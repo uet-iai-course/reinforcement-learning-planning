@@ -1,0 +1,23 @@
+# Ghi chú cho người soạn Bài 09
+
+- Tệp nguồn tự ghi “Bài giảng 10”, nhưng bài này được phát hành là Bài 09 theo tên tệp và trình tự kho. Không đổi tiêu đề đầu ra nếu chưa có chỉ dẫn mới.
+- Không mở rộng phần DQN. Bài 08 đã trình bày replay, mạng mục tiêu, tensor và giả mã đầy đủ.
+- Khi giảng Double DQN, luôn đọc công thức theo thứ tự: online chọn, target đánh giá, terminal che bootstrap, đích dừng gradient.
+- Chỉ tính argmax cho mẫu không kết thúc. Giải thích `sg` ngay lần đầu: giữ nguyên giá trị ở lượt thuận, đạo hàm bằng không.
+- Áp dụng cùng quy tắc cho Double Q-learning: đích terminal bằng $R$ và không được tính argmax trên $S'$.
+- Bài dùng quan sát đầy đủ $O=S$. Nếu dùng $O=h(S)$ mất thông tin, không được áp dụng ngầm định lý trạng thái Markov cho $O$.
+- Không gọi online và target là hai ước lượng độc lập. Target là bản sao trễ.
+- Double Q-learning dạng bảng là thuật toán khác Double DQN; không suy diễn “4-DQN” hoặc “8-DQN” chỉ từ tên gọi.
+- Không dùng ví dụ gộp trạng thái để tuyên bố ngẫu nhiên hóa tăng return. Cùng biểu diễn tạo cùng phân phối hành động; cần biểu diễn hoặc bộ nhớ tốt hơn để sửa aliasing. Trong MDP quan sát đầy đủ, một chính sách tối ưu tất định có thể tồn tại.
+- Động cơ dùng chính sách trực tiếp trong bài là phân phối khả vi, lấy mẫu và hành động liên tục không cần giải argmax bên trong.
+- Đặt trực giác chính sách trước ngôn ngữ kernel. Trên mặt trang chỉ cần xác suất hoặc mật độ hành động; ký hiệu độ đo để trong ghi chú khi cần.
+- Trước định lý gradient chính sách, viết đủ $\nabla J=\int G\nabla p=\mathbb E[G\nabla\log p]$. Bước nhân quả dùng $\mathbb E[\psi_t\mid H_t]=0$, không giả sử phần thưởng và hành động độc lập.
+- Với định lý gradient chính sách, giữ đồng thời occupancy chuẩn hóa và hệ số $1/(1-\gamma)$. Episode được nối bằng trạng thái hấp thụ có phần thưởng và $Q$ bằng không.
+- Giữ quy ước $R_{t+1}$ nhận sau $A_t$, $G_t=\sum_{k=t}^{T-1}\gamma^{k-t}R_{k+1}$ và estimator có $\gamma^tG_t$.
+- Giữ miền $0\le\gamma&lt;1$ từ mục tiêu đến phân bố chiếm dụng. Trong các công thức softmax và Gaussian của bài, $\phi$ là đặc trưng cố định khi lấy đạo hàm theo $\theta$.
+- Khi chứng minh kỳ vọng hàm điểm bằng không, dùng kỳ vọng theo $A_t\mid H_t$: tổng với hành động rời rạc, tích phân với hành động liên tục.
+- Định nghĩa $Q^\pi(s,a)=\mathbb E[G_t\mid S_t=s,A_t=a]$. Với chân trời cưỡng bức, ghép $t$ vào trạng thái; với terminal, nối trạng thái hấp thụ có $Q=0$.
+- Dùng lại ví dụ softmax ở trang ứng dụng cuối. Sau cập nhật return dương, phải kiểm được xác suất hành động 1 tăng từ $2/3$ lên khoảng $0,710$.
+- Trong REINFORCE episodic, thu cả episode dưới $\theta_{old}$, cộng đóng góp rồi cập nhật một lần. Nếu muốn cập nhật online, cần một thuật toán và suy diễn khác.
+- Baseline, advantage và actor–critic thuộc bài kế tiếp. Chỉ dùng câu nối ở trang cuối.
+- Không đưa thời lượng, mã trang hoặc chỉ dẫn phân tuyến lên mặt trang chiếu hay ghi chú diễn giả.

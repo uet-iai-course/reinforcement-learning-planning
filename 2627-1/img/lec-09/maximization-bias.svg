@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 340" role="img" aria-labelledby="t d">
+  <title id="t">Bốn kết quả của ví dụ Rademacher</title>
+  <desc id="d">Bốn cặp nhiễu đồng xác suất cho cực đại lần lượt là âm một, một, một và một; trung bình của cực đại bằng một phần hai.</desc>
+  <text x="480" y="42" text-anchor="middle" font-size="34" font-weight="700" fill="#2f3e7a">Mỗi cặp có xác suất 1/4</text>
+  <g font-size="30" text-anchor="middle">
+    <g transform="translate(45 75)"><rect width="200" height="150" rx="12" fill="#f4f4f4" stroke="#555" stroke-width="3"/><text x="100" y="48">(-1, -1)</text><text x="100" y="98">max = -1</text><circle cx="72" cy="128" r="8" fill="#2f3e7a"/><circle cx="128" cy="128" r="8" fill="#2f3e7a"/></g>
+    <g transform="translate(270 75)"><rect width="200" height="150" rx="12" fill="#edf4ff" stroke="#2f3e7a" stroke-width="3"/><text x="100" y="48">(-1, +1)</text><text x="100" y="98">max = +1</text><circle cx="72" cy="128" r="8" fill="#2f3e7a"/><circle cx="128" cy="128" r="8" fill="#b15a2b"/></g>
+    <g transform="translate(495 75)"><rect width="200" height="150" rx="12" fill="#edf4ff" stroke="#2f3e7a" stroke-width="3"/><text x="100" y="48">(+1, -1)</text><text x="100" y="98">max = +1</text><circle cx="72" cy="128" r="8" fill="#b15a2b"/><circle cx="128" cy="128" r="8" fill="#2f3e7a"/></g>
+    <g transform="translate(720 75)"><rect width="200" height="150" rx="12" fill="#edf4ff" stroke="#2f3e7a" stroke-width="3"/><text x="100" y="48">(+1, +1)</text><text x="100" y="98">max = +1</text><circle cx="72" cy="128" r="8" fill="#b15a2b"/><circle cx="128" cy="128" r="8" fill="#b15a2b"/></g>
+  </g>
+  <text x="480" y="285" text-anchor="middle" font-size="32" fill="#333">E[max] = (-1 + 1 + 1 + 1)/4 = 1/2</text>
+  <text x="480" y="325" text-anchor="middle" font-size="30" fill="#555">Ba trong bốn hiện thực cho cực đại dương; không phải mọi hiện thực.</text>
+</svg>

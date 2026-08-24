@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 380" role="img" aria-labelledby="t d">
+  <title id="t">Gộp trạng thái không được sửa bằng trộn hành động</title>
+  <desc id="d">Hai trạng thái khác nhau cho cùng biểu diễn xám, vì vậy cùng chính sách tham số tạo cùng phân phối hành động; trộn Đông và Tây không khôi phục trạng thái đã mất.</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#2f3e7a"/></marker></defs>
+  <g font-size="30" text-anchor="middle">
+    <g transform="translate(55 48)"><rect width="210" height="140" rx="12" fill="#f7efe6" stroke="#333" stroke-width="3"/><text x="105" y="38" font-weight="700">Trạng thái</text><text x="105" y="75" font-weight="700">bên trái</text><text x="105" y="116">đích: Đông</text></g>
+    <g transform="translate(695 48)"><rect width="210" height="140" rx="12" fill="#f7efe6" stroke="#333" stroke-width="3"/><text x="105" y="38" font-weight="700">Trạng thái</text><text x="105" y="75" font-weight="700">bên phải</text><text x="105" y="116">đích: Tây</text></g>
+    <g transform="translate(360 48)"><rect width="240" height="140" rx="14" fill="#ddd" stroke="#333" stroke-width="3"/><text x="120" y="52" font-weight="700">Cùng biểu diễn</text><text x="120" y="94">xám: x</text></g>
+    <path d="M265 118 H350" stroke="#2f3e7a" stroke-width="5" marker-end="url(#arrow)"/>
+    <path d="M695 118 H610" stroke="#2f3e7a" stroke-width="5" marker-end="url(#arrow)"/>
+    <path d="M480 198 V238" stroke="#2f3e7a" stroke-width="5" marker-end="url(#arrow)"/>
+    <rect x="295" y="248" width="370" height="70" rx="12" fill="#edf4ff" stroke="#2f3e7a" stroke-width="3"/>
+    <text x="480" y="291" font-weight="700">Cùng πθ(· | x)</text>
+    <text x="480" y="350">Trộn hành động không khôi phục trạng thái đã bị mất.</text>
+  </g>
+</svg>
