@@ -1,0 +1,26 @@
+# Chỉ theo dõi các thành phần cần để chạy website.
+*
+
+!.gitignore
+!index.html
+!index-pages.css
+!favicon.ico
+!favicon.png
+
+!2627-1/
+2627-1/*
+!2627-1/index.html
+!2627-1/lecture-01-gioi-thieu-hoc-tang-cuong.html
+!2627-1/lecture-style.css
+
+!2627-1/img/
+2627-1/img/*
+!2627-1/img/lec-01/
+!2627-1/img/lec-01/*.svg
+
+!2627-1/revealjs/
+!2627-1/revealjs/**
+!2627-1/plugin/
+!2627-1/plugin/**
+!2627-1/vendor/
+!2627-1/vendor/**
