@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 300" role="img" aria-labelledby="title desc">
+  <title id="title">Lượt dùng chung D đến C đến B đến A</title>
+  <desc id="desc">Lượt bắt đầu D, đi trái sang C nhận âm 1, đi trái sang B nhận âm 1, rồi thăm dò đi trái vào A nhận 1000.</desc>
+  <defs><marker id="ar" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M0 0L11 5.5L0 11Z" fill="#B15A2B"/></marker></defs>
+  <g font-family="sans-serif" text-anchor="middle"><circle cx="930" cy="135" r="55" fill="#E8F5E9" stroke="#2E7D32" stroke-width="4"/><text x="930" y="147" font-size="40" font-weight="700">D</text><circle cx="680" cy="135" r="55" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="680" y="147" font-size="40" font-weight="700">C</text><circle cx="430" cy="135" r="55" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="430" y="147" font-size="40" font-weight="700">B</text><circle cx="180" cy="135" r="55" fill="#F7EFE6" stroke="#B15A2B" stroke-width="4"/><text x="180" y="147" font-size="40" font-weight="700">A</text><text x="805" y="87" font-size="30">a=0, R=−1</text><text x="555" y="87" font-size="30">a=0, R=−1</text><text x="305" y="87" font-size="30">a=0, R=+1000</text><text x="555" y="260" font-size="30">Return: (D,0)=998 · (C,0)=999 · (B,0)=1000</text></g>
+  <g stroke="#B15A2B" stroke-width="5" marker-end="url(#ar)"><path d="M870 135H745"/><path d="M620 135H495"/><path d="M370 135H245"/></g>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 350" role="img" aria-labelledby="title desc">
+  <title id="title">Chuỗi năm trạng thái</title>
+  <desc id="desc">Năm trạng thái A đến E trên một hàng; A và E kết thúc, D bắt đầu. Đi vào A nhận 1000, đi vào E nhận 10, các chuyển khác nhận âm 1.</desc>
+  <defs><marker id="arr" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M0 0L11 5.5L0 11Z" fill="#555"/></marker></defs>
+  <g font-family="sans-serif" text-anchor="middle">
+    <rect x="50" y="105" width="150" height="100" rx="18" fill="#F7EFE6" stroke="#B15A2B" stroke-width="4"/><text x="125" y="165" font-size="42" font-weight="700">A</text>
+    <rect x="260" y="105" width="150" height="100" rx="18" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="335" y="165" font-size="42" font-weight="700">B</text>
+    <rect x="470" y="105" width="150" height="100" rx="18" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="545" y="165" font-size="42" font-weight="700">C</text>
+    <rect x="680" y="105" width="150" height="100" rx="18" fill="#E8F5E9" stroke="#2E7D32" stroke-width="4"/><text x="755" y="155" font-size="42" font-weight="700">D</text><text x="755" y="190" font-size="30">bắt đầu</text>
+    <rect x="890" y="105" width="150" height="100" rx="18" fill="#F7EFE6" stroke="#B15A2B" stroke-width="4"/><text x="965" y="165" font-size="42" font-weight="700">E</text>
+    <text x="125" y="68" font-size="30">kết thúc · +1000</text><text x="965" y="68" font-size="30">kết thúc · +10</text>
+    <text x="545" y="300" font-size="30">0 = trái · 1 = phải · chuyển chưa kết thúc nhận −1</text>
+  </g>
+  <g stroke="#555" stroke-width="4" fill="none" marker-end="url(#arr)"><path d="M260 125H210"/><path d="M410 185H460"/><path d="M470 125H420"/><path d="M620 185H670"/><path d="M680 125H630"/><path d="M830 185H880"/></g>
+</svg>
