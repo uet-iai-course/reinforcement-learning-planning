@@ -10,13 +10,17 @@
 !2627-1/
 2627-1/*
 !2627-1/index.html
-!2627-1/lecture-01-gioi-thieu-hoc-tang-cuong.html
+!2627-1/lecture-*.html
+2627-1/lecture-template.html
 !2627-1/lecture-style.css
 
 !2627-1/img/
 2627-1/img/*
-!2627-1/img/lec-01/
-!2627-1/img/lec-01/*.svg
+!2627-1/img/lec-*/
+!2627-1/img/lec-*/*.svg
+
+!2627-1/planning/
+!2627-1/planning/**
 
 !2627-1/revealjs/
 !2627-1/revealjs/**

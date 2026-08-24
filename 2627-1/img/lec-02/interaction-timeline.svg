@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 310" role="img" aria-labelledby="title desc">
+  <title id="title">Dòng thời gian tương tác</title><desc id="desc">Chuỗi quan sát O không, hành động A không, phần thưởng R một và quan sát O một, rồi lặp lại.</desc>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#2F3E7A"/></marker></defs>
+  <path d="M80 150H940" stroke="#2F3E7A" stroke-width="6" marker-end="url(#a)"/>
+  <g font-family="sans-serif" font-size="30" text-anchor="middle"><circle cx="120" cy="150" r="42" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="5"/><text x="120" y="160">O₀</text><circle cx="310" cy="150" r="42" fill="#F7EFE6" stroke="#B15A2B" stroke-width="5"/><text x="310" y="160">A₀</text><circle cx="520" cy="150" r="50" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="5"/><text x="520" y="145">R₁</text><text x="520" y="178">O₁</text><circle cx="720" cy="150" r="42" fill="#F7EFE6" stroke="#B15A2B" stroke-width="5"/><text x="720" y="160">A₁</text><circle cx="900" cy="150" r="50" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="5"/><text x="900" y="145">R₂</text><text x="900" y="178">O₂</text><text x="310" y="245" fill="#B15A2B">tác tử chọn</text><text x="520" y="245" fill="#2F3E7A">môi trường trả</text></g>
+</svg>

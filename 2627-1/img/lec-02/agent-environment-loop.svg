@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
+  <title id="title">Vòng tương tác giữa tác tử và môi trường</title><desc id="desc">Tác tử gửi hành động A t sang môi trường; môi trường trả phần thưởng R t cộng một và quan sát O t cộng một.</desc>
+  <defs><marker id="a" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#B15A2B"/></marker></defs>
+  <rect x="70" y="105" width="250" height="145" rx="24" fill="#F7EFE6" stroke="#2F3E7A" stroke-width="6"/><text x="195" y="185" text-anchor="middle" font-size="38" font-family="sans-serif" fill="#2F3E7A">TÁC TỬ</text>
+  <rect x="580" y="105" width="250" height="145" rx="24" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="6"/><text x="705" y="185" text-anchor="middle" font-size="38" font-family="sans-serif" fill="#2F3E7A">MÔI TRƯỜNG</text>
+  <path d="M320 135H570" stroke="#B15A2B" stroke-width="7" marker-end="url(#a)"/><text x="445" y="112" text-anchor="middle" font-size="32" font-family="sans-serif">Hành động Aₜ</text>
+  <path d="M580 225H330" stroke="#B15A2B" stroke-width="7" marker-end="url(#a)"/><text x="455" y="285" text-anchor="middle" font-size="30" font-family="sans-serif">Rₜ₊₁, Oₜ₊₁</text>
+</svg>
