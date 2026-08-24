@@ -1,0 +1,155 @@
+# Nhật ký rà soát Bài 07
+
+## Kiểm kê ban đầu
+
+- Nguồn chính có 45 trang; phiếu bài tập có 3 trang và 8 bài.
+- Không có notebook hoặc code demo liên quan trong nguồn.
+- Các ảnh minh họa miền ứng dụng và sơ đồ được vẽ lại bằng tám SVG.
+- Không dùng ảnh raster và không phụ thuộc tài nguyên mạng.
+
+## Báo cáo lập kế hoạch
+
+Tác tử lập kế hoạch đề nghị giữ Bài 07 trong một buổi. Phần tr. 5–20 lặp kiến thức hội tụ dạng bảng của Bài 06 và chứa một phác thảo chưa đủ chặt, nên được nén thành một cầu nối. Trọng tâm chuyển sang đặc trưng, MC/TD tuyến tính, Bellman chiếu, điều khiển và deadly triad. Kế hoạch 36 trang chính, ba trang bài tập dọc, 110 phút cốt lõi, 10 phút linh hoạt và 30 phút chữa bài đã được điều phối viên chấp nhận.
+
+## Báo cáo ánh xạ nguồn ban đầu
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa |
+|---|---|---|---|---|
+| nghiêm trọng | `L07-02` | Nguồn dùng lịch $\varepsilon_k=1/k$ như thể tự đủ cho GLIE và chuyển luật số lớn của chính sách cố định sang dãy chính sách thay đổi. | lecture-07.pdf, tr. 5–20. | Không trình bày phác thảo này như chứng minh; chỉ nhắc kết quả dạng bảng có điều kiện. |
+| nghiêm trọng | `L07-12`–`L07-19` | Nguồn gọi chung cập nhật theo đích là bán gradient. | lecture-07.pdf, tr. 32–35. | Gọi MC là gradient đầy đủ khi $G_t$ không phụ thuộc $w$; chỉ gọi TD là bán gradient. |
+| nghiêm trọng | `L07-17`, `L07-24` | Điều kiện hội tụ thiếu chính sách, phân phối lấy mẫu và tính dừng. | lecture-07.pdf, tr. 27, 34–36. | Nêu riêng trường hợp iid và chuỗi Markov trộn; giới hạn TD ở on-policy với chính sách cố định. |
+| nghiêm trọng | `L07-10` | Vector đặc trưng hành động trong nguồn ghép các khối có kích thước không rõ. | lecture-07.pdf, tr. 31. | Dùng một mã hóa khối nhất quán $x(s,a)=e_a\otimes\phi(s)\in\mathbb R^{mp}$. |
+| trung bình | `L07-27` | Chuỗi A–E không tự bảo đảm tối đa ba bước. | Phiếu bài tập, tr. 2. | Nêu chân trời cưỡng bức hoặc bổ sung thời gian vào trạng thái. |
+| trung bình | `L07-32` | Cách diễn đạt nguồn có thể bị hiểu thành cả ba thành phần luôn gây phân kỳ. | lecture-07.pdf, tr. 41. | Dùng “có thể làm một số thuật toán TD phân kỳ”. |
+| trung bình | `L07-34` | Bound mẫu ở trang kết thiếu thiết lập và thước đo sai số. | lecture-07.pdf, tr. 44. | Bỏ bound; giữ bảng phạm vi của các kết luận đã xây dựng. |
+
+## Báo cáo phản biện học thuật ban đầu
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa |
+|---|---|---|---|---|
+| nghiêm trọng | `L07-21`–`L07-24` | Phương trình Bellman chiếu dễ thành ký hiệu rời nếu thiếu $D$, $\Phi$, $P_\pi$, $r_\pi$ và giả thiết đủ hạng. | Phiếu bài tập, Bài 5 chỉ cho gợi ý $b-Aw$. | Định nghĩa toàn bộ đối tượng trước phương trình; nối $Aw=b$ với phép chiếu. |
+| nghiêm trọng | `L07-28`–`L07-31` | Đặt Q-learning trước SARSA sẽ bỏ cầu nối từ TD theo chính sách. | SARSA dùng đúng mẫu mở rộng $(S,A,R,S',A')$ đã có từ Bài 06. | Dạy SARSA, tính một bước, rồi đổi đích sang cực đại của Q-learning. |
+| trung bình | `L07-13` | “Return không chệch” có thể bị hiểu quá rộng. | $\mathbb E_\pi[G_t\mid S_t=s]=v_\pi(s)$ chỉ dưới đúng chính sách và return tồn tại. | Gắn phát biểu với chính sách cố định và không suy ra không chệch hữu hạn mẫu của $w$. |
+| trung bình | `X02` | Phiếu gọi một lượt cập nhật là MC control nhưng không có bước cải thiện chính sách. | HW7 chỉ yêu cầu cập nhật $w$ trên quỹ đạo cố định. | Gọi đây là cập nhật giá trị hành động MC; ghi rõ chưa phải vòng control hoàn chỉnh. |
+| trung bình | `L07-32`–`L07-34` | Công thức đúng riêng lẻ nhưng thiếu cầu nối từ khác chính sách sang bất ổn. | Q-learning dùng cực đại trong khi dữ liệu do hành vi sinh ra. | Đặt Q-learning ngay trước deadly triad và dùng ba câu chẩn đoán. |
+
+## Kiểm tra số
+
+### Bài 7
+
+Return theo thứ tự $(D,0),(C,0),(B,0)$ là $(998,999,1000)$. Cập nhật tuần tự cho:
+
+$$
+w_1=(299.5,100.5,98.5)^T,
+$$
+
+$$
+w_2=(339.7,120.6,118.6)^T,
+$$
+
+$$
+w_3=(381.81,162.71,160.71)^T.
+$$
+
+Giá trị cuối là $\hat q(D,0)=1468.85$, $\hat q(C,0)=1087.04$, $\hat q(B,0)=705.23$.
+
+### Bài 8
+
+Ba cập nhật SARSA cho:
+
+$$
+w_1=(-0.2,0.6,-1.4)^T,
+$$
+
+$$
+w_2=(-0.68,0.84,-1.64)^T,
+$$
+
+$$
+w_3=(8.032,-2.064,1.264)^T.
+$$
+
+Giá trị cuối là $\hat q(D,0)=23.296$, $\hat q(C,1)=19.392$, $\hat q(D,1)=27.424$.
+
+## Sai khác có chủ ý so với nguồn
+
+1. Nén tr. 5–20 thành `L07-02` vì lặp Bài 06 và không đủ chặt để dùng như chứng minh.
+2. Tách MC gradient đầy đủ khỏi bán gradient TD.
+3. Bổ sung miền, kích thước, phân phối dừng, phép chiếu và điều kiện đủ hạng.
+4. Đặt SARSA trước Q-learning để giữ thứ tự theo chính sách rồi khác chính sách.
+5. Sửa deadly triad thành phát biểu khả năng, không phải kết quả tất định.
+6. Bỏ bound mẫu ở tr. 44 vì nguồn thiếu thiết lập.
+7. Không dạy chi tiết LSVI ở tr. 42 vì mệnh đề và trích dẫn không đủ để xây một cụm tự đủ.
+8. Xem giới hạn ba bước của bài tập là chân trời cưỡng bức; nếu cần MDP dừng, trạng thái phải gồm chỉ số thời gian.
+
+## Ngoại lệ
+
+Không có ngoại lệ raster. Không có tài sản cốt lõi phụ thuộc mạng.
+
+## Trạng thái rà soát
+
+Bản nháp đầu đã được tạo để chuyển sang kiểm định storyboard và bốn vòng rà soát độc lập.
+
+## Báo cáo kiểm định storyboard
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa |
+|---|---|---|---|---|
+| nghiêm trọng | `L07-04`–`L07-11` | Cụm đặc trưng đặt ví dụ miền sau thiết lập và công thức, nên chu trình chưa có ví dụ cụ thể trước hình thức hóa. | Bản nháp đặt thiết lập và mô hình ở `L07-07`–`L07-08`, còn ví dụ đầu tiên ở `L07-09`. | Dùng `L07-06` làm ví dụ số về chia sẻ tham số trước thiết lập tổng quát. |
+| nghiêm trọng | `L07-12`–`L07-17` | Cụm MC đặt phép đạo hàm và thuật toán trước ví dụ số. | Bản nháp có gradient ở `L07-14`, thuật toán ở `L07-15`, ví dụ ở `L07-16`. | Đặt ví dụ hướng sửa ở `L07-14`, gradient ở `L07-15`, thuật toán và kiểm tra ở `L07-16`. |
+| nghiêm trọng | `L07-18`–`L07-24` | TD chưa có cập nhật số trước bán gradient; Bellman chiếu đi từ đại số sang trực giác nên khó theo dõi. | Bản nháp mở trực tiếp bằng công thức ở `L07-19`; $b-Aw$ đứng trước hình học chiếu nhưng không có ví dụ đơn giản. | Thêm một cập nhật TD số ở `L07-19`; dùng ví dụ chiếu hai chiều ở `L07-22` trước công thức tổng quát `L07-23`. |
+| nghiêm trọng | `L07-26`–`L07-33` | Cầu nối từ điều khiển theo chính sách sang khác chính sách và bộ ba bất ổn chưa tạo tình huống cụ thể trước khi phân loại. | Q-learning được nêu như công thức rời ở `L07-31`; `L07-32` mới giải thích ba cơ chế. | Viết `L07-31` như biến đổi từ SARSA, chỉ ra ba cơ chế trên cùng tình huống rồi mới gọi tên và phân loại ở `L07-32`. |
+| trung bình | toàn bài | Bảng thời lượng theo cụm bị chồng lấn ở `L07-31` và không chỉ rõ 10 phút linh hoạt thuộc khoảng nào. | Cụm điều khiển và cụm bất ổn đều tính `L07-31`; tổng theo hàng không truy nguyên được về 110 + 10. | Chia lại thành các khoảng trang rời nhau, ghi riêng cốt lõi và linh hoạt, kiểm tổng 120 phút. |
+| trung bình | `L07-24`, `L07-33` | Một số cụm có kết luận nhưng thiếu kiểm tra trực tiếp ngay sau ứng dụng. | Câu kiểm tra Bellman nằm tận `L07-35`; chẩn đoán deadly triad chưa buộc áp dụng vào Q-learning vừa học. | Thêm câu kiểm tra tại `L07-24` và `L07-33`; giữ `L07-35` làm kiểm tra tổng hợp. |
+
+## Quyết định chỉnh sửa sau kiểm định storyboard
+
+1. Giữ đủ 36 trang chính và ba trang dọc; không đổi `data-slide-id`.
+2. Sửa `L07-06` thành ví dụ số về hai trạng thái dùng chung tham số. Cụm đặc trưng nay đi theo `L07-04` → `L07-05` → `L07-06` → `L07-07`–`L07-10` → `L07-11`.
+3. Đổi vai trò `L07-14`–`L07-16`: ví dụ MC đứng trước gradient; thuật toán kết bằng câu kiểm tra và nối sang bài áp dụng `X02`.
+4. Thêm cập nhật TD số ở `L07-19`, sau đó mới khái quát bán gradient và giao diện thuật toán ở `L07-20`.
+5. Giữ $b-Aw$ ở `L07-21` như ứng dụng của cập nhật trung bình; bổ sung ví dụ chiếu hai chiều ở `L07-22` trước định nghĩa $\Pi_D$ ở `L07-23` và câu kiểm tra ở `L07-24`.
+6. Viết lại `L07-31` thành đúng một biến đổi từ SARSA sang Q-learning; ba cơ chế xuất hiện trên cùng tình huống trước khi được phân loại tại `L07-32`. `L07-33` áp dụng lại phân loại cho Q-learning.
+7. Chia thời lượng thành bảy khoảng không chồng lấn. Tổng cốt lõi là 110 phút; phần linh hoạt là 10 phút; ba bài dọc vẫn là 8 + 10 + 12 phút.
+8. Rà lại hai trang lân cận của mọi vị trí đổi vai trò. Các câu nối `L07-12`–`L07-17`, `L07-18`–`L07-24` và `L07-29`–`L07-34` đã được cập nhật trong storyboard.
+
+Các lỗi nghiêm trọng của vòng kiểm định storyboard đã được xử lý. Bản này chuyển sang bốn vòng rà soát độc lập; chưa coi mục này là kiểm định cuối.
+
+## Hợp nhất bốn báo cáo độc lập
+
+| Đề xuất | Quyết định | Cách xử lý |
+|---|---|---|
+| Sửa thứ tự tích Kronecker và không coi đó là mã hóa duy nhất. | chấp nhận | `L07-10` dùng $e_a\otimes\phi(s)$; `L07-27` được gọi rõ là đặc trưng ba chiều thiết kế trực tiếp cho $(s,a)$. |
+| Nêu $\gamma=1$ cho hai bài tính. | chấp nhận | Bổ sung tại `L07-27`, `L07-30`, `X02` và `X03`. |
+| Viết SARSA như thuật toán control với chính sách hiện hành. | chấp nhận | `L07-28`–`L07-29` nêu $\varepsilon$-greedy theo $\hat q(\cdot,\cdot,w)$, phá hòa, khởi tạo $S,A$, cập nhật chính sách qua $w$ và cảnh báo hội tụ. |
+| Hạ mục tiêu Q-learning xuống phân biệt quy tắc đích. | chấp nhận | `L07-03` và outline được sửa; `L07-31` chỉ định nghĩa đích, miền cực đại, trường hợp kết thúc và so sánh trên mẫu `L07-30`. |
+| Bỏ phát biểu hội tụ dạng bảng quá rộng. | chấp nhận | `L07-02` chỉ nhắc cập nhật và điều kiện phân tích riêng của Bài 06. |
+| Tách $\mu$ của MC khỏi $d_\pi$ của TD và viết kỳ vọng có điều kiện. | chấp nhận | `L07-07`, `L07-13`, `L07-17`, `L07-34` và bảng ký hiệu đã đồng bộ. |
+| Chỉ dùng đủ hạng để kết luận nghiệm tham số duy nhất. | chấp nhận | `L07-17`, `L07-23` và ghi chú `L07-24` phân biệt tồn tại dự đoán, khả nghịch và duy nhất của $w$. |
+| Đặt trực giác Bellman trước $A,b$ và thêm điều kiện trực giao. | chấp nhận | Thứ tự mới là `L07-21` hình học, `L07-22` trực giao và $Aw=b$, `L07-23` điểm cố định chiếu. Storyboard và câu nối đã đổi theo. |
+| Làm hai trang điều kiện hội tụ dễ học hơn. | chấp nhận | `L07-17` và `L07-24` dùng hai khối điều kiện; định nghĩa ổn định của $A$ được nêu ngắn trên trang và giải thích trong ghi chú. |
+| Tăng cỡ chữ hiệu dụng của giả mã và bảng. | chấp nhận | Bảng dùng $0.94$ em trong trang có cỡ nền $0.82$ em; giả mã `L07-29` dùng $0.94$ em, cho cỡ hiệu dụng trên $0.75$ em. |
+| Ẩn đáp số hai bài tính. | chấp nhận | Return, trọng số và dự đoán ở `X02`–`X03` nằm trong fragment. |
+| Dùng $x(S,A)$ cho cập nhật giá trị hành động và giải thích $\varepsilon$. | chấp nhận | `X02` dùng đúng $x(S,A)$; ghi chú `L07-29` và `X03` nêu $\varepsilon=0.25$ không tham gia số học khi chuỗi đã cho. |
+| Thu hẹp deadly triad và không hứa hội tụ cho bài kế tiếp. | chấp nhận | `L07-32`–`L07-33` giới hạn kết luận vào thiết lập học giá trị TD liên quan; `L07-36` nói rõ bảo đảm tuyến tính không tự chuyển sang mạng nơ-ron. |
+
+Không có đề xuất nghiêm trọng hoặc trung bình nào bị từ chối. Giữ 36 trang chính và ba trang dọc; không đổi mã trang. Hai trang lân cận của các vùng `L07-07`–`L07-10`, `L07-17`–`L07-24` và `L07-27`–`L07-36` đã được rà lại về câu nối, ký hiệu và phạm vi kết luận.
+
+## Trạng thái sau chỉnh sửa độc lập
+
+Mọi lỗi nghiêm trọng đã được xử lý. Các thay đổi công thức và thuật toán cần qua một lượt tái kiểm tra toán học trước kiểm định cuối.
+
+## Tái kiểm tra toán học và thuật toán
+
+Tác tử rà toán độc lập xác nhận không còn lỗi từ mức trung bình trở lên. Các nội dung sau đã được kiểm tra lại: thứ tự $e_a\otimes\phi(s)$; cập nhật MC và TD; phương trình $Aw=b$ và điểm cố định Bellman chiếu; giao diện SARSA; đích Q-learning ở chuyển tiếp thường và chuyển tiếp kết thúc; toàn bộ số học của ví dụ TD, Bài 7 và Bài 8.
+
+## Kiểm định cuối
+
+- 39 mã trang duy nhất, 39 khối ghi chú và 39 mục storyboard; độ sâu `<section>` lớn nhất là 2.
+- KaTeX nghiêm ngặt đọc 194 biểu thức, không có lỗi phân tích.
+- Tám SVG hợp lệ về XML, có `role="img"`, `title`, `desc`; nhãn nhỏ nhất là 30 px.
+- HTML và tám SVG trả HTTP 200 tại cổng 8765.
+- Không có ảnh raster, tài nguyên mạng cốt lõi, mã trang, nhãn phân tuyến hoặc thời lượng lộ trên mặt trang và ghi chú.
+- Cỡ chữ hiệu dụng của bảng và giả mã là khoảng 0,77 em, cao hơn ngưỡng 0,75 em.
+- Năm tệp HTML/quy trình trong dự án Codex Slides khớp từng byte với bản trong kho.
+
+Codex Slides đã được dùng làm dự án bền vững và kho Design Files, nhưng Codex Browser trong trình soạn thảo không khả dụng trong phiên này. Vì vậy chưa thể tuyên bố đã duyệt trực quan bằng Codex Slides hoặc kiểm tra tràn trang bằng Browser. Các kiểm tra RevealJS cục bộ, cấu trúc, công thức, đường dẫn và tài sản đã được thực hiện đầy đủ; giới hạn trực quan này không được che giấu.
