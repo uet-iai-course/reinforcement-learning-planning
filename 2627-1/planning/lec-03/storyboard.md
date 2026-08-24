@@ -1,0 +1,87 @@
+# Storyboard Bài 03
+
+## Hành trình khái niệm
+
+| Cụm | Vấn đề | Trực giác | Ví dụ | Hình thức | Ứng dụng | Kiểm tra | Đầu vào → sản phẩm | Phút |
+|---|---|---|---|---|---|---|---|---:|
+| Định hướng | không áp dụng: đặt phạm vi | P02 | không áp dụng | P02 | P02 | P01 | Bài 02 → ba lớp mô hình | 6 |
+| Chuỗi Markov | A02 | A02–A03 | A02–A04 | A00–A01,A04 | A03–A04 | A05 | tính Markov → $P$, $\mu_{t+1}$ | 18 |
+| MRP và phần thưởng tích lũy | B01 | B01–B02 | B01,B03 | B00,B02,B04 | B03–B04 | B04 | $P$ → $r,\gamma,G_t,v$ | 22 |
+| Bellman MRP | C00 | C00–C01 | C00 | C01–C04 | C05 | C03,C06 | sao lưu số → Bellman → điều kiện giải | 30 |
+| MDP và chính sách | D01 | D01–D03 | D01,D03,D06 | D00,D02,D04–D05,D07–D08 | D06–D08 | D08 | hành động + $\pi$ → $P^\pi,r^\pi,v_\pi,q_\pi$ | 28 |
+| Racing Car | D09 | D09 | D09–D10 | D10 | D10 | D10 | sáu kết quả → hệ Bellman và điều kiện hữu hạn | 10 |
+| Tổng hợp | D11 | D11,D13 | không áp dụng: tổng hợp | D11 | D13 | D12 | biết mô hình → quy hoạch động → phi mô hình | 6 |
+| Bài tập | X03,X04,X07,X08 | gộp trong đề | gộp trong đề | X03,X04,X07,X08 | X03,X04,X07,X08 | X03,X04,X07,X08 | khái niệm → lời giải | ngoài tuyến |
+
+Tổng tuyến chính: $6+18+22+30+28+10+6=120$ phút.
+
+Phân bổ phần bài tập 30 phút: X03 12 phút, X04 10 phút, X08 8 phút; X07 tự luyện.
+
+## Truyền dữ kiện và câu nối
+
+- A02 cho ví dụ đồ thị trước; A00–A01 mới hình thức hóa chuỗi Markov và điều kiện của $P$. A02–A05 giữ thứ tự Student MRP là C1, C2, C3, Pass, Pub, Facebook, Sleep.
+- B01 cho véc-tơ thưởng trước; B00 mới đóng gói thành MRP. B00–B04 dùng cùng quy ước $R_{t+1}=r(S_t)$.
+- C00 dùng các giá trị tiếp tục tạm thời để tạo một sao lưu Student, chưa dùng nghiệm. C01 phân rã $G_t$; C02 mới định nghĩa Bellman; C05 mới đưa hai nghiệm.
+- C03 nối phương trình theo trạng thái với $v=r+\gamma Pv$. C04 tách $\gamma<1$ khỏi $\gamma=1$; C06 kiểm lại điều kiện trước khi giải.
+- D01 cho ví dụ MDP trước D00 và nói rõ Student MDP là đặc tả khác Student MRP. D03 tạo một hàng $P^\pi$ và $r^\pi$ trước công thức D04.
+- D04 nối trở lại MRP bằng $v_\pi=r^\pi+\gamma P^\pi v_\pi$. D05 nêu quan hệ $v_\pi=\sum_a\pi q_\pi$; D06 kiểm bằng số trước Bellman $q_\pi$ ở D08.
+- D09 chỉ dùng để đọc sáu kết quả. D10 yêu cầu người học tự lập hệ trước khi hiện nghiệm và đối chiếu điều kiện $\gamma=1$.
+- D11–D13 nối rõ: bài này biết mô hình, Bài 04 dùng quy hoạch động, các bài sau học phi mô hình.
+
+## Bản đồ 35 trang tuyến chính
+
+| Mã | Luận điểm trung tâm | Câu nối sang trang sau |
+|---|---|---|
+| P00 | Phạm vi là đánh giá mô hình Markov. | “Đầu ra cần đạt được đo bằng ví dụ.” |
+| P01 | Năm mục tiêu có thể kiểm tra. | “Đặt chúng trên ba lớp mô hình.” |
+| P02 | Mỗi lớp giữ cấu phần trước rồi bổ sung phần thưởng hoặc hành động. | “Bắt đầu từ động lực không có thưởng.” |
+| A02 | Đồ thị Student tạo trực giác về trạng thái và xác suất chuyển. | “Đóng gói đồ thị thành một mô hình.” |
+| A00 | Chuỗi Markov hữu hạn được xác định bởi $\mathcal S,P$. | “Ma trận phải là các phân phối.” |
+| A01 | Mỗi hàng hợp lệ; Sleep là trạng thái hấp thụ. | “Một lần chạy chỉ cho một quỹ đạo.” |
+| A03 | Quỹ đạo mẫu không phải động lực. | “Đóng gói toàn bộ động lực vào ma trận.” |
+| A04 | Đồ thị và ma trận dùng cùng thứ tự. | “Dùng ma trận để đẩy phân phối.” |
+| A05 | Quy ước véc-tơ cột cho phân phối. | “Thêm phần thưởng vào động lực.” |
+| B01 | Véc-tơ thưởng Student tạo ví dụ trước định nghĩa. | “Đóng gói động lực và thưởng thành MRP.” |
+| B00 | MRP thêm thưởng và chiết khấu, không có hành động. | “Tổng các thưởng dọc theo quỹ đạo.” |
+| B02 | $G_t$ là tổng chiết khấu và cần điều kiện hữu hạn. | “Tính hai quỹ đạo cụ thể.” |
+| B03 | Hai quỹ đạo có hai phần thưởng tích lũy. | “Giá trị phải lấy trung bình trên các quỹ đạo.” |
+| B04 | Giá trị là kỳ vọng của $G_t$. | “Ước lượng một bước cần thưởng và giá trị tiếp tục.” |
+| C00 | Một sao lưu Student tạo mẫu tính một bước. | “Mẫu này đến từ phân rã của $G_t$.” |
+| C01 | Phân rã một bước chuẩn bị Bellman. | “Lấy kỳ vọng có điều kiện.” |
+| C02 | Bellman MRP là thưởng cộng giá trị tiếp tục trung bình. | “Viết đồng thời cho mọi trạng thái.” |
+| C03 | Dạng véc-tơ tạo hệ tuyến tính. | “Khả năng giải phụ thuộc $\gamma$ và trạng thái kết thúc.” |
+| C04 | Hai chế độ giải có điều kiện khác nhau. | “Áp điều kiện đúng cho Student.” |
+| C05 | Hai nghiệm Student xuất hiện sau phương trình. | “Giải trực tiếp không mở rộng tốt.” |
+| C06 | Giới hạn tính toán và kiểm tra $\gamma=1$. | “Thêm hành động vào mô hình.” |
+| D01 | Student MDP tạo trực giác về hành động và phản hồi. | “Đóng gói các nhánh thành hạt nhân chung.” |
+| D00 | Hạt nhân chung biểu diễn chuyển và thưởng theo hành động. | “Cần quy tắc chọn hành động.” |
+| D02 | Chính sách Markov dừng là phân phối theo trạng thái. | “Cố định chính sách tại một trạng thái.” |
+| D03 | Một hàng MRP cảm sinh được tính bằng lấy trung bình hành động. | “Khái quát cho mọi trạng thái.” |
+| D04 | $P^\pi,r^\pi$ đưa MDP về Bellman MRP. | “Có hai cách điều kiện hóa giá trị.” |
+| D05 | $v_\pi$ là trung bình $q_\pi$ theo chính sách. | “Kiểm quan hệ bằng số Student.” |
+| D06 | Một ví dụ $q_\pi$ khôi phục đúng $v_\pi$. | “Viết Bellman cho giá trị trạng thái.” |
+| D07 | Bellman $v_\pi$ lấy trung bình theo chính sách rồi môi trường. | “Cố định hành động đầu để viết $q_\pi$.” |
+| D08 | Bellman $q_\pi$ giữ cố định $(s,a)$ ở vế trái. | “Áp dụng trên MDP có rủi ro kết thúc.” |
+| D09 | Racing Car có đúng sáu kết quả chuyển tiếp. | “Từ sáu kết quả, lập hai phương trình.” |
+| D10 | Người học áp dụng Bellman và kiểm tính hữu hạn. | “Khái quát lại ba lớp.” |
+| D11 | Ba lớp trả lời ba câu hỏi khác nhau. | “Tự kiểm các cầu nối quan trọng.” |
+| D12 | Tự kiểm phủ $v_\pi$, $q_\pi$ và Bellman kỳ vọng. | “Nối đánh giá với điều khiển.” |
+| D13 | Bài 04 dùng quy hoạch động; các bài sau học phi mô hình. | “Nhấn xuống để chữa bài.” |
+
+## Nhánh bài tập
+
+| Mã | Sản phẩm học tập |
+|---|---|
+| X03 | Kiểm tra ma trận, trạng thái hấp thụ và lập hệ Bellman. |
+| X04 | Chứng minh MDP cảm sinh MRP dưới chính sách cố định. |
+| X07 | Suy ra $v_\pi(s)=\sum_a\pi(a\mid s)q_\pi(s,a)$; tự luyện. |
+| X08 | Viết và giải thích Bellman kỳ vọng cho $v_\pi$. |
+
+## Rà lại sau đổi thứ tự
+
+- Đã rà P02–A03 sau khi chuyển A02 trước A00–A01: câu nối đi từ ba lớp → đồ thị → định nghĩa → điều kiện → quỹ đạo; không dùng ký hiệu chưa được giải thích trong phép tính.
+- Đã rà A04–B03 sau khi chuyển B01 trước B00: thứ tự trạng thái đã được cố định ở A04; véc-tơ thưởng là ví dụ trực quan rồi mới định nghĩa MRP và $r(s)$.
+- Đã rà C05–D03 sau khi chuyển D01 trước D00: C06 kết thúc MRP; D01 giới thiệu hành động bằng hình; D00 mới định nghĩa hạt nhân; D02 mới định nghĩa chính sách.
+- Đã rà C00–C05 và hai trang lân cận B03–B04, C06–D00: không còn nghiệm hoặc Bellman trước định nghĩa giá trị và ví dụ sao lưu.
+- Đã rà D01–D08 cùng C05–D00 và D09–D10: mỗi công thức có tiên quyết, ví dụ hoặc cầu nối MRP cảm sinh.
+- Đã rà D08–D13: Racing Car không lặp kết luận; D10 là câu hỏi áp dụng; tự kiểm cuối phủ đủ ba đại lượng trọng tâm.

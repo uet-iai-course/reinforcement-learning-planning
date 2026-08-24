@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 520" role="img" aria-labelledby="title desc">
+  <title id="title">Chuỗi Markov Student</title>
+  <desc id="desc">Bảy trạng thái C1, C2, C3, Pass, Pub, Facebook và Sleep. C1 sang C2 và Facebook với xác suất 0,5; Facebook sang C1 với 0,1 và tự lặp với 0,9; C2 sang C3 với 0,8 và Sleep với 0,2; C3 sang Pass với 0,6 và Pub với 0,4; Pub sang C1, C2, C3 với 0,2, 0,4, 0,4; Pass sang Sleep với 1; Sleep tự lặp với 1.</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#2F3E7A"/></marker></defs>
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <g fill="none" stroke="#2F3E7A" stroke-width="4" marker-end="url(#arrow)">
+      <path d="M180 145 H300"/><path d="M410 145 H530"/><path d="M640 145 H760"/><path d="M870 145 H1000"/><path d="M130 198 V330"/><path d="M105 330 V205"/><path d="M80 172 C10 220,15 335,80 372"/><path d="M390 105 C560 15,875 20,1020 105"/><path d="M585 200 V345"/><path d="M535 398 C430 375,300 330,170 190"/><path d="M570 345 C535 280,450 225,395 190"/><path d="M625 365 C690 300,675 235,625 190"/><path d="M1060 200 C1145 240,1140 355,1065 380"/>
+    </g>
+    <g fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"><circle cx="125" cy="145" r="55"/><circle cx="355" cy="145" r="55"/><circle cx="585" cy="145" r="55"/><circle cx="815" cy="145" r="55"/><circle cx="585" cy="405" r="58"/><circle cx="125" cy="405" r="67"/><rect x="1005" y="90" width="120" height="110" rx="8" fill="#F7EFE6"/></g>
+    <g font-size="32" fill="#17213F"><text x="125" y="156">C1</text><text x="355" y="156">C2</text><text x="585" y="156">C3</text><text x="815" y="156">Pass</text><text x="585" y="416">Pub</text><text x="125" y="416">Facebook</text><text x="1065" y="156">Sleep</text></g>
+    <g font-size="30" font-weight="700" fill="#8B3A18"><text x="240" y="125">0,5</text><text x="470" y="125">0,8</text><text x="700" y="125">0,6</text><text x="935" y="125">1</text><text x="155" y="275">0,5</text><text x="92" y="275">0,1</text><text x="35" y="290">0,9</text><text x="705" y="55">0,2</text><text x="620" y="275">0,4</text><text x="335" y="345">0,2</text><text x="465" y="300">0,4</text><text x="685" y="300">0,4</text><text x="1130" y="300">1</text></g>
+  </g>
+</svg>
