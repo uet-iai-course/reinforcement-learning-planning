@@ -125,3 +125,7 @@ Sau các sửa trên, số trang và phân bổ tuyến chính giữ nguyên: 35
 - Bốn SVG hợp lệ về XML, có `role="img"`, `title`, `desc`; cỡ chữ nhỏ nhất là 30 px. Không có tham chiếu ảnh raster hoặc tài nguyên cốt lõi qua mạng.
 - Năm tệp HTML/planning đã được tải vào Design Files của dự án Codex Slides `20260824143212-chuy-n-lecture-3-quy-tr-nh-quy-t-nh-mark-w2vu` và đối chiếu trùng từng byte với tệp trong kho.
 - Codex Browser không khả dụng trong phiên này. Vì vậy chưa thể xác nhận trực quan từng trang ở khung 1280 × 720, màn hình hẹp, chồng lấn, tràn chữ hoặc thao tác bàn phím trong Codex Slides. Các kiểm tra RevealJS cục bộ và kiểm tra tĩnh vẫn được thực hiện đầy đủ; không tuyên bố đã rà trực quan bằng Codex Slides.
+
+## Hậu kiểm toàn học phần
+
+- Đổi `\text{với mọi }i` thành `\forall i` tại `A01`. Hai biểu thức tương đương; ký hiệu chuẩn loại cảnh báo thiếu metric ký tự tiếng Việt của KaTeX và không đổi nội dung toán học.
