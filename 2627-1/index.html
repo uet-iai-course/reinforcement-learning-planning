@@ -2,61 +2,201 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Học tăng cường · 2026–2027</title>
+  <meta name="description" content="Danh mục bài giảng Học tăng cường, học kỳ 1 năm học 2026–2027"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="icon" type="image/png" href="../favicon.png"/>
+  <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
   <link rel="stylesheet" href="../index-pages.css"/>
-  <style>body{font-family:Arial,sans-serif;max-width:900px;margin:3rem auto;padding:0 1.5rem;color:#263238}a{color:#b15a2b}.card{border:1px solid #ddd;border-left:5px solid #b15a2b;border-radius:8px;padding:1rem 1.25rem;margin-bottom:1rem}.meta{color:#455a64}</style>
+  <style>
+    .course-map {
+      margin: 0;
+      padding: 16px;
+    }
+
+    .course-map img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 14px;
+    }
+
+    .course-map figcaption {
+      margin: 12px 4px 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+  </style>
+  <title>Học tăng cường · 2026–2027</title>
 </head>
 <body>
-  <h1>Học tăng cường</h1>
-  <p>Học kỳ 1 · Năm học 2026–2027</p>
-  <div class="card">
-    <h2><a href="lecture-01-gioi-thieu-hoc-tang-cuong.html">Bài 01: Giới thiệu Học tăng cường</a></h2>
-    <p>Tác tử và môi trường; tín hiệu học; phần thưởng trễ; chính sách, hàm giá trị và mô hình; thăm dò, khai thác; Tic-tac-toe.</p>
-  </div>
-  <div class="card">
-    <h2><a href="lecture-02-giao-dien-tac-tu-moi-truong.html">Bài 02: Giao diện tác tử–môi trường</a></h2>
-    <p>Vòng tương tác; trạng thái và quan sát; tính Markov; chính sách, hàm giá trị, mô hình; dự đoán, điều khiển và mê cung.</p>
-  </div>
-  <div class="card">
-    <h2><a href="lecture-03-qua-trinh-quyet-dinh-markov.html">Bài 03: Quá trình quyết định Markov</a></h2>
-    <p>Chuỗi Markov; quá trình phần thưởng Markov; phần thưởng tích lũy; phương trình Bellman; chính sách và hàm giá trị trong MDP.</p>
-  </div>
-  <div class="card">
-    <h2><a href="lecture-04-giai-mdp-bang-quy-hoach-dong.html">Bài 04: Giải MDP bằng quy hoạch động</a></h2>
-    <p>Bellman tối ưu; đánh giá và cải thiện chính sách; lặp chính sách; lặp giá trị; hội tụ, sai số và giới hạn của quy hoạch động bảng.</p>
-  </div>
-  <div class="card">
-    <h2><a href="lecture-05-du-doan-phi-mo-hinh.html">Bài 05: Dự đoán phi mô hình</a></h2>
-    <p>Monte Carlo lần ghé đầu tiên; sai phân thời gian TD(0); đích cập nhật, chệch–phương sai và điều kiện hội tụ trong bài toán dự đoán theo chính sách.</p>
-  </div>
-  <div class="card">
-    <h2><a href="lecture-06-dieu-khien-phi-mo-hinh.html">Bài 06: Điều khiển phi mô hình</a></h2>
-    <p>Monte Carlo control, SARSA và Q-learning dạng bảng; chính sách ε-tham lam, theo/khác chính sách, GLIE và điều kiện hội tụ.</p>
-  </div>
-  <div class="card">
-    <h2><a href="lecture-07-xap-xi-ham.html">Bài 07: Xấp xỉ hàm</a></h2>
-    <p>Đặc trưng tuyến tính; Monte Carlo và TD với xấp xỉ hàm; điểm cố định Bellman chiếu; SARSA, Q-learning và bộ ba bất ổn.</p>
-  </div>
-  <div class="card">
-    <h2><a href="lecture-08-deep-q-learning.html">Bài 08: Deep Q-Learning</a></h2>
-    <p>Mạng trực tuyến và mạng mục tiêu; bộ nhớ phát lại; mục tiêu, loss và gradient DQN; giả mã, bộ tối ưu, bất ổn và giao diện Atari.</p>
-  </div>
-  <div class="card">
-    <h2><a href="lecture-09-double-dqn-va-gradient-chinh-sach.html">Bài 09: Double DQN và nhập môn gradient chính sách</a></h2>
-    <p>Sai lệch cực đại; Double Q-learning và Double DQN; chính sách tham số, hàm điểm, định lý gradient chính sách và REINFORCE.</p>
-  </div>
-  <div class="card">
-    <h2><a href="lecture-10-trpo-va-ppo.html">Bài 10: TRPO và PPO</a></h2>
-    <p>Baseline và GAE; miền tin cậy, natural gradient và TRPO; mục tiêu PPO-Clip, hợp đồng dữ liệu, chẩn đoán và phạm vi kết quả điểm dừng.</p>
-  </div>
-  <div class="card">
-    <h2><a href="lecture-11-cac-phuong-phap-gradient-chinh-sach-nang-cao.html">Bài 11: Các phương pháp gradient chính sách nâng cao</a></h2>
-    <p>SPO và SAM+PPO; actor–critic theo và khác chính sách; DPG/DDPG, SAC/TD3 cùng bản đồ các phương pháp phân tán, đa tác tử và khảo sát nâng cao.</p>
-  </div>
-  <div class="card">
-    <h2><a href="lecture-12-nhap-mon-hoc-tang-cuong-da-tac-tu.html">Bài 12: Nhập môn Học tăng cường đa tác tử</a></h2>
-    <p>Trò chơi Markov; CTDE; COMA, QMIX, MADDPG, MAPPO và HAPPO; benchmark, framework và giao tiếp giữa các tác tử.</p>
-  </div>
+  <main class="page-shell">
+    <section class="hero">
+      <p class="eyebrow">Học kỳ 1 · 2026–2027</p>
+      <h1>Học tăng cường</h1>
+      <div class="hero-text">
+        <p>Danh mục bài giảng RevealJS của học phần, từ giao diện tác tử–môi trường đến học tăng cường sâu và đa tác tử.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="secondary-link" href="../index.html">
+          <span aria-hidden="true">←</span>
+          <span>Trang học phần</span>
+        </a>
+      </div>
+    </section>
+
+    <section aria-labelledby="course-map-title">
+      <h2 class="section-title" id="course-map-title">Mạch nội dung của học phần</h2>
+      <figure class="panel course-map">
+        <img
+          src="img/lec-01/course-map.svg"
+          alt="Lộ trình học từ nhập môn qua các phương pháp Học tăng cường, thi giữa kỳ và dự án, rồi đến Học tăng cường sâu, lý thuyết trò chơi và lập kế hoạch."
+          width="1200"
+          height="330"
+          decoding="async"
+        />
+        <figcaption>Các bài đi từ mô hình tương tác và phương pháp dạng bảng đến xấp xỉ hàm, Học tăng cường sâu và đa tác tử.</figcaption>
+      </figure>
+    </section>
+
+    <section aria-labelledby="lecture-list-title">
+      <h2 class="section-title" id="lecture-list-title">Bài giảng</h2>
+      <div class="term-grid">
+        <article class="term-card">
+          <div>
+            <span class="term-label">Bài 1</span>
+            <h2>Giới thiệu Học tăng cường</h2>
+            <p>Tác tử và môi trường; tín hiệu học; phần thưởng trễ; chính sách, hàm giá trị và mô hình; thăm dò, khai thác; Tic-tac-toe.</p>
+          </div>
+          <a class="term-link" href="lecture-01-gioi-thieu-hoc-tang-cuong.html" aria-label="Mở bài 1: Giới thiệu Học tăng cường">
+            <span>Mở bài giảng</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+        <article class="term-card">
+          <div>
+            <span class="term-label">Bài 2</span>
+            <h2>Giao diện tác tử–môi trường</h2>
+            <p>Vòng tương tác; trạng thái và quan sát; tính Markov; chính sách, hàm giá trị, mô hình; dự đoán, điều khiển và mê cung.</p>
+          </div>
+          <a class="term-link" href="lecture-02-giao-dien-tac-tu-moi-truong.html" aria-label="Mở bài 2: Giao diện tác tử–môi trường">
+            <span>Mở bài giảng</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+        <article class="term-card">
+          <div>
+            <span class="term-label">Bài 3</span>
+            <h2>Quá trình quyết định Markov</h2>
+            <p>Chuỗi Markov; quá trình phần thưởng Markov; phần thưởng tích lũy; phương trình Bellman; chính sách và hàm giá trị trong MDP.</p>
+          </div>
+          <a class="term-link" href="lecture-03-qua-trinh-quyet-dinh-markov.html" aria-label="Mở bài 3: Quá trình quyết định Markov">
+            <span>Mở bài giảng</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+        <article class="term-card">
+          <div>
+            <span class="term-label">Bài 4</span>
+            <h2>Giải MDP bằng quy hoạch động</h2>
+            <p>Bellman tối ưu; đánh giá và cải thiện chính sách; lặp chính sách; lặp giá trị; hội tụ, sai số và giới hạn của quy hoạch động dạng bảng.</p>
+          </div>
+          <a class="term-link" href="lecture-04-giai-mdp-bang-quy-hoach-dong.html" aria-label="Mở bài 4: Giải MDP bằng quy hoạch động">
+            <span>Mở bài giảng</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+        <article class="term-card">
+          <div>
+            <span class="term-label">Bài 5</span>
+            <h2>Dự đoán phi mô hình</h2>
+            <p>Monte Carlo lần ghé đầu tiên; sai phân thời gian TD(0); đích cập nhật, chệch–phương sai và điều kiện hội tụ trong dự đoán theo chính sách.</p>
+          </div>
+          <a class="term-link" href="lecture-05-du-doan-phi-mo-hinh.html" aria-label="Mở bài 5: Dự đoán phi mô hình">
+            <span>Mở bài giảng</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+        <article class="term-card">
+          <div>
+            <span class="term-label">Bài 6</span>
+            <h2>Điều khiển phi mô hình</h2>
+            <p>Điều khiển Monte Carlo, SARSA và Q-learning dạng bảng; chính sách ε-tham lam, theo và khác chính sách, GLIE cùng điều kiện hội tụ.</p>
+          </div>
+          <a class="term-link" href="lecture-06-dieu-khien-phi-mo-hinh.html" aria-label="Mở bài 6: Điều khiển phi mô hình">
+            <span>Mở bài giảng</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+        <article class="term-card">
+          <div>
+            <span class="term-label">Bài 7</span>
+            <h2>Xấp xỉ hàm trong Học tăng cường</h2>
+            <p>Đặc trưng tuyến tính; Monte Carlo và TD với xấp xỉ hàm; điểm cố định Bellman chiếu; SARSA, Q-learning và bộ ba bất ổn.</p>
+          </div>
+          <a class="term-link" href="lecture-07-xap-xi-ham.html" aria-label="Mở bài 7: Xấp xỉ hàm trong Học tăng cường">
+            <span>Mở bài giảng</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+        <article class="term-card">
+          <div>
+            <span class="term-label">Bài 8</span>
+            <h2>Deep Q-Learning</h2>
+            <p>Mạng trực tuyến và mạng mục tiêu; bộ nhớ phát lại; mục tiêu, hàm mất mát và gradient DQN; giả mã, bộ tối ưu, bất ổn và giao diện Atari.</p>
+          </div>
+          <a class="term-link" href="lecture-08-deep-q-learning.html" aria-label="Mở bài 8: Deep Q-Learning">
+            <span>Mở bài giảng</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+        <article class="term-card">
+          <div>
+            <span class="term-label">Bài 9</span>
+            <h2>Double DQN và gradient chính sách</h2>
+            <p>Sai lệch cực đại; Double Q-learning và Double DQN; chính sách tham số, hàm điểm, định lý gradient chính sách và REINFORCE.</p>
+          </div>
+          <a class="term-link" href="lecture-09-double-dqn-va-gradient-chinh-sach.html" aria-label="Mở bài 9: Double DQN và gradient chính sách">
+            <span>Mở bài giảng</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+        <article class="term-card">
+          <div>
+            <span class="term-label">Bài 10</span>
+            <h2>TRPO và PPO</h2>
+            <p>Đường cơ sở và GAE; miền tin cậy, gradient tự nhiên và TRPO; mục tiêu PPO-Clip, hợp đồng dữ liệu, chẩn đoán và điều kiện dừng.</p>
+          </div>
+          <a class="term-link" href="lecture-10-trpo-va-ppo.html" aria-label="Mở bài 10: TRPO và PPO">
+            <span>Mở bài giảng</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+        <article class="term-card">
+          <div>
+            <span class="term-label">Bài 11</span>
+            <h2>Các phương pháp gradient chính sách nâng cao</h2>
+            <p>SPO và SAM+PPO; actor–critic theo và khác chính sách; DPG/DDPG, SAC/TD3; các phương pháp phân tán, đa tác tử và khảo sát nâng cao.</p>
+          </div>
+          <a class="term-link" href="lecture-11-cac-phuong-phap-gradient-chinh-sach-nang-cao.html" aria-label="Mở bài 11: Các phương pháp gradient chính sách nâng cao">
+            <span>Mở bài giảng</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+        <article class="term-card">
+          <div>
+            <span class="term-label">Bài 12</span>
+            <h2>Nhập môn Học tăng cường đa tác tử</h2>
+            <p>Trò chơi Markov; CTDE; COMA, QMIX, MADDPG, MAPPO và HAPPO; bộ chuẩn đánh giá, khung phần mềm và giao tiếp giữa các tác tử.</p>
+          </div>
+          <a class="term-link" href="lecture-12-nhap-mon-hoc-tang-cuong-da-tac-tu.html" aria-label="Mở bài 12: Nhập môn Học tăng cường đa tác tử">
+            <span>Mở bài giảng</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <p class="footer">Học tăng cường · Học kỳ 1, 2026–2027</p>
+  </main>
 </body>
 </html>
