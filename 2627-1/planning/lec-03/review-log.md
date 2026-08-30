@@ -128,4 +128,143 @@ Sau các sửa trên, số trang và phân bổ tuyến chính giữ nguyên: 35
 
 ## Hậu kiểm toàn học phần
 
-- Đổi `\text{với mọi }i` thành `\forall i` tại `A01`. Hai biểu thức tương đương; ký hiệu chuẩn loại cảnh báo thiếu metric ký tự tiếng Việt của KaTeX và không đổi nội dung toán học.
+- Đổi `\text{với mọi }i` thành `\forall i` tại `A01`. Hai biểu thức tương đương; ký hiệu chuẩn loại cảnh báo thiếu metric ký tự tiếng Việt bên trong `\text{...}` của KaTeX và không đổi nội dung toán học.
+
+## Vòng chỉnh sửa 2026-08-30
+
+### Bằng chứng runtime của các lượt hoàn tất
+
+Mọi lượt hoàn tất dưới đây có `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`:
+
+| Vai | Task profile | Ghi chú lượt lỗi |
+|---|---|---|
+| planner | plan | — |
+| source reader | source | — |
+| storyboard reviewer | storyboard | Lượt đầu chạm giới hạn tool-call; lượt hoàn tất dùng `max_rounds=14`. |
+| reviewer 1 | góc nhìn sinh viên | — |
+| reviewer 2 | chuyên gia Học tăng cường | — |
+| reviewer 3 | toán học và thuật toán | — |
+| reviewer 4 | phản biện học thuật và giảng dạy | Hai lượt chưa hoàn tất vì giới hạn đầu ra; lượt hoàn tất dùng `max_tokens=16000`. |
+| reviewer 5 | kết nối và mạch viết | — |
+
+Các lượt lỗi do giới hạn không được tính là báo cáo độc lập.
+
+### Sáu báo cáo rà soát — vòng 2026-08-30
+
+#### Kiểm định storyboard
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa | Xử lý |
+|---|---|---|---|---|---|
+| trung bình | toàn bài | Storyboard mô tả 7 mạch nhưng HTML chỉ có 5 `<section>` ngoài. | Đếm section ngoài trong HTML là 5; storyboard liệt kê 7 mạch. | Tách thành 7 section ngoài. | Đã tách: P; A; B; C; D01–D08; D09–D10; D11–D13 cùng nhánh X. Không đổi mã hay thứ tự trang. |
+| nhẹ | B02 | Lý do bỏ hình trang nguồn 37 chưa được ghi. | Outline và storyboard không nêu hình suy giảm mũ. | Ghi lý do bỏ hình. | Đã ghi ở outline, storyboard và notes B02: công thức và ba trường hợp gamma phủ đủ nội dung. |
+| nhẹ | A02 | Caption nhắc sớm thưởng và giá trị. | Caption cũ: “Đồ thị, ma trận, thưởng và giá trị dùng cùng thứ tự trạng thái.” | Sửa caption chỉ nói đồ thị và ma trận. | Đã sửa caption A02. |
+| nhẹ | D06 | Dữ kiện chưa có cách truy nguyên. | Hai giá trị $-30/13$, $35/13$ xuất hiện không rõ nguồn. | Sửa notes/storyboard chỉ nguồn và cách kiểm. | Đã sửa: notes D06 dẫn trang 54–55, véc-tơ nghiệm đầy đủ và một phương trình Bellman kiểm tại C1. |
+
+#### Góc nhìn sinh viên
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa | Xử lý |
+|---|---|---|---|---|---|
+| trung bình | C05 | Cỡ hiệu dụng khoảng 0,67em do style lồng `.82em`; số quá dài. | `font-size:.82em` nhân với `.82em` toàn bài. | Bỏ style lồng, rút số trên mặt trang. | Đã bỏ hai `style="font-size:.82em"`; rút nghiệm gamma 0,9 còn 3 chữ số thập phân, số đầy đủ chuyển vào notes. |
+| trung bình | D06 | Dữ kiện chưa có cách tái lập. | Người học không sinh được $-30/13$, $35/13$. | Nêu nguồn, nghiệm đầy đủ trong notes và một phép kiểm. | Đã sửa D06 như trên. |
+| trung bình | C04 | `$Q$`, `$\rho(Q)$` chưa được định nghĩa. | Ký hiệu xuất hiện lần đầu không có giải thích. | Bổ sung định nghĩa. | Đã bổ sung trong notes C04: $Q$ là ma trận chuyển giới hạn, $\rho$ là bán kính phổ. |
+| trung bình | B03, D06, D10 | Đổi $\gamma$ giữa các ví dụ dễ nhầm. | B03 dùng $\gamma=1/2$; D06, D10 dùng $\gamma=1$. | Thêm tín hiệu trong notes nếu không làm mặt trang nặng. | Đã áp dụng: mỗi trang đã nêu giá trị $\gamma$ trên mặt trang; notes B03 nhắc đây là phần thưởng tích lũy từng quỹ đạo, notes D06 và D10 nêu rõ $\gamma=1$. |
+| nhẹ | D11 | Bảng nhỏ trên màn hình hẹp. | Bảng ba cột với công thức. | Chờ kiểm render, sửa cục bộ nếu cần. | Chưa sửa; chờ điều phối viên kiểm render hẹp theo quyết định 13 của brief. |
+| nhẹ | toàn bài | Viewport và lưới theo template. | Không đổi viewport hay CSS dùng chung. | Kiểm bằng trình duyệt trước khi quyết định. | Không áp dụng ở lượt writer; điều phối viên kiểm tra render hẹp thực tế. |
+| nhẹ | D09 | Nhãn Racing Car sát mép. | Nhãn “Slow: p=1; r=+1” và “Fast: p=1; r=−10” gần mép viewBox. | Sửa SVG. | Đã dịch hai nhãn vào trong (`x` 130→185 và 780→770), không đổi sáu kết quả. |
+
+#### Chuyên gia Học tăng cường
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa | Xử lý |
+|---|---|---|---|---|---|
+| nghiêm trọng | A00 | Thiếu phát biểu giả thiết Markov từ nguồn trang 29. | Trang chỉ định nghĩa bộ $\langle\mathcal S,P\rangle$. | Bổ sung phát biểu trên mặt trang. | Đã bổ sung box tính Markov tại A00, dẫn trang 29. |
+| trung bình | D06 | Dữ kiện xuất hiện đột ngột. | Không có cầu nối trước hai giá trị. | Xử lý như báo cáo sinh viên. | Đã xử lý: nêu nguồn, chính sách đều ở mọi trạng thái hai hành động, $\gamma=1$, và phép kiểm. |
+| trung bình | C04 | Thiếu định nghĩa ký hiệu. | Như báo cáo sinh viên. | Bổ sung. | Đã bổ sung. |
+| nhẹ | B02 | Thiếu ý chiết khấu ưu tiên thưởng sớm. | Chỉ nói trọng số giảm. | Bổ sung. | Đã bổ sung trên mặt trang B02 cùng điều kiện hữu hạn khi $\gamma<1$ dưới thưởng bị chặn. |
+| nhẹ | student-mdp.svg | `desc` thiếu hành động Quit và tự lặp Facebook. | `desc` cũ không nêu hai hành động từ C1. | Bổ sung. | Đã bổ sung `desc`: Facebook tự lặp thưởng âm một, Quit trở về C1 thưởng không. |
+
+#### Độ chính xác toán học và thuật toán
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa | Xử lý |
+|---|---|---|---|---|---|
+| trung bình | D06 | Cách gọi dữ kiện chưa truy nguyên được. | “Dữ kiện đã giải” mơ hồ. | Sửa cách gọi thành dữ kiện nguồn và chỉ cách kiểm; không đổi số. | Đã sửa; nghiệm nguồn trang 54 exact $(-30,-17,35,96,0)/13$ theo thứ tự Facebook, C1, C2, C3, Sleep được giữ nguyên. |
+| nhẹ | D09 | Quy ước Warm–Fast quyết định nghiệm nhưng nằm trong notes. | Nghiệm D10 phụ thuộc việc chọn $-10$. | Đưa quy ước lên mặt trang. | Đã đưa box quy ước lên D09 và nhắc lại trong notes D10. |
+| nhẹ | C04 | Lý do khả nghịch chưa chặt. | “Nghịch đảo tồn tại với $P$ hữu hạn” không đủ. | Sửa bằng bán kính phổ. | Đã sửa: $\rho(\gamma P)\le\gamma<1$ trên mặt trang; giữ điều kiện đủ thực hành trong notes. |
+| nhẹ | student-mdp.svg | `desc` thiếu. | Như báo cáo chuyên gia RL. | Bổ sung. | Đã bổ sung. |
+
+#### Phản biện học thuật và giảng dạy
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa | Xử lý |
+|---|---|---|---|---|---|
+| nghiêm trọng | D06 | Thiếu cầu nối dữ kiện. | Hai giá trị tiếp tục xuất hiện không có nguồn và cách kiểm. | Xử lý bằng nguồn + nghiệm đầy đủ + một phương trình kiểm, không thêm trang. | Đã xử lý đúng phương án; không thêm trang. |
+| trung bình | D09, D10 | Quy ước thưởng nằm sai chỗ. | Quy ước quyết định nghiệm chỉ có trong notes D09. | Đưa lên slide D09 và notes D10. | Đã thực hiện. |
+| trung bình | C04 | Ký hiệu chưa định nghĩa. | Như hai báo cáo trước. | Bổ sung. | Đã bổ sung. |
+| trung bình | C05 | Chưa nêu biên trên mặt trang. | Nghiệm gamma 1 cần biên $v(\text{Sleep})=0$. | Bổ sung. | Đã nêu “$v(\text{Sleep})=0$ ở cả hai trường hợp” trên mặt trang C05. |
+| trung bình | A05 | Dùng $\mu_t$ trước định nghĩa. | Câu hỏi dùng $\mu_t$ chưa giải thích. | Bổ sung định nghĩa trước câu hỏi. | Đã bổ sung: $\mu_t$ là phân phối trạng thái dạng véc-tơ cột, phần tử thứ $i$ là $\Pr(S_t=s_i)$. |
+| trung bình | C06→D01 | Thiếu vấn đề cần hành động. | C06 kết thúc MRP; D01 vào MDP không nêu giới hạn của MRP. | Bổ sung D01. | Đã bổ sung câu mở D01: MRP không biểu diễn lựa chọn hành động. |
+
+#### Kết nối và mạch viết
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa | Xử lý |
+|---|---|---|---|---|---|
+| trung bình | toàn bài | 7 mạch storyboard không khớp 5 section HTML. | Đếm section ngoài. | Tách 7 section. | Đã tách; vai trò này cần tái rà các trang bị ảnh hưởng, hai trang lân cận mỗi phía và mọi ranh giới phần. |
+| trung bình | D06 | Bước nhảy dữ kiện. | Như các báo cáo trước. | Xử lý. | Đã xử lý. |
+| nhẹ | D09–D10 | Thiếu tín hiệu đây là mạch ứng dụng mới. | Không có câu nối từ D08 sang D09. | Thêm câu nối notes/storyboard. | Đã thêm câu nối trong notes D09 và storyboard. |
+| nhẹ | D12 | Chưa thu hồi đủ mục tiêu. | Tự kiểm thiếu kiểm ma trận và MRP cảm sinh. | Bổ sung. | Đã bổ sung hai mục 5–6 vào D12 bằng lưới hai cột, giữ trang đọc được. |
+
+### Quyết định của điều phối viên — áp dụng
+
+1. Tách 7 section ngoài: đã thực hiện, giữ 39 mã trang và thứ tự.
+2. Phát biểu Markov ở A00: đã bổ sung; giữ A02 trước A00.
+3. Caption A02: đã sửa.
+4. Định nghĩa $\mu_t$ ở A05: đã bổ sung trước câu hỏi.
+5. B02: đã bổ sung ý ưu tiên thưởng sớm và điều kiện hữu hạn; lý do bỏ hình trang 37 đã ghi ở outline, storyboard, notes.
+6. C04: đã định nghĩa $Q$, $\rho$; sửa lý do khả nghịch thành $\rho(\gamma P)\le\gamma<1$; điều kiện đủ thực hành giữ trong notes.
+7. C05: đã bỏ cỡ chữ lồng, rút 3 chữ số thập phân, nêu $v(\text{Sleep})=0$ và giải hệ con khi $\gamma=1$.
+8. D01: đã bổ sung vấn đề lựa chọn hành động; `desc` student-mdp.svg đã bổ sung tự lặp Facebook và Quit.
+9. D06: không thêm trang; đã sửa thành dữ kiện nguồn trang 54, chính sách đều mọi trạng thái hai hành động, $\gamma=1$; véc-tơ nghiệm đầy đủ và phép kiểm Bellman trong notes. Storyboard ghi bước giải hệ đầy đủ được lược nhưng dữ kiện truy nguyên và kiểm được.
+10. D09: quy ước thưởng đã lên mặt trang; notes D10 nhắc lại; nhãn SVG đã dịch khỏi mép, không đổi sáu kết quả.
+11. D12: đã bổ sung kiểm ma trận/hấp thụ và MRP cảm sinh bằng lưới hai cột.
+12. Không thêm nhãn “Tự luyện” lên X07; phân bổ chỉ giữ trong planning. Notes X07 chỉ chứa gợi ý lời giải và nguồn.
+13. Không đổi viewport hay CSS dùng chung ở lượt writer.
+14. Đã bỏ script `plugin/markdown/markdown.js` và `RevealMarkdown` khỏi danh sách tiện ích.
+15. Giữ toàn bộ phép tính hiện có, gồm nghiệm nguồn trang 54 exact $(-30,-17,35,96,0)/13$.
+
+### Đề xuất không áp dụng
+
+- Không thêm nhãn “Tự luyện” hiển thị trên X07: AGENTS cấm hiển thị nhãn phân tuyến trên slide hoặc notes.
+- Không đổi viewport, `lecture-style.css` hay template: theo quyết định 13 của brief; điều phối viên kiểm render hẹp rồi quyết định.
+- Không sửa bảng D11 cho màn hình hẹp ở lượt này: chờ kết quả kiểm render thực tế.
+
+### Nhu cầu tái rà sau sửa
+
+- Vai kết nối và mạch viết cần rà lại các trang bị ảnh hưởng, hai trang lân cận mỗi phía và mọi ranh giới phần sau khi tách 7 section ngoài: ranh giới C→D01, D08→D09, D10→D11.
+- Vai toán học–thuật toán cần tái rà C04, C05, D06 vì nội dung toán học hiển thị đã đổi đáng kể (bán kính phổ, rút số, phép kiểm mới).
+- Điều phối viên cần kiểm render hẹp cho D11 và toàn trang ở khung 1280 × 720 trước khi quyết định sửa cục bộ tiếp theo.
+
+### Sửa từ kiểm định hiển thị của điều phối viên
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Sửa đã áp dụng |
+|---|---|---|---|---|
+| nghiêm trọng | C05 | Véc-tơ phân số của nghiệm $\gamma=1$ bị cắt trong thẻ bên phải. | Ảnh chụp Chromium ở cả 1280 × 720 và 800 × 600 cho thấy phần cuối véc-tơ nằm ngoài vùng nhìn thấy của thẻ; phép kiểm overflow theo phần tử con không bắt được tràn nội bộ này. | Mặt trang hiển thị cả hai nghiệm với ba chữ số thập phân; véc-tơ $\gamma=1$ ngắt thành hai dòng, còn nghiệm phân số chính xác chuyển vào notes. Không đổi giá trị toán học. Yêu cầu render và tái rà toán lại C05. |
+
+Nguyên nhân CSS là cột `1fr` nhận chiều rộng tối thiểu từ công thức dài và đẩy cột kế tiếp ra khỏi khung. Sửa cục bộ `.grid2` của riêng bài thành `repeat(2,minmax(0,1fr))`; không sửa `lecture-style.css` dùng chung.
+
+### Tái rà toán học và mạch viết sau sửa
+
+Các lượt hoàn tất dưới đây đều có `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`.
+
+- Lượt toán đầu nêu lỗi nghiêm trọng D06 vì bỏ sót nhánh Study $+10$ tại C3. Điều phối viên bác bỏ bằng phép thế đầy đủ; lượt xác nhận độc lập thứ hai kiểm cả bốn phương trình Bellman và kết luận véc-tơ $(-30,-17,35,96,0)/13$ đúng. Cụ thể tại C3: $96/13=\tfrac12(10)+\tfrac12(1+49/13)$.
+- Lượt mạch viết xác nhận đúng 7 section ngoài; các ranh giới C06→D01, D08→D09, D10→D11 và việc D12–D13 thu hồi mục tiêu đều đạt.
+- Báo cáo mạch nêu D10 sai do giả định Warm–Fast còn một nhánh tiếp diễn xác suất 0,5. Đối chiếu nguồn trang 51 và `racing-car.svg` cho thấy Warm–Fast có đúng một kết quả xác suất 1 đi Overheated; Warm–Slow mới có hai kết quả xác suất 0,5. Vì vậy giữ $v(W)=-4{,}5+0{,}25v(C)+0{,}25v(W)$ và nghiệm $(0,-6)$.
+- Báo cáo mạch phát hiện đúng notes D01 gán Facebook/Quit cho C1. Đã sửa: C1 có Facebook/Study; trạng thái Facebook có Facebook/Quit. Đồng bộ `student-mdp.svg` và làm rõ D06 là chính sách đều trên các hành động khả dụng tại mỗi trạng thái.
+
+Các lượt không hoàn tất không được tính: ba lượt sandbox lỗi vận chuyển API; một lượt nạp nhật ký quá dài bị hủy; một lượt phạm vi hẹp bị cắt ở 7.000 token. Tiến độ JSONL cho phép điều phối viên phát hiện và điều chỉnh phạm vi, `max_tokens` và quyền mạng trước khi chạy lại.
+
+### Kiểm định cuối 2026-08-30
+
+- `python3 -m reloadserver 8765` không chạy vì môi trường thiếu mô-đun `reloadserver`. Phương án thay thế dùng `python3 -m http.server 8765` trên webroot tạm chỉ chứa HTML Bài 03, CSS, 4 SVG và thư viện RevealJS/KaTeX cục bộ; `.env` không được sao chép hoặc phục vụ.
+- Chromium headless duyệt đủ 39 trang ở 1280 × 720 và 800 × 600. Cả hai khung: 0 lỗi console, 0 request hỏng, 0 trang bị bộ đo tràn đánh dấu. Điều hướng bàn phím kiểm được P00 ↓ P01, ↑ P00, → A02.
+- Kiểm ảnh trực tiếp phát hiện C05 bị cắt dù bộ đo tràn không báo. Sau khi làm tròn mặt trang, ngắt hai véc-tơ thành hai dòng và đổi lưới cục bộ thành `repeat(2,minmax(0,1fr))`, ảnh cuối ở cả hai khung không còn cắt hoặc chồng lấn. Nghiệm đầy đủ và phân số chính xác giữ trong notes.
+- Kiểm tĩnh cuối: 7 section ngoài; 39 `data-slide-id` duy nhất; 39 notes; mọi ID có trong storyboard; 4 SVG hợp lệ XML, có `role="img"`, `title`, `desc`; không ảnh raster, URL cốt lõi ngoài, tài nguyên hỏng hoặc `RevealMarkdown`; `git diff --check` sạch. `index.html` có đúng liên kết tới bài giảng.
+- Tự kiểm theo `no-ai-slop/eval.md`: nội dung hiển thị và notes không có câu hỏi tu từ, lời ca tụng/quảng bá, lời dẫn rỗng, kết luận lặp hoặc nhãn phân tuyến. Rà theo Quill xác nhận 7 mạch có điểm vào–ra, thứ tự ví dụ → hình thức và kết luận thu hồi mục tiêu; không tạo `quill.json`.
+- Codex Slides: `get_project` xác nhận dự án `20260824143212-chuy-n-lecture-3-quy-tr-nh-quy-t-nh-mark-w2vu` vẫn ở trạng thái `draft`, checkpoint `clarify`, 0 slide. Bốn Design Files HTML/outline/storyboard/review-log đã được ghi lại và đọc lại khớp chính xác với tệp trong kho tại thời điểm đồng bộ. Codex in-editor Browser không khả dụng trong phiên, nên không tuyên bố đã kiểm trực quan bằng Codex Slides; kiểm trực quan RevealJS cục bộ bằng Chromium là bằng chứng hiển thị cuối.

@@ -17,15 +17,27 @@ Tổng tuyến chính: $6+18+22+30+28+10+6=120$ phút.
 
 Phân bổ phần bài tập 30 phút: X03 12 phút, X04 10 phút, X08 8 phút; X07 tự luyện.
 
+## Cấu trúc section ngoài
+
+HTML dùng đúng 7 `<section>` ngoài, khớp 7 mạch của bảng hành trình khái niệm:
+
+1. Định hướng: P00–P02.
+2. Chuỗi Markov: A02, A00, A01, A03, A04, A05.
+3. MRP và phần thưởng tích lũy: B01, B00, B02, B03, B04.
+4. Bellman MRP: C00–C06.
+5. MDP và chính sách: D01, D00, D02–D08.
+6. Racing Car: D09, D10.
+7. Tổng hợp: D11, D12, D13; nhánh bài tập X03, X04, X07, X08 nằm trong section cuối.
+
 ## Truyền dữ kiện và câu nối
 
-- A02 cho ví dụ đồ thị trước; A00–A01 mới hình thức hóa chuỗi Markov và điều kiện của $P$. A02–A05 giữ thứ tự Student MRP là C1, C2, C3, Pass, Pub, Facebook, Sleep.
-- B01 cho véc-tơ thưởng trước; B00 mới đóng gói thành MRP. B00–B04 dùng cùng quy ước $R_{t+1}=r(S_t)$.
-- C00 dùng các giá trị tiếp tục tạm thời để tạo một sao lưu Student, chưa dùng nghiệm. C01 phân rã $G_t$; C02 mới định nghĩa Bellman; C05 mới đưa hai nghiệm.
+- A02 cho ví dụ đồ thị trước; A00–A01 mới hình thức hóa chuỗi Markov, phát biểu tính Markov và điều kiện của $P$. A02 chỉ nói đồ thị và ma trận dùng cùng thứ tự; thưởng và giá trị chưa xuất hiện. A02–A05 giữ thứ tự Student MRP là C1, C2, C3, Pass, Pub, Facebook, Sleep.
+- B01 cho véc-tơ thưởng trước; B00 mới đóng gói thành MRP. B00–B04 dùng cùng quy ước $R_{t+1}=r(S_t)$. B02 nêu ý chiết khấu ưu tiên thưởng sớm và điều kiện hữu hạn khi $\gamma<1$ dưới thưởng bị chặn; hình minh họa suy giảm mũ ở trang 37 nguồn được bỏ vì công thức và ba trường hợp gamma đã phủ đủ nội dung.
+- C00 dùng các giá trị tiếp tục tạm thời để tạo một sao lưu Student, chưa dùng nghiệm. C01 phân rã $G_t$; C02 mới định nghĩa Bellman; C05 mới đưa hai nghiệm. Mặt trang làm tròn cả hai véc-tơ đến ba chữ số thập phân; notes giữ số đầy đủ và nghiệm phân số chính xác.
 - C03 nối phương trình theo trạng thái với $v=r+\gamma Pv$. C04 tách $\gamma<1$ khỏi $\gamma=1$; C06 kiểm lại điều kiện trước khi giải.
-- D01 cho ví dụ MDP trước D00 và nói rõ Student MDP là đặc tả khác Student MRP. D03 tạo một hàng $P^\pi$ và $r^\pi$ trước công thức D04.
-- D04 nối trở lại MRP bằng $v_\pi=r^\pi+\gamma P^\pi v_\pi$. D05 nêu quan hệ $v_\pi=\sum_a\pi q_\pi$; D06 kiểm bằng số trước Bellman $q_\pi$ ở D08.
-- D09 chỉ dùng để đọc sáu kết quả. D10 yêu cầu người học tự lập hệ trước khi hiện nghiệm và đối chiếu điều kiện $\gamma=1$.
+- D01 nêu vấn đề: MRP đánh giá động lực cố định nhưng không biểu diễn lựa chọn hành động; hình Student MDP cho trực giác trước D00. D03 tạo một hàng $P^\pi$ và $r^\pi$ trước công thức D04.
+- D04 nối trở lại MRP bằng $v_\pi=r^\pi+\gamma P^\pi v_\pi$. D05 nêu quan hệ $v_\pi=\sum_a\pi q_\pi$; D06 kiểm bằng số trước Bellman $q_\pi$ ở D08. D06 dùng dữ kiện nguồn trang 54: chính sách đều trên các hành động khả dụng tại mỗi trạng thái, $\gamma=1$; bước giải hệ đầy đủ được lược để tập trung quan hệ $v_\pi$–$q_\pi$, nhưng dữ kiện truy nguyên và kiểm được bằng phương trình Bellman tại C1 trong notes.
+- D09 mở mạch ứng dụng mới với quy ước nhìn thấy được: vào Overheated nhận $-10$, không cộng thêm $+2$. D10 yêu cầu người học tự lập hệ trước khi hiện nghiệm và đối chiếu điều kiện $\gamma=1$; notes D10 nhắc lại quy ước thưởng.
 - D11–D13 nối rõ: bài này biết mô hình, Bài 04 dùng quy hoạch động, các bài sau học phi mô hình.
 
 ## Bản đồ 35 trang tuyến chính
@@ -36,7 +48,7 @@ Phân bổ phần bài tập 30 phút: X03 12 phút, X04 10 phút, X08 8 phút; 
 | P01 | Năm mục tiêu có thể kiểm tra. | “Đặt chúng trên ba lớp mô hình.” |
 | P02 | Mỗi lớp giữ cấu phần trước rồi bổ sung phần thưởng hoặc hành động. | “Bắt đầu từ động lực không có thưởng.” |
 | A02 | Đồ thị Student tạo trực giác về trạng thái và xác suất chuyển. | “Đóng gói đồ thị thành một mô hình.” |
-| A00 | Chuỗi Markov hữu hạn được xác định bởi $\mathcal S,P$. | “Ma trận phải là các phân phối.” |
+| A00 | Chuỗi Markov hữu hạn được xác định bởi $\mathcal S,P$; tính Markov tóm tắt quá khứ bằng trạng thái hiện tại. | “Ma trận phải là các phân phối.” |
 | A01 | Mỗi hàng hợp lệ; Sleep là trạng thái hấp thụ. | “Một lần chạy chỉ cho một quỹ đạo.” |
 | A03 | Quỹ đạo mẫu không phải động lực. | “Đóng gói toàn bộ động lực vào ma trận.” |
 | A04 | Đồ thị và ma trận dùng cùng thứ tự. | “Dùng ma trận để đẩy phân phối.” |
@@ -53,19 +65,19 @@ Phân bổ phần bài tập 30 phút: X03 12 phút, X04 10 phút, X08 8 phút; 
 | C04 | Hai chế độ giải có điều kiện khác nhau. | “Áp điều kiện đúng cho Student.” |
 | C05 | Hai nghiệm Student xuất hiện sau phương trình. | “Giải trực tiếp không mở rộng tốt.” |
 | C06 | Giới hạn tính toán và kiểm tra $\gamma=1$. | “Thêm hành động vào mô hình.” |
-| D01 | Student MDP tạo trực giác về hành động và phản hồi. | “Đóng gói các nhánh thành hạt nhân chung.” |
+| D01 | Student MDP tạo trực giác về hành động và phản hồi; MRP không biểu diễn lựa chọn. | “Đóng gói các nhánh thành hạt nhân chung.” |
 | D00 | Hạt nhân chung biểu diễn chuyển và thưởng theo hành động. | “Cần quy tắc chọn hành động.” |
 | D02 | Chính sách Markov dừng là phân phối theo trạng thái. | “Cố định chính sách tại một trạng thái.” |
 | D03 | Một hàng MRP cảm sinh được tính bằng lấy trung bình hành động. | “Khái quát cho mọi trạng thái.” |
 | D04 | $P^\pi,r^\pi$ đưa MDP về Bellman MRP. | “Có hai cách điều kiện hóa giá trị.” |
 | D05 | $v_\pi$ là trung bình $q_\pi$ theo chính sách. | “Kiểm quan hệ bằng số Student.” |
-| D06 | Một ví dụ $q_\pi$ khôi phục đúng $v_\pi$. | “Viết Bellman cho giá trị trạng thái.” |
+| D06 | Dữ kiện nguồn trang 54 cho phép tính $q_\pi$ và khôi phục $v_\pi(\text{C1})$. | “Viết Bellman cho giá trị trạng thái.” |
 | D07 | Bellman $v_\pi$ lấy trung bình theo chính sách rồi môi trường. | “Cố định hành động đầu để viết $q_\pi$.” |
 | D08 | Bellman $q_\pi$ giữ cố định $(s,a)$ ở vế trái. | “Áp dụng trên MDP có rủi ro kết thúc.” |
-| D09 | Racing Car có đúng sáu kết quả chuyển tiếp. | “Từ sáu kết quả, lập hai phương trình.” |
+| D09 | Racing Car có đúng sáu kết quả chuyển tiếp; quy ước thưởng vào Overheated được nêu rõ. | “Từ sáu kết quả, lập hai phương trình.” |
 | D10 | Người học áp dụng Bellman và kiểm tính hữu hạn. | “Khái quát lại ba lớp.” |
 | D11 | Ba lớp trả lời ba câu hỏi khác nhau. | “Tự kiểm các cầu nối quan trọng.” |
-| D12 | Tự kiểm phủ $v_\pi$, $q_\pi$ và Bellman kỳ vọng. | “Nối đánh giá với điều khiển.” |
+| D12 | Tự kiểm phủ $v_\pi$, $q_\pi$, Bellman kỳ vọng, kiểm ma trận và MRP cảm sinh. | “Nối đánh giá với điều khiển.” |
 | D13 | Bài 04 dùng quy hoạch động; các bài sau học phi mô hình. | “Nhấn xuống để chữa bài.” |
 
 ## Nhánh bài tập

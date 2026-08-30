@@ -14,17 +14,17 @@ Sau bài học, sinh viên có thể kiểm tra ma trận chuyển; tính phần
 
 | Trang nguồn | Quyết định | Trang đích | Lý do |
 |---:|---|---|---|
-| 28–30 | gộp, sửa | P00–P02, A00–A01 | Đặt mục tiêu; diễn đạt chính xác quan hệ kế thừa; nêu phạm vi biết mô hình. |
+| 29–30 | gộp, sửa | P00–P02, A00–A01 | Đặt mục tiêu; diễn đạt chính xác quan hệ kế thừa; nêu phạm vi biết mô hình; bổ sung phát biểu tính Markov ở A00 theo trang 29. |
 | 31–33 | tách, vẽ lại | A02–A05 | Đặt đồ thị trước định nghĩa; quỹ đạo và ma trận dùng cùng thứ tự, quy ước véc-tơ cột. |
 | 34–35 | sửa, sắp lại | B01,B00 | Đặt véc-tơ thưởng trước định nghĩa MRP; tách $R_{t+1}$ khỏi $r(s)$. |
-| 36–40 | gộp, tính lại | B02–B03 | Nêu điều kiện hữu hạn; tính lại hai phần thưởng tích lũy. |
+| 36–40 | gộp, tính lại, bỏ hình | B02–B03 | Nêu điều kiện hữu hạn và ý ưu tiên thưởng sớm; tính lại hai phần thưởng tích lũy. Bỏ hình minh họa suy giảm mũ ở trang 37 vì công thức và ba trường hợp gamma đã phủ đủ nội dung. |
 | 39–43 | gộp, sắp lại | B04, C00, C05 | Định nghĩa giá trị, dùng một sao lưu tạm trước Bellman, chỉ đưa nghiệm sau công thức. |
 | 44–48 | tách, sửa | C01–C06 | Dẫn từ phân rã một bước tới hệ; bỏ thuật ngữ ánh xạ co chưa định nghĩa; nêu điều kiện $\gamma=1$. |
 | 49 | sửa | D00 | Dùng hạt nhân chung sau ví dụ; nêu miền thưởng rời rạc và quy tắc thay tổng bằng tích phân. |
 | 50 | vẽ lại, sửa, sắp lại | D01, D03, D06 | Đặt Student MDP trước định nghĩa; khôi phục nút ngẫu nhiên Pub; nêu rõ dữ kiện giá trị ở D06. |
 | 51 | vẽ lại, sửa | D09–D10 | Biểu diễn đủ sáu kết quả; dùng Warm–Fast nhận $-10$ rồi kết thúc. |
 | 52–53 | giữ, mở rộng | D02, D05–D06 | Chính sách Markov dừng; ví dụ $q_\pi$ và quan hệ với $v_\pi$. |
-| 54–55 | tính lại, gộp | D06, D10 | Dùng nghiệm Student và Racing Car đã kiểm. |
+| 54–55 | tính lại, gộp | D06, D10 | Dùng nghiệm Student và Racing Car đã kiểm; D06 nêu dữ kiện nguồn trang 54, chính sách đều ở mọi trạng thái hai hành động, $\gamma=1$, kèm phép kiểm Bellman. |
 | 56–57 | tách | D07–D08 | Hai Bellman kỳ vọng đặt sau ví dụ và cầu nối MRP cảm sinh. |
 | 58 | chuyển | D11–D13, `note-for-author.md` | Nối rõ quy hoạch động và phi mô hình; nguồn đọc chưa đủ thư mục để công bố. |
 | hw02 Bài 3,4,7,8 | giữ phạm vi | X03,X04,X07,X08 | Nhánh dọc; phân bổ chữa lưu ngoài slide. |
@@ -37,7 +37,8 @@ Sau bài học, sinh viên có thể kiểm tra ma trận chuyển; tính phần
 | $\mu_t$ | Phân phối trạng thái dạng véc-tơ cột; $\mu_{t+1}=P^{\mathsf T}\mu_t$. |
 | $r(s)$ | $\mathbb E[R_{t+1}\mid S_t=s]$; Student MRP dùng $R_{t+1}=r(S_t)$. |
 | $G_t$ | Phần thưởng tích lũy từ $R_{t+1}$. |
-| $Q$ | Ma trận con của các trạng thái chưa kết thúc khi $\gamma=1$. |
+| $Q$ | Ma trận chuyển giới hạn trên các trạng thái chưa kết thúc khi $\gamma=1$. |
+| $\rho(\cdot)$ | Bán kính phổ; $\rho(\gamma P)\le\gamma<1$ bảo đảm $I-\gamma P$ khả nghịch. |
 | $p(s',r\mid s,a)$ | Hạt nhân chung của MDP; các tổng trong bài dùng miền rời rạc. |
 | $\pi(a\mid s)$ | Chính sách Markov ngẫu nhiên dừng. |
 | $P^\pi,r^\pi$ | Động lực và thưởng của MRP cảm sinh bởi chính sách cố định. |

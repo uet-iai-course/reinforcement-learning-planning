@@ -6,6 +6,6 @@
     <g fill="#EDF4FF" stroke="#2F3E7A" stroke-width="5"><circle cx="180" cy="255" r="70"/><circle cx="590" cy="255" r="70" fill="#F7EFE6"/><rect x="900" y="185" width="190" height="140" rx="12" fill="#F3F3F3" stroke="#555"/></g>
     <g font-size="34" fill="#17213F"><text x="180" y="266">Cool</text><text x="590" y="266">Warm</text><text x="995" y="266">Overheated</text></g>
     <g fill="none" stroke="#2F3E7A" stroke-width="5" marker-end="url(#arrow)"><path d="M115 220 C45 140,45 355,120 305"/><path d="M150 185 C105 45,305 45,220 195"/><path d="M250 255 H510"/><path d="M535 305 C450 405,315 405,235 305"/><path d="M560 185 C515 45,715 45,630 195"/><path d="M660 255 H890"/></g>
-    <g font-size="30" fill="#17213F"><text x="130" y="115">Slow: p=1; r=+1</text><text x="205" y="45">Fast → Cool: p=0,5; r=+2</text><text x="380" y="235">Fast → Warm: p=0,5; r=+2</text><text x="385" y="450">Slow → Cool: p=0,5; r=+1</text><text x="615" y="45">Slow → Warm: p=0,5; r=+1</text><text x="780" y="235" fill="#8B3A18">Fast: p=1; r=−10</text></g>
+    <g font-size="30" fill="#17213F"><text x="185" y="115">Slow: p=1; r=+1</text><text x="205" y="45">Fast → Cool: p=0,5; r=+2</text><text x="380" y="235">Fast → Warm: p=0,5; r=+2</text><text x="385" y="450">Slow → Cool: p=0,5; r=+1</text><text x="615" y="45">Slow → Warm: p=0,5; r=+1</text><text x="770" y="235" fill="#8B3A18">Fast: p=1; r=−10</text></g>
   </g>
 </svg>
