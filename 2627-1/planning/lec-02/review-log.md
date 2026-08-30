@@ -114,7 +114,7 @@
 - Đạt: câu trực tiếp, không hỏi tu từ, không dùng câu mở rỗng hoặc kết luận lặp.
 - Đạt: dùng nhất quán các thuật ngữ trạng thái, quan sát, biểu diễn, chính sách, giá trị và mô hình.
 - Đạt: đã thay `policy`, `return`, `control`, `caveat` trong nội dung quy trình bằng thuật ngữ Việt phù hợp.
-- Đạt: không có dấu gạch ngang dài, khẩu hiệu, câu cảm thán hoặc nhịp câu kịch tính.
+- Đạt: không có khẩu hiệu, câu cảm thán hoặc nhịp câu kịch tính trong nội dung hiển thị và ghi chú diễn giả.
 
 ## Rà mạch theo Quill
 
@@ -131,3 +131,108 @@
 - D07: thêm giả thiết rời rạc và điều kiện chuẩn hóa.
 - E00–E03: làm rõ trạng thái Markov, tọa độ, thưởng chuyển tiếp đích và giao diện quan sát.
 - Vòng tái rà cuối: C03 đã thêm điều kiện $\mathcal H_t^S=h_t^S$, $S_t=s$ và xác suất dương; D04–D09 đã thống nhất $X_t=S_t$, $\pi(a\mid s)$; ví dụ D04 và D07 đã được tính lại.
+
+## Vòng rà lại ngày 2026-08-30
+
+### Bằng chứng runtime
+
+| vai trò | requested_model | observed_model | provider |
+|---|---|---|---|
+| planner | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| source reader | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| storyboard reviewer | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| reviewer 1 (sinh viên) | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| reviewer 2 (chuyên gia RL) | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| reviewer 3 (toán và thuật toán) | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| reviewer 4 (phản biện học thuật) | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| reviewer 5 (mạch viết) | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+
+### Tóm tắt kiểm định storyboard mới
+
+Storyboard giữ 34 trang tuyến chính cộng X01–X02, tổng 120 phút. P02 nêu đủ bốn trục; B04 có cầu nối tới hình thức hóa tổng phần thưởng ở phần giá trị; D07 tự nêu quy ước tối thiểu và tách $p$ với $\hat p$; D00 được ghi rõ là trang mở phần dùng chung; E05 chỉ thu hồi vòng giao diện, Z00 là nơi duy nhất nêu tuyến Bài 03 và phân tuyến bài tập.
+
+### Góc nhìn sinh viên
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa | trạng thái xử lý |
+|---|---|---|---|---|---|
+| trung bình | D04 | $\gamma$ xuất hiện mà thiếu trực giác số. | Quỹ đạo $(-1,-1)$ đã có nhưng chưa so sánh các giá trị $\gamma$. | Tính với $\gamma=0,0{,}5,1$. | Đã thêm câu hỏi và đáp án trong notes. |
+| trung bình | C03 | Trang có nhiều ký hiệu mới. | Lịch sử trạng thái, điều kiện xác suất dương và đẳng thức cùng xuất hiện. | Tách trang hoặc giảm tải. | Không tách; C02 đã đặt ví dụ trước, C03 giữ một luận điểm hình thức. Sẽ kiểm tra tràn trực quan. |
+| trung bình | D07 | Ví dụ mê cung dùng trước đặc tả E00. | Tọa độ và thưởng xuất hiện trước phần mê cung. | Tự nêu quy ước tối thiểu. | Đã sửa. |
+| trung bình | E00, E02 | Hình mê cung thiếu tọa độ. | Không đối chiếu được $(2,1)\to(3,1)$. | Thêm nhãn hàng, cột và đích. | Đã sửa SVG. |
+| nhẹ | D09 | Giá trị $-7$ thiếu $\gamma$ và số bước. | Con số không kiểm tra được với giả thiết cũ. | Nêu $\gamma=1$ và đúng 7 bước. | Đã sửa trên mặt trang. |
+| nhẹ | P00 | Notes ghi sai nguồn ghép Bài 2–3. | Tệp là Lecture 2; phạm vi dùng trang 1–27. | Sửa mô tả nguồn. | Đã sửa. |
+| nhẹ | toàn bài | Reviewer đếm nhầm 36 trang chính. | 36 mã gồm 34 trang chính và X01–X02. | Đối chiếu lại cấu trúc. | Bác bỏ; số trang planning đúng. |
+
+### Chuyên gia Học tăng cường
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa | trạng thái xử lý |
+|---|---|---|---|---|---|
+| trung bình | D07 | Định nghĩa $p$ làm mờ ranh giới với Bài 03. | Bài 02 dừng trước MDP đầy đủ. | Chuyển $p$ sang Bài 03 hoặc ghi rõ vai trò tiên quyết. | Giữ $p$ để định nghĩa mô hình; không giới thiệu bộ MDP hay Bellman. |
+| trung bình | D00, D08 | SVG dùng ký hiệu giá trị không khớp HTML. | Hình dùng `vᵖⁱ`, HTML dùng $v_\pi$. | Đồng bộ ký hiệu. | Đã sửa hai SVG. |
+| trung bình | D04 | Thiếu trực giác về hệ số chiết khấu. | Mặt trang cũ chỉ nêu miền $[0,1]$. | Thêm so sánh số. | Đã sửa cục bộ. |
+| trung bình | E00, E02 | Hình mê cung thiếu hệ tọa độ. | Ví dụ dùng tọa độ cụ thể. | Thêm nhãn hàng và cột. | Đã sửa. |
+| nhẹ | C02 | SVG khẳng định vị trí kế tiếp chắc chắn khác. | HTML chỉ kết luận “có thể khác”. | Giảm mức khẳng định, thêm đơn vị. | Đã sửa SVG. |
+| nhẹ | B04 | Phạm vi giả thuyết phần thưởng chưa đủ rõ. | Nguồn phát biểu quá mạnh. | Nêu điều kiện tín hiệu thưởng nhất quán với hành vi mong muốn. | Đã sửa notes. |
+
+### Độ chính xác toán học và thuật toán
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa | trạng thái xử lý |
+|---|---|---|---|---|---|
+| trung bình | D07 | Ví dụ dùng quy ước mê cung trước khi thiết lập. | Thưởng $-1$ và chuyển tất định chỉ có ở E00. | Tự nêu quy ước. | Đã sửa. |
+| trung bình | D04–D05 | Định nghĩa chỉ khép cho nhiệm vụ hữu hạn. | $G_t$ dùng thời điểm kết thúc $T$, còn $v_\pi$ được phát biểu chung. | Nêu trường hợp tiếp diễn và điều kiện hội tụ. | Đã thêm vào notes với $\gamma<1$ và phần thưởng bị chặn. |
+| nhẹ | D09 | $v_\pi(s)=-7$ thiếu giả thiết. | Với $\gamma<1$ hoặc số bước khác, kết quả đổi. | Nêu $\gamma=1$, đúng 7 bước. | Đã sửa. |
+| nhẹ | D00, D08 | Ký hiệu $v_\pi$ trong SVG sai dạng. | Hình dùng ký tự chỉ số trên ghép. | Dùng `tspan` cho chỉ số dưới $\pi$. | Đã sửa. |
+| nhẹ | B03 | Mô tả thay thế nói ba hành động đầu chưa có thưởng. | Hình chỉ có hai hành động đầu thưởng 0. | Sửa thành hai hành động đầu. | Đã sửa. |
+| nhẹ | B02 | Câu “người giám sát chỉ sẵn” thiếu từ. | Câu không trọn nghĩa. | Viết “cung cấp sẵn”. | Đã sửa. |
+
+### Phản biện học thuật và giảng dạy
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa | trạng thái xử lý |
+|---|---|---|---|---|---|
+| trung bình | D04 | Công thức hữu hạn thiếu cầu nối tới nhiệm vụ tiếp diễn. | $T$ hữu hạn được dùng nhưng chưa nói $T=\infty$. | Bổ sung trường hợp tiếp diễn trong notes. | Đã sửa. |
+| trung bình | D04 | $\gamma$ thiếu ví dụ trực giác. | Bài tập nguồn có yêu cầu so sánh, nhưng nằm ngoài phạm vi Bài 1–2. | Dùng quỹ đạo sẵn có để minh họa ngắn. | Đã sửa mà không mở thêm bài tập. |
+| trung bình | D07 | $\mathcal R$ chưa định nghĩa; $p$ dễ bị hiểu là mô hình tác tử. | Outline chỉ có $R_{t+1}\in\mathbb R$. | Định nghĩa $\mathcal R$ và tách $p$ với $\hat p$. | Đã sửa. |
+| trung bình | Z00 | Nhánh bài tập không nói rõ phần bị hoãn. | Nguồn có 10 bài, nhánh chỉ dùng Bài 1–2. | Nêu Bài 3–10 xử lý sau Bài 03. | Đã sửa. |
+| nhẹ | A03, C03 | Hai lịch sử dễ nhầm. | $H_t$ chứa quan sát; $\mathcal H_t^S$ chứa trạng thái. | Nêu khác biệt trong notes. | Đã sửa. |
+| nhẹ | C02 | Ví dụ xe thiếu đơn vị. | Hình ghi 10, 1, 5 không có đơn vị. | Thêm m và m/s. | Đã sửa SVG. |
+
+### Kết nối và mạch viết
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa | trạng thái xử lý |
+|---|---|---|---|---|---|
+| trung bình | P02 | Bản đồ bỏ sót mạch tín hiệu học. | Cụm B dài 16 phút nhưng không có trên P02. | Thêm trục Tín hiệu học. | Đã sửa; P02 có bốn trục nội dung. |
+| trung bình | D07 | Ví dụ mượn quy ước từ phần sau. | Kết nối vào thiếu tiên quyết. | Tự nêu quy ước tối thiểu. | Đã sửa. |
+| trung bình | B04 | Sản phẩm không được thu hồi trước D04. | Cầu nối B04→D04 bị treo qua một mạch. | Thêm mốc hồi đầu và ghi trong storyboard. | Đã sửa. |
+| nhẹ | E05, Z00 | Hai trang lặp chức năng mở Bài 03. | Cả hai cùng nêu tuyến chi tiết. | E05 thu hồi bài; Z00 mở bài kế tiếp. | Đã sửa. |
+| nhẹ | B05, C00 | Câu nối liên mạch chỉ có trong storyboard. | Notes B05 chưa báo chuyển sang tầng thông tin. | Thêm câu nối trong notes. | Đã sửa. |
+
+### Quyết định bác bỏ
+
+- Bác bỏ nhận xét “36 trang chính”: sai đếm; 36 gồm 34 trang chính cộng X01–X02 nhánh dọc.
+- Bác bỏ đề xuất đưa hw02 Bài 3–10 vào Bài 02: chỉ ghi sẽ xử lý sau Bài 03.
+- Bác bỏ đề xuất tách C03: ví dụ C02 đã đứng trước và công thức cần liền mạch.
+- Bác bỏ đề xuất loại $p$ khỏi D07: $p$ là tiên quyết để định nghĩa vai trò mô hình; chỉ phân biệt động lực $p$ với mô hình ước lượng $\hat p$.
+
+### Ghi nhận tiến trình và giới hạn
+
+- Writer lượt đầu chạm giới hạn tool-call sau khi sửa HTML, SVG và outline; lượt này hoàn tất planning. Đây không phải lỗi nội dung.
+- Kiểm định trực quan của vòng hiện tại CHƯA chạy; không tuyên bố đã đạt.
+- Đã tự rà no-ai-slop và mạch Quill: đạt; không tạo quill.json.
+
+### Tái rà sau chỉnh sửa
+
+- Độ chính xác toán học và thuật toán: `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`. Không còn lỗi chặn bàn giao hoặc nghiêm trọng. Các phép tính ở D04, D06, D09; giả thiết hữu hạn/tiếp diễn; chuẩn hóa; $p$/$\hat p$ và tọa độ SVG đều đúng. Đã bổ sung trong notes D09 rằng phát biểu chuyển tiếp xác suất $0{,}1$ minh họa môi trường ngẫu nhiên.
+- Kết nối và mạch viết: `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`. Đủ bảy mạch ngoài; P02 giữ đúng bốn trục nội dung; B04 nối tới D04; D07 tự đủ; E05 và Z00 không lặp chức năng. Hai góp ý nhẹ ở E05 được xử lý bằng một câu thu hồi ví dụ mê cung và dẫn sang tự kiểm tra.
+- Rà lân cận E03–X02 phát hiện chuyển ý E04→E05 còn mờ ở mức trung bình. Đã thêm một dòng trên E04 để báo trước trang tổng hợp; không đổi luận điểm, số trang hoặc thứ tự.
+- Tái rà tiếp phát hiện E05 dùng $O_t\to X_t$ như trường hợp tổng quát, không khớp $X_t=f(H_t)$ ở C06. Đã đổi ô đầu thành lịch sử $H_t$, thêm giải thích trong notes và ghi E04 áp dụng lại bảng kiểm quan sát.
+
+### Kiểm định cuối của vòng rà ngày 2026-08-30
+
+- Lệnh bắt buộc `python3 -m reloadserver 8765` không chạy vì môi trường không có mô-đun `reloadserver`. Để không phục vụ tệp `.env`, đã tạo một gói kiểm thử cô lập chỉ gồm Bài 02 và tài sản cục bộ, rồi phục vụ bằng `python3 -m http.server 8765` tại `http://127.0.0.1:8765/2627-1/lecture-02-giao-dien-tac-tu-moi-truong.html`.
+- Kiểm tra tĩnh đạt: 7 `<section>` ngoài; 36 trang với 36 `data-slide-id` duy nhất; 36 ghi chú diễn giả; 11 SVG; không có ảnh raster, tham chiếu mạng cốt lõi, tài nguyên thiếu hoặc liên kết planning trên chỉ mục.
+- Chromium ở khung 1280 × 720: duyệt đủ 36 trang; không có lỗi JavaScript, lỗi tài nguyên, tràn chữ hoặc chồng lấn. Đã xem lại riêng D04, D07, E00, E04, E05 và Z00.
+- Chromium ở khung 800 × 600: duyệt đủ 36 trang; không có lỗi JavaScript, lỗi tài nguyên, tràn chữ hoặc chồng lấn.
+- Điều hướng bàn phím đạt: `P00` → `P01` bằng phím xuống, trở lại `P00` bằng phím lên và sang `A00` bằng phím phải.
+- Rà cuối theo `no-ai-slop/eval.md` và Quill đạt; không tạo `quill.json`.
+- Codex Slides trong trình duyệt nhúng không khả dụng ở vòng hiện tại. Vì vậy, vòng này chỉ xác minh bằng RevealJS cục bộ và không tuyên bố đã rà trực quan bằng Codex Slides. Bằng chứng dự án Codex Slides lịch sử ở trên được giữ để truy nguyên, không thay cho phép kiểm tra trình duyệt hiện tại.
+- Sau các lượt tái rà toán học, mạch viết và vùng lân cận, không còn lỗi `chặn bàn giao`, `nghiêm trọng` hoặc `trung bình` chưa xử lý.

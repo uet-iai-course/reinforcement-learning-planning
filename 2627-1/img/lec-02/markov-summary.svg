@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 340" role="img" aria-labelledby="title desc">
   <title id="title">Vị trí chưa đủ làm trạng thái</title>
-  <desc id="desc">Hai xe cùng ở vị trí x bằng mười nhưng có vận tốc khác nhau; sau cùng hành động phanh, vị trí kế tiếp có thể khác.</desc>
+  <desc id="desc">Hai xe cùng ở vị trí x bằng mười mét nhưng có vận tốc khác nhau tính bằng mét trên giây; sau cùng hành động Phanh, x bước kế tiếp có thể khác.</desc>
   <defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#2F3E7A"/></marker></defs>
   <g font-family="sans-serif" text-anchor="middle">
-    <rect x="45" y="95" width="260" height="150" rx="18" fill="#F3F3F3" stroke="#666" stroke-width="5"/><text x="175" y="145" font-size="30" font-weight="bold">Xe thứ nhất</text><text x="175" y="190" font-size="30">xₜ=10, vₜ=1</text><text x="175" y="225" font-size="30">Aₜ=phanh</text>
-    <rect x="370" y="95" width="260" height="150" rx="18" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="5"/><text x="500" y="145" font-size="30" font-weight="bold">Xe thứ hai</text><text x="500" y="190" font-size="30">xₜ=10, vₜ=5</text><text x="500" y="225" font-size="30">Aₜ=phanh</text>
-    <rect x="695" y="95" width="260" height="150" rx="18" fill="#F7EFE6" stroke="#B15A2B" stroke-width="5"/><text x="825" y="145" font-size="30" font-weight="bold">Bước kế tiếp</text><text x="825" y="190" font-size="30">xₜ₊₁ khác nhau</text><text x="825" y="225" font-size="30">nếu vₜ bị bỏ</text>
+    <rect x="45" y="95" width="260" height="150" rx="18" fill="#F3F3F3" stroke="#666" stroke-width="5"/><text x="175" y="145" font-size="30" font-weight="bold">Xe thứ nhất</text><text x="175" y="190" font-size="30">xₜ=10 m; vₜ=1 m/s</text><text x="175" y="225" font-size="30">Aₜ=Phanh</text>
+    <rect x="370" y="95" width="260" height="150" rx="18" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="5"/><text x="500" y="145" font-size="30" font-weight="bold">Xe thứ hai</text><text x="500" y="190" font-size="30">xₜ=10 m; vₜ=5 m/s</text><text x="500" y="225" font-size="30">Aₜ=Phanh</text>
+    <rect x="695" y="95" width="260" height="150" rx="18" fill="#F7EFE6" stroke="#B15A2B" stroke-width="5"/><text x="825" y="145" font-size="30" font-weight="bold">Bước kế tiếp</text><text x="825" y="190" font-size="30">xₜ₊₁ có thể khác</text><text x="825" y="225" font-size="30">nếu vₜ bị bỏ</text>
     <path d="M305 170H360" stroke="#666" stroke-width="6" marker-end="url(#a)"/><path d="M630 170H685" stroke="#2F3E7A" stroke-width="6" marker-end="url(#a)"/>
     <text x="500" y="310" font-size="30" fill="#B15A2B">Trạng thái cần giữ biến chi phối chuyển tiếp</text>
   </g>

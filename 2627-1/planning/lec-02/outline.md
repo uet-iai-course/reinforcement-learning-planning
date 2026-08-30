@@ -20,11 +20,15 @@ Sau bài học, sinh viên có thể:
 
 ## Dàn ý
 
-1. Giao diện tác tử–môi trường và chỉ số thời gian.
-2. Tín hiệu học, phụ thuộc dữ liệu và phản hồi trễ.
-3. Trạng thái, quan sát, tính Markov và POMDP.
-4. Chính sách, phần thưởng tích lũy, hàm giá trị, mô hình, dự đoán và điều khiển.
-5. Mê cung cố định và hai giao diện quan sát.
+Bài có bảy mạch trình bày ngoài:
+
+1. Định hướng: phạm vi, mục tiêu và bốn trục nội dung.
+2. Giao diện tương tác: ranh giới tác tử–môi trường và chỉ số thời gian.
+3. Tín hiệu học: ba nguồn tín hiệu, phụ thuộc dữ liệu và phản hồi trễ.
+4. Thông tin: trạng thái, quan sát, tính Markov và quan sát một phần.
+5. Vai trò quyết định: chính sách, phần thưởng tích lũy, hàm giá trị, mô hình, dự đoán và điều khiển.
+6. Mê cung: đặc tả môi trường và hai giao diện quan sát.
+7. Kết luận: tự kiểm tra, tuyến Bài 03 và nhánh bài tập.
 
 ## Ánh xạ nguồn
 
@@ -38,19 +42,19 @@ Sau bài học, sinh viên có thể:
 | 6 | bỏ | — | Nhận định về AGI không có căn cứ đủ trong nguồn. |
 | 7 | gộp | B00 | So sánh ba tín hiệu bằng một hình; bỏ trang mở phần lặp. |
 | 8 | tách | B02, B03 | Tách phụ thuộc dữ liệu khỏi phản hồi trễ. |
-| 9 | sửa | B04 | Không dùng $\pi$ và $G_t$ trước định nghĩa; giới hạn giả thuyết phần thưởng. |
+| 9 | sửa | B04 | Không dùng $\pi$ và $G_t$ trước định nghĩa; thêm cầu nối tới phần hàm giá trị; giới hạn giả thuyết phần thưởng. |
 | 10, 20 | gộp | D00 | Ba vai trò chỉ xuất hiện một lần; mô hình là tùy chọn. |
 | 11 | bỏ | — | Trang chỉ có số trang. |
-| 12–13 | chuyển, lược | C06, C07 | Giữ biểu diễn và bộ nhớ; bỏ tranh luận AGI. |
+| 12–13 | bỏ | — | Phần thảo luận AGI và tranh luận ngoài lược đồ không còn trên slide; không gán vào C06/C07. |
 | 14–15 | tách, sửa | A00, A02–A04 | Sửa vai trò và chỉ số $R_{t+1}$; đáp án A04 hiện bằng fragment. |
 | 16 | sửa | C00 | Phân biệt $S_t,O_t,X_t$ và miền tương ứng. |
-| 17 | tách, sửa | C02, C03 | Đưa ví dụ xe trước công thức; dùng $\mathcal H_t^S=h_t^S$ kết thúc ở $S_t=s$ và chỉ điều kiện trên biến cố có xác suất dương. |
+| 17 | tách, sửa | C02, C03 | Đưa ví dụ xe trước công thức; tiêu đề C03 là "Tính Markov theo trạng thái và hành động"; dùng $\mathcal H_t^S=h_t^S$ kết thúc ở $S_t=s$ và chỉ điều kiện trên biến cố có xác suất dương; notes phân biệt lịch sử trạng thái với lịch sử quan sát. |
 | 18 | sửa | C04 | Quan sát đầy đủ không đồng nhất với định nghĩa MDP. |
 | 19 | tách, sửa | C05, C06 | Giới thiệu đầy đủ tên POMDP trước khi dùng lịch sử/niềm tin. |
 | 21 | tách | D02, D03 | Chính sách theo $X_t$ tổng quát; định nghĩa $\mathcal A(x)$ và chuẩn hóa. |
-| 22 | tách, thêm | D04–D06 | Chốt $X_t=S_t$, chính sách Markov $\pi(a\mid s)$; đặt quỹ đạo thưởng cụ thể trước công thức $G_t$ và $v_\pi$. |
-| 23 | sửa | D07 | Đặt chuyển tiếp mê cung tất định xác suất $1/0$ trước mô hình rời rạc và điều kiện chuẩn hóa. |
-| 24 | sửa, tách | D08, D09 | Bỏ $q_\pi$ chưa định nghĩa; phân biệt dự đoán với điều khiển. |
+| 22 | tách, thêm | D04–D06 | Chốt $X_t=S_t$, chính sách Markov $\pi(a\mid s)$; đặt quỹ đạo thưởng cụ thể trước công thức $G_t$ và $v_\pi$; kiểm tra trực giác $\gamma=0,0{,}5,1$; notes nêu trường hợp tiếp diễn với tổng vô hạn, $\gamma<1$ dưới giả thiết phần thưởng bị chặn. |
+| 23 | sửa | D07 | Quy ước mê cung tự nêu trên trang trước ví dụ $1/0$; định nghĩa $\mathcal R\subset\mathbb R$; phân biệt $p$ với mô hình ước lượng $\hat p$. |
+| 24 | sửa, tách | D08, D09 | Bỏ $q_\pi$ chưa định nghĩa; phân biệt dự đoán với điều khiển; phát biểu giá trị $-7$ ghi $\gamma=1$ và nhiệm vụ kết thúc sau đúng 7 bước. |
 | 25–26 | gộp, sửa | E00, E02 | Cố định bản đồ, tọa độ, tập hành động, thưởng khi vào đích và quy tắc va tường. |
 | 27 | sửa, tách | C07, E03–E04 | Tách tính Markov khỏi việc tác tử biết mô hình; phân loại theo giao diện quan sát. |
 | hw02 Bài 1 | giữ nguyên văn | X01 | Không thay nhiệm vụ cốt lõi. |
@@ -81,13 +85,14 @@ Sau bài học, sinh viên có thể:
 | $X_t\in\mathcal X$ | Biểu diễn dùng để quyết định; trường hợp đầy đủ có thể chọn $X_t=S_t$. |
 | $A_t\in\mathcal A(X_t)$ | Hành động hợp lệ tại biểu diễn hiện tại. |
 | $R_{t+1}\in\mathbb R$ | Phần thưởng sinh sau $A_t$. |
+| $\mathcal R\subset\mathbb R$ | Tập giá trị phần thưởng; dùng trong điều kiện chuẩn hóa của mô hình. |
 | $H_t$ | Lịch sử quan sát đến $O_t$. |
 | $\mathcal H_t^S$ | Lịch sử trạng thái đến $S_t$; dùng riêng trong phát biểu Markov. |
 | $\pi(a\mid x)$ | Xác suất chọn $a\in\mathcal A(x)$ khi $X_t=x$. |
 | $G_t$ | Phần thưởng tích lũy có hệ số chiết khấu từ $R_{t+1}$. |
 | $\gamma\in[0,1]$ | Hệ số giảm trọng số của phần thưởng ở xa. |
 | $v_\pi(s)$ | Phần thưởng tích lũy kỳ vọng từ $s$ dưới chính sách Markov $\pi(a\mid s)$ trong phần D04–D09, nơi giả sử $X_t=S_t$. |
-| $p(s',r\mid s,a)$ | Phân phối chung của trạng thái kế tiếp và phần thưởng trong trường hợp rời rạc. |
+| $p(s',r\mid s,a)$ | Phân phối chung của trạng thái kế tiếp và phần thưởng trong trường hợp rời rạc; là động lực thật của môi trường, khác với mô hình ước lượng $\hat p$ của tác tử. |
 | POMDP | Quá trình quyết định Markov quan sát một phần. |
 | dự đoán | Đánh giá một chính sách cố định. |
 | điều khiển | Tìm hoặc cải thiện chính sách. |
@@ -100,4 +105,4 @@ Sau bài học, sinh viên có thể:
 
 ## Điểm nối sang Bài 03
 
-Bài 03 phân biệt chuỗi Markov, quá trình phần thưởng Markov và MDP; sau đó đóng gói $\mathcal S,\mathcal A,p,\gamma$ thành MDP và xây phương trình Bellman.
+Bài 03 phân biệt chuỗi Markov, quá trình phần thưởng Markov và MDP; sau đó đóng gói $\mathcal S,\mathcal A,p,\gamma$ thành MDP và xây phương trình Bellman. E05 không lặp chi tiết tuyến này; Z00 là nơi mở bài kế tiếp. Nhánh dọc của Bài 02 chỉ chứa Bài 1–2 của hw02; Bài 3–10 dùng kiến thức của Bài 03 và sẽ được xử lý sau Bài 03.
