@@ -5,7 +5,7 @@
 | Cụm | Vấn đề | Trực giác | Ví dụ | Hình thức | Ứng dụng | Kiểm tra | Đầu vào → sản phẩm | Phút |
 |---|---|---|---|---|---|---|---|---:|
 | Định hướng | P01 | P01 | không áp dụng: đặt phạm vi | P02 | P01 | P02 | Bài 03 → miền DP và chuẩn | 7 |
-| Bellman tối ưu và $q_*$ | A02 | A02 | A02,A08 | A08,A00,A01,A03,A09 | A05–A06 | A02,A09 | phép tính tất định → $q_*,v_*,T^\pi,T_*$, greedy | 25 |
+| Bellman tối ưu và $q_*$ | A02 | A02 | A02,A08 | A08,A00,A01,A03,A09 | A05–A06 | A09 | phép tính tất định → $q_*,v_*,T^\pi,T_*$, greedy | 25 |
 | Lặp chính sách | B00 | B00–B03 | B00–B03 | B04–B06,B08 | B03,B06 | B06 | MDP hai trạng thái → PI chính xác | 27 |
 | Lặp giá trị | C00 | C01–C02 | C00–C02 | C03–C09 | C05–C07 | C05 | Gridworld → VI, phần dư, chi phí | 31 |
 | Hội tụ, giới hạn, quyết định | D00 | D00–D02 | dùng lại A02, B00 và C00 | D01–D07 | D05,D08 | D05 | tính co → tồn tại → chặn dừng → phạm vi dùng | 30 |
@@ -30,7 +30,7 @@ Tổng tuyến chính: $7+25+27+31+30=120$ phút. Thời lượng này gồm cá
 | P00 | Bài toán là giải MDP có mô hình. | Tách đầu vào và đầu ra. |
 | P01 | DP tính kỳ vọng từ mô hình đã biết. | Chốt miền toán học. |
 | P02 | Mọi toán tử cùng miền $\mathcal V$ và chuẩn vô cùng. | Bắt đầu bằng lựa chọn số. |
-| A02 | Micro-example nêu rõ thưởng, trạng thái kế tiếp và tiếp diễn tối ưu. | Đặt tên giá trị hành động. |
+| A02 | Micro-example nêu rõ thưởng, trạng thái kế tiếp và tiếp diễn tối ưu; không phải trang kiểm tra. | Đặt tên giá trị hành động. |
 | A08 | $q_*$ ép hành động đầu rồi tối ưu chính sách tiếp diễn. | Lấy cực đại để được $v_*$. |
 | A00 | $v_*=\sup_\pi v_\pi=\max_aq_*$. | So với đánh giá chính sách cố định. |
 | A01 | $T^\pi:\mathcal V\to\mathcal V$ cho chính sách Markov dừng. | Thay trung bình hành động bằng cực đại. |
@@ -64,7 +64,7 @@ Tổng tuyến chính: $7+25+27+31+30=120$ phút. Thời lượng này gồm cá
 | D04 | Phần dư chặn sai số giá trị bằng phép suy diễn một dòng. | Chặn mất mát. |
 | D07 | Greedy identity chuyển sai số thành mất mát chính sách. | Kiểm phạm vi với CartPole. |
 | D05 | CartPole rời rạc vẫn thiếu hạt nhân. | Tổng kết cách chọn công cụ. |
-| D08 | Bảng quyết định nối DP với điều khiển phi mô hình. | Chuyển sang bài tập. |
+| D08 | Bảng quyết định thu hồi P01 và nối DP với điều khiển phi mô hình; tín hiệu bài tập dọc. | Chuyển sang bài tập. |
 | X09 | Dữ kiện MDP đầy đủ; tính $V_1$, rồi sáu $Q_{V_1}$ để trích greedy. | Sang chứng minh ma trận. |
 | X06 | Chứng minh đánh giá dạng ma trận. | Sang lịch cập nhật. |
 | X04 | Phân tích đồng bộ và bất đồng bộ. | Sang tính đơn điệu. |

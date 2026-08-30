@@ -3,7 +3,7 @@
 ## Trạng thái sau chỉnh sửa
 
 - 38 trang tuyến chính, 4 trang bài tập dọc; 5 SVG cục bộ; không dùng raster hoặc tài nguyên mạng cốt lõi.
-- Bản sửa đã hợp nhất kiểm định storyboard và bốn báo cáo độc lập. Mọi mục `chặn bàn giao` và `nghiêm trọng` đã có sửa tương ứng.
+- Bản trước đã hợp nhất bốn báo cáo độc lập; lượt bổ sung dưới đây có kiểm định storyboard và đủ năm báo cáo độc lập. Mọi mục `chặn bàn giao` và `nghiêm trọng` đều có quyết định xử lý.
 - Không sửa `index.html`, CSS dùng chung, không commit hoặc push.
 
 ## Bốn báo cáo độc lập — đầu vào chỉnh sửa
@@ -115,9 +115,79 @@ Rà lân cận sau sửa: A02–A09–A00–A01 giữ mạch ví dụ → địn
 
 ## Kiểm định cuối của điều phối viên
 
-- `python3 -m reloadserver 8765` đang phục vụ kho tại cổng 8765; trang bài giảng và trang chỉ mục trả HTTP 200.
+- `python3 -m reloadserver 8765` không chạy vì môi trường thiếu mô-đun `reloadserver`. Điều phối viên dùng cây web tạm không có `.env` và `python3 -m http.server 8765 --bind 127.0.0.1` để kiểm thử tại đúng cổng 8765.
 - HTML có 42 mã trang duy nhất, 42 ghi chú diễn giả và đúng cấu trúc section lồng; mọi mã đều có mục trong storyboard.
-- KaTeX ở chế độ nghiêm ngặt dựng được 22 công thức khối và 210 công thức nội dòng, không có lỗi.
-- Năm SVG hợp lệ về XML, có `role="img"`, `title`, `desc`; cỡ chữ nhỏ nhất là 30 px. Không có ảnh raster hoặc tài nguyên cốt lõi qua mạng.
-- Năm tệp HTML/planning đã được tải vào Design Files của dự án Codex Slides `20260824154346-chuy-n-lecture-4-gi-i-mdp-b-ng-quy-ho-ch-z4es` và đối chiếu trùng từng byte với tệp trong kho.
-- Codex Browser không khả dụng trong phiên này. Vì vậy chưa thể xác nhận trực quan từng trang ở khung 1280 × 720, màn hình hẹp, chồng lấn, tràn chữ hoặc thao tác bàn phím trong Codex Slides. Các kiểm tra RevealJS cục bộ và kiểm tra tĩnh vẫn được thực hiện đầy đủ; không tuyên bố đã rà trực quan bằng Codex Slides.
+- Chromium headless dựng đủ 42 trang ở 1280 × 720 và 800 × 600, không có lỗi console hoặc request. Điều hướng `↓`, `↑`, `→` cho kết quả P01, P00, A02. Điều phối viên duyệt ảnh mọi trang và mở riêng các trang công thức bị bộ dò hình học gắn dương tính giả do cấu trúc nội bộ KaTeX; không thấy cắt, chồng hoặc tràn.
+- Năm SVG tải được trong Chromium; mỗi tệp có `role="img"`, `title`, `desc`. Không có ảnh raster hoặc tài nguyên cốt lõi qua mạng. Môi trường thiếu `xmllint`, nên tính hợp lệ được xác nhận qua tải ảnh thực tế và không có request lỗi.
+- Bốn tệp văn bản HTML/outline/storyboard/review-log đã được ghi vào Design Files của dự án Codex Slides `20260824154346-chuy-n-lecture-4-gi-i-mdp-b-ng-quy-ho-ch-z4es` và đọc lại trùng chính xác nội dung trong kho. Tải riêng `gridworld.svg` lên Design Files trả HTTP 500; SVG vẫn được kiểm trực tiếp trong RevealJS.
+- Dự án Codex Slides vẫn ở trạng thái `draft`, bước `clarify`, 0 trang; Codex Browser không khả dụng trong phiên này. Vì vậy không tuyên bố đã rà trực quan bằng Codex Slides; kiểm tra trực quan được thực hiện trên RevealJS cục bộ.
+
+## Lượt rà storyboard và năm báo cáo độc lập — lượt bổ sung B04
+
+Runtime: các lượt thành công dùng `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter` (storyboard, sinh viên, chuyên gia Học tăng cường, toán lượt hẹp, học thuật–giảng dạy và mạch viết). Lượt toán đầu vượt giới hạn tool-call nên không được tính; lượt toán hẹp sau đó thành công.
+
+### Rà storyboard
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa | quyết định |
+|---|---|---|---|---|---|
+| nhẹ | A02,A09 | Cột Kiểm tra ghi cả A02. | A02 là ví dụ; chỉ A09 đặt câu hỏi kiểm tra Bellman tối ưu. | Chỉ ghi A09 ở cột Kiểm tra. | Chấp nhận. |
+| nhẹ | C09 | Dùng $\varepsilon_{\mathrm{pol}}$ trước khi định nghĩa trên mặt trang. | Ký hiệu chỉ được giải thích trong mạch chứng minh sau đó. | Nêu đây là mức mất mát chính sách cho phép. | Chấp nhận. |
+
+### Góc nhìn sinh viên
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa | quyết định |
+|---|---|---|---|---|---|
+| nhẹ | A02,A09 | Storyboard gán sai vai trò kiểm tra cho A02. | A02 không có nhãn “Câu hỏi:”. | Chỉ giữ A09 ở bước kiểm tra. | Chấp nhận. |
+| nhẹ | B06 | Cụm “giá trị có thể không tăng nghiêm” chưa nói rõ hệ quả. | Người học chưa thấy vì sao phá hòa tùy ý nguy hiểm. | Nêu khả năng tạo chu trình chính sách. | Chấp nhận. |
+| nhẹ | X07 | Có thể thêm nhãn tự luyện trên mặt trang. | Nhãn giúp phân tuyến bài tập. | Thêm nhãn. | Không áp dụng: quy ước cấm hiển thị nhãn phân tuyến nội bộ. |
+| chặn bàn giao | toàn bài | Báo thiếu thư viện RevealJS trong cây worker. | Cây tạm chỉ chứa tệp được phép gửi, không phải kho đầy đủ. | Bổ sung thư viện. | Bác bỏ là dương tính giả; kho thật có đủ tài sản cục bộ và sẽ được kiểm khi render. |
+
+### Chuyên gia Học tăng cường
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa | quyết định |
+|---|---|---|---|---|---|
+| trung bình | X09 | Chỉ bao phủ phần 1 của Bài 9. | Phần 2 không xuất hiện trong nhánh bài tập. | Thêm phần 2. | Không thêm trang: nội dung trùng chu trình B01–B03 và vượt 12 phút; ghi rõ sai khác trong outline, notes và nhật ký. |
+| nhẹ | A08–A00 | Có thể nhắc lại quan hệ $q_\pi$–$v_\pi$. | Bài đi thẳng vào $q_*$ và $v_*$. | Thêm trang/công thức nhắc lại. | Không áp dụng: đây là tiên quyết đã hoàn thành ở Bài 03. |
+| nhẹ | C06 | Ánh xạ trang nguồn 29 chưa rõ. | Nguồn dùng so sánh định tính, đích dùng chi phí định lượng. | Ghi sai khác. | Chấp nhận trong outline và nhật ký. |
+| nhẹ | P01 | Từ “hạt nhân” có thể mơ hồ. | Notes chưa ghi ký hiệu cụ thể. | Gọi rõ mô hình chuyển–thưởng $p(s',r\mid s,a)$. | Chấp nhận. |
+| nhẹ | D08 | Cầu nối sang Bài 05 chưa thu hồi phân ranh mô hình. | Kết bài chỉ nhắc $q_*$. | Nêu rõ biết mô hình và không biết mô hình. | Chấp nhận. |
+
+### Độ chính xác toán học và thuật toán
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa | quyết định |
+|---|---|---|---|---|---|
+| nhẹ | B06 | Giải thích phá hòa chưa nêu điều kiện gây chu trình. | Đổi tùy ý giữa các hành động đồng hạng có thể làm chính sách đổi qua lại dù giá trị không đổi. | Nêu phá hòa tùy ý có thể tạo chu trình; dùng quy tắc cố định. | Chấp nhận. |
+| nhẹ | A02,B04,C09,D04,D07,X09 | Không phát hiện lỗi số hay công thức. | Tính lại cho kết quả lần lượt $6{,}5$, $7{,}2$, các chặn phần dư và chính sách $(b,a,a)$. | Giữ các phép tính. | Chấp nhận; X09 được rà lại sau khi tách bốn hàng chuyển. |
+
+### Phản biện học thuật và giảng dạy
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa | quyết định |
+|---|---|---|---|---|---|
+| nghiêm trọng | X09 | Hai hàng gộp làm mỗi hành động có hai kết quả xác suất 1. | Mỗi hàng `(s_1,a),(s_1,b)` và `(s_2,a),(s_2,b)` chứa hai chuyển tất định. | Tách thành bốn hàng, mỗi cặp $(s,a)$ có đúng một kết quả. | Chấp nhận. |
+| trung bình | B05 | Điều kiện công bằng được viết như mô tả, chưa phải giả thiết chủ động. | Câu cũ không chỉ rõ lịch cập nhật phải thỏa điều kiện. | Viết “lịch cập nhật phải…”. | Chấp nhận. |
+| trung bình | C03 | “Bảng đã kiểm tra” không chỉ ra quan hệ với phần dư. | Chặn ở C09 yêu cầu cùng một $v$. | Nói chính bảng $v$ dùng để kiểm phần dư. | Chấp nhận. |
+| nhẹ | B06 | Tổng chuyển bị viết tắt. | Thiếu chỉ số $s',r$ và đối số của $p$. | Viết đầy đủ phép tổng Bellman. | Chấp nhận. |
+
+### Kết nối và mạch viết
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa | quyết định |
+|---|---|---|---|---|---|
+| trung bình | A02→A00 | $v_*$ xuất hiện trước trang định nghĩa. | A02 ghi trực tiếp $v_*(s_1),v_*(s_2)$. | Dùng cụm “giá trị tiếp tục tối ưu”, đặt ký hiệu ở A00. | Chấp nhận. |
+| nhẹ | B08→C00 | Chuyển từ PI sang VI chưa hiện trên mặt trang. | Vai trò trong mạch: kết PI; kết nối ra Gridworld còn nằm ở suy luận của người học. | Thêm câu báo bỏ bước giải hệ và chuyển sang VI. | Chấp nhận. |
+| nhẹ | D08 | Kết bài chưa thu hồi rõ P01 và nối Bài 05. | Vai trò trong mạch: chọn công cụ; kết nối vào từ bảo đảm, kết nối ra bài tập/Bài 05 còn mờ. | Thu hồi đầu vào–đầu ra và phân ranh mô hình. | Chấp nhận. |
+| trung bình | số section | Báo cáo đếm sáu section ngoài. | Bộ phân tích HTML và storyboard đều cho năm section ngoài; nhánh X nằm dọc trong section D. | Giảm số section. | Bác bỏ là lỗi đếm; giữ năm mạch hợp lệ. |
+
+## Sửa sau các báo cáo
+
+- HTML: sửa P01, A02, B05, B06, B08, C00, C03, C09, D08 và X09; bỏ `RevealMarkdown` không dùng khỏi riêng tệp B04.
+- SVG: `gridworld.svg` bỏ vòng tự lặp “0” ở trạng thái kết thúc và ghi rõ không sao lưu.
+- X09 có bốn hàng chuyển tất định riêng; $V_1=(1,2,2)$ và chính sách tham lam $(b,a,a)$ vẫn đúng.
+- Outline ghi sai khác trang nguồn 29, lỗi gõ trang 33 và việc lược Bài 9 phần 2.
+- Worker từng sửa nhầm bản sao `lecture-template.html`; điều phối viên loại thay đổi này, không đưa vào kho.
+- Chưa tính lượt này là đã render hoặc kiểm định cuối; các bước đó do điều phối viên thực hiện sau tái rà.
+
+## Tái rà sau chỉnh sửa
+
+- Runtime của hai lượt thành công: `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`.
+- Rà toán học–thuật toán: tính lại độc lập X09 cho $V_1=(1,2,2)$, sáu giá trị hành động $(1{,}35;2{,}8)$, $(2{,}9;0{,}8)$, $(3{,}8;0{,}9)$ và chính sách $(b,a,a)$; tổng xác suất của mỗi cặp $(s,a)$ bằng 1. B05, B06, C03, C09 và `gridworld.svg` nhất quán; không còn lỗi chặn bàn giao hoặc nghiêm trọng.
+- Rà mạch viết: xác nhận đúng 5 section ngoài và các ranh giới A02±2, B05–C00, C03–C09, D05–X09. Không còn lỗi chặn bàn giao hoặc nghiêm trọng. Đề xuất nhẹ ở A02 được áp dụng bằng cách hiển thị trực tiếp hai phép tính thay cho ký hiệu suy ra; thứ tự ID C09 trước C05 là chủ ý và không đổi thứ tự trình bày.

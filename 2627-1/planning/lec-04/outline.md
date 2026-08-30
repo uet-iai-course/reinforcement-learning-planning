@@ -37,6 +37,9 @@ Tuyến chính gồm 38 trang, thiết kế cho 120 phút kể cả tương tác
 - Lặp chính sách sửa đổi được bỏ khỏi tuyến chính: nguồn không đặc tả đủ cách mang $v_0$ giữa các vòng, tiêu chuẩn dừng ngoài, phá hòa và bảo đảm. Bảo đảm của PI chính xác được giữ nguyên.
 - C09 tính $w=T_*v$ để phần dư và chính sách tham lam dùng cùng bảng $v$; nếu chưa dừng, tái sử dụng $w$ làm bảng tiếp theo.
 - D03–D07 mở các bước chứng minh mà nguồn lược để tránh phát biểu kết quả không có cầu nối.
+- Nguồn tr. 29 trình bày bảng so sánh định tính PI/VI; bài giảng thay bằng bảng chi phí định lượng ở C06 để tránh nhận định không có giả thiết.
+- Nguồn tr. 33 có lỗi gõ `$|A||S|$` khi nói về số chính sách; ý đúng là `$|A|^{|S|}$` (số chính sách xác định hữu hạn). HTML chỉ dùng tính hữu hạn, không dùng công thức đếm.
+- X09 chỉ ánh xạ Bài 9 phần 1 của `hw3.pdf`; phần 2 được lược vì trùng chu trình đánh giá–cải thiện ở B01–B03 và vượt 12 phút đã phân bổ.
 
 ## Ký hiệu
 
