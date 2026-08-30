@@ -23,13 +23,16 @@ Tệp có 31 trang chính và 3 trang bài tập dọc. Tuyến lõi là 108 ph�
 
 | Nguồn | Đích | Quyết định |
 |---|---|---|
-| tr. 1–14 | P00–P01 | Lược ôn tập Bài 04; giữ cầu nối mô hình đã biết/chưa biết |
-| tr. 15–16 | P01–P02 | Giữ, bổ sung giả thiết và kiểu đại lượng |
+| tr. 1–14 | P00 | Lược ôn tập Bài 04; tr. 1 cung cấp tên bài và cầu nối |
+| tr. 15–16 | P00–P02 | Giữ cầu nối mô hình đã biết/chưa biết; bổ sung giả thiết và kiểu đại lượng |
 | tr. 17–23 | A00–A08 | Giữ MC; thêm giao diện thuật toán; áp dụng trọn trung bình mẫu trước $\alpha$ hằng; đặt oracle sau ước lượng |
 | tr. 24–29 | B00–B08 | Đưa chuyển mẫu trước công thức; thêm giao diện thuật toán, định nghĩa $T^\pi$ và Robbins–Monro theo số lần cập nhật |
-| tr. 30–31 | C00–C05 | Sửa số mũ và giá trị $0{,}970299$, $-0{,}99$; giải thích cơ chế chệch–phương sai có điều kiện |
+| tr. 30–31 | C00–C05 | Sửa số mũ và giá trị $0{,}970299$, $-0{,}99$; giải thích cơ chế chệch–phương sai có điều kiện. C00 không dùng hai giá trị chuẩn của nguồn vì không tái tạo nhất quán từ mô hình đã nêu |
 | tr. 32–33 | C06–D01 | Giữ phạm vi và cầu nối, không dạy điều khiển |
 | hw05 B7/B3/B4 | X07/X03/X04 | Nhánh dọc tự đủ; X07 chuyển từ tính lặp sang giải thích cơ chế |
+| hw05 Bài 1 | B05/C07 | Hấp thụ: phân biệt đích MC và đích TD một bước, thời điểm cập nhật |
+| hw05 Bài 2 | P01–P02/B00 | Hấp thụ: bài toán dự đoán theo chính sách, chuyển mẫu trước công thức |
+| hw05 Bài 6 | (lược) | Yêu cầu giải Bellman bằng mô hình đã biết; trùng Bài 04 và ngoài phạm vi phi mô hình |
 
 ## Ký hiệu
 
