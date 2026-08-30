@@ -19,8 +19,8 @@ Các khoảng trang trên không chồng lấn. Tổng phần chính là 110 ph�
 | Mã | Luận điểm và bước học | Nguồn | Phút | Câu nối |
 |---|---|---|---:|---|
 | `L07-01` | Mở bài: thay bảng bằng hàm tham số. | tr. 1–4, 21–23 | 2 | Từ tên bài sang giới hạn của kết quả dạng bảng. |
-| `L07-02` | Cầu nối: chứng minh bảng không tự chuyển sang xấp xỉ. | tr. 5–20 | 3 | Xác định phần kiến thức mới cần xây dựng. |
-| `L07-03` | Nêu sản phẩm học tập có thể kiểm tra. | tr. 21–44 | 2 | Bắt đầu từ giới hạn của bảng tra. |
+| `L07-02` | Nêu giới hạn: kết quả dạng bảng không tự chuyển sang xấp xỉ. | tr. 5–20 | 3 | Xác định phần kiến thức mới cần xây dựng. |
+| `L07-03` | Nêu sản phẩm học tập có thể kiểm tra. | tr. 21–44 | 2 | Ba trục phân tích (loại đích, quan hệ hành vi–đích, cách cải thiện chính sách) dẫn đường cho toàn bộ các mạch sau. |
 | `L07-04` | Vấn đề: bộ nhớ, mẫu và thiếu tổng quát hóa. | tr. 22–23 | 3 | Dùng chung tham số để chia sẻ thông tin. |
 | `L07-05` | Trực giác: một vector thay nhiều ô. | tr. 22–24 | 2 | Quan sát hệ quả của một cập nhật. |
 | `L07-06` | Ví dụ số: một cập nhật đổi hai dự đoán qua tham số chung. | tr. 23, 31–32 | 3 | Khái quát ví dụ thành thiết lập dự đoán. |
@@ -51,11 +51,28 @@ Các khoảng trang trên không chồng lấn. Tổng phần chính là 110 ph�
 | `L07-31` | Quy tắc đích Q-learning, trường hợp kết thúc, miền cực đại và kiểm tra. | tr. 38–41 | 4 | Phân loại ba cơ chế của thiết lập khác chính sách. |
 | `L07-32` | Hình thức hóa bộ ba bất ổn và mức khẳng định có điều kiện. | tr. 41 | 3 | Áp dụng phân loại vào Q-learning vừa xét. |
 | `L07-33` | Ứng dụng và kiểm tra bằng ba câu chẩn đoán. | tr. 41–43 | 3 | Đặt kết luận vào đúng phạm vi lý thuyết. |
-| `L07-34` | Ranh giới của bốn thiết lập. | tr. 34–44 | 3 | Kiểm tra toàn bộ mạch suy luận. |
+| `L07-34` | Ranh giới của bốn thiết lập. | tr. 34, 41–44 | 3 | Kiểm tra toàn bộ mạch suy luận. |
 | `L07-35` | Kiểm tra tổng hợp năm bước. | tổng hợp | 2 | Nối các khái niệm sang bài học sâu. |
 | `L07-36` | Kết: bảo đảm tuyến tính không tự chuyển sang Deep Q-Network. | tr. 26, 41–45 | 2 | Chuyển sang phần bài tập dọc. |
 | `X01` | Chữa HW4: đạo hàm MC. | HW4 | 8 | Từ công thức sang cập nhật tuần tự. |
 | `X02` | Chữa HW7: ba cập nhật MC. | HW7 | 10 | Giữ cùng đặc trưng cho SARSA. |
 | `X03` | Chữa HW8: ba cập nhật SARSA. | HW8 | 12 | Kết thúc bằng kiểm tra chỉ số và terminal. |
 
-Mười phút linh hoạt nằm trong các khoảng không chồng lấn: `L07-04`–`L07-11` (2), `L07-12`–`L07-17` (2), `L07-18`–`L07-24` (4), `L07-26`–`L07-30` (1), `L07-31`–`L07-36` (1). Có thể rút phần trao đổi ở `L07-06`, `L07-16`, `L07-22`, `L07-23`, `L07-30` và `L07-33`. Không hiển thị phân tuyến hoặc thời lượng trên trang chiếu và ghi chú.
+Mười phút linh hoạt nằm trong các khoảng không chồng lấn: `L07-04`–`L07-11` (2), `L07-12`–`L07-17` (2), `L07-18`–`L07-25` (4), `L07-26`–`L07-30` (1), `L07-31`–`L07-36` (1). Có thể rút phần trao đổi ở `L07-06`, `L07-16`, `L07-22`, `L07-23`, `L07-30` và `L07-33`. Không hiển thị phân tuyến hoặc thời lượng trên trang chiếu và ghi chú.
+
+## Bản đồ sáu mạch
+
+Bảy cụm khái niệm được chứa trong sáu mạch; cụm so sánh MC–TD nằm cuối M4.
+
+| Mạch | Chức năng | Kết nối vào | Đầu ra | Cụm chứa | Trang |
+|---|---|---|---|---|---|
+| M1 | Mở đầu, cầu nối từ dạng bảng, ba trục phân tích và đích học tập | Kết quả dạng bảng của Bài 06 | Ba trục dùng xuyên bài và kỳ vọng học tập | Định hướng | `L07-01`–`L07-03` |
+| M2 | Lý do cần xấp xỉ, chia sẻ tham số, đặc trưng và giới hạn biểu diễn | Ba trục của M1 | Lớp hàm tuyến tính với miền, kích thước và giới hạn rõ | Xấp xỉ và đặc trưng | `L07-04`–`L07-11` |
+| M3 | Phân loại đích, MC tuyến tính từ ví dụ đến thuật toán và điều kiện | Lớp hàm của M2 | Thuật toán MC tuyến tính và điều kiện SGD | MC tuyến tính | `L07-12`–`L07-17` |
+| M4 | TD(0), bán gradient, Bellman chiếu và so sánh MC–TD | Đích MC của M3 | Điểm cố định Bellman chiếu; bảng so sánh hai đích | TD tuyến tính và Bellman chiếu; so sánh MC–TD (cuối mạch) | `L07-18`–`L07-25` |
+| M5 | Điều khiển: giá trị hành động, SARSA tuyến tính và cập nhật số | Điểm cố định và so sánh của M4 | Thuật toán SARSA control và một bước số | Điều khiển | `L07-26`–`L07-30` |
+| M6 | Q-learning, deadly triad, phạm vi lý thuyết, kết luận và chữa bài dọc | SARSA của M5 | Phân biệt đích max, chẩn đoán bất ổn, ranh giới lý thuyết | Khác chính sách và bất ổn | `L07-31`–`L07-36` |
+
+## Hàng chữa bài trong hành trình
+
+Ba trang dọc `X01`–`X03` là hàng chữa bài 30 phút, nằm ngoài 120 phút chính: `X01` (8 phút) đạo hàm MC, `X02` (10 phút) cập nhật MC tuần tự, `X03` (12 phút) ba bước SARSA. Các trang dọc nằm trong M6 về vị trí trình chiếu nhưng thời lượng chữa bài không tính vào 120 phút chính.

@@ -153,3 +153,45 @@ Tác tử rà toán độc lập xác nhận không còn lỗi từ mức trung 
 - Năm tệp HTML/quy trình trong dự án Codex Slides khớp từng byte với bản trong kho.
 
 Codex Slides đã được dùng làm dự án bền vững và kho Design Files, nhưng Codex Browser trong trình soạn thảo không khả dụng trong phiên này. Vì vậy chưa thể tuyên bố đã duyệt trực quan bằng Codex Slides hoặc kiểm tra tràn trang bằng Browser. Các kiểm tra RevealJS cục bộ, cấu trúc, công thức, đường dẫn và tài sản đã được thực hiện đầy đủ; giới hạn trực quan này không được che giấu.
+
+## Vòng writer theo brief chỉnh sửa
+
+### Mô hình và nhà cung cấp
+
+Runtime planner, source reader, storyboard reviewer, năm reviewer và writer đều dùng `requested_model=observed_model=z-ai/glm-5.3-flash`, provider OpenRouter.
+
+### Tóm tắt năm báo cáo theo trường bắt buộc
+
+| Báo cáo | Mức độ cao nhất | Phát hiện chính | Xử lý |
+|---|---|---|---|
+| Góc nhìn sinh viên | trung bình | Thiếu phần thưởng ở ví dụ, đáp án phân mảnh và giải thích hệ số 2 | Đã bổ sung ở `L07-06`, `L07-27`, `L07-36`, `X01`; giữ `L07-07` đúng vị trí nguồn |
+| Chuyên gia Học tăng cường | trung bình | Thiếu dữ liệu tương quan/không dừng, đối chiếu độ chệch–phương sai và lý do lược bảng phân loại nguồn | Đã sửa `L07-04`, `L07-25` và ghi lý do trong outline |
+| Toán học và thuật toán | nhẹ | Cần nói rõ $e=2$, thứ tự tích Kronecker và quy ước mọi-lần-ghé | Đã sửa `L07-06`, ghi chú `L07-10`, `L07-16`; toàn bộ số học đạt |
+| Phản biện học thuật và giảng dạy | trung bình | Cần phân biệt đích SARSA/Q-learning trên mẫu cụ thể và nối $\Pi_I$ với $\Pi_D$ | Đã sửa `L07-21`, `L07-31`; bác phát hiện sai về X02 sau khi tính lại |
+| Kết nối và mạch viết | trung bình | Bảy cụm chưa được ánh xạ rõ vào sáu mạch; ranh giới phần và bài tập dọc cần ghi tường minh | Đã lập bản đồ M1–M6 trong outline/storyboard và giữ X01–X03 dọc trong M6 |
+
+### Hai dương tính giả
+
+1. **Tổng phút:** reviewer báo bảng thời lượng sai, nhưng tổng đúng là $7+23+21+30+3+19+17=120$ và chữa bài $8+10+12=30$; bảng không cần sửa. Đây là dương tính giả.
+2. **X02/HW7:** reviewer nghi sai đáp số, nhưng kiểm tra lại: $q(C,0;w_1)=2\cdot299{,}5+100{,}5+98{,}5=798$, nên $w_2=(339{,}7;120{,}6;118{,}6)$ và dãy hiện tại đúng. Đây là dương tính giả; đáp số X02 giữ nguyên. X03 cũng đúng với các sai số $-2;\,-1{,}2;\,14{,}52$.
+
+### Nguồn tr. 42
+
+Nguồn tr. 42 có nghi vấn về ký hiệu $H^3/H^4$ trong khai triển; deck đã lược phần này và không đưa khẳng định mới về nó lên mặt trang hay ghi chú.
+
+### Kết quả writer
+
+- HTML: đổi ranh giới sáu `<section>` ngoài thành sáu mạch M1–M6 đúng ranh giới brief; giữ 39 `data-slide-id` và thứ tự; sửa cục bộ `L07-02`, `L07-03`, `L07-04`, `L07-06`, `L07-10`, `L07-16`, `L07-17`, `L07-21`, `L07-25`, `L07-26`, `L07-27`, `L07-31`, `L07-34`, `L07-36`, `X01`; không đổi số học X02/X03; không tách `L07-29`; không di chuyển $J_\mu$ khỏi `L07-07`.
+- Outline: sáu mạch đúng ranh giới, danh mục đủ 39 mã trang, tiên quyết đại số tuyến tính, lý do bỏ bảng phân loại tr. 4, bảy cụm trong sáu mạch.
+- Storyboard: bản đồ sáu mạch với chức năng/kết nối vào/đầu ra/cụm/trang, hàng chữa bài 30 phút ngoài 120 phút, câu nối `L07-03` sửa theo ba trục, tổng 120+30 giữ đúng.
+- Chưa tuyên bố render hoặc Codex Slides ở lượt writer.
+
+## Tái kiểm và kiểm định bàn giao ngày 30-08-2026
+
+- Hai tác tử chỉ đọc tái kiểm sau writer đều chạy qua OpenRouter với `requested_model=observed_model=z-ai/glm-5.3-flash`. Tác tử toán học tính lại độc lập X02, X03 và toàn bộ ví dụ số; không có lỗi chặn, nghiêm trọng hoặc trung bình. Tác tử kết nối xác nhận sáu mạch M1–M6, 39 mã trang, độ sâu 2 và các ranh giới phần đều nối được.
+- Hai dương tính giả được giữ làm bằng chứng: tổng thời lượng chính bằng 120 phút; X02 đúng vì $q(C,0;w_1)=798$.
+- Sau kiểm tra ảnh, `L07-27`, `L07-31` và `X01` được rút gọn cục bộ để chừa khoảng an toàn ở mép dưới. Không đổi công thức, kết quả số, thứ tự hoặc vai trò trong mạch.
+- Kiểm tra tĩnh đạt: sáu `<section>` ngoài, 39 `data-slide-id` duy nhất, 39 ghi chú, đủ 39 mã trong outline và storyboard; tám SVG phân tích XML được, có `role="img"`, `title`, `desc`; mọi tham chiếu cục bộ tồn tại; không có ảnh raster hoặc phụ thuộc mạng cốt lõi.
+- Lệnh `python3 -m reloadserver 8765` không khả dụng trong môi trường. Dùng bản sao webroot an toàn không chứa `.env` với `python3 -m http.server 8765`; Chromium duyệt đủ 39 trang ở 1280 × 720 và 800 × 600, tạo 78 ảnh kiểm tra, không có lỗi console, lỗi trang, yêu cầu hỏng hoặc lỗi điều hướng bàn phím. Cảnh báo hình học tự động còn lại chỉ đến từ hộp bao KaTeX và tiêu đề bị biến đổi theo tỉ lệ; đối chiếu trực tiếp toàn bộ ảnh không thấy tràn hoặc chồng lấn.
+- Bản cuối đã được tự kiểm theo `no-ai-slop/eval.md`: không còn lời dẫn rỗng, câu hỏi tu từ, khẩu hiệu hoặc kết luận lặp. Rà theo Quill xác nhận thuật ngữ, ký hiệu và câu chuyển liên tục; không tạo `quill.json`.
+- Dự án Codex Slides bền vững `20260824191033-chuy-n-lecture-7-h-m-x-p-x-trong-h-c-t-n-6jd4` vẫn ở trạng thái draft với 0 trang dựng. Năm Design Files `lecture-07-xap-xi-ham.html`, `outline.md`, `storyboard.md`, `review-log.md`, `note-for-author.md` đã được đồng bộ và đọc lại khớp chính xác với kho. Codex Browser không có trong phiên nên không thể duyệt trực quan bằng giao diện Codex Slides; kiểm tra Chromium cục bộ là bằng chứng trực quan chính.

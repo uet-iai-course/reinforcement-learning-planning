@@ -5,9 +5,11 @@
 - Nguồn chính: `RL-hk2-2025-2026/lecture-07.pdf`, 45 trang.
 - Nguồn bài tập: `RL-hk2-2025-2026/resources/hw07-function-approximation.pdf`, 3 trang, 8 bài.
 - Đối tượng: sinh viên đã học MDP, MC, TD(0), SARSA và Q-learning dạng bảng.
+- Tiên quyết đại số tuyến tính: tích vô hướng có trọng số (dạng $u^TDv$), phép chiếu trực giao lên không gian con và trị riêng của ma trận; sinh viên cần dùng chúng ở phần Bellman chiếu.
 - Phần trình chiếu: 120 phút, gồm 110 phút cốt lõi và 10 phút linh hoạt.
-- Chữa bài: 30 phút ở ba trang dọc `X01`–`X03`.
+- Chữa bài: 30 phút ở ba trang dọc `X01`–`X03`, ngoài 120 phút chính.
 - Không có code demo trong nguồn.
+- Bảng phân loại nguồn tr. 4 (actor-critic/policy methods) được bỏ riêng vì ngoài phạm vi bài; ba trục liên quan (loại đích, quan hệ hành vi–đích, cách cải thiện chính sách) được giữ ở `L07-03`.
 
 ## Mục tiêu
 
@@ -21,19 +23,22 @@ Sau bài học, sinh viên có thể:
 6. nhận diện xấp xỉ hàm, bootstrap và học khác chính sách trong deadly triad;
 7. tự tính các cập nhật tuần tự trong Bài 7 và Bài 8 của phiếu bài tập.
 
-## Dàn ý và thời lượng
+## Dàn ý theo sáu mạch và thời lượng
 
-| Phần | Trang | Nội dung | Cốt lõi | Linh hoạt |
+Sáu mạch chứa bảy cụm khái niệm: cụm so sánh MC–TD nằm cuối M4, nên không cần mạch thứ bảy.
+
+| Mạch | Trang | Nội dung | Cốt lõi | Linh hoạt |
 |---|---|---|---:|---:|
-| Định hướng | `L07-01`–`L07-03` | Cầu nối dạng bảng và kết quả học tập | 7 | 0 |
-| Nhu cầu và biểu diễn | `L07-04`–`L07-11` | Vấn đề bảng tra, chia sẻ tham số, ví dụ, tuyến tính và giới hạn đặc trưng | 21 | 2 |
-| Đích học và Monte Carlo | `L07-12`–`L07-17` | Phân loại đích, return, ví dụ, gradient, thuật toán và điều kiện | 19 | 2 |
-| TD và Bellman chiếu | `L07-18`–`L07-24` | Bootstrap, ví dụ số, bán gradient, hướng trung bình, phép chiếu và hội tụ | 26 | 4 |
-| So sánh MC–TD | `L07-25` | Đối chiếu hai đích và đối tượng phân tích | 3 | 0 |
-| Điều khiển | `L07-26`–`L07-30` | Giá trị hành động, chuỗi ví dụ, SARSA và cập nhật số | 18 | 1 |
-| Khác chính sách, bất ổn và kết | `L07-31`–`L07-36` | Q-learning, deadly triad, phạm vi lý thuyết và kiểm tra | 16 | 1 |
+| M1 Mở đầu và đích học tập | `L07-01`–`L07-03` | Cầu nối dạng bảng, ba trục phân tích và kết quả học tập | 7 | 0 |
+| M2 Nhu cầu xấp xỉ, đặc trưng, biểu diễn | `L07-04`–`L07-11` | Vấn đề bảng tra, chia sẻ tham số, ví dụ, tuyến tính và giới hạn đặc trưng | 21 | 2 |
+| M3 MC tuyến tính | `L07-12`–`L07-17` | Phân loại đích, return, ví dụ, gradient, thuật toán và điều kiện | 19 | 2 |
+| M4 TD, Bellman chiếu và so sánh MC–TD | `L07-18`–`L07-25` | Bootstrap, ví dụ số, bán gradient, phép chiếu, hội tụ và đối chiếu hai đích | 29 | 4 |
+| M5 Điều khiển và SARSA tuyến tính | `L07-26`–`L07-30` | Giá trị hành động, chuỗi ví dụ, SARSA và cập nhật số | 18 | 1 |
+| M6 Q-learning, deadly triad, phạm vi, kết luận | `L07-31`–`L07-36` | Đích Q-learning, bộ ba bất ổn, phạm vi lý thuyết, kết luận và kiểm tra | 16 | 1 |
 | Tổng | 36 trang chính |  | 110 | 10 |
-| Chữa bài | `X01`–`X03` | Đạo hàm MC, MC tuần tự, SARSA tuần tự | 30 | 0 |
+| Chữa bài (dọc, ngoài 120 phút) | `X01`–`X03` | Đạo hàm MC, MC tuần tự, SARSA tuần tự | 30 | 0 |
+
+Tổng kiểm tra: $7+23+21+(30+3)+19+17=120$ phút chính; $30+3$ là hai cụm TD và so sánh MC–TD cùng nằm trong M4. Chữa bài $8+10+12=30$ phút.
 
 ## Ánh xạ nguồn
 
@@ -52,12 +57,12 @@ Sau bài học, sinh viên có thể:
 | 35–36 | giữ, mở rộng | `L07-18`–`L07-24` | Đặt hình học trước đại số; bổ sung điều kiện trực giao, $A$, $b$, $D$, $\Phi$, $P_\pi$, $r_\pi$ và giả thiết. |
 | 37 | giữ, sửa | `L07-25` | Giữ so sánh có thể kiểm chứng; lược tuyên bố hiệu năng quá rộng. |
 | 38–39 | giữ, sắp lại | `L07-26`, `L07-28`–`L07-31` | Đặt SARSA control trước; chỉ dùng Q-learning để phân biệt quy tắc đích và miền cực đại. |
-| 40 | giữ, sửa | `L07-27`, `L07-30`, `X02`, `X03` | Nêu $\gamma=1$, chân trời cưỡng bức và vai trò chỉ sinh dữ liệu của $\varepsilon$ khi chuỗi đã cho. |
+| 40 | giữ, sửa | `L07-27`, `L07-30`, `X02`, `X03` | Nêu $\gamma=1$, lượt dài tối đa ba bước và vai trò chỉ sinh dữ liệu của $\varepsilon$ khi chuỗi đã cho. |
 | 41 | giữ, sửa | `L07-32`–`L07-33` | Deadly triad có thể gây phân kỳ, không phải luôn gây phân kỳ. |
 | 42–43 | gộp | `L07-34` | Không dạy chi tiết LSVI vì nguồn không đủ thiết lập; giữ ranh giới lý thuyết. |
 | 44 | bỏ một phần | `L07-35`–`L07-36` | Bỏ bound $\widetilde O(d/\varepsilon^2)$ do thiếu mô hình và thước đo sai số. |
 | 45 | giữ trong ghi chú | nhiều trang | Nguồn được đặt sát mệnh đề thay vì một trang tài liệu tham khảo dày. |
-| HW 1–3 | chuyển sang tự học | `note-for-author.md` | Câu trình bày lặp với nội dung chính. |
+| HW 1–3 | chuyển sang tự học | `note-for-author.md`, ghi chú `L07-36` | Câu trình bày lặp với nội dung chính. |
 | HW 4 | giữ | `X01` | Bài đạo hàm trực tiếp. |
 | HW 5–6 | linh hoạt/tự học | `L07-21`–`L07-24`, `note-for-author.md` | Nội dung đã được giải thích trong phần Bellman chiếu và điều kiện bước học. |
 | HW 7 | giữ, tính lại | `X02` | Chữa cập nhật MC tuần tự. |
@@ -81,6 +86,10 @@ Sau bài học, sinh viên có thể:
 | $\Pi_D$ | phép chiếu trực giao lên $\operatorname{col}(\Phi)$ theo chuẩn $D$ |
 | $G_t$ | return từ thời điểm $t$ đến cuối lượt |
 | $\delta_t$ | sai số TD của một chuyển tiếp |
+
+## Danh mục đầy đủ 39 mã trang
+
+M1: `L07-01`, `L07-02`, `L07-03`. M2: `L07-04`, `L07-05`, `L07-06`, `L07-07`, `L07-08`, `L07-09`, `L07-10`, `L07-11`. M3: `L07-12`, `L07-13`, `L07-14`, `L07-15`, `L07-16`, `L07-17`. M4: `L07-18`, `L07-19`, `L07-20`, `L07-21`, `L07-22`, `L07-23`, `L07-24`, `L07-25`. M5: `L07-26`, `L07-27`, `L07-28`, `L07-29`, `L07-30`. M6: `L07-31`, `L07-32`, `L07-33`, `L07-34`, `L07-35`, `L07-36`. Dọc: `X01`, `X02`, `X03`.
 
 ## Tài sản trực quan
 
