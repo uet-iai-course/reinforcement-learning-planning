@@ -31,7 +31,7 @@ Không có code demo vì nguồn không cung cấp chương trình. Các thuật
 | So sánh, lý thuyết và tổng kết | `L10-36`, `L10-37`, `L10-37B`, `L10-38` | 11 | 0 |
 | Tổng | 39 trang chính | 110 | 10 |
 
-Ba bài tập dọc `X01`, `X02`, `X03` dùng lần lượt 10, 8 và 12 phút, tổng 30 phút.
+Ba bài tập dọc `X01`, `X02`, `X03` dùng lần lượt 10, 8 và 12 phút, tổng 30 phút. `X01` nối chung hai cụm baseline–actor–critic và GAE; chỉ tính 10 phút một lần.
 
 Phần linh hoạt gồm đúng hai mục: diễn giải sâu đồ thị và đánh đổi GAE ở `L10-10` (5 phút), khai triển shape và broadcasting ở `L10-28` (5 phút). Nhãn linh hoạt chỉ dùng trong planning, không đưa lên mặt trang chiếu hoặc ghi chú diễn giả.
 
@@ -64,6 +64,10 @@ Mốc ba tiết 50 phút: tiết 1 dừng sau `L10-16`; tiết 2 dừng sau `L10
 
 ## Thuật ngữ và ký hiệu
 
+### Danh mục mã trang
+
+`L10-01`, `L10-02`, `L10-03`, `L10-04`, `L10-05`, `L10-06`, `L10-07`, `L10-08`, `L10-09`, `L10-10`, `L10-11`, `L10-12`, `X01`, `L10-13`, `L10-14`, `L10-15`, `L10-16`, `L10-17`, `L10-18`, `L10-19`, `L10-20`, `X02`, `L10-21`, `L10-22`, `L10-23`, `L10-24`, `L10-25`, `L10-26`, `L10-27`, `L10-28`, `L10-29`, `L10-30`, `L10-31`, `L10-32`, `L10-33`, `L10-34`, `L10-35`, `X03`, `L10-36`, `L10-37`, `L10-37B`, `L10-38`.
+
 | ký hiệu | nghĩa |
 |---|---|
 | $R_{t+1}$ | phần thưởng nhận sau hành động $A_t$ |
@@ -76,7 +80,7 @@ Mốc ba tiết 50 phút: tiết 1 dừng sau `L10-16`; tiết 2 dừng sau `L10
 | $w_t(\theta)$ | tỷ số $\pi_\theta(A_t\mid S_t)/\pi_{\mathrm{old}}(A_t\mid S_t)$ |
 | $\mathbb E_{\mathrm{disc},\pi}$ | kỳ vọng theo occupancy chiết khấu đã chuẩn hóa và hành động từ $\pi$ |
 | $\mathbb E_B$ | trung bình đều trên $B=HN$ mẫu thực hành |
-| $F$ | Fisher lý tưởng: Hessian average-KL và kỳ vọng score outer product trên hành động từ $\pi_{\mathrm{old}}$ |
+| $F$ | Fisher cục bộ trên phân bố trạng thái của batch: Hessian average-KL và kỳ vọng score outer product theo $\pi_{\mathrm{old}}$ |
 | $\widehat F$ | ước lượng Monte Carlo $B^{-1}\sum_tu_tu_t^\top$ dùng trong FVP/CG |
 | $V_{\mathrm{boot}}$ | $V_{\mathrm{old}}(S_H)\in\mathbb R^N$ từ quan sát cuối trước reset; không dùng quan sát reset |
 | $\delta$ | bán kính KL của TRPO |

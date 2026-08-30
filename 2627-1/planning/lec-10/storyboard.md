@@ -14,7 +14,7 @@ Các khoảng thời gian dưới đây không chồng lặp. Tuyến cốt lõi
 | PPO thực hành | vấn đề → cơ chế → ứng dụng → kiểm tra | `L10-29`–`L10-35`, `X03` | batch on-policy → schema, chẩn đoán và kiểm toán | 14 phút | 0 |
 | So sánh, lý thuyết và tổng kết | so sánh → mô hình → kết quả có điều kiện → tổng hợp | `L10-36`, `L10-37`, `L10-37B`, `L10-38` | thuật toán thực hành → kết luận có phạm vi | 11 phút | 0 |
 
-`X01`, `X02`, `X03` dùng lần lượt 10, 8 và 12 phút. Các nhãn linh hoạt chỉ tồn tại trong planning; không hiển thị trên trang chiếu hoặc trong ghi chú diễn giả.
+`X01`, `X02`, `X03` dùng lần lượt 10, 8 và 12 phút. `X01` là trang nối chung hai cụm baseline–actor–critic và GAE, nên xuất hiện ở cả hai hàng nhưng chỉ tính 10 phút một lần. Các nhãn linh hoạt chỉ tồn tại trong planning; không hiển thị trên trang chiếu hoặc trong ghi chú diễn giả.
 
 ## Truyền dữ kiện
 

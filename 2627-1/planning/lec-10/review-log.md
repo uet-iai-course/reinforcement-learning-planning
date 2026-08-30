@@ -112,13 +112,40 @@ Kiểm định cuối sau hợp nhất: 42 ID duy nhất; 42/42 trang có ghi ch
 
 Kiểm định sau bốn sửa đổi: 42 ID duy nhất, 42/42 ghi chú, tập ID HTML khớp storyboard; 194 công thức dựng bằng KaTeX cục bộ với `throwOnError`; 7/7 tham chiếu SVG tồn tại và 7/7 tệp phân tích XML, có `role="img"`, `title`, `desc`. `index.html` và `lecture-style.css` không đổi. Rà Quill giữ mạch Fisher lý tưởng → ước lượng Monte Carlo → solver → pipeline biên rollout → chẩn đoán → định lý; rà no-ai-slop loại các nhãn gây suy diễn quá mức.
 
+## Vòng rà soát hiện tại
+
+Runtime của planner, source reader, storyboard reviewer, năm reviewer độc lập và writer: `requested_model = observed_model = z-ai/glm-5.3-flash`, provider OpenRouter. Bản sao worker có 748 dòng nguồn TXT, 6 `section` ngoài và 7 SVG; `.env` không được đưa vào `repo-root` của worker.
+
+Danh mục 42 mã được rà trong vòng này: `L10-01`, `L10-02`, `L10-03`, `L10-04`, `L10-05`, `L10-06`, `L10-07`, `L10-08`, `L10-09`, `L10-10`, `L10-11`, `L10-12`, `X01`, `L10-13`, `L10-14`, `L10-15`, `L10-16`, `L10-17`, `L10-18`, `L10-19`, `L10-20`, `X02`, `L10-21`, `L10-22`, `L10-23`, `L10-24`, `L10-25`, `L10-26`, `L10-27`, `L10-28`, `L10-29`, `L10-30`, `L10-31`, `L10-32`, `L10-33`, `L10-34`, `L10-35`, `X03`, `L10-36`, `L10-37`, `L10-37B`, `L10-38`.
+
+### Planner, source reader và storyboard reviewer
+
+- Planner xác nhận phạm vi 120 phút chính + 30 phút chữa bài và quy trình tuần tự/song song. Điều phối viên bác cách planner dùng số SVG để trả lời số mạch; parser HTML xác nhận 6 mạch ngoài.
+- Source reader lập đủ 43 hàng nguồn→đích và tính lại baseline, GAE, natural gradient, bốn ca PPO-Clip, loss, tensor và giới hạn hội tụ. Báo cáo ghi nhầm 791 dòng; `wc -l` trên tệp worker cho 748 dòng, dùng số 748 làm bằng chứng.
+- Storyboard reviewer xác nhận 42 mã, 6 mạch, 7 SVG, thời lượng 110 + 10 + 30 và không cần đổi số lượng hay thứ tự. `X01` là bài tập nối chung baseline–actor–critic và GAE, tính 10 phút đúng một lần.
+
+### Năm reviewer độc lập
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | quyết định |
+|---|---|---|---|---|
+| trung bình | `L10-16` | Trang dày và dễ đồng nhất identity, xấp xỉ occupancy với ràng buộc KL thực nghiệm. | Ba phép kỳ vọng khác nhau nằm cùng trang. | Giữ một trang để bảo toàn mạch nguồn; rút notes, gọi rõ KL trung bình thực nghiệm và phân biệt max-KL lý thuyết. Render phải kiểm riêng trang này. |
+| trung bình | `L10-31` | Tiêu đề nói ba chẩn đoán nhưng hình có bốn. | Hình gồm KL, clipfrac, entropy và EV; chỉ ba đại lượng cần công thức phép giảm. | Đổi thành “Bốn chẩn đoán, ba phép giảm”; notes nêu entropy được theo dõi trực tiếp. |
+| trung bình | `L10-25` | Cụm “hai số phía bất lợi” làm lẫn hướng tỷ số với dấu lợi thế. | Ca $1{,}4$ có lợi thế dương. | Viết lại thành hai ca ngoài dải theo hướng không cải thiện, nêu rõ hai cặp $(A,w)$. |
+| trung bình | `L10-37B` | $V$, $\theta_{n,1}$ và $\phi_n$ chưa định nghĩa; nguồn bài giảng chỉ nêu kết quả định tính. | Người học có thể nhầm $V$ với critic. | Đối chiếu trực tiếp bài báo ICLR 2024: công thức, `liminf`, hằng số, a.s. và Giả thiết 3.1/3.2/3.4 đều đúng; bổ sung ba định nghĩa, không đổi định lý. |
+| trung bình | nhịp ba tiết | Reviewer sinh viên cho rằng mốc tiết lệch bảng tổng. | Ước lượng cộng theo cụm không xét tuyến cắt và thời lượng linh hoạt. | Chưa đổi mốc khi chưa có bằng chứng diễn tập; giữ tuyến cắt đã ghi và kiểm tải qua render. |
+| trung bình | `X01`, ranh giới mạch 2–3 | Một trang kiểm cả baseline và GAE nên xuất hiện ở hai cụm. | Outline/storyboard có `X01` ở hai hàng. | Ghi rõ đây là trang nối chung, tính 10 phút một lần; không đổi vị trí. |
+| nhẹ | `L10-13`, `L10-17`, `L10-18`, `L10-24`, `L10-37` | Nhãn surrogate/Fisher, công thức bước tổng quát, câu notes và hướng KL còn mơ hồ. | Các công thức đúng nhưng tên gọi hoặc cầu nối chưa đủ chính xác. | Sửa cục bộ theo nguồn; PPO-Penalty dùng $D_{KL}(\pi_{old}\|\pi_\theta)$ và $\beta$ thích ứng. |
+
+Các đề xuất thêm trang tiên quyết, trang tài liệu tham khảo, ví dụ approxKL và bỏ cấu hình viewport bị bác: L10-02 đã viết đầy đủ thuật ngữ, B09 là tiên quyết trong planning, nguồn không yêu cầu trang mới, và cấu hình kỹ thuật phải giữ theo mẫu. Không có lỗi chặn bàn giao hoặc nghiêm trọng.
+
 ## Tái kiểm định và kiểm định cuối của điều phối viên
 
-- Tác tử toán học–thuật toán đã tái kiểm định bản sửa cuối và kết luận `PASS`: không còn vấn đề từ mức `trung bình` trở lên.
-- Tác tử storyboard đã rà trang mới `L10-37B`, hai trang lân cận và toàn bộ cụm bị ảnh hưởng; kết luận `PASS`.
-- Điều phối viên đối chiếu Định lý 3.1 với bài sơ cấp của Jin, Li và Wang tại ICLR 2024; công thức và phạm vi phát biểu trên `L10-37B` khớp nguồn.
-- HTML có 42 mã duy nhất, 42 ghi chú và độ sâu `section` tối đa là hai; storyboard chứa đủ 42 mã theo đúng thứ tự.
-- KaTeX cục bộ dựng nghiêm ngặt 194 biểu thức, không có lỗi. Bảy SVG hợp lệ theo XML, có `role="img"`, `title`, `desc` và đều được HTML sử dụng.
-- Tệp HTML và bảy SVG đều trả HTTP 200 tại cổng 8765. Không có ảnh raster, liên kết planning trong HTML, phụ thuộc mạng cốt lõi hoặc lỗi từ `git diff --check`.
-- Bản HTML và bốn tệp quy trình đã được đưa vào Design Files của dự án Codex Slides và đối chiếu từng byte với tệp trong kho.
-- Codex Slides Browser không khả dụng trong phiên này. Vì vậy chưa thể tuyên bố đã rà trực quan bằng Codex Slides; giới hạn còn lại là kiểm tra tràn, chồng lấn và khả năng đọc bằng trình duyệt đồ họa ở khung 16:9 và màn hình hẹp.
+- Hai lượt tái kiểm độc lập dùng `requested_model = observed_model = z-ai/glm-5.3-flash`, provider OpenRouter. Lượt mạch viết kết luận `PASS` sau khi rà 6 mạch, `X01`, các trang sửa, hai trang lân cận và ranh giới phần. Lượt toán học đầu chạm giới hạn 10 vòng nên không được dùng; chạy lại với 14 vòng, 180 giây và 5.000 token, rồi kết luận `PASS`, không còn lỗi từ mức `trung bình` trở lên.
+- Điều phối viên đối chiếu trực tiếp Định lý 3.1 với bài sơ cấp của Jin, Li và Wang tại ICLR 2024; công thức, `liminf`, hằng số, phát biểu hầu chắc chắn và các Giả thiết 3.1, 3.2, 3.4 trên `L10-37B` khớp nguồn.
+- HTML có 42 mã duy nhất, 42 ghi chú, 6 `section` ngoài và độ sâu `section` tối đa là hai. Outline, storyboard và nhật ký đều chứa đủ 42 mã. Không có ảnh raster, tài nguyên mạng cốt lõi, đường dẫn hỏng hoặc tham chiếu planning trong HTML.
+- Chromium dựng 212 biểu thức KaTeX cục bộ, không có `katex-error` hoặc lỗi console. Bảy SVG đều tồn tại, hợp lệ theo XML, có `role="img"`, `title`, `desc` và được HTML sử dụng.
+- Lệnh bắt buộc `python3 -m reloadserver 8765` không chạy vì môi trường thiếu mô-đun `reloadserver`. Kiểm thử tiếp tục bằng `python3 -m http.server 8765 --bind 127.0.0.1` trên webroot tối thiểu không có `.env`; tệp HTML và bảy SVG đều trả HTTP 200.
+- Đã duyệt 42 trang ở 1280×720 và 42 trang ở 800×600, tổng 84 ảnh chụp. Cả hai viewport không có lỗi console, lỗi tải tài nguyên hoặc lỗi bàn phím. Phép đo hình học báo sai dương ở H1 và một số hộp KaTeX; đối chiếu ảnh xác nhận các phần này nằm trong khung. Một lỗi thật ở `L10-30` làm ba cột chồng nhau đã được sửa bằng lưới `minmax(0,1fr)` và ngắt dòng ký hiệu; lần render toàn bộ sau sửa đạt ở cả hai viewport.
+- Rà Quill giữ tuyến baseline → lợi thế thô → tách actor/critic → TRPO → PPO → chẩn đoán → kết quả lý thuyết. Tự kiểm `no-ai-slop/eval.md` đạt: không thêm mệnh đề, số liệu hoặc nguồn; không còn lời dẫn rỗng, câu hỏi tu từ, nhãn phô trương hoặc nhịp câu máy móc. Không tạo `quill.json`.
+- Bốn Design Files `lecture-10-trpo-va-ppo.html`, `outline.md`, `storyboard.md`, `review-log.md` trong dự án Codex Slides `20260824221550-lecture-10-trpo-v-ppo-p4gd` đã được đồng bộ và đối chiếu nội dung từng byte với tệp trong kho. Trạng thái chuẩn của dự án là `draft`, 0 slide, vì dự án dùng Design Files để lưu bản RevealJS thay vì render deck ảnh.
+- Codex Slides trả handoff chính xác tới `?view=design-files&file=uploaded%2Flecture-10-trpo-va-ppo.html`, nhưng phiên này không có Codex in-editor Browser để mở handoff. Vì vậy không tuyên bố đã xác minh giao diện Design Files trong Browser; rà trực quan RevealJS cục bộ bằng Chromium là bằng chứng hiển thị cuối.
