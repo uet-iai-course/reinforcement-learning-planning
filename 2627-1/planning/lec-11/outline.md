@@ -8,14 +8,15 @@ Sau bài, kết quả học tập chia hai tầng:
 
 **Tầng core — tính và viết được**
 
-1. viết target $n_t$ bước của A3C và so sánh với A2C;
-2. viết target, Jacobian–gradient và hợp đồng replay của DDPG/MADDPG;
-3. tính target và phân biệt objective/cơ chế của SAC với TD3;
-4. kiểm tra support, occupancy, terminal/cutoff, mạng target, noise và dừng gradient.
+1. tính objective SPO và nhiễu SAM đúng dấu;
+2. viết target $n_t$ bước của A3C và so sánh với A2C;
+3. viết target, Jacobian–gradient và hợp đồng replay của DDPG/MADDPG;
+4. tính target và phân biệt objective/cơ chế của SAC với TD3;
+5. kiểm tra support, occupancy, terminal/cutoff, mạng target, noise và dừng gradient.
 
 **Tầng định hướng — nhận dạng cơ chế và giới hạn**
 
-- SPO, SAM, D4PG, ACER, ACKTR, SVPG, IMPALA và PPG;
+- D4PG, ACER, ACKTR, SVPG, IMPALA và PPG;
 - không yêu cầu triển khai đầy đủ các thuật toán định hướng.
 
 ## Thời lượng
@@ -41,7 +42,7 @@ Các bài tập `X01`, `X02`, `X03` dùng 8, 12 và 10 phút, tổng 30 phút.
 | 4–43 | gộp | `L11-01` | Nội dung đã học ở Bài 10; chỉ giữ một cầu nối tiên quyết. |
 | 44–47 | tách, sửa | `L11-04`–`L11-07`, `X01` | Đi theo vấn đề → trực giác → số $A=\pm2$ → objective/đạo hàm/$A=0$; SPO chỉ thay policy loss. |
 | 48–51 | tách, sửa | `L11-08`–`L11-12`, `X01` | Đi theo sharp/flat → số $g=(3,4)$ → max–min/thuật toán → liên hệ có điều kiện → phạm vi bằng chứng. |
-| 52 | dời cục bộ | `L11-03` | Dùng khung đọc chung ngay đầu bài. |
+| 52 | dời cục bộ | `L11-13` | Dùng vấn đề khác chính sách sau khi đã dựng actor–critic core. |
 | 53–54 | sửa | `L11-16` | Khóa đường gradient actor và critic. |
 | 55–56 | tách, sửa | `L11-13`–`L11-15`, `X02` | Tách action IS khỏi trajectory/occupancy mismatch. |
 | 57–58 | tách, sửa, dời trước off-policy | `L11-16`–`L11-19` | Actor–critic core đứng trước replay; A3C dùng snapshot $\phi_{\mathrm{loc}}$, target dừng tại $n_t$ và không dùng target network. |
@@ -64,6 +65,7 @@ Các bài tập `X01`, `X02`, `X03` dùng 8, 12 và 10 phút, tổng 30 phút.
 | $\beta,\pi$ | behavior policy và target policy |
 | $d_{\rho_0,\gamma}^{\mu}$ | occupancy chiết khấu chuẩn hóa của policy tất định |
 | $m_t$ | mặt nạ terminal thật |
+| $\operatorname{sg}(x)$ | coi $x$ là hằng số khi lấy đạo hàm; dừng gradient qua $x$ |
 | $\theta,\phi$ | tham số actor và critic online |
 | $\bar\theta,\bar\phi$ | tham số actor và critic target |
 | $\phi_{\mathrm{loc}}$ | snapshot critic cục bộ của worker A3C; không phải mạng target |
@@ -76,3 +78,7 @@ Tên viết tắt dùng nhất quán: Simple Policy Optimization (SPO, tối ưu
 ## SVG
 
 `spo-ratio-field.svg`, `sam-parameter-neighborhood.svg`, `sam-claim-scope.svg`, `offpolicy-corrections.svg`, `a3c-a2c-workers.svg`, `dpg-chain-rule.svg`, `ddpg-data-targets.svg`, `d4pg-maddpg.svg`, `acer-acktr.svg`, `sac-td3-targets.svg`, `survey-three-methods.svg`.
+
+## Danh mục mã trang
+
+`L11-01`, `L11-02`, `L11-03`, `L11-04`, `L11-05`, `L11-06`, `L11-07`, `L11-08`, `L11-09`, `L11-10`, `L11-11`, `L11-12`, `X01`, `L11-16`, `L11-17`, `L11-18`, `L11-19`, `L11-13`, `L11-14`, `L11-15`, `L11-20`, `L11-21`, `L11-22`, `L11-23`, `L11-24`, `L11-25`, `L11-26`, `L11-27`, `L11-28`, `X02`, `L11-29`, `L11-30`, `L11-31`, `L11-32`, `L11-33`, `L11-34`, `L11-35`, `L11-36`, `L11-37`, `L11-38`, `L11-39`, `L11-40`, `L11-41`, `L11-42`, `X03`, `L11-43`.

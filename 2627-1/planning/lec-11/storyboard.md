@@ -29,7 +29,7 @@ Các khoảng trên phủ đúng 43 trang chính, không chồng lặp: 110 phú
 | mã | luận điểm | bước |
 |---|---|---|
 | `L11-01` | Một cầu nối từ PPO sang các biến thể nâng cao. | mở |
-| `L11-02` | Tách tầng core phải tính/viết khỏi tầng định hướng chỉ nhận dạng. | định hướng |
+| `L11-02` | Đưa SPO/SAM, A3C/A2C, DDPG/MADDPG và SAC/TD3 vào tầng phải tính/viết; tách phần khảo sát chỉ nhận dạng. | định hướng |
 | `L11-03` | Recap hiện rõ $w$, dấu lợi thế và batch cũ đóng băng. | tiên quyết |
 | `L11-04` | PPO có vùng gradient bằng không theo mẫu. | vấn đề SPO |
 | `L11-05` | Penalty tạo lực kéo về $1\pm\epsilon$ theo dấu lợi thế. | trực giác |
@@ -57,7 +57,7 @@ Các khoảng trên phủ đúng 43 trang chính, không chồng lặp: 110 phú
 | `L11-26` | MADDPG core dùng CTDE và Jacobian chuyển vị đúng shape. | trực giác, hình thức |
 | `L11-27` | Target MADDPG dùng mọi target actor. | thuật toán |
 | `L11-28` | D4PG và MADDPG sửa hai giới hạn khác nhau. | so sánh |
-| `X02` | Kiểm IS, kích thước DPG và noise DDPG. | kiểm tra |
+| `X02` | Kiểm IS, kích thước DPG và target DDPG tại terminal/cutoff. | kiểm tra |
 | `L11-29` | ACER định hướng: support, tỷ số cắt và residual correction; Retrace/trust region không triển khai. | định hướng |
 | `L11-30` | ACKTR định hướng: công thức chỉ là lõi K-FAC, còn damping/trust scaling ở ghi chú. | định hướng |
 | `L11-31` | ACER sửa dữ liệu; ACKTR sửa hình học. | so sánh |
@@ -68,9 +68,9 @@ Các khoảng trên phủ đúng 43 trang chính, không chồng lặp: 110 phú
 | `L11-36` | TD3 dùng noise clip rồi action clip, actor $Q_1$, critic mỗi bước và actor/target mỗi $d$. | thuật toán |
 | `L11-37` | SAC stochastic/entropy khác TD3 deterministic/noise ngoài policy. | so sánh, ứng dụng |
 | `L11-38` | SVPG giả sử prior đều, định nghĩa particle/kernel/$\alpha$ và lực đẩy. | định hướng |
-| `L11-39` | V-trace định nghĩa $\mu,\pi,u,\rho,c,\gamma_t$ và vai trò residual/trace. | định hướng |
+| `L11-39` | V-trace định nghĩa $\mu,\pi,u,\rho,c,\gamma_t$; mặt trang tách vai trò residual/trace, còn tổng trace đầy đủ nằm trong ghi chú. | định hướng |
 | `L11-40` | PPG dùng $L_{\mathrm{joint}}$, auxiliary value head, policy/target trước pha đóng băng. | định hướng |
-| `L11-41` | Ba phương pháp trả lời ba bài toán. | so sánh |
-| `L11-42` | Bản đồ nhiều thuộc tính, không coi các hàng là loại trừ. | tổng hợp |
-| `X03` | Tính twin target rồi chọn ba scenario: continuous replay, CTDE và policy lag. | kiểm tra |
-| `L11-43` | Năm phép kiểm cho phương pháp mới. | tổng hợp |
+| `L11-41` | Ba phương pháp trả lời ba bài toán và mở sang bản đồ chung. | so sánh |
+| `L11-42` | Bản đồ theo họ, dữ liệu, actor và cơ chế; A3C/A2C hiện rõ, SAM/ACKTR không bị gán nhầm loại dữ liệu. | tổng hợp |
+| `X03` | Tính twin target rồi chọn ba tình huống: continuous replay, CTDE và policy lag; nêu tradeoff và vai trò $\rho/c$. | kiểm tra |
+| `L11-43` | Năm phép kiểm thu hồi bài tập và dẫn về nguồn sơ cấp. | tổng hợp |

@@ -39,9 +39,9 @@
 - Đã dùng nguyên tắc `codex-slides`: kế thừa template/CSS/thư viện cục bộ, một luận điểm trung tâm, hình đủ lớn và ghi chú có nguồn. Điều phối viên thực hiện bước nhập dự án và rà trực quan.
 - Không sửa `index.html`, `lecture-style.css`, RevealJS hoặc plugin.
 
-## Trạng thái
+## Trạng thái vòng hiện tại
 
-Bản nháp có 43 trang chính, 3 bài tập dọc, 11 SVG, 110 phút cốt lõi, 10 phút mở rộng và 30 phút bài tập. Chưa qua tác tử kiểm định storyboard, bốn phản biện độc lập hoặc rà trực quan cuối.
+Bản nháp có 43 trang chính, 3 bài tập dọc, 5 mạch ngoài, 11 SVG, 110 phút cốt lõi, 10 phút mở rộng và 30 phút bài tập. Nguồn văn bản trích xuất có 1.326 dòng theo `wc -l`; số 1.404 do worker báo là số dòng đã chuẩn hóa qua cầu nối và không được dùng làm chuẩn. Bản này đã qua kiểm định storyboard và năm phản biện độc lập; kiểm định hiển thị cuối được ghi sau khi hoàn tất.
 
 ## Đóng SB11-01–SB11-12
 
@@ -95,3 +95,41 @@ Kiểm định cuối sau hợp nhất bốn phản biện: 46 ID duy nhất g�
 - Tệp HTML và 11 SVG đều trả HTTP 200 tại cổng 8765. Không có ảnh raster, liên kết planning trong HTML, phụ thuộc mạng cốt lõi hoặc lỗi từ `git diff --check`.
 - Bản HTML và bốn tệp quy trình đã được đưa vào Design Files của dự án Codex Slides và đối chiếu từng byte với tệp trong kho.
 - Codex Slides Browser không khả dụng trong phiên này. Vì vậy chưa thể tuyên bố đã rà trực quan bằng Codex Slides; giới hạn còn lại là kiểm tra tràn, chồng lấn và khả năng đọc bằng trình duyệt đồ họa ở khung 16:9 và màn hình hẹp.
+
+## Năm phản biện độc lập — vòng hiện tại
+
+Năm báo cáo hợp lệ đều chạy qua `openrouter-mcp-reviewer --json --progress jsonl` với `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`. Lượt sinh viên đầu hết thời gian, lượt toán đầu bị cắt đầu ra và lượt kết nối đầu hết giới hạn công cụ; ba lượt đó không được dùng làm bằng chứng. Các lượt chạy lại là tiến trình độc lập.
+
+| vai | mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa và quyết định |
+|---|---|---|---|---|---|
+| góc nhìn sinh viên | trung bình | `L11-02`, `X01` | Mục tiêu gọi SPO/SAM là định hướng trong khi bài tập yêu cầu tính. | `X01` tính cả objective SPO và nhiễu SAM. | Đưa SPO/SAM vào tầng core; giữ các thuật toán khảo sát ở tầng nhận dạng. Đã áp dụng. |
+| góc nhìn sinh viên | trung bình | `L11-39`, `L11-42` | Công thức V-trace và bảng tổng hợp dày. | Trang `L11-39` từng hiển thị cả tổng trace; `L11-42` có tám hàng. | Chuyển tổng trace đầy đủ sang ghi chú; giữ bảng ở `.87em` và kiểm bằng render. Đã áp dụng phần nội dung, chờ render. |
+| chuyên gia Học tăng cường | trung bình | `L11-16`, `L11-19` | Toán tử dừng gradient và mô tả staleness chưa đủ trực tiếp. | `sg` chưa được định nghĩa; A2C chỉ loại staleness giữa worker. | Định nghĩa $\operatorname{sg}$ và target critic; thu hẹp phát biểu A2C. Đã áp dụng. |
+| chuyên gia Học tăng cường | trung bình | `L11-42` | Bản đồ bỏ A3C/A2C và gán dữ liệu/actor cho SAM, ACKTR như thuộc tính cố định. | Hai thuật toán actor–critic core không có hàng; SAM/ACKTR là cơ chế tối ưu. | Thêm A3C/A2C; ghi “không do cơ chế xác định” cho SAM/ACKTR. Đã áp dụng. |
+| toán học và thuật toán | nhẹ | `L11-35`–`L11-36` | Dấu phẩy trên trạng thái/hành động kế tiếp chưa nhất quán. | Một số công thức dùng ký hiệu kế tiếp không có dấu phẩy. | Đồng bộ $S'$ và $A'$ trong công thức SAC/TD3. Đã áp dụng. |
+| toán học và thuật toán | nhẹ | `L11-38`–`L11-39` | Cần khóa quy ước $1/n$ và vai trò riêng của $\rho_t,c_t$. | Scale SVPG và hai tỷ số cắt có thể bị đọc như cùng chức năng. | Nêu $1/n$ là quy ước trung bình; $\rho_t$ sửa residual, $c_t$ truyền trace. Đã áp dụng. |
+| phản biện học thuật và giảng dạy | trung bình | `X02`, `L11-41` | Tên bước kiểm và cầu nối sang bản đồ chưa khớp nội dung hiện hành. | `X02` kiểm terminal/cutoff, không kiểm noise; `L11-41` chưa dẫn sang trục tổng hợp. | Sửa storyboard và thêm câu nối trong ghi chú. Đã áp dụng. |
+| kết nối và mạch viết | trung bình | `L11-41`–`L11-43` | Vai trò trong mạch: so sánh ba khảo sát; kết nối vào từ survey rõ nhưng kết nối ra sang bản đồ và checklist còn mờ. | Bản cũ chuyển trực tiếp từ bảng ba phương pháp sang bảng toàn bài rồi bài tập. | Dẫn `L11-41` sang bản đồ, `L11-42` sang `X03`, và `X03` sang checklist. Đã áp dụng. |
+| kết nối và mạch viết | nhẹ | `L11-43` | Vai trò trong mạch: thu hồi bài; kết nối vào từ `X03` có, kết nối ra nguồn sơ cấp chưa rõ. | Ghi chú cuối chỉ liệt kê nguồn mà chưa gắn với năm phép kiểm. | Nêu `X03` đã dùng bốn phép kiểm và phép thứ năm giới hạn kết luận theo nguồn. Đã áp dụng. |
+
+Không có lỗi `chặn bàn giao` hoặc `nghiêm trọng` trong năm báo cáo hợp lệ. Đề xuất cũ thêm tình huống đa dạng quần thể và hai mục nhận dạng PPG/ACER vào `X03` không áp dụng: rubric hiện hành gồm bốn câu trong 10 phút và đã kiểm đủ target, tradeoff, CTDE, policy lag. Quyết định này thay thế mô tả SB11-07 cũ.
+
+## Danh mục mã trang vòng hiện tại
+
+`L11-01`, `L11-02`, `L11-03`, `L11-04`, `L11-05`, `L11-06`, `L11-07`, `L11-08`, `L11-09`, `L11-10`, `L11-11`, `L11-12`, `X01`, `L11-16`, `L11-17`, `L11-18`, `L11-19`, `L11-13`, `L11-14`, `L11-15`, `L11-20`, `L11-21`, `L11-22`, `L11-23`, `L11-24`, `L11-25`, `L11-26`, `L11-27`, `L11-28`, `X02`, `L11-29`, `L11-30`, `L11-31`, `L11-32`, `L11-33`, `L11-34`, `L11-35`, `L11-36`, `L11-37`, `L11-38`, `L11-39`, `L11-40`, `L11-41`, `L11-42`, `X03`, `L11-43`.
+
+Các cảnh báo “nguồn có 1.404 dòng”, “HTML có 70 dòng so với nguồn” và “không có mạch ngoài” bị bác bỏ vì lần lượt dùng số dòng chuẩn hóa của cầu nối, so nhầm HTML với văn bản nguồn và không phân tích cấu trúc `section` lồng nhau. Chuẩn điều phối viên là 1.326 dòng theo `wc -l`, 46 trang đích và 5 mạch ngoài.
+
+## Kiểm định cuối vòng 30-08-2026
+
+Mục này thay thế các số kiểm định cũ ở phía trên.
+
+- Tái kiểm toán học dùng `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`. Các trang trong phạm vi đều đạt. Cảnh báo đặt $\beta_{\mathrm{clone}}$ nhầm hạng ở `L11-40` bị bác bỏ sau khi đối chiếu phương trình gốc của Cobbe et al. (2021): $L_{\mathrm{joint}}=L_{\mathrm{aux}}+\beta_{\mathrm{clone}}\,\mathbb E[D_{\mathrm{KL}}(\pi_{\mathrm{old}}\|\pi_\theta)]$. Công thức hiện hành đúng nguồn.
+- Tái kiểm kết nối dùng cùng runtime trên và kết luận `PASS`: đủ 5 mạch ngoài; tuyến 110 phút cốt lõi + 10 phút linh hoạt; 30 phút cho `X01/X02/X03`. Sau hai sửa nhẹ, lượt rà hẹp xác nhận `L11-36` → `L11-37` → `L11-38` và `L11-42` → `X03` → `L11-43` liền mạch.
+- HTML có 46 mã duy nhất, 46 ghi chú, 5 `section` ngoài và độ sâu tối đa hai. Tập mã khớp outline, storyboard và nhật ký. Có 11 tham chiếu SVG duy nhất; tất cả tồn tại, hợp lệ XML và có `role="img"`, `title`, `desc`. Không có ảnh raster hoặc tài nguyên cốt lõi từ mạng.
+- Lệnh bắt buộc `python3 -m reloadserver 8765` không chạy vì môi trường thiếu mô-đun `reloadserver`. Kiểm thử dùng phương án cục bộ `python3 -m http.server 8765 --bind 127.0.0.1` trên webroot tạm không chứa `.env`.
+- HTML và 11 SVG đều trả HTTP 200. RevealJS dựng 46 trang và 46 ghi chú; 149 biểu thức KaTeX, 0 lỗi KaTeX, 0 lỗi console. Điều hướng bàn phím lên, xuống và sang phải đúng.
+- Đã chụp và duyệt 92 ảnh, gồm toàn bộ 46 trang ở 1280 × 720 và 800 × 600. Cảnh báo biên tự động trên một số hộp KaTeX là dương tính giả do hộp span sau scale; ảnh không có nội dung bị cắt. Ba trang câu hỏi được kiểm thêm khi hiện toàn bộ 2, 2 và 4 fragment; không có fragment tràn hoặc bị cắt.
+- Rà `no-ai-slop` không thấy tiêu đề câu hỏi tu từ, khẩu hiệu, lời ca tụng hoặc tuyên bố phổ quát mới. Rà mạch theo `quill` xác nhận chuỗi PPO → SPO/SAM → actor–critic → khác chính sách → DPG/DDPG → SAC/TD3 → khảo sát → bản đồ/checklist; không tạo `quill.json`.
+- Năm Design Files của dự án Codex Slides `20260825000420-lecture-11-c-c-ph-ng-ph-p-gradient-ch-nh-w00c` đã được đồng bộ và đối chiếu chính xác với HTML, outline, storyboard, ghi chú tác giả và nhật ký trong kho. Dự án vẫn ở trạng thái draft với 0 slide native; liên kết Design Files đã tạo, nhưng Codex in-editor Browser không khả dụng trong phiên nên không tuyên bố đã rà trực quan trong giao diện Codex Slides.
+- `2627-1/index.html` đã có đúng một liên kết tới Bài 11 và không liên kết tệp quy trình. `git diff --check` đạt.

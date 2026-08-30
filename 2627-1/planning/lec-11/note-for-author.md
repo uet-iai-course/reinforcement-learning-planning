@@ -8,7 +8,7 @@
 
 ## Điểm cần nhấn
 
-- Tầng core yêu cầu tính/viết: A3C–A2C, DDPG–MADDPG và SAC–TD3. D4PG, ACER, ACKTR, SVPG, IMPALA, PPG chỉ yêu cầu nhận dạng cơ chế và giới hạn.
+- Tầng core yêu cầu tính/viết: SPO–SAM, A3C–A2C, DDPG–MADDPG và SAC–TD3. D4PG, ACER, ACKTR, SVPG, IMPALA, PPG chỉ yêu cầu nhận dạng cơ chế và giới hạn.
 
 - SPO: $0<\epsilon\le1$, $w\ge0$; nghiệm $1+\operatorname{sign}(A)\epsilon$ chỉ duy nhất khi $A\ne0$.
 - SAM cực đại hóa reward nên nhiễu inner đi ngược gradient. Dùng $\xi$ cho nhiễu, không dùng epsilon clipping.
@@ -27,7 +27,7 @@
 
 - Kết quả SAM+PPO chỉ được mô tả trong ba tác vụ MuJoCo và giao thức của paper; không ngoại suy thành bảo đảm phổ quát.
 - SVPG, IMPALA và PPG là phần định hướng. Không triển khai giả mã đầy đủ hoặc benchmark trên lớp.
-- Không biến bảng cuối nguồn thành khuyến nghị “default/best”. Dùng `L11-42` theo hai trục nguồn dữ liệu và loại actor; bài `X03` yêu cầu chọn họ rồi nêu tradeoff.
+- Không biến bảng cuối nguồn thành khuyến nghị “default/best”. Dùng `L11-42` theo bốn thuộc tính: họ, dữ liệu, actor và cơ chế; bài `X03` gồm bốn câu trong 10 phút, yêu cầu tính target rồi chọn họ và nêu tradeoff.
 - Không chuẩn bị notebook vì nguồn không có code demo.
 
 ## Tự tính trước khi giảng
