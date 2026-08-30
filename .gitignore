@@ -7,6 +7,22 @@
 !favicon.ico
 !favicon.png
 !AGENTS.md
+!codex-orchestrator
+
+!openrouter-mcp/
+!openrouter-mcp/**
+openrouter-mcp/.venv/
+openrouter-mcp/**/__pycache__/
+openrouter-mcp/tmp/
+
+!.codex/
+.codex/*
+!.codex/config.toml
+!.codex/README.md
+!.codex/workflow-smoke-test-prompt.md
+!.codex/agents/
+.codex/agents/*
+!.codex/agents/*.toml
 
 !2627-1/
 2627-1/*
