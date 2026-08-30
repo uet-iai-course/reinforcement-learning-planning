@@ -3,39 +3,40 @@
 ## Mục tiêu và phạm vi
 
 - Đối tượng: sinh viên đại học đã học học máy, học sâu và thuật toán.
-- Phần trình chiếu P–G: 120 phút. H04–H07 và Z00: 30 phút chữa bài, thảo luận và giao tự kiểm tra.
+- Phần trình chiếu chính: 120 phút. Phần bài tập: 30 phút chữa bài, thảo luận và giao tự kiểm tra.
 - LLO1: giải thích tác tử học từ tương tác, phản hồi trễ và dữ liệu phụ thuộc thời gian.
 - LLO2: phân biệt Học tăng cường với học có giám sát và không giám sát.
 - LLO3: mô tả chính sách, hàm giá trị và mô hình tùy chọn.
 - LLO4: biểu diễn Tic-tac-toe bằng trạng thái, hành động và phần thưởng.
 - Chưa gán CLO vì bản nguồn dùng chuẩn đầu ra của học phần *Intelligent Agents and Robotics*. Cần đối chiếu đề cương Học tăng cường 2026–2027 trước khi gán.
 
-## Dàn ý
+## Bảy mạch ngoài
 
-| Cụm | Nội dung | Mục tiêu | Thời lượng |
-|---|---|---|---:|
-| 1 | Định hướng, tác tử học, giới hạn mô hình cố định và hai trường hợp | LLO1 | 34 phút |
-| 2 | Khung Học tăng cường và ba dạng tín hiệu học | LLO1, LLO2 | 22 phút |
-| 3 | Phần thưởng và kết quả dài hạn | LLO1 | 18 phút |
-| 4 | Chính sách, hàm giá trị, mô hình tùy chọn | LLO3 | 14 phút |
-| 5 | Thăm dò và khai thác | LLO1, LLO3 | 14 phút |
-| 6 | Tic-tac-toe | LLO3, LLO4 | 18 phút |
+| Mạch | data-slide-id | Nội dung | Mục tiêu | Thời lượng |
+|---|---|---|---|---:|
+| 1. P+A+B | P00–P02, A00–A04, B00–B02 | Định hướng, tác tử học, giới hạn mô hình cố định, hai trường hợp tiêu biểu | LLO1 | 30 phút |
+| 2. C | C00–C05 | Khung Học tăng cường và ba dạng tín hiệu học | LLO1, LLO2 | 22 phút |
+| 3. D | D00–D03 | Phần thưởng và kết quả dài hạn | LLO1 | 18 phút |
+| 4. E | E00–E02 | Chính sách, hàm giá trị, mô hình tùy chọn | LLO3 | 18 phút |
+| 5. F | F00–F03 | Thăm dò và khai thác | LLO1, LLO3 | 14 phút |
+| 6. G | G00–G04 | Tic-tac-toe | LLO3, LLO4 | 18 phút |
+| 7. H+Z | H04–H07, Z00 | Bài tập: ôn tập, thảo luận, tự kiểm tra | LLO1–LLO4 | 30 phút |
 
-Tổng sáu cụm P–G: 120 phút.
+Tổng trình chiếu chính (mạch 1–6): 120 phút. Mạch 7 là phần bài tập 30 phút. Phụ lục H00–H03 nằm trong stack dọc dưới Z00, không thuộc tuyến 150 phút.
 
-## Phần 30 phút cuối
+Tuyến trình chiếu: P00–G04 → H04–H07 → Z00. Tại Z00, nhấn ↓ để mở H00–H03 khi cần đối chiếu thông tin trong bản nguồn.
+
+## Phần 30 phút bài tập
 
 | Trang | Hoạt động | Thời lượng |
 |---|---|---:|
 | H04 | Chữa câu hỏi về động cơ, tín hiệu và phản hồi trễ | 6 phút |
-| H05 | Chữa câu hỏi về thành phần, đánh đổi và Tic-tac-toe | 7 phút |
+| H05 | Chữa câu hỏi về thành phần, đánh đổi và robot dọn nhà | 7 phút |
 | H06 | Thảo luận tác tử tổng quát | 7 phút |
 | H07 | Thảo luận mô hình thế giới | 7 phút |
 | Z00 | Giao tự kiểm tra và tài liệu đọc | 3 phút |
 
-Tổng: 30 phút. Không có code demo vì bản nguồn không có nội dung mã. H00–H03 là phụ lục truy nguyên trong stack dọc dưới Z00 và không thuộc tuyến 150 phút.
-
-Tuyến ngang: P00–G04 → H04–H07 → Z00. Tại Z00, nhấn ↓ để mở H00–H03 khi cần đối chiếu thông tin trong bản nguồn.
+Tổng: 30 phút. Không có code demo vì bản nguồn không có nội dung mã.
 
 ## Bảng thuật ngữ và ký hiệu
 
@@ -48,12 +49,23 @@ Tuyến ngang: P00–G04 → H04–H07 → Z00. Tại Z00, nhấn ↓ để mở
 | $T$ | Chỉ số của trạng thái kết thúc trong nhiệm vụ hữu hạn. |
 | $G_t=\sum_{k=t+1}^{T}R_k$ | Tổng phần thưởng từ sau bước $t$ đến khi kết thúc. |
 | $H_t$, $h_t$ | Biến lịch sử ngẫu nhiên và lịch sử đã quan sát đến bước $t$. |
+| cầu nối $h_t\leftrightarrow(S_t,\text{lượt})$ | Trong Tic-tac-toe quan sát đầy đủ, lịch sử $h_t$ rút gọn thành cặp (thế cờ $S_t$, lượt chơi); dùng ở E01, G00, G03. |
 | $\pi(a\mid h_t)$ | Phân phối chọn hành động; chính sách có thể ngẫu nhiên. |
 | $V^\pi(h_t)$ | Kỳ vọng của $G_t$ dưới chính sách $\pi$, theo ngẫu nhiên của chính sách và môi trường. |
+| $a^*$ | Hành động khai thác một bước: $a^*\in\arg\max_{a\in\mathcal A(S_t)}\mathbb E_\pi[R_{t+1}+V^\pi(S_{t+1})\mid S_t,A_t=a]$; chỉ dùng ở G03. |
+| $\widehat S_{t+1}$, $\widehat O_{t+1}$, $\widehat R_{t+1}$ | Dự báo của mô hình môi trường về trạng thái/quan sát kế tiếp và phần thưởng; dấu mũ biểu thị dự báo, không khẳng định đúng tuyệt đối. Dùng ở E02. |
+| $R_{t+1}^{(a)}$ | Không dùng trong bản hiện hành; phần thưởng theo hành động được viết qua điều kiện $A_t=a$ trong kỳ vọng ở G03. |
 | mô hình môi trường | Dự báo quan sát hoặc trạng thái kế tiếp và phần thưởng; thành phần tùy chọn. |
 | $S_t$ | Trạng thái Tic-tac-toe ở bước $t$. |
 | $\mathcal A(S_t)$ | Tập ô trống ở trạng thái $S_t$. |
 | $A_t$ | Hành động thỏa $A_t\in\mathcal A(S_t)$. |
+
+## Quy ước nội dung đã chốt trên HTML
+
+- G03: kỳ vọng điều kiện $\mathbb E_\pi[\,\cdot\mid S_t,A_t=a\,]$; thưởng tức thời 0 cho nước chưa kết thúc, giá trị trạng thái kết thúc bằng 0.
+- G04: bài kiểm tra mô hình hóa với ô 5 không hợp lệ; H05 có nhiệm vụ chuyển giao robot dọn nhà.
+- G02: quy ước thưởng $+1/0/-1$ từ góc nhìn tác tử; $0$ ở bước chưa kết thúc và khi hòa.
+- Mọi hình SVG có `alt`/`title`/`desc` mô tả; các câu nối giữa trang dẫn về nguồn tương ứng.
 
 ## Ánh xạ 45 trang nguồn
 
@@ -94,7 +106,7 @@ Tuyến ngang: P00–G04 → H04–H07 → Z00. Tại Z00, nhấn ↓ để mở
 | 33 | Lịch học | H02 | Gộp thành bản đồ SVG. |
 | 34 | Tài liệu | H02, Z00 | Tách tài liệu dùng học và danh mục đọc. |
 | 35 | Đánh giá | H03 | Giữ, ghi trạng thái chưa xác nhận. |
-| 36 | Giảng viên và trợ giảng | P00, H00 | Bỏ tiểu sử khỏi mặt chiếu; không đủ căn cứ cho niên khóa mới. |
+| 36 | Giảng viên và trợ giảng | H00 | Bỏ tiểu sử và nhân sự khỏi mặt chiếu; H00 chỉ lưu dấu rằng phụ lục có nguồn tổ chức chưa xác nhận. |
 | 37 | Tiên quyết | H03 | Gộp với đánh giá. |
 | 38 | Trắc nghiệm 1 | H04 | Chuyển thành câu hỏi ngắn và đặt liền sau G04. |
 | 39 | Trắc nghiệm 2 | H04 | Gộp vào ôn tập 1. |
@@ -104,6 +116,20 @@ Tuyến ngang: P00–G04 → H04–H07 → Z00. Tại Z00, nhấn ↓ để mở
 | 43 | Thảo luận robot tổng quát | H06 | Giữ, bỏ câu dẫn quảng bá. |
 | 44 | Thảo luận mô hình thế giới và AGI | H07 | Giữ dạng thảo luận, không kết luận. |
 | 45 | Cảm ơn | Z00 | Thay bằng tài liệu đọc, tự kiểm tra và chỉ dẫn mở phụ lục dọc. |
+
+## Quyết định lược hoặc thay nội dung nguồn
+
+- T5 (ví dụ cờ, xe tự hành, FinTech): chỉ giữ cờ và robot làm ví dụ xuyên suốt; FinTech không có chi tiết đủ để minh họa tín hiệu học trong phạm vi bài.
+- T8 (Planning under uncertainty: xe tự hành, đăng ký môn học): gộp vào A04 dưới dạng "bất định và không gian lớn"; ví dụ đăng ký môn học không phục vụ mạch lập luận.
+- T14 (RL as AGI, URL chat.openai.com): bỏ URL và hình chụp; chuyển thành thảo luận H06 vì không thể truy nguyên nội dung và không thuộc phạm vi khái niệm.
+- T17 (lịch sử Bellman, thập niên 1950): lược khỏi mặt chiếu; chỉ giữ trong ghi chú C01 nếu cần.
+- T22 (bốn ví dụ tác tử): phân bổ vào B01–B02 và H06; không giữ trang danh sách riêng.
+- T23–T24 (ảnh raster từ lilianweng.github.io): thay bằng SVG quỹ đạo tự vẽ (D00) để đồng bộ phong cách và tránh phụ thuộc ảnh ngoài.
+- T27 (ảnh UC Berkeley CS188): thay bằng SVG explore-exploit tự vẽ (F00).
+- T29 (tập thưởng $\{1,0,-1,9\}$, hành động 1–9): "9" là lỗi đánh máy; thay bằng quy ước $+1/0/-1$ và tập hành động $\mathcal A(S_t)$ (G02), ghi rõ là lựa chọn mô hình hóa.
+- T25 nêu cờ, sinh văn bản và đăng ký môn học. D03 giữ cờ và dùng lại robot dọn nhà từ T6–T8 để kiểm tra cách đặt phần thưởng; không thêm kịch bản giao hàng ngoài nguồn.
+- URL và ảnh raster trong nguồn (mục Tài liệu, ảnh Pieter Abbeel, lilianweng, CS188): URL đầy đủ chỉ lưu trong outline và review-log, không đưa lên mặt chiếu; ảnh raster thay bằng SVG tự vẽ.
+- Không khôi phục chi tiết ngoài phạm vi: lịch sử ngành, tiểu sử giảng viên, tỷ lệ đánh giá chi tiết chỉ nằm ở phụ lục H00–H03 với nhãn "trong nguồn, chưa xác nhận".
 
 ## Nguồn
 
