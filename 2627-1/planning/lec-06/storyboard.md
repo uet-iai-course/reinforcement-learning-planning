@@ -9,7 +9,7 @@
 | MC control | B00 | B00 | B00,B03–B04 | B05 | B01–B02 | B03–B04 | B04 | B06 | 23 |
 | SARSA | C00 | C00 | C00 | C01 | C02 | C03 | C04 | C05 | 23 |
 | Q-learning cốt lõi | D00 | D00 | D00 | D01 | D02 | D03 | D04 | D05 | 24 |
-| Tổng hợp cốt lõi | E00 | E00–E01 | không áp dụng: tổng hợp | E00–E01 | không áp dụng | E03 | không áp dụng: trang tổng hợp | không áp dụng | 10 |
+| Tổng hợp cốt lõi | E00 | E00–E01 | không áp dụng: tổng hợp | E00–E01 | không áp dụng | không áp dụng: E03 là kết luận và neo nhóm dọc | không áp dụng: trang tổng hợp | không áp dụng | 10 |
 | Linh hoạt: dự đoán khác chính sách | D06 | D06 | D07 | D06–D07 | không áp dụng: nhánh mở rộng | D07 | không áp dụng | không áp dụng | 5 |
 | Linh hoạt: chặn Hoeffding | E02 | E02 | không áp dụng: chặn tổng quát | E02 | không áp dụng | không áp dụng | không áp dụng | không áp dụng | 5 |
 
@@ -22,11 +22,11 @@ Tuyến cốt lõi là 110 phút và không gồm D06, D07 hoặc E02. D06–D07
 - A04 dùng dãy $u_t=0{,}8,0{,}6,0{,}2,0{,}4$ với $\varepsilon=0{,}25$: $u_t\le\varepsilon$ mở cổng thăm dò; số kế chọn hành động 0 khi không quá $0{,}5$. Quy tắc chỉ cố định lượt $(D,0)\to(C,0)\to(B,0)\to A$; không phải bộ lấy mẫu đúng của chính sách $\varepsilon$-tham lam.
 - B00 truyền các phần thưởng tích lũy $998,999,1000$ vào B03–B04. B03 dùng trung bình mẫu; B04 dùng $\alpha=0{,}8$.
 - B05 nối một bảng $Q$ còn nhiễu với định lý chỉ dùng $q_\pi$ chính xác. B06 ghép GLIE với điều kiện kết thúc, return bị chặn và trung bình mẫu hoặc bước Robbins–Monro; kết luận chỉ trên $\mathcal X_{\mathrm{reach}}$.
-- C00 dùng ngay chuyển $(C,0)\to B$ và hành động kế tiếp $A'=0$ trước khi C01 đưa công thức SARSA. C03 áp dụng toàn lượt; C04 đổi đúng một hành động để kiểm tra cơ chế.
+- C00 và D00 nói rõ mỗi cụm quay lại cùng bảng khởi tạo $Q_0$ ở A03; không tiếp tục từ bảng đã cập nhật bởi MC hoặc SARSA. C00 dùng ngay chuyển $(C,0)\to B$ và hành động kế tiếp $A'=0$ trước khi C01 đưa công thức SARSA. C03 áp dụng toàn lượt; C04 đổi đúng một hành động trong đích tại C để kiểm tra cơ chế, không khẳng định phần còn lại của lượt vật lý giữ nguyên.
 - D00 giữ cùng chuyển nhưng đổi mục tiêu sang hành động tham lam trước công thức D01. D03 áp dụng toàn lượt; D04 so trực tiếp với SARSA.
 - C02 và D02 dùng $k$ cho lượt, $t$ cho chuyển và $N(s,a)$ cho số lần cập nhật riêng của cặp; bước học là $\alpha_{N(s,a)}(s,a)$.
 - D05 kết thúc mạch Q-learning trên $\mathcal X_{\mathrm{reach}}$. D06–D07 mới mở rộng sang điều kiện hỗ trợ và TD(0) giá trị trạng thái khác chính sách, rồi nối về E00.
-- Chính sách tham lam ban đầu có thể lặp B–C. Lượt mẫu dài ba bước không chứng minh mọi lượt đều kết thúc.
+- Chính sách tham lam ban đầu có thể lặp B–C nếu bỏ bộ đếm giới hạn thời gian của nguồn; lượt dùng trong deck kết thúc ở A sau đúng ba chuyển. Nguồn ghi môi trường "tối đa 3 bước" nhưng không nêu quy ước return khi cắt sớm, nên deck không dùng mệnh đề này; giả thiết MC tổng quát vẫn cần kết thúc gần chắc chắn.
 
 ## Từng trang
 
@@ -56,16 +56,16 @@ Tuyến cốt lõi là 110 phút và không gồm D06, D07 hoặc E02. D06–D07
 | C05 | Hội tụ SARSA cần GLIE và Robbins–Monro theo từng cặp. | Đổi chính sách đích. |
 | D00 | Cùng chuyển có hành động lấy mẫu và hành động tham lam khác nhau. | Viết công thức. |
 | D01 | Q-learning dùng cực đại thay hành động kế tiếp. | Đặt vào thuật toán. |
-| D02 | Q-learning có vòng ngoài theo lượt, reset, nhánh kết thúc, dừng và chi phí. | Chạy toàn lượt. |
+| D02 | Q-learning có vòng ngoài theo lượt, reset, nhánh kết thúc, dừng và chi phí; $\mu_t$ là chính sách hành vi tại chuyển $t$ và cơ chế hành vi bảo đảm mọi cặp khả đạt được cập nhật vô hạn. | Chạy toàn lượt. |
 | D03 | Q-learning cho $0{,}2;0{,}2;800$ ở ba ô. | So đích. |
 | D04 | SARSA dùng quyết định thăm dò; Q-learning dùng cực đại. | Gắn với bảo đảm. |
-| D05 | Hội tụ Q-learning cần độ phủ và Robbins–Monro theo từng cặp. | Mở rộng đánh giá khác chính sách. |
+| D05 | Hội tụ Q-learning cần độ phủ vô hạn của hành vi, không cần GLIE, cùng Robbins–Monro theo từng cặp. | Mở rộng đánh giá khác chính sách. |
 | D06 | Nhánh linh hoạt quay lại dự đoán $V$ và lượng hóa điều kiện hỗ trợ trên các cặp khả đạt. | Nêu cập nhật hiệu chỉnh. |
 | D07 | TD(0) giá trị trạng thái dùng tỉ số từng bước, kèm ví dụ $\rho=4$. | Quay lại ba thuật toán chính. |
-| E00 | Ba thuật toán khác ở đích, thời điểm và quan hệ chính sách. | Tách chi phí. |
+| E00 | Ba thuật toán khác ở đích, thời điểm, quan hệ chính sách và điều kiện hành vi: MC cần GLIE và lượt kết thúc; SARSA cần GLIE; Q-learning cần cập nhật vô hạn từng cặp. | Tách chi phí. |
 | E01 | Chi phí tính toán không phải độ phức tạp mẫu. | Giới hạn chặn xác suất. |
 | E02 | Hoeffding chỉ chặn một trung bình độc lập bị chặn. | Khóa phạm vi. |
-| E03 | Bài 07 thay bảng giá trị bằng hàm xấp xỉ và xét lại bảo đảm hội tụ. | Sang bài tập dọc. |
+| E03 | Kiểm tra phạm vi kết luận và làm kết luận; neo X01–X03. Bài 07 thay bảng giá trị bằng hàm xấp xỉ và xét lại bảo đảm hội tụ. | Sang bài tập dọc. |
 | X01 | Phản biện quy tắc số như một bộ lấy mẫu. | Chữa phân phối và lượt. |
 | X02 | Đối chiếu ba bảng và đổi riêng $A_{t+1}$ tại B để tính lại cập nhật ở C. | Chữa cơ chế đích. |
 | X03 | Khôi phục miền hữu hạn, thưởng bị chặn, $\gamma<1$; tách GLIE của SARSA khỏi độ phủ và Robbins–Monro mà Q-learning vẫn cần. | Chữa điều kiện. |
@@ -73,8 +73,7 @@ Tuyến cốt lõi là 110 phút và không gồm D06, D07 hoặc E02. D06–D07
 ## Rà lân cận sau đổi thứ tự
 
 - Đã rà A03–B01: môi trường → quy tắc cố định lượt → return → giả thiết MC; không suy kết thúc từ chuỗi.
-- Đã rà B03–B06: hai cập nhật → định lý cải thiện → GLIE và hội tụ; định lý không còn đứng trước ứng dụng.
-- Đã rà B06–C02: bảo đảm MC → ví dụ nhỏ SARSA → công thức → thuật toán.
-- Đã rà C03–D02: ứng dụng SARSA → kiểm tra → hội tụ → ví dụ nhỏ Q-learning → công thức → thuật toán.
-- Đã rà D03–E01: ứng dụng Q-learning → so sánh → hội tụ → mở rộng khác chính sách → tổng hợp.
+- Đã rà B05–C01: định lý cải thiện → GLIE → ví dụ nhỏ SARSA → công thức.
+- Đã rà C04–D01: kiểm tra SARSA → hội tụ → ví dụ nhỏ Q-learning → công thức.
+- Đã rà D05–E01: hội tụ Q-learning → mở rộng khác chính sách → tổng hợp → chi phí.
 - E00–E02 là một nhóm ngang riêng. E03 là neo của nhóm dọc E03/X01/X02/X03; RevealJS không còn cấp lồng thứ ba.

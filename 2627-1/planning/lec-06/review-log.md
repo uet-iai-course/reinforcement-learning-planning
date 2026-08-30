@@ -131,3 +131,45 @@ Storyboard đã đồng bộ luận điểm và phạm vi đáp án của X02–
 - Năm SVG đều đọc được dưới dạng XML, có `role="img"`, `title`, `desc` và cỡ nhãn nhỏ nhất 30 px. Mọi SVG đều được dùng; không có ảnh raster hoặc tài nguyên mạng trong trang chiếu.
 - Cỡ chữ bảng và khối thuật toán hiệu dụng nhỏ nhất là khoảng $0{,}756$ em. Môi trường không có Chromium, Firefox hoặc Playwright, nên chưa thể xác nhận tràn chữ và chồng lấn bằng trình duyệt thật.
 - Đã đồng bộ HTML, outline, storyboard, review-log và note-for-author vào Design Files của dự án Codex Slides `20260824175305-chuy-n-lecture-6-i-u-khi-n-phi-m-h-nh-mo-c905`; các bản sao khớp từng byte. Codex in-editor Browser không khả dụng trong phiên này, nên chưa tuyên bố đã rà trực quan bằng Codex Slides.
+
+## Chỉnh sửa theo REVIEW_BRIEF.md
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa | Kết quả |
+|---|---|---|---|---|---|
+| trung bình | P02 | Gạch đầu dòng cảnh báo "tối đa 3 bước" nằm trên mặt trang gây quá tải. | REVIEW_BRIEF.md mục 1. | Bỏ khỏi mặt trang; giữ mạch trong notes P02 và các mục A03/C00. | đã xử lý |
+| trung bình | A01 | $m_s$ chưa được định nghĩa ngay; nhánh khai thác dễ đọc nhầm là $1-\varepsilon$. | REVIEW_BRIEF.md mục 2. | Định nghĩa $m_s=|\mathcal A(s)|$ ngay đầu trang; sửa gạch đầu dòng nhánh khai thác thành $1-\varepsilon+\varepsilon/m_s$; thêm $m_s$ vào bảng ký hiệu outline. | đã xử lý |
+| trung bình | A03,C00,greedy-induced-mrp.svg | Diễn đạt chưa chính xác về quan hệ chuyển và giới hạn thời gian của nguồn. | REVIEW_BRIEF.md mục 1. | Nêu rõ: sơ đồ B–C là quan hệ chuyển tham lam theo bảng thống nhất khi bỏ bộ đếm giới hạn; lượt dùng trong deck kết thúc ở A sau đúng ba chuyển; nguồn ghi tối đa 3 bước nhưng không nêu quy ước return khi cắt. Sửa title/desc SVG, không đổi hình học. | đã xử lý |
+| trung bình | C00,D00 | Câu đặt lại $Q_0$ còn dài. | REVIEW_BRIEF.md mục 4. | Rút thành một câu ngắn ở mỗi trang, đồng bộ storyboard. | đã xử lý |
+| trung bình | C04,X02 | Phản thực cục bộ chưa có caveat. | REVIEW_BRIEF.md mục 6. | Thêm caveat vào notes: chỉ thay $A_{t+1}$ trong đích tại C; không khẳng định phần còn lại của lượt vật lý giữ nguyên. | đã xử lý |
+| trung bình | D02,D05 | $\mu_t$ chưa được định nghĩa và nối với độ phủ. | REVIEW_BRIEF.md mục 7. | Định nghĩa $\mu_t$ là chính sách hành vi tại chuyển $t$; yêu cầu cơ chế hành vi bảo đảm mọi cặp khả đạt được cập nhật vô hạn; không ép Q-learning GLIE; thêm $\mu_t$ vào outline. | đã xử lý |
+| trung bình | E00 | Hàng "Khám phá" không phản ánh đúng điều kiện từng thuật toán. | REVIEW_BRIEF.md mục 8. | Đổi nhãn thành "Điều kiện hành vi": MC cần GLIE và lượt kết thúc; SARSA cần GLIE; Q-learning cần cập nhật vô hạn từng cặp; thêm câu GLIE gồm độ phủ vô hạn và tham lam ở giới hạn. | đã xử lý |
+| trung bình | outline,storyboard | Cấu trúc và E03 chưa phản ánh 7 section ngoài. | REVIEW_BRIEF.md mục 10–11. | E03 là kiểm tra/kết luận và neo X01–X03; hàng 6 là E00–E02, hàng 7 là E03/X01–X03; không tách section thứ tám. | đã xử lý |
+
+## Nhật ký runtime
+
+- planner: `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter` — thành công.
+- source reader: `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter` — thành công.
+- storyboard reviewer: `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter` — thành công.
+- reviewer 1 (sinh viên): `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter` — thành công.
+- reviewer 2 (chuyên gia Học tăng cường): `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter` — thành công.
+- reviewer 3 (toán học và thuật toán): `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter` — thành công.
+- reviewer 4 (phản biện học thuật–giảng dạy): `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter` — thành công.
+- reviewer 5 (kết nối và mạch viết): `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter` — thành công.
+- writer: `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter` — thành công.
+
+Báo cáo reviewer ghi nhận: sinh viên — gạch đầu dòng P02 quá tải, đã xử lý; chuyên gia Học tăng cường — E00 cần tách điều kiện hành vi, đã xử lý; toán học và thuật toán — $m_s$ và $\mu_t$ thiếu định nghĩa, đã xử lý; phản biện học thuật–giảng dạy — caveat C04/X02 cần thêm, đã xử lý; kết nối và mạch viết — câu đặt lại $Q_0$ ở C00/D00 cần rút, đã xử lý. Dương tính giả: báo cáo `target-comparison.svg` thiếu `role="img"`/`aria-labelledby`/title/desc — điều phối viên xác nhận tệp đã có đủ, đề xuất bị bác. Chưa tuyên bố đã render hoặc rà Codex Slides.
+
+## Tái kiểm sau chỉnh sửa
+
+- Tái kiểm toán học, thuật toán và đối chiếu nguồn: `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`. Không còn lỗi `chặn bàn giao` hoặc `nghiêm trọng`; các phép tính MC, SARSA, Q-learning, xác suất $\varepsilon$-tham lam, bảng $Q_0$, giới hạn ba bước và điều kiện độ phủ đều nhất quán.
+- Tái kiểm kết nối và mạch viết: cùng metadata runtime. Xác nhận 7 `<section>` ngoài, 37 `data-slide-id`, độ sâu tối đa 2 và E03 là neo của nhóm dọc X01–X03. Ba sai lệch nhẹ giữa outline và storyboard đã được sửa.
+- Điều phối viên đổi tiêu đề C00 thành “Hành động kế tiếp trong đích SARSA”, liệt kê đủ 37 mã trang trong outline và tách công thức B05 thành ba dòng sau khi render phát hiện tràn ngang.
+
+## Kiểm định cuối ngày 30-08-2026
+
+- `git diff --check` không báo lỗi. HTML có 37 mã trang duy nhất, 37 ghi chú diễn giả, 44 cặp thẻ `section` cân bằng, 7 section ngoài và độ sâu tối đa 2. Mọi mã trang xuất hiện trong outline và storyboard.
+- Năm SVG đọc được dưới dạng XML, có `role="img"`, `title`, `desc`; không có ảnh raster hoặc tài nguyên mạng cốt lõi. Mọi đường dẫn CSS, JavaScript và SVG đều tồn tại.
+- Lệnh `reloadserver` không có trong môi trường. Đã dùng bản sao webroot tạm chỉ chứa HTML, CSS, RevealJS, plugin, KaTeX và năm SVG; bản sao không chứa `.env`; phục vụ bằng `python3 -m http.server 8765`.
+- Chromium duyệt đủ 37 trang ở 1280 × 720 và 800 × 600, tạo 74 ảnh kiểm tra. Không có lỗi console, lỗi trang hoặc request thất bại; điều hướng bàn phím ngang và dọc hoạt động. Công thức B05 bị tràn ở lượt đầu, đã tách dòng và render lại. Các cảnh báo hình học còn lại ở P00, C01, D01 và E02 là dương tính giả do biên glyph KaTeX/tiêu đề; ảnh chụp xác nhận không bị cắt hoặc chồng lấn.
+- Đã tự kiểm theo `no-ai-slop/eval.md`: không thêm lời dẫn rỗng, khẩu hiệu, nhận định quảng bá hoặc kết luận lặp; nội dung hiển thị giữ câu ngắn và thuật ngữ nhất quán. Đã rà theo Quill: tuyến dự đoán → chính sách → MC → SARSA → Q-learning → tổng hợp → kết luận truyền liên tục bảng $Q_0$, lượt chung và ký hiệu; không tạo `quill.json`.
+- Đã đồng bộ chính xác HTML, outline, storyboard và hai bản review-log vào Design Files của dự án Codex Slides `20260824175305-chuy-n-lecture-6-i-u-khi-n-phi-m-h-nh-mo-c905`; kiểm tra đọc lại khớp từng ký tự. Dự án Codex Slides vẫn ở trạng thái draft với 0 slide, và phiên này không có công cụ Browser trong trình soạn thảo để mở resource link; vì vậy không tuyên bố đã rà trực quan bằng Codex Slides.

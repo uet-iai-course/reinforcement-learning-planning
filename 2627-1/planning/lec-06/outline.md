@@ -6,6 +6,8 @@ Sinh viên phân biệt dự đoán với điều khiển, theo chính sách v�
 
 Thiết lập chính là MDP bảng hữu hạn, phần thưởng bị chặn. MC chỉ áp dụng khi lượt kết thúc gần chắc chắn và phần thưởng tích lũy hữu hạn. Bài toán theo lượt đặt giá trị trạng thái kết thúc bằng không. Các kết luận hội tụ của bài dùng $\gamma<1$ và chỉ áp dụng trên miền cặp khả đạt $\mathcal X_{\mathrm{reach}}$. Không dạy xấp xỉ hàm, DQN, policy gradient hoặc actor-critic; E03 chỉ nối sang nội dung xấp xỉ hàm của Bài 07. Không có code demo trong nguồn.
 
+Sai khác nguồn: tr. 15 ghi môi trường "tối đa 3 bước" nhưng không nêu quy ước return nếu cắt trước trạng thái kết thúc, nên deck không dùng mệnh đề này. Sơ đồ B–C biểu diễn quan hệ chuyển tham lam theo bảng $Q_0$ thống nhất (ví dụ 2, $Q_0(D)=(1,0)$) khi bỏ bộ đếm giới hạn; lượt dùng trong deck kết thúc ở A sau đúng ba chuyển. Giả thiết MC tổng quát vẫn cần kết thúc gần chắc chắn.
+
 ## Cấu trúc
 
 | Phần | Trang | Nội dung |
@@ -15,10 +17,20 @@ Thiết lập chính là MDP bảng hữu hạn, phần thưởng bị chặn. M
 | MC control | B00–B06 | Return, thuật toán đầy đủ, hai bước học, cải thiện $\varepsilon$-mềm và GLIE |
 | SARSA | C00–C05 | Ví dụ nhỏ, đích theo chính sách, thuật toán, lượt chung, kiểm tra và hội tụ |
 | Q-learning và khác chính sách | D00–D07 | Ví dụ nhỏ, đích tham lam, thuật toán, lượt chung, hội tụ và TD(0) mở rộng |
-| Tổng hợp | E00–E03 | So sánh, chi phí, chặn Hoeffding đúng phạm vi, giới hạn kết luận |
-| Bài tập dọc | X01–X03 | Tái tạo lượt, so SARSA–Q-learning, phản biện hội tụ |
+| Tổng hợp | E00–E02 | So sánh, chi phí và chặn Hoeffding đúng phạm vi; E02 là trang linh hoạt |
+| Kết luận và bài tập dọc | E03, X01–X03 | Giới hạn kết luận; tái tạo lượt, so SARSA–Q-learning và phản biện hội tụ |
 
 Bộ trang chiếu có 34 trang chính và 3 trang bài tập dọc. Tuyến cốt lõi là 110 phút, không gồm D06, D07 hoặc E02. Ba trang này tạo nhánh linh hoạt đúng 10 phút. Ba bài tập dọc dùng 30 phút theo phân bổ 5–10–15 phút.
+
+## Danh mục mã trang
+
+- Định hướng: P00, P01, P02, P03.
+- Chính sách và ví dụ chung: A00, A01, A02, A03, A04.
+- MC control: B00, B01, B02, B03, B04, B05, B06.
+- SARSA: C00, C01, C02, C03, C04, C05.
+- Q-learning và khác chính sách: D00, D01, D02, D03, D04, D05, D06, D07.
+- Tổng hợp: E00, E01, E02.
+- Kết luận và bài tập dọc: E03, X01, X02, X03.
 
 ## Ánh xạ nguồn
 
@@ -47,6 +59,8 @@ Bộ trang chiếu có 34 trang chính và 3 trang bài tập dọc. Tuyến c�
 | $Q_t(s,a)$ | Bảng ước lượng trên $\mathcal X$ trước cập nhật thứ $t$ |
 | $q_\pi(s,a)$, $q_*(s,a)$ | Giá trị hành động thật của $\pi$ và giá trị tối ưu |
 | $g_Q(s)$ | Một hành động tham lam theo quy tắc phá hòa cố định |
+| $m_s$ | $|\mathcal A(s)|$, số hành động tại trạng thái $s$ |
+| $\mu_t$ | Chính sách hành vi tại chuyển $t$ |
 | $\mu$ | Chính sách hành vi sinh dữ liệu |
 | $\pi$ | Chính sách đích cần đánh giá hoặc tối ưu |
 | $\rho_t$ | $\pi(A_t\mid S_t)/\mu(A_t\mid S_t)$ |
@@ -59,6 +73,6 @@ Bộ trang chiếu có 34 trang chính và 3 trang bài tập dọc. Tuyến c�
 
 - `control-loop.svg`: vòng chính sách–trải nghiệm–bảng $Q$.
 - `five-state-chain.svg`: môi trường A–E, hành động và phần thưởng.
-- `greedy-induced-mrp.svg`: chuyển do chính sách tham lam ban đầu tạo ra.
+- `greedy-induced-mrp.svg`: quan hệ chuyển tham lam theo bảng $Q_0$ thống nhất khi bỏ bộ đếm giới hạn; không phải MRP đầy đủ của môi trường có giới hạn thời gian.
 - `shared-trace.svg`: lượt $D\to C\to B\to A$ và ba return.
 - `target-comparison.svg`: so sánh đích MC, SARSA và Q-learning.
