@@ -28,7 +28,7 @@ Mục tiêu đầu ra:
 | Kết | `L12-45` | 2 phút | 0 |
 | Tổng | 42 trang cốt lõi + 5 trang linh hoạt | 110 phút | 10 phút |
 
-Tuyến cốt lõi 110 phút dùng phím Phải tại `L12-34` (`#/6/6`) để sang `L12-38` (`#/7/1`), và tại `L12-42` (`#/8/1`) để sang `L12-45` (`#/9/1`). Tuyến đủ 120 phút dùng phím Xuống qua `L12-35`–`L12-37` (`#/6/7`–`#/6/9`) và `L12-43`–`L12-44` (`#/8/2`–`#/8/3`) trước khi đi Phải. Sau kết luận, phím Phải mở cụm bài tập riêng `X01`–`X03` (`#/10/1`–`#/10/3`), dùng 8, 12 và 10 phút. Không có code demo vì nguồn không có nội dung tương ứng.
+Tuyến cốt lõi 110 phút dùng phím Phải tại `L12-34` (`#/5/6`) để sang `L12-38` (`#/6/1`), và tại `L12-42` (`#/6/5`) để sang `L12-45` (`#/7/1`). Tuyến đủ 120 phút dùng phím Xuống qua `L12-35`–`L12-37` (`#/5/7`–`#/5/9`) và `L12-43`–`L12-44` (`#/6/6`–`#/6/7`) trước khi đi Phải. Sau kết luận, dùng phím Xuống qua `X01`–`X03` (`#/7/2`–`#/7/4`), lần lượt 8, 12 và 10 phút. Bảy mạch ngoài lần lượt là mở bài; hợp đồng MARL; COMA–VDN/QMIX; actor–critic; benchmark–framework; giao tiếp; kết luận–bài tập. Không có code demo vì nguồn không có nội dung tương ứng.
 
 ## Ánh xạ 54/54 trang nguồn
 
@@ -201,4 +201,8 @@ Mọi SVG có `role="img"`, `title`, `desc`, nhãn chữ và đường viền; k
 
 ## Danh mục mã trang đích
 
-Thứ tự nội dung: `L12-01`–`L12-07`, `L12-07B`, `L12-08`–`L12-22`, `L12-22B`, `L12-23`–`L12-45`. Cụm bài tập tách riêng sau kết luận: `X01`, `X02`, `X03`. Tổng cộng 47 trang chính và 3 trang bài tập.
+Thứ tự nội dung: `L12-01`–`L12-07`, `L12-07B`, `L12-08`–`L12-22`, `L12-22B`, `L12-23`–`L12-45`. Cụm bài tập nằm sau kết luận trong cùng mạch cuối: `X01`, `X02`, `X03`. Tổng cộng 47 trang chính và 3 trang bài tập.
+
+Danh mục 50 mã trang: `L12-01`, `L12-02`, `L12-03`, `L12-04`, `L12-05`, `L12-06`, `L12-07`, `L12-07B`, `L12-08`, `L12-09`, `L12-10`, `L12-11`, `L12-12`, `L12-13`, `L12-14`, `L12-15`, `L12-16`, `L12-17`, `L12-18`, `L12-19`, `L12-20`, `L12-21`, `L12-22`, `L12-22B`, `L12-23`, `L12-24`, `L12-25`, `L12-26`, `L12-27`, `L12-28`, `L12-29`, `L12-30`, `L12-31`, `L12-32`, `L12-33`, `L12-34`, `L12-35`, `L12-36`, `L12-37`, `L12-38`, `L12-39`, `L12-40`, `L12-41`, `L12-42`, `L12-43`, `L12-44`, `L12-45`, `X01`, `X02`, `X03`.
+
+Bản trích văn bản nguồn dùng để kiểm kê có 585 dòng theo `wc -l`; con số 639 do cầu nối chuẩn hóa không được dùng làm số dòng nguồn.

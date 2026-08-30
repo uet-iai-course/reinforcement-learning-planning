@@ -2,11 +2,11 @@
 
 ## Trạng thái bản nháp
 
-- Nguồn đã kiểm kê: 54/54 trang chiếu, 76/76 media, 0 trang ẩn, 53 notes rỗng, không code demo.
-- Bản sau bốn phản biện và chỉnh sửa: 47 trang chính, gồm `L12-07B`, `L12-22B`, và ba bài tập `X01`–`X03` trong cụm riêng sau kết luận.
+- Nguồn đã kiểm kê: 54/54 trang chiếu, 76/76 media, 0 trang ẩn, 53 notes rỗng, không code demo; bản trích nguồn có 585 dòng theo `wc -l`.
+- Bản hiện tại có 47 trang chính, gồm `L12-07B`, `L12-22B`, và ba bài tập `X01`–`X03` sau kết luận.
 - Tài sản đích: 11 SVG; không có tham chiếu ảnh raster và không có ngoại lệ raster.
 - Thời lượng thiết kế: 42 trang cốt lõi trong 110 phút; 5 trang linh hoạt không trùng lặp trong 10 phút; 30 phút chữa ba bài tập sau kết luận.
-- Bốn báo cáo độc lập đã được hợp nhất dưới đây; mọi lỗi `chặn bàn giao` và `nghiêm trọng` đã được xử lý trong bản hiện tại.
+- Bốn báo cáo của vòng nháp trước được lưu dưới đây. Vòng bàn giao phải có đủ năm vai độc lập; kết quả vòng hiện tại được bổ sung sau khi các reviewer hoàn tất.
 
 ## Phân tích nguồn và quyết định ban đầu
 
@@ -62,13 +62,13 @@ Sau vòng storyboard đầu, đã rà các vùng ảnh hưởng và hai trang l�
 | trung bình | `L12-27`–`L12-28`, `X02` | Trực giác tuần tự chuyển thẳng sang công thức mà chưa có phép thế số. | `X02` có các tỷ số $1{,}1$ và $0{,}9$ nhưng dữ kiện này chưa được chuẩn bị trước công thức. | Thêm tại `L12-27`: ratio actor đầu $1{,}1$ làm surrogate actor kế thành $1{,}1\widehat A$; giữ `X02` làm bài tổng hợp $1{,}1\times0{,}9\times2=1{,}98$. Đã sửa và rà `L12-25`–`X02`. |
 | trung bình | `L12-38`–`L12-40` | Storyboard chưa ghi đúng vai trò sư phạm đã có trên mặt trang. | `L12-38` đã gồm vấn đề, ví dụ và trực giác; `L12-39` là taxonomy/hình thức; `L12-40` giải thích cơ chế topology và áp nó vào đường gửi–nhận. | Sửa trường `bước` tương ứng, không đổi nội dung hoặc thứ tự trang; rà `L12-36`–`L12-42`. Đã sửa. |
 
-## Bốn báo cáo độc lập sau bản nháp
+## Bốn báo cáo độc lập của vòng nháp trước
 
 ### Góc nhìn sinh viên
 
 | mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa và quyết định |
 |---|---|---|---|---|
-| nghiêm trọng | toàn bộ điều hướng, `X01`–`X03` | Bài tập nằm giữa các cụm nội dung và kết luận, nên phím Phải/Xuống không tạo tuyến 110/120 phút rõ. | `X01`, `X02`, `X03` từng nằm trong ba stack kiến thức; `L12-42` còn nối tới bài tập trước kết luận. | Chuyển ba bài sang stack ngang 10 sau `L12-45`; dùng đuôi dọc cho hai phần linh hoạt và ghi hash một-gốc. Đã sửa. |
+| nghiêm trọng | toàn bộ điều hướng, `X01`–`X03` | Bài tập nằm giữa các cụm nội dung và kết luận, nên phím Phải/Xuống không tạo tuyến 110/120 phút rõ. | `X01`, `X02`, `X03` từng nằm trong ba stack kiến thức; `L12-42` còn nối tới bài tập trước kết luận. | Vòng trước chuyển bài tập ra sau kết luận; vòng hiện tại giữ thứ tự đó nhưng gộp vào mạch ngoài thứ 7 để toàn bài có 7 mạch. |
 | nghiêm trọng | 11 SVG | Chữ từ `17px` đến `24px` không đọc được sau khi hình co theo chiều cao. | Kiểm kê `font-size` cho thấy mọi SVG trừ một nhãn đều dưới ngưỡng nguồn `28px`. | Vẽ lại cả 11 SVG với chữ có nghĩa từ `30px`, rút nhãn và nới chiều cao cục bộ ở ba hình cao. Đã sửa. |
 | trung bình | `L12-07` | Tuple, kernel và lịch sử cùng nằm trên một trang nhưng miền của các ánh xạ chưa rõ. | Người học gặp $\Delta$, $\tau_i$ và kernel trước khi biết kiểu. | Giữ tuple ở `L12-07`, thêm `L12-07B` cho lịch sử và công thức cảm sinh; notes nêu tổng/tích phân. Đã sửa. |
 | trung bình | `L12-26`, `L12-28` | Kiểm tra actor/critic và ratio chỉ xuất hiện ở bài tập cuối. | Khoảng cách giữa công thức và lần truy hồi đầu tiên làm tăng tải nhớ. | Thêm câu hỏi ngay tại hai trang, giữ `X02` làm tổng hợp. Đã sửa. |
@@ -98,10 +98,10 @@ Sau vòng storyboard đầu, đã rà các vùng ảnh hưởng và hai trang l�
 |---|---|---|---|---|
 | nghiêm trọng | `L12-21`–`L12-23` | Trình tự đi từ điều kiện QMIX sang MADDPG mà không cho người học thấy một bước học QMIX. | Công thức IGM đúng riêng lẻ nhưng thiếu cầu nối từ cấu trúc hàm tới TD update. | Chèn `L12-22B` sau giới hạn biểu diễn, rồi mới chuyển sang actor–critic. Đã sửa. |
 | nghiêm trọng | `L12-27`–`L12-28` | Ví dụ ratio chưa dẫn tới objective của tác tử hiện tại. | $1{,}1\widehat A$ chỉ giải thích multiplier, không giải thích clipping. | Giữ ví dụ ở `L12-27`, viết objective và recurrence tại `L12-28`, dùng `X02` để nối hai phép tính. Đã sửa. |
-| nghiêm trọng | `L12-34`–`L12-45`, `X01`–`X03` | Trình tự trang không thực hiện đúng nhánh cắt đã mô tả trong planning. | Các trang linh hoạt và bài tập cùng nằm trong stack chính, nên không thể đi Phải để bỏ qua đúng chỗ. | Tái cấu trúc thành 10 stack ngang; đuôi framework và threat model dùng Xuống, kết luận thành stack 9, bài tập thành stack 10. Đã sửa. |
+| nghiêm trọng | `L12-34`–`L12-45`, `X01`–`X03` | Trình tự trang không thực hiện đúng nhánh cắt đã mô tả trong planning. | Các trang linh hoạt và bài tập từng cùng nằm trong stack chính, nên không thể đi Phải để bỏ qua đúng chỗ. | Vòng trước dùng 10 stack; vòng hiện tại giữ hai nhánh cắt nhưng hợp nhất thành 7 mạch ngoài theo quy ước kho. |
 | trung bình | `L12-05`, `L12-12` | “Dừng hơn” và “đồng nhất” quá tắt, dễ tạo trực giác sai. | Cụm từ không nêu tác nhân gây không dừng hoặc điều kiện chia sẻ tham số. | Viết lại siêu tác tử theo một bộ chọn joint action; tách compatibility, ID/role và dị thể. Đã sửa. |
 
-## Quyết định hợp nhất sau bốn báo cáo
+## Quyết định hợp nhất vòng nháp trước
 
 - Đã xử lý toàn bộ lỗi chặn bàn giao và nghiêm trọng; các lỗi trung bình liên quan trực tiếp tới công thức, tải nhận thức, kiểm tra tại chỗ, điều hướng và khả năng đọc cũng đã xử lý.
 - Hai trang bổ sung giữ nguyên tổng 110 phút cốt lõi bằng cách phân bổ lại thời gian trong cụm hợp đồng Markov 25 phút và VDN/QMIX 15 phút; không lấy thời gian từ bài tập.
@@ -110,7 +110,7 @@ Sau vòng storyboard đầu, đã rà các vùng ảnh hưởng và hai trang l�
 ### Kiểm tra của tác tử chỉnh sửa
 
 - KaTeX strict sau hậu kiểm: 147 biểu thức hợp lệ, `throwOnError: true`, `strict: "error"`.
-- Cấu trúc: 50 mã trang duy nhất, 50 khối ghi chú, 10 stack ngang, độ sâu `<section>` tối đa bằng 2; thứ tự stack khớp bảng hash trong storyboard.
+- Cấu trúc sau chỉnh sửa hiện tại: 50 mã trang duy nhất, 50 khối ghi chú, 7 mạch ngoài, độ sâu `<section>` tối đa bằng 2; thứ tự khớp bảng hash trong storyboard.
 - SVG: 11/11 tệp là XML hợp lệ và có `role="img"`, `title`, `desc`; cỡ chữ nguồn nhỏ nhất bằng `30px`.
 - Sửa hậu kiểm trực quan cục bộ: nới khối MARL cuối trong `path-to-marl.svg` để hai dòng tên thuật toán không vượt biên; tách nội dung khối kết hợp trong `message-integration.svg` thành ba dòng và dịch biểu diễn $h_i$ để không chồng chữ hoặc mũi tên.
 - Tài sản: 21 tham chiếu cục bộ hợp lệ; không có ảnh raster hoặc phụ thuộc mạng.
@@ -130,7 +130,7 @@ Sau vòng storyboard đầu, đã rà các vùng ảnh hưởng và hai trang l�
 6. Gộp PyMARL, EPyMARL, MARLlib và HARL thành ma trận theo tài liệu nguồn; không tuyên bố support hiện tại.
 7. Bỏ AutoGen khỏi nội dung hiển thị vì nó không mặc nhiên là MARL.
 8. Sửa phần communication để tách CTDE, topology, tần suất, nội dung, integration và constraints.
-9. Chuyển ba bài tập ra sau kết luận và tổ chức hai phần linh hoạt thành đuôi dọc để phím Phải/Xuống thực hiện đúng tuyến 110/120 phút.
+9. Chuyển ba bài tập ra sau kết luận, gộp COMA với VDN/QMIX, gộp hai cụm giao tiếp và đặt kết luận–bài tập trong cùng mạch cuối để đạt 7 mạch ngoài; hai phần linh hoạt vẫn là đuôi dọc cho tuyến 110/120 phút.
 
 ## Tài sản và ngoại lệ
 
@@ -151,15 +151,77 @@ Sau vòng storyboard đầu, đã rà các vùng ảnh hưởng và hai trang l�
 - Papoudakis et al. (2020), EPyMARL; Hu et al. (2023), MARLlib; Zhong et al. (2023), HARL.
 - Zhu, Dastani & Wang (2022/2024), communication survey; Singh et al. (2018); Agarwal et al. (2019); Kim et al. (2020).
 
+## Năm báo cáo độc lập của vòng hiện tại
+
+Cả năm báo cáo hợp lệ có `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`. Lượt sư phạm đầu tiên bị treo phản hồi ở vòng 7 và bị hủy; lượt chạy lại riêng hoàn tất, nên chỉ lượt chạy lại được tính.
+
+### Góc nhìn sinh viên
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa |
+|---|---|---|---|---|
+| trung bình | `L12-11` | VDN bị gộp với QMIX và mixer. | Hàng cũ ghi “VDN/QMIX — target và mixer”. | Tách hai hàng, ghi đây là bản đồ tới trước. Đã sửa. |
+| trung bình | `L12-28` | $r_m^{\mathrm{new}}$ chưa có định nghĩa trên mặt trang. | Recurrence dùng ký hiệu mới chỉ được giải thích trong notes. | Định nghĩa $r_m^{\mathrm{new}}=r_m(\theta_m^*)$. Đã sửa. |
+| trung bình | `L12-33` | Phạm vi MAgent ghi “hình nguồn” mơ hồ. | Không xác định hình nào hoặc ý nghĩa con số. | Ghi rõ slide nguồn chỉ minh họa cấu hình 22–1000. Đã sửa. |
+| nhẹ | `L12-05`, `L12-45` | “Động lực nền” mơ hồ; chỉ dẫn bài tập không nêu phím Xuống. | Một cụm dễ hiểu thành motivation; bài tập ở cùng stack dọc. | Dùng kernel chuyển tiếp nền $P$ và ghi “Bấm Xuống”. Đã sửa. |
+
+### Chuyên gia Học tăng cường
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa |
+|---|---|---|---|---|
+| trung bình | `L12-30` | LBF bị mô tả như mặc định mixed. | Bản cũ ghi “mặc định có yếu tố hợp tác–cạnh tranh”. | Ghi mặc định hợp tác; biến thể phụ thuộc cấu hình. Đã sửa. |
+| trung bình | `L12-23` | MADDPG thiếu hành vi khám phá khi thu dữ liệu. | Actor tất định không tự tạo exploration. | Thêm policy khám phá/nhiễu trong notes, tách khỏi target actor. Đã sửa. |
+| trung bình | `L12-25`, `L12-28` | Chưa nói advantage được tính và giữ cố định thế nào. | Công thức chỉ có ratio và multiplier. | Ghi advantage/GAE tính dưới policy cũ, giữ cố định; chuẩn hóa batch là lựa chọn triển khai. Đã sửa. |
+| trung bình | `L12-33` | Mốc Arena thiếu mẫu trên mặt trang. | Mẫu 7.215/7.257 chỉ ở notes. | Đưa mốc 18–21/4/2019 và mẫu vào bảng. Đã sửa. |
+
+### Độ chính xác toán học và thuật toán
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa |
+|---|---|---|---|---|
+| trung bình | `L12-18`–`L12-22B` | Chữ ký $Q_{\mathrm{tot}}$ và đường gradient chưa nhất quán. | `L12-18` thiếu $s$; câu backprop có thể bị hiểu là đi qua argmax. | Thêm $s$; ghi argmax/target dừng gradient và loss chỉ backprop qua dự đoán online. Đã sửa. |
+| trung bình | `L12-05` | Ghi chú về một bộ học và tính không dừng tự mâu thuẫn. | Cấu trúc câu cũ làm sai quan hệ nguyên nhân. | Viết lại theo kernel nền và nhiều bộ học độc lập. Đã sửa. |
+| nhẹ | `L12-08`, `L12-16`, `L12-20`, `X02` | Thiếu $\Omega$ trong kỳ vọng, thiếu tổng theo $t$, trộn vector/vô hướng, và đáp án QMIX thiếu utility target. | Các ký hiệu không khớp phần định nghĩa hoặc bước target. | Sửa bốn vị trí theo hợp đồng đã khóa. Đã sửa. |
+
+### Phản biện học thuật và giảng dạy
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa |
+|---|---|---|---|---|
+| trung bình | `L12-29`–`L12-34` | Tuyến 110 phút không có kiểm tra benchmark tại chỗ. | `L12-37` thuộc nhánh linh hoạt, `X03` ở sau kết luận. | Thêm câu kiểm tra tại `L12-34`. Đã sửa. |
+| trung bình | `L12-38`–`L12-42` | Tuyến cốt lõi giao tiếp không có kiểm tra tại chỗ. | Không có `.check` trước điểm cắt `L12-42`. | Thêm câu phân biệt topology và policy gửi tại `L12-42`. Đã sửa. |
+| trung bình | `L12-11` | Bảng thuật toán xuất hiện trước trực giác từng họ. | Các công thức bắt đầu từ `L12-13`. | Đổi tiêu đề thành bản đồ và báo rõ ký hiệu sẽ học sau. Đã sửa. |
+
+### Kết nối và mạch viết
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa |
+|---|---|---|---|---|
+| nghiêm trọng | `L12-34` → `L12-38` | Vai trò trong mạch: trang chốt bằng chứng không có kết nối ra; trang mở giao tiếp không có kết nối vào. | Cầu nối cũ chỉ nằm ở `L12-37`, bị tuyến 110 phút cắt bỏ. | Đặt cầu nối ở notes của cả `L12-34` và `L12-38`; kết nối ra sang taxonomy `L12-39`. Đã sửa. |
+| trung bình | `L12-42` → `L12-45` | Vai trò trong mạch: điểm cắt giao tiếp→kết luận thiếu kết nối vào–ra. | Cầu nối cũ chỉ có trong nhánh linh hoạt `L12-43`–`L12-44`. | Thêm câu tổng hợp ở `L12-42` và thu hồi mạch giao tiếp tại `L12-45`. Đã sửa. |
+| trung bình | `L12-03`→`L12-04`, `L12-12`→`L12-13`, `L12-17`→`L12-18`, `L12-22B`→`L12-23`, `L12-28`→`L12-29` | Vai trò trong mạch đúng trong storyboard nhưng tín hiệu chuyển chưa nằm ở trang biên. | Người học chỉ thấy bước nhảy mục tiêu→hợp đồng hoặc công thức→họ thuật toán kế. | Thêm câu nối vào notes/mặt trang tại đúng ranh giới; giữ nguyên thứ tự nguồn. Đã sửa. |
+
+## Quyết định của pha chỉnh sửa hiện tại
+
+- Đã xử lý lỗi `nghiêm trọng` và mọi mục `trung bình` liên quan đến tính đúng, chu trình học tập, điểm cắt tuyến cốt lõi và phạm vi bằng chứng.
+- Không chuyển đáp án của sáu câu kiểm tra tại chỗ thành fragment. Đây là bộ trang chiếu giảng dạy; đáp án trong notes giữ mặt trang gọn, còn `X01`–`X03` đã có fragment để chữa bài. Quyết định không ảnh hưởng tính đúng hoặc khả năng trình chiếu.
+- Không thêm trang tài liệu tham khảo riêng và không đổi các `max-height` cục bộ trước khi render. Nguồn đã truy nguyên trong notes; chiều cao từng hình phải được quyết định bằng kiểm định hiển thị, không bằng đồng nhất số CSS cơ học.
+- Biên tập theo `no-ai-slop`: cắt lời dẫn rỗng, sửa cụm mơ hồ “động lực nền”, giữ câu ngắn và không thêm kết quả thực nghiệm. Rà theo Quill: giữ tuyến hợp đồng → thuật toán → bằng chứng → giao tiếp → checklist; không tạo `quill.json`.
+
 ## Kiểm định cuối của điều phối viên
 
-1. Bốn rà soát độc lập và pha chỉnh sửa riêng đã hoàn tất; mọi lỗi chặn và nghiêm trọng đã được xử lý.
-2. Tái kiểm toán toán học đã đạt đối với `L12-07B`, `L12-21`–`L12-22B`, `L12-23`, `L12-25` và `L12-28`; không phát sinh lỗi chặn hoặc nghiêm trọng.
-3. Kiểm định tĩnh cuối đạt: 50 mã trang duy nhất, 50 ghi chú, 50 mục nguồn, 10 stack ngang, 147 biểu thức KaTeX strict, 11 SVG hợp lệ và không có raster hoặc phụ thuộc mạng.
-4. Tiến trình `python3 -m reloadserver 8765` đang phục vụ kho; tệp HTML và 21 tài nguyên cục bộ được kiểm tra qua HTTP, tất cả trả mã `200`.
-5. Nguồn PowerPoint đã được nạp vào dự án Codex Slides bền vững. HTML, outline, storyboard, nhật ký và `note-for-author.md` đã được tải lên dưới dạng Design Files; năm tệp trong dự án khớp byte-for-byte với bản trong kho tại thời điểm xác minh.
-6. Codex Slides khả dụng qua API dự án nhưng môi trường không cung cấp trình duyệt nhúng, Chromium, Chrome hoặc Firefox. Vì vậy không thể duyệt toàn bộ RevealJS ở khung 16:9 và màn hình hẹp trong trình duyệt, cũng không tuyên bố đã rà trực quan bằng Codex Slides. Hai SVG từng tràn nhãn đã được raster hóa riêng và phản biện học thuật xác nhận không còn chồng lấn.
+1. Đủ năm báo cáo độc lập hiện tại; mọi lỗi `chặn bàn giao` và `nghiêm trọng` đã được xử lý. Tái kiểm toán toán học và mạch viết sau sửa đều có `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`, kết luận `PASS` và không còn lỗi bắt buộc.
+2. Kiểm định tĩnh đạt: 50 mã trang duy nhất, 50 ghi chú, 7 `<section>` ngoài, độ sâu tối đa 2, 21 tham chiếu cục bộ hợp lệ, 11 SVG XML hợp lệ, không có raster hoặc phụ thuộc mạng cốt lõi. `index.html` liên kết đúng tới bài và không liên kết tệp planning.
+3. `python3 -m reloadserver 8765` thất bại vì môi trường không có mô-đun `reloadserver`. Máy chủ dự phòng `python3 -m http.server --bind 127.0.0.1 8765` đã phục vụ bản này trong các lượt kiểm định đầu; HTML, CSS, JavaScript, font KaTeX và 11 SVG đều trả `200`. Sau đó cổng 8765 bị một kho khác chiếm, nên lượt tái kiểm cuối dùng cổng tạm 8766 mà không đổi nội dung.
+4. Chromium headless đã duyệt đủ 50 trang ở 1280×720 và 800×600, tạo 100 ảnh kiểm tra; không có lỗi console, lỗi request hoặc tràn sau khi bộ dò bỏ nhiễu `scrollWidth` nội bộ của KaTeX. Điều phối viên đã xem contact sheet toàn bài và các trang dày `L12-11`, `L12-16`, `L12-22B`, `L12-28`, `L12-33`, `L12-34`, `L12-42`, `L12-45`.
+5. KaTeX render 150 biểu thức, 0 lỗi. Sáu trạng thái fragment của `X01`–`X03` ở hai viewport đều hiển thị đủ, không bị cắt. Bảy phép thử điều hướng đạt: hai nhánh cắt `L12-34`, `L12-42`, kết luận → `X01`, và chuyển `X01` → `X02` → `X03` sau khi mở fragment đáp án.
+6. Dự án Codex Slides `20260825012827-b-i-12-nh-p-m-n-h-c-t-ng-c-ng-a-t-c-t-fht2` truy cập được. Năm Design Files (HTML, outline, storyboard, review-log, note-for-author) khớp chính xác từng ký tự với bản trong kho. Dự án vẫn là draft với 0 slide native; môi trường không có Browser nhúng để rà trực quan trong giao diện Codex Slides, nên không tuyên bố đã rà hình bằng Browser. Kiểm định hình ảnh được thực hiện bằng RevealJS/Chromium cục bộ như mục 4.
+
+### Bằng chứng runtime của vòng hiện tại
+
+- Lượt lập kế hoạch, phân tích nguồn và tái kiểm định storyboard hợp lệ đều có `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`. Lượt storyboard hợp lệ dùng `reasoning_effort=low`; hai lượt trước bị cắt do vượt ngân sách đầu ra nên không được dùng làm bằng chứng.
+- Hai lượt writer không hoàn tất: lượt đầu không tạo thay đổi; lượt sau chỉ sửa một phần ranh giới `<section>` rồi chạm giới hạn tool call. Điều phối viên đã kiểm tra byte, sửa lại cấu trúc và hoàn tất các thay đổi bằng `apply_patch`; không coi hai lượt này là bằng chứng bàn giao.
+- Năm reviewer độc lập và hai lượt tái kiểm hợp lệ đều dùng `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`. Lượt reviewer sư phạm đầu tiên bị treo phản hồi và bị hủy; lượt chạy lại riêng hoàn tất mới được tính.
+- Không thêm trang tài liệu tham khảo riêng. Ghi chú diễn giả đã giữ truy nguyên nguồn; thêm một trang mới sẽ đổi 50 mã trang và lấy thời gian khỏi tuyến 120 phút mà không tăng nội dung khái niệm.
 
 ## Đối chiếu mã trang của bản nháp
 
 Trang chính theo thứ tự: `L12-01`–`L12-07`, `L12-07B`, `L12-08`–`L12-22`, `L12-22B`, `L12-23`–`L12-45`. Cụm cuối: `X01`, `X02`, `X03`. Tổng 50 mã; bảng route/hash nằm trong storyboard.
+
+Danh mục 50 mã trang: `L12-01`, `L12-02`, `L12-03`, `L12-04`, `L12-05`, `L12-06`, `L12-07`, `L12-07B`, `L12-08`, `L12-09`, `L12-10`, `L12-11`, `L12-12`, `L12-13`, `L12-14`, `L12-15`, `L12-16`, `L12-17`, `L12-18`, `L12-19`, `L12-20`, `L12-21`, `L12-22`, `L12-22B`, `L12-23`, `L12-24`, `L12-25`, `L12-26`, `L12-27`, `L12-28`, `L12-29`, `L12-30`, `L12-31`, `L12-32`, `L12-33`, `L12-34`, `L12-35`, `L12-36`, `L12-37`, `L12-38`, `L12-39`, `L12-40`, `L12-41`, `L12-42`, `L12-43`, `L12-44`, `L12-45`, `X01`, `X02`, `X03`.

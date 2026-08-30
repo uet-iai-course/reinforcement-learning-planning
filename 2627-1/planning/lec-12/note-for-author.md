@@ -6,6 +6,8 @@ Tệp này chứa chỉ dẫn nội bộ. Không đưa mã trang, thời lượn
 
 Giữ thứ tự:
 
+Tám mục dưới đây là thứ tự nội dung; khi trình bày, chúng được gộp thành bảy mạch ngoài theo `outline.md`.
+
 1. hợp đồng trò chơi Markov và MDP cảm sinh;
 2. CTDE và miền thông tin;
 3. COMA;
@@ -19,9 +21,9 @@ Không chuyển phần benchmark lên trước công thức. Không dạy commun
 
 ## Tuyến 110 và 120 phút
 
-- Tuyến cốt lõi 110 phút dùng 42 trang. Tại `L12-34` (`#/6/6`), bấm Phải để sang `L12-38` (`#/7/1`). Tại `L12-42` (`#/8/1`), bấm Phải để sang kết luận `L12-45` (`#/9/1`).
-- Tuyến đủ 120 phút dùng phím Xuống tại hai điểm cắt: `L12-35`–`L12-37` (`#/6/7`–`#/6/9`, 6 phút) và `L12-43`–`L12-44` (`#/8/2`–`#/8/3`, 4 phút). Sau đuôi dọc, bấm Phải để tiếp tục.
-- Cụm bài tập luôn đứng sau kết luận tại `#/10/1`–`#/10/3`. Từ `L12-45`, bấm Phải vào `X01`, rồi dùng Xuống cho `X02`, `X03`. Ba bài dùng 8, 12 và 10 phút; không xen chúng vào mạch 120 phút.
+- Tuyến cốt lõi 110 phút dùng 42 trang. Tại `L12-34` (`#/5/6`), bấm Phải để sang `L12-38` (`#/6/1`). Tại `L12-42` (`#/6/5`), bấm Phải để sang kết luận `L12-45` (`#/7/1`).
+- Tuyến đủ 120 phút dùng phím Xuống tại hai điểm cắt: `L12-35`–`L12-37` (`#/5/7`–`#/5/9`, 6 phút) và `L12-43`–`L12-44` (`#/6/6`–`#/6/7`, 4 phút). Sau đuôi dọc, bấm Phải để tiếp tục.
+- Cụm bài tập luôn đứng sau kết luận trong mạch cuối. Từ `L12-45` (`#/7/1`), dùng phím Xuống cho `X01`–`X03` (`#/7/2`–`#/7/4`). Trên mỗi bài, lần Xuống đầu mở đáp án fragment; lần Xuống kế tiếp sang bài sau. Ba bài dùng 8, 12 và 10 phút; không xen chúng vào mạch 120 phút.
 - Nếu chỉ có 110 phút, giao bảng framework, checklist tái lập, tích hợp message và mô hình đe dọa làm tài liệu tự đọc. `L12-34`, `L12-38`, `L12-42` và `L12-45` vẫn nối được khi bỏ hai đuôi.
 - Không cắt `L12-04`–`L12-12` cùng `L12-07B`, `L12-13`–`L12-22B` hoặc các công thức `L12-23`, `L12-25`, `L12-28`.
 

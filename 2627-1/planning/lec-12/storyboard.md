@@ -14,7 +14,7 @@
 | Kết | tổng hợp | `L12-45` | toàn bài → checklist đọc phương pháp | 2 | 0 |
 | Bài tập | kiểm tra tách riêng | `X01`–`X03` sau `L12-45` | ba cụm kiến thức → lời giải có thể chấm | 0 | 30 phút ngoài phần trình chiếu |
 
-Tuyến cốt lõi 110 phút gồm 42 trang và dùng phím Phải tại `L12-34` (`#/6/6`) để sang `L12-38` (`#/7/1`), rồi tại `L12-42` (`#/8/1`) để sang `L12-45` (`#/9/1`). Năm trang linh hoạt không nằm trong tuyến cốt lõi: dùng phím Xuống qua `L12-35`–`L12-37` (`#/6/7`–`#/6/9`) thêm 6 phút và `L12-43`–`L12-44` (`#/8/2`–`#/8/3`) thêm 4 phút. Sau kết luận, cụm `X01`–`X03` nằm riêng tại `#/10/1`–`#/10/3`, dùng 8, 12 và 10 phút. Tổng có 47 trang chính và 3 trang bài tập.
+Tuyến cốt lõi 110 phút gồm 42 trang và dùng phím Phải tại `L12-34` (`#/5/6`) để sang `L12-38` (`#/6/1`), rồi tại `L12-42` (`#/6/5`) để sang `L12-45` (`#/7/1`). Năm trang linh hoạt không nằm trong tuyến cốt lõi: dùng phím Xuống qua `L12-35`–`L12-37` (`#/5/7`–`#/5/9`) thêm 6 phút và `L12-43`–`L12-44` (`#/6/6`–`#/6/7`) thêm 4 phút. Sau kết luận, dùng phím Xuống qua `X01`–`X03` tại `#/7/2`–`#/7/4`, lần lượt 8, 12 và 10 phút. Tổng có 47 trang chính và 3 trang bài tập trong bảy mạch ngoài.
 
 ## Dữ kiện truyền giữa các bước
 
@@ -53,7 +53,7 @@ Tuyến cốt lõi 110 phút gồm 42 trang và dùng phím Phải tại `L12-34
 | `L12-08` | Nash là điều kiện lệch đơn phương; tối ưu chung suy ra Nash chỉ được khẳng định dưới common payoff. | hình thức, giới hạn | 7 |
 | `L12-09` | Common, zero-sum và general-sum dùng ba hợp đồng reward khác nhau. | ứng dụng | 7, 9 |
 | `L12-10` | CTDE tách thông tin tập trung khi học khỏi actor cục bộ khi chạy. | trực giác | 8, 48–50 |
-| `L12-11` | COMA, MADDPG, VDN/QMIX và MAPPO là các hiện thân CTDE khác nhau. | ứng dụng | 8, 12–16 |
+| `L12-11` | Bảng tham chiếu tới trước tách VDN khỏi QMIX và chỉ ra thành phần tập trung/phân tán. | bản đồ ứng dụng | 8, 12–16 |
 | `L12-12` | Gán công, quan sát, parameter sharing/agent ID và dị thể là bốn trục khó. | tổng hợp | 10, 45 |
 | `L12-13` | Reward chung không cô lập đóng góp; giá trị $Q=6$ mở ví dụ COMA nhất quán. | vấn đề | 12 |
 | `L12-14` | Counterfactual baseline chỉ thay $a_i$, giữ $\mathbf a_{-i}$. | trực giác | 12 |
@@ -62,10 +62,10 @@ Tuyến cốt lõi 110 phút gồm 42 trang và dùng phím Phải tại `L12-34
 | `L12-17` | Phép tổng hành động và centralized critic giới hạn COMA; câu hỏi kiểm độ lớn phép tổng. | ứng dụng, giới hạn, kiểm tra | 12 |
 | `L12-18` | Joint $Q$ phải cho phép thực thi tham lam cục bộ. | vấn đề | 14 |
 | `L12-19` | VDN là phép cộng các utility cục bộ. | trực giác, hình thức | 14 |
-| `L12-20` | Một mixer phi tuyến đơn điệu giữ local argmax. | ví dụ | 14 |
+| `L12-20` | Các utility vô hướng $q_1,q_2$ minh họa điều kiện mixer đơn điệu, không thay kiến trúc QMIX. | ví dụ | 14 |
 | `L12-21` | QMIX dùng đơn điệu để bảo đảm tích các tập local argmax nằm trong tập global argmax, kể cả khi hòa. | hình thức | 14 |
 | `L12-22` | QMIX giàu hơn VDN nhưng không biểu diễn joint $Q$ giảm theo utility cục bộ; câu hỏi kiểm điều kiện. | ứng dụng, giới hạn, kiểm tra | 14 |
-| `L12-22B` | QMIX lấy replay, đặt $m_t=1-d_t$ với $d_t$ chỉ terminal thật, chọn next action bằng utility online, đánh giá bằng target mixer và backprop TD loss qua mạng online. | thuật toán | 14, 39–40 |
+| `L12-22B` | QMIX lấy replay, chọn next action bằng utility online, đánh giá bằng utility target cùng target mixer và chỉ backprop qua số hạng dự đoán online. | thuật toán | 14, 39–40 |
 | `L12-23` | MADDPG định nghĩa $x$, $m$, tham số online/target, deterministic chain rule và joint target action; phạm vi còn gồm mixed tasks. | cầu nối, hình thức | 13 |
 | `L12-24` | IPPO/MAPPO khác miền của value learner; cụm PPO/HAPPO trong bài giới hạn ở cooperative common-return. | vấn đề, phạm vi | 15–17 |
 | `L12-25` | MAPPO dùng $\pi_{\theta_i}$ và tỷ số theo đúng action/history của từng tác tử trên batch cũ. | hình thức | 16 |
@@ -77,7 +77,7 @@ Tuyến cốt lõi 110 phút gồm 42 trang và dùng phím Phải tại `L12-34
 | `L12-31` | RWARE/gridworld làm lộ partial observation và cấu hình reward. | ví dụ | 23–24 |
 | `L12-32` | MAMuJoCo và SMAC khác nhau ở action geometry. | ví dụ | 25–28 |
 | `L12-33` | Football/many-agent kiểm khả năng mở rộng trong phạm vi lịch sử. | ví dụ, giới hạn | 29–38 |
-| `L12-34` | Đường cong thiếu protocol không đủ để xếp hạng. | phạm vi bằng chứng | 21, 26, 28, 31, 38, 40, 42, 46 |
+| `L12-34` | Đường cong thiếu protocol không đủ để xếp hạng; câu kiểm tra đóng cụm benchmark trên cả tuyến cốt lõi. | phạm vi bằng chứng, kiểm tra | 21, 26, 28, 31, 38, 40, 42, 46 |
 | `L12-35` | Framework ghép thuật toán, environment và hạ tầng theo phiên bản. | ứng dụng | 39–46 |
 | `L12-36` | Các lớp framework đều có thể làm đổi kết quả. | trực giác | 44 |
 | `L12-37` | Tái lập cần pin cấu hình, seed, budget và aggregation; câu hỏi kiểm sự khác biệt wrapper/action mask. | kiểm tra quy trình | 39–46 |
@@ -85,7 +85,7 @@ Tuyến cốt lõi 110 phút gồm 42 trang và dùng phím Phải tại `L12-34
 | `L12-39` | Năm trục đặc tả kênh, trong đó topology tách khỏi quyết định gửi. | phân loại, hình thức | 49 |
 | `L12-40` | Topology áp vào ví dụ để xác định các cặp gửi–nhận hợp lệ trước khi policy chọn gửi. | cơ chế, ứng dụng | 50 |
 | `L12-41` | Communication policy chọn có gửi và khi nào trên topology đã có. | thuật toán | 51 |
-| `L12-42` | Message có thể mang experience, hidden state hoặc intent. | hình thức | 52 |
+| `L12-42` | Message có thể mang experience, hidden state hoặc intent; câu kiểm tra phân biệt topology với policy gửi. | hình thức, kiểm tra | 52 |
 | `L12-43` | Actor phụ thuộc message thì kênh phải tồn tại khi chạy. | ứng dụng | 53 |
 | `L12-44` | Bandwidth, lỗi, privacy và attack cần threat model. | giới hạn | 54 |
 | `L12-45` | Sáu phép kiểm hợp nhất mô hình, thuật toán và bằng chứng. | tổng hợp | 4–54 |
@@ -99,14 +99,11 @@ Tuyến cốt lõi 110 phút gồm 42 trang và dùng phím Phải tại `L12-34
 |---:|---|---|---|
 | 1 | `L12-01`–`L12-03` | `#/1/1`–`#/1/3` | mở và mục tiêu |
 | 2 | `L12-04`–`L12-12`, gồm `L12-07B` | `#/2/1`–`#/2/10` | hợp đồng MARL |
-| 3 | `L12-13`–`L12-17` | `#/3/1`–`#/3/5` | COMA |
-| 4 | `L12-18`–`L12-22B` | `#/4/1`–`#/4/6` | VDN/QMIX |
-| 5 | `L12-23`–`L12-28` | `#/5/1`–`#/5/6` | actor–critic đa tác tử |
-| 6 | `L12-29`–`L12-34`; đuôi linh hoạt `L12-35`–`L12-37` | `#/6/1`–`#/6/9` | tại `#/6/6`: Phải để cắt, Xuống để học phần linh hoạt |
-| 7 | `L12-38`–`L12-41` | `#/7/1`–`#/7/4` | kênh, topology và policy gửi |
-| 8 | `L12-42`; đuôi linh hoạt `L12-43`–`L12-44` | `#/8/1`–`#/8/3` | tại `#/8/1`: Phải để cắt, Xuống để học phần linh hoạt |
-| 9 | `L12-45` | `#/9/1` | kết luận trước bài tập |
-| 10 | `X01`–`X03` | `#/10/1`–`#/10/3` | cụm chữa bài tập riêng; Phải từ kết luận rồi dùng Xuống |
+| 3 | `L12-13`–`L12-22B` | `#/3/1`–`#/3/11` | COMA nối trực tiếp sang VDN/QMIX |
+| 4 | `L12-23`–`L12-28` | `#/4/1`–`#/4/6` | actor–critic đa tác tử |
+| 5 | `L12-29`–`L12-34`; đuôi linh hoạt `L12-35`–`L12-37` | `#/5/1`–`#/5/9` | tại `#/5/6`: Phải để cắt, Xuống để học phần linh hoạt |
+| 6 | `L12-38`–`L12-42`; đuôi linh hoạt `L12-43`–`L12-44` | `#/6/1`–`#/6/7` | tại `#/6/5`: Phải để cắt, Xuống để học phần linh hoạt |
+| 7 | `L12-45`, `X01`–`X03` | `#/7/1`–`#/7/4` | kết luận trước, rồi dùng Xuống để chữa bài tập |
 
 ## Sai khác có chủ ý
 
@@ -119,4 +116,6 @@ Tuyến cốt lõi 110 phút gồm 42 trang và dùng phím Phải tại `L12-34
 - Gộp framework thành ma trận và kiến trúc lớp; mọi nhận định về hỗ trợ được giới hạn theo tài liệu nguồn.
 - Bỏ AutoGen khỏi mặt trang vì nó không mặc nhiên là MARL; ghi ranh giới trong ghi chú và nhật ký.
 - Bổ sung ví dụ robot kho tại `L12-38` từ ngữ cảnh RWARE/grid trong nguồn để nối quan sát cục bộ với message khi thực thi; không thêm kết quả thực nghiệm.
-- Chuyển `X01`–`X03` sang stack ngang cuối sau `L12-45`; hai cụm linh hoạt là đuôi dọc để tuyến 110 phút dùng Phải và tuyến 120 phút dùng Xuống.
+- Đặt `X01`–`X03` sau `L12-45` trong mạch ngoài cuối; hai cụm linh hoạt là đuôi dọc để tuyến 110 phút dùng Phải và tuyến 120 phút dùng Xuống.
+
+Danh mục 50 mã trang: `L12-01`, `L12-02`, `L12-03`, `L12-04`, `L12-05`, `L12-06`, `L12-07`, `L12-07B`, `L12-08`, `L12-09`, `L12-10`, `L12-11`, `L12-12`, `L12-13`, `L12-14`, `L12-15`, `L12-16`, `L12-17`, `L12-18`, `L12-19`, `L12-20`, `L12-21`, `L12-22`, `L12-22B`, `L12-23`, `L12-24`, `L12-25`, `L12-26`, `L12-27`, `L12-28`, `L12-29`, `L12-30`, `L12-31`, `L12-32`, `L12-33`, `L12-34`, `L12-35`, `L12-36`, `L12-37`, `L12-38`, `L12-39`, `L12-40`, `L12-41`, `L12-42`, `L12-43`, `L12-44`, `L12-45`, `X01`, `X02`, `X03`.
