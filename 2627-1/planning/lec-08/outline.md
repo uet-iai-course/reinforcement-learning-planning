@@ -5,7 +5,7 @@
 - Nguồn chính: `RL-hk2-2025-2026/lecture8-dqn.pdf`, 36 trang.
 - Không có tài liệu bài tập hay code demo đi kèm.
 - Đối tượng: sinh viên đã học Q-learning dạng bảng, xấp xỉ hàm và bộ ba nguy hiểm.
-- Đầu ra: 34 trang chính, gồm 110 phút tuyến cốt lõi và 10 phút linh hoạt; ba trang bài tập dọc cho 30 phút.
+- Đầu ra: 34 trang chính + 3 trang bài tập dọc = 37 mã trang; 120 phút chính gồm 110 phút tuyến cốt lõi và 10 phút linh hoạt; 30 phút chữa bài qua ba bài tập dọc (ngoài 120 phút chính, không tính là vượt giờ).
 
 ## Mục tiêu học tập
 
@@ -16,7 +16,32 @@
 5. Viết đúng SGD, RMSprop và Adam theo từng tọa độ, đồng thời giới hạn vai trò của optimizer.
 6. Giải thích replay và mạng mục tiêu giảm hai cơ chế bất ổn nhưng không tạo bảo đảm hội tụ.
 
-## Mạch nội dung
+## Bảy mạch ngoài (cấu trúc HTML)
+
+HTML có đúng 7 section ngoài, độ sâu tối đa 2:
+
+1. M1 — `L08-01`–`L08-06`: cầu nối từ bảng Q sang DQN; giữ mốc 7+13 phút bên trong M1 giữa `L08-03`/`L08-04`.
+2. M2 — `L08-07`–`L08-10` + `X01`: giao diện mạng, hai mạng, đích bootstrap, loss và bài tính.
+3. M3 — `L08-11`–`L08-21` + `X02`: vòng DQN, replay, hai cờ, giả mã, hợp đồng tensor và kiểm tra gradient.
+4. M4 — `L08-22`–`L08-25`: gradient và ba bộ tối ưu (nhánh dọc linh hoạt).
+5. M5 — `L08-26`: bảng so sánh và phạm vi chọn optimizer.
+6. M6 — `L08-27`–`L08-30`: bất ổn, replay, mạng mục tiêu và deadly triad.
+7. M7 — `L08-31`–`L08-34` + `X03`: pipeline Atari, kiểm tra tổng hợp, ablation và hợp đồng DQN.
+
+`X01`–`X03` là 30 phút chữa bài ngoài 120 phút chính; không coi đây là lỗi thời lượng.
+
+## Truy nguyên các trang bổ sung
+
+- `L08-20` (hợp đồng tensor Atari): truy nguyên từ công thức loss `L08-17` và giao diện mạng `L08-07`; biến công thức thành shape/dtype/device cụ thể trước khi kiểm tra.
+- `L08-21` (kiểm tra dấu gradient hai mẫu): truy nguyên từ ví dụ số `X01` và công thức loss; kiểm hướng cập nhật trước khi sửa giả mã.
+- `X01` (bài tính đích, TD error, MSE, gradient): truy nguyên trực tiếp từ công thức đích và loss của nguồn.
+- `X03` (bài ablation): truy nguyên từ hai cơ chế replay và mạng mục tiêu; dùng lại đúng hai cơ chế đã dạy và thu hồi bốn kết quả `L08-02`.
+
+## Câu hỏi khám phá nguồn tr.36
+
+Câu hỏi khám phá ở nguồn tr.36 không được đưa lên mặt trang vì đã có `L08-33` (kiểm tra tổng hợp bốn câu) và `X03` (ablation) phủ cùng mục tiêu kiểm; nội dung liên quan được đưa vào notes của `L08-33`. Không thêm câu hỏi mới lên mặt trang.
+
+## Mạch nội dung (cụm khái niệm nhỏ hơn)
 
 1. Cầu nối từ bảng Q sang DQN.
 2. Giao diện mạng, khởi tạo mạng online/mục tiêu và mục tiêu bootstrap.
@@ -96,9 +121,9 @@ Quy ước thời gian chỉ dùng khi tương tác với môi trường: $(O_t,
 
 ## Phân bổ thời lượng
 
-- 110 phút cốt lõi: cầu nối Q-learning, giao diện và hai mạng, đích/loss, replay, giả mã, bất ổn, Atari và tổng hợp.
+- 120 phút chính = 110 phút cốt lõi (cầu nối Q-learning, giao diện và hai mạng, đích/loss, replay, giả mã, bất ổn, Atari và tổng hợp) + 10 phút linh hoạt.
 - 10 phút linh hoạt: từ `L08-22` đi xuống `L08-23`–`L08-25` để xem SGD, RMSprop và Adam. Tuyến ngang đi từ `L08-22` sang bảng so sánh `L08-26`.
-- 30 phút bài tập: `X01`, `X02`, `X03`, mỗi bài 10 phút.
+- 30 phút chữa bài (ngoài 120 phút chính): `X01`, `X02`, `X03`, mỗi bài 10 phút.
 
 ## Tài sản SVG
 

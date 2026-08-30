@@ -1,5 +1,27 @@
 # Storyboard Bài 08
 
+## Bản đồ bảy mạch ngoài
+
+| mạch | range | chức năng | kết nối vào | đầu ra |
+|---|---|---|---|---|
+| M1 | `L08-01`–`L08-06` | Cầu nối từ bảng Q sang DQN; mốc 7+13 phút giữa `L08-03`/`L08-04` | Từ Bài 07; `L08-06` có câu nối sang giao diện mạng | Nhận ra cần tham số dùng chung và giới hạn của bảng |
+| M2 | `L08-07`–`L08-10` + `X01` | Giao diện mạng, hai mạng, đích bootstrap, loss, bài tính | Vào từ `L08-06`; `L08-10` báo trước batch từ replay | Đích có mặt nạ, MSE, gather, gradient chỉ qua mạng online |
+| M3 | `L08-11`–`L08-21` + `X02` | Vòng DQN, replay, hai cờ, giả mã, hợp đồng tensor | Vào từ `L08-10`/`X01`; batch đến từ replay như đã báo trước | Giả mã hoàn chỉnh với warmup, tần suất, đồng bộ; kiểm gradient |
+| M4 | `L08-22`–`L08-25` | Gradient và ba bộ tối ưu (nhánh dọc linh hoạt) | Vào ngang từ `L08-22` sau M3 | Quy tắc cập nhật SGD/RMSprop/Adam theo tọa độ |
+| M5 | `L08-26` | Bảng so sánh và phạm vi chọn optimizer | Vào ngang từ `L08-22`; câu nối quay lại bất ổn cấu trúc | Chọn optimizer bằng thí nghiệm có kiểm soát |
+| M6 | `L08-27`–`L08-30` | Bất ổn, replay, mạng mục tiêu, deadly triad | Vào từ `L08-26` | Quan hệ nhân quả đúng: hai cơ chế giảm bất ổn, không bảo đảm hội tụ |
+| M7 | `L08-31`–`L08-34` + `X03` | Pipeline Atari, kiểm tra tổng hợp, ablation, hợp đồng DQN | Vào từ `L08-30`; `X03` là bài ablation dùng lại hai cơ chế; `L08-34` thu hồi bốn kết quả `L08-02` | Danh sách kiểm hợp đồng DQN |
+
+Ranh giới hai phía đã rà: M1↔M2 (`L08-06`→`L08-07`), M2↔M3 (`L08-10`→`L08-11`), M3↔M4 (`L08-21`→`L08-22`), M4↔M5 (`L08-25`→`L08-26`), M5↔M6 (`L08-26`→`L08-27`), M6↔M7 (`L08-30`→`L08-31`).
+
+## Trang dùng chung giữa các mạch
+
+`L08-11` và `L08-20` được dùng chung trong bảng chu trình sáu bước dưới đây (xuất hiện ở nhiều cụm khái niệm) nhưng mỗi trang chỉ chiếm một vị trí vật lý và thời lượng của nó chỉ được tính một lần trong mạch M3; không tính hai lần.
+
+## X03 gộp ứng dụng + kiểm tra
+
+`X03` gộp hai vai trò: ứng dụng (thiết kế ablation loại bỏ đúng một trong hai cơ chế replay/mạng mục tiêu) và kiểm tra (phân biệt dự đoán cơ chế với kết luận thực nghiệm qua các lần chạy độc lập). Gộp để không thêm trang mới và giữ 30 phút chữa bài đúng chuẩn.
+
 ## Hành trình khái niệm và thời lượng
 
 | cụm | chu trình | trang | đầu vào → sản phẩm | tuyến chính | linh hoạt |
@@ -12,7 +34,7 @@
 | Bất ổn | vấn đề → trực giác → ví dụ → hình thức → ứng dụng → kiểm tra | `L08-27`–`L08-30`, `X03` | Bootstrap đang học → mục tiêu di động, replay và deadly triad | 13 phút | 0 |
 | Atari và tổng hợp | ứng dụng → kiểm tra | `L08-31`–`L08-34` | Lịch sử bốn khung → kiểm hợp đồng DQN | 10 phút | 0 |
 
-Tuyến chính có 110 phút. Ba bài tập dọc có 30 phút: `X01`, `X02`, `X03`, mỗi bài 10 phút. Từ `L08-22`, đi ngang sang `L08-26` để giữ tuyến cốt lõi; đi xuống `L08-23`–`L08-25` cho 10 phút linh hoạt về SGD, RMSprop và Adam. Optimizer là công cụ phụ nên không chiếm một chu trình trọng tâm riêng.
+Tuyến chính có 110 phút, cộng 10 phút linh hoạt = 120 phút chính. Ba bài tập dọc có 30 phút chữa bài ngoài 120 phút chính: `X01`, `X02`, `X03`, mỗi bài 10 phút; đây không phải vượt giờ. Từ `L08-22`, đi ngang sang `L08-26` để giữ tuyến cốt lõi; đi xuống `L08-23`–`L08-25` cho 10 phút linh hoạt về SGD, RMSprop và Adam. Optimizer là công cụ phụ nên không chiếm một chu trình trọng tâm riêng.
 
 ## Chu trình sáu bước cho các khái niệm trọng tâm
 

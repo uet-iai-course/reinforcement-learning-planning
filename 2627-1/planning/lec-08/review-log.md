@@ -127,15 +127,40 @@ Sau thay đổi cấu trúc optimizer, đã rà `L08-20`–`L08-28` và các tra
 
 Tác tử rà toán xác nhận PASS sau hai sửa cuối; không còn lỗi từ mức trung bình trở lên.
 
+## Vòng rà soát độc lập hiện tại và lượt writer
+
+- Runtime: `requested_model=observed_model=z-ai/glm-5.3-flash`, provider OpenRouter.
+- Phạm vi thực thi: chỉ sửa ba tệp planning (`outline.md`, `storyboard.md`, `review-log.md`); không sửa HTML hay tệp khác.
+- Năm báo cáo độc lập đều chạy bằng `openrouter-mcp-reviewer`, không có worker ghi tệp:
+  1. Góc nhìn sinh viên: yêu cầu khởi tạo $O_0$, tách bước dừng khỏi điều kiện tối ưu, làm rõ final observation và hai đồng hồ.
+  2. Chuyên gia Học tăng cường: xác nhận phạm vi DQN; yêu cầu nối giả mã với vòng huấn luyện, làm rõ autoreset và ký hiệu $j/k_{\mathrm{opt}}$.
+  3. Độ chính xác toán học và thuật toán: kiểm lại đích $y$, MSE, gradient, mặt nạ, giả mã và optimizer; không phát hiện lỗi từ mức trung bình trở lên.
+  4. Phản biện học thuật và giảng dạy: yêu cầu báo trước nguồn batch tại `L08-10`, thêm đáp án ví dụ `L08-09`, và nói rõ thời điểm kiểm $t\bmod F$.
+  5. Kết nối và mạch viết: xác nhận bảy mạch sau khi gộp hai section đầu; yêu cầu bổ sung câu nối tại các ranh giới và ghi đúng vai trò vào–ra trong storyboard.
+- Writer HTML và writer planning chạy tuần tự, có phạm vi tệp không trùng nhau. Cả hai dùng `requested_model=observed_model=z-ai/glm-5.3-flash`, provider OpenRouter.
+- Quyết định chấp nhận/từ chối:
+  - Chấp nhận: gộp hai section đầu thành M1; ghi X01–X03 là 30 phút chữa bài ngoài 120 phút chính.
+  - Chấp nhận: thêm truy nguyên bốn trang bổ sung và lý do bỏ câu hỏi tr.36 vào outline.
+  - Chấp nhận: bản đồ bảy mạch và ghi chú trang dùng chung trong storyboard.
+  - Từ chối: tách `L08-18`/`L08-19`/`L08-20` (chưa có bằng chứng tràn từ render); đổi vị trí `X03`; thêm câu hỏi mới lên mặt trang.
+- Hai dương tính giả cần ghi nhận:
+  1. "120 phút chính + 30 phút chữa bài" là đúng yêu cầu, không phải vượt giờ; 30 phút chữa bài nằm ngoài 120 phút chính.
+  2. `L08-20`/`L08-21` và `X01`/`X03` không phải trang mồ côi; chúng là bổ sung truy nguyên từ công thức/tensor/kiểm tra, nhưng outline cần ghi rõ truy nguyên này (đã ghi).
+- Chưa tuyên bố render, HTTP hoặc Codex Slides ở lượt writer này; các kiểm tra đó thuộc vòng sau.
+
 ## Kiểm định cuối của điều phối viên
 
-- 37 mã trang duy nhất, 37 khối ghi chú và 37 mục storyboard; độ sâu `<section>` lớn nhất là 2.
-- KaTeX nghiêm ngặt đọc 166 biểu thức, không có lỗi phân tích.
+- 37 mã trang duy nhất, 37 khối ghi chú và 37 mục storyboard; đúng bảy `<section>` ngoài, độ sâu lớn nhất là 2. Các range vật lý khớp outline và storyboard.
+- RevealMath/KaTeX dựng toàn bộ công thức ở cả hai lượt render, không có lỗi console hoặc lỗi trang.
 - Tám SVG hợp lệ về XML, có `role="img"`, `title`, `desc`; nhãn nhỏ nhất là 34 px.
-- HTML và tám SVG trả HTTP 200 tại cổng 8765.
+- Máy chủ tối thiểu chỉ chứa Bài 08 và thư viện cục bộ trả HTTP 200 cho HTML, CSS, RevealJS, KaTeX, phông cục bộ và tám SVG tại `127.0.0.1:8765`. Lệnh `python3 -m reloadserver 8765` không chạy được vì mô-đun `reloadserver` không có trong môi trường; dùng `python3 -m http.server 8765 --bind 127.0.0.1` thay thế.
+- Chromium headless duyệt đủ 37 trang ở $1280\times720$ và $800\times600$, tạo 74 ảnh chụp; không có lỗi tài nguyên. Điều hướng bàn phím xuống, lên và sang phải đi đúng `L08-02`, `L08-01`, `L08-07`.
+- Bộ dò hình học báo mười dương tính giả ở H1 và hộp KaTeX; đối chiếu montage và ảnh gốc xác nhận không có chữ, công thức hoặc hình bị cắt. Đã kiểm riêng `L08-18`–`L08-20`, `X02`, `L08-33`, `X03`.
 - Không có ảnh raster, tài nguyên mạng cốt lõi, mã trang, nhãn phân tuyến hoặc thời lượng lộ trên mặt trang và ghi chú.
 - Cỡ chữ hiệu dụng của giả mã là khoảng 0,77 em và của bảng là khoảng 0,76 em.
 - Nhánh optimizer có độ sâu dọc một cấp và có thể bỏ qua bằng điều hướng ngang sau trang tổng quan.
-- Năm tệp HTML/quy trình trong dự án Codex Slides khớp từng byte với bản trong kho sau khi đồng bộ.
+- Tự kiểm theo `no-ai-slop/eval.md`: giữ nội dung nguồn, không thêm số liệu hoặc mệnh đề mới; không còn từ cấm, lời dẫn rỗng, câu hỏi tu từ, phô trương, kết giả hoặc nhịp câu máy móc trong nội dung hiển thị và notes.
+- Rà mạch theo Quill khi không có `quill.json`: bảy mạch tiến từ bảng Q đến hợp đồng DQN; thuật ngữ, ký hiệu $O,A,R,Z,U,\theta,\theta^-$ và hai đồng hồ được truyền liên tục; không tạo `quill.json`.
+- Ba lần yêu cầu tái kiểm định OpenRouter sau chỉnh sửa giả mã/mạch đều dừng ở `api_transport_error` trước khi model nhận prompt. Không ghi các lượt này là PASS; điều phối viên đã tự kiểm lại thứ tự bước 1–10, mặt nạ, autoreset, fallback `final_observation=None`, $t\bmod F$ và phạm vi bước dừng.
 
-Codex Slides đã được dùng làm dự án bền vững và kho Design Files, nhưng Codex Browser trong trình soạn thảo không khả dụng trong phiên này. Vì vậy chưa thể tuyên bố đã duyệt trực quan bằng Codex Slides hoặc kiểm tra tràn trang bằng Browser. Các kiểm tra RevealJS cục bộ, cấu trúc, công thức, đường dẫn và tài sản đã được thực hiện đầy đủ; giới hạn trực quan này được giữ rõ trong bàn giao.
+Codex Slides không thể đồng bộ bản hiện tại. Runtime đi kèm đang chạy Node.js 18.19.1 trong khi skill yêu cầu Node.js 20 trở lên; API Design Files lỗi `ReferenceError: File is not defined`. Vì vậy không tuyên bố năm Design Files khớp bản hiện tại và không tuyên bố đã duyệt bằng Codex Browser. Kiểm định trực quan RevealJS cục bộ ở hai khung đã hoàn tất như trên.
