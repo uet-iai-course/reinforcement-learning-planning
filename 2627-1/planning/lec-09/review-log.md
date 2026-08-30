@@ -63,25 +63,70 @@ Tất cả đề xuất trên đã áp dụng. Sai phân hữu hạn ở nguồn
 - `L09-29`: đã viết kỳ vọng có điều kiện tổng quát theo $A_t\mid H_t$; ghi rõ tổng cho hành động rời rạc và tích phân cho hành động liên tục.
 - Chỉnh nhẹ: $Z$ có kiểu Boolean thay vì gộp vào $\mathbb R^b$; $\pi_\theta(a\mid s)\ge0$ xuất hiện cùng điều kiện chuẩn hóa; $\phi$ được giữ cố định tại hai họ chính sách.
 
+## Vòng hiện tại
+
+Runtime: mọi vai (planner, source reader, storyboard reviewer và năm reviewer độc lập) đều dùng `requested_model=observed_model=z-ai/glm-5.3-flash`, provider OpenRouter.
+
+### Planner
+
+- Mức độ: `trung bình`.
+- Trang: `L09-28`–`L09-30`, `X01`, `X03`, `L09-16`.
+- Vấn đề: một slide `L09-28` gánh cả tỷ số xác suất lẫn khai triển $\nabla\log p$; X01 lặp số cũ; X03 trùng `L09-32`; cầu nối Double DQN → chính sách trực tiếp còn mỏng.
+- Bằng chứng: storyboard cũ cho thấy `L09-28` quá dày; X03 trùng ví dụ cộng vector của `L09-32`.
+- Quyết định: tách `L09-28` thành `L09-28` + `L09-28A` trong cùng section ngoài; đổi số X01 thành $r=1$, $\gamma=0{,}8$, $Q_{\theta^-}=(2,7)$, $Q_\theta=(4,1)$ (DQN $6{,}6$, DDQN $2{,}6$); đổi X03 sang $G_0=-3$, $\theta_{new}=(\log2-0{,}1,0{,}1)$, $\pi_{new}(1\mid s)\approx0{,}621$ và episode hai bước $R_1=1,R_2=2,\gamma=0{,}9$ cho $G_0=2{,}8$, $G_1=2$; thêm dòng cầu nối argmax → phân phối khả vi ở `L09-16`.
+
+### Source reader
+
+- Mức độ: `trung bình`.
+- Trang: nguồn tr.39–40, `L09-30`, `L09-31`.
+- Vấn đề: nguồn tr.40 dùng mục tiêu khác $J=E[G_0]$; occupancy cần thuật ngữ Anh lần đầu.
+- Bằng chứng: đối chiếu trực tiếp tr.39–40 với quy ước $J=E[G_0]$ đã chốt.
+- Quyết định: `L09-30` đổi tiêu đề “Mở rộng: phân bố chiếm dụng”, lần đầu kèm `occupancy measure`; `L09-31` notes ghi khác nguồn là sửa có chủ ý; không đưa metadata quy trình lên mặt slide.
+
+### Storyboard reviewer
+
+- Mức độ: `trung bình`.
+- Trang: toàn storyboard, quanh `L09-28A` và ranh giới section.
+- Vấn đề: cần bản đồ 6 mạch, cập nhật bảng cho `L09-28A`, X01/X03; `L09-30` phải đánh dấu là mở rộng có thể lược.
+- Bằng chứng: bảng cũ chưa có `L09-28A`; tổng thời lượng phải giữ 110 cốt lõi + 10 linh hoạt + 30 chữa bài.
+- Quyết định: cập nhật bản đồ và mọi bảng; rà hai trang lân cận quanh `L09-28A` và mọi ranh giới section; không ghi số phút trên mặt slide hay trong notes.
+
+### Năm reviewer độc lập
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | quyết định |
+|---|---|---|---|---|
+| nghiêm trọng | `L09-28` | Góc nhìn sinh viên: ba công thức dày trên một trang nhỏ. | Trang cũ đồng thời chứa likelihood ratio, tích xác suất quỹ đạo và tổng log-gradient. | Tách thành `L09-28` và `L09-28A`; giữ mỗi trang một luận điểm. |
+| trung bình | `L09-13`, `L09-07`, `X01` | Chuyên gia Học tăng cường: quy ước chỉ số hành động cần rõ; điều kiện $Z_i=0$ đặt cạnh argmax dễ đọc nhầm; X01 lặp số cũ. | Ví dụ toán dùng hành động 1/2 trong khi tensor có thể đánh số từ 0; đáp án X01 trùng `L09-08`. | Ghi quy ước trong notes `L09-09`, sửa câu điều kiện `L09-07`, đổi X01 sang $6{,}6$ / $2{,}6$. |
+| nhẹ | `L09-09`, `L09-29`, `L09-30` | Rà toán: không có lỗi; cần làm rõ vai trò phòng thủ của `sg` và hai bước suy diễn. | Mọi ví dụ, $\gamma^t$, occupancy và kích thước đều được tính lại đúng. | Giữ công thức; bổ sung dòng $G_0=G_{<t}+\gamma^tG_t$ và trực giác occupancy. |
+| trung bình | `L09-29`, `L09-30` | Phản biện học thuật: cầu nối nhân quả và dạng occupancy thiếu bước trung gian hiển thị. | Kết quả đúng nhưng lập luận chủ yếu nằm trong notes. | Thêm phân rã return ở `L09-29`; đổi `L09-30` thành mở rộng có trực giác và có thể lược. |
+| nhẹ | `L09-16`, `L09-33`, `X01`, `X03` | Kết nối và mạch viết: động cơ chuyển sang chính sách và thu hồi hook còn mờ; hai bài tập lặp ví dụ. | Cầu nối argmax chỉ ở notes; kết luận chưa nhắc sai lệch cực đại. | Thêm cầu nối trên `L09-16`, thu hồi phép max trên `L09-33`, đổi dữ kiện X01/X03. |
+
+### Hai dương tính giả
+
+- 120+30: một reviewer báo tổng thời lượng vượt 120 phút vì cộng cả 30 phút chữa X01–X03 vào giờ chính. Đây là dương tính giả: 120 phút chính = 110 cốt lõi + 10 linh hoạt; 30 phút chữa bài nằm ngoài 120 phút chính, không phải vượt giờ.
+- Gợi ý thời lượng trong notes: một reviewer đề xuất ghi số phút từng cụm vào notes để dễ trình bài. Đây cũng là dương tính giả: quy ước hiện hành cấm mã nội bộ, phân tuyến và thời lượng trên mặt slide lẫn trong notes; đề xuất bị bác bỏ.
+
+### Kết luận vòng
+
+- Đã áp dụng: tách `L09-28`, thêm `L09-28A` (phân tích $p_\theta(\tau)=\rho_0\prod\pi_\theta P$ và $\nabla\log p=\sum_t\psi_t$; một luận điểm trung tâm, notes nối sang `L09-29`), sửa X01/X03, thêm cầu nối `L09-16`, các sửa thuật ngữ lần đầu (maximization bias ở `L09-04`, likelihood ratio ở `L09-28`, occupancy measure ở `L09-30`).
+- Chưa tuyên bố render, HTTP, recheck hoặc Codex Slides cho vòng này; các bước kiểm định trực quan và tái kiểm còn phải thực hiện riêng.
+
 ## Tài sản và ngoại lệ
 
 Tám hình kỹ thuật được vẽ lại thành SVG trong `img/lec-09/`. Không dùng ảnh raster, tài nguyên mạng hoặc tài sản sinh bởi AI. Không có ngoại lệ cần người dùng duyệt.
 
 ## Kiểm định sau sửa storyboard
 
-- Cấu trúc: 33 trang chính và 3 trang dọc; độ sâu `section` tối đa là hai.
-- Có 36 mã duy nhất, 36 ghi chú diễn giả và đủ 36 mục tương ứng trong storyboard.
-- Nội dung hiển thị không chứa mã nội bộ, phân tuyến hoặc thời lượng.
-- KaTeX chế độ nghiêm đã đọc 158 biểu thức; không có lỗi cú pháp.
-- Tám SVG hợp lệ theo bộ phân tích XML, có `role="img"`, `title`, `desc`; cỡ nhãn nhỏ nhất khai báo là 30 px. Hai SVG đã sửa được kết xuất bằng ImageMagick để kiểm chữ tràn, cắt nhãn và thông điệp.
-- Mọi `src` là tệp cục bộ và trả HTTP 200 tại cổng 8765; không có ảnh raster hoặc URL mạng.
-- Không có cỡ chữ CSS dưới `0.75em`; không phát hiện mẫu từ cấm trong kiểm tra `$no-ai-slop`.
-- Chưa kiểm tra tràn trang bằng trình duyệt đồ họa; bước kiểm định trực quan cuối vẫn phải thực hiện hoặc ghi rõ giới hạn công cụ.
+- Cấu trúc cuối: 34 trang chính và 3 trang bài tập, tổng 37 mã duy nhất; 37 ghi chú diễn giả; 6 `section` ngoài và độ sâu `section` tối đa là hai.
+- Mọi mã trang xuất hiện trong HTML, outline và storyboard; nội dung hiển thị không chứa mã nội bộ, phân tuyến hoặc thời lượng.
+- Tám SVG hợp lệ, có `role="img"`, `title` và `desc`; mọi tham chiếu tài sản đều cục bộ. Không có ảnh raster, URL mạng hoặc đường dẫn hỏng.
+- Hai reviewer tái kiểm độc lập chạy song song qua OpenRouter. Cả hai có `requested_model = observed_model = z-ai/glm-5.3-flash`, `provider = OpenRouter`. Rà toán xác nhận lại X01, `L09-28`–`L09-32` và X03; rà mạch xác nhận đủ 6 mạch, mọi ranh giới và hai trang lân cận quanh `L09-28A`. Không còn lỗi từ mức `trung bình` trở lên.
+- Các sửa nhẹ sau tái kiểm: viết tường minh lịch sử $H_t$, thêm câu dẫn vào `L09-28A`, đồng bộ cách ghi phạm vi và số trang. Gợi ý giải thích thêm chỉ số hành động/đẳng thức chiếm dụng được giữ trong ghi chú hoặc bác bỏ khi không cần cho tính đúng.
 
 ## Tái kiểm tra toán học và kiểm định cuối
 
-- Tác tử rà soát toán học và thuật toán đã kiểm tra lại bản sửa cuối; không còn vấn đề từ mức `trung bình` trở lên.
-- Máy chủ cục bộ trả HTTP 200 cho tệp HTML và cả tám SVG tại cổng 8765.
-- `git diff --check` không phát hiện lỗi khoảng trắng.
-- Bản HTML và bốn tệp quy trình đã được đưa vào Design Files của dự án Codex Slides và đối chiếu từng byte với tệp trong kho.
-- Codex Slides Browser không khả dụng trong phiên này. Vì vậy chưa thể tuyên bố đã rà trực quan bằng Codex Slides; giới hạn còn lại là kiểm tra tràn, chồng lấn và khả năng đọc bằng trình duyệt đồ họa.
+- `python3 -m reloadserver 8765` không chạy vì môi trường không cài mô-đun `reloadserver`; dùng `python3 -m http.server 8765 --bind 127.0.0.1` làm máy chủ cục bộ thay thế.
+- Chromium duyệt đủ 37 trang ở hai khung 1280 × 720 và 800 × 600, tạo 74 ảnh chụp. Không có lỗi console, lỗi trang hoặc yêu cầu tài nguyên thất bại; điều hướng ngang/dọc bằng bàn phím đúng.
+- Kiểm tra hình học và ảnh chụp phát hiện công thức `L09-28` bị cắt bên phải. Công thức đã được tách thành ba dòng và toàn bộ 74 lượt kiểm tra được chạy lại; lỗi không tái xuất hiện. Các cảnh báo còn lại chỉ là hộp KaTeX hoặc H1 vượt hộp nội bộ vài pixel, không vượt khung trang và không thấy tràn/chồng lấn trên ảnh.
+- Biên tập cuối theo `no-ai-slop/eval.md` không phát hiện lời dẫn rỗng, tổng kết lặp, câu quảng bá hoặc nhịp câu máy móc. Rà mạch theo Quill xác nhận thuật ngữ, ký hiệu và đầu ra–đầu vào của 6 mạch liên tục; không tạo `quill.json`.
+- Bốn Design Files của dự án Codex Slides B09 đã được cập nhật và đọc ngược lại; HTML, outline, storyboard và review-log khớp từng byte với tệp trong kho tại thời điểm đồng bộ. Không dùng chức năng render lại bộ RevealJS trong Codex Slides.
