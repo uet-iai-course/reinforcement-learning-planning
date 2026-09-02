@@ -7,6 +7,7 @@
   <link rel="icon" type="image/png" href="../favicon.png"/>
   <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
   <link rel="stylesheet" href="../index-pages.css"/>
+  <link rel="stylesheet" href="material-index.css"/>
   <style>
     .course-map {
       margin: 0;
@@ -29,12 +30,13 @@
   <title>Học tăng cường · 2026–2027</title>
 </head>
 <body>
+  <a class="skip-link" href="#lecture-list-title">Bỏ qua phần giới thiệu</a>
   <main class="page-shell">
     <section class="hero">
       <p class="eyebrow">Học kỳ 1 · 2026–2027</p>
       <h1>Học tăng cường</h1>
       <div class="hero-text">
-        <p>Danh mục bài giảng RevealJS của học phần, từ giao diện tác tử–môi trường đến học tăng cường sâu và đa tác tử.</p>
+        <p>Danh mục bài giảng RevealJS và ghi chú tự học, từ giao diện tác tử–môi trường đến học tăng cường sâu và đa tác tử.</p>
       </div>
       <div class="hero-actions">
         <a class="secondary-link" href="../index.html">
@@ -59,139 +61,211 @@
     </section>
 
     <section aria-labelledby="lecture-list-title">
-      <h2 class="section-title" id="lecture-list-title">Bài giảng</h2>
-      <div class="term-grid">
-        <article class="term-card">
+      <h2 class="section-title" id="lecture-list-title">Bài giảng và ghi chú</h2>
+      <div class="term-grid" role="list">
+        <article class="term-card" role="listitem">
           <div>
             <span class="term-label">Bài 1</span>
             <h2>Giới thiệu Học tăng cường</h2>
             <p>Tác tử và môi trường; tín hiệu học; phần thưởng trễ; chính sách, hàm giá trị và mô hình; thăm dò, khai thác; Tic-tac-toe.</p>
           </div>
-          <a class="term-link" href="lecture-01-gioi-thieu-hoc-tang-cuong.html" aria-label="Mở bài 1: Giới thiệu Học tăng cường">
-            <span>Mở bài giảng</span>
-            <span aria-hidden="true">→</span>
-          </a>
+          <div class="resource-actions" role="group" aria-label="Tài nguyên Bài 1">
+            <div class="resource-item">
+              <span class="resource-label">Bài giảng</span>
+              <a class="term-link" href="lecture-01-gioi-thieu-hoc-tang-cuong.html"><span>Mở bài giảng</span><span aria-hidden="true">→</span></a>
+            </div>
+            <div class="resource-item">
+              <span class="resource-label">Ghi chú bài giảng</span>
+              <a class="term-link" href="material-viewer.html?doc=materials/lec-01/lecture-note.md&amp;deck=lecture-01-gioi-thieu-hoc-tang-cuong.html"><span>Mở ghi chú</span><span aria-hidden="true">→</span></a>
+            </div>
+          </div>
         </article>
-        <article class="term-card">
+        <article class="term-card" role="listitem">
           <div>
             <span class="term-label">Bài 2</span>
             <h2>Giao diện tác tử–môi trường</h2>
             <p>Vòng tương tác; trạng thái và quan sát; tính Markov; chính sách, hàm giá trị, mô hình; dự đoán, điều khiển và mê cung.</p>
           </div>
-          <a class="term-link" href="lecture-02-giao-dien-tac-tu-moi-truong.html" aria-label="Mở bài 2: Giao diện tác tử–môi trường">
-            <span>Mở bài giảng</span>
-            <span aria-hidden="true">→</span>
-          </a>
+          <div class="resource-actions" role="group" aria-label="Tài nguyên Bài 2">
+            <div class="resource-item">
+              <span class="resource-label">Bài giảng</span>
+              <a class="term-link" href="lecture-02-giao-dien-tac-tu-moi-truong.html"><span>Mở bài giảng</span><span aria-hidden="true">→</span></a>
+            </div>
+            <div class="resource-item">
+              <span class="resource-label">Ghi chú bài giảng</span>
+              <span class="resource-status">Chưa có</span>
+            </div>
+          </div>
         </article>
-        <article class="term-card">
+        <article class="term-card" role="listitem">
           <div>
             <span class="term-label">Bài 3</span>
             <h2>Quá trình quyết định Markov</h2>
             <p>Chuỗi Markov; quá trình phần thưởng Markov; phần thưởng tích lũy; phương trình Bellman; chính sách và hàm giá trị trong MDP.</p>
           </div>
-          <a class="term-link" href="lecture-03-qua-trinh-quyet-dinh-markov.html" aria-label="Mở bài 3: Quá trình quyết định Markov">
-            <span>Mở bài giảng</span>
-            <span aria-hidden="true">→</span>
-          </a>
+          <div class="resource-actions" role="group" aria-label="Tài nguyên Bài 3">
+            <div class="resource-item">
+              <span class="resource-label">Bài giảng</span>
+              <a class="term-link" href="lecture-03-qua-trinh-quyet-dinh-markov.html"><span>Mở bài giảng</span><span aria-hidden="true">→</span></a>
+            </div>
+            <div class="resource-item">
+              <span class="resource-label">Ghi chú bài giảng</span>
+              <span class="resource-status">Chưa có</span>
+            </div>
+          </div>
         </article>
-        <article class="term-card">
+        <article class="term-card" role="listitem">
           <div>
             <span class="term-label">Bài 4</span>
             <h2>Giải MDP bằng quy hoạch động</h2>
             <p>Bellman tối ưu; đánh giá và cải thiện chính sách; lặp chính sách; lặp giá trị; hội tụ, sai số và giới hạn của quy hoạch động dạng bảng.</p>
           </div>
-          <a class="term-link" href="lecture-04-giai-mdp-bang-quy-hoach-dong.html" aria-label="Mở bài 4: Giải MDP bằng quy hoạch động">
-            <span>Mở bài giảng</span>
-            <span aria-hidden="true">→</span>
-          </a>
+          <div class="resource-actions" role="group" aria-label="Tài nguyên Bài 4">
+            <div class="resource-item">
+              <span class="resource-label">Bài giảng</span>
+              <a class="term-link" href="lecture-04-giai-mdp-bang-quy-hoach-dong.html"><span>Mở bài giảng</span><span aria-hidden="true">→</span></a>
+            </div>
+            <div class="resource-item">
+              <span class="resource-label">Ghi chú bài giảng</span>
+              <span class="resource-status">Chưa có</span>
+            </div>
+          </div>
         </article>
-        <article class="term-card">
+        <article class="term-card" role="listitem">
           <div>
             <span class="term-label">Bài 5</span>
             <h2>Dự đoán phi mô hình</h2>
             <p>Monte Carlo lần ghé đầu tiên; sai phân thời gian TD(0); đích cập nhật, chệch–phương sai và điều kiện hội tụ trong dự đoán theo chính sách.</p>
           </div>
-          <a class="term-link" href="lecture-05-du-doan-phi-mo-hinh.html" aria-label="Mở bài 5: Dự đoán phi mô hình">
-            <span>Mở bài giảng</span>
-            <span aria-hidden="true">→</span>
-          </a>
+          <div class="resource-actions" role="group" aria-label="Tài nguyên Bài 5">
+            <div class="resource-item">
+              <span class="resource-label">Bài giảng</span>
+              <a class="term-link" href="lecture-05-du-doan-phi-mo-hinh.html"><span>Mở bài giảng</span><span aria-hidden="true">→</span></a>
+            </div>
+            <div class="resource-item">
+              <span class="resource-label">Ghi chú bài giảng</span>
+              <span class="resource-status">Chưa có</span>
+            </div>
+          </div>
         </article>
-        <article class="term-card">
+        <article class="term-card" role="listitem">
           <div>
             <span class="term-label">Bài 6</span>
             <h2>Điều khiển phi mô hình</h2>
             <p>Điều khiển Monte Carlo, SARSA và Q-learning dạng bảng; chính sách ε-tham lam, theo và khác chính sách, GLIE cùng điều kiện hội tụ.</p>
           </div>
-          <a class="term-link" href="lecture-06-dieu-khien-phi-mo-hinh.html" aria-label="Mở bài 6: Điều khiển phi mô hình">
-            <span>Mở bài giảng</span>
-            <span aria-hidden="true">→</span>
-          </a>
+          <div class="resource-actions" role="group" aria-label="Tài nguyên Bài 6">
+            <div class="resource-item">
+              <span class="resource-label">Bài giảng</span>
+              <a class="term-link" href="lecture-06-dieu-khien-phi-mo-hinh.html"><span>Mở bài giảng</span><span aria-hidden="true">→</span></a>
+            </div>
+            <div class="resource-item">
+              <span class="resource-label">Ghi chú bài giảng</span>
+              <span class="resource-status">Chưa có</span>
+            </div>
+          </div>
         </article>
-        <article class="term-card">
+        <article class="term-card" role="listitem">
           <div>
             <span class="term-label">Bài 7</span>
             <h2>Xấp xỉ hàm trong Học tăng cường</h2>
             <p>Đặc trưng tuyến tính; Monte Carlo và TD với xấp xỉ hàm; điểm cố định Bellman chiếu; SARSA, Q-learning và bộ ba bất ổn.</p>
           </div>
-          <a class="term-link" href="lecture-07-xap-xi-ham.html" aria-label="Mở bài 7: Xấp xỉ hàm trong Học tăng cường">
-            <span>Mở bài giảng</span>
-            <span aria-hidden="true">→</span>
-          </a>
+          <div class="resource-actions" role="group" aria-label="Tài nguyên Bài 7">
+            <div class="resource-item">
+              <span class="resource-label">Bài giảng</span>
+              <a class="term-link" href="lecture-07-xap-xi-ham.html"><span>Mở bài giảng</span><span aria-hidden="true">→</span></a>
+            </div>
+            <div class="resource-item">
+              <span class="resource-label">Ghi chú bài giảng</span>
+              <span class="resource-status">Chưa có</span>
+            </div>
+          </div>
         </article>
-        <article class="term-card">
+        <article class="term-card" role="listitem">
           <div>
             <span class="term-label">Bài 8</span>
             <h2>Deep Q-Learning</h2>
             <p>Mạng trực tuyến và mạng mục tiêu; bộ nhớ phát lại; mục tiêu, hàm mất mát và gradient DQN; giả mã, bộ tối ưu, bất ổn và giao diện Atari.</p>
           </div>
-          <a class="term-link" href="lecture-08-deep-q-learning.html" aria-label="Mở bài 8: Deep Q-Learning">
-            <span>Mở bài giảng</span>
-            <span aria-hidden="true">→</span>
-          </a>
+          <div class="resource-actions" role="group" aria-label="Tài nguyên Bài 8">
+            <div class="resource-item">
+              <span class="resource-label">Bài giảng</span>
+              <a class="term-link" href="lecture-08-deep-q-learning.html"><span>Mở bài giảng</span><span aria-hidden="true">→</span></a>
+            </div>
+            <div class="resource-item">
+              <span class="resource-label">Ghi chú bài giảng</span>
+              <span class="resource-status">Chưa có</span>
+            </div>
+          </div>
         </article>
-        <article class="term-card">
+        <article class="term-card" role="listitem">
           <div>
             <span class="term-label">Bài 9</span>
             <h2>Double DQN và gradient chính sách</h2>
             <p>Sai lệch cực đại; Double Q-learning và Double DQN; chính sách tham số, hàm điểm, định lý gradient chính sách và REINFORCE.</p>
           </div>
-          <a class="term-link" href="lecture-09-double-dqn-va-gradient-chinh-sach.html" aria-label="Mở bài 9: Double DQN và gradient chính sách">
-            <span>Mở bài giảng</span>
-            <span aria-hidden="true">→</span>
-          </a>
+          <div class="resource-actions" role="group" aria-label="Tài nguyên Bài 9">
+            <div class="resource-item">
+              <span class="resource-label">Bài giảng</span>
+              <a class="term-link" href="lecture-09-double-dqn-va-gradient-chinh-sach.html"><span>Mở bài giảng</span><span aria-hidden="true">→</span></a>
+            </div>
+            <div class="resource-item">
+              <span class="resource-label">Ghi chú bài giảng</span>
+              <span class="resource-status">Chưa có</span>
+            </div>
+          </div>
         </article>
-        <article class="term-card">
+        <article class="term-card" role="listitem">
           <div>
             <span class="term-label">Bài 10</span>
             <h2>TRPO và PPO</h2>
             <p>Đường cơ sở và GAE; miền tin cậy, gradient tự nhiên và TRPO; mục tiêu PPO-Clip, hợp đồng dữ liệu, chẩn đoán và điều kiện dừng.</p>
           </div>
-          <a class="term-link" href="lecture-10-trpo-va-ppo.html" aria-label="Mở bài 10: TRPO và PPO">
-            <span>Mở bài giảng</span>
-            <span aria-hidden="true">→</span>
-          </a>
+          <div class="resource-actions" role="group" aria-label="Tài nguyên Bài 10">
+            <div class="resource-item">
+              <span class="resource-label">Bài giảng</span>
+              <a class="term-link" href="lecture-10-trpo-va-ppo.html"><span>Mở bài giảng</span><span aria-hidden="true">→</span></a>
+            </div>
+            <div class="resource-item">
+              <span class="resource-label">Ghi chú bài giảng</span>
+              <span class="resource-status">Chưa có</span>
+            </div>
+          </div>
         </article>
-        <article class="term-card">
+        <article class="term-card" role="listitem">
           <div>
             <span class="term-label">Bài 11</span>
             <h2>Các phương pháp gradient chính sách nâng cao</h2>
             <p>SPO và SAM+PPO; actor–critic theo và khác chính sách; DPG/DDPG, SAC/TD3; các phương pháp phân tán, đa tác tử và khảo sát nâng cao.</p>
           </div>
-          <a class="term-link" href="lecture-11-cac-phuong-phap-gradient-chinh-sach-nang-cao.html" aria-label="Mở bài 11: Các phương pháp gradient chính sách nâng cao">
-            <span>Mở bài giảng</span>
-            <span aria-hidden="true">→</span>
-          </a>
+          <div class="resource-actions" role="group" aria-label="Tài nguyên Bài 11">
+            <div class="resource-item">
+              <span class="resource-label">Bài giảng</span>
+              <a class="term-link" href="lecture-11-cac-phuong-phap-gradient-chinh-sach-nang-cao.html"><span>Mở bài giảng</span><span aria-hidden="true">→</span></a>
+            </div>
+            <div class="resource-item">
+              <span class="resource-label">Ghi chú bài giảng</span>
+              <span class="resource-status">Chưa có</span>
+            </div>
+          </div>
         </article>
-        <article class="term-card">
+        <article class="term-card" role="listitem">
           <div>
             <span class="term-label">Bài 12</span>
             <h2>Nhập môn Học tăng cường đa tác tử</h2>
             <p>Trò chơi Markov; CTDE; COMA, QMIX, MADDPG, MAPPO và HAPPO; bộ chuẩn đánh giá, khung phần mềm và giao tiếp giữa các tác tử.</p>
           </div>
-          <a class="term-link" href="lecture-12-nhap-mon-hoc-tang-cuong-da-tac-tu.html" aria-label="Mở bài 12: Nhập môn Học tăng cường đa tác tử">
-            <span>Mở bài giảng</span>
-            <span aria-hidden="true">→</span>
-          </a>
+          <div class="resource-actions" role="group" aria-label="Tài nguyên Bài 12">
+            <div class="resource-item">
+              <span class="resource-label">Bài giảng</span>
+              <a class="term-link" href="lecture-12-nhap-mon-hoc-tang-cuong-da-tac-tu.html"><span>Mở bài giảng</span><span aria-hidden="true">→</span></a>
+            </div>
+            <div class="resource-item">
+              <span class="resource-label">Ghi chú bài giảng</span>
+              <span class="resource-status">Chưa có</span>
+            </div>
+          </div>
         </article>
       </div>
     </section>

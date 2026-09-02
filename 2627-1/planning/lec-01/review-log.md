@@ -368,3 +368,146 @@ Trạng thái: đủ điều kiện kiểm định RevealJS cục bộ; không c
 - David Silver, *Introduction to Reinforcement Learning*: https://www.davidsilver.uk/wp-content/uploads/2020/03/intro_RL.pdf
 - Sutton & Barto (2018): https://incompleteideas.net/book/the-book-2nd.html
 - Silver et al. (2016): https://doi.org/10.1038/nature16961
+
+## Giai đoạn I — Lecture note (02/09/2026)
+
+### Phạm vi và sai khác so với quy trình deck cũ
+
+- Đầu ra mới: `2627-1/materials/lec-01/lecture-note.md` và liên kết tĩnh qua
+  `material-viewer.html`.
+- Bản đồ chủ đề có 6 mục `cốt lõi`, 1 mục `cầu nối`, 3 mục `bổ sung` và nhóm
+  `đọc thêm`. Tuyến cốt lõi giữ thứ tự nguồn: tác tử học → tín hiệu → phần
+  thưởng → chính sách/giá trị/mô hình → thăm dò–khai thác → Tic-tac-toe.
+- Nhóm tài nguyên hai liên kết trong `index.html` thay quy tắc một liên kết duy
+  nhất của `AGENTS.md` theo yêu cầu cụ thể trong `prompt_lecture_note_deck.md`.
+- Không dùng thông tin học phần trang 31–37 vì chưa xác nhận cho học kỳ đích.
+  Không có code demo trong nguồn nên không tạo code hoặc notebook.
+- Sửa lỗi nguồn ở trang 29–30: bỏ giá trị thưởng `9`, dùng miền thắng/hòa/thua
+  $\{+1,0,-1\}$; tập hành động chỉ gồm ô trống hợp lệ. Sai khác được giải thích
+  ngay trong note và ánh xạ sang `G02`–`G04`.
+
+### Reader, hợp nhất và writer
+
+| Vai trò | Profile | requested_model | observed_model | provider | Kết quả |
+|---|---|---|---|---|---|
+| Lập kế hoạch | `plan` | `deepseek/deepseek-v3.2` | `deepseek/deepseek-v3.2` | OpenRouter | Hoàn tất vòng 11 với trần 12; một phản hồi HTTP 200 rỗng được thử lại. |
+| Phân tích nguồn | `source` | `deepseek/deepseek-v3.2` | `deepseek/deepseek-v3.2` | OpenRouter | Hoàn tất vòng 9 với trần 20; ánh xạ đủ 45 trang. |
+| Hợp nhất phạm vi lần 1 | `recheck` | `deepseek/deepseek-v3.2` | `deepseek/deepseek-v3.2` | OpenRouter | Hoàn tất vòng 7; thiếu trường đầu vào/đầu ra cho từng mục nên chưa duyệt. |
+| Hợp nhất phạm vi lần 2 | `recheck` | `deepseek/deepseek-v3.2` | `deepseek/deepseek-v3.2` | OpenRouter | Hoàn tất vòng 5; đủ trường và kết luận PASS. |
+| Soạn note | `write` | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter | Hoàn tất vòng 9; một `finish_reason=error` được thử lại trước khi ghi. |
+| Sửa sau review | `write` | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter | Sửa tuần tự note; lượt sửa sót riêng hoàn tất vòng 4. |
+
+Các lượt trong sandbox trước đó trả `api_transport_error`; các lượt hợp lệ
+đều chạy lại với quyền mạng nâng cao và cùng model đã chỉ định. Writer dùng
+repo-root hẹp; cầu nối nạp khóa qua liên kết `.env` tạm, MCP chặn worker đọc
+`.env`, và liên kết được gỡ ngay sau mỗi lượt.
+
+### Năm báo cáo độc lập
+
+#### Góc nhìn sinh viên
+
+| mức độ | vị trí | vấn đề | bằng chứng | đề xuất sửa | quyết định |
+|---|---|---|---|---|---|
+| nghiêm trọng | `lec-01-topic-06` | Ô 9 vừa được gọi là đã có quân vừa được gọi là ô trống tạo thắng. | Đoạn ví dụ dùng cùng một thế cờ nhưng hai dữ kiện trái nhau. | Dùng thế cờ trống `3,7,9`; chọn ô 5 đã có quân làm hành động không hợp lệ. | Áp dụng. |
+| trung bình | G03/G04 | Hai trang deck dùng hai thế cờ khác nhau mà chưa báo chuyển ví dụ. | G03 dùng `3,7,9`; G04 dùng `2,6,8`. | Đồng bộ hoặc nêu rõ hai thế cờ. | Chuyển sang Giai đoạn II; note đã ghi “bàn cờ khác ví dụ trên”. |
+| nhẹ | các mục Kiểm tra | Đáp án hiển thị ngay sau câu hỏi. | Sáu chủ đề đều có “Trả lời” trong prose. | Đưa đáp án vào `::: solution`. | Áp dụng cho cả sáu chủ đề. |
+| nhẹ | cầu nối và bổ sung | Chưa có `note-topic-id` riêng. | Bản đầu chỉ có sáu mã cốt lõi. | Thêm mã duy nhất cho mọi chủ đề nội dung. | Áp dụng; hiện có 10 mã. |
+
+Runtime: `requested_model=observed_model=z-ai/glm-5.3-flash`, provider
+OpenRouter, profile `review`, hoàn tất vòng 5.
+
+#### Chuyên gia Học tăng cường
+
+| mức độ | vị trí | vấn đề | bằng chứng | đề xuất sửa | quyết định |
+|---|---|---|---|---|---|
+| trung bình | `lec-01-topic-06` | Cách sửa lỗi thưởng nguồn cần truy nguyên rõ. | Nguồn có `9`; note dùng $\{+1,0,-1\}$. | Nêu lỗi và quy ước thay thế. | Đã có trong “Ứng dụng và giới hạn”; không lặp ở “Hình thức”. |
+| nhẹ | `lec-01-topic-05` | Ví dụ số thăm dò không có trong nguồn. | Bảng A/B là dữ kiện do note đặt để tính tay. | Gắn nhãn giả định hoặc bỏ số. | Giữ và ghi rõ “không phải số liệu từ nguồn”. |
+| nhẹ | thảo luận AGI | Cần phân biệt quan điểm nguồn với kết luận của bài. | Trang 14–15, 43–44 thiếu bằng chứng. | Ghi là quan điểm chưa được kiểm chứng. | Áp dụng. |
+
+Lượt đầu lỗi `model exceeded the tool-call limit (10)` và không được tính.
+Lượt chạy lại độc lập có
+`requested_model=observed_model=deepseek/deepseek-v3.2`, provider OpenRouter,
+profile `review`, hoàn tất vòng 6.
+
+#### Độ chính xác toán học và thuật toán
+
+Reviewer ban đầu không báo lỗi bắt buộc và bỏ sót mâu thuẫn ô 9; điều phối
+viên không dùng kết luận này để bác bằng chứng trực tiếp từ hai vai khác.
+Reviewer xác nhận $G_0=G_1=G_3=1$, ví dụ giá trị bằng 0 và bảng A/B được tính
+đúng. Runtime:
+`requested_model=observed_model=deepseek/deepseek-v3.2`, provider OpenRouter,
+profile `review`, hoàn tất vòng 9.
+
+#### Phản biện học thuật và giảng dạy
+
+| mức độ | vị trí | vấn đề | bằng chứng | đề xuất sửa | quyết định |
+|---|---|---|---|---|---|
+| nghiêm trọng | `lec-01-topic-06` | Công thức chọn một bước xuất hiện thiếu cầu nối từ định nghĩa giá trị. | $V^\pi$ được định nghĩa ở topic-04; biểu thức $R_{t+1}+V^\pi(S_{t+1})$ xuất hiện ở topic-06. | Nối bằng $G_t=R_{t+1}+G_{t+1}$ và nêu giả thiết riêng của Tic-tac-toe. | Áp dụng; không gọi đây là Bellman tổng quát cho phần trước. |
+| trung bình | `lec-01-topic-03` | Ví dụ $T=4$ chưa nối sang ký hiệu $T$ tổng quát. | Công thức tổng xuất hiện ngay sau ví dụ. | Thêm một câu khái quát hóa. | Áp dụng ở cuối ví dụ. |
+| nhẹ | `lec-01-topic-04` | Ví dụ chính sách đều có thể bị hiểu là mặc định. | Dữ kiện ba kết quả bằng nhau là giả định. | Gắn nhãn ví dụ giả định. | Áp dụng. |
+
+Runtime: `requested_model=observed_model=deepseek/deepseek-v3.2`, provider
+OpenRouter, profile `review`, hoàn tất vòng 11.
+
+#### Kết nối và mạch viết
+
+| mức độ | vị trí | vấn đề | bằng chứng | đề xuất sửa | quyết định |
+|---|---|---|---|---|---|
+| trung bình | `lec-01-topic-06` | Chuỗi ví dụ đứt vì hai thế cờ bị trộn. | Vai trò trong mạch: ví dụ tổng hợp; kết nối vào từ cầu nối trạng thái; kết nối ra công thức và kiểm tra. | Dùng một thế cờ hoặc tách rõ hai tình huống. | Áp dụng. |
+| trung bình | G03/G04 | Deck đổi thế cờ không có câu nối. | Vai trò G03 là tổng hợp; vào từ G02, ra G04. | Đồng bộ hoặc báo chuyển. | Ghi cho Giai đoạn II. |
+| nhẹ | các bổ sung/cầu nối | Thứ bậc nhấn cần rõ sau khi tách heading. | Các phần phụ phải phục vụ tuyến cốt lõi. | Rà toàn bộ sau sửa. | Recheck toàn bộ note đã PASS. |
+
+Runtime: `requested_model=observed_model=z-ai/glm-5.3-flash`, provider
+OpenRouter, profile `review`, hoàn tất vòng 7.
+
+### Sửa và tái kiểm
+
+- Sửa ví dụ Tic-tac-toe thành thế cờ trống `3,7,9`; ô 5 đã có quân là hành
+  động không hợp lệ; bài kiểm tra dùng một thế cờ khác trống `2,6,8`.
+- Thêm quy ước $V^\pi(S_T)=0$; thêm cầu nối
+  $G_t=R_{t+1}+G_{t+1}$ trước công thức chọn một bước; nêu trạng thái gồm bàn
+  cờ và lượt chơi là đủ thông tin trong miền này.
+- Gắn nhãn hai ví dụ số là giả định; gập sáu đáp án; bỏ câu hỏi tu từ; thêm
+  bốn mã cho cầu nối và bổ sung.
+- Recheck toán học: `requested_model=observed_model=deepseek/deepseek-v3.2`,
+  provider OpenRouter, profile `recheck`, hoàn tất vòng 6, kết luận PASS và
+  tính lại các ví dụ.
+- Recheck mạch viết: `requested_model=observed_model=z-ai/glm-5.3-flash`,
+  provider OpenRouter, profile `recheck`, hoàn tất vòng 2, kết luận PASS cho
+  toàn bộ tuyến và 10 `note-topic-id`.
+
+Không còn lỗi `chặn bàn giao` hoặc `nghiêm trọng` của Giai đoạn I. Các góp ý
+chỉ liên quan deck được giữ cho Giai đoạn II; chưa sửa deck trước commit note.
+
+### Kiểm định cổng Giai đoạn I
+
+- `python3 -m reloadserver 8765` đã chạy và thất bại với
+  `/usr/bin/python3: No module named reloadserver`. Dùng
+  `python3 -m http.server 8765` trên đúng cổng làm máy chủ kiểm định thay thế;
+  không ghi nhận `reloadserver` là thành công.
+- URL viewer, Markdown và deck đều trả HTTP 200. Viewer render đúng Bài 01 ở
+  1280×720 và 800×600; ảnh chụp đầu trang không có tràn ngang, chồng lấn hoặc
+  tài nguyên hỏng. Bản in Chromium có 16 trang và chứa đủ các mục Lời giải,
+  Mô hình hóa Tic-tac-toe và Tài liệu tham khảo.
+- Viewer từ chối đúng hai ca âm: `doc` Bài 01 ghép với `deck` Bài 02; đường
+  dẫn `doc=../AGENTS.md`. Cả hai hiển thị thông báo lỗi cụ thể và không mở nội
+  dung ngoài `materials/lec-NN/`.
+- Một heading cấp một; 10 `note-topic-id` duy nhất, đúng mẫu và đứng ngay trước
+  heading; 7 khối `solution` cân bằng, không lồng; không có `\(...\)` hoặc
+  `\[...\]`; không có `quill.json`.
+- `node --check 2627-1/material-viewer.js` đạt. SRI SHA-256 trong HTML khớp
+  chính xác KaTeX CSS/JS, auto-render, Marked và DOMPurify cục bộ. Thành phần
+  cốt lõi không dùng CDN.
+- `index.html` có đúng một liên kết ghi chú Bài 01 theo dạng quy định, còn 11
+  bài chưa đạt kiểm định vẫn hiển thị `Chưa có`; không liên kết tệp planning.
+- Tự kiểm trực tiếp theo `no-ai-slop/eval.md`: không thêm thuật toán, code hoặc
+  mệnh đề không có căn cứ; ví dụ tự đặt được gắn nhãn giả định; không có lời
+  dẫn rỗng, giọng quảng bá, câu hỏi tu từ hoặc kết luận AGI thiếu bằng chứng.
+  Câu “Vì sao” còn lại là bài kiểm tra có đáp án, không phải câu hỏi tu từ.
+- Codex Slides không được dùng cho cổng note; Giai đoạn II vẫn phải rà deck
+  bằng Codex Slides. Phiên hiện tại không có in-editor Browser để tuyên bố đã
+  xác minh bằng bề mặt Codex Slides.
+
+Trạng thái Giai đoạn I: đủ điều kiện commit; giới hạn còn lại là thiếu mô-đun
+`reloadserver`. Giai đoạn II phải xử lý các điểm đồng bộ deck đã hoãn và chạy
+lại kiểm định RevealJS/Codex Slides trước commit deck.

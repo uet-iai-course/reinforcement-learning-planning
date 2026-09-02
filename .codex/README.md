@@ -30,8 +30,8 @@ một lần bằng `cd openrouter-mcp && uv sync`. Mỗi lệnh worker phải d�
 
 ## Mô hình worker và trách nhiệm điều phối
 
-Mô hình worker hiện tại là `z-ai/glm-5.3-flash`. Mỗi worker chỉ nhận một nhiệm
-vụ hẹp, có đầu vào, đầu ra và phạm vi tệp cụ thể. Reader và reviewer chỉ nhận
+Mỗi worker chỉ nhận một nhiệm vụ hẹp, có đầu vào, đầu ra và phạm vi tệp cụ
+thể. Reader và reviewer chỉ nhận
 công cụ đọc. Writer nhận `write_text_file` và `replace_text_file`, nhưng chỉ
 ghi được bên trong `--repo-root` của tiến trình. Mọi vai trò đều bị chặn đọc,
 tìm kiếm hoặc ghi `.env` và các biến thể `.env.*`.
@@ -45,3 +45,55 @@ nguyên văn lỗi. Không gọi worker mặc định thay thế.
 phải hỗ trợ tool calling trên OpenRouter.
 
 Không thêm khóa API, tệp `.env`, lịch sử phiên hoặc dữ liệu xác thực vào kho.
+
+## Cấu hình đã kiểm chứng cho pipeline lecture note và slide deck
+
+Chạy trong `openrouter-mcp/` và đặt cache của `uv` tại thư mục tạm để không
+phụ thuộc quyền ghi vào cache người dùng:
+
+```bash
+UV_CACHE_DIR=/tmp/rl-plan-uv-cache uv run <worker> \
+  --repo-root /data/tqlong/rl-plan \
+  --json --model <model> --task-profile <profile> \
+  --max-rounds <rounds> --timeout 180 \
+  '<nhiệm vụ hẹp, kèm danh sách tệp chính xác>'
+```
+
+Các tổ hợp đã chạy thành công:
+
+| Vai trò | Worker | Model | Profile | Số vòng |
+|---|---|---|---|---:|
+| Lập kế hoạch lecture note | `openrouter-mcp-reader` | `deepseek/deepseek-v3.2` | `plan` | 12 |
+| Phân tích nguồn lecture note | `openrouter-mcp-reader` | `deepseek/deepseek-v3.2` | `source` | 20 |
+| Phân tích logic, toán, RL phạm vi hẹp | `openrouter-mcp-reader` | `deepseek/deepseek-v3.2` | `recheck` | 8 |
+| Rà mạch viết, sinh viên | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` | `recheck` | 4–6 |
+| Rà logic, toán, RL | `openrouter-mcp-reviewer` | `deepseek/deepseek-v3.2` | `recheck` | 6–8 |
+| Ghi một phạm vi tệp | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `write` | 12 |
+
+`source` hoặc `review` chỉ dùng khi đầu vào đã được cô lập. Với tài liệu lớn,
+`recheck` ổn định hơn khi prompt cấm liệt kê và tìm kiếm, đồng thời nêu đúng
+từng tệp được phép đọc. Không cho worker quét `2627-1/vendor/`, thư viện
+RevealJS hoặc toàn bộ kho. Tạo hồ sơ nguồn nhỏ trước nếu tài liệu gốc là PDF
+hoặc PPTX.
+
+Sau mỗi lệnh, lưu ba trường `requested_model`, `observed_model` và `provider`
+từ JSON vào nhật ký rà soát. Không coi tên model do worker tự viết trong phần
+nội dung là bằng chứng.
+
+Hai cấu hình reader đầu tiên được kiểm chứng khi xử lý lecture note Bài 01
+ngày 02/09/2026. Cả hai trả
+`requested_model = observed_model = deepseek/deepseek-v3.2`, provider
+`OpenRouter`. Hồ sơ `plan` cần một lượt thử lại sau phản hồi HTTP 200 rỗng và
+hoàn tất ở vòng 11. Hồ sơ `source` hoàn tất ở vòng 9; request tổng hợp cuối kéo
+dài gần hết timeout 300 giây. Các lượt chạy trong sandbox trước đó trả
+`api_transport_error`, vì vậy worker dùng OpenRouter phải chạy với quyền mạng
+nâng cao và vẫn nạp khóa ở phía cầu nối từ `.env`; không đọc hoặc chuyển nội
+dung `.env` cho worker.
+
+Writer Bài 01 dùng profile `write`, trần 12 vòng, timeout 300 giây và 32.000
+token; hoàn tất ở vòng 9 sau một phản hồi `finish_reason=error` được cầu nối
+thử lại. Runtime trả `requested_model = observed_model =
+z-ai/glm-5.3-flash`, provider `OpenRouter`. Với `--repo-root` hẹp không chứa
+`.env`, cầu nối không tự tìm thấy khóa. Cách đã kiểm chứng là tạo liên kết
+`.env` tạm trong repo-root của writer trỏ về `.env` ở gốc kho, xác minh MCP
+vẫn chặn đọc `.env`, rồi gỡ liên kết ngay sau lượt chạy.

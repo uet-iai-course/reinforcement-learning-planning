@@ -8,6 +8,7 @@
 !favicon.png
 !AGENTS.md
 !codex-orchestrator
+!prompt_lecture_note_deck.md
 
 !openrouter-mcp/
 !openrouter-mcp/**
@@ -30,6 +31,13 @@ openrouter-mcp/tmp/
 !2627-1/lecture-*.html
 2627-1/lecture-template.html
 !2627-1/lecture-style.css
+!2627-1/material-viewer.html
+!2627-1/material-viewer.css
+!2627-1/material-viewer.js
+!2627-1/material-index.css
+
+!2627-1/materials/
+!2627-1/materials/**
 
 !2627-1/img/
 2627-1/img/*

@@ -137,3 +137,22 @@ Tổng: 30 phút. Không có code demo vì bản nguồn không có nội dung m
 - David Silver, *Introduction to Reinforcement Learning*: https://www.davidsilver.uk/wp-content/uploads/2020/03/intro_RL.pdf
 - Sutton, R. S. & Barto, A. G. (2018), *Reinforcement Learning: An Introduction*: https://incompleteideas.net/book/the-book-2nd.html
 - Silver et al. (2016), *Nature*: https://doi.org/10.1038/nature16961
+
+## Ánh xạ lecture note sang trang chiếu
+
+| `note-topic-id` | Nhóm | Chủ đề | `data-slide-id` liên quan |
+|---|---|---|---|
+| `lec-01-topic-01` | cốt lõi | Tác tử học từ tương tác | `A00`–`A04` |
+| `lec-01-topic-09` | bổ sung | AlphaGo và thao tác robot | `B00`–`B02` |
+| `lec-01-topic-08` | bổ sung | Giới hạn mô hình điều khiển cố định | `A03`–`A04` |
+| `lec-01-topic-02` | cốt lõi | Khung Học tăng cường và ba dạng tín hiệu | `C00`–`C05` |
+| `lec-01-topic-03` | cốt lõi | Phần thưởng và kết quả dài hạn | `D00`–`D03` |
+| `lec-01-topic-10` | bổ sung | Giả thuyết phần thưởng | `D03` |
+| `lec-01-topic-04` | cốt lõi | Chính sách, hàm giá trị và mô hình tùy chọn | `E00`–`E02` |
+| `lec-01-topic-07` | cầu nối | Từ $V^\pi(h_t)$ đến $V^\pi(S_t)$ | `E01`, `G03` |
+| `lec-01-topic-05` | cốt lõi | Thăm dò và khai thác | `F00`–`F03` |
+| `lec-01-topic-06` | cốt lõi | Mô hình hóa Tic-tac-toe | `G00`–`G04` |
+
+Lecture note giữ tuyến cốt lõi `01 → 02 → 03 → 04 → 05 → 06`. Các mã
+`07`–`10` là cầu nối hoặc bổ sung được đặt tại vị trí phục vụ trực tiếp cho
+chủ đề cốt lõi; số mã không biểu thị thứ tự trình bày.
