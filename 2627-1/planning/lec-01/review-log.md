@@ -511,3 +511,250 @@ chỉ liên quan deck được giữ cho Giai đoạn II; chưa sửa deck trư�
 Trạng thái Giai đoạn I: đủ điều kiện commit; giới hạn còn lại là thiếu mô-đun
 `reloadserver`. Giai đoạn II phải xử lý các điểm đồng bộ deck đã hoãn và chạy
 lại kiểm định RevealJS/Codex Slides trước commit deck.
+
+---
+
+# Đợt rà Giai đoạn II — Writer
+
+## Số trang và cấu trúc
+
+- Báo cáo reader ghi **64 trang là sai**. Kiểm đếm trực tiếp trên
+  `lecture-01-gioi-thieu-hoc-tang-cuong.html`: deck có **42 `data-slide-id`
+  duy nhất** (`P00–P02`, `A00–A04`, `B00–B02`, `C00–C05`, `D00–D03`,
+  `E00–E02`, `F00–F03`, `G00–G04`, `H04–H07`, `Z00`, phụ lục `H00–H03`) trong
+  **7 section ngoài**. Outline và storyboard đã ghi rõ căn cứ 42.
+- Mạch nguồn giữ nguyên: 120 phút trình chiếu chính (mạch 1–6) và 30 phút bài
+  tập (mạch 7). Không thêm code demo.
+
+## Đồng bộ note ↔ deck
+
+- Bảng ánh xạ hai chiều 10 `note-topic-id` ↔ `data-slide-id` đã thêm vào
+  `outline.md` và `storyboard.md`; cả hai chiều đều truy được.
+- Rà ký hiệu trên deck: $S_t$, $A_t$, $R_{t+1}$, $G_t$, $\pi(a\mid h_t)$,
+  $V^\pi(h_t)$, $\mathcal A(S_t)$ khớp bảng thuật ngữ outline; cầu nối
+  $h_t\leftrightarrow(S_t,\text{lượt})$ có trên mặt G03 và ghi chú E01, G02.
+- Rà khái niệm: trạng thái/quan sát tách biệt (A01); có mô hình/phi mô hình
+  (E02, nối lại A03–A04); thăm dò/khai thác (F00–F03); Tic-tac-toe (G00–G04).
+  Chu trình vấn đề → trực giác → ví dụ → hình thức → ứng dụng → kiểm tra có
+  trong từng cụm của storyboard; mỗi trang một luận điểm; ghi chú diễn giả
+  tiếng Việt không lặp mặt trang; mọi trang có dòng `Nguồn` truy nguyên.
+
+## Sửa SVG
+
+- `img/lec-01/delayed-reward.svg`: mô tả (`desc`) cũ đọc số kiểu "S không",
+  "A t tại S t" dễ hiểu thành phủ định/đơn vị sai. Đã viết lại thành "S0 đến
+  S4" theo góp ý reviewer sinh viên. File vẫn hợp lệ XML, giữ
+  `role="img"`, `title`, `desc`. Các SVG khác không phát hiện lỗi truy cập
+  hoặc nội dung.
+
+## Metadata runtime
+
+| Vai trò | requested_model | observed_model | provider | Ghi chú |
+|---|---|---|---|---|
+| Plan reader (Giai đoạn II) | deepseek/deepseek-v3.2 | deepseek/deepseek-v3.2 | OpenRouter | Phiên hợp lệ. |
+
+- Một lượt plan trước đó bị loại vì agent gọi sai công cụ `list_files` thay vì
+  trả kế hoạch; lượt hợp lệ chạy lại độc lập như bảng trên.
+- Codex Slides không khả dụng trong môi trường này: Node là v18.19.1 trong khi
+  plugin cần Node 20+, và khởi động báo
+  `ReferenceError: File is not defined`. Vì vậy **chưa được phép tuyên bố đã
+  rà deck bằng Codex Slides**; đây là giới hạn công cụ còn lại.
+
+## Tự kiểm cuối đợt này
+
+- Đếm lại 42 `data-slide-id` duy nhất; 49 cặp `<section>` cân bằng
+  (7 vỏ ngoài + 42 trang); 42 ghi chú diễn giả.
+- Đường dẫn trong deck: 11 tham chiếu SVG ngoài + 2 SVG nội dòng (B02),
+  CSS `lecture-style.css`, `revealjs/*`, `plugin/*`, `vendor/katex` đều tồn
+  tại theo kiểm kê trước; không có ảnh raster.
+- `index.html` liên kết đúng một bài giảng Bài 01 và một ghi chú Bài 01 qua
+  `material-viewer.html`; không cần sửa.
+- `no-ai-slop`: không thêm câu dẫn rỗng, số liệu ngoài nguồn hoặc thuật ngữ
+  xuất hiện sớm. Quill dùng ở chế độ rà mạch; không tạo `quill.json`.
+- Không commit.
+
+## Tiếp nối lượt writer Giai đoạn II sau lỗi tool_call_limit
+
+- Lượt writer Giai đoạn II trước đó dừng giữa chừng vì agent vượt giới hạn
+  gọi công cụ (`tool_call_limit`); không hoàn tác các thay đổi hợp lệ của lượt
+  đó. Lượt tiếp nối này dùng cùng model và chỉ đọc các tệp được giao:
+  `materials/lec-01/lecture-note.md`,
+  `lecture-01-gioi-thieu-hoc-tang-cuong.html`, `planning/lec-01/outline.md`,
+  `planning/lec-01/storyboard.md`, `planning/lec-01/review-log.md`.
+- Kết quả đối chiếu trên lượt này:
+  - Đếm lại 42 `data-slide-id` duy nhất trong HTML (P 3, A 5, B 3, C 6, D 4,
+    E 3, F 4, G 5, H04–H07+Z00 5, phụ lục H00–H03 4), đúng 7 section ngoài;
+    tổng thời lượng 120 phút (mạch 1–6: 30+22+18+18+14+18) và 30 phút bài tập
+    (6+7+7+7+3) khớp outline và storyboard; không sửa số trang hay thời lượng.
+  - Bảng ánh xạ hai chiều 10 `note-topic-id` ↔ `data-slide-id` khớp nội dung
+    note và HTML; ký hiệu và quy ước trên deck ($R_{t+1}$, $G_t$, $\pi(a\mid h_t)$,
+    $V^\pi(h_t)$, $\mathcal A(S_t)$, cầu nối $h_t\leftrightarrow(S_t,\text{lượt})$,
+    thưởng $+1/0/-1$, kiểm tra ô 5) khớp note; HTML không cần sửa.
+  - Sửa một sai khác trong `outline.md`: dòng cầu nối trong bảng thuật ngữ ghi
+    "dùng ở E01, G00, G03" trong khi G00 không nhắc cầu nối trên deck; đã sửa
+    thành "E01, G02, G03 (ghi chú E01, G02; mặt trang G03)" khớp HTML hiện hành.
+- Giới hạn: lượt này không chạy lệnh shell (không dựng server, không chụp
+  Chromium, không kiểm tra đường dẫn hệ thống tệp); các kiểm định đó phải do
+  điều phối viên chạy. Không sửa lecture note, SVG, index, template, CSS,
+  vendor hoặc bài khác. Không tạo `quill.json`; không commit.
+
+---
+
+# Đợt rà Giai đoạn II — Writer hợp nhất năm báo cáo (lượt hiện hành)
+
+## Năm báo cáo độc lập (đợt hợp nhất)
+
+### 1. Góc nhìn sinh viên
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa | Quyết định |
+|---|---|---|---|---|---|
+| nghiêm trọng | P01 | Tiên quyết nêu sai: chỉ "xác suất cơ bản" trong khi note yêu cầu kỳ vọng có điều kiện và đại số tuyến tính cơ bản. | P01 dòng "Kiến thức cần dùng" so với note §Mục tiêu và kiến thức tiên quyết. | Nêu đầy đủ tiên quyết trên P01. | Áp dụng: P01 ghi "xác suất cơ bản (biến ngẫu nhiên, kỳ vọng có điều kiện, phân phối đều) và đại số tuyến tính cơ bản". |
+| trung bình | B00/B02 | Hai trang dẫn nhập chưa nói rõ đây là ví dụ sẽ được phân tích sau. | B00 chỉ "chuẩn bị cho phần hình thức"; B02 ghi chú "dẫn nhập cho phần hình thức sau". | Ghi tường minh "ví dụ dẫn nhập sẽ được phân tích sau" ở box B00 và ghi chú B02. | Áp dụng. |
+| nhẹ | Z00 | Chỉ dẫn "nhấn ↓" nằm trên mặt trang, không phù hợp mặt chiếu. | Z00: "Phụ lục thông tin nguồn: nhấn ↓". | Bỏ khỏi mặt trang, giữ hướng dẫn trong ghi chú. | Áp dụng. |
+
+Runtime: `requested_model=observed_model=z-ai/glm-5.3-flash`, provider OpenRouter.
+
+### 2. Kết nối và mạch viết
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa | Quyết định |
+|---|---|---|---|---|---|
+| trung bình | D03→E00 | Chưa có câu nối từ mục tiêu kỳ vọng $G_t$ sang chính sách/hàm giá trị. | Ghi chú D03 kết thúc ở phần thưởng; E00 mở bằng thế cờ. | Thêm câu nối ở ghi chú D03 hoặc box E00. | Áp dụng ở ghi chú D03. |
+| trung bình | F00–F03 | Thăm dò–khai thác chưa nối với chính sách vừa định nghĩa. | F01–F03 không nhắc $\pi$. | Nối bằng diễn đạt trong nguồn; không nêu UCB hay epsilon-greedy vì ngoài nguồn. | Áp dụng ở ghi chú F03: khai thác ↔ chọn theo giá trị ước lượng, thăm dò ↔ $\pi$ đặt xác suất khác không. |
+| trung bình | F03→G00 | Chưa có câu nối từ F03 sang phần G. | F03 kết bằng câu hỏi; G00 mở bằng bài toán. | Thêm câu nối. | Áp dụng: G00 mở bằng "gắn khái niệm đã định nghĩa vào một bài toán cụ thể". |
+| nhẹ | G04→H04 | Thiếu tín hiệu chuyển sang phần ôn tập. | H04 mở trực tiếp bằng câu hỏi. | Thêm câu dẫn đánh dấu chuyển khối. | Áp dụng. |
+
+Runtime: `requested_model=observed_model=z-ai/glm-5.3-flash`, provider OpenRouter.
+
+### 3. Chuyên gia Học tăng cường
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa | Quyết định |
+|---|---|---|---|---|---|
+| trung bình | A04 | Dùng cặp thuật ngữ "có mô hình/phi mô hình" trước khi E02 định nghĩa. | Box A04: "học cả mô hình hoặc học không cần mô hình tường minh". | Giữ ý, diễn đạt trung tính và dẫn tới phần E. | Áp dụng: "cách tác tử sử dụng hoặc không sử dụng mô hình được định nghĩa ở phần sau"; ghi chú A04 sửa kèm theo. |
+| trung bình | C05 | Chưa nhắc hành động $t$ làm đổi quan sát sau. | Box C05 chỉ nêu đổi vị trí/quan sát tiếp theo mà không gắn với hành động. | Nhắc $A_t$ làm đổi quan sát sau. | Áp dụng. |
+| nhẹ | G03 | Thiếu ghi chú $G_t=R_{t+1}+G_{t+1}$ làm nền của công thức chọn nước. | Công thức G03 dùng $R_{t+1}+V^\pi(S_{t+1})$ mà không nêu đồng nhất thức. | Thêm ghi chú nêu $G_t=R_{t+1}+G_{t+1}$. | Áp dụng trong ghi chú G03. |
+
+Runtime: `requested_model=observed_model=deepseek/deepseek-v3.2`, provider OpenRouter.
+
+### 4. Độ chính xác toán học và thuật toán
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa | Quyết định |
+|---|---|---|---|---|---|
+| trung bình | D02 | $T$ chưa được định nghĩa khi xuất hiện; chuỗi $R_1,\ldots,R_4$ chưa nêu giá trị từng phần. | D02: "Với $T=4$ trên hình trước…". | Định nghĩa $T$ là chỉ số trạng thái kết thúc; nêu $R_1=R_2=R_3=0$, $R_4=1$. | Áp dụng. |
+| trung bình | E01 | Việc viết $V^\pi(S_t)$ ở phần sau thiếu ghi chú điều kiện cho phép rút gọn lịch sử. | E01 định nghĩa trên $h_t$; G03 dùng $V^\pi(S_{t+1})$. | Thêm ghi chú nêu điều kiện Markov/quan sát đầy đủ cho phép viết $V^\pi(S_t)$. | Áp dụng trong ghi chú E01. |
+
+Báo cáo toán này có ba dòng kết luận ghi $G_0=G_1=G_3=-1$: **loại vì tự mâu thuẫn** với chính phép tính trong báo cáo và với deck ($G_0=R_1+R_2+R_3+R_4=0+0+0+1=1$; quỹ đạo thưởng 0, 0, 0, 1 cho $G_0=G_1=G_2=G_3=1$). Không dùng các dòng này làm căn cứ sửa.
+
+Runtime: `requested_model=observed_model=deepseek/deepseek-v3.2`, provider OpenRouter.
+
+### 5. Phản biện học thuật và giảng dạy
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa | Quyết định |
+|---|---|---|---|---|---|
+| trung bình | D03→E00 | Mục tiêu kỳ vọng $G_t$ chưa được nối sang đại lượng điều khiển và đánh giá. | Giống mục Kết nối và mạch viết. | Thêm câu nối ghi chú D03. | Áp dụng (trùng với mục 2; sửa một lần). |
+
+Runtime: `requested_model=observed_model=deepseek/deepseek-v3.2`, provider OpenRouter.
+
+## Quyết định tổng hợp
+
+- Xử lý toàn bộ lỗi nghiêm trọng của năm báo cáo; sửa các điểm trung bình có căn cứ trong hàng đợi đã duyệt.
+- Loại đề xuất thêm hệ số chiết khấu $\gamma$: nguồn và note dùng tổng hữu hạn, không có $\gamma$.
+- Loại đề xuất thêm UCB hoặc epsilon-greedy: thuật toán ngoài nguồn.
+- Giữ question-box H06–H07: `lecture-style.css` (dòng 130) đã định nghĩa `.reveal .question-box` dùng chung, không cần thêm CSS.
+- Loại ba dòng báo cáo toán nói $G_0$, $G_1$, $G_3=-1$ vì tự mâu thuẫn; phép tính đúng là $G_0=G_1=G_2=G_3=1$ với quỹ đạo $R_1=R_2=R_3=0$, $R_4=1$.
+- Codex Slides vẫn không khả dụng: Node là v18.19.1 (cần Node 20+) và khởi động báo `ReferenceError: File is not defined`; không tuyên bố đã rà deck bằng Codex Slides.
+- Cấu trúc giữ nguyên: 7 section, 42 trang, thứ tự và ID không đổi; không thêm gamma, không thêm thuật toán ngoài nguồn, không tạo trang mới, không sửa SVG, note, CSS, index, template, vendor.
+- `no-ai-slop` áp dụng khi viết lại các câu nối: không câu dẫn rỗng, không thuật ngữ sớm. Quill dùng ở chế độ rà mạch, không tạo `quill.json`.
+
+## Danh sách tệp sửa (không commit)
+
+- `lecture-01-gioi-thieu-hoc-tang-cuong.html`
+- `planning/lec-01/outline.md`
+- `planning/lec-01/storyboard.md`
+- `planning/lec-01/review-log.md`
+
+## Giai đoạn II — Recheck deck sau sửa (writer, đợt kế tiếp)
+
+### Metadata runtime
+
+| Vai | requested_model | observed_model | provider |
+|---|---|---|---|
+| Reviewer flow (recheck) | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| Reviewer math (recheck) | deepseek/deepseek-v3.2 | deepseek/deepseek-v3.2 | OpenRouter |
+
+### Kết luận
+
+- Recheck flow: không còn lỗi nghiêm trọng về kết nối; lỗi nghiêm trọng đã đóng. Hai gợi ý câu nối còn sót được áp dụng cục bộ.
+- Recheck math: xác nhận phép tính $G_0=G_1=G_3=1$ và các công thức D02, E01, G03 đúng; không còn lỗi nghiêm trọng. Mục "lời nói có lỗi argmax" của vòng trước bị loại vì không có bằng chứng trong checkpoint.
+
+### Phát hiện escape LaTeX và sửa
+
+| Vị trí | Phát hiện | Sửa |
+|---|---|---|
+| E01 (ghi chú) | `V^\\pi(S_t)` dùng hai backslash trong chuỗi | Đổi thành một backslash `$V^\pi(S_t)$`; không đụng công thức đúng khác |
+| F03 (ghi chú) | `$\\pi$` dùng hai backslash | Đổi thành `$\pi$` |
+| G03 (ghi chú) | `$t+1 \\le T$` và `$\\pi$`, `V^\\pi` dùng hai backslash | Đổi thành `\le` và `\pi`, `V^\pi` một backslash |
+| Z00 (ghi chú) | Thiếu câu nối H07→Z00 | Thêm câu đầu ghi chú: "Hai thảo luận vừa rồi khép phần mở rộng."; không thêm dòng trên mặt trang |
+
+### Sửa câu nối
+
+- E00 box đổi thành câu nối trực tiếp từ D03: "Để cực đại hóa kỳ vọng của $G_t$, tác tử phải tách hai việc: chọn nước đi và đánh giá thế cờ."
+- H04 dòng muted đổi thành: "Ví dụ Tic-tac-toe khép phần lý thuyết; trang sau chữa câu hỏi ôn tập, rồi chuyển sang hai thảo luận."
+- Storyboard đã đồng bộ đúng các câu này tại các hàng mạch 4, E00, H04 và Z00.
+
+### Quy tắc
+
+- Áp dụng `no-ai-slop`: không câu dẫn rỗng, không khẳng định tuyệt đối. Quill dùng ở chế độ rà mạch, không tạo `quill.json`. Không commit.
+
+### Danh sách tệp sửa (không commit)
+
+- `lecture-01-gioi-thieu-hoc-tang-cuong.html`
+- `planning/lec-01/storyboard.md`
+- `planning/lec-01/review-log.md`
+
+## Giai đoạn II — Recheck cuối sau sửa escape và câu nối
+
+| Vai | requested_model | observed_model | provider | Kết quả |
+|---|---|---|---|---|
+| Toán học (recheck cuối) | deepseek/deepseek-v3.2 | deepseek/deepseek-v3.2 | OpenRouter | Không còn lỗi bắt buộc; công thức và các escape ở E00, E01, F03, G03 đúng. |
+| Mạch viết (recheck cuối) | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter | Không còn lỗi bắt buộc; các ranh giới D–E, F–G, G–H và H–Z đã nối được. |
+
+Quyết định của điều phối viên:
+
+- Bác nhận định H00–H03 là các trang ngang. Trong RevealJS, các `<section>`
+  con cùng nằm trong một `<section>` ngoài tạo stack dọc; H00–H03 nằm dưới
+  Z00 đúng như HTML và storyboard.
+- Giữ cụm “chữa câu hỏi ôn tập” ở H04–H05. Mặt trang nêu câu hỏi và ghi chú
+  diễn giả chứa đáp án, nên người dạy có đủ nội dung để chữa; không cần thêm
+  trang đáp án.
+- Không đổi `\mathbb E` thành `\mathbb{E}`: cả hai cách đều hợp lệ, và ký hiệu
+  hiện tại đã thống nhất với lecture note cùng các trang khác.
+- Không dùng tuyên bố “đã từng có lỗi ngoặc trong `argmax`” của recheck toán,
+  vì không có bằng chứng trong checkpoint hoặc diff. Công thức G03 hiện tại đã
+  được điều phối viên đối chiếu trực tiếp và đúng.
+- Tìm chuỗi hai backslash trong HTML sau sửa trả về rỗng; `git diff --check`
+  đạt trước khi chuyển sang kiểm định cục bộ.
+
+## Giai đoạn II — Kiểm định cục bộ cuối
+
+### Kiểm tra cấu trúc và tài nguyên
+
+- 42 `data-slide-id`, 42 giá trị duy nhất; 42 khối ghi chú diễn giả.
+- 7 `<section>` ngoài, gồm mạch mở đầu và mạch kết luận; cấu trúc đóng thẻ hợp lệ.
+- 10 `note-topic-id` được ánh xạ hai chiều giữa lecture note và deck.
+- 12 SVG trong `img/lec-01/`; tất cả phân tích được bằng trình phân tích XML và có `role="img"` cùng mô tả thay thế.
+- Không có tham chiếu ảnh raster, tài nguyên cốt lõi từ xa, đường dẫn cục bộ bị thiếu hoặc chuỗi LaTeX hai backslash.
+- Cấu hình bắt buộc hiện diện: khung 1280 × 720, điều khiển ở cạnh, số trang, băm một-based, băm URL, Math/Notes/Highlight.
+- `git diff --check` đạt.
+
+### Kiểm tra chạy và hiển thị
+
+- Lệnh bắt buộc `python3 -m reloadserver 8765` không chạy vì môi trường không có mô-đun `reloadserver`: `/usr/bin/python3: No module named reloadserver`.
+- Dùng phương án dự phòng `python3 -m http.server 8765 --bind 127.0.0.1` trên webroot tạm chỉ chứa tài sản công khai; không sao chép `.env`.
+- Chromium qua Playwright 1.55.0 duyệt đủ 42 trang ở 1280 × 720 và 800 × 600. Cả hai lượt trả HTTP 200, không lỗi console, lỗi trang hoặc yêu cầu mạng thất bại; không trang nào có `scrollWidth`/`scrollHeight` vượt khung.
+- Kiểm tra bàn phím đạt: từ P00, `ArrowDown` tới P01 và `ArrowRight` tới C00 theo cấu trúc stack dọc/ngang.
+- Đã dựng và xem bảng ảnh thu nhỏ của toàn bộ 42 trang ở cả hai kích thước; không phát hiện chữ bị cắt, chồng lấn, công thức vỡ, hình mất hoặc tương phản gây chặn bàn giao.
+- Trình đọc lecture note trả HTTP 200, dựng 30 tiêu đề và nội dung Markdown; liên kết về deck hiện diện. `index.html` trả HTTP 200, có liên kết deck và lecture note, không có liên kết tới planning/outline/storyboard/review-log.
+
+### Giới hạn công cụ
+
+- Không thể rà bằng Codex Slides: runtime cục bộ dùng Node v18.19.1 trong khi plugin cần Node 20+, và máy chủ dừng với `ReferenceError: File is not defined`. Đã tiếp tục đầy đủ kiểm tra RevealJS cục bộ; không tuyên bố đã xác minh bằng Codex Slides.

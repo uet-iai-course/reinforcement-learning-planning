@@ -8,6 +8,7 @@
 - LLO2: phân biệt Học tăng cường với học có giám sát và không giám sát.
 - LLO3: mô tả chính sách, hàm giá trị và mô hình tùy chọn.
 - LLO4: biểu diễn Tic-tac-toe bằng trạng thái, hành động và phần thưởng.
+- Tiên quyết nêu trên P01: xác suất cơ bản (biến ngẫu nhiên, kỳ vọng có điều kiện, phân phối đều) và đại số tuyến tính cơ bản; khớp H03 phụ lục và note.
 - Chưa gán CLO vì bản nguồn dùng chuẩn đầu ra của học phần *Intelligent Agents and Robotics*. Cần đối chiếu đề cương Học tăng cường 2026–2027 trước khi gán.
 
 ## Bảy mạch ngoài
@@ -22,9 +23,11 @@
 | 6. G | G00–G04 | Tic-tac-toe | LLO3, LLO4 | 18 phút |
 | 7. H+Z | H04–H07, Z00 | Bài tập: ôn tập, thảo luận, tự kiểm tra | LLO1–LLO4 | 30 phút |
 
+Số trang deck thực tế: **42 `data-slide-id` duy nhất** từ `P00` đến `H03` (P 3, A 5, B 3, C 6, D 4, E 3, F 4, G 5, H+Z 5, phụ lục H00–H03 4), nằm trong 7 section ngoài. Mọi đếm trang khác (ví dụ 64) là sai và không dùng làm căn cứ kế hoạch.
+
 Tổng trình chiếu chính (mạch 1–6): 120 phút. Mạch 7 là phần bài tập 30 phút. Phụ lục H00–H03 nằm trong stack dọc dưới Z00, không thuộc tuyến 150 phút.
 
-Tuyến trình chiếu: P00–G04 → H04–H07 → Z00. Tại Z00, nhấn ↓ để mở H00–H03 khi cần đối chiếu thông tin trong bản nguồn.
+Tuyến trình chiếu: P00–G04 → H04–H07 → Z00. Hướng dẫn mở phụ lục H00–H03 dưới Z00 nằm trong ghi chú diễn giả Z00, không trên mặt trang.
 
 ## Phần 30 phút bài tập
 
@@ -49,7 +52,7 @@ Tổng: 30 phút. Không có code demo vì bản nguồn không có nội dung m
 | $T$ | Chỉ số của trạng thái kết thúc trong nhiệm vụ hữu hạn. |
 | $G_t=\sum_{k=t+1}^{T}R_k$ | Tổng phần thưởng từ sau bước $t$ đến khi kết thúc. |
 | $H_t$, $h_t$ | Biến lịch sử ngẫu nhiên và lịch sử đã quan sát đến bước $t$. |
-| cầu nối $h_t\leftrightarrow(S_t,\text{lượt})$ | Trong Tic-tac-toe quan sát đầy đủ, lịch sử $h_t$ rút gọn thành cặp (thế cờ $S_t$, lượt chơi); dùng ở E01, G00, G03. |
+| cầu nối $h_t\leftrightarrow(S_t,\text{lượt})$ | Trong Tic-tac-toe quan sát đầy đủ, lịch sử $h_t$ rút gọn thành cặp (thế cờ $S_t$, lượt chơi); dùng ở E01, G02, G03 (ghi chú E01, G02; mặt trang G03). |
 | $\pi(a\mid h_t)$ | Phân phối chọn hành động; chính sách có thể ngẫu nhiên. |
 | $V^\pi(h_t)$ | Kỳ vọng của $G_t$ dưới chính sách $\pi$, theo ngẫu nhiên của chính sách và môi trường. |
 | $a^*$ | Hành động khai thác một bước: $a^*\in\arg\max_{a\in\mathcal A(S_t)}\mathbb E_\pi[R_{t+1}+V^\pi(S_{t+1})\mid S_t,A_t=a]$; chỉ dùng ở G03. |
@@ -63,6 +66,9 @@ Tổng: 30 phút. Không có code demo vì bản nguồn không có nội dung m
 ## Quy ước nội dung đã chốt trên HTML
 
 - G03: kỳ vọng điều kiện $\mathbb E_\pi[\,\cdot\mid S_t,A_t=a\,]$; thưởng tức thời 0 cho nước chưa kết thúc, giá trị trạng thái kết thúc bằng 0.
+- G00: mở bằng câu nối từ F03 ("gắn khái niệm đã định nghĩa vào một bài toán cụ thể"); G03 ghi chú nêu $G_t=R_{t+1}+G_{t+1}$ làm nền của công thức chọn nước.
+- B00/B02: hai trường hợp được ghi rõ là ví dụ dẫn nhập, sẽ phân tích bằng khái niệm hình thức ở phần E trở đi.
+- F00–F03 nối với chính sách $\pi$ bằng cách diễn đạt "chọn theo giá trị ước lượng hiện có" và "$\pi$ đặt xác suất khác không"; không nêu UCB hay epsilon-greedy vì ngoài nguồn.
 - G04: bài kiểm tra mô hình hóa với ô 5 không hợp lệ; H05 có nhiệm vụ chuyển giao robot dọn nhà.
 - G02: quy ước thưởng $+1/0/-1$ từ góc nhìn tác tử; $0$ ở bước chưa kết thúc và khi hòa.
 - Mọi hình SVG có `alt`/`title`/`desc` mô tả; các câu nối giữa trang dẫn về nguồn tương ứng.
@@ -77,7 +83,7 @@ Tổng: 30 phút. Không có code demo vì bản nguồn không có nội dung m
 | 4 | Tác tử học qua tương tác | A00–A01 | Sửa thành vòng tương tác có nhãn. |
 | 5 | Điều kiện mô tả tác tử, ví dụ | A01 | Gộp thành bốn dữ kiện trong ghi chú. |
 | 6 | Ghi nhớ, thích nghi, khái quát; điều khiển | A02–A03 | Tách nhu cầu khỏi cách tiếp cận. |
-| 7 | Giới hạn robot dọn nhà | A04 | Giữ ví dụ, rút lời. |
+| 7 | Giới hạn robot dọn nhà | A04 | Giữ ví dụ, rút lời; mặt trang dẫn tới phần E cho định nghĩa có mô hình/phi mô hình thay vì dùng cặp thuật ngữ trước E02. |
 | 8 | Không gian lớn, bất định | A04 | Gộp với giới hạn cùng cụm. |
 | 9 | Cách tiếp cận Học tăng cường | A04, C01 | Tách động cơ và định nghĩa. |
 | 10 | Tiến bộ gần đây, ảnh | B00 | Gộp thành trang dẫn cho hai trường hợp tiêu biểu. |
@@ -95,8 +101,8 @@ Tổng: 30 phút. Không có code demo vì bản nguồn không có nội dung m
 | 22 | Ví dụ tác tử | B01–B02, H06 | Phân bổ vào trò chơi, thao tác robot và thảo luận. |
 | 23 | Định nghĩa phần thưởng | D00–D01 | Tách chuyển phần và định nghĩa. |
 | 24 | Giả thuyết phần thưởng | D03 | Giữ với caveat mô hình hóa. |
-| 25 | Hậu quả dài hạn | D02–D03 | Tách công thức tổng hữu hạn và ví dụ. |
-| 26 | Ba thành phần | E00–E02 | Tách; sửa mô hình thành tùy chọn. |
+| 25 | Hậu quả dài hạn | D02–D03 | Tách công thức tổng hữu hạn và ví dụ; D02 định nghĩa $T$ là chỉ số trạng thái kết thúc và nêu $R_1=R_2=R_3=0$, $R_4=1$. |
+| 26 | Ba thành phần | E00–E02 | Tách; sửa mô hình thành tùy chọn; E00 nhận câu nối từ mục tiêu kỳ vọng $G_t$ ở D03 sang chính sách/hàm giá trị. |
 | 27 | Thăm dò và khai thác | F00–F03 | Mở rộng thành chu trình có câu hỏi số. |
 | 28 | Tic-tac-toe bằng tìm kiếm | G00–G01 | Vẽ lại bàn cờ và cây tìm kiếm. |
 | 29 | Tic-tac-toe bằng Học tăng cường | G02–G03 | Sửa hành động và tập phần thưởng. |
@@ -115,7 +121,7 @@ Tổng: 30 phút. Không có code demo vì bản nguồn không có nội dung m
 | 42 | Trắc nghiệm 5 | H05 | Gộp vào ôn tập 2. |
 | 43 | Thảo luận robot tổng quát | H06 | Giữ, bỏ câu dẫn quảng bá. |
 | 44 | Thảo luận mô hình thế giới và AGI | H07 | Giữ dạng thảo luận, không kết luận. |
-| 45 | Cảm ơn | Z00 | Thay bằng tài liệu đọc, tự kiểm tra và chỉ dẫn mở phụ lục dọc. |
+| 45 | Cảm ơn | Z00 | Thay bằng tài liệu đọc, tự kiểm tra; chỉ dẫn mở phụ lục nằm trong ghi chú diễn giả, không trên mặt trang. |
 
 ## Quyết định lược hoặc thay nội dung nguồn
 

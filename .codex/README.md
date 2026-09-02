@@ -69,6 +69,7 @@ Các tổ hợp đã chạy thành công:
 | Rà mạch viết, sinh viên | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` | `recheck` | 4–6 |
 | Rà logic, toán, RL | `openrouter-mcp-reviewer` | `deepseek/deepseek-v3.2` | `recheck` | 6–8 |
 | Ghi một phạm vi tệp | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `write` | 12 |
+| Ghi nhiều điểm trong deck | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `write` | 20 |
 
 `source` hoặc `review` chỉ dùng khi đầu vào đã được cô lập. Với tài liệu lớn,
 `recheck` ổn định hơn khi prompt cấm liệt kê và tìm kiếm, đồng thời nêu đúng
@@ -97,3 +98,11 @@ z-ai/glm-5.3-flash`, provider `OpenRouter`. Với `--repo-root` hẹp không ch�
 `.env`, cầu nối không tự tìm thấy khóa. Cách đã kiểm chứng là tạo liên kết
 `.env` tạm trong repo-root của writer trỏ về `.env` ở gốc kho, xác minh MCP
 vẫn chặn đọc `.env`, rồi gỡ liên kết ngay sau lượt chạy.
+
+Lượt chỉnh sửa deck Bài 01 có nhiều điểm dùng cùng model/profile với
+`--max-rounds 20 --timeout 300 --max-tokens 32000` và hoàn tất ở vòng 17;
+runtime trả `requested_model = observed_model = z-ai/glm-5.3-flash`, provider
+`OpenRouter`. Cấu hình 12 vòng trước đó dừng với `tool_call_limit` sau khi đã
+ghi một phần. Vì vậy dùng 12 vòng cho writer hẹp, còn hàng đợi sửa nhiều tệp
+hoặc nhiều điểm dùng 20 vòng. `timeout` áp dụng cho từng yêu cầu API; tổng thời
+gian của tiến trình có thể vượt 300 giây khi có nhiều vòng công cụ.
