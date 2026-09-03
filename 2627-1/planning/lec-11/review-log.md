@@ -133,3 +133,23 @@ Mục này thay thế các số kiểm định cũ ở phía trên.
 - Rà `no-ai-slop` không thấy tiêu đề câu hỏi tu từ, khẩu hiệu, lời ca tụng hoặc tuyên bố phổ quát mới. Rà mạch theo `quill` xác nhận chuỗi PPO → SPO/SAM → actor–critic → khác chính sách → DPG/DDPG → SAC/TD3 → khảo sát → bản đồ/checklist; không tạo `quill.json`.
 - Năm Design Files của dự án Codex Slides `20260825000420-lecture-11-c-c-ph-ng-ph-p-gradient-ch-nh-w00c` đã được đồng bộ và đối chiếu chính xác với HTML, outline, storyboard, ghi chú tác giả và nhật ký trong kho. Dự án vẫn ở trạng thái draft với 0 slide native; liên kết Design Files đã tạo, nhưng Codex in-editor Browser không khả dụng trong phiên nên không tuyên bố đã rà trực quan trong giao diện Codex Slides.
 - `2627-1/index.html` đã có đúng một liên kết tới Bài 11 và không liên kết tệp quy trình. `git diff --check` đạt.
+
+## Lecture note — vòng 03-09-2026
+
+Đầu ra là `2627-1/materials/lec-11/lecture-note.md`, gồm 13 topic ánh xạ đủ 46 trang đích, 110 phút nội dung cốt lõi, 10 phút linh hoạt và 30 phút cho ba bộ `exercise`–`hint`–`solution`. Phạm vi mới dùng trang 44–77 của `lecture11_part3.pdf`; trang 4–43 chỉ làm tiên quyết Bài 10; trang 78 là tài liệu tham khảo phần I.
+
+Năm lượt rà độc lập chạy qua OpenRouter với `--json`. Vai sinh viên và kết nối dùng `requested_model=observed_model=z-ai/glm-5.3-flash`, `reasoning_effort=minimal`; vai chuyên gia, toán học và sư phạm dùng `requested_model=observed_model=deepseek/deepseek-v4-flash-0731`, `reasoning_effort=none`; mọi lượt có `provider=OpenRouter`. Hai lượt DeepSeek đầu chạm giới hạn gọi công cụ và không được tính; các lượt chạy lại chỉ đọc note/scope, hoàn tất với đúng model yêu cầu.
+
+| vai | mức độ | topic | vấn đề và bằng chứng | quyết định |
+|---|---|---|---|---|
+| góc nhìn sinh viên | trung bình | 04, 08, 09, 10 | Mặt nạ dùng cả $b_t/m_t$; $c$ có hai nghĩa; $u$ chưa phân biệt ACER và V-trace. | Thống nhất $m_t$; dùng $c_\xi$ cho TD3; định nghĩa riêng $u=\pi/\beta$ và $u_t=\pi/\mu$. |
+| góc nhìn sinh viên | nhẹ | 13 | Thiếu dòng nguồn theo cấu trúc chung. | Thêm nguồn tr. 75–77 dùng lại để tổng kết và tr. 78 cho tài liệu tham khảo. |
+| chuyên gia Học tăng cường | đạt | 01–13 | Đủ scope, đúng mức cốt lõi/nhận dạng, đúng 110+10+30 phút. | Không sửa. |
+| toán học và thuật toán | trung bình | 02 | Câu về $\epsilon$ có thể bị đọc thành “lợi thế âm trở thành không âm”. | Viết rõ $0<\epsilon\le1$ bảo đảm tỷ số $w^*=1-\epsilon\ge0$ khi $A<0$. |
+| toán học và thuật toán | chặn bàn giao, bị bác | 11 | Reviewer cho rằng V-trace không được có $\gamma$ trong tích trace. | Bác sau đối chiếu dạng tương đương: $\prod_{i=s}^{t-1}(\gamma_i c_i)=\gamma^{t-s}\prod c_i$ trước terminal khi $\gamma_i=\gamma m_i$. Lượt tái kiểm DeepSeek xác nhận `PASS`. |
+| phản biện học thuật và giảng dạy | trung bình | 02, 03 | Điều kiện SPO và Jacobian actor xuất hiện sau chỗ dùng; ứng dụng/giới hạn bị gộp. | Đưa điều kiện SPO trước ví dụ; thêm cầu nối Jacobian tới topic 06; tách ứng dụng và giới hạn. |
+| kết nối và mạch viết | trung bình | 12, 13 | X03 lặp nguyên ví dụ $4{,}6$; nguồn 75–77 dùng lại nhưng chưa nói rõ. | Đổi X03 thành $2+0{,}95\min(3,4)=4{,}85$; ghi rõ phạm vi nguồn dùng lại. |
+
+Tái kiểm toán học sau sửa dùng DeepSeek V4 Flash và kết luận `PASS` cho điều kiện SPO, $m_t$, $u/u_t$, $c_\xi$, phép tính $4{,}85$ và V-trace. Tái kiểm mạch bằng GLM chỉ xét các topic bị ảnh hưởng và kết luận `PASS`, không còn lỗi từ mức trung bình trở lên. Tự kiểm `no-ai-slop` loại câu hỏi tu từ, lời dẫn rỗng và tuyên bố vượt nguồn; rà `quill` xác nhận tuyến PPO → SPO/SAM → actor–critic → khác chính sách → DPG/DDPG → SAC/TD3 → khảo sát → bản đồ/checklist, không tạo `quill.json`.
+
+Kiểm định material viewer phát hiện bản nháp từng dùng thẻ HTML thô cho marker topic; `material-viewer.js` cố ý escape HTML và chỉ hỗ trợ `<!-- note-topic-id: ... -->`. Đã chuyển cơ học 13 marker sang dạng comment, xóa thẻ đóng và rà lại toàn bộ viewer. Kết quả cuối: 13 mã topic duy nhất; 17 tiêu đề cấp hai và 17 mục lục; 245 biểu thức KaTeX, 0 lỗi; 6 khối gợi ý/lời giải; không tràn ngang tại 1280 × 720 và 390 × 844; bàn phím, skip-link, liên kết deck và chế độ in đều đạt; không có lỗi console, lỗi trang hoặc request hỏng. Lệnh `python3 -m reloadserver 8765` không chạy vì thiếu mô-đun; phương án thay thế dùng `python3 -m http.server 8765` trên webroot tạm chỉ chứa `2627-1`, `index-pages.css` và favicon, không chứa `.env`. Codex Slides không khả dụng trong phiên này nên không tuyên bố đã rà trực quan bằng Codex Slides.
