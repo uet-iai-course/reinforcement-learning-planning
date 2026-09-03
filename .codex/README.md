@@ -174,3 +174,25 @@ Vá công thức D04 Bài 03 trên đúng một HTML hoàn tất với writer GL
 `write`, `--max-rounds 4 --timeout 300 --max-tokens 5000`. Recheck DeepSeek
 trên cùng một HTML, profile `recheck` và cùng trần 4 vòng/5.000 token, xác nhận
 biểu thức ngắt dòng tương đương công thức kỳ vọng và không còn lỗi toán.
+
+Với lecture note Bài 04 khoảng 46 KB, ba reader DeepSeek chạy thành công trên
+gói nguồn cô lập: lập kế hoạch `plan/12/600/16000`, phân tích nguồn
+`source/20/600/24000`, và hợp nhất `plan/10/600/18000` (profile/số vòng/timeout/
+token). Writer bản đầu GLM dùng `write/12/600/32000`; lượt vá Bài 9 phạm vi hẹp
+dùng `write/5/300/7000`. Tất cả lượt thành công trả model quan sát đúng model
+yêu cầu và provider `OpenRouter`.
+
+Writer GLM không ổn định khi nhận nhiều thay thế tuần tự trên note Bài 04:
+hai lượt `write/8/600/14000` và `write/12/600/14000` ghi được một phần rồi dừng
+`tool_call_limit`; lượt hẹp `write/6/600/9000` dừng `incomplete_answer` sau hai
+phản hồi `finish_reason=length`; lượt ba thay thế `write/4/300/5000` cũng ghi
+một phần rồi dừng `tool_call_limit`. Vì vậy phải kiểm diff sau từng lượt và
+dùng writer chỉ cho một hoặc hai khối độc lập; bản vá cơ học còn lại do điều
+phối viên thực hiện và được reviewer độc lập tái kiểm.
+
+Reviewer note Bài 04 chạy ổn định nhất với một tệp cô lập: DeepSeek
+`recheck/4/600/10000` cho toàn note và GLM `recheck/3/600/7000` cho mạch viết.
+Tái rà đoạn ngắn 40–210 dòng dùng DeepSeek hoặc GLM với `recheck`, 3–5 vòng,
+timeout 300 giây và 3.500–5.000 token. DeepSeek vẫn có thể gọi thêm search dù
+prompt yêu cầu một lần đọc; nếu chạm giới hạn vòng, chạy lại cùng model với
+phạm vi dòng nhỏ hơn, không đổi model.

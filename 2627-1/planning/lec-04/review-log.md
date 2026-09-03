@@ -191,3 +191,96 @@ Runtime: các lượt thành công dùng `requested_model=z-ai/glm-5.3-flash`, `
 - Runtime của hai lượt thành công: `requested_model=z-ai/glm-5.3-flash`, `observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`.
 - Rà toán học–thuật toán: tính lại độc lập X09 cho $V_1=(1,2,2)$, sáu giá trị hành động $(1{,}35;2{,}8)$, $(2{,}9;0{,}8)$, $(3{,}8;0{,}9)$ và chính sách $(b,a,a)$; tổng xác suất của mỗi cặp $(s,a)$ bằng 1. B05, B06, C03, C09 và `gridworld.svg` nhất quán; không còn lỗi chặn bàn giao hoặc nghiêm trọng.
 - Rà mạch viết: xác nhận đúng 5 section ngoài và các ranh giới A02±2, B05–C00, C03–C09, D05–X09. Không còn lỗi chặn bàn giao hoặc nghiêm trọng. Đề xuất nhẹ ở A02 được áp dụng bằng cách hiển thị trực tiếp hai phép tính thay cho ký hiệu suy ra; thứ tự ID C09 trước C05 là chủ ý và không đổi thứ tự trình bày.
+
+## Giai đoạn I — ghi chú bài giảng
+
+### Đầu ra và runtime
+
+- Tạo `materials/lec-04/lecture-note.md` gồm 15 chủ đề duy nhất, đủ bốn nhóm cốt lõi, cầu nối, bổ sung và đọc thêm; mỗi chủ đề có câu hỏi, gợi ý và lời giải.
+- Ba reader lập kế hoạch, phân tích nguồn và hợp nhất đều trả
+  `requested_model=observed_model=deepseek/deepseek-v3.2`, `provider=OpenRouter`.
+- Writer bản đầu và các lượt sửa thành công đều trả
+  `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`.
+- Năm vai rà độc lập dùng đúng model được phân công: sinh viên và mạch viết dùng
+  `z-ai/glm-5.3-flash`; chuyên gia Học tăng cường, toán–thuật toán và phản biện
+  giảng dạy dùng `deepseek/deepseek-v3.2`; mọi kết quả hợp lệ có provider
+  `OpenRouter`.
+
+### Vấn đề bắt buộc và quyết định
+
+| mức độ | chủ đề | vấn đề | bằng chứng | quyết định |
+|---|---|---|---|---|
+| nghiêm trọng | `lec-04-topic-11` | Bài tập yêu cầu sai số nhỏ hơn 1 nhưng lời giải dùng ngưỡng 0,1. | Bất đẳng thức đúng là $0{,}9^k100<1$. | Sửa thành $k>43{,}7$, cần 44 lượt. |
+| nghiêm trọng | `lec-04-topic-06` | Tuyên bố đánh giá dừng sớm vẫn bảo đảm PI dừng hữu hạn thiếu giả thiết và ngoài phạm vi nguồn. | Bảo đảm trong bài dùng đánh giá chính xác. | Ghi rõ đánh giá dừng sớm là biến thể chưa phân tích. |
+| nghiêm trọng | `lec-04-topic-12` | Chứng minh dùng tính đơn điệu trước khi phát biểu. | $T^\pi$ và $T_*$ phải bảo toàn thứ tự. | Thêm bổ đề đơn điệu ở topic 04, truy nguyên hw3 Bài 7. |
+| nghiêm trọng | `lec-04-topic-02` | Lời giải ban đầu giữ $v_*(s_1)=11$ sau khi đổi phần thưởng của nhánh $b$, nên không tự nhất quán. | Hệ mới cho $v_*(s_0)=v_*(s_1)=20$. | Viết lại hệ, phép thế và kiểm tra nhánh $a$. |
+| nghiêm trọng | `lec-04-topic-13` | Chặn mất mát chính sách được nêu nhưng suy diễn quá tắt. | Cần đưa $L$ sang hai vế trong $L\le\gamma e+\gamma(e+L)$. | Mở đầy đủ chuỗi bất đẳng thức và chặn theo phần dư. |
+
+### Các sửa và sai khác có chủ ý
+
+- Sửa lỗi gõ nguồn trang 33: số chính sách xác định tổng quát là
+  $\prod_s|\mathcal A(s)|$; khi mọi trạng thái có cùng tập hành động thì bằng
+  $|\mathcal A|^{|\mathcal S|}$.
+- Dùng $C_{\text{model}}=O(\sum_s\sum_a|\operatorname{supp}p_{s,a}|)$ thay cho
+  nhãn định tính “đắt/rẻ”; không tuyên bố PI hoặc VI nhanh hơn tuyệt đối.
+- Giữ phần 1 Bài 9 trong khối 30 phút; phần 2 là tự học bằng PI ở topic 05–07.
+  Không thêm Monte Carlo, Q-learning hoặc code demo.
+- Giữ cả bản đồ bốn nhóm và danh sách 15 chủ đề: bản đồ phục vụ phân loại theo
+  yêu cầu, danh sách cố định thứ tự ánh xạ. Đề xuất bỏ một khối được bác vì làm
+  mất một trong hai chức năng này.
+- Báo động `(27,30)` phải thành `(29,30)` được bác sau khi đối chiếu: MDP
+  topic 05 dùng $s_0\xrightarrow{b}(0,s_1)$, còn biến thể topic 02–03 mới dùng
+  phần thưởng 2. Hai reviewer tái rà đã xác nhận các nghiệm 10/11, 20/20 và
+  27/30 đúng trong từng MDP.
+
+### Lỗi worker và phục hồi
+
+- Một lượt reviewer toán trên gói lớn dừng đúng lỗi
+  `model exceeded the tool-call limit (4)`; chạy lại cùng DeepSeek trên một tệp
+  cô lập và hoàn tất.
+- Các writer vá rộng lần lượt dừng `model exceeded the tool-call limit (8)`,
+  `model exceeded the tool-call limit (12)`, và
+  `model returned an empty or incomplete answer after all retries`. Lượt vá ba
+  điểm tiếp theo dừng `model exceeded the tool-call limit (4)` sau khi ghi một
+  phần. Không đổi model; điều phối viên kiểm diff, khôi phục đoạn bị thay nhầm,
+  áp dụng các vá cơ học còn lại và yêu cầu tái rà độc lập.
+- Một recheck DeepSeek phạm vi hẹp dừng `model exceeded the tool-call limit (3)`;
+  chạy lại cùng model với phạm vi dòng rõ hơn và hoàn tất.
+- Liên kết `.env` chỉ tồn tại tạm để cầu nối nạp khóa, bị MCP chặn đọc và được
+  gỡ ngay sau mỗi nhóm tiến trình. Không nội dung `.env` nào được đưa vào prompt,
+  log hoặc sản phẩm.
+
+### Tái rà sau sửa
+
+- DeepSeek xác nhận Bellman, tính đơn điệu, tính co, số chính sách, điều kiện PI,
+  phép tính 44 lượt, chi phí, chặn mất mát và Bài 9 đều đúng; không còn lỗi
+  `chặn bàn giao` hoặc `nghiêm trọng`.
+- GLM xác nhận đủ 15 marker, các kết nối vào–ra, thuật ngữ và văn phong; không
+  còn lỗi `chặn bàn giao` hoặc `nghiêm trọng`.
+- Hai lượt cuối cùng đọc riêng topic 02 xác nhận ví dụ gốc thêm $b$ với phần
+  thưởng 0 cho 10/11, còn bài kiểm tra đổi phần thưởng thành 2 cho 20/20; không
+  còn bước nhảy logic. Phép thế được viết thêm một bước theo đề xuất mức trung bình.
+- Tự kiểm `no-ai-slop`: không có khẩu hiệu, câu hỏi tu từ, kết luận lặp hoặc lời
+  dẫn rỗng. Tự kiểm Quill: tuyến Bellman kỳ vọng → tối ưu → toán tử → PI/VI →
+  hội tụ → phần dư → giới hạn liên tục giữ thứ tự tiên quyết. Không tạo
+  `quill.json`.
+
+### Kiểm định cuối ghi chú
+
+- `python3 -m reloadserver 8765` thất bại vì môi trường thiếu mô-đun
+  `reloadserver`. Điều phối viên dùng cây web tạm không chứa `.env` và
+  `python3 -m http.server 8765 --bind 127.0.0.1` tại đúng cổng 8765.
+- Chromium headless tải `material-viewer.html` ở 1440 × 900 và 390 × 844:
+  HTTP 200, không lỗi console, page hoặc request; không tràn ngang toàn trang.
+- Trình xem dựng 584 biểu thức KaTeX, không có `.katex-error`; nhận đủ 30 khối
+  thu gọn gồm 15 lời giải; không hiển thị `note-topic-id`.
+- Liên kết “Mở ghi chú” trên thẻ Bài 04 trỏ đúng tài liệu và deck. Dùng bàn
+  phím đặt tiêu điểm vào `summary` rồi nhấn Enter mở được khối “Gợi ý”. Một
+  bảng rộng dùng cuộn ngang cục bộ trong khung, không làm tràn trang.
+- Kiểm tĩnh xác nhận 15 marker duy nhất, đủ 15 bộ exercise/hint/solution, chỉ
+  dùng cú pháp `$...$` và `$$...$$` cho toán Markdown, không có `quill.json`
+  hoặc liên kết `.env` ngoài tệp bí mật gốc đã được git bỏ qua.
+- Codex Slides không khả dụng trong phiên này do runtime Node.js 18 thấp hơn
+  yêu cầu của gói (Node.js 20 trở lên). Vì vậy không tuyên bố đã rà bằng Codex
+  Slides; toàn bộ kiểm tra hiển thị giai đoạn này được thực hiện bằng trình xem
+  tài liệu cục bộ và Chromium.
