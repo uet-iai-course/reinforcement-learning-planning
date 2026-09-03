@@ -141,7 +141,7 @@ Chuỗi Markov chỉ có $\langle \mathcal S, P \rangle$; MRP thêm hàm thưở
 
 $$G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}.$$
 
-$\gamma$ là giá trị hiện tại của phần thưởng tương lai: $\gamma$ gần 0 ưu tiên thưởng sớm, $\gamma$ gần 1 cho kế hoạch dài hạn. Lý do dùng chiết khấu: ta ưu tiên thưởng sớm hơn thưởng muộn, và khi $\gamma < 1$ với thưởng bị chặn thì tổng trên chắc chắn hội tụ. Khi $\gamma = 1$, cần điều kiện hữu hạn (có trạng thái kết thúc hoặc quỹ đạo hữu hạn) thì $G_t$ mới xác định được.
+$\gamma$ là giá trị hiện tại của phần thưởng tương lai: $\gamma$ gần 0 ưu tiên thưởng sớm, $\gamma$ gần 1 cho kế hoạch dài hạn. Lý do dùng chiết khấu: ta ưu tiên thưởng sớm hơn thưởng muộn, và khi $\gamma < 1$ với thưởng bị chặn thì tổng trên chắc chắn hội tụ. Khi $\gamma = 1$, cần điều kiện chính xác: quỹ đạo kết thúc gần như chắc chắn, kỳ vọng thời gian kết thúc hữu hạn và phần thưởng bị chặn, thì $G_t$ mới xác định được.
 
 ::: example Ví dụ hai quỹ đạo Student với $\gamma = \tfrac12$
 Với $\gamma = \tfrac12$ và $r = (-2, -2, -2, +10, +1, -1, 0)$:

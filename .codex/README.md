@@ -152,3 +152,25 @@ Reviewer mạch GLM cho toàn lecture note Bài 03 chạy được bằng profil
 `--max-rounds 3 --timeout 300 --max-tokens 6000`; worker kết thúc ở vòng 3.
 Prompt nên buộc một lần đọc toàn tệp. GLM đôi khi vẫn lặp cùng tool call, nên
 giữ trần 3 vòng và kiểm tra log tiến độ trước khi chấp nhận báo cáo.
+
+Với slide deck Bài 03, reader lập kế hoạch ổn định khi bốn tệp được cô lập,
+dùng `deepseek/deepseek-v3.2`, profile `plan`, `--max-rounds 8 --timeout 600
+--max-tokens 12000`; câu trả lời cuối được phép sau vòng công cụ thứ 8. Writer
+GLM sửa ba tệp deck/planning hoàn tất bằng `--max-rounds 10 --timeout 600
+--max-tokens 16000`. Writer vá đúng hai chuỗi hoàn tất bằng `--max-rounds 6
+--timeout 300 --max-tokens 6000`.
+
+Reviewer deck Bài 03 không nên đọc bốn tệp bằng DeepSeek trong nhiều tool-call:
+các lượt trần 8 và 12 đều dừng ở `model exceeded the tool-call limit`. Cấu hình
+ổn định là cô lập một `deck.html` khoảng 31 KB, profile `review` hoặc `recheck`,
+`--max-rounds 6 --timeout 600 --max-tokens 9000–12000`; lượt toán và tái rà toán
+đều hoàn tất, giữ đúng `deepseek/deepseek-v3.2`. Reviewer GLM đọc bốn tệp với
+`--max-rounds 8 --timeout 600 --max-tokens 12000` hoàn tất cho vai sinh viên và
+mạch viết; tái rà một deck dùng `--max-rounds 6 --timeout 600 --max-tokens
+9000`. Một writer rộng 12 vòng đã ghi bán phần rồi chạm giới hạn; nên tách các
+vá còn lại thành lượt hẹp và kiểm diff sau mỗi lượt.
+
+Vá công thức D04 Bài 03 trên đúng một HTML hoàn tất với writer GLM, profile
+`write`, `--max-rounds 4 --timeout 300 --max-tokens 5000`. Recheck DeepSeek
+trên cùng một HTML, profile `recheck` và cùng trần 4 vòng/5.000 token, xác nhận
+biểu thức ngắt dòng tương đương công thức kỳ vọng và không còn lỗi toán.

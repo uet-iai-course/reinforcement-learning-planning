@@ -314,3 +314,48 @@ Các lượt không hoàn tất không được tính: ba lượt sandbox lỗi 
 - `index.html` có đúng liên kết deck và viewer của Bài 03, không có liên kết planning. Viewer chặn cặp doc/deck lệch số bài và ẩn layout nội dung.
 - Kiểm bàn phím qua Chrome DevTools Protocol: sáu lần Tab lần lượt đặt tiêu điểm vào liên kết bỏ qua điều hướng, danh mục học phần, bộ trang chiếu, Markdown gốc và hai liên kết mục lục đầu. Viewer dùng được không cần chuột.
 - Playwright không chạy vì gói hiện có yêu cầu Node ≥20 còn môi trường là Node 18.19.1; kiểm Chromium trực tiếp và DevTools Protocol thay thế. Codex Slides/Browser vẫn không khả dụng, nên không tuyên bố đã rà bằng Codex Slides.
+
+## Giai đoạn II — slide deck, 2026-09-03
+
+### Kế hoạch, ánh xạ và runtime
+
+- Reader lập kế hoạch trên gói bốn tệp cô lập: `requested_model=observed_model=deepseek/deepseek-v3.2`, `provider=OpenRouter`, profile `plan`, `max_rounds=8`, timeout 600 giây, 12.000 token. Điều phối viên sửa hai sai số trong báo cáo: deck có 39, không phải 40 mã; X03 ánh xạ cả topic01 và topic06.
+- Outline và storyboard chứa ánh xạ nhiều–nhiều đủ 13 `note-topic-id` và 39 `data-slide-id`; P00–P01 tạo khung cho cả bài, P02 nối topic01, topic02, topic07 và topic13.
+- Writer đồng bộ ban đầu: `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`, profile `write`, `max_rounds=10`, timeout 600 giây, 16.000 token. Writer chỉnh sửa sau review chạm `model exceeded the tool-call limit (12)` sau khi ghi bán phần; điều phối viên kiểm diff và chạy writer vá hai chuỗi với cùng model, `max_rounds=6`, timeout 300 giây, 6.000 token. Không đổi model.
+
+### Năm báo cáo độc lập
+
+| Vai | Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa / quyết định |
+|---|---|---|---|---|---|
+| Góc nhìn sinh viên | trung bình | B01 | Quy ước thưởng diễn đạt là “rời” trạng thái, trái $R_{t+1}=r(S_t)$. | B01 nói “Rời C1”; B00 và lecture note gắn thưởng với trạng thái hiện tại. | Đổi thành “Ở C1/Pass/Sleep”; notes dùng đúng quy ước. Đã áp dụng. |
+| Góc nhìn sinh viên | trung bình | C04–C06 | Bán kính phổ trên mặt trang tạo tải nhận thức sớm. | C04 đặt cả $\rho(\gamma P)$ và $\rho(Q)$ trên hai thẻ. | Mặt trang giữ điều kiện thực hành; chứng minh phổ và $Q$ giữ trong notes. Đã áp dụng. |
+| Chuyên gia Học tăng cường | trung bình | D06 | Báo cáo cho rằng thiếu giải thích $q_\pi$. | Bản được rà đã có notes: thưởng đầu cộng giá trị kế tiếp vì $\gamma=1$ và chuyển đầu tất định. | Không áp dụng; đề xuất đã được đáp ứng trước lượt rà. |
+| Chuyên gia Học tăng cường | trung bình | D10 | Cần nêu điều kiện hữu hạn khi $\gamma=1$. | Notes đã nói chính sách kết thúc gần như chắc chắn và kỳ vọng thời gian hữu hạn. | Giữ điều kiện; bổ sung cách tạo hai hệ số và phản ví dụ chính sách Slow đầy đủ. |
+| Toán học–thuật toán | nghiêm trọng | A05 | Báo cáo đầu cho rằng $\mu_{t+1}=P^{\mathsf T}\mu_t$ sai. | A00 định nghĩa $P_{ij}=\Pr(S_{t+1}=s_j\mid S_t=s_i)$ theo hàng; A05 định nghĩa $\mu_t$ là véc-tơ cột. | Bác đề xuất: với hai quy ước này, $P^{\mathsf T}\mu_t$ là đúng. Recheck DeepSeek xác nhận. |
+| Toán học–thuật toán | trung bình | D10 | Hệ số $1{,}5$ và $-4{,}5$ chưa được khai triển. | Mặt trang chỉ có hệ Bellman. | Notes thêm $0{,}5\times1+0{,}5\times2$ và $0{,}5\times1+0{,}5\times(-10)$; nêu số hạng Overheated có giá trị tiếp tục 0. |
+| Học thuật–giảng dạy | trung bình | C05 | Cần nói rõ biên và hệ con khi $\gamma=1$. | Notes hiện có $v(\text{Sleep})=0$, giải hệ con và nói $I-P$ toàn cục suy biến. | Không áp dụng thêm; đề xuất đã được đáp ứng. |
+| Học thuật–giảng dạy | nhẹ | P01 | Mục tiêu “đúng điều kiện” chưa gọi tên hai trường hợp. | P01 chưa nêu $\gamma<1$ và $\gamma=1$. | Gọi rõ hai trường hợp; notes nhắc tiên quyết. Đã áp dụng. |
+| Kết nối và mạch viết | trung bình | B01 | Cùng lỗi quy ước thưởng với vai sinh viên. | B01 trái B00 và note. | Đã sửa. |
+| Kết nối và mạch viết | nhẹ | outline, X07–X08 | Ánh xạ nguồn chồng dải; nhánh bài tập có thể trông lặp chức năng. | C00 ghi nguồn 44–46; X07/X08 yêu cầu lại quan hệ đã học. | Chuyển C00 sang hàng 44–48; notes nêu yêu cầu tự suy diễn trước khi đối chiếu. |
+
+Ba lượt DeepSeek đầu với `max_rounds=8` và lượt toán bốn tệp với `max_rounds=12` không được tính vì dừng ở `model exceeded the tool-call limit`. Báo cáo hợp lệ đều có `requested_model=observed_model=deepseek/deepseek-v3.2` hoặc `z-ai/glm-5.3-flash` đúng phân vai, `provider=OpenRouter`.
+
+### Chỉnh sửa, đề xuất không áp dụng và tái rà
+
+- B01, P01, P02, C04, D04, D10, X07–X08, bảng ánh xạ nguồn và câu điều kiện $\gamma=1$ trong lecture note đã được sửa tuần tự. Không đổi số trang, thứ tự, SVG, công thức hoặc số liệu cốt lõi.
+- Giữ hai nghiệm C05 làm tròn ba chữ số trên mặt trang; notes giữ số đầy đủ và phân số chính xác. Không tăng số chữ số vì làm giảm khả năng đọc mà không tăng ý nghĩa sư phạm.
+- Không thêm Bài tập 5–6 và không đánh lại số X03, X04, X07, X08: số bài truy nguyên trực tiếp `hw02.pdf`; Bài 9 đã chuyển sang Bài 04.
+- Giữ B01 trước B00, A02 trước A00 và D03 trước D04: đây là chủ ý ví dụ trước định nghĩa, đã ghi trong storyboard.
+- Recheck toán: `requested_model=observed_model=deepseek/deepseek-v3.2`, `provider=OpenRouter`, profile `recheck`, `max_rounds=6`, timeout 600 giây, 9.000 token. Kết luận không còn lỗi chặn/nghiêm trọng; xác nhận A05, C04–C06, D04–D06 và D09–D10 đúng.
+- Recheck mạch: `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`, cùng cấu hình. Kết luận đúng 7 section ngoài; các ranh giới A05→B01, B04→C00, C06→D01, D10→D11, D13→X03 liền mạch; không còn lỗi chặn/nghiêm trọng.
+- Tự kiểm theo `no-ai-slop/eval.md`: bỏ câu quy trình bị lộ trong notes X07, giữ câu ngắn và không dùng khẩu hiệu, câu hỏi tu từ hoặc nhãn phân tuyến. Rà theo Quill xác nhận tuyến chuỗi Markov → MRP → Bellman → MDP → đánh giá chính sách → ứng dụng → tổng kết; không tạo `quill.json`.
+
+### Kiểm định cuối Giai đoạn II
+
+- Kiểm tĩnh: 7 `<section>` ngoài; 39 `data-slide-id` duy nhất; 35 trang tuyến chính và 4 trang dọc; 39 notes; mọi ID và 13 topic có trong outline/storyboard. Bốn SVG hợp lệ XML, có `role="img"`, `title`, `desc`; không có ảnh raster, URL cốt lõi ngoài, tài nguyên thiếu, `.env` hoặc `quill.json`. `git diff --check` sạch.
+- Lệnh bắt buộc `python3 -m reloadserver 8765` thất bại với `/usr/bin/python3: No module named reloadserver`. Máy chủ thay thế dùng `python3 -m http.server 8765 --bind 127.0.0.1` trên webroot tạm cô lập, không chứa `.env`, planning hoặc nguồn.
+- Chromium headless duyệt đủ 39 trang ở 1280 × 720 và 800 × 600. DOM cuối có 171 phần tử KaTeX, 0 `katex-error`, 0 request hỏng và 0 lỗi trang. Lỗi 404 duy nhất ở lượt đầu là yêu cầu tự động `/favicon.ico`, không phải tài nguyên được deck tham chiếu.
+- Điều hướng bàn phím cuối: P00 ↓ P01, ↑ P00, → A02. Cả bốn nhánh dọc được duyệt trong danh sách 39 trang.
+- Kiểm ảnh trực tiếp phát hiện D04 bị cắt ngang sau khi thêm ngoặc. Writer GLM ngắt $r^\pi(s)$ thành hai dòng, không giảm cỡ chữ; render lại ở hai khung cho thấy công thức nằm trọn trong thẻ. Phép đo biên ở 1280 × 720: thẻ phải từ 651,6 đến 1254,4 px, công thức từ 672,4 đến 1233,6 px; ở 800 × 600, công thức từ 420,2 đến 771,0 px trong thẻ từ 407,2 đến 784,0 px.
+- Recheck D04 cuối: `requested_model=observed_model=deepseek/deepseek-v3.2`, `provider=OpenRouter`, profile `recheck`, `max_rounds=4`, timeout 300 giây, 5.000 token. Xác nhận $r^\pi(s)=\sum_a\sum_{s'}\sum_r\pi(a\mid s)p(s',r\mid s,a)r$, $P^\pi$ và Bellman MRP cảm sinh đều đúng.
+- Codex Slides/Browser không khả dụng trong phiên do môi trường Node 18 không đáp ứng gói yêu cầu Node ≥20. Không tuyên bố đã rà trực quan bằng Codex Slides; kiểm trực quan RevealJS cục bộ bằng Chromium là bằng chứng cuối.

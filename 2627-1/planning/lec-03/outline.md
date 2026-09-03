@@ -18,8 +18,8 @@ Sau bài học, sinh viên có thể kiểm tra ma trận chuyển; tính phần
 | 31–33 | tách, vẽ lại | A02–A05 | Đặt đồ thị trước định nghĩa; quỹ đạo và ma trận dùng cùng thứ tự, quy ước véc-tơ cột. |
 | 34–35 | sửa, sắp lại | B01,B00 | Đặt véc-tơ thưởng trước định nghĩa MRP; tách $R_{t+1}$ khỏi $r(s)$. |
 | 36–40 | gộp, tính lại, bỏ hình | B02–B03 | Nêu điều kiện hữu hạn và ý ưu tiên thưởng sớm; tính lại hai phần thưởng tích lũy. Bỏ hình minh họa suy giảm mũ ở trang 37 vì công thức và ba trường hợp gamma đã phủ đủ nội dung. |
-| 39–43 | gộp, sắp lại | B04, C00, C05 | Định nghĩa giá trị, dùng một sao lưu tạm trước Bellman, chỉ đưa nghiệm sau công thức. |
-| 44–48 | tách, sửa | C01–C06 | Dẫn từ phân rã một bước tới hệ; bỏ thuật ngữ ánh xạ co chưa định nghĩa; nêu điều kiện $\gamma=1$. |
+| 39–43 | gộp, sắp lại | B04, C05 | Định nghĩa giá trị; chỉ đưa nghiệm sau công thức. |
+| 44–48 | tách, sửa | C00–C06 | Dẫn từ phép nhìn trước một bước tới hệ; bỏ thuật ngữ ánh xạ co chưa định nghĩa; nêu điều kiện $\gamma=1$. |
 | 49 | sửa | D00 | Dùng hạt nhân chung sau ví dụ; nêu miền thưởng rời rạc và quy tắc thay tổng bằng tích phân. |
 | 50 | vẽ lại, sửa, sắp lại | D01, D03, D06 | Đặt Student MDP trước định nghĩa; khôi phục nút ngẫu nhiên Pub; nêu rõ dữ kiện giá trị ở D06. |
 | 51 | vẽ lại, sửa | D09–D10 | Biểu diễn đủ sáu kết quả; dùng Warm–Fast nhận $-10$ rồi kết thúc. |
@@ -28,6 +28,28 @@ Sau bài học, sinh viên có thể kiểm tra ma trận chuyển; tính phần
 | 56–57 | tách | D07–D08 | Hai Bellman kỳ vọng đặt sau ví dụ và cầu nối MRP cảm sinh. |
 | 58 | chuyển | D11–D13, `note-for-author.md` | Nối rõ quy hoạch động và phi mô hình; nguồn đọc chưa đủ thư mục để công bố. |
 | hw02 Bài 3,4,7,8 | giữ phạm vi | X03,X04,X07,X08 | Nhánh dọc; phân bổ chữa lưu ngoài slide. |
+
+## Ánh xạ lecture note ↔ deck
+
+Ánh xạ nhiều–nhiều giữa topic trong `materials/lec-03/lecture-note.md` và `data-slide-id` trong deck:
+
+| Topic lecture note | Slide deck |
+|---|---|
+| topic01 Chuỗi Markov | A02, A00, A01, A03, A04, A05, X03 |
+| topic02 MRP | B01, B00 |
+| topic03 $G_t$ sang kỳ vọng | B02, B03 |
+| topic04 Giá trị trạng thái | B04 |
+| topic05 Bellman MRP | C00, C01, C02 |
+| topic06 Dạng ma trận/giải hệ/$\gamma=1$ | C03, C04, C05, C06, X03 |
+| topic07 MDP và hạt nhân chung | D01, D00, D09, D10 |
+| topic08 Chính sách | D02 |
+| topic09 MRP cảm sinh | D03, D04, X04 |
+| topic10 $v_\pi$ | D05 |
+| topic11 $q_\pi$ | D05, D06, X07 |
+| topic12 Bellman kỳ vọng | D07, D08, X08 |
+| topic13 Tổng kết | D11, D12, D13 |
+
+Ghi chú: P00, P01 không ánh xạ topic riêng nhưng tạo khung phạm vi và mục tiêu cho cả 13 topic; P02 nối trực tiếp topic01, topic02, topic07 và topic13 (ba lớp mô hình). Ánh xạ trên phủ đủ 39 data-slide-id của deck (35 trang tuyến chính P/A/B/C/D cộng 4 trang dọc X03, X04, X07, X08).
 
 ## Ký hiệu và quy ước
 

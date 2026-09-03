@@ -17,6 +17,28 @@ Tổng tuyến chính: $6+18+22+30+28+10+6=120$ phút.
 
 Phân bổ phần bài tập 30 phút: X03 12 phút, X04 10 phút, X08 8 phút; X07 tự luyện.
 
+## Ánh xạ lecture note ↔ deck
+
+Ánh xạ nhiều–nhiều giữa topic trong `materials/lec-03/lecture-note.md` và `data-slide-id` trong deck:
+
+| Topic lecture note | Slide deck |
+|---|---|
+| topic01 Chuỗi Markov | A02, A00, A01, A03, A04, A05, X03 |
+| topic02 MRP | B01, B00 |
+| topic03 $G_t$ sang kỳ vọng | B02, B03 |
+| topic04 Giá trị trạng thái | B04 |
+| topic05 Bellman MRP | C00, C01, C02 |
+| topic06 Dạng ma trận/giải hệ/$\gamma=1$ | C03, C04, C05, C06, X03 |
+| topic07 MDP và hạt nhân chung | D01, D00, D09, D10 |
+| topic08 Chính sách | D02 |
+| topic09 MRP cảm sinh | D03, D04, X04 |
+| topic10 $v_\pi$ | D05 |
+| topic11 $q_\pi$ | D05, D06, X07 |
+| topic12 Bellman kỳ vọng | D07, D08, X08 |
+| topic13 Tổng kết | D11, D12, D13 |
+
+Ghi chú: P00, P01 tạo khung phạm vi và mục tiêu cho cả 13 topic; P02 nối topic01, topic02, topic07, topic13. Ánh xạ phủ đủ 39 data-slide-id (35 trang chính + 4 trang dọc).
+
 ## Cấu trúc section ngoài
 
 HTML dùng đúng 7 `<section>` ngoài, khớp 7 mạch của bảng hành trình khái niệm:
@@ -33,11 +55,12 @@ HTML dùng đúng 7 `<section>` ngoài, khớp 7 mạch của bảng hành trìn
 
 - A02 cho ví dụ đồ thị trước; A00–A01 mới hình thức hóa chuỗi Markov, phát biểu tính Markov và điều kiện của $P$. A02 chỉ nói đồ thị và ma trận dùng cùng thứ tự; thưởng và giá trị chưa xuất hiện. A02–A05 giữ thứ tự Student MRP là C1, C2, C3, Pass, Pub, Facebook, Sleep.
 - B01 cho véc-tơ thưởng trước; B00 mới đóng gói thành MRP. B00–B04 dùng cùng quy ước $R_{t+1}=r(S_t)$. B02 nêu ý chiết khấu ưu tiên thưởng sớm và điều kiện hữu hạn khi $\gamma<1$ dưới thưởng bị chặn; hình minh họa suy giảm mũ ở trang 37 nguồn được bỏ vì công thức và ba trường hợp gamma đã phủ đủ nội dung.
-- C00 dùng các giá trị tiếp tục tạm thời để tạo một sao lưu Student, chưa dùng nghiệm. C01 phân rã $G_t$; C02 mới định nghĩa Bellman; C05 mới đưa hai nghiệm. Mặt trang làm tròn cả hai véc-tơ đến ba chữ số thập phân; notes giữ số đầy đủ và nghiệm phân số chính xác.
+- C00 dùng các giá trị tiếp tục tạm thời để tạo một phép nhìn trước một bước Student, chưa dùng nghiệm. C01 phân rã $G_t$; C02 mới định nghĩa Bellman; C05 mới đưa hai nghiệm. Mặt trang làm tròn cả hai véc-tơ đến ba chữ số thập phân; notes giữ số đầy đủ và nghiệm phân số chính xác.
 - C03 nối phương trình theo trạng thái với $v=r+\gamma Pv$. C04 tách $\gamma<1$ khỏi $\gamma=1$; C06 kiểm lại điều kiện trước khi giải.
 - D01 nêu vấn đề: MRP đánh giá động lực cố định nhưng không biểu diễn lựa chọn hành động; hình Student MDP cho trực giác trước D00. D03 tạo một hàng $P^\pi$ và $r^\pi$ trước công thức D04.
 - D04 nối trở lại MRP bằng $v_\pi=r^\pi+\gamma P^\pi v_\pi$. D05 nêu quan hệ $v_\pi=\sum_a\pi q_\pi$; D06 kiểm bằng số trước Bellman $q_\pi$ ở D08. D06 dùng dữ kiện nguồn trang 54: chính sách đều trên các hành động khả dụng tại mỗi trạng thái, $\gamma=1$; bước giải hệ đầy đủ được lược để tập trung quan hệ $v_\pi$–$q_\pi$, nhưng dữ kiện truy nguyên và kiểm được bằng phương trình Bellman tại C1 trong notes.
-- D09 mở mạch ứng dụng mới với quy ước nhìn thấy được: vào Overheated nhận $-10$, không cộng thêm $+2$. D10 yêu cầu người học tự lập hệ trước khi hiện nghiệm và đối chiếu điều kiện $\gamma=1$; notes D10 nhắc lại quy ước thưởng.
+- D09 mở mạch ứng dụng mới với quy ước nhìn thấy được: vào Overheated nhận $-10$, không cộng thêm $+2$. D10 yêu cầu người học tự lập hệ trước khi hiện nghiệm và đối chiếu điều kiện $\gamma=1$; notes D10 nhắc lại quy ước thưởng, giải thích $1{,}5=0{,}5\times1+0{,}5\times2$, $-4{,}5=0{,}5\times1+0{,}5\times(-10)$ và nêu phản ví dụ chính sách chọn Slow ở cả Cool và Warm nhận $+1$ mãi mãi nên phân kỳ khi $\gamma=1$.
+- X07 và X08 là yêu cầu sinh viên tự suy diễn trước khi đối chiếu D05 hoặc D07; không thêm nhãn phân tuyến lên mặt slide hoặc notes.
 - D11–D13 nối rõ: bài này biết mô hình, Bài 04 dùng quy hoạch động, các bài sau học phi mô hình.
 
 ## Bản đồ 35 trang tuyến chính
@@ -58,7 +81,7 @@ HTML dùng đúng 7 `<section>` ngoài, khớp 7 mạch của bảng hành trìn
 | B02 | $G_t$ là tổng chiết khấu và cần điều kiện hữu hạn. | “Tính hai quỹ đạo cụ thể.” |
 | B03 | Hai quỹ đạo có hai phần thưởng tích lũy. | “Giá trị phải lấy trung bình trên các quỹ đạo.” |
 | B04 | Giá trị là kỳ vọng của $G_t$. | “Ước lượng một bước cần thưởng và giá trị tiếp tục.” |
-| C00 | Một sao lưu Student tạo mẫu tính một bước. | “Mẫu này đến từ phân rã của $G_t$.” |
+| C00 | Nhìn trước một bước Student tạo mẫu tính một bước. | “Mẫu này đến từ phân rã của $G_t$.” |
 | C01 | Phân rã một bước chuẩn bị Bellman. | “Lấy kỳ vọng có điều kiện.” |
 | C02 | Bellman MRP là thưởng cộng giá trị tiếp tục trung bình. | “Viết đồng thời cho mọi trạng thái.” |
 | C03 | Dạng véc-tơ tạo hệ tuyến tính. | “Khả năng giải phụ thuộc $\gamma$ và trạng thái kết thúc.” |
@@ -94,6 +117,6 @@ HTML dùng đúng 7 `<section>` ngoài, khớp 7 mạch của bảng hành trìn
 - Đã rà P02–A03 sau khi chuyển A02 trước A00–A01: câu nối đi từ ba lớp → đồ thị → định nghĩa → điều kiện → quỹ đạo; không dùng ký hiệu chưa được giải thích trong phép tính.
 - Đã rà A04–B03 sau khi chuyển B01 trước B00: thứ tự trạng thái đã được cố định ở A04; véc-tơ thưởng là ví dụ trực quan rồi mới định nghĩa MRP và $r(s)$.
 - Đã rà C05–D03 sau khi chuyển D01 trước D00: C06 kết thúc MRP; D01 giới thiệu hành động bằng hình; D00 mới định nghĩa hạt nhân; D02 mới định nghĩa chính sách.
-- Đã rà C00–C05 và hai trang lân cận B03–B04, C06–D00: không còn nghiệm hoặc Bellman trước định nghĩa giá trị và ví dụ sao lưu.
+- Đã rà C00–C05 và hai trang lân cận B03–B04, C06–D00: không còn nghiệm hoặc Bellman trước định nghĩa giá trị và ví dụ nhìn trước một bước.
 - Đã rà D01–D08 cùng C05–D00 và D09–D10: mỗi công thức có tiên quyết, ví dụ hoặc cầu nối MRP cảm sinh.
 - Đã rà D08–D13: Racing Car không lặp kết luận; D10 là câu hỏi áp dụng; tự kiểm cuối phủ đủ ba đại lượng trọng tâm.
