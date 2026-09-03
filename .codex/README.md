@@ -60,7 +60,7 @@ UV_CACHE_DIR=/tmp/rl-plan-uv-cache uv run <worker> \
 
 Từ Bài 08, ưu tiên dùng nguyên preset và chỉ ghi đè tham số khi nhật ký của
 lượt hiện tại chứng minh cần thiết. Preset đã được nâng theo dữ liệu Bài 01–07:
-`plan/12/600/16000`, `source/20/600/24000`,
+`plan/12/600/16000`, `source/14/600/18000`,
 `storyboard/10/600/12000`, `review/8/600/12000`,
 `write/20/900/32000`, `recheck/6/600/10000` và
 `patch/6/300/7000` (profile/vòng/timeout/token).
@@ -97,7 +97,7 @@ Các tổ hợp đã chạy thành công:
 | Vai trò | Worker | Model | Profile | Số vòng |
 |---|---|---|---|---:|
 | Lập kế hoạch lecture note | `openrouter-mcp-reader` | `deepseek/deepseek-v3.2` | `plan` | 12 |
-| Phân tích nguồn lecture note | `openrouter-mcp-reader` | `deepseek/deepseek-v3.2` | `source` | 20 |
+| Phân tích nguồn lecture note | `openrouter-mcp-reader` | `deepseek/deepseek-v3.2` | `source` | 14 |
 | Phân tích logic, toán, RL phạm vi hẹp | `openrouter-mcp-reader` | `deepseek/deepseek-v3.2` | `recheck` | 8 |
 | Rà mạch viết, sinh viên | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` | `recheck` | 4–6 |
 | Rà logic, toán, RL | `openrouter-mcp-reviewer` | `deepseek/deepseek-v3.2` | `recheck` | 6–8 |
@@ -107,6 +107,15 @@ Các tổ hợp đã chạy thành công:
 | Tái rà deck sau đổi cấu trúc, 2–3 tệp | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v3.2` | `recheck` | 5 |
 | Soạn một note hoặc deck đã cô lập | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `write` | 20 |
 | Vá một hoặc hai khối độc lập | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `patch` | 6 |
+
+Lượt source Bài 09 với cấu hình cũ `20/600/24000` đã gọi 20 vòng đọc,
+lặp lại cùng các khoảng nguồn, tạo prompt 82.874 token và chỉ hoàn tất ở vòng
+21 sau 544,73 giây. Cấu hình `source` từ Bài 09 giảm còn `14/600/18000`.
+Cầu nối đồng thời chặn lặp lại một tool call đã thành công với cùng tên và đối
+số; worker nhận chỉ dẫn dùng kết quả đang có và kết thúc báo cáo. Timeout 600
+giây được giữ vì yêu cầu tổng hợp hợp lệ của DeepSeek có thể kéo dài hơn 300
+giây. Prompt reader giới hạn tối đa hai lượt đọc mỗi đường dẫn và bắt buộc lượt
+thứ hai tiếp tục sau dòng cuối, không đọc lại cùng khoảng.
 
 ### Bài 04 — cấu hình đã quan sát
 

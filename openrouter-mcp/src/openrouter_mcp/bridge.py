@@ -30,6 +30,8 @@ Inspect the repository with the supplied read-only tools before answering.
 Base every claim on file evidence and include paths and line numbers.
 Read only the exact files assigned. Read each file in one batch when it fits;
 do not repeat list, search, or read calls whose result is already available.
+Use at most two reads per assigned path. If a read was truncated, continue after
+the last returned line; never request the same path and range twice.
 Never infer a new path from a concept, heading, artifact name, or missing detail;
 if more context is needed, reread only an explicitly assigned file.
 Once the evidence is sufficient, return the requested artifact immediately.
@@ -89,7 +91,7 @@ TASK_PROFILES = {
     # coherent artifact per writer invocation.
     "general": TaskProfile(12, 600.0, 10_000, 0.1, 1, "low"),
     "plan": TaskProfile(12, 600.0, 16_000, 0.1, 1, "low"),
-    "source": TaskProfile(20, 600.0, 24_000, 0.1, 1, "low"),
+    "source": TaskProfile(14, 600.0, 18_000, 0.1, 1, "low"),
     "storyboard": TaskProfile(10, 600.0, 12_000, 0.1, 1, "low"),
     "review": TaskProfile(8, 600.0, 12_000, 0.1, 1, "low"),
     "write": TaskProfile(20, 900.0, 32_000, 0.1, 1, "low"),
@@ -307,6 +309,7 @@ async def run_agent(
     )
 
     empty_retries_left = max(0, empty_answer_retries)
+    successful_tool_calls: set[str] = set()
 
     async with Client(mcp) as mcp_client:
         listed = await mcp_client.list_tools()
@@ -466,25 +469,50 @@ async def run_agent(
                         )
                     else:
                         context = _tool_progress_context(function["name"], arguments)
-                        report("tool_call_started", role=role, round=round_index, **context)
-                        try:
-                            result = await mcp_client.call_tool(function["name"], arguments)
-                            tool_text = _tool_result_text(result)
-                        except Exception:
+                        signature = json.dumps(
+                            [function["name"], arguments],
+                            ensure_ascii=False,
+                            sort_keys=True,
+                        )
+                        if signature in successful_tool_calls:
                             report(
-                                "tool_call_failed",
+                                "duplicate_tool_call_blocked",
                                 role=role,
                                 round=round_index,
                                 **context,
                             )
-                            raise
-                        report(
-                            "tool_call_finished",
-                            role=role,
-                            round=round_index,
-                            result_chars=len(tool_text),
-                            **context,
-                        )
+                            tool_text = json.dumps(
+                                {
+                                    "error": "duplicate tool call blocked",
+                                    "instruction": (
+                                        "Use the result already present in context and "
+                                        "finish the requested artifact."
+                                    ),
+                                },
+                                ensure_ascii=False,
+                            )
+                        else:
+                            report("tool_call_started", role=role, round=round_index, **context)
+                            try:
+                                result = await mcp_client.call_tool(function["name"], arguments)
+                                tool_text = _tool_result_text(result)
+                            except Exception:
+                                report(
+                                    "tool_call_failed",
+                                    role=role,
+                                    round=round_index,
+                                    **context,
+                                )
+                                raise
+                            if not getattr(result, "is_error", False):
+                                successful_tool_calls.add(signature)
+                            report(
+                                "tool_call_finished",
+                                role=role,
+                                round=round_index,
+                                result_chars=len(tool_text),
+                                **context,
+                            )
                     messages.append(
                         {
                             "role": "tool",

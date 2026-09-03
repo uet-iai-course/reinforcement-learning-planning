@@ -123,6 +123,9 @@ class ReadOnlyServerTest(unittest.TestCase):
         for prompt in ROLE_SYSTEM_PROMPTS.values():
             self.assertIn("Never infer a new path", prompt)
 
+    def test_reader_prompt_forbids_duplicate_ranges(self) -> None:
+        self.assertIn("never request the same path and range twice", ROLE_SYSTEM_PROMPTS["reader"])
+
     def test_writer_prompt_requires_evidence_before_noop(self) -> None:
         self.assertIn("Before declaring a no-op", ROLE_SYSTEM_PROMPTS["writer"])
         self.assertIn("successful write or replacement", ROLE_SYSTEM_PROMPTS["writer"])
@@ -130,6 +133,8 @@ class ReadOnlyServerTest(unittest.TestCase):
     def test_task_profiles_fit_worker_jobs(self) -> None:
         self.assertGreater(TASK_PROFILES["source"].max_rounds, TASK_PROFILES["plan"].max_rounds)
         self.assertEqual(TASK_PROFILES["source"].timeout_seconds, 600)
+        self.assertEqual(TASK_PROFILES["source"].max_rounds, 14)
+        self.assertEqual(TASK_PROFILES["source"].max_tokens, 18_000)
         self.assertEqual(TASK_PROFILES["plan"].timeout_seconds, 600)
         self.assertGreater(TASK_PROFILES["write"].max_tokens, TASK_PROFILES["review"].max_tokens)
         self.assertLess(TASK_PROFILES["recheck"].max_tokens, TASK_PROFILES["review"].max_tokens)
