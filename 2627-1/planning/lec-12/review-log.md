@@ -225,3 +225,40 @@ Cả năm báo cáo hợp lệ có `requested_model=z-ai/glm-5.3-flash`, `observ
 Trang chính theo thứ tự: `L12-01`–`L12-07`, `L12-07B`, `L12-08`–`L12-22`, `L12-22B`, `L12-23`–`L12-45`. Cụm cuối: `X01`, `X02`, `X03`. Tổng 50 mã; bảng route/hash nằm trong storyboard.
 
 Danh mục 50 mã trang: `L12-01`, `L12-02`, `L12-03`, `L12-04`, `L12-05`, `L12-06`, `L12-07`, `L12-07B`, `L12-08`, `L12-09`, `L12-10`, `L12-11`, `L12-12`, `L12-13`, `L12-14`, `L12-15`, `L12-16`, `L12-17`, `L12-18`, `L12-19`, `L12-20`, `L12-21`, `L12-22`, `L12-22B`, `L12-23`, `L12-24`, `L12-25`, `L12-26`, `L12-27`, `L12-28`, `L12-29`, `L12-30`, `L12-31`, `L12-32`, `L12-33`, `L12-34`, `L12-35`, `L12-36`, `L12-37`, `L12-38`, `L12-39`, `L12-40`, `L12-41`, `L12-42`, `L12-43`, `L12-44`, `L12-45`, `X01`, `X02`, `X03`.
+
+## Nhật ký Giai đoạn I — lecture note Bài 12
+
+- Nguồn và plan: `RL-hk2-2025-2026/Lecture12-MARL.pptx` (54 trang, bản trích 585 dòng); plan reader và source reader đều `requested_model=observed_model=deepseek/deepseek-v4-flash-0731`, provider `OpenRouter`, reasoning `none`. Topic-map reviewer cùng model, profile `review`.
+- Metadata runtime: draft writer và ba patch writer dùng `requested_model=observed_model=z-ai/glm-5.3-flash`, provider `OpenRouter`, profiles `write`/`patch`, reasoning `minimal`. Năm reviewer độc lập: student/flow `z-ai/glm-5.3-flash`, expert/math/pedagogy `deepseek/deepseek-v4-flash-0731`; recheck student/flow `z-ai/glm-5.3-flash`, recheck math `deepseek/deepseek-v4-flash-0731`; provider `OpenRouter`, profile `recheck`.
+- Bảng năm báo cáo độc lập (mức độ, vị trí, vấn đề, bằng chứng, đề xuất sửa):
+  - Sinh viên: 3 chặn bàn giao + 3 nghiêm trọng về "hỏng mã hóa" tại topic-11, 05, 06, 08, 10, 02; 2 trung bình (thuật ngữ "gán công", tỷ lệ OpenAI Five); 2 nhẹ. Kết luận KHÔNG PASS.
+  - Chuyên gia RL: PASS; 2 phát hiện mức thấp — chiều sâu HATRPO mỏng (dòng 301) và thiếu bảng phân bổ thời lượng theo nhóm chủ đề.
+  - Toán học: PASS; tính lại toàn bộ ví dụ số (COMA b=5/A=1, QMIX 12,5, HAPPO 2,64/1,98, OpenAI Five 99,421%), miền/kiểu, chỉ số, kích thước tensor — không lỗi.
+  - Sư phạm: KHÔNG PASS; 1 nghiêm trọng — cầu nối PPO (topic-12) đặt sau MAPPO/HAPPO mà nó là tiên quyết; 2 trung bình — "Nối ra" của cầu nối PG/AC nói "COMA ở topic kế" sai vị trí và bỏ MADDPG.
+  - Mạch viết: PASS; 1 trung bình — cầu nối PPO đứt kết nối vào khi đặt sau topic-10; 3 nhẹ về kết nối vào/ra và thu hồi nhánh bổ sung.
+
+### Trường phát hiện chuẩn hóa của năm báo cáo note
+
+| vai rà soát | mức độ | vị trí | vấn đề | bằng chứng | đề xuất sửa và quyết định |
+|---|---|---|---|---|---|
+| Góc nhìn sinh viên | chặn bàn giao | topic-11, 05, 06 | Reviewer báo công thức và văn bản bị hỏng mã hóa. | Điều phối viên đọc trực tiếp đúng các khối; `file` xác nhận UTF-8 và `iconv` không báo lỗi. Recheck sinh viên đọc được toàn bộ công thức. | Từ chối như false positive; không sửa công thức đúng. |
+| Góc nhìn sinh viên | nghiêm trọng | topic-08, 10, 02 | Reviewer báo các đoạn HAPPO, giao tiếp và câu nối không đọc được. | Các đoạn nguyên vẹn trong tệp; recheck trích đúng HAPPO và topology/policy gửi. | Từ chối như false positive; recheck PASS. |
+| Góc nhìn sinh viên | trung bình | topic-14; X02 | Mẫu của tỷ lệ OpenAI Five chưa rõ; X02 chưa yêu cầu tính target QMIX. | Bản nháp chỉ nêu 7.215/7.257 và hỏi đường chọn/đánh giá. | Ghi rõ tỷ lệ thắng thuộc sự kiện; thêm phép tính $y$, loss và ca terminal vào topic-05/X02. |
+| Góc nhìn sinh viên | trung bình | toàn note | Reviewer nghi “gán công” là lỗi từ. | Thuật ngữ dùng nhất quán cho credit assignment và đúng ngữ cảnh COMA. | Không áp dụng; giữ “gán công (credit assignment)”. |
+| Chuyên gia Học tăng cường | nhẹ | topic-08 | HATRPO mỏng hơn HAPPO. | Bản nháp chỉ nói cùng ý tưởng tuần tự. | Thêm giới hạn: HATRPO thay clip bằng trust region/KL; không triển khai ngoài nguồn. |
+| Chuyên gia Học tăng cường | nhẹ | bản đồ chủ đề | Chưa có ngân sách thời gian theo cụm. | Chỉ X01–X03 có thời lượng. | Thêm 110 phút tuyến chính + 10 phút linh hoạt; bài tập 30 phút. |
+| Độ chính xác toán học–thuật toán | nhẹ | toàn note | Không có lỗi bắt buộc; cần xác nhận lại các phép tính và hợp đồng gradient. | Reviewer tính lại COMA $b=5$, QMIX $12{,}5$, MAPPO $2{,}4$, HAPPO $2{,}64/1{,}98$, Jacobian MADDPG và các mask; tất cả khớp. | Giữ công thức; recheck riêng target QMIX sau bổ sung. |
+| Phản biện học thuật–giảng dạy | nghiêm trọng | topic-12 so với topic-07/08 | Cầu nối PPO đặt sau MAPPO/HAPPO. | Câu “đọc lại topic 07 và 08” cho thấy tiên quyết xuất hiện sau nội dung phụ thuộc. | Di chuyển topic-12 lên sau MADDPG và trước MAPPO; recheck flow PASS. |
+| Phản biện học thuật–giảng dạy | trung bình | topic-11 | Câu “COMA ở topic kế” sai vị trí và không nối MADDPG. | Ba topic hợp đồng nằm giữa cầu nối và COMA; topic-map ghi C1 phục vụ T4 và T6. | Đặt topic-11 sau CTDE; dẫn rõ tới COMA topic-04 và MADDPG topic-06. |
+| Kết nối và mạch viết | trung bình | topic-12 | Vai trò trong mạch là tiên quyết on-policy nhưng kết nối vào–ra bị đảo. | Topic-12 nằm sau topic-10 trong bản nháp, trái vị trí “trước T7” của topic-map. | Di chuyển trước topic-07/08; đổi “đọc lại” thành “đọc”. |
+| Kết nối và mạch viết | nhẹ | topic-09, 13, 10; phần kết | Nhánh framework thiếu kết nối vào–ra và kết bài thu hồi chưa rõ. | Topic-09 nối thẳng tới giao tiếp trong khi topic-13 nằm sau topic-10. | Đặt topic-13 sau benchmark, thêm đường quay lại topic-10 và giữ phép kiểm phiên bản ở kết bài. |
+- Quyết định áp dụng/từ chối:
+  - Áp dụng: di chuyển `lec-12-topic-11` xuống sau topic-03; di chuyển `lec-12-topic-12` lên sau topic-06 trước topic-07; đặt lại nhánh framework sau benchmark rồi quay về giao tiếp; thêm ví dụ tính tay target QMIX và câu target trong X02; nêu HATRPO dùng trust region/KL; làm rõ tỷ lệ OpenAI Five 7.215/7.257 trận của sự kiện; giữ tổng 110 + 10 phút.
+  - Từ chối (false positive mã hóa): các phát hiện "hỏng văn bản/mã hóa" của reviewer sinh viên bị bác bỏ — điều phối viên kiểm bằng `file`, `iconv` và đọc trực tiếp; tệp UTF-8 hợp lệ, các khối công thức PG, QMIX, MADDPG, HAPPO và giao tiếp nguyên vẹn. Giữ thuật ngữ "gán công (credit assignment)"; không mở rộng claim/nguồn ngoài packet.
+- Ba recheck PASS: recheck student PASS (3 ghi chú minor không chặn); recheck math PASS (tự tính lại $y=5{,}1$, loss $0{,}25$, terminal $y=1{,}5$); recheck flow PASS (thứ tự topic khớp 100%, ngân sách 120 phút đạt, 3 ghi chú nhẹ N1–N3).
+- Kiểm no-ai-slop/Quill: tự kiểm theo `no-ai-slop/eval.md` — không từ cấm/pattern rỗng, không thêm claim ngoài nguồn, câu ngắn; không tạo `quill.json`, công thức chỉ dùng `$`/`$$`.
+- Cổng tĩnh: 15 `note-topic-id` duy nhất, đủ bốn nhóm topic, ba exercise có hint/solution, không raster, không phụ thuộc mạng cốt lõi.
+- Ngân sách: 110 phút tuyến chính + 10 phút linh hoạt; X01–X03 30 phút ngoài phần trình chiếu.
+- Ngoại lệ index: theo goal hiện hành, thẻ index có hai nhóm Bài giảng/Ghi chú bài giảng thay cho quy tắc một liên kết duy nhất cũ trong `AGENTS.md`; không liên kết tệp planning.
+- Viewer/index sau khi công bố note: `python3 -m reloadserver 8765` không chạy vì thiếu mô-đun `reloadserver`. Máy chủ dự phòng chỉ phục vụ webroot tạm đã loại `.env`; Chromium tải viewer ở 1280×720 và 800×600 với 20 mục lục, 270 node KaTeX, 9 khối chỉ dẫn và 6 `details`, không lỗi console/request và không tràn ngang. Phím Tab vào skip-link; Enter trên `summary` đóng/mở được. Hai truy vấn `../.env` và lệch số bài đều bị chặn, ẩn layout và báo lỗi. Index có 12 thẻ; Bài 12 có đúng hai liên kết deck/note, không lỗi tài nguyên ở cả hai viewport.
+- Codex Slides chưa được dùng ở Giai đoạn I; kiểm định deck thuộc Giai đoạn II.
