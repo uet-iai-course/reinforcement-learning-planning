@@ -75,6 +75,13 @@ Các tổ hợp đã chạy thành công:
 | Ghi một phạm vi tệp | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `write` | 12 |
 | Ghi nhiều điểm trong deck | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `write` | 20 |
 
+### Bài 04 — cấu hình đã quan sát
+
+- Lập kế hoạch deck ổn định với reader DeepSeek, hồ sơ `plan`, 10 lượt, timeout 600 giây, 14.000 token; cấu hình 8 lượt đã vượt giới hạn công cụ.
+- Rà deck độc lập ổn định với reviewer GLM hoặc DeepSeek, hồ sơ `review`, 8 lượt. Vai phản biện sư phạm có thể cần chạy lại nếu chạm giới hạn 8 lượt.
+- Tái rà deck phạm vi 2–3 tệp ổn định với GLM 5 lượt và DeepSeek 6–8 lượt, timeout 600 giây, 7.000–9.000 token. Tái rà toán DeepSeek 6 lượt đã vượt giới hạn; 8 lượt thành công.
+- Writer GLM cho nhiều sửa rải rác đã vượt giới hạn ở 8 và 10 lượt. Với trường hợp tương tự, dùng gói tệp hẹp hơn hoặc cấu hình 20 lượt đã chạy tốt ở các bài trước; luôn kiểm JSON runtime và diff trước khi chấp nhận.
+
 `source` hoặc `review` chỉ dùng khi đầu vào đã được cô lập. Với tài liệu lớn,
 `recheck` ổn định hơn khi prompt cấm liệt kê và tìm kiếm, đồng thời nêu đúng
 từng tệp được phép đọc. Không cho worker quét `2627-1/vendor/`, thư viện

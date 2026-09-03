@@ -22,13 +22,33 @@ Tuyến chính gồm 38 trang, thiết kế cho 120 phút kể cả tương tác
 | Nguồn | Đích | Quyết định |
 |---|---|---|
 | 1–4 | P00–P02 | Giữ; bổ sung $\mathcal V$ và chuẩn vô cùng trước khi dùng. |
-| 5–10 | A02,A08,A00,A01,A03,A09 | Đặt ví dụ tất định trước hình thức; dùng $\sup_\pi$; bổ sung $q_*$, Bellman $q_*$ và greedy. |
+| 5–10 | A02,A08,A00,A01,A03,A09 | Đặt ví dụ tất định trước hình thức; dùng $\sup_\pi$; bổ sung $q_*$, Bellman $q_*$ và greedy. Micro-example hai trạng thái dùng $a$ cho $(r=1,s_0)$, $b$ cho $(r=0,s_1)$, giá trị tiếp tục $10$ và $11$. |
 | 11–15 | A05–A06,B04–B05 | Gộp trang mục lục; thêm chặn sai số đánh giá và điều kiện công bằng. |
-| 16–21 | B00–B06,B08 | Giữ ví dụ; thêm $q_{\pi_1}(s_0,b)=27$; chỉ giữ PI chính xác có đặc tả tái lập. |
+| 16–21 | B00–B06,B08 | Giữ ví dụ; thêm $q_{\pi_1}(s_0,b)=27$; chỉ giữ PI chính xác có đặc tả tái lập; HTML nay dùng công thức đếm chính sách tổng quát $\prod_s|\mathcal A(s)|$ (và $|\mathcal A|^{|\mathcal S|}$ khi cùng tập hành động). |
 | 22–29 | C00–C09 | Đưa Gridworld và lượt đầu trước VI; tách lượt cập nhật khỏi lượt kiểm phần dư; ghi chi phí chính xác. |
 | 30–34 | C08,D00–D07 | Tách chứng minh cận trên, đạt cận, phần dư–sai số và sai số–mất mát. |
 | 35–38 | D05,D08 | Gộp CartPole với kiểm tra mô hình; thêm trang quyết định tổng kết. |
 | `hw3.pdf` B9/B6/B4/B7 | X09/X06/X04/X07 | Nhánh dọc; X09 chép đủ dữ kiện MDP và lời giải trong notes. |
+
+## Ánh xạ note-topic-id sang trang
+
+| Note topic | Trang |
+|---|---|
+| `lec-04-topic-01` | P00–P02, A05–A06 |
+| `lec-04-topic-02` | A02, A08, A00 |
+| `lec-04-topic-03` | A00, A03, A09 |
+| `lec-04-topic-04` | P02, A01, A03 |
+| `lec-04-topic-05` | B00–B03 |
+| `lec-04-topic-06` | B04–B05 |
+| `lec-04-topic-07` | B06, B08 |
+| `lec-04-topic-08` | C00–C02 |
+| `lec-04-topic-09` | C03, C04, C05, C09 |
+| `lec-04-topic-10` | B05, C06, C07 |
+| `lec-04-topic-11` | C08, D00, D01, D02 |
+| `lec-04-topic-12` | D03, D06 |
+| `lec-04-topic-13` | C09, D04, D07 |
+| `lec-04-topic-14` | D05 |
+| `lec-04-topic-15` | D08, X09, X06, X04, X07 |
 
 ## Sai khác nguồn cần truy nguyên
 

@@ -337,7 +337,7 @@ Cập nhật đồng bộ:
 
 $$v_{k+1}(s)=\sum_a\pi(a\mid s)\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma v_k(s')\bigr],$$
 
-tức $v_{k+1}=T^\pi v_k$. Vì $T^\pi$ co với hệ số $\gamma$, $v_k\to v^\pi$ từ mọi $v_0$. Dạng bất đồng bộ: cập nhật từng trạng thái và dùng ngay giá trị mới cho các cập nhật kế tiếp; hội tụ vẫn bảo đảm nếu lịch cập nhật là công bằng, tức mỗi trạng thái được cập nhật vô hạn lần.
+tức $v_{k+1}=T^\pi v_k$. Vì $T^\pi$ co với hệ số $\gamma$, $v_k\to v^\pi$ từ mọi $v_0$. Chặn đánh giá: nếu sau một lượt $\|v_{j+1}-v_j\|_\infty\le\varepsilon_{\text{step}}$, chuỗi hình học cho $\|v_{j+1}-v^\pi\|_\infty\le\gamma\,\varepsilon_{\text{step}}/(1-\gamma)$. Đây là chặn đánh giá chất lượng bảng trả về, không bảo đảm lặp chính sách sửa đổi dừng hữu hạn; dừng hữu hạn chỉ được bảo đảm với đánh giá chính xác ở topic 07. Dạng bất đồng bộ: cập nhật từng trạng thái và dùng ngay giá trị mới cho các cập nhật kế tiếp; hội tụ vẫn bảo đảm nếu lịch cập nhật là công bằng, tức mỗi trạng thái được cập nhật vô hạn lần.
 
 ### Ứng dụng và giới hạn
 
@@ -684,7 +684,7 @@ L
 \end{aligned}
 $$
 
-Do đó $L\le 2\gamma e/(1-\gamma)\le 2\gamma\rho(v)/(1-\gamma)^2$. Vì $\rho(v_k)=\Delta_k<\theta$ khi VI dừng, hai chặn định lượng sai số giá trị và mất mát của chính sách theo $\theta,\gamma$.
+Do đó $L\le 2\gamma e/(1-\gamma)\le 2\gamma\rho(v)/(1-\gamma)^2$. Vì $\rho(v_k)=\Delta_k<\theta$ khi VI dừng, hai chặn định lượng sai số giá trị và mất mát của chính sách theo $\theta,\gamma$. Ứng dụng: để bảo đảm mất mát chính sách $L\le\varepsilon_{\text{pol}}$, chọn ngưỡng $\theta\le\varepsilon_{\text{pol}}(1-\gamma)^2/(2\gamma)$ với $\gamma>0$.
 
 ### Ứng dụng và giới hạn
 
@@ -789,7 +789,7 @@ Với $V_0(s_0)=V_0(s_1)=V_0(s_2)=0$, $\gamma V_0=0$ nên $V_1(s)=\max_a\mathbb 
 - $V_1(s_1)$: nhánh $a$: $2$; nhánh $b$: $-1$. Vậy $V_1(s_1)=2$, tham lam chọn $a$.
 - $V_1(s_2)$: nhánh $a$: $2$; nhánh $b$: $0$. Vậy $V_1(s_2)=2$, tham lam chọn $a$.
 
-Kết quả: $V_1=(1,2,2)$; chính sách tham lam: $b$ tại $s_0$, $a$ tại $s_1$, $a$ tại $s_2$, tức $(b,a,a)$. Phần 2 là bài tự học, dùng PI ở topic 05–07, không tính trong 30 phút trên lớp.
+Kết quả: $V_1=(1,2,2)$; chính sách tham lam: $b$ tại $s_0$, $a$ tại $s_1$, $a$ tại $s_2$, tức $(b,a,a)$. Phần 2 là bài tự học, dùng PI ở topic 05–07, không tính trong 12 phút dành cho Bài 9 phần 1 trên lớp; tổng nhánh bài tập vẫn là 30 phút.
 
 ### Bài 6 (hw3): dạng ma trận của đánh giá chính sách
 

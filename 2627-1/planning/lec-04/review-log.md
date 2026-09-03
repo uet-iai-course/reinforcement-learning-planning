@@ -118,6 +118,50 @@ Rà lân cận sau sửa: A02–A09–A00–A01 giữ mạch ví dụ → địn
 - `python3 -m reloadserver 8765` không chạy vì môi trường thiếu mô-đun `reloadserver`. Điều phối viên dùng cây web tạm không có `.env` và `python3 -m http.server 8765 --bind 127.0.0.1` để kiểm thử tại đúng cổng 8765.
 - HTML có 42 mã trang duy nhất, 42 ghi chú diễn giả và đúng cấu trúc section lồng; mọi mã đều có mục trong storyboard.
 - Chromium headless dựng đủ 42 trang ở 1280 × 720 và 800 × 600, không có lỗi console hoặc request. Điều hướng `↓`, `↑`, `→` cho kết quả P01, P00, A02. Điều phối viên duyệt ảnh mọi trang và mở riêng các trang công thức bị bộ dò hình học gắn dương tính giả do cấu trúc nội bộ KaTeX; không thấy cắt, chồng hoặc tràn.
+
+## Pha II — đồng bộ với lecture note và rà lại độc lập
+
+### Runtime OpenRouter
+
+- Tác tử lập kế hoạch: `requested_model=deepseek/deepseek-v3.2`, `observed_model=deepseek/deepseek-v3.2`, `provider=OpenRouter`; hồ sơ `plan`, 10 lượt. Lần đầu dừng với `model exceeded the tool-call limit (8)`; lần chạy lại thành công.
+- Hai lượt writer đầu dùng `requested_model=z-ai/glm-5.3-flash` lần lượt dừng với `model exceeded the tool-call limit (10)` và `model exceeded the tool-call limit (8)`. Lượt sửa tiếp theo bị mất JSON ở lớp điều phối nên không dùng lời tự khai của worker làm bằng chứng runtime; điều phối viên kiểm tra diff và hoàn tất các sửa còn thiếu.
+- Năm báo cáo độc lập ban đầu dùng đúng mô hình quy định. Bốn lượt thành công ngay; vai phản biện học thuật–giảng dạy lần đầu dừng với `model exceeded the tool-call limit (8)` rồi chạy lại thành công. Các JSON thành công đều ghi `provider=OpenRouter` và `requested_model=observed_model`.
+- Tái rà toán–thuật toán: lần đầu dừng với `model exceeded the tool-call limit (6)`; lần chạy lại thành công với hồ sơ `recheck`, 8 lượt, `requested_model=observed_model=deepseek/deepseek-v3.2`, `provider=OpenRouter`.
+- Tái rà phản biện học thuật–giảng dạy: hồ sơ `recheck`, 6 lượt, `requested_model=observed_model=deepseek/deepseek-v3.2`, `provider=OpenRouter`.
+- Tái rà kết nối và mạch viết: hồ sơ `recheck`, 5 lượt, `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`.
+- Mọi liên kết `.env` tạm trong gói worker đã được gỡ sau khi các tiến trình kết thúc. Không đưa `.env` vào gói nội dung, prompt hoặc nhật ký.
+
+### Năm báo cáo độc lập và quyết định
+
+| Vai | Mức cao nhất | Vấn đề chính | Quyết định |
+|---|---|---|---|
+| Góc nhìn sinh viên | trung bình | A02 thiếu nguồn của giá trị tiếp tục 10/11; A08 cần giải thích can thiệp trên mặt trang; cầu nối miền chính sách ở A01 còn mờ. | Nêu 10/11 ở A02; định nghĩa rõ can thiệp ở A08; A01 hẹn chặn chân trời ở phần bảo đảm. Sửa câu phân bổ Bài 9 thành 12 phút. |
+| Chuyên gia Học tăng cường | trung bình | A08 cần tách can thiệp khỏi điều kiện hóa; D01 cần nêu cơ sở đơn điệu. | Sửa A08; tách hai cơ sở đơn điệu thành hai gạch đầu dòng ở D01. Không đổi thứ tự A02→A08→A00 vì đây là mạch ví dụ→định nghĩa→giá trị. |
+| Toán học và thuật toán | trung bình | C09 cần ký hiệu phép nhân rõ; lecture note cần chặn dừng B04 và ngưỡng mất mát chính sách. | Dùng `\cdot` ở C09; bổ sung hai chặn vào topic 06 và 13; tự tính lại micro-example và $k=44$. |
+| Phản biện học thuật–giảng dạy | nghiêm trọng | A08 chưa nói rõ $a\triangleright\pi$ buộc $A_0=a$, không phải điều kiện hóa theo hành động do $\pi$ sinh. | Đã sửa trực tiếp trên mặt trang và trong ghi chú; tái rà xác nhận lỗi nghiêm trọng được xử lý triệt để. |
+| Kết nối và mạch viết | trung bình | C08 cần báo rõ ba bước sẽ được xử lý theo thứ tự; topic 06 trong note cần neo B04. | Thêm câu chuyển ở C08 và chặn đánh giá vào topic 06. Báo cáo ban đầu đếm nhầm nhánh dọc thành section ngoài; kiểm tĩnh xác nhận đúng 5 section ngoài. |
+
+Các đề xuất không áp dụng:
+
+- Giữ dấu phẩy thập phân theo quy ước tiếng Việt; không đổi sang dấu chấm.
+- Giữ định nghĩa ngắn của $\Pi$ ở A00 dù đã có ở P02 để trang định nghĩa $v_*$ tự chứa.
+- Giữ công thức đếm chính sách ở B08 vì sửa trực tiếp lỗi của nguồn trang 33.
+- Không đổi thứ tự cụm tối ưu và không chuyển Bài 9 vào tuyến chính; hai thay đổi này không cần thiết để sửa lỗi cục bộ.
+
+### Tái rà sau chỉnh sửa
+
+- Toán–thuật toán xác nhận các số $10$, $11$, $9{,}9$, nghiệm biến thể $20$, định nghĩa $a\triangleright\pi$, chặn đánh giá, ngưỡng phần dư, số chính sách, tính đơn điệu và $k=44$ đều đúng; không còn lỗi chặn hoặc nghiêm trọng.
+- Phản biện học thuật–giảng dạy xác nhận A08 đã phân biệt can thiệp với điều kiện hóa; các cầu nối từ ví dụ tới hình thức và từ tiêu chuẩn dừng tới chứng minh nhất quán; không còn lỗi chặn hoặc nghiêm trọng.
+- Kết nối và mạch viết rà A02±2, A08–A03, B06–C00 và C08–D03; xác nhận 5 section ngoài, 42 mã trang và bốn bài tập dọc nằm trong section kết luận; không còn lỗi chặn hoặc nghiêm trọng.
+- `no-ai-slop`: loại từ tiếng Anh không cần thiết trong topic 06, cắt diễn giải trùng và giữ câu trực tiếp. Quill: dàn ý vẫn theo ví dụ→định nghĩa→toán tử→thuật toán→bảo đảm→giới hạn; không tạo `quill.json`.
+
+### Kiểm định cuối sau Pha II
+
+- Kiểm tĩnh: 42 `data-slide-id` duy nhất, 42 ghi chú, 5 section ngoài; mọi tài nguyên tương đối tồn tại; `git diff --check` sạch.
+- `python3 -m reloadserver 8765` không chạy vì thiếu mô-đun `reloadserver`. Dùng cây web cô lập trong `/tmp`, không chứa `.env`, và `python3 -m http.server 8765 --bind 127.0.0.1 --directory <cây-tạm>`.
+- Chromium headless kiểm đủ 42 trang ở 1280×720 và 800×600. Lần đầu phát hiện A01 bị cắt công thức ở mép phải; đã tách kiểu toán tử và định nghĩa thành hai dòng rồi chạy lại toàn bộ. Kết quả cuối: không tràn, không lỗi KaTeX, console, request hoặc tài nguyên; không có request ngoài máy chủ cục bộ. Phím `↓`, `↑`, `→` lần lượt tới P01, P00, A02.
+- Trình đọc lecture note ở 390×844 trả HTTP 200, dựng 589 công thức KaTeX, 30 khối `details`, 15 lời giải; không tràn ngang, không lộ `note-topic-id`, phím Enter mở được khối đầu tiên.
+- Codex Slides không khả dụng trong môi trường này do runtime Node.js 18 thấp hơn yêu cầu Node.js 20 của gói. Vì vậy chỉ xác nhận kiểm định RevealJS cục bộ, không tuyên bố đã rà bằng Codex Slides.
 - Năm SVG tải được trong Chromium; mỗi tệp có `role="img"`, `title`, `desc`. Không có ảnh raster hoặc tài nguyên cốt lõi qua mạng. Môi trường thiếu `xmllint`, nên tính hợp lệ được xác nhận qua tải ảnh thực tế và không có request lỗi.
 - Bốn tệp văn bản HTML/outline/storyboard/review-log đã được ghi vào Design Files của dự án Codex Slides `20260824154346-chuy-n-lecture-4-gi-i-mdp-b-ng-quy-ho-ch-z4es` và đọc lại trùng chính xác nội dung trong kho. Tải riêng `gridworld.svg` lên Design Files trả HTTP 500; SVG vẫn được kiểm trực tiếp trong RevealJS.
 - Dự án Codex Slides vẫn ở trạng thái `draft`, bước `clarify`, 0 trang; Codex Browser không khả dụng trong phiên này. Vì vậy không tuyên bố đã rà trực quan bằng Codex Slides; kiểm tra trực quan được thực hiện trên RevealJS cục bộ.
@@ -284,3 +328,34 @@ Runtime: các lượt thành công dùng `requested_model=z-ai/glm-5.3-flash`, `
   yêu cầu của gói (Node.js 20 trở lên). Vì vậy không tuyên bố đã rà bằng Codex
   Slides; toàn bộ kiểm tra hiển thị giai đoạn này được thực hiện bằng trình xem
   tài liệu cục bộ và Chromium.
+
+## Giai đoạn II — đồng bộ deck với lecture note
+
+### Kế hoạch và bản nháp
+
+- Reader lập kế hoạch thành công với
+  `requested_model=observed_model=deepseek/deepseek-v3.2`,
+  `provider=OpenRouter`. Lượt trước đó đọc gói bảy tệp rồi dừng đúng lỗi
+  `model exceeded the tool-call limit (8)`; lượt thành công dùng gói bốn tệp
+  đã đóng băng và không đổi model.
+- Writer dùng `requested_model=observed_model=z-ai/glm-5.3-flash`,
+  `provider=OpenRouter`. Lượt đầu dừng `model exceeded the tool-call limit (10)`
+  sau khi sửa HTML và một phần outline. Lượt phục hồi cùng model dừng
+  `model exceeded the tool-call limit (8)` sau khi hoàn thiện D01 và bảng ánh
+  xạ outline. Điều phối viên kiểm diff và hoàn tất phần metadata planning còn
+  lại trước khi mở đợt review.
+- A02, A08, A00 và ghi chú A03 dùng lại micro-example của note: hành động $a$
+  cho giá trị 10, hành động $b$ với phần thưởng 0 cho $9{,}9$; câu hỏi đổi phần
+  thưởng $b$ thành 2 cho nghiệm tự nhất quán 20/20.
+- B08 thêm số chính sách xác định $\prod_s|\mathcal A(s)|$ và trường hợp chung
+  $|\mathcal A|^{|\mathcal S|}$; vẫn giả sử đánh giá chính xác và phá hòa cố định.
+- D01 phát biểu tính đơn điệu của $T^\pi,T_*$ với đúng lý do; D02 thêm phép tính
+  $0{,}9^k100<1$, cho số lượt tối thiểu 44.
+- Giữ nguyên 42 trang, 5 mạch, 120 phút và năm SVG. `bellman-choice.svg` chỉ mô
+  tả quan hệ tổng quát, không chứa phần thưởng hoặc giá trị số nên không cần sửa.
+- Outline và storyboard ánh xạ đủ 15 `note-topic-id` tới mọi `data-slide-id`.
+  Các mã chỉ nằm trong HTML và planning, không hiển thị trên mặt trang hoặc
+  trong ghi chú diễn giả.
+
+Checkpoint này chưa được tính là đã qua năm báo cáo độc lập hoặc kiểm định
+RevealJS. Các bước đó được thực hiện sau khi đóng băng bản nháp.
