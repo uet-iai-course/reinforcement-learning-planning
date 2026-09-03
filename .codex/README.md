@@ -249,3 +249,20 @@ hoàn tất ở vòng 6 do cầu nối cho phép phản hồi cuối, nhưng kh�
 thấp hơn. Reviewer mạch GLM trên cùng note hoàn tất bằng
 `recheck/5/600/8000` ở vòng 3. Luôn cô lập đúng một note để tránh lặp đường dẫn
 và dọn liên kết `.env` ngay khi worker kết thúc.
+
+Với deck Bài 06, reader kế hoạch DeepSeek hoàn tất bằng `plan/10/600/16000`
+ở vòng 9, khoảng 204 giây. Writer GLM bản đầu dùng `write/20/600/20000`; một
+phản hồi `finish_reason=error` được cầu nối thử lại cùng model, sau đó hoàn tất
+ở vòng 9, khoảng 638 giây. Writer chỉnh sửa hẹp hơn chạy ổn định bằng
+`write/12/600/12000`, hoàn tất ở vòng 9, khoảng 178 giây.
+
+DeepSeek đọc nhiều tệp cho vai toán có thể dừng với `model exceeded the
+tool-call limit (7)`. Cấu hình ổn định là cô lập đúng deck và dùng
+`review/4/600/12000`; các lượt tái rà mục tiêu dùng `recheck/3–4/600/4000–8000`.
+GLM rà toàn mạch bằng `recheck/5/600/8000`, rồi rà riêng ranh giới phần bằng
+`recheck/3/600/5000`. Mọi lượt thành công đều trả model quan sát đúng model yêu
+cầu và provider `OpenRouter`.
+
+Kiểm tra hình học DOM không đủ để phát hiện nội dung sát chân trang. Với trang
+công thức hoặc hộp kết luận dày, phải xem ảnh Chromium ở cả 1280 × 720 và
+800 × 600; B06 chỉ lộ lỗi chạm chân trang qua ảnh chụp dù báo cáo overflow rỗng.

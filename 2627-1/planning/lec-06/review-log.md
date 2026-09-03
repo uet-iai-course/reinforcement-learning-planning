@@ -199,3 +199,25 @@ Báo cáo reviewer ghi nhận: sinh viên — gạch đầu dòng P02 quá tải
 - Lệnh bắt buộc `python3 -m reloadserver 8765` dừng với lỗi `/usr/bin/python3: No module named reloadserver`. Đã dùng webroot cô lập trong `/tmp`, không chứa `.env`, và `python3 -m http.server 8765` làm phương án dự phòng.
 - Chromium headless mở viewer từ thẻ Bài 06 ở 1280 × 720 và 800 × 600. Cả hai lượt hiển thị 550 biểu thức KaTeX, 15 bài tập, 30 khối đóng/mở và 15 đáp án; không có lỗi console, request thất bại, tràn ngang hoặc phần tử tràn; phím Enter mở được khối chi tiết.
 - Codex Slides yêu cầu Node.js 20 trở lên trong khi môi trường hiện có Node.js 18.19.1. Không tuyên bố đã rà trực quan ghi chú bằng Codex Slides; kiểm định material-viewer cục bộ ở trên là bằng chứng hiển thị của giai đoạn I.
+
+## Giai đoạn II — đồng bộ trang chiếu với ghi chú, ngày 03-09-2026
+
+- Reader lập kế hoạch dùng `requested_model=observed_model=deepseek/deepseek-v3.2`, `provider=OpenRouter`, cấu hình `plan/10/600/16000`; hoàn tất ở vòng 9 sau khoảng 204 giây. Kế hoạch ánh xạ 15 chủ đề ghi chú vào đủ 37 trang và giữ 7 mạch ngoài.
+- Writer bản đầu dùng `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`, cấu hình `write/20/600/20000`; một phản hồi vòng 4 có `finish_reason=error`, cầu nối thử lại cùng model và hoàn tất ở vòng 9 sau khoảng 638 giây.
+- Writer thêm `data-note-topic-id` cho đủ 37 trang, đồng bộ outline/storyboard, chuẩn hóa thuật ngữ, thời lượng 110 phút cốt lõi cộng hai nhánh 5 phút và 30 phút chữa bài. Ba SVG `greedy-induced-mrp.svg`, `shared-trace.svg`, `target-comparison.svg` được cập nhật nhãn tiếng Việt; hai SVG còn lại giữ nguyên vì đã khớp nguồn và ghi chú.
+
+### Năm báo cáo độc lập và chỉnh sửa
+
+- Góc nhìn sinh viên và kết nối–mạch viết dùng GLM; chuyên gia Học tăng cường, toán học–thuật toán và phản biện học thuật–giảng dạy dùng DeepSeek. Mọi lượt thành công đều có `requested_model=observed_model` và `provider=OpenRouter`.
+- Lượt toán DeepSeek đầu dừng đúng với lỗi `model exceeded the tool-call limit (7)`. Lượt chạy lại giữ nguyên model, cô lập đúng deck và dùng `review/4/600/12000`; không còn lỗi từ mức trung bình trở lên.
+- Writer chỉnh sửa dùng GLM `write/12/600/12000`, hoàn tất ở vòng 9 sau khoảng 178 giây. Đã sửa điều kiện GLIE và Robbins–Monro ở B06, đích Bellman và phạm vi hội tụ ở D05, điều kiện MC trong bảng E00, các câu chuyển phần, cảnh báo về bước học hằng và thuật ngữ trong SVG.
+- Tái rà toán dùng DeepSeek `recheck/3–4/600/4000–8000`; tái rà mạch dùng GLM `recheck/5/600/8000`, sau đó rà ranh giới bằng `recheck/3/600/5000`. Lượt mạch cuối xác nhận không còn lỗi từ mức trung bình trở lên.
+- Không áp dụng nhận xét cho rằng A03 thiếu nhãn phần thưởng vì SVG hiện rõ nhãn và giá trị. Không thêm giả thiết ergodic vì deck đã phát biểu trực tiếp điều kiện độ phủ vô hạn cần dùng. Không áp dụng nhận xét rằng Q-learning không có cơ chế độ phủ vì D02 yêu cầu chính sách hành vi cập nhật vô hạn mọi cặp khả đạt. Không áp dụng nhận xét coi cảnh báo `$\alpha=0{,}8$` hằng là lỗi: câu trên trang nói rõ giá trị này không thuộc bảo đảm hội tụ.
+- Các mã trang và nhãn phân tuyến do reviewer đề xuất trong ghi chú diễn giả đã bị loại. Ghi chú chỉ giữ câu chuyển tự nhiên; mã nội bộ, phân tuyến và thời lượng chỉ nằm trong outline, storyboard và nhật ký.
+
+### Kiểm định sau chỉnh sửa
+
+- Đã tự kiểm theo `no-ai-slop/eval.md`: cắt lời dẫn rỗng, nhịp câu máy móc, thuật ngữ Anh không cần thiết và câu tổng kết lặp. Đã rà theo Quill: tuyến dự đoán → chính sách → MC → SARSA → Q-learning → tổng hợp → kết luận giữ liên tục bảng $Q_0$, lượt chung, miền $\mathcal X_{\mathrm{reach}}$ và lịch bước học; không tạo `quill.json`.
+- Lệnh bắt buộc `python3 -m reloadserver 8765` dừng với lỗi `/usr/bin/python3: No module named reloadserver`. Đã dùng webroot cô lập trong `/tmp`, không chứa `.env`, và `python3 -m http.server 8765` làm phương án dự phòng.
+- Chromium headless duyệt đủ 37 trang ở 1280 × 720 và 800 × 600. Lượt đầu phát hiện hộp kết luận B06 chạm chân trang dù phép đo DOM không báo tràn; nội dung đã được rút gọn và render lại. Lượt cuối không có lỗi console, lỗi KaTeX, request thất bại hoặc phần tử tràn; ảnh B06 và E00 xác nhận nội dung không bị cắt. Phím mũi tên phải chuyển ngang và phím mũi tên xuống chuyển dọc đúng cấu trúc.
+- Codex Slides không chạy được vì môi trường có Node.js 18.19.1, thấp hơn yêu cầu Node.js 20. Không tuyên bố đã rà trực quan bằng Codex Slides; kiểm tra RevealJS cục bộ và ảnh Chromium là bằng chứng hiển thị cuối.

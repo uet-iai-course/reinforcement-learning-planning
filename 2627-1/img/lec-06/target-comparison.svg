@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 360" role="img" aria-labelledby="title desc">
   <title id="title">So sánh đích của Monte Carlo, SARSA và Q-learning</title>
-  <desc id="desc">Monte Carlo dùng toàn bộ return, SARSA dùng giá trị của hành động kế tiếp do chính sách hành vi chọn, Q-learning dùng giá trị lớn nhất ở trạng thái kế tiếp.</desc>
+  <desc id="desc">Monte Carlo dùng toàn bộ phần thưởng tích lũy, SARSA dùng giá trị của hành động kế tiếp do chính sách hành vi chọn, Q-learning dùng giá trị lớn nhất ở trạng thái kế tiếp.</desc>
   <g font-family="sans-serif">
-    <rect x="35" y="55" width="320" height="245" rx="18" fill="#F7EFE6" stroke="#B15A2B" stroke-width="4"/><text x="195" y="112" text-anchor="middle" font-size="36" font-weight="700" fill="#8A421F">MC control</text><text x="70" y="172" font-size="30">Đích: Gₜ</text><text x="70" y="218" font-size="30">Chờ hết lượt</text><text x="70" y="264" font-size="30">Theo chính sách</text>
+    <rect x="35" y="55" width="320" height="245" rx="18" fill="#F7EFE6" stroke="#B15A2B" stroke-width="4"/><text x="195" y="112" text-anchor="middle" font-size="36" font-weight="700" fill="#8A421F">Điều khiển MC</text><text x="70" y="172" font-size="30">Đích: Gₜ</text><text x="70" y="218" font-size="30">Chờ hết lượt</text><text x="70" y="264" font-size="30">Theo chính sách</text>
     <rect x="390" y="55" width="320" height="245" rx="18" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="550" y="112" text-anchor="middle" font-size="36" font-weight="700" fill="#2F3E7A">SARSA</text><text x="425" y="172" font-size="30">Đích: R+γQ(S′,A′)</text><text x="425" y="218" font-size="30">A′ do hành vi chọn</text><text x="425" y="264" font-size="30">Theo chính sách</text>
     <rect x="745" y="55" width="320" height="245" rx="18" fill="#E8F5E9" stroke="#2E7D32" stroke-width="4"/><text x="905" y="112" text-anchor="middle" font-size="36" font-weight="700" fill="#2E7D32">Q-learning</text><text x="780" y="172" font-size="30">Đích: R+γ max Q</text><text x="780" y="218" font-size="30">bỏ qua A′ trong đích</text><text x="780" y="264" font-size="30">Khác chính sách</text>
   </g>
