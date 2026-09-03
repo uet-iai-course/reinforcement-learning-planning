@@ -149,6 +149,7 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Chỉ số thời gian $t = 0, 1, 2, \dots$; phần thưởng nhận được khi chuyển ra khỏi $S_t$ là $R_{t+1}$, trạng thái kế là $S_{t+1}$. Phần thưởng gắn với trạng thái kết thúc được ký hiệu $R(A) = 1000$, $R(E) = 10$; mọi phần thưởng còn lại bằng $-1$; hệ số chiết khấu $\gamma = 1$ trong ví dụ chuỗi.
 - Vector đặc trưng $x(s) \in \mathbb R^d$ cho giá trị trạng thái, $x(s,a) \in \mathbb R^d$ cho giá trị hành động; vector trọng số $w \in \mathbb R^d$; $w_t$ là trọng số sau $t$ lần cập nhật, $w_0$ là khởi tạo.
 - $\Phi$ là ma trận đặc trưng với hàng là $x(s)^\top$; $D$ là ma trận chéo chứa phân phối dừng theo chính sách $d(s)$; $P_\pi$ là ma trận chuyển theo chính sách $\pi$; $r_\pi$ là vector phần thưởng kỳ vọng theo $\pi$.
+- $\mu$ là phân phối trọng số trong mục tiêu hồi quy MC; không đồng nhất $\mu$ với phân phối dừng $d$ nếu chưa có giả thiết tương ứng.
 - Kỳ vọng $\mathbb E_\pi[\cdot]$ tính theo quỹ đạo sinh bởi $\pi$; kỳ vọng có điều kiện $\mathbb E[\cdot \mid S_t = s, A_t = a]$.
 - Bước học $\alpha_t$ theo số lần cập nhật; trong tính tay, $\alpha$ là hằng số cho từng bài.
 
@@ -157,7 +158,7 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 
 Vấn đề: trước khi thêm hàm xấp xỉ, cần nhớ chính xác những gì đã được bảo đảm trong trường hợp bảng tra, để biết chính xác cái gì mất đi khi thay bảng bằng hàm tham số.
 
-Trực giác và tóm tắt điều kiện. Với điều khiển Monte Carlo dạng bảng trên MDP hữu hạn theo lượt, phần thưởng bị chặn, nếu dãy chính sách thỏa GLIE — mọi cặp $(s,a)$ được thăm vô hạn lần và chính sách hội tụ về tham lam — thì $Q_k(s,a) \to q_*(s,a)$; chuỗi suy luận là GLIE cho đủ dữ liệu, luật số lớn mạnh cho đánh giá đúng, cải tiến chính sách ép tiến về tối ưu, và phản chứng loại trừ chính sách giới hạn không tối ưu. Với SARSA dạng bảng trên MDP hữu hạn, $\gamma < 1$, chính sách GLIE và bước học thỏa Robbins–Monro $\sum_t \alpha_t(s,a) = \infty$, $\sum_t \alpha_t^2(s,a) < \infty$ cho từng cặp, thì $Q_t(s,a) \to q_*(s,a)$ gần như chắc chắn; chứng minh viết sai số dưới dạng xấp xỉ ngẫu nhiên, dùng tính co của toán tử Bellman tối ưu $\|T_*Q_t - q_*\|_\infty \le \gamma \|Q_t - q_*\|_\infty$, rồi dùng GLIE để chuyển từ đánh giá sang điều khiển. Chi tiết chứng minh đã trình bày trong Bài 06, ở đây không lặp lại.
+Trực giác và tóm tắt điều kiện. Bài 06 đã cho thấy các kết luận hội tụ dạng bảng luôn đi kèm điều kiện: MDP hữu hạn, phần thưởng bị chặn, mọi cặp trạng thái–hành động được thăm đủ, chính sách tiến dần về tham lam khi điều khiển, và bước học thỏa Robbins–Monro đối với cập nhật sai phân thời gian. Bài này chỉ dùng bài học đó làm cầu nối; không lặp lại phác thảo chứng minh ở tr. 5–20 vì việc chuyển từ chính sách cố định sang dãy chính sách thay đổi cần lập luận riêng.
 
 Giới hạn của bảng tra: không thể lưu hết mọi trạng thái và hành động khi $|\mathcal S|$, $|\mathcal A|$ lớn hoặc liên tục; không tổng quát hoá giữa các trạng thái "na ná nhau"; dữ liệu RL không i.i.d. và không dừng. Câu hỏi kết nối của nguồn: chuyện gì xảy ra nếu hàm $Q$ là hàm tuyến tính hoặc mạng sâu? Toàn bộ phần còn lại của bài trả lời câu hỏi này.
 
@@ -238,7 +239,7 @@ $$y_t^{\mathrm{MC}} = G_t, \qquad y_t^{\mathrm{TD}} = R_{t+1} + \gamma\, \hat v(
 
 nên dữ liệu vừa phụ thuộc chính sách, vừa phụ thuộc chính mô hình đang học.
 
-Ví dụ về cấu trúc đặc trưng cho điều khiển: $x(s,a) = [\,x(s);\ \mathrm{one\text{-}hot}(a);\ x(s) \otimes \mathrm{one\text{-}hot}(a);\ 1\,]$, ghép đặc trưng trạng thái, mã hoá hành động và tích tensor của chúng.
+Ví dụ về cấu trúc đặc trưng cho điều khiển: nếu $\psi(s)\in\mathbb R^p$ là đặc trưng trạng thái và $e_a\in\mathbb R^m$ là mã một-nóng của hành động, có thể chọn $x(s,a)=e_a\otimes\psi(s)\in\mathbb R^{mp}$. Mỗi hành động khi đó đọc một khối $p$ trọng số. Đây là một lựa chọn; ví dụ tính tay phía sau dùng đặc trưng ba chiều được thiết kế trực tiếp cho $(s,a)$.
 
 Giới hạn: lớp tuyến tính chỉ biểu diễn được các hàm giá trị nằm trong không gian sinh bởi các đặc trưng; phần thiếu hụt là sai số xấp xỉ không thể xoá bằng cách học $w$.
 
@@ -389,7 +390,7 @@ $$w_{t+1} = w_t + \alpha_t \delta_t x(S_t), \qquad \delta_t = R_{t+1} + \gamma x
 
 Đây là bán gradient: nó là gradient của $\frac{1}{2}\big(y_t^{\mathrm{TD}} - \hat v(S_t,w)\big)^2$ chỉ khi coi đích là hằng số, bỏ qua sự phụ thuộc của $y_t^{\mathrm{TD}}$ vào $w_t$. Vì vậy không thể phân tích nó như hồi quy SGD thông thường; cần công cụ khác — toán tử Bellman chiếu — ở chủ đề tiếp theo.
 
-Ưu điểm: cập nhật trực tuyến, phương sai thấp hơn MC. Nhược điểm: đích tự khởi tạo bị chệch.
+Ưu điểm: cập nhật trực tuyến; trong các thiết lập quen thuộc, đích một bước thường có phương sai có điều kiện thấp hơn tổng thưởng MC. Nhược điểm: đích tự khởi tạo bị chệch.
 
 ::: exercise Câu hỏi kiểm tra
 Viết gradient đầy đủ của hàm mất mát $\frac{1}{2}\big(y_t^{\mathrm{TD}}(w) - x(S_t)^\top w\big)^2$ với $y_t^{\mathrm{TD}}(w) = R_{t+1} + \gamma x(S_{t+1})^\top w$, rồi chỉ ra số hạng mà cập nhật bán gradient bỏ qua.
