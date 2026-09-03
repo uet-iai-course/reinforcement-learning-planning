@@ -164,3 +164,37 @@ Tác tử rà toán xác nhận PASS sau hai sửa cuối; không còn lỗi t�
 - Ba lần yêu cầu tái kiểm định OpenRouter sau chỉnh sửa giả mã/mạch đều dừng ở `api_transport_error` trước khi model nhận prompt. Không ghi các lượt này là PASS; điều phối viên đã tự kiểm lại thứ tự bước 1–10, mặt nạ, autoreset, fallback `final_observation=None`, $t\bmod F$ và phạm vi bước dừng.
 
 Codex Slides không thể đồng bộ bản hiện tại. Runtime đi kèm đang chạy Node.js 18.19.1 trong khi skill yêu cầu Node.js 20 trở lên; API Design Files lỗi `ReferenceError: File is not defined`. Vì vậy không tuyên bố năm Design Files khớp bản hiện tại và không tuyên bố đã duyệt bằng Codex Browser. Kiểm định trực quan RevealJS cục bộ ở hai khung đã hoàn tất như trên.
+
+## Giai đoạn I — lecture note độc lập
+
+- Writer bản đầu dùng `requested_model=observed_model=z-ai/glm-5.3-flash`,
+  provider OpenRouter, profile `write/20/900/32000`. Worker ghi 43.217 byte ở
+  vòng 3 và hoàn tất vòng 4 sau 303,643 giây. Lượt trước đó với sáu tệp đầu vào
+  và timeout 600 giây đã dừng đúng ngưỡng; bản chạy lại chỉ nhận ba tệp đã cô lập.
+- Năm reviewer chỉ đọc chạy song song bằng `review/8/600/12000`. Hai vai sinh
+  viên và mạch viết dùng GLM; ba vai chuyên gia Học tăng cường, toán–thuật toán
+  và phản biện sư phạm dùng DeepSeek. Tất cả trả đúng model yêu cầu, model quan
+  sát và provider OpenRouter; không có lỗi chặn bàn giao hoặc nghiêm trọng.
+- Đã xử lý các góp ý có căn cứ: sửa câu về phép sao lưu lệch chính sách; thống
+  nhất bộ sáu thành phần và ký hiệu quan sát; đưa hợp đồng tensor về đúng mạch;
+  tách thời lượng để bảy mạch cộng đúng 120 phút mà không tính đôi; nối đích hồi
+  quy với mặt nạ kết thúc; làm rõ đạo hàm theo đầu ra và gradient theo tham số;
+  mô tả điều kiện dùng `final_observation`; sửa mở–kết thành sáu điểm kiểm tra.
+- Không áp dụng gợi ý thêm kết quả CartPole, giả thiết hội tụ mới hoặc khẳng định
+  thực nghiệm ngoài nguồn. Công thức cận mẫu thiếu thiết lập đã được bỏ hoàn
+  toàn; chỉ giữ cảnh báo về phạm vi giả thiết.
+- Tự kiểm theo `no-ai-slop/eval.md`: bỏ lời dẫn quy trình, tiêu đề thừa, nhịp câu
+  quảng bá và các công thức không đủ căn cứ. Rà mạch theo Quill mà không tạo
+  `quill.json`: 15 chủ đề thuộc đủ bốn nhóm, bảy mạch tiến từ Q-learning dạng
+  bảng đến giao diện DQN, vòng huấn luyện, bất ổn và Atari.
+- Material viewer được kiểm trên bản sao tối thiểu không chứa `.env`: 15 mã chủ
+  đề duy nhất và không hiển thị, 278 biểu thức KaTeX, ba bài tập, ba gợi ý, ba
+  lời giải, không lỗi console và không tràn ngang ở 1280×720 hay 390×844.
+- Cổng 8765 đang bị tiến trình khác chiếm; lượt viewer riêng dùng cổng 18765.
+  Kiểm định deck Bài 08 tại cổng 8765 đã được ghi ở mục trên. Codex Slides vẫn
+  không khả dụng do giới hạn Node.js đã nêu.
+- Tái kiểm toán–thuật toán bằng DeepSeek trả PASS. Tái kiểm mạch bằng GLM phát
+  hiện topic-05 ở mạch 3 phụ thuộc topic-04 từng bị xếp ở mạch 4; đã chuyển
+  topic-04 về mạch 3 và cân lại mạch 3/4 thành 29/24 phút, tổng vẫn là 120 phút.
+- Tái kiểm hẹp lần cuối bằng GLM xác nhận PASS: 15 chủ đề xuất hiện đúng một mạch,
+  quan hệ topic-04 → topic-05 → topic-06 đúng thứ tự và tổng thời lượng là 120 phút.
