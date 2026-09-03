@@ -23,6 +23,10 @@ ROLE_DEFAULT_MODELS = {
     "reviewer": "z-ai/glm-5.3-flash",
     "writer": "z-ai/glm-5.3-flash",
 }
+MODEL_DEFAULT_REASONING_EFFORT = {
+    "deepseek/deepseek-v4-flash-0731": "none",
+    "z-ai/glm-5.3-flash": "minimal",
+}
 LEGACY_MODEL_ALIASES = {"stealth/ox-alpha": "z-ai/glm-5.3-flash"}
 MAX_TOOL_RESULT_CHARS = 60_000
 ROLE_SYSTEM_PROMPTS = {
@@ -225,6 +229,14 @@ def resolve_model(model: str) -> tuple[str, str | None]:
         f"OpenRouter retired {model}; using its disclosed model {replacement}."
     )
     return replacement, warning
+
+
+def resolve_reasoning_effort(
+    model: str, requested_effort: str | None, profile_effort: str
+) -> str:
+    if requested_effort is not None:
+        return requested_effort
+    return MODEL_DEFAULT_REASONING_EFFORT.get(model, profile_effort)
 
 
 def _tool_schema(tool: Any) -> dict[str, Any]:
@@ -597,7 +609,7 @@ def _parser(forced_role: str | None = None) -> argparse.ArgumentParser:
     parser.add_argument("--empty-answer-retries", type=int)
     parser.add_argument(
         "--reasoning-effort",
-        choices=("low", "high", "max"),
+        choices=("none", "minimal", "low", "high", "max"),
     )
     parser.add_argument(
         "--progress",
@@ -636,10 +648,8 @@ def main(forced_role: str | None = None) -> None:
         if args.empty_answer_retries is not None
         else profile.empty_answer_retries
     )
-    reasoning_effort = (
-        args.reasoning_effort
-        if args.reasoning_effort is not None
-        else profile.reasoning_effort
+    reasoning_effort = resolve_reasoning_effort(
+        model, args.reasoning_effort, profile.reasoning_effort
     )
 
     try:

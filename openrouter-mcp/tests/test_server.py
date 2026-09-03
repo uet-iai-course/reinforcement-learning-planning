@@ -19,6 +19,7 @@ from openrouter_mcp.bridge import (
     allowed_tool_names,
     load_openrouter_api_key,
     resolve_model,
+    resolve_reasoning_effort,
 )
 from openrouter_mcp.server import mcp
 
@@ -188,6 +189,28 @@ class ReadOnlyServerTest(unittest.TestCase):
         self.assertEqual(
             _parser("writer").parse_args(["task"]).model,
             "z-ai/glm-5.3-flash",
+        )
+
+    def test_reasoning_can_be_disabled_for_models_that_ignore_low_effort(self) -> None:
+        parsed = _parser("reviewer").parse_args(
+            ["--reasoning-effort", "none", "task"]
+        )
+        self.assertEqual(parsed.reasoning_effort, "none")
+
+    def test_model_specific_reasoning_defaults(self) -> None:
+        self.assertEqual(
+            resolve_reasoning_effort(
+                "deepseek/deepseek-v4-flash-0731", None, "low"
+            ),
+            "none",
+        )
+        self.assertEqual(
+            resolve_reasoning_effort("z-ai/glm-5.3-flash", None, "low"),
+            "minimal",
+        )
+        self.assertEqual(
+            resolve_reasoning_effort("z-ai/glm-5.3-flash", "high", "low"),
+            "high",
         )
 
     def test_role_specific_parser_cannot_be_overridden(self) -> None:

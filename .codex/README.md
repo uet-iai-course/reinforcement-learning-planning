@@ -136,6 +136,24 @@ Sau mỗi lệnh, lưu ba trường `requested_model`, `observed_model` và `pro
 từ JSON vào nhật ký rà soát. Không coi tên model do worker tự viết trong phần
 nội dung là bằng chứng.
 
+### DeepSeek V4 Flash 0731 và ngân sách suy luận
+
+Từ ngày 03/09/2026, các vai DeepSeek dùng
+`deepseek/deepseek-v4-flash-0731`. Với model này, `reasoning-effort=low` không
+giới hạn được suy luận ở các lượt rà note Bài 10: các ngân sách 12.000, 18.000
+và 32.000 token đều kết thúc bằng `finish_reason=length`, trong đó reasoning
+chiếm khoảng 9.600–28.000 token và không tạo báo cáo dùng được. Cấu hình đã
+kiểm chứng là `--reasoning-effort none`: hai reviewer một-note hoàn tất ở vòng
+3 trong 32–35 giây với 2.426–2.450 completion token và 0 reasoning token;
+reviewer toán dài hoàn tất trong 208 giây với 9.914 completion token.
+`requested_model` và `observed_model` đều là
+`deepseek/deepseek-v4-flash-0731`, provider `OpenRouter`.
+
+GLM 5.3 Flash từ chối `none` bằng HTTP 400 vì reasoning là bắt buộc. Dùng
+`--reasoning-effort minimal` cho reviewer/writer GLM. Với lượt sửa rộng, vẫn
+chia thành các vá hẹp vì model có thể dùng hết 20 vòng cho nhiều thao tác thay
+thế; giữ profile `patch` cho 1–2 khối và `write` cho một sản phẩm cô lập.
+
 Hai cấu hình reader đầu tiên được kiểm chứng khi xử lý lecture note Bài 01
 ngày 02/09/2026. Cả hai trả
 `requested_model = observed_model = deepseek/deepseek-v3.2`, provider

@@ -88,7 +88,7 @@ Các tệp `.env` và biến thể như `.env.local` bị loại khỏi `list_fi
 
 Dùng `--task-profile` để chọn ngân sách phù hợp. Có thể ghi đè riêng bằng
 `--max-rounds`, `--timeout`, `--max-tokens`, `--temperature`,
-`--reasoning-effort` hoặc
+`--reasoning-effort` (`none`, `minimal`, `low`, `high`, `max`) hoặc
 `--empty-answer-retries`. Mỗi hồ sơ mặc định thử lại một lần nếu nhà cung cấp
 trả HTTP 200 nhưng nội dung cuối rỗng; sự kiện `empty_answer_received` cho biết
 trường hợp này ngay trong log tiến độ. Vòng thử lại nằm ngoài ngân sách
@@ -121,6 +121,9 @@ uv run openrouter-mcp-reviewer --repo-root .. --json --task-profile review \
 Reader mặc định dùng `deepseek/deepseek-v4-flash-0731`; reviewer và writer mặc định dùng
 `z-ai/glm-5.3-flash`. Vai rà toán hoặc chuyên môn Học tăng cường phải truyền
 `--model deepseek/deepseek-v4-flash-0731`; vai sinh viên và mạch viết giữ mặc định GLM.
+Khi không truyền `--reasoning-effort`, cầu nối dùng `none` cho DeepSeek V4 Flash
+và `minimal` cho GLM 5.3 Flash. Hai giá trị này tránh để phần suy luận chiếm hết
+ngân sách trả lời; đối số tường minh vẫn có ưu tiên cao hơn.
 Tên GLM hiện hành từng được thử nghiệm dưới tên `stealth/ox-alpha`. OpenRouter
 đã ngừng slug thử nghiệm;
 nếu vẫn truyền `stealth/ox-alpha`, client sẽ báo ánh xạ rồi gọi
