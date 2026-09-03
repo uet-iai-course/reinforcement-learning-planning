@@ -130,3 +130,68 @@ Tám hình kỹ thuật được vẽ lại thành SVG trong `img/lec-09/`. Khô
 - Kiểm tra hình học và ảnh chụp phát hiện công thức `L09-28` bị cắt bên phải. Công thức đã được tách thành ba dòng và toàn bộ 74 lượt kiểm tra được chạy lại; lỗi không tái xuất hiện. Các cảnh báo còn lại chỉ là hộp KaTeX hoặc H1 vượt hộp nội bộ vài pixel, không vượt khung trang và không thấy tràn/chồng lấn trên ảnh.
 - Biên tập cuối theo `no-ai-slop/eval.md` không phát hiện lời dẫn rỗng, tổng kết lặp, câu quảng bá hoặc nhịp câu máy móc. Rà mạch theo Quill xác nhận thuật ngữ, ký hiệu và đầu ra–đầu vào của 6 mạch liên tục; không tạo `quill.json`.
 - Bốn Design Files của dự án Codex Slides B09 đã được cập nhật và đọc ngược lại; HTML, outline, storyboard và review-log khớp từng byte với tệp trong kho tại thời điểm đồng bộ. Không dùng chức năng render lại bộ RevealJS trong Codex Slides.
+
+## Giai đoạn lecture note — 03/09/2026
+
+### Kiểm kê, bản đồ chủ đề và runtime
+
+- Nguồn: `RL-hk2-2025-2026/lecture09-ddqn-and-policy-gradient-part1.pdf`,
+  40 trang. Metadata ghi “Bài giảng 10”, nhưng tên tệp, thứ tự học phần và bộ
+  trang chiếu hiện có xác định đầu ra là Bài 09; giữ sai khác này trong nhật ký.
+- Plan reader: `requested_model=observed_model=deepseek/deepseek-v3.2`, provider
+  OpenRouter, `plan/12/600/16000`; hoàn tất vòng 11 sau 232,45 giây.
+- Source reader: cùng model/provider, cấu hình cũ `source/20/600/24000`; hoàn
+  tất vòng 21 sau 544,73 giây, bao phủ đủ 40 trang. Lượt này lặp cùng khoảng đọc
+  và tạo prompt 82.874 token; vì vậy preset từ bài này là `14/600/18000` và cầu
+  nối chặn tool call trùng hệt đã thành công.
+- Reviewer hợp nhất bản đồ: cùng model/provider, `review/8/600/12000`; hoàn tất
+  vòng 2 sau 110,16 giây. Phạm vi chốt 14 chủ đề: 9 cốt lõi, 2 cầu nối, 2 bổ
+  sung và 1 đọc thêm. Topic-04 ngăn phát biểu quá mức về Double DQN; topic-11
+  nối dạng quỹ đạo với phân bố chiếm dụng; topic-13 chỉ báo trước Bài 10;
+  topic-14 nằm ngoài tuyến chính.
+- Writer note: `requested_model=observed_model=z-ai/glm-5.3-flash`, provider
+  OpenRouter, `write/20/900/32000`; ghi 31.630 byte ở vòng 3, sửa một ID thừa và
+  hoàn tất vòng 5 sau 389,50 giây. Writer nhận đúng ba đầu vào cô lập.
+
+### Năm báo cáo độc lập
+
+| vai | model | runtime | phát hiện chính | quyết định |
+|---|---|---:|---|---|
+| Góc nhìn sinh viên | GLM | 44,29 giây | Hai đáp án topic-03 và topic-08 mâu thuẫn/mơ hồ; dải trang tham khảo thiếu tr. 3–4. | Sửa đủ. |
+| Chuyên gia Học tăng cường | DeepSeek | 95,70 giây | PASS; gợi ý làm rõ câu hoán đổi mạng. | Sửa câu bằng hai đích 6,4 và 3,7. |
+| Toán học–thuật toán | DeepSeek | 198,14 giây | PASS; ví dụ, giả thiết, $\gamma^t$ và phân bố chiếm dụng đúng. | Giữ công thức. |
+| Phản biện học thuật–giảng dạy | DeepSeek | 81,55 giây | PASS; trình tự và cầu nối đủ. | Không đổi cấu trúc. |
+| Kết nối–mạch viết/no-ai-slop | GLM | 47,64 giây | Hai lỗi nghiêm trọng trùng với vai sinh viên; nguồn topic-07 và chỉ dẫn biên tập cần sửa. | Sửa đủ. |
+
+- Writer sửa tuần tự dùng GLM `patch/6/300/7000`; một phản hồi chạm giới hạn
+  token nhưng cơ chế retry tiếp tục đúng model. Mười phép sửa được thử, ba phép
+  sai chuỗi cũ thất bại rồi được sửa lại thành công; worker hoàn tất vòng 6 sau
+  245,14 giây. Diff được điều phối viên kiểm trực tiếp, không dựa vào lời tóm tắt.
+- Tái kiểm toán DeepSeek `recheck/6/600/10000` hoàn tất vòng 3 sau 86,42 giây,
+  PASS. Tái kiểm mạch GLM phát hiện mâu thuẫn “ba/bốn/hai hợp đồng”, lặp câu có
+  thể lược và thuật ngữ `collapse`; writer GLM `patch` sửa tám vị trí ở vòng 3
+  và hoàn tất vòng 4 sau 37,99 giây.
+- Tái kiểm mạch cuối GLM cùng profile hoàn tất vòng 3 sau 64,58 giây, PASS: bốn
+  hợp đồng, 14 ID, bảy mạch, 120 phút và phân cấp X01–X03 đều nhất quán.
+
+### Kiểm định tĩnh và quyết định công bố
+
+- Kiểm định cục bộ: đúng một H1; 14 `note-topic-id` duy nhất; 304 biểu thức
+  KaTeX parse ở strict mode; ba khối exercise, hint và solution; directive cân
+  bằng; không có mã slide hoặc mẫu nội bộ.
+- Không có code demo trong nguồn nên không tạo chương trình hoặc notebook.
+- Lecture note không dùng ảnh raster. Tám SVG của deck hiện có không bị đổi ở
+  giai đoạn note.
+- Theo yêu cầu cụ thể của `prompt_lecture_note_deck.md`, thẻ index dùng hai nhóm
+  “Bài giảng” và “Ghi chú bài giảng”; yêu cầu này thay thế quy tắc một liên kết
+  duy nhất trong AGENTS.md cho bài đang xử lý.
+- Codex Slides không được dùng trong giai đoạn note hiện tại vì runtime đang có
+  Node.js 18.19.1, thấp hơn mức 20 của tiện ích. Không tuyên bố đã rà note bằng
+  Codex Slides; kiểm định viewer cục bộ được thực hiện riêng trước commit.
+- `python3 -m reloadserver 8765` vẫn không khả dụng do thiếu mô-đun. Để không
+  phục vụ `.env`, kiểm định dùng bản sao tối thiểu trong `/tmp` và fallback
+  `python3 -m http.server 8765 --bind 127.0.0.1`.
+- Chromium mở liên kết từ thẻ Bài 09 ở 1280×720 và 800×600. Cả hai lượt hiển
+  thị đúng tiêu đề, 14 heading cấp hai, 28 heading cấp ba, 304 công thức KaTeX,
+  6 khối tương tác, liên kết quay lại đúng deck; không lỗi console, tài nguyên
+  hỏng hoặc tràn ngang.
