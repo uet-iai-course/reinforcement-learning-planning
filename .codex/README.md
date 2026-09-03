@@ -55,9 +55,15 @@ phụ thuộc quyền ghi vào cache người dùng:
 UV_CACHE_DIR=/tmp/rl-plan-uv-cache uv run <worker> \
   --repo-root /data/tqlong/rl-plan \
   --json --model <model> --task-profile <profile> \
-  --max-rounds <rounds> --timeout 180 \
   '<nhiệm vụ hẹp, kèm danh sách tệp chính xác>'
 ```
+
+Từ Bài 08, ưu tiên dùng nguyên preset và chỉ ghi đè tham số khi nhật ký của
+lượt hiện tại chứng minh cần thiết. Preset đã được nâng theo dữ liệu Bài 01–07:
+`plan/12/600/16000`, `source/20/600/24000`,
+`storyboard/10/600/12000`, `review/8/600/12000`,
+`write/20/600/32000`, `recheck/6/600/10000` và
+`patch/6/300/7000` (profile/vòng/timeout/token).
 
 Các tổ hợp đã chạy thành công:
 
@@ -72,8 +78,8 @@ Các tổ hợp đã chạy thành công:
 | Tái rà một tệp, phạm vi hẹp | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v3.2` | `recheck` | 3 |
 | Rà deck trên bốn tệp cố định | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v3.2` | `review` | 8 |
 | Tái rà deck sau đổi cấu trúc, 2–3 tệp | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v3.2` | `recheck` | 5 |
-| Ghi một phạm vi tệp | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `write` | 12 |
-| Ghi nhiều điểm trong deck | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `write` | 20 |
+| Soạn một note hoặc deck đã cô lập | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `write` | 20 |
+| Vá một hoặc hai khối độc lập | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `patch` | 6 |
 
 ### Bài 04 — cấu hình đã quan sát
 
@@ -266,3 +272,22 @@ cầu và provider `OpenRouter`.
 Kiểm tra hình học DOM không đủ để phát hiện nội dung sát chân trang. Với trang
 công thức hoặc hộp kết luận dày, phải xem ảnh Chromium ở cả 1280 × 720 và
 800 × 600; B06 chỉ lộ lỗi chạm chân trang qua ảnh chụp dù báo cáo overflow rỗng.
+
+Với lecture note Bài 07, reader DeepSeek hoàn tất bằng
+`plan/12/600/16000`, `source/20/600/20000` và lượt hợp nhất cô lập
+`recheck/8/600/16000`. Writer GLM bản đầu hoàn tất bằng
+`write/20/600/32000`, dù cần cơ chế phục hồi sau một phản hồi
+`finish_reason=error`. Reviewer GLM cho vai sinh viên và mạch viết hoàn tất ở
+vòng 3. Reviewer DeepSeek đọc nhiều tệp liên tiếp đã chạm giới hạn 5 hoặc 8
+vòng; khi chỉ cấp đúng một note và yêu cầu một lần đọc, lượt toán hoàn tất ở
+vòng 3 với `review/8/600/12000`. Vì vậy từ Bài 08 không dùng reviewer DeepSeek
+trên gói note/planning/deck; các tệp planning chỉ cấp cho reviewer GLM khi vai
+trò thật sự cần đối chiếu mạch.
+
+Hai lượt writer sửa rộng Bài 07 dùng `write/20/600/20000` và
+`write/12/600/12000` đều dừng ở `finish_reason=length` trước khi ghi. Đây là
+lỗi về phạm vi và ngân sách đầu ra, không phải lý do để tăng tiếp số vòng.
+Quy tắc dùng lại là: bản nháp dùng nguyên preset `write/20/600/32000`; sau năm
+báo cáo, chia hàng đợi thành lượt `patch/6/300/7000`, mỗi lượt chỉ một hoặc hai
+khối và yêu cầu gộp các tool call độc lập trong cùng phản hồi. Điều phối viên
+kiểm diff sau từng lượt và giao recheck đúng phần đã đổi.

@@ -103,12 +103,13 @@ token hoàn tất và reasoning token khi nhà cung cấp trả các trường n
 
 | Hồ sơ | Vòng | Timeout mỗi API | Token đầu ra | Dùng cho |
 |---|---:|---:|---:|---|
-| `plan` | 8 | 180 giây | 6.000 | Lập kế hoạch |
-| `source` | 14 | 300 giây | 16.000 | Phân tích và ánh xạ nguồn |
-| `storyboard` | 10 | 240 giây | 10.000 | Kiểm định storyboard |
-| `review` | 8 | 240 giây | 8.000 | Năm rà soát độc lập |
-| `write` | 16 | 300 giây | 32.000 | Chỉnh sửa có phạm vi ghi hẹp |
-| `recheck` | 10 | 120 giây | 4.000 | Rà lại sau chỉnh sửa; đủ vòng đọc, báo cáo ngắn |
+| `plan` | 12 | 600 giây | 16.000 | Lập kế hoạch |
+| `source` | 20 | 600 giây | 24.000 | Phân tích và ánh xạ nguồn |
+| `storyboard` | 10 | 600 giây | 12.000 | Kiểm định storyboard |
+| `review` | 8 | 600 giây | 12.000 | Năm rà soát độc lập |
+| `write` | 20 | 600 giây | 32.000 | Soạn một sản phẩm hoàn chỉnh đã cô lập |
+| `recheck` | 6 | 600 giây | 10.000 | Rà lại đúng một note/deck; báo cáo ngắn |
+| `patch` | 6 | 300 giây | 7.000 | Sửa một hoặc hai khối độc lập |
 
 Ví dụ:
 
@@ -117,8 +118,11 @@ uv run openrouter-mcp-reviewer --repo-root .. --json --task-profile review \
   "Rà Lecture 01 theo góc nhìn sinh viên."
 ```
 
-Mặc định client dùng `z-ai/glm-5.3-flash`, tên hiện hành của model từng được
-thử nghiệm dưới tên `stealth/ox-alpha`. OpenRouter đã ngừng slug thử nghiệm;
+Reader mặc định dùng `deepseek/deepseek-v3.2`; reviewer và writer mặc định dùng
+`z-ai/glm-5.3-flash`. Vai rà toán hoặc chuyên môn Học tăng cường phải truyền
+`--model deepseek/deepseek-v3.2`; vai sinh viên và mạch viết giữ mặc định GLM.
+Tên GLM hiện hành từng được thử nghiệm dưới tên `stealth/ox-alpha`. OpenRouter
+đã ngừng slug thử nghiệm;
 nếu vẫn truyền `stealth/ox-alpha`, client sẽ báo ánh xạ rồi gọi
 `z-ai/glm-5.3-flash`. Có thể thay model bằng biến môi trường hoặc đối số:
 
@@ -128,6 +132,13 @@ uv run openrouter-mcp-reader --repo-root .. --json "Nhiệm vụ chỉ đọc"
 ```
 
 Model được chọn phải hỗ trợ tham số `tools` trên OpenRouter.
+
+Các preset là ngân sách tối đa, không thay cho việc cô lập đầu vào. Reviewer
+DeepSeek chỉ nhận đúng một note hoặc deck và được yêu cầu đọc tệp đó một lần.
+Writer `write` chỉ soạn một sản phẩm; mọi hàng đợi chỉnh sửa sau review phải
+tách thành các lượt `patch`, mỗi lượt tối đa hai khối độc lập. Cách chia này
+tránh hai lỗi đã lặp ở Bài 04–07: cạn vòng gọi công cụ và
+`finish_reason=length` sau khi worker ghi bán phần.
 
 `z-ai/glm-5.3-flash` là model có tính phí. Kiểm tra giá hiện hành trên
 OpenRouter trước khi chạy tác vụ lớn.

@@ -18,24 +18,37 @@ from .server import mcp
 
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-DEFAULT_MODEL = "z-ai/glm-5.3-flash"
+ROLE_DEFAULT_MODELS = {
+    "reader": "deepseek/deepseek-v3.2",
+    "reviewer": "z-ai/glm-5.3-flash",
+    "writer": "z-ai/glm-5.3-flash",
+}
 LEGACY_MODEL_ALIASES = {"stealth/ox-alpha": "z-ai/glm-5.3-flash"}
 ROLE_SYSTEM_PROMPTS = {
     "reader": """You are an OpenRouter reader worker.
 Inspect the repository with the supplied read-only tools before answering.
 Base every claim on file evidence and include paths and line numbers.
+Read only the exact files assigned. Read each file in one batch when it fits;
+do not repeat list, search, or read calls whose result is already available.
+Once the evidence is sufficient, return the requested artifact immediately.
 Do not request writes, shell commands, network calls, or broader access.
 Clearly separate facts from inferences. Answer in the user's language.
 """,
     "reviewer": """You are an independent OpenRouter reviewer worker.
 Inspect the supplied evidence with read-only tools. Report every finding with
 the requested severity, location, issue, evidence, and proposed correction.
+Read only the exact files assigned. Prefer one bounded read per file and do
+not repeat discovery calls. Return a concise report as soon as the requested
+checks are complete.
 Do not edit files or rely on unsupported claims. Answer in the user's language.
 """,
     "writer": """You are a narrowly scoped OpenRouter writer worker.
 Use write_text_file only for paths explicitly assigned by the coordinator and
 inside the configured root. Preserve unrelated work. Never delete or revert
 files, broaden scope, or claim a write without a successful tool result.
+Read each assigned file at most once before editing. Batch independent tool
+calls in one response, do not retry a successful replacement, and finish with
+a concise change summary instead of restating file contents.
 Answer in the user's language.
 """,
 }
@@ -61,13 +74,17 @@ class TaskProfile:
 
 
 TASK_PROFILES = {
-    "general": TaskProfile(12, 180.0, 8_000, 0.1, 1, "low"),
-    "plan": TaskProfile(8, 180.0, 6_000, 0.1, 1, "low"),
-    "source": TaskProfile(14, 300.0, 16_000, 0.1, 1, "low"),
-    "storyboard": TaskProfile(10, 240.0, 10_000, 0.1, 1, "low"),
-    "review": TaskProfile(8, 240.0, 8_000, 0.1, 1, "low"),
-    "write": TaskProfile(16, 300.0, 32_000, 0.1, 1, "low"),
-    "recheck": TaskProfile(10, 120.0, 4_000, 0.1, 1, "low"),
+    # Defaults below are the stable envelope observed across lectures 01--07.
+    # Scope remains the primary control: one note/deck per reviewer and one
+    # coherent artifact per writer invocation.
+    "general": TaskProfile(12, 600.0, 10_000, 0.1, 1, "low"),
+    "plan": TaskProfile(12, 600.0, 16_000, 0.1, 1, "low"),
+    "source": TaskProfile(20, 600.0, 24_000, 0.1, 1, "low"),
+    "storyboard": TaskProfile(10, 600.0, 12_000, 0.1, 1, "low"),
+    "review": TaskProfile(8, 600.0, 12_000, 0.1, 1, "low"),
+    "write": TaskProfile(20, 600.0, 32_000, 0.1, 1, "low"),
+    "recheck": TaskProfile(6, 600.0, 10_000, 0.1, 1, "low"),
+    "patch": TaskProfile(6, 300.0, 7_000, 0.1, 1, "low"),
 }
 
 
@@ -501,10 +518,14 @@ def _parser(forced_role: str | None = None) -> argparse.ArgumentParser:
         )
     else:
         parser.set_defaults(role=forced_role)
+    default_role = forced_role or "reader"
+    default_model = os.environ.get(
+        "OPENROUTER_MODEL", ROLE_DEFAULT_MODELS[default_role]
+    )
     parser.add_argument(
         "--model",
-        default=os.environ.get("OPENROUTER_MODEL", DEFAULT_MODEL),
-        help="OpenRouter model ID (default: OPENROUTER_MODEL or %(default)s)",
+        default=default_model,
+        help="OpenRouter model ID (default: OPENROUTER_MODEL or role default: %(default)s)",
     )
     parser.add_argument(
         "--repo-root",

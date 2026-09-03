@@ -121,18 +121,32 @@ class ReadOnlyServerTest(unittest.TestCase):
 
     def test_task_profiles_fit_worker_jobs(self) -> None:
         self.assertGreater(TASK_PROFILES["source"].max_rounds, TASK_PROFILES["plan"].max_rounds)
-        self.assertGreater(
-            TASK_PROFILES["source"].timeout_seconds,
-            TASK_PROFILES["plan"].timeout_seconds,
-        )
+        self.assertEqual(TASK_PROFILES["source"].timeout_seconds, 600)
+        self.assertEqual(TASK_PROFILES["plan"].timeout_seconds, 600)
         self.assertGreater(TASK_PROFILES["write"].max_tokens, TASK_PROFILES["review"].max_tokens)
         self.assertLess(TASK_PROFILES["recheck"].max_tokens, TASK_PROFILES["review"].max_tokens)
-        self.assertLess(
+        self.assertEqual(
             TASK_PROFILES["recheck"].timeout_seconds,
             TASK_PROFILES["review"].timeout_seconds,
         )
+        self.assertLess(TASK_PROFILES["patch"].max_rounds, TASK_PROFILES["write"].max_rounds)
+        self.assertLess(TASK_PROFILES["patch"].max_tokens, TASK_PROFILES["write"].max_tokens)
         self.assertEqual(TASK_PROFILES["review"].empty_answer_retries, 1)
         self.assertEqual(TASK_PROFILES["review"].reasoning_effort, "low")
+
+    def test_role_specific_default_models(self) -> None:
+        self.assertEqual(
+            _parser("reader").parse_args(["task"]).model,
+            "deepseek/deepseek-v3.2",
+        )
+        self.assertEqual(
+            _parser("reviewer").parse_args(["task"]).model,
+            "z-ai/glm-5.3-flash",
+        )
+        self.assertEqual(
+            _parser("writer").parse_args(["task"]).model,
+            "z-ai/glm-5.3-flash",
+        )
 
     def test_role_specific_parser_cannot_be_overridden(self) -> None:
         args = _parser("reader").parse_args(["task"])
