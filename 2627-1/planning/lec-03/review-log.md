@@ -268,3 +268,49 @@ Các lượt không hoàn tất không được tính: ba lượt sandbox lỗi 
 - Kiểm tĩnh cuối: 7 section ngoài; 39 `data-slide-id` duy nhất; 39 notes; mọi ID có trong storyboard; 4 SVG hợp lệ XML, có `role="img"`, `title`, `desc`; không ảnh raster, URL cốt lõi ngoài, tài nguyên hỏng hoặc `RevealMarkdown`; `git diff --check` sạch. `index.html` có đúng liên kết tới bài giảng.
 - Tự kiểm theo `no-ai-slop/eval.md`: nội dung hiển thị và notes không có câu hỏi tu từ, lời ca tụng/quảng bá, lời dẫn rỗng, kết luận lặp hoặc nhãn phân tuyến. Rà theo Quill xác nhận 7 mạch có điểm vào–ra, thứ tự ví dụ → hình thức và kết luận thu hồi mục tiêu; không tạo `quill.json`.
 - Codex Slides: `get_project` xác nhận dự án `20260824143212-chuy-n-lecture-3-quy-tr-nh-quy-t-nh-mark-w2vu` vẫn ở trạng thái `draft`, checkpoint `clarify`, 0 slide. Bốn Design Files HTML/outline/storyboard/review-log đã được ghi lại và đọc lại khớp chính xác với tệp trong kho tại thời điểm đồng bộ. Codex in-editor Browser không khả dụng trong phiên, nên không tuyên bố đã kiểm trực quan bằng Codex Slides; kiểm trực quan RevealJS cục bộ bằng Chromium là bằng chứng hiển thị cuối.
+
+## Giai đoạn I — lecture note, 2026-09-03
+
+### Phạm vi và bằng chứng runtime
+
+- Tệp nguồn chính: `lecture2-3-MDPswithKeyConcepts.pptx`, trang 28–58; bài tập: `hw02.pdf`, Bài 3, 4, 7, 8. Bài 9 chuyển sang Bài 04.
+- Writer bản đầu: `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`, profile `write`, `max_rounds=12`, timeout 600 giây, 28.000 token; hoàn tất ở vòng 3.
+- Hai reviewer sinh viên và mạch viết: `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`.
+- Ba reviewer chuyên gia Học tăng cường, toán học–thuật toán và học thuật–giảng dạy: `requested_model=observed_model=deepseek/deepseek-v3.2`, `provider=OpenRouter`.
+- Reviewer toán hợp lệ đọc toàn bộ note trong một tool call, profile `review`, `max_rounds=4`, timeout 600 giây, 12.000 token; hoàn tất ở vòng 2. Các lượt nhiều tệp chạm giới hạn 5, 8, 12 vòng hoặc timeout 300 giây không được tính là báo cáo.
+- Writer vá cục bộ và bổ sung bản đồ chủ đề đều dùng đúng `z-ai/glm-5.3-flash`/OpenRouter; các lượt hoàn tất dùng 4–5 vòng. Liên kết `.env` chỉ tồn tại trong lúc cầu nối nạp khóa, bị MCP chặn đọc và được gỡ ngay sau mỗi đợt.
+
+### Năm báo cáo độc lập
+
+| Vai | Mức độ | Vị trí | Vấn đề và bằng chứng | Đề xuất / quyết định |
+|---|---|---|---|---|
+| Góc nhìn sinh viên | nghiêm trọng | `lec-03-topic-01`, `lec-03-topic-03` | Hàng C3 và quỹ đạo không khớp đồ thị; quỹ đạo Facebook tính $G_0=-3{,}875$ trái véc-tơ thưởng. | Thêm toàn bộ $P$, sửa C3 sang Pass/Pub, sửa $G_0=-3{,}125$. Đã áp dụng. |
+| Chuyên gia Học tăng cường | trung bình | `lec-03-topic-07`, `lec-03-topic-09`, deck D01–D10 | Báo cáo chủ yếu xác nhận note đã bổ sung các công thức bị ẩn trong ảnh nguồn: hạt nhân chung, MRP cảm sinh và Bellman kỳ vọng. | Giữ note; chuyển các đề xuất chỉ dành cho deck sang Giai đoạn II. Không tính là lỗi note. |
+| Toán học–thuật toán | nghiêm trọng | `lec-03-topic-03`, `lec-03-topic-05` | Tính lại xác nhận $G_0=-3{,}125$; recheck phát hiện phép nhìn trước dùng hàng C2 nhưng ghi C3. | Sửa số và nhãn thành C2; recheck cuối xác nhận phép tính $0{,}88$ đúng và hết lỗi nghiêm trọng. |
+| Học thuật–giảng dạy | trung bình | `lec-03-topic-07`, `lec-03-topic-11` | Ví dụ số $q_\pi$ thiếu cách truy nguyên; hạt nhân chung cần trực giác trước công thức. | Dùng dữ kiện phân số từ nguồn/deck và đặt Student MDP trước định nghĩa hạt nhân. Đã áp dụng. |
+| Kết nối và mạch viết | chặn bàn giao | `lec-03-topic-03`, `lec-03-topic-05` | Số $G_0$ sai lan sang topic 04; ví dụ nhìn trước đặt sau công thức; bản đồ nguồn thiếu tín hiệu bốn nhóm. | Sửa số, đưa ví dụ trước Bellman, thêm bản đồ đủ `cốt lõi`, `cầu nối`, `bổ sung`, `đọc thêm`. Recheck toàn note xác nhận 13 mã khớp 13 marker và không còn lỗi bắt buộc. |
+
+### Quyết định chỉnh sửa và sai khác có chủ ý
+
+- Student MRP dùng đúng thứ tự C1, C2, C3, Pass, Pub, Facebook, Sleep và ma trận trong `student-mrp.svg`. Nghiệm $\gamma=0{,}9$ được tính lại thành $(-5{,}013,0{,}943,4{,}087,10,1{,}908,-7{,}638,0)$.
+- Student MDP là đặc tả khác Student MRP. Tại C3, hành động Study đi tới Sleep và nhận $+10$; Pub nhận $+1$ rồi qua nút ngẫu nhiên. Không áp dụng đề xuất đổi C3–Study sang Pass vì trái `student-mdp.svg` và deck đã kiểm định.
+- Dữ kiện chính sách đều, $\gamma=1$: $v_\pi(\text{Facebook})=-30/13$, $v_\pi(\text{C2})=35/13$, $q_\pi(\text{C1,Facebook})=-43/13$, $q_\pi(\text{C1,Study})=9/13$, $v_\pi(\text{C1})=-17/13$.
+- Racing Car giữ sáu kết quả trong `racing-car.svg`; chuyển vào Overheated nhận $-10$ thay cho $+2$ và kết thúc. Dưới chính sách đều ở Cool: $P^\pi_{C,W}=0{,}25$, $P^\pi_{C,C}=0{,}75$, $r^\pi(C)=1{,}5$.
+- Không thêm Bellman tối ưu, lặp giá trị, lặp chính sách, code demo hoặc ví dụ ngoài nguồn.
+- Thẻ Bài 03 trên `index.html` có hai liên kết Bài giảng/Ghi chú. Đây là ngoại lệ có chủ ý thay quy tắc một liên kết duy nhất trong `AGENTS.md`, do `prompt_lecture_note_deck.md` yêu cầu trực tiếp.
+
+### Recheck và biên tập
+
+- Recheck toán toàn note xác nhận ma trận, hai $G_0$, nghiệm Student, điều kiện $\gamma=1$, Racing Car, $P^\pi/r^\pi$, các phân số $q_\pi/v_\pi$ và Bellman kỳ vọng. Recheck hẹp cuối xác nhận lỗi C2/C3 đã hết.
+- Recheck mạch toàn note xác nhận đủ bốn nhóm, 13 mã trong bản đồ khớp 13 marker, trình tự chuỗi Markov → MRP → $G_t$ → $v$ → Bellman → MDP → chính sách → MRP cảm sinh → $v_\pi,q_\pi$ → Bellman kỳ vọng, và mở–kết nhất quán.
+- Tự kiểm theo `no-ai-slop/eval.md`: bỏ lặp ý, nhịp “là hợp lý”, từ mang phán xét và thuật ngữ mơ hồ. Rà theo Quill giữ vai trò, kết nối vào–ra và thứ tự trực giác → hình thức; không tạo `quill.json`.
+
+### Kiểm định công bố Giai đoạn I
+
+- Lệnh bắt buộc `python3 -m reloadserver 8765` đã được thử và thất bại với `/usr/bin/python3: No module named reloadserver`.
+- Phương án thay thế dùng `python3 -m http.server 8765 --bind 127.0.0.1` trên webroot tạm cô lập. Webroot chỉ chứa index, viewer, note/deck Bài 03, CSS, SVG và thư viện cục bộ cần thiết; không chứa `.env`, planning hoặc nguồn.
+- Chromium headless chụp material-viewer ở 1280 × 720 và 800 × 600; note hiển thị đúng, bố cục hẹp chuyển thành một cột. Cảnh báo thiếu phông DejaVu của Chromium không làm mất chữ hoặc công thức.
+- DOM sau render: tiêu đề đúng; layout hiển thị; trạng thái lỗi ẩn; 342 phần tử KaTeX; 0 `katex-error`; 26 khối `details`; marker `note-topic-id` không lộ; liên kết deck và Markdown đúng.
+- `index.html` có đúng liên kết deck và viewer của Bài 03, không có liên kết planning. Viewer chặn cặp doc/deck lệch số bài và ẩn layout nội dung.
+- Kiểm bàn phím qua Chrome DevTools Protocol: sáu lần Tab lần lượt đặt tiêu điểm vào liên kết bỏ qua điều hướng, danh mục học phần, bộ trang chiếu, Markdown gốc và hai liên kết mục lục đầu. Viewer dùng được không cần chuột.
+- Playwright không chạy vì gói hiện có yêu cầu Node ≥20 còn môi trường là Node 18.19.1; kiểm Chromium trực tiếp và DevTools Protocol thay thế. Codex Slides/Browser vẫn không khả dụng, nên không tuyên bố đã rà bằng Codex Slides.

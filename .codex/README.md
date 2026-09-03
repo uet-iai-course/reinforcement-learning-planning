@@ -128,3 +128,27 @@ Lượt chạy lại cùng model/profile bằng `--max-rounds 8 --timeout 300
 vòng 2, DeepSeek trả ở vòng 5. Recheck sau thay đổi cấu trúc chạy ổn định bằng
 `--max-rounds 5 --timeout 300 --max-tokens 4500`; GLM hoàn tất vòng 3 và
 DeepSeek hoàn tất vòng 4. Không đổi model khi tăng giới hạn vòng.
+
+Với lecture note Bài 03 dài khoảng 34 KB, writer tạo bản đầu chạy ổn định bằng
+`z-ai/glm-5.3-flash`, profile `write`, `--max-rounds 12 --timeout 600
+--max-tokens 28000`; worker đọc năm tệp nguồn cố định trong một batch, ghi note
+ở vòng 2 và kết thúc ở vòng 3. Writer vá 7–9 đoạn cục bộ chạy ổn định bằng
+`--max-rounds 6 --timeout 300 --max-tokens 8000–9000`, với nhiều lệnh
+`replace_text_file` trong cùng một batch. Một lượt sửa rộng với 12 vòng đã ghi
+một phần rồi dừng ở `model exceeded the tool-call limit (12)`; vì vậy không
+dùng 12 vòng cho hàng đợi nhiều thay thế tuần tự nếu prompt không yêu cầu gộp
+tool call.
+
+Reviewer toán DeepSeek cho note Bài 03 ổn định nhất khi prompt buộc đúng một
+`read_text_file` toàn tệp (`start_line=1`, `max_lines=2000`), rồi trả báo cáo:
+`--max-rounds 4 --timeout 600 --max-tokens 12000`. Lượt này hoàn tất ở vòng 2.
+Recheck toàn note dùng `--max-rounds 3 --timeout 600 --max-tokens 9000`; recheck
+một đoạn 50 dòng dùng `--max-rounds 3 --timeout 300 --max-tokens 4000`. Không
+chia tệp dài thành nhiều lần đọc: các lượt DeepSeek đọc ba tệp bằng nhiều tool
+call đã lần lượt chạm giới hạn 5, 8 và 12; một lượt gom ba tệp với timeout 300
+giây dừng ở `OpenRouter request exceeded 300s wall timeout`.
+
+Reviewer mạch GLM cho toàn lecture note Bài 03 chạy được bằng profile `recheck`,
+`--max-rounds 3 --timeout 300 --max-tokens 6000`; worker kết thúc ở vòng 3.
+Prompt nên buộc một lần đọc toàn tệp. GLM đôi khi vẫn lặp cùng tool call, nên
+giữ trần 3 vòng và kiểm tra log tiến độ trước khi chấp nhận báo cáo.
