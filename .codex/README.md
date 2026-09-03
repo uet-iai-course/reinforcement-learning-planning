@@ -70,6 +70,8 @@ Các tổ hợp đã chạy thành công:
 | Rà logic, toán, RL | `openrouter-mcp-reviewer` | `deepseek/deepseek-v3.2` | `recheck` | 6–8 |
 | Rà note trên hai tệp cố định | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v3.2` | `review` | 4 |
 | Tái rà một tệp, phạm vi hẹp | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v3.2` | `recheck` | 3 |
+| Rà deck trên bốn tệp cố định | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v3.2` | `review` | 8 |
+| Tái rà deck sau đổi cấu trúc, 2–3 tệp | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v3.2` | `recheck` | 5 |
 | Ghi một phạm vi tệp | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `write` | 12 |
 | Ghi nhiều điểm trong deck | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `write` | 20 |
 
@@ -118,3 +120,11 @@ từng làm GLM dừng ở `api_wall_timeout`, nên dùng 300 giây cho note dà
 vòng 2. Prompt phải giới hạn số lần `read_text_file` và yêu cầu báo cáo ngắn;
 một lượt GLM trước đó với đầu ra 5.000 token đã chạm `finish_reason=length`
 rồi mới hoàn tất ở lượt phục hồi.
+
+Với slide deck Bài 02, lượt rà bốn tệp bằng `--max-rounds 4` không đủ: cả năm
+reviewer dừng với `model exceeded the tool-call limit (4)` sau khi đọc tệp.
+Lượt chạy lại cùng model/profile bằng `--max-rounds 8 --timeout 300
+--max-tokens 7000` hoàn tất; GLM thường đọc bốn tệp trong một batch rồi trả ở
+vòng 2, DeepSeek trả ở vòng 5. Recheck sau thay đổi cấu trúc chạy ổn định bằng
+`--max-rounds 5 --timeout 300 --max-tokens 4500`; GLM hoàn tất vòng 3 và
+DeepSeek hoàn tất vòng 4. Không đổi model khi tăng giới hạn vòng.

@@ -3,9 +3,9 @@
 ## Phạm vi và mục tiêu
 
 - Nguồn chính: `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx`, trang 1–27.
-- Nguồn bài tập: `RL-hk2-2025-2026/resources/hw02.pdf`, nguyên văn Bài 1–2.
+- Nguồn bài tập: `RL-hk2-2025-2026/resources/hw02.pdf`, Bài 1, 2, 5, 6 và 10.
 - Đối tượng: sinh viên đại học đã học học máy, học sâu và thuật toán.
-- Phần trình chiếu chính: 120 phút, 34 trang; hai bài tập nằm ở nhánh dọc để dùng trong 30 phút chữa bài.
+- Phần trình chiếu chính: 120 phút, 36 trang; bài tập nằm ở nhánh dọc để dùng trong 30 phút chữa bài.
 - Điểm dừng: giao diện tác tử–môi trường, trạng thái và quan sát, tính Markov, ba vai trò của tác tử và ví dụ mê cung. Định nghĩa đầy đủ MDP bắt đầu ở Bài 03.
 
 Sau bài học, sinh viên có thể:
@@ -20,7 +20,7 @@ Sau bài học, sinh viên có thể:
 
 ## Dàn ý
 
-Bài có bảy mạch trình bày ngoài:
+Bài có bảy mạch trình bày, trong đó mạch 1 mở bài và mạch 7 kết luận:
 
 1. Định hướng: phạm vi, mục tiêu và bốn trục nội dung.
 2. Giao diện tương tác: ranh giới tác tử–môi trường và chỉ số thời gian.
@@ -53,12 +53,16 @@ Bài có bảy mạch trình bày ngoài:
 | 19 | tách, sửa | C05, C06 | Giới thiệu đầy đủ tên POMDP trước khi dùng lịch sử/niềm tin. |
 | 21 | tách | D02, D03 | Chính sách theo $X_t$ tổng quát; định nghĩa $\mathcal A(x)$ và chuẩn hóa. |
 | 22 | tách, thêm | D04–D06 | Chốt $X_t=S_t$, chính sách Markov $\pi(a\mid s)$; đặt quỹ đạo thưởng cụ thể trước công thức $G_t$ và $v_\pi$; kiểm tra trực giác $\gamma=0,0{,}5,1$; notes nêu trường hợp tiếp diễn với tổng vô hạn, $\gamma<1$ dưới giả thiết phần thưởng bị chặn. |
-| 23 | sửa | D07 | Quy ước mê cung tự nêu trên trang trước ví dụ $1/0$; định nghĩa $\mathcal R\subset\mathbb R$; phân biệt $p$ với mô hình ước lượng $\hat p$. |
+| 23 | tách, sửa | D07, D07B | D07 dùng ví dụ $1/0$; D07B định nghĩa phân phối chuẩn hóa, $\mathcal R\subset\mathbb R$ và phân biệt $p$ với mô hình ước lượng $\hat p$. Tách để công thức không bị cắt ngang. |
 | 24 | sửa, tách | D08, D09 | Bỏ $q_\pi$ chưa định nghĩa; phân biệt dự đoán với điều khiển; phát biểu giá trị $-7$ ghi $\gamma=1$ và nhiệm vụ kết thúc sau đúng 7 bước. |
 | 25–26 | gộp, sửa | E00, E02 | Cố định bản đồ, tọa độ, tập hành động, thưởng khi vào đích và quy tắc va tường. |
 | 27 | sửa, tách | C07, E03–E04 | Tách tính Markov khỏi việc tác tử biết mô hình; phân loại theo giao diện quan sát. |
 | hw02 Bài 1 | giữ nguyên văn | X01 | Không thay nhiệm vụ cốt lõi. |
 | hw02 Bài 2 | giữ nguyên văn | X02 | Không thay nhiệm vụ cốt lõi. |
+| hw02 Bài 5 | giữ nhiệm vụ | X05 | Bài tập chính; nằm ở nhánh dọc, ngoài 120 phút. |
+| hw02 Bài 6 | giữ nhiệm vụ | X06 | Bài tập chính; nằm ở nhánh dọc, ngoài 120 phút. |
+| hw02 Bài 10 | giữ nhiệm vụ | X10 | Bài tập mở rộng; hợp lệ ngay sau topic 09, không cần $q_\pi$ hay Bellman. |
+| trang 13 | chuyển, trả lời | D10 | Câu hỏi "mô hình thế giới" được trả lời sau khi định nghĩa mô hình ở D07; ghi rõ giới hạn dự báo cục bộ, sai số $\hat p$ và không suy diễn AGI. |
 
 ## Tài sản SVG
 
@@ -94,15 +98,38 @@ Bài có bảy mạch trình bày ngoài:
 | $v_\pi(s)$ | Phần thưởng tích lũy kỳ vọng từ $s$ dưới chính sách Markov $\pi(a\mid s)$ trong phần D04–D09, nơi giả sử $X_t=S_t$. |
 | $p(s',r\mid s,a)$ | Phân phối chung của trạng thái kế tiếp và phần thưởng trong trường hợp rời rạc; là động lực thật của môi trường, khác với mô hình ước lượng $\hat p$ của tác tử. |
 | POMDP | Quá trình quyết định Markov quan sát một phần. |
+| mô hình dự báo cục bộ có điều kiện | Mô hình của tác tử dự báo với từng cặp $(s,a)$: phân phối trạng thái và phần thưởng kế tiếp; khác "mô hình hoàn thiện về thế giới" ở phạm vi và độ tin cậy (xem D10). |
 | dự đoán | Đánh giá một chính sách cố định. |
 | điều khiển | Tìm hoặc cải thiện chính sách. |
+
+## Ánh xạ note-topic-id → data-slide-id (hai chiều)
+
+| note-topic-id | data-slide-id |
+|---|---|
+| `lec-02-topic-01` | B00, B02, B03, B04, B05 |
+| `lec-02-topic-02` | A00, A02, A03, A04 |
+| `lec-02-topic-03` | C00, C02, C03 |
+| `lec-02-topic-04` | C04, C05, C06, C07 |
+| `lec-02-topic-05` | D00 |
+| `lec-02-topic-06` | D02, D03 |
+| `lec-02-topic-07` | D04, D05, D06, D07, D07B |
+| `lec-02-topic-08` | D08, D09 |
+| `lec-02-topic-09` | E00, E02, E03, E04, E05 |
+| `lec-02-topic-10` | A03, C02, C03 (cầu nối lịch sử → trạng thái Markov; không tạo C10) |
+| `lec-02-topic-11` | D10 (một trang duy nhất, sau D07 trước D08) |
+| `lec-02-topic-12` | Z00 (ghi chú đọc thêm và phân tuyến bài tập; không tạo trang riêng) |
+
+Ánh xạ cho phép một trang hỗ trợ nhiều chủ đề liền kề; các mã P00–P02 là trang mở bài không gắn topic. Mỗi `data-slide-id` trong deck là duy nhất; topic-10 không tạo trang C10 vì nội dung cầu nối đã phủ trong A03 (lịch sử) và C02–C03 (tiêu chuẩn Markov).
+
+Về thứ tự: deck giữ cụm topic-02 (giao diện tương tác, các trang A) trước topic-01 (tín hiệu học, các trang B), khác thứ tự note. Lý do: dựng ranh giới tác tử–môi trường và chỉ số thời gian trước, rồi mới so sánh ba tín hiệu học, để các so sánh tín hiệu có khung chỉ số đúng; thứ tự khác note nhưng không đổi logic nội dung.
 
 ## Tài liệu dùng để kiểm tra
 
 - Sutton, R. S. và Barto, A. G. (2018), *Reinforcement Learning: An Introduction*, Chương 3.
-- `RL-hk2-2025-2026/resources/hw02.pdf`, Bài 1–2.
+- Silver, D., *Introduction to Reinforcement Learning*, Lecture 2 (https://www.davidsilver.uk/teaching/); phần Bellman của Lecture 2 thuộc Bài 03.
+- `RL-hk2-2025-2026/resources/hw02.pdf`, Bài 1, 2, 5, 6 (bài tập chính) và Bài 10 (mở rộng).
 - `2627-1/lecture-template.html` và `2627-1/lecture-style.css` cho cấu trúc và nền kỹ thuật.
 
 ## Điểm nối sang Bài 03
 
-Bài 03 phân biệt chuỗi Markov, quá trình phần thưởng Markov và MDP; sau đó đóng gói $\mathcal S,\mathcal A,p,\gamma$ thành MDP và xây phương trình Bellman. E05 không lặp chi tiết tuyến này; Z00 là nơi mở bài kế tiếp. Nhánh dọc của Bài 02 chỉ chứa Bài 1–2 của hw02; Bài 3–10 dùng kiến thức của Bài 03 và sẽ được xử lý sau Bài 03.
+Bài 03 phân biệt chuỗi Markov, quá trình phần thưởng Markov và MDP; sau đó đóng gói $\mathcal S,\mathcal A,p,\gamma$ thành MDP và xây phương trình Bellman. E05 không lặp chi tiết tuyến này; Z00 là nơi mở bài kế tiếp. Nhánh dọc của Bài 02 chứa Bài 1, 2, 5, 6 (bài tập chính) và Bài 10 (mở rộng) của hw02; Bài 3, 4, 7, 8, 9 đòi hỏi MRP, $q_\pi$ hoặc Bellman, thuộc Bài 03 và sẽ được xử lý sau Bài 03. Phần Bellman của Silver Lecture 2 cũng bắt đầu từ Bài 03.

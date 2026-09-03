@@ -2,7 +2,7 @@
 
 ## Hành trình khái niệm và thời lượng
 
-Tuyến chính có 34 trang, tổng 120 phút. X01–X02 là nhánh dọc, dùng trong 30 phút chữa bài và không tính vào 120 phút trình chiếu.
+Tuyến chính có 36 trang, tổng 120 phút. X01, X02, X05, X06 và X10 là nhánh dọc, dùng trong 30 phút chữa bài và không tính vào 120 phút trình chiếu.
 
 | Cụm / vi chu trình | Vấn đề | Trực giác | Ví dụ | Hình thức/thuật toán | Ứng dụng | Kiểm tra | Đầu vào → sản phẩm | Thời lượng |
 |---|---|---|---|---|---|---|---|---:|
@@ -13,13 +13,14 @@ Tuyến chính có 34 trang, tổng 120 phút. X01–X02 là nhánh dọc, dùng
 | Quan sát một phần | C04 | C05 | C05 | C05–C06 | C06 | C07 | trạng thái Markov → phân loại giao diện quan sát | 12 phút |
 | Chính sách | D00 | D02 | D03 | D02–D03 | D03 | D03 | $X_t$ → phân phối trên $\mathcal A(x)$ | 8 phút |
 | Giá trị | D00 | D04 | D04, D06 | D04–D05 | D06 | D06 | $X_t=S_t$, $\pi(a\mid s)$ → quỹ đạo thưởng → $G_t$ → $v_\pi$ | 14 phút |
-| Mô hình | D00 | D07 | D07 | D07 | D07 | D07 | quy ước tối thiểu tự nêu trên trang → mô hình chuẩn hóa, tách $p$ và $\hat p$ | 6 phút |
-| Dự đoán và điều khiển | D00 | D08 | D09 | D08 | D08 | D09 | chính sách + giá trị + mô hình → phân biệt vai trò | 8 phút |
+| Mô hình | D00 | D07 | D07 | D07B | D07–D07B | D07B | quy ước tối thiểu → ví dụ $1/0$ → phân phối chuẩn hóa → tách $p$ và $\hat p$ | 6 phút |
+| Giới hạn mô hình | D10 | D10 | D10 | D10 | D10 | D10 | mô hình dự báo cục bộ → phân biệt với mô hình hoàn thiện, không suy diễn AGI | 2 phút |
+| Dự đoán và điều khiển | D08 | D08 | D09 | D08 | D08 | D09 | chính sách + giá trị + mô hình → phân biệt vai trò | 6 phút |
 | Mê cung | E00 | E02 | E02–E03 | E00–E02 | E03–E05 | E04 | toàn bộ ký hiệu → mô hình hóa nhất quán | 20 phút |
 | Kết nối | Z00 | không áp dụng | không áp dụng | không áp dụng | không áp dụng | Z00 | Bài 02 → Bài 03 | 4 phút |
-| Bài tập | X01–X02 | X01–X02 | X01–X02 | không áp dụng: luyện tập | X01–X02 | X01–X02 | nội dung vừa học → lời giải có giả thiết | ngoài tuyến chính |
+| Bài tập | X01, X02, X05, X06, X10 | X01, X02, X05, X06, X10 | X01, X02, X05, X06, X10 | không áp dụng: luyện tập | X01, X02, X05, X06, X10 | X01, X02, X05, X06, X10 | nội dung vừa học → lời giải có giả thiết | ngoài tuyến chính |
 
-Tổng: $6+14+16+12+12+8+14+6+8+20+4=120$ phút.
+Tổng: $6+14+16+12+12+8+14+6+2+6+20+4=120$ phút. So với bản trước, cụm dự đoán và điều khiển giảm từ 8 xuống 6 phút để cấp 2 phút cho trang giới hạn mô hình D10; bài vẫn có 7 mạch, gồm mạch mở bài và mạch kết luận.
 
 ## Dữ kiện truyền giữa các cụm
 
@@ -29,7 +30,7 @@ Tổng: $6+14+16+12+12+8+14+6+8+20+4=120$ phút.
 - $X_t$ từ C00 và C06 đi vào $\pi(a\mid x)$ và $\mathcal A(x)$ ở D02–D03. Trường hợp $X_t=S_t$ được nêu riêng.
 - D04 chốt phạm vi D04–D09 là quan sát đầy đủ $X_t=S_t$ với chính sách Markov $\pi(a\mid s)$. Quỹ đạo $(-1,-1)$ tạo $G_t=-1-\gamma$ trước khi tổng quát hóa; D05–D06 dùng đúng giả thiết này.
 - E00 cố định bản đồ, tọa độ, $\mathcal A$, thưởng và điều kiện dừng. E02–E04 không thay các quy ước đó khi đổi giao diện quan sát.
-- D07 không phụ thuộc E00 tương lai: trang tự nêu quy ước tối thiểu (mê cung lưới, chuyển tất định, mỗi chuyển tiếp $-1$) rồi mới đi tới mô hình; sản phẩm phân biệt động lực $p$ với mô hình ước lượng $\hat p$.
+- D07 không phụ thuộc E00 tương lai: trang tự nêu quy ước tối thiểu (mê cung lưới, chuyển tất định, mỗi chuyển tiếp $-1$). Ví dụ $1/0$ truyền sang D07B để định nghĩa phân phối chuẩn hóa và phân biệt động lực $p$ với mô hình ước lượng $\hat p$.
 
 ## Bản đồ từng trang
 
@@ -60,17 +61,22 @@ Tổng: $6+14+16+12+12+8+14+6+8+20+4=120$ phút.
 | D04 | Trong trường hợp $X_t=S_t$, quỹ đạo $(-1,-1)$ cho $G_t=-1-\gamma$ rồi dẫn tới công thức tổng. | A02, B04, D02 | Chốt chính sách Markov và định nghĩa phần thưởng tích lũy theo thứ tự ví dụ → hình thức. | “Giá trị là kỳ vọng của đại lượng này.” |
 | D05 | $v_\pi$ đánh giá tương lai dưới chính sách cố định. | D04 | Định nghĩa hàm giá trị trạng thái. | “Kỳ vọng gộp nhiều quỹ đạo.” |
 | D06 | Kỳ vọng không bảo đảm từng quỹ đạo. | D05 | Tính $2{,}5$. | “Mô hình trả lời câu hỏi khác.” |
-| D07 | Chuyển tiếp mê cung tất định có xác suất $1$ cho kết quả đúng, $0$ cho kết quả khác. | Quy ước tối thiểu tự nêu trên chính trang: mê cung lưới, chuyển tất định, mỗi chuyển tiếp $-1$ | Đi từ ví dụ $1/0$ tới mô hình rời rạc chuẩn hóa; phân biệt động lực $p$ với mô hình ước lượng $\hat p$. | “Dự đoán và điều khiển dùng các vai trò khác nhau.” |
-| D08 | Dự đoán giữ $\pi$; điều khiển cải thiện $\pi$. | D02, D05 | Phân biệt hai bài toán. | “Kiểm tra bằng ba phát biểu.” |
+| D07 | Chuyển tiếp mê cung tất định có xác suất $1$ cho kết quả đúng, $0$ cho kết quả khác. | Quy ước tối thiểu tự nêu trên chính trang: mê cung lưới, chuyển tất định, mỗi chuyển tiếp $-1$ | Có ví dụ tính được trước khi định nghĩa tổng quát. | “Khái quát ví dụ thành phân phối có điều kiện.” |
+| D07B | Mô hình chung là phân phối chuẩn hóa của trạng thái và phần thưởng kế tiếp. | D07 | Định nghĩa $p(s',r\mid s,a)$, điều kiện chuẩn hóa và phân biệt $p$ với $\hat p$. | “Mô hình một bước này có phạm vi và sai số nào?” |
+| D10 | Mô hình dự báo cục bộ có điều kiện: câu mở là cầu nối vấn đề — mô hình một bước ở phần trước hữu ích nhưng có phạm vi và sai số, nên cần phân biệt với mô hình hoàn thiện; một luận điểm trung tâm, không quá tải. | D07B | Phân biệt mô hình cục bộ với "mô hình hoàn thiện về thế giới" bằng phạm vi và độ tin cậy; không suy diễn hệ thống AI bắt buộc cần mô hình tường minh; kết nối ra: dẫn sang phân biệt dự đoán và điều khiển. | “Dự đoán và điều khiển dùng các vai trò khác nhau.” |
+| D08 | Dự đoán giữ $\pi$; điều khiển cải thiện $\pi$. | D10, D02, D05 | Nhận câu nối từ D10 và phân biệt hai bài toán dựa trên vai trò đã tách. | “Kiểm tra bằng ba phát biểu.” |
 | D09 | Mỗi vai trò có đầu ra riêng. | D00–D08 | Ghép đúng phát biểu. | “Áp toàn bộ vào mê cung.” |
 | E00 | Mê cung cố định có đặc tả $S,A,R$ và kết thúc rõ. | D09 | Có tọa độ, hành động, thưởng đích và va tường. | “Viết một chuyển tiếp.” |
 | E02 | Chuyển tiếp mê cung giữ đúng chỉ số và tọa độ. | E00, A02 | Áp dụng ký hiệu. | “Đổi quan sát nhưng giữ môi trường.” |
 | E03 | Tính Markov không phụ thuộc tác tử biết mô hình. | C03, E00 | Tách trạng thái khỏi kiến thức tác tử. | “Ảnh cục bộ tạo nhập nhằng.” |
 | E04 | Ảnh cục bộ có thể là quan sát một phần. | E03, C05 | Nêu bằng chứng và vai trò lịch sử. | “Nối các kết quả thành toàn bộ vòng tương tác.” |
 | E05 | Lịch sử → biểu diễn → chính sách → phản hồi là trục bài; mê cung thu hồi bốn trục mở đầu. | Toàn bài | Tái dựng $X_t=f(H_t)$ trong vòng giao diện và vai trò của giá trị, mô hình. | “Tự kiểm tra trước khi sang bài tiếp.” |
-| Z00 | Nơi duy nhất nêu tuyến chi tiết Bài 03 và phân tuyến bài tập. | E05 | Tự kiểm bốn đầu ra và biết tuyến bài kế tiếp. | “Nhấn xuống để chữa Bài 1–2.” |
+| Z00 | Nơi duy nhất nêu tuyến chi tiết Bài 03 và phân tuyến bài tập. | E05 | Tự kiểm bốn đầu ra, biết tuyến bài kế tiếp và phân tuyến bài tập (1, 2, 5, 6 chính; 10 mở rộng; 3, 4, 7, 8, 9 sau Bài 03); ghi chú đọc thêm Sutton & Barto Chương 3 và Silver Lecture 2. | “Nhấn xuống để chữa bài tập tuần 2.” |
 | X01 | Đối chiếu ba dạng học và giải thích phản hồi trễ. | B00–B03 | Trả lời đúng Bài 1 nguồn. | “Áp vào mê cung.” |
-| X02 | Mô hình hóa mê cung trong hai thiết lập quan sát. | C04–C06, E00–E04 | Trả lời đúng Bài 2 nguồn. | Kết thúc phần chữa bài. |
+| X02 | Mô hình hóa mê cung trong hai thiết lập quan sát. | C04–C06, E00–E04 | Trả lời đúng Bài 2 nguồn. | “Tính tổng phần thưởng chiết khấu.” |
+| X05 | Tính $G_0$ và $G_1$ cho dãy thưởng cho trước với $\gamma=0{,}5$. | D04–D05 | Trả lời đúng Bài 5 nguồn ($G_0=3$, $G_1=4$). | “Kiểm tra chuẩn hóa chính sách.” |
+| X06 | Kiểm tra chuẩn hóa và phân loại chính sách ngẫu nhiên. | D02–D03 | Trả lời đúng Bài 6 nguồn ($\pi(\text{Nam}\mid s)=0{,}3$, ngẫu nhiên). | “Mở rộng sang bài toán thực tế.” |
+| X10 | Mô hình hóa một bài toán thực tế bằng trạng thái, hành động, chuyển tiếp, phần thưởng và điều kiện kết thúc/tiếp diễn. | E00–E04 | Trả lời đúng Bài 10 nguồn (mở rộng); không cần $q_\pi$ hay Bellman. | Kết thúc phần chữa bài. |
 
 ## Quyết định bố cục và rà lân cận
 
@@ -78,6 +84,9 @@ Tổng: $6+14+16+12+12+8+14+6+8+20+4=120$ phút.
 - Sau mỗi lần gộp, đã rà lại hai trang trước và hai trang sau: P01–A03, A03–B03, B04–C03, C05–D03 và D08–E03. Không còn tham chiếu tới mã đã bỏ; câu nối đã được viết lại.
 - Cụm D được tách thành bốn vi chu trình: chính sách (bắt đầu D02); giá trị (bắt đầu D04); mô hình (bắt đầu D07); dự đoán và điều khiển (bắt đầu D08). D00 chỉ là trang mở phần dùng chung. Không coi chín trang là một chu trình duy nhất.
 - A04 giấu đáp án bằng fragment; đáp án đầy đủ nằm trong ghi chú.
-- X01–X02 giữ nguyên văn nhiệm vụ cốt lõi của `hw02.pdf` và ở nhánh dọc của Z00.
+- X01, X02, X05, X06 giữ nguyên tinh thần nhiệm vụ của `hw02.pdf` Bài 1, 2, 5, 6 và X10 giữ nhiệm vụ Bài 10; cả năm trang ở nhánh dọc của Z00, ngoài 120 phút tuyến chính.
+- D07B và D10 dùng HTML/KaTeX, không thêm SVG; đặt theo thứ tự D07 → D07B → D10 → D08 trong cùng cụm vai trò.
 - Cụm mê cung có 20 phút để người học đặc tả, tính một chuyển tiếp, so sánh hai giao diện và giải thích quan sát một phần.
-- Vòng sửa cuối rà lại hai trang lân cận quanh C03, D04, D07, E05 và Z00: C02–C05, D02–D06, D05–D09 và E03–X02. Câu nối và giả thiết được giữ liên tục; không đổi số lượng hoặc thứ tự trang.
+- Vòng sửa hiển thị tách D07 thành D07 và D07B, đồng thời xuống dòng công thức C03. Phạm vi rà lại gồm C02–C05 và D05–D09; câu nối và giả thiết phải giữ liên tục sau khi số trang chính tăng từ 35 lên 36.
+- Vai trò và kết nối vào–ra quanh D10: D07 truyền ví dụ $1/0$ sang định nghĩa tổng quát ở D07B; D07B truyền mô hình một bước sang D10 để xét phạm vi và sai số; D10 kết nối ra D08 để phân biệt dự đoán với điều khiển. Mỗi trang có một luận điểm trung tâm.
+- Thứ tự deck: cụm A (giao diện tương tác, topic-02) đứng trước cụm B (tín hiệu học, topic-01), khác thứ tự note. Lý do: dựng ranh giới tác tử–môi trường và chỉ số thời gian trước khi so sánh các tín hiệu học; khác thứ tự note nhưng không đổi logic.

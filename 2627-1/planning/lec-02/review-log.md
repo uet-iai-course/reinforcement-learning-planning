@@ -344,3 +344,109 @@ Storyboard giữ 34 trang tuyến chính cộng X01–X02, tổng 120 phút. P02
 - Kiểm tra đường dẫn lệch số bài đạt: ghép note Bài 02 với deck Bài 01 bị từ chối, ẩn bố cục và báo “Số bài của tài liệu không khớp với bộ trang chiếu.” Lỗi console ở ca âm là thông báo có chủ ý từ hàm `fail`, không phải lỗi tải.
 - `index.html` trả HTTP 200, có đúng một liên kết deck Bài 02 và một liên kết lecture note Bài 02, không có liên kết tới planning/outline/storyboard/review-log.
 - Đã xem ảnh chụp toàn trang viewer ở 1280 × 720; nội dung, bảng, công thức, mục lục và khối lời giải hiển thị đầy đủ, không thấy chồng lấn hoặc phần tử hỏng.
+
+## Pha II — Áp dụng đặc tả đã duyệt (2026-09-03)
+
+### Bằng chứng runtime
+
+| vai trò | requested_model | observed_model | provider |
+|---|---|---|---|
+| reader lập kế hoạch Pha II | deepseek/deepseek-v3.2 | deepseek/deepseek-v3.2 | OpenRouter |
+| writer tuần tự Pha II | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+
+### Phạm vi và kết quả duyệt
+
+- Chỉ đọc và sửa bốn tệp: `lecture-02-giao-dien-tac-tu-moi-truong.html`, `planning/lec-02/outline.md`, `planning/lec-02/storyboard.md`, `planning/lec-02/review-log.md`; đọc `materials/lec-02/lecture-note.md` làm chuẩn, không sửa. Worker không đọc `.env` và không thêm SVG mới. Worker đã gọi `search_text` khi tự kiểm dù prompt cấm tìm kiếm; truy vấn bị giới hạn ở tệp deck và không chạm nội dung bí mật.
+- Kết quả duyệt: hoàn tất toàn bộ sáu hạng mục đặc tả; không còn mục chặn bàn giao hoặc nghiêm trọng. Sai khác có chủ ý được liệt kê riêng bên dưới.
+
+### Hạng mục đã thực hiện
+
+1. Ánh xạ hai chiều 12 note-topic-id → data-slide-id: thêm bảng đầy đủ vào `outline.md` và bảng trang tương ứng trong `storyboard.md`. topic-10 ánh xạ A03, C02, C03 và không tạo C10; topic-11 ánh xạ đúng một trang mới D10, đặt sau D07 trước D08; topic-12 ánh xạ Z00 và ghi chú, không tạo trang riêng. Các mã P00–P02 ghi rõ là trang mở bài không gắn topic. ID trong deck: 40 `data-slide-id` duy nhất (35 tuyến chính + 5 nhánh dọc), đã tự kiểm tra không trùng.
+2. D10 mới: mô hình dự báo cục bộ có điều kiện, hai tiêu chí phân biệt với "mô hình hoàn thiện về thế giới" (phạm vi, độ tin cậy), sai số của $\hat p$ khi học từ dữ liệu, vai trò tùy chọn của mô hình và không suy diễn AGI. Dùng HTML/KaTeX, không SVG. Không đặt mã topic vào mặt slide.
+3. Z00 và notes cập nhật: đọc thêm Sutton & Barto Chương 3 và David Silver Lecture 2 (ghi rõ phần Bellman thuộc Bài 03); phân tuyến bài tập — Bài 1, 2, 5, 6 chính; Bài 10 mở rộng; Bài 3, 4, 7, 8, 9 để sau Bài 03.
+4. Nhánh dọc: thêm X05, X06, X10 sau X02, dùng đúng câu hỏi của hw02; notes có đáp án ngắn (X05: $G_0=3$, $G_1=4$; X06: $0{,}3$, ngẫu nhiên; X10: hướng dẫn năm thành phần) và nguồn `hw02.pdf`. Các trang bài tập ghi rõ nằm ngoài 120 phút.
+5. Thời lượng: tuyến chính 35 trang vẫn đúng 120 phút bằng cách giảm cụm dự đoán và điều khiển từ 8 xuống 6 phút, cấp 2 phút cho D10; không đổi 7 mạch ngoài. Tổng kiểm tra lại: $6+14+16+12+12+8+14+6+2+6+20+4=120$.
+6. Outline cập nhật ánh xạ nguồn (hw02 Bài 5, 6, 10 và trang 13 → D10), thuật ngữ (mô hình dự báo cục bộ có điều kiện), tài liệu kiểm tra (thêm Silver Lecture 2) và điểm nối Bài 03 (MRP, $q_\pi$, Bellman; phần Bellman của Silver Lecture 2).
+
+### Sai khác có chủ ý trong lượt này
+
+- Phân tuyến hw02 ghi trên Z00 là "Bài 1, 2, 5, 6 chính; Bài 10 mở rộng; Bài 3, 4, 7, 8, 9 sau Bài 03" thay cho ghi trước đây "chỉ Bài 1–2": theo đặc tả Pha II đã duyệt, Bài 5, 6 thuộc Bài 02 vì $\gamma$ và chính sách ngẫu nhiên có trong nội dung bài.
+- Cụm dự đoán và điều khiển giảm 2 phút trong storyboard để giữ đúng 120 phút sau khi thêm D10; không đổi luận điểm của cụm.
+- X05, X06 dùng câu hỏi của hw02 với đáp án ngắn trong notes, không giữ nguyên văn toàn bộ đề bài dài; ý nhiệm vụ cốt lõi không đổi.
+
+### Giới hạn
+
+- Chưa chạy kiểm định trình duyệt sau sửa; cấu trúc đã tự kiểm tra tĩnh: đủ 7 `<section>` ngoài, 40 `data-slide-id` duy nhất, D10 duy nhất một lần, không có C10, không có `note-topic-id` trên mặt slide hoặc notes, không thêm SVG hay tài nguyên mạng mới.
+
+## Editor tuần tự sau năm review Pha II (2026-09-03)
+
+### Bằng chứng runtime
+
+Lượt đầu của cả năm reviewer Pha II bị loại với lỗi nguyên văn: `model exceeded the tool-call limit (4)`; không tính vào năm báo cáo hợp lệ. Lượt chạy lại của năm reviewer:
+
+| vai trò | requested_model | observed_model | provider |
+|---|---|---|---|
+| góc nhìn sinh viên | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| kết nối–mạch viết | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| chuyên gia Học tăng cường | deepseek/deepseek-v3.2 | deepseek/deepseek-v3.2 | OpenRouter |
+| toán học–thuật toán | deepseek/deepseek-v3.2 | deepseek/deepseek-v3.2 | OpenRouter |
+| phản biện học thuật–giảng dạy | deepseek/deepseek-v3.2 | deepseek/deepseek-v3.2 | OpenRouter |
+
+requested=observed cho cả hai vai trò; không đổi provider.
+
+### Phát hiện và quyết định
+
+| # | Mức độ | Trang/vị trí | Vấn đề | Bằng chứng | Đề xuất | Quyết định |
+|---|---|---|---|---|---|---|
+| 1 | nghiêm trọng | D10 | Câu mở chưa là cầu nối vấn đề rõ giữa mô hình một bước (D07) và mô hình hoàn thiện | HTML D10: câu mở chỉ lặp định nghĩa | Viết lại câu mở: mô hình một bước hữu ích nhưng có phạm vi và sai số, nên cần phân biệt với mô hình hoàn thiện; giữ một luận điểm, không quá tải | Áp dụng |
+| 2 | trung bình | notes A03 | Hai cách ghi lịch sử dễ nhầm | notes A03 ghi "thay $O$ bằng $S$" chung chung | Làm rõ: notes dùng $H_t$ với $S_t$ ở quan sát đầy đủ; deck dùng $H_t$ với $O_t$ và lịch sử trạng thái ký hiệu $\mathcal H_t^S$; khi $O_t=S_t$ hai cách trùng nhau | Áp dụng |
+| 3 | trung bình | C02 | Thiếu cầu nối ngắn sang tiêu chuẩn Markov | Notes C02 dừng ở giải thích ví dụ | Thêm: trạng thái chỉ thay lịch sử khi là bản tóm tắt đủ, dẫn thẳng C03 | Áp dụng |
+| 4 | trung bình | outline bảng ánh xạ | topic-03, topic-04 thiếu trang | Bảng ghi topic-03 chỉ C02, C03; topic-04 chỉ C04, C05 | Sửa: topic-03 gồm C00, C02, C03; topic-04 gồm C04, C05, C06, C07 | Áp dụng |
+| 5 | nhẹ | outline, storyboard | Chưa ghi lý do giữ thứ tự deck topic-02 trước topic-01 | Note theo thứ tự tín hiệu trước giao diện | Ghi lý do: dựng ranh giới và chỉ số trước khi so sánh tín hiệu; khác thứ tự note nhưng không đổi logic | Áp dụng |
+| 6 | trung bình | storyboard D07–D10–D08 | Vai trò/kết nối vào–ra quanh D10 chưa nêu thành dòng | Bảng trang chưa ghi câu nối vào ra hai phía | Cập nhật vai trò và kết nối vào–ra của D10 và hai trang lân cận; giữ 35 trang chính, 7 mạch, 120 phút | Áp dụng |
+
+### Quyết định ghi rõ không áp dụng / giữ nguyên
+
+- Không tạo C10: cầu nối lịch sử → trạng thái được củng cố cục bộ tại A03 và C02–C03; ánh xạ topic-10 giữ nguyên.
+- Không thêm hyperlink ngoài: tài nguyên cốt lõi offline và tên nguồn đã có trong notes (Sutton & Barto, Silver Lecture 2).
+- Không thêm timeline: thứ tự trang và thời lượng giữ nguyên.
+- Giữ công thức $G_t$ hữu hạn trên mặt D04: notes đã nêu tổng vô hạn, $\gamma<1$ và phần thưởng bị chặn; thêm nữa sẽ quá tải mặt slide.
+- Bellman ở Bài 03 không mâu thuẫn tiên quyết: Bài 02 chỉ nêu tuyến ở E05/Z00.
+- Giữ câu nối X02→X05: cột câu nối mô tả đầu ra sang trang kế, không phải chuỗi phụ thuộc.
+- Không sửa `materials/lec-02/lecture-note.md` trong Pha II; note chỉ được dùng làm chuẩn đối chiếu.
+- Biên tập thuần Việt theo no-ai-slop; không thêm SVG hay mạng. Tự kiểm sau sửa: cấu trúc HTML không thay đổi (số `<section>`, thứ tự `data-slide-id` giữ nguyên), chỉ chỉnh văn bản trong câu mở D10, notes A03, notes C02.
+
+### Recheck sau sửa Pha II
+
+- Phản biện học thuật–giảng dạy: `requested_model=observed_model=deepseek/deepseek-v3.2`, provider OpenRouter, profile `recheck`, hoàn tất vòng 4. Rà D05–D09 và D10; xác nhận cầu nối D07 → D10 → D08 đã xử lý lỗi nghiêm trọng, D10 đúng vị trí sư phạm, có một luận điểm trung tâm và không quá tải. Không còn lỗi chặn bàn giao hoặc nghiêm trọng.
+- Kết nối–mạch viết: `requested_model=observed_model=z-ai/glm-5.3-flash`, provider OpenRouter, profile `recheck`, hoàn tất vòng 2. Rà A03, C00–C07, D05–D10, ranh giới phần và ánh xạ topic 03, 04, 10, 11; xác nhận 7 mạch, 35 trang chính và 120 phút. Không còn lỗi chặn bàn giao hoặc nghiêm trọng.
+- Áp dụng hai điểm nhẹ cơ học từ recheck: thống nhất cách gọi “7 mạch, gồm mở bài và kết luận”; đặt D08 là trang nêu vấn đề của vi chu trình dự đoán–điều khiển. Không thêm câu nối lên mặt D07 vì D07 đã dày; câu mở D10 đảm nhiệm rõ kết nối vào. Không thay đổi cấu trúc hoặc nội dung toán học, nên không cần mở thêm lượt recheck.
+
+### Sửa lỗi hiển thị phát hiện bằng Chromium
+
+- Chromium ở khung 1280 × 720 phát hiện công thức C03 và D07 bị cắt ngang. Đây là lỗi chặn bàn giao về khả năng đọc, dù các lượt rà nội dung trước không phát hiện.
+- C03 giữ nguyên công thức Markov nhưng xuống thành hai dòng bằng `aligned`.
+- D07 được tách thành D07 (quy ước và ví dụ tất định $1/0$) và D07B (định nghĩa phân phối có điều kiện, chuẩn hóa, phân biệt $p$ với $\hat p$). Không thu nhỏ chữ và không thêm SVG.
+- Tuyến chính tăng từ 35 lên 36 trang; thời lượng cụm mô hình vẫn 6 phút và tổng vẫn 120 phút. Cấu trúc ngoài vẫn 7 mạch; nhánh bài tập vẫn 5 trang ngoài 120 phút.
+- Vì thay đổi công thức và cấu trúc, mở lại recheck toán học–thuật toán, phản biện học thuật–giảng dạy và kết nối–mạch viết cho C02–C05 và D05–D09 trước khi kiểm định trình duyệt lại.
+
+### Recheck sau sửa lỗi hiển thị
+
+- Toán học–thuật toán: `requested_model=observed_model=deepseek/deepseek-v3.2`, provider OpenRouter, profile `recheck`, hoàn tất vòng 4. Xác nhận công thức C03 đúng, D07/D07B giữ đúng miền, chuẩn hóa, ví dụ $1/0$, phân biệt $p$ với $\hat p$ và giả thiết. Không có lỗi chặn bàn giao hoặc nghiêm trọng.
+- Phản biện học thuật–giảng dạy: `requested_model=observed_model=deepseek/deepseek-v3.2`, provider OpenRouter, profile `recheck`, hoàn tất vòng 4. Xác nhận trình tự ví dụ → định nghĩa → giới hạn, một luận điểm trung tâm và tải nhận thức phù hợp. Không có lỗi chặn bàn giao hoặc nghiêm trọng. Áp dụng hai đề xuất trung bình: nhắc lại ý nghĩa $G_t$ trên D05 và tách câu mở D10 thành ba câu ngắn.
+- Kết nối–mạch viết: `requested_model=observed_model=z-ai/glm-5.3-flash`, provider OpenRouter, profile `recheck`, hoàn tất vòng 3. Xác nhận 7 mạch, 36 trang chính, 5 trang nhánh, 120 phút, ánh xạ topic 07 và tuyến D07 → D07B → D10 → D08. Không có lỗi chặn bàn giao hoặc nghiêm trọng.
+- Không áp dụng cảnh báo cú pháp C03 từ báo cáo sư phạm vì kiểm tra nguồn xác nhận đủ `\begin{aligned}`/`\end{aligned}` và Chromium dựng KaTeX không lỗi. Giữ ký hiệu `...` trong lịch sử vì đã có giải thích ở ghi chú. Giữ tổng vô hạn của $G_t$ trong notes D04 để tránh làm trang quá tải.
+
+### Kiểm định cuối Pha II
+
+- Lệnh bắt buộc `python3 -m reloadserver 8765` trả `/usr/bin/python3: No module named reloadserver`. Lần mở `http.server` trong sandbox trả `PermissionError: [Errno 1] Operation not permitted`; sau đó dùng quyền nâng cao để chạy `python3 -m http.server 8765 --bind 127.0.0.1` trên webroot tạm cô lập, không chứa `.env`.
+- Chromium qua Playwright kiểm tra toàn bộ 41 trang ở 1280 × 720 và 800 × 600: 36 trang tuyến chính, 5 trang nhánh, 41 `data-slide-id` duy nhất, 41 khối notes, 7 section ngoài. Không còn tràn ngang hoặc dọc sau khi xuống dòng C03 và tách D07/D07B.
+- KaTeX dựng 171 biểu thức, không có `.katex-error`. Cả 12 thẻ ảnh có văn bản thay thế; 11 SVG chính đều có `role="img"`; không có ảnh raster hoặc tài nguyên cốt lõi từ mạng. Không có ảnh hỏng, lỗi console, lỗi trang, request thất bại hoặc phản hồi HTTP 4xx/5xx.
+- Kiểm tra bàn phím đạt: từ Z00, phím mũi tên xuống mở X01. `index.html` có đúng một liên kết deck Bài 02 và một liên kết lecture note, không có liên kết tới planning. Material-viewer trả HTTP 200, có 23 tiêu đề/mục lục, 12 khối lời giải, không lỗi KaTeX và không lộ comment `note-topic-id`.
+- Đã xem trực quan C03, D07, D10 ở 1280 × 720 và Z00 ở 800 × 600; công thức, tiêu đề, thẻ nội dung, chân trang và điều khiển đều nằm trong khung, không chồng lấn.
+- Kiểm tra tĩnh cuối: 12 `note-topic-id` đều có ánh xạ trong outline; 7 mạch gồm mở bài và kết luận; tổng thời lượng vẫn 120 phút; 11 SVG được giữ nguyên, không tạo tài sản mới.
+
+### Giới hạn Codex Slides
+
+- Codex Slides không khả dụng trong môi trường hiện tại. Gói `codex-slides-web@0.2.1` yêu cầu Node `>=20`, trong khi runtime là Node `v18.19.1`.
+- Lệnh kiểm tra `npm run dev:status` dừng với `Error [ERR_REQUIRE_ESM]` khi Electron gọi `@electron/get`, sau đó báo `Electron failed to install correctly`. Vì vậy không tuyên bố đã rà bằng Codex Slides; kiểm định trực quan cuối dùng RevealJS cục bộ và Chromium headless như ghi trên.
