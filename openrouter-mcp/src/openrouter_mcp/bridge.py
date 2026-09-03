@@ -93,17 +93,17 @@ class TaskProfile:
 
 
 TASK_PROFILES = {
-    # Defaults below are the stable envelope observed across lectures 01--07.
-    # Scope remains the primary control: one note/deck per reviewer and one
-    # coherent artifact per writer invocation.
+    # Stable envelope observed through lecture 11. Scope remains the primary
+    # control: one note/deck per reviewer and one coherent artifact per writer.
+    # In particular, do not combine a minified HTML deck with planning edits.
     "general": TaskProfile(12, 600.0, 10_000, 0.1, 1, "low"),
     "plan": TaskProfile(12, 600.0, 16_000, 0.1, 1, "low"),
     "source": TaskProfile(14, 600.0, 18_000, 0.1, 1, "low"),
     "storyboard": TaskProfile(10, 600.0, 12_000, 0.1, 1, "low"),
-    "review": TaskProfile(8, 600.0, 12_000, 0.1, 1, "low"),
+    "review": TaskProfile(8, 600.0, 8_000, 0.1, 1, "low"),
     "write": TaskProfile(20, 900.0, 32_000, 0.1, 1, "low"),
-    "recheck": TaskProfile(6, 600.0, 10_000, 0.1, 1, "low"),
-    "patch": TaskProfile(6, 300.0, 7_000, 0.1, 1, "low"),
+    "recheck": TaskProfile(5, 600.0, 4_000, 0.1, 1, "low"),
+    "patch": TaskProfile(10, 300.0, 6_000, 0.1, 1, "low"),
 }
 
 

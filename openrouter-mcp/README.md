@@ -104,12 +104,12 @@ token hoàn tất và reasoning token khi nhà cung cấp trả các trường n
 | Hồ sơ | Vòng | Timeout mỗi API | Token đầu ra | Dùng cho |
 |---|---:|---:|---:|---|
 | `plan` | 12 | 600 giây | 16.000 | Lập kế hoạch |
-| `source` | 20 | 600 giây | 24.000 | Phân tích và ánh xạ nguồn |
+| `source` | 14 | 600 giây | 18.000 | Phân tích và ánh xạ nguồn |
 | `storyboard` | 10 | 600 giây | 12.000 | Kiểm định storyboard |
-| `review` | 8 | 600 giây | 12.000 | Năm rà soát độc lập |
+| `review` | 8 | 600 giây | 8.000 | Năm rà soát độc lập |
 | `write` | 20 | 900 giây | 32.000 | Soạn một sản phẩm hoàn chỉnh đã cô lập |
-| `recheck` | 6 | 600 giây | 10.000 | Rà lại đúng một note/deck; báo cáo ngắn |
-| `patch` | 6 | 300 giây | 7.000 | Sửa một hoặc hai khối độc lập |
+| `recheck` | 5 | 600 giây | 4.000 | Rà lại đúng một note/deck; báo cáo ngắn |
+| `patch` | 10 | 300 giây | 6.000 | Sửa một hoặc hai khối độc lập |
 
 Ví dụ:
 
@@ -138,6 +138,11 @@ Model được chọn phải hỗ trợ tham số `tools` trên OpenRouter.
 
 Các preset là ngân sách tối đa, không thay cho việc cô lập đầu vào. Reviewer
 DeepSeek chỉ nhận đúng một note hoặc deck và được yêu cầu đọc tệp đó một lần.
+Với deck HTML nén, không giao cùng lượt việc gắn hàng chục thuộc tính, sửa nội
+dung và cập nhật planning. Thực hiện ánh xạ cơ học trước, sau đó chạy một patch
+cho HTML và một patch riêng cho outline/storyboard. Thử nghiệm Bài 11 cho thấy
+một writer gộp ba tệp đã dùng hết 20.000 token trước khi gọi công cụ; các patch
+cô lập hoàn tất trong 4–7 lượt với ngân sách 6.000 token.
 Writer `write` chỉ soạn một sản phẩm; mọi hàng đợi chỉnh sửa sau review phải
 tách thành các lượt `patch`, mỗi lượt tối đa hai khối độc lập. Cách chia này
 tránh hai lỗi đã lặp ở Bài 04–07: cạn vòng gọi công cụ và
