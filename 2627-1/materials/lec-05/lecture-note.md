@@ -113,7 +113,7 @@ Mười lăm topic với bốn nhãn bắt buộc: **cốt lõi** = 01, 02, 03, 
 - Vai trò trong mạch: giải thích vì sao đích khác nhau tạo đánh đổi khác nhau, không xếp hạng phổ quát.
 - Kết nối vào: hai đích $G_t$ và $Y_t^{\mathrm{TD}}$ (topic 02, 07).
 - Kết nối ra: tiêu chí chọn (topic 14) và bài tập hw05 Bài 4.
-- Nguồn: tr. 26–28, 31; slide C02–C04.
+- Nguồn: tr. 26–28, 31; slide C02–C03.
 
 ### lec-05-topic-14 — Tiêu chí chọn, giới hạn và phạm vi
 
@@ -121,7 +121,7 @@ Mười lăm topic với bốn nhãn bắt buộc: **cốt lõi** = 01, 02, 03, 
 - Vai trò trong mạch: chuyển cơ chế thành tiêu chí lựa chọn và chặn suy diễn quá phạm vi.
 - Kết nối vào: topic 06, 11, 13.
 - Kết nối ra: tổng hợp (topic 15).
-- Nguồn: tr. 15, 28, 31–33; slide C04, C06.
+- Nguồn: tr. 15, 28, 31–33; slide C04, C06–C07.
 
 ### lec-05-topic-15 — Tổng hợp, cầu nối Bài 06 và bài tập hw05 B7/B3/B4
 

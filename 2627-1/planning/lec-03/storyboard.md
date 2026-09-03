@@ -23,21 +23,21 @@ Phân bổ phần bài tập 30 phút: X03 12 phút, X04 10 phút, X08 8 phút; 
 
 | Topic lecture note | Slide deck |
 |---|---|
-| topic01 Chuỗi Markov | A02, A00, A01, A03, A04, A05, X03 |
-| topic02 MRP | B01, B00 |
-| topic03 $G_t$ sang kỳ vọng | B02, B03 |
-| topic04 Giá trị trạng thái | B04 |
-| topic05 Bellman MRP | C00, C01, C02 |
-| topic06 Dạng ma trận/giải hệ/$\gamma=1$ | C03, C04, C05, C06, X03 |
-| topic07 MDP và hạt nhân chung | D01, D00, D09, D10 |
-| topic08 Chính sách | D02 |
-| topic09 MRP cảm sinh | D03, D04, X04 |
-| topic10 $v_\pi$ | D05 |
-| topic11 $q_\pi$ | D05, D06, X07 |
-| topic12 Bellman kỳ vọng | D07, D08, X08 |
-| topic13 Tổng kết | D11, D12, D13 |
+| `lec-03-topic-01` Chuỗi Markov | A02, A00, A01, A03, A04, A05, X03 |
+| `lec-03-topic-02` MRP | B01, B00 |
+| `lec-03-topic-03` $G_t$ sang kỳ vọng | B02, B03 |
+| `lec-03-topic-04` Giá trị trạng thái | B04 |
+| `lec-03-topic-05` Bellman MRP | C00, C01, C02 |
+| `lec-03-topic-06` Dạng ma trận/giải hệ/$\gamma=1$ | C03, C04, C05, C06, X03 |
+| `lec-03-topic-07` MDP và hạt nhân chung | D01, D00, D09, D10 |
+| `lec-03-topic-08` Chính sách | D02 |
+| `lec-03-topic-09` MRP cảm sinh | D03, D04, X04 |
+| `lec-03-topic-10` $v_\pi$ | D05 |
+| `lec-03-topic-11` $q_\pi$ | D05, D06, X07 |
+| `lec-03-topic-12` Bellman kỳ vọng | D07, D08, X08 |
+| `lec-03-topic-13` Tổng kết | D11, D12, D13 |
 
-Ghi chú: P00, P01 tạo khung phạm vi và mục tiêu cho cả 13 topic; P02 nối topic01, topic02, topic07, topic13. Ánh xạ phủ đủ 39 data-slide-id (35 trang chính + 4 trang dọc).
+Ghi chú: bảng ánh xạ trực tiếp 36/39 `data-slide-id`. P00, P01 tạo khung phạm vi và mục tiêu cho cả 13 topic; P02 nối `lec-03-topic-01`, `lec-03-topic-02`, `lec-03-topic-07`, `lec-03-topic-13`. Ba trang P00–P02 được ánh xạ ở mức khung toàn bài; deck gồm 35 trang chính và 4 trang dọc.
 
 ## Cấu trúc section ngoài
 

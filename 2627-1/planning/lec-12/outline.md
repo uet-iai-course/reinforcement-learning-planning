@@ -95,23 +95,23 @@ Ba bài tập `X01`–`X03` nằm ngoài 120 phút trình chiếu và dùng 30 p
 
 | note-topic-id | vai trò | data-slide-id |
 |---|---|---|
-| topic-01 | mở nền tảng | `L12-01`–`L12-06` |
-| topic-02 | hợp đồng trò chơi Markov | `L12-07`, `L12-07B`, `L12-08`, `L12-09`, `X01` |
-| topic-03 | CTDE | `L12-10`–`L12-12` |
-| topic-11 | cầu nối policy gradient/actor–critic | `L12-13` |
-| topic-04 | COMA | `L12-14`–`L12-17` |
-| topic-05 | VDN/QMIX | `L12-18`–`L12-22B`, `X02` |
-| topic-06 | MADDPG | `L12-23` |
-| topic-12 | cầu nối PPO | `L12-24` |
-| topic-07 | IPPO/MAPPO | `L12-25`–`L12-26` |
-| topic-08 | HAPPO/HATRPO | `L12-27`–`L12-28` |
-| topic-09 | benchmark | `L12-29`–`L12-32`, `L12-34`, `X03` |
-| topic-13 | framework | `L12-35`–`L12-37` |
-| topic-10 | giao tiếp | `L12-38`–`L12-44` |
-| topic-14 | đọc thêm benchmark | `L12-33` |
-| topic-15 | tài liệu/kết luận | `L12-45` |
+| lec-12-topic-01 | mở nền tảng | `L12-01`–`L12-06` |
+| lec-12-topic-02 | hợp đồng trò chơi Markov | `L12-07`, `L12-07B`, `L12-08`, `L12-09`, `X01` |
+| lec-12-topic-03 | CTDE | `L12-10`–`L12-12` |
+| lec-12-topic-11 | cầu nối policy gradient/actor–critic | `L12-13` |
+| lec-12-topic-04 | COMA | `L12-14`–`L12-17` |
+| lec-12-topic-05 | VDN/QMIX | `L12-18`–`L12-22B`, `X02` |
+| lec-12-topic-06 | MADDPG | `L12-23` |
+| lec-12-topic-12 | cầu nối PPO | `L12-24` |
+| lec-12-topic-07 | IPPO/MAPPO | `L12-25`–`L12-26` |
+| lec-12-topic-08 | HAPPO/HATRPO | `L12-27`–`L12-28` |
+| lec-12-topic-09 | benchmark | `L12-29`–`L12-32`, `L12-34`, `X03` |
+| lec-12-topic-13 | framework | `L12-35`–`L12-37` |
+| lec-12-topic-10 | giao tiếp | `L12-38`–`L12-44` |
+| lec-12-topic-14 | đọc thêm benchmark | `L12-33` |
+| lec-12-topic-15 | tài liệu/kết luận | `L12-45` |
 
-Mỗi trong 50 trang có đúng một topic chính; topic-14 và topic-15 được gấp vào trang có nội dung tương ứng để không thêm trang riêng. `X02` lấy topic-05 làm chủ đề chính nhưng đồng thời kiểm tra COMA, MADDPG và HAPPO thuộc topic-04, topic-06 và topic-08.
+Mỗi trong 50 trang có đúng một topic chính; lec-12-topic-14 và lec-12-topic-15 được gấp vào trang có nội dung tương ứng để không thêm trang riêng. `X02` lấy lec-12-topic-05 làm chủ đề chính nhưng đồng thời kiểm tra COMA, MADDPG và HAPPO thuộc lec-12-topic-04, lec-12-topic-06 và lec-12-topic-08.
 
 ## Kiểm kê và ánh xạ 76/76 media
 

@@ -160,7 +160,17 @@ mỗi lượt chỉ sửa 1–2 khối trong HTML nén hoặc Markdown. Một l�
 với trần 6 vòng đã ghi đủ phần lớn thay đổi nhưng kết thúc bằng
 `tool_call_limit` sau replacement mismatch và đọc lại. Vì vậy không giao từ ba
 khối độc lập trở lên cho một lượt `patch`; chia thành các lượt 1–2 khối. Không
-tăng preset toàn cục khi chưa có lượt 8 vòng được kiểm chứng.
+tăng preset writer toàn cục. Lượt chuẩn hóa 50 thuộc tính lặp lại với
+`patch/5/300/5000` cũng ghi đủ thay đổi nhưng dừng ở `tool_call_limit`; thay đổi
+cơ học số lượng lớn phải dùng phép viết lại hàng loạt của điều phối viên rồi
+giao reviewer xác minh, không dùng một lệnh tool cho mỗi thuộc tính.
+
+Tái rà bốn tệp Bài 12 bằng GLM ổn định với `recheck/8/300/6000`,
+`reasoning-effort=minimal`, khi prompt khóa bốn đường dẫn và yêu cầu
+`read_text_file` trực tiếp. Worker hoàn tất ở vòng 3; runtime trả
+`requested_model = observed_model = z-ai/glm-5.3-flash`, provider
+`OpenRouter`. Trần 6 vòng đã thất bại vì worker tự tìm sai vị trí HTML, nên
+giữ 8 vòng cho lượt rà bốn tệp và ghi rõ HTML nằm ở gốc `repo-root`.
 
 Hai cấu hình reader đầu tiên được kiểm chứng khi xử lý lecture note Bài 01
 ngày 02/09/2026. Cả hai trả

@@ -216,6 +216,27 @@ Bản chỉnh sửa đã xử lý mọi lỗi `chặn bàn giao` và `nghiêm tr
 - `git diff --check` đạt; cấu trúc 15 topic và 15 bộ exercise–hint–solution cân bằng; các đường dẫn note và deck trong thẻ Bài 05 hợp lệ.
 - Codex Slides không khả dụng trong môi trường hiện tại do Node.js 18 thấp hơn yêu cầu Node.js 20 của plugin. Pha ghi chú đã được kiểm đầy đủ bằng trình xem Markdown cục bộ, nhưng không tuyên bố đã rà trực quan bằng Codex Slides.
 
+## Hoàn thiện ánh xạ ghi chú–trang chiếu — 04-09-2026
+
+### Phát hiện của reader DeepSeek
+
+- Reader DeepSeek V4 Flash phát hiện bảng ánh xạ cũ trong outline bỏ sót C07 và còn 33 thay vì 34 trang.
+- Runtime `requested_model=observed_model=deepseek/deepseek-v4-flash-0731`, `provider=OpenRouter`, `reasoning=none`.
+
+### Chuẩn hóa của writer GLM
+
+- Writer GLM chuẩn hóa bảng ánh xạ ở outline và thêm bảng ánh xạ vào storyboard; không đổi nội dung, thứ tự, công thức hoặc SVG.
+- Runtime `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`, `reasoning=minimal`.
+
+### Kết quả ánh xạ
+
+- HTML được gắn đúng 34 `data-note-topic-id`; C07 thuộc topic-14; mỗi trang đúng một topic và đủ 15 topic.
+
+### Tái kiểm độc lập
+
+- GLM (mạch) PASS; DeepSeek (chuyên môn) PASS. DeepSeek nêu hai lỗi nhẹ ở tham chiếu note topic-13/14, đã sửa thành C02–C03 và C04,C06–C07.
+- Không còn lỗi chặn, nghiêm trọng hoặc trung bình.
+
 ## Pha đồng bộ bộ trang chiếu 2026-09-03
 
 ### Worker và bản nháp
@@ -254,3 +275,10 @@ Bản chỉnh sửa đã xử lý mọi lỗi `chặn bàn giao` và `nghiêm tr
 - Trình xem note đạt ở cả hai kích thước: 489 phần tử KaTeX, 15 bài tập, 30 khối `details`, 15 lời giải; không tràn ngang hay request lỗi, phím Enter mở được gợi ý đầu tiên.
 - Tự kiểm cuối theo `no-ai-slop/eval.md` giữ câu ngắn, không thêm lời dẫn rỗng, khẩu hiệu hay kết luận lặp. Rà theo Quill xác nhận mạch P→A→B→C→D, thuật ngữ và ký hiệu nhất quán; không tạo `quill.json`.
 - Codex Slides không khả dụng vì Node.js hiện tại là 18.19.1, thấp hơn yêu cầu Node.js 20 của plugin. Đã hoàn tất kiểm tra RevealJS cục bộ nhưng không tuyên bố đã rà trực quan bằng Codex Slides.
+
+## Tái kiểm cuối ánh xạ — 04-09-2026
+
+- Chromium duyệt lại đủ 34 trang ở 1280×720 và 800×600: 34 mã trang duy nhất, 34 `data-note-topic-id`, không lỗi KaTeX, console, tài nguyên, bàn phím hoặc phần tử vượt khung trang hiện tại.
+- Trình xem ghi chú đạt ở 1280×720 và 390×844: 489 phần tử KaTeX, 34 mục lục hợp lệ, không lỗi tải; phím Enter mở được khối `details`. Bảng và công thức rộng cuộn trong vùng riêng, còn thân tài liệu không cuộn ngang.
+- Ba Design Files hiện hữu `lecture-05-du-doan-phi-mo-hinh-2.html`, `outline-2.md`, `storyboard-2.md` đã được ghi lại trong dự án Codex Slides `20260824165326-chuy-n-lecture-5-d-o-n-phi-m-h-nh-monte--cp0p` và đọc lại khớp từng byte với kho.
+- Lệnh thêm `lecture-note.md` vào Design Files trả HTTP 500 trên runtime Node.js 18.19.1. Ghi chú vẫn được kiểm trực quan bằng trình xem cục bộ; không tuyên bố đã xem ghi chú hoặc deck bằng Codex in-editor Browser.

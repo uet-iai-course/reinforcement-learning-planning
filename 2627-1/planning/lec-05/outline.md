@@ -56,21 +56,23 @@ Note tự học tại `materials/lec-05/lecture-note.md` dùng 15 chủ đề du
 
 | Topic | Slide | Ghi chú |
 |---|---|---|
-| 01 | P00, P01, P02 | Đặt bài, giả thiết, $v_\pi$ vs $V_t$ |
-| 02 | A00, A01 | Lượt $e_1$, $G_t$, chỉ số $\gamma^k$ |
-| 03 | A02 | Thuật toán MC lần ghé đầu đầy đủ |
-| 04 | A03 | Hai lượt, trung bình mẫu $(1,1)\to(0,0)$ |
-| 05 | A04 | Giá trị chuẩn đối chiếu $11/21$, $19/21$ |
-| 06 | A05, A06, A08 | Hai trục; A06 là vùng đệm mọi lần ghé |
-| 07 | B00, B01 | Chuyển mẫu, $Y_t^{\mathrm{TD}}$, $\delta_t$ |
-| 08 | B02 | Thuật toán TD(0) đầy đủ |
-| 09 | B03, B04, B05, B08 | Tính tay hai lượt, cập nhật tại chỗ và so thời điểm cập nhật |
-| 10 | B06 | $T^\pi$, kỳ vọng $\delta_t$ |
-| 11 | A07, B07 | Giả thiết hội tụ, $\gamma<1$ và $\gamma=1$ theo lượt |
-| 12 | C00, C01, C05 | Đi bộ dài, $\gamma^3=0{,}970299$, $-\gamma=-0{,}99$ |
-| 13 | C02, C03 | Cơ chế chệch–phương sai có điều kiện |
-| 14 | C04, C06 | Tiêu chí chọn, giới hạn, phạm vi |
-| 15 | D00, D01, X07, X03, X04 | Tổng hợp, cầu nối, bài tập dọc |
+| lec-05-topic-01 | P00, P01, P02 | Đặt bài, giả thiết, $v_\pi$ vs $V_t$ |
+| lec-05-topic-02 | A00, A01 | Lượt $e_1$, $G_t$, chỉ số $\gamma^k$ |
+| lec-05-topic-03 | A02 | Thuật toán MC lần ghé đầu đầy đủ |
+| lec-05-topic-04 | A03 | Hai lượt, trung bình mẫu $(1,1)\to(0,0)$ |
+| lec-05-topic-05 | A04 | Giá trị chuẩn đối chiếu $11/21$, $19/21$ |
+| lec-05-topic-06 | A05, A06, A08 | Hai trục; A06 là vùng đệm mọi lần ghé |
+| lec-05-topic-07 | B00, B01 | Chuyển mẫu, $Y_t^{\mathrm{TD}}$, $\delta_t$ |
+| lec-05-topic-08 | B02 | Thuật toán TD(0) đầy đủ |
+| lec-05-topic-09 | B03, B04, B05, B08 | Tính tay hai lượt, cập nhật tại chỗ và so thời điểm cập nhật |
+| lec-05-topic-10 | B06 | $T^\pi$, kỳ vọng $\delta_t$ |
+| lec-05-topic-11 | A07, B07 | Giả thiết hội tụ, $\gamma<1$ và $\gamma=1$ theo lượt |
+| lec-05-topic-12 | C00, C01, C05 | Đi bộ dài, $\gamma^3=0{,}970299$, $-\gamma=-0{,}99$ |
+| lec-05-topic-13 | C02, C03 | Cơ chế chệch–phương sai có điều kiện |
+| lec-05-topic-14 | C04, C06, C07 | Tiêu chí chọn, giới hạn, phạm vi, tự kiểm |
+| lec-05-topic-15 | D00, D01, X07, X03, X04 | Tổng hợp, cầu nối, bài tập dọc |
+
+15 topic phủ đủ 34 slide; mỗi slide thuộc đúng một topic. Bảng này đồng bộ với thuộc tính `data-note-topic-id` trong HTML.
 
 ### Ánh xạ hw05
 

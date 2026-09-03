@@ -359,3 +359,9 @@ Ba lượt DeepSeek đầu với `max_rounds=8` và lượt toán bốn tệp v�
 - Kiểm ảnh trực tiếp phát hiện D04 bị cắt ngang sau khi thêm ngoặc. Writer GLM ngắt $r^\pi(s)$ thành hai dòng, không giảm cỡ chữ; render lại ở hai khung cho thấy công thức nằm trọn trong thẻ. Phép đo biên ở 1280 × 720: thẻ phải từ 651,6 đến 1254,4 px, công thức từ 672,4 đến 1233,6 px; ở 800 × 600, công thức từ 420,2 đến 771,0 px trong thẻ từ 407,2 đến 784,0 px.
 - Recheck D04 cuối: `requested_model=observed_model=deepseek/deepseek-v3.2`, `provider=OpenRouter`, profile `recheck`, `max_rounds=4`, timeout 300 giây, 5.000 token. Xác nhận $r^\pi(s)=\sum_a\sum_{s'}\sum_r\pi(a\mid s)p(s',r\mid s,a)r$, $P^\pi$ và Bellman MRP cảm sinh đều đúng.
 - Codex Slides/Browser không khả dụng trong phiên do môi trường Node 18 không đáp ứng gói yêu cầu Node ≥20. Không tuyên bố đã rà trực quan bằng Codex Slides; kiểm trực quan RevealJS cục bộ bằng Chromium là bằng chứng cuối.
+
+## Chuẩn hóa mã ánh xạ — 04-09-2026
+
+- Hai bảng ánh xạ trong outline/storyboard đã đổi nhãn `topic01`–`topic13` thành đúng 13 mã `lec-03-topic-01`–`lec-03-topic-13` của lecture note. Không đổi bất kỳ quan hệ topic–slide nào.
+- Lượt recheck GLM đầu xác nhận 13 mã khớp nhưng phát hiện câu cũ nói bảng phủ 39 trang trong khi bảng trực tiếp chứa 36 mã. Đã sửa thành 36/39 trang ánh xạ trực tiếp; P00–P02 được ánh xạ ở mức khung toàn bài như hai tệp vốn mô tả.
+- Lượt recheck cuối dùng `recheck/5/300/3500`, reasoning `minimal`, hoàn tất ở vòng 2 và PASS. Runtime trả `requested_model=observed_model=z-ai/glm-5.3-flash`, provider `OpenRouter`; hai bảng giống nhau, số 36/39 đúng và 13 mã khớp lecture note.

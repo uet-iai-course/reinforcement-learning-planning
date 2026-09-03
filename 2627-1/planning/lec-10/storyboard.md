@@ -30,6 +30,8 @@ Các khoảng thời gian dưới đây không chồng lặp. Tuyến cốt lõi
 
 ## Ánh xạ topic – slide
 
+Phân nhóm chủ đề: cốt lõi gồm 01, 03–09; cầu nối gồm 02; bổ sung gồm 10–11; đọc thêm gồm 12. Chủ đề 02 nối vấn đề phương sai của REINFORCE với TD/GAE; chủ đề 10 nối mục tiêu với cấu hình triển khai; chủ đề 11 giới hạn kết quả lý thuyết của PPO-Clip.
+
 Bảng ánh xạ hai chiều giữa 12 topic ghi chú và 42 section slide (đồng bộ `data-note-topic-id` trong deck):
 
 | topic | slide |

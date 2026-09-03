@@ -12,6 +12,25 @@ Kiến thức tiên quyết: MDP, xấp xỉ hàm, DQN, hàm điểm (score func
 
 Chu trình PPO dùng xuyên suốt bài: thu dữ liệu theo chính sách cũ → tính và đóng băng lợi thế cùng đích giá trị → tối ưu nhiều epoch → đồng bộ chính sách cũ rồi thu lô mới.
 
+## Bản đồ chủ đề
+
+Mười hai chủ đề được chia thành bốn nhóm: cốt lõi (01, 03–09), cầu nối (02), bổ sung (10, 11) và đọc thêm (12).
+
+| Mã | Nhóm và phạm vi | Vai trò, đầu vào → sản phẩm học tập | Vị trí và kết nối | Nguồn |
+|---|---|---|---|---|
+| 01 | Cốt lõi | REINFORCE và dữ liệu đổi → khóa mục tiêu, hàm điểm và chính sách sinh dữ liệu | Mở bài; Bài 09 → chủ đề 02 | tr. 4–10 |
+| 02 | Cầu nối | Phương sai REINFORCE → baseline, critic và tín hiệu lợi thế | Sau 01, trước 03; lấp khoảng trống giữa REINFORCE và TD/GAE | tr. 11–13 |
+| 03 | Cốt lõi | Critic và sai số TD → lợi thế GAE cùng hai mặt nạ | 02 → surrogate ở 04 | tr. 13 |
+| 04 | Cốt lõi | Lợi thế và dữ liệu cũ → tỷ số, surrogate và giới hạn xấp xỉ | 03 → miền tin cậy TRPO ở 05 | tr. 14–16 |
+| 05 | Cốt lõi | Ràng buộc KL → bước natural gradient và quy trình TRPO | 04 → động cơ đơn giản hóa ở 06 | tr. 17–20 |
+| 06 | Cốt lõi | Tỷ số và dấu lợi thế → mục tiêu PPO-Clip theo từng trường hợp | 05 → hàm mất mát tổng ở 07 | tr. 20–22 |
+| 07 | Cốt lõi | Lợi thế thô và đích giá trị → hai đường mất mát actor–critic | 06 → hợp đồng dữ liệu ở 08 | tr. 23 |
+| 08 | Cốt lõi | Rollout nhiều môi trường → bộ đệm, lô con và dữ liệu biên | 07 → chẩn đoán ở 09 | tr. 24–25 |
+| 09 | Cốt lõi | Log huấn luyện → chẩn đoán và so sánh TRPO/PPO có điều kiện | 08 → chi tiết triển khai ở 10 | tr. 26–28, 35–36 |
+| 10 | Bổ sung | Khoảng trống giữa mục tiêu và cấu hình thực hành → danh mục lựa chọn triển khai | 09 → mô hình lý thuyết ở 11; có thể rút khi thiếu thời gian | tr. 29–36 |
+| 11 | Bổ sung | Khoảng trống về phạm vi bảo đảm → kết quả điểm dừng có điều kiện | 08 và 10 → giới hạn, đọc thêm ở 12; không suy sang PPO thực hành | tr. 37–42; Jin–Li–Wang 2024 |
+| 12 | Đọc thêm | Kết quả chính → PPO-Penalty và danh mục nguồn tự học | Kết bài; không mở thêm tuyến nội dung | tr. 38, 43 |
+
 ## Ký hiệu và quy ước
 
 Trạng thái $S_t$, hành động $A_t$, phần thưởng $R_{t+1}$ nhận sau $A_t$. Return từ thời điểm $t$:
@@ -20,7 +39,7 @@ $$G_t=\sum_{k=t}^{T-1}\gamma^{k-t}R_{k+1},\qquad J(\theta)=\mathbb E[G_0],\quad 
 
 $V^\pi(s)=\mathbb E[G_t\mid S_t=s]$, $Q^\pi(s,a)=\mathbb E[G_t\mid S_t=s,A_t=a]$, $A^\pi=Q^\pi-V^\pi$. Chính sách cũ $\pi_{\mathrm{old}}=\pi_{\theta_{\mathrm{old}}}$ sinh dữ liệu; hàm điểm (score) là $\nabla_\theta\log\pi_\theta(a\mid s)$ được đạo hàm theo $\theta$ rồi đánh giá tại $\theta_{\mathrm{old}}$. Với mục tiêu $J=\mathbb E[G_0]$, ước lượng quỹ đạo mang hệ số $\gamma^tG_t\nabla\log\pi$. Mỗi đợt thu thập dài $H$ bước từ $N$ môi trường tạo lô $B=HN$; $T$ dành cho thời điểm episode kết thúc thật. Tỷ số $w_t(\theta)=\pi_\theta(A_t\mid S_t)/\pi_{\mathrm{old}}(A_t\mid S_t)$ yêu cầu chính sách cũ gán xác suất khác không cho hành động đã lấy mẫu.
 
-<section class="note-topic" id="lec-10-topic-01" data-note-topic-id="lec-10-topic-01">
+<!-- note-topic-id: lec-10-topic-01 -->
 
 ## Từ REINFORCE đến vấn đề phân bố dữ liệu đổi
 
@@ -38,7 +57,7 @@ Hệ số $\gamma^t$ theo quy ước $J=\mathbb E[G_0]$; phép suy ra đầy đ�
 
 Chu trình PPO gồm bốn bước: thu dữ liệu theo $\pi_{\mathrm{old}}$, tính rồi đóng băng lợi thế và đích, tối ưu nhiều epoch trên lô cố định, đồng bộ $\pi_{\mathrm{old}}\leftarrow\pi_\theta$.
 
-**Ví dụ/ứng dụng.** Một quỹ đạo may mắn có thể chi phối toàn bộ gradient của lô; đây là lý do trực tiếp dẫn tới baseline và critic ở topic sau (tr. 6–10).
+**Ví dụ/ứng dụng.** Một quỹ đạo may mắn có thể chi phối toàn bộ gradient của lô; đây là lý do trực tiếp dẫn tới baseline và critic ở chủ đề sau (tr. 6–10).
 
 ::: derivation Từ log-derivative trick đến ước lượng có hệ số $\gamma^t$
 Khởi điểm từ $J(\theta)=\mathbb E_{\tau\sim p_\theta}[R(\tau)]$. Đạo hàm dưới dấu tích phân:
@@ -58,9 +77,8 @@ $$\widehat g_{\mathrm{MC}}=\sum_{t=0}^{T-1}\gamma^tG_t\,\left.\nabla_\theta\log\
 
 **Giới hạn.** Bài không chứng minh lại toàn bộ định lý gradient chính sách; chỉ khóa mục tiêu, chỉ số $R_{t+1}$, định nghĩa $G_t$ và điểm đánh giá hàm điểm để mọi phép suy diễn sau nhất quán.
 
-</section>
 
-<section class="note-topic" id="lec-10-topic-02" data-note-topic-id="lec-10-topic-02">
+<!-- note-topic-id: lec-10-topic-02 -->
 
 ## Baseline và actor–critic
 
@@ -94,9 +112,8 @@ Bước đổi đạo hàm qua tổng cần điều kiện chính quy: hỗ tr�
 
 **Giới hạn.** Baseline chỉ không đổi kỳ vọng khi không phụ thuộc hành động tại trạng thái; một critic học bằng đích Monte Carlo vẫn tạo được actor–critic, nên không đồng nhất "critic" với "bootstrap".
 
-</section>
 
-<section class="note-topic" id="lec-10-topic-03" data-note-topic-id="lec-10-topic-03">
+<!-- note-topic-id: lec-10-topic-03 -->
 
 ## Generalized Advantage Estimation (GAE)
 
@@ -137,9 +154,8 @@ Truncation ngoại sinh (giới hạn thời gian nhân tạo, ví dụ hết $H
 
 **Giới hạn.** Chỉ truncation nhân tạo hoặc ngoại sinh có quan sát cuối hợp lệ mới bootstrap; nếu chân trời là một phần của MDP (thời gian còn lại nằm trong trạng thái) thì hết chân trời là terminal và $m_t=0$. Không mở TD($\lambda$) thành tuyến riêng.
 
-</section>
 
-<section class="note-topic" id="lec-10-topic-04" data-note-topic-id="lec-10-topic-04">
+<!-- note-topic-id: lec-10-topic-04 -->
 
 ## Vì sao cần miền tin cậy: surrogate và tỷ số
 
@@ -174,9 +190,8 @@ Bước 3 (trung bình batch): thay kỳ vọng occupancy chiết khấu bằng 
 
 **Giới hạn.** Tỷ số cần chính sách mới tuyệt đối liên tục theo chính sách cũ trên dữ liệu; mẫu có xác suất/mật độ cũ bằng không không thể được sửa bằng tỷ số. Tỷ số chỉ tái trọng số hành động có điều kiện; trạng thái vẫn từ phân bố cũ. KL trong ràng buộc là KL trung bình thực nghiệm trên batch, không phải max-KL trong chặn lý thuyết của TRPO gốc; không trình bày chứng minh performance-difference đầy đủ.
 
-</section>
 
-<section class="note-topic" id="lec-10-topic-05" data-note-topic-id="lec-10-topic-05">
+<!-- note-topic-id: lec-10-topic-05 -->
 
 ## TRPO như natural gradient
 
@@ -216,9 +231,8 @@ Bảng so sánh bước theo metric:
 
 **Giới hạn.** Không dựng hay nghịch đảo $F$ tường minh trong mạng sâu; FVP tránh dựng $\widehat F$ nhưng mỗi lần nhân vẫn cần phép vi phân trên batch. Chi phí phụ thuộc số vòng CG, ngưỡng residual và số lần line search; cần báo cáo tolerance, damping, $\delta$ và tiêu chí nhận bước. Không cài đặt FVP bằng code trong phạm vi bài.
 
-</section>
 
-<section class="note-topic" id="lec-10-topic-06" data-note-topic-id="lec-10-topic-06">
+<!-- note-topic-id: lec-10-topic-06 -->
 
 ## PPO-Clip: mục tiêu có đoạn phẳng
 
@@ -264,9 +278,8 @@ Hai ca ngoài dải theo phía bất lợi: $(\widehat A,w)=(2,0{,}7)$ cho $\ell
 
 **Giới hạn.** Phân tích theo dấu: với $\widehat A\ge0$, ngoài dải phía $w>1+\epsilon$ gradient bằng 0 (đoạn phẳng), phía $w<1-\epsilon$ vẫn giữ gradient phạt; với $\widehat A<0$, đoạn phẳng ở $w<1-\epsilon$ và phía $w>1+\epsilon$ vẫn phạt. Trong dải $[1-\epsilon,1+\epsilon]$, clipping không đổi hạng surrogate. Clipping không phải ràng buộc KL cứng: từng tỷ số có thể nằm trong khoảng nhưng KL toàn phân phối vẫn lớn; nhiều epoch SGD có thể đẩy chính sách xa batch ban đầu; không có bảo đảm đơn điệu chung.
 
-</section>
 
-<section class="note-topic" id="lec-10-topic-07" data-note-topic-id="lec-10-topic-07">
+<!-- note-topic-id: lec-10-topic-07 -->
 
 ## Hàm mất mát tổng: lợi thế actor và đích critic
 
@@ -298,9 +311,8 @@ Do đó gradient của critic chỉ đi qua $V_\phi(S_t)$; gradient của actor 
 
 **Giới hạn.** $\mu_B,\sigma_B$ là trung bình và độ lệch chuẩn của lợi thế thô trên batch; $\varepsilon_A>0$ tránh chia cho không. Mọi đại lượng đóng băng phải tường minh trước $K$ epoch tối ưu.
 
-</section>
 
-<section class="note-topic" id="lec-10-topic-08" data-note-topic-id="lec-10-topic-08">
+<!-- note-topic-id: lec-10-topic-08 -->
 
 ## Đợt thu thập, bộ đệm và lô con
 
@@ -337,9 +349,8 @@ Mẫu shape kiểm tra nhanh:
 
 **Giới hạn.** Trước minibatch đầu, $\theta=\theta_{\mathrm{old}}$ nên $w=1$; sau đó $w$ được tính lại với $\theta$ hiện tại. Không tính lại lợi thế hay target bằng critic đã đổi trong các epoch sau.
 
-</section>
 
-<section class="note-topic" id="lec-10-topic-09" data-note-topic-id="lec-10-topic-09">
+<!-- note-topic-id: lec-10-topic-09 -->
 
 ## Chẩn đoán, siêu tham số và so sánh TRPO/PPO
 
@@ -374,9 +385,8 @@ Mẫu thứ hai minh họa lỗi phổ biến: $w$ tại hành động đã lấ
 
 **Giới hạn.** Clipfrac là tỷ lệ mẫu có tỷ số ngoài dải, không phải tỷ lệ mẫu nằm trên đoạn phẳng của objective (đoạn phẳng còn phụ thuộc dấu lợi thế). $\operatorname{EV}$ không xác định khi $\operatorname{Var}_B(\widehat V)=0$; không có ngưỡng chẩn đoán phổ quát. PPO không phải "TRPO bỏ CG": đó là một recipe thực hành khác.
 
-</section>
 
-<section class="note-topic" id="lec-10-topic-10" data-note-topic-id="lec-10-topic-10">
+<!-- note-topic-id: lec-10-topic-10 -->
 
 ## Chi tiết triển khai: biến thể và tiền xử lý
 
@@ -406,9 +416,8 @@ Khi bỏ một tối ưu cấp mã, chuẩn hóa phần thưởng, giảm dần 
 
 **Giới hạn.** Khi bỏ các tối ưu cấp mã, một PPO tối giản có thể khác nhiều so với PPO chuẩn; khác biệt giữa PPO và TRPO có thể nhỏ hơn khác biệt giữa hai cài đặt PPO. Chỉ ghi tên thuật toán là không đủ để tái lập; không suy ra một lựa chọn luôn tốt trên mọi benchmark.
 
-</section>
 
-<section class="note-topic" id="lec-10-topic-11" data-note-topic-id="lec-10-topic-11">
+<!-- note-topic-id: lec-10-topic-11 -->
 
 ## Lý thuyết PPO-Clip: mô hình lý tưởng và kết quả điểm dừng
 
@@ -424,9 +433,8 @@ trong đó $L$ là hằng số Lipschitz của gradient, $|\mathcal A|$ là số
 
 **Giới hạn.** Không suy ra cực đại toàn cục, không đổi $\liminf$ thành hội tụ của toàn dãy, không gọi đây là hội tụ tham số, và không suy ra hội tụ của PPO thực hành với Adam, GAE chuẩn hóa, clipping gradient hay early stopping. Mô hình lý tưởng không tự bao gồm các chi tiết recipe.
 
-</section>
 
-<section class="note-topic" id="lec-10-topic-12" data-note-topic-id="lec-10-topic-12">
+<!-- note-topic-id: lec-10-topic-12 -->
 
 ## Đọc thêm: PPO-Penalty và danh mục nguồn
 
@@ -442,7 +450,6 @@ với $\beta$ thích ứng để hạn chế KL quá lớn; PPO-Clip không có 
 
 **Giới hạn.** Không mở A3C/A2C, DPG/DDPG, SAC/TD3, IMPALA/PPG, SPO hoặc SAM+PPO thành tuyến nội dung của bài; chúng chỉ là nhánh tiếp theo để tự đọc.
 
-</section>
 
 ## Bài tập
 

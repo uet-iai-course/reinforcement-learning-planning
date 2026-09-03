@@ -73,6 +73,29 @@ Bảy cụm khái niệm được chứa trong sáu mạch; cụm so sánh MC–
 | M5 | Điều khiển: giá trị hành động, SARSA tuyến tính và cập nhật số | Điểm cố định và so sánh của M4 | Thuật toán SARSA control và một bước số | Điều khiển | `L07-26`–`L07-30` |
 | M6 | Q-learning, deadly triad, phạm vi lý thuyết, kết luận và chữa bài dọc | SARSA của M5 | Phân biệt đích max, chẩn đoán bất ổn, ranh giới lý thuyết | Khác chính sách và bất ổn | `L07-31`–`L07-36` |
 
+## Ánh xạ hai chiều ghi chú–trang chiếu
+
+Mỗi trang trong 39 trang chiếu (`L07-01`–`L07-36` và `X01`–`X03`) thuộc đúng một chủ đề; cả 16 chủ đề đều có trang tương ứng. Bảng dưới đây đối chiếu trực tiếp với thuộc tính `data-note-topic-id` trong HTML.
+
+| Topic | Trang chiếu |
+|---|---|
+| `lec-07-topic-13` | `L07-01`, `L07-02`, `L07-03` |
+| `lec-07-topic-01` | `L07-04` |
+| `lec-07-topic-02` | `L07-05`, `L07-06` |
+| `lec-07-topic-03` | `L07-07`, `L07-08` |
+| `lec-07-topic-04` | `L07-09`, `L07-10`, `L07-11` |
+| `lec-07-topic-05` | `L07-12` |
+| `lec-07-topic-06` | `L07-13`, `L07-14`, `L07-15`, `L07-16` |
+| `lec-07-topic-15` | `L07-17`, `X01` |
+| `lec-07-topic-07` | `L07-18`, `L07-19`, `L07-20` |
+| `lec-07-topic-08` | `L07-21`, `L07-22`, `L07-23`, `L07-24` |
+| `lec-07-topic-09` | `L07-25` |
+| `lec-07-topic-10` | `L07-26`, `L07-27`, `L07-28`, `L07-29`, `L07-30` |
+| `lec-07-topic-11` | `L07-31`, `L07-32`, `L07-33` |
+| `lec-07-topic-14` | `L07-34` |
+| `lec-07-topic-12` | `L07-35`, `L07-36` |
+| `lec-07-topic-16` | `X02`, `X03` |
+
 ## Hàng chữa bài trong hành trình
 
 Ba trang dọc `X01`–`X03` là hàng chữa bài 30 phút, nằm ngoài 120 phút chính: `X01` (8 phút) đạo hàm MC, `X02` (10 phút) cập nhật MC tuần tự, `X03` (12 phút) ba bước SARSA. Các trang dọc nằm trong M6 về vị trí trình chiếu nhưng thời lượng chữa bài không tính vào 120 phút chính.

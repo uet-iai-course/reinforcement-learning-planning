@@ -22,25 +22,25 @@ Ba bài tập `X01`–`X03` nằm ngoài 120 phút trình chiếu và dùng 30 p
 
 | note-topic-id | chức năng trong mạch | kết nối vào | data-slide-id | kết nối ra |
 |---|---|---|---|---|
-| topic-01 | mở bài, định hướng MARL | Bài 11 | `L12-01`–`L12-06` | nền tảng → hợp đồng |
-| topic-02 | khóa hợp đồng trò chơi Markov | nền tảng | `L12-07`, `L12-07B`, `L12-08`, `L12-09`, `X01` | hợp đồng → CTDE |
-| topic-03 | CTDE và bốn trục khó | hợp đồng | `L12-10`–`L12-12` | CTDE → cầu policy gradient |
-| topic-11 | vấn đề gán công mở COMA | CTDE | `L12-13` | cầu policy gradient → COMA |
-| topic-04 | COMA: baseline phản thực | cầu policy gradient | `L12-14`–`L12-17` | COMA → VDN/QMIX |
-| topic-05 | phân rã giá trị, IGM, bước TD | COMA | `L12-18`–`L12-22B`, `X02` | VDN/QMIX → MADDPG |
-| topic-06 | MADDPG nối action liên tục | VDN/QMIX | `L12-23` | MADDPG → cầu PPO |
-| topic-12 | cầu nối PPO và phạm vi huấn luyện theo chính sách | MADDPG | `L12-24` | cầu PPO → IPPO/MAPPO |
-| topic-07 | MAPPO: ratio theo tác tử | IPPO/MAPPO | `L12-25`–`L12-26` | IPPO/MAPPO → HAPPO/HATRPO |
-| topic-08 | HAPPO: clipping và recurrence | IPPO/MAPPO | `L12-27`–`L12-28` | HAPPO/HATRPO → benchmark |
-| topic-09 | benchmark: trục, ca, bằng chứng | HAPPO/HATRPO | `L12-29`–`L12-32`, `L12-34`, `X03` | benchmark → giao tiếp (cốt lõi) hoặc framework (tuyến đủ 120 phút) |
-| topic-14 | nhánh đọc thêm benchmark, đặt tại `L12-33` trong cụm benchmark | benchmark | `L12-33` | benchmark → framework |
-| topic-13 | framework và tái lập | benchmark | `L12-35`–`L12-37` | framework → giao tiếp |
-| topic-10 | giao tiếp MARL | framework | `L12-38`–`L12-44` | giao tiếp → kết luận |
-| topic-15 | thu hồi tài liệu và kiểm tra ở kết luận, không cần trang tài liệu riêng | giao tiếp | `L12-45` | kết luận → bài tập |
+| lec-12-topic-01 | mở bài, định hướng MARL | Bài 11 | `L12-01`–`L12-06` | nền tảng → hợp đồng |
+| lec-12-topic-02 | khóa hợp đồng trò chơi Markov | nền tảng | `L12-07`, `L12-07B`, `L12-08`, `L12-09`, `X01` | hợp đồng → CTDE |
+| lec-12-topic-03 | CTDE và bốn trục khó | hợp đồng | `L12-10`–`L12-12` | CTDE → cầu policy gradient |
+| lec-12-topic-11 | vấn đề gán công mở COMA | CTDE | `L12-13` | cầu policy gradient → COMA |
+| lec-12-topic-04 | COMA: baseline phản thực | cầu policy gradient | `L12-14`–`L12-17` | COMA → VDN/QMIX |
+| lec-12-topic-05 | phân rã giá trị, IGM, bước TD | COMA | `L12-18`–`L12-22B`, `X02` | VDN/QMIX → MADDPG |
+| lec-12-topic-06 | MADDPG nối action liên tục | VDN/QMIX | `L12-23` | MADDPG → cầu PPO |
+| lec-12-topic-12 | cầu nối PPO và phạm vi huấn luyện theo chính sách | MADDPG | `L12-24` | cầu PPO → IPPO/MAPPO |
+| lec-12-topic-07 | MAPPO: ratio theo tác tử | IPPO/MAPPO | `L12-25`–`L12-26` | IPPO/MAPPO → HAPPO/HATRPO |
+| lec-12-topic-08 | HAPPO: clipping và recurrence | IPPO/MAPPO | `L12-27`–`L12-28` | HAPPO/HATRPO → benchmark |
+| lec-12-topic-09 | benchmark: trục, ca, bằng chứng | HAPPO/HATRPO | `L12-29`–`L12-32`, `L12-34`, `X03` | benchmark → giao tiếp (cốt lõi) hoặc framework (tuyến đủ 120 phút) |
+| lec-12-topic-14 | nhánh đọc thêm benchmark, đặt tại `L12-33` trong cụm benchmark | benchmark | `L12-33` | benchmark → framework |
+| lec-12-topic-13 | framework và tái lập | benchmark | `L12-35`–`L12-37` | framework → giao tiếp |
+| lec-12-topic-10 | giao tiếp MARL | framework | `L12-38`–`L12-44` | giao tiếp → kết luận |
+| lec-12-topic-15 | thu hồi tài liệu và kiểm tra ở kết luận, không cần trang tài liệu riêng | giao tiếp | `L12-45` | kết luận → bài tập |
 
 Tuyến: nền tảng → hợp đồng → CTDE → cầu policy gradient → COMA → VDN/QMIX → MADDPG → cầu PPO → IPPO/MAPPO → HAPPO/HATRPO → benchmark → framework rồi trở lại giao tiếp → kết luận.
 
-`X02` dùng topic-05 làm chủ đề chính để giữ quan hệ một trang–một topic, đồng thời kiểm tra chung topic-04 (COMA), topic-06 (MADDPG) và topic-08 (HAPPO).
+`X02` dùng lec-12-topic-05 làm chủ đề chính để giữ quan hệ một trang–một topic, đồng thời kiểm tra chung lec-12-topic-04 (COMA), lec-12-topic-06 (MADDPG) và lec-12-topic-08 (HAPPO).
 
 ## Dữ kiện truyền giữa các bước
 

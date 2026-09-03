@@ -224,3 +224,26 @@ Kiểm định cuối của vòng đồng bộ:
 - Lệnh bắt buộc `python3 -m reloadserver 8765` tiếp tục không chạy vì thiếu mô-đun. Dùng `python3 -m http.server 8765 --bind 127.0.0.1` trên webroot tối thiểu không chứa `.env`.
 - Chromium duyệt đủ 42 trang ở 1280×720 và 800×600: không lỗi console, lỗi tải tài nguyên hoặc lỗi bàn phím. Bộ đo hình học vẫn báo sai dương ở H1 và một số hộp KaTeX; ảnh chụp xác nhận nằm trong khung. `X03` từng tràn do fragment đáp án dài, đã rút gọn rồi render lại; `X03` và `L10-37B` đọc được ở cả hai viewport.
 - Codex Slides không khả dụng trong lượt này vì Node.js 18.19.1 thấp hơn yêu cầu Node.js 20. Không tuyên bố đã rà vòng đồng bộ bằng Codex Slides; bằng chứng hiển thị là Chromium trên RevealJS cục bộ.
+
+## Hoàn thiện bản đồ bốn nhóm — 04-09-2026
+
+- Kiểm định tổng thể: phát hiện note còn 12 chủ đề chưa được phân loại vào bốn nhóm (cốt lõi, cầu nối, bổ sung, đọc thêm).
+- Reader DeepSeek đề xuất: cốt lõi gồm 01, 03–09; cầu nối là 02; bổ sung là 10–11; đọc thêm là 12. Mỗi nhóm được ghi rõ khoảng trống mà nó lấp, nguồn dẫn tương ứng và kết nối cụ thể tới các chủ đề lân cận trong mạch bài.
+- Writer GLM thêm bảng phân loại vào note; runtime `requested_model = observed_model = z-ai/glm-5.3-flash`, provider `OpenRouter`, `reasoning-effort minimal`.
+- Điều phối viên chuẩn hóa bảng đủ các cột: nhóm, phạm vi, vai trò, đầu vào→sản phẩm, vị trí/kết nối, nguồn; đồng bộ hóa phân nhóm ở outline và storyboard.
+- Hai lượt recheck cuối:
+  - DeepSeek: PASS, runtime `requested_model = observed_model = deepseek/deepseek-v4-flash-0731`, provider `OpenRouter`, `reasoning-effort none`.
+  - GLM: PASS về tiêu chí no-ai-slop và mạch viết, runtime `requested_model = observed_model = z-ai/glm-5.3-flash`, provider `OpenRouter`, `reasoning-effort minimal`.
+- Không đổi 12 chủ đề, 42 slide, ánh xạ, công thức, thứ tự hay SVG. Sau hai lượt recheck, không còn lỗi chặn, nghiêm trọng hoặc trung bình.
+
+## Tái kiểm cuối bản đồ chủ đề — 04-09-2026
+
+- Trình xem ghi chú đạt ở 1280×720 và 390×844: 414 phần tử KaTeX, 17 mục lục hợp lệ, không lỗi tải hoặc bàn phím; thân tài liệu không cuộn ngang. Bảng năm cột dùng vùng cuộn riêng trên màn hình hẹp.
+- Hai Design Files `outline.md` và `storyboard.md` đã được ghi lại trong dự án Codex Slides `20260824221550-lecture-10-trpo-v-ppo-p4gd` và đọc lại khớp từng byte với kho. HTML không đổi trong vòng này.
+- `lecture-note.md` không phải Design File hiện hữu của dự án. Codex in-editor Browser không có trong phiên này, nên bằng chứng hiển thị cuối của phần ghi chú là Chromium cục bộ; không tuyên bố đã rà trực quan bằng Codex Slides.
+
+## Sửa marker hiển thị của lecture note — 04-09-2026
+
+- Kiểm tra văn bản đã render phát hiện 12 thẻ `<section ...>` bị material-viewer escape và hiển thị nguyên mã. Đã đổi chúng thành 12 comment `<!-- note-topic-id: lec-10-topic-NN -->` theo đúng giao diện của viewer và bỏ 12 thẻ đóng; không đổi nội dung, công thức, bài tập hoặc thứ tự.
+- Recheck GLM dùng `recheck/5/300/4000`, reasoning `minimal`, hoàn tất ở vòng 3 và PASS: đủ 12 mã duy nhất, không còn thẻ section, bốn nhóm và toàn bộ khối nội dung còn nguyên. Runtime trả `requested_model=observed_model=z-ai/glm-5.3-flash`, provider `OpenRouter`.
+- Chromium dựng lại ghi chú ở 1280×720 và 390×844: 414 phần tử KaTeX, 17 mục lục, không lỗi tải, bàn phím hoặc cuộn ngang thân tài liệu. Kiểm tra `innerText` xác nhận không còn chuỗi thẻ section hiển thị; bảng rộng vẫn cuộn trong vùng riêng.

@@ -16,6 +16,21 @@ Tuyến lõi: $7+31+32+25+13=108$ phút. Vùng đệm: A06 8 phút và phần hi
 
 Note `materials/lec-05/lecture-note.md` tái dùng cùng hành trình khái niệm của storyboard, gom 34 trang thành 15 topic `lec-05-topic-01..15`. Các nhãn học tập là cốt lõi (01, 02, 03, 04, 06, 07, 08, 09, 12, 13, 15), cầu nối (05, 10, 11), bổ sung (14), và đọc thêm (tr. 1–14 cùng tài liệu tham khảo, không có topic ID). Bốn mạch nội dung là Đặt bài, Monte Carlo, TD(0), So sánh và tổng hợp. Mỗi topic giữ mạch vấn đề → trực giác → ví dụ → hình thức/thuật toán → ứng dụng/giới hạn → exercise + hint + solution, khớp các cột của bảng hành trình ở trên. Các quyết định số đã chốt ở phần "Truyền dữ kiện" được chuyển nguyên vào note: trung bình mẫu trước $\alpha$ hằng, A06 là nhánh đệm, C00 bỏ hai giá trị chuẩn không tái tạo được, C01 dùng đúng $\gamma^3=0{,}970299$ và $-\gamma=-0{,}99$, C02 chốt $\gamma=1$, $\alpha=0{,}5$, bảng 0. Note không thêm code demo và không tạo `quill.json`; rà mạch theo Quill chỉ là biên tập nội bộ.
 
+### Ánh xạ hai chiều 15 topic ↔ data-slide-id
+
+15 topic phủ đủ 34 slide; mỗi slide thuộc đúng một topic. Bảng này đồng bộ với thuộc tính `data-note-topic-id` trong HTML.
+
+| Topic | data-slide-id | Topic | data-slide-id |
+|---|---|---|---|
+| lec-05-topic-01 | P00, P01, P02 | lec-05-topic-09 | B03, B04, B05, B08 |
+| lec-05-topic-02 | A00, A01 | lec-05-topic-10 | B06 |
+| lec-05-topic-03 | A02 | lec-05-topic-11 | A07, B07 |
+| lec-05-topic-04 | A03 | lec-05-topic-12 | C00, C01, C05 |
+| lec-05-topic-05 | A04 | lec-05-topic-13 | C02, C03 |
+| lec-05-topic-06 | A05, A06, A08 | lec-05-topic-14 | C04, C06, C07 |
+| lec-05-topic-07 | B00, B01 | lec-05-topic-15 | D00, D01, X07, X03, X04 |
+| lec-05-topic-08 | B02 | | |
+
 ## Truyền dữ kiện
 
 - P02 cố định $v_\pi$ là đích và $V_t$ là ước lượng. Các phần sau không đổi chính sách.

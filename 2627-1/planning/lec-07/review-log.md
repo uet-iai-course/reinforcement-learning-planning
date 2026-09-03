@@ -247,3 +247,19 @@ Các lượt GLM hoàn tất ở vòng 3. Reviewer DeepSeek ban đầu đọc nh
 - Không đổi số trang, thứ tự, ranh giới phần hoặc luận điểm trung tâm. Deck vẫn có sáu `<section>` ngoài, 39 mã trang duy nhất, 39 ghi chú và tám SVG. Tám SVG phân tích XML được, có `role="img"`, `title`, `desc`; không có ảnh raster hoặc tài nguyên mạng.
 - Dùng lại webroot cô lập tại cổng 8765. Chromium duyệt đủ 39 trang ở 1280 × 720 và 800 × 600: không lỗi console, KaTeX, tràn chữ, chồng lấn hoặc phần tử vượt khung. Ảnh `L07-26` ở hai kích thước đã được điều phối viên xem trực tiếp; ký hiệu $\pi_w$ hiển thị đúng.
 - `reloadserver` và Codex Slides có cùng giới hạn đã ghi ở pha note. Không tuyên bố đã rà thay đổi này bằng Codex Slides.
+
+## Bổ sung ánh xạ ghi chú–trang chiếu — 04-09-2026
+
+- Reader DeepSeek V4 Flash đề xuất ánh xạ 16 topic phủ đủ 39 slide. Runtime `requested_model=observed_model=deepseek/deepseek-v4-flash-0731`, provider `OpenRouter`, reasoning none.
+- Writer GLM đã thêm cùng bảng ánh xạ vào outline/storyboard. Runtime `requested_model=observed_model=z-ai/glm-5.3-flash`, provider `OpenRouter`, reasoning minimal.
+- HTML được gắn 39 `data-note-topic-id`, mỗi slide đúng một topic; cả 16 topic đều xuất hiện. Không đổi số trang, thứ tự, nội dung, công thức hoặc SVG.
+- Tái rà mạch GLM: PASS, chỉ hai nhận xét nhẹ không cần sửa.
+- Tái rà chuyên môn DeepSeek nêu một vấn đề trung bình ở `L07-34` vì mặt trang thiên về phạm vi lý thuyết/topic-12.
+- Quyết định điều phối viên (không đổi): `data-note-topic-id` gắn cho toàn bộ slide kể cả notes; notes `L07-34` chứa duy nhất phần kết quả MDP tuyến tính và nguồn tr. 42–43, nên dùng topic-14 để giữ ánh xạ hai chiều; topic-12 đã có `L07-35`–`L07-36`; không thêm trang bổ sung vì sẽ mở rộng nhánh ngoài tuyến chính.
+- Không còn lỗi chặn bàn giao hoặc nghiêm trọng.
+
+## Tái kiểm cuối ánh xạ — 04-09-2026
+
+- Chromium duyệt lại đủ 39 trang ở 1280×720 và 800×600: 39 mã trang duy nhất, 39 `data-note-topic-id`, đủ 16 chủ đề, không lỗi KaTeX, console, tài nguyên, bàn phím hoặc phần tử vượt khung trang hiện tại.
+- Ba Design Files `lecture-07-xap-xi-ham.html`, `outline.md`, `storyboard.md` đã được ghi lại trong dự án Codex Slides `20260824191033-chuy-n-lecture-7-h-m-x-p-x-trong-h-c-t-n-6jd4` và đọc lại khớp từng byte với kho.
+- Codex Slides trả handoff tới Design Files nhưng Codex in-editor Browser không có trong phiên này. Không tuyên bố đã rà trực quan bằng giao diện đó; ảnh Chromium cục bộ là bằng chứng hiển thị cuối.
