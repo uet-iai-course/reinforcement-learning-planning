@@ -55,6 +55,10 @@ calls in one response, do not retry a successful replacement, and finish with
 a concise change summary instead of restating file contents.
 Never infer a new path from a concept, heading, artifact name, or missing detail;
 use only paths explicitly assigned by the coordinator.
+For a mutation task, finish with a successful write or replacement unless the
+current file evidence proves every requested constraint is already satisfied.
+Before declaring a no-op, compare the observed state item by item with the target;
+never treat the target specification itself as evidence of the current state.
 Answer in the user's language.
 """,
 }

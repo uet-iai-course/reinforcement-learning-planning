@@ -123,6 +123,10 @@ class ReadOnlyServerTest(unittest.TestCase):
         for prompt in ROLE_SYSTEM_PROMPTS.values():
             self.assertIn("Never infer a new path", prompt)
 
+    def test_writer_prompt_requires_evidence_before_noop(self) -> None:
+        self.assertIn("Before declaring a no-op", ROLE_SYSTEM_PROMPTS["writer"])
+        self.assertIn("successful write or replacement", ROLE_SYSTEM_PROMPTS["writer"])
+
     def test_task_profiles_fit_worker_jobs(self) -> None:
         self.assertGreater(TASK_PROFILES["source"].max_rounds, TASK_PROFILES["plan"].max_rounds)
         self.assertEqual(TASK_PROFILES["source"].timeout_seconds, 600)

@@ -84,6 +84,14 @@ Một lượt tái kiểm hẹp Bài 08 đã tự suy tên mục “bản đồ 
 ba vai trò nay cấm suy đường dẫn từ tên khái niệm, heading hoặc tên sản phẩm;
 worker chỉ được đọc lại tệp đã được điều phối viên nêu rõ.
 
+Lượt sắp xếp deck Bài 08 cho thấy writer có thể phục hồi sau
+`finish_reason=error` nhưng kết thúc không ghi tệp và nhầm đặc tả đích là trạng
+thái hiện tại. System prompt writer nay yêu cầu mọi nhiệm vụ biến đổi phải có
+tool ghi thành công, trừ khi bằng chứng từ tệp hiện tại chứng minh từng ràng buộc
+đã đạt; trước khi báo no-op phải so sánh trạng thái quan sát với đích theo từng
+mục. Điều phối viên vẫn phải kiểm diff và chuỗi ID, không dùng lời tổng kết của
+worker thay cho bằng chứng.
+
 Các tổ hợp đã chạy thành công:
 
 | Vai trò | Worker | Model | Profile | Số vòng |
