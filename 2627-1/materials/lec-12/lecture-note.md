@@ -356,7 +356,7 @@ Không tái tính GAE hay thu rollout sau từng actor. Hoán vị ngẫu nhiên
 
 **Nguồn:** tr. 19–38.
 
-**Nối ra:** benchmark khóa kênh thông tin môi trường; giao tiếp ở topic 10 thêm kênh giữa các tác tử khi thực thi; framework MARL ở phần bổ sung kế dưới đối chiếu phiên bản trước khi quay lại mạch chính ở giao tiếp.
+**Nối ra:** tuyến cốt lõi đi thẳng từ benchmark sang giao tiếp ở topic 10; nhánh linh hoạt đi qua framework MARL ở topic 13 rồi quay lại giao tiếp.
 
 <!-- note-topic-id: lec-12-topic-13 -->
 

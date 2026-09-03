@@ -154,6 +154,14 @@ GLM 5.3 Flash từ chối `none` bằng HTTP 400 vì reasoning là bắt buộc.
 chia thành các vá hẹp vì model có thể dùng hết 20 vòng cho nhiều thao tác thay
 thế; giữ profile `patch` cho 1–2 khối và `write` cho một sản phẩm cô lập.
 
+Deck Bài 12 xác nhận writer GLM với `reasoning-effort=minimal`, profile
+`patch`, 4–5 vòng, timeout 300 giây và 3.500–5.000 token hoàn tất ổn định khi
+mỗi lượt chỉ sửa 1–2 khối trong HTML nén hoặc Markdown. Một lượt sửa ba khối
+với trần 6 vòng đã ghi đủ phần lớn thay đổi nhưng kết thúc bằng
+`tool_call_limit` sau replacement mismatch và đọc lại. Vì vậy không giao từ ba
+khối độc lập trở lên cho một lượt `patch`; chia thành các lượt 1–2 khối. Không
+tăng preset toàn cục khi chưa có lượt 8 vòng được kiểm chứng.
+
 Hai cấu hình reader đầu tiên được kiểm chứng khi xử lý lecture note Bài 01
 ngày 02/09/2026. Cả hai trả
 `requested_model = observed_model = deepseek/deepseek-v3.2`, provider

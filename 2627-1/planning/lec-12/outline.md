@@ -28,7 +28,9 @@ Mục tiêu đầu ra:
 | Kết | `L12-45` | 2 phút | 0 |
 | Tổng | 42 trang cốt lõi + 5 trang linh hoạt | 110 phút | 10 phút |
 
-Tuyến cốt lõi 110 phút dùng phím Phải tại `L12-34` (`#/5/6`) để sang `L12-38` (`#/6/1`), và tại `L12-42` (`#/6/5`) để sang `L12-45` (`#/7/1`). Tuyến đủ 120 phút dùng phím Xuống qua `L12-35`–`L12-37` (`#/5/7`–`#/5/9`) và `L12-43`–`L12-44` (`#/6/6`–`#/6/7`) trước khi đi Phải. Sau kết luận, dùng phím Xuống qua `X01`–`X03` (`#/7/2`–`#/7/4`), lần lượt 8, 12 và 10 phút. Bảy mạch ngoài lần lượt là mở bài; hợp đồng MARL; COMA–VDN/QMIX; actor–critic; benchmark–framework; giao tiếp; kết luận–bài tập. Không có code demo vì nguồn không có nội dung tương ứng.
+Tuyến trình chiếu cốt lõi 110 phút dùng phím Phải tại `L12-34` (`#/5/6`) để sang `L12-38` (`#/6/1`), và tại `L12-42` (`#/6/5`) để sang `L12-45` (`#/7/1`). Tuyến trình chiếu đủ 120 phút dùng thêm `L12-35`–`L12-37` (`#/5/7`–`#/5/9`) và `L12-43`–`L12-44` (`#/6/6`–`#/6/7`).
+
+Ba bài tập `X01`–`X03` nằm ngoài 120 phút trình chiếu và dùng 30 phút còn lại, lần lượt 8, 12 và 10 phút. Sau kết luận, dùng phím Xuống để mở các trang tại `#/7/2`–`#/7/4`. Bảy mạch ngoài lần lượt là mở bài; hợp đồng MARL; COMA–VDN/QMIX; actor–critic; benchmark–framework; giao tiếp; kết luận–bài tập. Không có code demo vì nguồn không có nội dung tương ứng.
 
 ## Ánh xạ 54/54 trang nguồn
 
@@ -88,6 +90,28 @@ Tuyến cốt lõi 110 phút dùng phím Phải tại `L12-34` (`#/5/6`) để s
 | 52 | giữ, sửa | `L12-42` | Chuẩn hóa experience, hidden state và intention. |
 | 53 | giữ, sửa | `L12-43` | Hiện đường phụ thuộc actor/critic và execution availability. |
 | 54 | giữ, sửa | `L12-44` | Sửa chiều privacy và yêu cầu threat model. |
+
+## Ánh xạ chủ đề bài đọc sang trang chiếu
+
+| note-topic-id | vai trò | data-slide-id |
+|---|---|---|
+| topic-01 | mở nền tảng | `L12-01`–`L12-06` |
+| topic-02 | hợp đồng trò chơi Markov | `L12-07`, `L12-07B`, `L12-08`, `L12-09`, `X01` |
+| topic-03 | CTDE | `L12-10`–`L12-12` |
+| topic-11 | cầu nối policy gradient/actor–critic | `L12-13` |
+| topic-04 | COMA | `L12-14`–`L12-17` |
+| topic-05 | VDN/QMIX | `L12-18`–`L12-22B`, `X02` |
+| topic-06 | MADDPG | `L12-23` |
+| topic-12 | cầu nối PPO | `L12-24` |
+| topic-07 | IPPO/MAPPO | `L12-25`–`L12-26` |
+| topic-08 | HAPPO/HATRPO | `L12-27`–`L12-28` |
+| topic-09 | benchmark | `L12-29`–`L12-32`, `L12-34`, `X03` |
+| topic-13 | framework | `L12-35`–`L12-37` |
+| topic-10 | giao tiếp | `L12-38`–`L12-44` |
+| topic-14 | đọc thêm benchmark | `L12-33` |
+| topic-15 | tài liệu/kết luận | `L12-45` |
+
+Mỗi trong 50 trang có đúng một topic chính; topic-14 và topic-15 được gấp vào trang có nội dung tương ứng để không thêm trang riêng. `X02` lấy topic-05 làm chủ đề chính nhưng đồng thời kiểm tra COMA, MADDPG và HAPPO thuộc topic-04, topic-06 và topic-08.
 
 ## Kiểm kê và ánh xạ 76/76 media
 

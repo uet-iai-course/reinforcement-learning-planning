@@ -262,3 +262,55 @@ Danh mục 50 mã trang: `L12-01`, `L12-02`, `L12-03`, `L12-04`, `L12-05`, `L12-
 - Ngoại lệ index: theo goal hiện hành, thẻ index có hai nhóm Bài giảng/Ghi chú bài giảng thay cho quy tắc một liên kết duy nhất cũ trong `AGENTS.md`; không liên kết tệp planning.
 - Viewer/index sau khi công bố note: `python3 -m reloadserver 8765` không chạy vì thiếu mô-đun `reloadserver`. Máy chủ dự phòng chỉ phục vụ webroot tạm đã loại `.env`; Chromium tải viewer ở 1280×720 và 800×600 với 20 mục lục, 270 node KaTeX, 9 khối chỉ dẫn và 6 `details`, không lỗi console/request và không tràn ngang. Phím Tab vào skip-link; Enter trên `summary` đóng/mở được. Hai truy vấn `../.env` và lệch số bài đều bị chặn, ẩn layout và báo lỗi. Index có 12 thẻ; Bài 12 có đúng hai liên kết deck/note, không lỗi tài nguyên ở cả hai viewport.
 - Codex Slides chưa được dùng ở Giai đoạn I; kiểm định deck thuộc Giai đoạn II.
+
+## Nhật ký Giai đoạn II — đồng bộ bộ trang chiếu với bài đọc
+
+### Phạm vi và ánh xạ
+
+- Giữ 50 trang trong 7 mạch ngoài. Mỗi trang có đúng một `data-note-topic-id`; 15 mã topic của bài đọc đều có ít nhất một trang đích.
+- `topic-11` được gấp vào `L12-13` như cầu policy gradient mở COMA; `topic-12` được gấp vào `L12-24` như cầu PPO mở IPPO/MAPPO. Hai trang đã có dòng nhắc tiên quyết trên mặt trang.
+- `topic-14` được gấp vào `L12-33`; `topic-15` được thu hồi tại `L12-45`. Không tạo trang đọc thêm hoặc tài liệu tham khảo riêng.
+- `X02` lấy `topic-05` làm chủ đề chính nhưng kiểm tra chung COMA, QMIX, MADDPG và HAPPO. Outline và storyboard ghi rõ ngoại lệ một trang kiểm nhiều cụm.
+- Ví dụ QMIX tại `X02` dùng $r=1{,}5$, $\gamma=0{,}9$, $m=1$, giá trị đích $4$: $y=5{,}1$, loss bình phương $0{,}25$; terminal thật cho $y=1{,}5$.
+
+### Năm báo cáo độc lập
+
+Mọi báo cáo hợp lệ đều có `requested_model=observed_model`; hai vai sinh viên và mạch viết dùng `z-ai/glm-5.3-flash`, reasoning `minimal`; ba vai chuyên gia, toán và sư phạm dùng `deepseek/deepseek-v4-flash-0731`, reasoning `none`; provider đều là `OpenRouter`.
+
+| vai rà soát | mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa và quyết định |
+|---|---|---|---|---|---|
+| Góc nhìn sinh viên | nhẹ | `L12-13` | Mã topic cầu nối nhưng mặt trang cũ chỉ nêu vấn đề gán công. | `topic-11` trong bài đọc ôn policy gradient; bản cũ của `L12-13` không hiện tiên quyết này. | Thêm công thức policy gradient cục bộ trên mặt trang. Đã sửa. |
+| Góc nhìn sinh viên | nhẹ | `L12-07B` | Trang có nhiều ký hiệu và hai phương trình cảm sinh. | Một slide khóa lịch sử cục bộ, giả thiết độc lập có điều kiện và hai kernel. | Giữ một trang vì hai phương trình dùng chung giả thiết và tạo cùng sản phẩm học tập; kiểm bằng render. |
+| Góc nhìn sinh viên | nhẹ | `X02` | Bốn câu hỏi nhiều phần và một fragment đáp án chung. | Trang chữa bài bao phủ bốn họ thuật toán. | Giữ một fragment vì đây là trang chữa bài 12 phút; kiểm tràn ở hai viewport. |
+| Góc nhìn sinh viên | nhẹ | `L12-06`, `X01` | Quy ước dấu phân cách số nguyên khác ký hiệu thập phân trong công thức. | $9.765.625$ là cách viết số nguyên theo tiếng Việt; số thập phân dùng `{,}` trong KaTeX. | Không đổi: hai dấu có hai chức năng và không tạo mơ hồ. |
+| Chuyên gia Học tăng cường | trung bình | `L12-13` | Nội dung topic cầu policy gradient chưa hiện trên deck. | `L12-13` cũ mở thẳng vào COMA. | Thêm dòng nhắc policy gradient rồi giữ ví dụ gán công. Đã sửa. |
+| Chuyên gia Học tăng cường | trung bình | `L12-24` | Nội dung topic cầu PPO chưa hiện trên deck. | `L12-24` cũ mở thẳng vào IPPO/MAPPO. | Thêm dòng nhắc tỷ số mới/cũ và PPO-Clip. Đã sửa. |
+| Chuyên gia Học tăng cường | nhẹ | `L12-28` | HATRPO chỉ được giới thiệu định tính. | Deck và note chỉ nêu cập nhật tuần tự, multiplier và trust region/KL. | Giữ phạm vi có chủ ý; không triển khai công thức ngoài nguồn. |
+| Chuyên gia Học tăng cường | nhẹ | `L12-18`–`L12-22B` | Từ viết tắt IGM có trong note nhưng chưa được gọi tên trên deck. | Deck cũ mô tả tính chất mà không đặt tên. | Viết đầy đủ tiếng Việt rồi đặt IGM ở `L12-18`. Đã sửa. |
+| Độ chính xác toán học–thuật toán | đạt | toàn bộ | Không phát hiện lỗi. | Reviewer tính lại COMA, QMIX, MAPPO, HAPPO, kích thước Jacobian, mask terminal, IGM, target MADDPG và double-Q; mọi kết quả khớp. | Giữ công thức; tái rà các trang có sửa. |
+| Phản biện học thuật–giảng dạy | trung bình | `L12-20` | Ví dụ đơn điệu xuất hiện trước khi động lực phi cộng của QMIX được nói trên mặt trang. | Giới hạn của VDN trước đây chỉ nằm trong notes `L12-19`. | Đưa giới hạn VDN và vai trò mixer đơn điệu của QMIX lên box `L12-19`. Đã sửa. |
+| Phản biện học thuật–giảng dạy | trung bình | `L12-13`, `L12-24` | Hai cầu tiên quyết chỉ có trong bài đọc. | Policy gradient và PPO-Clip chưa hiện ở hai trang gắn topic tương ứng. | Thêm hai dòng nhắc ngắn; không tạo trang mới. Đã sửa. |
+| Phản biện học thuật–giảng dạy | nhẹ | `L12-23` | MADDPG mở bằng công thức, trực giác chỉ ở notes. | Mặt trang ưu tiên gradient và target. | Không thêm chữ trước khi render; tiêu đề và notes đã nêu critic tập trung/action liên tục. |
+| Phản biện học thuật–giảng dạy | nhẹ | `L12-19`–`L12-20` | Chu trình VDN/QMIX thiếu tín hiệu chuyển trực giác trên mặt trang. | VDN và ví dụ mixer đứng liền nhau. | Box mới ở `L12-19` tạo cầu VDN → mixer QMIX. Đã sửa. |
+| Phản biện học thuật–giảng dạy | nhẹ | tuyến 120 phút, `X01`–`X03` | Đoạn mô tả cũ có thể làm bài tập trông như nằm trong 120 phút. | 110 phút cốt lõi + 10 linh hoạt + 30 bài tập là 150 phút. | Tách thành hai đoạn: 120 phút trình chiếu và 30 phút bài tập. Đã sửa ở outline/storyboard. |
+| Kết nối và mạch viết | nhẹ | `X02` | Một topic chính nhưng kiểm bốn cụm. | `X02` mang topic-05 và hỏi COMA, QMIX, MADDPG, HAPPO. | Giữ một topic chính; ghi rõ kiểm chung topic-04/05/06/08 trong planning. Đã sửa. |
+| Kết nối và mạch viết | nhẹ | `L12-33` | Topic đọc thêm nằm trên tuyến cốt lõi. | Nội dung Neural MMO/OpenAI Five nằm cùng bảng benchmark. | Giữ vì trang vẫn có một luận điểm về khả năng mở rộng và phạm vi bằng chứng; phần AutoGen chỉ ở notes. |
+| Kết nối và mạch viết | nhẹ | `L12-29`–`L12-34` | Câu nối topic-09 chưa tách tuyến cốt lõi và nhánh framework. | Tuyến cốt lõi đi `L12-34` → `L12-38`; tuyến đủ đi qua `L12-35`–`L12-37`. | Tách hai vế trong note và sửa ô kết nối ra của storyboard. Đã sửa. |
+
+### Chỉnh sửa và tái rà
+
+- Writer vá ba khối đầu đã ghi được HATRPO, số trận OpenAI Five và câu hỏi QMIX, nhưng kết thúc với lỗi nguyên văn `model exceeded the tool-call limit (6)`. Lượt này không được tính là worker hoàn tất. Writer hẹp tiếp theo hoàn tất phần notes của `X02`; metadata hợp lệ là `requested_model=observed_model=z-ai/glm-5.3-flash`, provider `OpenRouter`, reasoning `minimal`.
+- Các writer hẹp cho outline, storyboard, hai cầu tiên quyết, IGM/động lực QMIX và câu nối note đều hoàn tất với cùng model/provider/reasoning. Kinh nghiệm cấu hình: với HTML nén và từ ba khối thay thế trở lên, `patch/6` dễ hết vòng do worker phải đọc lại sau replacement mismatch; dùng tối đa hai khối mỗi lượt hoặc tăng trần lên 8 vòng. Với một hoặc hai khối, 4–5 vòng đã ổn định.
+- Tái rà toán bằng DeepSeek V4 Flash, reasoning `none`, kết luận PASS: công thức policy gradient cục bộ, IGM, đẳng thức VDN, bao hàm QMIX, cầu PPO và miền ký hiệu đều đúng; không có lỗi mới.
+- Tái rà mạch bằng GLM, reasoning `minimal`, kết luận PASS: bốn ranh giới CTDE→COMA, COMA→VDN/QMIX, VDN/QMIX→MADDPG và MADDPG→PPO/MAPPO đều liền; 120 phút trình chiếu đã tách rõ khỏi 30 phút bài tập. Điểm nhẹ cuối về kết nối ra topic-09 đã được sửa trong storyboard.
+
+### Kiểm định cuối Giai đoạn II
+
+1. Kiểm định tĩnh đạt: 7 `<section>` ngoài; 50 trang và 50 `data-slide-id` duy nhất; 50 `data-note-topic-id` ánh xạ đủ 15 `note-topic-id`; 50 ghi chú diễn giả; 11 tham chiếu tài sản cục bộ; 11 SVG hợp lệ có `role="img"`, `title`, `desc`; không có tham chiếu raster hoặc tài nguyên mạng cốt lõi. `index.html` có 12 thẻ và hai liên kết đúng cho Bài 12, không liên kết planning. Không có `.env` dưới `2627-1/` và không có `quill.json` trong kho.
+2. `python3 -m reloadserver 8765` tiếp tục không chạy vì môi trường thiếu mô-đun `reloadserver`. Máy chủ dự phòng `python3 -m http.server 8765 --bind 127.0.0.1` được chạy với quyền nâng cao từ webroot tạm chỉ chứa deck, CSS, RevealJS, KaTeX và 11 SVG; không chứa `.env`, lecture note, planning hoặc index.
+3. Chromium headless duyệt đủ 50 trang ở 1280×720 và 800×600: không lỗi console, request hoặc tràn. Điều phối viên đã xem contact sheet của 100 ảnh và xem riêng `L12-13`, `L12-18`, `L12-19`, `L12-24`, `X02` ở cả hai viewport.
+4. KaTeX tạo 167 node `.katex`, 0 `.katex-error`; 50 trang và 50 notes được nhận diện. Fragment đáp án của `X01`–`X03` hiện đầy đủ, không bị cắt ở cả hai viewport.
+5. Bảy phép thử bàn phím đạt: `L12-34` sang phải tới `L12-38` hoặc xuống tới `L12-35`; `L12-42` sang phải tới `L12-45` hoặc xuống tới `L12-43`; `L12-45` xuống `X01`; sau khi mở fragment, `X01` xuống `X02` và `X02` xuống `X03`.
+6. Tự kiểm trực tiếp theo `no-ai-slop/eval.md`: không có từ cấm/pattern rỗng được phát hiện, chỉ một dấu gạch ngang dài trong mỗi tệp dài, không thêm claim hoặc số liệu ngoài phạm vi; câu trên mặt trang ngắn và thuật ngữ lặp nhất quán. Rà theo Quill giữ tuyến nền tảng → hợp đồng → thuật toán → bằng chứng → giao tiếp → checklist; không tạo trạng thái dự án sách.
+7. Codex Slides đọc được đúng dự án `20260825012827-b-i-12-nh-p-m-n-h-c-t-ng-c-ng-a-t-c-t-fht2` sau khi dùng polyfill tạm `buffer.File` cho Node 18 và quyền mở cổng 4311. Trạng thái canonical vẫn là `draft`, 0 slide native, stage `clarify`; nguồn PPTX đúng. HTML, outline và storyboard đã được cập nhật qua `write-design-file`; `note-for-author.md` không đổi. `lecture-note.md` không thêm được như Design File mới: `upload-design-file` trả `HTTP 500`, log ghi `ReferenceError: File is not defined` do runtime Node 18 trong khi kỹ năng yêu cầu Node 20+. Không sửa plugin để che lỗi môi trường.
+8. Codex hiện tại không cung cấp Browser nhúng để theo `browserHandoff`, và dự án có 0 slide native. Vì vậy không tuyên bố đã rà hình bằng Codex Slides Browser. Kiểm định hình ảnh cuối dùng RevealJS/Chromium cục bộ ở mục 3; Design Files văn bản được đối chiếu bằng hash sau lần đồng bộ cuối.
