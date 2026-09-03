@@ -215,3 +215,42 @@ Bản chỉnh sửa đã xử lý mọi lỗi `chặn bàn giao` và `nghiêm tr
 - Trình duyệt tải thành công liên kết ghi chú duy nhất từ thẻ Bài 05 trong `index.html`. Chromium headless kiểm ở 1280×720 và 800×600: 489 phần tử KaTeX, 15 bài tập, 30 khối `details`, 15 lời giải; không có lỗi console, request hỏng, tràn ngang hoặc phần tử nội dung tràn khung. Phím Enter mở được khối gợi ý đầu tiên.
 - `git diff --check` đạt; cấu trúc 15 topic và 15 bộ exercise–hint–solution cân bằng; các đường dẫn note và deck trong thẻ Bài 05 hợp lệ.
 - Codex Slides không khả dụng trong môi trường hiện tại do Node.js 18 thấp hơn yêu cầu Node.js 20 của plugin. Pha ghi chú đã được kiểm đầy đủ bằng trình xem Markdown cục bộ, nhưng không tuyên bố đã rà trực quan bằng Codex Slides.
+
+## Pha đồng bộ bộ trang chiếu 2026-09-03
+
+### Worker và bản nháp
+
+- Reader lập kế hoạch dùng `deepseek/deepseek-v3.2`, profile `plan`, 10 vòng, timeout 600 giây, 16.000 token; runtime `requested_model=observed_model=deepseek/deepseek-v3.2`, `provider=OpenRouter`. Reader xác nhận 34 trang, 5 mạch ngoài, 34 ghi chú, 4 SVG và tuyến lõi 108 phút cộng vùng đệm 12 phút.
+- Writer đồng bộ dùng `z-ai/glm-5.3-flash`, profile `write`, 20 vòng, timeout 600 giây, 18.000 token; runtime `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`. Điều phối viên bác đề nghị đặt bước học hằng $0{,}1$ vào phát biểu hội tụ B07 vì trái điều kiện Robbins–Monro; giữ $\alpha_n=1/n$.
+- Lượt writer chỉnh sửa sau rà dùng cùng GLM, profile `write`, 16 vòng, dừng đúng lỗi `model exceeded the tool-call limit (16)` khi lặp một phép thay thế B07. Điều phối viên kiểm diff, áp dụng các sửa đã chấp nhận bằng bản vá cục bộ, không đổi model và không chuyển worker mặc định.
+
+### Năm rà soát độc lập
+
+| Vai | Model runtime | Kết quả và quyết định |
+|---|---|---|
+| Góc nhìn sinh viên | `z-ai/glm-5.3-flash` / OpenRouter | Chấp nhận làm rõ bản đồ C00 và giảm tải B07. Bác nhận định sai về thời lượng vì quy định là 120 phút trình chiếu và 30 phút bài tập. |
+| Chuyên gia Học tăng cường | `deepseek/deepseek-v3.2` / OpenRouter | Chấp nhận bổ sung điều kiện chính sách đúng đắn tại B07. Bác nhận định $11/21$ và $19/21$ sai sau khi tính lại hệ phương trình. |
+| Toán học và thuật toán | `deepseek/deepseek-v3.2` / OpenRouter | Lượt đầu dừng `model exceeded the tool-call limit (6)`; lượt chạy lại cô lập đúng một deck hoàn tất và không phát hiện lỗi toán hoặc thuật toán. |
+| Phản biện học thuật–giảng dạy | `deepseek/deepseek-v3.2` / OpenRouter | Lượt đầu dừng `model exceeded the tool-call limit (7)`; lượt chạy lại hoàn tất. Bác các đề nghị thêm đồ thị, số liệu chệch–phương sai, ví dụ mới, code và đổi thứ tự ngoài phạm vi nguồn. |
+| Kết nối và mạch viết | `z-ai/glm-5.3-flash` / OpenRouter | Chấp nhận bổ sung B05 vào topic 09, tách A07 khỏi ánh xạ topic 06 và làm rõ năm ý ở D00. |
+
+### Chỉnh sửa và tái kiểm
+
+- Chuẩn hóa “lần ghé đầu”, “phần thưởng tích lũy”, “giá trị chuẩn đối chiếu”; B06 nêu TD(0) là xấp xỉ ngẫu nhiên của sai số Bellman kỳ vọng.
+- B07 tách điều kiện $\gamma<1$, trường hợp theo lượt $\gamma=1$, định nghĩa chính sách đúng đắn và hai tổng Robbins–Monro thành các ý ngắn; C00 nêu rõ số chuyển tới hai đầu mút; X03 dùng $\alpha_{n(s)}(s)=0{,}1$.
+- Sửa ánh xạ nguồn tr. 32–33 thành C06–C07,D01; ánh xạ topic 09 gồm B03–B05,B08; topic 06 chỉ gồm A05,A06,A08 và ghi A07 thuộc topic 11.
+- Lượt tái kiểm toán cuối dùng DeepSeek, profile `recheck`, 6 vòng, timeout 600 giây, 10.000 token; runtime `requested_model=observed_model=deepseek/deepseek-v3.2`, `provider=OpenRouter`. Worker hoàn tất ở vòng 4 và xác nhận B06, B07, C00, D00, X03 cùng các phép tính liên quan không còn lỗi mức trung bình trở lên.
+- Lượt tái kiểm mạch GLM đầu tiên, profile `recheck`, 6 vòng, dừng đúng lỗi `model exceeded the tool-call limit (6)` sau khi tự ghép sai đường dẫn. Lượt chạy lại đặt gốc tại `2627-1`, profile `recheck`, 8 vòng, timeout 600 giây, 9.000 token; runtime `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`, hoàn tất ở vòng 3. Không còn lỗi mức trung bình trở lên; đề nghị nhẹ loại B06 khỏi cột ứng dụng TD(0) đã áp dụng.
+- Tất cả worker chỉ nhận bản chụp tệp trong phạm vi nhiệm vụ. Các liên kết `.env` tạm đã được gỡ ngay sau lượt chạy; không gửi nội dung `.env` cho worker.
+- Kiểm thử trình duyệt phát hiện hai đẳng thức kỳ vọng ở B06 nằm cùng một dòng và bị cắt bên phải. Đã tách thành hai công thức khối tương đương; không đổi biểu thức toán học.
+
+### Kiểm định cuối pha bộ trang chiếu
+
+- `git diff --check` đạt. Parser xác nhận 5 `<section>` ngoài, 34 trang có `data-slide-id` duy nhất, 34 ghi chú diễn giả và thẻ `section` cân bằng; mọi đường dẫn cục bộ đều tồn tại.
+- Bốn SVG trong `img/lec-05/` đọc được dưới dạng XML, có `role="img"`, `title` và `desc`. Deck không tham chiếu ảnh raster hoặc tài nguyên mạng cốt lõi.
+- Note giữ 15 topic duy nhất, 15 khối bài tập, 15 gợi ý và 15 lời giải. Thẻ Bài 05 trong `index.html` có đúng một liên kết note, một liên kết deck và không liên kết vào `planning/`.
+- `python3 -m reloadserver 8765` không khả dụng: `/usr/bin/python3: No module named reloadserver`. Đã dùng `python3 -m http.server 8765 --bind 127.0.0.1` trên webroot tạm không có `.env`.
+- Chromium headless duyệt đủ 34 trang ở 1280×720 và 800×600 sau khi sửa B06: không tràn, không lỗi KaTeX, console, JavaScript hoặc request. Phím mũi tên dọc đi P00→P01 và phím ngang đi P00→A00 ở cả hai kích thước.
+- Trình xem note đạt ở cả hai kích thước: 489 phần tử KaTeX, 15 bài tập, 30 khối `details`, 15 lời giải; không tràn ngang hay request lỗi, phím Enter mở được gợi ý đầu tiên.
+- Tự kiểm cuối theo `no-ai-slop/eval.md` giữ câu ngắn, không thêm lời dẫn rỗng, khẩu hiệu hay kết luận lặp. Rà theo Quill xác nhận mạch P→A→B→C→D, thuật ngữ và ký hiệu nhất quán; không tạo `quill.json`.
+- Codex Slides không khả dụng vì Node.js hiện tại là 18.19.1, thấp hơn yêu cầu Node.js 20 của plugin. Đã hoàn tất kiểm tra RevealJS cục bộ nhưng không tuyên bố đã rà trực quan bằng Codex Slides.

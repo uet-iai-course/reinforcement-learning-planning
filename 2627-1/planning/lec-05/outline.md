@@ -2,7 +2,7 @@
 
 ## Mục tiêu và phạm vi
 
-Sinh viên phân biệt giá trị thật $v_\pi$, ước lượng $V_t$, phần thưởng tích lũy $G_t$, đích $Y_t^{\mathrm{TD}}$ và sai số $\delta_t$; thực hiện Monte Carlo (MC) lần ghé đầu tiên và sai phân thời gian TD(0) dạng bảng; nêu điều kiện hội tụ đi cùng giả thiết; so sánh cơ chế chệch–phương sai mà không xếp hạng phổ quát.
+Sinh viên phân biệt giá trị thật $v_\pi$, ước lượng $V_t$, phần thưởng tích lũy $G_t$, đích $Y_t^{\mathrm{TD}}$ và sai số $\delta_t$; thực hiện Monte Carlo (MC) lần ghé đầu và sai phân thời gian TD(0) dạng bảng; nêu điều kiện hội tụ đi cùng giả thiết; so sánh cơ chế chệch–phương sai mà không xếp hạng phổ quát.
 
 Thiết lập: quy trình quyết định Markov (MDP) bảng hữu hạn, chưa biết mô hình; chính sách Markov dừng $\pi$ cố định; dữ liệu theo chính sách; phần thưởng bị chặn. MC dùng lượt kết thúc gần như chắc chắn và $V(\text{kết thúc})=0$. Không dạy điều khiển, khác chính sách, Q-learning, xấp xỉ hàm hoặc mã nguồn.
 
@@ -28,7 +28,7 @@ Tệp có 31 trang chính và 3 trang bài tập dọc. Tuyến lõi là 108 ph�
 | tr. 17–23 | A00–A08 | Giữ MC; thêm giao diện thuật toán; áp dụng trọn trung bình mẫu trước $\alpha$ hằng; đặt giá trị chuẩn đối chiếu sau ước lượng |
 | tr. 24–29 | B00–B08 | Đưa chuyển mẫu trước công thức; thêm giao diện thuật toán, định nghĩa $T^\pi$ và Robbins–Monro theo số lần cập nhật |
 | tr. 30–31 | C00–C05 | Sửa số mũ và giá trị $0{,}970299$, $-0{,}99$; giải thích cơ chế chệch–phương sai có điều kiện. C00 không dùng hai giá trị chuẩn của nguồn vì không tái tạo nhất quán từ mô hình đã nêu |
-| tr. 32–33 | C06–D01 | Giữ phạm vi và cầu nối, không dạy điều khiển |
+| tr. 32–33 | C06–C07, D01 | Giữ phạm vi, câu tự kiểm và cầu nối; không dạy điều khiển |
 | hw05 B7/B3/B4 | X07/X03/X04 | Nhánh dọc tự đủ; X07 chuyển từ tính lặp sang giải thích cơ chế |
 | hw05 Bài 1 | B05/C07 | Hấp thụ: phân biệt đích MC và đích TD một bước, thời điểm cập nhật |
 | hw05 Bài 2 | P01–P02/B00 | Hấp thụ: bài toán dự đoán theo chính sách, chuyển mẫu trước công thức |
@@ -64,7 +64,7 @@ Note tự học tại `materials/lec-05/lecture-note.md` dùng 15 chủ đề du
 | 06 | A05, A06, A08 | Hai trục; A06 là vùng đệm mọi lần ghé |
 | 07 | B00, B01 | Chuyển mẫu, $Y_t^{\mathrm{TD}}$, $\delta_t$ |
 | 08 | B02 | Thuật toán TD(0) đầy đủ |
-| 09 | B03, B04, B08 | Tính tay hai lượt, cập nhật tại chỗ |
+| 09 | B03, B04, B05, B08 | Tính tay hai lượt, cập nhật tại chỗ và so thời điểm cập nhật |
 | 10 | B06 | $T^\pi$, kỳ vọng $\delta_t$ |
 | 11 | A07, B07 | Giả thiết hội tụ, $\gamma<1$ và $\gamma=1$ theo lượt |
 | 12 | C00, C01, C05 | Đi bộ dài, $\gamma^3=0{,}970299$, $-\gamma=-0{,}99$ |
@@ -77,7 +77,7 @@ Note tự học tại `materials/lec-05/lecture-note.md` dùng 15 chủ đề du
 | Bài tập | Topic | Quyết định |
 |---|---|---|
 | hw05 B7 | topic 04, 06, 09, 15 (X07) | Chuyển từ lặp phép tính sang giải thích ba kết quả |
-| hw05 B3 | topic 07, 08, 15 (X03) | Bổ sung số để tự đủ |
+| hw05 B3 | topic 07, 08, 15 (X03) | Bổ sung số để tự đủ; dùng $\alpha_{n(s)}(s)=0{,}1$ |
 | hw05 B4 | topic 13, 15 (X04) | Cơ chế có điều kiện, không xếp hạng phổ quát |
 | hw05 Bài 1 | topic 06, 07 | Hấp thụ: đích MC vs đích TD, thời điểm cập nhật |
 | hw05 Bài 2 | topic 01, 07 | Hấp thụ: quan sát bốn đại lượng, học từ mẫu |

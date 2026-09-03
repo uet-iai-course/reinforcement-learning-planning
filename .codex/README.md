@@ -221,3 +221,15 @@ bản vá hẹp và kiểm diff sau từng lượt. Tái kiểm cuối Bài 05 c
 DeepSeek `recheck/4/600/10000` và GLM `recheck/4/600/8000`; DeepSeek có thể
 đọc note trên 400 dòng thành hai đoạn và gọi thêm search, nên không hạ dưới 4
 vòng.
+
+Với deck Bài 05 khoảng 28 KB, reader kế hoạch DeepSeek hoàn tất bằng
+`plan/10/600/16000`; writer GLM bản đầu hoàn tất bằng `write/20/600/18000`.
+Reviewer GLM cho vai sinh viên và mạch viết chạy ổn định với 8 vòng, timeout
+600 giây và 10.000–11.000 token. Reviewer DeepSeek đọc nhiều tệp với 6–7 vòng
+có thể chạm `tool_call_limit`; cô lập đúng một deck rồi dùng
+`recheck/6–8/600/10000` đã hoàn tất với model quan sát đúng yêu cầu. Tái rà mạch
+bốn tệp bằng GLM nên đặt `--repo-root` trực tiếp tại `2627-1`, dùng
+`recheck/8/600/9000`; nếu để gốc cao hơn, model có thể tự ghép lặp `2627-1` và
+lãng phí giới hạn công cụ. Writer GLM nhiều thay thế với 16 vòng có thể lặp
+phép thay thế không khớp rồi dừng giới hạn; nên tách bản vá nhỏ hoặc dùng trần
+20 vòng và luôn kiểm diff.

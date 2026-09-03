@@ -57,7 +57,7 @@ Mười lăm topic với bốn nhãn bắt buộc: **cốt lõi** = 01, 02, 03, 
 - Vai trò trong mạch: tách quy tắc lấy mẫu khỏi quy tắc bước học — hai lựa chọn độc lập.
 - Kết nối vào: thuật toán topic 03 và ví dụ topic 04.
 - Kết nối ra: điều kiện hội tụ của trung bình mẫu (topic 11) và bài tập hw05 Bài 5.
-- Nguồn: tr. 18, 20–23; slide A05–A08.
+- Nguồn: tr. 18, 20–23; slide A05, A06, A08. A07 thuộc topic 11.
 
 ### lec-05-topic-07 — Chuyển mẫu, đích TD, delta
 
@@ -81,7 +81,7 @@ Mười lăm topic với bốn nhãn bắt buộc: **cốt lõi** = 01, 02, 03, 
 - Vai trò trong mạch: cùng hai lượt, cùng $\alpha=0{,}5$, cùng khởi tạo — khác biệt chỉ còn cơ chế cập nhật.
 - Kết nối vào: thuật toán topic 08; ví dụ topic 04.
 - Kết nối ra: so thời điểm và phạm vi tác động (topic 12, 13).
-- Nguồn: tr. 29; hw05 Bài 7; slide B03–B04, B08.
+- Nguồn: tr. 29; hw05 Bài 7; slide B03–B05, B08.
 
 ### lec-05-topic-10 — $T^\pi$ và kỳ vọng cập nhật
 
