@@ -236,3 +236,111 @@ Storyboard giữ 34 trang tuyến chính cộng X01–X02, tổng 120 phút. P02
 - Rà cuối theo `no-ai-slop/eval.md` và Quill đạt; không tạo `quill.json`.
 - Codex Slides trong trình duyệt nhúng không khả dụng ở vòng hiện tại. Vì vậy, vòng này chỉ xác minh bằng RevealJS cục bộ và không tuyên bố đã rà trực quan bằng Codex Slides. Bằng chứng dự án Codex Slides lịch sử ở trên được giữ để truy nguyên, không thay cho phép kiểm tra trình duyệt hiện tại.
 - Sau các lượt tái rà toán học, mạch viết và vùng lân cận, không còn lỗi `chặn bàn giao`, `nghiêm trọng` hoặc `trung bình` chưa xử lý.
+
+## Giai đoạn I — Lecture note (2026-09-03)
+
+## Trạng thái
+
+- Giai đoạn: I (soạn và sửa theo phạm vi duyệt).
+- Chưa commit; chưa tuyên bố kiểm định viewer/deck.
+
+## Kiểm kê plan/source/merge
+
+- Plan: `.worker/lec02-approved-scope.md` — đặc tả 12 topic, thứ tự học, yêu cầu hình thức.
+- Source: `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx` trang 1–27 (bằng chứng kiểm kê trực tiếp do điều phối viên cung cấp trong plan, gồm trang 15, 17, 22, 23, 25–26); `RL-hk2-2025-2026/resources/hw02.pdf` (Bài 1, 2, 5, 6 chính; Bài 10 mở rộng; Bài 3, 4, 7, 8, 9 để dành).
+- Merge: `materials/lec-02/lecture-note.md` — áp dụng 20 mục sửa từ `.worker/lec02-note-review-queue.md`.
+
+## Năm báo cáo hợp lệ (metadata)
+
+| Vai | requested_model | observed_model | provider | Kết quả |
+|---|---|---|---|---|
+| Góc nhìn sinh viên (chạy lại) | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter | hoàn tất vòng 2, review, timeout 300 giây |
+| Chuyên gia Học tăng cường (chạy lại) | deepseek/deepseek-v3.2 | deepseek/deepseek-v3.2 | OpenRouter | hoàn tất vòng 3, review, timeout 300 giây |
+| Độ chính xác toán học–thuật toán | deepseek/deepseek-v3.2 | deepseek/deepseek-v3.2 | OpenRouter | hoàn tất vòng 3, review |
+| Phản biện học thuật–giảng dạy | deepseek/deepseek-v3.2 | deepseek/deepseek-v3.2 | OpenRouter | hoàn tất vòng 3, review |
+| Kết nối và mạch viết | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter | hoàn tất vòng 2, review |
+
+## Lượt bị loại/lỗi (không tính vào năm báo cáo)
+
+| Lượt | Vấn đề |
+|---|---|
+| Reviewer sinh viên (lượt 1) | Lỗi `OpenRouter request exceeded 240s wall timeout`. |
+| Reviewer chuyên gia RL (lượt 1) | Gọi `search_text` trái phạm vi nên bị loại dù có kết quả. |
+
+## Bảng phát hiện và quyết định
+
+| # | Mức độ | Vị trí | Vấn đề | Bằng chứng | Đề xuất sửa | Quyết định |
+|---|---|---|---|---|---|---|
+| 1 | Bắt buộc | Tiên quyết | "Hai kiến thức này" sai số nhiều; thiếu dẫn giải trước lần dùng đầu | Queue mục 1 | Đổi thành "Các kiến thức này", thêm dẫn giải | Áp dụng |
+| 2 | Bắt buộc | Topic 10, 11 | Heading `###` thấp hơn các topic khác | Queue mục 2 | Nâng lên `##` | Áp dụng |
+| 3 | Bắt buộc | Topic 04 Vấn đề | Câu hỏi tu từ trong mục Vấn đề | Queue mục 3 | Viết phát biểu trực tiếp | Áp dụng |
+| 4 | Bắt buộc | Topic 01 ví dụ | Quy ước thưởng không nhất quán (0 ở đích) | Queue mục 4 | $-1$ mỗi bước kể cả bước đích | Áp dụng |
+| 5 | Bắt buộc | Topic 01 hình thức | Mục tiêu mơ hồ $\sum_t R_{t+1}$ | Queue mục 5 | Đổi thành $\max_\pi\mathbb E_\pi[G_t]$, báo $G_t$ ở topic 07 | Áp dụng |
+| 6 | Bắt buộc | Topic 03 | Tính Markov thiếu biến cố đầy đủ, lịch sử chưa bắt đầu ở $S_0$ | Queue mục 6 | Viết $\Pr(S_{t+1}\mid S_t)=\Pr(S_{t+1}\mid S_0,\ldots,S_t)$, nêu dạng viết tắt sau | Áp dụng |
+| 7 | Bắt buộc | Topic 04 hình thức + đáp án | Định nghĩa một phần chỉ bằng $O_t\ne S_t$ | Queue mục 7 | Định nghĩa qua đủ thông tin dự báo/khôi phục trạng thái | Áp dụng |
+| 8 | Bắt buộc | Mục Ký hiệu | Danh sách thay vì bảng | Queue mục 8 | Chuyển thành bảng Markdown, tách đoạn quy ước chu kỳ | Áp dụng |
+| 9 | Bắt buộc | Topic 05 | "10 bước thưởng" mơ hồ | Queue mục 9 | Diễn đạt thưởng $-1$ mỗi bước; dẫn $P^a_{ss'},R^a_s$ tới topic 07 | Áp dụng |
+| 10 | Bắt buộc | Topic 06 ví dụ | Ví dụ chưa tính thực sự | Queue mục 10 | Thưởng Bắc $=2$, Đông $=-1$, kỳ vọng $0{,}5$; ghi rõ dữ kiện tự đặt | Áp dụng |
+| 11 | Bắt buộc | Topic 07 | Thiếu tách tiếp diễn/hữu hạn và công thức tổng hình học | Queue mục 11 | Tách hai công thức $G_t$, nhắc $\gamma=1$ phân kỳ, giải thích $1/(1-\gamma)$ | Áp dụng |
+| 12 | Bắt buộc | Topic 09 ví dụ | Trộn hai chính sách trong cùng phân tích | Queue mục 12 | Nêu rõ chính sách (a) xác định và (b) chọn đều từ đầu | Áp dụng |
+| 13 | Bắt buộc | Tự kiểm 4, 8 | Câu 4 thiếu giả sử; câu 8 đếm sai | Queue mục 13 | Thêm giả sử $|R_{t+1}|\le10$ mọi bước; đổi "bốn" thành "năm" | Áp dụng |
+| 14 | Bắt buộc | Trước tự kiểm | Thiếu mục tổng kết thu hồi mục tiêu | Queue mục 14 | Thêm `## Tổng kết bài`, 5 câu | Áp dụng |
+| 15 | Bắt buộc | Topic 11 đáp án | "Trả lời (gợi ý)" không trực tiếp | Queue mục 15 | Đổi thành đáp án trực tiếp, giữ hai tiêu chí | Áp dụng |
+| 16 | Bắt buộc | Topic 02 ứng dụng | Tuyên bố quá rộng "mọi bài toán đều đặc tả được" | Queue mục 16 | Thêm quan sát, điều kiện kết thúc, $\gamma$; nói đây là khung đặc tả | Áp dụng |
+| 17 | Bắt buộc | Topic 06 hình thức | Nguy cơ hiểu $\pi(s)$ và $\pi(a\mid s)$ mâu thuẫn | Queue mục 17 | Nêu rõ hai ký hiệu cho hai loại chính sách | Áp dụng |
+| 18 | Bắt buộc | Topic 04 ví dụ | Tham chiếu mê cung trước khi đặc tả | Queue mục 18 | Thêm "sẽ đặc tả ở topic 09" | Áp dụng |
+| 19 | Điều phối viên | Tự kiểm 9, đáp án, Đọc thêm | Phân loại sai hw02 Bài 10 (gán $q_\pi$/Bellman) | Queue mục 19 | Bài 10 chỉ cần S, A, chuyển tiếp, thưởng, kết thúc/tiếp diễn; xếp mở rộng sau topic 09; không đưa lời giải | Áp dụng |
+| 20 | Điều phối viên | Đọc thêm | Chưa ghi lý do Bài 5, 6 thuộc bài này | Queue mục 20 | Ghi rằng $\gamma$ và chính sách ngẫu nhiên có ở trang 21–22 cùng hw02 | Áp dụng |
+
+### Phát hiện bị bác
+
+| Phát hiện | Quyết định | Lý do |
+|---|---|---|
+| Topic 11 thiếu `::: solution` | Bác | Checkpoint đã có câu kiểm tra và khối lời giải. |
+| Dùng "kiểm soát" thay "điều khiển" | Bác | Checkpoint dùng "điều khiển" nhất quán ở tiêu đề, định nghĩa, đáp án. |
+| Topic 10 không có comment ID | Bác | Có `<!-- note-topic-id: lec-02-topic-10 -->`; chỉ cấp heading sai (đã sửa). |
+| Bảng nguồn topic 10–12 để trống | Bác | Bảng đã ghi nguồn; giữ định dạng rõ. |
+| Thêm ví dụ mới cho kỳ vọng theo chính sách | Không bắt buộc | Sau sửa mục 10, topic 06 đã đủ cầu nối. |
+
+## Sai khác có chủ ý so với nguồn
+
+1. Sửa chu kỳ trang 15 theo quy ước chuẩn ($S_t, R_t$ nhận trước; $A_t$ chọn; $S_{t+1}, R_{t+1}$ phát).
+2. Bổ sung điều kiện hội tụ: tiếp diễn cần $0\le\gamma<1$ và phần thưởng bị chặn; hữu hạn cho phép $0\le\gamma\le1$.
+3. Sửa phát biểu MDP trang 18: quan sát đầy đủ không tự nó là định nghĩa MDP; đặc tả hình thức ở bài sau.
+4. Chuyển câu hỏi mô hình thế giới (trang 13) tới topic 11, sau định nghĩa mô hình ở topic 07.
+5. Không dùng ảnh trang 5–7, 9, 12, 19, 21, 27 (kể cả đồ thị chuyển và bảng đánh số trạng thái mê cung); ví dụ mê cung ba ô là dữ kiện tự đặt.
+
+## Tuân thủ
+
+- No-ai-slop: không câu hỏi tu từ trong lời dẫn, không quảng bá, không câu tổng kết lặp, không lộ chỉ dẫn người viết.
+- Mạch viết rà theo Quill; không tạo `quill.json`.
+- 12 `note-topic-id` duy nhất giữ nguyên; công thức chỉ dùng `$...$` và `$$...$$`.
+- Không thêm Bellman, MRP hoặc $q_\pi$ vào nội dung cốt lõi.
+
+### Recheck lecture note sau sửa
+
+- Toán: requested/observed `deepseek/deepseek-v3.2`, provider OpenRouter, recheck hoàn tất vòng 3; không lỗi chặn bàn giao/nghiêm trọng, bốn điểm nhẹ ở trên.
+- Mạch viết: requested/observed `z-ai/glm-5.3-flash`, provider OpenRouter, recheck hoàn tất vòng 3 sau một lượt phục hồi `finish_reason=length`; không lỗi chặn bàn giao/nghiêm trọng, một điểm nhẹ về ánh xạ lặp hw02 Bài 2.
+- Ghi quyết định áp dụng năm sửa nhẹ; giữ chu trình rút gọn topic 10/11 vì đây không phải khái niệm cốt lõi độc lập.
+
+### Recheck cuối sau năm sửa nhẹ
+
+- Toán học–thuật toán: `requested_model=observed_model=deepseek/deepseek-v3.2`, provider OpenRouter, profile `recheck`, hoàn tất vòng 2 với `--max-rounds 3 --timeout 300 --max-tokens 3000`. Xác nhận định nghĩa $R_{\max}$, hai miền $\gamma$, trường hợp $\gamma=1$ hữu hạn, cận trên $100$ và điều kiện hội tụ đều đúng; không có lỗi chặn bàn giao hoặc nghiêm trọng.
+- Mạch viết: `requested_model=observed_model=z-ai/glm-5.3-flash`, provider OpenRouter, cùng cấu hình, hoàn tất vòng 2. Xác nhận ánh xạ kép hw02 Bài 2 có hai vai trò riêng (phân biệt quan sát ở topic 04; áp dụng tổng hợp ở topic 09), câu nối hai chiều rõ và không trùng chức năng; không có lỗi chặn bàn giao hoặc nghiêm trọng.
+- Giữ hai điểm nhẹ không bắt buộc: topic 04 giới thiệu ví dụ mê cung trước topic 09 rồi topic 09 tái dùng ở vai trò tổng hợp; dạng $S_1,\ldots,S_t$ được giữ khi trích đúng công thức trang 17, còn dạng chuẩn của note bắt đầu ở $S_0$ và đã ghi rõ khác biệt.
+
+### Công bố lecture note
+
+- Cổng nội dung Giai đoạn I đạt: đủ 12 `note-topic-id` duy nhất, bản đồ bốn nhóm, công thức đúng cú pháp Markdown, không còn lỗi chặn bàn giao hoặc nghiêm trọng trong năm báo cáo và hai recheck cuối.
+- `index.html` đổi trạng thái Ghi chú bài giảng của Bài 02 thành liên kết tĩnh `material-viewer.html?doc=materials/lec-02/lecture-note.md&deck=lecture-02-giao-dien-tac-tu-moi-truong.html`.
+- Nhóm hai tài nguyên “Bài giảng / Ghi chú bài giảng” thay thế quy tắc một liên kết duy nhất trong `AGENTS.md` theo yêu cầu cụ thể của `prompt_lecture_note_deck.md`.
+- Lệnh bắt buộc `python3 -m reloadserver 8765` chưa chạy được vì môi trường không có mô-đun `reloadserver`; kiểm định trình duyệt cổng 8765 cho note được thực hiện ở bước kế tiếp bằng máy chủ dự phòng cô lập, không chứa `.env`.
+
+### Kiểm định viewer Giai đoạn I
+
+- Lệnh bắt buộc `python3 -m reloadserver 8765` trả `/usr/bin/python3: No module named reloadserver`. Dùng `python3 -m http.server 8765 --bind 127.0.0.1` trên webroot tạm chỉ chứa tài sản công khai; không sao chép `.env`.
+- Chromium qua Playwright 1.55.0 mở đúng URL viewer của Bài 02: HTTP 200, tiêu đề đúng, 23 mục lục/tiêu đề, 12 khối lời giải, 305 biểu thức KaTeX, 0 `.katex-error`; không lỗi console, lỗi trang hoặc yêu cầu thất bại.
+- Comment `note-topic-id` được loại khỏi DOM hiển thị; liên kết nguồn Markdown và deck đúng; phím Tab đầu tiên tới liên kết bỏ qua nội dung `#material-content`.
+- Kiểm tra đường dẫn lệch số bài đạt: ghép note Bài 02 với deck Bài 01 bị từ chối, ẩn bố cục và báo “Số bài của tài liệu không khớp với bộ trang chiếu.” Lỗi console ở ca âm là thông báo có chủ ý từ hàm `fail`, không phải lỗi tải.
+- `index.html` trả HTTP 200, có đúng một liên kết deck Bài 02 và một liên kết lecture note Bài 02, không có liên kết tới planning/outline/storyboard/review-log.
+- Đã xem ảnh chụp toàn trang viewer ở 1280 × 720; nội dung, bảng, công thức, mục lục và khối lời giải hiển thị đầy đủ, không thấy chồng lấn hoặc phần tử hỏng.

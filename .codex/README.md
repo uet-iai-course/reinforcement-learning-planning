@@ -68,6 +68,8 @@ Các tổ hợp đã chạy thành công:
 | Phân tích logic, toán, RL phạm vi hẹp | `openrouter-mcp-reader` | `deepseek/deepseek-v3.2` | `recheck` | 8 |
 | Rà mạch viết, sinh viên | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` | `recheck` | 4–6 |
 | Rà logic, toán, RL | `openrouter-mcp-reviewer` | `deepseek/deepseek-v3.2` | `recheck` | 6–8 |
+| Rà note trên hai tệp cố định | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v3.2` | `review` | 4 |
+| Tái rà một tệp, phạm vi hẹp | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v3.2` | `recheck` | 3 |
 | Ghi một phạm vi tệp | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `write` | 12 |
 | Ghi nhiều điểm trong deck | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `write` | 20 |
 
@@ -106,3 +108,13 @@ runtime trả `requested_model = observed_model = z-ai/glm-5.3-flash`, provider
 ghi một phần. Vì vậy dùng 12 vòng cho writer hẹp, còn hàng đợi sửa nhiều tệp
 hoặc nhiều điểm dùng 20 vòng. `timeout` áp dụng cho từng yêu cầu API; tổng thời
 gian của tiến trình có thể vượt 300 giây khi có nhiều vòng công cụ.
+
+Với lecture note Bài 02, reviewer chỉ đọc hai tệp cố định chạy ổn định bằng
+`--max-rounds 4 --timeout 300 --max-tokens 7000`: GLM hoàn tất vòng 2 và
+DeepSeek hoàn tất vòng 3. Cấu hình mặc định `review` với timeout 240 giây đã
+từng làm GLM dừng ở `api_wall_timeout`, nên dùng 300 giây cho note dài khoảng
+40 KB. Recheck đúng một tệp và phạm vi rất hẹp chạy ổn định bằng
+`--max-rounds 3 --timeout 300 --max-tokens 3000`; cả GLM và DeepSeek hoàn tất
+vòng 2. Prompt phải giới hạn số lần `read_text_file` và yêu cầu báo cáo ngắn;
+một lượt GLM trước đó với đầu ra 5.000 token đã chạm `finish_reason=length`
+rồi mới hoàn tất ở lượt phục hồi.
