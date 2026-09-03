@@ -197,3 +197,30 @@ Các đề xuất thêm trang tiên quyết, trang tài liệu tham khảo, ví 
 - Rà Quill giữ tuyến baseline → lợi thế thô → tách actor/critic → TRPO → PPO → chẩn đoán → kết quả lý thuyết. Tự kiểm `no-ai-slop/eval.md` đạt: không thêm mệnh đề, số liệu hoặc nguồn; không còn lời dẫn rỗng, câu hỏi tu từ, nhãn phô trương hoặc nhịp câu máy móc. Không tạo `quill.json`.
 - Bốn Design Files `lecture-10-trpo-va-ppo.html`, `outline.md`, `storyboard.md`, `review-log.md` trong dự án Codex Slides `20260824221550-lecture-10-trpo-v-ppo-p4gd` đã được đồng bộ và đối chiếu nội dung từng byte với tệp trong kho. Trạng thái chuẩn của dự án là `draft`, 0 slide, vì dự án dùng Design Files để lưu bản RevealJS thay vì render deck ảnh.
 - Codex Slides trả handoff chính xác tới `?view=design-files&file=uploaded%2Flecture-10-trpo-va-ppo.html`, nhưng phiên này không có Codex in-editor Browser để mở handoff. Vì vậy không tuyên bố đã xác minh giao diện Design Files trong Browser; rà trực quan RevealJS cục bộ bằng Chromium là bằng chứng hiển thị cuối.
+
+## Đồng bộ deck với lecture note ngày 03/09/2026
+
+- Thêm `data-note-topic-id` cho đủ 42 trang. Phân bố 12 chủ đề lần lượt là `5, 4, 4, 4, 5, 6, 1, 3, 4, 3, 2, 1`; mỗi trang thuộc đúng một chủ đề.
+- Thêm cùng bảng ánh xạ hai chiều vào `outline.md` và `storyboard.md`. Tập 42 `data-slide-id` trong HTML xuất hiện đầy đủ ở cả hai tệp; 12 mã chủ đề khớp các section của lecture note.
+- Không đổi số trang, thứ tự, sáu mạch ngoài, bảy SVG hoặc cấu hình RevealJS. Đồng bộ cục bộ kết quả học tập, nguồn trang, thuật ngữ triển khai, đích critic và cầu nối từ pipeline sang kết quả lý thuyết.
+
+Năm lượt rà độc lập sau đồng bộ:
+
+| vai | model runtime | kết quả và quyết định |
+|---|---|---|
+| góc nhìn sinh viên | `z-ai/glm-5.3-flash` | PASS; đề nghị làm rõ thời lượng và phát hiện mô tả $L$ lệch note. Giữ lịch 110 phút cốt lõi + 10 phút linh hoạt + 30 phút bài tập vì đúng yêu cầu 120+30; sửa $L$. |
+| chuyên gia Học tăng cường | `deepseek/deepseek-v4-flash-0731` | Phát hiện mức nghiêm trọng tại `L10-37B`: $L$ phải là hằng số Lipschitz của gradient. Đã sửa và tái rà toán PASS. |
+| toán học và thuật toán | `deepseek/deepseek-v4-flash-0731` | Các ví dụ GAE, natural gradient và PPO-Clip đúng; cùng phát hiện mô tả $L$. Sau sửa `X03` và `L10-37B`, tái rà xác nhận bốn đáp số theo thứ tự là $2{,}4$, $1{,}4$, $-2{,}6$, $-1{,}6$ và kết luận PASS. |
+| phản biện học thuật–sư phạm | `deepseek/deepseek-v4-flash-0731` | Không có lỗi chặn hoặc nghiêm trọng. Các nhận xét cho rằng ca $(\widehat A,w)=(-2,0{,}7)$ còn gradient bị bác vì phép `min` chọn $0{,}8(-2)=-1{,}6$, đúng là đoạn phẳng. |
+| kết nối và mạch viết | `z-ai/glm-5.3-flash` | PASS về tuyến và ánh xạ; phát hiện `X03` lệch bài tập trong note. Đã thay câu phân loại batch bằng phép tính đủ bốn ca PPO-Clip; tái rà `L10-31`–`L10-38` PASS. Nhận xét đồng nhất “mạch ngoài” với số SVG bị bác: mạch ngoài là sáu section cấp một, còn SVG là bảy tài sản. |
+
+Ba vai DeepSeek có `requested_model = observed_model = deepseek/deepseek-v4-flash-0731`, provider `OpenRouter`, `reasoning-effort none`. Vai sư phạm đầu tiên bị `finish_reason=length`; lượt chạy lại thu hẹp phạm vi hoàn tất và mới được dùng làm báo cáo. Hai vai GLM có `requested_model = observed_model = z-ai/glm-5.3-flash`, provider `OpenRouter`, `reasoning-effort minimal`.
+
+Kiểm định cuối của vòng đồng bộ:
+
+- `git diff --check` đạt; 42 ID duy nhất, 42 ghi chú, 6 section ngoài, 12 chủ đề; 229 biểu thức KaTeX nguồn dựng thành công với `strict: error`.
+- 17 tài nguyên cục bộ được tham chiếu đều tồn tại; không có tài nguyên mạng cốt lõi hay ảnh raster. Bảy SVG phân tích XML thành công và đều có `role="img"`, `title`, `desc`.
+- `index.html` đã có đúng liên kết deck và lecture note của Bài 10; không có liên kết tới planning.
+- Lệnh bắt buộc `python3 -m reloadserver 8765` tiếp tục không chạy vì thiếu mô-đun. Dùng `python3 -m http.server 8765 --bind 127.0.0.1` trên webroot tối thiểu không chứa `.env`.
+- Chromium duyệt đủ 42 trang ở 1280×720 và 800×600: không lỗi console, lỗi tải tài nguyên hoặc lỗi bàn phím. Bộ đo hình học vẫn báo sai dương ở H1 và một số hộp KaTeX; ảnh chụp xác nhận nằm trong khung. `X03` từng tràn do fragment đáp án dài, đã rút gọn rồi render lại; `X03` và `L10-37B` đọc được ở cả hai viewport.
+- Codex Slides không khả dụng trong lượt này vì Node.js 18.19.1 thấp hơn yêu cầu Node.js 20. Không tuyên bố đã rà vòng đồng bộ bằng Codex Slides; bằng chứng hiển thị là Chromium trên RevealJS cục bộ.

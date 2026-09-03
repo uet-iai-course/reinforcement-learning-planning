@@ -28,6 +28,27 @@ Các khoảng thời gian dưới đây không chồng lặp. Tuyến cốt lõi
 - `L10-27` truyền $\widehat A^{\mathrm{raw}}$ sang hai nhánh: chuẩn hóa thành $\widehat A^{\mathrm{actor}}$ và cộng $V_{\mathrm{old}}$ thành target $\widehat V$.
 - $T$ ký hiệu thời điểm episode kết thúc; kích thước $[H,N,\cdot]$ và $B=HN$ ở `L10-28` đi vào schema, minibatch và bài kiểm toán `X03`.
 
+## Ánh xạ topic – slide
+
+Bảng ánh xạ hai chiều giữa 12 topic ghi chú và 42 section slide (đồng bộ `data-note-topic-id` trong deck):
+
+| topic | slide |
+|---|---|
+| `lec-10-topic-01` | `L10-01`, `L10-02`, `L10-03`, `L10-04`, `L10-05` |
+| `lec-10-topic-02` | `L10-06`, `L10-07`, `L10-08`, `L10-09` |
+| `lec-10-topic-03` | `L10-10`, `L10-11`, `L10-12`, `X01` |
+| `lec-10-topic-04` | `L10-13`, `L10-14`, `L10-15`, `L10-16` |
+| `lec-10-topic-05` | `L10-17`, `L10-18`, `L10-19`, `L10-20`, `X02` |
+| `lec-10-topic-06` | `L10-21`, `L10-22`, `L10-23`, `L10-24`, `L10-25`, `L10-26` |
+| `lec-10-topic-07` | `L10-27` |
+| `lec-10-topic-08` | `L10-28`, `L10-29`, `L10-30` |
+| `lec-10-topic-09` | `L10-31`, `L10-32`, `X03`, `L10-36` |
+| `lec-10-topic-10` | `L10-33`, `L10-34`, `L10-35` |
+| `lec-10-topic-11` | `L10-37`, `L10-37B` |
+| `lec-10-topic-12` | `L10-38` |
+
+Tổng: 12 topic ↔ 42 slide, mỗi slide thuộc đúng một topic.
+
 ## Quyết định cho các bước gộp
 
 - `L10-03` chỉ nêu vấn đề chung về phân bố dữ liệu đổi; chu trình baseline bắt đầu từ phương sai của REINFORCE ở `L10-05`–`L10-06`.
