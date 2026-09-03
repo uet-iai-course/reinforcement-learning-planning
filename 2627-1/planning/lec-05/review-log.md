@@ -136,6 +136,14 @@ Metadata lượt này: planner, source reader, storyboard reviewer, năm reviewe
 - Không đổi thứ tự X hoặc C05; không thêm nội dung ngoài nguồn về chệch của MC mọi lần ghé.
 - Chưa render và chưa đồng bộ Codex Slides ở thời điểm lập bảng này.
 
+## Lượt soạn note tự học
+
+- Đã tạo `materials/lec-05/lecture-note.md` với 15 topic `lec-05-topic-01..15`, bản đồ chủ đề bốn nhóm, bảng ký hiệu và tài liệu tham khảo; mỗi topic có exercise + hint + solution.
+- Note giữ nguyên mọi quyết định số của storyboard và review-log: $(1,1)\to(0,0)$ trung bình mẫu; $(0{,}5,0{,}5)\to(-0{,}25,-0{,}25)$ với $\alpha=0{,}5$; mọi lần ghé $(0,1/3)$; TD $(-0{,}375,0{,}375)$; $\gamma^3=0{,}970299$; $-\gamma=-0{,}99$; oracle $11/21$, $19/21$.
+- Sai khác có chủ ý so với nguồn được giữ nguyên trong note: không dùng $0{,}829$ và $0{,}992$; không tuyên bố MC không chệch hay TD phương sai thấp hơn vô điều kiện; tách trung bình mẫu khỏi $\alpha$ hằng; $\alpha$ hằng không hội tụ điểm nói chung; giả thiết hội tụ nêu đầy đủ (cập nhật vô hạn lần, Robbins–Monro, đúng đắn, khởi động lại, hấp thụ).
+- Không thêm code demo; không sửa deck, index, CSS hoặc SVG; không tạo `quill.json` — rà mạch theo Quill chỉ biên tập thứ tự vấn đề → trực giác → ví dụ → hình thức → ứng dụng → kiểm tra.
+- Chỉ dùng `$...$` và `$$...$$` cho toán; không dùng các cú pháp toán khác.
+
 ## Trạng thái trước kiểm định cuối
 
 Bản chỉnh sửa đã xử lý mọi lỗi `chặn bàn giao` và `nghiêm trọng` được báo cáo. Bốn hình giữ nguyên vì không có lỗi mới. Các kiểm tra cuối và giới hạn rà trực quan được ghi ở cuối nhật ký.
@@ -164,3 +172,46 @@ Bản chỉnh sửa đã xử lý mọi lỗi `chặn bàn giao` và `nghiêm tr
 - Bốn SVG đều đọc được dưới dạng XML, có `role="img"`, `title` và `desc`. Không có ảnh raster hoặc tài nguyên mạng trong trang chiếu.
 - Chromium headless duyệt đủ 34 trang ở 1280×720 và 800×600, chụp 68 ảnh, không có lỗi console hoặc request. Kiểm tra bàn phím cho P00→P01 và P00→A00 đạt. Các cảnh báo hình học ở P00 và công thức KaTeX A01/A02/A04/B06/B07 là dương tính giả; ảnh chụp xác nhận không cắt, chồng hoặc tràn. A06, B03, B04, B06, B07 và ba trang X đều đọc rõ.
 - Đã đồng bộ HTML, outline, storyboard và review-log vào Design Files `*-2` của dự án Codex Slides `20260824165326-chuy-n-lecture-5-d-o-n-phi-m-h-nh-monte--cp0p` và đọc lại để đối chiếu byte. Dự án vẫn ở trạng thái `draft/clarify` với 0 slide; Codex in-editor Browser không có trong phiên này, nên không tuyên bố đã rà trực quan trong Codex Slides.
+
+## Pha ghi chú bài giảng 2026-09-03
+
+### Worker và bằng chứng runtime
+
+- Reader lập kế hoạch: `deepseek/deepseek-v3.2`, profile `plan`, 12 vòng, timeout 600 giây, 14.000 token; runtime `requested_model=observed_model=deepseek/deepseek-v3.2`, `provider=OpenRouter`.
+- Reader phân tích nguồn: cùng model, profile `source`, 20 vòng, timeout 600 giây, 18.000 token; hoàn tất sau một lần cầu nối tự thử lại phản hồi rỗng; runtime model khớp, provider OpenRouter.
+- Lượt hợp nhất đầu bằng DeepSeek, 8 vòng, dừng đúng lỗi `model exceeded the tool-call limit (8)`. Lượt chạy lại chỉ đọc hai JSON, profile `recheck`, 6 vòng, timeout 600 giây, 10.000 token, hoàn tất với model quan sát đúng yêu cầu và provider OpenRouter.
+- Writer bản đầu: `z-ai/glm-5.3-flash`, profile `write`, 20 vòng, timeout 600 giây, 32.000 token; cầu nối phục hồi một phản hồi chưa hoàn chỉnh; runtime `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`.
+- Hai lượt writer sửa rộng tiếp theo cùng GLM, 12 vòng, lần lượt dừng đúng lỗi `model exceeded the tool-call limit (12)` sau khi đã ghi một phần. Điều phối viên kiểm diff và dùng bản vá cục bộ cho phần còn lại; không đổi model, không chuyển sang worker mặc định.
+- Mọi gói worker chỉ chứa tệp được phép đọc. Liên kết `.env` tạm được gỡ sau từng lượt; kiểm tra cuối không còn liên kết `.env` trong `/tmp`.
+
+### Năm rà soát độc lập
+
+| Vai | Model runtime | Mức độ cao nhất | Bằng chứng và quyết định |
+|---|---|---|---|
+| Góc nhìn sinh viên | `z-ai/glm-5.3-flash` / OpenRouter | trung bình | Báo nhầm kết quả mọi lần ghé $(0,1/3)$ và hai kết quả $\alpha$ hằng; điều phối viên tính lại, giữ các kết quả và sửa mô tả tổng số mẫu thành bốn mẫu cho $S$, ba mẫu cho $x$. Chấp nhận đề nghị chuẩn hóa thuật ngữ. |
+| Chuyên gia Học tăng cường | `deepseek/deepseek-v3.2` / OpenRouter | trung bình | Lượt đầu chạm `model exceeded the tool-call limit (8)`; chạy lại trên đúng một note hoàn tất. Bổ sung miền trạng thái có thể đạt được trong nhánh $\gamma=1$, tách hội tụ của thuật toán khỏi tính không chệch của mẫu đích. |
+| Toán học và thuật toán | `deepseek/deepseek-v3.2` / OpenRouter | nghiêm trọng trước sửa | Lượt đầu chạm `model exceeded the tool-call limit (8)`; chạy lại trên đúng một note hoàn tất. Tính lại MC mọi lần ghé, MC $\alpha$ hằng, TD tại chỗ, $11/21$, $19/21$, $\gamma^3$ và $-\gamma$; không phát hiện sai số số học. Sửa phát biểu kỳ vọng TD chỉ dịch $V_t(s)$ về $(T^\pi V_t)(s)$; hội tụ cần giả thiết riêng. |
+| Phản biện học thuật–giảng dạy | `deepseek/deepseek-v3.2` / OpenRouter | trung bình | Lượt đầu chạm `model exceeded the tool-call limit (8)`; chạy lại trên đúng một note hoàn tất. Chấp nhận cầu nối topic 10→11→12 và giải thích riêng hai tổng Robbins–Monro; bác đề nghị thêm định lý hoặc xếp hạng phương sai ngoài nguồn. |
+| Kết nối và mạch viết | `z-ai/glm-5.3-flash` / OpenRouter | trung bình | Xác nhận cần bốn nhãn học tập thay vì gọi bốn mạch là bốn nhóm; chấp nhận phân tuyến cốt lõi/cầu nối/bổ sung/đọc thêm và thêm đầu ra topic 11 sang quỹ đạo dài topic 12. |
+
+### Chỉnh sửa sau rà soát
+
+- Chuẩn hóa tên tiếng Việt “sai phân thời gian (TD)”, “tự mồi (bootstrap)”, “chuẩn vô cùng”, “giá trị chuẩn đối chiếu”; bỏ các nhãn nội bộ “đúng chỉ số”, `return`, `oracle` khỏi note.
+- Topic 03 nêu rõ các lượt khởi động lại độc lập, còn mẫu trong cùng lượt phụ thuộc nhau. Topic 06 giữ đúng mọi lần ghé $(0,1/3)$ và $\alpha=0{,}5$ tại chỗ $(-0{,}5625,-0{,}125)$.
+- Topic 10 chỉ phát biểu cập nhật kỳ vọng dịch về $T^\pi V_t$; topic 11 nêu miền trạng thái đạt được, tính quá độ và ý nghĩa riêng của hai tổng Robbins–Monro.
+- Topic 12 dùng bản đồ $L\;\cdot\;S\;\cdot\;\cdot\;\cdot\;G$, tách bài kiểm tra khỏi phép tính lặp ở topic 02. Topic 13 gắn tính không chệch với mẫu đích $G_t$, không với MC $\alpha$ hằng, và không xếp hạng phương sai phổ quát.
+- Topic 14 bỏ khuyến nghị cho môi trường không dừng ngoài phạm vi nguồn. Topic 15 tổng hợp năm ý và dùng $\alpha_{n(s)}(s)$ nhất quán.
+- Tự kiểm `no-ai-slop/eval.md`: giữ ý nguồn, không thêm số liệu hay định lý, bỏ lời dẫn rỗng và thuật ngữ Anh không cần thiết. Rà theo Quill xác nhận thứ tự khái niệm, kết nối 10→15 và bảng thuật ngữ nhất quán; không tạo `quill.json`.
+
+### Tái kiểm sau chỉnh sửa note
+
+- DeepSeek: profile `recheck`, 4 vòng, timeout 600 giây, 10.000 token; runtime `requested_model=observed_model=deepseek/deepseek-v3.2`, `provider=OpenRouter`. Worker đọc note thành hai đoạn do giới hạn 400 dòng, gọi thừa một `search_text` sai kiểu đường dẫn nhưng vẫn hoàn tất ở vòng 4. Báo cáo tính lại topic 03, 06, 10, 11, 12, 13, 15 và xác nhận không còn lỗi mức trung bình trở lên.
+- GLM: profile `recheck`, 4 vòng, timeout 600 giây, 8.000 token; runtime `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`. Báo cáo xác nhận mạch 10→15 và bốn nhãn thống nhất; hai gợi ý nhẹ đã xử lý: viết $\gamma(-1)=-0{,}99$ thay cho $-\gamma$ ở bản đồ topic và dùng thống nhất “lần ghé đầu”.
+- Kiểm tra cấu trúc sau sửa: 15 `note-topic-id` duy nhất, 15 khối `exercise`, 15 `hint`, 15 `solution`; không có `\\(...\\)` hoặc `\\[...\\]`; không có `quill.json`.
+
+### Kiểm định cuối pha ghi chú
+
+- `python3 -m reloadserver 8765` dừng với `/usr/bin/python3: No module named reloadserver`. Dùng `python3 -m http.server 8765 --bind 127.0.0.1` trên webroot tạm chỉ chứa tài sản cần thiết và không có `.env`.
+- Trình duyệt tải thành công liên kết ghi chú duy nhất từ thẻ Bài 05 trong `index.html`. Chromium headless kiểm ở 1280×720 và 800×600: 489 phần tử KaTeX, 15 bài tập, 30 khối `details`, 15 lời giải; không có lỗi console, request hỏng, tràn ngang hoặc phần tử nội dung tràn khung. Phím Enter mở được khối gợi ý đầu tiên.
+- `git diff --check` đạt; cấu trúc 15 topic và 15 bộ exercise–hint–solution cân bằng; các đường dẫn note và deck trong thẻ Bài 05 hợp lệ.
+- Codex Slides không khả dụng trong môi trường hiện tại do Node.js 18 thấp hơn yêu cầu Node.js 20 của plugin. Pha ghi chú đã được kiểm đầy đủ bằng trình xem Markdown cục bộ, nhưng không tuyên bố đã rà trực quan bằng Codex Slides.

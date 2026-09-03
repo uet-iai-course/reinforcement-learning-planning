@@ -203,3 +203,21 @@ Tái rà đoạn ngắn 40–210 dòng dùng DeepSeek hoặc GLM với `recheck`
 timeout 300 giây và 3.500–5.000 token. DeepSeek vẫn có thể gọi thêm search dù
 prompt yêu cầu một lần đọc; nếu chạm giới hạn vòng, chạy lại cùng model với
 phạm vi dòng nhỏ hơn, không đổi model.
+
+Với lecture note Bài 05 khoảng 36 KB, reader DeepSeek chạy tốt bằng
+`plan/12/600/14000` và `source/20/600/18000`; lượt source cần một lần tự thử
+lại phản hồi rỗng. Hợp nhất chỉ nên cho đúng hai JSON và dùng
+`recheck/6/600/10000`; lượt đọc phạm vi rộng hơn với 8 vòng đã dừng
+`model exceeded the tool-call limit (8)`. Writer bản đầu GLM ổn định với
+`write/20/600/32000` và cơ chế phục hồi phản hồi chưa hoàn chỉnh.
+
+Năm review note Bài 05: GLM đọc note hoặc ba tệp note/planning ổn định với
+3–6 vòng, timeout 600 giây; DeepSeek nên cô lập đúng một note và dùng
+`recheck/4–6/600/10000`. Ba lượt DeepSeek ban đầu đọc nhiều tệp bằng
+`review/8` đều chạm giới hạn công cụ, nhưng chạy lại trên đúng một note hoàn
+tất với model không đổi. Hai lượt writer sửa rộng bằng GLM `write/12` ghi bán
+phần rồi chạm giới hạn; với nhiều thay thế, dùng 20 vòng hoặc tách thành các
+bản vá hẹp và kiểm diff sau từng lượt. Tái kiểm cuối Bài 05 chạy tốt bằng
+DeepSeek `recheck/4/600/10000` và GLM `recheck/4/600/8000`; DeepSeek có thể
+đọc note trên 400 dòng thành hai đoạn và gọi thêm search, nên không hạ dưới 4
+vòng.

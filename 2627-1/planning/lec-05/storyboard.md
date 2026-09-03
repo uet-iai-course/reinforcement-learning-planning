@@ -12,14 +12,18 @@
 
 Tuyến lõi: $7+31+32+25+13=108$ phút. Vùng đệm: A06 8 phút và phần hiện dần về $\gamma=1$ ở B07 4 phút. Bài tập: X07 15 phút, X03 7 phút, X04 8 phút.
 
+## Bản đồ note tự học
+
+Note `materials/lec-05/lecture-note.md` tái dùng cùng hành trình khái niệm của storyboard, gom 34 trang thành 15 topic `lec-05-topic-01..15`. Các nhãn học tập là cốt lõi (01, 02, 03, 04, 06, 07, 08, 09, 12, 13, 15), cầu nối (05, 10, 11), bổ sung (14), và đọc thêm (tr. 1–14 cùng tài liệu tham khảo, không có topic ID). Bốn mạch nội dung là Đặt bài, Monte Carlo, TD(0), So sánh và tổng hợp. Mỗi topic giữ mạch vấn đề → trực giác → ví dụ → hình thức/thuật toán → ứng dụng/giới hạn → exercise + hint + solution, khớp các cột của bảng hành trình ở trên. Các quyết định số đã chốt ở phần "Truyền dữ kiện" được chuyển nguyên vào note: trung bình mẫu trước $\alpha$ hằng, A06 là nhánh đệm, C00 bỏ hai giá trị chuẩn không tái tạo được, C01 dùng đúng $\gamma^3=0{,}970299$ và $-\gamma=-0{,}99$, C02 chốt $\gamma=1$, $\alpha=0{,}5$, bảng 0. Note không thêm code demo và không tạo `quill.json`; rà mạch theo Quill chỉ là biên tập nội bộ.
+
 ## Truyền dữ kiện
 
 - P02 cố định $v_\pi$ là đích và $V_t$ là ước lượng. Các phần sau không đổi chính sách.
 - A00 cho lượt $e_1$ trước công thức A01, nêu chính sách dự định Right và xác suất đảo chiều $0{,}2$. A02 nêu đủ đầu vào, khởi tạo, vòng lượt, đầu ra, dừng, chi phí và quy tắc mỗi trạng thái tối đa một mẫu trong mỗi lượt của MC lần ghé đầu tiên.
-- A03 áp dụng trọn trung bình mẫu trên $e_1,e_2$: $(1,1)$ rồi $(0,0)$. A04 mới đưa $11/21,19/21$ làm oracle. A05 giữ cùng mẫu và đổi bước học sang $\alpha=0{,}5$.
+- A03 áp dụng trọn trung bình mẫu trên $e_1,e_2$: $(1,1)$ rồi $(0,0)$. A04 mới đưa $11/21,19/21$ làm giá trị chuẩn đối chiếu. A05 giữ cùng mẫu và đổi bước học sang $\alpha=0{,}5$.
 - A06 tách mọi lần ghé khỏi tuyến lõi; nhãn hàng alpha ghi rõ đây là MC mọi lần ghé, không phải TD. A07 chỉ phát biểu hội tụ chính cho lần ghé đầu tiên với các lượt khởi động lại độc lập.
 - B00 cho chuyển $S\to x$ trước ký hiệu. B02 nêu đủ đầu vào, khởi tạo, vòng chuyển, đầu ra, dừng và chi phí của TD(0). B03–B04 dùng cập nhật tại chỗ.
-- B06 định nghĩa $T^\pi$ rồi mới lấy kỳ vọng của $\delta_t$; mỗi $\delta_t$ là một mẫu nhiễu của sai số Bellman, một chuyển chưa xác định dấu của sai số Bellman kỳ vọng. B07 dùng $n$ là số lần cập nhật trạng thái, cho ví dụ $\alpha_n=1/n$, diễn giải Robbins–Monro bằng “học mãi nhưng nhiễu giảm dần” và định nghĩa ngay trên mặt trang $\pi$ đúng đắn là đi tới kết thúc với xác suất $1$ từ mọi trạng thái liên quan.
+- B06 định nghĩa $T^\pi$ rồi mới lấy kỳ vọng của $\delta_t$; mỗi $\delta_t$ là một mẫu nhiễu của sai số Bellman, một chuyển chưa xác định dấu của sai số Bellman kỳ vọng. B07 dùng $n$ là số lần cập nhật trạng thái, cho ví dụ $\alpha_n=1/n$, giải thích riêng hai tổng Robbins–Monro và định nghĩa $\pi$ đúng đắn là đi tới kết thúc với xác suất $1$ từ mọi trạng thái có thể đạt được từ phân phối khởi tạo dưới $\pi$. Topic 11 nối sang topic 12 bằng giới hạn của quỹ đạo dài và phần thưởng thưa.
 - C00–C01 dùng đi bộ dài; C00 không dùng hai giá trị chuẩn của nguồn vì không tái tạo nhất quán từ mô hình đã nêu. C02 báo rõ trở lại lượt ngắn, chốt $\gamma=1$, $\alpha=0{,}5$ và bảng khởi tạo bằng không; nguồn số liệu tr. 29. C03 nối số nguồn ngẫu nhiên trong $G_t$ với biến động, rồi nối phần đuôi $V_t$ với chệch.
 - C01 dùng đúng $R_{t+4}$ với $\gamma^3=0{,}970299$ và $R_{t+2}$ với $-\gamma=-0{,}99$.
 
@@ -34,11 +38,11 @@ Tuyến lõi: $7+31+32+25+13=108$ phút. Vùng đệm: A06 8 phút và phần hi
 | A01 | MC dùng toàn bộ phần còn lại sau lần ghé. | Viết thuật toán tái tạo được. |
 | A02 | MC lần ghé đầu có đủ giao diện, vòng lặp, dừng, chi phí và mỗi trạng thái tối đa một mẫu trong mỗi lượt. | Chạy thuật toán trên hai lượt. |
 | A03 | Trung bình mẫu cho $(1,1)$ sau $e_1$ và $(0,0)$ sau $e_2$. | Đối chiếu với giá trị thật. |
-| A04 | $11/21,19/21$ chỉ là oracle đo sai số. | Tách mẫu khỏi bước học. |
+| A04 | $11/21,19/21$ chỉ là giá trị chuẩn đối chiếu để đo sai số. | Tách mẫu khỏi bước học. |
 | A05 | Cùng mẫu nhưng bước $1/N$ và $\alpha$ hằng cho kết quả khác. | Mở rộng quy tắc lần ghé khi còn giờ. |
 | A06 | Phần đệm: mọi lần ghé cho $(1,1)$ sau $e_1$ và $(0,1/3)$ sau $e_2$ với trung bình mẫu; hàng alpha là MC mọi lần ghé. | Trở lại bảo đảm của tuyến chính. |
 | A07 | Trung bình lần ghé đầu cần lượt độc lập, kỳ vọng hữu hạn và ghé vô hạn. | Kiểm tên thuật toán. |
-| A08 | Tên “gia tăng” chưa xác định quy tắc mẫu và bước học; câu chuyển sang TD thay return bằng đích một bước. | Sang đích một bước. |
+| A08 | Tên “gia tăng” chưa xác định quy tắc mẫu và bước học; câu chuyển sang TD thay phần thưởng tích lũy bằng đích một bước. | Sang đích một bước. |
 | B00 | Một chuyển đủ để tạo đích TD. | Phân biệt các đích. |
 | B01 | $G_t$ là đích MC; $Y_t^{\mathrm{TD}}$ và $\delta_t$ thuộc TD. | Viết thuật toán tái tạo được. |
 | B02 | TD(0) có đủ giao diện, vòng chuyển, dừng và chi phí. | Chạy lượt đầu. |
@@ -46,7 +50,7 @@ Tuyến lõi: $7+31+32+25+13=108$ phút. Vùng đệm: A06 8 phút và phần hi
 | B04 | Lượt hai kết thúc tại $(-0{,}375,0{,}375)$. | So thời điểm cập nhật. |
 | B05 | TD cập nhật sớm; MC truyền kết quả cuối sau kết thúc. | Lấy kỳ vọng của một cập nhật. |
 | B06 | Kỳ vọng sai số TD là sai số Bellman của $V_t$; mỗi $\delta_t$ là một mẫu nhiễu, chưa xác định dấu của sai số kỳ vọng. | Chọn lịch bước học. |
-| B07 | Robbins–Monro dùng số lần cập nhật của từng trạng thái; nhánh $\gamma=1$ cần lượt khởi động lại và $\pi$ đúng đắn — đi tới kết thúc với xác suất $1$ từ mọi trạng thái liên quan. | Kiểm cập nhật tại chỗ. |
+| B07 | Robbins–Monro dùng số lần cập nhật của từng trạng thái; nhánh $\gamma=1$ cần lượt khởi động lại và $\pi$ đúng đắn — đi tới kết thúc với xác suất $1$ từ mọi trạng thái có thể đạt được từ phân phối khởi tạo dưới $\pi$. | Kiểm cập nhật tại chỗ. |
 | B08 | Đích hàng hai dùng giá trị vừa cập nhật. | Sang quỹ đạo dài. |
 | C00 | Quỹ đạo dài làm $G_t$ nhạy với đường đi; không dùng hai giá trị chuẩn không tái tạo được của nguồn. | Viết chỉ số. |
 | C01 | Số mũ phụ thuộc vị trí phần thưởng. | Trở lại lượt ngắn để so phạm vi tác động. |
@@ -64,7 +68,7 @@ Tuyến lõi: $7+31+32+25+13=108$ phút. Vùng đệm: A06 8 phút và phần hi
 
 ## Rà mạch và lân cận sau chỉnh sửa
 
-- Đã rà P02–A04: lượt → return → thuật toán → ước lượng → oracle; không còn đặt oracle trước thao tác học.
+- Đã rà P02–A04: lượt → phần thưởng tích lũy → thuật toán → ước lượng → giá trị chuẩn đối chiếu; không còn đặt giá trị chuẩn trước thao tác học.
 - Đã rà A02–A07: thuật toán đầy đủ đứng trước số học; trung bình mẫu đứng trước $\alpha$ hằng; mọi lần ghé không chen vào tuyến lõi.
 - Đã rà B00–B04: chuyển mẫu → phân biệt đích → thuật toán → hai lượt tại chỗ.
 - Đã rà B04–B08: bảng số → thời điểm → định nghĩa $T^\pi$ → Robbins–Monro → kiểm tra tại chỗ.
