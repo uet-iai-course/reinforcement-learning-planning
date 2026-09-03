@@ -29,7 +29,7 @@ Tiên quyết từ Bài 10 (trang 4–43 của nguồn, không giảng lại): �
 | `lec-11-topic-12` | Bản đồ lựa chọn và bài tập tích hợp | cốt lõi | 75–77 | 4 + 10 (X03) phút |
 | `lec-11-topic-13` | Năm phép kiểm và tuyến đọc tiếp | đọc thêm | 75–78 | — |
 
-Tổng cốt lõi 110 phút, linh hoạt 10 phút, bài tập 30 phút (8 + 12 + 10).
+Tổng nội dung giảng 110 phút (96 phút cốt lõi và 14 phút bổ sung), linh hoạt 10 phút, bài tập 30 phút (8 + 12 + 10); toàn buổi 150 phút.
 
 ## Ký hiệu và quy ước
 
@@ -510,4 +510,3 @@ Nguồn sơ cấp phần II (theo cụm chủ đề):
 Nguồn bài giảng: `lecture11_part3.pdf`, tr. 44–77 (nội dung mới), tr. 78 (tài liệu tham khảo phần I: Williams 1992; Schulman et al. 2015, 2016, 2017; Weng 2018; Engstrom et al. 2020; Jin, Li & Wang 2024; Xie et al. 2025; Lee & Yoon 2025).
 
 **Nguồn:** tr. 75–77 (dùng lại để tổng kết); tr. 78 (tài liệu tham khảo phần I).
-

@@ -153,3 +153,22 @@ Năm lượt rà độc lập chạy qua OpenRouter với `--json`. Vai sinh vi�
 Tái kiểm toán học sau sửa dùng DeepSeek V4 Flash và kết luận `PASS` cho điều kiện SPO, $m_t$, $u/u_t$, $c_\xi$, phép tính $4{,}85$ và V-trace. Tái kiểm mạch bằng GLM chỉ xét các topic bị ảnh hưởng và kết luận `PASS`, không còn lỗi từ mức trung bình trở lên. Tự kiểm `no-ai-slop` loại câu hỏi tu từ, lời dẫn rỗng và tuyên bố vượt nguồn; rà `quill` xác nhận tuyến PPO → SPO/SAM → actor–critic → khác chính sách → DPG/DDPG → SAC/TD3 → khảo sát → bản đồ/checklist, không tạo `quill.json`.
 
 Kiểm định material viewer phát hiện bản nháp từng dùng thẻ HTML thô cho marker topic; `material-viewer.js` cố ý escape HTML và chỉ hỗ trợ `<!-- note-topic-id: ... -->`. Đã chuyển cơ học 13 marker sang dạng comment, xóa thẻ đóng và rà lại toàn bộ viewer. Kết quả cuối: 13 mã topic duy nhất; 17 tiêu đề cấp hai và 17 mục lục; 245 biểu thức KaTeX, 0 lỗi; 6 khối gợi ý/lời giải; không tràn ngang tại 1280 × 720 và 390 × 844; bàn phím, skip-link, liên kết deck và chế độ in đều đạt; không có lỗi console, lỗi trang hoặc request hỏng. Lệnh `python3 -m reloadserver 8765` không chạy vì thiếu mô-đun; phương án thay thế dùng `python3 -m http.server 8765` trên webroot tạm chỉ chứa `2627-1`, `index-pages.css` và favicon, không chứa `.env`. Codex Slides không khả dụng trong phiên này nên không tuyên bố đã rà trực quan bằng Codex Slides.
+
+## Đồng bộ lecture note → deck — vòng 04-09-2026
+
+Đã gắn `data-note-topic-id` cho đủ 46 slide và thêm bảng ánh xạ 13 topic vào outline/storyboard. Năm reviewer deck độc lập chạy qua OpenRouter: sinh viên và kết nối dùng GLM 5.3 Flash với `minimal`; chuyên gia, toán học và sư phạm dùng DeepSeek V4 Flash với `none`; `requested_model=observed_model` và `provider=OpenRouter` ở mọi báo cáo hợp lệ.
+
+| vai | mức độ | slide | vấn đề | quyết định |
+|---|---|---|---|---|
+| sinh viên | nghiêm trọng, bị bác | toàn bài | Cho rằng 110+10+30 vượt ngân sách 120 phút. | Bác: quy ước khóa học là 120 phút trình chiếu chính và 30 phút bài tập, tổng buổi 150 phút. Sửa nhãn thành 96 phút cốt lõi + 14 phút bổ sung + 10 phút linh hoạt + 30 phút bài tập để tránh nhập nhằng. |
+| sinh viên | nhẹ | `L11-39` | $u_t=\pi/\mu$ có thể bị lẫn với $u=\pi/\beta$ ở ACER. | Thêm phân biệt trực tiếp trong ghi chú. |
+| chuyên gia Học tăng cường | trung bình, bị bác | thứ tự `L11-16`–`L11-19` trước `L11-13`–`L11-15` | ID không tăng theo DOM. | Bác: ID giữ truy nguyên; thứ tự actor–critic trước off-policy là thay đổi sư phạm đã ghi trong storyboard. |
+| chuyên gia Học tăng cường | nhẹ | `L11-02`, `L11-42` | Target A3C/A2C và nguồn bản đồ chưa đủ rõ. | Nêu target $n$ bước dùng chung, khác nhịp đồng bộ; nguồn `L11-42` là tr. 75–77 và tổng hợp cơ chế tr. 44–76. |
+| toán học và thuật toán | đạt | toàn deck | 153 biểu thức, mask, tỷ số, shape, V-trace và số liệu đúng. | Không sửa công thức. |
+| sư phạm | trung bình | `X02` | Thiếu phép kiểm MADDPG dù mục tiêu xếp vào tầng phải viết target. | Thêm câu hỏi và đáp án: target MADDPG dùng mọi target actor, không thay bằng actor online. |
+| sư phạm | trung bình, bị bác | `L11-05` | Đề nghị đưa đạo hàm lên trang trực giác. | Bác vì phá chu trình ví dụ trước hình thức; đạo hàm nằm đúng ở `L11-07`. |
+| kết nối và mạch viết | trung bình, bị bác | `L11-10`, `L11-39` | Đề nghị hiển thị nhãn thời lượng linh hoạt trên slide. | Bác vì quy ước cấm hiển thị thời lượng/metadata quy trình; thời lượng đã ghi trong storyboard. |
+
+Tái kiểm toán học bằng DeepSeek và tái kiểm mạch bằng GLM đều kết luận `PASS`. Kiểm định tĩnh: 46 slide/46 ID duy nhất, 13 topic, 5 section ngoài, 46 ghi chú, 155 biểu thức KaTeX dựng nghiêm ngặt, 0 ảnh raster, mọi tài sản cục bộ tồn tại. Chromium duyệt đủ 46 slide ở 1280 × 720 và 800 × 600, 0 lỗi console/request; bàn phím lên/xuống/phải đạt; toàn bộ fragment của X01/X02/X03 hiển thị đủ và không bị cắt. Phép đo tự động báo một số hộp KaTeX vượt biên do scale; rà ảnh xác định hai lỗi thật ở `L11-25` và `L11-29`, đã giảm riêng chiều cao SVG xuống 190 px và rà ảnh lại, công thức cùng chân trang đều hiển thị đầy đủ. Codex Slides vẫn không khả dụng trong phiên này.
+
+Hồ sơ worker được cập nhật sau vòng này: `review=8.000` token, `recheck=4.000`, `patch=6.000` với 10 lượt; DeepSeek V4 Flash mặc định `none`, GLM 5.3 Flash mặc định `minimal`. README ghi thêm quy tắc không gộp HTML nén lớn với sửa planning trong cùng writer. Bộ kiểm thử bridge đạt 22/22.

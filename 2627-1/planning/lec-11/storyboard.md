@@ -2,7 +2,7 @@
 
 ## Chu trình học tập
 
-| cụm không chồng lặp | chu trình | trang | đầu vào → sản phẩm | cốt lõi | linh hoạt |
+| cụm không chồng lặp | chu trình | trang | đầu vào → sản phẩm | nội dung giảng | linh hoạt |
 |---|---|---|---|---:|---:|
 | Định hướng | mở → hai tầng mục tiêu → recap PPO | `L11-01`–`L11-03` | Bài 10 → hợp đồng $w$, dấu lợi thế, batch cũ | 7 | 0 |
 | SPO và SAM | vấn đề → trực giác → ví dụ → hình thức/thuật toán → ứng dụng → giới hạn | `L11-04`–`L11-12` | PPO → objective tỷ số và SAM đúng dấu | 24 | 4 tại `L11-10` |
@@ -12,7 +12,7 @@
 | Khảo sát | cơ chế định nghĩa → so sánh | `L11-38`–`L11-41` | SVPG/IMPALA/PPG → nhận dạng theo bài toán | 8 | 6 tại `L11-39` |
 | Bản đồ và tổng hợp | bản đồ → kiểm tra đọc mới | `L11-42`–`L11-43` | toàn bài → quy tắc chọn và kiểm | 4 | 0 |
 
-Các khoảng trên phủ đúng 43 trang chính, không chồng lặp: 110 phút cốt lõi và 10 phút linh hoạt. `X01`, `X02`, `X03` tách khỏi thời lượng trình chiếu, dùng lần lượt 8, 12 và 10 phút. Phần khảo sát dùng chu trình rút gọn vì không dạy giả mã đầy đủ.
+Các khoảng trên phủ đúng 43 trang chính, không chồng lặp: 110 phút nội dung giảng và 10 phút linh hoạt, đủ 120 phút trình chiếu chính. `X01`, `X02`, `X03` dùng lần lượt 8, 12 và 10 phút, nâng tổng toàn buổi lên 150 phút. Phần khảo sát dùng chu trình rút gọn vì không dạy giả mã đầy đủ.
 
 ## Truyền dữ kiện
 
@@ -38,7 +38,7 @@ Các khoảng trên phủ đúng 43 trang chính, không chồng lặp: 110 phú
 | `L11-08` | Đỉnh sắc nhạy hơn vùng phẳng trong cùng bán kính tham số. | vấn đề, trực giác |
 | `L11-09` | Gradient $(3,4)$ cho nhiễu $(-0{,}06,-0{,}08)$. | ví dụ |
 | `L11-10` | Max–min, dấu $\xi$ và thuật toán SAM một bước. | hình thức, thuật toán |
-| `L11-11` | Liên hệ tham số–hành động cần chặn Jacobian hoặc điều kiện hạng. | ứng dụng có điều kiện |
+| `L11-11` | Liên hệ tham số–hành động cần Jacobian được chặn, đủ hạng và singular value nhỏ nhất được chặn xa 0; các điều kiện đi cùng nhau. | ứng dụng có điều kiện |
 | `L11-12` | Bằng chứng SAM+PPO có phạm vi giao thức. | ứng dụng có giới hạn |
 | `X01` | Tính SPO, SAM và nêu điều kiện thiếu. | kiểm tra |
 | `L11-16` | Actor và critic có đường gradient riêng. | hình thức |
@@ -74,3 +74,23 @@ Các khoảng trên phủ đúng 43 trang chính, không chồng lặp: 110 phú
 | `L11-42` | Bản đồ theo họ, dữ liệu, actor và cơ chế; A3C/A2C hiện rõ, SAM/ACKTR không bị gán nhầm loại dữ liệu. | tổng hợp |
 | `X03` | Tính twin target rồi chọn ba tình huống: continuous replay, CTDE và policy lag; nêu tradeoff và vai trò $\rho/c$. | kiểm tra |
 | `L11-43` | Năm phép kiểm thu hồi bài tập và dẫn về nguồn sơ cấp. | tổng hợp |
+
+## Ánh xạ note-topic-id → data-slide-id
+
+| note-topic-id | data-slide-id |
+|---|---|
+| `lec-11-topic-01` | `L11-01`, `L11-02`, `L11-03` |
+| `lec-11-topic-02` | `L11-04`, `L11-05`, `L11-06`, `L11-07` |
+| `lec-11-topic-03` | `L11-08`, `L11-09`, `L11-10`, `L11-11`, `L11-12`, `X01` |
+| `lec-11-topic-04` | `L11-16`, `L11-17`, `L11-18`, `L11-19` |
+| `lec-11-topic-05` | `L11-13`, `L11-14`, `L11-15` |
+| `lec-11-topic-06` | `L11-20`, `L11-21` |
+| `lec-11-topic-07` | `L11-22`, `L11-23`, `L11-24` |
+| `lec-11-topic-08` | `L11-25`, `L11-26`, `L11-27`, `L11-28`, `X02` |
+| `lec-11-topic-09` | `L11-29`, `L11-30`, `L11-31` |
+| `lec-11-topic-10` | `L11-32`, `L11-33`, `L11-34`, `L11-35`, `L11-36`, `L11-37` |
+| `lec-11-topic-11` | `L11-38`, `L11-39`, `L11-40`, `L11-41` |
+| `lec-11-topic-12` | `L11-42`, `X03` |
+| `lec-11-topic-13` | `L11-43` |
+
+Ghi chú X03: phép tính twin target dùng $R=2$, $\gamma=0{,}95$, hai critics 3 và 4, cho $y=4{,}85$.
