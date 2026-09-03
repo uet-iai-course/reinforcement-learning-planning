@@ -198,3 +198,42 @@ Codex Slides không thể đồng bộ bản hiện tại. Runtime đi kèm đan
   topic-04 về mạch 3 và cân lại mạch 3/4 thành 29/24 phút, tổng vẫn là 120 phút.
 - Tái kiểm hẹp lần cuối bằng GLM xác nhận PASS: 15 chủ đề xuất hiện đúng một mạch,
   quan hệ topic-04 → topic-05 → topic-06 đúng thứ tự và tổng thời lượng là 120 phút.
+
+## Đồng bộ lecture note → deck
+
+- Reader kế hoạch dùng `requested_model=observed_model=deepseek/deepseek-v3.2`,
+  provider OpenRouter, profile `plan/12/600/16000`; hoàn tất vòng 8 sau 264,68 giây.
+- Writer HTML dùng `requested_model=observed_model=z-ai/glm-5.3-flash`, provider
+  OpenRouter, profile `write/20/900/32000`; ghi 42.620 byte ở vòng 3 và hoàn tất
+  vòng 4 sau 329,885 giây. Worker chỉ sửa tệp HTML đã giao.
+- Đã gắn đúng một `data-note-topic-id` cho cả 37 trang có `data-slide-id`; đủ 15
+  chủ đề của note. Bổ sung notes về giới hạn replay, giới hạn bộ tối ưu, đối chiếu
+  giả mã nguồn và ba hướng thảo luận; không đổi mặt trang, thứ tự, SVG hoặc CSS.
+- Outline và storyboard ghi bảng ánh xạ hai chiều. Bài tập được gắn với chủ đề
+  chi phối trực tiếp: `X01` → topic-09, `X02` → topic-05, `X03` → topic-15.
+- Reviewer mạch phát hiện hai lỗi trung bình: cầu nối topic-13 đứng sau vấn đề
+  topic-01 và `L08-02` bị gắn nhầm topic-15. Đã chuyển `L08-04`–`L08-05` lên
+  trước `L08-03`, gắn `L08-02` vào topic-01 và sửa câu nối ở notes.
+- Lượt writer sắp xếp cấu trúc nhận một phản hồi `finish_reason=error`, sau đó
+  kết thúc mà không gọi công cụ ghi và tuyên bố sai rằng thứ tự đã đạt. Điều phối
+  viên không chấp nhận kết quả này; kiểm tra chuỗi ID cho thấy M2/M3 vẫn sai.
+- Điều phối viên sắp lại M2/M3 theo đặc tả đã duyệt. Phép di chuyển theo dòng làm
+  lộ `X02` là khối nhiều dòng; kiểm định tĩnh phát hiện thiếu một notes và số
+  section ngoài giảm. `X02` được khôi phục nguyên vẹn từ `HEAD`, giữ thêm thuộc
+  tính ánh xạ. Sau sửa: 37 ID duy nhất, 37 notes, 7 section ngoài.
+- Lượt rà mạch tiếp theo yêu cầu đưa toàn bộ bất ổn trước bộ tối ưu vì giả định
+  mã topic phải tăng tuần tự. Không áp dụng: note và deck đều chủ ý dùng mạch
+  “bộ tối ưu phụ trợ → quay lại bất ổn cấu trúc”, đã có câu nối ở `L08-26`.
+  Đề xuất cục bộ hợp lệ được áp dụng: chuyển `L08-28` (tương quan/replay,
+  topic-07) lên trước `L08-27`–`L08-30` (tổng hợp topic-12).
+- Tái rà toàn mạch phát hiện `L08-15` quay lại topic-08 sau `X01` và `L08-21`
+  quay lại topic-09 sau topic-11. Đã nhóm lại M3 thành hai đường tính → loss →
+  bài tính/kiểm tra → vòng DQN → tensor → đồng bộ → bài sửa lỗi. Không đổi nội
+  dung hay mã trang.
+- Tái kiểm mạch cuối bằng GLM trả PASS sau khi nhóm lại M3. Kiểm định tĩnh xác
+  nhận 37 ID duy nhất, 37 ánh xạ, đủ 15 topic, 37 notes, 7 section ngoài, không
+  thiếu tài sản, không raster và không URL tài sản ngoài.
+- `python3 -m reloadserver 8765` tiếp tục không khả dụng vì thiếu mô-đun. Fallback
+  `python3 -m http.server 8765 --bind 127.0.0.1` chạy trên bản sao tối thiểu không
+  chứa `.env`; mọi tài sản trả HTTP 200. Chromium duyệt đủ 37 trang ở 1280×720
+  và 800×600: không lỗi console, lỗi tài nguyên hoặc tràn hình học.

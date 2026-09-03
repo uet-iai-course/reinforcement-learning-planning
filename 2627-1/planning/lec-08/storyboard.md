@@ -4,15 +4,15 @@
 
 | mạch | range | chức năng | kết nối vào | đầu ra |
 |---|---|---|---|---|
-| M1 | `L08-01`–`L08-06` | Cầu nối từ bảng Q sang DQN; mốc 7+13 phút giữa `L08-03`/`L08-04` | Từ Bài 07; `L08-06` có câu nối sang giao diện mạng | Nhận ra cần tham số dùng chung và giới hạn của bảng |
-| M2 | `L08-07`–`L08-10` + `X01` | Giao diện mạng, hai mạng, đích bootstrap, loss, bài tính | Vào từ `L08-06`; `L08-10` báo trước batch từ replay | Đích có mặt nạ, MSE, gather, gradient chỉ qua mạng online |
-| M3 | `L08-11`–`L08-21` + `X02` | Vòng DQN, replay, hai cờ, giả mã, hợp đồng tensor | Vào từ `L08-10`/`X01`; batch đến từ replay như đã báo trước | Giả mã hoàn chỉnh với warmup, tần suất, đồng bộ; kiểm gradient |
+| M1 | `L08-01`, `L08-02`, `L08-04`, `L08-05`, `L08-03`, `L08-06` | Cầu nối từ bảng Q sang DQN; mốc 7+13 phút giữa `L08-03`/`L08-04` | Từ Bài 07; `L08-06` có câu nối sang giao diện mạng | Nhận ra cần tham số dùng chung và giới hạn của bảng |
+| M2 | `L08-07`–`L08-09`, `L08-12`–`L08-14` | Giao diện mạng, đích bootstrap, hai cờ và replay | Vào từ `L08-06`; đích có mặt nạ dẫn sang schema chuyển tiếp và nguồn batch | Hai mạng, bộ sáu thành phần và giới hạn của replay |
+| M3 | `L08-10`, `L08-15`, `L08-17`, `X01`, `L08-21`, `L08-11`, `L08-18`–`L08-20`, `L08-16`, `X02` | Đồ thị tính, loss, kiểm tra, vòng DQN, giả mã, tensor, đồng bộ và bài tập | Vào từ replay ở `L08-14`; hai đường tính đứng trước loss và hai trang kiểm tra đứng trước vòng hoàn chỉnh | Thuật toán hoàn chỉnh, gradient chỉ qua mạng online và kiểm cài đặt |
 | M4 | `L08-22`–`L08-25` | Gradient và ba bộ tối ưu (nhánh dọc linh hoạt) | Vào ngang từ `L08-22` sau M3 | Quy tắc cập nhật SGD/RMSprop/Adam theo tọa độ |
 | M5 | `L08-26` | Bảng so sánh và phạm vi chọn optimizer | Vào ngang từ `L08-22`; câu nối quay lại bất ổn cấu trúc | Chọn optimizer bằng thí nghiệm có kiểm soát |
-| M6 | `L08-27`–`L08-30` | Bất ổn, replay, mạng mục tiêu, deadly triad | Vào từ `L08-26` | Quan hệ nhân quả đúng: hai cơ chế giảm bất ổn, không bảo đảm hội tụ |
+| M6 | `L08-28`, `L08-27`, `L08-29`, `L08-30` | Tương quan, replay, mạng mục tiêu và bộ ba nguy hiểm | Vào từ `L08-26`; tương quan dữ liệu đứng trước trang tổng hợp hai biểu hiện | Quan hệ nhân quả đúng: hai cơ chế giảm bất ổn, không bảo đảm hội tụ |
 | M7 | `L08-31`–`L08-34` + `X03` | Pipeline Atari, kiểm tra tổng hợp, ablation, hợp đồng DQN | Vào từ `L08-30`; `X03` là bài ablation dùng lại hai cơ chế; `L08-34` thu hồi bốn kết quả `L08-02` | Danh sách kiểm hợp đồng DQN |
 
-Ranh giới hai phía đã rà: M1↔M2 (`L08-06`→`L08-07`), M2↔M3 (`L08-10`→`L08-11`), M3↔M4 (`L08-21`→`L08-22`), M4↔M5 (`L08-25`→`L08-26`), M5↔M6 (`L08-26`→`L08-27`), M6↔M7 (`L08-30`→`L08-31`).
+Ranh giới hai phía đã rà: M1↔M2 (`L08-06`→`L08-07`), M2↔M3 (`L08-14`→`L08-10`), M3↔M4 (`X02`→`L08-22`), M4↔M5 (`L08-25`→`L08-26`), M5↔M6 (`L08-26`→`L08-28`), M6↔M7 (`L08-30`→`L08-31`).
 
 ## Trang dùng chung giữa các mạch
 
@@ -28,10 +28,10 @@ Ranh giới hai phía đã rà: M1↔M2 (`L08-06`→`L08-07`), M2↔M3 (`L08-10`
 |---|---|---|---|---:|---:|
 | Mở bài | vấn đề → trực giác | `L08-01`–`L08-03` | Bảng Q → nhu cầu tham số dùng chung | 7 phút | 0 |
 | Q-learning làm cầu nối | hình thức → giới hạn | `L08-04`–`L08-06` | Cập nhật bảng → hành vi/đích và phạm vi kết luận | 13 phút | 0 |
-| Giao diện, hai mạng và đích | vấn đề → trực giác → ví dụ → hình thức → ứng dụng → kiểm tra | `L08-07`–`L08-10`, `L08-20`, `X01` | Hai mạng đã khởi tạo → đích có mặt nạ, loss, tensor và gradient | 17 phút | 0 |
-| Vòng DQN | vấn đề → trực giác → ví dụ → hình thức → ứng dụng → kiểm tra | `L08-11`–`L08-21`, `X02` | Chuyển tiếp → replay, đồng bộ, giả mã và batch Atari | 43 phút | 0 |
+| Giao diện, đích và dữ liệu | vấn đề → trực giác → ví dụ → hình thức → ứng dụng → kiểm tra | `L08-07`–`L08-09`, `L08-12`–`L08-14` | Hai mạng đã khởi tạo → đích có mặt nạ, bộ sáu thành phần và replay | 25 phút | 0 |
+| Phép tính và vòng DQN | vấn đề → trực giác → ví dụ → hình thức → ứng dụng → kiểm tra | `L08-10`, `L08-15`, `L08-17`, `X01`, `L08-21`, `L08-11`, `L08-18`–`L08-20`, `L08-16`, `X02` | Batch từ replay → hai đường tính, loss, kiểm tra số, giả mã, tensor, đồng bộ và kiểm cài đặt | 35 phút | 0 |
 | Bộ tối ưu phụ trợ | chu trình rút gọn | `L08-22`–`L08-26` | Gradient loss → quy tắc cập nhật có phạm vi | 7 phút | 10 phút |
-| Bất ổn | vấn đề → trực giác → ví dụ → hình thức → ứng dụng → kiểm tra | `L08-27`–`L08-30`, `X03` | Bootstrap đang học → mục tiêu di động, replay và deadly triad | 13 phút | 0 |
+| Bất ổn | vấn đề → trực giác → ví dụ → hình thức → ứng dụng → kiểm tra | `L08-28`, `L08-27`, `L08-29`, `L08-30`, `X03` | Tương quan và bootstrap đang học → mục tiêu di động, replay và bộ ba nguy hiểm | 13 phút | 0 |
 | Atari và tổng hợp | ứng dụng → kiểm tra | `L08-31`–`L08-34` | Lịch sử bốn khung → kiểm hợp đồng DQN | 10 phút | 0 |
 
 Tuyến chính có 110 phút, cộng 10 phút linh hoạt = 120 phút chính. Ba bài tập dọc có 30 phút chữa bài ngoài 120 phút chính: `X01`, `X02`, `X03`, mỗi bài 10 phút; đây không phải vượt giờ. Từ `L08-22`, đi ngang sang `L08-26` để giữ tuyến cốt lõi; đi xuống `L08-23`–`L08-25` cho 10 phút linh hoạt về SGD, RMSprop và Adam. Optimizer là công cụ phụ nên không chiếm một chu trình trọng tâm riêng.
@@ -114,6 +114,28 @@ Optimizer không phải khái niệm trọng tâm của DQN trong bài này. `L0
 - Giao diện $\mathbf q_\theta(O)\in\mathbb R^{|\mathcal A|}$ ở `L08-07` đi vào `gather` ở `L08-19`–`L08-20` và pipeline Atari ở `L08-31`.
 - Ví dụ hai mẫu ở `X01` được tóm lại ở `L08-21`; cùng dấu sai số được dùng để kiểm hướng gradient.
 - Replay và mạng mục tiêu được tách ở `L08-13`–`L08-16`, hợp nhất trong công thức `L08-17`, rồi quay lại như hai cơ chế ở `L08-27`–`L08-30`.
+
+## Ánh xạ lecture note → deck
+
+Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể trải trên nhiều trang.
+
+| `note-topic-id` | `data-slide-id` |
+|---|---|
+| `lec-08-topic-01` | `L08-01`, `L08-02`, `L08-03`, `L08-06` |
+| `lec-08-topic-02` | `L08-07` |
+| `lec-08-topic-03` | `L08-08` |
+| `lec-08-topic-04` | `L08-09` |
+| `lec-08-topic-05` | `L08-12`, `X02` |
+| `lec-08-topic-06` | `L08-13` |
+| `lec-08-topic-07` | `L08-14`, `L08-28` |
+| `lec-08-topic-08` | `L08-10`, `L08-15` |
+| `lec-08-topic-09` | `X01`, `L08-17`, `L08-21` |
+| `lec-08-topic-10` | `L08-11`, `L08-18`, `L08-19` |
+| `lec-08-topic-11` | `L08-20` |
+| `lec-08-topic-12` | `L08-16`, `L08-27`, `L08-29`, `L08-30` |
+| `lec-08-topic-13` | `L08-04`, `L08-05` |
+| `lec-08-topic-14` | `L08-22`–`L08-26` |
+| `lec-08-topic-15` | `L08-31`–`L08-34`, `X03` |
 
 ## Từng trang chiếu
 

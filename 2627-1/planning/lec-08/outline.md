@@ -20,12 +20,12 @@
 
 HTML có đúng 7 section ngoài, độ sâu tối đa 2:
 
-1. M1 — `L08-01`–`L08-06`: cầu nối từ bảng Q sang DQN; giữ mốc 7+13 phút bên trong M1 giữa `L08-03`/`L08-04`.
-2. M2 — `L08-07`–`L08-10` + `X01`: giao diện mạng, hai mạng, đích bootstrap, loss và bài tính.
-3. M3 — `L08-11`–`L08-21` + `X02`: vòng DQN, replay, hai cờ, giả mã, hợp đồng tensor và kiểm tra gradient.
+1. M1 — `L08-01`, `L08-02`, `L08-04`, `L08-05`, `L08-03`, `L08-06`: cầu nối từ bảng Q sang DQN; giữ mốc 7+13 phút bên trong M1 giữa `L08-03`/`L08-04`.
+2. M2 — `L08-07`–`L08-09`, `L08-12`–`L08-14`: giao diện mạng, đích bootstrap, hai cờ và replay.
+3. M3 — `L08-10`, `L08-15`, `L08-17`, `X01`, `L08-21`, `L08-11`, `L08-18`–`L08-20`, `L08-16`, `X02`: đồ thị tính, loss, kiểm tra, vòng DQN, tensor, đồng bộ và bài tập.
 4. M4 — `L08-22`–`L08-25`: gradient và ba bộ tối ưu (nhánh dọc linh hoạt).
 5. M5 — `L08-26`: bảng so sánh và phạm vi chọn optimizer.
-6. M6 — `L08-27`–`L08-30`: bất ổn, replay, mạng mục tiêu và deadly triad.
+6. M6 — `L08-28`, `L08-27`, `L08-29`, `L08-30`: tương quan, replay, mạng mục tiêu và bộ ba nguy hiểm.
 7. M7 — `L08-31`–`L08-34` + `X03`: pipeline Atari, kiểm tra tổng hợp, ablation và hợp đồng DQN.
 
 `X01`–`X03` là 30 phút chữa bài ngoài 120 phút chính; không coi đây là lỗi thời lượng.
@@ -49,6 +49,28 @@ Câu hỏi khám phá ở nguồn tr.36 không được đưa lên mặt trang v
 4. Gradient và ba bộ tối ưu.
 5. Bất ổn, bộ ba nguy hiểm và phạm vi bảo đảm.
 6. Pipeline Atari và kiểm tra tổng hợp.
+
+## Ánh xạ lecture note → deck
+
+Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể trải trên nhiều trang.
+
+| `note-topic-id` | `data-slide-id` |
+|---|---|
+| `lec-08-topic-01` | `L08-01`, `L08-02`, `L08-03`, `L08-06` |
+| `lec-08-topic-02` | `L08-07` |
+| `lec-08-topic-03` | `L08-08` |
+| `lec-08-topic-04` | `L08-09` |
+| `lec-08-topic-05` | `L08-12`, `X02` |
+| `lec-08-topic-06` | `L08-13` |
+| `lec-08-topic-07` | `L08-14`, `L08-28` |
+| `lec-08-topic-08` | `L08-10`, `L08-15` |
+| `lec-08-topic-09` | `X01`, `L08-17`, `L08-21` |
+| `lec-08-topic-10` | `L08-11`, `L08-18`, `L08-19` |
+| `lec-08-topic-11` | `L08-20` |
+| `lec-08-topic-12` | `L08-16`, `L08-27`, `L08-29`, `L08-30` |
+| `lec-08-topic-13` | `L08-04`, `L08-05` |
+| `lec-08-topic-14` | `L08-22`–`L08-26` |
+| `lec-08-topic-15` | `L08-31`–`L08-34`, `X03` |
 
 ## Ánh xạ nguồn
 
