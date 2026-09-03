@@ -101,6 +101,54 @@ Sau hợp nhất, bài có 39 trang chính và 3 bài tập dọc. Thời lượ
 
 Kiểm định cuối sau hợp nhất: 42 ID duy nhất; 42/42 trang có ghi chú; HTML khớp toàn bộ ID trong storyboard; 194 công thức dựng thành công bằng KaTeX cục bộ với `throwOnError`; 7/7 tham chiếu hình tồn tại; 7/7 SVG hợp lệ, có `role="img"`, `title`, `desc`; không có ảnh raster. Rà `quill` xác nhận mạch baseline → raw advantage → actor/critic split → TRPO → PPO → diagnostics → theory; rà `no-ai-slop` loại lời dẫn rỗng và không thêm tuyên bố ngoài nguồn.
 
+## Lecture note — vòng độc lập ngày 03/09/2026
+
+Lecture note được soạn từ PDF 43 trang thành 12 chủ đề, 110 phút cốt lõi,
+10 phút linh hoạt và 30 phút bài tập. Năm vai chỉ đọc đã rà độc lập:
+
+| vai | model runtime | kết quả chính | quyết định |
+|---|---|---|---|
+| góc nhìn sinh viên | `z-ai/glm-5.3-flash` | Phát hiện phép tính trung gian X02 sai, nhãn dải X03 sai và câu tiếng Anh sót. | Sửa toàn bộ; PASS ở tái rà mạch. |
+| chuyên gia Học tăng cường | `deepseek/deepseek-v4-flash-0731` | Yêu cầu làm rõ ma trận Fisher minh họa, ký hiệu lý thuyết và chẩn đoán chính sách gần tất định. | Đã bổ sung; bác nhận xét đổi terminal $T=2$ vì quỹ đạo có hai chuyển tiếp $t=0,1$ và trạng thái cuối $S_2$. |
+| toán học và thuật toán | `deepseek/deepseek-v4-flash-0731` | Phát hiện $m_0$ sai trong X01, hệ số 16 sai trong X02 và hai nhãn “trong dải” sai trong X03. | Đã sửa; tái tính độc lập PASS. |
+| phản biện học thuật–sư phạm | `deepseek/deepseek-v4-flash-0731` | Yêu cầu làm rõ cầu nối actor–critic → GAE, TRPO → cách giải, pipeline → lý thuyết. | Đã thêm câu nối, không đổi thứ tự 12 chủ đề. |
+| kết nối và mạch viết | `z-ai/glm-5.3-flash` | Mạch 12 chủ đề đạt; phát hiện câu gượng, từ tiếng Anh sót và chỉ số Fisher trùng chỉ số thời gian. | Việt hóa, đổi chỉ số mẫu sang $i$, tái rà PASS. |
+
+Ba báo cáo DeepSeek hợp lệ có
+`requested_model = observed_model = deepseek/deepseek-v4-flash-0731`, provider
+`OpenRouter`. Lượt reviewer toán đầu hoàn tất với profile `review`; hai vai còn
+lại chỉ hoàn tất ổn định khi dùng `--reasoning-effort none`, profile `recheck`,
+6 vòng, timeout 600 giây và 12.000 token. Các lượt dùng `low` với 12.000,
+18.000 và 32.000 token đều bị `finish_reason=length` vì reasoning chiếm gần
+hết ngân sách; không dùng các lượt lỗi làm báo cáo. Reviewer GLM dùng
+`minimal`; GLM từ chối `none` bằng HTTP 400 vì reasoning là bắt buộc.
+
+Writer GLM sửa tuần tự một tệp. Hai lượt rộng chạm giới hạn 12 và 20 vòng sau
+khi đã ghi nhiều bản vá; điều phối viên đối chiếu từng mục, hoàn thiện các sửa
+cục bộ và chạy lại kiểm định. Không có hai writer sửa cùng tệp đồng thời.
+
+Kiểm định note sau sửa: một H1; 12 `data-note-topic-id` duy nhất; 12 thẻ
+`section` mở/đóng cân bằng; ba bộ `exercise`–`hint`–`solution`; 414 biểu thức
+KaTeX dựng thành công với `throwOnError`; không có mã trang chiếu hoặc chỉ dẫn
+quy trình trong nội dung. Tái rà toán bằng V4 Flash PASS; tái rà mạch và
+`no-ai-slop` bằng GLM PASS. Các sửa câu chữ nhẹ cuối không đổi công thức, thứ tự
+hoặc vai trò chủ đề.
+
+Kiểm định hiển thị note: lệnh bắt buộc `python3 -m reloadserver 8765` thất bại
+vì môi trường thiếu mô-đun `reloadserver`. Điều phối viên dùng
+`python3 -m http.server 8765 --bind 127.0.0.1` trên webroot tối thiểu chỉ chứa
+viewer, note Bài 10, index, deck đích và các thư viện render cục bộ; không phục
+vụ `.env` hoặc planning. Chromium kiểm ở 1280×720 và 390×844: tiêu đề đúng,
+16 mục lục khớp 16 H2, 414 biểu thức KaTeX không lỗi, sáu khối thu gọn đóng mặc
+định, liên kết deck đúng, bàn phím hoạt động, không lỗi console/tài nguyên và
+không tràn ngang. Chế độ in mở mọi khối thu gọn và ẩn mục lục/thanh hành động;
+kiểm tra chống duyệt đường dẫn từ chối `../AGENTS.md`.
+
+Codex Slides không khả dụng trong phiên này vì runtime Node.js là 18.19.1,
+thấp hơn yêu cầu Node.js 20 của plugin. Vì vậy không tuyên bố đã rà note bằng
+Codex Slides; bằng chứng hiển thị cuối là RevealJS/material viewer cục bộ bằng
+Chromium.
+
 ## Bốn vấn đề trung bình cuối
 
 | mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa | quyết định |
