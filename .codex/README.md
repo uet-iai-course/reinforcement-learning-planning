@@ -291,3 +291,9 @@ Quy tắc dùng lại là: bản nháp dùng nguyên preset `write/20/600/32000`
 báo cáo, chia hàng đợi thành lượt `patch/6/300/7000`, mỗi lượt chỉ một hoặc hai
 khối và yêu cầu gộp các tool call độc lập trong cùng phản hồi. Điều phối viên
 kiểm diff sau từng lượt và giao recheck đúng phần đã đổi.
+
+Preset mới được kiểm chứng ngay trên hai lượt tái rà Bài 07 chạy song song.
+DeepSeek chỉ đọc đúng một note bằng `recheck/6/600/10000`, hoàn tất ở vòng 2
+sau khoảng 129 giây; GLM dùng cùng preset và hoàn tất ở vòng 2 sau khoảng 57
+giây. Cả hai trả đúng model yêu cầu và provider `OpenRouter`, không có
+`tool_call_limit`, `finish_reason=length`, timeout hoặc lỗi transport.

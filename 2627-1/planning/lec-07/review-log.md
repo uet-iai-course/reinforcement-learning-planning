@@ -195,3 +195,46 @@ Nguồn tr. 42 có nghi vấn về ký hiệu $H^3/H^4$ trong khai triển; deck
 - Lệnh `python3 -m reloadserver 8765` không khả dụng trong môi trường. Dùng bản sao webroot an toàn không chứa `.env` với `python3 -m http.server 8765`; Chromium duyệt đủ 39 trang ở 1280 × 720 và 800 × 600, tạo 78 ảnh kiểm tra, không có lỗi console, lỗi trang, yêu cầu hỏng hoặc lỗi điều hướng bàn phím. Cảnh báo hình học tự động còn lại chỉ đến từ hộp bao KaTeX và tiêu đề bị biến đổi theo tỉ lệ; đối chiếu trực tiếp toàn bộ ảnh không thấy tràn hoặc chồng lấn.
 - Bản cuối đã được tự kiểm theo `no-ai-slop/eval.md`: không còn lời dẫn rỗng, câu hỏi tu từ, khẩu hiệu hoặc kết luận lặp. Rà theo Quill xác nhận thuật ngữ, ký hiệu và câu chuyển liên tục; không tạo `quill.json`.
 - Dự án Codex Slides bền vững `20260824191033-chuy-n-lecture-7-h-m-x-p-x-trong-h-c-t-n-6jd4` vẫn ở trạng thái draft với 0 trang dựng. Năm Design Files `lecture-07-xap-xi-ham.html`, `outline.md`, `storyboard.md`, `review-log.md`, `note-for-author.md` đã được đồng bộ và đọc lại khớp chính xác với kho. Codex Browser không có trong phiên nên không thể duyệt trực quan bằng giao diện Codex Slides; kiểm tra Chromium cục bộ là bằng chứng trực quan chính.
+
+## Giai đoạn ghi chú bài giảng — 03-09-2026
+
+### Phạm vi và điều phối
+
+- Ghi chú dùng nguồn chính `RL-hk2-2025-2026/lecture-07.pdf` (45 trang) và phiếu `resources/hw07-function-approximation.pdf` (8 bài). Không có code demo trong nguồn.
+- Reader DeepSeek lập kế hoạch bằng `plan/12/600/16000`, phân tích nguồn bằng `source/20/600/20000`, và hợp nhất phạm vi bằng `recheck/8/600/16000`. Runtime thành công đều trả `requested_model=observed_model=deepseek/deepseek-v3.2`, provider `OpenRouter`.
+- Writer GLM tạo bản đầu bằng `write/20/600/32000`; một phản hồi `finish_reason=error` được cầu nối phục hồi, rồi hoàn tất ở vòng 8. Runtime trả `requested_model=observed_model=z-ai/glm-5.3-flash`, provider `OpenRouter`.
+- Phạm vi được chấp nhận gồm 16 chủ đề: 12 cốt lõi, một cầu nối Bài 06, hai chủ đề bổ sung và một chủ đề thực hành. Phần chính 120 phút; chữa bài 30 phút. Tr. 5–20 chỉ là cầu nối ngắn; kết quả MDP tuyến tính tr. 42 chỉ nêu hướng nghiên cứu; không thêm ví dụ ngoài nguồn.
+
+### Năm báo cáo độc lập cho bản ghi chú đầu
+
+| Vai rà | Mức độ cao nhất | Phát hiện và bằng chứng | Quyết định |
+|---|---|---|---|
+| Góc nhìn sinh viên — GLM | nghiêm trọng | Bài 8 sai ngay từ $w_1$; ký hiệu $v_{\hat{}}$, $q_{\hat{}}$ khó đọc; kết luận đứng trước phần thực hành. | Chấp nhận; tính lại toàn bộ Bài 8, chuẩn hoá thành $\hat v$, $\hat q$, chuyển kết luận xuống cuối. |
+| Chuyên gia Học tăng cường — DeepSeek | nghiêm trọng | Cập nhật và đích điều khiển cần phân biệt đánh giá với cải thiện chính sách; phạm vi kết quả hiện đại bị nói rộng hơn thiết lập nguồn. | Chấp nhận; đổi tên Bài 7 thành một bước đánh giá trong quá trình điều khiển và thu hẹp kết quả hiện đại. |
+| Toán học và thuật toán — DeepSeek | nghiêm trọng | Bài 8 sai số học; lời giải gradient có chỗ giữ ký hiệu tạm; số chiều lớp hàm thiếu điều kiện hạng. | Chấp nhận; tự tính lại từ mẫu gốc, viết gradient đầy đủ và sửa số chiều thành $\operatorname{rank}(\Phi)\le d$. Bác đáp số thay thế $w_3=(7.52,-2.24,1.04)$ vì không khớp phép cập nhật trực tiếp. |
+| Phản biện học thuật và giảng dạy — DeepSeek | nghiêm trọng | Cầu nối giữa kết quả tuyến tính, thực hành và kết luận chưa đúng thứ tự; một số bảo đảm thiếu giới hạn thiết lập. | Chấp nhận; dùng thứ tự bộ ba bất ổn → MDP tuyến tính → thực hành → kết luận và gắn giả thiết vào từng bảo đảm. |
+| Kết nối và mạch viết — GLM | nghiêm trọng | Trùng mã `lec-07-topic-05`, tên chủ đề và kết nối vào–ra của chủ đề 14–16 chưa khớp; tiếng Anh dày. | Chấp nhận; sửa thành 16 mã duy nhất, đồng bộ bản đồ chủ đề, câu nối và thuật ngữ tiếng Việt. |
+
+Các lượt GLM hoàn tất ở vòng 3. Reviewer DeepSeek ban đầu đọc nhiều tệp đã chạm giới hạn gọi công cụ ở 5 hoặc 8 vòng. Lượt chạy lại chỉ cấp đúng một note và yêu cầu một lần đọc đã hoàn tất mà không đổi model. Không dùng worker mặc định thay thế.
+
+### Chỉnh sửa và quyết định
+
+- Bài 8 được tính lại: $w_1=(-0.2,0.6,-1.4)^\top$, $w_2=(-0.68,0.84,-1.64)^\top$, $w_3=(8.032,-2.064,1.264)^\top$; các giá trị cuối là $23.296$, $19.392$, $27.424$.
+- Lời giải gradient TD dùng $e(w)=R_{t+1}+\gamma x(S_{t+1})^\top w-x(S_t)^\top w$; bước hạ gradient đầy đủ giữ $e(w)[x(S_t)-\gamma x(S_{t+1})]$, còn TD bỏ số hạng tại trạng thái kế.
+- Bỏ khẳng định độ phức tạp mẫu $\tilde O(d/\varepsilon^2)$ và các suy rộng về tối ưu cực tiểu–cực đại vì nguồn không cung cấp thiết lập đủ.
+- Đồng bộ ký hiệu đặc trưng thành $x$, chuẩn hoá $\hat v$, $\hat q$, và chuyển phần kết luận xuống sau hai bài tính tay.
+- Hai lượt writer sửa rộng `write/20/600/20000` và `write/12/600/12000` dừng ở `finish_reason=length` trước khi ghi. Điều phối viên không tăng tiếp ngân sách; các sửa được chia thành khối hẹp, kiểm diff và giao reviewer độc lập tái kiểm. Kinh nghiệm này đã được mã hoá thành preset `patch/6/300/7000` trong commit `95169a3`.
+
+### Tái rà sau chỉnh sửa
+
+- Reviewer toán DeepSeek dùng nguyên preset `recheck/6/600/10000`, chỉ đọc note một lần và hoàn tất ở vòng 2 sau 128,6 giây. Runtime: `requested_model=observed_model=deepseek/deepseek-v3.2`, provider `OpenRouter`. Báo cáo xác nhận ký hiệu, gradient MC/TD, Bellman chiếu, giả thiết hội tụ và toàn bộ số học Bài 7–8 đúng; không còn lỗi chặn bàn giao hoặc nghiêm trọng.
+- Reviewer mạch GLM dùng `recheck/6/600/10000`, chỉ đọc note một lần và hoàn tất ở vòng 2 sau 57,3 giây. Runtime: `requested_model=observed_model=z-ai/glm-5.3-flash`, provider `OpenRouter`. Báo cáo xác nhận 16 chủ đề, thứ tự, tổng 120 phút và kết luận sau thực hành; sáu lỗi nhẹ về tên, chỉ số và chính tả đã được sửa. Nhận xét ngày tháng là dương tính giả: tháng 4-2026 đã qua tại thời điểm rà tháng 9-2026.
+- Bản cuối có 16 mã chủ đề duy nhất và 17 bộ `exercise`–`hint`–`solution`; chỉ dùng `$...$`, `$$...$$`. Nội dung đã tự kiểm theo `no-ai-slop/eval.md`; rà Quill xác nhận thứ tự và thuật ngữ liên tục, không tạo `quill.json`.
+
+### Kiểm định trình xem ghi chú
+
+- Lệnh bắt buộc `python3 -m reloadserver 8765` thất bại với `/usr/bin/python3: No module named reloadserver`.
+- Dùng bản sao webroot cô lập trong `/tmp`, không chứa `.env`, và máy chủ `python3 -m http.server 8765 --bind 127.0.0.1` làm phương án dự phòng.
+- Chromium duyệt từ liên kết duy nhất trên `index.html` ở 1280 × 720 và 390 × 844. Cả hai khung có 397 biểu thức KaTeX, 17 bài tập, 17 lời giải, 34 khối đóng/mở; không có lỗi KaTeX, console, trang, tài nguyên, tràn ngang hoặc phần tử tràn ngoài vùng chứa. Phím Enter mở được khối lời giải.
+- Ảnh toàn trang ở hai kích thước đã được điều phối viên xem trực tiếp. Một công thức đặc trưng nội dòng ban đầu gây tràn ở 390 px; sau khi chuyển thành công thức khối và rút nhãn sang tiếng Việt, kiểm định chạy lại đạt.
+- Codex Slides không chạy được trong môi trường hiện tại vì Node.js là `v18.19.1`, thấp hơn yêu cầu Node.js 20 của tiện ích. Vì vậy không tuyên bố đã rà bản ghi chú bằng Codex Slides; bằng chứng trực quan là hai lượt Chromium cục bộ.
