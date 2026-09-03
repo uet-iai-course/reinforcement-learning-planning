@@ -131,6 +131,7 @@ class ReadOnlyServerTest(unittest.TestCase):
         )
         self.assertLess(TASK_PROFILES["patch"].max_rounds, TASK_PROFILES["write"].max_rounds)
         self.assertLess(TASK_PROFILES["patch"].max_tokens, TASK_PROFILES["write"].max_tokens)
+        self.assertGreater(TASK_PROFILES["write"].timeout_seconds, TASK_PROFILES["review"].timeout_seconds)
         self.assertEqual(TASK_PROFILES["review"].empty_answer_retries, 1)
         self.assertEqual(TASK_PROFILES["review"].reasoning_effort, "low")
 

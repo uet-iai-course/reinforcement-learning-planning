@@ -82,7 +82,7 @@ TASK_PROFILES = {
     "source": TaskProfile(20, 600.0, 24_000, 0.1, 1, "low"),
     "storyboard": TaskProfile(10, 600.0, 12_000, 0.1, 1, "low"),
     "review": TaskProfile(8, 600.0, 12_000, 0.1, 1, "low"),
-    "write": TaskProfile(20, 600.0, 32_000, 0.1, 1, "low"),
+    "write": TaskProfile(20, 900.0, 32_000, 0.1, 1, "low"),
     "recheck": TaskProfile(6, 600.0, 10_000, 0.1, 1, "low"),
     "patch": TaskProfile(6, 300.0, 7_000, 0.1, 1, "low"),
 }

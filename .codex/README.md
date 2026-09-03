@@ -62,7 +62,7 @@ Từ Bài 08, ưu tiên dùng nguyên preset và chỉ ghi đè tham số khi nh
 lượt hiện tại chứng minh cần thiết. Preset đã được nâng theo dữ liệu Bài 01–07:
 `plan/12/600/16000`, `source/20/600/24000`,
 `storyboard/10/600/12000`, `review/8/600/12000`,
-`write/20/600/32000`, `recheck/6/600/10000` và
+`write/20/900/32000`, `recheck/6/600/10000` và
 `patch/6/300/7000` (profile/vòng/timeout/token).
 
 Các tổ hợp đã chạy thành công:
@@ -287,7 +287,7 @@ trò thật sự cần đối chiếu mạch.
 Hai lượt writer sửa rộng Bài 07 dùng `write/20/600/20000` và
 `write/12/600/12000` đều dừng ở `finish_reason=length` trước khi ghi. Đây là
 lỗi về phạm vi và ngân sách đầu ra, không phải lý do để tăng tiếp số vòng.
-Quy tắc dùng lại là: bản nháp dùng nguyên preset `write/20/600/32000`; sau năm
+Quy tắc dùng lại là: bản nháp dùng nguyên preset `write/20/900/32000`; sau năm
 báo cáo, chia hàng đợi thành lượt `patch/6/300/7000`, mỗi lượt chỉ một hoặc hai
 khối và yêu cầu gộp các tool call độc lập trong cùng phản hồi. Điều phối viên
 kiểm diff sau từng lượt và giao recheck đúng phần đã đổi.
@@ -297,3 +297,11 @@ DeepSeek chỉ đọc đúng một note bằng `recheck/6/600/10000`, hoàn tấ
 sau khoảng 129 giây; GLM dùng cùng preset và hoàn tất ở vòng 2 sau khoảng 57
 giây. Cả hai trả đúng model yêu cầu và provider `OpenRouter`, không có
 `tool_call_limit`, `finish_reason=length`, timeout hoặc lỗi transport.
+
+Lượt writer đầu của Bài 08 với sáu tệp đầu vào và yêu cầu sinh toàn bộ note
+trong một tool call đã dừng chính xác ở `OpenRouter request exceeded 600s wall
+timeout`; không có tệp đích hay bản ghi bán phần. Từ Bài 08, preset `write` dùng
+timeout 900 giây cho mỗi request. Đồng thời chỉ cấp ba nguồn cần thiết và giới
+hạn note khoảng 40–48 KB; không tăng token quá 32.000 và không đổi model. Đây
+là thay đổi riêng cho bản nháp dài; `review`, `recheck` và `patch` giữ timeout
+đã kiểm chứng.

@@ -107,7 +107,7 @@ token hoàn tất và reasoning token khi nhà cung cấp trả các trường n
 | `source` | 20 | 600 giây | 24.000 | Phân tích và ánh xạ nguồn |
 | `storyboard` | 10 | 600 giây | 12.000 | Kiểm định storyboard |
 | `review` | 8 | 600 giây | 12.000 | Năm rà soát độc lập |
-| `write` | 20 | 600 giây | 32.000 | Soạn một sản phẩm hoàn chỉnh đã cô lập |
+| `write` | 20 | 900 giây | 32.000 | Soạn một sản phẩm hoàn chỉnh đã cô lập |
 | `recheck` | 6 | 600 giây | 10.000 | Rà lại đúng một note/deck; báo cáo ngắn |
 | `patch` | 6 | 300 giây | 7.000 | Sửa một hoặc hai khối độc lập |
 
