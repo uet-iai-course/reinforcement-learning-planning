@@ -233,3 +233,19 @@ bốn tệp bằng GLM nên đặt `--repo-root` trực tiếp tại `2627-1`, d
 lãng phí giới hạn công cụ. Writer GLM nhiều thay thế với 16 vòng có thể lặp
 phép thay thế không khớp rồi dừng giới hạn; nên tách bản vá nhỏ hoặc dùng trần
 20 vòng và luôn kiểm diff.
+
+Với lecture note Bài 06 khoảng 45 KB, reader kế hoạch DeepSeek chạy tốt bằng
+`plan/12/600/16000`. Reader nguồn trên PDF đã trích văn bản vẫn có thể chạm
+`tool_call_limit` ở 20 vòng; tách nguồn thành hai phần 300/218 dòng rồi dùng
+`source/6/600/20000` hoàn tất. Hợp nhất chỉ nên nhận hai đề xuất, hai phần
+nguồn và deck hiện có; `recheck/6/600/16000` hoàn tất, trong khi gói rộng hơn
+với 10 vòng đã chạm giới hạn.
+
+Writer GLM tạo note Bài 06 ổn định bằng `write/20/600/32000`. Lượt sửa rộng
+với 20 vòng ghi gần hết thay đổi nhưng vẫn dừng ở `model exceeded the tool-call
+limit (20)`; cần kiểm diff và dùng bản vá cục bộ cho phần còn lại. Reviewer
+DeepSeek trên note dài có thể đọc toàn tệp rồi gọi thêm search: `review/5` vẫn
+hoàn tất ở vòng 6 do cầu nối cho phép phản hồi cuối, nhưng không nên hạ trần
+thấp hơn. Reviewer mạch GLM trên cùng note hoàn tất bằng
+`recheck/5/600/8000` ở vòng 3. Luôn cô lập đúng một note để tránh lặp đường dẫn
+và dọn liên kết `.env` ngay khi worker kết thúc.
