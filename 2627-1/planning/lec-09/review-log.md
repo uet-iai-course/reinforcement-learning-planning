@@ -195,3 +195,90 @@ Tám hình kỹ thuật được vẽ lại thành SVG trong `img/lec-09/`. Khô
   thị đúng tiêu đề, 14 heading cấp hai, 28 heading cấp ba, 304 công thức KaTeX,
   6 khối tương tác, liên kết quay lại đúng deck; không lỗi console, tài nguyên
   hỏng hoặc tràn ngang.
+
+## Đồng bộ bộ trang chiếu với lecture note — 03/09/2026
+
+Mục này thay thế các con số 37 trang/34 trang chính của vòng deck cũ ghi ở
+phía trên; lịch sử cũ được giữ nguyên làm tham chiếu.
+
+### Bằng chứng kiểm định cuối
+
+- Bản đồng bộ note–deck hiện có 38 mã duy nhất: 35 mã L và 3 mã X; 38 notes;
+  14 topic; 6 section ngoài; độ sâu section tối đa 2.
+- Storyboard reviewer DeepSeek dùng `storyboard/10/600/12000`, hoàn tất vòng 11
+  sau 225,26 giây, PASS.
+- Năm reviewer độc lập: sinh viên GLM 164,43 giây, PASS và nêu ba lỗi cục bộ;
+  chuyên gia RL DeepSeek 179,80 giây, PASS; toán DeepSeek lần đầu lỗi HTTP 400
+  vì một kết quả search dài 2.024.384 ký tự làm yêu cầu ước lượng 562.425 token
+  vượt cửa sổ 163.840; sau commit cầu nối `92a6eab`, chạy lại đúng model với
+  `review/8/600/12000`, hoàn tất vòng 3 sau 86,23 giây, PASS; phản biện học
+  thuật DeepSeek 207,89 giây, PASS; mạch viết GLM 125,88 giây, PASS và nêu ba
+  lỗi mô tả nhẹ.
+- Writer bản đồng bộ HTML GLM hoàn tất vòng 6 sau 328,86 giây; writer planning
+  GLM vòng 6 sau 162,58 giây. Writer sửa lần một GLM `patch/6/300/7000` hoàn
+  tất vòng 5 sau 74,76 giây; writer sửa lần hai cùng profile hoàn tất vòng 4
+  sau 38,11 giây. Mọi lượt có requested_model=observed_model và provider
+  OpenRouter.
+- Tái rà toán DeepSeek `recheck/6/600/10000` hoàn tất vòng 5 sau 95,02 giây,
+  PASS. Tái rà mạch GLM cùng profile hoàn tất vòng 3 sau 104,18 giây, nêu ba
+  lệch nhẹ; sau sửa, tái rà mạch cuối hoàn tất vòng 3 sau 83,57 giây, PASS.
+- Điều phối viên phát hiện một vế cũ còn đảo câu nối `X01`–`L09-10` dù lượt rà
+  trước báo PASS. Writer GLM `patch/6/300/7000` sửa một lần thay thế, hoàn tất
+  vòng 3 sau 24,17 giây. Reviewer mạch GLM tái rà đúng hai đoạn ở vòng 2 sau
+  19,74 giây, PASS cho tuyến `L09-06`–`L09-07` → `L09-08` → `X01` → `L09-09`
+  → `L09-10` → `L09-11`.
+- Sửa đã áp dụng: thêm topic-14 qua `L09-30A`; đồng bộ đầy đủ 14 topic; đặt
+  X01/X02 đúng topic và thứ tự; thêm `Z=0` ở X01; đổi ba chuỗi `G_{<t}` thành
+  thực thể HTML `G_{&lt;t}`; làm rõ “35 trang không mang mã X”; sửa các câu nối
+  L09-10 và storyboard.
+- Kiểm định tĩnh: 38 slide, 6 section ngoài, 38 notes, 14 topic, 8 SVG XML hợp
+  lệ có role/title/desc; không tài sản thiếu, raster hay URL mạng; cấu hình
+  RevealJS bắt buộc và plugin cục bộ đúng; `git diff --check` sạch. Nội dung
+  hiển thị không lộ mã nội bộ, topic, workflow hoặc thời lượng.
+- `python3 -m reloadserver 8765` thất bại chính xác vì `No module named
+  reloadserver`. Fallback dùng bản sao tối thiểu trong `/tmp` và
+  `python3 -m http.server 8765 --bind 127.0.0.1`, không phục vụ `.env`.
+- Chromium duyệt đủ 38 trang tại 1280×720 và 800×600: HTTP 200, 0
+  console/page/request error, 0 KaTeX error, 0 tràn ngoài khung slide; bàn phím
+  chuyển từ h=0 sang h=1. Ảnh L09-29, L09-30A và L09-33 được xem trực tiếp ở cả
+  hai khung, không thấy chữ nhỏ bất thường, chồng lấn hoặc cắt công thức.
+- Biên tập cuối theo `no-ai-slop/eval.md` không phát hiện khẩu hiệu, lời dẫn
+  rỗng, kết luận lặp hoặc nhịp câu máy móc. Rà liên tục theo Quill dựa trên bản
+  đồ 6 mạch và hai lượt reviewer mạch cuối; không tạo `quill.json`.
+- Codex Slides không khả dụng vì Node.js 18.19.1 thấp hơn yêu cầu 20. Không
+  tuyên bố đã rà bằng Codex Slides trong vòng hiện tại.
+- Index Bài 09 đã có cả liên kết bài giảng và ghi chú; không cần đổi index ở
+  giai đoạn đồng bộ deck.
+
+### Năm báo cáo/tái rà độc lập
+
+- Góc nhìn sinh viên — `z-ai/glm-5.3-flash`, OpenRouter: PASS. Cần sửa ký tự
+  ba lần `<` thô trong ký hiệu `G_{<t}` tại `L09-29`; bổ sung giả thiết `Z=0`
+  trên mặt bài tập `X01`; bỏ câu thời lượng lặp trong outline.
+- Chuyên gia Học tăng cường — `deepseek/deepseek-v3.2`, OpenRouter: PASS, không
+  có lỗi bắt buộc.
+- Độ chính xác toán học và thuật toán — `deepseek/deepseek-v3.2`, OpenRouter:
+  lần đầu lỗi HTTP 400 vì kết quả search 2.024.384 ký tự làm yêu cầu khoảng
+  562.425 token; chạy lại cùng model sau bản vá cầu nối, hoàn tất vòng 3 trong
+  86 giây và PASS, không có lỗi bắt buộc.
+- Phản biện học thuật và giảng dạy — `deepseek/deepseek-v3.2`, OpenRouter:
+  PASS, không có lỗi bắt buộc.
+- Kết nối và mạch viết — `z-ai/glm-5.3-flash`, OpenRouter: PASS. Sửa thứ tự
+  logic để `X01` nằm sau `L09-08` và trước `L09-09`; thay cách gọi “35 trang
+  chính” vì `L09-30A` được ghi là ngoài tuyến chính.
+
+### Bản vá được duyệt và bản vá bổ sung
+
+1. Trong HTML, tại `L09-29`, đổi cả ba lần `G_{<t}` thành `G_{&lt;t}` để HTML
+   không diễn giải `<t` như thẻ. Không thay công thức toán học.
+2. Trong HTML, tại `X01`, thêm `$Z=0$` vào câu dữ kiện trước hai vector Q.
+3. Trong outline, bỏ câu lặp “Tổng thời lượng chính...” ở đoạn sau bảng; giữ
+   một mô tả đầy đủ về 120 + 30 phút.
+4. Trong outline và storyboard, thay “35 trang chính” bằng “35 trang không mang
+   mã X” hoặc cách tương đương chính xác; vẫn giữ tổng 38 mã.
+5. Trong outline, sửa thứ tự logic thành `L09-01`–`L09-08`, `X01`,
+   `L09-09`–`L09-19`, ...; không đổi thứ tự vật lý.
+6. Bản vá bổ sung sau tái rà mạch: ghi chú `L09-10` thay “bài tập kế tiếp” bằng
+   tham chiếu ngược tự nhiên tới `X01` (không hiển thị mã nội bộ); storyboard
+   cụm sai lệch cực đại ghi đúng thứ tự `L09-06`–`L09-07` → `L09-08` → `X01` →
+   `L09-09` → `L09-10`; outline đặt `X02` sau `L09-25` và trước `L09-26`.

@@ -8,7 +8,7 @@
 | Hai ước lượng dạng bảng | chu trình rút gọn: trực giác → thuật toán → ứng dụng → so sánh → kiểm tra | `L09-11`–`L09-15` | Double DQN → Double Q-learning và cập nhật chéo | 11 phút | 5 phút |
 | Chính sách trực tiếp | vấn đề → trực giác → ví dụ → hình thức → kiểm tra | `L09-16`–`L09-19` | giới hạn của aliasing và argmax liên tục → phân phối hành động | 14 phút | 0 |
 | Mục tiêu và hàm điểm | vấn đề → trực giác → hình thức → ví dụ → ứng dụng → kiểm tra | `L09-20`–`L09-27`, `X02` | mục tiêu episodic → hàm điểm softmax và Gaussian | 27 phút | 5 phút |
-| Gradient chính sách | hình thức → nhân quả → định lý → thuật toán → ứng dụng → kiểm tra | `L09-28`–`L09-33`, `X03` | tỷ số xác suất → reward-to-go → phân bố chiếm dụng → REINFORCE | 26 phút | 0 |
+| Gradient chính sách | hình thức → nhân quả → định lý → thuật toán → ứng dụng → kiểm tra | `L09-28`–`L09-33`, `X03` (gồm `L09-28A`, `L09-30A`) | tỷ số xác suất → reward-to-go → phân bố chiếm dụng → REINFORCE | 26 phút | 0 |
 
 ## Bản đồ sáu mạch ngoài
 
@@ -19,9 +19,36 @@
 | 3 | `L09-11`–`L09-15` | Double Q-learning dạng bảng, cập nhật chéo. | Nguyên tắc tách ở mạch 2 | Giới hạn argmax mở đường cho mạch 4. |
 | 4 | `L09-16`–`L09-19` | Chính sách là phân phối; hai giao diện softmax/Gaussian. | Giới hạn argmax ở mạch 3 | Giao diện lấy mẫu khả vi cho mạch 5. |
 | 5 | `L09-20`–`L09-27`, `X02` | Mục tiêu episodic, giả thiết, hàm điểm. | Giao diện chính sách ở mạch 4 | Hàm điểm softmax và Gaussian cho mạch 6. |
-| 6 | `L09-28`–`L09-33` (gồm `L09-28A`), `X03` | Tỷ số xác suất, nhân quả, phân bố chiếm dụng, REINFORCE. | Hàm điểm ở mạch 5 | Ba hợp đồng kết bài và cầu nối sang Bài 10. |
+| 6 | `L09-28`–`L09-33` (gồm `L09-28A`, `L09-30A`), `X03` | Tỷ số xác suất, nhân quả, phân bố chiếm dụng, REINFORCE; đọc thêm sai phân hữu hạn. | Hàm điểm ở mạch 5 | Bốn hợp đồng kết bài và cầu nối sang Bài 10. |
 
-Các cột thời lượng không tính các trang `X`. Tổng thời lượng vẫn 110 phút cốt lõi + 10 phút linh hoạt + 30 phút chữa bài; 30 phút chữa bài nằm ngoài 120 phút chính, không gọi là vượt giờ. Toàn bộ cầu nối tỷ số xác suất, nhân quả và phân bố chiếm dụng là cốt lõi, riêng `L09-30` là mở rộng có thể lược. Phần linh hoạt gồm bảng so sánh ở `L09-14` và nhánh Gaussian ở `L09-26`–`L09-27`; sai phân hữu hạn đã bỏ.
+Thứ tự vật lý trong mạch 6 là `L09-28`, `L09-28A`, `L09-29`, `L09-31`, `L09-32`, `X03`, `L09-30`, `L09-30A`, `L09-33` (thứ tự `lec-09-topic-10` → `lec-09-topic-12` → `lec-09-topic-11` → `lec-09-topic-14` → `lec-09-topic-13`). Lý do đổi thứ tự: giữ chu trình học tập REINFORCE (định lý → thuật toán → ứng dụng → kiểm tra) liền mạch trước khi vào phần mở rộng có thể lược, rồi chốt bằng trang tổng hợp `L09-33`.
+
+Lý do thêm `L09-30A`: nội dung sai phân hữu hạn ở nguồn tr. 33 đã bị bỏ khỏi tuyến chính. Bản đồng bộ khôi phục thành trang “Đọc thêm: sai phân hữu hạn” ngoài tuyến chính, có thể lược, gồm một công thức xấp xỉ gradient và hai thẻ ưu điểm/giới hạn, nối từ hai cách viết gradient sang cầu nối Bài 10. Không thêm ảnh.
+
+Tổng mã: 35 trang không mang mã X + 3 bài tập = 38 mã.
+
+## Bảng note-topic-id → data-slide-id
+
+| note-topic-id | data-slide-id |
+|---|---|
+| `lec-09-topic-01` | `L09-01`, `L09-02`, `L09-03` |
+| `lec-09-topic-02` | `L09-04`, `L09-05`, `L09-06` |
+| `lec-09-topic-03` | `L09-07`, `L09-08`, `X01` |
+| `lec-09-topic-04` | `L09-09`, `L09-10` |
+| `lec-09-topic-05` | `L09-11`–`L09-15` |
+| `lec-09-topic-06` | `L09-16`–`L09-19` |
+| `lec-09-topic-07` | `L09-20`–`L09-22` |
+| `lec-09-topic-08` | `L09-23`–`L09-25`, `X02` |
+| `lec-09-topic-09` | `L09-26`, `L09-27` |
+| `lec-09-topic-10` | `L09-28`, `L09-28A`, `L09-29` |
+| `lec-09-topic-11` | `L09-30` |
+| `lec-09-topic-12` | `L09-31`, `L09-32`, `X03` |
+| `lec-09-topic-13` | `L09-33` |
+| `lec-09-topic-14` | `L09-30A` |
+
+Tổng: 38 `data-slide-id` duy nhất, 38 `data-note-topic-id`, đủ 14 topic và 6 section ngoài.
+
+Các cột thời lượng không tính các trang `X`. Tổng thời lượng vẫn 110 phút cốt lõi + 10 phút linh hoạt = 120 phút chính, cộng 30 phút chữa bài nằm ngoài 120 phút chính, không gọi là vượt giờ. Toàn bộ cầu nối tỷ số xác suất, nhân quả và phân bố chiếm dụng là cốt lõi, riêng `L09-30` và `L09-30A` là mở rộng có thể lược. Phần linh hoạt gồm bảng so sánh ở `L09-14` và nhánh Gaussian ở `L09-26`–`L09-27`; sai phân hữu hạn chỉ còn ở trang đọc thêm `L09-30A`.
 
 ## Truyền dữ kiện
 
@@ -37,7 +64,7 @@ Các cột thời lượng không tính các trang `X`. Tổng thời lượng v
 
 ### Sai lệch cực đại và Double DQN
 
-Vấn đề ở `L09-03`–`L09-04`; trực giác và ví dụ ở `L09-04`–`L09-05`; hình thức ở `L09-06`–`L09-07`; ứng dụng số và hợp đồng tensor ở `L09-08`–`L09-10`; kiểm tra ở `X01`, sau khi công thức Double DQN đã xuất hiện. `L09-10` chuyển nhẹ sang bài kiểm tra; `X01` mới chuyển sang hai bảng.
+Vấn đề ở `L09-03`–`L09-04`; trực giác và ví dụ ở `L09-04`–`L09-05`; hình thức ở `L09-06`–`L09-07`; ví dụ số ở `L09-08`; kiểm tra ở `X01`; hợp đồng tensor ở `L09-09`; giới hạn ở `L09-10`, sau khi công thức Double DQN đã xuất hiện và bài tập đã kiểm cơ chế. `X01` kiểm cơ chế; `L09-10` chốt giới hạn rồi chuyển sang hai bảng.
 
 ### Double Q-learning
 
@@ -49,7 +76,7 @@ Vấn đề biểu diễn ở `L09-16`: chính sách tối ưu tất định có
 
 ### REINFORCE
 
-Tỷ số xác suất ở `L09-28` viết $J=\int G_0p_\theta d\tau$ rồi likelihood ratio; `L09-28A` tách phân tích quỹ đạo $p_\theta(\tau)=\rho_0\prod\pi_\theta P$ và $\nabla\log p=\sum_t\psi_t$, một luận điểm trung tâm nối sang `L09-29`. Hai trang lân cận quanh `L09-28A` đã rà: `L09-27` kết cụm hàm điểm, `L09-29` mở cầu nối nhân quả; ranh giới section 5→6 nằm giữa `X02` và `L09-28`. `L09-30` là phần mở rộng về phân bố chiếm dụng, có thể lược khi thiếu thời gian. Thuật toán ở `L09-31`; ứng dụng softmax ở `L09-32`; kiểm tra ở `X03`; tổng hợp ở `L09-33`.
+Tỷ số xác suất ở `L09-28` viết $J=\int G_0p_\theta d\tau$ rồi likelihood ratio; `L09-28A` tách phân tích quỹ đạo $p_\theta(\tau)=\rho_0\prod\pi_\theta P$ và $\nabla\log p=\sum_t\psi_t$, một luận điểm trung tâm nối sang `L09-29`. Hai trang lân cận quanh `L09-28A` đã rà: `L09-27` kết cụm hàm điểm, `L09-29` mở cầu nối nhân quả; ranh giới section 5→6 nằm giữa `X02` và `L09-28`. `L09-30` là phần mở rộng về phân bố chiếm dụng, có thể lược khi thiếu thời gian; `L09-30A` là trang đọc thêm sai phân hữu hạn, cũng có thể lược. Thuật toán ở `L09-31`; ứng dụng softmax ở `L09-32`; kiểm tra ở `X03`; tổng hợp ở `L09-33`. Thứ tự vật lý trong mạch 6 là `L09-28`, `L09-28A`, `L09-29`, `L09-31`, `L09-32`, `X03`, `L09-30`, `L09-30A`, `L09-33`: chu trình REINFORCE cốt lõi đi liền trước, phần mở rộng có thể lược nằm giữa `X03` và trang tổng hợp.
 
 ## Từng trang chiếu
 
@@ -90,5 +117,6 @@ Tỷ số xác suất ở `L09-28` viết $J=\int G_0p_\theta d\tau$ rồi likel
 | `L09-30` | Mở rộng: trọng số $\gamma^t$ tạo phân bố chiếm dụng và nối $G_t$ với $Q^\pi$; có thể lược. | định lý | Thành ước lượng mẫu. |
 | `L09-31` | Thu dưới $\theta_{old}$, cộng $\gamma^tG_t\psi_t$ rồi cập nhật. | thuật toán | Đi vào số. |
 | `L09-32` | Cập nhật softmax tăng xác suất từ $2/3$ lên khoảng $0,710$. | ứng dụng | Kiểm cả tham số và xác suất. |
-| `X03` | Tính tham số, xác suất mới khi return âm và return hai bước; giữ $\theta_{old}$. | kiểm tra | Chốt hợp đồng. |
-| `L09-33` | Ba hợp đồng kết thúc bài. | tổng hợp | Cầu nối baseline và actor–critic. |
+| `X03` | Tính tham số, xác suất mới khi return âm và return hai bước; giữ $\theta_{old}$. | kiểm tra | Sang phần mở rộng. |
+| `L09-30A` | Đọc thêm: sai phân hữu hạn, xấp xỉ $\partial J/\partial\theta_k\approx[J(\theta+\epsilon u_k)-J(\theta)]/\epsilon$; ưu điểm không cần đạo hàm giải tích, giới hạn nhiễu và chi phí đánh giá; có thể lược. | đọc thêm | Nối hai cách viết gradient sang cầu nối Bài 10. |
+| `L09-33` | Bốn hợp đồng cần giữ: sai lệch cực đại, Double DQN, chính sách, REINFORCE. | tổng hợp | Cầu nối baseline và actor–critic. |
