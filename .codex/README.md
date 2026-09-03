@@ -341,3 +341,13 @@ timeout 900 giây cho mỗi request. Đồng thời chỉ cấp ba nguồn cần
 hạn note khoảng 40–48 KB; không tăng token quá 32.000 và không đổi model. Đây
 là thay đổi riêng cho bản nháp dài; `review`, `recheck` và `patch` giữ timeout
 đã kiểm chứng.
+
+Reviewer toán của bộ trang chiếu Bài 09 đã gọi `search_text` ngoài phạm vi dù
+prompt yêu cầu chỉ đọc một tệp. Một dòng HTML rất dài làm kết quả công cụ đạt
+2.024.384 ký tự; yêu cầu kế tiếp bị OpenRouter từ chối vì ước lượng 562.425
+token vượt cửa sổ 163.840 token. Cầu nối hiện cắt mỗi dòng khớp tìm kiếm ở 500
+ký tự và áp trần 60.000 ký tự cho mọi kết quả công cụ trước khi đưa lại vào
+ngữ cảnh. Prompt reviewer cũng coi `list_files` và `search_text` là bị cấm khi
+điều phối viên yêu cầu không dùng. Với reviewer DeepSeek trên một deck, tiếp
+tục dùng `review/8/600/12000`; lớp bảo vệ mới xử lý kết quả bất thường thay vì
+tăng cửa sổ, token hoặc đổi model.

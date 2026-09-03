@@ -24,6 +24,7 @@ ROLE_DEFAULT_MODELS = {
     "writer": "z-ai/glm-5.3-flash",
 }
 LEGACY_MODEL_ALIASES = {"stealth/ox-alpha": "z-ai/glm-5.3-flash"}
+MAX_TOOL_RESULT_CHARS = 60_000
 ROLE_SYSTEM_PROMPTS = {
     "reader": """You are an OpenRouter reader worker.
 Inspect the repository with the supplied read-only tools before answering.
@@ -44,6 +45,8 @@ the requested severity, location, issue, evidence, and proposed correction.
 Read only the exact files assigned. Prefer one bounded read per file and do
 not repeat discovery calls. Return a concise report as soon as the requested
 checks are complete.
+If the coordinator says not to list or search, calling list_files or
+search_text is forbidden; use only the explicitly assigned read_text_file calls.
 Never infer a new path from a concept, heading, artifact name, or missing detail;
 if more context is needed, reread only an explicitly assigned file.
 Do not edit files or rely on unsupported claims. Answer in the user's language.
@@ -249,7 +252,8 @@ def _assistant_message(message: dict[str, Any]) -> dict[str, Any]:
 
 def _tool_result_text(result: Any) -> str:
     if result.structured_content is not None:
-        return json.dumps(result.structured_content, ensure_ascii=False)
+        text = json.dumps(result.structured_content, ensure_ascii=False)
+        return _truncate_tool_result(text)
 
     blocks: list[str] = []
     for block in result.content:
@@ -257,7 +261,17 @@ def _tool_result_text(result: Any) -> str:
             blocks.append(block.text)
         else:
             blocks.append(str(block))
-    return "\n".join(blocks)
+    return _truncate_tool_result("\n".join(blocks))
+
+
+def _truncate_tool_result(text: str) -> str:
+    if len(text) <= MAX_TOOL_RESULT_CHARS:
+        return text
+    omitted = len(text) - MAX_TOOL_RESULT_CHARS
+    return (
+        text[:MAX_TOOL_RESULT_CHARS]
+        + f"\n[tool result truncated by bridge; omitted {omitted} characters]"
+    )
 
 
 async def run_agent(

@@ -12,6 +12,7 @@ from mcp.server.mcpserver.exceptions import ToolError
 MAX_FILE_BYTES = 1_000_000
 MAX_LINES_PER_READ = 2_000
 MAX_RESULTS = 500
+MAX_SEARCH_MATCH_CHARS = 500
 MAX_WRITE_BYTES = 1_000_000
 
 mcp = MCPServer(
@@ -158,8 +159,17 @@ async def search_text(
         for line_number, line in enumerate(lines, start=1):
             haystack = line if case_sensitive else line.casefold()
             if needle in haystack:
+                display_line = line
+                truncated = len(display_line) > MAX_SEARCH_MATCH_CHARS
+                if truncated:
+                    display_line = display_line[:MAX_SEARCH_MATCH_CHARS] + "…"
                 matches.append(
-                    {"path": _relative(resolved), "line": line_number, "text": line}
+                    {
+                        "path": _relative(resolved),
+                        "line": line_number,
+                        "text": display_line,
+                        "truncated": truncated,
+                    }
                 )
                 if len(matches) >= limit:
                     return {"matches": matches, "count": len(matches), "limit": limit}

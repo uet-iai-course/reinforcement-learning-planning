@@ -9,11 +9,13 @@ from pathlib import Path
 from mcp import Client
 
 from openrouter_mcp.bridge import (
+    MAX_TOOL_RESULT_CHARS,
     ROLE_SYSTEM_PROMPTS,
     TASK_PROFILES,
     _await_with_heartbeats,
     _parser,
     _tool_progress_context,
+    _truncate_tool_result,
     allowed_tool_names,
     load_openrouter_api_key,
     resolve_model,
@@ -125,6 +127,32 @@ class ReadOnlyServerTest(unittest.TestCase):
 
     def test_reader_prompt_forbids_duplicate_ranges(self) -> None:
         self.assertIn("never request the same path and range twice", ROLE_SYSTEM_PROMPTS["reader"])
+
+    def test_reviewer_prompt_obeys_no_search_scope(self) -> None:
+        self.assertIn("calling list_files or", ROLE_SYSTEM_PROMPTS["reviewer"])
+        self.assertIn("search_text is forbidden", ROLE_SYSTEM_PROMPTS["reviewer"])
+
+    def test_tool_results_have_a_hard_character_cap(self) -> None:
+        original = "x" * (MAX_TOOL_RESULT_CHARS + 123)
+        bounded = _truncate_tool_result(original)
+        self.assertTrue(bounded.startswith("x" * MAX_TOOL_RESULT_CHARS))
+        self.assertIn("omitted 123 characters", bounded)
+        self.assertEqual(_truncate_tool_result("short"), "short")
+
+    def test_search_truncates_pathological_long_lines(self) -> None:
+        (self.root / "long.html").write_text(
+            "needle " + "x" * 10_000,
+            encoding="utf-8",
+        )
+
+        async def scenario() -> None:
+            async with Client(mcp, raise_exceptions=True) as client:
+                result = await client.call_tool("search_text", {"query": "needle"})
+                match = result.structured_content["matches"][0]
+                self.assertTrue(match["truncated"])
+                self.assertLessEqual(len(match["text"]), 501)
+
+        asyncio.run(scenario())
 
     def test_writer_prompt_requires_evidence_before_noop(self) -> None:
         self.assertIn("Before declaring a no-op", ROLE_SYSTEM_PROMPTS["writer"])
