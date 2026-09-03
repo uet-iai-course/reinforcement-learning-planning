@@ -118,9 +118,9 @@ uv run openrouter-mcp-reviewer --repo-root .. --json --task-profile review \
   "Rà Lecture 01 theo góc nhìn sinh viên."
 ```
 
-Reader mặc định dùng `deepseek/deepseek-v3.2`; reviewer và writer mặc định dùng
+Reader mặc định dùng `deepseek/deepseek-v4-flash-0731`; reviewer và writer mặc định dùng
 `z-ai/glm-5.3-flash`. Vai rà toán hoặc chuyên môn Học tăng cường phải truyền
-`--model deepseek/deepseek-v3.2`; vai sinh viên và mạch viết giữ mặc định GLM.
+`--model deepseek/deepseek-v4-flash-0731`; vai sinh viên và mạch viết giữ mặc định GLM.
 Tên GLM hiện hành từng được thử nghiệm dưới tên `stealth/ox-alpha`. OpenRouter
 đã ngừng slug thử nghiệm;
 nếu vẫn truyền `stealth/ox-alpha`, client sẽ báo ánh xạ rồi gọi

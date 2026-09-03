@@ -179,7 +179,7 @@ class ReadOnlyServerTest(unittest.TestCase):
     def test_role_specific_default_models(self) -> None:
         self.assertEqual(
             _parser("reader").parse_args(["task"]).model,
-            "deepseek/deepseek-v3.2",
+            "deepseek/deepseek-v4-flash-0731",
         )
         self.assertEqual(
             _parser("reviewer").parse_args(["task"]).model,

@@ -92,19 +92,21 @@ tool ghi thành công, trừ khi bằng chứng từ tệp hiện tại chứng 
 mục. Điều phối viên vẫn phải kiểm diff và chuỗi ID, không dùng lời tổng kết của
 worker thay cho bằng chứng.
 
-Các tổ hợp đã chạy thành công:
+Cấu hình điều phối hiện hành từ ngày 03/09/2026. Các dòng dùng DeepSeek V4
+Flash thay thế cấu hình V3.2 lịch sử và phải lưu bằng chứng runtime của từng
+lượt trong `review-log.md`:
 
 | Vai trò | Worker | Model | Profile | Số vòng |
 |---|---|---|---|---:|
-| Lập kế hoạch lecture note | `openrouter-mcp-reader` | `deepseek/deepseek-v3.2` | `plan` | 12 |
-| Phân tích nguồn lecture note | `openrouter-mcp-reader` | `deepseek/deepseek-v3.2` | `source` | 14 |
-| Phân tích logic, toán, RL phạm vi hẹp | `openrouter-mcp-reader` | `deepseek/deepseek-v3.2` | `recheck` | 8 |
+| Lập kế hoạch lecture note | `openrouter-mcp-reader` | `deepseek/deepseek-v4-flash-0731` | `plan` | 12 |
+| Phân tích nguồn lecture note | `openrouter-mcp-reader` | `deepseek/deepseek-v4-flash-0731` | `source` | 14 |
+| Phân tích logic, toán, RL phạm vi hẹp | `openrouter-mcp-reader` | `deepseek/deepseek-v4-flash-0731` | `recheck` | 8 |
 | Rà mạch viết, sinh viên | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` | `recheck` | 4–6 |
-| Rà logic, toán, RL | `openrouter-mcp-reviewer` | `deepseek/deepseek-v3.2` | `recheck` | 6–8 |
-| Rà note trên hai tệp cố định | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v3.2` | `review` | 4 |
-| Tái rà một tệp, phạm vi hẹp | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v3.2` | `recheck` | 3 |
-| Rà deck trên bốn tệp cố định | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v3.2` | `review` | 8 |
-| Tái rà deck sau đổi cấu trúc, 2–3 tệp | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v3.2` | `recheck` | 5 |
+| Rà logic, toán, RL | `openrouter-mcp-reviewer` | `deepseek/deepseek-v4-flash-0731` | `recheck` | 6–8 |
+| Rà note trên hai tệp cố định | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v4-flash-0731` | `review` | 4–8 |
+| Tái rà một tệp, phạm vi hẹp | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v4-flash-0731` | `recheck` | 3–6 |
+| Rà deck trên bốn tệp cố định | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v4-flash-0731` | `review` | 8 |
+| Tái rà deck sau đổi cấu trúc, 2–3 tệp | `openrouter-mcp-reviewer` | `z-ai/glm-5.3-flash` hoặc `deepseek/deepseek-v4-flash-0731` | `recheck` | 5–6 |
 | Soạn một note hoặc deck đã cô lập | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `write` | 20 |
 | Vá một hoặc hai khối độc lập | `openrouter-mcp-writer` | `z-ai/glm-5.3-flash` | `patch` | 6 |
 

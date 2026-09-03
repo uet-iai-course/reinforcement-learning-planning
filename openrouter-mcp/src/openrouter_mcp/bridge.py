@@ -19,7 +19,7 @@ from .server import mcp
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 ROLE_DEFAULT_MODELS = {
-    "reader": "deepseek/deepseek-v3.2",
+    "reader": "deepseek/deepseek-v4-flash-0731",
     "reviewer": "z-ai/glm-5.3-flash",
     "writer": "z-ai/glm-5.3-flash",
 }
