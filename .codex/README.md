@@ -65,6 +65,25 @@ lượt hiện tại chứng minh cần thiết. Preset đã được nâng theo
 `write/20/900/32000`, `recheck/6/600/10000` và
 `patch/6/300/7000` (profile/vòng/timeout/token).
 
+Writer note Bài 08 xác nhận `write/20/900/32000` ổn định khi chỉ nhận ba đầu vào
+đã cô lập (phạm vi đã duyệt, bản trích nguồn, deck hiện có): GLM ghi tệp 43 KB ở
+vòng 3 và kết thúc ở vòng 4 sau khoảng 304 giây. Lượt cùng nội dung nhưng nhận
+sáu tệp và timeout 600 giây đã dừng đúng ngưỡng; vì vậy các bài sau giữ tối đa
+ba tệp đầu vào cho writer bản đầu, gộp kế hoạch trước khi gọi writer, và không hạ
+timeout `write` dưới 900 giây.
+
+Năm reviewer note Bài 08 chạy song song thành công với `review/8/600/12000`:
+GLM hoàn tất trong 75–88 giây, DeepSeek trong 37–93 giây; mọi kết quả đều có
+`requested_model=observed_model` và provider OpenRouter. Với note khoảng 40 KB,
+prompt phải nêu đúng một đường dẫn, cấm list/search và yêu cầu báo cáo ngắn. Công
+cụ có thể tự chia một lần đọc logic thành hai đoạn do giới hạn 400 dòng; đây
+không phải lỗi và không cần tăng số vòng.
+
+Một lượt tái kiểm hẹp Bài 08 đã tự suy tên mục “bản đồ chủ đề” thành tệp
+`topic-map.md` không tồn tại rồi dùng thêm các lượt list. System prompt của cả
+ba vai trò nay cấm suy đường dẫn từ tên khái niệm, heading hoặc tên sản phẩm;
+worker chỉ được đọc lại tệp đã được điều phối viên nêu rõ.
+
 Các tổ hợp đã chạy thành công:
 
 | Vai trò | Worker | Model | Profile | Số vòng |

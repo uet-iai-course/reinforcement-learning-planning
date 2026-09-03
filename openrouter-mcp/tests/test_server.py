@@ -119,6 +119,10 @@ class ReadOnlyServerTest(unittest.TestCase):
     def test_all_project_roles_are_defined(self) -> None:
         self.assertEqual(set(ROLE_SYSTEM_PROMPTS), {"reader", "reviewer", "writer"})
 
+    def test_worker_prompts_forbid_inferred_paths(self) -> None:
+        for prompt in ROLE_SYSTEM_PROMPTS.values():
+            self.assertIn("Never infer a new path", prompt)
+
     def test_task_profiles_fit_worker_jobs(self) -> None:
         self.assertGreater(TASK_PROFILES["source"].max_rounds, TASK_PROFILES["plan"].max_rounds)
         self.assertEqual(TASK_PROFILES["source"].timeout_seconds, 600)
