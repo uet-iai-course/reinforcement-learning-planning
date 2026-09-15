@@ -4,7 +4,8 @@
 - Bản được rà: [Giao diện tác tử–môi trường](../../lecture-02-giao-dien-tac-tu-moi-truong.html), tại commit `202d9f7`.
 - SHA-256 HTML: `3598b918e6ea362cd60e978015bc6623a6e4a7f8e6d498591f1429370840b1cc`.
 - Phạm vi: **47/47 slide, 7 section chính**, gồm trang mở phần và 5 trang bài tập; đọc mặt slide, ghi chú diễn giả và 11 SVG được tham chiếu. Đã duyệt bản RevealJS trong Chromium ở 1280 × 720 và xem ảnh của từng trang.
-- Đây là báo cáo đề xuất; chưa sửa HTML, SVG hoặc thứ tự bài giảng.
+- Phần 1–7 lưu kết quả rà bản 47 trang trước khi sửa. STT và nhận xét ở các phần này thuộc bản lịch sử; các liên kết và cột vị trí đã cập nhật theo ID trong bản hiện hành.
+- Đợt triển khai 2026-09-16 đã hoàn tất và kiểm định bản 53 trang. Trạng thái từng phát hiện được ghi ở phần 8.
 
 ## 1. Kết luận
 
@@ -40,28 +41,28 @@ Cột “Vị trí” là số ngang.dọc của RevealJS, tính từ 1. Liên k
 | 16 | 4.2 | [C00 — Ba tầng thông tin](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/4/2) | Miền $\mathcal S,\mathcal O,\mathcal X$ và vai trò $S,O,X$. | Giữ. Ví dụ xe trong notes hữu ích; không cần định nghĩa Markov trước ví dụ C02. |
 | 17 | 4.3 | [C02 — Ví dụ: vị trí chưa đủ](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/4/3) | Vị trí chưa đủ khi vận tốc ảnh hưởng bước kế. | Giữ trước C03. F03: dùng ví dụ này để phát biểu tiêu chuẩn bằng lời trước xác suất. |
 | 18 | 4.4 | [C03 — Tính Markov theo trạng thái và hành động](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/4/4) | Lịch sử trạng thái, điều kiện hóa, tính Markov. | F03: thêm câu trực giác và phân biệt hai lịch sử trước công thức. |
-| 19 | 4.5 | [C04 — Quan sát đầy đủ](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/4/5) | Quan sát xác định trạng thái Markov; nhắc MDP. | F04: bỏ so sánh dựa vào thuật ngữ MDP chưa được giới thiệu; chỉ hẹn mô hình đầy đủ. |
-| 20 | 4.6 | [C05 — Quan sát một phần](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/4/6) | Quan sát một phần và tên POMDP. | F04: đi từ hai trạng thái cho cùng ảnh tới tên gọi; nối rõ với hình C04. |
-| 21 | 4.7 | [C06 — Khôi phục thông tin cho quyết định](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/4/7) | Lịch sử → biểu diễn → chính sách; niềm tin. | F05: $\pi(a\mid X_t)$ dùng trước D02; giải thích hoặc chuyển phần niềm tin vào notes. |
-| 22 | 4.8 | [C07 — Kiểm tra khả năng quan sát](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/4/8) | Phân loại theo thông tin tác tử nhận. | F13: tách cảm biến/quan sát khỏi biết mô hình và có bộ nhớ. |
+| 19 | 4.6 | [C04 — Quan sát đầy đủ](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/4/6) | Quan sát xác định trạng thái Markov; nhắc MDP. | F04: bỏ so sánh dựa vào thuật ngữ MDP chưa được giới thiệu; chỉ hẹn mô hình đầy đủ. |
+| 20 | 4.7 | [C05 — Quan sát một phần](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/4/7) | Quan sát một phần và tên POMDP. | F04: đi từ hai trạng thái cho cùng ảnh tới tên gọi; nối rõ với hình C04. |
+| 21 | 4.8 | [C06 — Khôi phục thông tin cho quyết định](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/4/8) | Lịch sử → biểu diễn → chính sách; niềm tin. | F05: $\pi(a\mid X_t)$ dùng trước D02; giải thích hoặc chuyển phần niềm tin vào notes. |
+| 22 | 4.9 | [C07 — Kiểm tra khả năng quan sát](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/4/9) | Phân loại theo thông tin tác tử nhận. | F13: tách cảm biến/quan sát khỏi biết mô hình và có bộ nhớ. |
 | 23 | 5.1 | [D-TITLE — Chính sách, hàm giá trị và mô hình](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/1) | Ba vai trò và hai bài toán dự đoán/điều khiển. | Giữ. Mở phần không cần dạy ngay cả năm tên. |
 | 24 | 5.2 | [D00 — Ba vai trò của tác tử](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/2) | Chính sách, giá trị, mô hình trong SVG. | F06: bỏ mũi tên khiến ba vai trò bị đọc thành chuỗi xử lý; lược ký hiệu giá trị chưa dạy. |
-| 25 | 5.3 | [D02 — Chính sách chọn hành động](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/3) | Chính sách tất định/ngẫu nhiên, tập hành động hợp lệ. | F07: đưa ví dụ hợp lệ trước hai công thức. |
-| 26 | 5.4 | [D03 — Chính sách là một phân phối hợp lệ](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/4) | Chuẩn hóa xác suất; phát hiện tổng 1,2. | F07: giữ bài kiểm tra sau ví dụ hợp lệ; nói rõ đang xét chính sách ngẫu nhiên. |
-| 27 | 5.5 | [D04 — Phần thưởng tích lũy](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/5) | Chính sách Markov, $\gamma$, $T$, $G_t$. | F08, ưu tiên cao nhất: giải nghĩa trọng số và tách đổi giả thiết khỏi định nghĩa tổng thưởng. |
-| 28 | 5.6 | [D05 — Hàm giá trị trạng thái](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/6) | Kỳ vọng có điều kiện và hàm giá trị. | F09: cho người học tính ví dụ D06 trước rồi đặt tên $v_\pi(s)$. |
-| 29 | 5.7 | [D06 — Kỳ vọng gộp nhiều quỹ đạo](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/7) | Hai kết quả với xác suất 0,7 và 0,3. | F09: phép tính đúng; chuyển phần dữ kiện lên trước định nghĩa giá trị, không cần thay số. |
-| 30 | 5.8 | [D07 — Mô hình dự báo một bước](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/8) | Ví dụ mô hình một bước trong mê cung. | F10: thêm quy ước tối thiểu ngay tại ví dụ, giải nghĩa $p$ trước số 1. |
-| 31 | 5.9 | [D07B — Mô hình là phân phối có điều kiện](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/9) | Phân phối chung và mô hình ước lượng $\hat p$. | Giữ sau D07. Đã có miền rời rạc, chuẩn hóa và phân biệt động lực thật/ước lượng. |
-| 32 | 5.10 | [D10 — Mô hình dự báo cục bộ có điều kiện](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/10) | Phạm vi mô hình, sai số, lập kế hoạch. | F11: bỏ đối tượng tranh luận “mô hình hoàn thiện về thế giới” chưa được đặt ra. |
-| 33 | 5.11 | [D08 — Dự đoán và điều khiển](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/11) | Dự đoán giữ chính sách; điều khiển cải thiện chính sách. | Giữ. F11 cần câu nối từ giới hạn mô hình trở lại hai nhiệm vụ này. |
-| 34 | 5.12 | [D09 — Ghép đúng vai trò](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/12) | Ghép phát biểu với chính sách/giá trị/mô hình. | Giữ câu hỏi. F10: ghi rõ tình huống chuyển tiếp ngẫu nhiên khác mê cung tất định. |
+| 25 | 5.4 | [D02 — Chính sách chọn hành động](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/4) | Chính sách tất định/ngẫu nhiên, tập hành động hợp lệ. | F07: đưa ví dụ hợp lệ trước hai công thức. |
+| 26 | 5.5 | [D03 — Chính sách là một phân phối hợp lệ](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/5) | Chuẩn hóa xác suất; phát hiện tổng 1,2. | F07: giữ bài kiểm tra sau ví dụ hợp lệ; nói rõ đang xét chính sách ngẫu nhiên. |
+| 27 | 5.6 | [D04 — Phần thưởng tích lũy](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/6) | Chính sách Markov, $\gamma$, $T$, $G_t$. | F08, ưu tiên cao nhất: giải nghĩa trọng số và tách đổi giả thiết khỏi định nghĩa tổng thưởng. |
+| 28 | 5.10 | [D05 — Hàm giá trị trạng thái](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/10) | Kỳ vọng có điều kiện và hàm giá trị. | F09: cho người học tính ví dụ D06 trước rồi đặt tên $v_\pi(s)$. |
+| 29 | 5.9 | [D06 — Kỳ vọng gộp nhiều quỹ đạo](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/9) | Hai kết quả với xác suất 0,7 và 0,3. | F09: phép tính đúng; chuyển phần dữ kiện lên trước định nghĩa giá trị, không cần thay số. |
+| 30 | 5.11 | [D07 — Mô hình dự báo một bước](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/11) | Ví dụ mô hình một bước trong mê cung. | F10: thêm quy ước tối thiểu ngay tại ví dụ, giải nghĩa $p$ trước số 1. |
+| 31 | 5.12 | [D07B — Mô hình là phân phối có điều kiện](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/12) | Phân phối chung và mô hình ước lượng $\hat p$. | Giữ sau D07. Đã có miền rời rạc, chuẩn hóa và phân biệt động lực thật/ước lượng. |
+| 32 | 5.13 | [D10 — Mô hình dự báo cục bộ có điều kiện](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/13) | Phạm vi mô hình, sai số, lập kế hoạch. | F11: bỏ đối tượng tranh luận “mô hình hoàn thiện về thế giới” chưa được đặt ra. |
+| 33 | 5.14 | [D08 — Dự đoán và điều khiển](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/14) | Dự đoán giữ chính sách; điều khiển cải thiện chính sách. | Giữ. F11 cần câu nối từ giới hạn mô hình trở lại hai nhiệm vụ này. |
+| 34 | 5.15 | [D09 — Ghép đúng vai trò](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/5/15) | Ghép phát biểu với chính sách/giá trị/mô hình. | Giữ câu hỏi. F10: ghi rõ tình huống chuyển tiếp ngẫu nhiên khác mê cung tất định. |
 | 35 | 6.1 | [E-TITLE — Mô hình hóa bài toán mê cung](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/6/1) | Mở ví dụ tổng hợp. | Giữ; lời hứa áp dụng cần được thực hiện đủ ở E05, xem F12. |
 | 36 | 6.2 | [E00 — Mô hình hóa mê cung cố định](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/6/2) | Tọa độ, hành động, thưởng, va tường, kết thúc. | Đã có quy ước trên mặt slide. F12: nối thưởng −1 với mục tiêu ít bước. |
 | 37 | 6.3 | [E02 — Mỗi bước nối đúng chỉ số](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/6/3) | Vận dụng chuyển tiếp và trường hợp va tường. | Giữ. Cùng chỉ số A02, quy ước E00; không có khái niệm mới đột ngột. |
 | 38 | 6.4 | [E03 — Giao diện quan sát đổi kết luận](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/6/4) | So sánh tọa độ với ảnh cục bộ. | Giữ; F13 cần nêu rõ biết trạng thái khác biết bản đồ/chuyển tiếp. |
 | 39 | 6.5 | [E04 — Phân loại có điều kiện](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/6/5) | Lập luận về nhập nhằng quan sát. | F13: kết luận dựa vào cặp trạng thái cùng ảnh; không suy ra chỉ từ thiếu bản đồ/bộ nhớ. |
-| 40 | 6.6 | [E05 — Từ giao diện đến quyết định](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/6/6) | Khép vòng lịch sử–biểu diễn–hành động–phản hồi. | F12: bổ sung một quyết định cụ thể, giá trị và dự báo trong mê cung; sửa “bốn trục”, mục 4. |
+| 40 | 6.8 | [E05 — Từ giao diện đến quyết định](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/6/8) | Khép vòng lịch sử–biểu diễn–hành động–phản hồi. | F12: bổ sung một quyết định cụ thể, giá trị và dự báo trong mê cung; sửa “bốn trục”, mục 4. |
 | 41 | 7.1 | [Z-TITLE — Tổng kết và bài tập](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/7/1) | Mở tổng kết và bài tập. | Giữ; nối đúng từ ví dụ sang tự kiểm tra. |
 | 42 | 7.2 | [Z00 — Tự kiểm tra và đọc tiếp](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/7/2) | Thu hồi mục tiêu và giới thiệu Bài 03. | Giữ. Chuỗi Markov/MRP/Bellman là hẹn học sau, không yêu cầu vận dụng ở đây; xử lý viết tắt theo F04. |
 | 43 | 7.3 | [X01 — Bài tập 1](../../lecture-02-giao-dien-tac-tu-moi-truong.html#/7/3) | So sánh ba dạng học và phản hồi trễ. | Đủ tiên quyết từ B. Giải thích trễ có thể xảy ra, không phải mọi thưởng đều trễ, mục 4. |
@@ -291,3 +292,36 @@ Nhận xét toán “công thức tổng tự giả định $T$ cố định” 
 - Đã phân biệt bằng chứng trực tiếp, nguy cơ hiểu nhầm và ví dụ sửa đề xuất; không coi toàn bộ 13 nhóm là lỗi toán học.
 - Đã kiểm tra nội dung theo no-ai-slop: loại lời dẫn rỗng, giữ thuật ngữ nhất quán, dùng câu sửa cụ thể, không thêm nguồn hoặc kết quả thực nghiệm. Công thức Markdown chỉ dùng ký hiệu đô la.
 - Chỉ tạo tệp báo cáo này; HTML và toàn bộ SVG của bài không thay đổi.
+
+## 8. Triển khai sửa — 2026-09-16
+
+Bản hiện hành giữ 7 mạch; 48 trang chính, 5 trang bài tập. Các chỉnh sửa dưới đây đã có trong HTML/SVG và đã qua rà độc lập, kiểm định cuối. Không còn lỗi chặn bàn giao hoặc nghiêm trọng chưa xử lý.
+
+| Phát hiện | Thay đổi đã triển khai | Bằng chứng trong bản hiện hành |
+|---|---|---|
+| F01 | Ghi tên quan sát, hành động, phần thưởng; nhãn SVG đầy đủ. | A00, A02; agent-environment-loop.svg |
+| F02 | Giải thích chính sách, quỹ đạo và trạng thái tại lần dùng đầu; làm rõ thưởng bằng 0. | B02, B03; delayed-feedback.svg |
+| F03 | Tách phát biểu bằng lời khỏi công thức; phân biệt hai lịch sử và nêu miền rời rạc. | C03, C03F |
+| F04 | Bỏ phản bác MDP chưa được giới thiệu; quan sát một phần bắt đầu từ ví dụ. | C04, C05; Z00 viết đủ tên MDP |
+| F05 | Chọn hành động từ biểu diễn; bỏ công thức chính sách và niềm tin khỏi mặt trang. | C06 |
+| F06 | Ba vai trò song song; mô hình tùy chọn. | D00; rl-components.svg |
+| F07 | Ví dụ chính sách hợp lệ đứng trước công thức. | D02V → D02 → D03 |
+| F08 | Tách chiết khấu, tổng thưởng và giả thiết đánh giá. | D04 → D04F → D05S |
+| F09 | Phép tính hai quỹ đạo đứng trước kỳ vọng định nghĩa giá trị. | D06 → D05 |
+| F10 | Ví dụ mô hình có tọa độ và dữ kiện ngay tại chỗ; bài ghép vai trò nêu ba tình huống độc lập. | D07, D09 |
+| F11 | Chỉ bàn phạm vi, sai số; giải thích lập kế hoạch và nối sang dự đoán/điều khiển. | D10 → D08 |
+| F12 | Một đường bảy bước dùng chung chính sách, mô hình và giá trị; có câu hỏi đổi đường. | E04P, E04V; maze-policy-path.svg |
+| F13 | Cảm biến khác với biết bản đồ và bộ nhớ; hai tọa độ cụ thể cho cùng tín hiệu. | C07, E03, E04 |
+
+Chỉnh nhẹ: P02 phân biệt ba vai trò; B00 không coi mọi thưởng là trễ; X01 có ghi chú giới hạn; X10 giải thích nhiệm vụ tiếp diễn. Nội dung bài tập nguồn được giữ.
+
+### Kết quả kiểm định cuối
+
+- SHA-256 HTML đã rà: `e398e872eda4b0374adcfdf11d27ebaa80d756f24097191849e0efec603f2a70`.
+- Đủ 53 ID duy nhất, 7 section ngoài, 48 trang chính và 5 bài tập; outline/storyboard ánh xạ đầy đủ. Giữ tổng 120 phút và 30 phút chữa bài.
+- Đã có đủ năm góc nhìn độc lập và các lượt rà lại toán, sinh viên, mạch viết, storyboard. Các nhận xét không áp dụng có bằng chứng và quyết định trong review-log.
+- Duyệt 53 trang bằng Chromium tại 1280×720 và 390×844; đã xem ảnh từng trang, kiểm tra lại các trang sửa. Không lỗi JS/HTTP/KaTeX, không tràn nghiêm trọng; đáp án A04 ẩn và hiện đúng khi dùng bàn phím.
+- 12 SVG được tham chiếu, gồm hình đường đi mới; không raster hoặc yêu cầu ngoại lệ. Tài nguyên cốt lõi hoàn toàn cục bộ, không yêu cầu mạng ngoài.
+- Tính lại chiết khấu, kỳ vọng, bài tập và đường mê cung 7/9 bước. Điều kiện tổng hữu hạn hiển thị đầy đủ.
+- Chạy `python3 -m reloadserver 8765` gặp cổng đã được sử dụng; bản đã kiểm tra phục vụ tại [cổng 8766](http://localhost:8766/2627-1/lecture-02-giao-dien-tac-tu-moi-truong.html).
+- Codex Slides dùng để lưu tệp dự án; canvas hiện chưa có slide, không có Browser tích hợp để rà trực quan. Bằng chứng trực quan là RevealJS trong Chromium, không phải canvas Codex Slides.

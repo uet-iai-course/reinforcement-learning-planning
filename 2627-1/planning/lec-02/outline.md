@@ -5,7 +5,7 @@
 - Nguồn chính: `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx`, trang 1–27.
 - Nguồn bài tập: `RL-hk2-2025-2026/resources/hw02.pdf`, Bài 1, 2, 5, 6 và 10.
 - Đối tượng: sinh viên đại học đã học học máy, học sâu và thuật toán.
-- Phần trình chiếu chính: 120 phút, 36 trang; bài tập nằm ở nhánh dọc để dùng trong 30 phút chữa bài.
+- Phần trình chiếu chính: 120 phút, 48 trang chính và 5 trang bài tập; bài tập nằm ở nhánh dọc để dùng trong 30 phút chữa bài.
 - Điểm dừng: giao diện tác tử–môi trường, trạng thái và quan sát, tính Markov, ba vai trò của tác tử và ví dụ mê cung. Định nghĩa đầy đủ MDP bắt đầu ở Bài 03.
 
 Sau bài học, sinh viên có thể:
@@ -50,21 +50,21 @@ Trang bìa P00 mở mạch định hướng. Các trang A-TITLE, B-TITLE, C-TITL
 | 12–13 | bỏ | — | Phần thảo luận AGI và tranh luận ngoài lược đồ không còn trên slide; không gán vào C06/C07. |
 | 14–15 | tách, sửa | A00, A02–A04 | Sửa vai trò và chỉ số $R_{t+1}$; đáp án A04 hiện bằng fragment. |
 | 16 | sửa | C00 | Phân biệt $S_t,O_t,X_t$ và miền tương ứng. |
-| 17 | tách, sửa | C02, C03 | Đưa ví dụ xe trước công thức; tiêu đề C03 là "Tính Markov theo trạng thái và hành động"; dùng $\mathcal H_t^S=h_t^S$ kết thúc ở $S_t=s$ và chỉ điều kiện trên biến cố có xác suất dương; notes phân biệt lịch sử trạng thái với lịch sử quan sát. |
+| 17 | tách, sửa | C02, C03, C03F | Đưa ví dụ xe trước công thức; C03 giải thích bằng lời, C03F viết điều kiện; dùng $\mathcal H_t^S=h_t^S$ kết thúc ở $S_t=s$ và chỉ điều kiện trên biến cố có xác suất dương; notes phân biệt lịch sử trạng thái với lịch sử quan sát. |
 | 18 | sửa | C04 | Quan sát đầy đủ không đồng nhất với định nghĩa MDP. |
-| 19 | tách, sửa | C05, C06 | Giới thiệu đầy đủ tên POMDP trước khi dùng lịch sử/niềm tin. |
-| 21 | tách | D02, D03 | Chính sách theo $X_t$ tổng quát; định nghĩa $\mathcal A(x)$ và chuẩn hóa. |
-| 22 | tách, thêm | D04–D06 | Chốt $X_t=S_t$, chính sách Markov $\pi(a\mid s)$; đặt quỹ đạo thưởng cụ thể trước công thức $G_t$ và $v_\pi$; kiểm tra trực giác $\gamma=0,0{,}5,1$; notes nêu trường hợp tiếp diễn với tổng vô hạn, $\gamma<1$ dưới giả thiết phần thưởng bị chặn. |
+| 19 | tách, sửa | C05, C06 | Dùng ví dụ nhập nhằng trước khái niệm quan sát một phần và cách bổ sung lịch sử. |
+| 21 | tách | D02V, D02, D03 | Chính sách theo $X_t$ tổng quát; định nghĩa $\mathcal A(x)$ và chuẩn hóa. |
+| 22 | tách, thêm | D04, D04F, D05S, D06, D05 | Chốt $X_t=S_t$, chính sách Markov $\pi(a\mid s)$; đặt quỹ đạo thưởng cụ thể trước công thức $G_t$ và $v_\pi$; kiểm tra trực giác $\gamma=0,0{,}5,1$; notes nêu trường hợp tiếp diễn với tổng vô hạn, $\gamma<1$ dưới giả thiết phần thưởng bị chặn. |
 | 23 | tách, sửa | D07, D07B | D07 dùng ví dụ $1/0$; D07B định nghĩa phân phối chuẩn hóa, $\mathcal R\subset\mathbb R$ và phân biệt $p$ với mô hình ước lượng $\hat p$. Tách để công thức không bị cắt ngang. |
 | 24 | sửa, tách | D08, D09 | Bỏ $q_\pi$ chưa định nghĩa; phân biệt dự đoán với điều khiển; phát biểu giá trị $-7$ ghi $\gamma=1$ và nhiệm vụ kết thúc sau đúng 7 bước. |
-| 25–26 | gộp, sửa | E00, E02 | Cố định bản đồ, tọa độ, tập hành động, thưởng khi vào đích và quy tắc va tường. |
+| 25–26 | gộp, sửa | E00, E02, E04P, E04V | Cố định bản đồ, tọa độ, tập hành động, thưởng khi vào đích và quy tắc va tường. |
 | 27 | sửa, tách | C07, E03–E04 | Tách tính Markov khỏi việc tác tử biết mô hình; phân loại theo giao diện quan sát. |
 | hw02 Bài 1 | giữ nguyên văn | X01 | Không thay nhiệm vụ cốt lõi. |
 | hw02 Bài 2 | giữ nguyên văn | X02 | Không thay nhiệm vụ cốt lõi. |
 | hw02 Bài 5 | giữ nhiệm vụ | X05 | Bài tập chính; nằm ở nhánh dọc, ngoài 120 phút. |
 | hw02 Bài 6 | giữ nhiệm vụ | X06 | Bài tập chính; nằm ở nhánh dọc, ngoài 120 phút. |
 | hw02 Bài 10 | giữ nhiệm vụ | X10 | Bài tập mở rộng; hợp lệ ngay sau topic 09, không cần $q_\pi$ hay Bellman. |
-| trang 13 | chuyển, trả lời | D10 | Câu hỏi "mô hình thế giới" được trả lời sau khi định nghĩa mô hình ở D07; ghi rõ giới hạn dự báo cục bộ, sai số $\hat p$ và không suy diễn AGI. |
+| trang 13, 23 | sửa | D10 | Bỏ tranh luận ngoài mạch; xét phạm vi và sai số sau định nghĩa mô hình, giải thích lập kế hoạch. |
 
 ## Tài sản SVG
 
@@ -82,6 +82,8 @@ Trang bìa P00 mở mạch định hướng. Các trang A-TITLE, B-TITLE, C-TITL
 | `maze-mdp.svg` | Mê cung cố định và quy ước thưởng. |
 | `maze-observations.svg` | Tọa độ so với ảnh cục bộ. |
 
+| `maze-policy-path.svg` | Đường đi bảy bước nối chính sách, mô hình và giá trị. |
+
 ## Thuật ngữ và ký hiệu
 
 | Ký hiệu/thuật ngữ | Nghĩa và quy ước |
@@ -96,11 +98,12 @@ Trang bìa P00 mở mạch định hướng. Các trang A-TITLE, B-TITLE, C-TITL
 | $\mathcal H_t^S$ | Lịch sử trạng thái đến $S_t$; dùng riêng trong phát biểu Markov. |
 | $\pi(a\mid x)$ | Xác suất chọn $a\in\mathcal A(x)$ khi $X_t=x$. |
 | $G_t$ | Phần thưởng tích lũy có hệ số chiết khấu từ $R_{t+1}$. |
-| $\gamma\in[0,1]$ | Hệ số giảm trọng số của phần thưởng ở xa. |
-| $v_\pi(s)$ | Phần thưởng tích lũy kỳ vọng từ $s$ dưới chính sách Markov $\pi(a\mid s)$ trong phần D04–D09, nơi giả sử $X_t=S_t$. |
+| $\gamma\in[0,1]$ | Hệ số chiết khấu: giảm trọng số của phần thưởng ở xa. |
+| $T$ | Thời điểm chạm trạng thái kết thúc của từng quỹ đạo; có thể khác nhau giữa các quỹ đạo. |
+| $v_\pi(s)$ | Phần thưởng tích lũy kỳ vọng từ $s$ dưới chính sách Markov $\pi(a\mid s)$ từ D05S trở đi trong phần đánh giá, nơi giả sử $X_t=S_t$. |
 | $p(s',r\mid s,a)$ | Phân phối chung của trạng thái kế tiếp và phần thưởng trong trường hợp rời rạc; là động lực thật của môi trường, khác với mô hình ước lượng $\hat p$ của tác tử. |
 | POMDP | Quá trình quyết định Markov quan sát một phần. |
-| mô hình dự báo cục bộ có điều kiện | Mô hình của tác tử dự báo với từng cặp $(s,a)$: phân phối trạng thái và phần thưởng kế tiếp; khác "mô hình hoàn thiện về thế giới" ở phạm vi và độ tin cậy (xem D10). |
+| mô hình dự báo cục bộ có điều kiện | Mô hình của tác tử dự báo với từng cặp $(s,a)$: phân phối trạng thái và phần thưởng kế tiếp; có phạm vi và sai số riêng; dùng để dự báo khi lập kế hoạch (D10). |
 | dự đoán | Đánh giá một chính sách cố định. |
 | điều khiển | Tìm hoặc cải thiện chính sách. |
 
@@ -110,11 +113,11 @@ Trang bìa P00 mở mạch định hướng. Các trang A-TITLE, B-TITLE, C-TITL
 |---|---|
 | `lec-02-topic-01` | B00, B02, B03, B04, B05 |
 | `lec-02-topic-02` | A00, A02, A03, A04 |
-| `lec-02-topic-03` | C00, C02, C03 |
+| `lec-02-topic-03` | C00, C02, C03, C03F |
 | `lec-02-topic-04` | C04, C05, C06, C07 |
 | `lec-02-topic-05` | D00 |
-| `lec-02-topic-06` | D02, D03 |
-| `lec-02-topic-07` | D04, D05, D06, D07, D07B |
+| `lec-02-topic-06` | D02V, D02, D03 |
+| `lec-02-topic-07` | D04, D04F, D05S, D06, D05, D07, D07B |
 | `lec-02-topic-08` | D08, D09 |
 | `lec-02-topic-09` | E00, E02, E03, E04, E05 |
 | `lec-02-topic-10` | A03, C02, C03 (cầu nối lịch sử → trạng thái Markov; không tạo C10) |
@@ -139,3 +142,7 @@ Bài 03 phân biệt chuỗi Markov, quá trình phần thưởng Markov và MDP
 ## Điều chỉnh trang mở phần — 2026-09-15
 
 Sáu trang tiêu đề mới là phần biên tập theo yêu cầu người dùng, không bổ sung kiến thức hoặc hình nguồn. Ánh xạ: A-TITLE → A00–A04; B-TITLE → B00–B05; C-TITLE → C00–C07; D-TITLE → D00–D09 (gồm D07B, D10); E-TITLE → E00–E05; Z-TITLE → Z00 và nhánh bài tập. Giữ nguyên ánh xạ nguồn và thứ tự 41 trang đã có; chỉ P02 thay bản đồ bốn trục bằng danh sách bảy mạch.
+
+## Cập nhật sau kiểm định mạch — 2026-09-16
+
+Bản hiện hành có 53 trang trong 7 mạch. Thứ tự chi tiết và lý do thêm/tách được ghi trong storyboard. D04 giải thích chiết khấu; D04F định nghĩa tổng; D05S nêu giả thiết; D06 tính ví dụ; D05 định nghĩa giá trị. C03F giới hạn công thức ở biến rời rạc. E04P–E04V dùng lại cùng lưới, không đưa thêm dữ liệu thực nghiệm hoặc code demo.

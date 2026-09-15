@@ -750,3 +750,269 @@ Không có phát hiện lỗi nào cần sửa; không nhận xét về số th�
 - index.html đã có liên kết đúng tới bài, không có liên kết planning; không cần sửa chỉ mục vì tên bài và đường dẫn không đổi. PDF có sẵn không được xuất lại trong yêu cầu chỉnh HTML này.
 - Codex Slides MCP khả dụng; dự án 20260824132931-chuy-n-lecture-2-markov-decision-process-jnbq hiện có 0 trang dựng trong canvas. Bản HTML cuối đã lưu thành uploaded/lecture-02-giao-dien-tac-tu-moi-truong-3.html và đối chiếu byte với kho. Không có công cụ Browser nhúng trong phiên này, nên không tuyên bố đã rà trực quan bằng Codex Slides; rà trực quan dùng RevealJS cục bộ.
 - Không còn lỗi chặn bàn giao hoặc nghiêm trọng trong phạm vi thay đổi; có đủ năm báo cáo độc lập và báo cáo rà lại mạch viết.
+
+## Sửa theo concept-flow-audit — 2026-09-16 (đã hoàn tất; diễn biến bên dưới theo thời điểm)
+
+- Điều phối viên chấp nhận kế hoạch reader trong `/tmp/lec02-fix-plan.json`. Worker writer triển khai cụm D04–D06; điều phối viên kiểm tra và tích hợp các cụm còn lại. Không có hai worker ghi đồng thời.
+- Giữ 7 mạch, bổ sung 6 trang để đạt 53 trang; đưa D06 trước D05. Thêm SVG đường đi bảy bước. Lý do cụ thể theo F01–F13 trong concept-flow-audit và storyboard.
+- Năm reviewer độc lập đã được gọi với bằng chứng bản 53 trang, `--json`, `--no-tools`, giới hạn 120 giây mỗi yêu cầu. RL và toán học hoàn tất; sinh viên, sư phạm, mạch viết timeout ở đúng giới hạn 120 giây. Ba lượt sau được gọi lại một lần với nội dung gọn hơn, bỏ nguồn lặp và hạn chế ba phát hiện. Không tăng timeout hoặc chuyển ngầm mô hình.
+- Kiểm tra Chromium lượt đầu: 53 trang ở 1280×720 và 390×844; không lỗi JavaScript, HTTP hay KaTeX; bàn phím ngang/dọc hoạt động. Rà ảnh vẫn phát hiện điều kiện `t<T` bị phân tích thành HTML và ký hiệu `(s)` còn sót trong SVG ba vai trò; cần sửa và chạy lại trước bàn giao.
+- URL đang kiểm tra: `http://localhost:8766/2627-1/lecture-02-giao-dien-tac-tu-moi-truong.html`. Cổng 8765 đã do dự án khác sử dụng; không dừng máy chủ của dự án khác.
+
+### Báo cáo độc lập sau sửa: Chuyên gia Học tăng cường
+
+Runtime: requested_model `deepseek/deepseek-v4-flash-0731`, observed_model `deepseek/deepseek-v4-flash-0731`, provider `OpenRouter`. Báo cáo chỉ đọc, chưa phải quyết định cuối của điều phối viên. Các mức “Thấp” của worker được quy về “nhẹ”.
+
+## Báo cáo review độc lập — Bài 02 Học tăng cường
+
+**Tổng quan:** Bản chỉnh sửa có cấu trúc mạch lạc, phân biệt rõ giới thiệu tên với vận dụng. Phát hiện 7 vấn đề còn lại, xếp theo mức độ.
+
+---
+
+**1. [Trung bình] Slide D04 — Thiếu tiên quyết về ký hiệu $G_t$ trước khi dùng**
+- **Bằng chứng:** "Ví dụ: quỹ đạo còn hai chuyển tiếp với $R_{t+1}=R_{t+2}=-1$, tổng chiết khấu là $-1-\gamma$" — dùng $G_t$ ngầm nhưng $G_t$ chỉ được định nghĩa ở D04F (slide sau).
+- **Điểm đứt:** Sinh viên chưa biết $G_t$ là gì khi gặp ví dụ.
+- **Hướng sửa:** Nói rõ "tổng chiết khấu (sẽ ký hiệu là $G_t$)" hoặc đảo thứ tự D04F lên trước D04.
+- **Độ chắc chắn:** Cao.
+
+**2. [Trung bình] Slide D05S — Giả thiết "động lực không đổi theo thời gian" chưa được giới thiệu trước đó**
+- **Bằng chứng:** "Động lực không đổi theo thời gian" — khái niệm "động lực" (dynamics) chưa được định nghĩa tường minh trước D07B.
+- **Điểm đứt:** Dùng thuật ngữ chưa định nghĩa trong phần giả thiết.
+- **Hướng sửa:** Thêm chú thích ngắn "động lực = phân phối chuyển tiếp, sẽ định nghĩa ở D07B" hoặc chuyển giả thiết này xuống sau D07B.
+- **Độ chắc chắn:** Trung bình — có thể chấp nhận như thuật ngữ trực quan.
+
+**3. [Trung bình] Slide D04F — Công thức tổng rỗng $G_T=0$ mâu thuẫn trực giác "phần thưởng cuối"**
+- **Bằng chứng:** "$G_T=0$ theo tổng rỗng" — nhưng E00 nói "Quỹ đạo kết thúc khi vào đích" và E04V tính $G_0=-7$ gồm cả bước vào đích.
+- **Điểm đứt:** Sinh viên có thể thắc mắc: nếu $G_T=0$ thì phần thưởng bước vào đích tính ở đâu? (Câu trả lời: $R_T$ đã tính trong $G_{T-1}$, nhưng chưa nói rõ).
+- **Hướng sửa:** Thêm ghi chú: "$R_T$ được tính trong $G_{T-1}$; $G_T=0$ vì không còn chuyển tiếp nào sau khi kết thúc."
+- **Độ chắc chắn:** Cao.
+
+**4. [Thấp–trung bình] Slide C03F — Ký hiệu $h_t^S$ viết thường không được giải thích**
+- **Bằng chứng:** "Với mọi $h_t^S=(s_0,a_0,r_1,\ldots,s)$" — dùng chữ thường cho giá trị cụ thể nhưng không nói rõ quy ước chữ thường = giá trị, chữ hoa = biến ngẫu nhiên.
+- **Điểm đứt:** Có thể gây nhầm lẫn với $\mathcal H_t^S$ ở dòng trên.
+- **Hướng sửa:** Thêm một câu: "chữ thường chỉ một giá trị cụ thể của biến ngẫu nhiên tương ứng."
+- **Độ chắc chắn:** Trung bình — quy ước toán học phổ biến nhưng chưa nêu.
+
+**5. [Thấp] Slide D09 — Phát biểu (2) dùng $v_\pi(s)=-7$ nhưng chưa nói rõ đây là ví dụ khớp với E04V**
+- **Bằng chứng:** "Dưới chính sách $\pi$, với $\gamma=1$ và đúng 7 bước thưởng $-1$, $v_\pi(s)=-7$" — trùng số liệu E04V nhưng không tham chiếu.
+- **Điểm đứt:** Không phải lỗi sai, chỉ thiếu liên kết giúp sinh viên nhận ra tính nhất quán.
+- **Hướng sửa:** Thêm "(khớp ví dụ mê cung ở E04V)".
+- **Độ chắc chắn:** Cao về sự trùng khớp; mức độ ảnh hưởng thấp.
+
+**6. [Thấp] Slide E04P — "Chính sách chọn Đông tới cột 6, rồi Bắc" chưa định nghĩa chính sách cho trạng thái ngoài đường**
+- **Bằng chứng:** Notes nói "Có thể chọn tùy ý hành động hợp lệ ở trạng thái ngoài đường đi" — nhưng visible không nói điều này.
+- **Điểm đứt:** Sinh viên nhìn slide có thể nghĩ chính sách chỉ định nghĩa trên 7 trạng thái của đường đi, trong khi chính sách phải xác định cho mọi $s\in\mathcal S$.
+- **Hướng sửa:** Thêm vào visible: "Tại trạng thái ngoài đường, chọn tùy ý hành động hợp lệ; không ảnh hưởng kết quả từ (2,1)."
+- **Độ chắc chắn:** Cao — chỉ nằm trong notes, cần đưa lên visible.
+
+**7. [Thấp] Slide B04 — "Tổng phần thưởng sẽ được hình thức hóa… ở phần hàm giá trị" nhưng thứ tự thực tế là D04F trước D05**
+- **Bằng chứng:** "Tổng phần thưởng sẽ được hình thức hóa thành phần thưởng tích lũy ở phần hàm giá trị" — D04F nằm trong phần D (chính sách, hàm giá trị, mô hình) nhưng trước D05 (hàm giá trị).
+- **Điểm đứt:** Chỉ là lệch nhẹ về mô tả vị trí; không ảnh hưởng nội dung.
+- **Hướng sửa:** Đổi thành "ở phần chính sách, hàm giá trị và mô hình".
+- **Độ chắc chắn:** Cao về vị trí thực tế; mức độ ảnh hưởng rất thấp.
+
+---
+
+**Ghi chú cần xác minh:** (1) Việc dùng $G_t$ ở D04 trước khi định nghĩa ở D04F — cần kiểm tra thứ tự hiển thị thực tế khi trình chiếu; (2) Giả thiết "động lực không đổi" — cần xác minh thuật ngữ "động lực" đã xuất hiện ở slide nào trước D05S trong bản trình chiếu thực tế.
+
+### Báo cáo độc lập sau sửa: Toán học và thuật toán
+
+Runtime: requested_model `deepseek/deepseek-v4-flash-0731`, observed_model `deepseek/deepseek-v4-flash-0731`, provider `OpenRouter`. Báo cáo chỉ đọc, chưa phải quyết định cuối của điều phối viên. Các mức “Thấp” của worker được quy về “nhẹ”.
+
+## Báo cáo rà soát độc lập
+
+**Tổng quan:** Bản chỉnh sửa nhìn chung mạch lạc, trình tự hợp lý. Phát hiện 7 vấn đề sau:
+
+---
+
+**1. [Trung bình] Slide C03 (n=18) – Ký hiệu H_t^S xuất hiện trước khi định nghĩa rõ ràng**
+- **Bằng chứng:** "Lịch sử $H_t$ chứa quan sát... Để phát biểu tính Markov, dùng lịch sử trạng thái: $\mathcal H_t^S=(S_0,A_0,R_1,\ldots,S_t)$."
+- **Vấn đề:** Ký hiệu $\mathcal H_t^S$ được giới thiệu nhưng chưa giải thích tại sao cần lịch sử trạng thái riêng, khác $H_t$ đã có từ phần A. Sinh viên có thể nhầm lẫn.
+- **Hướng sửa:** Thêm một câu: "Khác với $H_t$ chứa quan sát, $\mathcal H_t^S$ dùng trạng thái thật để phát biểu điều kiện dự báo."
+- **Độ chắc chắn:** Cao.
+
+---
+
+**2. [Trung bình] Slide D04F (n=30) – Công thức tổng rỗng G_T=0 chưa được giải thích**
+- **Bằng chứng:** "Tại thời điểm kết thúc, $G_T=0$ theo tổng rỗng."
+- **Vấn đề:** Khái niệm "tổng rỗng" (empty sum) có thể chưa quen thuộc với sinh viên chưa học giải tích chuỗi.
+- **Hướng sửa:** Thêm chú thích ngắn: "tổng không có số hạng nào, quy ước bằng 0."
+- **Độ chắc chắn:** Trung bình – có thể chấp nhận nếu coi là kiến thức nền.
+
+---
+
+**3. [Thấp] Slide D05S (n=31) – Giả thiết "phần thưởng bị chặn" chỉ nêu trong notes**
+- **Bằng chứng:** Notes: "Phần thưởng bị chặn và thời gian kết thúc có kỳ vọng hữu hạn là giả thiết bảo đảm giá trị hữu hạn kể cả khi $\gamma=1$."
+- **Vấn đề:** Sinh viên chỉ thấy slide không biết vì sao $v_\pi$ hữu hạn khi $\gamma=1$; giả thiết quan trọng này nằm ẩn.
+- **Hướng sửa:** Thêm một dòng trên slide: "Giả thiết: phần thưởng bị chặn, thời gian kết thúc hữu hạn."
+- **Độ chắc chắn:** Cao.
+
+---
+
+**4. [Thấp] Slide D07 (n=34) – Ký hiệu $\mathsf E$ chưa được giới thiệu trước đó**
+- **Bằng chứng:** "$p((3,1),-1\mid(2,1),\mathsf E)=1$" – $\mathsf E$ là hành động Đông, nhưng slide E00 (n=40) mới định nghĩa $\mathcal A=\{\mathsf N,\mathsf E,\mathsf S,\mathsf W\}$.
+- **Vấn đề:** Người đọc chưa biết $\mathsf E$ nghĩa là gì khi gặp ở slide 34.
+- **Hướng sửa:** Thêm chú thích "$\mathsf E$ = Đông" hoặc dời ví dụ này sau E00.
+- **Độ chắc chắn:** Cao – đây là điểm đứt trình tự thực sự.
+
+---
+
+**5. [Thấp] Slide D09 (n=38) – Phát biểu (2) dùng $\gamma=1$ nhưng chưa nói rõ giả thiết hội tụ**
+- **Bằng chứng:** "Dưới chính sách $\pi$, với $\gamma=1$ và đúng 7 bước thưởng $-1$, $v_\pi(s)=-7$."
+- **Vấn đề:** Nếu sinh viên nhớ D05S yêu cầu giả thiết, họ có thể thắc mắc vì sao $\gamma=1$ vẫn hợp lệ ở đây.
+- **Hướng sửa:** Thêm "với giả thiết ở trang trước" vào phát biểu.
+- **Độ chắc chắn:** Trung bình.
+
+---
+
+**6. [Thấp] Slide E04V (n=45) – Câu hỏi đáp án "âm chín" chưa được giải thích trên slide**
+- **Bằng chứng:** Notes: "Đáp án: âm chín... đi Tây rồi Đông trước khi theo đường cũ."
+- **Vấn đề:** Sinh viên tự kiểm tra không thấy lời giải; nếu sai logic (ví dụ đi Tây rồi Đông có thể không quay lại đúng $(2,1)$) sẽ không được sửa.
+- **Hướng sửa:** Có thể chấp nhận vì là câu hỏi tự kiểm tra; chỉ cần xác minh đường đi Tây–Đông không va tường.
+- **Độ chắc chắn:** Cần xác minh – chưa kiểm tra được bản đồ đầy đủ.
+
+---
+
+**7. [Thấp] Slide E05 (n=46) – Sơ đồ vòng lặp thiếu $S_t$ trong chuỗi**
+- **Bằng chứng:** "Lịch sử $H_t$ → Biểu diễn $X_t$ → Chính sách $\pi\to A_t$ → Phản hồi $R_{t+1},O_{t+1}$"
+- **Vấn đề:** Chuỗi không hiển thị trạng thái $S_t$ mặc dù phần C nhấn mạnh vai trò của nó; có thể gây hiểu nhầm rằng $H_t$ là điểm khởi đầu duy nhất.
+- **Hướng sửa:** Thêm $S_t$ vào đầu chuỗi hoặc chú thích "$H_t$ bao gồm $O_t$ và lịch sử".
+- **Độ chắc chắn:** Trung bình – có thể là lựa chọn thiết kế có chủ đích.
+
+---
+
+**Kết luận:** Không có lỗi toán học nghiêm trọng. Các vấn đề chủ yếu về trình tự giới thiệu ký hiệu và giả thiết ẩn trong notes. Điểm cần ưu tiên sửa: #1 (C03), #4 (D07), #3 (D05S).
+
+### Báo cáo độc lập sau sửa: Phản biện giảng dạy
+
+Runtime: requested_model `deepseek/deepseek-v4-flash-0731`, observed_model `deepseek/deepseek-v4-flash-0731`, provider `OpenRouter`. Báo cáo chỉ đọc, chưa phải quyết định cuối của điều phối viên. Các mức “Thấp” của worker được quy về “nhẹ”.
+
+## Báo cáo phản biện giảng dạy
+
+**Vấn đề 1 — Mức độ: Trung bình (ảnh hưởng tính đúng)**
+- **Slide:** D04F (n=30)
+- **Bằng chứng:** Công thức `G_t = Σ_{k=0}^{T-t-1} γ^k R_{t+k+1}` với điều kiện "Với t < T" hiển thị trên slide.
+- **Vấn đề:** Điều kiện `t < T` không được nêu rõ ràng trong phần visible — chỉ xuất hiện trong notes. Sinh viên thấy công thức nhưng không thấy ràng buộc về miền xác định của `t`, dẫn đến nhầm lẫn khi `t = T` (mặc dù có ghi "G_T=0 theo tổng rỗng").
+- **Hướng sửa:** Thêm điều kiện "Với t < T" vào phần visible ngay trước công thức.
+- **Độ chắc chắn:** Cao.
+
+**Vấn đề 2 — Mức độ: Thấp (điểm đứt trình tự)**
+- **Slide:** D05S (n=31) → D05 (n=33)
+- **Bằng chứng:** D05S nêu giả thiết "Quan sát đầy đủ: X_t=S_t" và "Chính sách Markov". D05 định nghĩa `v_π(s) = E_π[G_t | S_t=s]`.
+- **Vấn đề:** Giữa D05S và D05 có slide D06 (Kỳ vọng gộp nhiều quỹ đạo) chèn vào, làm đứt mạch: giả thiết → định nghĩa. Trình tự hiện tại là D05S → D06 → D05, khiến sinh viên thấy ví dụ số trước khi định nghĩa hàm giá trị.
+- **Hướng sửa:** Đổi thứ tự thành D05S → D05 → D06, hoặc dời D06 xuống sau D05.
+- **Độ chắc chắn:** Trung bình — cần xác minh ý đồ thiết kế.
+
+**Vấn đề 3 — Mức độ: Thấp (độ rõ, chỉ trong notes)**
+- **Slide:** E04 (n=43)
+- **Bằng chứng:** Notes ghi "Nếu biết vị trí ban đầu và các hành động đã thực hiện trong động lực tất định, lịch sử có thể giúp theo dõi vị trí."
+- **Vấn đề:** Notes khẳng định lịch sử "có thể giúp" nhưng không nêu điều kiện đủ: cần biết bản đồ (mô hình) để suy ra vị trí từ hành động. Thiếu tiên quyết này, sinh viên có thể hiểu sai rằng lịch sử tự thân đủ để khôi phục vị trí.
+- **Hướng sửa:** Bổ sung vào notes: "…với điều kiện biết bản đồ và vị trí ban đầu."
+- **Độ chắc chắn:** Cao.
+
+### Báo cáo độc lập sau sửa: Kết nối và mạch viết
+
+Runtime: requested_model `z-ai/glm-5.3-flash`, observed_model `z-ai/glm-5.3-flash`, provider `OpenRouter`. Báo cáo chỉ đọc, chưa phải quyết định cuối của điều phối viên. Các mức “Thấp” của worker được quy về “nhẹ”.
+
+## Báo cáo review độc lập — Lecture 02 (53 slide, 7 section)
+
+Tổng thể: mạch P00→P02→A…→Z nối rõ, các trang nối (A-TITLE, B-TITLE, C-TITLE, E-TITLE, Z00) đều có câu chuyển; phép so sánh dưới đây chọn 3 vấn đề còn ảnh hưởng thực sự.
+
+**1. (Nghiêm trọng — độ chắc chắn cao) Slide 30 (D04F, "Phần thưởng tích lũy"): công thức bị đứt trên mặt slide.**
+- Trích visible: "Với $t $$G_t=\sum_{k=0}^{T-t-1}\gamma^k R_{t+k+1}.$$"
+- Điểm đứt: mệnh đề điều kiện "Với $t…" bị cắt giữa chừng (thiếu "$< T$" và đóng math), sinh viên nhìn thấy một câu dở dang ngay trước công thức trung tâm của phần hàm giá trị; đây cũng là điểm B04 (slide 13) hứa "sẽ được hình thức hóa thành phần thưởng tích lũy ở phần hàm giá trị" — lời hứa đó được thu hồi tại slide lỗi này.
+- Hướng sửa: khôi phục thành "Với $t < T$:" trước công thức $G_t$.
+
+**2. (Trung bình — chắc chắn cao) Slide 10 (B00, "Ba nguồn tín hiệu học"): tiêu đề hứa ba nguồn, mặt slide chỉ nêu một nguồn.**
+- Trích visible: toàn bộ nội dung chỉ là "Học tăng cường dùng phần thưởng để đánh giá hậu quả của chuỗi hành động." Ba nguồn (có giám sát / không giám sát / tăng cường) chỉ nằm ở notes.
+- Điểm đứt: B-TITLE (slide 9) hứa "So sánh ba nguồn tín hiệu", nhưng sinh viên không thấy gì để so sánh; B05 (slide 14) yêu cầu phân loại có giám sát vs tăng cường mà hai khái niệm chưa từng hiện trên slide.
+- Hướng sửa: đưa bảng/tóm tắt ba nguồn vào mặt slide (đối chiếu tín hiệu và cách tác động lên dữ liệu).
+
+**3. (Nhẹ — cần xác minh ý đồ) Slide 28 (D03): hành động "nghĩ" xuất hiện không được chuẩn bị.**
+- Trích visible D03: "gán xác suất $0{,}5$ cho 'nhảy', $0{,}5$ cho 'nghĩ', và $0{,}2$ cho 'đứng'"; D02V (slide 26) chỉ chuẩn bị tập hai hành động "nhảy" và "đứng".
+- Điểm đứt: ví dụ nền dùng "tại cùng biểu diễn $x$, có hai hành động hợp lệ", rồi câu hỏi thêm hành động thứ ba ngoài ví dụ; trọng tâm câu hỏi là tổng $1{,}2$, nhưng "nghĩ" chưa được khai báo trong $\mathcal A(x)$ có thể gây nhiễu (notes phải bổ sung "kiểm tra từng hành động có thuộc $\mathcal A(x)$").
+- Hướng sửa: nêu rõ trong đề câu hỏi rằng tập hành động gồm cả "nghĩ", hoặc giữ đúng hai hành động của D02V.
+
+Không phát hiện lỗi thứ tự section hay kết luận không thu hồi khác trong phạm vi bằng chứng; chưa kiểm chứng rendered HTML, không tự nhận đã duyệt trình duyệt.
+
+### Quyết định điều phối sau bốn báo cáo
+
+- Nhận lỗi D04F từ vai mạch viết/sư phạm: bằng chứng render xác nhận HTML nuốt điều kiện; phải sửa trước bàn giao. Đồng thời giải thích tổng rỗng và thưởng bước vào đích.
+- Nhận góp ý D05S: diễn đạt quy luật chuyển trạng thái/sinh thưởng bằng lời và đưa giả thiết hữu hạn lên mặt trang. Nhận góp ý D07 giải nghĩa E là Đông, D03 làm rõ tập hành động, E04 bổ sung điều kiện biết bản đồ vào ghi chú.
+- Không đảo D06 xuống sau D05: mục tiêu F09 là phép tính ví dụ chuẩn bị cho định nghĩa kỳ vọng. D06 có đủ xác suất và tổng thưởng, không dùng ký hiệu giá trị chưa được định nghĩa.
+- Không coi D04 thiếu ký hiệu G là lỗi: mặt trang cố ý dùng tổng cụ thể trước khi đặt tên đại lượng ở D04F.
+- Không nhận kết luận B00 chỉ hiển thị một tín hiệu: ba nguồn nằm trong SVG, đã thấy trên ảnh Chromium. Lượt rút gọn bỏ phần chữ SVG làm reviewer thiếu bằng chứng; cần cung cấp lại khi rà mạch cuối.
+- C03 đã phân biệt lịch sử quan sát và lịch sử trạng thái bằng lời trước công thức; C03F có h cụ thể, bổ sung quy ước chữ thường trong ghi chú là đủ.
+- D09 đã nêu đúng 7 bước hữu hạn, không cần thêm điều kiện hội tụ; không đưa mã E04V lên mặt trang. E05 là luồng thông tin của tác tử nên không thêm trạng thái ẩn S vào dữ liệu nó mặc nhiên nhận.
+- E04P giới hạn điểm xuất phát ngay trên mặt trang; ghi chú đã định nghĩa cách mở rộng chính sách ngoài đường đi. Không cần làm quá tải mặt trang bằng quy tắc không ảnh hưởng phép tính.
+- Tự kiểm bổ sung: lời giải đi Tây rồi Đông trước khi theo đường cũ quay lại cùng trạng thái nhưng đổi hành động, không phù hợp chính sách tất định dừng. Thay bằng đường 9 bước không lặp trạng thái: Tây một bước, Bắc ba bước, Đông năm bước.
+
+### Báo cáo góc nhìn sinh viên — gói information
+
+Runtime: requested_model `z-ai/glm-5.3-flash`, observed_model `z-ai/glm-5.3-flash`, provider `OpenRouter`.
+
+**Báo cáo review gói slide Bài 02 – Học tăng cường**
+
+**Vấn đề 1 — Trung bình**
+- Trang: C03F
+- Vấn đề: Ký hiệu lịch sử trạng thái không nhất quán, gây khó đọc công thức Markov cho người mới.
+- Bằng chứng: Slide định nghĩa $\mathcal H_t^S=(S_0,A_0,R_1,\ldots,S_t)$ (hết thúc bằng $S_t$), nhưng khi viết giá trị cụ thể lại là $h_t^S=(s_0,a_0,r_1,\ldots,s)$ — phần tử cuối là $s$ chung chung, không khớp mẫu chuỗi (theo mẫu phải là $s_t$). Người học phải tự suy rằng $s$ chính là giá trị của $S_t$ trong vế điều kiện $\Pr(\cdot\mid S_t=s,A_t=a)$.
+- Đề xuất: Viết $h_t^S=(s_0,a_0,r_1,\ldots,s_t)$ và điều kiện $\Pr(\cdot\mid S_t=s_t,A_t=a)$, hoặc chú thích một câu "$s$ là giá trị của $S_t$".
+
+**Vấn đề 2 — Trung bình**
+- Trang: A02
+- Vấn đề: Trùng lặp hình ảnh khiến trang thừa, loãng thông điệp.
+- Bằng chứng: Cùng một hình `img/lec-02/agent-environment-loop.svg` (vòng tương tác tác tử–môi trường, nhãn $A_t$, $R_{t+1}$, $O_{t+1}$) xuất hiện ở cả A00 và A02, trong khi nội dung văn bản A02 chỉ là một mũi tên $A_t\to(R_{t+1},O_{t+1})$ — tức là thông tin đã có đầy đủ trong hình ở A00 ngay trước đó.
+- Đề xuất: Bỏ hình ở A02, giữ only công thức và lời giải thích chỉ số $t+1$; hoặc thay bằng hình chụp cận cảnh một bước thời gian (chỉ $A_t$ và cặp phản hồi) để tránh lặp nguyên vòng lặp.
+
+Không có vấn đề mức chặn bàn giao hoặc nghiêm trọng. Các trang còn lại (định nghĩa lịch sử A03–A04, ví dụ xe C02, quan sát một phần C05) nhất quán về chỉ số và ký hiệu.
+
+### Báo cáo góc nhìn sinh viên — gói roles
+
+Runtime: requested_model `z-ai/glm-5.3-flash`, observed_model `z-ai/glm-5.3-flash`, provider `OpenRouter`.
+
+**Báo cáo review gói slide (góc nhìn sinh viên)**
+
+**Vấn đề 1 — Nghiêm trọng**
+- Trang: D04F
+- Vấn đề: Công thức định nghĩa $G_t$ bị đứt gãy, mất mốc điều kiện.
+- Bằng chứng: Văn bản hiển thị: "Với $t $$G_t=\sum_{k=0}^{T-t-1}\gamma^k R_{t+k+1}.$" — cụm "Với $t $" dở dang, thiếu điều kiện (ví dụ "$0\le t<T$") trước công thức; dấu `$` lẻ làm LaTeX không render đúng, sinh viên không đọc được định nghĩa return — đây là đại lượng trung tâm của toàn bộ phần hàm giá trị.
+- Đề xuất: Sửa thành "Với $0\le t<T$: $$G_t=\sum_{k=0}^{T-t-1}\gamma^k R_{t+k+1}.$$" và kiểm tra cặp dấu `$` trên slide này.
+
+**Vấn đề 2 — Trung bình**
+- Trang: D06 (kết hợp D04F, D05)
+- Vấn đề: Ký hiệu quỹ đạo không nhất quán với $T$ đã định nghĩa.
+- Bằng chứng: D06 dùng "$\tau_1$, $\tau_2$" cho quỹ đạo, trong khi D04F vừa định nghĩa $T$ là thời điểm kết thúc và toàn phần trước dùng $T$; bảng lại đặt tiêu đề cột "$G_t$" mà không nói $t$ ứng với đầu quỹ đạo nào. Sinh viên mới học dễ nhầm $\tau$ với $T$ và không biết $G_t$ trong bảng tính tại thời điểm nào.
+- Đề xuất: Thống nhất một ký hiệu (nếu dùng $\tau$ cho quỹ đạo, giới thiệu một câu "ký hiệu $\tau$ là một quỹ đạo, $T$ là thời điểm kết thúc của nó"), và ghi rõ trong bảng $G_t$ được tính tại trạng thái xuất phát của mỗi quỹ đạo.
+
+**Không ghi rõ:** các slide còn lại (D00–D10, E00–E05, X01–X10) đọc thông suốt, ví dụ trước định nghĩa là chủ ý nên không tính là lỗi.
+
+### Sửa sau đủ năm báo cáo
+
+- Lượt sinh viên rút gọn toàn bài trả lời chưa hoàn chỉnh (`finish_reason=length`), nên tách thành hai gói P–C và D–X; cả hai hoàn tất với đúng GLM, không đổi mô hình.
+- Tác tử chỉnh sửa riêng: requested_model `z-ai/glm-5.3-flash`, observed_model `z-ai/glm-5.3-flash`, provider `OpenRouter`; hoàn tất trong 27,53 giây, sửa đúng D04F và D05S. Điều phối viên đọc lại HTML để xác minh, không dựa vào số dòng worker gọi nhầm là số slide.
+- D04F dùng `&lt;` trong HTML; điều kiện toán học hiển thị đầy đủ. Đã thêm tổng rỗng, phần thưởng vào đích và nguồn. D05S đưa giả thiết phần thưởng bị chặn, thời gian tới đích có kỳ vọng hữu hạn lên mặt trang.
+- Nhận góp ý sinh viên C03F bằng ghi chú giải thích chữ thường và trạng thái cuối s. D06 đổi tên quỹ đạo thành 1, 2 để không thêm ký hiệu tau; nêu rõ tính tổng từ thời điểm t tại cùng trạng thái. Giữ hình vòng lặp ở A02 vì A00 xác định vai trò, còn A02 giới thiệu các ký hiệu và quan hệ thời gian; việc dùng lại cùng hình có chủ ý.
+- Tích hợp: D03 nói rõ ví dụ khác có ba hành động hợp lệ; D07 giải nghĩa E; E04 nêu biết bản đồ trong suy vị trí; E04V dùng đường chín bước không lặp trạng thái. Sửa SVG ba vai trò và dành khoảng trống dưới C00, D08.
+- Chromium sau sửa: 53/53 trang, hai kích thước 1280×720 và 390×844; không lỗi JS/HTTP/KaTeX; không tràn theo phép đo. Đã xem lại ảnh các trang sửa, gồm điều kiện t nhỏ hơn T ở cả hai màn hình. Màn hình hẹp giữ khung 16:9 thu nhỏ, nên xem ngang phù hợp hơn cho đọc công thức.
+
+### Các lượt rà lại cuối và quyết định
+
+| Vai | requested_model | observed_model | provider | Kết quả và quyết định |
+|---|---|---|---|---|
+| math | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter | Không tìm thấy lỗi; xác nhận Markov, tổng rỗng, giả thiết hữu hạn và đường 7/9 bước đúng. |
+| flow | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter | Đủ 7 mạch và kết nối; B00 đủ 3 nguồn, D06 trước D05 hợp lý. A04 đã được kiểm chứng ẩn/hiện bằng bàn phím. B02 tự giải thích chính sách bằng lời nên không thêm báo trước; E02 đã ghi rõ tình huống giả định khác. |
+| student | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter | Xác nhận D04F và D06 đã sửa. X và biểu diễn đã được định nghĩa ở C00/C06, nên không nhận nhận xét D02V thiếu tiên quyết. D06 dùng các G đã cho để tính kỳ vọng, không cần tự chọn gamma; đã làm rõ các giá trị được tính sẵn với cùng hệ số chiết khấu và thống nhất tên phần thưởng tích lũy. |
+| storyboard | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter | Không có lỗi chặn/nghiêm trọng. Làm rõ C06 hình thức hóa biểu diễn X=f(H), không phải chính sách. Chuẩn hóa đã được nêu ở D03 và thể hiện bằng công thức D07B. Bảng mê cung đã có E04P/E04V trong ứng dụng và kiểm tra; thêm ghi chú tránh tính trùng thời lượng. |
+
+### Kiểm định bàn giao
+
+- SHA-256 bản HTML cuối: `e398e872eda4b0374adcfdf11d27ebaa80d756f24097191849e0efec603f2a70`.
+- Các lỗi nghiêm trọng D04F đã sửa, rà lại bởi toán, sinh viên và mạch viết; điều phối viên xác nhận bằng ảnh và mã KaTeX thực tế `t < T`. Không còn lỗi bắt buộc chưa xử lý.
+- `python3 /tmp/lec02-final-validate.py`: 53 trang, 7 section ngoài, 12 SVG, 22 tham chiếu tài nguyên hợp lệ; ID trong HTML/outline/storyboard; chỉ mục hợp lệ và không liên kết planning; không raster; kiểm tra số học và hai đường đi đạt.
+- `python3 /tmp/lec02-fix-browser.py`: toàn bộ 53 trang, hai kích thước 1280×720 và 390×844; lỗi JavaScript, HTTP, KaTeX và phát hiện tràn đều bằng 0. Đã xem ảnh toàn bộ trang và ảnh mới sau sửa cục bộ. Không coi phép đo tự động thay cho xem ảnh.
+- `python3 /tmp/lec02-fragment-network.py`: A04 ban đầu ẩn đáp án, phím xuống hiện đáp án mà không rời trang; công thức điều kiện D04F có trong KaTeX; 0 yêu cầu tài nguyên ngoài localhost.
+- `python3 -m reloadserver 8765`: thất bại với `Address already in use`; giữ máy chủ hiện có cho kho này ở cổng 8766.
+- `git diff --check`: đạt. Tệp nguồn vẫn là `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx`, trang 1–27; bài tập từ resources/hw02.pdf. Không thêm code demo, dữ liệu thực nghiệm hoặc tài sản raster.
+- Tự biên tập theo no-ai-slop/eval: giữ thuật ngữ và ý nguồn, câu trực tiếp, bỏ tranh luận ngoài mạch và lời dẫn rỗng; ví dụ bổ sung có phép tính truy nguyên theo yêu cầu audit. Quill được dùng kiểm tra thứ tự tiên quyết, vai trò phần và thuật ngữ; không tạo quill.json.
+- Codex Slides: dự án `20260824132931-chuy-n-lecture-2-markov-decision-process-jnbq` vẫn ở draft, canvas 0 slide. Tệp được lưu để đối chiếu; không tuyên bố đã rà trực quan bằng Codex Slides.
