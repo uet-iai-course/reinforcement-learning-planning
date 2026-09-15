@@ -22,13 +22,15 @@ Sau bài học, sinh viên có thể:
 
 Bài có bảy mạch trình bày, trong đó mạch 1 mở bài và mạch 7 kết luận:
 
-1. Định hướng: phạm vi, mục tiêu và bốn trục nội dung.
+1. Định hướng bài học: phạm vi, mục tiêu và bản đồ nội dung.
 2. Giao diện tương tác: ranh giới tác tử–môi trường và chỉ số thời gian.
-3. Tín hiệu học: ba nguồn tín hiệu, phụ thuộc dữ liệu và phản hồi trễ.
-4. Thông tin: trạng thái, quan sát, tính Markov và quan sát một phần.
-5. Vai trò quyết định: chính sách, phần thưởng tích lũy, hàm giá trị, mô hình, dự đoán và điều khiển.
-6. Mê cung: đặc tả môi trường và hai giao diện quan sát.
-7. Kết luận: tự kiểm tra, tuyến Bài 03 và nhánh bài tập.
+3. Tín hiệu học và phần thưởng: nguồn tín hiệu, dữ liệu phụ thuộc hành động và phản hồi trễ.
+4. Trạng thái, quan sát và tính Markov: thông tin của môi trường và biểu diễn của tác tử.
+5. Chính sách, hàm giá trị và mô hình: chọn hành động, đánh giá tương lai, dự báo; dự đoán và điều khiển.
+6. Mô hình hóa bài toán mê cung: đặc tả môi trường và so sánh giao diện quan sát.
+7. Tổng kết và bài tập: tự kiểm tra, chuẩn bị Bài 03 và nhánh bài tập.
+
+Trang bìa P00 mở mạch định hướng. Các trang A-TITLE, B-TITLE, C-TITLE, D-TITLE, E-TITLE và Z-TITLE mở sáu mạch tiếp theo; P02 liệt kê đủ bảy tên trên.
 
 ## Ánh xạ nguồn
 
@@ -133,3 +135,7 @@ Về thứ tự: deck giữ cụm topic-02 (giao diện tương tác, các trang
 ## Điểm nối sang Bài 03
 
 Bài 03 phân biệt chuỗi Markov, quá trình phần thưởng Markov và MDP; sau đó đóng gói $\mathcal S,\mathcal A,p,\gamma$ thành MDP và xây phương trình Bellman. E05 không lặp chi tiết tuyến này; Z00 là nơi mở bài kế tiếp. Nhánh dọc của Bài 02 chứa Bài 1, 2, 5, 6 (bài tập chính) và Bài 10 (mở rộng) của hw02; Bài 3, 4, 7, 8, 9 đòi hỏi MRP, $q_\pi$ hoặc Bellman, thuộc Bài 03 và sẽ được xử lý sau Bài 03. Phần Bellman của Silver Lecture 2 cũng bắt đầu từ Bài 03.
+
+## Điều chỉnh trang mở phần — 2026-09-15
+
+Sáu trang tiêu đề mới là phần biên tập theo yêu cầu người dùng, không bổ sung kiến thức hoặc hình nguồn. Ánh xạ: A-TITLE → A00–A04; B-TITLE → B00–B05; C-TITLE → C00–C07; D-TITLE → D00–D09 (gồm D07B, D10); E-TITLE → E00–E05; Z-TITLE → Z00 và nhánh bài tập. Giữ nguyên ánh xạ nguồn và thứ tự 41 trang đã có; chỉ P02 thay bản đồ bốn trục bằng danh sách bảy mạch.

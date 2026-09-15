@@ -2,7 +2,7 @@
 
 ## Hành trình khái niệm và thời lượng
 
-Tuyến chính có 36 trang, tổng 120 phút. X01, X02, X05, X06 và X10 là nhánh dọc, dùng trong 30 phút chữa bài và không tính vào 120 phút trình chiếu.
+Tuyến chính có 42 trang (36 trang có sẵn và 6 trang mở phần), tổng 120 phút. X01, X02, X05, X06 và X10 là nhánh dọc, dùng trong 30 phút chữa bài và không tính vào 120 phút trình chiếu.
 
 | Cụm / vi chu trình | Vấn đề | Trực giác | Ví dụ | Hình thức/thuật toán | Ứng dụng | Kiểm tra | Đầu vào → sản phẩm | Thời lượng |
 |---|---|---|---|---|---|---|---|---:|
@@ -37,8 +37,8 @@ Tổng: $6+14+16+12+12+8+14+6+2+6+20+4=120$ phút. So với bản trước, cụ
 | Mã | Luận điểm trung tâm | Kiến thức đầu vào | Sản phẩm học tập | Câu nối |
 |---|---|---|---|---|
 | P00 | Bài 02 xây giao diện trước MDP. | Bài 01 | Biết phạm vi. | “Các mục tiêu đều kiểm tra được.” |
-| P01 | Mục tiêu giới hạn ở giao diện, thông tin và vai trò. | P00 | Biết chuẩn đầu ra. | “Ba tuyến dùng lại cùng ký hiệu.” |
-| P02 | Bốn trục Tương tác, Tín hiệu học, Thông tin và Quyết định tạo một chuỗi. | P01 | Có bản đồ bài. | “Bắt đầu bằng ranh giới hai phía.” |
+| P01 | Mục tiêu giới hạn ở giao diện, thông tin và vai trò. | P00 | Biết chuẩn đầu ra. | “Bảy phần dùng lại cùng ký hiệu.” |
+| P02 | Bảy mạch đi từ định hướng đến tổng kết và bài tập. | P01 | Có bản đồ khớp bảy section ngoài. | “Bắt đầu bằng giao diện tương tác.” |
 | A00 | Ranh giới xác định phần nào chọn và phần nào sinh phản hồi. | P02 | Phân biệt tác tử với môi trường. | “Đặt chỉ số cho một bước.” |
 | A02 | $A_t$ sinh $R_{t+1},O_{t+1}$. | A00 | Viết một chuyển tiếp. | “Lặp chuyển tiếp thành lịch sử.” |
 | A03 | Lịch sử quan sát có thứ tự. | A02 | Viết $H_t$. | “Kiểm tra một chỉ số cụ thể.” |
@@ -90,3 +90,18 @@ Tổng: $6+14+16+12+12+8+14+6+2+6+20+4=120$ phút. So với bản trước, cụ
 - Vòng sửa hiển thị tách D07 thành D07 và D07B, đồng thời xuống dòng công thức C03. Phạm vi rà lại gồm C02–C05 và D05–D09; câu nối và giả thiết phải giữ liên tục sau khi số trang chính tăng từ 35 lên 36.
 - Vai trò và kết nối vào–ra quanh D10: D07 truyền ví dụ $1/0$ sang định nghĩa tổng quát ở D07B; D07B truyền mô hình một bước sang D10 để xét phạm vi và sai số; D10 kết nối ra D08 để phân biệt dự đoán với điều khiển. Mỗi trang có một luận điểm trung tâm.
 - Thứ tự deck: cụm A (giao diện tương tác, topic-02) đứng trước cụm B (tín hiệu học, topic-01), khác thứ tự note. Lý do: dựng ranh giới tác tử–môi trường và chỉ số thời gian trước khi so sánh các tín hiệu học; khác thứ tự note nhưng không đổi logic.
+
+## Trang mở các mạch — 2026-09-15
+
+Giữ bảy section ngoài và thứ tự trang chuyên môn. P00 là bìa đồng thời mở phần định hướng; P02 dùng tên thống nhất với các trang mở. Mỗi trang mới là câu chuyển của cụm kế tiếp, không phải khái niệm mới nên chu trình sáu bước không áp dụng riêng. Dành khoảng 15 giây cho mỗi trang mở, lấy trong thời lượng chuyển ý đã có của cụm; tổng vẫn 120 phút, cộng 30 phút chữa bài.
+
+| Mã | Tiêu đề / vai trò | Kết nối vào | Kết nối ra | Bước tiến / câu nối | Thời lượng cụm (gồm trang mở) |
+|---|---|---|---|---|---|
+| A-TITLE | Giao diện tương tác | P02 | A00 | Quy ước tương tác nối mục tiêu bài với ranh giới tác tử–môi trường. | 14 phút |
+| B-TITLE | Tín hiệu học và phần thưởng | A04 | B00 | Từ thứ tự phản hồi sang nguồn tín hiệu đánh giá hành động. | 16 phút |
+| C-TITLE | Trạng thái, quan sát và tính Markov | B05 | C00 | Từ tín hiệu học sang thông tin dùng để dự báo và quyết định. | 24 phút |
+| D-TITLE | Chính sách, hàm giá trị và mô hình | C07 | D00 | Biểu diễn quyết định trở thành đầu vào của chính sách; giá trị và mô hình có vai trò riêng. | 36 phút |
+| E-TITLE | Mô hình hóa bài toán mê cung | D09 | E00 | Dùng các vai trò vừa phân biệt để đặc tả mê cung. | 20 phút |
+| Z-TITLE | Tổng kết và bài tập | E05 | Z00 | Thu hồi vòng tương tác qua tự kiểm tra, bài tập và chuẩn bị Bài 03. | 4 phút |
+
+Sản phẩm của mỗi trang mở là nhận biết nhiệm vụ của phần và liên hệ với kết quả vừa có; tiên quyết và chu trình học tập vẫn theo bảng đầu tài liệu. Các ID mới phải đứng ngay trước trang ghi ở cột kết nối ra, trong cùng section ngoài. Bản đồ hiện hành này thay cho các mô tả tên mạch cũ trong lịch sử; không đổi các vi chu trình chuyên môn.
