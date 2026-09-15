@@ -167,7 +167,7 @@ class ReadOnlyServerTest(unittest.TestCase):
         self.assertEqual(TASK_PROFILES["plan"].timeout_seconds, 600)
         self.assertGreater(TASK_PROFILES["write"].max_tokens, TASK_PROFILES["review"].max_tokens)
         self.assertLess(TASK_PROFILES["recheck"].max_tokens, TASK_PROFILES["review"].max_tokens)
-        self.assertEqual(
+        self.assertLess(
             TASK_PROFILES["recheck"].timeout_seconds,
             TASK_PROFILES["review"].timeout_seconds,
         )

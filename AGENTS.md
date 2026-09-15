@@ -296,3 +296,26 @@ Khi bàn giao, nêu ngắn gọn: tệp trang chiếu, URL cục bộ, tệp ngu
 - Khi cần chạy song song, khởi chạy mỗi reviewer trong một tiến trình `openrouter-mcp-reviewer` riêng và chờ tất cả hoàn tất.
 - Không cho hai tác tử có quyền ghi sửa các tệp trùng nhau cùng lúc.
 - Điều phối viên phải chờ các tác tử liên quan, hợp nhất kết quả và tự xác minh trước khi bàn giao.
+
+
+### Chọn phạm vi và ngân sách gọi reviewer
+
+- Trước mỗi lượt rà, chọn hồ sơ theo phần thực sự thay đổi: `review-change`
+  cho tiêu đề/câu dẫn/chỉnh chữ; `recheck` cho một lỗi vừa sửa;
+  `review-section` cho một cụm khái niệm/công thức/thuật toán;
+  `review-full` cho bản nháp mới hoặc thay đổi luận điểm, mở bài, kết bài.
+- Tác vụ nhỏ dùng trích đoạn đúng phần sửa, hai trang lân cận mỗi phía và bản
+  đồ section nếu liên quan mạch viết; ưu tiên `--no-tools` để reviewer không
+  tự đọc cả deck. Trích đoạn phải có đường dẫn và ID/dòng truy nguyên.
+- Rà toán phải giữ đủ ký hiệu, giả thiết, ví dụ và nguồn của cụm; không rút
+  đầu vào chỉ còn công thức cuối. Rà toàn bài vượt ngân sách thì chia gói có
+  bảng bao phủ; vai mạch viết vẫn phải rà toàn tuyến bằng bản đồ các phần.
+- Luôn dùng `--json`. Mặc định reviewer là `review-section`; ngân sách request
+  lần lượt 90/90/120/180 giây cho change/recheck/section/full, tổng worker
+  150/150/240/360 giây. Chi tiết giới hạn và mẫu lệnh nằm trong
+  `openrouter-mcp/README.md`, mục “Chọn cách gọi reviewer theo tác vụ”.
+- Khi vượt giới hạn dữ liệu hoặc timeout, thu hẹp/chia gói trước khi thử lại
+  tối đa một lần bằng cùng mô hình. Không lặp nguyên request, tăng timeout
+  mặc định hay chuyển worker âm thầm. Ghi rõ gói chưa rà nếu vẫn thất bại.
+- Năm vai vẫn độc lập; rà lại theo đúng phạm vi bị ảnh hưởng và các ranh giới
+  liên quan. Không coi rà trích đoạn là đã rà toàn deck.

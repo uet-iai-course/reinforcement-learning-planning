@@ -7,6 +7,7 @@ import os
 import sys
 import time
 from dataclasses import asdict, dataclass
+from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any, Awaitable, Callable, TypeVar
 
@@ -44,7 +45,9 @@ Do not request writes, shell commands, network calls, or broader access.
 Clearly separate facts from inferences. Answer in the user's language.
 """,
     "reviewer": """You are an independent OpenRouter reviewer worker.
-Inspect the supplied evidence with read-only tools. Report every finding with
+Review the supplied evidence. Use read-only tools only when they are available.
+When tools are disabled, use only the supplied excerpts and report missing evidence;
+never claim to have inspected files outside those excerpts. Report every finding with
 the requested severity, location, issue, evidence, and proposed correction.
 Read only the exact files assigned. Prefer one bounded read per file and do
 not repeat discovery calls. Return a concise report as soon as the requested
@@ -90,6 +93,8 @@ class TaskProfile:
     temperature: float
     empty_answer_retries: int
     reasoning_effort: str
+    max_context_chars: int | None = None
+    total_timeout_seconds: float | None = None
 
 
 TASK_PROFILES = {
@@ -100,9 +105,12 @@ TASK_PROFILES = {
     "plan": TaskProfile(12, 600.0, 16_000, 0.1, 1, "low"),
     "source": TaskProfile(14, 600.0, 18_000, 0.1, 1, "low"),
     "storyboard": TaskProfile(10, 600.0, 12_000, 0.1, 1, "low"),
-    "review": TaskProfile(8, 600.0, 8_000, 0.1, 1, "low"),
+    "review": TaskProfile(6, 180.0, 5_000, 0.1, 1, "low", 60_000, 360.0),
+    "review-change": TaskProfile(2, 90.0, 2_200, 0.1, 1, "low", 16_000, 150.0),
+    "review-section": TaskProfile(4, 120.0, 3_500, 0.1, 1, "low", 32_000, 240.0),
+    "review-full": TaskProfile(6, 180.0, 5_000, 0.1, 1, "low", 60_000, 360.0),
     "write": TaskProfile(20, 900.0, 32_000, 0.1, 1, "low"),
-    "recheck": TaskProfile(5, 600.0, 4_000, 0.1, 1, "low"),
+    "recheck": TaskProfile(2, 90.0, 2_200, 0.1, 1, "low", 16_000, 150.0),
     "patch": TaskProfile(10, 300.0, 6_000, 0.1, 1, "low"),
 }
 
@@ -262,10 +270,10 @@ def _assistant_message(message: dict[str, Any]) -> dict[str, Any]:
     return {key: message[key] for key in allowed if key in message}
 
 
-def _tool_result_text(result: Any) -> str:
+def _tool_result_text(result: Any, *, truncate: bool = True) -> str:
     if result.structured_content is not None:
         text = json.dumps(result.structured_content, ensure_ascii=False)
-        return _truncate_tool_result(text)
+        return _truncate_tool_result(text) if truncate else text
 
     blocks: list[str] = []
     for block in result.content:
@@ -273,7 +281,8 @@ def _tool_result_text(result: Any) -> str:
             blocks.append(block.text)
         else:
             blocks.append(str(block))
-    return _truncate_tool_result("\n".join(blocks))
+    text = "\n".join(blocks)
+    return _truncate_tool_result(text) if truncate else text
 
 
 def _truncate_tool_result(text: str) -> str:
@@ -284,6 +293,39 @@ def _truncate_tool_result(text: str) -> str:
         text[:MAX_TOOL_RESULT_CHARS]
         + f"\n[tool result truncated by bridge; omitted {omitted} characters]"
     )
+
+
+def check_context_budget(messages: list[dict[str, Any]], limit: int | None) -> int:
+    """Count serialized messages, including tool arguments/results; never cut evidence."""
+    size = len(json.dumps(messages, ensure_ascii=False))
+    if limit is not None and size > limit:
+        raise RuntimeError(
+            f"review context exceeds limit ({size} > {limit} characters); "
+            "split the task or supply bounded excerpts with --no-tools. "
+            "No oversized request was sent."
+        )
+    return size
+
+
+@asynccontextmanager
+async def _worker_session(total_timeout_seconds, report, role):
+    """Bound MCP setup, tools and all API rounds by one deadline."""
+    try:
+        async with asyncio.timeout(total_timeout_seconds):
+            async with Client(mcp) as client:
+                yield client
+    except ExceptionGroup as exc:
+        # MCP task groups wrap failures from our own request/budget checks.
+        # Preserve multi-error groups, but expose a single actionable failure.
+        error: BaseException = exc
+        while isinstance(error, BaseExceptionGroup) and len(error.exceptions) == 1:
+            error = error.exceptions[0]
+        if isinstance(error, RuntimeError):
+            raise error from None
+        raise
+    except TimeoutError as exc:
+        report("worker_failed", role=role, reason="worker_wall_timeout")
+        raise RuntimeError("worker total time budget exhausted; split the review") from exc
 
 
 async def run_agent(
@@ -301,9 +343,22 @@ async def run_agent(
     reasoning_effort: str = "low",
     task_profile: str = "general",
     progress: ProgressCallback | None = None,
+    no_tools: bool = False,
+    max_context_chars: int | None = None,
+    total_timeout_seconds: float | None = None,
 ) -> WorkerResult:
     if role not in ROLE_SYSTEM_PROMPTS:
         raise ValueError(f"unsupported worker role: {role}")
+    if no_tools and role != "reviewer":
+        raise ValueError("--no-tools is only supported for reviewers")
+    profile = TASK_PROFILES[task_profile]
+    if role == "reviewer":
+        defaults = profile if profile.max_context_chars else TASK_PROFILES["review-section"]
+        if max_context_chars is None:
+            max_context_chars = defaults.max_context_chars
+        if total_timeout_seconds is None:
+            total_timeout_seconds = defaults.total_timeout_seconds
+    started = time.monotonic()
     os.environ["MCP_REPO_ROOT"] = repo_root
     os.environ["MCP_ALLOW_WRITE"] = "1" if role == "writer" else "0"
     messages: list[dict[str, Any]] = [
@@ -332,14 +387,17 @@ async def run_agent(
         empty_answer_retries=empty_answer_retries,
         reasoning_effort=reasoning_effort,
         task_profile=task_profile,
+        max_context_chars=max_context_chars,
+        total_timeout_seconds=total_timeout_seconds,
+        no_tools=no_tools,
     )
 
     empty_retries_left = max(0, empty_answer_retries)
     successful_tool_calls: set[str] = set()
 
-    async with Client(mcp) as mcp_client:
+    async with _worker_session(total_timeout_seconds, report, role) as mcp_client:
         listed = await mcp_client.list_tools()
-        allowed_tools = allowed_tool_names(role)
+        allowed_tools = set() if no_tools else allowed_tool_names(role)
         tools = [
             _tool_schema(tool) for tool in listed.tools if tool.name in allowed_tools
         ]
@@ -348,7 +406,20 @@ async def run_agent(
         async with httpx.AsyncClient(timeout=timeout_seconds) as http:
             request_limit = max_rounds + max(0, empty_answer_retries)
             for round_index in range(1, request_limit + 1):
-                report("api_request_started", role=role, round=round_index)
+                try:
+                    context_chars = check_context_budget(messages, max_context_chars)
+                except RuntimeError:
+                    report("worker_failed", role=role, reason="context_budget")
+                    raise
+                request_timeout = timeout_seconds
+                if total_timeout_seconds is not None:
+                    remaining = total_timeout_seconds - (time.monotonic() - started)
+                    if remaining <= 0:
+                        report("worker_failed", role=role, reason="worker_wall_timeout")
+                        raise RuntimeError("worker total time budget exhausted; split the review")
+                    request_timeout = min(request_timeout, remaining)
+                report("api_request_started", role=role, round=round_index,
+                       context_chars=context_chars, request_timeout_seconds=request_timeout)
                 try:
                     response = await _await_with_heartbeats(
                         http.post(
@@ -362,7 +433,7 @@ async def run_agent(
                             json={
                                 "model": model,
                                 "messages": messages,
-                                "tools": tools,
+                                **({"tools": tools} if tools else {}),
                                 "max_tokens": max_tokens,
                                 "temperature": temperature,
                                 "reasoning": {
@@ -371,7 +442,7 @@ async def run_agent(
                                 },
                             },
                         ),
-                        timeout_seconds=timeout_seconds,
+                        timeout_seconds=request_timeout,
                         heartbeat_seconds=min(15.0, max(1.0, timeout_seconds / 4)),
                         on_heartbeat=lambda elapsed: report(
                             "api_request_waiting",
@@ -386,10 +457,11 @@ async def run_agent(
                         role=role,
                         reason="api_wall_timeout",
                         round=round_index,
-                        timeout_seconds=timeout_seconds,
+                        timeout_seconds=request_timeout,
                     )
                     raise RuntimeError(
-                        f"OpenRouter request exceeded {timeout_seconds:g}s wall timeout"
+                        f"OpenRouter request exceeded {request_timeout:g}s wall timeout; "
+                        "retry only after narrowing the evidence or splitting the task"
                     ) from exc
                 except httpx.HTTPError as exc:
                     report(
@@ -477,6 +549,8 @@ async def run_agent(
                 )
                 for tool_call in tool_calls:
                     function = tool_call["function"]
+                    if function["name"] not in allowed_tools:
+                        raise RuntimeError("model requested a tool outside the permitted review scope")
                     try:
                         arguments = json.loads(function.get("arguments") or "{}")
                     except json.JSONDecodeError as exc:
@@ -521,7 +595,7 @@ async def run_agent(
                             report("tool_call_started", role=role, round=round_index, **context)
                             try:
                                 result = await mcp_client.call_tool(function["name"], arguments)
-                                tool_text = _tool_result_text(result)
+                                tool_text = _tool_result_text(result, truncate=role != "reviewer")
                             except Exception:
                                 report(
                                     "tool_call_failed",
@@ -599,9 +673,15 @@ def _parser(forced_role: str | None = None) -> argparse.ArgumentParser:
     parser.add_argument(
         "--task-profile",
         choices=tuple(TASK_PROFILES),
-        default="general",
+        default="review-section" if forced_role == "reviewer" else "general",
         help="Task-tuned defaults; explicit tuning flags override the profile",
     )
+    parser.add_argument("--no-tools", action="store_true",
+                        help="Reviewer: use only evidence supplied in the prompt")
+    parser.add_argument("--max-context-chars", type=int,
+                        help="Fail before sending oversized message history; never truncate evidence")
+    parser.add_argument("--total-timeout", type=float,
+                        help="Total worker time budget across all API rounds")
     parser.add_argument("--max-rounds", type=int)
     parser.add_argument("--timeout", type=float)
     parser.add_argument("--max-tokens", type=int)
@@ -627,6 +707,12 @@ def _parser(forced_role: str | None = None) -> argparse.ArgumentParser:
 
 def main(forced_role: str | None = None) -> None:
     args = _parser(forced_role).parse_args()
+    for name in ("max_rounds", "timeout", "max_tokens", "max_context_chars", "total_timeout"):
+        value = getattr(args, name)
+        if value is not None and value <= 0:
+            raise SystemExit(f"--{name.replace('_', '-')} must be positive")
+    if args.no_tools and args.role != "reviewer":
+        raise SystemExit("--no-tools is only supported for reviewers")
     api_key = load_openrouter_api_key(args.repo_root)
     if not api_key:
         print("OPENROUTER_API_KEY is not set", file=sys.stderr)
@@ -668,6 +754,9 @@ def main(forced_role: str | None = None) -> None:
                 reasoning_effort=reasoning_effort,
                 task_profile=args.task_profile,
                 progress=_stderr_progress(args.progress),
+                no_tools=args.no_tools,
+                max_context_chars=args.max_context_chars,
+                total_timeout_seconds=args.total_timeout,
             )
         )
     except (OpenRouterAPIError, RuntimeError) as exc:

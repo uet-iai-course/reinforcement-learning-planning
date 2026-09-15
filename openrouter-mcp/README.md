@@ -106,16 +106,18 @@ token hoàn tất và reasoning token khi nhà cung cấp trả các trường n
 | `plan` | 12 | 600 giây | 16.000 | Lập kế hoạch |
 | `source` | 14 | 600 giây | 18.000 | Phân tích và ánh xạ nguồn |
 | `storyboard` | 10 | 600 giây | 12.000 | Kiểm định storyboard |
-| `review` | 8 | 600 giây | 8.000 | Năm rà soát độc lập |
+| `review-full` / `review` | 6 | 180 giây | 5.000 | Rà toàn bài theo từng vai |
+| `review-section` | 4 | 120 giây | 3.500 | Rà một cụm khái niệm; mặc định reviewer |
+| `review-change` | 2 | 90 giây | 2.200 | Rà tiêu đề, câu dẫn hoặc thay đổi nhỏ |
 | `write` | 20 | 900 giây | 32.000 | Soạn một sản phẩm hoàn chỉnh đã cô lập |
-| `recheck` | 5 | 600 giây | 4.000 | Rà lại đúng một note/deck; báo cáo ngắn |
+| `recheck` | 2 | 90 giây | 2.200 | Rà lại đúng vấn đề đã sửa |
 | `patch` | 10 | 300 giây | 6.000 | Sửa một hoặc hai khối độc lập |
 
 Ví dụ:
 
 ```bash
-uv run openrouter-mcp-reviewer --repo-root .. --json --task-profile review \
-  "Rà Lecture 01 theo góc nhìn sinh viên."
+uv run openrouter-mcp-reviewer --repo-root .. --json --task-profile review-full \
+  "Rà Lecture 01 theo góc nhìn sinh viên; chỉ đọc các tệp được chỉ định."
 ```
 
 Reader mặc định dùng `deepseek/deepseek-v4-flash-0731`; reviewer và writer mặc định dùng
@@ -175,3 +177,82 @@ uv run python -m unittest discover -s tests -v
 - Client dừng khi vượt quá số vòng gọi công cụ cho phép.
 - Cầu nối này thay cho `collaboration.spawn_agent` đối với ba vai trò dự án;
   nó không đăng ký loại tác tử vào runtime Codex hiện tại.
+
+## Chọn cách gọi reviewer theo tác vụ
+
+Không dùng một lệnh rà toàn deck cho mọi chỉnh sửa. Chọn phạm vi trước khi chọn
+ngân sách. Các giới hạn dưới đây là ngân sách khởi đầu, không bảo đảm API luôn
+phản hồi kịp. Không tự tăng timeout hoặc chuyển mô hình khi nhà cung cấp chậm.
+
+| Tác vụ | Hồ sơ | Đầu vào cần chuẩn bị | Giới hạn lịch sử gửi API | Tổng thời gian worker |
+|---|---|---|---:|---:|
+| Tiêu đề, câu dẫn, chỉnh chữ, thay đổi nhỏ | `review-change` | Trích đoạn đã sửa, hai trang lân cận mỗi phía; sơ đồ các section nếu sửa mạch | 16.000 ký tự | 150 giây |
+| Rà lại một lỗi | `recheck` | Vấn đề cũ, đoạn sau sửa, giả thiết và các phần phụ thuộc | 16.000 ký tự | 150 giây |
+| Công thức, thuật toán, một cụm khái niệm | `review-section` | Định nghĩa, ký hiệu, giả thiết, ví dụ và nguồn của cụm | 32.000 ký tự | 240 giây |
+| Bản nháp mới hoặc đổi luận điểm/mở–kết bài | `review-full` | Một bài và các bằng chứng cần cho vai được giao | 60.000 ký tự | 360 giây |
+
+Giới hạn ký tự tính trên JSON lịch sử thông điệp, gồm chỉ dẫn, prompt, kết quả
+công cụ và câu trả lời trước đó; không phải số token và không chỉ là kích thước
+tệp. Cầu nối kiểm tra trước **mỗi** request. Nếu vượt giới hạn, lệnh thất bại
+trước khi gửi request đó; không cắt bằng chứng rồi giả vờ đã rà toàn bộ.
+Kết quả đọc tệp của reviewer không bị cắt thêm bởi cầu nối; công cụ đọc vẫn có
+phạm vi dòng riêng, phải kiểm tra dấu hiệu còn dòng chưa đọc.
+
+`openrouter-mcp-reviewer` mặc định dùng `review-section`. `review` tương đương
+ngân sách `review-full`; `recheck` nay dành cho phạm vi nhỏ, không phải một deck.
+Các mặc định reader và writer không đổi. Có thể ghi đè bằng `--timeout`
+(mỗi API), `--total-timeout` (toàn worker), `--max-context-chars` và
+`--max-tokens`, nhưng phải có lý do cụ thể cho phạm vi được tăng.
+Ngân sách tổng bao gồm cả lượt đọc công cụ và lượt phục hồi câu trả lời bị cắt.
+
+### Đầu vào trích đoạn, không cho tự mở rộng
+
+Với tác vụ nhỏ, dùng `--no-tools` và đặt bằng chứng ngay trong prompt. Cờ này
+loại bỏ schema công cụ khỏi request và từ chối nếu mô hình vẫn yêu cầu công cụ.
+Chỉ reviewer dùng được cờ này. Mỗi trích đoạn cần tên tệp, ID trang hoặc dòng,
+và ranh giới; không đưa `.env`, biến bí mật hoặc dữ liệu ngoài phạm vi vào prompt.
+
+```bash
+uv run openrouter-mcp-reviewer --repo-root .. --json \
+  --task-profile review-change --no-tools \
+  'Rà tiêu đề theo bằng chứng sau. Phạm vi: [tệp, ID trang].
+  Thay đổi: [nội dung trước và sau].
+  Bằng chứng: [trích đoạn thật, trang lân cận, chuỗi section].
+  Báo cáo dưới 300 từ; nêu bằng chứng thiếu, không suy đoán phần chưa đọc.'
+```
+
+Các phần trong ngoặc vuông phải được thay bằng dữ liệu thật trước khi chạy.
+Khi chuẩn bị prompt dài bằng chương trình, truyền nó thành một đối số trong
+`subprocess.run([...])`, không ghép thành mã shell.
+
+### Rà có công cụ đọc
+
+Dùng `review-section` cho một cụm. Chỉ định chính xác tệp và phạm vi dòng trong
+prompt; yêu cầu không list/search khi đã biết vị trí. Với HTML nén, ít dòng vẫn
+có thể rất dài: chuẩn bị trích đoạn theo `data-slide-id` thay vì đọc cả tệp.
+Cờ giới hạn ký tự chỉ chặn kích thước; phạm vi đường dẫn/dòng trong prompt vẫn
+là chỉ dẫn cho worker, không phải một danh sách đường dẫn bị khóa bằng mã.
+
+Rà toàn bài bằng `review-full`. Nếu vượt ngân sách, chia thành các gói có bảng
+bao phủ trang nguồn/trang đích; mỗi gói giữ đủ tiên quyết và trang lân cận.
+Vai mạch viết còn cần một lượt tổng hợp toàn tuyến bằng bản đồ section và các
+điểm nối. Không dùng kết quả rà một gói để tuyên bố đã rà toàn bài.
+
+### Khi API chậm hoặc câu trả lời bị cắt
+
+1. Xem `context_chars`, `request_timeout_seconds`, `reason` và `finish_reason`
+   trong log. `api_request_waiting` chỉ là nhịp báo chờ, không phải tiến độ sinh.
+2. `context_budget`: chia gói hoặc rút phần không liên quan; không tự tăng trần
+   cho một tác vụ nhỏ. Cầu nối chưa gửi request vượt trần.
+3. `api_wall_timeout` hoặc `worker_wall_timeout`: dừng gói; chỉ thử lại tối đa
+   một lần sau khi thu hẹp đầu vào, giữ cùng mô hình và ghi kết quả runtime.
+   Cầu nối không tự thử lại timeout, không đổi mô hình.
+4. `finish_reason=length`: yêu cầu báo cáo ngắn hơn. Cầu nối cho phép một lượt
+   phục hồi mặc định trong tổng ngân sách; không tăng token vô hạn.
+5. Nếu vẫn thất bại, ghi gói nào chưa được rà; không đánh dấu đạt. Không kết
+   luận “nhà cung cấp nghẽn” chỉ từ log chờ.
+
+Năm vai độc lập vẫn chạy bằng năm tiến trình. Số gói có thể nhiều hơn số vai;
+điều phối viên hợp nhất và kiểm tra độ bao phủ. Không chạy thêm một đợt lớn chỉ
+để chẩn đoán timeout; dùng kiểm thử giả lập cho ngân sách và một request nhỏ
+nếu cần xác minh kết nối thật.
