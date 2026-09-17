@@ -33,3 +33,7 @@ Reader lập kế hoạch được chấp nhận về quy trình; điều phối
 Writer tạo bốn trang và phân tích. Điều phối viên sửa tọa độ Bắt đầu sai trong alt thành (0,2); đủ bảy mục trong bản đồ; bỏ lời chào rỗng, “Câu nối”, mã trang, lời bình thiết kế và hứa giải bằng thuật toán; sửa phân biệt hàm giá trị đánh giá với mô hình dự báo. Notes hiện là lời giải thích trực tiếp. Kiểm tra bố cục và bàn phím được ghi sau lượt chạy trình duyệt.
 
 Phần 1: 4 trang đã duyệt ở 1280×720 và 390×844; không tràn khung, lỗi KaTeX, ảnh hỏng, HTTP lỗi hoặc JavaScript lỗi; phím xuống hoạt động. Tắt tự chuyển sang cuộn ở màn hình hẹp để giữ điều hướng RevealJS. Đã xem ảnh trang mê cung và bản đồ nội dung; dịch nhãn Bắt đầu để không chồng chỉ số hàng.
+
+## Phần 2 — kiểm tra và chỉnh sửa
+
+Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter. Bảy trang,20 phút. Bỏ bảng hàm giá trị bị dùng sớm ở trang mục tiêu, thay bằng bảng16/18 bước. Rút notes, bỏ chỉ dẫn người viết và lời dẫn, sửa ví dụ phản hồi trễ thành quy ước thưởng của ví dụ, không quy kết mọi ván cờ có cùng thưởng. Câu hỏi tương tác có nhãn chuẩn. Kiểm tra14 lượt màn hình rộng/hẹp không lỗi; hạ chiều cao hình dòng thời gian để tăng khoảng trắng. Kiểm tra lại sau chỉnh bố cục trước commit.

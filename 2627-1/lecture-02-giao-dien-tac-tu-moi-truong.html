@@ -33,6 +33,43 @@
 <aside class="notes">Vòng tương tác xác định dữ liệu được tạo ra. Trạng thái và quan sát xác định thông tin có thể dùng để quyết định. Chính sách chọn hành động, hàm giá trị đánh giá tương lai và mô hình dự báo phản hồi. Các thành phần đó được dùng để đặc tả và phân tích mê cung. Trước hết, ta xác định ranh giới giữa tác tử và môi trường.<p class="note-source"><strong>Nguồn:</strong> Cấu trúc biên tập từ PPTX, trang 2, 15–27.</p></aside>
 </section>
 </section>
+<section>
+<section data-slide-id="L02-02-01">
+<h2>Tác tử và môi trường</h2>
+<div class="grid2"><img class="figure" src="img/lec-02/agent-environment-loop.svg" alt="Sơ đồ vòng lặp: tác tử nhận quan sát và phần thưởng từ môi trường, phát hành hành động trở lại môi trường."/><div><p><strong>Tác tử</strong>: chọn hành động.</p><p><strong>Môi trường</strong>: sinh phản hồi cho hành động.</p><div class="box">Bộ điều khiển robot chọn tín hiệu điều khiển; thế giới vật lý trả về vị trí và lực đo được.</div></div></div>
+<aside class="notes">Tác tử là bộ phận chọn hành động. Môi trường nhận hành động, thay đổi trạng thái và cung cấp phản hồi. Với robot, có thể chọn bộ điều khiển làm tác tử, còn cơ cấu cơ học và thế giới bên ngoài thuộc môi trường. Trong hình, t đánh số bước; A là hành động, O là quan sát và R là phần thưởng. Ranh giới này phải được dùng nhất quán khi mô tả bài toán.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 4 (tác tử) và 10, 20 (thành phần giao diện)</p></aside>
+</section>
+<section data-slide-id="L02-02-02">
+<h2>Một bước trong mê cung</h2>
+<div class="grid2"><img class="figure" src="img/lec-02/source-maze.svg" alt="Mê cung tám cột tám hàng, tác tử tại ô (0,2) ở mép trái, đích G ngoài lưới bên phải."/><div><p>Tại $(0,2)$, chọn <strong>Đông</strong>.</p><p>Chuyển đến $(1,2)$.</p><p>Nhận thưởng $-1$.</p><div class="box">Một bước tương tác = quan sát, hành động, thưởng, quan sát mới.</div></div></div>
+<aside class="notes">Tại ô (0,2), tác tử quan sát tọa độ rồi chọn hướng Đông. Môi trường chuyển tác tử sang (1,2), trả phần thưởng âm một và tọa độ mới. Quan sát mô tả thông tin nhận được; phần thưởng đánh giá kết quả theo mục tiêu đã đặt. Hai tín hiệu có vai trò khác nhau.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 25–26 (bài toán mê cung), 7–9 (tín hiệu thưởng)</p></aside>
+</section>
+<section data-slide-id="L02-02-03">
+<h2>Thứ tự tương tác</h2>
+<img class="figure short" src="img/lec-02/interaction-timeline.svg" alt="Quan sát O không, hành động A không, rồi thưởng R một và quan sát O một; chuỗi tiếp tục theo thời gian."/><p>$t=0,1,2,\ldots$ đánh số bước tương tác.</p><p>$O_t\in\mathcal O$: quan sát; $A_t\in\mathcal A$: hành động.</p><p>$R_{t+1}\in\mathbb R$: phần thưởng sau $A_t$.</p>
+<aside class="notes">Tại bước $t$, tác tử có quan sát $O_t$ và chọn $A_t$. Phản hồi của hành động đó là $R_{t+1}$ và $O_{t+1}$. Tập $\mathcal O$ chứa các quan sát có thể nhận; $\mathcal A$ chứa các hành động. Lịch sử là $H_t=(O_0,A_0,R_1,O_1,\ldots,A_{t-1},R_t,O_t)$. Khi $t=0$, lịch sử chỉ có $O_0$. Trong ví dụ mê cung, quan sát là tọa độ và hành động là một trong bốn hướng.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 14–15 (giao diện), 16 (trạng thái/quan sát)</p></aside>
+</section>
+<section data-slide-id="L02-02-04">
+<h2>Tín hiệu học</h2>
+<table><tr><th>Khung</th><th>Tín hiệu</th><th>Thời điểm</th></tr><tr><td>Có giám sát</td><td>Nhãn đúng cho mỗi mẫu</td><td>Tại lúc học</td></tr><tr><td>Không giám sát</td><td>Không có nhãn</td><td>—</td></tr><tr><td>Tăng cường</td><td>Phần thưởng mỗi bước</td><td>Sau hành động</td></tr></table><div class="box">Phần thưởng không cho biết hành động đúng; nó chỉ chấm điểm kết quả.</div>
+<aside class="notes">Học có giám sát dùng nhãn mục tiêu gắn với mẫu. Học không giám sát tìm cấu trúc khi không có nhãn mục tiêu. Trong học tăng cường, phần thưởng được nhận qua tương tác. Thưởng âm một sau một bước đi không chỉ ra hướng nào nên chọn. Hành động còn thay đổi vị trí và dữ liệu mà tác tử sẽ gặp ở các bước tiếp theo.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 7–8 (tín hiệu học); hw02 bài 1</p></aside>
+</section>
+<section data-slide-id="L02-02-05">
+<h2>Phần thưởng và mục tiêu</h2>
+<p>Thưởng $-1$ mỗi bước, kể cả bước vào đích; tới đích thì dừng.</p><table><thead><tr><th>Đường đi</th><th>Tổng thưởng không chiết khấu</th></tr></thead><tbody><tr><td>16 bước</td><td>$-16$</td></tr><tr><td>18 bước</td><td>$-18$</td></tr></tbody></table><p class="box">Trong thiết lập này, ít bước hơn cho tổng thưởng lớn hơn.</p>
+<aside class="notes">Với mỗi bước nhận âm một và dừng ở đích, tổng phần thưởng của một đường đi hữu hạn bằng âm số bước. Đường 16 bước cho tổng âm 16; thêm một lần đi rồi quay lại tạo đường 18 bước, tổng âm 18. Cực đại hóa tổng thưởng trong thiết lập này tương ứng với giảm số bước. Giả thuyết phần thưởng đề xuất mô tả mục tiêu bằng phần thưởng tích lũy kỳ vọng; cách chọn thưởng vẫn cần phản ánh đúng mục tiêu của từng bài toán.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 9 (thưởng) và 25 (mê cung với -1 mỗi bước)</p></aside>
+</section>
+<section data-slide-id="L02-02-06">
+<h2>Phản hồi trễ</h2>
+<img class="figure" src="img/lec-02/delayed-feedback.svg" alt="Ví dụ ba chuyển tiếp có thưởng 0, 0 rồi 1; kết quả cuối liên quan tới các lựa chọn trước đó."/><p>Ví dụ trò chơi: chỉ gán thưởng khác 0 khi kết thúc với thắng hoặc thua.</p><p>Một hành động có thể ảnh hưởng kết quả xuất hiện nhiều bước sau.</p>
+<aside class="notes">Trong hình, $S_i$ ký hiệu trạng thái của ván ở mốc $i$. Xét cách gán thưởng cho một trò chơi: các nước chưa kết thúc nhận 0, thắng nhận 1, thua nhận âm 1 và hòa nhận 0. Khi đó, một nước chưa nhận thưởng dương vẫn có thể góp phần dẫn tới chiến thắng về sau. Hình minh họa một chuỗi rút gọn kết thúc bằng thưởng 1. Trong mê cung, thưởng âm một được nhận ngay mỗi bước; không phải mọi tín hiệu thưởng đều đến trễ.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 4 (phần thưởng bị trễ) và 11 (cờ)</p></aside>
+</section>
+<section data-slide-id="L02-02-07">
+<h2>Kiểm tra vòng tương tác</h2>
+<p>Tại $(1,2)$, tác tử chọn Bắc, đến $(1,1)$ và nhận $-1$.</p><div class="check"><p><strong>Câu hỏi:</strong> Khi quan sát là tọa độ, điền $A_t$, $R_{t+1}$ và $O_{t+1}$.</p><p>Giải thích liệu thưởng $-1$ có xác định hành động tối ưu.</p></div>
+<aside class="notes">Đáp án: $A_t=\text{Bắc}$, $R_{t+1}=-1$, $O_{t+1}=(1,1)$. Phần thưởng này không xác định hành động tối ưu vì mọi bước đều nhận âm một. Việc so sánh lựa chọn cần xét các phần thưởng tiếp theo. Để ra quyết định, tác tử còn cần biết thông tin hiện tại có phân biệt được các tình huống dẫn tới kết quả khác nhau hay không.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 27 (quiz); bài luyện suy ra từ trang 25–26 và hw02 bài 6, 10</p></aside>
+</section>
+</section>
 <div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 02</div>
 </div></div>
 <script src="revealjs/dist/reveal.js"></script>

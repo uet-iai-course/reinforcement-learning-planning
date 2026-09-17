@@ -20,7 +20,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 
 ## Trạng thái triển khai
 
-Đã có bản viết cho 1/7 phần; chỉ bàn giao khi đủ các vòng rà soát và kiểm định cuối.
+Đã có bản viết cho 2/7 phần; chỉ bàn giao khi đủ các vòng rà soát và kiểm định cuối.
 
 ## Trang đích
 
@@ -28,6 +28,13 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-01-02` — Mê cung và chuỗi quyết định — PPTX trang 25–26 (bài toán mê cung)
 - `L02-01-03` — Mục tiêu học tập — Mục tiêu biên tập từ PPTX, trang 15–27; hw02, Bài 1, 2, 5, 6.
 - `L02-01-04` — Nội dung bài học — Cấu trúc biên tập từ PPTX, trang 2, 15–27.
+- `L02-02-01` — Tác tử và môi trường — PPTX trang 4 (tác tử) và 10, 20 (thành phần giao diện)
+- `L02-02-02` — Một bước trong mê cung — PPTX trang 25–26 (bài toán mê cung), 7–9 (tín hiệu thưởng)
+- `L02-02-03` — Thứ tự tương tác — PPTX trang 14–15 (giao diện), 16 (trạng thái/quan sát)
+- `L02-02-04` — Tín hiệu học — PPTX trang 7–8 (tín hiệu học); hw02 bài 1
+- `L02-02-05` — Phần thưởng và mục tiêu — PPTX trang 9 (thưởng) và 25 (mê cung với -1 mỗi bước)
+- `L02-02-06` — Phản hồi trễ — PPTX trang 4 (phần thưởng bị trễ) và 11 (cờ)
+- `L02-02-07` — Kiểm tra vòng tương tác — PPTX trang 27 (quiz); bài luyện suy ra từ trang 25–26 và hw02 bài 6, 10
 
 ## Ánh xạ toàn bộ nguồn
 
