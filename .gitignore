@@ -30,7 +30,7 @@ openrouter-mcp/tmp/
 !2627-1/index.html
 !2627-1/lecture-*.html
 2627-1/lecture-template.html
-!2627-1/lecture-style.css
+!2627-1/lecture-slide.css
 !2627-1/material-viewer.html
 !2627-1/material-viewer.css
 !2627-1/material-viewer.js

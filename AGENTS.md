@@ -40,7 +40,7 @@ Khi có xung đột, tuân theo thứ tự sau:
 1. Chỉ dẫn cụ thể của người dùng cho bài đang làm.
 2. Bộ trang chiếu được người dùng chọn trong `RL-hk2-2025-2026/`.
 3. Tài liệu bổ sung và tài sản liên quan do người dùng cung cấp.
-4. `2627-1/lecture-template.html` và `2627-1/lecture-style.css` về giao diện và nền kỹ thuật.
+4. `2627-1/lecture-template.html` và `2627-1/lecture-slide.css` về giao diện và nền kỹ thuật.
 5. Các quy ước trong tệp này.
 
 Giữ mạch, thứ tự và ý chính của nguồn. Chỉ gộp, tách, thêm, lược hoặc sắp xếp cục bộ khi cần sửa lỗi, giảm quá tải, khôi phục tiên quyết, hoàn thiện mạch học tập hoặc bảo đảm khả năng đọc. Mọi sai khác phải có lý do trong storyboard và nhật ký rà soát.
@@ -52,7 +52,7 @@ Sau khi người dùng chọn tệp nguồn, điều phối viên phải:
 - đọc tệp nguồn và kiểm tra các tài liệu liên quan trong `RL-hk2-2025-2026/resources/`;
 - bỏ qua `.DS_Store`, tệp có tiền tố `._` và tệp tạm có tiền tố `~$`;
 - xác định số bài, tên bài, mục tiêu, kiến thức tiên quyết, phạm vi, số trang và các tài sản được dùng;
-- đọc `2627-1/lecture-template.html`, `lecture-style.css` và `index.html` trước khi lập kế hoạch;
+- đọc `2627-1/lecture-template.html`, `lecture-slide.css` và `index.html` trước khi lập kế hoạch;
 - kiểm kê các hình, biểu đồ, sơ đồ, bảng, công thức và đoạn code phải chuyển;
 - xác định phần nào của nguồn là nội dung, bố cục, ghi chú, tài liệu tham khảo hoặc tài sản trực quan;
 - chỉ hỏi người dùng về thông tin không thể suy ra từ kho và có thể làm thay đổi đáng kể kết quả.
@@ -85,8 +85,9 @@ Mỗi bài dùng cấu trúc sau:
 ## Mẫu RevealJS bắt buộc
 
 - Dùng `2627-1/lecture-template.html` làm nền. Chỉ kế thừa cấu trúc, giao diện và cấu hình kỹ thuật; không sao chép chủ đề, nội dung hoặc siêu dữ liệu (metadata) của bài mẫu.
-- Dùng `2627-1/lecture-style.css`, màu, phông chữ, khoảng cách, thẻ, lưới và chân trang hiện có. Không tạo hệ giao diện mới.
-- Tham khảo cách tổ chức bố cục trong kho [uet-iai-course/machine-learning](https://github.com/uet-iai-course/machine-learning), ưu tiên `SLIDE_STYLE_GUIDE.md` và các tệp `2526-2/lecture-*.html`. Áp dụng các nguyên tắc một luận điểm trung tâm, hình hoặc công thức đủ lớn, chú thích nêu kết luận và nhịp mở phần–trực giác–cơ chế–ví dụ–kiểm tra. Không sao chép nội dung, tài sản hoặc CSS từ kho tham khảo; `lecture-template.html`, `lecture-style.css` và các quy ước cục bộ vẫn có ưu tiên cao hơn.
+- Mọi bộ trang chiếu RevealJS trong `2627-1/`, kể cả `lecture-template.html`, phải dùng chung tệp `2627-1/lecture-slide.css` và liên kết bằng đường dẫn tương đối `href="lecture-slide.css"`. Đây là tệp CSS dùng chung cho giao diện bài giảng; không sao chép CSS thành tệp riêng cho từng bài hoặc tạo hệ giao diện mới. Kế thừa màu, phông chữ, khoảng cách, thẻ, lưới và chân trang từ tệp này.
+- Các quy tắc giao diện có thể tái sử dụng phải đặt trong `lecture-slide.css`. Chỉ dùng CSS cục bộ trong HTML cho nhu cầu riêng của một trang mà CSS chung chưa đáp ứng; không ghi đè hệ giao diện chung. Các tệp CSS của RevealJS và tiện ích vẫn dùng theo mẫu kỹ thuật.
+- Tham khảo cách tổ chức bố cục trong kho [uet-iai-course/machine-learning](https://github.com/uet-iai-course/machine-learning), ưu tiên `SLIDE_STYLE_GUIDE.md` và các tệp `2526-2/lecture-*.html`. Áp dụng các nguyên tắc một luận điểm trung tâm, hình hoặc công thức đủ lớn, chú thích nêu kết luận và nhịp mở phần–trực giác–cơ chế–ví dụ–kiểm tra. Không sao chép nội dung, tài sản hoặc CSS từ kho tham khảo; `lecture-template.html`, `lecture-slide.css` và các quy ước cục bộ vẫn có ưu tiên cao hơn.
 - Giữ `lang="vi"`, khung `1280 × 720`, `controlsLayout: "edges"`, `slideNumber: true`, `hashOneBasedIndex: true` và `hash: true`.
 - Dùng các thư viện cục bộ trong `2627-1/`: RevealJS, `RevealMath.KaTeX`, `RevealNotes` và `RevealHighlight`.
 - Dùng `<section>` ngoài cho từng phần và `<section>` trong cho từng trang chiếu.
@@ -110,6 +111,23 @@ Mỗi bài dùng cấu trúc sau:
 
 ## Cấu trúc học tập
 
+### Các loại phần chính trong bộ trang chiếu
+
+Mỗi `<section>` ngoài là một mạch trình bày có chức năng riêng đối với vấn đề trung tâm của bài. Mỗi mạch phải có điểm vào nhận kiến thức, kết quả hoặc vấn đề còn lại từ mạch trước và đầu ra đủ rõ để mạch sau sử dụng. Giữ quy mô 5–7 mạch theo mục “Mẫu RevealJS bắt buộc”; không chia một mạch liền lạc hoặc tạo phần trang trí chỉ để đạt số lượng.
+
+Tổ chức các phần theo vai trò sau, đồng thời giữ thứ tự và ý chính của nguồn:
+
+- **Mở đầu:** giới thiệu tên học phần, số bài, chủ đề và đơn vị theo thông tin đã xác minh; nêu mục tiêu có thể quan sát hoặc đánh giá, kiến thức tiên quyết, bản đồ nội dung và vấn đề trung tâm cần giải quyết. Viết vấn đề dưới dạng quyết định, bài toán hoặc giới hạn cụ thể, không dùng câu hỏi tu từ. Đầu ra của phần này là nhu cầu học khái niệm đầu tiên; không chỉ liệt kê mục lục.
+- **Phát triển kiến thức:** mỗi phần giải quyết một khía cạnh của vấn đề trung tâm theo chu trình học tập bên dưới. Mở phần bằng nhu cầu chưa được giải quyết hoặc giới hạn của kết quả trước; xây dựng trực giác và ví dụ trước khi đưa định nghĩa, công thức hay thuật toán. Kết phần bằng kết quả có thể dùng tiếp và một câu nối nêu rõ nhu cầu của phần sau. Có thể có nhiều phần loại này, nhưng mỗi phần phải tạo một bước tiến riêng.
+- **Ứng dụng và luyện tập:** dùng trực tiếp khái niệm, công thức hoặc thuật toán vừa xây dựng để tính, giải thích, so sánh hoặc ra quyết định trong một bài toán Học tăng cường. Nêu dữ kiện, yêu cầu và sản phẩm cần đạt; không đòi hỏi kỹ thuật hay giả thiết chưa được chuẩn bị. Gợi ý hoặc đáp án đặt trong ghi chú diễn giả. Mặc định đặt ứng dụng và câu hỏi kiểm tra ngay sau cụm khái niệm liên quan; chỉ tách thành phần riêng khi cần tổng hợp nhiều kết quả và nguồn cho phép. Phần tổng hợp không thay thế bước ứng dụng và kiểm tra của từng khái niệm trọng tâm. Mọi lời mời tương tác vẫn dùng nhãn **“Câu hỏi:”**.
+- **Kết luận:** trở lại vấn đề mở đầu, đối chiếu kết quả đã đạt với mục tiêu học tập và nêu điều kiện áp dụng hoặc giới hạn cần nhớ. Có câu hỏi tự kiểm tra, bài tập và tài liệu đọc khi có căn cứ từ nguồn. Đầu ra là những việc người học có thể thực hiện sau bài và kiến thức cần mang sang bài tiếp theo nếu xác định được từ nguồn. Không chỉ lặp lại mục lục, không đưa khái niệm trọng tâm mới vào phần kết luận.
+
+Các vai trò trên không tương ứng cứng với bốn `<section>` ngoài. Ứng dụng và luyện tập có thể nằm trong các phần phát triển kiến thức; mạch mở đầu và mạch kết luận luôn phải có. Phân bổ phần trình chiếu chính trong 120 phút; giữ 30 phút chữa bài tập và trình diễn mã theo phạm vi đã quy định, không tự bổ sung code demo.
+
+Nếu nguồn có nội dung lịch sử, trình bày theo quan hệ **vấn đề hoặc giới hạn trước đó → nhu cầu mới → ý tưởng được đưa ra → hệ quả còn dùng hiện nay**. Chỉ giữ mốc thời gian, tên người và thuật toán khi chúng giải thích sự thay đổi phương pháp. Đặt nội dung này vào mạch khái niệm liên quan; chỉ tách thành phần riêng khi có chức năng rõ đối với vấn đề trung tâm. Không dùng danh sách niên đại tách rời lập luận hoặc lời ca tụng.
+
+### Chu trình cho từng khái niệm
+
 Mỗi khái niệm trọng tâm đi theo chu trình:
 
 **vấn đề → trực giác → ví dụ → hình thức/thuật toán → ứng dụng → kiểm tra**
@@ -121,13 +139,52 @@ Mỗi khái niệm trọng tâm đi theo chu trình:
 - **Ứng dụng:** dùng trực tiếp kết quả vừa xây dựng trong một bài toán Học tăng cường.
 - **Kiểm tra:** yêu cầu người học tính, giải thích, so sánh, chứng minh hoặc áp dụng.
 
-Không bắt buộc sáu bước là sáu trang riêng. Có thể gộp khi trang vẫn có một luận điểm trung tâm. Với khái niệm phụ, có thể dùng chu trình rút gọn nếu storyboard ghi rõ lý do. Không đảo thứ tự hoặc bỏ ngầm một bước đối với khái niệm trọng tâm.
+Ví dụ dẫn nhập có thể đặt cùng hoặc ngay sau vấn đề, trước trực giác, theo chuỗi **vấn đề + ví dụ dẫn nhập → trực giác → hình thức/thuật toán → ứng dụng → kiểm tra**. Storyboard phải ghi rõ ví dụ làm cụ thể vấn đề nào và dữ kiện nào được dùng tiếp. Không mở đầu khái niệm trọng tâm bằng định nghĩa hoặc ký hiệu khi vấn đề, đại lượng và trực giác chưa được thiết lập.
+
+Không bắt buộc sáu bước là sáu trang riêng. Có thể gộp khi trang vẫn có một luận điểm trung tâm. Với khái niệm phụ, có thể dùng chu trình rút gọn nếu storyboard ghi rõ lý do. Ngoài cách đặt ví dụ dẫn nhập đã nêu, không đảo thứ tự hoặc bỏ ngầm một bước đối với khái niệm trọng tâm.
+
+### Phần về khái niệm
+
+Phần về khái niệm phải giúp người học nhận diện đúng đối tượng, giải thích ý nghĩa và dùng được khái niệm trong bài toán đang học. Đây là một dạng phần phát triển kiến thức; không bắt buộc mỗi khái niệm có một `<section>` ngoài riêng.
+
+Trình bày theo chu trình đã quy định, với các yêu cầu cụ thể:
+
+1. **Vấn đề:** chỉ ra điều chưa mô tả, phân biệt hoặc tính được bằng kiến thức đã có; nêu vai trò của khái niệm mới trong việc giải quyết thiếu hụt đó.
+2. **Trực giác:** giải thích đối tượng và quan hệ bằng lời hoặc hình trước khi đưa ký hiệu. Phân biệt rõ diễn giải trực giác với định nghĩa chính thức.
+3. **Ví dụ:** dùng một trường hợp nhỏ có thể tính hoặc kiểm tra; xác định rõ dữ kiện và đại lượng đang xét. Khi phù hợp, thêm phản ví dụ hoặc trường hợp biên có căn cứ để làm rõ ranh giới của khái niệm.
+4. **Hình thức:** phát biểu định nghĩa với miền xác định, kiểu đại lượng, ký hiệu và giả thiết cần thiết. Dùng lại dữ kiện và ký hiệu của ví dụ, hoặc nêu ánh xạ rõ ràng. Phân biệt định nghĩa, tính chất, định lý và nhận xét; với công thức, giải thích từng thành phần và ý nghĩa trong bài toán. Nếu cần chứng minh, nêu mục tiêu, ý tưởng, bước then chốt và điểm dùng giả thiết; tách suy diễn dài sang trang kế tiếp hoặc ghi chú.
+5. **Ứng dụng:** dùng định nghĩa hoặc tính chất vừa xây dựng để giải quyết vấn đề đã nêu. Chỉ rõ kết quả nào được dùng tiếp trong khái niệm hoặc thuật toán sau.
+6. **Kiểm tra:** yêu cầu người học nhận diện trường hợp thỏa định nghĩa, phân biệt khái niệm dễ nhầm, tính một đại lượng hoặc giải thích tác động khi thay giả thiết. Gợi ý và đáp án phải dựa trên kiến thức đã trình bày.
+
+Không coi việc nêu tên, chép định nghĩa và liệt kê tính chất là đã hoàn thành phần khái niệm. Đầu ra phải là một năng lực có thể kiểm tra, chẳng hạn phân biệt trạng thái với quan sát hoặc tính giá trị từ một mô hình đã cho, khi phù hợp với nguồn.
+
+### Phần về thuật toán
+
+Phần về thuật toán phải giúp người học giải thích cơ chế, thực hiện được một bước hoặc một lượt lặp và xác định điều kiện sử dụng. Chỉ giới thiệu thuật toán sau các khái niệm và mục tiêu mà nó cần; không dùng giả mã để đưa ngầm kiến thức tiên quyết mới.
+
+Trình bày theo chu trình đã quy định, với các yêu cầu cụ thể:
+
+1. **Vấn đề:** nêu bài toán cần giải, đại lượng cần tìm và giới hạn của cách làm đã biết. Xác định đây là dự đoán hay điều khiển, có mô hình hay phi mô hình, theo chính sách hay khác chính sách khi các phân biệt này phù hợp.
+2. **Trực giác:** giải thích thông tin thuật toán dùng, đại lượng nó thay đổi và cơ chế tạo ra thay đổi. Với quy tắc cập nhật, làm rõ ước lượng hiện tại, mục tiêu cập nhật và sai lệch giữa chúng trước khi viết công thức tổng quát.
+3. **Ví dụ:** thực hiện bằng tay một bước hoặc một lượt lặp trên dữ kiện nhỏ, có giá trị khởi tạo và kết quả trung gian kiểm tra được. Giải thích phép tính bằng cơ chế vừa nêu, rồi dùng chính ví dụ này để chuẩn bị ký hiệu cho công thức và giả mã.
+4. **Hình thức và quy trình:** nêu đầu vào, đầu ra, giả thiết, khởi tạo, tham số, công thức cập nhật, thứ tự thao tác và điều kiện dừng hoặc ngân sách chạy. Giả mã hay sơ đồ phải đủ rõ để lần theo ví dụ; phân biệt đại lượng cũ, mới và được giữ cố định. Với dữ liệu lấy mẫu, chỉ rõ nguồn mẫu và chính sách sinh dữ liệu khi phù hợp; xử lý trạng thái kết thúc và phân biệt kết thúc một lượt tương tác với dừng toàn bộ thuật toán.
+5. **Ứng dụng và đánh giá:** dùng quy trình đầy đủ cho bài toán đã đặt, đối chiếu với bước tính tay và nêu cách đánh giá đầu ra. Trình bày chi phí tính toán, bộ nhớ, điều kiện hội tụ và giới hạn thực hành khi nguồn có hoặc khi thiếu sẽ gây hiểu sai. Phân biệt bảo đảm lý thuyết với tiêu chuẩn dừng thực hành; không coi hết ngân sách chạy hoặc một ví dụ thành công là bằng chứng hội tụ.
+6. **Kiểm tra:** yêu cầu người học thực hiện bước tiếp theo, tìm lỗi trong cập nhật, giải thích vai trò của tham số hoặc chọn thuật toán dựa trên giả thiết đã học. Bài kiểm tra phải đo hiểu cơ chế và điều kiện áp dụng, không chỉ nhớ tên hay chép giả mã.
+
+Nếu giới thiệu biến thể, nêu rõ giới hạn cần khắc phục, thành phần thay đổi và hệ quả đối với dữ liệu, mục tiêu cập nhật hoặc chi phí. Giữ ký hiệu chung để so sánh; không trình bày một danh sách thuật toán rời rạc. Ví dụ tính tay, công thức và giả mã phải cho kết quả nhất quán. Không tự bổ sung chương trình hoặc notebook để thay cho giải thích thuật toán.
+
+Hai dạng phần trên vẫn tuân theo quy định về nguồn, cách đặt ví dụ dẫn nhập và việc gộp bước. Mọi bổ sung để khôi phục tiên quyết hoặc sửa thiếu sót của nguồn phải được truy nguyên và ghi lý do trong storyboard cùng nhật ký rà soát.
+
+### Ghi nhận trong storyboard
+
+Storyboard phải có bản đồ các phần, ghi loại phần, chức năng riêng, kiến thức đầu vào, kết quả đầu ra và đóng góp cho vấn đề trung tâm. Với từng trang, ghi lý do tồn tại, nhu cầu học tập được giải quyết, quan hệ với trang trước và sau, mục tiêu hoặc sản phẩm học tập được hỗ trợ, cùng quyết định `giữ`, `sửa`, `gộp`, `tách`, `thêm` hoặc `bỏ` và lý do. Không thêm trang chỉ để trang trí hoặc lặp kết luận; mọi thay đổi so với nguồn phải tuân theo thứ tự ưu tiên và được ghi trong nhật ký rà soát.
 
 Storyboard phải chỉ ra cho từng cụm:
 
 - mạch trình bày chứa cụm, chức năng của mạch, kết nối vào từ mạch trước và đầu ra cho mạch sau;
-- mã trang thực hiện từng bước;
+- mã trang thực hiện từng bước; nếu ví dụ dẫn nhập đứng trước trực giác, nêu rõ vấn đề mà ví dụ làm cụ thể;
 - kiến thức đầu vào và sản phẩm học tập;
+- dạng nội dung `khái niệm`, `thuật toán` hoặc kết hợp; với khái niệm, chỉ rõ năng lực nhận diện và sử dụng cần kiểm tra; với thuật toán, chỉ rõ tiên quyết, bước tính tay và trang chứa quy trình đầy đủ;
 - ký hiệu hoặc dữ kiện được truyền từ ví dụ sang công thức hoặc thuật toán;
 - bước được gộp hoặc ghi `không áp dụng`, kèm lý do;
 - câu nối giữa các bước;
@@ -198,7 +255,7 @@ Giao một tác tử soạn:
 - giữ thứ tự nguồn trừ các thay đổi đã được phê duyệt;
 - thêm ghi chú diễn giả và nguồn;
 - không sửa RevealJS, tiện ích (plugin) hoặc CSS dùng chung nếu có thể giải quyết trong tệp bài giảng;
-- nếu cần sửa `lecture-style.css`, phải kiểm tra các bài hiện có không bị hỏng.
+- nếu cần sửa `lecture-slide.css`, phải kiểm tra mẫu và tất cả các bài hiện có sử dụng tệp này không bị hỏng bố cục hoặc khả năng đọc.
 
 ### 4. Kiểm định storyboard
 
@@ -206,7 +263,9 @@ Giao một tác tử chỉ đọc rà từng trang và từng cụm khái niệm
 
 - kiểm tra lý do tồn tại của từng trang có cụ thể và kiểm chứng được;
 - kiểm tra trang tạo một bước tiến trong lập luận hoặc luyện tập;
-- kiểm tra chu trình sáu bước đúng thứ tự và nối được từ ví dụ sang hình thức;
+- kiểm tra chức năng từng loại phần theo mục “Các loại phần chính trong bộ trang chiếu”, đầu vào–đầu ra giữa các phần và việc kết luận giải quyết vấn đề mở đầu;
+- kiểm tra chu trình sáu bước đúng thứ tự, kể cả cách đặt ví dụ dẫn nhập được phép, và nối được từ ví dụ sang hình thức;
+- đối chiếu phần khái niệm và phần thuật toán với yêu cầu riêng tương ứng; kiểm tra ranh giới trực giác–định nghĩa, tiên quyết trước thuật toán và sự nhất quán giữa ví dụ tính tay, công thức, giả mã và câu hỏi kiểm tra;
 - phát hiện trang trùng ý, trang trang trí, trang quá tải và khoảng trống cần bổ sung;
 - kiểm tra thời lượng 120 phút, kiến thức tiên quyết và quan hệ trước–sau;
 - đề xuất quyết định, bằng chứng và tác động đến trang lân cận;
@@ -247,7 +306,9 @@ Các tác tử sửa tệp không được chạy song song.
 
 - đối chiếu số trang nguồn, bảng ánh xạ, `data-slide-id` và mục tương ứng trong storyboard;
 - kiểm tra HTML, cấu trúc `<section>`, KaTeX, tiện ích, ghi chú diễn giả, đường dẫn, SVG và liên kết;
+- kiểm tra mọi bộ trang chiếu và mẫu liên kết đúng tới CSS dùng chung `lecture-slide.css`; không có bản sao CSS giao diện riêng cho từng bài hoặc liên kết tới tên CSS cũ;
 - kiểm tra bài có từ 5 đến 7 `<section>` ngoài, gồm mạch mở đầu và mạch kết luận, hoặc có ngoại lệ hợp lệ đã được ghi trong storyboard và nhật ký;
+- đối chiếu loại phần, chức năng, đầu vào, đầu ra và đóng góp cho vấn đề trung tâm giữa storyboard và HTML; kiểm tra mở đầu thiết lập nhu cầu, các phần kiến thức tạo bước tiến và kết luận thu hồi mục tiêu đã nêu;
 - tìm mọi tham chiếu ảnh raster; chỉ chấp nhận mục có ngoại lệ đã được người dùng duyệt và ghi trong nhật ký;
 - kiểm tra không có tài nguyên hỏng hoặc phụ thuộc mạng cốt lõi;
 - chạy `python3 -m reloadserver 8765` tại thư mục gốc; cổng là đối số vị trí, không dùng `--port`;
@@ -287,7 +348,9 @@ Khi bàn giao, nêu ngắn gọn: tệp trang chiếu, URL cục bộ, tệp ngu
 ## Điều phối mô hình trong dự án
 
 - Codex chính giữ vai trò điều phối viên và thực hiện kiểm định cuối.
-- Người dùng cho phép các worker OpenRouter đọc và gửi nội dung các tệp trong workspace tới OpenRouter để thực hiện nhiệm vụ được giao, ngoại trừ mọi tệp `.env`. Không được đọc, đưa vào prompt, ghi log hoặc gửi nội dung `.env` và các giá trị bí mật chứa trong đó tới OpenRouter.
+- Người dùng cho phép điều phối viên yêu cầu nâng quyền thực thi (`elevate`, `sandbox_permissions: "require_escalated"`) khi cần chạy worker OpenRouter, truy cập mạng tới OpenRouter hoặc sử dụng môi trường chạy và bộ nhớ đệm cần thiết ngoài giới hạn sandbox. Đây là ủy quyền sẵn cho các thao tác phục vụ nhiệm vụ được giao; không cần hỏi lại người dùng cho từng lần gọi. Việc thực thi vẫn chịu cơ chế phê duyệt và giới hạn của môi trường; quy định này không cho phép bỏ qua quyết định từ chối của hệ thống.
+- Người dùng cho phép đọc và gửi nội dung các tệp cục bộ liên quan đến nhiệm vụ tới OpenRouter qua prompt, tệp đính kèm hoặc kết quả công cụ của worker. Phạm vi gồm tệp trong workspace và tài liệu cục bộ bên ngoài workspace mà người dùng đã chỉ định làm nguồn. Chỉ gửi phần cần thiết cho nhiệm vụ; quyền này không cho phép gửi dữ liệu tới dịch vụ khác hoặc tự mở rộng sang tệp không liên quan.
+- Loại trừ mọi tệp `.env` và biến thể như `.env.local`, cùng mọi bí mật dù nằm trong tệp khác: khóa API, mật khẩu, token truy cập, khóa riêng, cookie hoặc thông tin xác thực phiên. Không đọc các tệp bí mật để đưa vào ngữ cảnh tác tử; không đưa bí mật vào prompt, tệp đính kèm, kết quả công cụ, log hoặc nội dung gửi tới mô hình OpenRouter. Với tài liệu có cả nội dung cần dùng và bí mật, chỉ gửi bản trích đã loại bỏ bí mật; nếu chưa bảo đảm loại bỏ được thì không gửi tệp đó. Cầu nối có thể nạp khóa xác thực bằng cơ chế cấu hình sẵn để xác thực yêu cầu API, nhưng không được để lộ khóa trong nội dung tác vụ hoặc log.
 - Chạy worker qua các lệnh `openrouter-mcp-reader`, `openrouter-mcp-reviewer` và `openrouter-mcp-writer` trong `openrouter-mcp/`. Không dùng `collaboration.spawn_agent` cho ba vai trò này và không chuyển ngầm sang worker mặc định khi OpenRouter lỗi.
 - Dùng vai trò `openrouter_reader` qua `openrouter-mcp-reader` cho kiểm kê, lập kế hoạch và phân tích nguồn chỉ đọc.
 - Dùng vai trò `openrouter_reviewer` qua `openrouter-mcp-reviewer` cho các lượt rà soát độc lập chỉ đọc.

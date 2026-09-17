@@ -394,3 +394,23 @@
     height: 46px;
     font-size: 1.15em;
 }
+
+/* Bố cục bài giảng dùng chung; bật bằng class lecture-deck. */
+.reveal.lecture-deck .slides section[data-slide-id] { font-size: .8em; }
+.reveal.lecture-deck h1, .reveal.lecture-deck h2 { color: #2F3E7A; }
+.reveal.lecture-deck h1 { font-size: 2em; }
+.reveal.lecture-deck h2 { font-size: 1.5em; margin-bottom: .65em; }
+.reveal.lecture-deck h3 { font-size: 1.05em; color: #2F3E7A; }
+.reveal.lecture-deck .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: .8em; align-items: center; }
+.reveal.lecture-deck .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: .65em; }
+.reveal.lecture-deck .card { border: 1px solid #c9cdd4; border-radius: 8px; padding: .5em .65em; }
+.reveal.lecture-deck .box { border-left: 5px solid #B15A2B; background: #F7EFE6; padding: .5em .7em; border-radius: 8px; }
+.reveal.lecture-deck .check { background: #edf4ff; border-left: 5px solid #2F3E7A; padding: .5em .7em; }
+.reveal.lecture-deck .figure { display: block; width: auto; max-width: 100%; max-height: 390px; margin: .2em auto; }
+.reveal.lecture-deck .grid2 .figure { max-height: 410px; }
+.reveal.lecture-deck .math-large { font-size: 1.12em; text-align: center; margin: .55em 0; }
+.reveal.lecture-deck .caption { font-size: .82em; color: #424954; margin: .35em 0; font-style: normal; }
+.reveal.lecture-deck table { font-size: .9em; }
+.reveal.lecture-deck th { background: #F7EFE6; }
+.reveal.lecture-deck li { margin: .2em 0; }
+.reveal.lecture-deck .note-source { font-size: .9em; }
