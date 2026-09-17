@@ -20,7 +20,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 
 ## Trạng thái triển khai
 
-Đã có bản viết cho 4/7 phần; chỉ bàn giao khi đủ các vòng rà soát và kiểm định cuối.
+Đã có bản viết cho 5/7 phần; chỉ bàn giao khi đủ các vòng rà soát và kiểm định cuối.
 
 ## Trang đích
 
@@ -48,6 +48,15 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-04-03` — Chính sách xác định — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 - `L02-04-04` — Chính sách ngẫu nhiên — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 - `L02-04-05` — Kiểm tra chính sách — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
+- `L02-05-01` — Kết quả dài hạn của chính sách — PPTX trang 10, 21, 22, 23
+- `L02-05-02` — Tổng phần thưởng trên quỹ đạo — PPTX trang 26; hw02 bài 1
+- `L02-05-03` — Phần thưởng tích lũy — PPTX trang 7–9, 22; hw02 bài 2
+- `L02-05-04` — Giá trị kỳ vọng — PPTX trang 22; ví dụ giả định sư phạm theo hw02 bài 5
+- `L02-05-05` — Hàm giá trị trạng thái — PPTX trang 16–18, 22; hw02 bài 5
+- `L02-05-06` — Kiểm tra giá trị — PPTX trang 22, 26; hw02 bài 1
+- `L02-05-07` — Dự báo bước tiếp theo — PPTX trang 13, 23; hw02 bài 6
+- `L02-05-08` — Mô hình chuyển và phần thưởng — PPTX trang 13, 23; hw02 bài 10
+- `L02-05-09` — Kiểm tra mô hình — PPTX trang 13, 24, 27; hw02 bài 6
 
 ## Ánh xạ toàn bộ nguồn
 

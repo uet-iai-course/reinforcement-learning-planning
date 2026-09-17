@@ -45,3 +45,7 @@ Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; p
 ## Phần 4 — kiểm tra và chỉnh sửa
 
 Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter. Năm trang,15 phút. Sửa ký hiệu tập thành mathcal X/A và phân biệt X_t với S_t; dùng không âm thay vì dương. Sửa hướng Đông tại(1,2) thực tế là tường, vẫn được chọn nhưng đứng yên. Đưa đáp án0,3 vào notes, bổ sung nguồn writer bỏ thiếu; bỏ chỉ dẫn thiết kế. Kiểm tra10lượt rộng/hẹp đủ5trang, không tràn, lỗi KaTeX, ảnh hỏng, HTTP hay JavaScript lỗi. Đã xem công thức chính sách xác định/ngẫu nhiên.
+
+## Phần 5 — kiểm tra và chỉnh sửa
+
+Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter. Chín trang,25 phút. Sửa hướng đoạn cuối thành Nam–Đông–Đông; tách ví dụ ngẫu nhiên khỏi mê cung xác định; sửa điều kiện kỳ vọng hữu hạn, phân biệt dừng gần chắc chắn với kỳ vọng thời gian dừng hữu hạn. Công thức mô hình dùng điều kiện đầy đủ. Bỏ đáp án trên mặt câu hỏi và lời bình quy trình. Sửa escape dấu nhỏ hơn trong HTML; bổ sung kiểm tra dấu dollar còn sót. 18 lượt rộng/hẹp không tràn, không rawMath, lỗi KaTeX, ảnh hỏng hoặc lỗi tài nguyên/JavaScript. Đã tính lại tổng -1,-1.75,-3 và kỳ vọng -4; vòng rà toán độc lập cuối bài vẫn bắt buộc.
