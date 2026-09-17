@@ -112,6 +112,33 @@
 <aside class="notes">Hai trường hợp đầu đầy đủ nếu quan sát cho phép xác định chính xác vị trí trong mê cung cố định. Trường hợp ba là một phần, như cặp vị trí (2,1) và (3,1). Với robot chỉ có cảm biến gần, kết luận cũng phụ thuộc khả năng định vị và thông tin bị che khuất. Sau khi chọn biểu diễn $X_t$, tác tử cần một quy tắc dùng biểu diễn đó để chọn hành động.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 27 (quiz); các trường hợp từ trang 16, 18, 19 và ảnh maze-local.svg.</p></aside>
 </section>
 </section>
+<section>
+<section data-slide-id="L02-04-01">
+<h2>Quy tắc lựa chọn hành động</h2>
+<div class="grid2"><img class="figure" src="img/lec-02/source-policy.svg" alt="Mũi tên chính sách trên từng ô đi được của mê cung nguồn; tại (1,2) chọn Bắc."/><div><p>Biết vị trí chưa xác định được hành động cần chọn.</p><p class="box">Chính sách quy định cách chọn hành động từ thông tin hiện có.</p></div></div>
+<aside class="notes">Mỗi mũi tên trong mê cung gán một hành động cho một vị trí. Tại (1,2), quy tắc minh họa chọn Bắc. Một tác tử khác có thể chọn hành động khác dù nhận cùng tọa độ. Chính sách mô tả sự lựa chọn đó; mô hình môi trường mô tả kết quả khi thực hiện lựa chọn.<p class="note-source"><strong>Nguồn:</strong> PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.</p></aside>
+</section>
+<section data-slide-id="L02-04-02">
+<h2>Ví dụ về chính sách</h2>
+<p>Tại $x=(1,2)$, xét hai quy tắc chọn hành động.</p><table><thead><tr><th>Quy tắc</th><th>Bắc</th><th>Đông</th><th>Nam</th><th>Tây</th></tr></thead><tbody><tr><td>Luôn Bắc</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Bắc hoặc Đông</td><td>0,5</td><td>0,5</td><td>0</td><td>0</td></tr></tbody></table><p class="caption">Các số là xác suất chọn. Tại ô này, chọn Đông gặp tường và giữ nguyên vị trí.</p>
+<aside class="notes">Ở đây, $x$ là một giá trị của biểu diễn $X_t$, cụ thể là cặp tọa độ (1,2). Mọi hướng đều có thể được chọn; đi vào tường giữ nguyên vị trí và vẫn nhận âm một. Quy tắc thứ nhất luôn chọn Bắc. Quy tắc thứ hai chọn Bắc hoặc Đông với xác suất bằng nhau. Tính ngẫu nhiên tự nó không bảo đảm chất lượng tốt hơn.<p class="note-source"><strong>Nguồn:</strong> PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.</p></aside>
+</section>
+<section data-slide-id="L02-04-03">
+<h2>Chính sách xác định</h2>
+<p>Với mỗi biểu diễn đầu vào, chính sách xác định chọn một hành động.</p><div class="math-large">$$\pi:\mathcal X\to\mathcal A,\qquad A_t=\pi(X_t).$$</div><table><thead><tr><th>$x$</th><th>$\pi(x)$</th></tr></thead><tbody><tr><td>$(0,2)$</td><td>Đông</td></tr><tr><td>$(1,2)$</td><td>Bắc</td></tr><tr><td>$(1,1)$</td><td>Đông</td></tr></tbody></table>
+<aside class="notes">$\mathcal X$ là tập biểu diễn quyết định, $\mathcal A$ là tập hành động. Bảng cho ba giá trị của cùng chính sách; các vị trí còn lại cần được quy định khi sử dụng trên toàn mê cung. Ta xét chính sách không thay đổi theo thời gian. Chính sách là quy tắc đang dùng; thuật toán học là cách tạo hoặc thay đổi quy tắc đó.<p class="note-source"><strong>Nguồn:</strong> PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.</p></aside>
+</section>
+<section data-slide-id="L02-04-04">
+<h2>Chính sách ngẫu nhiên</h2>
+<p>Với $x\in\mathcal X$, chính sách cho một phân phối trên $\mathcal A$.</p><div class="math-large">$$\pi(a\mid x)=\Pr(A_t=a\mid X_t=x).$$</div><p>$\pi(a\mid x)\ge0$, và $\sum_{a\in\mathcal A}\pi(a\mid x)=1$.</p><p>Trong mê cung: $\mathcal A=\{\text{Bắc},\text{Đông},\text{Nam},\text{Tây}\}$.</p><p class="box">Nếu dùng trạng thái đầy đủ làm đầu vào, chọn $X_t=S_t$.</p>
+<aside class="notes">Với mỗi $x$ cố định, các xác suất phải không âm và cộng thành một. Chính sách xác định là trường hợp đặt xác suất một vào đúng một hành động. Khi quan sát đầy đủ và chọn $X_t=S_t$, có thể viết $\pi(a\mid s)$. Với quan sát một phần, đầu vào vẫn là biểu diễn mà tác tử thực sự có.<p class="note-source"><strong>Nguồn:</strong> PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.</p></aside>
+</section>
+<section data-slide-id="L02-04-05">
+<h2>Kiểm tra chính sách</h2>
+<div class="check"><p><strong>Câu hỏi:</strong> Cho $\pi(\text{Bắc}\mid x)=0{,}2$, $\pi(\text{Đông}\mid x)=0{,}5$ và $\pi(\text{Tây}\mid x)=0$.</p><p>Tính $\pi(\text{Nam}\mid x)$ và phân loại chính sách.</p></div><p>So sánh chất lượng các chính sách cần xét phần thưởng tương lai.</p>
+<aside class="notes">Xác suất chọn Nam là $1-0{,}2-0{,}5-0=0{,}3$. Chính sách ngẫu nhiên vì nhiều hành động có xác suất dương. Điều kiện chuẩn hóa chỉ xác nhận đây là phân phối hợp lệ. Để so sánh quy tắc này với một chính sách khác, cần đánh giá các phần thưởng mà chúng tạo ra về sau.<p class="note-source"><strong>Nguồn:</strong> PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.</p></aside>
+</section>
+</section>
 <div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 02</div>
 </div></div>
 <script src="revealjs/dist/reveal.js"></script>

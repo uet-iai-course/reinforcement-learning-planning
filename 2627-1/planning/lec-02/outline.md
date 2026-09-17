@@ -20,7 +20,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 
 ## Trạng thái triển khai
 
-Đã có bản viết cho 3/7 phần; chỉ bàn giao khi đủ các vòng rà soát và kiểm định cuối.
+Đã có bản viết cho 4/7 phần; chỉ bàn giao khi đủ các vòng rà soát và kiểm định cuối.
 
 ## Trang đích
 
@@ -43,6 +43,11 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-03-06` — Quan sát đầy đủ và một phần — PPTX trang 18 (đầy đủ) và trang 19 (một phần); ảnh maze-local.svg từ trang 25-26.
 - `L02-03-07` — Biểu diễn dùng để quyết định — PPTX trang 14-15 (giao diện) và trang 21; ví dụ xe hai thời điểm từ trang 12.
 - `L02-03-08` — Kiểm tra thông tin quan sát — PPTX trang 27 (quiz); các trường hợp từ trang 16, 18, 19 và ảnh maze-local.svg.
+- `L02-04-01` — Quy tắc lựa chọn hành động — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
+- `L02-04-02` — Ví dụ về chính sách — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
+- `L02-04-03` — Chính sách xác định — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
+- `L02-04-04` — Chính sách ngẫu nhiên — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
+- `L02-04-05` — Kiểm tra chính sách — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 
 ## Ánh xạ toàn bộ nguồn
 

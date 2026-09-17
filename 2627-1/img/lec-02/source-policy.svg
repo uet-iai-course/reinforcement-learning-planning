@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 570" role="img" aria-labelledby="title desc"><title id="title">Chính sách trên mê cung</title><desc id="desc">Mê cung tám hàng tám cột theo trang 25–26 nguồn. Bắt đầu tại (0,2). Đích G ngoài lưới tại (8,6). Chính sách minh họa cần 16 bước từ điểm bắt đầu, thưởng âm một mỗi bước.</desc>
+<defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#B15A2B"/></marker></defs>
+<g font-family="Arial,sans-serif" text-anchor="middle">
+<rect x="110" y="48" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="168" y="48" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="226" y="48" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="284" y="48" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="342" y="48" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="400" y="48" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="458" y="48" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="516" y="48" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="110" y="106" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="168" y="106" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M181.0 135.0L214.0 135.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="226" y="106" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M239.0 135.0L272.0 135.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="284" y="106" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M297.0 135.0L330.0 135.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="342" y="106" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M355.0 135.0L388.0 135.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="400" y="106" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M413.0 135.0L446.0 135.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="458" y="106" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M487.0 119.0L487.0 152.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="516" y="106" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="110" y="164" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M123.0 193.0L156.0 193.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="168" y="164" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M197.0 209.0L197.0 176.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="226" y="164" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="284" y="164" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="342" y="164" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M371.0 209.0L371.0 176.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="400" y="164" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="458" y="164" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M487.0 177.0L487.0 210.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="516" y="164" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="110" y="222" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="168" y="222" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M197.0 267.0L197.0 234.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="226" y="222" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M271.0 251.0L238.0 251.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="284" y="222" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="342" y="222" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="400" y="222" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M429.0 235.0L429.0 268.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="458" y="222" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M503.0 251.0L470.0 251.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="516" y="222" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="110" y="280" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="168" y="280" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="226" y="280" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M255.0 325.0L255.0 292.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="284" y="280" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M329.0 309.0L296.0 309.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="342" y="280" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="400" y="280" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M429.0 293.0L429.0 326.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="458" y="280" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="516" y="280" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="110" y="338" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="168" y="338" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M197.0 351.0L197.0 384.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="226" y="338" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="284" y="338" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M313.0 383.0L313.0 350.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="342" y="338" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="400" y="338" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M413.0 367.0L446.0 367.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="458" y="338" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M487.0 351.0L487.0 384.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="516" y="338" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="110" y="396" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="168" y="396" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M181.0 425.0L214.0 425.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="226" y="396" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M239.0 425.0L272.0 425.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="284" y="396" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M313.0 441.0L313.0 408.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="342" y="396" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M387.0 425.0L354.0 425.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="400" y="396" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="458" y="396" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M471.0 425.0L504.0 425.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="516" y="396" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<path d="M529.0 425.0L562.0 425.0" stroke="#B15A2B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="110" y="454" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="168" y="454" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="226" y="454" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="284" y="454" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="342" y="454" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="400" y="454" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="458" y="454" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="516" y="454" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<text x="139.0" y="35" font-size="25" fill="#424954">0</text>
+<text x="95" y="84.0" font-size="25" fill="#424954">0</text>
+<text x="197.0" y="35" font-size="25" fill="#424954">1</text>
+<text x="95" y="142.0" font-size="25" fill="#424954">1</text>
+<text x="255.0" y="35" font-size="25" fill="#424954">2</text>
+<text x="95" y="200.0" font-size="25" fill="#424954">2</text>
+<text x="313.0" y="35" font-size="25" fill="#424954">3</text>
+<text x="95" y="258.0" font-size="25" fill="#424954">3</text>
+<text x="371.0" y="35" font-size="25" fill="#424954">4</text>
+<text x="95" y="316.0" font-size="25" fill="#424954">4</text>
+<text x="429.0" y="35" font-size="25" fill="#424954">5</text>
+<text x="95" y="374.0" font-size="25" fill="#424954">5</text>
+<text x="487.0" y="35" font-size="25" fill="#424954">6</text>
+<text x="95" y="432.0" font-size="25" fill="#424954">6</text>
+<text x="545.0" y="35" font-size="25" fill="#424954">7</text>
+<text x="95" y="490.0" font-size="25" fill="#424954">7</text>
+<text x="42" y="185.0" font-size="19" fill="#2F3E7A">Bắt</text>
+<text x="42" y="208.0" font-size="19" fill="#2F3E7A">đầu →</text>
+<path d="M580 425.0H620" stroke="#B15A2B" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="660" y="421.0" font-size="25" fill="#2F3E7A">Đích G</text>
+<text x="660" y="450.0" font-size="25" fill="#424954">(8,6)</text>
+<text x="360" y="548" font-size="23" fill="#424954">x: cột, y: hàng · Tường tô đậm · Ô đi được để trắng</text>
+</g></svg>

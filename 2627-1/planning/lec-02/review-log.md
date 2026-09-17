@@ -41,3 +41,7 @@ Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; p
 ## Phần 3 — kiểm tra và chỉnh sửa
 
 Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter. Tám trang,25 phút. Sửa dữ kiện xe cho khớp hình1/5m/s cùng phanh; bỏ khẳng định X bắt buộc dùng lịch sử; phát biểu Markov xét biến cố điều kiện có xác suất dương, không yêu cầu xác suất kết quả dương. Công thức hai dòng đủ lớn. Loại lời bình về slide, chỉ dẫn người viết, câu tu từ; bài kiểm tra còn3trường hợp và robot trong đáp án. Thay hình nhỏ lặp bằng bảng, thêm lề tránh nút điều hướng. Kiểm tra16lượt rộng/hẹp không lỗi và kiểm tra lại cả3phần sau đổi lề.
+
+## Phần 4 — kiểm tra và chỉnh sửa
+
+Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter. Năm trang,15 phút. Sửa ký hiệu tập thành mathcal X/A và phân biệt X_t với S_t; dùng không âm thay vì dương. Sửa hướng Đông tại(1,2) thực tế là tường, vẫn được chọn nhưng đứng yên. Đưa đáp án0,3 vào notes, bổ sung nguồn writer bỏ thiếu; bỏ chỉ dẫn thiết kế. Kiểm tra10lượt rộng/hẹp đủ5trang, không tràn, lỗi KaTeX, ảnh hỏng, HTTP hay JavaScript lỗi. Đã xem công thức chính sách xác định/ngẫu nhiên.

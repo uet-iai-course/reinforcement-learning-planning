@@ -289,3 +289,83 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 27 (quiz); các trường hợp t�
 - **Kết nối ra:** Câu X_t làm đối số chính sách mở sang section 4 về chính sách lựa chọn hành động.
 - **Sản phẩm học tập/kiểm tra:** Bốn câu trả lời có giả thiết; đáp án chi tiết trong notes để đối chiếu.
 - **Quyết định nguồn:** Sửa: trang 27 là quiz chung; chọn bốn trường hợp bám đúng nội dung trạng thái/quan sát của section, thêm yêu cầu giả thiết để câu hỏi phân loại có tính kiểm tra rõ ràng.
+
+## Phần 4: Chính sách lựa chọn hành động — 15 phút
+
+- **Chức năng:** Định nghĩa chính sách là quy tắc chọn hành động từ thông tin hiện có, phân biệt loại xác định và loại ngẫu nhiên, và chỉ ra rằng so sánh chính sách đòi hỏi đánh giá tương lai.
+- **Tiên quyết:** Sinh viên cần khái niệm trạng thái/quan sát từ phần 3, tập hành động và phần thưởng từ phần 2, ký hiệu xác suất rời rạc cơ bản.
+- **Kết nối vào:** Nhận từ phần 3 vị trí (2,1)/(3,1) với ảnh bốn ô kề, và quy ước đi vào tường thì đứng yên đã dùng trong mê cung nguồn.
+- **Kết nối ra:** Ký hiệu $\pi$ và ví dụ hàng xác suất được phần 5 dùng lại khi định nghĩa hàm giá trị và phần 6 khi phân biệt dự đoán/điều khiển.
+- **Mạch phù hợp sinh viên năm 3:** Sinh viên năm 3 quen khái niệm hàm và phân phối xác suất nên đường vào tự nhiên là chính sách như hàm hoặc phân phối có điều kiện, đặt trên nền ví dụ mê cung cụ thể trước công thức.
+
+### Cụm Chính sách là quy tắc lựa chọn hành động
+
+- vấn đề: L02-04-01
+- trực giác: L02-04-01
+- ví dụ: L02-04-02
+- hình thức: L02-04-03, L02-04-04
+- ứng dụng: L02-04-04
+- kiểm tra: L02-04-05
+- Gộp bước/ngoại lệ: Không áp dụng cho phần mở/kết: đây là phần giữa có chu kỳ khái niệm đầy đủ.
+- Dữ kiện truyền tiếp: Ví dụ xác suất (0.5 Bắc, 0.5 Đông) và bảng áp dụng (0,2)→Đông, (1,2)→Bắc, (1,1)→Đông đi xuyên suốt ba slide giữa.
+- Câu nối: Phần 5 nhận $\pi$ làm dữ kiện và gán cho mỗi chính sách một số lượng chất qua hàm giá trị.
+
+### L02-04-01 — Quy tắc lựa chọn hành động
+
+Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa..
+
+- **Luận điểm:** Thông tin quan sát không tự chọn thay tác tử; cần một quy tắc bổ sung gọi là chính sách.
+- **Nhu cầu và lý do tồn tại:** Phần 3 kết thúc ở quan sát; sinh viên cần thấy khoảng trống giữa quan sát và hành động trước khi có định nghĩa.
+- **Cách thể hiện và độ phù hợp năm 3:** Hình toàn bộ chính sách nguồn, một câu nêu quy tắc; dùng ô(1,2) làm điểm neo trước ví dụ xác suất.
+- **Kết nối vào:** Ảnh bốn ô kề tại (2,1),(3,1) từ phần 3.
+- **Kết nối ra:** Ví dụ chính sách cụ thể tại x=(1,2) ở slide kế.
+- **Sản phẩm học tập/kiểm tra:** Hỏi miệng: tại ô hai lối, đâu là dữ kiện môi trường và đâu là quyết định tác tử.
+- **Quyết định nguồn:** Giữ nội dung trang 21, tách bỏ phần định nghĩa hình thức để dành cho slide sau.
+
+### L02-04-02 — Ví dụ về chính sách
+
+Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa..
+
+- **Luận điểm:** Cùng một trạng thái cho phép nhiều chính sách khác nhau, gồm hành động cố định và phân phối hành động.
+- **Nhu cầu và lý do tồn tại:** Trước ký hiệu $\pi$, sinh viên cần thấy chính sách tồn tại dưới nhiều dạng trên một ví dụ mê cung cụ thể.
+- **Cách thể hiện và độ phù hợp năm 3:** Bảng hành động/xác suất ngắn là trung tâm; ví dụ trước công thức phù hợp năm 3 vì bảng đọc nhanh hơn định nghĩa trừu tượng.
+- **Kết nối vào:** Quy ước đứng yên khi va tường từ phần mê cung nguồn.
+- **Kết nối ra:** Hàng xác suất 0.5/0.5 được tái dùng ở slide chính sách ngẫu nhiên.
+- **Sản phẩm học tập/kiểm tra:** Yêu cầu thêm một hàng chính sách thứ ba vào bảng.
+- **Quyết định nguồn:** Sửa: dựng bảng xác suất từ trang 21–22 với tọa độ cụ thể (1,2) của mê cung trang 25–26.
+
+### L02-04-03 — Chính sách xác định
+
+Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa..
+
+- **Luận điểm:** Chính sách xác định là hàm $\pi:X\to A$ với $A_t=\pi(X_t)$; chính sách không đồng nghĩa thuật toán học.
+- **Nhu cầu và lý do tồn tại:** Sinh viên cần ký hiệu chính xác trước khi viết phân phối điều kiện ở slide sau, và cần phân biệt đối tượng với quy trình.
+- **Cách thể hiện và độ phù hợp năm 3:** Công thức math-large cạnh bảng áp dụng; ghép công thức và ví dụ số trong một màn giúp năm 3 thấy hàm được đánh giá thế nào.
+- **Kết nối vào:** Ví dụ (1,2)→Bắc từ slide trước.
+- **Kết nối ra:** Ký hiệu $\pi$ dùng lại ở slide ngẫu nhiên và ở phần 5–6.
+- **Sản phẩm học tập/kiểm tra:** Hỏi $\pi((0,2))$ đọc từ bảng và hỏi vì sao một hàm không trả hai hành động.
+- **Quyết định nguồn:** Giữ định nghĩa trang 21, thêm bảng ba cặp trạng thái–hành động làm ví dụ áp dụng.
+
+### L02-04-04 — Chính sách ngẫu nhiên
+
+Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa..
+
+- **Luận điểm:** Chính sách ngẫu nhiên là phân phối điều kiện $\pi(a\mid x)=P(A_t=a\mid X_t=x)$, không âm và tổng bằng 1 trên $A$.
+- **Nhu cầu và lý do tồn tại:** Sinh viên đã học xác suất có điều kiện, nên đây là bước hình thức hóa tự nhiên sau ví dụ bảng xác suất.
+- **Cách thể hiện và độ phù hợp năm 3:** Công thức định nghĩa chiếm toàn chiều ngang, điều kiện chuẩn hóa ở dòng riêng; tránh nhồi công thức vào cột hẹp.
+- **Kết nối vào:** Không gian quan sát $X$ và quy ước $X=S$ khi quan sát đầy đủ từ phần 3.
+- **Kết nối ra:** Dạng điều kiện $\pi(a\mid x)$ là ký hiệu chuẩn của các slide giá trị kỳ vọng theo $\pi$.
+- **Sản phẩm học tập/kiểm tra:** Kiểm tra hai điều kiện chuẩn hóa trên hàng ví dụ 0.5/0.5/0/0.
+- **Quyết định nguồn:** Giữ trang 22, nối tường minh vào phần 3 qua quy ước $X=S$ và tái dùng hàng xác suất slide trước.
+
+### L02-04-05 — Kiểm tra chính sách
+
+Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa..
+
+- **Luận điểm:** Một thành phần của phân phối suy ra từ điều kiện chuẩn hóa; so sánh chất lượng chính sách đòi hỏi đánh giá tương lai.
+- **Nhu cầu và lý do tồn tại:** Kiểm tra trực tiếp hai điều kiện của phân phối và cài mầm nhu cầu về đánh giá, mở đường sang phần 5.
+- **Cách thể hiện và độ phù hợp năm 3:** Hộp câu hỏi với ba xác suất đã biết; đáp án chỉ ở notes để người học tự tính.
+- **Kết nối vào:** Hai điều kiện $\pi\ge 0$ và tổng bằng 1 từ slide ngẫu nhiên.
+- **Kết nối ra:** Câu nối về đánh giá tương lai dẫn vào hàm giá trị của phần 5.
+- **Sản phẩm học tập/kiểm tra:** Tự kiểm tra theo hw02 bài 6: cho ba xác suất, tìm thành phần còn lại và phân loại chính sách.
+- **Quyết định nguồn:** Sửa: giữ ý khái niệm của hw02 bài 6 và trang 27, thay số bằng bài luyện suy ra với đáp án 0.3.
