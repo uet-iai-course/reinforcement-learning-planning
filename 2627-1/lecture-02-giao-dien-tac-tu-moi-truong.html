@@ -32,6 +32,11 @@
 <div class="grid2"><div><p>Bài toán ra quyết định tuần tự</p><p>Tương tác và phần thưởng</p><p>Trạng thái và thông tin quan sát</p><p>Chính sách lựa chọn hành động</p></div><div><p>Hàm giá trị và mô hình môi trường</p><p>Dự đoán, điều khiển và bài toán mê cung</p><p>Tổng kết và tự kiểm tra</p></div></div>
 <aside class="notes">Vòng tương tác xác định dữ liệu được tạo ra. Trạng thái và quan sát xác định thông tin có thể dùng để quyết định. Chính sách chọn hành động, hàm giá trị đánh giá tương lai và mô hình dự báo phản hồi. Các thành phần đó được dùng để đặc tả và phân tích mê cung. Trước hết, ta xác định ranh giới giữa tác tử và môi trường.<p class="note-source"><strong>Nguồn:</strong> Cấu trúc biên tập từ PPTX, trang 2, 15–27.</p></aside>
 </section>
+<section data-slide-id="L02-01-05">
+<h2>Câu hỏi kiểm tra</h2>
+<ol><li>Trong mê cung, mỗi bước tác tử chọn điều gì để di chuyển?</li><li>Hành động hiện tại ảnh hưởng đến lựa chọn về sau ra sao?</li><li>Nêu một tiêu chí để so sánh hai đường đi tới cùng đích.</li></ol>
+<aside class="notes"><ol><li>Tác tử chọn một trong bốn hướng Bắc, Đông, Nam, Tây; chọn hướng có tường thì đứng yên.</li><li>Vị trí mới quy định các chuyển tiếp có thể ở bước tiếp theo.</li><li>Có thể dùng số bước khi mục tiêu là tới đích bằng ít bước nhất.</li></ol><p class="note-source"><strong>Nguồn:</strong> PPTX trang1–2,25; câu hỏi mở đầu suy ra từ bài toán mê cung.</p></aside>
+</section>
 </section>
 <section>
 <section data-slide-id="L02-02-01">
@@ -47,7 +52,7 @@
 <section data-slide-id="L02-02-03">
 <h2>Thứ tự tương tác</h2>
 <img class="figure short" src="img/lec-02/interaction-timeline.svg" alt="Quan sát O không, hành động A không, rồi thưởng R một và quan sát O một; chuỗi tiếp tục theo thời gian."/><p>$t=0,1,2,\ldots$ đánh số bước tương tác.</p><p>$O_t\in\mathcal O$: quan sát; $A_t\in\mathcal A$: hành động.</p><p>$R_{t+1}\in\mathbb R$: phần thưởng sau $A_t$.</p>
-<aside class="notes">Tại bước $t$, tác tử có quan sát $O_t$ và chọn $A_t$. Phản hồi của hành động đó là $R_{t+1}$ và $O_{t+1}$. Tập $\mathcal O$ chứa các quan sát có thể nhận; $\mathcal A$ chứa các hành động. Lịch sử là $H_t=(O_0,A_0,R_1,O_1,\ldots,A_{t-1},R_t,O_t)$. Khi $t=0$, lịch sử chỉ có $O_0$. Trong ví dụ mê cung, quan sát là tọa độ và hành động là một trong bốn hướng.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 14–15 (giao diện), 16 (trạng thái/quan sát)</p></aside>
+<aside class="notes">Tại bước $t$, tác tử có quan sát $O_t$ và chọn $A_t$. Phản hồi của hành động đó là $R_{t+1}$ và $O_{t+1}$. Tập $\mathcal O$ chứa các quan sát có thể nhận; $\mathcal A$ chứa các hành động. Trong ví dụ mê cung, quan sát là tọa độ và hành động là một trong bốn hướng.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 14–15 (giao diện), 16 (trạng thái/quan sát)</p></aside>
 </section>
 <section data-slide-id="L02-02-04">
 <h2>Tín hiệu học</h2>
@@ -64,12 +69,12 @@
 <section data-slide-id="L02-02-06">
 <h2>Phản hồi trễ</h2>
 <img class="figure" src="img/lec-02/delayed-feedback.svg" alt="Ví dụ ba chuyển tiếp có thưởng 0, 0 rồi 1; kết quả cuối liên quan tới các lựa chọn trước đó."/><p>Ví dụ trò chơi: chỉ gán thưởng khác 0 khi kết thúc với thắng hoặc thua.</p><p>Một hành động có thể ảnh hưởng kết quả xuất hiện nhiều bước sau.</p>
-<aside class="notes">Trong hình, $S_i$ ký hiệu trạng thái của ván ở mốc $i$. Xét cách gán thưởng cho một trò chơi: các nước chưa kết thúc nhận 0, thắng nhận 1, thua nhận âm 1 và hòa nhận 0. Khi đó, một nước chưa nhận thưởng dương vẫn có thể góp phần dẫn tới chiến thắng về sau. Hình minh họa một chuỗi rút gọn kết thúc bằng thưởng 1. Trong mê cung, thưởng âm một được nhận ngay mỗi bước; không phải mọi tín hiệu thưởng đều đến trễ.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 4 (phần thưởng bị trễ) và 11 (cờ)</p></aside>
+<aside class="notes">Trong hình, $O_i$ là quan sát tác tử nhận được ở mốc $i$. Xét cách gán thưởng cho một trò chơi: các nước chưa kết thúc nhận 0, thắng nhận 1, thua nhận âm 1 và hòa nhận 0. Khi đó, một nước chưa nhận thưởng dương vẫn có thể góp phần dẫn tới chiến thắng về sau. Hình minh họa một chuỗi rút gọn kết thúc bằng thưởng 1. Trong mê cung, thưởng âm một được nhận ngay mỗi bước; không phải mọi tín hiệu thưởng đều đến trễ.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 7–8 (phản hồi trễ), 11 (cờ); ký hiệu quan sát theo giao diện ở trang 14–15</p></aside>
 </section>
 <section data-slide-id="L02-02-07">
-<h2>Kiểm tra vòng tương tác</h2>
-<p>Tại $(1,2)$, tác tử chọn Bắc, đến $(1,1)$ và nhận $-1$.</p><div class="check"><p><strong>Câu hỏi:</strong> Khi quan sát là tọa độ, điền $A_t$, $R_{t+1}$ và $O_{t+1}$.</p><p>Giải thích liệu thưởng $-1$ có xác định hành động tối ưu.</p></div>
-<aside class="notes">Đáp án: $A_t=\text{Bắc}$, $R_{t+1}=-1$, $O_{t+1}=(1,1)$. Phần thưởng này không xác định hành động tối ưu vì mọi bước đều nhận âm một. Việc so sánh lựa chọn cần xét các phần thưởng tiếp theo. Để ra quyết định, tác tử còn cần biết thông tin hiện tại có phân biệt được các tình huống dẫn tới kết quả khác nhau hay không.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 27 (quiz); bài luyện suy ra từ trang 25–26 và hw02 bài 6, 10</p></aside>
+<h2>Câu hỏi kiểm tra</h2>
+<ol><li>Từ $(1,2)$ chọn Bắc đến $(1,1)$, thưởng $-1$, quan sát là tọa độ. Hãy ghi $A_t$, $R_{t+1}$, $O_{t+1}$.</li><li>Giả thuyết điểm thưởng nêu tiêu chí tối ưu nào cho tác tử?</li><li>Nhận $-1$ ngay có đủ để đánh giá hành động Bắc hay không?</li></ol>
+<aside class="notes"><ol><li>$A_t$ là Bắc, $R_{t+1}=-1$, $O_{t+1}$ là tọa độ $(1,1)$.</li><li>Cực đại kỳ vọng phần thưởng tích lũy theo thời gian.</li><li>Chưa, vì hậu quả dài hạn của hành động chưa được xét.</li></ol><p class="note-source"><strong>Nguồn:</strong> PPTX trang7–9,14–15,25–26.</p></aside>
 </section>
 </section>
 <section>
@@ -83,6 +88,15 @@
 <div class="grid3"><div class="card"><h3>Trạng thái</h3><p>$S_t\in\mathcal S$</p><p>Tình huống của môi trường trong mô hình.</p></div><div class="card"><h3>Quan sát</h3><p>$O_t\in\mathcal O$</p><p>Thông tin tác tử nhận được.</p></div><div class="card"><h3>Biểu diễn</h3><p>$X_t\in\mathcal X$</p><p>Dữ liệu dùng để chọn hành động.</p></div></div><p>Trong mê cung cố định, trạng thái là tọa độ; quan sát có thể chỉ là bốn ô kề.</p>
 <aside class="notes">$\mathcal S$, $\mathcal O$ và $\mathcal X$ lần lượt là tập trạng thái, tập quan sát và tập biểu diễn quyết định. Trong mê cung cố định, $S_t$ là tọa độ ô, kể cả đích $G$. Nếu nhận tọa độ chính xác, có thể chọn $X_t=O_t=S_t$. Với cảm biến bốn ô kề, vẫn có thể chọn $X_t=O_t$, nhưng biểu diễn đó mất thông tin vị trí. Dùng lịch sử là một cách bổ sung thông tin.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 16 (trạng thái/quan sát); phần biểu diễn ở trang 14-15 và 21.</p></aside>
 </section>
+<section data-slide-id="L02-03-09">
+<h2>Mẫu dữ liệu, lịch sử và quỹ đạo</h2>
+<p><strong>Mẫu dữ liệu một bước:</strong> $(o_t,a_t,o_{t+1},r_{t+1})$.</p>
+<p><strong>Lịch sử trạng thái tới thời điểm $t$:</strong></p>
+<div class="math-large">$$H_t=(S_0,A_0,R_1,S_1,\ldots,A_{t-1},R_t,S_t).$$</div>
+<p><strong>Quỹ đạo trạng thái kết thúc tại $T$:</strong></p>
+<div class="math-large">$$\tau=(S_0,A_0,R_1,S_1,\ldots,A_{T-1},R_T,S_T).$$</div>
+<aside class="notes">Chữ thường trong mẫu dữ liệu chỉ giá trị cụ thể của các biến viết hoa. Mẫu dùng quan sát, còn lịch sử và quỹ đạo ở đây dùng trạng thái môi trường; khi quan sát một phần, tác tử không nhất thiết biết chuỗi trạng thái này. Một mẫu ghi hành động và phản hồi của một bước; quan sát mới và phần thưởng đều đến sau hành động. Lịch sử trạng thái kết thúc ở trạng thái hiện tại, trước khi chọn hành động tiếp theo; $H_0=(S_0)$. Quỹ đạo ở đây là toàn bộ một lượt tương tác hữu hạn, với $T$ là thời điểm kết thúc: $\tau=H_T$. Lịch sử $H_t$ là phần đầu của quỹ đạo. Nhiệm vụ tiếp diễn có thể được ghi thành quỹ đạo vô hạn hoặc các đoạn hữu hạn.<p class="note-source"><strong>Nguồn:</strong> PPTX trang14–16 (giao diện và lịch sử); biểu diễn mẫu dữ liệu và quỹ đạo bổ sung theo yêu cầu.</p></aside>
+</section>
 <section data-slide-id="L02-03-03">
 <h2>Thông tin trong lịch sử</h2>
 <p>Hai xe cùng vị trí, cùng lệnh phanh, nhưng khác vận tốc.</p><img class="figure short" src="img/lec-02/markov-summary.svg" alt="Hai xe ở vị trí 10 mét, vận tốc 1 và 5 mét mỗi giây, cùng phanh; vị trí tiếp theo có thể khác."/><p class="box">Vị trí đơn lẻ bỏ mất thông tin ảnh hưởng chuyển động.</p>
@@ -90,12 +104,12 @@
 </section>
 <section data-slide-id="L02-03-04">
 <h2>Tính Markov</h2>
-<p>Biết trạng thái và hành động thì lịch sử không cải thiện dự báo bước tới.</p><div class="math-large">$$\begin{aligned}&amp;\Pr(S_{t+1}=s',R_{t+1}=r\mid H_t^S=h,A_t=a)\\&amp;\quad=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a).\end{aligned}$$</div><p>$H_t^S$: lịch sử trạng thái–hành động–thưởng; $h$ kết thúc ở $s$.</p><p class="caption">Xét biến rời rạc và các biến cố điều kiện có xác suất dương.</p>
-<aside class="notes">$H_t^S=(S_0,A_0,R_1,S_1,\ldots,A_{t-1},R_t,S_t)$ là lịch sử trạng thái, khác lịch sử quan sát $H_t$. Vế trái dùng toàn bộ lịch sử, vế phải chỉ dùng trạng thái cuối và hành động hiện tại. Tính Markov yêu cầu hai phân phối bằng nhau với mọi lịch sử có thể xảy ra kết thúc tại $s$. $s'$ là giá trị của trạng thái kế tiếp và $r$ là giá trị phần thưởng. Điều kiện dương áp dụng cho biến cố được điều kiện hóa, không yêu cầu mọi kết quả bước tới đều có xác suất dương. Tính chất này không xác định hành động tối ưu.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 17 (Markov) và trang 18 (đầy đủ).</p></aside>
+<p>Biết trạng thái và hành động thì lịch sử không cải thiện dự báo bước tới.</p><div class="math-large">$$\begin{aligned}&amp;\Pr(S_{t+1}=s',R_{t+1}=r\mid H_t=h,A_t=a)\\&amp;\quad=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a).\end{aligned}$$</div><p>$H_t$: lịch sử trạng thái–hành động–thưởng; $h$ kết thúc ở $s$.</p><p class="caption">Xét biến rời rạc và các biến cố điều kiện có xác suất dương.</p>
+<aside class="notes">$H_t=(S_0,A_0,R_1,S_1,\ldots,A_{t-1},R_t,S_t)$ là lịch sử trạng thái, khác lịch sử quan sát $H_t^O$. Vế trái dùng toàn bộ lịch sử, vế phải chỉ dùng trạng thái cuối và hành động hiện tại. Tính Markov yêu cầu hai phân phối bằng nhau với mọi lịch sử có thể xảy ra kết thúc tại $s$. $s'$ là giá trị của trạng thái kế tiếp và $r$ là giá trị phần thưởng. Điều kiện dương áp dụng cho biến cố được điều kiện hóa, không yêu cầu mọi kết quả bước tới đều có xác suất dương. Tính chất này không xác định hành động tối ưu.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 17 (Markov) và trang 18 (đầy đủ).</p></aside>
 </section>
 <section data-slide-id="L02-03-05">
 <h2>Trạng thái trong mê cung</h2>
-<ul><li>Bản đồ cố định, chuyển động xác định, thưởng $-1$ mỗi bước, đích $G$.</li><li>$S_t = (x_t, y_t)$: cùng $(s, a)$ cho cùng phản hồi, độc lập đường đã đi.</li></ul><p class="check">Câu hỏi: nếu cửa ra phụ thuộc chìa khóa, tọa độ $(x_t, y_t)$ còn đủ không?</p>
+<ul><li>Bản đồ cố định, chuyển động xác định, thưởng $-1$ mỗi bước, đích $G$.</li><li>$S_t = (x_t, y_t)$: cùng $(s, a)$ cho cùng phản hồi, độc lập đường đã đi.</li></ul><p class="box">Nếu cửa ra phụ thuộc chìa khóa, trạng thái cần gồm tọa độ và tình trạng chìa khóa.</p>
 <aside class="notes">Trong mê cung cố định, tọa độ cùng hành động xác định ô tiếp theo và phần thưởng. Khi đến $G$, tương tác kết thúc. Với biến thể có cửa khóa, hai lần đến cùng ô nhưng khác tình trạng chìa khóa có thể cho kết quả khác nhau. Cần bổ sung $k\in\{0,1\}$ biểu thị có chìa khóa, chẳng hạn $S_t=(x_t,y_t,k_t)$. Biến thể này kiểm tra ranh giới của cách mô tả chỉ bằng tọa độ.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 25-26 (mê cung); bài mê cung hw02 bài 10; biến thể chìa khóa là giả thiết sư phạm suy ra.</p></aside>
 </section>
 <section data-slide-id="L02-03-06">
@@ -105,13 +119,13 @@
 </section>
 <section data-slide-id="L02-03-07">
 <h2>Biểu diễn dùng để quyết định</h2>
-<p>Xe: hai vị trí $x_t, x_{t-1}$ suy ra vận tốc trong mô hình chuyển động đều.</p><p>Lịch sử $H_t = (O_0, A_0, R_1, \ldots, O_t)$ giúp phân biệt thông tin bị mất khỏi $O_t$.</p><p class="math-large">$$X_t = f(H_t)$$</p><p>Nhiều khung quan sát gần nhất chưa chắc cho trạng thái Markov.</p>
-<aside class="notes">Tác tử có thể dùng hàm $f$ để tạo biểu diễn $X_t$ từ lịch sử $H_t$. Chẳng hạn trong chuyển động đều một chiều, biết hai vị trí cách nhau khoảng thời gian $\Delta t&gt;0$ cho phép tính vận tốc bằng hiệu vị trí chia cho $\Delta t$. Ngoài giả thiết chuyển động đều, cách suy này cần được xét lại. Ghép một số hữu hạn quan sát gần nhất không bảo đảm lưu đủ mọi thông tin liên quan tới tương lai.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 14-15 (giao diện) và trang 21; ví dụ xe hai thời điểm từ trang 12.</p></aside>
+<p>Xe: hai vị trí $x_t, x_{t-1}$ suy ra vận tốc trong mô hình chuyển động đều.</p><p>Lịch sử quan sát $H_t^O = (O_0, A_0, R_1, \ldots, O_t)$ giúp phân biệt thông tin bị mất khỏi $O_t$.</p><p class="math-large">$$X_t = f(H_t^O)$$</p><p>Nhiều khung quan sát gần nhất chưa chắc cho trạng thái Markov.</p>
+<aside class="notes">Tác tử có thể dùng hàm $f$ để tạo biểu diễn $X_t$ từ lịch sử quan sát $H_t^O$. Chẳng hạn trong chuyển động đều một chiều, biết hai vị trí cách nhau khoảng thời gian $\Delta t&gt;0$ cho phép tính vận tốc bằng hiệu vị trí chia cho $\Delta t$. Ngoài giả thiết chuyển động đều, cách suy này cần được xét lại. Ghép một số hữu hạn quan sát gần nhất không bảo đảm lưu đủ mọi thông tin liên quan tới tương lai.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 14-15 (giao diện) và trang 21; ví dụ xe hai thời điểm từ trang 12.</p></aside>
 </section>
 <section data-slide-id="L02-03-08">
-<h2>Kiểm tra thông tin quan sát</h2>
-<div class="check"><p><strong>Câu hỏi:</strong> Phân loại mức quan sát và nêu giả thiết.</p><ul><li>Tọa độ chính xác trong mê cung cố định.</li><li>Ảnh toàn bản đồ, thấy rõ tác tử và mọi ô.</li><li>Cảm biến chỉ báo bốn ô kề.</li></ul></div>
-<aside class="notes">Tọa độ chính xác và ảnh toàn bản đồ cho quan sát đầy đủ. Ảnh phải thấy rõ tác tử; quy ước tọa độ cho phép suy ra vị trí. Cảm biến bốn ô kề cho quan sát một phần, như cặp (2,1) và (3,1). Sau khi chọn biểu diễn $X_t$, tác tử cần một quy tắc dùng biểu diễn đó để chọn hành động.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 27 (quiz); các trường hợp từ trang 16, 18, 19 và ảnh maze-local.svg.</p></aside>
+<h2>Câu hỏi kiểm tra</h2>
+<ol><li>Phân loại ba quan sát: tọa độ chính xác; ảnh toàn mê cung thấy rõ tác tử; cảm biến bốn ô kề.</li><li>Nếu mở cửa phụ thuộc việc có chìa khóa, tọa độ còn đủ để mô tả trạng thái Markov không? Cần bổ sung gì?</li><li>Ghép một số hữu hạn quan sát có bảo đảm tính Markov không?</li><li>Mẫu một bước, lịch sử $H_t$ và quỹ đạo $\tau$ khác nhau về phạm vi thông tin như thế nào?</li></ol>
+<aside class="notes"><ol><li>Tọa độ và ảnh toàn bản đồ thấy rõ tác tử cho quan sát đầy đủ khi bản đồ, luật và quy ước tọa độ cố định. Cảm biến bốn ô kề là quan sát một phần.</li><li>Chưa đủ; cần thêm trạng thái chìa khóa đã lấy hay chưa.</li><li>Không, vẫn có thể bỏ thông tin quá khứ liên quan.</li><li>Mẫu chứa một chuyển tiếp; lịch sử trạng thái chứa các bước tới thời điểm hiện tại; quỹ đạo trạng thái hữu hạn chứa cả lượt tới khi kết thúc. Mẫu ở đây dùng quan sát; hai chuỗi còn lại dùng trạng thái.</li></ol><p class="note-source"><strong>Nguồn:</strong> PPTX trang16–19,25–27; hw02 bài2; biến thể chìa khóa là ví dụ sư phạm.</p></aside>
 </section>
 </section>
 <section>
@@ -136,9 +150,9 @@
 <aside class="notes">Với mỗi $x$ cố định, các xác suất phải không âm và cộng thành một. Chính sách xác định là trường hợp đặt xác suất một vào đúng một hành động. Khi quan sát đầy đủ và chọn $X_t=S_t$, có thể viết $\pi(a\mid s)$. Với quan sát một phần, đầu vào vẫn là biểu diễn mà tác tử thực sự có.<p class="note-source"><strong>Nguồn:</strong> PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.</p></aside>
 </section>
 <section data-slide-id="L02-04-05">
-<h2>Kiểm tra chính sách</h2>
-<div class="check"><p><strong>Câu hỏi:</strong> Cho $\pi(\text{Bắc}\mid x)=0{,}2$, $\pi(\text{Đông}\mid x)=0{,}5$ và $\pi(\text{Tây}\mid x)=0$.</p><p>Tính $\pi(\text{Nam}\mid x)$ và phân loại chính sách.</p></div><p>So sánh chất lượng các chính sách cần xét phần thưởng tương lai.</p>
-<aside class="notes">Xác suất chọn Nam là $1-0{,}2-0{,}5-0=0{,}3$. Chính sách ngẫu nhiên vì nhiều hành động có xác suất dương. Điều kiện chuẩn hóa chỉ xác nhận đây là phân phối hợp lệ. Để so sánh quy tắc này với một chính sách khác, cần đánh giá các phần thưởng mà chúng tạo ra về sau.<p class="note-source"><strong>Nguồn:</strong> PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.</p></aside>
+<h2>Câu hỏi kiểm tra</h2>
+<ol><li>Cho $\pi(\text{Bắc}\mid x)=0{,}2$, $\pi(\text{Đông}\mid x)=0{,}5$, $\pi(\text{Tây}\mid x)=0$. Tính $\pi(\text{Nam}\mid x)$.</li><li>Phân loại chính sách đó và giải thích lý do.</li><li>Chính sách xác định là trường hợp nào của phân phối hành động?</li></ol>
+<aside class="notes"><ol><li>$\pi(\text{Nam}\mid x)=0{,}3$.</li><li>Chính sách ngẫu nhiên, vì nhiều hành động có xác suất dương.</li><li>Một hành động có xác suất $1$, các hành động khác $0$.</li></ol><p class="note-source"><strong>Nguồn:</strong> PPTX trang21; hw02 bài6.</p></aside>
 </section>
 </section>
 <section>
@@ -167,11 +181,6 @@
 <p>Giữ cố định chính sách Markov $\pi(a\mid s)$ và động lực môi trường.</p><div class="math-large">$$v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s].$$</div><p>Lấy trung bình trên hành động của chính sách và chuyển động của môi trường.</p><p>Hai nhánh trên cho $v_\pi(s)=-4$.</p><p class="caption">Giả thiết: quy luật không đổi theo thời gian và kỳ vọng hữu hạn.</p>
 <aside class="notes">Ta chọn $X_t=S_t$, dùng chính sách và quy luật chuyển không đổi theo thời gian. Với $\gamma=1$, thưởng bị chặn và $\mathbb E_\pi[T-t\mid S_t=s]&lt;\infty$ bảo đảm kỳ vọng hữu hạn. Kết thúc với xác suất một tự nó chưa đủ. Nếu có hạn chót cố định, cần đưa thời gian còn lại vào trạng thái hoặc dùng giá trị phụ thuộc thời gian. Kỳ vọng dưới $\pi$ không phải phép chọn chính sách tối ưu.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 16–18, 22; hw02 bài 5</p></aside>
 </section>
-<section data-slide-id="L02-05-06">
-<h2>Kiểm tra giá trị</h2>
-<div class="check"><p><strong>Câu hỏi:</strong> Quỹ đạo ba bước có thưởng $-1$ mỗi bước.</p><p>Tính $G_t$ với $\gamma=0$, $\gamma=0{,}5$ và $\gamma=1$.</p><p>Phân biệt $G_t$ của quỹ đạo này với $v_\pi(s)$.</p></div>
-<aside class="notes">Ba kết quả lần lượt là $-1$, $-1{,}75$ và $-3$. $G_t$ phụ thuộc quỹ đạo cụ thể; $v_\pi(s)$ lấy trung bình các quỹ đạo từ $s$ dưới chính sách cố định. Khi mọi quỹ đạo từ $s$ đều có cùng tổng thưởng, giá trị bằng tổng đó; nếu có các kết quả khác nhau thì cần tính kỳ vọng.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 22, 26; hw02 bài 1</p></aside>
-</section>
 <section data-slide-id="L02-05-07">
 <h2>Dự báo bước tiếp theo</h2>
 <p>Mô hình dự báo trạng thái kế tiếp và phần thưởng từ một cặp $(s,a)$.</p><table><thead><tr><th>Trạng thái và hành động</th><th>Trạng thái kế tiếp</th><th>Thưởng</th></tr></thead><tbody><tr><td>$(0,2)$, Đông</td><td>$(1,2)$</td><td>$-1$</td></tr><tr><td>$(0,2)$, Bắc</td><td>$(0,2)$: gặp tường</td><td>$-1$</td></tr></tbody></table><p class="box">Dự báo phản hồi khác với lựa chọn hành động.</p>
@@ -183,9 +192,9 @@
 <aside class="notes">$P$ là phân phối trạng thái kế tiếp: không âm và có tổng bằng một trên $s'\in\mathcal S$. Ví dụ, $P((1,2)\mid(0,2),\text{Đông})=1$ và $\bar r((0,2),\text{Đông})=-1$. $\bar r$ là thưởng kỳ vọng. Đây là hai thành phần mô hình trong nguồn. Tác tử có thể biết chính xác hoặc ước lượng chúng; ước lượng có thể sai. Không phải mọi phương pháp học tăng cường đều xây dựng mô hình môi trường.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 13, 23; hw02 bài 10</p></aside>
 </section>
 <section data-slide-id="L02-05-09">
-<h2>Kiểm tra mô hình</h2>
-<div class="check"><p><strong>Câu hỏi:</strong> Mô hình dự báo từ $(0,2)$ chọn Đông sẽ đến $(1,2)$ và nhận $0$.</p><p>Đối chiếu với luật thưởng $-1$ mỗi bước: thành phần nào sai?</p><p>Dự báo đúng một bước đã xác định được cả đường tới đích chưa?</p></div>
-<aside class="notes">Phần dự báo chuyển trạng thái đúng, phần dự báo thưởng sai: phải là âm một. Biết phản hồi một bước chưa tự xác định đường đi; còn phải đánh giá các chuỗi lựa chọn theo mục tiêu. Một mô hình phục vụ tác vụ không cần mô tả mọi chi tiết của thế giới. Sự khác nhau giữa đánh giá và tìm cách hành động dẫn tới hai bài toán dự đoán và điều khiển.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 13, 24, 27; hw02 bài 6</p></aside>
+<h2>Câu hỏi kiểm tra</h2>
+<ol><li>Ba bước đều nhận $-1$, kết thúc sau bước thứ ba. Tính $G_t$ khi $\gamma=0{,}5$.</li><li>Phân biệt $G_t$ của một quỹ đạo với $v_\pi(s)$.</li><li>Mô hình dự báo $(0,2)$ chọn Đông tới $(1,2)$ thưởng $0$, trong khi luật là $-1$ mỗi bước. Thành phần nào sai?</li></ol>
+<aside class="notes"><ol><li>$G_t=-1-0{,}5-0{,}25=-1{,}75$.</li><li>$G_t$ là tổng thưởng trên một quỹ đạo; $v_\pi(s)$ là kỳ vọng của tổng thưởng từ $s$ dưới chính sách cố định.</li><li>Phần thưởng sai; chuyển tiếp trạng thái đúng.</li></ol><p class="note-source"><strong>Nguồn:</strong> PPTX trang22–23,25–26; hw02 bài5.</p></aside>
 </section>
 </section>
 <section>
@@ -196,8 +205,8 @@
 </section>
 <section data-slide-id="L02-06-02">
 <h2>Dự đoán và điều khiển</h2>
-<div class="grid2"><div class="card"><h3>Dự đoán</h3><p>Giữ một chính sách cho trước; tính $v_\pi(0,2)$ khi $\gamma=1$.</p></div><div class="card"><h3>Điều khiển</h3><p>Tìm chính sách tối đa hóa phần thưởng tích lũy kỳ vọng từ điểm bắt đầu.</p></div></div><p class="check"><strong>Câu hỏi:</strong> Phân biệt đầu ra của hai yêu cầu.</p>
-<aside class="notes">Yêu cầu thứ nhất là dự đoán: chính sách không đổi và kết quả cần tìm là một giá trị. Yêu cầu thứ hai là điều khiển: kết quả cần tìm là một chính sách. Tìm chính sách tối ưu không có nghĩa chính sách đang dùng chắc chắn kém hơn; cần đối chiếu với các lựa chọn và giả thiết của bài toán.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 16 bước và 18 bước; hw02 bài 5</p></aside>
+<div class="grid2"><div class="card"><h3>Dự đoán</h3><p>Giữ một chính sách cho trước; tính $v_\pi(0,2)$ khi $\gamma=1$.</p></div><div class="card"><h3>Điều khiển</h3><p>Tìm chính sách tối đa hóa phần thưởng tích lũy kỳ vọng từ điểm bắt đầu.</p></div></div>
+<aside class="notes">Yêu cầu thứ nhất là dự đoán: chính sách không đổi và kết quả cần tìm là một giá trị. Yêu cầu thứ hai là điều khiển: kết quả cần tìm là một chính sách. Tìm chính sách tối ưu không có nghĩa chính sách đang dùng chắc chắn kém hơn; cần đối chiếu với các lựa chọn và giả thiết của bài toán.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 24–26; hai nhiệm vụ trên mê cung</p></aside>
 </section>
 <section data-slide-id="L02-06-03">
 <h2>Đặc tả môi trường mê cung</h2>
@@ -211,18 +220,18 @@
 </section>
 <section data-slide-id="L02-06-05">
 <h2>Giá trị trên mê cung</h2>
-<div class="grid2"><img class="figure" src="img/lec-02/source-values.svg" alt="Bảng giá trị nguồn: đầu (0,2) là âm16, (6,5) âm3, (7,6) âm1 dưới chính sách minh họa."/><div><p>Chuyển xác định, $\gamma=1$, mỗi bước thưởng $-1$.</p><div class="math-large">$$v_\pi(0,2)=-16$$</div><p class="check"><strong>Câu hỏi:</strong> Giải thích $v_\pi(7,6)=-1$ và $v_\pi(G)=0$.</p></div></div>
+<div class="grid2"><img class="figure" src="img/lec-02/source-values.svg" alt="Bảng giá trị nguồn: đầu (0,2) là âm16, (6,5) âm3, (7,6) âm1 dưới chính sách minh họa."/><div><p>Chuyển xác định, $\gamma=1$, mỗi bước thưởng $-1$.</p><div class="math-large">$$v_\pi(0,2)=-16$$</div><p>Ô $(7,6)$ còn một bước tới đích: $v_\pi(7,6)=-1$; tại đích, $v_\pi(G)=0$.</p></div></div>
 <aside class="notes">Ô (7,6) còn một bước Đông tới đích nên giá trị là âm một. Tại G không còn phần thưởng tương lai nên giá trị bằng không. Từ (6,5) còn ba bước nên giá trị âm ba; từ điểm bắt đầu còn 16 bước nên âm 16. Các giá trị ứng với chính sách cụ thể và hệ số chiết khấu một.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 26; hw02 bài 6</p></aside>
 </section>
 <section data-slide-id="L02-06-06">
 <h2>Trạng thái kết thúc trong trò chơi</h2>
-<div class="grid2"><img class="figure" src="img/lec-02/source-tictactoe.svg" alt="Bàn cờ nguồn: X O O; O X X; trống trống X. X thắng đường chéo chính."/><div><p>X vừa hoàn thành đường chéo và nhận thưởng $R_T=1$.</p><p class="check"><strong>Câu hỏi:</strong> Ván đã kết thúc. Tính $G_T$ và giải thích sự khác nhau với $R_T$.</p></div></div>
+<div class="grid2"><img class="figure" src="img/lec-02/source-tictactoe.svg" alt="Bàn cờ nguồn: X O O; O X X; trống trống X. X thắng đường chéo chính."/><div><p>X vừa hoàn thành đường chéo và nhận thưởng $R_T=1$.</p><p>Ở trạng thái kết thúc, $G_T=0$: không còn phần thưởng tương lai.</p></div></div>
 <aside class="notes">$G_T=0$ vì ván đã kết thúc và không còn phần thưởng tương lai. $R_T=1$ được nhận ở bước vừa đưa ván vào trạng thái kết thúc. Với bước trước đó, $G_{T-1}=R_T=1$. Quy ước này không phụ thuộc việc chọn hệ số chiết khấu nào: tại trạng thái kết thúc, tổng còn lại luôn rỗng.<p class="note-source"><strong>Nguồn:</strong> PPTX, trang 11; bài kiểm tra suy ra từ quy ước phần thưởng và điều kiện kết thúc.</p></aside>
 </section>
 <section data-slide-id="L02-06-07">
-<h2>Kiểm tra mô hình hóa</h2>
-<div class="check"><p><strong>Câu hỏi:</strong> Giữ nguyên mê cung và quy tắc thưởng. Thay quan sát tọa độ bằng cảm biến bốn ô kề.</p><p>Xác định thành phần giữ nguyên và thành phần cần thay đổi trong mô tả tác tử–môi trường.</p></div>
-<aside class="notes">Tập trạng thái, tập hành động, quy luật chuyển và phần thưởng giữ nguyên. Kênh quan sát đổi; biểu diễn quyết định và chính sách sử dụng nó cần được xét lại. Không thể mặc nhiên áp dụng quy tắc nhận tọa độ cho dữ liệu cảm biến. Tương tự, ảnh bàn cờ vua chưa chắc chứa lượt đi và quyền nhập thành; mức quan sát phải được xét theo thông tin thật sự có.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 27; hw02 bài 10</p></aside>
+<h2>Câu hỏi kiểm tra</h2>
+<ol><li>Giữ chính sách tính giá trị và tìm chính sách tối ưu là hai nhiệm vụ gì?</li><li>Với chính sách đã cho, $\gamma=1$, thưởng $-1$ mỗi bước: tính $v_\pi(7,6)$ và $v_\pi(G)$ khi ô $(7,6)$ còn một bước tới đích.</li><li>Ván cờ kết thúc nhận $R_T=1$. Tính $G_T$.</li><li>Đổi tọa độ thành cảm biến bốn ô kề nhưng giữ nguyên luật và mê cung. Thành phần nào giữ, thành phần nào cần xét lại?</li></ol>
+<aside class="notes"><ol><li>Dự đoán giá trị và điều khiển tối ưu.</li><li>$v_\pi(7,6)=-1$ và $v_\pi(G)=0$.</li><li>$G_T=0$ vì không còn phần thưởng nào sau khi kết thúc.</li><li>Tập trạng thái, tập hành động, quy luật chuyển và phần thưởng giữ nguyên. Kênh quan sát đổi; biểu diễn quyết định và chính sách cần được xét lại.</li></ol><p class="note-source"><strong>Nguồn:</strong> PPTX trang11,24–27; hw02 bài2,10.</p></aside>
 </section>
 </section>
 <section>
@@ -231,15 +240,15 @@
 <table><tr><th>Thành phần</th><th>Trong mê cung</th></tr><tr><td>Thông tin $S_t,O_t,X_t$</td><td>Vị trí thật; dữ liệu nhận được; biểu diễn dùng để quyết định</td></tr><tr><td>Chính sách $\pi$</td><td>Chọn hướng đi từ thông tin sẵn có</td></tr><tr><td>$R_{t+1},G_t,v_\pi$</td><td>Thưởng từng bước; tổng thưởng; kỳ vọng theo chính sách</td></tr><tr><td>Mô hình môi trường</td><td>Dự báo vị trí kế tiếp và phần thưởng</td></tr></table>
 <aside class="notes"><p>Với mê cung quan sát đầy đủ, có thể chọn vị trí hiện tại làm biểu diễn để quyết định. Với quan sát cục bộ, biểu diễn có thể cần thêm thông tin từ lịch sử. Chính sách chọn hành động; hàm giá trị đánh giá kết quả dài hạn theo chính sách; mô hình dự báo phản hồi của môi trường.</p><p class="note-source"><strong>Nguồn:</strong> PPTX trang 10, 20, 25–26; hw02 bài 1</p></aside>
 </section>
-<section data-slide-id="L02-07-02">
-<h2>Tự kiểm tra</h2>
-<ol><li><strong>Câu hỏi:</strong> Cùng quan sát có thể ứng với hai trạng thái khác nhau không?</li><li><strong>Câu hỏi:</strong> Thưởng $-1$ mỗi bước có chỉ ra hành động tốt nhất không?</li><li><strong>Câu hỏi:</strong> Biết mô hình có đồng nghĩa biết chính sách tốt nhất không?</li></ol>
-<aside class="notes"><p>Có: hai ô (2,1) và (3,1) cùng quan sát bốn ô kề nhưng khác vị trí thật. Không: thưởng tức thời chưa phản ánh hậu quả dài hạn của hành động. Không: biết chuyển động và phần thưởng vẫn cần giải bài toán tối ưu. Bài 03 hình thức hóa quá trình quyết định Markov và xây dựng phương trình Bellman.</p><p class="note-source"><strong>Nguồn:</strong> PPTX trang 16, 19, 22–23, 27; hw02 bài 2, 5</p></aside>
-</section>
 <section data-slide-id="L02-07-03">
 <h2>Bài tập và tài liệu đọc</h2>
 <div class="grid2"><div><h3>Bài tập tuần 2</h3><p>Bài 1, 2, 5, 6: tín hiệu học, đặc tả mê cung, chiết khấu, chính sách ngẫu nhiên.</p><p>Bài 10: xác định trạng thái, hành động, chuyển động, thưởng và điều kiện kết thúc.</p></div><div><h3>Tài liệu đọc</h3><p>Sutton và Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, chương 3.</p><p>Tạ Việt Cường, bài giảng 2–3, trang 1–27.</p></div></div>
 <aside class="notes"><p>Bài 10 yêu cầu chọn một ứng dụng thực tế rồi nêu các thành phần và khó khăn khi mô hình hóa. Tập trung vào giả thiết về thông tin và phần thưởng; cách hình thức hóa đầy đủ được học tiếp ở Bài 03. Bài 3, 4, 7, 8, 9 trong cùng tập bài tập cần các khái niệm của Bài 03.</p><p class="note-source"><strong>Nguồn:</strong> RL-hk2-2025-2026/resources/hw02.pdf, bài1,2,5,6,10; Sutton và Barto (2018), chương3; PPTX trang1–27.</p></aside>
+</section>
+<section data-slide-id="L02-07-02">
+<h2>Câu hỏi kiểm tra</h2>
+<ol><li>Cùng một quan sát có thể khác trạng thái không?</li><li>Thưởng $-1$ mỗi bước có chỉ ra hành động tốt nhất ngay không?</li><li>Biết mô hình có đồng nghĩa biết chính sách tốt nhất không?</li></ol>
+<aside class="notes"><ol><li>Có, ví dụ $(2,1)$ và $(3,1)$ cho cùng quan sát bốn ô kề.</li><li>Không, cần xét hậu quả dài hạn của các lựa chọn.</li><li>Không, vẫn cần giải bài toán lựa chọn trên mô hình đó.</li></ol><p class="note-source"><strong>Nguồn:</strong> PPTX trang10,16,19–23,25–27.</p></aside>
 </section>
 </section>
 <div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 02</div>

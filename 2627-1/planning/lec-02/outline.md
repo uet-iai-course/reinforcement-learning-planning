@@ -11,8 +11,8 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 | Phần | Tên | Phút |
 |---|---|---:|
 | 1 | Bài toán ra quyết định tuần tự | 8 |
-| 2 | Tương tác và phần thưởng | 20 |
-| 3 | Trạng thái và thông tin quan sát | 25 |
+| 2 | Tương tác và phần thưởng | 17 |
+| 3 | Trạng thái và thông tin quan sát | 28 |
 | 4 | Chính sách lựa chọn hành động | 15 |
 | 5 | Hàm giá trị và mô hình môi trường | 25 |
 | 6 | Dự đoán, điều khiển và bài toán mê cung | 20 |
@@ -20,7 +20,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 
 ## Trạng thái triển khai
 
-Đã hoàn tất7/7phần:43trang,120phút; đủ năm báo cáo độc lập và kiểm định lại. Giới hạn rà trực quan Codex Slides được ghi trong review-log.md.
+Đã hoàn tất 7/7 phần: 44 trang, 120 phút; đủ năm báo cáo độc lập và kiểm định lại. Giới hạn rà trực quan Codex Slides được ghi trong review-log.md.
 
 ## Trang đích
 
@@ -28,45 +28,46 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-01-02` — Mê cung và chuỗi quyết định — PPTX trang 25–26 (bài toán mê cung)
 - `L02-01-03` — Mục tiêu học tập — Mục tiêu biên tập từ PPTX, trang 15–27; hw02, Bài 1, 2, 5, 6.
 - `L02-01-04` — Nội dung bài học — Cấu trúc biên tập từ PPTX, trang 2, 15–27.
+- `L02-01-05` — Câu hỏi kiểm tra — PPTX trang1–2,25; câu hỏi mở đầu về mê cung.
 - `L02-02-01` — Tác tử và môi trường — PPTX trang 4 (tác tử) và 10, 20 (thành phần giao diện)
 - `L02-02-02` — Một bước trong mê cung — PPTX trang 25–26 (bài toán mê cung), 7–9 (tín hiệu thưởng)
 - `L02-02-03` — Thứ tự tương tác — PPTX trang 14–15 (giao diện), 16 (trạng thái/quan sát)
 - `L02-02-04` — Tín hiệu học — PPTX trang 7–8 (tín hiệu học); hw02 bài 1
 - `L02-02-05` — Giả thuyết điểm thưởng — PPTX trang 9 (thưởng) và 25 (mê cung với -1 mỗi bước)
-- `L02-02-06` — Phản hồi trễ — PPTX trang 4 (phần thưởng bị trễ) và 11 (cờ)
-- `L02-02-07` — Kiểm tra vòng tương tác — PPTX trang 27 (quiz); bài luyện suy ra từ trang 25–26 và hw02 bài 6, 10
+- `L02-02-06` — Phản hồi trễ — PPTX trang 7–8 (phản hồi trễ), 11 (cờ)
+- `L02-02-07` — Câu hỏi kiểm tra — PPTX trang 27 (quiz); bài luyện suy ra từ trang 25–26 và hw02 bài 6, 10
 - `L02-03-01` — Thông tin để ra quyết định — PPTX trang 19; ảnh maze-local.svg dựng từ trang 25-26; bài mê cung hw02 bài 10 suy ra kịch bản hai lối ra.
 - `L02-03-02` — Trạng thái và quan sát — PPTX trang 16 (trạng thái/quan sát); phần biểu diễn ở trang 14-15 và 21.
+- `L02-03-09` — Mẫu dữ liệu, lịch sử và quỹ đạo — PPTX trang 14–16; bổ sung theo yêu cầu, đặt sau trạng thái và quan sát
 - `L02-03-03` — Thông tin trong lịch sử — PPTX trang 12 (ví dụ robot/cờ/xe); ví dụ vận tốc là giả thiết sư phạm suy ra,Markov-summary.svg từ trang 17.
 - `L02-03-04` — Tính Markov — PPTX trang 17 (Markov) và trang 18 (đầy đủ).
 - `L02-03-05` — Trạng thái trong mê cung — PPTX trang 25-26 (mê cung); bài mê cung hw02 bài 10; biến thể chìa khóa là giả thiết sư phạm suy ra.
 - `L02-03-06` — Quan sát đầy đủ và một phần — PPTX trang 18 (đầy đủ) và trang 19 (một phần); ảnh maze-local.svg từ trang 25-26.
 - `L02-03-07` — Biểu diễn dùng để quyết định — PPTX trang 14-15 (giao diện) và trang 21; ví dụ xe hai thời điểm từ trang 12.
-- `L02-03-08` — Kiểm tra thông tin quan sát — PPTX trang 27 (quiz); các trường hợp từ trang 16, 18, 19 và ảnh maze-local.svg.
+- `L02-03-08` — Câu hỏi kiểm tra — PPTX trang 27 (quiz); các trường hợp từ trang 16, 18, 19 và ảnh maze-local.svg.
 - `L02-04-01` — Quy tắc lựa chọn hành động — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 - `L02-04-02` — Ví dụ về chính sách — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 - `L02-04-03` — Chính sách xác định — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 - `L02-04-04` — Chính sách ngẫu nhiên — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
-- `L02-04-05` — Kiểm tra chính sách — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
+- `L02-04-05` — Câu hỏi kiểm tra — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 - `L02-05-01` — Kết quả dài hạn của chính sách — PPTX trang 10, 21, 22, 23
 - `L02-05-02` — Tổng phần thưởng trên quỹ đạo — PPTX trang 26; hw02 bài 1
 - `L02-05-03` — Phần thưởng tích lũy — PPTX trang 7–9, 22; hw02 bài 2
 - `L02-05-04` — Giá trị kỳ vọng — PPTX trang 22; ví dụ giả định sư phạm theo hw02 bài 5
 - `L02-05-05` — Hàm giá trị trạng thái — PPTX trang 16–18, 22; hw02 bài 5
-- `L02-05-06` — Kiểm tra giá trị — PPTX trang 22, 26; hw02 bài 1
 - `L02-05-07` — Dự báo bước tiếp theo — PPTX trang 13, 23; hw02 bài 6
 - `L02-05-08` — Mô hình chuyển và phần thưởng — PPTX trang 13, 23; hw02 bài 10
-- `L02-05-09` — Kiểm tra mô hình — PPTX trang 13, 24, 27; hw02 bài 6
+- `L02-05-09` — Câu hỏi kiểm tra — PPTX trang 13, 24, 27; hw02 bài 6
 - `L02-06-01` — Hai nhiệm vụ trên mê cung — PPTX trang 24; hw02 bài 1, 5
-- `L02-06-02` — Dự đoán và điều khiển — PPTX trang 16 bước và 18 bước; hw02 bài 5
+- `L02-06-02` — Dự đoán và điều khiển — PPTX trang 24–26; hw02 bài 5
 - `L02-06-03` — Đặc tả môi trường mê cung — PPTX trang 25; hw02 bài 2
 - `L02-06-04` — Chính sách trên mê cung — PPTX trang 26; hw02 bài 2
 - `L02-06-05` — Giá trị trên mê cung — PPTX trang 26; hw02 bài 6
 - `L02-06-06` — Trạng thái kết thúc trong trò chơi — PPTX, trang 11; bài kiểm tra suy ra từ quy ước phần thưởng và điều kiện kết thúc.
-- `L02-06-07` — Kiểm tra mô hình hóa — PPTX trang 27; hw02 bài 10
+- `L02-06-07` — Câu hỏi kiểm tra — PPTX trang 27; hw02 bài 10
 - `L02-07-01` — Các thành phần của bài toán — PPTX trang 10, 20, 25–26; hw02 bài 1
-- `L02-07-02` — Tự kiểm tra — PPTX trang 16, 19, 22–23, 27; hw02 bài 2, 5
 - `L02-07-03` — Bài tập và tài liệu đọc — RL-hk2-2025-2026/resources/hw02.pdf, bài1,2,5,6,10; Sutton và Barto (2018), chương3; PPTX trang1–27.
+- `L02-07-02` — Câu hỏi kiểm tra — PPTX trang 16, 19, 22–23, 27; hw02 bài 2, 5
 
 ## Ánh xạ toàn bộ nguồn
 
@@ -100,7 +101,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 
 ## Quy ước và dữ kiện xuyên suốt
 
-- $S_t\in\mathcal S$: trạng thái môi trường; $O_t\in\mathcal O$: quan sát; $X_t\in\mathcal X$: biểu diễn dùng để quyết định; $H_t$: lịch sử quan sát–hành động–thưởng.
+- $S_t\in\mathcal S$: trạng thái môi trường; $O_t\in\mathcal O$: quan sát; $X_t\in\mathcal X$: biểu diễn dùng để quyết định; $H_t$: lịch sử trạng thái–hành động–thưởng; $H_t^O$: lịch sử quan sát–hành động–thưởng; $\tau=H_T$: quỹ đạo trạng thái hữu hạn.
 - $A_t\in\mathcal A$: hành động; $R_{t+1}\in\mathbb R$: thưởng sau hành động; $t$ là chỉ số thời gian không âm.
 - $\pi(a\mid x)$: chính sách trên biểu diễn; khi quan sát đầy đủ dùng $X_t=S_t$.
 - $T$: thời điểm kết thúc của quỹ đạo; $G_t$: thưởng tích lũy chiết khấu; $\gamma\in[0,1]$; $v_\pi(s)$: kỳ vọng dưới chính sách cố định trong thiết lập Markov với kỳ vọng hữu hạn.

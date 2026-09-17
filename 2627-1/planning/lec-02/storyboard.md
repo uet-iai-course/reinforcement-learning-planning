@@ -13,7 +13,7 @@ Sinh viên năm 3; kiến thức được nối từ dữ liệu tương tác t�
 ### Cụm Mở bài
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 8 phút; trang tính thời gian: L02-01-01, L02-01-02, L02-01-03, L02-01-04. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 8 phút; trang tính thời gian: L02-01-01, L02-01-02, L02-01-03, L02-01-04, L02-01-05. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Sinh viên năm ba đã biết học máy, xác suất và thuật toán cơ bản.
 - Sản phẩm học tập: Nêu được hậu quả của một hành động đối với các quyết định tiếp theo và mục tiêu của bài học.
 - vấn đề: L02-01-01
@@ -21,14 +21,14 @@ Sinh viên năm 3; kiến thức được nối từ dữ liệu tương tác t�
 - ví dụ: L02-01-02
 - hình thức: không áp dụng; xem lý do bên dưới
 - ứng dụng: không áp dụng; xem lý do bên dưới
-- kiểm tra: không áp dụng; xem lý do bên dưới
-- Gộp bước/ngoại lệ: Mở bài đặt vấn đề và mục tiêu; hình thức và kiểm tra triển khai ở phần 2–6.
+- kiểm tra: L02-01-05
+- Gộp bước/ngoại lệ: Mở bài đặt vấn đề và kiểm tra trực giác về mê cung; định nghĩa hình thức triển khai ở phần 2–6.
 - Dữ kiện truyền tiếp: Mê cung tám hàng, tám cột; điểm bắt đầu (0,2), đích G tại (8,6), bốn hướng hành động.
 - Câu nối: Chuyển sang phần 2 để xem một vòng tương tác cụ thể diễn ra thế nào.
 
 ### L02-01-01 — Bài toán ra quyết định tuần tự
 
-Thời lượng: 2 phút. Nguồn: PPTX trang 1 (bìa).
+Thời lượng: 1 phút. Nguồn: PPTX trang 1 (bìa).
 
 - **Luận điểm:** Bài 02 nghiên cứu giao diện tác tử–môi trường cho chuỗi quyết định.
 - **Nhu cầu và lý do tồn tại:** Đặt khung bài học ngay từ đầu.
@@ -52,7 +52,7 @@ Thời lượng: 2 phút. Nguồn: PPTX trang 25–26 (bài toán mê cung).
 
 ### L02-01-03 — Mục tiêu học tập
 
-Thời lượng: 2 phút. Nguồn: Mục tiêu biên tập từ PPTX, trang 15–27; hw02, Bài 1, 2, 5, 6..
+Thời lượng: 1 phút. Nguồn: Mục tiêu biên tập từ PPTX, trang 15–27; hw02, Bài 1, 2, 5, 6..
 
 - **Luận điểm:** Ba năng lực đầu ra: mô tả tương tác, phân biệt thông tin/quy tắc, đánh giá kết quả.
 - **Nhu cầu và lý do tồn tại:** Sinh viên cần biết tiêu chí tự kiểm tra.
@@ -64,17 +64,29 @@ Thời lượng: 2 phút. Nguồn: Mục tiêu biên tập từ PPTX, trang 15�
 
 ### L02-01-04 — Nội dung bài học
 
-Thời lượng: 2 phút. Nguồn: Cấu trúc biên tập từ PPTX, trang 2, 15–27..
+Thời lượng: 1 phút. Nguồn: Cấu trúc biên tập từ PPTX, trang 2, 15–27..
 
 - **Luận điểm:** Bài học gồm 7 phần đi từ khái niệm tới ứng dụng mê cung.
 - **Nhu cầu và lý do tồn tại:** Sinh viên cần bản đồ để định vị từng khái niệm.
 - **Cách thể hiện và độ phù hợp năm 3:** Lưới 2 cột, tên section chữ đủ lớn, không mã slide và không thời lượng; phù hợp năm 3 vì cấu trúc phẳng dễ quét.
 - **Kết nối vào:** Mục tiêu học tập.
-- **Kết nối ra:** Section 2: tương tác và phần thưởng.
-- **Sản phẩm học tập/kiểm tra:** Không đánh giá ở slide bản đồ.
+- **Kết nối ra:** Ba câu hỏi cuối phần kiểm tra hiểu biết về bài toán mê cung.
+- **Sản phẩm học tập/kiểm tra:** Nêu các nội dung sẽ học trước khi trả lời câu hỏi mở đầu.
 - **Quyết định nguồn:** Sửa: thay trang trình bày gốc bằng lưới 2 cột theo MAP, thêm câu nối từ mê cung sang giao diện.
 
-## Phần 2: Tương tác và phần thưởng — 20 phút
+### L02-01-05 — Câu hỏi kiểm tra
+
+Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 1; xem nguồn cụ thể trong HTML.
+
+- **Luận điểm:** Mê cung đòi hỏi một chuỗi lựa chọn có hậu quả nối tiếp.
+- **Nhu cầu và lý do tồn tại:** Khép phần bằng câu hỏi áp dụng và giải thích, kiểm tra trước khi chuyển sang phần kế.
+- **Cách thể hiện và độ phù hợp năm 3:** Danh sách đánh số từ 1 đến 3; dữ kiện nằm trong câu hỏi, đáp án chỉ trong ghi chú diễn giả.
+- **Kết nối vào:** Ví dụ mê cung và mục tiêu học tập.
+- **Kết nối ra:** Từ quyết định về hướng đi sang cách mô tả tác tử và môi trường.
+- **Sản phẩm học tập/kiểm tra:** Trả lời lần lượt 3 câu; giải thích bằng khái niệm và dữ kiện vừa học.
+- **Quyết định nguồn:** Gom câu hỏi về cuối phần theo yêu cầu; giữ ý nguồn, không thêm thuật toán hay kiến thức chưa học.
+
+## Phần 2: Tương tác và phần thưởng — 17 phút
 
 - **Chức năng:** Định nghĩa giao diện tác tử–môi trường qua một bước tương tác cụ thể, giới thiệu bộ ký hiệu $O_t, A_t, R_{t+1}$ và vai trò của phần thưởng là tín hiệu học duy nhất.
 - **Tiên quyết:** Section 1: bài toán ra quyết định tuần tự và mê cung 8x8 với điểm bắt đầu (0,2) và đích G.
@@ -85,7 +97,7 @@ Thời lượng: 2 phút. Nguồn: Cấu trúc biên tập từ PPTX, trang 2, 1
 ### Cụm Vòng tương tác
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 11 phút; trang tính thời gian: L02-02-01, L02-02-02, L02-02-03, L02-02-07. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 9 phút; trang tính thời gian: L02-02-01, L02-02-02, L02-02-03, L02-02-07. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã hiểu mục tiêu bài học và mê cung 8×8 với điểm bắt đầu (0,2) và G ngoài (8,6).
 - Sản phẩm học tập: Điền đúng hành động, phần thưởng kế tiếp và quan sát mới trong một bước tương tác.
 - vấn đề: L02-02-01
@@ -101,7 +113,7 @@ Thời lượng: 2 phút. Nguồn: Cấu trúc biên tập từ PPTX, trang 2, 1
 ### Cụm Tín hiệu học và phần thưởng
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 9 phút; trang tính thời gian: L02-02-04, L02-02-05, L02-02-06. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 8 phút; trang tính thời gian: L02-02-04, L02-02-05, L02-02-06. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã nắm vòng tương tác và quy ước thưởng −1 mỗi bước trong mê cung.
 - Sản phẩm học tập: Phân biệt nhãn mục tiêu với tín hiệu thưởng và giải thích hậu quả có thể xuất hiện muộn.
 - vấn đề: L02-02-04
@@ -110,13 +122,13 @@ Thời lượng: 2 phút. Nguồn: Cấu trúc biên tập từ PPTX, trang 2, 1
 - hình thức: không áp dụng; xem lý do bên dưới
 - ứng dụng: L02-02-06
 - kiểm tra: không áp dụng; xem lý do bên dưới
-- Gộp bước/ngoại lệ: Cụm phụ so sánh tín hiệu học; công thức tổng thưởng ở L02-05-03, kiểm tra ở L02-05-06, không lặp chu trình.
+- Gộp bước/ngoại lệ: Cụm phụ so sánh tín hiệu học; công thức tổng thưởng ở L02-05-03, kiểm tra ở L02-05-09, không lặp chu trình.
 - Dữ kiện truyền tiếp: Quy ước thưởng −1 mỗi bước dùng lại khi tính tổng thưởng có chiết khấu ở phần 5.
 - Câu nối: Sang phần 3, làm rõ trạng thái, quan sát và cách biểu diễn từ lịch sử.
 
 ### L02-02-01 — Tác tử và môi trường
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 4 (tác tử) và 10, 20 (thành phần giao diện).
+Thời lượng: 2 phút. Nguồn: PPTX trang 4 (tác tử) và 10, 20 (thành phần giao diện).
 
 - **Luận điểm:** Học tăng cường mô hình hóa tương tác giữa hai bên: tác tử chọn hành động, môi trường sinh phản hồi.
 - **Nhu cầu và lý do tồn tại:** Phân định vai trò là bước đầu tiên trước mọi ký hiệu.
@@ -128,7 +140,7 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 4 (tác tử) và 10, 20 (thành p
 
 ### L02-02-02 — Một bước trong mê cung
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 25–26 (bài toán mê cung), 7–9 (tín hiệu thưởng).
+Thời lượng: 2 phút. Nguồn: PPTX trang 25–26 (bài toán mê cung), 7–9 (tín hiệu thưởng).
 
 - **Luận điểm:** Một bước tương tác gồm bốn sự kiện: quan sát, hành động, thưởng, quan sát mới.
 - **Nhu cầu và lý do tồn tại:** Neo ký hiệu vào một ví dụ đo được trước khi hình thức hóa.
@@ -140,7 +152,7 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 25–26 (bài toán mê cung), 7�
 
 ### L02-02-03 — Thứ tự tương tác
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 14–15 (giao diện), 16 (trạng thái/quan sát).
+Thời lượng: 2 phút. Nguồn: PPTX trang 14–15 (giao diện), 16 (trạng thái/quan sát).
 
 - **Luận điểm:** Chuỗi tương tác được đánh chỉ mục theo quy ước: $R_{t+1}$ là hệ quả của $A_t$, lịch sử $H_t$ kết thúc bằng $O_t$.
 - **Nhu cầu và lý do tồn tại:** Quy ước chỉ số chuẩn bị công thức tổng thưởng và hàm giá trị; cần xác định phản hồi của hành động hiện tại.
@@ -152,7 +164,7 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 14–15 (giao diện), 16 (trạng
 
 ### L02-02-04 — Tín hiệu học
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 7–8 (tín hiệu học); hw02 bài 1.
+Thời lượng: 2 phút. Nguồn: PPTX trang 7–8 (tín hiệu học); hw02 bài 1.
 
 - **Luận điểm:** Phần thưởng là tín hiệu đánh giá, không phải nhãn hành động đúng; nó tác động đến lựa chọn hành động tiếp theo.
 - **Nhu cầu và lý do tồn tại:** Gỡ nhầm lẫn phổ biến nhất khi chuyển từ ML có giám sát sang học tăng cường.
@@ -176,7 +188,7 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 9 (giả thuyết điểm thưởn
 
 ### L02-02-06 — Phản hồi trễ
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 4 (phần thưởng bị trễ) và 11 (cờ).
+Thời lượng: 3 phút. Nguồn: PPTX trang 7–8 (phản hồi trễ), 11 (cờ) và 14–15 (quan sát).
 
 - **Luận điểm:** Hậu quả của hành động có thể xuất hiện trễ nhiều bước; hành động đổi phân phối dữ liệu tương tác sau.
 - **Nhu cầu và lý do tồn tại:** Phản hồi trễ và dữ liệu phụ thuộc hành động là hai tính chất xác định bài toán học tăng cường.
@@ -186,19 +198,19 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 4 (phần thưởng bị trễ) v�
 - **Sản phẩm học tập/kiểm tra:** hw02 bài 2: nhận dạng ví dụ phản hồi trễ và giải thích tại sao thưởng 0 giữa ván không vô dụng.
 - **Quyết định nguồn:** Giữ ví dụ cờ trang 4 và 11, vẽ lại thành sơ đồ dãy đơn giản; thêm ý đổi phân phối dữ liệu từ trang 4; tách khỏi trang 5–6 vì ngoài phạm vi.
 
-### L02-02-07 — Kiểm tra vòng tương tác
+### L02-02-07 — Câu hỏi kiểm tra
 
-Thời lượng: 2 phút. Nguồn: PPTX trang 27 (quiz); bài luyện suy ra từ trang 25–26 và hw02 bài 6, 10.
+Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 2; xem nguồn cụ thể trong HTML.
 
-- **Luận điểm:** Điền đúng $A_t, R_{t+1}, O_{t+1}$ và lý giải thưởng tức thời không xác định hành động tối ưu.
-- **Nhu cầu và lý do tồn tại:** Kiểm tra cả quy ước chỉ số lẫn giới hạn tín hiệu thưởng, hai nội dung trung tâm của section.
-- **Cách thể hiện và độ phù hợp năm 3:** Một card duy nhất với ba chỗ điền và một câu hỏi; phù hợp năm 3 vì bài tập ngắn dạng điền khuyết trực tiếp, không cần hình mới.
-- **Kết nối vào:** Toàn bộ section 2: ký hiệu thứ tự và bản chất tín hiệu thưởng.
-- **Kết nối ra:** Section 3: thông tin trong $O_t$ — trạng thái và quan sát.
-- **Sản phẩm học tập/kiểm tra:** Đáp án đầy đủ trong notes; nối tới hw02 bài 6 và 10 ở mức nhận diện thành phần.
-- **Quyết định nguồn:** Từ quiz trang 27, giữ câu điền ký hiệu theo tọa độ mê cung; câu về hành động tối ưu suy ra từ trang 7–8 để khép vòng ý phần này.
+- **Luận điểm:** Đọc đúng tương tác và phân biệt thưởng tức thời với tiêu chí tích lũy.
+- **Nhu cầu và lý do tồn tại:** Khép phần bằng câu hỏi áp dụng và giải thích, kiểm tra trước khi chuyển sang phần kế.
+- **Cách thể hiện và độ phù hợp năm 3:** Danh sách đánh số từ 1 đến 3; dữ kiện nằm trong câu hỏi, đáp án chỉ trong ghi chú diễn giả.
+- **Kết nối vào:** Tín hiệu học, giả thuyết điểm thưởng và phản hồi trễ.
+- **Kết nối ra:** Thông tin nào đủ để chọn hành động là nội dung phần 3.
+- **Sản phẩm học tập/kiểm tra:** Trả lời lần lượt 3 câu; giải thích bằng khái niệm và dữ kiện vừa học.
+- **Quyết định nguồn:** Gom câu hỏi về cuối phần theo yêu cầu; giữ ý nguồn, không thêm thuật toán hay kiến thức chưa học.
 
-## Phần 3: Trạng thái và thông tin quan sát — 25 phút
+## Phần 3: Trạng thái và thông tin quan sát — 28 phút
 
 - **Chức năng:** Xác định thông tin nào tác tử cần để ra quyết định: trạng thái môi trường, quan sát và biểu diễn dùng để quyết định; đưa ra định nghĩa tính Markov trên lịch sử trạng thái.
 - **Tiên quyết:** Đã biết chuỗi quan sát–hành động–phần thưởng; có kiến thức xác suất có điều kiện và mô hình chuyển động đơn giản.
@@ -209,13 +221,13 @@ Thời lượng: 2 phút. Nguồn: PPTX trang 27 (quiz); bài luyện suy ra t�
 ### Cụm Trạng thái, quan sát và biểu diễn
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 6 phút; trang tính thời gian: L02-03-01, L02-03-02. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 9 phút; trang tính thời gian: L02-03-01, L02-03-02, L02-03-09. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã biết tác tử nhận quan sát và thưởng sau hành động; có thể đối chiếu hai ô trên mê cung.
 - Sản phẩm học tập: Phân biệt trạng thái môi trường, quan sát nhận được và biểu diễn dùng để quyết định.
 - vấn đề: L02-03-01
 - trực giác: L02-03-01
 - ví dụ: L02-03-01
-- hình thức: L02-03-02
+- hình thức: L02-03-02, L02-03-09
 - ứng dụng: L02-03-02
 - kiểm tra: L02-03-08
 - Gộp bước/ngoại lệ: Trang 01 gộp vấn đề/trực giác/ví dụ, trang 02 gộp định nghĩa và áp dụng; kiểm tra 08 tham chiếu, không cộng giờ hai lần.
@@ -225,7 +237,7 @@ Thời lượng: 2 phút. Nguồn: PPTX trang 27 (quiz); bài luyện suy ra t�
 ### Cụm Tính Markov
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 10 phút; trang tính thời gian: L02-03-03, L02-03-04, L02-03-05. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 9 phút; trang tính thời gian: L02-03-03, L02-03-04, L02-03-05. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã phân biệt trạng thái và quan sát trên mê cung 8×8.
 - Sản phẩm học tập: Kiểm tra thông tin trạng thái có đủ cho dự báo bước tiếp theo và bổ sung biến bị thiếu.
 - vấn đề: L02-03-03
@@ -233,7 +245,7 @@ Thời lượng: 2 phút. Nguồn: PPTX trang 27 (quiz); bài luyện suy ra t�
 - ví dụ: L02-03-03
 - hình thức: L02-03-04
 - ứng dụng: L02-03-05
-- kiểm tra: L02-03-05
+- kiểm tra: L02-03-08
 - Gộp bước/ngoại lệ: Ví dụ xe trước công thức; mê cung và chìa khóa kiểm tra điều kiện đủ thông tin.
 - Dữ kiện truyền tiếp: Cùng vị trí và hành động nhưng khác vận tốc có thể cho kết quả khác; mê cung có khóa cần thêm tình trạng chìa khóa.
 - Câu nối: Từ tính Markov, phân loại quan sát đầy đủ và một phần trên các tình huống đã có.
@@ -241,7 +253,7 @@ Thời lượng: 2 phút. Nguồn: PPTX trang 27 (quiz); bài luyện suy ra t�
 ### Cụm Quan sát đầy đủ và một phần
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 6 phút; trang tính thời gian: L02-03-06, L02-03-08. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 7 phút; trang tính thời gian: L02-03-06, L02-03-08. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã hiểu tính Markov và cặp ô (2,1)/(3,1) cùng bốn ô kề.
 - Sản phẩm học tập: Sinh viên xếp được ba tình huống vào quan sát đầy đủ hay một phần kèm lý do.
 - vấn đề: L02-03-01
@@ -294,6 +306,18 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 16 (trạng thái/quan sát); ph�
 - **Sản phẩm học tập/kiểm tra:** Cho mê cung có GPS: hỏi X_t có thể là gì và vì sao X_t = S_t khi đó là lựa chọn hợp lệ.
 - **Quyết định nguồn:** Sửa: trang 16 trình bày trạng thái và quan sát chung chung; thêm X_t theo trang 14-15 và ví dụ tọa độ/bốn ô kề để chốt ký hiệu cho cả section.
 
+### L02-03-09 — Mẫu dữ liệu, lịch sử và quỹ đạo
+
+Thời lượng: 3 phút. Nguồn: PPTX trang 14–16; mẫu và quỹ đạo bổ sung theo yêu cầu.
+
+- **Luận điểm:** Mẫu ghi một bước; lịch sử ghi tới hiện tại; quỹ đạo hữu hạn ghi toàn lượt tương tác.
+- **Nhu cầu và lý do tồn tại:** Định nghĩa lịch sử trước khi dùng nó để phân tích thông tin và tính Markov.
+- **Cách thể hiện và độ phù hợp năm 3:** Bộ bốn dữ liệu và hai chuỗi hình thức, phân biệt mẫu quan sát với chuỗi trạng thái–hành động–thưởng.
+- **Kết nối vào:** Trạng thái và quan sát đã được phân biệt; mẫu dùng quan sát, lịch sử và quỹ đạo dùng trạng thái.
+- **Kết nối ra:** Ví dụ hai xe làm rõ thông tin ảnh hưởng dự báo có thể bị mất trong quan sát hiện tại.
+- **Sản phẩm học tập/kiểm tra:** Phân biệt phạm vi ba đối tượng ở L02-03-08.
+- **Quyết định nguồn:** Thêm theo yêu cầu; chuyển từ sau phản hồi trễ sang ngay sau trạng thái và quan sát theo chỉ dẫn mới nhất. Với lượt hữu hạn, $\tau=H_T$; trường hợp tiếp diễn giải thích trong ghi chú.
+
 ### L02-03-03 — Thông tin trong lịch sử
 
 Thời lượng: 3 phút. Nguồn: PPTX trang 12 (ví dụ robot/cờ/xe); ví dụ vận tốc là giả thiết sư phạm suy ra,Markov-summary.svg từ trang 17..
@@ -320,14 +344,14 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 17 (Markov) và trang 18 (đầy �
 
 ### L02-03-05 — Trạng thái trong mê cung
 
-Thời lượng: 4 phút. Nguồn: PPTX trang 25-26 (mê cung); bài mê cung hw02 bài 10; biến thể chìa khóa là giả thiết sư phạm suy ra..
+Thời lượng: 3 phút. Nguồn: PPTX trang 25-26 (mê cung); bài mê cung hw02 bài 10; biến thể chìa khóa là giả thiết sư phạm suy ra..
 
 - **Luận điểm:** Tọa độ là trạng thái Markov cho mê cung cố định xác định, nhưng không còn Markov khi luật chuyển phụ thuộc biến chưa ghi trong S.
 - **Nhu cầu và lý do tồn tại:** Áp dụng định nghĩa slide 4 vào bài tập mê cung mà sinh viên gặp ở hw02, để thấy tiêu chí kiểm tra dùng được trong thực hành.
 - **Cách thể hiện và độ phù hợp năm 3:** Hai bullet tóm tắt thiết lập và một box check chứa câu hỏi; không cần hình mới vì mê cung đã quen từ phần 2 và hw02.
 - **Kết nối vào:** Định nghĩa tính Markov ở slide 4 là tiêu chí kiểm tra.
-- **Kết nối ra:** Kết luận tọa độ đủ khi bản đồ cố định; trường hợp thiếu thông tin dẫn sang phân loại quan sát đầy đủ/một phần ở slide 6.
-- **Sản phẩm học tập/kiểm tra:** Chính là câu hỏi trong box: yêu cầu chỉ ra các cặp lịch sử cùng (S_t, A_t) cho phản hồi khác nhau.
+- **Kết nối ra:** Mức quan sát được phân loại dựa trên thông tin trạng thái đã xác định.
+- **Sản phẩm học tập/kiểm tra:** Nhận diện biến chìa khóa cần thêm; câu hỏi áp dụng nằm cuối phần.
 - **Quyết định nguồn:** Sửa: trang 25-26 dùng mê cung làm ví dụ bài toán; thêm giả thiết chìa khóa làm bài kiểm tra ứng dụng vì cần một trường hợp phản Markov rõ ràng.
 
 ### L02-03-06 — Quan sát đầy đủ và một phần
@@ -354,17 +378,17 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 14-15 (giao diện) và trang 21; 
 - **Sản phẩm học tập/kiểm tra:** Cho mê cung có chìa khóa: hỏi f cần ghi nhớ thông tin gì để biểu diễn trở nên đủ.
 - **Quyết định nguồn:** Sửa: trang 14-15 nói về giao diện tác tử - môi trường; rút gọn thành ý lịch sử và hàm f, gắn với ví dụ xe đã chuẩn bị ở slide 3.
 
-### L02-03-08 — Kiểm tra thông tin quan sát
+### L02-03-08 — Câu hỏi kiểm tra
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 27 (quiz); các trường hợp từ trang 16, 18, 19 và ảnh maze-local.svg..
+Thời lượng: 4 phút. Nguồn: các khái niệm và ví dụ trong phần 3; xem nguồn cụ thể trong HTML.
 
-- **Luận điểm:** Tính đầy đủ của quan sát được phân loại theo tiêu chí ánh xạ từ O_t về S_t, gắn với giả thiết về cảm biến.
-- **Nhu cầu và lý do tồn tại:** Câu hỏi phân loại cuối section để kiểm tra chu kỳ khái niệm; cần lý do và giả thiết nên chấm được quy trình chứ không chỉ đáp án.
-- **Cách thể hiện và độ phù hợp năm 3:** Ba trường hợp so sánh trên cùng mê cung; giữ thông tin cảm biến làm biến thay đổi, đáp án trong notes.
-- **Kết nối vào:** Định nghĩa đầy đủ/một phần ở slide 6 và tiêu chí Markov ở slide 4.
-- **Kết nối ra:** Câu X_t làm đối số chính sách mở sang section 4 về chính sách lựa chọn hành động.
-- **Sản phẩm học tập/kiểm tra:** Bốn câu trả lời có giả thiết; đáp án chi tiết trong notes để đối chiếu.
-- **Quyết định nguồn:** Sửa: trang 27 là quiz chung; chọn bốn trường hợp bám đúng nội dung trạng thái/quan sát của section, thêm yêu cầu giả thiết để câu hỏi phân loại có tính kiểm tra rõ ràng.
+- **Luận điểm:** Kiểm tra mức quan sát và tính đầy đủ của thông tin trạng thái.
+- **Nhu cầu và lý do tồn tại:** Khép phần bằng câu hỏi áp dụng và giải thích, kiểm tra trước khi chuyển sang phần kế.
+- **Cách thể hiện và độ phù hợp năm 3:** Danh sách đánh số từ 1 đến 4; dữ kiện nằm trong câu hỏi, đáp án chỉ trong ghi chú diễn giả.
+- **Kết nối vào:** Trạng thái, quan sát, Markov và biểu diễn từ lịch sử.
+- **Kết nối ra:** Biểu diễn quyết định là đầu vào của chính sách ở phần 4.
+- **Sản phẩm học tập/kiểm tra:** Trả lời lần lượt 4 câu; giải thích bằng khái niệm và dữ kiện vừa học.
+- **Quyết định nguồn:** Gom câu hỏi về cuối phần theo yêu cầu; giữ ý nguồn, không thêm thuật toán hay kiến thức chưa học.
 
 ## Phần 4: Chính sách lựa chọn hành động — 15 phút
 
@@ -438,17 +462,17 @@ Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví d�
 - **Sản phẩm học tập/kiểm tra:** Kiểm tra hai điều kiện chuẩn hóa trên hàng ví dụ 0.5/0.5/0/0.
 - **Quyết định nguồn:** Giữ trang 22, nối tường minh vào phần 3 qua quy ước $X=S$ và tái dùng hàng xác suất slide trước.
 
-### L02-04-05 — Kiểm tra chính sách
+### L02-04-05 — Câu hỏi kiểm tra
 
-Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa..
+Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 4; xem nguồn cụ thể trong HTML.
 
-- **Luận điểm:** Một thành phần của phân phối suy ra từ điều kiện chuẩn hóa; so sánh chất lượng chính sách đòi hỏi đánh giá tương lai.
-- **Nhu cầu và lý do tồn tại:** Kiểm tra trực tiếp hai điều kiện của phân phối và cài mầm nhu cầu về đánh giá, mở đường sang phần 5.
-- **Cách thể hiện và độ phù hợp năm 3:** Hộp câu hỏi với ba xác suất đã biết; đáp án chỉ ở notes để người học tự tính.
-- **Kết nối vào:** Hai điều kiện $\pi\ge 0$ và tổng bằng 1 từ slide ngẫu nhiên.
-- **Kết nối ra:** Câu nối về đánh giá tương lai dẫn vào hàm giá trị của phần 5.
-- **Sản phẩm học tập/kiểm tra:** Tự kiểm tra theo hw02 bài 6: cho ba xác suất, tìm thành phần còn lại và phân loại chính sách.
-- **Quyết định nguồn:** Sửa: giữ ý khái niệm của hw02 bài 6 và trang 27, thay số bằng bài luyện suy ra với đáp án 0.3.
+- **Luận điểm:** Kiểm tra chuẩn hóa và phân biệt chính sách xác định với ngẫu nhiên.
+- **Nhu cầu và lý do tồn tại:** Khép phần bằng câu hỏi áp dụng và giải thích, kiểm tra trước khi chuyển sang phần kế.
+- **Cách thể hiện và độ phù hợp năm 3:** Danh sách đánh số từ 1 đến 3; dữ kiện nằm trong câu hỏi, đáp án chỉ trong ghi chú diễn giả.
+- **Kết nối vào:** Ví dụ bảng và định nghĩa chính sách.
+- **Kết nối ra:** Phần 5 đánh giá phần thưởng dài hạn dưới một chính sách.
+- **Sản phẩm học tập/kiểm tra:** Trả lời lần lượt 3 câu; giải thích bằng khái niệm và dữ kiện vừa học.
+- **Quyết định nguồn:** Gom câu hỏi về cuối phần theo yêu cầu; giữ ý nguồn, không thêm thuật toán hay kiến thức chưa học.
 
 ## Phần 5: Hàm giá trị và mô hình môi trường — 25 phút
 
@@ -469,15 +493,15 @@ Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví d�
 - ví dụ: L02-05-02
 - hình thức: L02-05-03
 - ứng dụng: L02-05-03
-- kiểm tra: L02-05-06
-- Gộp bước/ngoại lệ: Ba bước/thưởng −1 trước công thức, thay số ngay sau công thức; kiểm tra 06 tính ba gamma, giờ thuộc cụm giá trị.
+- kiểm tra: L02-05-09
+- Gộp bước/ngoại lệ: Ba bước/thưởng −1 trước công thức, thay số ngay sau công thức; kiểm tra 06 tính ba gamma, thời gian kiểm tra chung thuộc cụm mô hình.
 - Dữ kiện truyền tiếp: Ba bước cuối tới đích và trọng số $1,\gamma,\gamma^2$ được thay trực tiếp vào định nghĩa $G_t$.
 - Câu nối: Từ tổng thưởng một quỹ đạo, mở rộng thành hàm giá trị kỳ vọng của trạng thái.
 
 ### Cụm Hàm giá trị trạng thái
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 9 phút; trang tính thời gian: L02-05-04, L02-05-05, L02-05-06. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 7 phút; trang tính thời gian: L02-05-04, L02-05-05. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã tính tổng thưởng trên một quỹ đạo và biết kỳ vọng từ học phần xác suất.
 - Sản phẩm học tập: Tính $v_\pi(s)=-4$ cho hai nhánh ba/năm bước cùng xác suất $0{,}5$ khi $\gamma=1$.
 - vấn đề: L02-05-01
@@ -485,7 +509,7 @@ Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví d�
 - ví dụ: L02-05-04
 - hình thức: L02-05-05
 - ứng dụng: L02-05-05
-- kiểm tra: L02-05-06
+- kiểm tra: L02-05-09
 - Gộp bước/ngoại lệ: Ví dụ hai nhánh trước kỳ vọng có điều kiện; thay số vào $v_\pi(s)$ rồi phân biệt $G_t$ và $v_\pi(s)$.
 - Dữ kiện truyền tiếp: Định nghĩa giá trị dưới chính sách cố định được dùng để đánh giá mê cung ở phần 6.
 - Câu nối: Tiếp theo xây dựng mô hình môi trường P và r để dự báo chuyển tiếp và thưởng.
@@ -493,7 +517,7 @@ Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví d�
 ### Cụm Mô hình môi trường
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 8 phút; trang tính thời gian: L02-05-07, L02-05-08, L02-05-09. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 10 phút; trang tính thời gian: L02-05-07, L02-05-08, L02-05-09. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã nắm hàm giá trị và quy ước thưởng −1 mỗi bước trong mê cung.
 - Sản phẩm học tập: Viết xác suất chuyển bằng một, thưởng kỳ vọng bằng âm một cho bước Đông từ (0,2); phát hiện dự báo thưởng sai.
 - vấn đề: L02-05-07
@@ -562,21 +586,9 @@ Thời lượng: 4 phút. Nguồn: PPTX trang 16–18, 22; hw02 bài 5.
 - **Nhu cầu và lý do tồn tại:** Đây là định nghĩa trung tâm của section; các slide trước chỉ dựng trực giác cho nó.
 - **Cách thể hiện và độ phù hợp năm 3:** Công thức math-large làm trung tâm, dòng điều kiện và phân biệt E/max dưới, phù hợp vì định nghĩa cần được đọc chậm.
 - **Kết nối vào:** Kỳ vọng -4 từ ví dụ giả định slide L02-05-04.
-- **Kết nối ra:** Bảng giá trị mê cung và v(start)=-16.
-- **Sản phẩm học tập/kiểm tra:** Gắn kỳ vọng−4 của hai nhánh với v_π(s), phân biệt một quỹ đạo với trung bình có điều kiện.
+- **Kết nối ra:** Mô hình môi trường tiếp theo dự báo từng bước; câu hỏi cuối phần kiểm tra các vai trò.
+- **Sản phẩm học tập/kiểm tra:** Gắn kỳ vọng âm bốn với hàm giá trị; phân biệt với một tổng thưởng quỹ đạo.
 - **Quyết định nguồn:** Giữ định nghĩa nguồn22; bổ sung tường minh giả thiết kỳ vọng hữu hạn và quy luật không đổi để tránh hiểu sai.
-
-### L02-05-06 — Kiểm tra giá trị
-
-Thời lượng: 2 phút. Nguồn: PPTX trang 22, 26; hw02 bài 1.
-
-- **Luận điểm:** gamma quyết định mức nhớ phần thưởng xa; G của quỹ đạo khác v kỳ vọng.
-- **Nhu cầu và lý do tồn tại:** Kiểm tra sớm hai lỗi thường gặp: nhầm gamma=0 với gamma=1 và đồng nhất G với v.
-- **Cách thể hiện và độ phù hợp năm 3:** Bảng ba dòng ngắn dưới câu hỏi, trung tâm thị giác vì đáp án cần đối chiếu nhanh từng gamma.
-- **Kết nối vào:** Công thức G_t slide L02-05-03 và định nghĩa v_pi slide L02-05-05.
-- **Kết nối ra:** Nhóm mô hình bắt đầu slide L02-05-07.
-- **Sản phẩm học tập/kiểm tra:** Chính slide là câu hỏi kiểm tra; đáp án nằm trong notes.
-- **Quyết định nguồn:** Tách thành slide kiểm tra riêng từ số liệu trang 26 để chốt khối giá trị trước khi sang mô hình.
 
 ### L02-05-07 — Dự báo bước tiếp theo
 
@@ -602,17 +614,17 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 13, 23; hw02 bài 10.
 - **Sản phẩm học tập/kiểm tra:** Hỏi khi nào hai mô hình khác nhau dù cùng môi trường.
 - **Quyết định nguồn:** Giữ nguồn trang 23, tách nhận xét quy luật/ước lượng và joint p vào notes để body gọn.
 
-### L02-05-09 — Kiểm tra mô hình
+### L02-05-09 — Câu hỏi kiểm tra
 
-Thời lượng: 2 phút. Nguồn: PPTX trang 13, 24, 27; hw02 bài 6.
+Thời lượng: 4 phút. Nguồn: các khái niệm và ví dụ trong phần 5; xem nguồn cụ thể trong HTML.
 
-- **Luận điểm:** Mô hình đúng một bước chưa đủ điều khiển; cần chính sách và mục tiêu kèm theo.
-- **Nhu cầu và lý do tồn tại:** Kiểm tra khép kín khối mô hình và mở đường sang dự đoán/điều khiển.
-- **Cách thể hiện và độ phù hợp năm 3:** Câu hỏi kèm hai bullet dẫn dắt trả lời, vì slide kiểm tra cần câu hỏi nổi bật hơn đáp án.
-- **Kết nối vào:** Định nghĩa P và r_bar slide L02-05-08.
-- **Kết nối ra:** Section 6: dự đoán với mô hình, điều khiển với chính sách.
-- **Sản phẩm học tập/kiểm tra:** Sinh viên chỉ ra lỗi phần thưởng và lập luận vì sao một bước chưa đủ.
-- **Quyết định nguồn:** Giữ quiz trang 27 và thảo luận phạm vi trang 13, thêm nối dự đoán/điều khiển trang 24 vào notes.
+- **Luận điểm:** Phân biệt tổng thưởng, giá trị kỳ vọng và dự báo của mô hình.
+- **Nhu cầu và lý do tồn tại:** Khép phần bằng câu hỏi áp dụng và giải thích, kiểm tra trước khi chuyển sang phần kế.
+- **Cách thể hiện và độ phù hợp năm 3:** Danh sách đánh số từ 1 đến 3; dữ kiện nằm trong câu hỏi, đáp án chỉ trong ghi chú diễn giả.
+- **Kết nối vào:** Định nghĩa tổng thưởng, hàm giá trị và mô hình chuyển/thưởng.
+- **Kết nối ra:** Phần 6 phân biệt dự đoán với điều khiển và vận dụng trên mê cung.
+- **Sản phẩm học tập/kiểm tra:** Trả lời lần lượt 3 câu; giải thích bằng khái niệm và dữ kiện vừa học.
+- **Quyết định nguồn:** Gom câu hỏi về cuối phần theo yêu cầu; giữ ý nguồn, không thêm thuật toán hay kiến thức chưa học.
 
 ## Phần 6: Dự đoán, điều khiển và bài toán mê cung — 20 phút
 
@@ -625,7 +637,7 @@ Thời lượng: 2 phút. Nguồn: PPTX trang 13, 24, 27; hw02 bài 6.
 ### Cụm Phân biệt dự đoán và điều khiển
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 6 phút; trang tính thời gian: L02-06-01, L02-06-02. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 5 phút; trang tính thời gian: L02-06-01, L02-06-02. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã biết chính sách, hàm giá trị và mô hình môi trường.
 - Sản phẩm học tập: Xác định đầu ra của dự đoán là giá trị theo chính sách; đầu ra của điều khiển là chính sách tối ưu theo mục tiêu.
 - vấn đề: L02-06-01
@@ -633,15 +645,15 @@ Thời lượng: 2 phút. Nguồn: PPTX trang 13, 24, 27; hw02 bài 6.
 - ví dụ: L02-06-01
 - hình thức: L02-06-02
 - ứng dụng: L02-06-02
-- kiểm tra: L02-06-02
-- Gộp bước/ngoại lệ: Trang 02 gộp định nghĩa, áp dụng vào hai yêu cầu và kiểm tra loại đầu ra. Dự đoán được tính tiếp ở 03–05; thuật toán tìm chính sách tối ưu chưa thuộc phạm vi.
+- kiểm tra: L02-06-07
+- Gộp bước/ngoại lệ: Trang 02 gộp định nghĩa và hai yêu cầu; kiểm tra loại đầu ra được chuyển về cuối phần. Dự đoán được tính tiếp ở 03–05; thuật toán tìm chính sách tối ưu chưa thuộc phạm vi.
 - Dữ kiện truyền tiếp: Một bộ mũi tên cho trước và nhiệm vụ chọn mũi tên minh họa sự khác nhau giữa hai loại đầu ra.
 - Câu nối: Chuyển sang cụm vận dụng tổng hợp trên mê cung và trạng thái kết thúc.
 
 ### Cụm Vận dụng mê cung và trạng thái kết thúc
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 14 phút; trang tính thời gian: L02-06-03, L02-06-04, L02-06-05, L02-06-06, L02-06-07. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 15 phút; trang tính thời gian: L02-06-03, L02-06-04, L02-06-05, L02-06-06, L02-06-07. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã biết trạng thái/quan sát/biểu diễn, chính sách, tổng thưởng, hàm giá trị và mô hình.
 - Sản phẩm học tập: Tính giá trị điểm đầu, phân biệt thưởng cuối với tổng thưởng sau kết thúc, xác định thông tin thay đổi khi đổi cảm biến.
 - vấn đề: không áp dụng; xem lý do bên dưới
@@ -649,7 +661,7 @@ Thời lượng: 2 phút. Nguồn: PPTX trang 13, 24, 27; hw02 bài 6.
 - ví dụ: không áp dụng; xem lý do bên dưới
 - hình thức: không áp dụng; xem lý do bên dưới
 - ứng dụng: L02-06-03, L02-06-04, L02-06-05, L02-06-06
-- kiểm tra: L02-06-05, L02-06-06, L02-06-07
+- kiểm tra: L02-06-07
 - Gộp bước/ngoại lệ: Cụm vận dụng các khái niệm phần 2–5, không hình thức hóa lại; bàn cờ kiểm tra $G_T=0$, không tìm chính sách.
 - Dữ kiện truyền tiếp: Mê cung: 16 bước từ điểm đầu; bàn cờ: $G_T=0$ dù $R_T=1$; cảm biến cục bộ làm mất thông tin vị trí.
 - Câu nối: Sang phần 7 tổng kết các chức năng đã học và giao bài tập nối Bài 03.
@@ -668,14 +680,14 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 24; hw02 bài 1, 5.
 
 ### L02-06-02 — Dự đoán và điều khiển
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 16 bước và 18 bước; hw02 bài 5.
+Thời lượng: 2 phút. Nguồn: PPTX trang 24–26; hw02 bài 5.
 
 - **Luận điểm:** Giá trị đo chất lượng chính sách: -16 tốt hơn -18 khi $\gamma=1$.
 - **Nhu cầu và lý do tồn tại:** Con số cụ thể giúp thấy vì sao cần tiêu chí so chính sách.
 - **Cách thể hiện và độ phù hợp năm 3:** Hai giá trị đặt cạnh trong công thức lớn, so sánh tức thời.
 - **Kết nối vào:** Quy ước thưởng -1 mỗi chuyển từ phần 2.
-- **Kết nối ra:** Định nghĩa dự đoán, điều khiển được dùng xuyên suốt mê cung.
-- **Sản phẩm học tập/kiểm tra:** Nêu đúng kiểu đầu ra: giá trị của chính sách cho trước hoặc chính sách cần tìm; chưa yêu cầu đáp án số.
+- **Kết nối ra:** Dùng mê cung để minh họa nhiệm vụ dự đoán dưới chính sách cho trước.
+- **Sản phẩm học tập/kiểm tra:** Phân biệt hai loại đầu ra qua ví dụ; tự kiểm tra ở cuối phần.
 - **Quyết định nguồn:** Sửa trang24: dự đoán giữ chính sách, điều khiển tìm chính sách. Bỏ so sánh v của chính sách thêm một vòng2bước vì vòng rồi thoát không là chính sách xác định dừng trên riêng tọa độ.
 
 ### L02-06-03 — Đặc tả môi trường mê cung
@@ -692,7 +704,7 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 25; hw02 bài 2.
 
 ### L02-06-04 — Chính sách trên mê cung
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 26; hw02 bài 2.
+Thời lượng: 2 phút. Nguồn: PPTX trang 26; hw02 bài 2.
 
 - **Luận điểm:** Một chính sách cho trước sinh ra đường đi xác định dài 16 chuyển.
 - **Nhu cầu và lý do tồn tại:** Cần đường đi cụ thể để slide sau tính giá trị từng ô.
@@ -710,8 +722,8 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 26; hw02 bài 6.
 - **Nhu cầu và lý do tồn tại:** Kiểm tra sinh viên đọc được giá trị từ khoảng cách theo chính sách.
 - **Cách thể hiện và độ phù hợp năm 3:** Hình toàn bộ giá trị và công thức lớn v_π(0,2)=−16 bên cạnh; câu hỏi kiểm tra ô sát đích và G.
 - **Kết nối vào:** Đường đi 16 chuyển slide trước.
-- **Kết nối ra:** Cách đọc giá trị này chuyển sang ví dụ cờ.
-- **Sản phẩm học tập/kiểm tra:** Giải thích vì sao ô kề nhau giá trị khác.
+- **Kết nối ra:** Quy ước giá trị ở đích chuẩn bị cho tổng thưởng sau kết thúc ván cờ.
+- **Sản phẩm học tập/kiểm tra:** Đối chiếu số bước còn lại với giá trị; câu hỏi tự tính nằm cuối phần.
 - **Quyết định nguồn:** Giữ số gốc trang 26, không gọi Bellman hay cập nhật lặp.
 
 ### L02-06-06 — Trạng thái kết thúc trong trò chơi
@@ -722,21 +734,21 @@ Thời lượng: 3 phút. Nguồn: PPTX, trang 11; bài kiểm tra suy ra từ q
 - **Nhu cầu và lý do tồn tại:** Sinh viên hay đồng nhất $R_T$ với $G_T$; ví dụ cờ cho phân biệt rõ.
 - **Cách thể hiện và độ phù hợp năm 3:** Bàn cờ kết thúc vẽ đúng nguồn11, nối quy ước thưởng và tổng tương lai sang một trò chơi khác.
 - **Kết nối vào:** Điều kiện dừng ở mê cung và định nghĩa $G_t$ phần 2.
-- **Kết nối ra:** Nền cho bài học sau về cập nhật giá trị qua trạng thái kết thúc.
-- **Sản phẩm học tập/kiểm tra:** Giải thích vì sao $R_T=1$ nhưng $G_T=0$.
+- **Kết nối ra:** Câu hỏi cuối phần tích hợp các khái niệm qua bốn tình huống.
+- **Sản phẩm học tập/kiểm tra:** Phân biệt thưởng nhận ở bước cuối với tổng thưởng sau kết thúc; câu hỏi nằm cuối phần.
 - **Quyết định nguồn:** Giữ hình trang 11; lược cây cập nhật cùng trang vì là ôn bài 01 và không dạy thuật toán mới.
 
-### L02-06-07 — Kiểm tra mô hình hóa
+### L02-06-07 — Câu hỏi kiểm tra
 
-Thời lượng: 2 phút. Nguồn: PPTX trang 27; hw02 bài 10.
+Thời lượng: 4 phút. Nguồn: các khái niệm và ví dụ trong phần 6; xem nguồn cụ thể trong HTML.
 
-- **Luận điểm:** Đổi cách quan sát không đổi môi trường nhưng buộc xét lại biểu diễn chính sách.
-- **Nhu cầu và lý do tồn tại:** Kiểm tra sinh viên phân biệt trạng thái với quan sát đã học phần 3.
-- **Cách thể hiện và độ phù hợp năm 3:** Câu hỏi dẫn đầu, hai gạch đầu dòng đáp án ngắn.
-- **Kết nối vào:** Phân biệt trạng thái, quan sát phần 3 và đặc tả mê cung phần này.
-- **Kết nối ra:** Dẫn sang phần 7 tổng kết và tự kiểm tra.
-- **Sản phẩm học tập/kiểm tra:** Sinh viên tự liệt kê thành phần giữ và thành phần đổi trước khi xem đáp án.
-- **Quyết định nguồn:** Giữ ý trang 27, thay ví dụ cờ vua, robot bằng ghi chú vì slide đã có mê cung làm ví dụ chính.
+- **Luận điểm:** Vận dụng dự đoán/điều khiển, trạng thái kết thúc và thay đổi quan sát.
+- **Nhu cầu và lý do tồn tại:** Khép phần bằng câu hỏi áp dụng và giải thích, kiểm tra trước khi chuyển sang phần kế.
+- **Cách thể hiện và độ phù hợp năm 3:** Danh sách đánh số từ 1 đến 4; dữ kiện nằm trong câu hỏi, đáp án chỉ trong ghi chú diễn giả.
+- **Kết nối vào:** Các ví dụ mê cung, chính sách cho trước và bàn cờ kết thúc.
+- **Kết nối ra:** Phần 7 tổng hợp vai trò của những thành phần đã học.
+- **Sản phẩm học tập/kiểm tra:** Trả lời lần lượt 4 câu; giải thích bằng khái niệm và dữ kiện vừa học.
+- **Quyết định nguồn:** Gom câu hỏi về cuối phần theo yêu cầu; giữ ý nguồn, không thêm thuật toán hay kiến thức chưa học.
 
 ## Phần 7: Tổng kết và tự kiểm tra — 7 phút
 
@@ -749,7 +761,7 @@ Thời lượng: 2 phút. Nguồn: PPTX trang 27; hw02 bài 10.
 ### Cụm Tổng kết và tự kiểm tra
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 7 phút; trang tính thời gian: L02-07-01, L02-07-02, L02-07-03. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 7 phút; trang tính thời gian: L02-07-01, L02-07-03, L02-07-02. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã học xong các khái niệm và vận dụng của phần 1–6.
 - Sản phẩm học tập: Phân biệt thông tin, chính sách, thưởng/giá trị và mô hình qua ba câu tự kiểm tra.
 - vấn đề: không áp dụng; xem lý do bên dưới
@@ -758,7 +770,7 @@ Thời lượng: 2 phút. Nguồn: PPTX trang 27; hw02 bài 10.
 - hình thức: không áp dụng; xem lý do bên dưới
 - ứng dụng: L02-07-01
 - kiểm tra: L02-07-02
-- Gộp bước/ngoại lệ: Kết bài tổng hợp và kiểm tra, không dạy khái niệm mới; trang cuối giao bài tập 1,2,5,6,10 của hw02.
+- Gộp bước/ngoại lệ: Kết bài tổng hợp và kiểm tra, không dạy khái niệm mới; trang bài tập giao bài 1,2,5,6,10 trước câu hỏi tổng kết cuối cùng.
 - Dữ kiện truyền tiếp: Bài tập tự học dẫn sang Bài 03, nơi phương trình Bellman được giới thiệu.
 - Câu nối: Kết thúc Bài 02, hẹn Bài 03 phát triển hàm giá trị bằng phương trình Bellman.
 
@@ -770,30 +782,30 @@ Thời lượng: 2 phút. Nguồn: PPTX trang 10, 20, 25–26; hw02 bài 1.
 - **Nhu cầu và lý do tồn tại:** Sinh viên cần một bảng thu hồi gọn thay vì liệt kê lại bảy section.
 - **Cách thể hiện và độ phù hợp năm 3:** Bảng bốn dòng dùng lại mê cung để gắn từng ký hiệu với chức năng, không lặp hình đã phân tích.
 - **Kết nối vào:** Định nghĩa S/O/X, pi, r/G/v, model từ section 2–5.
-- **Kết nối ra:** Ba câu hỏi tự kiểm tra ở slide kế.
-- **Sản phẩm học tập/kiểm tra:** Sinh viên đối chiếu từng dòng bảng với mê cung để tự xác nhận ký hiệu.
+- **Kết nối ra:** Bài tập và tài liệu đọc củng cố trước ba câu hỏi tổng kết.
+- **Sản phẩm học tập/kiểm tra:** Đối chiếu các thành phần với mê cung.
 - **Quyết định nguồn:** Gộp nguồn10/20 và ví dụ25–26 thành bảng tổng hợp các vai trò.
-
-### L02-07-02 — Tự kiểm tra
-
-Thời lượng: 2 phút. Nguồn: PPTX trang 16, 19, 22–23, 27; hw02 bài 2, 5.
-
-- **Luận điểm:** Ba giới hạn cần phân biệt: quan sát khác trạng thái, thưởng tức thời khác giá trị, mô hình khác chính sách tối ưu.
-- **Nhu cầu và lý do tồn tại:** Kiểm tra mức hiểu thay vì ghi nhớ định nghĩa.
-- **Cách thể hiện và độ phù hợp năm 3:** Ba câu hỏi đánh số, không đáp án trên mặt trang; từng câu kiểm tra một ranh giới khái niệm.
-- **Kết nối vào:** Ví dụ (2,1)/(3,1) ở section 3, thưởng -1 ở section 2, model ở section 5.
-- **Kết nối ra:** Kết nối sang bài 03: MDP và Bellman, chưa công thức.
-- **Sản phẩm học tập/kiểm tra:** Sinh viên trả lời trước, notes cung cấp đáp án kèm lý do.
-- **Quyết định nguồn:** Giữ quiz trang 27, ghép ba câu từ trang 16, 19, 22–23; tách đáp án sang notes theo spec.
 
 ### L02-07-03 — Bài tập và tài liệu đọc
 
-Thời lượng: 3 phút. Nguồn: RL-hk2-2025-2026/resources/hw02.pdf, bài1,2,5,6,10; Sutton và Barto (2018), chương3; PPTX trang1–27..
+Thời lượng: 2 phút. Nguồn: RL-hk2-2025-2026/resources/hw02.pdf, bài1,2,5,6,10; Sutton và Barto (2018), chương3; PPTX trang1–27..
 
 - **Luận điểm:** Bài tập củng cố tín hiệu học, đặc tả, chiết khấu và chính sách; chương3 chuẩn bị cho bài kế tiếp.
 - **Nhu cầu và lý do tồn tại:** Sinh viên cần nguồn cụ thể và ranh giới phạm vi để tự học.
 - **Cách thể hiện và độ phù hợp năm 3:** Hai card song song bài tập và đọc; bảng ngắn thay văn xuôi dài.
 - **Kết nối vào:** Kỹ năng đặc tả từ section 1–6.
-- **Kết nối ra:** Bài 03: MDP và Bellman.
-- **Sản phẩm học tập/kiểm tra:** Hoàn thành bài1,2,5,6 và phần đặc tả bài10 của hw02.
+- **Kết nối ra:** Ba câu hỏi cuối bài kiểm tra khả năng phân biệt các thành phần.
+- **Sản phẩm học tập/kiểm tra:** Chuẩn bị bài1,2,5,6 và phần đặc tả bài10 của hw02.
 - **Quyết định nguồn:** Giữ đúng đề nguồn; chưa yêu cầu Bellman hoặc chứng minh chuyển MDP thành MRP.
+
+### L02-07-02 — Câu hỏi kiểm tra
+
+Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 7; xem nguồn cụ thể trong HTML.
+
+- **Luận điểm:** Phân biệt quan sát với trạng thái, thưởng với giá trị và mô hình với chính sách.
+- **Nhu cầu và lý do tồn tại:** Khép phần bằng câu hỏi áp dụng và giải thích, kiểm tra trước khi chuyển sang phần kế.
+- **Cách thể hiện và độ phù hợp năm 3:** Danh sách đánh số từ 1 đến 3; dữ kiện nằm trong câu hỏi, đáp án chỉ trong ghi chú diễn giả.
+- **Kết nối vào:** Bảng tổng kết, bài tập và tài liệu đọc.
+- **Kết nối ra:** Chuẩn bị hình thức hóa quá trình quyết định Markov và Bellman ở Bài 03.
+- **Sản phẩm học tập/kiểm tra:** Trả lời lần lượt 3 câu; giải thích bằng khái niệm và dữ kiện vừa học.
+- **Quyết định nguồn:** Gom câu hỏi về cuối phần theo yêu cầu; giữ ý nguồn, không thêm thuật toán hay kiến thức chưa học.

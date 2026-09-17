@@ -774,3 +774,135 @@ Theo yêu cầu, đổi L02-02-05 từ bảng so sánh đường đi sang phát 
 - reward-flow: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
 
 Reviewer mạch viết xác nhận vai trò, kết nối vào/ra và nội dung khớp nguồn, đề xuất giữ nguyên. Reviewer RL nêu mức trung bình vì muốn thêm công thức G/v ngay tại đây; điều phối viên không áp dụng: yêu cầu là dành định nghĩa cho phần5, nơi công thức vẫn có ở L02-05-03/05. Việc thêm chúng tại02-05 sẽ đảo tiên quyết. Đề xuất gọi công thức định nghĩa là giả thuyết cũng không đúng; chỉ phát biểu biểu diễn mục tiêu ở nguồn9 là giả thuyết. Bảng16/18 được chuyển sang notes có chủ ý, không phải mất dữ kiện. Không có thay đổi slide Kiểm tra vòng tương tác trong lần này; câu hỏi của người dùng được giải thích riêng.
+
+
+## Cập nhật câu hỏi kiểm tra và dữ liệu tương tác — 2026-09-18
+
+- Theo yêu cầu: mỗi phần kết thúc bằng một trang “Câu hỏi kiểm tra”, câu hỏi đánh số, đáp án trong notes. Thêm L02-01-05; gộp kiểm tra giá trị vào L02-05-09 và bỏ L02-05-06; chuyển L02-07-02 sau trang bài tập. Các câu hỏi chen giữa phần được chuyển thành ví dụ giải thích.
+- Thêm L02-03-09 ngay sau “Trạng thái và quan sát”, theo chỉ dẫn mới thay cho vị trí sau “Phản hồi trễ”. Mẫu dùng $(o_t,a_t,o_{t+1},r_{t+1})$; lịch sử $H_t$ và quỹ đạo $\tau$ dùng trạng thái theo yêu cầu. Lịch sử quan sát ký hiệu riêng $H_t^O$. Ký hiệu Markov và bảng thuật ngữ đồng bộ.
+- Phản hồi trễ dùng các quan sát O₀–O₃ thay cho trạng thái chưa định nghĩa; điều phối viên kiểm tra trực tiếp SVG. Reviewer chỉ được cung cấp HTML, không coi báo cáo của họ là kiểm tra nội dung SVG.
+- Giữ ID bền vững dù thứ tự không tăng dần. Tổng 44 trang, 7 phần, 120 phút; phần 2: 17 phút, phần 3: 28 phút.
+- Ngoại lệ biên tập do chỉ dẫn cụ thể: câu trên L02-02-05 đổi nguyên văn thành “Mọi mục tiêu có thể được mô tả bằng việc cực đại hóa của phần thưởng tích lũy.” Ghi chú và đáp án vẫn làm rõ kỳ vọng như nguồn trang 9. Thay câu này diễn ra sau năm báo cáo dưới đây, không coi các báo cáo là đã rà câu mới.
+- OpenRouter writer: requested_model = observed_model = z-ai/glm-5.3-flash, provider = OpenRouter; điều phối viên sửa dữ kiện hành động, ký hiệu và phạm vi câu hỏi theo nội dung đã học.
+- Rà độc lập theo review-section, trích đoạn thay đổi, hai trang lân cận và bản đồ toàn bài. Lần đầu vượt 32000 ký tự, chưa gửi request; bỏ trích nguồn lặp để thu gọn trước một lần thử lại. Không có lỗi chặn hoặc nghiêm trọng. Không thêm lịch sử quan sát vào mặt slide mới để tránh quá tải; định nghĩa ở trang biểu diễn. Không đánh lại ID vì cần giữ tham chiếu bền vững.
+- Vai trò trong mạch của L02-03-09: hình thức hóa phạm vi dữ liệu; kết nối vào từ định nghĩa S/O ở L02-03-02; kết nối ra tới ví dụ thông tin bị mất ở L02-03-03. Bảy câu hỏi cuối phần thu hồi kiến thức ngay trước ranh giới phần. Điều phối viên xác minh các kết nối, không dùng phần tự mô tả vai worker trong báo cáo flow làm bằng chứng sư phạm.
+- Kiểm tra cục bộ: HTML/storyboard khớp 44 ID theo thứ tự, tổng 120 phút; 7 trang kiểm tra nằm cuối 7 phần. Chromium tại cổng 8765: 88 lượt trang ở 1280×720 và 390×844; không tràn, lỗi KaTeX, ảnh hỏng, lỗi HTTP/JavaScript; phím ngang/dọc hoạt động. Đã xem ảnh slide công thức mới. Codex Slides vẫn không khả dụng để rà trực quan như giới hạn đã ghi; không tuyên bố đã rà bản này trong Codex Slides.
+
+### Báo cáo phạm vi thay đổi: student
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Báo cáo review (vai trò: sinh viên) — chỉ duyệt các thay đổi hiện tại**
+
+**1. Bảy slide câu hỏi có số, đáp án trong notes — Đạt**
+- Vị trí: L02-01-05, L02-02-07, L02-03-08, L02-04-05, L02-05-09, L02-06-07, L02-07-02.
+- Bằng chứng: mỗi slide là `<ol>` đánh số, đáp án đầy đủ trong `<aside class="notes">`. Kiểm tra chéo đáp án đúng: $G_t=-1{,}75$ (γ=0,5) ✓; $v_\pi(7,6)=-1$, $v(G)=0$ ✓; π(Nam)=0,3 ✓.
+- Mức độ: Không có lỗi.
+
+**2. Slide mới L02-03-09 đặt ngay sau L02-03-02 — Đạt**
+- Bằng chứng: trong bản đồ, thứ tự L02-03-02 → L02-03-09 → L02-03-03. Nội dung dùng S cho $H_t$, τ; ghi chú phân biệt mẫu (chữ thường, dùng quan sát) và $H_t^O$ xuất hiện riêng ở L02-03-07 và notes L02-03-04. Nhất quán với đáp án câu 4 của L02-03-08.
+- Mức độ: Không có lỗi.
+
+**3. SVG phản hồi trễ dùng O0..O3 — Đạt**
+- Vị trí: L02-02-06. Alt mô tả ba chuyển tiếp thưởng 0, 0, 1; notes giải thích "$O_i$ là quan sát ở mốc $i$". Không còn trạng thái S không định nghĩa.
+
+**4. Giả thuyết điểm thưởng & mê cung — Đạt**
+- L02-02-05: "cực đại hóa kỳ vọng phần thưởng tích lũy" ✓; thưởng −1/bước, γ=1, giá trị đích 0 khớp L02-05-02, L02-06-05 ($v_\pi(0,2)=-16$) ✓.
+
+**Đề xuất tăng cường (không bắt buộc, mức Thấp):**
+- L02-03-09: có thể nêu rõ $H_t^O=(O_0,A_0,R_1,\ldots,O_t)$ ngay tại đây thay vì để slide sau, giúp tự-contained.
+- L02-02-06: alt ảnh có thể ghi tường minh nhãn O0…O3 để khớp notes.
+
+**Kết luận:** Không phát hiện lỗi thực tế; các đề xuất trên chỉ là tùy chọn.
+
+### Báo cáo phạm vi thay đổi: rl
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Báo cáo review (role: rl) — chỉ các thay đổi hiện tại**
+
+**Phạm vi đã soát:** 7 slide câu hỏi có số thứ tự cuối mỗi mục, slide mới L02-03-09, SVG phản hồi trễ (L02-02-06), cùng hàng xóm trong map.
+
+**Kết luận chung: không có lỗi thực sự.**
+
+1. **[OK – Nghiêm trọng thấp/kiểm tra] 7 slide câu hỏi** (L02-01-05, 02-07, 03-08, 04-05, 05-09, 06-07, 07-02): tất cả đều có đáp án trong `<aside class="notes">`, đánh số khớp số câu hỏi. Đáp án nhất quán với nội dung (ví dụ 05-09: $G_t=-1{,}75$ khớp L02-05-02; 06-07: $v_\pi(7{,}6)=-1$, $v_\pi(G)=0$ khớp L02-06-05). Không phát hiện sai.
+
+2. **[OK] L02-03-09**: mẫu dữ liệu dùng chữ thường $(o_t,a_t,o_{t+1},r_{t+1})$; $H_t$ và $\tau$ dùng $S$ đúng theo yêu cầu; notes nêu rõ sự khác biệt và quan hệ $\tau=H_T$, $H_0=(S_0)$. Nhất quán với L02-03-04 (định nghĩa $H_t$ bằng $S$) và L02-03-08 câu 4 ($H_t^O$ tách riêng). Vị trí sau L02-03-02, trước L02-03-03 khớp map.
+
+3. **[OK] L02-02-06**: alt SVG không còn "state S" chưa định nghĩa; notes dùng $O_i$. Consistent.
+
+**Cải tiến tùy chọn (không bắt buộc):**
+- **[Tùy chọn] L02-02-06**: alt nói "ba chuyển tiếp" nhưng notes không chốt chỉ số cụ thể O0..O3; có thể ghi rõ "$O_0,A_0,\ldots,R_3$" vào alt để đồng bộ ký hiệu với L02-03-09.
+- **[Tùy chọn] L02-03-09**: phần thân chưa nhắc $H_t^O$; thêm một dòng tham chiếu sang L02-03-07 giúp liên kết rõ hơn (hiện chỉ có trong notes).
+
+Không dùng công cụ nào ngoài excerpt được cung cấp.
+
+### Báo cáo phạm vi thay đổi: math
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+## Báo cáo review (toán) – các thay đổi hiện tại
+
+**Phạm vi đã kiểm tra:** 7 slide câu hỏi đánh số cuối (L02-01-05, 02-02-07, 02-03-08, 02-04-05, 02-05-09, 02-06-07, 02-07-02), slide mới L02-03-09, và SVG phản hồi trễ.
+
+**1. Slide L02-03-09 (mới) – Không có lỗi.**
+- Bằng chứng: $H_t=(S_0,A_0,R_1,S_1,\ldots,A_{t-1},R_t,S_t)$; $\tau$ cùng dạng tới $S_T$; mẫu $(o_t,a_t,o_{t+1},r_{t+1})$ dùng chữ thường.
+- Nhất quán với L02-03-04 (phân biệt $H_t^O$) và đáp án Q4 của L02-03-08. Ghi chú giải thích rõ $\tau=H_T$, $H_0=(S_0)$. Đúng yêu cầu dùng $S$ cho lịch sử/quỹ đạo.
+- Tùy chọn nâng cao (không bắt buộc): nêu quan hệ $\tau=H_T$ ngay trên thân slide thay vì chỉ trong notes.
+
+**2. SVG phản hồi trễ (L02-02-06) – Thiếu bằng chứng.**
+- Bằng chứng: chỉ có alt-text "thưởng 0, 0 rồi 1" và notes dùng $O_i$; không có excerpt nội dung SVG nên **không xác minh được** việc đã thay trạng thái $S$ không định nghĩa bằng $O_0..O_3$.
+- Đề xuất: coordinator cung cấp excerpt file `img/lec-02/delayed-feedback.svg` để xác nhận nhãn.
+
+**3. Kiểm tra toán 7 slide câu hỏi – Đúng hết.**
+- L02-05-09: $G_t=-1-0{,}5-0{,}25=-1{,}75$ ✓; Q3 phần thưởng sai/chuyển đúng ✓.
+- L02-06-07: $v_\pi(7,6)=-1$, $v_\pi(G)=0$, $G_T=0$ ✓ (khớp gamma=1, thưởng $-1$/bước, giá trị đích 0).
+- L02-04-05: $\pi(\text{Nam})=0{,}3$ ✓. L02-02-07: ký hiệu $A_t,R_{t+1},O_{t+1}$ đúng quy ước ✓.
+- Giả thuyết điểm thưởng (L02-02-05): "cực đại hóa kỳ vọng phần thưởng tích lũy" ✓.
+
+**Kết luận:** Không có lỗi thực tế; 1 mục cần bằng chứng bổ sung (SVG), 1 nâng cao tùy chọn.
+
+### Báo cáo phạm vi thay đổi: academic
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+## Báo cáo review (chỉ các thay đổi hiện tại)
+
+**1. [OK – không lỗi] Bảy slide câu hỏi kiểm tra có số thứ tự + đáp án trong notes.**
+Slide: L02-01-05, L02-02-07, L02-03-08, L02-04-05, L02-05-09, L02-06-07, L02-07-02.
+Kiểm tra đáp án: tất cả nhất quán với nội dung (ví dụ $G_t=-1{,}75$ với $\gamma=0{,}5$ khớp L02-05-02; $v_\pi(7,6)=-1$, $v_\pi(G)=0$ khớp L02-06-05; phân loại quan sát khớp L02-03-06). Không phát hiện sai về mặt học thuật.
+
+**2. [OK] Slide mới L02-03-09 sau L02-03-02.**
+Luồng hợp lý: đi vào từ "Trạng thái và quan sát" (định nghĩa $S_t,O_t$), đi ra sang "Thông tin trong lịch sử". $H_t,\tau$ dùng $S$ đúng yêu cầu; notes phân biệt rõ với $H_t^O$ (L02-03-04, L02-03-07 nhất quán).
+- [Thấp – tuỳ chọn] ID "09" chèn giữa "02" và "03" gây lệch đánh số file; nếu ID phản ánh thứ tự trình chiếu nên đánh lại (ví dụ L02-03-02b) hoặc ghi chú quy ước.
+- [Thấp – tuỳ chọn] Notes L02-03-09 nhắc $H_t^O$ trước khi slide này xuất hiện (L02-03-07); có thể chấp nhận, nhưng có thể thêm cụm "sẽ giới thiệu sau".
+
+**3. [Thấp – đề xuất tăng cường] L02-02-06 (Phản hồi trễ).**
+Alt SVG chỉ nói "thưởng 0, 0 rồi 1", chưa nêu nhãn $O_0..O_3$; notes có $O_i$. Đề xuất: sửa alt thành "chuỗi $O_0,A_0,\ldots,O_3$, thưởng 0, 0 rồi 1" để đồng bộ hình–alt–notes. Không phải lỗi.
+
+**4. [OK] Giả thuyết điểm thưởng & mê cung:** "cực đại hóa kỳ vọng phần thưởng tích lũy" (L02-02-05, L02-06-02) đúng nguồn; thưởng $-1$/bước, $\gamma=1$, $v_\pi(G)=0$ nhất quán toàn bộ.
+
+**Kết luận:** không có lỗi thực sự; 3 đề xuất tuỳ chọn mức thấp.
+
+### Báo cáo phạm vi thay đổi: flow
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+## Báo cáo review (flow)
+
+**Phạm vi:** 7 slide câu hỏi đánh số cuối, slide mới L02-03-09, SVG phản hồi trễ, khái niệm H_t/τ dùng S, giả thuyết thưởng. Không dùng công cụ; chỉ dựa excerpt.
+
+**Kiểm tra chính (không có lỗi chặn):**
+- 7 slide câu hỏi (L02-01-05, 02-07, 03-08, 04-05, 05-09, 06-07, 07-02) đều có đáp án đầy đủ trong notes. ✔
+- L02-03-09 nằm đúng sau L02-03-02 (trạng thái/quan sát) và trước L02-03-03. ✔
+- SVG phản hồi trễ: alt ghi 3 chuyển tiếp thưởng 0,0,1; notes dùng $O_i$ tại mốc $i$, không còn trạng thái S chưa định nghĩa. Khớp ký hiệu O ở L02-02-01. ✔
+- H_t và τ dùng S_t (L02-03-09, L02-03-04); H_t^O tách riêng tại L02-03-07. ✔
+- Giả thuyết thưởng: "cực đại hóa kỳ vọng của phần thưởng tích lũy" (L02-02-05). Mê cung: −1/bước, γ=1, v_π(G)=0 (L02-06-05), nhất quán với notes L02-02-05 (−16/−18) và L02-06-06 (G_T=0). ✔
+
+**Tìm kiếm:**
+1. [Thấp / tùy chọn] L02-03-09 vs L02-03-07 — Định nghĩa $H_t^O=(O_0,A_0,R_1,\ldots,O_t)$ xuất hiện muộn (L02-03-07) trong khi notes L02-03-04 đã tham chiếu "lịch sử quan sát $H_t^O$". Bằng chứng: L02-03-04 notes. Fix (tùy chọn): thêm một cụm định nghĩa ngắn trong notes L02-03-04 hoặc ở L02-03-09. Không phải lỗi.
+2. [Thấp / tùy chọn] ID "L02-03-09" chèn giữa 03-02 và 03-03 làm mất tính liên tiếp số thứ tự trong map. Fix: chấp nhận hoặc đánh lại ID toàn mục; chỉ ảnh hưởng quản lý, không ảnh hưởng nội dung.
+
+**Flow:** incoming — nhận excerpt file 2627-1 từ coordinator; outgoing — báo cáo này trả coordinator; role — reviewer đọc-шифру read-only, mục "flow", không thực hiện edit.
+
+**Kết luận:** Các thay đổi yêu cầu đều đúng và nhất quán; chỉ có 2 gợi ý tùy chọn, không cần sửa bắt buộc.
