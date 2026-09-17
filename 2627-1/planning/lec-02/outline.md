@@ -32,7 +32,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-02-02` — Một bước trong mê cung — PPTX trang 25–26 (bài toán mê cung), 7–9 (tín hiệu thưởng)
 - `L02-02-03` — Thứ tự tương tác — PPTX trang 14–15 (giao diện), 16 (trạng thái/quan sát)
 - `L02-02-04` — Tín hiệu học — PPTX trang 7–8 (tín hiệu học); hw02 bài 1
-- `L02-02-05` — Phần thưởng và mục tiêu — PPTX trang 9 (thưởng) và 25 (mê cung với -1 mỗi bước)
+- `L02-02-05` — Giả thuyết điểm thưởng — PPTX trang 9 (thưởng) và 25 (mê cung với -1 mỗi bước)
 - `L02-02-06` — Phản hồi trễ — PPTX trang 4 (phần thưởng bị trễ) và 11 (cờ)
 - `L02-02-07` — Kiểm tra vòng tương tác — PPTX trang 27 (quiz); bài luyện suy ra từ trang 25–26 và hw02 bài 6, 10
 - `L02-03-01` — Thông tin để ra quyết định — PPTX trang 19; ảnh maze-local.svg dựng từ trang 25-26; bài mê cung hw02 bài 10 suy ra kịch bản hai lối ra.

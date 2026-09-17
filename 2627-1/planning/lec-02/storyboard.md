@@ -162,17 +162,17 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 7–8 (tín hiệu học); hw02 b�
 - **Sản phẩm học tập/kiểm tra:** hw02 bài 1: phân biệt ba khung học và giải thích thưởng không phải nhãn.
 - **Quyết định nguồn:** Giữ nội dung trang 7–8, tái cấu trúc thành bảng so sánh ba cột; câu 'thưởng không là nhãn' giữ nguyên theo hw02 bài 1.
 
-### L02-02-05 — Phần thưởng và mục tiêu
+### L02-02-05 — Giả thuyết điểm thưởng
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 9 (thưởng) và 25 (mê cung với -1 mỗi bước).
+Thời lượng: 3 phút. Nguồn: PPTX trang 9 (giả thuyết điểm thưởng), 25–26 (mê cung).
 
-- **Luận điểm:** Mục tiêu là cực đại hóa tổng thưởng dài hạn; trong mê cung, thưởng $-1$ mỗi bước kể cả bước ra đích, hai đường 16 và 18 bước cho tổng $-16$ và $-18$.
-- **Nhu cầu và lý do tồn tại:** Chuyển từ 'thưởng từng bước' sang 'mục tiêu dài hạn' là bước ý niệm quan trọng nhất của phần này.
-- **Cách thể hiện và độ phù hợp năm 3:** Bảng hai đường đi và tổng thưởng; tránh đưa bảng hàm giá trị trước định nghĩa. Dữ kiện nhỏ giúp sinh viên kiểm tra tổng bằng tay.
-- **Kết nối vào:** Thưởng $-1$ mỗi bước từ slide ví dụ bước đi.
-- **Kết nối ra:** Section 5: định nghĩa $G_t$ với chiết khấu; section 6: giải mê cung bằng chính sách.
-- **Sản phẩm học tập/kiểm tra:** hw02 bài 5: tính tổng thưởng cho một đường cho trước.
-- **Quyết định nguồn:** Giữ số liệu trang 9 và 25, thêm hai tổng $-16$/$-18$ làm ví dụ đếm được; không khẳng định mọi mục tiêu đều biểu diễn được bằng thưởng vì nằm ngoài phạm vi trang nguồn.
+- **Luận điểm:** Giả thuyết đề xuất biểu diễn mọi mục tiêu bằng cực đại hóa kỳ vọng của phần thưởng tích lũy.
+- **Nhu cầu và lý do tồn tại:** Nối tín hiệu chấm điểm từng bước với tiêu chí mô tả mục tiêu dài hạn.
+- **Cách thể hiện và độ phù hợp năm 3:** Phát biểu trung tâm trong khung lớn; ví dụ mê cung một câu dùng lại thưởng âm một đã biết.
+- **Kết nối vào:** Phần thưởng là tín hiệu số, khác nhãn hành động đúng/sai ở trang trước.
+- **Kết nối ra:** Hành động có thể ảnh hưởng phần thưởng xuất hiện muộn; phần 5 định nghĩa tổng thưởng và kỳ vọng.
+- **Sản phẩm học tập/kiểm tra:** Giải thích vì sao thưởng âm một mỗi bước biểu diễn mục tiêu giảm số bước tới đích; phân biệt thưởng tức thời với tiêu chí tích lũy.
+- **Quyết định nguồn:** Khôi phục phát biểu giả thuyết của nguồn9 làm trọng tâm theo yêu cầu; chuyển bảng16/18bước sang giải thích trong notes. Không trình bày giả thuyết như định lý đã chứng minh.
 
 ### L02-02-06 — Phản hồi trễ
 

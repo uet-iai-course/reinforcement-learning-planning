@@ -765,3 +765,12 @@ Kiểm tra bàn giao: thẻ Bài2 trên index mở đúng deck43trang.11tệp th
 ## Chỉnh hình Phản hồi trễ theo yêu cầu
 
 Vẽ lại delayed-feedback.svg: ba mũi tên riêng nối S₀→S₁→S₂→S₃, đầu mũi tên có kích thước cố định và dừng trước viền trạng thái. Thay hình đánh dấu méo bằng vòng kép và nhãn Kết thúc; dùng ngoặc gom chuỗi cho chú thích. Giữ các nhãn hành động và thưởng0,0,+1. Đã xem ảnh render trang L02-02-06 và kiểm tra14lượt rộng/hẹp của phần2: không tràn khung, lỗi toán, ảnh hỏng hoặc lỗi JavaScript/tài nguyên.
+
+## Slide Giả thuyết điểm thưởng
+
+Theo yêu cầu, đổi L02-02-05 từ bảng so sánh đường đi sang phát biểu giả thuyết điểm thưởng của nguồn9; giữ mê cung làm ví dụ và chuyển số16/18 sang notes. Cập nhật outline/storyboard, giữ thời lượng3phút. Đã đối chiếu trực tiếp XML trang9 của PPTX và kiểm tra14lượt rộng/hẹp phần2 không lỗi; đã xem ảnh render.
+
+- reward-rl: requested_model=deepseek/deepseek-v4-flash-0731; observed_model=deepseek/deepseek-v4-flash-0731; provider=OpenRouter.
+- reward-flow: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+Reviewer mạch viết xác nhận vai trò, kết nối vào/ra và nội dung khớp nguồn, đề xuất giữ nguyên. Reviewer RL nêu mức trung bình vì muốn thêm công thức G/v ngay tại đây; điều phối viên không áp dụng: yêu cầu là dành định nghĩa cho phần5, nơi công thức vẫn có ở L02-05-03/05. Việc thêm chúng tại02-05 sẽ đảo tiên quyết. Đề xuất gọi công thức định nghĩa là giả thuyết cũng không đúng; chỉ phát biểu biểu diễn mục tiêu ở nguồn9 là giả thuyết. Bảng16/18 được chuyển sang notes có chủ ý, không phải mất dữ kiện. Không có thay đổi slide Kiểm tra vòng tương tác trong lần này; câu hỏi của người dùng được giải thích riêng.
