@@ -416,3 +416,5 @@
 .reveal.lecture-deck .note-source { font-size: .9em; }
 
 .reveal.lecture-deck .figure.short { max-height: 260px; }
+
+.reveal.lecture-deck .slides section[data-slide-id] { padding: 0 24px; box-sizing: border-box; }

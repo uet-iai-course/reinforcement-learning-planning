@@ -173,3 +173,119 @@ Thời lượng: 2 phút. Nguồn: PPTX trang 27 (quiz); bài luyện suy ra t�
 - **Kết nối ra:** Section 3: thông tin trong $O_t$ — trạng thái và quan sát.
 - **Sản phẩm học tập/kiểm tra:** Đáp án đầy đủ trong notes; nối tới hw02 bài 6 và 10 ở mức nhận diện thành phần.
 - **Quyết định nguồn:** Từ quiz trang 27, giữ câu điền ký hiệu theo tọa độ mê cung; câu về hành động tối ưu suy ra từ trang 7–8 để khép vòng ý phần này.
+
+## Phần 3: Trạng thái và thông tin quan sát — 25 phút
+
+- **Chức năng:** Xác định thông tin nào tác tử cần để ra quyết định: trạng thái môi trường, quan sát và biểu diễn dùng để quyết định; đưa ra định nghĩa tính Markov trên lịch sử trạng thái.
+- **Tiên quyết:** Khai niệm tác tử - môi trường, chuỗi S_t, A_t, R_t và tín hiệu thưởng ở phần 2; xác suất có điều kiện; lưu đồ và cây trạng thái ở mức năm ba.
+- **Kết nối vào:** Từ phần 2: sơ đồ tương tác tác tử - môi trường và dòng thời gian phần thưởng; từ bài mê cung ở cuối phần 2: vai trò của vị trí tác tử.
+- **Kết nối ra:** Sang phần 4: X_t trở thành đối số của chính sách; sang phần 5: hàm giá trị định nghĩa trên trạng thái; bài mê cung dùng S=(x,y) và G làm ví dụ xuyên suốt.
+- **Mạch phù hợp sinh viên năm 3:** Sinh viên năm ba đã quen với mô hình xác suất và thao tác trên đặc trưng; ví dụ xe cùng vị trí khác vận tốc và robot chỉ thấy ô lân cận khớp trực tiếp với kinh nghiệm đặc trưng - dự báo của họ, nên giới thiệu S, O, X như ba cấp thông tin thay vì định nghĩa trừu tượng ngay.
+
+### Cụm Cấp thông tin: quan sát, trạng thái, biểu diễn quyết định
+
+- vấn đề: L02-03-01
+- trực giác: L02-03-02
+- ví dụ: L02-03-03
+- hình thức: L02-03-04
+- ứng dụng: L02-03-05, L02-03-06
+- kiểm tra: L02-03-07, L02-03-08
+- Gộp bước/ngoại lệ: Không áp dụng cho phần mở/kết với lý do: phần này là vòng khái niệm duy nhất của section nên chu kỳ vấn đề - trực giác - ví dụ - hình thức - ứng dụng - kiểm tra trải trên tám slide liên tiếp, không tách thành phần mở riêng.
+- Dữ kiện truyền tiếp: Ảnh mê cung cục bộ (hai vị trí, ảnh bốn ô kề) và ví dụ xe cùng vị trí khác vận tốc được dùng lại ở slide 6 và 7; mê cung tọa độ với thưởng -1 từ slide 5 nối sang phần mê cung ở section 6.
+- Câu nối: Kết bằng câu hỏi phân loại về đủ hay thiếu thông tin, dẫn sang chính sách trong phần 4.
+
+### L02-03-01 — Thông tin để ra quyết định
+
+Thời lượng: 3 phút. Nguồn: PPTX trang 19; ảnh maze-local.svg dựng từ trang 25-26; bài mê cung hw02 bài 10 suy ra kịch bản hai lối ra..
+
+- **Luận điểm:** Quan sát cục bộ có thể không phân biệt được các tình huống môi trường khác nhau có hậu quả khác nhau.
+- **Nhu cầu và lý do tồn tại:** Sinh viên cần một vấn đề cụ thể trước định nghĩa; việc tìm thông tin còn thiếu chính là động lực cho ba cấp thông tin ở slide tiếp theo.
+- **Cách thể hiện và độ phù hợp năm 3:** Ảnh mê cung cục bộ làm trung tâm, chú thích hai vị trí một ảnh; năm ba đã xử lý mê cung trong hw02 nên hình quen và đọc được ngay.
+- **Kết nối vào:** Dòng thời gian tương tác và vai trò của vị trí tác tử trong mê cung từ phần 2.
+- **Kết nối ra:** Câu hỏi thiếu thông tin gì dẫn tới cặp khái niệm trạng thái - quan sát ở slide 2.
+- **Sản phẩm học tập/kiểm tra:** Hỏi: vì sao bước đi Đông từ hai vị trí có thể khác hậu quả.
+- **Quyết định nguồn:** Tách: trang 19 nêu quan sát một phần bằng mê cung; tách thành slide mở vấn đề với ảnh cục bộ dựng từ trang 25-26 để định vị bài toán trước công thức.
+
+### L02-03-02 — Trạng thái và quan sát
+
+Thời lượng: 3 phút. Nguồn: PPTX trang 16 (trạng thái/quan sát); phần biểu diễn ở trang 14-15 và 21..
+
+- **Luận điểm:** S_t, O_t, X_t là ba cấp thông tin phân biệt theo phía dữ liệu nằm ở đâu và dùng làm gì.
+- **Nhu cầu và lý do tồn tại:** Định nghĩa miền và ký hiệu trước khi dùng, đúng yêu cầu trình tự của bài giảng.
+- **Cách thể hiện và độ phù hợp năm 3:** Ba card ngang cho ba khái niệm, mỗi card một câu định nghĩa; ví dụ mê cung viết dưới dạng dòng duy nhất để không tách ý.
+- **Kết nối vào:** Vấn đề thiếu thông tin ở slide 1: thiếu chính là khoảng cách giữa O_t và S_t.
+- **Kết nối ra:** Trường hợp O_t thiếu thông tin dự báo được phân tích ở slide 3 qua ví dụ xe.
+- **Sản phẩm học tập/kiểm tra:** Cho mê cung có GPS: hỏi X_t có thể là gì và vì sao X_t = S_t khi đó là lựa chọn hợp lệ.
+- **Quyết định nguồn:** Sửa: trang 16 trình bày trạng thái và quan sát chung chung; thêm X_t theo trang 14-15 và ví dụ tọa độ/bốn ô kề để chốt ký hiệu cho cả section.
+
+### L02-03-03 — Thông tin trong lịch sử
+
+Thời lượng: 3 phút. Nguồn: PPTX trang 12 (ví dụ robot/cờ/xe); ví dụ vận tốc là giả thiết sư phạm suy ra,Markov-summary.svg từ trang 17..
+
+- **Luận điểm:** Một quan sát đơn lẻ có thể không dự báo được bước tới, trong khi lịch sử nhiều thời điểm có thể đủ.
+- **Nhu cầu và lý do tồn tại:** Trước khi phát biểu điều kiện Markov, sinh viên cần thấy một trường hợp quan sát hiện tại thiếu thông tin dự báo để hiểu vì sao định nghĩa dùng lịch sử.
+- **Cách thể hiện và độ phù hợp năm 3:** Sơ đồ hai xe cùng vị trí10m, vận tốc1/5m/s, cùng lệnh phanh; dữ kiện và lời giảng trùng hình. Sinh viên dùng kiến thức chuyển động để nhận ra biến bị thiếu.
+- **Kết nối vào:** Ba cấp S, O, X từ slide 2: đây là trường hợp O_t hẹp hơn trạng thái thực.
+- **Kết nối ra:** Ví dụ này là nền để viết định nghĩa tính Markov trên lịch sử ở slide 4.
+- **Sản phẩm học tập/kiểm tra:** Hỏi: cần thêm thông tin gì ngoài vị trí để dự báo vị trí sau một bước với cùng mức ga.
+- **Quyết định nguồn:** Sửa: trang 12 liệt kê robot/cờ/xe; giữ xe, gắn giả thiết chuyển động đều và cặp hai thời điểm để ví dụ có tính được và nối được sang slide 7.
+
+### L02-03-04 — Tính Markov
+
+Thời lượng: 3 phút. Nguồn: PPTX trang 17 (Markov) và trang 18 (đầy đủ)..
+
+- **Luận điểm:** Trạng thái là Markov khi biết S_t và A_t, phân phối của (S_{t+1}, R_{t+1}) không phụ thuộc phần lịch sử trước đó.
+- **Nhu cầu và lý do tồn tại:** Định nghĩa hình thức sau ví dụ, theo nguyên tắc ví dụ trước công thức của bài giảng.
+- **Cách thể hiện và độ phù hợp năm 3:** Công thức lớn đặt trung tâm, dòng trực giác phía trên, giả thiết kỹ thuật phía dưới; năm ba đọc quen ký hiệu xác suất có điều kiện nên công thức giữ nguyên dạng chuẩn.
+- **Kết nối vào:** Ví dụ xe ở slide 3 cho trực giác đủ/thiếu thông tin.
+- **Kết nối ra:** Tiêu chuẩn này được áp dụng để kiểm tra trạng thái mê cung ở slide 5.
+- **Sản phẩm học tập/kiểm tra:** Hỏi: với S_t chỉ là vị trí của xe, hai vế công thức có bằng nhau không.
+- **Quyết định nguồn:** Giữ: trang 17 đã có định nghĩa Markov trên lịch sử; tách giả thiết rời rạc và xác suất dương thành dòng riêng và thêm cảnh báo phạm vi không suy hành động tối ưu.
+
+### L02-03-05 — Trạng thái trong mê cung
+
+Thời lượng: 4 phút. Nguồn: PPTX trang 25-26 (mê cung); bài mê cung hw02 bài 10; biến thể chìa khóa là giả thiết sư phạm suy ra..
+
+- **Luận điểm:** Tọa độ là trạng thái Markov cho mê cung cố định xác định, nhưng không còn Markov khi luật chuyển phụ thuộc biến chưa ghi trong S.
+- **Nhu cầu và lý do tồn tại:** Áp dụng định nghĩa slide 4 vào bài tập mê cung mà sinh viên gặp ở hw02, để thấy tiêu chí kiểm tra dùng được trong thực hành.
+- **Cách thể hiện và độ phù hợp năm 3:** Hai bullet tóm tắt thiết lập và một box check chứa câu hỏi; không cần hình mới vì mê cung đã quen từ phần 2 và hw02.
+- **Kết nối vào:** Định nghĩa tính Markov ở slide 4 là tiêu chí kiểm tra.
+- **Kết nối ra:** Kết luận tọa độ đủ khi bản đồ cố định; trường hợp thiếu thông tin dẫn sang phân loại quan sát đầy đủ/một phần ở slide 6.
+- **Sản phẩm học tập/kiểm tra:** Chính là câu hỏi trong box: yêu cầu chỉ ra các cặp lịch sử cùng (S_t, A_t) cho phản hồi khác nhau.
+- **Quyết định nguồn:** Sửa: trang 25-26 dùng mê cung làm ví dụ bài toán; thêm giả thiết chìa khóa làm bài kiểm tra ứng dụng vì cần một trường hợp phản Markov rõ ràng.
+
+### L02-03-06 — Quan sát đầy đủ và một phần
+
+Thời lượng: 3 phút. Nguồn: PPTX trang 18 (đầy đủ) và trang 19 (một phần); ảnh maze-local.svg từ trang 25-26..
+
+- **Luận điểm:** Đầy đủ/một phần là thuộc tính của ánh xạ từ quan sát về trạng thái, không phụ thuộc việc tác tử có biết mô hình hay không.
+- **Nhu cầu và lý do tồn tại:** Khép vòng mở ở slide 1: giải thích vì sao hai ảnh lân cận tạo ra vấn đề, và đặt thuật ngữ cho hai lớp bài toán.
+- **Cách thể hiện và độ phù hợp năm 3:** Bảng hai mức quan sát và kết luận từ cặp vị trí đã thấy; tránh lặp hình nhỏ, giữ cỡ chữ lớn.
+- **Kết nối vào:** Kịch bản hai vị trí một ảnh từ slide 1 và cặp S, O từ slide 2.
+- **Kết nối ra:** Khi quan sát một phần, tác tử phải tự xây biểu diễn từ lịch sử, nội dung slide 7.
+- **Sản phẩm học tập/kiểm tra:** Hỏi: trong mê cung 8x8, cần thêm dữ liệu nào vào O_t để nó trở thành đầy đủ.
+- **Quyết định nguồn:** Giữ: trang 18-19 đã định nghĩa đầy đủ/một phần; thêm cảnh báo tách quan sát đầy đủ khỏi biết mô hình vì sinh viên năm ba hay gộp hai ý này.
+
+### L02-03-07 — Biểu diễn dùng để quyết định
+
+Thời lượng: 3 phút. Nguồn: PPTX trang 14-15 (giao diện) và trang 21; ví dụ xe hai thời điểm từ trang 12..
+
+- **Luận điểm:** Biểu diễn quyết định là hàm f trên lịch sử; f tốt khôi phục thông tin dự báo, nhưng ghép hữu hạn khung chưa chắc Markov.
+- **Nhu cầu và lý do tồn tại:** Sinh viên cần cầu nối từ quan sát một phần về chính sách: chính sách ở phần 4 nhận đối số nào.
+- **Cách thể hiện và độ phù hợp năm 3:** Công thức X_t = f(H_t) đặt trung tâm với hai dòng ví dụ và một dòng cảnh báo; chữ công thức ngắn nên dùng math-large an toàn.
+- **Kết nối vào:** Ví dụ xe hai thời điểm ở slide 3 và quan sát một phần ở slide 6.
+- **Kết nối ra:** X_t trở thành đối số của chính sách ở section 4; tiêu chí Markov của slide 4 dùng để kiểm tra f.
+- **Sản phẩm học tập/kiểm tra:** Cho mê cung có chìa khóa: hỏi f cần ghi nhớ thông tin gì để biểu diễn trở nên đủ.
+- **Quyết định nguồn:** Sửa: trang 14-15 nói về giao diện tác tử - môi trường; rút gọn thành ý lịch sử và hàm f, gắn với ví dụ xe đã chuẩn bị ở slide 3.
+
+### L02-03-08 — Kiểm tra thông tin quan sát
+
+Thời lượng: 3 phút. Nguồn: PPTX trang 27 (quiz); các trường hợp từ trang 16, 18, 19 và ảnh maze-local.svg..
+
+- **Luận điểm:** Tính đầy đủ của quan sát được phân loại theo tiêu chí ánh xạ từ O_t về S_t, gắn với giả thiết về cảm biến.
+- **Nhu cầu và lý do tồn tại:** Câu hỏi phân loại cuối section để kiểm tra chu kỳ khái niệm; cần lý do và giả thiết nên chấm được quy trình chứ không chỉ đáp án.
+- **Cách thể hiện và độ phù hợp năm 3:** Ba trường hợp so sánh trên cùng mê cung; giữ thông tin cảm biến làm biến thay đổi, đáp án trong notes.
+- **Kết nối vào:** Định nghĩa đầy đủ/một phần ở slide 6 và tiêu chí Markov ở slide 4.
+- **Kết nối ra:** Câu X_t làm đối số chính sách mở sang section 4 về chính sách lựa chọn hành động.
+- **Sản phẩm học tập/kiểm tra:** Bốn câu trả lời có giả thiết; đáp án chi tiết trong notes để đối chiếu.
+- **Quyết định nguồn:** Sửa: trang 27 là quiz chung; chọn bốn trường hợp bám đúng nội dung trạng thái/quan sát của section, thêm yêu cầu giả thiết để câu hỏi phân loại có tính kiểm tra rõ ràng.

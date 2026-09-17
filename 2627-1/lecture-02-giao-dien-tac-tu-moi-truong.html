@@ -70,6 +70,48 @@
 <aside class="notes">Đáp án: $A_t=\text{Bắc}$, $R_{t+1}=-1$, $O_{t+1}=(1,1)$. Phần thưởng này không xác định hành động tối ưu vì mọi bước đều nhận âm một. Việc so sánh lựa chọn cần xét các phần thưởng tiếp theo. Để ra quyết định, tác tử còn cần biết thông tin hiện tại có phân biệt được các tình huống dẫn tới kết quả khác nhau hay không.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 27 (quiz); bài luyện suy ra từ trang 25–26 và hw02 bài 6, 10</p></aside>
 </section>
 </section>
+<section>
+<section data-slide-id="L02-03-01">
+<h2>Thông tin để ra quyết định</h2>
+<p>Cảm biến chỉ báo bốn ô kề có tường hay đi được.</p><img class="figure short" src="img/lec-02/maze-local.svg" alt="Tại (2,1) và (3,1), Bắc và Nam đều là tường, Đông và Tây đều là ô trống."/><p class="box">Quan sát hiện tại chưa phân biệt được hai vị trí.</p>
+<aside class="notes">Tại (2,1) và (3,1), cảm biến đều báo Bắc và Nam có tường, Đông và Tây đi được. Chọn Đông từ hai vị trí này đưa tác tử tới hai ô khác nhau. Dù biết bản đồ, tác tử vẫn chưa xác định được vị trí chỉ từ tín hiệu đang nhận. Vì vậy cần phân biệt tình huống của môi trường với thông tin được cung cấp cho tác tử.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 19; ảnh maze-local.svg dựng từ trang 25-26; bài mê cung hw02 bài 10 suy ra kịch bản hai lối ra.</p></aside>
+</section>
+<section data-slide-id="L02-03-02">
+<h2>Trạng thái và quan sát</h2>
+<div class="grid3"><div class="card"><h3>Trạng thái</h3><p>$S_t\in\mathcal S$</p><p>Tình huống của môi trường trong mô hình.</p></div><div class="card"><h3>Quan sát</h3><p>$O_t\in\mathcal O$</p><p>Thông tin tác tử nhận được.</p></div><div class="card"><h3>Biểu diễn</h3><p>$X_t\in\mathcal X$</p><p>Dữ liệu dùng để chọn hành động.</p></div></div><p>Trong mê cung cố định, trạng thái là tọa độ; quan sát có thể chỉ là bốn ô kề.</p>
+<aside class="notes">$\mathcal S$, $\mathcal O$ và $\mathcal X$ lần lượt là tập trạng thái, tập quan sát và tập biểu diễn quyết định. Trong mê cung cố định, $S_t$ là tọa độ ô, kể cả đích $G$. Nếu nhận tọa độ chính xác, có thể chọn $X_t=O_t=S_t$. Với cảm biến bốn ô kề, vẫn có thể chọn $X_t=O_t$, nhưng biểu diễn đó mất thông tin vị trí. Dùng lịch sử là một cách bổ sung thông tin.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 16 (trạng thái/quan sát); phần biểu diễn ở trang 14-15 và 21.</p></aside>
+</section>
+<section data-slide-id="L02-03-03">
+<h2>Thông tin trong lịch sử</h2>
+<p>Hai xe cùng vị trí, cùng lệnh phanh, nhưng khác vận tốc.</p><img class="figure short" src="img/lec-02/markov-summary.svg" alt="Hai xe ở vị trí 10 mét, vận tốc 1 và 5 mét mỗi giây, cùng phanh; vị trí tiếp theo có thể khác."/><p class="box">Vị trí đơn lẻ bỏ mất thông tin ảnh hưởng chuyển động.</p>
+<aside class="notes">Hình minh họa hai xe cùng ở vị trí 10 mét, vận tốc lần lượt 1 và 5 mét mỗi giây. Cùng lệnh phanh không bảo đảm vị trí ở bước sau giống nhau. Trong mô hình chuyển động chỉ phụ thuộc vị trí, vận tốc và lệnh điều khiển, cần giữ cả vị trí lẫn vận tốc. Đây là ví dụ sư phạm về việc bỏ mất biến trạng thái, không phải mô hình đầy đủ của xe tự lái.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 12 (ví dụ robot/cờ/xe); ví dụ vận tốc là giả thiết sư phạm suy ra,Markov-summary.svg từ trang 17.</p></aside>
+</section>
+<section data-slide-id="L02-03-04">
+<h2>Tính Markov</h2>
+<p>Biết trạng thái và hành động thì lịch sử không cải thiện dự báo bước tới.</p><div class="math-large">$$\begin{aligned}&\Pr(S_{t+1}=s',R_{t+1}=r\mid H_t^S=h,A_t=a)\\&\quad=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a).\end{aligned}$$</div><p>$H_t^S$: lịch sử trạng thái–hành động–thưởng; $h$ kết thúc ở $s$.</p><p class="caption">Xét biến rời rạc và các biến cố điều kiện có xác suất dương.</p>
+<aside class="notes">$H_t^S=(S_0,A_0,R_1,S_1,\ldots,A_{t-1},R_t,S_t)$ là lịch sử trạng thái, khác lịch sử quan sát $H_t$. Vế trái dùng toàn bộ lịch sử, vế phải chỉ dùng trạng thái cuối và hành động hiện tại. Tính Markov yêu cầu hai phân phối bằng nhau với mọi lịch sử có thể xảy ra kết thúc tại $s$. $s'$ là giá trị của trạng thái kế tiếp và $r$ là giá trị phần thưởng. Điều kiện dương áp dụng cho biến cố được điều kiện hóa, không yêu cầu mọi kết quả bước tới đều có xác suất dương. Tính chất này không xác định hành động tối ưu.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 17 (Markov) và trang 18 (đầy đủ).</p></aside>
+</section>
+<section data-slide-id="L02-03-05">
+<h2>Trạng thái trong mê cung</h2>
+<ul><li>Bản đồ cố định, chuyển động xác định, thưởng $-1$ mỗi bước, đích $G$.</li><li>$S_t = (x_t, y_t)$: cùng $(s, a)$ cho cùng phản hồi, độc lập đường đã đi.</li></ul><p class="check">Câu hỏi: nếu cửa ra phụ thuộc chìa khóa, tọa độ $(x_t, y_t)$ còn đủ không?</p>
+<aside class="notes">Trong mê cung cố định, tọa độ cùng hành động xác định ô tiếp theo và phần thưởng. Khi đến $G$, tương tác kết thúc. Với biến thể có cửa khóa, hai lần đến cùng ô nhưng khác tình trạng chìa khóa có thể cho kết quả khác nhau. Cần bổ sung $k\in\{0,1\}$ biểu thị có chìa khóa, chẳng hạn $S_t=(x_t,y_t,k_t)$. Biến thể này kiểm tra ranh giới của cách mô tả chỉ bằng tọa độ.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 25-26 (mê cung); bài mê cung hw02 bài 10; biến thể chìa khóa là giả thiết sư phạm suy ra.</p></aside>
+</section>
+<section data-slide-id="L02-03-06">
+<h2>Quan sát đầy đủ và một phần</h2>
+<table><thead><tr><th>Mức quan sát</th><th>Thông tin về trạng thái</th></tr></thead><tbody><tr><td>Đầy đủ</td><td>Từ $O_t$ xác định được $S_t$.</td></tr><tr><td>Một phần</td><td>Một $O_t$ có thể phù hợp với nhiều $S_t$.</td></tr></tbody></table><p class="box">Ảnh bốn ô kề tại $(2,1)$ và $(3,1)$ giống nhau, nên không xác định được vị trí.</p>
+<aside class="notes">Quan sát tọa độ chính xác là đầy đủ trong mê cung có bản đồ và luật cố định. Quan sát bốn ô kề là một phần vì hai vị trí đã xét cho cùng tín hiệu. Đầy đủ thông tin trạng thái không có nghĩa tác tử biết quy luật chuyển hoặc phần thưởng. Quan sát đầy đủ cũng chưa phải định nghĩa đầy đủ của quá trình quyết định Markov; còn cần nêu các thành phần và giả thiết của bài toán.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 18 (đầy đủ) và trang 19 (một phần); ảnh maze-local.svg từ trang 25-26.</p></aside>
+</section>
+<section data-slide-id="L02-03-07">
+<h2>Biểu diễn dùng để quyết định</h2>
+<p>Lịch sử $H_t = (O_0, A_0, R_1, \ldots, O_t)$ giúp phân biệt thông tin bị mất khỏi $O_t$.</p><p class="math-large">$$X_t = f(H_t)$$</p><p>Xe: hai vị trí $x_t, x_{t-1}$ suy ra vận tốc trong mô hình chuyển động đều.</p><p>Nhiều khung quan sát gần nhất chưa chắc cho trạng thái Markov.</p>
+<aside class="notes">Tác tử có thể dùng hàm $f$ để tạo biểu diễn $X_t$ từ lịch sử $H_t$. Chẳng hạn trong chuyển động đều một chiều, biết hai vị trí cách nhau khoảng thời gian $\Delta t>0$ cho phép tính vận tốc bằng hiệu vị trí chia cho $\Delta t$. Ngoài giả thiết chuyển động đều, cách suy này cần được xét lại. Ghép một số hữu hạn quan sát gần nhất không bảo đảm lưu đủ mọi thông tin liên quan tới tương lai.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 14-15 (giao diện) và trang 21; ví dụ xe hai thời điểm từ trang 12.</p></aside>
+</section>
+<section data-slide-id="L02-03-08">
+<h2>Kiểm tra thông tin quan sát</h2>
+<div class="check"><p><strong>Câu hỏi:</strong> Phân loại mức quan sát và nêu giả thiết.</p><ul><li>Tọa độ chính xác trong mê cung cố định.</li><li>Ảnh toàn bản đồ, thấy rõ tác tử và mọi ô.</li><li>Cảm biến chỉ báo bốn ô kề.</li></ul></div>
+<aside class="notes">Hai trường hợp đầu đầy đủ nếu quan sát cho phép xác định chính xác vị trí trong mê cung cố định. Trường hợp ba là một phần, như cặp vị trí (2,1) và (3,1). Với robot chỉ có cảm biến gần, kết luận cũng phụ thuộc khả năng định vị và thông tin bị che khuất. Sau khi chọn biểu diễn $X_t$, tác tử cần một quy tắc dùng biểu diễn đó để chọn hành động.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 27 (quiz); các trường hợp từ trang 16, 18, 19 và ảnh maze-local.svg.</p></aside>
+</section>
+</section>
 <div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 02</div>
 </div></div>
 <script src="revealjs/dist/reveal.js"></script>

@@ -37,3 +37,7 @@ Phần 1: 4 trang đã duyệt ở 1280×720 và 390×844; không tràn khung, l
 ## Phần 2 — kiểm tra và chỉnh sửa
 
 Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter. Bảy trang,20 phút. Bỏ bảng hàm giá trị bị dùng sớm ở trang mục tiêu, thay bằng bảng16/18 bước. Rút notes, bỏ chỉ dẫn người viết và lời dẫn, sửa ví dụ phản hồi trễ thành quy ước thưởng của ví dụ, không quy kết mọi ván cờ có cùng thưởng. Câu hỏi tương tác có nhãn chuẩn. Kiểm tra14 lượt màn hình rộng/hẹp không lỗi; hạ chiều cao hình dòng thời gian để tăng khoảng trắng. Kiểm tra lại sau chỉnh bố cục trước commit.
+
+## Phần 3 — kiểm tra và chỉnh sửa
+
+Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter. Tám trang,25 phút. Sửa dữ kiện xe cho khớp hình1/5m/s cùng phanh; bỏ khẳng định X bắt buộc dùng lịch sử; phát biểu Markov xét biến cố điều kiện có xác suất dương, không yêu cầu xác suất kết quả dương. Công thức hai dòng đủ lớn. Loại lời bình về slide, chỉ dẫn người viết, câu tu từ; bài kiểm tra còn3trường hợp và robot trong đáp án. Thay hình nhỏ lặp bằng bảng, thêm lề tránh nút điều hướng. Kiểm tra16lượt rộng/hẹp không lỗi và kiểm tra lại cả3phần sau đổi lề.

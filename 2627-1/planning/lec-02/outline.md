@@ -20,7 +20,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 
 ## Trạng thái triển khai
 
-Đã có bản viết cho 2/7 phần; chỉ bàn giao khi đủ các vòng rà soát và kiểm định cuối.
+Đã có bản viết cho 3/7 phần; chỉ bàn giao khi đủ các vòng rà soát và kiểm định cuối.
 
 ## Trang đích
 
@@ -35,6 +35,14 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-02-05` — Phần thưởng và mục tiêu — PPTX trang 9 (thưởng) và 25 (mê cung với -1 mỗi bước)
 - `L02-02-06` — Phản hồi trễ — PPTX trang 4 (phần thưởng bị trễ) và 11 (cờ)
 - `L02-02-07` — Kiểm tra vòng tương tác — PPTX trang 27 (quiz); bài luyện suy ra từ trang 25–26 và hw02 bài 6, 10
+- `L02-03-01` — Thông tin để ra quyết định — PPTX trang 19; ảnh maze-local.svg dựng từ trang 25-26; bài mê cung hw02 bài 10 suy ra kịch bản hai lối ra.
+- `L02-03-02` — Trạng thái và quan sát — PPTX trang 16 (trạng thái/quan sát); phần biểu diễn ở trang 14-15 và 21.
+- `L02-03-03` — Thông tin trong lịch sử — PPTX trang 12 (ví dụ robot/cờ/xe); ví dụ vận tốc là giả thiết sư phạm suy ra,Markov-summary.svg từ trang 17.
+- `L02-03-04` — Tính Markov — PPTX trang 17 (Markov) và trang 18 (đầy đủ).
+- `L02-03-05` — Trạng thái trong mê cung — PPTX trang 25-26 (mê cung); bài mê cung hw02 bài 10; biến thể chìa khóa là giả thiết sư phạm suy ra.
+- `L02-03-06` — Quan sát đầy đủ và một phần — PPTX trang 18 (đầy đủ) và trang 19 (một phần); ảnh maze-local.svg từ trang 25-26.
+- `L02-03-07` — Biểu diễn dùng để quyết định — PPTX trang 14-15 (giao diện) và trang 21; ví dụ xe hai thời điểm từ trang 12.
+- `L02-03-08` — Kiểm tra thông tin quan sát — PPTX trang 27 (quiz); các trường hợp từ trang 16, 18, 19 và ảnh maze-local.svg.
 
 ## Ánh xạ toàn bộ nguồn
 
