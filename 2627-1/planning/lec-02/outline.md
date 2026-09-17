@@ -20,7 +20,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 
 ## Trạng thái triển khai
 
-Đã có bản viết cho 7/7 phần; chỉ bàn giao khi đủ các vòng rà soát và kiểm định cuối.
+Đã hoàn tất7/7phần:43trang,120phút; đủ năm báo cáo độc lập và kiểm định lại. Giới hạn rà trực quan Codex Slides được ghi trong review-log.md.
 
 ## Trang đích
 
@@ -57,7 +57,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-05-07` — Dự báo bước tiếp theo — PPTX trang 13, 23; hw02 bài 6
 - `L02-05-08` — Mô hình chuyển và phần thưởng — PPTX trang 13, 23; hw02 bài 10
 - `L02-05-09` — Kiểm tra mô hình — PPTX trang 13, 24, 27; hw02 bài 6
-- `L02-06-01` — Đánh giá và cải thiện chính sách — PPTX trang 24; hw02 bài 1, 5
+- `L02-06-01` — Hai nhiệm vụ trên mê cung — PPTX trang 24; hw02 bài 1, 5
 - `L02-06-02` — Dự đoán và điều khiển — PPTX trang 16 bước và 18 bước; hw02 bài 5
 - `L02-06-03` — Đặc tả môi trường mê cung — PPTX trang 25; hw02 bài 2
 - `L02-06-04` — Chính sách trên mê cung — PPTX trang 26; hw02 bài 2

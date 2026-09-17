@@ -2,7 +2,7 @@
 
 ## Yêu cầu và kế hoạch
 
-Viết lại bảy phần đã chấp nhận cho sinh viên năm 3, có phân tích mạch và cách thể hiện từng trang; dùng Quill rà quan hệ tiên quyết và no-ai-slop biên tập. Chỉ dẫn nội bộ nằm trong planning; slide và notes chỉ có nội dung học thuật, đáp án, nguồn. Commit riêng từng phần sau kiểm tra, chưa push. Bản đang triển khai, chưa qua năm vòng rà soát cuối.
+Viết lại bảy phần đã chấp nhận cho sinh viên năm 3, có phân tích mạch và cách thể hiện từng trang; dùng Quill rà quan hệ tiên quyết và no-ai-slop biên tập. Chỉ dẫn nội bộ nằm trong planning; slide và notes chỉ có nội dung học thuật, đáp án, nguồn. Commit riêng từng phần sau kiểm tra, chưa push. Bản đã hoàn tất bảy phần, năm vai rà soát và các lượt kiểm định lại; giới hạn Codex Slides được ghi ở cuối.
 
 ## Điều phối và bằng chứng runtime
 
@@ -57,3 +57,707 @@ Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; p
 ## Phần 7 — kiểm tra và chỉnh sửa
 
 Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter. Ba trang,7 phút. Sửa X_t thành biểu diễn dùng để quyết định, không đồng nhất với lịch sử; sửa mô tả bài tập theo văn bản hw02, không gán bài10 cho riêng mê cung. Bảng tổng kết bốn vai trò, ba câu tự kiểm tra và tài liệu đọc nối sang bài03. Notes không còn chỉ dẫn biên soạn. Kiểm tra6 lượt rộng/hẹp không tràn, lỗi toán, ảnh hoặc tài nguyên/JavaScript; đã xem trang tổng kết và bài tập. Đủ7phần,43trang,120phút; đang chờ kiểm định storyboard và năm báo cáo độc lập.
+
+## Rà soát độc lập bản nháp đầy đủ
+
+Năm vai chạy trong năm tiến trình reviewer riêng với hồ sơ review-full, không có công cụ ghi; đầu vào là toàn bộ43 body/notes theo ID, bản đồ7phần, dữ kiện nguồn và thông số kiểm tra. Các reviewer chưa trực tiếp xem ảnh render; điều phối viên đã xem đủ7bảng ảnh và các ảnh chi tiết. Không coi ý kiến worker là bằng chứng đã kiểm định nếu nó mâu thuẫn tệp thật. Các mục dưới đây giữ báo cáo để truy nguyên; quyết định chấp nhận/bác bỏ nằm ở mục xử lý sau rà soát.
+
+Lượt storyboard đầu vượt60.000 ký tự khi nối câu trả lời bị cắt; đã rút gói và thử lại một lần cùng mô hình. Lượt toán toàn bài trả lời không hoàn tất; đã chia gói A (phần2–4) và B (phần5–6), thử lại một lần cùng mô hình với review-section. Mở/kết không có công thức mới; góiA giữ toàn bộ định nghĩa, góiB có dữ kiện mê cung và tiên quyết. Cả hai gói đã trả báo cáo. Không tăng timeout, không đổi mô hình âm thầm.
+
+### Kiểm định storyboard
+
+Runtime: requested_model=deepseek/deepseek-v4-flash-0731; observed_model=deepseek/deepseek-v4-flash-0731; provider=OpenRouter. Chuẩn hóa nhãn Thấp/Lỗi nhỏ thành nhẹ; nội dung báo cáo không phải kết luận cuối của điều phối viên.
+
+ ## Báo cáo đánh giá độc lập
+
+###### Xác nhận phạm vi đã đọc
+
+Tôi đã đọc toàn bộ bằng chứng được cung cấp cho tệp `2627-1/lecture-02-giao-dien-tac-tu-moi-truong.html` (43 trang, 7 phần). Tôi xác nhận đã xem xét:
+
+- **Phần 1** (8 phút): Bài toán ra quyết định tuần tự – L02-01-01 đến L02-01-04
+- **Phần 2** (20 phút): Tương tác và phần thưởng – L02-02-01 đến L02-02-03
+- **Phần 3** (25 phút): Cấp thông tin – L02-03-01 đến L02-03-08
+- **Phần 4** (15 phút): Chính sách – L02-04-01 đến L02-04-04
+- **Phần 5** (25 phút): Phần thưởng tích lũy – L02-05-01 đến L02-05-06
+- **Phần 6** (20 phút): Dự đoán và điều khiển – L02-06-01 đến L02-06-06
+- **Phần 7** (7 phút): Bốn thành phần – L02-07-01 đến L02-07-02
+
+Tôi xác nhận không có thuật toán cập nhật/Bellman trong phạm vi bài 02 này.
+
+---
+
+##### Kiểm định STORYBOARD
+
+###### 1. Chu trình sáu bước
+
+**Phần 1 (mở bài):** Chu kỳ vấn đề→trực giác→ví dụ→hình thức→ứng dụng→kiểm tra **không áp dụng** cho phần mở/kết với lý do được nêu rõ: "Không áp dụng cho phần mở/kết với lý do: phần này là vòng khái niệm duy nhất của section nên chu kỳ vấn đề - trực giác - ví dụ - hình thức - ứng dụng - kiểm tra trải trên tám slide liên tiếp". **Hợp lệ** – phần mở bài không cần chu kỳ đầy đủ.
+
+**Phần 2:** Chu kỳ đầy đủ: vấn đề (L02-02-01) → trực giác (L02-02-02) → ví dụ (L02-02-02, L02-02-05) → hình thức (L02-02-03) → ứng dụng (L02-02-04, L02-02-05, L02-02-06) → kiểm tra. **Đúng thứ tự.**
+
+**Phần 3:** Chu kỳ đầy đủ: vấn đề (L02-03-01) → trực giác (L02-03-02) → ví dụ (L02-03-03) → hình thức (L02-03-04) → ứng dụng (L02-03-05, L02-03-06) → kiểm tra (L02-03-07, L02-03-08). **Đúng thứ tự.**
+
+**Phần 4:** Chu kỳ: vấn đề (L02-04-01) → trực giác (L02-04-01) → ví dụ (L02-04-02) → hình thức (L02-04-03, L02-04-04) → ứng dụng (L02-04-04) → kiểm tra. **Đúng thứ tự.**
+
+**Phần 5:** Chu kỳ: vấn đề (L02-05-01, L02-05-02) → trực giác (L02-05-02) → ví dụ (L02-05-02, L02-05-06) → hình thức (L02-05-03, L02-05-04) → ứng dụng (L02-05-05) → kiểm tra. **Đúng thứ tự.**
+
+**Phần 6:** Chu kỳ: vấn đề (L02-06-01) → trực giác (L02-06-02) → ví dụ (L02-06-02, L02-06-04) → hình thức (L02-06-03, L02-06-05) → ứng dụng (L02-06-06) → kiểm tra. **Đúng thứ tự.**
+
+**Phần 7:** Chu kỳ: vấn đề (L02-07-01) → trực giác (L02-07-01) → ví dụ (L02-07-01) → hình thức (L02-07-01) → ứng dụng (L02-07-01) → kiểm tra (L02-07-02). Merge reason: "Không áp dụng cho phần mở/kết với lý do: section tổng kết thu hồi khái niệm đã xoay vòng ở section 2–6, chỉ cần một slide bảng thu hồi và một slide kiểm tra." **Hợp lệ** – phần tổng kết được rút gọn có lý do.
+
+###### 2. Kiểm tra nối từ ví dụ sang công thức
+
+- **Phần 2:** Ví dụ (L02-02-02, L02-02-05) → Hình thức (L02-02-03). Có nối.
+- **Phần 3:** Ví dụ (L02-03-03) → Hình thức (L02-03-04). Có nối.
+- **Phần 4:** Ví dụ (L02-04-02) → Hình thức (L02-04-03, L02-04-04). Có nối.
+- **Phần 5:** Ví dụ (L02-05-02, L02-05-06) → Hình thức (L02-05-03, L02-05-04). Có nối.
+- **Phần 6:** Ví dụ (L02-06-02, L02-06-04) → Hình thức (L02-06-03, L02-06-05). Có nối.
+
+###### 3. Kiểm tra ánh xạ planning sai / metadata sai hứa Bellman
+
+- **Phần 7 carried_data:** "Ra:Bài 03: MDP và Bellman." – Đây là **chuyển tiếp sang bài 03**, không phải hứa hẹn dạy Bellman trong bài 02. **Hợp lệ.**
+- Không phát hiện ánh xạ planning sai hoặc metadata sai hứa Bellman trong phạm vi bài 02.
+
+###### 4. Kiểm tra phụ thuộc/thời lượng
+
+- Tổng thời lượng: 8+20+25+15+25+20+7 = **120 phút** – khớp với yêu cầu.
+- Không phát hiện phụ thuộc vòng tròn giữa các phần.
+
+###### 5. Kiểm tra trang thừa/quá tải
+
+- **Phần 1:** 4 slide cho 8 phút – hợp lý cho phần mở.
+- **Phần 2:** 3 slide cho 20 phút – hơi ít nhưng mỗi slide có nội dung dày.
+- **Phần 3:** 8 slide cho 25 phút – hợp lý.
+- **Phần 4:** 4 slide cho 15 phút – hợp lý.
+- **Phần 5:** 6 slide cho 25 phút – hợp lý.
+- **Phần 6:** 6 slide cho 20 phút – hợp lý.
+- **Phần 7:** 2 slide cho 7 phút – hợp lý cho tổng kết.
+
+---
+
+##### Phát hiện
+
+###### Phát hiện 1
+- **Mức độ:** Trung bình
+- **Trang chiếu:** L02-02-03
+- **Vấn đề:** Trong phần "Thứ tự tương tác", có nội dung "A=\{\text{Bắc},\text{Đông},\text{Nam},\text{Tây}\}$" – dấu `$` mở không có dấu đóng tương ứng trong đoạn trích. Đây có thể là lỗi KaTeX hoặc lỗi trích xuất.
+- **Bằng chứng:** "A=\{\text{Bắc},\text{Đông},\text{Nam},\text{Tây}\}$" – dấu `$` mở bị thiếu ở đầu.
+- **Đề xuất sửa:** Kiểm tra lại công thức LaTeX, đảm bảo cặp dấu `$...$` đầy đủ: `$A=\{\text{Bắc},\text{Đông},\text{Nam},\text{Tây}\}$`.
+
+###### Phát hiện 2
+- **Mức độ:** Nhẹ
+- **Trang chiếu:** L02-01-02
+- **Vấn đề:** Hình `source-maze.svg` có alt text mô tả "đích G tại (8,6) ngoài lưới" – đúng với dữ kiện nguồn. Tuy nhiên, cần xác nhận hình ảnh hiển thị đúng lưới 8x8 với 27 ô trống và 37 tường.
+- **Bằng chứng:** "alt="Mê cung tám hàng tám cột, bắt đầu tại (0,2), đích G tại (8,6) ngoài lưới.""
+- **Đề xuất sửa:** Kiểm tra trực quan file SVG đảm bảo khớp với dữ kiện nguồn (lưới 8x8, 27 ô trống, 37 tường).
+
+###### Phát hiện 3
+- **Mức độ:** Nhẹ
+- **Trang chiếu:** L02-02-01
+- **Vấn đề:** Hình `agent-environment-loop.svg` có alt text mô tả vòng lặp tác tử–môi trường. Cần xác nhận hình này không mâu thuẫn với hình Markov (xe cùng vị trí nhưng tốc độ 1/5 m/s).
+- **Bằng chứng:** "alt="Sơ đồ vòng lặp: tác tử nhận quan sát và phần thưởng từ môi trường, phát hành hành động trở lại môi trường.""
+- **Đề xuất sửa:** Kiểm tra hình SVG đảm bảo thể hiện đúng vòng lặp tác tử–môi trường.
+
+###### Phát hiện 4
+- **Mức độ:** Nhẹ
+- **Trang chiếu:** L02-01-03
+- **Vấn đề:** Mục tiêu học tập "Đánh giá và dự báo kết quả của một chuỗi quyết định" – cần xác nhận nội dung này được dạy trong bài 02 (không phải bài 03).
+- **Bằng chứng:** "NGUỒN:Mục tiêu biên tập từ PPTX, trang 15–27; hw02, Bài 1, 2, 5, 6."
+- **Đề xuất sửa:** Xác nhận mục tiêu này nằm trong phạm vi bài 02 (dự đoán kết quả chuỗi quyết định, không phải Bellman).
+
+###### Phát hiện 5
+- **Mức độ:** Nhẹ
+- **Trang chiếu:** L02-02-03
+- **Vấn đề:** Câu hỏi kiểm tra "Cho $\pi(\text{Bắc}\mid x)=0{,}2$, $\pi(\text{Đông}\mid x)=0{,}5$ và $\pi(\text{Tây}\mid x)=0$" – cần xác nhận đáp án $\pi(\text{Nam}\mid x)=0{,}3$ là chính xác (tổng xác suất = 1).
+- **Bằng chứng:** "Tính $\pi(\text{Nam}\mid x)$ và phân loại chính sách."
+- **Đề xuất sửa:** Xác nhận đáp án đúng là 0,3 và phân loại chính sách (ngẫu nhiên).
+
+###### Phát hiện 6
+- **Mức độ:** Nhẹ
+- **Trang chiếu:** L02-05 (nhiều slide)
+- **Vấn đề:** "v(start)=-16 khi gamma=1, giá trị theo chính sách source-values.svg" – cần xác nhận giá trị -16 là chính xác với tuyến đường 16 bước (mỗi bước -1, gamma=1).
+- **Bằng chứng:** "v(start)=-16 khi gamma=1, giá trị theo chính sách source-values.svg"
+- **Đề xuất sửa:** Kiểm tra file `source-values.svg` đảm bảo giá trị -16 tại start (0,2) khớp với tuyến đường 16 bước.
+
+###### Phát hiện 7
+- **Mức độ:** Nhẹ
+- **Trang chiếu:** L02-01-04
+- **Vấn đề:** "Nội dung bài học" liệt kê "Dự đoán, điều khiển và bài toán mê cung" – cần xác nhận phần này không bao gồm thuật toán cập nhật/Bellman.
+- **Bằng chứng:** "Dự đoán, điều khiển và bài toán mê cung"
+- **Đề xuất sửa:** Xác nhận nội dung "dự đoán" ở đây chỉ là dự báo kết quả chuỗi quyết định, không phải thuật toán dự đoán.
+
+###### Phát hiện 8
+- **Mức độ:** Nhẹ
+- **Trang chiếu:** L02-07-01
+- **Vấn đề:** Phần 7 "Bốn thành phần bài toán ra quyết định tuần tự" – cần xác nhận bốn thành phần được nêu đúng (chính sách, phần thưởng, giá trị, mô hình).
+- **Bằng chứng:** "concept":"Bốn thành phần bài toán ra quyết định tuần tự"
+- **Đề xuất sửa:** Kiểm tra nội dung slide đảm bảo đủ bốn thành phần.
+
+---
+
+##### Kết luận
+
+**ĐỦ** – Deck đáp ứng yêu cầu với vai được giao.
+
+**Lý do:**
+1. **Chu trình sáu bước** được triển khai đúng thứ tự ở tất cả các phần có áp dụng.
+2. **Phần mở/kết** được rút gọn có lý do rõ ràng.
+3. **Không có lỗi planning** – không phát hiện ánh xạ sai, metadata sai hứa Bellman, hoặc phụ thuộc vòng tròn.
+4. **Thời lượng** khớp chính xác 120 phút.
+5. **Không có trang thừa** – mỗi phần có số slide hợp lý cho thời lượng tương ứng.
+6. **Các phát hiện** đều ở mức nhẹ/trung bình, chủ yếu là cần xác nhận thêm dữ kiện nguồn, không phải lỗi nghiêm trọng.
+
+**Điểm cần lưu ý:** Các phát hiện 1–8 đều là kiểm tra xác nhận, không phải lỗi chặn bàn giao. Không có phát hiện nào ở mức "chặn bàn giao" hoặc "nghiêm trọng".
+
+### Góc nhìn sinh viên
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter. Chuẩn hóa nhãn Thấp/Lỗi nhỏ thành nhẹ; nội dung báo cáo không phải kết luận cuối của điều phối viên.
+
+#### Báo cáo review — Vai GÓC NHÌN SINH VIÊN (bài 02, 43 trang)
+
+##### Xác nhận phạm vi đã đọc
+Đã đọc toàn bộ nội dung/notes/NGUỒN của 43 trang (L02-01-01 → L02-07-03) cùng dữ kiện nguồn do điều phối viên đối chiếu XML/ảnh (mê cung 8×8, chính sách nguồn, tuyến 16 bước, thông số SVG). **Hạn chế quan trọng:** tôi chưa trực tiếp xem ảnh render; mọi nhận xét về hình chỉ dựa trên alt-text, thông số (viewbox, font) và kết quả kiểm tra của điều phối viên. Không có thuật toán cập nhật/Bellman trong deck — đúng phạm vi.
+
+##### Nhận xét chính theo vai sinh viên
+- **Tiên quyết:** mở đầu từ bài 01 (học từ tương tác) hợp lý; ML/xác suất được tận dụng ở phần 2 (ba kiểu học) và phần 3 (kỳ vọng, xác suất có điều kiện L02-03-04) — vừa trình độ năm 3.
+- **Tải nhận thức:** mỗi slide một ý, ví dụ mê cung xuyên suốt, bảng ngắn. 7 slide kiểm tra/quiz xen kẽ giúp củng cố, không quá tải.
+- **Nhịp:** 120 phút / 43 trang ≈ 2,8 phút/trang, hợp lý; có slide 2 phút làm điểm thở.
+- **Khả năng đọc ví dụ:** bộ ký hiệu $O_t, A_t, R_{t+1}$ giới thiệu dần; bảng (4,5)–(6) tự nhất quán với mê cung nguồn.
+
+##### Phát hiện
+
+**1. mức độ: trung bình — trang chiếu: toàn phần 2, cụ thể L02-02-01…07**
+- vấn đề: tổng thời lượng phần 2 là 19 phút (3+3+3+3+3+3+2) trong khi đầu mục ghi 20 phút.
+- bằng chứng: bảy slide ghi "3phút…2phút" cộng đúng 19.
+- đề xuất sửa: nâng một slide lên 4 phút (gợi ý L02-02-04, bảng ba kiểu học thường gây nhiều câu hỏi) hoặc sửa đầu mục thành 19 phút.
+
+**2. mức độ: trung bình — trang chiếu: L02-06-05 (source-values.svg)**
+- vấn đề: sinh viên phải đối chiếu giá trị số với tọa độ ô, nhưng không có bằng chứng về nhãn trục/cột-hàng trên SVG (alt chỉ nêu ba giá trị). Chỉ số font 36 trên viewbox 740 ≈ 24px khi hiển thị ~500px — đủ đọc trên 1280px, nhưng khi RevealJS thu xuống viewport 390px, cỡ chữ quy đổi chỉ còn ~7px, khó đọc các con số −16/−3/−1.
+- bằng chứng: dữ kiện điều phối viên "số values font 36 trên viewbox 740 → rộng khoảng 500px"; kiểm tra 390×844 "không tràn viewport, giữ tỷ lệ".
+- đề xuất sửa: thêm nhãn ngắn (số cột 0–7 ở mép dưới, hàng 0–7 mép trái) vào source-values/source-policy nếu SVG chưa có; cân nhắc tăng font values lên ~44–48 hoặc tách hàng giá trị thành bảng HTML đi kèm để bản thân con số không phụ thuộc thu/phóng. Đây là bổ sung, không giảm chữ.
+
+**3. mức độ: nhẹ — trang chiếu: L02-06-02**
+- vấn đề: slide bảo "Giữ chính sách ở hình mê cung" nhưng slide này không chứa hình nào; sinh viên đang xem slide đơn lẻ phải nhớ/lùi lại L02-06-04.
+- bằng chứng: cấu trúc slide chỉ có hai card văn bản + câu hỏi, không thẻ img.
+- đề xuất sửa: chèn lại `source-policy.svg` (hoặc bản thu nhỏ) vào card "Dự đoán", hoặc ghi rõ "(xem slide Chính sách trên mê cung ngay trước)".
+
+**4. mức độ: nhẹ — trang chiếu: L02-03-01 / L02-03-06**
+- vấn đề: luận điểm then chốt "hai ô (2,1) và (3,1) cùng quan sát" phụ thuộc hoàn toàn vào maze-local.svg. Theo dữ kiện nguồn (Bắc/Nam tường, Đông/Tây trống ở cả hai ô) luận điểm đúng, nhưng tôi chưa xem trực tiếp ảnh nên không xác nhận mũi tên/nhãn trong hình không gây hiểu nhầm (ví dụ có vẽ nhãn tọa độ hai ô hay không).
+- bằng chứng: dữ kiện điều phối viên về maze-local.svg; alt-text nêu đủ.
+- đề xuất sửa: điều phối viên xác nhận hình có chú tọa độ "(2,1)" và "(3,1)" cạnh hai ô để sinh viên tự đối chiếu; nếu chưa có, bổ sung nhãn.
+
+**5. mức độ: nhẹ — trang chiếu: L02-04-02**
+- vấn đề: mệnh đề "Tại ô này, chọn Đông gặp tường" là điểm dễ gây băn khoăn (nhiều sinh viên sẽ mặc định (1,2) Đông đi được). Kiểm tra theo dữ kiện nguồn: (2,2) là tường nên phát biểu **đúng**; tuy nhiên notes không nhấn rằng đây là ví dụ có chủ ý về hành động "vô hiệu vẫn nhận −1".
+- đề xuất sửa: thêm một câu trong notes: "Đông từ (1,2) gặp tường vì (2,2) là ô tường; đây là ví dụ hành động không đổi vị trí nhưng vẫn tốn −1," để người trình chiếu không bị hỏi bất ngờ.
+
+**6. mức độ: nhẹ — trang chiếu: L02-02-06 vs L02-06-06**
+- vấn đề: quy ước thưởng kết thúc nhất quán giữa hai slide (R_T=1, G_T=0), nhưng L02-02-06 dùng trò chơi tổng quát "thắng +1 / thua −1" còn L02-06-06 chỉ xét thắng; sinh viên có thể thắc mắc G_{T−1} khi thua.
+- đề xuất sửa: trong notes L02-06-06 thêm: "nếu thua, R_T=−1 và G_{T−1}=−1; quy ước G_T=0 không đổi."
+
+##### Các điểm đã kiểm tra và KHÔNG có lỗi
+- Hằng số mê cung: mọi slide thống nhất start (0,2), G=(8,6) ngoài lưới, −1 mỗi bước kể cả bước vào G và bước va tường, dừng tại G (L02-02-02, 02-05, 06-03, 06-05). Tuyến 16 bước khớp chuỗi hành động ở L02-06-04 và giá trị −16/−3/−1 ở L02-06-05; đoạn cuối (6,5)→G qua Nam, Đông, Đông khớp chính sách nguồn.
+- Phát biểu "chọn Đông tại (1,2) gặp tường" đúng theo lưới nguồn (mục 5 ở trên).
+- Không có nội dung Bellman/AGI/thành tựu; bàn cờ chỉ ở mức quy ước G_T, đúng giới hạn "giữ bàn cờ 11, lược phần sao lưu ôn bài 01".
+- Phân bổ bài tập hw02 đúng: bài 1,2,5,6,10 ở bài 02; 3,4,7–9 dẫn về bài 03 (L02-07-03).
+- Không phát hiện bằng chứng về lỗi KaTeX, raw $, ảnh hỏng, HTTP/JS từ kết quả kiểm tra điều phối viên; không bịa thêm lỗi mà không có bằng chứng.
+
+##### Kết luận
+**ĐỦ** với vai góc nhìn sinh viên được giao: tiên quyết, tải nhận thức, nhịp, khả năng đọc ví dụ và câu hỏi tự kiểm tra đều đạt; deck tự nhất quán về mặt dữ kiện với mê cung nguồn. Hai mục trung bình (thời lượng phần 2, độ đọc số trên source-values ở màn hẹp) nên xử lý trước khi bàn giao vì ảnh hưởng trực tiếp trải nghiệm nghe/sửa bài trên máy chiếu và điện thoại của sinh viên; các mục nhẹ có thể sửa khi biên tập. Lưu ý lại: nhận xét về hình ảnh chỉ dựa trên alt-text và thông số, cần một lượt xem render trực tiếp để chốt mục 2 và 4.
+
+(Đếm khoảng ~850 từ, trong giới hạn 1200.)
+
+### Chuyên gia Học tăng cường
+
+Runtime: requested_model=deepseek/deepseek-v4-flash-0731; observed_model=deepseek/deepseek-v4-flash-0731; provider=OpenRouter. Chuẩn hóa nhãn Thấp/Lỗi nhỏ thành nhẹ; nội dung báo cáo không phải kết luận cuối của điều phối viên.
+
+##### Báo cáo đánh giá — Vai Chuyên gia Học tăng cường
+
+###### Phạm vi đã đọc
+
+Tôi đã đọc toàn bộ nội dung 43 trang của tệp `lecture-02-giao-dien-tac-tu-moi-truong.html` theo 7 phần (8/20/25/15/25/20/7 phút), bao gồm cả notes và nguồn tham chiếu của từng slide. Tôi xác nhận không có thuật toán cập nhật/Bellman trong phạm vi bài 02 — các slide chỉ dừng ở định nghĩa hàm giá trị $v_\pi(s)$ và mô hình $P(s'\mid s,a)$, đúng phạm vi. Bài 03 được nhắc đến như phần tiếp theo (slide L02-07-02, L02-07-03) nhưng không triển khai nội dung.
+
+---
+
+###### Phát hiện
+
+###### 1. Mức độ: Trung bình
+- **Trang chiếu**: L02-03-04 (Tính Markov)
+- **Vấn đề**: Công thức Markov sử dụng $\Pr(S_{t+1}=s', R_{t+1}=r \mid H_t^S=h, A_t=a)$ nhưng notes không giải thích rõ tại sao vế trái điều kiện trên toàn bộ lịch sử $H_t^S$ trong khi vế phải chỉ dùng $S_t=s$. Sinh viên năm 3 có thể nhầm lẫn giữa "lịch sử trạng thái" $H_t^S$ (định nghĩa trong notes) và "lịch sử quan sát" $H_t$ (định nghĩa ở L02-02-03). Sự khác biệt này chưa được làm nổi bật trên slide.
+- **Bằng chứng**: Slide hiển thị công thức và dòng "$H_t^S$: lịch sử trạng thái–hành động–thưởng; $h$ kết thúc ở $s$." Notes có nhắc "$H_t^S$ khác lịch sử quan sát $H_t$" nhưng chỉ nằm trong notes, không hiển thị trên slide.
+- **Đề xuất sửa**: Thêm một dòng caption trên slide: "Phân biệt $H_t^S$ (lịch sử trạng thái) với $H_t$ (lịch sử quan sát)" hoặc thêm ký hiệu $H_t^S$ vào phần notes hiển thị dưới công thức.
+
+###### 2. Mức độ: Trung bình
+- **Trang chiếu**: L02-05-05 (Hàm giá trị trạng thái)
+- **Vấn đề**: Điều kiện hội tụ được nêu trong notes: "Với $\gamma=1$, thưởng bị chặn và $\mathbb E_\pi[T-t\mid S_t=s]<\infty$ bảo đảm kỳ vọng hữu hạn. Kết thúc với xác suất một tự nó chưa đủ." Đây là điểm tinh tế nhưng slide chỉ hiển thị caption ngắn "Giả thiết: quy luật không đổi theo thời gian và kỳ vọng hữu hạn" — không giải thích vì sao "kết thúc với xác suất 1 chưa đủ". Sinh viên có thể hiểu sai rằng mọi nhiệm vụ kết thúc hữu hạn đều có giá trị hữu hạn.
+- **Bằng chứng**: Slide L02-05-05 chỉ có công thức $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$ và caption ngắn; toàn bộ giải thích về điều kiện hội tụ nằm trong notes.
+- **Đề xuất sửa**: Thêm vào caption hoặc box trên slide: "Kết thúc với xác suất 1 chưa đủ để bảo đảm kỳ vọng hữu hạn khi $\gamma=1$; cần thời gian kết thúc kỳ vọng hữu hạn." Hoặc chuyển ý này thành câu hỏi kiểm tra ở L02-05-06.
+
+###### 3. Mức độ: Nhẹ
+- **Trang chiếu**: L02-03-03 (Thông tin trong lịch sử)
+- **Vấn đề**: Ví dụ xe với vận tốc 1 và 5 m/s được ghi chú là "giả thiết sư phạm suy ra" từ nguồn PPTX trang 12. Điều này có nghĩa nội dung không trực tiếp từ nguồn mà được biên soạn thêm. Mặc dù hợp lý về mặt sư phạm, cần kiểm tra tính nhất quán: notes nói "cùng lệnh phanh không bảo đảm vị trí ở bước sau giống nhau" — nhưng nếu cả hai xe cùng phanh với cùng gia tốc, vị trí sau 1 giây sẽ khác nhau do vận tốc ban đầu khác nhau. Điều này đúng về mặt vật lý, nhưng sinh viên có thể thắc mắc tại sao không dùng ví dụ đơn giản hơn (ví dụ: cùng vị trí nhưng khác hướng di chuyển).
+- **Bằng chứng**: Notes ghi rõ "ví dụ vận tốc là giả thiết sư phạm suy ra, Markov-summary.svg từ trang 17."
+- **Đề xuất sửa**: Giữ nguyên nhưng thêm một câu trong notes (hoặc caption) làm rõ: "Ví dụ minh họa nguyên tắc bỏ mất biến trạng thái; trong mô hình đầy đủ cần giữ cả vị trí lẫn vận tốc." — thực tế notes đã có câu này, nên có thể chỉ cần đảm bảo nó hiển thị trên slide dưới dạng caption thay vì chỉ trong notes.
+
+###### 4. Mức độ: Nhẹ
+- **Trang chiếu**: L02-06-02 (Dự đoán và điều khiển)
+- **Vấn đề**: Notes nói "Yêu cầu thứ nhất là dự đoán: chính sách không đổi và kết quả cần tìm là giá trị âm 16 tại điểm bắt đầu." Tuy nhiên, slide không hiển thị giá trị $-16$ cụ thể — người học phải tự suy ra từ L02-06-05. Nếu slide này được trình bày trước L02-06-05, sinh viên chưa có đủ thông tin để trả lời câu hỏi kiểm tra.
+- **Bằng chứng**: Slide L02-06-02 chỉ có hai card "Dự đoán" và "Điều khiển" với mô tả ngắn, không có con số $-16$.
+- **Đề xuất sửa**: Thêm vào card "Dự đoán": "kết quả: $v_\pi(0,2) = -16$" để sinh viên có thể đối chiếu ngay, hoặc đổi thứ tự trình bày để L02-06-05 đứng trước L02-06-02.
+
+###### 5. Mức độ: Nhẹ
+- **Trang chiếu**: L02-05-02 (Tổng phần thưởng trên quỹ đạo)
+- **Vấn đề**: Bảng hiển thị "Trọng số ba phần thưởng" với dòng "Cộng trực tiếp" ghi "$1;1;1$" và dòng "Mỗi bước giảm một nửa" ghi "$1;0{,}5;0{,}25$". Cách viết dùng dấu chấm phẩy (;) để phân tách có thể gây nhầm lẫn với ký hiệu xác suất có điều kiện hoặc danh sách. Nên dùng dấu phẩy hoặc trình bày dưới dạng công thức.
+- **Bằng chứng**: Bảng HTML: `<td>$1;1;1$</td>` và `<td>$1;0{,}5;0{,}25$</td>`.
+- **Đề xuất sửa**: Đổi thành "$1,\ 1,\ 1$" và "$1,\ 0{,}5,\ 0{,}25$" hoặc trình bày dưới dạng tổng: $(-1)+(-1)+(-1)=-3$ và $(-1)+(-0{,}5)+(-0{,}25)=-1{,}75$.
+
+###### 6. Mức độ: Nhẹ
+- **Trang chiếu**: L02-04-02 (Ví dụ về chính sách)
+- **Vấn đề**: Bảng hiển thị "Quy tắc | Bắc | Đông | Nam | Tây" với hàng "Bắc hoặc Đông" ghi xác suất $0{,}5$ cho cả Bắc và Đông. Notes giải thích "chọn Đông gặp tường và giữ nguyên vị trí" — nhưng tại $(1,2)$, theo dữ kiện nguồn, hướng Đông từ $(1,2)$ dẫn tới $(2,2)$ là ô tường (hàng 2: `..##.#.#`). Điều này đúng. Tuy nhiên, slide không hiển thị thông tin này — sinh viên không biết tại sao chọn Đông lại "gặp tường" trừ khi nhớ bản đồ từ L02-01-02.
+- **Bằng chứng**: Slide chỉ có bảng xác suất và caption "Tại ô này, chọn Đông gặp tường và giữ nguyên vị trí."
+- **Đề xuất sửa**: Thêm một dòng nhắc nhở: "Xem lại bản đồ ở slide L02-01-02: ô $(2,2)$ là tường." hoặc thêm mini-map nhỏ bên cạnh bảng.
+
+###### 7. Mức độ: Nhẹ
+- **Trang chiếu**: L02-07-03 (Bài tập và tài liệu đọc)
+- **Vấn đề**: Notes nói "Bài 3, 4, 7, 8, 9 trong cùng tập bài tập cần các khái niệm của Bài 03" — điều này có nghĩa các bài tập này không được giao trong tuần này. Tuy nhiên, slide chỉ liệt kê "Bài 1, 2, 5, 6" và "Bài 10" mà không giải thích tại sao bỏ qua các bài khác. Sinh viên có thể thắc mắc.
+- **Bằng chứng**: Slide liệt kê bài tập nhưng không có ghi chú về các bài 3, 4, 7–9.
+- **Đề xuất sửa**: Thêm một dòng nhỏ trên slide: "Bài 3, 4, 7–9 sẽ làm sau khi học Bài 03 (MDP và Bellman)."
+
+---
+
+###### Đánh giá tổng thể
+
+**Kết luận: ĐỦ điều kiện bàn giao** với các đề xuất sửa mức nhẹ/trung bình nêu trên.
+
+**Điểm mạnh**:
+- Cấu trúc 7 phần hợp lý, mạch học thuật rõ ràng: từ bài toán → tương tác → trạng thái/quan sát → chính sách → giá trị/mô hình → dự đoán/điều khiển → tổng kết.
+- Liên hệ ML tốt: bảng so sánh 3 khung học (L02-02-04) đặt RL trong bối cảnh đã học.
+- Sử dụng nhất quán mê cung 8x8 xuyên suốt, đúng dữ kiện nguồn (27 ô trống, 37 tường, G=(8,6), start (0,2), 16 bước, giá trị -16).
+- Phân biệt rõ $S_t$, $O_t$, $X_t$ — điểm khó nhưng được trình bày có hệ thống.
+- Không vượt phạm vi: không dạy Bellman, chỉ đặt nền tảng cho Bài 03.
+- Thời lượng 120 phút hợp lý với 7 phần; các slide kiểm tra (check) phân bố đều.
+
+**Điểm cần lưu ý**:
+- Các vấn đề phát hiện đều là cải thiện trình bày, không phải lỗi nội dung sai về mặt học thuật.
+- Cần đảm bảo thứ tự trình bày L02-06-02 trước L02-06-05 không gây khó hiểu (đề xuất 4).
+- Các ghi chú "giả thiết sư phạm suy ra" cho thấy một số ví dụ được biên soạn thêm — điều này chấp nhận được nhưng nên nhất quán trong cách trình bày.
+
+### Độ chính xác toán học — gói A
+
+Runtime: requested_model=deepseek/deepseek-v4-flash-0731; observed_model=deepseek/deepseek-v4-flash-0731; provider=OpenRouter. Chuẩn hóa nhãn Thấp/Lỗi nhỏ thành nhẹ; nội dung báo cáo không phải kết luận cuối của điều phối viên.
+
+##### Báo cáo rà soát Gói A (phần 2–4)
+
+###### Phát hiện 1
+- **Mức độ**: Trung bình
+- **Trang chiếu**: Mục "Trạng thái/Quan sát/Biểu diễn"
+- **Vấn đề**: Mâu thuẫn nội bộ về việc liệu tọa độ có phải là trạng thái đầy đủ hay không. Đoạn đầu nói "Trong mê cung cố định, trạng thái là tọa độ" và "có thể chọn $X_t=O_t=S_t$", nhưng đoạn sau lại nói "Quan sát đầy đủ cũng chưa phải định nghĩa đầy đủ của quá trình quyết định Markov; còn cần nêu các thành phần và giả thiết của bài toán."
+- **Bằng chứng**: "Trong mê cung cố định, $S_t$ là tọa độ ô, kể cả đích $G$. Nếu nhận tọa độ chính xác, có thể chọn $X_t=O_t=S_t$." so với "Quan sát đầy đủ cũng chưa phải định nghĩa đầy đủ của quá trình quyết định Markov"
+- **Đề xuất sửa**: Làm rõ rằng tọa độ là trạng thái đầy đủ cho mê cung cố định, nhưng định nghĩa MDP cần thêm thành phần (phần thưởng, chuyển tiếp) — không phải quan sát đầy đủ là chưa đủ, mà là cần đủ các thành phần bài toán.
+
+###### Phát hiện 2
+- **Mức độ**: nhẹ
+- **Trang chiếu**: Mục "Chính sách"
+- **Vấn đề**: Ví dụ chính sách có dữ liệu không nhất quán. Đoạn văn nói "$\pi(\text{Bắc}\mid x)=0{,}2$, $\pi(\text{Đông}\mid x)=0{,}5$ và $\pi(\text{Tây}\mid x)=0$" nhưng bảng số liệu trước đó (trong trích đoạn) hiển thị "Đông | 0,5 | 0,5 | 0 | 0" — không rõ các cột tương ứng với hành động nào.
+- **Bằng chứng**: "Đông</td><td>0,5</td><td>0,5</td><td>0</td><td>0</td>" và "$\pi(\text{Bắc}\mid x)=0{,}2$, $\pi(\text{Đông}\mid x)=0{,}5$"
+- **Đề xuất sửa**: Kiểm tra tính nhất quán giữa bảng số liệu và ví dụ chính sách; đảm bảo các xác suất trong bảng khớp với ví dụ.
+
+###### Phát hiện 3
+- **Mức độ**: nhẹ
+- **Trang chiếu**: Mục "Tính Markov"
+- **Vấn đề**: Công thức Markov được mô tả nhưng không được hiển thị đầy đủ trong trích đoạn; chỉ có mô tả bằng lời "Tính Markov yêu cầu hai phân phối bằng nhau với mọi lịch sử có thể xảy ra kết thúc tại $s$."
+- **Bằng chứng**: "Tính Markov yêu cầu hai phân phối bằng nhau với mọi lịch sử có thể xảy ra kết thúc tại $s$."
+- **Đề xuất sửa**: Bổ sung công thức đầy đủ $P(S_{t+1}=s', R_{t+1}=r \mid S_t=s, A_t=a) = P(S_{t+1}=s', R_{t+1}=r \mid H_t, S_t=s, A_t=a)$ nếu chưa có.
+
+###### Phát hiện 4
+- **Mức độ**: nhẹ
+- **Trang chiếu**: Mục "Quan sát"
+- **Vấn đề**: Ví dụ xe hơi nói "Hai xe cùng vị trí, cùng lệnh phanh, nhưng khác vận tốc" và kết luận "cần giữ cả vị trí lẫn vận tốc", nhưng ghi chú lại nói "ví dụ vận tốc là giả thiết sư phạm suy ra" — có thể gây nhầm lẫn về tính thực tế của ví dụ.
+- **Bằng chứng**: "Hai xe cùng vị trí, cùng lệnh phanh, nhưng khác vận tốc" và "ví dụ vận tốc là giả thiết sư phạm suy ra"
+- **Đề xuất sửa**: Làm rõ rằng ví dụ mang tính minh họa, không phải mô tả tình huống thực tế cụ thể.
+
+###### Phát hiện 5
+- **Mức độ**: nhẹ
+- **Trang chiếu**: Mục "Chính sách"
+- **Vấn đề**: Câu "Chính sách xác định là trường hợp đặt xác suất một vào đúng một hành động" mâu thuẫn nhẹ với câu hỏi kiểm tra yêu cầu "phân loại chính sách" khi có xác suất dương cho nhiều hành động — cần làm rõ thuật ngữ "chính sách ngẫu nhiên".
+- **Bằng chứng**: "Chính sách xác định là trường hợp đặt xác suất một vào đúng một hành động" và "Chính sách ngẫu nhiên vì nhiều hành động có xác suất dương"
+- **Đề xuất sửa**: Định nghĩa rõ ràng hai loại chính sách trước khi đưa ra câu hỏi phân loại.
+
+###### Kết luận
+Không có lỗi nghiêm trọng về mặt nội dung. Các vấn đề chủ yếu là mâu thuẫn nhỏ về cách diễn đạt và thiếu nhất quán giữa bảng số liệu và ví dụ. Nội dung tổng thể phù hợp với đối tượng năm 3 đã học xác suất/ML, không có lỗi về công thức hay logic.
+
+### Độ chính xác toán học — gói B
+
+Runtime: requested_model=deepseek/deepseek-v4-flash-0731; observed_model=deepseek/deepseek-v4-flash-0731; provider=OpenRouter. Chuẩn hóa nhãn Thấp/Lỗi nhỏ thành nhẹ; nội dung báo cáo không phải kết luận cuối của điều phối viên.
+
+ ## Báo cáo rà soát gói B (phần 5–6)
+
+###### Phát hiện 1 — Mức độ: nhẹ
+- **Trang chiếu:** L02-05-02
+- **Vấn đề:** Bảng "Cộng trực tiếp" ghi trọng số `$1;1;1$` nhưng tổng ghi `$-3$`. Với ba phần thưởng mỗi phần `$-1$`, tổng đúng là `$-3$`, nhưng cách trình bày trọng số dương `1;1;1` gây nhầm lẫn vì các phần thưởng thực tế đều âm.
+- **Bằng chứng:** Bảng ghi "Trọng số ba phần thưởng: $1;1;1$" và "Tổng: $-3$".
+- **Đề xuất sửa:** Đổi trọng số thành `$-1;-1;-1$` hoặc ghi rõ "ba phần thưởng mỗi phần $-1$" để khớp với tổng.
+
+###### Phát hiện 2 — Mức độ: nhẹ
+- **Trang chiếu:** L02-05-02
+- **Vấn đề:** Dòng "Mỗi bước giảm một nửa" ghi trọng số `$1;0{,}5;0{,}25$` và tổng `$-1{,}75$`. Nếu trọng số là `1;0,5;0,25` (dương) thì tổng phải là `1,75` dương, không phải `-1,75`. Cần làm rõ dấu âm của các phần thưởng.
+- **Bằng chứng:** Bảng ghi trọng số dương nhưng tổng âm.
+- **Đề xuất sửa:** Ghi trọng số là `$-1;-0{,}5;-0{,}25$` hoặc thêm chú thích "các phần thưởng đều âm".
+
+###### Phát hiện 3 — Mức độ: nhẹ
+- **Trang chiếu:** L02-05-04
+- **Vấn đề:** Ví dụ giả định có hai nhánh với tổng thưởng `$-3$` và `$-5$`, xác suất mỗi nhánh `0,5`. Tuy nhiên, với thưởng `$-1$` mỗi bước, nhánh 3 bước phải có tổng `$-3$` và nhánh 5 bước phải có tổng `$-5$` — điều này đúng. Nhưng câu "kỳ vọng bằng `0,5(-3)+0,5(-5)=-4`" không nêu rõ đây là kỳ vọng có điều kiện từ trạng thái `s`; cần làm rõ rằng `s` là trạng thái bắt đầu của cả hai nhánh.
+- **Bằng chứng:** Bảng ghi "Số bước còn lại: 3 và 5" với xác suất `0,5` mỗi nhánh.
+- **Đề xuất sửa:** Thêm câu "từ trạng thái `s`" vào đầu ví dụ để tránh hiểu nhầm.
+
+###### Phát hiện 4 — Mức độ: nhẹ
+- **Trang chiếu:** L02-05-05
+- **Vấn đề:** Ghi chú "Với $\gamma=1$, thưởng bị chặn và $\mathbb E_\pi[T-t\mid S_t=s]<\infty$ bảo đảm kỳ vọng hữu hạn" — điều này đúng nhưng cần lưu ý rằng nếu thưởng bị chặn và thời gian kết thúc hữu hạn hầu chắc chắn thì kỳ vọng hữu hạn. Tuy nhiên, câu "Kết thúc với xác suất một tự nó chưa đủ" có thể gây hiểu nhầm vì nếu thời gian kết thúc có kỳ vọng hữu hạn thì đủ.
+- **Bằng chứng:** Ghi chú nói về điều kiện đủ cho kỳ vọng hữu hạn.
+- **Đề xuất sửa:** Diễn đạt lại: "Kết thúc với xác suất một chưa đủ; cần thời gian kết thúc có kỳ vọng hữu hạn."
+
+###### Phát hiện 5 — Mức độ: nhẹ
+- **Trang chiếu:** L02-05-06
+- **Vấn đề:** Câu hỏi kiểm tra yêu cầu tính `$G_t$` với `$\gamma=0$`, `$\gamma=0{,}5$` và `$\gamma=1$`. Ghi chú cho kết quả "lần lượt là `$-1$`, `$-1{,}75$` và `$-3$`". Tuy nhiên, với `$\gamma=0$`, công thức `$G_t=R_{t+1}$` nên kết quả là `$-1$` — đúng. Nhưng cần kiểm tra xem quỹ đạo ba bước có thực sự bắt đầu từ `$R_{t+1}$` hay không; nếu quỹ đạo là `$(6,5)\to(6,6)\to(7,6)\to G$` thì `$G_t$` với `$\gamma=0$` chỉ là `$-1$` — đúng.
+- **Bằng chứng:** Ghi chú đưa ra ba kết quả.
+- **Đề xuất sửa:** Không cần sửa; xác nhận đúng.
+
+###### Phát hiện 6 — Mức độ: nhẹ
+- **Trang chiếu:** L02-06-02
+- **Vấn đề:** Ghi chú "Giá trị âm số bước đến G khi gamma1" — câu này chưa hoàn chỉnh về ngữ pháp và có thể gây hiểu nhầm. Cần diễn đạt rõ hơn: "Khi $\gamma=1$, giá trị bằng âm số bước đến G."
+- **Bằng chứng:** Ghi chú cuối trang.
+- **Đề xuất sửa:** Sửa thành: "Khi $\gamma=1$, giá trị $v_\pi(s)$ bằng âm số bước từ $s$ đến G."
+
+**Tổng kết:** Không có lỗi nghiêm trọng về mặt toán học; các phát hiện chủ yếu là vấn đề trình bày và diễn đạt. Các phép tính số trong gói đều chính xác.
+
+### Phản biện học thuật và giảng dạy
+
+Runtime: requested_model=deepseek/deepseek-v4-flash-0731; observed_model=deepseek/deepseek-v4-flash-0731; provider=OpenRouter. Chuẩn hóa nhãn Thấp/Lỗi nhỏ thành nhẹ; nội dung báo cáo không phải kết luận cuối của điều phối viên.
+
+ # BÁO CÁO PHẢN BIỆN HỌC THUẬT VÀ GIẢNG DẠY RL–LẬP KẾ HOẠCH
+
+##### I. XÁC NHẬN PHẠM VI ĐÃ ĐỌC
+
+Tôi xác nhận đã đọc toàn bộ bằng chứng được cung cấp trong phạm vi bài 02, bao gồm: mục tiêu mở bài, cấu trúc bảy phần (8/20/25/15/25/20/7 phút), nội dung mê cung 8x8, định nghĩa giao diện tác tử–môi trường, các khái niệm quan sát đầy đủ/một phần, mô hình dự báo, chiết khấu, và phần tổng kết. Tôi không tự khai đã xem ảnh chụp; chỉ dựa trên notes, thông số hình và kết quả kiểm tra của điều phối viên.
+
+---
+
+##### II. PHÁT HIỆN CHI TIẾT
+
+###### 1. Mức độ: NGHIÊM TRỌNG
+
+- **Trang chiếu:** Phần 2 (8 phút), mục tiêu học tập, trang 15–27.
+- **Vấn đề:** Mục tiêu "Đánh giá và dự báo kết quả của một chuỗi quyết định" được đặt ở đầu bài, nhưng khái niệm "dự báo" chưa được định nghĩa trước đó. Sinh viên năm 3 có thể hiểu "dự báo" theo nghĩa thông thường (dự đoán tương lai) thay vì nghĩa kỹ thuật (đánh giá chính sách). Điều này tạo khoảng cách nhận thức giữa mục tiêu và nội dung.
+- **Bằng chứng:** Mục tiêu thứ ba ghi "Đánh giá và dự báo kết quả của một chuỗi quyết định" trong khi phần 6 mới giới thiệu "Đánh giá nhận một chính sách cho trước và xác định phần thưởng dài hạn".
+- **Đề xuất sửa:** Diễn đạt lại mục tiêu thành "Đánh giá hậu quả dài hạn của một chuỗi hành động" hoặc thêm chú thích ngắn: "Ở đây, dự báo có nghĩa là ước lượng phần thưởng tích lũy, sẽ được định nghĩa chính xác hơn ở phần 6."
+
+---
+
+###### 2. Mức độ: NGHIÊM TRỌNG
+
+- **Trang chiếu:** Phần 3 (20 phút), mục "Quan sát đầy đủ", trang 14–15, 21.
+- **Vấn đề:** Bảng phân loại mức quan sát đưa ra ba trường hợp (tọa độ chính xác, ảnh toàn bản đồ, cảm biến bốn ô kề) nhưng thiếu cầu nối giải thích vì sao "ảnh toàn bản đồ" được xếp là quan sát đầy đủ. Sinh viên có thể thắc mắc: nếu ảnh hiển thị toàn bộ mê cung, liệu có cần biết vị trí tác tử trong ảnh không? Điều này chưa được làm rõ.
+- **Bằng chứng:** Notes ghi "Hai trường hợp đầu đầy đủ nếu quan sát cho phép xác định chính xác vị trí trong mê cung cố định" nhưng không giải thích cơ chế ánh xạ từ ảnh sang tọa độ.
+- **Đề xuất sửa:** Bổ sung một câu: "Với ảnh toàn bản đồ, nếu biết quy ước tọa độ (cột tăng sang phải, hàng tăng xuống), ta có thể xác định chính xác vị trí tác tử trong ảnh, do đó quan sát là đầy đủ." Điều này tạo cầu nối trực quan trước khi đi vào định nghĩa hình thức.
+
+---
+
+###### 3. Mức độ: TRUNG BÌNH
+
+- **Trang chiếu:** Phần 4 (25 phút), mục "Mô hình dự báo", trang 10, 20, 25–26.
+- **Vấn đề:** Câu hỏi kiểm tra "Mô hình dự báo từ (0,2) chọn Đông sẽ đến (1,2) và nhận 0. Đối chiếu với luật thưởng -1 mỗi bước: thành phần nào sai?" có thể gây nhầm lẫn vì nó đặt cạnh nhau hai loại thông tin: dự báo trạng thái kế tiếp (đúng) và dự báo phần thưởng (sai). Sinh viên có thể không phân biệt được hai thành phần này nếu chưa được giới thiệu tường minh.
+- **Bằng chứng:** Notes ghi "Dự báo đúng một bước đã xác định được cả đường tới đích" nhưng không tách bạch giữa "dự báo trạng thái" và "dự báo thưởng".
+- **Đề xuất sửa:** Trước câu hỏi, thêm một câu dẫn: "Mô hình dự báo gồm hai thành phần: (1) trạng thái kế tiếp, (2) phần thưởng nhận được. Hãy kiểm tra từng thành phần." Điều này giúp sinh viên định hướng câu trả lời.
+
+---
+
+###### 4. Mức độ: TRUNG BÌNH
+
+- **Trang chiếu:** Phần 5 (25 phút), mục "Chiết khấu", trang 9, 25.
+- **Vấn đề:** Ví dụ chiết khấu "-1 - 0,5 - 0,25 = -1,75" được đưa ra nhưng thiếu giải thích vì sao trọng số đầu tiên bằng 1. Sinh viên có thể hiểu nhầm rằng trọng số luôn bắt đầu từ 1 cho mọi bước, trong khi thực chất đó là quy ước cho phần thưởng nhận ngay sau hành động hiện tại.
+- **Bằng chứng:** Notes ghi "Trọng số đầu tiên bằng một vì đó là phần thưởng nhận ngay sau hành động hiện tại" nhưng không giải thích vì sao quy ước này hợp lý.
+- **Đề xuất sửa:** Bổ sung: "Quy ước này xuất phát từ việc phần thưởng nhận được ngay lập tức có giá trị đầy đủ, trong khi phần thưởng tương lai bị chiết khấu vì độ không chắc chắn và chi phí cơ hội."
+
+---
+
+###### 5. Mức độ: TRUNG BÌNH
+
+- **Trang chiếu:** Phần 6 (20 phút), mục "Dự đoán và điều khiển", trang 25–26.
+- **Vấn đề:** Sự phân biệt giữa "dự đoán" (đánh giá chính sách) và "điều khiển" (tìm chính sách tối ưu) được nêu nhưng chưa có ví dụ minh họa cụ thể trong mê cung. Sinh viên có thể hiểu được định nghĩa nhưng không hình dung được sự khác biệt thực tế.
+- **Bằng chứng:** Notes ghi "Yêu cầu thứ nhất là dự đoán: chính sách không đổi và kết quả cần tìm là giá trị âm 16 tại điểm bắt đầu. Yêu cầu thứ hai là điều khiển: kết quả cần tìm là một chính sách."
+- **Đề xuất sửa:** Thêm một ví dụ ngắn: "Ví dụ, nếu chính sách là 'luôn đi Đông', dự đoán sẽ cho biết tổng thưởng kỳ vọng. Điều khiển sẽ tìm chính sách khác, chẳng hạn 'rẽ Nam ở hàng 3', để đạt tổng thưởng tốt hơn."
+
+---
+
+###### 6. Mức độ: NHẸ
+
+- **Trang chiếu:** Phần 7 (7 phút), tổng kết, trang 2, 15–27.
+- **Vấn đề:** Phần tổng kết chốt lại "bốn thành phần của bài toán ra quyết định tuần tự" nhưng không liệt kê rõ bốn thành phần đó là gì trong slide tổng kết. Sinh viên có thể quên mất nếu không được nhắc lại.
+- **Bằng chứng:** Notes ghi "Chốt lại bốn thành phần của bài toán ra quyết định tuần tự bằng mê cung mở đầu" nhưng không nêu tên bốn thành phần.
+- **Đề xuất sửa:** Thêm một bullet liệt kê: "Bốn thành phần: (1) trạng thái, (2) hành động, (3) phần thưởng, (4) mô hình chuyển trạng thái."
+
+---
+
+###### 7. Mức độ: NHẸ
+
+- **Trang chiếu:** Phần 3 (20 phút), mục "Quan sát một phần", trang 14–15.
+- **Vấn đề:** Ví dụ "cảm biến bốn ô kề" được đưa ra nhưng không giải thích vì sao trường hợp này có thể không đầy đủ. Sinh viên có thể nghĩ rằng bốn ô kề là đủ để xác định vị trí trong mê cung cố định.
+- **Bằng chứng:** Notes ghi "Với robot chỉ có cảm biến gần, kết luận cũng phụ thuộc khả năng định vị và thông tin bị che khuất" nhưng không đưa ra ví dụ cụ thể về hai vị trí khác nhau có cùng quan sát.
+- **Đề xuất sửa:** Bổ sung ví dụ: "Chẳng hạn, hai vị trí (2,1) và (3,1) có thể cho cùng một ảnh bốn ô kề nếu cấu trúc tường xung quanh giống nhau, dẫn đến quan sát không đủ để phân biệt."
+
+---
+
+###### 8. Mức độ: NHẸ
+
+- **Trang chiếu:** Phần 5 (25 phút), mục "Kỳ vọng", trang 9, 25.
+- **Vấn đề:** Câu "Kỳ vọng âm bốn là trung bình có trọng số, không nhất thiết là kết quả quan sát được trong một lượt" có thể gây hiểu nhầm rằng kỳ vọng là một khái niệm trừu tượng xa rời thực tế. Cần nhấn mạnh tính ứng dụng của nó trong việc ra quyết định.
+- **Bằng chứng:** Notes ghi "Kỳ vọng âm bốn là trung bình có trọng số, không nhất thiết là kết quả quan sát được trong một lượt."
+- **Đề xuất sửa:** Bổ sung: "Tuy nhiên, nếu chạy nhiều lần và lấy trung bình, kết quả sẽ tiến gần đến giá trị kỳ vọng. Đây là cơ sở cho các phương pháp học tăng cường dựa trên mẫu."
+
+---
+
+##### III. KẾT LUẬN
+
+**Kết luận: ĐỦ** với các điều kiện sau:
+
+1. **Về phạm vi:** Bài 02 đáp ứng đúng yêu cầu về nội dung, không yêu cầu dạy Bellman/thuật toán ngoài phạm vi nguồn 1–27. Việc đưa mê cung lên trước và gộp/tách cục bộ là hợp lý.
+
+2. **Về trình tự suy luận:** Trình tự từ trực giác (mê cung) → giao diện tác tử–môi trường → quan sát → mô hình dự báo → chiết khấu → dự đoán/điều khiển là hợp lý về mặt sư phạm. Tuy nhiên, cần bổ sung các cầu nối đã nêu ở trên để đảm bảo sinh viên không bị "rơi" giữa các khái niệm.
+
+3. **Về tiên quyết:** Việc nhắc lại xác suất có điều kiện và kỳ vọng ở đầu bài là phù hợp với trình độ sinh viên năm 3. Tuy nhiên, cần đảm bảo các khái niệm này được sử dụng nhất quán xuyên suốt bài.
+
+4. **Các phát hiện chính cần khắc phục trước khi bàn giao:**
+   - Bổ sung cầu nối giữa mục tiêu "dự báo" và nội dung phần 6.
+   - Giải thích rõ cơ chế ánh xạ từ ảnh toàn bản đồ sang tọa độ.
+   - Tách bạch hai thành phần của mô hình dự báo trong câu hỏi kiểm tra.
+   - Giải thích quy ước trọng số chiết khấu.
+   - Thêm ví dụ minh họa cho sự khác biệt giữa dự đoán và điều khiển.
+
+Các phát hiện mức độ nhẹ không chặn bàn giao nhưng nên được xem xét để nâng cao chất lượng giảng dạy.
+
+### Kết nối và mạch viết
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter. Chuẩn hóa nhãn Thấp/Lỗi nhỏ thành nhẹ; nội dung báo cáo không phải kết luận cuối của điều phối viên.
+
+#### Báo cáo rà soát toàn tuyến — Vai KẾT NỐI VÀ MẠCH VIẾT
+
+##### Phạm vi đã đọc
+Chỉ dựa trên nội dung 43 trang của `2627-1/lecture-02-giao-dien-tac-tu-moi-truong.html`, notes, thông số hình, và dữ kiện nguồn do điều phối viên cung cấp. Không có thuật toán cập nhật/Bellman trong phạm vi bài 02 (phù hợp ràng buộc; slide L02-05 chỉ định nghĩa $v_\pi$, $P$, $\bar r$, không trình bày phương trình Bellman — điều phối ghi "Ra: Phương trình Bellman … ở section 6 dùng trực tiếp" nhưng thực tế section 6 không có Bellman, xem phát hiện F3).
+
+##### Xác nhận mạch tổng thể
+- Mở bài (Phần 1): đặt vấn đề qua mê cung, mục tiêu, bản đồ bài học — có.
+- Tuyến chính: tương tác/thưởng → trạng thái/quan sát → chính sách → giá trị/mô hình → dự đoán/điều khiển trên mê cung → tổng kết. Chức năng tăng dần, không lặp chức năng trọng tâm.
+- Kết bài (L02-07-01–03): bảng tổng kết bốn thành phần, ba câu tự kiểm tra phản hồi đúng ba nội dung trọng tâm (quan sát một phần, thưởng tức thời, mô hình ≠ chính sách), giao hw02 đúng các bài 1,2,5,6,10 — khép vòng với mở bài.
+- Mỗi phần có kiểm tra cuối (L02-02-07, 03-08, 04-05, 05-06/09, 06-06/07) tạo nhịp tự kiểm nhất quán.
+- Kết luận: **không chặn** — mở/kết/tuyến chính đều hiện diện và liên tục.
+
+##### Phát hiện
+
+**F1 — mức độ: nhẹ — trang chiếu: L02-05 (mục đích section)**
+- Vấn đề: Mục đích phần 5 ghi "Ra: Phương trình Bellman và bài toán dự đoán/điều khiển ở section 6 dùng trực tiếp v_pi(s) và mô hình P(s'|s,a) xây ở đây", nhưng section 6 không trình bày phương trình Bellman (phù hợp ràng buộc phạm vi); cột "Ra" mô tả sai nội dung thực của phần kế tiếp.
+- Bằng chứng: Mục đích section 5 vs. nội dung L02-06-01–07 (chỉ bảng đánh giá/điều khiển, đặc tả mê cung, giá trị, cờ).
+- Vai trò trong mạch: điểm ra của phần 5 phải khớp điểm vào của phần 6 để tuyến "giá trị → đánh giá/điều khiển" liền mạch.
+- Đề xuất sửa: Sửa cột "Ra" của section 5 thành: "Ra: v_pi(s) và P(s'|s,a) là đầu vào cho việc phân biệt dự đoán/điều khiển ở section 6; phương trình Bellman dành cho bài 03." Đồng thời kiểm tra mục đích section 6: "Nhận định nghĩa $v^\pi$…" — nên thống nhất ký hiệu $v_\pi$ (nhất quán với toàn deck).
+
+**F2 — mức độ: trung bình — trang chiếu: L02-04-01 / L02-06-04**
+- Vấn đề: điểm vào của phần 4 dùng ảnh `source-policy.svg` lần đầu ở L02-04-01 với chú thích "tại (1,2) chọn Bắc", nhưng chính sách nguồn tại (1,2) là **N** đúng; tuy nhiên điểm mờ: L02-04-01 nói "Biết vị trí chưa xác định được hành động cần chọn" — câu này có thể đọc nhầm là mê cung chưa có chính sách, trong khi ảnh đã vẽ chính sách đầy đủ. Chức năng trang (giới thiệu khái niệm chính sách) và hình (chính sách hoàn chỉnh của mê cung) hơi lệch: hình thuộc tốt hơn vào L02-06-04.
+- Bằng chứng: L02-04-01 alt "Mũi tên chính sách trên từng ô đi được… tại (1,2) chọn Bắc"; chính sách nguồn (1,2)=N xác nhận đúng dữ kiện.
+- Vai trò trong mạch: trang này nhận vị trí (2,1)/(3,1) từ phần 3; nếu hình gợi ý đã có lời giải, tín hiệu chuyển sang phần 4 bị mờ về điểm vào.
+- Đề xuất sửa: Giữ hình nhưng đổi câu dẫn thành: "Cùng vị trí, các tác tử khác nhau có thể chọn hành động khác nhau; hình minh họa một quy tắc có sẵn." Hoặc tách: dùng một hình mê cung trống (không mũi tên) ở L02-04-01, giữ `source-policy.svg` ở L02-06-04.
+- Kết nối vào: (2,1)/(3,1) và quy ước tường từ phần 3. Kết nối ra: ký hiệu π và bảng xác suất cho phần 5.
+
+**F3 — mức độ: nhẹ — trang chiếu: L02-02-02 / L02-03-05**
+- Vấn đề: tín hiệu chuyển giữa phần 2 và phần 3 chỉ nằm trong notes (L02-02-07 notes: "tác tử còn cần biết thông tin hiện tại…"), thân slide L02-02-07 không có câu dẫn sang phần 3; tương tự L02-03-08 notes dẫn sang phần 4 nhưng thân slide không có.
+- Bằng chứng: thân slide các trang check chỉ chứa câu hỏi/đáp án khung.
+- Vai trò trong mạch: các trang kiểm tra cuối phần là điểm nối tự nhiên; thiếu tín hiệu chuyển trên thân slide khiến ranh giới phần chỉ thấy qua notes (người xem không notes sẽ thấy phần kết đột ngột).
+- Đề xuất sửa: thêm một dòng box ngắn trên mỗi trang check cuối phần, ví dụ L02-02-07: "Phần sau: tác tử cần thông tin gì để quyết định?"; L02-03-08: "Phần sau: từ biểu diễn $X_t$ đến quy tắc chọn hành động."
+- Kết nối vào/ra: như trên.
+
+**F4 — mức độ: nhẹ — trang chiếu: L02-05-02**
+- Vấn đề: trang dùng đoạn cuối tuyến $(6,5)\to(6,6)\to(7,6)\to G$ làm ví dụ chiết khấu trước khi mê cung được đặc tả đầy đủ ở section 6; người nghe chưa thấy chính sách/đường đi tại thời điểm phút 28 của bài. Không sai dữ kiện (khớp chính sách nguồn: (6,5)E,(6,6)E,(7,6)E; tổng −3 đúng với γ=1; −1,75 đúng với trọng số 1;0,5;0,25).
+- Bằng chứng: L02-05-02 và chính sách nguồn 26 bước cuối.
+- Vai trò trong mạch: ví dụ nối tuyến thưởng −1 của phần 2 vào phần 5 — hợp; chỉ là thứ tự lộ ảnh mê cung hơi sớm.
+- Đề xuất sửa: chấp nhận được; nếu muốn, thêm nửa câu "đoạn cuối của đường 16 bước sẽ xem đầy đủ ở phần 6" để người nghe định vị.
+
+**F5 — mức độ: không có lỗi cấu trúc nghiêm trọng**
+- Kiểm tra các cột Vào/Ra của 7 phần: section 2 nhận mê cung từ section 1 ✓; section 3 nhận sơ đồ tương tác ✓ và trả $X_t$ cho section 4, trạng thái cho section 5 ✓; section 4 trả π cho 5 và 6 ✓; section 6 nhận $v_\pi$ từ 5, ví dụ cờ từ phần 2 (L02-02-06), trả tổng kết cho 7 ✓; section 7 khép mở bài (mê cung L02-01-02 ↔ L02-07-01; mục tiêu L02-01-03 ↔ tự kiểm L02-07-02) ✓. Không có phần trọng tâm bị đứt hoặc lặp chức năng (mê cung xuất hiện ở nhiều phần nhưng vai trò đổi: mở bài → ví dụ một bước → trạng thái → chính sách → đánh giá — đúng thiết kế "xuyên suốt").
+
+##### Nhận xét cú pháp/thuật ngữ
+Thuật ngữ nhất quán: "tác tử", "môi trường", "quan sát", "biểu diễn", "chính sách", "hàm giá trị"; ký hiệu $O_t,A_t,R_{t+1},S_t,X_t,\pi,v_\pi,G_t$ dùng thống nhất toàn tuyến. Không phát hiện dạng câu AI-slop (không "Hãy cùng khám phá", không liệt kê rỗng). Chú ý nhỏ: L02-02-01 notes dùng "A", "O", "R" chưa kèm chỉ số $t$ — chấp nhận được vì trang sau (L02-02-03) chuẩn hóa bộ ký hiệu đầy đủ.
+
+##### Kết luận
+**Đủ** với vai được giao: toàn tuyến 7 phần có mở, kết, mạch chính liên tục, chức năng mỗi phần rõ, không chặn bàn giao. Các sửa đề xuất (F1 bắt buộc sửa vì mô tả sai điểm ra; F2–F4 nên sửa) đều biên tập cục bộ, không ảnh hưởng cấu trúc.
+
+**Tổng số từ: ~950.**
+
+## Đối chiếu phát hiện và quyết định của điều phối viên
+
+Các nhận định trong báo cáo trên đã được kiểm lại bằng HTML, notes, JSON phân tích, SVG và phép tính. Không xem nhãn “đủ” của reviewer là kết luận cuối.
+
+| Vai/phát hiện | Quyết định | Bằng chứng và phạm vi xử lý |
+|---|---|---|
+| Storyboard, kết luận chu trình đúng | Bác kết luận; sửa planning | Ví dụ02-05 đứng sau hình thức02-03; 03-07 là định nghĩa biểu diễn, không phải kiểm tra; 05-04 là ví dụ kỳ vọng, 05-05 mới là định nghĩa giá trị. Tách cụm S/O/X, Markov, quan sát, biểu diễn; tách G và v; ghi đúng các bước gộp và không áp dụng. |
+| Storyboard1, thiếu dollar | Không áp dụng | Công thức bị gán sai ID; HTML thực và86 lượt render không có raw dollar hoặc lỗi KaTeX. |
+| Storyboard2–8 | Đã xác minh cục bộ | Lưới27ô/37tường, đích ngoài; loop đúng hướng; mục tiêu được thực hiện;0,3 là xác suất còn thiếu;16bước cho−16; không có Bellman trong bài; tổng kết có bảng bốn nhóm vai trò. |
+| Sinh viên1, thời lượng19phút | Bác bỏ sai số | Sáu trang3phút cộng một trang2phút là20; tổng120 được assert khi ghép. Không sửa thời lượng. |
+| Sinh viên2, số trên SVG | Sửa cục bộ và ghi giới hạn | SVG có đầy đủ trục0–7, đích ngoài; cỡ36 cho giá trị đã tăng trước rà. Bổ sung giá trị điểm đầu bằng công thức lớn bên cạnh hình. Trên390px, deck16:9 bị thu nhỏ; không coi kiểm tra không tràn là bằng chứng mọi chữ đều dễ đọc. Khi học bằng điện thoại cần để ngang/phóng to. |
+| Sinh viên3 + mạchF2 | Sửa | Không gọi hình không có trên trang06-02; nêu rõ chính sách cho trước. Trang04-01 giải thích hình là một quy tắc có sẵn, không phải vị trí tự quyết định hành động. |
+| Sinh viên4–6 | Không thêm lặp | Đã xem nhãn(2,1)/(3,1) trên SVG; notes04-02 đã nói va tường vẫn−1; trường hợp thua suy ra trực tiếp từ quy ước02-06, không cần thêm ví dụ phụ. |
+| RL1, lịch sử trạng thái/quan sát | Giữ | Mặt03-04 ghi lịch sử trạng thái–hành động–thưởng; notes định nghĩa đầy đủ và phân biệt H_t. Không thêm một dòng nhắc trùng. |
+| RL2, điều kiện kỳ vọng | Giữ giả thiết đúng | Mặt05-05 ghi kỳ vọng hữu hạn; notes nêu điều kiện đủ thưởng bị chặn và thời gian kết thúc kỳ vọng hữu hạn. Không biến điều kiện đủ thành điều kiện cần, không thêm khối dài trên mặt trang. |
+| RL3, ví dụ xe | Giữ | Notes03-03 đã ghi mô hình minh họa và giới hạn, không tuyên bố mô hình đầy đủ của xe tự lái. |
+| RL4, chưa có−16 ở06-02 | Sửa notes theo vai trò trang | Câu hỏi chỉ phân biệt loại đầu ra; bỏ đáp án số trước phần vận dụng. Không đảo trang hay đưa đáp án−16 lên sớm. |
+| RL5, dấu chấm phẩy | Không áp dụng | Dấu phẩy là dấu thập phân tiếng Việt; chấm phẩy tách danh sách trọng số rõ hơn. |
+| RL6–7 | Giữ | Caption04-02 đã nêu Đông gặp tường;07-03 giao rõ bài1,2,5,6,10 và notes nêu các bài còn lại thuộc Bài03. |
+| ToánA1, tọa độ/định nghĩa MDP | Bác mâu thuẫn được nêu | Tọa độ là trạng thái đầy đủ trong ví dụ cố định; định nghĩa MDP còn cần hành động, quy luật chuyển, thưởng. Hai phát biểu cùng đúng và đã được phân biệt trong notes. |
+| ToánA2,5, hai chính sách khác nhau | Không áp dụng | Bảng04-02 minh họa0,5/0,5; câu hỏi04-05 cố ý dùng0,2/0,5/0,3. Không đồng nhất hai bài. Chính sách xác định là trường hợp suy biến của phân phối, không mâu thuẫn với ví dụ có nhiều xác suất dương. |
+| ToánA3–4 | Không áp dụng | Công thức Markov đầy đủ ở03-04, điều kiện dương đã nêu; ví dụ xe đã ghi rõ giả thiết. |
+| ToánB1–2, đổi trọng số thành âm | Bác đề xuất sai | Trọng số là1,1,1 hoặc1,0,5,0,25; nhân các phần thưởng−1 cho−3/−1,75. Đổi dấu trọng số sẽ làm sai phép tính. |
+| ToánB3–6 | Đã có hoặc đã xác minh | Ví dụ05-04 mở bằng “từ s”; notes05-05 đã phân biệt dừng gần chắc chắn với kỳ vọng hữu hạn; gamma0 cho−1; câu văn rút gọn reviewer trích là dữ kiện gói rà, không nằm trong notes06-02. |
+| Học thuật1, mức nghiêm trọng | Bác bằng chứng sai | Mục tiêu01-03 phân biệt đánh giá dài hạn(v) và dự báo phản hồi(mô hình), được dạy ở05-05/08. Reviewer đồng nhất “dự báo” với đánh giá chính sách và gán sai phần/thời lượng. Không sửa mục tiêu đúng. Sẽ gửi trích đoạn để rà lại quyết định. |
+| Học thuật2, mức nghiêm trọng | Làm rõ cục bộ | Mặt03-08 đã ghi ảnh thấy rõ tác tử và mọi ô; thêm vào notes cách dùng quy ước tọa độ để xác định vị trí. Không phải thiếu biến vị trí; rà lại với reviewer. |
+| Học thuật3–7 | Không áp dụng các đề xuất sai/trùng | Mô hình đã tách P và r; trọng số đầu tiên đã giải thích; hai nhiệm vụ đã có ví dụ; tổng kết đã có bảng; hai ô cùng quan sát đã xuất hiện nhiều lần. Không thêm “luôn Đông” vì không kết thúc trong mê cung, không quy gamma chỉ do bất định. |
+| Học thuật8 | Giữ phạm vi | Kỳ vọng−4 không nhất thiết quan sát được trong một lượt là đúng. Luật số lớn/phương pháp dựa trên mẫu dành bài sau, không cần thêm để hiểu ví dụ hiện tại. |
+| MạchF1 | Sửa bắt buộc | Outgoing phần5 hứa Bellman ởphần6 sai; sửa thành vận dụng giá trị/mô hình và phân biệt dự đoán/điều khiển. Thống nhất v_π. |
+| MạchF3–4 | Giữ câu nối nói, tăng cầu nối công thức | Notes có câu chuyển phần; không thêm câu hỏi tu từ hoặc nhãn “Phần sau”. Đoạn3bước tự đủ dữ kiện thưởng/đường đi. Phần6,5 hành động đúng là Nam rồi Đông, Đông; reviewer ghi Đông ở(6,5) là sai. |
+
+Điều phối viên giao writer riêng ghi revision.json trong vùng tạm với10ID và7bản đồ chu trình xác định, rồi kiểm lại trước ghép; writer không sửa kho trực tiếp.
+
+Lượt writer chỉnh sửa gộp10trang và planning vượt timeout180giây trước khi ghi tệp. Đã chia thành hai tác vụ tuần tự: revision-slides (chỉ body/notes10trang) và revision-cycles (chỉ bản đồ14cụm). Giữ mô hình và timeout; không cho writer chạy ghi song song.
+
+## Chỉnh sửa và rà lại sau bản nháp
+
+- revision-slides: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+- revision-cycles: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+Writer slide và writer planning hoàn tất tuần tự. Điều phối viên kiểm lại và rút notes03-08, bỏ cột trùng ở06-01, sửa các câu planning suy diễn sai về S/O/X đã học, ba mức quan sát, chính sách ngẫu nhiên được đánh giá ở phần5, và nội dung bài tập. Chu trình14cụm có đủ kiến thức đầu vào, sản phẩm học tập, dữ kiện truyền tiếp, câu nối, bước gộp và thời lượng; mỗi trang có một cụm sở hữu thời gian, tổng43trang/120phút. Các tham chiếu lại không cộng thời gian hai lần. Sửa thêm nhu cầu02-03 từng hứa Bellman ởphần5 và nguồn05-05 từng gán điều kiện kỳ vọng cho nguồn18 không đúng.
+
+### Rà lại math
+
+requested_model=deepseek/deepseek-v4-flash-0731; observed_model=deepseek/deepseek-v4-flash-0731; provider=OpenRouter.
+
+##### Báo cáo đánh giá — L02-03-07 đến L02-06-06
+
+**Mức độ:** Không phát hiện lỗi trong các trích đoạn cung.
+
+**Trang:** L02-03-07, L02-04-04, L02-05-01 đến L02-05-09, L02-06-05, L02-06-06.
+
+**Vấấ:** Không có.
+
+**Bằng chứng:**
+- L02-05-02: Ba bước cuối $(6,5)→(6,6)→(7,6)→G$, mỗi bước $-1$; cộng trực tiếp $-3$, giảm một nửa $-1{,}75$. Không đề nghị thay trọng số dương thành âm; phần thưởng mới là $-1$.
+- L02-05-03: $G_t=\sum_{k=0}^{T-t-1}\gamma^kR_{t+k+1}$; ba bước cho $G_t=-1-\gamma-\gamma^2$; $G_T=0$; điều kỳ vọng hữu hạn: $\gamma<1$ và thưởng bị chặn.
+- L02-05-04: Hai nhánh 3 bước ($-3$) và 5 bước ($-5$), mỗi với xác suất $0{,}5$, $\gamma=1$: kỳ vọng $0{,}5(-3)+0{,}5(-5)=-4$. Không đồng nhất với mê cung chuyển xác định.
+- L02-05-05: $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$; hai nhánh cho $-4$; điều kỳ vọng hữu hạn: thưởng bị chặn và $\mathbb E_\pi[T-t\mid S_t=s]<\infty$.
+- L02-05-06: $G_t$ với $\gamma=0,0{,}5,1$: $-1,-1{,}75,-3$; phân biệt với $v_\pi(s)$.
+- L02-05-07: $(0,2)$ Đông→$(1,2)$ $-1$; Bắc→$(0,2)$ tường $-1$.
+- L02-05-08: $P((1,2)\mid(0,2),\text{Đông})=1$; $\bar r((0,2),\text{Đông})=-1$.
+- L02-05-09: Dự báo thưởng sai (phải $-1$); dự báo chuyển đúng.
+- L02-06-05: $v_\pi(0,2)=-16$; $v_\pi(7,6)=-1$; $v_\pi(G)=0$; 16 bước từ (0,2).
+- L02-06-06: $G_T=0$; $R_T=1$; $G_{T-1}=R_T=1$.
+- L02-03-07: Chuyển động đều, $\Delta t>0$; $X_t=f(H_t)$; nhiều quan sát gần nhất chưa chắc Markov.
+
+**Đề xu:** Không cần sửa.
+
+### Rà lại academic
+
+requested_model=deepseek/deepseek-v4-flash-0731; observed_model=deepseek/deepseek-v4-flash-0731; provider=OpenRouter.
+
+##### Báo cáo phản biện học thuật — Rà lại độc lập sau sửa
+
+###### Đánh giá hai quyết định từ bằng chứng thật
+
+**Quyết định (1): Giữ mục tiêu “đánh giá và dự báo kết quả của một chuỗi quyết định”**
+
+**Mức độ: Không còn lỗi chặn — giữ nguyên mức nghiêm trọng đã nêu, không rút.**
+
+Bằng chứng từ L02-05-01 và L02-05-07 cho thấy hai nội dung được phân biệt rõ ràng: “Hàm giá trị thực hiện việc đánh giá đó dưới một chính sách xác định trước. Mô hình giải quyết nhu cầu khác: dự báo điều gì xảy ra nếu thực hiện một hành động.” L02-05-07 nêu rõ: “Mô hình dự báo trạng thái kế tiếp và phần thưởng từ một cặp $(s,a)$” và “Dự báo chưa chỉ ra nên chọn hành động nào.” L02-06-02 phân biệt “Dự đoán” (tính $v_\pi(0,2)$) với “Điều khiển” (tìm chính sách tối ưu). NOTES bổ sung: “Yêu cầu thứ nhất là dự đoán… Yêu cầu thứ hai là điều khiển.” Như vậy, “đánh giá” gắn với hàm giá trị $v_\pi(s)$ và “dự báo” gắn với mô hình $P$ — hai khái niệm khác nhau, đã dạy ở phần 5. Mục tiêu L02-01-03 không đồng nhất hai khái niệm; nó liệt kê cả hai như các năng lực cần đạt. **Kết luận: giữ mục tiêu, không còn lỗi chặn.**
+
+**Quyết định (2): Bổ sung notes03-08 về ảnh thấy rõ tác tử và quy ước tọa độ**
+
+**Mức độ: Không còn lỗi chặn — giữ nguyên mức nghiêm trọng đã nêu, không rút.**
+
+Bằng chứng từ L02-03-08: “Ảnh toàn bản đồ, thấy rõ tác tử và mọi ô” được xếp vào quan sát đầy đủ. NOTES bổ sung: “Ảnh phải thấy rõ tác tử; quy ước tọa độ cho phép suy ra vị trí.” Điều này giải quyết trực tiếp lỗi đã nêu: ảnh toàn bản đồ chỉ hữu ích nếu (a) tác tử hiện diện trong ảnh và (b) có quy ước tọa độ để suy ra vị trí. L02-03-01 cũng cho thấy vấn đề khi thiếu thông tin vị trí: “Dù biết bản đồ, tác tử vẫn chưa xác định được vị trí chỉ từ tín hiệu đang nhận.” **Kết luận: bổ sung notes03-08 là hợp lý, không còn lỗi chặn.**
+
+---
+
+###### Tổng kết
+
+Cả hai lỗi nghiêm trọng đã nêu đều được giải quyết thỏa đáng bằng bằng chứng trong nguồn. Không còn lỗi chặn. Các quyết định của điều phối viên được giữ nguyên.
+
+Reviewer học thuật giữ nhãn mức nghiêm trọng của báo cáo cũ nhưng phần bằng chứng và kết luận xác nhận hai vấn đề đã được giải quyết, không còn lỗi hiện tại. Điều phối viên xác nhận bằng trích đoạn và ảnh hiển thị; không coi nhãn cũ là vấn đề chưa xử lý. Rà toán mới xác nhận dấu, chỉ số, tổng thưởng, kỳ vọng, mô hình và trạng thái kết thúc đều đúng trong các trích đoạn.
+
+### Rà lại flow
+
+requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+##### Báo cáo rà độc lập (Bài 02, năm 3)
+
+**Kết luận chung:** Sáu điểm sửa đã được xác nhận trong trích đoạn; không phát hiện lỗi mạch/kết nối phải sửa. Một phát hiện mức thấp về bằng chứng không kiểm chứng được.
+
+**Các sửa đã kiểm tra — đạt:**
+1. Ví dụ xe đặt trước $X=f(H)$: L02-03-03 (hai xe, vị trí/vận tốc) → L02-03-07 ($X_t=f(H_t)$, suy vận tốc từ hai vị trí). Mạch vào/ra hợp lý.
+2. Chính sách cho trước: L02-04-01 notes "một chính sách cho trước"; L02-06-04 "chính sách được cho trong nguồn". Nhất quán.
+3. Ví dụ ngay sau định nghĩa: $\pi$ — bảng tại 04-03; $G_t$ — hộp "ba bước... $-1-\gamma-\gamma^2$" tại 05-03; $v_\pi$ — hai nhánh cho $-4$ tại 05-05; mô hình — bảng $(0,2)$ tại 05-07. Đủ.
+4. L02-06-01 nêu hai nhiệm vụ (đếm bước / chọn mũi tên) trước tên gọi "dự đoán/điều khiển" ở 06-02. Đạt.
+5. L02-03-08 notes: "Ảnh phải thấy rõ tác tử; quy ước tọa độ cho phép suy ra vị trí". Đạt.
+6. Không hứa Bellman ở Phần 6; ranh giới ghi "Bellman thuộc Bài 03", chỉ xuất hiện ở ra của Phần 5 và 07-02 notes. Đạt.
+
+**Kiểm tra nhất quán số liệu:** chuỗi 16 hành động ở 06-04 đếm đúng 16; $v_\pi(6,5)=-3$ khớp bảng chiết khấu 05-02; $G_t$ với $\gamma=0/0{,}5/1$ ở 06-05 notes khớp $-1/-1{,}75/-3$; $G_T=0$, $R_T=1$, $G_{T-1}=1$ ở 06-06 nhất quán với 05-03.
+
+**Phát hiện:**
+
+- **Mức độ:** Thấp.
+- **Vị trí:** L02-06-03 (bảng đặc tả, dòng "Trạng thái").
+- **Vấn đề:** Con số "27 ô đi được" không kiểm chứng được từ các trích đoạn được cấp (không có ảnh mê cung nguồn hay số liệu ô trống); các trích đoạn khác chỉ xác nhận tọa độ $(0,2)$, $(7,6)$, $G=(8,6)$ ngoài lưới — phần này nhất quán với 01-02 và 06-03 notes.
+- **Bằng chứng:** "27 ô đi được và đích $G=(8,6)$" (06-03) so với "Mê cung tám hàng tám cột... đích G tại (8,6) ngoài lưới" (01-02).
+- **Đề xuất sửa:** Không bắt buộc sửa trang; coordinator đối chiếu số 27 với slide nguồn (trang mê cung trong lecture2-3, trang 1–27). Nếu lệch, cập nhật đúng số ô; nếu khớp, giữ nguyên.
+
+**Lưu ý phi lỗi (không yêu cầu hành động):** các ghi chú quy trình/viết ("Phần sau", vai trò kết nối) chỉ nằm trong trường vào/ra và notes, không xuất hiện trên mặt trang — đúng yêu cầu.
+
+Không có lỗi mức trung bình/cao.
+
+### Rà lại storyboard
+
+requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+##### Báo cáo kiểm định Storyboard Bài 02 (43 trang / 120 phút)
+
+**Đối chiếu số học (đạt):** Tổng phút 8+20+25+15+25+20+7 = 120 ✓; số slide 4+7+8+5+9+7+3 = 43 ✓; phút cụm khớp phút slide (ví dụ P3: 6+10+6+3 = 25 ✓). 14 cụm đúng yêu cầu. Không phát hiện owner thời gian trùng; các tham chiếu lại (L02-03-08, L02-05-06, L02-06-07) đều được merge_reason khai báo "không cộng giờ", hợp lệ.
+
+**Tách G và v (đạt):** Cụm 1 P5 định nghĩa $G_t$ trên quỹ đạo (L02-05-03), cụm 2 định nghĩa $v_\pi$ kỳ vọng có điều kiện (L02-05-05); số kiểm tra: $\gamma=0/0{,}5/1$ cho −1/−1,75/−3 và $v_\pi=-4=(({-3})+({-5}))/2$ đều đúng.
+
+**Các yêu cầu cấu trúc khác (đạt):** 06-03 là "Đặc tả môi trường mê cung" đúng vai trò đặc tả, cụm P6-2 để trống hình thức, merge_reason nêu rõ không hình thức hóa lại. 03-07 đã chuyển sang kiểm tra biểu diễn (L02-03-08, L02-06-07), không còn là kiểm tra khái niệm cũ. Cụm mở bài (P1) và vận dụng/tổng kết (P6-2, P7) đều có merge_reason cụ thể, không dạy khái niệm mới; P7 chỉ giao bài tập hw02.
+
+**Ví dụ trước hình thức (đạt):** P2-1 (02→03), P5-1 (02→03), P5-2 (04→05), P4 (02→03/04), P6-1 (01→02) đúng thứ tự.
+
+###### Lỗi/ghi nhận
+
+1. **[Mức: Thấp | Vị trí: P3 cụm 1, kiểm tra L02-03-08 | Vấn đề:** Kiểm tra của cụm 1 tham chiếu slide nằm sau hai cụm 2 và 3 trong body; nội dung slide 08 (phân loại đầy đủ/một phần) phụ thuộc khái niệm cụm 3, nên về thời gian trình chiếu, kiểm tra này diễn ra sau, không phải ngay sau cụm 1. **Bằng chứng:** owned_slides cụm 1 chỉ có 01, 02; slide 08 thuộc cụm 3; merge_reason có khai báo "tham chiếu, không cộng giờ". **Đề xuất:** giữ nguyên nhưng ghi chú rõ trong notes rằng slide 08 trình bày sau cụm 3 để tránh hiểu nhầm vị trí kiểm tra.
+
+2. **[Mức: Thấp | Vị trí: P6 cụm 2, carried_data | Vấn đề:** "16 bước từ điểm đầu" không kiểm chứng được từ trích đoạn; khoảng cách Manhattan (0,2)→(8,6) là 12. **Đề xuất:** đối chiếu với L02-06-05/đặc tả mê cung nguồn để xác nhận 16 là chiều dài đường đi thực.
+
+3. **[Mức: Thấp | Vị trí: P5 cụm 1 & 2 | Vấn đề:** L02-05-06 là kiểm tra chung, owned bởi cụm 2 nhưng cụm 1 cũng đưa vào steps.kiểm tra. **Bằng chứng:** owned_slides hai cụm rời nhau. **Đề xuất:** chấp nhận được vì có khai báo; cân nhắc ghi "kiểm tra dùng chung" tại cụm 1.
+
+###### Thiếu bằng chứng
+Không có trích đoạn thật từ lecture2-3-MDPswithKeyConcepts.pptx, file HTML đích và storyboard.md; mọi đối chiếu nội dung slide chỉ dựa trên dữ liệu storyboard cung cấp. Không phát hiện mô tả hứa nội dung không có (Bellman được chuyển Bài 03 nhất quán ở P5 và P7).
+
+### Quyết định sau rà lại
+
+- Mạch viết xác nhận các cầu nối đã sửa, không còn lỗi trung bình/nghiêm trọng. Chưa xác minh27ô trong gói văn bản là giới hạn bằng chứng của reviewer; điều phối viên đã đếm trực tiếp64rect trong SVG,27ô trắng,37tường và đối chiếu nguồn25–26.
+- Storyboard xác nhận14cụm,43trang,120phút, không trùng thời gian. Kiểm tra03-08 được thực hiện sau khi học mức quan sát;05-06 dùng chung cho G và v. Giữ ghi chú tổ chức này trong planning, không đưa ID hay hướng dẫn trình bày vào notes.
+- Đường đi16bước không phải khoảng cách Manhattan: tường buộc đi vòng. Đã đọc các mũi tên trực tiếp từ source-policy.svg, lần đường từ mọi ô, kiểm tra đúng cả27số trong source-values.svg; mọi ô đến G, điểm đầu−16, (6,5)−3, (7,6)−1.
+- Một số câu mô tả vị trí trong báo cáo rà lại bị gán nhầm ID; kết luận cuối dựa trên tệp thật và kiểm tra độc lập, không sao chép lỗi này sang bài.
+
+## Kiểm định cuối và giới hạn công cụ
+
+- Cấu trúc:7section ngoài,43ID duy nhất,43notes,14cụm,120phút; outline/storyboard khớp từng ID. Không có thuật toán cập nhật hay code demo trong phạm vi nguồn1–27.
+- Toán và nguồn: đối chiếu mọi trang nguồn1–27; kiểm tra chỉ số thưởng, Markov, chính sách, chiết khấu, kỳ vọng hữu hạn, mô hình và kết thúc. Tính lại−1/−1,75/−3, kỳ vọng−4, tất cả27giá trị mê cung từ SVG thật.
+- Tài sản:9SVG được dùng, gồm5hình mới (mê cung, chính sách, giá trị, quan sát cục bộ, bàn cờ) và4hìnhSVG tái dùng. Có roleimg, title/desc và alt; không raster, không ngoại lệ raster.
+- Giao diện: đủ86lượt cho43trang ở1280×720 và390×844 sau sửa; không tràn viewport, raw dollar, lỗi KaTeX, ảnh hỏng, HTTP lỗi hoặc JavaScript lỗi. Điều hướng ngang/dọc bằng bàn phím hoạt động. Đã xem toàn bộ bảng ảnh và ảnh chi tiết các trang thay đổi; công thức/số chính đủ lớn ở khung trình chiếu. Màn hình390px thu toàn bộ khung16:9 nên cần xoay ngang/phóng to khi đọc số nhỏ; không tuyên bố tối ưu riêng giao diện điện thoại.
+- Kỹ thuật:20tham chiếu HTML đều là tệp cục bộ tồn tại; các bài và mẫu cùng dùng lecture-slide.css, không còn liên kết tên CSS cũ. CSS bổ sung giới hạn ở lớp lecture-deck; đã kiểm tra12bài cũ tải được khi đổi tên CSS.
+- Chỉ mục: thẻ Bài2 có mô tả mới và duy nhất liên kết HTML; bỏ liên kết tới ghi chú công khai của bản cũ để không trình bày tài liệu chưa đồng bộ. Không liên kết planning.
+- Văn phong: rà no-ai-slop và eval, bỏ câu cảm thán/tu từ/ca tụng, lời bình quy trình, mã nội bộ và hướng dẫn người viết khỏi mặt trang/notes. Quill được dùng để rà tiên quyết, khái niệm và đầu vào/ra; không tạo dự án sách.
+- Máy chủ: python3 -m reloadserver 8765 ở gốc kho; URL http://localhost:8765/2627-1/lecture-02-giao-dien-tac-tu-moi-truong.html.
+- Codex Slides: dự án bền vững đã có; API Design Files nhận tệp nhưng UI vẫn ở bước làm rõ yêu cầu, không hiển thị ảnh đã tải dù mở đúng liên kết file và bảng Design Files. Không có Browser nhúng trong phiên này. Đã kiểm tra UI bằng Chromium và tiếp tục toàn bộ kiểm tra RevealJS cục bộ; KHÔNG tuyên bố đã rà bản render trong Codex Slides. Tệp cuối và bảng ảnh được lưu làm tài liệu tham chiếu của dự án.
+- Đã commit riêng từng phần1–7; phần chỉnh sửa sau rà soát có commit riêng. Không push. Không còn lỗi chặn bàn giao hoặc nghiêm trọng chưa có quyết định và bằng chứng xử lý.
+
+Kiểm tra bàn giao: thẻ Bài2 trên index mở đúng deck43trang.11tệp tham chiếu cuối trong Design Files khớp SHA-256 với tệp cục bộ (HTML, ba tệp planning, bảy bảng ảnh); ảnh phần3 cuối mang tên lecture02-final-section03.png, thay cho contact-03.png của bản trước. Đồng bộ tệp không đồng nghĩa đã rà bản render trong Codex Slides. git diff --check không báo lỗi.
