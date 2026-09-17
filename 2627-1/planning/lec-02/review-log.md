@@ -53,3 +53,7 @@ Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; p
 ## Phần 6 — kiểm tra và chỉnh sửa
 
 Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter. Bảy trang,20 phút. Thêm một trang vận dụng bàn cờ nguồn11, đưa tổng dự kiến lên43 trang. Sửa so sánh chính sách thành nhiệm vụ đánh giá chính sách cố định và tìm chính sách tốt; không gán vòng lặp rồi thoát cho chính sách xác định chỉ phụ thuộc vị trí. Nêu rõ hành động va tường vẫn nhận -1, bước vào G cũng nhận -1, sau G không còn thưởng. Tính lại toàn bộ27 giá trị của mê cung, giữ đích ngoài lưới. Bàn cờ X thắng, thưởng cuối bằng1 nhưng tổng thưởng tại trạng thái kết thúc bằng0. Bỏ lời bình quy trình trong notes. 14 lượt rộng/hẹp không tràn, không lỗi toán, ảnh hay JavaScript; tăng cỡ số trong hình giá trị để đọc trên máy chiếu.
+
+## Phần 7 — kiểm tra và chỉnh sửa
+
+Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter. Ba trang,7 phút. Sửa X_t thành biểu diễn dùng để quyết định, không đồng nhất với lịch sử; sửa mô tả bài tập theo văn bản hw02, không gán bài10 cho riêng mê cung. Bảng tổng kết bốn vai trò, ba câu tự kiểm tra và tài liệu đọc nối sang bài03. Notes không còn chỉ dẫn biên soạn. Kiểm tra6 lượt rộng/hẹp không tràn, lỗi toán, ảnh hoặc tài nguyên/JavaScript; đã xem trang tổng kết và bài tập. Đủ7phần,43trang,120phút; đang chờ kiểm định storyboard và năm báo cáo độc lập.

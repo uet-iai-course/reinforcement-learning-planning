@@ -20,7 +20,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 
 ## Trạng thái triển khai
 
-Đã có bản viết cho 6/7 phần; chỉ bàn giao khi đủ các vòng rà soát và kiểm định cuối.
+Đã có bản viết cho 7/7 phần; chỉ bàn giao khi đủ các vòng rà soát và kiểm định cuối.
 
 ## Trang đích
 
@@ -64,6 +64,9 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-06-05` — Giá trị trên mê cung — PPTX trang 26; hw02 bài 6
 - `L02-06-06` — Trạng thái kết thúc trong trò chơi — PPTX, trang 11; bài kiểm tra suy ra từ quy ước phần thưởng và điều kiện kết thúc.
 - `L02-06-07` — Kiểm tra mô hình hóa — PPTX trang 27; hw02 bài 10
+- `L02-07-01` — Các thành phần của bài toán — PPTX trang 10, 20, 25–26; hw02 bài 1
+- `L02-07-02` — Tự kiểm tra — PPTX trang 16, 19, 22–23, 27; hw02 bài 2, 5
+- `L02-07-03` — Bài tập và tài liệu đọc — RL-hk2-2025-2026/resources/hw02.pdf, bài1,2,5,6,10; Sutton và Barto (2018), chương3; PPTX trang1–27.
 
 ## Ánh xạ toàn bộ nguồn
 

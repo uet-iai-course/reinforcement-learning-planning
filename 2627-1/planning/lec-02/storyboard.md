@@ -613,3 +613,59 @@ Thời lượng: 2 phút. Nguồn: PPTX trang 27; hw02 bài 10.
 - **Kết nối ra:** Dẫn sang phần 7 tổng kết và tự kiểm tra.
 - **Sản phẩm học tập/kiểm tra:** Sinh viên tự liệt kê thành phần giữ và thành phần đổi trước khi xem đáp án.
 - **Quyết định nguồn:** Giữ ý trang 27, thay ví dụ cờ vua, robot bằng ghi chú vì slide đã có mê cung làm ví dụ chính.
+
+## Phần 7: Tổng kết và tự kiểm tra — 7 phút
+
+- **Chức năng:** Chốt lại bốn thành phần của bài toán ra quyết định tuần tự bằng mê cung mở đầu, kiểm tra mức hiểu qua ba câu hỏi, và giao bài tập cùng tài liệu đọc.
+- **Tiên quyết:** Sinh viên đã theo các section 1–6: tương tác tác tử–môi trường, thưởng, trạng thái/quan sát, chính sách, hàm giá trị, mô hình, dự đoán/điều khiển và bài mê cung.
+- **Kết nối vào:** Định nghĩa S, O, X, chính sách, phần thưởng tức thời, G và v, mô hình dự báo từ section 2–5; mê cung 8x8 ở section 6.
+- **Kết nối ra:** Bài 03 sẽ hình thức hóa quá trình quyết định Markov (MDP) và phương trình Bellman; hw02 củng cố kỹ năng đặc tả.
+- **Mạch phù hợp sinh viên năm 3:** Bảng chức năng và ba câu phân biệt giúp kiểm tra khả năng dùng khái niệm, không chỉ nhớ tên.
+
+### Cụm Bốn thành phần bài toán ra quyết định tuần tự
+
+- vấn đề: L02-07-01
+- trực giác: L02-07-01
+- ví dụ: L02-07-01
+- hình thức: L02-07-01
+- ứng dụng: L02-07-01
+- kiểm tra: L02-07-02
+- Gộp bước/ngoại lệ: Không áp dụng cho phần mở/kết với lý do: section tổng kết thu hồi khái niệm đã xoay vòng ở section 2–6, chỉ cần một slide bảng thu hồi và một slide kiểm tra.
+- Dữ kiện truyền tiếp: Mê cung 8x8 với G=(8,6), cặp (2,1)/(3,1) cùng quan sát, thưởng -1 mỗi bước.
+- Câu nối: Từ bảng thu hồi chuyển sang ba câu hỏi tự kiểm tra có đáp án.
+
+### L02-07-01 — Các thành phần của bài toán
+
+Thời lượng: 2 phút. Nguồn: PPTX trang 10, 20, 25–26; hw02 bài 1.
+
+- **Luận điểm:** Bài toán gồm bốn nhóm thành phần: thông tin (S/O/X), chính sách, đại lượng giá trị (r/G/v), và mô hình.
+- **Nhu cầu và lý do tồn tại:** Sinh viên cần một bảng thu hồi gọn thay vì liệt kê lại bảy section.
+- **Cách thể hiện và độ phù hợp năm 3:** Bảng bốn dòng dùng lại mê cung để gắn từng ký hiệu với chức năng, không lặp hình đã phân tích.
+- **Kết nối vào:** Định nghĩa S/O/X, pi, r/G/v, model từ section 2–5.
+- **Kết nối ra:** Ba câu hỏi tự kiểm tra ở slide kế.
+- **Sản phẩm học tập/kiểm tra:** Sinh viên đối chiếu từng dòng bảng với mê cung để tự xác nhận ký hiệu.
+- **Quyết định nguồn:** Gộp nguồn10/20 và ví dụ25–26 thành bảng tổng hợp các vai trò.
+
+### L02-07-02 — Tự kiểm tra
+
+Thời lượng: 2 phút. Nguồn: PPTX trang 16, 19, 22–23, 27; hw02 bài 2, 5.
+
+- **Luận điểm:** Ba giới hạn cần phân biệt: quan sát khác trạng thái, thưởng tức thời khác giá trị, mô hình khác chính sách tối ưu.
+- **Nhu cầu và lý do tồn tại:** Kiểm tra mức hiểu thay vì ghi nhớ định nghĩa.
+- **Cách thể hiện và độ phù hợp năm 3:** Ba câu hỏi đánh số, không đáp án trên mặt trang; từng câu kiểm tra một ranh giới khái niệm.
+- **Kết nối vào:** Ví dụ (2,1)/(3,1) ở section 3, thưởng -1 ở section 2, model ở section 5.
+- **Kết nối ra:** Kết nối sang bài 03: MDP và Bellman, chưa công thức.
+- **Sản phẩm học tập/kiểm tra:** Sinh viên trả lời trước, notes cung cấp đáp án kèm lý do.
+- **Quyết định nguồn:** Giữ quiz trang 27, ghép ba câu từ trang 16, 19, 22–23; tách đáp án sang notes theo spec.
+
+### L02-07-03 — Bài tập và tài liệu đọc
+
+Thời lượng: 3 phút. Nguồn: RL-hk2-2025-2026/resources/hw02.pdf, bài1,2,5,6,10; Sutton và Barto (2018), chương3; PPTX trang1–27..
+
+- **Luận điểm:** Bài tập củng cố tín hiệu học, đặc tả, chiết khấu và chính sách; chương3 chuẩn bị cho bài kế tiếp.
+- **Nhu cầu và lý do tồn tại:** Sinh viên cần nguồn cụ thể và ranh giới phạm vi để tự học.
+- **Cách thể hiện và độ phù hợp năm 3:** Hai card song song bài tập và đọc; bảng ngắn thay văn xuôi dài.
+- **Kết nối vào:** Kỹ năng đặc tả từ section 1–6.
+- **Kết nối ra:** Bài 03: MDP và Bellman.
+- **Sản phẩm học tập/kiểm tra:** Hoàn thành bài1,2,5,6 và phần đặc tả bài10 của hw02.
+- **Quyết định nguồn:** Giữ đúng đề nguồn; chưa yêu cầu Bellman hoặc chứng minh chuyển MDP thành MRP.
