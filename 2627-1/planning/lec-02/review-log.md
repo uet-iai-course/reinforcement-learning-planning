@@ -17,7 +17,7 @@ Reader lập kế hoạch được chấp nhận về quy trình; điều phối
 - Kiểm kê trực tiếp PPTX, XML và ảnh trang1–27; nguồn bài tập hw02 đã đọc. Bản cũ dùng mê cung6×4 và đường7 bước; bản này khôi phục lưới8×8, đích ngoài và đường16 bước của nguồn25–26.
 - Đưa mê cung lên mở bài và dùng lại qua từng khái niệm để chuẩn bị công thức. Gộp giao diện và tín hiệu thưởng; tách chính sách thành phần riêng.
 - Bỏ trang5–6 khỏi tuyến vì không phục vụ mục tiêu đã chốt; bỏ logo nhận diện và ảnh game27, giữ nhiệm vụ phân loại bằng thông tin/giả thiết. Không giữ raster, không có ngoại lệ raster.
-- Trang11 có bàn cờ/cây lựa chọn: phải giữ ý trong phần6, không coi là trang trống.
+- Trang11 có bàn cờ/cây lựa chọn, không phải trang trống. Giữ bàn cờ kết thúc ở phần6 để vận dụng thưởng và tổng thưởng; lược cây sao lưu giá trị vì đây là phần ôn bài01 và cơ chế cập nhật vượt mục tiêu bài02. Đã ghi quyết định trong ánh xạ nguồn.
 - Sửa vai trò môi trường và chỉ số thưởng nguồn15, phát biểu Markov nguồn17, quan sát đầy đủ nguồn18, dự đoán nguồn24; kiểm định toán độc lập còn chờ.
 - SVG nguồn-maze/policy/values và maze-local được dựng từ cấu trúc lưới, mũi tên, giá trị nguồn. Kiểm tra mọi ô của chính sách đều đến G, giá trị bằng âm số bước khi gamma=1. Tổng 27 trạng thái không kết thúc và G.
 
@@ -49,3 +49,7 @@ Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; p
 ## Phần 5 — kiểm tra và chỉnh sửa
 
 Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter. Chín trang,25 phút. Sửa hướng đoạn cuối thành Nam–Đông–Đông; tách ví dụ ngẫu nhiên khỏi mê cung xác định; sửa điều kiện kỳ vọng hữu hạn, phân biệt dừng gần chắc chắn với kỳ vọng thời gian dừng hữu hạn. Công thức mô hình dùng điều kiện đầy đủ. Bỏ đáp án trên mặt câu hỏi và lời bình quy trình. Sửa escape dấu nhỏ hơn trong HTML; bổ sung kiểm tra dấu dollar còn sót. 18 lượt rộng/hẹp không tràn, không rawMath, lỗi KaTeX, ảnh hỏng hoặc lỗi tài nguyên/JavaScript. Đã tính lại tổng -1,-1.75,-3 và kỳ vọng -4; vòng rà toán độc lập cuối bài vẫn bắt buộc.
+
+## Phần 6 — kiểm tra và chỉnh sửa
+
+Writer: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter. Bảy trang,20 phút. Thêm một trang vận dụng bàn cờ nguồn11, đưa tổng dự kiến lên43 trang. Sửa so sánh chính sách thành nhiệm vụ đánh giá chính sách cố định và tìm chính sách tốt; không gán vòng lặp rồi thoát cho chính sách xác định chỉ phụ thuộc vị trí. Nêu rõ hành động va tường vẫn nhận -1, bước vào G cũng nhận -1, sau G không còn thưởng. Tính lại toàn bộ27 giá trị của mê cung, giữ đích ngoài lưới. Bàn cờ X thắng, thưởng cuối bằng1 nhưng tổng thưởng tại trạng thái kết thúc bằng0. Bỏ lời bình quy trình trong notes. 14 lượt rộng/hẹp không tràn, không lỗi toán, ảnh hay JavaScript; tăng cỡ số trong hình giá trị để đọc trên máy chiếu.

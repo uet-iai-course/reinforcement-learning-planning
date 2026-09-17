@@ -509,3 +509,107 @@ Thời lượng: 2 phút. Nguồn: PPTX trang 13, 24, 27; hw02 bài 6.
 - **Kết nối ra:** Section 6: dự đoán với mô hình, điều khiển với chính sách.
 - **Sản phẩm học tập/kiểm tra:** Sinh viên chỉ ra lỗi phần thưởng và lập luận vì sao một bước chưa đủ.
 - **Quyết định nguồn:** Giữ quiz trang 27 và thảo luận phạm vi trang 13, thêm nối dự đoán/điều khiển trang 24 vào notes.
+
+## Phần 6: Dự đoán, điều khiển và bài toán mê cung — 20 phút
+
+- **Chức năng:** Tách hai nhiệm vụ đánh giá chính sách và cải thiện chính sách, rồi áp dụng lên mê cung 8x8 và trò chơi cờ để củng cố hàm giá trị và điều kiện dừng.
+- **Tiên quyết:** Sinh viên đã biết thành phần MDP, chính sách, hàm giá trị, phần thưởng tức thời và quy ước gamma từ các phần trước.
+- **Kết nối vào:** Nhận định nghĩa $v^\pi$ và mô hình chuyển tiếp xác định từ phần 5, cùng ví dụ robot và cờ ở phần 1–3.
+- **Kết nối ra:** Chuẩn bị cho phần 7 tổng kết và cho bài học sau về thuật toán dự đoán, điều khiển thực sự.
+- **Mạch phù hợp sinh viên năm 3:** Sinh viên năm 3 quen bài toán tối ưu và bảng truy vết; tách rõ nhiệm vụ đánh giá so với cải thiện giúp họ phân loại yêu cầu đề bài trước khi gặp thuật toán.
+
+### Cụm Dự đoán và điều khiển
+
+- vấn đề: L02-06-01
+- trực giác: L02-06-02
+- ví dụ: L02-06-02, L02-06-04
+- hình thức: L02-06-03, L02-06-05
+- ứng dụng: L02-06-06
+- kiểm tra: L02-06-07
+- Gộp bước/ngoại lệ: Không áp dụng cho phần mở/kết vì đây là phần chuyển tiếp giữa khái niệm và bài toán áp dụng, chu kỳ trải trên toàn section.
+- Dữ kiện truyền tiếp: Bảng đặc tả mê cung và hai con số -16, -18 được dùng lại ở slide giá trị và quiz.
+- Câu nối: Kết bằng câu hỏi mô hình hóa dẫn sang phần tổng kết.
+
+### L02-06-01 — Đánh giá và cải thiện chính sách
+
+Thời lượng: 3 phút. Nguồn: PPTX trang 24; hw02 bài 1, 5.
+
+- **Luận điểm:** Đánh giá giữ nguyên $\pi$ và xuất ra giá trị; cải thiện xuất ra chính sách mới.
+- **Nhu cầu và lý do tồn tại:** Sinh viên hay trộn hai nhiệm vụ khi đọc đề, cần bảng phân biệt đầu vào, đầu ra.
+- **Cách thể hiện và độ phù hợp năm 3:** Bảng hai dòng trung tâm, đủ gọn để đối chiếu trực tiếp.
+- **Kết nối vào:** Định nghĩa $\pi$ và $v^\pi$ từ phần 4, 5.
+- **Kết nối ra:** Hai nhiệm vụ này tổ chức toàn bộ ví dụ mê cung phía sau.
+- **Sản phẩm học tập/kiểm tra:** Hỏi phân loại một đề cho trước thuộc nhiệm vụ nào.
+- **Quyết định nguồn:** Giữ trang 24, tách thành slide mở riêng để đặt khung trước ví dụ.
+
+### L02-06-02 — Dự đoán và điều khiển
+
+Thời lượng: 3 phút. Nguồn: PPTX trang 16 bước và 18 bước; hw02 bài 5.
+
+- **Luận điểm:** Giá trị đo chất lượng chính sách: -16 tốt hơn -18 khi $\gamma=1$.
+- **Nhu cầu và lý do tồn tại:** Con số cụ thể giúp thấy vì sao cần tiêu chí so chính sách.
+- **Cách thể hiện và độ phù hợp năm 3:** Hai giá trị đặt cạnh trong công thức lớn, so sánh tức thời.
+- **Kết nối vào:** Quy ước thưởng -1 mỗi chuyển từ phần 2.
+- **Kết nối ra:** Định nghĩa dự đoán, điều khiển được dùng xuyên suốt mê cung.
+- **Sản phẩm học tập/kiểm tra:** Phân loại yêu cầu tính giá trị so với tìm quy tắc.
+- **Quyết định nguồn:** Sửa trang24: dự đoán giữ chính sách, điều khiển tìm chính sách. Bỏ so sánh v của chính sách thêm một vòng2bước vì vòng rồi thoát không là chính sách xác định dừng trên riêng tọa độ.
+
+### L02-06-03 — Đặc tả môi trường mê cung
+
+Thời lượng: 3 phút. Nguồn: PPTX trang 25; hw02 bài 2.
+
+- **Luận điểm:** Mê cung là MDP xác định với thưởng -1 mỗi chuyển và một trạng thái kết thúc.
+- **Nhu cầu và lý do tồn tại:** Đặc tả chính xác trước khi tính đường đi và giá trị.
+- **Cách thể hiện và độ phù hợp năm 3:** Bảng đặc tả toàn chiều ngang, không lặp hình khiến chữ nhỏ; ghi rõ27ôtrống và G thay vì64ô.
+- **Kết nối vào:** Bộ bốn thành phần MDP từ phần 3.
+- **Kết nối ra:** Đặc tả này cố định cho slide chính sách và giá trị.
+- **Sản phẩm học tập/kiểm tra:** Hỏi thưởng khi đụng tường và vị trí đích.
+- **Quyết định nguồn:** Giữ đặc tả trang 25 và hw02 bài 2, ghép vào một slide duy nhất.
+
+### L02-06-04 — Chính sách trên mê cung
+
+Thời lượng: 3 phút. Nguồn: PPTX trang 26; hw02 bài 2.
+
+- **Luận điểm:** Một chính sách cho trước sinh ra đường đi xác định dài 16 chuyển.
+- **Nhu cầu và lý do tồn tại:** Cần đường đi cụ thể để slide sau tính giá trị từng ô.
+- **Cách thể hiện và độ phù hợp năm 3:** Hình mũi tên nguyên bản nguồn, trực quan cho lưới nhỏ.
+- **Kết nối vào:** Đặc tả mê cung slide trước.
+- **Kết nối ra:** Danh sách 16 chuyển là dữ liệu tính $v$.
+- **Sản phẩm học tập/kiểm tra:** Yêu cầu liệt kê lại các chuyển từ $(0,2)$.
+- **Quyết định nguồn:** Giữ nguyên hình trang 26, không giảng thuật toán tìm đường.
+
+### L02-06-05 — Giá trị trên mê cung
+
+Thời lượng: 3 phút. Nguồn: PPTX trang 26; hw02 bài 6.
+
+- **Luận điểm:** Với $\gamma=1$, giá trị bằng âm số chuyển còn lại tới đích.
+- **Nhu cầu và lý do tồn tại:** Kiểm tra sinh viên đọc được giá trị từ khoảng cách theo chính sách.
+- **Cách thể hiện và độ phù hợp năm 3:** Bảng giá trị vẽ lại nguồn và câu hỏi về ô sát đích; số liệu được kiểm tra theo từng mũi tên.
+- **Kết nối vào:** Đường đi 16 chuyển slide trước.
+- **Kết nối ra:** Cách đọc giá trị này chuyển sang ví dụ cờ.
+- **Sản phẩm học tập/kiểm tra:** Giải thích vì sao ô kề nhau giá trị khác.
+- **Quyết định nguồn:** Giữ số gốc trang 26, không gọi Bellman hay cập nhật lặp.
+
+### L02-06-06 — Trạng thái kết thúc trong trò chơi
+
+Thời lượng: 3 phút. Nguồn: PPTX, trang 11; bài kiểm tra suy ra từ quy ước phần thưởng và điều kiện kết thúc..
+
+- **Luận điểm:** Tại trạng thái kết thúc, phần thưởng bước cuối và lợi nhuận từ đó là hai đại lượng khác nhau.
+- **Nhu cầu và lý do tồn tại:** Sinh viên hay đồng nhất $R_T$ với $G_T$; ví dụ cờ cho phân biệt rõ.
+- **Cách thể hiện và độ phù hợp năm 3:** Bàn cờ kết thúc vẽ đúng nguồn11, nối quy ước thưởng và tổng tương lai sang một trò chơi khác.
+- **Kết nối vào:** Điều kiện dừng ở mê cung và định nghĩa $G_t$ phần 2.
+- **Kết nối ra:** Nền cho bài học sau về cập nhật giá trị qua trạng thái kết thúc.
+- **Sản phẩm học tập/kiểm tra:** Giải thích vì sao $R_T=1$ nhưng $G_T=0$.
+- **Quyết định nguồn:** Giữ hình trang 11; lược cây cập nhật cùng trang vì là ôn bài 01 và không dạy thuật toán mới.
+
+### L02-06-07 — Kiểm tra mô hình hóa
+
+Thời lượng: 2 phút. Nguồn: PPTX trang 27; hw02 bài 10.
+
+- **Luận điểm:** Đổi cách quan sát không đổi môi trường nhưng buộc xét lại biểu diễn chính sách.
+- **Nhu cầu và lý do tồn tại:** Kiểm tra sinh viên phân biệt trạng thái với quan sát đã học phần 3.
+- **Cách thể hiện và độ phù hợp năm 3:** Câu hỏi dẫn đầu, hai gạch đầu dòng đáp án ngắn.
+- **Kết nối vào:** Phân biệt trạng thái, quan sát phần 3 và đặc tả mê cung phần này.
+- **Kết nối ra:** Dẫn sang phần 7 tổng kết và tự kiểm tra.
+- **Sản phẩm học tập/kiểm tra:** Sinh viên tự liệt kê thành phần giữ và thành phần đổi trước khi xem đáp án.
+- **Quyết định nguồn:** Giữ ý trang 27, thay ví dụ cờ vua, robot bằng ghi chú vì slide đã có mê cung làm ví dụ chính.

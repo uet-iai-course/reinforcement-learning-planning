@@ -20,7 +20,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 
 ## Trạng thái triển khai
 
-Đã có bản viết cho 5/7 phần; chỉ bàn giao khi đủ các vòng rà soát và kiểm định cuối.
+Đã có bản viết cho 6/7 phần; chỉ bàn giao khi đủ các vòng rà soát và kiểm định cuối.
 
 ## Trang đích
 
@@ -57,6 +57,13 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-05-07` — Dự báo bước tiếp theo — PPTX trang 13, 23; hw02 bài 6
 - `L02-05-08` — Mô hình chuyển và phần thưởng — PPTX trang 13, 23; hw02 bài 10
 - `L02-05-09` — Kiểm tra mô hình — PPTX trang 13, 24, 27; hw02 bài 6
+- `L02-06-01` — Đánh giá và cải thiện chính sách — PPTX trang 24; hw02 bài 1, 5
+- `L02-06-02` — Dự đoán và điều khiển — PPTX trang 16 bước và 18 bước; hw02 bài 5
+- `L02-06-03` — Đặc tả môi trường mê cung — PPTX trang 25; hw02 bài 2
+- `L02-06-04` — Chính sách trên mê cung — PPTX trang 26; hw02 bài 2
+- `L02-06-05` — Giá trị trên mê cung — PPTX trang 26; hw02 bài 6
+- `L02-06-06` — Trạng thái kết thúc trong trò chơi — PPTX, trang 11; bài kiểm tra suy ra từ quy ước phần thưởng và điều kiện kết thúc.
+- `L02-06-07` — Kiểm tra mô hình hóa — PPTX trang 27; hw02 bài 10
 
 ## Ánh xạ toàn bộ nguồn
 
@@ -71,7 +78,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 | 7–8 | gộp, sửa | 2 | So sánh tín hiệu, ảnh hưởng hành động tới dữ liệu, phân biệt phản hồi trễ với thưởng mỗi bước. |
 | 9 | sửa | 2, 5 | Giả thuyết phần thưởng không phải định lý; tách trực giác tích lũy và công thức. |
 | 10 | gộp | 5, 7 | Tránh lặp danh mục ba thành phần với trang 20. |
-| 11 | sửa | 6 | Có bàn cờ và cây lựa chọn; giữ ý đánh giá các lựa chọn, không thêm thuật toán minimax hoặc cập nhật chưa học. |
+| 11 | sửa | 6 | Giữ bàn cờ kết thúc để vận dụng phần thưởng và tổng thưởng; lược cây sao lưu giá trị (ôn bài 01), vì cơ chế cập nhật nằm ngoài mục tiêu bài 02. |
 | 12 | tách, sửa | 2, 3 | Dùng robot/xe/cờ để phân biệt ranh giới và thông tin. |
 | 13 | sửa | 5 | Phạm vi mô hình theo tác vụ; bỏ câu hỏi tu từ về mô hình hoàn thiện thế giới. |
 | 14–15 | gộp, sửa | 2 | Môi trường trả quan sát/phần thưởng, không trả hành động; chỉ số phản hồi là t+1. |

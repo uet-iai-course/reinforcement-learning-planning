@@ -186,6 +186,43 @@
 <aside class="notes">Phần dự báo chuyển trạng thái đúng, phần dự báo thưởng sai: phải là âm một. Biết phản hồi một bước chưa tự xác định đường đi; còn phải đánh giá các chuỗi lựa chọn theo mục tiêu. Một mô hình phục vụ tác vụ không cần mô tả mọi chi tiết của thế giới. Sự khác nhau giữa đánh giá và tìm cách hành động dẫn tới hai bài toán dự đoán và điều khiển.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 13, 24, 27; hw02 bài 6</p></aside>
 </section>
 </section>
+<section>
+<section data-slide-id="L02-06-01">
+<h2>Đánh giá và cải thiện chính sách</h2>
+<p>Mô tả được chính sách chưa cho biết chất lượng của nó.</p><table><thead><tr><th>Nhiệm vụ</th><th>Đại lượng giữ cố định</th><th>Kết quả cần tìm</th></tr></thead><tbody><tr><td>Đánh giá</td><td>Chính sách $\pi$</td><td>Giá trị $v_\pi$</td></tr><tr><td>Tìm cách hành động</td><td>Môi trường và mục tiêu</td><td>Chính sách phù hợp mục tiêu</td></tr></tbody></table>
+<aside class="notes">Đánh giá nhận một chính sách cho trước và xác định phần thưởng dài hạn dưới chính sách đó. Tìm cách hành động phải lựa chọn chính sách theo mục tiêu. Hai nhiệm vụ có đầu ra khác nhau, dù cùng dùng các thành phần trạng thái, hành động và phần thưởng.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 24; hw02 bài 1, 5</p></aside>
+</section>
+<section data-slide-id="L02-06-02">
+<h2>Dự đoán và điều khiển</h2>
+<div class="grid2"><div class="card"><h3>Dự đoán</h3><p>Giữ chính sách ở hình mê cung; tính $v_\pi(0,2)$ khi $\gamma=1$.</p></div><div class="card"><h3>Điều khiển</h3><p>Tìm chính sách tối đa hóa phần thưởng tích lũy kỳ vọng từ điểm bắt đầu.</p></div></div><p class="check"><strong>Câu hỏi:</strong> Phân biệt đầu ra của hai yêu cầu.</p>
+<aside class="notes">Yêu cầu thứ nhất là dự đoán: chính sách không đổi và kết quả cần tìm là giá trị âm 16 tại điểm bắt đầu. Yêu cầu thứ hai là điều khiển: kết quả cần tìm là một chính sách. Tìm chính sách tối ưu không có nghĩa chính sách đang dùng chắc chắn kém hơn; cần đối chiếu với các lựa chọn và giả thiết của bài toán.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 16 bước và 18 bước; hw02 bài 5</p></aside>
+</section>
+<section data-slide-id="L02-06-03">
+<h2>Đặc tả môi trường mê cung</h2>
+<table><thead><tr><th>Thành phần</th><th>Đặc tả</th></tr></thead><tbody><tr><td>Trạng thái</td><td>27 ô đi được và đích $G=(8,6)$.</td></tr><tr><td>Hành động</td><td>Bắc, Đông, Nam, Tây.</td></tr><tr><td>Chuyển</td><td>Đi sang ô kề; gặp tường hoặc biên thì đứng yên.</td></tr><tr><td>Thưởng và kết thúc</td><td>$-1$ mỗi bước, kể cả vào $G$; đến $G$ thì dừng.</td></tr></tbody></table><p>Riêng từ $(7,6)$, chọn Đông sẽ vào đích ngoài lưới.</p>
+<aside class="notes">Tọa độ đánh số từ 0; cột tăng sang phải, hàng tăng xuống. Ô tường không thuộc tập trạng thái của tác tử. Mỗi hành động thử di chuyển đều nhận âm một, kể cả khi đứng yên do gặp tường. Đích ở ngoài lưới, chỉ vào được bằng hành động Đông từ (7,6). Sau đó không sinh thêm hành động hoặc phần thưởng.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 25; hw02 bài 2</p></aside>
+</section>
+<section data-slide-id="L02-06-04">
+<h2>Chính sách trên mê cung</h2>
+<div class="grid2"><img class="figure" src="img/lec-02/source-policy.svg" alt="Các mũi tên chính sách nguồn dẫn từ (0,2) qua hành lang trên tới đích G trong 16 bước."/><div><p>Mỗi ô đi được có một hành động được chọn.</p><p>Từ $(0,2)$ đến $G$: 16 bước.</p><p>Ở $G$, tương tác kết thúc.</p></div></div>
+<aside class="notes">Chuỗi hành động từ (0,2) là Đông, Bắc, Đông, Đông, Đông, Đông, Đông, Nam, Nam, Tây, Nam, Nam, Đông, Nam, Đông, Đông. Đường đi gồm 16 chuyển tiếp và kết thúc tại G. Đây là chính sách được cho trong nguồn; việc đọc và thực hiện nó khác với bài toán tìm ra chính sách.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 26; hw02 bài 2</p></aside>
+</section>
+<section data-slide-id="L02-06-05">
+<h2>Giá trị trên mê cung</h2>
+<div class="grid2"><img class="figure" src="img/lec-02/source-values.svg" alt="Bảng giá trị nguồn: đầu (0,2) là âm16, (6,5) âm3, (7,6) âm1 dưới chính sách minh họa."/><div><p>Chuyển xác định, $\gamma=1$, mỗi bước thưởng $-1$.</p><p>Giá trị bằng âm số bước còn lại theo chính sách.</p><p class="check"><strong>Câu hỏi:</strong> Giải thích $v_\pi(7,6)=-1$ và $v_\pi(G)=0$.</p></div></div>
+<aside class="notes">Ô (7,6) còn một bước Đông tới đích nên giá trị là âm một. Tại G không còn phần thưởng tương lai nên giá trị bằng không. Từ (6,5) còn ba bước nên giá trị âm ba; từ điểm bắt đầu còn 16 bước nên âm 16. Các giá trị ứng với chính sách cụ thể và hệ số chiết khấu một.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 26; hw02 bài 6</p></aside>
+</section>
+<section data-slide-id="L02-06-06">
+<h2>Trạng thái kết thúc trong trò chơi</h2>
+<div class="grid2"><img class="figure" src="img/lec-02/source-tictactoe.svg" alt="Bàn cờ nguồn: X O O; O X X; trống trống X. X thắng đường chéo chính."/><div><p>X vừa hoàn thành đường chéo và nhận thưởng $R_T=1$.</p><p class="check"><strong>Câu hỏi:</strong> Ván đã kết thúc. Tính $G_T$ và giải thích sự khác nhau với $R_T$.</p></div></div>
+<aside class="notes">$G_T=0$ vì ván đã kết thúc và không còn phần thưởng tương lai. $R_T=1$ được nhận ở bước vừa đưa ván vào trạng thái kết thúc. Với bước trước đó, $G_{T-1}=R_T=1$. Quy ước này không phụ thuộc việc chọn hệ số chiết khấu nào: tại trạng thái kết thúc, tổng còn lại luôn rỗng.<p class="note-source"><strong>Nguồn:</strong> PPTX, trang 11; bài kiểm tra suy ra từ quy ước phần thưởng và điều kiện kết thúc.</p></aside>
+</section>
+<section data-slide-id="L02-06-07">
+<h2>Kiểm tra mô hình hóa</h2>
+<div class="check"><p><strong>Câu hỏi:</strong> Giữ nguyên mê cung và quy tắc thưởng. Thay quan sát tọa độ bằng cảm biến bốn ô kề.</p><p>Xác định thành phần giữ nguyên và thành phần cần thay đổi trong mô tả tác tử–môi trường.</p></div>
+<aside class="notes">Tập trạng thái, tập hành động, quy luật chuyển và phần thưởng giữ nguyên. Kênh quan sát đổi; biểu diễn quyết định và chính sách sử dụng nó cần được xét lại. Không thể mặc nhiên áp dụng quy tắc nhận tọa độ cho dữ liệu cảm biến. Tương tự, ảnh bàn cờ vua chưa chắc chứa lượt đi và quyền nhập thành; mức quan sát phải được xét theo thông tin thật sự có.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 27; hw02 bài 10</p></aside>
+</section>
+</section>
 <div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 02</div>
 </div></div>
 <script src="revealjs/dist/reveal.js"></script>
