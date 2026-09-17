@@ -1,5 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 330" role="img" aria-labelledby="title desc">
-  <title id="title">Phần thưởng trễ trên một quỹ đạo</title><desc id="desc">Hai chuyển tiếp đầu nhận phần thưởng bằng 0; hành động cuối có phần thưởng dương, nên kết quả cuối liên quan tới cả chuỗi.</desc>
-  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#2F3E7A"/></marker></defs>
-  <g font-family="sans-serif" text-anchor="middle"><path d="M120 155H880" stroke="#2F3E7A" stroke-width="6" marker-end="url(#a)"/><g fill="#EDF4FF" stroke="#2F3E7A" stroke-width="5"><circle cx="130" cy="155" r="38"/><circle cx="350" cy="155" r="38"/><circle cx="570" cy="155" r="38"/><circle cx="790" cy="155" r="38"/></g><path d="M790 117L812 145L848 100L878 126L790 117" fill="#2E7D32"/><text x="130" y="165" font-size="30">S₀</text><text x="350" y="165" font-size="30">S₁</text><text x="570" y="165" font-size="30">S₂</text><text x="790" y="165" font-size="30">S₃</text><text x="240" y="115" font-size="30">A₀, R₁=0</text><text x="460" y="115" font-size="30">A₁, R₂=0</text><text x="680" y="115" font-size="30">A₂, R₃=+1</text><path d="M680 235Q460 300 240 235" fill="none" stroke="#B15A2B" stroke-width="5"/><text x="460" y="295" font-size="30" fill="#B15A2B">Gán kết quả cho chuỗi hành động</text></g>
+  <title id="title">Phần thưởng trễ trên một quỹ đạo</title>
+  <desc id="desc">Ba mũi tên riêng nối lần lượt S0 tới S1, S1 tới S2 và S2 tới trạng thái kết thúc S3. Hai chuyển tiếp đầu nhận thưởng 0; chuyển tiếp cuối nhận thưởng +1. Kết quả cuối liên quan tới cả chuỗi hành động.</desc>
+  <defs>
+    <marker id="transition-arrow" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="18" refX="18" refY="9" orient="auto" viewBox="0 0 20 18">
+      <path d="M0 0 L18 9 L0 18 Z" fill="#2F3E7A"/>
+    </marker>
+  </defs>
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <g fill="none" stroke="#2F3E7A" stroke-width="4" marker-end="url(#transition-arrow)">
+      <path d="M192 155 H336"/>
+      <path d="M422 155 H566"/>
+      <path d="M652 155 H796"/>
+    </g>
+    <g fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4">
+      <circle cx="150" cy="155" r="38"/>
+      <circle cx="380" cy="155" r="38"/>
+      <circle cx="610" cy="155" r="38"/>
+      <circle cx="840" cy="155" r="38"/>
+    </g>
+    <circle cx="840" cy="155" r="30" fill="none" stroke="#2F3E7A" stroke-width="2"/>
+    <g fill="#202838" font-size="30">
+      <text x="150" y="165">S₀</text>
+      <text x="380" y="165">S₁</text>
+      <text x="610" y="165">S₂</text>
+      <text x="840" y="165">S₃</text>
+      <text x="265" y="110">A₀, R₁=0</text>
+      <text x="495" y="110">A₁, R₂=0</text>
+      <text x="725" y="110">A₂, R₃=+1</text>
+    </g>
+    <text x="840" y="224" font-size="27" fill="#2F3E7A">Kết thúc</text>
+    <path d="M210 228 V246 H780 V228" fill="none" stroke="#B15A2B" stroke-width="3"/>
+    <text x="495" y="297" font-size="30" fill="#B15A2B">Kết quả cuối liên quan tới cả chuỗi</text>
+  </g>
 </svg>

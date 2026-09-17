@@ -761,3 +761,7 @@ Không có trích đoạn thật từ lecture2-3-MDPswithKeyConcepts.pptx, file 
 - Đã commit riêng từng phần1–7; phần chỉnh sửa sau rà soát có commit riêng. Không push. Không còn lỗi chặn bàn giao hoặc nghiêm trọng chưa có quyết định và bằng chứng xử lý.
 
 Kiểm tra bàn giao: thẻ Bài2 trên index mở đúng deck43trang.11tệp tham chiếu cuối trong Design Files khớp SHA-256 với tệp cục bộ (HTML, ba tệp planning, bảy bảng ảnh); ảnh phần3 cuối mang tên lecture02-final-section03.png, thay cho contact-03.png của bản trước. Đồng bộ tệp không đồng nghĩa đã rà bản render trong Codex Slides. git diff --check không báo lỗi.
+
+## Chỉnh hình Phản hồi trễ theo yêu cầu
+
+Vẽ lại delayed-feedback.svg: ba mũi tên riêng nối S₀→S₁→S₂→S₃, đầu mũi tên có kích thước cố định và dừng trước viền trạng thái. Thay hình đánh dấu méo bằng vòng kép và nhãn Kết thúc; dùng ngoặc gom chuỗi cho chú thích. Giữ các nhãn hành động và thưởng0,0,+1. Đã xem ảnh render trang L02-02-06 và kiểm tra14lượt rộng/hẹp của phần2: không tràn khung, lỗi toán, ảnh hỏng hoặc lỗi JavaScript/tài nguyên.
