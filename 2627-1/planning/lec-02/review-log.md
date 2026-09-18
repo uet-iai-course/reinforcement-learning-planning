@@ -1793,3 +1793,10 @@ Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; 
 4. **Đề xuất nhỏ (severity: minor, không bắt buộc):** câu "Giả sử Bắc đang được đánh giá tốt nhất, Nam chưa rõ" có thể thêm "trong ví dụ này" để nhấn mạnh giả định minh họa; tuy nhiên aside đã làm rõ đủ.
 
 **Mức độ: không có lỗi major/critical.**
+
+
+## Bỏ slide so sánh chính sách và khai thác/thăm dò — 2026-09-18
+
+- Theo yêu cầu, bỏ L02-04-06. Khôi phục câu hỏi cuối phần về ba câu trước khi thêm slide, bỏ câu hỏi thăm dò phụ thuộc nội dung vừa bỏ.
+- HTML, outline và storyboard trở về đúng bản đã kiểm định trước commit 64bcbbb; giữ nhật ký các lượt trước. Phần 4 trở lại 5 trang/15 phút, toàn bài 42 trang/120 phút; chính sách ngẫu nhiên chuyển trực tiếp tới câu hỏi kiểm tra.
+- Kiểm tra ID, thứ tự, ánh xạ storyboard và tổng thời lượng đạt; `git diff --check` đạt. Không sửa các nội dung khác.
