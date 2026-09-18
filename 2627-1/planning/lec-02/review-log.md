@@ -1614,3 +1614,8 @@ Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; 
 
 - Theo yêu cầu, L02-04-01 đổi tiêu đề từ “Quy tắc lựa chọn hành động” thành “Chính sách”; câu mô tả đổi thành “Chính sách là quy tắc chọn hành động cho từng vị trí.”
 - Đồng bộ tiêu đề trong outline/storyboard. Giữ hình mê cung, ghi chú và định nghĩa khái quát theo thông tin hiện có. Kiểm tra mỗi chuỗi được thay đúng một lần; `git diff --check` đạt.
+
+
+## Sửa câu định nghĩa chính sách — 2026-09-18
+
+- Theo chỉ dẫn mới, câu trên L02-04-01 là “Chính sách là quy tắc chọn hành động cho từng trạng thái.”, thay cho “từng vị trí”. Kiểm tra thay đúng một lần và `git diff --check` đạt.
