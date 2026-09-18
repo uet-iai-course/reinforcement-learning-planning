@@ -1619,3 +1619,8 @@ Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; 
 ## Sửa câu định nghĩa chính sách — 2026-09-18
 
 - Theo chỉ dẫn mới, câu trên L02-04-01 là “Chính sách là quy tắc chọn hành động cho từng trạng thái.”, thay cho “từng vị trí”. Kiểm tra thay đúng một lần và `git diff --check` đạt.
+
+
+## Bỏ câu nhắc lại về chính sách — 2026-09-18
+
+- Theo yêu cầu, bỏ hộp chứa câu “Chính sách quy định cách chọn hành động từ thông tin hiện có.” khỏi L02-04-01. Giữ câu định nghĩa theo trạng thái và hình chính sách. Kiểm tra thay đúng một đoạn và `git diff --check` đạt.
