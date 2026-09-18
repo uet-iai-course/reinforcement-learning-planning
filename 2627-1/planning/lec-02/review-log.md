@@ -1608,3 +1608,9 @@ Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; 
 - **Luồng sư phạm:** 02 → 11 → 09 → 06 → 04 → 10 → 08 mạch lạc (định nghĩa → dữ liệu/lịch sử → quan sát đầy đủ/một phần → Markov → mở rộng → kiểm tra).
 
 **Severity:** none. **Fix:** không cần.
+
+
+## Đổi tiêu đề và câu mô tả chính sách — 2026-09-18
+
+- Theo yêu cầu, L02-04-01 đổi tiêu đề từ “Quy tắc lựa chọn hành động” thành “Chính sách”; câu mô tả đổi thành “Chính sách là quy tắc chọn hành động cho từng vị trí.”
+- Đồng bộ tiêu đề trong outline/storyboard. Giữ hình mê cung, ghi chú và định nghĩa khái quát theo thông tin hiện có. Kiểm tra mỗi chuỗi được thay đúng một lần; `git diff --check` đạt.

@@ -364,7 +364,7 @@ Thời lượng: 5 phút. Nguồn: Các khái niệm phần 3; PPTX 16–19, 25�
 - Dữ kiện truyền tiếp: Bảng xác suất tại (1,2) chuyển thành ký hiệu chính sách; khái niệm chính sách cố định được dùng trong hàm giá trị.
 - Câu nối: Cách chọn hành động đã xác định; tiếp theo cần đánh giá phần thưởng dài hạn.
 
-### L02-04-01 — Quy tắc lựa chọn hành động
+### L02-04-01 — Chính sách
 
 Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa..
 
