@@ -1800,3 +1800,115 @@ Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; 
 - Theo yêu cầu, bỏ L02-04-06. Khôi phục câu hỏi cuối phần về ba câu trước khi thêm slide, bỏ câu hỏi thăm dò phụ thuộc nội dung vừa bỏ.
 - HTML, outline và storyboard trở về đúng bản đã kiểm định trước commit 64bcbbb; giữ nhật ký các lượt trước. Phần 4 trở lại 5 trang/15 phút, toàn bài 42 trang/120 phút; chính sách ngẫu nhiên chuyển trực tiếp tới câu hỏi kiểm tra.
 - Kiểm tra ID, thứ tự, ánh xạ storyboard và tổng thời lượng đạt; `git diff --check` đạt. Không sửa các nội dung khác.
+
+
+## Ưu tiên dừng và mô hình phân phối chung — 2026-09-18
+
+- Thêm L02-05-10 ngay sau “Kết quả dài hạn của chính sách”. Điều kiện ưu tiên dừng dùng đúng ý người dùng: thêm cùng thưởng đầu chuỗi giữ nguyên so sánh. Tham khảo Berkeley CS188 Spring 2026, bài 09, trang 22: https://inst.eecs.berkeley.edu/~cs188/sp26/assets/lectures/cs188-sp26-lec09.pdf.
+- Phát biểu rút gọn được bổ sung phạm vi công khai: trong lớp lợi ích cộng tuyến tính với trọng số dương không tăng, độc lập độ dài, chuẩn hóa trọng số đầu bằng 1, tính dừng buộc trọng số hình học. Chứng minh, phản ví dụ cho điều kiện dừng đứng riêng, trường hợp biên và tính không duy nhất của biểu diễn số ở notes. Tổng thường là trường hợp hệ số bằng 1. Không gán bộ giả thiết bổ sung cho slide nguồn.
+- Theo các yêu cầu tiếp theo, bỏ L02-05-02 “Tổng phần thưởng trên quỹ đạo”, bỏ câu “Ba bước vừa xét cho...” và tham chiếu cũ trong notes L02-05-03; bỏ L02-05-07 “Dự báo bước tiếp theo”.
+- Đổi L02-05-08 thành “Mô hình chuyển trạng thái và phần thưởng”, dùng phân phối chung $P(s',r\mid s,a)$, nêu miền rời rạc, chuẩn hóa và ví dụ. Dạng biên và thưởng kỳ vọng nằm trong notes, không giả định độc lập. Bổ sung Sutton–Barto (2018), mục 3.1, phương trình 3.2.
+- Câu hỏi thứ 4 cuối phần so sánh $(2,0)$ và $(1,1)$, giữ ba câu cũ. HTML/outline/storyboard đồng bộ: 41 trang, 7 phần, 120 phút; phần 5 vẫn 25 phút. Các phút của slide bỏ được chuyển sang giải thích định nghĩa và ví dụ bằng lời. Không đổi CSS, hình, trang chỉ mục hoặc các phần khác.
+- Quy trình: reader lập kế hoạch ban đầu cho phát biểu về tính cộng trước khi người dùng cung cấp điều kiện dừng. Lượt đầu timeout do đọc rộng; lượt thu hẹp thành công. Bản định lý ban đầu không bàn giao; thay bằng điều kiện người dùng xác định. Writer OpenRouter soạn lại slide có điều kiện, điều phối viên biên tập và tích hợp. Năm reviewer chạy độc lập trên phần 5 và hai trang mỗi phía; sau yêu cầu thay mô hình, chạy lại năm vai trên bản mới. Các lượt này là rà theo cụm, không phải rà toàn bộ deck.
+- Bằng chứng writer: `/tmp/rl02-rebuild/stationary-writer.json`; requested_model = observed_model = `z-ai/glm-5.3-flash`, provider = `OpenRouter`. Hồ sơ `write`; lần nhập nhầm tên hồ sơ được sửa trước khi API chạy.
+- Quyết định rà: đã thêm giải thích gamma và nối chuỗi, miền mọi chuỗi hữu hạn thực trên mặt slide. Không áp dụng đề nghị bỏ số mũ 3 trong phản ví dụ: đây là phép lập phương có chủ ý, không phải chú thích chân trang. Bỏ số mũ sẽ biến phản ví dụ thành tổng thường và làm sai lập luận. Đã thêm ngoặc và chữ “lập phương lợi ích của phần đuôi” để tránh đọc nhầm. Reviewer toán xác nhận định lý và mô hình đúng; không đổi thứ tự do người dùng chỉ định rõ vị trí slide mới.
+- Kiểm định cục bộ: 14 lượt hiển thị của 7 trang phần 5 trên hai kích thước 1280×720 và 390×844; không tràn, không lỗi KaTeX, không công thức thô, không hình hỏng, không lỗi JavaScript/HTTP. Đã xem ảnh chụp slide định lý và mô hình; bàn phím hoạt động. Bố cục định lý ban đầu quá cao đã được sửa thành điều kiện ngắn và bảng hai dạng lợi ích trước lần kiểm định cuối. ID/thứ tự storyboard và tổng thời lượng được kiểm tra bằng mã; `git diff --check` đạt.
+- Giới hạn: Codex Slides vẫn không khả dụng để xác minh trực quan; kiểm tra hiển thị dùng RevealJS cục bộ tại cổng 8765. Không tuyên bố đã rà bằng Codex Slides.
+
+- Rà mạch bản trước (`stationary-flow`) timeout; bản sau có mô hình chung (`finaljoint-flow`) đã hoàn thành và xác nhận kết nối vào/ra. Thống nhất ký hiệu nối chuỗi thành $[r,a]$ theo góp ý cuối.
+
+### Rà bản cuối: student
+
+Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flash`; provider `OpenRouter`; profile `review-section`, `--no-tools`.
+
+**Báo cáo review — File 2627-1/lecture-02, section 5 (role student)**
+
+**Kết quả chung: PASS** (1 lỗi trình bày mức thấp).
+
+1. **Low — L02-05-10 (notes)**: Câu "$V([r]+a)=r+V(a)^3$" có ký hiệu "^3" lạ ngay sau công thức, dễ đọc nhầm là lũy thừa thay vì chú thích chân trang. Evidence: đoạn notes ví dụ hàm V bảo toàn so sánh. Fix: đổi thành ghi chú rõ ràng, ví dụ "(chú thích 3)" hoặc bỏ số.
+
+**Các mục kiểm tra khác — đạt:**
+- **Định lý (05-10)**: Phạm vi đã giới hạn đúng — U cộng tuyến tính trọng số dương không tăng trên mọi chuỗi hữu hạn số thực, độc lập độ dài, w₁=1; suy ra wᵢ=γ^{i−1}, 0<γ≤1; ghi rõ tính dừng không suy ra tính cộng, γ=0 không thỏa tương đương chặt, tham chiếu CS188 lec09 p22 và Shakerinava (2022) có cảnh báo không đồng nhất. Chứng minh tóm tắt nhất quán.
+- **Mô hình (05-08)**: P(s′,r|s,a) liên hợp, tổng bằng 1, miền rời rạc khai báo rõ, ghi chú "không giả định độc lập", công thức thu về P(s′|s,a) và r̄ đúng.
+- **Quiz (05-09)**: Gₜ=−1,75 với γ=0,5 đúng; đáp án Q3, Q4 nhất quán với ví dụ (2,0)/(1,1) ở 05-10.
+- **Hàng xóm & dòng nội dung**: 05-01 (nhận từ chính sách) → 05-10 → 05-03 (Gₜ, γ∈[0,1] nhất quán với ghi chú γ=0) → 05-04 → 05-05 → 05-08 → 05-09 → 06-01; các liên kết "trang trước/trang sau" khớp.
+- **Thời lượng**: 1+4+6+2+4+4+4 = 25 phút, khớp ngân sách section 5.
+- **Slide đã xóa (05-02, 05-07, box 05-03)**: không còn dấu vết, không khôi phục.
+- Trình bày: không tràn tại 1280/390 theo kiểm tra trình duyệt đã cung cấp.
+
+### Rà bản cuối: rl
+
+Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flash`; provider `OpenRouter`; profile `review-section`, `--no-tools`.
+
+**Kết quả: PASS (có 2 ghi chú mức Thấp)**
+
+**Thấp – L02-05-10:** Trong ghi chú, biểu thức "$V([r]+a)=r+V(a)^3$" có số mũ 3 bất thường, nhiều khả năng là chú thích chân trang bị dính vào công thức. Bằng chứng: dòng ví dụ về hàm V bảo toàn so sánh. Đề xuất: sửa thành $V([r]+a)=r+V(a)$ (hoặc chú thích riêng).
+
+**Thấp – L02-05-10:** Slide dùng $\gamma$ trong bảng và định lý trước khi slide 05-03 định nghĩa $\gamma\in[0,1]$. Ghi chú đã giải thích "hệ số chiết khấu" qua caption nên chấp nhận được; đề xuất thêm nửa câu "định nghĩa ở trang sau" nếu muốn chặt hơn.
+
+**Đã kiểm, không có lỗi:**
+- Định lý: phát biểu đúng phạm vi (trọng số dương không tăng, mọi chuỗi hữu hạn số thực, độc lập độ dài, $w_1=1$); chứng minh $w_i=\gamma^{i-1}$, $0<\gamma\le1$, chiều ngược đúng; ghi chú phân biệt rõ tính dừng với tính cộng, tham chiếu CS188 lec09 p22 và Shakerinava (2022) phù hợp.
+- Mô hình 05-08: phân phối chung $P(s',r\mid s,a)$, chuẩn hóa đúng, không giả định độc lập, miền rời rạc nêu rõ, thu được biên đúng.
+- Quiz 05-09: $-1{,}75$ và ví dụ $(2,0)/(1,1)$ đều đúng.
+- Luồng: 05-01 mở vai trò, 05-10 nối từ chính sách sang $G_t$ (05-03), chuỗi 03→04→05→08→09 hợp lý; thời lượng mục 5 đúng 25 phút; không khôi phục slide đã xóa.
+
+### Rà bản cuối: math
+
+Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flash`; provider `OpenRouter`; profile `review-section`, `--no-tools`.
+
+**Báo cáo review — File 2627-1/lecture-02, Section 5 (25 phút), role math**
+
+Kiểm tra định lý, mô hình, quiz, kề cận, luồng:
+
+- **05-10 (Định lý):** Phát biểu khớp chứng minh: trọng số dương không tăng, độc lập độ dài, w₁=1, tính dừng trên toàn bộ chuỗi hữu hạn số thực ⇒ wᵢ=γⁱ⁻¹, 0<γ≤1. Lập luận tỉ lệ vector trọng số và hệ số γ=w₂/w₁ đúng; ghi chú đã xử lý đúng các biên γ=0 (vi phạm tương đương chặt) và γ>1 (chỉ nếu bỏ giả thiết không tăng). Phạm vi "chuỗi tất định vs ngẫu nhiên, không đưa biến đổi tăng ngặt vào kỳ vọng" chính xác.
+- **05-08 (Mô hình):** P(s′,r|s,a) là phân phối chung, tổng =1, không giả định độc lập; công thức truy hồi P(s′|s,a)=Σᵣ và r̄ đúng.
+- **05-09 (Quiz):** Đáp án đều đúng: Gₜ=−1,75; (2,0) so (1,1) với γ=0,5 cho 2 vs 1,5 khớp ví dụ trong 05-10.
+- **05-03/04/05:** Định nghĩa γ∈[0,1] nhất quán (γ=0 chỉ là trường hợp định nghĩa Gₜ, không xung đột với định lý); điều kiện hữu hạn kỳ vọng nêu đủ; ví dụ −4 đúng.
+- **Luồng & vai trò:** 05-01 dẫn nhập → 05-10 định lý → 05-03–05 giá trị → 05-08 mô hình → 05-09 quiz → 06-01/02 nhận nhiệm vụ; trích dẫn "trang trước/trang sau" đều trỏ đúng; tổng thời gian 25/25. Không có dấu vết của slide đã xóa.
+
+**Kết luận: PASS** — không phát hiện lỗi toán học, không cần sửa.
+
+**Severity: none.**
+
+### Rà bản cuối: academic
+
+Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flash`; provider `OpenRouter`; profile `review-section`, `--no-tools`.
+
+**Kết luận: PASS** (một lỗi trình bày nhỏ cần sửa).
+
+**Kiểm toán chính:**
+
+1. **Định lý 05-10 (Ưu tiên dừng)** — đúng toán học. Chứng minh hợp lệ: tính dừng buộc dấu của $\sum w_i d_i$ và $\sum w_{i+1}d_i$ trùng với mọi $d\in\mathbb R^n$, suy ra vector trọng số tỉ lệ dương, $\gamma=w_2/w_1$, $w_i=\gamma^{i-1}$; trọng số dương không tăng cho $0<\gamma\le1$. Phạm vi "mọi chuỗi hữu hạn số thực, độc lập độ dài, $w_1=1$" được phát biểu tường minh; phản ví dụ $V([r]+a)=r+V(a)$ và trường hợp $\gamma>1$, $\gamma=0$ được xử lý đúng. Nguồn CS188 lec09 tr.22 và Shakerinava–Ravanbakhsh được ghi rõ, có lưu ý không đồng nhất.
+
+2. **Mô hình 05-08** — đúng: phân phối chung $P(s',r\mid s,a)$, chuẩn hóa $\sum_{s',r}=1$, miền rời rạc tường minh, ghi rõ không giả định độc lập, có công thức thu về $P(s'\mid s,a)$ và $\bar r(s,a)$. Ví dụ mê cung nhất quán.
+
+3. **Quiz 05-09** — đáp số đúng: $G_t=-1{,}75$; câu 4 khớp ví dụ $(2,0)$ vs $(1,1)$ ở 05-10.
+
+4. **Dòng chảy & thời lượng** — 05-01 → 05-10 → 05-03 → 05-04 → 05-05 → 05-08 → 05-09 hợp lý; 05-10 dẫn chiếu "trang trước/kế tiếp" khớp. Tổng thời lượng mục 5: 1+4+6+2+4+4+4 = 25 phút ✓. Slide đã xóa (05-02, 05-07) không được khôi phục ✓.
+
+**Lỗi nhỏ (Minor) — 05-10, ghi chú giảng viên:**
+- Vấn đề: chuỗi "$V([r]+a)=r+V(a)^3$" — số mũ "3" là dấu chú thích superscript bị dính vào công thức, dễ đọc nhầm là $V(a)^3$.
+- Bằng chứng: đoạn "Ví dụ hàm V trên chuỗi hữu hạn... $V([r]+a)=r+V(a)^3$ vẫn bảo toàn...".
+- Sửa: tách chú thích ra khỏi công thức, ví dụ "$V([r]+a)=r+V(a)$³" hoặc chuyển thành ghi chú "(chú thích 3)".
+
+Không có lỗi nghiêm trọng hay trung bình.
+
+### Rà bản cuối: flow
+
+Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flash`; provider `OpenRouter`; profile `review-section`, `--no-tools`.
+
+**Kết quả review File 2627-1, section 5 (L02-05)**
+
+**Pass về mặt chính:**
+- Định lý 05-10: chứng minh đúng — tính dừng với U cộng tuyến tính, w₁=1, trọng số dương không tăng suy ra wᵢ=γⁱ⁻¹, 0<γ≤1; chiều ngược đúng; ghi chú giới hạn phạm vi hợp lý, có nguồn CS188 lec09 p22 và Shakerinava (2022).
+- 05-08: P(s',r|s,a) liên hợp, chuẩn hóa Σ=1, miền rời rạc tường minh, không giả định độc lập — đạt.
+- Quiz 05-09: G_t=-1,75 đúng; đáp án Q3, Q4 nhất quán với 05-10/05-04.
+- Flow: 05-01 ← section 4; 05-10 → 05-03 ("trang kế tiếp") khớp; 05-09 → 06-01 hợp lý. Thời lượng 1+4+6+2+4+4+4=25 phút khớp ngân sách. Không khôi phục slide đã xóa — đúng yêu cầu.
+
+**Finding 1 — Minor, 05-10 (notes):** "V([r]+a)=r+V(a)^3" — số mũ 3 dễ đọc thành lũy thừa; có vẻ là dấu chú thích chân trang. Fix: dùng ký hiệu chú thích ngoài công thức toán (vd. "V(a) (①)") hoặc chữ thường.
+
+**Finding 2 — Minor, 05-10:** Caption slide dùng "[r,a]" nhưng notes dùng "[r]+a" — hai ký hiệu cho cùng phép nối. Fix: thống nhất một ký hiệu.
+
+**Finding 3 — Info:** 05-03 cho γ∈[0,1] trong khi định lý yêu cầu γ>0; notes 05-10 đã giải thích rõ khác biệt — chấp nhận được, không cần sửa.
+
+**Kết luận: Pass** với 2 lỗi minor về ký hiệu.

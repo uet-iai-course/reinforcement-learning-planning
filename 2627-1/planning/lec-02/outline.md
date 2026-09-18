@@ -20,7 +20,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 
 ## Trạng thái triển khai
 
-Đã hoàn tất 7/7 phần: 42 trang, 120 phút; đủ năm báo cáo độc lập và kiểm định lại. Giới hạn rà trực quan Codex Slides được ghi trong review-log.md.
+Đã hoàn tất 7/7 phần: 41 trang, 120 phút; đủ năm báo cáo độc lập và kiểm định lại. Giới hạn rà trực quan Codex Slides được ghi trong review-log.md.
 
 ## Trang đích
 
@@ -49,12 +49,11 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-04-04` — Chính sách ngẫu nhiên — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 - `L02-04-05` — Câu hỏi kiểm tra — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 - `L02-05-01` — Kết quả dài hạn của chính sách — PPTX trang 10, 21, 22, 23
-- `L02-05-02` — Tổng phần thưởng trên quỹ đạo — PPTX trang 26; hw02 bài 1
+- `L02-05-10` — Ưu tiên dừng và tổng phần thưởng — điều kiện thêm cùng phần thưởng đầu chuỗi; tổng thường và tổng chiết khấu trong lớp lợi ích cộng có trọng số; Berkeley CS188, bài 09 (2026), trang 22; bổ sung giả thiết và chứng minh
 - `L02-05-03` — Phần thưởng tích lũy — PPTX trang 7–9, 22; hw02 bài 2
 - `L02-05-04` — Giá trị kỳ vọng — PPTX trang 22; ví dụ giả định sư phạm theo hw02 bài 5
 - `L02-05-05` — Hàm giá trị trạng thái — PPTX trang 16–18, 22; hw02 bài 5
-- `L02-05-07` — Dự báo bước tiếp theo — PPTX trang 13, 23; hw02 bài 6
-- `L02-05-08` — Mô hình chuyển và phần thưởng — PPTX trang 13, 23; hw02 bài 10
+- `L02-05-08` — Mô hình chuyển trạng thái và phần thưởng — phân phối chung theo yêu cầu; PPTX trang 13, 23; hw02 bài 10; Sutton–Barto (2018), mục 3.1
 - `L02-05-09` — Câu hỏi kiểm tra — PPTX trang 13, 24, 27; hw02 bài 6
 - `L02-06-01` — Hai nhiệm vụ trên mê cung — PPTX trang 24; hw02 bài 1, 5
 - `L02-06-02` — Dự đoán và điều khiển — PPTX trang 24–26; hw02 bài 5

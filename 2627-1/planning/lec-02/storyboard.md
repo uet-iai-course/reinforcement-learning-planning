@@ -435,23 +435,23 @@ Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 4
 ### Cụm Tổng thưởng có chiết khấu
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 8 phút; trang tính thời gian: L02-05-01, L02-05-02, L02-05-03. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 11 phút; trang tính thời gian: L02-05-01, L02-05-10, L02-05-03. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã biết phần thưởng từng bước và sự khác nhau giữa quy tắc chọn hành động với chất lượng của nó.
 - Sản phẩm học tập: Tính tổng ba phần thưởng âm một với $\gamma=0;0{,}5;1$, lần lượt được $-1;-1{,}75;-3$.
 - vấn đề: L02-05-01
-- trực giác: L02-05-02
-- ví dụ: L02-05-02
+- trực giác: L02-05-10
+- ví dụ: L02-05-10 (ví dụ số trong ghi chú)
 - hình thức: L02-05-03
 - ứng dụng: L02-05-03
 - kiểm tra: L02-05-09
-- Gộp bước/ngoại lệ: Ba bước/thưởng −1 trước công thức, thay số ngay sau công thức; kiểm tra 06 tính ba gamma, thời gian kiểm tra chung thuộc cụm mô hình.
-- Dữ kiện truyền tiếp: Ba bước cuối tới đích và trọng số $1,\gamma,\gamma^2$ được thay trực tiếp vào định nghĩa $G_t$.
+- Gộp bước/ngoại lệ: Theo yêu cầu bỏ slide ví dụ ba bước. Ví dụ ngắn ở ghi chú 05-10; định nghĩa ở 05-03 và vận dụng ba bước trong câu hỏi cuối phần.
+- Dữ kiện truyền tiếp: Trọng số hình học ở 05-10 chuyển thành số mũ theo khoảng cách từ thời điểm t trong $G_t$.
 - Câu nối: Từ tổng thưởng một quỹ đạo, mở rộng thành hàm giá trị kỳ vọng của trạng thái.
 
 ### Cụm Hàm giá trị trạng thái
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 7 phút; trang tính thời gian: L02-05-04, L02-05-05. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 6 phút; trang tính thời gian: L02-05-04, L02-05-05. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã tính tổng thưởng trên một quỹ đạo và biết kỳ vọng từ học phần xác suất.
 - Sản phẩm học tập: Tính $v_\pi(s)=-4$ cho hai nhánh ba/năm bước cùng xác suất $0{,}5$ khi $\gamma=1$.
 - vấn đề: L02-05-01
@@ -462,63 +462,63 @@ Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 4
 - kiểm tra: L02-05-09
 - Gộp bước/ngoại lệ: Ví dụ hai nhánh trước kỳ vọng có điều kiện; thay số vào $v_\pi(s)$ rồi phân biệt $G_t$ và $v_\pi(s)$.
 - Dữ kiện truyền tiếp: Định nghĩa giá trị dưới chính sách cố định được dùng để đánh giá mê cung ở phần 6.
-- Câu nối: Tiếp theo xây dựng mô hình môi trường P và r để dự báo chuyển tiếp và thưởng.
+- Câu nối: Tiếp theo xây dựng phân phối chung P để dự báo chuyển tiếp và thưởng.
 
 ### Cụm Mô hình môi trường
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 10 phút; trang tính thời gian: L02-05-07, L02-05-08, L02-05-09. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 8 phút; trang tính thời gian: L02-05-08, L02-05-09. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã nắm hàm giá trị và quy ước thưởng −1 mỗi bước trong mê cung.
-- Sản phẩm học tập: Viết xác suất chuyển bằng một, thưởng kỳ vọng bằng âm một cho bước Đông từ (0,2); phát hiện dự báo thưởng sai.
-- vấn đề: L02-05-07
-- trực giác: L02-05-07
-- ví dụ: L02-05-07
+- Sản phẩm học tập: Viết xác suất chung bằng một cho bước Đông từ (0,2), tới (1,2) và nhận -1; phát hiện dự báo thưởng sai.
+- vấn đề: L02-05-08
+- trực giác: L02-05-08
+- ví dụ: L02-05-08
 - hình thức: L02-05-08
 - ứng dụng: L02-05-08
 - kiểm tra: L02-05-09
-- Gộp bước/ngoại lệ: Bảng một bước trước định nghĩa P/r; notes 08 thay dữ kiện vào công thức; 09 kiểm tra dự báo thưởng sai.
-- Dữ kiện truyền tiếp: Hai thành phần $P$ và $\bar r$ dự báo một bước; hàm giá trị đánh giá nhiều bước.
+- Gộp bước/ngoại lệ: Gộp trực giác, ví dụ và hình thức trên 08 theo yêu cầu bỏ slide dự báo riêng; dùng mê cung đã biết để giải thích trước công thức; 09 kiểm tra dự báo thưởng sai.
+- Dữ kiện truyền tiếp: Phân phối chung $P(s',r\mid s,a)$ dự báo một bước; hàm giá trị đánh giá nhiều bước.
 - Câu nối: Hai vai trò này giúp phân biệt đánh giá chính sách với tìm chính sách ở phần 6.
 
 ### L02-05-01 — Kết quả dài hạn của chính sách
 
-Thời lượng: 2 phút. Nguồn: PPTX trang 10, 21, 22, 23.
+Thời lượng: 1 phút. Nguồn: PPTX trang 10, 21, 22, 23.
 
 - **Luận điểm:** Đánh giá chính sách cần tiêu chí dài hạn cùng ba vai pi, v, model.
 - **Nhu cầu và lý do tồn tại:** Sinh viên thấy tại sao thưởng tức thời không phân biệt được hai chính sách.
 - **Cách thể hiện và độ phù hợp năm 3:** Ba bullet vai chức năng, chính giữa slide, đủ cho ba đối tượng cần giới thiệu trước khi định nghĩa riêng.
 - **Kết nối vào:** Chính sách pi và mê cung từ section 4.
-- **Kết nối ra:** G_t ở slide L02-05-02.
+- **Kết nối ra:** đánh giá chuỗi thưởng bằng ưu tiên dừng ở L02-05-10.
 - **Sản phẩm học tập/kiểm tra:** Hỏi sinh viên vì sao hai chính sách cùng thưởng tức thời có thể khác nhau ở tổng quỹ đạo.
 - **Quyết định nguồn:** Tách nội dung ba trang thành ba vai trên một slide mở để tránh định nghĩa đồng loạt sau đó.
 
-### L02-05-02 — Tổng phần thưởng trên quỹ đạo
+### L02-05-10 — Ưu tiên dừng và tổng phần thưởng
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 26; hw02 bài 1.
+Thời lượng: 4 phút. Nguồn: Berkeley CS188, bài 09 (2026), trang 22, “Stationary Preferences”; bổ sung giả thiết để phát biểu chính xác.
 
-- **Luận điểm:** Trọng số giảm theo thời gian thay đổi tổng thưởng của cùng quỹ đạo; ví dụ dùng một và một nửa.
-- **Nhu cầu và lý do tồn tại:** Ví dụ số cụ thể trước ký hiệu để sinh viên thấy chiết khấu tác động lên kết quả.
-- **Cách thể hiện và độ phù hợp năm 3:** Bảng trọng số và tổng của cùng một quỹ đạo; ba hành động Nam–Đông–Đông đúng hình nguồn.
-- **Kết nối vào:** Quy tắc thưởng -1 mỗi bước dịch chuyển của mê cung.
-- **Kết nối ra:** Công thức tổng quát G_t ở slide L02-05-03.
-- **Sản phẩm học tập/kiểm tra:** Đổi gamma=0.25, yêu cầu tính lại G của cùng quỹ đạo.
-- **Quyết định nguồn:** Sửa trang 26 thành ba bước cuối cụ thể với hai giá trị gamma, thêm tính gamma=0.5 phục vụ trực giác.
+- **Luận điểm:** Thêm cùng một phần thưởng vào đầu hai chuỗi giữ nguyên thứ tự ưu tiên; trong lớp lợi ích cộng có trọng số dương không tăng, điều này buộc trọng số hình học.
+- **Nhu cầu và lý do tồn tại:** Giải thích tính nhất quán theo thời gian trước khi tính tổng thường và tổng chiết khấu.
+- **Cách thể hiện và độ phù hợp năm 3:** Điều kiện ưu tiên dừng, phát biểu có điều kiện, hai dạng hàm lợi ích. Chứng minh và giới hạn ở ghi chú; công thức KaTeX.
+- **Kết nối vào:** Hai chính sách tạo hai chuỗi thưởng cần so sánh.
+- **Kết nối ra:** Trang 03 định nghĩa phần thưởng tích lũy từ thời điểm t.
+- **Sản phẩm học tập/kiểm tra:** Câu 4 cuối phần so sánh $(2,0)$ với $(1,1)$ khi cộng trực tiếp và khi chiết khấu 0,5.
+- **Quyết định nguồn:** Dùng đúng điều kiện ưu tiên dừng người dùng cung cấp. Riêng điều kiện này không suy ra tính cộng: bổ sung công khai lớp $U=\sum_i w_i r_i$, trọng số dương không tăng, độc lập độ dài chuỗi và $w_1=1$. Trên tất cả chuỗi hữu hạn thực, điều kiện dừng buộc $w_{i+1}=\gamma w_i$. Tổng thường là trường hợp $\gamma=1$, tổng chiết khấu có $0<\gamma<1$. Không khẳng định duy nhất về mọi biểu diễn số của cùng ưu tiên. Ghi chú phân biệt trường hợp $\gamma=0$, trọng số tăng và chuỗi vô hạn. Điều kiện bổ sung này làm rõ phạm vi phát biểu rút gọn của CS188, không gán bộ giả thiết chi tiết cho tài liệu gốc.
 
 ### L02-05-03 — Phần thưởng tích lũy
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 7–9, 22; hw02 bài 2.
+Thời lượng: 6 phút. Nguồn: PPTX trang 7–9, 22; hw02 bài 2.
 
 - **Luận điểm:** G_t là tổng chiết khấu phần thưởng từ t đến kết thúc, xác định khi t<T hoặc gamma<1.
 - **Nhu cầu và lý do tồn tại:** Ký hiệu tổng quát để nói về giá trị mà không liệt kê từng quỹ đạo.
 - **Cách thể hiện và độ phù hợp năm 3:** Công thức một dòng ở vị trí trung tâm, hai bullet điều kiện dưới, vì slide này là định nghĩa.
-- **Kết nối vào:** Ví dụ ba bước chiết khấu slide L02-05-02.
+- **Kết nối vào:** Hai dạng lợi ích và ví dụ ngắn trong ghi chú L02-05-10.
 - **Kết nối ra:** Kỳ vọng trên G_t ở slide L02-05-04.
 - **Sản phẩm học tập/kiểm tra:** Thay ba phần thưởng−1 vào công thức để được G_t=−1−γ−γ² trước khi tính với ba hệ số.
 - **Quyết định nguồn:** Giữ công thức trang 22, bổ sung trường hợp tiếp diễn và phần thưởng bị chặn vào notes vì trang nguồn chỉ nói episodic.
 
 ### L02-05-04 — Giá trị kỳ vọng
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 22; ví dụ giả định sư phạm theo hw02 bài 5.
+Thời lượng: 2 phút. Nguồn: PPTX trang 22; ví dụ giả định sư phạm theo hw02 bài 5.
 
 - **Luận điểm:** Khi chính sách hoặc môi trường ngẫu nhiên, đại lượng cần theo dõi là kỳ vọng của G.
 - **Nhu cầu và lý do tồn tại:** Trước công thức v_pi cần ý niệm rằng giá trị là trung bình có trọng số, không phải một quỹ đạo duy nhất.
@@ -540,29 +540,17 @@ Thời lượng: 4 phút. Nguồn: PPTX trang 16–18, 22; hw02 bài 5.
 - **Sản phẩm học tập/kiểm tra:** Gắn kỳ vọng âm bốn với hàm giá trị; phân biệt với một tổng thưởng quỹ đạo.
 - **Quyết định nguồn:** Giữ định nghĩa nguồn22; bổ sung tường minh giả thiết kỳ vọng hữu hạn và quy luật không đổi để tránh hiểu sai.
 
-### L02-05-07 — Dự báo bước tiếp theo
+### L02-05-08 — Mô hình chuyển trạng thái và phần thưởng
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 13, 23; hw02 bài 6.
+Thời lượng: 4 phút. Nguồn: PPTX trang 13, 23; hw02 bài 10; Sutton–Barto (2018), mục 3.1, phương trình 3.2.
 
-- **Luận điểm:** Mô hình là hàm dự báo cặp (s', r) từ (s,a).
-- **Nhu cầu và lý do tồn tại:** Trước ký hiệu p(s'|s,a) cần trực giác mô hình như trình mô phỏng một bước.
-- **Cách thể hiện và độ phù hợp năm 3:** Bảng chuyển của hai hành động từ cùng trạng thái; không dùng hình quan sát không liên quan.
-- **Kết nối vào:** Mê cung và quy tắc thưởng từ section 2–4.
-- **Kết nối ra:** Ký hiệu hóa mô hình ở slide L02-05-08.
-- **Sản phẩm học tập/kiểm tra:** Câu hỏi trên slide có đáp án -1, (1,2) trong notes.
-- **Quyết định nguồn:** Giữ nguồn trang 23, ghép mê cục bộ hình maze-local.svg để dự báo gắn vào ngữ cảnh quen thuộc.
-
-### L02-05-08 — Mô hình chuyển và phần thưởng
-
-Thời lượng: 3 phút. Nguồn: PPTX trang 13, 23; hw02 bài 10.
-
-- **Luận điểm:** Mô hình gồm hai thành phần chuyển và phần thưởng; mô hình là ước lượng, không phải quy luật.
-- **Nhu cầu và lý do tồn tại:** Tránh đồng nhất mô hình của tác tử với bản thân môi trường, điểm phân biệt thường bị bỏ qua.
-- **Cách thể hiện và độ phù hợp năm 3:** Hai thành phần cùng mô hình trên toàn chiều ngang, định nghĩa điều kiện đầy đủ; nguồn dùng dạng tách P và thưởng kỳ vọng.
-- **Kết nối vào:** Dự báo (s',r) trực giác slide L02-05-07.
-- **Kết nối ra:** Kiểm tra mô hình slide L02-05-09 và dự đoán/điều khiển section 6.
-- **Sản phẩm học tập/kiểm tra:** Hỏi khi nào hai mô hình khác nhau dù cùng môi trường.
-- **Quyết định nguồn:** Giữ nguồn trang 23, tách nhận xét quy luật/ước lượng và joint p vào notes để body gọn.
+- **Luận điểm:** Phân phối chung $P(s',r\mid s,a)$ mô tả trạng thái kế tiếp và thưởng cùng lúc.
+- **Nhu cầu và lý do tồn tại:** Hình thức hóa dự báo phản hồi một bước và phân biệt với đánh giá dài hạn.
+- **Cách thể hiện và độ phù hợp năm 3:** Xác suất chung, miền rời rạc, chuẩn hóa và ví dụ mê cung có xác suất 1; dạng biên và kỳ vọng ở ghi chú.
+- **Kết nối vào:** Hàm giá trị đánh giá dài hạn; trở về cặp phản hồi một bước trong vòng tương tác.
+- **Kết nối ra:** Kiểm tra dự báo sai ở 05-09, rồi phân biệt dự đoán/điều khiển ở phần 6.
+- **Sản phẩm học tập/kiểm tra:** Đọc và viết xác suất đồng thời tới (1,2), nhận -1 khi chọn Đông từ (0,2).
+- **Quyết định nguồn:** Bỏ slide Dự báo bước tiếp theo, đổi mô hình sang phân phối chung và đổi tiêu đề theo yêu cầu. Không giả định độc lập giữa trạng thái kế tiếp và thưởng.
 
 ### L02-05-09 — Câu hỏi kiểm tra
 
@@ -570,10 +558,10 @@ Thời lượng: 4 phút. Nguồn: các khái niệm và ví dụ trong phần 5
 
 - **Luận điểm:** Phân biệt tổng thưởng, giá trị kỳ vọng và dự báo của mô hình.
 - **Nhu cầu và lý do tồn tại:** Khép phần bằng câu hỏi áp dụng và giải thích, kiểm tra trước khi chuyển sang phần kế.
-- **Cách thể hiện và độ phù hợp năm 3:** Danh sách đánh số từ 1 đến 3; dữ kiện nằm trong câu hỏi, đáp án chỉ trong ghi chú diễn giả.
+- **Cách thể hiện và độ phù hợp năm 3:** Danh sách đánh số từ 1 đến 4; dữ kiện nằm trong câu hỏi, đáp án chỉ trong ghi chú diễn giả.
 - **Kết nối vào:** Định nghĩa tổng thưởng, hàm giá trị và mô hình chuyển/thưởng.
 - **Kết nối ra:** Phần 6 phân biệt dự đoán với điều khiển và vận dụng trên mê cung.
-- **Sản phẩm học tập/kiểm tra:** Trả lời lần lượt 3 câu; giải thích bằng khái niệm và dữ kiện vừa học.
+- **Sản phẩm học tập/kiểm tra:** Trả lời lần lượt 4 câu; giải thích bằng khái niệm và dữ kiện vừa học.
 - **Quyết định nguồn:** Gom câu hỏi về cuối phần theo yêu cầu; giữ ý nguồn, không thêm thuật toán hay kiến thức chưa học.
 
 ## Phần 6: Dự đoán, điều khiển và bài toán mê cung — 20 phút
