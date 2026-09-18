@@ -20,7 +20,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 
 ## Trạng thái triển khai
 
-Đã hoàn tất 7/7 phần: 43 trang, 120 phút; đủ năm báo cáo độc lập và kiểm định lại. Giới hạn rà trực quan Codex Slides được ghi trong review-log.md.
+Đã hoàn tất 7/7 phần: 41 trang, 120 phút; đủ năm báo cáo độc lập và kiểm định lại. Giới hạn rà trực quan Codex Slides được ghi trong review-log.md.
 
 ## Trang đích
 
@@ -41,8 +41,6 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-03-06` — Quan sát đầy đủ và một phần — PPTX trang 18 (đầy đủ) và trang 19 (một phần); hình full-partial-observation.svg từ trang 25-26.
 - `L02-03-04` — Tính Markov — PPTX trang 17 (Markov) và trang 18 (đầy đủ).
 - `L02-03-10` — Tính Markov có hạn chế khả năng mô hình hóa? — PPTX trang 17; mở rộng trạng thái bằng lịch sử bổ sung theo yêu cầu
-- `L02-03-05` — Trạng thái trong mê cung — PPTX trang 25-26 (mê cung); bài mê cung hw02 bài 10; biến thể chìa khóa là giả thiết sư phạm suy ra.
-- `L02-03-07` — Biểu diễn dùng để quyết định — PPTX trang 14–15 (giao diện) và trang 21; ví dụ ghi nhớ chìa khóa trong mê cung.
 - `L02-03-08` — Câu hỏi kiểm tra — PPTX trang 27 (quiz); các trường hợp từ trang 16, 18, 19 và hình full-partial-observation.svg.
 - `L02-04-01` — Quy tắc lựa chọn hành động — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 - `L02-04-02` — Ví dụ về chính sách — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
@@ -100,7 +98,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 
 ## Quy ước và dữ kiện xuyên suốt
 
-- $S_t\in\mathcal S$: trạng thái môi trường; $O_t\in\mathcal O$: quan sát; $X_t\in\mathcal X$: biểu diễn dùng để quyết định; $H_t$: lịch sử trạng thái–hành động–thưởng; $H_t^O$: lịch sử quan sát–hành động–thưởng; $\tau=H_T$: quỹ đạo trạng thái hữu hạn.
+- $S_t\in\mathcal S$: trạng thái môi trường; $O_t\in\mathcal O$: quan sát; $X_t\in\mathcal X$: biểu diễn dùng để quyết định; $H_t$: lịch sử trạng thái–hành động–thưởng; $\tau=H_T$: quỹ đạo trạng thái hữu hạn.
 - $A_t\in\mathcal A$: hành động; $R_{t+1}\in\mathbb R$: thưởng sau hành động; $t$ là chỉ số thời gian không âm.
 - $\pi(a\mid x)$: chính sách trên biểu diễn; khi quan sát đầy đủ dùng $X_t=S_t$.
 - $T$: thời điểm kết thúc của quỹ đạo; $G_t$: thưởng tích lũy chiết khấu; $\gamma\in[0,1]$; $v_\pi(s)$: kỳ vọng dưới chính sách cố định trong thiết lập Markov với kỳ vọng hữu hạn.

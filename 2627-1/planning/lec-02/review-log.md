@@ -1244,3 +1244,196 @@ Không có vấn đề mới.
 
 - Theo yêu cầu, bỏ câu “Xét biến rời rạc và các biến cố điều kiện có xác suất dương.” khỏi mặt L02-03-04. Giữ nguyên công thức và phần giải thích điều kiện xác suất dương trong ghi chú diễn giả.
 - Cập nhật storyboard; không đổi thứ tự, số trang hoặc thời lượng. Kiểm tra thay đúng một đoạn, câu không còn trong HTML và `git diff --check` đạt.
+
+
+## Hình trạng thái–quan sát và rút gọn phần 3 — 2026-09-18
+
+- Theo ba chỉ dẫn liên tiếp, thay ba thẻ của L02-03-02 bằng SVG trực quan, bỏ L02-03-07 “Biểu diễn dùng để quyết định” và L02-03-05 “Trạng thái trong mê cung”. Không dựng lại hai trang đã bỏ ở vị trí khác. Còn 41 trang, 7 phần; phần 3 có thứ tự 02 → 09 → 06 → 04 → 10 → 08.
+- Hình `img/lec-02/state-observation-representation.svg` nối mê cung với tác tử tại (2,1), cảm biến bốn ô kề, bốn thành phần mã hóa theo Bắc–Đông–Nam–Tây và bước chọn hành động. Mã 1/tường, 0/trống là ví dụ bổ sung, không phải quy ước nguồn bắt buộc. Trạng thái, quan sát và biểu diễn giữ ký hiệu và miền trong notes; công thức dựng bằng HTML/KaTeX. Không sửa CSS dùng chung.
+- Nguồn: PPTX trang 16 cho trạng thái/quan sát, 14–15 và 21 cho dữ liệu quyết định, 25–26 cho bản đồ. Điền SVG đúng 64 ô từ mê cung nguồn; các ô Bắc/Nam tại (2,1) là tường, Đông/Tây trống. Chấm tác tử (105,110) khớp gốc (30,65), ô rộng 30, tọa độ (2,1). Vị trí (3,1) cũng có cùng cảm biến. Hình toàn mê cung dành cho người học, không phải dữ liệu tác tử nhận; notes nói rõ.
+- Reader lập kế hoạch hình trước hai chỉ dẫn xóa tiếp theo. Điều phối viên giữ đặc tả hình, cập nhật phạm vi khi người dùng yêu cầu bỏ trang; số trang/thời lượng trong kế hoạch reader không còn là số cuối. Writer soạn SVG, điều phối viên điền mê cung và sửa các ô cảm biến Bắc/Nam từ trắng sang tối, hoàn thiện viền ô và chú thích.
+- Câu chuyển Markov10 nay dẫn thẳng tới câu hỏi. Bỏ ký hiệu lịch sử quan sát chưa còn nơi định nghĩa; giữ giải thích bằng lời. Cảnh báo cửa sổ hữu hạn chuyển vào notes trang Markov10. Câu hỏi chìa khóa là bài vận dụng mở rộng trạng thái với dữ kiện trong đề và đáp án trong notes, không cần trang ví dụ riêng.
+- Phân bổ 6 phút từ hai trang bỏ: thêm 2 phút cho hình trạng thái/quan sát, 2 phút cho thảo luận khả năng mô hình hóa, 2 phút cho kiểm tra. Phần 3 vẫn 28 phút, toàn bài 120 phút; mỗi trang có một chủ thời lượng. Outline/storyboard cập nhật đầy đủ, không còn tham chiếu hoạt động đến ID bị bỏ. Index không đổi vì tên/đường dẫn bài giữ nguyên.
+- Biên tập no-ai-slop: dùng ví dụ cụ thể và câu ngắn; rà quill: giữ cầu nối từ phần 2 vào dữ liệu trạng thái/quan sát, từ Markov vào kiểm tra và từ biểu diễn X sang chính sách ở phần 4. Không khởi tạo dự án sách.
+- Năm reviewer độc lập dùng review-section, --no-tools với trích đoạn phần 3, hai trang lân cận tại mỗi ranh giới và SVG. Đây là rà thay đổi, không phải rà lại toàn bài. Kết quả và quyết định ở dưới.
+- Kiểm định: 41 ID khớp thứ tự HTML/storyboard, phân bổ thời lượng duy nhất và tổng 120 phút; 7 trang câu hỏi cuối phần; SVG XML hợp lệ. Chromium cổng 8765: 12 lượt cho 6 trang phần 3 tại 1280×720 và 390×844, không tràn, lỗi KaTeX, ảnh hỏng, lỗi HTTP/JavaScript; phím ngang/dọc đạt. Đã xem ảnh hình mới. Codex Slides vẫn có giới hạn đã ghi; chỉ tuyên bố rà trực quan cục bộ bằng Chromium. `git diff --check` đạt.
+
+### Báo cáo hình trạng thái: plan
+
+Runtime: requested_model=deepseek/deepseek-v4-flash-0731; observed_model=deepseek/deepseek-v4-flash-0731; provider=OpenRouter.
+
+# Kế hoạch thay thế slide L02-03-02 (≤180 từ)
+
+**Mục tiêu:** Thay 3 thẻ văn bản bằng 1 SVG gồm 3 hình liên kết.
+
+**Bố cục SVG (ngang, 3 phần):**
+1. **Trái:** Mê cung 8×8 thật (map đã cho), chấm đỏ tại (2,1).
+2. **Giữa:** Cảm biến 5 ô hình chữ thập — Bắc/Nam tối (tường), Đông/Tây trắng (trống).
+3. **Phải:** 4 thanh chiếm chỗ theo thứ tự Bắc/Đông/Nam/Tây = (1,0,1,0); mũi tên nhỏ "Chọn hành động".
+
+**Mũi tên nhãn:** "cảm biến" (trái→giữa), "mã hóa" (giữa→phải).
+
+**KaTeX bên dưới:** `S_t=(2,1)`; `X_t=(1,0,1,0)` mã hóa O cục bộ (1=tường, 0=trống). Ghi chú: có thể dùng `X_t=O_t` cho minh họa đơn giản, không cần mã hóa số.
+
+**Cảnh báo:** X có thể dựa trên lịch sử nhưng KHÔNG trình bày lịch sử chính thức (slide sau định nghĩa). Nhấn mạnh biểu diễn không cần xác định trạng thái thật.
+
+**Kỹ thuật:** Chỉ sửa slide này; không đổi CSS toàn cục; giữ 43 slide/120 phút. SVG nội tuyến, không ảnh ngoài.
+
+**Lưu ý:** (2,1) và (3,1) đều có tường Bắc/Nam, Đông/Tây trống — khớp mã hóa.
+
+### Báo cáo hình trạng thái: writer
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 350" role="img" aria-labelledby="svg-title svg-desc">
+  <title id="svg-title">Từ trạng thái đến quan sát đến biểu diễn</title>
+  <desc id="svg-desc">Sơ đồ minh họa dòng thông tin: trạng thái là mê cung cố định với tọa độ (2,1); cảm biến chỉ nhìn thấy bốn ô kề; biểu diễn mã hóa tường/tự do (tường, tự do, tường, tự do) để chọn hành động. Biểu diễn không cần tiết lộ tọa độ thật của robot.</desc>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#293247"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1100" height="350" fill="#FFFFFF"/>
+
+  <!-- Left: Trạng thái -->
+  <text x="150" y="35" font-family="Arial" font-size="24" fill="#2F3E7A" text-anchor="middle">Trạng thái</text>
+  <rect x="30" y="65" width="240" height="240" fill="none" stroke="#293247" stroke-width="3"/>
+  <g id="maze-cells"></g>
+
+  <!-- Middle: Quan sát -->
+  <text x="510" y="35" font-family="Arial" font-size="24" fill="#2F3E7A" text-anchor="middle">Quan sát</text>
+  <g stroke="#293247" stroke-width="3" fill="#FFFFFF">
+    <rect x="485" y="102" width="50" height="50"/>
+    <rect x="485" y="202" width="50" height="50"/>
+    <rect x="435" y="152" width="50" height="50" stroke="#FFFFFF"/>
+    <rect x="535" y="152" width="50" height="50" stroke="#FFFFFF"/>
+  </g>
+  <g stroke="#293247" stroke-width="3" fill="none">
+    <line x1="485" y1="102" x2="535" y2="102"/>
+    <line x1="485" y1="152" x2="535" y2="152"/>
+    <line x1="485" y1="202" x2="535" y2="202"/>
+    <line x1="485" y1="252" x2="535" y2="252"/>
+    <line x1="485" y1="102" x2="485" y2="152"/>
+    <line x1="535" y1="102" x2="535" y2="152"/>
+    <line x1="485" y1="202" x2="485" y2="252"/>
+    <line x1="535" y1="202" x2="535" y2="252"/>
+  </g>
+  <circle cx="510" cy="177" r="10" fill="#B15A2B"/>
+  <text x="510" y="300" font-family="Arial" font-size="24" fill="#2F3E7A" text-anchor="middle">Bốn ô kề</text>
+
+  <!-- Right: Biểu diễn -->
+  <text x="905" y="35" font-family="Arial" font-size="24" fill="#2F3E7A" text-anchor="middle">Biểu diễn</text>
+  <g font-family="Arial" font-size="24" fill="#2F3E7A" text-anchor="middle">
+    <text x="830" y="140">B</text>
+    <text x="880" y="140">Đ</text>
+    <text x="930" y="140">N</text>
+    <text x="980" y="140">T</text>
+  </g>
+  <g stroke="#293247" stroke-width="3">
+    <rect x="805" y="150" width="50" height="50" fill="#293247"/>
+    <rect x="855" y="150" width="50" height="50" fill="#FFFFFF"/>
+    <rect x="905" y="150" width="50" height="50" fill="#293247"/>
+    <rect x="955" y="150" width="50" height="50" fill="#FFFFFF"/>
+  </g>
+  <text x="905" y="250" font-family="Arial" font-size="24" fill="#2F3E7A" text-anchor="middle" text-decoration="underline">Mã hóa ô kề</text>
+  <line x1="905" y1="265" x2="905" y2="305" stroke="#293247" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="905" y="335" font-family="Arial" font-size="24" fill="#2F3E7A" text-anchor="middle">Chọn hành động</text>
+
+  <!-- Arrows -->
+  <line x1="290" y1="180" x2="400" y2="180" stroke="#293247" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="345" y="125" font-family="Arial" font-size="24" fill="#B15A2B" text-anchor="middle">Cảm biến</text>
+  <line x1="620" y1="180" x2="770" y2="180" stroke="#293247" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="695" y="125" font-family="Arial" font-size="24" fill="#B15A2B" text-anchor="middle">Mã hóa</text>
+</svg>
+
+### Báo cáo hình trạng thái: student
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Kết quả review (tiếng Việt, ngắn gọn):**
+
+1. **Trung bình – SVG state-observation-representation.svg (panel Trạng thái):** Chỉ có khung viền trống, không vẽ mê cung 8×8 nào; chú thích XML nói "independently validated" nhưng không có nội dung mê cung. Người học không thấy mê cung cố định như mô tả alt/caption. **Fix:** vẽ các ô tường/ô trống của mê cung nguồn vào panel trái, đánh dấu tác tử tại (2,1).
+
+2. **Thấp – cùng SVG:** Thiếu đường nối từ "Chọn hành động" trở lại/quan sát không có nhãn X_t; không nghiêm trọng.
+
+**Đúng:** X=(1,0,1,0) khớp mê cung (B,N tường; Đ,T trống); dot (105,110) đúng ô (2,1); ô kề (3,1) cùng cảm biến được nêu đúng; thứ tự slide 02,09,06,04,10,08 hợp lệ; không có H^O; Markov10 không tham chiếu slide đã xóa.
+
+**Kết luận:** chỉ cần sửa lỗi 1 trước khi merge.
+
+### Báo cáo hình trạng thái: rl
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+## Báo cáo review (role: rl)
+
+**Tổng thể:** L02-03-02 mới và SVG khớp tốt. Mê cung 8 hàng khớp nguồn; ô (2,1) đúng tâm (105,110); 4 ô kề viền cam đúng; Bắc/Nam đậm, Đông/Tây trắng; $X_t=(1,0,1,0)$ đúng thứ tự B–Đ–N–T. Đúng mạch S→cảm biến→O→mã hóa→X→chọn hành động. Ghi chú đã bỏ $H^O$, nêu caveat cửa sổ hữu hạn; L02-03-04 dùng $H_t$ trạng thái, nhất quán với 03-09/03-10. Thứ tự 02,09,06,04,10,08 hợp lệ, kết thúc bằng quiz.
+
+**Phát hiện:**
+
+1. **Minor — SVG / mê cung nguồn:** hàng 2–5 của mê cung nguồn theo trích dẫn có 9 ký tự (ví dụ `#..##.#.#`), trong khi SVG vẽ 8 cột (khớp các hàng 1,6,7). Cần coordinator xác nhận mê cung nguồn chuẩn; nếu nguồn đúng 8 cột thì bỏ qua.
+2. **Minor — SVG panel "Biểu diễn":** chỉ mã màu, không hiển thị nhãn giá trị "1/0/1/0"; giá trị chỉ nằm ở body slide. Đề xuất thêm chữ 1/0 trong 4 ô để hình tự chứa thông tin.
+3. **Info — L02-03-08:** câu hỏi chìa khóa vẫn nhất quán với ghi chú 03-10 (không hồi sinh slide đã xóa), không cần sửa.
+
+Không thấy lỗi nghiêm trọng; không flag các xóa theo yêu cầu.
+
+### Báo cáo hình trạng thái: math
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Báo cáo review hoàn tất (≤200 từ)**
+
+Đối chiếu SVG `state-observation-representation.svg` với mê cung nguồn 8 hàng: lưới khớp từng hàng; tâm (105,110) đúng ô (2,1); 4 khung cam đúng Bắc/Nam tường, Đông/Tây trống; phần Quan sát và Biểu diễn (B,Đ,N,T = tối,trắng,tối,trắng = 1,0,1,0) khớp $X_t$; desc nêu đúng "không xác định tọa độ", nhất quán với (3,1) ở L02-03-06.
+
+Slide: L02-03-02 notes không còn $H^O$, nêu biểu diễn từ lịch sử — đạt. L02-03-04 không chuyển tới slide đã xóa — đạt. L02-03-09/10: $H_t$ trạng thái–hành động–thưởng, phân biệt với quan sát; caveat cửa sổ hữu hạn có ở 10 — đạt. L02-03-08: chìa khóa là ứng dụng augmentation, đủ ngữ cảnh — đạt. Luồng 02→09→06→04→10→08, 7 phần kết quiz — đạt.
+
+**Không tìm thấy lỗi thực chất.** Hai lưu ý nhỏ (minor, tùy chọn):
+1. L02-03-02: caption "chưa xác định được vị trí" — nên nói rõ "vị trí thật của tác tử" để tránh hiểu nhầm với tọa độ trong hình.
+2. SVG: nhãn "Mã hóa ô kề" lặp ý với tiêu đề "Biểu diễn"; có thể rút gọn.
+
+Không flag xóa slide, reward text, hay số slide/120 phút.
+
+### Báo cáo hình trạng thái: academic
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Báo cáo review (học thuật, ≤200 từ)**
+
+Đã đối chiếu SVG `state-observation-representation.svg` với mê cung nguồn và các slide trong excerpt.
+
+**Kiểm tra hình vẽ:**
+- Lưới 8×8 khớp từng hàng với nguồn (kể cả hàng 3 `#..##.#.#`, hàng 5 `##..#.##`).
+- Tác tử (2,1): tâm (105,110) = x=30+30·2+15, y=65+30·1+15 — đúng.
+- Bốn ô kề viền cam đứt: Bắc (92,67) tường, Nam (92,127) tường, Đông (122,97) trống, Tây (62,97) trống → X=(1,0,1,0) thứ tự B–Đ–N–T, khớp middle panel và khối "Biểu diễn" (B/N tối, Đ/T trắng). Đúng.
+
+**Kiểm tra nội dung slide:**
+- L02-03-02: không còn tham chiếu H^O; ghi chú nêu rõ biểu diễn từ lịch sử và giới hạn (3,1) cùng cảm biến — đúng.
+- L02-03-09: H_t dùng trạng thái, mẫu dùng quan sát, đã giải thích rõ — nhất quán.
+- L02-03-10: caveat cửa sổ hữu hạn có trong ghi chú; không chuyển tiếp tới slide mê cung đã xóa.
+- L02-03-08: câu chìa khóa là ứng dụng bổ sung trạng thái, đầy đủ giả định — không phải slide phục hồi.
+- Chuỗi 02→09→06→04→10→08: các câu "trang tiếp theo" đều khớp.
+
+**Kết luận:** không phát hiện lỗi thực sự. Không flag xóa slide theo yêu cầu. Mục 7 phần/quiz cuối và số slide tổng: ngoài phạm vi excerpt, không xác nhận được (thiếu bằng chứng, không phải lỗi).
+
+### Báo cáo hình trạng thái: flow
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+## Báo cáo review
+
+**Tổng thể:** Không tìm thấy lỗi nghiêm trọng. Sơ đồ SVG khớp mê cung nguồn: (2,1) tự do, X=(1,0,1,0) theo B–Đ–N–T đúng; chấm tác tử (105,110) đúng; viền đứt tối B/N, sáng Đ/T đúng; panel "Biểu diễn" tối–trắng–tối–trắng khớp.
+
+**Tìm thấy (mức nhỏ):**
+1. **Minor – L02-03-09 (outgoing):** Ghi chú kết thúc bằng "quỹ đạo vô hạn hoặc các đoạn hữu hạn", không có câu chuyển tiếp tường minh sang slide kế (quan sát đầy đủ/một phần), trong khi các slide lân cận (03-02, 03-06, 03-10) đều nêu rõ "trang/tiếp theo". Đề xuất: thêm một câu dẫn ở notes.
+2. **Minor – L02-03-08 (note-source):** Ghi "trang 25–27", các slide khác trong mê cung ghi "25–26". Không có bằng chứng trang 27 trong phần được cung cấp. Đề xuất: thống nhất thành 25–26 hoặc bổ sung bằng chứng cho trang 27.
+3. **Info – L02-03-04 (incoming):** Không nêu nguồn liên kết trực tiếp từ slide quan sát một phần, nhưng luồng 06→04 được slide 06 đảm nhiệm ("Tiếp theo là điều kiện Markov"), chấp nhận được.
+
+**Đã kiểm và đạt:** Không còn tham chiếu H^O; không còn chuyển tiếp sang slide mê cung đã xóa; caveat cửa sổ hữu hạn có ở 03-10 và 03-08; quiz 03-08 là áp dụng, không tái sinh slide; công thức HTML/MathJax, không SVG.
+
+**Thiếu bằng chứng:** Không thấy excerpt về tổng số slide (41) và 7 mục — không xác nhận được, thuộc static check của coordinator.
+
+### Quyết định sau rà hình trạng thái
+
+- Không có lỗi chặn hoặc nghiêm trọng. Reviewer sinh viên lần đầu không có câu trả lời hoàn chỉnh do hết ngân sách đầu ra; thu gọn riêng 64 ô SVG lặp trong trích đoạn và thử lại một lần cùng mô hình. Bản thân tệp SVG không bị rút gọn. Nhận xét trung bình “khung mê cung trống” xuất phát từ việc xem trích đoạn đã rút gọn như tệp thật; bác bỏ bằng kiểm tra XML đủ 64 ô, tâm tác tử và ảnh chụp slide hiển thị đầy đủ mê cung.
+- RL và academic chép nhầm một hàng nguồn thành chuỗi 9 ký tự. Điều phối viên xác minh tám hàng đều tám ký tự và đối chiếu từng tọa độ/màu của 64 ô SVG với bản đồ đã dùng trong bài. Không sửa bản đồ theo lỗi chép trong báo cáo.
+- Không thêm số 1/0 vào SVG vì công thức và quy ước đã hiển thị ngay dưới hình bằng HTML/KaTeX. Không thêm vòng phản hồi từ hành động về môi trường: slide này minh họa dòng thông tin từ trạng thái tới dữ liệu quyết định, vòng tương tác đã có ở phần 2.
+- Không đổi nguồn trang 27 theo góp ý flow: đã đọc XML PPTX trang 27, đây đúng là bài kiểm tra quan sát đầy đủ/một phần với tọa độ, ảnh mê cung và trò chơi. Quan hệ vào/ra của trang 09 đã ghi trong storyboard; không cần thêm lời dẫn lặp vào notes. Giữ chú thích ngắn “chưa xác định được vị trí”, đã có ngữ cảnh tọa độ tác tử ngay trên.
