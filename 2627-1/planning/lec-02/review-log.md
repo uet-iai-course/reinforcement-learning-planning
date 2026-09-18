@@ -906,3 +906,174 @@ Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; 
 **Flow:** incoming — nhận excerpt file 2627-1 từ coordinator; outgoing — báo cáo này trả coordinator; role — reviewer đọc-шифру read-only, mục "flow", không thực hiện edit.
 
 **Kết luận:** Các thay đổi yêu cầu đều đúng và nhất quán; chỉ có 2 gợi ý tùy chọn, không cần sửa bắt buộc.
+
+
+## Bỏ dẫn nhập và minh họa mức quan sát — 2026-09-18
+
+- Bỏ L02-03-01 theo yêu cầu. Chuyển L02-03-06 ngay sau L02-03-09. Thứ tự phần 3: 02 → 09 → 06 → 03 → 04 → 05 → 07 → 08. Bài còn 43 trang, 7 phần, 120 phút; chuyển 3 phút của trang bỏ sang hình mới, phần 3 vẫn 28 phút.
+- Vẽ SVG `img/lec-02/full-partial-observation.svg`: hai trạng thái thật cho hai tọa độ khác nhau khi nhận tọa độ; cùng bốn ô kề khi nhận cảm biến cục bộ. Nhãn “hoặc” làm rõ hai trường hợp thay thế. Không dùng tính Markov làm tiên quyết của phân loại quan sát. Giữ các định nghĩa bằng KaTeX/HTML dưới hình.
+- Reader lập kế hoạch riêng; điều phối viên chấp nhận thứ tự và thời lượng, sửa nhầm “7 mục” trong báo cáo thành 8 trang thực tế. Tọa độ thật được phép xuất hiện như nhãn giải thích, tách khỏi đầu ra cảm biến; không áp dụng đề nghị bỏ mọi tọa độ ở khung bên phải vì làm mất phép đối chiếu.
+- Writer chỉ ghi SVG trong thư mục tạm giới hạn. Lần ghi tuyệt đối bị công cụ từ chối; worker tự sửa sang đường dẫn tương đối. Điều phối viên sửa mũi tên xuất phát ngoài hộp, căn nhãn và bổ sung “hoặc”. Không có fallback mô hình.
+- Năm reviewer độc lập dùng review-section, --no-tools, trích đoạn 18,3 nghìn ký tự gồm phần 3, hai trang hai bên ranh giới và SVG. Đây là rà thay đổi cục bộ, không phải rà lại toàn bộ deck.
+- Quyết định: áp dụng góp ý flow về hai trường hợp bằng nhãn “hoặc”, rồi giao rà lại. Không áp dụng đề nghị ép hai đầu mũi tên trùng tâm hoặc chạm khối: khoảng hở nhất quán giúp đầu mũi tên dễ đọc, cả hai đều trỏ tới cùng quan sát. Không áp dụng góp ý RL đổi hai tiêu đề panel thành S/O: panel trái là toàn bộ phép quan sát tọa độ, panel phải là toàn bộ phép quan sát cục bộ, không phải hai cột S/O chung. Nhãn “Vị trí thật” và notes đã phân biệt dữ liệu tác tử nhận. Góp ý về thiếu thẻ nav không phù hợp RevealJS; kiểm tra thứ tự section và phím điều hướng trực tiếp.
+- Đối chiếu lại tọa độ: ô Đông của (1,2) là (2,2), tường, đúng notes phần 4; các ô Bắc/Nam của (2,1),(3,1) là tường, Đông/Tây trống. Báo cáo math có lỗi chữ “Bắc/Đông tối”; SVG và nguồn là Bắc/Nam. Không lấy lỗi chữ này làm bằng chứng nội dung.
+- Biên tập theo no-ai-slop và rà mạch theo quill: câu ngắn, ví dụ nhận đầu vào từ phân biệt S/O và chuỗi tương tác; đầu ra sang ví dụ xe về thông tin dự báo, rồi Markov; không khởi tạo dự án sách. Outline/storyboard cập nhật đủ, 43 ID duy nhất khớp đúng thứ tự HTML, mỗi trang có một chủ thời lượng; tổng 120 phút. Không đổi index vì đường dẫn và tên bài giữ nguyên.
+- Kiểm tra RevealJS tại cổng 8765: 16 lượt cho 8 trang phần 3 ở 1280×720 và 390×844, không tràn, lỗi KaTeX, ảnh hỏng, HTTP/JavaScript; điều hướng bàn phím đạt. Xem trực tiếp ảnh trang minh họa; kiểm tra lại sau thêm “hoặc”. SVG XML hợp lệ, có title/desc/role. Giới hạn Codex Slides như đã ghi vẫn còn; lần này rà trực quan bằng Chromium cục bộ, không tuyên bố đã rà trong Codex Slides.
+
+### Báo cáo quan sát: plan
+
+Runtime: requested_model=deepseek/deepseek-v4-flash-0731; observed_model=deepseek/deepseek-v4-flash-0731; provider=OpenRouter.
+
+# Kế hoạch điều chỉnh L02-03 (Phần 3)
+
+## 1. Thứ tự mới đề xuất (7 mục, tổng 28 phút)
+
+| # | Mục | Thời lượng |
+|---|-----|-----------|
+| 01 | Trạng thái / Quan sát / Biểu diễn | 3' |
+| 02 | Sample O / History S / Trajectory S | 3' |
+| 03 | **Quan sát đầy đủ và một phần** (mới, 6') | 6' |
+| 04 | Vị trí xe vs vận tốc | 3' |
+| 05 | Markov | 3' |
+| 06 | Mê cung: trạng thái + chìa khóa | 3' |
+| 07 | Biểu diễn từ lịch sử quan sát | 3' |
+| 08 | Quiz (4') | 4' |
+
+**Tổng:** 3+3+6+3+3+3+3+4 = **28 phút** ✓
+
+## 2. Nguồn & giả định
+- **Nguồn:** PPTX 18/19 định nghĩa *fully vs partially observable*.
+- **Giả định:** Trạng thái mê cung = tọa độ ô; bản đồ cố định đã biết.
+- **Định nghĩa giữ nguyên:** *Full* = một O suy ra S; *Partial* = một O tương thích với nhiều S.
+- **Không dùng tiền đề Markov** (để dành cho mục 05).
+
+## 3. Đặc tả SVG cho L02-03-06 (6 phút)
+- **Bố cục:** Hai khung cạnh nhau, cùng một sensor output.
+- **Khung trái (Full):** ô (2,1) — tọa độ chính xác → 1 trạng thái duy nhất.
+- **Khung phải (Partial):** 4 cảm biến tường (N/S/E/W) cho **hai ô (2,1) và (3,1)** — cả hai đều có tường Bắc/Nam, trống Đông/Tây → **cùng một output**.
+- **Quan trọng:** Không vẽ tọa độ thật trong khung partial; chỉ hiển thị 4 giá trị cảm biến giống hệt nhau.
+- **Chú thích:** "Cùng sensor output → 2 trạng thái khả dĩ".
+
+## 4. Kiểm tra
+- Tổng thời gian = 28' ✓
+- 7 mục + quiz cuối mỗi mục, dùng sharedCSS ✓
+- Không nhắc Markov trước mục 05 ✓
+- Partial không tiết lộ tọa độ thật ✓
+
+**Lưu ý:** Bản đồ mê cung nguồn (8 hàng) chỉ dùng nếu cần; khung partial chỉ cần 2 ô (2,1)/(3,1).
+
+### Báo cáo quan sát: writer
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+Đã tạo /tmp/rl02-observation/full-partial-observation.svg (một tệp duy nhất): SVG viewBox 0 0 1100×330, role img + title/desc, hai panel — trái 'Quan sát tọa độ' (hai hàng Vị trí (2,1)/(3,1) → hộp tọa độ, chú thích 'hai quan sát khác nhau'), phải 'Cảm biến bốn ô kề' (hai hộp 'Vị trí thật' (2,1),(3,1), hai mũi tên hội tụ về chữ thập 5 ô: bắc/nam tối = tường, đông/tây trắng, tâm chấm cam, 'Quan sát nhận được'), chú thích 'cùng một quan sát', chú giải Ô tối/Ô trắng.
+
+### Báo cáo quan sát: student
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Vai trò sư phạm:** L02-03-02 giới thiệu S/O/X; L02-03-09 định nghĩa mẫu, lịch sử, quỹ đạo; L02-03-06 đặt ngay sau quỹ đạo, định nghĩa đầy đủ/một phần bằng "từ $O_t$ tái tạo được $S_t$", không kèm điều kiện Markov — đúng yêu cầu người học. Nhãn tọa độ trong hình được ghi rõ là để người học đối chiếu, không phải tín hiệu cảm biến. Các slide L02-03-03→08 và biên L02-02-06/07, L02-04-01/02 nhất quán.
+
+**Kiểm tra SVG (full-partial-observation.svg):** hai ô tường Bắc/Nam tối, Đông/Tây trắng, chấm cam trung tâm — khớp nguồn (2,1),(3,1) tường Bắc/Nam. Mũi tên hội tụ và nhãn đúng.
+
+**Phát hiện:**
+
+1. **Thấp — SVG, tọa độ mũi tên:** Hai mũi tên hội tụ kết thúc tại x=875 (`<line x1="736" y1="113" x2="875" y2="157">` và `x2="875" y2="177">`), trong khi ô quan sát phía Tây bắt đầu tại x=885. Mũi tên không chạm khối quan sát, hở 10px. **Sửa:** kéo dài x2 tới ~883 (chừa cho đầu mũi tên).
+
+2. **Thấp — L02-04-02, chú thích:** "Tại ô này, chọn Đông gặp tường và giữ nguyên vị trí" — bằng chứng cung cấp chỉ cho tường Bắc/Nam tại (2,1),(3,1); tường tại (1,2) không có trong trích dẫn. Không thể xác minh từ bằng chứng; nếu đúng nguồn, chỉ cần ghi chú nguồn tường tại (1,2).
+
+3. **Thông tin — thiếu bằng chứng:** Thẻ liên kết đến/ra (incoming/outgoing links) và hình markov-summary.svg, source-policy.svg không có trong trích dẫn; không đánh giá được tọa độ các hình này.
+
+Không phát hiện lỗi nội dung sai về định nghĩa quan sát đầy đủ/một phần, lịch sử $H_t^O$, hay biến thể chìa khóa. Bảy phần ngoài không thuộc phạm vi.
+
+### Báo cáo quan sát: rl
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Vai trò sư phạm (rl):** L02-03-06 định nghĩa đầy đủ/một phần qua khả năng dựng lại $S_t$ từ $O_t$, mê cung cố định → trạng thái = tọa độ, không đòi điều kiện Markov. Đúng yêu cầu.
+
+**Liên kết vào/ra (không phải vai trò worker):** vào từ L02-03-09, ra tới L02-03-03. Không có thẻ nav tường minh trong đoạn cung cấp — không thể kiểm chứng, chỉ ghi nhận thiếu bằng chứng.
+
+**Phát hiện:**
+
+1. **Trung bình – L02-03-06 / SVG:** Tiêu đề trái "Quan sát tọa độ" nhưng khung "Vị trí (2,1)" và "(3,1)" vẽ cùng kiểu hộp như khung quan sát bên phải; theo ghi chú, tọa độ chỉ là nhãn giải thích cho người học, không phải dữ liệu cảm biến. Bằng chứng: SVG dòng `<text ...>Vị trí (2,1)</text>` → hộp `(2,1)`; aside ghi "Nhãn tọa độ trong phần minh họa trạng thái chỉ giúp người học đối chiếu". Sửa: đổi tiêu đề khung trái thành "Trạng thái $S_t$" và khung phải thành "Quan sát $O_t$", hoặc chú thích phân biệt rõ.
+
+2. **Thấp – L02-03-06 / SVG:** Mũi tên hội tụ phải: đường từ (3,1) kết thúc tại y=177, lệch tâm quan sát (trung tâm cross ≈ y=167); đường từ (2,1) kết thúc y=157. Bằng chứng: `line ... x2="875" y2="157"` và `y2="177"`. Sửa: cho cả hai mũi tên hội tụ về ~(875,167).
+
+3. **Thấp – L02-03-08 / đáp án 1:** Gọi "tọa độ chính xác" là quan sát đầy đủ dựa trên quy ước tọa độ cố định — hợp lệ, nhưng ghi chú nên nhắc đây là giả thiết về giao diện cảm biến (như L02-03-02). Bằng chứng: ghi chú đã nêu "khi bản đồ, luật và quy ước tọa độ cố định". Chấp nhận được; không bắt buộc sửa.
+
+Không phát hiện lỗi nội dung nghiêm trọng; seven phần ngoài và quiz cuối giữ nguyên đúng phạm vi.
+
+### Báo cáo quan sát: math
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+## Báo cáo review (toàn bộ, ≤220 từ)
+
+**Vai trò giáo dục:** L02-03-09 → L02-03-06 đúng thứ tự người dùng yêu cầu; định nghĩa đầy đủ/một phần qua tái dựng $S$ từ $O$, không kèm tiền đề Markov. L02-03-01 đã xóa sạch; liên kết vào (L02-02-07) và ra (L02-04-01) hợp lý. Bảy mục ngoài và quiz cuối giữ nguyên.
+
+**Toán:** Đúng. Mẫu $(o_t,a_t,o_{t+1},r_{t+1})$ chữ thường, $H_t$, $\tau=H_T$ nhất quán; Markov L02-03-04 đúng với điều kiện xác suất dương.
+
+**SVG full-partial-observation.svg:**
+- **Thấp / SVG:** Mũi tên hội tụ bên phải: mũi tên từ (3,1) kết thúc y=177, lệch tâm dọc của khối quan sát (y=167); nên đổi thành y2≈167.
+- **Thấp / SVG:** Nhãn "Vị trí thật" (y=80) nằm sát tiêu đề panel (y=42) và trên khối (2,1) — chấp nhận được, không phải lỗi.
+- **Đúng:** Tường Bắc/Đông tối, Đông/Tây trắng khớp mê cung nguồn (2,1),(3,1); hai vị trí cho cùng tín hiệu bốn ô kề; nhãn tọa độ là giải thích, đúng ghi chú.
+
+**Không flag:** câu thưởng do người dùng yêu cầu trong part2; kỳ vọng nguồn đầy đủ đã có trong notes.
+
+**Kết luận:** Không lỗi nghiêm trọng; 1 sửa nhỏ SVG (tọa độ mũi tên), 1 gợi ý ký hiệu $H_t$ vs $H_t^O$ ở L02-03-09.
+
+### Báo cáo quan sát: academic
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Báo cáo thẩm định (vai trò học thuật) — phạm vi: L02-03-02→09, L02-03-06, hai slide biên (L02-02-06/07, L02-04-01/02), SVG full-partial-observation.svg**
+
+**Vai trò giáo dục:** Cụm L02-03 định nghĩa trạng thái/quan sát/biểu diễn, mẫu dữ liệu–lịch sử–quỹ đạo, rồi đầy đủ/một phần quan sát, thông tin lịch sử, Markov, trạng thái mê cung, biểu diễn quyết định; liên kết vào từ L02-02 (tác tử, tín hiệu học, phản hồi trễ) và ra L02-04 (chính sách). Bảy mục ngoài và các câu hỏi kiểm tra cuối giữ nguyên — không thuộc nhiệm vụ.
+
+**Kiểm tra nội dung theo định nghĩa yêu cầu:**
+- L02-03-06 định nghĩa "Đầy đủ: từ $O_t$ xác định được $S_t$" — đúng tiêu chí tái dựng S từ O, không đòi điều kiện Markov. ✓
+- Ghi chú nêu rõ hai vị trí là hai trường hợp thay thế, nhãn tọa độ chỉ để người học đối chiếu — phù hợp yêu cầu. ✓
+- Tường Bắc/Nam, Đông/Tây đi được ở (2,1),(3,1) khớp mê cung nguồn. ✓
+- L02-03-09: mẫu dùng $o$, lịch sử/quỹ đạo dùng $S$ — ghi chú đã giải thích rõ. ✓
+- Không phát hiện câu thưởng "đúng theo yêu cầu người dùng" trong phần đã xem thuộc phạm vi cấm phản biện.
+
+**SVG (full-partial-observation.svg):**
+
+| Mức | Vị trí | Vấn đề | Bằng chứng | Đề xuất |
+|---|---|---|---|---|
+| Nhẹ | SVG, hai mũi tên hội tụ phải | Đầu mũi tên (x=875) cách khối quan sát (ô Tây, x=885) ~10px, có thể trông hở | `<line ... x2="875" y2="157"/>` và ô Tây `x="885"` | Kéo x2 tới 883 hoặc giảm khoảng hở |
+| Nhẹ | SVG, bảng trái | Mũi tên kết thúc x=315, hộp quan sát bắt đầu x=325 — khe 10px tương tự | `<line x1="215" ... x2="315"/>`, hộp `x="325"` | Đồng bộ khoảng cách |
+
+**Kết luận:** Không có lỗi nội dung nghiêm trọng; định nghĩa đầy đủ/một phần, nhãn trạng thái minh họa, và hình học tường đều chính xác. Chỉ hai chỉnh sửa thẩm mỹ SVG nêu trên.
+
+### Báo cáo quan sát: flow
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+## Báo cáo rà soát L02-02-06 → L02-04-02
+
+**Dòng vai trò (report flow):** Slide L02-02-06 nhận từ L02-02-05 (giả thuyết điểm thưởng), chuyển tới L02-02-07 (câu hỏi); phần 3 sau xóa L02-03-01: L02-03-02 nhận từ phần 2, chuỗi 02 → 09 (quỹ đạo) → 06 (đầy đủ/một phần) → 03 → 04 → 05 → 07 → 08, đúng yêu cầu người dùng đặt quan sát ngay sau quỹ đạo. Bảy phần ngoài không đổi, quiz cuối giữ nguyên.
+
+| Mức | Vị trí | Vấn đề | Bằng chứng | Đề xuất |
+|---|---|---|---|---|
+| Trung bình | L02-03-06 SVG | Hai mũi tên từ hai ô "Vị trí thật" hội tụ về **một** khối quan sát, dễ hiểu là hai tác tử đồng thời, mâu thuẫn ghi chú "hai trường hợp thay thế" | `<line x1="736" y1="113" ...>` và `<line x1="736" y1="193" ...>` cùng trỏ vào một cross tại x≈875; notes: "hai trường hợp thay thế, không phải hai tác tử đồng thời" | Thêm nhãn "hoặc" giữa hai ô, hoặc tách quan sát thứ hai song song |
+| Thấp | L02-03-06 SVG | Cross thiếu nhãn hướng Bắc/Nam/Đông/Tây; người học khó đối chiếu "Bắc, Nam là tường" | Chỉ có `<rect>` tối/trắng quanh (935–1035, 92–242), không `<text>` hướng | Thêm chữ "B" (960,86), "N" (960,254), "T" (877,171), "Đ" (1010,171) |
+| Thấp | L02-03-08 đáp án 1 | Nêu hai quan sát đầy đủ nhưng gộp một dòng, dễ đọc thành ba trường hợp cùng loại | "<li>Tọa độ và ảnh toàn bản đồ... một phần.</li>" | Tách thành hai vế rõ "tọa độ: đầy đủ; ảnh: đầy đủ; bốn ô kề: một phần" |
+
+**SVG đã kiểm tọa độ:** khớp mê cung nguồn — Bắc/Nam tối (tường), Đông/Tây trắng; text các hàng, tiêu đề, legend trong viewBox 1100×330, không tràn. Không phát hiện lỗi nội dung ở L02-02-06, L02-03-09, L02-03-04, L02-03-05, L02-03-07, L02-04-01/02.
+
+### Báo cáo quan sát: flow-recheck
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Kết luận: ĐÃ GIẢI QUYẾT.**
+
+- SVG panel phải: nhãn "hoặc" giữa hai hộ vị trí thật (y=159), hai mũi tên hội tụ về một quan sát — hai trường hợp thay thế, không đồng thời. Sửa lỗi cũ xác nhận.
+- Vai trò sư phạm rõ: ghi chú L02-03-06 nhấn "hai trường hợp thay thế, không phải hai tác tử đồng thời".
+- Liên kết: ghi chú 03-06 dẫn tới ví dụ xe ("Tiếp theo"); 03-03 và 03-04 nối logic (thông tin lịch sử → Markov).
+- Thứ tự đúng yêu cầu: 03-02 → 03-09 → 03-06 → 03-03 → 03-04; phân loại quan sát (03-06) không đòi hỏi Markov.
+
+**Lưu ý nhỏ (không chặn):** 03-03 dùng `markov-summary.svg` trước mục Markov — chấp nhận được vì chỉ minh họa mất thông tin; ghi chú 03-03 có lỗi chính tả "suy ra,Markov-summary.svg" (thiếu dấu cách).
+
+Recheck flow: gói đầu vượt 16000 ký tự và bị chặn trước khi gửi; thu gọn còn 10399 ký tự, thử lại một lần cùng mô hình, xác nhận vấn đề đã giải quyết.

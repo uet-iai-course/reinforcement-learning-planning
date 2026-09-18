@@ -20,7 +20,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 
 ## Trạng thái triển khai
 
-Đã hoàn tất 7/7 phần: 44 trang, 120 phút; đủ năm báo cáo độc lập và kiểm định lại. Giới hạn rà trực quan Codex Slides được ghi trong review-log.md.
+Đã hoàn tất 7/7 phần: 43 trang, 120 phút; đủ năm báo cáo độc lập và kiểm định lại. Giới hạn rà trực quan Codex Slides được ghi trong review-log.md.
 
 ## Trang đích
 
@@ -36,15 +36,14 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-02-05` — Giả thuyết điểm thưởng — PPTX trang 9 (thưởng) và 25 (mê cung với -1 mỗi bước)
 - `L02-02-06` — Phản hồi trễ — PPTX trang 7–8 (phản hồi trễ), 11 (cờ)
 - `L02-02-07` — Câu hỏi kiểm tra — PPTX trang 27 (quiz); bài luyện suy ra từ trang 25–26 và hw02 bài 6, 10
-- `L02-03-01` — Thông tin để ra quyết định — PPTX trang 19; ảnh maze-local.svg dựng từ trang 25-26; bài mê cung hw02 bài 10 suy ra kịch bản hai lối ra.
 - `L02-03-02` — Trạng thái và quan sát — PPTX trang 16 (trạng thái/quan sát); phần biểu diễn ở trang 14-15 và 21.
 - `L02-03-09` — Mẫu dữ liệu, lịch sử và quỹ đạo — PPTX trang 14–16; bổ sung theo yêu cầu, đặt sau trạng thái và quan sát
+- `L02-03-06` — Quan sát đầy đủ và một phần — PPTX trang 18 (đầy đủ) và trang 19 (một phần); hình full-partial-observation.svg từ trang 25-26.
 - `L02-03-03` — Thông tin trong lịch sử — PPTX trang 12 (ví dụ robot/cờ/xe); ví dụ vận tốc là giả thiết sư phạm suy ra,Markov-summary.svg từ trang 17.
 - `L02-03-04` — Tính Markov — PPTX trang 17 (Markov) và trang 18 (đầy đủ).
 - `L02-03-05` — Trạng thái trong mê cung — PPTX trang 25-26 (mê cung); bài mê cung hw02 bài 10; biến thể chìa khóa là giả thiết sư phạm suy ra.
-- `L02-03-06` — Quan sát đầy đủ và một phần — PPTX trang 18 (đầy đủ) và trang 19 (một phần); ảnh maze-local.svg từ trang 25-26.
 - `L02-03-07` — Biểu diễn dùng để quyết định — PPTX trang 14-15 (giao diện) và trang 21; ví dụ xe hai thời điểm từ trang 12.
-- `L02-03-08` — Câu hỏi kiểm tra — PPTX trang 27 (quiz); các trường hợp từ trang 16, 18, 19 và ảnh maze-local.svg.
+- `L02-03-08` — Câu hỏi kiểm tra — PPTX trang 27 (quiz); các trường hợp từ trang 16, 18, 19 và hình full-partial-observation.svg.
 - `L02-04-01` — Quy tắc lựa chọn hành động — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 - `L02-04-02` — Ví dụ về chính sách — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 - `L02-04-03` — Chính sách xác định — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.

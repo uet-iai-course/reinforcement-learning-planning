@@ -221,18 +221,34 @@ Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 2
 ### Cụm Trạng thái, quan sát và biểu diễn
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 9 phút; trang tính thời gian: L02-03-01, L02-03-02, L02-03-09. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 6 phút; trang tính thời gian: L02-03-02, L02-03-09. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã biết tác tử nhận quan sát và thưởng sau hành động; có thể đối chiếu hai ô trên mê cung.
 - Sản phẩm học tập: Phân biệt trạng thái môi trường, quan sát nhận được và biểu diễn dùng để quyết định.
-- vấn đề: L02-03-01
-- trực giác: L02-03-01
-- ví dụ: L02-03-01
+- vấn đề: L02-03-02
+- trực giác: L02-03-02
+- ví dụ: L02-03-02
 - hình thức: L02-03-02, L02-03-09
 - ứng dụng: L02-03-02
 - kiểm tra: L02-03-08
-- Gộp bước/ngoại lệ: Trang 01 gộp vấn đề/trực giác/ví dụ, trang 02 gộp định nghĩa và áp dụng; kiểm tra 08 tham chiếu, không cộng giờ hai lần.
+- Gộp bước/ngoại lệ: Theo yêu cầu bỏ trang dẫn nhập riêng, trang 02 nhận vấn đề từ vòng tương tác ở phần 2 và gộp ví dụ tọa độ/bốn ô kề với định nghĩa. Trang 09 hình thức hóa chuỗi; ví dụ phân biệt hai vị trí được triển khai ở trang 06. Kiểm tra 08 không cộng giờ hai lần.
 - Dữ kiện truyền tiếp: Cặp ô (2,1)/(3,1) cùng bốn ô kề dùng lại cho cụm quan sát đầy đủ và một phần.
 - Câu nối: Ví dụ xe tiếp theo cho thấy việc bỏ một biến có thể làm mất thông tin dự báo.
+
+### Cụm Quan sát đầy đủ và một phần
+
+- Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
+- Thời lượng phân bổ: 10 phút; trang tính thời gian: L02-03-06, L02-03-08. Các tham chiếu lại không cộng lặp.
+- Kiến thức đầu vào: Đã phân biệt trạng thái, quan sát và quỹ đạo; không cần định nghĩa Markov.
+- Sản phẩm học tập: Sinh viên xếp được ba tình huống vào quan sát đầy đủ hay một phần kèm lý do.
+- vấn đề: L02-03-02
+- trực giác: L02-03-02
+- ví dụ: L02-03-02
+- hình thức: L02-03-06
+- ứng dụng: L02-03-06
+- kiểm tra: L02-03-08
+- Gộp bước/ngoại lệ: Trang 06 gộp ví dụ hai vị trí, trực giác về thông tin không phân biệt được và định nghĩa hai mức quan sát; câu hỏi ở trang 08. Ví dụ đã chuyển từ trang 01 bị bỏ.
+- Dữ kiện truyền tiếp: Cặp ô cùng quan sát dẫn đến phân loại ba cách cung cấp thông tin trong cùng mê cung.
+- Câu nối: Từ quan sát không phân biệt được vị trí, chuyển sang ví dụ xe và điều kiện thông tin đủ để dự báo.
 
 ### Cụm Tính Markov
 
@@ -248,30 +264,14 @@ Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 2
 - kiểm tra: L02-03-08
 - Gộp bước/ngoại lệ: Ví dụ xe trước công thức; mê cung và chìa khóa kiểm tra điều kiện đủ thông tin.
 - Dữ kiện truyền tiếp: Cùng vị trí và hành động nhưng khác vận tốc có thể cho kết quả khác; mê cung có khóa cần thêm tình trạng chìa khóa.
-- Câu nối: Từ tính Markov, phân loại quan sát đầy đủ và một phần trên các tình huống đã có.
-
-### Cụm Quan sát đầy đủ và một phần
-
-- Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 7 phút; trang tính thời gian: L02-03-06, L02-03-08. Các tham chiếu lại không cộng lặp.
-- Kiến thức đầu vào: Đã hiểu tính Markov và cặp ô (2,1)/(3,1) cùng bốn ô kề.
-- Sản phẩm học tập: Sinh viên xếp được ba tình huống vào quan sát đầy đủ hay một phần kèm lý do.
-- vấn đề: L02-03-01
-- trực giác: L02-03-01
-- ví dụ: L02-03-01
-- hình thức: L02-03-06
-- ứng dụng: L02-03-06
-- kiểm tra: L02-03-08
-- Gộp bước/ngoại lệ: Tái dùng cặp ô phần trước để định nghĩa mức quan sát, rồi kiểm tra ba tình huống.
-- Dữ kiện truyền tiếp: Cặp ô cùng quan sát dẫn đến phân loại ba cách cung cấp thông tin trong cùng mê cung.
-- Câu nối: Khi quan sát một phần, cần biểu diễn từ lịch sử, chủ đề cụm kế tiếp.
+- Câu nối: Sau khi kiểm tra trạng thái đủ thông tin dự báo, xét biểu diễn từ lịch sử quan sát.
 
 ### Cụm Biểu diễn từ lịch sử
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
 - Thời lượng phân bổ: 3 phút; trang tính thời gian: L02-03-07. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã phân biệt trạng thái với quan sát và thấy ví dụ vị trí đơn lẻ bỏ mất vận tốc.
-- Sản phẩm học tập: Giải thích $X_t=f(H_t)$ và giả thiết để suy vận tốc từ hai quan sát vị trí.
+- Sản phẩm học tập: Giải thích $X_t=f(H_t^O)$ và giả thiết để suy vận tốc từ hai quan sát vị trí.
 - vấn đề: L02-03-03
 - trực giác: L02-03-03
 - ví dụ: L02-03-07
@@ -282,18 +282,6 @@ Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 2
 - Dữ kiện truyền tiếp: Lịch sử có thể khôi phục thông tin; dùng nguyên tắc này khi đổi quan sát tọa độ thành cảm biến cục bộ ở L02-06-07.
 - Câu nối: Biểu diễn $X_t$ trở thành đầu vào của chính sách ở phần 4.
 
-### L02-03-01 — Thông tin để ra quyết định
-
-Thời lượng: 3 phút. Nguồn: PPTX trang 19; ảnh maze-local.svg dựng từ trang 25-26; bài mê cung hw02 bài 10 suy ra kịch bản hai lối ra..
-
-- **Luận điểm:** Quan sát cục bộ có thể không phân biệt được các tình huống môi trường khác nhau có hậu quả khác nhau.
-- **Nhu cầu và lý do tồn tại:** Sinh viên cần một vấn đề cụ thể trước định nghĩa; việc tìm thông tin còn thiếu chính là động lực cho ba cấp thông tin ở slide tiếp theo.
-- **Cách thể hiện và độ phù hợp năm 3:** Ảnh mê cung cục bộ làm trung tâm, chú thích hai vị trí một ảnh; năm ba đã xử lý mê cung trong hw02 nên hình quen và đọc được ngay.
-- **Kết nối vào:** Dòng thời gian tương tác và vai trò của vị trí tác tử trong mê cung từ phần 2.
-- **Kết nối ra:** Câu hỏi thiếu thông tin gì dẫn tới cặp khái niệm trạng thái - quan sát ở slide 2.
-- **Sản phẩm học tập/kiểm tra:** Hỏi: vì sao bước đi Đông từ hai vị trí có thể khác hậu quả.
-- **Quyết định nguồn:** Tách: trang 19 nêu quan sát một phần bằng mê cung; tách thành slide mở vấn đề với ảnh cục bộ dựng từ trang 25-26 để định vị bài toán trước công thức.
-
 ### L02-03-02 — Trạng thái và quan sát
 
 Thời lượng: 3 phút. Nguồn: PPTX trang 16 (trạng thái/quan sát); phần biểu diễn ở trang 14-15 và 21..
@@ -301,8 +289,8 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 16 (trạng thái/quan sát); ph�
 - **Luận điểm:** S_t, O_t, X_t là ba cấp thông tin phân biệt theo phía dữ liệu nằm ở đâu và dùng làm gì.
 - **Nhu cầu và lý do tồn tại:** Định nghĩa miền và ký hiệu trước khi dùng, đúng yêu cầu trình tự của bài giảng.
 - **Cách thể hiện và độ phù hợp năm 3:** Ba card ngang cho ba khái niệm, mỗi card một câu định nghĩa; ví dụ mê cung viết dưới dạng dòng duy nhất để không tách ý.
-- **Kết nối vào:** Vấn đề thiếu thông tin ở slide 1: thiếu chính là khoảng cách giữa O_t và S_t.
-- **Kết nối ra:** Trường hợp O_t thiếu thông tin dự báo được phân tích ở slide 3 qua ví dụ xe.
+- **Kết nối vào:** Vòng tương tác phần 2 đã có quan sát; cần phân biệt thông tin nhận được với tình huống môi trường.
+- **Kết nối ra:** Mẫu dữ liệu dùng quan sát còn lịch sử và quỹ đạo dùng trạng thái ở trang kế tiếp.
 - **Sản phẩm học tập/kiểm tra:** Cho mê cung có GPS: hỏi X_t có thể là gì và vì sao X_t = S_t khi đó là lựa chọn hợp lệ.
 - **Quyết định nguồn:** Sửa: trang 16 trình bày trạng thái và quan sát chung chung; thêm X_t theo trang 14-15 và ví dụ tọa độ/bốn ô kề để chốt ký hiệu cho cả section.
 
@@ -314,9 +302,21 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 14–16; mẫu và quỹ đạo b�
 - **Nhu cầu và lý do tồn tại:** Định nghĩa lịch sử trước khi dùng nó để phân tích thông tin và tính Markov.
 - **Cách thể hiện và độ phù hợp năm 3:** Bộ bốn dữ liệu và hai chuỗi hình thức, phân biệt mẫu quan sát với chuỗi trạng thái–hành động–thưởng.
 - **Kết nối vào:** Trạng thái và quan sát đã được phân biệt; mẫu dùng quan sát, lịch sử và quỹ đạo dùng trạng thái.
-- **Kết nối ra:** Ví dụ hai xe làm rõ thông tin ảnh hưởng dự báo có thể bị mất trong quan sát hiện tại.
+- **Kết nối ra:** Hình quan sát đầy đủ/một phần tiếp theo làm rõ chuỗi trạng thái có thể không trực tiếp sẵn có cho tác tử.
 - **Sản phẩm học tập/kiểm tra:** Phân biệt phạm vi ba đối tượng ở L02-03-08.
 - **Quyết định nguồn:** Thêm theo yêu cầu; chuyển từ sau phản hồi trễ sang ngay sau trạng thái và quan sát theo chỉ dẫn mới nhất. Với lượt hữu hạn, $\tau=H_T$; trường hợp tiếp diễn giải thích trong ghi chú.
+
+### L02-03-06 — Quan sát đầy đủ và một phần
+
+Thời lượng: 6 phút. Nguồn: PPTX trang 18–19; mê cung trang 25–26.
+
+- **Luận điểm:** Mức quan sát quyết định khả năng phân biệt các trạng thái từ thông tin tác tử nhận.
+- **Nhu cầu và lý do tồn tại:** Phân biệt chuỗi trạng thái vừa định nghĩa với dữ liệu quan sát thực sự sẵn có.
+- **Cách thể hiện và độ phù hợp năm 3:** SVG đối chiếu hai trạng thái có tọa độ khác nhau nhưng cùng bốn ô kề; hai định nghĩa ngắn dưới hình. Nhãn trạng thái phục vụ người học, không phải dữ liệu cảm biến.
+- **Kết nối vào:** L02-03-09 mô tả mẫu quan sát và lịch sử/quỹ đạo trạng thái; hình làm rõ khoảng cách giữa hai loại dữ liệu.
+- **Kết nối ra:** L02-03-03 dùng ví dụ xe để xét thông tin bị mất ảnh hưởng dự báo, trước định nghĩa Markov.
+- **Sản phẩm học tập/kiểm tra:** Phân loại ba kiểu quan sát ở L02-03-08 và giải thích bằng khả năng xác định trạng thái.
+- **Quyết định nguồn:** Chuyển lên ngay sau quỹ đạo theo yêu cầu; gộp ví dụ cục bộ của trang bị bỏ L02-03-01 vào hình mới, dành thêm 3 phút đối chiếu. Không dùng tính Markov làm tiên quyết.
 
 ### L02-03-03 — Thông tin trong lịch sử
 
@@ -325,7 +325,7 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 12 (ví dụ robot/cờ/xe); ví d
 - **Luận điểm:** Một quan sát đơn lẻ có thể không dự báo được bước tới, trong khi lịch sử nhiều thời điểm có thể đủ.
 - **Nhu cầu và lý do tồn tại:** Trước khi phát biểu điều kiện Markov, sinh viên cần thấy một trường hợp quan sát hiện tại thiếu thông tin dự báo để hiểu vì sao định nghĩa dùng lịch sử.
 - **Cách thể hiện và độ phù hợp năm 3:** Sơ đồ hai xe cùng vị trí10m, vận tốc1/5m/s, cùng lệnh phanh; dữ kiện và lời giảng trùng hình. Sinh viên dùng kiến thức chuyển động để nhận ra biến bị thiếu.
-- **Kết nối vào:** Ba cấp S, O, X từ slide 2: đây là trường hợp O_t hẹp hơn trạng thái thực.
+- **Kết nối vào:** Hình quan sát một phần vừa cho thấy thông tin có thể không phân biệt trạng thái; ví dụ xe xét hệ quả đối với dự báo.
 - **Kết nối ra:** Ví dụ này là nền để viết định nghĩa tính Markov trên lịch sử ở slide 4.
 - **Sản phẩm học tập/kiểm tra:** Hỏi: cần thêm thông tin gì ngoài vị trí để dự báo vị trí sau một bước với cùng mức ga.
 - **Quyết định nguồn:** Sửa: trang 12 liệt kê robot/cờ/xe; giữ xe, gắn giả thiết chuyển động đều và cặp hai thời điểm để ví dụ có tính được và nối được sang slide 7.
@@ -350,21 +350,9 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 25-26 (mê cung); bài mê cung hw
 - **Nhu cầu và lý do tồn tại:** Áp dụng định nghĩa slide 4 vào bài tập mê cung mà sinh viên gặp ở hw02, để thấy tiêu chí kiểm tra dùng được trong thực hành.
 - **Cách thể hiện và độ phù hợp năm 3:** Hai bullet tóm tắt thiết lập và một box check chứa câu hỏi; không cần hình mới vì mê cung đã quen từ phần 2 và hw02.
 - **Kết nối vào:** Định nghĩa tính Markov ở slide 4 là tiêu chí kiểm tra.
-- **Kết nối ra:** Mức quan sát được phân loại dựa trên thông tin trạng thái đã xác định.
+- **Kết nối ra:** Chuyển sang biểu diễn từ lịch sử quan sát để giữ thông tin cần cho quyết định.
 - **Sản phẩm học tập/kiểm tra:** Nhận diện biến chìa khóa cần thêm; câu hỏi áp dụng nằm cuối phần.
 - **Quyết định nguồn:** Sửa: trang 25-26 dùng mê cung làm ví dụ bài toán; thêm giả thiết chìa khóa làm bài kiểm tra ứng dụng vì cần một trường hợp phản Markov rõ ràng.
-
-### L02-03-06 — Quan sát đầy đủ và một phần
-
-Thời lượng: 3 phút. Nguồn: PPTX trang 18 (đầy đủ) và trang 19 (một phần); ảnh maze-local.svg từ trang 25-26..
-
-- **Luận điểm:** Đầy đủ/một phần là thuộc tính của ánh xạ từ quan sát về trạng thái, không phụ thuộc việc tác tử có biết mô hình hay không.
-- **Nhu cầu và lý do tồn tại:** Khép vòng mở ở slide 1: giải thích vì sao hai ảnh lân cận tạo ra vấn đề, và đặt thuật ngữ cho hai lớp bài toán.
-- **Cách thể hiện và độ phù hợp năm 3:** Bảng hai mức quan sát và kết luận từ cặp vị trí đã thấy; tránh lặp hình nhỏ, giữ cỡ chữ lớn.
-- **Kết nối vào:** Kịch bản hai vị trí một ảnh từ slide 1 và cặp S, O từ slide 2.
-- **Kết nối ra:** Khi quan sát một phần, tác tử phải tự xây biểu diễn từ lịch sử, nội dung slide 7.
-- **Sản phẩm học tập/kiểm tra:** Hỏi: trong mê cung 8x8, cần thêm dữ liệu nào vào O_t để nó trở thành đầy đủ.
-- **Quyết định nguồn:** Giữ: trang 18-19 đã định nghĩa đầy đủ/một phần; thêm cảnh báo tách quan sát đầy đủ khỏi biết mô hình vì sinh viên năm ba hay gộp hai ý này.
 
 ### L02-03-07 — Biểu diễn dùng để quyết định
 

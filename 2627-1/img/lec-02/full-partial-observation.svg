@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 330" role="img" aria-labelledby="t d">
+  <title id="t">Quan sát đầy đủ và quan sát một phần</title>
+  <desc id="d">Bên trái: hai vị trí (2,1) và (3,1) cho hai quan sát tọa độ khác nhau. Bên phải: hai vị trí khác nhau cho cùng một quan sát cảm biến bốn ô kề.</desc>
+  <rect x="0" y="0" width="1100" height="330" fill="#FFFFFF"/>
+
+  <!-- Panel titles -->
+  <text x="270" y="42" font-family="Arial" font-size="26" font-weight="bold" fill="#2F3E7A" text-anchor="middle">Quan sát tọa độ</text>
+  <text x="830" y="42" font-family="Arial" font-size="26" font-weight="bold" fill="#2F3E7A" text-anchor="middle">Cảm biến bốn ô kề</text>
+
+  <!-- ================= LEFT PANEL ================= -->
+  <!-- Row 1: state (2,1) -->
+  <rect x="40" y="75" width="170" height="46" rx="8" fill="#FFFFFF" stroke="#293247" stroke-width="2"/>
+  <text x="125" y="105" font-family="Arial" font-size="22" fill="#293247" text-anchor="middle">Vị trí (2,1)</text>
+  <line x1="215" y1="98" x2="315" y2="98" stroke="#B15A2B" stroke-width="3" marker-end="url(#arw)"/>
+  <rect x="325" y="75" width="150" height="46" rx="8" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2"/>
+  <text x="400" y="105" font-family="Arial" font-size="22" fill="#2F3E7A" text-anchor="middle">(2,1)</text>
+
+  <!-- Row 2: state (3,1) -->
+  <rect x="40" y="145" width="170" height="46" rx="8" fill="#FFFFFF" stroke="#293247" stroke-width="2"/>
+  <text x="125" y="175" font-family="Arial" font-size="22" fill="#293247" text-anchor="middle">Vị trí (3,1)</text>
+  <line x1="215" y1="168" x2="315" y2="168" stroke="#B15A2B" stroke-width="3" marker-end="url(#arw)"/>
+  <rect x="325" y="145" width="150" height="46" rx="8" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2"/>
+  <text x="400" y="175" font-family="Arial" font-size="22" fill="#2F3E7A" text-anchor="middle">(3,1)</text>
+
+  <text x="270" y="275" font-family="Arial" font-size="22" fill="#B15A2B" text-anchor="middle">Hai vị trí → hai quan sát khác nhau</text>
+
+  <!-- ================= RIGHT PANEL ================= -->
+  <text x="675" y="80" font-family="Arial" font-size="22" font-weight="bold" fill="#293247" text-anchor="middle">Vị trí thật</text>
+  <rect x="620" y="92" width="110" height="42" rx="8" fill="#FFFFFF" stroke="#293247" stroke-width="2"/>
+  <text x="675" y="121" font-family="Arial" font-size="22" fill="#293247" text-anchor="middle">(2,1)</text>
+  <rect x="620" y="172" width="110" height="42" rx="8" fill="#FFFFFF" stroke="#293247" stroke-width="2"/>
+  <text x="675" y="201" font-family="Arial" font-size="22" fill="#293247" text-anchor="middle">(3,1)</text>
+
+  <text x="675" y="159" font-family="Arial" font-size="22" fill="#293247" text-anchor="middle">hoặc</text>
+
+  <!-- converging arrows -->
+  <line x1="736" y1="113" x2="875" y2="157" stroke="#B15A2B" stroke-width="3" marker-end="url(#arw)"/>
+  <line x1="736" y1="193" x2="875" y2="177" stroke="#B15A2B" stroke-width="3" marker-end="url(#arw)"/>
+
+  <!-- cross: north dark, south dark, east white, west white, center orange dot -->
+  <text x="960" y="80" font-family="Arial" font-size="22" font-weight="bold" fill="#293247" text-anchor="middle">Quan sát nhận được</text>
+  <!-- north wall -->
+  <rect x="935" y="92" width="50" height="50" fill="#293247"/>
+  <!-- south wall -->
+  <rect x="935" y="192" width="50" height="50" fill="#293247"/>
+  <!-- west free -->
+  <rect x="885" y="142" width="50" height="50" fill="#FFFFFF" stroke="#293247" stroke-width="2"/>
+  <!-- east free -->
+  <rect x="985" y="142" width="50" height="50" fill="#FFFFFF" stroke="#293247" stroke-width="2"/>
+  <!-- center -->
+  <rect x="935" y="142" width="50" height="50" fill="#FFFFFF" stroke="#293247" stroke-width="2"/>
+  <circle cx="960" cy="167" r="12" fill="#B15A2B"/>
+  <rect x="935" y="92" width="50" height="150" fill="none" stroke="#293247" stroke-width="2"/>
+
+  <text x="830" y="275" font-family="Arial" font-size="22" fill="#B15A2B" text-anchor="middle">Hai vị trí → cùng một quan sát</text>
+
+  <!-- legend -->
+  <text x="550" y="318" font-family="Arial" font-size="22" fill="#293247" text-anchor="middle">Ô tối: tường · Ô trắng: đi được</text>
+
+  <defs>
+    <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#B15A2B"/>
+    </marker>
+  </defs>
+</svg>

@@ -78,11 +78,6 @@
 </section>
 </section>
 <section>
-<section data-slide-id="L02-03-01">
-<h2>Thông tin để ra quyết định</h2>
-<p>Cảm biến chỉ báo bốn ô kề có tường hay đi được.</p><img class="figure short" src="img/lec-02/maze-local.svg" alt="Tại (2,1) và (3,1), Bắc và Nam đều là tường, Đông và Tây đều là ô trống."/><p class="box">Quan sát hiện tại chưa phân biệt được hai vị trí.</p>
-<aside class="notes">Tại (2,1) và (3,1), cảm biến đều báo Bắc và Nam có tường, Đông và Tây đi được. Chọn Đông từ hai vị trí này đưa tác tử tới hai ô khác nhau. Dù biết bản đồ, tác tử vẫn chưa xác định được vị trí chỉ từ tín hiệu đang nhận. Vì vậy cần phân biệt tình huống của môi trường với thông tin được cung cấp cho tác tử.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 19; ảnh maze-local.svg dựng từ trang 25-26; bài mê cung hw02 bài 10 suy ra kịch bản hai lối ra.</p></aside>
-</section>
 <section data-slide-id="L02-03-02">
 <h2>Trạng thái và quan sát</h2>
 <div class="grid3"><div class="card"><h3>Trạng thái</h3><p>$S_t\in\mathcal S$</p><p>Tình huống của môi trường trong mô hình.</p></div><div class="card"><h3>Quan sát</h3><p>$O_t\in\mathcal O$</p><p>Thông tin tác tử nhận được.</p></div><div class="card"><h3>Biểu diễn</h3><p>$X_t\in\mathcal X$</p><p>Dữ liệu dùng để chọn hành động.</p></div></div><p>Trong mê cung cố định, trạng thái là tọa độ; quan sát có thể chỉ là bốn ô kề.</p>
@@ -96,6 +91,13 @@
 <p><strong>Quỹ đạo trạng thái kết thúc tại $T$:</strong></p>
 <div class="math-large">$$\tau=(S_0,A_0,R_1,S_1,\ldots,A_{T-1},R_T,S_T).$$</div>
 <aside class="notes">Chữ thường trong mẫu dữ liệu chỉ giá trị cụ thể của các biến viết hoa. Mẫu dùng quan sát, còn lịch sử và quỹ đạo ở đây dùng trạng thái môi trường; khi quan sát một phần, tác tử không nhất thiết biết chuỗi trạng thái này. Một mẫu ghi hành động và phản hồi của một bước; quan sát mới và phần thưởng đều đến sau hành động. Lịch sử trạng thái kết thúc ở trạng thái hiện tại, trước khi chọn hành động tiếp theo; $H_0=(S_0)$. Quỹ đạo ở đây là toàn bộ một lượt tương tác hữu hạn, với $T$ là thời điểm kết thúc: $\tau=H_T$. Lịch sử $H_t$ là phần đầu của quỹ đạo. Nhiệm vụ tiếp diễn có thể được ghi thành quỹ đạo vô hạn hoặc các đoạn hữu hạn.<p class="note-source"><strong>Nguồn:</strong> PPTX trang14–16 (giao diện và lịch sử); biểu diễn mẫu dữ liệu và quỹ đạo bổ sung theo yêu cầu.</p></aside>
+</section>
+<section data-slide-id="L02-03-06">
+<h2>Quan sát đầy đủ và một phần</h2>
+<img class="figure" src="img/lec-02/full-partial-observation.svg" alt="Trong cùng mê cung, hai vị trí (2,1) và (3,1) cho tọa độ khác nhau khi quan sát đầy đủ, nhưng cùng tín hiệu bốn ô kề khi quan sát một phần: Bắc và Nam là tường, Đông và Tây là ô trống."/>
+<div class="grid2"><p><strong>Đầy đủ:</strong> từ $O_t$ xác định được $S_t$.</p><p><strong>Một phần:</strong> một $O_t$ có thể phù hợp với nhiều $S_t$.</p></div>
+<aside class="notes">Xét cùng mê cung có bản đồ và luật cố định; trạng thái là tọa độ tác tử. Hai vị trí (2,1) và (3,1) là hai trường hợp thay thế, không phải hai tác tử đồng thời. Nhận tọa độ chính xác giúp phân biệt hai trạng thái. Với cảm biến bốn ô kề, cả hai trường hợp đều báo Bắc và Nam là tường, Đông và Tây đi được; tác tử không nhận tọa độ thật. Nhãn tọa độ trong phần minh họa trạng thái chỉ giúp người học đối chiếu. Quan sát đầy đủ không có nghĩa tác tử biết quy luật chuyển hoặc phần thưởng. Tiếp theo, ví dụ xe cho thấy thông tin cần giữ còn phụ thuộc những đại lượng ảnh hưởng dự báo.
+<p class="note-source"><strong>Nguồn:</strong> PPTX trang 18–19; hai vị trí và bốn ô kề đối chiếu trên mê cung nguồn trang 25–26.</p></aside>
 </section>
 <section data-slide-id="L02-03-03">
 <h2>Thông tin trong lịch sử</h2>
@@ -111,11 +113,6 @@
 <h2>Trạng thái trong mê cung</h2>
 <ul><li>Bản đồ cố định, chuyển động xác định, thưởng $-1$ mỗi bước, đích $G$.</li><li>$S_t = (x_t, y_t)$: cùng $(s, a)$ cho cùng phản hồi, độc lập đường đã đi.</li></ul><p class="box">Nếu cửa ra phụ thuộc chìa khóa, trạng thái cần gồm tọa độ và tình trạng chìa khóa.</p>
 <aside class="notes">Trong mê cung cố định, tọa độ cùng hành động xác định ô tiếp theo và phần thưởng. Khi đến $G$, tương tác kết thúc. Với biến thể có cửa khóa, hai lần đến cùng ô nhưng khác tình trạng chìa khóa có thể cho kết quả khác nhau. Cần bổ sung $k\in\{0,1\}$ biểu thị có chìa khóa, chẳng hạn $S_t=(x_t,y_t,k_t)$. Biến thể này kiểm tra ranh giới của cách mô tả chỉ bằng tọa độ.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 25-26 (mê cung); bài mê cung hw02 bài 10; biến thể chìa khóa là giả thiết sư phạm suy ra.</p></aside>
-</section>
-<section data-slide-id="L02-03-06">
-<h2>Quan sát đầy đủ và một phần</h2>
-<table><thead><tr><th>Mức quan sát</th><th>Thông tin về trạng thái</th></tr></thead><tbody><tr><td>Đầy đủ</td><td>Từ $O_t$ xác định được $S_t$.</td></tr><tr><td>Một phần</td><td>Một $O_t$ có thể phù hợp với nhiều $S_t$.</td></tr></tbody></table><p class="box">Ảnh bốn ô kề tại $(2,1)$ và $(3,1)$ giống nhau, nên không xác định được vị trí.</p>
-<aside class="notes">Quan sát tọa độ chính xác là đầy đủ trong mê cung có bản đồ và luật cố định. Quan sát bốn ô kề là một phần vì hai vị trí đã xét cho cùng tín hiệu. Đầy đủ thông tin trạng thái không có nghĩa tác tử biết quy luật chuyển hoặc phần thưởng. Quan sát đầy đủ cũng chưa phải định nghĩa đầy đủ của quá trình quyết định Markov; còn cần nêu các thành phần và giả thiết của bài toán.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 18 (đầy đủ) và trang 19 (một phần); ảnh maze-local.svg từ trang 25-26.</p></aside>
 </section>
 <section data-slide-id="L02-03-07">
 <h2>Biểu diễn dùng để quyết định</h2>
