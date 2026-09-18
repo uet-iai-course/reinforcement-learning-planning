@@ -39,10 +39,10 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-03-02` — Trạng thái và quan sát — PPTX trang 16 (trạng thái/quan sát); phần biểu diễn ở trang 14-15 và 21.
 - `L02-03-09` — Mẫu dữ liệu, lịch sử và quỹ đạo — PPTX trang 14–16; bổ sung theo yêu cầu, đặt sau trạng thái và quan sát
 - `L02-03-06` — Quan sát đầy đủ và một phần — PPTX trang 18 (đầy đủ) và trang 19 (một phần); hình full-partial-observation.svg từ trang 25-26.
-- `L02-03-03` — Thông tin trong lịch sử — PPTX trang 12 (ví dụ robot/cờ/xe); ví dụ vận tốc là giả thiết sư phạm suy ra,Markov-summary.svg từ trang 17.
 - `L02-03-04` — Tính Markov — PPTX trang 17 (Markov) và trang 18 (đầy đủ).
+- `L02-03-10` — Tính Markov có hạn chế khả năng mô hình hóa? — PPTX trang 17; mở rộng trạng thái bằng lịch sử bổ sung theo yêu cầu
 - `L02-03-05` — Trạng thái trong mê cung — PPTX trang 25-26 (mê cung); bài mê cung hw02 bài 10; biến thể chìa khóa là giả thiết sư phạm suy ra.
-- `L02-03-07` — Biểu diễn dùng để quyết định — PPTX trang 14-15 (giao diện) và trang 21; ví dụ xe hai thời điểm từ trang 12.
+- `L02-03-07` — Biểu diễn dùng để quyết định — PPTX trang 14–15 (giao diện) và trang 21; ví dụ ghi nhớ chìa khóa trong mê cung.
 - `L02-03-08` — Câu hỏi kiểm tra — PPTX trang 27 (quiz); các trường hợp từ trang 16, 18, 19 và hình full-partial-observation.svg.
 - `L02-04-01` — Quy tắc lựa chọn hành động — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 - `L02-04-02` — Ví dụ về chính sách — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
@@ -82,7 +82,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 | 9 | sửa | 2, 5 | Giả thuyết phần thưởng không phải định lý; tách trực giác tích lũy và công thức. |
 | 10 | gộp | 5, 7 | Tránh lặp danh mục ba thành phần với trang 20. |
 | 11 | sửa | 6 | Giữ bàn cờ kết thúc để vận dụng phần thưởng và tổng thưởng; lược cây sao lưu giá trị (ôn bài 01), vì cơ chế cập nhật nằm ngoài mục tiêu bài 02. |
-| 12 | tách, sửa | 2, 3 | Dùng robot/xe/cờ để phân biệt ranh giới và thông tin. |
+| 12 | sửa | 2 | Dùng bộ điều khiển robot để minh họa ranh giới tác tử–môi trường; ví dụ xe đã bỏ theo yêu cầu. |
 | 13 | sửa | 5 | Phạm vi mô hình theo tác vụ; bỏ câu hỏi tu từ về mô hình hoàn thiện thế giới. |
 | 14–15 | gộp, sửa | 2 | Môi trường trả quan sát/phần thưởng, không trả hành động; chỉ số phản hồi là t+1. |
 | 16 | tách | 3 | Trạng thái, quan sát và biểu diễn quyết định có miền riêng. |

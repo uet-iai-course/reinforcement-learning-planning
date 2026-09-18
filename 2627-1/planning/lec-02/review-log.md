@@ -1077,3 +1077,164 @@ Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; 
 **Lưu ý nhỏ (không chặn):** 03-03 dùng `markov-summary.svg` trước mục Markov — chấp nhận được vì chỉ minh họa mất thông tin; ghi chú 03-03 có lỗi chính tả "suy ra,Markov-summary.svg" (thiếu dấu cách).
 
 Recheck flow: gói đầu vượt 16000 ký tự và bị chặn trước khi gửi; thu gọn còn 10399 ký tự, thử lại một lần cùng mô hình, xác nhận vấn đề đã giải quyết.
+
+
+## Khả năng mô hình hóa với tính Markov — 2026-09-18
+
+- Theo yêu cầu, bỏ L02-03-03 “Thông tin trong lịch sử” và thêm L02-03-10 “Tính Markov có hạn chế khả năng mô hình hóa?” ngay sau L02-03-04. Giữ tiêu đề dạng câu hỏi do chỉ dẫn cụ thể của người dùng. Bài vẫn 43 trang, 7 phần, 120 phút; trang mới nhận 3 phút của trang bị bỏ.
+- Nội dung mới: nếu cho phép mở rộng trạng thái, có thể dùng $\tilde S_t=H_t$. Các lịch sử trước là phần đầu của lịch sử hiện tại, nên không cung cấp thêm thông tin cho phân phối bước tiếp theo khi đã biết trạng thái mới và hành động. Đây là cấu trúc lý thuyết; không bảo đảm trạng thái gọn, học hiệu quả hoặc suy ra trạng thái ẩn từ quan sát. Phân biệt với việc ghép một số hữu hạn quan sát.
+- PPTX trang 17 là căn cứ định nghĩa; phép mở rộng bằng lịch sử là diễn giải bổ sung theo yêu cầu, không gán nhầm cho nguồn. Công thức dựng bằng KaTeX, không cần hình mới. Giữ tài sản SVG xe cũ trong kho nhưng không còn nhúng vào bài.
+- Điều chỉnh câu chuyển từ quan sát đầy đủ/một phần sang tiêu chí thông tin dự báo. Ghi chú trang Markov nhắc mê cung cố định đã học để giữ trực giác trước công thức, theo ngoại lệ bỏ trang dẫn nhập. Đổi ví dụ xe trong trang biểu diễn sang nhớ nhặt chìa khóa: giả sử sự kiện nhặt quan sát được và chìa khóa không mất/tiêu hao. Câu 3 cuối phần kiểm tra thêm chi phí của lịch sử đầy đủ.
+- Reader lập kế hoạch; writer soạn đúng một trang; điều phối viên tích hợp và sửa nguồn vào notes, giới hạn phát biểu về phân phối bước tiếp theo, làm rõ câu chuyển. Writer/reader dùng mô hình đúng metadata dưới đây, không fallback.
+- Năm reviewer độc lập rà review-section, --no-tools, khoảng 14,3 nghìn ký tự gồm toàn phần 3 và hai trang hai phía ranh giới. Không có lỗi chặn, nghiêm trọng hoặc trung bình. Rà thay đổi cục bộ, không tuyên bố rà toàn bài.
+- Áp dụng: nói rõ ví dụ chìa khóa ở trang tiếp theo; bỏ tham chiếu thừa tới ký hiệu quan sát chưa định nghĩa trong notes trang mới; nói rõ lịch sử quan sát vẫn gồm hành động và thưởng. Không lặp điều kiện xác suất dương trên trang mới vì vừa nêu ở định nghĩa trước. Không thêm nhãn “mang tính cấu trúc” trên mặt slide vì notes đã giải thích lập luận phần đầu của lịch sử.
+- Bác nhận xét RL về thứ tự: thứ tự thực tế là 02 → 09 → 06 → 04 → 10 → 05 → 07 → 08, nên lịch sử đã định nghĩa trước và quan sát chuyển trực tiếp sang Markov. Nhận xét math nói trang mê cung đứng trước Markov cũng không đúng thứ tự HTML. Điều phối viên kiểm tra ID trực tiếp, không suy từ thứ tự số ID.
+- Mạch của trang mới: nhận tiêu chí Markov từ trang 04; vai trò phân biệt khả năng biểu diễn với chi phí; chuyển sang ví dụ mở rộng gọn bằng chìa khóa ở trang 05. Rà lại vai flow sau sửa câu chuyển. Biên tập no-ai-slop: câu ngắn, giữ thuật ngữ; rà quill: không còn phụ thuộc ví dụ xe đã xóa, không khởi tạo dự án sách.
+- Kiểm định: 43 ID HTML khớp storyboard và phân bổ thời lượng duy nhất; 120 phút; 7 câu hỏi kiểm tra cuối phần; thứ tự thêm/xóa đúng; git diff --check đạt. Chromium tại cổng 8765 kiểm tra 16 lượt phần 3 ở 1280×720 và 390×844: không tràn, lỗi KaTeX, ảnh hỏng, HTTP/JavaScript; bàn phím đạt. Đã xem ảnh slide mới. Sau đó chỉ sửa notes, không đổi mặt slide. Codex Slides vẫn có giới hạn đã ghi; rà hiển thị bằng Chromium cục bộ, không tuyên bố rà bản này bằng Codex Slides. Index giữ nguyên vì tên/đường dẫn bài không đổi.
+
+### Báo cáo Markov: plan
+
+Runtime: requested_model=deepseek/deepseek-v4-flash-0731; observed_model=deepseek/deepseek-v4-flash-0731; provider=OpenRouter.
+
+# Kế hoạch chỉnh sửa bài giảng (chỉ đọc, không thao tác file)
+
+## Bối cảnh
+- **Xóa** slide L02-03-03 "Thông tin trong lịch sử" (cùng vị trí, vận tốc khác nhau).
+- **Thêm** slide mới L02-03-10 sau L02-03-04 "Tính Markov".
+
+## Slide mới L02-03-10: "Markov và khả năng mô hình hóa"
+- **Thông điệp:** "Không về nguyên tắc, nếu được phép mở rộng trạng thái".
+- **Công thức:** $\tilde{S}_t = H_t$ (lịch sử đầy đủ trạng thái/hành động/phần thưởng gốc).
+- **Lý do Markov:** lịch sử trước là tiền tố (prefix) khôi phục được từ lịch sử hiện tại, cho trước hành động hiện tại.
+- **Cảnh báo toán học:** không đảm bảo biểu diễn compact hữu hạn; lịch sử tăng theo thời gian.
+- **Cảnh báo:** không khẳng định xếp chồng frame cố định tự động Markov; lịch sử không tiết lộ trạng thái tiềm ẩn thật.
+- **Lưu ý:** lịch sử đầy đủ là cấu trúc lý thuyết, không phải khuyến nghị thuật toán.
+
+## Liên kết sư phạm
+- Slide kế tiếp: mê cung + chìa khóa minh họa mở rộng compact.
+- Slide biểu diễn sau đó: thay ví dụ xe bằng nhớ nhặt chìa khóa từ lịch sử quan sát; giả định nhặt chìa khóa quan sát được và trạng thái gồm chìa khóa.
+- Giữ $H_t^O$ tách biệt với lịch sử trạng thái $H_t$.
+
+## Kiểm tra
+- Thứ tự mới: 02, 09, 06, 04, 10, 05, 07, 08.
+- Giữ nguyên 43 slide / 120 phút (thay slide 3 phút).
+
+## Dàn ý ngắn
+1. Xóa slide cũ → 2. Chèn slide mới → 3. Cập nhật ví dụ slide biểu diễn → 4. Kiểm tra thứ tự và thời lượng.
+
+### Báo cáo Markov: writer
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+<section data-slide-id="L02-03-10">
+  <h2>Markov và khả năng mô hình hóa</h2>
+  <p><strong>Không</strong> về nguyên tắc, nếu được phép mở rộng trạng thái.</p>
+  <ul>
+    <li>Toàn bộ lịch sử $H_t$ làm trạng thái mới đảm bảo tính Markov.</li>
+    <li>Hạn chế: kích thước lịch sử tăng theo thời gian, không đảm bảo biểu diễn gọn.</li>
+  </ul>
+  <div class="math-large">$$\tilde{S}_t = H_t$$</div>
+  <aside class="notes">Với trạng thái mới là toàn bộ lịch sử $H_t = (S_0, A_0, R_1, S_1, \ldots, A_{t-1}, R_t, S_t)$, tính Markov được phục hồi: các lịch sử trước là tiền tố của lịch sử hiện tại, nên khi biết $\tilde{S}_t$ và hành động tiếp theo, không có thông tin quá khứ nào bị mất; phân phối tương lai chỉ phụ thuộc vào $(\tilde{S}_t, A_t)$. Cách này cho phép mô tả các quá trình phụ thuộc lịch sử. Nhưng đây là kiến tạo lý thuyết, không phải giải pháp học hiệu quả: lịch sử tăng dần về kích thước và thời gian, không có bảo đảm về biểu diễn gọn với số chiều cố định, và cũng không tự động khôi phục trạng thái tiềm ẩn từ quan sát. Với một trạng thái cố định không đủ thông tin, tính Markov có thể sai. Lịch sử quan sát $H_t^O$ là khái niệm riêng, sẽ xuất hiện sau. Chuyển tiếp: ví dụ mê cung với trạng thái tọa độ cộng khóa minh họa mở rộng trạng thái theo nghĩa cụ thể.</aside>
+  <p class="source">PPTX trang 17 (tính Markov); mở rộng trạng thái bằng lịch sử là diễn giải bổ sung theo yêu cầu.</p>
+</section>
+
+### Báo cáo Markov: student
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Báo cáo review phần 3 (role: student, tiếng Việt)**
+
+**Điểm đạt:**
+- L02-03-03 đã bị xóa (không xuất hiện trong trích đoạn); L02-03-10 đặt ngay sau slide Markov L02-03-04, giữ tiêu đề câu hỏi người học ✓
+- $\tilde S_t = H_t$ dùng lịch sử trạng thái–hành động–thưởng đầy đủ, nhất quán với định nghĩa $H_t$ ở L02-03-09 (đứng trước) ✓
+- Phân biệt rõ kiến tạo lý thuyết vs. học hiệu quả; không tuyên bố ghép quan sát hữu hạn bảo đảm Markov hay khôi phục trạng thái tiềm ẩn ✓
+- Định lý Markov chỉ một bước phân phối, đúng PPTX trang 17 ✓
+- Ví dụ chìa khóa: chỉ "nhặt được quan sát", không giả định mất/tiêu hao ✓
+- Quiz có 4 câu, câu 3 nêu hạn chế thực hành ✓
+
+**Khiếm khuyết:**
+1. **Thấp – L02-03-10:** mệnh đề "bảo đảm tính Markov" nên thêm điều kiện "với mọi lịch sử có xác suất dương" như slide L02-03-04 đã chú thích; hiện chưa lặp điều kiện này. *Fix:* thêm chú thích tương tự.
+2. **Thấp – L02-03-10 (notes):** dẫn "ví dụ mê cung cộng khóa" trước khi slide L02-03-05 xuất hiện — tham chiếu xuôi, nên ghi "sẽ xét sau".
+3. **Thiếu bằng chứng:** không kiểm tra được liên kết flow (incoming/outgoing), cấu trúc 7 phần/43 slide/120 phút, và vai trò educational trong báo cáo flow — trích đoạn không chứa; cần trích bổ sung.
+
+### Báo cáo Markov: rl
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Báo cáo review (rl, phần 3)**
+
+**1. Severity: Thấp — L02-03-06/03-04 — Bằng chứng: ghi chú L02-03-06 kết thúc "Tiếp theo là điều kiện Markov cho thông tin dự báo", nhưng theo thứ tự slide trong excerpt, L02-03-09 (mẫu dữ liệu, lịch sử, quỹ đạo) nằm giữa L02-03-06 và L02-03-04.** Nếu thứ tự excerpt đúng là thứ tự trình chiếu, slide quan sát đầy đủ/một phần không chuyển tiếp trực tiếp vào Markov như yêu cầu. Fix: xác nhận thứ tự slide thực tế; nếu L02-03-09 nằm giữa, di chuyển nó hoặc sửa câu chuyển tiếp.
+
+**2. Severity: Thông tin — L02-03-10 — Bằng chứng: "$\tilde S_t = H_t$" dùng $H_t$ trước khi khái niệm lịch sử được nhắc trong phần Markov (định nghĩa ở L02-03-09).** Về nội dung đúng và nhất quán (cùng công thức ở 03-09, 03-04, 03-10); không có lỗi ký hiệu hay toán. Không có tuyên bố sai kiểu "xếp chồng quan sát hữu hạn đủ" — slide và ghi chú L02-03-07/03-08 đều phủ định đúng.
+
+**Đã kiểm tra và đạt:** tiêu đề L02-03-10 giữ nguyên câu hỏi người học; phân biệt biểu diễn lý thuyết vs học hiệu quả có đủ; ví dụ chìa khóa quan sát được, không giả định mất/tiêu hao; định lý một bước đúng; 4 câu hỏi kiểm tra với hạn chế thực hành ở câu 3; ranh giới phần 3 đầy đủ hai láng giềng mỗi bên.
+
+Không có khiếm khuyết mức trung bình/cao.
+
+### Báo cáo Markov: math
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Báo cáo review (vai trò: toán học)**
+
+**1. Thấp – L02-03-10 (notes):** Tham chiếu trước "$H_t^O$ là khái niệm riêng, sẽ xuất hiện sau" trong khi $H_t^O$ chỉ được định nghĩa ở L02-03-07. Người học gặp ký hiệu chưa định nghĩa. Bằng chứng: dòng "Lịch sử quan sát $H_t^O$ là khái niệm riêng, sẽ xuất hiện sau." Đề xuất: bỏ câu này hoặc thay bằng "một khái niệm về lịch sử quan sát sẽ được giới thiệu ở slide biểu diễn".
+
+**2. Thấp – L02-03-10 (notes):** Câu "Ví dụ mê cung với trạng thái tọa độ cộng khóa minh họa mở rộng trạng thái" có thể gây nhầm: ví dụ khóa nằm ở L02-03-05 (trước Markov) và L02-03-07 (sau), không phải minh họa trực tiếp $\tilde S_t=H_t$. Đề xuất: ghi rõ "xem slide trạng thái mê cung có khóa".
+
+**Kiểm tra đạt:**
+- Công thức Markov L02-03-04 đúng, chỉ phân phối một bước, điều kiện dương phát biểu chính xác.
+- Lập luận tiền tố trong L02-03-10 đúng về cấu trúc; phân biệt đúng tính đại diện trừu tượng với học hiệu quả; không tuyên bố ghép quan sát hữu hạn bảo đảm Markov.
+- Quiz L02-03-08 có 4 câu, câu 3 chứa hạn chế thực hành như yêu cầu.
+- Không đánh giá lại câu thưởng không đổi (yêu cầu của người dùng).
+
+**Thiếu bằng chứng:** không thể xác minh tổng 43 slide/120 phút và biên giới part3 (hai slide lân cận mỗi biên) từ đoạn trích; không có lỗi liên kết hình trong các excerpt.
+
+### Báo cáo Markov: academic
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Báo cáo review phần 3 (L02-03), role academic, tiếng Việt**
+
+Nhìn chung phần tuân thủ tốt yêu cầu: L02-03-10 đặt đúng sau Markov, giữ tiêu đề câu hỏi như ngoại lệ được yêu cầu; phân biệt đúng khả năng biểu diễn trừu tượng với trạng thái hữu hạn gọn và học hiệu quả; tránh khẳng định ghép quan sát hữu hạn bảo đảm Markov hay khôi phục trạng thái tiềm ẩn; công thức Markov ở L02-03-04 chỉ ràng buộc phân phối một bước, đúng phạm vi; luồng L02-03-06 → L02-03-04 liền mạch; ví dụ chìa khóa ở L02-03-07 không giả thiết mất/tiêu hao chìa khóa.
+
+**Phát hiện:**
+
+1. **Thấp – L02-03-07:** Văn bản slide gọi $H_t^O=(O_0,A_0,R_1,\ldots,O_t)$ là "lịch sử quan sát" dù chuỗi chứa cả hành động và thưởng, dễ nhầm với định nghĩa "lịch sử trạng thái" ở L02-03-09. Bằng chứng: hai định nghĩa cùng cấu trúc nhưng khác thành phần. Đề xuất: thêm chú thích ngắn "gồm cả hành động và thưởng, chỉ khác thành phần quan sát so với $H_t$".
+
+2. **Thấp – L02-03-10:** Bullet "Toàn bộ lịch sử $H_t$ làm trạng thái mới bảo đảm tính Markov" chưa nêu rõ tính chất mang tính cấu trúc (các lịch sử trước là tiền tố) ngay trên slide; chỉ ghi trong notes. Đề xuất: thêm cụm "mang tính cấu trúc" vào bullet để nhất quán với notes.
+
+Không tìm thấy lỗi ký hiệu hay suy luận toán học khác.
+
+### Báo cáo Markov: flow
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Báo cáo review phần L02-03 (role flow, giáo dục)**
+
+**1. Tham chiếu tới trước (nhẹ) — slide L02-03-10**
+- Vấn đề: Ghi chú cuối nêu "Ví dụ mê cung với trạng thái tọa độ cộng khóa minh họa mở rộng trạng thái", nhưng slide mê cung có khóa (L02-03-05) đứng **sau** L02-03-10 theo trình tự. Người học chưa gặp ví dụ này tại thời điểm đọc.
+- Bằng chứng: Trích đoạn L02-03-10 (notes) so với L02-03-05.
+- Đề xuất: Bỏ câu tham chiếu hoặc đổi thành "sẽ minh họa ở slide sau".
+
+**2. Nhất quán ký hiệu (đạt)**
+- $\tilde S_t = H_t$ khớp định nghĩa $H_t$ ở L02-03-09; lập luận "lịch sử trước là tiền tố của lịch sử hiện tại" đúng về toán; phân phối bước kế chỉ phụ thuộc $(\tilde S_t, A_t)$ — đúng cấu trúc Markov một bước. Không tuyên bố quá mức (nêu rõ không bảo đảm biểu diễn gọn, không khôi phục trạng thái tiềm ẩn, không khẳng định ghép quan sát hữu hạn đủ) — đúng yêu cầu.
+
+**3. Các kiểm tra khác (đạt)**
+- L02-03-04: chỉ phân phối một bước, đúng phạm vi; điều kiện dương diễn giải chính xác.
+- L02-03-06 chuyển trực tiếp sang Markov; L02-03-07 dùng chìa khóa quan sát được, không giả định mất/tiêu hao; L02-03-08 có đúng 4 câu hỏi, câu 3 chứa hạn chế thực hành mới.
+- Không thấy slide giới thiệu lịch sử xe còn lại; tiêu đề câu hỏi người học được giữ ở L02-03-10.
+
+**Kết luận:** Không lỗi nghiêm trọng; 1 lỗi nhẹ về tham chiếu tới trước tại L02-03-10.
+
+### Báo cáo Markov: flow-recheck
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Kết quả kiểm tra lại: Đạt.**
+
+1. **Luồng trình bày:** Thứ tự 02→09→06→04→10→05→07→08 đúng yêu cầu; slide 03 đã bị xóa (không còn trong dữ liệu).
+2. **Tìm thấy cũ đã khắc phục:** Slide 10 có câu chuyển tiếp rõ ràng "Ở trang tiếp theo, mê cung với trạng thái gồm tọa độ và tình trạng chìa khóa…", tạo cầu nối tốt sang slide 05.
+3. **H^O dư thừa:** Đã loại khỏi ghi chú slide 10; ký hiệu chỉ xuất hiện và giải thích tại slide 07 (định nghĩa biểu diễn) — nhất quán.
+4. **Liên kết giáo dục:** Incoming (04 đặt vấn đề hạn chế Markov), role (khẳng định H_t làm trạng thái khôi phục Markov, nêu hạn chế thực hành), outgoing (chuyển sang ví dụ mê cung khóa) đều rõ ràng; slide 08 hỏi lại nội dung này một cách khớp.
+
+Không có vấn đề mới.

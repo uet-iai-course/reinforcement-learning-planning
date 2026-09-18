@@ -216,7 +216,7 @@ Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 2
 - **Tiên quyết:** Đã biết chuỗi quan sát–hành động–phần thưởng; có kiến thức xác suất có điều kiện và mô hình chuyển động đơn giản.
 - **Kết nối vào:** Từ phần 2: sơ đồ tương tác tác tử - môi trường và dòng thời gian phần thưởng; từ bài mê cung ở cuối phần 2: vai trò của vị trí tác tử.
 - **Kết nối ra:** Phân biệt trạng thái, quan sát và biểu diễn để xây dựng quy tắc chọn hành động ở phần 4.
-- **Mạch phù hợp sinh viên năm 3:** Sinh viên năm ba đã quen với mô hình xác suất và thao tác trên đặc trưng; ví dụ xe cùng vị trí khác vận tốc và robot chỉ thấy ô lân cận khớp trực tiếp với kinh nghiệm đặc trưng - dự báo của họ, nên giới thiệu S, O, X như ba cấp thông tin thay vì định nghĩa trừu tượng ngay.
+- **Mạch phù hợp sinh viên năm 3:** Sinh viên năm ba đã quen với mô hình xác suất và thao tác trên đặc trưng; ví dụ mê cung có khóa và cảm biến chỉ thấy ô lân cận khớp trực tiếp với kinh nghiệm đặc trưng - dự báo của họ, nên giới thiệu S, O, X như ba cấp thông tin thay vì định nghĩa trừu tượng ngay.
 
 ### Cụm Trạng thái, quan sát và biểu diễn
 
@@ -232,7 +232,7 @@ Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 2
 - kiểm tra: L02-03-08
 - Gộp bước/ngoại lệ: Theo yêu cầu bỏ trang dẫn nhập riêng, trang 02 nhận vấn đề từ vòng tương tác ở phần 2 và gộp ví dụ tọa độ/bốn ô kề với định nghĩa. Trang 09 hình thức hóa chuỗi; ví dụ phân biệt hai vị trí được triển khai ở trang 06. Kiểm tra 08 không cộng giờ hai lần.
 - Dữ kiện truyền tiếp: Cặp ô (2,1)/(3,1) cùng bốn ô kề dùng lại cho cụm quan sát đầy đủ và một phần.
-- Câu nối: Ví dụ xe tiếp theo cho thấy việc bỏ một biến có thể làm mất thông tin dự báo.
+- Câu nối: Cụm quan sát phân biệt thông tin tác tử nhận; Markov tiếp theo xét thông tin cần cho dự báo.
 
 ### Cụm Quan sát đầy đủ và một phần
 
@@ -248,32 +248,32 @@ Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 2
 - kiểm tra: L02-03-08
 - Gộp bước/ngoại lệ: Trang 06 gộp ví dụ hai vị trí, trực giác về thông tin không phân biệt được và định nghĩa hai mức quan sát; câu hỏi ở trang 08. Ví dụ đã chuyển từ trang 01 bị bỏ.
 - Dữ kiện truyền tiếp: Cặp ô cùng quan sát dẫn đến phân loại ba cách cung cấp thông tin trong cùng mê cung.
-- Câu nối: Từ quan sát không phân biệt được vị trí, chuyển sang ví dụ xe và điều kiện thông tin đủ để dự báo.
+- Câu nối: Từ mức quan sát, phân biệt điều kiện đủ thông tin để dự báo với khả năng nhận biết trạng thái.
 
 ### Cụm Tính Markov
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 9 phút; trang tính thời gian: L02-03-03, L02-03-04, L02-03-05. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 9 phút; trang tính thời gian: L02-03-04, L02-03-10, L02-03-05. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã phân biệt trạng thái và quan sát trên mê cung 8×8.
 - Sản phẩm học tập: Kiểm tra thông tin trạng thái có đủ cho dự báo bước tiếp theo và bổ sung biến bị thiếu.
-- vấn đề: L02-03-03
-- trực giác: L02-03-03
-- ví dụ: L02-03-03
-- hình thức: L02-03-04
+- vấn đề: L02-03-04
+- trực giác: L02-03-04
+- ví dụ: L02-03-04
+- hình thức: L02-03-04, L02-03-10
 - ứng dụng: L02-03-05
 - kiểm tra: L02-03-08
-- Gộp bước/ngoại lệ: Ví dụ xe trước công thức; mê cung và chìa khóa kiểm tra điều kiện đủ thông tin.
-- Dữ kiện truyền tiếp: Cùng vị trí và hành động nhưng khác vận tốc có thể cho kết quả khác; mê cung có khóa cần thêm tình trạng chìa khóa.
+- Gộp bước/ngoại lệ: Theo yêu cầu bỏ dẫn nhập xe, ghi chú trang 04 dùng mê cung cố định đã học để chuẩn bị trực giác trước công thức; trang 10 nêu cách mở rộng lịch sử, trang 05 áp dụng với chìa khóa.
+- Dữ kiện truyền tiếp: Mê cung cố định đã học cho phản hồi từ vị trí và hành động; biến thể có khóa cần thêm tình trạng chìa khóa. Toàn bộ lịch sử là cách mở rộng tổng quát, không mặc nhiên gọn.
 - Câu nối: Sau khi kiểm tra trạng thái đủ thông tin dự báo, xét biểu diễn từ lịch sử quan sát.
 
 ### Cụm Biểu diễn từ lịch sử
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
 - Thời lượng phân bổ: 3 phút; trang tính thời gian: L02-03-07. Các tham chiếu lại không cộng lặp.
-- Kiến thức đầu vào: Đã phân biệt trạng thái với quan sát và thấy ví dụ vị trí đơn lẻ bỏ mất vận tốc.
-- Sản phẩm học tập: Giải thích $X_t=f(H_t^O)$ và giả thiết để suy vận tốc từ hai quan sát vị trí.
-- vấn đề: L02-03-03
-- trực giác: L02-03-03
+- Kiến thức đầu vào: Đã phân biệt trạng thái với quan sát, biết mở rộng trạng thái và biến thể mê cung có khóa.
+- Sản phẩm học tập: Giải thích $X_t=f(H_t^O)$ và giả thiết để ghi nhớ tình trạng chìa khóa từ các quan sát trước.
+- vấn đề: L02-03-04
+- trực giác: L02-03-04
 - ví dụ: L02-03-07
 - hình thức: L02-03-07
 - ứng dụng: L02-03-07
@@ -314,33 +314,33 @@ Thời lượng: 6 phút. Nguồn: PPTX trang 18–19; mê cung trang 25–26.
 - **Nhu cầu và lý do tồn tại:** Phân biệt chuỗi trạng thái vừa định nghĩa với dữ liệu quan sát thực sự sẵn có.
 - **Cách thể hiện và độ phù hợp năm 3:** SVG đối chiếu hai trạng thái có tọa độ khác nhau nhưng cùng bốn ô kề; hai định nghĩa ngắn dưới hình. Nhãn trạng thái phục vụ người học, không phải dữ liệu cảm biến.
 - **Kết nối vào:** L02-03-09 mô tả mẫu quan sát và lịch sử/quỹ đạo trạng thái; hình làm rõ khoảng cách giữa hai loại dữ liệu.
-- **Kết nối ra:** L02-03-03 dùng ví dụ xe để xét thông tin bị mất ảnh hưởng dự báo, trước định nghĩa Markov.
+- **Kết nối ra:** L02-03-04 phân biệt điều kiện thông tin đủ dự báo với mức quan sát vừa học.
 - **Sản phẩm học tập/kiểm tra:** Phân loại ba kiểu quan sát ở L02-03-08 và giải thích bằng khả năng xác định trạng thái.
 - **Quyết định nguồn:** Chuyển lên ngay sau quỹ đạo theo yêu cầu; gộp ví dụ cục bộ của trang bị bỏ L02-03-01 vào hình mới, dành thêm 3 phút đối chiếu. Không dùng tính Markov làm tiên quyết.
-
-### L02-03-03 — Thông tin trong lịch sử
-
-Thời lượng: 3 phút. Nguồn: PPTX trang 12 (ví dụ robot/cờ/xe); ví dụ vận tốc là giả thiết sư phạm suy ra,Markov-summary.svg từ trang 17..
-
-- **Luận điểm:** Một quan sát đơn lẻ có thể không dự báo được bước tới, trong khi lịch sử nhiều thời điểm có thể đủ.
-- **Nhu cầu và lý do tồn tại:** Trước khi phát biểu điều kiện Markov, sinh viên cần thấy một trường hợp quan sát hiện tại thiếu thông tin dự báo để hiểu vì sao định nghĩa dùng lịch sử.
-- **Cách thể hiện và độ phù hợp năm 3:** Sơ đồ hai xe cùng vị trí10m, vận tốc1/5m/s, cùng lệnh phanh; dữ kiện và lời giảng trùng hình. Sinh viên dùng kiến thức chuyển động để nhận ra biến bị thiếu.
-- **Kết nối vào:** Hình quan sát một phần vừa cho thấy thông tin có thể không phân biệt trạng thái; ví dụ xe xét hệ quả đối với dự báo.
-- **Kết nối ra:** Ví dụ này là nền để viết định nghĩa tính Markov trên lịch sử ở slide 4.
-- **Sản phẩm học tập/kiểm tra:** Hỏi: cần thêm thông tin gì ngoài vị trí để dự báo vị trí sau một bước với cùng mức ga.
-- **Quyết định nguồn:** Sửa: trang 12 liệt kê robot/cờ/xe; giữ xe, gắn giả thiết chuyển động đều và cặp hai thời điểm để ví dụ có tính được và nối được sang slide 7.
 
 ### L02-03-04 — Tính Markov
 
 Thời lượng: 3 phút. Nguồn: PPTX trang 17 (Markov) và trang 18 (đầy đủ)..
 
 - **Luận điểm:** Trạng thái là Markov khi biết S_t và A_t, phân phối của (S_{t+1}, R_{t+1}) không phụ thuộc phần lịch sử trước đó.
-- **Nhu cầu và lý do tồn tại:** Định nghĩa hình thức sau ví dụ, theo nguyên tắc ví dụ trước công thức của bài giảng.
+- **Nhu cầu và lý do tồn tại:** Hình thức hóa điều kiện đủ thông tin dự báo; ghi chú nhắc ví dụ mê cung cố định đã học sau khi bỏ trang dẫn nhập theo yêu cầu.
 - **Cách thể hiện và độ phù hợp năm 3:** Công thức lớn đặt trung tâm, dòng trực giác phía trên, giả thiết kỹ thuật phía dưới; năm ba đọc quen ký hiệu xác suất có điều kiện nên công thức giữ nguyên dạng chuẩn.
-- **Kết nối vào:** Ví dụ xe ở slide 3 cho trực giác đủ/thiếu thông tin.
-- **Kết nối ra:** Tiêu chuẩn này được áp dụng để kiểm tra trạng thái mê cung ở slide 5.
-- **Sản phẩm học tập/kiểm tra:** Hỏi: với S_t chỉ là vị trí của xe, hai vế công thức có bằng nhau không.
+- **Kết nối vào:** Quan sát đầy đủ/một phần xét khả năng nhận biết trạng thái; nay xét trạng thái đủ cho dự báo hay chưa.
+- **Kết nối ra:** Trang mới bàn cách mở rộng trạng thái để mô tả phụ thuộc quá khứ và chi phí của cách này.
+- **Sản phẩm học tập/kiểm tra:** Đối chiếu cùng vị trí và hành động trong mê cung cố định; chuẩn bị biến thể chìa khóa ở trang 05.
 - **Quyết định nguồn:** Giữ: trang 17 đã có định nghĩa Markov trên lịch sử; tách giả thiết rời rạc và xác suất dương thành dòng riêng và thêm cảnh báo phạm vi không suy hành động tối ưu.
+
+### L02-03-10 — Tính Markov có hạn chế khả năng mô hình hóa?
+
+Thời lượng: 3 phút. Nguồn: PPTX trang 17; mở rộng trạng thái bằng lịch sử bổ sung theo yêu cầu.
+
+- **Luận điểm:** Có thể mô tả phụ thuộc quá khứ bằng trạng thái mở rộng, nhưng không bảo đảm biểu diễn gọn để học hiệu quả.
+- **Nhu cầu và lý do tồn tại:** Tránh hiểu Markov là loại bỏ mọi bài toán có trí nhớ; phân biệt khả năng biểu diễn với tính khả thi.
+- **Cách thể hiện và độ phù hợp năm 3:** Một luận điểm, công thức $\tilde S_t=H_t$ và giới hạn về kích thước; ghi chú giải thích các lịch sử trước là phần đầu của lịch sử hiện tại.
+- **Kết nối vào:** Điều kiện Markov vừa định nghĩa có thể sai nếu trạng thái chọn ban đầu bỏ thông tin liên quan.
+- **Kết nối ra:** Mê cung có chìa khóa minh họa việc bổ sung một biến thay vì lưu cả lịch sử.
+- **Sản phẩm học tập/kiểm tra:** Câu 3 cuối phần yêu cầu nêu chi phí của lịch sử và giới hạn của cửa sổ hữu hạn.
+- **Quyết định nguồn:** Thêm sau tính Markov theo yêu cầu, thay 3 phút của L02-03-03 đã bỏ. Không khẳng định ghép hữu hạn quan sát bảo đảm Markov hoặc lịch sử quan sát tiết lộ trạng thái ẩn.
 
 ### L02-03-05 — Trạng thái trong mê cung
 
@@ -349,22 +349,22 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 25-26 (mê cung); bài mê cung hw
 - **Luận điểm:** Tọa độ là trạng thái Markov cho mê cung cố định xác định, nhưng không còn Markov khi luật chuyển phụ thuộc biến chưa ghi trong S.
 - **Nhu cầu và lý do tồn tại:** Áp dụng định nghĩa slide 4 vào bài tập mê cung mà sinh viên gặp ở hw02, để thấy tiêu chí kiểm tra dùng được trong thực hành.
 - **Cách thể hiện và độ phù hợp năm 3:** Hai bullet tóm tắt thiết lập và một box check chứa câu hỏi; không cần hình mới vì mê cung đã quen từ phần 2 và hw02.
-- **Kết nối vào:** Định nghĩa tính Markov ở slide 4 là tiêu chí kiểm tra.
+- **Kết nối vào:** Tiêu chí Markov ở trang 04 và nguyên tắc mở rộng trạng thái ở trang 10 dẫn tới ví dụ chìa khóa cụ thể.
 - **Kết nối ra:** Chuyển sang biểu diễn từ lịch sử quan sát để giữ thông tin cần cho quyết định.
 - **Sản phẩm học tập/kiểm tra:** Nhận diện biến chìa khóa cần thêm; câu hỏi áp dụng nằm cuối phần.
 - **Quyết định nguồn:** Sửa: trang 25-26 dùng mê cung làm ví dụ bài toán; thêm giả thiết chìa khóa làm bài kiểm tra ứng dụng vì cần một trường hợp phản Markov rõ ràng.
 
 ### L02-03-07 — Biểu diễn dùng để quyết định
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 14-15 (giao diện) và trang 21; ví dụ xe hai thời điểm từ trang 12..
+Thời lượng: 3 phút. Nguồn: PPTX trang 14–15 (giao diện) và trang 21; ví dụ ghi nhớ chìa khóa trong mê cung..
 
 - **Luận điểm:** Biểu diễn quyết định là hàm f trên lịch sử; f tốt khôi phục thông tin dự báo, nhưng ghép hữu hạn khung chưa chắc Markov.
 - **Nhu cầu và lý do tồn tại:** Sinh viên cần cầu nối từ quan sát một phần về chính sách: chính sách ở phần 4 nhận đối số nào.
-- **Cách thể hiện và độ phù hợp năm 3:** Công thức X_t = f(H_t) đặt trung tâm với hai dòng ví dụ và một dòng cảnh báo; chữ công thức ngắn nên dùng math-large an toàn.
-- **Kết nối vào:** Ví dụ xe hai thời điểm ở slide 3 và quan sát một phần ở slide 6.
+- **Cách thể hiện và độ phù hợp năm 3:** Công thức $X_t=f(H_t^O)$ đặt trung tâm với hai dòng ví dụ và một dòng cảnh báo; chữ công thức ngắn nên dùng math-large an toàn.
+- **Kết nối vào:** Mê cung có khóa vừa bổ sung biến trạng thái; xét điều kiện tác tử có thể ghi nhớ biến đó từ quan sát.
 - **Kết nối ra:** X_t trở thành đối số của chính sách ở section 4; tiêu chí Markov của slide 4 dùng để kiểm tra f.
 - **Sản phẩm học tập/kiểm tra:** Cho mê cung có chìa khóa: hỏi f cần ghi nhớ thông tin gì để biểu diễn trở nên đủ.
-- **Quyết định nguồn:** Sửa: trang 14-15 nói về giao diện tác tử - môi trường; rút gọn thành ý lịch sử và hàm f, gắn với ví dụ xe đã chuẩn bị ở slide 3.
+- **Quyết định nguồn:** Sửa: trang 14-15 nói về giao diện tác tử - môi trường; rút gọn thành ý lịch sử và hàm f, gắn với việc nhặt chìa khóa quan sát được trong biến thể mê cung vừa học.
 
 ### L02-03-08 — Câu hỏi kiểm tra
 
