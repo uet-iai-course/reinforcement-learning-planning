@@ -191,10 +191,37 @@
 <p>Với $x\in\mathcal X$, chính sách cho một phân phối trên $\mathcal A$.</p><div class="math-large">$$\pi(a\mid x)=\Pr(A_t=a\mid X_t=x).$$</div><p>$\pi(a\mid x)\ge0$, và $\sum_{a\in\mathcal A}\pi(a\mid x)=1$.</p><p>Ví dụ từ bảng trước: $\pi(\text{Bắc}\mid(1,2))=0{,}5$.</p><p class="box">Nếu dùng trạng thái đầy đủ làm đầu vào, chọn $X_t=S_t$.</p>
 <aside class="notes">Với mỗi $x$ cố định, các xác suất phải không âm và cộng thành một. Chính sách xác định là trường hợp đặt xác suất một vào đúng một hành động. Khi quan sát đầy đủ và chọn $X_t=S_t$, có thể viết $\pi(a\mid s)$. Với quan sát một phần, đầu vào vẫn là biểu diễn mà tác tử thực sự có.<p class="note-source"><strong>Nguồn:</strong> PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.</p></aside>
 </section>
+<section data-slide-id="L02-04-06">
+  <h2>Chính sách, khai thác và thăm dò</h2>
+  <p>Giả sử Bắc đang được đánh giá tốt nhất, Nam chưa rõ.</p>
+  <table>
+    <thead>
+      <tr><th>Chính sách xác định</th><th>Chính sách ngẫu nhiên</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Một hành động cho mỗi đầu vào.</td>
+        <td>Một phân phối hành động cho mỗi đầu vào.</td>
+      </tr>
+      <tr>
+        <td>Ví dụ: luôn chọn Bắc.</td>
+        <td>Ví dụ: $0{,}9$ Bắc, $0{,}1$ Nam.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>Khai thác (exploit):</strong> chọn hành động tốt nhất theo hiểu biết hiện tại.</p>
+  <p><strong>Thăm dò (explore):</strong> thử hành động để thu thêm thông tin.</p>
+  <p class="caption">Chọn ngẫu nhiên không tự động đồng nghĩa với thăm dò.</p>
+  <aside class="notes">
+    <p>Ví dụ Bắc/Nam tại mê cung ô (1,2): từ ô này, cả hai hành động đều khả thi. Phân phối $0{,}9$ Bắc / $0{,}1$ Nam minh họa việc chủ yếu chọn Bắc theo đánh giá hiện tại, đồng thời thử Nam để thu thêm thông tin. Các xác suất này không phải kết quả tối ưu và không bảo đảm cải thiện kết quả.</p>
+    <p>Thăm dò có kế hoạch xác định vẫn có thể xảy ra khi bộ nhớ và thời gian được tính vào trạng thái, vì vậy không đồng nhất "xác định" với "khai thác". Tính ngẫu nhiên chỉ là cơ chế; thăm dò được định nghĩa bởi việc thu thập thông tin.</p>
+    <p class="note-source">Nguồn: lecture2-3-MDPswithKeyConcepts.pptx, trang 21 (chính sách); lecture1-introduction-to-RL.pptx, trang 27 (thăm dò: thu thập thông tin; khai thác: tối đa hóa mục tiêu dựa trên kinh nghiệm). Xác suất do người trình bày thêm để minh họa.</p>
+  </aside>
+</section>
 <section data-slide-id="L02-04-05">
 <h2>Câu hỏi kiểm tra</h2>
-<ol><li>Cho $\pi(\text{Bắc}\mid x)=0{,}2$, $\pi(\text{Đông}\mid x)=0{,}5$, $\pi(\text{Tây}\mid x)=0$. Tính $\pi(\text{Nam}\mid x)$.</li><li>Phân loại chính sách đó và giải thích lý do.</li><li>Chính sách xác định là trường hợp nào của phân phối hành động?</li></ol>
-<aside class="notes"><ol><li>$\pi(\text{Nam}\mid x)=0{,}3$.</li><li>Chính sách ngẫu nhiên, vì nhiều hành động có xác suất dương.</li><li>Một hành động có xác suất $1$, các hành động khác $0$.</li></ol><p class="note-source"><strong>Nguồn:</strong> PPTX trang21; hw02 bài6.</p></aside>
+<ol><li>Cho $\pi(\text{Bắc}\mid x)=0{,}2$, $\pi(\text{Đông}\mid x)=0{,}5$, $\pi(\text{Tây}\mid x)=0$. Tính $\pi(\text{Nam}\mid x)$.</li><li>Phân loại chính sách đó và giải thích lý do.</li><li>Chính sách xác định là trường hợp nào của phân phối hành động?</li><li>Chọn hành động ngẫu nhiên có đồng nghĩa với thăm dò không? Giải thích.</li></ol>
+<aside class="notes"><ol><li>$\pi(\text{Nam}\mid x)=0{,}3$.</li><li>Chính sách ngẫu nhiên, vì nhiều hành động có xác suất dương.</li><li>Một hành động có xác suất $1$, các hành động khác $0$.</li><li>Không. Ngẫu nhiên mô tả cách chọn; thăm dò nhằm thu thêm thông tin. Cần xét mục đích của cách chọn đó.</li></ol><p class="note-source"><strong>Nguồn:</strong> PPTX bài 02 trang21; hw02 bài6; PPTX bài 01 trang27.</p></aside>
 </section>
 </section>
 <section>

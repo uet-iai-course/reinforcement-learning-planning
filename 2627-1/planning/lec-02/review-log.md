@@ -1624,3 +1624,172 @@ Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; 
 ## Bỏ câu nhắc lại về chính sách — 2026-09-18
 
 - Theo yêu cầu, bỏ hộp chứa câu “Chính sách quy định cách chọn hành động từ thông tin hiện có.” khỏi L02-04-01. Giữ câu định nghĩa theo trạng thái và hình chính sách. Kiểm tra thay đúng một đoạn và `git diff --check` đạt.
+
+
+## So sánh chính sách và khai thác/thăm dò — 2026-09-18
+
+- Theo yêu cầu, thêm L02-04-06 “Chính sách, khai thác và thăm dò” ngay sau chính sách ngẫu nhiên, trước câu hỏi kiểm tra. Bảng so sánh quy tắc xác định và phân phối hành động; ví dụ luôn Bắc so với Bắc 0,9/Nam 0,1, với giả định Bắc đang được đánh giá tốt nhất và Nam chưa rõ.
+- Nêu khai thác là chọn theo hiểu biết hiện tại, thăm dò nhằm thu thêm thông tin. Không đồng nhất xác định với khai thác hoặc ngẫu nhiên với thăm dò; notes giải thích thăm dò theo kế hoạch có thể xác định khi có bộ nhớ/thời gian. Không thêm thuật toán epsilon-greedy, hàm Q hoặc cam kết cải thiện.
+- Đã đọc XML nguồn `lecture1-introduction-to-RL.pptx` trang 27: exploration thu thêm thông tin từ môi trường; exploitation tối đa hóa mục tiêu dựa trên kinh nghiệm. Định nghĩa chính sách từ bài 02 trang21. Ví dụ xác suất là bổ sung theo yêu cầu, không gán cho số liệu nguồn.
+- Thêm câu 4 cuối phần kiểm tra vì sao ngẫu nhiên không tự đồng nghĩa thăm dò; đáp án trong notes. Giữ câu hỏi cuối mỗi phần, 7 phần. Bài có 43 trang; trang mới 3 phút, giảm 1 phút từng trang 04-01/02/03 để giữ phần 4 là 15 phút, toàn bài 120 phút.
+- Reader lập kế hoạch; writer soạn một trang; điều phối viên bỏ lời dẫn rỗng, caption dài, sửa class về CSS chung và ký hiệu thập phân tiếng Việt; ghi rõ giả định trước bảng và minh họa trong notes. Biên tập no-ai-slop, rà mạch quill: định nghĩa chính sách → so sánh cơ chế và mục đích → kiểm tra → đánh giá kết quả dài hạn.
+- Năm reviewer độc lập rà review-section, --no-tools, phần 4 và hai trang lân cận mỗi phía; không có lỗi bắt buộc sửa. Không tuyên bố rà toàn bài. Giữ bố cục hai cột và thứ tự ví dụ/định nghĩa vì đã đọc được; không thêm nhãn hàng hoặc lời dẫn lặp. Nhận xét academic về khả năng đi Nam đã được đối chiếu: (1,1) và (1,3) đều trống; không cần đổi dữ kiện đúng thành giả định.
+- Kiểm định 0,9+0,1=1; 43 ID duy nhất khớp HTML/storyboard, đúng thứ tự, đúng chủ thời lượng và 120 phút; 7 slide kiểm tra. Chromium cổng 8765: 12 lượt phần 4 ở 1280×720 và 390×844, không tràn, lỗi KaTeX, ảnh hỏng, HTTP/JavaScript; bàn phím đạt; đã xem ảnh slide mới. `git diff --check` đạt. Không tạo hình mới vì bảng và định nghĩa đủ rõ. Index giữ nguyên. Giới hạn Codex Slides vẫn như đã ghi; kiểm tra trực quan bằng Chromium cục bộ.
+
+### Báo cáo so sánh chính sách: plan
+
+Runtime: requested_model=deepseek/deepseek-v4-flash-0731; observed_model=deepseek/deepseek-v4-flash-0731; provider=OpenRouter.
+
+# Kế hoạch slide so sánh (L02-04-06)
+
+**Vị trí:** Sau slide stochastic policy03 (L02-04-04), trước section quiz (L02-04-05).
+
+**Bố cục (1280×720, CSS dùng chung):**
+- Bảng so sánh 2 cột: Deterministic vs Stochastic
+- 2 định nghĩa ngắn: Exploitation (hành động theo hiểu biết hiện tại) / Exploration (thu thập thông tin)
+- Caveat: không gán deterministic=exploit, stochastic=explore
+
+**Ví dụ:** Maze cố định tại (1,2), North/South. Deterministic luôn North; Stochastic 0.9 North / 0.1 South (tổng=1), cố ý khám phá.
+
+**Thời lượng 3 phút:** Phần 4 giới thiệu/ví dụ/deterministic 3→2 mỗi phần, 3 phần khác giữ nguyên = 15.
+
+**Quiz Q4:** Vì sao ngẫu nhiên ≠ exploration.
+
+**Ghi chú:** Phân biệt cơ chế vs mục đích; vai trò bộ nhớ/thời gian cho exploration deterministic.
+
+**Nguồn:** lecture1 slide27 (Exploration/Exploitation), lecture2 source21 (policy).
+
+### Báo cáo so sánh chính sách: writer
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+<section class="slide" data-slide-id="L02-04-06">
+  <h2>Chính sách, khai thác và thăm dò</h2>
+  <p>Sau hai định nghĩa về chính sách xác định và chính sách ngẫu nhiên, ta so sánh trực tiếp:</p>
+  <table>
+    <caption>So sánh hai loại chính sách (xác suất minh họa, không phải tuyên bố tối ưu)</caption>
+    <thead>
+      <tr><th>Chính sách xác định</th><th>Chính sách ngẫu nhiên</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Một hành động cho mỗi đầu vào.</td>
+        <td>Một phân phối hành động cho mỗi đầu vào.</td>
+      </tr>
+      <tr>
+        <td>Ví dụ: luôn chọn Bắc.</td>
+        <td>Ví dụ: $0.9$ Bắc, $0.1$ Nam.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="example-assumption">Giả sử Bắc đang được đánh giá tốt nhất, Nam chưa rõ.</p>
+  <p><strong>Khai thác (exploit):</strong> chọn hành động tốt nhất theo hiểu biết hiện tại.</p>
+  <p><strong>Thăm dò (explore):</strong> thử hành động để thu thêm thông tin.</p>
+  <p class="caveat">Lưu ý: chọn ngẫu nhiên không tự động đồng nghĩa với thăm dò.</p>
+  <aside class="notes">
+    <p>Ví dụ Bắc/Nam tại mê cung ô (1,2): từ ô này, cả hai hành động đều khả thi. Phân phối $0.9$ Bắc / $0.1$ Nam chỉ là hỗn hợp minh họa được gán cho mục đích học tập, không đảm bảo cải thiện kết quả.</p>
+    <p>Thăm dò có kế hoạch xác định vẫn có thể xảy ra khi bộ nhớ và thời gian được tính vào trạng thái, vì vậy không đồng nhất "xác định" với "khai thác". Tính ngẫu nhiên chỉ là cơ chế; thăm dò được định nghĩa bởi việc thu thập thông tin.</p>
+    <p class="note-source">Nguồn: lecture2-3-MDPswithKeyConcepts.pptx, trang 21 (chính sách); lecture1-introduction-to-RL.pptx, trang 27 (thăm dò: thu thập thông tin; khai thác: tối đa hóa mục tiêu dựa trên kinh nghiệm). Xác suất do người trình bày thêm để minh họa.</p>
+  </aside>
+</section>
+
+### Báo cáo so sánh chính sách: student
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Review: L02-04-06 (new slide, part 4, between L02-04-04 and L02-04-05)**
+
+**Verdict: No factual errors found. Content is consistent with neighbors and cited sources.**
+
+Checks performed (excerpts only, no tools):
+
+1. **Source fidelity (lecture1 p.27, lecture2 p.21):** Definitions match — thăm dò = thu thập thông tin từ môi trường; khai thác = tối đa hóa mục tiêu dựa trên kinh nghiệm; chính sách = quy tắc chọn hành động. ✅
+2. **Consistency with L02-04-02:** At (1,2), East hits a wall; North/South free is consistent. ✅
+3. **Consistency with quiz L02-04-05 Q4:** "Chọn ngẫu nhiên không tự động đồng nghĩa với thăm dò" aligns with the answer key (random = mechanism, explore = purpose). ✅
+4. **Consistency with L02-04-03/04:** Deterministic = one action per input; stochastic = distribution. ✅
+5. **Hedging:** 0.9/0.1 explicitly labeled illustrative, "không phải kết quả tối ưu và không bảo đảm cải thiện" — appropriately avoids claiming exploration guarantee or optimality. ✅
+6. **Deterministic-explore claim:** Framed conditionally (memory/time in state), not equating deterministic with exploit. ✅
+7. **Scope:** No epsilon-greedy or Q-values introduced — stays within part 4 scope. ✅
+
+**Minor suggestions (severity: low, cosmetic):**
+- **Location:** L02-04-06 notes. **Issue:** "Phân phối này không phải kết quả tối ưu" — slightly ambiguous phrasing (the distribution vs. its outcome). **Fix:** "Các xác suất này chỉ để minh họa, không phải tối ưu."
+- **Location:** L02-04-06 table. **Issue:** Column headers compare policy types while rows compare structure/example — acceptable, but a row label ("Cấu trúc" / "Ví dụ") would aid readability. **Fix:** optional.
+
+**Missing evidence:** None blocking; lecture1 p.27 and lecture2 p.21 content taken as verified per coordinator.
+
+**Flow:** Incoming L02-04-04 (stochastic policy definition) → L02-04-06 (exploit/explore application) → L02-04-05 (quiz) is coherent.
+
+### Báo cáo so sánh chính sách: rl
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Review: L02-04-06 (role: rl, ≤150 words)**
+
+**Verdict: no actual errors found.** Slide is consistent with neighbors and sources.
+
+Checks performed:
+
+1. **Source fidelity (lecture1 p27):** "Thăm dò: thu thêm thông tin" / "Khai thác: tối đa hóa mục tiêu dựa trên kinh nghiệm" — matches verified definitions. ✔
+2. **Policy source (lecture2 p21):** deterministic/stochastic framing matches L02-04-03/04. ✔
+3. **Maze consistency:** L02-04-02 states East hits wall at (1,2); North/South both free is consistent. ✔
+4. **Quiz Q4 (L02-04-05):** "Ngẫu nhiên mô tả cách chọn; thăm dò nhằm thu thêm thông tin" — consistent with caption and notes; no contradiction. ✔
+5. **Hedging:** 0.9/0.1 explicitly marked illustrative, "không phải kết quả tối ưu"; no ε-greedy/Q-value claims. ✔
+6. **Deterministic≠exploit:** planned-exploration note with memory/time in state is correct and matches L02-03-10 (history-as-state). ✔
+
+**Minor (severity: low, L02-04-06 heading):** heading promises "khai thác và thăm dò" but table only compares policy types; exploit/explore appear only as definitions below. Suggested fix: none required, or reorder so definitions precede the table.
+
+**Missing evidence:** none blocking; maze layout beyond (1,2) neighbors not verifiable from excerpts but not asserted.
+
+### Báo cáo so sánh chính sách: math
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Nhận xét L02-04-06 (vai trò: toán học)**
+
+**Kết luận: không phát hiện lỗi thực chất.**
+
+1. **Đúng đắn toán học — OK.** Ví dụ $0{,}9 + 0{,}1 = 1$ thỏa mãn điều kiện phân phối ở L02-04-04 ($\pi(a\mid x)\ge0$, tổng bằng 1). Định nghĩa khai thác/thăm dò khớp nguồn lecture1 trang 27 (thăm dò: thu thập thông tin; khai thác: tối đa hóa mục tiêu theo kinh nghiệm).
+
+2. **Nhất quán với quiz L02-04-05 — OK.** Câu 4 ("ngẫu nhiên ≠ thăm dò") được slide mới dẫn dắt đúng; vị trí sau 04, trước quiz 05 hợp lý về luồng: định nghĩa → so sánh → kiểm tra.
+
+3. **Giả định được khai báo rõ — OK.** "Bắc đang được đánh giá tốt nhất, Nam chưa rõ" và tính minh họa của 0,9/0,1 đều nêu trong notes; không có khẳng định tối ưu sai.
+
+4. **Độ nghiêm ngặt thấp (không bắt buộc sửa):** dòng "Thăm dò có kế hoạch xác định vẫn có thể xảy ra…" hơi dày trong notes; có thể tách thành một câu ngắn hơn. Mức độ: minor, không ảnh hưởng đúng đắn.
+
+**Đề xuất:** giữ nguyên slide; chỉ tinh chỉnh câu notes nếu muốn.
+
+### Báo cáo so sánh chính sách: academic
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Đánh giá L02-04-06** (role: academic; chỉ dựa trên đoạn trích cung cấp)
+
+**Kết luận chung:** Không phát hiện lỗi thực chất. Nội dung khớp nguồn đã xác minh (lecture1 tr.27: thăm dò = thu thập thông tin; khai thác = tối đa hóa mục tiêu theo kinh nghiệm; lecture2 tr.21: chính sách). Vị trí trong flow đúng: sau L02-04-04 (chính sách ngẫu nhiên), trước quiz L02-04-05; Q4 quiz nhất quán với caption "chọn ngẫu nhiên không tự động đồng nghĩa với thăm dò".
+
+**Phát hiện:**
+
+1. **Minor — L02-04-06, notes:** "cả hai hành động đều khả thi" (Bắc→(1,1), Nam→(1,3)) không được xác minh trong các đoạn trích; L02-04-02 chỉ xác nhận Đông gặp tường. **Fix:** giữ giả định nhưng ghi rõ "giả định cả Nam (1,3) trống" hoặc đối chiếu bản đồ mê cung nguồn.
+
+2. **Informational:** 0,9/0,1 đã được gắn nhãn minh họa, không tối ưu — đúng yêu cầu; không có epsilon/Q-values — đúng.
+
+**Flow:** incoming L02-04-04 (định nghĩa phân phối) → slide so sánh → outgoing quiz L02-04-05. Hợp lý.
+
+Không flag phần thưởng (theo yêu cầu người dùng).
+
+### Báo cáo so sánh chính sách: flow
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Báo cáo review L02-04-06** (không có công cụ, chỉ dựa trên trích đoạn)
+
+**Kết luận: không phát hiện lỗi thực tế.**
+
+1. **Độ chính xác nội dung — OK.** Định nghĩa thăm dò ("thử hành động để thu thêm thông tin") và khai thác ("tối đa hóa mục tiêu dựa trên kinh nghiệm" — diễn giải "theo hiểu biết hiện tại") khớp nguồn lecture1 trang 27 đã xác minh. Chính sách khớp lecture2 trang 21. Ghi chú nguồn rõ ràng, ghi rõ 0,9/0,1 là minh họa do người trình bày thêm — đúng yêu cầu.
+
+2. **Vai trò slide — đúng.** Slide tổng hợp so sánh chính sách xác định/ngẫu nhiên và khai thác/thăm dò, đúng vị trí sau L02-04-04 (định nghĩa chính sách ngẫu nhiên), trước quiz L02-04-05.
+
+3. **Luồng vào/ra — nhất quán.** Câu chốt "Chọn ngẫu nhiên không tự động đồng nghĩa với thăm dò" khớp quiz Q4 và ghi chú L02-04-02 ("Tính ngẫu nhiên tự nó không bảo đảm chất lượng tốt hơn"). Không mâu thuẫn với L02-04-03 (ghi chú về thăm dò có kế hoạch xác định được đặt trong aside, không đụng thân slide).
+
+4. **Đề xuất nhỏ (severity: minor, không bắt buộc):** câu "Giả sử Bắc đang được đánh giá tốt nhất, Nam chưa rõ" có thể thêm "trong ví dụ này" để nhấn mạnh giả định minh họa; tuy nhiên aside đã làm rõ đủ.
+
+**Mức độ: không có lỗi major/critical.**

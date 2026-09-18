@@ -351,22 +351,22 @@ Thời lượng: 5 phút. Nguồn: Các khái niệm phần 3; PPTX 16–19, 25�
 ### Cụm Chính sách lựa chọn hành động
 
 - Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 15 phút; trang tính thời gian: L02-04-01, L02-04-02, L02-04-03, L02-04-04, L02-04-05. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 15 phút; trang tính thời gian: L02-04-01, L02-04-02, L02-04-03, L02-04-04, L02-04-06, L02-04-05. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Đã nắm trạng thái, quan sát và biểu diễn từ lịch sử ở phần 3.
 - Sản phẩm học tập: Sinh viên viết được chính sách bảng và chính sách xác suất cho mê cung tại (1,2).
 - vấn đề: L02-04-01
 - trực giác: L02-04-01
 - ví dụ: L02-04-02
 - hình thức: L02-04-03, L02-04-04
-- ứng dụng: L02-04-04
+- ứng dụng: L02-04-04, L02-04-06
 - kiểm tra: L02-04-05
-- Gộp bước/ngoại lệ: Từ hai quy tắc tại (1,2) sang ánh xạ/phân phối; ứng dụng xác suất Bắc 0,5 ngay sau định nghĩa.
+- Gộp bước/ngoại lệ: Từ hai quy tắc tại (1,2) sang ánh xạ/phân phối; ứng dụng xác suất Bắc 0,5 ngay sau định nghĩa. Trang 06 ôn khai thác/thăm dò từ bài 1, nối ví dụ Bắc 0,9/Nam 0,1 với mục đích thu thêm thông tin; không thêm thuật toán.
 - Dữ kiện truyền tiếp: Bảng xác suất tại (1,2) chuyển thành ký hiệu chính sách; khái niệm chính sách cố định được dùng trong hàm giá trị.
 - Câu nối: Cách chọn hành động đã xác định; tiếp theo cần đánh giá phần thưởng dài hạn.
 
 ### L02-04-01 — Chính sách
 
-Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa..
+Thời lượng: 2 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa..
 
 - **Luận điểm:** Thông tin quan sát không tự chọn thay tác tử; cần một quy tắc bổ sung gọi là chính sách.
 - **Nhu cầu và lý do tồn tại:** Phần 3 kết thúc ở quan sát; sinh viên cần thấy khoảng trống giữa quan sát và hành động trước khi có định nghĩa.
@@ -378,7 +378,7 @@ Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví d�
 
 ### L02-04-02 — Ví dụ về chính sách
 
-Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa..
+Thời lượng: 2 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa..
 
 - **Luận điểm:** Cùng một trạng thái cho phép nhiều chính sách khác nhau, gồm hành động cố định và phân phối hành động.
 - **Nhu cầu và lý do tồn tại:** Trước ký hiệu $\pi$, sinh viên cần thấy chính sách tồn tại dưới nhiều dạng trên một ví dụ mê cung cụ thể.
@@ -390,7 +390,7 @@ Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví d�
 
 ### L02-04-03 — Chính sách xác định
 
-Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa..
+Thời lượng: 2 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa..
 
 - **Luận điểm:** Chính sách xác định là hàm $\pi:X\to A$ với $A_t=\pi(X_t)$; chính sách không đồng nghĩa thuật toán học.
 - **Nhu cầu và lý do tồn tại:** Sinh viên cần ký hiệu chính xác trước khi viết phân phối điều kiện ở slide sau, và cần phân biệt đối tượng với quy trình.
@@ -408,9 +408,21 @@ Thời lượng: 3 phút. Nguồn: PPTX, trang 21, 25–26; hw02, Bài 6. Ví d�
 - **Nhu cầu và lý do tồn tại:** Sinh viên đã học xác suất có điều kiện, nên đây là bước hình thức hóa tự nhiên sau ví dụ bảng xác suất.
 - **Cách thể hiện và độ phù hợp năm 3:** Công thức định nghĩa chiếm toàn chiều ngang, điều kiện chuẩn hóa ở dòng riêng; tránh nhồi công thức vào cột hẹp.
 - **Kết nối vào:** Không gian quan sát $X$ và quy ước $X=S$ khi quan sát đầy đủ từ phần 3.
-- **Kết nối ra:** Dạng điều kiện $\pi(a\mid x)$ là ký hiệu chuẩn của các slide giá trị kỳ vọng theo $\pi$.
+- **Kết nối ra:** So sánh hai loại chính sách và phân biệt cách chọn với mục đích khai thác/thăm dò ở trang tiếp theo.
 - **Sản phẩm học tập/kiểm tra:** Kiểm tra hai điều kiện chuẩn hóa trên hàng ví dụ 0.5/0.5/0/0.
 - **Quyết định nguồn:** Giữ trang 22, nối tường minh vào phần 3 qua quy ước $X=S$ và tái dùng hàng xác suất slide trước.
+
+### L02-04-06 — Chính sách, khai thác và thăm dò
+
+Thời lượng: 3 phút. Nguồn: PPTX bài 02 trang21; bài 01 trang27; ví dụ bổ sung theo yêu cầu.
+
+- **Luận điểm:** Xác định/ngẫu nhiên mô tả cách chọn; khai thác/thăm dò mô tả mục đích dùng hiểu biết hiện tại hoặc thu thêm thông tin.
+- **Nhu cầu và lý do tồn tại:** So sánh hai loại vừa định nghĩa, tránh đồng nhất chính sách ngẫu nhiên với thăm dò.
+- **Cách thể hiện và độ phù hợp năm 3:** Bảng hai cột, ví dụ luôn Bắc so với Bắc 0,9/Nam 0,1, hai định nghĩa ngắn và một lưu ý; dữ kiện Bắc đang được đánh giá tốt nhất, Nam chưa rõ được ghi trên slide.
+- **Kết nối vào:** Chính sách xác định và phân phối hành động đã có định nghĩa và ví dụ.
+- **Kết nối ra:** Câu hỏi cuối phần kiểm tra cả chuẩn hóa, loại chính sách và mục đích thăm dò.
+- **Sản phẩm học tập/kiểm tra:** Câu 4 giải thích vì sao chọn ngẫu nhiên không tự đồng nghĩa thăm dò.
+- **Quyết định nguồn:** Thêm theo yêu cầu, lấy khái niệm khai thác/thăm dò từ bài 1 trang27; không thêm thuật toán epsilon-greedy hoặc dùng hàm giá trị chưa học. Không khẳng định xác suất ví dụ là tối ưu hay bảo đảm học tốt hơn.
 
 ### L02-04-05 — Câu hỏi kiểm tra
 
@@ -418,10 +430,10 @@ Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 4
 
 - **Luận điểm:** Kiểm tra chuẩn hóa và phân biệt chính sách xác định với ngẫu nhiên.
 - **Nhu cầu và lý do tồn tại:** Khép phần bằng câu hỏi áp dụng và giải thích, kiểm tra trước khi chuyển sang phần kế.
-- **Cách thể hiện và độ phù hợp năm 3:** Danh sách đánh số từ 1 đến 3; dữ kiện nằm trong câu hỏi, đáp án chỉ trong ghi chú diễn giả.
-- **Kết nối vào:** Ví dụ bảng và định nghĩa chính sách.
+- **Cách thể hiện và độ phù hợp năm 3:** Danh sách đánh số từ 1 đến 4; dữ kiện nằm trong câu hỏi, đáp án chỉ trong ghi chú diễn giả.
+- **Kết nối vào:** Ví dụ bảng, định nghĩa chính sách và phân biệt khai thác/thăm dò.
 - **Kết nối ra:** Phần 5 đánh giá phần thưởng dài hạn dưới một chính sách.
-- **Sản phẩm học tập/kiểm tra:** Trả lời lần lượt 3 câu; giải thích bằng khái niệm và dữ kiện vừa học.
+- **Sản phẩm học tập/kiểm tra:** Trả lời lần lượt 4 câu; giải thích bằng khái niệm và dữ kiện vừa học.
 - **Quyết định nguồn:** Gom câu hỏi về cuối phần theo yêu cầu; giữ ý nguồn, không thêm thuật toán hay kiến thức chưa học.
 
 ## Phần 5: Hàm giá trị và mô hình môi trường — 25 phút

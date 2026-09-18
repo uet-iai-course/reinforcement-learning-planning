@@ -2,7 +2,7 @@
 
 ## Phạm vi
 
-Bản viết lại từ đầu cho sinh viên năm 3 đã học học máy, học sâu, xác suất và thuật toán. Nguồn chính: `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx`, trang 1–27 trong tổng 58 trang; trang 28 mở Bài 03. Nguồn bài tập: `resources/hw02.pdf`, Bài 1, 2, 5, 6 và 10. Không có code demo trong phạm vi này.
+Bản viết lại từ đầu cho sinh viên năm 3 đã học học máy, học sâu, xác suất và thuật toán. Nguồn chính: `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx`, trang 1–27 trong tổng 58 trang; trang 28 mở Bài 03. Nguồn bổ sung cho khai thác/thăm dò: `lecture1-introduction-to-RL.pptx`, trang 27. Nguồn bài tập: `resources/hw02.pdf`, Bài 1, 2, 5, 6 và 10. Không có code demo trong phạm vi này.
 
 Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mục tiêu: mô tả tương tác; phân biệt trạng thái/quan sát/biểu diễn; định nghĩa và áp dụng chính sách, giá trị, mô hình; phân biệt dự đoán/điều khiển; đặc tả mê cung.
 
@@ -20,7 +20,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 
 ## Trạng thái triển khai
 
-Đã hoàn tất 7/7 phần: 42 trang, 120 phút; đủ năm báo cáo độc lập và kiểm định lại. Giới hạn rà trực quan Codex Slides được ghi trong review-log.md.
+Đã hoàn tất 7/7 phần: 43 trang, 120 phút; đủ năm báo cáo độc lập và kiểm định lại. Giới hạn rà trực quan Codex Slides được ghi trong review-log.md.
 
 ## Trang đích
 
@@ -47,6 +47,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-04-02` — Ví dụ về chính sách — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 - `L02-04-03` — Chính sách xác định — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 - `L02-04-04` — Chính sách ngẫu nhiên — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
+- `L02-04-06` — Chính sách, khai thác và thăm dò — PPTX bài 02 trang21; bài 01 trang27; ví dụ xác suất bổ sung theo yêu cầu
 - `L02-04-05` — Câu hỏi kiểm tra — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
 - `L02-05-01` — Kết quả dài hạn của chính sách — PPTX trang 10, 21, 22, 23
 - `L02-05-02` — Tổng phần thưởng trên quỹ đạo — PPTX trang 26; hw02 bài 1
