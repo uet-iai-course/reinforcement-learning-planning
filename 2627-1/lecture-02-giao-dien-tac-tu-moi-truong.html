@@ -101,7 +101,7 @@
 </section>
 <section data-slide-id="L02-03-04">
 <h2>Tính Markov</h2>
-<p>Biết trạng thái và hành động thì lịch sử không cải thiện dự báo bước tới.</p><div class="math-large">$$\begin{aligned}&amp;\Pr(S_{t+1}=s',R_{t+1}=r\mid H_t=h,A_t=a)\\&amp;\quad=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a).\end{aligned}$$</div><p>$H_t$: lịch sử trạng thái–hành động–thưởng; $h$ kết thúc ở $s$.</p><p class="caption">Xét biến rời rạc và các biến cố điều kiện có xác suất dương.</p>
+<p>Biết trạng thái và hành động thì lịch sử không cải thiện dự báo bước tới.</p><div class="math-large">$$\begin{aligned}&amp;\Pr(S_{t+1}=s',R_{t+1}=r\mid H_t=h,A_t=a)\\&amp;\quad=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a).\end{aligned}$$</div><p>$H_t$: lịch sử trạng thái–hành động–thưởng; $h$ kết thúc ở $s$.</p>
 <aside class="notes">Trong mê cung cố định đã xét, cùng vị trí và hành động cho cùng ô kế tiếp và phần thưởng, không cần biết đường đã đi. Điều kiện Markov khái quát trực giác này cho cả chuyển động ngẫu nhiên bằng phân phối có điều kiện. $H_t=(S_0,A_0,R_1,S_1,\ldots,A_{t-1},R_t,S_t)$ là lịch sử trạng thái, khác lịch sử quan sát $H_t^O$. Vế trái dùng toàn bộ lịch sử, vế phải chỉ dùng trạng thái cuối và hành động hiện tại. Tính Markov yêu cầu hai phân phối bằng nhau với mọi lịch sử có thể xảy ra kết thúc tại $s$. $s'$ là giá trị của trạng thái kế tiếp và $r$ là giá trị phần thưởng. Điều kiện dương áp dụng cho biến cố được điều kiện hóa, không yêu cầu mọi kết quả bước tới đều có xác suất dương. Tính chất này không xác định hành động tối ưu.<p class="note-source"><strong>Nguồn:</strong> PPTX trang 17 (Markov) và trang 18 (đầy đủ).</p></aside>
 </section>
 <section data-slide-id="L02-03-10">

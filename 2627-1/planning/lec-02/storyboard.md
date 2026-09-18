@@ -324,11 +324,11 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 17 (Markov) và trang 18 (đầy �
 
 - **Luận điểm:** Trạng thái là Markov khi biết S_t và A_t, phân phối của (S_{t+1}, R_{t+1}) không phụ thuộc phần lịch sử trước đó.
 - **Nhu cầu và lý do tồn tại:** Hình thức hóa điều kiện đủ thông tin dự báo; ghi chú nhắc ví dụ mê cung cố định đã học sau khi bỏ trang dẫn nhập theo yêu cầu.
-- **Cách thể hiện và độ phù hợp năm 3:** Công thức lớn đặt trung tâm, dòng trực giác phía trên, giả thiết kỹ thuật phía dưới; năm ba đọc quen ký hiệu xác suất có điều kiện nên công thức giữ nguyên dạng chuẩn.
+- **Cách thể hiện và độ phù hợp năm 3:** Công thức lớn đặt trung tâm, dòng trực giác phía trên; điều kiện kỹ thuật giải thích trong ghi chú diễn giả; năm ba đọc quen ký hiệu xác suất có điều kiện nên công thức giữ nguyên dạng chuẩn.
 - **Kết nối vào:** Quan sát đầy đủ/một phần xét khả năng nhận biết trạng thái; nay xét trạng thái đủ cho dự báo hay chưa.
 - **Kết nối ra:** Trang mới bàn cách mở rộng trạng thái để mô tả phụ thuộc quá khứ và chi phí của cách này.
 - **Sản phẩm học tập/kiểm tra:** Đối chiếu cùng vị trí và hành động trong mê cung cố định; chuẩn bị biến thể chìa khóa ở trang 05.
-- **Quyết định nguồn:** Giữ: trang 17 đã có định nghĩa Markov trên lịch sử; tách giả thiết rời rạc và xác suất dương thành dòng riêng và thêm cảnh báo phạm vi không suy hành động tối ưu.
+- **Quyết định nguồn:** Giữ: trang 17 đã có định nghĩa Markov trên lịch sử; điều kiện xác suất dương và cảnh báo phạm vi không suy hành động tối ưu được giải thích trong ghi chú; bỏ câu chú thích điều kiện trên mặt trang theo yêu cầu.
 
 ### L02-03-10 — Tính Markov có hạn chế khả năng mô hình hóa?
 

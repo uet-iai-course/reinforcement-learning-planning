@@ -1238,3 +1238,9 @@ Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; 
 4. **Liên kết giáo dục:** Incoming (04 đặt vấn đề hạn chế Markov), role (khẳng định H_t làm trạng thái khôi phục Markov, nêu hạn chế thực hành), outgoing (chuyển sang ví dụ mê cung khóa) đều rõ ràng; slide 08 hỏi lại nội dung này một cách khớp.
 
 Không có vấn đề mới.
+
+
+## Bỏ chú thích điều kiện trên slide Markov — 2026-09-18
+
+- Theo yêu cầu, bỏ câu “Xét biến rời rạc và các biến cố điều kiện có xác suất dương.” khỏi mặt L02-03-04. Giữ nguyên công thức và phần giải thích điều kiện xác suất dương trong ghi chú diễn giả.
+- Cập nhật storyboard; không đổi thứ tự, số trang hoặc thời lượng. Kiểm tra thay đúng một đoạn, câu không còn trong HTML và `git diff --check` đạt.
