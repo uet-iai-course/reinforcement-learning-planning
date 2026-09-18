@@ -83,8 +83,55 @@
 <img class="figure" src="img/lec-02/state-observation-representation.svg" alt="Mê cung có tác tử ở (2,1); cảm biến chỉ thấy Bắc và Nam là tường, Đông và Tây trống. Bốn ô kề được mã hóa thành dữ liệu dùng để chọn hành động."/>
 <p>$S_t=(2,1)$; $O_t$: bốn ô kề; $X_t=(1,0,1,0)$ theo thứ tự Bắc–Đông–Nam–Tây.</p>
 <p class="caption">Mã hóa: 1 là tường, 0 là ô trống. Biểu diễn này chưa xác định được vị trí.</p>
-<aside class="notes">Trạng thái $S_t\in\mathcal S$ mô tả tình huống môi trường; quan sát $O_t\in\mathcal O$ là thông tin tác tử nhận; biểu diễn $X_t\in\mathcal X$ là dữ liệu tác tử dùng để chọn hành động. Ba tập tương ứng là miền trạng thái, quan sát và biểu diễn. Trong mê cung cố định này, trạng thái là tọa độ ô, kể cả đích G. Hình toàn mê cung dành cho người học; cảm biến của tác tử chỉ cung cấp bốn ô kề. Tại (2,1), Bắc và Nam là tường, Đông và Tây trống. Ví dụ mã hóa ô tường bằng 1, ô trống bằng 0 cho bốn thành phần theo thứ tự Bắc, Đông, Nam, Tây. Biểu diễn này chỉ mã hóa quan sát hiện tại, không suy ra tọa độ: vị trí (3,1) cũng cho cùng bốn giá trị. Có thể tạo biểu diễn từ lịch sử quan sát, hành động và phần thưởng để giữ thêm thông tin; không phải cách biểu diễn nào cũng có tính Markov. Nếu nhận tọa độ chính xác thì có thể chọn $X_t=O_t=S_t$. Trang tiếp theo phân biệt một mẫu dữ liệu với lịch sử và quỹ đạo.
+<aside class="notes">Trạng thái $S_t\in\mathcal S$ mô tả tình huống môi trường; quan sát $O_t\in\mathcal O$ là thông tin tác tử nhận; biểu diễn $X_t\in\mathcal X$ là dữ liệu tác tử dùng để chọn hành động. Ba tập tương ứng là miền trạng thái, quan sát và biểu diễn. Trong mê cung cố định này, trạng thái là tọa độ ô, kể cả đích G. Hình toàn mê cung dành cho người học; cảm biến của tác tử chỉ cung cấp bốn ô kề. Tại (2,1), Bắc và Nam là tường, Đông và Tây trống. Ví dụ mã hóa ô tường bằng 1, ô trống bằng 0 cho bốn thành phần theo thứ tự Bắc, Đông, Nam, Tây. Biểu diễn này chỉ mã hóa quan sát hiện tại, không suy ra tọa độ: vị trí (3,1) cũng cho cùng bốn giá trị. Có thể tạo biểu diễn từ lịch sử quan sát, hành động và phần thưởng để giữ thêm thông tin; không phải cách biểu diễn nào cũng có tính Markov. Nếu nhận tọa độ chính xác thì có thể chọn $X_t=O_t=S_t$. Trang tiếp theo định nghĩa hình thức ba đối tượng vừa thấy trong hình.
 <p class="note-source"><strong>Nguồn:</strong> PPTX trang 16 (trạng thái/quan sát), 14–15 và 21 (biểu diễn, lựa chọn hành động); mê cung trang 25–26. Mã nhị phân ô kề là ví dụ minh họa bổ sung.</p></aside>
+</section>
+<section data-slide-id="L02-03-11">
+  <h2>Định nghĩa trạng thái, quan sát và biểu diễn</h2>
+
+  <table>
+    <thead>
+      <tr><th>Khái niệm</th><th>Ký hiệu</th><th>Định nghĩa</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Trạng thái</td>
+        <td>$S_t \in \mathcal{S}$</td>
+        <td>Cấu hình môi trường được mô hình biểu diễn tại thời điểm $t$.</td>
+      </tr>
+      <tr>
+        <td>Quan sát</td>
+        <td>$O_t \in \mathcal{O}$</td>
+        <td>Thông tin nhận được từ môi trường tại thời điểm $t$.</td>
+      </tr>
+      <tr>
+        <td>Biểu diễn</td>
+        <td>$X_t \in \mathcal{X}$</td>
+        <td>Dữ liệu tác tử dùng để chọn hành động tại $t$, tính từ thông tin khả dụng.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="math-large">
+    $$X_t = f_t\!\left(O_{0:t},\, A_{0:t-1},\, R_{1:t}\right)$$
+  </div>
+  <p class="caption">$O_{0:t}=(O_0,\ldots,O_t)$; các dãy hành động và thưởng viết tương tự.</p>
+
+  <aside class="notes">
+    <p>
+      Ba miền khác nhau: $\mathcal{S}$ (trạng thái), $\mathcal{O}$ (quan sát), $\mathcal{X}$ (biểu diễn). Quan sát có thể ngẫu nhiên, không đầy đủ. Trạng thái không tự động thỏa tính Markov. $X_t$ không bảo đảm khôi phục được $S_t$.
+    </p>
+    <p>
+      Thứ tự thời gian: tại $t$, tác tử tính $X_t$ từ dữ liệu có trước khi chọn $A_t$; hành động và phần thưởng tương lai chưa được nhìn thấy. Tại $t=0$, dãy hành động và phần thưởng rỗng.
+    </p>
+    <p>
+      Trường hợp đơn giản: $X_t=\phi(O_t)$, mã hóa nhị phân từ slide trước. Trường hợp tổng quát: $X_t$ là hàm của toàn bộ lịch sử. Lịch sử thông tin tác tử nhận khác với lịch sử trạng thái sẽ định nghĩa ở trang tiếp theo.
+    </p>
+    <p>
+      Chính thức: $f_t:\mathcal{O}^{t+1}\times\mathcal{A}^{t}\times\mathbb{R}^{t}\to\mathcal{X}$ là hàm mã hóa tất định do tác tử chọn.
+    </p>
+    <p class="note-source">Nguồn: PPTX 14–16, 21; ký hiệu mở rộng chính thức bổ sung theo yêu cầu.</p>
+  </aside>
 </section>
 <section data-slide-id="L02-03-09">
 <h2>Mẫu dữ liệu, lịch sử và quỹ đạo</h2>

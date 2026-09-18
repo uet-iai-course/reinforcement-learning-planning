@@ -1437,3 +1437,174 @@ Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; 
 - RL và academic chép nhầm một hàng nguồn thành chuỗi 9 ký tự. Điều phối viên xác minh tám hàng đều tám ký tự và đối chiếu từng tọa độ/màu của 64 ô SVG với bản đồ đã dùng trong bài. Không sửa bản đồ theo lỗi chép trong báo cáo.
 - Không thêm số 1/0 vào SVG vì công thức và quy ước đã hiển thị ngay dưới hình bằng HTML/KaTeX. Không thêm vòng phản hồi từ hành động về môi trường: slide này minh họa dòng thông tin từ trạng thái tới dữ liệu quyết định, vòng tương tác đã có ở phần 2.
 - Không đổi nguồn trang 27 theo góp ý flow: đã đọc XML PPTX trang 27, đây đúng là bài kiểm tra quan sát đầy đủ/một phần với tọa độ, ảnh mê cung và trò chơi. Quan hệ vào/ra của trang 09 đã ghi trong storyboard; không cần thêm lời dẫn lặp vào notes. Giữ chú thích ngắn “chưa xác định được vị trí”, đã có ngữ cảnh tọa độ tác tử ngay trên.
+
+
+## Định nghĩa hình thức trạng thái, quan sát và biểu diễn — 2026-09-18
+
+- Theo yêu cầu mới, thêm L02-03-11 ngay sau hình trực quan L02-03-02, trước mẫu/lịch sử/quỹ đạo L02-03-09. Đây là trang định nghĩa chung ba khái niệm, không khôi phục hai trang riêng đã bỏ. Bài có 42 trang, 7 phần.
+- Bảng định nghĩa các miền $S_t\in\mathcal S$, $O_t\in\mathcal O$, $X_t\in\mathcal X$. Công thức $X_t=f_t(O_{0:t},A_{0:t-1},R_{1:t})$ hình thức hóa biểu diễn tính từ thông tin đã có trước hành động hiện tại. Chú thích giải thích cách viết dãy; notes nêu miền hàm, trường hợp $t=0$, mã hóa chỉ dùng quan sát hiện tại và giới hạn không bảo đảm khôi phục trạng thái.
+- Nguồn khái niệm PPTX trang 14–16, 21; miền hàm và ký hiệu dãy là hình thức hóa bổ sung theo yêu cầu. Không giả định quan sát luôn xác định hoặc mọi cách chọn trạng thái đều Markov. Giữ $H_t$ cho lịch sử trạng thái ở trang tiếp theo, không dùng ký hiệu này cho lịch sử quan sát.
+- Reader lập kế hoạch; writer soạn HTML giới hạn đúng một slide. Điều phối viên chuyển các class không có trong CSS sang class dùng chung, thay “agent” bằng “tác tử”, dùng $\mathbb R^t$ cho dãy thưởng, bỏ lời ghi chú về quy trình soạn. Không sửa CSS hoặc SVG.
+- Thời lượng trang mới 3 phút: giảm hình trực quan 5→4, thảo luận Markov 5→4, kiểm tra 6→5. Phần 3 vẫn 28 phút, toàn bài 120 phút. Outline/storyboard khớp 42 ID và thứ tự; mỗi trang có một chủ thời lượng. Index không đổi do đường dẫn/tên bài không đổi.
+- Rà no-ai-slop: định nghĩa ngắn, không thêm lời dẫn rỗng. Rà quill: ví dụ trực quan → hình thức ba đối tượng → tổ chức dữ liệu theo thời gian → mức quan sát → Markov → kiểm tra. Không tạo dự án sách.
+- Năm reviewer độc lập rà review-section với trích đoạn toàn phần 3 và hai trang tại mỗi ranh giới, --no-tools. Đây là rà cục bộ theo thay đổi, không phải rà toàn bài. Các báo cáo runtime lưu dưới đây; không thay mô hình.
+- Kiểm định: số lượng/ID/thứ tự/miền hàm và tổng thời lượng đạt; ở $t=0$, đầu vào hành động và thưởng là dãy rỗng (tích lũy thừa bậc 0 chứa một dãy rỗng, không phải tập rỗng). Chromium cổng 8765: 14 lượt cho 7 trang phần 3 ở 1280×720 và 390×844, không tràn, lỗi KaTeX, ảnh hỏng, HTTP/JavaScript; bàn phím đạt. Đã xem ảnh slide mới. `git diff --check` đạt. Giới hạn Codex Slides như các lượt trước: rà trực quan cục bộ bằng Chromium, không tuyên bố đã rà bản này trong Codex Slides.
+
+### Báo cáo định nghĩa hình thức: plan
+
+Runtime: requested_model=deepseek/deepseek-v4-flash-0731; observed_model=deepseek/deepseek-v4-flash-0731; provider=OpenRouter.
+
+# Kế hoạch chèn slide định nghĩa hình thức (≤150 từ)
+
+**Nguồn:** PPTX14–16, 21; mở rộng ký hiệu hình thức.
+
+**Nội dung slide mới (ID03-11, bảng 3 hàng):**
+- S_t ∈ S: cấu hình môi trường theo mô hình
+- O_t ∈ O: thông tin cảm biến nhận được
+- X_t ∈ X: biểu diễn tính từ thông tin khả dụng để chọn hành động
+
+**Quan hệ trung tâm:** X_t = f_t(O_{0:t}, A_{0:t-1}, R_{1:t}); định nghĩa khoảng chỉ số, khoảng ban đầu rỗng.
+
+**Cảnh báo:** không khẳng định state tự Markov, X không nhất thiết bằng S, O_t không nhất thiết = g(S_t) tất định. Ghi chú trường hợp đơn giản X_t = φ(O_t) (mã hóa mê cung nhị phân đã giới thiệu), dạng tổng quát gồm quá khứ. H_t slide sau = STATE history (không dùng cho quan sát). Caveat: X chưa chắc Markov.
+
+**Bố cục:** chèn sau L02-03-02, trước L02-03-09.
+
+**Thời lượng:** +3 phút; visual 5→4, Markov modeling 5→4, quiz 6→5. Section 3 vẫn 28.
+
+### Báo cáo định nghĩa hình thức: writer
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+<section class="slide" data-slide-id="L02-03-11">
+  <h2>Định nghĩa trạng thái, quan sát và biểu diễn</h2>
+
+  <table class="def-table">
+    <thead>
+      <tr><th>Khái niệm</th><th>Ký hiệu</th><th>Định nghĩa</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Trạng thái</td>
+        <td>$S_t \in \mathcal{S}$</td>
+        <td>Cấu hình môi trường được mô hình biểu diễn tại thời điểm $t$.</td>
+      </tr>
+      <tr>
+        <td>Quan sát</td>
+        <td>$O_t \in \mathcal{O}$</td>
+        <td>Thông tin nhận được từ môi trường tại thời điểm $t$.</td>
+      </tr>
+      <tr>
+        <td>Biểu diễn</td>
+        <td>$X_t \in \mathcal{X}$</td>
+        <td>Dữ liệu agent dùng để chọn hành động tại $t$, tính từ thông tin khả dụng.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="formula-center">
+    $$X_t = f_t\!\left(O_{0:t},\, A_{0:t-1},\, R_{1:t}\right)$$
+  </div>
+  <p class="formula-caption">$O_{0:t}=(O_0,\ldots,O_t)$; các dãy hành động và thưởng viết tương tự.</p>
+
+  <aside class="notes">
+    <p>
+      Ba miền khác nhau: $\mathcal{S}$ (trạng thái), $\mathcal{O}$ (quan sát), $\mathcal{X}$ (biểu diễn). Quan sát có thể ngẫu nhiên, không đầy đủ. Trạng thái không tự động thỏa tính Markov. $X_t$ không đảm bảo khôi phục được $S_t$.
+    </p>
+    <p>
+      Thứ tự thời gian: tại $t$, agent tính $X_t$ từ dữ liệu có trước khi chọn $A_t$; hành động và phần thưởng tương lai chưa được nhìn thấy. Tại $t=0$, dãy hành động và phần thưởng rỗng.
+    </p>
+    <p>
+      Trường hợp đơn giản: $X_t=\phi(O_t)$, mã hóa nhị phân từ slide trước. Trường hợp tổng quát: $X_t$ là hàm của toàn bộ lịch sử. Chú ý: không dùng ký hiệu $H_t$ cho quan sát để tránh trùng với khái niệm lịch sử trạng thái ở slide sau.
+    </p>
+    <p>
+      Chính thức: $f_t:\mathcal{O}^{t+1}\times\mathcal{A}^{t}\times\mathcal{R}^{t}\to\mathcal{X}$ là hàm mã hóa tất định do agent chọn; chưa có chính sách nào được định nghĩa ở đây.
+    </p>
+    <p class="note-source">Nguồn: PPTX 14–16, 21; ký hiệu mở rộng chính thức bổ sung theo yêu cầu.</p>
+  </aside>
+</section>
+
+### Báo cáo định nghĩa hình thức: student
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Báo cáo review L02-03-11 (vai trò sinh viên)**
+
+**Kiểm tra toán học:**
+- $f_t:\mathcal{O}^{t+1}\times\mathcal{A}^{t}\times\mathbb{R}^{t}\to\mathcal{X}$ khớp đúng số phần tử: $O_{0:t}$ có $t+1$, $A_{0:t-1}$ có $t$, $R_{1:t}$ có $t$ phần tử. ✅
+- Tại $t=0$: $\mathcal{A}^0,\mathbb{R}^0$ rỗng, nhất quán với ghi chú. ✅
+- Không dùng đầu vào tương lai; $X_t$ tính trước $A_t$. ✅
+- Không tuyên bố $X_t$ khôi phục $S_t$; quan sát ngẫu nhiên được nêu. ✅
+
+**Liên kết sư phạm:**
+- Slide trước (L02-03-02) hứa "định nghĩa hình thức" → khớp. ✅
+- Ghi chú dẫn tới "lịch sử trạng thái ở trang tiếp theo" → L02-03-09 định nghĩa $H_t$ đúng, không xung đột ký hiệu. ✅
+- Ví dụ $X_t=\phi(O_t)$ nối với mã hóa nhị phân slide trước. ✅
+
+**Độ tải đọc:** Bảng + công thức gọn; ghi chú dài nhưng nằm ở aside, chấp nhận được.
+
+**Kết luận:** Không có lỗi thực sự. Không cần sửa.
+
+### Báo cáo định nghĩa hình thức: rl
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Kết quả: ĐẠT — không phát hiện lỗi thực sự.**
+
+- **Toán học:** `$f_t:\mathcal{O}^{t+1}\times\mathcal{A}^{t}\times\mathbb{R}^{t}\to\mathcal{X}$` khớp đúng số phần tử của $O_{0:t}$ (t+1), $A_{0:t-1}$ (t), $R_{1:t}$ (t). Tại $t=0$, dãy hành động/thưởng rỗng, nhất quán với ghi chú. Không có đầu vào tương lai ($O_t$, không $A_t/R_{t+1}$) — đúng mốc thời gian trước khi chọn $A_t$.
+- **Xung đột ký hiệu:** $X_t$ ở đây không va chạm với $H_t$ "lịch sử trạng thái" ở L02-03-09; ghi chú đã phân biệt rõ hai khái niệm.
+- **Tính nhất quán:** nhất quán với L02-03-02 (ví dụ mã hóa nhị phân $X_t=\phi(O_t)$ được trích đúng như trường hợp đơn giản), với ghi chú slide 02 hứa "trang tiếp theo định nghĩa hình thức". Câu chốt "không bảo đảm khôi phục $S_t$" phù hợp, không quá mức.
+- **Độ tải đọc:** bảng 3 dòng + 1 công thức + 1 dòng chú thích trên slide chính; chi tiết nằm trong ghi chú — hợp lý.
+- **Phạm vi:** các slide lân cận trong phạm vi (03-02, 03-09, 03-04, 03-06, 03-10) không có lỗi mới cần báo từ ngữ cảnh này.
+
+### Báo cáo định nghĩa hình thức: math
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Báo cáo review L02-03-11 (role: math)**
+
+**Kiểm tra toán học:**
+- $X_t=f_t(O_{0:t},A_{0:t-1},R_{1:t})$: nhất quán — $O_{0:t}$ có $t+1$ phần tử, $A_{0:t-1}$ có $t$, $R_{1:t}$ có $t$; khớp miền xác định $\mathcal{O}^{t+1}\times\mathcal{A}^{t}\times\mathbb{R}^{t}\to\mathcal{X}$. ✓
+- $t=0$: $A_{0:-1}$, $R_{1:0}$ rỗng, miền $\mathcal{A}^0\times\mathbb{R}^0$ hợp lệ; notes nêu rõ dãy rỗng. ✓
+- Không dùng đầu vào tương lai; $X_t$ tính trước khi chọn $A_t$. ✓
+- Không tuyên bố $X_t$ khôi phục $S_t$; ghi rõ quan sát có thể ngẫu nhiên, trạng thái Markov định nghĩa sau (khớp L02-03-04). ✓
+- Tránh xung đột với $H_t$ ở L02-03-09: notes phân biệt lịch sử thông tin tác tử với lịch sử trạng thái. ✓
+- Liên kết với L02-03-02 ($X_t=\phi(O_t)$) hợp lệ.
+
+**Đọc/pedagogy:** bảng 3 hàng + 1 công thức, tải hợp lý; vai trò incoming (từ 03-02) / outgoing (sang 03-09) rõ.
+
+**Kết luận:** Không có lỗi thực sự. Không cần sửa.
+
+### Báo cáo định nghĩa hình thức: academic
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Báo cáo review L02-03-11 (role: academic)**
+
+**Kết luận: Không phát hiện lỗi thực sự.**
+
+Kiểm tra chi tiết:
+
+1. **Định nghĩa toán học — đúng.** Công thức $X_t=f_t(O_{0:t},A_{0:t-1},R_{1:t})$ khớp với miền khai báo $\mathcal{O}^{t+1}\times\mathcal{A}^{t}\times\mathbb{R}^{t}\to\mathcal{X}$: chỉ số $0{:}t$ cho $t+1$ quan sát, $0{:}t-1$ cho $t$ hành động, $1{:}t$ cho $t$ phần thưởng. Tại $t=0$: dãy hành động và thưởng rỗng, nhất quán với ghi chú.
+
+2. **Không dùng đầu vào tương lai** — đúng, $X_t$ tính trước khi chọn $A_t$.
+
+3. **Nhất quán với slide lân cận:** khớp mã hóa nhị phân ở L02-03-02 ($X_t=\phi(O_t)$); không xung đột với $H_t$ lịch sử *trạng thái* ở L02-03-09 (đã phân biệt rõ trong ghi chú); không tuyên bố $X_t$ khôi phục $S_t$ hay tính Markov — đúng phạm vi.
+
+4. **Độ tải đọc và sư phạm:** bảng + một công thức + caption gọn; chi tiết kỹ thuật đặt trong ghi chú, phù hợp vai trò slide định nghĩa.
+
+**Severity:** không có.
+
+### Báo cáo định nghĩa hình thức: flow
+
+Runtime: requested_model=z-ai/glm-5.3-flash; observed_model=z-ai/glm-5.3-flash; provider=OpenRouter.
+
+**Đánh giá L02-03-11 — Định nghĩa S, O, X**
+
+**Kết luận: không có lỗi thực sự.**
+
+- **Toán học:** đúng. $O_{0:t}$ có $t+1$ phần tử khớp $\mathcal{O}^{t+1}$; $A_{0:t-1}$ có $t$ phần tử khớp $\mathcal{A}^t$; $R_{1:t}$ có $t$ phần tử khớp $\mathbb{R}^t$. Tại $t=0$, dãy hành động/thưởng rỗng nhất quán với ghi chú. Không dùng đầu vào tương lai. Không tuyên bố $X_t$ khôi phục $S_t$ — đúng.
+- **Phù hợp với slide kề:** sau L02-03-02 (ví dụ mê cung, $X_t=(1,0,1,0)$) hợp lý; ghi chú dẫn về trường hợp đơn giản $X_t=\phi(O_t)$ khớp. Tránh xung đột với $H_t$ ở L02-03-09 (lịch sử **trạng thái**) — ghi chú đã phân biệt rõ.
+- **Đọc/tải nhận thức:** bảng 3 hàng + 1 công thức + chú thích ngắn; gánh nặng chấp nhận được. Ghi chú dài nhưng là tài liệu giảng dạy, không hiển thị cho người học.
+- **Luồng sư phạm:** 02 → 11 → 09 → 06 → 04 → 10 → 08 mạch lạc (định nghĩa → dữ liệu/lịch sử → quan sát đầy đủ/một phần → Markov → mở rộng → kiểm tra).
+
+**Severity:** none. **Fix:** không cần.

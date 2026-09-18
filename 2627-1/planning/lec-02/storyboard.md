@@ -216,19 +216,19 @@ Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 2
 - **Tiên quyết:** Vòng tương tác, quan sát–hành động–thưởng, xác suất có điều kiện.
 - **Kết nối vào:** Phần 2 xác định dữ liệu tương tác; phần này xét dữ liệu phản ánh trạng thái đến đâu.
 - **Kết nối ra:** Biểu diễn $X_t$ đã có ý nghĩa cụ thể để làm đầu vào chính sách ở phần 4.
-- **Mạch:** Sơ đồ mê cung → chuỗi dữ liệu → đầy đủ/một phần → Markov → mở rộng trạng thái → kiểm tra. Theo yêu cầu, bỏ hai trang riêng về trạng thái mê cung và biểu diễn quyết định; không lặp lại chúng ở vị trí khác.
+- **Mạch:** Sơ đồ mê cung → định nghĩa hình thức → chuỗi dữ liệu → đầy đủ/một phần → Markov → mở rộng trạng thái → kiểm tra. Theo yêu cầu, bỏ hai trang riêng về trạng thái mê cung và biểu diễn quyết định; không lặp lại chúng ở vị trí khác. Bổ sung trang định nghĩa hình thức chung theo yêu cầu mới, ngay sau hình trực quan.
 
 ### Cụm Trạng thái, quan sát và dữ liệu
 
 - Dạng nội dung: khái niệm, ví dụ mã hóa ô kề.
-- Thời lượng phân bổ: 8 phút; trang tính thời gian: L02-03-02, L02-03-09. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 10 phút; trang tính thời gian: L02-03-02, L02-03-11, L02-03-09. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Vòng tương tác và mê cung cố định đã học.
 - Sản phẩm học tập: Phân biệt $S_t,O_t,X_t$, mẫu một bước, lịch sử và quỹ đạo.
 - vấn đề/trực giác/ví dụ: L02-03-02, cùng vị trí thật nhưng cảm biến chỉ cung cấp ô kề.
-- hình thức: L02-03-02 (ký hiệu và mã hóa), L02-03-09 (chuỗi).
+- hình thức: L02-03-11 (ba định nghĩa và hàm biểu diễn), L02-03-09 (chuỗi).
 - ứng dụng: L02-03-02 mã hóa Bắc–Đông–Nam–Tây thành bốn thành phần.
 - kiểm tra: L02-03-08.
-- Gộp bước: Hình và mã hóa cụ thể cùng trang; lịch sử/quỹ đạo formal hóa ở trang sau. Biểu diễn chỉ giới thiệu ngắn theo yêu cầu bỏ trang riêng.
+- Gộp bước: Hình và mã hóa cụ thể ở trang 02; trang 11 hình thức hóa ba khái niệm theo yêu cầu mới; trang 09 định nghĩa lịch sử và quỹ đạo. Không tái lập trang biểu diễn riêng đã bỏ.
 - Dữ kiện truyền tiếp: Tại (2,1), cảm biến và biểu diễn chưa xác định được vị trí; (3,1) cho cùng dữ liệu.
 - Câu nối: Khả năng xác định trạng thái từ quan sát được phân loại ở trang 06.
 
@@ -246,7 +246,7 @@ Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 2
 ### Cụm Markov và khả năng mô hình hóa
 
 - Dạng nội dung: định nghĩa và diễn giải lý thuyết.
-- Thời lượng phân bổ: 14 phút; trang tính thời gian: L02-03-04, L02-03-10, L02-03-08. Các tham chiếu lại không cộng lặp.
+- Thời lượng phân bổ: 12 phút; trang tính thời gian: L02-03-04, L02-03-10, L02-03-08. Các tham chiếu lại không cộng lặp.
 - Kiến thức đầu vào: Lịch sử trạng thái và xác suất có điều kiện.
 - Sản phẩm học tập: Giải thích đủ thông tin dự báo; phân biệt biểu diễn lý thuyết với khả năng học hiệu quả.
 - vấn đề/trực giác/ví dụ: L02-03-04, ghi chú nhắc cùng vị trí/hành động trong mê cung cố định không cần đường đã đi.
@@ -258,15 +258,27 @@ Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 2
 
 ### L02-03-02 — Trạng thái và quan sát
 
-Thời lượng: 5 phút. Nguồn: PPTX trang 14–16, 21, 25–26; mã ô kề bổ sung.
+Thời lượng: 4 phút. Nguồn: PPTX trang 14–16, 21, 25–26; mã ô kề bổ sung.
 
 - **Luận điểm:** Trạng thái môi trường tạo ra quan sát; biểu diễn mã hóa thông tin dùng để quyết định.
 - **Nhu cầu và lý do tồn tại:** Mã hóa đúng ô kề và giải thích vì sao biểu diễn chưa xác định được vị trí.
 - **Cách thể hiện và độ phù hợp năm 3:** Sơ đồ SVG nối mê cung thật, cảm biến bốn ô kề, bốn thành phần mã hóa và lựa chọn hành động. Công thức và chú thích dựng bằng HTML/KaTeX.
 - **Kết nối vào:** Vòng tương tác ở phần 2 đã phân biệt bên chọn hành động và bên phản hồi.
-- **Kết nối ra:** Mẫu, lịch sử và quỹ đạo tổ chức thông tin theo thời gian.
+- **Kết nối ra:** Định nghĩa hình thức gắn miền và vai trò cho ba đối tượng trong hình.
 - **Sản phẩm học tập/kiểm tra:** Mã hóa đúng ô kề và giải thích vì sao biểu diễn chưa xác định được vị trí.
 - **Quyết định nguồn:** Thay ba thẻ bằng hình theo yêu cầu; giữ ngắn gọn cả ba khái niệm, không tạo trang thay thế cho trang biểu diễn bị bỏ.
+
+### L02-03-11 — Định nghĩa trạng thái, quan sát và biểu diễn
+
+Thời lượng: 3 phút. Nguồn: PPTX trang 14–16, 21; ký hiệu hàm biểu diễn bổ sung theo yêu cầu.
+
+- **Luận điểm:** $S_t$, $O_t$, $X_t$ là ba đối tượng khác nhau; biểu diễn được tính từ thông tin tác tử có trước khi chọn hành động.
+- **Nhu cầu và lý do tồn tại:** Hình thức hóa ví dụ trực quan bằng miền giá trị, định nghĩa và ánh xạ.
+- **Cách thể hiện và độ phù hợp năm 3:** Bảng ba hàng, công thức $X_t=f_t(O_{0:t},A_{0:t-1},R_{1:t})$ và quy ước dãy chỉ số; ghi chú nêu trường hợp đầu và miền hàm.
+- **Kết nối vào:** Hình trước cung cấp tọa độ, cảm biến ô kề và mã nhị phân để đối chiếu ba định nghĩa.
+- **Kết nối ra:** Mẫu dữ liệu, lịch sử và quỹ đạo tiếp theo xác định phạm vi các chuỗi, với $H_t$ vẫn là lịch sử trạng thái.
+- **Sản phẩm học tập/kiểm tra:** Phân biệt thông tin môi trường với dữ liệu tác tử dùng; nhận dạng mã nhị phân là trường hợp chỉ dùng quan sát hiện tại.
+- **Quyết định nguồn:** Thêm theo chỉ dẫn mới; không giả định quan sát luôn xác định, trạng thái tự có tính Markov hay biểu diễn khôi phục được trạng thái thật. Không khôi phục trang biểu diễn và trạng thái mê cung đã bỏ.
 
 ### L02-03-09 — Mẫu dữ liệu, lịch sử và quỹ đạo
 
@@ -306,7 +318,7 @@ Thời lượng: 3 phút. Nguồn: PPTX trang 17–18.
 
 ### L02-03-10 — Tính Markov có hạn chế khả năng mô hình hóa?
 
-Thời lượng: 5 phút. Nguồn: PPTX trang 17; mở rộng lịch sử bổ sung theo yêu cầu.
+Thời lượng: 4 phút. Nguồn: PPTX trang 17; mở rộng lịch sử bổ sung theo yêu cầu.
 
 - **Luận điểm:** Có thể mở rộng trạng thái bằng toàn bộ lịch sử, nhưng không bảo đảm biểu diễn gọn và học hiệu quả.
 - **Nhu cầu và lý do tồn tại:** Câu 3 kiểm tra lịch sử đầy đủ và cửa sổ hữu hạn.
@@ -318,7 +330,7 @@ Thời lượng: 5 phút. Nguồn: PPTX trang 17; mở rộng lịch sử bổ s
 
 ### L02-03-08 — Câu hỏi kiểm tra
 
-Thời lượng: 6 phút. Nguồn: Các khái niệm phần 3; PPTX 16–19, 25–27, hw02 bài 2.
+Thời lượng: 5 phút. Nguồn: Các khái niệm phần 3; PPTX 16–19, 25–27, hw02 bài 2.
 
 - **Luận điểm:** Kiểm tra mức quan sát, thông tin trạng thái và phạm vi chuỗi dữ liệu.
 - **Nhu cầu và lý do tồn tại:** Phân loại quan sát, bổ sung biến chìa khóa, nêu giới hạn lịch sử, phân biệt mẫu/lịch sử/quỹ đạo.

@@ -20,7 +20,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 
 ## Trạng thái triển khai
 
-Đã hoàn tất 7/7 phần: 41 trang, 120 phút; đủ năm báo cáo độc lập và kiểm định lại. Giới hạn rà trực quan Codex Slides được ghi trong review-log.md.
+Đã hoàn tất 7/7 phần: 42 trang, 120 phút; đủ năm báo cáo độc lập và kiểm định lại. Giới hạn rà trực quan Codex Slides được ghi trong review-log.md.
 
 ## Trang đích
 
@@ -37,6 +37,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-02-06` — Phản hồi trễ — PPTX trang 7–8 (phản hồi trễ), 11 (cờ)
 - `L02-02-07` — Câu hỏi kiểm tra — PPTX trang 27 (quiz); bài luyện suy ra từ trang 25–26 và hw02 bài 6, 10
 - `L02-03-02` — Trạng thái và quan sát — PPTX trang 16 (trạng thái/quan sát); phần biểu diễn ở trang 14-15 và 21.
+- `L02-03-11` — Định nghĩa trạng thái, quan sát và biểu diễn — PPTX trang 14–16, 21; ký hiệu hàm biểu diễn bổ sung theo yêu cầu
 - `L02-03-09` — Mẫu dữ liệu, lịch sử và quỹ đạo — PPTX trang 14–16; bổ sung theo yêu cầu, đặt sau trạng thái và quan sát
 - `L02-03-06` — Quan sát đầy đủ và một phần — PPTX trang 18 (đầy đủ) và trang 19 (một phần); hình full-partial-observation.svg từ trang 25-26.
 - `L02-03-04` — Tính Markov — PPTX trang 17 (Markov) và trang 18 (đầy đủ).
