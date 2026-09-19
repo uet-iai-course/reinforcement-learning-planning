@@ -1,6 +1,6 @@
 # Bài 03 — Dàn ý triển khai
 
-Trạng thái: đã triển khai phần 1–3/7 theo [kế hoạch chi tiết](detailed-slide-plan.md). Các phần sau vẫn là nội dung cũ cho đến lượt thay thế tương ứng.
+Trạng thái: đã triển khai phần 1–4/7 theo [kế hoạch chi tiết](detailed-slide-plan.md). Các phần sau vẫn là nội dung cũ cho đến lượt thay thế tương ứng.
 
 ## Mục tiêu và phạm vi
 
@@ -82,3 +82,15 @@ $P$ trong chuỗi Markov là ma trận; $P(s',r\mid s,a)$ trong MDP là xác su�
 - `L03-03-04`: Hai quỹ đạo, hai tổng thưởng.
 - `L03-03-05`: Giá trị của một trạng thái.
 - `L03-03-06`: Câu hỏi kiểm tra.
+
+## Phần 4
+
+- `L03-04-01`: Phương trình Bellman.
+- `L03-04-02`: Một bước và phần còn lại.
+- `L03-04-03`: Tách phần thưởng tích lũy.
+- `L03-04-04`: Từ tổng thưởng đến giá trị.
+- `L03-04-05`: Bellman cho quá trình phần thưởng Markov.
+- `L03-04-06`: Hệ Bellman ba trạng thái.
+- `L03-04-07`: Dạng ma trận và nghiệm.
+- `L03-04-08`: Điều kiện để giá trị hữu hạn.
+- `L03-04-09`: Câu hỏi kiểm tra.

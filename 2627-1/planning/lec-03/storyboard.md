@@ -1,6 +1,6 @@
 # Bài 03 — Storyboard triển khai
 
-Đã triển khai phần 1–3/7. Bảy phần và 120 phút theo [kế hoạch chi tiết](detailed-slide-plan.md); bản này ghi quyết định thể hiện thực tế. Các phần chưa triển khai dùng bản HTML cũ, không được tính là hoàn tất.
+Đã triển khai phần 1–4/7. Bảy phần và 120 phút theo [kế hoạch chi tiết](detailed-slide-plan.md); bản này ghi quyết định thể hiện thực tế. Các phần chưa triển khai dùng bản HTML cũ, không được tính là hoàn tất.
 
 ## Phần 1. Từ tương tác đến mô hình xác suất — 8 phút
 
@@ -378,3 +378,245 @@ Thời lượng: 3 phút. Vai trò: kiểm tra.
 **Nguồn:** PPTX34–40.
 
 **Quyết định thể hiện khi triển khai:** Ba câu bám sát ba đại lượng của phần: thưởng một bước, tổng mẫu, kỳ vọng. Dải thời gian nhỏ cho câu 2 giúp làm bài trực tiếp trên mặt slide mà không cần vẽ lại. Cầu nối sang phần 4: tổng G được viết lại thành quan hệ đệ quy giữa v(s) và v(s'). Bản triển khai sau rà: công thức dựng bằng KaTeX; SVG chỉ giữ nút, mũi tên và dữ liệu thưởng. Các lỗi hình và dấu được đối chiếu lại với ma trận phần2.
+
+## Phần 4. Phương trình Bellman — 24 phút
+
+Đầu vào: P, r, G và v. Đầu ra: lập hệ Bellman và kiểm tra nghiệm. Suy diễn được tách thành ba trang 04-03…05; sau đó áp dụng, viết ma trận và nêu điều kiện. Không dùng các thuật ngữ ánh xạ co, bán kính phổ hoặc chuỗi Neumann trước khi định nghĩa; chúng không thuộc tuyến chính.
+
+
+### L03-04-01 — Phương trình Bellman
+
+Thời lượng: 1 phút. Vai trò: mở phần.
+
+**Đầu vào:** G và v(s) cùng việc không thể liệt kê hết các quỹ đạo.
+
+**Nội dung trên slide:** Tiêu đề phần và câu: “Tính giá trị từ một bước chuyển và phần đường còn lại.”
+
+**Cách thể hiện:** Một nút hiện tại, hai nhánh kế tiếp và các phần đuôi được đóng thành hộp.
+
+**Giải thích và hình thức hóa:** Không đặt công thức kết quả ngay trên trang mở.
+
+**Kết nối:** Từ nhiều quỹ đạo ở phần 3 đến cách gộp phần tương lai.
+
+**Kiểm tra/ghi chú đáp án:** Chưa yêu cầu tính giá trị chưa biết.
+
+**Nguồn:** PPTX44.
+
+**Quyết định thể hiện khi triển khai:** Slide mở phần chỉ cần một câu dẫn và một hình trực giác: nút hiện tại, hai nhánh kế tiếp, phần đuôi gộp thành hộp. Hình này khớp đúng cấu trúc 'một bước + phần còn lại' mà phần 4 sẽ hình thức hóa, nên sinh viên năm 3 đã quen với đồ thị chuyển từ Bài 02 nhận ra ngay hộp đuôi chính là đại lượng cần đặt tên. Tiên quyết: định nghĩa G và v ở phần 3; cầu nối: từ nhiều quỹ đạo sang cách gộp phần tương lai. Bản cuối dùng hai hộp tương lai riêng, tránh gợi ý hai trạng thái có cùng giá trị. Nhãn xác suất khái quát được dành cho công thức ở04-05; hình mở chỉ thể hiện quan hệ phân nhánh.
+
+### L03-04-02 — Một bước và phần còn lại
+
+Thời lượng: 3 phút. Vai trò: trực giác trên ví dụ.
+
+**Đầu vào:** C3 tới Pass/Pub; thưởng -2 và xác suất0,6/0,4.
+
+**Nội dung trên slide:** Từ C3: nhận -2, rồi tới Pass với xác suất 0,6 hoặc Pub với xác suất 0,4; dùng $\gamma=0{,}9$.
+
+**Cách thể hiện:** Tách hình thành nhãn thưởng ngay và hai hộp “giá trị từ Pass”, “giá trị từ Pub”; không cho giá trị số chưa tính.
+
+**Giải thích và hình thức hóa:** Mỗi hộp đại diện kỳ vọng của toàn bộ phần còn lại. Bằng lời: giá trị tại C3 bằng -2 cộng 0,9 lần trung bình có trọng số của hai giá trị kế tiếp. Giữ các giá trị này là ẩn.
+
+**Kết nối:** Từ cách nhìn trên hình sang tách chính xác tổng G.
+
+**Kiểm tra/ghi chú đáp án:** Không gán 10 và 1 là nghiệm v của hai nút nếu chưa kiểm mô hình.
+
+**Nguồn:** PPTX35,44–46.
+
+**Quyết định thể hiện khi triển khai:** Hình tách nhánh C3 thành: nhãn thưởng ngay (-2) đặt trên cạnh ra khỏi C3, hai hộp 'giá trị từ Pass' và 'giá trị từ Pub' để trống số. Cách này buộc sinh viên nhìn thấy hai thành phần: phần thưởng biết trước và hai giá trị ẩn, đúng cấu trúc mà Bellman sẽ viết thành công thức. Không cho giá trị số vào hộp để tránh ấn tượng nghiệm được gán tùy ý. Tiên quyết: ma trận chuyển của ví dụ sinh viên ở Bài 02; cầu nối: từ đọc hình sang tách tổng G. Nhãn thưởng đặt dưới C3, nhất quán với quy ước thưởng khi rời trạng thái ởphần3; xác suất ở hai cạnh, mỗi trạng thái kế tiếp có hộp giá trị riêng.
+
+### L03-04-03 — Tách phần thưởng tích lũy
+
+Thời lượng: 3 phút. Vai trò: suy diễn 1: đồng nhất thức.
+
+**Đầu vào:** Định nghĩa tổng thưởng và giá trị phần đuôi.
+
+**Nội dung trên slide:** Hiện lần lượt ba dòng:
+
+$$
+\begin{aligned}
+G_t&=R_{t+1}+\gamma R_{t+2}+\gamma^2R_{t+3}+\cdots\\
+&=R_{t+1}+\gamma\big(R_{t+2}+\gamma R_{t+3}+\cdots\big)\\
+&=R_{t+1}+\gamma G_{t+1}.
+\end{aligned}
+$$
+
+**Cách thể hiện:** Dải thời gian; khoanh phần đuôi cùng màu với G ở dòng cuối.
+
+**Giải thích và hình thức hóa:** Dòng 1 là định nghĩa; dòng 2 đặt gamma ra ngoài; dòng 3 nhận diện tổng bắt đầu ở t+1. Với lượt hữu hạn, dừng tại T và đặt G_T=0. Đây là đẳng thức trên mỗi quỹ đạo, không cần Markov, tính dừng hoặc phép lấy kỳ vọng.
+
+**Kết nối:** Sang bước lấy kỳ vọng theo trạng thái hiện tại.
+
+**Kiểm tra/ghi chú đáp án:** Số hạng đầu của $G_{t+1}$ là $R_{t+2}$, không phải $R_{t+1}$.
+
+**Nguồn:** PPTX44; Silver PDF19.
+
+**Quyết định thể hiện khi triển khai:** Ba dòng xuất hiện lần lượt như fragment, mỗi dòng một phép biến đổi duy nhất. Trên dải thời gian, phần đuôi từ R_{t+2} trở đi được khoanh cùng màu với G ở dòng cuối để sinh viên thấy đẳng thức thứ ba là nhận diện, không phải phép tính mới. Cách trình bày dòng-từng-dòng phù hợp năm 3 vì mỗi bước chỉ dùng một quy tắc đại số; tiên quyết là định nghĩa G ở phần 3, cầu nối là bước lấy kỳ vọng theo trạng thái hiện tại.
+
+### L03-04-04 — Từ tổng thưởng đến giá trị
+
+Thời lượng: 3 phút. Vai trò: suy diễn 2: tuyến tính và kỳ vọng lặp.
+
+**Đầu vào:** Đẳng thức tách G từ04-03; định nghĩa v và r.
+
+**Nội dung trên slide:** Hai dòng chính:
+
+$$
+\begin{aligned}
+v(s)&=\mathbb E[R_{t+1}+\gamma G_{t+1}\mid S_t=s]\\
+&=r(s)+\gamma\mathbb E[G_{t+1}\mid S_t=s].
+\end{aligned}
+$$
+
+Sau đó khai triển phần tương lai:
+
+$$
+\mathbb E[G_{t+1}\mid S_t=s]
+=\mathbb E\!\left[\mathbb E[G_{t+1}\mid S_t,S_{t+1}]\mid S_t=s\right].
+$$
+
+**Cách thể hiện:** Dòng suy diễn xuất hiện lần lượt. Bên phải là nút s phân nhánh theo S_(t+1), khớp với kỳ vọng trong/ngoài. Không dồn cả chứng minh lên một lần hiện.
+
+**Giải thích và hình thức hóa:** Dòng đầu thế kết quả trước vào định nghĩa v. Dòng sau dùng tính tuyến tính và định nghĩa r(s). Dòng cuối dùng kỳ vọng lặp: trung bình trong từng nhóm có cùng trạng thái kế tiếp, rồi trung bình giữa các nhóm. Không giả định thưởng độc lập với trạng thái kế tiếp.
+
+**Kết nối:** Kỳ vọng bên trong sẽ được nhận diện là giá trị của trạng thái kế tiếp.
+
+**Kiểm tra/ghi chú đáp án:** Notes giải thích điều kiện tính được kỳ vọng đã nêu ở phần 3; chỉ xét các biến cố có xác suất dương khi viết theo từng giá trị.
+
+**Nguồn:** PPTX44–45; bổ sung bước kỳ vọng lặp.
+
+**Quyết định thể hiện khi triển khai:** Hai khối công thức tách thành hai bước: khối đầu là thế kết quả và tuyến tính, khối sau là kỳ vọng lặp. Bên phải nên hình dung nút s phân nhánh theo S_{t+1}, khớp với cấu trúc trung bình-trong-nhóm rồi trung bình-giữa-nhóm của kỳ vọng lặp. Không dồn cả chứng minh lên một lần hiện; các dòng là fragment. Tiên quyết: định nghĩa v, r ở phần 3 và đẳng thức tách G ở trang trước; cầu nối: nhận diện kỳ vọng trong là v(s').
+
+### L03-04-05 — Bellman cho quá trình phần thưởng Markov
+
+Thời lượng: 3 phút. Vai trò: suy diễn 3: Markov và tổng theo trạng thái.
+
+**Đầu vào:** Biểu thức kỳ vọng lặp từ04-04; Markov và quy luật không đổi theo thời gian.
+
+**Nội dung trên slide:** Với chuyển tiếp có thể xảy ra:
+
+$$
+\mathbb E[G_{t+1}\mid S_t=s,S_{t+1}=s']=v(s').
+$$
+
+Suy ra lần lượt:
+
+$$
+\begin{aligned}
+v(s)&=r(s)+\gamma\mathbb E[v(S_{t+1})\mid S_t=s]\\
+&=r(s)+\gamma\sum_{s'}P_{ss'}v(s').
+\end{aligned}
+$$
+
+**Cách thể hiện:** Thay hai hộp tương lai ở 04-02 bằng v(Pass), v(Pub); ghi nhãn “Markov” cạnh phép thay và “lấy trung bình” cạnh dấu tổng.
+
+**Giải thích và hình thức hóa:** Tính Markov của quá trình có thưởng cho phép bỏ thông tin trạng thái trước; quy luật không đổi theo thời gian cho phép dùng cùng hàm v tại t và t+1. Trở lại ví dụ: v(C3)=-2+0,9[0,6v(Pass)+0,4v(Pub)]. Đây là quan hệ giữa các giá trị chưa biết, không phải phép gán đáp số tùy ý.
+
+**Kết nối:** Mỗi trạng thái cho một phương trình; tập các phương trình tạo thành hệ.
+
+**Kiểm tra/ghi chú đáp án:** Sinh viên chỉ được giả thiết dùng tại từng dấu bằng; không nói “do Markov” cho bước đặt gamma ra ngoài tổng.
+
+**Nguồn:** PPTX45–46.
+
+**Quyết định thể hiện khi triển khai:** Hai hộp 'giá trị từ Pass', 'giá trị từ Pub' ở trang 04-02 được thay bằng v(Pass), v(Pub); nhãn 'Markov' đặt cạnh phép thay và 'lấy trung bình' cạnh dấu tổng để mỗi giả thiết gắn với đúng vị trí sử dụng. Cách gắn nhãn này giúp sinh viên năm 3 phân biệt vai trò của từng giả thiết thay vì gộp chung thành 'do Markov'. Tiên quyết: định nghĩa MRP và ma trận P; cầu nối: mỗi trạng thái một phương trình, dẫn tới hệ ở trang sau.
+
+### L03-04-06 — Hệ Bellman ba trạng thái
+
+Thời lượng: 3 phút. Vai trò: ứng dụng vào dữ liệu đã biết.
+
+**Đầu vào:** Bellman MRP và ma trận ba trạng thái đã đọc ở02-06.
+
+**Nội dung trên slide:** Dùng lại ma trận ở 02-06; thêm $r=(1,-1,0)^{\mathsf T}$, $\gamma=0{,}9$:
+
+$$
+\begin{aligned}
+v_1&=1+0{,}9(0{,}5v_1+0{,}5v_2),\\
+v_2&=-1+0{,}9(0{,}2v_1+0{,}3v_2+0{,}5v_3),\\
+v_3&=0+0{,}9v_3=0.
+\end{aligned}
+$$
+
+**Cách thể hiện:** Hiện một hàng P rồi phương trình tương ứng; nhãn v_i=v(s_i) trước khi rút gọn chỉ số.
+
+**Giải thích và hình thức hóa:** Quy ước s3 kết thúc với thưởng 0 sau đó. Việc biểu diễn tự lặp làm hàng cuối hợp lệ. Hàng 1 chứa v1 ở hai vế vì có cạnh tự lặp, không phải lỗi.
+
+**Kết nối:** Gom hệ thành dạng ma trận rồi giải.
+
+**Kiểm tra/ghi chú đáp án:** Thử để trống hệ số trước v3 ở hàng 2; đáp án 0,45.
+
+**Nguồn:** hw02 bài3; PPTX47.
+
+**Quyết định thể hiện khi triển khai:** Mỗi hàng của P được hiện kèm phương trình tương ứng để sinh viên thấy sự khớp từng hệ số; nhãn v_i = v(s_i) đặt trước khi rút gọn chỉ số. Bài ba trạng thái là ví dụ tính toán nhỏ đủ để giải hệ bằng tay, không thêm ví dụ lớn thứ ba. Tiên quyết: đọc ma trận chuyển ở Bài 02 và phương trình Bellman vừa suy diễn; cầu nối: gom hệ thành dạng ma trận.
+
+### L03-04-07 — Dạng ma trận và nghiệm
+
+Thời lượng: 3 phút. Vai trò: hình thức hóa và giải hệ.
+
+**Đầu vào:** Ba phương trình từ04-06; đại số ma trận và giải hệ tuyến tính.
+
+**Nội dung trên slide:** Với $v,r\in\mathbb R^n$, $I$ là ma trận đơn vị:
+
+$$v=r+\gamma Pv\quad\Longrightarrow\quad(I-\gamma P)v=r.$$
+
+Ví dụ ba trạng thái rút còn:
+
+$$0{,}55v_1-0{,}45v_2=1,\qquad -0{,}18v_1+0{,}73v_2=-1.$$
+
+$$v_1=\frac{560}{641}\approx0{,}874,\quad v_2=-\frac{740}{641}\approx-1{,}154,\quad v_3=0.$$
+
+**Cách thể hiện:** Nối từng dòng ma trận với phương trình ở trang trước; giữ kích thước chữ. Các bước khử ẩn chi tiết ở notes và buổi chữa bài, không đặt thêm ma trận 7×7.
+
+**Giải thích và hình thức hóa:** Chuyển gamma Pv sang trái, đặt v làm nhân tử. Với gamma<1, có thể viết nghiệm lý thuyết (I-gamma P)^(-1)r; khi tính toán giải hệ, không cần tạo ma trận nghịch đảo. Trong ghi chú hoặc buổi chữa bài, kiểm nghiệm bằng thay lại cả hai phương trình. Chi phí giải hệ đặc O(n^3), nên dành mô hình lớn cho phương pháp lặp ở Bài 04.
+
+**Kết nối:** Nghiệm hữu hạn phụ thuộc giả thiết, không chỉ thao tác biến đổi.
+
+**Kiểm tra/ghi chú đáp án:** Notes: định thức hệ hai ẩn 0,3205; các tử số 0,28 và -0,37.
+
+**Nguồn:** PPTX47–48; hw02 bài3, nghiệm tính lại.
+
+**Quyết định thể hiện khi triển khai:** Dòng ma trận được nối trực tiếp với ba phương trình ở trang trước để sinh viên thấy phép gom hệ không thêm thông tin mới. Các bước khử ẩn chi tiết để ở notes và buổi chữa bài, giữ mặt slide gọn; không đặt thêm ma trận 7×7. Tiên quyết: đại số ma trận và giải hệ tuyến tính đã học; cầu nối: điều kiện để (I - gamma P) khả nghịch ở trang sau.
+
+### L03-04-08 — Điều kiện để giá trị hữu hạn
+
+Thời lượng: 2 phút. Vai trò: giới hạn và kiểm tra giả thiết.
+
+**Đầu vào:** Hệ Bellman và nghiệm ví dụ; tổng hình học.
+
+**Nội dung trên slide:** Nếu $|R_{t+1}|\le M$ và $0\le\gamma<1$:
+
+$$|G_t|\le\frac{M}{1-\gamma}.$$
+
+Với $\gamma=1$: ví dụ kết thúc có kỳ vọng thời gian kết thúc hữu hạn và thưởng bị chặn vẫn cho giá trị hữu hạn.
+
+**Cách thể hiện:** Hai khung riêng: gamma<1 có cận tổng hình học; gamma=1 cần điều kiện khác. Ví dụ vòng lặp nhận +1 cho thấy tổng không chiết khấu phân kỳ.
+
+**Giải thích và hình thức hóa:** Với gamma<1, P chuẩn hóa theo hàng làm I-gamma P khả nghịch. Ghi chú chứng minh ngắn: nếu d=gamma Pd thì max|d|≤gamma max|d| nên d=0; ma trận vuông có hạt nhân chỉ gồm 0 thì khả nghịch. Với gamma=1, không nghịch đảo toàn bộ I-P của chuỗi có trạng thái hấp thụ; áp v(terminal)=0 và giải trên các trạng thái chưa kết thúc có tính quá độ. Điều kiện kết thúc hữu hạn kỳ vọng là điều kiện đủ, không phải điều kiện cần cho mọi hàm thưởng.
+
+**Kết nối:** Phần 5 sẽ thêm hành động nhưng giữ cách đánh giá bằng Bellman.
+
+**Kiểm tra/ghi chú đáp án:** Vòng lặp +1, gamma=1 phân kỳ; trạng thái hấp thụ không mặc nhiên là kết thúc nếu vẫn sinh thưởng.
+
+**Nguồn:** PPTX36–38,48; bổ sung điều kiện giải hệ.
+
+**Quyết định thể hiện khi triển khai:** Hai khung riêng tách hai chế độ: gamma < 1 có cận tổng hình học, gamma = 1 cần điều kiện khác. Ví dụ vòng lặp +1 đặt cạnh khung gamma = 1 để điều kiện không còn là phát biểu trừu tượng. Trình bày hai khung song song giúp sinh viên năm 3 thấy ranh giới áp dụng của nghiệm (I - gamma P)^{-1} r vừa lập. Tiên quyết: tổng hình học và khái niệm trạng thái hấp thụ; cầu nối: phần 5 thêm hành động, giữ cách đánh giá bằng Bellman.
+
+### L03-04-09 — Câu hỏi kiểm tra
+
+Thời lượng: 3 phút. Vai trò: kiểm tra suy luận.
+
+**Đầu vào:** Suy diễn Bellman, hệ ba trạng thái và điều kiện hữu hạn.
+
+**Nội dung trên slide:** 1. Bước nào cần Markov trong suy diễn Bellman?
+2. Viết phương trình cho s2 của bài ba trạng thái.
+3. Vòng lặp thưởng +1, gamma=1 có giá trị hữu hạn không?
+
+**Cách thể hiện:** Ba câu đánh số; câu 2 kèm hàng P và r(s2) để không cần quay slide.
+
+**Giải thích và hình thức hóa:** Kiểm tra lý do của công thức và điều kiện áp dụng, không chỉ chép lại định nghĩa.
+
+**Kết nối:** Từ đánh giá một quá trình sang tác động của việc chọn hành động.
+
+**Kiểm tra/ghi chú đáp án:** 1. Thay kỳ vọng tương lai có điều kiện bằng v(s′). 2. Như 04-06. 3. Không.
+
+**Nguồn:** PPTX44–48; hw02 bài3.
+
+**Quyết định thể hiện khi triển khai:** Ba câu đánh số; câu 2 kèm hàng P và r(s2) ngay trên slide để không cần quay lại trang trước. Các câu kiểm tra lý do của từng dấu bằng và điều kiện áp dụng, không chỉ chép định nghĩa. Tiên quyết: toàn bộ suy diễn phần 4; cầu nối: từ đánh giá một quá trình sang tác động của việc chọn hành động ở phần 5.

@@ -482,3 +482,22 @@ Kiểm tra Chromium bản nháp: 12 lượt (6slide × 1280×720/390×844), khô
 - Sai khác thể hiện: bỏ số mũchiếtkhấu và công thức khỏiSVG, giữ dữ liệu thưởng; công thứcKaTeX nằm trongHTML. Trang hai quỹ đạo giữ hai dòng tính rút gọn trên mặt; các tích chiếtkhấu đầy đủ ởnotes, tránh tràn trang. Định nghĩaGamma[0,1] đi cùng điều kiện đủ hữu hạn trongnotes, được phát triển ởphần4. TổngGt đã có ởBài02 nên được nhắc ngắn, không phải khái niệm mới đột ngột.
 - Tái rà `lec03-final-03-math` (DeepSeekV4Flash) và `lec03-final-03-flow` (GLM5.3Flash) đềuPASS: ma trận/13cạnh, thưởng−2/−1/+1/+10/0, tổng−2,25/−3,125, quiz−3, phân biệt r/R/G/v, điều kiệnGamma1 và mạch vào–ra. Runtime requested=observed, providerOpenRouter.
 - Kiểm định: 12lượt render không tràn biên, lỗiKaTeX, ảnhhỏng, HTTP/JavaScript; xem trực tiếp đủ6ảnh rộng. Phân tích57biểu thứcKaTeX trong cả mặt vànotes của phần1–3 đều thành công. Tự kiểm no-ai-slop bỏ câu tu từ, điều hành, chỉ dẫn tác giả; Quill xác nhận ví dụ thưởng→định nghĩa→hai mẫu→kỳ vọng→kiểmtra→Bellman.
+
+### Phần 4 — Bellman cho quá trình phần thưởng Markov, 20-09-2026
+
+- Bản nháp gồm 9 slide và 2 SVG. Chuỗi suy diễn giữ riêng: tách tổng trên từng quỹ đạo → tuyến tính và kỳ vọng lặp → dùng Markov và quy luật không đổi theo thời gian → hệ phương trình → nghiệm. Phân tích cách thể hiện từng slide nằm trong storyboard.
+- Năm vai độc lập: `lec03-part-04-{student,rl,math,academic,flow}`. Sinh viên, học thuật, mạch dùng GLM5.3Flash; chuyên môn và toán dùng DeepSeekV4Flash. Lượt toán đầu dừng do API vượt 120 giây; đã bỏ SVG và phân tích thiết kế, giữ đủ body/notes/giả thiết rồi thử lại một lần cùng mô hình (`lec03-part-04-math-retry`), hoàn tất. Các kết quả hợp lệ có requested_model=observed_model, provider=OpenRouter.
+
+| Vai | Mức độ sau đối chiếu | Slide | Bằng chứng và quyết định |
+|---|---|---|---|
+| Sinh viên | trung bình | 04-02 | Notes chứa chỉ dẫn “không được gán”; thay bằng lời giải thích phân biệt thưởng một bước và giá trị trạng thái. |
+| Chuyên môn | trung bình | 04-04/05 | Đưa giả thiết Markov và quy luật không đổi lên mặt slide; nói rõ khả tích trong bước kỳ vọng lặp. Bác hai nhận định “nghiêm trọng”: điều kiện đủ không cần là điều kiện cần; ví dụ trạng thái hấp thụ có thưởng khác 0 không mâu thuẫn với ví dụ riêng có thưởng 0. Bản cuối giải thích rõ trường hợp s3 và điều kiện biên. |
+| Toán, lượt thử lại | không có lỗi | 04-03–09 | Xác nhận tách tổng, kỳ vọng lặp, Bellman, hệ ba trạng thái, nghiệm và điều kiện đủ hữu hạn. |
+| Học thuật | nhẹ | 04-02/08 | Giữ nhãn thưởng dưới C3 cho nhất quán với phần 3, cập nhật mô tả thực tế; mở rộng chứng minh khả nghịch trong notes bằng bất đẳng thức từng thành phần. |
+| Mạch viết | nhẹ | 04-01/02 | Vai trò mở: gom tương lai; vào từ định nghĩa giá trị, ra ví dụ C3 và suy diễn. Điều phối viên tách hộp tương lai thành hai hộp riêng để tránh gợi ý hai trạng thái chung giá trị. Không thêm công thức ở slide mở. |
+
+- Writer chỉnh sửa riêng `lec03-fix-04` (GLM5.3Flash, requested=observed, OpenRouter) vá notes04-01/02 sau năm báo cáo. Điều phối viên sửa tuần tự hình, tham chiếu nhầm “Bài02” thành “phần2”, nhãn Câu hỏi và thẻ đóng HTML ở04-07. Không sửa CSS chung.
+- Tái rà `lec03-final-04-math` và `lec03-final-04-flow` xác nhận suy diễn, nghiệm, điều kiện và hai hộp tương lai đúng; không còn lỗi bắt buộc. Các đề xuất đổi tiếng Việt thành từ tiếng Slovakia trong báo cáo toán là sai, không áp dụng. Vai mạch ghi thiếu bằng chứng về phần sau trong gói tái rà; phần5 mở bằng lựa chọn hành động từ C2 và được rà cùng hai slide cuối phần4.
+- Đã tự tính nghiệm $(560/641,-740/641,0)$ và thay lại hệ; 117 biểu thức KaTeX của phần1–4 ở thời điểm kiểm tra đều phân tích thành công. Bản cuối diễn đạt $0\le\gamma<1$ là điều kiện bảo đảm nghiệm, không khẳng định đây là điều kiện cần.
+- Kiểm định hiển thị: 18 lượt cho đủ 9 ID, mỗi ID ở1280×720 và390×844; không tràn, lỗi KaTeX, ảnh hỏng, HTTP hay JavaScript. Xem ảnh toàn phần và ảnh lớn của các trang hình/công thức; kiểm bàn phím cả hai kích thước. Đã sửa phép kiểm tra: màn hình hẹp dùng chế độ cuộn của RevealJS, cuộn tới phần tử và xác nhận ID trước khi chụp, thay vì tin chỉ số chuyển trang. Báo cáo ban đầu có ID lặp không được dùng làm bằng chứng đủ trang.
+- Tự kiểm no-ai-slop: nội dung và notes là giải thích học thuật, không lời ca tụng, câu hỏi tu từ hoặc chỉ dẫn tác giả. Rà theo Quill giữ mạch từ kỳ vọng tới phương trình, không đưa thuật toán tối ưu vào phần này. Sai khác thể hiện nằm ở hai hộp tương lai, nhãn thưởng dưới nút và giả thiết hiển thị; không thay đổi các số liệu nguồn.

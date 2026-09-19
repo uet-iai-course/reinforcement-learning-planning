@@ -144,13 +144,76 @@
 </section>
 
 <section>
-<section data-slide-id="C00"><h2>Nhìn trước một bước tại C2</h2><p>Giả sử giá trị tiếp tục tạm thời là $\tilde v(\text{C3})=4$, $\tilde v(\text{Sleep})=0$ và $\gamma=0{,}9$.</p><div class="math-large">$$-2+0{,}9\,[0{,}8\times4+0{,}2\times0]=0{,}88.$$</div><div class="box">Thưởng tức thời cộng trung bình chiết khấu của giá trị tiếp tục.</div><aside class="notes">Đây là phép nhìn trước một bước với các giá trị tạm thời, chưa phải nghiệm. Ví dụ tạo nhu cầu cho phương trình tổng quát ở các trang sau.<p class="note-source"><strong>Nguồn:</strong> Xây dựng từ PPTX nguồn, trang 33, 35, 44–46.</p></aside></section>
-<section data-slide-id="C01"><h2>Phân rã một bước</h2><div class="math-large">$$G_t=R_{t+1}+\gamma G_{t+1}.$$</div><img class="figure small" src="img/lec-03/bellman-backup.svg" alt="Sao lưu Bellman từ một trạng thái tới ba trạng thái kế tiếp."/><aside class="notes">Đẳng thức trên đúng theo định nghĩa phần thưởng tích lũy. Lấy kỳ vọng có điều kiện theo trạng thái hiện tại tạo phương trình Bellman.<p class="note-source"><strong>Nguồn:</strong> PPTX nguồn, trang 44–46.</p></aside></section>
-<section data-slide-id="C02"><h2>Bellman kỳ vọng cho MRP</h2><div class="math-large">$$v(s)=r(s)+\gamma\sum_{s'\in\mathcal S}P_{ss'}v(s').$$</div><p>Mỗi trạng thái tạo một phương trình; tổng là trung bình theo trạng thái kế tiếp.</p><aside class="notes">Phương trình dùng tính Markov và quy ước phần thưởng đã nêu. Không có phép cực đại vì MRP không có hành động.<p class="note-source"><strong>Nguồn:</strong> PPTX nguồn, trang 44–46.</p></aside></section>
-<section data-slide-id="C03"><h2>Từ từng trạng thái đến hệ tuyến tính</h2><div class="math-large">$$v=r+\gamma Pv,\qquad (I-\gamma P)v=r.$$</div><p>Với $v,r\in\mathbb R^n$ và $P\in\mathbb R^{n\times n}$.</p><div class="check"><strong>Câu hỏi:</strong> kích thước của $Pv$ là gì?</div><aside class="notes">$Pv$ thuộc $\mathbb R^n$. Cầu nối từ phương trình theo trạng thái sang dạng véc-tơ phụ thuộc việc giữ nguyên thứ tự trạng thái.<p class="note-source"><strong>Nguồn:</strong> PPTX nguồn, trang 47.</p></aside></section>
-<section data-slide-id="C04"><h2>Hai điều kiện giải</h2><div class="grid2"><div class="card"><h3>$0\le\gamma<1$</h3><p>$$v=(I-\gamma P)^{-1}r.$$</p><p>$I-\gamma P$ khả nghịch; nghiệm duy nhất.</p></div><div class="card"><h3>$\gamma=1$</h3><p>Đặt biên tại trạng thái kết thúc và yêu cầu kết thúc gần như chắc chắn với kỳ vọng thời gian kết thúc hữu hạn.</p></div></div><aside class="notes">$Q$ là ma trận chuyển giới hạn trên các trạng thái chưa kết thúc khi gamma bằng một; $\rho(\cdot)$ là bán kính phổ, tức giá trị riêng có mô-đun lớn nhất. Vì mọi giá trị riêng của $\gamma P$ có mô-đun không vượt $\gamma$, ta có $\rho(\gamma P)\le\gamma<1$, nên $I-\gamma P$ khả nghịch. Một điều kiện đủ để kỳ vọng phần thưởng tích lũy hữu hạn khi gamma bằng một là: kết thúc gần như chắc chắn, thời gian kết thúc có kỳ vọng hữu hạn và phần thưởng bị chặn.<p class="note-source"><strong>Nguồn:</strong> PPTX nguồn, trang 47–48; bổ sung điều kiện chính xác.</p></aside></section>
-<section data-slide-id="C05"><h2>Hai nghiệm Student</h2><p>Thứ tự $(\text{C1,C2,C3,Pass,Pub,Facebook,Sleep})$; $v(\text{Sleep})=0$ ở cả hai trường hợp.</p><div class="grid2"><div class="card"><h3>$\gamma=0{,}9$</h3><p>$$\begin{aligned}(&-5{,}013,\ 0{,}943,\ 4{,}087,\\&10,\ 1{,}908,\ -7{,}638,\ 0)^{\mathsf T}\end{aligned}$$</p></div><div class="card"><h3>$\gamma=1$</h3><p>$$\begin{aligned}(&-12{,}543,\ 1{,}457,\ 4{,}321,\\&10,\ 0{,}802,\ -22{,}543,\ 0)^{\mathsf T}\end{aligned}$$</p></div></div><aside class="notes">Hai nghiệm chỉ xuất hiện sau định nghĩa Bellman và điều kiện giải. Cột gamma bằng một dùng biên $v(\text{Sleep})=0$ rồi giải hệ con trên các trạng thái chưa kết thúc; ma trận $I-P$ toàn cục suy biến. Nghiệm gamma 0,9 đầy đủ: $(-5{,}012729,\ 0{,}942655,\ 4{,}087021,\ 10,\ 1{,}908392,\ -7{,}637608,\ 0)$. Nghiệm chính xác khi gamma bằng một: $(-1016/81,\ 118/81,\ 350/81,\ 10,\ 65/81,\ -1826/81,\ 0)^{\mathsf T}$.<p class="note-source"><strong>Nguồn:</strong> PPTX nguồn, trang 33, 35, 42–43; nghiệm tính lại.</p></aside></section>
-<section data-slide-id="C06"><h2>Giải trực tiếp có giới hạn</h2><ul><li>Khử Gauss trên ma trận đặc tốn $O(n^3)$ phép toán.</li><li>Lưu ma trận đặc tốn $O(n^2)$ bộ nhớ.</li><li>Không gian lớn cần khai thác độ thưa hoặc phương pháp lặp.</li></ul><div class="check"><strong>Câu hỏi:</strong> khi $\gamma=1$, cần kiểm tra gì trước khi giải hệ con?</div><aside class="notes">Đáp án: xác định trạng thái kết thúc, đặt giá trị biên và kiểm tra tập chưa kết thúc là quá độ; điều kiện thực hành đủ là kết thúc gần như chắc chắn với kỳ vọng thời gian hữu hạn. Không dạy thuật toán lặp cụ thể ở đây.<p class="note-source"><strong>Nguồn:</strong> PPTX nguồn, trang 48.</p></aside></section>
+<section data-slide-id="L03-04-01">
+<h2>Phương trình Bellman</h2>
+<p>Tính giá trị từ một bước chuyển và phần đường còn lại.</p><img class="figure" src="img/lec-03/part-04-bellman-mo-dau.svg" alt="Một trạng thái hiện tại, hai trạng thái kế tiếp, mỗi trạng thái có một phần tương lai riêng"/>
+<aside class="notes"><p>Định nghĩa giá trị đòi hỏi xét tổng thưởng trên tất cả các quỹ đạo. Ta có thể gom các quỹ đạo theo trạng thái kế tiếp: nhận phần thưởng của bước hiện tại, rồi tính giá trị của phần đường còn lại.</p><p>Mỗi trạng thái kế tiếp có một giá trị riêng. Lấy trung bình các giá trị này theo xác suất chuyển và nhân hệ số chiết khấu cho ta đóng góp của tương lai.</p><p class="note-source">Nguồn: PPTX44.</p></aside>
+</section>
+<section data-slide-id="L03-04-02">
+<h2>Một bước và phần còn lại</h2>
+<p>Bước rời C3 nhận $-2$; hệ số chiết khấu $\gamma=0{,}9$.</p><img class="figure" src="img/lec-03/part-04-c3-tach-nhanh.svg" alt="C3 nhận thưởng -2 khi rời trạng thái; chuyển tới Pass với xác suất 0,6 hoặc Pub với xác suất 0,4; mỗi nơi có một giá trị chưa biết"/><p class="caption">Mỗi hộp là kỳ vọng của tổng thưởng tính từ trạng thái tương ứng.</p>
+<aside class="notes"><p>Bước rời C3 nhận phần thưởng $-2$, rồi tới Pass với xác suất $0{,}6$ hoặc Pub với xác suất $0{,}4$. Hai hộp biểu diễn $v(\text{Pass})$ và $v(\text{Pub})$, tức kỳ vọng tổng thưởng tính từ từng trạng thái đó.</p><p>Với $\gamma=0{,}9$, giá trị tại C3 bằng $-2$ cộng $0{,}9$ lần trung bình có trọng số của hai giá trị kế tiếp. Thưởng một bước và giá trị trạng thái là hai đại lượng khác nhau; các nhãn thưởng $10$ và $1$ chưa đủ để xác định cả hai giá trị này.</p><p class="note-source">Nguồn: PPTX35, 44–46.</p></aside>
+</section>
+<section data-slide-id="L03-04-03">
+<h2>Tách phần thưởng tích lũy</h2>
+<div class="math-large">$$
+\begin{aligned}
+G_t&=R_{t+1}+\gamma R_{t+2}+\gamma^2R_{t+3}+\cdots\\
+&=R_{t+1}+\gamma\big(R_{t+2}+\gamma R_{t+3}+\cdots\big)\\
+&=R_{t+1}+\gamma G_{t+1}.
+\end{aligned}
+$$</div><p class="caption">Dòng 1: định nghĩa. Dòng 2: đặt $\gamma$ ra ngoài. Dòng 3: nhận diện tổng bắt đầu ở $t+1$.</p>
+<aside class="notes">Dòng 1 là định nghĩa tổng thưởng tích lũy. Dòng 2 chỉ đặt gamma làm thừa số chung: gamma nhân với (R_{t+2} + gamma R_{t+3} + ...) trả lại đúng các lũy thừa gamma, gamma bình phương. Dòng 3 nhận diện biểu thức trong ngoặc là tổng thưởng bắt đầu từ thời điểm t+1, tức G_{t+1}. Với lượt hữu hạn, dãy dừng tại T và đặt G_T = 0. Đây là đẳng thức đúng trên mỗi quỹ đạo riêng lẻ, không cần tính Markov, không cần tính dừng, không cần phép lấy kỳ vọng. Số hạng đầu của G_{t+1} là R_{t+2}, không phải R_{t+1} — sai sót thường gặp khi viết lại dòng 3. Nguồn: PPTX44; Silver PDF19.</aside>
+</section>
+<section data-slide-id="L03-04-04">
+<h2>Từ tổng thưởng đến giá trị</h2>
+<div class="math-large">$$
+\begin{aligned}
+v(s)&=\mathbb E[R_{t+1}+\gamma G_{t+1}\mid S_t=s]\\
+&=r(s)+\gamma\,\mathbb E[G_{t+1}\mid S_t=s].
+\end{aligned}
+$$</div><div class="math-large">$$
+\mathbb E[G_{t+1}\mid S_t=s]
+=\mathbb E\!\left[\mathbb E[G_{t+1}\mid S_t,S_{t+1}]\mid S_t=s\right].
+$$</div><p class="caption">Kỳ vọng lặp: trung bình trong từng nhóm có cùng trạng thái kế tiếp, rồi trung bình giữa các nhóm.</p>
+<aside class="notes">Dòng đầu thế kết quả G_t = R_{t+1} + gamma G_{t+1} vào định nghĩa v(s) = E[G_t | S_t = s]. Dòng sau dùng tính tuyến tính của kỳ vọng và định nghĩa r(s) = E[R_{t+1} | S_t = s]. Dòng cuối là kỳ vọng lặp: kỳ vọng của G_{t+1} khi biết S_t = s được tính bằng cách, trong mỗi nhóm các quỹ đạo có cùng trạng thái kế tiếp S_{t+1}, lấy trung bình theo phần còn lại của quỹ đạo, rồi lấy trung bình giữa các nhóm với trọng số là xác suất chuyển. Không cần giả định thưởng độc lập với trạng thái kế tiếp. Các phép lấy kỳ vọng trên sử dụng giả thiết tổng thưởng khả tích. Khi viết theo từng giá trị, chỉ xét các biến cố điều kiện có xác suất dương. Kỳ vọng bên trong sẽ được nhận diện là giá trị của trạng thái kế tiếp ở trang sau. Nguồn: PPTX44–45; bổ sung bước kỳ vọng lặp.</aside>
+</section>
+<section data-slide-id="L03-04-05">
+<h2>Bellman cho quá trình phần thưởng Markov</h2>
+<p>Quá trình có thưởng thỏa Markov, quy luật không đổi theo thời gian:</p><div class="math-large">$$\mathbb E[G_{t+1}\mid S_t=s,\,S_{t+1}=s']=v(s').$$</div><div class="math-large">$$
+\begin{aligned}
+v(s)&=r(s)+\gamma\,\mathbb E[v(S_{t+1})\mid S_t=s]\\
+&=r(s)+\gamma\sum_{s'}P_{ss'}\,v(s').
+\end{aligned}
+$$</div><p class="caption">Trở lại ví dụ: $v(\text{C3})=-2+0{,}9\,[\,0{,}6\,v(\text{Pass})+0{,}4\,v(\text{Pub})\,]$.</p>
+<aside class="notes">Bước thay E[G_{t+1} | S_t = s, S_{t+1} = s'] bằng v(s') cần hai giả thiết. Tính Markov của quá trình có thưởng cho phép bỏ thông tin trạng thái ở thời điểm t và quá khứ trước đó: phân phối tương lai chỉ phụ thuộc s'. Quy luật không đổi theo thời gian cho phép dùng cùng hàm v tại thời điểm t+1 như tại t, vì phần đuôi bắt đầu ở t+1 có cùng cấu trúc với phần đuôi bắt đầu ở t. Dòng cuối là tổng theo các trạng thái kế tiếp với trọng số P_{ss'} — phép lấy trung bình theo ma trận chuyển. Trở lại ví dụ C3: v(C3) = -2 + 0,9[0,6 v(Pass) + 0,4 v(Pub)]. Đây là quan hệ giữa các giá trị chưa biết, không phải phép gán đáp số tùy ý. Về lý do tại từng dấu bằng: tính Markov được dùng khi thay kỳ vọng có điều kiện bằng v(s'), không dùng cho bước đặt gamma ra ngoài tổng ở trang trước — bước đó chỉ là đại số trên mỗi quỹ đạo. Mỗi trạng thái cho một phương trình; tập các phương trình tạo thành hệ. Nguồn: PPTX45–46.</aside>
+</section>
+<section data-slide-id="L03-04-06">
+<h2>Hệ Bellman ba trạng thái</h2>
+<p>Dùng lại ma trận chuyển ba trạng thái ở phần 2; thêm $r=(1,-1,0)^{\mathsf T}$, $\gamma=0{,}9$, ký hiệu $v_i=v(s_i)$:</p><div class="math-large">$$
+\begin{aligned}
+v_1&=1+0{,}9(0{,}5v_1+0{,}5v_2),\\
+v_2&=-1+0{,}9(0{,}2v_1+0{,}3v_2+0{,}5v_3),\\
+v_3&=0+0{,}9v_3=0.
+\end{aligned}
+$$</div><p class="caption">Quy ước: $s_3$ kết thúc với thưởng $0$ sau đó; hàng 1 chứa $v_1$ ở hai vế do có cạnh tự lặp.</p>
+<aside class="notes">Ba trạng thái s1, s2, s3 với ma trận chuyển ở phần 2: hàng 1 là (0,5; 0,5; 0), hàng 2 là (0,2; 0,3; 0,5), hàng 3 là (0; 0; 1). Thêm r = (1, -1, 0)^T và gamma = 0,9. Quy ước s3 kết thúc với thưởng 0 sau đó, nên hàng cuối v3 = 0 + 0,9 v3 = 0 vẫn là phương trình hợp lệ của dạng tự lặp. Hàng 1 chứa v1 ở hai vế vì có cạnh tự lặp với xác suất 0,5 — đây không phải lỗi lập hệ. Hệ số trước v3 ở hàng 2 là 0,9 × 0,5 = 0,45. Ba phương trình này sẽ được gom thành dạng ma trận ở trang sau. Nguồn: hw02 bài 3; PPTX47.</aside>
+</section>
+<section data-slide-id="L03-04-07">
+<h2>Dạng ma trận và nghiệm</h2>
+<p>Với $v,r\in\mathbb R^n$, $I$ là ma trận đơn vị:</p><div class="math-large">$$v=r+\gamma Pv\quad\Longrightarrow\quad(I-\gamma P)v=r.$$</div><p>Ví dụ ba trạng thái rút còn:</p><div class="math-large">$$0{,}55v_1-0{,}45v_2=1,\qquad -0{,}18v_1+0{,}73v_2=-1.$$</div><div class="math-large">$$v_1=\frac{560}{641}\approx0{,}874,\quad v_2=-\frac{740}{641}\approx-1{,}154,\quad v_3=0.$$</div>
+<aside class="notes">Chuyển gamma Pv sang trái và đặt v làm nhân tử chung: (I - gamma P) v = r. Với gamma < 1, có thể viết nghiệm lý thuyết v = (I - gamma P)^{-1} r; khi tính toán, giải hệ tuyến tính trực tiếp, không cần tạo ma trận nghịch đảo. Với ví dụ ba trạng thái: v3 = 0, hai phương trình còn lại là 0,55 v1 - 0,45 v2 = 1 và -0,18 v1 + 0,73 v2 = -1. Định thức hệ hai ẩn là 0,55 × 0,73 - (-0,45)(-0,18) = 0,4015 - 0,081 = 0,3205. Theo quy tắc Cramer, v1 = (1 × 0,73 - (-1)(-0,45)) / 0,3205 = (0,73 - 0,45)/0,3205 = 0,28/0,3205 = 560/641 ≈ 0,874; v2 = (0,55 × (-1) - (-0,18) × 1)/0,3205 = (-0,55 + 0,18)/0,3205 = -0,37/0,3205 = -740/641 ≈ -1,154. Kiểm nghiệm bằng thay lại cả hai phương trình. Chi phí giải hệ đặc là O(n^3), chỉ khả thi với mô hình nhỏ; mô hình lớn dành cho phương pháp lặp ở Bài 04. Với ma trận chuyển hữu hạn và thưởng bị chặn, điều kiện $0\le\gamma<1$ bảo đảm nghiệm hữu hạn duy nhất. Nguồn: PPTX47–48; hw02 bài 3, nghiệm tính lại.</aside>
+</section>
+<section data-slide-id="L03-04-08">
+<h2>Điều kiện để giá trị hữu hạn</h2>
+<div class="grid2"><div class="check"><p>Nếu $|R_{t+1}|\le M$ và $0\le\gamma<1$:</p><div class="math-large">$$|G_t|\le\frac{M}{1-\gamma}.$$</div><p>Cận từ tổng hình học $M(1+\gamma+\gamma^2+\cdots)$.</p></div><div class="box"><p>Với $\gamma=1$: thưởng bị chặn và kỳ vọng thời gian kết thúc hữu hạn là điều kiện đủ.</p><p>Ví dụ vòng lặp nhận $+1$ mỗi bước: tổng không chiết khấu phân kỳ.</p></div></div>
+<aside class="notes"><p>Với $0\le\gamma<1$ và $|R_{t+1}|\le M$, tổng hình học cho $|G_t|\le M/(1-\gamma)$, nên tổng thưởng khả tích và giá trị hữu hạn.</p><p>Nếu $d=\gamma Pd$, mỗi thành phần thỏa $|d_i|\le\gamma\sum_jP_{ij}|d_j|\le\gamma\max_j|d_j|$. Lấy giá trị lớn nhất ở hai vế cho $\max_i|d_i|\le\gamma\max_i|d_i|$, suy ra $d=0$. Vì vậy $I-\gamma P$ khả nghịch.</p><p>Với $\gamma=1$, thưởng bị chặn và kỳ vọng số bước còn lại đến kết thúc hữu hạn bảo đảm kỳ vọng tổng trị tuyệt đối của thưởng hữu hạn. Đây là điều kiện đủ; chẳng hạn thưởng luôn bằng 0 vẫn cho giá trị 0 trong một quá trình không kết thúc.</p><p>Với chuỗi có trạng thái hấp thụ, toàn bộ $I-P$ suy biến. Áp điều kiện biên $v(\text{kết thúc})=0$ rồi giải trên các trạng thái chưa kết thúc. Trong ví dụ ba trạng thái, $s_3$ có thưởng 0 sau khi kết thúc, nên $v_3=0$. Một vòng lặp nhận $+1$ mỗi bước có tổng không chiết khấu phân kỳ.</p><p class="note-source">Nguồn: PPTX36–38, 48; bổ sung điều kiện giải hệ.</p></aside>
+</section>
+<section data-slide-id="L03-04-09">
+<h2>Câu hỏi kiểm tra</h2>
+<p><strong>Câu hỏi:</strong></p><ol><li>Bước nào cần Markov trong suy diễn Bellman?</li><li>Viết phương trình cho $s_2$ của bài ba trạng thái, với hàng $P$ của $s_2$ là $(0{,}2;\,0{,}3;\,0{,}5)$ và $r(s_2)=-1$, $\gamma=0{,}9$.</li><li>Vòng lặp thưởng $+1$, $\gamma=1$ có giá trị hữu hạn không?</li></ol>
+<aside class="notes">Đáp án. Câu 1: bước thay E[G_{t+1} | S_t = s, S_{t+1} = s'] bằng v(s') — cần tính Markov để bỏ thông tin các trạng thái trước và tính dừng để dùng cùng hàm v tại t và t+1; bước đặt gamma ra ngoài tổng không cần Markov vì là đẳng thức trên mỗi quỹ đạo. Câu 2: v2 = -1 + 0,9(0,2 v1 + 0,3 v2 + 0,5 v3), với v3 = 0. Câu 3: không; tổng +1 + 1 + 1 + ... với gamma = 1 phân kỳ, giá trị không hữu hạn. Nguồn: PPTX44–48; hw02 bài 3.</aside>
+</section>
 </section>
 
 <section>
