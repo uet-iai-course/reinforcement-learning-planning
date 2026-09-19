@@ -32,7 +32,7 @@
     </ol>
   </div>
 </div>
-<aside class="notes"><p>Quy luật chuyển tiếp xác định những quỹ đạo có thể xảy ra. Phần thưởng cho phép đánh giá các quỹ đạo; kỳ vọng của tổng thưởng xác định giá trị trạng thái. Khi có lựa chọn hành động, giá trị phụ thuộc chính sách. Bài này xây dựng Bellman kỳ vọng; Bellman tối ưu và các thuật toán tối ưu thuộc Bài04.</p><p class="note-source">Nguồn: PPTX 28–58.</p></aside>
+<aside class="notes"><p>Quy luật chuyển tiếp xác định những quỹ đạo có thể xảy ra. Phần thưởng cho phép đánh giá các quỹ đạo; kỳ vọng của tổng thưởng xác định giá trị trạng thái. Khi có lựa chọn hành động, giá trị phụ thuộc chính sách. Bài này xây dựng Bellman kỳ vọng; Bellman tối ưu và các thuật toán tối ưu thuộc Bài 04.</p><p class="note-source">Nguồn: PPTX 28–58.</p></aside>
 </section>
 <section data-slide-id="L03-01-03">
 <h2>Từ tương tác đến mô hình xác suất</h2>
@@ -45,17 +45,18 @@
 <section data-slide-id="L03-01-04">
 <h2>Một mô hình, nhiều quỹ đạo</h2>
 <p>Hai đường đi từ cùng điểm xuất phát trên đồ thị sinh viên.</p>
+<p class="caption">C1, C2, C3 là ba buổi học; Pass là thi đạt; Facebook là dùng mạng xã hội; Sleep là ngủ.</p>
 <figure>
   <img class="figure" src="img/lec-03/part-01-hai-duong.svg" alt="Hai quỹ đạo từ C1 tới Sleep trên đồ thị sinh viên">
 </figure>
-<aside class="notes"><p>C1, C2, C3 là ba buổi học; Pass là thi đạt, Facebook là dùng mạng xã hội, Sleep là ngủ. Hai dòng là hai quỹ đạo hợp lệ suy ra từ đồ thị sinh viên: C1→C2→C3→Pass→Sleep và C1→Facebook→C1→C2→Sleep. Các nhãn C1 ở hai dòng biểu diễn cùng một trạng thái. Một quỹ đạo ghi lại kết quả đã xảy ra; mô hình mô tả cả những khả năng chưa xuất hiện trong quỹ đạo đó. Một lần quan sát chưa xác định được toàn bộ xác suất chuyển.</p><p class="note-source">Nguồn: đồ thị PPTX31; quỹ đạo minh họa suy ra từ đồ thị (PPTX31–32).</p></aside>
+<aside class="notes"><p>Trước hết, quy luật chuyển giữa các trạng thái đã được cho; nó bao gồm cách tác tử đang hành động. Mỗi quỹ đạo là một chuỗi trạng thái nối tiếp. Hai dòng là hai quỹ đạo hợp lệ suy ra từ đồ thị sinh viên: C1→C2→C3→Pass→Sleep và C1→Facebook→C1→C2→Sleep. Các nhãn C1 ở hai dòng biểu diễn cùng một trạng thái. Một quỹ đạo ghi lại kết quả đã xảy ra; mô hình mô tả cả những khả năng chưa xuất hiện trong quỹ đạo đó. Một lần quan sát chưa xác định được toàn bộ xác suất chuyển. Các lựa chọn hành động sẽ được tách riêng ở phần 5.</p><p class="note-source">Nguồn: đồ thị PPTX31; quỹ đạo minh họa suy ra từ đồ thị (PPTX31–32).</p></aside>
 </section>
 <section data-slide-id="L03-01-05">
 <h2>Ba lớp mô hình</h2>
 <figure>
   <img class="figure" src="img/lec-03/part-01-ba-lop.svg" alt="Ba lớp: chuỗi trạng thái, thêm thưởng, thêm lựa chọn hành động">
 </figure>
-<p class="caption">Chuỗi trạng thái → thêm phần thưởng → thêm lựa chọn hành động.</p>
+<p class="caption">Từ mô hình và chính sách, tính kỳ vọng của tổng thưởng.</p>
 <aside class="notes"><p>Chuỗi Markov mô tả các trạng thái và xác suất chuyển. Quá trình phần thưởng Markov thêm phần thưởng và hệ số chiết khấu để đánh giá tương lai. Quá trình quyết định Markov thêm lựa chọn hành động; lựa chọn đó có thể thay đổi xác suất chuyển và phần thưởng. Khi cố định một chính sách, ta có thể tính giá trị dài hạn từ mô hình.</p><p class="note-source">Nguồn: PPTX 30, 34, 49.</p></aside>
 </section>
 <section data-slide-id="L03-01-06">
