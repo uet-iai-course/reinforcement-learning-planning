@@ -445,3 +445,22 @@ Kiểm tra Chromium bản nháp: 12 lượt (6slide × 1280×720/390×844), khô
 - Đã xem trực tiếp đủ6ảnh ở1280×720 và ảnh hình ba lớp ở390×844; 12lượt render cuối không tràn biên, lỗiKaTeX, ảnhhỏng, HTTP hoặcJavaScript. Điện thoại dùng khung16:9 thu nhỏ, cần xoayngang/phóngto để đọc nội dung dài; không tuyên bố chữ ở390px lớn như mànchiếu. Điều hướng bànphím đã kiểm ở cảhaikhung.
 - Tự kiểm no-ai-slop: body/notes là nội dung học thuật và đápán; không có lời ca tụng, câu tu từ hoặc chỉ dẫn người viết. Phân tích cách thể hiện, tiên quyết và cầu nối nằm trong storyboard. Quill rà tuyến phần1 và ranhgiới sangchuỗiMarkov; không tạoquill.json.
 - Phần1 có6slide, 3SVG mới, được tíchhợp vàoHTML; phần2–7 chưa được tính hoàn tất. Outline/storyboard và trạngthái kếhoạch đã đồngbộ. Dùng CSS chung lecture-slide.css, không sửaCSS.
+
+### Phần 2 — triển khai và năm báo cáo độc lập
+
+- Writer soạn `lec03-write-02.json`, requested=observedGLM5.3Flash, providerOpenRouter. Sáu slide đi từ đồ thị sinh viên tới xác suất chuyển, ma trận, phân phối sau một bước và kiểm tra. Vẽ mới baSVG; không tái dùng nguyên SVG cũ vì vòng tự lặp củaFB/Sleep có đầu mút sai.
+- Năm reviewer độc lập `lec03-part-02-{student,rl,math,academic,flow}.json`, profile review-section, no-tools: sinh viên/học thuật/mạch dùngGLM5.3Flash; chuyên môn/toán dùngDeepSeekV4Flash; runtime cả năm requested=observed, providerOpenRouter. Gói gồm sáu slide, hai trang trước và hai trang kế hoạch sau.
+
+| Vai | Mức độ sau đối chiếu | Slide | Bằng chứng và quyết định |
+|---|---|---|---|
+| Sinh viên | nghiêm trọng | 02-05 | Hình cộng0,5+0,5 thiếu trọng số nguồn và không khớp ma trận. Thay bằng phân phối hiện tại C1/FB mỗi nơi0,5; xác suấtFB bước tới bằng0,7. |
+| Chuyên môn | không áp dụng | 02-03 | Báo cáo coi ngoặc vuông củaPr là lỗi nghiêm trọng. Bác nhận định: ngoặc vuông/tròn đều là ký hiệu chấp nhận được. Giữ phát biểu Markov có điều kiện, mọi thời điểm; không đồng nhất Markov với đồng nhất thời gian. |
+| Toán học | nghiêm trọng | 02-05 | Xác nhận thiếu trọng số ở hình; sửa như trên. Các mục báo “nghiêm trọng” cho từng hàng ma trận tự kết luận PASS ngay trong bằng chứng; không coi là lỗi số liệu. |
+| Học thuật | trung bình | 02-05 | Ký hiệu phân phối xuất hiện trước định nghĩa. Dùng ví dụ số bằng lời trước; định nghĩa mu đi cùng công thức sau. |
+| Mạch viết | trung bình | 02-02/05 | Vai trò02-02: đọc quỹ đạo, vào từ sơ đồ ngẫu nhiên, ra hai cạnhC1 để lập hàng ma trận. Hình chưa làm nổi cạnh như storyboard; đã tăng độ dày. Vai trò02-05: chuyển hàng điều kiện thành phân phối, vào từP, ra kỳ vọng ởphần3; sửa ví dụ giữ cùng ma trận và cầu nối. |
+
+- Điều phối viên phát hiện cạnhPub→C1 trong bản nháp lại kết thúc tạiFB; đã vẽ lại đúng biênC1 và đối chiếu đủ13cạnh với ma trận. Dời đườngC2→Sleep ra ngoài nútPass để không gợi bước trung gian sai.
+- Writer chỉnh sửa riêng `lec03-fix-02` chạy sau đủ năm báo cáo, profilepatch: sửa hai khối notes02-01 và02-05; requested=observedGLM5.3Flash, providerOpenRouter. Điều phối viên tiếp tục sửa tuần tự bố cục, SVG và lời giảng còn lại, không có hai writer ghi đồng thời.
+- Ma trận7×7 ban đầu tràn cuối trang. Bản cuối bỏ véc-tơC1 lặp với hàng bảng, tô nền hàngC1 và giữ điều kiện ở chú thích. Sai khác có chủ ý: không hiện thêm toàn ma trận sau một fragment, vì cả bảng đã vừa khung và hàngC1 vẫn là điểm vào. Ví dụ chắc chắnC1 đã hiện ở02-03 và được nhắc trong notes02-05; hình02-05 dành cho phân phối trộn để thể hiện phép cộng xác suất.
+- Tái rà `lec03-final-02-math.json` xác nhận ma trận, các công thức và ví dụ0,7 đúng; `lec03-final-02-flow.json` xác nhận mạch và notes sạch, chỉ yêu cầu đồng bộ mô tảFB trong analysis. Đã sửa analysis02-02/04 theo đúng hình và bố cục thực tế. Tái rà toán dùngDeepSeekV4Flash, mạch dùngGLM5.3Flash; runtime requested=observed, providerOpenRouter. Không sao chép các câu lẫn ngoại ngữ trong báo cáo vào sản phẩm.
+- Kiểm tra cuối: xem trực tiếp đủ6slide rộng, render12lượt ở1280×720 và390×844, không tràn biên, lỗiKaTeX, ảnhhỏng, HTTP hoặcJavaScript; kiểm bànphím ởhaikhung. Xác suất hàng ma trận và0,5×0,5+0,5×0,9 được tính lại. Tự kiểm no-ai-slop loại câu hỏi tu từ, lời điều hành và “occurrence/stays”; Quill xác nhận đồ thị→định nghĩa→ma trận→phân phối→kiểmtra→thêmthưởng.

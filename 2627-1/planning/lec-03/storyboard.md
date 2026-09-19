@@ -1,6 +1,6 @@
 # Bài 03 — Storyboard triển khai
 
-Đã triển khai phần 1–1/7. Bảy phần và 120 phút theo [kế hoạch chi tiết](detailed-slide-plan.md); bản này ghi quyết định thể hiện thực tế. Các phần chưa triển khai dùng bản HTML cũ, không được tính là hoàn tất.
+Đã triển khai phần 1–2/7. Bảy phần và 120 phút theo [kế hoạch chi tiết](detailed-slide-plan.md); bản này ghi quyết định thể hiện thực tế. Các phần chưa triển khai dùng bản HTML cũ, không được tính là hoàn tất.
 
 ## Phần 1. Từ tương tác đến mô hình xác suất — 8 phút
 
@@ -127,3 +127,129 @@ Thời lượng: 2 phút. Vai trò: kiểm tra tiên quyết.
 **Nguồn:** Bài 02; PPTX 29–30.
 
 **Quyết định thể hiện khi triển khai:** Hai câu trong danh sách đánh số dưới một nhãn Câu hỏi chung; đáp án nằm trọn trong notes để slide chỉ giữ câu hỏi. Câu 1 tách quan sát khỏi mô hình, câu 2 khẳng định tính ngẫu nhiên — đúng hai phân biệt mà phần 1 đặt ra. Không dùng hình vì hai câu đủ tự đứng và slide kiểm tra cần gọn. Tiên quyết: slide 01-03 và 01-04. Cầu nối: sang phần 2, đọc đồ thị chuyển.
+
+## Phần 2. Chuỗi Markov — 18 phút
+
+Vấn đề → ví dụ đồ thị → xác suất chuyển → ma trận → phân phối sau một bước → kiểm tra. Đầu ra là cách đọc P và xác định các bước chuyển hợp lệ, dùng ngay ở phần 3.
+
+
+### L03-02-01 — Chuỗi Markov
+
+Thời lượng: 1 phút. Vai trò: mở phần.
+
+**Đầu vào:** Câu hỏi về quy luật sinh nhiều quỹ đạo ở phần1.
+
+**Nội dung trên slide:** Tiêu đề phần, hình các trạng thái nối bằng mũi tên xác suất.
+
+**Cách thể hiện:** Đồ thị sinh viên chưa có thưởng hoặc hành động.
+
+**Giải thích và hình thức hóa:** Chỉ quan sát quá trình di chuyển giữa trạng thái.
+
+**Kết nối:** Từ nhiều quỹ đạo sang quy luật chung sinh chúng.
+
+**Kiểm tra/ghi chú đáp án:** Không thêm ký hiệu mới.
+
+**Nguồn:** PPTX 30–31.
+
+**Quyết định thể hiện khi triển khai:** Slide mở phần dùng lại chính đồ thị sinh viên nhưng lược bỏ mọi thành phần ngoài trạng thái, để hình trực tiếp thể hiện luận điểm: chuỗi Markov chỉ nói về di chuyển giữa trạng thái. Sinh viên năm 3 đã quen đồ thị từ phần 1 nên hình hoạt như cầu nối, không cần câu dẫn dài; một câu duy nhất đặt vấn đề quy luật sinh quỹ đạo là đủ.
+
+### L03-02-02 — Một ngày của sinh viên
+
+Thời lượng: 3 phút. Vai trò: ví dụ trực quan.
+
+**Đầu vào:** Các nút biểu diễn trạng thái; mũi tên biểu diễn chuyển tiếp.
+
+**Nội dung trên slide:** Các trạng thái học, mạng xã hội, giải trí, thi đạt, ngủ; nhãn ngắn đi kèm C1,C2,C3,Pass,Pub,FB,Sleep.
+
+**Cách thể hiện:** Giữ nguyên đồ thị và xác suất nguồn; làm nổi hai cạnh C1→C2 và C1→FB, mỗi cạnh 0,5.
+
+**Giải thích và hình thức hóa:** Đi lần lượt một quỹ đạo nguồn. Nhãn dịch không đổi ý trạng thái; Sleep là điểm dừng của lượt minh họa.
+
+**Kết nối:** Các cạnh ra từ C1 chuẩn bị một hàng ma trận.
+
+**Kiểm tra/ghi chú đáp án:** Tổng xác suất các cạnh ra bằng 1. Một cạnh không vẽ có xác suất 0.
+
+**Nguồn:** PPTX 31–32; Silver PDF7–8.
+
+**Quyết định thể hiện khi triển khai:** Đồ thị lớn chiếm phần trung tâm; quỹ đạo nguồn nằm ở chú thích. Hai cạnh ra từ C1 có nét dày để nối sang định nghĩa xác suất chuyển. Ghi chú diễn giả giải nghĩa C1–C3, FB, Pub, Pass, Sleep. Đầu vào: nút và cạnh; đầu ra: đọc được một quỹ đạo và các khả năng từ C1.
+
+### L03-02-03 — Xác suất chuyển và tính Markov
+
+Thời lượng: 3 phút. Vai trò: hình thức hóa.
+
+**Đầu vào:** Đồ thị C1 có hai cạnh ra xác suất0,5.
+
+**Nội dung trên slide:** Định nghĩa chuỗi hữu hạn đồng nhất theo thời gian bằng $(\mathcal S,P)$ và $P_{ij}=\Pr(S_{t+1}=s_j\mid S_t=s_i)$.
+
+**Cách thể hiện:** Bên trái C1 và các cạnh; bên phải công thức vừa đủ mô tả những cạnh đó.
+
+**Giải thích và hình thức hóa:** Nêu n trạng thái, P có kích thước n×n. Nhắc ngắn tính Markov; không đổi theo thời gian là giả thiết bổ sung, không suy ra từ Markov.
+
+**Kết nối:** Từ một cặp trạng thái đến tất cả cặp trong ma trận.
+
+**Kiểm tra/ghi chú đáp án:** Không diễn giải Markov là “trạng thái tương lai độc lập hoàn toàn với quá khứ”.
+
+**Nguồn:** PPTX 29–30.
+
+**Quyết định thể hiện khi triển khai:** Bố cục hai cột đặt cạnh nhau cặp trạng thái cụ thể và công thức tổng quát, để phép hình thức hóa đi từ ví dụ đến định nghĩa chứ không rơi từ trên xuống. Công thức chỉ gồm hai dòng lớn, đúng giới hạn; tính Markov viết dưới dạng phương trình xác suất thay vì câu chữ mơ hồ, kèm câu tách hai giả thiết — điểm sinh viên năm 3 hay gộp chung.
+
+### L03-02-04 — Từ đồ thị đến ma trận chuyển
+
+Thời lượng: 4 phút. Vai trò: cơ chế và vận dụng.
+
+**Đầu vào:** Định nghĩa P_ij và thứ tự các trạng thái.
+
+**Nội dung trên slide:** Hàng C1 có 0,5 ở C2, 0,5 ở FB và 0 ở các cột khác; $P_{ij}\ge0$, $\sum_jP_{ij}=1$.
+
+**Cách thể hiện:** Đồ thị và hàng ma trận dùng cùng thứ tự; hiện toàn ma trận ở bước sau, không thu nhỏ cả hai hình.
+
+**Giải thích và hình thức hóa:** Giới thiệu trạng thái hấp thụ qua hàng Sleep có phần tử chéo bằng 1. Phân biệt hấp thụ của chuỗi với kết thúc lượt; sau kết thúc có thể quy ước tự lặp với thưởng 0.
+
+**Kết nối:** P biểu diễn mọi phân phối bước tới có điều kiện theo trạng thái hiện tại.
+
+**Kiểm tra/ghi chú đáp án:** Xác định hàng nào sai nếu tổng xác suất khác 1.
+
+**Nguồn:** PPTX 33.
+
+**Quyết định thể hiện khi triển khai:** Bảng HTML giữ thứ tự trạng thái của đồ thị; tô nền hàng C1 để đọc hai phần tử0,5 trước khi xét toàn ma trận. Bỏ dòng véc-tơ C1 trùng với bảng để tránh tràn trang. Điều kiện không âm, tổng hàng bằng1 và Sleep hấp thụ nằm ở chú thích. Đầu vào: xác suất chuyển; đầu ra: mọi phân phối bước tới có điều kiện, dùng ở phép nhân phân phối.
+
+### L03-02-05 — Phân phối sau một bước
+
+Thời lượng: 4 phút. Vai trò: ứng dụng.
+
+**Đầu vào:** Ma trận P chuẩn hóa theo hàng; định luật xác suất toàn phần đã học.
+
+**Nội dung trên slide:** Dồn xác suất từ nhiều trạng thái xuất phát tới các trạng thái đích.
+
+**Cách thể hiện:** Ban đầu, toàn bộ xác suất tập trung ở C1. Sau một bước, C2 và FB mỗi trạng thái có xác suất 0,5. Sau đó minh họa hai mũi tên cùng đi vào một nút.
+
+**Giải thích và hình thức hóa:** Sau phép cộng bằng số, đặt $\mu_t(i)=\Pr(S_t=s_i)$; suy ra $\mu_{t+1}(j)=\sum_i\mu_t(i)P_{ij}$ và $\mu_{t+1}=P^{\mathsf T}\mu_t$. Không dạy phân phối dừng.
+
+**Kết nối:** Phân biệt phân phối tại một thời điểm với một quỹ đạo cụ thể.
+
+**Kiểm tra/ghi chú đáp án:** Nếu bắt đầu ở Sleep thì phân phối sau một bước vẫn tập trung ở Sleep.
+
+**Nguồn:** Vận dụng ma trận PPTX33; bổ sung định luật xác suất toàn phần.
+
+**Quyết định thể hiện khi triển khai:** Slide đi từ phép cộng bằng số cụ thể (0,5 và 0,5) đến công thức véc-tơ, đúng trình tự vấn đề trước định nghĩa. Hình nhỏ dạng short minh họa hai mũi tên cùng vào một nút — bản chất của phép cộng trong định luật toàn phần — không tranh chỗ với công thức. Hai dòng công thức tách thành fragment để bước suy diễn hiện sau khi ví dụ số đã rõ. Hình dùng một phân phối ban đầu khác với ví dụ chắc chắn C1; xác suất FB bằng0,5×0,5+0,5×0,9=0,7. Các số trên cạnh là xác suất có điều kiện, các trọng số50%đặt tại nguồn.
+
+### L03-02-06 — Câu hỏi kiểm tra
+
+Thời lượng: 3 phút. Vai trò: kiểm tra.
+
+**Đầu vào:** Ma trận chuyển, hàng xác suất và trạng thái hấp thụ.
+
+**Nội dung trên slide:** Bài ba trạng thái: $P=\begin{pmatrix}0{,}5&0{,}5&0\\0{,}2&0{,}3&0{,}5\\0&0&1\end{pmatrix}$.
+1. P hợp lệ không? 2. Trạng thái nào hấp thụ? 3. Từ s1, phân phối bước tới là gì?
+
+**Cách thể hiện:** Ma trận lớn và ba câu ngắn, không đặt đồ thị mới phức tạp.
+
+**Giải thích và hình thức hóa:** Ma trận này sẽ được dùng lại để giải Bellman; chưa thêm phần thưởng.
+
+**Kết nối:** Phần 3 giữ quy luật chuyển và thêm thưởng.
+
+**Kiểm tra/ghi chú đáp án:** Hợp lệ; s3 hấp thụ; véc-tơ cột (0,5;0,5;0).
+
+**Nguồn:** hw02 bài3.
+
+**Quyết định thể hiện khi triển khai:** Ma trận được viết lớn bằng KaTeX và ba câu hỏi ngắn đặt trong nhãn Câu hỏi:, không kèm đồ thị mới để trọng tâm ở việc đọc P. Ba câu bám đúng ba kỹ năng của phần: kiểm tra ràng buộc hàng, nhận diện hấp thụ qua phần tử chéo, và đọc phân phối bước tới từ một hàng. Ma trận được chọn để tái sử dụng ở phần Bellman, tạo cầu nối sang phần 3 nơi quy luật chuyển được giữ nguyên và thêm thành phần thưởng.

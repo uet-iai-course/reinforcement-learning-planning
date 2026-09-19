@@ -1,6 +1,6 @@
 # Bài 03 — Dàn ý triển khai
 
-Trạng thái: đã triển khai phần 1–1/7 theo [kế hoạch chi tiết](detailed-slide-plan.md). Các phần sau vẫn là nội dung cũ cho đến lượt thay thế tương ứng.
+Trạng thái: đã triển khai phần 1–2/7 theo [kế hoạch chi tiết](detailed-slide-plan.md). Các phần sau vẫn là nội dung cũ cho đến lượt thay thế tương ứng.
 
 ## Mục tiêu và phạm vi
 
@@ -64,3 +64,12 @@ $P$ trong chuỗi Markov là ma trận; $P(s',r\mid s,a)$ trong MDP là xác su�
 - `L03-01-04`: Một mô hình, nhiều quỹ đạo.
 - `L03-01-05`: Ba lớp mô hình.
 - `L03-01-06`: Câu hỏi kiểm tra.
+
+## Phần 2
+
+- `L03-02-01`: Chuỗi Markov.
+- `L03-02-02`: Một ngày của sinh viên.
+- `L03-02-03`: Xác suất chuyển và tính Markov.
+- `L03-02-04`: Từ đồ thị đến ma trận chuyển.
+- `L03-02-05`: Phân phối sau một bước.
+- `L03-02-06`: Câu hỏi kiểm tra.
