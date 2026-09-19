@@ -15,7 +15,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 | 3 | Trạng thái và thông tin quan sát | 28 |
 | 4 | Chính sách lựa chọn hành động | 15 |
 | 5 | Hàm giá trị và mô hình môi trường | 25 |
-| 6 | Dự đoán, điều khiển và bài toán mê cung | 20 |
+| 6 | Phần thưởng định hướng hành vi | 20 |
 | 7 | Tổng kết và tự kiểm tra | 7 |
 
 ## Trạng thái triển khai
@@ -55,13 +55,13 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-05-05` — Hàm giá trị trạng thái — PPTX trang 16–18, 22; hw02 bài 5
 - `L02-05-08` — Mô hình chuyển trạng thái và phần thưởng — phân phối chung theo yêu cầu; PPTX trang 13, 23; hw02 bài 10; Sutton–Barto (2018), mục 3.1
 - `L02-05-09` — Câu hỏi kiểm tra — PPTX trang 13, 24, 27; hw02 bài 6
-- `L02-06-01` — Hai nhiệm vụ trên mê cung — PPTX trang 24; hw02 bài 1, 5
-- `L02-06-02` — Dự đoán và điều khiển — PPTX trang 24–26; hw02 bài 5
-- `L02-06-03` — Đặc tả môi trường mê cung — PPTX trang 25; hw02 bài 2
-- `L02-06-04` — Chính sách trên mê cung — PPTX trang 26; hw02 bài 2
-- `L02-06-05` — Giá trị trên mê cung — PPTX trang 26; hw02 bài 6
-- `L02-06-06` — Trạng thái kết thúc trong trò chơi — PPTX, trang 11; bài kiểm tra suy ra từ quy ước phần thưởng và điều kiện kết thúc.
-- `L02-06-07` — Câu hỏi kiểm tra — PPTX trang 27; hw02 bài 10
+- `L02-06-01` — Đến đích và tránh hố — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
+- `L02-06-02` — Điểm thưởng của hai lựa chọn — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
+- `L02-06-03` — Cùng môi trường, khác hành vi — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
+- `L02-06-04` — Ngưỡng thay đổi hành vi — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
+- `L02-06-05` — Thiết kế thưởng và hành vi — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
+- `L02-06-06` — Câu hỏi kiểm tra — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
+- `L02-06-07` — Khuyến khích và chế tài — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
 - `L02-07-01` — Các thành phần của bài toán — PPTX trang 10, 20, 25–26; hw02 bài 1
 - `L02-07-03` — Bài tập và tài liệu đọc — RL-hk2-2025-2026/resources/hw02.pdf, bài1,2,5,6,10; Sutton và Barto (2018), chương3; PPTX trang1–27.
 - `L02-07-02` — Câu hỏi kiểm tra — PPTX trang 16, 19, 22–23, 27; hw02 bài 2, 5
@@ -79,7 +79,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 | 7–8 | gộp, sửa | 2 | So sánh tín hiệu, ảnh hưởng hành động tới dữ liệu, phân biệt phản hồi trễ với thưởng mỗi bước. |
 | 9 | sửa | 2, 5 | Giả thuyết phần thưởng không phải định lý; tách trực giác tích lũy và công thức. |
 | 10 | gộp | 5, 7 | Tránh lặp danh mục ba thành phần với trang 20. |
-| 11 | sửa | 6 | Giữ bàn cờ kết thúc để vận dụng phần thưởng và tổng thưởng; lược cây sao lưu giá trị (ôn bài 01), vì cơ chế cập nhật nằm ngoài mục tiêu bài 02. |
+| 11 | gộp, bỏ | 2, 6 | Giữ ví dụ thưởng khi trò chơi kết thúc ở phần 2; bỏ bàn cờ riêng phần 6. Phân biệt thưởng cuối và tổng sau kết thúc bằng đích/hố. |
 | 12 | sửa | 2 | Dùng bộ điều khiển robot để minh họa ranh giới tác tử–môi trường; ví dụ xe đã bỏ theo yêu cầu. |
 | 13 | sửa | 5 | Phạm vi mô hình theo tác vụ; bỏ câu hỏi tu từ về mô hình hoàn thiện thế giới. |
 | 14–15 | gộp, sửa | 2 | Môi trường trả quan sát/phần thưởng, không trả hành động; chỉ số phản hồi là t+1. |
@@ -90,10 +90,10 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 | 20–21 | tách | 4, 5 | Chính sách xác định/ngẫu nhiên; cùng ký hiệu X khi quan sát chưa đầy đủ. |
 | 22 | tách | 5 | Quỹ đạo, chiết khấu, tổng và kỳ vọng trước hàm giá trị; giả thiết kỳ vọng tồn tại. |
 | 23 | tách | 5 | Giữ phân phối chuyển và thưởng kỳ vọng của nguồn; KaTeX, không SVG công thức. |
-| 24 | sửa | 6 | Dự đoán giữ chính sách cố định; điều khiển tìm/cải thiện chính sách. |
-| 25 | giữ, tách | 1, 2, 3, 6 | Dùng mê cung sớm để chuẩn bị khái niệm; giữ hình học nguồn. |
-| 26 | giữ, tách | 4, 5, 6 | Vẽ lại chính sách và giá trị; gamma=1, đích ngoài lưới, 16 bước từ đầu. |
-| 27 | sửa | 3, 6 | Phân loại dựa trên thông tin quan sát và giả thiết; không giữ screenshot game. |
+| 24 | gộp | 6 | Phân biệt đánh giá và điều khiển trong ghi chú tính tổng hai đường, không giữ slide riêng. |
+| 25 | giữ, thay | 1, 2, 3, 6 | Giữ mê cung nguồn ở phần đầu; phần 6 thay bằng mê cung đích/hố theo yêu cầu. |
+| 26 | giữ, thay | 4, 5, 6 | Giữ minh họa chính sách phần 4; phần 6 thay bảng giá trị nguồn bằng phân tích alpha. |
+| 27 | sửa | 3 | Phân loại theo thông tin quan sát và giả thiết; câu hỏi phần 6 thay bằng bài tập alpha. |
 | hw02 Bài 1,2,5,6,10 | giữ phạm vi, sửa cách giao | 2–7 | Câu hỏi ngắn lồng trong bài, 30 phút chữa bài; Bài10 chỉ đặc tả, không Bellman. |
 
 ## Quy ước và dữ kiện xuyên suốt
@@ -105,3 +105,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - Mê cung nguồn: 8×8, 27 ô đi được và 37 ô tường. Cột $x$ và hàng $y$ đánh số từ 0, hàng tăng xuống. Bắt đầu $(0,2)$; đích $G=(8,6)$ nằm ngoài bên phải. Tường/biên giữ nguyên vị trí, trừ bước Đông từ $(7,6)$ vào $G$; thưởng $-1$ mỗi bước kể cả bước vào đích; tới $G$ thì dừng.
 - Bảng giá trị nguồn tương ứng chính sách được vẽ, chuyển xác định, $\gamma=1$: đầu $-16$, ô $(7,6)$ là $-1$, $v_\pi(G)=0$.
 - Tham khảo bố cục: [SLIDE_STYLE_GUIDE.md](https://raw.githubusercontent.com/uet-iai-course/machine-learning/main/SLIDE_STYLE_GUIDE.md), chỉ nguyên tắc một ý/trang và trung tâm thị giác; mẫu và CSS cục bộ ưu tiên.
+
+## Thay phần 6: phần thưởng định hướng hành vi
+
+Bảy trang, 20 phút; ví dụ mới không phải hình gốc PPTX. Mê cung có đường tới đích sáu bước và đường tới hố hai bước; cả hai là trạng thái kết thúc. Mỗi chuyển có thưởng $-\alpha$, cộng 10 khi vào đích, dùng $\gamma=1$, $\alpha\ge0$. Ngưỡng $\alpha=2{,}5$; phạt hố thêm $h$ cho ngưỡng $(10+h)/4$. Câu hỏi kiểm tra ở trang áp chót, trang cuối liên hệ xã hội theo yêu cầu cụ thể, thay quy ước câu hỏi cuối phần. Các hình cũ vẫn giữ vì được dùng ở các phần trước hoặc lưu làm tài sản nguồn.

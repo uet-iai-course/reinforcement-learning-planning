@@ -46,9 +46,9 @@ Thời lượng: 2 phút. Nguồn: PPTX trang 25–26 (bài toán mê cung).
 - **Nhu cầu và lý do tồn tại:** Cho trực giác về tính tuần tự trước khi định nghĩa.
 - **Cách thể hiện và độ phù hợp năm 3:** Hình mê cung lớn chiếm trung tâm; phù hợp năm 3 vì sinh viên đọc lưới tọa độ nhanh và hình cụ thể trước ký hiệu.
 - **Kết nối vào:** Câu định vị ở slide bìa.
-- **Kết nối ra:** Mê cung này dùng lại ở section 6.
+- **Kết nối ra:** Mê cung này dùng để giới thiệu giao diện; phần 6 dùng ví dụ hai nhánh mới.
 - **Sản phẩm học tập/kiểm tra:** Nhận diện tác động của một lựa chọn đến phần đường còn lại; kiểm tra tính toán ở các phần sau.
-- **Quyết định nguồn:** Tách từ trang 25–26: chỉ lấy hình mê cung và nhiệm vụ, bỏ phần giải bằng giá trị/chính sách để dành cho section 6.
+- **Quyết định nguồn:** Tách từ trang 25–26: chỉ lấy hình mê cung và nhiệm vụ, phần giá trị/chính sách được phát triển ở phần 4–5.
 
 ### L02-01-03 — Mục tiêu học tập
 
@@ -560,139 +560,122 @@ Thời lượng: 4 phút. Nguồn: các khái niệm và ví dụ trong phần 5
 - **Nhu cầu và lý do tồn tại:** Khép phần bằng câu hỏi áp dụng và giải thích, kiểm tra trước khi chuyển sang phần kế.
 - **Cách thể hiện và độ phù hợp năm 3:** Danh sách đánh số từ 1 đến 4; dữ kiện nằm trong câu hỏi, đáp án chỉ trong ghi chú diễn giả.
 - **Kết nối vào:** Định nghĩa tổng thưởng, hàm giá trị và mô hình chuyển/thưởng.
-- **Kết nối ra:** Phần 6 phân biệt dự đoán với điều khiển và vận dụng trên mê cung.
+- **Kết nối ra:** Phần 6 phân tích lựa chọn khi thay đổi chi phí mỗi bước.
 - **Sản phẩm học tập/kiểm tra:** Trả lời lần lượt 4 câu; giải thích bằng khái niệm và dữ kiện vừa học.
 - **Quyết định nguồn:** Gom câu hỏi về cuối phần theo yêu cầu; giữ ý nguồn, không thêm thuật toán hay kiến thức chưa học.
 
-## Phần 6: Dự đoán, điều khiển và bài toán mê cung — 20 phút
+## Phần 6: Phần thưởng định hướng hành vi — 20 phút
 
-- **Chức năng:** Tách hai nhiệm vụ đánh giá chính sách và cải thiện chính sách, rồi áp dụng lên mê cung 8x8 và trò chơi cờ để củng cố hàm giá trị và điều kiện dừng.
-- **Tiên quyết:** Sinh viên đã biết thành phần MDP, chính sách, hàm giá trị, phần thưởng tức thời và quy ước gamma từ các phần trước.
-- **Kết nối vào:** Nhận định nghĩa $v_\pi$, mô hình chuyển và thưởng từ phần 5; dùng lại mê cung và quy ước thưởng trò chơi.
-- **Kết nối ra:** Đặc tả mê cung, giá trị theo chính sách và trạng thái kết thúc được tổng hợp thành các vai trò ở phần 7.
-- **Mạch phù hợp sinh viên năm 3:** Sinh viên năm 3 quen bài toán tối ưu và bảng truy vết; tách rõ nhiệm vụ đánh giá so với cải thiện giúp họ phân loại yêu cầu đề bài trước khi gặp thuật toán.
+- **Chức năng:** Dùng tổng thưởng để suy ra hành vi tối ưu khi thay chi phí mỗi bước, rồi liên hệ cơ chế khuyến khích xã hội.
+- **Tiên quyết:** Chính sách, tổng thưởng, chiết khấu, trạng thái kết thúc và mô hình chuyển.
+- **Kết nối vào:** Phần 5 đã định nghĩa tổng thưởng và phản hồi một bước; phần này thay hàm thưởng trong một môi trường cố định.
+- **Kết nối ra:** Phần 7 tổng hợp thông tin, chính sách, thưởng/giá trị và mô hình.
+- **Ngoại lệ:** Theo yêu cầu, slide xã hội kết thúc phần; câu hỏi kiểm tra chuyển lên áp chót. Giữ 7 phần, 41 trang và 120 phút.
 
-### Cụm Phân biệt dự đoán và điều khiển
+### Cụm Phần thưởng và lựa chọn tối ưu
 
-- Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 5 phút; trang tính thời gian: L02-06-01, L02-06-02. Các tham chiếu lại không cộng lặp.
-- Kiến thức đầu vào: Đã biết chính sách, hàm giá trị và mô hình môi trường.
-- Sản phẩm học tập: Xác định đầu ra của dự đoán là giá trị theo chính sách; đầu ra của điều khiển là chính sách tối ưu theo mục tiêu.
-- vấn đề: L02-06-01
-- trực giác: L02-06-01
-- ví dụ: L02-06-01
-- hình thức: L02-06-02
-- ứng dụng: L02-06-02
-- kiểm tra: L02-06-07
-- Gộp bước/ngoại lệ: Trang 02 gộp định nghĩa và hai yêu cầu; kiểm tra loại đầu ra được chuyển về cuối phần. Dự đoán được tính tiếp ở 03–05; thuật toán tìm chính sách tối ưu chưa thuộc phạm vi.
-- Dữ kiện truyền tiếp: Một bộ mũi tên cho trước và nhiệm vụ chọn mũi tên minh họa sự khác nhau giữa hai loại đầu ra.
-- Câu nối: Chuyển sang cụm vận dụng tổng hợp trên mê cung và trạng thái kết thúc.
+- Thời lượng phân bổ: 20 phút; trang tính thời gian: L02-06-01, L02-06-02, L02-06-03, L02-06-04, L02-06-05, L02-06-06, L02-06-07.
+- Kiến thức đầu vào: Tổng thưởng với hệ số chiết khấu 1, so sánh các chính sách và trạng thái kết thúc.
+- Sản phẩm học tập: Tính hai tổng thưởng, tìm ngưỡng đổi hành vi và điều kiện phạt hố đủ để ưu tiên đích.
+- vấn đề: L02-06-01 (đến đích, tránh hố)
+- trực giác: L02-06-01 (đường dài đến đích, đường ngắn kết thúc ở hố)
+- ví dụ: L02-06-02, L02-06-03 (đếm bước, thay số 0, 1, 3)
+- hình thức: L02-06-04 (giải bất đẳng thức, ngưỡng và đồ thị)
+- ứng dụng: L02-06-05 (phạt hố bổ sung), L02-06-07 (liên hệ xã hội)
+- kiểm tra: L02-06-06
+- Gộp bước/ngoại lệ: Kiểm tra sau ứng dụng toán và trước liên hệ xã hội theo yêu cầu; liên hệ không có thuật toán hoặc khẳng định pháp lý cụ thể.
+- Dữ kiện truyền tiếp: 6 bước tới đích, 2 bước tới hố, thưởng đích 10, chi phí mọi bước alpha; hai đường lợi ích giao ở (2,5; -5).
+- Câu nối: Từ mô hình phản hồi sang hành vi do hàm thưởng tạo ra; sang phần 7 bằng vai trò của thưởng/giá trị trong đặc tả nhiệm vụ.
 
-### Cụm Vận dụng mê cung và trạng thái kết thúc
+### L02-06-01 — Đến đích và tránh hố
 
-- Dạng nội dung: khái niệm hoặc vận dụng khái niệm; không có thuật toán cập nhật trong phạm vi bài.
-- Thời lượng phân bổ: 15 phút; trang tính thời gian: L02-06-03, L02-06-04, L02-06-05, L02-06-06, L02-06-07. Các tham chiếu lại không cộng lặp.
-- Kiến thức đầu vào: Đã biết trạng thái/quan sát/biểu diễn, chính sách, tổng thưởng, hàm giá trị và mô hình.
-- Sản phẩm học tập: Tính giá trị điểm đầu, phân biệt thưởng cuối với tổng thưởng sau kết thúc, xác định thông tin thay đổi khi đổi cảm biến.
-- vấn đề: không áp dụng; xem lý do bên dưới
-- trực giác: không áp dụng; xem lý do bên dưới
-- ví dụ: không áp dụng; xem lý do bên dưới
-- hình thức: không áp dụng; xem lý do bên dưới
-- ứng dụng: L02-06-03, L02-06-04, L02-06-05, L02-06-06
-- kiểm tra: L02-06-07
-- Gộp bước/ngoại lệ: Cụm vận dụng các khái niệm phần 2–5, không hình thức hóa lại; bàn cờ kiểm tra $G_T=0$, không tìm chính sách.
-- Dữ kiện truyền tiếp: Mê cung: 16 bước từ điểm đầu; bàn cờ: $G_T=0$ dù $R_T=1$; cảm biến cục bộ làm mất thông tin vị trí.
-- Câu nối: Sang phần 7 tổng kết các chức năng đã học và giao bài tập nối Bài 03.
+Thời lượng: 3 phút. Nguồn: ví dụ và liên hệ mới theo kế hoạch đã được duyệt.
 
-### L02-06-01 — Hai nhiệm vụ trên mê cung
+- **Luận điểm:** Đếm bước hai nhánh và xác định kết thúc.
+- **Nhu cầu và lý do tồn tại:** Đếm bước hai nhánh và xác định kết thúc.
+- **Cách thể hiện:** SVG mê cung hai hành lang, quy tắc thưởng bên cạnh.
+- **Kết nối vào:** Mô hình chuyển và thưởng phần 5.
+- **Kết nối ra:** Tính tổng hai đường.
+- **Sản phẩm học tập/kiểm tra:** Vận dụng ở L02-06-06; câu 2 cần h>2, không phải h≥2.
+- **Quyết định nguồn:** Thay nội dung phần 6 cũ theo yêu cầu; chỉ dẫn biên tập giữ trong planning, không đưa lên slide hoặc notes.
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 24; hw02 bài 1, 5.
+### L02-06-02 — Điểm thưởng của hai lựa chọn
 
-- **Luận điểm:** Hai nhiệm vụ trên mê cung khác nhau ở thông tin cho trước và kết quả cần tìm.
-- **Nhu cầu và lý do tồn tại:** Sinh viên hay trộn hai nhiệm vụ khi đọc đề, cần bảng phân biệt đầu vào, đầu ra.
-- **Cách thể hiện và độ phù hợp năm 3:** Bảng hai hàng dùng mũi tên và số bước làm ví dụ trước tên gọi dự đoán và điều khiển.
-- **Kết nối vào:** Đã có chính sách, tổng thưởng và giá trị; mê cung cung cấp một ví dụ cụ thể.
-- **Kết nối ra:** Gắn hai nhiệm vụ với định nghĩa dự đoán và điều khiển ở trang kế.
-- **Sản phẩm học tập/kiểm tra:** Phân biệt việc nhận một quy tắc có sẵn với việc tìm quy tắc.
-- **Quyết định nguồn:** Giữ trang 24, tách thành slide mở riêng để đặt khung trước ví dụ.
+Thời lượng: 3 phút. Nguồn: ví dụ và liên hệ mới theo kế hoạch đã được duyệt.
 
-### L02-06-02 — Dự đoán và điều khiển
+- **Luận điểm:** Tổng từ điểm đầu khác thưởng tức thời và tổng sau kết thúc.
+- **Nhu cầu và lý do tồn tại:** Tổng từ điểm đầu khác thưởng tức thời và tổng sau kết thúc.
+- **Cách thể hiện:** Hai công thức với phân rã bước cuối.
+- **Kết nối vào:** Sáu bước tới đích, hai bước tới hố.
+- **Kết nối ra:** Thay ba giá trị alpha.
+- **Sản phẩm học tập/kiểm tra:** Vận dụng ở L02-06-06; câu 2 cần h>2, không phải h≥2.
+- **Quyết định nguồn:** Thay nội dung phần 6 cũ theo yêu cầu; chỉ dẫn biên tập giữ trong planning, không đưa lên slide hoặc notes.
 
-Thời lượng: 2 phút. Nguồn: PPTX trang 24–26; hw02 bài 5.
+### L02-06-03 — Cùng môi trường, khác hành vi
 
-- **Luận điểm:** Giá trị đo chất lượng chính sách: -16 tốt hơn -18 khi $\gamma=1$.
-- **Nhu cầu và lý do tồn tại:** Con số cụ thể giúp thấy vì sao cần tiêu chí so chính sách.
-- **Cách thể hiện và độ phù hợp năm 3:** Hai giá trị đặt cạnh trong công thức lớn, so sánh tức thời.
-- **Kết nối vào:** Quy ước thưởng -1 mỗi chuyển từ phần 2.
-- **Kết nối ra:** Dùng mê cung để minh họa nhiệm vụ dự đoán dưới chính sách cho trước.
-- **Sản phẩm học tập/kiểm tra:** Phân biệt hai loại đầu ra qua ví dụ; tự kiểm tra ở cuối phần.
-- **Quyết định nguồn:** Sửa trang24: dự đoán giữ chính sách, điều khiển tìm chính sách. Bỏ so sánh v của chính sách thêm một vòng2bước vì vòng rồi thoát không là chính sách xác định dừng trên riêng tọa độ.
+Thời lượng: 3 phút. Nguồn: ví dụ và liên hệ mới theo kế hoạch đã được duyệt.
 
-### L02-06-03 — Đặc tả môi trường mê cung
+- **Luận điểm:** Thay chi phí có thể khiến tác tử chọn hố.
+- **Nhu cầu và lý do tồn tại:** Thay chi phí có thể khiến tác tử chọn hố.
+- **Cách thể hiện:** Bảng alpha 0, 1, 3 và các tổng 10/0, 4/-2, -8/-6.
+- **Kết nối vào:** Hai biểu thức tổng.
+- **Kết nối ra:** Tìm ngưỡng tổng quát.
+- **Sản phẩm học tập/kiểm tra:** Vận dụng ở L02-06-06; câu 2 cần h>2, không phải h≥2.
+- **Quyết định nguồn:** Thay nội dung phần 6 cũ theo yêu cầu; chỉ dẫn biên tập giữ trong planning, không đưa lên slide hoặc notes.
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 25; hw02 bài 2.
+### L02-06-04 — Ngưỡng thay đổi hành vi
 
-- **Luận điểm:** Mê cung là MDP xác định với thưởng -1 mỗi chuyển và một trạng thái kết thúc.
-- **Nhu cầu và lý do tồn tại:** Đặc tả chính xác trước khi tính đường đi và giá trị.
-- **Cách thể hiện và độ phù hợp năm 3:** Bảng đặc tả toàn chiều ngang, không lặp hình khiến chữ nhỏ; ghi rõ27ôtrống và G thay vì64ô.
-- **Kết nối vào:** Bộ bốn thành phần MDP từ phần 3.
-- **Kết nối ra:** Đặc tả này cố định cho slide chính sách và giá trị.
-- **Sản phẩm học tập/kiểm tra:** Hỏi thưởng khi đụng tường và vị trí đích.
-- **Quyết định nguồn:** Giữ đặc tả trang 25 và hw02 bài 2, ghép vào một slide duy nhất.
+Thời lượng: 4 phút. Nguồn: ví dụ và liên hệ mới theo kế hoạch đã được duyệt.
 
-### L02-06-04 — Chính sách trên mê cung
+- **Luận điểm:** Hai lựa chọn đổi thứ tự ở alpha 2,5.
+- **Nhu cầu và lý do tồn tại:** Hai lựa chọn đổi thứ tự ở alpha 2,5.
+- **Cách thể hiện:** SVG hai đường thẳng có nhãn, đường đứt/liền và giao điểm.
+- **Kết nối vào:** Các ví dụ trước gợi ra sự đổi lựa chọn.
+- **Kết nối ra:** Ảnh hưởng của thiết kế thưởng.
+- **Sản phẩm học tập/kiểm tra:** Vận dụng ở L02-06-06; câu 2 cần h>2, không phải h≥2.
+- **Quyết định nguồn:** Thay nội dung phần 6 cũ theo yêu cầu; chỉ dẫn biên tập giữ trong planning, không đưa lên slide hoặc notes.
 
-Thời lượng: 2 phút. Nguồn: PPTX trang 26; hw02 bài 2.
+### L02-06-05 — Thiết kế thưởng và hành vi
 
-- **Luận điểm:** Một chính sách cho trước sinh ra đường đi xác định dài 16 chuyển.
-- **Nhu cầu và lý do tồn tại:** Cần đường đi cụ thể để slide sau tính giá trị từng ô.
-- **Cách thể hiện và độ phù hợp năm 3:** Hình mũi tên nguyên bản nguồn, trực quan cho lưới nhỏ.
-- **Kết nối vào:** Đặc tả mê cung slide trước.
-- **Kết nối ra:** Danh sách 16 chuyển là dữ liệu tính $v$.
-- **Sản phẩm học tập/kiểm tra:** Yêu cầu liệt kê lại các chuyển từ $(0,2)$.
-- **Quyết định nguồn:** Giữ nguyên hình trang 26, không giảng thuật toán tìm đường.
+Thời lượng: 2 phút. Nguồn: ví dụ và liên hệ mới theo kế hoạch đã được duyệt.
 
-### L02-06-05 — Giá trị trên mê cung
+- **Luận điểm:** Phạt bước quá lớn khuyến khích kết thúc ở hố.
+- **Nhu cầu và lý do tồn tại:** Phạt bước quá lớn khuyến khích kết thúc ở hố.
+- **Cách thể hiện:** Ba nhận xét và ngưỡng mới khi phạt hố thêm h.
+- **Kết nối vào:** Ngưỡng cơ sở.
+- **Kết nối ra:** Tính mức phạt để tác tử ưu tiên đích.
+- **Sản phẩm học tập/kiểm tra:** Vận dụng ở L02-06-06; câu 2 cần h>2, không phải h≥2.
+- **Quyết định nguồn:** Thay nội dung phần 6 cũ theo yêu cầu; chỉ dẫn biên tập giữ trong planning, không đưa lên slide hoặc notes.
 
-Thời lượng: 3 phút. Nguồn: PPTX trang 26; hw02 bài 6.
+### L02-06-06 — Câu hỏi kiểm tra
 
-- **Luận điểm:** Với $\gamma=1$, giá trị bằng âm số chuyển còn lại tới đích.
-- **Nhu cầu và lý do tồn tại:** Kiểm tra sinh viên đọc được giá trị từ khoảng cách theo chính sách.
-- **Cách thể hiện và độ phù hợp năm 3:** Hình toàn bộ giá trị và công thức lớn v_π(0,2)=−16 bên cạnh; câu hỏi kiểm tra ô sát đích và G.
-- **Kết nối vào:** Đường đi 16 chuyển slide trước.
-- **Kết nối ra:** Quy ước giá trị ở đích chuẩn bị cho tổng thưởng sau kết thúc ván cờ.
-- **Sản phẩm học tập/kiểm tra:** Đối chiếu số bước còn lại với giá trị; câu hỏi tự tính nằm cuối phần.
-- **Quyết định nguồn:** Giữ số gốc trang 26, không gọi Bellman hay cập nhật lặp.
+Thời lượng: 3 phút. Nguồn: ví dụ và liên hệ mới theo kế hoạch đã được duyệt.
 
-### L02-06-06 — Trạng thái kết thúc trong trò chơi
+- **Luận điểm:** Áp dụng bất đẳng thức để chọn đường và sửa thưởng.
+- **Nhu cầu và lý do tồn tại:** Áp dụng bất đẳng thức để chọn đường và sửa thưởng.
+- **Cách thể hiện:** Ba câu hỏi đánh số, đáp án trong notes.
+- **Kết nối vào:** Hai tổng và ngưỡng có h.
+- **Kết nối ra:** Liên hệ cơ chế khuyến khích.
+- **Sản phẩm học tập/kiểm tra:** Vận dụng ở L02-06-06; câu 2 cần h>2, không phải h≥2.
+- **Quyết định nguồn:** Thay nội dung phần 6 cũ theo yêu cầu; chỉ dẫn biên tập giữ trong planning, không đưa lên slide hoặc notes.
 
-Thời lượng: 3 phút. Nguồn: PPTX, trang 11; bài kiểm tra suy ra từ quy ước phần thưởng và điều kiện kết thúc..
+### L02-06-07 — Khuyến khích và chế tài
 
-- **Luận điểm:** Tại trạng thái kết thúc, phần thưởng bước cuối và lợi nhuận từ đó là hai đại lượng khác nhau.
-- **Nhu cầu và lý do tồn tại:** Sinh viên hay đồng nhất $R_T$ với $G_T$; ví dụ cờ cho phân biệt rõ.
-- **Cách thể hiện và độ phù hợp năm 3:** Bàn cờ kết thúc vẽ đúng nguồn11, nối quy ước thưởng và tổng tương lai sang một trò chơi khác.
-- **Kết nối vào:** Điều kiện dừng ở mê cung và định nghĩa $G_t$ phần 2.
-- **Kết nối ra:** Câu hỏi cuối phần tích hợp các khái niệm qua bốn tình huống.
-- **Sản phẩm học tập/kiểm tra:** Phân biệt thưởng nhận ở bước cuối với tổng thưởng sau kết thúc; câu hỏi nằm cuối phần.
-- **Quyết định nguồn:** Giữ hình trang 11; lược cây cập nhật cùng trang vì là ôn bài 01 và không dạy thuật toán mới.
+Thời lượng: 2 phút. Nguồn: ví dụ và liên hệ mới theo kế hoạch đã được duyệt.
 
-### L02-06-07 — Câu hỏi kiểm tra
-
-Thời lượng: 4 phút. Nguồn: các khái niệm và ví dụ trong phần 6; xem nguồn cụ thể trong HTML.
-
-- **Luận điểm:** Vận dụng dự đoán/điều khiển, trạng thái kết thúc và thay đổi quan sát.
-- **Nhu cầu và lý do tồn tại:** Khép phần bằng câu hỏi áp dụng và giải thích, kiểm tra trước khi chuyển sang phần kế.
-- **Cách thể hiện và độ phù hợp năm 3:** Danh sách đánh số từ 1 đến 4; dữ kiện nằm trong câu hỏi, đáp án chỉ trong ghi chú diễn giả.
-- **Kết nối vào:** Các ví dụ mê cung, chính sách cho trước và bàn cờ kết thúc.
-- **Kết nối ra:** Phần 7 tổng hợp vai trò của những thành phần đã học.
-- **Sản phẩm học tập/kiểm tra:** Trả lời lần lượt 4 câu; giải thích bằng khái niệm và dữ kiện vừa học.
-- **Quyết định nguồn:** Gom câu hỏi về cuối phần theo yêu cầu; giữ ý nguồn, không thêm thuật toán hay kiến thức chưa học.
+- **Luận điểm:** Khuyến khích và chế tài có thể định hướng hành vi xã hội.
+- **Nhu cầu và lý do tồn tại:** Khuyến khích và chế tài có thể định hướng hành vi xã hội.
+- **Cách thể hiện:** Hai thẻ và giới hạn về quyền, nghĩa vụ, công bằng.
+- **Kết nối vào:** Mức thưởng phạt đã làm thay đổi lựa chọn trong mê cung.
+- **Kết nối ra:** Bảng tổng hợp các thành phần của bài toán ở phần 7.
+- **Sản phẩm học tập/kiểm tra:** Vận dụng ở L02-06-06; câu 2 cần h>2, không phải h≥2.
+- **Quyết định nguồn:** Thay nội dung phần 6 cũ theo yêu cầu; chỉ dẫn biên tập giữ trong planning, không đưa lên slide hoặc notes.
 
 ## Phần 7: Tổng kết và tự kiểm tra — 7 phút
 
 - **Chức năng:** Chốt lại bốn thành phần của bài toán ra quyết định tuần tự bằng mê cung mở đầu, kiểm tra mức hiểu qua ba câu hỏi, và giao bài tập cùng tài liệu đọc.
 - **Tiên quyết:** Sinh viên đã theo các section 1–6: tương tác tác tử–môi trường, thưởng, trạng thái/quan sát, chính sách, hàm giá trị, mô hình, dự đoán/điều khiển và bài mê cung.
-- **Kết nối vào:** Định nghĩa S, O, X, chính sách, phần thưởng tức thời, G và v, mô hình dự báo từ section 2–5; mê cung 8x8 ở section 6.
+- **Kết nối vào:** Định nghĩa S, O, X, chính sách, phần thưởng tức thời, G và v, mô hình dự báo từ section 2–5; ví dụ đích/hố ở phần 6.
 - **Kết nối ra:** Bài tập củng cố khái niệm và chuẩn bị hình thức hóa quá trình quyết định Markov, phương trình Bellman ở Bài 03.
 - **Mạch phù hợp sinh viên năm 3:** Bảng chức năng và ba câu phân biệt giúp kiểm tra khả năng dùng khái niệm, không chỉ nhớ tên.
 

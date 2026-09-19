@@ -1912,3 +1912,155 @@ Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flas
 **Finding 3 — Info:** 05-03 cho γ∈[0,1] trong khi định lý yêu cầu γ>0; notes 05-10 đã giải thích rõ khác biệt — chấp nhận được, không cần sửa.
 
 **Kết luận: Pass** với 2 lỗi minor về ký hiệu.
+
+
+## Phần thưởng định hướng hành vi và biên tập no-ai-slop — 2026-09-19
+
+- Thực hiện kế hoạch bảy slide/20 phút đã được người dùng chấp thuận: thay toàn bộ L02-06-01…07 bằng mê cung đích/hố, hai tổng thưởng, ví dụ số, ngưỡng alpha, thiết kế thưởng, câu hỏi kiểm tra và liên hệ khuyến khích/chế tài xã hội. Toàn bài giữ 41 trang, 7 phần, 120 phút.
+- Mô hình mới: mỗi cạnh hành lang là một bước, chuyển xác định, có thể quay lại; đích và hố kết thúc ngay. Đường ngắn nhất đến đích 6 bước, hố 2 bước. Mỗi bước kể cả bước cuối nhận âm alpha; đích cộng thêm 10, hố không cộng thêm; gamma=1 và alpha không âm. Hai tổng là $10-6\alpha$ và $-2\alpha$, ngưỡng 2,5. Với phạt hố bổ sung h, ngưỡng $(10+h)/4$; tại alpha=3 cần h>2 để ưu tiên đích.
+- Vẽ hai SVG mới: `incentive-maze.svg`, `incentive-threshold.svg`. Hình có mô tả tiếp cận, nét liền/đứt và nhãn; không chỉ phân biệt bằng màu. Các hình nguồn cũ vẫn giữ, không ghi đè.
+- Sai khác có chủ ý: ví dụ mới thay mê cung 16 bước và bàn cờ của phần 6; phân biệt đánh giá/điều khiển được gộp vào ghi chú tính tổng. Câu hỏi kiểm tra áp chót, liên hệ xã hội ở cuối theo yêu cầu cụ thể. Cập nhật mục lục bài, ánh xạ nguồn, dàn ý và storyboard; liên kết index vẫn đúng, không cần sửa.
+- Dùng no-ai-slop và tự kiểm theo `eval.md`: bỏ chỉ dẫn biên tập, tham chiếu người dùng, lời dẫn “slide này/trang kế tiếp” và nhãn quy trình trong HTML/notes; giữ các điều kiện toán học, nguồn và đáp án. Đọc toàn bộ thân bài và ghi chú trước khi chỉnh. Tệp planning vẫn chứa quyết định biên tập vì là tài liệu nội bộ. Rà theo Quill về thứ tự khái niệm, dữ kiện và chuyển phần; không tạo quill.json.
+- Tác tử lập kế hoạch: `incentives-plan.json`, requested_model = observed_model = `deepseek/deepseek-v4-flash-0731`, provider OpenRouter; kế hoạch được người dùng duyệt ở lượt trước. Tác tử soạn: `incentives-writer.json`, requested_model = observed_model = `z-ai/glm-5.3-flash`, provider OpenRouter. Điều phối viên sửa định dạng RevealJS/KaTeX, từ “agent”, câu hỏi sai “h lớn nhất” và dấu bất đẳng thức bị đảo trong bản thô trước khi tích hợp.
+- Năm reviewer độc lập dùng `review-section`, `--no-tools`, nhận cả phần 6, hai trang lân cận mỗi phía, bản đồ toàn bài và các câu biên tập ngoài phần 6. Gói đầu vượt ngưỡng 32000 ký tự khoảng 200 ký tự, bị chặn trước API; thu hẹp diff về các câu thực sự thay đổi rồi chạy thành công cùng mô hình/ngân sách. Không gọi đây là rà nội dung toàn bộ deck.
+- Quyết định rà: sửa “Mức phạt quá cao” thành “Mức phạt mỗi bước quá cao” để phân biệt alpha với h. Không gán ví dụ mới cho PPTX theo gợi ý một reviewer. Nhãn “Ví dụ minh họa” ở đầu cụm cùng ánh xạ nội bộ đủ truy nguyên; không lặp nhãn vào từng slide. Đổi mục lục phần 6 là thay đổi đã được duyệt, không khôi phục tên cũ. Điều phối viên đã mở ảnh chụp SVG và kiểm tra đồ thị chuyển độc lập để xử lý giới hạn reviewer chỉ đọc HTML.
+- Lượt biên tập cuối riêng: `incentives-editor.json`, requested_model = observed_model = `z-ai/glm-5.3-flash`, provider OpenRouter. Nhận sửa câu về phạt mỗi bước. Không nhận câu nối khẳng định tác tử luôn chọn đích, vì sai khi alpha>2,5; không nhận nhãn nguồn chứa “speaker/tự viết”, vì là lời bình biên soạn. Không đổi các công thức đã được reviewer toán xác nhận.
+- Kiểm định: BFS trên đồ thị với H/G không có cạnh ra cho khoảng cách S→H=2, S→G=6; kiểm lại bảng số, giao điểm và điều kiện h>2. XML SVG hợp lệ. ID/thứ tự outline-storyboard, phân bổ thời lượng từng cụm và tổng 120 phút khớp. HTML dùng CSS lecture-slide.css chung; không thêm raster hay thư viện.
+- RevealJS cục bộ: 82 lượt kiểm tra (41 trang × 1280×720 và 390×844), không tràn, không lỗi KaTeX, không công thức thô, không ảnh hỏng, không lỗi JavaScript/HTTP; bàn phím hoạt động. Đã xem các ảnh chụp phần 6, kiểm tra nhãn, đường và độ đọc được. `git diff --check` đạt. Bản cuối chỉ sửa thêm một câu ghi chú, không thay bố cục.
+- Giới hạn: Codex Slides chưa khả dụng cho việc xác minh trực quan trong phiên này; dùng kiểm tra RevealJS tại cổng 8765, không tuyên bố đã rà bằng Codex Slides.
+
+### Rà phần 6: student
+
+Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flash`; provider `OpenRouter`.
+
+**Báo cáo review L02-06 (file2627-1), chỉ đọc excerpt, không dùng tool.**
+
+**Kết luận chính: không có lỗi nghiêm trọng.**
+
+Kiểm tra chính theo yêu cầu:
+
+1. **Ngưỡng 2,5 (L02-06-04):** $10-6\alpha=-2\alpha \Rightarrow \alpha=2{,}5$, tổng tại ngưỡng $-5$. Đúng, khớp bảng ở L02-06-03 (α=3: $-8$ vs $-6$, chọn hố) và L02-06-05 ($\alpha>2{,}5$ chọn hố). ✓
+2. **Điều kiện h>2 tại α=3 (L02-06-06):** cần $10-18>-6-h \Leftrightarrow -8>-6-h \Leftrightarrow h>2$; ghi đúng, kèm trường hợp h nguyên $h\ge3$. Khớp công thức tổng quát $\alpha_{\text{ngưỡng}}=(10+h)/4$ ở L02-06-05. ✓
+3. **Trung thực nguồn ví dụ mới (L02-06-01):** notes ghi "Nguồn: Ví dụ minh họa" — trung thực, không gán nguồn ngoài. ✓
+4. **Phép liên hệ xã hội (L02-06-07):** không có tuyên bố về utility con người; notes giới hạn rõ "Phép liên hệ chỉ xét vai trò của khuyến khích", nêu nghĩa vụ/niềm tin. ✓
+5. **Toán mê cung:** 6 bước tới đích ($5(-\alpha)+(10-\alpha)=10-6\alpha$), 2 bước vào hố ($-2\alpha$), $\gamma=1$, thưởng bước cuối có tính, $G_T=0$ ở trạng thái kết thúc — nhất quán qua 01–05. α=0: mọi đường tới đích được 10, đúng với mô tả đi vòng/backtrack. ✓
+6. **Luồng:** incoming từ phần 5 (L02-05-08 mô hình chuyển/thưởng, L02-05-09 quiz có nguồn) mạch lạc; outgoing L02-07-01 tổng kết thành phần phủ đủ $S_t,O_t,X_t$, $\pi$, $R,G,v_\pi$, mô hình. ✓
+7. **Không AI-slop/editorial instruction** trong body/notes của section 6; các copyedit lân cận (L02-01-04 đổi mục đề thành "Phần thưởng định hướng hành vi" khớp nội dung mới; L02-05-08/10, L02-03-* chỉ dọn nguồn, giữ nguyên toán) đúng phạm vi cleanup. ✓
+
+**Finding nhỏ (Low):**
+- **L02-06-06:** thiếu `note-source` so với quiz L02-05-09 có nguồn. Fix: thêm "Nguồn: Ví dụ minh họa; PPTX trang 25–26" hoặc tương tự.
+- **L02-06-03/04/05:** notes không có dòng nguồn; nếu nhất quán là yêu cầu, bổ sung "Ví dụ minh họa" như 06-01.
+
+Không có vấn đề nào ngoài phạm vi được duyệt.
+
+### Rà phần 6: rl
+
+Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flash`; provider `OpenRouter`.
+
+**Báo cáo review rl — File2627-1, phần 6 (L02-06-01…07) + 2 slide biên giới mỗi bên**
+
+**Kiểm tra chính (đạt):**
+- Ngưỡng 2,5 đúng: 10−6α=−2α ⟺ α=2,5 (L02-06-04); bảng α=3: −8 < −6, chọn hố đúng (L02-06-03).
+- h>2 tại α=3 đúng: −8>−6−h ⟺ h>2; h nguyên ⟹ h≥3 (L02-06-06). Ngưỡng (10+h)/4 đúng (L02-06-05).
+- Toán nhất quán spec: 5 bước −α + bước cuối 10−α = 10−6α; hố −2α; G_T=0; γ=1; α=0 đi mãi = 0 < 10; mọi đường hữu hạn tới đích = 10. Không có đường tắt, được nêu rõ (L02-06-01 notes).
+- Nguồn trung thực: L02-06-01 ghi "Nguồn: Ví dụ minh họa" — ví dụ mới được khai báo đúng.
+- Liên hệ xã hội (L02-06-07): notes giới hạn rõ "Phép liên hệ chỉ xét vai trò của khuyến khích", không gán utility cho con người — đạt.
+- Không thấy chỉ dẫn biên tập/lời AI sót trong body/notes; các cleanup lân cận (L02-05-08/09/10, L02-07-01/03) chỉ xóa meta, giữ nguyên toán và trích dẫn.
+
+**Phát hiện:**
+
+1. **Minor — L02-06-01:** Cầu nối vào từ phần 5 còn mỏng; notes chỉ nói "mê cung mới", không nhắc khái niệm phần 5 (đánh giá chính sách/giá trị). **Fix:** thêm một câu trong notes liên hệ "đánh giá chính sách bằng tổng thưởng như phần trước".
+
+2. **Minor — L02-06-02…06:** Các slide này không có dòng note-source; chỉ slide 01 khai báo nguồn. **Fix:** thêm "Nguồn: Ví dụ minh họa" nhất quán vào notes từng slide để truy vết ví dụ mới.
+
+3. **Info — L02-06-01 (alt text):** Mô tả "nhánh trên/nhánh dưới" khớp spec (S trái trên, G phải trên, H giữa hành lang trên, cạnh dọc chỉ ở đầu hành lang, mỗi cạnh 1 bước); không cần sửa.
+
+**Kết luận:** Phần 6 đạt về toán, ngưỡng, nguồn trung thực, liên hệ xã hội và vệ sinh văn bản; chỉ cần 2 chỉnh minor về cầu nối flow vào và dòng nguồn.
+
+### Rà phần 6: math
+
+Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flash`; provider `OpenRouter`.
+
+**Báo cáo review File2627-1, phần 6 (L02-06-01 → 06-07) + 2 slide lân cận mỗi bên. Kết luận: ĐẠT, 1 lỗi nhỏ.**
+
+**Kiểm tra toán (đúng):**
+- Ngưỡng 2.5: 10−6α=−2α ⟺ α=2.5 ✓ (L02-06-04, alt text "−5" đúng).
+- α=3: đích −8, hố −6, chọn hố ✓ (L02-06-03).
+- Mỗi bước −α kể cả bước cuối: 5(−α)+(10−α)=10−6α ✓ (L02-06-02); G_T=0 ở trạng thái kết thúc ✓.
+- Phạt hố h: −8>−6−h ⟺ h>2; h nguyên ⟹ h≥3 ✓ (L02-06-06); ngưỡng (10+h)/4 ✓ (L02-06-05).
+- α=0: đi mãi = 0 < 10; chu kỳ không cải thiện khi α>0 ✓ (L02-06-01 notes).
+- Cấu trúc đồ thị: S→H 2 bước, S→G 6 bước, H/G terminal, không tắt đường, được phát biểu nhất quán ✓.
+
+**Tìm thấy:**
+
+1. **Minor — L02-06-05 (notes):** "Mức phạt quá cao khiến hố trở thành lựa chọn tối ưu" — ngược chiều với h (phạt hố tăng h làm hố kém hấp dẫn; câu sau "Tăng h mở rộng khoảng… chọn đích" mới đúng). Câu này dễ hiểu là α (phạt mỗi bước) quá cao. **Fix:** đổi thành "Mức phạt mỗi bước quá cao khiến hố trở thành lựa chọn tối ưu."
+
+**Các mục yêu cầu — đạt:**
+- Nguồn trung thực: L02-06-01 ghi "Ví dụ minh họa" cho mê cung mới, không gán nguồn giả ✓.
+- Liên hệ xã hội (L02-06-07): không gán utility cho con người, ghi rõ giới hạn phép liên hệ ✓.
+- Không AI-slop/editorial instructions trong thân và notes của phần 6 ✓ (các cụm "theo yêu cầu" chỉ xuất hiện ngoài phạm vi và đã được cleanup ở copyedits).
+- Toán/citations thật được giữ nguyên ✓.
+- Flow: incoming từ phần 5 (L02-05-08 mô hình P/r với ví dụ mê cung; L02-05-09 quiz) — L02-06-01 mở đầu "mê cung mới" nối tiếp tự nhiên ✓. Outgoing sang phần 7: L02-07-01 tổng kết thành phần dựa trên mê cung vừa phân tích ✓.
+- Quiz cuối phần 6 giữ vị trí áp chót, liên hệ xã hội cuối — theo override, không flag ✓.
+
+Không có câu hỏi/đề xuất ngoài phạm vi được duyệt.
+
+### Rà phần 6: academic
+
+Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flash`; provider `OpenRouter`.
+
+**Báo cáo review File2627-1, phần 6 (L02-06-01 → 07) + hàng xóm**
+
+**Kết luận: ĐẠT, không lỗi chặn.**
+
+**Kiểm tra toán (Primary concern):**
+- Ngưỡng 2,5: $10-6\alpha=-2\alpha \Rightarrow \alpha=2{,}5$ ✓ (L02-06-04, alt text "giao tại alpha 2,5, tổng -5" đúng: $10-15=-5$).
+- $\alpha=3$: đích $-8$, hố $-6$, chọn hố ✓ (L02-06-03, ghi chú "chi phí 18" = 6×3 đúng).
+- $h>2$ tại $\alpha=3$: $-8>-6-h \Rightarrow h>2$; ghi chú nêu đúng cả trường hợp $h=2$ ngang nhau và $h\ge3$ nếu nguyên ✓ (L02-06-06).
+- Công thức tổng quát $(10+h)/4$ ✓ (L02-06-05).
+- $G_{\text{đích}}=5(-\alpha)+(10-\alpha)=10-6\alpha$; $G_{\text{hố}}=-2\alpha$ ✓ (L02-06-02).
+- $\alpha=0$: mọi đường hữu hạn tới đích = 10, không ưu tiên đường ngắn ✓ (L02-06-01 notes, L02-06-05, L02-06-06 Q3).
+- Cấu trúc đồ thị: S→H 2 bước, S→G 6 bước, H/G kết thúc, mỗi cạnh 1 bước, không tắt đường — nhất quán trên L02-06-01/02, alt text đúng, ghi chú "khoảng cách trên hình không biểu thị số bước" xử lý tốt vấn đề thị giác.
+
+**Nguồn trung thực:** L02-06-01 ghi "Nguồn: Ví dụ minh họa" — trung thực cho ví dụ mới ✓.
+
+**Phép liên hệ xã hội (L02-06-07):** notes giới hạn rõ "Phép liên hệ chỉ xét vai trò của khuyến khích", không gán utility cho con người ✓.
+
+**Editor instructions:** đã loại khỏi body/notes ở các diff (L02-01-03/04, 03-02/06/09/10/11, 05-08/10, 07-03); không còn cụm "theo yêu cầu/biên tập" trong phần 6 ✓.
+
+**Flow:** incoming L02-05-08/09 (mô hình P, G_t) hiện diện; outgoing L02-07-01 (tổng hợp thành phần), L02-07-02 (quiz), L02-07-03 hiện diện ✓.
+
+**Cleanup ngoài phạm vi:** các diff chỉ xóa câu meta, giữ nguyên phát biểu toán/citation (ví dụ L02-05-10 giữ định lý, nguồn CS188/Shakerinava) ✓.
+
+**Severity:** Không có High/Medium. Low (không bắt buộc): L02-06-02 câu "Ở trạng thái kết thúc, $G_T=0$" có thể gây nhầm với phần thưởng bước cuối; ghi chú đã giải thích rõ, chấp nhận được.
+
+### Rà phần 6: flow
+
+Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flash`; provider `OpenRouter`.
+
+# Báo cáo kiểm duyệt độc lập — Section 6, L02 file2627-1
+
+**Phạm vi:** L02-06-01…07 (+ hàng xóm L02-05-08/09, L02-07-01/03; diff cleanup các phần khác).
+
+**Kiểm tra toán — Đạt:**
+- Đích 6 bước: $5(-\alpha)+(10-\alpha)=10-6\alpha$ ✓ (06-02)
+- Hố 2 bước: $-2\alpha$ ✓
+- Ngưỡng chính xác: $10-6\alpha=-2\alpha \Rightarrow \alpha=2{,}5$, tổng $-5$ ✓ (06-03, 06-04; bảng đúng tại α=0,1,3)
+- Phạt hố: $10-6\alpha>-2\alpha-h \iff \alpha<(10+h)/4$ ✓ (06-05)
+- Quiz (cuối phần, theo đúng override): α=3 cần $h>2$; α=2 chọn đích ($-2>-4$) ✓ (06-06)
+- α=0: đi mãi 0 < 10; mọi đường hữu hạn tới đích = 10 ✓; $G_T=0$ giải thích rõ, không sai ✓
+- H/G terminal không có bước ra; lùi đường cho phép; mỗi liên kết 1 bước dù dài hình ảnh khác — nêu rõ ở ghi chú 06-01 ✓
+
+**Nguồn & analogy:**
+- 06-01 "Nguồn: Ví dụ minh họa" — trung thực về ví dụ mới ✓
+- 06-07 chỉ liên hệ cơ chế khuyến khích, tường minh phủ nhận quy về lợi ích con người ✓
+
+**Tìm kiếm (severity/trang/vấn đề/bằng chứng/sửa):**
+
+1. **Minor — L02-06-01:** Không kiểm chứng được cấu trúc SVG 5 nút/hàng, S-G-H, chỉ có cạnh dọc ở hai đầu (chỉ có alt text; file .svg không nằm trong excerpt). **Bằng chứng:** `<img src="img/lec-02/incentive-maze.svg">`. **Sửa:** cần xem SVG nếu yêu cầu kiểm chứng hình học.
+
+2. **Minor — L02-01-04 (diff, ngoài section 6):** Thay mục agenda "Dự đoán, điều khiển và bài toán mê cung" → "Phần thưởng định hướng hành vi" là thay đổi nội dung, không phải cleanup giữ nguyên phát biểu. **Sửa:** xác nhận thay đổi này thuộc phê duyệt hoặc giữ mục cũ.
+
+**Flow:** Incoming ✓ từ part 5 (L02-05-08 mô hình P/r, 05-09 quiz tổng thưởng $G_t$). Outgoing ✓ sang L02-07-01 bảng thành phần dùng mê cung.
+
+**Không phát hiện:** AI-slop, chỉ dẫn biên tập trong body/notes của section 6; sai số toán; vi phạm scope khác.
