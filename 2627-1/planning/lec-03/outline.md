@@ -1,6 +1,6 @@
 # Bài 03 — Dàn ý triển khai
 
-Trạng thái: đã triển khai phần 1–4/7 theo [kế hoạch chi tiết](detailed-slide-plan.md). Các phần sau vẫn là nội dung cũ cho đến lượt thay thế tương ứng.
+Trạng thái: đã triển khai phần 1–5/7 theo [kế hoạch chi tiết](detailed-slide-plan.md). Các phần sau vẫn là nội dung cũ cho đến lượt thay thế tương ứng.
 
 ## Mục tiêu và phạm vi
 
@@ -94,3 +94,13 @@ $P$ trong chuỗi Markov là ma trận; $P(s',r\mid s,a)$ trong MDP là xác su�
 - `L03-04-07`: Dạng ma trận và nghiệm.
 - `L03-04-08`: Điều kiện để giá trị hữu hạn.
 - `L03-04-09`: Câu hỏi kiểm tra.
+
+## Phần 5
+
+- `L03-05-01`: MDP và chính sách cố định.
+- `L03-05-02`: Lựa chọn làm thay đổi phản hồi.
+- `L03-05-03`: Quá trình quyết định Markov.
+- `L03-05-04`: Cố định một chính sách.
+- `L03-05-05`: Từ MDP đến quá trình phần thưởng Markov.
+- `L03-05-06`: Mô hình dưới chính sách.
+- `L03-05-07`: Câu hỏi kiểm tra.

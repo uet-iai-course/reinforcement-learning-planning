@@ -1,6 +1,6 @@
 # Bài 03 — Kế hoạch chi tiết từng slide
 
-Ngày lập: 2026-09-19. Trạng thái: đang triển khai, đã tích hợp phần 1–4/7; các phần sau chưa hoàn tất. Các ID `L03-…` dùng cho bản viết lại; outline và storyboard ghi phạm vi đã tích hợp thực tế.
+Ngày lập: 2026-09-19. Trạng thái: đang triển khai, đã tích hợp phần 1–5/7; các phần sau chưa hoàn tất. Các ID `L03-…` dùng cho bản viết lại; outline và storyboard ghi phạm vi đã tích hợp thực tế.
 
 ## Mục tiêu và phạm vi
 

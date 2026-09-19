@@ -1,6 +1,6 @@
 # Bài 03 — Storyboard triển khai
 
-Đã triển khai phần 1–4/7. Bảy phần và 120 phút theo [kế hoạch chi tiết](detailed-slide-plan.md); bản này ghi quyết định thể hiện thực tế. Các phần chưa triển khai dùng bản HTML cũ, không được tính là hoàn tất.
+Đã triển khai phần 1–5/7. Bảy phần và 120 phút theo [kế hoạch chi tiết](detailed-slide-plan.md); bản này ghi quyết định thể hiện thực tế. Các phần chưa triển khai dùng bản HTML cũ, không được tính là hoàn tất.
 
 ## Phần 1. Từ tương tác đến mô hình xác suất — 8 phút
 
@@ -620,3 +620,163 @@ Thời lượng: 3 phút. Vai trò: kiểm tra suy luận.
 **Nguồn:** PPTX44–48; hw02 bài3.
 
 **Quyết định thể hiện khi triển khai:** Ba câu đánh số; câu 2 kèm hàng P và r(s2) ngay trên slide để không cần quay lại trang trước. Các câu kiểm tra lý do của từng dấu bằng và điều kiện áp dụng, không chỉ chép định nghĩa. Tiên quyết: toàn bộ suy diễn phần 4; cầu nối: từ đánh giá một quá trình sang tác động của việc chọn hành động ở phần 5.
+
+## Phần 5. MDP và chính sách cố định — 20 phút
+
+Đầu vào: MRP và Bellman. Đầu ra: hiểu MDP có lựa chọn hành động; cố định một chính sách Markov dừng tạo mô hình P^pi,r^pi để đánh giá như MRP. Không mặc định MRP cảm sinh bằng đúng MRP sinh viên đầu bài: phải tính theo chính sách cụ thể.
+
+
+### L03-05-01 — MDP và chính sách cố định
+
+Thời lượng: 1 phút. Vai trò: mở phần.
+
+**Đầu vào:** MRP có quy luật chuyển đã cố định và phương trình đánh giá.
+
+**Nội dung trên slide:** Tiêu đề phần và hai lựa chọn học/nghỉ từ cùng một trạng thái.
+
+**Cách thể hiện:** Dùng cùng bối cảnh sinh viên, chuyển sang đồ thị MDP của nguồn trang 50; làm nổi lựa chọn tại C2.
+
+**Giải thích và hình thức hóa:** Ở phần trước quá trình chuyển đã cho sẵn; giờ hành động ảnh hưởng phản hồi.
+
+**Kết nối:** Nhìn hai hành động cụ thể trước định nghĩa MDP.
+
+**Kiểm tra/ghi chú đáp án:** Chưa hiện bộ thành phần ở trang mở.
+
+**Nguồn:** PPTX49–50.
+
+**Quyết định thể hiện khi triển khai:** Slide mở phần dùng đúng bối cảnh sinh viên đã quen từ phần 2–4, chỉ thêm tầng lựa chọn tại C2. Hình chỉ vẽ hai nhánh hành động từ một nút, không vẽ toàn hình MDP để tránh trùng slide sau; SV năm 3 nhìn thấy ngay rằng cùng trạng thái đầu cho hai kết quả khác nhau, đây là cầu nối trực tiếp từ MRP sang MDP. Tiên quyết: MRP, Bellman kỳ vọng ở phần 4.
+
+### L03-05-02 — Lựa chọn làm thay đổi phản hồi
+
+Thời lượng: 3 phút. Vai trò: ví dụ trực quan.
+
+**Đầu vào:** Bối cảnh sinh viên; tác tử có thể chọn học hoặc ngủ.
+
+**Nội dung trên slide:** Tại C2, chọn Study chuyển tới C3 và nhận -2; chọn Sleep chuyển tới Sleep và nhận 0.
+
+**Cách thể hiện:** Một nút C2 nối hai nút hành động có hình dạng riêng, rồi tới trạng thái kế tiếp.
+
+**Giải thích và hình thức hóa:** Phân biệt lựa chọn hành động với kết quả môi trường. Bản MDP nguồn có năm trạng thái: C1, C2, C3, Facebook, Sleep. So với MRP trước, thưởng thi đạt được gộp vào hành động Study từ C3 tới Sleep; Pub trở thành hành động dẫn qua một nút ngẫu nhiên. Nút này không phải trạng thái mới. Giải thích thay đổi biểu diễn trước khi hiện toàn hình, không nói đây chỉ là cùng ma trận P thêm nhãn hành động.
+
+**Kết nối:** Cần một mô hình có điều kiện theo cả s và a.
+
+**Kiểm tra/ghi chú đáp án:** Hai cạnh hành động không phải hai xác suất chuyển chưa điều kiện hóa.
+
+**Nguồn:** PPTX50; đồ thị Student MDP.
+
+**Quyết định thể hiện khi triển khai:** Hình lớn toàn cảnh Student MDP, đặt sau một câu phát hiện để SV tự đối chiếu với MRP đã vẽ ở phần 3. Nút hành động và nút ngẫu nhiên phân biệt bằng hình dạng chứ không chỉ màu, đúng yêu cầu đọc đồ thị nguồn. SV năm 3 cần thấy thay đổi biểu diễn trước khi gặp định nghĩa hình thức, vì sai số phổ biến là coi MDP chỉ là ma trận P cũ gắn thêm nhãn hành động.
+
+### L03-05-03 — Quá trình quyết định Markov
+
+Thời lượng: 3 phút. Vai trò: hình thức hóa.
+
+**Đầu vào:** Hai lựa chọn có phản hồi khác nhau; xác suất chung từ Bài02.
+
+**Nội dung trên slide:** Quá trình quyết định Markov (MDP), với trạng thái và hành động hữu hạn:
+
+$$\big(\mathcal S,\mathcal A,P,\gamma\big),\qquad
+P(s',r\mid s,a)=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a).
+$$
+
+$P(s',r\mid s,a)\ge0$, $\sum_{s',r}P(s',r\mid s,a)=1$.
+
+**Cách thể hiện:** Đặt (s,a) ở đầu một nhánh, cặp (s′,r) ở cuối; cùng ký hiệu xác suất chung của Bài 02.
+
+**Giải thích và hình thức hóa:** Ở đây P đã chứa cả quy luật thưởng nên không thêm một hàm thưởng độc lập vào bộ. Tập hành động hợp lệ A(s), miền thưởng rời rạc trong các công thức tổng; quy luật Markov và không đổi theo thời gian. Quan sát đầy đủ và biết mô hình là hai khái niệm khác nhau.
+
+**Kết nối:** Mô hình chưa quy định tác tử chọn hành động nào: cần chính sách.
+
+**Kiểm tra/ghi chú đáp án:** Nêu vai trò của từng thành phần trên chính ví dụ học/nghỉ.
+
+**Nguồn:** PPTX49; tiếp nối Bài02.
+
+**Quyết định thể hiện khi triển khai:** Công thức đặt giữa slide, hình nhánh ngắn phía dưới chỉ minh họa cấu trúc (s, a) → nút ngẫu nhiên → (s′, r), không vẽ lại đồ thị sinh viên để tránh lặp. SV năm 3 đã quen ký hiệu xác suất chung từ Bài 02 nên chỉ cần thấy điểm mới là A_t trong điều kiện. Hai dòng công thức, mỗi dòng một luận điểm, nằm trong giới hạn 3–4 dòng công thức lớn. Bản cuối bỏ hình nhánh trùng với05-01/02 để đủ chỗ cho định nghĩa xác suất chung, miền thưởng và giả thiết; công thức trên hai dòng, không giảm cỡ chữ.
+
+### L03-05-04 — Cố định một chính sách
+
+Thời lượng: 4 phút. Vai trò: ví dụ → định nghĩa.
+
+**Đầu vào:** MDP chưa quy định tần suất tác tử chọn các hành động.
+
+**Nội dung trên slide:** Tại C2, chọn Study với 0,75 và Sleep với 0,25; sau đó nhắc $\pi(a\mid s)$ và $\sum_a\pi(a\mid s)=1$.
+
+**Cách thể hiện:** Tô nhãn xác suất tại tầng hành động, khác nhãn ở tầng môi trường bằng vị trí và hình dạng, không chỉ màu.
+
+**Giải thích và hình thức hóa:** Đây là chính sách minh họa được chọn để tính, không gán là chính sách gốc hoặc tối ưu. Chốt chính sách đầy đủ: tại C1 chọn Study/Facebook mỗi hành động 0,5; tại Facebook chọn Facebook/Quit mỗi hành động 0,5; tại C3 chọn Study/Pub mỗi hành động 0,5; Sleep kết thúc, không chọn hành động. Xét chính sách Markov dừng; không khẳng định mọi chính sách đều dừng.
+
+**Kết nối:** Gộp hai tầng ngẫu nhiên thành phản hồi theo trạng thái.
+
+**Kiểm tra/ghi chú đáp án:** Từ C2 theo chính sách này, xác suất đến C3 là 0,75; đến Sleep là 0,25.
+
+**Nguồn:** PPTX52; xác suất 0,75/0,25 là bài luyện bổ sung.
+
+**Quyết định thể hiện khi triển khai:** Hình tách hai tầng: tầng hành động mang nhãn xác suất của π, tầng môi trường mang nhãn thưởng; hai tầng khác nhau cả vị trí lẫn hình dạng nút nên SV không nhầm xác suất chính sách với xác suất chuyển. Chỉ một trạng thái C2 được vẽ để giữ trọng tâm; chính sách đầy đủ liệt kê bằng lời trong notes vì đưa cả năm trạng thái lên hình sẽ trùng slide 2. Hiển thị ví dụ chọn hành động bằng hình trước công thức chính sách; nhãn thưởng đặt ở cạnh hành động→trạng thái kế tiếp, xác suất chọn ở cạnh trạng thái→hành động.
+
+### L03-05-05 — Từ MDP đến quá trình phần thưởng Markov
+
+Thời lượng: 3 phút. Vai trò: trực giác và phép tính trước công thức.
+
+**Đầu vào:** Chính sách đầy đủ đã chốt ở05-04; mô hình C2 theo từng hành động.
+
+**Nội dung trên slide:** Tại C2: $P^\pi(C2,C3)=0{,}75$, $P^\pi(C2,Sleep)=0{,}25$; $r^\pi(C2)=0{,}75(-2)+0{,}25(0)=-1{,}5$.
+
+**Cách thể hiện:** Bên trái hai tầng (chính sách/môi trường); bên phải nút C2 với các cạnh đã gộp.
+
+**Giải thích và hình thức hóa:** Giới thiệu ký hiệu mũ pi bằng lời “quy luật khi tác tử theo chính sách này”. Tính từng xác suất và thưởng bằng số trước, không đưa hai dấu tổng ngay từ đầu.
+
+**Kết nối:** Khái quát phép gộp ở tất cả trạng thái.
+
+**Kiểm tra/ghi chú đáp án:** Đổi pi làm P^pi hoặc r^pi thay đổi, dù mô hình môi trường giữ nguyên.
+
+**Nguồn:** PPTX52–55; hw02 bài4.
+
+**Quyết định thể hiện khi triển khai:** Hình chia đôi: trái là hai tầng chưa gộp, phải là nút C2 với hai cạnh đã mang xác suất gộp, cho thấy phép biến đổi một cách trực quan trước khi khái quát. Công thức chỉ hai dòng số cụ thể, phù hợp nhịp ví dụ trước định nghĩa. SV năm 3 thấy ngay r^π(C2) = −1,5 là trung bình có trọng số, kiến thức xác suất đã có. Hai đồ thị đều đầy đủ nút đích; mũi tên giữa hai đồ thị chỉ phép gộp, không phải chuyển trạng thái. Công thức thưởng giữ trong HTML, không vẽ vàoSVG.
+
+### L03-05-06 — Mô hình dưới chính sách
+
+Thời lượng: 3 phút. Vai trò: suy diễn ngắn.
+
+**Đầu vào:** Phép tính P^pi và r^pi tại C2 ở05-05.
+
+**Nội dung trên slide:** Từ xác suất chung theo chính sách:
+
+$$P^\pi(s',r\mid s)=\sum_a\pi(a\mid s)P(s',r\mid s,a).$$
+
+Lấy biên và kỳ vọng:
+
+$$P^\pi_{ss'}=\sum_a\pi(a\mid s)\sum_rP(s',r\mid s,a),$$
+$$r^\pi(s)=\sum_a\pi(a\mid s)\sum_{s',r}rP(s',r\mid s,a).$$
+
+**Cách thể hiện:** Ba dòng xuất hiện theo thứ tự: trộn theo hành động → cộng bỏ thưởng → lấy trung bình thưởng. Công thức cuối có thể hiện thay thế dòng đầu để không quá tải.
+
+**Giải thích và hình thức hóa:** Dùng xác suất toàn phần và định nghĩa kỳ vọng rời rạc. Cố định pi thì v_pi là giá trị MRP cảm sinh và thỏa v_pi=r^pi+gamma P^pi v_pi. Không giả định thưởng độc lập với trạng thái kế tiếp.
+
+**Kết nối:** Phần 6 mở lại tầng hành động để so sánh giá trị của từng lựa chọn.
+
+**Kiểm tra/ghi chú đáp án:** Tổng mỗi hàng P^pi bằng 1; chính sách thay đổi theo thời gian thì không có một ma trận P^pi cố định như trên.
+
+**Nguồn:** PPTX52–57; hw02 bài4.
+
+**Quyết định thể hiện khi triển khai:** Ba dòng xuất hiện theo thứ tự bằng fragment: trộn theo hành động, cộng bỏ thưởng, lấy trung bình thưởng; dòng đầu hiển thị thay thế để trang không quá tải. Không dùng hình lớn vì trọng tâm là ba bước suy diễn; mỗi dòng một phép toán quen thuộc từ xác suất, nên derivation giữ trọn trên slide. Câu kết nối về v^π đặt cuối để dẫn sang phần 6.
+
+### L03-05-07 — Câu hỏi kiểm tra
+
+Thời lượng: 3 phút. Vai trò: kiểm tra.
+
+**Đầu vào:** Cách lấy trung bình theo chính sách và giới hạn bài toán đánh giá.
+
+**Nội dung trên slide:** 1. Cố định pi, ngẫu nhiên nào còn trong quá trình?
+2. Nếu tại C2 luôn chọn Study, hàng chuyển và thưởng trung bình là gì?
+3. Biết mô hình có đồng nghĩa đã biết chính sách tốt nhất không?
+
+**Cách thể hiện:** Ba câu đánh số, giữ hình C2 nhỏ nếu cần.
+
+**Giải thích và hình thức hóa:** Không yêu cầu tối ưu chính sách ở bài này.
+
+**Kết nối:** Từ giá trị khi theo pi đến giá trị của một hành động đầu tiên.
+
+**Kiểm tra/ghi chú đáp án:** 1. Hành động nếu pi ngẫu nhiên và phản hồi môi trường. 2. Đến C3 xác suất 1, thưởng -2. 3. Không.
+
+**Nguồn:** PPTX50–52; hw02 bài4.
+
+**Quyết định thể hiện khi triển khai:** Ba câu bám đúng ba mức của phần: nguồn ngẫu nhiên còn lại, phép gộp tại một trạng thái, và ranh giới giữa đánh giá với tối ưu. Không dùng hình để giữ trang gọn; câu 2 có thể giải trực tiếp từ con số −1,5 đã tính ở slide 05-05, giúp SV tự kiểm tra phép gộp.
