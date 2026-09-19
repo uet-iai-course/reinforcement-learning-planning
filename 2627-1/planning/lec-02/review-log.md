@@ -2070,3 +2070,9 @@ Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flas
 
 - Theo yêu cầu, đổi tiêu đề L02-06-01 từ “Đến đích và tránh hố” thành “Điểm thưởng và hành vi”. Đồng bộ HTML, outline và storyboard; nội dung, hình và thứ tự giữ nguyên.
 - Kiểm tra thay đúng một tiêu đề trong mỗi tệp và `git diff --check` đạt.
+
+
+## Bổ sung câu về hệ quả ngoài ý muốn — 2026-09-19
+
+- Theo yêu cầu, thêm “(cực đại điểm thưởng tích luỹ)” vào câu về hành vi lách quy định ở L02-06-07. Giữ nguyên các nội dung khác.
+- Kiểm tra thay đúng một câu và `git diff --check` đạt.
