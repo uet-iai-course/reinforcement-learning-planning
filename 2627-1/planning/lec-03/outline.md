@@ -1,5 +1,7 @@
 # Bài 03 — Quá trình quyết định Markov
 
+> Kế hoạch viết lại ngày 2026-09-19: [Kế hoạch chi tiết từng slide](detailed-slide-plan.md), 47 slide, 7 phần, 120 phút. Tệp bên dưới vẫn mô tả bản HTML hiện hành; chưa thay thế storyboard hoặc deck.
+
 ## Phạm vi và mục tiêu
 
 - Nguồn chính: `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx`, trang 28–58.

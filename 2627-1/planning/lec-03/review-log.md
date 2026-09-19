@@ -365,3 +365,37 @@ Ba lượt DeepSeek đầu với `max_rounds=8` và lượt toán bốn tệp v�
 - Hai bảng ánh xạ trong outline/storyboard đã đổi nhãn `topic01`–`topic13` thành đúng 13 mã `lec-03-topic-01`–`lec-03-topic-13` của lecture note. Không đổi bất kỳ quan hệ topic–slide nào.
 - Lượt recheck GLM đầu xác nhận 13 mã khớp nhưng phát hiện câu cũ nói bảng phủ 39 trang trong khi bảng trực tiếp chứa 36 mã. Đã sửa thành 36/39 trang ánh xạ trực tiếp; P00–P02 được ánh xạ ở mức khung toàn bài như hai tệp vốn mô tả.
 - Lượt recheck cuối dùng `recheck/5/300/3500`, reasoning `minimal`, hoàn tất ở vòng 2 và PASS. Runtime trả `requested_model=observed_model=z-ai/glm-5.3-flash`, provider `OpenRouter`; hai bảng giống nhau, số 36/39 đúng và 13 mã khớp lecture note.
+
+
+## Kế hoạch viết lại Bài 03 — 19-09-2026
+
+### Phạm vi và quyết định
+
+- Tạo `detailed-slide-plan.md`: 47 slide, 7 phần, 120 phút và 30 phút chữa bài tập nguồn. Chỉ lập kế hoạch Markdown; HTML, SVG và storyboard hiện hành chưa thay đổi. Outline có liên kết và phân biệt rõ hai phiên bản.
+- Theo yêu cầu mới nhất, phần 1 chứa lần lượt tiêu đề bài, nội dung bài học, tiêu đề phần “Từ tương tác đến mô hình xác suất”, rồi các slide còn lại. Giữ slide mở đầu và câu hỏi kiểm tra cho từng phần.
+- Mỗi slide ghi đầu vào, vai trò, nội dung, cách thể hiện, giải thích hình thức, kết nối, đáp án và nguồn. Bellman được tách thành các bước: tách tổng thưởng, lấy kỳ vọng, điều kiện hóa, dùng tính Markov và khai triển xác suất.
+- Nguồn chính là PPTX Bài 2–3, trang 28–58 và bài tập 3, 4, 7, 8 trong `hw02.pdf`; nguồn Silver, Berkeley và ghi chú Stanford bổ sung cách thể hiện và kiểm chứng. Bellman tối ưu và các thuật toán tối ưu để sang Bài 04.
+- Áp dụng Quill để rà thứ tự khái niệm và chuyển phần; áp dụng no-ai-slop và tự kiểm theo `eval.md`. Không tạo `quill.json`. Hướng dẫn dựng slide chỉ nằm trong kế hoạch, không phải nội dung dự kiến hiển thị.
+
+### Bằng chứng worker và năm lượt rà độc lập
+
+Reader lập kế hoạch có `requested_model=observed_model=deepseek/deepseek-v4-flash-0731`, `provider=OpenRouter`. Writer và các reviewer có `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`, được xác nhận từ JSON cầu nối. Các reviewer dùng `review-full`, `--no-tools`, nhận toàn văn kế hoạch. Năm lượt đầu rà bản 45 slide; lượt mạch viết cuối rà toàn bản 47 slide sau khi thêm tiêu đề và nội dung bài học.
+
+| Vai | Mức độ | Slide/cụm | Vấn đề và bằng chứng | Quyết định |
+|---|---|---|---|---|
+| Sinh viên | trung bình | Toàn bài; 06-08 | Cần chỉ rõ tiên quyết từng slide và dành thời gian đủ cho xe đua. | Thêm trường đầu vào cho cả 47 slide; dành 5 phút cho xe đua. |
+| Chuyên gia Học tăng cường | trung bình | 05-04–06 | Chính sách ví dụ cần được xác định ở mọi trạng thái để mô hình cảm sinh có nghĩa trên toàn đồ thị. | Bổ sung xác suất chọn hành động ở C1, C2, C3 và Facebook; Sleep kết thúc. |
+| Toán học–thuật toán | nhẹ | 04-06–08; 06-08 | Kiểm tra hệ ba trạng thái, điều kiện hữu hạn và xe đua. | Tính lại nghiệm chính xác, phân biệt trường hợp có chiết khấu với kết thúc hữu hạn; giữ điều kiện kỳ vọng thời gian kết thúc hữu hạn. |
+| Học thuật–giảng dạy | trung bình | 05-02; 06-08 | Cần cầu nối giữa hai đồ thị sinh viên và cách kiểm tra giá trị xe đua đã cho. | Nêu rõ MRP có 7 trạng thái, MDP có 5; Pass gộp vào hành động Study, Pub trở thành hành động. Ghi hệ kiểm tra các giá trị xe đua trong phần giải thích. |
+| Kết nối và mạch viết | trung bình | Ranh giới phần 4–5; phần 6 | Vai trò phần 5 là đưa lựa chọn hành động vào mô hình; kết nối vào từ MRP đã biết giá trị, kết nối ra là MRP cảm sinh và giá trị theo chính sách. Hai đồ thị khác tập trạng thái cần được báo trước. | Thêm cầu nối tại 05-02; giữ tuyến trực quan → định nghĩa → gộp theo chính sách → Bellman. Rà lại toàn tuyến sau mọi thay đổi. |
+
+- Điều phối viên không chấp nhận nguyên trạng bản nháp suy diễn của writer: đã sửa nghiệm hệ tuyến tính, biểu thức trọng số chính sách và phân biệt đẳng thức tổng thưởng theo quỹ đạo với bước dùng giả thiết Markov.
+- Không áp dụng đề xuất xác suất kết thúc trong hai bước ít nhất 1/4: đề xuất bỏ sót xác suất chọn hành động đầu. Cận đúng dùng trong kế hoạch là 1/8. Không áp dụng biểu thức `1 + 0 × v(Cool)`; biểu thức đúng là `1 + v(Cool)` với giá trị đang xét bằng 0.
+- Kết quả các lượt rà lưu trong phiên tại `/tmp/rl02-rebuild/lec03-detail-{student,rl,math,academic,flow}.json`. Lượt cuối `lec03-detail-finalflow.json` kết luận PASS cho toàn bản 47 slide: thứ tự mở bài đúng, mỗi slide có đầu vào và kết nối, đủ suy diễn Bellman, không còn lỗi thực chất. Các kết quả này là rà kế hoạch, không phải rà HTML.
+
+### Kiểm định cuối kế hoạch
+
+- 47 ID duy nhất; 7 trang mở phần, 7 trang câu hỏi kiểm tra; 47 trường đầu vào. Số slide từng phần là 6/6/6/9/7/9/4; thời lượng 8/18/18/24/20/24/8 phút, tổng 120 phút.
+- Tính lại tổng thưởng hai quỹ đạo sinh viên: -2,25 và -3,125. Nghiệm hệ ba trạng thái là $(560/641,-740/641,0)$. Kiểm tra hệ Bellman xe đua và các giá trị hành động bằng thế trực tiếp.
+- 83 biểu thức toán được phân tích thành công bằng KaTeX cục bộ. Đây là kiểm tra cú pháp, không phải kiểm tra trực quan; bộ máy có cảnh báo metric cho một số ký tự tiếng Việt trong văn bản công thức.
+- Kiểm tra ký tự điều khiển và quy ước toán Markdown; không dùng dấu phân cách toán kiểu LaTeX ngoài quy ước của kho. Không chạy duyệt trang hoặc tuyên bố đã rà bằng Codex Slides vì lần này chỉ sửa kế hoạch Markdown.
