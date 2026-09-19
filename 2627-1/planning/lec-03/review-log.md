@@ -399,3 +399,49 @@ Reader lập kế hoạch có `requested_model=observed_model=deepseek/deepseek-
 - Tính lại tổng thưởng hai quỹ đạo sinh viên: -2,25 và -3,125. Nghiệm hệ ba trạng thái là $(560/641,-740/641,0)$. Kiểm tra hệ Bellman xe đua và các giá trị hành động bằng thế trực tiếp.
 - 83 biểu thức toán được phân tích thành công bằng KaTeX cục bộ. Đây là kiểm tra cú pháp, không phải kiểm tra trực quan; bộ máy có cảnh báo metric cho một số ký tự tiếng Việt trong văn bản công thức.
 - Kiểm tra ký tự điều khiển và quy ước toán Markdown; không dùng dấu phân cách toán kiểu LaTeX ngoài quy ước của kho. Không chạy duyệt trang hoặc tuyên bố đã rà bằng Codex Slides vì lần này chỉ sửa kế hoạch Markdown.
+
+
+## Triển khai bản viết lại 47 slide — 19-09-2026
+
+### Tiếp nhận và kế hoạch được chấp nhận
+
+- Phạm vi: triển khai đủ 7 phần trong `detailed-slide-plan.md`, giữ 120 phút trình bày và 30 phút chữa bài tập nguồn; commit từng phần, chưa push. Bản gốc có 39 slide và 4 SVG. Đã đọc lại PPTX28–58, template, CSS chung, HTML và mục Bài03 trong index.
+- Reader lập kế hoạch và reader ánh xạ nguồn chạy riêng; runtime cả hai `requested_model=observed_model=deepseek/deepseek-v4-flash-0731`, `provider=OpenRouter`. Bằng chứng phiên: `/tmp/rl02-rebuild/lec03-implementation-plan.json`, `lec03-source-map.json`.
+- Chấp nhận trình tự phần1→7, writer ghi từng sản phẩm cô lập, hình cụ thể trước ký hiệu, suy diễn Bellman từng bước, năm vai rà độc lập. Không áp dụng đề xuất reader trì hoãn đồng bộ planning đến cuối: outline/storyboard được cập nhật theo từng phần. Câu hỏi nằm trên mặt slide; chỉ đáp án nằm trong notes, sửa diễn đạt nhầm trong báo cáo reader.
+- Báo cáo reader có nhiều từ lẫn tiếng Romania; không dùng nguyên văn vào tài liệu hoặc slide. Đã kiểm lại ánh xạ: PPTX58 chứa bài tập/tài liệu đọc, không chứa Bellman tối ưu; nội dung tối ưu được dành cho Bài04 theo kế hoạch, không phải lược từ trang58.
+- Codex Slides đã tạo hồ sơ `20260919162357-b-i-03-qu-tr-nh-quy-t-nh-markov-h-s-ki-m-4hzc`. Phiên không có công cụ Browser trong giao diện; kiểm tra Chromium và Design Files sẽ được ghi đúng phạm vi, không đồng nhất hồ sơ với deck đã render.
+- Lệnh `python3 -m reloadserver 8765` được thử: sandbox chặn socket; lần chạy nâng quyền báo cổng đã được dùng. Sẽ xác minh máy chủ đang chạy phục vụ đúng bản workspace trước khi kiểm hình.
+
+### Nguyên tắc thể hiện đã chốt
+
+1. Phần1: sơ đồ phân nhánh, hai quỹ đạo, ba lớp mô hình; chưa đưa bộ ký hiệu chính thức.
+2. Phần2: đồ thị sinh viên trước hàng ma trận, rồi phân phối sau một bước.
+3. Phần3: thưởng trên bước chuyển trước tổng thưởng và kỳ vọng; giữ quy ước thưởng theo trạng thái hiện tại.
+4. Phần4: phần thưởng đầu + phần còn lại, sau đó tách tổng, kỳ vọng lặp, tính Markov và hệ tuyến tính.
+5. Phần5: lựa chọn ở C2, phân biệt đồ thị MRP7 trạng thái với MDP5 trạng thái, cố định chính sách và gộp xác suất.
+6. Phần6: ấn định hành động đầu rồi theo chính sách; cây trạng thái–hành động–phản hồi đi cùng từng bước Bellman; xe đua vận dụng.
+7. Phần7: tổng hợp quan hệ mô hình–phương trình giá trị, bài tập3/4/7/8 và kiểm tra.
+
+### Phần 1 — lượt rà bản nháp
+
+Writer `lec03-write-01.json`: `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`. Writer ban đầu gọi đường dẫn tuyệt đối bị cầu nối từ chối, sau đó ghi bằng đường dẫn tương đối; không đổi mô hình. Năm reviewer chạy riêng đồng thời, profile `review-section`, `--no-tools`, bao phủ 6 slide phần1, ba SVG và hai slide kế hoạch đầu phần2. Chuyên môn/toán dùng DeepSeek V4 Flash; sinh viên/học thuật/mạch dùng GLM5.3Flash; cả năm JSON xác nhận requested=observed, providerOpenRouter.
+
+| Vai | Mức độ sau đối chiếu | Slide | Vấn đề, bằng chứng | Quyết định |
+|---|---|---|---|---|
+| Sinh viên | nghiêm trọng | 01-04 | Đường cam vẽ đè đường xanh; nhãn nói C2→Sleep nhưng hình thiếu cạnh này. | Vẽ lại hai dòng quỹ đạo, nhãn Đường1/2, không dùng riêng màu để phân biệt. |
+| Chuyên gia Học tăng cường | — | Toàn phần1 | Báo cáo PASS nhưng nhận xét hình đúng không khớp tọa độ SVG và ảnh render. | Không dùng PASS này để bỏ qua lỗi hình; đối chiếu với reviewer sinh viên và kiểm trực quan. |
+| Toán học | — | Toàn phần1 | Báo cáo PASS; tương tự bỏ sót cạnh vẽ sai. | Giữ các phân biệt khái niệm đã được xác nhận, vẫn sửa hình theo bằng chứng trực tiếp. |
+| Học thuật–giảng dạy | nghiêm trọng/nhẹ | 01-04/05 | Xác nhận cạnh chồng. Hình ba lớp không giữ cùng trạng thái, nhãn thưởng không gắn rõ đối tượng. | Sửa hình; bác đề xuất cho rằng nguồn không có cạnh C2→Sleep, vì ma trận nguồn có xác suất0,2. |
+| Kết nối và mạch viết | trung bình | 01-04→05 | Vai trò: phân biệt mẫu/quy luật; vào từ phản hồi ngẫu nhiên; ra là nhu cầu mô hình. Hình sai làm yếu bằng chứng; thiết kế nói hai kết thúc dù cả hai là Sleep. | Sửa hình và mô tả thành hai diễn tiến cùng điểm đầu/cuối, giữ ranh giới phần2. |
+
+Điều phối viên phát hiện thêm hướng dẫn tác giả trong notes dù reviewer bỏ sót: “Nhắc lại”, “Ở bước này chỉ cần”, “Chưa yêu cầu ghi nhớ”, “Đầu ra cần đạt”, “Hai câu chỉ kiểm tra”. Giao writer chỉnh sửa riêng `lec03-fix-01` sau khi đủ năm báo cáo; chỉ trường phân tích thiết kế trong storyboard được chứa hướng dẫn. Đồng thời sửa câu agenda nhầm xe đua ở phần7 thành đúng phần6 và chuẩn hóa nhãn Câu hỏi: cùng danh sách đánh số.
+
+Kiểm tra Chromium bản nháp: 12 lượt (6slide × 1280×720/390×844), không tràn biên, lỗi KaTeX, ảnh hỏng, HTTP lỗi hoặc lỗi JavaScript. Ảnh trực tiếp phát hiện chữ Facebook tràn nút và các cạnh chồng dù phép kiểm biên trang không phát hiện; đây là lý do phải kiểm hình thủ công. Điều hướng bàn phím hoạt động: màn rộng Down tới01-02, Right sangphần2; màn hẹp Right tiến theo thứ tự tuyến tính tới01-03.
+
+### Phần 1 — kiểm định sau chỉnh sửa và bàn giao từng phần
+
+- Writer chỉnh sửa riêng hoàn tất (`lec03-fix-01.json`, requested=observedGLM5.3Flash, OpenRouter). Ghi chú đã bỏ chỉ dẫn tác giả. Ảnh render và hai reviewer tái rà phát hiện thêm caption quỹ đạo chồng nhau, nút b vượt viewBox và nhãn hàng3 đè nút; điều phối viên sửa tọa độ SVG, bỏ caption lặp và tách nhãn dài.
+- Tái rà cuối `lec03-geometry-01-student.json` xác nhận không còn lỗi; `lec03-geometry-01-flow.json` xác nhận mạch title→agenda→mởphần→quỹđạo→ba lớp→quiz và các hình đã đúng. Hai lượt requested=observedGLM5.3Flash, providerOpenRouter, profile review-section, không công cụ. Gợi ý nhẹ dời nhãn thưởng không áp dụng vì ảnh ở1280×720 cho thấy nhãn đọc được, không che chữ hoặc nét. Không thay thứ tự/mệnh đề sau lượt rà này.
+- Đã xem trực tiếp đủ6ảnh ở1280×720 và ảnh hình ba lớp ở390×844; 12lượt render cuối không tràn biên, lỗiKaTeX, ảnhhỏng, HTTP hoặcJavaScript. Điện thoại dùng khung16:9 thu nhỏ, cần xoayngang/phóngto để đọc nội dung dài; không tuyên bố chữ ở390px lớn như mànchiếu. Điều hướng bànphím đã kiểm ở cảhaikhung.
+- Tự kiểm no-ai-slop: body/notes là nội dung học thuật và đápán; không có lời ca tụng, câu tu từ hoặc chỉ dẫn người viết. Phân tích cách thể hiện, tiên quyết và cầu nối nằm trong storyboard. Quill rà tuyến phần1 và ranhgiới sangchuỗiMarkov; không tạoquill.json.
+- Phần1 có6slide, 3SVG mới, được tíchhợp vàoHTML; phần2–7 chưa được tính hoàn tất. Outline/storyboard và trạngthái kếhoạch đã đồngbộ. Dùng CSS chung lecture-slide.css, không sửaCSS.

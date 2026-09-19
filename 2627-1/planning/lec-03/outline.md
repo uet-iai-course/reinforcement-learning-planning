@@ -1,76 +1,66 @@
-# Bài 03 — Quá trình quyết định Markov
+# Bài 03 — Dàn ý triển khai
 
-> Kế hoạch viết lại ngày 2026-09-19: [Kế hoạch chi tiết từng slide](detailed-slide-plan.md), 47 slide, 7 phần, 120 phút. Tệp bên dưới vẫn mô tả bản HTML hiện hành; chưa thay thế storyboard hoặc deck.
+Trạng thái: đã triển khai phần 1–1/7 theo [kế hoạch chi tiết](detailed-slide-plan.md). Các phần sau vẫn là nội dung cũ cho đến lượt thay thế tương ứng.
 
-## Phạm vi và mục tiêu
+## Mục tiêu và phạm vi
 
-- Nguồn chính: `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx`, trang 28–58.
-- Bài tập: `RL-hk2-2025-2026/resources/hw02.pdf`, Bài 3, 4, 7, 8.
-- Tuyến chính: 35 trang, 120 phút. Bốn bài tập ở nhánh dọc, ngoài tuyến chính.
-- Bài này giả sử biết mô hình. Quy hoạch động thuộc Bài 04; phương pháp phi mô hình thuộc các bài sau.
-- Không dạy Bellman tối ưu, lặp giá trị hoặc lặp chính sách. Bài 9 của bài tập chuyển sang Bài 04.
+Sinh viên năm 3 đã học học máy, học sâu, xác suất và thuật toán; đã học Bài 02 về trạng thái, quan sát, chính sách, tổng thưởng và mô hình chuyển. Sau Bài 03, sinh viên có thể đọc một mô hình hữu hạn, suy ra phương trình giá trị và đánh giá một chính sách cố định.
 
-Sau bài học, sinh viên có thể kiểm tra ma trận chuyển; tính phần thưởng tích lũy; lập và giải Bellman cho MRP; tạo MRP từ MDP dưới chính sách Markov dừng; liên hệ $v_\pi$, $q_\pi$ và Bellman kỳ vọng.
+- 47 slide, gồm 1 slide tiêu đề bài, 1 slide nội dung bài học, 7 slide mở phần và 7 slide câu hỏi kiểm tra; 120 phút trình bày và hoạt động ngắn trong lớp.
+- 30 phút chữa bài tập nguồn, tách khỏi 120 phút. Không tạo code demo mới.
+- Toàn bài mở bằng slide tiêu đề “Quá trình quyết định Markov”, tiếp theo là slide “Nội dung bài học”; cả hai nằm trong phần 1. Sau đó mới đến slide mở phần “Từ tương tác đến mô hình xác suất” và các slide còn lại của phần 1. Các phần 2–7 bắt đầu ngay bằng slide tiêu đề phần. Slide mở phần có một hình gợi tình huống và tối đa một câu dẫn, không có danh sách công thức.
+- Mỗi khái niệm mới đi từ vấn đề, ví dụ trực quan và phép tính cụ thể tới định nghĩa/công thức; sau đó vận dụng và kiểm tra. Các trường hợp rút gọn được ghi ở từng phần.
+- Giữ giả thiết mô hình đã biết, hữu hạn và không đổi theo thời gian. Tính Markov và tính không đổi theo thời gian là hai giả thiết riêng. Quan sát đầy đủ không đồng nghĩa biết mô hình.
+- Tập trung Bellman kỳ vọng; Bellman tối ưu, lặp giá trị và lặp chính sách thuộc Bài 04.
+- Khi triển khai: dùng `lecture-slide.css`, RevealJS cục bộ, SVG có nhãn và mô tả thay thế, KaTeX cho công thức. Chỉ đưa nội dung học thuật và mạch nói vào HTML/notes; các hướng dẫn dựng hình, thời lượng và ID trong tài liệu này là thông tin nội bộ.
 
-## Ánh xạ nguồn
+## Nguồn và cách sử dụng
 
-| Trang nguồn | Quyết định | Trang đích | Lý do |
-|---:|---|---|---|
-| 29–30 | gộp, sửa | P00–P02, A00–A01 | Đặt mục tiêu; diễn đạt chính xác quan hệ kế thừa; nêu phạm vi biết mô hình; bổ sung phát biểu tính Markov ở A00 theo trang 29. |
-| 31–33 | tách, vẽ lại | A02–A05 | Đặt đồ thị trước định nghĩa; quỹ đạo và ma trận dùng cùng thứ tự, quy ước véc-tơ cột. |
-| 34–35 | sửa, sắp lại | B01,B00 | Đặt véc-tơ thưởng trước định nghĩa MRP; tách $R_{t+1}$ khỏi $r(s)$. |
-| 36–40 | gộp, tính lại, bỏ hình | B02–B03 | Nêu điều kiện hữu hạn và ý ưu tiên thưởng sớm; tính lại hai phần thưởng tích lũy. Bỏ hình minh họa suy giảm mũ ở trang 37 vì công thức và ba trường hợp gamma đã phủ đủ nội dung. |
-| 39–43 | gộp, sắp lại | B04, C05 | Định nghĩa giá trị; chỉ đưa nghiệm sau công thức. |
-| 44–48 | tách, sửa | C00–C06 | Dẫn từ phép nhìn trước một bước tới hệ; bỏ thuật ngữ ánh xạ co chưa định nghĩa; nêu điều kiện $\gamma=1$. |
-| 49 | sửa | D00 | Dùng hạt nhân chung sau ví dụ; nêu miền thưởng rời rạc và quy tắc thay tổng bằng tích phân. |
-| 50 | vẽ lại, sửa, sắp lại | D01, D03, D06 | Đặt Student MDP trước định nghĩa; khôi phục nút ngẫu nhiên Pub; nêu rõ dữ kiện giá trị ở D06. |
-| 51 | vẽ lại, sửa | D09–D10 | Biểu diễn đủ sáu kết quả; dùng Warm–Fast nhận $-10$ rồi kết thúc. |
-| 52–53 | giữ, mở rộng | D02, D05–D06 | Chính sách Markov dừng; ví dụ $q_\pi$ và quan hệ với $v_\pi$. |
-| 54–55 | tính lại, gộp | D06, D10 | Dùng nghiệm Student và Racing Car đã kiểm; D06 nêu dữ kiện nguồn trang 54, chính sách đều ở mọi trạng thái hai hành động, $\gamma=1$, kèm phép kiểm Bellman. |
-| 56–57 | tách | D07–D08 | Hai Bellman kỳ vọng đặt sau ví dụ và cầu nối MRP cảm sinh. |
-| 58 | chuyển | D11–D13, `note-for-author.md` | Nối rõ quy hoạch động và phi mô hình; nguồn đọc chưa đủ thư mục để công bố. |
-| hw02 Bài 3,4,7,8 | giữ phạm vi | X03,X04,X07,X08 | Nhánh dọc; phân bổ chữa lưu ngoài slide. |
+1. **Nguồn chính:** `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx`, trang 28–58. Giữ tuyến chuỗi Markov → quá trình phần thưởng Markov → Bellman → MDP → Bellman kỳ vọng. Bài tập: `RL-hk2-2025-2026/resources/hw02.pdf`, bài 3, 4, 7, 8.
+2. [David Silver, Lecture 2: Markov Decision Processes](https://web.stanford.edu/class/cme241/lecture_slides/david_silver_slides/MDP.pdf): ví dụ sinh viên và sơ đồ nhìn trước một bước; trang PDF 7–9, 10–23, 24–34. Không lấy phần tối ưu và các mở rộng ngoài phạm vi.
+3. [Berkeley CS188, Fall 2025, Lecture 8](https://inst.eecs.berkeley.edu/~cs188/fa25/assets/lectures/cs188-fa25-lec08.pdf): cách phân biệt nút hành động/nút ngẫu nhiên, ví dụ xe đua; trang PDF 20–22. Không sao chép CSS hoặc tài sản.
+4. [Stanford CS234, ghi chú Lecture 2 của Rahul Sarkar và Emma Brunskill](https://web.stanford.edu/~rsarkar/materials/lecture2-CS234.pdf): kiểm tra giả thiết, chuyển từ đồ thị sang ma trận và đánh giá khi biết mô hình. Đây là ghi chú bài giảng, không phải bộ slide để sao chép bố cục.
 
-## Ánh xạ lecture note ↔ deck
+Ví dụ sinh viên là mạch chính. Bài tập ba trạng thái là ví dụ tính toán nhỏ để giải hệ; xe đua là bài vận dụng chuyển sang tình huống khác. Không thêm một ví dụ lớn thứ ba. Mọi xác suất và thưởng giữ theo nguồn; quy ước xe quá nhiệt nhận -10, không cộng thêm +2, được nêu rõ trước khi tính.
 
-Ánh xạ nhiều–nhiều giữa topic trong `materials/lec-03/lecture-note.md` và `data-slide-id` trong deck:
+## Phân bổ
 
-| Topic lecture note | Slide deck |
-|---|---|
-| `lec-03-topic-01` Chuỗi Markov | A02, A00, A01, A03, A04, A05, X03 |
-| `lec-03-topic-02` MRP | B01, B00 |
-| `lec-03-topic-03` $G_t$ sang kỳ vọng | B02, B03 |
-| `lec-03-topic-04` Giá trị trạng thái | B04 |
-| `lec-03-topic-05` Bellman MRP | C00, C01, C02 |
-| `lec-03-topic-06` Dạng ma trận/giải hệ/$\gamma=1$ | C03, C04, C05, C06, X03 |
-| `lec-03-topic-07` MDP và hạt nhân chung | D01, D00, D09, D10 |
-| `lec-03-topic-08` Chính sách | D02 |
-| `lec-03-topic-09` MRP cảm sinh | D03, D04, X04 |
-| `lec-03-topic-10` $v_\pi$ | D05 |
-| `lec-03-topic-11` $q_\pi$ | D05, D06, X07 |
-| `lec-03-topic-12` Bellman kỳ vọng | D07, D08, X08 |
-| `lec-03-topic-13` Tổng kết | D11, D12, D13 |
+| Phần | Tiêu đề mở phần | Slide | Phút |
+|---|---|---:|---:|
+| 1 | Từ tương tác đến mô hình xác suất | 6 | 8 |
+| 2 | Chuỗi Markov | 6 | 18 |
+| 3 | Quá trình phần thưởng Markov | 6 | 18 |
+| 4 | Phương trình Bellman | 9 | 24 |
+| 5 | MDP và chính sách cố định | 7 | 20 |
+| 6 | Giá trị trạng thái và giá trị hành động | 9 | 24 |
+| 7 | Tổng hợp và vận dụng | 4 | 8 |
+| **Tổng** | | **47** | **120** |
 
-Ghi chú: bảng ánh xạ trực tiếp 36/39 `data-slide-id`. P00, P01 không thuộc một topic riêng mà tạo khung phạm vi và mục tiêu cho cả 13 topic; P02 nối trực tiếp `lec-03-topic-01`, `lec-03-topic-02`, `lec-03-topic-07` và `lec-03-topic-13` (ba lớp mô hình). Ba trang P00–P02 vì vậy được ánh xạ ở mức khung toàn bài thay vì lặp trong từng hàng; deck gồm 35 trang tuyến chính P/A/B/C/D và 4 trang dọc X03, X04, X07, X08.
+47 slide nhiều hơn ước lượng ban đầu 36–40 vì có slide tiêu đề bài, slide nội dung bài học, 7 trang mở phần và các bước suy diễn được tách riêng. Không tăng số khái niệm hoặc thời lượng. Phần 4 và 6 dành tổng 48 phút cho Bellman; các slide mở phần chỉ 1 phút. Phần 1 có sáu slide trong 8 phút: 1 + 1 + 1 + 2 + 1 + 2.
 
-## Ký hiệu và quy ước
+## Ký hiệu và thứ tự xuất hiện
 
-| Ký hiệu | Nghĩa |
-|---|---|
-| $P_{ss'}$ | $\Pr(S_{t+1}=s'\mid S_t=s)$ trong chuỗi Markov/MRP. |
-| $\mu_t$ | Phân phối trạng thái dạng véc-tơ cột; $\mu_{t+1}=P^{\mathsf T}\mu_t$. |
-| $r(s)$ | $\mathbb E[R_{t+1}\mid S_t=s]$; Student MRP dùng $R_{t+1}=r(S_t)$. |
-| $G_t$ | Phần thưởng tích lũy từ $R_{t+1}$. |
-| $Q$ | Ma trận chuyển giới hạn trên các trạng thái chưa kết thúc khi $\gamma=1$. |
-| $\rho(\cdot)$ | Bán kính phổ; $\rho(\gamma P)\le\gamma<1$ bảo đảm $I-\gamma P$ khả nghịch. |
-| $p(s',r\mid s,a)$ | Hạt nhân chung của MDP; các tổng trong bài dùng miền rời rạc. |
-| $\pi(a\mid s)$ | Chính sách Markov ngẫu nhiên dừng. |
-| $P^\pi,r^\pi$ | Động lực và thưởng của MRP cảm sinh bởi chính sách cố định. |
-| $v_\pi,q_\pi$ | Giá trị trạng thái và giá trị hành động dưới $\pi$. |
+| Ký hiệu/khái niệm | Nơi xuất hiện chính thức | Chuẩn bị bằng ví dụ |
+|---|---|---|
+| Trạng thái, Markov, tổng thưởng, chính sách | Đã có ở Bài 02; chỉ nhắc ngắn | 01-04 |
+| $P_{ij}$, ma trận chuyển | 02-03 | Các cạnh ra ở 02-02 |
+| Phân phối trạng thái $\mu_t$ | 02-05 | Dồn xác suất theo các cạnh bằng số trước |
+| Thưởng trung bình $r(s)$, quá trình phần thưởng Markov (MRP) | 03-03 | Gắn thưởng vào bước chuyển ở 03-02 |
+| $G_t$ và $v(s)$ của MRP | 03-04/05 | Hai quỹ đạo với tổng khác nhau |
+| Bellman, dạng hệ tuyến tính | 04-03…07 | Nhánh một bước ở 04-02 |
+| Quá trình quyết định Markov (MDP), $P(s',r\mid s,a)$ | 05-03 | Lựa chọn học/nghỉ ở 05-02 |
+| $P^\pi,r^\pi$ | 05-06 | Gộp nút hành động trên hình ở 05-05 |
+| $q_\pi(s,a)$ | 06-03 | So sánh hai hành động đầu tiên ở 06-02 |
+| Bellman kỳ vọng theo $v_\pi,q_\pi$ | 06-04…07 | Cùng sơ đồ trạng thái → hành động → phản hồi |
 
-## Tài sản SVG
+$P$ trong chuỗi Markov là ma trận; $P(s',r\mid s,a)$ trong MDP là xác suất chung, tiếp nối ký hiệu Bài 02. $r(s)$ và $r^\pi(s)$ là kỳ vọng của phần thưởng, khác biến ngẫu nhiên $R_{t+1}$. Dùng véc-tơ cột cho $v,r,\mu$; do P chuẩn hóa theo hàng, $\mu_{t+1}=P^{\mathsf T}\mu_t$. Xét chính sách Markov dừng khi viết giá trị không có chỉ số thời gian; không khẳng định mọi chính sách đều thuộc lớp này.
 
-- `student-mrp.svg`: bảy trạng thái, đúng toàn bộ xác suất chuyển và Sleep hấp thụ.
-- `bellman-backup.svg`: sao lưu Bellman kỳ vọng, nhãn cốt lõi từ 30 px.
-- `student-mdp.svg`: đúng topology nguồn, gồm nút ngẫu nhiên sau hành động Pub.
-- `racing-car.svg`: đủ sáu kết quả theo cặp trạng thái–hành động, xác suất và thưởng.
+
+## Phần 1
+
+- `L03-01-01`: Quá trình quyết định Markov.
+- `L03-01-02`: Nội dung bài học.
+- `L03-01-03`: Từ tương tác đến mô hình xác suất.
+- `L03-01-04`: Một mô hình, nhiều quỹ đạo.
+- `L03-01-05`: Ba lớp mô hình.
+- `L03-01-06`: Câu hỏi kiểm tra.

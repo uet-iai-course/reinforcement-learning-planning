@@ -1,13 +1,74 @@
 <!doctype html>
 <html lang="vi"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><title>Bài 03: Quá trình quyết định Markov</title>
 <link rel="stylesheet" href="revealjs/dist/reset.css"/><link rel="stylesheet" href="revealjs/dist/reveal.css"/><link rel="stylesheet" href="revealjs/dist/theme/white.css"/><link rel="stylesheet" href="plugin/highlight/monokai.css"/><link rel="stylesheet" href="lecture-slide.css"/>
-<style>.reveal .slides section[data-slide-id]{font-size:.82em}.reveal h1,.reveal h2{color:#2F3E7A}.box{border-left:5px solid #B15A2B;background:#F7EFE6;padding:.5em .7em;border-radius:8px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7em}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.55em}.card{border:1px solid #ddd;border-radius:8px;padding:.45em .6em}.figure{display:block;margin:.12em auto;max-width:1050px;max-height:405px}.figure.small{max-height:300px}.math-large{font-size:1.08em;text-align:center}.check{background:#EDF4FF;border:2px solid #2F3E7A;border-radius:8px;padding:.45em .65em}.note-source{font-size:.9em;color:#444}.muted{color:#666}.reveal table{font-size:.76em}.reveal th{background:#F7EFE6}.compact li{margin:.08em 0}.caption{text-align:center;font-size:.76em;color:#555}.warn{color:#8B3A18;font-weight:700}</style></head>
-<body><div class="reveal"><div class="slides">
+</head>
+<body><div class="reveal lecture-deck"><div class="slides">
+
 
 <section>
-<section data-slide-id="P00"><h1>Quá trình quyết định Markov</h1><h3>Bài 03 · Học tăng cường</h3><p>Năm học 2026–2027 · Học kỳ 1</p><p>Trường Đại học Công nghệ · Đại học Quốc gia Hà Nội</p><aside class="notes">Bài học đi từ chuỗi Markov đến quá trình phần thưởng Markov, rồi thêm hành động để tạo quá trình quyết định Markov. Phạm vi chỉ gồm đánh giá một chính sách cố định, chưa gồm Bellman tối ưu.<p class="note-source"><strong>Nguồn:</strong> PPTX nguồn, trang 28–30, 34, 49.</p></aside></section>
-<section data-slide-id="P01"><h2>Mục tiêu học tập</h2><ol><li>Kiểm tra ma trận chuyển và trạng thái hấp thụ.</li><li>Tính phần thưởng tích lũy và giá trị trạng thái.</li><li>Lập, giải Bellman cho MRP, phân biệt điều kiện khi $\gamma<1$ và $\gamma=1$.</li><li>Tạo MRP từ MDP dưới một chính sách cố định.</li><li>Liên hệ $v_\pi$, $q_\pi$ và Bellman kỳ vọng.</li></ol><aside class="notes">Mỗi mục tiêu đều được kiểm tra bằng Student hoặc Racing Car. Chú ý điều kiện khác nhau giữa chiết khấu nhỏ hơn một và trường hợp không chiết khấu. Tiên quyết: xác suất có điều kiện, kỳ vọng, đại số ma trận và mô hình tác tử–môi trường Bài 02.<p class="note-source"><strong>Nguồn:</strong> PPTX nguồn, trang 30–57.</p></aside></section>
-<section data-slide-id="P02"><h2>Ba lớp mô hình</h2><div class="grid3"><div class="card"><h3>Chuỗi Markov</h3><p>$\mathcal S,P$</p><p>Động lực</p></div><div class="card"><h3>MRP</h3><p>$\mathcal S,P,r,\gamma$</p><p>Thêm phần thưởng</p></div><div class="card"><h3>MDP</h3><p>$\mathcal S,\mathcal A,p,\gamma$</p><p>Thêm hành động vào động lực</p></div></div><div class="box">Chuỗi Markov cho động lực; MRP thêm phần thưởng; MDP thêm hành động vào động lực.</div><aside class="notes">MRP là quá trình phần thưởng Markov; MDP là quá trình quyết định Markov. Bài này giả sử đã biết mô hình chuyển và thưởng. Bài 04 dùng quy hoạch động để giải mô hình; các bài sau mới học trực tiếp khi không biết mô hình.<p class="note-source"><strong>Nguồn:</strong> PPTX nguồn, trang 30, 34, 49.</p></aside></section>
+<section data-slide-id="L03-01-01">
+<h1>Quá trình quyết định Markov</h1>
+<p class="caption">Bài 03 · Học tăng cường</p>
+<p class="caption">Học kỳ 1 · Năm học 2026–2027</p>
+<p class="caption">Trường Đại học Công nghệ · Đại học Quốc gia Hà Nội</p>
+<aside class="notes"><p>Bài học xét môi trường quan sát đầy đủ và mô hình đã biết. Với một chính sách cố định, ta tính kỳ vọng của phần thưởng tích lũy. Chuỗi Markov mô tả chuyển tiếp, quá trình phần thưởng Markov thêm thưởng, còn quá trình quyết định Markov cho phép chọn hành động.</p><p class="note-source">Nguồn: PPTX28; thông tin học phần.</p></aside>
+</section>
+<section data-slide-id="L03-01-02">
+<h2>Nội dung bài học</h2>
+<div class="grid2">
+  <div class="card">
+    <ol>
+      <li><strong>Từ tương tác đến mô hình xác suất</strong></li>
+      <li>Chuỗi Markov</li>
+      <li>Quá trình phần thưởng Markov</li>
+      <li>Phương trình Bellman</li>
+    </ol>
+  </div>
+  <div class="card">
+    <ol start="5">
+      <li>Quá trình quyết định Markov (MDP) và chính sách cố định</li>
+      <li>Giá trị trạng thái và giá trị hành động</li>
+      <li>Tổng hợp và vận dụng</li>
+    </ol>
+  </div>
+</div>
+<aside class="notes"><p>Quy luật chuyển tiếp xác định những quỹ đạo có thể xảy ra. Phần thưởng cho phép đánh giá các quỹ đạo; kỳ vọng của tổng thưởng xác định giá trị trạng thái. Khi có lựa chọn hành động, giá trị phụ thuộc chính sách. Bài này xây dựng Bellman kỳ vọng; Bellman tối ưu và các thuật toán tối ưu thuộc Bài04.</p><p class="note-source">Nguồn: PPTX 28–58.</p></aside>
+</section>
+<section data-slide-id="L03-01-03">
+<h2>Từ tương tác đến mô hình xác suất</h2>
+<p>Cùng trạng thái và hành động có thể cho kết quả khác nhau.</p>
+<figure>
+  <img class="figure" src="img/lec-03/part-01-mo-phan.svg" alt="Một trạng thái, một hành động, hai kết quả khác nhau">
+</figure>
+<aside class="notes"><p>Môi trường ngẫu nhiên có thể trả về các trạng thái kế tiếp khác nhau sau cùng một hành động ở cùng trạng thái. Bài này xét không gian trạng thái và hành động hữu hạn, với mô hình đã biết và không đổi theo thời gian. Tính Markov và tính không đổi theo thời gian là hai giả thiết riêng. Quan sát trạng thái hiện tại không cung cấp ngay xác suất chuyển.</p><p class="note-source">Nguồn: PPTX 28–29; nối Bài 02.</p></aside>
+</section>
+<section data-slide-id="L03-01-04">
+<h2>Một mô hình, nhiều quỹ đạo</h2>
+<p>Hai đường đi từ cùng điểm xuất phát trên đồ thị sinh viên.</p>
+<figure>
+  <img class="figure" src="img/lec-03/part-01-hai-duong.svg" alt="Hai quỹ đạo từ C1 tới Sleep trên đồ thị sinh viên">
+</figure>
+<aside class="notes"><p>C1, C2, C3 là ba buổi học; Pass là thi đạt, Facebook là dùng mạng xã hội, Sleep là ngủ. Hai dòng là hai quỹ đạo hợp lệ suy ra từ đồ thị sinh viên: C1→C2→C3→Pass→Sleep và C1→Facebook→C1→C2→Sleep. Các nhãn C1 ở hai dòng biểu diễn cùng một trạng thái. Một quỹ đạo ghi lại kết quả đã xảy ra; mô hình mô tả cả những khả năng chưa xuất hiện trong quỹ đạo đó. Một lần quan sát chưa xác định được toàn bộ xác suất chuyển.</p><p class="note-source">Nguồn: đồ thị PPTX31; quỹ đạo minh họa suy ra từ đồ thị (PPTX31–32).</p></aside>
+</section>
+<section data-slide-id="L03-01-05">
+<h2>Ba lớp mô hình</h2>
+<figure>
+  <img class="figure" src="img/lec-03/part-01-ba-lop.svg" alt="Ba lớp: chuỗi trạng thái, thêm thưởng, thêm lựa chọn hành động">
+</figure>
+<p class="caption">Chuỗi trạng thái → thêm phần thưởng → thêm lựa chọn hành động.</p>
+<aside class="notes"><p>Chuỗi Markov mô tả các trạng thái và xác suất chuyển. Quá trình phần thưởng Markov thêm phần thưởng và hệ số chiết khấu để đánh giá tương lai. Quá trình quyết định Markov thêm lựa chọn hành động; lựa chọn đó có thể thay đổi xác suất chuyển và phần thưởng. Khi cố định một chính sách, ta có thể tính giá trị dài hạn từ mô hình.</p><p class="note-source">Nguồn: PPTX 30, 34, 49.</p></aside>
+</section>
+<section data-slide-id="L03-01-06">
+<h2>Câu hỏi kiểm tra</h2>
+<div class="check">
+  <p><strong>Câu hỏi:</strong></p>
+  <ol>
+    <li>Quan sát đúng trạng thái có đồng nghĩa biết xác suất chuyển không?</li>
+    <li>Cùng trạng thái có thể dẫn tới các trạng thái kế tiếp khác nhau không?</li>
+  </ol>
+</div>
+<aside class="notes"><ol><li>Không. Trạng thái cho biết tình huống hiện tại; mô hình cho biết phân phối phản hồi có thể xảy ra.</li><li>Có. Trong ví dụ sinh viên, từ C1 có thể sang C2 hoặc Facebook.</li></ol><p>Đồ thị chuyển biểu diễn các khả năng này bằng cạnh có nhãn xác suất.</p><p class="note-source">Nguồn: Bài 02; PPTX 29–30.</p></aside>
+</section>
 </section>
 
 <section>

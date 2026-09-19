@@ -1,6 +1,6 @@
 # Bài 03 — Kế hoạch chi tiết từng slide
 
-Ngày lập: 2026-09-19. Trạng thái: kế hoạch viết lại, chưa triển khai vào HTML. Các ID `L03-…` là ID dự kiến; không đồng nhất với ID của deck hiện hành. `outline.md` và `storyboard.md` hiện hành vẫn mô tả bản HTML cũ.
+Ngày lập: 2026-09-19. Trạng thái: đang triển khai, đã tích hợp phần 1–1/7; các phần sau chưa hoàn tất. Các ID `L03-…` dùng cho bản viết lại; outline và storyboard ghi phạm vi đã tích hợp thực tế.
 
 ## Mục tiêu và phạm vi
 
@@ -121,7 +121,7 @@ Thời lượng: 2 phút. Vai trò: vấn đề và trực giác.
 
 **Nội dung trên slide:** Hai đường đi từ cùng điểm xuất phát trên đồ thị sinh viên.
 
-**Cách thể hiện:** Chỉ hiện các nút liên quan đến hai đường; cùng nút xuất phát, hai kết thúc khác nhau.
+**Cách thể hiện:** Chỉ hiện các nút liên quan đến hai đường; cùng điểm xuất phát và cùng kết thúc Sleep, hai diễn tiến khác nhau.
 
 **Giải thích và hình thức hóa:** Quỹ đạo là một kết quả lấy mẫu. Mô hình là quy luật sinh ra cả các quỹ đạo chưa quan sát; chưa đồng nhất hai tổng cụ thể với kỳ vọng.
 
