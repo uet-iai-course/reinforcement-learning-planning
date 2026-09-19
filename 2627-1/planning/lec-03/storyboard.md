@@ -1,6 +1,6 @@
 # Bài 03 — Storyboard triển khai
 
-Đã triển khai phần 1–5/7. Bảy phần và 120 phút theo [kế hoạch chi tiết](detailed-slide-plan.md); bản này ghi quyết định thể hiện thực tế. Các phần chưa triển khai dùng bản HTML cũ, không được tính là hoàn tất.
+Đã triển khai phần 1–6/7. Bảy phần và 120 phút theo [kế hoạch chi tiết](detailed-slide-plan.md); bản này ghi quyết định thể hiện thực tế. Các phần chưa triển khai dùng bản HTML cũ, không được tính là hoàn tất.
 
 ## Phần 1. Từ tương tác đến mô hình xác suất — 8 phút
 
@@ -780,3 +780,243 @@ Thời lượng: 3 phút. Vai trò: kiểm tra.
 **Nguồn:** PPTX50–52; hw02 bài4.
 
 **Quyết định thể hiện khi triển khai:** Ba câu bám đúng ba mức của phần: nguồn ngẫu nhiên còn lại, phép gộp tại một trạng thái, và ranh giới giữa đánh giá với tối ưu. Không dùng hình để giữ trang gọn; câu 2 có thể giải trực tiếp từ con số −1,5 đã tính ở slide 05-05, giúp SV tự kiểm tra phép gộp.
+
+## Phần 6. Giá trị trạng thái và giá trị hành động — 24 phút
+
+Đầu vào: mô hình chung P, chính sách cố định, MRP cảm sinh và Bellman cho v. Đầu ra: giải thích và suy ra ba quan hệ v theo q, q theo v, q theo q; dùng một MDP khác để kiểm tra. Duy trì cùng cây một bước qua các trang, chỉ mở thêm tầng cần thiết.
+
+
+### L03-06-01 — Giá trị trạng thái và giá trị hành động
+
+Thời lượng: 1 phút. Vai trò: mở phần.
+
+**Đầu vào:** v_pi của MRP cảm sinh và mô hình có điều kiện theo hành động.
+
+**Nội dung trên slide:** Tiêu đề phần và hai nhánh Study/Sleep xuất phát từ cùng C2.
+
+**Cách thể hiện:** Hai hình: chưa chọn hành động và đã chọn Study.
+
+**Giải thích và hình thức hóa:** Cùng chính sách tiếp tục, khác việc có ấn định hành động đầu tiên hay không.
+
+**Kết nối:** Từ v_pi của cả trạng thái sang giá trị từng lựa chọn.
+
+**Kiểm tra/ghi chú đáp án:** Không đưa bốn công thức Bellman trên trang mở.
+
+**Nguồn:** PPTX53.
+
+**Quyết định thể hiện khi triển khai:** Slide mở phần dùng một hình hai nhánh duy nhất để đặt vấn đề: cùng trạng thái, cùng chính sách, khác nhau ở bước đầu. Hình phù hợp vì sinh viên đã vẽ và đọc đúng đồ thị sinh viên ở các phần trước, nên chỉ cần mở thêm một tầng; tránh đưa công thức Bellman lên trang mở để giữ một luận điểm.
+
+### L03-06-02 — Ấn định hành động đầu tiên
+
+Thời lượng: 3 phút. Vai trò: ví dụ trực quan.
+
+**Đầu vào:** C2 có Study/Sleep và một chính sách tiếp tục cố định.
+
+**Nội dung trên slide:** Từ C2: một lượt chọn Study trước, lượt khác chọn Sleep trước; sau đó đều theo cùng pi.
+
+**Cách thể hiện:** Khoanh hành động đầu tiên; các bước sau ghi “theo pi”.
+
+**Giải thích và hình thức hóa:** Giá trị hành động không phải phần thưởng tức thời và không phải giá trị của một chính sách mới dùng hành động đó mãi. Tác tử chỉ ấn định bước đầu.
+
+**Kết nối:** Đặt tên q cho kỳ vọng của thí nghiệm vừa mô tả.
+
+**Kiểm tra/ghi chú đáp án:** Ở nhánh Sleep, không còn hành động nào sau khi kết thúc.
+
+**Nguồn:** PPTX50,53–54.
+
+**Quyết định thể hiện khi triển khai:** Hình trình bày hai luồng song song với khung nét đứt quanh hành động đầu và nhãn “theo π” ở các bước sau, đúng cấu trúc của định nghĩa sẽ đến. Hình hai nhánh thay cho lời giải thích dài vì điểm mấu chốt nằm ở chỗ khác nhau chỉ một bước, phù hợp với sinh viên năm ba đã quen đọc đồ thị chuyển tiếp.
+
+### L03-06-03 — Định nghĩa giá trị hành động
+
+Thời lượng: 2 phút. Vai trò: hình thức hóa.
+
+**Đầu vào:** Thí nghiệm ấn định hành động đầu rồi theo pi ở06-02.
+
+**Nội dung trên slide:** Với các kỳ vọng hữu hạn:
+
+$$v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s],$$
+$$q_\pi(s,a)=\mathbb E[G_t\mid S_t=s,\ A_t\text{ được ấn định là }a;\ \pi\text{ từ }t+1].$$
+
+Ký hiệu thông dụng: $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$.
+
+**Cách thể hiện:** Hai cột chung phần “từ bước sau theo pi”; chỉ khác điều kiện về hành động đầu. Ký hiệu thông dụng trên mặt slide; cách định nghĩa đầy đủ ở ghi chú nếu dòng quá dài.
+
+**Giải thích và hình thức hóa:** q được định nghĩa cho mọi hành động hợp lệ, kể cả pi(a|s)=0: thực hiện a một lần rồi theo pi. Công thức điều kiện thông dụng được hiểu theo quy ước này, không coi điều kiện trên biến cố xác suất 0 là phép chia xác suất hợp lệ. Cũng hiểu giá trị từ trạng thái s bằng khởi tạo tại s.
+
+**Kết nối:** Từ q của từng hành động sang trung bình khi để pi chọn.
+
+**Kiểm tra/ghi chú đáp án:** Phân biệt hai chỉ số s,a với chỉ số pi: pi quy định hành vi tiếp tục.
+
+**Nguồn:** PPTX53; làm rõ quy ước hành động có xác suất 0.
+
+**Quyết định thể hiện khi triển khai:** Bố cục hai cột chung cấu trúc, chỉ khác dòng điều kiện, phản chiếu trực tiếp điểm khác biệt duy nhất giữa hai khái niệm. Hộp ký hiệu thông dụng tách khỏi định nghĩa đầy đủ để dòng công thức không quá dài; đây là bước hình thức hóa đi sau ví dụ ấn định hành động của slide trước. Định nghĩa dùng hai hàng toàn chiều ngang thay hai thẻ, tránh công thức q vượt khung. Quy ước ấn định hành động được nói trước công thức và nhắc rõ cho xác suất chính sách bằng0.
+
+### L03-06-04 — Từ giá trị hành động đến giá trị trạng thái
+
+Thời lượng: 3 phút. Vai trò: suy diễn bằng xác suất toàn phần.
+
+**Đầu vào:** Định nghĩa v_pi,q_pi; chính sách chọn hành động với xác suất pi.
+
+**Nội dung trên slide:** Trước tiên minh họa C2 chọn Study/Sleep với trọng số 0,75/0,25. Sau đó:
+
+$$
+\begin{aligned}
+v_\pi(s)&=\mathbb E_\pi[G_t\mid S_t=s]\\
+&=\sum_a\Pr_\pi(A_t=a\mid S_t=s)\,
+\mathbb E_\pi[G_t\mid S_t=s,A_t=a]\\
+&=\sum_a\pi(a\mid s)q_\pi(s,a).
+\end{aligned}
+$$
+
+**Cách thể hiện:** Cây s→a; mỗi nhánh mang một giá trị q và trọng số pi. Hai mức hiện: phép tính hai nhánh trước, dấu tổng sau.
+
+**Giải thích và hình thức hóa:** Dòng giữa là kỳ vọng toàn phần theo A_t. Các hành động có pi=0 đóng góp 0; không cần đánh giá một kỳ vọng điều kiện xác suất 0 trong phép chứng minh.
+
+**Kết nối:** Đã biết cách gộp q thành v; tiếp theo tính q từ phản hồi một bước.
+
+**Kiểm tra/ghi chú đáp án:** Không dùng max: chính sách đã cố định.
+
+**Nguồn:** PPTX53,56–57; hw02 bài7.
+
+**Quyết định thể hiện khi triển khai:** Cây s→a với trọng số π và giá trị q trên mỗi nhánh được minh họa bằng cặp trọng số 0,75/0,25 quen thuộc của C2 trước khi viết tổng. Hai mức fragment tách phép tính hai nhánh và dạng tổng, giúp mỗi bước suy diễn hiện một lần; công thức giữ dạng aligned ba dòng ngắn.
+
+### L03-06-05 — Giá trị hành động từ phản hồi một bước
+
+Thời lượng: 3 phút. Vai trò: suy diễn Bellman: q theo v.
+
+**Đầu vào:** Đẳng thức tách G; mô hình phản hồi chung; định nghĩa q_pi.
+
+**Nội dung trên slide:** Ấn định (s,a), dùng đồng nhất thức đã có:
+
+$$
+q_\pi(s,a)=\mathbb E[R_{t+1}+\gamma G_{t+1}\mid s,a;\pi\text{ sau đó}].
+$$
+
+Chia theo cặp phản hồi $(s',r)$:
+
+$$
+q_\pi(s,a)=\sum_{s',r}P(s',r\mid s,a)
+\left[r+\gamma\mathbb E[G_{t+1}\mid s,a,s',r;\pi\text{ sau đó}]\right].
+$$
+
+Nhận diện kỳ vọng tương lai:
+
+$$q_\pi(s,a)=\sum_{s',r}P(s',r\mid s,a)\big[r+\gamma v_\pi(s')\big].$$
+
+**Cách thể hiện:** Một cây từ cặp (s,a) tới các cặp (s′,r); phần tương lai tại mỗi s′ là hộp v_pi(s′). Hai dòng dài là các bước xuất hiện nối tiếp, không ép lên cùng mặt một lúc.
+
+**Giải thích và hình thức hóa:** Bước 1 dùng tách G; bước 2 dùng kỳ vọng toàn phần theo phản hồi chung; bước 3 dùng Markov của môi trường, chính sách Markov dừng và quy luật không đổi theo thời gian. Chỉ các cặp có xác suất dương cần kỳ vọng điều kiện trung gian. Không tách P(s′,r|s,a) thành tích hai phân phối độc lập.
+
+**Kết nối:** Thay v ở vế phải bằng trung bình các q ở thời điểm kế tiếp.
+
+**Kiểm tra/ghi chú đáp án:** Nếu s′ kết thúc thì v_pi(s′)=0, nhưng r ở bước vào đó vẫn được cộng.
+
+**Nguồn:** PPTX56–57; nối mô hình chung Bài02.
+
+**Quyết định thể hiện khi triển khai:** Ba dòng công thức là ba bước nối tiếp, mỗi dòng nằm trong một fragment để không dồn cả ba lên cùng một lúc; hình cây (s,a)→(s′,r) với hộp v_π(s′) ở đầu mỗi nhánh minh họa đúng cấu trúc nhìn trước một bước. Chú ý Markov của môi trường và Markov của chính sách được dùng ở bước ba, nối thẳng với giả thiết đã kiểm tra ở phần 1. Bỏ cụm chữ dài “pi sau đó” khỏi công thức: quy ước đã có ở định nghĩa và được giải thích trong notes. Giữ cả ba bước tách tổng, kỳ vọng toàn phần và nhận diện giá trị tương lai; caption nêu giả thiết tại phép thay.
+
+### L03-06-06 — Bellman kỳ vọng cho giá trị hành động
+
+Thời lượng: 2 phút. Vai trò: suy diễn: q theo q.
+
+**Đầu vào:** q theo v ở06-05 và v theo q ở06-04.
+
+**Nội dung trên slide:** Tại trạng thái kế tiếp:
+
+$$v_\pi(s')=\sum_{a'}\pi(a'\mid s')q_\pi(s',a').$$
+
+Thế vào kết quả trước:
+
+$$
+q_\pi(s,a)=\sum_{s',r}P(s',r\mid s,a)
+\left[r+\gamma\sum_{a'}\pi(a'\mid s')q_\pi(s',a')\right].
+$$
+
+**Cách thể hiện:** Mở hộp v_pi(s′) thành tầng hành động a′. Dùng nhãn t và t+1 để phân biệt a và a′.
+
+**Giải thích và hình thức hóa:** Không có suy luận mới ngoài phép thế; tránh trình bày như một công thức độc lập phải học thuộc. Tổng trong là trung bình theo hành động tiếp theo, tổng ngoài là trung bình phản hồi của hành động hiện tại. Với s′ kết thúc, quy ước tổng tiếp tục bằng 0.
+
+**Kết nối:** Quay lại giá trị trạng thái bằng cách lấy trung bình hành động đầu tiên.
+
+**Kiểm tra/ghi chú đáp án:** Câu kiểm tra miệng: pi bên trong được điều kiện theo s hay s′? Đáp án s′.
+
+**Nguồn:** PPTX56–57.
+
+**Quyết định thể hiện khi triển khai:** Hình mở hộp v_π(s′) thành tầng hành động a′ với nhãn t và t+1, đúng một bước nhìn trước so với slide trước. Công thức duy nhất trên mặt slide giúp luận điểm “chỉ là phép thế” rõ ràng; tránh trình bày như một công thức độc lập cần học thuộc.
+
+### L03-06-07 — Bellman kỳ vọng cho giá trị trạng thái
+
+Thời lượng: 2 phút. Vai trò: suy diễn: thế và đối chiếu MRP.
+
+**Đầu vào:** Hai quan hệ v theo q và q theo v; P^pi,r^pi từ05-06.
+
+**Nội dung trên slide:** Bắt đầu từ kết quả 06-04, thế công thức 06-05:
+
+$$
+\begin{aligned}
+v_\pi(s)&=\sum_a\pi(a\mid s)q_\pi(s,a)\\
+&=\sum_a\pi(a\mid s)\sum_{s',r}P(s',r\mid s,a)
+\big[r+\gamma v_\pi(s')\big]\\
+&=r^\pi(s)+\gamma\sum_{s'}P^\pi_{ss'}v_\pi(s').
+\end{aligned}
+$$
+
+**Cách thể hiện:** Cây s→a→(s′,r) rồi gộp lại như phần 5; đánh dấu bằng nhãn hai nhóm số hạng tạo r^pi và P^pi.
+
+**Giải thích và hình thức hóa:** Dòng cuối phân phối phép cộng và dùng đúng định nghĩa P^pi,r^pi. Không lấy trung bình thêm lần nữa theo pi sau khi đã tạo P^pi. Hai cách viết là cùng Bellman kỳ vọng, không phải hai giả thuyết.
+
+**Kết nối:** Áp dụng ba quan hệ vừa suy ra vào xe đua.
+
+**Kiểm tra/ghi chú đáp án:** Đối chiếu với 05-06 để khép mạch MDP→MRP.
+
+**Nguồn:** PPTX56–57; hw02 bài4,8.
+
+**Quyết định thể hiện khi triển khai:** Cây ba tầng s→a→(s′,r) rồi gộp lại đúng như phần 5; hai nhóm số hạng được đánh dấu bằng chú thích thay vì tô màu, vì màu không được là tín hiệu duy nhất. Công thức aligned ba dòng ngắn nằm trọn trong giới hạn chiều cao.
+
+### L03-06-08 — Vận dụng với xe đua
+
+Thời lượng: 5 phút. Vai trò: chuyển sang tình huống mới.
+
+**Đầu vào:** Ba quan hệ Bellman đã suy ra và điều kiện gamma=1 ở04-08.
+
+**Nội dung trên slide:** Ba trạng thái Cool, Warm, Overheated; hai hành động Slow/Fast. Chính sách chọn mỗi hành động với 0,5 ở hai trạng thái chưa kết thúc; $\gamma=1$.
+
+Cho $v_\pi(Cool)=0$, $v_\pi(Warm)=-6$, $v_\pi(Overheated)=0$:
+
+$$q_\pi(Cool,Slow)=1+v_\pi(Cool)=1,\quad q_\pi(Cool,Fast)=2+0{,}5(0)+0{,}5(-6)=-1.$$
+
+$$v_\pi(Cool)=0{,}5(1)+0{,}5(-1)=0.$$
+
+**Cách thể hiện:** Đồ thị xe đua; trước phép tính chỉ làm nổi hai hành động từ Cool. Các kết quả còn lại giải thích trong notes và phần chữa bài, tránh sáu nhánh cộng bốn công thức trên một trang.
+
+**Giải thích và hình thức hóa:** Các giá trị là dữ kiện đã giải dưới chính sách trên, không yêu cầu sinh viên tự tìm cả hệ trong 5 phút. Notes: Cool–Slow tới Cool thưởng1; Cool–Fast tới Cool/Warm mỗi xác suất0,5 thưởng2; Warm–Slow tới Cool/Warm mỗi0,5 thưởng1; Warm–Fast tới Overheated thưởng-10, không thêm2. Kiểm các giá trị đã cho bằng cách thay ngược vào hệ: vC=1,5+0,75vC+0,25vW; vW=-4,5+0,25vC+0,25vW. Từ Cool, đường Fast→Warm→Fast→Overheated có xác suất (1/2)(1/2)(1/2)=1/8. Từ Warm, xác suất kết thúc ngay là 1/2. Vì thế chính sách này có xác suất kết thúc ít nhất 1/8 trong mỗi hai bước từ mọi trạng thái chưa kết thúc, nên kỳ vọng thời gian hữu hạn; gamma=1 hợp lệ.
+
+**Kết nối:** Từ phép tính Cool sang câu hỏi tự làm tại Warm.
+
+**Kiểm tra/ghi chú đáp án:** Đọc mô hình trước khi tính; lựa chọn đầu tiên Fast có thể có q thấp dù thưởng tức thời cao hơn.
+
+**Nguồn:** PPTX51,55; Berkeley CS188; quy ước thưởng quá nhiệt đã nêu.
+
+**Quyết định thể hiện khi triển khai:** Dùng lại đồ thị xe đua với đủ sáu kết quả chuyển tiếp để việc tra xác suất và thưởng khi tính không phụ thuộc trí nhớ. Trên mặt slide chỉ tính hai nhánh từ Cool, đủ cho một luận điểm; sáu nhánh cộng bốn công thức cùng lúc sẽ vượt vùng nội dung. Điều kiện γ=1 được kiểm bằng lập luận xác suất kết thúc, nối với điều kiện ở 04-08. Vẽ lại đồ thị theo bố cục ngang, đủ sáu kết quả, nhãn cạnh rút thành hành động:xác suất;thưởng và chú giải ngay dưới. Hai phép tính q tách dòng; phép kiểm v(Cool) nằm trong notes để giữ hình đọc được. Không dùng ảnh hoặc bảng raster.
+
+### L03-06-09 — Câu hỏi kiểm tra
+
+Thời lượng: 3 phút. Vai trò: kiểm tra.
+
+**Đầu vào:** Mô hình xe đua, chính sách đều và các giá trị ở06-08.
+
+**Nội dung trên slide:** 1. Với xe đua và các giá trị đã cho, tính q_pi(Warm,Slow), q_pi(Warm,Fast).
+2. Từ hai q đó, tính v_pi(Warm).
+3. Trong Bellman kỳ vọng, vì sao lấy trung bình theo pi thay vì chọn giá trị lớn nhất?
+
+**Cách thể hiện:** Giữ mô hình Warm và ba giá trị cần thiết trên mặt slide, không buộc nhớ số từ trang trước.
+
+**Giải thích và hình thức hóa:** Câu 1 vận dụng mô hình, câu 2 vận dụng xác suất toàn phần, câu 3 phân biệt đánh giá và tối ưu.
+
+**Kết nối:** Khép phần giá trị, sang tổng hợp quy trình đọc và giải một mô hình.
+
+**Kiểm tra/ghi chú đáp án:** 1. -2 và -10. 2. -6. 3. Đang đánh giá chính sách cố định.
+
+**Nguồn:** PPTX51,55–57; hw02 bài7,8.
+
+**Quyết định thể hiện khi triển khai:** Mô hình tại Warm và ba giá trị cần thiết được đặt trên mặt slide để câu hỏi không buộc nhớ số từ trang trước. Ba câu bám đúng ba mạch của phần: áp dụng công thức q theo v, áp dụng xác suất toàn phần v theo q, và phân biệt kỳ vọng với tối ưu.

@@ -1,6 +1,6 @@
 # Bài 03 — Dàn ý triển khai
 
-Trạng thái: đã triển khai phần 1–5/7 theo [kế hoạch chi tiết](detailed-slide-plan.md). Các phần sau vẫn là nội dung cũ cho đến lượt thay thế tương ứng.
+Trạng thái: đã triển khai phần 1–6/7 theo [kế hoạch chi tiết](detailed-slide-plan.md). Các phần sau vẫn là nội dung cũ cho đến lượt thay thế tương ứng.
 
 ## Mục tiêu và phạm vi
 
@@ -104,3 +104,15 @@ $P$ trong chuỗi Markov là ma trận; $P(s',r\mid s,a)$ trong MDP là xác su�
 - `L03-05-05`: Từ MDP đến quá trình phần thưởng Markov.
 - `L03-05-06`: Mô hình dưới chính sách.
 - `L03-05-07`: Câu hỏi kiểm tra.
+
+## Phần 6
+
+- `L03-06-01`: Giá trị trạng thái và giá trị hành động.
+- `L03-06-02`: Ấn định hành động đầu tiên.
+- `L03-06-03`: Định nghĩa giá trị hành động.
+- `L03-06-04`: Từ giá trị hành động đến giá trị trạng thái.
+- `L03-06-05`: Giá trị hành động từ phản hồi một bước.
+- `L03-06-06`: Bellman kỳ vọng cho giá trị hành động.
+- `L03-06-07`: Bellman kỳ vọng cho giá trị trạng thái.
+- `L03-06-08`: Vận dụng với xe đua.
+- `L03-06-09`: Câu hỏi kiểm tra.
