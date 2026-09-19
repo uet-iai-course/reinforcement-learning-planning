@@ -1,6 +1,6 @@
 # Bài 03 — Dàn ý triển khai
 
-Trạng thái: đã triển khai phần 1–2/7 theo [kế hoạch chi tiết](detailed-slide-plan.md). Các phần sau vẫn là nội dung cũ cho đến lượt thay thế tương ứng.
+Trạng thái: đã triển khai phần 1–3/7 theo [kế hoạch chi tiết](detailed-slide-plan.md). Các phần sau vẫn là nội dung cũ cho đến lượt thay thế tương ứng.
 
 ## Mục tiêu và phạm vi
 
@@ -73,3 +73,12 @@ $P$ trong chuỗi Markov là ma trận; $P(s',r\mid s,a)$ trong MDP là xác su�
 - `L03-02-04`: Từ đồ thị đến ma trận chuyển.
 - `L03-02-05`: Phân phối sau một bước.
 - `L03-02-06`: Câu hỏi kiểm tra.
+
+## Phần 3
+
+- `L03-03-01`: Quá trình phần thưởng Markov.
+- `L03-03-02`: Phần thưởng trên từng bước.
+- `L03-03-03`: Định nghĩa quá trình phần thưởng Markov.
+- `L03-03-04`: Hai quỹ đạo, hai tổng thưởng.
+- `L03-03-05`: Giá trị của một trạng thái.
+- `L03-03-06`: Câu hỏi kiểm tra.

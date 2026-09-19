@@ -464,3 +464,21 @@ Kiểm tra Chromium bản nháp: 12 lượt (6slide × 1280×720/390×844), khô
 - Ma trận7×7 ban đầu tràn cuối trang. Bản cuối bỏ véc-tơC1 lặp với hàng bảng, tô nền hàngC1 và giữ điều kiện ở chú thích. Sai khác có chủ ý: không hiện thêm toàn ma trận sau một fragment, vì cả bảng đã vừa khung và hàngC1 vẫn là điểm vào. Ví dụ chắc chắnC1 đã hiện ở02-03 và được nhắc trong notes02-05; hình02-05 dành cho phân phối trộn để thể hiện phép cộng xác suất.
 - Tái rà `lec03-final-02-math.json` xác nhận ma trận, các công thức và ví dụ0,7 đúng; `lec03-final-02-flow.json` xác nhận mạch và notes sạch, chỉ yêu cầu đồng bộ mô tảFB trong analysis. Đã sửa analysis02-02/04 theo đúng hình và bố cục thực tế. Tái rà toán dùngDeepSeekV4Flash, mạch dùngGLM5.3Flash; runtime requested=observed, providerOpenRouter. Không sao chép các câu lẫn ngoại ngữ trong báo cáo vào sản phẩm.
 - Kiểm tra cuối: xem trực tiếp đủ6slide rộng, render12lượt ở1280×720 và390×844, không tràn biên, lỗiKaTeX, ảnhhỏng, HTTP hoặcJavaScript; kiểm bànphím ởhaikhung. Xác suất hàng ma trận và0,5×0,5+0,5×0,9 được tính lại. Tự kiểm no-ai-slop loại câu hỏi tu từ, lời điều hành và “occurrence/stays”; Quill xác nhận đồ thị→định nghĩa→ma trận→phân phối→kiểmtra→thêmthưởng.
+
+### Phần 3 — quá trình phần thưởng Markov, 20-09-2026
+
+- Writer `lec03-write-03`: requested=observedGLM5.3Flash, providerOpenRouter. Sáu slide, nămSVG: đồ thị có thưởng, dải thưởng, hai quỹ đạo, cây tổng thưởng và bài kiểm tra.
+- Năm vai độc lập dùng profile review-section/no-tools; GLM cho sinh viên/học thuật/mạch, DeepSeekV4Flash cho chuyên môn/toán. Lượt toán đầu bịfinish_reason=length rồi vượtngânsách lịch sử32704>32000, không được tính. Đã thu hẹp gói còn body/notes, SVGMRP và ma trận chuẩn rồi thử lại đúng một lần cùngmôhình (`lec03-part-03-math-retry`), hoàn tất. Bốn vai còn lại hoàn tất; các runtime requested=observed, providerOpenRouter.
+
+| Vai | Mức độ sau đối chiếu | Slide | Bằng chứng và quyết định |
+|---|---|---|---|
+| Sinh viên | nghiêm trọng | 03-01/06 | Đồ thị thưởng thiếu cạnh và có xác suất sai; đáp án viết dấu trừ trước thưởng âm. Dựng lại đủ đồ thị chuẩn, sửa tổng thành−2+(1/2)(−2)=−3. |
+| Chuyên môn | không áp dụng | 03-01/04 | Đề nghị đưa định nghĩa lên trước ví dụ trái yêu cầu ví dụ→formalism; đề nghị thêm số hạnggamma^5 vào quỹ đạo kết thúc là không cần vì mọi thưởng sauSleep bằng0. Giữ trình tự đã duyệt, nêu rõ điều kiện hữu hạn trong notes. |
+| Toán học, retry | nghiêm trọng | 03-01 | Xác nhận thiếuPub và các cạnh; sửa từ ma trận phần2. Bác đề xuất thưởngPub=−2, vì nguồn choPub=+1; không chấp nhận nhận xét coi−2−(1/2)(−2)=−3 là đúng. Điều phối viên tự tính cả ba tổng. |
+| Học thuật | nghiêm trọng/trung bình | 03-01/04 | Đồ thị không khớp nguồn; thưởngC1→FB phải−2. Sửa cả hình và quy ước, dùng hai chỉ số mẫu(1)/(2). Báo cáo nhầm cạnhC2→FB0,2; cạnh chuẩn làC2→Sleep0,2. |
+| Mạch viết | nghiêm trọng | 03-01→06 | Vai trò: thêm thưởng vào chuỗi, vào từP đã có, ra giá trị để lậpBellman. Đồ thị thiếu vòngFB vàPub làm các quỹ đạo sau mất căn cứ. Đã giữ nguyên đủ7nút/13cạnh và bổ sung thưởng theo trạng thái hiện tại. |
+
+- Writer chỉnh sửa riêng `lec03-fix-03`, profilepatch, GLM5.3Flash: vá notes03-04/06 sau đủ năm báo cáo. Điều phối viên sửa tuần tự hình và bố cục; không có hai writer ghi đồng thời. Hình mở phần ghi thưởng trong nút để tránh lặp trên nhiều cạnh; lời giảng xác định đó là thưởng của bước rời trạng thái.
+- Sai khác thể hiện: bỏ số mũchiếtkhấu và công thức khỏiSVG, giữ dữ liệu thưởng; công thứcKaTeX nằm trongHTML. Trang hai quỹ đạo giữ hai dòng tính rút gọn trên mặt; các tích chiếtkhấu đầy đủ ởnotes, tránh tràn trang. Định nghĩaGamma[0,1] đi cùng điều kiện đủ hữu hạn trongnotes, được phát triển ởphần4. TổngGt đã có ởBài02 nên được nhắc ngắn, không phải khái niệm mới đột ngột.
+- Tái rà `lec03-final-03-math` (DeepSeekV4Flash) và `lec03-final-03-flow` (GLM5.3Flash) đềuPASS: ma trận/13cạnh, thưởng−2/−1/+1/+10/0, tổng−2,25/−3,125, quiz−3, phân biệt r/R/G/v, điều kiệnGamma1 và mạch vào–ra. Runtime requested=observed, providerOpenRouter.
+- Kiểm định: 12lượt render không tràn biên, lỗiKaTeX, ảnhhỏng, HTTP/JavaScript; xem trực tiếp đủ6ảnh rộng. Phân tích57biểu thứcKaTeX trong cả mặt vànotes của phần1–3 đều thành công. Tự kiểm no-ai-slop bỏ câu tu từ, điều hành, chỉ dẫn tác giả; Quill xác nhận ví dụ thưởng→định nghĩa→hai mẫu→kỳ vọng→kiểmtra→Bellman.

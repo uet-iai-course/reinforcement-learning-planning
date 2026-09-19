@@ -1,6 +1,6 @@
 # Bài 03 — Storyboard triển khai
 
-Đã triển khai phần 1–2/7. Bảy phần và 120 phút theo [kế hoạch chi tiết](detailed-slide-plan.md); bản này ghi quyết định thể hiện thực tế. Các phần chưa triển khai dùng bản HTML cũ, không được tính là hoàn tất.
+Đã triển khai phần 1–3/7. Bảy phần và 120 phút theo [kế hoạch chi tiết](detailed-slide-plan.md); bản này ghi quyết định thể hiện thực tế. Các phần chưa triển khai dùng bản HTML cũ, không được tính là hoàn tất.
 
 ## Phần 1. Từ tương tác đến mô hình xác suất — 8 phút
 
@@ -253,3 +253,128 @@ Thời lượng: 3 phút. Vai trò: kiểm tra.
 **Nguồn:** hw02 bài3.
 
 **Quyết định thể hiện khi triển khai:** Ma trận được viết lớn bằng KaTeX và ba câu hỏi ngắn đặt trong nhãn Câu hỏi:, không kèm đồ thị mới để trọng tâm ở việc đọc P. Ba câu bám đúng ba kỹ năng của phần: kiểm tra ràng buộc hàng, nhận diện hấp thụ qua phần tử chéo, và đọc phân phối bước tới từ một hàng. Ma trận được chọn để tái sử dụng ở phần Bellman, tạo cầu nối sang phần 3 nơi quy luật chuyển được giữ nguyên và thêm thành phần thưởng.
+
+## Phần 3. Quá trình phần thưởng Markov — 18 phút
+
+Đầu vào: chuỗi Markov. Đầu ra: phân biệt dữ liệu thưởng, tổng trên một mẫu và kỳ vọng giá trị. Ví dụ quỹ đạo đứng trước định nghĩa giá trị; chưa giải Bellman.
+
+
+### L03-03-01 — Quá trình phần thưởng Markov
+
+Thời lượng: 1 phút. Vai trò: mở phần.
+
+**Đầu vào:** Chuỗi Markov gồm trạng thái và xác suất chuyển.
+
+**Nội dung trên slide:** Tiêu đề phần và đồ thị sinh viên có thêm nhãn thưởng.
+
+**Cách thể hiện:** Thêm nhãn lên đồ thị quen thuộc, không thay xác suất.
+
+**Giải thích và hình thức hóa:** Đi từ “quá trình xảy ra thế nào” đến “quá trình cho tổng thưởng bao nhiêu”.
+
+**Kết nối:** Đặt nhu cầu đánh giá quỹ đạo.
+
+**Kiểm tra/ghi chú đáp án:** Không thêm một đồ thị khác.
+
+**Nguồn:** PPTX34–35.
+
+**Quyết định thể hiện khi triển khai:** Slide mở phần dùng lại đúng đồ thị phần 2 và chỉ thêm nhãn thưởng, để sinh viên thấy MRP là mở rộng trực tiếp của chuỗi Markov chứ không phải mô hình mới. Tiên quyết: chuỗi Markov, ma trận chuyển, ký hiệu S_t. Cầu nối sang slide thưởng từng bước. Bản triển khai sau rà: công thức dựng bằng KaTeX; SVG chỉ giữ nút, mũi tên và dữ liệu thưởng. Các lỗi hình và dấu được đối chiếu lại với ma trận phần2.
+
+### L03-03-02 — Phần thưởng trên từng bước
+
+Thời lượng: 3 phút. Vai trò: ví dụ.
+
+**Đầu vào:** Các quỹ đạo Student đã đọc ở phần2.
+
+**Nội dung trên slide:** Quỹ đạo C1→C2→C3→Pass→Sleep với thưởng -2,-2,-2,+10.
+
+**Cách thể hiện:** Dải thời gian: trạng thái phía trên, thưởng phía dưới mũi tên.
+
+**Giải thích và hình thức hóa:** Trong ví dụ này $R_{t+1}=r(S_t)$: thưởng gắn với trạng thái xuất phát của bước. +10 nhận khi rời Pass sang Sleep. Nêu rõ để tránh cộng lệch một bước hoặc coi mọi thưởng là thưởng vào trạng thái.
+
+**Kết nối:** Từ bốn giá trị cụ thể đến hàm thưởng r(s).
+
+**Kiểm tra/ghi chú đáp án:** Sau Sleep không có thưởng; quy ước tự lặp với thưởng 0 nếu viết chuỗi vô hạn.
+
+**Nguồn:** PPTX35,40; Silver PDF11,15.
+
+**Quyết định thể hiện khi triển khai:** Dải thời gian đặt trạng thái phía trên và thưởng phía dưới mũi tên để chỉ số thời gian hiện rõ trên hình, đúng chỗ dễ nhầm của sinh viên năm 3: lệch một bước trong R_{t+1}. Câu ngắn, một luận điểm. Tiên quyết: quỹ đạo đã đọc ở phần 2; cầu nối tới hàm r(s) ở slide định nghĩa. Bản triển khai sau rà: công thức dựng bằng KaTeX; SVG chỉ giữ nút, mũi tên và dữ liệu thưởng. Các lỗi hình và dấu được đối chiếu lại với ma trận phần2.
+
+### L03-03-03 — Định nghĩa quá trình phần thưởng Markov
+
+Thời lượng: 3 phút. Vai trò: hình thức hóa.
+
+**Đầu vào:** Các thưởng -2,-2,-2,+10 trên từng bước.
+
+**Nội dung trên slide:** Quá trình phần thưởng Markov (MRP): $(\mathcal S,P,r,\gamma)$; $r(s)=\mathbb E[R_{t+1}\mid S_t=s]$.
+
+**Cách thể hiện:** Liên kết từng thành phần với nút, cạnh, nhãn thưởng và trọng số thời gian trên hình trước.
+
+**Giải thích và hình thức hóa:** r là véc-tơ n thành phần khi liệt kê trạng thái; có thể là kỳ vọng của thưởng ngẫu nhiên. Phân phối phản hồi bước tới, có điều kiện theo lịch sử, chỉ phụ thuộc trạng thái hiện tại; quy luật không đổi theo thời gian. Miền mặc định: n hữu hạn, thưởng bị chặn, $0\le\gamma<1$; ví dụ kết thúc có thể dùng gamma=1 với điều kiện nêu sau.
+
+**Kết nối:** Từ mô hình thưởng tới tính tổng của một quỹ đạo.
+
+**Kiểm tra/ghi chú đáp án:** Phân biệt số r(s) với quan sát thưởng R ở một lần chuyển.
+
+**Nguồn:** PPTX34–35.
+
+**Quyết định thể hiện khi triển khai:** Định nghĩa đặt trong hộp với ba dòng, mỗi thành phần nối về nút, cạnh, nhãn thưởng và trọng số thời gian của hình trước, giúp sinh viên năm 3 gắn ký hiệu mới vào đồ thị quen. Không đưa Bellman vào đây; slide kết thúc ở cấu trúc (S, P, r, gamma) và mở sang tính tổng một quỹ đạo. Bản triển khai sau rà: công thức dựng bằng KaTeX; SVG chỉ giữ nút, mũi tên và dữ liệu thưởng. Các lỗi hình và dấu được đối chiếu lại với ma trận phần2.
+
+### L03-03-04 — Hai quỹ đạo, hai tổng thưởng
+
+Thời lượng: 4 phút. Vai trò: ví dụ tính toán.
+
+**Đầu vào:** P, r(s), gamma; quy ước thưởng ở trạng thái rời đi.
+
+**Nội dung trên slide:** Với $\gamma=1/2$: C1→C2→C3→Pass→Sleep cho -2,25; C1→FB→FB→C1→C2→Sleep cho -3,125.
+
+**Cách thể hiện:** Hai dải thời gian, mỗi dòng chỉ một phép cộng có chiết khấu.
+
+**Giải thích và hình thức hóa:** Tính $-2-1-0{,}5+1{,}25=-2{,}25$ và $-2-0{,}5-0{,}25-0{,}25-0{,}125=-3{,}125$. Nhắc $G_t=\sum_{k\ge0}\gamma^kR_{t+k+1}$ với thưởng 0 sau kết thúc.
+
+**Kết nối:** Hai tổng khác nhau dẫn tới nhu cầu một giá trị đại diện theo phân phối.
+
+**Kiểm tra/ghi chú đáp án:** Đây là hai mẫu, không lấy trung bình đơn giản của chúng để tuyên bố giá trị chính xác.
+
+**Nguồn:** PPTX36–40.
+
+**Quyết định thể hiện khi triển khai:** Một hình chứa hai dải thời gian, mỗi dòng trên mặt slide chỉ một phép cộng có chiết khấu, đúng giới hạn ba bốn dòng công thức lớn. Số mũ gamma đặt trên từng mũi tên để phép nhân với chiết khấu nhìn thấy được thay vì chỉ xuất hiện trong công thức. Cầu nối: hai tổng khác nhau cùng xuất phát từ C1 dẫn tới định nghĩa kỳ vọng ở slide sau. Bản triển khai sau rà: công thức dựng bằng KaTeX; SVG chỉ giữ nút, mũi tên và dữ liệu thưởng. Các lỗi hình và dấu được đối chiếu lại với ma trận phần2.
+
+### L03-03-05 — Giá trị của một trạng thái
+
+Thời lượng: 4 phút. Vai trò: trực giác → định nghĩa.
+
+**Đầu vào:** Hai tổng mẫu -2,25 và -3,125 từ cùng C1; khái niệm kỳ vọng.
+
+**Nội dung trên slide:** Từ cùng C1 có nhiều quỹ đạo và tổng khác nhau; $v(s)=\mathbb E[G_t\mid S_t=s]$.
+
+**Cách thể hiện:** Một nút tỏa ra nhiều quỹ đạo; đặt từng tổng ở cuối; bao nhóm bằng ký hiệu kỳ vọng.
+
+**Giải thích và hình thức hóa:** Kỳ vọng dùng xác suất do mô hình sinh, không phải trung bình không trọng số của vài đường tùy chọn. v(s) là một số, G là biến ngẫu nhiên. Giá trị lớn có thể đến từ thưởng muộn.
+
+**Kết nối:** Phần 4 sẽ tính v mà không liệt kê vô hạn quỹ đạo.
+
+**Kiểm tra/ghi chú đáp án:** Tại Sleep, v=0 dưới quy ước kết thúc; chưa đưa bảng v đầy đủ khi chưa có cách tính.
+
+**Nguồn:** PPTX39–43.
+
+**Quyết định thể hiện khi triển khai:** Hình một nút tỏa ra nhiều quỹ đạo với tổng đặt ở cuối từng nhánh, bao nhóm bằng ký hiệu kỳ vọng trong công thức phía dưới, thể hiện đúng bước trực giác sang định nghĩa. Sinh viên năm 3 đã biết kỳ vọng nên trọng tâm là phân biệt biến ngẫu nhiên G với giá trị kỳ vọng v. Cầu nối: phần 4 tính v mà không liệt kê vô hạn quỹ đạo. Bản triển khai sau rà: công thức dựng bằng KaTeX; SVG chỉ giữ nút, mũi tên và dữ liệu thưởng. Các lỗi hình và dấu được đối chiếu lại với ma trận phần2.
+
+### L03-03-06 — Câu hỏi kiểm tra
+
+Thời lượng: 3 phút. Vai trò: kiểm tra.
+
+**Đầu vào:** Phân biệt thưởng một bước, tổng mẫu, kỳ vọng tổng.
+
+**Nội dung trên slide:** 1. r(s), G và v(s) khác nhau thế nào? 2. Tính tổng đường C1→C2→Sleep với gamma=1/2. 3. Một mẫu G có bằng v(s) không?
+
+**Cách thể hiện:** Ba câu đánh số; một dải thời gian nhỏ cho câu 2.
+
+**Giải thích và hình thức hóa:** Chỉ dùng thưởng và ký hiệu đã giới thiệu.
+
+**Kết nối:** Khép phân biệt mẫu/kỳ vọng, mở bài toán tính v từ một bước.
+
+**Kiểm tra/ghi chú đáp án:** 1. Kỳ vọng thưởng một bước/tổng một mẫu/kỳ vọng tổng. 2. -3. 3. Không nhất thiết.
+
+**Nguồn:** PPTX34–40.
+
+**Quyết định thể hiện khi triển khai:** Ba câu bám sát ba đại lượng của phần: thưởng một bước, tổng mẫu, kỳ vọng. Dải thời gian nhỏ cho câu 2 giúp làm bài trực tiếp trên mặt slide mà không cần vẽ lại. Cầu nối sang phần 4: tổng G được viết lại thành quan hệ đệ quy giữa v(s) và v(s'). Bản triển khai sau rà: công thức dựng bằng KaTeX; SVG chỉ giữ nút, mũi tên và dữ liệu thưởng. Các lỗi hình và dấu được đối chiếu lại với ma trận phần2.

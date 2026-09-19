@@ -105,11 +105,42 @@
 </section>
 
 <section>
-<section data-slide-id="B01"><h2>Phần thưởng Student</h2><p>Với thứ tự trạng thái đã cố định:</p><div class="math-large">$$r=(-2,-2,-2,10,1,-1,0)^{\mathsf T}.$$</div><div class="box">Ở C1 nhận $-2$; ở Pass nhận $10$; ở Sleep nhận $0$.</div><aside class="notes">Phần thưởng gắn với trạng thái hiện tại theo quy ước $R_{t+1}=r(S_t)$, không dùng cụm trạng thái đang rời đi. Không suy quy ước này cho mọi MRP.<p class="note-source"><strong>Nguồn:</strong> PPTX nguồn, trang 34–35.</p></aside></section>
-<section data-slide-id="B00"><h2>Quá trình phần thưởng Markov</h2><p>MRP hữu hạn là bộ $\langle\mathcal S,P,r,\gamma\rangle$.</p><ul><li>$r(s)=\mathbb E[R_{t+1}\mid S_t=s]$.</li><li>$\gamma\in[0,1]$ là hệ số chiết khấu.</li><li>Student dùng quy ước $R_{t+1}=r(S_t)$.</li></ul><aside class="notes">Véc-tơ Student vừa minh họa việc thêm phần thưởng vào chuỗi Markov. Tách biến ngẫu nhiên $R_{t+1}$ khỏi hàm kỳ vọng $r(s)$; MRP không có hành động.<p class="note-source"><strong>Nguồn:</strong> PPTX nguồn, trang 34.</p></aside></section>
-<section data-slide-id="B02"><h2>Phần thưởng tích lũy</h2><div class="math-large">$$G_t=\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}.$$</div><div class="grid3"><div class="card"><h3>$\gamma=0$</h3><p>Chỉ giữ thưởng kế tiếp.</p></div><div class="card"><h3>$0<\gamma<1$</h3><p>Thưởng xa có trọng số giảm.</p></div><div class="card"><h3>$\gamma=1$</h3><p>Phải kiểm tra tính hữu hạn.</p></div></div><div class="box">Với $\gamma<1$ và thưởng bị chặn, tổng hữu hạn; chiết khấu thể hiện ưu tiên thưởng sớm hơn thưởng muộn.</div><aside class="notes">Chiết khấu không tự chọn hành động. Với $\gamma<1$ và $|R|\le R_{\max}$, $|G_t|\le R_{\max}/(1-\gamma)$ nên tổng luôn hữu hạn. Khi gamma bằng một, không mặc định tổng hội tụ. Hình minh họa suy giảm mũ ở trang 37 của nguồn được bỏ vì công thức và ba trường hợp gamma đã phủ đủ nội dung.<p class="note-source"><strong>Nguồn:</strong> PPTX nguồn, trang 36–38.</p></aside></section>
-<section data-slide-id="B03"><h2>Tính trên hai quỹ đạo</h2><p>Với $\gamma=\tfrac12$ và $R_{t+1}=r(S_t)$:</p><div class="grid2"><div class="card"><h3>C1 → C2 → C3 → Pass → Sleep</h3><p>$$-2-1-\tfrac12+\tfrac{10}{8}=-\tfrac94.$$</p></div><div class="card"><h3>C1 → Facebook → Facebook → C1 → C2 → Sleep</h3><p>$$-2-\tfrac12-\tfrac14-\tfrac14-\tfrac18=-\tfrac{25}{8}.$$</p></div></div><aside class="notes">Hai kết quả đã được tính lại. Đây là phần thưởng tích lũy của từng quỹ đạo, chưa phải giá trị kỳ vọng.<p class="note-source"><strong>Nguồn:</strong> PPTX nguồn, trang 40; tính lại từ trang 35–36.</p></aside></section>
-<section data-slide-id="B04"><h2>Giá trị là kỳ vọng trên các quỹ đạo</h2><div class="math-large">$$v(s)=\mathbb E[G_t\mid S_t=s].$$</div><div class="check"><strong>Câu hỏi:</strong> hai quỹ đạo từ C1 có $G_t$ khác nhau, vì sao chỉ có một $v(\text{C1})$?</div><aside class="notes">Phần thưởng tích lũy phụ thuộc quỹ đạo đã xảy ra. Giá trị lấy kỳ vọng trên mọi quỹ đạo do cùng $P,r,\gamma$ sinh ra từ C1.<p class="note-source"><strong>Nguồn:</strong> PPTX nguồn, trang 39–43.</p></aside></section>
+<section data-slide-id="L03-03-01">
+<h2>Quá trình phần thưởng Markov</h2>
+<img src="img/lec-03/part-03-mrp-graph.svg" class="figure" alt="Đồ thị sinh viên giữ đủ xác suất chuyển; mỗi nút ghi thưởng của bước rời trạng thái đó"/><p class="caption">Mỗi bước chuyển đi kèm một phần thưởng.</p>
+<aside class="notes"><p>Mô hình giữ nguyên bảy trạng thái và toàn bộ xác suất chuyển của chuỗi sinh viên. Thưởng mỗi bước được xác định bởi trạng thái hiện tại: C1, C2, C3 nhận −2; Facebook nhận −1; Pub nhận +1; Pass nhận +10; Sleep nhận 0. Cùng quy luật chuyển, các quỹ đạo khác nhau có thể nhận những chuỗi thưởng khác nhau.</p><p class="note-source">Nguồn: PPTX34–35.</p></aside>
+</section>
+<section data-slide-id="L03-03-02">
+<h2>Phần thưởng trên từng bước</h2>
+<img src="img/lec-03/part-03-trajectory.svg" class="figure" alt="Bốn bước có thưởng lần lượt âm2, âm2, âm2 và10"/><div class="math-large">$$R_{t+1}=r(S_t).$$</div><p>Trong ví dụ này, thưởng được xác định bởi trạng thái xuất phát của bước.</p><p class="caption">+10 nhận trên bước Pass → Sleep; sau Sleep, thưởng bằng 0.</p>
+<aside class="notes"><p>Quỹ đạo C1→C2→C3→Pass→Sleep có bốn phần thưởng −2, −2, −2, +10. Phần thưởng trên bước vào Pass vẫn là −2, vì bước đó xuất phát từ C3. +10 là thưởng của bước xuất phát từ Pass. Đây là quy ước riêng của ví dụ sinh viên; mô hình tổng quát có thể có thưởng ngẫu nhiên.</p><p>Sau trạng thái kết thúc, có thể kéo dài chuỗi bằng các bước tự lặp với thưởng 0.</p><p class="note-source">Nguồn: PPTX35,40.</p></aside>
+</section>
+<section data-slide-id="L03-03-03">
+<h2>Định nghĩa quá trình phần thưởng Markov</h2>
+<div class="math-large">$$(\mathcal S,P,r,\gamma).$$</div><ul><li>$\mathcal S$: tập $n$ trạng thái; $P$: ma trận chuyển.</li><li>$r(s)=\mathbb E[R_{t+1}\mid S_t=s]$: thưởng trung bình một bước.</li><li>$\gamma\in[0,1]$: hệ số chiết khấu.</li></ul><p>$r\in\mathbb R^n$ chứa các kỳ vọng, còn $R_{t+1}$ là phần thưởng quan sát được.</p>
+<aside class="notes"><p>Quá trình phần thưởng Markov (MRP) thêm hàm thưởng và hệ số chiết khấu vào chuỗi Markov. Quy luật chung của trạng thái kế tiếp và phần thưởng chỉ phụ thuộc trạng thái hiện tại và không đổi theo thời gian. Tính Markov và tính đồng nhất theo thời gian là hai giả thiết riêng.</p><p>Thưởng bị chặn và $0\le\gamma<1$ bảo đảm tổng thưởng hữu hạn. Trường hợp $\gamma=1$ cần điều kiện bổ sung; với thưởng bị chặn, kỳ vọng thời gian tới trạng thái kết thúc hữu hạn là một điều kiện đủ. Ví dụ sinh viên có thưởng tất định, nên $r(S_t)$ cũng là giá trị thưởng trên từng bước.</p><p class="note-source">Nguồn: PPTX34–35; điều kiện hữu hạn được chứng minh trong phần Bellman.</p></aside>
+</section>
+<section data-slide-id="L03-03-04">
+<h2>Hai quỹ đạo, hai tổng thưởng</h2>
+<p>$G_t=\sum_{k=0}^{\infty}\gamma^k R_{t+k+1}$. Với $\gamma=\tfrac12$:</p><img src="img/lec-03/part-03-two-returns.svg" class="figure short" alt="Hai quỹ đạo từ C1: qua Pass và qua Facebook hai lần; thưởng đặt dưới từng mũi tên"/><div class="math-large">$$\begin{aligned}G_0^{(1)}&=-2-1-0{,}5+1{,}25=-2{,}25,\\G_0^{(2)}&=-2-0{,}5-0{,}25-0{,}25-0{,}125=-3{,}125.\end{aligned}$$</div>
+<aside class="notes"><p>Hai dòng ứng với hai mẫu quỹ đạo, ký hiệu bằng chỉ số trên (1) và (2). Với $\gamma=1/2$, quỹ đạo quaPass có tổng $-2+(1/2)(-2)+(1/4)(-2)+(1/8)(10)=-2{,}25$. Phần thưởng +10 là phần thưởng thứ tư, nên có trọng số $\gamma^3$.</p><p>Quỹ đạo C1→FB→FB→C1→C2→Sleep có tổng $-2+(1/2)(-1)+(1/4)(-1)+(1/8)(-2)+(1/16)(-2)=-3{,}125$. Sau Sleep, mọi phần thưởng bằng 0. Hai tổng này là hai mẫu; kỳ vọng cần xét xác suất của tất cả các quỹ đạo.</p><p class="note-source">Nguồn: PPTX36–40; các phép tính được tính lại.</p></aside>
+</section>
+<section data-slide-id="L03-03-05">
+<h2>Giá trị của một trạng thái</h2>
+<img src="img/lec-03/part-03-branch.svg" class="figure" alt="Từ C1 có nhiều quỹ đạo với các tổng thưởng khác nhau"/><div class="math-large">$$v(s)=\mathbb E[G_t\mid S_t=s].$$</div><p class="caption">Kỳ vọng tính theo xác suất do mô hình sinh. $v(\mathrm{Sleep})=0$.</p>
+<aside class="notes"><p>Từ C1, hai quỹ đạo vừa tính cho −2,25 và −3,125, nhưng còn nhiều quỹ đạo khác. Giá trị trạng thái là kỳ vọng của tổng thưởng theo phân phối do mô hình sinh ra; nó không phải trung bình không trọng số của hai đường được chọn để minh họa.</p><p>$v(s)$ là một số xác định; $G_t$ là biến ngẫu nhiên. Tại Sleep, mọi thưởng về sau bằng 0 nên giá trị bằng 0. Phương trình Bellman cho phép tính các giá trị này mà không liệt kê mọi quỹ đạo.</p><p class="note-source">Nguồn: PPTX39–43.</p></aside>
+</section>
+<section data-slide-id="L03-03-06">
+<h2>Câu hỏi kiểm tra</h2>
+<p><strong>Câu hỏi:</strong></p>
+<ol>
+<li>$r(s)$, $G_t$ và $v(s)$ khác nhau thế nào?</li>
+<li>Tính tổng thưởng của đường C1→C2→Sleep với $\gamma = 1/2$.</li>
+<li>Một giá trị mẫu $G$ có bằng $v(s)$ không?</li>
+</ol>
+<figure><img src="img/lec-03/part-03-check-timeline.svg" class="figure short" alt="Đường C1 đến Sleep với thưởng −2 trên hai bước và gamma bằng một phần hai"></figure>
+<aside class="notes"><ol><li>$r(s)$ là kỳ vọng thưởng một bước; $G_t$ là tổng thưởng có chiết khấu của một quỹ đạo; $v(s)$ là kỳ vọng của tổng đó khi bắt đầu ở $s$.</li><li>$-2+(1/2)(-2)=-3$.</li><li>Không nhất thiết. Một mẫu có thể khác kỳ vọng; trong trường hợp tổng thưởng tất định, mọi mẫu đều bằng kỳ vọng.</li></ol><p>Giá trị trạng thái cần xét cả các khả năng diễn tiến của quá trình.</p><p class="note-source">Nguồn: PPTX34–40.</p></aside>
+</section>
 </section>
 
 <section>
