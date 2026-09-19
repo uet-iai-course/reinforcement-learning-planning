@@ -577,3 +577,10 @@ Kiểm tra Chromium bản nháp: 12 lượt (6slide × 1280×720/390×844), khô
 - Hồ sơ Codex Slides: `20260919162357-b-i-03-qu-tr-nh-quy-t-nh-markov-h-s-ki-m-4hzc`. Đã lưu HTML, outline, storyboard, kế hoạch chi tiết và bảy ảnh tổng hợp. Đối chiếu byte xác nhận HTML/tài liệu đã lưu khớp bản cục bộ. Giới hạn: môi trường không có Codex in-editor Browser; hồ sơ dùng Design Files của bản RevealJS, không phải 47 trang dựng lại trong chế độ Play của Codex Slides. Kiểm tra tương tác trực tiếp thực hiện trên RevealJS cục bộ.
 
 - Thử mở Design Files bằng Chromium: giao diện vẫn hiện một tệp tham chiếu cũ và hộp chọn độ phân giải, không hiện các ảnh đã được MCP liệt kê. Vì trạng thái giao diện không đồng bộ, chưa xác nhận được ảnh trong giao diện Codex Slides; không tuyên bố đã rà trực quan bằng Codex Slides. Bản RevealJS và toàn bộ ảnh được rà cục bộ như mô tả trên.
+
+## Lượt đánh giá kế hoạch và viết lại — 20-09-2026
+
+- Reader `lec03-v2-plan`: requested/observed `deepseek/deepseek-v4-flash-0731`, provider OpenRouter. Không chấp nhận báo cáo đầu làm kế hoạch triển khai: phần lớn sai ngôn ngữ, viện dẫn nhật ký thay cho kiểm tra thực tế.
+- Đã thu hẹp gốc đọc còn một gói toàn tuyến và gọi lại `lec03-v2-plan-recheck` cùng mô hình. Báo cáo chỉ ra r/v_pi xuất hiện sớm, điều kiện kỳ vọng, dữ kiện quiz và câu hỏi cuối. Không áp dụng đề xuất thêm nhãn “định nghĩa sau”; không đảo ví dụ và định nghĩa. Điều phối viên sửa kế hoạch bằng việc gọi tên trước khi dùng và giữ ví dụ số trước công thức. Nhận xét mọi phần đều “giữ” mâu thuẫn với bảng sửa của reader đã được hợp nhất thành các quyết định cụ thể trong detailed-slide-plan.
+- Đối chiếu trực tiếp 47 mặt slide và 47 notes; thông tin chỉ có trong notes không được coi là đã hiện trên mặt slide. Giữ nguồn PPTX28–58, bài tập hw02 số3/4/7/8, tất cả xác suất và phần thưởng.
+- Kiểm tra giá GLM trước loạt writer theo README: [trang mô hình OpenRouter](https://openrouter.ai/z-ai/glm-5.3-flash), ngày 20-09-2026.

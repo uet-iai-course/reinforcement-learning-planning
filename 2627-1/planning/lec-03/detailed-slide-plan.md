@@ -1,6 +1,6 @@
 # Bài 03 — Kế hoạch chi tiết từng slide
 
-Ngày lập: 2026-09-19. Trạng thái: đã triển khai đủ 7 phần; kết quả kiểm định ghi trong review-log.md. Các ID `L03-…` dùng cho bản viết lại; outline và storyboard ghi phạm vi đã tích hợp thực tế.
+Ngày lập: 2026-09-19. Trạng thái: đang viết lại theo rà soát sư phạm ngày 20-09-2026; kết quả kiểm định ghi trong review-log.md. Các ID `L03-…` dùng cho bản viết lại; outline và storyboard ghi phạm vi đã tích hợp thực tế.
 
 ## Mục tiêu và phạm vi
 
@@ -54,6 +54,22 @@ Ví dụ sinh viên là mạch chính. Bài tập ba trạng thái là ví dụ 
 | Bellman kỳ vọng theo $v_\pi,q_\pi$ | 06-04…07 | Cùng sơ đồ trạng thái → hành động → phản hồi |
 
 $P$ trong chuỗi Markov là ma trận; $P(s',r\mid s,a)$ trong MDP là xác suất chung, tiếp nối ký hiệu Bài 02. $r(s)$ và $r^\pi(s)$ là kỳ vọng của phần thưởng, khác biến ngẫu nhiên $R_{t+1}$. Dùng véc-tơ cột cho $v,r,\mu$; do P chuẩn hóa theo hàng, $\mu_{t+1}=P^{\mathsf T}\mu_t$. Xét chính sách Markov dừng khi viết giá trị không có chỉ số thời gian; không khẳng định mọi chính sách đều thuộc lớp này.
+
+## Rà soát trước lượt viết lại — 20-09-2026
+
+Mục tiêu của lượt này là làm rõ các cầu nối và giảm tải đọc; giữ 47 slide, bảy phần và dữ kiện nguồn. Reader độc lập đã rà toàn tuyến, sau đó được yêu cầu làm lại báo cáo vì bản đầu sai ngôn ngữ và dựa quá nhiều vào nhật ký. Điều phối viên chỉ chấp nhận những nhận định đối chiếu được với nội dung thực tế; không dùng nhãn “định nghĩa sau” để thay cho việc giới thiệu một đại lượng.
+
+| Phần | Đánh giá và quyết định trước khi soạn | Cách thể hiện được chọn |
+|---|---|---|
+| 1 | Giữ tiêu đề bài → nội dung → mở phần; làm rõ việc quan sát chuỗi trạng thái khi hành vi đã cố định. Đưa giải nghĩa nhãn lên 01-04 và mục tiêu đánh giá giá trị lên 01-05. | Hai quỹ đạo cùng điểm đầu, chú thích tên trạng thái; sơ đồ ba lớp kết bằng mục tiêu có thể thực hiện. |
+| 2 | Giữ ví dụ → ký hiệu → ma trận → phép tính phân phối. Bổ sung nghĩa FB/Pub ở 02-02, giải thích biến trạng thái và giá trị cụ thể trước khi đọc công thức. | Đồ thị, nhánh C1, bảng chuyển và hai nguồn xác suất vào FB giữ nguyên; không thêm hình lặp. |
+| 3 | Bỏ công thức dùng r chưa định nghĩa ở 03-02. Sau khi định nghĩa r ở 03-03 mới nối lại trường hợp thưởng tất định. | Hình thưởng theo từng bước làm ví dụ; định nghĩa dùng cùng dữ kiện; hai tổng thưởng vẫn là hai mẫu, rồi mới tới kỳ vọng. |
+| 4 | Giữ ba bước suy diễn riêng, điều kiện và bài giải hệ. Nhắc tổng thưởng khả tích tại 04-04; biên tập notes thành các đoạn có công thức đọc được. | Dùng lại nhánh C3; KaTeX cho các bước đại số, kỳ vọng lặp và điểm dùng Markov. Không thu nhỏ chữ để gộp suy diễn. |
+| 5 | Nêu rõ thay đổi đặc tả MRP/MDP trên 05-02. Gọi tên v_pi là giá trị của MRP dưới chính sách trước khi viết phương trình ở 05-06. | Từ lựa chọn tại C2 sang đồ thị, rồi gộp hai tầng ngẫu nhiên; công thức tổng quát dùng lại P và r đã tính. |
+| 6 | 06-04 bắt đầu bằng phép lấy trung bình cụ thể ở C2 rồi suy ra công thức chung. Nhắc chính sách đều trên quiz 06-09; giữ đủ quy ước hành động đầu và các bước thế Bellman. | Sơ đồ hành động đầu, công thức theo từng bước, xe đua để vận dụng; notes không chứa chỉ dẫn cho người viết. |
+| 7 | Giữ tuyến mô hình + chính sách → Bellman → giá trị. Câu hỏi cuối kiểm tra điều kiện gamma=1 đã học, thay câu hỏi thay đổi chính sách quá mở. | Sơ đồ tổng hợp và bảng bài tập giữ nguyên; quiz thu hồi định nghĩa và điều kiện áp dụng. |
+
+Với từng slide, storyboard ghi phân tích cách thể hiện và quyết định giữ/sửa sau triển khai. Writer làm từng phần trong gốc ghi riêng, lần lượt; năm vai reviewer đọc độc lập, có thể chạy song song. Điều phối viên đối chiếu số liệu, công thức và ảnh hiển thị trước khi commit từng phần; không push.
 
 ## Phần 1. Từ tương tác đến mô hình xác suất — 8 phút
 
@@ -119,13 +135,13 @@ Thời lượng: 2 phút. Vai trò: vấn đề và trực giác.
 
 **Đầu vào:** Một bước có thể có nhiều kết quả; trạng thái quan sát được.
 
-**Nội dung trên slide:** Hai đường đi từ cùng điểm xuất phát trên đồ thị sinh viên.
+**Nội dung trên slide:** Hai đường đi từ cùng điểm xuất phát. Chú thích C1–C3 là các buổi học, Pass là thi đạt, Facebook là mạng xã hội, Sleep là ngủ.
 
 **Cách thể hiện:** Chỉ hiện các nút liên quan đến hai đường; cùng điểm xuất phát và cùng kết thúc Sleep, hai diễn tiến khác nhau.
 
 **Giải thích và hình thức hóa:** Quỹ đạo là một kết quả lấy mẫu. Mô hình là quy luật sinh ra cả các quỹ đạo chưa quan sát; chưa đồng nhất hai tổng cụ thể với kỳ vọng.
 
-**Kết nối:** Từ sự khác nhau của đường đi đến việc phải dùng phân phối.
+**Kết nối:** Trước hết mô tả chuỗi trạng thái khi hành vi đã cố định; phần 5 sẽ tách lựa chọn hành động khỏi phản hồi môi trường.
 
 **Kiểm tra/ghi chú đáp án:** Một đường quan sát được có xác định hết xác suất chuyển không? Không.
 
@@ -137,7 +153,7 @@ Thời lượng: 1 phút. Vai trò: bản đồ khái niệm.
 
 **Đầu vào:** Hai quỹ đạo từ cùng điểm đầu; nhu cầu mô tả quy luật sinh chúng.
 
-**Nội dung trên slide:** Chuỗi trạng thái → thêm thưởng → thêm lựa chọn hành động.
+**Nội dung trên slide:** Sơ đồ ba lớp mô hình; câu kết: từ mô hình và chính sách, tính kỳ vọng của tổng thưởng.
 
 **Cách thể hiện:** Ba hình dùng cùng các nút; lần lượt thêm nhãn thưởng và nút lựa chọn.
 
@@ -196,7 +212,7 @@ Thời lượng: 3 phút. Vai trò: ví dụ trực quan.
 
 **Đầu vào:** Các nút biểu diễn trạng thái; mũi tên biểu diễn chuyển tiếp.
 
-**Nội dung trên slide:** Các trạng thái học, mạng xã hội, giải trí, thi đạt, ngủ; nhãn ngắn đi kèm C1,C2,C3,Pass,Pub,FB,Sleep.
+**Nội dung trên slide:** Quỹ đạo nguồn trên đồ thị; chú thích ngắn FB là mạng xã hội, Pub là giải trí.
 
 **Cách thể hiện:** Giữ nguyên đồ thị và xác suất nguồn; làm nổi hai cạnh C1→C2 và C1→FB, mỗi cạnh 0,5.
 
@@ -309,11 +325,11 @@ Thời lượng: 3 phút. Vai trò: ví dụ.
 
 **Đầu vào:** Các quỹ đạo Student đã đọc ở phần2.
 
-**Nội dung trên slide:** Quỹ đạo C1→C2→C3→Pass→Sleep với thưởng -2,-2,-2,+10.
+**Nội dung trên slide:** Hình bốn bước có thưởng −2, −2, −2, +10; thưởng được xác định bởi trạng thái xuất phát của bước. +10 nhận trên bước Pass → Sleep; sau Sleep, thưởng bằng 0. Không dùng r trước định nghĩa.
 
 **Cách thể hiện:** Dải thời gian: trạng thái phía trên, thưởng phía dưới mũi tên.
 
-**Giải thích và hình thức hóa:** Trong ví dụ này $R_{t+1}=r(S_t)$: thưởng gắn với trạng thái xuất phát của bước. +10 nhận khi rời Pass sang Sleep. Nêu rõ để tránh cộng lệch một bước hoặc coi mọi thưởng là thưởng vào trạng thái.
+**Giải thích và hình thức hóa:** Chỉ đọc thưởng cụ thể trên từng bước. Sau định nghĩa r ở 03-03 mới viết quan hệ $R_{t+1}=r(S_t)$ cho ví dụ tất định này.
 
 **Kết nối:** Từ bốn giá trị cụ thể đến hàm thưởng r(s).
 
@@ -483,7 +499,7 @@ $$
 
 **Cách thể hiện:** Dòng suy diễn xuất hiện lần lượt. Bên phải là nút s phân nhánh theo S_(t+1), khớp với kỳ vọng trong/ngoài. Không dồn cả chứng minh lên một lần hiện.
 
-**Giải thích và hình thức hóa:** Dòng đầu thế kết quả trước vào định nghĩa v. Dòng sau dùng tính tuyến tính và định nghĩa r(s). Dòng cuối dùng kỳ vọng lặp: trung bình trong từng nhóm có cùng trạng thái kế tiếp, rồi trung bình giữa các nhóm. Không giả định thưởng độc lập với trạng thái kế tiếp.
+**Giải thích và hình thức hóa:** Với tổng thưởng khả tích, dùng tuyến tính của kỳ vọng rồi kỳ vọng lặp theo trạng thái kế tiếp. Câu giải thích trên mặt slide nhắc điều kiện này; notes diễn giải các nhóm quỹ đạo bằng ví dụ C3.
 
 **Kết nối:** Kỳ vọng bên trong sẽ được nhận diện là giá trị của trạng thái kế tiếp.
 
@@ -644,7 +660,7 @@ Thời lượng: 3 phút. Vai trò: ví dụ trực quan.
 
 **Đầu vào:** Bối cảnh sinh viên; tác tử có thể chọn học hoặc ngủ.
 
-**Nội dung trên slide:** Tại C2, chọn Study chuyển tới C3 và nhận -2; chọn Sleep chuyển tới Sleep và nhận 0.
+**Nội dung trên slide:** Đồ thị năm trạng thái; từ C3, Study nhận +10 rồi kết thúc, Pub là hành động. Nút tròn nhỏ là chỗ phân nhánh của môi trường, không phải trạng thái.
 
 **Cách thể hiện:** Một nút C2 nối hai nút hành động có hình dạng riêng, rồi tới trạng thái kế tiếp.
 
@@ -735,7 +751,7 @@ $$r^\pi(s)=\sum_a\pi(a\mid s)\sum_{s',r}rP(s',r\mid s,a).$$
 
 **Giải thích và hình thức hóa:** Dùng xác suất toàn phần và định nghĩa kỳ vọng rời rạc. Cố định pi thì v_pi là giá trị MRP cảm sinh và thỏa v_pi=r^pi+gamma P^pi v_pi. Không giả định thưởng độc lập với trạng thái kế tiếp.
 
-**Kết nối:** Phần 6 mở lại tầng hành động để so sánh giá trị của từng lựa chọn.
+**Kết nối:** Gọi tên $v_\pi$ là giá trị trạng thái của MRP dưới chính sách $\pi$ trước khi viết Bellman cảm sinh. Phần 6 định nghĩa giá trị hành động để xét riêng từng lựa chọn đầu.
 
 **Kiểm tra/ghi chú đáp án:** Tổng mỗi hàng P^pi bằng 1; chính sách thay đổi theo thời gian thì không có một ma trận P^pi cố định như trên.
 
@@ -830,16 +846,7 @@ Thời lượng: 3 phút. Vai trò: suy diễn bằng xác suất toàn phần.
 
 **Đầu vào:** Định nghĩa v_pi,q_pi; chính sách chọn hành động với xác suất pi.
 
-**Nội dung trên slide:** Trước tiên minh họa C2 chọn Study/Sleep với trọng số 0,75/0,25. Sau đó:
-
-$$
-\begin{aligned}
-v_\pi(s)&=\mathbb E_\pi[G_t\mid S_t=s]\\
-&=\sum_a\Pr_\pi(A_t=a\mid S_t=s)\,
-\mathbb E_\pi[G_t\mid S_t=s,A_t=a]\\
-&=\sum_a\pi(a\mid s)q_\pi(s,a).
-\end{aligned}
-$$
+**Nội dung trên slide:** Bắt đầu bằng $v_\pi(\mathrm{C2})=0{,}75q_\pi(\mathrm{C2},\mathrm{Study})+0{,}25q_\pi(\mathrm{C2},\mathrm{Sleep})$. Sau đó dùng kỳ vọng toàn phần theo hành động đầu để suy ra $v_\pi(s)=\sum_a\pi(a\mid s)q_\pi(s,a)$.
 
 **Cách thể hiện:** Cây s→a; mỗi nhánh mang một giá trị q và trọng số pi. Hai mức hiện: phép tính hai nhánh trước, dấu tổng sau.
 
@@ -966,7 +973,7 @@ $$v_\pi(Cool)=0{,}5(1)+0{,}5(-1)=0.$$
 
 Thời lượng: 3 phút. Vai trò: kiểm tra.
 
-**Đầu vào:** Mô hình xe đua, chính sách đều và các giá trị ở06-08.
+**Đầu vào:** Mô hình xe đua, chính sách đều được nhắc lại trên mặt slide, gamma=1 và ba giá trị trạng thái đã cho.
 
 **Nội dung trên slide:** 1. Với xe đua và các giá trị đã cho, tính q_pi(Warm,Slow), q_pi(Warm,Fast).
 2. Từ hai q đó, tính v_pi(Warm).
@@ -1046,9 +1053,7 @@ Thời lượng: 2 phút. Vai trò: kiểm tra cuối bài.
 
 **Đầu vào:** Phân biệt mô hình, phần thưởng, chính sách, giá trị và tối ưu.
 
-**Nội dung trên slide:** 1. Biết P và pi, cần thêm gì để tính v_pi?
-2. G, v và q khác nhau thế nào?
-3. Tăng xác suất chọn một hành động có chắc làm giá trị tăng không?
+**Nội dung trên slide:** 1. Chỉ biết xác suất chuyển $P(s\prime\mid s,a)$ và chính sách, còn cần gì để tính giá trị? 2. Phân biệt $G_t,v_\pi(s),q_\pi(s,a)$. 3. Với $\gamma=1$, chỉ có một trạng thái kết thúc đã đủ bảo đảm giá trị hữu hạn chưa?
 
 **Cách thể hiện:** Ba câu ngắn; kết thúc bằng câu trả lời cụ thể, không khẩu hiệu.
 
@@ -1056,7 +1061,7 @@ Thời lượng: 2 phút. Vai trò: kiểm tra cuối bài.
 
 **Kết nối:** Kết thúc Bài03; Bài04 giải bài toán lựa chọn chính sách.
 
-**Kiểm tra/ghi chú đáp án:** 1. Quy luật/kỳ vọng thưởng, gamma, quy ước kết thúc và điều kiện giá trị hữu hạn. 2. Tổng một lượt/kỳ vọng theo trạng thái/kỳ vọng khi ấn định hành động đầu. 3. Không, phụ thuộc giá trị và hậu quả của hành động.
+**Kiểm tra/ghi chú đáp án:** 1. Cần quy luật thưởng, hệ số chiết khấu và quy ước kết thúc. 2. Tổng của một quỹ đạo và hai kỳ vọng với cách chọn hành động đầu khác nhau. 3. Chưa; quá trình có thể không tới trạng thái kết thúc hoặc có kỳ vọng thời gian kết thúc vô hạn. Thưởng bị chặn và kỳ vọng thời gian kết thúc hữu hạn là một điều kiện đủ.
 
 **Nguồn:** Tổng hợp bài học.
 
