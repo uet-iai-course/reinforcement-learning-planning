@@ -1,6 +1,14 @@
 # Nhật ký rà soát — Bài 03
 
-## Trạng thái sau chỉnh sửa
+## Trạng thái bản hoàn tất — 20-09-2026
+
+- 47 slide trong 7 phần, 47 ghi chú diễn giả; 23 lượt dùng hình, gồm 22 SVG riêng. Không dùng ảnh raster trên slide.
+- Phần 1 giữ thứ tự: tiêu đề bài giảng → Nội dung bài học → Từ tương tác đến mô hình xác suất → các slide tiếp theo của phần 1. Hai slide đầu cùng nằm trong section ngoài của phần 1.
+- Tuyến chính 120 phút; 30 phút chữa bài tập. Mỗi phần có slide mở và slide câu hỏi đánh số. Dùng chung `lecture-slide.css`.
+- Các phần 1–6 đã commit riêng; phần 7 và kiểm định toàn bài được ghi ở cuối nhật ký. Không push trong lượt triển khai này.
+- Các mục ngay dưới đây là lịch sử của bản cũ; số lượng và trạng thái cũ không mô tả bản hoàn tất.
+
+## Bản cũ trước khi triển khai lại bảy phần
 
 - 35 trang tuyến chính, 4 trang bài tập dọc; 4 SVG cục bộ; không dùng tài sản raster.
 - Tác tử chỉnh sửa đã hợp nhất kiểm định storyboard và bốn báo cáo độc lập. Mọi mục `chặn bàn giao` và `nghiêm trọng` trong các báo cáo đã có sửa tương ứng; cần tác tử độc lập tái rà phần toán học và trình tự đã đổi.
@@ -536,3 +544,36 @@ Kiểm tra Chromium bản nháp: 12 lượt (6slide × 1280×720/390×844), khô
 - Lượt `lec03-recheck-06-math/flow` xác nhận diễn đạt hai bước và1/8. Báo cáo toán kiểm đúng tổng hàng của bình phương ma trận chuyển trên trạng thái chưa kết thúc. Báo cáo mạch vẫn tính sai tổng hàng bằng một phần tử; không áp dụng phép tính đó. Điều phối viên dùng phân số chính xác: với $Q=((3/4,1/4),(1/4,1/4))$, tổng hàng $Q^2$ là7/8 và3/8, nên xác suất hấp thụ tronghai bước là1/8 và5/8. Nội dung deck chưa từng đổi thành1/4 hay3/8.
 - Kiểm định cuối:18lượt đúng9ID ở1280×720 và390×844, không tràn, lỗiKaTeX, ảnhhỏng, HTTP/JavaScript; xem đủ9ảnh rộng và riêng hình xeđua sau nới khoảng trống chântrang. NhãnSVG xeđua tăng lên28đơn vị, hình giới hạncao320px riêng trang này để công thức không sát điều hướng; không sửaCSS chung. 229biểu thức phần1–6 phân tích thành công; số liệu được tính lại bằng phân số.
 - Sai khác có chủ ý: thay bố cục hai cột của định nghĩa bằng hai hàng; hai phép tínhq(Cool) tách dòng, phép kiểmv(Cool) chuyển notes; hình xeđua vẽ mới thaySVG cũ có nhãn dài; chỉ dẫn và mã nội bộ bị bỏ khỏi nội dung/notes. Tự kiểm no-ai-slop và ràQuill giữ trực giác hành động đầu→định nghĩa→ba quan hệ→vận dụng→kiểmtra.
+
+### Phần 7 — Tổng hợp và vận dụng, 20-09-2026
+
+- Bốn slide, hai SVG: tổng hợp tuyến đánh giá chính sách; quan hệ giữa ba lớp mô hình; bài tập; câu hỏi kiểm tra. Phần kết thu hồi vấn đề tính giá trị dài hạn khi biết mô hình và cố định chính sách, rồi nối sang Bellman tối ưu ở Bài 04.
+- Năm báo cáo độc lập: `lec03-part-07-student`, `rl`, `math`, `academic`, `flow-retry`. Sinh viên, học thuật và mạch viết dùng `z-ai/glm-5.3-flash`; chuyên môn và toán dùng `deepseek/deepseek-v4-flash-0731`. Kết quả hoàn tất có `requested_model=observed_model`, `provider=OpenRouter`. Lượt mạch đầu quá hạn; đã thu hẹp gói rồi thử lại một lần cùng mô hình.
+
+| Vai | Mức độ sau đối chiếu | Trang | Vấn đề, bằng chứng và xử lý |
+|---|---|---|---|
+| Sinh viên | trung bình | 07-02 | Ký hiệu mới trong công thức tổng hợp gây đứt mạch. Dùng lại hạt nhân chuyển–thưởng và các ký hiệu đã định nghĩa. |
+| Chuyên môn | trung bình | 07-01/02 | Phân biệt mô hình với giá trị; tách nút MRP cảm sinh khỏi MDP và giữ bước cố định chính sách. Nhận định nghiêm trọng về chỉ dẫn trong phân tích thiết kế không áp dụng cho mặt slide/notes. |
+| Toán | trung bình | 07-02/04 | Bỏ các ký hiệu thưởng/chuyển theo hành động chưa định nghĩa. Câu hỏi cuối không khẳng định tăng một xác suất hành động luôn tăng giá trị. |
+| Học thuật | trung bình | 07-01 | Bỏ mũi tên thừa, làm rõ mô hình + chính sách → Bellman → giá trị; chuyển cách tổ chức thời lượng ra khỏi notes. |
+| Mạch viết | trung bình | 07-02 | Vai trò tổng hợp, vào từ v/q, ra bài toán tối ưu: dùng lại ký hiệu cũ để không mở tuyến mới. Không áp dụng đề xuất đưa C1 vào ví dụ xe đua vì đó là hai ví dụ khác nhau. |
+
+- Writer chỉnh sửa riêng `lec03-fix-07` vá notes sau đủ năm báo cáo; GLM, runtime đúng mô hình yêu cầu qua OpenRouter. Điều phối viên chỉnh tuần tự bốn slide, hai SVG, nhãn sơ đồ và ký hiệu giá trị ở phần 5 cho nhất quán. Không có hai tác tử ghi đồng thời.
+- `lec03-final-07-math` hoàn tất bằng DeepSeek, xác nhận các định nghĩa và đáp án. Tái rà mạch cuối được thực hiện trên toàn tuyến 47 slide, bao gồm ranh giới 6→7 và kết bài.
+- Tám lượt kiểm tra bốn slide ở 1280×720 và 390×844 đều đạt; hình cuối đã xem lại sau khi chuyển nhãn sang cạnh mũi tên. Không sửa CSS chung.
+
+### Kiểm định toàn bài và quyết định cuối
+
+- `lec03-whole-storyboard`: GLM, review-full, toàn bộ 47 slide, phân tích thiết kế, bản đồ chu trình và ánh xạ nguồn. Xác nhận 7 phần, 120 phút, mạch ví dụ → hình thức. Bác nhận định tổng 120+30 phút sai: thời lượng người dùng yêu cầu là 150 phút. Bác nhận định hai số hạng −0,25 trong quỹ đạo thứ hai bị lặp: một số là $(-1)(1/2)^2$, số còn lại là $(-2)(1/2)^3$; tổng đúng là −3,125.
+- `lec03-whole-flow-retry`: GLM, review-full, toàn bộ mặt 47 slide và bản đồ chu trình, notes phần kết; không coi đây là rà toàn bộ notes hoặc layout. Lượt đầu hết ngân sách đầu ra; gói thử lại được thu hẹp, giữ toàn tuyến. Một cấu hình tắt reasoning bị API từ chối trước suy luận; đã dùng lại cấu hình mặc định, cùng mô hình và ngân sách. Bản hoàn tất không có lỗi nghiêm trọng hay chặn bàn giao.
+- Ba đề xuất trong lượt mạch cuối được đối chiếu: (1) điều kiện $0\le\gamma<1$ đã có nguyên vẹn ở 04-08; bản trích văn bản mất đoạn sau dấu `<`, nên không sửa công thức đúng; (2) nhánh Study nhận −2 tới C3 có trong SVG 06-01/02 và notes, nên không thêm chữ lặp; (3) tổng thưởng ở Bài 02 đã được nhắc trong bản đồ/notes, không cần thêm câu chuyển lên mặt 03-03. Các ranh giới phần và kết bài được giữ sau đối chiếu.
+- Sơ đồ C2 được dùng lại ở phần 5 và 6 có chủ ý: phần 5 lấy trung bình theo chính sách để tạo MRP; phần 6 ấn định hành động đầu để định nghĩa giá trị hành động. Hai lần dùng có chức năng khác nhau trong tuyến lập luận.
+- Tự kiểm theo `no-ai-slop/eval.md`: văn phong học thuật trực tiếp; bỏ lời ca tụng, câu cảm thán, câu hỏi tu từ và chỉ dẫn cho người viết khỏi mặt slide/notes; giữ câu hỏi học tập và lời giải có nội dung. Rà theo Quill: mỗi khái niệm có tiên quyết, ví dụ và cầu nối; không tạo `quill.json`.
+- Kiểm tra cấu trúc: 47 ID duy nhất, khớp storyboard; số slide theo phần là 6/6/6/9/7/9/4; đủ 47 notes, đường dẫn hợp lệ, SVG có title/desc và role, hình có alt. Cấu hình RevealJS đúng 1280×720, số trang, hash, controls edges và các plugin cục bộ. 260 biểu thức KaTeX ở mặt slide/notes phân tích thành công; Markdown dùng dấu đô la.
+- Tính lại bằng phân số: tổng hai quỹ đạo −9/4 và −25/8; nghiệm ba trạng thái 560/641, −740/641, 0; thưởng cảm sinh tại C2 −3/2; giá trị xe đua 0, −6, 0; các giá trị hành động 1, −1, −2, −10; cận xác suất hấp thụ trong hai bước từ Cool là 1/8.
+- Kiểm tra trình duyệt toàn bài: 94 lượt, đúng 47 ID ở hai khung 1280×720 và 390×844; không tràn nội dung, lỗi công thức, ảnh hỏng, lỗi JavaScript hoặc HTTP. Sau chỉnh nhãn/chữ phần 7 đã chạy lại tám lượt tương ứng. Đã duyệt ảnh toàn bộ các phần và kiểm tra bàn phím. Trên màn hình hẹp, RevealJS dùng chế độ cuộn và thu nhỏ slide.
+- URL: `http://localhost:8765/2627-1/lecture-03-qua-trinh-quyet-dinh-markov.html`. Lệnh reloadserver với cổng là đối số vị trí gặp cổng đã được dùng; xác minh máy chủ hiện có phục vụ đúng thư mục kho rồi dùng máy chủ đó để kiểm tra.
+- `index.html` cập nhật mô tả Bài 03 và chỉ giữ liên kết đến deck; không đặt liên kết planning. Giữ nguyên thẻ các bài khác.
+- Hồ sơ Codex Slides: `20260919162357-b-i-03-qu-tr-nh-quy-t-nh-markov-h-s-ki-m-4hzc`. Đã lưu HTML, outline, storyboard, kế hoạch chi tiết và bảy ảnh tổng hợp. Đối chiếu byte xác nhận HTML/tài liệu đã lưu khớp bản cục bộ. Giới hạn: môi trường không có Codex in-editor Browser; hồ sơ dùng Design Files của bản RevealJS, không phải 47 trang dựng lại trong chế độ Play của Codex Slides. Kiểm tra tương tác trực tiếp thực hiện trên RevealJS cục bộ.
+
+- Thử mở Design Files bằng Chromium: giao diện vẫn hiện một tệp tham chiếu cũ và hộp chọn độ phân giải, không hiện các ảnh đã được MCP liệt kê. Vì trạng thái giao diện không đồng bộ, chưa xác nhận được ảnh trong giao diện Codex Slides; không tuyên bố đã rà trực quan bằng Codex Slides. Bản RevealJS và toàn bộ ảnh được rà cục bộ như mô tả trên.

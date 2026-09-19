@@ -1,6 +1,36 @@
 # Bài 03 — Storyboard triển khai
 
-Đã triển khai phần 1–6/7. Bảy phần và 120 phút theo [kế hoạch chi tiết](detailed-slide-plan.md); bản này ghi quyết định thể hiện thực tế. Các phần chưa triển khai dùng bản HTML cũ, không được tính là hoàn tất.
+Đã triển khai đủ47slide, 7phần và120phút theo [kế hoạch chi tiết](detailed-slide-plan.md). Bản này ghi đặc tả và quyết định thể hiện thực tế; sai khác có chủ ý được giải thích tại từng slide và trongreview-log.md.
+
+## Bản đồ chu trình học tập và chuyển phần
+
+Thời lượng tính theo bảy phần, tổng120phút; các hàng khái niệm giao nhau không được cộng thêm lần nữa. Phần mở8phút; chuỗi18; MRP18; Bellman24; MDP20; v/q24; tổng hợp8. Ngoài ra có30phút chữa bài3/4/7/8 theo phân bổ10/8/5/7phút; không tạo code demo.
+
+| Cụm và phần | Vấn đề | Trực giác và ví dụ trước hình thức | Hình thức | Ứng dụng | Kiểm tra |
+|---|---|---|---|---|---|
+| Mở đầu, phần1 | 01-03: kết quả của cùng hành động có thể khác | 01-04: hai đường đi cùng xuất phát | 01-05: phân loại ba lớp mô hình; không có định nghĩa mới | 01-05: nhận diện thành phần được thêm | 01-06 |
+| Chuỗi Markov, phần2 | 02-01: mô tả quy luật chuyển | 02-02: đồ thị sinh viên, các cạnhC1; ví dụ và trực giác gộp | 02-03/04: xác suất có điều kiện và ma trận | 02-05: truyền phân phối, xác suấtFB bằng0,7 | 02-06 |
+| MRP và tổng thưởng, phần3 | 03-01: chuyển trạng thái chưa đánh giá kết quả | 03-02: quỹ đạo và thưởng theo bước | 03-03: MRP và tổng có chiết khấu, tổng đã học ởBài02 | 03-04: tính hai tổng−2,25 và−3,125 | 03-06 |
+| Giá trị trạng thái, phần3→4 | 03-04: hai mẫu từ cùng trạng thái khác nhau | 03-05: nhóm các quỹ đạo từC1 trước ký hiệu kỳ vọng | 03-05: định nghĩa v | 03-06: phân biệt mẫu/kỳ vọng; 04-02/06/07: tính bằng mô hình | 03-06, 04-09 |
+| Bellman MRP, phần4 | 04-01: định nghĩa chưa cho phép tính hữu hạn | 04-02: một bước từC3, hai phần tương lai | 04-03…05: tách tổng, kỳ vọng lặp, Markov; 04-07: dạng ma trận | 04-06/07: giải hệ ba trạng thái; 04-08: kiểm điều kiện | 04-09 |
+| MDP, phần5 | 05-01: tác tử có thể chọn hành động | 05-01/02: học/nghỉ và toàn đồ thị có hành động | 05-03: xác suất chung và miền/giả thiết | 05-04/05: chọn chính sách và tính phản hồi cảm sinh | 05-07 |
+| MRP cảm sinh, phần5 | 05-04: đánh giá khi chính sách đã cố định | 05-05: gộp hai tầng tạiC2, ví dụ0,75/0,25 và−1,5 | 05-06: trộn phân phối, lấy biên, kỳ vọng thưởng | 05-06: đưa về Bellman đã có; 05-07 câu2: đổi chính sách | 05-07 |
+| Giá trị hành động, phần6 | 06-01: cần phân biệt từng lựa chọn | 06-02: ấn định hành động đầu, rồi cùng theo chính sách | 06-03: q và quan hệ với định nghĩa v | 06-04: lấy trung bình q; 06-08: tính q ởCool | 06-09 |
+| Bellman MDP, phần6 | 06-04: cần tính từng q từ mô hình | 06-01/02: nhánhStudy nhận−2 rồi tớiC3; tái dùng trực giác một bước của04-02 | 06-05…07: tách tổng và hai tầng kỳ vọng; phép thế | 06-08: mô hình xeđua và kiểm giá trị | 06-09 |
+| Tổng hợp, phần7 | 07-01: trở lại tính giá trị khi biết mô hình | 07-02: quan hệ các lớp mô hình | 07-02 nhắc Bellman; không áp dụng bước định nghĩa mới vì đây là kết luận | 07-03: bốn nhiệm vụ từhw02 | 07-04 |
+
+Mỗi cụm gộp trực giác với ví dụ trên cùng hình khi hai chức năng dùng chung dữ kiện. Phần1 và7 dùng chu trình rút gọn vì mở/khép vấn đề, không đưa khái niệm trọng tâm mới. Quan hệ v/q tiếp tục chu trình giá trị đã mở ởphần3; phép kỳ vọng toàn phần ởphần6 tái dùng kiến thức củaphần4, không phải tiên quyết xuất hiện đột ngột.
+
+| Ranh giới | Kiến thức truyền sang và câu nối về nội dung |
+|---|---|
+| 1→2 | Nhiều quỹ đạo từ cùng xuất phát dẫn tới nhu cầu xác suất chuyển. |
+| 2→3 | Ma trận mô tả đường đi có thể xảy ra; thêm thưởng để đánh giá các đường đi. |
+| 3→4 | Tổng của từng mẫu khác nhau; kỳ vọng cần được tính từ mô hình bằng quan hệ một bước. |
+| 4→5 | Bellman đánh giá quá trình có quy luật cố định; thêm hành động làm phản hồi phụ thuộc lựa chọn, cố định chính sách để gộp lại. |
+| 5→6 | Giá trị dưới chính sách đã có; ấn định hành động đầu để đánh giá từng lựa chọn riêng. |
+| 6→7 | Hai tầng kỳ vọng đưa trở lại cùng hệ giá trị; tổng hợp thành quy trình đọc mô hình, lập và giải phương trình. |
+
+Từng mục slide bên dưới ghi đầu vào, dữ kiện chuyển từ hình sang công thức, câu nối, thời lượng và quyết định thể hiện. Hình thức không bắt đầu trước ví dụ đối với khái niệm trọng tâm; những slide thuần công thức thuộc cụm đã có phần dẫn nhập.
 
 ## Phần 1. Từ tương tác đến mô hình xác suất — 8 phút
 
@@ -1020,3 +1050,90 @@ Thời lượng: 3 phút. Vai trò: kiểm tra.
 **Nguồn:** PPTX51,55–57; hw02 bài7,8.
 
 **Quyết định thể hiện khi triển khai:** Mô hình tại Warm và ba giá trị cần thiết được đặt trên mặt slide để câu hỏi không buộc nhớ số từ trang trước. Ba câu bám đúng ba mạch của phần: áp dụng công thức q theo v, áp dụng xác suất toàn phần v theo q, và phân biệt kỳ vọng với tối ưu.
+
+## Phần 7. Tổng hợp và vận dụng — 8 phút
+
+Đầu vào: toàn tuyến lập luận. Đầu ra: sinh viên tự nối mô tả môi trường với một phương trình giá trị, biết nội dung chữa bài và đích đến của Bài 04. Phần kết dùng chu trình rút gọn, không giới thiệu khái niệm mới.
+
+
+### L03-07-01 — Tổng hợp và vận dụng
+
+Thời lượng: 1 phút. Vai trò: mở phần.
+
+**Đầu vào:** Toàn bộ tuyến chuỗi Markov, MRP, MDP, chính sách và Bellman.
+
+**Nội dung trên slide:** Tiêu đề phần và sơ đồ nhỏ từ mô hình tới giá trị.
+
+**Cách thể hiện:** Tái dùng các biểu tượng trạng thái, thưởng, hành động và giá trị đã có.
+
+**Giải thích và hình thức hóa:** Không thêm thuật ngữ hoặc công thức tối ưu.
+
+**Kết nối:** Thu hồi câu hỏi mở bài về tính giá trị khi biết mô hình.
+
+**Kiểm tra/ghi chú đáp án:** Không có phép tính mới ở trang mở.
+
+**Nguồn:** Tổng hợp PPTX30–57.
+
+**Quyết định thể hiện khi triển khai:** Slide mở phần dùng một sơ đồ ngang bốn nút (mô hình → MRP → MDP → giá trị) tái dùng đúng thứ tự các phần trước, giúp SV năm 3 nhìn lại toàn tuyến trong một hình thay vì đọc lại danh sách công thức. Hình phù hợp vì SV đã từng gặp từng nút riêng; giờ chỉ cần thấy quan hệ nối giữa chúng. Tiên quyết: đã học P, R, gamma, pi, Bellman. Cầu nối sang slide tổng hợp trực tiếp. Slide mở chỉ có một câu và sơ đồ mô hình/chính sách→Bellman→giá trị; quan hệ chi tiết giữa các lớp mô hình dành cho slide kế tiếp.
+
+### L03-07-02 — Từ mô hình đến phương trình giá trị
+
+Thời lượng: 2 phút. Vai trò: tổng hợp trực quan.
+
+**Đầu vào:** Các khái niệm đã học và sơ đồ mở phần.
+
+**Nội dung trên slide:** Chuỗi Markov → thêm thưởng thành MRP; thêm lựa chọn thành MDP; cố định pi thu được MRP để đánh giá.
+
+**Cách thể hiện:** Sơ đồ hai chiều ở bước MRP/MDP, gắn P,r và P^pi,r^pi đúng chỗ.
+
+**Giải thích và hình thức hóa:** Tại một nút, nối hai đường giải thích: gộp theo pi trước rồi viết Bellman; hoặc mở cây s→a→s′ rồi lấy kỳ vọng. Hai đường cho cùng v_pi.
+
+**Kết nối:** Từ khái niệm sang nhiệm vụ tự viết phương trình.
+
+**Kiểm tra/ghi chú đáp án:** Bài 04 sẽ thay câu hỏi “chính sách này có giá trị bao nhiêu” bằng “chọn chính sách nào”.
+
+**Nguồn:** PPTX30,34,49,56–58.
+
+**Quyết định thể hiện khi triển khai:** Sơ đồ hai chiều ở bước MRP/MDP với P, r gắn ở cạnh MRP→MRP và P^pi, r^pi gắn ở cạnh MDP→MRP(pi) giúp SV thấy chính sách là phép rút gọn MDP về MRP, không phải khái niệm tách rời. Hai hộp song song trình bày hai đường suy diễn ngắn gọn, công thức chính đặt ở math-large phía trên; phù hợp SV năm 3 vì họ đã quen kỳ vọng có điều kiện và chỉ cần thấy hai cách sắp xếp cùng một phép lấy kỳ vọng. Tiên quyết: Bellman MRP ở phần 4, định nghĩa v^pi và q^pi ở phần 6. Vẽ quan hệ giữa các lớp mô hình, tách MRP cảm sinh thành nút riêng và dùng mũi tên quay lại từ MDP. Công thức dựng KaTeX bên dưới; không viết tuple hoặc chỉ số công thức vàoSVG. Hai đường lập phương trình được nối bằng phép thế trongnotes, giữ xác suất chung đã dùng ởphần5–6.
+
+### L03-07-03 — Bài tập và bước tiếp theo
+
+Thời lượng: 3 phút. Vai trò: ứng dụng và chuẩn bị chữa bài.
+
+**Đầu vào:** Quy trình từ mô hình đến phương trình giá trị.
+
+**Nội dung trên slide:** Bài 3: kiểm ma trận, lập hệ. Bài 4: MDP dưới pi. Bài 7: v từ q. Bài 8: Bellman kỳ vọng. Bài 04: Bellman tối ưu và quy hoạch động.
+
+**Cách thể hiện:** Bảng bốn nhiệm vụ với sản phẩm cần nộp; không đưa toàn bộ đề dài vào một trang.
+
+**Giải thích và hình thức hóa:** 30 phút chữa bài nguồn: 10 phút bài3, 8 phút bài4, 5 phút bài7, 7 phút bài8. Bài9 về tối ưu để Bài04. Không thêm chương trình minh họa ngoài nguồn.
+
+**Kết nối:** Câu hỏi cuối xác nhận sinh viên đã phân biệt đánh giá với tối ưu.
+
+**Kiểm tra/ghi chú đáp án:** Các bài tập dùng đúng ký hiệu đã xây dựng; bản HTML không hiển thị phân bổ phút hoặc chỉ dẫn soạn.
+
+**Nguồn:** PPTX58; hw02 bài3,4,7,8.
+
+**Quyết định thể hiện khi triển khai:** Bảng bốn nhiệm vụ với cột sản phẩm nộp giúp SV biết chính xác đầu ra cần có của từng bài mà không phải đọc lại toàn bộ đề dài; bảng dùng font mặc định để vừa chiều cao khung. Phù hợp SV năm 3 vì mỗi dòng ánh trực tiếp vào một kỹ thuật đã học ở phần tương ứng. Tiên quyết: các phần 2–6. Cầu nối: dòng cuối dẫn sang Bài 04.
+
+### L03-07-04 — Câu hỏi kiểm tra
+
+Thời lượng: 2 phút. Vai trò: kiểm tra cuối bài.
+
+**Đầu vào:** Phân biệt mô hình, phần thưởng, chính sách, giá trị và tối ưu.
+
+**Nội dung trên slide:** 1. Biết P và pi, cần thêm gì để tính v_pi?
+2. G, v và q khác nhau thế nào?
+3. Tăng xác suất chọn một hành động có chắc làm giá trị tăng không?
+
+**Cách thể hiện:** Ba câu ngắn; kết thúc bằng câu trả lời cụ thể, không khẩu hiệu.
+
+**Giải thích và hình thức hóa:** Câu 1 chỉ rõ P trong câu hỏi là xác suất chuyển trạng thái, chưa bao gồm thưởng; tránh đánh đố do P chung.
+
+**Kết nối:** Kết thúc Bài03; Bài04 giải bài toán lựa chọn chính sách.
+
+**Kiểm tra/ghi chú đáp án:** 1. Quy luật/kỳ vọng thưởng, gamma, quy ước kết thúc và điều kiện giá trị hữu hạn. 2. Tổng một lượt/kỳ vọng theo trạng thái/kỳ vọng khi ấn định hành động đầu. 3. Không, phụ thuộc giá trị và hậu quả của hành động.
+
+**Nguồn:** Tổng hợp bài học.
+
+**Quyết định thể hiện khi triển khai:** Ba câu bám vào ba điểm phân biệt của bài: thành phần mô hình cần đủ để tính giá trị, ba đại lượng G/v/q ở ba tầng cụ thể–kỳ vọng, và tính phi đơn điệu của giá trị theo chính sách. Câu 1 ghi rõ P là xác suất chuyển trạng thái để tránh nhầm lẫn do ký hiệu P chung. Hình thức danh sách đánh số với nhãn Câu hỏi: giúp SV trả lời tuần tự trong 2 phút cuối.

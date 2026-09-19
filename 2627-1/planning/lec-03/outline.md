@@ -1,6 +1,6 @@
 # Bài 03 — Dàn ý triển khai
 
-Trạng thái: đã triển khai phần 1–6/7 theo [kế hoạch chi tiết](detailed-slide-plan.md). Các phần sau vẫn là nội dung cũ cho đến lượt thay thế tương ứng.
+Trạng thái: đã triển khai đủ47slide thuộc7phần theo [kế hoạch chi tiết](detailed-slide-plan.md); kiểm định cuối ghi trongreview-log.md.
 
 ## Mục tiêu và phạm vi
 
@@ -116,3 +116,50 @@ $P$ trong chuỗi Markov là ma trận; $P(s',r\mid s,a)$ trong MDP là xác su�
 - `L03-06-07`: Bellman kỳ vọng cho giá trị trạng thái.
 - `L03-06-08`: Vận dụng với xe đua.
 - `L03-06-09`: Câu hỏi kiểm tra.
+
+## Phần 7
+
+- `L03-07-01`: Tổng hợp và vận dụng.
+- `L03-07-02`: Từ mô hình đến phương trình giá trị.
+- `L03-07-03`: Bài tập và bước tiếp theo.
+- `L03-07-04`: Câu hỏi kiểm tra.
+
+## Ánh xạ từng trang nguồn
+
+Nguồn chính: `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx`. Bảng này ghi ánh xạ của bản triển khai; các ví dụ số bổ sung được phân biệt với số liệu nguyên bản.
+
+| Trang nguồn | Slide đích | Quyết định và lý do |
+|---:|---|---|
+| 28 | L03-01-01…03 | Tách tiêu đề bài, nội dung bài học và mở phần theo yêu cầu người dùng. |
+| 29 | L03-01-03/06, L03-02-03 | Rút gọn ôn Markov; phân biệt quan sát đầy đủ với biết mô hình. |
+| 30 | L03-02-03 | Giữ định nghĩa chuỗi; bổ sung rõ giả thiết đồng nhất theo thời gian. |
+| 31 | L03-02-01/02 | Vẽ lại đồ thị sinh viên, giữ bảy trạng thái và xác suất. |
+| 32 | L03-01-04, L03-02-02 | Giữ quỹ đạo nguồn trong02-02; bổ sung hai đường đi ở01-04 để nối sang các ví dụ tổng thưởng. |
+| 33 | L03-02-04/05 | Giữ toàn ma trận; thêm phép truyền phân phối và ví dụ trộn tạiC1/FB. |
+| 34 | L03-03-02/03 | Đưa ví dụ thưởng trước định nghĩa MRP; phân biệt biến thưởng và kỳ vọng thưởng. |
+| 35 | L03-03-01/02, L03-04-02 | Vẽ lại đồ thị có thưởng; dùng nhánhC3 để chuẩn bị Bellman. |
+| 36 | L03-03-03/04 | Giữ tổng có chiết khấu và miềngamma; tính hai tổng quỹ đạo. |
+| 37 | L03-03-03, L03-04-08 | Gộp phần giải thích chiết khấu với định nghĩa và điều kiện hữu hạn; nội dung động cơ đã học ởBài02. |
+| 38 | L03-03-04, L03-04-08 | Gộp ảnh hưởng chiết khấu vào phép tính và cận tổng hình học; không lặp phần thưởng–mục tiêu củaBài02. |
+| 39 | L03-03-05 | Giữ định nghĩa giá trị, đặt sau ví dụ hai tổng khác nhau. |
+| 40 | L03-03-04/06 | Giữ hai quỹ đạo vàgamma=1/2; tự tính lại tổng−2,25 và−3,125. |
+| 41 | L03-03-03/05, L03-04-08 | Gộp trường hợpgamma=0 vào định nghĩa/cận; không chép bảng giá trị bảy trạng thái. |
+| 42 | L03-04-06/07 | Thay bảng nghiệm bảy trạng thái bằng hệ ba trạng thái từhw02 để sinh viên tự giải được; giữgamma=0,9. |
+| 43 | L03-04-08, L03-06-08 | Gộp trường hợpgamma=1 vào điều kiện kết thúc; vận dụng trên xeđua thay vì chép bảng nghiệm sinh viên. |
+| 44 | L03-04-01…04 | Tách trực giác, tổng thưởng và kỳ vọng lặp; nêu lý do từng dấu bằng. |
+| 45 | L03-04-05 | Giữ Bellman MRP; chỉ rõ bước dùng Markov và đồng nhất thời gian. |
+| 46 | L03-04-02/05 | Giữ quan hệ một bước quaPass/Pub; không gán thưởng một bước thành giá trị dài hạn. |
+| 47 | L03-04-06/07 | Giữ dạng ma trận; bổ sung hệ và nghiệm từhw02 bài3. |
+| 48 | L03-04-07/08 | Giữ giải hệ, chi phí bậc ba và giới hạn; thêm điều kiện khả nghịch, xử lý trạng thái kết thúc. |
+| 49 | L03-05-01/03 | Giữ MDP hữu hạn; dùng xác suất chung trạng thái–thưởng nhất quán Bài02. |
+| 50 | L03-05-01/02/04/05, L03-06-01/02 | Vẽ lại StudentMDP năm trạng thái; giữ thưởng/cạnh; nêu thay đổi so vớiMRP bảy trạng thái. |
+| 51 | L03-06-08/09 | Chuyển ví dụ xeđua tới phần vận dụng; giữ sáu kết quả và quy ước quá nhiệt nhận−10. |
+| 52 | L03-05-04/06/07 | Giữ chính sách; thêm phép gộp MDP dưới chính sách bằng số rồi công thức. |
+| 53 | L03-06-01…04 | Đưa hai thí nghiệm hành động đầu trước định nghĩa v/q; nêu quy ước hành động có xác suất chính sách bằng0. |
+| 54 | L03-05-04/05 | Thay bảng giá trị có sẵn bằng phép gộp tạiC2; xác suất0,75/0,25 được ghi là ví dụ luyện thêm, không nhận là số liệu gốc. |
+| 55 | L03-06-08/09 | Giữ chính sách đều, gamma=1 và giá trị xeđua; tính q và kiểm lại v. |
+| 56 | L03-06-04…06 | Tách kỳ vọng theo hành động, phản hồi môi trường và hành động tiếp theo. |
+| 57 | L03-06-05…07 | Giữ Bellman kỳ vọng; nối lại dạngMRP cảm sinh để tránh hai hệ công thức rời nhau. |
+| 58 | L03-07-03/04 | Giữ bài tập/đọc thêm; phần tối ưu nối sangBài04, không dạy thuật toán mới trong kết bài. |
+
+Bài tập `resources/hw02.pdf`: bài3 → L03-02-06, L03-04-06/07/09; bài4 → L03-05-05…07, L03-06-07; bài7 → L03-06-04/09; bài8 → L03-06-05…07. L03-07-03 tập hợp các bài này cho 30 phút luyện tập. Không tạo code demo mới.

@@ -1,6 +1,6 @@
 # Bài 03 — Kế hoạch chi tiết từng slide
 
-Ngày lập: 2026-09-19. Trạng thái: đang triển khai, đã tích hợp phần 1–6/7; các phần sau chưa hoàn tất. Các ID `L03-…` dùng cho bản viết lại; outline và storyboard ghi phạm vi đã tích hợp thực tế.
+Ngày lập: 2026-09-19. Trạng thái: đã triển khai đủ 7 phần; kết quả kiểm định ghi trong review-log.md. Các ID `L03-…` dùng cho bản viết lại; outline và storyboard ghi phạm vi đã tích hợp thực tế.
 
 ## Mục tiêu và phạm vi
 
@@ -1060,7 +1060,7 @@ Thời lượng: 2 phút. Vai trò: kiểm tra cuối bài.
 
 **Nguồn:** Tổng hợp bài học.
 
-## Các phép kiểm bắt buộc trước khi triển khai
+## Các phép kiểm bắt buộc
 
 - **Nối ví dụ với công thức:** giữ đúng thứ tự trạng thái, nhãn thưởng và chỉ số thời gian từ hình sang công thức. Student MRP nhận thưởng theo trạng thái rời đi; không chuyển ngầm sang thưởng vào trạng thái.
 - **Mỗi dấu bằng trong Bellman:** 04-03 là tách tổng; 04-04 là tuyến tính và kỳ vọng lặp; 04-05 là Markov, không đổi theo thời gian và kỳ vọng rời rạc. 06-04 lấy trung bình hành động đầu; 06-05 lấy trung bình phản hồi chung; 06-06/07 là phép thế và gom nhóm.
@@ -1082,7 +1082,7 @@ Thời lượng: 2 phút. Vai trò: kiểm tra cuối bài.
 | Xe đua | 06-08/09 | Tái dùng `racing-car.svg`, giữ sáu kết quả và quy ước -10 khi quá nhiệt |
 | Ma trận, phương trình, bảng số | Các phần | HTML/KaTeX, không biến công thức thành SVG |
 
-## Ánh xạ và sai khác so với bản hiện hành
+## Ánh xạ và sai khác so với nguồn
 
 | Nguồn chính | Phần kế hoạch mới | Quyết định |
 |---|---|---|
@@ -1094,4 +1094,4 @@ Thời lượng: 2 phút. Vai trò: kiểm tra cuối bài.
 | PPTX53–57 | 6 | Giới thiệu q qua hành động đầu tiên; suy ra từng Bellman; xe đua dùng để kiểm chứng |
 | PPTX58 và hw02 | 7 | Giao bài3,4,7,8; tối ưu chuyển Bài04 |
 
-Không sửa bản HTML đang dùng trong lượt lập kế hoạch này. Khi triển khai sẽ chuyển nội dung đã duyệt sang storyboard chính, cập nhật outline, ID, hình và ánh xạ lecture-note liên quan; không coi bản kế hoạch là bằng chứng deck đã thay đổi.
+Bản kế hoạch đã được triển khai vào HTML. Storyboard ghi quyết định thể hiện thực tế; outline có ánh xạ từng trang nguồn; review-log.md ghi bằng chứng rà soát. Mục danh sách bài giảng chỉ liên kết tới HTML của bài.
