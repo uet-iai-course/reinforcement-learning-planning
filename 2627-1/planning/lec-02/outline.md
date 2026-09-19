@@ -55,7 +55,7 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 - `L02-05-05` — Hàm giá trị trạng thái — PPTX trang 16–18, 22; hw02 bài 5
 - `L02-05-08` — Mô hình chuyển trạng thái và phần thưởng — phân phối chung theo yêu cầu; PPTX trang 13, 23; hw02 bài 10; Sutton–Barto (2018), mục 3.1
 - `L02-05-09` — Câu hỏi kiểm tra — PPTX trang 13, 24, 27; hw02 bài 6
-- `L02-06-01` — Đến đích và tránh hố — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
+- `L02-06-01` — Điểm thưởng và hành vi — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
 - `L02-06-02` — Điểm thưởng của hai lựa chọn — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
 - `L02-06-03` — Cùng môi trường, khác hành vi — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
 - `L02-06-04` — Ngưỡng thay đổi hành vi — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt

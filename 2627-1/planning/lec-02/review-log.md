@@ -2064,3 +2064,9 @@ Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flas
 **Flow:** Incoming ✓ từ part 5 (L02-05-08 mô hình P/r, 05-09 quiz tổng thưởng $G_t$). Outgoing ✓ sang L02-07-01 bảng thành phần dùng mê cung.
 
 **Không phát hiện:** AI-slop, chỉ dẫn biên tập trong body/notes của section 6; sai số toán; vi phạm scope khác.
+
+
+## Đổi tiêu đề mở phần 6 — 2026-09-19
+
+- Theo yêu cầu, đổi tiêu đề L02-06-01 từ “Đến đích và tránh hố” thành “Điểm thưởng và hành vi”. Đồng bộ HTML, outline và storyboard; nội dung, hình và thứ tự giữ nguyên.
+- Kiểm tra thay đúng một tiêu đề trong mỗi tệp và `git diff --check` đạt.

@@ -587,7 +587,7 @@ Thời lượng: 4 phút. Nguồn: các khái niệm và ví dụ trong phần 5
 - Dữ kiện truyền tiếp: 6 bước tới đích, 2 bước tới hố, thưởng đích 10, chi phí mọi bước alpha; hai đường lợi ích giao ở (2,5; -5).
 - Câu nối: Từ mô hình phản hồi sang hành vi do hàm thưởng tạo ra; sang phần 7 bằng vai trò của thưởng/giá trị trong đặc tả nhiệm vụ.
 
-### L02-06-01 — Đến đích và tránh hố
+### L02-06-01 — Điểm thưởng và hành vi
 
 Thời lượng: 3 phút. Nguồn: ví dụ và liên hệ mới theo kế hoạch đã được duyệt.
 
