@@ -38,7 +38,6 @@ Từng mục slide bên dưới ghi đầu vào, dữ kiện chuyển từ hình
 
 
 ### L03-01-01 — Quá trình quyết định Markov
-
 Thời lượng: 1 phút. Vai trò: tiêu đề bài giảng.
 
 **Đầu vào:** Bài 02 đã giới thiệu giao diện tác tử–môi trường và các thành phần của bài toán.
@@ -55,10 +54,10 @@ Thời lượng: 1 phút. Vai trò: tiêu đề bài giảng.
 
 **Nguồn:** PPTX28; thông tin học phần.
 
-**Quyết định thể hiện khi triển khai:** Trang tiêu đề chỉ đặt tên bài và thông tin học phần, không có công thức mới vì đây là điểm vào của toàn bài; mục tiêu nằm trong notes. Không dùng hình trực giác để tránh lặp với slide mở phần ngay sau đó. Tiên quyết: Bài 02 (giao diện tác tử–môi trường, tổng thưởng). Cầu nối: slide nội dung bài học.
+**Đánh giá và cách thể hiện sau viết lại:** Slide mở đầu, chỉ giữ tiêu đề và thông tin học phần. Không có hình; kiến thức vào là bối cảnh môi trường quan sát đầy đủ, kết quả ra là định hướng tính kỳ vọng phần thưởng tích lũy. Giữ nguyên vì đã đúng phạm vi phần 1.
+
 
 ### L03-01-02 — Nội dung bài học
-
 Thời lượng: 1 phút. Vai trò: định hướng toàn bài.
 
 **Đầu vào:** Tên và mục tiêu Bài 03.
@@ -75,10 +74,10 @@ Thời lượng: 1 phút. Vai trò: định hướng toàn bài.
 
 **Nguồn:** Dàn ý bảy phần đã được thống nhất; PPTX28–58.
 
-**Quyết định thể hiện khi triển khai:** Danh sách hai cột giúp bảy mục vừa khung 1280x720 mà không cần hình; mục 1 được nhấn mạnh để sinh viên biết vị trí hiện tại. Thứ tự mục chính là bản đồ khái niệm: mỗi lớp mô hình là mở rộng của lớp trước, nên thứ tự đọc cũng là thứ tự xây dựng. Không hiện thời lượng hay ID vì đó là thông tin điều hành, không phải nội dung học.
+**Đánh giá và cách thể hiện sau viết lại:** Slide mục lục, giữ cấu trúc hai cột và thứ tự bảy mục. Kiến thức vào là lộ trình từ mô hình xác suất đến Bellman; kết quả ra là ranh giới với Bài 04. Chỉ sửa khoảng trắng trong "Bài 04".
+
 
 ### L03-01-03 — Từ tương tác đến mô hình xác suất
-
 Thời lượng: 1 phút. Vai trò: mở phần.
 
 **Đầu vào:** Bản đồ bài học ở 01-02 và giao diện tác tử–môi trường từ Bài02.
@@ -95,35 +94,35 @@ Thời lượng: 1 phút. Vai trò: mở phần.
 
 **Nguồn:** PPTX 28–29; nối Bài 02.
 
-**Quyết định thể hiện khi triển khai:** Hình trực giác gồm một nút trạng thái, một nút hành động và hai nút trạng thái kế tiếp với hai mũi tên, thể hiện đúng luận điểm duy nhất của slide: một bước tương tác có nhiều khả năng diễn tiến. Hai nhãn trạng thái 1 và trạng thái 2 phân biệt hai kết quả khác nhau. Chưa dùng bộ ký hiệu MDP để không vượt trước định nghĩa ở phần 5. Tiên quyết: giao diện tác tử–môi trường Bài 02. Cầu nối: slide sau cho thấy nhiều quỹ đạo sinh ra từ chính tính ngẫu nhiên này.
+**Đánh giá và cách thể hiện sau viết lại:** Slide dẫn nhập bằng sơ đồ một trạng thái, một hành động, hai kết quả; hình SVG sẵn có phù hợp vì minh họa trực tiếp tính ngẫu nhiên của môi trường. Kiến thức vào là tương tác quan sát được, kết quả ra là nhu cầu mô hình xác suất. Giữ nguyên nội dung, chỉ biên tập notes.
+
 
 ### L03-01-04 — Một mô hình, nhiều quỹ đạo
-
 Thời lượng: 2 phút. Vai trò: vấn đề và trực giác.
 
 **Đầu vào:** Một bước có thể có nhiều kết quả; trạng thái quan sát được.
 
-**Nội dung trên slide:** Hai đường đi từ cùng điểm xuất phát trên đồ thị sinh viên.
+**Nội dung trên slide:** Hai đường đi từ cùng điểm xuất phát. Chú thích C1–C3 là các buổi học, Pass là thi đạt, Facebook là mạng xã hội, Sleep là ngủ.
 
 **Cách thể hiện:** Chỉ hiện các nút liên quan đến hai đường; cùng điểm xuất phát và cùng kết thúc Sleep, hai diễn tiến khác nhau.
 
 **Giải thích và hình thức hóa:** Quỹ đạo là một kết quả lấy mẫu. Mô hình là quy luật sinh ra cả các quỹ đạo chưa quan sát; chưa đồng nhất hai tổng cụ thể với kỳ vọng.
 
-**Kết nối:** Từ sự khác nhau của đường đi đến việc phải dùng phân phối.
+**Kết nối:** Trước hết mô tả chuỗi trạng thái khi hành vi đã cố định; phần 5 sẽ tách lựa chọn hành động khỏi phản hồi môi trường.
 
 **Kiểm tra/ghi chú đáp án:** Một đường quan sát được có xác định hết xác suất chuyển không? Không.
 
 **Nguồn:** PPTX 31–32.
 
-**Quyết định thể hiện khi triển khai:** Hình vẽ hai hàng quỹ đạo riêng biệt, cùng xuất phát từ C1 và cùng kết thúc ở Sleep, mỗi hàng có nhãn Đường 1/Đường 2 để sinh viên đọc được ngay luận điểm: cùng điểm đầu, nhiều diễn tiến. Hai quỹ đạo là các đường hợp lệ suy ra từ đồ thị, không phải hai kết thúc khác nhau. Chỉ hiện các nút liên quan, đúng yêu cầu của kế hoạch. Đây là bước vấn đề–trực giác trước khi đưa vào phân phối ở phần 2; chưa tính tổng thưởng để không trộn với phần 3. Tiên quyết: khái niệm trạng thái và quỹ đạo từ Bài 02. Cầu nối: cần một cách mô tả gọn quy luật sinh mọi quỹ đạo — đó là ba lớp mô hình ở slide sau.
+**Đánh giá và cách thể hiện sau viết lại:** Slide minh họa hai quỹ đạo trên đồ thị sinh viên; hình SVG giữ nguyên vì đúng nội dung. Theo spec, giải nghĩa C1–C3/Pass/Facebook/Sleep được đưa lên caption ngắn trên slide, và notes nối từ tương tác sang chuỗi trạng thái bằng cách mô tả hành vi cố định trước, phần lựa chọn để dành cho mục 5.
+
 
 ### L03-01-05 — Ba lớp mô hình
-
 Thời lượng: 1 phút. Vai trò: bản đồ khái niệm.
 
 **Đầu vào:** Hai quỹ đạo từ cùng điểm đầu; nhu cầu mô tả quy luật sinh chúng.
 
-**Nội dung trên slide:** Chuỗi trạng thái → thêm thưởng → thêm lựa chọn hành động.
+**Nội dung trên slide:** Sơ đồ ba lớp mô hình; câu kết: từ mô hình và chính sách, tính kỳ vọng của tổng thưởng.
 
 **Cách thể hiện:** Ba hình dùng cùng các nút; lần lượt thêm nhãn thưởng và nút lựa chọn.
 
@@ -135,10 +134,10 @@ Thời lượng: 1 phút. Vai trò: bản đồ khái niệm.
 
 **Nguồn:** PPTX 30,34,49.
 
-**Quyết định thể hiện khi triển khai:** Ba hàng của hình dùng cùng hai trạng thái A và B: hàng một chỉ có chuyển tiếp, hàng hai thêm nhãn thưởng trên phản hồi, hàng ba thêm hai lựa chọn hành động a và b trước khi về B, vẫn giữ nhãn thưởng — trực quan thể hiện quan hệ bao chứa giữa ba lớp mà không mất phần thưởng khi thêm hành động. Nhãn tiếng Việt đủ ba lớp, không công thức, vì slide chỉ làm bản đồ khái niệm. Tiên quyết: hai quỹ đạo từ cùng điểm đầu ở slide trước cho thấy cần mô hình hóa quy luật. Cầu nối: phần 2 bắt đầu bằng lớp đơn giản nhất, chuỗi Markov.
+**Đánh giá và cách thể hiện sau viết lại:** Slide tổng hợp ba lớp mô hình bằng sơ đồ SVG sẵn có; theo spec, caption lặp lại nội dung sơ đồ được thay bằng mục tiêu cụ thể của phần: từ mô hình và chính sách, tính kỳ vọng tổng thưởng. Không thêm công thức hay định nghĩa mới; notes giữ ba lớp và vai trò của chính sách cố định.
+
 
 ### L03-01-06 — Câu hỏi kiểm tra
-
 Thời lượng: 2 phút. Vai trò: kiểm tra tiên quyết.
 
 **Đầu vào:** Phân biệt trạng thái, mô hình và một mẫu quỹ đạo.
@@ -156,7 +155,8 @@ Thời lượng: 2 phút. Vai trò: kiểm tra tiên quyết.
 
 **Nguồn:** Bài 02; PPTX 29–30.
 
-**Quyết định thể hiện khi triển khai:** Hai câu trong danh sách đánh số dưới một nhãn Câu hỏi chung; đáp án nằm trọn trong notes để slide chỉ giữ câu hỏi. Câu 1 tách quan sát khỏi mô hình, câu 2 khẳng định tính ngẫu nhiên — đúng hai phân biệt mà phần 1 đặt ra. Không dùng hình vì hai câu đủ tự đứng và slide kiểm tra cần gọn. Tiên quyết: slide 01-03 và 01-04. Cầu nối: sang phần 2, đọc đồ thị chuyển.
+**Đánh giá và cách thể hiện sau viết lại:** Slide kiểm tra cuối phần, giữ đúng hai câu hỏi dạng danh sách 1, 2 dưới nhãn Câu hỏi:. Kiến thức vào là hai điểm chính của phần (quan sát khác mô hình, tính ngẫu nhiên của chuyển tiếp); kết quả ra là xác nhận SV phân biệt được quỹ đạo đã xảy ra với phân phối của mô hình. Giữ nguyên vì đã tuân theo spec.
+
 
 ## Phần 2. Chuỗi Markov — 18 phút
 
@@ -164,7 +164,6 @@ Vấn đề → ví dụ đồ thị → xác suất chuyển → ma trận → 
 
 
 ### L03-02-01 — Chuỗi Markov
-
 Thời lượng: 1 phút. Vai trò: mở phần.
 
 **Đầu vào:** Câu hỏi về quy luật sinh nhiều quỹ đạo ở phần1.
@@ -181,15 +180,15 @@ Thời lượng: 1 phút. Vai trò: mở phần.
 
 **Nguồn:** PPTX 30–31.
 
-**Quyết định thể hiện khi triển khai:** Slide mở phần dùng lại chính đồ thị sinh viên nhưng lược bỏ mọi thành phần ngoài trạng thái, để hình trực tiếp thể hiện luận điểm: chuỗi Markov chỉ nói về di chuyển giữa trạng thái. Sinh viên năm 3 đã quen đồ thị từ phần 1 nên hình hoạt như cầu nối, không cần câu dẫn dài; một câu duy nhất đặt vấn đề quy luật sinh quỹ đạo là đủ.
+**Đánh giá và cách thể hiện sau viết lại:** Slide mở đầu chuỗi ví dụ→định nghĩa→ma trận→phân phối, giới thiệu đồ thị chuỗi sinh viên làm ví dụ xuyên suốt. Hình SVG bảy trạng thái phù hợp vì cho thấy trực quan các cạnh xác suất chuyển. Kiến thức vào là khái niệm quy luật chuyển; kết quả ra là người học nhận ra một quy luật sinh nhiều quỹ đạo. Giữ nguyên vì đã đúng vai trò và không thuộc phạm vi sửa của spec.
+
 
 ### L03-02-02 — Một ngày của sinh viên
-
 Thời lượng: 3 phút. Vai trò: ví dụ trực quan.
 
 **Đầu vào:** Các nút biểu diễn trạng thái; mũi tên biểu diễn chuyển tiếp.
 
-**Nội dung trên slide:** Các trạng thái học, mạng xã hội, giải trí, thi đạt, ngủ; nhãn ngắn đi kèm C1,C2,C3,Pass,Pub,FB,Sleep.
+**Nội dung trên slide:** Quỹ đạo nguồn trên đồ thị; chú thích ngắn FB là mạng xã hội, Pub là giải trí.
 
 **Cách thể hiện:** Giữ nguyên đồ thị và xác suất nguồn; làm nổi hai cạnh C1→C2 và C1→FB, mỗi cạnh 0,5.
 
@@ -201,10 +200,10 @@ Thời lượng: 3 phút. Vai trò: ví dụ trực quan.
 
 **Nguồn:** PPTX 31–32; Silver PDF7–8.
 
-**Quyết định thể hiện khi triển khai:** Đồ thị lớn chiếm phần trung tâm; quỹ đạo nguồn nằm ở chú thích. Hai cạnh ra từ C1 có nét dày để nối sang định nghĩa xác suất chuyển. Ghi chú diễn giả giải nghĩa C1–C3, FB, Pub, Pass, Sleep. Đầu vào: nút và cạnh; đầu ra: đọc được một quỹ đạo và các khả năng từ C1.
+**Đánh giá và cách thể hiện sau viết lại:** Slide gắn tên các trạng thái với ngữ cảnh đời thường và đọc một quỹ đạo cụ thể trên đồ thị. Hình dùng lại chuỗi sinh viên với hai cạnh ra từ C1 nét dày, đúng trọng tâm quỹ đạo. Kiến thức vào là ký hiệu trạng thái; kết quả ra là người học đọc được quỹ đạo và quy tắc tổng xác suất bằng 1. Theo spec, thêm chú thích ngắn FB và Pub trên mặt slide, giữ quỹ đạo; sửa khoảng trắng trong dòng nguồn.
+
 
 ### L03-02-03 — Xác suất chuyển và tính Markov
-
 Thời lượng: 3 phút. Vai trò: hình thức hóa.
 
 **Đầu vào:** Đồ thị C1 có hai cạnh ra xác suất0,5.
@@ -221,10 +220,10 @@ Thời lượng: 3 phút. Vai trò: hình thức hóa.
 
 **Nguồn:** PPTX 29–30.
 
-**Quyết định thể hiện khi triển khai:** Bố cục hai cột đặt cạnh nhau cặp trạng thái cụ thể và công thức tổng quát, để phép hình thức hóa đi từ ví dụ đến định nghĩa chứ không rơi từ trên xuống. Công thức chỉ gồm hai dòng lớn, đúng giới hạn; tính Markov viết dưới dạng phương trình xác suất thay vì câu chữ mơ hồ, kèm câu tách hai giả thiết — điểm sinh viên năm 3 hay gộp chung.
+**Đánh giá và cách thể hiện sau viết lại:** Slide định nghĩa chính thức xác suất chuyển $P_{ij}$ và tách hai giả thiết Markov và đồng nhất theo thời gian. Hình hai nhánh từ C1 nối ký hiệu trừu tượng với ví dụ đang chạy. Kiến thức vào là đồ thị ở hai slide trước; kết quả ra là công thức $P_{ij}$ và phân biệt hai giả thiết. Theo spec, notes nhắc nghĩa của $S_t$ và $s_i$ trước khi đọc $P_{ij}$, và giải thích rõ Markov khác đồng nhất thời gian.
+
 
 ### L03-02-04 — Từ đồ thị đến ma trận chuyển
-
 Thời lượng: 4 phút. Vai trò: cơ chế và vận dụng.
 
 **Đầu vào:** Định nghĩa P_ij và thứ tự các trạng thái.
@@ -241,17 +240,17 @@ Thời lượng: 4 phút. Vai trò: cơ chế và vận dụng.
 
 **Nguồn:** PPTX 33.
 
-**Quyết định thể hiện khi triển khai:** Bảng HTML giữ thứ tự trạng thái của đồ thị; tô nền hàng C1 để đọc hai phần tử0,5 trước khi xét toàn ma trận. Bỏ dòng véc-tơ C1 trùng với bảng để tránh tràn trang. Điều kiện không âm, tổng hàng bằng1 và Sleep hấp thụ nằm ở chú thích. Đầu vào: xác suất chuyển; đầu ra: mọi phân phối bước tới có điều kiện, dùng ở phép nhân phân phối.
+**Đánh giá và cách thể hiện sau viết lại:** Slide chuyển đồ thị sang dạng ma trận 7×7, bước trung gian trước khi tính phân phối. Bảng là hình thức phù hợp nhất để đọc từng hàng như một phân phối. Kiến thức vào là các cạnh xác suất trên đồ thị; kết quả ra là ma trận $P$ với điều kiện hàng và trạng thái hấp thụ Sleep. Theo spec, notes nêu cách đọc hàng/cột, diễn đạt hấp thụ bằng lời tự nhiên, và sửa các từ dính như "bằng0", "cộtSleep"; ma trận và ký hiệu giữ nguyên.
+
 
 ### L03-02-05 — Phân phối sau một bước
-
 Thời lượng: 4 phút. Vai trò: ứng dụng.
 
 **Đầu vào:** Ma trận P chuẩn hóa theo hàng; định luật xác suất toàn phần đã học.
 
 **Nội dung trên slide:** Dồn xác suất từ nhiều trạng thái xuất phát tới các trạng thái đích.
 
-**Cách thể hiện:** Ban đầu, toàn bộ xác suất tập trung ở C1. Sau một bước, C2 và FB mỗi trạng thái có xác suất 0,5. Sau đó minh họa hai mũi tên cùng đi vào một nút.
+**Cách thể hiện:** Phân phối ban đầu có 0,5 ở C1 và 0,5 ở FB. Hai mũi tên cùng đi vào FB minh họa phép tính $0{,}5\times0{,}5+0{,}5\times0{,}9=0{,}7$. Trường hợp ban đầu chắc chắn ở C1 chỉ dùng đối chiếu trong notes.
 
 **Giải thích và hình thức hóa:** Sau phép cộng bằng số, đặt $\mu_t(i)=\Pr(S_t=s_i)$; suy ra $\mu_{t+1}(j)=\sum_i\mu_t(i)P_{ij}$ và $\mu_{t+1}=P^{\mathsf T}\mu_t$. Không dạy phân phối dừng.
 
@@ -261,10 +260,10 @@ Thời lượng: 4 phút. Vai trò: ứng dụng.
 
 **Nguồn:** Vận dụng ma trận PPTX33; bổ sung định luật xác suất toàn phần.
 
-**Quyết định thể hiện khi triển khai:** Slide đi từ phép cộng bằng số cụ thể (0,5 và 0,5) đến công thức véc-tơ, đúng trình tự vấn đề trước định nghĩa. Hình nhỏ dạng short minh họa hai mũi tên cùng vào một nút — bản chất của phép cộng trong định luật toàn phần — không tranh chỗ với công thức. Hai dòng công thức tách thành fragment để bước suy diễn hiện sau khi ví dụ số đã rõ. Hình dùng một phân phối ban đầu khác với ví dụ chắc chắn C1; xác suất FB bằng0,5×0,5+0,5×0,9=0,7. Các số trên cạnh là xác suất có điều kiện, các trọng số50%đặt tại nguồn.
+**Đánh giá và cách thể hiện sau viết lại:** Phân phối ban đầu có 0,5 ở C1 và 0,5 ở FB. Hai mũi tên vào FB cho phép cộng 0,5×0,5+0,5×0,9=0,7, rồi khái quát bằng xác suất toàn phần thành công thức véc-tơ cột. Đầu vào là một hàng ma trận chuyển; đầu ra là phân phối bước tới. Trường hợp bắt đầu chắc chắn ở C1 chỉ dùng trong notes để đối chiếu.
+
 
 ### L03-02-06 — Câu hỏi kiểm tra
-
 Thời lượng: 3 phút. Vai trò: kiểm tra.
 
 **Đầu vào:** Ma trận chuyển, hàng xác suất và trạng thái hấp thụ.
@@ -282,7 +281,8 @@ Thời lượng: 3 phút. Vai trò: kiểm tra.
 
 **Nguồn:** hw02 bài3.
 
-**Quyết định thể hiện khi triển khai:** Ma trận được viết lớn bằng KaTeX và ba câu hỏi ngắn đặt trong nhãn Câu hỏi:, không kèm đồ thị mới để trọng tâm ở việc đọc P. Ba câu bám đúng ba kỹ năng của phần: kiểm tra ràng buộc hàng, nhận diện hấp thụ qua phần tử chéo, và đọc phân phối bước tới từ một hàng. Ma trận được chọn để tái sử dụng ở phần Bellman, tạo cầu nối sang phần 3 nơi quy luật chuyển được giữ nguyên và thêm thành phần thưởng.
+**Đánh giá và cách thể hiện sau viết lại:** Slide kiểm tra cuối phần, yêu cầu người học tự vận dụng ba nội dung vừa học: điều kiện ma trận hợp lệ, trạng thái hấp thụ và cập nhật phân phối một bước. Ma trận 3×3 nhỏ đủ để tính tay. Kiến thức vào là cả ba slide trước; kết quả ra là đáp án trong notes. Giữ nguyên vì đã đúng cấu trúc danh sách 1,2,3 dưới nhãn Câu hỏi và đáp án đầy đủ.
+
 
 ## Phần 3. Quá trình phần thưởng Markov — 18 phút
 
@@ -290,7 +290,6 @@ Thời lượng: 3 phút. Vai trò: kiểm tra.
 
 
 ### L03-03-01 — Quá trình phần thưởng Markov
-
 Thời lượng: 1 phút. Vai trò: mở phần.
 
 **Đầu vào:** Chuỗi Markov gồm trạng thái và xác suất chuyển.
@@ -307,19 +306,19 @@ Thời lượng: 1 phút. Vai trò: mở phần.
 
 **Nguồn:** PPTX34–35.
 
-**Quyết định thể hiện khi triển khai:** Slide mở phần dùng lại đúng đồ thị phần 2 và chỉ thêm nhãn thưởng, để sinh viên thấy MRP là mở rộng trực tiếp của chuỗi Markov chứ không phải mô hình mới. Tiên quyết: chuỗi Markov, ma trận chuyển, ký hiệu S_t. Cầu nối sang slide thưởng từng bước. Bản triển khai sau rà: công thức dựng bằng KaTeX; SVG chỉ giữ nút, mũi tên và dữ liệu thưởng. Các lỗi hình và dấu được đối chiếu lại với ma trận phần2.
+**Đánh giá và cách thể hiện sau viết lại:** Slide mở đầu phần, gắn hàm thưởng lên đồ thị chuỗi Markov đã học để sinh viên thấy MRP chỉ bổ sung thưởng vào cấu trúc quen thuộc. Hình đồ thị với thưởng ghi trên nút là hình phù hợp vì giữ nguyên xác suất chuyển. Kiến thức vào là chuỗi Markov; kết quả ra là mô hình sinh viên có thưởng, giữ nguyên theo spec.
+
 
 ### L03-03-02 — Phần thưởng trên từng bước
-
 Thời lượng: 3 phút. Vai trò: ví dụ.
 
 **Đầu vào:** Các quỹ đạo Student đã đọc ở phần2.
 
-**Nội dung trên slide:** Quỹ đạo C1→C2→C3→Pass→Sleep với thưởng -2,-2,-2,+10.
+**Nội dung trên slide:** Hình bốn bước có thưởng −2, −2, −2, +10; thưởng được xác định bởi trạng thái xuất phát của bước. +10 nhận trên bước Pass → Sleep; sau Sleep, thưởng bằng 0. Không dùng r trước định nghĩa.
 
 **Cách thể hiện:** Dải thời gian: trạng thái phía trên, thưởng phía dưới mũi tên.
 
-**Giải thích và hình thức hóa:** Trong ví dụ này $R_{t+1}=r(S_t)$: thưởng gắn với trạng thái xuất phát của bước. +10 nhận khi rời Pass sang Sleep. Nêu rõ để tránh cộng lệch một bước hoặc coi mọi thưởng là thưởng vào trạng thái.
+**Giải thích và hình thức hóa:** Chỉ đọc thưởng cụ thể trên từng bước. Sau định nghĩa r ở 03-03 mới viết quan hệ $R_{t+1}=r(S_t)$ cho ví dụ tất định này.
 
 **Kết nối:** Từ bốn giá trị cụ thể đến hàm thưởng r(s).
 
@@ -327,10 +326,10 @@ Thời lượng: 3 phút. Vai trò: ví dụ.
 
 **Nguồn:** PPTX35,40; Silver PDF11,15.
 
-**Quyết định thể hiện khi triển khai:** Dải thời gian đặt trạng thái phía trên và thưởng phía dưới mũi tên để chỉ số thời gian hiện rõ trên hình, đúng chỗ dễ nhầm của sinh viên năm 3: lệch một bước trong R_{t+1}. Câu ngắn, một luận điểm. Tiên quyết: quỹ đạo đã đọc ở phần 2; cầu nối tới hàm r(s) ở slide định nghĩa. Bản triển khai sau rà: công thức dựng bằng KaTeX; SVG chỉ giữ nút, mũi tên và dữ liệu thưởng. Các lỗi hình và dấu được đối chiếu lại với ma trận phần2.
+**Đánh giá và cách thể hiện sau viết lại:** Slide minh họa quy ước thưởng ở bước rời trạng thái bằng quỹ đạo cụ thể. Hình timeline bốn bước với −2, −2, −2, +10 giữ nguyên theo spec. Công thức $R_{t+1}=r(S_t)$ được bỏ khỏi mặt slide vì $r$ chưa được định nghĩa tới slide 03-03; thay bằng lời mô tả bằng từ ngữ, giữ đúng ví dụ và quy ước.
+
 
 ### L03-03-03 — Định nghĩa quá trình phần thưởng Markov
-
 Thời lượng: 3 phút. Vai trò: hình thức hóa.
 
 **Đầu vào:** Các thưởng -2,-2,-2,+10 trên từng bước.
@@ -347,10 +346,10 @@ Thời lượng: 3 phút. Vai trò: hình thức hóa.
 
 **Nguồn:** PPTX34–35.
 
-**Quyết định thể hiện khi triển khai:** Định nghĩa đặt trong hộp với ba dòng, mỗi thành phần nối về nút, cạnh, nhãn thưởng và trọng số thời gian của hình trước, giúp sinh viên năm 3 gắn ký hiệu mới vào đồ thị quen. Không đưa Bellman vào đây; slide kết thúc ở cấu trúc (S, P, r, gamma) và mở sang tính tổng một quỹ đạo. Bản triển khai sau rà: công thức dựng bằng KaTeX; SVG chỉ giữ nút, mũi tên và dữ liệu thưởng. Các lỗi hình và dấu được đối chiếu lại với ma trận phần2.
+**Đánh giá và cách thể hiện sau viết lại:** Slide định nghĩa bộ bốn thành phần của MRP, là khung khái niệm trung tâm của phần. Không dùng hình; danh sách gắn ý nghĩa từng ký hiệu là đủ. Kiến thức vào là chuỗi Markov và ví dụ có thưởng; kết quả ra là định nghĩa chính thức, trong đó notes nối lại ví dụ tất định bằng $R_{t+1}=r(S_t)$ sau khi $r$ đã được định nghĩa, đúng yêu cầu spec. Công thức giữ dạng chuẩn, không bịa số phương trình Sutton–Barto.
+
 
 ### L03-03-04 — Hai quỹ đạo, hai tổng thưởng
-
 Thời lượng: 4 phút. Vai trò: ví dụ tính toán.
 
 **Đầu vào:** P, r(s), gamma; quy ước thưởng ở trạng thái rời đi.
@@ -367,10 +366,10 @@ Thời lượng: 4 phút. Vai trò: ví dụ tính toán.
 
 **Nguồn:** PPTX36–40.
 
-**Quyết định thể hiện khi triển khai:** Một hình chứa hai dải thời gian, mỗi dòng trên mặt slide chỉ một phép cộng có chiết khấu, đúng giới hạn ba bốn dòng công thức lớn. Số mũ gamma đặt trên từng mũi tên để phép nhân với chiết khấu nhìn thấy được thay vì chỉ xuất hiện trong công thức. Cầu nối: hai tổng khác nhau cùng xuất phát từ C1 dẫn tới định nghĩa kỳ vọng ở slide sau. Bản triển khai sau rà: công thức dựng bằng KaTeX; SVG chỉ giữ nút, mũi tên và dữ liệu thưởng. Các lỗi hình và dấu được đối chiếu lại với ma trận phần2.
+**Đánh giá và cách thể hiện sau viết lại:** Slide tính cụ thể hai tổng thưởng để cho thấy $G_t$ phụ thuộc quỹ đạo. Hình hai quỹ đạo với thưởng dưới từng mũi tên giữ nguyên theo spec. Kiến thức vào là định nghĩa $G_t$ từ Bài 02, được nhắc lại trong notes; kết quả ra là hai giá trị −2,25 và −3,125 với đầy đủ lũy thừa của $\gamma=1/2$, giữ nguyên mọi phép tính.
+
 
 ### L03-03-05 — Giá trị của một trạng thái
-
 Thời lượng: 4 phút. Vai trò: trực giác → định nghĩa.
 
 **Đầu vào:** Hai tổng mẫu -2,25 và -3,125 từ cùng C1; khái niệm kỳ vọng.
@@ -387,10 +386,10 @@ Thời lượng: 4 phút. Vai trò: trực giác → định nghĩa.
 
 **Nguồn:** PPTX39–43.
 
-**Quyết định thể hiện khi triển khai:** Hình một nút tỏa ra nhiều quỹ đạo với tổng đặt ở cuối từng nhánh, bao nhóm bằng ký hiệu kỳ vọng trong công thức phía dưới, thể hiện đúng bước trực giác sang định nghĩa. Sinh viên năm 3 đã biết kỳ vọng nên trọng tâm là phân biệt biến ngẫu nhiên G với giá trị kỳ vọng v. Cầu nối: phần 4 tính v mà không liệt kê vô hạn quỹ đạo. Bản triển khai sau rà: công thức dựng bằng KaTeX; SVG chỉ giữ nút, mũi tên và dữ liệu thưởng. Các lỗi hình và dấu được đối chiếu lại với ma trận phần2.
+**Đánh giá và cách thể hiện sau viết lại:** Slide chuyển từ các mẫu cụ thể sang khái niệm giá trị trạng thái như kỳ vọng, chuẩn bị cho phương trình Bellman. Hình nhánh nhiều quỹ đạo từ C1 phù hợp vì gợi ý phân phối các tổng. Kiến thức vào là hai mẫu $G_t$ vừa tính; kết quả ra là định nghĩa $v(s)$, phân biệt rõ số xác định và biến ngẫu nhiên.
+
 
 ### L03-03-06 — Câu hỏi kiểm tra
-
 Thời lượng: 3 phút. Vai trò: kiểm tra.
 
 **Đầu vào:** Phân biệt thưởng một bước, tổng mẫu, kỳ vọng tổng.
@@ -407,7 +406,8 @@ Thời lượng: 3 phút. Vai trò: kiểm tra.
 
 **Nguồn:** PPTX34–40.
 
-**Quyết định thể hiện khi triển khai:** Ba câu bám sát ba đại lượng của phần: thưởng một bước, tổng mẫu, kỳ vọng. Dải thời gian nhỏ cho câu 2 giúp làm bài trực tiếp trên mặt slide mà không cần vẽ lại. Cầu nối sang phần 4: tổng G được viết lại thành quan hệ đệ quy giữa v(s) và v(s'). Bản triển khai sau rà: công thức dựng bằng KaTeX; SVG chỉ giữ nút, mũi tên và dữ liệu thưởng. Các lỗi hình và dấu được đối chiếu lại với ma trận phần2.
+**Đánh giá và cách thể hiện sau viết lại:** Slide kiểm tra cuối phần, phủ ba khái niệm $r(s)$, $G_t$, $v(s)$ và một phép tính ngắn. Hình timeline đường C1→Sleep giữ nguyên. Kiến thức vào là toàn bộ phần 3; kết quả ra là đáp án đầy đủ trong notes, trong đó câu 3 nhấn phân biệt mẫu và kỳ vọng.
+
 
 ## Phần 4. Phương trình Bellman — 24 phút
 
@@ -415,7 +415,6 @@ Thời lượng: 3 phút. Vai trò: kiểm tra.
 
 
 ### L03-04-01 — Phương trình Bellman
-
 Thời lượng: 1 phút. Vai trò: mở phần.
 
 **Đầu vào:** G và v(s) cùng việc không thể liệt kê hết các quỹ đạo.
@@ -432,10 +431,10 @@ Thời lượng: 1 phút. Vai trò: mở phần.
 
 **Nguồn:** PPTX44.
 
-**Quyết định thể hiện khi triển khai:** Slide mở phần chỉ cần một câu dẫn và một hình trực giác: nút hiện tại, hai nhánh kế tiếp, phần đuôi gộp thành hộp. Hình này khớp đúng cấu trúc 'một bước + phần còn lại' mà phần 4 sẽ hình thức hóa, nên sinh viên năm 3 đã quen với đồ thị chuyển từ Bài 02 nhận ra ngay hộp đuôi chính là đại lượng cần đặt tên. Tiên quyết: định nghĩa G và v ở phần 3; cầu nối: từ nhiều quỹ đạo sang cách gộp phần tương lai. Bản cuối dùng hai hộp tương lai riêng, tránh gợi ý hai trạng thái có cùng giá trị. Nhãn xác suất khái quát được dành cho công thức ở04-05; hình mở chỉ thể hiện quan hệ phân nhánh.
+**Đánh giá và cách thể hiện sau viết lại:** Slide mở đầu phần, giới thiệu ý tưởng tách giá trị thành bước thưởng hiện tại cộng phần tương lai chiết khấu. Hình SVG hai trạng thái kế tiếp minh họa trực quan phép gom quỹ đạo theo nhánh chuyển. Kiến thức vào là định nghĩa giá trị đã có, kết quả ra là trực giác cho phương trình Bellman ở các slide sau; nội dung gốc tốt nên giữ nguyên.
+
 
 ### L03-04-02 — Một bước và phần còn lại
-
 Thời lượng: 3 phút. Vai trò: trực giác trên ví dụ.
 
 **Đầu vào:** C3 tới Pass/Pub; thưởng -2 và xác suất0,6/0,4.
@@ -452,10 +451,10 @@ Thời lượng: 3 phút. Vai trò: trực giác trên ví dụ.
 
 **Nguồn:** PPTX35,44–46.
 
-**Quyết định thể hiện khi triển khai:** Hình tách nhánh C3 thành: nhãn thưởng ngay (-2) đặt trên cạnh ra khỏi C3, hai hộp 'giá trị từ Pass' và 'giá trị từ Pub' để trống số. Cách này buộc sinh viên nhìn thấy hai thành phần: phần thưởng biết trước và hai giá trị ẩn, đúng cấu trúc mà Bellman sẽ viết thành công thức. Không cho giá trị số vào hộp để tránh ấn tượng nghiệm được gán tùy ý. Tiên quyết: ma trận chuyển của ví dụ sinh viên ở Bài 02; cầu nối: từ đọc hình sang tách tổng G. Nhãn thưởng đặt dưới C3, nhất quán với quy ước thưởng khi rời trạng thái ởphần3; xác suất ở hai cạnh, mỗi trạng thái kế tiếp có hộp giá trị riêng.
+**Đánh giá và cách thể hiện sau viết lại:** Slide gắn phương trình Bellman trừu tượng vào ví dụ Student quen thuộc từ nguồn PPTX35. Hình thể hiện nhánh xác suất 0,6/0,4 và hai giá trị chưa biết, giúp sinh viên phân biệt thưởng một bước với giá trị trạng thái. Kiến thức vào là ví dụ C3, kết quả ra là dạng phương trình cụ thể dùng lại ở slide 5; giữ nguyên vì đã đúng spec.
+
 
 ### L03-04-03 — Tách phần thưởng tích lũy
-
 Thời lượng: 3 phút. Vai trò: suy diễn 1: đồng nhất thức.
 
 **Đầu vào:** Định nghĩa tổng thưởng và giá trị phần đuôi.
@@ -480,10 +479,10 @@ $$
 
 **Nguồn:** PPTX44; Silver PDF19.
 
-**Quyết định thể hiện khi triển khai:** Ba dòng xuất hiện lần lượt như fragment, mỗi dòng một phép biến đổi duy nhất. Trên dải thời gian, phần đuôi từ R_{t+2} trở đi được khoanh cùng màu với G ở dòng cuối để sinh viên thấy đẳng thức thứ ba là nhận diện, không phải phép tính mới. Cách trình bày dòng-từng-dòng phù hợp năm 3 vì mỗi bước chỉ dùng một quy tắc đại số; tiên quyết là định nghĩa G ở phần 3, cầu nối là bước lấy kỳ vọng theo trạng thái hiện tại.
+**Đánh giá và cách thể hiện sau viết lại:** Slide chứng minh đẳng thức nền $G_t=R_{t+1}+\gamma G_{t+1}$ bằng đại số trên từng quỹ đạo, không cần giả thiết xác suất. Body giữ nguyên ba bước aligned vì mỗi dòng tương ứng một bước suy diễn được spec yêu cầu bảo toàn. Notes được tách thành các đoạn học thuật với KaTeX, nhấn điểm sai sót thường gặp; kết quả ra là công thức dùng lại ở slide 4.
+
 
 ### L03-04-04 — Từ tổng thưởng đến giá trị
-
 Thời lượng: 3 phút. Vai trò: suy diễn 2: tuyến tính và kỳ vọng lặp.
 
 **Đầu vào:** Đẳng thức tách G từ04-03; định nghĩa v và r.
@@ -506,7 +505,7 @@ $$
 
 **Cách thể hiện:** Dòng suy diễn xuất hiện lần lượt. Bên phải là nút s phân nhánh theo S_(t+1), khớp với kỳ vọng trong/ngoài. Không dồn cả chứng minh lên một lần hiện.
 
-**Giải thích và hình thức hóa:** Dòng đầu thế kết quả trước vào định nghĩa v. Dòng sau dùng tính tuyến tính và định nghĩa r(s). Dòng cuối dùng kỳ vọng lặp: trung bình trong từng nhóm có cùng trạng thái kế tiếp, rồi trung bình giữa các nhóm. Không giả định thưởng độc lập với trạng thái kế tiếp.
+**Giải thích và hình thức hóa:** Với tổng thưởng khả tích, dùng tuyến tính của kỳ vọng rồi kỳ vọng lặp theo trạng thái kế tiếp. Câu giải thích trên mặt slide nhắc điều kiện này; notes diễn giải các nhóm quỹ đạo bằng ví dụ C3.
 
 **Kết nối:** Kỳ vọng bên trong sẽ được nhận diện là giá trị của trạng thái kế tiếp.
 
@@ -514,10 +513,10 @@ $$
 
 **Nguồn:** PPTX44–45; bổ sung bước kỳ vọng lặp.
 
-**Quyết định thể hiện khi triển khai:** Hai khối công thức tách thành hai bước: khối đầu là thế kết quả và tuyến tính, khối sau là kỳ vọng lặp. Bên phải nên hình dung nút s phân nhánh theo S_{t+1}, khớp với cấu trúc trung bình-trong-nhóm rồi trung bình-giữa-nhóm của kỳ vọng lặp. Không dồn cả chứng minh lên một lần hiện; các dòng là fragment. Tiên quyết: định nghĩa v, r ở phần 3 và đẳng thức tách G ở trang trước; cầu nối: nhận diện kỳ vọng trong là v(s').
+**Đánh giá và cách thể hiện sau viết lại:** Slide chuyển từ đẳng thức trên quỹ đạo sang kỳ vọng, đưa ra biểu thức kỳ vọng lặp làm cầu nối tới Bellman. Body giữ hai khối công thức vì spec yêu cầu không thay đổi các bước tách tổng, tuyến tính, kỳ vọng lặp. Theo spec 04-04, giả thiết khả tích trong notes được sửa thành điều kiện kỳ vọng trị tuyệt đối hữu hạn $\mathbb E[|G_t|]<\infty$ và $\mathbb E[|G_{t+1}|]<\infty$, không đồng nhất hữu hạn từng quỹ đạo với kỳ vọng trị tuyệt đối hữu hạn; caption cuối trên mặt slide mở bằng "Với tổng thưởng khả tích,". các đoạn dài được tách thành đoạn học thuật dùng KaTeX.
+
 
 ### L03-04-05 — Bellman cho quá trình phần thưởng Markov
-
 Thời lượng: 3 phút. Vai trò: suy diễn 3: Markov và tổng theo trạng thái.
 
 **Đầu vào:** Biểu thức kỳ vọng lặp từ04-04; Markov và quy luật không đổi theo thời gian.
@@ -547,10 +546,10 @@ $$
 
 **Nguồn:** PPTX45–46.
 
-**Quyết định thể hiện khi triển khai:** Hai hộp 'giá trị từ Pass', 'giá trị từ Pub' ở trang 04-02 được thay bằng v(Pass), v(Pub); nhãn 'Markov' đặt cạnh phép thay và 'lấy trung bình' cạnh dấu tổng để mỗi giả thiết gắn với đúng vị trí sử dụng. Cách gắn nhãn này giúp sinh viên năm 3 phân biệt vai trò của từng giả thiết thay vì gộp chung thành 'do Markov'. Tiên quyết: định nghĩa MRP và ma trận P; cầu nối: mỗi trạng thái một phương trình, dẫn tới hệ ở trang sau.
+**Đánh giá và cách thể hiện sau viết lại:** Slide phát biểu phương trình Bellman cho MRP, điểm đến chính của phần, kèm ví dụ C3 đóng vòng với slide 2. Body giữ hai giả thiết và công thức tổng theo $P_{ss'}$ nguyên vẹn. Notes được tách thành bốn đoạn học thuật dùng KaTeX, giữ đúng các điểm phân biệt nơi dùng tính Markov và nơi không dùng; đây là kiến thức nền cho hệ phương trình ở slide 6–7.
+
 
 ### L03-04-06 — Hệ Bellman ba trạng thái
-
 Thời lượng: 3 phút. Vai trò: ứng dụng vào dữ liệu đã biết.
 
 **Đầu vào:** Bellman MRP và ma trận ba trạng thái đã đọc ở02-06.
@@ -575,10 +574,10 @@ $$
 
 **Nguồn:** hw02 bài3; PPTX47.
 
-**Quyết định thể hiện khi triển khai:** Mỗi hàng của P được hiện kèm phương trình tương ứng để sinh viên thấy sự khớp từng hệ số; nhãn v_i = v(s_i) đặt trước khi rút gọn chỉ số. Bài ba trạng thái là ví dụ tính toán nhỏ đủ để giải hệ bằng tay, không thêm ví dụ lớn thứ ba. Tiên quyết: đọc ma trận chuyển ở Bài 02 và phương trình Bellman vừa suy diễn; cầu nối: gom hệ thành dạng ma trận.
+**Đánh giá và cách thể hiện sau viết lại:** Slide dựng hệ Bellman cụ thể ba trạng thái, tái dùng dữ liệu hw02 và phần 2 để sinh viên thấy dạng tổng quát áp vào số liệu. Body giữ nguyên ba phương trình và quy ước. Notes được tách thành ba đoạn, dùng KaTeX cho các hàng ma trận và phép tính hệ số 0,45; kết quả ra là hệ sẵn sàng đưa về dạng ma trận ở slide tiếp theo.
+
 
 ### L03-04-07 — Dạng ma trận và nghiệm
-
 Thời lượng: 3 phút. Vai trò: hình thức hóa và giải hệ.
 
 **Đầu vào:** Ba phương trình từ04-06; đại số ma trận và giải hệ tuyến tính.
@@ -603,10 +602,10 @@ $$v_1=\frac{560}{641}\approx0{,}874,\quad v_2=-\frac{740}{641}\approx-1{,}154,\q
 
 **Nguồn:** PPTX47–48; hw02 bài3, nghiệm tính lại.
 
-**Quyết định thể hiện khi triển khai:** Dòng ma trận được nối trực tiếp với ba phương trình ở trang trước để sinh viên thấy phép gom hệ không thêm thông tin mới. Các bước khử ẩn chi tiết để ở notes và buổi chữa bài, giữ mặt slide gọn; không đặt thêm ma trận 7×7. Tiên quyết: đại số ma trận và giải hệ tuyến tính đã học; cầu nối: điều kiện để (I - gamma P) khả nghịch ở trang sau.
+**Đánh giá và cách thể hiện sau viết lại:** Slide đưa hệ về dạng ma trận $(I-\gamma P)v=r$ và giải trọn bộ ví dụ ba trạng thái theo Cramer, gồm cả định thức. Body giữ nguyên mọi công thức và đáp số. Theo spec 04-07, câu mệnh lệnh "Kiểm nghiệm bằng thay lại" được thay bằng khẳng định nghiệm thỏa hai phương trình; notes tách thành ba đoạn dùng KaTeX, giữ đầy đủ phép tính, khả nghịch và điều kiện $\gamma<1$.
+
 
 ### L03-04-08 — Điều kiện để giá trị hữu hạn
-
 Thời lượng: 2 phút. Vai trò: giới hạn và kiểm tra giả thiết.
 
 **Đầu vào:** Hệ Bellman và nghiệm ví dụ; tổng hình học.
@@ -627,10 +626,10 @@ Với $\gamma=1$: ví dụ kết thúc có kỳ vọng thời gian kết thúc h
 
 **Nguồn:** PPTX36–38,48; bổ sung điều kiện giải hệ.
 
-**Quyết định thể hiện khi triển khai:** Hai khung riêng tách hai chế độ: gamma < 1 có cận tổng hình học, gamma = 1 cần điều kiện khác. Ví dụ vòng lặp +1 đặt cạnh khung gamma = 1 để điều kiện không còn là phát biểu trừu tượng. Trình bày hai khung song song giúp sinh viên năm 3 thấy ranh giới áp dụng của nghiệm (I - gamma P)^{-1} r vừa lập. Tiên quyết: tổng hình học và khái niệm trạng thái hấp thụ; cầu nối: phần 5 thêm hành động, giữ cách đánh giá bằng Bellman.
+**Đánh giá và cách thể hiện sau viết lại:** Slide tổng hợp điều kiện bảo đảm giá trị hữu hạn: cận hình học theo $\gamma$ và điều kiện đủ cho $\gamma=1$, kèm lập luận khả nghịch của $I-\gamma P$ phục vụ slide 7. Body hai cột giữ nguyên vì đã phân biệt rõ hai trường hợp. Notes giữ đầy đủ lập luận, các nguồn và ví dụ trạng thái hấp thụ, trình bày thành bốn đoạn học thuật dùng KaTeX.
+
 
 ### L03-04-09 — Câu hỏi kiểm tra
-
 Thời lượng: 3 phút. Vai trò: kiểm tra suy luận.
 
 **Đầu vào:** Suy diễn Bellman, hệ ba trạng thái và điều kiện hữu hạn.
@@ -649,7 +648,8 @@ Thời lượng: 3 phút. Vai trò: kiểm tra suy luận.
 
 **Nguồn:** PPTX44–48; hw02 bài3.
 
-**Quyết định thể hiện khi triển khai:** Ba câu đánh số; câu 2 kèm hàng P và r(s2) ngay trên slide để không cần quay lại trang trước. Các câu kiểm tra lý do của từng dấu bằng và điều kiện áp dụng, không chỉ chép định nghĩa. Tiên quyết: toàn bộ suy diễn phần 4; cầu nối: từ đánh giá một quá trình sang tác động của việc chọn hành động ở phần 5.
+**Đánh giá và cách thể hiện sau viết lại:** Slide cuối kiểm tra ba nội dung trọng tâm: vị trí dùng giả thiết Markov, lập hệ cho một trạng thái, và điều kiện hữu hạn khi $\gamma=1$. Body giữ nguyên ba câu hỏi dưới dạng danh sách 1,2,3 với nhãn Câu hỏi. Notes trình bày đáp án thành các đoạn riêng dùng KaTeX, giữ nguyên nguồn; đây là cơ chế kiểm soát kiến thức vào của cả phần.
+
 
 ## Phần 5. MDP và chính sách cố định — 20 phút
 
@@ -657,7 +657,6 @@ Thời lượng: 3 phút. Vai trò: kiểm tra suy luận.
 
 
 ### L03-05-01 — MDP và chính sách cố định
-
 Thời lượng: 1 phút. Vai trò: mở phần.
 
 **Đầu vào:** MRP có quy luật chuyển đã cố định và phương trình đánh giá.
@@ -674,15 +673,15 @@ Thời lượng: 1 phút. Vai trò: mở phần.
 
 **Nguồn:** PPTX49–50.
 
-**Quyết định thể hiện khi triển khai:** Slide mở phần dùng đúng bối cảnh sinh viên đã quen từ phần 2–4, chỉ thêm tầng lựa chọn tại C2. Hình chỉ vẽ hai nhánh hành động từ một nút, không vẽ toàn hình MDP để tránh trùng slide sau; SV năm 3 nhìn thấy ngay rằng cùng trạng thái đầu cho hai kết quả khác nhau, đây là cầu nối trực tiếp từ MRP sang MDP. Tiên quyết: MRP, Bellman kỳ vọng ở phần 4.
+**Đánh giá và cách thể hiện sau viết lại:** Slide mở phần, nối từ MRP sang MDP qua điểm chọn hành động tại C2; hình SVG hai nhánh Study/Sleep cho thấy ngay phần thưởng khác nhau theo hành động. Kiến thức vào là quy luật cố định của MRP, kết quả ra là nhu cầu mô hình hóa điều kiện theo hành động. Giữ nguyên nội dung vì đã đúng trọng tâm, chỉ chuẩn hóa ký hiệu toán trong notes.
+
 
 ### L03-05-02 — Lựa chọn làm thay đổi phản hồi
-
 Thời lượng: 3 phút. Vai trò: ví dụ trực quan.
 
 **Đầu vào:** Bối cảnh sinh viên; tác tử có thể chọn học hoặc ngủ.
 
-**Nội dung trên slide:** Tại C2, chọn Study chuyển tới C3 và nhận -2; chọn Sleep chuyển tới Sleep và nhận 0.
+**Nội dung trên slide:** Đồ thị năm trạng thái; từ C3, Study nhận +10 rồi kết thúc, Pub là hành động. Nút tròn nhỏ là chỗ phân nhánh của môi trường, không phải trạng thái.
 
 **Cách thể hiện:** Một nút C2 nối hai nút hành động có hình dạng riêng, rồi tới trạng thái kế tiếp.
 
@@ -694,25 +693,25 @@ Thời lượng: 3 phút. Vai trò: ví dụ trực quan.
 
 **Nguồn:** PPTX50; đồ thị Student MDP.
 
-**Quyết định thể hiện khi triển khai:** Hình lớn toàn cảnh Student MDP, đặt sau một câu phát hiện để SV tự đối chiếu với MRP đã vẽ ở phần 3. Nút hành động và nút ngẫu nhiên phân biệt bằng hình dạng chứ không chỉ màu, đúng yêu cầu đọc đồ thị nguồn. SV năm 3 cần thấy thay đổi biểu diễn trước khi gặp định nghĩa hình thức, vì sai số phổ biến là coi MDP chỉ là ma trận P cũ gắn thêm nhãn hành động.
+**Đánh giá và cách thể hiện sau viết lại:** Slide giới thiệu đồ thị Student MDP, nền tảng cho mọi phép tính còn lại của phần; hình SVG giữ nguyên vì thể hiện đủ ba điểm khác biệt với MRP. Kiến thức vào là cấu trúc cạnh hành động và nút ngẫu nhiên, kết quả ra là nhận thức cần điều kiện hóa theo $(s,a)$. Sửa theo spec: dời câu mở chung xuống caption và bổ sung phân biệt ví dụ 5 trạng thái với MRP 7 trạng thái, Pub là hành động, Study từ C3 nhận +10 rồi kết thúc.
+
 
 ### L03-05-03 — Quá trình quyết định Markov
-
 Thời lượng: 3 phút. Vai trò: hình thức hóa.
 
 **Đầu vào:** Hai lựa chọn có phản hồi khác nhau; xác suất chung từ Bài02.
 
 **Nội dung trên slide:** Quá trình quyết định Markov (MDP), với trạng thái và hành động hữu hạn:
 
-$$\big(\mathcal S,\mathcal A,P,\gamma\big),\qquad
-P(s',r\mid s,a)=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a).
+$$\big(\mathcal S,\mathcal A,p,\gamma\big),\qquad
+p(s',r\mid s,a)=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a).
 $$
 
-$P(s',r\mid s,a)\ge0$, $\sum_{s',r}P(s',r\mid s,a)=1$.
+$p(s',r\mid s,a)\ge0$, $\sum_{s',r}p(s',r\mid s,a)=1$.
 
-**Cách thể hiện:** Đặt (s,a) ở đầu một nhánh, cặp (s′,r) ở cuối; cùng ký hiệu xác suất chung của Bài 02.
+**Cách thể hiện:** Công thức dùng toàn chiều ngang; không lặp hình nhánh của slide trước. Dưới điều kiện Markov và đồng nhất theo thời gian, nêu $r(s,a)=\sum_{s',r}r\,p(s',r\mid s,a)$ để chuẩn bị phép trung bình theo chính sách.
 
-**Giải thích và hình thức hóa:** Ở đây P đã chứa cả quy luật thưởng nên không thêm một hàm thưởng độc lập vào bộ. Tập hành động hợp lệ A(s), miền thưởng rời rạc trong các công thức tổng; quy luật Markov và không đổi theo thời gian. Quan sát đầy đủ và biết mô hình là hai khái niệm khác nhau.
+**Giải thích và hình thức hóa:** Ở đây $p$ đã chứa cả quy luật thưởng nên không thêm một hàm thưởng độc lập vào bộ. Tập hành động hợp lệ $\mathcal A(s)$, miền thưởng hữu hạn $\mathcal R$ trong các công thức tổng; quy luật Markov và không đổi theo thời gian. Quan sát đầy đủ và biết mô hình là hai khái niệm khác nhau.
 
 **Kết nối:** Mô hình chưa quy định tác tử chọn hành động nào: cần chính sách.
 
@@ -720,10 +719,10 @@ $P(s',r\mid s,a)\ge0$, $\sum_{s',r}P(s',r\mid s,a)=1$.
 
 **Nguồn:** PPTX49; tiếp nối Bài02.
 
-**Quyết định thể hiện khi triển khai:** Công thức đặt giữa slide, hình nhánh ngắn phía dưới chỉ minh họa cấu trúc (s, a) → nút ngẫu nhiên → (s′, r), không vẽ lại đồ thị sinh viên để tránh lặp. SV năm 3 đã quen ký hiệu xác suất chung từ Bài 02 nên chỉ cần thấy điểm mới là A_t trong điều kiện. Hai dòng công thức, mỗi dòng một luận điểm, nằm trong giới hạn 3–4 dòng công thức lớn. Bản cuối bỏ hình nhánh trùng với05-01/02 để đủ chỗ cho định nghĩa xác suất chung, miền thưởng và giả thiết; công thức trên hai dòng, không giảm cỡ chữ.
+**Đánh giá và cách thể hiện sau viết lại:** Định nghĩa MDP hữu hạn từ ví dụ hai hành động. Bộ $(\mathcal S,\mathcal A,p,\gamma)$ dùng hạt nhân chung $p$ theo Sutton và Barto; ma trận chuỗi vẫn dùng $P$. Công thức đặt toàn chiều ngang, bỏ hình nhánh lặp để đủ chỗ cho miền xác định và chuẩn hóa. Thưởng trung bình $r(s,a)$ được tính từ chính hạt nhân này, làm tiên quyết cho phép lấy trung bình theo chính sách. Đầu ra là mô hình phản hồi đã có, còn cách chọn hành động được xác định ở slide kế tiếp.
+
 
 ### L03-05-04 — Cố định một chính sách
-
 Thời lượng: 4 phút. Vai trò: ví dụ → định nghĩa.
 
 **Đầu vào:** MDP chưa quy định tần suất tác tử chọn các hành động.
@@ -740,10 +739,10 @@ Thời lượng: 4 phút. Vai trò: ví dụ → định nghĩa.
 
 **Nguồn:** PPTX52; xác suất 0,75/0,25 là bài luyện bổ sung.
 
-**Quyết định thể hiện khi triển khai:** Hình tách hai tầng: tầng hành động mang nhãn xác suất của π, tầng môi trường mang nhãn thưởng; hai tầng khác nhau cả vị trí lẫn hình dạng nút nên SV không nhầm xác suất chính sách với xác suất chuyển. Chỉ một trạng thái C2 được vẽ để giữ trọng tâm; chính sách đầy đủ liệt kê bằng lời trong notes vì đưa cả năm trạng thái lên hình sẽ trùng slide 2. Hiển thị ví dụ chọn hành động bằng hình trước công thức chính sách; nhãn thưởng đặt ở cạnh hành động→trạng thái kế tiếp, xác suất chọn ở cạnh trạng thái→hành động.
+**Đánh giá và cách thể hiện sau viết lại:** Slide định nghĩa chính sách $\pi(a\mid s)$ trên đúng đồ thị C2, cầu nối giữa MDP và MRP; hình phân tầng xác suất chọn trước, thưởng sau phù hợp với vai trò tác tử – môi trường. Kiến thức vào là MDP, kết quả ra là một phân phối hành động cố định theo trạng thái. Giữ nguyên công thức và số liệu 0,75/0,25 cùng điều kiện chính sách Markov dừng, chỉ chia đoạn notes.
+
 
 ### L03-05-05 — Từ MDP đến quá trình phần thưởng Markov
-
 Thời lượng: 3 phút. Vai trò: trực giác và phép tính trước công thức.
 
 **Đầu vào:** Chính sách đầy đủ đã chốt ở05-04; mô hình C2 theo từng hành động.
@@ -760,37 +759,37 @@ Thời lượng: 3 phút. Vai trò: trực giác và phép tính trước công 
 
 **Nguồn:** PPTX52–55; hw02 bài4.
 
-**Quyết định thể hiện khi triển khai:** Hình chia đôi: trái là hai tầng chưa gộp, phải là nút C2 với hai cạnh đã mang xác suất gộp, cho thấy phép biến đổi một cách trực quan trước khi khái quát. Công thức chỉ hai dòng số cụ thể, phù hợp nhịp ví dụ trước định nghĩa. SV năm 3 thấy ngay r^π(C2) = −1,5 là trung bình có trọng số, kiến thức xác suất đã có. Hai đồ thị đều đầy đủ nút đích; mũi tên giữa hai đồ thị chỉ phép gộp, không phải chuyển trạng thái. Công thức thưởng giữ trong HTML, không vẽ vàoSVG.
+**Đánh giá và cách thể hiện sau viết lại:** Slide thực hiện phép gộp hai tầng chính sách – môi trường thành một MRP cảm sinh tại C2; hình SVG minh họa đúng phép trung bình hóa theo $\pi$. Kiến thức vào là chính sách Markov dừng slide trước, kết quả ra là $P^\pi$ và $r^\pi$ với con số $0{,}75$, $0{,}25$, $-1{,}5$. Giữ nguyên toàn bộ phép tính vì đúng spec và đối chiếu với hw02 bài 4.
+
 
 ### L03-05-06 — Mô hình dưới chính sách
-
 Thời lượng: 3 phút. Vai trò: suy diễn ngắn.
 
 **Đầu vào:** Phép tính P^pi và r^pi tại C2 ở05-05.
 
 **Nội dung trên slide:** Từ xác suất chung theo chính sách:
 
-$$P^\pi(s',r\mid s)=\sum_a\pi(a\mid s)P(s',r\mid s,a).$$
+$$P^\pi(s',r\mid s)=\sum_a\pi(a\mid s)p(s',r\mid s,a).$$
 
 Lấy biên và kỳ vọng:
 
-$$P^\pi_{ss'}=\sum_a\pi(a\mid s)\sum_rP(s',r\mid s,a),$$
-$$r^\pi(s)=\sum_a\pi(a\mid s)\sum_{s',r}rP(s',r\mid s,a).$$
+$$P^\pi_{ss'}=\sum_a\pi(a\mid s)\sum_rp(s',r\mid s,a),$$
+$$r^\pi(s)=\sum_a\pi(a\mid s)\sum_{s',r}rp(s',r\mid s,a).$$
 
 **Cách thể hiện:** Ba dòng xuất hiện theo thứ tự: trộn theo hành động → cộng bỏ thưởng → lấy trung bình thưởng. Công thức cuối có thể hiện thay thế dòng đầu để không quá tải.
 
 **Giải thích và hình thức hóa:** Dùng xác suất toàn phần và định nghĩa kỳ vọng rời rạc. Cố định pi thì v_pi là giá trị MRP cảm sinh và thỏa v_pi=r^pi+gamma P^pi v_pi. Không giả định thưởng độc lập với trạng thái kế tiếp.
 
-**Kết nối:** Phần 6 mở lại tầng hành động để so sánh giá trị của từng lựa chọn.
+**Kết nối:** Gọi tên $v_\pi$ là giá trị trạng thái của MRP dưới chính sách $\pi$ trước khi viết Bellman cảm sinh. Phần 6 định nghĩa giá trị hành động để xét riêng từng lựa chọn đầu.
 
 **Kiểm tra/ghi chú đáp án:** Tổng mỗi hàng P^pi bằng 1; chính sách thay đổi theo thời gian thì không có một ma trận P^pi cố định như trên.
 
 **Nguồn:** PPTX52–57; hw02 bài4.
 
-**Quyết định thể hiện khi triển khai:** Ba dòng xuất hiện theo thứ tự bằng fragment: trộn theo hành động, cộng bỏ thưởng, lấy trung bình thưởng; dòng đầu hiển thị thay thế để trang không quá tải. Không dùng hình lớn vì trọng tâm là ba bước suy diễn; mỗi dòng một phép toán quen thuộc từ xác suất, nên derivation giữ trọn trên slide. Câu kết nối về v^π đặt cuối để dẫn sang phần 6.
+**Đánh giá và cách thể hiện sau viết lại:** Slide chứa ba công thức trung bình hóa theo chính sách; cả ba là chuẩn chương 3 Sutton và Barto nên giữ nguyên, không rút gọn. Kiến thức vào là MDP và $\pi$, kết quả ra là MRP cảm sinh với $P^\pi$, $r^\pi$ và phương trình $v_\pi$. Sửa theo spec: gọi tên $v_\pi$ ngay trong body trước khi dùng, sắp xếp notes theo mạch C2 → xác suất chung → lấy biên/thưởng trung bình → MRP cảm sinh, giữ điều kiện chính sách Markov dừng, thêm cảnh báo không lấy trung bình $\pi$ hai lần và KaTeX hóa các ký hiệu từng là văn bản thô.
+
 
 ### L03-05-07 — Câu hỏi kiểm tra
-
 Thời lượng: 3 phút. Vai trò: kiểm tra.
 
 **Đầu vào:** Cách lấy trung bình theo chính sách và giới hạn bài toán đánh giá.
@@ -809,7 +808,8 @@ Thời lượng: 3 phút. Vai trò: kiểm tra.
 
 **Nguồn:** PPTX50–52; hw02 bài4.
 
-**Quyết định thể hiện khi triển khai:** Ba câu bám đúng ba mức của phần: nguồn ngẫu nhiên còn lại, phép gộp tại một trạng thái, và ranh giới giữa đánh giá với tối ưu. Không dùng hình để giữ trang gọn; câu 2 có thể giải trực tiếp từ con số −1,5 đã tính ở slide 05-05, giúp SV tự kiểm tra phép gộp.
+**Đánh giá và cách thể hiện sau viết lại:** Slide chốt phần bằng ba câu hỏi phủ ba mức: nguồn ngẫu nhiên, phép trung bình hóa cụ thể, ranh giới giữa biết mô hình và tối ưu. Kiến thức vào là toàn bộ phần 5, kết quả ra là kiểm tra việc phân biệt $P^\pi$, $r^\pi$ với bài toán tối ưu. Giữ nguyên câu hỏi và đáp án vì đúng spec, chỉ KaTeX hóa các biểu thức trong notes.
+
 
 ## Phần 6. Giá trị trạng thái và giá trị hành động — 24 phút
 
@@ -817,7 +817,6 @@ Thời lượng: 3 phút. Vai trò: kiểm tra.
 
 
 ### L03-06-01 — Giá trị trạng thái và giá trị hành động
-
 Thời lượng: 1 phút. Vai trò: mở phần.
 
 **Đầu vào:** v_pi của MRP cảm sinh và mô hình có điều kiện theo hành động.
@@ -834,10 +833,10 @@ Thời lượng: 1 phút. Vai trò: mở phần.
 
 **Nguồn:** PPTX53.
 
-**Quyết định thể hiện khi triển khai:** Slide mở phần dùng một hình hai nhánh duy nhất để đặt vấn đề: cùng trạng thái, cùng chính sách, khác nhau ở bước đầu. Hình phù hợp vì sinh viên đã vẽ và đọc đúng đồ thị sinh viên ở các phần trước, nên chỉ cần mở thêm một tầng; tránh đưa công thức Bellman lên trang mở để giữ một luận điểm.
+**Đánh giá và cách thể hiện sau viết lại:** Slide mở phần, đặt vấn đề so sánh hai lựa chọn đầu tiên từ cùng trạng thái C2. Hình SVG hai nhánh Study/Sleep đưa trực quan điều kiện so sánh. Kiến thức vào là khái niệm v_π đã có; kết quả ra là nhu cầu của một đại lượng riêng cho cặp (trạng thái, hành động).
+
 
 ### L03-06-02 — Ấn định hành động đầu tiên
-
 Thời lượng: 3 phút. Vai trò: ví dụ trực quan.
 
 **Đầu vào:** C2 có Study/Sleep và một chính sách tiếp tục cố định.
@@ -854,10 +853,10 @@ Thời lượng: 3 phút. Vai trò: ví dụ trực quan.
 
 **Nguồn:** PPTX50,53–54.
 
-**Quyết định thể hiện khi triển khai:** Hình trình bày hai luồng song song với khung nét đứt quanh hành động đầu và nhãn “theo π” ở các bước sau, đúng cấu trúc của định nghĩa sẽ đến. Hình hai nhánh thay cho lời giải thích dài vì điểm mấu chốt nằm ở chỗ khác nhau chỉ một bước, phù hợp với sinh viên năm ba đã quen đọc đồ thị chuyển tiếp.
+**Đánh giá và cách thể hiện sau viết lại:** Slide chuẩn bị định nghĩa q_π qua thí nghiệm ấn định hành động đầu. Hình minh họa quy ước: hành động chỉ bị ép một lần, phần còn lại theo π. Kiến thức vào là quy trình quỹ đạo với chính sách cố định; kết quả ra là quy ước định nghĩa cho slide định nghĩa kế tiếp.
+
 
 ### L03-06-03 — Định nghĩa giá trị hành động
-
 Thời lượng: 2 phút. Vai trò: hình thức hóa.
 
 **Đầu vào:** Thí nghiệm ấn định hành động đầu rồi theo pi ở06-02.
@@ -879,24 +878,15 @@ Ký hiệu thông dụng: $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$.
 
 **Nguồn:** PPTX53; làm rõ quy ước hành động có xác suất 0.
 
-**Quyết định thể hiện khi triển khai:** Bố cục hai cột chung cấu trúc, chỉ khác dòng điều kiện, phản chiếu trực tiếp điểm khác biệt duy nhất giữa hai khái niệm. Hộp ký hiệu thông dụng tách khỏi định nghĩa đầy đủ để dòng công thức không quá dài; đây là bước hình thức hóa đi sau ví dụ ấn định hành động của slide trước. Định nghĩa dùng hai hàng toàn chiều ngang thay hai thẻ, tránh công thức q vượt khung. Quy ước ấn định hành động được nói trước công thức và nhắc rõ cho xác suất chính sách bằng0.
+**Đánh giá và cách thể hiện sau viết lại:** Slide định nghĩa chính thức v_π và q_π bằng kỳ vọng của G_t, công thức trùng giáo trình Sutton–Barto ấn bản 2. Hai công thức giữ nguyên; ghi chú tách quy ước ấn định hành động với kỳ vọng điều kiện thông thường. Kết quả ra là nền để suy quan hệ v–q ở slide sau.
+
 
 ### L03-06-04 — Từ giá trị hành động đến giá trị trạng thái
-
 Thời lượng: 3 phút. Vai trò: suy diễn bằng xác suất toàn phần.
 
 **Đầu vào:** Định nghĩa v_pi,q_pi; chính sách chọn hành động với xác suất pi.
 
-**Nội dung trên slide:** Trước tiên minh họa C2 chọn Study/Sleep với trọng số 0,75/0,25. Sau đó:
-
-$$
-\begin{aligned}
-v_\pi(s)&=\mathbb E_\pi[G_t\mid S_t=s]\\
-&=\sum_a\Pr_\pi(A_t=a\mid S_t=s)\,
-\mathbb E_\pi[G_t\mid S_t=s,A_t=a]\\
-&=\sum_a\pi(a\mid s)q_\pi(s,a).
-\end{aligned}
-$$
+**Nội dung trên slide:** Bắt đầu bằng $v_\pi(\mathrm{C2})=0{,}75q_\pi(\mathrm{C2},\mathrm{Study})+0{,}25q_\pi(\mathrm{C2},\mathrm{Sleep})$. Sau đó dùng kỳ vọng toàn phần theo hành động đầu để suy ra $v_\pi(s)=\sum_a\pi(a\mid s)q_\pi(s,a)$.
 
 **Cách thể hiện:** Cây s→a; mỗi nhánh mang một giá trị q và trọng số pi. Hai mức hiện: phép tính hai nhánh trước, dấu tổng sau.
 
@@ -908,10 +898,10 @@ $$
 
 **Nguồn:** PPTX53,56–57; hw02 bài7.
 
-**Quyết định thể hiện khi triển khai:** Cây s→a với trọng số π và giá trị q trên mỗi nhánh được minh họa bằng cặp trọng số 0,75/0,25 quen thuộc của C2 trước khi viết tổng. Hai mức fragment tách phép tính hai nhánh và dạng tổng, giúp mỗi bước suy diễn hiện một lần; công thức giữ dạng aligned ba dòng ngắn.
+**Đánh giá và cách thể hiện sau viết lại:** Slide suy quan hệ v_π(s)=Σ_a π(a|s) q_π(s,a), mở đầu bằng ví dụ số C2 theo spec thay cho dòng liệt kê xác suất cũ. Ví dụ cụ thể trước, công thức tổng quát sau nên giảm tải. Kết quả ra là công thức chuẩn của Sutton–Barto (mục 3.6) dùng làm bước thế cho Bellman ở phần sau.
+
 
 ### L03-06-05 — Giá trị hành động từ phản hồi một bước
-
 Thời lượng: 3 phút. Vai trò: suy diễn Bellman: q theo v.
 
 **Đầu vào:** Đẳng thức tách G; mô hình phản hồi chung; định nghĩa q_pi.
@@ -925,17 +915,17 @@ $$
 Chia theo cặp phản hồi $(s',r)$:
 
 $$
-q_\pi(s,a)=\sum_{s',r}P(s',r\mid s,a)
+q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)
 \left[r+\gamma\mathbb E[G_{t+1}\mid s,a,s',r;\pi\text{ sau đó}]\right].
 $$
 
 Nhận diện kỳ vọng tương lai:
 
-$$q_\pi(s,a)=\sum_{s',r}P(s',r\mid s,a)\big[r+\gamma v_\pi(s')\big].$$
+$$q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)\big[r+\gamma v_\pi(s')\big].$$
 
 **Cách thể hiện:** Một cây từ cặp (s,a) tới các cặp (s′,r); phần tương lai tại mỗi s′ là hộp v_pi(s′). Hai dòng dài là các bước xuất hiện nối tiếp, không ép lên cùng mặt một lúc.
 
-**Giải thích và hình thức hóa:** Bước 1 dùng tách G; bước 2 dùng kỳ vọng toàn phần theo phản hồi chung; bước 3 dùng Markov của môi trường, chính sách Markov dừng và quy luật không đổi theo thời gian. Chỉ các cặp có xác suất dương cần kỳ vọng điều kiện trung gian. Không tách P(s′,r|s,a) thành tích hai phân phối độc lập.
+**Giải thích và hình thức hóa:** Bước 1 dùng tách G; bước 2 dùng kỳ vọng toàn phần theo phản hồi chung; bước 3 dùng Markov của môi trường, chính sách Markov dừng và quy luật không đổi theo thời gian. Chỉ các cặp có xác suất dương cần kỳ vọng điều kiện trung gian. Không tách p(s′,r|s,a) thành tích hai phân phối độc lập.
 
 **Kết nối:** Thay v ở vế phải bằng trung bình các q ở thời điểm kế tiếp.
 
@@ -943,10 +933,10 @@ $$q_\pi(s,a)=\sum_{s',r}P(s',r\mid s,a)\big[r+\gamma v_\pi(s')\big].$$
 
 **Nguồn:** PPTX56–57; nối mô hình chung Bài02.
 
-**Quyết định thể hiện khi triển khai:** Ba dòng công thức là ba bước nối tiếp, mỗi dòng nằm trong một fragment để không dồn cả ba lên cùng một lúc; hình cây (s,a)→(s′,r) với hộp v_π(s′) ở đầu mỗi nhánh minh họa đúng cấu trúc nhìn trước một bước. Chú ý Markov của môi trường và Markov của chính sách được dùng ở bước ba, nối thẳng với giả thiết đã kiểm tra ở phần 1. Bỏ cụm chữ dài “pi sau đó” khỏi công thức: quy ước đã có ở định nghĩa và được giải thích trong notes. Giữ cả ba bước tách tổng, kỳ vọng toàn phần và nhận diện giá trị tương lai; caption nêu giả thiết tại phép thay.
+**Đánh giá và cách thể hiện sau viết lại:** Slide suy q_π theo mô hình động qua phản hồi một bước, công thức tương ứng Sutton–Barto (mục 3.6) với giả thiết Markov và quy luật không đổi được nêu đủ. Ghi chú giữ chi tiết điều kiện và trường hợp trạng thái kết thúc. Kết quả ra là dạng Bellman kỳ vọng cho q dùng ở slide kế tiếp.
+
 
 ### L03-06-06 — Bellman kỳ vọng cho giá trị hành động
-
 Thời lượng: 2 phút. Vai trò: suy diễn: q theo q.
 
 **Đầu vào:** q theo v ở06-05 và v theo q ở06-04.
@@ -958,7 +948,7 @@ $$v_\pi(s')=\sum_{a'}\pi(a'\mid s')q_\pi(s',a').$$
 Thế vào kết quả trước:
 
 $$
-q_\pi(s,a)=\sum_{s',r}P(s',r\mid s,a)
+q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)
 \left[r+\gamma\sum_{a'}\pi(a'\mid s')q_\pi(s',a')\right].
 $$
 
@@ -972,10 +962,10 @@ $$
 
 **Nguồn:** PPTX56–57.
 
-**Quyết định thể hiện khi triển khai:** Hình mở hộp v_π(s′) thành tầng hành động a′ với nhãn t và t+1, đúng một bước nhìn trước so với slide trước. Công thức duy nhất trên mặt slide giúp luận điểm “chỉ là phép thế” rõ ràng; tránh trình bày như một công thức độc lập cần học thuộc.
+**Đánh giá và cách thể hiện sau viết lại:** Slide trình bày phép thế v_π(s') bằng quan hệ v–q để có Bellman kỳ vọng cho q, đúng bước thế được spec yêu cầu giữ nguyên. Hai tầng tổng được phân biệt qua nhãn a và a′. Kết quả ra là phương trình q theo q, nền cho Bellman của v ở slide sau.
+
 
 ### L03-06-07 — Bellman kỳ vọng cho giá trị trạng thái
-
 Thời lượng: 2 phút. Vai trò: suy diễn: thế và đối chiếu MRP.
 
 **Đầu vào:** Hai quan hệ v theo q và q theo v; P^pi,r^pi từ05-06.
@@ -985,7 +975,7 @@ Thời lượng: 2 phút. Vai trò: suy diễn: thế và đối chiếu MRP.
 $$
 \begin{aligned}
 v_\pi(s)&=\sum_a\pi(a\mid s)q_\pi(s,a)\\
-&=\sum_a\pi(a\mid s)\sum_{s',r}P(s',r\mid s,a)
+&=\sum_a\pi(a\mid s)\sum_{s',r}p(s',r\mid s,a)
 \big[r+\gamma v_\pi(s')\big]\\
 &=r^\pi(s)+\gamma\sum_{s'}P^\pi_{ss'}v_\pi(s').
 \end{aligned}
@@ -1001,10 +991,10 @@ $$
 
 **Nguồn:** PPTX56–57; hw02 bài4,8.
 
-**Quyết định thể hiện khi triển khai:** Cây ba tầng s→a→(s′,r) rồi gộp lại đúng như phần 5; hai nhóm số hạng được đánh dấu bằng chú thích thay vì tô màu, vì màu không được là tín hiệu duy nhất. Công thức aligned ba dòng ngắn nằm trọn trong giới hạn chiều cao.
+**Đánh giá và cách thể hiện sau viết lại:** Slide khép chuỗi phép thế thành Bellman kỳ vọng cho v_π và nối về MRP cảm sinh của phần 5. Cấu trúc ba dòng giữ nguyên, ghi chú tách ngắn thành hai đoạn. Kết quả ra là dạng Bellman dùng để giải ví dụ xe đua ở slide sau.
+
 
 ### L03-06-08 — Vận dụng với xe đua
-
 Thời lượng: 5 phút. Vai trò: chuyển sang tình huống mới.
 
 **Đầu vào:** Ba quan hệ Bellman đã suy ra và điều kiện gamma=1 ở04-08.
@@ -1027,13 +1017,13 @@ $$v_\pi(Cool)=0{,}5(1)+0{,}5(-1)=0.$$
 
 **Nguồn:** PPTX51,55; Berkeley CS188; quy ước thưởng quá nhiệt đã nêu.
 
-**Quyết định thể hiện khi triển khai:** Dùng lại đồ thị xe đua với đủ sáu kết quả chuyển tiếp để việc tra xác suất và thưởng khi tính không phụ thuộc trí nhớ. Trên mặt slide chỉ tính hai nhánh từ Cool, đủ cho một luận điểm; sáu nhánh cộng bốn công thức cùng lúc sẽ vượt vùng nội dung. Điều kiện γ=1 được kiểm bằng lập luận xác suất kết thúc, nối với điều kiện ở 04-08. Vẽ lại đồ thị theo bố cục ngang, đủ sáu kết quả, nhãn cạnh rút thành hành động:xác suất;thưởng và chú giải ngay dưới. Hai phép tính q tách dòng; phép kiểm v(Cool) nằm trong notes để giữ hình đọc được. Không dùng ảnh hoặc bảng raster.
+**Đánh giá và cách thể hiện sau viết lại:** Slide vận dụng toàn bộ lý thuyết vào ví dụ xe đua quen thuộc, hình SVG giữ nguyên với nhãn cạnh đầy đủ. Ghi chú giữ nguyên phép tính, hệ Bellman và chứng minh kỳ vọng kết thúc hữu hạn với xác suất 1/8. Kết quả ra là hai giá trị $q_\pi(\mathrm{Cool},\mathrm{Slow})$ và $q_\pi(\mathrm{Cool},\mathrm{Fast})$ minh chứng thưởng trước mắt khác giá trị hành động.
+
 
 ### L03-06-09 — Câu hỏi kiểm tra
-
 Thời lượng: 3 phút. Vai trò: kiểm tra.
 
-**Đầu vào:** Mô hình xe đua, chính sách đều và các giá trị ở06-08.
+**Đầu vào:** Mô hình xe đua, chính sách đều được nhắc lại trên mặt slide, gamma=1 và ba giá trị trạng thái đã cho.
 
 **Nội dung trên slide:** 1. Với xe đua và các giá trị đã cho, tính q_pi(Warm,Slow), q_pi(Warm,Fast).
 2. Từ hai q đó, tính v_pi(Warm).
@@ -1049,7 +1039,8 @@ Thời lượng: 3 phút. Vai trò: kiểm tra.
 
 **Nguồn:** PPTX51,55–57; hw02 bài7,8.
 
-**Quyết định thể hiện khi triển khai:** Mô hình tại Warm và ba giá trị cần thiết được đặt trên mặt slide để câu hỏi không buộc nhớ số từ trang trước. Ba câu bám đúng ba mạch của phần: áp dụng công thức q theo v, áp dụng xác suất toàn phần v theo q, và phân biệt kỳ vọng với tối ưu.
+**Đánh giá và cách thể hiện sau viết lại:** Slide kiểm tra cuối phần, giữ nguyên ba câu hỏi dạng danh sách. Theo spec, mặt slide nhắc chính sách đều trước câu 2 và thêm nhắc chính sách đều ở khối đề bài. Đáp án trong ghi chú giữ đủ phép tính và phân biệt Bellman kỳ vọng với Bellman tối ưu.
+
 
 ## Phần 7. Tổng hợp và vận dụng — 8 phút
 
@@ -1057,7 +1048,6 @@ Thời lượng: 3 phút. Vai trò: kiểm tra.
 
 
 ### L03-07-01 — Tổng hợp và vận dụng
-
 Thời lượng: 1 phút. Vai trò: mở phần.
 
 **Đầu vào:** Toàn bộ tuyến chuỗi Markov, MRP, MDP, chính sách và Bellman.
@@ -1074,10 +1064,10 @@ Thời lượng: 1 phút. Vai trò: mở phần.
 
 **Nguồn:** Tổng hợp PPTX30–57.
 
-**Quyết định thể hiện khi triển khai:** Slide mở phần dùng một sơ đồ ngang bốn nút (mô hình → MRP → MDP → giá trị) tái dùng đúng thứ tự các phần trước, giúp SV năm 3 nhìn lại toàn tuyến trong một hình thay vì đọc lại danh sách công thức. Hình phù hợp vì SV đã từng gặp từng nút riêng; giờ chỉ cần thấy quan hệ nối giữa chúng. Tiên quyết: đã học P, R, gamma, pi, Bellman. Cầu nối sang slide tổng hợp trực tiếp. Slide mở chỉ có một câu và sơ đồ mô hình/chính sách→Bellman→giá trị; quan hệ chi tiết giữa các lớp mô hình dành cho slide kế tiếp.
+**Đánh giá và cách thể hiện sau viết lại:** Slide tổng kết mở đầu phần, gắn lại luồng chính của bài: mô hình + chính sách → phân phối quỹ đạo → giá trị qua Bellman, đúng yêu cầu spec về nối mục tiêu mở bài. SVG giữ nguyên vì tóm tắt đúng chuỗi đó. Knowledge in: mô hình, chính sách; output: bài toán giải hệ giá trị.
+
 
 ### L03-07-02 — Từ mô hình đến phương trình giá trị
-
 Thời lượng: 2 phút. Vai trò: tổng hợp trực quan.
 
 **Đầu vào:** Các khái niệm đã học và sơ đồ mở phần.
@@ -1094,10 +1084,10 @@ Thời lượng: 2 phút. Vai trò: tổng hợp trực quan.
 
 **Nguồn:** PPTX30,34,49,56–58.
 
-**Quyết định thể hiện khi triển khai:** Sơ đồ hai chiều ở bước MRP/MDP với P, r gắn ở cạnh MRP→MRP và P^pi, r^pi gắn ở cạnh MDP→MRP(pi) giúp SV thấy chính sách là phép rút gọn MDP về MRP, không phải khái niệm tách rời. Hai hộp song song trình bày hai đường suy diễn ngắn gọn, công thức chính đặt ở math-large phía trên; phù hợp SV năm 3 vì họ đã quen kỳ vọng có điều kiện và chỉ cần thấy hai cách sắp xếp cùng một phép lấy kỳ vọng. Tiên quyết: Bellman MRP ở phần 4, định nghĩa v^pi và q^pi ở phần 6. Vẽ quan hệ giữa các lớp mô hình, tách MRP cảm sinh thành nút riêng và dùng mũi tên quay lại từ MDP. Công thức dựng KaTeX bên dưới; không viết tuple hoặc chỉ số công thức vàoSVG. Hai đường lập phương trình được nối bằng phép thế trongnotes, giữ xác suất chung đã dùng ởphần5–6.
+**Đánh giá và cách thể hiện sau viết lại:** Slide trung tâm về mặt kỹ thuật: chỉ ra hai cách lập cùng phương trình giá trị và vị trí của MRP cảm sinh trong chuỗi mô hình; phần mở đầu notes được nối về mục tiêu mô hình + chính sách → phân phối quỹ đạo → giá trị theo spec. SVG phù hợp vì minh họa quan hệ giữa các lớp mô hình. Các công thức chuẩn $v_\pi,q_\pi$, Bellman giữ nguyên, không thêm số phương trình/trang để chờ điều phối viên đối chiếu PDF.
+
 
 ### L03-07-03 — Bài tập và bước tiếp theo
-
 Thời lượng: 3 phút. Vai trò: ứng dụng và chuẩn bị chữa bài.
 
 **Đầu vào:** Quy trình từ mô hình đến phương trình giá trị.
@@ -1114,17 +1104,15 @@ Thời lượng: 3 phút. Vai trò: ứng dụng và chuẩn bị chữa bài.
 
 **Nguồn:** PPTX58; hw02 bài3,4,7,8.
 
-**Quyết định thể hiện khi triển khai:** Bảng bốn nhiệm vụ với cột sản phẩm nộp giúp SV biết chính xác đầu ra cần có của từng bài mà không phải đọc lại toàn bộ đề dài; bảng dùng font mặc định để vừa chiều cao khung. Phù hợp SV năm 3 vì mỗi dòng ánh trực tiếp vào một kỹ thuật đã học ở phần tương ứng. Tiên quyết: các phần 2–6. Cầu nối: dòng cuối dẫn sang Bài 04.
+**Đánh giá và cách thể hiện sau viết lại:** Slide chuyển tiếp: liệt kê nhiệm vụ hw02 (bài 3,4,7,8 giữ nguyên theo spec) và dẫn hướng sang Bài 04 mà không thêm yêu cầu tối ưu. Bảng phù hợp vì nội dung dạng ánh xạ bài tập–nhiệm vụ–kết quả. Giữ nguyên dòng nguồn và danh mục tài liệu đọc.
+
 
 ### L03-07-04 — Câu hỏi kiểm tra
-
 Thời lượng: 2 phút. Vai trò: kiểm tra cuối bài.
 
 **Đầu vào:** Phân biệt mô hình, phần thưởng, chính sách, giá trị và tối ưu.
 
-**Nội dung trên slide:** 1. Biết P và pi, cần thêm gì để tính v_pi?
-2. G, v và q khác nhau thế nào?
-3. Tăng xác suất chọn một hành động có chắc làm giá trị tăng không?
+**Nội dung trên slide:** 1. Chỉ biết xác suất chuyển $p(s\prime\mid s,a)$ và chính sách, còn cần gì để tính giá trị? 2. Phân biệt $G_t,v_\pi(s),q_\pi(s,a)$. 3. Với $\gamma=1$, chỉ có một trạng thái kết thúc đã đủ bảo đảm giá trị hữu hạn chưa?
 
 **Cách thể hiện:** Ba câu ngắn; kết thúc bằng câu trả lời cụ thể, không khẩu hiệu.
 
@@ -1132,8 +1120,8 @@ Thời lượng: 2 phút. Vai trò: kiểm tra cuối bài.
 
 **Kết nối:** Kết thúc Bài03; Bài04 giải bài toán lựa chọn chính sách.
 
-**Kiểm tra/ghi chú đáp án:** 1. Quy luật/kỳ vọng thưởng, gamma, quy ước kết thúc và điều kiện giá trị hữu hạn. 2. Tổng một lượt/kỳ vọng theo trạng thái/kỳ vọng khi ấn định hành động đầu. 3. Không, phụ thuộc giá trị và hậu quả của hành động.
+**Kiểm tra/ghi chú đáp án:** 1. Cần quy luật thưởng, hệ số chiết khấu và quy ước kết thúc. 2. Tổng của một quỹ đạo và hai kỳ vọng với cách chọn hành động đầu khác nhau. 3. Chưa; quá trình có thể không tới trạng thái kết thúc hoặc có kỳ vọng thời gian kết thúc vô hạn. Thưởng bị chặn và kỳ vọng thời gian kết thúc hữu hạn là một điều kiện đủ.
 
 **Nguồn:** Tổng hợp bài học.
 
-**Quyết định thể hiện khi triển khai:** Ba câu bám vào ba điểm phân biệt của bài: thành phần mô hình cần đủ để tính giá trị, ba đại lượng G/v/q ở ba tầng cụ thể–kỳ vọng, và tính phi đơn điệu của giá trị theo chính sách. Câu 1 ghi rõ P là xác suất chuyển trạng thái để tránh nhầm lẫn do ký hiệu P chung. Hình thức danh sách đánh số với nhãn Câu hỏi: giúp SV trả lời tuần tự trong 2 phút cuối.
+**Đánh giá và cách thể hiện sau viết lại:** Slide kiểm tra cuối phần; câu 3 được thay theo spec thành câu hỏi về điều kiện hữu hạn với $\gamma=1$, kiểm tra điều kiện đã học ở phần 04-08. Danh sách 1,2,3 dưới nhãn Câu hỏi: được giữ. Notes nêu rõ đáp án chưa đủ cùng hai điều kiện đủ, và câu kết nối sang Bài 04 không thêm yêu cầu tối ưu.

@@ -1,6 +1,6 @@
 # Bài 03 — Kế hoạch chi tiết từng slide
 
-Ngày lập: 2026-09-19. Trạng thái: đang viết lại theo rà soát sư phạm ngày 20-09-2026; kết quả kiểm định ghi trong review-log.md. Các ID `L03-…` dùng cho bản viết lại; outline và storyboard ghi phạm vi đã tích hợp thực tế.
+Ngày lập: 2026-09-19. Trạng thái: đã viết lại và kiểm định đủ bảy phần ngày 20-09-2026, đối chiếu công thức theo Sutton và Barto; kết quả ghi trong review-log.md. Các ID `L03-…` dùng cho bản viết lại; outline và storyboard ghi phạm vi đã tích hợp thực tế.
 
 ## Mục tiêu và phạm vi
 
@@ -16,12 +16,33 @@ Sinh viên năm 3 đã học học máy, học sâu, xác suất và thuật to�
 
 ## Nguồn và cách sử dụng
 
-1. **Nguồn chính:** `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx`, trang 28–58. Giữ tuyến chuỗi Markov → quá trình phần thưởng Markov → Bellman → MDP → Bellman kỳ vọng. Bài tập: `RL-hk2-2025-2026/resources/hw02.pdf`, bài 3, 4, 7, 8.
+1. **Nguồn mạch bài và ví dụ:** `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx`, trang 28–58. Giữ tuyến chuỗi Markov → quá trình phần thưởng Markov → Bellman → MDP → Bellman kỳ vọng. Bài tập: `RL-hk2-2025-2026/resources/hw02.pdf`, bài 3, 4, 7, 8.
 2. [David Silver, Lecture 2: Markov Decision Processes](https://web.stanford.edu/class/cme241/lecture_slides/david_silver_slides/MDP.pdf): ví dụ sinh viên và sơ đồ nhìn trước một bước; trang PDF 7–9, 10–23, 24–34. Không lấy phần tối ưu và các mở rộng ngoài phạm vi.
 3. [Berkeley CS188, Fall 2025, Lecture 8](https://inst.eecs.berkeley.edu/~cs188/fa25/assets/lectures/cs188-fa25-lec08.pdf): cách phân biệt nút hành động/nút ngẫu nhiên, ví dụ xe đua; trang PDF 20–22. Không sao chép CSS hoặc tài sản.
 4. [Stanford CS234, ghi chú Lecture 2 của Rahul Sarkar và Emma Brunskill](https://web.stanford.edu/~rsarkar/materials/lecture2-CS234.pdf): kiểm tra giả thiết, chuyển từ đồ thị sang ma trận và đánh giá khi biết mô hình. Đây là ghi chú bài giảng, không phải bộ slide để sao chép bố cục.
 
 Ví dụ sinh viên là mạch chính. Bài tập ba trạng thái là ví dụ tính toán nhỏ để giải hệ; xe đua là bài vận dụng chuyển sang tình huống khác. Không thêm một ví dụ lớn thứ ba. Mọi xác suất và thưởng giữ theo nguồn; quy ước xe quá nhiệt nhận -10, không cộng thêm +2, được nêu rõ trước khi tính.
+
+## Nguồn chuẩn cho công thức — Sutton và Barto
+
+Theo yêu cầu bổ sung ngày 20-09-2026, định nghĩa và phương trình Học tăng cường được đối chiếu với Richard S. Sutton và Andrew G. Barto, *Reinforcement Learning: An Introduction*, ấn bản 2, chương 3. Bản PDF đã đọc là bản 2018/2020 do [DTU lưu](https://www2.imm.dtu.dk/courses/02465/pensum/sutton2018.pdf); số trang dưới đây là số in trong sách, không phải số trang của trình xem PDF.
+
+| Nội dung | Nguồn trong sách | Slide và cách dùng |
+|---|---|---|
+| Hạt nhân $p(s',r\mid s,a)$ và chuẩn hóa | (3.2)–(3.3), tr.48–49 | 05-03; đổi chỉ số $t-1,t$ thành $t,t+1$ để khớp vòng tương tác. |
+| Xác suất chuyển và thưởng kỳ vọng | (3.4)–(3.5), tr.49 | 03-03 và 05-05/06; MRP là trường hợp không còn lựa chọn hành động, hoặc đã lấy trung bình theo chính sách. |
+| Tổng thưởng có chiết khấu | (3.8), tr.55; quy ước kết thúc ở mục 3.4, tr.57 | 03-04 và mọi ví dụ số; giữ thưởng 0 sau kết thúc. |
+| Tách tổng thưởng | (3.9), tr.55 | 04-03, giữ đầy đủ ba bước biến đổi. |
+| Giá trị trạng thái, giá trị hành động | (3.12)–(3.13), tr.58 | 03-05 là trường hợp MRP; 06-03 dùng định nghĩa dưới chính sách. |
+| Giá trị trạng thái theo giá trị hành động | Bài tập 3.12, tr.58; 3.18, tr.62 | 06-04, suy diễn bằng kỳ vọng toàn phần. |
+| Giá trị hành động theo phản hồi và giá trị trạng thái | Bài tập 3.13, tr.58; 3.19, tr.62 | 06-05, suy diễn từ tổng thưởng và hạt nhân chung. |
+| Bellman kỳ vọng cho giá trị hành động | Bài tập 3.17, tr.61 | 06-06 là lời giải có suy diễn; không gọi đây là phương trình (3.17). |
+| Bellman kỳ vọng cho giá trị trạng thái | (3.14), tr.59 | 06-07; 04-04/05 là trường hợp MRP; dạng ma trận ở 04-07 và 05-06 suy ra bằng gom các phương trình. |
+| Giá trị hữu hạn | Đoạn sau (3.8), tr.55; mục 3.4, tr.57 | 04-08; cận trị tuyệt đối và điều kiện kỳ vọng thời gian kết thúc hữu hạn là phần giải thích toán học bổ sung, không gán số phương trình của sách. |
+
+Dùng $p$ thường cho hạt nhân xác suất như sách, còn $P$ hoa cho ma trận chuyển của chuỗi và $P^\pi$ cho ma trận cảm sinh. $p$ ở đây tương ứng ký hiệu $P(s',r\mid s,a)$ đã dùng trong Bài 02. Trong bài này, $\mathcal S$ bao gồm cả trạng thái kết thúc; nó tương ứng $\mathcal S^+$ của sách khi xét bài toán có lượt. $v(\text{kết thúc})=v_\pi(\text{kết thúc})=0$.
+
+Các đồ thị sinh viên, xe đua và bài tập số vẫn lấy từ nguồn slide đã chọn. Không gán các ví dụ đó cho Sutton–Barto. Những công thức MRP, lấy trung bình theo chính sách và dạng ma trận được ghi rõ là trường hợp riêng hoặc suy ra từ công thức trong sách.
 
 ## Phân bổ
 
@@ -48,12 +69,12 @@ Ví dụ sinh viên là mạch chính. Bài tập ba trạng thái là ví dụ 
 | Thưởng trung bình $r(s)$, quá trình phần thưởng Markov (MRP) | 03-03 | Gắn thưởng vào bước chuyển ở 03-02 |
 | $G_t$ và $v(s)$ của MRP | 03-04/05 | Hai quỹ đạo với tổng khác nhau |
 | Bellman, dạng hệ tuyến tính | 04-03…07 | Nhánh một bước ở 04-02 |
-| Quá trình quyết định Markov (MDP), $P(s',r\mid s,a)$ | 05-03 | Lựa chọn học/nghỉ ở 05-02 |
+| Quá trình quyết định Markov (MDP), $p(s',r\mid s,a)$ | 05-03 | Lựa chọn học/nghỉ ở 05-02 |
 | $P^\pi,r^\pi$ | 05-06 | Gộp nút hành động trên hình ở 05-05 |
 | $q_\pi(s,a)$ | 06-03 | So sánh hai hành động đầu tiên ở 06-02 |
 | Bellman kỳ vọng theo $v_\pi,q_\pi$ | 06-04…07 | Cùng sơ đồ trạng thái → hành động → phản hồi |
 
-$P$ trong chuỗi Markov là ma trận; $P(s',r\mid s,a)$ trong MDP là xác suất chung, tiếp nối ký hiệu Bài 02. $r(s)$ và $r^\pi(s)$ là kỳ vọng của phần thưởng, khác biến ngẫu nhiên $R_{t+1}$. Dùng véc-tơ cột cho $v,r,\mu$; do P chuẩn hóa theo hàng, $\mu_{t+1}=P^{\mathsf T}\mu_t$. Xét chính sách Markov dừng khi viết giá trị không có chỉ số thời gian; không khẳng định mọi chính sách đều thuộc lớp này.
+$P$ trong chuỗi Markov là ma trận; $p(s',r\mid s,a)$ trong MDP là xác suất chung, tiếp nối ký hiệu Bài 02. $r(s)$ và $r^\pi(s)$ là kỳ vọng của phần thưởng, khác biến ngẫu nhiên $R_{t+1}$. Dùng véc-tơ cột cho $v,r,\mu$; do P chuẩn hóa theo hàng, $\mu_{t+1}=P^{\mathsf T}\mu_t$. Xét chính sách Markov dừng khi viết giá trị không có chỉ số thời gian; không khẳng định mọi chính sách đều thuộc lớp này.
 
 ## Rà soát trước lượt viết lại — 20-09-2026
 
@@ -268,7 +289,7 @@ Thời lượng: 4 phút. Vai trò: ứng dụng.
 
 **Nội dung trên slide:** Dồn xác suất từ nhiều trạng thái xuất phát tới các trạng thái đích.
 
-**Cách thể hiện:** Ban đầu, toàn bộ xác suất tập trung ở C1. Sau một bước, C2 và FB mỗi trạng thái có xác suất 0,5. Sau đó minh họa hai mũi tên cùng đi vào một nút.
+**Cách thể hiện:** Phân phối ban đầu có 0,5 ở C1 và 0,5 ở FB. Hai mũi tên cùng đi vào FB minh họa phép tính $0{,}5\times0{,}5+0{,}5\times0{,}9=0{,}7$. Trường hợp ban đầu chắc chắn ở C1 chỉ dùng đối chiếu trong notes.
 
 **Giải thích và hình thức hóa:** Sau phép cộng bằng số, đặt $\mu_t(i)=\Pr(S_t=s_i)$; suy ra $\mu_{t+1}(j)=\sum_i\mu_t(i)P_{ij}$ và $\mu_{t+1}=P^{\mathsf T}\mu_t$. Không dạy phân phối dừng.
 
@@ -680,15 +701,15 @@ Thời lượng: 3 phút. Vai trò: hình thức hóa.
 
 **Nội dung trên slide:** Quá trình quyết định Markov (MDP), với trạng thái và hành động hữu hạn:
 
-$$\big(\mathcal S,\mathcal A,P,\gamma\big),\qquad
-P(s',r\mid s,a)=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a).
+$$\big(\mathcal S,\mathcal A,p,\gamma\big),\qquad
+p(s',r\mid s,a)=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a).
 $$
 
-$P(s',r\mid s,a)\ge0$, $\sum_{s',r}P(s',r\mid s,a)=1$.
+$p(s',r\mid s,a)\ge0$, $\sum_{s',r}p(s',r\mid s,a)=1$.
 
-**Cách thể hiện:** Đặt (s,a) ở đầu một nhánh, cặp (s′,r) ở cuối; cùng ký hiệu xác suất chung của Bài 02.
+**Cách thể hiện:** Công thức dùng toàn chiều ngang; không lặp hình nhánh của slide trước. Dưới điều kiện Markov và đồng nhất theo thời gian, nêu $r(s,a)=\sum_{s',r}r\,p(s',r\mid s,a)$ để chuẩn bị phép trung bình theo chính sách.
 
-**Giải thích và hình thức hóa:** Ở đây P đã chứa cả quy luật thưởng nên không thêm một hàm thưởng độc lập vào bộ. Tập hành động hợp lệ A(s), miền thưởng rời rạc trong các công thức tổng; quy luật Markov và không đổi theo thời gian. Quan sát đầy đủ và biết mô hình là hai khái niệm khác nhau.
+**Giải thích và hình thức hóa:** Ở đây $p$ đã chứa cả quy luật thưởng nên không thêm một hàm thưởng độc lập vào bộ. Tập hành động hợp lệ $\mathcal A(s)$, miền thưởng hữu hạn $\mathcal R$ trong các công thức tổng; quy luật Markov và không đổi theo thời gian. Quan sát đầy đủ và biết mô hình là hai khái niệm khác nhau.
 
 **Kết nối:** Mô hình chưa quy định tác tử chọn hành động nào: cần chính sách.
 
@@ -740,12 +761,12 @@ Thời lượng: 3 phút. Vai trò: suy diễn ngắn.
 
 **Nội dung trên slide:** Từ xác suất chung theo chính sách:
 
-$$P^\pi(s',r\mid s)=\sum_a\pi(a\mid s)P(s',r\mid s,a).$$
+$$P^\pi(s',r\mid s)=\sum_a\pi(a\mid s)p(s',r\mid s,a).$$
 
 Lấy biên và kỳ vọng:
 
-$$P^\pi_{ss'}=\sum_a\pi(a\mid s)\sum_rP(s',r\mid s,a),$$
-$$r^\pi(s)=\sum_a\pi(a\mid s)\sum_{s',r}rP(s',r\mid s,a).$$
+$$P^\pi_{ss'}=\sum_a\pi(a\mid s)\sum_rp(s',r\mid s,a),$$
+$$r^\pi(s)=\sum_a\pi(a\mid s)\sum_{s',r}rp(s',r\mid s,a).$$
 
 **Cách thể hiện:** Ba dòng xuất hiện theo thứ tự: trộn theo hành động → cộng bỏ thưởng → lấy trung bình thưởng. Công thức cuối có thể hiện thay thế dòng đầu để không quá tải.
 
@@ -873,17 +894,17 @@ $$
 Chia theo cặp phản hồi $(s',r)$:
 
 $$
-q_\pi(s,a)=\sum_{s',r}P(s',r\mid s,a)
+q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)
 \left[r+\gamma\mathbb E[G_{t+1}\mid s,a,s',r;\pi\text{ sau đó}]\right].
 $$
 
 Nhận diện kỳ vọng tương lai:
 
-$$q_\pi(s,a)=\sum_{s',r}P(s',r\mid s,a)\big[r+\gamma v_\pi(s')\big].$$
+$$q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)\big[r+\gamma v_\pi(s')\big].$$
 
 **Cách thể hiện:** Một cây từ cặp (s,a) tới các cặp (s′,r); phần tương lai tại mỗi s′ là hộp v_pi(s′). Hai dòng dài là các bước xuất hiện nối tiếp, không ép lên cùng mặt một lúc.
 
-**Giải thích và hình thức hóa:** Bước 1 dùng tách G; bước 2 dùng kỳ vọng toàn phần theo phản hồi chung; bước 3 dùng Markov của môi trường, chính sách Markov dừng và quy luật không đổi theo thời gian. Chỉ các cặp có xác suất dương cần kỳ vọng điều kiện trung gian. Không tách P(s′,r|s,a) thành tích hai phân phối độc lập.
+**Giải thích và hình thức hóa:** Bước 1 dùng tách G; bước 2 dùng kỳ vọng toàn phần theo phản hồi chung; bước 3 dùng Markov của môi trường, chính sách Markov dừng và quy luật không đổi theo thời gian. Chỉ các cặp có xác suất dương cần kỳ vọng điều kiện trung gian. Không tách p(s′,r|s,a) thành tích hai phân phối độc lập.
 
 **Kết nối:** Thay v ở vế phải bằng trung bình các q ở thời điểm kế tiếp.
 
@@ -904,7 +925,7 @@ $$v_\pi(s')=\sum_{a'}\pi(a'\mid s')q_\pi(s',a').$$
 Thế vào kết quả trước:
 
 $$
-q_\pi(s,a)=\sum_{s',r}P(s',r\mid s,a)
+q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)
 \left[r+\gamma\sum_{a'}\pi(a'\mid s')q_\pi(s',a')\right].
 $$
 
@@ -929,7 +950,7 @@ Thời lượng: 2 phút. Vai trò: suy diễn: thế và đối chiếu MRP.
 $$
 \begin{aligned}
 v_\pi(s)&=\sum_a\pi(a\mid s)q_\pi(s,a)\\
-&=\sum_a\pi(a\mid s)\sum_{s',r}P(s',r\mid s,a)
+&=\sum_a\pi(a\mid s)\sum_{s',r}p(s',r\mid s,a)
 \big[r+\gamma v_\pi(s')\big]\\
 &=r^\pi(s)+\gamma\sum_{s'}P^\pi_{ss'}v_\pi(s').
 \end{aligned}
@@ -1053,7 +1074,7 @@ Thời lượng: 2 phút. Vai trò: kiểm tra cuối bài.
 
 **Đầu vào:** Phân biệt mô hình, phần thưởng, chính sách, giá trị và tối ưu.
 
-**Nội dung trên slide:** 1. Chỉ biết xác suất chuyển $P(s\prime\mid s,a)$ và chính sách, còn cần gì để tính giá trị? 2. Phân biệt $G_t,v_\pi(s),q_\pi(s,a)$. 3. Với $\gamma=1$, chỉ có một trạng thái kết thúc đã đủ bảo đảm giá trị hữu hạn chưa?
+**Nội dung trên slide:** 1. Chỉ biết xác suất chuyển $p(s\prime\mid s,a)$ và chính sách, còn cần gì để tính giá trị? 2. Phân biệt $G_t,v_\pi(s),q_\pi(s,a)$. 3. Với $\gamma=1$, chỉ có một trạng thái kết thúc đã đủ bảo đảm giá trị hữu hạn chưa?
 
 **Cách thể hiện:** Ba câu ngắn; kết thúc bằng câu trả lời cụ thể, không khẩu hiệu.
 
@@ -1100,3 +1121,11 @@ Thời lượng: 2 phút. Vai trò: kiểm tra cuối bài.
 | PPTX58 và hw02 | 7 | Giao bài3,4,7,8; tối ưu chuyển Bài04 |
 
 Bản kế hoạch đã được triển khai vào HTML. Storyboard ghi quyết định thể hiện thực tế; outline có ánh xạ từng trang nguồn; review-log.md ghi bằng chứng rà soát. Mục danh sách bài giảng chỉ liên kết tới HTML của bài.
+
+## Điều chỉnh sau năm báo cáo
+
+- 02-05 gọi rõ phân phối ban đầu trước phép tính bước tới.
+- 05-03 thêm thưởng kỳ vọng $r(s,a)$ từ phương trình (3.5) của Sutton–Barto; định nghĩa trực tiếp bằng hạt nhân vừa giới thiệu. Bộ thành phần MDP dùng $p$ thường, ma trận chuỗi vẫn dùng $P$.
+- 05-06 gọi tên $v_\pi$ trước công thức, đặt phương trình gọn trong cùng dòng chú thích để tránh tràn khung.
+- 04-08 giải thích rõ $D=\max_i|d_i|$ và điều kiện $0\le\gamma<1$ khi chứng minh khả nghịch.
+- 06-06 dùng đúng nguồn bài tập 3.17, mục 3.5; bỏ tham chiếu sai do writer tự thêm tới mục 3.6.

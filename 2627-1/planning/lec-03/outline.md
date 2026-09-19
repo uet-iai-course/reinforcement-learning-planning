@@ -1,6 +1,6 @@
 # Bài 03 — Dàn ý triển khai
 
-Trạng thái: đã triển khai đủ47slide thuộc7phần theo [kế hoạch chi tiết](detailed-slide-plan.md); kiểm định cuối ghi trongreview-log.md.
+Trạng thái: đã viết lại và kiểm định đủ 47 slide thuộc 7 phần theo [kế hoạch chi tiết](detailed-slide-plan.md); kiểm định cuối ghi trong review-log.md.
 
 ## Mục tiêu và phạm vi
 
@@ -48,12 +48,12 @@ Ví dụ sinh viên là mạch chính. Bài tập ba trạng thái là ví dụ 
 | Thưởng trung bình $r(s)$, quá trình phần thưởng Markov (MRP) | 03-03 | Gắn thưởng vào bước chuyển ở 03-02 |
 | $G_t$ và $v(s)$ của MRP | 03-04/05 | Hai quỹ đạo với tổng khác nhau |
 | Bellman, dạng hệ tuyến tính | 04-03…07 | Nhánh một bước ở 04-02 |
-| Quá trình quyết định Markov (MDP), $P(s',r\mid s,a)$ | 05-03 | Lựa chọn học/nghỉ ở 05-02 |
+| Quá trình quyết định Markov (MDP), $p(s',r\mid s,a)$ | 05-03 | Lựa chọn học/nghỉ ở 05-02 |
 | $P^\pi,r^\pi$ | 05-06 | Gộp nút hành động trên hình ở 05-05 |
 | $q_\pi(s,a)$ | 06-03 | So sánh hai hành động đầu tiên ở 06-02 |
 | Bellman kỳ vọng theo $v_\pi,q_\pi$ | 06-04…07 | Cùng sơ đồ trạng thái → hành động → phản hồi |
 
-$P$ trong chuỗi Markov là ma trận; $P(s',r\mid s,a)$ trong MDP là xác suất chung, tiếp nối ký hiệu Bài 02. $r(s)$ và $r^\pi(s)$ là kỳ vọng của phần thưởng, khác biến ngẫu nhiên $R_{t+1}$. Dùng véc-tơ cột cho $v,r,\mu$; do P chuẩn hóa theo hàng, $\mu_{t+1}=P^{\mathsf T}\mu_t$. Xét chính sách Markov dừng khi viết giá trị không có chỉ số thời gian; không khẳng định mọi chính sách đều thuộc lớp này.
+$P$ trong chuỗi Markov là ma trận; $p(s',r\mid s,a)$ trong MDP là xác suất chung, tương ứng với ký hiệu $P(s',r\mid s,a)$ ở Bài 02. $r(s)$ và $r^\pi(s)$ là kỳ vọng của phần thưởng, khác biến ngẫu nhiên $R_{t+1}$. Dùng véc-tơ cột cho $v,r,\mu$; do P chuẩn hóa theo hàng, $\mu_{t+1}=P^{\mathsf T}\mu_t$. Xét chính sách Markov dừng khi viết giá trị không có chỉ số thời gian; không khẳng định mọi chính sách đều thuộc lớp này.
 
 
 ## Phần 1
@@ -163,3 +163,24 @@ Nguồn chính: `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx`. Bảng n
 | 58 | L03-07-03/04 | Giữ bài tập/đọc thêm; phần tối ưu nối sangBài04, không dạy thuật toán mới trong kết bài. |
 
 Bài tập `resources/hw02.pdf`: bài3 → L03-02-06, L03-04-06/07/09; bài4 → L03-05-05…07, L03-06-07; bài7 → L03-06-04/09; bài8 → L03-06-05…07. L03-07-03 tập hợp các bài này cho 30 phút luyện tập. Không tạo code demo mới.
+
+## Nguồn chuẩn cho công thức — Sutton và Barto
+
+Theo yêu cầu bổ sung ngày 20-09-2026, định nghĩa và phương trình Học tăng cường được đối chiếu với Richard S. Sutton và Andrew G. Barto, *Reinforcement Learning: An Introduction*, ấn bản 2, chương 3. Bản PDF đã đọc là bản 2018/2020 do [DTU lưu](https://www2.imm.dtu.dk/courses/02465/pensum/sutton2018.pdf); số trang dưới đây là số in trong sách, không phải số trang của trình xem PDF.
+
+| Nội dung | Nguồn trong sách | Slide và cách dùng |
+|---|---|---|
+| Hạt nhân $p(s',r\mid s,a)$ và chuẩn hóa | (3.2)–(3.3), tr.48–49 | 05-03; đổi chỉ số $t-1,t$ thành $t,t+1$ để khớp vòng tương tác. |
+| Xác suất chuyển và thưởng kỳ vọng | (3.4)–(3.5), tr.49 | 03-03 và 05-05/06; MRP là trường hợp không còn lựa chọn hành động, hoặc đã lấy trung bình theo chính sách. |
+| Tổng thưởng có chiết khấu | (3.8), tr.55; quy ước kết thúc ở mục 3.4, tr.57 | 03-04 và mọi ví dụ số; giữ thưởng 0 sau kết thúc. |
+| Tách tổng thưởng | (3.9), tr.55 | 04-03, giữ đầy đủ ba bước biến đổi. |
+| Giá trị trạng thái, giá trị hành động | (3.12)–(3.13), tr.58 | 03-05 là trường hợp MRP; 06-03 dùng định nghĩa dưới chính sách. |
+| Giá trị trạng thái theo giá trị hành động | Bài tập 3.12, tr.58; 3.18, tr.62 | 06-04, suy diễn bằng kỳ vọng toàn phần. |
+| Giá trị hành động theo phản hồi và giá trị trạng thái | Bài tập 3.13, tr.58; 3.19, tr.62 | 06-05, suy diễn từ tổng thưởng và hạt nhân chung. |
+| Bellman kỳ vọng cho giá trị hành động | Bài tập 3.17, tr.61 | 06-06 là lời giải có suy diễn; không gọi đây là phương trình (3.17). |
+| Bellman kỳ vọng cho giá trị trạng thái | (3.14), tr.59 | 06-07; 04-04/05 là trường hợp MRP; dạng ma trận ở 04-07 và 05-06 suy ra bằng gom các phương trình. |
+| Giá trị hữu hạn | Đoạn sau (3.8), tr.55; mục 3.4, tr.57 | 04-08; cận trị tuyệt đối và điều kiện kỳ vọng thời gian kết thúc hữu hạn là phần giải thích toán học bổ sung, không gán số phương trình của sách. |
+
+Dùng $p$ thường cho hạt nhân xác suất như sách, còn $P$ hoa cho ma trận chuyển của chuỗi và $P^\pi$ cho ma trận cảm sinh. $p$ ở đây tương ứng ký hiệu $P(s',r\mid s,a)$ đã dùng trong Bài 02. Trong bài này, $\mathcal S$ bao gồm cả trạng thái kết thúc; nó tương ứng $\mathcal S^+$ của sách khi xét bài toán có lượt. $v(\text{kết thúc})=v_\pi(\text{kết thúc})=0$.
+
+Các đồ thị sinh viên, xe đua và bài tập số vẫn lấy từ nguồn slide đã chọn. Không gán các ví dụ đó cho Sutton–Barto. Những công thức MRP, lấy trung bình theo chính sách và dạng ma trận được ghi rõ là trường hợp riêng hoặc suy ra từ công thức trong sách.

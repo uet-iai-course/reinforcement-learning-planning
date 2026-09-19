@@ -1,11 +1,11 @@
 # Nhật ký rà soát — Bài 03
 
-## Trạng thái bản hoàn tất — 20-09-2026
+## Trạng thái bản viết lại theo Sutton–Barto — 20-09-2026
 
 - 47 slide trong 7 phần, 47 ghi chú diễn giả; 23 lượt dùng hình, gồm 22 SVG riêng. Không dùng ảnh raster trên slide.
 - Phần 1 giữ thứ tự: tiêu đề bài giảng → Nội dung bài học → Từ tương tác đến mô hình xác suất → các slide tiếp theo của phần 1. Hai slide đầu cùng nằm trong section ngoài của phần 1.
 - Tuyến chính 120 phút; 30 phút chữa bài tập. Mỗi phần có slide mở và slide câu hỏi đánh số. Dùng chung `lecture-slide.css`.
-- Các phần 1–6 đã commit riêng; phần 7 và kiểm định toàn bài được ghi ở cuối nhật ký. Không push trong lượt triển khai này.
+- Bản viết lại giữ 47 slide, bổ sung nguồn công thức theo Sutton và Barto. Kết quả mới nhất ở mục “Lượt đánh giá kế hoạch và viết lại” cuối tệp; các lượt trước là lịch sử. Mỗi phần được lưu một commit, không push.
 - Các mục ngay dưới đây là lịch sử của bản cũ; số lượng và trạng thái cũ không mô tả bản hoàn tất.
 
 ## Bản cũ trước khi triển khai lại bảy phần
@@ -584,3 +584,107 @@ Kiểm tra Chromium bản nháp: 12 lượt (6slide × 1280×720/390×844), khô
 - Đã thu hẹp gốc đọc còn một gói toàn tuyến và gọi lại `lec03-v2-plan-recheck` cùng mô hình. Báo cáo chỉ ra r/v_pi xuất hiện sớm, điều kiện kỳ vọng, dữ kiện quiz và câu hỏi cuối. Không áp dụng đề xuất thêm nhãn “định nghĩa sau”; không đảo ví dụ và định nghĩa. Điều phối viên sửa kế hoạch bằng việc gọi tên trước khi dùng và giữ ví dụ số trước công thức. Nhận xét mọi phần đều “giữ” mâu thuẫn với bảng sửa của reader đã được hợp nhất thành các quyết định cụ thể trong detailed-slide-plan.
 - Đối chiếu trực tiếp 47 mặt slide và 47 notes; thông tin chỉ có trong notes không được coi là đã hiện trên mặt slide. Giữ nguồn PPTX28–58, bài tập hw02 số3/4/7/8, tất cả xác suất và phần thưởng.
 - Kiểm tra giá GLM trước loạt writer theo README: [trang mô hình OpenRouter](https://openrouter.ai/z-ai/glm-5.3-flash), ngày 20-09-2026.
+
+### Viết lại bảy phần và chọn nguồn công thức
+
+- Người dùng yêu cầu công thức lấy từ giáo trình “Reinforcement Learning (Barton)”. Đã giải thích và dùng Richard S. Sutton và Andrew G. Barto, *Reinforcement Learning: An Introduction*, ấn bản 2, chương 3. Đọc bản đầy đủ 548 trang do [DTU lưu](https://www2.imm.dtu.dk/courses/02465/pensum/sutton2018.pdf), kiểm tra trang tên sách và trực tiếp xem các trang in 55, 58, 59. Không dùng bản nháp 2014–2015 tìm thấy ở Stanford làm nguồn chuẩn.
+- Bảng truy nguyên ở outline và kế hoạch chi tiết ghi các phương trình (3.2)–(3.5), (3.8)–(3.9), (3.11)–(3.14), cùng các bài tập 3.12, 3.13, 3.17–3.19. Các dạng MRP, MRP cảm sinh và ma trận được gọi là trường hợp riêng hoặc hệ quả, không tự gán số phương trình trong sách. Đổi chỉ số thời gian của (3.2) thêm một đơn vị để thống nhất vòng tương tác. Dùng $p$ cho hạt nhân chung và $P$ cho ma trận; giải thích quan hệ với ký hiệu Bài 02 và quy ước tập trạng thái có kết thúc.
+- Các hình sinh viên và xe đua vẫn theo PPTX, David Silver và Berkeley CS188. Bài tập theo hw02. Không gán những ví dụ này cho Sutton–Barto; không thêm thuật toán tối ưu hoặc code demo.
+- Bảy writer `lec03-v2-write-01` đến `lec03-v2-write-07` chạy tuần tự trên bảy gói riêng, sau khi điều phối viên đánh giá và chỉnh plan của từng phần. Mỗi gói trả nội dung, notes và phân tích cách thể hiện cho từng slide. Đã tích hợp đủ 47 mục phân tích vào storyboard.
+
+| Phần | Quyết định sau đánh giá plan | Kết quả triển khai và kiểm tra |
+|---|---|---|
+| 1 | Giữ tiêu đề bài và agenda trong phần 1; hình quỹ đạo trước mô hình xác suất. | Khôi phục nguồn bị writer bỏ; giữ sáu slide và mở phần ở vị trí thứ ba. |
+| 2 | Từ cạnh chuyển tới ma trận, rồi cộng xác suất bằng số trước công thức phân phối. | Làm rõ phân phối đầu 0,5 tại C1 và 0,5 tại FB; kết quả FB bằng 0,7. Giữ nhãn Pub là giải trí; plan và hình dùng cùng ví dụ. |
+| 3 | Thưởng từng bước trước $r(s)$; hai tổng thưởng trước $v(s)$. | Bỏ ký hiệu xuất hiện sớm và lời lặp. Giữ phân biệt thưởng ngẫu nhiên, thưởng trung bình, tổng thưởng và giá trị. |
+| 4 | Tách tổng → tuyến tính → kỳ vọng lặp → dùng Markov → hệ → nghiệm. | Sửa giải thích khả tích thành kỳ vọng trị tuyệt đối hữu hạn, giữ đầy đủ suy diễn. Chứng minh khả nghịch nêu rõ $D=\max_i\lvert d_i\rvert$ và $\gamma<1$. |
+| 5 | Ví dụ hai hành động trước hạt nhân, chính sách và phép gộp thành MRP. | Phân biệt MDP năm trạng thái với MRP bảy trạng thái. Thêm $r(s,a)$ từ (3.5) trước phép lấy trung bình theo chính sách. Chuẩn hóa $p/P$; rút caption để slide 05-06 không tràn. |
+| 6 | Ấn định hành động đầu trước $q_\pi$; suy ra lần lượt ba quan hệ và Bellman. | Chuẩn hóa dấu nháy trong công thức/notes. Sửa tham chiếu của Bellman cho $q$ thành bài tập 3.17, tr.61, mục 3.5. Giữ đủ bước tính và quy ước thưởng xe đua. |
+| 7 | Thu hồi bài toán tính giá trị từ mô hình và chính sách; bài tập và tự kiểm cuối. | Bỏ chỉ dẫn cho người viết khỏi notes. Câu hỏi cuối dùng lại điều kiện $\gamma=1$, không thêm khái niệm mới. |
+
+### Bằng chứng chạy các worker của lượt viết lại
+
+Đã kiểm tra 21 kết quả cầu nối hoàn tất, tất cả có `requested_model=observed_model`, `provider=OpenRouter`; không dùng lời tự khai trong báo cáo làm bằng chứng mô hình. Các worker đọc và rà đều chỉ đọc; writer chỉ ghi trong gói được giới hạn. Không có hai writer ghi đồng thời.
+
+| Worker | requested_model = observed_model | Hồ sơ / phạm vi |
+|---|---|---|
+| `lec03-v2-plan`, `plan-recheck` | `deepseek/deepseek-v4-flash-0731` | Reader; toàn tuyến và gói thu hẹp để làm lại kế hoạch. |
+| `lec03-v2-write-01`…`07` | `z-ai/glm-5.3-flash` | Writer; một phần mỗi tiến trình, chạy tuần tự. |
+| `lec03-v2-fix-quality` | `z-ai/glm-5.3-flash` | Writer; sửa giải thích khả tích và chỉ dẫn còn lọt trong notes. |
+| `lec03-v2-review-student`, `review-academic`, `review-flow` | `z-ai/glm-5.3-flash` | Ba reviewer độc lập, `review-full`, `--no-tools`. |
+| `lec03-v2-review-rl`, `review-math` | `deepseek/deepseek-v4-flash-0731` | Hai reviewer độc lập, `review-full`, `--no-tools`. |
+| `lec03-v2-revise-reviews-retry` | `z-ai/glm-5.3-flash` | Writer chỉnh sửa riêng sau năm báo cáo; hai tệp notes HTML. |
+| `lec03-v2-final-math`, `final-rl` | `deepseek/deepseek-v4-flash-0731` | Tái rà cụm công thức, giả thiết và nguồn đã sửa. |
+| `lec03-v2-final-flow` | `z-ai/glm-5.3-flash` | Tái rà mạch tại các cụm và ranh giới bị ảnh hưởng. |
+| `lec03-v2-storyboard-retry`, `storyboard-final` | `z-ai/glm-5.3-flash` | Rà storyboard toàn tuyến, rồi rà lại các mục vừa đồng bộ. |
+
+Năm báo cáo toàn bài nhận cùng 47 mặt slide và 47 notes, kèm giả thiết, số liệu và bảng nguồn. Chỉ bỏ các đoạn nguồn lặp để giữ gói trong ngân sách; không gọi đó là kiểm tra hình ảnh. Ba reviewer GLM và hai reviewer DeepSeek chạy ở năm tiến trình riêng.
+
+Writer chỉnh sửa đầu `lec03-v2-revise-reviews` thất bại do sửa JSON có chuỗi LaTeX escape sai; không dùng kết quả đó. Khôi phục dữ liệu từ bản HTML hợp lệ, thu hẹp đầu ra thành hai tệp HTML notes rồi gọi lại cùng mô hình. Một lần xét duyệt lệnh hết hạn trước khi thực thi; lần thử lại được chấp nhận và hoàn tất. Gói storyboard đầu vượt giới hạn ký tự trước khi gọi API; đã thu hẹp một lần từ hơn 60 nghìn xuống khoảng 50 nghìn ký tự, giữ đủ 47 slide. Không tăng timeout mặc định hoặc đổi mô hình ngầm.
+
+### Năm báo cáo độc lập và quyết định sau đối chiếu
+
+#### Góc nhìn sinh viên
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa và quyết định |
+|---|---|---|---|---|
+| trung bình | 05-03 | Cầu nối thưởng trung bình theo hành động chưa hiện rõ. | Có hạt nhân chung và sau đó có $r^\pi$, thiếu dòng $r(s,a)$. | Đã thêm công thức từ (3.5) lên mặt slide và giải thích bằng ví dụ C2 trong notes. |
+| nhẹ | 02-05 | Phân phối đầu dễ bị đọc thành kết quả bước tới. | Câu dẫn cũ chỉ ghi “Ví dụ: 50%…”. | Đã gọi rõ “Phân phối ban đầu”. |
+| nhẹ | 04-03/09, 05-07, 06-09, 07-04 | Một số nhãn notes, chỉ dẫn viết và cách gọi thời gian còn thừa. | “sai sót thường gặp khi viết lại dòng 3”, nhãn “Đáp án.”. | Bỏ lời biên tập, đi thẳng vào phép giải và câu trả lời; dùng kỳ vọng số bước đến kết thúc khi cần chính xác. |
+| nhẹ | 05-03 | Dấu prime không nhất quán. | Chuỗi LaTeX dùng `s\prime`. | Chuẩn hóa thành `s'`; không chấp nhận giải thích của reviewer rằng nó làm ký hiệu $P$ thành $P'$. |
+
+#### Chuyên gia Học tăng cường
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa và quyết định |
+|---|---|---|---|---|
+| nghiêm trọng | 06-06 | Sai tham chiếu mục sách cho Bellman của $q$. | Writer tự thêm “mục 3.6”; công thức thuộc bài tập 3.17 trong mục 3.5. | Đã sửa thành bài tập 3.17, tr.61; không gán nhãn phương trình (3.17). |
+| không áp dụng | 06-07 | Reviewer cho rằng nguồn Bellman trạng thái sai. | Dòng giữa đúng (3.14); dòng cuối là dạng MRP cảm sinh, đã ghi là hệ quả. | Giữ công thức đúng và bảng truy nguyên; không đổi dòng cuối thành số phương trình của sách. |
+| trung bình | 05-03 | Cần nêu rõ miền hữu hạn và bộ ký hiệu. | Miền thưởng trước đó chỉ có trong notes. | Mặt slide nêu $\mathcal R$ hữu hạn, bộ MDP dùng $p$; giải thích tập trạng thái kết thúc trong notes. |
+| không áp dụng | 03-03, 04-05 | Reviewer nói điều kiện thưởng bị chặn không có trong sách và MRP thiếu nguồn trường hợp riêng. | Trang in 55, ngay sau (3.8), có điều kiện bị chặn; notes MRP đã ghi chuyên biệt từ (3.14). | Giữ các phát biểu đúng; đối chiếu trực tiếp trang sách thay vì thêm cảnh báo nguồn sai. |
+
+#### Độ chính xác toán học
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa và quyết định |
+|---|---|---|---|---|
+| không áp dụng / trung bình | 04-08 | Reviewer gọi phép lấy max là sai; phần nhắc điều kiện có thể rõ hơn. | Với mọi $i$, $\lvert d_i\rvert\le\gamma D$ thì lấy max vẫn đúng. | Bác kết luận sai logic; viết rõ $D=\max_i\lvert d_i\rvert$, $D\le\gamma D$, và $\gamma<1$ để kết luận $D=0$. |
+| nhẹ | 04-08 | Cần giải thích hàng hấp thụ trong $I-P$. | Hàng đó bằng 0 khi trạng thái tự lặp xác suất 1. | Đã bổ sung trong notes, phân biệt với $I-\gamma P$ khi $\gamma<1$. |
+| không áp dụng | 05-06 | Reviewer nêu “thiếu gamma” trong $r^\pi$ nhưng cũng xác nhận công thức đúng. | $r^\pi$ là thưởng trung bình một bước; gamma chỉ đặt trước giá trị tương lai. | Không thêm hệ số sai. Ví dụ −1,5 và lời giải thích một bước đã đủ. |
+| nhẹ, không áp dụng | 06-08 | Đề nghị thêm phép giải đầy đủ hệ xe đua. | Hệ và nghiệm đã có trong notes; mặt slide ghi rõ giá trị là dữ kiện. | Giữ nhiệm vụ áp dụng công thức $q$; điều phối viên tính lại hệ và nghiệm bằng phân số. |
+
+#### Phản biện học thuật và giảng dạy
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa và quyết định |
+|---|---|---|---|---|
+| trung bình | 05-03 | Thiếu cầu nối từ thưởng MRP sang MDP. | $r(s,a)$ chưa hiện trước $r^\pi$. | Đã thêm như quyết định của vai sinh viên. |
+| trung bình, không áp dụng | 05-02/05 | Có thể nhầm thưởng của hai đặc tả sinh viên. | Reviewer đề nghị thêm câu giải thích trên mặt slide. | Caption đã nói rõ MDP 5 trạng thái khác MRP 7 trạng thái; hình ghi thưởng trên cạnh, notes nêu các khác biệt. Không thêm câu lặp. |
+| trung bình, không áp dụng | 06-08 | Đưa nghiệm cho sẵn trước phép tính có thể bị hiểu là thiếu derivation. | Mặt slide ghi “Đã cho”; nhiệm vụ là tính giá trị hành động, hệ Bellman ở notes. | Giữ đúng nhiệm vụ vận dụng sau các slide derivation 06-04…07; không dồn thêm hệ lên trang xe đua. |
+| nhẹ | 02-04, 04-07, 07-03 | Kiểm tra bảng, nghiệm và truy nguyên nguồn. | Reviewer chỉ có văn bản, không thấy bố cục bảng. | Đã kiểm tra bảng qua ảnh; tính lại nghiệm; nguồn công thức có trong từng nhóm notes và bảng Markdown, không chỉ ở cuối bài. |
+| không áp dụng | 06-03/06 | Đề nghị nhắc lại quy ước $q$; đồng thời nhận xét mục 3.6 đúng. | Quy ước hành động đầu có trên mặt và notes; mục 3.6 là tham chiếu sai. | Giữ quy ước, sửa nguồn như trên; không chấp nhận lời xác nhận nguồn thiếu kiểm chứng. |
+
+#### Kết nối và mạch viết
+
+| Mức độ | Trang chiếu | Vấn đề | Bằng chứng | Đề xuất sửa và quyết định |
+|---|---|---|---|---|
+| trung bình, không áp dụng | 02-06 | Ma trận mới ở quiz bị coi là khái niệm mới. | Vai trò: vận dụng đọc ma trận; vào từ ma trận 7 trạng thái; ra ma trận nhỏ dùng giải hệ ở 04-06. | Đây là dữ kiện mới của cùng khái niệm, không phải kiến thức mới. Notes có câu nối; giữ nhiệm vụ kiểm tra. |
+| trung bình, không áp dụng | 06-08 | Cận 1/8 chỉ nằm trong notes. | Vai trò: áp dụng $q$; vào từ quan hệ Bellman; ra câu hỏi tính tại Warm. | Giữ chứng minh điều kiện hữu hạn trong notes để không tranh luận điểm với phép tính $q$ trên mặt slide. Điều kiện chung đã có ở 04-08. |
+| nhẹ | 05-03, 06-06 | Ký hiệu và dấu nháy không thống nhất. | Vai trò: định nghĩa mô hình rồi thế quan hệ $v/q$; lỗi dấu gây nhiễu kết nối. | Đã chuẩn hóa $p/P$, `s'`, `a'`; không thay thứ tự lập luận. |
+| nhẹ, không áp dụng | 05-03 | Miền gamma gồm 1 trong khi phép nghịch đảo đòi nhỏ hơn 1. | Vai trò: xác định mô hình; vào từ điều kiện giá trị hữu hạn; ra chính sách. | Đây là hai phạm vi khác nhau, đã được phân biệt ở 04-08 và notes05-03; không thu hẹp sai định nghĩa MDP. |
+
+### Tái rà và kiểm định storyboard
+
+- `lec03-v2-final-math`, `final-rl`, `final-flow` rà lại các cụm 02-03…06, 04-06…09, 05-01…07, 06-04…08 và bản đồ ranh giới. Đã xác nhận các công thức, chứng minh với $D$, nguồn bài tập 3.17, miền ký hiệu và các cầu nối. Không còn lỗi bắt buộc sau đối chiếu.
+- `lec03-v2-storyboard-retry` rà đủ 47 mục plan, mặt slide và phân tích. Xác nhận bảy phần, thứ tự tiêu đề–agenda–mở phần, thời lượng 120 phút và chu trình học tập. Phát hiện đúng: mô tả phân phối đầu ở 02-05 chưa khớp mặt slide; analysis05-03 dùng $P$ trong bộ MDP; analysis06-08 gọi nhầm C2. Đã đồng bộ lần lượt về phân phối 0,5/0,5, hạt nhân $p$ và trạng thái Cool.
+- Không áp dụng gợi ý đổi “tổng thưởng khả tích” tại04-04: đây là thuật ngữ đúng và notes đã định nghĩa bằng kỳ vọng trị tuyệt đối hữu hạn. Không coi lời xác nhận mục3.6 của reviewer là bằng chứng; nguồn đã kiểm trực tiếp. Nhận xét SVG chưa xem được chỉ là giới hạn của gói, được bù bằng kiểm tra trực quan của điều phối viên.
+- `lec03-v2-storyboard-final` rà lại các mục vừa đồng bộ, hai slide lân cận mỗi phía còn có trong phần và ranh giới liên quan. Xác nhận ba điểm khớp, không có lỗi cao/trung bình. Bỏ dấu ngoặc thừa trong analysis. Không chấp nhận câu bên lề của reviewer gọi Pass là hấp thụ: ma trận thực tế có Pass→Sleep; chỉ Sleep tự lặp. Không sửa ma trận đúng.
+
+### Kiểm định cuối của bản viết lại theo Sutton–Barto
+
+- Cấu trúc: 47 ID duy nhất, 47 notes, bảy section ngoài với 6/6/6/9/7/9/4 slide; outline, storyboard và kế hoạch khớp từng ID. Có bảy slide mở phần và bảy quiz đánh số. Toàn bộ công thức Markdown dùng dấu đô la.
+- 475 biểu thức ở mặt slide và notes qua bộ phân tích KaTeX nghiêm ngặt, không lỗi. Kiểm tra các phép tính bằng phân số: hai tổng −9/4 và −25/8; nghiệm ba trạng thái 560/641, −740/641, 0; thưởng cảm sinh tại C2 −3/2; giá trị xe đua 0, −6, 0; bốn giá trị hành động 1, −1, −2, −10; cận kết thúc trong hai bước 1/8.
+- Kiểm tra trình duyệt bao phủ 94 cặp slide/khung nhìn ở 1280×720 và 390×844, đúng từng ID. Lượt đầu phát hiện tràn ở05-06; đã rút caption và kiểm lại toàn phần5. Phần2 được kiểm lại sau chỉnh câu dẫn. Bản cuối không có tràn, lỗi công thức, ảnh hỏng, lỗi HTTP hoặc JavaScript; bàn phím hoạt động. Đã xem bảy ảnh tổng hợp bao phủ cả47slide, cùng ảnh riêng các trang vừa sửa. Không coi kiểm tra văn bản của reviewer là kiểm tra pixel.
+- Giữ 23 lượt dùng hình từ22SVG đã vẽ lại, mọi đường dẫn hợp lệ, có mô tả thay thế. Không có raster hoặc ngoại lệ mới; không sửa CSS chung. Dùng máy chủ hiện có tại `http://localhost:8765/2627-1/lecture-03-qua-trinh-quyet-dinh-markov.html`; cấu hình và plugin RevealJS cục bộ đúng mẫu. Thẻ Bài03 trong index vẫn liên kết duy nhất tới HTML, không liên kết planning.
+- Tự kiểm theo `no-ai-slop/eval.md`: giữ thuật ngữ và giọng học thuật trực tiếp; cắt câu dẫn rỗng, câu lặp, nhãn biên tập và chỉ dẫn cho người viết trên mặt/notes. Giữ các cảnh báo toán học có nội dung và câu hỏi học tập. Không thay chúng bằng khẩu hiệu hoặc câu hỏi tu từ. Các bước kiểm về giữ nghĩa, từ vựng, nhịp câu, độ cắt, chủ thể, dẫn nguồn và đọc thành lời đều đạt; kết quả chỉnh được lưu trực tiếp trong deck.
+- Rà theo Quill: tuyến tương tác → quy luật chuyển → thưởng và giá trị → Bellman → thêm hành động và chính sách → đánh giá hành động → tổng hợp. Từng phần nhận tiên quyết từ phần trước và tạo đầu ra cho phần sau; không tạo `quill.json`.
+- Codex Slides: đã tải bản HTML mới và bảy ảnh kiểm định mới vào hồ sơ `20260919162357-b-i-03-qu-tr-nh-quy-t-nh-markov-h-s-ki-m-4hzc`. Đọc lại `uploaded/lecture-03-qua-trinh-quyet-dinh-markov-2.html` xác nhận khớp toàn bộ 59.548 ký tự với bản cục bộ. Công cụ upload trả trường `file` cũ dù danh sách `files` có bản mới; đã chọn đúng đường dẫn mới khi đọc lại.
+- Giới hạn Codex Slides còn tồn tại: không có Codex in-editor Browser trong phiên. Thử lại bằng Chromium, giao diện vẫn chỉ hiện một tệp tham chiếu cũ và hộp chọn độ phân giải, không hiện ảnh mới mặc dù MCP đã lưu. Vì vậy không tuyên bố đã rà trực quan trong Codex Slides; kiểm tra hình, công thức, layout và tương tác hoàn tất trên RevealJS cục bộ. Các tài liệu lập kế hoạch được lưu cùng hồ sơ sau khi đồng bộ cuối.
+- Lưu mỗi phần vào một commit riêng; không push. Các thay đổi chỉ thuộc Lecture03 và tài liệu quy trình của bài.
