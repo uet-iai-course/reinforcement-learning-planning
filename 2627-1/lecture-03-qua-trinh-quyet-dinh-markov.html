@@ -106,5 +106,125 @@
   </aside>
 </section>
 </section>
+
+<section>
+<section data-slide-id="L03R-02-01">
+<h2>Mô hình xác suất của MDP</h2>
+<p>Cùng pin thấp và hành động Tìm có thể dẫn tới hai phản hồi.</p>
+<img src="img/lec-03/robot-p02-uncertain-feedback.svg" class="figure short" alt="Robot ở trạng thái pin thấp thực hiện hành động Tìm và dẫn tới hai kết quả chưa xác định"/>
+<aside class="notes">
+<p>Phần trước ta chỉ quan sát một mẫu: từ pin cao, robot chọn Tìm rồi về pin thấp với thưởng 2. Một mẫu duy nhất không cho biết tần suất từng kết quả. Giả thiết ở đây: môi trường là ngẫu nhiên, thưởng cố định trên mỗi nhánh, và quy luật phản hồi không đổi theo thời gian. Mô hình xác suất phải mô tả mọi phản hồi có thể xảy ra sau mỗi cặp trạng thái–hành động, tức là cho cả trạng thái kế tiếp lẫn phần thưởng trong cùng một bước. Hành động đã được cố định; các xác suất mô tả phản hồi ngẫu nhiên của môi trường.</p>
+<p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, ví dụ 3.3, tr. 52–53.</p>
+</aside>
+</section>
+
+<section data-slide-id="L03R-02-02">
+<h2>Hai phản hồi của hành động Tìm</h2>
+<img src="img/lec-03/robot-p02-search-outcomes.svg" class="figure" alt="Tìm từ L: L và thưởng2 hoặc H và thưởng−3 do cứu hộ. Tìm từ H: H hoặc L, đều thưởng2. Mỗi nhánh xác suất một phần hai."/>
+<p class="caption">Mỗi kết quả là một cặp trạng thái mới kèm thưởng. Ví dụ số theo Sutton–Barto; thưởng cố định trên mỗi nhánh.</p>
+<aside class="notes">
+<p>Từ pin thấp, Tìm giữ robot ở pin thấp và nhận 2 với xác suất 1/2, hoặc pin cạn, robot được cứu hộ về pin cao và nhận −3 với xác suất 1/2. Hai xác suất cộng bằng 1. Từ pin cao, Tìm dẫn tới pin cao hoặc pin thấp, mỗi nơi 1/2, đều nhận 2.</p>
+<p>Trạng thái kế tiếp và phần thưởng được rút thăm cùng nhau trong một bước, không phải hai lần độc lập. Ở pin thấp, biết thưởng là −3 là biết robot đã được cứu về pin cao; cứu hộ đã tính trọn trong một bước, không cộng thêm 2. Không có giả thiết độc lập giữa trạng thái mới và thưởng.</p>
+<p class="note-source">Nguồn: số hóa Sutton và Barto, ấn bản 2, ví dụ 3.3, tr. 52–53.</p>
+</aside>
+</section>
+
+<section data-slide-id="L03R-02-03">
+<h2>Bảng phản hồi của robot</h2>
+<table style="margin:0 auto;">
+<thead><tr><th>Hiện tại</th><th>Hành động</th><th>Kế tiếp</th><th>Thưởng</th><th>Xác suất</th></tr></thead>
+<tbody>
+<tr><td rowspan="2">Pin cao</td><td rowspan="2">Tìm</td><td>Pin cao</td><td>2</td><td>1/2</td></tr>
+<tr><td>Pin thấp</td><td>2</td><td>1/2</td></tr>
+<tr><td>Pin cao</td><td>Chờ</td><td>Pin cao</td><td>1</td><td>1</td></tr>
+<tr><td rowspan="2">Pin thấp</td><td rowspan="2">Tìm</td><td>Pin thấp</td><td>2</td><td>1/2</td></tr>
+<tr><td>Pin cao (cứu hộ)</td><td>−3</td><td>1/2</td></tr>
+<tr><td>Pin thấp</td><td>Chờ</td><td>Pin thấp</td><td>1</td><td>1</td></tr>
+<tr><td>Pin thấp</td><td>Sạc</td><td>Pin cao</td><td>0</td><td>1</td></tr>
+</tbody>
+</table>
+<p class="caption">Với mỗi cặp trạng thái–hành động hợp lệ, tổng xác suất các phản hồi bằng 1. Ví dụ số theo Sutton–Barto; thưởng cố định trên mỗi nhánh.</p>
+<aside class="notes">
+<p>Bảng bảy hàng này chuyển cây phản hồi thành dữ liệu mô hình. Các hàng có cùng cặp hiện tại–hành động tạo thành một nhóm; tổng xác suất của mỗi nhóm bằng 1: hai hàng 1/2 cộng lại là 1, hàng đơn có xác suất 1. Bảng chỉ ghi các kết quả có xác suất dương trong các cặp hợp lệ; cặp Pin cao–Sạc không hợp lệ nên không có hàng nào, vì Sạc chỉ có ở pin thấp. Tập hành động phụ thuộc mức pin: ở pin cao chỉ có Tìm và Chờ, ở pin thấp thêm Sạc. Chờ giữ nguyên mức pin và nhận 1; Sạc từ pin thấp chủ động đưa robot về pin cao và nhận 0, khác với cứu hộ thụ động nhận −3. Sách cho thưởng kỳ vọng trên nhánh; để xác định phân phối chung trong ví dụ số này, ta giả sử thưởng cố định trên mỗi nhánh.</p>
+<p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, ví dụ 3.3, tr. 52–53; tinh thần bài tập 3.4.</p>
+</aside>
+</section>
+
+<section data-slide-id="L03R-02-04">
+<h2>Xác suất chuyển trạng thái và phần thưởng</h2>
+<p>Gọi $\mathcal S$ là tập trạng thái, $\mathcal A(s)$ là tập hành động hợp lệ tại $s$, $\mathcal R$ là tập điểm thưởng; cả ba đều hữu hạn.</p>
+<p>Ví dụ: $p(\mathrm H,-3\mid \mathrm L,\mathrm{tim})=\tfrac12$.</p>
+<div class="math-large">
+$$\begin{aligned}&p(s',r\mid s,a)\\&\quad=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a).\end{aligned}$$
+$$p(s',r\mid s,a)\ge 0,\qquad\sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}p(s',r\mid s,a)=1.$$
+</div>
+<aside class="notes">
+<p>Bốn nhãn của một dòng bảng đặt vào đúng bốn vị trí của hàm $p$: hiện tại là $s$, hành động là $a$, cả hai đứng sau vạch điều kiện và được cố định; kế tiếp là $s'$ trước dấu phẩy, thưởng là $r$ sau dấu phẩy, hai đại lượng này chạy trong tổng chuẩn hóa. Ví dụ đọc một dòng: $p(\mathrm H,-3\mid\mathrm L,\mathrm{tim})=1/2$ nghĩa là từ pin thấp, chọn Tìm, robot về pin cao với thưởng −3 với xác suất 1/2.</p>
+<p>Điều kiện chuẩn hóa: với mỗi cặp hợp lệ, tổng mọi xác suất bằng 1, ví dụ với L–Tìm thì $1/2+1/2=1$; với L–Chờ, hàng duy nhất có xác suất 1. Mỗi xác suất không âm.</p>
+<p>Viết $p$ không có chỉ số thời gian nghĩa là thêm giả thiết quy luật phản hồi không đổi theo thời gian. Giả thiết này khác điều kiện Markov của phần 1: Markov nói phản hồi chỉ phụ thuộc trạng thái và hành động hiện tại, còn giả thiết mới nói bảng đó không thay đổi qua các bước. Chỉ số trong phương trình (3.2) của sách dùng $t-1,t$; ở đây dịch sang $t,t+1$ vì thưởng $R_{t+1}$ đến sau hành động $A_t$. Tổng chuẩn hóa chạy trên mọi cặp phản hồi $(s',r)$.</p>
+<p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, phương trình (3.2)–(3.3), tr. 48–49.</p>
+</aside>
+</section>
+
+<section data-slide-id="L03R-02-05">
+<h2>Xác suất chuyển và thưởng trung bình</h2>
+<p><strong>L–Tìm:</strong> về H với xác suất 1/2; thưởng trung bình $\tfrac12\cdot 2+\tfrac12\cdot(-3)=-\tfrac12$.</p>
+<p>−1/2 là kỳ vọng; mỗi lần robot nhận 2 hoặc −3.</p>
+<div class="math-large">
+$$p(s'\mid s,a)=\sum_{r\in\mathcal R}p(s',r\mid s,a),$$
+$$r(s,a)=\mathbb E[R_{t+1}\mid S_t=s,A_t=a]$$
+$$\phantom{r(s,a)}=\sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}r\,p(s',r\mid s,a).$$
+</div>
+<aside class="notes">
+<p>Vẫn cố định cặp pin thấp–Tìm. Xác suất về pin cao là 1/2 vì trong bảng chỉ một hàng dẫn tới pin cao với trọng số 1/2. Thưởng trung bình là trung bình có trọng số của hai mức thưởng: một nửa lần nhận 2, một nửa lần nhận −3, cho −1/2. Xác suất tới một trạng thái đích bằng tổng trọng số của các hàng dẫn tới đúng trạng thái đó.</p>
+<p>Đại lượng $r(s,a)$ là kỳ vọng của biến ngẫu nhiên $R_{t+1}$; nó có thể bằng −1/2 dù không lần nào robot nhận đúng điểm đó, kết quả thực tế chỉ là 2 hoặc −3. Khi viết $p$ với ba đối số $p(s'\mid s,a)$, đó là xác suất chuyển đã cộng hết các mức thưởng của mọi hàng dẫn tới $s'$. Hai công thức lấy từ cùng hạt nhân $p$, không cần thêm dữ liệu mới.</p>
+<p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, phương trình (3.4)–(3.5), tr. 49.</p>
+</aside>
+</section>
+
+<section data-slide-id="L03R-02-06">
+<h2>Các thành phần của MDP</h2>
+<table style="margin:0 auto;">
+<thead><tr><th>Thành phần</th><th>Ý nghĩa</th><th>Ở robot</th></tr></thead>
+<tbody>
+<tr><td>$\mathcal S$</td><td>Tập trạng thái</td><td>$\{\mathrm H,\mathrm L\}$</td></tr>
+<tr><td>$\mathcal A(s)$</td><td>Tập hành động hợp lệ tại $s$, phụ thuộc mức pin</td><td>H: Tìm, Chờ; L: Tìm, Chờ, Sạc</td></tr>
+<tr><td>$\mathcal R$</td><td>Tập điểm thưởng hữu hạn</td><td>$\{-3,0,1,2\}$</td></tr>
+<tr><td>$p(s',r\mid s,a)$</td><td>Bảng phản hồi, tổng mỗi nhóm bằng 1</td><td>Bảy hàng đã lập</td></tr>
+</tbody>
+</table>
+<div class="math-large">$$\mathcal M=\bigl(\mathcal S,\ \{\mathcal A(s)\}_{s\in\mathcal S},\ \mathcal R,\ p\bigr).$$</div>
+<p class="caption">Trạng thái Markov; quy luật phản hồi không đổi theo thời gian.</p>
+<aside class="notes">
+<p>Mỗi thành phần đã có nghĩa qua robot: hai trạng thái pin, hành động phụ thuộc mức pin, bốn điểm thưởng, và bảng phản hồi bảy hàng. Bộ $\mathcal M$ mô tả môi trường; tiêu chuẩn cộng thưởng và cách chọn hành động cần được xác định thêm để đánh giá kết quả dài hạn. Do đó biết mô hình chưa tự xác định hành động tốt nhất.</p>
+<p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, mục 3.1, tr. 47–49.</p>
+</aside>
+</section>
+
+<section data-slide-id="L03R-02-07">
+<h2>Câu hỏi kiểm tra</h2>
+<p><strong>Câu hỏi:</strong></p>
+<ol>
+<li>Đọc $p(\mathrm H,0\mid \mathrm L,\mathrm{sac})$; tổng xác suất sau L–Sạc bằng bao nhiêu?</li>
+<li>Thưởng trung bình sau L–Tìm bằng bao nhiêu? Robot có lần nào nhận đúng điểm đó?</li>
+<li>Nếu thưởng là $-3$ sau L–Tìm, trạng thái kế tiếp là gì? Thưởng và trạng thái mới có độc lập không?</li>
+</ol>
+<table style="margin:0.5em auto 0; font-size:32px;">
+<thead><tr><th>Hiện tại</th><th>Hành động</th><th>Kế tiếp</th><th>Thưởng</th><th>Xác suất</th></tr></thead>
+<tbody>
+<tr><td>L</td><td>Sạc</td><td>H</td><td>0</td><td>1</td></tr>
+<tr><td>L</td><td>Tìm</td><td>L</td><td>2</td><td>1/2</td></tr>
+<tr><td>L</td><td>Tìm</td><td>H (cứu hộ)</td><td>−3</td><td>1/2</td></tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>Đáp án câu 1: $p(\mathrm H,0\mid \mathrm L,\mathrm{sac})=1$ vì hàng duy nhất của L–Sạc; tổng xác suất các phản hồi sau L–Sạc cũng bằng 1 theo điều kiện chuẩn hóa.</p>
+<p>Đáp án câu 2: thưởng trung bình là $\tfrac12\cdot 2+\tfrac12\cdot(-3)=-\tfrac12$; đó là kỳ vọng, không phải điểm robot luôn nhận, vì kết quả thực tế chỉ là 2 hoặc −3.</p>
+<p>Đáp án câu 3: trạng thái kế tiếp là pin cao; thưởng −3 xảy ra đúng khi được cứu hộ. Hai đại lượng không độc lập trong ví dụ này: rút thăm cho ra cặp (trạng thái mới, thưởng) cùng nhau, nên biết một thành phần suy ra được thông tin về thành phần kia.</p>
+<p>Mô hình đã cho điểm của từng bước. Ta cần một tiêu chuẩn để tính cả chuỗi bước.</p>
+<p class="note-source">Nguồn: vận dụng Sutton và Barto, ấn bản 2, phương trình (3.2)–(3.5), tr. 48–49.</p>
+</aside>
+</section>
+</section>
 <div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 03</div>
 </div></div><script src="revealjs/dist/reveal.js"></script><script src="plugin/notes/notes.js"></script><script src="plugin/highlight/highlight.js"></script><script src="plugin/math/math.js"></script><script>Reveal.initialize({width:1280,height:720,margin:.04,controlsLayout:"edges",slideNumber:true,hashOneBasedIndex:true,hash:true,katex:{local:"vendor/katex"},plugins:[RevealHighlight,RevealNotes,RevealMath.KaTeX]});</script></body></html>

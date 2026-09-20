@@ -1097,7 +1097,7 @@ Rà trực tiếp theo Quill về vai trò từng phần, điểm vào–ra và 
 | Giải thích kỹ các biến đổi | 05-03…09 tách từng công cụ toán học; 06-02/03 lập và giải hệ bằng tay; ghi chú chỉ rõ giả thiết. |
 | Tiêu đề đầu mỗi phần | 01-01 là tiêu đề bài; 02-01…07-01 là đúng tên phần; 01-02 giữ slide nội dung. |
 | Nguồn Barto được kiểm | SB ấn bản 2, ví dụ 3.3 và các phương trình/bài tập được ghi theo trang; tham số minh họa và giả thiết thưởng cố định được tách rõ khỏi bản gốc. |
-| Thời lượng có thể kiểm tra | 50 slide, tổng từng phần 12/18/14/17/26/25/8 = 120 phút; 30 phút chữa bài tách riêng. |
+| Thời lượng có thể kiểm tra | 50 slide, tổng từng phần 12/18/14/17/30/21/8 = 120 phút; 30 phút chữa bài tách riêng. |
 | Kiểm tra hiểu ở mỗi phần | Bảy slide cuối phần đều có câu hỏi đánh số và đáp án dựa trên nội dung đã xuất hiện. |
 | Không nhầm kế hoạch với triển khai | File mới có tiền tố ID `L03R`; đầu tệp nói rõ HTML hiện tại chưa đổi. Không tuyên bố đã dựng hoặc rà trực quan các SVG dự kiến. |
 

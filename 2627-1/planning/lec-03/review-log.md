@@ -731,3 +731,13 @@ Phạm vi ánh xạ: PPTX28→01-01;29→01-05/06;30,34→06-05/06;36–38,40–
 Writer: hai lượt `z-ai/glm-5.3-flash`, requested=observed, provider OpenRouter. Bản đầu bị loại: Chờ H→L sai mô hình, LaTeX trong SVG không render, thiếu nguồn và nhiều chữ trên trang đầu. Đã yêu cầu worker sửa; điều phối viên tiếp tục chuyển nguồn vào notes, dựng lại cặp phản hồi trong cùng hộp, vẽ đúng mức pin thấp, xuống dòng công thức Markov và biên tập no-ai-slop. Không đưa lời chỉ dẫn soạn vào notes.
 
 Kiểm tra: đủ7ID/7notes/3SVG; 19 biểu thức KaTeX hợp lệ; Chromium14 lượt (7slide×1280×720/390×844), không tràn, lỗi toán, ảnh hỏng, lỗiJS/HTTP. Đã xem ảnh ghép cả7slide. Đây là kiểm tra phần1; năm lượt rà độc lập toàn bài sẽ thực hiện khi đủ bản nháp50slide.
+
+### Kiểm định storyboard độc lập
+
+Reader `deepseek/deepseek-v4-flash-0731` (requested=observed, provider OpenRouter) đã đọc đủ 50 mục của storyboard. Báo cáo xác nhận thứ tự ký hiệu, thí nghiệm q khi xác suất hành động bằng0, hai tầng kỳ vọng trước bước Markov, MRP sau chính sách và các phép tính số. Không có lỗi chặn. Mức trung bình: bảng tự kiểm cuối còn thời lượng26/25 cũ; đã đổi30/21 cho khớp từng slide. Mức nhẹ: reviewer không tự xác minh được451biểu thức của lượt kiểm Markdown cũ; đây là bằng chứng lịch sử của lượt lập kế hoạch, không thay cho kiểm KaTeX HTML hiện tại. Báo cáo này chưa kiểm bản HTML/SVG, được tách với năm vai rà bản nháp sau cùng.
+
+### Phần 2 — triển khai và kiểm tra cục bộ
+
+Đã thêm7slide L03R-02-01…07: mở phần, cây phản hồi, bảng7nhánh, định nghĩa hạt nhân chung, xác suất chuyển/thưởng trung bình, thành phần MDP, câu hỏi kiểm tra. HaiSVG mới; bảng và công thức làHTML/KaTeX. Writer `z-ai/glm-5.3-flash` (hai lượt, requested=observed, OpenRouter). Bản đầu bị loại vì cộng nhầm trọng số của các trạng thái đích khác nhau, gọi sai “quy trình”, mở đầu nhắc sai mẫu trước và đặt công thức rộng trong nửa trang. Đã gọi sửa; điều phối viên tự kiểm lại7nhánh, dựng lại hình hai cây, làm rõ hành động H–Sạc không hợp lệ, chuẩn hóa tên phần, nguồn trong notes và biên tập câu văn.
+
+Kiểm tra lũy kế14ID/14notes/5SVG;62biểu thức KaTeX hợp lệ. Phần2:14lượt Chromium ở1280×720 và390×844, không tràn, lỗi toán, hình hỏng, JS/HTTP. Đã xem ảnh ghép7slide và trang câu hỏi riêng. Năm rà soát độc lập chưa thực hiện vì bản nháp toàn bài đang được soạn.
