@@ -738,3 +738,174 @@ Thời lượng: 3 phút. Vai trò: kiểm tra lập luận và tầng xác su�
 **Ghi chú đáp án:** 1. $R_{t+2}$; phép tách là đại số trên một dãy đã cho. 2. Khi thay kỳ vọng phần tương lai đã điều kiện hóa bằng $v_\pi(s')$. 3. Xác suất chọn hành động rồi nhận cặp phản hồi; đây là quy tắc nhân có điều kiện, không giả thiết độc lập. Với $q$, hành động đầu đã ấn định. **Câu nối:** “Các phương trình vẫn chứa giá trị chưa biết ở cả hai vế. Với robot hai trạng thái, ta sẽ giải chúng đồng thời.”
 
 **Nguồn:** vận dụng SB (3.9), (3.14), bài tập 3.17–3.19.
+
+## 8. Phần 6 — Đánh giá một chính sách từ mô hình
+
+**Chức năng:** biến các quan hệ Bellman thành kết quả tính được, rồi nhận diện dạng tổng quát. Đầu vào là bảng robot, chính sách cố định và $\gamma=1/2$; đầu ra là nghiệm giá trị, phép kiểm bằng $q$ và cách rút MDP về MRP.
+
+**Mạch trình bày trước khi chia slide:**
+
+1. Viết đúng hai phương trình cho H và L từ hai cây một bước.
+2. Giải hệ bằng phép trừ và thế, chưa đưa nghịch đảo ma trận trước bài toán số.
+3. Dùng nghiệm tính hai giá trị hành động và kiểm lại trung bình theo chính sách.
+4. Gộp các đường đi qua hành động để tính trực tiếp xác suất chuyển và thưởng trung bình của mỗi trạng thái.
+5. Từ bảng đã gộp, định nghĩa chuỗi Markov và MRP cảm sinh; sau đó mới viết Bellman bằng ma trận.
+6. Kiểm tra bằng hành động chưa dùng trong chính sách và bằng một hàng chuyển.
+
+**Chu trình học:** vấn đề và ví dụ 06-01/02 → phép giải cụ thể 06-03 → ứng dụng/kiểm nghiệm 06-04 → ví dụ rút gọn mô hình 06-05 → hình thức MRP và ma trận 06-06/07 → kiểm tra 06-08. Phần này có hai cụm gắn nhau: giải một MDP nhỏ và khái quát phép tính thành mô hình đã gộp. Tổng 25 phút.
+
+### L03R-06-01 — Đánh giá một chính sách từ mô hình
+
+Thời lượng: 1 phút. Vai trò: tiêu đề phần.
+
+**Mặt slide:** tên phần; hai trạng thái H và L, mỗi trạng thái có một ô giá trị chưa biết. Câu dẫn “Hai trạng thái, hai giá trị cần tìm”.
+
+**Cách thể hiện:** quay về hình robot của phần 1; giữ bảng chính sách nhỏ và $\gamma=1/2$ để xác định rõ bài toán.
+
+**Ghi chú và cầu nối:** không ước lượng từ các lần chạy và không tìm chính sách tối ưu trong phép tính này. Dữ kiện đầu vào là mô hình đầy đủ và chính sách; đầu ra là giá trị kỳ vọng đúng của từng trạng thái trong mô hình đó.
+
+**Nguồn:** vận dụng SB (3.14); PPTX47–48.
+
+### L03R-06-02 — Hệ Bellman của robot
+
+Thời lượng: 3 phút. Vai trò: lập hệ từ hình.
+
+**Mặt slide:** đặt $v_H=v_\pi(\mathrm H)$, $v_L=v_\pi(\mathrm L)$. Tại H luôn Tìm; tại L chọn Chờ/Sạc như trước:
+
+$$\begin{aligned}
+v_H&=2+\frac12\left(\frac12v_H+\frac12v_L\right),\\
+v_L&=\frac12\left(1+\frac12v_L\right)
++\frac12\left(0+\frac12v_H\right).
+\end{aligned}$$
+
+**Cách thể hiện:** đọc cây H và viết phương trình thứ nhất; đọc lại cây L của 05-02 và viết phương trình thứ hai. Đặt nhãn “chính sách”, “chuyển trạng thái”, “chiết khấu” vào các hệ số tương ứng trong lúc xây từng phương trình.
+
+**Giải thích và cầu nối:** ở H, hành động có xác suất 1 nhưng môi trường chia hai kết quả. Ở L, chính sách chia hai hành động, mỗi hành động có kết quả chắc chắn. Cả hai trường hợp dẫn tới giá trị tương lai có cùng hai ẩn. Không thay $v_L$ bằng thưởng chờ 1. Hai phương trình cần được giải đồng thời.
+
+**Nguồn:** chuyên biệt SB (3.14) theo dữ kiện đã công bố.
+
+### L03R-06-03 — Giải hai phương trình giá trị
+
+Thời lượng: 4 phút. Vai trò: biến đổi đại số đầy đủ.
+
+**Mặt slide:** khai triển hai phương trình, cùng hệ số của phần tương lai:
+
+$$\begin{aligned}
+v_H&=2+\frac14v_H+\frac14v_L,\\
+v_L&=\frac12+\frac14v_H+\frac14v_L.
+\end{aligned}$$
+
+Trừ phương trình thứ hai khỏi phương trình thứ nhất:
+
+$$v_H-v_L=\frac32.$$
+
+Thế $v_H=v_L+3/2$ vào phương trình thứ hai:
+
+$$v_L=\frac12+\frac14\left(v_L+\frac32\right)+\frac14v_L
+=\frac78+\frac12v_L.$$
+
+Suy ra $v_L=7/4$ và $v_H=13/4$.
+
+**Cách thể hiện:** giữ hai phương trình ở đầu; khi hiện phép thế, thay vùng giải thích bên dưới thay vì tích lũy toàn bộ chữ. Kết quả cuối nằm trong hai ô H/L đã mở ở 06-01.
+
+**Giải thích và kiểm lại:** $13/4=2+(1/4)(13/4+7/4)$ và $7/4=1/2+(1/4)(13/4+7/4)$. Cả hai đúng. $13/4$ là giá trị toàn tương lai, khác $21/8$ của hai bước đầu; không dùng kết quả hữu hạn đó thay cho nghiệm Bellman.
+
+**Nguồn:** phép giải hệ do người soạn tính từ ví dụ; không gán nghiệm số cho sách.
+
+### L03R-06-04 — Kiểm tra giá trị bằng các hành động
+
+Thời lượng: 4 phút. Vai trò: áp dụng $q$ theo $v$ và kiểm tra $v$ theo $q$.
+
+**Mặt slide:** dùng nghiệm vừa tìm:
+
+$$q_\pi(\mathrm L,\mathrm{cho})=1+\frac12\,\frac74=\frac{15}{8},$$
+$$q_\pi(\mathrm L,\mathrm{sac})=0+\frac12\,\frac{13}{4}=\frac{13}{8}.$$
+
+Lấy trung bình theo chính sách:
+
+$$v_\pi(\mathrm L)=\frac12\,\frac{15}{8}+\frac12\,\frac{13}{8}=\frac74.$$
+
+**Cách thể hiện:** thay giá trị vào đúng hai hộp tương lai trên cây L; lần lượt hiện phép tính từng hành động, rồi lấy trung bình hai kết quả. Không đưa bảng tất cả năm $q$ cùng lúc.
+
+**Giải thích và cầu nối:** Chờ một lần rồi theo $\pi$ có giá trị cao hơn Sạc một lần rồi theo $\pi$ trong ví dụ này. Đây là so sánh với phần tiếp diễn cố định; chưa chứng minh chính sách nào tối ưu. Cả hai cách tính giá trị L trùng nhau. Có thể gộp luôn các nhánh hành động để tính trực tiếp từ trạng thái sang trạng thái.
+
+**Nguồn:** vận dụng SB bài tập 3.12–3.13.
+
+### L03R-06-05 — Gộp các nhánh dưới chính sách
+
+Thời lượng: 3 phút. Vai trò: ví dụ số cho MRP cảm sinh.
+
+**Mặt slide:** tại H, hai kết quả của Tìm có xác suất $1/2$ và thưởng 2. Tại L, Chờ đưa về L với xác suất $1/2$, Sạc đưa về H với xác suất $1/2$; thưởng trung bình bằng $(1/2)1+(1/2)0=1/2$.
+
+| Hiện tại | Kế tiếp H | Kế tiếp L | Thưởng trung bình một bước |
+|---|---:|---:|---:|
+| H | $1/2$ | $1/2$ | $2$ |
+| L | $1/2$ | $1/2$ | $1/2$ |
+
+**Cách thể hiện:** bên trái là hai tầng chọn hành động/phản hồi; bên phải là hai trạng thái nối trực tiếp. Gộp từng đường đi, rồi mới hiện bảng. Thưởng trung bình đặt tại hàng trạng thái, không gắn $1/2$ thành thưởng thực tế của từng nhánh L.
+
+**Giải thích và cầu nối:** chính sách đã được lấy trung bình vào các trọng số; tính ngẫu nhiên vẫn còn. Bảng phụ thuộc chính sách cụ thể đang dùng. Việc chỉ còn trạng thái và chuyển tiếp dẫn đến tên gọi chuỗi Markov; giữ cả thưởng cho quá trình phần thưởng Markov.
+
+**Nguồn:** hệ quả SB (3.4)–(3.5), §3.5; hw02 bài 4.
+
+### L03R-06-06 — Chuỗi Markov và MRP dưới chính sách
+
+Thời lượng: 4 phút. Vai trò: hình thức hóa phép gộp.
+
+**Mặt slide:** ma trận chuyển dưới chính sách có phần tử
+
+$$P^\pi_{ss'}=\sum_{a\in\mathcal A(s)}\pi(a\mid s)p(s'\mid s,a),$$
+
+và thưởng trung bình của trạng thái là
+
+$$r^\pi(s)=\sum_{a\in\mathcal A(s)}\pi(a\mid s)r(s,a).$$
+
+Giữ trạng thái và chuyển tiếp: chuỗi Markov $(\mathcal S,P^\pi)$. Giữ thêm thưởng và chiết khấu: MRP $(\mathcal S,P^\pi,r^\pi,\gamma)$.
+
+**Cách thể hiện:** gắn mỗi công thức với một cột của bảng vừa tính. Hàng L cho $P^\pi_{LH}=P^\pi_{LL}=1/2$, $r^\pi(L)=1/2$. Mỗi hàng của $P^\pi$ tổng bằng 1.
+
+**Giải thích và cầu nối:** hai công thức chỉ lấy trung bình những đại lượng đã định nghĩa ở 02-05. Chính sách Markov dừng làm phân phối phản hồi sau khi gộp chỉ phụ thuộc trạng thái hiện tại; vì vậy quá trình trạng thái vẫn Markov. $r^\pi$ lưu kỳ vọng thưởng cần cho bài toán giá trị; không mô tả đầy đủ phân phối thưởng. Chuỗi Markov và MRP không có một quyết định hành động mới ngoài chính sách đã gộp. Bellman của chúng chính là hệ vừa giải.
+
+**Nguồn:** suy ra từ SB (3.4)–(3.5), (3.14); khái niệm tương ứng PPTX30,34; hw02 bài 4. Không gán số phương trình SB cho định nghĩa bộ MRP.
+
+### L03R-06-07 — Bellman dưới dạng ma trận
+
+Thời lượng: 3 phút. Vai trò: khái quát hệ phương trình và xác định điều kiện giải.
+
+**Mặt slide:** chọn thứ tự trạng thái H, L; tổng quát có $n$ trạng thái. $v,r^\pi\in\mathbb R^n$ là véc-tơ cột, $P^\pi\in\mathbb R^{n\times n}$, $I$ là ma trận đơn vị. Gộp hai nhóm số hạng trong Bellman đã suy ra:
+
+$$v_\pi(s)=r^\pi(s)+\gamma\sum_{s'}P^\pi_{ss'}v_\pi(s'),$$
+$$v=r^\pi+\gamma P^\pi v
+\quad\Longleftrightarrow\quad (I-\gamma P^\pi)v=r^\pi.$$
+
+Với robot, hệ đó là
+
+$$\begin{pmatrix}3/4&-1/4\\-1/4&3/4\end{pmatrix}
+\begin{pmatrix}v_H\\v_L\end{pmatrix}
+=\begin{pmatrix}2\\1/2\end{pmatrix}.$$
+
+**Cách thể hiện:** tô một hàng để đối chiếu với phương trình H ở 06-03, rồi hàng L. Phép nhân $P^\pi v$ là các tổng có trọng số vừa học, không thêm quy tắc cập nhật mới. Công thức tổng quát xuất hiện trước ví dụ ma trận; ví dụ hệ số đã được chuẩn bị bằng hai phương trình và bảng ở các trang trước.
+
+**Giải thích và điều kiện:** đầu vào gồm mô hình, chính sách và $\gamma$; tính $P^\pi,r^\pi$ rồi giải hệ cho $v$. Với ma trận xác suất hữu hạn và $0\le\gamma<1$, hệ có nghiệm duy nhất; có thể viết $v=(I-\gamma P^\pi)^{-1}r^\pi$. Chứng minh ngắn và trường hợp $\gamma=1$ đặt trong phụ lục ghi chú của storyboard, không dùng kết luận không điều kiện. Với ma trận đặc, giải trực tiếp thường tốn $O(n^3)$ phép tính; các phương pháp lặp sẽ học ở Bài 04. Trang chính ưu tiên lập hệ, không dạy thuật toán khử mới.
+
+**Nguồn:** dạng ma trận suy ra từ SB (3.14); PPTX47–48.
+
+### L03R-06-08 — Câu hỏi kiểm tra
+
+Thời lượng: 3 phút. Vai trò: kiểm tra tính giá trị và rút gọn mô hình.
+
+**Mặt slide — Câu hỏi:** cho lại $v_H=13/4$, $v_L=7/4$, $\gamma=1/2$ và hai nhánh L–Tìm.
+
+1. Tính $q_\pi(\mathrm L,\mathrm{tim})$, dù chính sách đang dùng không chọn hành động đó tại L.
+2. Từ bảng chính sách, tính hàng chuyển và thưởng trung bình của trạng thái L.
+3. Nếu đổi chính sách, những đại lượng nào trong $p,P^\pi,r^\pi,v_\pi$ cần tính lại?
+
+**Ghi chú đáp án:**
+
+$$q_\pi(\mathrm L,\mathrm{tim})=
+\frac12\left(2+\frac12\,\frac74\right)
++\frac12\left(-3+\frac12\,\frac{13}{4}\right)=\frac34.$$
+
+Hàng L là $(1/2,1/2)$, thưởng trung bình $1/2$. Khi đổi chính sách, giữ mô hình $p$; phải xét lại $P^\pi,r^\pi,v_\pi$. Không khẳng định mọi thay đổi chính sách luôn làm mọi số đổi. **Câu nối:** “Một bài toán đánh giá chính sách đã được giải trọn từ mô hình đến giá trị; phần cuối nối lại các bước và chuyển sang bài tập.”
+
+**Nguồn:** vận dụng SB §3.5; hw02 bài 4, 7, 8.
