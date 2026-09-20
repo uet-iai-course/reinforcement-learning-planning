@@ -3,7 +3,7 @@
 <circle cx="110" cy="100" r="20" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/><text x="110" y="155" font-size="28" text-anchor="middle">Bắt đầu</text>
 <path d="M135 100H360M415 100H610" stroke="#2F3E7A" stroke-width="3" marker-end="url(#episode-arrow)"/><circle cx="385" cy="100" r="20" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/><text x="385" y="155" font-size="28" text-anchor="middle">Di chuyển</text>
 <rect x="620" y="65" width="135" height="70" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/><text x="687" y="110" font-size="30" text-anchor="middle">Đích</text><text x="687" y="165" font-size="28" text-anchor="middle">Kết thúc ở T</text>
-<path d="M765 100H1060" stroke="#424954" stroke-dasharray="7 6" stroke-width="2"/><text x="925" y="88" font-size="30" text-anchor="middle">0, 0, 0, …</text><text x="925" y="155" font-size="28" text-anchor="middle">Thưởng 0 đệm</text>
+<path d="M765 100H1060" stroke="#424954" stroke-dasharray="7 6" stroke-width="2"/><text x="925" y="88" font-size="30" text-anchor="middle">0, 0, 0, …</text><text x="925" y="155" font-size="28" text-anchor="middle">Đệm 0 sau T</text>
 <text x="30" y="215" font-size="30" fill="#B15A2B">Robot tiếp diễn</text>
 <path d="M150 275H430M510 275H810M890 275H1060" stroke="#2F3E7A" stroke-width="3" marker-end="url(#episode-arrow)"/>
 <circle cx="110" cy="275" r="35" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/><text x="110" y="286" font-size="32" text-anchor="middle">L</text>

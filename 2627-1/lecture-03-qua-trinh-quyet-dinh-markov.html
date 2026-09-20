@@ -61,7 +61,7 @@
   </div>
   <p>Mở rộng theo thời gian: $S_0, A_0, R_1, S_1, A_1, R_2, S_2, \ldots$</p>
   <aside class="notes">
-    <p>Từng trường của bộ dữ liệu được gắn chỉ số thời gian: $S_t$ là trạng thái tại thời điểm quyết định $t$, $A_t$ là hành động chọn tại đó. Phần thưởng mang chỉ số $t+1$ vì nó xuất hiện sau khi hành động $A_t$ đã được thực hiện — đây là quy ước ghi của Sutton và Barto, giúp chuỗi $S_0,A_0,R_1,S_1,\ldots$ xen kẽ đều nhau.</p>
+    <p>Từng trường của bộ dữ liệu được gắn chỉ số thời gian: $S_t$ là trạng thái tại thời điểm quyết định $t$, $A_t$ là hành động chọn tại đó. Phần thưởng mang chỉ số $t+1$ vì nó xuất hiện sau khi hành động $A_t$ đã được thực hiện — đây là quy ước ghi của Sutton và Barto, giúp chuỗi $S_0,A_0,R_1,S_1,\ldots$ xen kẽ đều nhau. Ký hiệu ngắn $\mathrm{tim}$, $\mathrm{cho}$, $\mathrm{sac}$ là nhãn toán cho các hành động Tìm, Chờ, Sạc.</p>
     <p>Kết quả trên là một mẫu đơn lẻ được chọn làm ví dụ minh họa trong lớp, chưa phải quy luật xác suất. Lịch sử của robot nối các mẫu này theo thứ tự thời gian.</p>
   <p class="note-source">Nguồn: Sutton và Barto, Reinforcement Learning: An Introduction, ấn bản 2, (3.1), tr.48; số thưởng là ví dụ minh họa.</p>
   </aside>
@@ -143,7 +143,7 @@
 <tr><td>Pin thấp</td><td>Sạc</td><td>Pin cao</td><td>0</td><td>1</td></tr>
 </tbody>
 </table>
-<p class="caption">Với mỗi cặp trạng thái–hành động hợp lệ, tổng xác suất các phản hồi bằng 1. Ví dụ số theo Sutton–Barto; thưởng cố định trên mỗi nhánh.</p>
+<p class="caption">Với mỗi cặp trạng thái–hành động hợp lệ, tổng xác suất các phản hồi bằng 1. Pin cao–Sạc không hợp lệ.</p>
 <aside class="notes">
 <p>Bảng bảy hàng này chuyển cây phản hồi thành dữ liệu mô hình. Các hàng có cùng cặp hiện tại–hành động tạo thành một nhóm; tổng xác suất của mỗi nhóm bằng 1: hai hàng 1/2 cộng lại là 1, hàng đơn có xác suất 1. Bảng chỉ ghi các kết quả có xác suất dương trong các cặp hợp lệ; cặp Pin cao–Sạc không hợp lệ nên không có hàng nào, vì Sạc chỉ có ở pin thấp. Tập hành động phụ thuộc mức pin: ở pin cao chỉ có Tìm và Chờ, ở pin thấp thêm Sạc. Chờ giữ nguyên mức pin và nhận 1; Sạc từ pin thấp chủ động đưa robot về pin cao và nhận 0, khác với cứu hộ thụ động nhận −3. Sách cho thưởng kỳ vọng trên nhánh; để xác định phân phối chung trong ví dụ số này, ta giả sử thưởng cố định trên mỗi nhánh.</p>
 <p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, ví dụ 3.3, tr. 52–53; tinh thần bài tập 3.4.</p>
@@ -209,7 +209,7 @@ $$\phantom{r(s,a)}=\sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}r\,p(s',r\mid s,a)
 <li>Thưởng trung bình sau L–Tìm bằng bao nhiêu? Robot có lần nào nhận đúng điểm đó?</li>
 <li>Nếu thưởng là $-3$ sau L–Tìm, trạng thái kế tiếp là gì? Thưởng và trạng thái mới có độc lập không?</li>
 </ol>
-<table style="margin:0.5em auto 0; font-size:32px;">
+<table style="margin:0 auto; font-size:32px;">
 <thead><tr><th>Hiện tại</th><th>Hành động</th><th>Kế tiếp</th><th>Thưởng</th><th>Xác suất</th></tr></thead>
 <tbody>
 <tr><td>L</td><td>Sạc</td><td>H</td><td>0</td><td>1</td></tr>
@@ -243,7 +243,7 @@ $$\phantom{r(s,a)}=\sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}r\,p(s',r\mid s,a)
   <h2>Nhiệm vụ có kết thúc và nhiệm vụ tiếp diễn</h2>
   <img src="img/lec-03/robot-p03-episodic-continuing.svg" class="figure" alt="Lượt đi đến đích kết thúc ở T rồi đệm thưởng0; robot L sạc về H rồi tiếp tục tìm và hoạt động"/>
   <div class="box">
-    <p>Trong lượt có kết thúc, $T$ là thời điểm kết thúc của lượt ấy. Trong mô hình đang xét, nhiệm vụ tiếp diễn không có điểm dừng nên $T=\infty$.</p>
+    <p>$T$ là thời điểm kết thúc một lượt. Robot là nhiệm vụ tiếp diễn, nên $T=\infty$.</p>
   </div>
   <aside class="notes">
     <p>Một lượt (episode) kết thúc ở thời điểm $T$ tại trạng thái kết thúc. Sau đích, dãy thưởng được đệm bằng 0: đây là quy ước toán học về trạng thái hấp thụ của chính lượt đã kết thúc, giúp viết công thức tổng thống nhất cho cả hai loại bài toán. Các số 0 kéo dài biểu diễn toán học của lượt cũ. Phần thưởng của một lượt mới được tính trong một tổng riêng.</p>
@@ -255,10 +255,10 @@ $$\phantom{r(s,a)}=\sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}r\,p(s',r\mid s,a)
 <section data-slide-id="L03R-03-03">
   <h2>Điểm thưởng ở các thời điểm</h2>
   <img src="img/lec-03/robot-p03-discounted-bands.svg" class="figure short" alt="Hai đoạn ba thưởng:0,2,2 và1,1,1; trọng số tương ứng1,1/2,1/4"/>
-  <div class="math-large">
+  <div class="math-large" style="margin:.2em 0">
     $$\begin{aligned}0+\frac12\cdot2+\frac14\cdot2&=\frac32,\\1+\frac12\cdot1+\frac14\cdot1&=\frac74.\end{aligned}$$
   </div>
-  <p>Với $\gamma=1/2$, trọng số giảm một nửa sau mỗi bước.</p>
+  <p>Hệ số chiết khấu $\gamma=1/2$ làm trọng số giảm một nửa mỗi bước.</p>
   <aside class="notes">
     <p>Từ L, dãy $(0,2,2)$ là một tiền tố ba bước có thể xảy ra theo đường cụ thể L --Sạc/0--&gt; H --Tìm/+2--&gt; H --Tìm/+2--&gt; L: Sạc nhận 0, hai lần Tìm từ pin cao mỗi lần nhận +2. Đây chỉ là một đường khả dĩ, không phải kết quả tất nhiên của việc chọn Sạc rồi Tìm hai lần: lần Tìm đầu có thể đưa robot về pin thấp, và lần Tìm tiếp theo từ pin thấp có thể phát sinh cứu hộ. Chờ ba lần giữ nguyên pin thấp nên dãy $(1,1,1)$ là tất định.</p>
     <p>Với trọng số $1,1/2,1/4$, hai dãy cho $3/2$ và $7/4$: thưởng đến muộn bị giảm giá theo $\gamma=1/2$. So sánh này chỉ đối chiếu hai dãy thưởng cụ thể, không suy ra chính sách nào tốt hơn: một tiền tố ba bước mẫu không quyết định giá trị toàn tương lai của chính sách.</p>
@@ -277,7 +277,7 @@ $$\phantom{r(s,a)}=\sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}r\,p(s',r\mid s,a)
   <p>Với bài có lượt: $\mathcal S$ gồm trạng thái chưa kết thúc; $\mathcal S^+$ thêm trạng thái kết thúc. Tại đó, $G_T=0$.</p>
   <aside class="notes">
     <p>Đại lượng $G_t$ cộng các thưởng nhận được sau thời điểm $t$, tức bắt đầu từ $R_{t+1}$ với trọng số $\gamma^0=1$. Trong tổng thứ nhất, chỉ số $k$ chạy trên thời điểm nên mũ là $k-t-1$; trong tổng thứ hai, chỉ số $k$ chạy trên khoảng cách nên mũ là $k$ và thưởng là $R_{t+k+1}$. Hai tổng cùng bắt đầu bằng $R_{t+1}$ và bằng nhau khi dãy thưởng được đệm 0 sau $T$, vì các số hạng $\gamma^{k}R_{t+k+1}$ với $k\ge T-t$ đều triệt tiêu.</p>
-    <p>Việc đệm 0 sau thời điểm $T$ là quy ước trạng thái hấp thụ của chính lượt đã kết thúc, không thêm quyết định hay phần thưởng mới của tác tử. Với $\gamma\in[0,1]$, tổng hình học $\sum\gamma^k$ hội tụ khi $\gamma<1$; trong nhiệm vụ tiếp diễn của bài, thưởng bị chặn và $\gamma<1$ bảo đảm tổng hữu hạn. Với bài có lượt, trạng thái kết thúc được thêm vào tập trạng thái qua $\mathcal S^+$ và $G_T=0$ vì không còn thưởng nào sau $T$.</p>
+    <p>Việc đệm 0 sau thời điểm $T$ là quy ước trạng thái hấp thụ của chính lượt đã kết thúc, không thêm quyết định hay phần thưởng mới của tác tử. Với $\gamma\in[0,1]$, tổng hình học $\sum\gamma^k$ hội tụ khi $\gamma<1$; trong nhiệm vụ tiếp diễn của bài, thưởng bị chặn và $\gamma<1$ bảo đảm tổng hữu hạn. Với bài có lượt, trạng thái kết thúc được thêm vào tập trạng thái qua $\mathcal S^+$ và $G_T=0$ vì không còn thưởng nào sau $T$. Lưu ý: $R_T$ có thể khác 0, còn $G_T=0$ đo phần thưởng nhận sau thời điểm $T$.</p>
     <p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, (3.7)–(3.8), (3.11), tr. 54–57.</p>
   </aside>
 </section>
@@ -291,8 +291,7 @@ $$\phantom{r(s,a)}=\sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}r\,p(s',r\mid s,a)
     $$\lvert G_t\rvert\le\sum_{k=0}^{\infty}\gamma^k M=\frac{M}{1-\gamma}.$$
   </div>
   
-  <div class="box">
-    <p>Robot có $M=3$ và $\gamma=1/2$, nên $|G_t|\le 6$ với mọi quỹ đạo. Đây là cận trị tuyệt đối, không phải giá trị chính xác.</p>
+  <div class="box" style="padding:.3em .7em"><p style="margin:0">Robot có $M=\max_{r\in\mathcal R}|r|=3$ và $\gamma=1/2$, nên $|G_t|\le 6$ với mọi quỹ đạo. Đây là cận trị tuyệt đối, không phải giá trị chính xác.</p>
   </div>
   <aside class="notes">
     <p>$M$ là cận trị tuyệt đối của phần thưởng từng bước, không phải một giá trị cụ thể. Nếu mọi thưởng bị chặn $|R_t|\le M$ và $0\le\gamma<1$ thì theo bất đẳng thức tam giác, $|G_t|\le\sum\gamma^k M=M/(1-\gamma)$, vì $\sum_{k=0}^{\infty}\gamma^k=1/(1-\gamma)$ hội tụ khi $\gamma<1$. Hình minh họa tổng hình học với mức thưởng 1: các đoạn có độ dài tỉ lệ $1:1/2:1/4$ nên tổng tiến tới $1/(1-1/2)=2$. Chuyển từ mức 1 sang cận $M$ chỉ thay độ dài các đoạn; công thức cho cận, không cho giá trị của robot.</p>
@@ -311,7 +310,7 @@ $$\phantom{r(s,a)}=\sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}r\,p(s',r\mid s,a)
   </ol>
   <aside class="notes">
     <p>Đáp án. 1. Không: Sạc chủ động nhận 0 và nhiệm vụ tiếp diễn không có thời điểm kết thúc; về pin cao chỉ là thay đổi trạng thái. 2. Điểm của đoạn là $0+\frac12\cdot2+\frac14\cdot2=3/2$; khi $\gamma=0$, chỉ số hạng đầu còn lại, và nó bằng 0. 3. Không: 6 là cận trị tuyệt đối $|G_t|\le M/(1-\gamma)$ với $M=3$, $\gamma=1/2$, tức $-6\le G_t\le 6$ trên mọi quỹ đạo; tổng trên mỗi quỹ đạo nằm trong khoảng này, không nhất thiết bằng 6.</p>
-    <p>Cùng bắt đầu từ một trạng thái vẫn có nhiều tổng thưởng; cách chọn hành động và ngẫu nhiên của môi trường quyết định phân phối của chúng.</p>
+    <p>Muốn lấy kỳ vọng của $G_t$, cần xác định cách chọn hành động ở mỗi trạng thái.</p>
     <p class="note-source">Nguồn: vận dụng Sutton và Barto, ấn bản 2, §3.3–3.4.</p>
   </aside>
 </section>
@@ -323,7 +322,7 @@ $$\phantom{r(s,a)}=\sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}r\,p(s',r\mid s,a)
 <p>Tổng thưởng còn phụ thuộc cách chọn hành động.</p>
 <img src="img/lec-03/robot-p04-policy-choices.svg" class="figure" alt="Robot ở trạng thái pin thấp L với ba lựa chọn hành động"/>
 <aside class="notes">
-    <p>Bảng xác suất chuyển tiếp $p$ ở phần trước chỉ mô tả điều xảy ra sau khi một hành động đã được chọn. Muốn nói đến trung bình của tổng thưởng trên nhiều quỹ đạo, trước hết phải biết các hành động trên những quỹ đạo đó được chọn theo quy tắc nào: quy tắc đó được gọi là chính sách.</p>
+    <p>Bảng xác suất phản hồi $p$ ở phần trước chỉ mô tả điều xảy ra sau khi một hành động đã được chọn. Muốn nói đến trung bình của tổng thưởng trên nhiều quỹ đạo, trước hết phải biết các hành động trên những quỹ đạo đó được chọn theo quy tắc nào: quy tắc đó được gọi là chính sách.</p>
     <p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, §3.5, tr. 58.</p>
   </aside>
 </section>
@@ -346,11 +345,10 @@ $$\phantom{r(s,a)}=\sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}r\,p(s',r\mid s,a)
 
 <section data-slide-id="L03R-04-03">
   <h2>Chính sách là phân phối trên hành động</h2>
-  <p>Ví dụ: $\pi(\mathrm{cho}\mid \mathrm L)=1/2$ và $\pi(\mathrm{sac}\mid \mathrm L)=1/2$, còn $\pi(\mathrm{tim}\mid \mathrm H)=1$.</p>
-  <div class="math-large">
+  <div class="math-large" style="margin:.2em 0">
     $$\pi(a\mid s)=\Pr(A_t=a\mid S_t=s).$$
   </div>
-  <div class="math-large">
+  <div class="math-large" style="margin:.2em 0">
     $$\pi(a\mid s)\ge 0,\qquad \sum_{a\in\mathcal A(s)}\pi(a\mid s)=1.$$
   </div>
   <img src="img/lec-03/robot-p04-two-layers.svg" class="figure short" alt="Tại L, chính sách chọn Chờ hoặc Sạc mỗi1/2. Chờ chắc chắn đưa về L với thưởng1; Sạc chắc chắn đưa về H với thưởng0."/>
@@ -366,7 +364,7 @@ $$\phantom{r(s,a)}=\sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}r\,p(s',r\mid s,a)
   <img src="img/lec-03/robot-p04-two-step-tree.svg" class="figure" alt="Từ H chọn Tìm thưởng2; bước1 tới H hoặc L mỗi nơi1/2. Nếu H, bước2 Tìm thưởng2: điểm3, xác suất1/2. Nếu L, Chờ hoặc Sạc mỗi1/2: điểm5/2 hoặc2, xác suất mỗi nhóm1/4."/>
   <div class="math-large">$$\mathbb E_\pi[G_0^{[2]}\mid S_0=\mathrm H]=\frac12\,3+\frac14\,\frac52+\frac14\,2=\frac{21}{8}.$$</div>
   <aside class="notes">
-    <p>Xác suất của một nhánh hai bước là tích của hệ số chọn hành động và hệ số phản hồi môi trường. Nhánh Tìm ở bước hai dẫn tới H hoặc L với xác suất 1/2 mỗi trạng thái, nhưng cả hai đều cho thưởng 2, nên $G_0^{[2]}=2+(1/2)\cdot 2=3$ như nhau; nhóm hai trạng thái cuối này mang xác suất $(1/2)(1/2)+(1/2)(1/2)=1/2$, vì mỗi đường đến một trạng thái cuối có xác suất $(1/2)\cdot(1/2)=1/4$ và hai đường như nhau gộp lại thành 1/2. Nhánh Chờ: chọn Chờ với xác suất 1/2, môi trường phản hồi tất định với hệ số 1, nên xác suất nhánh là $(1/2)\cdot(1/2)\cdot 1=1/4$, và $G_0^{[2]}=2+(1/2)\cdot 1=5/2$. Nhánh Sạc: chọn Sạc với xác suất 1/2, phản hồi tất định, nên xác suất nhánh là $(1/2)\cdot(1/2)\cdot 1=1/4$, và $G_0^{[2]}=2+(1/2)\cdot 0=2$. Ký hiệu $\mathbb E_\pi$ lấy trung bình theo cả chính sách và môi trường, với trọng số 1/2, 1/4, 1/4 của ba nhóm. Kết quả $21/8$ là kỳ vọng của đúng hai bước đầu, chưa phải giá trị toàn tương lai $v_\pi(\mathrm H)$.</p>
+    <p>Xác suất của một nhánh hai bước là tích của hệ số chọn hành động và hệ số phản hồi môi trường. Nhánh Tìm ở bước hai dẫn tới H hoặc L với xác suất 1/2 mỗi trạng thái, nhưng cả hai đều cho thưởng 2, nên $G_0^{[2]}=2+(1/2)\cdot 2=3$ như nhau; nhóm hai trạng thái cuối này mang xác suất $(1/2)(1/2)+(1/2)(1/2)=1/2$, vì mỗi đường đến một trạng thái cuối có xác suất $(1/2)\cdot(1/2)=1/4$ và hai đường như nhau gộp lại thành 1/2. Nhánh Chờ: chọn Chờ với xác suất 1/2, môi trường phản hồi tất định với hệ số 1, nên xác suất nhánh là $(1/2)\cdot(1/2)\cdot 1=1/4$, và $G_0^{[2]}=2+(1/2)\cdot 1=5/2$. Nhánh Sạc: chọn Sạc với xác suất 1/2, phản hồi tất định, nên xác suất nhánh là $(1/2)\cdot(1/2)\cdot 1=1/4$, và $G_0^{[2]}=2+(1/2)\cdot 0=2$. Lưu ý: nhãn 1 giữa H và Tìm là xác suất chính sách chọn Tìm ở bước 2, không phải hệ số nhân trả thưởng; các kết quả H/L ở bước 2 được gộp vì cùng cho thưởng 2. Ở nhánh Chờ: 1/2 đầu là xác suất môi trường bước 1 (H→L), 1/2 sau là xác suất chính sách chọn Chờ ở bước 2, rồi 1 là phản hồi tất định; nhánh Sạc tương tự. Ký hiệu $\mathbb E_\pi$ lấy trung bình theo cả chính sách và môi trường, với trọng số 1/2, 1/4, 1/4 của ba nhóm. Kết quả $21/8$ là kỳ vọng của đúng hai bước đầu, chưa phải giá trị toàn tương lai $v_\pi(\mathrm H)$.</p>
     <p class="note-source">Nguồn: phép tính từ đặc tả robot của bài; trực giác kỳ vọng theo Sutton và Barto, ấn bản 2, (3.12).</p>
   </aside>
 </section>
@@ -376,7 +374,7 @@ $$\phantom{r(s,a)}=\sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}r\,p(s',r\mid s,a)
   <div class="math-large">
     $$v_\pi(s)=\mathbb E_\pi\!\left[G_t\mid S_t=s\right].$$
   </div>
-  <p>Với robot, $v_\pi(\mathrm H)$ là kỳ vọng tổng thưởng toàn tương lai khi bắt đầu pin cao và chọn hành động theo $\pi$.</p>
+  <p>$v_\pi(\mathrm H)$ là tổng thưởng kỳ vọng từ pin cao khi robot theo $\pi$.</p>
   <p>$G_t$ là tổng thưởng trên một quỹ đạo, còn $v_\pi(s)$ là kỳ vọng theo xác suất do mô hình và chính sách sinh ra.</p>
   <img src="img/lec-03/robot-p04-continuing-branches.svg" class="figure short" alt="Hai nhánh hai bước được kéo dài bằng dấu tiếp diễn để chỉ toàn quỹ đạo"/>
   <aside class="notes">
@@ -402,7 +400,7 @@ $$\phantom{r(s,a)}=\sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}r\,p(s',r\mid s,a)
     $$q_\pi(s,a)=\mathbb E_\pi\!\left[G_t\mid S_t=s,\,A_t=a\right],
     \qquad a\in\mathcal A(s).$$
   </div>
-  <p>So với $v_\pi(s)$, khác biệt duy nhất là cách xác định hành động đầu tiên: $v_\pi$ để chính sách chọn, $q_\pi$ ấn định hành động rồi để chính sách quyết định từ bước kế tiếp.</p>
+  <p>So với $v_\pi(s)$, khác biệt duy nhất là cách xác định hành động đầu tiên: $v_\pi$ để chính sách chọn, $q_\pi$ ấn định hành động rồi để chính sách quyết định từ bước kế tiếp. Quy ước này áp dụng cả khi $\pi(a\mid s)=0$.</p>
   <aside class="notes">
     <p>Định nghĩa $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s, A_t=a]$ với $a\in\mathcal A(s)$ được hiểu theo thí nghiệm ấn định hành động đầu: hành động đầu là $a$, mọi hành động về sau được rút theo $\pi$. Ký hiệu kỳ vọng điều kiện ở đây là quy ước của thí nghiệm, không phải phép chia cho $\Pr(A_t=a\mid S_t=s)$; do đó định nghĩa vẫn có nghĩa khi $\pi(a\mid s)=0$, chẳng hạn $q_\pi(\mathrm L,\mathrm{tim})$ dù $\pi(\mathrm{tim}\mid\mathrm L)=0$. $q_\pi$ tính cả toàn bộ tương lai sau bước đầu, nên không đồng nhất với thưởng kỳ vọng tức thời $r(s,a)$. Trạng thái kết thúc không còn hành động nào cần đánh giá. Hai hàm $v_\pi$ và $q_\pi$ là hai cách đọc cùng một phép trung bình, sẽ gặp lại trong phương trình Bellman.</p>
     <p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, (3.13), tr. 58; quy ước hành động đầu do bài làm rõ.</p>
@@ -482,7 +480,7 @@ v_\pi(s)&=\mathbb E_\pi\bigl[R_{t+1}+\gamma G_{t+1}\mid S_t=s\bigr]\\
 \end{aligned}$$
 </div>
 <aside class="notes">
-<p>Đây là tầng kỳ vọng thứ nhất: kỳ vọng toàn phần theo hành động đầu, không phải chọn hành động có giá trị lớn nhất. Xác suất toàn phần tách kỳ vọng theo biến rời rạc $A_t$ thành tổng có trọng số $\pi(a\mid s)$; bên trong mỗi nhóm, mô hình vẫn ngẫu nhiên nên kỳ vọng chưa được tính. Các hành động có trọng số $\pi(a\mid s)=0$ không đóng góp vào tổng, nhưng kỳ vọng sau hành động đó vẫn có định nghĩa riêng theo thí nghiệm hành động đầu đã ấn định đã định nghĩa. Liên hệ với ví dụ L: hai trọng số $1/2$ ngoài ngoặc chính là hai giá trị $\pi(a\mid s)$ đầu tiên của tổng này.</p>
+<p>Đây là tầng kỳ vọng thứ nhất: kỳ vọng toàn phần theo hành động đầu, không phải chọn hành động có giá trị lớn nhất. Xác suất toàn phần tách kỳ vọng theo biến rời rạc $A_t$ thành tổng có trọng số $\pi(a\mid s)$; bên trong mỗi nhóm, mô hình vẫn ngẫu nhiên nên kỳ vọng chưa được tính. Các hành động có trọng số $\pi(a\mid s)=0$ không đóng góp vào tổng, nhưng kỳ vọng sau hành động đó vẫn có định nghĩa riêng theo thí nghiệm hành động đầu đã ấn định. Liên hệ với ví dụ L: hai trọng số $1/2$ ngoài ngoặc chính là hai giá trị $\pi(a\mid s)$ đầu tiên của tổng này.</p>
 <p class="note-source">Bước trung gian làm tường minh suy diễn phương trình (3.14) của Sutton và Barto, ấn bản 2, tr. 59.</p>
 </aside>
 </section>
@@ -500,7 +498,7 @@ $$\begin{aligned}
 \end{aligned}$$
 </div>
 <aside class="notes">
-<p>Kỳ vọng toàn phần nhóm theo cặp $(S_{t+1},R_{t+1})$ với trọng số $p(s',r\mid s,a)$. Trong một nhóm, $R_{t+1}=r$ đã cố định nên $r$ ra khỏi kỳ vọng; tuyến tính đưa $\gamma$ ra ngoài. Ở ví dụ L–Tìm, tổng là $\tfrac12[2+\gamma\,\mathbb E_\pi[G_{t+1}\mid \mathrm L,\mathrm{tim},\mathrm L,2]]+\tfrac12[-3+\gamma\,\mathbb E_\pi[G_{t+1}\mid \mathrm L,\mathrm{tim},\mathrm H,-3]]$. Lưu ý: chưa bỏ điều kiện $s,a,r$ trong kỳ vọng tương lai; chỉ các nhóm có xác suất dương cần kỳ vọng điều kiện riêng. Sai lầm phổ biến là nhân xác suất thưởng với xác suất chuyển như thể chúng độc lập — $p(s',r\mid s,a)$ là xác suất đồng thời của cặp, không cần giả thiết độc lập.</p>
+<p>Kỳ vọng toàn phần nhóm theo cặp $(S_{t+1},R_{t+1})$ với trọng số $p(s',r\mid s,a)$. Trong một nhóm, $R_{t+1}=r$ đã cố định nên $r$ ra khỏi kỳ vọng; tuyến tính đưa $\gamma$ ra ngoài. Ở ví dụ L–Tìm, tổng là $\tfrac12[2+\gamma\,\mathbb E_\pi[G_{t+1}\mid \mathrm L,\mathrm{tim},\mathrm L,2]]+\tfrac12[-3+\gamma\,\mathbb E_\pi[G_{t+1}\mid \mathrm L,\mathrm{tim},\mathrm H,-3]]$. Lưu ý: chưa bỏ điều kiện $s,a,r$ trong kỳ vọng tương lai; chỉ các nhóm có xác suất dương cần kỳ vọng điều kiện riêng. Sai lầm phổ biến là nhân xác suất thưởng với xác suất chuyển như thể chúng độc lập — $p(s',r\mid s,a)$ là xác suất đồng thời của cặp, không cần giả thiết độc lập. Quy ước viết tắt $s,a,s',r$ là viết gọn của $S_t=s, A_t=a, S_{t+1}=s', R_{t+1}=r$.</p>
 <p class="note-source">Sutton và Barto, ấn bản 2, phương trình (3.14), tr. 59; mở riêng bước kỳ vọng lặp và giữ đầy đủ điều kiện.</p>
 </aside>
 </section>
@@ -568,12 +566,11 @@ v_\pi(s)&=\sum_a\pi(a\mid s)\,\mathbb E_\pi\bigl[G_t\mid s,a\bigr]\\
 
 <section data-slide-id="L03R-05-09">
 <h2>Bellman kỳ vọng cho giá trị hành động</h2>
-<p>Tại trạng thái kế tiếp $s'$:</p>
-<div class="math-large">
+<div class="math-large" style="margin:.2em 0">
 $$v_\pi(s')=\sum_{a'\in\mathcal A(s')}\pi(a'\mid s')\,q_\pi(s',a').$$
 </div>
 <p>Thế vào phương trình của $q_\pi$:</p>
-<div class="math-large">
+<div class="math-large" style="margin:.2em 0">
 $$\begin{aligned}
 q_\pi(s,a)&=\sum_{s',r}p(s',r\mid s,a)\left[r+\gamma\, v_\pi(s')\right]\\
 &=\sum_{s',r}p(s',r\mid s,a)\left[r+\gamma\sum_{a'}\pi(a'\mid s')\,q_\pi(s',a')\right].
@@ -620,8 +617,7 @@ v_H&=2+\frac12\left(\frac12v_H+\frac12v_L\right),\\[4pt]
 v_L&=\frac12\left(1+\frac12v_L\right)+\frac12\left(0+\frac12v_H\right).
 \end{aligned}$$
 </div>
-<div class="box">
-<p>H: trong ngoặc là xác suất chuyển; ngoài ngoặc là $\gamma$.<br>L: ngoài ngoặc là xác suất hành động; trước mỗi $v$ là $\gamma$.</p>
+<div class="box" style="padding:.3em .7em"><p style="margin:0">H: trong ngoặc là xác suất chuyển; ngoài ngoặc là $\gamma$.<br>L: ngoài ngoặc là xác suất hành động; trước mỗi $v$ là $\gamma$.</p>
 </div>
 <aside class="notes">
 <p>Phương trình thứ nhất đọc từ cây H: hành động Tìm có xác suất 1 theo chính sách, nhưng môi trường chia hai kết quả — về H hoặc về L, mỗi nhánh xác suất 1/2, thưởng 2. Phương trình thứ hai đọc từ cây L: chính sách chia hai hành động Chờ và Sạc, mỗi hành động xác suất 1/2; Chờ về L với thưởng 1, Sạc về H với thưởng 0, mỗi nhánh chuyển chắc chắn. Cả hai trường hợp dẫn tới giá trị tương lai chứa cùng hai ẩn $v_H$ và $v_L$, nên hệ phải giải đồng thời. Sai lầm thường gặp: thay $v_L$ bằng thưởng Chờ là 1 — đó chỉ là thưởng một bước, không phải giá trị; và quên nhân $\gamma=1/2$ vào cụm tương lai.</p>
@@ -713,11 +709,10 @@ $$\begin{pmatrix}3/4&-1/4\\-1/4&3/4\end{pmatrix}
 \begin{pmatrix}v_H\\v_L\end{pmatrix}
 =\begin{pmatrix}2\\1/2\end{pmatrix}.$$
 </div>
-<div class="check">
-<p>Điều kiện có nghiệm duy nhất: $P^\pi$ là ma trận xác suất hữu hạn — các phần tử không âm và từng hàng tổng bằng 1 — cùng $0\le\gamma<1$.</p>
+<div class="check" style="padding:.3em .7em"><p style="margin:0">Với $P^\pi$ trên tập trạng thái hữu hạn, các phần tử không âm, mỗi hàng tổng bằng 1 và $0\le\gamma<1$, hệ có nghiệm duy nhất.</p>
 </div>
 <aside class="notes">
-<p>Gộp hai nhóm số hạng trong Bellman đã suy ra: $v_\pi(s)=r^\pi(s)+\gamma\sum_{s'}P^\pi_{ss'}v_\pi(s')$. Phép nhân $P^\pi v$ là các tổng có trọng số vừa học, không thêm quy tắc cập nhật mới. Hàng đầu của ma trận hệ số, $3/4$ và $-1/4$, chính là phương trình H ở dạng $v_H-(1/4)v_H-(1/4)v_L=2$; hàng hai là phương trình L. Điều kiện duy nhất: với ma trận xác suất hữu hạn — phần tử không âm, từng hàng tổng bằng 1 — và $0\le\gamma<1$, ma trận $I-\gamma P^\pi$ khả nghịch. Khai triển Neumann $v=\sum_{k\ge0}\gamma^k(P^\pi)^k r^\pi$ hội tụ vì $\|\gamma P^\pi\|_\infty=\gamma<1$, nên tồn tại nghiệm. Nếu có hai nghiệm $v,w$ thì $\|v-w\|_\infty\le\gamma\|v-w\|_\infty$, suy ra $v=w$. Phép nhân $P^\pi$ không làm tăng chuẩn; hệ số $\gamma<1$ mới tạo tính co. Điều này không cho phép kết luận không điều kiện khi $\gamma=1$. Với ma trận đặc, giải trực tiếp thường tốn $O(n^3)$ phép tính; các phương pháp lặp sẽ học ở Bài 04.</p>
+<p>Gộp hai nhóm số hạng trong Bellman đã suy ra: $v_\pi(s)=r^\pi(s)+\gamma\sum_{s'}P^\pi_{ss'}v_\pi(s')$. Phép nhân $P^\pi v$ là các tổng có trọng số vừa học, không thêm quy tắc cập nhật mới. Hàng đầu của ma trận hệ số, $3/4$ và $-1/4$, chính là phương trình H ở dạng $v_H-(1/4)v_H-(1/4)v_L=2$; hàng hai là phương trình L. Với ma trận xác suất trên tập trạng thái hữu hạn — phần tử không âm, từng hàng tổng bằng 1 — và $0\le\gamma<1$, ma trận $I-\gamma P^\pi$ khả nghịch. Khai triển Neumann $v=\sum_{k\ge0}\gamma^k(P^\pi)^k r^\pi$ hội tụ vì $\|\gamma P^\pi\|_\infty=\gamma<1$, nên tồn tại nghiệm. Nếu có hai nghiệm $v,w$ thì $\|v-w\|_\infty\le\gamma\|v-w\|_\infty$, suy ra $v=w$. Phép nhân $P^\pi$ không làm tăng chuẩn; hệ số $\gamma<1$ mới tạo tính co. Điều này không cho phép kết luận không điều kiện khi $\gamma=1$. Với ma trận đặc, giải trực tiếp thường tốn $O(n^3)$ phép tính; các phương pháp lặp sẽ học ở Bài 04.</p>
 <p class="note-source">Nguồn: dạng ma trận suy ra từ Sutton và Barto, ấn bản 2, phương trình (3.14), tr. 59.</p>
 </aside>
 </section>
@@ -745,7 +740,7 @@ $$\begin{pmatrix}3/4&-1/4\\-1/4&3/4\end{pmatrix}
 
 <aside class="notes">
 <p>Đầu bài, robot ở L chỉ cho ta biết các lựa chọn và tác động tức thời lên pin. Sau sáu phần, mỗi lựa chọn có thêm một con số: giá trị dài hạn khi thực hiện hành động đó trước rồi tiếp tục theo $\pi$. Ba giá trị này là kết quả của ví dụ xuyên suốt, không phải số liệu thực nghiệm trong sách.</p>
-<p>Từ giá trị $15/8$ ta lần lại được xác suất chuyển, phần thưởng và giá trị trạng thái kế tiếp đã dùng để tính. Mô hình, chính sách và giá trị là ba đối tượng khác nhau; nhầm lẫn giữa chúng là lỗi thường gặp khi lập hệ phương trình.</p>
+<p>Giá trị $15/8$ được tính từ xác suất phản hồi, phần thưởng và giá trị trạng thái kế tiếp. Mô hình, chính sách và giá trị là ba đối tượng khác nhau; nhầm lẫn giữa chúng là lỗi thường gặp khi lập hệ phương trình.</p>
 <p class="note-source">Sutton và Barto, ấn bản 2, §3.5; kết quả ví dụ xuyên suốt của bài.</p>
 </aside>
 </section>
@@ -790,12 +785,12 @@ $$q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)\left[r+\gamma v_\pi(s')\right].$$
 <h2>Câu hỏi kiểm tra</h2>
 <p><strong>Câu hỏi:</strong></p>
 <ol>
-<li>Biết $p(s'\mid s,a)$, chính sách và hệ số chiết khấu đã đủ để tính giá trị chưa? Còn thiếu dữ kiện nào?</li>
+<li>Biết $p(s'\mid s,a)$, chính sách và hệ số chiết khấu đã đủ để tính giá trị trạng thái $v_\pi(s)$ chưa? Còn thiếu dữ kiện nào?</li>
 <li>Một quỹ đạo có tổng thưởng khác $v_\pi(s)$ có mâu thuẫn với định nghĩa giá trị không?</li>
 <li>$q_\pi(\mathrm L,\mathrm{cho})>q_\pi(\mathrm L,\mathrm{sac})$ đã chứng minh chính sách đang dùng là tối ưu chưa?</li>
 </ol>
 <aside class="notes">
-<p>Đáp án 1: chưa đủ. Còn thiếu mô hình thưởng; cho $r(s,a)$ là đủ cùng xác suất chuyển để viết Bellman kỳ vọng, hoặc cho hạt nhân chung $p(s',r\mid s,a)$. Chỉ có xác suất chuyển không cho biết phần thưởng kỳ vọng.</p>
+<p>Đáp án 1: chưa đủ. Với xác suất chuyển, chính sách và hệ số chiết khấu đã cho, cần thêm thưởng kỳ vọng $r(s,a)$ để viết Bellman. Có thể dùng hạt nhân chung $p(s',r\mid s,a)$ để cung cấp cả chuyển trạng thái và thưởng. Chỉ có xác suất chuyển không cho biết phần thưởng kỳ vọng.</p>
 <p>Đáp án 2: không mâu thuẫn. Một tổng thưởng là kết quả của một quỹ đạo cụ thể; $v_\pi(s)$ là kỳ vọng trên mọi quỹ đạo, nên từng quỹ đạo có thể lệch khỏi giá trị.</p>
 <p>Đáp án 3: chưa. Phép so sánh chỉ xét hành động đầu rồi tiếp tục theo chính sách đã cho; nó không loại trừ việc thay đổi cả phần tiếp diễn. Bài 04 sẽ nghiên cứu việc thay đổi chính sách và mục tiêu tối ưu.</p>
 <p class="note-source">Sutton và Barto, ấn bản 2, §3.1 và §3.5.</p>

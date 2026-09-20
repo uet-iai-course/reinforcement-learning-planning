@@ -802,3 +802,57 @@ Lũy kế46slide/46notes/17SVG,411biểu thức KaTeX hợp lệ. Hai lượt ki
 Đã thêm4slide L03R-07-01…04: trở lại robot ở L với ba giá trị hành động, đọc lại nhánh Chờ từ mô hình tới giá trị, bài tập hw02 và câu hỏi tổng hợp. HaiSVG mới. Writer GLM hai lượt, requested=observed, OpenRouter. Bản đầu bị loại vì hình gắn q(L,Tìm) vào H như một trạng thái đích chắc chắn; đã yêu cầu đổi thành ba hộp hành động mang giá trị, giữ phân biệt q với v. Điều phối viên bỏ các nhãn thừa, thống nhất ký hiệu hành động, sửa nguồn và không tự đặt thêm nghĩa vụ bài tập ngoài phạm vi nguồn.
 
 Lũy kế50slide/50notes/19SVG,446biểu thức KaTeX hợp lệ. Phần7 qua8lượt Chromium ở1280×720 và390×844, không tràn/lỗi toán/ảnh hỏng/JS/HTTP; đã xem ảnh ghép4slide. Năm reviewer độc lập đang rà góiB gồm30slide phần4–7 với toàn bộ notes, nhãn SVG và bản đồ cả bài; chỉ khi hoàn tất và chỉnh sửa mới bàn giao toàn bộ.
+
+
+### Năm báo cáo độc lập — gói B (phần 4–7)
+
+Phạm vi:30slide L03R-04-01…L03R-07-04, toàn bộ mặt slide/notes, mô tả và nhãn SVG; kèm bản đồ50slide và dữ kiện/tiên quyết phần1–3. Năm tiến trình riêng `review-full --no-tools`; requested=observed, OpenRouter. Sinh viên/mạch viết: GLM; RL/toán/phản biện giảng dạy: DeepSeek như góiA. Mỗi vai có hai góiA20+B30, bao phủ50slide. Báo cáo sinh viên ghi nhầm19slide trong dòng tổng, nhưng input chứa đủ30ID và nhận xét xuyên cả4phần; số lượng được điều phối viên đối chiếu từ input, không dựa vào lời tự khai. Báo cáo toán và giảng dạy có một số nhận xét tự mâu thuẫn hoặc đề xuất sai; đã lọc bằng kiểm toán độc lập, không đưa vào deck.
+
+| Vai | Mức độ / slide | Vấn đề và bằng chứng | Quyết định |
+|---|---|---|---|
+| Sinh viên | Nhẹ,05-04;04-01;04-04 | Cụm “đã ấn định đã định nghĩa” lặp; p gọi chuyển tiếp chưa rõ là phản hồi chung; chưa gắn nguồn cho hai hệ số1/2 của nhánh Chờ. | Bỏ từ lặp; gọi xác suất phản hồi; ghi rõ hệ số môi trường ở bước1, chính sách ở bước2 trong notes. |
+| RL | Trung bình,04-04 | Nhóm điểm3 gộp hai trạng thái cuối nhưng nhãn chưa nói gộp. | Nhãn kết quả “3; gộp1/2”; tiêu đề cột “Nhóm tổng; xác suất”; notes giải thích hai đường1/4. Không vẽ thêm nhánh gây quá tải. |
+| RL | Nhẹ,04-07;05-05 | Quy ước hành động đầu khi pi=0 và cách viết tắt điều kiện mới ở notes. | Thêm một câu ngắn trên04-07; bổ sung điều kiện viết đầy đủ vào notes05-05. |
+| RL | Nhẹ,06-07;07-03 | Muốn ghi điều kiện ma trận như hệ quả tự động; muốn thêm bài10vào bảng. | Giữ điều kiện toán để sinh viên kiểm mô hình; chỉnh cụm hữu hạn trạng thái. Bài10là tự luyện, giữ trong notes, không thêm nghĩa vụ. |
+| Toán | Không có lỗi công thức deck; nhẹ,04-04 | Đã kiểm nghiệm, ma trận, chỉ số, phép thế; nghi nhãn1trên cây là xác suất môi trường. | Nhãn1là xác suất CHỌN Tìm tại H, không phải hệ số thưởng như reviewer đề nghị. Làm rõ trong notes, giữ số1. |
+| Toán | Lỗi trong chính báo cáo, không phải slide | Cuối báo cáo nhầm q(H,Tìm)=21/8 và bán kính phổ I−gammaP<1, trái phép kiểm trước đó. | Bác bỏ: q(H,Tìm)=13/4;21/8là q(H,Chờ) và trùng trung bình hai bước. Bán kính phổ gammaP<1; I−gammaPkhả nghịch. Sẽ gửi rà lại có số liệu và phương trình đầy đủ. |
+| Phản biện giảng dạy | Trung bình,04-04 | Cần thấy gộp hai kết quả cùng thưởng và nguồn các trọng số. | Gộp vào sửa cây/notes đã chấp nhận, không thêm câu dài vào slide đã có cây và phép tính. |
+| Phản biện giảng dạy | Trung bình theo reviewer,05-05→07 | Cho rằng thiếu bước bỏ điều kiện r,a. | Không sửa:05-06nằm ngay giữa và viết đầy đủ chính bước ấy. Reviewer đã bỏ qua trang trung gian. |
+| Phản biện giảng dạy | Nhẹ theo reviewer,06-02/03 | Đề xuất kiểm xác suất bằng1/4+1/4=1/2. | Bác bỏ: đó là hệ số đã nhân gamma, không phải hàng xác suất. Hàng P=(1/2,1/2)đã có06-05/06. |
+| Phản biện giảng dạy | Nghiêm trọng đã tự rút,06-03 | Nghi phép trừ hệ sai rồi tự tính lại và kết luận đúng ngay trong báo cáo. | Không có lỗi cần sửa. Điều phối viên đã tự tính lại bằng phân số. |
+| Phản biện giảng dạy | Trung bình/nhẹ,06-07;07-03/04 | Cụm hữu hạn; số bài tập; phân phối ban đầu. | Sửa thành hữu hạn trạng thái; cột đã ghi “Bài(hw02)”, không sửa. Câu hỏi cuối chỉ rõ giá trị trạng thái v(s), không thêm khái niệm phân phối khởi đầu. |
+| Mạch viết | Nhẹ,05-04 | Vai trò: tách kỳ vọng theo hành động; kết nối vào từ tách tổng; kết nối ra tới phản hồi. Cụm từ notes lặp. | Bỏ từ lặp, giữ nguyên phép suy diễn. |
+| Mạch viết | Nhẹ,07-01 | Vai trò: thu hồi bài toán; kết nối vào từ giá trị đã giải; kết nối ra sang kiểm lại nhánh Chờ. Câu đọc ngược có thể bị hiểu là suy ra mô hình duy nhất từ giá trị. | Viết chiều mô hình→giá trị:15/8được tính từ xác suất, thưởng và giá trị kế tiếp. |
+| Mạch viết | Nhẹ,07-04 | Vai trò: kiểm tra tổng hợp; kết nối vào từ bài tập; kết nối ra Bài04. Câu về dữ kiện thưởng chưa gọn. | Viết rõ mô hình chuyển đã cho cần thêm thưởng kỳ vọng để tính v(s). |
+| Mạch viết | Nhẹ,06-07;06-04;04-03;04-02 | Cụm hữu hạn; nguồn chỉ3.12/13; nhãn thưởng dính chữ; bảng bị dính trong trích văn bản. | Sửa cụm hữu hạn và khoảng trắng. Giữ nguồn3.12/13p58vì slide dùng cả hai quan hệ. Bảng HTML/ảnh thực tế có ô đúng, không phải lỗi deck. |
+
+Mạch toàn bài: bảy phần nhận đầu ra của nhau theo robot→mô hình→tổng→chính sách/giá trị→Bellman→nghiệm→vận dụng. Reviewer mạch xác nhận mở phần, câu hỏi cuối phần, cầu nối04→05→06→07và kết bài thu hồi bài toán đánh giá chính sách. Không có lỗi chặn; các lỗi nghiêm trọng nghi ngờ đã được tự rút hoặc bác bỏ bằng tính toán. Correction writer riêng bắt đầu sau khi đủ cả năm báo cáoA+B; chỉ nhận16slide có sửa đã chấp nhận và tạo tệp thay thế để điều phối viên kiểm trước khi áp dụng.
+
+
+### Chỉnh sửa riêng và rà lại sau báo cáo
+
+Correction writer GLM hai lượt (requested=observed, OpenRouter) tạo25phép thay thế có phạm vi trên16slide. Lượt đầu bị loại vì tự đổi nhãn1của chính sách H–Tìm thành1/2và bỏ sót một số sửa mặt slide; đã gọi lại. Điều phối viên đọc từng thay thế, xác nhận chuỗi nguồn xuất hiện đúng một lần trong slide đích rồi mới áp dụng. Không thay số liệu mô hình, nghiệm hoặc thứ tự50slide.
+
+Đã làm rõ các đoạn thưởng mẫu, tên hệ số chiết khấu, hành động H–Sạc không hợp lệ, cận trị tuyệt đối, nhóm tổng hai bước và ý nghĩa hành động đầu khi xác suất chính sách bằng0. Bỏ từ lặp và cách diễn đạt có thể suy ngược mô hình từ một giá trị. Nguồn3.12/13và bước Markov05-06đã đúng nên không thêm giải thích trùng.
+
+Rà lại toán DeepSeek: xác nhận các sửa và toàn bộ phép tính trong30slide được cung cấp, rút nhầm lẫn q(H,Tìm) và nhãn1. Reviewer vẫn thêm một câu riêng sai về véc-tơ riêng của I−Pởgamma1; không dùng câu này làm chứng cứ. Điều phối viên kiểm trực tiếp: P có trị riêng1,0; gammaP ởgamma1/2có1/2,0; I−gammaP có1/2,1. Vì vậy dùng cận chuẩn gammaP<1, không dùng khẳng định bán kính phổ I−gammaP<1. Chứng minh trong deck đã đúng và không đổi.
+
+Rà lại phản biện giảng dạy DeepSeek trên05-04…07,06-02…06và07-03: đã rút các góp ý sai về bước Markov bị thiếu, chuẩn hóa bằng hệ số đã chiết khấu và nhãn bài hw02. Kết luận trình tự và công thức đúng, không cần sửa thêm.
+
+Rà lại mạch viết GLM: request toàn văn57.1nghìn ký tự hết hạn180giây. Theo ngân sách reviewer, chỉ thử lại một lần cùng mô hình, thu hẹp còn37.7nghìn ký tự: mặt cả50slide và nhãnSVG đầy đủ, notes điểm vào–ra của mọi slide và notes cầu nối đã sửa. Không tăng timeout. Lượt này hoàn tất62.8giây; xác nhận bảy phần, mọi ranh giới, mở/kết bài và hai trang lân cận các vùng sửa. Một phát hiện nhẹ về mảnh “59) cho hệ hai ẩn” là lỗi cắt câu của gói trích, không phải deck: notes06-01thực tế có câu đầy đủ “Phương trình Bellman trạng thái (Sutton và Barto, ấn bản2, phương trình3.14, tr.59) cho hệ hai ẩn.” Đã đối chiếu trực tiếp, không sửa câu đúng. Gói thử lại kiểm mạch toàn tuyến, không được gọi là một lần rà toán toàn văn mới.
+
+Sau rà nội dung, kiểm hình phát hiện một số nội dung/hộp nền sát footer. Đã bỏ hai câu dẫn lặp ở04-03và05-09, rút câu03-03/04-05và điều chỉnh khoảng trắng cục bộ; không giảm cỡ chữ, không sửa CSS chung. 04-02vẫn là ví dụ trước định nghĩa04-03;05-09vẫn giữ nguyên quan hệ tại s′ và phép thế đầy đủ. Lượt rà mạch thu hẹp đã nhận đúng các thay đổi này.
+
+
+### Kiểm định và bàn giao bản robot
+
+- Deck cuối có **50 slide trong 7 phần**, phân bố7/7/6/8/10/8/4. Có50IDduy nhất,50notes và19SVG mới; không có ảnh raster, ngoại lệ raster hoặc code demo mới. Outline và storyboard bao phủ đủ mọi ID; index có đúng một liên kết tới bài03và không liên kết tới planning. CSS chung không đổi.
+- **453 biểu thức KaTeX** trong HTML/notes hợp lệ. Markdown: outline65,storyboard418,kế hoạch gốc451biểu thức đều hợp lệ, không có dấu đô la chưa đóng. Nhật ký cũng được kiểm KaTeX. Tự tính bằng phân số cho toàn bộ bảng phản hồi, các tổng, nghiệm, năm q và phần dư hệ bằng0.
+- **100 lượt mở slide** (50×hai khung1280×720 và390×844): không tràn khung, lỗi toán, ảnh hỏng, lỗiJS hoặc HTTP. Sau chỉnh khoảng trắng, kiểm lại đúng8slide bị ảnh hưởng ở cả hai khung; không lỗi. Đã xem ảnh ghép của từng phần và ảnh riêng các trang sửa. Kiểm riêng vị trí nhãn SVG không vượt viewBox, nội dung/chữ không đè chân trang; các hộp nền cũng đã thu khoảng trắng để nằm trên footer. URL hash1-based và bốn hướng bàn phím hoạt động đúng.
+- Rà văn phong theo no-ai-slop: lời giảng trình bày đối tượng, giả thiết, phép tính và đáp án; đã bỏ câu chỉ dẫn soạn, nhãn nội bộ, lời dẫn rỗng và những câu kể quy trình. Rà mạch theo Quill: các phần dùng kết quả của phần trước, ví dụ đi trước định nghĩa, không có khái niệm trọng tâm mới ở phần kết. Không tạo quill.json.
+- Sai khác có chủ ý với PPTX28–58: dùng robot Sutton–Barto thay sinh viên/xe; đi từ bài toán có hành động đến MDP rồi mới rút về MRP; tách Bellman thành các bước suy diễn; giải hệ số trước ma trận. Tham số số và thưởng cố định trên nhánh là giả thiết lớp học đã công bố, không gán cho dữ liệu sách. Đã xóa26SVG cũ không còn tham chiếu.
+- Codex Slides: đã lưu HTML,19SVG,7ảnh ghép kiểm định và4tệp kế hoạch trong Design Files;31tệp được so sánh byte với workspace, khớp hoàn toàn. HTML mới là `uploaded/lecture-03-qua-trinh-quyet-dinh-markov-3.html`, đã đọc lại qua MCP và so sánh chuỗi nguyên văn. Nhật ký cuối được đồng bộ riêng sau kiểm tra.
+- **Giới hạn Codex Slides:** phiên này không có công cụ Browser nội bộ. Khi mở web app bằng Chromium tại dự án `20260919162357-b-i-03-qu-tr-nh-quy-t-nh-markov-h-s-ki-m-4hzc`, giao diện vẫn chỉ hiện một tệp tham khảo cũ và màn hình hỏi cấu hình, không hiện ảnh bản robot vừa lưu; không tuyên bố đã rà trực quan deck trong Codex Slides. Việc rà hình được thực hiện trực tiếp trên RevealJS cục bộ, còn lưu trữ MCP đã kiểm nội dung khớp. Không có giới hạn còn lại về chạy deck cục bộ.
+- Bảy commit phần:1=`e5ec357`,2=`f504356`,3=`380ad02`,4=`05dfd59`,5=`1a11144`,6=`1c7d6af`,7=`dba2bc4`. Các chỉnh sửa sau rà, hồ sơ và dọn tài sản được commit tiếp; **không push**.
+
+Tệp bàn giao: `2627-1/lecture-03-qua-trinh-quyet-dinh-markov.html`. URL: http://localhost:8765/2627-1/lecture-03-qua-trinh-quyet-dinh-markov.html. Nguồn: `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx` (28–58), hw02 và Sutton–Barto, Reinforcement Learning: An Introduction, ấn bản2, chương3.
