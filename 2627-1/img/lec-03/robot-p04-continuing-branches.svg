@@ -1,0 +1,24 @@
+<svg class="figure short" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 300" role="img" aria-label="Hai nhánh hai bước được kéo dài bằng dấu tiếp diễn để chỉ toàn quỹ đạo" font-family="Arial,sans-serif">
+    <defs>
+      <marker id="arw4" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+        <polygon points="0,0 9,4 0,8" fill="#2F3E7A"/>
+      </marker>
+    </defs>
+    <rect x="40" y="120" width="150" height="60" rx="12" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+    <text x="115" y="160" font-size="32" fill="#424954" text-anchor="middle">H</text>
+    <line x1="190" y1="135" x2="350" y2="70" stroke="#2F3E7A" stroke-width="3" marker-end="url(#arw4)"/>
+    <line x1="190" y1="165" x2="350" y2="230" stroke="#2F3E7A" stroke-width="3" marker-end="url(#arw4)"/>
+    <text x="250" y="88" font-size="28" fill="#B15A2B">Tìm</text>
+    <text x="250" y="240" font-size="28" fill="#B15A2B">Tìm</text>
+    <rect x="360" y="40" width="200" height="60" rx="12" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+    <text x="460" y="80" font-size="30" fill="#424954" text-anchor="middle">H</text>
+    <rect x="360" y="200" width="200" height="60" rx="12" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+    <text x="460" y="240" font-size="30" fill="#424954" text-anchor="middle">L</text>
+    <line x1="560" y1="70" x2="700" y2="70" stroke="#424954" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#arw4)"/>
+    <line x1="560" y1="230" x2="700" y2="230" stroke="#424954" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#arw4)"/>
+    <text x="720" y="80" font-size="34" fill="#424954">⋯</text>
+    <text x="720" y="240" font-size="34" fill="#424954">⋯</text>
+    <text x="790" y="80" font-size="28" fill="#424954">vẫn chọn theo π</text>
+    <text x="790" y="240" font-size="28" fill="#424954">vẫn chọn theo π</text>
+    <text x="550" y="290" font-size="28" fill="#B15A2B">Toàn bộ phần thưởng trong tương lai</text>
+  </svg>

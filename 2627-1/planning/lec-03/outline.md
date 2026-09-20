@@ -1,6 +1,6 @@
 # Dàn ý triển khai — Bài 03: Quá trình quyết định Markov
 
-Đã triển khai 3/7 phần (20/50 slide) theo storyboard robot. Thiết kế đầy đủ:120 phút; 30 phút chữa hw02. Đối tượng: sinh viên năm3 đã học xác suất, đại số tuyến tính, học máy và Bài02.
+Đã triển khai 4/7 phần (28/50 slide) theo storyboard robot. Thiết kế đầy đủ:120 phút; 30 phút chữa hw02. Đối tượng: sinh viên năm3 đã học xác suất, đại số tuyến tính, học máy và Bài02.
 
 ## 1. Đích học tập và quyết định về cấu trúc
 
@@ -106,6 +106,14 @@ Quy luật môi trường và chính sách được giả sử Markov, không đ
 - `L03R-03-04`: Tổng thưởng từ thời điểm hiện tại.
 - `L03R-03-05`: Điều kiện để tổng thưởng hữu hạn.
 - `L03R-03-06`: Câu hỏi kiểm tra.
+- `L03R-04-01`: Chính sách và hàm giá trị.
+- `L03R-04-02`: Một cách điều khiển robot.
+- `L03R-04-03`: Chính sách là phân phối trên hành động.
+- `L03R-04-04`: Trung bình trên các nhánh quỹ đạo.
+- `L03R-04-05`: Giá trị trạng thái.
+- `L03R-04-06`: Ấn định hành động đầu tiên.
+- `L03R-04-07`: Giá trị hành động.
+- `L03R-04-08`: Câu hỏi kiểm tra.
 
 ## Đặc tả và ánh xạ nguồn
 

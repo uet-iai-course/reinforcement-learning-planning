@@ -1,0 +1,24 @@
+<svg class="figure" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 360" role="img" aria-label="Robot ở trạng thái pin thấp L với ba lựa chọn hành động" font-family="Arial,sans-serif">
+      <defs>
+        <marker id="arw1" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+          <polygon points="0,0 9,4 0,8" fill="#2F3E7A"/>
+        </marker>
+      </defs>
+      <rect x="60" y="120" width="240" height="130" rx="18" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+      <rect x="95" y="150" width="90" height="46" rx="8" fill="#F7EFE6" stroke="#424954" stroke-width="2"/>
+      <rect x="103" y="158" width="20" height="30" fill="#B15A2B"/>
+      <rect x="127" y="158" width="50" height="30" fill="#B15A2B"/>
+      <text x="180" y="230" font-size="30" fill="#424954" text-anchor="middle">Robot ở L</text>
+      <line x1="300" y1="160" x2="560" y2="80" stroke="#2F3E7A" stroke-width="3" marker-end="url(#arw1)"/>
+      <line x1="300" y1="185" x2="560" y2="185" stroke="#2F3E7A" stroke-width="3" marker-end="url(#arw1)"/>
+      <line x1="300" y1="210" x2="560" y2="290" stroke="#2F3E7A" stroke-width="3" marker-end="url(#arw1)"/>
+      <rect x="570" y="45" width="300" height="70" rx="12" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/>
+      <text x="720" y="92" font-size="32" fill="#424954" text-anchor="middle">Tìm</text>
+      <rect x="570" y="150" width="300" height="70" rx="12" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/>
+      <text x="720" y="197" font-size="32" fill="#424954" text-anchor="middle">Chờ</text>
+      <rect x="570" y="255" width="300" height="70" rx="12" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/>
+      <text x="720" y="302" font-size="32" fill="#424954" text-anchor="middle">Sạc</text>
+      
+      
+      
+    </svg>

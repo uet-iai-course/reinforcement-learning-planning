@@ -1,6 +1,6 @@
 # Storyboard triển khai — Bài 03: Quá trình quyết định Markov
 
-Bản viết lại dùng robot thu gom lon. Đã triển khai 3/7 phần; 20/50 slide. Phần chưa triển khai nằm trong [kế hoạch đầy đủ](storyboard-mdp-replanned.md). Bản HTML cũ đã được thay thế; không trộn các phần cũ vào deck mới.
+Bản viết lại dùng robot thu gom lon. Đã triển khai 4/7 phần; 28/50 slide. Phần chưa triển khai nằm trong [kế hoạch đầy đủ](storyboard-mdp-replanned.md). Bản HTML cũ đã được thay thế; không trộn các phần cũ vào deck mới.
 
 ## 1. Đích học tập và quyết định về cấu trúc
 
@@ -408,6 +408,139 @@ Thời lượng: 2 phút. Vai trò: vận dụng và kiểm chỉ số.
 **Ghi chú đáp án:** 1. Không. 2. $3/2$; khi $\gamma=0$ chỉ giữ thưởng đầu, bằng 0. 3. Không, đó là cận trị tuyệt đối. **Câu nối:** “Cùng bắt đầu từ một trạng thái vẫn có nhiều tổng thưởng; cách chọn hành động và ngẫu nhiên của môi trường quyết định phân phối của chúng.”
 
 **Nguồn:** vận dụng SB §3.3–3.4.
+
+## 6. Phần 4 — Chính sách và hàm giá trị
+
+**Chức năng:** xác định phân phối tổng thưởng cần lấy kỳ vọng và phân biệt hai thí nghiệm đánh giá. Đầu vào là mô hình và $G_t$; đầu ra là $v_\pi$ và $q_\pi$ với cùng một chính sách tiếp diễn.
+
+**Mạch trình bày trước khi chia slide:**
+
+1. Cho một cách điều khiển robot bằng lời và bảng xác suất hành động.
+2. Định nghĩa chính sách từ bảng; phân biệt ngẫu nhiên của hành động với phản hồi môi trường.
+3. Tính trung bình tổng thưởng của hai bước đầu bằng cây xác suất có ít nhánh.
+4. Mở rộng đối tượng được lấy trung bình sang toàn bộ tương lai để định nghĩa giá trị trạng thái.
+5. Thay thí nghiệm: ấn định một hành động đầu rồi trở lại chính sách cũ; định nghĩa giá trị hành động.
+6. Kiểm tra sự khác nhau giữa mô hình, chính sách, một tổng thưởng và hai hàm giá trị.
+
+**Chu trình học:** vấn đề/ví dụ chính sách 04-01/02 → hình thức 04-03 → ví dụ trung bình 04-04 → định nghĩa $v$ 04-05 → thí nghiệm cụ thể 04-06 → định nghĩa $q$ 04-07 → vận dụng/kiểm tra 04-08. $v$ và $q$ có ví dụ riêng trước định nghĩa; chưa lấy công thức Bellman làm định nghĩa. Tổng 17 phút.
+
+### L03R-04-01 — Chính sách và hàm giá trị
+
+Thời lượng: 1 phút. Vai trò: tiêu đề phần.
+
+**Mặt slide:** tên phần; robot ở L với ba lựa chọn; câu “Tổng thưởng còn phụ thuộc cách chọn hành động”.
+
+**Cách thể hiện:** tái dùng ba nhánh lựa chọn, không thêm ký hiệu giá trị vào hình mở phần.
+
+**Ghi chú và cầu nối:** bảng $p$ chỉ mô tả điều xảy ra khi một hành động đã được chọn. Muốn nói đến trung bình của nhiều quỹ đạo, phải biết cách chọn các hành động trên những quỹ đạo đó.
+
+**Nguồn:** SB §3.5, tr.58.
+
+### L03R-04-02 — Một cách điều khiển robot
+
+Thời lượng: 2 phút. Vai trò: ví dụ chính sách.
+
+**Mặt slide:** tại H luôn Tìm; tại L chọn Chờ hoặc Sạc, mỗi hành động xác suất $1/2$. Bảng hai hàng ghi đủ xác suất 0 của các hành động không được chọn; ô H–Sạc là “không hợp lệ”, không ghi 0 như một hành động hợp lệ.
+
+**Cách thể hiện:** hành động được chọn bằng bảng/cây từ trạng thái; xác suất của cách chọn đặt trước nút hành động. Chưa gắn xác suất của môi trường lên cùng tầng.
+
+**Giải thích và cầu nối:** đây là một cách điều khiển cố định để đánh giá, chưa có khẳng định tối ưu. Chính sách có thể tất định ở một trạng thái và ngẫu nhiên ở trạng thái khác. Các con số trên bảng sẽ được gọi là $\pi(a\mid s)$.
+
+**Nguồn:** minh họa cho định nghĩa chính sách SB §3.5; chính sách cụ thể do người soạn chọn.
+
+### L03R-04-03 — Chính sách là phân phối trên hành động
+
+Thời lượng: 2 phút. Vai trò: định nghĩa và phân biệt hai nguồn ngẫu nhiên.
+
+**Mặt slide:** từ ô L–Chờ có $\pi(\mathrm{cho}\mid\mathrm L)=1/2$, khái quát:
+
+$$\pi(a\mid s)=\Pr(A_t=a\mid S_t=s),\qquad
+\pi(a\mid s)\ge0,\quad\sum_{a\in\mathcal A(s)}\pi(a\mid s)=1.$$
+
+**Cách thể hiện:** một cây ba tầng trạng thái → hành động → phản hồi. Tầng đầu mang $\pi$, tầng sau mang $p$; có nhãn chữ cho hai tầng, không chỉ dùng màu.
+
+**Giải thích và cầu nối:** trong bài, chính sách Markov dừng chỉ phụ thuộc trạng thái hiện tại và không đổi theo thời gian. Cố định chính sách ngẫu nhiên không loại bỏ việc rút thăm hành động. Mô hình và chính sách cùng tạo ra xác suất của một nhánh quỹ đạo.
+
+**Nguồn:** SB §3.5, tr.58; cách viết xác suất theo ký hiệu của bài.
+
+### L03R-04-04 — Trung bình trên các nhánh quỹ đạo
+
+Thời lượng: 3 phút. Vai trò: ví dụ kỳ vọng trước giá trị trạng thái.
+
+**Mặt slide:** bắt đầu ở H, theo chính sách đã cho, $\gamma=1/2$. Chỉ xét hai bước đầu, đặt $G_0^{[2]}=R_1+\gamma R_2$:
+
+| Trường hợp | Xác suất | $G_0^{[2]}$ |
+|---|---:|---:|
+| Sau bước 1 ở H, bước 2 Tìm | $1/2$ | $2+(1/2)2=3$ |
+| Sau bước 1 ở L, bước 2 Chờ | $(1/2)(1/2)=1/4$ | $2+(1/2)1=5/2$ |
+| Sau bước 1 ở L, bước 2 Sạc | $(1/2)(1/2)=1/4$ | $2+(1/2)0=2$ |
+
+$$\mathbb E_\pi[G_0^{[2]}\mid S_0=\mathrm H]
+=\frac12\,3+\frac14\,\frac52+\frac14\,2=\frac{21}{8}.$$
+
+**Cách thể hiện:** cây có nhãn nguồn của từng hệ số: $1/2$ chuyển trạng thái và $1/2$ chọn hành động. Hàng đầu gộp hai trạng thái cuối H/L của lần Tìm thứ hai vì chúng cùng thưởng 2; giải thích phép gộp trước khi chỉ còn ba hàng. Cây xuất hiện trước phép cộng.
+
+**Giải thích và cầu nối:** ký hiệu $\mathbb E_\pi$ lấy trung bình theo cả chính sách và môi trường. Không lấy trung bình đều ba hàng. Đây là tổng của hai bước, không phải giá trị toàn tương lai; giá trị trạng thái sẽ lấy trung bình của $G_0$ đầy đủ.
+
+**Nguồn:** phép tính từ đặc tả robot; trực giác kỳ vọng của SB (3.12).
+
+### L03R-04-05 — Giá trị trạng thái
+
+Thời lượng: 3 phút. Vai trò: định nghĩa sau phép lấy trung bình cụ thể.
+
+**Mặt slide:** xuất phát ở $s$, từ đầu đến cuối chọn hành động theo $\pi$. Giá trị trạng thái là
+
+$$v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s].$$
+
+Với robot, $v_\pi(\mathrm H)$ là kỳ vọng tổng thưởng toàn tương lai khi bắt đầu pin cao và dùng bảng chính sách vừa chọn.
+
+**Cách thể hiện:** kéo dài các nhánh hai bước bằng dấu tiếp diễn; ngoặc $G_t$ ôm cả phần tương lai. Thay ba con số hữu hạn bằng các tổng của toàn quỹ đạo; không đưa nghiệm $13/4$ trước khi lập hệ.
+
+**Giải thích và cầu nối:** $v_\pi:\mathcal S\to\mathbb R$; trạng thái kết thúc, nếu có, mang giá trị 0. $G_t$ thay đổi theo quỹ đạo; $v_\pi(s)$ là một số xác định khi mô hình, chính sách và tiêu chuẩn tổng thưởng đã cố định. Điều kiện hữu hạn đã kiểm ở phần 3. Định nghĩa này để chính sách chọn cả hành động đầu; muốn đánh giá riêng một lựa chọn, đổi thí nghiệm ở trang sau.
+
+**Nguồn:** SB (3.12), tr.58.
+
+### L03R-04-06 — Ấn định hành động đầu tiên
+
+Thời lượng: 2 phút. Vai trò: ví dụ chuẩn bị cho giá trị hành động.
+
+**Mặt slide:** xuất phát ở L; lần lượt buộc hành động đầu là Tìm, Chờ hoặc Sạc. Sau phản hồi đầu tiên, cả ba thí nghiệm đều trở lại chính sách ở 04-02.
+
+**Cách thể hiện:** ba hàng cùng xuất phát L. Khoanh hành động đầu của mỗi hàng; sau nút trạng thái mới dùng cùng hộp “tiếp tục theo $\pi$”. Nhánh Tìm giữ hai phản hồi của mô hình, không thay thành kết quả chắc chắn.
+
+**Giải thích và cầu nối:** ấn định Tìm một lần vẫn có nghĩa dù chính sách thường không chọn Tìm ở L. Không buộc robot lặp hành động đầu mãi mãi. Phân phối tổng thưởng của mỗi thí nghiệm có một kỳ vọng riêng; đó là đối tượng cần đặt tên.
+
+**Nguồn:** SB diễn giải giá trị hành động ngay trước (3.13), tr.58.
+
+### L03R-04-07 — Giá trị hành động
+
+Thời lượng: 2 phút. Vai trò: định nghĩa $q_\pi$ và miền của thí nghiệm.
+
+**Mặt slide:** tại $s$, thực hiện $a$ một lần, sau đó theo $\pi$:
+
+$$q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a],\qquad a\in\mathcal A(s).$$
+
+So với $v_\pi(s)$, khác biệt là cách xác định hành động đầu tiên.
+
+**Cách thể hiện:** đặt định nghĩa ngay dưới ba thí nghiệm rút gọn của trang trước; trên mặt có câu “Ấn định hành động đầu, rồi tiếp tục theo cùng chính sách”.
+
+**Giải thích và cầu nối:** ký hiệu kỳ vọng điều kiện được hiểu theo thí nghiệm vừa định nghĩa, kể cả khi $\pi(a\mid s)=0$; không dựa vào chia cho xác suất của một biến cố 0. $q_\pi$ tính cả tương lai, không đồng nhất với $r(s,a)$. Trạng thái kết thúc không còn hành động cần đánh giá. Hai định nghĩa sẽ cho hai cách đọc cùng phép trung bình Bellman.
+
+**Nguồn:** SB (3.13), tr.58; làm rõ quy ước hành động đầu.
+
+### L03R-04-08 — Câu hỏi kiểm tra
+
+Thời lượng: 2 phút. Vai trò: kiểm tra các đối tượng trước khi suy diễn.
+
+**Mặt slide — Câu hỏi:**
+
+1. Thay cách chọn Chờ/Sạc ở L có làm thay đổi bảng $p$ không? Có thể làm thay đổi giá trị không?
+2. $21/8$ vừa tính là kỳ vọng hai bước hay giá trị toàn tương lai?
+3. Tính $q_\pi(\mathrm L,\mathrm{tim})$ nghĩa là buộc Tìm bao nhiêu lần trước khi trở lại $\pi$?
+
+**Ghi chú đáp án:** 1. Bảng môi trường không đổi; phân phối quỹ đạo và giá trị có thể đổi. 2. Kỳ vọng của đúng hai bước. 3. Một lần, rồi theo $\pi$ kể từ trạng thái kế tiếp. **Câu nối:** “Thay vì liệt kê toàn bộ quỹ đạo, ta tách bước đầu và dùng lại giá trị của trạng thái kế tiếp.”
+
+**Nguồn:** vận dụng SB §3.5.
 
 
 ## Bằng chứng triển khai

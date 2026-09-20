@@ -316,5 +316,112 @@ $$\phantom{r(s,a)}=\sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}r\,p(s',r\mid s,a)
   </aside>
 </section>
 </section>
+
+<section>
+<section data-slide-id="L03R-04-01">
+<h2>Chính sách và hàm giá trị</h2>
+<p>Tổng thưởng còn phụ thuộc cách chọn hành động.</p>
+<img src="img/lec-03/robot-p04-policy-choices.svg" class="figure" alt="Robot ở trạng thái pin thấp L với ba lựa chọn hành động"/>
+<aside class="notes">
+    <p>Bảng xác suất chuyển tiếp $p$ ở phần trước chỉ mô tả điều xảy ra sau khi một hành động đã được chọn. Muốn nói đến trung bình của tổng thưởng trên nhiều quỹ đạo, trước hết phải biết các hành động trên những quỹ đạo đó được chọn theo quy tắc nào: quy tắc đó được gọi là chính sách.</p>
+    <p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, §3.5, tr. 58.</p>
+  </aside>
+</section>
+
+<section data-slide-id="L03R-04-02">
+  <h2>Một cách điều khiển robot</h2>
+  <table>
+    <tr><th></th><th>Tìm</th><th>Chờ</th><th>Sạc</th></tr>
+    <tr><td>tại H</td><td>1</td><td>0</td><td>—</td></tr>
+    <tr><td>tại L</td><td>0</td><td>1/2</td><td>1/2</td></tr>
+  </table>
+  <p class="caption">—: hành động không hợp lệ.</p>
+  <p>Tại H chính sách luôn chọn Tìm; tại L nó chọn Chờ hoặc Sạc, mỗi hành động với xác suất một nửa.</p>
+  <p>Đây là một cách điều khiển cố định dùng để đánh giá, chưa có khẳng định tối ưu.</p>
+  <aside class="notes">
+    <p>Bảng trên mô tả một chính sách cụ thể: ở H chỉ Tìm với xác suất 1, ở L chọn Chờ hoặc Sạc đều với xác suất 1/2. Sạc chỉ là hành động hợp lệ ở L, nên ô H–Sạc để gạch thay vì ghi 0: 0 là xác suất của một hành động hợp lệ không được chọn, còn ô gạch nghĩa là cặp trạng thái–hành động nằm ngoài tập điều khiển. Chính sách này được cố định để đánh giá trong cả phần; nó không phải kết luận về hành vi tốt nhất. Ở H chính sách tất định, ở L nó ngẫu nhiên, nên một chính sách duy nhất có thể mang cả hai tính chất.</p>
+    <p class="note-source">Nguồn: minh họa cho định nghĩa chính sách trong Sutton và Barto, ấn bản 2, §3.5; chính sách cụ thể do người soạn chọn cho lớp.</p>
+  </aside>
+</section>
+
+<section data-slide-id="L03R-04-03">
+  <h2>Chính sách là phân phối trên hành động</h2>
+  <p>Ví dụ: $\pi(\mathrm{cho}\mid \mathrm L)=1/2$ và $\pi(\mathrm{sac}\mid \mathrm L)=1/2$, còn $\pi(\mathrm{tim}\mid \mathrm H)=1$.</p>
+  <div class="math-large">
+    $$\pi(a\mid s)=\Pr(A_t=a\mid S_t=s).$$
+  </div>
+  <div class="math-large">
+    $$\pi(a\mid s)\ge 0,\qquad \sum_{a\in\mathcal A(s)}\pi(a\mid s)=1.$$
+  </div>
+  <img src="img/lec-03/robot-p04-two-layers.svg" class="figure short" alt="Tại L, chính sách chọn Chờ hoặc Sạc mỗi1/2. Chờ chắc chắn đưa về L với thưởng1; Sạc chắc chắn đưa về H với thưởng0."/>
+  <aside class="notes">
+    <p>Từ ô L–Chờ của bảng, với xác suất 1/2 hành động Chờ được chọn; khái quát hóa cho mọi cặp trạng thái–hành động cho công thức $\pi(a\mid s)=\Pr(A_t=a\mid S_t=s)$ với điều kiện chuẩn hóa $\pi(a\mid s)\ge 0$ và tổng bằng 1 trên $\mathcal A(s)$. Trong bài này chính sách là Markov và dừng: nó chỉ phụ thuộc trạng thái hiện tại, không phụ thuộc lịch sử, và không đổi theo thời gian. Cần phân biệt hai nguồn ngẫu nhiên: chính sách quyết định rút thăm hành động, môi trường quyết định phản hồi; cố định chính sách ngẫu nhiên không loại bỏ việc rút thăm hành động. Trên một nhánh quỹ đạo, xác suất của nhánh là tích của một hệ số $\pi$ và một hệ số $p$ theo đúng thứ tự tầng.</p>
+    <p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, §3.5, tr. 58; ký hiệu xác suất theo quy ước của bài.</p>
+  </aside>
+</section>
+
+<section data-slide-id="L03R-04-04">
+  <h2>Trung bình trên các nhánh quỹ đạo</h2>
+  <p>Xuất phát ở H, theo chính sách ở trên, $\gamma=1/2$; chỉ xét hai bước đầu, đặt $G_0^{[2]}=R_1+\gamma R_2$.</p>
+  <img src="img/lec-03/robot-p04-two-step-tree.svg" class="figure" alt="Từ H chọn Tìm thưởng2; bước1 tới H hoặc L mỗi nơi1/2. Nếu H, bước2 Tìm thưởng2: điểm3, xác suất1/2. Nếu L, Chờ hoặc Sạc mỗi1/2: điểm5/2 hoặc2, xác suất mỗi nhóm1/4."/>
+  <div class="math-large">$$\mathbb E_\pi[G_0^{[2]}\mid S_0=\mathrm H]=\frac12\,3+\frac14\,\frac52+\frac14\,2=\frac{21}{8}.$$</div>
+  <aside class="notes">
+    <p>Xác suất của một nhánh hai bước là tích của hệ số chọn hành động và hệ số phản hồi môi trường. Nhánh Tìm ở bước hai dẫn tới H hoặc L với xác suất 1/2 mỗi trạng thái, nhưng cả hai đều cho thưởng 2, nên $G_0^{[2]}=2+(1/2)\cdot 2=3$ như nhau; nhóm hai trạng thái cuối này mang xác suất $(1/2)(1/2)+(1/2)(1/2)=1/2$, vì mỗi đường đến một trạng thái cuối có xác suất $(1/2)\cdot(1/2)=1/4$ và hai đường như nhau gộp lại thành 1/2. Nhánh Chờ: chọn Chờ với xác suất 1/2, môi trường phản hồi tất định với hệ số 1, nên xác suất nhánh là $(1/2)\cdot(1/2)\cdot 1=1/4$, và $G_0^{[2]}=2+(1/2)\cdot 1=5/2$. Nhánh Sạc: chọn Sạc với xác suất 1/2, phản hồi tất định, nên xác suất nhánh là $(1/2)\cdot(1/2)\cdot 1=1/4$, và $G_0^{[2]}=2+(1/2)\cdot 0=2$. Ký hiệu $\mathbb E_\pi$ lấy trung bình theo cả chính sách và môi trường, với trọng số 1/2, 1/4, 1/4 của ba nhóm. Kết quả $21/8$ là kỳ vọng của đúng hai bước đầu, chưa phải giá trị toàn tương lai $v_\pi(\mathrm H)$.</p>
+    <p class="note-source">Nguồn: phép tính từ đặc tả robot của bài; trực giác kỳ vọng theo Sutton và Barto, ấn bản 2, (3.12).</p>
+  </aside>
+</section>
+
+<section data-slide-id="L03R-04-05">
+  <h2>Giá trị trạng thái</h2>
+  <div class="math-large">
+    $$v_\pi(s)=\mathbb E_\pi\!\left[G_t\mid S_t=s\right].$$
+  </div>
+  <p>Với robot, $v_\pi(\mathrm H)$ là kỳ vọng tổng thưởng toàn tương lai khi bắt đầu pin cao và chọn hành động theo $\pi$.</p>
+  <p>$G_t$ là tổng thưởng trên một quỹ đạo, còn $v_\pi(s)$ là kỳ vọng theo xác suất do mô hình và chính sách sinh ra.</p>
+  <img src="img/lec-03/robot-p04-continuing-branches.svg" class="figure short" alt="Hai nhánh hai bước được kéo dài bằng dấu tiếp diễn để chỉ toàn quỹ đạo"/>
+  <aside class="notes">
+    <p>Kỳ vọng của hai bước đầu chỉ xét một đoạn của mỗi quỹ đạo. Giá trị trạng thái mở rộng đối tượng lấy trung bình sang toàn bộ tương lai: xuất phát ở $s$, mọi hành động về sau đều được rút theo $\pi$, và $G_t$ gồm cả phần sau hai bước, biểu diễn bằng dấu tiếp diễn trên hình. Định nghĩa $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$ là một hàm từ $\mathcal S$ vào $\mathbb R$; nếu có trạng thái kết thúc thì giá trị của nó bằng 0. $G_t$ thay đổi theo từng quỹ đạo, nhưng khi mô hình, chính sách và tiêu chuẩn tổng thưởng đã cố định, $v_\pi(s)$ là một số xác định. Điều kiện tổng hội tụ hữu hạn đã được kiểm ở phần 3. Định nghĩa này để chính sách chọn cả hành động đầu; muốn đánh giá riêng một lựa chọn, cần đổi thí nghiệm.</p>
+    <p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, (3.12), tr. 58.</p>
+  </aside>
+</section>
+
+<section data-slide-id="L03R-04-06">
+  <h2>Ấn định hành động đầu tiên</h2>
+  <p>Xuất phát ở L; lần lượt buộc hành động đầu là Tìm, Chờ hoặc Sạc. Sau phản hồi đầu tiên, cả ba thí nghiệm đều trở lại chính sách đã cho.</p>
+  <img src="img/lec-03/robot-p04-forced-first-action.svg" class="figure" alt="Ba thí nghiệm từ L với hành động đầu bị ấn định rồi tiếp tục theo chính sách"/>
+  <aside class="notes">
+    <p>Ba thí nghiệm cùng xuất phát ở L và khác nhau chỉ ở hành động đầu bị ấn định. Sau phản hồi đầu tiên của môi trường, cả ba thí nghiệm đều quay lại đúng chính sách đã cho, không buộc robot lặp hành động đầu mãi mãi. Ở hàng Tìm, hai phản hồi của mô hình vẫn được giữ nguyên với xác suất 1/2 mỗi nhánh; ấn định hành động không biến kết quả môi trường thành chắc chắn. Ấn định Tìm một lần vẫn có nghĩa dù chính sách thường không chọn Tìm ở L, vì thí nghiệm là một quy ước đánh giá, không phải mô tả hành vi thường ngày của chính sách. Mỗi thí nghiệm sinh một phân phối tổng thưởng với một kỳ vọng riêng.</p>
+    <p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, phần diễn giải giá trị hành động ngay trước (3.13), tr. 58.</p>
+  </aside>
+</section>
+
+<section data-slide-id="L03R-04-07">
+  <h2>Giá trị hành động</h2>
+  <p>Ấn định hành động đầu, rồi tiếp tục theo cùng chính sách.</p>
+  <div class="math-large">
+    $$q_\pi(s,a)=\mathbb E_\pi\!\left[G_t\mid S_t=s,\,A_t=a\right],
+    \qquad a\in\mathcal A(s).$$
+  </div>
+  <p>So với $v_\pi(s)$, khác biệt duy nhất là cách xác định hành động đầu tiên: $v_\pi$ để chính sách chọn, $q_\pi$ ấn định hành động rồi để chính sách quyết định từ bước kế tiếp.</p>
+  <aside class="notes">
+    <p>Định nghĩa $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s, A_t=a]$ với $a\in\mathcal A(s)$ được hiểu theo thí nghiệm ấn định hành động đầu: hành động đầu là $a$, mọi hành động về sau được rút theo $\pi$. Ký hiệu kỳ vọng điều kiện ở đây là quy ước của thí nghiệm, không phải phép chia cho $\Pr(A_t=a\mid S_t=s)$; do đó định nghĩa vẫn có nghĩa khi $\pi(a\mid s)=0$, chẳng hạn $q_\pi(\mathrm L,\mathrm{tim})$ dù $\pi(\mathrm{tim}\mid\mathrm L)=0$. $q_\pi$ tính cả toàn bộ tương lai sau bước đầu, nên không đồng nhất với thưởng kỳ vọng tức thời $r(s,a)$. Trạng thái kết thúc không còn hành động nào cần đánh giá. Hai hàm $v_\pi$ và $q_\pi$ là hai cách đọc cùng một phép trung bình, sẽ gặp lại trong phương trình Bellman.</p>
+    <p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, (3.13), tr. 58; quy ước hành động đầu do bài làm rõ.</p>
+  </aside>
+</section>
+
+<section data-slide-id="L03R-04-08">
+  <h2>Câu hỏi kiểm tra</h2>
+  <p><strong>Câu hỏi:</strong></p>
+  <ol>
+    <li>Thay cách chọn Chờ/Sạc ở L có làm thay đổi bảng $p$ không? Có thể làm thay đổi giá trị không?</li>
+    <li>$21/8$ vừa tính là kỳ vọng hai bước hay giá trị toàn tương lai?</li>
+    <li>Tính $q_\pi(\mathrm L,\mathrm{tim})$ nghĩa là buộc Tìm bao nhiêu lần trước khi trở lại $\pi$?</li>
+  </ol>
+  <aside class="notes">
+    <p>Đáp án. Câu 1: bảng $p$ mô tả môi trường nên không đổi khi thay cách chọn hành động; nhưng phân phối quỹ đạo và giá trị có thể đổi vì trọng số trên các nhánh phụ thuộc chính sách. Câu 2: $21/8$ là kỳ vọng của đúng hai bước đầu, $G_0^{[2]}=R_1+\gamma R_2$, chưa phải giá trị toàn tương lai $v_\pi(\mathrm H)$. Câu 3: đúng một lần; sau phản hồi đầu tiên, thí nghiệm trở lại chính sách kể từ trạng thái kế tiếp, kể cả khi $\pi(\mathrm{tim}\mid\mathrm L)=0$. Đánh giá toàn bộ tương lai có thể dựa vào phần thưởng bước đầu và giá trị của trạng thái kế tiếp.</p>
+    <p class="note-source">Nguồn: vận dụng Sutton và Barto, ấn bản 2, §3.5.</p>
+  </aside>
+</section>
+</section>
 <div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 03</div>
 </div></div><script src="revealjs/dist/reveal.js"></script><script src="plugin/notes/notes.js"></script><script src="plugin/highlight/highlight.js"></script><script src="plugin/math/math.js"></script><script>Reveal.initialize({width:1280,height:720,margin:.04,controlsLayout:"edges",slideNumber:true,hashOneBasedIndex:true,hash:true,katex:{local:"vendor/katex"},plugins:[RevealHighlight,RevealNotes,RevealMath.KaTeX]});</script></body></html>

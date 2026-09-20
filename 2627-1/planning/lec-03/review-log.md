@@ -749,3 +749,31 @@ Kiểm tra lũy kế14ID/14notes/5SVG;62biểu thức KaTeX hợp lệ. Phần2:
 L03R-03-04 từng tràn ở1280×720: chuyển hai trường hợp sang hai cột, hiện lần lượt, giữ nguyên cỡ chữ và đủ công thức. Ghi chú giải thích quy ước kết thúc; dãy ba thưởng chỉ là đoạn minh họa, không kết luận chính sách tối ưu.
 
 Kiểm tra lũy kế20ID/20notes/9SVG;132biểu thức KaTeX hợp lệ. Rà lại12lượt Chromium của cả phần3 sau sửa, không tràn/lỗi toán/ảnh hỏng/JS/HTTP. Đã xem ảnh ghép6slide. Các thay đổi toán và ranh giới phần sẽ nằm trong gói rà độc lập toàn bài.
+
+
+### Phần 4 — triển khai và kiểm tra cục bộ
+
+Đã thêm8slide L03R-04-01…08: lựa chọn hành động, bảng chính sách, phân phối chính sách, trung bình hai bước, giá trị trạng thái, thí nghiệm hành động đầu, giá trị hành động, câu hỏi kiểm tra. NămSVG mới. Writer GLM hai lượt, `requested_model=observed_model=z-ai/glm-5.3-flash`, `provider=OpenRouter`. Bản đầu có lỗi xác suất nhánh và cây không đúng chính sách; đã gọi sửa. Điều phối viên dựng lại cây hai tầng và cây hai bước: H chỉ Tìm, L chọn Chờ/Sạc mỗi1/2, kết quả môi trường giữ đúng bảng. Ba nhóm tổng hai bước có xác suất1/2,1/4,1/4 và kỳ vọng21/8; chưa phải giá trị toàn tương lai. Thí nghiệm q chỉ ép hành động đầu, kể cả khi chính sách cho hành động đó xác suất0.
+
+Kiểm tra lũy kế28ID/28notes/14SVG,194biểu thức KaTeX hợp lệ; mọi nhãn SVG nằm trong viewBox. Phần4 qua16lượt Chromium ở1280×720/390×844, không tràn, lỗi toán, ảnh hỏng hoặc lỗiJS/HTTP. Rà ảnh phát hiện hai nhãn tiêu đề cây chồng lấn; đã rút gọn/bỏ nhãn lặp và kiểm tra lại. Năm lượt rà độc lập phần4–7 sẽ thực hiện trên góiB khi có đủ bản nháp.
+
+### Năm báo cáo độc lập — gói A (phần 1–3)
+
+Phạm vi: toàn bộ nội dung, notes và nhãn/mô tả9SVG của20slide L03R-01-01…L03R-03-06; kèm bản đồ cả50slide, dữ kiện robot và bảng nguồn. Mỗi vai chạy tiến trình reviewer riêng, `review-full --no-tools`; chỉ góiA đã được rà, chưa coi là rà toàn deck. Bằng chứng runtime: requested=observed, provider OpenRouter; sinh viên/mạch viết dùng `z-ai/glm-5.3-flash`, RL/toán/phản biện giảng dạy dùng `deepseek/deepseek-v4-flash-0731`.
+
+| Vai | Mức độ và slide | Vấn đề / bằng chứng | Quyết định |
+|---|---|---|---|
+| Sinh viên | Nhẹ,02-04 | Cho rằng số thời gian trong nguồn (3.2) không khớp notes. | Không sửa: đã xem trực tiếp trang in48/PDF70; sách dùng t−1,t, bài dùng t,t+1, là đổi chỉ số hợp lệ. Reviewer GLM đã rút nhận xét sau lượt `recheck` với trang gốc. |
+| Sinh viên | Nhẹ,02-03 và các câu hỏi | Bản trích tuyến tính không thể hiện rowspan; đáp án chỉ trong notes. | Bảng HTML thực tế đã xem và đúng; đáp án trong notes đúng yêu cầu. Không có yêu cầu xuất PDF kèm đáp án. |
+| RL | Nghiêm trọng theo reviewer,02-03 | H–Sạc không có hàng; giới hạn hành động mới giải thích trong notes. | Bổ sung nhãn ngắn trên mặt slide; đây là làm rõ miền hợp lệ, không đổi mô hình. |
+| RL | Nghiêm trọng theo reviewer,03-04 | Có thể nhầm G_T=0 với thưởng cuối bằng0. | Công thức và notes đã đúng: G_t bắt đầu sau t, R_T có thể khác0. Rút gọn câu giải thích để nhìn rõ hơn; không sửa chỉ số đã kiểm. |
+| RL | Trung bình,03-03/05 | Hai dãy thưởng dễ bị hiểu thành kết quả chắc chắn; M=3 chưa gắn rõ với trị tuyệt đối. | Gắn nhãn đoạn mẫu và viết M=max trị tuyệt đối của thưởng. |
+| RL | Trung bình/nhẹ,01-04,02-02/04,03-02 | Ký hiệu hành động, tính dừng, giả thiết thưởng cố định, robot tiếp diễn. | Bổ sung ký hiệu hành động trong notes. Tính dừng đã nêu ở02-06, thưởng cố định đã có caption02-02: giữ, tránh lặp. Làm rõ robot tiếp diễn trong câu hiện có. |
+| Toán | Không có lỗi cần sửa,01-01…03-06 | Kiểm xác suất, kỳ vọng−1/2, hai tổng3/2 và7/4, cận6, chỉ số đệm k≥T−t và điều kiện khả tích. | Chấp nhận kết quả kiểm; các mục “nhẹ” của báo cáo đều kết luận công thức đúng, không biến thành lỗi giả. |
+| Phản biện giảng dạy | Nghiêm trọng theo reviewer,03-03 | Đoạn0,2,2 chỉ là một kết quả có thể xảy ra; so sánh đoạn không suy ra so sánh chính sách. | Gộp với nhận xét RL, bổ sung nhãn đoạn mẫu. Không coi các hành động Tìm cho thưởng2 chắc chắn tại L. |
+| Phản biện giảng dạy | Trung bình,01-05,02-03,03-04 | Cùng phân phối khác cùng mẫu; H–Sạc; cách đếm các số hạng hữu hạn/vô hạn. | H–Sạc bổ sung như trên. Phân phối đã nói rõ và chỉ số đã đúng; giữ công thức. |
+| Mạch viết | Trung bình,03-03 | Vai trò trong mạch: ví dụ trước tổng quát; kết nối vào từ dải thưởng; kết nối ra sang công thức. Gamma được dùng trước khi có tên tiếng Việt. | Ghi “hệ số chiết khấu” ngay ví dụ gamma=1/2. |
+| Mạch viết | Trung bình,03-06 | Vai trò trong mạch: kết phần tổng thưởng; kết nối vào từ kiểm tra tổng; kết nối ra sang chính sách còn gián tiếp. | Sửa câu nối thành nhu cầu xác định cách chọn hành động để lấy kỳ vọng, không thêm chỉ dẫn người giảng. |
+| Mạch viết | Nhẹ,01-04,03-02,03-06 | Một mẫu xuất hiện trước mô hình; ví dụ lượt kết thúc tách khỏi robot; câu hỏi tính−1/2 lặp. | Giữ có lý do: ví dụ trước formalism; cần đối chiếu episodic/continuing; tính lại là luyện tập truy hồi. Không phát sinh mạch riêng ngoài7phần. |
+
+Các sửa biên tập góiA sẽ do correction writer riêng thực hiện sau khi đủ năm báo cáo góiB; sau đó rà lại toán và mạch viết theo vùng thay đổi cùng hai slide lân cận và ranh giới phần. Không tự động chấp nhận mức độ reviewer khi bằng chứng cho thấy nội dung toán đã đúng.
