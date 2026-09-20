@@ -2076,3 +2076,373 @@ Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flas
 
 - Theo yêu cầu, thêm “(cực đại điểm thưởng tích luỹ)” vào câu về hành vi lách quy định ở L02-06-07. Giữ nguyên các nội dung khác.
 - Kiểm tra thay đúng một câu và `git diff --check` đạt.
+
+
+## Đồng bộ ghi chú với 41 slide hiện tại — 2026-09-20
+
+Chỉ sửa ghi chú công khai và hồ sơ đồng bộ trong planning; không chuyển hoặc thay nội dung slide, CSS, index, PDF. HTML hiện tại là nguồn ưu tiên cho lần đồng bộ này. Bản note trước chỉ có commit tạo f1c8baa, còn dùng cấu trúc 12 topic và ví dụ hành lang ba ô.
+
+Hai reader OpenRouter riêng lập kế hoạch và đối chiếu nguồn. Chấp nhận phát hiện các nội dung thiếu: biểu diễn X, mẫu/quỹ đạo, phân phối chung, ưu tiên dừng, ví dụ đích–hố và liên hệ khuyến khích/chế tài. Bác nhận xét giữ sáu phần (deck có bảy), coi topic cũ đã khớp toàn bộ, hoặc thêm X như thành phần thay cho bộ ba chính sách/giá trị/mô hình. Kết quả reader có lỗi ngôn ngữ trộn, chỉ dùng các phát hiện đã được điều phối viên xác minh trực tiếp, không sao chép vào note.
+
+Kế hoạch chấp nhận: bảy phần tương ứng 41 slide; giao diện O trước trạng thái S và biểu diễn X; mẫu dùng quan sát, lịch sử/quỹ đạo dùng trạng thái; ưu tiên dừng trong lớp lợi ích cộng có trọng số; G trước v; P chung trước phân tích alpha/h. Mỗi phần có câu hỏi và lời giải; cuối phần 6 là liên hệ xã hội theo ngoại lệ đã duyệt ở deck. Dùng các SVG đã có. Bản đồ chủ đề và quyết định biên tập ở planning, không hiện mã nội bộ/hướng dẫn người viết trong note.
+
+Dùng Quill cho trật tự khái niệm và tính liên tục, không tạo quill.json; biên tập và tự kiểm no-ai-slop/eval.md. Một writer cô lập chỉ ghi lecture-note.md; năm reviewer độc lập cùng bản đóng băng, writer sửa riêng sau các báo cáo. Kiểm định cuối: ánh xạ41slide, note-topic-id, KaTeX toàn văn, hình/đường dẫn, viewer tại8765 trên1280×720 và390×844, bàn phím/mục lục/lời giải/in; commit khi hoàn tất, chưa push lần sửa mới.
+
+### Kết quả và phạm vi
+
+- Đã viết lại ghi chú theo bảy phần hiện tại; bảng ánh xạ đủ 41 slide nằm trong outline. Bảy `note-topic-id` được giữ ở comment ẩn; không hiển thị mã slide hoặc hướng dẫn người viết.
+- Bổ sung biểu diễn $X_t$, bộ mẫu dùng quan sát, lịch sử/quỹ đạo dùng trạng thái, điều kiện Markov, chính sách trên biểu diễn, ưu tiên dừng và chứng minh có giả thiết, tổng thưởng, kỳ vọng, mô hình chung $P(s',r\mid s,a)$, bài toán đích–hố với $\alpha$ và mức phạt $h$, liên hệ khuyến khích/chế tài.
+- Bỏ cấu trúc 12 topic, phần mô hình thế giới riêng, hành lang ba ô và các lời dẫn biên tập. Dự đoán/điều khiển gắn vào đánh giá và chọn đường đi. Không đưa Bellman hoặc thuật toán mới vào ghi chú bài 02.
+- Giữ sáu hình SVG đã có: source-maze, interaction-timeline, state-observation-representation, full-partial-observation, incentive-maze, incentive-threshold. Không tạo hình mới, không giữ raster, không có ngoại lệ tài sản.
+- HTML, SVG, CSS, PDF và index không đổi. Lần này kiểm định ghi chú trong material-viewer, không tuyên bố đã rà lại slide bằng Codex Slides.
+
+### Worker và phục hồi timeout
+
+Reader lập kế hoạch và reader phân tích nguồn là hai lượt riêng. Lượt writer toàn văn thất bại với lỗi `OpenRouter request exceeded 900s wall timeout; retry only after narrowing the evidence or splitting the task`, lý do runtime `api_wall_timeout`. Chưa có tệp bản thảo được ghi trong lượt thất bại. Đã báo lỗi cho người dùng và thử lại một lần bằng ba gói thu hẹp 1–3 / 4–5 / 6–7, giữ GLM. Ba gói hoàn tất tuần tự. Sau đủ năm báo cáo độc lập, bốn lượt writer chỉnh sửa riêng xử lý các khối 1–2 / 3–4 / 5 / 6–7. Điều phối viên sửa tiếp các lỗi mới do writer đưa vào rồi yêu cầu rà lại toán, Học tăng cường và toàn mạch. Không chuyển ngầm worker, không chạy hai writer song song.
+
+| Lượt | requested_model | observed_model | provider |
+|---|---|---|---|
+| plan | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter |
+| source | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter |
+| retry-a | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter |
+| retry-b | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter |
+| retry-c | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter |
+| patch-12 | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter |
+| patch-34 | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter |
+| patch-5 | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter |
+| patch-67 | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter |
+| review-student | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter |
+| review-rl | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter |
+| review-math | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter |
+| review-academic | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter |
+| review-flow | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter |
+| recheck-math | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter |
+| recheck-rl | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter |
+| recheck-flow | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter |
+
+### Quyết định đối với các phát hiện
+
+- Chấp nhận và xử lý: thiếu $R_{\max}$ và tổng vô hạn; ví dụ sau công thức; chứng minh dồn trong một đoạn; câu hỏi chưa đánh số; nhầm lời dẫn trò chơi với mê cung trong bản writer; ký hiệu $X=G_t$ đụng biểu diễn; lời chỉ dẫn về nguồn và mã slide lọt vào phần đọc thêm. Đã sửa trước bản kiểm định cuối.
+- Bác lỗi toán “nghiêm trọng” trong review-math về phần thưởng thêm ở đầu: với $\gamma=0{,}5$, $U([r,2,0])=r+0{,}5\cdot2=r+1$ và $U([r,1,1])=r+0{,}5+0{,}25=r+0{,}75$. Đề xuất $r+2$/$r+1{,}5$ bỏ quên chiết khấu khi dịch thời gian. Điều phối viên tính bằng phân số chính xác; recheck-math tự tính lại và xác nhận kết quả hiện tại đúng. Không còn lỗi nghiêm trọng chưa xử lý.
+- Bác đề nghị giới hạn cùng độ dài khi $\gamma>1$: $U([r,a])-U([r,b])=\gamma(U(a)-U(b))$ giữ dấu với mọi $\gamma>0$ và mọi chuỗi hữu hạn, kể cả khác độ dài. Dãy trọng số dùng chung đã nằm trong giả thiết; không cần và không dùng lập luận tự thêm phần đuôi. Recheck-math xác nhận.
+- Giữ lịch sử $H_t$ bằng trạng thái theo yêu cầu người dùng; không đổi thành lịch sử quan sát theo đề nghị recheck-rl. $f_t$ dùng riêng lịch sử quan sát/hành động/thưởng; sự phân biệt được ghi rõ ngay sau các công thức.
+- Giữ thưởng mỗi bước: $0$ cũng là một giá trị phần thưởng, nên trò chơi $0,\ldots,0,1$ không mâu thuẫn với giao diện nhận thưởng sau mỗi hành động. Đã thêm câu nhận diện trò chơi là ví dụ khác để làm rõ mạch chuyển.
+- Các chi tiết thắng/thua/hòa, đường 16/18 bước, tường phía Đông tại (1,2), phạm vi hw02 đều được đối chiếu với HTML hiện tại: L02-02-05/06, L02-04-02/03 và L02-07-03. Không áp dụng các đề nghị bỏ dữ kiện chỉ vì bản tóm tắt gửi reviewer không ghi chi tiết đó. Không chấp nhận suy đoán đường ngắn nhất 12 bước khi reviewer chưa đọc SVG có tường.
+- Giữ định nghĩa chính sách xác định trước câu hỏi và nhắc lại trong lời giải: lời giải phục vụ tự kiểm tra, không phải đoạn giảng lặp. Vị trí câu về hành động gặp tường làm rõ tập hành động trước quy tắc xác suất, nên không bắt buộc chuyển nó sang sau câu đánh giá chất lượng.
+- Comment note-topic-id không lộ trên nội dung: viewer gọi validateAndStripTopicIds trước render, kiểm tra DOM xác nhận không có chuỗi này trong văn bản hiển thị. Giữ ID để truy nguyên.
+- Recheck-math đặt nhãn “Lỗi” cho nhiều dòng nhưng tự xác nhận từng dòng không có lỗi; dùng kết luận thực chất và phép tính kèm theo, không đếm các nhãn đó như lỗi chưa giải quyết. Các mức “Thấp” trong báo cáo được quy về “nhẹ” khi hợp nhất.
+- Tự kiểm trực tiếp theo no-ai-slop/eval.md: cắt lời mở rỗng, nhãn gây chú ý, câu hỏi tu từ, câu dẫn cho người viết, mã nội bộ và các đoạn tổng kết lặp; giữ các đối chiếu kỹ thuật cần để phân biệt khái niệm. Quill: trật tự O → S/O/X → lịch sử/Markov → chính sách → tổng/kỳ vọng/giá trị/mô hình → phân tích thưởng → vận dụng; không tạo quill.json.
+
+### Kiểm định cuối
+
+- SHA-256 ghi chú đã kiểm định: `669fc71b5cf7af3e6310f98fd10ed218e61aa6073fdf233cdcb03950c0de132e`.
+- Cấu trúc: 7 phần, 7 ID duy nhất, 7 bộ câu hỏi và 7 khối lời giải; 23 câu hỏi và 23 đáp án tương ứng. Có một khối chứng minh chi tiết. Bảng ánh xạ bao phủ đủ 41 ID của HTML, không làm thay đổi deck.
+- Hai màn hình 1280×720 và 390×844: 350 công thức KaTeX, 6 hình tải đúng, 35 mục lục trỏ đúng đích, không lỗi JavaScript/HTTP/KaTeX hoặc tràn toàn trang. Hình lớn và công thức dài nằm trong vùng cuộn ngang có sẵn của CSS chung; đây không phải tràn toàn trang. Đã xem riêng khối chứng minh trên hai màn hình; trên màn hình hẹp, các dòng toán dài được đọc bằng cuộn ngang.
+- Mọi lời giải mở/đóng bằng bàn phím; chế độ in mở đủ lời giải và trả về trạng thái cũ sau in. Đã xem ảnh chụp phần trạng thái, giá trị và đích–hố, ngoài việc kiểm định DOM toàn văn.
+- Máy chủ có sẵn tại cổng 8765; lần gọi `python3 -m reloadserver 8765` báo cổng đang dùng, nên dùng máy chủ hiện có sau khi xác nhận phục vụ đúng kho. Nội dung Markdown nhận qua HTTP khớp từng byte với tệp trong worktree.
+- Các kiểm tra số học: bộ ba thưởng -1 với hệ số 1/2 cho -7/4; hai nhánh cho kỳ vọng -4; bảng alpha 0/1/2/2,5/3, ngưỡng 2,5 và h>2 tại alpha3 đều đúng; tính lại bằng Fraction và chứng minh trực tiếp.
+- Các lỗi ban đầu của script kiểm định (selector CSS cho ID bắt đầu bằng số và nhận nhầm hình trong vùng cuộn là tràn trang) đã sửa trong script tạm, không sửa viewer/CSS để chiều theo kiểm tra.
+- Không có notebook, code demo, xuất PDF hoặc thay đổi chỉ mục trong phạm vi yêu cầu cập nhật ghi chú. Không có giới hạn nội dung hay lỗi bắt buộc còn mở.
+
+### Năm báo cáo độc lập trên bản nháp
+
+#### review-student
+
+# Báo cáo rà soát Lecture 02 (chỉ ghi chú Markdown)
+
+**Phạm vi:** đối chiếu bản nháp `/tmp/rl02-note-sync/lecture-note.md` với đặc tả 41 slide hiện tại (dạng văn bản). Không kiểm định hình ảnh SVG/slide hiển thị; không sửa tệp. Không coi các phần thăm dò, Bellman, MRP, q_pi, mô hình AGI là thiếu sót.
+
+**Kết quả chung:** ghi chú bám sát bảy phần, ví dụ trước công thức, không chứa hướng dẫn cho người viết, không lộ bản đồ slide/ID nội bộ. Các điểm cốt lõi (thứ tự O_t, A_t, R_{t+1}, O_{t+1}; định nghĩa f_t; H_t, τ; định lý ưu tiên dừng trong lớp U; G_t, v_π, P chữ hoa; mê cung đích–hố với ngưỡng 2,5 và phạt h; quiz các phần) đều khớp đặc tả. Không phát hiện lỗi mức chặn bàn giao hay nghiêm trọng.
+
+**Các vấn đề còn lại (đều mức nhẹ):**
+
+1. **Nhẹ — Phần 7, đoạn "Bài tập tuần 2", câu cuối đoạn.** Vấn đề: ghi chú tuyên bố "Bài 3, 4, 7, 8, 9 trong cùng tập bài tập cần các khái niệm của Bài 03", nhưng đặc tả chỉ nêu "Bài 03 học MDP/Bellman"; các bài 4, 7, 8, 9 không có trong chứng cứ. Bằng chứng: đặc tả L02-07. Đề xuất: xác minh với hw02 hoặc thu hẹp về "Bài 3 cần các khái niệm của Bài 03".
+
+2. **Nhẹ — Phần 7, cùng đoạn.** Vấn đề: nhãn nội dung "tín hiệu học, đặc tả mê cung, chiết khấu, chính sách ngẫu nhiên" cho Bài 1, 2, 5, 6 không xuất hiện trong đặc tả (chỉ có danh sách số bài). Đề xuất: xác minh hoặc bỏ phần mô tả để tránh khẳng định không có nguồn.
+
+3. **Nhẹ — Phần 2, đoạn "Phản hồi trễ", câu thứ hai.** Vấn đề: bổ sung "thua nhận −1 và hòa nhận 0" ngoài chuỗi "0,…,0,1" ghi trong đặc tả. Có thể đúng theo slide nhưng chưa được chứng cứ xác nhận. Đề xuất: đối chiếu slide L02-02; nếu slide chỉ nêu 0,…,0,1 thì bỏ mệnh đề thua/hòa.
+
+4. **Nhẹ — Phần 2, đoạn "Giả thuyết điểm thưởng", câu cuối trước đoạn phản hồi trễ.** Vấn đề: ví dụ "đường 16 bước cho −16, đường 18 bước cho −18" không có trong đặc tả; đường ngắn nhất từ (0,2) tới G=(8,6) là 12 bước, người học có thể hiểu nhầm 16/18 là hai đường ngắn nhất. Đề xuất: ghi rõ đây là hai đường ví dụ bất kỳ, hoặc thay bằng con số kiểm chứng được.
+
+5. **Nhẹ — Phần 4, mục "Ví dụ về chính sách", câu "Mọi hướng đều có thể được chọn".** Vấn đề: đặt ngay sau bảng gồm cả quy tắc "Luôn Bắc" (xác suất 1), dễ đọc nhầm là áp dụng cho cả hai quy tắc, mâu thuẫn với hàng đầu bảng. Đề xuất: sửa thành "Với quy tắc thứ hai, cả Bắc và Đông đều có thể được chọn; chọn Đông gặp tường…".
+
+6. **Nhẹ — Phần 6, dòng mở đầu.** Vấn đề: thiếu dòng trống giữa chú thích `<!-- note-topic-id: lec-02-part-06 -->` và đề mục `## 6. …`, không đồng nhất với các phần 1–5 và 7; một số bộ render Markdown có thể không nhận đề mục. Đề xuất: thêm một dòng trống.
+
+**Không phải lỗi:** ghi "đích sau ô (7,6)" thay vì "G=(8,6)" là nhất quán với quy ước tọa độ 0–7 của lưới 8×8; cách trình bày P chữ hoa có chú thích khác biệt với Sutton–Barto đúng theo đặc tả; phần liên hệ khuyến khích/chế tài xã hội giữ đúng phạm vi analog như yêu cầu.
+
+**Kết luận:** không có lỗi chặn bàn giao; 6 điểm nhẹ nêu trên nên được xác minh/sửa trước khi bàn giao.
+
+#### review-rl
+
+## Báo cáo rà soát Ghi chú Bài 02
+
+**Tổng quan:** Ghi chú bám sát bảy phần của slide, thuật ngữ chính xác, không có lỗi chặn bàn giao. Phát hiện 4 vấn đề nhẹ.
+
+---
+
+### Vấn đề 1 — Mức độ: Nhẹ
+- **Vị trí:** Phần 2, đoạn "Phản hồi trễ", câu: "trò chơi với cách gán thưởng $0,\ldots,0,1$ — các nước chưa kết thúc nhận $0$, thắng nhận $1$, thua nhận $-1$ và hòa nhận $0$."
+- **Vấn đề:** Câu mô tả chuỗi $0,\ldots,0,1$ nhưng đồng thời nói "thua nhận $-1$" — chuỗi ví dụ chỉ có $0$ và $1$, không minh họa trường hợp thua $-1$. Gây mơ hồ nhẹ.
+- **Bằng chứng:** Đặc tả L02-02: "chuỗi trò chơi 0,...,0,1" — không đề cập $-1$ trong chuỗi này.
+- **Đề xuất:** Tách hai ý: "chuỗi $0,\ldots,0,1$ minh họa thắng; quy ước chung: thắng $1$, thua $-1$, hòa $0$."
+
+---
+
+### Vấn đề 2 — Mức độ: Nhẹ
+- **Vị trí:** Phần 3, đoạn "Với quan sát đầy đủ", câu: "Quan sát đầy đủ không có nghĩa tác tử biết quy luật chuyển hoặc phần thưởng."
+- **Vấn đề:** Đặc tả yêu cầu "không viện bộ nhớ vào định nghĩa này" cho định nghĩa đầy đủ. Ghi chú đã đúng, nhưng thiếu câu nhấn mạnh rằng định nghĩa đầy đủ chỉ xét quan sát hiện tại $O_t$, không xét lịch sử — có thể gây hiểu nhầm rằng đầy đủ bao gồm bộ nhớ.
+- **Bằng chứng:** Đặc tả L02-03: "Đầy đủ: từ O_t suy ra S_t (không viện bộ nhớ vào định nghĩa này)."
+- **Đề xuất:** Thêm: "Định nghĩa này chỉ xét $O_t$ tại thời điểm hiện tại, không dùng bộ nhớ quá khứ."
+
+---
+
+### Vấn đề 3 — Mức độ: Nhẹ
+- **Vị trí:** Phần 5, mục "Ưu tiên dừng", đoạn "Hai hệ quả", câu: "Nếu bỏ giả thiết trọng số không tăng, $\gamma>1$ cũng thỏa tính dừng trên chuỗi hữu hạn."
+- **Vấn đề:** Câu này đúng nhưng thiếu ngữ cảnh rằng $\gamma>1$ không được dùng trong định nghĩa $G_t$ (phạm vi $0\le\gamma\le1$). Người đọc có thể hiểu nhầm $\gamma>1$ là hợp lệ.
+- **Bằng chứng:** Đặc tả L02-05: "$0\le\gamma\le1$" cho $G_t$; định lý chỉ "$0<\gamma\le1$".
+- **Đề xuất:** Thêm: "Tuy nhiên, $G_t$ chỉ xét $0\le\gamma\le1$; $\gamma>1$ chỉ là nhận xét lý thuyết về định lý."
+
+---
+
+### Vấn đề 4 — Mức độ: Nhẹ
+- **Vị trí:** Phần 6, đoạn "Vì sao so sánh hai đường ngắn nhất là đủ?", câu: "Với $\alpha=0$, đi mãi cho $0$, thấp hơn $10$ khi đến đích."
+- **Vấn đề:** Câu này đúng nhưng thiếu nhấn mạnh rằng với $\alpha=0$, đường vòng hữu hạn tới đích vẫn cho $10$ (đã nêu ở đoạn sau) — thứ tự trình bày có thể gây hiểu nhầm rằng chỉ đường ngắn nhất mới cho $10$.
+- **Bằng chứng:** Đặc tả L02-06: "alpha0 đi mãi0, đến đích hữu hạn10, không ưu tiên đường ngắn."
+- **Đề xuất:** Thêm ngay sau câu đó: "(mọi đường hữu hạn tới đích đều cho $10$, không riêng đường ngắn nhất — chi tiết ở đoạn sau)."
+
+---
+
+**Kết luận:** Không có lỗi chặn bàn giao hoặc nghiêm trọng. Bốn vấn đề nhẹ về độ rõ ràng, không sai kiến thức. Ghi chú đạt yêu cầu bàn giao.
+
+#### review-math
+
+## Báo cáo rà soát độ chính xác toán — Lecture 02
+
+### 1. Nghiêm trọng — Mục 5, "Ưu tiên dừng và tổng phần thưởng", đoạn "Ví dụ ngắn"
+
+**Vấn đề:** Sai số học trong ví dụ minh họa chiết khấu.
+
+**Bằng chứng:** Ghi chú viết: "chuỗi thưởng từ $(2,0)$ và từ $(1,1)$ đều có tổng $2$; với $\gamma=0{,}5$, lợi ích lần lượt là $2$ và $1{,}5$." Chuỗi $(2,0)$ với $\gamma=0{,}5$ cho $2 + 0{,}5 \times 0 = 2$ (đúng). Chuỗi $(1,1)$ cho $1 + 0{,}5 \times 1 = 1{,}5$ (đúng). Tuy nhiên, câu tiếp theo: "Thêm cùng thưởng $r$ cho hai lợi ích $r+1$ và $r+0{,}75$" — **sai**. Lợi ích sau khi thêm $r$ phải là $r + 2$ và $r + 1{,}5$ (vì $U([r,a]) = r + \gamma U(a)$ với $\gamma=0{,}5$). Các giá trị $r+1$ và $r+0{,}75$ không khớp với bất kỳ phép tính nào ở trên.
+
+**Đề xuất sửa:** Đổi thành "Thêm cùng thưởng $r$ cho hai lợi ích $r+2$ và $r+1{,}5$, thứ tự không đổi."
+
+---
+
+### 2. Trung bình — Mục 5, "Phần thưởng tích lũy", công thức $G_t$
+
+**Vấn đề:** Thiếu điều kiện cho trường hợp nhiệm vụ tiếp diễn (vô hạn).
+
+**Bằng chứng:** Ghi chú viết: "Với nhiệm vụ tiếp diễn, tổng kéo dài vô hạn; $\gamma<1$ và thưởng bị chặn là điều kiện đủ để tổng hội tụ tuyệt đối." Công thức $G_t=\sum_{k=0}^{T-t-1}\gamma^k R_{t+k+1}$ dùng $T$ hữu hạn; khi $T\to\infty$ cần viết lại thành $\sum_{k=0}^{\infty}\gamma^k R_{t+k+1}$. Ghi chú không nêu rõ sự chuyển đổi ký hiệu này, gây nhập nhằng giữa tổng hữu hạn và vô hạn.
+
+**Đề xuất sửa:** Bổ sung câu: "Khi $T=\infty$, tổng được viết $\sum_{k=0}^{\infty}\gamma^k R_{t+k+1}$."
+
+---
+
+### 3. Nhẹ — Mục 5, "Mô hình chuyển trạng thái và phần thưởng"
+
+**Vấn đề:** Thiếu điều kiện $\bar r(s,a)$ hữu hạn khi nói "trong trường hợp hữu hạn."
+
+**Bằng chứng:** Ghi chú viết: "thưởng trung bình $\bar r(s,a)=\sum_{s',r}r\,P(s',r\mid s,a)$ trong trường hợp hữu hạn." Cụm "trong trường hợp hữu hạn" không rõ nghĩa — hữu hạn về số cặp $(s',r)$ hay hữu hạn về giá trị $r$? Nếu $\mathcal R$ vô hạn đếm được, tổng có thể phân kỳ.
+
+**Đề xuất sửa:** Đổi thành "khi kỳ vọng tồn tại và hữu hạn" hoặc "với $\mathcal R$ hữu hạn."
+
+---
+
+### 4. Nhẹ — Mục 6, "Phần thưởng định hướng hành vi", đoạn giải thích bảng $\alpha=3$
+
+**Vấn đề:** Diễn giải "tổng chi phí $18$" có thể gây hiểu nhầm vì tổng thưởng là $-8$, không phải chi phí $18$ trừ đi thưởng đích.
+
+**Bằng chứng:** Ghi chú viết: "Đến đích vẫn nhận thêm $10$ nhưng phải trả tổng chi phí $18$; vào hố chỉ tốn $6$." Với $\alpha=3$, sáu bước đến đích cho $6 \times (-3) = -18$ cộng $10$ thành $-8$; hố hai bước cho $-6$. Diễn giải "chi phí $18$" là đúng số học nhưng dùng từ "chi phí" cho tổng thưởng âm có thể gây nhầm lẫn với khái niệm chi phí trong tối ưu hóa.
+
+**Đề xuất sửa:** Đổi thành "phải chịu tổng phạt $18$ trước khi cộng thưởng đích $10$."
+
+---
+
+### 5. Nhẹ — Mục 5, "Giá trị kỳ vọng", bảng hai nhánh
+
+**Vấn đề:** Không nêu rõ $G_t$ tương ứng với nhánh nào khi $t$ là thời điểm hiện tại.
+
+**Bằng chứng:** Bảng ghi "Số bước còn lại: $3$/$5$" với tổng thưởng $-3$/$-5$. Nếu $t$ là thời điểm hiện tại và còn $3$ bước, thì $G_t = R_{t+1}+R_{t+2}+R_{t+3} = -3$ (đúng). Tuy nhiên ghi chú không định nghĩa rõ $t$ trong bảng này, khác với công thức $G_t$ ở trên dùng $T-t-1$ số hạng.
+
+**Đề xuất sửa:** Thêm câu: "Giả sử tại thời điểm $t$, còn $3$ hoặc $5$ bước nữa trước khi kết thúc."
+
+---
+
+### Kết luận
+
+Không phát hiện lỗi về định lý, giả thiết kỳ vọng, ngưỡng $\alpha=2{,}5$, hay các phép tính chính trong phần 6. Lỗi nghiêm trọng duy nhất là sai số học ở ví dụ minh họa chiết khấu (mục 5), cần sửa trước khi bàn giao. Các vấn đề còn lại là trung bình/nhẹ về độ rõ ràng ký hiệu.
+
+#### review-academic
+
+# Báo cáo rà soát độc lập — Lecture 02 (bản ghi chú Markdown)
+
+**Kết luận chung:** Ghi chú bám sát bảy phần hiện tại, ví dụ đặt trước công thức, không chứa hướng dẫn cho người viết hay mã quy trình. Không có lỗi ở mức **chặn bàn giao** hoặc **nghiêm trọng**. Phát hiện 3 vấn đề nhỏ (mức **nhẹ**).
+
+---
+
+## Vấn đề 1 — Nhẹ
+- **Vị trí:** Phần 5, mục "Ưu tiên dừng và tổng phần thưởng", đoạn sau phản ví dụ.
+- **Vấn đề:** Câu "Nếu bỏ giả thiết trọng số không tăng, γ>1 cũng thỏa tính dừng trên chuỗi hữu hạn" chưa nêu rõ điều kiện chuỗi hữu hạn có độ dài cố định; người đọc có thể hiểu nhầm áp dụng cho mọi độ dài.
+- **Bằng chứng:** Đặc tả L02-05 nêu "cùng dãy trọng số dương không tăng cho mọi độ dài, w1=1"; việc bỏ "không tăng" cần kèm điều kiện độ dài cố định để tránh mơ hồ.
+- **Đề xuất:** Bổ sung: "trên các chuỗi hữu hạn cùng độ dài cố định".
+
+## Vấn đề 2 — Nhẹ
+- **Vị trí:** Phần 6, đoạn "Vì sao so sánh hai đường ngắn nhất là đủ?"
+- **Vấn đề:** Câu "mọi đường hữu hạn tới đích đều cho 10−6α hoặc kém" chưa giải thích vì sao đường vòng dài hơn cho tổng kém hơn khi α>0 (cần nêu rõ mỗi bước thêm làm giảm tổng).
+- **Bằng chứng:** Đặc tả L02-06: "α>0 đi vòng kém" — ghi chú đã nêu kết luận nhưng thiếu một câu giải thích trung gian.
+- **Đề xuất:** Thêm: "vì mỗi bước thêm đóng góp −α<0 vào tổng".
+
+## Vấn đề 3 — Nhẹ
+- **Vị trí:** Phần 7, mục "Bài tập tuần 2".
+- **Vấn đề:** Câu "Bài 3, 4, 7, 8, 9 trong cùng tập bài tập cần các khái niệm của Bài 03" chưa nêu rõ đây là các bài **không** thuộc phạm vi hw02 tuần này, dễ gây hiểu nhầm là bài tập phải làm.
+- **Bằng chứng:** Đặc tả L02-07: "hw02 Bài 1, 2, 5, 6, 10" — chỉ 5 bài này thuộc hw02; các bài còn lại được nhắc để định hướng, không phải yêu cầu.
+- **Đề xuất:** Thêm cụm "không thuộc hw02 tuần này" trước "cần các khái niệm".
+
+---
+
+**Xác nhận không có lỗi ở các điểm sau:** thứ tự O_t, A_t, R_{t+1}, O_{t+1} đúng; chưa dùng S trước định nghĩa; ví dụ đặt trước công thức ở tất cả bảy phần; ký hiệu P hoa đúng theo deck; các phần thăm dò/khai thác, Bellman, MRP, q_pi, mô hình thế giới AGI không bị coi là thiếu sót.
+
+#### review-flow
+
+## Báo cáo rà soát Lecture 02 (ghi chú Markdown)
+
+Đã đối chiếu toàn bộ bản nháp với đặc tả 41 slide. Tuyến bảy phần đủ, thứ tự đúng, điểm vào mỗi phần nối từ phần trước (1→2 dùng mê cung xuyên suốt; 2→3 từ quan sát tọa độ; 3→4 từ biểu diễn X; 4→5 từ chính sách; 5→6 từ hàm giá trị; 6→7 tổng kết), đầu ra mỗi phần dẫn sang phần sau. Các số liệu kiểm tra đều khớp đặc tả: (0,2) Đông→(1,2),−1; X=(1,0,1,0) tại (2,1) và (3,1); f_t, H_t, τ=H_T; bảng chính sách (0,2)Đông/(1,2)Bắc/(1,1)Đông; quiz Nam=0,3; định lý lớp U với w₁=1, γ∈(0,1]; phản ví dụ V([r,a])=r+V(a)³; G_t, −1,75; hai nhánh −4; P chữ hoa, P((1,2),−1|(0,2),Đông)=1; mê cung mới 10−6α/−2α, ngưỡng 2,5, ngưỡng (10+h)/4; quiz α=2→−2/−4, h>2; hw02 Bài 1,2,5,6,10; ba câu cuối khớp. Không thấy hướng dẫn cho người viết, mã quy trình, hay AI slop. Không có lỗi chặn bàn giao.
+
+**Các vấn đề còn lại:**
+
+1. **Trung bình** — Vị trí: toàn tệp, các chú thích `<!-- note-topic-id: lec-02-part-0X -->`. Vấn đề: ID truy nguyên nội bộ nằm trong tệp ghi chú, trong khi đặc tả quy định bản đồ/ID chỉ giữ ở planning, không hiển thị trong note. Bằng chứng: 7 chú thích ID xuất hiện ngay trước mỗi đề mục. Đề xuất: chuyển ID về planning hoặc xác nhận bước build sẽ tách chúng khỏi nội dung phát hành.
+
+2. **Nhẹ** — Vị trí: phần 6, dòng mở đầu `## 6. Phần thưởng định hướng hành vi`. Vấn đề: thiếu dòng trắng giữa chú thích ID và đề mục, không nhất quán với các phần 1–5 và 7 (đều có dòng trắng). Bằng chứng: so sánh `<!-- note-topic-id: lec-02-part-05 -->` + dòng trống + `## 5.` với phần 6. Đề xuất: thêm dòng trắng để đồng nhất định dạng.
+
+3. **Nhẹ** — Vị trí: phần 5, đề mục "Ưu tiên dừng và tổng phần thưởng" và "Phần thưởng tích lũy". Vấn đề: công thức (a≻b⟺[r,a]≻[r,b] và G_t) đứng trước ví dụ, trong khi quy ước "ví dụ trước công thức" được các phần 3, 4, 5 (hai nhánh trước v_π) và phần 6 tuân thủ. Bằng chứng: đề mục "Phần thưởng tích lũy" mở bằng định nghĩa G_t, ví dụ −1,75 chỉ xuất hiện sau hai đoạn giải thích. Đề xuất: thêm một câu trực giác/ví dụ ngắn dẫn vào trước mỗi công thức (ví dụ: chuỗi −1,−1,−1 trước định nghĩa G_t), hoặc xác nhận hai định nghĩa này được phép ngoại lệ vì là tiên đề/định nghĩa.
+
+4. **Nhẹ** — Vị trí: phần 2, đoạn "Phản hồi trễ", câu "thắng nhận 1, thua nhận −1 và hòa nhận 0". Vấn đề: đặc tả slide chỉ nêu chuỗi 0,…,0,1; nhánh thua/hòa là mở rộng không có trong đặc tả, cần xác nhận với slide nguồn trước phát hành. Bằng chứng: đặc tả L02-02 chỉ ghi "chuỗi trò chơi 0,...,0,1". Đề xuất: kiểm tra slide gốc; nếu slide không nêu, bỏ mệnh đề "thua nhận −1 và hòa nhận 0" hoặc đánh dấu cần nguồn.
+
+**Kết luận:** không có lỗi chặn bàn giao hay nghiêm trọng; bốn mục trên (một trung bình, ba nhẹ) nên xử lý trước khi phát hành. Các phần thăm dò/khai thác, Bellman, MRP, q_π, mô hình thế giới AGI không được coi là thiếu sót theo phạm vi. Không tuyên bố đã kiểm định hiển thị SVG/slide; các nhận xét về hình chỉ dựa trên văn bản alt và đặc tả.
+
+### Rà lại sau chỉnh sửa
+
+#### recheck-math
+
+## Báo cáo rà soát phần 5–6
+
+### Lỗi 1 — Mức độ: Trung bình
+**Phần/Vị trí:** Phần 5, mục "Ưu tiên dừng và tổng phần thưởng", đoạn ví dụ đầu.
+
+**Vấn đề:** Ví dụ minh họa trọng số (1, 0,5) cho hai chuỗi (2,0) và (1,1) đưa ra lợi ích lần lượt là 2 và 1,5. Tuy nhiên, nếu áp dụng đúng công thức $U(a)=\sum w_i r_i$ với $w_1=1$, $w_2=0{,}5$: $U(2,0)=2$, $U(1,1)=1{,}5$ — kết quả này **đúng**. Nhưng câu "cách tính này ưu tiên chuỗi nhận nhiều thưởng hơn ở bước đầu" cần kiểm tra: với $\gamma=0{,}5$, $U(2,0)=2$ và $U(1,1)=1{,}5$ — đúng. **Không có lỗi ở đây.** *(Bỏ qua — tự kiểm tra lại xác nhận đúng.)*
+
+### Lỗi 2 — Mức độ: Thấp
+**Phần/Vị trí:** Phần 5, mục "Ưu tiên dừng", đoạn tính $U([r,2,0])$ và $U([r,1,1])$.
+
+**Vấn đề:** Báo cáo trước đòi sửa thành $r+2$ và $r+1{,}5$; điều phối tính lại thành $r+1$ và $r+0{,}75$. Tự tính lại với $\gamma=0{,}5$:
+- $U([r,2,0]) = r + 0{,}5\cdot2 + 0{,}25\cdot0 = r+1$ ✓
+- $U([r,1,1]) = r + 0{,}5\cdot1 + 0{,}25\cdot1 = r+0{,}75$ ✓
+
+**Kết luận:** Giá trị trong văn bản hiện tại ($r+1$ và $r+0{,}75$) là **đúng**. Không cần sửa.
+
+### Lỗi 3 — Mức độ: Trung bình
+**Phần/Vị trí:** Phần 6, mục "Ngưỡng thay đổi hành vi", ngưỡng $\alpha=2{,}5$.
+
+**Vấn đề:** Tự tính lại: $10-6\alpha = -2\alpha \Rightarrow 10 = 4\alpha \Rightarrow \alpha = 2{,}5$. Tại $\alpha=2{,}5$: đích $=10-15=-5$; hố $=-5$. **Đúng.** Không có lỗi.
+
+### Lỗi 4 — Mức độ: Thấp
+**Phần/Vị trí:** Phần 6, mục "Phạt hố bổ sung", điều kiện $h>2$ tại $\alpha=3$.
+
+**Vấn đề:** Tự tính: cần $10-6(3) > -2(3)-h \Rightarrow -8 > -6-h \Rightarrow -2 > -h \Rightarrow h > 2$. **Đúng.** Không có lỗi.
+
+### Lỗi 5 — Mức độ: Thấp
+**Phần/Vị trí:** Phần 5, chứng minh Định lý, bước chọn $d_1=w_j$, $d_j=-w_1$.
+
+**Vấn đề:** Kiểm tra: hiệu trước $= w_1w_j + w_j(-w_1) = 0$ ✓. Hiệu sau $= w_2w_j + w_{j+1}(-w_1) = 0 \Rightarrow w_{j+1} = (w_2/w_1)w_j$ ✓. Truy hồi đúng. Dãy $w$ dùng chung cho mọi độ dài từ giả thiết ✓. $\gamma>1$ giữ ưu tiên trên chuỗi hữu hạn vì $\gamma>0$ ✓. **Không có lỗi.**
+
+### Lỗi 6 — Mức độ: Thấp
+**Phần/Vị trí:** Phần 5, ví dụ phản chứng $V([r,a])=r+(V(a))^3$.
+
+**Vấn đề:** Kiểm tra: $V((0,x)) = 0 + x^3 = x^3$, không bằng $w_2x$ với $w_2$ cố định cho mọi $x$ ✓. Hàm lập phương tăng ngặt giữ so sánh chặt ✓. **Đúng.**
+
+### Lỗi 7 — Mức độ: Thấp
+**Phần/Vị trí:** Phần 5, mục "Giá trị kỳ vọng", ví dụ hai nhánh.
+
+**Vấn đề:** $0{,}5(-3)+0{,}5(-5) = -1{,}5-2{,}5 = -4$ ✓. Kết thúc với xác suất 1 chưa đủ — cần $\mathbb E[T-t]<\infty$ ✓. **Đúng.**
+
+### Lỗi 8 — Mức độ: Thấp
+**Phần/Vị trí:** Phần 5, mục "Mô hình chuyển trạng thái", phân phối biên.
+
+**Vấn đề:** $P(s'|s,a)=\sum_r P(s',r|s,a)$ không yêu cầu kỳ vọng thưởng tồn tại ✓; $\bar r(s,a)$ cần kỳ vọng hữu hạn ✓. **Đúng.**
+
+---
+
+**Tổng kết:** Không phát hiện lỗi toán học còn sót trong phần 5–6. Các giá trị $r+1$, $r+0{,}75$, $\alpha=2{,}5$, $h>2$ đều đúng sau khi tự tính lại. Chứng minh trọng số, phản ví dụ cubic, và các giả thiết kỳ vọng đều hợp lệ.
+
+#### recheck-rl
+
+## Rà lại ghi chú — Báo cáo lỗi
+
+**Lỗi 1 — Mức độ: Trung bình**
+- **Phần/Vị trí:** Phần 2, mục "Một bước tương tác"
+- **Vấn đề:** Ví dụ mê cung thưởng $-1$ mỗi bước bị lẫn với ví dụ trò chơi thưởng cuối ở mục "Phản hồi trễ". Đoạn "Trong một trò chơi, giả sử các bước chưa kết thúc nhận thưởng $0$, thắng nhận $1$, thua nhận $-1$..." đứng ngay sau đoạn nói về mê cung, dễ gây nhầm lẫn hai cơ chế thưởng.
+- **Bằng chứng:** "Trong mê cung, thưởng $-1$ mỗi bước và dừng ở đích..." (mục Giả thuyết điểm thưởng) rồi ngay sau đó "Trong một trò chơi, giả sử các bước chưa kết thúc nhận thưởng $0$, thắng nhận $1$..." (mục Phản hồi trễ).
+- **Đề xuất sửa:** Thêm câu chuyển tiếp tường minh phân biệt hai ví dụ, ví dụ: "Khác với mê cung thưởng $-1$ mỗi bước, xét một trò chơi có thưởng chỉ ở cuối..."
+
+**Lỗi 2 — Mức độ: Thấp**
+- **Phần/Vị trí:** Phần 3, mục "Mẫu dữ liệu, lịch sử và quỹ đạo"
+- **Vấn đề:** Câu cuối "Lịch sử thông tin tác tử nhận dùng trong $f_t$ khác với lịch sử trạng thái của môi trường" có thể gây nhầm khi người đọc chưa phân biệt rõ hai khái niệm lịch sử.
+- **Bằng chứng:** "Lịch sử trạng thái tới thời điểm $t$: $H_t=(S_0,A_0,R_1,S_1,\ldots)$" và "Lịch sử thông tin tác tử nhận dùng trong $f_t$" — hai khái niệm cùng tên "lịch sử" nhưng khác nội dung.
+- **Đề xuất sửa:** Đổi tên một trong hai, ví dụ gọi lịch sử trạng thái là "chuỗi trạng thái" và giữ "lịch sử" cho thông tin tác tử nhận.
+
+**Lỗi 3 — Mức độ: Thấp**
+- **Phần/Vị trí:** Phần 4, mục "Ví dụ về chính sách"
+- **Vấn đề:** Câu "Chọn Đông gặp tường, giữ nguyên vị trí và vẫn nhận $-1$" chưa rõ nguồn: không có bằng chứng trong phần đã đọc rằng ô $(1,2)$ có tường phía Đông.
+- **Bằng chứng:** Phần 1 chỉ nói "chọn hướng có tường hoặc ra ngoài biên thì đứng yên" nhưng không xác nhận cụ thể ô $(1,2)$ có tường Đông.
+- **Đề xuất sửa:** Thêm chú thích xác nhận từ bản đồ mê cung rằng phía Đông của $(1,2)$ là tường, hoặc bỏ chi tiết này nếu không chắc chắn.
+
+**Lỗi 4 — Mức độ: Thấp**
+- **Phần/Vị trí:** Phần 3, mục "Quan sát đầy đủ và một phần"
+- **Vấn đề:** Câu "Quan sát đầy đủ là trường hợp từ quan sát hiện tại $O_t$ xác định được $S_t$, không cần thêm lịch sử vào định nghĩa này" hơi lủng củng, cụm "vào định nghĩa này" thừa.
+- **Bằng chứng:** Nguyên văn câu trên.
+- **Đề xuất sửa:** Viết lại: "Quan sát đầy đủ là trường hợp từ quan sát hiện tại $O_t$ xác định được $S_t$ mà không cần thêm lịch sử."
+
+**Lỗi 5 — Mức độ: Thấp**
+- **Phần/Vị trí:** Phần 2, mục "Tín hiệu học", bảng
+- **Vấn đề:** Hàng "Tăng cường" ghi "Phần thưởng mỗi bước" nhưng phần thưởng không nhất thiết mỗi bước (có thể thưởng cuối như ví dụ trò chơi).
+- **Bằng chứng:** Bảng ghi "Phần thưởng mỗi bước | Sau hành động" trong khi mục "Phản hồi trễ" nêu ví dụ thưởng $0$ nhiều bước rồi mới có thưởng cuối.
+- **Đề xuất sửa:** Đổi thành "Phần thưởng qua tương tác" hoặc "Phần thưởng sau hành động (có thể trễ)".
+
+#### recheck-flow
+
+## Báo cáo rà lại Bài 02 (chỉ dùng bằng chứng trong prompt, tiếng Việt, ≤450 từ)
+
+**Kết luận chung:** Mạch 7 phần đúng thứ tự, ví dụ trước hình thức, mỗi phần có kết nối vào/ra, câu hỏi/đáp án đánh số đầy đủ, khối proof trình bày chứng minh từng bước (hiệu lợi ích → truy hồi $w_{j+1}=\gamma w_j$ → dạng hình học → chiều ngược $U([r,a])=r+\gamma U(a)$). Không yêu cầu giữ abstractlinearforms cũ. Các nguồn hw02 khớp xác minh: phần 7 liệt kê Bài 1, 2, 5, 6, 10 và để dành 3, 4, 7, 8, 9 sau Bài 03; chuỗi $0,\ldots,0,1$, thưởng $-1$/hòa 0 có trong phần 2; mê cung gốc $-1$ mỗi bước nhất quán các phần 1–2. Phần 6 "liên hệ xã hội" đứng trước — ngoại lệ đã được duyệt. Comment `note-topic-id` là quy ước ẩn, đúng 7 phần, không phải lỗi lộ mã. Không suy đoán về SVG/hw02 chưa đọc.
+
+**Các lỗi còn lại (đề xuất sửa, mức nhẹ):**
+
+1. **[Nhẹ — phần 4, "Ví dụ về chính sách"]** Câu "Chọn Đông gặp tường, giữ nguyên vị trí và vẫn nhận $-1$" chèn giữa hai câu mô tả bảng, ngắt mạch bảng xác suất. Vai: ví dụ nối vào công thức $\pi$ phía sau. Đề xuất: dời xuống sau câu "Tính ngẫu nhiên tự nó không bảo đảm chất lượng tốt hơn."
+
+2. **[Nhẹ — phần 4, cuối "Chính sách ngẫu nhiên"]** Đoạn kết lặp ý đã nêu: "Chính sách xác định là trường hợp đặt xác suất một vào đúng một hành động" lặp lại câu ở phần exercise solution và gần trùng câu mở đầu "Chính sách mô tả sự lựa chọn đó". Đề xuất: gộp hoặc bỏ một lần nêu.
+
+3. **[Nhẹ — phần 1, phần mở "Nội dung bài học" → phần 2]** Lời hướng dẫn người viết còn lộ nhẹ trong câu tóm tắt "dùng mê cung làm ví dụ theo dõi xuyên suốt" — câu này mang giọng meta-điều phối (nói về cách xây bài) hơn là giọng mạch viết trực tiếp. Vai: kết nối ra phần 1 vào phần 2. Đề xuất: viết lại thành nội dung hướng người học, ví dụ "Ví dụ mê cung này sẽ được dùng lại ở các phần sau."
+
+4. **[Nhẹ — phần 6, "Ngưỡng thay đổi hành vi"]** Câu "Điều này không có nghĩa phần thưởng bước cuối bằng 0 — phần thưởng ở bước cuối đã được tính vào tổng" nằm trong mục trước ("Điểm thưởng của hai lựa chọn") nhưng nhắc $G_T=0$ lần hai với dash lệch giọng; kiểm tra lại: câu này ở phần 6 cuối mục hai lựa chọn, không trùng — rút lại, không phải lỗi.
+
+**Không phát hiện:** lỗi nhảy ký hiệu giữa các phần ($S_t,O_t,X_t,\pi,G_t,v_\pi,P$ giới thiệu đúng chỗ, phần 7 bảng ghép nhất quán); câu hỏi thiếu đáp án; phần thiếu nội dung tự học; lỗi ẩn ID.
+
+Không có ghi chú cần ghi lại cho writer ngoài 3 mục trên.
+
+
+### Rà ba sửa câu chữ cuối
+
+Sau các recheck nội dung, bỏ câu meta về cách xây bài, nêu rõ trò chơi là ví dụ khác và rút cụm vòng vo trong định nghĩa quan sát đầy đủ. Lượt review-change đầu gặp `api_wall_timeout` sau 90 giây. Đã báo người dùng, thu hẹp prompt từ 7.349 xuống 2.002 ký tự, thử lại một lần bằng cùng mô hình và cùng timeout; kết quả hoàn tất.
+
+Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flash`; provider `OpenRouter`.
+
+**Kết luận: Ba chỉnh sửa đều đạt.**
+
+1. **Đoạn 1 (mở bài):** Câu meta về cách xây bài đã được bỏ; chỉ còn nêu vấn đề quyết định tuần tự. Đạt.
+
+2. **Đoạn 2 (trò chơi):** Đã nêu rõ "một ví dụ khác" so với mê cung; quy ước $0$ mỗi bước chưa kết thúc và $-1$ mỗi bước trong mê cung được trình bày song song, không mâu thuẫn; câu cuối làm rõ phản hồi trễ đúng nghĩa. Đạt.
+
+3. **Đoạn 3 (quan sát đầy đủ):** Cụm "vào định nghĩa này" đã bỏ; câu giữ nghĩa quan sát hiện tại đủ xác định $S_t$ mà không cần lịch sử. Đạt.
+
+Không phát hiện lỗi thực trong ba đoạn được đọc.
+
+Phạm vi chỉ ba chỉnh sửa câu chữ; không thay cho các báo cáo toàn văn và recheck toán đã ghi ở trên. Sau các sửa này, kiểm định viewer đã chạy lại trên tệp trong kho: nội dung qua HTTP khớp byte, 350 công thức, 6 hình, 7 bộ câu hỏi/lời giải, hai kích thước màn hình đều đạt. `git diff --check` đạt; chỉ bốn tệp ghi chú và planning của bài 02 thay đổi.

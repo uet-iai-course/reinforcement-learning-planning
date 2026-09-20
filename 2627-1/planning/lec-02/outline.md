@@ -109,3 +109,25 @@ Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mụ
 ## Thay phần 6: phần thưởng định hướng hành vi
 
 Bảy trang, 20 phút; ví dụ mới không phải hình gốc PPTX. Mê cung có đường tới đích sáu bước và đường tới hố hai bước; cả hai là trạng thái kết thúc. Mỗi chuyển có thưởng $-\alpha$, cộng 10 khi vào đích, dùng $\gamma=1$, $\alpha\ge0$. Ngưỡng $\alpha=2{,}5$; phạt hố thêm $h$ cho ngưỡng $(10+h)/4$. Câu hỏi kiểm tra ở trang áp chót, trang cuối liên hệ xã hội theo yêu cầu cụ thể, thay quy ước câu hỏi cuối phần. Các hình cũ vẫn giữ vì được dùng ở các phần trước hoặc lưu làm tài sản nguồn.
+
+
+## Đồng bộ ghi chú với bản slide hiện tại — 2026-09-20
+
+Ghi chú `2627-1/materials/lec-02/lecture-note.md` được tổ chức lại theo bảy phần, lấy HTML hiện tại làm nguồn ưu tiên. Bản đồ dưới đây bao phủ 41 trang, gồm cả các câu hỏi và phần giải thích trong ghi chú diễn giả. Trạng thái: đã kiểm định nội dung và material-viewer tại hai kích thước màn hình; ghi nhận chi tiết trong review-log.
+
+| Phần | Chủ đề trong ghi chú | Trang chiếu tương ứng |
+|---|---|---|
+| 1 | `lec-02-part-01` | `L02-01-01`, `L02-01-02`, `L02-01-03`, `L02-01-04`, `L02-01-05` |
+| 2 | `lec-02-part-02` | `L02-02-01`, `L02-02-02`, `L02-02-03`, `L02-02-04`, `L02-02-05`, `L02-02-06`, `L02-02-07` |
+| 3 | `lec-02-part-03` | `L02-03-02`, `L02-03-11`, `L02-03-09`, `L02-03-06`, `L02-03-04`, `L02-03-10`, `L02-03-08` |
+| 4 | `lec-02-part-04` | `L02-04-01`, `L02-04-02`, `L02-04-03`, `L02-04-04`, `L02-04-05` |
+| 5 | `lec-02-part-05` | `L02-05-01`, `L02-05-10`, `L02-05-03`, `L02-05-04`, `L02-05-05`, `L02-05-08`, `L02-05-09` |
+| 6 | `lec-02-part-06` | `L02-06-01`, `L02-06-02`, `L02-06-03`, `L02-06-04`, `L02-06-05`, `L02-06-06`, `L02-06-07` |
+| 7 | `lec-02-part-07` | `L02-07-01`, `L02-07-03`, `L02-07-02` |
+
+- Cốt lõi: giao diện, phần thưởng, trạng thái/quan sát/biểu diễn, lịch sử/quỹ đạo, Markov, chính sách, tổng thưởng, giá trị, mô hình chung và thiết kế thưởng.
+- Cầu nối: dữ liệu khả dụng trước hành động; lịch sử đầy đủ làm trạng thái; từ tổng thưởng một quỹ đạo đến kỳ vọng dưới chính sách. Các mục này nằm trong phần 3 và 5.
+- Bổ sung: chứng minh ưu tiên dừng trong lớp lợi ích cộng có trọng số; phân tích ngưỡng đích–hố và mức phạt bổ sung; liên hệ khuyến khích/chế tài. Đây là nội dung đã có trong slide mới, được giải thích đầy đủ hơn trong note.
+- Đọc thêm: Sutton–Barto chương 3, CS188 về ưu tiên dừng, Shakerinava–Ravanbakhsh về các tiên đề lợi ích và phạm vi bài tập tuần 2.
+
+Bỏ cấu trúc 12 topic cũ, ví dụ hành lang ba ô và mục mô hình thế giới riêng. Gộp dự đoán/điều khiển vào ví dụ đánh giá và lựa chọn đường đi. Mã chủ đề, phân loại nội dung và quyết định biên tập chỉ ở hồ sơ quy trình hoặc comment ẩn, không hiển thị trong phần học. HTML, SVG, CSS và index không thay đổi trong lần đồng bộ ghi chú.

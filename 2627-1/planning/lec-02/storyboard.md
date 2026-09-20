@@ -730,3 +730,20 @@ Thời lượng: 3 phút. Nguồn: các khái niệm và ví dụ trong phần 7
 - **Kết nối ra:** Chuẩn bị hình thức hóa quá trình quyết định Markov và Bellman ở Bài 03.
 - **Sản phẩm học tập/kiểm tra:** Trả lời lần lượt 3 câu; giải thích bằng khái niệm và dữ kiện vừa học.
 - **Quyết định nguồn:** Gom câu hỏi về cuối phần theo yêu cầu; giữ ý nguồn, không thêm thuật toán hay kiến thức chưa học.
+
+
+## Quan hệ giữa ghi chú và slide — 2026-09-20
+
+Ghi chú theo đúng bảy phần của storyboard này; bảng ánh xạ đầy đủ ở mục “Đồng bộ ghi chú” trong outline. Không đổi số lượng, thứ tự hoặc nội dung trang chiếu.
+
+| Phần | Đầu vào và bước phát triển trong ghi chú | Kết quả dùng tiếp |
+|---|---|---|
+| 1 | Mê cung gốc và hậu quả của chuỗi quyết định; mục tiêu, tiên quyết và nội dung bài | Nhu cầu mô tả một bước tương tác |
+| 2 | Ví dụ đi Đông; giao diện dùng quan sát; tín hiệu thưởng và phản hồi trễ | Dữ liệu do tương tác tạo ra |
+| 3 | Ví dụ bốn ô kề trước định nghĩa trạng thái, quan sát, biểu diễn; mẫu/lịch sử/quỹ đạo trước Markov | Thông tin khả dụng và giả thiết đủ để dự báo |
+| 4 | Bảng lựa chọn tại cùng tọa độ trước chính sách xác định/ngẫu nhiên | Quy tắc chọn hành động có đầu vào rõ ràng |
+| 5 | So sánh chuỗi thưởng trước tính dừng và chứng minh có điều kiện; tổng trước kỳ vọng và giá trị; mô hình chung | Công cụ đánh giá dài hạn và dự báo một bước |
+| 6 | Mê cung đích–hố trước công thức tổng và ngưỡng; đánh giá/chọn chính sách; phạt hố bổ sung | Giải thích hành vi do thiết kế thưởng, giới hạn phép liên hệ xã hội |
+| 7 | Tổng hợp các thành phần, tự kiểm tra và phạm vi bài tập | Tiên quyết cho mô hình MDP và Bellman ở bài 03 |
+
+Mỗi phần có một bộ câu hỏi đánh số và lời giải ẩn bằng khối solution. Phần 6 giữ câu hỏi trước liên hệ xã hội theo ngoại lệ đã duyệt trong slide. Ghi chú diễn giải tự học, không sao chép các nhãn sáu bước hay lời hướng dẫn biên tập lên nội dung học. Kiểm định note được ghi riêng trong review-log; không dùng kết quả rà note để tuyên bố đã rà lại hiển thị cả deck.

@@ -1,398 +1,499 @@
-# Bài 02 — Giao diện tác tử–môi trường và các khái niệm MDP nền tảng
+# Bài 02 — Giao diện tác tử–môi trường
 
-## Mục tiêu và kiến thức tiên quyết
+Học tăng cường · Học kỳ 1, 2026–2027 · Trường Đại học Công nghệ · Đại học Quốc gia Hà Nội
 
-Sau bài này, người học làm được:
+<!-- note-topic-id: lec-02-part-01 -->
 
-1. Phân biệt Học tăng cường với học có giám sát và học không giám sát qua nguồn tín hiệu, độ trễ và phụ thuộc thời gian.
-2. Mô tả đúng chu kỳ tác tử–môi trường và chỉ số $S_t, A_t, R_{t+1}$.
-3. Phân biệt trạng thái với quan sát, phát biểu tính Markov và nhận dạng quan sát đầy đủ/một phần.
-4. Định nghĩa chính sách, hàm giá trị và mô hình; phân biệt dự đoán với điều khiển.
-5. Mô hình hóa mê cung bằng không gian trạng thái, hành động, chuyển tiếp, phần thưởng và điều kiện kết thúc.
+## 1. Bài toán ra quyết định tuần tự
 
-Kiến thức tiên quyết: xác suất cơ bản (biến ngẫu nhiên, xác suất có điều kiện, kỳ vọng), tổng cấp số nhân và khái niệm hàm. Các kiến thức này được giải thích ngắn trước lần dùng đầu: xác suất có điều kiện và kỳ vọng được nhắc lại trước khi dùng ở topic 01 và topic 03; công thức tổng của cấp số nhân được nhắc lại trước khi dùng ở topic 07. Bài này không giả định người học đã biết phương trình Bellman; phương trình Bellman kỳ vọng/tối ưu, MRP và $q_\pi$ không thuộc nội dung cốt lõi của bài và sẽ được dạy ở bài sau.
+Trong bài toán ra quyết định tuần tự, kết quả của hành động hiện tại ảnh hưởng đến những quyết định về sau.
 
-## Bản đồ chủ đề
+### Mê cung và chuỗi quyết định
 
-### Cốt lõi
+![Mê cung nguồn: lưới 8×8, các ô tô đậm là tường, điểm bắt đầu tại cột 0 hàng 2 (đánh dấu S), đích G nằm ngoài lưới bên phải, sau ô (7,6), với một lối đi từ S qua các ô trống tới G.](img/lec-02/source-maze.svg)
 
-| ID | Chủ đề | Nguồn | Bài tập |
-|---|---|---|---|
-| `lec-02-topic-01` | Tín hiệu học và giả thuyết phần thưởng | PPTX trang 4, 7–9 | hw02 Bài 1 |
-| `lec-02-topic-02` | Giao diện tác tử–môi trường | PPTX trang 14–15 | — |
-| `lec-02-topic-03` | Trạng thái, quan sát và tính Markov | PPTX trang 16–17 | — |
-| `lec-02-topic-04` | Quan sát đầy đủ và quan sát một phần | PPTX trang 18–19, 27 | hw02 Bài 2 (dùng ở topic 04 để phân biệt quan sát và trạng thái) |
-| `lec-02-topic-05` | Ba thành phần của tác tử | PPTX trang 10, 20 | — |
-| `lec-02-topic-06` | Chính sách xác định và ngẫu nhiên | PPTX trang 21 | hw02 Bài 6 |
-| `lec-02-topic-07` | Hàm giá trị và mô hình | PPTX trang 22–23 | hw02 Bài 5 |
-| `lec-02-topic-08` | Dự đoán và điều khiển | PPTX trang 24 | — |
-| `lec-02-topic-09` | Mê cung như bài toán tổng hợp | PPTX trang 25–27 | hw02 Bài 2 (được áp dụng tổng hợp ở topic này) |
+Nhiệm vụ là đi từ điểm bắt đầu tới đích. Một bước đi hợp lệ thay đổi vị trí và đường đi còn lại; nếu bước đi gặp tường thì tác tử đứng yên. Điểm bắt đầu nằm ở mép trái, tại cột 0 và hàng 2, với tọa độ đánh từ 0, hàng tăng xuống dưới. Đích nằm ngoài lưới bên phải, sau ô $(7,6)$, tại tọa độ $G=(8,6)$. Các ô tô đậm là tường. Ở mỗi bước tác tử chọn một trong bốn hướng Bắc, Đông, Nam, Tây; chọn hướng có tường hoặc ra ngoài biên thì đứng yên, trừ bước đi vào đích. Một hướng đi có thể dẫn vào ngõ cụt và buộc tác tử quay lại. Muốn đánh giá một lựa chọn, ta cần xét cả phần đường còn lại, vì vị trí mới quy định các chuyển tiếp có thể ở bước tiếp theo.
 
-### Cầu nối
+### Mục tiêu và kiến thức tiên quyết
 
-| ID | Chủ đề | Nguồn |
-|---|---|---|
-| `lec-02-topic-10` | Từ lịch sử tới trạng thái Markov | PPTX trang 15–17 |
+Sau bài học, người học cần đạt ba mục tiêu: mô tả một bước tương tác giữa tác tử và môi trường bằng các tín hiệu quan sát, hành động và phần thưởng; phân biệt trạng thái của môi trường với thông tin quan sát mà tác tử nhận được; trình bày được vai trò của hàm giá trị và mô hình môi trường trong việc đánh giá và dự báo kết quả dài hạn.
 
-### Bổ sung
+Kiến thức tiên quyết gồm xác suất có điều kiện, kỳ vọng của một biến ngẫu nhiên và khái niệm tổng hữu hạn khi cộng một chuỗi phần thưởng.
 
-| ID | Chủ đề | Nguồn |
-|---|---|---|
-| `lec-02-topic-11` | Mô hình thế giới và giới hạn biểu diễn | PPTX trang 13, 19, 23 |
+### Nội dung bài học
 
-### Đọc thêm
+Bài học gồm bảy phần:
 
-| ID | Chủ đề | Nguồn |
-|---|---|---|
-| `lec-02-topic-12` | Tài liệu và bài tập mở rộng | Sutton & Barto (dẫn ở trang 15); Silver (dẫn ở trang 1); hw02 Bài 10 |
+1. Bài toán ra quyết định tuần tự
+2. Tương tác và phần thưởng
+3. Trạng thái và thông tin quan sát
+4. Chính sách lựa chọn hành động
+5. Hàm giá trị và mô hình môi trường
+6. Phần thưởng định hướng hành vi
+7. Tổng kết và tự kiểm tra
 
-Thứ tự học: topic 01 → 02 → 10 → 03 → 04 → 05 → 06 → 07 → 11 → 08 → 09 → tự kiểm tra → 12. Topic 02 và 10 gộp thành một cụm vì cùng dùng lịch sử $H_t$; topic 05–08 gộp thành cụm thành phần tác tử; topic 09 là ứng dụng và kiểm tra tổng hợp của topic 02–08.
+::: exercise Câu hỏi kiểm tra
+1. Trong mê cung, mỗi bước tác tử chọn điều gì để di chuyển?
 
-## Ký hiệu và quy ước
+2. Hành động hiện tại ảnh hưởng đến lựa chọn về sau ra sao?
 
-| Ký hiệu | Ý nghĩa |
+3. Nêu một tiêu chí để so sánh hai đường đi tới cùng đích.
+:::
+
+::: solution
+1. Tác tử chọn một trong bốn hướng Bắc, Đông, Nam, Tây; chọn hướng có tường thì đứng yên.
+
+2. Vị trí mới quy định các chuyển tiếp có thể ở bước tiếp theo.
+
+3. Có thể dùng số bước khi mục tiêu là tới đích bằng ít bước nhất.
+:::
+
+<!-- note-topic-id: lec-02-part-02 -->
+
+## 2. Tương tác và phần thưởng
+
+### Tác tử và môi trường
+
+Tác tử là bộ phận chọn hành động; môi trường nhận hành động, thay đổi tình huống và cung cấp phản hồi. Ví dụ: bộ điều khiển robot chọn tín hiệu điều khiển, còn cơ cấu cơ học và thế giới bên ngoài thuộc môi trường, trả về vị trí và lực đo được. Ranh giới giữa tác tử và môi trường phải được dùng nhất quán khi mô tả bài toán.
+
+### Một bước tương tác
+
+Xét một bước trong mê cung: tại $(0,2)$, tác tử quan sát tọa độ rồi chọn hướng Đông; môi trường chuyển tác tử sang $(1,2)$, trả phần thưởng $-1$ và tọa độ mới. Quan sát mô tả thông tin nhận được; phần thưởng đánh giá kết quả theo mục tiêu đã đặt. Hai tín hiệu có vai trò khác nhau.
+
+Thứ tự tương tác: $t=0,1,2,\ldots$ đánh số bước tương tác. $O_t\in\mathcal O$ là quan sát, $A_t\in\mathcal A$ là hành động, $R_{t+1}\in\mathbb R$ là phần thưởng sau $A_t$. Tại bước $t$, tác tử có quan sát $O_t$ và chọn $A_t$; phản hồi của hành động đó là cặp $(O_{t+1},R_{t+1})$. Tập $\mathcal O$ chứa các quan sát có thể nhận, $\mathcal A$ chứa các hành động. Trong mê cung, quan sát là tọa độ và hành động là một trong bốn hướng.
+
+![Dòng thời gian tương tác: tại mỗi mốc thời gian tác tử nhận quan sát rồi chọn hành động; sau hành động môi trường trả về phần thưởng và quan sát mới, nối tiếp qua các mốc thời gian liên tiếp.](img/lec-02/interaction-timeline.svg)
+
+### Tín hiệu học
+
+| Khung | Tín hiệu | Thời điểm |
+| --- | --- | --- |
+| Có giám sát | Nhãn đúng cho mỗi mẫu | Tại lúc học |
+| Không giám sát | Không có nhãn | — |
+| Tăng cường | Phần thưởng mỗi bước | Sau hành động |
+
+Học có giám sát dùng nhãn mục tiêu gắn với mẫu; học không giám sát tìm cấu trúc khi không có nhãn mục tiêu; trong học tăng cường, phần thưởng được nhận qua tương tác. Phần thưởng không cho biết hành động đúng hay sai mà chỉ chấm điểm, và có thể được nhận ngay sau mỗi bước. Thưởng $-1$ sau một bước đi không chỉ ra hướng nào nên chọn; hành động còn thay đổi vị trí và dữ liệu mà tác tử sẽ gặp ở các bước tiếp theo.
+
+### Giả thuyết điểm thưởng
+
+Giả thuyết điểm thưởng nêu rằng mọi mục tiêu có thể được mô tả bằng việc cực đại hóa kỳ vọng của phần thưởng tích lũy. Đây là một giả thuyết mô hình hóa, không phải định lý về mọi mục tiêu. Mục tiêu xét cả chuỗi phần thưởng, không chỉ phần thưởng ở bước hiện tại; kỳ vọng tính đến sự ngẫu nhiên của hành động và môi trường. Trong mê cung, thưởng $-1$ mỗi bước và dừng ở đích khiến đường đi ngắn hơn có tổng thưởng lớn hơn: mỗi đường đi hữu hạn nhận tổng thưởng bằng âm số bước, ví dụ một đường 16 bước cho $-16$ và một đường 18 bước cho $-18$. Cách gán thưởng cần phản ánh đúng mục tiêu của nhiệm vụ.
+
+### Phản hồi trễ
+
+Một ví dụ khác là trò chơi với ba kết quả: thắng, thua hoặc hòa. Các bước chưa kết thúc nhận thưởng $0$; khi kết thúc, thắng nhận $1$, thua nhận $-1$ và hòa nhận $0$. Chuỗi thưởng $0,\ldots,0,1$ minh họa một lượt thắng. Một hành động chưa nhận thưởng dương vẫn có thể góp phần dẫn tới kết quả xuất hiện nhiều bước sau. Trong mê cung, thưởng $-1$ được nhận ngay mỗi bước; phản hồi trễ không có nghĩa mọi phần thưởng đều chỉ xuất hiện khi kết thúc.
+
+::: exercise Câu hỏi kiểm tra
+1. Từ $(1,2)$ chọn Bắc đến $(1,1)$, thưởng $-1$, quan sát là tọa độ. Hãy ghi $A_t$, $R_{t+1}$, $O_{t+1}$.
+
+2. Giả thuyết điểm thưởng nêu tiêu chí tối ưu nào cho tác tử?
+
+3. Nhận $-1$ ngay có đủ để đánh giá hành động Bắc hay không?
+:::
+
+::: solution
+1. $A_t$ là Bắc, $R_{t+1}=-1$, $O_{t+1}$ là tọa độ $(1,1)$.
+
+2. Cực đại kỳ vọng phần thưởng tích lũy theo thời gian.
+
+3. Chưa, vì hậu quả dài hạn của hành động chưa được xét.
+:::
+
+<!-- note-topic-id: lec-02-part-03 -->
+
+## 3. Trạng thái và thông tin quan sát
+
+### Trạng thái, quan sát và biểu diễn
+
+Một tác tử đứng ở ô $(2,1)$ trong mê cung cố định. Cảm biến của tác tử không thấy toàn bộ bản đồ mà chỉ báo về bốn ô kề: phía Bắc là tường, phía Nam là tường, phía Đông và phía Tây là ô trống. Mã hóa bốn chỉ báo này theo thứ tự Bắc–Đông–Nam–Tây với 1 là tường và 0 là ô trống, ta nhận được bộ giá trị $(1,0,1,0)$. Ô $(3,1)$ cho cùng bốn chỉ báo, nên bộ mã này không đủ để suy ra vị trí thực: hai vị trí khác nhau có thể chia sẻ cùng một dữ liệu cảm biến.
+
+![Ba lớp thông tin: trạng thái là vị trí (2,1) trên bản đồ, quan sát là bốn ô kề theo thứ tự Bắc–Đông–Nam–Tây, và biểu diễn nhị phân (1,0,1,0); vị trí (3,1) cho cùng quan sát và biểu diễn.](img/lec-02/state-observation-representation.svg)
+
+Trạng thái $S_t\in\mathcal S$ là cấu hình môi trường mà mô hình đã chọn để mô tả tình huống; trong mê cung này, trạng thái là tọa độ ô, kể cả đích $G$. Quan sát $O_t\in\mathcal O$ là thông tin mà tác tử thực sự nhận được; trong ví dụ, đó là bốn chỉ báo kề. Biểu diễn $X_t\in\mathcal X$ là dữ liệu tác tử dùng để chọn hành động; ở đây là bộ mã nhị phân. Ba tập $\mathcal S$, $\mathcal O$, $\mathcal X$ lần lượt là miền trạng thái, miền quan sát và miền biểu diễn. Trạng thái là lựa chọn của người xây dựng mô hình: cùng một môi trường có thể được mô tả bằng các trạng thái khác nhau, và một mô tả có thể bỏ sót thông tin ảnh hưởng đến diễn biến tiếp theo.
+
+Biểu diễn được tính từ thông tin khả dụng trước khi chọn hành động:
+
+$$X_t = f_t\!\left(O_{0:t},\, A_{0:t-1},\, R_{1:t}\right)$$
+
+với $O_{0:t}=(O_0,\ldots,O_t)$; các dãy hành động và phần thưởng viết tương tự. Chính thức,
+
+$$f_t:\mathcal O^{t+1}\times\mathcal A^{t}\times\mathbb R^{t}\to\mathcal X$$
+
+là hàm mã hóa tất định do tác tử chọn. Thứ tự thời gian: tại $t$, tác tử tính $X_t$ từ dữ liệu có trước khi chọn $A_t$; hành động và phần thưởng tương lai chưa được nhìn thấy. Tại $t=0$, dãy hành động và phần thưởng đều rỗng. Trường hợp đơn giản là $f_t$ chỉ phụ thuộc quan sát hiện tại, như mã hóa nhị phân bốn ô kề; trường hợp tổng quát là hàm của toàn bộ lịch sử. Quan sát có thể ngẫu nhiên, không đầy đủ; $X_t$ không bảo đảm khôi phục được $S_t$.
+
+### Mẫu dữ liệu, lịch sử và quỹ đạo
+
+Một mẫu dữ liệu một bước là $(o_t,a_t,o_{t+1},r_{t+1})$, với chữ thường chỉ giá trị cụ thể của các biến viết hoa; quan sát mới và phần thưởng đều đến sau hành động. Lịch sử trạng thái tới thời điểm $t$:
+
+$$H_t=(S_0,A_0,R_1,S_1,\ldots,A_{t-1},R_t,S_t),$$
+
+kết thúc ở trạng thái hiện tại, trước khi chọn hành động tiếp theo, với $H_0=(S_0)$. Quỹ đạo là toàn bộ một lượt tương tác hữu hạn kết thúc tại $T$, với $T$ là thời điểm dừng:
+
+$$\tau=(S_0,A_0,R_1,S_1,\ldots,A_{T-1},R_T,S_T)=H_T.$$
+
+Mẫu dùng quan sát, còn lịch sử và quỹ đạo ở đây dùng trạng thái môi trường; khi quan sát một phần, tác tử không nhất thiết biết chuỗi trạng thái này. Lịch sử thông tin tác tử nhận dùng trong $f_t$ khác với lịch sử trạng thái của môi trường.
+
+### Quan sát đầy đủ và một phần
+
+Quan sát đầy đủ là trường hợp từ quan sát hiện tại $O_t$ xác định được $S_t$, không cần thêm thông tin từ lịch sử; với quan sát một phần, một $O_t$ có thể phù hợp với nhiều $S_t$. Trong mê cung đã xét với bản đồ và luật cố định, trạng thái là tọa độ tác tử: hai vị trí $(2,1)$ và $(3,1)$ là hai trường hợp thay thế, không phải hai tác tử đồng thời. Nhận tọa độ chính xác giúp phân biệt hai trạng thái; với cảm biến bốn ô kề, cả hai đều báo Bắc và Nam là tường, Đông và Tây đi được, nên tác tử không nhận tọa độ thật. Quan sát đầy đủ không có nghĩa tác tử biết quy luật chuyển hoặc phần thưởng; khả năng xác định trạng thái từ quan sát cũng khác với việc trạng thái có đủ thông tin dự báo hay không. Biết trạng thái, do đó, không đồng nghĩa với biết mô hình hoặc biết tính Markov đã thỏa.
+
+![So sánh quan sát đầy đủ, nơi tọa độ cho biết chính xác vị trí tác tử trên bản đồ, và quan sát một phần, nơi cảm biến bốn ô kề phù hợp với nhiều vị trí khác nhau.](img/lec-02/full-partial-observation.svg)
+
+### Tính Markov
+
+Trong mê cung cố định đã xét, cùng vị trí và hành động cho cùng ô kế tiếp và phần thưởng, không cần biết đường đã đi. Trực giác này được khái quát cho cả chuyển động ngẫu nhiên bằng phân phối có điều kiện: biết trạng thái và hành động thì lịch sử không cải thiện dự báo bước tới,
+
+$$\begin{aligned}&\Pr(S_{t+1}=s',R_{t+1}=r\mid H_t=h,A_t=a)\\&\quad=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a),\end{aligned}$$
+
+với $h$ là lịch sử kết thúc ở $s$, và $s'$, $r$ là giá trị trạng thái kế tiếp và phần thưởng. Vế trái dùng toàn bộ lịch sử, vế phải chỉ dùng trạng thái cuối và hành động hiện tại; tính Markov yêu cầu hai phân phối bằng nhau với mọi lịch sử có thể xảy ra kết thúc tại $s$. Tính chất này không xác định hành động tối ưu.
+
+### Mở rộng trạng thái
+
+Trạng thái được chọn và tính Markov là hai việc khác nhau: phải kiểm tra tính Markov, vì nó phụ thuộc vào cách trạng thái được định nghĩa. Nếu kết quả phụ thuộc vào việc có chìa khóa, tọa độ thôi chưa đủ và cần thêm biến chìa khóa vào trạng thái. Về nguyên tắc, mở rộng trạng thái $\tilde S_t=H_t$ phục hồi tính Markov: các lịch sử trước là tiền tố của lịch sử hiện tại, nên khi biết $\tilde S_t$ và hành động tiếp theo, không có thông tin quá khứ nào bị mất. Nhưng đây là kiến tạo lý thuyết, không phải giải pháp học hiệu quả: kích thước lịch sử tăng theo thời gian, không có bảo đảm về biểu diễn gọn với số chiều cố định, và cũng không tự động khôi phục trạng thái tiềm ẩn từ quan sát. Giữ một số hữu hạn quan sát gần nhất có thể bỏ thông tin quá khứ liên quan, nên không tự bảo đảm tính Markov.
+
+::: exercise Câu hỏi kiểm tra
+1. Phân loại ba quan sát: tọa độ chính xác; ảnh toàn mê cung thấy rõ tác tử; cảm biến bốn ô kề.
+
+2. Nếu mở cửa phụ thuộc việc có chìa khóa, tọa độ còn đủ để mô tả trạng thái Markov không? Cần bổ sung gì?
+
+3. Dùng toàn bộ lịch sử làm trạng thái có hạn chế thực hành gì? Ghép hữu hạn quan sát có bảo đảm Markov không?
+
+4. Mẫu một bước, lịch sử $H_t$ và quỹ đạo $\tau$ khác nhau về phạm vi thông tin như thế nào?
+:::
+
+::: solution
+1. Tọa độ và ảnh toàn bản đồ thấy rõ tác tử cho quan sát đầy đủ khi bản đồ, luật và quy ước tọa độ cố định; cảm biến bốn ô kề là quan sát một phần.
+
+2. Chưa đủ; cần thêm trạng thái chìa khóa đã lấy hay chưa.
+
+3. Lịch sử tăng theo thời gian, làm lưu trữ và học khó hơn. Ghép hữu hạn quan sát không bảo đảm Markov vì vẫn có thể bỏ thông tin quá khứ liên quan.
+
+4. Mẫu chứa một chuyển tiếp; lịch sử trạng thái chứa các bước tới thời điểm hiện tại; quỹ đạo trạng thái hữu hạn chứa cả lượt tới khi kết thúc. Mẫu ở đây dùng quan sát; hai chuỗi còn lại dùng trạng thái.
+:::
+
+<!-- note-topic-id: lec-02-part-04 -->
+
+## 4. Chính sách lựa chọn hành động
+
+Chính sách là quy tắc chọn hành động cho từng đầu vào biểu diễn. Trong mê cung đã dùng từ đầu bài, mỗi mũi tên gán một hành động cho một vị trí; tại $(1,2)$, quy tắc minh họa chọn Bắc. Vị trí tự nó không quyết định hành động: một tác tử khác có thể chọn hành động khác dù nhận cùng tọa độ. Chính sách mô tả sự lựa chọn đó, còn mô hình môi trường mô tả kết quả khi thực hiện lựa chọn.
+
+### Ví dụ về chính sách
+
+Tại $x=(1,2)$, xét hai quy tắc chọn hành động:
+
+| Quy tắc | Bắc | Đông | Nam | Tây |
+|---|---|---|---|---|
+| Luôn Bắc | $1$ | $0$ | $0$ | $0$ |
+| Bắc hoặc Đông | $0{,}5$ | $0{,}5$ | $0$ | $0$ |
+
+Các số là xác suất chọn. Trong ví dụ này, đầu vào của chính sách là tọa độ ô, nghĩa là biểu diễn trùng với trạng thái: $X_t=S_t$ và $x\in\mathcal X$. Môi trường cho phép chọn cả bốn hướng; chính sách quyết định xác suất của từng hướng. Chọn Đông gặp tường, giữ nguyên vị trí và vẫn nhận $-1$. Quy tắc thứ nhất luôn chọn Bắc; quy tắc thứ hai chọn Bắc hoặc Đông với xác suất bằng nhau. Tính ngẫu nhiên tự nó không bảo đảm chất lượng tốt hơn.
+
+### Chính sách xác định
+
+Với mỗi biểu diễn đầu vào, chính sách xác định chọn một hành động:
+
+$$\pi:\mathcal X\to\mathcal A,\qquad A_t=\pi(X_t).$$
+
+| $x$ | $\pi(x)$ |
 |---|---|
-| $t$ | Chỉ số thời gian; $t = 0, 1, 2, \ldots$; trong nhiệm vụ hữu hạn, $T$ là chỉ số của trạng thái kết thúc. |
-| $S_t$ | Trạng thái môi trường tại bước $t$; $S_t \in \mathcal S$. |
-| $A_t$ | Hành động tại bước $t$; $A_t \in \mathcal A$ (hoặc $A_t \in \mathcal A(s)$ khi tập hành động phụ thuộc trạng thái). |
-| $R_{t+1}$ | Phần thưởng môi trường trả sau hành động $A_t$; $R_{t+1} \in \mathbb R$, chỉ số gắn với chuyển tiếp vừa xảy ra. |
-| $H_t$ | Lịch sử đến bước $t$: $H_t = (S_0, A_0, R_1, S_1, \ldots, A_{t-1}, R_t, S_t)$. |
-| $O_t$ | Quan sát tác tử nhận tại bước $t$; dùng riêng cho trường hợp quan sát một phần, không đồng nhất với $S_t$. |
-| $\pi$ | Chính sách. |
-| $G_t$ | Tổng phần thưởng chiết khấu. |
-| $v_\pi(s)$ | Hàm giá trị trạng thái dưới $\pi$. |
-| $P^a_{ss'}$, $R^a_s$ | Mô hình chuyển và thưởng của môi trường. |
-| $\mathbb E_\pi[\cdot]$ | Kỳ vọng lấy theo mọi nguồn ngẫu nhiên sau điều kiện hóa: cách $\pi$ chọn hành động và cách môi trường sinh chuyển tiếp và phần thưởng. |
+| $(0,2)$ | Đông |
+| $(1,2)$ | Bắc |
+| $(1,1)$ | Đông |
 
-Quy ước chu kỳ (đã sửa so với nguồn, xem mục "Sai khác có chủ ý"): ở bước $t$, tác tử nhận $S_t$ và phần thưởng $R_t$ từ chuyển tiếp trước, rồi chọn $A_t$; môi trường nhận $A_t$, chuyển sang $S_{t+1}$ và phát $R_{t+1}$.
+$\mathcal X$ là tập biểu diễn quyết định, $\mathcal A$ là tập hành động. Bảng cho ba giá trị của cùng một chính sách; các vị trí còn lại cần được quy định khi dùng trên toàn mê cung. Ta xét chính sách không thay đổi theo thời gian. Chính sách là quy tắc đang dùng; thuật toán học là cách tạo hoặc thay đổi quy tắc đó.
 
-<!-- note-topic-id: lec-02-topic-01 -->
-## Tín hiệu học và giả thuyết phần thưởng
+### Chính sách ngẫu nhiên
 
-**Vấn đề.** Tác tử phải chọn hành động liên tục nhưng không có nhãn "hành động đúng" cho từng bước. Cần xác định tín hiệu nào hướng dẫn việc chọn, và tín hiệu đó khác gì tín hiệu của học có giám sát và học không giám sát.
+Với $x\in\mathcal X$, chính sách cho một phân phối trên $\mathcal A$:
 
-**Trực giác.** Trong học có giám sát, mỗi mẫu đi kèm đáp án đúng nên sai số tính được ngay trên từng mẫu. Trong học không giám sát, dữ liệu không kèm nhãn và thuật toán tìm cấu trúc bên trong. Trong Học tăng cường, tín hiệu duy nhất là phần thưởng: nó đến trễ sau một chuỗi hành động, và dữ liệu tương tác không thỏa giả thiết độc lập cùng phân phối (i.i.d.) vì hành động ở bước trước làm đổi tình huống ở bước sau.
+$$\pi(a\mid x)=\Pr(A_t=a\mid X_t=x),$$
 
-**Ví dụ tính được.** Xét một tác tử điều hướng nhận phần thưởng $-1$ mỗi bước, kể cả bước đến đích. Đường đi dài 5 bước cho tổng phần thưởng $(-1) \times 5 = -5$; đường đi dài 3 bước cho $-3$. Tác tử không được nói "bước này đúng hay sai", nhưng so sánh tổng phần thưởng của hai đường cho biết đường nào tốt hơn. Tín hiệu học vì thế là một số vô hướng gắn với kết quả dài hạn, không phải nhãn từng bước.
+với điều kiện
 
-**Hình thức.** Mục tiêu của tác tử là cực đại hóa kỳ vọng của tổng phần thưởng tích lũy:
+$$\pi(a\mid x)\ge 0,\qquad \sum_{a\in\mathcal A}\pi(a\mid x)=1.$$
 
-$$\max_\pi \; \mathbb E_\pi[G_t].$$
+Ví dụ từ bảng trước: $\pi(\text{Bắc}\mid(1,2))=0{,}5$. Với mỗi $x$ cố định, các xác suất phải không âm và cộng thành một. Chính sách xác định là trường hợp đặt xác suất một vào đúng một hành động. Nếu dùng trạng thái đầy đủ làm đầu vào, chọn $X_t=S_t$ và viết $\pi(a\mid s)$. Với quan sát một phần, đầu vào vẫn là biểu diễn mà tác tử thực sự có.
 
-Ở đây $G_t$ là tổng phần thưởng chiết khấu, được định nghĩa hình thức ở topic 07; tại đây chỉ cần hiểu là "tổng phần thưởng tích lũy trong tương lai".
+::: exercise Câu hỏi kiểm tra
+1. Cho $\pi(\text{Bắc}\mid x)=0{,}2$, $\pi(\text{Đông}\mid x)=0{,}5$, $\pi(\text{Tây}\mid x)=0$. Tính $\pi(\text{Nam}\mid x)$.
 
-Giả thuyết phần thưởng phát biểu: mọi mục tiêu có thể được mô tả bằng cực đại hóa kỳ vọng của phần thưởng tích lũy. Phát biểu này có điều kiện: nó đúng cho các bài toán mà mục tiêu mã hóa được bằng một tín hiệu vô hướng tích lũy; cách đặt phần thưởng sai có thể tạo hành vi ngoài ý muốn.
+2. Phân loại chính sách đó và giải thích lý do.
 
-**Ứng dụng và giới hạn.** Tiêu chí nhận dạng Học tăng cường: tác tử tác động lên dữ liệu tương lai và chỉ nhận phản hồi sau một chuỗi hành động. Giới hạn: một hệ thống thực có thể kết hợp nhiều dạng học; giả thuyết phần thưởng là phát biểu mô hình hóa, không phải định lý rằng mọi mục tiêu đều mã hóa trọn vẹn.
-
-**Kiểm tra.** Một hệ thống chấm điểm bài luận với đáp án chuẩn cho từng bài: đó là học có giám sát hay Học tăng cường? Vì sao?
-
-::: solution
-Trả lời: học có giám sát, vì đáp án chuẩn là tín hiệu mục tiêu trực tiếp cho từng mẫu, không phải phản hồi trễ qua tương tác. Học tăng cường chỉ có phần thưởng vô hướng đến sau chuỗi hành động và dữ liệu phụ thuộc thời gian.
+3. Chính sách xác định là trường hợp nào của phân phối hành động?
 :::
 
-<!-- note-topic-id: lec-02-topic-02 -->
-## Giao diện tác tử–môi trường
-
-**Vấn đề.** Cần một khung hình thức chung mô tả mọi bài toán Học tăng cường: ai làm gì, tại thời điểm nào, và đại lượng nào đi theo hướng nào.
-
-**Trực giác.** Tác tử và môi trường tương tác theo vòng lặp. Ở bước $t$: tác tử nhận $S_t$ và phần thưởng $R_t$ từ chuyển tiếp trước, rồi chọn $A_t$. Môi trường nhận $A_t$, chuyển sang $S_{t+1}$ và phát $R_{t+1}$. Vòng lặp lặp lại; mỗi vòng gồm một hành động của tác tử và một chuyển tiếp của môi trường.
-
-**Ví dụ tính được.** Robot trong mê cung ở ô $(1,1)$ tại $t=0$: tác tử nhận $S_0 = (1,1)$ (chưa có $R_0$ vì chưa có chuyển tiếp trước), chọn $A_0 = $ Đông. Môi trường chuyển robot sang $(2,1)$ và phát $R_1 = -1$. Tại $t=1$, tác tử nhận $S_1 = (2,1)$ và $R_1 = -1$, chọn $A_1$. Lịch sử sau hai bước là $H_2 = (S_0, A_0, R_1, S_1, A_1, R_2, S_2)$.
-
-**Hình thức.** Các đại lượng và miền của chúng:
-
-- $S_t \in \mathcal S$: trạng thái môi trường tại bước $t$.
-- $A_t \in \mathcal A$: hành động của tác tử tại bước $t$.
-- $R_{t+1} \in \mathbb R$: phần thưởng môi trường phát sau hành động $A_t$.
-- Lịch sử: $H_t = (S_0, A_0, R_1, S_1, \ldots, A_{t-1}, R_t, S_t)$.
-
-Chỉ số của phần thưởng là $R_{t+1}$ chứ không phải $R_t$ vì phần thưởng gắn với chuyển tiếp do $A_t$ gây ra, tức kết quả của hành động vừa chọn.
-
-**Ứng dụng và giới hạn.** Ứng dụng: khung này là khung đặc tả chung cho các bài toán Học tăng cường; một đặc tả đầy đủ thường gồm $\mathcal S$, $\mathcal A$, quy tắc chuyển tiếp, phần thưởng, cách quan sát (đầy đủ hay một phần), điều kiện kết thúc/tiếp diễn, và hệ số chiết khấu $\gamma$ khi phù hợp. Đây là khung đặc tả, không phải chứng minh rằng mọi bài toán đều đặc tả được trọn vẹn theo cách này. Giới hạn: khung chưa nói gì về cách tác tử quyết định; các thành phần quyết định ở topic 05–08.
-
-**Kiểm tra.** Trong chu kỳ trên, vì sao phần thưởng sau hành động $A_t$ được viết là $R_{t+1}$ thay vì $R_t$?
-
 ::: solution
-Trả lời: vì phần thưởng là kết quả của chuyển tiếp do $A_t$ gây ra, xảy ra cùng lúc với việc môi trường chuyển sang $S_{t+1}$; chỉ số $t+1$ gắn phần thưởng với chuyển tiếp vừa xảy ra, còn $R_t$ đã được tác tử nhận trước khi chọn $A_t$.
+1. Vì các xác suất cộng thành một: $\pi(\text{Nam}\mid x)=1-0{,}2-0{,}5-0=0{,}3$.
+
+2. Đây là chính sách ngẫu nhiên, vì nhiều hành động có xác suất dương.
+
+3. Chính sách xác định là trường hợp một hành động có xác suất $1$ và các hành động khác $0$.
 :::
 
-<!-- note-topic-id: lec-02-topic-10 -->
-## Cầu nối: từ lịch sử tới trạng thái Markov
+<!-- note-topic-id: lec-02-part-05 -->
 
-Nguồn đặt lịch sử ở trang 15 rồi chuyển ngay sang tính Markov ở trang 17 mà không giải thích quan hệ giữa hai khái niệm. Khoảng trống cần lấp: khi nào có thể thay $H_t$ bằng $S_t$ trong điều kiện hóa?
+## 5. Hàm giá trị và mô hình môi trường
 
-Lịch sử $H_t$ chứa mọi thứ đã xảy ra, nên điều kiện hóa theo $H_t$ luôn đúng nhưng cồng kềnh: chiều dài của $H_t$ tăng theo thời gian và các lịch sử khác nhau gần như không lặp lại. Trạng thái $S_t$ hữu ích khi nó là bản tóm tắt đủ của lịch sử: mọi thông tin trong $H_t$ có ảnh hưởng đến tương lai đều đã nằm trong $S_t$. Khi đó, điều kiện hóa theo $S_t$ (và $A_t$) cho cùng kết quả dự báo như điều kiện hóa theo $H_t$ (và $A_t$), và ta viết được công thức Markov ở topic 03. Nếu $S_t$ bỏ sót thông tin liên quan (ví dụ vận tốc của vật thể khi động lực học phụ thuộc vận tốc), thay $H_t$ bằng $S_t$ làm mất thông tin và giả thiết Markov sai.
+### Kết quả dài hạn của chính sách
 
-**Kiểm tra.** Một môi trường mà chuyển tiếp kế tiếp phụ thuộc cả vị trí lẫn vận tốc, nhưng trạng thái chỉ ghi vị trí. Có thể thay $H_t$ bằng $S_t$ trong điều kiện hóa không?
+Hai chính sách có thể nhận cùng thưởng tức thời nhưng tạo ra các đường đi dài khác nhau. Phần thưởng $-1$ ngay sau một bước không đủ để so sánh hai chính sách; cần xét cả chuỗi thưởng về sau. Ba thành phần có vai trò khác nhau: chính sách chọn hành động, hàm giá trị đánh giá kết quả dài hạn dưới một chính sách xác định trước, và mô hình dự báo phản hồi khi thực hiện một hành động.
 
-::: solution
-Trả lời: không; $S_t$ bỏ sót vận tốc là thông tin liên quan đến tương lai, nên $S_t$ không phải bản tóm tắt đủ của $H_t$ và giả thiết Markov không thỏa khi điều kiện hóa chỉ theo $S_t$.
+### Ưu tiên dừng và tổng phần thưởng
+
+Xét hai chuỗi thưởng $(2,0)$ và $(1,1)$. Nếu cộng trực tiếp, cả hai cho tổng $2$. Nếu trọng số của bước đầu là $1$ và bước sau là $0{,}5$, lợi ích của hai chuỗi lần lượt là $2$ và $1{,}5$: cách tính này ưu tiên chuỗi nhận nhiều thưởng hơn ở bước đầu.
+
+Với chuỗi thưởng hữu hạn $a=(r_1,\ldots,r_n)$, một cách tính lợi ích là gán trọng số $w_i$ cho phần thưởng ở vị trí $i$:
+
+$$U(a)=\sum_{i=1}^{n}w_i r_i.$$
+
+Ký hiệu $a\succ b$ nghĩa là ưu tiên chuỗi $a$ hơn chuỗi $b$, tức $U(a)>U(b)$. Ký hiệu $[r,a]$ chỉ chuỗi nhận phần thưởng $r$ rồi tiếp tục với chuỗi $a$. Tính dừng của ưu tiên yêu cầu việc thêm cùng một phần thưởng vào đầu hai chuỗi không đổi thứ tự so sánh:
+
+$$a\succ b\quad\Longleftrightarrow\quad[r,a]\succ[r,b].$$
+
+Điều kiện áp dụng cho mọi cặp chuỗi hữu hạn số thực, kể cả khác độ dài, và mọi $r\in\mathbb R$. Đây là điều kiện về cách đánh giá chuỗi thưởng; tính Markov ở phần 3 là điều kiện về dự báo diễn biến của môi trường.
+
+**Định lý.** Giả sử lợi ích có dạng cộng $U(a)=\sum_{i=1}^{n}w_i r_i$, dùng cùng một dãy trọng số cho mọi độ dài $n$, với $w_1=1$ và các trọng số dương, không tăng. Khi đó, tính dừng của ưu tiên buộc các trọng số có dạng
+
+$$w_i=\gamma^{i-1},\qquad 0<\gamma\le1.$$
+
+Hệ số $\gamma$ là tỉ số trọng số giữa hai bước liên tiếp, gọi là hệ số chiết khấu. Hai dạng thường dùng thuộc cùng một họ:
+
+| Hệ số | Lợi ích |
+|---|---|
+| $\gamma=1$ | $U(a)=\sum_{i=1}^{n}r_i$ |
+| $0<\gamma<1$ | $U(a)=\sum_{i=1}^{n}\gamma^{i-1}r_i$ |
+
+::: proof Chứng minh
+Xét hai chuỗi cùng độ dài $n$ và đặt $d_i=a_i-b_i$. Hiệu lợi ích trước và sau khi thêm cùng $r$ là
+
+$$
+\begin{aligned}
+U(a)-U(b)&=\sum_{i=1}^{n}w_i d_i,\\
+U([r,a])-U([r,b])&=\sum_{i=1}^{n}w_{i+1}d_i.
+\end{aligned}
+$$
+
+Phần thưởng $r$ ở đầu triệt tiêu trong hiệu thứ hai. Tính dừng giữ nguyên cả hai chiều so sánh chặt. Vì vậy, nếu hai chuỗi ngang nhau trước khi thêm $r$, chúng cũng phải ngang nhau sau đó: nếu hiệu sau dương hoặc âm, chiều ngược của điều kiện dừng sẽ cho một so sánh chặt trước khi thêm $r$, trái với giả thiết ngang nhau. Do đó,
+
+$$
+\sum_{i=1}^{n}w_i d_i=0
+\quad\Longrightarrow\quad
+\sum_{i=1}^{n}w_{i+1}d_i=0.
+$$
+
+Với mỗi $j\ge2$, chọn $n\ge j$, đặt $d_1=w_j$, $d_j=-w_1$ và các tọa độ khác bằng $0$. Hiệu trước bằng $w_1w_j-w_jw_1=0$, nên
+
+$$
+w_2w_j-w_{j+1}w_1=0
+\quad\Longrightarrow\quad
+w_{j+1}=\frac{w_2}{w_1}w_j.
+$$
+
+Đặt $\gamma=w_2/w_1$. Truy hồi $w_{j+1}=\gamma w_j$ cũng đúng tại $j=1$ theo định nghĩa này. Vì $w_1=1$, suy ra $w_i=\gamma^{i-1}$. Dãy trọng số dùng chung cho mọi độ dài ngay từ giả thiết, nên $\gamma$ cũng dùng chung. Trọng số dương cho $\gamma>0$; trọng số không tăng cho $\gamma\le1$.
+
+Ngược lại, với trọng số hình học và mọi chuỗi hữu hạn $a$,
+
+$$U([r,a])=r+\gamma U(a).$$
+
+Vì thế, kể cả khi $a,b$ khác độ dài,
+
+$$U([r,a])-U([r,b])=\gamma\bigl(U(a)-U(b)\bigr).$$
+
+Với $\gamma>0$, hiệu mới và hiệu cũ có cùng dấu. Điều kiện dừng được thỏa mãn.
 :::
 
-<!-- note-topic-id: lec-02-topic-03 -->
-## Trạng thái, quan sát và tính Markov
+Với $\gamma=0{,}5$, việc thêm phần thưởng $r$ đẩy toàn bộ chuỗi cũ lùi một bước, nên các phần thưởng cũ được chiết khấu thêm một lần:
 
-**Vấn đề.** Trạng thái môi trường và dữ liệu tác tử nhận về có thể khác nhau. Cần phân biệt hai đại lượng này và phát biểu điều kiện để tương lai chỉ phụ thuộc hiện tại.
+$$
+\begin{aligned}
+U([r,2,0])&=r+0{,}5\cdot2+0{,}25\cdot0=r+1,\\
+U([r,1,1])&=r+0{,}5\cdot1+0{,}25\cdot1=r+0{,}75.
+\end{aligned}
+$$
 
-**Trực giác.** Trạng thái là mô tả tình huống của môi trường; quan sát là dữ liệu tác tử nhận về tình huống đó. Vị trí thật của một vật là trạng thái; ảnh camera có nhiễu là quan sát. Khi quan sát đủ để xác định trạng thái, hai đại lượng trùng nhau; khi không, tác tử chỉ thấy một phần.
+Chuỗi đầu vẫn có lợi ích lớn hơn với mọi $r$.
 
-**Ví dụ tính được.** Một xe chạy trên đường: trạng thái gồm vị trí và vận tốc; camera chỉ cho ảnh, tức quan sát. Hai trạng thái khác nhau chỉ ở vận tốc có thể sinh cùng một ảnh, nên từ quan sát không suy ra được trạng thái. Ngược lại, trong cờ vây, thế cờ trên bàn là cả trạng thái lẫn quan sát.
+Định lý giả sử trước dạng lợi ích cộng tuyến tính. Riêng tính dừng không suy ra dạng này. Chẳng hạn, đặt $\varnothing$ là chuỗi rỗng và định nghĩa
 
-**Hình thức.** Tính Markov phát biểu theo hai dạng:
+$$V(\varnothing)=0,\qquad V([r,a])=r+\bigl(V(a)\bigr)^3.$$
 
-- Dạng chuỗi trạng thái (như nguồn trang 17), với biến cố đầy đủ và lịch sử bắt đầu ở $S_0$:
+Hàm lập phương tăng ngặt nên cách tính này vẫn giữ mọi so sánh chặt khi thêm cùng $r$. Tuy nhiên, $V((0,x))=x^3$ không thể bằng $w_2x$ với một trọng số cố định cho mọi $x$.
 
-$$\Pr(S_{t+1} \mid S_t) = \Pr(S_{t+1} \mid S_0, \ldots, S_t).$$
+Một biến đổi tăng ngặt của $U$ giữ cùng thứ tự ưu tiên giữa các chuỗi tất định. Với chuỗi thưởng ngẫu nhiên, đưa biến đổi đó vào kỳ vọng có thể đổi thứ tự đánh giá chính sách. Nếu bỏ giả thiết trọng số không tăng, $\gamma>1$ cũng thỏa tính dừng trên các chuỗi hữu hạn, kể cả khác độ dài. Trong bài này, tổng thưởng chỉ dùng $0\le\gamma\le1$.
 
-- Dạng có điều khiển, nối giao diện với tính Markov:
+Tại $\gamma=0$, lợi ích chỉ giữ phần thưởng đầu. Sau khi thêm cùng $r$, mọi chuỗi đều có lợi ích $r$, nên tương đương ưu tiên chặt không còn đúng. Giá trị này vẫn dùng được để định nghĩa mục tiêu chỉ xét phần thưởng tức thời.
 
-$$\Pr(S_{t+1}, R_{t+1} \mid H_t, A_t) = \Pr(S_{t+1}, R_{t+1} \mid S_t, A_t).$$
+### Phần thưởng tích lũy
 
-Sau khi tính Markov được thiết lập, dạng chuỗi trạng thái thường được viết tắt thành $\Pr(S_{t+1} \mid S_t) = \Pr(S_{t+1} \mid S_1, \ldots, S_t)$, như trong nguồn. Dạng thứ hai là cách nối giao diện tác tử–môi trường với tính Markov: phân phối của trạng thái và phần thưởng kế tiếp, sau khi đã chọn $A_t$, chỉ phụ thuộc $S_t$ chứ không phụ thuộc phần còn lại của lịch sử. Đây là giả thiết về môi trường, không phải về tác tử.
+Giả sử một quỹ đạo kết thúc sau đúng ba bước và mỗi bước nhận thưởng $-1$; với $\gamma=0{,}5$, các trọng số theo thứ tự là $1,\ 0{,}5,\ 0{,}25$, nên tổng thưởng tích lũy là
+$$-1\cdot 1+(-1)\cdot 0{,}5+(-1)\cdot 0{,}25=-1{,}75.$$
+Gọi $T$ là thời điểm kết thúc, $t<T$, và $\gamma\in[0,1]$ là hệ số chiết khấu:
+$$G_t=\sum_{k=0}^{T-t-1}\gamma^k R_{t+k+1}.$$
+$G_t$ là phần thưởng tích lũy kể từ sau hành động $A_t$; số hạng đầu là $R_{t+1}$. $G_T=0$: không còn thưởng sau khi kết thúc, điều này không xóa bỏ thưởng chuyển cuối vì $R_T$ đã nằm trong tổng tại $T-1$. Khi $\gamma=0$, chỉ giữ thưởng kế tiếp. Với nhiệm vụ tiếp diễn, tổng kéo dài vô hạn và được viết riêng:
+$$G_t=\sum_{k=0}^{\infty}\gamma^k R_{t+k+1},\qquad 0\le\gamma<1.$$
+Định nghĩa $R_{\max}\ge 0$ là hằng số sao cho $|R_{t+1}|\le R_{\max}$ với mọi $t$. Khi đó chặn
+$$|G_t|\le\sum_{k=0}^{\infty}\gamma^k |R_{t+k+1}|\le R_{\max}\sum_{k=0}^{\infty}\gamma^k=\frac{R_{\max}}{1-\gamma}.$$
+Chuỗi hình học $\sum_{k=0}^\infty\gamma^k$ với $0\le\gamma<1$ hội tụ, nên tổng hội tụ tuyệt đối.
 
-**Ứng dụng và giới hạn.** Ứng dụng: giả thiết Markov cho phép thay $H_t$ bằng $S_t$ trong mọi điều kiện hóa về sau (xem cầu nối topic 10), làm các định nghĩa gọn và tính được. Giới hạn: nhiều môi trường thực không Markov trên không gian trạng thái thô; cần mở rộng trạng thái hoặc dùng lịch sử.
+### Giá trị kỳ vọng
 
-**Kiểm tra.** Viết dạng có điều khiển của tính Markov và cho biết nó khác dạng chuỗi trạng thái ở điểm nào.
+Ví dụ giả định: từ $s$, dưới một chính sách cố định, môi trường chọn một trong hai nhánh kết thúc.
 
-::: solution
-Trả lời: $\Pr(S_{t+1}, R_{t+1} \mid H_t, A_t) = \Pr(S_{t+1}, R_{t+1} \mid S_t, A_t)$. Khác dạng chuỗi trạng thái ở chỗ có hành động $A_t$ trong điều kiện hóa và có cả phần thưởng $R_{t+1}$ trong vế trái; nó mô tả chuyển tiếp của môi trường sau hành động, không chỉ tiến trình trạng thái thuần túy.
+| Số bước còn lại | Xác suất | Tổng thưởng |
+|---|---|---|
+| $3$ | $0{,}5$ | $-3$ |
+| $5$ | $0{,}5$ | $-5$ |
+
+Thưởng $-1$ mỗi bước, $\gamma=1$: kỳ vọng bằng $0{,}5(-3)+0{,}5(-5)=-4$. Đây là môi trường giả định có hai nhánh, khác với mê cung chuyển xác định. Chính sách được giữ cố định; sự ngẫu nhiên nằm ở lựa chọn nhánh của môi trường. Kỳ vọng $-4$ là trung bình có trọng số, không nhất thiết là kết quả quan sát được trong một lượt: không quỹ đạo nào của ví dụ này có tổng đúng $-4$.
+
+### Hàm giá trị trạng thái
+
+Giữ cố định chính sách Markov $\pi(a\mid s)$ và động lực môi trường. Hàm giá trị trạng thái được định nghĩa bởi
+$$v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s].$$
+Kỳ vọng lấy trung bình trên hành động của chính sách và chuyển động của môi trường; hai nhánh trên cho $v_\pi(s)=-4$. Giả thiết: chọn $X_t=S_t$, $\pi$ Markov không đổi theo thời gian, môi trường Markov với quy luật cố định theo thời gian, và kỳ vọng hữu hạn. Với $\gamma=1$, thưởng bị chặn cùng với $\mathbb E_\pi[T-t\mid S_t=s]<\infty$ bảo đảm kỳ vọng hữu hạn; kết thúc với xác suất $1$ tự nó chưa đủ. Nếu có hạn chót cố định, cần đưa thời gian còn lại vào trạng thái hoặc dùng giá trị phụ thuộc thời gian. Kỳ vọng dưới $\pi$ không phải phép chọn chính sách tối ưu.
+
+### Mô hình chuyển trạng thái và phần thưởng
+
+Trong mê cung, từ ô $(0,2)$ chọn hành động Đông, tác tử tới $(1,2)$ và nhận thưởng $-1$; đây là một cặp kết quả (trạng thái mới, phần thưởng) xảy ra với xác suất $1$.
+
+Mô hình dự báo đồng thời trạng thái kế tiếp và phần thưởng. Với trạng thái và phần thưởng rời rạc, $s,s'\in\mathcal S$, $r\in\mathcal R$ với $\mathcal R$ là tập giá trị thưởng, trạng thái hiện tại $s$ chưa kết thúc và hành động hợp lệ $a\in\mathcal A(s)$. Trạng thái kế tiếp $s'$ có thể là trạng thái kết thúc:
+$$P(s',r\mid s,a)=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a),$$
+với $P(s',r\mid s,a)\ge 0$ và $\sum_{s',r}P(s',r\mid s,a)=1$. Ví dụ vừa xét cho $P((1,2),-1\mid(0,2),\text{Đông})=1$. Không giả định trạng thái kế tiếp và phần thưởng độc lập; tổng xác suất lấy trên mọi cặp $(s',r)$ với $s,a$ cố định. Phân phối biên theo trạng thái luôn được định nghĩa:
+$$P(s'\mid s,a)=\sum_r P(s',r\mid s,a);$$
+định nghĩa này không yêu cầu kỳ vọng thưởng tồn tại. Ngược lại, thưởng trung bình
+$$\bar r(s,a)=\sum_{s',r}r\,P(s',r\mid s,a)$$
+cần kỳ vọng thưởng tồn tại và hữu hạn. Theo giả thiết Markov và quy luật không đổi theo thời gian, không cần điều kiện hóa thêm lịch sử hay chỉ số $t$. Ký hiệu dùng chữ hoa $P$, khác với chữ $p$ thường trong Sutton–Barto. Hàm giá trị đánh giá kết quả dài hạn; mô hình mô tả phản hồi một bước. Tác tử có thể biết hoặc ước lượng $P$, và ước lượng có thể sai; không phải mọi phương pháp học tăng cường đều xây dựng mô hình tường minh.
+
+::: exercise Câu hỏi kiểm tra
+1. Ba bước đều nhận $-1$, kết thúc sau bước thứ ba. Tính $G_t$ khi $\gamma=0{,}5$.
+2. Phân biệt $G_t$ của một quỹ đạo với $v_\pi(s)$.
+3. Mô hình dự báo $(0,2)$ chọn Đông tới $(1,2)$ với thưởng $0$, trong khi luật là $-1$ mỗi bước; thành phần nào sai?
+4. So sánh $(2,0)$ và $(1,1)$ khi cộng trực tiếp và khi $\gamma=0{,}5$.
 :::
 
-<!-- note-topic-id: lec-02-topic-04 -->
-## Quan sát đầy đủ và quan sát một phần
-
-**Vấn đề.** Tác tử có thể nhìn thấy toàn bộ trạng thái môi trường hoặc chỉ một phần; cần phát biểu tiêu chí phân biệt hai trường hợp vì chúng quyết định hình thức bài toán.
-
-**Trực giác.** Trong cờ vây, thế cờ hiển thị đầy đủ: quan sát bằng trạng thái. Trong poker, lá bài của đối thủ là một phần trạng thái: quan sát chỉ là một phần. Hai trường hợp đòi hỏi cách tiếp cận khác nhau vì lượng thông tin cho quyết định khác nhau.
-
-**Ví dụ tính được.** Trong mê cung (sẽ đặc tả ở topic 09), nếu tác tử nhận tọa độ ô hiện tại thì quan sát bằng trạng thái. Nếu tác tử chỉ nhận ảnh từ camera góc nhìn thứ nhất, hai ô khác nhau có thể cho cùng ảnh (tường giống nhau quanh mình), nên quan sát là một phần.
-
-**Hình thức.** Quan sát đầy đủ: quan sát chứa đủ thông tin để khôi phục trạng thái Markov, tức từ $O_t$ (kết hợp với bộ nhớ tác tử nếu cần) xác định được $S_t$, hoặc tương đương, quan sát chứa đủ thông tin dự báo phân phối chuyển tiếp và phần thưởng kế tiếp; trong trường hợp đơn giản viết $O_t = S_t$. Quan sát một phần: không khôi phục được trạng thái Markov từ quan sát; $O_t$ là hàm của trạng thái (có thể nhiều–một) và nhiều trạng thái khác nhau cho cùng quan sát. Khi quan sát một phần, dùng ký hiệu $O_t$ cho quan sát và không đồng nhất $O_t$ với $S_t$.
-
-Lưu ý về phạm vi: quan sát đầy đủ là một điều kiện thường đi kèm bài toán MDP, nhưng không tự nó là định nghĩa đầy đủ của MDP. Đặc tả hình thức của MDP (gồm không gian trạng thái, chuyển tiếp, phần thưởng và chính sách) được trình bày ở bài tiếp theo.
-
-**Ứng dụng và giới hạn.** Ứng dụng: nhận dạng quan sát đầy đủ/một phần là bước đầu khi mô hình hóa một bài toán mới. Giới hạn: ranh giới phụ thuộc cách chọn trạng thái; cùng một bài toán có thể quan sát đầy đủ trên một không gian trạng thái giàu và một phần trên không gian thô.
-
-**Kiểm tra.** Một robot chỉ nhận khoảng cách tới tường phía trước. Quan sát của nó đầy đủ hay một phần? Nếu môi trường chỉ có một hành lang thẳng không có đặc điểm phân biệt, câu trả lời đổi không?
-
 ::: solution
-Trả lời: nói chung là một phần, vì nhiều vị trí khác nhau cho cùng khoảng cách. Trong hành lang thẳng không đặc điểm, nếu động lực học và phần thưởng chỉ phụ thuộc khoảng cách tới tường thì khoảng cách chứa đủ thông tin dự báo, nên trên không gian trạng thái rút gọn này quan sát đủ cho quyết định; đánh giá phải xét đủ thông tin dự báo, không chỉ kiểu dữ liệu.
+1. Với trọng số $1,\ 0{,}5,\ 0{,}25$: $G_t=-1-0{,}5-0{,}25=-1{,}75$.
+2. $G_t$ là tổng thưởng trên một quỹ đạo cụ thể; $v_\pi(s)$ là kỳ vọng của tổng thưởng từ $s$ dưới chính sách cố định.
+3. Thành phần sai là phần thưởng; chuyển tiếp trạng thái $(0,2)\to(1,2)$ là đúng.
+4. Cộng trực tiếp: hai chuỗi cùng tổng $2$, ngang nhau. Với $\gamma=0{,}5$: $U(2,0)=2$ và $U(1,1)=1{,}5$, nên chuỗi đầu tốt hơn; chiết khấu cho phần thưởng đến sớm trọng số lớn hơn.
 :::
 
-<!-- note-topic-id: lec-02-topic-05 -->
-## Ba thành phần của tác tử
+<!-- note-topic-id: lec-02-part-06 -->
 
-**Vấn đề.** Giao diện xác định tác tử làm gì (chọn $A_t$), nhưng chưa nói tác tử quyết định bằng cách nào. Cần đặt tên cho các thành phần bên trong tác tử.
+## 6. Phần thưởng định hướng hành vi
 
-**Trực giác.** Ba câu hỏi khác nhau: "làm gì bây giờ?", "tình huống này đáng giá bao nhiêu?", "nếu làm X thì chuyện gì xảy ra?". Mỗi câu hỏi tương ứng một thành phần: chính sách, hàm giá trị, mô hình.
+### Mê cung và quy tắc thưởng
 
-**Ví dụ tính được.** Robot giao hàng: chính sách trả lời "ở ngã ba này, rẽ phải"; hàm giá trị trả lời "ô này còn cách đích khoảng 10 bước, mỗi bước thưởng $-1$, nên giá trị khoảng $-10$"; mô hình trả lời "nếu đi Đông từ ô $(2,3)$ thì sang ô $(3,3)$ và mất 1 điểm". Ba câu trả lời có thể tồn tại độc lập.
+Mê cung mới này có hai hành lang. Mỗi đoạn nối hai nút là một bước; khoảng cách trên hình không biểu thị số bước. Tác tử chọn đi sang nút kề dọc hành lang, có thể quay lại trên các nút chưa kết thúc. Không có đường tắt xuyên tường giữa hai hành lang. Hố nằm trên hành lang trên hướng tới đích; vì vào hố là kết thúc, tác tử không thể đi xuyên qua hố để đến đích. Nhánh dưới đến đích sau sáu bước, nhánh trên gặp hố sau hai bước.
 
-**Hình thức.**
+![Mê cung hai hành lang: nhánh trên gặp hố sau hai bước, nhánh dưới đến đích sau sáu bước, mỗi cạnh một bước](img/lec-02/incentive-maze.svg)
 
-- **Chính sách** $\pi$: ánh xạ từ trạng thái (hoặc quan sát) sang hành động hoặc phân phối hành động; quyết định hành vi.
-- **Hàm giá trị**: đánh giá kết quả tương lai kỳ vọng của một trạng thái dưới một chính sách; đo độ tốt.
-- **Mô hình**: dự báo chuyển tiếp và phần thưởng kế tiếp của môi trường; dùng để lập kế hoạch. Các đại lượng $P^a_{ss'}$ và $R^a_s$ của mô hình được định nghĩa ở topic 07.
+Quy ước thưởng: mỗi bước nhận $-\alpha$, kể cả bước cuối; đến đích cộng thêm $10$; vào hố không cộng thêm điểm. Đến đích hoặc vào hố thì dừng. Giả thiết $\gamma=1$, $\alpha\ge0$, chuyển động xác định.
 
-Không phải mọi thuật toán Học tăng cường đều dùng cả ba: tác tử phi mô hình học chính sách hoặc giá trị mà không có mô hình tường minh; một số phương pháp chỉ học chính sách. Mô hình là thành phần tùy chọn.
+### Điểm thưởng của hai lựa chọn
 
-**Ứng dụng và giới hạn.** Bản đồ vai trò này dùng để phân loại thuật toán ở các bài sau. Giới hạn: bài này mới định nghĩa vai trò, chưa định nghĩa cách học từng thành phần.
+Từ điểm xuất phát, đường đến đích gồm năm bước nhận $-\alpha$ và bước cuối nhận $10-\alpha$:
 
-**Kiểm tra.** Một tác tử chỉ có chính sách, không có hàm giá trị và mô hình. Nó thiếu năng lực gì so với tác tử có đủ ba thành phần?
+$$G_{\text{đích}}=5(-\alpha)+(10-\alpha)=10-6\alpha.$$
 
-::: solution
-Trả lời: thiếu khả năng đánh giá độ tốt của tình huống (hàm giá trị) và khả năng dự báo hậu quả hành động để lập kế hoạch (mô hình); nó vẫn chọn được hành động nhưng không đánh giá hay lập kế hoạch bằng các thành phần đó.
+Đường vào hố gồm hai bước, mỗi bước $-\alpha$:
+
+$$G_{\text{hố}}=-2\alpha.$$
+
+Ở trạng thái kết thúc, $G_T=0$: không còn thưởng tương lai. Điều này không có nghĩa phần thưởng bước cuối bằng 0 — phần thưởng ở bước cuối đã được tính vào tổng.
+
+Để tìm tổng thưởng lớn nhất, chỉ cần so sánh hai đường ngắn nhất tới đích và hố. Với $\alpha>0$, mỗi bước thêm đóng góp $-\alpha$, nên đi vòng làm giảm tổng thưởng, còn đi mãi cho tổng $-\infty$. Với $\alpha=0$, mọi đường hữu hạn tới đích đều cho $10$, đi mãi cho $0$, nên không có ưu tiên riêng cho đường ngắn. Vì vậy, so sánh hai đường ngắn nhất cho phép tìm một chính sách tối ưu; khi $\alpha=0$, các đường vòng hữu hạn tới đích cũng tối ưu. Chỉ các chính sách có giá trị hữu hạn mới dùng được $v_\pi$ ở phần 5; đường không dừng với tổng $-\infty$ bị loại khi tìm tối ưu, nên không mâu thuẫn với giả thiết của kỳ vọng giá trị.
+
+### Ngưỡng thay đổi hành vi
+
+Bảng sau tính lại hai tổng khi $\alpha$ thay đổi, bản đồ và quy luật chuyển giữ nguyên:
+
+| $\alpha$ | Đích: $10-6\alpha$ | Hố: $-2\alpha$ | Lựa chọn tối ưu |
+|---|---|---|---|
+| $0$ | $10$ | $0$ | Đến đích |
+| $1$ | $4$ | $-2$ | Đến đích |
+| $3$ | $-8$ | $-6$ | Vào hố |
+
+Với $\alpha=3$, tác tử vào hố vì $-6>-8$. Đến đích vẫn nhận thêm $10$ nhưng sáu bước bị phạt tổng cộng $18$; vào hố chỉ bị phạt $6$. Tác tử tối ưu tổng thưởng chọn hố, dù mục tiêu của người thiết kế là đến đích.
+
+![Tổng thưởng đường đến đích là 10 trừ 6 lần alpha, đường tới hố là âm 2 lần alpha. Hai đường giao tại alpha bằng 2,5, tổng thưởng âm 5.](img/lec-02/incentive-threshold.svg)
+
+Ngưỡng đổi hành vi là nghiệm của $10-6\alpha=-2\alpha$, tức $\alpha=2{,}5$. Trên hình, đường liền ứng với đích, đường đứt ứng với hố. Với $0\le\alpha<2{,}5$, đường đến đích cho tổng thưởng lớn hơn. Tại $\alpha=2{,}5$, cả hai tổng bằng $-5$; chọn một trong hai đường, hoặc ngẫu nhiên giữa chúng, đều đạt cùng giá trị. Với $\alpha>2{,}5$, kết thúc sớm ở hố có lợi hơn. Ngưỡng phụ thuộc thưởng đích và chênh lệch số bước giữa hai đường.
+
+### Phạt hố bổ sung
+
+Giả sử vào hố bị phạt thêm $h\ge0$:
+
+$$G_{\text{hố}}=-2\alpha-h,\qquad \alpha_{\text{ngưỡng}}=\frac{10+h}{4}.$$
+
+Điều kiện ưu tiên đích là $10-6\alpha>-2\alpha-h$, tương đương $4\alpha<10+h$. Tăng $h$ mở rộng khoảng chi phí mà tác tử chọn đích, nhưng một mức $h$ hữu hạn không bảo đảm chọn đích với mọi $\alpha$ không bị chặn. Phạt mỗi bước khuyến khích rút ngắn đường đi đến trạng thái kết thúc được chọn; mức phạt mỗi bước quá cao khiến hố trở thành lựa chọn tối ưu. Với $\alpha=0$, đường vòng hữu hạn rồi đến đích vẫn được $10$, nên đường ngắn nhất không được ưu tiên riêng. Các kết luận này xét tác tử tối ưu tổng thưởng; trong quá trình học, tác tử có thể chưa tìm được chính sách tối ưu.
+
+Dự đoán là đánh giá một chính sách cố định. Trong ví dụ chuyển động và chính sách xác định này, ta tính tổng thưởng của đường đi do chính sách tạo ra. Điều khiển là tìm hoặc cải thiện chính sách; ở đây, ta so sánh các đường đi để chọn chính sách có tổng thưởng cao nhất.
+
+::: exercise Câu hỏi kiểm tra
+1. Với $\alpha=2$, tác tử chọn đích hay hố? Tính hai tổng thưởng.
+
+2. Với $\alpha=3$, mức phạt hố bổ sung $h$ phải thỏa điều kiện nào để tác tử ưu tiên đến đích?
+
+3. Với $\alpha=0$, phần thưởng có khuyến khích đường ngắn nhất không?
 :::
 
-<!-- note-topic-id: lec-02-topic-06 -->
-## Chính sách xác định và ngẫu nhiên
-
-**Vấn đề.** Chính sách cần được định nghĩa hình thức, gồm cả trường hợp chọn hành động ngẫu nhiên.
-
-**Trực giác.** Ở một ngã ba, tác tử có thể luôn rẽ phải (quyết định cứng), hoặc tung đồng xu rồi rẽ trái hoặc phải với xác suất bằng nhau. Cả hai đều là cách chọn hành động hợp lệ; cái sau hữu ích khi cần thăm dò.
-
-**Ví dụ tính được.** Ví dụ hai hành động với xác suất 0,5 trong nguồn; dữ kiện phần thưởng sau đây là ví dụ tự đặt, không phải dữ kiện nguồn. Tại trạng thái $s$, chính sách ngẫu nhiên chọn Bắc với xác suất $0{,}5$ và Đông với xác suất $0{,}5$; đặt thưởng Bắc $= 2$, Đông $= -1$. Kỳ vọng phần thưởng tức thời là $0{,}5 \times 2 + 0{,}5 \times (-1) = 0{,}5$. Tổng xác suất bằng $1$. Chính sách xác định tương ứng chọn Bắc với xác suất $1$.
-
-**Hình thức.** Chính sách xác định và chính sách ngẫu nhiên là hai loại chính sách khác nhau, với hai ký hiệu riêng (không mâu thuẫn):
-
-- Chính sách xác định: $\pi(s) = a$, một hàm từ trạng thái sang hành động; ký hiệu $\pi(s)$ chỉ dùng cho loại này.
-- Chính sách ngẫu nhiên:
-
-$$\pi(a \mid s) = \Pr(A_t = a \mid S_t = s), \qquad \sum_{a \in \mathcal A} \pi(a \mid s) = 1, \quad \pi(a \mid s) \ge 0.$$
-
-Miền: $\pi(\cdot \mid s)$ là phân phối xác suất trên $\mathcal A(s)$ tại mỗi $s$; điều kiện chuẩn hóa là tổng xác suất trên các hành động hợp lệ bằng $1$. Chính sách xác định là trường hợp riêng với $\pi(a \mid s) \in \{0, 1\}$.
-
-**Ứng dụng và giới hạn.** Ứng dụng: chính sách ngẫu nhiên hỗ trợ thăm dò và phá vỡ đối xứng; chính sách xác định gọn khi hành vi đã cố định. Giới hạn: chính sách ngẫu nhiên có thể mất phần thưởng ngắn hạn so với chọn hành động tốt nhất đã biết.
-
-**Kiểm tra.** Với $\mathcal A(s) = \{\text{Bắc}, \text{Đông}\}$ và $\pi(\text{Bắc} \mid s) = 0{,}3$, giá trị $\pi(\text{Đông} \mid s)$ phải bằng bao nhiêu để $\pi$ là chính sách hợp lệ?
-
 ::: solution
-Trả lời: $\pi(\text{Đông} \mid s) = 1 - 0{,}3 = 0{,}7$, vì tổng xác suất trên các hành động hợp lệ phải bằng $1$.
+1. Đích cho $10-12=-2$; hố cho $-4$. Tác tử chọn đích.
+
+2. Cần $-8>-6-h$, tức $h>2$. Với $h=2$, hai lựa chọn ngang nhau. Nếu $h$ nguyên thì $h\ge3$.
+
+3. Không. Mọi đường hữu hạn tới đích đều nhận tổng $10$, kể cả đường vòng.
 :::
 
-<!-- note-topic-id: lec-02-topic-07 -->
-## Hàm giá trị và mô hình
+### Khuyến khích và chế tài
 
-**Vấn đề.** Phần thưởng tức thời không đủ để so sánh tình huống: một ô có thưởng $0$ ngay nhưng gần đích có thể tốt hơn ô có thưởng nhỏ ngay nhưng xa đích. Cần đại lượng đo kết quả dài hạn và công cụ dự báo chuyển tiếp.
+Cơ chế thưởng và phạt ở đây tương tự cách xã hội định hướng hành vi. Khuyến khích tạo lợi ích cho hành vi phù hợp với mục tiêu xã hội, pháp luật và chuẩn mực đạo đức; chế tài áp dụng hậu quả bất lợi đối với vi phạm để răn đe và hạn chế hành vi đó. Trong mê cung, mức phạt mỗi bước quyết định tác tử chọn đích hay hố; chính sách xã hội và pháp luật cũng dùng lợi ích và chế tài để làm hành vi phù hợp hấp dẫn hơn, hành vi vi phạm kém hấp dẫn hơn.
 
-**Trực giác.** Tổng phần thưởng tương lai cần ưu tiên phần thưởng đến sớm. Hệ số chiết khấu $\gamma \in [0, 1)$ làm phần thưởng ở bước sau nhỏ dần: phần thưởng sau $k$ bước được tính bằng $\gamma^k$ lần. Kỳ vọng cần thiết vì tương lai không xác định: cả cách chính sách chọn hành động lẫn cách môi trường chuyển tiếp đều ngẫu nhiên.
+Cơ chế thưởng, phạt có thể tạo hành vi lách quy định hoặc hệ quả ngoài ý muốn (cực đại điểm thưởng tích luỹ). Cơ chế cần được đánh giá qua hành vi thực tế mà nó tạo ra, kể cả hành vi đối phó.
 
-**Ví dụ tính được.** Tính tay với $\gamma = 0{,}5$ và dãy phần thưởng $R_1 = 2$, $R_2 = 4$, các phần thưởng sau bằng $0$:
+Phép liên hệ chỉ xét vai trò của khuyến khích. Pháp luật và đạo đức còn xét quyền, nghĩa vụ và công bằng. Con người còn hành động vì niềm tin, nghĩa vụ và quan hệ xã hội. Hành vi hợp pháp không tự động đồng nghĩa với hành vi hợp đạo đức; pháp luật còn bảo vệ quyền, đặt ra nghĩa vụ, thủ tục, trách nhiệm và giới hạn cho việc thực thi chế tài.
 
-$$G_0 = R_1 + \gamma R_2 + \gamma^2 R_3 + \cdots = 2 + 0{,}5 \times 4 + 0 = 4.$$
+<!-- note-topic-id: lec-02-part-07 -->
 
-Nếu đổi thứ tự thành $R_1 = 4$, $R_2 = 2$: $G_0 = 4 + 0{,}5 \times 2 = 5$. Phần thưởng đến sớm được chiết khấu ít nên có giá trị lớn hơn; đây là lý do thứ tự thời gian quan trọng.
+## 7. Tổng kết và tự kiểm tra
 
-**Hình thức.** Tổng phần thưởng chiết khấu phụ thuộc loại nhiệm vụ.
+Bảng ghép các thành phần của bài toán trong mê cung:
 
-Nhiệm vụ tiếp diễn (không có điểm kết thúc): $G_t$ là chuỗi vô hạn,
+| Thành phần | Trong mê cung |
+|---|---|
+| $S_t, O_t, X_t$ | Vị trí thật; dữ liệu nhận được; biểu diễn dùng để quyết định |
+| Chính sách $\pi$ | Chọn hướng đi từ thông tin sẵn có |
+| $R_{t+1}, G_t, v_\pi$ | Thưởng từng bước; tổng thưởng; kỳ vọng theo chính sách |
+| Mô hình môi trường | Dự báo vị trí kế tiếp và phần thưởng |
 
-$$G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}, \qquad 0 \le \gamma < 1,$$
+Với mê cung quan sát đầy đủ, có thể chọn vị trí hiện tại làm biểu diễn để quyết định. Với quan sát cục bộ, biểu diễn có thể cần thêm thông tin từ lịch sử. Chính sách chọn hành động; hàm giá trị đánh giá kết quả dài hạn theo chính sách; mô hình dự báo phản hồi của môi trường.
 
-với $R_{\max}$ là cận trên không âm của $|R_{t+1}|$ với mọi $t$.
+::: exercise Câu hỏi kiểm tra
+1. Cùng một quan sát có thể khác trạng thái không?
 
-Nhiệm vụ hữu hạn kết thúc ở bước $T$: tổng là hữu hạn,
+2. Thưởng $-1$ mỗi bước có chỉ ra hành động tốt nhất ngay không?
 
-$$G_t = \sum_{k=0}^{T-t-1} \gamma^k R_{t+k+1}, \qquad 0 \le \gamma \le 1.$$
-
-Với nhiệm vụ tiếp diễn, $\gamma = 1$ có thể làm tổng phân kỳ, nên yêu cầu $\gamma < 1$. Điều kiện hội tụ: với $0 \le \gamma < 1$ và phần thưởng bị chặn, chuỗi $\sum_k \gamma^k R_{t+k+1}$ hội tụ tuyệt đối vì tổng hình học $\sum_{k=0}^{\infty} \gamma^k = \frac{1}{1-\gamma}$ với $0 \le \gamma < 1$; giá trị bị chặn bởi $R_{\max}/(1-\gamma)$.
-
-Hàm giá trị trạng thái dưới chính sách $\pi$:
-
-$$v_\pi(s) = \mathbb E_\pi\!\left[G_t \mid S_t = s\right] = \mathbb E_\pi\!\left[R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots \mid S_t = s\right].$$
-
-Kỳ vọng $\mathbb E_\pi$ lấy theo chính sách $\pi$ (cách chọn hành động) và động lực môi trường (cách chuyển tiếp và phát thưởng). Hàm giá trị luôn phụ thuộc chính sách đang được đánh giá; đổi $\pi$ là đổi $v_\pi$.
-
-Mô hình của môi trường gồm chuyển tiếp và thưởng:
-
-$$P^a_{ss'} = \Pr(S_{t+1} = s' \mid S_t = s, A_t = a), \qquad R^a_s = \mathbb E\!\left[R_{t+1} \mid S_t = s, A_t = a\right].$$
-
-Cả hai đều điều kiện hóa theo cặp (trạng thái, hành động); $P^a_{ss'}$ là phân phối xác suất trên $\mathcal S$ nên $\sum_{s'} P^a_{ss'} = 1$ với mỗi $(s, a)$.
-
-Bài này không trình bày phương trình Bellman kỳ vọng hay tối ưu; quan hệ đệ quy của $v_\pi$ thuộc bài sau.
-
-**Ứng dụng và giới hạn.** Ứng dụng: $v_\pi$ dùng để so sánh trạng thái và đánh giá chính sách; $P^a_{ss'}$ và $R^a_s$ dùng để lập kế hoạch khi biết trước động lực học. Giới hạn: tính $v_\pi$ chính xác đòi hỏi biết mô hình hoặc thu thập dữ liệu; bài này chỉ định nghĩa, chưa chỉ cách tính.
-
-**Kiểm tra.** Với $\gamma = 0{,}5$, $R_1 = 0$, $R_2 = 8$, các phần thưởng sau bằng $0$: tính $G_0$. Nếu $\gamma = 0$ thì $G_0$ bằng bao nhiêu?
-
-::: solution
-Trả lời: $G_0 = 0 + 0{,}5 \times 8 = 4$. Với $\gamma = 0$: $G_0 = R_1 = 0$, vì mọi phần thưởng sau bước đầu bị triệt tiêu; $\gamma = 0$ tương ứng chỉ quan tâm phần thưởng tức thời.
+3. Biết mô hình có đồng nghĩa biết chính sách tốt nhất không?
 :::
 
-<!-- note-topic-id: lec-02-topic-11 -->
-## Bổ sung: mô hình thế giới và giới hạn biểu diễn
-
-Nguồn đặt câu hỏi về "mô hình thế giới" ở trang 13, trước khi định nghĩa mô hình ở trang 23, và không có khung trả lời. Sau khi đã có định nghĩa ở topic 07, câu hỏi trả lời được như sau.
-
-Mô hình ở topic 07 là mô hình dự báo cục bộ có điều kiện: với mỗi cặp $(s, a)$, nó dự báo phân phối trạng thái kế tiếp và phần thưởng kỳ vọng. Đây là một công cụ tính toán, không phải "mô hình hoàn thiện về thế giới": nó chỉ đúng trong phạm vi các trạng thái và hành động đã đặc tả, chỉ dự báo một bước (trừ khi ghép nhiều bước), và mang sai số nếu được học từ dữ liệu. Một hệ thống có thể hành xử tốt mà không có mô hình tường minh (học chính sách hoặc giá trị trực tiếp từ tương tác), và một hệ thống có mô hình vẫn có thể lập kế hoạch kém nếu mô hình sai. Do đó không kết luận rằng trí tuệ nhân tạo tổng quát bắt buộc phải có mô hình tường minh; đây là lựa chọn thiết kế phụ thuộc bài toán và dữ liệu sẵn có.
-
-**Kiểm tra.** Phân biệt "mô hình dự báo cục bộ có điều kiện" với "mô hình hoàn thiện về thế giới" bằng hai tiêu chí cụ thể.
-
 ::: solution
-Trả lời: phạm vi — mô hình cục bộ chỉ dự báo với các cặp $(s,a)$ đã đặc tả, mô hình hoàn thiện phải bao quát mọi tình huống; độ tin cậy — mô hình cục bộ có sai số đo được và chỉ dự báo một bước, mô hình hoàn thiện được giả định đúng trên mọi độ dài kế hoạch. Nguồn không cung cấp cơ sở để khẳng định hệ AI bắt buộc cần mô hình tường minh.
+1. Có, ví dụ $(2,1)$ và $(3,1)$ cho cùng quan sát bốn ô kề.
+
+2. Không, cần xét hậu quả dài hạn của các lựa chọn.
+
+3. Không, vẫn cần giải bài toán lựa chọn trên mô hình đó.
 :::
 
-<!-- note-topic-id: lec-02-topic-08 -->
-## Dự đoán và điều khiển
+### Bài tập và tài liệu đọc
 
-**Vấn đề.** Với các thành phần đã định nghĩa, có hai nhiệm vụ khác nhau cần phân biệt rõ để tránh nhầm khi đọc thuật toán ở các bài sau.
+Bài tập tuần 2: Bài 1, 2, 5, 6 về tín hiệu học, đặc tả mê cung, chiết khấu, chính sách ngẫu nhiên; Bài 10 yêu cầu chọn một ứng dụng thực tế rồi nêu trạng thái, hành động, chuyển động, thưởng, điều kiện kết thúc và các khó khăn khi mô hình hóa. Các giả thiết về thông tin và phần thưởng quyết định cách mô hình hóa. Bài 3, 4, 7, 8, 9 trong cùng tập hw02 để dành sau khi học Bài 03.
 
-**Trực giác.** Đánh giá một cầu thủ cụ thể và tìm cầu thủ tốt nhất là hai việc khác nhau. Việc đầu giữ chính sách cố định rồi đo giá trị; việc thứ hai thay đổi chính sách để giá trị tăng.
+Bài 03 sẽ trình bày mô hình đầy đủ: mô hình quyết định Markov và phương trình Bellman.
 
-**Ví dụ tính được.** Cho mê cung với thưởng $-1$ mỗi bước và một chính sách luôn đi Đông. Dự đoán: tính $v_\pi$ cho chính sách đó — kết quả có thể kém vì chính sách đâm vào tường. Điều khiển: đổi chính sách (ví dụ thêm rẽ khi gặp tường) để $v_\pi$ tăng. Cùng dữ kiện mê cung, hai nhiệm vụ cho hai câu hỏi khác nhau.
+Tài liệu đọc:
 
-**Hình thức.**
-
-- **Dự đoán** (evaluation): cho trước chính sách $\pi$, tính $v_\pi(s) = \mathbb E_\pi[G_t \mid S_t = s]$ cho các $s$. Đầu vào là $\pi$; đầu ra là hàm giá trị.
-- **Điều khiển** (control): tìm hoặc cải thiện chính sách để đạt giá trị cao; đầu ra là một chính sách tốt hơn (trong phạm vi đã xét).
-
-Không đồng nhất "chơi tốt nhất" với dự đoán: nếu chính sách chưa cố định thì chưa có gì để đánh giá; phải trước hết xác định $\pi$ đang xét hoặc chuyển sang bài toán điều khiển.
-
-**Ứng dụng và giới hạn.** Ứng dụng: hầu hết thuật toán Học tăng cường xen kẽ hai nhiệm vụ này. Giới hạn: bài này chưa trình bày thuật toán cho cả hai; chỉ xác lập sự phân biệt.
-
-**Kiểm tra.** Một người nói "tôi dùng dự đoán để tìm chính sách tốt nhất". Phát biểu đó sai ở đâu?
-
-::: solution
-Trả lời: dự đoán đánh giá một chính sách đã cho, không tìm chính sách; tìm chính sách tốt hơn là điều khiển. Nếu chính sách chưa cố định thì không có đối tượng để dự đoán.
-:::
-
-<!-- note-topic-id: lec-02-topic-09 -->
-## Mê cung như bài toán tổng hợp
-
-**Vấn đề.** Cần đặc tả một bài toán hoàn chỉnh bằng mọi khái niệm từ topic 02 đến topic 08, để kiểm tra rằng các định nghĩa dùng được cùng nhau.
-
-**Trực giác.** Mê cung gồm các ô, tường và một ô đích. Tác tử đứng ở một ô, chọn một trong bốn hướng; môi trường di chuyển tác tử theo hướng đó nếu không gặp tường, trừ một điểm mỗi bước, và kết thúc khi đến đích.
-
-**Ví dụ tính được.** Ví dụ sau là dữ kiện tự đặt để tính tay, với bố cục một hành lang ba ô: các ô $s_1, s_2, s_3$, tường hai đầu, đích là $s_3$, thưởng $R_{t+1} = -1$ mỗi bước, $\gamma = 1$ (nhiệm vụ hữu hạn; điều này được phép vì tổng chỉ có hữu hạn số hạng). Xét hai chính sách: (a) chính sách xác định luôn đi Đông; (b) chính sách chọn đều Đông/Tây tại $s_1$ và luôn đi Đông ở các ô khác.
-
-Dưới chính sách (a): từ $s_1$ cần 2 bước tới đích, tổng phần thưởng $G_0 = (-1) + (-1) = -2$; từ $s_2$ cần 1 bước, $G_0 = -1$. Vậy $v_\pi(s_1) = -2$ và $v_\pi(s_2) = -1$ dưới chính sách này.
-
-Dưới chính sách (b) tại $s_1$: với xác suất $0{,}5$ đi Đông tới $s_2$ (sau đó luôn Đông, còn $-1$), với xác suất $0{,}5$ đâm tường ở lại $s_1$ (chuỗi lặp); kỳ vọng khi đó không tính được bằng hai đường hữu hạn trên mà cần giải phương trình theo định nghĩa kỳ vọng, và bài này dừng ở việc chỉ ra rằng giá trị phụ thuộc chính sách.
-
-**Hình thức.** Đặc tả mê cung:
-
-- Không gian trạng thái: $\mathcal S$ là tập các ô không phải tường; $S_t$ là vị trí tác tử tại bước $t$.
-- Hành động: $\mathcal A(s) = \{\text{Bắc}, \text{Đông}, \text{Nam}, \text{Tây}\}$ tại mỗi ô; quy tắc chuyển khi gặp tường: hành động hướng vào tường giữ tác tử ở nguyên chỗ, tức $P^a_{ss} = 1$ cho hành động $a$ hướng tường tại ô $s$ sát tường.
-- Phần thưởng: $R_{t+1} = -1$ mỗi bước, kể cả bước đâm tường; mục tiêu là đến đích với ít bước nhất.
-- Kết thúc: trạng thái đích là trạng thái kết thúc; nhiệm vụ hữu hạn kết thúc khi đến đích.
-
-So sánh đầu vào: nếu tác tử nhận tọa độ ô đầy đủ thì quan sát bằng trạng thái (quan sát đầy đủ). Nếu tác tử chỉ nhận ảnh hoặc cảm biến góc nhìn thứ nhất, hai vị trí khác nhau có thể cho cùng dữ liệu cảm biến, nên quan sát có thể là một phần. Kết luận về đầy đủ hay một phần không dựa vào kiểu dữ liệu (tọa độ hay ảnh) mà phải xét đủ thông tin dự báo: dữ liệu đó có xác định được phân phối chuyển tiếp và phần thưởng kế tiếp hay không.
-
-**Ứng dụng và giới hạn.** Ứng dụng: khuôn này dùng để mô hình hóa mọi bài toán điều hướng và là bài tập nền cho hw02. Giới hạn: nguồn trình bày mê cung kèm đồ thị chuyển và bảng đánh số trạng thái ở dạng hình; bản note không dùng ảnh raster và không suy diễn đường đi cụ thể từ hình khi không đọc chắc chắn được, nên ví dụ tính tay ở trên dùng bố cục tự đặt.
-
-**Kiểm tra.** Trong mê cung ba ô ở ví dụ trên, tác tử ở $s_2$ dưới chính sách luôn đi Đông. Tính $G_0$ và cho biết vì sao $v_\pi(s_2) \neq v_\pi(s_1)$ dưới cùng chính sách.
-
-::: solution
-Trả lời: từ $s_2$, đi Đông một bước tới đích, $G_0 = -1$. Dưới chính sách luôn đi Đông, từ $s_1$ cần 2 bước nên $G_0 = -2$. Hai giá trị khác nhau vì khoảng cách tới đích khác nhau; $v_\pi$ đo kết quả dài hạn từ từng trạng thái, không phải một số chung cho cả mê cung.
-:::
-
-## Tổng kết bài
-
-- Học tăng cường khác học có giám sát và học không giám sát ở tín hiệu phần thưởng trễ, dữ liệu phụ thuộc thời gian và việc tác tử tác động lên dữ liệu tương lai.
-- Tác tử và môi trường trao đổi theo chu kỳ: tác tử nhận $S_t$ và $R_t$, chọn $A_t$; môi trường chuyển sang $S_{t+1}$ và phát $R_{t+1}$.
-- Trạng thái hữu ích khi là bản tóm tắt đủ của lịch sử; khi đó tính Markov cho phép điều kiện hóa theo $S_t$ thay vì $H_t$.
-- Tác tử gồm chính sách (quyết định), hàm giá trị (đánh giá) và mô hình (dự báo); ba thành phần không bắt buộc đồng thời.
-- Dự đoán đánh giá một chính sách đã cho; điều khiển tìm chính sách tốt hơn — mê cung là bài toán tổng hợp để áp dụng cả các khái niệm trên.
-
-## Tự kiểm tra và bài tập
-
-Các câu sau tổng hợp nội dung bài; đáp án tách khỏi câu hỏi ở cuối mục.
-
-1. Nêu ba khác biệt giữa Học tăng cường và học có giám sát. (hw02 Bài 1)
-2. Một robot chỉ nhận tín hiệu sonar ba hướng trong mê cung. Trạng thái và quan sát của nó khác nhau thế nào, và bài toán là quan sát đầy đủ hay một phần? (hw02 Bài 2)
-3. Viết cả hai dạng tính Markov và cho biết dạng nào gắn với giao diện tác tử–môi trường.
-4. Giả sử phần thưởng bị chặn bởi $|R_{t+1}| \le 10$ tại mọi bước và $\gamma = 0{,}9$: giá trị lớn nhất có thể của $G_t$ là bao nhiêu? Căn cứ vào điều kiện gì?
-5. Cho $R_1 = 1$, $R_2 = 2$, $R_3 = 4$, $\gamma = 0{,}5$, các phần thưởng sau bằng $0$: tính $G_0$ và $G_1$. (hw02 Bài 5)
-6. Tại trạng thái $s$ với $\mathcal A(s) = \{\text{Bắc}, \text{Đông}, \text{Nam}\}$ và $\pi(\text{Bắc} \mid s) = 0{,}2$, $\pi(\text{Đông} \mid s) = 0{,}5$: tính $\pi(\text{Nam} \mid s)$ và cho biết đây là chính sách xác định hay ngẫu nhiên. (hw02 Bài 6)
-7. Phân biệt dự đoán và điều khiển bằng một câu mỗi nhiệm vụ.
-8. Đặc tả mê cung ở topic 09 bằng năm thành phần: $\mathcal S$, $\mathcal A(s)$, quy tắc chuyển khi gặp tường, phần thưởng và điều kiện kết thúc.
-9. (Đọc thêm) hw02 Bài 10 yêu cầu làm gì, và nó xếp vào nhóm bài tập nào của bài này?
-
-::: solution
-Đáp án: (1) không có nhãn đúng từng mẫu, chỉ có phần thưởng; phản hồi trễ sau chuỗi hành động; dữ liệu không i.i.d. và phụ thuộc thời gian. (2) Trạng thái là vị trí thật trong mê cung; quan sát là ba số đo sonar; nhiều vị trí cho cùng ba số đo nên quan sát là một phần. (3) $\Pr(S_{t+1} \mid S_t) = \Pr(S_{t+1} \mid S_1, \ldots, S_t)$ và $\Pr(S_{t+1}, R_{t+1} \mid H_t, A_t) = \Pr(S_{t+1}, R_{t+1} \mid S_t, A_t)$; dạng thứ hai gắn với giao diện vì có $A_t$ và $R_{t+1}$. (4) $10/(1 - 0{,}9) = 100$, theo chặn trên của tổng hình học với phần thưởng bị chặn và $\gamma < 1$; giá trị lớn nhất $100$ đạt khi mọi phần thưởng tương lai đều bằng cận trên $10$. (5) $G_0 = 1 + 0{,}5 \times 2 + 0{,}25 \times 4 = 3$; $G_1 = 2 + 0{,}5 \times 4 = 4$. (6) $\pi(\text{Nam} \mid s) = 1 - 0{,}2 - 0{,}5 = 0{,}3$; chính sách ngẫu nhiên vì có hành động được chọn với xác suất nằm giữa $0$ và $1$. (7) Dự đoán: cho $\pi$, tính $v_\pi$. Điều khiển: tìm hoặc cải thiện $\pi$ để giá trị tăng. (8) $\mathcal S$ là tập ô không phải tường; $\mathcal A(s) = \{\text{Bắc}, \text{Đông}, \text{Nam}, \text{Tây}\}$; hành động hướng tường giữ nguyên vị trí; $R_{t+1} = -1$ mỗi bước; kết thúc khi đến ô đích. (9) Bài 10 yêu cầu chọn một bài toán thực tế và mô hình hóa bằng trạng thái, hành động, chuyển tiếp, phần thưởng cùng điều kiện kết thúc/tiếp diễn; các khái niệm này đã có trong bài, nên Bài 10 là bài tập mở rộng hợp lệ sau topic 09, không cần $q_\pi$ hay Bellman.
-:::
-
-<!-- note-topic-id: lec-02-topic-12 -->
-## Đọc thêm
-
-- Sutton, R. S. & Barto, A. G. (2018), *Reinforcement Learning: An Introduction*, Chương 3 (được dẫn ở trang 15 của nguồn): đối chiếu khung tác tử–môi trường và quy ước chỉ số phần thưởng với bài này.
-- David Silver, *Introduction to Reinforcement Learning*, Lecture 2 (slide được dẫn ở trang 1 của nguồn): cùng các khái niệm MDP với ví dụ khác; lưu ý bài này chưa đi tới phần Bellman của Lecture 2.
-- hw02 Bài 10: bài tập mở rộng hợp lệ sau topic 09 — chọn một bài toán thực tế và mô hình hóa bằng trạng thái, hành động, chuyển tiếp, phần thưởng, điều kiện kết thúc/tiếp diễn; không yêu cầu $q_\pi$ hay Bellman và không cung cấp lời giải trong phạm vi bài này.
-- hw02 Bài 1, 2, 5, 6: bài tập chính của bài; Bài 5 và 6 thuộc Bài 02 vì $\gamma$ và chính sách ngẫu nhiên có trong trang 21–22 cùng hw02; Bài 3, 4, 7, 8, 9 đòi hỏi MRP, $q_\pi$ hoặc Bellman, sẽ dùng sau khi các khái niệm đó được dạy.
-
-## Sai khác có chủ ý so với nguồn
-
-- **Sửa chu kỳ trang 15:** nguồn ghi/khó hiểu chu kỳ. Bản note dùng quy ước chuẩn: ở bước $t$, tác tử nhận $S_t$ và $R_t$ từ chuyển tiếp trước, chọn $A_t$; môi trường nhận $A_t$, chuyển sang $S_{t+1}$ và phát $R_{t+1}$; lịch sử $H_t = (S_0, A_0, R_1, S_1, \ldots, A_{t-1}, R_t, S_t)$.
-- **Bổ sung điều kiện hội tụ cho tổng vô hạn:** nguồn đưa $G_t$ dạng chuỗi vô hạn mà không nêu điều kiện; bản note thêm $0 \le \gamma < 1$ cùng phần thưởng bị chặn cho nhiệm vụ tiếp diễn, và cho phép $0 \le \gamma \le 1$ với nhiệm vụ hữu hạn.
-- **Sửa phát biểu MDP trang 18:** bản note không tuyên bố quan sát đầy đủ tự nó là định nghĩa đầy đủ của MDP; đặc tả hình thức MDP chuyển sang bài tiếp theo.
-- **Chuyển câu hỏi mô hình thế giới:** câu hỏi ở trang 13 của nguồn xuất hiện trước định nghĩa mô hình trang 23; bản note chuyển nội dung này tới sau topic 07 (topic 11) để có khung trả lời.
-- **Không dùng ảnh:** các trang 5–7, 9, 12, 19, 21, 27 của nguồn chứa nội dung dạng ảnh; bản note không dùng ảnh raster và không suy diễn dữ kiện từ ảnh, gồm đồ thị chuyển và bảng đánh số trạng thái mê cung ở trang 26–27.
-- **Ví dụ mê cung tính tay:** bố cục ba ô là dữ kiện tự đặt để tính được, không phải bố cục trong nguồn; điều này được ghi rõ tại chỗ sử dụng.
-
-## Tài liệu tham khảo
-
-- Nguồn bài giảng: `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx`, trang 1–27 (slide chuyển thể từ davidsilver.uk/teaching/). Các trích dẫn "PPTX trang N" trong bài dùng số trang của tệp này.
-- Nguồn bài tập: `RL-hk2-2025-2026/resources/hw02.pdf`, Bài 1, 2, 5, 6 (bài tập chính) và Bài 10 (đọc thêm).
-- Sutton, R. S. & Barto, A. G. (2018). *Reinforcement Learning: An Introduction* (2nd ed.). MIT Press. Chương 3. https://incompleteideas.net/book/the-book-2nd.html
-- Silver, D. *Introduction to Reinforcement Learning*, Lecture 2. https://www.davidsilver.uk/teaching/
+- Tạ Việt Cường, bài giảng 2–3 "MDPs with Key Concepts" (lecture2-3-MDPswithKeyConcepts.pptx), trang 1–27.
+- Tập bài tập hw02, bài 1, 2, 5, 6, 10.
+- Sutton và Barto (2018), [*Reinforcement Learning: An Introduction*](https://incompleteideas.net/book/the-book-2nd.html), ấn bản 2, chương 3, mục 3.1–3.5. Ký hiệu $P$ là cách ký hiệu của slide; sách dùng $p$.
+- Berkeley CS188, bài 09 (2026), [*Markov Decision Processes*](https://inst.eecs.berkeley.edu/~cs188/sp26/assets/lectures/cs188-sp26-lec09.pdf), trang 22 "Stationary Preferences".
+- Shakerinava và Ravanbakhsh (2022), [*Utility Theory for Sequential Decision Making*](https://proceedings.mlr.press/v162/shakerinava22a.html). Bài báo nghiên cứu các tiên đề về ưu tiên giữa những phân phối quỹ đạo.
