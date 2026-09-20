@@ -909,3 +909,82 @@ $$q_\pi(\mathrm L,\mathrm{tim})=
 Hàng L là $(1/2,1/2)$, thưởng trung bình $1/2$. Khi đổi chính sách, giữ mô hình $p$; phải xét lại $P^\pi,r^\pi,v_\pi$. Không khẳng định mọi thay đổi chính sách luôn làm mọi số đổi. **Câu nối:** “Một bài toán đánh giá chính sách đã được giải trọn từ mô hình đến giá trị; phần cuối nối lại các bước và chuyển sang bài tập.”
 
 **Nguồn:** vận dụng SB §3.5; hw02 bài 4, 7, 8.
+
+## 9. Phần 7 — Tổng hợp và vận dụng
+
+**Chức năng:** trở lại quyết định của robot ở đầu bài và xác nhận sinh viên nối được từng đối tượng với phép tính. Đầu vào là mô hình và các giá trị đã giải; đầu ra là khả năng tự lập luận trên một quyết định, cùng nhiệm vụ luyện tập và điểm vào của Bài 04.
+
+**Mạch trình bày trước khi chia slide:**
+
+1. Trở lại robot pin thấp với các giá trị đã tính.
+2. Đọc một hành động cụ thể từ dữ kiện môi trường và giá trị tương lai, rồi nhận ra công thức tổng quát đã học.
+3. Giao bài tập theo đúng các năng lực vừa hình thành.
+4. Kiểm tra điều kiện đủ dữ liệu, phân biệt các đại lượng và phạm vi kết luận về chính sách.
+
+**Chu trình học:** ví dụ thu hồi 07-01/02 → nối lại hình thức đã biết 07-02 → vận dụng 07-03 → kiểm tra 07-04. Phần kết dùng chu trình rút gọn vì không giới thiệu khái niệm trọng tâm mới; không dựng một mô hình lớn khác ở cuối bài. Tổng 8 phút.
+
+### L03R-07-01 — Tổng hợp và vận dụng
+
+Thời lượng: 1 phút. Vai trò: tiêu đề phần và thu hồi vấn đề mở đầu.
+
+**Mặt slide:** tên phần; robot ở L, bên cạnh các giá trị Chờ $15/8$, Sạc $13/8$, Tìm $3/4$, cùng nhãn “hành động đầu, sau đó theo $\pi$”.
+
+**Cách thể hiện:** dùng lại hình ba lựa chọn ở 01-03, lần này thêm những giá trị đã tính hoặc vừa chữa ở 06-08. Không đánh dấu một hành động là “tối ưu”.
+
+**Ghi chú và cầu nối:** đầu bài chỉ biết các lựa chọn và tác động tới pin. Giờ mỗi lựa chọn có một giá trị dài hạn dưới cùng cách tiếp tục. Đọc ngược một phép tính để xác nhận mô hình, chính sách và giá trị không bị lẫn nhau.
+
+**Nguồn:** kết quả ví dụ xuyên suốt; SB §3.5.
+
+### L03R-07-02 — Đọc một quyết định bằng mô hình và giá trị
+
+Thời lượng: 3 phút. Vai trò: từ ca cụ thể trở lại công thức đã học.
+
+**Mặt slide:** xét L–Chờ. Môi trường cho $p(\mathrm L,1\mid\mathrm L,\mathrm{cho})=1$; giá trị trạng thái kế tiếp là $7/4$; $\gamma=1/2$. Vì thế:
+
+$$q_\pi(\mathrm L,\mathrm{cho})=1+\frac12\,\frac74=\frac{15}{8}.$$
+
+Đối chiếu từng thành phần với công thức:
+
+$$q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)\left[r+\gamma v_\pi(s')\right].$$
+
+**Cách thể hiện:** dùng một nhánh của robot, ánh xạ xác suất 1, thưởng 1, trạng thái L và giá trị $7/4$ vào vị trí tương ứng. Công thức tổng quát hiện sau phép tính số, không lặp lại cả cây suy diễn phần 5.
+
+**Giải thích và cầu nối:** $\pi(\mathrm{cho}\mid\mathrm L)=1/2$ là xác suất chính sách chọn hành động; nó khác xác suất phản hồi bằng 1. Không nhân $q$ với $1/2$ khi đánh giá hành động đã ấn định; chỉ dùng trọng số chính sách lúc ghép các $q$ thành $v$. Sinh viên sẽ thực hiện lại chuỗi thao tác này trên bài tập.
+
+**Nguồn:** vận dụng SB bài tập 3.13/3.19; dùng kết quả phần 6.
+
+### L03R-07-03 — Bài tập và bước tiếp theo
+
+Thời lượng: 2 phút. Vai trò: xác định đầu ra luyện tập và giới hạn bài học.
+
+**Mặt slide:** ba nhóm bài trong hw02:
+
+| Bài | Nhiệm vụ | Kết quả cần viết |
+|---|---|---|
+| 3 | Kiểm tra ma trận ba trạng thái và lập Bellman | Hàng xác suất hợp lệ; hệ ba phương trình |
+| 4 | Cố định chính sách, gộp MDP thành MRP | Công thức $P^\pi,r^\pi$ và giải thích phép trung bình |
+| 7–8 | Nối $q$ với $v$, giải thích Bellman | Phép lấy trung bình và ý nghĩa từng thành phần |
+
+Đọc SB §3.1–3.5. Bài 04: tìm chính sách tốt hơn khi biết mô hình.
+
+**Cách thể hiện:** một bảng ngắn; không chèn nguyên đề bài dài hoặc toàn bộ chương sách lên mặt slide.
+
+**Ghi chú và cầu nối:** 30 phút chữa bài ngoài tuyến 120 phút chia 10 phút cho bài 3, 10 phút cho bài 4, 10 phút cho bài 7–8. Bài 9 về Bellman tối ưu nối sang Bài 04; không suy diễn công thức tối ưu trong phần tổng kết này. Bài 10 có thể dùng luyện mô hình hóa sau giờ học nếu giảng viên giao.
+
+**Nguồn:** hw02 bài 3, 4, 7, 8, 9, 10; ranh giới SB §3.5→§3.6.
+
+### L03R-07-04 — Câu hỏi kiểm tra
+
+Thời lượng: 2 phút. Vai trò: kiểm tra tổng hợp và kết bài.
+
+**Mặt slide — Câu hỏi:**
+
+1. Biết $p(s'\mid s,a)$, chính sách và hệ số chiết khấu đã đủ để tính giá trị chưa? Còn thiếu dữ kiện nào?
+2. Một quỹ đạo có tổng thưởng khác $v_\pi(s)$ có mâu thuẫn với định nghĩa giá trị không?
+3. $q_\pi(\mathrm L,\mathrm{cho})>q_\pi(\mathrm L,\mathrm{sac})$ đã chứng minh chính sách đang dùng là tối ưu chưa?
+
+**Ghi chú đáp án:** 1. Còn thiếu mô hình thưởng; cho $r(s,a)$ là đủ cùng xác suất chuyển để viết Bellman kỳ vọng, hoặc cho hạt nhân chung $p(s',r\mid s,a)$. 2. Không; một tổng thưởng là kết quả của quỹ đạo, giá trị là kỳ vọng. 3. Chưa; ta mới so sánh hành động đầu với phần tiếp diễn theo chính sách đã cho. Bài 04 sẽ nghiên cứu việc thay đổi chính sách và mục tiêu tối ưu.
+
+**Cách thể hiện:** chỉ ba câu hỏi đánh số; đáp án nằm trong notes. Kết ở năng lực tính và giới hạn kết luận, không thêm câu khẩu hiệu hoặc lặp lại mục lục.
+
+**Nguồn:** vận dụng SB §3.1 và §3.5.
