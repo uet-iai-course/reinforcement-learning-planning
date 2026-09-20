@@ -140,3 +140,9 @@ Quy luật môi trường và chính sách được giả sử Markov, không đ
 ## Đặc tả và ánh xạ nguồn
 
 Mạch và vai trò từng slide, chu trình học, lý do chuyển ví dụ sinh viên/xe sang robot: storyboard.md và review-log.md. Mọi công thức dùng ký hiệu Sutton và Barto, ấn bản2, chương3; ma trận là hệ quả của Bellman. Không có code demo mới.
+
+## Đồng bộ ghi chú tự học — 20/09/2026
+
+Ghi chú materials/lec-03/lecture-note.md đã thay bản Student/Racing Car bằng bảy phần robot theo 50 slide hiện hành. Mục tiêu, kiến thức tiên quyết và mục lục nằm trong phần 1. Phần 5 giữ đầy đủ suy diễn Bellman; phần 6 giải hệ trước khi nhận diện chuỗi Markov/MRP và dạng ma trận. Mỗi phần có ba câu hỏi đánh số và lời giải ẩn tương ứng. Bảy SVG được dùng lại từ bộ slide. Mã truy nguyên là lec-03-part-01 đến lec-03-part-07, chỉ nằm trong comment ẩn; ánh xạ từng slide nằm ở phụ lục storyboard.
+
+Nội dung người học đọc không còn nhóm chủ đề, vai trò trong mạch, mã slide hay chỉ dẫn soạn bài. Không thay slide, PDF, CSS hoặc thời lượng bài giảng. Thẻ Bài 3 trong index.html thêm “Mở ghi chú”, dẫn tới material-viewer.html với doc=materials/lec-03/lecture-note.md và deck=lecture-03-qua-trinh-quyet-dinh-markov.html.

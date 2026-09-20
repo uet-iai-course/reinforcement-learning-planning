@@ -1096,3 +1096,62 @@ Bản triển khai dùng quy trình đa tác tử OpenRouter: reader lập kế 
 Rà theo Quill về điểm vào–ra, thứ tự ký hiệu và sự liên tục của robot xuyên suốt; không tạo quill.json. Biên tập nội dung hiển thị và notes theo no-ai-slop và eval.md. Mỗi phần kết thúc bằng ba câu hỏi đánh số; không thêm code demo. Bảy phần lần lượt12/18/14/17/30/21/8phút, tổng120phút;30phút chữa hw02 tách riêng.
 
 Kiểm định RevealJS gồm HTML/ID/section, nguồn trong notes, công thức KaTeX, số học bằng phân số, đường dẫn, SVG và toàn bộ50slide ở1280×720/390×844. Bằng chứng cuối cùng và giới hạn Codex Slides được ghi trong nhật ký; không dùng kiểm định của deck cũ để chứng nhận bản robot.
+
+## Ánh xạ ghi chú tự học theo bộ slide hiện hành — 20/09/2026
+
+Ghi chú giữ bảy phần theo thứ tự của deck. Các slide tiêu đề được gộp vào đề mục; nội dung, ví dụ, công thức và lời giải được viết thành văn tự học. Bản cũ gồm 13 chủ đề Student/Racing Car được thay vì không còn khớp ví dụ và quan hệ tiên quyết của deck. Không thay 50 slide hay thời lượng 120 phút.
+
+| Trang nguồn | Nội dung trang | Phần ghi chú |
+|---|---|---|
+| L03R-01-01 | Quá trình quyết định Markov (MDP) | lec-03-part-01 |
+| L03R-01-02 | Nội dung bài học | lec-03-part-01 |
+| L03R-01-03 | Robot thu gom lon | lec-03-part-01 |
+| L03R-01-04 | Một bước tương tác | lec-03-part-01 |
+| L03R-01-05 | Hai lịch sử, cùng trạng thái hiện tại | lec-03-part-01 |
+| L03R-01-06 | Tính Markov | lec-03-part-01 |
+| L03R-01-07 | Câu hỏi kiểm tra | lec-03-part-01 |
+| L03R-02-01 | Mô hình xác suất của MDP | lec-03-part-02 |
+| L03R-02-02 | Hai phản hồi của hành động Tìm | lec-03-part-02 |
+| L03R-02-03 | Bảng phản hồi của robot | lec-03-part-02 |
+| L03R-02-04 | Xác suất chuyển trạng thái và phần thưởng | lec-03-part-02 |
+| L03R-02-05 | Xác suất chuyển và thưởng trung bình | lec-03-part-02 |
+| L03R-02-06 | Các thành phần của MDP | lec-03-part-02 |
+| L03R-02-07 | Câu hỏi kiểm tra | lec-03-part-02 |
+| L03R-03-01 | Phần thưởng và tổng thưởng | lec-03-part-03 |
+| L03R-03-02 | Nhiệm vụ có kết thúc và nhiệm vụ tiếp diễn | lec-03-part-03 |
+| L03R-03-03 | Điểm thưởng ở các thời điểm | lec-03-part-03 |
+| L03R-03-04 | Tổng thưởng từ thời điểm hiện tại | lec-03-part-03 |
+| L03R-03-05 | Điều kiện để tổng thưởng hữu hạn | lec-03-part-03 |
+| L03R-03-06 | Câu hỏi kiểm tra | lec-03-part-03 |
+| L03R-04-01 | Chính sách và hàm giá trị | lec-03-part-04 |
+| L03R-04-02 | Một cách điều khiển robot | lec-03-part-04 |
+| L03R-04-03 | Chính sách là phân phối trên hành động | lec-03-part-04 |
+| L03R-04-04 | Trung bình trên các nhánh quỹ đạo | lec-03-part-04 |
+| L03R-04-05 | Giá trị trạng thái | lec-03-part-04 |
+| L03R-04-06 | Ấn định hành động đầu tiên | lec-03-part-04 |
+| L03R-04-07 | Giá trị hành động | lec-03-part-04 |
+| L03R-04-08 | Câu hỏi kiểm tra | lec-03-part-04 |
+| L03R-05-01 | Phương trình Bellman | lec-03-part-05 |
+| L03R-05-02 | Một bước từ pin thấp | lec-03-part-05 |
+| L03R-05-03 | Tách phần thưởng tích lũy | lec-03-part-05 |
+| L03R-05-04 | Lấy trung bình theo hành động đầu | lec-03-part-05 |
+| L03R-05-05 | Lấy trung bình theo phản hồi môi trường | lec-03-part-05 |
+| L03R-05-06 | Từ trạng thái kế tiếp đến giá trị tương lai | lec-03-part-05 |
+| L03R-05-07 | Giá trị hành động từ phản hồi một bước | lec-03-part-05 |
+| L03R-05-08 | Giá trị trạng thái từ các giá trị hành động | lec-03-part-05 |
+| L03R-05-09 | Bellman kỳ vọng cho giá trị hành động | lec-03-part-05 |
+| L03R-05-10 | Câu hỏi kiểm tra | lec-03-part-05 |
+| L03R-06-01 | Đánh giá một chính sách từ mô hình | lec-03-part-06 |
+| L03R-06-02 | Hệ Bellman của robot | lec-03-part-06 |
+| L03R-06-03 | Giải hai phương trình giá trị | lec-03-part-06 |
+| L03R-06-04 | Kiểm tra giá trị bằng các hành động | lec-03-part-06 |
+| L03R-06-05 | Gộp các nhánh dưới chính sách | lec-03-part-06 |
+| L03R-06-06 | Chuỗi Markov và MRP dưới chính sách | lec-03-part-06 |
+| L03R-06-07 | Bellman dưới dạng ma trận | lec-03-part-06 |
+| L03R-06-08 | Câu hỏi kiểm tra | lec-03-part-06 |
+| L03R-07-01 | Tổng hợp và vận dụng | lec-03-part-07 |
+| L03R-07-02 | Đọc một quyết định bằng mô hình và giá trị | lec-03-part-07 |
+| L03R-07-03 | Bài tập và bước tiếp theo | lec-03-part-07 |
+| L03R-07-04 | Câu hỏi kiểm tra | lec-03-part-07 |
+
+Chu trình đọc: phần 1 lấy mẫu robot để dẫn vào Markov; phần 2 lấy cây phản hồi và bảng bảy hàng để định nghĩa mô hình; phần 3 lấy hai dãy thưởng để định nghĩa tổng và điều kiện hữu hạn; phần 4 lấy bảng chính sách và cây hai bước để định nghĩa giá trị; phần 5 lấy cây một bước từ L để suy diễn Bellman; phần 6 giải hệ robot trước khi gộp thành MRP và ma trận; phần 7 dùng kết quả hành động để vận dụng và giao bài tập. Mỗi phần kết thúc bằng ba câu hỏi kèm lời giải có thể mở khi tự học.

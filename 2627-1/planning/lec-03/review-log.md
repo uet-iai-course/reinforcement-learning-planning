@@ -856,3 +856,373 @@ Sau rà nội dung, kiểm hình phát hiện một số nội dung/hộp nền 
 - Bảy commit phần:1=`e5ec357`,2=`f504356`,3=`380ad02`,4=`05dfd59`,5=`1a11144`,6=`1c7d6af`,7=`dba2bc4`. Các chỉnh sửa sau rà, hồ sơ và dọn tài sản được commit tiếp; **không push**.
 
 Tệp bàn giao: `2627-1/lecture-03-qua-trinh-quyet-dinh-markov.html`. URL: http://localhost:8765/2627-1/lecture-03-qua-trinh-quyet-dinh-markov.html. Nguồn: `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx` (28–58), hw02 và Sutton–Barto, Reinforcement Learning: An Introduction, ấn bản2, chương3.
+
+
+## Đồng bộ ghi chú Lecture 03 — 20/09/2026
+
+Phạm vi: ghi chú Markdown, liên kết Bài 3 trong index và ba tệp planning. Đã đọc đủ 50 slide L03R cùng notes trong lecture-03-qua-trinh-quyet-dinh-markov.html. Đối chiếu Sutton và Barto ấn bản 2 chương 3 qua PDF cục bộ /tmp/lec03-v2/sutton2018.pdf: ví dụ 3.3 tr. 52–53, phương trình (3.2)–(3.5), (3.7)–(3.14), bài tập 3.12–3.13 và 3.17–3.19; đọc lại resources/hw02.pdf. Công cụ web không mở được PDF 73 MB từ DTU; việc kiểm chứng dùng PDF cục bộ. Không thay deck/PDF/CSS, không thêm code demo.
+
+Áp dụng Quill để kiểm quan hệ tiên quyết và đầu vào–đầu ra giữa bảy phần; không tạo dự án sách. Áp dụng no-ai-slop và tự đối chiếu eval: bỏ hướng dẫn tác giả, các trường phân loại/vai trò/kết nối hiển thị, mạch 13 chủ đề cũ, câu lặp, mô tả hình không nhúng và dấu gạch dài trang trí. Giữ nội dung học thuật, ví dụ, giả thiết và suy diễn chi tiết.
+
+Reader lập kế hoạch và reader phân tích chạy trước writer. Báo cáo reader đầu lẫn ngôn ngữ và thiếu một phần đặc tả; điều phối chỉ chấp nhận nhận định có bằng chứng trực tiếp từ tệp. Lượt ánh xạ gói cố định xác nhận bảy nhóm ID nhưng đề xuất bỏ SVG, bỏ số trang nguồn và đưa MDP formal sang phần 1 không có căn cứ; không áp dụng. Đặc tả cuối do điều phối đối chiếu 50 slide và kiểm số trước khi giao writer. Ba writer soạn tuần tự phần 1–3, 4–5, 6–7 trong thư mục tạm cô lập. Hai writer chỉnh sửa sau năm báo cáo đã ghi các patch nhưng dừng do giới hạn tool-call (8 và 10); điều phối đọc diff, hoàn tất chỉnh còn thiếu và sửa lỗi escape/dấu đóng công thức do patch gây ra, rồi chạy lại renderer và reviewer. Không coi worker dừng lỗi là hoàn tất thành công.
+
+### Bằng chứng mô hình từ cầu nối
+
+| Lượt | requested_model | observed_model | provider |
+|---|---|---|---|
+| plan | deepseek/deepseek-v4-flash-0731 | deepseek/deepseek-v4-flash-0731 | OpenRouter |
+| source | deepseek/deepseek-v4-flash-0731 | deepseek/deepseek-v4-flash-0731 | OpenRouter |
+| source-retry | deepseek/deepseek-v4-flash-0731 | deepseek/deepseek-v4-flash-0731 | OpenRouter |
+| write-a | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| write-b | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| write-c | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| storyboard | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| review-student | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| review-rl | deepseek/deepseek-v4-flash-0731 | deepseek/deepseek-v4-flash-0731 | OpenRouter |
+| review-math | deepseek/deepseek-v4-flash-0731 | deepseek/deepseek-v4-flash-0731 | OpenRouter |
+| review-pedagogy | deepseek/deepseek-v4-flash-0731 | deepseek/deepseek-v4-flash-0731 | OpenRouter |
+| review-flow | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| recheck-math | deepseek/deepseek-v4-flash-0731 | deepseek/deepseek-v4-flash-0731 | OpenRouter |
+| recheck-pedagogy | deepseek/deepseek-v4-flash-0731 | deepseek/deepseek-v4-flash-0731 | OpenRouter |
+| recheck-flow | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+| math-final | deepseek/deepseek-v4-flash-0731 | deepseek/deepseek-v4-flash-0731 | OpenRouter |
+| flow-final | z-ai/glm-5.3-flash | z-ai/glm-5.3-flash | OpenRouter |
+
+Reviewer chỉ đọc bằng chứng trong prompt với no-tools: toàn ghi chú cùng bản kiểm soát nguồn do điều phối lập; storyboard còn có ánh xạ đủ 50 slide. Không coi lời tự khai đã mở HTML/PDF là bằng chứng đọc trực tiếp của reviewer. Điều phối đọc các nguồn đó độc lập. Năm vai dùng năm tiến trình riêng, JSON và review-full; các lượt rà lại dùng phạm vi ghi dưới đây. Dưới đây là bản chép các báo cáo ban đầu; quyết định điều phối ở mục kế tiếp có ưu tiên khi báo cáo sai.
+
+
+### Kiểm định storyboard — báo cáo độc lập ban đầu
+
+> # Báo cáo kiểm định ghi chú Bài 03 (ánh xạ 50 slide → 7 phần)
+>
+> **Phạm vi:** chỉ đánh giá tệp `/tmp/rl03-note-sync/lecture-note.md` và bảng ánh xạ slide; không kiểm visual, không sửa tệp, không đọc HTML.
+>
+> ## Kết luận tổng thể: ĐẠT (không lỗi nghiêm trọng)
+>
+> **1. Đủ phạm vi ánh xạ — Thông qua**
+> - Vị trí: toàn bộ 7 phần ghi chú vs. bảng 50 slide.
+> - Bằng chứng: mỗi phần ghi chú khớp nhóm slide tương ứng: phần 1 ↔ L03R-01-01..07 (mục tiêu, tiên quyết, mục lục, robot, một bước, hai lịch sử, tính Markov); phần 2 ↔ L03R-02 (bảng 7 hàng, p, chuẩn hóa, thành phần MDP); phần 3 ↔ L03R-03 (episode/tiếp diễn, 3/2 và 7/4, G_t, điều kiện hữu hạn); phần 4 ↔ L03R-04 (bảng chính sách, 21/8, v_π, q_π); phần 5 ↔ L03R-05 (Bellman); phần 6 ↔ L03R-06 (giải hệ, MRP, ma trận); phần 7 ↔ L03R-07 (tổng hợp, hw02). Ghi chú tự học, không bắt buộc 50 đề mục — các slide tiêu đề ("Nội dung bài học", "Câu hỏi kiểm tra") được gộp hợp lệ vào phần tương ứng.
+>
+> **2. Kiến thức truyền giữa cụm — Thông qua**
+> - Vị trí: ranh giới phần 1→2, 2→3, 3→4, 4→5, 5→6.
+> - Bằng chứng: phần 1 nêu "biết trạng thái chưa nghĩa là biết xác suất", phần 2 mở đầu nối tiếp đúng; phần 2 không đưa π/γ vào bộ M=(S,{A(s)},R,p), γ và π chỉ xuất hiện từ phần 3/4; phần 3 nêu rõ cận hữu hạn "cần cho phần Bellman sau"; phần 4 kết thúc bằng "quan hệ sẽ hiện rõ ở phần 5"; phần 5 kết thúc "cần giải đồng thời", phần 6 giải. Chuỗi Markov/MRP chỉ xuất hiện ở phần 6, đúng kiểm soát.
+>
+> **3. Logic ví dụ robot nhất quán — Thông qua**
+> - Bảng phản hồi 7 hàng khớp kiểm soát (H–Sạc không hợp lệ; −3 không cộng +2; r(L,tim)=−1/2); số liệu 21/8, v_H=13/4, v_L=7/4, q(L,tim)=3/4, q(L,cho)=15/8, q(L,sac)=13/8 đều kiểm lại đúng arithmetic; ma trận (I−γP^π)v=r^π với [[3/4,−1/4],[−1/4,3/4]] đúng; Bellman cho q ghi rõ là bài tập 3.17, không phải phương trình 3.17.
+>
+> **4. Vị trí Bellman và thời lượng — Thông qua**
+> - Bellman nằm đúng phần 5 (slide L03R-05-01..10), dẫn dắt "ví dụ trước chứng minh" (v_L từ cây L trước tách đại số) đúng trình tự kiểm soát. Ghi chú chỉ là lớp Markdown ngoài HTML, deck 120 phút giữ nguyên.
+>
+> ## Đề xuất (mức độ: Thấp, tùy chọn)
+> - **T1 (Thấp)** — Phần 7, bảng hw02: hàng "7–8" gộp hai bài; kiểm soát liệt kê Bài 7 (quan hệ v–q) và Bài 8 (Bellman) riêng. Bằng chứng: dòng "| 7–8 | Nối q với v, giải thích Bellman |". Đề xuất: tách thành hai hàng để truy nguyên hw02 rõ hơn; không bắt buộc.
+> - **T2 (Thấp)** — Phần 6, mục "Kiểm tra giá trị bằng các hành động": công thức q_π(s,a)=r(s,a)+γΣp·v dùng dạng biên; nhất quán với phần 2 nhưng có thể thêm một mệnh đề nhắc rằng nó suy từ hạt nhân p(s′,r|s,a). Tùy chọn.
+>
+> Không phát hiện sai số học, sai ánh xạ phần, hay rò rỉ nguồn/planning vào nội dung hiển thị. Không tuyên bố đã kiểm visual/SVG.
+
+
+### Góc nhìn sinh viên — báo cáo độc lập ban đầu
+
+> # Báo cáo kiểm định bản ghi chú Bài 03 — MDP (hoàn tất)
+>
+> **Kết luận: không có lỗi chặn bàn giao, nghiêm trọng hay trung bình.** Bản ghi chú khớp bản đồ nguồn đã xác minh trên cả 7 phần. Hai nhận xét mức **nhẹ** nêu cuối báo cáo.
+>
+> ## Điểm đã đối chiếu và đạt
+>
+> 1. **Phần 1:** Mẫu đơn (H, tim, 2, L) đúng; quy ước $R_{t+1}$ đúng; nêu đủ "mức pin là giả thiết lý tưởng hóa" và "quan sát S ≠ biết p"; đẳng thức Markov joint đúng, có lưu ý điều kiện xác suất dương.
+> 2. **Phần 2:** Bảng 7 hàng khớp nguồn (H–Sạc không hợp lệ; nhánh −3 không cộng +2; cứu hộ không kết thúc); chuẩn hóa theo từng $(s,a)$; $r(\mathrm L,\mathrm{tim})=-1/2$; $\mathcal M$ không thêm $\pi/\gamma$; ghi chú lệch chỉ số (3.2) đúng.
+> 3. **Phần 3:** $3/2$, $7/4$ đúng; không kết luận $\pi$ từ tiền tố 3 bước; hai công thức $G_t$, đệm 0 sau $T$, $G_T=0$ dù $R_T\ne0$; $\mathcal S^+$; $M=3$, $|G_t|\le6$; điều kiện $\gamma=1$ (thưởng bị chặn + $E[T-t]$ hữu hạn là ĐỦ) đúng, không dạy sâu case $\gamma=1$.
+> 4. **Phần 4:** Bảng chính sách đúng (H luôn Tìm; L Chờ/Sạc mỗi 1/2); cây hai bước cho $21/8$ với trọng số $1/2,1/4,1/4$ đúng; $v_\pi$ toàn tương lai; $q$ ấn định hành động đầu, không chia cho $\pi(a\mid s)=0$; $q(\mathrm L,\mathrm{tim})$ có nghĩa dù $\pi=0$.
+> 5. **Phần 5:** Ví dụ L trước chứng minh đúng thứ tự; tách $G_t$ thuần đại số, chưa cần Markov; hai tầng trung bình đúng; Markov + dừng dùng đúng tại bước $\mathbb E[G_{t+1}\mid s,a,s',r]=v_\pi(s')$; Bellman $v$ và $q$ đúng; Bellman $q$ gắn đúng bài tập 3.17 (không nhầm phương trình 3.17); nhánh $p=0$ và terminal xử lý đúng.
+> 6. **Phần 6:** Hệ và nghiệm $v_H=13/4$, $v_L=7/4$ đúng; $q(\mathrm L,\mathrm{cho})=15/8$, $q(\mathrm L,\mathrm{sac})=13/8$, trung bình $7/4$, $q(\mathrm L,\mathrm{tim})=3/4$ — tất cả khớp số nguồn; $P^\pi$, $r^\pi=(2,1/2)^T$ đúng; định nghĩa Chuỗi Markov/MRP sau gộp; lưu ý $r^\pi$ chỉ kỳ vọng; ma trận $(I-\gamma P^\pi)v=r^\pi$ đúng; chứng minh tồn tại (Neumann) và duy nhất (sup-norm, $\gamma<1$), $O(n^3)$; không thêm định lý/ thuật toán ngoài phạm vi.
+> 7. **Phần 7:** Ba giá trị $q$ tại L đúng; phân biệt $p=1$ với $\pi=1/2$ đúng; bảng hw02 (bài 3, 4, 7–8, 10 tùy chọn) khớp; Bài 04 tìm chính sách tốt hơn, không yêu cầu code/tối ưu.
+>
+> **Điểm mạnh về góc nhìn sinh viên:** ví dụ trước formalism ở mọi phần; giải thích "không nhảy ký hiệu" ($a$ vs $a'$, hai dạng chỉ số của $G_t$); câu hỏi/đáp án đủ dữ kiện, đáp án khớp số đã tính; tiên quyết nêu rõ ở phần 1.
+>
+> ## Nhận xét mức nhẹ (không bắt buộc sửa)
+>
+> - **(Nhẹ, phần 6, khối proof):** câu "chuẩn vô cùng của ma trận $\|P^\pi\|_\infty=1$" viết lặp ý trong ngoặc, câu văn hơi dài; có thể tách gọn.
+> - **(Nhẹ, phần 3):** câu "Robot có $M=\max...=3$ và $\gamma=1/2$, nên $|G_t|\le 6$..." kết thúc bằng khoảng trắng thừa trước xuống dòng — lỗi trình bày thuần túy.
+>
+> Không sửa tệp. Bàn giao được chấp nhận.
+
+
+### Chuyên gia Học tăng cường — báo cáo độc lập ban đầu
+
+> ## Báo cáo kiểm định bản ghi chú Bài 03 — MDP
+>
+> **Phạm vi kiểm tra:** Toàn bộ bản ghi chú Markdown (7 phần), đối chiếu với slide 2627-1/lecture-03 và Sutton & Barto 2e chương 3.
+>
+> ---
+>
+> ### Kết luận chung
+>
+> **Không phát hiện lỗi chặn bàn giao hoặc lỗi nghiêm trọng.** Bản ghi chú bám sát deck nguồn, các phép tính số đều chính xác, phân biệt rõ các khái niệm R/r/G/v/q, và không có sai lệch so với sách giáo khoa. Chỉ có 2 lỗi nhẹ về trình bày.
+>
+> ---
+>
+> ### Các điểm chính đã kiểm tra (không có lỗi)
+>
+> 1. **Phần 1 — Markov:** Định nghĩa $H_t$, đẳng thức Markov, phân biệt "quan sát S không đồng nghĩa biết p" — đúng slide L03R-01.
+> 2. **Phần 2 — Mô hình MDP:** Bảng 7 hàng khớp chính xác; $r(L,tim)=-1/2$; chuẩn hóa theo từng $(s,a)$; H–Sạc không hợp lệ; thưởng −3 không cộng +2 — đúng L03R-02.
+> 3. **Phần 3 — Tổng thưởng:** $(0,2,2)$ cho $3/2$; $(1,1,1)$ cho $7/4$; $|G_t|\le 6$ với $M=3,\gamma=1/2$; $G_T=0$ dù $R_T\neq 0$; điều kiện đủ cho $\gamma=1$ — đúng L03R-03.
+> 4. **Phần 4 — Chính sách/giá trị:** $21/8$ tính đúng từ cây 2 bước; $q_\pi(L,tim)$ có nghĩa dù $\pi(tim|L)=0$; phân biệt $v$ (pi chọn) và $q$ (ấn định) — đúng L03R-04.
+> 5. **Phần 5 — Bellman:** Tách $G_t=R_{t+1}+\gamma G_{t+1}$ thuần đại số; Markov dùng đúng ở bước $\mathbb E[G_{t+1}|s,a,s',r]=v_\pi(s')$; Bellman q là Bài tập 3.17 — đúng L03R-05.
+> 6. **Phần 6 — Giải hệ:** $v_L=7/4$, $v_H=13/4$; $q(L,cho)=15/8$, $q(L,sac)=13/8$; ma trận $P^\pi, r^\pi$ đúng; chứng minh tồn tại/duy nhất bằng chuẩn sup — đúng L03R-06.
+> 7. **Phần 7 — Tổng hợp:** Ba $q$ tại L đúng; phân biệt $\pi=1/2$ (chính sách) với $p=1$ (môi trường); không kết luận tối ưu — đúng L03R-07.
+>
+> ---
+>
+> ### Lỗi nhẹ
+>
+> **Lỗi 1 — Mức độ: nhẹ**
+> - **Vị trí:** Phần 5, mục "Lấy trung bình theo phản hồi môi trường", đoạn cuối.
+> - **Vấn đề:** Có một khoảng trắng thừa đầu dòng trước chữ "Lưu ý" (dòng bắt đầu bằng khoảng trắng rồi mới "Lưu ý:"), gây lỗi định dạng Markdown nhỏ.
+> - **Bằng chứng:** Trong nguyên văn: ` Lưu ý: chưa bỏ điều kiện $s,a,r$...` (có khoảng trắng đầu dòng).
+> - **Đề xuất sửa:** Xóa khoảng trắng thừa đầu dòng.
+>
+> **Lỗi 2 — Mức độ: nhẹ**
+> - **Vị trí:** Phần 6, mục "Bellman dưới dạng ma trận", khối `::: proof`.
+> - **Vấn đề:** Trong khối proof có một dòng trống thừa sau "Với ma trận xác suất..." (xuống dòng hai lần liên tiếp), tạo khoảng trắng không cần thiết giữa câu giới thiệu và nội dung chứng minh.
+> - **Bằng chứng:** Nguyên văn có dòng trống giữa "từng hàng tổng bằng 1 (chuẩn vô cùng của ma trận $\|P^\pi\|_\infty=1$) — và $0\le\gamma<1$:" và "*Tồn tại:*".
+> - **Đề xuất sửa:** Bỏ dòng trống thừa để khối proof liền mạch.
+>
+> ---
+>
+> ### Ghi chú bổ sung
+>
+> - 7 comment `note-topic-id` hiện diện đúng, không báo lỗi (theo chỉ đạo).
+> - Không kiểm tra nội dung ảnh SVG (chưa được xem), chỉ xác nhận đường dẫn tồn tại.
+> - Các câu hỏi kiểm tra 1–3 mỗi phần đều có lời giải khớp slide.
+
+
+### Độ chính xác toán học — báo cáo độc lập ban đầu
+
+> ## Báo cáo kiểm định bản ghi chú Bài 03 — MDP
+>
+> **Phạm vi kiểm tra:** Toàn bộ bản ghi chú Markdown (7 phần), đối chiếu với slide 2627-1/lecture-03 và Sutton & Barto 2e chương 3 (ví dụ 3.3, tr. 52–53; (3.2)–(3.5), (3.7)–(3.14); bài tập 3.12–3.13, 3.17–3.19).
+>
+> ---
+>
+> ### Kết quả kiểm tra số liệu và giả thiết
+>
+> **1. Mô hình xác suất (Phần 2) — ĐÚNG.**
+> Bảng 7 hàng khớp hoàn toàn với slide: H–Tìm→(H,2)/(L,2) mỗi 1/2; H–Chờ→(H,1) xác suất 1; L–Tìm→(L,2)/(H,−3) mỗi 1/2; L–Chờ→(L,1) xác suất 1; L–Sạc→(H,0) xác suất 1. H–Sạc không hợp lệ (không có hàng). Thưởng −3 không cộng thêm +2 (cứu hộ tính trọn một bước). Chuẩn hóa theo từng (s,a): L–Tìm có 1/2+1/2=1. Tính lại: r(L,tim) = (1/2)·2 + (1/2)·(−3) = −1/2. **Đúng.**
+>
+> **2. Tổng thưởng (Phần 3) — ĐÚNG.**
+> Dãy (0,2,2): 0 + (1/2)·2 + (1/4)·2 = 3/2. Dãy (1,1,1): 1 + 1/2 + 1/4 = 7/4. Cận: M = max|r| = 3, γ = 1/2 → |G_t| ≤ 3/(1−1/2) = 6. **Đúng.** Công thức G_t hữu hạn/vô hạn, đệm 0 sau T, G_T = 0 dù R_T ≠ 0 — khớp sách.
+>
+> **3. Kỳ vọng hai bước từ H (Phần 4) — ĐÚNG.**
+> Ba nhóm: (1/2)·3 + (1/4)·(5/2) + (1/4)·2 = 3/2 + 5/8 + 1/2 = 12/8 + 5/8 + 4/8 = 21/8. **Đúng.** Ghi chú đúng khi phân biệt 21/8 (hai bước) với v_π(H) (toàn tương lai).
+>
+> **4. Hệ Bellman (Phần 6) — ĐÚNG.**
+> Hệ: v_H = 2 + (1/4)v_H + (1/4)v_L; v_L = 1/2 + (1/4)v_H + (1/4)v_L. Trừ: v_H − v_L = 3/2. Thế: v_L = 1/2 + (1/4)(v_L + 3/2) + (1/4)v_L = 7/8 + (1/2)v_L → v_L = 7/4, v_H = 13/4. **Đúng.** Kiểm tra lại: 13/4 = 2 + (1/4)(13/4 + 7/4) = 2 + 20/16 = 2 + 5/4 = 13/4 ✓; 7/4 = 1/2 + 5/4 = 7/4 ✓.
+>
+> **5. Giá trị hành động (Phần 6–7) — ĐÚNG.**
+> q(L,cho) = 1 + (1/2)(7/4) = 15/8 ✓. q(L,sac) = 0 + (1/2)(13/4) = 13/8 ✓. Trung bình: (1/2)(15/8) + (1/2)(13/8) = 28/16 = 7/4 ✓. q(L,tim) = (1/2)(2 + (1/2)(7/4)) + (1/2)(−3 + (1/2)(13/4)) = (1/2)(23/8) + (1/2)(−11/8) = 12/16 = 3/4 ✓. **Đúng.**
+>
+> **6. Ma trận (Phần 6) — ĐÚNG.**
+> P^π = [[1/2, 1/2],[1/2, 1/2]] (hàng H: Tìm→H/L mỗi 1/2; hàng L: Chờ→L (1/2), Sạc→H (1/2)). r^π = (2, 1/2)ᵀ. Ma trận hệ số (I − γP^π) = [[3/4, −1/4],[−1/4, 3/4]]. **Đúng.**
+>
+> **7. Tồn tại và duy nhất — ĐÚNG.**
+> ‖P^π‖∞ = 1 (ma trận xác suất hàng chuẩn hóa); ‖γP^π‖∞ = γ < 1 → khai triển Neumann hội tụ (tồn tại); bất đẳng thức co ‖v−w‖∞ ≤ γ‖v−w‖∞ với γ<1 → duy nhất. **Đúng.** Ghi chú đúng khi không kết luận cho γ=1.
+>
+> **8. Bellman cho q là Bài tập 3.17 — ĐÚNG.**
+> Ghi chú ghi rõ "Bellman cho q là bài tập 3.17", không gán nhầm là phương trình (3.17). Khớp sách.
+>
+> **9. q(L,tim) khi π(tim|L)=0 — ĐÚNG.**
+> Ghi chú giải thích đúng: kỳ vọng điều kiện là quy ước thí nghiệm, không phải phép chia cho xác suất 0; định nghĩa vẫn có nghĩa. Không chia cho 0.
+>
+> **10. Cấu trúc và ánh xạ — ĐÚNG.**
+> 7 phần khớp 7 slide; mỗi phần có 3 câu hỏi + 3 lời giải đúng slide kiểm tra. 7 comment note-topic-id ẩn (không hiển thị, không báo lỗi). Phân biệt đúng: p (môi trường) vs π (chính sách); r^π chỉ kỳ vọng không đủ phân phối; γ nằm ngoài r^π; chuỗi Markov/MRP xuất hiện đúng ở Phần 6 (sau khi gộp).
+>
+> ---
+>
+> ### Kết luận
+>
+> **Không phát hiện lỗi toán học, sai số, hay mâu thuẫn với nguồn chuẩn.** Toàn bộ kết quả số được tính lại độc lập và khớp: 3/2, 7/4, 21/8, 7/4, 13/4, 15/8, 13/8, 3/4, −1/2, cận 6, ma trận P^π và (I−γP^π). Các giả thiết (thưởng cố định trên nhánh, Markov, dừng, γ=1/2) được nêu rõ và nhất quán. Điều kiện hóa Bellman đúng thứ tự: tách đại số G_t (chưa cần Markov) → trung bình theo π → trung bình theo p → dùng Markov + dừng để thay bằng v(s'). Không có yêu cầu hình thức hóa thừa.
+>
+> **Các điểm chính đã kiểm:** (1) bảng 7 hàng và chuẩn hóa; (2) r(L,tim) = −1/2; (3) tổng chiết khấu 3/2, 7/4 và cận 6; (4) kỳ vọng 21/8; (5) hệ Bellman và nghiệm 7/4, 13/4; (6) ba giá trị q 15/8, 13/8, 3/4; (7) ma trận P^π, r^π, (I−γP^π); (8) chứng minh tồn tại–duy nhất bằng chuẩn ∞ và γ<1; (9) gán đúng Bellman q là Bài tập 3.17; (10) q(L,tim) có nghĩa khi π=0.
+
+
+### Phản biện học thuật và giảng dạy — báo cáo độc lập ban đầu
+
+> ## Báo cáo phản biện học thuật — Bài 03: Quá trình quyết định Markov
+>
+> ### Tổng quan
+>
+> Bản ghi chú có cấu trúc logic chặt chẽ, bám sát nguồn chuẩn Sutton & Barto (2e, chương 3) và slide deck. Các con số tính toán đều chính xác. Tuy nhiên, có một số vấn đề về trình tự trình bày và thiếu ví dụ cầu nối cần khắc phục.
+>
+> ---
+>
+> ### Lỗi 1 — Mức độ: Nghiêm trọng
+> **Vị trí:** Phần 4, mục "Trung bình trên các nhánh quỹ đạo" (trước khi định nghĩa $v_\pi$)
+>
+> **Vấn đề:** Công thức đặt sai trình tự. Tác giả tính $\mathbb E_\pi[G_0^{[2]}\mid S_0=\mathrm H]=21/8$ **trước khi** định nghĩa $v_\pi(s)$ và $q_\pi(s,a)$. Sinh viên năm 3 chưa được giới thiệu ký hiệu $\mathbb E_\pi$ (chỉ xuất hiện ở mục "Giá trị trạng thái" ngay sau đó) nhưng đã phải đọc công thức kỳ vọng có điều kiện phức tạp.
+>
+> **Bằng chứng:** "Ký hiệu $\mathbb E_\pi$ lấy trung bình theo cả chính sách và môi trường" — ký hiệu này chưa được định nghĩa trước đó; mục "Giá trị trạng thái" mới định nghĩa $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$.
+>
+> **Đề xuất:** Định nghĩa $\mathbb E_\pi$ ngay đầu phần 4 (sau bảng chính sách), hoặc chuyển mục "Giá trị trạng thái" lên trước mục "Trung bình trên các nhánh quỹ đạo".
+>
+> ---
+>
+> ### Lỗi 2 — Mức độ: Trung bình
+> **Vị trí:** Phần 5, mục "Giá trị hành động từ phản hồi một bước"
+>
+> **Vấn đề:** Thiếu cầu nối giải thích vì sao $q_\pi(s,a)$ có thể viết dưới dạng chỉ phụ thuộc $v_\pi(s')$ mà không cần trung bình theo hành động tiếp theo. Sinh viên có thể thắc mắc: tại sao $q_\pi$ không cần $\sum_{a'}\pi(a'\mid s')$ ngay từ công thức đầu tiên?
+>
+> **Bằng chứng:** Công thức $q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)[r+\gamma v_\pi(s')]$ xuất hiện trước, nhưng phải đến mục "Bellman kỳ vọng cho giá trị hành động" mới giải thích rõ $v_\pi(s')=\sum_{a'}\pi(a'\mid s')q_\pi(s',a')$.
+>
+> **Đề xuất:** Thêm một câu giải thích ngay sau công thức $q_\pi$: "Vì $v_\pi(s')$ đã bao gồm trung bình theo chính sách tại $s'$, nên $q_\pi(s,a)$ không cần nhân thêm $\pi(a'\mid s')$ ở bước này."
+>
+> ---
+>
+> ### Lỗi 3 — Mức độ: Trung bình
+> **Vị trí:** Phần 6, mục "Gộp các nhánh dưới chính sách"
+>
+> **Vấn đề:** Bảng gộp xuất hiện đột ngột. Sinh viên chưa được giải thích vì sao cần gộp nhánh, và mối liên hệ giữa bảng này với hệ Bellman đã giải ở mục trước chưa được làm rõ trước khi đưa ra bảng.
+>
+> **Bằng chứng:** Bảng "Hiện tại | Kế tiếp H | Kế tiếp L | Thưởng trung bình" được đưa ra với câu dẫn ngắn "có thể gộp luôn các nhánh hành động", nhưng không có ví dụ minh họa từng bước gộp cho hàng L (từ hai hành động Chờ và Sạc).
+>
+> **Đề xuất:** Thêm một đoạn tính mẫu: "Tại L, Chờ về L với xác suất $1/2$ và thưởng 1, Sạc về H với xác suất $1/2$ và thưởng 0, nên $P^\pi_{LL}=1/2$, $P^\pi_{LH}=1/2$, $r^\pi(L)=1/2$" — trước khi đưa bảng tổng hợp.
+>
+> ---
+>
+> ### Lỗi 4 — Mức độ: Nhẹ
+> **Vị trí:** Phần 3, mục "Điều kiện để tổng thưởng hữu hạn"
+>
+> **Vấn đề:** Câu "chỉ gắn nhãn kết thúc cho một trạng thái chưa bảo đảm tác tử sẽ tới đó" hơi khó hiểu và thiếu ví dụ. Sinh viên có thể không hình dung được tình huống trạng thái kết thúc không đạt tới.
+>
+> **Bằng chứng:** Đoạn văn kết thúc mục này không có ví dụ minh họa, trong khi các mục khác đều có ví dụ robot.
+>
+> **Đề xuất:** Thêm ví dụ ngắn: "Chẳng hạn, nếu đánh dấu trạng thái 'hết pin hoàn toàn' là kết thúc nhưng chính sách không bao giờ dẫn tới đó, thì kỳ vọng thời gian kết thúc là vô hạn."
+>
+> ---
+>
+> ### Lỗi 5 — Mức độ: Nhẹ
+> **Vị trí:** Phần 7, mục "Bài tập và bước tiếp theo"
+>
+> **Vấn đề:** Bảng bài tập thiếu cột "kiến thức liên quan" để sinh viên biết cần ôn phần nào trước khi làm. Bài 3, 4, 7–8 được mô tả nhưng không chỉ rõ tương ứng với phần nào của bài giảng.
+>
+> **Bằng chứng:** Bảng chỉ có 3 cột (Bài, Nhiệm vụ, Kết quả cần viết), không có cột ánh xạ tới phần lý thuyết.
+>
+> **Đề xuất:** Thêm cột "Phần liên quan" — ví dụ: Bài 3 → Phần 2 (mô hình xác suất), Bài 4 → Phần 6 (gộp MRP), Bài 7–8 → Phần 5 (Bellman).
+>
+> ---
+>
+> ### Các điểm chính đã kiểm và đạt yêu cầu
+>
+> 1. **Số liệu chính xác:** $v_H=13/4$, $v_L=7/4$, $q_\pi(\mathrm L,\mathrm{tim})=3/4$, $q_\pi(\mathrm L,\mathrm{cho})=15/8$, $q_\pi(\mathrm L,\mathrm{sac})=13/8$, $21/8$ — tất cả đều đúng.
+> 2. **Phân biệt rõ:** $p$ (môi trường) vs $\pi$ (chính sách); $r(s,a)$ (thưởng tức thời) vs $q_\pi$ (giá trị dài hạn); $G_t$ vs $v_\pi(s)$.
+> 3. **Trình tự suy diễn Bellman** từ đại số → kỳ vọng hành động → kỳ vọng phản hồi → Markov/dừng là hợp lý và đầy đủ.
+> 4. **Bài tập 3.17** được gán đúng cho Bellman $q$, không nhầm với phương trình 3.17.
+> 5. **Điều kiện hội tụ** $\gamma<1$ và cận $|G_t|\le 6$ được trình bày đúng, không đưa thêm nội dung ngoài phạm vi.
+> 6. **Các câu hỏi kiểm tra** (3 câu/phần × 7 phần) đều bám sát nội dung và có lời giải chính xác.
+
+
+### Kết nối và mạch viết — báo cáo độc lập ban đầu
+
+> # Báo cáo kiểm định bản ghi chú Bài 03
+>
+> Đã đối chiếu toàn tuyến 7 phần với bản đồ nguồn đã xác minh (deck 50 slide; Sutton–Barto ch.3, ví dụ 3.3, (3.2)–(3.5), (3.7)–(3.14), bài tập 3.12–3.13/3.17–3.19). Toàn bộ số liệu đã tính lại và đúng: 21/8; v_H=13/4, v_L=7/4; q(L,cho)=15/8, q(L,sac)=13/8, q(L,tim)=3/4; r(L,tim)=−1/2; cận |G|≤6; ma trận (I−γP^π) và P^π, r^π khớp. Ví dụ robot đi trước formalism ở cả 7 phần; các giả thiết bắt buộc (pin chỉ là giả thiết, quan sát ≠ biết p, −3 không cộng 2, cứu hộ không kết thúc, H–Sạc không hợp lệ, thưởng cố định trên nhánh là giả thiết thêm so với sách, G_T=0 dù R_T có thể khác 0, q có nghĩa khi π=0, Bellman-q là bài tập 3.17 trong danh mục đọc) đều hiện diện. Không thấy chỉ dẫn người viết hay metadata hiển thị; note-topic-id là comment ẩn, không báo.
+>
+> ## Lỗi
+>
+> **1. (Nhẹ) Phần 3, cuối phần — thiếu câu nối ra sang phần 4.**
+> - Vấn đề: phần 3 chỉ có nối tới trước ("Giả thiết này cần cho phần Bellman sau") nhưng không dẫn sang phần 4; phần 4 mở đầu bằng "Từ phần này, các phép tính của robot dùng γ=1/2 và chính sách cố định" — người đọc chưa được báo rằng tổng thưởng G_t phụ thuộc cách chọn hành động, đối tượng trung bình hóa sẽ xuất hiện ở phần sau.
+> - Bằng chứng: đoạn cuối phần 3 kết thúc ở điều kiện γ=1; câu đầu phần 4 nhảy thẳng vào bảng chính sách.
+> - Sửa: thêm một câu cuối phần 3, ví dụ: "Tổng G_t tính trên quỹ đạo cụ thể; để lấy trung bình trên nhiều quỹ đạo cần cố định cách chọn hành động — đối tượng đó là chính sách ở phần 4."
+>
+> **2. (Trung bình) Phần 5, mục "Bellman kỳ vọng cho giá trị hành động" — phương trình Bellman cho q không được gắn nguồn là bài tập 3.17 ngay tại chỗ.**
+> - Vấn đề: bản đồ yêu cầu ghi rõ đây là bài tập 3.17, không phải phương trình đánh số của sách; bản ghi chú chỉ nói ở mục "Tài liệu đọc" cuối phần 7 ("Bellman cho q là bài tập 3.17"), tách khỏi vị trí công thức.
+> - Bằng chứng: khối công thức q_π(s,a)=Σ_{s',r}p(s',r|s,a)[r+γΣ_{a'}π(a'|s')q_π(s',a')] ở phần 5 không có chú thích nguồn; chỉ mục đọc ở phần 7 mới nêu.
+> - Sửa: thêm một câu ngay sau công thức trong phần 5: "Phương trình này là nội dung bài tập 3.17 của sách, không phải một phương trình đánh số (3.17)."
+>
+> **3. (Nhẹ) Phần 6, khối proof "Tồn tại và duy nhất" — câu diễn đạt thừa từ.**
+> - Vấn đề: "ma trận xác suất trên tập trạng thái hữu hạn — phần tử không âm, từng hàng tổng bằng 1 (chuẩn vô cùng của ma trận ||P^π||_∞=1)" lặp khái niệm "chuẩn vô cùng của ma trận" ngay trước ký hiệu chuẩn, gây đọc vấp.
+> - Bằng chứng: câu mở đầu đoạn *Tồn tại* trong khối proof.
+> - Sửa: viết gọn: "P^π là ma trận xác suất (phần tử không âm, từng hàng tổng bằng 1), nên ||P^π||_∞=1; với 0≤γ<1:"
+>
+> **4. (Nhẹ) Phần 7, bảng hw02 — gộp Bài 7 và Bài 8 thành một hàng "7–8" trong khi nguồn tách vai: Bài 7 là quan hệ v–q, Bài 8 là Bellman.**
+> - Vấn đề: hàng gộp làm mất phân biệt nhiệm vụ giữa hai bài; phần văn dưới cũng chỉ mô tả chung "nối q với v".
+> - Bằng chứng: hàng "7–8 | Nối q với v, giải thích Bellman".
+> - Sửa: tách thành hai hàng: "7 | Quan hệ v–q | Công thức trung bình và ý nghĩa"; "8 | Bellman cho v và q | Ý nghĩa từng thành phần".
+>
+> ## Đã kiểm, không có lỗi
+> Mạch ví dụ robot xuyên suốt 7 phần với các giá trị nhất quán; các cặp nối vào/ra phần 1→2, 2→3, 4→5, 5→6, 6→7 rõ ràng; không có AI-slop (không câu rỗng, không lặp khuôn mẫu); không có chỉ dẫn người viết hiển thị; không thêm π/γ vào bộ mô hình phần 2; không kết luận chính sách tối ưu từ so sánh q; phân biệt p=1 với π=1/2 đúng ở phần 7.
+
+
+### Hợp nhất và quyết định sau rà soát
+
+| Mức độ báo cáo | Phần | Vấn đề và bằng chứng kiểm lại | Quyết định |
+|---|---|---|---|
+| Nghiêm trọng (phản biện) | 4 | Nhận định dùng $\mathbb E_\pi$ trước giải thích không đúng: bản gửi đã giải thích trước công thức $21/8$. | Không đảo định nghĩa $v/q$ lên trước ví dụ. Đưa giải thích $\mathbb E_\pi$ lên ngay sau chính sách để dễ đọc; lượt rà lại xác nhận đủ tiên quyết. |
+| Trung bình | 5 | Giá trị tương lai đã lấy trung bình theo cùng chính sách. | Thêm một câu sau công thức $q$ theo $v$; giữ thứ tự suy diễn. |
+| Trung bình (phản biện) | 6 | Reviewer nói thiếu ví dụ gộp L, nhưng đoạn trước bảng đã tính Chờ/Sạc và thưởng trung bình. | Giữ đoạn tính; thêm câu nêu mục đích viết gọn hệ Bellman. Không thêm ký hiệu $P^\pi$ trước khi định nghĩa. |
+| Trung bình (mạch) | 5 | Nguồn bài tập 3.17 vốn ở cuối bài. | Thêm dẫn nguồn ngay sau Bellman cho $q$. |
+| Nhẹ | 3–6 | Câu cố định $\gamma$ ngắt giải thích bảng; phạm vi tổng đứng trước ví dụ; câu về chuẩn dài; khoảng trắng thừa. | Chuyển câu về $\gamma$ xuống sau lời giải thích bảng, phạm vi tổng đến ngay trước suy diễn; rút câu về chuẩn và sửa khoảng trắng. |
+| Nhẹ | 7 | Bài 7–8 gộp chung. | Tách hàng. Bài 8 chỉ yêu cầu Bellman cho $v$ theo hw02; bác đề xuất thêm $q$ vào yêu cầu Bài 8. Thêm tham chiếu phần 5/6 bằng văn ngắn, không tăng cột bảng. |
+| Nhẹ | 3 | Đề nghị thêm ví dụ trạng thái hết pin làm terminal. | Không thêm: dễ xung đột robot tiếp diễn. Điều kiện đủ cho kỳ vọng hữu hạn đã được nêu trực tiếp. |
+| Nhẹ | 4, 6 | Diễn đạt nhánh con cùng điểm; “hai cách đọc cùng phép trung bình”; nhiều số $1/2$ trong bảng. | Làm rõ hai nhánh con; nêu $v$ là trung bình $q$ theo chính sách; chỉ rõ cột Thưởng trung bình của hàng L. |
+
+### Đánh giá các lượt rà lại
+
+- Rà sư phạm phần 4 cùng đoạn liên quan phần 5/6 xác nhận không có lỗi nghiêm trọng; giữ ví dụ trước định nghĩa và ví dụ gộp trước bảng. Ba chỉnh nhẹ về nhánh con, quan hệ $v/q$ và cột thưởng đã được áp dụng. Không thêm câu nhắc “theo quy ước phần 4” vì quy ước ép hành động đã rõ trong chính đoạn đó.
+- Rà mạch toàn văn nhầm thuật ngữ “episode” (lượt) với $\mathbb E_\pi$ và đòi dời định nghĩa lượt sang sau chính sách; bác vì hai khái niệm không liên quan về ký hiệu. Giữ bài có lượt ở phần 3. Không cắt ví dụ gộp chỉ vì bảng nhắc lại kết quả: ví dụ giải thích cách thu được bảng. Hai câu nối phần 4/5 được chuyển vị trí như bảng quyết định trên.
+- Rà toán phần 6 sau patch đưa ra các nhận định tự mâu thuẫn: cho rằng cách viết phân số bằng LaTeX khác $15/8$, lệnh tfrac là chuỗi vô nghĩa, dấu ngoặc đã đóng là thiếu, phép nhân ma trận bắt buộc có dấu chấm, và đề nghị đổi $\gamma$ thành $\gamma^k$ trong bất đẳng thức một bước. Bác toàn bộ các nhận định này bằng tệp thực tế, renderer KaTeX không lỗi, phép tính phân số chính xác và phép trừ hai phương trình. Không sửa công thức đúng để đáp ứng báo cáo sai.
+- math-final: gọi lại cùng mô hình với gói toán thu hẹp, giữ nguyên giả thiết và đủ bước chứng minh, reasoning effort low. Xác nhận Neumann, tính duy nhất, nghiệm hệ và ba giá trị hành động đều đúng. Đây là rà toán cụ thể, không thay cho rà toàn bài ban đầu.
+- flow-final: rà lại phần 4, đầu phần 5 và ví dụ gộp phần 6, kèm ranh giới phần 3 và bản đồ toàn tuyến. Xác nhận mạch vào–ra, vị trí kỳ vọng và ví dụ trước định nghĩa; không có lỗi chặn. Lượt này không thay cho báo cáo toàn văn trước đó.
+
+
+### Rà lại toán cụ thể — bằng chứng sau chỉnh
+
+> **Kết luận: Toán đúng, không có lỗi.**
+>
+> Đã tự kiểm 3 bước chính:
+>
+> 1. **Chuỗi Neumann và tính duy nhất:**
+>    $v = \sum_{k\ge0} \gamma^k P_\pi^k r_\pi$ đúng vì $\| \gamma P_\pi \|_\infty = \gamma \cdot 1 < 1$. Với hai nghiệm $v,w$, đặt $d=v-w$:
+>    $d = \gamma P_\pi d \Rightarrow \|d\|_\infty \le \gamma \|d\|_\infty \Rightarrow d=0$. Đúng.
+>
+> 2. **Giải hệ robot:**
+>    $v_H = 2 + (v_H+v_L)/4$, $v_L = 1/2 + (v_H+v_L)/4$.
+>    Trừ: $v_H - v_L = 3/2$. Thay vào phương trình $v_L$:
+>    $v_L = 1/2 + (2v_L + 3/2)/4 = 7/8 + v_L/2 \Rightarrow v_L = 7/4$, $v_H = 13/4$. Đúng.
+>
+> 3. **Các giá trị q và tổng theo π:**
+>    $q_L^{\text{cho}} = 1 + \frac12 \cdot \frac74 = \frac{15}{8}$.
+>    $q_L^{\text{sac}} = \frac12 \cdot \frac{13}{4} = \frac{13}{8}$.
+>    $q_L^{\text{tim}} = \frac12(2 + \frac12\cdot\frac74) + \frac12(-3 + \frac12\cdot\frac{13}{4}) = \frac12(\frac{23}{8}) + \frac12(-\frac{11}{8}) = \frac{12}{16} = \frac34$.
+>    Tổng $\sum_a \pi q = \frac12(\frac{15}{8}+\frac{13}{8}) = \frac{14}{8} = \frac74$. Đúng.
+>
+> Không có lỗi về vế hay bước nào. Các phép tính số học và đại số đều chính xác.
+
+
+### Rà lại các câu nối — bằng chứng sau chỉnh
+
+> ## Báo cáo rà soát (phần 4, đầu phần 5, đoạn gộp phần 6)
+>
+> **Kết luận chung: không có lỗi chặn. Các mạch nối đúng, thuật ngữ nhất quán theo quy ước đã chốt.**
+>
+> **Lỗi 0 — kiểm tra thuật ngữ (thấp):**
+> - Vai trò: xác nhận sửa của full review trước.
+> - Bằng chứng: trong toàn bộ phạm vi trích, không xuất hiện "episode" lẫn lộn với $\mathbb E_\pi$; "$\mathbb E_\pi$" được định nghĩa **sau** khi π ra đời ở mục "Chính sách là phân phối trên hành động" (phần 4) và dùng ngay ở công thức 21/8 — đúng thứ tự đã thống nhất. Không cần chỉnh gì.
+>
+> **Kiểm tra kết nối:**
+> - 3→4: phần 4 mở bằng "Bảng xác suất phản hồi $p$ ở phần trước", nối vào phần 3 đúng.
+> - 4 nội bộ: bảng chính sách → π → cây hai bước (21/8 = 3·½ + 5/2·¼ + 2·¼ ✓) → $v_\pi$ → ấn định hành động đầu → $q_\pi$; lối ra "Phần 5 sẽ biểu diễn $v_\pi$ bằng trung bình $q_\pi$" đúng trỏ Bellman.
+> - 5→6: đoạn gộp mở "Cùng hệ Bellman đã giải có thể viết gọn…" nối đúng vào hệ ở đầu phần 5; phép tính bảng: hàng H (1/2, 1/2, thưởng 2), hàng L (1/2, 1/2, thưởng 1/2) đều khớp nhánh Chờ/Sạc ở phần 5 ✓.
+> - Quy ước phạm vi tổng thưởng (phần 3, sau mẫu $L$) và câu cố định γ vào π sau lời giải thích bảng đã đúng vị trí.
+>
+> **Yêu cầu giữ đã đáp ứng:** lời giải thích gộp tại L trước bảng ở phần 6 **còn nguyên**, bảng chỉ nhắc lại số ✓.
+>
+> **Lưu ý phạm vi (không phải lỗi):** đoạn trích phần 5 chỉ đến phương trình tại L, chưa có phần giải hệ; các phần 1–3 và 6–7 còn lại được xác nhận không đổi mạch theo điều phối, ngoài phạm vi trích này nên không kiểm lại.
+
+### Kiểm định cuối trên tệp thực tế
+
+- Bảy phần ghi chú, 21 câu hỏi và 21 lời giải; bảy ID comment duy nhất; ánh xạ đủ 50 slide. Không còn Student/Racing Car, mã topic cũ hay trường chỉ dẫn tác giả trên nội dung người học.
+- Tự tính bằng phân số chính xác: mô hình chuẩn hóa, thưởng L–Tìm bằng $-1/2$, hai tiền tố ba thưởng cho $3/2$ và $7/4$, kỳ vọng hai bước $21/8$, nghiệm $v_H=13/4$, $v_L=7/4$, ba giá trị hành động tại L bằng $3/4$, $15/8$, $13/8$; thế vào hệ cho sai số bằng 0. Ma trận chuyển và thưởng trung bình khớp bảng.
+- Material viewer qua reloadserver cổng 8765: 1280×720 và 390×844, 438 công thức KaTeX, 7 SVG, 45 liên kết mục lục, 7 khối lời giải. Không lỗi JavaScript, HTTP hay KaTeX; không tràn toàn trang. Hình rộng và công thức dài cuộn ngang trong vùng nội dung theo CSS sẵn có. Mở/đóng lời giải bằng bàn phím và sự kiện in hoạt động.
+- Nội dung Markdown qua HTTP khớp tệp trong worktree. Đã bấm “Mở ghi chú” từ thẻ Bài 3 của index ở cả hai kích thước và xác nhận mở đúng bản bảy phần mới.
+- Đã xem trực tiếp các SVG dùng lại và bố cục ghi chú. Không thêm hình, ngoại lệ raster hay phụ thuộc mạng. Phạm vi là tài liệu trong material-viewer; không sửa hoặc tuyên bố rà deck bằng Codex Slides.
+- SHA-256 của bản ghi chú đã kiểm: 0e62f470b3adba08a2c35e667b7d6458ab25d375570951b80087048e1031e9e6.
+- Sau hợp nhất, không còn lỗi chặn bàn giao hoặc nghiêm trọng chưa xử lý. Các báo cáo sai đã có quyết định kèm bằng chứng và kết quả rà lại.
