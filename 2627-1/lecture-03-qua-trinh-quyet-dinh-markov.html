@@ -226,5 +226,95 @@ $$\phantom{r(s,a)}=\sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}r\,p(s',r\mid s,a)
 </aside>
 </section>
 </section>
+
+<section>
+<section data-slide-id="L03R-03-01">
+  <h2>Phần thưởng và tổng thưởng</h2>
+  <p class="caption">Đánh giá kết quả của cả chuỗi hành động.</p>
+  <img src="img/lec-03/robot-p03-reward-timeline.svg" class="figure" alt="Trục thời gian ba bước hành động của robot kèm ba ô điểm thưởng"/>
+  <aside class="notes">
+    <p>Đại lượng cần đánh giá là tổng thưởng trên một quỹ đạo, được xây từ thưởng từng bước. Trên trục thời gian, robot ở pin thấp sạc để về pin cao rồi hai lần tìm. Sạc làm pin cao nên bước tiếp theo có thể nhận +2, tìm từ pin cao có thể dẫn tới pin thấp. Một ô điểm duy nhất không thể thay cho cả chuỗi hành động.</p>
+    <p>Trước khi cộng điểm cần phân biệt hai loại bài toán: có kết thúc tự nhiên hay còn tiếp diễn; hai trường hợp cho hai công thức tổng khác nhau.</p>
+    <p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, §3.2–3.3, tr. 53–55.</p>
+  </aside>
+</section>
+
+<section data-slide-id="L03R-03-02">
+  <h2>Nhiệm vụ có kết thúc và nhiệm vụ tiếp diễn</h2>
+  <img src="img/lec-03/robot-p03-episodic-continuing.svg" class="figure" alt="Lượt đi đến đích kết thúc ở T rồi đệm thưởng0; robot L sạc về H rồi tiếp tục tìm và hoạt động"/>
+  <div class="box">
+    <p>Trong lượt có kết thúc, $T$ là thời điểm kết thúc của lượt ấy. Trong mô hình đang xét, nhiệm vụ tiếp diễn không có điểm dừng nên $T=\infty$.</p>
+  </div>
+  <aside class="notes">
+    <p>Một lượt (episode) kết thúc ở thời điểm $T$ tại trạng thái kết thúc. Sau đích, dãy thưởng được đệm bằng 0: đây là quy ước toán học về trạng thái hấp thụ của chính lượt đã kết thúc, giúp viết công thức tổng thống nhất cho cả hai loại bài toán. Các số 0 kéo dài biểu diễn toán học của lượt cũ. Phần thưởng của một lượt mới được tính trong một tổng riêng.</p>
+    <p>Nhiệm vụ tiếp diễn không có $T$ hữu hạn. Ba bước L→Sạc→H rồi tiếp tục hoạt động của robot chỉ là một đoạn cắt ra, chưa phải một lượt hoàn chỉnh. Cả việc được cứu hộ lẫn sạc pin của robot đều tiếp tục cùng một nhiệm vụ đang chạy, không tạo ra ranh giới giữa các lượt. Trên cả hai trục, thưởng xảy ra ở thời điểm nào sẽ quyết định trọng số của nó trong tổng.</p>
+    <p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, §3.3–3.4, tr. 54–57.</p>
+  </aside>
+</section>
+
+<section data-slide-id="L03R-03-03">
+  <h2>Điểm thưởng ở các thời điểm</h2>
+  <img src="img/lec-03/robot-p03-discounted-bands.svg" class="figure short" alt="Hai đoạn ba thưởng:0,2,2 và1,1,1; trọng số tương ứng1,1/2,1/4"/>
+  <div class="math-large">
+    $$\begin{aligned}0+\frac12\cdot2+\frac14\cdot2&=\frac32,\\1+\frac12\cdot1+\frac14\cdot1&=\frac74.\end{aligned}$$
+  </div>
+  <p>Với $\gamma=1/2$, trọng số giảm một nửa sau mỗi bước.</p>
+  <aside class="notes">
+    <p>Từ L, dãy $(0,2,2)$ là một tiền tố ba bước có thể xảy ra theo đường cụ thể L --Sạc/0--&gt; H --Tìm/+2--&gt; H --Tìm/+2--&gt; L: Sạc nhận 0, hai lần Tìm từ pin cao mỗi lần nhận +2. Đây chỉ là một đường khả dĩ, không phải kết quả tất nhiên của việc chọn Sạc rồi Tìm hai lần: lần Tìm đầu có thể đưa robot về pin thấp, và lần Tìm tiếp theo từ pin thấp có thể phát sinh cứu hộ. Chờ ba lần giữ nguyên pin thấp nên dãy $(1,1,1)$ là tất định.</p>
+    <p>Với trọng số $1,1/2,1/4$, hai dãy cho $3/2$ và $7/4$: thưởng đến muộn bị giảm giá theo $\gamma=1/2$. So sánh này chỉ đối chiếu hai dãy thưởng cụ thể, không suy ra chính sách nào tốt hơn: một tiền tố ba bước mẫu không quyết định giá trị toàn tương lai của chính sách.</p>
+    <p class="note-source">Nguồn: vận dụng Sutton và Barto, ấn bản 2, phương trình (3.8); dãy thưởng do người soạn chọn từ bảng robot.</p>
+  </aside>
+</section>
+
+<section data-slide-id="L03R-03-04">
+  <h2>Tổng thưởng từ thời điểm hiện tại</h2>
+  <p>$G_t$ là tổng thưởng chiết khấu sau thời điểm $t$; $\gamma\in[0,1]$.</p>
+  <div class="grid2">
+    <div><h3>Lượt kết thúc ở $T$</h3><div class="math-large">$$G_t=\sum_{k=t+1}^{T}\gamma^{k-t-1}R_k.$$</div></div>
+    <div class="fragment"><h3>Tiếp diễn hoặc đệm thưởng 0</h3><div class="math-large">$$G_t=\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}.$$</div></div>
+  </div>
+  <p>Cả hai tổng bắt đầu bằng $R_{t+1}$. Với robot tiếp diễn, dùng $\gamma<1$.</p>
+  <p>Với bài có lượt: $\mathcal S$ gồm trạng thái chưa kết thúc; $\mathcal S^+$ thêm trạng thái kết thúc. Tại đó, $G_T=0$.</p>
+  <aside class="notes">
+    <p>Đại lượng $G_t$ cộng các thưởng nhận được sau thời điểm $t$, tức bắt đầu từ $R_{t+1}$ với trọng số $\gamma^0=1$. Trong tổng thứ nhất, chỉ số $k$ chạy trên thời điểm nên mũ là $k-t-1$; trong tổng thứ hai, chỉ số $k$ chạy trên khoảng cách nên mũ là $k$ và thưởng là $R_{t+k+1}$. Hai tổng cùng bắt đầu bằng $R_{t+1}$ và bằng nhau khi dãy thưởng được đệm 0 sau $T$, vì các số hạng $\gamma^{k}R_{t+k+1}$ với $k\ge T-t$ đều triệt tiêu.</p>
+    <p>Việc đệm 0 sau thời điểm $T$ là quy ước trạng thái hấp thụ của chính lượt đã kết thúc, không thêm quyết định hay phần thưởng mới của tác tử. Với $\gamma\in[0,1]$, tổng hình học $\sum\gamma^k$ hội tụ khi $\gamma<1$; trong nhiệm vụ tiếp diễn của bài, thưởng bị chặn và $\gamma<1$ bảo đảm tổng hữu hạn. Với bài có lượt, trạng thái kết thúc được thêm vào tập trạng thái qua $\mathcal S^+$ và $G_T=0$ vì không còn thưởng nào sau $T$.</p>
+    <p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, (3.7)–(3.8), (3.11), tr. 54–57.</p>
+  </aside>
+</section>
+
+<section data-slide-id="L03R-03-05">
+  <h2>Điều kiện để tổng thưởng hữu hạn</h2>
+<img src="img/lec-03/robot-p03-geometric-series.svg" class="figure" alt="Các đoạn thẳng độ dài giảm một nửa mỗi bước minh họa tổng hình học tiến tới 2"/>
+
+  <p><strong>Nếu $|R_t|\le M$ và $0\le\gamma<1$:</strong></p>
+  <div class="math-large">
+    $$\lvert G_t\rvert\le\sum_{k=0}^{\infty}\gamma^k M=\frac{M}{1-\gamma}.$$
+  </div>
+  
+  <div class="box">
+    <p>Robot có $M=3$ và $\gamma=1/2$, nên $|G_t|\le 6$ với mọi quỹ đạo. Đây là cận trị tuyệt đối, không phải giá trị chính xác.</p>
+  </div>
+  <aside class="notes">
+    <p>$M$ là cận trị tuyệt đối của phần thưởng từng bước, không phải một giá trị cụ thể. Nếu mọi thưởng bị chặn $|R_t|\le M$ và $0\le\gamma<1$ thì theo bất đẳng thức tam giác, $|G_t|\le\sum\gamma^k M=M/(1-\gamma)$, vì $\sum_{k=0}^{\infty}\gamma^k=1/(1-\gamma)$ hội tụ khi $\gamma<1$. Hình minh họa tổng hình học với mức thưởng 1: các đoạn có độ dài tỉ lệ $1:1/2:1/4$ nên tổng tiến tới $1/(1-1/2)=2$. Chuyển từ mức 1 sang cận $M$ chỉ thay độ dài các đoạn; công thức cho cận, không cho giá trị của robot.</p>
+    <p>Giả thiết này cần cho phần Bellman sau: cận hữu hạn của trị tuyệt đối kéo theo kỳ vọng trị tuyệt đối hữu hạn, cho phép đổi thứ tự tổng và kỳ vọng, dùng tuyến tính và kỳ vọng lặp. Trường hợp $\gamma=1$ với bài có kết thúc: nếu thưởng bị chặn và kỳ vọng số bước tới kết thúc hữu hạn thì kỳ vọng tổng thưởng hữu hạn; chỉ gắn nhãn kết thúc cho một trạng thái chưa bảo đảm tác tử sẽ tới đó hoặc kỳ vọng thời gian tới đó hữu hạn.</p>
+    <p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, tr. 55 sau phương trình (3.8); cận hình học và điều kiện kỳ vọng trường hợp $\gamma=1$ được giải thích bổ sung.</p>
+  </aside>
+</section>
+
+<section data-slide-id="L03R-03-06">
+  <h2>Câu hỏi kiểm tra</h2>
+  <p><strong>Câu hỏi:</strong></p>
+  <ol>
+    <li>Robot về H sau Sạc có kết thúc nhiệm vụ không?</li>
+    <li>Với dãy ba thưởng $(0,2,2)$ và $\gamma=1/2$, điểm của đoạn là bao nhiêu? Nếu $\gamma=0$ thì còn số hạng nào?</li>
+    <li>Cận 6 ở phần trước có nghĩa mọi quỹ đạo của robot đều có tổng thưởng bằng 6 không?</li>
+  </ol>
+  <aside class="notes">
+    <p>Đáp án. 1. Không: Sạc chủ động nhận 0 và nhiệm vụ tiếp diễn không có thời điểm kết thúc; về pin cao chỉ là thay đổi trạng thái. 2. Điểm của đoạn là $0+\frac12\cdot2+\frac14\cdot2=3/2$; khi $\gamma=0$, chỉ số hạng đầu còn lại, và nó bằng 0. 3. Không: 6 là cận trị tuyệt đối $|G_t|\le M/(1-\gamma)$ với $M=3$, $\gamma=1/2$, tức $-6\le G_t\le 6$ trên mọi quỹ đạo; tổng trên mỗi quỹ đạo nằm trong khoảng này, không nhất thiết bằng 6.</p>
+    <p>Cùng bắt đầu từ một trạng thái vẫn có nhiều tổng thưởng; cách chọn hành động và ngẫu nhiên của môi trường quyết định phân phối của chúng.</p>
+    <p class="note-source">Nguồn: vận dụng Sutton và Barto, ấn bản 2, §3.3–3.4.</p>
+  </aside>
+</section>
+</section>
 <div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 03</div>
 </div></div><script src="revealjs/dist/reveal.js"></script><script src="plugin/notes/notes.js"></script><script src="plugin/highlight/highlight.js"></script><script src="plugin/math/math.js"></script><script>Reveal.initialize({width:1280,height:720,margin:.04,controlsLayout:"edges",slideNumber:true,hashOneBasedIndex:true,hash:true,katex:{local:"vendor/katex"},plugins:[RevealHighlight,RevealNotes,RevealMath.KaTeX]});</script></body></html>

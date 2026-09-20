@@ -741,3 +741,11 @@ Reader `deepseek/deepseek-v4-flash-0731` (requested=observed, provider OpenRoute
 Đã thêm7slide L03R-02-01…07: mở phần, cây phản hồi, bảng7nhánh, định nghĩa hạt nhân chung, xác suất chuyển/thưởng trung bình, thành phần MDP, câu hỏi kiểm tra. HaiSVG mới; bảng và công thức làHTML/KaTeX. Writer `z-ai/glm-5.3-flash` (hai lượt, requested=observed, OpenRouter). Bản đầu bị loại vì cộng nhầm trọng số của các trạng thái đích khác nhau, gọi sai “quy trình”, mở đầu nhắc sai mẫu trước và đặt công thức rộng trong nửa trang. Đã gọi sửa; điều phối viên tự kiểm lại7nhánh, dựng lại hình hai cây, làm rõ hành động H–Sạc không hợp lệ, chuẩn hóa tên phần, nguồn trong notes và biên tập câu văn.
 
 Kiểm tra lũy kế14ID/14notes/5SVG;62biểu thức KaTeX hợp lệ. Phần2:14lượt Chromium ở1280×720 và390×844, không tràn, lỗi toán, hình hỏng, JS/HTTP. Đã xem ảnh ghép7slide và trang câu hỏi riêng. Năm rà soát độc lập chưa thực hiện vì bản nháp toàn bài đang được soạn.
+
+### Phần 3 — triển khai và kiểm tra cục bộ
+
+Đã thêm6slide L03R-03-01…06 về thưởng từng bước, nhiệm vụ có kết thúc/tiếp diễn, hai đoạn thưởng, tổng hữu hạn/vô hạn, cận tổng và câu hỏi kiểm tra;4SVG mới. Hai lượt writer `z-ai/glm-5.3-flash`, requested=observed, OpenRouter. Bản đầu bị loại vì nói thưởng0đệm thuộc lượt sau và mô tả dãy0,2,2 như kết quả tất yếu của hành động. Sau lượt sửa, điều phối viên dựng lại hình để lượt đi đến đích tách khỏi robot tiếp diễn; sửa chỉ số các số hạng đệm thành k≥T−t, giải thích cứu hộ là phản hồi môi trường, đưa giả thiết bị chặn lên mặt slide và giữ ví dụ hình học trước cận tổng quát.
+
+L03R-03-04 từng tràn ở1280×720: chuyển hai trường hợp sang hai cột, hiện lần lượt, giữ nguyên cỡ chữ và đủ công thức. Ghi chú giải thích quy ước kết thúc; dãy ba thưởng chỉ là đoạn minh họa, không kết luận chính sách tối ưu.
+
+Kiểm tra lũy kế20ID/20notes/9SVG;132biểu thức KaTeX hợp lệ. Rà lại12lượt Chromium của cả phần3 sau sửa, không tràn/lỗi toán/ảnh hỏng/JS/HTTP. Đã xem ảnh ghép6slide. Các thay đổi toán và ranh giới phần sẽ nằm trong gói rà độc lập toàn bài.

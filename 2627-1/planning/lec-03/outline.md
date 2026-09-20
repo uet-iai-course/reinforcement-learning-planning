@@ -1,6 +1,6 @@
 # Dàn ý triển khai — Bài 03: Quá trình quyết định Markov
 
-Đã triển khai 2/7 phần (14/50 slide) theo storyboard robot. Thiết kế đầy đủ:120 phút; 30 phút chữa hw02. Đối tượng: sinh viên năm3 đã học xác suất, đại số tuyến tính, học máy và Bài02.
+Đã triển khai 3/7 phần (20/50 slide) theo storyboard robot. Thiết kế đầy đủ:120 phút; 30 phút chữa hw02. Đối tượng: sinh viên năm3 đã học xác suất, đại số tuyến tính, học máy và Bài02.
 
 ## 1. Đích học tập và quyết định về cấu trúc
 
@@ -100,6 +100,12 @@ Quy luật môi trường và chính sách được giả sử Markov, không đ
 - `L03R-02-05`: Xác suất chuyển và thưởng trung bình.
 - `L03R-02-06`: Các thành phần của MDP.
 - `L03R-02-07`: Câu hỏi kiểm tra.
+- `L03R-03-01`: Phần thưởng và tổng thưởng.
+- `L03R-03-02`: Nhiệm vụ có kết thúc và nhiệm vụ tiếp diễn.
+- `L03R-03-03`: Điểm thưởng ở các thời điểm.
+- `L03R-03-04`: Tổng thưởng từ thời điểm hiện tại.
+- `L03R-03-05`: Điều kiện để tổng thưởng hữu hạn.
+- `L03R-03-06`: Câu hỏi kiểm tra.
 
 ## Đặc tả và ánh xạ nguồn
 

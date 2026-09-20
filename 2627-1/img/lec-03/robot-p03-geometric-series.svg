@@ -1,0 +1,23 @@
+<svg class="figure" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 170" role="img" aria-label="Các đoạn thẳng độ dài giảm một nửa mỗi bước minh họa tổng hình học tiến tới 2" font-family="Arial,sans-serif">
+    <defs>
+      <marker id="arr7" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+        <polygon points="0,0 9,3 0,6" fill="#424954"/>
+      </marker>
+    </defs>
+    <line x1="80" y1="120" x2="1020" y2="120" stroke="#424954" stroke-width="3" marker-end="url(#arr7)"/>
+    <g>
+      <rect x="100" y="40" width="400" height="60" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+      <rect x="500" y="40" width="200" height="60" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+      <rect x="700" y="40" width="100" height="60" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+      <rect x="800" y="40" width="50" height="60" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+      <rect x="850" y="40" width="25" height="60" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+    </g>
+    <g font-size="28" fill="#2F3E7A" text-anchor="middle">
+      <text x="300" y="30">1</text>
+      <text x="600" y="30">1/2</text>
+      <text x="750" y="30">1/4</text>
+      <text x="825" y="30">1/8</text>
+      <text x="862" y="30">…</text>
+    </g>
+    <text x="560" y="160" fill="#424954" font-size="26" text-anchor="middle">mỗi bước nhận 1, gamma bằng 1/2: tổng tiến tới 2, không vượt 2</text>
+  </svg>

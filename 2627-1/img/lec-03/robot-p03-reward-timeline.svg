@@ -1,0 +1,29 @@
+<svg class="figure" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 300" role="img" aria-label="Trục thời gian ba bước hành động của robot kèm ba ô điểm thưởng" font-family="Arial,sans-serif">
+    <defs>
+      <marker id="arr3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+        <polygon points="0,0 9,3 0,6" fill="#2F3E7A"/>
+      </marker>
+    </defs>
+    <line x1="80" y1="150" x2="1020" y2="150" stroke="#2F3E7A" stroke-width="4" marker-end="url(#arr3)"/>
+    <g font-size="28" fill="#424954" text-anchor="middle">
+      <circle cx="200" cy="150" r="10" fill="#2F3E7A"/>
+      <text x="200" y="105">L: Sạc</text>
+      <circle cx="500" cy="150" r="10" fill="#2F3E7A"/>
+      <text x="500" y="105">H: Tìm</text>
+      <circle cx="800" cy="150" r="10" fill="#2F3E7A"/>
+      <text x="800" y="105">H: Tìm</text>
+    </g>
+    <g text-anchor="middle" font-size="28">
+      <rect x="120" y="200" width="160" height="60" rx="8" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/>
+      <text x="200" y="240" fill="#B15A2B" font-weight="bold">+0</text>
+      <rect x="420" y="200" width="160" height="60" rx="8" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+      <text x="500" y="240" fill="#2F3E7A" font-weight="bold">+2</text>
+      <rect x="720" y="200" width="160" height="60" rx="8" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+      <text x="800" y="240" fill="#2F3E7A" font-weight="bold">+2</text>
+    </g>
+    <g font-size="26" fill="#424954" text-anchor="middle">
+      <text x="200" y="290">thưởng bước 1</text>
+      <text x="500" y="290">thưởng bước 2</text>
+      <text x="800" y="290">thưởng bước 3</text>
+    </g>
+  </svg>
