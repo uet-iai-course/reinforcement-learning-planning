@@ -1,5 +1,7 @@
 # Bài 03 — Kế hoạch chi tiết từng slide
 
+> Kế hoạch thay thế mới: [Storyboard MDP từ ví dụ robot](storyboard-mdp-replanned.md), lập ngày 20-09-2026 theo yêu cầu tự soạn, không dùng sub-agent. Bản mới đề xuất 50 slide; chưa triển khai vào HTML. Nội dung dưới đây ghi tuyến 47 slide của bản đã triển khai trước đó.
+
 Ngày lập: 2026-09-19. Trạng thái: đã viết lại và kiểm định đủ bảy phần ngày 20-09-2026, đối chiếu công thức theo Sutton và Barto; kết quả ghi trong review-log.md. Các ID `L03-…` dùng cho bản viết lại; outline và storyboard ghi phạm vi đã tích hợp thực tế.
 
 ## Mục tiêu và phạm vi

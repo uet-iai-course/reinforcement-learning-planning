@@ -1,6 +1,6 @@
 # Storyboard mới — Bài 03: Quá trình quyết định Markov
 
-Ngày lập: 20-09-2026. Phạm vi: lập lại kế hoạch, chưa triển khai vào HTML. Soạn và tự rà trực tiếp trong phiên chính, không dùng sub-agent theo yêu cầu người dùng. Bản này đề xuất thay tuyến của `detailed-slide-plan.md`; `storyboard.md` hiện có vẫn ghi bản HTML đã triển khai.
+Ngày lập: 20-09-2026. Trạng thái: đã tự rà nội dung, số liệu và cấu trúc. Phạm vi: lập lại kế hoạch, chưa triển khai vào HTML. Soạn và tự rà trực tiếp trong phiên chính, không dùng sub-agent theo yêu cầu người dùng. Bản này đề xuất thay tuyến của `detailed-slide-plan.md`; `storyboard.md` hiện có vẫn ghi bản HTML đã triển khai.
 
 ## 1. Đích học tập và quyết định về cấu trúc
 
@@ -102,7 +102,7 @@ Quy luật môi trường và chính sách được giả sử Markov, không đ
 
 Thời lượng: 1 phút. Vai trò: tiêu đề bài giảng, đồng thời mở phần 1.
 
-**Mặt slide:** tên bài; Bài 03, Học tăng cường, học kỳ 1 năm 2026–2027, đơn vị theo mẫu hiện có. Không thêm tiêu đề phần 1 riêng.
+**Mặt slide:** tên bài “Quá trình quyết định Markov (MDP)”; Bài 03, Học tăng cường, học kỳ 1 năm 2026–2027, đơn vị theo mẫu hiện có. Tên viết tắt được giới thiệu cùng tên đầy đủ. Không thêm tiêu đề phần 1 riêng.
 
 **Cách thể hiện:** bố cục tiêu đề của deck; chưa đưa công thức hoặc toàn bộ đồ thị robot.
 
@@ -245,7 +245,7 @@ Thời lượng: 3 phút. Vai trò: đi từ hình sang dữ liệu mô hình.
 
 Thời lượng: 3 phút. Vai trò: định nghĩa hạt nhân chung.
 
-**Mặt slide:** gọi $\mathcal S$ là tập trạng thái, $\mathcal A(s)$ là tập hành động hợp lệ, $\mathcal R$ là tập điểm thưởng hữu hạn. Từ một dòng cụ thể:
+**Mặt slide:** gọi $\mathcal S$ là tập trạng thái, $\mathcal A(s)$ là tập hành động hợp lệ, $\mathcal R$ là tập điểm thưởng; cả ba loại tập đều hữu hạn. Từ một dòng cụ thể:
 
 $$p(\mathrm H,-3\mid\mathrm L,\mathrm{tim})=\frac12.$$
 
@@ -860,7 +860,7 @@ và thưởng trung bình của trạng thái là
 
 $$r^\pi(s)=\sum_{a\in\mathcal A(s)}\pi(a\mid s)r(s,a).$$
 
-Giữ trạng thái và chuyển tiếp: chuỗi Markov $(\mathcal S,P^\pi)$. Giữ thêm thưởng và chiết khấu: MRP $(\mathcal S,P^\pi,r^\pi,\gamma)$.
+Giữ trạng thái và chuyển tiếp: chuỗi Markov $(\mathcal S,P^\pi)$. Giữ thêm thưởng và chiết khấu: quá trình phần thưởng Markov (MRP) $(\mathcal S,P^\pi,r^\pi,\gamma)$.
 
 **Cách thể hiện:** gắn mỗi công thức với một cột của bảng vừa tính. Hàng L cho $P^\pi_{LH}=P^\pi_{LL}=1/2$, $r^\pi(L)=1/2$. Mỗi hàng của $P^\pi$ tổng bằng 1.
 
@@ -988,3 +988,121 @@ Thời lượng: 2 phút. Vai trò: kiểm tra tổng hợp và kết bài.
 **Cách thể hiện:** chỉ ba câu hỏi đánh số; đáp án nằm trong notes. Kết ở năng lực tính và giới hạn kết luận, không thêm câu khẩu hiệu hoặc lặp lại mục lục.
 
 **Nguồn:** vận dụng SB §3.1 và §3.5.
+
+## 10. Ánh xạ nguồn và các thay đổi có chủ ý
+
+| Slide PPTX | Quyết định | Nơi thực hiện trong storyboard mới | Lý do và ảnh hưởng |
+|---|---|---|---|
+| 28 | Giữ | Phần 1, tiêu đề bài | Bảo toàn tên và chủ đề MDP. |
+| 29 | Sửa, tách | 01-04…07; 02-04 | Ví dụ hai lịch sử trước điều kiện Markov; thêm giả thiết đồng nhất thời gian riêng. |
+| 30 | Chuyển | 06-05…07 | Chuỗi Markov được nhận diện từ MDP sau khi cố định chính sách, thay vì là cửa vào của bài. |
+| 31–33 | Thay ví dụ | 02-02/03; 06-05…07 | Thay đồ thị sinh viên bảy trạng thái bằng robot hai trạng thái; giữ đọc đồ thị, chuẩn hóa và ma trận. Không dạy phân phối dừng. |
+| 34 | Chuyển, sửa | 06-05/06 | Định nghĩa MRP sau ví dụ phép gộp; thưởng trung bình được phân biệt với thưởng quan sát. |
+| 35 | Thay ví dụ | Phần 2–3 | Cùng robot có cả trạng thái, hành động và thưởng ngay từ đầu, không đổi đặc tả giữa MRP và MDP. |
+| 36–38 | Giữ ý, sửa cách giải thích | 03-02…06 | Ví dụ trọng số trước tổng; không đồng nhất gamma nhỏ với thuật toán tham lam hoặc tuyên bố tổng là lựa chọn duy nhất. |
+| 39 | Chuyển, sửa | 04-04/05 | Định nghĩa giá trị sau khi có chính sách và phép lấy kỳ vọng bằng số; không dùng ký hiệu $v$ trước đối tượng cần đánh giá. |
+| 40–43 | Thay, gộp | 03-03; 04-04; 06-03 | Thay hai quỹ đạo sinh viên và các bảng giá trị cho nhiều gamma bằng các tổng robot và một chính sách xuyên suốt. Giảm số dữ kiện phải ghi nhớ; giữ vai trò của chiết khấu. |
+| 44–46 | Tách, mở rộng | 05-02…06 | Tách rõ đại số, kỳ vọng toàn phần, tuyến tính và chỗ dùng Markov. Suy diễn trực tiếp Bellman MDP, không giảng cùng phép suy diễn hai lần cho hai mô hình khác nhau. |
+| 47–48 | Chuyển, mở rộng ví dụ giải | 06-02…07 | Giải hai phương trình bằng tay trước khi trình bày dạng ma trận, điều kiện nghiệm và giới hạn của giải trực tiếp. |
+| 49 | Chuyển lên | 02-04…06 | MDP xuất phát từ bài toán có lựa chọn, theo tuyến §3.1 của SB. |
+| 50 | Thay ví dụ | Phần 1–2, 4, 6 | Robot từ SB thay Student MDP; không cần phân biệt hai đồ thị sinh viên khác nhau. |
+| 51 | Thay ví dụ | 04-06/07; 06-04/08 | Các hành động của robot đủ để minh họa $q$ và đánh đổi thưởng/tương lai. Xe đua có thể dùng sau giờ học; không xuất hiện trong tuyến 120 phút. |
+| 52 | Giữ, chuyển | 04-02/03 | Quy tắc cụ thể trước định nghĩa chính sách. |
+| 53 | Tách | 04-04…08 | Phép trung bình trước $v$; thí nghiệm ấn định hành động trước $q$. |
+| 54–55 | Thay ví dụ | 06-02…04 | Các giá trị đều được tìm ra từ hệ robot ngay trên lớp, không đưa sẵn nghiệm xe đua rồi mới giải thích. |
+| 56–57 | Tách, mở rộng | 05-07…10 | Giải thích cả $q$ theo $v$, $v$ theo $q$ và phép thế cho Bellman $q$; nguồn từ SB §3.5 và bài tập 3.17–3.19. |
+| 58 | Giữ, cập nhật | 07-03 | Đối chiếu đúng bài tập hw02 và mục đọc SB; Bellman tối ưu nối sang Bài 04. |
+
+Không yêu cầu vẽ lại ngay hoặc xóa các SVG của bản HTML đang có. Lượt này tạo kế hoạch mới; chưa đổi thẻ Bài 03 trên index. Khi triển khai, cần thay đồng bộ HTML, outline và storyboard triển khai theo tuyến mới, tránh trộn ID của hai phiên bản.
+
+## 11. Đặc tả hình và bố cục khi triển khai
+
+- Dùng chung `2627-1/lecture-slide.css`, mẫu RevealJS hiện có, khung 1280×720 và bảy section ngoài. Giữ thư viện cục bộ, KaTeX và notes. Không kế thừa nội dung học phần khác từ `lecture-template.html`.
+- Trạng thái dùng nút tròn lớn; hành động dùng nút nhỏ hoặc ô bo góc; cặp phản hồi có cả nhãn trạng thái và thưởng. Dùng chữ và hình dạng bên cạnh màu. Xác suất chính sách đặt ở tầng chọn hành động; xác suất môi trường đặt ở tầng phản hồi. Mũi tên đi hết tới đúng nút đích; các vòng tự lặp không cắt nhãn.
+- Hình robot chỉ minh họa pin và quyết định, không giả làm dữ liệu thực nghiệm. Các SVG dự kiến nằm trong `2627-1/img/lec-03/`, có `role="img"`, title/desc và alt cụ thể. Không cần ảnh raster hoặc ảnh sinh AI.
+- Một hình có thể tái dùng khi vai trò thay đổi: cây L dùng để mô tả môi trường, chọn chính sách, suy diễn và thay giá trị số. Mỗi lần phải hiện đúng tầng đang giải thích; không hiển thị toàn bộ đồ thị chỉ vì đã có sẵn hình.
+- Công thức được dựng bằng KaTeX. Các bước Bellman hiện theo lượt; khi chuyển sang bước sau có thể thay vùng công thức trung gian. Không tích lũy tất cả công thức của một cụm lên một trang hoặc giảm chữ để nhét chúng.
+- Các mục “Cách thể hiện”, nguồn, ID và thời lượng thuộc hồ sơ soạn. Mặt slide và notes khi triển khai chỉ lấy nội dung học thuật, lời giải thích, đáp án và nguồn cần dùng; không chép chỉ dẫn cho người viết vào bài giảng. Mọi quiz có tiêu đề “Câu hỏi kiểm tra”, nhãn “Câu hỏi:” và các câu đánh số.
+
+| Hình dự kiến | Các trang dùng | Nội dung phải bảo toàn |
+|---|---|---|
+| `robot-decisions.svg` | 01-03; 04-01; 07-01 | Hai mức pin; tập hành động khác nhau; chỉ thêm giá trị vào bản cuối. |
+| `robot-one-step.svg` | 01-04 | $A_t$ trước cặp $(R_{t+1},S_{t+1})$; một bước phản hồi. |
+| `robot-two-histories.svg` | 01-05/06 | Hai quá khứ cùng trạng thái L; không tự giả định trạng thái đủ ngoài mô hình đã nêu. |
+| `robot-search-outcomes.svg` | 02-01/02; 05-05/07; 06-08 | Hai nhánh của Tìm, xác suất $1/2$; cứu hộ nhận −3 về H. |
+| `robot-episode-timeline.svg` | 03-02/04 | Robot tiếp diễn; nhiệm vụ có lượt đệm thưởng 0 sau kết thúc. |
+| `robot-discounted-prefixes.svg` | 03-03 | Hai đoạn ba bước có thưởng $(0,2,2)$ và $(1,1,1)$, cùng trọng số. |
+| `robot-policy-tree.svg` | 04-02/03 | H luôn Tìm; L Chờ/Sạc mỗi $1/2$; phân biệt $\pi$ với $p$. |
+| `robot-two-step-returns.svg` | 04-04/05 | Ba nhóm tổng hai bước có trọng số $1/2,1/4,1/4$; không gán trung bình này thành $v$. |
+| `robot-first-action.svg` | 04-06/07 | Chỉ ấn định một hành động, sau đó cùng chính sách tiếp diễn. |
+| `robot-bellman-state.svg` | 05-01/02/04/06/08; 06-02/04 | Cây bắt đầu tại trạng thái; hai tầng trung bình và vị trí chiết khấu. |
+| `robot-bellman-action.svg` | 05-07/09 | Cây bắt đầu tại cặp trạng thái–hành động; hành động sau dùng $a'$ tại $s'$. |
+| `robot-induced-mrp.svg` | 06-05/06 | Hai hàng chuyển đều $(1/2,1/2)$, thưởng trung bình 2 và $1/2$. |
+
+Đây là danh mục thiết kế, không phải danh sách tài sản đã được tạo hoặc đã được rà hình. Bảng và công thức trong storyboard không chuyển thành ảnh.
+
+## 12. Ghi chú toán học để triển khai và chữa bài
+
+### Các kết quả số đã tính lại
+
+Với bảng robot, chính sách và $\gamma=1/2$ đã chốt:
+
+$$P^\pi=\begin{pmatrix}1/2&1/2\\1/2&1/2\end{pmatrix},\qquad
+r^\pi=\begin{pmatrix}2\\1/2\end{pmatrix},\qquad
+v=\begin{pmatrix}13/4\\7/4\end{pmatrix}.$$
+
+| Cặp trạng thái–hành động | $q_\pi$ | Phép kiểm bằng $r+\gamma v$ |
+|---|---:|---|
+| H–Tìm | $13/4$ | $2+(1/2)[(1/2)(13/4)+(1/2)(7/4)]$ |
+| H–Chờ | $21/8$ | $1+(1/2)(13/4)$ |
+| L–Tìm | $3/4$ | $(1/2)[2+(1/2)(7/4)]+(1/2)[-3+(1/2)(13/4)]$ |
+| L–Chờ | $15/8$ | $1+(1/2)(7/4)$ |
+| L–Sạc | $13/8$ | $(1/2)(13/4)$ |
+
+Các tổng ba bước có chiết khấu là $3/2$ và $7/4$. Trung bình của hai bước đầu từ H là $21/8$. Sự trùng số giữa một vài đại lượng là ngẫu nhiên trong bộ tham số đã chọn, không phải đẳng thức tổng quát giữa tổng thưởng ngắn hạn, giá trị trạng thái và giá trị hành động. Không đưa cả bảng năm $q$ lên slide nếu nó làm loãng nhiệm vụ đang xét.
+
+### Cơ sở cho nghiệm duy nhất khi có chiết khấu
+
+Ghi chú cho 06-07, không thêm slide chính. Gọi $d$ là nghiệm của hệ thuần nhất $(I-\gamma P^\pi)d=0$ và đặt $D=\max_i\lvert d_i\rvert$. Vì $P^\pi$ không âm, tổng mỗi hàng bằng 1:
+
+$$\lvert d_i\rvert
+=\left\lvert\gamma\sum_jP^\pi_{ij}d_j\right\rvert
+\le\gamma\sum_jP^\pi_{ij}\lvert d_j\rvert
+\le\gamma D.$$
+
+Lấy lớn nhất theo $i$ được $D\le\gamma D$. Với $0\le\gamma<1$, suy ra $D=0$, nên ma trận vuông $I-\gamma P^\pi$ khả nghịch. Đây là lập luận đại số bổ sung, không trích thành định lý được đánh số của SB. Với robot, định thức bằng $(3/4)^2-(1/4)^2=1/2$, kiểm tra trực tiếp được.
+
+Khi $\gamma=1$ và có trạng thái hấp thụ, ma trận đầy đủ $I-P^\pi$ có hàng 0, không dùng nghịch đảo đầy đủ. Đặt giá trị kết thúc bằng 0 và xét các trạng thái chưa kết thúc với điều kiện về thời gian kết thúc. Storyboard không tuyên bố cứ có trạng thái kết thúc thì mọi giá trị đều hữu hạn.
+
+### Các điều kiện trong phép biến đổi Bellman
+
+| Bước | Công cụ dùng | Điều chưa được suy ra ở bước đó |
+|---|---|---|
+| Tách $G_t$ | Đại số trên tổng hội tụ hoặc tổng hữu hạn | Chưa cần Markov, chưa lấy kỳ vọng. |
+| Nhóm theo $A_t$ | Kỳ vọng toàn phần, chính sách xác định trọng số | Chưa bỏ tính ngẫu nhiên của môi trường. |
+| Nhóm theo $(S_{t+1},R_{t+1})$ | Kỳ vọng lặp, hạt nhân chung, tuyến tính | Chưa bỏ các điều kiện quá khứ trong kỳ vọng tương lai. |
+| Nhận diện $v_\pi(s')$ | Trạng thái Markov; chính sách Markov dừng; động lực và tiêu chuẩn không đổi theo thời gian | Không suy ra công thức tối ưu hoặc phép max. |
+| Ghép $v$ và $q$ | Định nghĩa hai thí nghiệm, kỳ vọng theo hành động đầu | Không lấy trung bình hành động đầu lần nữa trong $q(s,a)$. |
+| Dạng ma trận | Gom hệ số từ Bellman đã chứng minh | Khả nghịch cần điều kiện; không là giả thiết tự có với mọi gamma. |
+
+## 13. Tự rà kế hoạch và tiêu chí nghiệm thu
+
+Rà trực tiếp theo Quill về vai trò từng phần, điểm vào–ra và thứ tự khái niệm; theo `no-ai-slop/eval.md` về câu hiển thị và mạch nói. Đây là lượt soạn một storyboard theo yêu cầu **không dùng sub-agent**; không có năm báo cáo độc lập và không gọi worker OpenRouter trong lượt này. Không tạo `quill.json` vì đây là kế hoạch bài giảng.
+
+| Yêu cầu | Bằng chứng trong bản mới |
+|---|---|
+| Các phần phối hợp để sinh viên năm 3 hiểu MDP | Bảng đầu vào/đầu ra của bảy phần; cùng robot; mỗi phần có câu nối sang phần sau. |
+| Mạch trình bày đi trước kế hoạch slide | Mỗi phần có mục “Mạch trình bày trước khi chia slide” và bản đồ chu trình, đặt trước slide đầu. |
+| Ví dụ cụ thể trước hình thức | Hai lịch sử→Markov; cây/bảng→$p$; dãy thưởng→$G$; bảng lựa chọn→$\pi$; kỳ vọng hai bước→$v$; hành động đầu→$q$; cây một bước→Bellman; bảng gộp→MRP. |
+| Giải thích kỹ các biến đổi | 05-03…09 tách từng công cụ toán học; 06-02/03 lập và giải hệ bằng tay; ghi chú chỉ rõ giả thiết. |
+| Tiêu đề đầu mỗi phần | 01-01 là tiêu đề bài; 02-01…07-01 là đúng tên phần; 01-02 giữ slide nội dung. |
+| Nguồn Barto được kiểm | SB ấn bản 2, ví dụ 3.3 và các phương trình/bài tập được ghi theo trang; tham số minh họa và giả thiết thưởng cố định được tách rõ khỏi bản gốc. |
+| Thời lượng có thể kiểm tra | 50 slide, tổng từng phần 12/18/14/17/26/25/8 = 120 phút; 30 phút chữa bài tách riêng. |
+| Kiểm tra hiểu ở mỗi phần | Bảy slide cuối phần đều có câu hỏi đánh số và đáp án dựa trên nội dung đã xuất hiện. |
+| Không nhầm kế hoạch với triển khai | File mới có tiền tố ID `L03R`; đầu tệp nói rõ HTML hiện tại chưa đổi. Không tuyên bố đã dựng hoặc rà trực quan các SVG dự kiến. |
+
+Những điểm đã sửa trong lúc tự rà: nêu đủ tính hữu hạn của trạng thái, hành động và thưởng; tính lại kỳ vọng hai bước từ H bằng $21/8$; không dùng nó làm giá trị toàn tương lai; làm rõ thưởng cố định trên nhánh là giả thiết bổ sung; giữ hành động H–Sạc là không hợp lệ; tách giả thiết Markov khỏi tính không đổi theo thời gian; đưa điều kiện khả tích trước suy diễn; tránh đưa nghiệm số trước bài giải; giải thích ý nghĩa các hệ số $1/2$ trùng số nhưng khác vai trò.
+
+Tự kiểm văn phong: câu ngắn và thuật ngữ nhất quán; không có lời ca tụng, khẩu hiệu hoặc câu hỏi tu từ trong phần nội dung đề xuất. Các câu hỏi học tập được giữ dưới nhãn “Câu hỏi:”. Các hướng dẫn dựng hình và thời lượng nằm trong trường quy trình, không coi là lời nói cho sinh viên. Bản thảo cần được kiểm tra hiển thị, KaTeX trong HTML và khả năng đọc khi triển khai; kiểm tra cú pháp toán trong Markdown không thay thế bước đó.
+
+Kiểm tra tệp: 50 ID duy nhất; bảy mạch đều có trình tự trước chi tiết slide, đúng tiêu đề mở phần và quiz cuối phần; thời lượng từng trang cộng đúng 120 phút. 451 biểu thức Markdown qua KaTeX với chế độ kiểm tra nghiêm ngặt, không lỗi và không có dấu đô la chưa đóng. Đã tính lại mô hình, các tổng hữu hạn, hệ giá trị và năm giá trị hành động bằng phân số chính xác. Không dùng kết quả kiểm định của deck cũ để chứng nhận kế hoạch mới.
