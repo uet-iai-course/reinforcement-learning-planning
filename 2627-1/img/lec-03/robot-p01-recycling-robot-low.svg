@@ -1,0 +1,29 @@
+<svg class="figure" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 340" role="img" aria-label="Robot thu gom lon ở mức pin thấp với ba lựa chọn: Tìm, Chờ, Sạc" font-family="Arial,sans-serif">
+    <rect x="0" y="0" width="1100" height="340" fill="#F7EFE6"/>
+    <!-- robot -->
+    <rect x="80" y="110" width="150" height="110" rx="16" fill="#2F3E7A"/>
+    <rect x="110" y="90" width="90" height="26" rx="8" fill="#2F3E7A"/>
+    <circle cx="120" cy="155" r="13" fill="#ffffff"/>
+    <circle cx="152" cy="155" r="13" fill="#ffffff"/>
+    <circle cx="120" cy="155" r="5" fill="#424954"/>
+    <circle cx="152" cy="155" r="5" fill="#424954"/>
+    <!-- battery -->
+    <rect x="255" y="130" width="60" height="70" rx="6" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+    <rect x="265" y="178" width="40" height="12" fill="#B15A2B"/>
+    <rect x="318" y="148" width="10" height="34" fill="#2F3E7A"/>
+    <text x="160" y="270" font-size="30" fill="#424954" text-anchor="middle">Pin thấp L</text>
+    <!-- arrows to three action boxes -->
+    <line x1="340" y1="150" x2="640" y2="80" stroke="#B15A2B" stroke-width="4"/>
+    <polygon points="648,78 622,74 630,94" fill="#B15A2B"/>
+    <line x1="340" y1="165" x2="640" y2="180" stroke="#B15A2B" stroke-width="4"/>
+    <polygon points="648,180 624,170 624,190" fill="#B15A2B"/>
+    <line x1="340" y1="180" x2="640" y2="280" stroke="#B15A2B" stroke-width="4"/>
+    <polygon points="648,282 630,262 622,282" fill="#B15A2B"/>
+    <!-- action boxes -->
+    <rect x="660" y="40" width="220" height="70" rx="10" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+    <text x="770" y="85" font-size="30" fill="#424954" text-anchor="middle">Tìm</text>
+    <rect x="660" y="145" width="220" height="70" rx="10" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+    <text x="770" y="190" font-size="30" fill="#424954" text-anchor="middle">Chờ</text>
+    <rect x="660" y="250" width="220" height="70" rx="10" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+    <text x="770" y="295" font-size="30" fill="#424954" text-anchor="middle">Sạc</text>
+  </svg>

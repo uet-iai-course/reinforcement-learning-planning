@@ -701,3 +701,33 @@ Writer chỉnh sửa đầu `lec03-v2-revise-reviews` thất bại do sửa JSON
 - Kiểm tra cấu trúc: số trang 7/7/6/8/10/8/4, tổng 50 ID duy nhất. Thời lượng 12/18/14/17/26/25/8, tổng 120 phút; 30 phút chữa hw02 tách riêng. Bảy phần có mạch trước slide chi tiết, tiêu đề mở đúng và câu hỏi đánh số cuối phần. 451 biểu thức toán Markdown qua KaTeX nghiêm ngặt, không lỗi hoặc dấu đô la chưa đóng; git diff --check đạt.
 - Giới hạn kiểm định: đây là kế hoạch, không phải một deck mới đã render. Chưa tạo 12 SVG dự kiến, chưa chạy kiểm tra hiển thị hoặc Codex Slides cho tuyến mới; không lấy kết quả của deck 47 slide cũ làm bằng chứng. Khi triển khai cần cập nhật đồng bộ HTML, outline và storyboard triển khai, rồi kiểm tra toàn bộ hiển thị.
 - Đã commit riêng bảy phần: 55b272d, ea026b2, b965a06, cd00e52, ed80378, fd73660, de9ecda. Các bổ sung ánh xạ nguồn, ghi chú và kiểm định cuối được lưu ở commit kế tiếp. Không push.
+
+
+## Viết lại deck theo robot — quyết định trước triển khai (20/09/2026)
+
+
+- Đã đọc báo cáo reader lập kế hoạch và yêu cầu làm lại vì sai ngôn ngữ, chia vai rà soát theo phần. Lượt hai vẫn pha tiếng Romania; không đưa nguyên văn vào planning. Chỉ tiếp nhận các phân tích có thể tự kiểm, điều phối viên viết lại quyết định tiếng Việt.
+- Giữ 7 phần và 50 slide. Giữ Bellman q ở cuối phần 5 để hoàn tất phép thế từ hai quan hệ v–q; không chuyển sang phần 6.
+- Chuyển 4 phút từ phần 6 sang phần 5. Phần 5: 1/3/3/3/4/4/2/3/4/3 = 30 phút; phần 6: 1/2/3/3/3/3/3/3 = 21 phút. Tổng bài 120 phút. Phần 6 chỉ giải hệ bằng trừ/thế, không dạy thuật toán khử hoặc lặp.
+- Phần 1: gắn chỉ số vào một phản hồi đã xảy ra trước định nghĩa lịch sử/Markov. Hai lịch sử hội tụ về L; pin đủ là giả thiết, nêu phản ví dụ vị trí trong đáp án.
+- Phần 2: cây phản hồi trước bảng; bảng trước ký hiệu p. Bảng chỉ bảy hàng, không đặt cạnh đồ thị tổng thể. Thưởng trung bình −1/2 khác các điểm có thể nhận 2 và −3.
+- Phần 3: dải thưởng cùng trục thời gian trước hai công thức tổng; phân biệt đoạn ba bước và lượt kết thúc. Cận hữu hạn bảo đảm các phép kỳ vọng phần 5.
+- Phần 4: bảng lựa chọn trước pi, cây hai bước trước v, thí nghiệm hành động đầu trước q. Trung bình hai bước21/8 chưa là giá trị13/4.
+- Phần 5: tách đại số, hai tầng kỳ vọng, rồi mới dùng Markov. Công thức dài xuống dòng; không thu nhỏ cả trang. Gắn rõ từng hệ số1/2 là xác suất hay chiết khấu.
+- Phần 6: giải hệ cụ thể trước MRP và ma trận. q của hành động không được chính sách chọn vẫn có nghĩa theo thí nghiệm đã định nghĩa.
+- Phần 7: thu hồi bài toán robot, xác định đầu vào/đầu ra và giới hạn đánh giá chính sách; bài tập nối nguồn hw02, không thêm demo.
+- Quy trình: reader ánh xạ nguồn; một writer cho mỗi phần, chạy tuần tự; reader kiểm định storyboard riêng; năm reviewer độc lập theo góc nhìn sinh viên/RL/toán/phản biện giảng dạy/mạch viết, mỗi vai có bảng bao phủ toàn 50 slide; correction writer riêng sau khi đủ năm báo cáo; rà toán/mạch lại theo vùng thay đổi. Kiểm tra cuối bằng KaTeX và RevealJS ở1280×720 và390×844.
+
+Reader lập kế hoạch và reader nguồn đều trả `requested_model=observed_model=deepseek/deepseek-v4-flash-0731`, `provider=OpenRouter`. Lượt lập kế hoạch thứ hai sửa phân công nhưng vẫn sai ngôn ngữ; không dùng nguyên văn báo cáo. Reader nguồn xác nhận ánh xạ và vị trí công thức, song cũng pha ngôn ngữ và nhận nhầm ma trận vào danh mục hình; điều phối viên giữ ma trận bằng KaTeX. Đã tự đối chiếu bản trích PPTX 28–58 và giáo trình, kể cả hình robot tr.52 đã kiểm ở lượt lập storyboard. Kết quả rà nguồn này không phải kiểm định HTML/SVG mới.
+
+Phạm vi ánh xạ: PPTX28→01-01;29→01-05/06;30,34→06-05/06;36–38,40–43→03-02…05 (đổi ví dụ);39,53→04-04…07;44–46,56–57→05-01…09 (tách suy diễn);47–48→06-02…07;49→02-02…06;52→04-02/03;58→07-03. Ví dụ sinh viên/xe ở31–33,35,50–51,54–55 được thay bằng robot xuyên suốt theo yêu cầu viết lại. Các trang kiểm tra và cầu nối được thêm theo storyboard. Số thưởng/xác suất và chính sách robot là lựa chọn minh họa; thưởng cố định trên từng nhánh là giả thiết bổ sung.
+
+Đã kiểm tra trang mô hình GLM hiện hành tại [OpenRouter](https://openrouter.ai/z-ai/glm-5.3-flash) trước lượt writer/reviewer; bằng chứng chọn mô hình thực thi sẽ lấy từ JSON cầu nối, không từ lời tự khai của worker.
+
+### Phần 1 — triển khai và kiểm tra cục bộ
+
+Đã thay deck cũ bằng phần đầu của deck robot; các phần còn lại đang được viết, không giữ xen kẽ slide cũ. Bảy slide L03R-01-01…07 có tiêu đề, nội dung bài học, ví dụ robot, một bước tương tác, hai lịch sử, định nghĩa Markov và kiểm tra. Ba SVG mới mô tả lựa chọn, phản hồi một bước và hai lịch sử; công thức giữ bằng KaTeX.
+
+Writer: hai lượt `z-ai/glm-5.3-flash`, requested=observed, provider OpenRouter. Bản đầu bị loại: Chờ H→L sai mô hình, LaTeX trong SVG không render, thiếu nguồn và nhiều chữ trên trang đầu. Đã yêu cầu worker sửa; điều phối viên tiếp tục chuyển nguồn vào notes, dựng lại cặp phản hồi trong cùng hộp, vẽ đúng mức pin thấp, xuống dòng công thức Markov và biên tập no-ai-slop. Không đưa lời chỉ dẫn soạn vào notes.
+
+Kiểm tra: đủ7ID/7notes/3SVG; 19 biểu thức KaTeX hợp lệ; Chromium14 lượt (7slide×1280×720/390×844), không tràn, lỗi toán, ảnh hỏng, lỗiJS/HTTP. Đã xem ảnh ghép cả7slide. Đây là kiểm tra phần1; năm lượt rà độc lập toàn bài sẽ thực hiện khi đủ bản nháp50slide.

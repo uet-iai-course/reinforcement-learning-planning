@@ -16,8 +16,8 @@ MDP xuất hiện ngay sau bài toán tương tác. Chuỗi Markov và quá trì
 | 2 | Mô hình xác suất của MDP | Trạng thái, hành động, phản hồi cùng một bước | Đọc và viết được $p(s',r\mid s,a)$, thưởng trung bình | 7 | 18 |
 | 3 | Phần thưởng và tổng thưởng | Quy luật phản hồi một bước | Tính và giải thích $G_t$, $\gamma$, kết thúc và tính hữu hạn | 6 | 14 |
 | 4 | Chính sách và hàm giá trị | Mô hình và tiêu chuẩn tổng thưởng | Phân biệt $\pi$, $G_t$, $v_\pi$, $q_\pi$ | 8 | 17 |
-| 5 | Phương trình Bellman | Các định nghĩa giá trị và kỳ vọng có điều kiện | Giải thích được từng dấu bằng và từng tầng lấy trung bình | 10 | 26 |
-| 6 | Đánh giá một chính sách từ mô hình | Bellman cho một chính sách cố định | Giải hệ robot; suy ra chuỗi Markov, MRP và dạng ma trận | 8 | 25 |
+| 5 | Phương trình Bellman | Các định nghĩa giá trị và kỳ vọng có điều kiện | Giải thích được từng dấu bằng và từng tầng lấy trung bình | 10 | 30 |
+| 6 | Đánh giá một chính sách từ mô hình | Bellman cho một chính sách cố định | Giải hệ robot; suy ra chuỗi Markov, MRP và dạng ma trận | 8 | 21 |
 | 7 | Tổng hợp và vận dụng | Mô hình, chính sách, giá trị đã tính | Nối dữ kiện với công thức, kiểm giới hạn và chuẩn bị Bài 04 | 4 | 8 |
 | **Tổng** | | | | **50** | **120** |
 
@@ -556,7 +556,7 @@ Thời lượng: 2 phút. Vai trò: kiểm tra các đối tượng trước khi
 6. Giữ cố định hành động đầu để có $q$ theo $v$; lấy trung bình các $q$ để trở lại $v$.
 7. Thế $v(s')$ bằng trung bình của các $q(s',a')$ để có Bellman cho $q$.
 
-**Chu trình học:** vấn đề/ví dụ 05-01/02 → trực giác tách một bước 05-03 → hình thức và suy diễn 05-04…06 → ứng dụng cách tách cho hành động 05-07/08 → phép thế 05-09 → kiểm tra 05-10. Từng phép biến đổi là một bước cần giải thích, không gom cả chuỗi vào một trang rồi thu nhỏ chữ. Tổng 26 phút.
+**Chu trình học:** vấn đề/ví dụ 05-01/02 → trực giác tách một bước 05-03 → hình thức và suy diễn 05-04…06 → ứng dụng cách tách cho hành động 05-07/08 → phép thế 05-09 → kiểm tra 05-10. Từng phép biến đổi là một bước cần giải thích, không gom cả chuỗi vào một trang rồi thu nhỏ chữ. Tổng 30 phút.
 
 ### L03R-05-01 — Phương trình Bellman
 
@@ -572,7 +572,7 @@ Thời lượng: 1 phút. Vai trò: tiêu đề phần.
 
 ### L03R-05-02 — Một bước từ pin thấp
 
-Thời lượng: 2 phút. Vai trò: phương trình ví dụ trước suy diễn tổng quát.
+Thời lượng: 3 phút. Vai trò: phương trình ví dụ trước suy diễn tổng quát.
 
 **Mặt slide:** dưới chính sách đã chọn, tại L: Chờ nhận 1 rồi ở L; Sạc nhận 0 rồi tới H; xác suất chọn mỗi hành động $1/2$. Với $\gamma=1/2$:
 
@@ -624,7 +624,7 @@ $$v_\pi(s)=\sum_{a\in\mathcal A(s)}\pi(a\mid s)
 
 ### L03R-05-05 — Lấy trung bình theo phản hồi môi trường
 
-Thời lượng: 3 phút. Vai trò: tầng kỳ vọng thứ hai và tuyến tính.
+Thời lượng: 4 phút. Vai trò: tầng kỳ vọng thứ hai và tuyến tính.
 
 **Mặt slide:** trước công thức, nêu quy ước điều kiện viết tắt: $s,a,s',r$ lần lượt là giá trị của $S_t,A_t,S_{t+1},R_{t+1}$. Với một hành động đã cố định:
 
@@ -642,7 +642,7 @@ $$\begin{aligned}
 
 ### L03R-05-06 — Từ trạng thái kế tiếp đến giá trị tương lai
 
-Thời lượng: 3 phút. Vai trò: chỉ rõ nơi dùng Markov và kết thúc suy diễn Bellman trạng thái.
+Thời lượng: 4 phút. Vai trò: chỉ rõ nơi dùng Markov và kết thúc suy diễn Bellman trạng thái.
 
 **Mặt slide:** giữ quy ước điều kiện ở trang trước. Với mô hình Markov và chính sách Markov dừng:
 
@@ -708,7 +708,7 @@ v_\pi(s)&=\sum_a\pi(a\mid s)\mathbb E_\pi[G_t\mid s,a]\\
 
 ### L03R-05-09 — Bellman kỳ vọng cho giá trị hành động
 
-Thời lượng: 3 phút. Vai trò: phép thế từng bước, không đưa công thức cuối đột ngột.
+Thời lượng: 4 phút. Vai trò: phép thế từng bước, không đưa công thức cuối đột ngột.
 
 **Mặt slide:** viết quan hệ vừa có tại trạng thái kế tiếp:
 
@@ -752,7 +752,7 @@ Thời lượng: 3 phút. Vai trò: kiểm tra lập luận và tầng xác su�
 5. Từ bảng đã gộp, định nghĩa chuỗi Markov và MRP cảm sinh; sau đó mới viết Bellman bằng ma trận.
 6. Kiểm tra bằng hành động chưa dùng trong chính sách và bằng một hàng chuyển.
 
-**Chu trình học:** vấn đề và ví dụ 06-01/02 → phép giải cụ thể 06-03 → ứng dụng/kiểm nghiệm 06-04 → ví dụ rút gọn mô hình 06-05 → hình thức MRP và ma trận 06-06/07 → kiểm tra 06-08. Phần này có hai cụm gắn nhau: giải một MDP nhỏ và khái quát phép tính thành mô hình đã gộp. Tổng 25 phút.
+**Chu trình học:** vấn đề và ví dụ 06-01/02 → phép giải cụ thể 06-03 → ứng dụng/kiểm nghiệm 06-04 → ví dụ rút gọn mô hình 06-05 → hình thức MRP và ma trận 06-06/07 → kiểm tra 06-08. Phần này có hai cụm gắn nhau: giải một MDP nhỏ và khái quát phép tính thành mô hình đã gộp. Tổng 21 phút.
 
 ### L03R-06-01 — Đánh giá một chính sách từ mô hình
 
@@ -768,7 +768,7 @@ Thời lượng: 1 phút. Vai trò: tiêu đề phần.
 
 ### L03R-06-02 — Hệ Bellman của robot
 
-Thời lượng: 3 phút. Vai trò: lập hệ từ hình.
+Thời lượng: 2 phút. Vai trò: lập hệ từ hình.
 
 **Mặt slide:** đặt $v_H=v_\pi(\mathrm H)$, $v_L=v_\pi(\mathrm L)$. Tại H luôn Tìm; tại L chọn Chờ/Sạc như trước:
 
@@ -786,7 +786,7 @@ v_L&=\frac12\left(1+\frac12v_L\right)
 
 ### L03R-06-03 — Giải hai phương trình giá trị
 
-Thời lượng: 4 phút. Vai trò: biến đổi đại số đầy đủ.
+Thời lượng: 3 phút. Vai trò: biến đổi đại số đầy đủ.
 
 **Mặt slide:** khai triển hai phương trình, cùng hệ số của phần tương lai:
 
@@ -814,7 +814,7 @@ Suy ra $v_L=7/4$ và $v_H=13/4$.
 
 ### L03R-06-04 — Kiểm tra giá trị bằng các hành động
 
-Thời lượng: 4 phút. Vai trò: áp dụng $q$ theo $v$ và kiểm tra $v$ theo $q$.
+Thời lượng: 3 phút. Vai trò: áp dụng $q$ theo $v$ và kiểm tra $v$ theo $q$.
 
 **Mặt slide:** dùng nghiệm vừa tìm:
 
@@ -850,7 +850,7 @@ Thời lượng: 3 phút. Vai trò: ví dụ số cho MRP cảm sinh.
 
 ### L03R-06-06 — Chuỗi Markov và MRP dưới chính sách
 
-Thời lượng: 4 phút. Vai trò: hình thức hóa phép gộp.
+Thời lượng: 3 phút. Vai trò: hình thức hóa phép gộp.
 
 **Mặt slide:** ma trận chuyển dưới chính sách có phần tử
 

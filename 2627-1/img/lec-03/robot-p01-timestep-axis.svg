@@ -1,0 +1,13 @@
+<svg class="figure short" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 220" role="img" aria-label="Pin cao H, hành động Tìm, rồi cùng nhận phần thưởng 2 và trạng thái pin thấp L" font-family="Arial,sans-serif">
+<defs><marker id="step-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8Z" fill="#2F3E7A"/></marker></defs>
+<rect x="25" y="60" width="235" height="100" rx="14" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+<text x="142" y="120" text-anchor="middle" font-size="32" fill="#2F3E7A">Pin cao H</text>
+<path d="M265 110H375" stroke="#2F3E7A" stroke-width="4" marker-end="url(#step-arrow)"/>
+<rect x="385" y="60" width="190" height="100" rx="14" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/>
+<text x="480" y="120" text-anchor="middle" font-size="32" fill="#424954">Tìm</text>
+<path d="M580 110H680" stroke="#2F3E7A" stroke-width="4" marker-end="url(#step-arrow)"/>
+<rect x="690" y="35" width="375" height="150" rx="14" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/>
+<text x="877" y="80" text-anchor="middle" font-size="30" fill="#424954">Phản hồi cùng một bước</text>
+<text x="877" y="125" text-anchor="middle" font-size="32" fill="#B15A2B">Thưởng +2</text>
+<text x="877" y="165" text-anchor="middle" font-size="32" fill="#2F3E7A">Pin thấp L</text>
+</svg>
