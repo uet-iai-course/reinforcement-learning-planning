@@ -190,3 +190,121 @@ Thời lượng: 2 phút. Vai trò: ứng dụng và kiểm tra.
 **Ghi chú đáp án:** 1. $R_{t+1}$. 2. Chưa đủ nếu vị trí thay đổi phân phối phản hồi; cần bổ sung thông tin liên quan. 3. Không; trạng thái là đầu vào, mô hình là quy luật phản hồi có điều kiện. **Câu nối:** “Ta sẽ mô tả quy luật này bằng bảng các kết quả có thể xảy ra.”
 
 **Nguồn:** vận dụng SB §3.1 và Bài 02.
+
+## 4. Phần 2 — Mô hình xác suất của MDP
+
+**Chức năng:** biến mô tả robot thành mô hình có thể tính toán. Đầu vào là một bước phản hồi và yêu cầu Markov; đầu ra là hạt nhân chung, xác suất chuyển và thưởng trung bình. Chưa chọn chính sách.
+
+**Mạch trình bày trước khi chia slide:**
+
+1. Cố định trạng thái L và hành động Tìm để chỉ còn sự ngẫu nhiên của môi trường.
+2. Vẽ hai kết quả có cả trạng thái mới lẫn thưởng; mở rộng thành bảng của robot.
+3. Đặt tên $p$ cho xác suất trong bảng, nêu miền và điều kiện chuẩn hóa.
+4. Gộp các hàng để lấy xác suất chuyển; lấy trung bình có trọng số để có thưởng kỳ vọng.
+5. Tập hợp các đối tượng thành đặc tả MDP và kiểm tra bằng một cặp trạng thái–hành động.
+
+**Chu trình học:** vấn đề/ví dụ 02-01/02 → biểu diễn cụ thể 02-03 → hình thức 02-04 → ứng dụng và công thức suy ra 02-05 → tổng hợp 02-06 → kiểm tra 02-07. Tổng 18 phút.
+
+### L03R-02-01 — Mô hình xác suất của MDP
+
+Thời lượng: 1 phút. Vai trò: tiêu đề phần và đặt vấn đề.
+
+**Mặt slide:** đúng tiêu đề phần; một câu “Cùng pin thấp và hành động Tìm có thể dẫn tới hai phản hồi”.
+
+**Cách thể hiện:** nút L → hành động Tìm → hai ô kết quả còn để trống. Hành động là lựa chọn đã cố định, không ghi xác suất chọn hành động lên cạnh này.
+
+**Ghi chú và cầu nối:** một mẫu H→Tìm→L ở phần trước không cho biết tần suất từng kết quả. Mô hình phải mô tả mọi phản hồi có thể xảy ra sau một cặp trạng thái–hành động.
+
+**Nguồn:** SB ví dụ 3.3, tr.52–53.
+
+### L03R-02-02 — Hai phản hồi của hành động Tìm
+
+Thời lượng: 3 phút. Vai trò: ví dụ số trước ký hiệu xác suất chung.
+
+**Mặt slide:** từ L, Tìm dẫn tới L và nhận $2$ với xác suất $1/2$; hoặc cạn pin, được cứu hộ về H và nhận $-3$ với xác suất $1/2$. Từ H, Tìm dẫn tới H hoặc L, mỗi nơi $1/2$, đều nhận $2$.
+
+**Cách thể hiện:** trước hết chỉ hiện nhánh từ L. Mỗi đầu mũi tên là một ô chứa cặp “trạng thái mới; thưởng”, trọng số nằm trên cạnh. Sau khi đọc đủ nhánh, hiện thêm cây từ H. Caption “Ví dụ số: thưởng cố định trên mỗi nhánh”.
+
+**Giải thích và cầu nối:** không tách rút thăm trạng thái và thưởng thành hai lần độc lập: ở L, biết thưởng $-3$ là biết robot đã được cứu về H. Cứu hộ tính trọn trong một bước mô hình; không cộng thêm $2$. Bảng ở trang sau ghi chính những nhánh này cùng các hành động còn lại.
+
+**Nguồn:** số hóa SB ví dụ 3.3 theo đặc tả đầu storyboard.
+
+### L03R-02-03 — Bảng phản hồi của robot
+
+Thời lượng: 3 phút. Vai trò: đi từ hình sang dữ liệu mô hình.
+
+**Mặt slide:** bảng bảy hàng đã xác định ở mục 2, với các cột “hiện tại”, “hành động”, “kế tiếp”, “thưởng”, “xác suất”. Chỉ ghi các kết quả có xác suất dương.
+
+**Cách thể hiện:** giữ H–Tìm và L–Tìm từ trang trước; lần lượt thêm H–Chờ, L–Chờ, L–Sạc. Khoanh nhóm hàng theo cùng cặp hiện tại–hành động; tổng xác suất của mỗi nhóm bằng 1. Không thu nhỏ bảng để đặt thêm đồ thị đầy đủ bên cạnh.
+
+**Giải thích và cầu nối:** ở H chỉ có Tìm/Chờ; ở L thêm Sạc. Chờ giữ mức pin, nhận 1; Sạc từ L về H, nhận 0. Các ô không có trong bảng có xác suất 0. Cần một ký hiệu ngắn để truy vấn từng dòng.
+
+**Nguồn:** SB ví dụ 3.3; tinh thần bài tập 3.4, với giả thiết thưởng cố định đã nêu.
+
+### L03R-02-04 — Xác suất chuyển trạng thái và phần thưởng
+
+Thời lượng: 3 phút. Vai trò: định nghĩa hạt nhân chung.
+
+**Mặt slide:** gọi $\mathcal S$ là tập trạng thái, $\mathcal A(s)$ là tập hành động hợp lệ, $\mathcal R$ là tập điểm thưởng hữu hạn. Từ một dòng cụ thể:
+
+$$p(\mathrm H,-3\mid\mathrm L,\mathrm{tim})=\frac12.$$
+
+Sau đó đưa định nghĩa và chuẩn hóa:
+
+$$p(s',r\mid s,a)=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a),$$
+$$p(s',r\mid s,a)\ge0,\qquad \sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}p(s',r\mid s,a)=1.$$
+
+**Cách thể hiện:** chuyển nhãn của dòng bảng sang đúng bốn vị trí trong công thức. Cặp $(s,a)$ cố định; chỉ $(s',r)$ chạy trong tổng. Các dòng công thức xuất hiện lần lượt.
+
+**Giải thích và cầu nối:** dùng một hàm $p$ không có chỉ số thời gian nghĩa là thêm giả thiết quy luật không đổi theo thời gian. Giả thiết này khác điều kiện Markov của phần 1. Chỉ số trong SB (3.2) được dịch từ $t-1,t$ sang $t,t+1$.
+
+**Nguồn:** SB (3.2)–(3.3), tr.48–49.
+
+### L03R-02-05 — Xác suất chuyển và thưởng trung bình
+
+Thời lượng: 3 phút. Vai trò: lấy hai đại lượng từ cùng mô hình.
+
+**Mặt slide:** vẫn cố định L–Tìm. Xác suất về H là $1/2$; thưởng trung bình là
+
+$$\frac12(2)+\frac12(-3)=-\frac12.$$
+
+Đọc từ bảng rồi khái quát:
+
+$$p(s'\mid s,a)=\sum_r p(s',r\mid s,a),$$
+$$r(s,a)=\mathbb E[R_{t+1}\mid S_t=s,A_t=a]=\sum_{s',r}r\,p(s',r\mid s,a).$$
+
+**Cách thể hiện:** hai bản sao nhỏ của nhóm L–Tìm: một bản gộp theo trạng thái đích, một bản nhân thưởng với trọng số. Giữ công thức cùng các hàng vừa gộp.
+
+**Giải thích và cầu nối:** $r(s,a)$ có thể bằng $-1/2$ dù không lần nào nhận đúng điểm đó. Biến ngẫu nhiên $R_{t+1}$ và kỳ vọng $r(s,a)$ khác nhau. Khi viết $p$ ba đối số, đó là xác suất chuyển đã cộng hết các mức thưởng.
+
+**Nguồn:** SB (3.4)–(3.5), tr.49.
+
+### L03R-02-06 — Các thành phần của MDP
+
+Thời lượng: 2 phút. Vai trò: tổng hợp hình thức sau khi từng thành phần đã có nghĩa.
+
+**Mặt slide:** bốn hàng ghép tên đối tượng với robot: $\mathcal S=\{\mathrm H,\mathrm L\}$; $\mathcal A(s)$ phụ thuộc mức pin; $\mathcal R=\{-3,0,1,2\}$; $p$ là bảng phản hồi. Tóm tắt mô hình bằng
+
+$$\mathcal M=\bigl(\mathcal S,\{\mathcal A(s)\}_{s\in\mathcal S},\mathcal R,p\bigr).$$
+
+**Cách thể hiện:** mỗi hàng có biểu tượng/nhánh nhỏ đã dùng; không đưa một bộ ký hiệu đứng riêng trước ví dụ. Caption “Trạng thái Markov; quy luật phản hồi không đổi theo thời gian”.
+
+**Giải thích và cầu nối:** đây là cách gom các thành phần của §3.1 thành một bộ, không phải phương trình đánh số của sách. Bộ mô tả môi trường; tiêu chuẩn cộng thưởng và cách chọn hành động được xây dựng ở phần 3 và 4. Biết mô hình chưa tự xác định hành động tốt nhất.
+
+**Nguồn:** SB §3.1; PPTX49. Chọn cách viết bộ chưa có $\gamma$ vì tiêu chuẩn đánh giá được định nghĩa ở phần kế tiếp.
+
+### L03R-02-07 — Câu hỏi kiểm tra
+
+Thời lượng: 3 phút. Vai trò: vận dụng hạt nhân và kỳ vọng.
+
+**Mặt slide — Câu hỏi:**
+
+1. Đọc $p(\mathrm H,0\mid\mathrm L,\mathrm{sac})$ và tổng xác suất của các phản hồi sau L–Sạc.
+2. Tính thưởng trung bình khi Tìm ở L. Điểm trung bình có phải điểm robot luôn nhận không?
+3. Sau L–Tìm, nếu biết thưởng là $-3$, trạng thái kế tiếp là gì? Điều này nói gì về quan hệ giữa thưởng và trạng thái kế tiếp?
+
+**Cách thể hiện:** kèm ba hàng liên quan của bảng; sinh viên không phải nhớ toàn bộ mô hình.
+
+**Ghi chú đáp án:** 1. Cả hai bằng 1. 2. $-1/2$; kết quả thực tế chỉ là 2 hoặc −3. 3. H; hai đại lượng không độc lập trong ví dụ này. **Câu nối:** “Mô hình đã cho điểm của từng bước. Ta cần một tiêu chuẩn để tính cả chuỗi bước.”
+
+**Nguồn:** vận dụng SB (3.2)–(3.5).
