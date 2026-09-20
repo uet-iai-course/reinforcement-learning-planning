@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 250" role="img" aria-label="Từ L: Chờ nhận1 rồi tiếp tục từL; Sạc nhận0 rồi tiếp tục từH. Cả hai nhánh tiếp tục theo cùng chính sách." font-family="Arial,sans-serif" class="figure"><defs><marker id="bellman-arrow" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="#2F3E7A"/></marker></defs>
+<circle cx="90" cy="135" r="42" fill="#edf4ff" stroke="#2F3E7A" stroke-width="3"/><text x="90" y="146" text-anchor="middle" font-size="34">L</text>
+<path d="M132 126L335 70" stroke="#2F3E7A" stroke-width="3" fill="none" marker-end="url(#bellman-arrow)"/><path d="M132 144L335 200" stroke="#2F3E7A" stroke-width="3" fill="none" marker-end="url(#bellman-arrow)"/>
+<rect x="345" y="35" width="290" height="65" rx="8" fill="#F7EFE6" stroke="#B15A2B" stroke-width="2"/><text x="490" y="78" text-anchor="middle" font-size="32">Chờ: thưởng1</text>
+<rect x="345" y="170" width="290" height="65" rx="8" fill="#F7EFE6" stroke="#B15A2B" stroke-width="2"/><text x="490" y="213" text-anchor="middle" font-size="32">Sạc: thưởng0</text>
+<path d="M640 68H770" stroke="#2F3E7A" stroke-width="3" fill="none" marker-end="url(#bellman-arrow)"/><path d="M640 203H770" stroke="#2F3E7A" stroke-width="3" fill="none" marker-end="url(#bellman-arrow)"/>
+<rect x="780" y="35" width="280" height="65" rx="8" fill="#edf4ff" stroke="#2F3E7A" stroke-width="2"/><text x="920" y="78" text-anchor="middle" font-size="30">Tiếp tục từ L</text>
+<rect x="780" y="170" width="280" height="65" rx="8" fill="#edf4ff" stroke="#2F3E7A" stroke-width="2"/><text x="920" y="213" text-anchor="middle" font-size="30">Tiếp tục từ H</text></svg>

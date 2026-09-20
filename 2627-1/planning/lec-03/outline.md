@@ -1,6 +1,6 @@
 # Dàn ý triển khai — Bài 03: Quá trình quyết định Markov
 
-Đã triển khai 4/7 phần (28/50 slide) theo storyboard robot. Thiết kế đầy đủ:120 phút; 30 phút chữa hw02. Đối tượng: sinh viên năm3 đã học xác suất, đại số tuyến tính, học máy và Bài02.
+Đã triển khai 5/7 phần (38/50 slide) theo storyboard robot. Thiết kế đầy đủ:120 phút; 30 phút chữa hw02. Đối tượng: sinh viên năm3 đã học xác suất, đại số tuyến tính, học máy và Bài02.
 
 ## 1. Đích học tập và quyết định về cấu trúc
 
@@ -114,6 +114,16 @@ Quy luật môi trường và chính sách được giả sử Markov, không đ
 - `L03R-04-06`: Ấn định hành động đầu tiên.
 - `L03R-04-07`: Giá trị hành động.
 - `L03R-04-08`: Câu hỏi kiểm tra.
+- `L03R-05-01`: Phương trình Bellman.
+- `L03R-05-02`: Một bước từ pin thấp.
+- `L03R-05-03`: Tách phần thưởng tích lũy.
+- `L03R-05-04`: Lấy trung bình theo hành động đầu.
+- `L03R-05-05`: Lấy trung bình theo phản hồi môi trường.
+- `L03R-05-06`: Từ trạng thái kế tiếp đến giá trị tương lai.
+- `L03R-05-07`: Giá trị hành động từ phản hồi một bước.
+- `L03R-05-08`: Giá trị trạng thái từ các giá trị hành động.
+- `L03R-05-09`: Bellman kỳ vọng cho giá trị hành động.
+- `L03R-05-10`: Câu hỏi kiểm tra.
 
 ## Đặc tả và ánh xạ nguồn
 

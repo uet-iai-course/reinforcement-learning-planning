@@ -777,3 +777,12 @@ Phạm vi: toàn bộ nội dung, notes và nhãn/mô tả9SVG của20slide L03R
 | Mạch viết | Nhẹ,01-04,03-02,03-06 | Một mẫu xuất hiện trước mô hình; ví dụ lượt kết thúc tách khỏi robot; câu hỏi tính−1/2 lặp. | Giữ có lý do: ví dụ trước formalism; cần đối chiếu episodic/continuing; tính lại là luyện tập truy hồi. Không phát sinh mạch riêng ngoài7phần. |
 
 Các sửa biên tập góiA sẽ do correction writer riêng thực hiện sau khi đủ năm báo cáo góiB; sau đó rà lại toán và mạch viết theo vùng thay đổi cùng hai slide lân cận và ranh giới phần. Không tự động chấp nhận mức độ reviewer khi bằng chứng cho thấy nội dung toán đã đúng.
+
+
+### Phần 5 — triển khai và kiểm tra cục bộ
+
+Đã thêm10slide L03R-05-01…10 về Bellman, giữ nguyên các bước: ví dụ L → tách đại số của tổng → kỳ vọng theo hành động → kỳ vọng theo cặp phản hồi với đủ điều kiện → dùng Markov và tính không đổi theo thời gian → q theo v → v theo q → phép thế để có Bellman q → câu hỏi kiểm tra. HaiSVG mới. Dùng công thức lớn toàn chiều rộng làm nội dung chính của các trang suy diễn; bỏ hình lặp không mang thông tin mới. Đây là điều chỉnh bố cục, không lược bước toán.
+
+Writer GLM hai lượt, requested=observed, OpenRouter. Bản đầu bị loại vì công thức dài trong nửa trang, nguồn gọi nhầm bài tập3.18/19 thành phương trình. Lượt sửa đã đổi bố cục nhưng còn cây ASCII, câu chỉ dẫn và đồng nhất sai phần thưởng tương lai với kỳ vọng của nó; điều phối viên sửa trực tiếp, dựng SVG hai nhánh, giữ phân biệt G và v, xóa lời hướng dẫn và chuẩn hóa nguồn. Một lần CLI sai tên tham số dừng trước request mạng; đã sửa tên tham số, không đổi mô hình. Không coi lời worker tự nhận “không tràn” là bằng chứng.
+
+Hai trang05-02/07 tràn chiều cao ở lần render đầu; đã rút gọn cây và trình bày phép tính ví dụ gọn hơn, giữ cỡ chữ. Kiểm lại20lượt Chromium: không tràn/lỗi toán/ảnh hỏng/JS/HTTP; đã xem ảnh ghép cả10slide và ảnh riêng hai trang sửa. Lũy kế38slide/38notes/16SVG,298biểu thức KaTeX hợp lệ. Đồng thời rút câu dẫn04-04 để công thức cách xa nút điều hướng. Năm rà soát độc lập phần4–7 vẫn chờ bản nháp đầy đủ.
