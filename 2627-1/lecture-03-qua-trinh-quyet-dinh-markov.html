@@ -599,5 +599,142 @@ q_\pi(s,a)&=\sum_{s',r}p(s',r\mid s,a)\left[r+\gamma\, v_\pi(s')\right]\\
 </aside>
 </section>
 </section>
+
+<section>
+<section data-slide-id="L03R-06-01">
+<h2>Đánh giá một chính sách từ mô hình</h2>
+<p class="caption">Hai trạng thái, hai giá trị cần tìm</p>
+<img src="img/lec-03/robot-p06-policy-evaluation-setup.svg" class="figure" alt="Robot hai trạng thái H và L, mỗi trạng thái một ô giá trị chưa biết"/>
+<aside class="notes">
+<p>Phần này giải trọn một bài toán đánh giá chính sách: đầu vào là mô hình đầy đủ của robot (các cặp xác suất chuyển và thưởng trên từng nhánh), một chính sách cố định $\pi$ và hệ số chiết khấu $\gamma=1/2$; đầu ra là giá trị kỳ vọng đúng $v_\pi(\mathrm H)$ và $v_\pi(\mathrm L)$ trong mô hình đó. Không ước lượng giá trị từ các lần chạy mô phỏng và không tìm chính sách tối ưu ở đây; $\pi$ được cho trước và giữ nguyên trong toàn bộ phép tính. Phương trình Bellman trạng thái (Sutton và Barto, ấn bản 2, phương trình 3.14, tr. 59) cho hệ hai ẩn.</p>
+<p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, vận dụng phương trình (3.14), tr. 59.</p>
+</aside>
+</section>
+
+<section data-slide-id="L03R-06-02">
+<h2>Hệ Bellman của robot</h2>
+<p>Đặt $v_H=v_\pi(\mathrm H)$, $v_L=v_\pi(\mathrm L)$. Tại H luôn chọn Tìm; tại L chính sách chia đều Chờ và Sạc:</p>
+<div class="math-large">
+$$\begin{aligned}
+v_H&=2+\frac12\left(\frac12v_H+\frac12v_L\right),\\[4pt]
+v_L&=\frac12\left(1+\frac12v_L\right)+\frac12\left(0+\frac12v_H\right).
+\end{aligned}$$
+</div>
+<div class="box">
+<p>H: trong ngoặc là xác suất chuyển; ngoài ngoặc là $\gamma$.<br>L: ngoài ngoặc là xác suất hành động; trước mỗi $v$ là $\gamma$.</p>
+</div>
+<aside class="notes">
+<p>Phương trình thứ nhất đọc từ cây H: hành động Tìm có xác suất 1 theo chính sách, nhưng môi trường chia hai kết quả — về H hoặc về L, mỗi nhánh xác suất 1/2, thưởng 2. Phương trình thứ hai đọc từ cây L: chính sách chia hai hành động Chờ và Sạc, mỗi hành động xác suất 1/2; Chờ về L với thưởng 1, Sạc về H với thưởng 0, mỗi nhánh chuyển chắc chắn. Cả hai trường hợp dẫn tới giá trị tương lai chứa cùng hai ẩn $v_H$ và $v_L$, nên hệ phải giải đồng thời. Sai lầm thường gặp: thay $v_L$ bằng thưởng Chờ là 1 — đó chỉ là thưởng một bước, không phải giá trị; và quên nhân $\gamma=1/2$ vào cụm tương lai.</p>
+<p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, phương trình (3.14), tr. 59, chuyên biệt theo dữ kiện ví dụ đã công bố.</p>
+</aside>
+</section>
+
+<section data-slide-id="L03R-06-03">
+<h2>Giải hai phương trình giá trị</h2>
+<div class="math-large">
+$$\begin{aligned}
+v_H&=2+\tfrac14v_H+\tfrac14v_L,\\
+v_L&=\tfrac12+\tfrac14v_H+\tfrac14v_L.\\[8pt]
+v_H-v_L&=\tfrac32\quad\Rightarrow\quad v_H=v_L+\tfrac32.\\[8pt]
+v_L&=\tfrac12+\tfrac14\left(v_L+\tfrac32\right)+\tfrac14v_L\\
+&=\tfrac78+\tfrac12v_L.\\[8pt]
+v_L&=\tfrac74,\qquad v_H=\tfrac{13}{4}.
+\end{aligned}$$
+</div>
+<aside class="notes">
+<p>Khai triển: ở phương trình H, $\gamma\cdot(1/2)=1/4$ cho từng nhánh; ở phương trình L, mỗi hành động có xác suất 1/2 và $\gamma=1/2$ nên cụm tương lai cũng có hệ số 1/4 cho mỗi trạng thái. Hai phương trình có cùng hệ số phần tương lai, nên trừ trực tiếp cho $v_H-v_L=3/2$. Thế $v_H=v_L+3/2$ vào phương trình L: $v_L=1/2+(1/4)v_L+3/8+(1/4)v_L=7/8+(1/2)v_L$, suy ra $v_L=7/4$ và $v_H=13/4$. Kiểm lại: $13/4=2+(1/4)(13/4+7/4)$ và $7/4=1/2+(1/4)(13/4+7/4)$, cả hai đúng. Lưu ý $13/4$ là giá trị toàn tương lai theo Bellman, khác $21/8$ — trung bình chiết khấu của đúng hai bước đầu từ H; không dùng kết quả hữu hạn đó thay cho nghiệm của hệ.</p>
+<p class="note-source">Nguồn: phép giải hệ tính từ mô hình robot đã khai báo ở phần này.</p>
+</aside>
+</section>
+
+<section data-slide-id="L03R-06-04">
+<h2>Kiểm tra giá trị bằng các hành động</h2>
+
+<div class="math-large">
+$$\begin{aligned}
+q_\pi(\mathrm L,\mathrm{cho})&=1+\frac12\cdot\frac74=\frac{15}{8},\\
+q_\pi(\mathrm L,\mathrm{sac})&=0+\frac12\cdot\frac{13}{4}=\frac{13}{8}.
+\end{aligned}$$
+</div>
+<div class="math-large">
+$$v_\pi(\mathrm L)=\frac12\cdot\frac{15}{8}+\frac12\cdot\frac{13}{8}=\frac74.\;\checkmark$$
+</div>
+<div class="check">
+<p>Chờ một lần có giá trị cao hơn Sạc một lần khi cùng tiếp tục theo $\pi$. So sánh này chưa chứng minh chính sách tối ưu.</p>
+</div>
+<aside class="notes">
+<p>Từ quan hệ $q$ theo $v$: $q_\pi(s,a)=r(s,a)+\gamma\sum_{s'}p(s'\mid s,a)\,v_\pi(s')$, tức thưởng một bước cộng giá trị chiết khấu của trạng thái kế tiếp. Với Chờ: $1+(1/2)(7/4)=15/8$; với Sạc: $0+(1/2)(13/4)=13/8$. Trung bình theo chính sách tại L, hai hành động mỗi cái xác suất 1/2, cho $(15/8+13/8)/2=7/4$, trùng đúng $v_L$ vừa giải — hai cách tính giá trị L khớp nhau, đây là phép kiểm tính nhất quán. Chờ tốt hơn Sạc trong ví dụ này, nhưng đó chỉ là so sánh các giá trị hành động dưới $\pi$; phần tiếp diễn vẫn là chính sách đã cho. Vì cả hai hành động đều dẫn tới trạng thái kế tiếp chắc chắn, có thể gộp luôn các nhánh hành động và tính trực tiếp từ trạng thái sang trạng thái.</p>
+<p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, bài tập 3.12–3.13, tr. 58.</p>
+</aside>
+</section>
+
+<section data-slide-id="L03R-06-05">
+<h2>Gộp các nhánh dưới chính sách</h2>
+<p>Tại H, Tìm chia hai kết quả về H hoặc về L, mỗi nhánh xác suất $1/2$, thưởng 2, nên thưởng trung bình một bước là $2$. Tại L, Chờ về L với xác suất $1/2$ và thưởng 1, Sạc về H với xác suất $1/2$ và thưởng 0, nên thưởng trung bình là $\tfrac12\cdot1+\tfrac12\cdot0=\tfrac12$.</p>
+<table>
+<tr><th>Hiện tại</th><th>Kế tiếp H</th><th>Kế tiếp L</th><th>Thưởng trung bình một bước</th></tr>
+<tr><td>H</td><td>$1/2$</td><td>$1/2$</td><td>$2$</td></tr>
+<tr><td>L</td><td>$1/2$</td><td>$1/2$</td><td>$1/2$</td></tr>
+</table>
+<aside class="notes">
+<p>Tại H, hành động Tìm có xác suất 1 và môi trường chia hai kết quả về H hoặc L, mỗi nhánh 1/2, thưởng 2; gộp lại cho xác suất chuyển H→H và H→L đều 1/2, thưởng trung bình 2. Tại L, Chờ đưa về L với xác suất 1/2 và thưởng 1, Sạc đưa về H với xác suất 1/2 và thưởng 0; xác suất chuyển L→H và L→L đều 1/2, thưởng trung bình $(1/2)\cdot1+(1/2)\cdot0=1/2$. Con số 1/2 ở hàng L là kỳ vọng thưởng của trạng thái, không phải thưởng thực tế của một nhánh cụ thể. Sau khi gộp, chính sách đã được lấy trung bình vào các trọng số, nhưng tính ngẫu nhiên của môi trường vẫn còn. Bảng này phụ thuộc chính sách cụ thể đang dùng; đổi chính sách thì tính lại. Việc chỉ còn trạng thái và chuyển tiếp dẫn đến tên gọi chuỗi Markov; giữ thêm thưởng thì được quá trình phần thưởng Markov.</p>
+<p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, hệ quả phương trình (3.4)–(3.5), §3.5; hw02 bài 4.</p>
+</aside>
+</section>
+
+<section data-slide-id="L03R-06-06">
+<h2>Chuỗi Markov và MRP dưới chính sách</h2>
+<div class="math-large">
+$$\begin{aligned}
+P^\pi_{ss'}&=\sum_{a\in\mathcal A(s)}\pi(a\mid s)\,p(s'\mid s,a),\\
+r^\pi(s)&=\sum_{a\in\mathcal A(s)}\pi(a\mid s)\,r(s,a).
+\end{aligned}$$
+</div>
+<div class="box">
+<p>Chuỗi Markov: $(\mathcal S,P^\pi)$.&nbsp;&nbsp;Quá trình phần thưởng Markov (MRP): $(\mathcal S,P^\pi,r^\pi,\gamma)$. Mỗi hàng của $P^\pi$ tổng bằng 1.</p>
+</div>
+<aside class="notes">
+<p>Hai công thức chỉ lấy trung bình những đại lượng đã định nghĩa ở phần mô hình: $P^\pi_{ss'}$ cộng theo mọi hành động $a$ tại $s$, mỗi hành động với trọng số $\pi(a\mid s)$; $r^\pi(s)$ lấy trung bình thưởng kỳ vọng $r(s,a)$ cùng trọng số đó. Kiểm bằng hàng L của bảng đã gộp: $P^\pi_{LH}=P^\pi_{LL}=1/2$ và $r^\pi(L)=1/2$, đúng như bảng. Chính sách Markov dừng, sau khi gộp, làm phân phối phản hồi chỉ phụ thuộc trạng thái hiện tại, nên quá trình trạng thái vẫn Markov. Lưu ý $r^\pi$ chỉ lưu kỳ vọng thưởng cần cho bài toán giá trị, không mô tả đầy đủ phân phối thưởng. Chuỗi Markov và MRP không có một quyết định hành động mới nào ngoài chính sách đã gộp; $\gamma$ nằm ngoài $r^\pi$, chỉ xuất hiện trong bộ MRP. Phương trình Bellman của MRP chính là hệ hai phương trình đã giải ở trên.</p>
+<p class="note-source">Nguồn: suy ra từ Sutton và Barto, ấn bản 2, phương trình (3.4)–(3.5), tr. 49 và (3.14), tr. 59; hw02 bài 4.</p>
+</aside>
+</section>
+
+<section data-slide-id="L03R-06-07">
+<h2>Bellman dưới dạng ma trận</h2>
+<p>Với $n$ trạng thái: $v,\,r^\pi\in\mathbb R^n$ là véc-tơ cột, $P^\pi\in\mathbb R^{n\times n}$, $I$ là ma trận đơn vị.</p>
+<div class="math-large">
+$$v=r^\pi+\gamma P^\pi v
+\quad\Longleftrightarrow\quad
+(I-\gamma P^\pi)v=r^\pi.$$
+</div>
+<p>Với robot, chọn thứ tự trạng thái H, L:</p>
+<div class="math-large">
+$$\begin{pmatrix}3/4&-1/4\\-1/4&3/4\end{pmatrix}
+\begin{pmatrix}v_H\\v_L\end{pmatrix}
+=\begin{pmatrix}2\\1/2\end{pmatrix}.$$
+</div>
+<div class="check">
+<p>Điều kiện có nghiệm duy nhất: $P^\pi$ là ma trận xác suất hữu hạn — các phần tử không âm và từng hàng tổng bằng 1 — cùng $0\le\gamma<1$.</p>
+</div>
+<aside class="notes">
+<p>Gộp hai nhóm số hạng trong Bellman đã suy ra: $v_\pi(s)=r^\pi(s)+\gamma\sum_{s'}P^\pi_{ss'}v_\pi(s')$. Phép nhân $P^\pi v$ là các tổng có trọng số vừa học, không thêm quy tắc cập nhật mới. Hàng đầu của ma trận hệ số, $3/4$ và $-1/4$, chính là phương trình H ở dạng $v_H-(1/4)v_H-(1/4)v_L=2$; hàng hai là phương trình L. Điều kiện duy nhất: với ma trận xác suất hữu hạn — phần tử không âm, từng hàng tổng bằng 1 — và $0\le\gamma<1$, ma trận $I-\gamma P^\pi$ khả nghịch. Khai triển Neumann $v=\sum_{k\ge0}\gamma^k(P^\pi)^k r^\pi$ hội tụ vì $\|\gamma P^\pi\|_\infty=\gamma<1$, nên tồn tại nghiệm. Nếu có hai nghiệm $v,w$ thì $\|v-w\|_\infty\le\gamma\|v-w\|_\infty$, suy ra $v=w$. Phép nhân $P^\pi$ không làm tăng chuẩn; hệ số $\gamma<1$ mới tạo tính co. Điều này không cho phép kết luận không điều kiện khi $\gamma=1$. Với ma trận đặc, giải trực tiếp thường tốn $O(n^3)$ phép tính; các phương pháp lặp sẽ học ở Bài 04.</p>
+<p class="note-source">Nguồn: dạng ma trận suy ra từ Sutton và Barto, ấn bản 2, phương trình (3.14), tr. 59.</p>
+</aside>
+</section>
+
+<section data-slide-id="L03R-06-08">
+<h2>Câu hỏi kiểm tra</h2>
+<p><span class="keyword">Câu hỏi:</span> cho lại $v_H=\tfrac{13}{4}$, $v_L=\tfrac{7}{4}$, $\gamma=\tfrac12$; hai nhánh L–Tìm: về L thưởng $2$ (xác suất $1/2$), về H thưởng $-3$ (xác suất $1/2$); chính sách tại L chia đều Chờ/Sạc; Chờ chắc chắn cho $(\mathrm L,1)$, Sạc cho $(\mathrm H,0)$.</p>
+<ol>
+<li>Tính $q_\pi(\mathrm L,\mathrm{tim})$, dù chính sách đang dùng không chọn hành động đó tại L.</li>
+<li>Từ bảng chính sách, tính hàng chuyển và thưởng trung bình của trạng thái L.</li>
+<li>Nếu đổi chính sách, những đại lượng nào trong $p,\;P^\pi,\;r^\pi,\;v_\pi$ cần tính lại?</li>
+</ol>
+<aside class="notes">
+<p>Đáp án 1: $q_\pi(\mathrm L,\mathrm{tim})=\tfrac12\left(2+\tfrac12\cdot\tfrac74\right)+\tfrac12\left(-3+\tfrac12\cdot\tfrac{13}{4}\right)=\tfrac12\cdot\tfrac{23}{8}+\tfrac12\cdot\left(-\tfrac{11}{8}\right)=\tfrac34$. Giá trị hành động được xác định đầy đủ bởi mô hình và $v$, kể cả khi $\pi(\mathrm{tim}\mid\mathrm L)=0$; hành động đầu bị ép bởi dữ kiện hai nhánh L–Tìm, còn chính sách ở các bước sau vẫn ảnh hưởng tới $q$ qua $v$. Đáp án 2: hàng L của $P^\pi$ là $(1/2,\,1/2)$ vì Chờ về L và Sạc về H, mỗi hành động xác suất 1/2; thưởng trung bình $r^\pi(L)=(1/2)\cdot1+(1/2)\cdot0=1/2$. Đáp án 3: giữ nguyên mô hình $p$ vì nó thuộc môi trường; phải tính lại $P^\pi$, $r^\pi$ và do đó $v_\pi$. Không khẳng định mọi thay đổi chính sách luôn làm mọi số đổi — có thể có trùng hợp, nhưng về nguyên tắc cả ba đại lượng phụ thuộc chính sách cần xét lại.</p>
+<p class="note-source">Nguồn: Sutton và Barto, ấn bản 2, §3.5, tr. 58–59; hw02 bài 4, 7, 8.</p>
+</aside>
+</section>
+</section>
 <div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 03</div>
 </div></div><script src="revealjs/dist/reveal.js"></script><script src="plugin/notes/notes.js"></script><script src="plugin/highlight/highlight.js"></script><script src="plugin/math/math.js"></script><script>Reveal.initialize({width:1280,height:720,margin:.04,controlsLayout:"edges",slideNumber:true,hashOneBasedIndex:true,hash:true,katex:{local:"vendor/katex"},plugins:[RevealHighlight,RevealNotes,RevealMath.KaTeX]});</script></body></html>

@@ -785,4 +785,13 @@ Các sửa biên tập góiA sẽ do correction writer riêng thực hiện sau 
 
 Writer GLM hai lượt, requested=observed, OpenRouter. Bản đầu bị loại vì công thức dài trong nửa trang, nguồn gọi nhầm bài tập3.18/19 thành phương trình. Lượt sửa đã đổi bố cục nhưng còn cây ASCII, câu chỉ dẫn và đồng nhất sai phần thưởng tương lai với kỳ vọng của nó; điều phối viên sửa trực tiếp, dựng SVG hai nhánh, giữ phân biệt G và v, xóa lời hướng dẫn và chuẩn hóa nguồn. Một lần CLI sai tên tham số dừng trước request mạng; đã sửa tên tham số, không đổi mô hình. Không coi lời worker tự nhận “không tràn” là bằng chứng.
 
-Hai trang05-02/07 tràn chiều cao ở lần render đầu; đã rút gọn cây và trình bày phép tính ví dụ gọn hơn, giữ cỡ chữ. Kiểm lại20lượt Chromium: không tràn/lỗi toán/ảnh hỏng/JS/HTTP; đã xem ảnh ghép cả10slide và ảnh riêng hai trang sửa. Lũy kế38slide/38notes/16SVG,298biểu thức KaTeX hợp lệ. Đồng thời rút câu dẫn04-04 để công thức cách xa nút điều hướng. Năm rà soát độc lập phần4–7 vẫn chờ bản nháp đầy đủ.
+Hai trang05-02/07 tràn chiều cao ở lần render đầu; đã rút gọn cây và trình bày phép tính ví dụ gọn hơn, giữ cỡ chữ. Kiểm lại20lượt Chromium: không tràn/lỗi toán/ảnh hỏng/JS/HTTP; đã xem ảnh ghép cả10slide và ảnh riêng hai trang sửa. Lũy kế38slide/38notes/16SVG,299biểu thức KaTeX hợp lệ. Đồng thời rút câu dẫn04-04 để công thức cách xa nút điều hướng. Năm rà soát độc lập phần4–7 vẫn chờ bản nháp đầy đủ.
+
+
+### Phần 6 — triển khai và kiểm tra cục bộ
+
+Đã thêm8slide L03R-06-01…08: đặt bài toán, lập hệ, giải bằng trừ/thế, kiểm q/v, gộp chính sách, định nghĩa MRP, ma trận và câu hỏi. MộtSVG mở phần. 06-05 dùng bảng số sau diễn giải từng nhánh thay cho đồ thị nhiều tầng để tránh chen nhãn; 06-06 hình thức hóa bảng ấy. Các phép giải cụ thể vẫn xuất hiện trước ma trận.
+
+Writer GLM hai lượt, requested=observed, OpenRouter. Bản đầu bị loại: giải thích hệ số của phương trình H áp nhầm sang L; cây gộp H đi Chờ và thiếu vòng tự chuyển; trung gian tính q sai dù kết quả cuối đúng. Worker sửa theo phản hồi. Điều phối viên sửa tiếp chứng minh tính duy nhất: P chỉ không làm tăng chuẩn, gamma<1 mới tạo tính co; chuyển toàn bộ toán notes sang KaTeX, bổ sung dữ kiện Chờ/Sạc trên câu hỏi, bố trí phép giải đủ bước trong một khối, sửa nhãn hình chồng và bỏ câu lặp sát chân trang. Nghiệm13/4,7/4 và q(L,Tìm)=3/4 được tự tính lại bằng phân số.
+
+Lũy kế46slide/46notes/17SVG,411biểu thức KaTeX hợp lệ. Hai lượt kiểm16màn hình của phần6 sau sửa đều không tràn/lỗi toán/ảnh hỏng/JS/HTTP; đã xem ảnh ghép8slide. Rà độc lập toán/mạch của góiB sẽ xét cả chứng minh và kết nối từ Bellman sang MRP.

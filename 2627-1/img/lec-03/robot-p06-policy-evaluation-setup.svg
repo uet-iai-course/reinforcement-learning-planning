@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 330" role="img" aria-label="Robot hai trạng thái H và L, mỗi trạng thái một ô giá trị chưa biết" class="figure" font-family="Arial,sans-serif">
+  <rect x="0" y="0" width="1100" height="330" fill="#F7EFE6"/>
+  <!-- robot -->
+  <g>
+    <rect x="60" y="120" width="120" height="150" rx="14" fill="#edf4ff" stroke="#2F3E7A" stroke-width="4"/>
+    <rect x="80" y="140" width="80" height="55" rx="8" fill="#ffffff" stroke="#2F3E7A" stroke-width="3"/>
+    <circle cx="102" cy="167" r="8" fill="#2F3E7A"/>
+    <circle cx="138" cy="167" r="8" fill="#2F3E7A"/>
+    <rect x="95" y="215" width="50" height="30" rx="6" fill="#B15A2B"/>
+    <text x="120" y="236" font-size="24" fill="#ffffff" text-anchor="middle">pin</text>
+    <line x1="120" y1="120" x2="120" y2="95" stroke="#2F3E7A" stroke-width="4"/>
+    <circle cx="120" cy="88" r="9" fill="#B15A2B"/>
+  </g>
+  <!-- H node -->
+  <rect x="330" y="60" width="300" height="90" rx="12" fill="#edf4ff" stroke="#2F3E7A" stroke-width="4"/>
+  <text x="350" y="118" font-size="30" fill="#2F3E7A" font-weight="bold">H (pin cao)</text>
+  <rect x="540" y="78" width="70" height="54" rx="8" fill="#ffffff" stroke="#B15A2B" stroke-width="3" stroke-dasharray="7 5"/>
+  <text x="575" y="115" font-size="30" fill="#B15A2B" text-anchor="middle">?</text>
+  <!-- L node -->
+  <rect x="330" y="200" width="300" height="90" rx="12" fill="#edf4ff" stroke="#2F3E7A" stroke-width="4"/>
+  <text x="350" y="258" font-size="30" fill="#2F3E7A" font-weight="bold">L (pin thấp)</text>
+  <rect x="540" y="218" width="70" height="54" rx="8" fill="#ffffff" stroke="#B15A2B" stroke-width="3" stroke-dasharray="7 5"/>
+  <text x="575" y="255" font-size="30" fill="#B15A2B" text-anchor="middle">?</text>
+  <!-- arrows robot to nodes -->
+  <defs>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2F3E7A"/></marker>
+  </defs>
+  <line x1="185" y1="160" x2="322" y2="110" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ar)"/>
+  <line x1="185" y1="230" x2="322" y2="245" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ar)"/>
+  <!-- policy box -->
+  <rect x="700" y="60" width="360" height="230" rx="12" fill="#ffffff" stroke="#2F3E7A" stroke-width="3"/>
+  <text x="880" y="105" font-size="30" fill="#2F3E7A" text-anchor="middle" font-weight="bold">Chính sách π</text>
+  <text x="725" y="155" font-size="28" fill="#424954">Tại H: luôn Tìm</text>
+  <text x="725" y="200" font-size="28" fill="#424954">Tại L: Chờ 1/2, Sạc 1/2</text>
+  <text x="725" y="245" font-size="28" fill="#B15A2B">γ = 1/2</text>
+</svg>
