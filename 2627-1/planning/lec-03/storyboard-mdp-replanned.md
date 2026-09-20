@@ -541,3 +541,200 @@ Thời lượng: 2 phút. Vai trò: kiểm tra các đối tượng trước khi
 **Ghi chú đáp án:** 1. Bảng môi trường không đổi; phân phối quỹ đạo và giá trị có thể đổi. 2. Kỳ vọng của đúng hai bước. 3. Một lần, rồi theo $\pi$ kể từ trạng thái kế tiếp. **Câu nối:** “Thay vì liệt kê toàn bộ quỹ đạo, ta tách bước đầu và dùng lại giá trị của trạng thái kế tiếp.”
 
 **Nguồn:** vận dụng SB §3.5.
+
+## 7. Phần 5 — Phương trình Bellman
+
+**Chức năng:** suy ra quan hệ giữa các giá trị, giải thích vì sao không cần liệt kê mọi quỹ đạo. Đầu vào là định nghĩa $G_t,v_\pi,q_\pi$, chính sách và hạt nhân; đầu ra là ba quan hệ giá trị và hai phương trình Bellman kỳ vọng.
+
+**Mạch trình bày trước khi chia slide:**
+
+1. Tại L, đọc hai nhánh Chờ/Sạc của chính sách và viết “thưởng ngay + giá trị phần còn lại” bằng các hệ số đã biết.
+2. Chứng minh việc tách bước đầu trên một dãy thưởng; bước này chưa cần Markov.
+3. Lấy kỳ vọng theo hành động đầu bằng xác suất toàn phần.
+4. Trong mỗi hành động, lấy kỳ vọng theo cặp phản hồi $(s',r)$ bằng cùng bảng $p$.
+5. Chỉ ở đây dùng trạng thái Markov cùng chính sách dừng để thay kỳ vọng tương lai bằng $v_\pi(s')$; thu Bellman cho $v$.
+6. Giữ cố định hành động đầu để có $q$ theo $v$; lấy trung bình các $q$ để trở lại $v$.
+7. Thế $v(s')$ bằng trung bình của các $q(s',a')$ để có Bellman cho $q$.
+
+**Chu trình học:** vấn đề/ví dụ 05-01/02 → trực giác tách một bước 05-03 → hình thức và suy diễn 05-04…06 → ứng dụng cách tách cho hành động 05-07/08 → phép thế 05-09 → kiểm tra 05-10. Từng phép biến đổi là một bước cần giải thích, không gom cả chuỗi vào một trang rồi thu nhỏ chữ. Tổng 26 phút.
+
+### L03R-05-01 — Phương trình Bellman
+
+Thời lượng: 1 phút. Vai trò: tiêu đề phần.
+
+**Mặt slide:** tên phần; một trạng thái dẫn qua bước đầu tới hai ô “giá trị từ trạng thái kế tiếp”. Câu dẫn “Tách bước đầu, dùng lại giá trị của phần còn lại”.
+
+**Cách thể hiện:** hình nhìn trước một bước, nối với cây nhiều bước ở phần 4. Các ô tương lai là các đại lượng đã có định nghĩa, chưa biết giá trị số.
+
+**Ghi chú và cầu nối:** định nghĩa kỳ vọng trên toàn tương lai chưa cho cách tính gọn. Ta thử nhóm các quỹ đạo theo bước đầu, bắt đầu tại L của robot.
+
+**Nguồn:** SB diễn giải trước và sau (3.14), tr.59.
+
+### L03R-05-02 — Một bước từ pin thấp
+
+Thời lượng: 2 phút. Vai trò: phương trình ví dụ trước suy diễn tổng quát.
+
+**Mặt slide:** dưới chính sách đã chọn, tại L: Chờ nhận 1 rồi ở L; Sạc nhận 0 rồi tới H; xác suất chọn mỗi hành động $1/2$. Với $\gamma=1/2$:
+
+$$v_\pi(\mathrm L)=\frac12\left[1+\frac12v_\pi(\mathrm L)\right]
++\frac12\left[0+\frac12v_\pi(\mathrm H)\right].$$
+
+**Cách thể hiện:** từ cây hai nhánh, thay đuôi mỗi nhánh bằng hộp $v_\pi$ tương ứng, rồi dựng từng ngoặc. Hai hệ số ngoài mang nhãn “xác suất hành động”; hệ số trước giá trị mang nhãn “chiết khấu”. Chúng có cùng số $1/2$ nhưng khác vai trò.
+
+**Giải thích và cầu nối:** mỗi ngoặc là thưởng một bước cộng giá trị tương lai đã chiết khấu. Giá trị L xuất hiện ở cả hai vế do Chờ giữ nguyên mức pin; chưa giải phương trình này. Các trang tiếp theo giải thích vì sao cấu trúc đó đúng cho mọi trạng thái.
+
+**Nguồn:** vận dụng SB (3.14) vào đặc tả robot.
+
+### L03R-05-03 — Tách phần thưởng tích lũy
+
+Thời lượng: 3 phút. Vai trò: phép biến đổi trên một quỹ đạo.
+
+**Mặt slide:**
+
+$$\begin{aligned}
+G_t&=R_{t+1}+\gamma R_{t+2}+\gamma^2R_{t+3}+\cdots\\
+&=R_{t+1}+\gamma\bigl(R_{t+2}+\gamma R_{t+3}+\cdots\bigr)\\
+&=R_{t+1}+\gamma G_{t+1}.
+\end{aligned}$$
+
+**Cách thể hiện:** mở từng dòng; ngoặc khoanh đuôi của cùng dãy thưởng. Bên dưới ghi riêng $G_{t+1}=R_{t+2}+\gamma R_{t+3}+\cdots$ để kiểm tra chỉ số. Dùng thưởng 0 sau kết thúc nếu có.
+
+**Giải thích và cầu nối:** dòng 1 khai triển định nghĩa; dòng 2 đặt $\gamma$ ra ngoài các số hạng từ bước thứ hai; dòng 3 nhận đúng tổng bắt đầu ở thời điểm $t+1$. Không dùng xác suất, chính sách hay Markov ở phép tách này. Điều kiện hội tụ đã có ở phần 3. Tiếp theo lấy kỳ vọng của đẳng thức.
+
+**Nguồn:** SB (3.9), tr.55, viết đầy đủ các số hạng.
+
+### L03R-05-04 — Lấy trung bình theo hành động đầu
+
+Thời lượng: 3 phút. Vai trò: tầng kỳ vọng thứ nhất.
+
+**Mặt slide:** từ định nghĩa giá trị và đẳng thức vừa chứng minh:
+
+$$v_\pi(s)=\mathbb E_\pi[R_{t+1}+\gamma G_{t+1}\mid S_t=s].$$
+
+Nhóm các quỹ đạo theo $A_t=a$:
+
+$$v_\pi(s)=\sum_{a\in\mathcal A(s)}\pi(a\mid s)
+\mathbb E_\pi[R_{t+1}+\gamma G_{t+1}\mid S_t=s,A_t=a].$$
+
+**Cách thể hiện:** cây chỉ mở tầng trạng thái→hành động; mỗi hành động giữ một hộp kỳ vọng chưa tính. Liên hệ trực tiếp với các trọng số $1/2$ ngoài ngoặc ở ví dụ L.
+
+**Giải thích và cầu nối:** dùng kỳ vọng toàn phần theo hành động đầu, không phải chọn giá trị lớn nhất. Mô hình vẫn ngẫu nhiên bên trong mỗi hộp. Các hành động có trọng số 0 không đóng góp; khi nói riêng kỳ vọng sau một hành động, hiểu theo thí nghiệm hành động đầu đã định nghĩa ở phần 4.
+
+**Nguồn:** bước trung gian làm tường minh suy diễn SB (3.14).
+
+### L03R-05-05 — Lấy trung bình theo phản hồi môi trường
+
+Thời lượng: 3 phút. Vai trò: tầng kỳ vọng thứ hai và tuyến tính.
+
+**Mặt slide:** trước công thức, nêu quy ước điều kiện viết tắt: $s,a,s',r$ lần lượt là giá trị của $S_t,A_t,S_{t+1},R_{t+1}$. Với một hành động đã cố định:
+
+$$\begin{aligned}
+&\mathbb E_\pi[R_{t+1}+\gamma G_{t+1}\mid s,a]\\
+&\quad=\sum_{s',r}p(s',r\mid s,a)
+\left[r+\gamma\mathbb E_\pi[G_{t+1}\mid s,a,s',r]\right].
+\end{aligned}$$
+
+**Cách thể hiện:** mở hộp kỳ vọng của một hành động thành các cặp phản hồi. Tái dùng L–Tìm với hai cặp $(\mathrm L,2)$ và $(\mathrm H,-3)$ để đọc tổng, rồi khái quát. Công thức dài tách hai dòng; quy ước điều kiện phải hiện trước lần dùng.
+
+**Giải thích từng biến đổi:** kỳ vọng toàn phần nhóm theo cặp $(S_{t+1},R_{t+1})$; trong một nhóm, $R_{t+1}=r$ đã cố định nên ra khỏi kỳ vọng; tuyến tính đưa $\gamma$ ra ngoài. Chưa bỏ điều kiện $s,a,r$ trong kỳ vọng tương lai. Không nhân xác suất thưởng với xác suất chuyển như thể chúng độc lập. Chỉ các nhóm có xác suất dương cần kỳ vọng điều kiện riêng.
+
+**Nguồn:** SB (3.14); mở riêng bước kỳ vọng lặp và giữ đầy đủ điều kiện.
+
+### L03R-05-06 — Từ trạng thái kế tiếp đến giá trị tương lai
+
+Thời lượng: 3 phút. Vai trò: chỉ rõ nơi dùng Markov và kết thúc suy diễn Bellman trạng thái.
+
+**Mặt slide:** giữ quy ước điều kiện ở trang trước. Với mô hình Markov và chính sách Markov dừng:
+
+$$\mathbb E_\pi[G_{t+1}\mid s,a,s',r]
+=\mathbb E_\pi[G_{t+1}\mid S_{t+1}=s']
+=v_\pi(s').$$
+
+Thế vào hai tầng trung bình:
+
+$$v_\pi(s)=\sum_a\pi(a\mid s)\sum_{s',r}p(s',r\mid s,a)
+\left[r+\gamma v_\pi(s')\right].$$
+
+**Cách thể hiện:** làm mờ quá khứ trên cây, giữ trạng thái kế tiếp và nhãn tiếp tục theo $\pi$; thay hộp kỳ vọng bằng $v_\pi(s')$. Công thức kết quả xuất hiện sau dòng nhận diện, không cùng lúc.
+
+**Giải thích từng bước:** biết $s'$ đủ để mô tả phân phối tương lai khi các hành động sau đó theo cùng chính sách; tính không đổi theo thời gian cho phép dùng cùng hàm $v_\pi$ tại $t+1$. Đây là điểm cần Markov, khác phép tách $G_t$ ở 05-03. Khi $s'$ kết thúc, dùng $v_\pi(s')=0$. Trở lại cây L và nhận lại đúng hai ngoặc của 05-02.
+
+**Nguồn:** SB (3.12), (3.14), tr.58–59.
+
+### L03R-05-07 — Giá trị hành động từ phản hồi một bước
+
+Thời lượng: 2 phút. Vai trò: áp dụng cách tách với hành động đầu đã ấn định.
+
+**Mặt slide:** trước hết đọc hai nhánh L–Tìm:
+
+$$q_\pi(\mathrm L,\mathrm{tim})=
+\frac12\left[2+\frac12v_\pi(\mathrm L)\right]
++\frac12\left[-3+\frac12v_\pi(\mathrm H)\right].$$
+
+Từ định nghĩa $q$, tách $G_t$ và dùng đúng phép nhóm vừa chứng minh:
+
+$$\begin{aligned}
+q_\pi(s,a)&=\mathbb E_\pi[R_{t+1}+\gamma G_{t+1}\mid s,a]\\
+&=\sum_{s',r}p(s',r\mid s,a)\left[r+\gamma v_\pi(s')\right].
+\end{aligned}$$
+
+**Cách thể hiện:** xuất phát ở nút hành động, chỉ còn tầng phản hồi môi trường. Hiện công thức ví dụ rồi thay bằng công thức tổng quát để tránh ba khối toán cùng lúc.
+
+**Giải thích và cầu nối:** không nhân thêm $\pi(a\mid s)$ ở bước đầu vì đã ấn định $a$. Chính sách vẫn quyết định phần tương lai thông qua $v_\pi$. Nếu để chính sách chọn hành động đầu, phải lấy trung bình các giá trị hành động.
+
+**Nguồn:** SB bài tập 3.13, tr.58 và 3.19, tr.62; suy ra từ các bước 05-03…06.
+
+### L03R-05-08 — Giá trị trạng thái từ các giá trị hành động
+
+Thời lượng: 3 phút. Vai trò: khép quan hệ giữa hai thí nghiệm đánh giá.
+
+**Mặt slide:** tại L, chính sách chọn hai hành động:
+
+$$v_\pi(\mathrm L)=\frac12q_\pi(\mathrm L,\mathrm{cho})
++\frac12q_\pi(\mathrm L,\mathrm{sac}).$$
+
+Sau ví dụ, viết lại bước kỳ vọng theo hành động đầu:
+
+$$\begin{aligned}
+v_\pi(s)&=\sum_a\pi(a\mid s)\mathbb E_\pi[G_t\mid s,a]\\
+&=\sum_a\pi(a\mid s)q_\pi(s,a).
+\end{aligned}$$
+
+**Cách thể hiện:** cây trạng thái→hành động, lần này các lá có nhãn $q$ thay cho hộp kỳ vọng. Gạch dưới kỳ vọng điều kiện rồi nhận diện nó bằng định nghĩa 04-07.
+
+**Giải thích và cầu nối:** Tìm không đóng góp vào $v_\pi(\mathrm L)$ của chính sách này do trọng số 0; $q_\pi(\mathrm L,\mathrm{tim})$ vẫn được định nghĩa. Quan hệ đúng tại mọi trạng thái, nên có thể dùng nó tại $s'$ để thay phần tương lai trong phương trình của $q$.
+
+**Nguồn:** SB bài tập 3.12, tr.58 và 3.18, tr.62.
+
+### L03R-05-09 — Bellman kỳ vọng cho giá trị hành động
+
+Thời lượng: 3 phút. Vai trò: phép thế từng bước, không đưa công thức cuối đột ngột.
+
+**Mặt slide:** viết quan hệ vừa có tại trạng thái kế tiếp:
+
+$$v_\pi(s')=\sum_{a'\in\mathcal A(s')}\pi(a'\mid s')q_\pi(s',a').$$
+
+Đặt cạnh phương trình $q$ theo $v$, đánh dấu vị trí sẽ thế; sau đó hiện:
+
+$$q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)
+\left[r+\gamma\sum_{a'}\pi(a'\mid s')q_\pi(s',a')\right].$$
+
+**Cách thể hiện:** cây xuất phát từ $(s,a)$, phân nhánh theo phản hồi, rồi theo hành động tiếp theo. Tổng ngoài mang $p$; tổng trong mang $\pi$. Công thức trung gian được thay tại chỗ thay vì chồng ba công thức rộng.
+
+**Giải thích từng bước:** $a$ là hành động đã thực hiện ở $t$; $a'$ là hành động chọn ở $t+1$ tại $s'$, vì vậy dùng $\pi(a'\mid s')$. Chỉ có một hệ số $\gamma$ vì từ $t$ sang $t+1$ mới qua một bước. Với trạng thái kết thúc, toàn bộ giá trị tương lai bằng 0; không yêu cầu hành động tiếp theo thực tế.
+
+**Nguồn:** lời giải bài tập 3.17, SB tr.61, từ bài tập 3.12–3.13. Không gán số phương trình (3.17).
+
+### L03R-05-10 — Câu hỏi kiểm tra
+
+Thời lượng: 3 phút. Vai trò: kiểm tra lập luận và tầng xác suất.
+
+**Mặt slide — Câu hỏi:**
+
+1. Số hạng đầu của $G_{t+1}$ là gì? Vì sao phép tách $G_t$ chưa cần Markov?
+2. Ở bước nào trong suy diễn Bellman mới dùng tính Markov và chính sách dừng?
+3. Trong $v_\pi(s)$, trọng số $\pi(a\mid s)p(s',r\mid s,a)$ mô tả điều gì? Vì sao phương trình của $q_\pi(s,a)$ không lấy trung bình hành động đầu lần nữa?
+
+**Ghi chú đáp án:** 1. $R_{t+2}$; phép tách là đại số trên một dãy đã cho. 2. Khi thay kỳ vọng phần tương lai đã điều kiện hóa bằng $v_\pi(s')$. 3. Xác suất chọn hành động rồi nhận cặp phản hồi; đây là quy tắc nhân có điều kiện, không giả thiết độc lập. Với $q$, hành động đầu đã ấn định. **Câu nối:** “Các phương trình vẫn chứa giá trị chưa biết ở cả hai vế. Với robot hai trạng thái, ta sẽ giải chúng đồng thời.”
+
+**Nguồn:** vận dụng SB (3.9), (3.14), bài tập 3.17–3.19.
