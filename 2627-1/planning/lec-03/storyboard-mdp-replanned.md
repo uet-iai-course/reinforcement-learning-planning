@@ -308,3 +308,103 @@ Thời lượng: 3 phút. Vai trò: vận dụng hạt nhân và kỳ vọng.
 **Ghi chú đáp án:** 1. Cả hai bằng 1. 2. $-1/2$; kết quả thực tế chỉ là 2 hoặc −3. 3. H; hai đại lượng không độc lập trong ví dụ này. **Câu nối:** “Mô hình đã cho điểm của từng bước. Ta cần một tiêu chuẩn để tính cả chuỗi bước.”
 
 **Nguồn:** vận dụng SB (3.2)–(3.5).
+
+## 5. Phần 3 — Phần thưởng và tổng thưởng
+
+**Chức năng:** xác định đại lượng sẽ được đánh giá trong những phần sau. Đầu vào là thưởng từng bước; đầu ra là tổng thưởng trên một quỹ đạo cùng các điều kiện cho phép lấy kỳ vọng.
+
+**Mạch trình bày trước khi chia slide:**
+
+1. Theo dõi robot qua nhiều chu kỳ, phân biệt việc sạc với kết thúc nhiệm vụ.
+2. Đặt cạnh nhau hai dãy thưởng ba bước và tính điểm khi giảm trọng số theo thời gian.
+3. Từ phép tính bằng số, định nghĩa $G_t$ và $\gamma$ cho nhiệm vụ có kết thúc và nhiệm vụ tiếp diễn.
+4. Dùng một tổng hình học cụ thể để giải thích điều kiện hữu hạn; kiểm tra chỉ số và ý nghĩa của chiết khấu.
+
+**Chu trình học:** vấn đề/ví dụ 03-01/02 → trực giác và tính số 03-03 → hình thức 03-04 → điều kiện và áp dụng 03-05 → kiểm tra 03-06. Không chứng minh tính duy nhất của phép cộng từ một tiên đề preference; tổng chiết khấu là tiêu chuẩn được chọn theo giáo trình. Tổng 14 phút.
+
+### L03R-03-01 — Phần thưởng và tổng thưởng
+
+Thời lượng: 1 phút. Vai trò: tiêu đề phần.
+
+**Mặt slide:** tên phần; một dải ba lần robot hành động và ba ô điểm thưởng, kèm câu “Đánh giá kết quả của cả chuỗi hành động”.
+
+**Cách thể hiện:** trục thời gian, chưa hiện tổng vô hạn. Một ô điểm không được dùng để thay cho cả chuỗi.
+
+**Ghi chú và cầu nối:** tìm, chờ và sạc có tác động khác nhau tới các bước sau. Trước khi cộng điểm cần biết bài toán có kết thúc tự nhiên hay còn tiếp diễn.
+
+**Nguồn:** SB §3.2–3.3, tr.53–55.
+
+### L03R-03-02 — Nhiệm vụ có kết thúc và nhiệm vụ tiếp diễn
+
+Thời lượng: 3 phút. Vai trò: ví dụ làm rõ phạm vi cộng thưởng.
+
+**Mặt slide:** robot L→Sạc→H rồi tiếp tục hoạt động; cứu hộ cũng tiếp tục. Đặt cạnh một lượt đi tới đích: sau khi kết thúc, không còn thưởng của lượt ấy. Gọi $T$ là thời điểm kết thúc; robot thu gom trong mô hình đang xét có $T=\infty$.
+
+**Cách thể hiện:** hai trục thời gian; trên trục có kết thúc, đệm các số 0 sau đích theo hình ở SB §3.4. Trạng thái kết thúc có hình vuông và nhãn, không chỉ phân biệt bằng màu.
+
+**Giải thích và cầu nối:** bắt đầu lượt mới là lần tương tác mới; không nối phần thưởng của lượt mới vào tổng của lượt cũ. Một đoạn ba bước cắt ra để minh họa chưa phải một lượt hoàn chỉnh của robot. Trên cả hai trục, thưởng xảy ra ở thời điểm nào sẽ quyết định trọng số của nó.
+
+**Nguồn:** SB §3.3–3.4, tr.54–57; ví dụ mê cung đã có ở Bài 02.
+
+### L03R-03-03 — Điểm thưởng ở các thời điểm
+
+Thời lượng: 3 phút. Vai trò: tính bằng số trước định nghĩa tổng chiết khấu.
+
+**Mặt slide:** từ L, hai đoạn ba bước hợp lệ: Sạc rồi Tìm, Tìm có dãy thưởng $(0,2,2)$; Chờ ba lần có dãy $(1,1,1)$. Tổng không chiết khấu lần lượt là 4 và 3. Với trọng số $1,1/2,1/4$:
+
+$$0+\frac12\,2+\frac14\,2=\frac32,\qquad
+1+\frac12\,1+\frac14\,1=\frac74.$$
+
+**Cách thể hiện:** hai dải thưởng cùng căn thời điểm; hàng trọng số chung ở dưới. Nêu $\gamma=1/2$ là hệ số làm trọng số giảm một nửa sau mỗi bước, sau khi sinh viên đã tính hai tổng.
+
+**Giải thích và cầu nối:** so sánh này dành cho hai đoạn cụ thể, không chứng minh chính sách Chờ tốt hơn trong toàn tương lai. Chiết khấu thay đổi cách đánh giá thời điểm nhận điểm. Trang sau đặt tên cho đại lượng được cộng từ một thời điểm bất kỳ.
+
+**Nguồn:** vận dụng SB (3.8); dãy thưởng do người soạn chọn từ bảng robot.
+
+### L03R-03-04 — Tổng thưởng từ thời điểm hiện tại
+
+Thời lượng: 3 phút. Vai trò: định nghĩa $G_t$ và quy ước kết thúc.
+
+**Mặt slide:** $G_t$ là tổng thưởng kể từ sau hành động tại thời điểm $t$. Với lượt kết thúc ở $T$:
+
+$$G_t=\sum_{k=t+1}^{T}\gamma^{k-t-1}R_k.$$
+
+Với nhiệm vụ tiếp diễn hoặc sau khi đệm thưởng 0:
+
+$$G_t=\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}.$$
+
+**Cách thể hiện:** tô nhãn số hạng đầu trên dải vừa xét rồi chỉ vào $R_{t+1}$, có trọng số 1. Hai công thức xuất hiện nối tiếp, cùng căn thời điểm bắt đầu; không đặt một bảng các công thức chưa giải thích.
+
+**Giải thích và cầu nối:** $\gamma\in[0,1]$; trong nhiệm vụ tiếp diễn của bài dùng $\gamma<1$. Với bài có lượt, ký hiệu $\mathcal S^+$ thêm trạng thái kết thúc vào $\mathcal S$ như sách; $G_T=0$. Các tổng qua trạng thái kế tiếp gồm cả trạng thái kết thúc nếu có. Đệm 0 là quy ước toán học, không thêm quyết định của tác tử sau khi đã kết thúc. Còn phải kiểm tra tổng và kỳ vọng có hữu hạn không.
+
+**Nguồn:** SB (3.7)–(3.8), (3.11), tr.54–57. Dịch chỉ số trong hai tổng phải được kiểm riêng; chúng cùng bắt đầu bằng $R_{t+1}$.
+
+### L03R-03-05 — Điều kiện để tổng thưởng hữu hạn
+
+Thời lượng: 2 phút. Vai trò: giải thích một giả thiết sẽ dùng trong Bellman.
+
+**Mặt slide:** nếu mỗi bước nhận 1 và $\gamma=1/2$, tổng là $1+1/2+1/4+\cdots=2$. Tổng quát, nếu $\lvert R_t\rvert\le M$ và $0\le\gamma<1$:
+
+$$\lvert G_t\rvert\le\sum_{k=0}^{\infty}\gamma^kM=\frac{M}{1-\gamma}.$$
+
+Robot có $M=3$, $\gamma=1/2$, nên $\lvert G_t\rvert\le6$ với mọi quỹ đạo.
+
+**Cách thể hiện:** tổng hình học bằng các đoạn độ dài giảm dần; chuyển từ mức thưởng 1 sang cận M. Công thức là cận trị tuyệt đối, không phải giá trị chính xác của robot.
+
+**Ghi chú và cầu nối:** cận này cũng bảo đảm kỳ vọng trị tuyệt đối hữu hạn, cho phép dùng tuyến tính và kỳ vọng lặp ở phần 5. Với $\gamma=1$, thưởng bị chặn và kỳ vọng số bước tới kết thúc hữu hạn là một điều kiện đủ. Chỉ có một trạng thái mang nhãn “kết thúc” chưa bảo đảm tác tử sẽ tới đó hoặc kỳ vọng thời gian tới đó hữu hạn.
+
+**Nguồn:** SB tr.55 sau (3.8); cận hình học và điều kiện kỳ vọng ở trường hợp $\gamma=1$ được giải thích bổ sung.
+
+### L03R-03-06 — Câu hỏi kiểm tra
+
+Thời lượng: 2 phút. Vai trò: vận dụng và kiểm chỉ số.
+
+**Mặt slide — Câu hỏi:**
+
+1. Robot về H sau Sạc có kết thúc nhiệm vụ không?
+2. Với dãy ba thưởng $(0,2,2)$ và $\gamma=1/2$, điểm của đoạn là bao nhiêu? Nếu $\gamma=0$ thì còn số hạng nào?
+3. Cận 6 ở trang trước có nghĩa mọi quỹ đạo của robot đều có tổng thưởng bằng 6 không?
+
+**Ghi chú đáp án:** 1. Không. 2. $3/2$; khi $\gamma=0$ chỉ giữ thưởng đầu, bằng 0. 3. Không, đó là cận trị tuyệt đối. **Câu nối:** “Cùng bắt đầu từ một trạng thái vẫn có nhiều tổng thưởng; cách chọn hành động và ngẫu nhiên của môi trường quyết định phân phối của chúng.”
+
+**Nguồn:** vận dụng SB §3.3–3.4.
