@@ -1,6 +1,6 @@
 # Dàn ý triển khai — Bài 03: Quá trình quyết định Markov
 
-Đã triển khai 6/7 phần (46/50 slide) theo storyboard robot. Thiết kế đầy đủ:120 phút; 30 phút chữa hw02. Đối tượng: sinh viên năm3 đã học xác suất, đại số tuyến tính, học máy và Bài02.
+Đã triển khai 7/7 phần (50/50 slide) theo storyboard robot. Thiết kế đầy đủ:120 phút; 30 phút chữa hw02. Đối tượng: sinh viên năm3 đã học xác suất, đại số tuyến tính, học máy và Bài02.
 
 ## 1. Đích học tập và quyết định về cấu trúc
 
@@ -132,6 +132,10 @@ Quy luật môi trường và chính sách được giả sử Markov, không đ
 - `L03R-06-06`: Chuỗi Markov và MRP dưới chính sách.
 - `L03R-06-07`: Bellman dưới dạng ma trận.
 - `L03R-06-08`: Câu hỏi kiểm tra.
+- `L03R-07-01`: Tổng hợp và vận dụng.
+- `L03R-07-02`: Đọc một quyết định bằng mô hình và giá trị.
+- `L03R-07-03`: Bài tập và bước tiếp theo.
+- `L03R-07-04`: Câu hỏi kiểm tra.
 
 ## Đặc tả và ánh xạ nguồn
 

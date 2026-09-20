@@ -795,3 +795,10 @@ Hai trang05-02/07 tràn chiều cao ở lần render đầu; đã rút gọn câ
 Writer GLM hai lượt, requested=observed, OpenRouter. Bản đầu bị loại: giải thích hệ số của phương trình H áp nhầm sang L; cây gộp H đi Chờ và thiếu vòng tự chuyển; trung gian tính q sai dù kết quả cuối đúng. Worker sửa theo phản hồi. Điều phối viên sửa tiếp chứng minh tính duy nhất: P chỉ không làm tăng chuẩn, gamma<1 mới tạo tính co; chuyển toàn bộ toán notes sang KaTeX, bổ sung dữ kiện Chờ/Sạc trên câu hỏi, bố trí phép giải đủ bước trong một khối, sửa nhãn hình chồng và bỏ câu lặp sát chân trang. Nghiệm13/4,7/4 và q(L,Tìm)=3/4 được tự tính lại bằng phân số.
 
 Lũy kế46slide/46notes/17SVG,411biểu thức KaTeX hợp lệ. Hai lượt kiểm16màn hình của phần6 sau sửa đều không tràn/lỗi toán/ảnh hỏng/JS/HTTP; đã xem ảnh ghép8slide. Rà độc lập toán/mạch của góiB sẽ xét cả chứng minh và kết nối từ Bellman sang MRP.
+
+
+### Phần 7 — triển khai và kiểm tra cục bộ
+
+Đã thêm4slide L03R-07-01…04: trở lại robot ở L với ba giá trị hành động, đọc lại nhánh Chờ từ mô hình tới giá trị, bài tập hw02 và câu hỏi tổng hợp. HaiSVG mới. Writer GLM hai lượt, requested=observed, OpenRouter. Bản đầu bị loại vì hình gắn q(L,Tìm) vào H như một trạng thái đích chắc chắn; đã yêu cầu đổi thành ba hộp hành động mang giá trị, giữ phân biệt q với v. Điều phối viên bỏ các nhãn thừa, thống nhất ký hiệu hành động, sửa nguồn và không tự đặt thêm nghĩa vụ bài tập ngoài phạm vi nguồn.
+
+Lũy kế50slide/50notes/19SVG,446biểu thức KaTeX hợp lệ. Phần7 qua8lượt Chromium ở1280×720 và390×844, không tràn/lỗi toán/ảnh hỏng/JS/HTTP; đã xem ảnh ghép4slide. Năm reviewer độc lập đang rà góiB gồm30slide phần4–7 với toàn bộ notes, nhãn SVG và bản đồ cả bài; chỉ khi hoàn tất và chỉnh sửa mới bàn giao toàn bộ.

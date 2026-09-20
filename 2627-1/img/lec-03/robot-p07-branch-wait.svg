@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 140" role="img" aria-label="Nhánh Chờ từ L: xác suất một, thưởng một, trở về L" class="figure short" font-family="Arial,sans-serif">
+<defs>
+<marker id="ar2" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0,0 10,4 0,8" fill="#2F3E7A"/></marker>
+</defs>
+<rect x="60" y="30" width="160" height="80" rx="12" fill="#F7EFE6" stroke="#2F3E7A" stroke-width="3"/>
+<circle cx="115" cy="62" r="16" fill="#B15A2B"/>
+<rect x="105" y="78" width="20" height="14" fill="#B15A2B"/>
+<circle cx="111" cy="59" r="3" fill="#F7EFE6"/>
+<circle cx="119" cy="59" r="3" fill="#F7EFE6"/>
+<text x="145" y="70" font-size="32" fill="#424954">L</text>
+<line x1="220" y1="70" x2="560" y2="70" stroke="#2F3E7A" stroke-width="3" marker-end="url(#ar2)"/>
+<text x="300" y="45" font-size="32" fill="#424954">Chờ</text>
+<text x="280" y="115" font-size="32" fill="#B15A2B">Xác suất1; thưởng1</text>
+<rect x="570" y="30" width="160" height="80" rx="12" fill="#F7EFE6" stroke="#2F3E7A" stroke-width="3"/>
+<circle cx="625" cy="62" r="16" fill="#B15A2B"/>
+<rect x="615" y="78" width="20" height="14" fill="#B15A2B"/>
+<circle cx="621" cy="59" r="3" fill="#F7EFE6"/>
+<circle cx="629" cy="59" r="3" fill="#F7EFE6"/>
+<text x="655" y="70" font-size="32" fill="#424954">L</text>
+</svg>
