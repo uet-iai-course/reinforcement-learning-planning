@@ -1,8 +1,116 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><title>Bài 04: Giải MDP bằng quy hoạch động</title><link rel="stylesheet" href="revealjs/dist/reset.css"/><link rel="stylesheet" href="revealjs/dist/reveal.css"/><link rel="stylesheet" href="revealjs/dist/theme/white.css"/><link rel="stylesheet" href="plugin/highlight/monokai.css"/><link rel="stylesheet" href="lecture-slide.css"/><style>.reveal .slides section[data-slide-id]{font-size:.82em}.reveal h1,.reveal h2{color:#2F3E7A}.box{border-left:5px solid #B15A2B;background:#F7EFE6;padding:.45em .7em;border-radius:8px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.7em;align-items:center}.card{border:1px solid #ddd;border-radius:8px;padding:.4em .6em}.figure{display:block;margin:.12em auto;width:min(100%,930px);max-height:350px}.grid2 .figure{width:100%;max-width:100%}.math-large{font-size:1.08em;text-align:center}.check{background:#EDF4FF;border:2px solid #2F3E7A;border-radius:8px;padding:.4em .65em}.note-source{font-size:.9em;color:#444}.reveal table{font-size:.92em}.reveal th{background:#F7EFE6}.codebox{font-family:monospace;background:#f5f5f5;border-radius:8px;padding:.45em .7em;font-size:.92em;line-height:1.28}.warn{color:#A33A1F;font-weight:700}.compact li{margin:.08em 0}.answer{border-left:4px solid #2E7D32;padding-left:.55em;color:#245C2B}</style></head><body><div class="reveal"><div class="slides">
-<section>
-<section data-slide-id="P00"><h1>Giải MDP bằng quy hoạch động</h1><h3>Bài 04 · Học tăng cường</h3><p>Năm học 2026–2027 · Học kỳ 1</p><aside class="notes">Bài này tiếp nối Bellman kỳ vọng ở Bài 03 để tìm chính sách tối ưu khi biết đầy đủ mô hình.<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 1.</p></aside></section>
-<section data-slide-id="P01"><h2>Đầu vào và đầu ra</h2><div class="grid2"><div class="card"><h3>Đầu vào</h3><p>MDP hữu hạn, mô hình đã biết.</p></div><div class="card"><h3>Đầu ra</h3><p>Giá trị và chính sách tối ưu.</p></div></div><p>Đánh giá chính sách, cải thiện chính sách, lặp chính sách và lặp giá trị.</p><div class="box">Đây là lập kế hoạch có mô hình, không phải học từ mẫu.</div><aside class="notes">Monte Carlo, sai phân thời gian và Q-learning nằm ngoài phạm vi. Điểm phân biệt là mọi kỳ vọng Bellman trong bài đều được tính từ mô hình chuyển–thưởng $p(s',r\mid s,a)$ đã biết.<p class="note-source"><strong>Nguồn:</strong> tr. 2–3.</p></aside></section>
-<section data-slide-id="P02"><h2>Giả thiết và không gian giá trị</h2><div class="grid2"><div><ul class="compact"><li>$\mathcal S$ hữu hạn; $\mathcal A(s)$ hữu hạn, không rỗng.</li><li>Biết $p(s',r\mid s,a)$; $|r|\le R_{\max}$; $0\le\gamma\lt1$.</li><li>$\Pi$ là tập mọi chính sách khả dụng.</li></ul></div><div class="card"><p>$$\mathcal V=\mathbb R^{|\mathcal S|},$$</p><p>$$\lVert v\rVert_\infty=\max_{s\in\mathcal S}|v(s)|.$$</p></div></div><div class="check"><strong>Câu hỏi:</strong> giả thiết nào bảo đảm cực đại theo hành động đạt được?</div><p class="fragment answer">Tập $\mathcal A(s)$ hữu hạn và không rỗng.</p><aside class="notes">$\Pi$ gồm cả chính sách phụ thuộc lịch sử và ngẫu nhiên. Chuẩn vô cùng được định nghĩa trước khi dùng tính co. Nếu phần thưởng liên tục, thay tổng trên phần thưởng bằng tích phân.<p class="note-source"><strong>Nguồn:</strong> tr. 4, 9, 12, 31; bổ sung miền toán tử.</p></aside></section>
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bài 04: Giải MDP bằng quy hoạch động</title>
+<link rel="stylesheet" href="revealjs/dist/reset.css">
+<link rel="stylesheet" href="revealjs/dist/reveal.css">
+<link rel="stylesheet" href="revealjs/dist/theme/white.css">
+<link rel="stylesheet" href="plugin/highlight/monokai.css">
+<link rel="stylesheet" href="lecture-slide.css">
+</head>
+<body>
+<div class="reveal lecture-deck"><div class="slides">
+<section aria-label="Mở đầu và động lực">
+  <section data-slide-id="L04-S01">
+    <h1>Giải MDP bằng quy hoạch động</h1>
+    <p class="caption">Học tăng cường — Bài 04 — Học kỳ 1, năm học 2026–2027</p>
+    <p>Quy trình quyết định Markov (MDP)</p>
+    <div class="box">
+      <p>Đầu vào: mô hình MDP với trạng thái, hành động, phần thưởng và hệ số chiết khấu.</p>
+      <p>Đầu ra: chính sách hành động cùng căn cứ đánh giá chất lượng của nó.</p>
+    </div>
+    <aside class="notes">
+      <p>Bài trước chúng ta đã mô tả quy trình quyết định Markov bằng hàm giá trị và phương trình Bellman, nhưng mới dừng ở mức mô tả. Hôm nay vấn đề chuyển sang tính: cho trước mô hình đầy đủ, làm thế nào tính được giá trị dài hạn của mỗi chính sách và tìm ra chính sách tốt nhất. Cả bài sẽ xây dựng ba năng lực: tính giá trị một chính sách, cải thiện chính sách bằng cách đổi hành động, và kiểm tra khi nào được phép dừng. Đây là nền tảng cho các thuật toán học khi mô hình chưa biết ở các bài sau.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 1–2.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S02">
+    <h2>Nội dung bài giảng</h2>
+    <div class="grid2">
+      <div class="card">
+        <p>1. Phương trình Bellman tối ưu</p>
+        <p>2. Đánh giá một chính sách</p>
+        <p>3. Lặp chính sách</p>
+      </div>
+      <div class="card">
+        <p>4. Lặp giá trị</p>
+        <p>5. Hội tụ và sai số</p>
+        <p>6. Tổng hợp và so sánh</p>
+      </div>
+    </div>
+    <div class="box">
+      <p>Sản phẩm cần đạt: tính giá trị một lượt, giải thích một lần đổi hành động, kiểm tra một ngưỡng dừng.</p>
+    </div>
+    <aside class="notes">
+      <p>Lộ trình gồm sáu phần. Phần một xây dựng phương trình Bellman tối ưu, phần hai đánh giá một chính sách cho trước, phần ba và bốn là hai thuật toán lặp chính sách và lặp giá trị, phần năm nói về hội tụ và sai số, phần sáu tổng hợp. Tiên quyết cần nhớ từ Bài 03 là dạng kỳ vọng của phương trình Bellman và tổng thưởng chiết khấu với chỉ số $R_{t+1}$ cho phần thưởng nhận sau khi thực hiện hành động. Ba năng lực sẽ được kiểm tra: tính trọn một lượt đánh giá, giải thích vì sao một lần đổi hành động làm giá trị tăng, và kiểm tra điều kiện dừng bằng ngưỡng. Bài toán hai trạng thái ngay sau đây sẽ cho thấy vì sao cần cả ba.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 2–3.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S03">
+    <h2>Lập kế hoạch từ mô hình đã biết</h2>
+    <img class="figure" src="img/lec-04/two-state.svg" alt="Sơ đồ hai trạng thái s0 và s1 với bốn chuyển tất định: chọn a ở s0 nhận thưởng 2 và ở lại s0, chọn b ở s0 nhận thưởng −1 và sang s1, chọn a ở s1 nhận thưởng 5 và về s0, chọn b ở s1 nhận thưởng 10 và ở lại s1" />
+    <div class="box">
+      <p>Hệ số chiết khấu $\gamma = 0{,}5$. Nhãn mỗi cạnh ghi hành động và phần thưởng nhận được; nút chỉ ghi tên trạng thái.</p>
+    </div>
+    <aside class="notes">
+      <p>Đây là mô hình làm việc xuyên suốt bài hôm nay. Hai trạng thái $s_0$ và $s_1$, mỗi trạng thái có hai hành động $a$ và $b$, mọi chuyển đều tất định. Ở $s_0$, chọn $a$ nhận thưởng 2 và ở lại $s_0$; chọn $b$ nhận thưởng −1 nhưng sang $s_1$. Ở $s_1$, chọn $a$ nhận 5 và về $s_0$; chọn $b$ nhận 10 và ở lại $s_1$. Hệ số chiết khấu bằng 0,5. Vì mô hình cho biết đủ xác suất chuyển và phân phối thưởng, ta tính được kỳ vọng của tổng thưởng chiết khấu ngay trên giấy, nghĩa là kỳ vọng của phần thưởng cộng giá trị tiếp diễn đã chiết khấu, mà không cần lấy mẫu trải nghiệm. Vấn đề là chọn hành động ở cả hai trạng thái sao cho tổng dài hạn lớn nhất, và bốn cạnh này sẽ được dùng lại liên tục.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 4, 12, 17; tham số điều chỉnh.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S04">
+    <h2>Phần thưởng trước mắt và dài hạn</h2>
+    <div class="grid2">
+      <div class="card">
+        <p><strong>Luôn chọn $a$ từ $s_0$</strong></p>
+        <table>
+          <tr><th>$R_1$</th><th>$R_2$</th><th>$R_3$</th><th>…</th></tr>
+          <tr><td>2</td><td>2</td><td>2</td><td>…</td></tr>
+        </table>
+        <p class="math-large">$$\frac{2}{1-0{,}5} = 4$$</p>
+      </div>
+      <div class="card">
+        <p><strong>Chọn $b$ rồi luôn $b$ ở $s_1$</strong></p>
+        <table>
+          <tr><th>$R_1$</th><th>$R_2$</th><th>$R_3$</th><th>…</th></tr>
+          <tr><td>−1</td><td>10</td><td>10</td><td>…</td></tr>
+        </table>
+        <p class="math-large">$$-1 + \frac{0{,}5\cdot 10}{1-0{,}5} = 9$$</p>
+      </div>
+    </div>
+    <div class="box">
+      <p>Cùng xuất phát từ $s_0$: chấp nhận phần thưởng đầu thấp hơn có thể đem lại tổng dài hạn cao hơn.</p>
+    </div>
+    <aside class="notes">
+      <p>So hai chính sách cùng xuất phát từ $s_0$. Chính sách thứ nhất luôn chọn $a$: mỗi bước nhận thưởng 2, chuỗi lặp vô hạn nên tổng là cấp số nhân với mẫu số $1-\gamma$, cho kết quả 4. Chính sách thứ hai chọn $b$ một lần, nhận −1, rồi ở $s_1$ luôn chọn $b$ và nhận 10 mãi. Tổng gồm phần thưởng đầu −1 cộng phần tiếp diễn chiết khấu: $0{,}5$ nhân 10 chia $1-0{,}5$, cho 9. Ba số cần tách bạch: phần thưởng đầu, giá trị của phần tiếp diễn, và tổng. Chính sách thứ hai thua ở bước đầu nhưng thắng về dài hạn, vì hành động $b$ ở $s_1$ nhận thưởng 10 ở mọi bước. Đây mới là so sánh hai chính sách cụ thể; chưa chứng minh được rằng một trong hai là tối ưu trên toàn bộ các chính sách.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 5, 17–19; tham số điều chỉnh.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S05">
+    <h2>Câu hỏi: giá trị của một bước nhìn trước</h2>
+    <p><strong>Câu hỏi:</strong> tính giá trị của việc chọn $b$ tại $s_0$ rồi dùng bảng tiếp diễn đã cho; chỉ ra hai dữ kiện lấy từ mô hình.</p>
+    <div class="grid2">
+      <div class="card">
+        <p><strong>Dữ kiện</strong></p>
+        <p>Bảng giá trị của chính sách luôn chọn $a$:</p><p>$v(s_0)=4$, $v(s_1)=7$.</p><p>Hệ số chiết khấu $\gamma=0{,}5$.</p>
+        <p>Chọn $b$ ở $s_0$: nhận thưởng $r=-1$ và chuyển đến $s_1$ với xác suất 1.</p>
+      </div>
+      <div class="card">
+        <p><strong>Phép tính</strong></p>
+        <p class="fragment math-large">$$-1 + 0{,}5\cdot 7 = 2{,}5$$</p>
+        <p class="fragment">Hai dữ kiện lấy từ mô hình: thưởng $-1$ trên cạnh, và chuyển đến $s_1$ với xác suất 1.</p>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>Trước khi sang phần tối ưu, kiểm tra lại phép nhìn trước một bước. Đề cho bảng tiếp diễn $v(s_0)=4$, $v(s_1)=7$ và $\gamma=0{,}5$. Hành động $b$ ở $s_0$ nhận thưởng −1 và đưa tới $s_1$ chắc chắn. Giá trị của lựa chọn này là phần thưởng −1 cộng hệ số 0,5 nhân giá trị tiếp diễn 7, cho 2,5. Bốn đại lượng trong phép tính có vai trò khác nhau: −1 là phần thưởng trên cạnh, 0,5 là hệ số chiết khấu, 7 là giá trị tiếp diễn của trạng thái kế tiếp, 2,5 là kết quả. Lỗi thường gặp là coi 7 hoặc 2,5 là phần thưởng nhận ngay; cả hai đều không phải. Từ phép tính này, phần hai sẽ đặt mục tiêu tối ưu đồng thời hành động đầu và phần tiếp diễn.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 6, 17–19; tham số điều chỉnh.</p>
+    </aside>
+  </section>
 </section>
 <section>
 <section data-slide-id="A02"><h2>Một lựa chọn tất định</h2><p>Tại $s_0$, $\gamma=0{,}9$; sau hành động đầu, tác tử tiếp tục tối ưu; giá trị tiếp tục tại $s_0,s_1$ lần lượt là $10$ và $11$.</p><div class="grid2"><div class="card"><h3>$a$</h3><p>$r=1$, ở lại $s_0$ chắc chắn</p><p>$1+0{,}9\cdot10=10$</p></div><div class="card"><h3>$b$</h3><p>$r=0$, tới $s_1$ chắc chắn</p><p>$0+0{,}9\cdot11=9{,}9$</p></div></div><div class="box">Khóa hành động đầu ở $a$ cho giá trị lớn hơn.</div><div class="check"><strong>Câu hỏi:</strong> nếu phần thưởng của $b$ đổi thành $2$ thì hành động nào tối ưu tại $s_0$?</div><p class="fragment answer">Chọn $b$; giá trị tối ưu ở cả hai trạng thái đều bằng $20$.</p><aside class="notes">Đây là MDP tất định ở nhánh đầu: hành động quyết định duy nhất trạng thái kế tiếp và thưởng; từ trạng thái kế tiếp dùng chính sách tối ưu với giá trị tiếp tục 10 và 11, nên $q_*(s_0,a)=1+0{,}9\cdot10=10$ và $q_*(s_0,b)=0+0{,}9\cdot11=9{,}9$. Với biến thể phần thưởng $2$: đặt $v_0=v_*(s_0)$, $v_1=v_*(s_1)$; nếu chọn nhánh $b$ thì $v_0=2+0{,}9v_1=2+0{,}9(2+0{,}9v_0)=3{,}8+0{,}81v_0$, suy ra $v_0=20$ và $v_1=2+0{,}9\cdot20=20$; kiểm tra nhánh $a$: $1+0{,}9\cdot20=19<20$.<p class="note-source"><strong>Nguồn:</strong> Ví dụ bổ sung trước tr. 8.</p></aside></section>
@@ -17,10 +125,12 @@
 <section>
 <section data-slide-id="B00"><h2>MDP hai trạng thái</h2><img class="figure" src="img/lec-04/two-state.svg" alt="MDP hai trạng thái với bốn chuyển tiếp tất định."/><p>$\gamma=0{,}9$; chính sách đầu $\pi_0=(a,a)$.</p><aside class="notes">Nhãn cạnh là hành động và phần thưởng. Ví dụ được giữ xuyên suốt phần lặp chính sách.<p class="note-source"><strong>Nguồn:</strong> tr. 17.</p></aside></section>
 <section data-slide-id="B01"><h2>Đánh giá chính sách đầu</h2><div class="math-large">$$v_{\pi_0}(s_0)=1+0{,}9v_{\pi_0}(s_0),\quad v_{\pi_0}(s_1)=2+0{,}9v_{\pi_0}(s_0).$$</div><div class="box">$v_{\pi_0}=(10,11)$.</div><aside class="notes">Đây là đánh giá chính xác bằng giải hệ Bellman của chính sách cố định.<p class="note-source"><strong>Nguồn:</strong> tr. 18.</p></aside></section>
-<section data-slide-id="B02"><h2>Cải thiện một bước</h2><table><tr><th>Trạng thái</th><th>$a$</th><th>$b$</th><th>Chọn</th></tr><tr><td>$s_0$</td><td>$10$</td><td>$9{,}9$</td><td>$a$</td></tr><tr><td>$s_1$</td><td>$11$</td><td>$12{,}9$</td><td>$b$</td></tr></table><p>$\pi_1=(a,b)$.</p><aside class="notes">Mọi so sánh dùng cùng $v_{\pi_0}$. Hành động $b$ ở $s_1$ cho $3+0,9\cdot11=12,9$.<p class="note-source"><strong>Nguồn:</strong> tr. 19.</p></aside></section>
-<section data-slide-id="B03"><h2>Vòng thứ hai</h2><div class="grid2"><div class="card"><h3>Đánh giá $\pi_1$</h3><p>$v_{\pi_1}=(10,30)$</p><p>$q_{\pi_1}(s_0,b)=0+0{,}9\cdot30=27$</p></div><div class="card"><h3>Cải thiện</h3><p>$\pi_2=(b,b)$</p><p>$v_{\pi_2}=(27,30)$</p></div></div><aside class="notes">Giá trị hành động $q_{\pi_1}(s_0,b)=27$ giải thích trực tiếp vì sao hành động ở $s_0$ đổi sang $b$. Chuỗi giá trị là $(10,11)\to(10,30)\to(27,30)$.<p class="note-source"><strong>Nguồn:</strong> tr. 18–19; bổ sung phép tính trung gian.</p></aside></section>
 <section data-slide-id="B04"><h2>Đánh giá chính sách lặp</h2><div class="math-large">$$v_{j+1}=T^\pi v_j,\qquad \Delta_j=\lVert v_{j+1}-v_j\rVert_\infty.$$</div><ul><li>Dừng khi $\Delta_j\le\varepsilon_{\mathrm{step}}$; trả về $v_{j+1}$.</li><li>Nếu $0\lt\gamma\lt1$:</li></ul><div class="math-large">$$\lVert v_{j+1}-v_\pi\rVert_\infty\le\frac{\gamma}{1-\gamma}\varepsilon_{\mathrm{step}}.$$</div><aside class="notes">Chặn theo sau từ tính co: đuôi các sai phân tạo cấp số nhân. Nếu gamma bằng không, một lượt là chính xác. Mỗi lượt đọc bảng cũ và ghi bảng mới.<p class="note-source"><strong>Nguồn:</strong> tr. 14; bổ sung nhãn ngưỡng và chặn đúng cho giá trị trả về.</p></aside></section>
 <section data-slide-id="B05"><h2>Đánh giá bất đồng bộ</h2><div class="grid2"><div class="card"><h3>Đồng bộ</h3><p>Đọc cũ, ghi mới.</p></div><div class="card"><h3>Bất đồng bộ</h3><p>Dùng ngay giá trị mới dưới cùng $\pi$.</p></div></div><div class="box"><strong>Công bằng:</strong> lịch cập nhật phải cập nhật mỗi trạng thái vô hạn lần nếu quá trình kéo dài.</div><aside class="notes">Đích ở đây là điểm bất động của $T^\pi$, không phải của $T_*$. Điều kiện dữ liệu: giá trị đọc không được cũ vô hạn lần.<p class="note-source"><strong>Nguồn:</strong> tr. 15; bổ sung điều kiện hội tụ.</p></aside></section>
+</section>
+<section>
+<section data-slide-id="B02"><h2>Cải thiện một bước</h2><table><tr><th>Trạng thái</th><th>$a$</th><th>$b$</th><th>Chọn</th></tr><tr><td>$s_0$</td><td>$10$</td><td>$9{,}9$</td><td>$a$</td></tr><tr><td>$s_1$</td><td>$11$</td><td>$12{,}9$</td><td>$b$</td></tr></table><p>$\pi_1=(a,b)$.</p><aside class="notes">Mọi so sánh dùng cùng $v_{\pi_0}$. Hành động $b$ ở $s_1$ cho $3+0,9\cdot11=12,9$.<p class="note-source"><strong>Nguồn:</strong> tr. 19.</p></aside></section>
+<section data-slide-id="B03"><h2>Vòng thứ hai</h2><div class="grid2"><div class="card"><h3>Đánh giá $\pi_1$</h3><p>$v_{\pi_1}=(10,30)$</p><p>$q_{\pi_1}(s_0,b)=0+0{,}9\cdot30=27$</p></div><div class="card"><h3>Cải thiện</h3><p>$\pi_2=(b,b)$</p><p>$v_{\pi_2}=(27,30)$</p></div></div><aside class="notes">Giá trị hành động $q_{\pi_1}(s_0,b)=27$ giải thích trực tiếp vì sao hành động ở $s_0$ đổi sang $b$. Chuỗi giá trị là $(10,11)\to(10,30)\to(27,30)$.<p class="note-source"><strong>Nguồn:</strong> tr. 18–19; bổ sung phép tính trung gian.</p></aside></section>
 <section data-slide-id="B06"><h2>Lặp chính sách chính xác</h2><div class="codebox">Đầu vào: $M$, chính sách Markov dừng $\pi$, thứ tự hành động cố định.<br/>1. Giải chính xác $v=T^\pi v$.<br/>2. Đặt $\pi'(s)$ là phần tử đầu của $\arg\max_a\sum_{s',r}p(s',r\mid s,a)[r+\gamma v(s')]$.<br/>3. Nếu $\pi'=\pi$, trả về $(\pi,v)$; nếu không, đặt $\pi\leftarrow\pi'$ và lặp.</div><div class="check"><strong>Câu hỏi:</strong> vì sao không được đổi tùy ý giữa các hành động đồng hạng?</div><p class="fragment answer">Phá hòa tùy ý có thể tạo chu trình chính sách; quy tắc cố định loại trừ chu trình này.</p><aside class="notes">Thứ tự toàn cục cố định làm quy tắc phá hòa có tính tái lập. Giải hệ đặc tốn $O(|\mathcal S|^3)$; bước tham lam tốn một lượt duyệt mô hình.<p class="note-source"><strong>Nguồn:</strong> tr. 20; bổ sung phá hòa, dừng và chi phí.</p></aside></section>
 <section data-slide-id="B08"><h2>Bảo đảm của lặp chính sách</h2><div class="math-large">$$T^{\pi'}v_\pi=T_*v_\pi\ge T^\pi v_\pi=v_\pi.$$</div><p>Tính đơn điệu và tính co cho $v_{\pi'}\ge v_\pi$.</p><p>Số chính sách xác định tổng quát là $\displaystyle\prod_{s\in\mathcal S}|\mathcal A(s)|$; nếu mọi trạng thái có cùng tập hành động thì bằng $|\mathcal A|^{|\mathcal S|}$.</p><div class="box">Với đánh giá chính xác và phá hòa cố định, số chính sách xác định hữu hạn nên thuật toán dừng tại chính sách tối ưu.</div><p>Phần sau giữ ý tưởng sao lưu Bellman nhưng bỏ bước giải hệ: lặp giá trị trên Gridworld.</p><aside class="notes">Nếu chính sách thay đổi ngoài các hành động đồng hạng, cải thiện nghiêm ở ít nhất một trạng thái. Bảo đảm dừng hữu hạn phụ thuộc đánh giá chính xác và quy tắc phá hòa cố định.<p class="note-source"><strong>Nguồn:</strong> tr. 21, 33; làm rõ miền áp dụng.</p></aside></section>
 </section>
@@ -45,10 +155,22 @@
 <section data-slide-id="D04"><h2>Phần dư chặn sai số giá trị</h2><p>Đặt $\rho=\lVert T_*v-v\rVert_\infty$ và $e=\lVert v-v_*\rVert_\infty$.</p><div class="math-large">$$e\le\lVert v-T_*v\rVert_\infty+\lVert T_*v-T_*v_*\rVert_\infty\le\rho+\gamma e.$$</div><div class="box">Suy ra $\displaystyle e\le\frac{\rho}{1-\gamma}$.</div><aside class="notes">Đây là phép suy diễn phần dư sang sai số, không chỉ phát biểu kết quả. Dùng bất đẳng thức tam giác rồi tính co của $T_*$.<p class="note-source"><strong>Nguồn:</strong> tr. 32, 34; mở bước chứng minh.</p></aside></section>
 <section data-slide-id="D07"><h2>Sai số chặn mất mát chính sách</h2><p>Với $\pi_v$ tham lam theo cùng $v$, $T^{\pi_v}v=T_*v$.</p><div class="math-large">$$L\le\gamma e+\gamma(e+L),\quad L=\lVert v_*-v_{\pi_v}\rVert_\infty.$$</div><div class="math-large">$$L\le\frac{2\gamma}{1-\gamma}e\le\frac{2\gamma}{(1-\gamma)^2}\rho.$$</div><aside class="notes">Tách $T_*v_*-T^{\pi_v}v_{\pi_v}$ qua $T_*v=T^{\pi_v}v$, rồi dùng tính co của hai toán tử. Sau đó chặn $\lVert v-v_{\pi_v}\rVert$ bởi $e+L$ và chuyển vế. Đây là cơ sở của ngưỡng phần dư đã nêu.<p class="note-source"><strong>Nguồn:</strong> tr. 32, 34; bổ sung suy diễn đầy đủ.</p></aside></section>
 <section data-slide-id="D05"><h2>CartPole còn thiếu mô hình</h2><div class="grid2"><img class="figure" src="img/lec-04/cartpole.svg" alt="CartPole lượng tử thành 324 trạng thái nhưng vẫn cần mô hình."/><div><ul class="compact"><li>Đã có: 324 trạng thái rời rạc, hai hành động.</li><li>Còn thiếu: $p(s',r\mid s,a)$, kết thúc và thưởng đầy đủ.</li><li>Lượng tử hóa vẫn gây sai số và bùng nổ trạng thái.</li></ul><div class="check"><strong>Câu hỏi:</strong> chỉ có bộ mô phỏng thì phép tổng nào chưa tính chính xác?</div><p class="fragment answer">Kỳ vọng theo $p(s',r\mid s,a)$.</p></div></div><aside class="notes">Đây là kiểm tra điều kiện đầu vào, nay áp vào CartPole. Có bảng trạng thái vẫn chưa đủ để chạy quy hoạch động chính xác nếu không biết hạt nhân.<p class="note-source"><strong>Nguồn:</strong> tr. 35–38; bổ sung cầu nối Bài 05.</p></aside></section>
+</section>
+<section>
 <section data-slide-id="D08"><h2>Chọn công cụ theo dữ kiện</h2><table><tr><th>Mục tiêu</th><th>Lựa chọn</th></tr><tr><td>Biết mô hình, đánh giá $\pi$</td><td>Lặp $T^\pi$ hoặc giải hệ</td></tr><tr><td>Biết mô hình, tối ưu</td><td>PI chính xác hoặc VI</td></tr><tr><td>VI cần chặn mất mát</td><td>Kiểm phần dư; trích từ cùng $v$</td></tr><tr><td>Không biết mô hình</td><td>Ước lượng từ trải nghiệm</td></tr></table><div class="box">MDP hữu hạn và mô hình chuyển–thưởng đã biết cho phép tính giá trị và chính sách tối ưu. Khi không biết mô hình, ta chuyển sang ước lượng từ trải nghiệm ở Bài 05.</div><p>Nhấn ↓ để làm bài tập.</p><aside class="notes">Thu hồi đầu vào và đầu ra ở P01. PI và VI thuộc nhánh biết mô hình. Bài 05 bắt đầu nhánh không biết mô hình và phải ước lượng từ trải nghiệm.<p class="note-source"><strong>Nguồn:</strong> Tổng hợp tr. 2–38 và phần giá trị hành động tối ưu.</p></aside></section>
 <section data-slide-id="X09"><h2>Bài tập 9: một lượt VI</h2><p>$\mathcal S=\{s_0,s_1,s_2\}$, $\mathcal A=\{a,b\}$, $\gamma=0{,}9$, $V_0=0$.</p><table><tr><th>$(s,a)$</th><th>Kết quả $(p,r,s')$</th></tr><tr><td>$(s_0,a)$</td><td>$0{,}5:(1,s_0);\ 0{,}5:(-1,s_2)$</td></tr><tr><td>$(s_0,b)$</td><td>$0{,}5:(0,s_1);\ 0{,}5:(2,s_2)$</td></tr><tr><td>$(s_1,a)$</td><td>$(1,2,s_0)$</td></tr><tr><td>$(s_1,b)$</td><td>$(1,-1,s_1)$</td></tr><tr><td>$(s_2,a)$</td><td>$(1,2,s_1)$</td></tr><tr><td>$(s_2,b)$</td><td>$(1,0,s_0)$</td></tr></table><div class="check"><strong>Câu hỏi:</strong> tính $V_1$, rồi trích chính sách tham lam theo $V_1$.</div><aside class="notes">Từ $V_0=0$, các cực đại cho $V_1=(1,2,2)$. Dùng chính $V_1$: $Q_{V_1}(s_0,a)=1{,}35$, $Q_{V_1}(s_0,b)=2{,}8$; tại $s_1$ được $(2{,}9,0{,}8)$; tại $s_2$ được $(3{,}8,0{,}9)$. Do đó chính sách tham lam theo $V_1$ là $(b,a,a)$.<p class="note-source"><strong>Nguồn:</strong> hw3.pdf, Bài 9, phần 1; phép tính được khai triển. Phần 2 được lược vì trùng chu trình đánh giá–cải thiện ở B01–B03 và không nằm trong 12 phút đã phân bổ.</p></aside></section>
 <section data-slide-id="X06"><h2>Bài tập 6: đánh giá dạng ma trận</h2><p>Chứng minh $(I-\gamma P_\pi)v_\pi=r_\pi$ và tính khả nghịch khi $0\lt\gamma\lt1$.</p><aside class="notes">Có thể dùng bán kính phổ của $P_\pi$ hoặc chuỗi Neumann để chứng minh khả nghịch.<p class="note-source"><strong>Nguồn:</strong> hw3.pdf, Bài 6.</p></aside></section>
 <section data-slide-id="X04"><h2>Bài tập 4: lịch cập nhật</h2><p>Phân biệt đồng bộ và bất đồng bộ; nêu vai trò của thứ tự, công bằng và điểm bất động.</p><aside class="notes">Hai cách có cùng điểm bất động dưới điều kiện hội tụ phù hợp. Không suy ra bất đồng bộ luôn nhanh hơn.<p class="note-source"><strong>Nguồn:</strong> hw3.pdf, Bài 4.</p></aside></section>
 <section data-slide-id="X07"><h2>Bài tập 7: tính đơn điệu</h2><p>Nếu $u\le v$, chứng minh $T^\pi u\le T^\pi v$ và $T_*u\le T_*v$.</p><aside class="notes">Dùng trọng số xác suất không âm. Với $T_*$, áp bất đẳng thức cho từng hành động rồi lấy cực đại.<p class="note-source"><strong>Nguồn:</strong> hw3.pdf, Bài 7.</p></aside></section>
 </section>
-<div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 04</div></div></div><script src="revealjs/dist/reveal.js"></script><script src="plugin/notes/notes.js"></script><script src="plugin/highlight/highlight.js"></script><script src="plugin/math/math.js"></script><script>Reveal.initialize({width:1280,height:720,margin:.04,controlsLayout:"edges",slideNumber:true,hashOneBasedIndex:true,hash:true,katex:{local:"vendor/katex"},plugins:[RevealHighlight,RevealNotes,RevealMath.KaTeX]});</script></body></html>
+<div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 04</div>
+</div></div>
+<script src="revealjs/dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script src="plugin/math/math.js"></script>
+<script>
+Reveal.initialize({width:1280,height:720,margin:.04,controlsLayout:"edges",slideNumber:true,hashOneBasedIndex:true,hash:true,katex:{local:"vendor/katex"},plugins:[RevealHighlight,RevealNotes,RevealMath.KaTeX]});
+</script>
+</body>
+</html>

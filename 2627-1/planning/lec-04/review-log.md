@@ -1,5 +1,420 @@
 # Nhật ký rà soát Bài 04
 
+## Triển khai lại theo dàn bài — 24-09-2026
+
+**Trạng thái:** đang thực hiện bảy phần theo dàn bài 45 slide/120 phút. Mỗi phần được kiểm tra rồi commit và push theo ủy quyền của người dùng. Chưa coi toàn bài là hoàn tất trước khi đủ năm báo cáo độc lập và kiểm định toàn bộ bản cuối. Các mục lịch sử phía dưới thuộc những phiên bản trước.
+
+**Yêu cầu mới về số liệu:** người dùng yêu cầu số trong ví dụ dễ phân biệt. Mô hình hai trạng thái giữ cấu trúc nguồn, đổi phần thưởng thành 2/−1/5/10 và hệ số chiết khấu 0,5. Các cặp giá trị chính sách là (4,7), (4,20), (9,20); lưới dùng thưởng −1/24, cùng hệ số. Ví dụ hội tụ dùng chặn đầu 64; các câu hỏi sai số dùng phần dư 0,15 hoặc 0,1 và ngưỡng sai số 0,2. Số được gắn với vai trò đại lượng; các bằng nhau có lý do toán học vẫn giữ nguyên. Tham số gốc PDF chỉ dùng để truy nguyên nguồn.
+
+**Giao diện:** yêu cầu gọi tên lecture-style.css được đối chiếu với kho và AGENTS.md; tệp chung thực tế là lecture-slide.css. Dùng lớp reveal lecture-deck, không tạo bản sao CSS hay hệ giao diện mới. Các kiểu cục bộ của bài cũ được loại bỏ khi lắp bản mới.
+
+**Điều phối:** tác tử lập kế hoạch và tác tử phân tích nguồn chạy qua OpenRouter; writer chỉ được ghi một sản phẩm trong thư mục tạm của từng phần. GPT-6-astra, reasoning ultra, được giao điều phối kiểm định kỹ thuật và trình duyệt. Điều phối viên chính đối chiếu dữ kiện, xét từng góp ý và kiểm tra bản ghép. Các reviewer nội dung vẫn dùng cầu nối OpenRouter theo AGENTS.md.
+
+**Kế hoạch được chấp nhận có điều chỉnh:** viết và kiểm từng phần theo thứ tự1–7; rà các phần đã thay bằng các vai phù hợp, kiểm hình và toán trước mỗi commit. Khi đủ bản nháp45 slide, chạy kiểm định storyboard và đủ năm vai độc lập trên phạm vi toàn bài; giao writer chỉnh sửa riêng rồi rà lại phần bị ảnh hưởng. Bản trung gian giữ nội dung các phần chưa viết lại, không dùng trang giữ chỗ. Những bản trung gian chưa phải sản phẩm cuối đã qua toàn bộ kiểm định.
+
+**Kiểm soát chất lượng tác tử:** planner diễn đạt nhầm “lỗi slide10,11”; thực tế lỗi cũ là gọi cặp giá trị(10,11) tối ưu. Hai lượt reader về bố cục lẫn nhiều ngôn ngữ, không được chép vào sản phẩm. Điều phối viên biên tập lại đủ45 quyết định bố cục bằng tiếng Việt trong storyboard. Bản writer mở đầu đầu tiên có chữ SVG quá nhỏ, công thức bên trong SVG và nội dung lặp; đã yêu cầu soạn lại, đồng thời áp dụng bộ số mới.
+
+**Kiểm số độc lập:** đã tính bằng phân số chính xác cả bốn chính sách của MDP hai trạng thái, chuỗi cải thiện, bảng q tối ưu, ba lượt đánh giá, năm lượt lưới, ví dụ co và ngưỡng sai số. Reviewer DeepSeek đề nghị sai rằng q tối ưu(s0,a)=4; bác bỏ vì phải dùng phần tiếp diễn tối ưu9, nên 2+0,5×9=6,5. Giá trị4 thuộc chính sách luôn a. Góp ý này cho thấy cần gắn nhãn phần tiếp diễn trên mặt slide, không sửa số đúng theo kết luận sai của tác tử.
+
+**Công cụ:** Codex Slides khả dụng tại http://127.0.0.1:4311/project/20260824154346-chuy-n-lecture-4-gi-i-mdp-b-ng-quy-ho-ch-z4es. Trạng thái hiện tại mới là hồ sơ tiếp nhận, chưa là bản deck đồng bộ. Phiên không có công cụ Browser trong trình biên tập; Playwright dùng để kiểm giao diện cục bộ, không tuyên bố đã mở trong Browser của Codex. Máy chủ RevealJS chạy bằng python3 -m reloadserver 8765. Hướng dẫn bố cục tham khảo từ [SLIDE_STYLE_GUIDE.md](https://github.com/uet-iai-course/machine-learning/blob/main/SLIDE_STYLE_GUIDE.md), chỉ lấy nguyên tắc trình bày; không sao chép CSS hoặc tài sản.
+
+### Tiến độ từng phần
+
+| Phần | Slide | Trạng thái | Commit |
+|---|---|---|---|
+| 1 | 01–05 | Đã kiểm nội dung, số học và hai khung hiển thị | Commit phần mở đầu trong lịch sử Git |
+| 2 | 06–12 | Chưa triển khai | — |
+| 3 | 13–18 | Chưa triển khai | — |
+| 4 | 19–26 | Chưa triển khai | — |
+| 5 | 27–34 | Chưa triển khai | — |
+| 6 | 35–41 | Chưa triển khai | — |
+| 7 | 42–45 | Chưa triển khai | — |
+
+### Bằng chứng runtime của lượt triển khai
+
+| Tác vụ | requested_model | observed_model | provider | Quyết định |
+|---|---|---|---|---|
+| Planner | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter | Chấp nhận kế hoạch sau sửa phạm vi và cách hiểu số |
+| Reader bố cục lần1 | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter | Không dùng nguyên văn do lẫn ngôn ngữ |
+| Reader bố cục lần2 | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter | Vẫn không đạt ngôn ngữ; điều phối viên biên tập lại |
+| Writer mở đầu lần1 | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter | Yêu cầu viết lại bố cục và đổi tham số |
+| Rà storyboard | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter | Báo cáo chỉ còn phần tiếp sau giới hạn token; chưa tính là hoàn tất |
+| Rà bộ số mới | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter | Giữ các tính đúng, bác bỏ nhầm chính sách tiếp diễn |
+
+
+### Rà phần mở đầu và storyboard triển khai
+
+- Writer lần hai và patch: requested/observed `z-ai/glm-5.3-flash`, provider OpenRouter. Bộ số mới được áp dụng; bỏ hình lặp ở trang đầu, đưa câu hỏi trước các fragment đáp án, sửa nhãn giá trị tiếp diễn.
+- Rà sinh viên: requested/observed `z-ai/glm-5.3-flash`; rà toán: requested/observed `deepseek/deepseek-v4-flash-0731`; provider OpenRouter. Hai báo cáo xác nhận phép tính 4, 9 và 2,5. Chấp nhận đề nghị gắn giá trị (4,7) với chính sách luôn chọn a. Bác bỏ đề nghị tách đáp án thành slide riêng: đáp án đã là fragment, kiểm trình duyệt xác nhận câu hỏi hiện trước. Sáu mục nội dung sau phần mở đầu tạo đúng bảy phần, không thiếu mục. Thưởng và chuyển trạng thái là hai dữ kiện mô hình; bảng v là đầu vào riêng, cách hỏi không sai. Biên tập câu phân vai bốn số thành lời giảng trực tiếp.
+- Reviewer storyboard lần thu gọn: requested/observed `z-ai/glm-5.3-flash`, provider OpenRouter. Chấp nhận sửa số27 tồn dư tại ghi chú bố cục S21 thành giá trị20. Bác bỏ nhầm “thưởng24” thành “24 ô”: lưới vẫn năm ô. Chặn đầu64 là giả định minh họa đã ghi rõ, không phải chặn tự nhiên của MDP; giữ ví dụ để tính được mốc7 lượt.
+- Kiểm kỹ thuật và quan sát đủ năm trang: không tràn, chồng lấn, hỏng tài nguyên, lỗi KaTeX hoặc yêu cầu mạng ngoài ở1280×720 và960×540. Bàn phím và cửa sổ ghi chú hoạt động. Sửa ngắt dòng tách số7 khỏi nhãn. SVG hai trạng thái có mô tả, nhãn và chiều mũi tên đúng. Bảng S04 cỡ30,24px và dòng học phần27,55px đọc được trong ảnh đã xem; không dùng chữ nhỏ hơn0,65em.
+- Phần còn lại trong commit này giữ bản trung gian; các số cũ ở phần chưa triển khai chưa được coi là bản cuối đồng bộ.
+
+## Lập dàn bài theo skill — 23-09-2026
+
+**Trạng thái hiện tại:** đã hoàn tất kế hoạch 45 slide, 120 phút, bảy phần và bảy slide kiểm tra. Đây là kết quả lập dàn bài theo yêu cầu mới, chưa triển khai các mã L04-S01–L04-S45 vào HTML. Các nhận định về 42 trang, SVG và kiểm định trình duyệt ở phần lịch sử bên dưới thuộc những lần triển khai trước, không phải bằng chứng cho dàn bài mới.
+
+Đầu ra lần này: [analysis.md](analysis.md), [outline.md](outline.md), [storyboard.md](storyboard.md) và nhật ký này. HTML, SVG, CSS, chỉ mục, lecture note và note-for-author giữ trạng thái cũ; chưa đồng bộ và chưa kiểm định hiển thị theo dàn bài mới.
+
+### Kế hoạch và phân công được chấp nhận
+
+1. Điều phối viên xác định đúng nguồn lecture04-solving-MDP.pdf, đọc 38 trang và học liệu liên quan, kiểm các tài sản và mẫu có sẵn.
+2. Reader lập kế hoạch riêng; điều phối viên chốt phạm vi năm 3, 45 slide/120 phút, bảy phần, câu kiểm tra từng phần và không triển khai HTML.
+3. Reader thứ hai phân tích nguồn/ánh xạ; điều phối viên đối chiếu PDF, sửa các suy diễn sai trước khi dùng. Phân tích thô có đoạn không thuần Việt, đề nghị 140 phút và nhận xét chặn sai số chưa đúng; những điểm này không được tiếp nhận. Quy mô cuối theo yêu cầu 120 phút.
+4. Writer nhận phần giới hạn slide 13–26 trong thư mục tạm riêng. Điều phối viên ghép với các phần còn lại, sửa mã giữ chỗ, công thức lỗi, ký hiệu, mô tả lượt quét và chặn đuôi chứng minh. Worker không sửa HTML hoặc tệp chung.
+5. Năm reviewer chạy trong các tiến trình độc lập; điều phối viên hợp nhất, tự tính lại và quyết định từng góp ý. Rà lại hai cụm thuật toán và chứng minh sau sửa; điều phối viên kiểm các biên và các thay đổi câu chữ cuối.
+
+Dùng build-slide-deck-outline cho cấu trúc phân tích/dàn bài, quill cho quan hệ khái niệm và no-ai-slop cho biên tập. Không tạo quill.json. Đối chiếu hai nguồn đại học chính thức và phạm vi đã đọc được ghi trong analysis; không dùng danh tiếng trường thay cho kiểm chứng toán học.
+
+### Bằng chứng runtime
+
+Các trường sau được lấy từ JSON của cầu nối; không dùng lời tự khai của worker. Chỉ có OpenRouter là nhà cung cấp trong các lượt thành công.
+
+| Vai/lượt | requested_model | observed_model | provider |
+|---|---|---|---|
+| Lập kế hoạch | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter |
+| Phân tích nguồn | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter |
+| Soạn slide 13–26 | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter |
+| Góc nhìn sinh viên | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter |
+| Chuyên gia Học tăng cường | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter |
+| Toán học và thuật toán | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter |
+| Phản biện giảng dạy | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter |
+| Kết nối và mạch viết | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` | OpenRouter |
+| Rà lại thuật toán 14–26 | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter |
+| Rà lại chứng minh 33–45 | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` | OpenRouter |
+
+Reader có lượt đầu chạm giới hạn công cụ; đã thu hẹp gói và dùng cùng mô hình. Hai vai sinh viên/mạch viết ban đầu hết ngân sách sinh 2.500 token mà chưa có báo cáo; gói sau rút bớt trường không liên quan, vẫn bao phủ 45 slide cùng bản đồ bảy phần, dùng hồ sơ review-full và ngân sách 5.000 token. Endpoint GLM từ chối tham số reasoning=none; đã dùng low, không đổi mô hình. Không tính lượt lỗi tham số hay gói thiếu nội dung là một báo cáo hợp lệ.
+
+Gói rà chứng minh ban đầu vượt 16.000 ký tự khi tính cả chỉ dẫn cầu nối, chưa gửi API; rút gọn một lần, cùng mô hình, thành công với 15.878 ký tự toàn ngữ cảnh. Không tăng timeout hoặc chuyển nhà cung cấp. Các lời gọi mạng dựa trên ủy quyền sẵn tại AGENTS.md; lần kiểm duyệt đầu được giải quyết bằng cách cung cấp đúng điều khoản ủy quyền. Không có phần nào còn chờ quyền.
+
+### Quyết định sau năm báo cáo độc lập
+
+| Vai | Mức reviewer nêu | Slide | Bằng chứng/vấn đề | Quyết định cuối |
+|---|---|---|---|---|
+| Sinh viên, RL | Trung bình | 16,24,31 | Hai quy trình trả bảng khác nhau, PI chưa rõ khi hết ngân sách | Giữ hai quy ước hợp lệ với chặn đúng bảng; giải thích lý do ở 16/39. Slide 24 trả chính sách vừa đánh giá cùng giá trị của nó; 31 ghi cả hai nhánh trả trong nội dung. Không ép hai thuật toán giống nhau. |
+| Sinh viên | Nhẹ | 19 | “Theo chính sách cũ” dễ lẫn với cách chạy chính sách mới | Làm rõ đó là giả định trong phép tính giá trị hành động một bước; chính sách mới được đánh giá riêng. |
+| Sinh viên, mạch viết | Nhẹ | 13–18 | Viết hoa đầu câu không nhất quán | Biên tập các trường nội dung; giữ cấu trúc dàn bài. |
+| Sinh viên | Nhẹ | 44 | Reviewer không có toàn văn bài tập để kiểm tham chiếu | Điều phối viên đối chiếu hw3.pdf: B3 tồn tại, B6 hệ Bellman, B7 đơn điệu, B9 MDP ba trạng thái ở tr.1–2. |
+| RL, giảng dạy | Trung bình | 16 | Chặn sai số xuất hiện sớm, thuật toán nhiều ý | Chuyển công thức chặn sang ghi chú/slide 39; định nghĩa thay đổi lớn nhất bằng lời; không lặp lại giải hệ trên mặt slide. |
+| RL | Nhẹ | 17 | Điều kiện cập nhật công bằng chưa đủ đặc tả | Bổ sung mỗi cập nhật dùng đúng công thức Bellman theo bảng hiện có, dưới giả thiết chiết khấu. |
+| RL, giảng dạy | Nhẹ/nghiêm trọng | 22–23 | Tính đơn điệu và lý do giá trị bị chặn chưa được chuẩn bị | Slide 22 mở bước trọng số không âm; 23 dùng chặn Rmax/(1−gamma) cho đuôi. |
+| RL, giảng dạy | Nhẹ/nghiêm trọng | 37 | Chứng minh mọi chính sách trong 4 phút quá dày; cần điều kiện hóa đúng lịch sử | Giữ phát biểu tối ưu đầy đủ, chỉ giảng sơ đồ hai nhánh. Chứng minh theo lịch sử nằm trong ghi chú đọc thêm, điều kiện hóa theo H_t. Không thu hẹp định lý một cách ngầm định. |
+| Toán | Nghiêm trọng | 35,38,43 | Reviewer tính lại các số đều đúng nhưng muốn có phép tính mẫu | Xếp lại thành yêu cầu giải thích, không là lỗi số học. Thêm phép tính mẫu và bước logarit trong ghi chú; giữ số đúng. |
+| Toán | Trung bình | 39 | Thiếu bước tam giác trong suy diễn | Bổ sung đầy đủ tam giác → co → chặn. |
+| Toán | Nhẹ | 31 | Thứ tự Q, max/argmax, phần dư chưa rõ | Viết rõ trình tự, cùng bảng v cho toàn bộ phép tính. |
+| Toán, RL, giảng dạy | Nhẹ/trung bình | 40 | Chưa chỉ rõ biến nào 3 khoảng, biến nào 6 | Đối chiếu trực tiếp NG1 tr.36; ghi x và vận tốc mỗi biến 3, góc và vận tốc góc mỗi biến 6. Giữ cảnh báo gộp trạng thái chưa bảo đảm Markov, thêm đặc tả hình gộp hai điểm. |
+| Giảng dạy | Trung bình | 38 | Chặn 100 có thể bị nhầm là dữ kiện của lưới | Ghi ngay trong nội dung đây là giả định minh họa số học; 44 là số lượt đủ theo chặn. |
+| Giảng dạy | Nhẹ | 44 | Sản phẩm chứng minh chưa rõ | Yêu cầu viết bằng lời của mình, nêu giả thiết và bước dùng từng giả thiết. |
+| Mạch viết | Trung bình | 06–12 | Báo cáo cộng sai thành 15 phút và toàn bài 117 | Bác bỏ: 2+3+3+3+2+2+3=18; kiểm bằng mã cho toàn bài 120. Không tăng thời gian để sửa một phát hiện sai. |
+| Mạch viết | Nhẹ | 23 | Cách viết chỉ số chính sách cải thiện | Chuẩn hóa ký hiệu prime trong nguồn Markdown; không đổi ý nghĩa. |
+
+### Kết quả rà lại và kiểm định cuối của điều phối viên
+
+- Rà lại 14–26 xác nhận đơn điệu, chặn đuôi và cặp trả của PI; tuy nhiên báo cáo nhầm cạnh s1,a quay về s1. Đề nghị đổi v2(s1) từ 2,9 thành 3,8 là sai. Nguồn tr.17 ghi s1,a → thưởng 2, trạng thái s0; vì vậy v2(s1)=2+0,9×1=2,9 và v3(s1)=2+0,9×1,9=3,71. Bác bỏ sửa số; đã tính độc lập bằng phân số chính xác. Thứ tự cập nhật tại chỗ s0 rồi s1 đã được ghi rõ, không phải thiếu.
+- Rà lại 33–45 xác nhận phép tính co, số 44, chặn phần dư, 324 ô, bảng Q tối ưu và chứng minh theo lịch sử; không còn đề nghị sửa có căn cứ. Một số hàng báo cáo gắn nhãn “trung bình” rồi tự xác nhận “đúng”; không coi đó là lỗi còn mở.
+- Kiểm 45 mã duy nhất và liên tục; tổng 120 phút; phân bổ 10/18/17/23/23/20/9; đủ bảy slide kiểm tra có đáp án và tiêu chí; hỏi–chữa đã nằm trong thời lượng.
+- Ánh xạ đủ trang nguồn 1–38. Liên kết cục bộ trong ba tệp kế hoạch đều tồn tại. Không có ký tự điều khiển hoặc dấu công thức Markdown sai quy ước.
+- Tính lại bằng phân số: ba chính sách, bảng giá trị hành động, ba lượt đánh giá, năm bảng lưới gồm lượt kiểm điểm bất động, ví dụ co, hai ngưỡng sai số. Kết quả khớp dàn bài.
+- 567 biểu thức trong analysis/outline/storyboard được bộ phân tích KaTeX cục bộ chấp nhận, không lỗi. Đây là kiểm cú pháp, không thay cho kiểm toán học hoặc kiểm hiển thị.
+- Rà chu trình và ranh giới theo quill: tiên quyết xuất hiện trước thuật toán; ví dụ truyền cùng dữ kiện sang công thức; kết luận giải đúng vấn đề mở đầu. Không có trang chỉ để trang trí. Không đổi số lượng/thứ tự sau năm báo cáo; các bổ sung cuối chỉ làm rõ nội dung và ghi chú.
+- Tự kiểm no-ai-slop/eval.md: giữ ý và dữ kiện nguồn, bỏ lời dẫn rỗng, dùng động từ cụ thể, phân biệt nhận định với chứng cứ; các trường lặp theo mẫu có chức năng tra cứu. Không tuyên bố kiểm định giọng nói từ bản thu âm hoặc khả năng đọc của slide chưa dựng.
+
+**Kết luận của điều phối viên:** kế hoạch đủ điều kiện bàn giao. Không còn lỗi nội dung chặn bàn giao có căn cứ sau phân xử. Thời lượng vẫn là dự toán; cần chạy thử khi triển khai slide. HTML/note hiện có còn theo bản cũ và không được coi là đã cập nhật hoặc đã qua kiểm định cho cấu trúc này.
+
+### Báo cáo độc lập được lưu để truy nguyên
+
+Các báo cáo sau là đầu ra worker trước phân xử. Quyết định có hiệu lực nằm trong các bảng trên; không áp dụng máy móc những đề xuất đã bị bác bỏ.
+
+#### Góc nhìn sinh viên
+
+##### Báo cáo rà outline.md (L04, 45 slide / 120 phút)
+
+Đã kiểm toàn bộ 45 slide: tổng thời lượng đúng 120 phút, khớp bản đồ phần (10+18+17+23+23+20+9=120); đủ mã L04-S01–S45. Các phép tính chính đều kiểm lại đúng: bảng $Q_v$ (S07), $T_*v=(10,12{,}9)$ (S12), nghiệm $(10,11)$ (S14), dãy quét (S15, S18), chuỗi PI $(10,11)\to(10,30)\to(27,30)$ (S21, S26), lưới 5 ô $v_1$–$v_4$ và điểm bất động (S28–S29, S34), ví dụ co $1{,}8=0{,}9\cdot2$ (S35), $100\cdot0{,}9^{44}\approx0{,}97$ và $k>43{,}71$ (S38), chặn $0{,}02/0{,}1=0{,}2$ (S41), $Q_{v_*}=(25{,}3,27;26{,}3,30)$ (S43), đáp án S45 $\le0{,}1$. Chặn $\gamma\delta/(1-\gamma)$ ở S16 và suy diễn $\rho/(1-\gamma)$ ở S39 đều đúng. Không thấy lỗi chặn bàn giao.
+
+**Các vấn đề tìm thấy:**
+
+1. **Trung bình | L04-S16 vs L04-S31 | Không nhất quán về bảng trả khi hết ngân sách** | Bằng chứng: S16 ghi "sau lượt thứ $K$... trả bảng $w$ cuối cùng kèm nhãn hết ngân sách"; S31 ghi "ở lượt thứ $K$, nếu chưa đạt thì trả chính bảng $v$ đã kiểm cùng $\pi_v,\rho(v)$... không âm thầm trả $w$ chưa kiểm" | Hai quy trình trả hai bảng khác nhau ($w=Tv$ vs $v$) trong cùng tình huống, dễ gây nhầm khi sinh viên đối chiếu PI/VI | Đề xuất: thống nhất một quy ước (khuyến nghị theo S31: trả bảng đã kiểm kèm phần dư đo được) và sửa ghi chú S16 cho khớp, nêu rõ lý do khác nhau nếu cố tình giữ.
+
+2. **Nhẹ | L04-S19 | Câu "phần tiếp diễn vẫn theo $\pi_0$" dễ hiểu sai** | Bằng chứng: S19 nêu đổi hành động tại $s_1$ nhưng "phần tiếp diễn vẫn theo $\pi_0$", trong khi S20 cho ra $\pi_1=(a,b)$ là chính sách mới hoàn chỉnh | Sin viên năm 3 có thể tưởng $\pi_1$ chỉ khác $\pi_0$ tại một bước rồi quay lại $\pi_0$ | Đề xuất: sửa thành "hành động tại $s_1$ đổi sang $b$; tại $s_0$ giữ $a$, tạo chính sách mới $\pi_1=(a,b)$".
+
+3. **Nhẹ | L04-S13–S18 | Lỗi văn phong: nhiều slide bắt đầu bằng chữ thường** | Bằng chứng: S13 "với $\pi_0=(a,a)$...", S14 "với $\pi_0$ và $\gamma=0.9$...", S15 "khởi $v_0$...", S17 "đồng bộ:...", S18 "đề:..." | Không nhất quán với S01–S12 viết hoa đầu câu; ảnh hưởng bản HTML sau này | Đề xuất: viết hoa đầu câu khi đồng bộ sang HTML.
+
+4. **Nhẹ | L04-S44 | Tham chiếu đọc thêm chưa kiểm được** | Bằng chứng: "NG1 tr.20–24,31–34", "NG2 Bài 9/6/3/7, B10" — outline không kèm trích dẫn nội dung các nguồn | Không xác nhận được trang/bài tập khớp tài liệu thật từ excerpt được cấp | Đề xuất: đối chiếu số trang với NG1/NG2 trước khi phát tài liệu; không phải lỗi nội dung mặt slide.
+
+**Kết luận:** Không có lỗi nghiêm trọng hay chặn bàn giao; số học, định lý và nhịp 120 phút đều nhất quán. Chỉ cần xử lý mục 1 trước khi dựng HTML.
+
+#### Chuyên gia Học tăng cường
+
+#### Báo cáo rà soát dàn bài Bài 04 — Giải MDP bằng quy hoạch động
+
+##### Tổng quan
+
+Dàn bài 45 slide/120 phút bám sát nguồn NG1 (38 trang), đúng cấu trúc Bellman → đánh giá → PI → VI → hội tụ → tổng hợp, có 7 slide kiểm tra đúng theo yêu cầu. Các giá trị số trong ví dụ hai trạng thái và lưới năm ô đều khớp với dữ kiện đã xác minh. Không phát hiện lỗi mức **chặn bàn giao** hay **nghiêm trọng**.
+
+---
+
+##### Vấn đề 1 — Mức độ: trung bình
+
+**Trang chiếu:** L04-S16, L04-S24, L04-S31
+
+**Vấn đề:** Mâu thuẫn giữa ba quy trình về cách xử lý khi hết ngân sách $K$: slide 16 trả bảng $w$ cuối cùng, slide 31 trả bảng $v$ đã kiểm, slide 24 không nói rõ trả bảng nào khi hết ngân sách.
+
+**Bằng chứng:** S16: "sau lượt thứ K, nếu chưa đạt ngưỡng thì trả bảng w cuối cùng"; S31: "trả chính bảng v đã kiểm cùng π_v, ρ(v)"; S24: "Nếu dừng do ngân sách K, phải gắn nhãn 'chưa chứng nhận tối ưu'" — không chỉ rõ bảng trả.
+
+**Đề xuất sửa:** Thống nhất quy ước: mọi quy trình trả bảng đã kiểm $v$ kèm phần dư $\rho(v)$ và nhãn hết ngân sách; sửa slide 16 cho đồng nhất với slide 31.
+
+---
+
+##### Vấn đề 2 — Mức độ: trung bình
+
+**Trang chiếu:** L04-S16
+
+**Vấn đề:** Chặn sai số cho bảng trả $w$ được ghi là $\gamma\delta/(1-\gamma)$ nhưng chưa giải thích vì sao hệ số có $\gamma$ ở tử số, trong khi slide 39 mới giải thích đầy đủ. Người học có thể nhầm với chặn $\rho(v)/(1-\gamma)$ của slide 39.
+
+**Bằng chứng:** S16: "chặn sai số cho bảng trả w là γδ/(1−γ), dẫn chiếu Phần 6, không chứng minh ở đây"; S39: "Nếu dùng bản trả w=Tv như đánh giá chính sách ở slide 16, chặn của w là γ‖Tv−v‖∞/(1−γ)".
+
+**Đề xuất sửa:** Giữ nguyên vì slide 39 đã làm rõ, nhưng nên thêm một câu ở slide 16: "hệ số γ xuất hiện vì w=T^π v đã tiến một bước gần điểm bất động hơn v" để tránh hiểu nhầm ngay từ đầu.
+
+---
+
+##### Vấn đề 3 — Mức độ: nhẹ
+
+**Trang chiếu:** L04-S17
+
+**Vấn đề:** Câu "lập luận hội tụ chỉ cần mỗi trạng thái được cập nhật vô hạn lần" chưa chính xác hoàn toàn — cần thêm điều kiện bước cập nhật phải theo toán tử $T^\pi$ đúng và thứ tự cập nhật không làm sai lệch phép tính.
+
+**Bằng chứng:** S17: "lập luận hội tụ chỉ cần mỗi trạng thái được cập nhật vô hạn lần; điều đó không cho phép kết luận tại chỗ nhanh hơn với mọi MDP."
+
+**Đề xuất sửa:** Bổ sung: "với điều kiện mỗi lần cập nhật dùng đúng công thức $T^\pi$ theo bảng hiện tại" để tránh hiểu lầm rằng chỉ cần cập nhật nhiều lần là đủ.
+
+---
+
+##### Vấn đề 4 — Mức độ: nhẹ
+
+**Trang chiếu:** L04-S23
+
+**Vấn đề:** Phác thảo chứng minh dùng "hạng đuôi $\gamma^n\mathbb{E}_{\pi'}[v^\pi(S_n)]$ tiến về 0" nhưng chưa nói rõ vì sao $v^\pi$ bị chặn — cần nhắc lại giả thiết $|R_t|\le R_{\max}$ từ quy ước soạn.
+
+**Bằng chứng:** S23: "hạng đuôi γ^n E_{π'}[v^π(S_n)] tiến về 0 vì v^π bị chặn và 0≤γ<1"; quy ước soạn có "$|R_t|\le R_{\max}<\infty$".
+
+**Đề xuất sửa:** Thêm một cụm: "v^π bị chặn bởi R_max/(1−γ) theo giả thiết phần thưởng bị chặn" để sinh viên thấy rõ nguồn của tính bị chặn.
+
+---
+
+##### Vấn đề 5 — Mức độ: nhẹ
+
+**Trang chiếu:** L04-S37
+
+**Vấn đề:** Ghi chú triển khai nói "chặn trên cho mọi chính sách, kể cả phụ thuộc lịch sử" nhưng phép lặp bất đẳng thức $\bar v(s)\ge\mathbb{E}[R_1+\gamma\bar v(S_1)]$ cần làm rõ kỳ vọng được lấy theo chính sách phụ thuộc lịch sử như thế nào — có thể gây nhầm vì $T^\pi$ chỉ định nghĩa cho chính sách Markov dừng.
+
+**Bằng chứng:** S37: "chặn trên cho mọi chính sách, kể cả phụ thuộc lịch sử, bằng lặp bất đẳng thức... Không dùng T^π cho chính sách phụ thuộc lịch sử."
+
+**Đề xuất sửa:** Thêm câu: "kỳ vọng ở mỗi bước được lấy theo phân phối hành động của chính sách đó tại trạng thái hiện tại, không cần dùng toán tử T^π" để phân biệt rõ hai cách dùng.
+
+---
+
+##### Vấn đề 6 — Mức độ: nhẹ
+
+**Trang chiếu:** L04-S40
+
+**Vấn đề:** Ví dụ CartPole chia $3\times3\times6\times6=324$ ô nhưng chưa nói rõ đây là số ô của biến nào (x, ẋ, θ, θ̇) — người học có thể không hiểu cách phân bổ.
+
+**Bằng chứng:** S40: "Chia thành 3×3×6×6=324 ô tạo biểu diễn hữu hạn" — không ghi rõ biến nào 3, biến nào 6.
+
+**Đề xuất sửa:** Ghi rõ: "ví dụ: x và ẋ mỗi biến 3 khoảng, θ và θ̇ mỗi biến 6 khoảng" hoặc bỏ con số cụ thể nếu không cần thiết cho mục tiêu MT6.
+
+---
+
+##### Kết luận
+
+Không có lỗi mức chặn bàn giao hoặc nghiêm trọng. Các vấn đề chủ yếu là mâu thuẫn nhỏ giữa các slide về quy ước trả bảng khi hết ngân sách (cần thống nhất) và một số chỗ cần bổ sung giải thích ngắn để tránh hiểu nhầm. Dàn bài đạt yêu cầu về độ bao phủ nội dung, phù hợp 120 phút, giữ đúng nguồn NG1 38 trang, không yêu cầu thêm chương trình hay chủ đề mới.
+
+#### Toán học và thuật toán
+
+#### Báo cáo rà soát độc lập — Dàn bài Bài 04
+
+##### Vấn đề 1
+- **Mức độ:** Nghiêm trọng
+- **Slide:** L04-S35
+- **Vấn đề:** Ví dụ số chưa được kiểm chứng độc lập: $T_*v=(11{,}7,14{,}7)$ cần tính lại từ mô hình hai trạng thái. Với $v=(11,13)$, $T_*v(s_0)=\max\{1+0{,}9\cdot11,\ 0+0{,}9\cdot13\}=\max\{10{,}9,\ 11{,}7\}=11{,}7$ (đúng); $T_*v(s_1)=\max\{2+0{,}9\cdot11,\ 3+0{,}9\cdot13\}=\max\{11{,}9,\ 14{,}7\}=14{,}7$ (đúng). Tuy nhiên slide chưa trình bày phép tính này, khiến người học không thể tự kiểm chứng.
+- **Bằng chứng:** Slide chỉ ghi kết quả "$T_*u=(10,12{,}9)$, $T_*v=(11{,}7,14{,}7)$" mà không nêu công thức tính từng ô.
+- **Đề xuất sửa:** Thêm dòng tính mẫu: "$T_*v(s_0)=\max\{1+0{,}9\cdot11,\ 0+0{,}9\cdot13\}=11{,}7$; $T_*v(s_1)=\max\{2+0{,}9\cdot11,\ 3+0{,}9\cdot13\}=14{,}7$" để người học theo dõi được.
+
+##### Vấn đề 2
+- **Mức độ:** Nghiêm trọng
+- **Slide:** L04-S38
+- **Vấn đề:** Số lượt 44 cần kiểm chứng: $100\cdot0{,}9^{44}\approx0{,}970<1$ là đúng, nhưng slide chưa giải thích cách chọn 44 từ bất đẳng thức $\gamma^k\|v_0-v_*\|_\infty<1$. Cần nêu rõ đây là chặn đủ (sufficient bound), không phải số lượt tối thiểu thực tế.
+- **Bằng chứng:** Slide ghi "cần 44 lượt để chặn nhỏ hơn 1: $100\cdot0{,}9^{44}\approx0{,}970$" nhưng không chỉ dẫn cách suy ra 44 từ logarit.
+- **Đề xuất sửa:** Thêm: "Giải $100\cdot0{,}9^k<1$ cho $k>\ln(0{,}01)/\ln(0{,}9)\approx43{,}7$, nên $k=44$ là đủ. Đây là chặn lý thuyết, không phải số lượt tối thiểu thật của mọi MDP."
+
+##### Vấn đề 3
+- **Mức độ:** Nghiêm trọng
+- **Slide:** L04-S43
+- **Vấn đề:** Bảng $Q_{v_*}=(25{,}3,27;26{,}3,30)$ chưa được kiểm chứng đầy đủ. Tính lại: $Q_{v_*}(s_0,a)=1+0{,}9\cdot27=25{,}3$; $Q_{v_*}(s_0,b)=0+0{,}9\cdot30=27$; $Q_{v_*}(s_1,a)=2+0{,}9\cdot27=26{,}3$; $Q_{v_*}(s_1,b)=3+0{,}9\cdot30=30$. Các số đúng, nhưng slide chưa trình bày phép tính để người học tự kiểm.
+- **Bằng chứng:** Slide ghi "Kiểm $Q_{v_*}=(25{,}3,27;26{,}3,30)$" mà không nêu công thức.
+- **Đề xuất sửa:** Thêm dòng tính mẫu: "$Q_{v_*}(s_0,b)=0+0{,}9\cdot30=27$; $Q_{v_*}(s_1,b)=3+0{,}9\cdot30=30$" và chỉ rõ $\max$ tại mỗi trạng thái khớp với $v_*$.
+
+##### Vấn đề 4
+- **Mức độ:** Trung bình
+- **Slide:** L04-S39
+- **Vấn đề:** Suy diễn $e\le\rho(v)+\gamma e$ thiếu bước trung gian: cần dùng bất đẳng thức tam giác $v-v_*=(v-T_*v)+(T_*v-v_*)$ rồi áp dụng tính co cho $T_*v$ và $v_*$. Slide hiện chỉ nêu kết quả.
+- **Bằng chứng:** Slide ghi "Đặt $e=\|v-v_*\|_\infty$: $e\le\rho(v)+\gamma e$, nên $e\le\rho(v)/(1-\gamma)$" — thiếu giải thích nguồn gốc.
+- **Đề xuất sửa:** Thêm: "Dùng bất đẳng thức tam giác và tính co: $\|v-v_*\|\le\|v-T_*v\|+\|T_*v-v_*\|\le\rho(v)+\gamma\|v-v_*\|$."
+
+##### Vấn đề 5
+- **Mức độ:** Trung bình
+- **Slide:** L04-S40
+- **Vấn đề:** Chỉ số phân chia CartPole chưa rõ ràng: $3\times3\times6\times6=324$ cần ghi rõ biến nào nhận 3, biến nào nhận 6. Nếu theo thứ tự $(x,\dot x,\theta,\dot\theta)$ thì $x$:3, $\dot x$:3, $\theta$:6, $\dot\theta$:6 — cần xác nhận với nguồn NG1 tr.35–37.
+- **Bằng chứng:** Slide ghi "Chia thành $3\times3\times6\times6=324$ ô" không chỉ rõ ánh xạ biến.
+- **Đề xuất sửa:** Ghi cụ thể: "$x$: 3 khoảng, $\dot x$: 3, $\theta$: 6, $\dot\theta$: 6" hoặc theo đúng nguồn đã xác minh.
+
+##### Vấn đề 6
+- **Mức độ:** Nhẹ
+- **Slide:** L04-S31
+- **Vấn đề:** Mô tả "một lượt tính $Q_v$ phục vụ cả $w$, chính sách và phần dư" là đúng, nhưng cần làm rõ thứ tự: phải tính $Q_v$ trước, rồi mới lấy $\max$ cho $w$, $\arg\max$ cho $\pi_v$, và $\max_s|w(s)-v(s)|$ cho $\rho(v)$. Hiện tại slide liệt kê song song có thể gây hiểu nhầm là ba phép tính độc lập.
+- **Bằng chứng:** Slide ghi "tính từng $Q_v$, $w=T_*v$, chính sách $\pi_v$ tham lam theo cùng $v$ và $\rho(v)$" — thứ tự chưa rõ.
+- **Đề xuất sửa:** Viết lại: "Trước tiên tính $Q_v(s,a)$ cho mọi $(s,a)$; từ đó lấy $w(s)=\max_a Q_v(s,a)$, $\pi_v(s)\in\arg\max_a Q_v(s,a)$, và $\rho(v)=\max_s|w(s)-v(s)|$."
+
+---
+
+**Tổng kết:** Không phát hiện lỗi sai số học trong các ví dụ trọng yếu (các giá trị $(10,11),(10,30),(27,30)$, $Q_{v_*}$, $T_*v$ đều tính lại đúng). Các vấn đề chủ yếu là thiếu trình bày phép tính kiểm chứng và thiếu bước trung gian trong suy diễn, ảnh hưởng đến khả năng tự học của sinh viên hơn là sai nội dung.
+
+#### Phản biện giảng dạy
+
+#### Báo cáo phản biện dàn bài Bài 04 (45 slide/120 phút)
+
+##### Tổng quan
+Dàn bài có cấu trúc chặt chẽ, mạch ví dụ–hình thức–thuật toán hợp lý, bám sát nguồn NG1 38 trang. Các công thức kiểm tra đều đúng. Tuy nhiên có một số vấn đề về thứ tự trình bày, tính khả thi chứng minh trên lớp và nhất quán dữ kiện.
+
+---
+
+##### Vấn đề 1 — Nghiêm trọng
+**Trang chiếu:** L04-S23 (Định lý cải thiện chính sách)
+
+**Vấn đề:** Chứng minh phác thảo dùng chuỗi bất đẳng thức `v^π ≤ T^π' v^π ≤ (T^π')²v^π ≤ ...` nhưng không giải thích vì sao `T^π'` đơn điệu — đây là bước cần chứng minh phụ, chưa được chuẩn bị ở slide nào trước đó.
+
+**Bằng chứng:** "dùng đơn điệu (trọng số không âm) lặp khai triển" — không có slide nào giới thiệu tính đơn điệu của toán tử Bellman trước slide 23.
+
+**Đề xuất sửa:** Thêm 1–2 câu ở slide 22 hoặc đầu slide 23 chứng minh nhanh: nếu `u ≤ v` theo từng tọa độ thì `T^π'u ≤ T^π'v` vì trọng số xác suất không âm; hoặc chuyển bước này thành câu hỏi kiểm tra nhanh.
+
+---
+
+##### Vấn đề 2 — Nghiêm trọng
+**Trang chiếu:** L04-S37 (Điểm bất động và chính sách tối ưu)
+
+**Vấn đề:** Phác thảo chứng minh "chặn trên cho mọi chính sách, kể cả phụ thuộc lịch sử" bằng lặp bất đẳng thức `v̄(s) ≥ E[R₁ + γv̄(S₁)]` là không tầm thường: cần lập luận quy nạp qua các bước thời gian và xử lý chính sách phụ thuộc lịch sử — khối lượng này quá lớn cho 4 phút trên lớp, đặc biệt khi sinh viên chưa quen kỹ thuật này.
+
+**Bằng chứng:** "chặn trên cho mọi chính sách, kể cả phụ thuộc lịch sử, bằng lặp bất đẳng thức... sau n bước, hạng đuôi bị chặn bởi γⁿ‖v̄‖∞→0" — toàn bộ nằm trong ghi chú triển khai, không có slide minh họa.
+
+**Đề xuất sửa:** Giới hạn phát biểu ở lớp chính sách Markov dừng (đã dùng trong `T^π`), nêu rõ trường hợp phụ thuộc lịch sử là mở rộng đọc thêm; hoặc tăng thời lượng slide này lên 5–6 phút và thêm một slide phụ minh họa bước quy nạp.
+
+---
+
+##### Vấn đề 3 — Trung bình
+**Trang chiếu:** L04-S16 (Quy trình đánh giá chính sách)
+
+**Vấn đề:** Slide đưa cùng lúc quá nhiều khái niệm mới: ngưỡng θ, chuẩn vô cùng, chặn sai số `γδ/(1-γ)` (dẫn chiếu Phần 6), ngân sách K, nhãn "hết ngân sách" — trong 4 phút. Sinh viên chưa học chuẩn vô cùng (chỉ mới thấy ở slide 35) và chưa hiểu vì sao chặn sai số lại có dạng đó.
+
+**Bằng chứng:** "Ngưỡng chỉ trả ước lượng; chặn sai số cho bảng trả w là γδ/(1-γ), dẫn chiếu Phần 6, không chứng minh ở đây" — nêu nhưng không giải thích trực giác.
+
+**Đề xuất sửa:** Tách thành hai slide: (a) quy trình lặp với ngưỡng θ và chuẩn vô cùng (định nghĩa nhanh); (b) ngân sách K và ý nghĩa "chưa chứng nhận". Chuyển chặn sai số thành ghi chú "sẽ giải thích ở Phần 6", không nêu công thức.
+
+---
+
+##### Vấn đề 4 — Trung bình
+**Trang chiếu:** L04-S38 (Hội tụ hình học)
+
+**Vấn đề:** Ví dụ "chặn sai số đầu bằng 100, γ=0.9, cần 44 lượt" là con số giả định không gắn với bất kỳ ví dụ nào trong bài — sinh viên khó hình dung vì sao chọn 100, và con số 44 có thể bị hiểu nhầm là số lượt thực tế cần cho ví dụ lưới ở Phần 5.
+
+**Bằng chứng:** "Với chặn sai số đầu bằng 100 và γ=0.9, cần 44 lượt để chặn nhỏ hơn 1: 100·0.9⁴⁴≈0.970" — không có nguồn gốc từ ví dụ cụ thể nào.
+
+**Đề xuất sửa:** Dùng chặn sai số đầu từ ví dụ lưới (‖v₀-v_*‖∞ ≤ 10 chẳng hạn) hoặc nêu rõ "đây là minh họa số học cho công thức, không phải dự đoán số lượt thực tế" ngay trên slide, không chỉ trong ghi chú.
+
+---
+
+##### Vấn đề 5 — Trung bình
+**Trang chiếu:** L04-S40 (Giới hạn mô hình dạng bảng)
+
+**Vấn đề:** Slide nói "chia thành 3×3×6×6=324 ô" nhưng không giải thích vì sao chọn số ô này, và quan trọng hơn — không nêu rõ rằng việc rời rạc hóa có thể phá vỡ tính Markov (trạng thái gộp không còn đủ thông tin). Ghi chú có nhắc nhưng mặt slide chỉ có sơ đồ.
+
+**Bằng chứng:** "chưa cung cấp hạt nhân chuyển/phần thưởng hay bảo đảm tính Markov của trạng thái gộp" — nằm trong luận điểm nhưng không có hình minh họa cụ thể về việc mất tính Markov.
+
+**Đề xuất sửa:** Thêm một ví dụ nhỏ: hai trạng thái liên tục khác nhau (vận tốc khác nhau) rơi vào cùng một ô nhưng hành vi tương lai khác nhau — minh họa trực quan việc mất tính Markov.
+
+---
+
+##### Vấn đề 6 — Nhẹ
+**Trang chiếu:** L04-S44 (Bài tập và tài liệu đọc)
+
+**Vấn đề:** Giao "Bài 3/7: hoàn thiện chứng minh tồn tại/đơn điệu" từ NG2 nhưng không nêu rõ sản phẩm cần nộp là gì (điền vào chỗ trống? viết lại chứng minh?); trong khi hai bài kia (B9, B6) có sản phẩm rõ ràng. Sinh viên có thể không biết mức độ hoàn thiện được kỳ vọng.
+
+**Bằng chứng:** "Bài 3/7: hoàn thiện chứng minh tồn tại/đơn điệu" — không có mô tả sản phẩm cụ thể như hai bài còn lại.
+
+**Đề xuất sửa:** Ghi rõ sản phẩm: "viết lại chứng minh bằng ngôn ngữ của mình, chỉ rõ chỗ dùng giả thiết γ<1" hoặc chuyển thành bài tự đọc không chấm điểm.
+
+---
+
+##### Kết luận
+Không có lỗi sai công thức hay dữ kiện. Các vấn đề chính thuộc về thứ tự trình bày (đơn điệu chưa được chuẩn bị trước slide 23), tải nhận thức quá lớn ở một số slide (16, 37), và thiếu trực giác cho các con số minh họa (38, 40). Cấu trúc 7 phần, 7 slide kiểm tra, mạch ví dụ–hình thức–thuật toán là hợp lý và khả thi nếu điều chỉnh các điểm trên.
+
+#### Kết nối và mạch viết
+
+##### Báo cáo rà dàn bài L04 (outline.md)
+
+Đã đối chiếu toàn bộ 45 slide, bản đồ 7 phần, các con số tính tay (S04, S07, S12, S14–S18, S21, S26, S28–S29, S34–S35, S38, S41, S43, S45) — tất cả đúng. Không thấy lỗi chặn bàn giao. Các vấn đề thực sự tìm được:
+
+**1. trung bình | Bản đồ phần 2 | Tổng thời lượng phần 2 không khớp |** Bảng bản đồ ghi Phần 2 = 18 phút, nhưng các slide S06–S12 cộng lại: 2+3+3+2+2+2+3 = 15 phút (S06:2, S07:3, S08:3, S09:3, S10:2, S11:2, S12:3). Tổng toàn bài cũng chỉ đạt 117 phút, không phải 120 như tiêu đề. | **Đề xuất:** tăng thời lượng một slide ở phần 2 (ví dụ S08 hoặc S12 lên 5 phút) hoặc sửa bản đồ thành 15 phút và tổng thành 117, nêu rõ phần dư 3 phút dùng cho buffer.
+
+**2. trung bình | L04-S31 | Thiếu đặc tả nhánh trả khi hết ngân sách |** Mục "Hình/ví dụ" nêu "lưu đồ có hai nhánh trả: đạt ngưỡng; hết ngân sách", nhưng phần "Luận điểm và nội dung" chỉ mô tả nhánh đạt ngưỡng ("Nếu ρ(v)≤θ, trả v,π_v,ρ(v)") và nhánh "đặt v←w"; không nói trả gì, kèm nhãn gì khi hết K lượt. Trong khi S16 đã đặc tả rõ nhánh tương tự ("trả bảng w cuối cùng kèm nhãn hết ngân sách… không phải chứng nhận"). | **Đề xuất:** bổ sung vào nội dung S31 một câu đặc tả nhánh hết ngân sách (trả v, π_v, ρ(v) kèm nhãn chưa chứng nhận, đồng bộ với S16 và S45).
+
+**3. nhẹ | L04-S13–S18 | Lỗi kiểu chữ nhất quán |** S13 ("với π₀=(a,a)…"), S14, S15, S16, S17, S18 bắt đầu câu bằng chữ thường, trong khi mọi slide khác (S01–S12, S19 trở đi) viết hoa đầu mục. | **Đề xuất:** viết hoa ký tự đầu phần "Luận điểm và nội dung" tại 6 slide này.
+
+**4. nhẹ | L04-S23 | Lỗi ký hiệu trong chứng minh |** Cụm "hạng đuôi γⁿ𝔼_{π\prime}[v^π(S_n)]" dùng "\prime" thay chỉ số đúng; nên là 𝔼_{π′} (chính sách cải thiện π′, vì khai triển theo T^{π′}). | **Đề xuất:** sửa chỉ số kỳ vọng thành π′.
+
+Không có vấn đề về chu trình vấn đề–trực giác–ví dụ–hình thức–ứng dụng–kiểm tra: cả 7 phần đều có slide kiểm tra (S05/S12/S18/S26/S34/S41/S45), phần 7 thu hồi đúng bài toán mở đầu (S43 đối chiếu S03–S04, kết luận (b,b), (27,30) khớp S04). Ranh giới khái niệm–thuật toán và phân biệt mặt slide/ghi chú được giữ nhất quán.
+
+#### Rà lại thuật toán 14–26
+
+##### Báo cáo rà soát lỗi còn lại — L04-S14 đến S26
+
+| Mức độ | Slide | Vấn đề | Bằng chứng | Sửa |
+|---|---|---|---|---|
+| **Trung bình** | S15 | Giá trị `v2` tính sai theo cập nhật đồng bộ từ `v1=(1,2)`. | `v2(s0)=1+0.9*1=1.9`; `v2(s1)=2+0.9*2=3.8`, không phải `2.9`. | Sửa thành `v2=(1.9,3.8)`. |
+| **Trung bình** | S17 | Bảng tại chỗ `(1,2.9)` sai: sau khi cập nhật `s0=1`, cập nhật `s1` dùng bảng mới: `2+0.9*1=2.9` — đúng, nhưng nếu cập nhật `s1` trước rồi `s0` thì khác. Cần nêu rõ thứ tự cập nhật. | Ghi chú nói "cập nhật s0 rồi s1" nhưng không nêu rõ thứ tự ảnh hưởng kết quả. | Ghi rõ thứ tự cập nhật `s0` trước, `s1` sau; kết quả `(1,2.9)` đúng với thứ tự đó. |
+| **Thấp** | S18 | Đáp án `v3=(2.71,3.71)` đúng, nhưng lời giải thích "s1: 2+0.9×1.9=3.71" — đúng vì `v2(s0)=1.9` (sau khi sửa S15). | Nếu giữ `v2=(1.9,2.9)` cũ thì `v3(s1)=2+0.9*2.9=4.61`, sai. | Sau khi sửa S15, đáp án S18 tự khớp. |
+| **Thấp** | S21 | `v^{π1}=(10,30)` — kiểm tra: `s0: a→(1,s0)` nên `x=1+0.9x → x=10`; `s1: b→(3,s1)` nên `y=3+0.9y → y=30`. Đúng. | Không có lỗi. | — |
+| **Thấp** | S21 | `q^{π1}(s0,b)=27` — kiểm tra: `b→(0,s1)` nên `0+0.9*30=27`. Đúng. | Không có lỗi. | — |
+| **Thấp** | S22 | Ghi chú chuẩn bị chứng minh: "nếu u≤v thì Q_u(s,a)≤Q_v(s,a)" — đúng vì γ≥0. | Không có lỗi. | — |
+| **Thấp** | S23 | Chứng minh dùng `‖v^π‖∞ ≤ Rmax/(1−γ)` — cần Rmax hữu hạn (giả thiết thưởng bị chặn). Đúng. | Không có lỗi. | — |
+| **Thấp** | S24 | "Sau lượt đánh giá thứ K, nếu bước cải thiện còn đổi hành động, trả π vừa đánh giá cùng v^π" — đúng, không ghép chính sách mới với bảng cũ. | Không có lỗi. | — |
+| **Thấp** | S25 | `∏_s|A(s)|=2×2=4` — đúng với 2 trạng thái, mỗi trạng thái 2 hành động. | Không có lỗi. | — |
+| **Thấp** | S26 | `q^{π1}(s0,a)=10` — kiểm tra: `a→(1,s0)` nên `1+0.9*10=10`. Đúng. | Không có lỗi. | — |
+
+**Lỗi chính còn lại:** S15 tính `v2(s1)` sai (2.9 thay vì 3.8). Lỗi này lan sang S17 (bảng tại chỗ dùng `v2` sai làm chuẩn so sánh) và S18 (đáp án `v3` chỉ đúng nếu `v2=(1.9,3.8)`). Các phép tính khác trong chuỗi S19–S26 đều khớp với mô hình đã cho.
+
+#### Rà lại chứng minh 33–45
+
+##### Báo cáo rà soát lỗi còn lại — L04-S33 đến L04-S45
+
+| Mức độ | Slide | Vấn đề | Bằng chứng | Sửa |
+|--------|-------|--------|------------|-----|
+| Trung bình | S35 | Sai phép tính mẫu `T_*u` | Ghi `T_*u=(10,12,9)` nhưng tính lại với mô hình hai trạng thái: `T_*u(s0)=max{1+0,9·10, 0+0,9·11}=10`, `T_*u(s1)=max{2+0,9·10, 3+0,9·11}=12,9`. Giá trị 10 tại s0 đúng, 12,9 tại s1 đúng → kết quả ghi đúng. **Tuy nhiên** hiệu tuyệt đối giữa `T_*u` và `T_*v`: `(10,12,9)` và `(11,7,14,7)` → chênh lệch lớn nhất là `|14,7−12,9|=1,8` — đúng với chặn `0,9·2=1,8`. **Không còn lỗi.** |
+| Thấp | S38 | Kiểm tra số 44 lượt | `100·0,9^44 ≈ 0,970`, giải bất phương trình `k > ln(0,01)/ln(0,9) ≈ 43,71` → 44 là số nguyên nhỏ nhất thỏa. **Đúng.** |
+| Trung bình | S39 | Tam giác bất đẳng thức và hệ số | Ghi chú "Nếu dùng bản trả `w=Tv` như đánh giá chính sách ở slide 16, chặn của `w` là `γ‖Tv−v‖∞/(1−γ)`". Cần kiểm: `‖w−v_*‖ ≤ ‖Tv−v_*‖ = ‖Tv−Tv_*‖ ≤ γ‖v−v_*‖`, và `‖v−v_*‖ ≤ ρ(v)/(1−γ)` → `‖w−v_*‖ ≤ γρ(v)/(1−γ)`. **Công thức đúng.** |
+| Thấp | S40 | Đếm số ô 324 | `3×3×6×6 = 324`. **Đúng.** |
+| Thấp | S43 | Phép kiểm Q | `Q(s0,b)=0+0,9·30=27`; `Q(s1,b)=3+0,9·30=30`; hai hành động còn lại: `Q(s0,a)=1+0,9·27=25,3`; `Q(s1,a)=2+0,9·27=26,3`. **Đúng.** |
+| Thấp | S41 | Chặn sai số | `0,02/(1−0,9) = 0,2`; so với `0,1` → chưa bảo đảm. **Đúng.** |
+| Thấp | S45 | Câu hỏi tổng hợp | `ρ=0,01` → `e ≤ 0,01/(0,1) = 0,1` — đúng. Câu trả lời chính xác về mặt khái niệm. |
+
+---
+
+**Kết luận:** Không phát hiện lỗi nghiêm trọng còn lại. Các phép tính số (S35, S38, S40, S43), bất đẳng thức (S39), ngưỡng dừng (S41) và phân biệt khái niệm (S37, S45) đều chính xác. Phép tính 44 lượt đúng. Phần đọc thêm ở S37 nhất quán với giả thiết MDP hữu hạn, γ<1 và Π gồm chính sách phụ thuộc lịch sử. Phép kiểm S43 khớp với v*=(27,30). Tải học phù hợp với thời lượng khai báo. **Không còn lỗi cần sửa.**
+
+## Lịch sử triển khai trước yêu cầu lập dàn bài này
+
+Giữ nguyên nội dung dưới đây để truy nguyên; các mã và trạng thái thuộc bản HTML cũ.
+
+
 ## Trạng thái sau chỉnh sửa
 
 - 38 trang tuyến chính, 4 trang bài tập dọc; 5 SVG cục bộ; không dùng raster hoặc tài nguyên mạng cốt lõi.
