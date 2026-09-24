@@ -265,11 +265,109 @@ Hai toán tử cùng nhận một bảng giá trị và cùng trả ra một b�
 </section>
 
 </section>
-<section>
-<section data-slide-id="B00"><h2>MDP hai trạng thái</h2><img class="figure" src="img/lec-04/two-state.svg" alt="MDP hai trạng thái với bốn chuyển tiếp tất định."/><p>$\gamma=0{,}9$; chính sách đầu $\pi_0=(a,a)$.</p><aside class="notes">Nhãn cạnh là hành động và phần thưởng. Ví dụ được giữ xuyên suốt phần lặp chính sách.<p class="note-source"><strong>Nguồn:</strong> tr. 17.</p></aside></section>
-<section data-slide-id="B01"><h2>Đánh giá chính sách đầu</h2><div class="math-large">$$v_{\pi_0}(s_0)=1+0{,}9v_{\pi_0}(s_0),\quad v_{\pi_0}(s_1)=2+0{,}9v_{\pi_0}(s_0).$$</div><div class="box">$v_{\pi_0}=(10,11)$.</div><aside class="notes">Đây là đánh giá chính xác bằng giải hệ Bellman của chính sách cố định.<p class="note-source"><strong>Nguồn:</strong> tr. 18.</p></aside></section>
-<section data-slide-id="B04"><h2>Đánh giá chính sách lặp</h2><div class="math-large">$$v_{j+1}=T^\pi v_j,\qquad \Delta_j=\lVert v_{j+1}-v_j\rVert_\infty.$$</div><ul><li>Dừng khi $\Delta_j\le\varepsilon_{\mathrm{step}}$; trả về $v_{j+1}$.</li><li>Nếu $0\lt\gamma\lt1$:</li></ul><div class="math-large">$$\lVert v_{j+1}-v_\pi\rVert_\infty\le\frac{\gamma}{1-\gamma}\varepsilon_{\mathrm{step}}.$$</div><aside class="notes">Chặn theo sau từ tính co: đuôi các sai phân tạo cấp số nhân. Nếu gamma bằng không, một lượt là chính xác. Mỗi lượt đọc bảng cũ và ghi bảng mới.<p class="note-source"><strong>Nguồn:</strong> tr. 14; bổ sung nhãn ngưỡng và chặn đúng cho giá trị trả về.</p></aside></section>
-<section data-slide-id="B05"><h2>Đánh giá bất đồng bộ</h2><div class="grid2"><div class="card"><h3>Đồng bộ</h3><p>Đọc cũ, ghi mới.</p></div><div class="card"><h3>Bất đồng bộ</h3><p>Dùng ngay giá trị mới dưới cùng $\pi$.</p></div></div><div class="box"><strong>Công bằng:</strong> lịch cập nhật phải cập nhật mỗi trạng thái vô hạn lần nếu quá trình kéo dài.</div><aside class="notes">Đích ở đây là điểm bất động của $T^\pi$, không phải của $T_*$. Điều kiện dữ liệu: giá trị đọc không được cũ vô hạn lần.<p class="note-source"><strong>Nguồn:</strong> tr. 15; bổ sung điều kiện hội tụ.</p></aside></section>
+<section aria-label="Phần 3. Đánh giá chính sách">
+
+  <section data-slide-id="L04-S13">
+    <h2>Giá trị của chính sách cố định</h2>
+    <p>Giữ $\pi_0=(a,a)$ và $\gamma=0{,}5$. Tìm giá trị dài hạn tại hai trạng thái.</p>
+    <img class="figure" src="img/lec-04/policy-evaluation.svg" alt="Hai chuyển theo chính sách luôn a: s0 về s0 nhận thưởng 2; s1 về s0 nhận thưởng 5.">
+    <aside class="notes">
+      <p>Ở hai phần trước chúng ta đã có mô hình và khái niệm giá trị. Giờ đặt một quy tắc hành động cố định: chính sách $\pi_0$ chọn $a$ ở cả hai trạng thái. Câu hỏi là giá trị của chính sách này bằng bao nhiêu tại $s_0$ và $s_1$. Ta đang đo giá trị của một quy tắc đã cho. Vì $\pi_0$ chọn duy nhất hành động $a$ tại mỗi trạng thái, kỳ vọng rút gọn thành một phương trình mỗi trạng thái: phần thưởng ngay cộng $\gamma$ nhân giá trị trạng thái kế. Phần thưởng tương lai bị nhân $\gamma$ mỗi bước, nên đóng góp của nó giảm dần. Quan hệ giữa giá trị hiện tại và giá trị kế tiếp tạo thành một hệ phương trình.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 14, 17; tham số điều chỉnh.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S14">
+    <h2>Hai phương trình Bellman</h2>
+    <p>Đặt $x=v^{\pi_0}(s_0)$, $y=v^{\pi_0}(s_1)$. Cấu trúc chung: giá trị hiện tại bằng phần thưởng cộng chiết khấu giá trị kế.</p>
+    <div class="grid2">
+      <div class="card">
+        <p class="math-large">$$x = 2 + 0{,}5\,x$$</p>
+        <p class="caption">từ chuyển $s_0\xrightarrow{a}s_0$, thưởng $2$.</p>
+      </div>
+      <div class="card">
+        <p class="math-large">$$y = 5 + 0{,}5\,x$$</p>
+        <p class="caption">từ chuyển $s_1\xrightarrow{a}s_0$, thưởng $5$.</p>
+      </div>
+    </div>
+    <p class="math-large">$$x = \frac{2}{1-0{,}5} = 4,\qquad y = 5 + 0{,}5\cdot 4 = 7$$</p>
+    <aside class="notes">
+      <p>Phương trình thứ nhất chỉ chứa $x$ vì $s_0$ đi về chính nó: $x=2+0{,}5x$, giải ra $x=4$. Đây là tổng của cấp số nhân với công bội $0{,}5$. Phương trình thứ hai dùng giá trị vừa tìm được: $y=5+0{,}5\cdot4=7$. Kiểm lại: $y$ nhận thưởng $5$ ngay, cộng một nửa giá trị của $s_0$ nơi nó quay về. Lỗi thường gặp là thay $x$ bằng $y$ ở phương trình thứ hai; hãy theo đúng cạnh của mô hình. Cặp $(4,7)$ là nghiệm chính xác của hệ, và sẽ là chuẩn đối chiếu khi ta xấp xỉ bằng lặp từ bảng $0$ bằng các lượt quét.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 6, 18; tham số điều chỉnh.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S15">
+    <h2>Đánh giá bằng các lượt quét</h2>
+    <p>Khởi tạo $v_0=(0,0)$ và cập nhật đồng bộ $v_{k+1}=T^{\pi_0}v_k$: mọi trạng thái đều dùng bảng cũ $v_k$.</p>
+    <table>
+      <tr><th></th><th>$v_0$</th><th>$v_1$</th><th>$v_2$</th><th>$v^{\pi_0}$</th></tr>
+      <tr><th>$s_0$</th><td>0</td><td>2</td><td>3</td><td>4</td></tr>
+      <tr><th>$s_1$</th><td>0</td><td>5</td><td>6</td><td>7</td></tr>
+    </table>
+    <div class="box">
+      <p>Phép tính mẫu: $v_2(s_1)=5+0{,}5\cdot v_1(s_0)=5+0{,}5\cdot2=6$ — thưởng $5$, giá trị cũ $2$, kết quả $6$.</p>
+    </div>
+    <aside class="notes">
+      <p>Thay vì giải hệ, ta lặp. Bắt đầu từ bảng $0$, một lượt quét áp dụng toán tử $T^{\pi_0}$ cho từng trạng thái: $v_1(s_0)=2+0{,}5\cdot0=2$, $v_1(s_1)=5+0{,}5\cdot0=5$. Lượt hai cho $(3,6)$. Trong phép tính $v_2(s_1)$, ba đại lượng có vai trò khác nhau: thưởng tức thời $5$, giá trị cũ $v_1(s_0)=2$ lấy từ bảng trước, và kết quả $6$. Nhầm thưởng với giá trị cũ là lỗi phổ biến nhất ở đây. Dãy $(0,0)$, $(2,5)$, $(3,6)$ tiến dần về nghiệm $(4,7)$; mỗi lượt đưa bảng gần hơn một bước chiết khấu. Quy trình cần một ngưỡng dừng và giới hạn số lượt.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 14, 17; tham số điều chỉnh.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S16">
+    <h2>Quy trình đánh giá chính sách</h2>
+    <p>Đầu vào: mô hình, $\pi$ cố định, $\theta>0$, $K\ge1$.<br>Khởi tạo $v$; trạng thái kết thúc giữ giá trị 0.</p>
+    <ol>
+      <li>Tính đồng bộ $w=T^\pi v$.</li>
+      <li>Đo thay đổi lớn nhất $\delta=\max_s|w(s)-v(s)|$.</li>
+      <li>Nếu $\delta\le\theta$: trả $w$, đã đạt ngưỡng.</li>
+      <li>Nếu hết $K$ lượt: trả $w$, hết ngân sách.<br>Còn lại: gán $v=w$ rồi lặp.</li>
+    </ol>
+    <p class="box">Hết ngân sách không chứng nhận sai số mong muốn.</p>
+    <aside class="notes">
+      <p>Quy trình gồm bốn phần. Đầu vào là mô hình, chính sách cố định, ngưỡng dương $\theta$ và ngân sách lượt $K$. Khởi tạo bảng giá trị, riêng trạng thái kết thúc giữ $0$ vì không còn tương lai. Mỗi lượt tính bảng mới $w$ bằng toán tử $T^\pi$, rồi đo $\delta$: thay đổi lớn nhất giữa hai bảng trên mọi trạng thái. Nếu $\delta\le\theta$ ta trả $w$ kèm nhãn đạt ngưỡng; nếu đã dùng hết $K$ lượt mà chưa đạt, trả $w$ cuối cùng kèm nhãn hết ngân sách — hai nhãn này phải phân biệt, vì hết ngân sách không bảo đảm sai số mong muốn. Điều kiện hội tụ thật sự là $\gamma&lt;1$, không phải việc có đủ $K$. Với $n$ trạng thái, nhiều nhất $m$ hành động mỗi trạng thái và mô hình chuyển dày, mỗi lượt quét cho chính sách ngẫu nhiên tốn $O(n^2m)$ phép tính. Quy trình này trả bảng mới $w$; lặp giá trị sau này sẽ trả bảng $v$ dùng để trích chính sách — hai quy ước không được tráo.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 6, 14, 34; hw3 B6.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S17">
+    <h2>Hai lịch cập nhật</h2>
+    <div class="grid2">
+      <div class="card">
+        <p><strong>Đồng bộ</strong></p>
+        <p>Từ $v_0=(0,0)$: cả hai trạng thái dùng bảng cũ.</p>
+        <p class="math-large">$v_1=(2,\;5)$</p>
+        <p>$v_1(s_1)=5+0{,}5\cdot0=5$.</p>
+      </div>
+      <div class="card">
+        <p><strong>Tại chỗ</strong></p>
+        <p>Theo thứ tự $s_0$ rồi $s_1$; bước thứ hai dùng giá trị $s_0$ vừa tính.</p>
+        <p class="math-large">$v_1=(2,\;6)$</p>
+        <p>$v_1(s_1)=5+0{,}5\cdot2=6$.</p>
+      </div>
+    </div>
+    <p class="caption">Mỗi cập nhật phải dùng đúng Bellman theo bảng hiện có; mỗi trạng thái phải được cập nhật vô hạn lần để có bảo đảm hội tụ.</p>
+    <aside class="notes">
+      <p>Hai lịch cho kết quả khác nhau từ cùng bảng $0$. Đồng bộ: mọi trạng thái đọc giá trị từ bảng cũ, nên $s_1$ thấy $v_0(s_0)=0$ và nhận $5$. Tại chỗ: ta cập nhật $s_0$ trước, được $2$, rồi $s_1$ đọc ngay giá trị mới đó, nhận $5+0{,}5\cdot2=6$. Khác biệt một đơn vị đến hoàn toàn từ ô nguồn được dùng. Tại chỗ truyền thông tin mới trong cùng lượt; hiệu quả phụ thuộc mô hình và thứ tự cập nhật. Điều bắt buộc là mỗi cập nhật dùng đúng phương trình Bellman với bảng hiện có, và mỗi trạng thái được cập nhật vô hạn lần — nếu một trạng thái bị bỏ qua mãi thì không có bảo đảm hội tụ.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 15; tham số điều chỉnh.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S18">
+    <h2>Câu hỏi: đánh giá chính sách</h2>
+    <div class="box">
+      <p><strong>Câu hỏi:</strong> Cho $\pi_0=(a,a)$, $v_2=(3,6)$, $\gamma=0{,}5$. Tính $v_3=T^{\pi_0}v_2$ đồng bộ. Vì sao phép cập nhật không có $\max$?</p>
+    </div>
+    <div class="fragment">
+      <p><strong>Đáp án:</strong> $v_3=(3{,}5,\;6{,}5)$.</p><p>$v_3(s_0)=2+0{,}5\cdot3=3{,}5$.</p><p>$v_3(s_1)=5+0{,}5\cdot3=6{,}5$.</p>
+      <p>Không có $\max$ vì chính sách được giữ cố định: mỗi trạng thái chỉ có một hành động theo $\pi_0$, không có gì để so sánh.</p>
+    </div>
+    <aside class="notes">
+      <p>Công thức cho biết đúng ô giá trị cần dùng trước khi thay số. Cùng một hành động $a$ ở cả hai trạng thái: $v_3(s_0)=2+0{,}5\cdot v_2(s_0)=2+1{,}5=3{,}5$; $v_3(s_1)=5+0{,}5\cdot v_2(s_0)=5+1{,}5=6{,}5$. Cả hai dòng đều đọc giá trị của $s_0$, vì đó là trạng thái kế theo chính sách. Về câu hỏi thứ hai: toán tử $T^\pi$ đánh giá một chính sách đã cho, nên chính sách xác định $\pi_0$ chọn duy nhất hành động $a$ ở mỗi trạng thái; $\max$ chỉ xuất hiện khi ta được phép chọn hành động tốt nhất. Khi thêm $\max$ vào phép cập nhật, ta bước sang phần tiếp theo: cải thiện chính sách.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 14, 17; tham số điều chỉnh.</p>
+    </aside>
+  </section>
+
 </section>
 <section>
 <section data-slide-id="B02"><h2>Cải thiện một bước</h2><table><tr><th>Trạng thái</th><th>$a$</th><th>$b$</th><th>Chọn</th></tr><tr><td>$s_0$</td><td>$10$</td><td>$9{,}9$</td><td>$a$</td></tr><tr><td>$s_1$</td><td>$11$</td><td>$12{,}9$</td><td>$b$</td></tr></table><p>$\pi_1=(a,b)$.</p><aside class="notes">Mọi so sánh dùng cùng $v_{\pi_0}$. Hành động $b$ ở $s_1$ cho $3+0,9\cdot11=12,9$.<p class="note-source"><strong>Nguồn:</strong> tr. 19.</p></aside></section>

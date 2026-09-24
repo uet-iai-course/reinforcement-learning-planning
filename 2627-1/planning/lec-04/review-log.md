@@ -23,8 +23,8 @@
 | Phần | Slide | Trạng thái | Commit |
 |---|---|---|---|
 | 1 | 01–05 | Đã kiểm nội dung, số học và hai khung hiển thị | `ae1cc0a` |
-| 2 | 06–12 | Đã kiểm nội dung và hai khung hiển thị | Commit phần Bellman trong lịch sử Git |
-| 3 | 13–18 | Chưa triển khai | — |
+| 2 | 06–12 | Đã kiểm nội dung và hai khung hiển thị | `dfb5d73` |
+| 3 | 13–18 | Đã kiểm nội dung và hai khung hiển thị | Commit đánh giá chính sách trong lịch sử Git |
 | 4 | 19–26 | Chưa triển khai | — |
 | 5 | 27–34 | Chưa triển khai | — |
 | 6 | 35–41 | Chưa triển khai | — |
@@ -56,6 +56,12 @@
 - Writer và reviewer sinh viên: requested/observed `z-ai/glm-5.3-flash`; reviewer toán: requested/observed `deepseek/deepseek-v4-flash-0731`; provider OpenRouter. Hai vai xác nhận bảng Q, phép cực đại, định nghĩa và điểm bất động đúng. Reviewer toán tự gắn nhãn lỗi rồi xác nhận phép tính đúng; đề nghị “sửa” từ thành chính từ ấy không có hiệu lực. Giữ phép tính đã kiểm độc lập.
 - Gợi ý nhắc lại gamma và nghiệm tối ưu ở định nghĩa được cân nhắc: gamma đã xuất hiện ở mô hình và phép tính, nghiệm được xây dựng ở phần lặp chính sách; không thêm kết quả sớm làm mất nhu cầu tính. Câu kiểm tra ngay sau hai toán tử phân biệt một lần cập nhật với điểm bất động.
 - Đã xem đủ bảy trang mới và biên phần mở đầu; hai viewport không tràn, chồng lấn, lỗi công thức hoặc tài nguyên. S11 hai công thức vừa hai thẻ; bảng chữ30,24px đọc được. S05 rút nhãn để hết dấu hai chấm lẻ. Chưa thay CSS chung.
+
+### Rà phần đánh giá chính sách
+
+- Writer và reviewer sinh viên: requested/observed `z-ai/glm-5.3-flash`; reviewer toán: requested/observed `deepseek/deepseek-v4-flash-0731`; provider OpenRouter. Xác nhận hệ cho (4,7), các lượt (2,5) rồi (3,6), cập nhật tại chỗ (2,6), câu hỏi (3,5;6,5). Các tiêu đề “lỗi” trong báo cáo toán đều tự xác nhận công thức đúng, không có sửa toán bắt buộc.
+- Chấp nhận làm rõ trạng thái kết thúc giữ giá trị0 và định nghĩa n,m trong chi phí. Thay bố cục ba cột thuật toán bằng bốn bước toàn chiều ngang; tách từng phương trình đáp án để không ngắt sau dấu nhân. Hình chỉ giữ hai cạnh a để tập trung vào chính sách cố định.
+- Kiểm sáu trang mới cùng biên hai trang trước ở1280×720 và960×540: không lỗi kỹ thuật. Sau chỉnh ngắt dòng, kiểm lại14–18; không tràn/chồng/KaTeX/tài nguyên; đã xem lại16–18. Phép tính tại chỗ dùng chữ thân bài; chú thích điều kiện hội tụ vẫn đọc được.
 
 ## Lập dàn bài theo skill — 23-09-2026
 
