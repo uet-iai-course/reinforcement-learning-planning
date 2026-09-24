@@ -26,8 +26,8 @@
 | 2 | 06–12 | Đã kiểm nội dung và hai khung hiển thị | `dfb5d73` |
 | 3 | 13–18 | Đã kiểm nội dung và hai khung hiển thị | `8d0dd23` |
 | 4 | 19–26 | Đã kiểm nội dung và hai khung hiển thị | `1dcb88d` |
-| 5 | 27–34 | Đã kiểm nội dung và hai khung hiển thị | Commit lặp giá trị trong lịch sử Git |
-| 6 | 35–41 | Chưa triển khai | — |
+| 5 | 27–34 | Đã kiểm nội dung và hai khung hiển thị | `e5247b1` |
+| 6 | 35–41 | Đã kiểm nội dung, chứng minh và hai khung hiển thị | Commit hội tụ trong lịch sử Git |
 | 7 | 42–45 | Chưa triển khai | — |
 
 ### Bằng chứng runtime của lượt triển khai
@@ -76,6 +76,29 @@
 - Điều phối viên thay đường dẫn lưu đồ không tồn tại do writer tự thêm bằng bốn bước HTML đầy đủ. Sửa caption mô tả mũi tên/viền không có, sửa số thập phân chưa đặt trong công thức và nhắc câu hỏi trước đáp án.
 - Chấp nhận giải thích bước c1 nhận ảnh hưởng đích: −1+0,5×4,5=1,25; ghi rõ v5=v4. Bác bỏ phép tính minh họa sai của reviewer rằng đi trái tại c1 đọc4,5: đi trái tự khép đọc1,25, cho−0,375; đi phải cho1,25. Bổ sung phần dư của v3 bằng3 và làm rõ giá trị0 ở lượt đầu thuộc bảng v0.
 - Đã xem tám trang và SVG lưới mới; hai viewport không có lỗi kỹ thuật. Rút cụm lặp ở S32 để nhãn v1 không xuống dòng riêng; giữ font và CSS chung. Mỗi phần thưởng, trạng thái và lượt được gắn nhãn nhất quán.
+
+### Rà phần hội tụ và sai số
+
+- Writer và reviewer sinh viên: requested/observed `z-ai/glm-5.3-flash`; reviewer toán: requested/observed `deepseek/deepseek-v4-flash-0731`; provider OpenRouter. Bản writer đầu đã bị điều phối viên bác ở chứng minh S37: bất đẳng thức một phía không cho đẳng thức chuẩn và không thể kết luận mọi chính sách có cùng giá trị. Giao patch riêng hai khối36–37; thay bằng chặn theo toàn lịch sử, hạng đuôi chiết khấu và chính sách tham lam đạt cận. Hai vai rà bản sửa xác nhận lập luận đúng.
+- Chặn64 là giả định minh họa độc lập; chạm ngưỡng1 ở lượt6 và nhỏ hơn1 ở lượt7. Làm rõ sai số thực tế có thể nhỏ hơn cận, còn phần dư trong câu hỏi đã được cho cụ thể. Chặn bảng mới của đánh giá chính sách giữ đúng hệ số gamma.
+- SVG hội tụ vẽ bằng Matplotlib từ số tính trực tiếp, trục logarit cơ số2 có tên trục và đường ngưỡng. Tăng toàn bộ nhãn lên24 đơn vị trong SVG để đọc rõ. Hình CartPole mới thể hiện hai điểm liên tục gộp cùng ô rồi còn phải xác định mô hình; công thức324 giữ dạng KaTeX.
+- Kiểm bảy trang×hai viewport phát hiện caption S40 sát chân trang và công thức S36 ngắt dòng. Bỏ caption lặp, tách giả thiết khỏi công thức; kiểm lại không tràn/chồng/lỗi tài nguyên hoặc KaTeX. Đã xem bản đồ thị chữ lớn và hình gộp trạng thái sau sửa.
+
+### Năm vai độc lập và chỉnh sửa sau rà toàn bài
+
+Bản nháp đủ45 trang được đóng gói theo phạm vi: mỗi vai sinh viên, RL, toán, giảng dạy nhận hai gói01–26 và27–45 (23–29 nghìn ký tự/gói); vai mạch viết nhận toàn45 mặt slide và phần đầu/cuối lời giảng (43 nghìn ký tự). Đây là rà toàn bộ nội dung theo bảng bao phủ, không lấy báo cáo một phần làm bằng chứng toàn bài. Chín tiến trình riêng dùng profile review-full, no-tools, cùng ảnh chụp nội dung trước chỉnh sửa cuối.
+
+| Vai | Phạm vi | requested_model = observed_model | provider | Kết quả sau phân xử |
+|---|---|---|---|---|
+| Sinh viên | 01–26;27–45 | z-ai/glm-5.3-flash | OpenRouter | Đạt; bác đề nghị nhầm bảng v3 thay v4 ở lượt5 |
+| Chuyên gia RL | 01–26;27–45 | deepseek/deepseek-v4-flash-0731 | OpenRouter | Đạt sau bác tính phần dư sai do lẫn v2,v3,v4 |
+| Toán và thuật toán | 01–26;27–45 | deepseek/deepseek-v4-flash-0731 | OpenRouter | Báo cáo cuối xác nhận các phép tính/chứng minh đúng |
+| Giảng dạy và trình tự | 01–26;27–45 | z-ai/glm-5.3-flash | OpenRouter | Đạt; tiên quyết, ví dụ–hình thức–ứng dụng đầy đủ |
+| Kết nối và mạch viết | Toàn tuyến01–45 | z-ai/glm-5.3-flash | OpenRouter | Đạt; các cầu nối và kết bài thu hồi mở bài |
+
+**Phân xử số:** v4(c1)=1,25, nên hành động trái ở lượt5 cho−1+0,5×1,25=−0,375; không dùng v3(c1)=−1,75. Với v3=(−1,75;4,5;11;24;0), T*v3=v4=(1,25;4,5;11;24;0), phần dư bằng3, không phải6. Tính lại bằng phân số chính xác; không thay số đúng bằng đề nghị sai. Các gợi ý tùy chọn lặp lại điều đã có trong notes không làm tăng số slide.
+
+**Tác tử chỉnh sửa riêng:** writer requested/observed z-ai/glm-5.3-flash, provider OpenRouter, sửa đúng hai khối notes29/34 trong thư mục cô lập sau khi đủ năm báo cáo. Bổ sung tên bảng và ô nguồn ở từng phép tính; không đổi mặt slide, thứ tự hoặc số. Reviewer DeepSeek và GLM được gọi lại với đầy đủ bảng/lân cận27–36; cả hai xác nhận v5=v4, phần dư3 và không đổi mạch câu hỏi. Mạch viết được rà lại các trang27–36 và40–45 sau chỉnh cục bộ.
 
 ## Lập dàn bài theo skill — 23-09-2026
 
