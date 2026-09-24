@@ -2,7 +2,7 @@
 
 ## Triển khai lại theo dàn bài — 24-09-2026
 
-**Trạng thái:** đã triển khai đủ 45 slide/7 phần theo kế hoạch 120 phút, đã đủ năm báo cáo độc lập và kiểm định RevealJS cục bộ. Mỗi phần được commit/push theo ủy quyền. Đang hoàn tất bản đối chiếu trực quan trong Codex Slides; kết quả công cụ ghi riêng. Các mục lịch sử phía dưới thuộc những phiên bản trước.
+**Trạng thái:** đã triển khai đủ 45 slide/7 phần theo kế hoạch 120 phút, có đủ năm báo cáo độc lập và kiểm định RevealJS cục bộ. Bảy phần đã được commit; sáu phần đầu đã push, phần cuối đang chờ xử lý giới hạn duyệt tự động. Codex Slides đã lưu 45 ảnh và 45 ghi chú; kết quả đối chiếu và giới hạn công cụ ghi riêng. Các mục lịch sử phía dưới thuộc những phiên bản trước.
 
 **Yêu cầu mới về số liệu:** người dùng yêu cầu số trong ví dụ dễ phân biệt. Mô hình hai trạng thái giữ cấu trúc nguồn, đổi phần thưởng thành 2/−1/5/10 và hệ số chiết khấu 0,5. Các cặp giá trị chính sách là (4,7), (4,20), (9,20); lưới dùng thưởng −1/24, cùng hệ số. Ví dụ hội tụ dùng chặn đầu 64; các câu hỏi sai số dùng phần dư 0,15 hoặc 0,1 và ngưỡng sai số 0,2. Số được gắn với vai trò đại lượng; các bằng nhau có lý do toán học vẫn giữ nguyên. Tham số gốc PDF chỉ dùng để truy nguyên nguồn.
 
@@ -16,7 +16,7 @@
 
 **Kiểm số độc lập:** đã tính bằng phân số chính xác cả bốn chính sách của MDP hai trạng thái, chuỗi cải thiện, bảng q tối ưu, ba lượt đánh giá, năm lượt lưới, ví dụ co và ngưỡng sai số. Reviewer DeepSeek đề nghị sai rằng q tối ưu(s0,a)=4; bác bỏ vì phải dùng phần tiếp diễn tối ưu9, nên 2+0,5×9=6,5. Giá trị4 thuộc chính sách luôn a. Góp ý này cho thấy cần gắn nhãn phần tiếp diễn trên mặt slide, không sửa số đúng theo kết luận sai của tác tử.
 
-**Công cụ:** Codex Slides khả dụng tại http://127.0.0.1:4311/project/20260824154346-chuy-n-lecture-4-gi-i-mdp-b-ng-quy-ho-ch-z4es. Trạng thái hiện tại mới là hồ sơ tiếp nhận, chưa là bản deck đồng bộ. Phiên không có công cụ Browser trong trình biên tập; Playwright dùng để kiểm giao diện cục bộ, không tuyên bố đã mở trong Browser của Codex. Máy chủ RevealJS chạy bằng python3 -m reloadserver 8765. Hướng dẫn bố cục tham khảo từ [SLIDE_STYLE_GUIDE.md](https://github.com/uet-iai-course/machine-learning/blob/main/SLIDE_STYLE_GUIDE.md), chỉ lấy nguyên tắc trình bày; không sao chép CSS hoặc tài sản.
+**Công cụ:** Codex Slides khả dụng tại http://127.0.0.1:4311/project/20260824154346-chuy-n-lecture-4-gi-i-mdp-b-ng-quy-ho-ch-z4es. Đã lưu bản đối chiếu 45 ảnh chụp RevealJS cùng ghi chú; không dùng ảnh này làm tài sản của bài giảng HTML. Phiên không có công cụ Browser trong trình biên tập; Playwright dùng để kiểm giao diện cục bộ, không tuyên bố đã mở trong Browser của Codex. Máy chủ RevealJS chạy bằng python3 -m reloadserver 8765. Hướng dẫn bố cục tham khảo từ [SLIDE_STYLE_GUIDE.md](https://github.com/uet-iai-course/machine-learning/blob/main/SLIDE_STYLE_GUIDE.md), chỉ lấy nguyên tắc trình bày; không sao chép CSS hoặc tài sản.
 
 ### Tiến độ từng phần
 
@@ -28,7 +28,7 @@
 | 4 | 19–26 | Đã kiểm nội dung và hai khung hiển thị | `1dcb88d` |
 | 5 | 27–34 | Đã kiểm nội dung và hai khung hiển thị | `e5247b1` |
 | 6 | 35–41 | Đã kiểm nội dung, chứng minh và hai khung hiển thị | `bb27f23` |
-| 7 | 42–45 | Đã kiểm nội dung và hai khung hiển thị | Commit tổng hợp trong lịch sử Git |
+| 7 | 42–45 | Đã kiểm nội dung và hai khung hiển thị; chưa push | `fc290d6` |
 
 ### Bằng chứng runtime của lượt triển khai
 
@@ -90,25 +90,25 @@ Bản nháp đủ 45 trang được đóng gói theo phạm vi: mỗi vai sinh v
 
 | Vai | Phạm vi | requested_model = observed_model | provider | Kết quả sau phân xử |
 |---|---|---|---|---|
-| Sinh viên | 01–26;27–45 | z-ai/glm-5.3-flash | OpenRouter | Đạt; bác đề nghị nhầm bảng v3 thay v4 ở lượt5 |
+| Sinh viên | 01–26;27–45 | z-ai/glm-5.3-flash | OpenRouter | Đạt; bác đề nghị nhầm bảng v3 thay v4 ở lượt 5 |
 | Chuyên gia RL | 01–26;27–45 | deepseek/deepseek-v4-flash-0731 | OpenRouter | Đạt sau bác tính phần dư sai do lẫn v2,v3,v4 |
 | Toán và thuật toán | 01–26;27–45 | deepseek/deepseek-v4-flash-0731 | OpenRouter | Báo cáo cuối xác nhận các phép tính/chứng minh đúng |
 | Giảng dạy và trình tự | 01–26;27–45 | z-ai/glm-5.3-flash | OpenRouter | Đạt; tiên quyết, ví dụ–hình thức–ứng dụng đầy đủ |
 | Kết nối và mạch viết | Toàn tuyến01–45 | z-ai/glm-5.3-flash | OpenRouter | Đạt; các cầu nối và kết bài thu hồi mở bài |
 
-**Phân xử số:** v4(c1)=1,25, nên hành động trái ở lượt5 cho−1+0,5×1,25=−0,375; không dùng v3(c1)=−1,75. Với v3=(−1,75;4,5;11;24;0), T*v3=v4=(1,25;4,5;11;24;0), phần dư bằng3, không phải6. Tính lại bằng phân số chính xác; không thay số đúng bằng đề nghị sai. Các gợi ý tùy chọn lặp lại điều đã có trong notes không làm tăng số slide.
+**Phân xử số:** v4(c1)=1,25, nên hành động trái ở lượt 5 cho−1+0,5×1,25=−0,375; không dùng v3(c1)=−1,75. Với v3=(−1,75;4,5;11;24;0), T*v3=v4=(1,25;4,5;11;24;0), phần dư bằng3, không phải6. Tính lại bằng phân số chính xác; không thay số đúng bằng đề nghị sai. Các gợi ý tùy chọn lặp lại điều đã có trong notes không làm tăng số slide.
 
 **Tác tử chỉnh sửa riêng:** writer requested/observed z-ai/glm-5.3-flash, provider OpenRouter, sửa đúng hai khối notes29/34 trong thư mục cô lập sau khi đủ năm báo cáo. Bổ sung tên bảng và ô nguồn ở từng phép tính; không đổi mặt slide, thứ tự hoặc số. Reviewer DeepSeek và GLM được gọi lại với đầy đủ bảng/lân cận27–36; cả hai xác nhận v5=v4, phần dư3 và không đổi mạch câu hỏi. Mạch viết được rà lại các trang27–36 và40–45 sau chỉnh cục bộ.
 
 ### Rà phần tổng hợp và kiểm định bản ghép
 
-- Writer và reviewer sinh viên: requested/observed z-ai/glm-5.3-flash; reviewer toán: requested/observed deepseek/deepseek-v4-flash-0731; provider OpenRouter. Điều phối viên phát hiện bản đầu dùng nhầm hệ số2gamma/(1−gamma) ở đáp án45, dù gamma0,5 vô tình cho đúng số2. Đã yêu cầu sửa thành chặn phần dư/(1−gamma), rồi hai vai rà bản sửa xác nhận đúng. Patch đạt giới hạn lượt công cụ sau khi đã ghi thay đổi; điều phối viên đối chiếu tệp thật và chỉ chấp nhận phần đã kiểm, không coi mã thoát lỗi là bằng chứng hoàn tất.
-- Bảng tổng hợp42 chuyển toàn chiều ngang;43 gắn9 với giá trị tối ưu tại s0;45 nhắc phần dư theo chuẩn vô cùng. Hai điểm ngắt giữa dấu bằng và số được tách thành dòng chủ động; kiểm lại41–45 không còn lỗi hiển thị. Nguồn hw3.pdf được đặt trực tiếp trên trang bài tập.
+- Writer và reviewer sinh viên: requested/observed z-ai/glm-5.3-flash; reviewer toán: requested/observed deepseek/deepseek-v4-flash-0731; provider OpenRouter. Điều phối viên phát hiện bản đầu dùng nhầm hệ số 2gamma/(1−gamma) ở đáp án 45, dù gamma = 0,5 vô tình cho đúng số 2. Đã yêu cầu sửa thành chặn phần dư/(1−gamma), rồi hai vai rà bản sửa xác nhận đúng. Patch đạt giới hạn lượt công cụ sau khi đã ghi thay đổi; điều phối viên đối chiếu tệp thật và chỉ chấp nhận phần đã kiểm, không coi mã thoát lỗi là bằng chứng hoàn tất.
+- Bảng tổng hợp 42 chuyển toàn chiều ngang; 43 gắn 9 với giá trị tối ưu tại s0; 45 nhắc phần dư theo chuẩn vô cùng. Hai điểm ngắt giữa dấu bằng và số được tách thành dòng chủ động; kiểm lại 41–45 không còn lỗi hiển thị. Nguồn hw3.pdf được đặt trực tiếp trên trang bài tập.
 - Chỉ mục của Bài 04 giữ đúng một liên kết đến HTML hoàn chỉnh. Bỏ liên kết đến lecture-note.md còn theo bộ số cũ; không xóa tệp đó hoặc đổi tài nguyên của các bài khác. Ghi chú diễn giả mới nằm đầy đủ trong HTML.
-- Bản ghép 45 mã liên tục, 7 phần có số trang5/7/6/8/8/7/4. Outline/storyboard khớp từng mã và thời lượng10/18/17/23/23/20/9, tổng 120 phút. Đây là dự toán, chưa phải kết quả chạy thử với lớp.
+- Bản ghép 45 mã liên tục, 7 phần có số trang 5/7/6/8/8/7/4. Outline/storyboard khớp từng mã và thời lượng 10/18/17/23/23/20/9, tổng 120 phút. Đây là dự toán, chưa phải kết quả chạy thử với lớp.
 - Đã duyệt cả 45 trang, 90 lượt kiểm ở 1280×720 và 960×540: không lỗi nghiêm trọng về tràn/chồng/cắt/công thức/tài nguyên. Bàn phím, ghi chú và nguồn hoạt động; không phụ thuộc mạng cốt lõi. Các bài và mẫu đều dùng lecture-slide.css; CSS chung không bị sửa. Các số và ngưỡng được tính lại bằng phân số chính xác.
--842 công thức trong năm tệp Markdown planning qua KaTeX cục bộ: không lỗi; đường dẫn cục bộ tồn tại, dấu công thức đúng quy ước. SVG đều có role và mô tả; không nhúng raster vào RevealJS. Nhãn nhỏ nhất của đồ thị đã tăng lên30,72px khi hiển thị1280.
-- Tự kiểm no-ai-slop/eval.md: giữ ý và dữ kiện có căn cứ, lời giảng trực tiếp, bỏ chỉ dẫn người soạn và lời dẫn rỗng; không dùng câu hỏi tu từ/cảm thán/ca tụng. Rà theo quill xác nhận vấn đề→trực giác→ví dụ→hình thức→ứng dụng→kiểm tra, các ranh giới và phần kết nối lại mở đầu. Không tạoquill.json.
+- 842 công thức trong năm tệp Markdown planning qua KaTeX cục bộ: không lỗi; đường dẫn cục bộ tồn tại, dấu công thức đúng quy ước. SVG đều có role và mô tả; không nhúng raster vào RevealJS. Nhãn nhỏ nhất của đồ thị đã tăng lên 30,72 px khi hiển thị ở chiều rộng 1280 px.
+- Tự kiểm no-ai-slop/eval.md: giữ ý và dữ kiện có căn cứ, lời giảng trực tiếp, bỏ chỉ dẫn người soạn và lời dẫn rỗng; không dùng câu hỏi tu từ/cảm thán/ca tụng. Rà theo quill xác nhận vấn đề→trực giác→ví dụ→hình thức→ứng dụng→kiểm tra, các ranh giới và phần kết nối lại mở đầu. Không tạo quill.json.
 
 ### Năm báo cáo cuối — tóm lược sau phân xử
 
@@ -116,15 +116,25 @@ Các bảng sau tóm lược báo cáo độc lập, không phải lời tự đ
 
 | Vai | Mức độ | Slide | Vấn đề/bằng chứng | Quyết định |
 |---|---|---|---|---|
-| Sinh viên | Nhẹ, đề nghị sai | 29 | Đề nghị thay−0,375 bằng−1,875 do đọc v3 thay v4 khi tính lượt5 | Giữ số; bổ sung tên bảng/ô nguồn; GLM rà lại27–36 xác nhận đúng |
-| RL | Đề nghị bắt buộc bị bác | 34 | Đề nghị phần dư6; báo cáo trộn v2 vàv3 trong cùng lượt | T*v3=v4, hiệu lớn nhất3; DeepSeek rà lại toàn phép tính xác nhận |
+| Sinh viên | Nhẹ, đề nghị sai | 29 | Đề nghị thay −0,375 bằng −1,875 do đọc v3 thay v4 khi tính lượt 5 | Giữ số; bổ sung tên bảng/ô nguồn; GLM rà lại 27–36 xác nhận đúng |
+| RL | Đề nghị bắt buộc bị bác | 34 | Đề nghị phần dư 6; báo cáo trộn v2 và v3 trong cùng lượt | T*v3=v4, hiệu lớn nhất 3; DeepSeek rà lại toàn phép tính xác nhận |
 | Toán | Không còn lỗi | 01–45 | Kiểm mô hình, chuỗi chính sách, lưới, chứng minh, ngưỡng và bảng trả; kết luận cuối PASS | Giữ nội dung; tự tính bằng phân số để đối chiếu |
 | Giảng dạy | Không còn lỗi | 01–45 | Ví dụ đi trước hình thức; đơn điệu trước cải thiện; co trước Banach/phần dư | Giữ chu trình và mức chứng minh |
-| Mạch viết | Không còn lỗi | 01–45 | Mở bài hai trạng thái được giải ở43; cầu nối giữa các phần và bảy câu hỏi đầy đủ | Giữ thứ tự; rà lại27–36,40–45 sau chỉnh cục bộ: PASS |
+| Mạch viết | Không còn lỗi | 01–45 | Mở bài hai trạng thái được giải ở 43; cầu nối giữa các phần và bảy câu hỏi đầy đủ | Giữ thứ tự; rà lại 27–36,40–45 sau chỉnh cục bộ: PASS |
+
+### Đối chiếu bản cuối và trạng thái bàn giao
+
+- HTML cuối có SHA-256 `e55893279e9872c2616fb3b1d287ce8956aa9f206328d9676bd39974e16c0a24`. Bản này dùng 45 mã liên tục, 7 mạch và bảy slide kiểm tra; không sửa CSS chung. Các lượt kiểm toàn bài và kiểm lại 41–45 bao phủ bản sau chỉnh ngắt dòng cuối.
+- RevealJS: đã duyệt toàn bộ trang ở 1280 × 720 và 960 × 540; không còn lỗi tràn, chồng lấn, tài nguyên hoặc KaTeX được phát hiện. Kiểm lại các phép tính bằng phân số chính xác đạt. Planning có 45 mã khớp, tổng 120 phút; 842 công thức Markdown không lỗi KaTeX và các đường dẫn cục bộ hợp lệ.
+- `get_project` xác nhận Codex Slides có 45 trang `rendered`, 45 ảnh, 45 tiêu đề và 45 ghi chú. Đây là bản đối chiếu ảnh chụp của RevealJS; HTML và SVG trong kho vẫn là sản phẩm bài giảng.
+- Cả 45 endpoint ảnh `/api/files/<project>/NN.png` trả PNG khớp từng byte và SHA-256 với ảnh RevealJS đã duyệt; không có endpoint lỗi. Tiêu đề và ghi chú khớp HTML sau chuẩn hóa khoảng trắng. Dữ liệu 45 trang giữ nguyên sau tải lại. Tham số `slide=1` và `slide=45` tồn tại qua chuyển hướng và tải lại; đây là bằng chứng lưu tham số, chưa chứng minh khung slide đang được chọn trực quan. Lượt kiểm Playwright chỉ đọc, chặn các yêu cầu ghi tự động của ứng dụng; không kích hoạt tạo nội dung. Báo cáo tạm: `/tmp/lec04-rewrite/codex-final-check.json` và `/tmp/lec04-rewrite/codex-image-endpoints.json`.
+- Handoff cuối: [Codex Slides, trang 45](http://127.0.0.1:4311/project/20260824154346-chuy-n-lecture-4-gi-i-mdp-b-ng-quy-ho-ch-z4es?slide=45). Dự án còn `status=draft`, `workflow.stage=clarify`; giao diện chuyển sang địa chỉ `/?resume=…&slide=45` và hiển thị màn hình tiếp nhận. Không dùng trạng thái `rendered` riêng của từng ảnh để tuyên bố đã hoàn tất quy trình tạo deck trong ứng dụng.
+- Phiên không có Browser tích hợp của Codex. Playwright headless xác nhận giao diện và chuyển hướng, nhưng chưa xác nhận khung slide trong Browser tích hợp; giới hạn này vẫn còn. Không chạy lại tạo nội dung bằng AI để thay đổi trạng thái ứng dụng.
+- Git: sáu phần đầu đã push tới `origin/main`; phần 7 đã commit `fc290d6`. Bộ duyệt tự động từ chối push phần cuối hai lần vì không chấp nhận ủy quyền lấy từ mục tiêu đã lưu và chưa coi remote là đích tin cậy. Đã đối chiếu remote `https://github.com/uet-iai-course/reinforcement-learning-planning.git`, xác nhận commit chỉ gồm các tệp của nhiệm vụ và gửi câu hỏi xác nhận mới; chưa nhận câu trả lời ở thời điểm ghi nhật ký. Không đổi remote hoặc dùng cách khác để vượt quyết định từ chối.
 
 ## Lập dàn bài theo skill — 23-09-2026
 
-**Trạng thái hiện tại:** đã hoàn tất kế hoạch 45 slide, 120 phút, bảy phần và bảy slide kiểm tra. Đây là kết quả lập dàn bài theo yêu cầu mới, chưa triển khai các mã L04-S01–L04-S45 vào HTML. Các nhận định về 42 trang, SVG và kiểm định trình duyệt ở phần lịch sử bên dưới thuộc những lần triển khai trước, không phải bằng chứng cho dàn bài mới.
+**Trạng thái tại thời điểm lập dàn bài:** đã hoàn tất kế hoạch 45 slide, 120 phút, bảy phần và bảy slide kiểm tra. Đây là kết quả lập dàn bài theo yêu cầu mới, chưa triển khai các mã L04-S01–L04-S45 vào HTML. Các nhận định về 42 trang, SVG và kiểm định trình duyệt ở phần lịch sử bên dưới thuộc những lần triển khai trước, không phải bằng chứng cho dàn bài mới.
 
 Đầu ra lần này: [analysis.md](analysis.md), [outline.md](outline.md), [storyboard.md](storyboard.md) và nhật ký này. HTML, SVG, CSS, chỉ mục, lecture note và note-for-author giữ trạng thái cũ; chưa đồng bộ và chưa kiểm định hiển thị theo dàn bài mới.
 
