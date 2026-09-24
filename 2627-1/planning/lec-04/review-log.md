@@ -1,5 +1,61 @@
 # Nhật ký rà soát Bài 04
 
+## Lecture note theo bộ slide mới — 24-09-2026
+
+**Trạng thái:** hoàn tất bản ghi chú cho sinh viên theo 45 slide/7 phần; đã rà đủ năm vai độc lập, sửa các điểm cần thiết và rà lại các đoạn thay đổi. Phần này ghi nhận yêu cầu tạo lecture note sau khi bộ slide đã hoàn tất; các mục phía dưới là lịch sử triển khai slide và các phiên bản cũ.
+
+**Sản phẩm và phạm vi:** viết lại `materials/lec-04/lecture-note.md`, cập nhật bản đồ đối chiếu trong `planning/lec-04/note-for-author.md`, khôi phục liên kết ghi chú trên thẻ Bài 04. Note giữ bảy phần ứng với slide 01–05, 06–12, 13–18, 19–26, 27–34, 35–41 và 42–45; mở rộng lời giải, lập luận và chứng minh để tự học. Mỗi phần có một câu hỏi, một khối gợi ý và một khối lời giải thu gọn. Năm SVG được dùng lại từ chính bài giảng. Không tạo notebook hoặc dự án sách.
+
+Nguồn trực tiếp là nội dung và ghi chú diễn giả của `lecture-04-giai-mdp-bang-quy-hoach-dong.html`, SHA-256 `e55893279e9872c2616fb3b1d287ce8956aa9f206328d9676bd39974e16c0a24`; tệp này giữ nguyên trong lượt làm note. Nguồn PDF và bài tập có liên kết ở cuối note. Bài 9 của `hw3.pdf` dùng MDP ba trạng thái và hệ số $0{,}9$ riêng; note ghi rõ điều này để không lẫn với ví dụ hai trạng thái/lưới dùng $0{,}5$ của bài giảng.
+
+### Điều phối và kiểm bản nháp
+
+Reader lập kế hoạch trước bước viết; điều phối viên chấp nhận ánh xạ bảy phần và các rủi ro về ký hiệu, nhưng bác đề nghị bỏ hình, nguồn và bài tập. Hai kết quả planner trộn ngôn ngữ nên không được chép vào sản phẩm; kế hoạch được điều phối viên diễn đạt lại bằng tiếng Việt. Bốn worker viết tuần tự, mỗi worker chỉ nhận tối đa hai phần và chỉ ghi trong thư mục tạm được giới hạn. Cả bốn được gọi lại để sửa bản nháp; sau năm báo cáo độc lập có một writer riêng sửa gợi ý ở phần 2 và viết rõ bất đẳng thức ở phần 4. Điều phối viên kiểm từng kết quả trước khi ghép.
+
+Các lỗi nháp đã sửa gồm: tổng thiếu chỉ số trạng thái trong $r^\pi$; lẫn $v_\pi$ với $v^\pi$; mô tả sai lặp chính sách như liệt kê toàn bộ chính sách; lẫn chi phí lưu $Q$ với mô hình chuyển; dùng đẳng thức biến ngẫu nhiên thay kỳ vọng có điều kiện trong chứng minh tối ưu; phép cộng triệt tiêu sai trong một bản sửa của worker. Bản cuối lấy trung bình theo hành động có điều kiện trên lịch sử, dùng luật kỳ vọng lặp, cộng triệt tiêu hữu hạn rồi chặn đuôi. Tính co chỉ áp dụng trong miền giả thiết đã nêu. Điều kiện đủ để chính sách tham lam tối ưu không bị viết thành điều kiện cần.
+
+### Năm báo cáo độc lập và quyết định
+
+Tất cả năm reviewer đọc toàn bộ bản note mới, với hồ sơ `review-full`, `--no-tools`, trong các tiến trình riêng. Không coi rà trích đoạn là rà toàn bài.
+
+| Vai | Mức độ và vị trí | Vấn đề/bằng chứng trong báo cáo | Quyết định |
+|---|---|---|---|
+| Sinh viên | Đạt, phần 1–7 | Tính được ví dụ, câu hỏi có đủ dữ kiện; phân biệt thưởng, giá trị tiếp diễn và kết quả | Giữ mạch và bảy bộ câu hỏi–gợi ý–lời giải |
+| Chuyên môn Học tăng cường | Gắn nhãn nghiêm trọng, phần 5–6 | Đề nghị bỏ $v_5=v_4$ và nghi ngờ mốc $k=6,7$ | Bác bỏ kết luận lỗi: tính lại đủ năm lượt cho đúng điểm bất động; chặn tại lượt 6 bằng 1, lượt 7 bằng 0,5. Viết rõ mốc 6 chưa thỏa bất đẳng thức nghiêm ngặt |
+| Chuyên môn Học tăng cường | Nhỏ, phần 2 và 5 | Gợi ý câu hỏi chưa đưa tiêu chí tối ưu; muốn làm rõ phần dư là hiệu hai lượt | Sửa gợi ý để tập trung vào bảng hiện có; thêm $v_4=T_*v_3$ trước phép tính phần dư |
+| Toán học và thuật toán | Gắn nhãn nghiêm trọng, phần 4 | Cho rằng giới hạn đơn điệu không giữ cải thiện nghiêm ngặt | Bác bỏ kết luận lỗi: tại trạng thái đổi hành động, $v^{\pi'}(s)\ge(T^{\pi'}v^\pi)(s)>v^\pi(s)$. Writer viết liền chuỗi này; reviewer toán rà lại và xác nhận đạt |
+| Toán học và thuật toán | Nhỏ, phần 3 | Muốn thay định nghĩa sai số bằng một chặn | Không đổi định nghĩa đúng $\lVert w-v^\pi\rVert_\infty$; chỉ rút “đúng bằng” thành “là”. Chặn trả bảng mới vẫn là $\gamma\delta/(1-\gamma)$ |
+| Phản biện giảng dạy | Đạt, gợi ý nhỏ ở phần 1 | “Chọn b một lần” dễ lẫn với hành động nhìn trước một bước | Ghi rõ chính sách $(b,b)$ trước khi mô tả quỹ đạo |
+| Kết nối và mạch viết | Đạt, gợi ý nhỏ ở phần 1 | Giá trị $(4,7)$ xuất hiện trước phần giải hệ | Gắn nhãn dữ kiện cho trước và chỉ đến phần 3; các lời hứa về hội tụ và tối ưu đều được giải quyết ở phần 6 |
+
+Điều phối viên đọc lại `hw3.pdf` tr. 1–2 và sửa mô tả Bài 3 thành tồn tại chính sách tối ưu, Bài 7 thành tính đơn điệu; Bài 9 phân biệt rõ hai yêu cầu. Reviewer mạch viết dùng hồ sơ `recheck` rà toàn bộ các đoạn sửa cùng văn cảnh lân cận và xác nhận đạt. Reviewer toán dùng `recheck` rà đầy đủ cụm giữ hòa–đơn điệu–chặn đuôi–cải thiện nghiêm ngặt–dừng hữu hạn và xác nhận đạt, không cần đưa định lý co lên trước.
+
+### Bằng chứng runtime
+
+Các trường dưới đây lấy từ kết quả JSON của cầu nối, không từ lời tự khai của worker; `provider` của mọi lượt là `OpenRouter`.
+
+| Tác vụ | requested_model | observed_model |
+|---|---|---|
+| Planner và một lượt chỉnh phạm vi | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` |
+| Bốn writer, bốn lượt sửa nháp và writer biên tập cuối | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` |
+| Rà sinh viên, giảng dạy, mạch viết toàn bài | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` |
+| Rà chuyên môn và toán toàn bài | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` |
+| Rà lại chứng minh cải thiện | `deepseek/deepseek-v4-flash-0731` | `deepseek/deepseek-v4-flash-0731` |
+| Rà lại diễn đạt và liên kết giữa các đoạn sửa | `z-ai/glm-5.3-flash` | `z-ai/glm-5.3-flash` |
+
+Lệnh chạy năm reviewer ban đầu bị duyệt tự động từ chối vì chưa nhận diện quyền gửi nội dung tới OpenRouter. Đã đọc lại chỉ dẫn cho phép gửi tệp liên quan tại mục “Điều phối mô hình trong dự án”, cung cấp bằng chứng quyền hiện có và được chấp thuận trước khi chạy lại; không đổi đích gửi hoặc lách cơ chế duyệt.
+
+### Kiểm định cuối
+
+- Tính lại bằng phân số chính xác: cả bốn chính sách của MDP hai trạng thái, chuỗi cải thiện, bảng $q_*$, các lượt đánh giá đồng bộ, năm lượt lưới, ví dụ co, mốc sai số và ngưỡng phần dư đều đạt. Phân biệt bảng trả về $w$ của đánh giá với bảng đã kiểm $v$ của lặp giá trị.
+- Rà `$quill` theo mạch khái niệm: mô hình → Bellman → đánh giá → cải thiện → lặp giá trị → hội tụ/sai số → chọn quy trình. Kết bài trở lại bài toán mở đầu với giá trị $(9,20)$ và chứng nhận Bellman. Không khởi tạo `quill.json`.
+- Tự kiểm theo `no-ai-slop/eval.md`: giữ thuật ngữ và dữ kiện nguồn, bỏ lời dẫn quy trình khỏi bản sinh viên, sửa câu mơ hồ và trùng ý, không thêm nhận định quảng bá hay nguồn giả. Các phân biệt giữa đại lượng và các bước kiểm lại phép tính được giữ vì cần cho việc tự học.
+- Cấu trúc Markdown: một H1, bảy phần chính, bảy mã đối chiếu ẩn duy nhất; bảy bộ exercise/hint/solution đóng đúng, không lồng; ký hiệu nhất quán, công thức dùng `$...$` và `$$...$$`.
+- Chromium/Playwright kiểm bản cuối ở 1440×900 và 390×844: 1.056 công thức KaTeX, 5 SVG, 50 mục mục lục; không lỗi công thức, tài nguyên, liên kết, bàn phím hoặc tràn ngang toàn trang. Mười bốn khối gợi ý/lời giải mở được bằng Enter và Space, tự mở khi in rồi khôi phục trạng thái. Liên kết index → note → deck và nguồn cục bộ đúng. PDF A4 có 33 trang, không vùng tràn ở chiều rộng in 703 px; đã xem các trang có hình, công thức dài, chứng minh vừa sửa và tài liệu tham khảo. Hai bên điều phối cùng xác nhận ảnh chụp đúng vùng và nội dung khớp tệp cuối.
+- Chỉnh riêng quy tắc in trong `material-viewer.css`: SVG của bài giảng được co về chiều rộng vùng in, khắc phục cắt cạnh phải do `min-width: 900px`. Sáu ảnh màn hình trước/sau giống từng byte; kiểm hồi quy thêm một SVG thật của Bài 03 cho thấy bản in đầy đủ. Không tuyên bố đã rà toàn bộ note Bài 03.
+- Cảnh báo CSP duy nhất thuộc script tự tải lại do `reloadserver` chèn, không phải lỗi nội dung hoặc KaTeX. Đối chiếu byte Markdown qua `fetch(...).arrayBuffer()` khớp tệp trên đĩa; không dùng kết quả `response.body()` của Playwright đã đổi biểu diễn mã hóa để kết luận tệp khác nhau.
+- SHA-256 note cuối: `d00a7797e9590476944b4a17252bc9d6d4c668213a8cbd749d14d7274cf2695c`. `git diff --check` đạt. Note được rà trong trình xem Markdown hiện có bằng Chromium/Playwright; lượt này không tạo hay tuyên bố rà note bằng Codex Slides.
+
 ## Triển khai lại theo dàn bài — 24-09-2026
 
 **Trạng thái:** đã triển khai đủ 45 slide/7 phần theo kế hoạch 120 phút, có đủ năm báo cáo độc lập và kiểm định RevealJS cục bộ. Bảy phần đã được commit và push lên origin/main; giới hạn duyệt tự động của phần cuối đã được giải quyết sau yêu cầu tiếp tục của người dùng. Codex Slides đã lưu 45 ảnh và 45 ghi chú; kết quả đối chiếu và giới hạn công cụ ghi riêng. Các mục lịch sử phía dưới thuộc những phiên bản trước.

@@ -1,822 +1,687 @@
 # Bài 04 — Giải MDP bằng quy hoạch động
 
-## Mục tiêu và kiến thức tiên quyết
+Học tăng cường — Học kỳ 1, năm học 2026–2027
 
-- Phát biểu bài toán tối ưu trên MDP hữu hạn và phương trình Bellman tối ưu cho $v_*, q_*$.
-- Trình bày hai thuật toán quy hoạch động: lặp chính sách và lặp giá trị, kèm giả mã và điều kiện dừng.
-- Chứng minh hai bảo đảm chính: tồn tại chính sách tối ưu dừng, xác định; hội tụ của lặp giá trị và dừng hữu hạn của lặp chính sách.
-- Tự tính lại các ví dụ MDP hai trạng thái, Gridworld năm ô và Bài 9 phần 1 của hw3.
-- Kiến thức tiên quyết: nội dung Bài 03 về MDP, phần thưởng tích lũy, $v^\pi, q^\pi$ và Bellman kỳ vọng.
-- Giả thiết xuyên suốt: MDP hữu hạn; mỗi trạng thái có ít nhất một hành động; biết hạt nhân $p(s',r\mid s,a)$; phần thưởng bị chặn; $0\le\gamma<1$.
+<!-- note-topic-id: lec-04-part-01 -->
 
-## Ký hiệu và quy ước
+## 1. Mục tiêu, giả thiết và mô hình hai trạng thái
 
-- $\mathcal S$ tập trạng thái hữu hạn, $\mathcal A$ tập hành động hữu hạn, $\gamma\in[0,1)$.
-- Hạt nhân chuyển: $p(s',r\mid s,a)$; ở đây $r$ là giá trị của biến phần thưởng ngẫu nhiên, phân biệt với hàm phần thưởng kỳ vọng $r(s,a)=\sum_{s',r}p(s',r\mid s,a)\,r$.
-- Phần thưởng tích lũy: $G_t=\sum_{k=0}^{\infty}\gamma^k R_{t+1+k}$; $v^\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$; $q^\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$.
-- Chính sách $\pi(a\mid s)$; chính sách xác định viết $\pi(s)\in\mathcal A$.
-- Chuẩn vô cùng trên không gian hàm giá trị: $\|v\|_\infty=\max_{s\in\mathcal S}|v(s)|$.
-- Toán tử Bellman: $T^\pi$ theo chính sách, $T_*$ tối ưu; định nghĩa ở topic 04.
+### Mục tiêu và tiên quyết
 
-## Bản đồ chủ đề
+Bài trước đã xây dựng quá trình quyết định Markov (MDP) cùng hàm giá trị và phương trình Bellman, đồng thời đánh giá giá trị của một chính sách cho trước. Bài này chuyển sang bài toán tối ưu: cho trước mô hình đầy đủ, tính giá trị dài hạn của mỗi chính sách và tìm chính sách tốt nhất. Ba năng lực cần đạt là: tính trọn một lượt đánh giá một chính sách, giải thích vì sao một lần đổi hành động làm giá trị tăng, và kiểm tra điều kiện dừng bằng ngưỡng sai số. Đây là nền tảng cho các thuật toán học khi mô hình chưa biết ở các bài sau.
 
-### Cốt lõi
+Tiên quyết cần nhớ từ Bài 03 gồm hai điểm. Thứ nhất, dạng kỳ vọng của phương trình Bellman: giá trị của một trạng thái bằng kỳ vọng theo chính sách của phần thưởng nhận sau khi thực hiện hành động cộng giá trị tiếp diễn đã chiết khấu, với phần thưởng mang chỉ số $R_{t+1}$. Thứ hai, tổng thưởng chiết khấu $G_0 = R_1 + \gamma R_2 + \gamma^2 R_3 + \cdots$, trong đó $\gamma \in [0,1)$ là hệ số chiết khấu; vì $\gamma < 1$ và phần thưởng bị chặn, chuỗi này hội tụ nên giá trị là một số hữu hạn xác định.
 
-- `lec-04-topic-01` — Bài toán, giả thiết, ôn Bellman kỳ vọng.
-- `lec-04-topic-03` — $v_*, q_*$, Bellman tối ưu, chính sách tham lam.
-- `lec-04-topic-05` — Lặp chính sách trên MDP hai trạng thái.
-- `lec-04-topic-07` — Thuật toán lặp chính sách và định lý cải thiện.
-- `lec-04-topic-08` — Gridworld và các lượt lặp giá trị.
-- `lec-04-topic-09` — Giả mã lặp giá trị và trích chính sách.
-- `lec-04-topic-11` — Bất đẳng thức cực đại, $T_*$ co, hội tụ hình học.
-- `lec-04-topic-12` — Điểm bất động chặn mọi chính sách, tồn tại tối ưu, dừng hữu hạn.
+### Giả thiết làm việc và bảng ký hiệu
 
-### Cầu nối
+Toàn bộ bài làm việc trong khung sau: tập trạng thái $\mathcal S$ hữu hạn với $n = |\mathcal S|$; mỗi trạng thái $s$ có tập hành động $\mathcal A(s)$ hữu hạn và khác rỗng, đặt $m = \max_s |\mathcal A(s)|$; xác suất chuyển và phân phối thưởng $p(s', r \mid s, a)$ được biết đầy đủ, bất biến theo thời gian; phần thưởng bị chặn; $0 \le \gamma < 1$. Vì mô hình cho biết đủ xác suất chuyển và phân phối thưởng, mọi kỳ vọng đều tính được trực tiếp trên giấy mà không cần lấy mẫu trải nghiệm.
 
-- `lec-04-topic-02` — Từ đánh giá chính sách sang tối ưu; micro-example nối $q_*$ với $v_*$.
-- `lec-04-topic-04` — Không gian $\mathcal V$, chuẩn vô cùng, toán tử và điểm bất động.
-- `lec-04-topic-06` — Đánh giá chính sách lặp, đồng bộ và điều kiện công bằng.
-- `lec-04-topic-13` — Phần dư $\rho(v)$, chặn sai số và mất mát.
+| Ký hiệu | Ý nghĩa |
+| --- | --- |
+| $\pi(a \mid s)$ | chính sách Markov dừng: xác suất chọn hành động $a$ tại trạng thái $s$ |
+| $G_0$ | tổng thưởng chiết khấu tính từ thời điểm khởi đầu |
+| $v^\pi(s)$ | giá trị trạng thái của chính sách $\pi$: $v^\pi(s) = \mathbb E_\pi[\,G_0 \mid S_0 = s\,]$, kỳ vọng tính từ thời điểm khởi đầu |
+| $q^\pi(s,a)$ | giá trị hành động: ấn định hành động đầu $a$ rồi theo $\pi$ từ bước sau, kể cả khi $\pi(a\mid s)=0$ |
+| $Q_v(s,a)$ | điểm của hành động tính từ một bảng $v$ bất kỳ; với chính sách Markov dừng, $Q_{v^\pi} = q^\pi$ |
+| $v_*, q_*$ | giá trị tối ưu, định nghĩa bằng $\sup$ trên lớp chính sách $\Pi$ |
+| $T^\pi, T_*$ | hai toán tử Bellman nhận và trả bảng $v$, định nghĩa ở phần 2 |
 
-### Bổ sung
+Trong các tổng hiển thị dưới dạng $\sum_{s', r}$, phần thưởng $r$ chạy trên tập giá trị rời rạc mà $p(s', r \mid s, a)$ hỗ trợ. Lớp $\Pi$ ở định nghĩa tối ưu gồm mọi chính sách hợp lệ, kể cả chính sách phụ thuộc lịch sử; $v^\pi(s)$ được hiểu là giá trị khi khởi đầu tại trạng thái $s$. Định nghĩa tối ưu dùng $\sup$ trước, rồi mới chứng minh cực đại đạt được bằng tính co của toán tử ở phần sau.
 
-- `lec-04-topic-10` — Đồng bộ/bất đồng bộ, chi phí một lượt, so sánh PI–VI.
-- `lec-04-topic-14` — CartPole rời rạc, giới hạn của DP dạng bảng.
+### Bản đồ bài giảng
 
-### Đọc thêm
+Lộ trình gồm bảy phần: (1) mục tiêu, giả thiết và mô hình hai trạng thái, (2) giá trị hành động, giá trị tối ưu và hai toán tử Bellman, (3) đánh giá một chính sách, (4) lặp chính sách, (5) lặp giá trị, (6) hội tụ và sai số, (7) tổng hợp và so sánh.
 
-- `lec-04-topic-15` — Hướng đọc chứng minh chi tiết và giới hạn không gian liên tục.
+### Mô hình hai trạng thái
 
-### Danh sách 15 topic
+Mô hình làm việc có hai trạng thái $s_0, s_1$, mỗi trạng thái hai hành động $a, b$, mọi chuyển đều tất định:
 
-1. `lec-04-topic-01` — cốt lõi — Bài toán, giả thiết, ôn Bellman kỳ vọng.
-2. `lec-04-topic-02` — cầu nối — Từ đánh giá đến tối ưu; micro-example tất định.
-3. `lec-04-topic-03` — cốt lõi — $v_*, q_*$, Bellman tối ưu, tham lam.
-4. `lec-04-topic-04` — cầu nối — Không gian $\mathcal V$, chuẩn vô cùng, $T^\pi, T_*$.
-5. `lec-04-topic-05` — cốt lõi — PI trên MDP hai trạng thái.
-6. `lec-04-topic-06` — cầu nối — Đánh giá chính sách lặp, đồng bộ/bất đồng bộ.
-7. `lec-04-topic-07` — cốt lõi — Thuật toán PI, cải thiện, dừng hữu hạn.
-8. `lec-04-topic-08` — cốt lõi — Gridworld và các lượt VI.
-9. `lec-04-topic-09` — cốt lõi — Giả mã VI, đầu vào/đầu ra/dừng, trích chính sách.
-10. `lec-04-topic-10` — bổ sung — Đồng bộ/bất đồng bộ, chi phí, so sánh PI–VI.
-11. `lec-04-topic-11` — cốt lõi — Bất đẳng thức cực đại, $T_*$ co, Banach, hội tụ hình học.
-12. `lec-04-topic-12` — cốt lõi — Điểm bất động chặn mọi chính sách, tồn tại tối ưu.
-13. `lec-04-topic-13` — cầu nối — Phần dư $\rho(v)$, chặn sai số và mất mát.
-14. `lec-04-topic-14` — bổ sung — CartPole rời rạc và giới hạn DP dạng bảng.
-15. `lec-04-topic-15` — đọc thêm — Hướng đọc chứng minh và giới hạn liên tục.
+| Từ | Hành động | Thưởng | Đến |
+| --- | --- | --- | --- |
+| $s_0$ | $a$ | $2$ | $s_0$ |
+| $s_0$ | $b$ | $-1$ | $s_1$ |
+| $s_1$ | $a$ | $5$ | $s_0$ |
+| $s_1$ | $b$ | $10$ | $s_1$ |
 
-<!-- note-topic-id: lec-04-topic-01 -->
-## Bài toán MDP và ôn Bellman kỳ vọng
+Hệ số chiết khấu $\gamma = 0{,}5$. Bốn cạnh này sẽ được dùng lại liên tục trong cả bài.
 
-- Nhóm: cốt lõi.
-- Vai trò trong mạch: đặt bài toán tối ưu trên MDP và khôi phục nền tảng Bellman kỳ vọng từ Bài 03.
-- Kết nối vào: định nghĩa MDP, phần thưởng tích lũy, $v^\pi, q^\pi$ ở Bài 03.
-- Kết nối ra: nhu cầu tìm chính sách tối ưu dẫn sang topic 02 và 03.
-- Nguồn: PDF nguồn trang 1–6.
+![Mô hình hai trạng thái: a từ s0 nhận 2 và về s0; b từ s0 nhận −1 và tới s1; a từ s1 nhận 5 và về s0; b từ s1 nhận 10 và ở s1.](img/lec-04/two-state.svg)
 
-### Vấn đề
+### So sánh hai chính sách: 4 với 9
 
-Cho MDP hữu hạn $\mathcal M=(\mathcal S,\mathcal A,p,r,\gamma)$ với hạt nhân $p(s',r\mid s,a)$ biết trước, phần thưởng bị chặn và $0\le\gamma<1$. Phần thưởng bị chặn cùng với $\gamma<1$ làm chuỗi chiết khấu hội tụ, nên giá trị $v^\pi(s)$ luôn hữu hạn. Cần tìm chính sách $\pi$ làm cực đại tổng phần thưởng chiết khấu kỳ vọng từ mọi trạng thái. Đây là bài toán lập kế hoạch khi mô hình đã biết.
+Cùng xuất phát từ $s_0$, xét hai chính sách. Chính sách thứ nhất luôn chọn $a$: mỗi bước nhận thưởng 2, chuỗi lặp vô hạn là cấp số nhân với mẫu số $1-\gamma$:
 
-### Trực giác
+$$\frac{2}{1-0{,}5} = 4.$$
 
-Giá trị của một trạng thái bằng phần thưởng tức thời cộng với giá trị tương lai đã chiết khấu. Bellman kỳ vọng mô tả đẳng thức tự nhất quán này khi chính sách cố định. Nếu biết chính xác giá trị của mọi trạng thái, việc chọn hành động tốt trở nên khả thi; vấn đề là giá trị phụ thuộc vào chính sách đang dùng.
+Chính sách thứ hai là $(b,b)$: chọn $b$ tại cả hai trạng thái. Từ $s_0$, bước đầu nhận $-1$ rồi chuyển tới $s_1$; mọi bước sau chọn $b$ ở $s_1$ và nhận thưởng $10$. Giá trị tiếp diễn tại $s_1$ của phần luôn chọn $b$ là
 
-### Ví dụ tính được
+$$\frac{10}{1-0{,}5} = 20.$$
 
-::: example Ví dụ tính được
-MDP một trạng thái $s$, một hành động $a$, chuyển về $s$ với phần thưởng xác định bằng $1$, $\gamma=0.9$. Với chính sách luôn chọn $a$: $v^\pi(s)=1+0.9\,v^\pi(s)$, suy ra $v^\pi(s)=10$. Kiểm tra: $1+0.9\cdot 10=10$.
-:::
+Phần này chiết khấu về thời điểm khởi đầu:
 
-### Hình thức
+$$0{,}5 \cdot 20 = 10.$$
 
-Bellman kỳ vọng cho chính sách $\pi$:
+Tổng gồm phần thưởng đầu cộng phần tiếp diễn đã chiết khấu:
 
-$$v^\pi(s)=\sum_a\pi(a\mid s)\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma v^\pi(s')\bigr],$$
+$$-1 + 10 = 9.$$
 
-$$q^\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)\Bigl[r+\gamma\sum_{a'}\pi(a'\mid s')\,q^\pi(s',a')\Bigr].$$
+Ba số cần tách bạch: phần thưởng đầu ($-1$), phần tiếp diễn đã chiết khấu ($10 = 0{,}5 \cdot 20$, với $20$ là giá trị chưa chiết khấu tại $s_1$), và tổng ($9$). Chính sách thứ hai thua ở bước đầu nhưng thắng về dài hạn, vì hành động $b$ ở $s_1$ nhận thưởng 10 ở mọi bước. Đây mới là so sánh hai chính sách cụ thể; chưa chứng minh được rằng một trong hai là tối ưu trên toàn bộ lớp $\Pi$.
 
-Liên hệ: $v^\pi(s)=\sum_a\pi(a\mid s)\,q^\pi(s,a)$. Dạng ma trận: $v^\pi=r^\pi+\gamma P^\pi v^\pi$. Lưu ý $r$ trong $p(s',r\mid s,a)$ là giá trị của biến phần thưởng ngẫu nhiên; hàm thưởng kỳ vọng là $r(s,a)$.
-
-### Ứng dụng và giới hạn
-
-Bellman kỳ vọng giải bài toán đánh giá chính sách với chính sách đã cho. Nó chưa trả lời chính sách nào tốt nhất; hệ phương trình tuyến tính theo $\pi$ không cho biết cách cải thiện $\pi$.
+Đối chiếu: slide 1–5 của Bài 04.
 
 ::: exercise Câu hỏi kiểm tra
-Với MDP một trạng thái ở ví dụ trên, nếu phần thưởng là $2$ và $\gamma=0.5$, tính $v^\pi(s)$.
+Dùng mô hình hai trạng thái với $\gamma = 0{,}5$. Cho trước giá trị của chính sách $\pi_0$ luôn chọn $a$: $v(s_0)=4$, $v(s_1)=7$ (phần 3 sẽ tính hai giá trị này từ mô hình). Tính giá trị của việc chọn $b$ tại $s_0$ rồi tiếp tục theo $\pi_0$; chỉ ra hai dữ kiện lấy từ mô hình dùng trong phép tính.
 :::
 
 ::: hint
-Giải $v=2+0.5v$.
+Giá trị của lựa chọn là phần thưởng trên cạnh cộng hệ số chiết khấu nhân giá trị tiếp diễn của trạng thái đến. Xác định trạng thái đến của cạnh $s_0 \xrightarrow{b}$.
 :::
 
 ::: solution
-$v^\pi(s)=2/(1-0.5)=4$. Kiểm tra: $2+0.5\cdot 4=4$.
+Cạnh $s_0 \xrightarrow{b}$ cho thưởng $r = -1$ và chuyển đến $s_1$ với xác suất 1 — đây là hai dữ kiện lấy từ mô hình: thưởng trên cạnh và xác suất chuyển. Giá trị của lựa chọn:
+
+$$-1 + 0{,}5 \cdot 7 = 2{,}5.$$
+
+Kiểm lại vai trò các đại lượng: $-1$ là phần thưởng trên cạnh, $0{,}5$ là hệ số chiết khấu, $7$ là giá trị tiếp diễn $v(s_1)$ của chính sách $\pi_0$, $2{,}5$ là kết quả. Cả $7$ lẫn $2{,}5$ đều không phải phần thưởng nhận ngay.
 :::
 
-<!-- note-topic-id: lec-04-topic-02 -->
-## Từ đánh giá chính sách sang tối ưu
+<!-- note-topic-id: lec-04-part-02 -->
 
-- Nhóm: cầu nối.
-- Vai trò trong mạch: chuyển từ hệ Bellman tuyến tính theo $\pi$ sang hệ bất đẳng thức cực đại; dùng micro-example tất định để nối $q_*$ với $v_*$.
-- Kết nối vào: Bellman kỳ vọng ở topic 01.
-- Kết nối ra: định nghĩa $v_*, q_*$ và Bellman tối ưu ở topic 03.
-- Nguồn: PDF nguồn trang 7–8. Micro-example là ví dụ xây dựng từ công thức nguồn, trình bày trong deck phụ.
+## 2. Giá trị hành động, giá trị tối ưu và hai toán tử Bellman
 
-### Vấn đề
+### Tách hành động đầu và phần tiếp diễn
 
-Đánh giá chính sách cho biết một chính sách tốt đến đâu. Cần một cách nói về chính sách tốt nhất và một phương trình mà nghiệm của nó chính là giá trị tối ưu.
+Mỗi lựa chọn tại một trạng thái gồm ba phần: hành động đầu, chuyển trạng thái, rồi một chính sách tiếp diễn từ trạng thái mới. Khi đánh giá một hành động cụ thể, ta giữ nguyên phần tiếp diễn theo chính sách đang xét $\pi$. Khi tìm giá trị tối ưu, phần tiếp diễn không bị ràng buộc nữa: từ trạng thái đến, ta được phép chọn chính sách tối ưu. Với chuyển trạng thái ngẫu nhiên, phải lấy kỳ vọng theo xác suất môi trường trước khi so sánh các hành động; tác tử không được chọn kết quả ngẫu nhiên. Cách tách này đặt tên cho phép tính áp dụng lên một bảng tiếp diễn bất kỳ.
 
-### Trực giác
+### Bảng điểm $Q_v$ từ một bảng giá trị
 
-Nếu tại mỗi bước được chọn hành động tốt nhất, phép lấy trung bình theo $\pi$ trong Bellman kỳ vọng được thay bằng phép cực đại theo $a$. Micro-example tất định dưới đây cho thấy $q_*$ và $v_*$ khớp nhau thế nào khi chỉ có một hành động tối ưu.
+Cho bảng tiếp diễn $v = (4, 7)$ của chính sách $\pi_0 = (a,a)$. Điểm của từng cặp (trạng thái, hành động) là thưởng ngay cộng giá trị tiếp diễn đã chiết khấu, lấy kỳ vọng theo xác suất chuyển:
 
-### Ví dụ tính được
+$$Q_v(s,a) = \sum_{s', r} p(s', r \mid s, a)\,\bigl[\, r + \gamma v(s') \,\bigr].$$
 
-::: example Micro-example tất định (xây dựng từ công thức nguồn)
-Hai trạng thái $s_0,s_1$, một hành động $a$ duy nhất, tất định: $s_0\xrightarrow{a}(r=1,s_0)$, $s_1\xrightarrow{a}(r=2,s_0)$, $\gamma=0.9$. Vì chỉ có một hành động, $\max_a q_*(s,a)=q_*(s,a)$ và $v_*(s)=q_*(s,a)$. Giải: $v_*(s_0)=1+0.9v_*(s_0)=10$; $v_*(s_1)=2+0.9\cdot 10=11$. Khi thêm hành động $b$ từ $s_0$ cho $(r=0,s_1)$, ta có $q_*(s_0,b)=0+0.9\cdot 11=9.9<10$, nên $v_*(s_0)=\max\{10,9.9\}=10$ vẫn giữ nguyên và chính sách tham lam chọn $a$. Ví dụ cho thấy trực tiếp các phép tính xác định $v_*(s)=\max_a q_*(s,a)$ và hành động đạt cực đại.
-:::
+Với mô hình tất định, bảng $Q_v$ là:
 
-### Hình thức
+| $Q_v$ | $a$ | $b$ |
+| --- | --- | --- |
+| $s_0$ | $4$ | $2{,}5$ |
+| $s_1$ | $7$ | $13{,}5$ |
 
-Định nghĩa giá trị tối ưu:
+Ô $Q_v(s_1, b) = 10 + 0{,}5 \cdot 7 = 13{,}5$ minh họa trọn một bước: thưởng 10 cộng $0{,}5$ lần giá trị tiếp diễn 7. Hai ô 4 và 7 trùng với $v$ vì đó là các hành động mà $\pi_0$ đã chọn, phần tiếp diễn quay lại chính bảng đang đánh giá.
 
-$$v_*(s)=\max_\pi v^\pi(s),\qquad q_*(s,a)=\max_\pi q^\pi(s,a).$$
+### Định nghĩa $Q_v$ và quan hệ với $q^\pi$
 
-Khi biết $q_*$, chính sách tối ưu lấy bằng tham lam: $\pi_*(s)\in\arg\max_a q_*(s,a)$.
+Ký hiệu $Q_v$ gắn với một bảng $v$ cụ thể: nó là điểm của hành động tính từ bảng đó, chưa phải giá trị hành động của một chính sách. Ngược lại, $q^\pi(s,a)$ được định nghĩa bằng giá trị của quy trình: khởi đầu tại $s$, ấn định hành động đầu là $a$, rồi theo $\pi$ từ bước sau; quy ước này có nghĩa kể cả khi $\pi(a \mid s) = 0$. Chỉ với chính sách Markov dừng, khi bảng $v$ đúng bằng $v^\pi$, phần tiếp diễn theo $\pi$ quay lại chính bảng đang đánh giá, nên hai khái niệm trùng nhau qua bảng trạng thái:
 
-### Ứng dụng và giới hạn
+$$Q_{v^\pi}(s,a) = q^\pi(s,a).$$
 
-Định nghĩa này hợp lệ nhưng chưa tự chứng minh $v_*$ đạt được bởi một chính sách cụ thể. Việc chứng minh tồn tại nằm ở topic 12; trước đó không tuyên bố tính tối ưu của chính sách tham lam.
+Với bảng $v = (4,7) = v^{\pi_0}$, bảng điểm vừa tính chính là $q^{\pi_0}$, chưa phải $q_*$.
+
+### Giá trị tối ưu bằng supremum
+
+Giả thiết hữu hạn, thưởng bị chặn và $\gamma < 1$ bảo đảm mọi giá trị hữu hạn. Định nghĩa giá trị tối ưu dùng cận trên nhỏ nhất trên lớp chính sách $\Pi$:
+
+$$v_*(s) = \sup_{\pi \in \Pi} v^\pi(s), \qquad q_*(s,a) = \sup_{\pi \in \Pi} q^\pi(s,a).$$
+
+Dùng $\sup$ trước khi chứng minh có chính sách đạt được nó; chứng minh dựa trên tính co của toán tử, trình bày ở phần 6. Tính chất Markov cho phép viết phần tiếp diễn bằng giá trị của trạng thái kế tiếp, dẫn tới quan hệ:
+
+$$v_*(s) = \max_{a \in \mathcal A(s)} q_*(s,a).$$
+
+### Phương trình Bellman tối ưu
+
+Kết hợp quan hệ $v_*(s) = \max_a q_*(s,a)$ với khai triển kỳ vọng của $q_*$ theo phân phối chuyển, ta được phương trình Bellman tối ưu cho giá trị trạng thái:
+
+$$v_*(s) = \max_a \sum_{s', r} p(s', r \mid s, a)\,\bigl[\, r + \gamma v_*(s') \,\bigr],$$
+
+và cho giá trị hành động:
+
+$$q_*(s,a) = \sum_{s', r} p(s', r \mid s, a)\,\bigl[\, r + \gamma \max_{a'} q_*(s', a') \,\bigr].$$
+
+Phép tính có thứ tự: trước hết, với mỗi hành động, lấy kỳ vọng phần thưởng và giá trị tiếp diễn theo phân phối của môi trường; sau đó mới so các hành động và lấy cực đại. Trong công thức $q_*$, hành động đầu $a$ đã được ấn định; phép cực đại chỉ xuất hiện ở trạng thái kế tiếp, trên mọi hành động khả dĩ tại đó. So với phương trình Bellman kỳ vọng của Bài 03, điểm thay đổi duy nhất là thay trung bình theo chính sách $\pi$ bằng phép cực đại theo hành động. Đây là phương trình đặc trưng của giá trị tối ưu, chưa phải cách giải bằng cách thay số đã biết; sự tồn tại và tính duy nhất của nghiệm được chứng minh bằng tính co của toán tử ở phần 6.
+
+### Phân biệt $\max$ và $\arg\max$
+
+Hai ký hiệu cần tách bạch: $\max$ trả một con số, còn $\arg\max$ trả tập các hành động đạt con số đó. Chính sách tham lam theo $q_*$ vì vậy được viết bằng dấu thuộc tập:
+
+$$\pi_*(s) \in \arg\max_a q_*(s,a).$$
+
+Khi đã có $q_*$, chọn tại mỗi trạng thái một hành động trong tập ấy là đủ. Một chính sách tham lam theo bảng xấp xỉ có thể đã tối ưu, nhưng chỉ riêng phép chọn cực đại chưa chứng nhận điều đó. Biết đúng $q_*$ là một điều kiện đủ để cách chọn trên tạo ra chính sách tối ưu; phần 6 chứng minh kết quả này.
+
+### Hai toán tử Bellman
+
+Hai toán tử cùng nhận một bảng giá trị $v \in \mathcal V = \mathbb R^{|\mathcal S|}$ và cùng trả ra một bảng mới, khác nhau ở khối chọn hành động:
+
+$$(T^\pi v)(s) = \sum_a \pi(a \mid s)\, Q_v(s,a), \qquad (T_* v)(s) = \max_a Q_v(s,a).$$
+
+Toán tử $T^\pi$ lấy trung bình theo xác suất chính sách, nên nó giữ nguyên chính sách Markov dừng đang xét. Toán tử $T_*$ lấy cực đại theo từng hàng, tức chọn hành động tốt nhất theo chính bảng đang có. Điểm bất động của một toán tử là bảng không đổi sau phép tính: $v^\pi = T^\pi v^\pi$ và $v_* = T_* v_*$. Một lần cập nhật $T_*$ nói chung chưa cho ngay nghiệm tối ưu; tính co của toán tử ở phần sau bảo đảm lặp cập nhật hội tụ về $v_*$.
+
+Đối chiếu: slide 6–12 của Bài 04.
 
 ::: exercise Câu hỏi kiểm tra
-Trong micro-example, nếu hành động $b$ từ $s_0$ cho $(r=2,s_1)$ thay vì $(r=0,s_1)$, hành động nào là tối ưu tại $s_0$?
+Vẫn với mô hình hai trạng thái, $\gamma = 0{,}5$, bảng $v = (4,7)$ và bảng $Q_v$ với ô $s_0$: $a$ cho 4, $b$ cho 2,5; ô $s_1$: $a$ cho 7, $b$ cho 13,5. Tính $T_* v$ và kết luận bảng $v$ đã phải giá trị tối ưu hay chưa. Ngoài ra, chính sách tham lam dựng theo bảng $Q_v$ này có được kết luận tối ưu ngay không?
 :::
 
 ::: hint
-So sánh $q_*(s_0,a)$ với $2+0.9\,v_*(s_1)$.
+Cực đại được lấy theo hành động trong từng hàng của bảng $Q_v$. Điểm bất động đòi hỏi toàn bảng không đổi. Lưu ý: hành động đạt cực đại theo bảng $Q_v$ hiện có chỉ là hành động tốt nhất theo bảng đang xét, chưa phải chứng nhận tối ưu của chính sách tham lam.
 :::
 
 ::: solution
-Đặt $v_0=v_*(s_0)$ và $v_1=v_*(s_1)$. Khi đó
+Từng hàng: $(T_* v)(s_0) = \max\{4,\ 2{,}5\} = 4$; $(T_* v)(s_1) = \max\{7,\ 13{,}5\} = 13{,}5$. Vậy $T_* v = (4,\ 13{,}5)$, khác với $(4,7)$, nên $v$ chưa phải $v_*$ vì chưa là điểm bất động của $T_*$. Kiểm lại: điểm bất động đòi hỏi $T_* v = v$ trên cả hai thành phần; thành phần $s_1$ đã sai lệch $13{,}5 - 7 = 6{,}5$.
 
-$$v_0=\max\{1+0.9v_0,\;2+0.9v_1\},\qquad v_1=2+0.9v_0.$$
-
-Nếu chọn nhánh $b$ thì $v_0=2+0.9v_1=2+0.9(2+0.9v_0)=3.8+0.81v_0$. Suy ra $v_0=20$ và $v_1=2+0.9\cdot20=20$. Kiểm tra nhánh $a$: $1+0.9\cdot20=19<20$. Vậy $b$ tối ưu tại $s_0$.
+Về chính sách tham lam: theo bảng $Q_v$, hành động được chọn là $a$ tại $s_0$ và $b$ tại $s_1$, tức chính sách $(a,b)$. Đây chỉ là hành động tốt nhất theo chính bảng $v = (4,7)$ đang có, mà $v$ chưa phải $v_*$, nên chưa được kết luận chính sách này tối ưu; tính tối ưu phải được kiểm chứng thêm. Phần 4 sẽ đánh giá lại chính sách này, còn phần 6 chứng minh điều kiện đủ khi biết đúng $q_*$.
 :::
 
-<!-- note-topic-id: lec-04-topic-03 -->
-## Giá trị tối ưu và Bellman tối ưu
+<!-- note-topic-id: lec-04-part-03 -->
 
-- Nhóm: cốt lõi.
-- Vai trò trong mạch: phát biểu hệ phương trình mà nghiệm của nó là $v_*, q_*$; đây là hạt nhân của toàn bài.
-- Kết nối vào: định nghĩa $v_*, q_*$ ở topic 02.
-- Kết nối ra: toán tử $T_*$ ở topic 04 và thuật toán lặp giá trị ở topic 08–09.
-- Nguồn: PDF nguồn trang 7–9.
+## 3. Đánh giá giá trị của một chính sách cố định
 
-### Vấn đề
+### Đặt bài: giá trị dài hạn của $\pi_0=(a,a)$
 
-Cần một hệ phương trình đặc trưng cho $v_*$ mà không cần liệt kê mọi chính sách, vì số chính sách có thể rất lớn.
+Giữ nguyên mô hình hai trạng thái với $\gamma=0{,}5$ và bộ chuyển xác định đã thống nhất: $s_0\xrightarrow{a}s_0$ thưởng $2$, $s_0\xrightarrow{b}s_1$ thưởng $-1$, $s_1\xrightarrow{a}s_0$ thưởng $5$, $s_1\xrightarrow{b}s_1$ thưởng $10$. Ta chọn chính sách $\pi_0$ chọn hành động $a$ ở cả hai trạng thái. Vì $\pi_0$ cố định, tại mỗi trạng thái chỉ còn một hành động, nên kỳ vọng trên hành động biến mất và mỗi trạng thái cho đúng một phương trình Bellman: giá trị hiện tại bằng phần thưởng ngay cộng $\gamma$ nhân giá trị của trạng thái kế. Phần thưởng tương lai bị nhân $\gamma$ mỗi bước nên đóng góp của nó giảm dần theo cấp số nhân; chính sự giảm dần này khiến hệ phương trình có nghiệm hữu hạn và duy nhất.
 
-### Trực giác
+### Hai phương trình Bellman và nghiệm chính xác
 
-Nếu mọi trạng thái sau đều đã tối ưu, thì ở trạng thái hiện tại chỉ cần chọn hành động cho tổng $r+\gamma v_*(s')$ lớn nhất. Nói cách khác, nếu đã biết $v_*(s')$ cho mọi $s'$, thì hành động đầu tiên phải cực đại hóa kỳ vọng $r+\gamma v_*(s')$. Đây là nguyên lý tối ưu của quy hoạch động.
+Đặt $x=v^{\pi_0}(s_0)$, $y=v^{\pi_0}(s_1)$. Theo các cạnh của mô hình:
 
-### Hình thức
+$$x = 2 + 0{,}5\,x, \qquad y = 5 + 0{,}5\,x.$$
 
-Bellman tối ưu:
+Phương trình thứ nhất chỉ chứa $x$ vì từ $s_0$ theo $a$ ta quay về chính $s_0$. Chuyển $0{,}5x$ sang vế trái: $x(1-0{,}5)=2$, tức $x=4$; đây là tổng cấp số nhân $2+0{,}5\cdot2+0{,}5^2\cdot2+\cdots$ với công bội $0{,}5$. Phương trình thứ hai dùng đúng cạnh $s_1\xrightarrow{a}s_0$, nên thay $x=4$: $y=5+0{,}5\cdot4=7$. Lỗi thường gặp là thay $x$ bằng $y$ ở đây; hãy theo đúng trạng thái kế của mô hình. Vậy
 
-$$v_*(s)=\max_a\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma v_*(s')\bigr],$$
+$$v^{\pi_0}=(4,\;7).$$
 
-$$q_*(s,a)=\sum_{s',r}p(s',r\mid s,a)\Bigl[r+\gamma\max_{a'}q_*(s',a')\Bigr].$$
+Cặp $(4,7)$ là nghiệm chính xác của hệ và sẽ là chuẩn đối chiếu khi ta xấp xỉ bằng lặp từ bảng $0$.
 
-Khác Bellman kỳ vọng: phép trung bình theo $\pi$ được thay bằng phép cực đại theo hành động. Chính sách tham lam: $\pi_*(s)\in\arg\max_a q_*(s,a)$.
+### Dạng ma trận và tính khả nghịch
 
-### Ứng dụng và giới hạn
+Với quá trình quyết định Markov và chính sách Markov dừng $\pi$, gọi $P^\pi$ là ma trận chuyển cỡ $n\times n$ với
 
-Hệ này là nền của lặp giá trị. Vì chứa phép cực đại, hệ không tuyến tính; không thể giải bằng nghịch đảo ma trận như đánh giá chính sách. Tính tối ưu của nghiệm được bảo đảm sau khi chứng minh tồn tại và hội tụ (topic 11–12).
+$$(P^\pi)_{ij}=\sum_a \pi(a\mid s_i)\sum_r p(s_j,r\mid s_i,a),$$
+
+và $r^\pi$ là vectơ phần thưởng kỳ vọng cỡ $n$:
+
+$$r^\pi(s_i)=\sum_a \pi(a\mid s_i)\sum_{j,r}p(s_j,r\mid s_i,a)\,r.$$
+
+Khi $\pi$ xác định, $\pi(a\mid s_i)=1$ đúng trên $a=\pi(s_i)$, nên hai công thức rút gọn về $(P^\pi)_{ij}=\sum_r p(s_j,r\mid s_i,\pi(s_i))$ và $r^\pi(s_i)$ là phần thưởng kỳ vọng của hành động $\pi(s_i)$. Phương trình Bellman viết gọn là
+
+$$v = r^\pi + \gamma P^\pi v \quad\Longleftrightarrow\quad (I-\gamma P^\pi)v = r^\pi.$$
+
+$I$ là ma trận đơn vị cỡ $n\times n$. Trong ví dụ này $n=2$, $P^{\pi_0}=\begin{pmatrix}1&0\\1&0\end{pmatrix}$, $r^{\pi_0}=(2,5)$, và hệ $(I-0{,}5P^{\pi_0})v=r^{\pi_0}$ chính là hai phương trình trên. Ma trận $I-\gamma P^\pi$ luôn khả nghịch khi $0\le\gamma<1$. Chứng minh bằng không gian nghiệm: giả sử $(I-\gamma P^\pi)u=0$, tức $u=\gamma P^\pi u$. Đặt $\Delta=\max_i\lvert u_i\rvert$. Theo từng thành phần, $\lvert u_i\rvert=\gamma\lvert\sum_j (P^\pi)_{ij}u_j\rvert\le\gamma\sum_j(P^\pi)_{ij}\Delta=\gamma\Delta$, vì mỗi hàng của $P^\pi$ là phân phối xác suất. Lấy max theo $i$: $\Delta\le\gamma\Delta$, mà $\gamma<1$, nên $\Delta=0$, tức $u=0$. Nghiệm của hệ thuần nhất chỉ có nghiệm không, nên ma trận vuông $I-\gamma P^\pi$ đơn ánh, do đó khả nghịch; hệ $(I-\gamma P^\pi)v=r^\pi$ có nghiệm duy nhất $v=(I-\gamma P^\pi)^{-1}r^\pi$.
+
+### Xấp xỉ bằng các lượt quét đồng bộ
+
+Thay vì giải hệ, ta lặp toán tử $T^{\pi_0}$ từ bảng khởi tạo $v_0=(0,0)$, cập nhật đồng bộ: mọi trạng thái đều đọc giá trị từ bảng cũ $v_k$.
+
+| Bảng | $v_0$ | $v_1$ | $v_2$ | $v^{\pi_0}$ |
+|---|---|---|---|---|
+| $s_0$ | $0$ | $2$ | $3$ | $4$ |
+| $s_1$ | $0$ | $5$ | $6$ | $7$ |
+
+Lượt một: $v_1(s_0)=2+0{,}5\cdot0=2$, $v_1(s_1)=5+0{,}5\cdot0=5$. Lượt hai: $v_2(s_0)=2+0{,}5\cdot2=3$, và $v_2(s_1)=5+0{,}5\cdot v_1(s_0)=5+0{,}5\cdot2=6$. Trong phép tính này ba đại lượng có vai trò khác nhau: thưởng tức thời $5$, giá trị cũ $v_1(s_0)=2$ lấy từ bảng trước, và kết quả $6$; nhầm thưởng với giá trị cũ là lỗi cần tránh. Dãy $(0,0)\to(2,5)\to(3,6)\to(3{,}5,6{,}5)\to\cdots$ tiến dần về $(4,7)$; mỗi lượt đưa bảng gần nghiệm hơn một bước chiết khấu, vì sai số mới bị chặn bởi $\gamma$ nhân sai số cũ sau mỗi lần áp dụng $T^{\pi_0}$.
+
+![Mô hình theo chính sách luôn chọn a: s0 nhận thưởng 2 và trở về s0; s1 nhận thưởng 5 và chuyển về s0.](img/lec-04/policy-evaluation.svg)
+
+### Hai lịch cập nhật: đồng bộ và tại chỗ
+
+Cùng xuất phát từ $v_0=(0,0)$, hai lịch cho kết quả khác nhau ngay lượt đầu. Đồng bộ: cả hai trạng thái đọc bảng cũ, $s_1$ thấy $v_0(s_0)=0$ nên nhận $5$, cho $v_1=(2,5)$. Tại chỗ, theo thứ tự $s_0$ rồi $s_1$: cập nhật $s_0$ trước được $2$, rồi $s_1$ đọc ngay giá trị mới đó, nhận $5+0{,}5\cdot2=6$, cho $v_1=(2,6)$. Khác biệt một đơn vị đến hoàn toàn từ ô nguồn được dùng. Tại chỗ cho phép thông tin mới lan truyền trong cùng lượt, nhưng tốc độ hội tụ phụ thuộc vào mô hình và thứ tự cập nhật, không có bảo đảm chung rằng nó nhanh hơn đồng bộ. Điều bắt buộc với cả hai lịch: mỗi cập nhật dùng đúng phương trình Bellman với bảng hiện có, và mỗi trạng thái được cập nhật vô hạn lần; nếu một trạng thái bị bỏ qua mãi thì không còn bảo đảm hội tụ. Lịch cập nhật vô hạn lần mỗi trạng thái chỉ là lịch lý thuyết; với ngân sách lượt hữu hạn trong thực hành, kết quả trả về khác đi và phải được xử lý riêng.
+
+### Quy trình đánh giá chính sách
+
+Quy trình đầy đủ gồm các thành phần sau.
+
+- **Đầu vào:** mô hình $p(s',r\mid s,a)$, chính sách $\pi$ cố định, ngưỡng $\theta>0$, ngân sách lượt $K\ge1$.
+- **Khởi tạo:** bảng $v$ tùy ý; trạng thái kết thúc giữ giá trị $0$ vì không còn tương lai.
+- **Một lượt:** tính đồng bộ $w=T^\pi v$; đo $\delta=\max_s\lvert w(s)-v(s)\rvert$.
+- **Dừng:** nếu $\delta\le\theta$, trả $w$ với nhãn *đạt ngưỡng*; nếu đã dùng hết $K$ lượt, trả $w$ với nhãn *hết ngân sách*; còn lại gán $v=w$ và lặp.
+
+Hai nhãn trả về phải phân biệt rõ: *hết ngân sách không chứng nhận sai số mong muốn*, vì điều kiện hội tụ thật sự là $\gamma<1$, không phải việc có đủ $K$. Về chi phí, với $n$ trạng thái, nhiều nhất $m$ hành động mỗi trạng thái và mô hình chuyển dày, mỗi lượt quét cho chính sách ngẫu nhiên tốn $O(n^2m)$ phép tính. Lưu ý quy ước: quy trình này trả bảng mới $w$; lặp giá trị ở phần sau sẽ trả bảng $v$ dùng để trích chính sách — hai quy ước không được tráo. Sai số của bảng trả về $w$ so với $v^\pi$ là $\lVert w-v^\pi\rVert_\infty$ và bị chặn bởi đại lượng $\delta$ cuối cùng nhân một hằng số phụ thuộc $\gamma$; việc thiết lập chặn đó được dành cho Phần 6.
 
 ::: exercise Câu hỏi kiểm tra
-Viết Bellman tối ưu cho micro-example hai trạng thái ở topic 02: tại $s_0$, hành động $a$ tất định cho $(1,s_0)$, hành động $b$ tất định cho $(2,s_1)$; tại $s_1$, hành động $a$ tất định cho $(2,s_0)$; $\gamma=0.9$.
+Cho $\pi_0=(a,a)$, $v_2=(3,6)$, $\gamma=0{,}5$. Tính $v_3=T^{\pi_0}v_2$ theo cập nhật đồng bộ. Vì sao phép cập nhật không có $\max$? Nếu đổi sang lịch tại chỗ với thứ tự $s_0$ rồi $s_1$, kết quả lượt này có đổi không?
 :::
 
 ::: hint
-Áp dụng $\max$ lên hai biểu thức $r+\gamma v_*(s')$ tương ứng.
+Viết công thức Bellman cho từng trạng thái trước khi thay số, chú ý cả hai trạng thái đều kế tiếp $s_0$ theo $\pi_0$. Nhớ rằng cập nhật đồng bộ đọc toàn bộ từ $v_2$.
 :::
 
 ::: solution
-$v_*(s_0)=\max\{1+0.9v_*(s_0),\;2+0.9v_*(s_1)\}$; $v_*(s_1)=2+0.9v_*(s_0)$. Nghiệm: $v_*(s_1)=2+0.9v_*(s_0)$, thay vào: $v_*(s_0)=\max\{1+0.9v_*(s_0),\;3.8+0.81v_*(s_0)\}$. Nhánh thứ hai cho $v_*(s_0)=20$ và $v_*(s_1)=20$; kiểm tra nhánh thứ nhất: $1+18=19<20$. Vậy $v_*(s_0)=v_*(s_1)=20$.
+Cùng hành động $a$ ở cả hai trạng thái, nên $v_3(s_0)=2+0{,}5\cdot v_2(s_0)=2+1{,}5=3{,}5$ và $v_3(s_1)=5+0{,}5\cdot v_2(s_0)=5+1{,}5=6{,}5$; cả hai dòng đều đọc giá trị của $s_0$ vì đó là trạng thái kế theo chính sách. Vậy $v_3=(3{,}5,\;6{,}5)$. Kiểm lại bằng hệ: khoảng cách tới nghiệm $(4,7)$ đúng bằng một nửa khoảng cách của $v_2$, tức $(0{,}5,\;0{,}5)$, phù hợp tính co của $T^{\pi_0}$ với $\gamma=0{,}5$. Không có $\max$ vì $T^\pi$ đánh giá một chính sách đã cho: $\pi_0$ xác định duy nhất hành động $a$ tại mỗi trạng thái, không có gì để so sánh; $\max$ chỉ xuất hiện khi ta được chọn hành động tốt nhất. Với lịch tại chỗ, thứ tự $s_0$ rồi $s_1$: $s_0$ vẫn cho $3{,}5$ (đọc $v_2(s_0)=3$), rồi $s_1$ đọc giá trị vừa cập nhật $3{,}5$ thay vì $3$, nhận $5+0{,}5\cdot3{,}5=6{,}75$. Vậy kết quả lượt này đổi thành $(3{,}5,\;6{,}75)$ — khác biệt hoàn toàn do ô nguồn được dùng.
 :::
 
-<!-- note-topic-id: lec-04-topic-04 -->
-## Không gian giá trị, chuẩn vô cùng và toán tử Bellman
+Đối chiếu: slide 13–18 của Bài 04.
 
-- Nhóm: cầu nối.
-- Vai trò trong mạch: dựng khung hàm học để chứng minh hội tụ; định nghĩa $T^\pi, T_*$ và điểm bất động.
-- Kết nối vào: Bellman kỳ vọng và Bellman tối ưu ở topic 01, 03.
-- Kết nối ra: tính co và hội tụ ở topic 11; đánh giá lặp ở topic 06.
-- Nguồn: PDF nguồn trang 10, 30–32; hw3.pdf Bài 7.
+<!-- note-topic-id: lec-04-part-04 -->
 
-### Vấn đề
+## 4. Cải thiện chính sách và lặp chính sách
 
-Các phương trình Bellman là đẳng thức giữa hàm trên $\mathcal S$. Để nói về hội tụ cần một không gian mét và các toán tử tác động trên đó.
+### Động lực: một hành động tốt hơn tại $s_1$
 
-### Trực giác
+Bảng $v^{\pi_0}=(4,7)$ chưa nói $\pi_0$ là tốt nhất. Tại $s_1$, nếu buộc chọn $b$ đúng một lần rồi quay về theo $\pi_0$, kỳ vọng là
 
-Xem một bảng giá trị như một điểm trong không gian vector $\mathbb R^{|\mathcal S|}$. Mỗi lần cập nhật Bellman là một ánh xạ biến bảng này thành bảng khác; hội tụ nghĩa là dãy các điểm ổn định tại một điểm bất động.
+$$q^{\pi_0}(s_1,b)=10+0{,}5\cdot7=13{,}5>7=v^{\pi_0}(s_1).$$
 
-### Hình thức
+Hai con số này không cùng bản chất: $7$ là giá trị của chính sách $\pi_0$, còn $13{,}5$ là giá trị khi buộc chọn $b$ một lần rồi tiếp tục theo $\pi_0$. Sai lầm thường gặp là coi $13{,}5$ là giá trị của chính sách mới. Chính sách mới $\pi_1$ chọn $b$ tại mọi lần đến $s_1$, nên đường đi của nó khác hẳn đường đi "một lần rồi quay về"; giá trị của $\pi_1$ tại $s_1$ là $20$ và phải được đánh giá riêng theo mô hình của $\pi_1$.
 
-Không gian $\mathcal V=\{v:\mathcal S\to\mathbb R\}$ với chuẩn vô cùng $\|v\|_\infty=\max_s|v(s)|$. Toán tử theo chính sách:
+### Bước tham lam một bước nhìn trước
 
-$$(T^\pi v)(s)=\sum_a\pi(a\mid s)\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma v(s')\bigr].$$
+Tính $q^{\pi_0}$ tại cả hai trạng thái:
 
-Toán tử tối ưu:
+| | $a$ | $b$ |
+|---|---|---|
+| $s_0$ | $4$ — chọn | $2{,}5$ |
+| $s_1$ | $7$ | $13{,}5$ — chọn |
 
-$$(T_* v)(s)=\max_a\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma v(s')\bigr].$$
+Mỗi hàng được xét độc lập: tại $s_0$, $4>2{,}5$ nên giữ $a$; tại $s_1$, $13{,}5>7$ nên đổi sang $b$. Kết quả $\pi_0\to\pi_1=(a,b)$. Các số trong bảng là giá trị của hành động một lần rồi tiếp tục theo $\pi_0$, nên phần tiếp diễn vẫn theo $\pi_0$; giá trị của $\pi_1$ chưa được tính và phải tính lại từ đầu theo mô hình của $\pi_1$.
 
-Nhận xét: $v^\pi$ là điểm bất động của $T^\pi$; $v_*$ là điểm bất động của $T_*$; quy hoạch động là lặp các toán tử Bellman tới khi ổn định.
+### Đánh giá lại $\pi_1$ và $\pi_2$
 
-::: proof Bổ đề đơn điệu của $T^\pi$ và $T_*$ (hw3 Bài 7)
-Nếu $u\le v$ theo từng điểm thì với mỗi $a$, tổng $\sum_{s',r}p(s',r\mid s,a)[r+\gamma u(s')]\le\sum_{s',r}p(s',r\mid s,a)[r+\gamma v(s')]$ vì $\gamma\ge 0$ và trọng số $p$ không âm. Kỳ vọng theo $\pi$ bảo toàn bất đẳng thức nên $T^\pi u\le T^\pi v$; lấy cực đại và dùng bất đẳng thức cực đại (nếu $f_a\le g_a$ với mọi $a$ thì $\max_a f_a\le\max_a g_a$) được $T_*u\le T_*v$.
+Với $\pi_1=(a,b)$, hệ Bellman là $x=2+0{,}5x$ (vì $s_0$ vẫn về $s_0$) cho $x=4$, và $y=10+0{,}5y$ (vì $s_1$ về chính nó) cho $y=20$; vậy $v^{\pi_1}=(4,20)$. Bước cải thiện tiếp theo so sánh trên bảng $v^{\pi_1}$: tại $s_0$, $q^{\pi_1}(s_0,b)=-1+0{,}5\cdot20=9>4=q^{\pi_1}(s_0,a)$, nên $\pi_2=(b,b)$. Đánh giá $\pi_2$: $y=10+0{,}5y=20$ và $x=-1+0{,}5\cdot20=9$, vậy $v^{\pi_2}=(9,20)$.
+
+| Chính sách | $v(s_0)$ | $v(s_1)$ |
+|---|---|---|
+| $\pi_0=(a,a)$ | $4$ | $7$ |
+| $\pi_1=(a,b)$ | $4$ | $20$ |
+| $\pi_2=(b,b)$ | $9$ | $20$ |
+
+Các giá trị giữ nguyên là đặc thù của ví dụ này, không phải quy luật chung. Từ $\pi_0$ sang $\pi_1$, tại $s_0$ hành động luôn là $a$ nên trạng thái tự vòng về chính nó, và mọi đường đi từ $s_0$ không bao giờ đến $s_1$ — nơi hành động đã đổi — nên $v(s_0)$ giữ nguyên $4$. Từ $\pi_1$ sang $\pi_2$, tại $s_1$ hành động luôn là $b$ nên trạng thái tự vòng về chính nó, và mọi đường đi từ $s_1$ không bao giờ đến $s_0$ — nơi hành động đã đổi — nên $v(s_1)$ giữ nguyên $20$. Nếu đường đi có thể đi qua trạng thái đã đổi hành động, kết luận này không còn đúng.
+
+### Quy tắc tham lam với điều khoản giữ hòa
+
+Quy tắc cải thiện cần phát biểu chặt để thuật toán tái lập được. Với $\pi$ xác định và bảng $v^\pi$, đặt
+
+$$\pi'(s)\in\operatorname{argmax}_a Q_{v^\pi}(s,a),$$
+
+kèm quy tắc hòa: nếu hành động cũ của $\pi$ thuộc argmax thì giữ hành động cũ; nếu không, chọn theo thứ tự cố định của tập hành động. Mọi so sánh dùng $v^\pi$ cũ, chưa cập nhật. Với $q^{\pi_0}$: tại $s_1$, $b$ thuộc argmax nên được chọn, còn hành động cũ $a$ không thuộc. Khi hai hành động đồng hạng, giữ hành động cũ ngăn thuật toán đổi qua lại giữa các chính sách tương đương qua các vòng lặp — nếu không có quy tắc này, không thể kết luận nghiêm ngặt rằng thuật toán không dao động vô hạn giữa các hành động bằng giá trị.
+
+Trước khi chứng minh định lý, cần tính đơn điệu của toán tử: nếu $u\le v$ theo từng trạng thái thì $Q_u(s,a)\le Q_v(s,a)$ cho mọi $s,a$, vì $\gamma\ge0$ và các xác suất chuyển không âm; do đó $T^{\pi'}u\le T^{\pi'}v$ với mọi chính sách $\pi'$. Tính đơn điệu này là giả thiết được dùng ngay dưới đây.
+
+### Định lý cải thiện chính sách
+
+**Định lý.** Giả sử quá trình quyết định Markov hữu hạn, thưởng bị chặn, $0\le\gamma<1$; $\pi$ và $\pi'$ là chính sách Markov dừng xác định, và $\pi'$ tham lam theo $v^\pi$ với quy tắc giữ hòa. Khi đó $v^\pi\le v^{\pi'}$ theo từng trạng thái; nếu $\pi'$ khác $\pi$ thì tăng nghiêm ngặt ở ít nhất một trạng thái.
+
+::: proof
+Vì $\pi'$ chọn argmax của $Q_{v^\pi}$, ta có
+
+$$T^{\pi'}v^\pi=\max_a Q_{v^\pi}(\cdot,a)\ge T^\pi v^\pi=v^\pi,$$
+
+bất đẳng thức đúng vì hành động $\pi(s)$ là một ứng viên trong phép max tại mỗi trạng thái. Xét một trạng thái $s$ nơi $\pi'(s)\ne\pi(s)$: theo quy tắc giữ hòa, hành động cũ $\pi(s)$ không thuộc argmax, nên
+
+$$(T^{\pi'}v^\pi)(s)=Q_{v^\pi}(s,\pi'(s))>Q_{v^\pi}(s,\pi(s))=(T^\pi v^\pi)(s)=v^\pi(s),$$
+
+bất đẳng thức nghiêm ngặt tại $s$. Áp dụng $T^{\pi'}$ lặp lại và dùng tính đơn điệu vừa thiết lập:
+
+$$v^\pi\le T^{\pi'}v^\pi\le (T^{\pi'})^2v^\pi\le\cdots$$
+
+Sau $N$ bước, tại mỗi trạng thái đầu $s$,
+
+$$((T^{\pi'})^Nv^\pi)(s)=\mathbb E_{\pi'}\!\left[\sum_{t=0}^{N-1}\gamma^t R_{t+1}+\gamma^N v^\pi(S_N)\,\middle|\,S_0=s\right].$$
+
+Chọn $R_{\max}$ sao cho $|R|\le R_{\max}$. Với chuẩn $\lVert v\rVert_\infty=\max_s|v(s)|$, ta có $\lVert v^\pi\rVert_\infty\le R_{\max}/(1-\gamma)$, nên hạng đuôi có chuẩn không vượt $\gamma^N R_{\max}/(1-\gamma)$ và tiến về $0$ vì $0\le\gamma<1$. Do đó dãy hội tụ về $v^{\pi'}$, và chuyển qua giới hạn trong chuỗi bất đẳng thức cho $v^\pi\le v^{\pi'}$; tại mỗi trạng thái đã đổi hành động $s$, dùng khoảng cách nghiêm ngặt ở bước đầu đã thiết lập ở trên, ta có $v^{\pi'}(s)\ge (T^{\pi'}v^\pi)(s) > v^\pi(s)$.
 :::
 
-### Ứng dụng và giới hạn
+Hệ quả về tính nghiêm ngặt: khi $\pi'$ khác $\pi$, có ít nhất một trạng thái tăng giá trị nghiêm ngặt. Kết hợp với tính đơn điệu, mỗi lần đổi chính sách làm giá trị tăng nghiêm ngặt ở ít nhất một trạng thái, nên trong dãy chính sách của lặp chính sách không có chính sách nào lặp lại: nếu $\pi_j=\pi_i$ với $i<j$ thì $v^{\pi_i}\le v^{\pi_{i+1}}\le\cdots\le v^{\pi_j}=v^{\pi_i}$ buộc mọi bước giữa đều giữ nguyên giá trị, mâu thuẫn với tăng nghiêm ngặt. Không gian các chính sách xác định hữu hạn, cỡ $\prod_s\lvert\mathcal A(s)\rvert$ — trong ví dụ là $2\cdot2=4$ — nên thuật toán dừng sau hữu hạn vòng. Khi dừng với $\pi'=\pi$, ta có $T_*v^\pi=v^\pi$, tức thỏa phương trình tối ưu Bellman; chứng minh rằng giá trị này là tối ưu toàn cục sẽ ở Phần 6.
 
-Khung này cho phép dùng định lý điểm bất động (Banach) khi chứng minh hội tụ. Nó đòi hỏi $\gamma<1$; với $\gamma=1$ toán tử không co và phân tích phải đổi hẳn.
+### Quy trình lặp chính sách
+
+Thuật toán ghép hai khối đánh giá và cải thiện:
+
+- **Đầu vào:** mô hình; ngân sách vòng lặp $K\ge1$; khởi tạo $\pi$ xác định.
+- **Đánh giá chính xác:** giải $(I-\gamma P^\pi)v=r^\pi$, trong đó $I$ là ma trận đơn vị cỡ $n\times n$, $P^\pi$ là ma trận chuyển của $\pi$, $r^\pi$ là vectơ phần thưởng kỳ vọng.
+- **Cải thiện:** tham lam trên bảng $Q$ vừa tính, giữ hòa theo quy tắc đã nêu, được $\pi'$.
+- **Dừng:** nếu $\pi'=\pi$, trả $\pi$ và $v^\pi$. Nếu hết $K$ vòng, trả $\pi$ cùng $v^\pi$ với nhãn *chưa chứng nhận*; còn lại đặt $\pi=\pi'$ và lặp.
+
+Hai điểm thực hiện quan trọng. Thứ nhất, đánh giá phải chính xác từng vòng: khi ngân sách cạn mà bước cải thiện vẫn đổi hành động, kết quả trả về là chính sách vừa được đánh giá cùng giá trị của nó — tuyệt đối không trả $\pi'$ chưa đánh giá ghép với bảng giá trị của chính sách cũ. Thứ hai, chi phí giải hệ tuyến tính cỡ $n$ là $O(n^3)$. Định lý cải thiện và lập luận hữu hạn ở trên giải thích vì sao dừng khi chính sách ổn định: với $\pi_2$, hành động $a$ cho $6{,}5$ tại $s_0$ và $9{,}5$ tại $s_1$, đều thấp hơn $9$ và $20$ của $b$, nên bước cải thiện giữ $\pi_2$. Bảo đảm dừng hữu hạn dựa trên đánh giá chính xác và quy tắc hòa, không suy rộng sang đánh giá bị cắt ngắn.
 
 ::: exercise Câu hỏi kiểm tra
-Tính $(T_* v)(s_0)$ cho micro-example topic 02 (hai hành động, $v_*(s_1)=20$) khi bảng đầu vào là $v(s_0)=0, v(s_1)=10$.
+Cho $v^{\pi_1}=(4,20)$. Hai giá trị $Q$ tại $s_0$ là gì? Chính sách sau cải thiện $\pi_2$ là gì? Vì sao cần giữ hành động cũ khi hai hành động hòa nhau?
 :::
 
 ::: hint
-Tính hai nhánh $r+\gamma v(s')$ rồi lấy cực đại.
+Dùng bảng $v^{\pi_1}$ vừa đánh giá, chưa cập nhật, để tính $q^{\pi_1}(s_0,a)$ và $q^{\pi_1}(s_0,b)$ theo đúng cạnh chuyển và thưởng của mô hình.
 :::
 
 ::: solution
-Nhánh $a$: $1+0.9\cdot 0=1$; nhánh $b$: $2+0.9\cdot 10=11$. Vậy $(T_* v)(s_0)=11$.
+Hành động $a$ từ $s_0$ về $s_0$ với thưởng $2$: $q^{\pi_1}(s_0,a)=2+0{,}5\cdot4=4$. Hành động $b$ từ $s_0$ đến $s_1$ với thưởng $-1$: $q^{\pi_1}(s_0,b)=-1+0{,}5\cdot20=9$. Vì $9>4$, chính sách sau cải thiện là $\pi_2=(b,b)$. Kiểm lại bằng định lý: $v^{\pi_2}=(9,20)\ge(4,20)=v^{\pi_1}$, tăng nghiêm ngặt đúng tại $s_0$ và giữ nguyên tại $s_1$ — không kết luận rằng cải thiện nghiêm ngặt tại mọi trạng thái. Mọi so sánh trên đều dùng $v^{\pi_1}$ cũ, chưa cập nhật. Về tiêu chí hòa: khi hai hành động đồng hạng, giữ hành động cũ ngăn thuật toán dao động giữa các chính sách tương đương qua các vòng lặp; nếu chọn tùy ý hành động đồng hạng, thuật toán có thể luân phiên giữa các chính sách có cùng giá trị mà không bao giờ dừng, nên quy tắc giữ hòa bảo đảm thuật toán tránh cách đổi chính sách này.
 :::
 
-<!-- note-topic-id: lec-04-topic-05 -->
-## Lặp chính sách trên MDP hai trạng thái
+Đối chiếu: slide 19–26 của Bài 04.
 
-- Nhóm: cốt lõi.
-- Vai trò trong mạch: ví dụ tính được trọn vẹn một chu trình đánh giá–cải thiện của PI.
-- Kết nối vào: Bellman kỳ vọng (topic 01) và ý tưởng tham lam (topic 03).
-- Kết nối ra: thuật toán PI tổng quát ở topic 07.
-- Nguồn: PDF nguồn trang 17–19.
+<!-- note-topic-id: lec-04-part-05 -->
 
-### Vấn đề
+## 5. Từ chi phí đánh giá đầy đủ sang lặp giá trị
 
-Cho MDP hai trạng thái, hai hành động, $\gamma=0.9$, chuyển tất định: $s_0\xrightarrow{a}(1,s_0)$, $s_0\xrightarrow{b}(0,s_1)$, $s_1\xrightarrow{a}(2,s_0)$, $s_1\xrightarrow{b}(3,s_1)$. Chạy PI từ $\pi_0=(a,a)$ và tìm chính sách tối ưu.
+### Chi phí đánh giá từng chính sách
 
-### Trực giác
+Lặp chính sách gồm hai giai đoạn tách bạch: với chính sách $\pi$ hiện tại, giải hệ tuyến tính để có $v^\pi$, rồi tại mỗi trạng thái so sánh các hành động qua $Q_{v^\pi}(s,a)$ để cải thiện $\pi$. Việc giải đầy đủ hệ tuyến tính ở mỗi vòng có thể tốn kém khi số trạng thái lớn. Lặp giá trị chọn hướng khác: tại mỗi trạng thái, nhìn trước một bước trên bảng giá trị đang có, lấy kỳ vọng thưởng ngay cộng hệ số chiết khấu nhân giá trị bảng cũ, rồi lấy cực đại theo hành động. Nhờ vậy không cần hoàn thành đánh giá đầy đủ của một chính sách nào trước khi cải thiện; cực đại theo hành động đã gộp việc so sánh vào mỗi lượt cập nhật.
 
-Đánh giá chính sách hiện tại bằng hệ tuyến tính, rồi ở mỗi trạng thái so sánh $q^\pi(s,a)$ với $q^\pi(s,b)$ để đổi quyết định nếu có lợi.
+Lưới năm ô $c_1,\dots,c_5$ đủ nhỏ để tính tay toàn bộ. Quy ước dữ kiện: $\gamma=0{,}5$; bước thường thưởng $-1$ vì mỗi bước đi tốn một đơn vị; riêng chuyển $c_4\to c_5$ thưởng $24$; đi trái ở $c_1$ thì đứng nguyên tại chỗ và vẫn mất $-1$, nên đứng yên không phải lối thoát; $c_5$ là trạng thái kết thúc, sau khi vào đích quá trình dừng và không nhận thêm thưởng, do đó $v(c_5)=0$.
 
-### Ví dụ tính được
+Đối chiếu: slide 27 của Bài 04.
 
-::: example Tính lại từng bước
-Đánh giá $\pi_0=(a,a)$:
+![Lưới năm ô: thưởng −1 cho bước thường, thưởng 24 khi từ c4 vào đích c5; đi trái từ c1 giữ nguyên ô, giá trị đích bằng 0.](img/lec-04/gridworld.svg)
 
-$$v^{\pi_0}(s_0)=1+0.9\,v^{\pi_0}(s_0)\Rightarrow v^{\pi_0}(s_0)=10,$$
-$$v^{\pi_0}(s_1)=2+0.9\cdot 10=11.$$
+### Một lượt quét đầu tiên
 
-Cải thiện theo $v^{\pi_0}$:
+Bảng khởi tạo là $v_0$ toàn số 0. Một lượt quét **đồng bộ** nghĩa là mọi trạng thái đều tính từ bảng cũ $v_0$, không dùng giá trị vừa cập nhật trong cùng lượt.
 
-- Tại $s_0$: $q^{\pi_0}(s_0,a)=1+0.9\cdot 10=10$; $q^{\pi_0}(s_0,b)=0+0.9\cdot 11=9.9$. Chọn $a$.
-- Tại $s_1$: $q^{\pi_0}(s_1,a)=2+0.9\cdot 10=11$; $q^{\pi_0}(s_1,b)=3+0.9\cdot 11=12.9$. Chọn $b$.
+| Ô | $c_1$ | $c_2$ | $c_3$ | $c_4$ | $c_5$ |
+|---|---|---|---|---|---|
+| $v_0$ | 0 | 0 | 0 | 0 | 0 |
+| $v_1$ | $-1$ | $-1$ | $-1$ | 24 | 0 |
 
-Chính sách mới $\pi_1=(a,b)$. Đánh giá:
+Tại $c_4$: đi phải nhận ngay $24$ cộng $\gamma$ nhân giá trị $c_5$ trong bảng cũ, tức $24+0{,}5\cdot 0=24$; đi trái chỉ được $-1$, nên cực đại là $24$. Ba ô còn lại không kề đích: mọi hành động đều dẫn tới ô có giá trị $0$ trong $v_0$, nên chúng chỉ ghi nhận chi phí bước đi $-1$. Việc các ô này chưa thấy đích không có nghĩa đường đi từ đó thiếu giá trị dài hạn; thông tin về phần thưởng $24$ cần thêm lượt quét mới truyền ngược tới.
 
-$$v^{\pi_1}(s_0)=1+0.9\,v^{\pi_1}(s_0)\Rightarrow v^{\pi_1}(s_0)=10,\qquad v^{\pi_1}(s_1)=3+0.9\cdot 10=30.$$
+Đối chiếu: slide 28 của Bài 04.
 
-Cải thiện tiếp: $q^{\pi_1}(s_0,a)=10$; $q^{\pi_1}(s_0,b)=0+0.9\cdot 30=27$. Chọn $b$, được $\pi_2=(b,b)$. Đánh giá: $v^{\pi_2}(s_1)=3+0.9\,v^{\pi_2}(s_1)=30$; $v^{\pi_2}(s_0)=0+0.9\cdot 30=27$. Cải thiện từ $\pi_2$ không đổi chính sách, nên $\pi_2$ tối ưu với $v^{\pi_2}=(27,30)$.
-:::
+### Giá trị lan dần từ đích
 
-### Hình thức
-
-Mỗi vòng PI gồm hai phép toán: giải $v^\pi=r^\pi+\gamma P^\pi v^\pi$ và lấy $\pi'(s)\in\arg\max_a\sum_{s',r}p(s',r\mid s,a)[r+\gamma v^\pi(s')]$.
-
-### Ứng dụng và giới hạn
-
-Ví dụ cho thấy PI có thể cần nhiều hơn một vòng cải thiện trước khi dừng. Chi phí đánh giá trọn vẹn một chính sách là điểm yếu trên không gian trạng thái lớn.
-
-::: exercise Câu hỏi kiểm tra
-Tính $v^{\pi_1}(s_1)$ nếu $\gamma=0.5$ thay vì $0.9$, giữ $\pi_1=(a,b)$.
-:::
-
-::: hint
-Giải $v(s_0)=1+0.5v(s_0)$ trước.
-:::
-
-::: solution
-$v^{\pi_1}(s_0)=2$; $v^{\pi_1}(s_1)=3+0.5\cdot 2=4$.
-:::
-
-<!-- note-topic-id: lec-04-topic-06 -->
-## Đánh giá chính sách lặp
-
-- Nhóm: cầu nối.
-- Vai trò trong mạch: trình bày cách tính gần đúng $v^\pi$ bằng lặp toán tử $T^\pi$; nối toán tử với bước đánh giá của PI.
-- Kết nối vào: toán tử $T^\pi$ ở topic 04.
-- Kết nối ra: bước đánh giá trong PI (topic 07) và dạng cập nhật của VI (topic 08).
-- Nguồn: PDF nguồn trang 14–15.
-
-### Vấn đề
-
-Giải hệ $v^\pi=r^\pi+\gamma P^\pi v^\pi$ bằng nghịch đảo ma trận tốn $O(|\mathcal S|^3)$. Cần cách lặp rẻ hơn và dễ phân tích.
-
-### Trực giác
-
-Bắt đầu từ $v_0$ bất kỳ, thường bằng $0$; mỗi lượt áp dụng $T^\pi$ làm bảng giá trị nhìn xa thêm một lớp về tương lai. Sai số so với $v^\pi$ giảm theo $\gamma$ mỗi lượt.
-
-### Hình thức
-
-Cập nhật đồng bộ:
-
-$$v_{k+1}(s)=\sum_a\pi(a\mid s)\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma v_k(s')\bigr],$$
-
-tức $v_{k+1}=T^\pi v_k$. Vì $T^\pi$ co với hệ số $\gamma$, $v_k\to v^\pi$ từ mọi $v_0$. Chặn đánh giá: nếu sau một lượt $\|v_{j+1}-v_j\|_\infty\le\varepsilon_{\text{step}}$, chuỗi hình học cho $\|v_{j+1}-v^\pi\|_\infty\le\gamma\,\varepsilon_{\text{step}}/(1-\gamma)$. Đây là chặn đánh giá chất lượng bảng trả về, không bảo đảm lặp chính sách sửa đổi dừng hữu hạn; dừng hữu hạn chỉ được bảo đảm với đánh giá chính xác ở topic 07. Dạng bất đồng bộ: cập nhật từng trạng thái và dùng ngay giá trị mới cho các cập nhật kế tiếp; hội tụ vẫn bảo đảm nếu lịch cập nhật là công bằng, tức mỗi trạng thái được cập nhật vô hạn lần.
-
-### Ứng dụng và giới hạn
-
-Trong PI, đánh giá chính xác của mỗi chính sách là điều kiện của bảo đảm dừng hữu hạn sẽ phát biểu ở topic 07 và chứng minh ở topic 12; thay đánh giá chính xác bằng đánh giá lặp dừng sớm chỉ cho một xấp xỉ, và xấp xỉ này chưa được phân tích ở đây. Lịch không công bằng có thể làm một nhóm trạng thái bị bỏ lại và giá trị không ổn định.
-
-::: exercise Câu hỏi kiểm tra
-Với MDP topic 05 và $\pi=(a,a)$, $v_0=0$, tính $v_1$ và $v_2$ theo cập nhật đồng bộ.
-:::
-
-::: hint
-Áp dụng công thức với $v_0=0$ rồi với $v_1$.
-:::
-
-::: solution
-$v_1(s_0)=1$, $v_1(s_1)=2$. $v_2(s_0)=1+0.9\cdot 1=1.9$; $v_2(s_1)=2+0.9\cdot 1=2.9$. Dãy tiến về $(10,11)$.
-:::
-
-<!-- note-topic-id: lec-04-topic-07 -->
-## Thuật toán lặp chính sách
-
-- Nhóm: cốt lõi.
-- Vai trò trong mạch: thuật toán PI chính xác, định lý cải thiện và bảo đảm dừng hữu hạn.
-- Kết nối vào: đánh giá lặp (topic 06) và ví dụ hai trạng thái (topic 05).
-- Kết nối ra: chứng minh tồn tại tối ưu và dừng hữu hạn ở topic 12.
-- Nguồn: PDF nguồn trang 20–21, 33.
-
-### Vấn đề
-
-Cần một quy trình lặp giữa đánh giá và cải thiện, kèm bảo đảm dừng tại chính sách tối ưu.
-
-### Trực giác
-
-Cải thiện tham lam theo $v^\pi$ không bao giờ làm chính sách tệ hơn; số chính sách xác định hữu hạn nên chuỗi cải thiện nghiêm ngặt không thể kéo dài vô hạn.
-
-### Thuật toán
-
-Lặp chính sách:
-
-1. Khởi tạo chính sách $\pi$ bất kỳ.
-2. Đánh giá chính sách để thu được $v^\pi$ (giải hệ hoặc lặp $T^\pi$).
-3. Cải thiện: $\pi'(s)\in\arg\max_a\sum_{s',r}p(s',r\mid s,a)[r+\gamma v^\pi(s')]$.
-4. Nếu $\pi'=\pi$ thì dừng; ngược lại đặt $\pi\leftarrow\pi'$ và lặp lại.
-
-Khi có nhiều hành động đạt cực đại, phá hòa bằng thứ tự cố định để thuật toán xác định. Bảo đảm dừng hữu hạn dưới đây yêu cầu bước đánh giá đạt đúng $v^\pi$; đánh giá dừng sớm thuộc biến thể chưa được phân tích ở đây.
-
-### Chứng minh ý chính
-
-::: proof Định lý cải thiện chính sách
-Nếu $\pi'$ tham lam theo $v^\pi$ thì $v^{\pi'}(s)\ge v^\pi(s)$ với mọi $s$. Ý tưởng: vì $\pi'$ tham lam, $T^{\pi'}v^\pi=T_*v^\pi\ge T^\pi v^\pi=v^\pi$. Áp dụng tính đơn điệu của $T^{\pi'}$ nhiều lần: $(T^{\pi'})^k v^\pi\to v^{\pi'}$ khi $k\to\infty$, và bất đẳng thức được bảo toàn qua mỗi lần áp dụng, nên $v^{\pi'}\ge v^\pi$.
-:::
-
-Hệ quả: dãy $v^{\pi_k}$ không giảm theo từng điểm. Số chính sách xác định dừng là hữu hạn; lập luận chỉ cần tính hữu hạn của tập chính sách. Tổng quát, số chính sách xác định là tích theo $s$ của $|\mathcal A(s)|$; khi mọi trạng thái có cùng tập hành động thì rút thành $|\mathcal A|^{|\mathcal S|}$ (sửa so với nguồn trang 33, nơi ghi $|\mathcal A|\,|\mathcal S|$). Vì không thể cải thiện nghiêm ngặt vô hạn lần, PI dừng sau hữu hạn bước tại một chính sách ổn định; kết hợp với topic 12, chính sách đó tối ưu.
-
-### Ứng dụng và giới hạn
-
-PI dừng hữu hạn là bảo đảm mạnh hơn hội tụ tiệm cận của VI. Giới hạn: mỗi vòng phải đánh giá trọn một chính sách; với $|\mathcal S|$ lớn chi phí này đáng kể.
-
-::: exercise Câu hỏi kiểm tra
-Trong ví dụ topic 05, dãy chính sách là $\pi_0=(a,a)\to\pi_1=(a,b)\to\pi_2=(b,b)$. Kiểm tra bất đẳng thức $v^{\pi_1}\ge v^{\pi_0}$ và $v^{\pi_2}\ge v^{\pi_1}$ theo từng thành phần.
-:::
-
-::: hint
-So sánh $(10,30)$ với $(10,11)$ rồi $(27,30)$ với $(10,30)$.
-:::
-
-::: solution
-$(10,30)\ge(10,11)$ đúng; $(27,30)\ge(10,30)$ đúng. Cả hai bước cải thiện đều không làm giảm giá trị ở bất kỳ trạng thái nào, đúng định lý.
-:::
-
-<!-- note-topic-id: lec-04-topic-08 -->
-## Gridworld năm ô và các lượt lặp giá trị
-
-- Nhóm: cốt lõi.
-- Vai trò trong mạch: ví dụ tính được cho VI, cho thấy giá trị lan truyền ngược về phía khởi đầu.
-- Kết nối vào: Bellman tối ưu (topic 03) và toán tử $T_*$ (topic 04).
-- Kết nối ra: giả mã VI ở topic 09 và trích chính sách.
-- Nguồn: PDF nguồn trang 23–28.
-
-### Vấn đề
-
-Năm ô thẳng hàng $c_1,\dots,c_5$; $c_5$ là trạng thái kết thúc; hành động Left, Right; mỗi bước thường thưởng $-1$; từ $c_4$ sang $c_5$ thưởng $+10$; $\gamma=0.9$. Chạy VI từ $v_0=0$ và đọc ra chính sách tối ưu.
-
-### Trực giác
-
-Không đánh giá trọn một chính sách trước; mỗi lượt cập nhật gộp đánh giá và cải thiện bằng phép cực đại. Thông tin về phần thưởng $+10$ lan truyền ngược một ô mỗi lượt.
-
-### Ví dụ tính được
-
-::: example Bảng giá trị theo lượt
-Khởi tạo $v_0=(0,0,0,0,0)$. Cập nhật $v_{k+1}(c_i)=\max_a[r+\gamma v_k(s')]$ với trạng thái kết thúc giữ $0$:
+Đọc bảng theo lượt $k$; mỗi lượt, ảnh hưởng của phần thưởng $24$ lùi thêm một ô về phía trái.
 
 | $k$ | $c_1$ | $c_2$ | $c_3$ | $c_4$ | $c_5$ |
 |---|---|---|---|---|---|
 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 1 | $-1$ | $-1$ | $-1$ | 10 | 0 |
-| 2 | $-1.9$ | $-1.9$ | 8 | 10 | 0 |
-| 3 | $-2.71$ | 6.2 | 8 | 10 | 0 |
-| 4 | 4.58 | 6.2 | 8 | 10 | 0 |
+| 1 | $-1$ | $-1$ | $-1$ | 24 | 0 |
+| 2 | $-1{,}5$ | $-1{,}5$ | 11 | 24 | 0 |
+| 3 | $-1{,}75$ | $4{,}5$ | 11 | 24 | 0 |
+| 4 | $1{,}25$ | $4{,}5$ | 11 | 24 | 0 |
+| 5 | $1{,}25$ | $4{,}5$ | 11 | 24 | 0 |
 
-Ở lượt đầu, $\gamma v_0=0$ nên mỗi ô chỉ thấy phần thưởng tức thời. Kiểm tra vài ô: $v_2(c_3)=-1+0.9\cdot 10=8$; $v_3(c_2)=-1+0.9\cdot 8=6.2$; $v_4(c_1)=-1+0.9\cdot 6.2=4.58$. Sau vòng 1 chỉ $c_4$ thấy lợi ích $+10$; các ô còn lại mới thấy chi phí $-1$. Giá trị tốt lan truyền ngược dần.
-:::
+Các phép tính mẫu, luôn dùng bảng của lượt trước:
 
-### Hình thức
+- $v_2(c_3)=-1+0{,}5\cdot 24=11$: lượt 2, $c_3$ nhìn thấy $c_4$ mang 24 trong $v_1$.
+- $v_3(c_2)=-1+0{,}5\cdot 11=4{,}5$: lượt 3, $c_2$ nhận từ $c_3$.
+- $v_4(c_1)=-1+0{,}5\cdot 4{,}5=1{,}25$: lượt 4, $c_1$ đọc $v_3(c_2)=4{,}5$.
 
-Cập nhật VI chính là $v_{k+1}=T_*v_k$ viết theo hạt nhân. Bảng trên là các lượt áp dụng $T_*$ liên tiếp.
+Lượt 5 dùng bảng $v_4$. Tại $c_1$: đi trái tự khép, đọc $v_4(c_1)=1{,}25$, cho $-1+0{,}5\cdot 1{,}25=-0{,}375$; đi phải đọc $v_4(c_2)=4{,}5$, cho $-1+0{,}5\cdot 4{,}5=1{,}25$. Cực đại vẫn là $1{,}25$. Các ô còn lại cũng không đổi, nên $v_5=v_4$. Điểm bất động ở ví dụ này đến sau hữu hạn lượt vì mọi đường đi tối ưu tới đích $c_5$ trong ít hơn hoặc bằng 4 bước; không suy ra mọi quá trình quyết định Markov đều dừng chính xác sau hữu hạn lượt. Công thức tổng quát ở dưới giữ cùng chỉ số lượt và cùng quy ước dùng bảng cũ.
 
-### Ứng dụng và giới hạn
+Đối chiếu: slide 29 của Bài 04.
 
-Ví dụ quy mô nhỏ minh họa cơ chế cập nhật Bellman. Trên không gian lớn, mỗi lượt vẫn phải quét mọi cặp trạng thái–hành động, chi phí mô hình một lượt được bàn ở topic 10.
+### Quy tắc lặp giá trị
 
-::: exercise Câu hỏi kiểm tra
-Tính $v_5(c_1)$ nếu tiếp tục một lượt nữa từ bảng $v_4$.
-:::
+$$
+v_{k+1}(s)=\max_a\sum_{s',r}p(s',r\mid s,a)\,\bigl[r+\gamma v_k(s')\bigr]
+$$
 
-::: hint
-$v_5(c_1)=-1+0.9\,v_4(c_2)$ vì đi phải là tối ưu.
-:::
+Công thức khái quát đúng phép tính tay trên lưới: tại mỗi trạng thái, xét mọi hành động, lấy kỳ vọng của thưởng ngay cộng $\gamma$ nhân giá trị bảng cũ, rồi lấy cực đại. Đối chiếu: $v_2(c_3)$ dùng $v_1$, đi phải cho $-1+0{,}5\cdot 24=11$, đi trái cho $-1+0{,}5\cdot(-1)=-1{,}5$, nên $v_2(c_3)=\max\{-1{,}5,\,11\}=11$.
 
-::: solution
-$v_5(c_1)=-1+0.9\cdot 6.2=4.58$, không đổi so với $v_4(c_1)$; bảng đã ổn định.
-:::
+Hai điểm cần tách bạch. Thứ nhất, $k$ đếm lượt quét trên mô hình — mỗi lượt tính lại toàn bộ không gian trạng thái — không phải bước thời gian của một tập dữ liệu tương tác. Thứ hai, với $v_0=0$, có thể diễn giải $v_k$ là giá trị tối ưu khi còn đúng $k$ quyết định và giá trị cuối bằng 0; với khởi tạo khác, diễn giải này chỉ đúng nếu nói rõ thưởng cuối. $v_k$ không nhất thiết bằng giá trị dài hạn của một chính sách dừng nào.
 
-<!-- note-topic-id: lec-04-topic-09 -->
-## Giả mã lặp giá trị
+Đối chiếu: slide 30 của Bài 04.
 
-- Nhóm: cốt lõi.
-- Vai trò trong mạch: thuật toán VI đầy đủ với đầu vào, đầu ra, điều kiện dừng và bước trích chính sách.
-- Kết nối vào: cập nhật Bellman tối ưu ở topic 08.
-- Kết nối ra: phân tích hội tụ ở topic 11 và phần dư ở topic 13.
-- Nguồn: PDF nguồn trang 23–24, 28.
+### Quy trình lặp giá trị có kiểm tra dừng
 
-### Vấn đề
+Đầu vào: mô hình $p(s',r\mid s,a)$, bảng khởi tạo $v_0$, ngưỡng phần dư $\theta>0$, ngân sách lượt $K\ge 1$. Một lượt gồm các bước sau, với bảng hiện tại $v$:
 
-Chuyển công thức cập nhật thành thuật toán có điều kiện dừng rõ ràng và cách đọc ra chính sách từ bảng giá trị.
+1. Tính bảng $Q_v(s,a)$ cho mọi cặp trạng thái–hành động; một lượt tính này phục vụ cả ba việc sau, không tính lặp hai lần.
+2. Lấy $w(s)=\max_a Q_v(s,a)$ và $\pi_v(s)\in\arg\max_a Q_v(s,a)$, phá hòa theo thứ tự cố định.
+3. Đo phần dư $\rho(v)=\max_s\lvert w(s)-v(s)\rvert$.
+4. Nếu $\rho(v)\le\theta$: trả $v$, $\pi_v$, $\rho(v)$ với nhãn đạt ngưỡng. Nếu chưa đạt mà còn lượt: gán $v\leftarrow w$ rồi lặp. Nếu hết $K$ lượt: trả chính bảng $v$ đã kiểm cùng $\pi_v$, $\rho(v)$ và nhãn hết ngân sách.
 
-### Thuật toán
+Điểm dễ sai nằm ở nhánh dừng: khi hết ngân sách, trả $v$ — bảng đã được đo phần dư — chứ không âm thầm trả $w$ chưa được kiểm. $v$ là bảng đang kiểm, $w$ là bảng dự kiến sau lượt; hai vai trò này không hoán đổi. Trạng thái kết thúc luôn giữ giá trị 0. Chưa gọi $\theta$ là sai số giá trị; quan hệ giữa phần dư và sai số so với $v_*$ được lập ở phần sau.
 
-Lặp giá trị:
+Đối chiếu: slide 31 của Bài 04.
 
-1. Khởi tạo $v_0(s)$, thường lấy $0$.
-2. Lặp cho mọi trạng thái: $v_{k+1}(s)=\max_a\sum_{s',r}p(s',r\mid s,a)[r+\gamma v_k(s')]$.
-3. Dừng khi $\max_s|v_{k+1}(s)-v_k(s)|<\theta$.
-4. Trích xuất chính sách: $\pi(s)\in\arg\max_a\sum_{s',r}p(s',r\mid s,a)[r+\gamma v_{k+1}(s')]$.
+### Trích chính sách từ cùng bảng giá trị
 
-Đầu vào: hạt nhân $p$, $\gamma$, ngưỡng $\theta$, khởi tạo $v_0$. Đầu ra: bảng giá trị gần đúng và chính sách tham lam. Điều kiện dừng dựa trên độ biến thiên giữa hai lượt; ý nghĩa sai số của tiêu chí này nằm ở topic 13.
+$$
+\pi_v(s)\in\arg\max_a Q_v(s,a),\qquad T^{\pi_v}v=T_*v
+$$
 
-### Ứng dụng và giới hạn
+Cùng một bảng $v_1=(-1,-1,-1,24,0)$ cấp dữ liệu cho hai nhánh. Nhánh tính điểm: tại $c_3$, đi trái nhìn trước sang $c_2$ cho $-1+0{,}5\cdot(-1)=-1{,}5$; đi phải sang $c_4$ cho $-1+0{,}5\cdot 24=11$; chọn phải. Số $11$ chính là $Q_{v_1}(c_3,a_R)$ với $a_R$ là hành động đi phải; đây là phép nhìn trước một bước từ $v_1$, chưa phải giá trị thật của chính sách vừa trích. Nhánh phần dư cũng dùng $v_1$: so $w(s)$ với $v_1(s)$ trên toàn bảng, $\rho(v_1)=\max_s\lvert w(s)-v_1(s)\rvert$.
 
-Trên Gridworld, bảng $v_4=[4.58,6.2,8,10,0]$ là $v_*$ trong chính ví dụ này, vì một lượt $T_*$ kế tiếp cho kết quả không đổi (topic 08). Chính sách trích từ $v_*$: tại $c_4$ đi phải để nhận ngay $+10$; tại $c_3$ đi phải vì $-1+0.9\cdot 10=8$; tại $c_2$ đi phải vì $-1+0.9\cdot 8=6.2$; tại $c_1$ đi phải vì $-1+0.9\cdot 6.2=4.58$. Cả bốn trạng thái đều đi phải. Giới hạn: dừng theo $\theta$ cho giá trị gần đúng, chưa chắc chính sách tối ưu nếu $\theta$ quá lớn.
+Đồng nhất thức $T^{\pi_v}v=T_*v$ bảo đảm chính sách trích từ bảng $v$ chính là chính sách tham lam của phép cập nhật $T_*$: cực đại hóa theo hành động trong $T_*v$ và chọn $\pi_v$ từ $Q_v$ là cùng một phép tính. Quy ước đặt tên cần nhất quán: bảng $v$ đang kiểm, bảng $w$ sau cập nhật, chính sách $\pi_v$ trích từ $v$.
 
-::: exercise Câu hỏi kiểm tra
-Với Gridworld trên, nếu $\gamma=0.5$, tính $v_2(c_3)$ và cho biết chính sách tại $c_3$ sau hai lượt.
-:::
+Đối chiếu: slide 32 của Bài 04.
 
-::: hint
-Dùng $v_1(c_4)=10$ với $\gamma=0.5$.
-:::
+### Chi phí của một lượt tính
 
-::: solution
-$v_2(c_3)=-1+0.5\cdot 10=4$; đi phải. Nhánh trái cho $-1+0.5\cdot(-1)=-1.5<4$.
-:::
+Đặt $n=\lvert\mathcal S\rvert$ và $m=\max_s\lvert\mathcal A(s)\rvert$.
 
-<!-- note-topic-id: lec-04-topic-10 -->
-## Đồng bộ, bất đồng bộ và so sánh PI–VI
-
-- Nhóm: bổ sung.
-- Vai trò trong mạch: bổ sung chi tiết triển khai và so sánh hai thuật toán dưới giả thiết rõ ràng.
-- Kết nối vào: cập nhật đồng bộ (topic 06) và VI (topic 08–09).
-- Kết nối ra: lựa chọn thuật toán trong bài tập thực hành.
-- Nguồn: PDF nguồn trang 15, 24, 29.
-
-### Vấn đề
-
-Cập nhật đồng bộ tính toàn bộ $v_{k+1}$ từ cùng một bảng $v_k$; cập nhật bất đồng bộ dùng ngay giá trị mới cho các trạng thái cập nhật sau. Cần biết khi nào mỗi dạng hợp lệ và hai thuật toán PI–VI khác nhau thế nào về chi phí.
-
-### Trực giác
-
-Bất đồng bộ cho phép thông tin lan truyền nhanh hơn trong nhiều bài toán vì giá trị mới được khai thác ngay. Đồng bộ dễ mô tả và dễ phân tích hội tụ; trong bài này trình bày lý thuyết chủ yếu theo dạng đồng bộ.
-
-### Hình thức
-
-Điều kiện công bằng cho bất đồng bộ: mỗi trạng thái được cập nhật vô hạn lần trong lịch. Khi đó dãy cập nhật vẫn hội tụ về điểm bất động tương ứng. Đặt $C_{\text{model}}=O\bigl(\sum_s\sum_a|\operatorname{supp} p_{s,a}|\bigr)$: chi phí truy vấn mô hình cho một phép quét toàn bộ cặp trạng thái–hành động với hạt nhân. Một lượt cập nhật $T_*$ tốn $C_{\text{model}}$. Đánh giá chính sách chính xác bằng giải hệ đặc tốn $O(|\mathcal S|^3)$, rồi cộng một phép quét cải thiện tốn $C_{\text{model}}$ cho mỗi vòng PI. Đánh giá lặp tốn số lượt quét nhân $C_{\text{model}}$ cho mỗi lượt.
-
-### So sánh PI–VI
-
-| Tiêu chí | Lặp chính sách | Lặp giá trị |
+| Phương pháp | Thao tác mỗi lượt | Chi phí |
 |---|---|---|
-| Ý tưởng | Đánh giá rồi cải thiện | Cập nhật trực tiếp theo Bellman tối ưu |
-| Mỗi vòng lặp | Tốn $O(|\mathcal S|^3)+C_{\text{model}}$ nếu đánh giá chính xác | Một lượt $T_*$ tốn $C_{\text{model}}$ |
-| Số vòng lặp | Không đổi chính sách thì dừng; không có chặn chung | Số lượt tới ngưỡng phụ thuộc $\gamma$, $\theta$ và bài toán |
-| Trung gian | Có chính sách rõ ràng | Chủ yếu theo dõi bảng giá trị |
+| Lặp giá trị, mô hình dày | Tính tổng theo trạng thái kế tiếp | $O(n^2m)$ |
+| Lặp giá trị, mô hình thưa | Duyệt các nhánh có xác suất khác 0 | theo số nhánh |
+| Lặp chính sách chính xác | Giải hệ dày trong bước đánh giá | $O(n^3)$ mỗi lần giải |
 
-Bảng trên mang tính điều kiện theo chi phí đã nêu; không khẳng định thuật toán nào tuyệt đối nhanh hay rẻ nếu thiếu giả thiết về bài toán cụ thể.
+Một lượt lặp giá trị duyệt $n$ trạng thái, tối đa $m$ hành động tại mỗi trạng thái và $n$ trạng thái kế tiếp, nên tốn $O(n^2m)$. Chặn này giả định đã lưu xác suất chuyển $p(s'\mid s,a)$ và thưởng kỳ vọng $r(s,a)$, hoặc số nhánh thưởng cho mỗi bộ $(s,a,s')$ bị chặn. Mô hình thưa chỉ cần duyệt các nhánh có xác suất khác $0$. Lặp chính sách chính xác tốn $O(n^3)$ để giải hệ dày, rồi $O(n^2m)$ cho bước cải thiện.
 
-### Ứng dụng và giới hạn
+Mô hình chuyển dày cần $O(n^2m)$ bộ nhớ. Ngoài mô hình, các bảng giá trị và chính sách cần $O(n)$; lưu toàn bộ $Q_v(s,a)$ cần thêm $O(nm)$. Có thể tính lần lượt các hành động và chỉ giữ cực đại để giảm bộ nhớ phụ xuống $O(n)$. Chi phí mỗi lượt chưa cho biết tổng thời gian: còn phải tính số lượt cần thiết, vốn khác nhau giữa hai thuật toán.
 
-Chọn PI khi cần chính sách trung gian rõ ràng và chấp nhận chi phí giải hệ mỗi vòng; chọn VI khi muốn mỗi lượt chỉ tốn một phép quét $T_*$. Bài 4 của hw3 hỏi về ảnh hưởng của hai dạng cập nhật: với lịch công bằng, cả hai đều hội tụ về cùng điểm bất động; không tuyên bố ảnh hưởng đến tính tối ưu nếu thiếu lịch công bằng.
+Đối chiếu: slide 33 của Bài 04.
 
 ::: exercise Câu hỏi kiểm tra
-Nêu một tình huống mà cập nhật bất đồng bộ hội tụ chậm hơn đồng bộ.
+Cho lưới năm ô với $\gamma=0{,}5$, bước thường thưởng $-1$, chuyển $c_4\to c_5$ thưởng $24$, đi trái ở $c_1$ đứng yên, $c_5$ kết thúc với giá trị 0. Bảng hiện tại là $v_2=(-1{,}5,\,-1{,}5,\,11,\,24,\,0)$.
+
+(a) Tính $v_3(c_1)$ và $v_3(c_2)$ theo cập nhật đồng bộ, nêu rõ điểm nhìn trước của mỗi hành động.
+
+(b) Biết $v_4=(1{,}25,\,4{,}5,\,11,\,24,\,0)$, tính $\rho(v_3)$.
+
+(c) Ô $c_4$ không đổi qua hai lượt. Điều đó đã đủ kết luận toàn thuật toán hội tụ chưa? Vì sao?
 :::
 
 ::: hint
-Xét lịch cập nhật hợp lệ nhưng dồn nhiều lượt vào một vùng trạng thái.
+Trong mỗi phép tính chỉ được dùng bảng $v_2$, kể cả khi $v_3(c_1)$ đã có trong tay. Phần dư là chuẩn vô cùng của hiệu hai bảng trên toàn bộ năm ô, không chỉ các ô thay đổi.
 :::
 
 ::: solution
-Nếu lịch vẫn công bằng nhưng liên tục cập nhật lại một nhóm trạng thái trước khi quay lại phần còn lại, thông tin từ phần xa chỉ lan truyền sau nhiều lượt; tổng thời gian tới ngưỡng $\theta$ có thể dài hơn đồng bộ, dù kết quả hội tụ như nhau.
+(a) Tại $c_1$, hai hành động: đi trái tự khép đọc $v_2(c_1)=-1{,}5$, cho $-1+0{,}5\cdot(-1{,}5)=-1{,}75$; đi phải sang $c_2$ đọc $v_2(c_2)=-1{,}5$, cho $-1+0{,}5\cdot(-1{,}5)=-1{,}75$. Cực đại là $-1{,}75$, nên $v_3(c_1)=-1{,}75$. Tại $c_2$: đi trái sang $c_1$ đọc $v_2(c_1)=-1{,}5$, cho $-1{,}75$; đi phải sang $c_3$ đọc $v_2(c_3)=11$, cho $-1+0{,}5\cdot 11=4{,}5$. Cực đại là $4{,}5$, vậy $v_3(c_2)=4{,}5$. Kiểm lại: nếu lỡ dùng $v_3(c_1)=-1{,}75$ cho phép tính tại $c_2$ thì nhánh đi trái thành $-1+0{,}5\cdot(-1{,}75)=-1{,}875$, vẫn nhỏ hơn $4{,}5$ nên kết quả $v_3(c_2)$ không đổi — nhưng phép tính đó đã vi phạm quy ước đồng bộ và phải làm lại đúng quy trình.
+
+(b) Vì $v_4=T_*v_3$, phần dư của $v_3$ là chuẩn vô cùng của hiệu hai bảng. Hiệu $v_4-v_3=(3,\,0,\,0,\,0,\,0)$, chỉ ô $c_1$ khác nhau, nên $\rho(v_3)=\lVert v_4-v_3\rVert_\infty=3$.
+
+(c) Chưa đủ. $c_4$ giữ 24 qua hai lượt, nhưng $c_1$ và $c_2$ vẫn thay đổi giữa $v_2$ và $v_3$; phần dư $\rho(v_3)=3$ đo trên toàn bảng vẫn lớn. Đạt ngưỡng dừng phải kiểm phần dư trên toàn bộ bảng, không phải khi một ô riêng lẻ ổn định; còn hội tụ là tính chất của cả dãy giá trị, không kết luận được từ một lượt.
 :::
 
-<!-- note-topic-id: lec-04-topic-11 -->
-## Tính co của $T_*$ và hội tụ của lặp giá trị
+Đối chiếu: slide 34 của Bài 04.
 
-- Nhóm: cốt lõi.
-- Vai trò trong mạch: chứng minh nền tảng cho hội tụ của VI.
-- Kết nối vào: toán tử $T_*$ và chuẩn vô cùng ở topic 04.
-- Kết nối ra: tồn tại chính sách tối ưu ở topic 12 và phần dư ở topic 13.
-- Nguồn: PDF nguồn trang 30–32.
+<!-- note-topic-id: lec-04-part-06 -->
 
-### Vấn đề
+## 6. Tính co của toán tử Bellman và các bảo đảm hội tụ
 
-Công thức cập nhật chưa đủ để bảo đảm tìm được nghiệm đúng. Cần chứng minh $v_k$ thực sự tiến tới $v_*$ từ mọi khởi tạo.
+### Chuẩn vô cùng và khoảng cách giữa hai bảng giá trị
 
-### Trực giác
+Trước khi nói về hội tụ, cần một cách đo khoảng cách giữa hai bảng giá trị. Với không gian giá trị $\mathcal V=\mathbb R^n$, mỗi bảng là một vectơ gồm $n=|\mathcal S|$ thành phần, chuẩn được dùng là chuẩn vô cùng:
 
-Phép cực đại là liên tục và không phóng đại khoảng cách quá hệ số $\gamma$; mỗi lần áp dụng $T_*$ kéo hai bảng giá trị lại gần nhau.
+$$\lVert u-v\rVert_\infty=\max_{s\in\mathcal S}\lvert u(s)-v(s)\rvert.$$
 
-### Chứng minh
+Hai bảng $u$ và $v$ ở đây không cần là giá trị của chính sách nào; chúng chỉ là hai bảng số bất kỳ. Xét MDP hai trạng thái với $\gamma=0{,}5$ và bộ số quen thuộc: $s_0,a$ trả $2$ về $s_0$; $s_0,b$ trả $-1$ về $s_1$; $s_1,a$ trả $5$ về $s_0$; $s_1,b$ trả $10$ về $s_1$. Lấy $u=(4,7)$ và $v=(8,9)$. Chênh lệch từng trạng thái là $4$ tại $s_0$ và $2$ tại $s_1$, nên $\lVert u-v\rVert_\infty=4$.
 
-::: proof Định lý 2: $T_*$ co
-Bước 1, toán tử theo hành động cố định $a$: với $u\le v$ theo từng điểm, $\sum_{s',r}p(s',r\mid s,a)[r+\gamma u(s')]\le\sum_{s',r}p(s',r\mid s,a)[r+\gamma v(s')]$ vì $\gamma\ge 0$. Bước 2, bất đẳng thức cực đại: nếu $f_a\le g_a$ với mọi $a$ thì $\max_a f_a\le\max_a g_a$. Do đó $T_*$ đơn điệu. Bước 3, co: đặt $d=\|u-v\|_\infty$; khi đó $u\le v+d\mathbf 1$, nên $T_*u\le T_*(v+d\mathbf 1)=T_*v+\gamma d\mathbf 1$ vì phần cộng hằng số bị chiết khấu bởi $\gamma$. Đối xứng: $\|T_*u-T_*v\|_\infty\le\gamma\|u-v\|_\infty$.
-:::
+Áp dụng một lần toán tử Bellman tối ưu $T_*$ cho cả hai bảng. Tại $s_0$:
 
-Với $0\le\gamma<1$, $T_*$ là ánh xạ co trên không gian đầy đủ $\mathbb R^{|\mathcal S|}$ với chuẩn vô cùng; theo nguyên lý điểm bất động Banach, $T_*$ có đúng một điểm bất động. Vì $v_*=T_*v_*$, điểm bất động đó là $v_*$.
+$$T_*v(s_0)=\max\{2+0{,}5\cdot 8,\,-1+0{,}5\cdot 9\}=\max\{6,\,3{,}5\}=6,$$
 
-::: proof Hội tụ hình học
-Từ $v_{k+1}=T_*v_k$ và $v_*=T_*v_*$:
+$$T_*u(s_0)=\max\{2+0{,}5\cdot 4,\,-1+0{,}5\cdot 7\}=\max\{4,\,2{,}5\}=4,$$
 
-$$\|v_{k+1}-v_*\|_\infty\le\gamma\|v_k-v_*\|_\infty,$$
+nên chênh còn $2$. Tại $s_1$:
 
-quy nạp: $\|v_k-v_*\|_\infty\le\gamma^k\|v_0-v_*\|_\infty$. Vì $\gamma<1$, $v_k\to v_*$ từ mọi $v_0$. Sai số giảm hình học theo hệ số $\gamma$; $\gamma$ càng gần 1, hội tụ càng chậm.
-:::
+$$T_*v(s_1)=\max\{5+0{,}5\cdot 8,\,10+0{,}5\cdot 9\}=\max\{9,\,14{,}5\}=14{,}5,$$
 
-### Ứng dụng và giới hạn
+$$T_*u(s_1)=\max\{5+0{,}5\cdot 4,\,10+0{,}5\cdot 7\}=\max\{7,\,13{,}5\}=13{,}5,$$
 
-Đây là bảo đảm toàn cục, độc lập với khởi tạo. Giới hạn: tốc độ chỉ hình học với hệ số $\gamma$; khi $\gamma\approx 1$ số lượt cần thiết tăng lớn.
+nên chênh còn $1$. Kết quả: $\lVert T_*u-T_*v\rVert_\infty=2=\gamma\cdot 4$. Phần thưởng trùng nhau triệt tiêu trong phép trừ, chỉ còn phần chiết khấu nhân với chênh cũ, nên khoảng cách giảm đúng hệ số $\gamma$. Ví dụ này gợi ý một tính chất tổng quát, và tính chất đó cần được chứng minh cho mọi cặp bảng.
+
+### Chứng minh tính co của $T_*$
+
+Với $0\le\gamma<1$ và mọi $u,v\in\mathcal V$, khẳng định cần chứng minh là
+
+$$\lVert T_*u-T_*v\rVert_\infty\le\gamma\,\lVert u-v\rVert_\infty.$$
+
+Chứng minh đi qua hai bước. Bước một là bất đẳng thức giữa hai cực đại theo hành động:
+
+$$\bigl\lvert\max_a x_a-\max_a y_a\bigr\rvert\le\max_a\lvert x_a-y_a\rvert.$$
+
+Thật vậy, gọi $a^*$ là hành động đạt $\max_a x_a$. Khi đó $\max_a x_a-\max_a y_a=x_{a^*}-\max_a y_a\le x_{a^*}-y_{a^*}\le\max_a(x_a-y_a)\le\max_a\lvert x_a-y_a\rvert$; hoán vai trò $x$ và $y$ cho chiều ngược lại, gộp hai chiều được điều cần chứng minh.
+
+Bước hai là so sánh hai đại lượng hành động $Q_u(s,a)$ và $Q_v(s,a)$. Với cùng cặp trạng thái–hành động, hai bảng chỉ khác phần tiếp diễn, vì phần thưởng nằm trong $p(s',r\mid s,a)$ là như nhau:
+
+$$Q_u(s,a)-Q_v(s,a)=\gamma\sum_{s',r}p(s',r\mid s,a)\bigl[u(s')-v(s')\bigr].$$
+
+Phần thưởng triệt tiêu trong phép trừ này, kể cả khi thưởng phụ thuộc kết quả chuyển. Lấy trị tuyệt đối và dùng bất đẳng thức tam giác, mỗi chênh $u(s')-v(s')$ bị chặn bởi $\lVert u-v\rVert_\infty$; các xác suất không âm và có tổng $1$ nên tổng trọng số bằng $1$, cho
+
+$$\lvert Q_u(s,a)-Q_v(s,a)\rvert\le\gamma\lVert u-v\rVert_\infty.$$
+
+Kết hợp hai bước: bất đẳng thức giữa hai cực đại truyền chặn ấy sang $T_*u(s)-T_*v(s)$; lấy cực đại trên các trạng thái cho $\lVert T_*u-T_*v\rVert_\infty\le\gamma\lVert u-v\rVert_\infty$.
+
+Toán tử Bellman của một chính sách cố định $T^\pi$ thỏa chặn tương tự, với điều kiện $\pi$ là chính sách Markov dừng. Thay phép cực đại bằng trung bình theo $\pi(a\mid s)$, các trọng số vẫn không âm và tổng $1$, nên chặn $\gamma\lVert u-v\rVert_\infty$ được giữ nguyên. Điều kiện $0\le\gamma<1$ làm hệ số co nhỏ hơn $1$; khi $\gamma=0$, một lần cập nhật đã không phụ thuộc bảng đầu.
+
+### Định lý Banach trong $\mathbb R^n$ với chuẩn vô cùng
+
+Một ánh xạ $F$ trên không gian mét $(X,d)$ là co nếu tồn tại $\gamma\in[0,1)$ sao cho $d(Fx,Fy)\le\gamma\, d(x,y)$ với mọi $x,y$. Không gian $\mathbb R^n$ với chuẩn vô cùng là đầy đủ: mọi dãy Cauchy hội tụ trong không gian, vì hội tụ theo từng tọa độ trong $\mathbb R$ rồi lấy max các giới hạn. Định lý điểm bất động Banach phát biểu: mọi ánh xạ co trên không gian đầy đủ có đúng một điểm bất động $\bar v$ với $F\bar v=\bar v$, và dãy lặp $v_{k+1}=Fv_k$ hội tụ tới $\bar v$ từ mọi điểm khởi đầu.
+
+Áp dụng cho $T_*$: tính co vừa chứng minh với $\gamma<1$ và tính đầy đủ của $(\mathcal V,\lVert\cdot\rVert_\infty)$ cho tồn tại điểm bất động duy nhất $\bar v$, tức $T_*\bar v=\bar v$. Tính duy nhất quan trọng vì nó cho phép nhận diện điểm bất động mà không cần biết trước nó là gì.
+
+### $\bar v$ chặn mọi chính sách, kể cả phụ thuộc lịch sử
+
+Cần chứng minh $v^\pi\le\bar v$ cho mọi chính sách trong lớp $\Pi$, trong đó lớp có thể gồm cả chính sách phụ thuộc lịch sử. Gọi $H_t=(S_0,A_0,R_1,\dots,S_t)$ là lịch sử đến thời điểm $t$; lưu ý $H_t$ không chứa $A_t$. Với $\pi$ bất kỳ trong lớp, kỳ vọng có điều kiện theo $H_t$ phải lấy trung bình theo phân phối của $A_t$ do chính sách sinh ra, rồi theo chuyển tiếp của môi trường:
+
+$$\mathbb E_\pi\bigl[R_{t+1}+\gamma\bar v(S_{t+1})\mid H_t\bigr]=\sum_a\pi_t(a\mid H_t)\sum_{s',r}p(s',r\mid S_t,a)\bigl[r+\gamma\bar v(s')\bigr].$$
+
+Với mỗi $a$ cố định, tổng trong ngoặc không vượt quá $\max_{a'}\sum_{s',r}p(s',r\mid S_t,a')[r+\gamma\bar v(s')]=T_*\bar v(S_t)=\bar v(S_t)$, vì $\bar v$ là điểm bất động của $T_*$. Trung bình trọng số $\pi_t(a\mid H_t)$ không âm và tổng $1$, nên
+
+$$\mathbb E_\pi\bigl[R_{t+1}+\gamma\bar v(S_{t+1})\mid H_t\bigr]\le\bar v(S_t).$$
+
+Nhân hai vế với $\gamma^t$ và lấy kỳ vọng khi khởi đầu tại $S_0=s$. Luật kỳ vọng lặp cho
+
+$$\begin{aligned}
+\gamma^t\mathbb E_\pi[R_{t+1}\mid S_0=s]
+&\le\gamma^t\mathbb E_\pi[\bar v(S_t)\mid S_0=s]\\
+&\quad-\gamma^{t+1}\mathbb E_\pi[\bar v(S_{t+1})\mid S_0=s].
+\end{aligned}$$
+
+Cộng từ $t=0$ đến $N-1$, các hạng giá trị ở giữa triệt tiêu từng cặp:
+
+$$\mathbb E_\pi\!\left[\sum_{t=0}^{N-1}\gamma^t R_{t+1}+\gamma^N\bar v(S_N)\,\middle|\,S_0=s\right]\le\bar v(s).$$
+
+Hạng đuôi có trị tuyệt đối không quá $\gamma^N\lVert\bar v\rVert_\infty$ và tiến về $0$ vì $\gamma<1$; tổng thưởng bị chặn nên trao đổi giới hạn và kỳ vọng hợp lệ. Kết quả là bất đẳng thức giá trị:
+
+$$v^\pi(s)\le\bar v(s),\qquad v^\pi(s):=\mathbb E_\pi\bigl[G_0\mid S_0=s\bigr],\quad G_0=\sum_{t=0}^{\infty}\gamma^t R_{t+1}.$$
+
+Định nghĩa $v^\pi$ qua tổng chiết khấu từ thời điểm $0$ với điều kiện $S_0=s$ là định nghĩa chuẩn cho mọi chính sách trong lớp $\Pi$, kể cả chính sách phụ thuộc lịch sử; lập luận trên chỉ dùng $T_*$ và tính Markov của môi trường, không gán toán tử $T^\pi$ cho lớp chính sách phụ thuộc lịch sử. Chặn $v^\pi\le\bar v$ do đó đúng cho toàn bộ lớp $\Pi$ trong định nghĩa tối ưu.
+
+### Đạt cận trên bằng chính sách tham lam và kết luận $\bar v=v_*$
+
+Cận trên $\bar v$ cần được đạt tới. Vì $\bar v$ là điểm bất động của $T_*$, tại mỗi trạng thái tồn tại hành động đạt cực đại trong $\max_a Q_{\bar v}(s,a)$. Chọn một hành động như vậy tại mỗi trạng thái, ta được chính sách Markov dừng xác định $\bar\pi$ tham lam theo $\bar v$, thỏa
+
+$$T^{\bar\pi}\bar v=T_*\bar v=\bar v.$$
+
+Toán tử $T^{\bar\pi}$ cũng co (đã chứng minh ở trên cho chính sách Markov dừng) và $\mathbb R^n$ đầy đủ, nên theo Banach nó có điểm bất động duy nhất; điểm bất động đó chính là $v^{\bar\pi}$, vì $v^{\bar\pi}$ thỏa phương trình Bellman đánh giá $v=T^\pi v$. Do $\bar v$ cũng là điểm bất động của $T^{\bar\pi}$, tính duy nhất cho
+
+$$v^{\bar\pi}=\bar v.$$
+
+Kết hợp hai kết quả: $\bar v$ chặn mọi chính sách và đạt được bởi $\bar\pi$, nên $\bar v$ là phần tử lớn nhất của $\{v^\pi:\pi\in\Pi\}$, tức $\bar v=v_*$, và $\bar\pi$ là chính sách tối ưu. Định nghĩa tối ưu dùng $\sup$ trước, và chứng minh này cho thấy $\sup$ đạt được.
+
+### Hội tụ hình học của lặp giá trị
+
+Tính co cho chặn hội tụ hình học. Vì $v_*$ là điểm bất động của $T_*$, áp dụng chặn co $k$ lần:
+
+$$\lVert v_k-v_*\rVert_\infty=\lVert T_*^k v_0-T_*^k v_*\rVert_\infty\le\gamma^k\,\lVert v_0-v_*\rVert_\infty.$$
+
+Để đọc số cụ thể, giả định sai số đầu $\lVert v_0-v_*\rVert_\infty=64$ với $\gamma=0{,}5$; đây là con số minh họa riêng, không lấy từ lưới năm ô. Chặn là $64\cdot(0{,}5)^k$. Điều kiện $64\cdot(0{,}5)^k<1$ tương đương $2^{6-k}<1$, tức $k>6$. Tại $k=6$, chặn bằng $1$, chưa nhỏ hơn $1$; tại $k=7$, chặn bằng $0{,}5$, đã đạt yêu cầu. Trục tung của hình dưới dùng thang $\log_2$ để hai mốc $1$ và $0{,}5$ đọc được rõ.
+
+![Chặn sai số giảm từ 64 theo hệ số 0,5 mỗi lượt; bằng 1 ở lượt 6 và bằng 0,5 ở lượt 7, trục tung dùng thang logarit cơ số 2.](img/lec-04/convergence.svg)
+
+Cần phân biệt chặn lý thuyết với thực nghiệm: bảy lượt là đủ theo chặn, không phải số lượt tối thiểu thực của mọi MDP. Hạn chế là $v_*$ chưa biết nên chặn chứa sai số ban đầu, khó dùng trực tiếp để dừng; phần dư dưới đây cung cấp một đại lượng đo được.
+
+### Phần dư Bellman và ngưỡng dừng
+
+Định nghĩa phần dư
+
+$$\rho(v)=\lVert T_*v-v\rVert_\infty,$$
+
+đo được trực tiếp từ bảng hiện có, trong khi sai số $e=\lVert v-v_*\rVert_\infty$ thì không. Suy diễn dùng bất đẳng thức tam giác:
+
+$$\lVert v-v_*\rVert_\infty\le\lVert v-T_*v\rVert_\infty+\lVert T_*v-T_*v_*\rVert_\infty.$$
+
+Hạng thứ nhất chính là $\rho(v)$. Hạng thứ hai bị chặn bởi $\gamma\lVert v-v_*\rVert_\infty$ nhờ tính co, vì $v_*$ là điểm bất động. Ghép lại:
+
+$$e\le\rho(v)+\gamma e\;\Rightarrow\;(1-\gamma)e\le\rho(v)\;\Rightarrow\;e\le\frac{\rho(v)}{1-\gamma}.$$
+
+Số cụ thể: với $\gamma=0{,}5$ và mục tiêu sai số $\varepsilon_v=0{,}2$, ngưỡng dừng trên phần dư là $\theta=(1-\gamma)\varepsilon_v=0{,}1$. Ngưỡng $0{,}1$ áp dụng cho phần dư, còn mức $0{,}2$ áp dụng cho sai số giá trị; hai mức này không tráo cho nhau. Nếu dùng bảng cập nhật $w=T^\pi v$ làm đánh giá chính sách $\pi$, đặt $\delta=\lVert T^\pi v-v\rVert_\infty$; vì $v^\pi$ là điểm bất động của $T^\pi$, tam giác và tính co cho $\lVert v-v^\pi\rVert_\infty\le\delta/(1-\gamma)$, do đó
+
+$$\lVert w-v^\pi\rVert_\infty=\lVert T^\pi v-T^\pi v^\pi\rVert_\infty\le\gamma\lVert v-v^\pi\rVert_\infty\le\frac{\gamma\,\delta}{1-\gamma}.$$
+
+Sai số của $w$ không vượt quá $\gamma$ lần sai số của $v$. Vì quy trình đánh giá trả bảng $w$, chặn tương ứng là $\gamma\delta/(1-\gamma)$.
+
+### Giới hạn của mô hình dạng bảng: ví dụ CartPole
+
+CartPole có trạng thái liên tục gồm vị trí $x$, vận tốc $\dot x$, góc $\theta$ và vận tốc góc $\dot\theta$. Chia $x$ và $\dot x$ mỗi biến thành $3$ khoảng, $\theta$ và $\dot\theta$ mỗi biến thành $6$ khoảng, số ô là
+
+$$3\times 3\times 6\times 6=324,$$
+
+tức một biểu diễn hữu hạn đủ để lập bảng. Nhưng rời rạc hóa chỉ tạo trạng thái gộp; nó chưa cung cấp hạt nhân chuyển và phần thưởng cho mô hình bảng, cũng chưa bảo đảm trạng thái gộp có tính Markov. Hình minh họa hai điểm liên tục khác nhau rơi vào cùng một ô: thông tin bị gộp mất.
+
+![Hai trạng thái liên tục khác nhau của CartPole được gộp vào cùng một ô; mô hình chuyển và phần thưởng của ô vẫn cần được xác định.](img/lec-04/cartpole.svg)
+
+Cần phân biệt hai loại sai số: sai số lặp giá trị trên mô hình đã cho (được chặn bởi $\rho(v)/(1-\gamma)$), và sai số do rời rạc hóa hoặc ước lượng mô hình. Tối ưu mô hình hữu hạn không tự chứng minh tối ưu trên môi trường liên tục, nên mọi bảo đảm như ngưỡng dừng phải kiểm tra lại miền áp dụng.
 
 ::: exercise Câu hỏi kiểm tra
-Với $\gamma=0.9$ và $\|v_0-v_*\|_\infty=100$, cần ít nhất bao nhiêu lượt để $\|v_k-v_*\|_\infty<1$?
+MDP hữu hạn đã biết mô hình có phần dư $\rho(v)=0{,}15$ theo chuẩn vô cùng và $\gamma=0{,}5$. (a) Chặn sai số giá trị $e=\lVert v-v_*\rVert_\infty$ bằng bao nhiêu? (b) Kết quả đó đã bảo đảm ngưỡng $e\le 0{,}2$ chưa, và cần điều kiện gì trên $\rho(v)$ để bảo đảm? (c) Chứng minh phần dư còn dùng được khi $\gamma=1$ không? Giải thích từng bước.
 :::
 
 ::: hint
-Giải $0.9^k\cdot 100<1$, tức $0.9^k<10^{-2}$.
+Dùng chặn $e\le\rho(v)/(1-\gamma)$; nhớ rằng một cận trên không cho biết chiều ngược lại; kiểm tra giả thiết $\gamma<1$ được dùng ở đâu trong chứng minh tính co.
 :::
 
 ::: solution
-$k\ln 0.9<-2\ln 10$, $k>2\ln 10/(-\ln 0.9)\approx 4.6052/0.10536\approx 43.7$, vậy cần $k=44$ lượt.
+(a) Áp dụng trực tiếp: $e\le\rho(v)/(1-\gamma)=0{,}15/0{,}5=0{,}3$. (b) Chưa bảo đảm ngưỡng $0{,}2$: chặn cho biết $e\le 0{,}3$, sai số thực tế có thể nhỏ hơn $0{,}2$ nhưng chưa có bảo đảm. Muốn bảo đảm $e\le 0{,}2$ cần $\rho(v)\le(1-\gamma)\cdot 0{,}2=0{,}5\cdot 0{,}2=0{,}1$, tức phải lặp thêm cho tới khi phần dư không vượt $0{,}1$. Kiểm lại: nếu $\rho(v)=0{,}1$ thì $e\le 0{,}1/0{,}5=0{,}2$, đúng yêu cầu. (c) Không. Khi $\gamma=1$, hệ số co $\gamma$ không còn nhỏ hơn $1$ nên chứng minh tính co của $T_*$ mất giá trị; đồng thời mẫu số $1-\gamma$ bằng $0$ khiến công thức $e\le\rho(v)/(1-\gamma)$ không xác định. Chứng minh dựa trên giả thiết $\gamma<1$; bỏ giả thiết đó thì cần các giả thiết và lập luận khác, chẳng hạn các điều kiện bổ sung về chuyển tiếp và phần thưởng cùng một chứng minh hội tụ riêng; các trường hợp đó nằm ngoài phạm vi bài này.
 :::
 
-<!-- note-topic-id: lec-04-topic-12 -->
-## Tồn tại chính sách tối ưu và dừng hữu hạn của PI
+Đối chiếu: slide 35–41 của Bài 04.
 
-- Nhóm: cốt lõi.
-- Vai trò trong mạch: kết luận lý thuyết trung tâm; điểm bất động của $T_*$ chặn mọi chính sách và chính sách tham lam đạt cận.
-- Kết nối vào: tính co (topic 11), định lý cải thiện (topic 07).
-- Kết nối ra: phần dư và mất mát ở topic 13.
-- Nguồn: PDF nguồn trang 9, 21, 31–33.
+<!-- note-topic-id: lec-04-part-07 -->
 
-### Vấn đề
+## 7. Chọn quy trình và đánh giá kết quả lập kế hoạch
 
-Bellman tối ưu có nghiệm $v_*$, nhưng cần chứng minh tồn tại chính sách xác định đạt $v_*$ và PI dừng tại chính sách đó.
+### Bảng so sánh ba phương pháp
 
-### Trực giác
+Ba quy trình của bài gom lại theo đầu ra cần tính:
 
-Nếu $v$ là điểm bất động của $T_*$ thì không chính sách nào vượt qua $v$; do đó chính sách tham lam theo $v_*$ đạt đúng $v_*$.
+| Phương pháp | Đầu vào | Bước chính | Đầu ra và dừng |
+|---|---|---|---|
+| Đánh giá chính sách | Mô hình $p,r$ và $\pi$ | Giải hệ hoặc lặp $T^\pi$ | $v^\pi$ hoặc ước lượng |
+| Lặp chính sách | Mô hình | Đánh giá–cải thiện | $\pi_*,v_*$ khi ổn định |
+| Lặp giá trị | Mô hình | Lặp $T_*$ | $v,\pi_v$ khi phần dư nhỏ |
 
-### Chứng minh
+Bảo đảm chung: mô hình đúng, hữu hạn, thưởng bị chặn và $0\le\gamma<1$. Nếu chỉ cần giá trị của một chính sách cho trước, đánh giá chính sách là đủ: lập hệ phương trình Bellman hoặc lặp toán tử $T^\pi$ cho tới khi hội tụ. Nếu cần chính sách tốt, có hai đường. Lặp chính sách đánh giá chính xác rồi cải thiện, giữ hành động cũ khi hòa, dừng khi chính sách không đổi nữa; nhánh này cho chứng nhận ổn định của chính sách. Lặp giá trị cập nhật bảng giá trị trực tiếp bằng $T_*$ và trích chính sách $\pi_v$ ở cuối, dừng khi phần dư nhỏ dưới ngưỡng hoặc khi hết ngân sách tính; nhánh hết ngân sách trả kết quả chưa chứng nhận đạt ngưỡng. Cả hai đều cần mô hình chuyển tiếp và thưởng, vì mọi phép tổng đều theo $p$. Khi mô hình không có, ba quy trình này không chạy được và ta phải chuyển sang học từ trải nghiệm; đó là nội dung của Bài 05.
 
-::: proof Điểm bất động chặn mọi chính sách
-Giả sử $v=T_*v$. Với mọi chính sách $\pi$ và mọi $s$: $T^\pi v\le T_*v=v$. Áp dụng tính đơn điệu của $T^\pi$ lặp lại: $(T^\pi)^k v\le v$ với mọi $k$; lấy giới hạn $k\to\infty$ được $v^\pi\le v$. Vậy $v$ chặn trên mọi $v^\pi$.
-:::
+### Lời giải cho bài toán hai trạng thái
 
-::: proof Chính sách tham lam đạt cận và tồn tại tối ưu
-Lấy $\pi_v$ tham lam theo $v_*$: $T^{\pi_v}v_*=T_*v_*=v_*$. Vì $v_*$ là điểm bất động duy nhất của $T^{\pi_v}$ (toán tử co), $v^{\pi_v}=v_*$. Kết hợp với chặn trên: $v^{\pi_v}=v_*=\max_\pi v^\pi$, tức $\pi_v$ tối ưu. Tính hữu hạn: với mỗi trạng thái, tập hành động hữu hạn nên $\max_a q_*(s,a)$ luôn đạt được; chọn hành động cực đại ở từng trạng thái cho một chính sách tối ưu dừng, xác định $\pi_*$ với $v^{\pi_*}=v_*$.
-:::
+Quay lại bài toán hai trạng thái ở mở đầu, với $\gamma=0{,}5$. Chính sách tối ưu là $\pi_*=(b,b)$ với giá trị $v_*=(9,20)$. Bảng $Q_{v_*}$ xác nhận điều đó:
 
-::: proof PI dừng hữu hạn
-Mỗi bước cải thiện cho $v^{\pi_{k+1}}\ge v^{\pi_k}$ theo từng điểm. Số chính sách xác định là $|\Pi_{\text{det}}|=\prod_s|\mathcal A(s)|$; khi mọi trạng thái có cùng tập hành động thì rút thành $|\mathcal A|^{|\mathcal S|}$, luôn hữu hạn. Chuỗi không giảm theo từng điểm trên tập hữu hạn không thể cải thiện nghiêm ngặt vô hạn lần, nên PI dừng sau hữu hạn bước tại chính sách ổn định; chính sách đó thỏa $T^\pi v^\pi=T_*v^\pi$, do đó tối ưu.
-:::
+| $Q_{v_*}$ | $a$ | $b$ |
+|---|---|---|
+| $s_0$ | $6{,}5$ | $\mathbf{9}$ |
+| $s_1$ | $9{,}5$ | $\mathbf{20}$ |
 
-### Ứng dụng và giới hạn
+Cực đại rơi ở $b$ tại cả hai trạng thái, nên $T_*v_*=v_*$: đây là chứng nhận Bellman. Kiểm tra từng ô. Tại $s_0$, chọn $b$ một lần rồi tiếp tục tối ưu:
 
-Ba bảo đảm trong MDP hữu hạn chiết khấu: tồn tại chính sách tối ưu; VI hội tụ về $v_*$; PI dừng hữu hạn tại chính sách tối ưu. Giới hạn: lập luận hữu hạn không cho biết số vòng PI nhiều hay ít; điều đó phụ thuộc bài toán.
+$$Q_{v_*}(s_0,b)=-1+0{,}5\cdot 20=9,$$
+
+còn chọn $a$ đưa hệ thống về $s_0$ với giá trị tối ưu $9$ chứ không phải $4$ của chính sách luôn chọn $a$, nên $Q_{v_*}(s_0,a)=2+0{,}5\cdot 9=6{,}5$. Tại $s_1$:
+
+$$Q_{v_*}(s_1,b)=10+0{,}5\cdot 20=20,\qquad Q_{v_*}(s_1,a)=5+0{,}5\cdot 9=9{,}5.$$
+
+Với $\gamma=0{,}5$, dãy thưởng $-1,10,10,\ldots$ cho giá trị $-1+0{,}5\cdot 20=9$ tại $s_0$. Giá trị ở $s_0$ tăng từ $4$ lên $9$ nhờ đổi quyết định dài hạn, trên cùng mô hình và hệ số chiết khấu. Kết luận này liên quan trực tiếp bảng phương pháp: bài toán có mô hình nên lặp giá trị hoặc lặp chính sách đều chạy được, và bảng $Q_{v_*}$ đúng là đầu ra cần kiểm khi trích chính sách từ bảng giá trị.
 
 ::: exercise Câu hỏi kiểm tra
-Trong ví dụ topic 05, kiểm tra $\pi_2=(b,b)$ thỏa $T^{\pi_2}v^{\pi_2}=T_*v^{\pi_2}$.
+MDP hữu hạn, mô hình chính xác, $\gamma=0{,}5$, lặp giá trị dừng với phần dư $\rho(v)=0{,}1$ theo chuẩn vô cùng và trích chính sách $\pi_v$. (a) Kết luận nào về $v$ được bảo đảm, kèm công thức? (b) Nhận định "$\pi_v$ chắc chắn tối ưu tuyệt đối" có đủ căn cứ chưa, vì sao? (c) Thuật toán nào cho chứng nhận chính sách ổn định khi đánh giá chính xác và giữ hòa?
 :::
 
 ::: hint
-Tính $T_*v^{\pi_2}$ từ $v^{\pi_2}=(27,30)$.
+Dùng $e\le\rho(v)/(1-\gamma)$ với $\rho=0{,}1$; phân biệt bảo đảm về giá trị gần đúng với chứng nhận tối ưu chính sách; nhớ quy tắc giữ hòa của lặp chính sách.
 :::
 
 ::: solution
-Tại $s_0$: $\max\{1+0.9\cdot 27,\;0+0.9\cdot 30\}=\max\{25.3,27\}=27$; tại $s_1$: $\max\{2+0.9\cdot 27,\;3+0.9\cdot 30\}=\max\{26.3,30\}=30$. Cả hai khớp $v^{\pi_2}$, nên $T^{\pi_2}v^{\pi_2}=T_*v^{\pi_2}=v^{\pi_2}$: $\pi_2$ tối ưu.
+(a) Vì sai số giá trị bị chặn bởi phần dư với hệ số $1/(1-\gamma)$, ta có $\lVert v-v_*\rVert_\infty\le 0{,}1/0{,}5=0{,}2$. Kiểm lại chiều suy diễn: tam giác cho $e\le\rho+\gamma e$, chuyển vế được $e\le\rho/(1-\gamma)$; thay số cho $0{,}2$. (b) Chưa đủ căn cứ. Phần dư $0{,}1$ chỉ cho chặn sai số giá trị $0{,}2$; một bảng giá trị gần đúng không đồng nhất với chính sách tối ưu, nên $\pi_v$ có thể đã tối ưu nhưng chưa có bằng chứng. Một cách chứng nhận tối ưu là đánh giá chính sách chính xác rồi kiểm tra điều kiện $T_*v^\pi=v^\pi$; lặp chính sách là một phương pháp cung cấp cả hai yếu tố đó khi hội tụ ổn định, nhưng không phải phương pháp duy nhất. Chứng nhận Bellman trong ví dụ hai trạng thái ở trên vẫn có giá trị theo nghĩa này. (c) Lặp chính sách (policy iteration) đánh giá chính xác từng chính sách, cải thiện tham lam, giữ hành động cũ khi hòa, và dừng khi chính sách không đổi giữa hai lần cải thiện liên tiếp; lúc đó chính sách ổn định và là tối ưu trên mô hình đã cho.
 :::
 
-<!-- note-topic-id: lec-04-topic-13 -->
-## Phần dư, chặn sai số và mất mát chính sách
+### Bài tập tự luyện
 
-- Nhóm: cầu nối.
-- Vai trò trong mạch: định lượng khoảng cách giữa bảng lặp dừng sớm và tối ưu; nối tiêu chí dừng $\theta$ với chất lượng chính sách.
-- Kết nối vào: hội tụ hình học (topic 11) và trích chính sách (topic 09).
-- Kết nối ra: thực hành chọn $\theta$; đọc thêm ở topic 15.
-- Nguồn: PDF nguồn trang 24, 32, 34.
+Trong [Bài tập tuần 3](../RL-hk2-2025-2026/resources/hw3.pdf), Bài 9 dùng MDP ba trạng thái và bộ dữ kiện riêng, với $\gamma=0{,}9$. Dùng đúng các cạnh chuyển và phần thưởng trong đề. Phần 1 yêu cầu lập công thức lặp giá trị, tính $V_1$ từ $V_0=0$ và chính sách tham lam tương ứng; phần 2 cho một chính sách ban đầu để lập hệ đánh giá rồi viết công thức cải thiện.
 
-### Vấn đề
+Bài 6 yêu cầu chứng minh dạng ma trận của phương trình đánh giá chính sách và tính khả nghịch của $I-\gamma P^\pi$. Bài 3 yêu cầu chứng minh sự tồn tại của chính sách tối ưu trong MDP hữu hạn; Bài 7 yêu cầu chứng minh tính đơn điệu của $T^\pi$ và $T_*$. Khi viết lại chứng minh, chỉ rõ mỗi giả thiết được dùng ở bước nào. Có thể đối chiếu các trang 20–24 và 31–34 của tài liệu bài giảng gốc.
 
-VI dừng khi $\Delta_k=\max_s|v_{k+1}(s)-v_k(s)|<\theta$. Cần biết $\|v_k-v_*\|_\infty$ và mức mất mát của chính sách tham lam $\pi_v$ trích từ cùng bảng $v_k$.
-
-### Trực giác
-
-Nếu một lượt cập nhật gần như không đổi bảng, bảng đã gần điểm bất động; khoảng cách còn lại bị chặn bởi phần dư chia cho $(1-\gamma)$.
-
-### Hình thức
-
-Đặt phần dư $\rho(v)=\|v-T_*v\|_\infty$ và $\pi_v$ là chính sách tham lam theo cùng bảng $v$. Hai chặn:
-
-$$\|v-v_*\|_\infty\le\frac{\rho(v)}{1-\gamma},$$
-
-$$\|v_*-v^{\pi_v}\|_\infty\le\frac{2\gamma\,\rho(v)}{(1-\gamma)^2}.$$
-
-Chặn thứ nhất: $\|v-v_*\|_\infty\le\|v-T_*v\|_\infty+\|T_*v-T_*v_*\|_\infty\le\rho+\gamma\|v-v_*\|_\infty$.
-
-Với chặn thứ hai, đặt $L=\|v_*-v^{\pi_v}\|_\infty$, $e=\|v-v_*\|_\infty$ và dùng $T^{\pi_v}v=T_*v$:
-
-$$
-\begin{aligned}
-L
-&=\|T_*v_*-T^{\pi_v}v^{\pi_v}\|_\infty\\
-&\le \|T_*v_*-T_*v\|_\infty
-  +\|T^{\pi_v}v-T^{\pi_v}v^{\pi_v}\|_\infty\\
-&\le \gamma e+\gamma\|v-v^{\pi_v}\|_\infty\\
-&\le \gamma e+\gamma(e+L).
-\end{aligned}
-$$
-
-Do đó $L\le 2\gamma e/(1-\gamma)\le 2\gamma\rho(v)/(1-\gamma)^2$. Vì $\rho(v_k)=\Delta_k<\theta$ khi VI dừng, hai chặn định lượng sai số giá trị và mất mát của chính sách theo $\theta,\gamma$. Ứng dụng: để bảo đảm mất mát chính sách $L\le\varepsilon_{\text{pol}}$, chọn ngưỡng $\theta\le\varepsilon_{\text{pol}}(1-\gamma)^2/(2\gamma)$ với $\gamma>0$.
-
-### Ứng dụng và giới hạn
-
-Cho phép chọn $\theta$ có căn cứ. Giới hạn: khi $\gamma\approx 1$, mẫu số $(1-\gamma)^2$ làm chặn mất mát nở rất nhanh; chặn là cận trên, không phải giá trị đúng.
-
-::: exercise Câu hỏi kiểm tra
-Với $\gamma=0.9$, $\theta=0.1$, ước lượng chặn trên $\|v_k-v_*\|_\infty$ và $\|v_*-v^{\pi_v}\|_\infty$ khi VI dừng.
-:::
-
-::: hint
-Dùng $\rho\le\theta$ trong hai công thức.
-:::
-
-::: solution
-$\|v_k-v_*\|_\infty\le 0.1/0.1=1$; $\|v_*-v^{\pi_v}\|_\infty\le 2\cdot 0.9\cdot 0.1/0.01=18$.
-:::
-
-<!-- note-topic-id: lec-04-topic-14 -->
-## CartPole rời rạc và giới hạn của DP dạng bảng
-
-- Nhóm: bổ sung.
-- Vai trò trong mạch: cho thấy cách đưa môi trường liên tục về khuôn khổ MDP hữu hạn và các giới hạn kèm theo.
-- Kết nối vào: toàn bộ lý thuyết DP cho MDP hữu hạn ở các topic trước.
-- Kết nối ra: nhu cầu phương pháp không biết mô hình ở Bài 05.
-- Nguồn: PDF nguồn trang 35–38.
-
-### Vấn đề
-
-CartPole có trạng thái gốc liên tục $s=(x,\dot x,\theta,\dot\theta)$ với hai hành động Left, Right. Không gian liên tục nên không áp dụng trực tiếp DP dạng bảng.
-
-### Trực giác
-
-Rời rạc hóa từng thành phần bằng các khoảng rời rạc (bin); mỗi tổ hợp khoảng là một trạng thái của MDP hữu hạn, sau đó áp dụng Bellman, VI hoặc PI như thường.
-
-### Ví dụ tính được
-
-::: example Đếm trạng thái
-Chia $x$ thành 3 khoảng, $\dot x$ thành 3 khoảng, $\theta$ thành 6 khoảng, $\dot\theta$ thành 6 khoảng. Trạng thái rời rạc $s_d=(b_x,b_{\dot x},b_\theta,b_{\dot\theta})$ và số trạng thái $3\times 3\times 6\times 6=324$.
-:::
-
-### Hình thức và giới hạn
-
-Ưu điểm: đưa môi trường liên tục về MDP hữu hạn; áp dụng được Bellman, VI, PI; dễ dùng trong giảng dạy. Hạn chế: bùng nổ số trạng thái khi tăng số khoảng; sai số xấp xỉ khi lượng tử hóa quá thô; cần mô hình chuyển hoặc mô phỏng để ước lượng xác suất chuyển. Ví dụ này là cầu nối từ lý thuyết MDP hữu hạn sang các bài toán học tăng cường gần thực tế; khi mô hình không có sẵn, cần phương pháp khác ở Bài 05.
-
-::: exercise Câu hỏi kiểm tra
-Nếu chia mỗi thành phần thành 10 khoảng, số trạng thái là bao nhiêu?
-:::
-
-::: hint
-Nhân số khoảng bốn thành phần.
-:::
-
-::: solution
-$10^4=10000$ trạng thái, tăng gần 31 lần so với 324; minh họa bùng nổ trạng thái.
-:::
-
-<!-- note-topic-id: lec-04-topic-15 -->
-## Đọc thêm và hướng tự học
-
-- Nhóm: đọc thêm.
-- Vai trò trong mạch: mở rộng chiều sâu chứng minh và chỉ ra giới hạn của khung hữu hạn.
-- Kết nối vào: các định lý ở topic 07, 11, 12.
-- Kết nối ra: bài tập hw3 Bài 8, Bài 10 và các bài sau trong khóa học.
-- Nguồn: PDF nguồn trang 21, 31–34; `hw3.pdf` Bài 8 và Bài 10.
-
-### Nội dung đọc thêm
-
-- Đọc lại phần chứng minh định lý cải thiện chính sách (trang 21) và tính co của $T_*$ (trang 31) theo từng bước; đối chiếu với các khối proof ở topic 07 và 11.
-- Đọc phần sai số và tiêu chuẩn dừng (trang 34) cùng với topic 13 để hiểu vai trò của $\theta$ và $\gamma$.
-- `hw3.pdf` Bài 8: bàn về MDP với môi trường và hành động liên tục; những gì phải thay đổi khi chứng minh hội tụ của lặp chính sách trong trường hợp đó. Đây là giới hạn không gian liên tục của khung DP hữu hạn.
-- `hw3.pdf` Bài 10: môi trường sáu trạng thái trên đường thẳng với nhiễu tại $B$, số bước tối đa 5, $\gamma=0.5$. Bài 10 thuộc các bài sau của khóa học; phần nội dung liên quan đến Monte Carlo và Q-learning không nằm trong phạm vi Bài 04 và sẽ được trình bày ở bài tương ứng. Ở đây chỉ khuyến nghị đọc phát biểu bài toán như một ví dụ môi trường hữu hạn nhỏ.
-
-### Giới hạn
-
-Không trình bày Monte Carlo, sai phân thời gian, Q-learning hoặc code demo trong Bài 04. Các hướng đọc chỉ định phạm vi và thứ tự, không thay thế chứng minh trong bài.
-
-::: exercise Câu hỏi kiểm tra
-Với hw3 Bài 8, nêu hai điểm phải thay đổi khi $\mathcal S$ và $\mathcal A$ liên tục.
-:::
-
-::: hint
-Nghĩ về phép cực đại theo $a$ và về khối chứng minh dùng tính hữu hạn.
-:::
-
-::: solution
-Phép $\max_a$ trên tập liên tục có thể không đạt được hoặc không dễ tính, cần điều kiện compact và liên tục; lập luận dừng hữu hạn của PI dựa trên đếm số chính sách hữu hạn, không còn áp dụng trực tiếp và cần tiêu chí khác như hội tụ theo chuẩn hoặc xấp xỉ.
-:::
-
-## Bài tập 30 phút
-
-### Bài 9 phần 1 (hw3): lặp giá trị một lượt trên MDP ba trạng thái
-
-MDP: $\mathcal S=\{s_0,s_1,s_2\}$, $\mathcal A=\{a,b\}$, $\gamma=0.9$. Động học: từ $s_0$, hành động $a$ cho $0.5:(1,s_0)$ và $0.5:(-1,s_2)$; hành động $b$ cho $0.5:(0,s_1)$ và $0.5:(2,s_2)$. Từ $s_1$: $a$ tất định $(2,s_0)$, $b$ tất định $(-1,s_1)$. Từ $s_2$: $a$ tất định $(2,s_1)$, $b$ tất định $(0,s_0)$. Chỉ hành động từ $s_0$ có tính ngẫu nhiên 50/50.
-
-Công thức lặp giá trị:
-
-$$V_{k+1}(s)=\max_a\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma V_k(s')\bigr].$$
-
-Với $V_0(s_0)=V_0(s_1)=V_0(s_2)=0$, $\gamma V_0=0$ nên $V_1(s)=\max_a\mathbb E[r\mid s,a]$:
-
-- $V_1(s_0)$: nhánh $a$: $0.5\cdot 1+0.5\cdot(-1)=0$; nhánh $b$: $0.5\cdot 0+0.5\cdot 2=1$. Vậy $V_1(s_0)=1$, tham lam chọn $b$.
-- $V_1(s_1)$: nhánh $a$: $2$; nhánh $b$: $-1$. Vậy $V_1(s_1)=2$, tham lam chọn $a$.
-- $V_1(s_2)$: nhánh $a$: $2$; nhánh $b$: $0$. Vậy $V_1(s_2)=2$, tham lam chọn $a$.
-
-Kết quả: $V_1=(1,2,2)$; chính sách tham lam: $b$ tại $s_0$, $a$ tại $s_1$, $a$ tại $s_2$, tức $(b,a,a)$. Phần 2 là bài tự học, dùng PI ở topic 05–07, không tính trong 12 phút dành cho Bài 9 phần 1 trên lớp; tổng nhánh bài tập vẫn là 30 phút.
-
-### Bài 6 (hw3): dạng ma trận của đánh giá chính sách
-
-Với chính sách $\pi$, $v^\pi=r^\pi+\gamma P^\pi v^\pi$ trong đó $(r^\pi)(s)=\sum_a\pi(a\mid s)\sum_{s',r}p(s',r\mid s,a)\,r$ và $(P^\pi)(s,s')=\sum_a\pi(a\mid s)\sum_r p(s',r\mid s,a)$. Suy ra $(I-\gamma P^\pi)v^\pi=r^\pi$. Khi $0\le\gamma<1$: $P^\pi$ là ma trận chuyển hàng, mọi giá trị riêng $|\lambda|\le 1$, nên mọi giá trị riêng của $I-\gamma P^\pi$ có môđun $|1-\gamma\lambda|\ge 1-\gamma>0$; định thức khác không, do đó khả nghịch và $v^\pi=(I-\gamma P^\pi)^{-1}r^\pi$.
-
-### Bài 4 (hw3): đồng bộ và bất đồng bộ
-
-Đồng bộ: tính toàn bộ $v_{k+1}$ từ cùng một bảng $v_k$. Bất đồng bộ: cập nhật trạng thái nào xong dùng luôn cho trạng thái kế tiếp. Ảnh hưởng đến hội tụ của lặp giá trị: đồng bộ hội tụ theo phân tích co ở topic 11; bất đồng bộ vẫn hội tụ nếu lịch cập nhật công bằng, tức mỗi trạng thái được cập nhật vô hạn lần. Không tuyên bố ảnh hưởng đến tính tối ưu nếu thiếu lịch công bằng.
-
-### Bài 7 (hw3): tính đơn điệu của $T^\pi, T_*$
-
-Nếu $u(s)\le v(s)$ với mọi $s$, thì với mỗi $a$:
-
-$$\sum_{s',r}p(s',r\mid s,a)[r+\gamma u(s')]\le\sum_{s',r}p(s',r\mid s,a)[r+\gamma v(s')]$$
-
-vì $\gamma\ge 0$ và trọng số $p$ không âm, tổng bằng 1. Lấy trung bình theo $\pi$ cho $T^\pi u\le T^\pi v$; lấy cực đại và dùng bất đẳng thức cực đại cho $T_*u\le T_*v$.
+Đối chiếu: slide 42–45 của Bài 04.
 
 ## Tài liệu tham khảo
 
-- Tạ Việt Cường, 2026, "Giải bài toán MDPs với Quy hoạch động", Week 04 — Học tăng cường và lập kế hoạch, PDF nguồn trang 1–38.
-- Tạ Việt Cường, 2026, "Bài tập tuần 3 — Giải bài toán MDP" (`hw3.pdf`): Bài 4, Bài 6, Bài 7, Bài 9, Bài 10.
-- Ghi chú bổ sung: micro-example ở topic 02 được xây dựng từ công thức nguồn trang 7–8 và trình bày trong deck phụ; bảng so sánh PI–VI ở topic 10 tái cấu trúc từ trang 29; phần sửa lỗi nguồn trang 33 về số chính sách xác định $|\mathcal A|^{|\mathcal S|}$ đã nêu tại topic 07 và 12.
-
-## Tóm tắt
-
-- Bellman tối ưu với phép cực đại theo hành động là hạt nhân của bài toán giải MDP; $v_*(s)=\max_a q_*(s,a)$ và chính sách tham lam theo $q_*$ là tối ưu.
-- Quy hoạch động giải MDP bằng cập nhật Bellman lặp: lặp chính sách đánh giá rồi cải thiện; lặp giá trị cập nhật trực tiếp theo $T_*$.
-- Hội tụ được bảo đảm nhờ $T_*$ co với hệ số $\gamma$ trong chuẩn vô cùng: $\|v_k-v_*\|_\infty\le\gamma^k\|v_0-v_*\|_\infty$; PI dừng hữu hạn nhờ tính đơn điệu của cải thiện và tính hữu hạn của tập chính sách.
-- Phần dư $\rho(v)$ cho hai chặn thực hành: $\|v-v_*\|_\infty\le\rho/(1-\gamma)$ và mất mát $\|v_*-v^{\pi_v}\|_\infty\le 2\gamma\rho/(1-\gamma)^2$ với $\pi_v$ tham lam theo cùng $v$.
-- DP cần mô hình và không gian hữu hạn; CartPole rời rạc minh họa cả khả năng áp dụng và giới hạn bùng nổ trạng thái, dẫn sang Bài 05 về phương pháp không biết mô hình.
+- [Bộ slide Bài 04: Giải MDP bằng quy hoạch động](lecture-04-giai-mdp-bang-quy-hoach-dong.html), bản 45 trang dùng cho học kỳ 1, năm học 2026–2027. Đây là nguồn trực tiếp của ghi chú và các ví dụ số.
+- Tạ Việt Cường, [lecture04-solving-MDP.pdf](../RL-hk2-2025-2026/lecture04-solving-MDP.pdf), 19-03-2026, đặc biệt tr. 6–10, 14, 17–25 và 31–37. Bộ slide hiện tại giữ cấu trúc mô hình hai trạng thái và lưới năm ô, đồng thời điều chỉnh phần thưởng và hệ số chiết khấu; các phép tính trong ghi chú dùng bộ số đã điều chỉnh.
+- Tạ Việt Cường, [Bài tập tuần 3: Giải bài toán MDP](../RL-hk2-2025-2026/resources/hw3.pdf), 08-05-2026, tr. 1–2, Bài 3, 6, 7 và 9.
