@@ -22,8 +22,8 @@
 
 | Phần | Slide | Trạng thái | Commit |
 |---|---|---|---|
-| 1 | 01–05 | Đã kiểm nội dung, số học và hai khung hiển thị | Commit phần mở đầu trong lịch sử Git |
-| 2 | 06–12 | Chưa triển khai | — |
+| 1 | 01–05 | Đã kiểm nội dung, số học và hai khung hiển thị | `ae1cc0a` |
+| 2 | 06–12 | Đã kiểm nội dung và hai khung hiển thị | Commit phần Bellman trong lịch sử Git |
 | 3 | 13–18 | Chưa triển khai | — |
 | 4 | 19–26 | Chưa triển khai | — |
 | 5 | 27–34 | Chưa triển khai | — |
@@ -49,6 +49,13 @@
 - Reviewer storyboard lần thu gọn: requested/observed `z-ai/glm-5.3-flash`, provider OpenRouter. Chấp nhận sửa số27 tồn dư tại ghi chú bố cục S21 thành giá trị20. Bác bỏ nhầm “thưởng24” thành “24 ô”: lưới vẫn năm ô. Chặn đầu64 là giả định minh họa đã ghi rõ, không phải chặn tự nhiên của MDP; giữ ví dụ để tính được mốc7 lượt.
 - Kiểm kỹ thuật và quan sát đủ năm trang: không tràn, chồng lấn, hỏng tài nguyên, lỗi KaTeX hoặc yêu cầu mạng ngoài ở1280×720 và960×540. Bàn phím và cửa sổ ghi chú hoạt động. Sửa ngắt dòng tách số7 khỏi nhãn. SVG hai trạng thái có mô tả, nhãn và chiều mũi tên đúng. Bảng S04 cỡ30,24px và dòng học phần27,55px đọc được trong ảnh đã xem; không dùng chữ nhỏ hơn0,65em.
 - Phần còn lại trong commit này giữ bản trung gian; các số cũ ở phần chưa triển khai chưa được coi là bản cuối đồng bộ.
+
+### Rà phần Bellman tối ưu
+
+- Writer đã được gọi lại để sửa sơ đồ: cả hai hành động phải dùng cùng quy ước phần tiếp diễn. Bỏ văn bản quy trình soạn thảo, rút chữ trên mặt, đặt công thức dài toàn chiều ngang. Bổ sung điều kiện số trạng thái/hành động hữu hạn, thưởng bị chặn và hệ số chiết khấu trong [0,1).
+- Writer và reviewer sinh viên: requested/observed `z-ai/glm-5.3-flash`; reviewer toán: requested/observed `deepseek/deepseek-v4-flash-0731`; provider OpenRouter. Hai vai xác nhận bảng Q, phép cực đại, định nghĩa và điểm bất động đúng. Reviewer toán tự gắn nhãn lỗi rồi xác nhận phép tính đúng; đề nghị “sửa” từ thành chính từ ấy không có hiệu lực. Giữ phép tính đã kiểm độc lập.
+- Gợi ý nhắc lại gamma và nghiệm tối ưu ở định nghĩa được cân nhắc: gamma đã xuất hiện ở mô hình và phép tính, nghiệm được xây dựng ở phần lặp chính sách; không thêm kết quả sớm làm mất nhu cầu tính. Câu kiểm tra ngay sau hai toán tử phân biệt một lần cập nhật với điểm bất động.
+- Đã xem đủ bảy trang mới và biên phần mở đầu; hai viewport không tràn, chồng lấn, lỗi công thức hoặc tài nguyên. S11 hai công thức vừa hai thẻ; bảng chữ30,24px đọc được. S05 rút nhãn để hết dấu hai chấm lẻ. Chưa thay CSS chung.
 
 ## Lập dàn bài theo skill — 23-09-2026
 

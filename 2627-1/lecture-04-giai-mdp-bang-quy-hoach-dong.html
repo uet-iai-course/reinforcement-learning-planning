@@ -97,7 +97,7 @@
     <div class="grid2">
       <div class="card">
         <p><strong>Dữ kiện</strong></p>
-        <p>Bảng giá trị của chính sách luôn chọn $a$:</p><p>$v(s_0)=4$, $v(s_1)=7$.</p><p>Hệ số chiết khấu $\gamma=0{,}5$.</p>
+        <p>Chính sách luôn chọn $a$:</p><p>$v(s_0)=4$, $v(s_1)=7$.</p><p>Hệ số chiết khấu $\gamma=0{,}5$.</p>
         <p>Chọn $b$ ở $s_0$: nhận thưởng $r=-1$ và chuyển đến $s_1$ với xác suất 1.</p>
       </div>
       <div class="card">
@@ -112,15 +112,158 @@
     </aside>
   </section>
 </section>
-<section>
-<section data-slide-id="A02"><h2>Một lựa chọn tất định</h2><p>Tại $s_0$, $\gamma=0{,}9$; sau hành động đầu, tác tử tiếp tục tối ưu; giá trị tiếp tục tại $s_0,s_1$ lần lượt là $10$ và $11$.</p><div class="grid2"><div class="card"><h3>$a$</h3><p>$r=1$, ở lại $s_0$ chắc chắn</p><p>$1+0{,}9\cdot10=10$</p></div><div class="card"><h3>$b$</h3><p>$r=0$, tới $s_1$ chắc chắn</p><p>$0+0{,}9\cdot11=9{,}9$</p></div></div><div class="box">Khóa hành động đầu ở $a$ cho giá trị lớn hơn.</div><div class="check"><strong>Câu hỏi:</strong> nếu phần thưởng của $b$ đổi thành $2$ thì hành động nào tối ưu tại $s_0$?</div><p class="fragment answer">Chọn $b$; giá trị tối ưu ở cả hai trạng thái đều bằng $20$.</p><aside class="notes">Đây là MDP tất định ở nhánh đầu: hành động quyết định duy nhất trạng thái kế tiếp và thưởng; từ trạng thái kế tiếp dùng chính sách tối ưu với giá trị tiếp tục 10 và 11, nên $q_*(s_0,a)=1+0{,}9\cdot10=10$ và $q_*(s_0,b)=0+0{,}9\cdot11=9{,}9$. Với biến thể phần thưởng $2$: đặt $v_0=v_*(s_0)$, $v_1=v_*(s_1)$; nếu chọn nhánh $b$ thì $v_0=2+0{,}9v_1=2+0{,}9(2+0{,}9v_0)=3{,}8+0{,}81v_0$, suy ra $v_0=20$ và $v_1=2+0{,}9\cdot20=20$; kiểm tra nhánh $a$: $1+0{,}9\cdot20=19<20$.<p class="note-source"><strong>Nguồn:</strong> Ví dụ bổ sung trước tr. 8.</p></aside></section>
-<section data-slide-id="A08"><h2>Giá trị hành động tối ưu</h2><p>Ký hiệu $a\triangleright\pi$ là một can thiệp: buộc hành động đầu $A_0=a$, không phải điều kiện hóa trên biến cố $A_0=a$ do $\pi$ sinh ra; từ $t=1$ trở đi lại theo $\pi$.</p><div class="math-large">$$q_*(s,a)=\sup_{\pi\in\Pi}\mathbb E^{a\triangleright\pi}[G_0\mid S_0=s].$$</div><p>Trong ví dụ trước, hai can thiệp cho:</p><div class="grid2"><div class="card"><p>$q_*(s_0,a)=10$</p></div><div class="card"><p>$q_*(s_0,b)=9{,}9$</p></div></div><aside class="notes">Phép can thiệp ép hành động đầu không phải điều kiện hóa trên biến cố $A_0=a$ do chính sách sinh ra, nên định nghĩa vẫn có nghĩa khi chính sách tiếp diễn gán xác suất không cho $a$ tại $s$. Supremum chỉ tối ưu các hành động từ thời điểm một trở đi.<p class="note-source"><strong>Nguồn:</strong> Khái niệm từ tr. 7–8; ký hiệu can thiệp và micro-example là phần bổ sung.</p></aside></section>
-<section data-slide-id="A00"><h2>Giá trị tối ưu</h2><p>Gọi $\Pi$ là tập mọi chính sách khả dụng, kể cả phụ thuộc lịch sử và ngẫu nhiên.</p><div class="math-large">$$v_*(s)=\sup_{\pi\in\Pi}v_\pi(s)=\max_{a\in\mathcal A(s)}q_*(s,a).$$</div><p>Trong ví dụ, $v_*(s_0)=10$.</p><aside class="notes">Dùng supremum trước khi chứng minh một chính sách đạt được. Đẳng thức với cực đại theo hành động dùng tập hành động hữu hạn và định nghĩa $q_*$; phần tồn tại chính sách tối ưu được chứng minh cuối bài.<p class="note-source"><strong>Nguồn:</strong> tr. 6–9; bổ sung cầu nối $q_*$.</p></aside></section>
-<section data-slide-id="A01"><h2>Toán tử theo chính sách</h2><p>Với chính sách Markov dừng $\pi(a\mid s)$:</p><div class="math-large">$$T^\pi:\mathcal V\to\mathcal V,$$</div><div class="math-large">$$(T^\pi v)(s)=\sum_a\pi(a\mid s)\sum_{s',r}p(s',r\mid s,a)[r+\gamma v(s')].$$</div><p>$T^\pi$ đơn điệu và là ánh xạ co hệ số $\gamma$ trong chuẩn vô cùng. Hai tính chất này nêu trước chỉ cho chính sách Markov dừng; lớp chính sách $\Pi$ đầy đủ sẽ được xử lý bằng chặn chân trời ở phần bảo đảm.</p><aside class="notes">“Dừng” nghĩa là không phụ thuộc thời điểm. Tính đơn điệu dùng trọng số không âm; tính co dùng tổng trọng số bằng một. Vì thế $v_\pi=T^\pi v_\pi$ là điểm bất động duy nhất.<p class="note-source"><strong>Nguồn:</strong> tr. 6, 10, 31; bổ sung kiểu toán tử và điều kiện chính sách.</p></aside></section>
-<section data-slide-id="A03"><h2>Toán tử Bellman tối ưu</h2><img class="figure" src="img/lec-04/bellman-choice.svg" alt="Hai hành động được đánh giá rồi lấy cực đại."/><div class="math-large">$$T_*:\mathcal V\to\mathcal V,\qquad (T_*v)(s)=\max_a\sum_{s',r}p(s',r\mid s,a)[r+\gamma v(s')].$$</div><aside class="notes">Trong micro-example, áp $T_*$ tại $s_0$ trả về 10. Tập hành động hữu hạn, không rỗng bảo đảm cực đại đạt được.<p class="note-source"><strong>Nguồn:</strong> tr. 8, 10.</p></aside></section>
-<section data-slide-id="A09"><h2>Bellman cho $q_*$</h2><div class="math-large">$$q_*(s,a)=\sum_{s',r}p(s',r\mid s,a)\left[r+\gamma\max_{a'}q_*(s',a')\right].$$</div><div class="check"><strong>Câu hỏi:</strong> vì sao phép cực đại nằm ở trạng thái kế tiếp?</div><p class="fragment answer">Hành động đầu đã bị khóa; từ $s'$ mới được chọn hành động tối ưu tiếp theo.</p><p>Ứng viên tham lam: $\bar\pi(s)\in\arg\max_a q_*(s,a)$.</p><aside class="notes">Dùng $v_*(s')=\max_{a'}q_*(s',a')$ trong phân rã một bước. Ở đây chỉ dựng ứng viên Markov dừng tham lam; phần chứng minh tồn tại cuối bài mới kết luận ứng viên này là chính sách tối ưu.<p class="note-source"><strong>Nguồn:</strong> Suy ra từ tr. 7–10; bổ sung để nối sang điều khiển.</p></aside></section>
-<section data-slide-id="A05"><h2>Chu trình quy hoạch động</h2><img class="figure" src="img/lec-04/dp-cycle.svg" alt="Đánh giá, cải thiện và kiểm tra ổn định."/><aside class="notes">Lặp chính sách luân phiên đánh giá và cải thiện. Tính toán hiện tại dùng giá trị tiếp tục ở các trạng thái kế tiếp.<p class="note-source"><strong>Nguồn:</strong> tr. 12–13.</p></aside></section>
-<section data-slide-id="A06"><h2>Ba phép toán</h2><ul><li>Đánh giá: $v\leftarrow T^\pi v$.</li><li>Cải thiện: $\pi\leftarrow\operatorname{Greedy}(v)$.</li><li>Tối ưu trực tiếp: $v\leftarrow T_*v$.</li></ul><div class="box">Lặp chính sách tách hai phép đầu; lặp giá trị dùng phép thứ ba.</div><aside class="notes">Không kết luận phương pháp nào luôn nhanh hơn. Chi phí từng vòng và số vòng đều phụ thuộc cấu trúc bài toán.<p class="note-source"><strong>Nguồn:</strong> tr. 13, 20, 23.</p></aside></section>
+<section aria-label="Bellman tối ưu">
+
+<section data-slide-id="L04-S06">
+<h2>Hành động đầu và phần tiếp diễn</h2>
+<figure>
+<svg role="img" width="1040" viewBox="0 0 1040 280" xmlns="http://www.w3.org/2000/svg">
+<title>Sơ đồ cây một bước từ s0 với hai hành động a, b</title>
+<desc>Từ s0, hành động a dẫn tới ô s0 với thưởng 2 và phần tiếp diễn từ s0; hành động b dẫn tới ô s1 với thưởng −1 và phần tiếp diễn từ s1.</desc>
+<rect x="0" y="0" width="1040" height="280" fill="#EDF4FF"/>
+<circle cx="520" cy="55" r="42" fill="#F7EFE6" stroke="#2F3E7A" stroke-width="3"/>
+<text x="520" y="68" font-size="36" fill="#2F3E7A" text-anchor="middle">s₀</text>
+<line x1="486" y1="80" x2="300" y2="150" stroke="#2F3E7A" stroke-width="3"/>
+<polygon points="300,150 316,138 310,156" fill="#2F3E7A"/>
+<text x="330" y="120" font-size="36" fill="#2F3E7A">a</text>
+<line x1="554" y1="80" x2="740" y2="150" stroke="#B15A2B" stroke-width="3"/>
+<polygon points="740,150 724,138 730,156" fill="#B15A2B"/>
+<text x="700" y="120" font-size="36" fill="#B15A2B">b</text>
+<rect x="140" y="160" width="320" height="100" fill="#F7EFE6" stroke="#2F3E7A" stroke-width="3"/>
+<text x="300" y="205" font-size="36" fill="#2F3E7A" text-anchor="middle">s₀, thưởng 2</text>
+<text x="300" y="248" font-size="36" fill="#2F3E7A" text-anchor="middle">tiếp diễn từ s₀</text>
+<rect x="580" y="160" width="320" height="100" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/>
+<text x="740" y="205" font-size="36" fill="#B15A2B" text-anchor="middle">s₁, thưởng −1</text>
+<text x="740" y="248" font-size="36" fill="#B15A2B" text-anchor="middle">tiếp diễn từ s₁</text>
+</svg>
+</figure>
+<p>Đánh giá một hành động: giữ phần tiếp diễn theo chính sách cố định $\pi$.</p>
+<p>Tối ưu: chọn phần tiếp diễn tốt nhất từ trạng thái đến.</p>
+<aside class="notes">
+Mỗi lựa chọn gồm ba phần: hành động đầu, chuyển trạng thái, rồi một chính sách tiếp diễn từ trạng thái mới. Khi đánh giá một hành động cụ thể, ta giữ nguyên phần tiếp diễn theo chính sách đang xét, nên hai nhánh trong hình dùng cùng quy ước tiếp diễn. Khi tìm giá trị tối ưu, phần tiếp diễn không bị ràng buộc nữa: từ trạng thái đến, ta được phép chọn chính sách tối ưu. Với chuyển trạng thái ngẫu nhiên, phải lấy kỳ vọng theo xác suất môi trường trước khi so sánh các hành động; tác tử không được chọn kết quả ngẫu nhiên. Cách tách này đặt tên cho phép tính áp dụng lên một bảng tiếp diễn bất kỳ.
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 6–8, 17; tham số điều chỉnh.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S07">
+<h2>Điểm của hành động từ bảng giá trị</h2>
+<p>Bảng tiếp diễn $v=(4,7)$ của chính sách $\pi_0=(a,a)$.</p>
+<div class="grid2">
+<div>
+<table>
+<tr><th></th><th>a</th><th>b</th></tr>
+<tr><th>s₀</th><td>4</td><td>2,5</td></tr>
+<tr><th>s₁</th><td>7</td><td>13,5</td></tr>
+</table>
+</div>
+<div class="card">
+<p>$Q_v(s_1,b)=10+0{,}5\cdot 7=13{,}5$</p>
+<p>Thưởng ngay cộng giá trị tiếp diễn đã chiết khấu.</p>
+</div>
+</div>
+<p>$$Q_v(s,a)=\sum_{s',r}p(s',r\mid s,a)\,[\,r+\gamma v(s')\,]$$</p>
+<aside class="notes">
+Bảng $v=(4,7)$ là giá trị của chính sách $\pi_0=(a,a)$, nên bảng điểm vừa tính chính là $q^{\pi_0}$, chưa phải $q_*$. Cách tính từng ô: lấy thưởng nhận được, cộng giá trị của trạng thái đến nhân với hệ số chiết khấu, rồi lấy kỳ vọng theo xác suất chuyển. Ô $Q_v(s_1,b)$ minh họa trọn một bước: thưởng 10 cộng $0{,}5$ lần 7. Hai ô 4 và 7 trùng với $v$ vì đó là các hành động mà $\pi_0$ đã chọn, phần tiếp diễn quay lại chính bảng đang đánh giá. Ký hiệu $Q_v$ gắn với bảng $v$ cụ thể, để không nhầm với giá trị hành động tối ưu.
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 6, 17–19; tham số điều chỉnh.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S08">
+<h2>Giá trị tối ưu</h2>
+<p>MDP có hữu hạn trạng thái và hành động, thưởng bị chặn, $0\le\gamma\lt1$.</p>
+<div class="grid2">
+<div class="card">
+<p>$v_*(s)=\sup_{\pi\in\Pi}v^\pi(s)$</p>
+<p>Cận trên nhỏ nhất của giá trị trạng thái trên lớp chính sách $\Pi$.</p>
+</div>
+<div class="card">
+<p>$q_*(s,a)=\sup_{\pi\in\Pi}q^\pi(s,a)$</p>
+<p>Cận trên nhỏ nhất của giá trị hành động trên lớp chính sách $\Pi$.</p>
+</div>
+</div>
+<p>$$v_*(s)=\max_{a\in\mathcal A(s)}q_*(s,a)$$</p>
+<aside class="notes">
+Lớp $\Pi$ gồm các chính sách hợp lệ, có thể phụ thuộc lịch sử. Định nghĩa dùng supremum, tức cận trên nhỏ nhất, trước khi chứng minh có chính sách đạt được nó; phần chứng minh nằm bằng tính co của toán tử. Quy ước cho $q^\pi(s,a)$: khởi đầu tại $s$, ấn định hành động đầu là $a$, rồi theo $\pi$ từ bước sau; không điều kiện hóa trên một hành động có xác suất bằng không. Tính chất Markov cho phép viết phần tiếp diễn bằng giá trị của trạng thái kế tiếp, dẫn tới quan hệ giữa $v_*$ và $q_*$: giá trị tối ưu của một trạng thái bằng cực đại theo hành động của $q_*$.
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 7–9.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S09">
+<h2>Bellman tối ưu cho giá trị trạng thái</h2>
+<p>$$v_*(s)=\max_a\sum_{s',r}p(s',r\mid s,a)\,[\,r+\gamma v_*(s')\,]$$</p>
+<div class="grid2">
+<div class="card">
+<p>1. Lấy kỳ vọng cho từng hành động</p>
+<p>Tổng theo $s',r$ với xác suất môi trường.</p>
+</div>
+<div class="card">
+<p>2. Chọn giá trị lớn nhất</p>
+<p>Cực đại theo $a$ sau khi các kỳ vọng đã có.</p>
+</div>
+</div>
+<aside class="notes">
+Phép tính có thứ tự: trước hết, với mỗi hành động, lấy kỳ vọng phần thưởng và giá trị tiếp diễn theo phân phối của môi trường; sau đó mới so các hành động và lấy cực đại. Thứ tự này khác với việc cho tác tử chọn cả kết quả ngẫu nhiên. So với phương trình Bellman kỳ vọng, điểm thay đổi duy nhất là thay trung bình theo chính sách $\pi$ bằng phép cực đại theo hành động. Đây là phương trình đặc trưng của giá trị tối ưu, chưa phải cách giải bằng cách thay số đã biết; sự tồn tại và tính duy nhất của nghiệm được chứng minh bằng tính co của toán tử.
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 6, 8.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S10">
+<h2>Giá trị hành động và chính sách tham lam</h2>
+<p>$$q_*(s,a)=\sum_{s',r}p(s',r\mid s,a)\,[\,r+\gamma\max_{a'}q_*(s',a')\,]$$</p>
+<p>$$\pi_*(s)\in\arg\max_a q_*(s,a)$$</p>
+<p>$\max$ trả một giá trị; $\arg\max$ trả tập hành động đạt giá trị đó.</p>
+<p>Cực đại áp dụng cho mọi hành động ở trạng thái kế tiếp, trong khi $a$ đã cố định.</p>
+<aside class="notes">
+Trong công thức $q_*$, hành động đầu $a$ đã được ấn định; phép cực đại chỉ xuất hiện ở trạng thái kế tiếp, trên mọi hành động khả dĩ tại đó. Hai ký hiệu cần tách bạch: $\max$ cho ra một con số, còn $\arg\max$ cho ra tập các hành động đạt con số đó, nên chính sách tham lam được viết bằng dấu thuộc tập. Khi đã có $q_*$, chọn tại mỗi trạng thái một hành động trong tập ấy là đủ. Chính sách tham lam dựng theo một bảng xấp xỉ của $q_*$ chưa mặc nhiên tối ưu; chứng minh cho phép dựng theo $q_*$ đúng sẽ đến sau.
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 7–9.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S11">
+<h2>Hai toán tử Bellman</h2>
+<div class="grid2">
+<div class="card">
+<p>$(T^\pi v)(s)=\sum_a\pi(a\mid s)\,Q_v(s,a)$</p>
+<p>Giữ chính sách Markov dừng khi trộn các ô theo $\pi$.</p>
+</div>
+<div class="card">
+<p>$(T_*v)(s)=\max_a Q_v(s,a)$</p>
+<p>Chọn hành động theo chính bảng đang có.</p>
+</div>
+</div>
+<p>Hai toán tử đều nhận bảng $v\in\mathcal V=\mathbb R^{|\mathcal S|}$ và trả một bảng mới.</p>
+<p>Điểm bất động là bảng không đổi sau phép tính: $v^\pi=T^\pi v^\pi$ và $v_*=T_*v_*$.</p>
+<aside class="notes">
+Hai toán tử cùng nhận một bảng giá trị và cùng trả ra một bảng mới, khác nhau ở khối chọn hành động. Toán tử $T^\pi$ lấy trung bình theo xác suất chính sách, nên nó giữ nguyên chính sách Markov dừng đang xét. Toán tử $T_*$ lấy cực đại theo từng hàng, tức chọn hành động tốt nhất theo chính bảng đang có. Điểm bất động của một toán tử là bảng mà khi áp dụng phép tính, kết quả không đổi; $v^\pi$ là điểm bất động của $T^\pi$ và $v_*$ là điểm bất động của $T_*$. Việc áp dụng toán tử một lần có cho ngay nghiệm tối ưu hay không là câu hỏi phần sau sẽ trả lời.
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 10, 13.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S12">
+<h2>Câu hỏi: một cập nhật có phải nghiệm tối ưu</h2>
+<div class="grid2">
+<div>
+<p>$v=(4,7)$</p>
+<table>
+<tr><th>$Q_v$</th><th>a</th><th>b</th></tr>
+<tr><th>s₀</th><td>4</td><td>2,5</td></tr>
+<tr><th>s₁</th><td>7</td><td>13,5</td></tr>
+</table>
+</div>
+<div class="box">
+<p>Câu hỏi: Tính $T_*v$ và kết luận bảng $v$ đã phải giá trị tối ưu hay chưa.</p>
+<div class="fragment">
+<p>$T_*v=(4,\,13{,}5)\ne(4,7)$, nên $v$ chưa phải $v_*$.</p>
+<p>Cực đại được lấy theo hành động trong từng hàng.</p>
+</div>
+</div>
+</div>
+<aside class="notes">
+Áp dụng $T_*$ lên từng hàng của bảng: tại $s_0$, cực đại giữa 4 và 2,5 cho 4; tại $s_1$, cực đại giữa 7 và 13,5 cho 13,5. Vậy một bước cập nhật cho bảng $(4,\,13{,}5)$, khác với $(4,7)$, nên bảng đã cho chưa phải $v_*$. Lỗi dễ gặp là chỉ kiểm tra một thành phần không đổi rồi kết luận điểm bất động; phải kiểm tra toàn bảng. Cũng cần tách ba đại lượng: $Q_v$ là bảng điểm từ một bảng $v$ cụ thể, $T_*v$ là kết quả một lần cập nhật, còn $v_*$ là nghiệm của phương trình. Phần tiếp theo giữ chính sách cố định để tính bảng giá trị một cách có hệ thống.
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 10, 17–19; tham số điều chỉnh.</p>
+</aside>
+</section>
+
 </section>
 <section>
 <section data-slide-id="B00"><h2>MDP hai trạng thái</h2><img class="figure" src="img/lec-04/two-state.svg" alt="MDP hai trạng thái với bốn chuyển tiếp tất định."/><p>$\gamma=0{,}9$; chính sách đầu $\pi_0=(a,a)$.</p><aside class="notes">Nhãn cạnh là hành động và phần thưởng. Ví dụ được giữ xuyên suốt phần lặp chính sách.<p class="note-source"><strong>Nguồn:</strong> tr. 17.</p></aside></section>
