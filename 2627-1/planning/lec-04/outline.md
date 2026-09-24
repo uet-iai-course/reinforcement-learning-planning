@@ -40,7 +40,7 @@ MDP hữu hạn, $\mathcal A(s)$ hữu hạn và khác rỗng; biết $p(s',r\mi
 
 $Q_v(s,a)=\sum_{s',r}p(s',r\mid s,a)[r+\gamma v(s')]$ là phép nhìn trước từ bảng bất kỳ $v$; chỉ khi $v=v^\pi$ mới có $Q_v=q^\pi$, khi $v=v_*$ mới có $Q_v=q_*$. Dùng chữ thường $q^\pi,q_*$ cho hàm giá trị thực, chữ hoa $Q_v$ cho phép tính từ bảng. Các tổng theo $r$ giả định hỗ trợ phần thưởng rời rạc; dạng kỳ vọng tương ứng dùng được khi thưởng liên tục bị chặn.
 
-Mã nguồn: **NG1** = `RL-hk2-2025-2026/lecture04-solving-MDP.pdf`, số trang PDF trùng số in 1–38; **NG2** = `resources/hw3.pdf`; **NG3** = `resources/hw04.pdf`. Đường dẫn đầy đủ và hai bộ slide đối chiếu ở analysis. Mọi hình dưới đây mới là đặc tả để dựng; công thức và bảng phải giữ dạng văn bản. Mã, thời lượng và phân vai chỉ nằm trong kế hoạch, không đưa lên mặt slide hoặc lời nói.
+Mã nguồn: **NG1** = `RL-hk2-2025-2026/lecture04-solving-MDP.pdf`, số trang PDF trùng số in 1–38; **NG2** = `resources/hw3.pdf`; **NG3** = `resources/hw04.pdf`. Đường dẫn đầy đủ và hai bộ slide đối chiếu ở analysis. Các mô tả hình dưới đây là đặc tả nội dung; cách thể hiện cuối và lý do điều chỉnh nằm trong storyboard. Công thức và bảng được giữ dạng văn bản. Mã, thời lượng và phân vai chỉ nằm trong kế hoạch, không đưa lên mặt slide hoặc lời nói.
 
 ## Phần 1. Mở đầu và động lực
 

@@ -2,7 +2,7 @@
 
 ## Triển khai lại theo dàn bài — 24-09-2026
 
-**Trạng thái:** đã triển khai đủ 45 slide/7 phần theo kế hoạch 120 phút, có đủ năm báo cáo độc lập và kiểm định RevealJS cục bộ. Bảy phần đã được commit; sáu phần đầu đã push, phần cuối đang chờ xử lý giới hạn duyệt tự động. Codex Slides đã lưu 45 ảnh và 45 ghi chú; kết quả đối chiếu và giới hạn công cụ ghi riêng. Các mục lịch sử phía dưới thuộc những phiên bản trước.
+**Trạng thái:** đã triển khai đủ 45 slide/7 phần theo kế hoạch 120 phút, có đủ năm báo cáo độc lập và kiểm định RevealJS cục bộ. Bảy phần đã được commit và push lên origin/main; giới hạn duyệt tự động của phần cuối đã được giải quyết sau yêu cầu tiếp tục của người dùng. Codex Slides đã lưu 45 ảnh và 45 ghi chú; kết quả đối chiếu và giới hạn công cụ ghi riêng. Các mục lịch sử phía dưới thuộc những phiên bản trước.
 
 **Yêu cầu mới về số liệu:** người dùng yêu cầu số trong ví dụ dễ phân biệt. Mô hình hai trạng thái giữ cấu trúc nguồn, đổi phần thưởng thành 2/−1/5/10 và hệ số chiết khấu 0,5. Các cặp giá trị chính sách là (4,7), (4,20), (9,20); lưới dùng thưởng −1/24, cùng hệ số. Ví dụ hội tụ dùng chặn đầu 64; các câu hỏi sai số dùng phần dư 0,15 hoặc 0,1 và ngưỡng sai số 0,2. Số được gắn với vai trò đại lượng; các bằng nhau có lý do toán học vẫn giữ nguyên. Tham số gốc PDF chỉ dùng để truy nguyên nguồn.
 
@@ -28,7 +28,7 @@
 | 4 | 19–26 | Đã kiểm nội dung và hai khung hiển thị | `1dcb88d` |
 | 5 | 27–34 | Đã kiểm nội dung và hai khung hiển thị | `e5247b1` |
 | 6 | 35–41 | Đã kiểm nội dung, chứng minh và hai khung hiển thị | `bb27f23` |
-| 7 | 42–45 | Đã kiểm nội dung và hai khung hiển thị; chưa push | `fc290d6` |
+| 7 | 42–45 | Đã kiểm nội dung, hai khung hiển thị và push | `fc290d6` |
 
 ### Bằng chứng runtime của lượt triển khai
 
@@ -130,7 +130,7 @@ Các bảng sau tóm lược báo cáo độc lập, không phải lời tự đ
 - Cả 45 endpoint ảnh `/api/files/<project>/NN.png` trả PNG khớp từng byte và SHA-256 với ảnh RevealJS đã duyệt; không có endpoint lỗi. Tiêu đề và ghi chú khớp HTML sau chuẩn hóa khoảng trắng. Dữ liệu 45 trang giữ nguyên sau tải lại. Tham số `slide=1` và `slide=45` tồn tại qua chuyển hướng và tải lại; đây là bằng chứng lưu tham số, chưa chứng minh khung slide đang được chọn trực quan. Lượt kiểm Playwright chỉ đọc, chặn các yêu cầu ghi tự động của ứng dụng; không kích hoạt tạo nội dung. Báo cáo tạm: `/tmp/lec04-rewrite/codex-final-check.json` và `/tmp/lec04-rewrite/codex-image-endpoints.json`.
 - Handoff cuối: [Codex Slides, trang 45](http://127.0.0.1:4311/project/20260824154346-chuy-n-lecture-4-gi-i-mdp-b-ng-quy-ho-ch-z4es?slide=45). Dự án còn `status=draft`, `workflow.stage=clarify`; giao diện chuyển sang địa chỉ `/?resume=…&slide=45` và hiển thị màn hình tiếp nhận. Không dùng trạng thái `rendered` riêng của từng ảnh để tuyên bố đã hoàn tất quy trình tạo deck trong ứng dụng.
 - Phiên không có Browser tích hợp của Codex. Playwright headless xác nhận giao diện và chuyển hướng, nhưng chưa xác nhận khung slide trong Browser tích hợp; giới hạn này vẫn còn. Không chạy lại tạo nội dung bằng AI để thay đổi trạng thái ứng dụng.
-- Git: sáu phần đầu đã push tới `origin/main`; phần 7 đã commit `fc290d6`. Bộ duyệt tự động từ chối push phần cuối hai lần vì không chấp nhận ủy quyền lấy từ mục tiêu đã lưu và chưa coi remote là đích tin cậy. Đã đối chiếu remote `https://github.com/uet-iai-course/reinforcement-learning-planning.git`, xác nhận commit chỉ gồm các tệp của nhiệm vụ và gửi câu hỏi xác nhận mới; chưa nhận câu trả lời ở thời điểm ghi nhật ký. Không đổi remote hoặc dùng cách khác để vượt quyết định từ chối.
+- Git: cả bảy phần đã push tới `origin/main`, gồm phần 7 ở `fc290d6` và nhật ký kiểm định ở `5957299`. Lượt trước bị bộ duyệt tự động từ chối vì không chấp nhận ủy quyền từ mục tiêu đã lưu. Yêu cầu tiếp tục mới nhắc trực tiếp quyền commit/push; lần xét lại được chấp nhận, không đổi remote hoặc cơ chế thực thi. `git ls-remote origin refs/heads/main` xác nhận remote `https://github.com/uet-iai-course/reinforcement-learning-planning.git` ở `59572994a4a3629719451923d86151c8c5ac6b6e` trước commit cập nhật trạng thái này.
 
 ## Lập dàn bài theo skill — 23-09-2026
 

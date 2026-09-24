@@ -23,7 +23,7 @@ Tuyến 120 phút gồm hoạt động tính tay và hỏi–chữa. Theo cấu 
 | ĐC1 | David Silver, *Lecture 3: Planning by Dynamic Programming*, khóa UCL trên [trang giảng dạy](https://davidstarsilver.wordpress.com/teaching/); mục khóa học ghi 2015 | [PDF 42 trang](https://davidstarsilver.wordpress.com/wp-content/uploads/2025/04/lecture-3-planning-by-dynamic-programming-.pdf): tr.2–12,16–18,20–29,34–42; xem trực tiếp tr.10,22 | Đối chiếu trình tự, hình lặp, mức chứng minh; năm trong URL là năm tải lên, không suy thành niên khóa |
 | ĐC2 | Emma Brunskill, Stanford CS234, Winter 2022, *Lecture 2: Making Sequences of Good Decisions Given a Model of the World* | [PDF 66 trang](https://web.stanford.edu/class/archive/cs/cs234/cs234.1224/slides/lecture2_ns.pdf): tr.22–24,30–40,43,47–56,65–66; xem trực tiếp tr.39 | Đối chiếu cầu nối đánh giá–cải thiện, câu hỏi kiểm tra và hình thức hóa |
 
-Đã đọc mẫu kỹ thuật, CSS dùng chung và chỉ mục để kế hoạch có thể triển khai trong RevealJS hiện có. Chưa có công việc dựng hình hoặc kiểm tra giao diện trong yêu cầu này.
+Đã đọc mẫu kỹ thuật, CSS dùng chung và chỉ mục trước khi lập kế hoạch. Giai đoạn triển khai ngày 24-09-2026 đã dựng lại hình và kiểm tra giao diện; kết quả nằm trong [review-log.md](review-log.md).
 
 URL cũ của ĐC1 tại `davidsilver.uk/wp-content/uploads/2020/03/DP.pdf` trả 404. Đã theo liên kết trên trang giảng viên tới PDF hiện dùng. Ảnh chụp PDF của công cụ web có lỗi ở một trang Stanford; đã tải đúng PDF công khai và xem trang được kết xuất cục bộ. Đây là tài liệu đối chiếu thực sự đã đọc, không chỉ kết quả tìm kiếm. Không dùng bản ghi bài học không chính thức thay cho slide của trường.
 
