@@ -118,7 +118,7 @@ Lưới giữ bước thường thưởng −1, thay thưởng vào đích bằn
 
 Chặn hội tụ minh họa dùng sai số đầu64: $64(0{,}5)^6=1$, $64(0{,}5)^7=0{,}5$. Phần dư0,15 cho chặn sai số0,3; muốn sai số không quá0,2 thì dùng ngưỡng phần dư0,1. Mỗi số luôn gắn với tên đại lượng, không chỉ hiện số rời.
 
-Không ép mọi ô số phải khác nhau: các ô giống nhau do cùng khoảng cách, cùng bước thưởng, điểm bất động hoặc đẳng thức $q^\pi(s,\pi(s))=v^\pi(s)$ có ý nghĩa toán học. Chỉ các trùng hợp không phục vụ cơ chế mới cần tránh. Nguồn gốc vẫn được đối chiếu: NG1 dùng thưởng1/0/2/3, hệ số0,9 và lưới thưởng đích10; bộ số mới là thay đổi được người dùng yêu cầu. Các bài tập chỉ dẫn trong hw3.pdf giữ nguyên tham số riêng của tài liệu đó.
+Không ép mọi ô số phải khác nhau: các ô giống nhau do cùng khoảng cách, cùng bước thưởng, điểm bất động hoặc đẳng thức $q^\pi(s,\pi(s))=v^\pi(s)$ có ý nghĩa toán học. Chỉ các trùng hợp không phục vụ cơ chế mới cần tránh. Nguồn gốc vẫn được đối chiếu: NG1 dùng thưởng1/0/2/3, hệ số 0,9 và lưới thưởng đích 10; bộ số mới là thay đổi được người dùng yêu cầu. Các bài tập chỉ dẫn trong hw3.pdf giữ nguyên tham số riêng của tài liệu đó.
 
 ## 7. Danh mục hình thức hóa ở mức năm 3
 
@@ -154,7 +154,7 @@ Gợi ý suy diễn: dùng $T^{\pi_v}v=T_*v$, thêm và bớt hai hạng tại $
 | Tài sản nguồn | Điều phải giữ | Đặc tả đích |
 |---|---|---|
 | NG1 tr.13, chu trình đánh giá–cải thiện | Chiều hai mũi tên, giá trị/chính sách ở mỗi bước | Sơ đồ SVG hai khối; thêm nhánh dừng ổn định ở thuật toán |
-| NG1 tr.17, MDP hai trạng thái | Hai vòng tự khép, hai cạnh chéo, nhãn $a/1,b/0,a/2,b/3$, $\gamma=0{,}9$ | Một SVG dùng lại, cấu trúc nguồn giữ nguyên; thay thưởng thành 2/−1/5/10 và hệ số0,5 theo yêu cầu người dùng; dùng nhãn cùng độ dày cạnh |
+| NG1 tr.17, MDP hai trạng thái | Hai vòng tự khép, hai cạnh chéo, nhãn $a/1,b/0,a/2,b/3$, $\gamma=0{,}9$ | Một SVG dùng lại, cấu trúc nguồn giữ nguyên; thay thưởng thành 2/−1/5/10 và hệ số 0,5 theo yêu cầu người dùng; dùng nhãn cùng độ dày cạnh |
 | NG1 tr.17–19, bảng và phép tính | Đúng bốn chuyển và ba chính sách | Bảng HTML/công thức, không chuyển thành ảnh; tách rõ đánh giá lại $\pi_1$ |
 | NG1 tr.25–28, lưới và bảng lặp | Năm ô, đích $c_5$, thưởng, dữ kiện từng lượt | SVG lưới và bảng HTML riêng; hiện từng lượt, không chụp raster nguồn |
 | NG1 tr.29, so sánh | Khác nhau giữa đánh giá đầy đủ và một phép Bellman tối ưu | Bảng ba tiêu chí có thao tác/chi phí cụ thể |

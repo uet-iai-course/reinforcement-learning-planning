@@ -1,6 +1,6 @@
 # Dàn bài Bài 04: Giải MDP bằng quy hoạch động
 
-**Trạng thái:** đang triển khai từ ngày 24-09-2026 theo dàn bài 45 slide đã duyệt. Tiến độ từng phần và kiểm định ghi trong review-log; chưa coi toàn bộ HTML là đã đồng bộ cho tới kiểm định cuối.
+**Trạng thái:** đã triển khai đủ 45 slide trong HTML và ghi chú diễn giả, với bộ số điều chỉnh theo yêu cầu người dùng. Thời lượng 120 phút là kế hoạch giảng; chưa có số đo từ buổi chạy thử với sinh viên. Kết quả rà và giới hạn công cụ ghi trong review-log.
 
 **Quy mô:** 45 slide, 120 phút, trung bình 2 phút 40 giây/slide. Thời gian đã gồm giải thích, tính tay và bảy lượt hỏi–chữa. Theo quy ước học phần, 30 phút chữa bài còn lại nằm ngoài tuyến này; không chuẩn bị chương trình hoặc notebook.
 
@@ -126,7 +126,7 @@ Nhận nhu cầu lựa chọn dài hạn; phân biệt phép nhìn trước từ
 - **Ghi chú triển khai:** $v=(4,7)$ là giá trị của $\pi_0=(a,a)$; vì vậy $Q_v=q^{\pi_0}$, còn $q_*$ chưa được tính. Các ô 4 và 7 lặp lại $v$ vì đó là hành động của chính sách đang đánh giá.
 - **Thời lượng:** 3 phút.
 
-#### L04-S08 — Giá trị tối ưu của trạng thái và hành động
+#### L04-S08 — Giá trị tối ưu
 
 - **Vai trò và mục tiêu:** Định nghĩa sau trực giác; MT1.
 - **Luận điểm và nội dung:** Cho $\Pi$ là lớp chính sách hợp lệ, có thể phụ thuộc lịch sử. Định nghĩa $v_*(s)=\sup_{\pi\in\Pi}v^\pi(s)$ và $q_*(s,a)=\sup_{\pi\in\Pi}q^\pi(s,a)$; $v_*(s)=\max_{a\in\mathcal A(s)}q_*(s,a)$.
@@ -335,7 +335,7 @@ Nhận giá trị của chính sách; dùng một bước nhìn trước để �
 
 Nhận giới hạn chi phí của đánh giá chính sách đầy đủ. Dùng lưới năm ô để thấy cập nhật cục bộ truyền thông tin về phần thưởng; sau đó mới viết thuật toán tổng quát. **23 phút.**
 
-#### L04-S27 — Cập nhật giá trị khi chưa đánh giá xong
+#### L04-S27 — Cập nhật từ bảng giá trị hiện có
 
 - **Vai trò và mục tiêu:** Vấn đề và trực giác mở phần; MT4.
 - **Luận điểm và nội dung:** Lặp giá trị cập nhật tốt nhất từ bảng đang có, thay cho đánh giá đầy đủ từng chính sách. Lưới $c_1,\ldots,c_5$: đi trái/phải tất định; $c_5$ kết thúc; bước thường thưởng $-1$, riêng $c_4\to c_5$ thưởng 24; $\gamma=0{,}5$.

@@ -1,6 +1,6 @@
-# Storyboard đề xuất Bài 04
+# Storyboard Bài 04
 
-Kế hoạch 45 slide/120 phút, đang triển khai từ ngày 24-09-2026. Các mã L04-S01–L04-S45 được đồng bộ từng phần; tiến độ và kiểm định nằm trong review-log. Nội dung chi tiết, dữ kiện, nguồn, ghi chú và đáp án ở [outline.md](outline.md); phân tích nguồn ở [analysis.md](analysis.md).
+Đã triển khai 45 slide theo kế hoạch 120 phút ngày 24-09-2026. Mã L04-S01–L04-S45 khớp HTML; kiểm định và lịch sử từng phần nằm trong review-log. Nội dung chi tiết, dữ kiện, nguồn, ghi chú và đáp án ở [outline.md](outline.md); phân tích nguồn ở [analysis.md](analysis.md).
 
 ## Bản đồ các phần và chức năng
 
@@ -48,7 +48,7 @@ Mỗi hàng chỉ bổ sung lý do và tác động biên tập; không thay đ�
 | L04-S05 | Câu hỏi: giá trị của một bước nhìn trước | Kiểm tra phép chiết khấu và dùng trạng thái kế tiếp đã học ở Bài 03. | thêm: kiểm tra ngay phần vừa học | L04-S04 → L04-S06 | 2 |
 | L04-S06 | Hành động đầu và phần tiếp diễn | Tách hành động đầu khỏi chính sách tiếp diễn để chuẩn bị tối ưu. | thêm: làm rõ nhu cầu hoặc dữ kiện trước ký hiệu | L04-S05 → L04-S07 | 2 |
 | L04-S07 | Điểm của hành động từ bảng giá trị | Biến bốn cạnh của ví dụ thành bảng điểm kiểm tra được. | thêm: làm rõ nhu cầu hoặc dữ kiện trước ký hiệu | L04-S06 → L04-S08 | 3 |
-| L04-S08 | Giá trị tối ưu của trạng thái và hành động | Đặt tên đại lượng tối ưu và phân biệt với bảng hiện có. | giữ/gộp: bảo toàn ý và bỏ lặp | L04-S07 → L04-S09 | 3 |
+| L04-S08 | Giá trị tối ưu | Đặt tên đại lượng tối ưu và phân biệt với bảng hiện có. | giữ/gộp: bảo toàn ý và bỏ lặp | L04-S07 → L04-S09 | 3 |
 | L04-S09 | Bellman tối ưu cho giá trị trạng thái | Chốt đúng thứ tự kỳ vọng môi trường rồi chọn hành động. | tách/sửa: giảm bước nhảy hoặc làm rõ giả thiết | L04-S08 → L04-S10 | 3 |
 | L04-S10 | Giá trị hành động và chính sách tham lam | Nối giá trị hành động với hành động của chính sách cần tìm. | tách/sửa: giảm bước nhảy hoặc làm rõ giả thiết | L04-S09 → L04-S11 | 2 |
 | L04-S11 | Hai toán tử Bellman | Tạo hai phép biến đổi bảng làm đầu vào cho thuật toán. | giữ/gộp: bảo toàn ý và bỏ lặp | L04-S10 → L04-S12 | 2 |
@@ -67,7 +67,7 @@ Mỗi hàng chỉ bổ sung lý do và tác động biên tập; không thay đ�
 | L04-S24 | Quy trình lặp chính sách | Ghép hai khâu thành thuật toán chính xác có thể lần theo. | tách/sửa: giảm bước nhảy hoặc làm rõ giả thiết | L04-S23 → L04-S25 | 4 |
 | L04-S25 | Chính sách ổn định và dừng hữu hạn | Nối ổn định chính sách với hữu hạn và tối ưu. | giữ/gộp: bảo toàn ý và bỏ lặp | L04-S24 → L04-S26 | 2 |
 | L04-S26 | Câu hỏi: kiểm tra bước cải thiện | Kiểm tra một lần đổi hành động và vai trò của quy tắc giữ hòa. | thêm: kiểm tra ngay phần vừa học | L04-S25 → L04-S27 | 3 |
-| L04-S27 | Cập nhật giá trị khi chưa đánh giá xong | Nêu nhu cầu giảm chi phí đánh giá rồi chuẩn bị lưới minh họa. | giữ/gộp: bảo toàn ý và bỏ lặp | L04-S26 → L04-S28 | 2 |
+| L04-S27 | Cập nhật từ bảng giá trị hiện có | Nêu nhu cầu giảm chi phí đánh giá rồi chuẩn bị lưới minh họa. | giữ/gộp: bảo toàn ý và bỏ lặp | L04-S26 → L04-S28 | 2 |
 | L04-S28 | Một lượt quét trên lưới | Cho một lượt quét tự tính được trước ký hiệu lặp giá trị. | tách/sửa: giảm bước nhảy hoặc làm rõ giả thiết | L04-S27 → L04-S29 | 3 |
 | L04-S29 | Giá trị lan dần từ đích | Thể hiện thông tin từ đích lan tới trạng thái xa. | tách/sửa: giảm bước nhảy hoặc làm rõ giả thiết | L04-S28 → L04-S30 | 3 |
 | L04-S30 | Quy tắc lặp giá trị | Khái quát các lượt lưới thành phép lặp trên mô hình bất kỳ. | tách/sửa: giảm bước nhảy hoặc làm rõ giả thiết | L04-S29 → L04-S31 | 3 |
@@ -154,3 +154,23 @@ Phân tích dưới đây cụ thể hóa dàn bài cho khung 1280 × 720. Hai b
 | L04-S45 | Phiếu kết quả có phần dư và chính sách, kèm ba câu đánh giá kết luận. | Kiểm việc phân biệt sai số giá trị, tối ưu chính sách và chứng nhận ổn định của lặp chính sách. |
 
 Bộ số mới ngày 24-09-2026 theo yêu cầu người dùng: hai trạng thái dùng thưởng 2/−1/5/10 và hệ số0,5; lưới dùng thưởng −1/24 và cùng hệ số. Mọi thay tham số được ghi ở analysis mục6 và outline; không đổi mạch, số slide hoặc thời lượng.
+
+## Quyết định bố cục sau triển khai
+
+Các quyết định dưới đây cụ thể hóa hoặc thay phương án hình ban đầu sau khi kiểm khung 1280×720 và 960×540; không đổi thứ tự 45 trang, nội dung toán học hay thời lượng.
+
+| Slide | Cách thể hiện cuối | Lý do và ảnh hưởng |
+|---|---|---|
+| 01 | Tiêu đề, đầu vào và đầu ra; bỏ sơ đồ lặp | Dành diện tích cho tên bài và nhiệm vụ |
+| 06 | Cây SVG một bước, toàn chiều ngang | Hai nhánh dùng cùng quy ước phần tiếp diễn; nhãn đủ lớn |
+| 08–11 | Định nghĩa, công thức KaTeX và các thẻ ngắn | Bỏ sơ đồ lặp lại cùng công thức; giữ một luận điểm/trang |
+| 13 | SVG chỉ giữ hai cạnh của chính sách luôn a | Phân biệt mô hình đầy đủ với mô hình theo chính sách |
+| 16,24,31 | Quy trình bốn bước HTML, đủ các nhánh trả | Công thức đọc được; tránh đặt ký hiệu vào SVG hoặc ba cột chật |
+| 19–21 | Thẻ so sánh và bảng chính sách–giá trị | Nhãn phân biệt giá trị 7, điểm nhìn trước 13,5 và giá trị mới 20 |
+| 28–29,34 | Bảng HTML có trạng thái và chỉ số lượt | Không dùng màu làm tín hiệu duy nhất; đọc số từ đúng bảng cũ |
+| 36–37 | Công thức lớn, hai nhánh lập luận; chứng minh chi tiết trong notes | Tách trực giác, định lý và suy diễn; giữ mức năm 3 |
+| 38 | Đồ thị SVG từ Matplotlib, trục tung logarit cơ số 2, nhãn 24 đơn vị | Cả mốc 1 và 0,5 đọc rõ; 64 là giả định minh họa độc lập |
+| 40 | Hai thẻ dữ kiện và SVG gộp trạng thái; bỏ caption lặp | Công thức 324 ở KaTeX, không chồng chân trang |
+| 42–45 | Bảng tổng hợp rộng, lời giải có nhãn đại lượng, bài tập và câu hỏi cuối | Thu hồi bài toán mở đầu; giữ công thức cùng giá trị khi xuống dòng |
+
+Ghi chú 29/34 bổ sung tên ô nguồn của từng bảng sau khi reviewer nhầm lượt; số đúng không đổi. Các nguồn có tham số điều chỉnh được ghi rõ trong notes. Bảy slide kiểm tra vẫn là 05/12/18/26/34/41/45; đáp án hiện sau câu hỏi hoặc nằm trong notes. Không thêm code demo, notebook, khái niệm trọng tâm mới hoặc phần thứ tám.

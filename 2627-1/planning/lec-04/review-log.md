@@ -2,7 +2,7 @@
 
 ## Triển khai lại theo dàn bài — 24-09-2026
 
-**Trạng thái:** đang thực hiện bảy phần theo dàn bài 45 slide/120 phút. Mỗi phần được kiểm tra rồi commit và push theo ủy quyền của người dùng. Chưa coi toàn bài là hoàn tất trước khi đủ năm báo cáo độc lập và kiểm định toàn bộ bản cuối. Các mục lịch sử phía dưới thuộc những phiên bản trước.
+**Trạng thái:** đã triển khai đủ 45 slide/7 phần theo kế hoạch 120 phút, đã đủ năm báo cáo độc lập và kiểm định RevealJS cục bộ. Mỗi phần được commit/push theo ủy quyền. Đang hoàn tất bản đối chiếu trực quan trong Codex Slides; kết quả công cụ ghi riêng. Các mục lịch sử phía dưới thuộc những phiên bản trước.
 
 **Yêu cầu mới về số liệu:** người dùng yêu cầu số trong ví dụ dễ phân biệt. Mô hình hai trạng thái giữ cấu trúc nguồn, đổi phần thưởng thành 2/−1/5/10 và hệ số chiết khấu 0,5. Các cặp giá trị chính sách là (4,7), (4,20), (9,20); lưới dùng thưởng −1/24, cùng hệ số. Ví dụ hội tụ dùng chặn đầu 64; các câu hỏi sai số dùng phần dư 0,15 hoặc 0,1 và ngưỡng sai số 0,2. Số được gắn với vai trò đại lượng; các bằng nhau có lý do toán học vẫn giữ nguyên. Tham số gốc PDF chỉ dùng để truy nguyên nguồn.
 
@@ -12,7 +12,7 @@
 
 **Kế hoạch được chấp nhận có điều chỉnh:** viết và kiểm từng phần theo thứ tự1–7; rà các phần đã thay bằng các vai phù hợp, kiểm hình và toán trước mỗi commit. Khi đủ bản nháp45 slide, chạy kiểm định storyboard và đủ năm vai độc lập trên phạm vi toàn bài; giao writer chỉnh sửa riêng rồi rà lại phần bị ảnh hưởng. Bản trung gian giữ nội dung các phần chưa viết lại, không dùng trang giữ chỗ. Những bản trung gian chưa phải sản phẩm cuối đã qua toàn bộ kiểm định.
 
-**Kiểm soát chất lượng tác tử:** planner diễn đạt nhầm “lỗi slide10,11”; thực tế lỗi cũ là gọi cặp giá trị(10,11) tối ưu. Hai lượt reader về bố cục lẫn nhiều ngôn ngữ, không được chép vào sản phẩm. Điều phối viên biên tập lại đủ45 quyết định bố cục bằng tiếng Việt trong storyboard. Bản writer mở đầu đầu tiên có chữ SVG quá nhỏ, công thức bên trong SVG và nội dung lặp; đã yêu cầu soạn lại, đồng thời áp dụng bộ số mới.
+**Kiểm soát chất lượng tác tử:** planner diễn đạt nhầm “lỗi slide10,11”; thực tế lỗi cũ là gọi cặp giá trị(10,11) tối ưu. Hai lượt reader về bố cục lẫn nhiều ngôn ngữ, không được chép vào sản phẩm. Điều phối viên biên tập lại đủ 45 quyết định bố cục bằng tiếng Việt trong storyboard. Bản writer mở đầu đầu tiên có chữ SVG quá nhỏ, công thức bên trong SVG và nội dung lặp; đã yêu cầu soạn lại, đồng thời áp dụng bộ số mới.
 
 **Kiểm số độc lập:** đã tính bằng phân số chính xác cả bốn chính sách của MDP hai trạng thái, chuỗi cải thiện, bảng q tối ưu, ba lượt đánh giá, năm lượt lưới, ví dụ co và ngưỡng sai số. Reviewer DeepSeek đề nghị sai rằng q tối ưu(s0,a)=4; bác bỏ vì phải dùng phần tiếp diễn tối ưu9, nên 2+0,5×9=6,5. Giá trị4 thuộc chính sách luôn a. Góp ý này cho thấy cần gắn nhãn phần tiếp diễn trên mặt slide, không sửa số đúng theo kết luận sai của tác tử.
 
@@ -27,8 +27,8 @@
 | 3 | 13–18 | Đã kiểm nội dung và hai khung hiển thị | `8d0dd23` |
 | 4 | 19–26 | Đã kiểm nội dung và hai khung hiển thị | `1dcb88d` |
 | 5 | 27–34 | Đã kiểm nội dung và hai khung hiển thị | `e5247b1` |
-| 6 | 35–41 | Đã kiểm nội dung, chứng minh và hai khung hiển thị | Commit hội tụ trong lịch sử Git |
-| 7 | 42–45 | Chưa triển khai | — |
+| 6 | 35–41 | Đã kiểm nội dung, chứng minh và hai khung hiển thị | `bb27f23` |
+| 7 | 42–45 | Đã kiểm nội dung và hai khung hiển thị | Commit tổng hợp trong lịch sử Git |
 
 ### Bằng chứng runtime của lượt triển khai
 
@@ -47,7 +47,7 @@
 - Writer lần hai và patch: requested/observed `z-ai/glm-5.3-flash`, provider OpenRouter. Bộ số mới được áp dụng; bỏ hình lặp ở trang đầu, đưa câu hỏi trước các fragment đáp án, sửa nhãn giá trị tiếp diễn.
 - Rà sinh viên: requested/observed `z-ai/glm-5.3-flash`; rà toán: requested/observed `deepseek/deepseek-v4-flash-0731`; provider OpenRouter. Hai báo cáo xác nhận phép tính 4, 9 và 2,5. Chấp nhận đề nghị gắn giá trị (4,7) với chính sách luôn chọn a. Bác bỏ đề nghị tách đáp án thành slide riêng: đáp án đã là fragment, kiểm trình duyệt xác nhận câu hỏi hiện trước. Sáu mục nội dung sau phần mở đầu tạo đúng bảy phần, không thiếu mục. Thưởng và chuyển trạng thái là hai dữ kiện mô hình; bảng v là đầu vào riêng, cách hỏi không sai. Biên tập câu phân vai bốn số thành lời giảng trực tiếp.
 - Reviewer storyboard lần thu gọn: requested/observed `z-ai/glm-5.3-flash`, provider OpenRouter. Chấp nhận sửa số27 tồn dư tại ghi chú bố cục S21 thành giá trị20. Bác bỏ nhầm “thưởng24” thành “24 ô”: lưới vẫn năm ô. Chặn đầu64 là giả định minh họa đã ghi rõ, không phải chặn tự nhiên của MDP; giữ ví dụ để tính được mốc7 lượt.
-- Kiểm kỹ thuật và quan sát đủ năm trang: không tràn, chồng lấn, hỏng tài nguyên, lỗi KaTeX hoặc yêu cầu mạng ngoài ở1280×720 và960×540. Bàn phím và cửa sổ ghi chú hoạt động. Sửa ngắt dòng tách số7 khỏi nhãn. SVG hai trạng thái có mô tả, nhãn và chiều mũi tên đúng. Bảng S04 cỡ30,24px và dòng học phần27,55px đọc được trong ảnh đã xem; không dùng chữ nhỏ hơn0,65em.
+- Kiểm kỹ thuật và quan sát đủ năm trang: không tràn, chồng lấn, hỏng tài nguyên, lỗi KaTeX hoặc yêu cầu mạng ngoài ở 1280×720 và 960×540. Bàn phím và cửa sổ ghi chú hoạt động. Sửa ngắt dòng tách số7 khỏi nhãn. SVG hai trạng thái có mô tả, nhãn và chiều mũi tên đúng. Bảng S04 cỡ30,24px và dòng học phần27,55px đọc được trong ảnh đã xem; không dùng chữ nhỏ hơn0,65em.
 - Phần còn lại trong commit này giữ bản trung gian; các số cũ ở phần chưa triển khai chưa được coi là bản cuối đồng bộ.
 
 ### Rà phần Bellman tối ưu
@@ -61,7 +61,7 @@
 
 - Writer và reviewer sinh viên: requested/observed `z-ai/glm-5.3-flash`; reviewer toán: requested/observed `deepseek/deepseek-v4-flash-0731`; provider OpenRouter. Xác nhận hệ cho (4,7), các lượt (2,5) rồi (3,6), cập nhật tại chỗ (2,6), câu hỏi (3,5;6,5). Các tiêu đề “lỗi” trong báo cáo toán đều tự xác nhận công thức đúng, không có sửa toán bắt buộc.
 - Chấp nhận làm rõ trạng thái kết thúc giữ giá trị0 và định nghĩa n,m trong chi phí. Thay bố cục ba cột thuật toán bằng bốn bước toàn chiều ngang; tách từng phương trình đáp án để không ngắt sau dấu nhân. Hình chỉ giữ hai cạnh a để tập trung vào chính sách cố định.
-- Kiểm sáu trang mới cùng biên hai trang trước ở1280×720 và960×540: không lỗi kỹ thuật. Sau chỉnh ngắt dòng, kiểm lại14–18; không tràn/chồng/KaTeX/tài nguyên; đã xem lại16–18. Phép tính tại chỗ dùng chữ thân bài; chú thích điều kiện hội tụ vẫn đọc được.
+- Kiểm sáu trang mới cùng biên hai trang trước ở 1280×720 và 960×540: không lỗi kỹ thuật. Sau chỉnh ngắt dòng, kiểm lại14–18; không tràn/chồng/KaTeX/tài nguyên; đã xem lại16–18. Phép tính tại chỗ dùng chữ thân bài; chú thích điều kiện hội tụ vẫn đọc được.
 
 ### Rà phần lặp chính sách
 
@@ -81,12 +81,12 @@
 
 - Writer và reviewer sinh viên: requested/observed `z-ai/glm-5.3-flash`; reviewer toán: requested/observed `deepseek/deepseek-v4-flash-0731`; provider OpenRouter. Bản writer đầu đã bị điều phối viên bác ở chứng minh S37: bất đẳng thức một phía không cho đẳng thức chuẩn và không thể kết luận mọi chính sách có cùng giá trị. Giao patch riêng hai khối36–37; thay bằng chặn theo toàn lịch sử, hạng đuôi chiết khấu và chính sách tham lam đạt cận. Hai vai rà bản sửa xác nhận lập luận đúng.
 - Chặn64 là giả định minh họa độc lập; chạm ngưỡng1 ở lượt6 và nhỏ hơn1 ở lượt7. Làm rõ sai số thực tế có thể nhỏ hơn cận, còn phần dư trong câu hỏi đã được cho cụ thể. Chặn bảng mới của đánh giá chính sách giữ đúng hệ số gamma.
-- SVG hội tụ vẽ bằng Matplotlib từ số tính trực tiếp, trục logarit cơ số2 có tên trục và đường ngưỡng. Tăng toàn bộ nhãn lên24 đơn vị trong SVG để đọc rõ. Hình CartPole mới thể hiện hai điểm liên tục gộp cùng ô rồi còn phải xác định mô hình; công thức324 giữ dạng KaTeX.
+- SVG hội tụ vẽ bằng Matplotlib từ số tính trực tiếp, trục logarit cơ số 2 có tên trục và đường ngưỡng. Tăng toàn bộ nhãn lên24 đơn vị trong SVG để đọc rõ. Hình CartPole mới thể hiện hai điểm liên tục gộp cùng ô rồi còn phải xác định mô hình; công thức324 giữ dạng KaTeX.
 - Kiểm bảy trang×hai viewport phát hiện caption S40 sát chân trang và công thức S36 ngắt dòng. Bỏ caption lặp, tách giả thiết khỏi công thức; kiểm lại không tràn/chồng/lỗi tài nguyên hoặc KaTeX. Đã xem bản đồ thị chữ lớn và hình gộp trạng thái sau sửa.
 
 ### Năm vai độc lập và chỉnh sửa sau rà toàn bài
 
-Bản nháp đủ45 trang được đóng gói theo phạm vi: mỗi vai sinh viên, RL, toán, giảng dạy nhận hai gói01–26 và27–45 (23–29 nghìn ký tự/gói); vai mạch viết nhận toàn45 mặt slide và phần đầu/cuối lời giảng (43 nghìn ký tự). Đây là rà toàn bộ nội dung theo bảng bao phủ, không lấy báo cáo một phần làm bằng chứng toàn bài. Chín tiến trình riêng dùng profile review-full, no-tools, cùng ảnh chụp nội dung trước chỉnh sửa cuối.
+Bản nháp đủ 45 trang được đóng gói theo phạm vi: mỗi vai sinh viên, RL, toán, giảng dạy nhận hai gói01–26 và27–45 (23–29 nghìn ký tự/gói); vai mạch viết nhận toàn45 mặt slide và phần đầu/cuối lời giảng (43 nghìn ký tự). Đây là rà toàn bộ nội dung theo bảng bao phủ, không lấy báo cáo một phần làm bằng chứng toàn bài. Chín tiến trình riêng dùng profile review-full, no-tools, cùng ảnh chụp nội dung trước chỉnh sửa cuối.
 
 | Vai | Phạm vi | requested_model = observed_model | provider | Kết quả sau phân xử |
 |---|---|---|---|---|
@@ -99,6 +99,28 @@ Bản nháp đủ45 trang được đóng gói theo phạm vi: mỗi vai sinh vi
 **Phân xử số:** v4(c1)=1,25, nên hành động trái ở lượt5 cho−1+0,5×1,25=−0,375; không dùng v3(c1)=−1,75. Với v3=(−1,75;4,5;11;24;0), T*v3=v4=(1,25;4,5;11;24;0), phần dư bằng3, không phải6. Tính lại bằng phân số chính xác; không thay số đúng bằng đề nghị sai. Các gợi ý tùy chọn lặp lại điều đã có trong notes không làm tăng số slide.
 
 **Tác tử chỉnh sửa riêng:** writer requested/observed z-ai/glm-5.3-flash, provider OpenRouter, sửa đúng hai khối notes29/34 trong thư mục cô lập sau khi đủ năm báo cáo. Bổ sung tên bảng và ô nguồn ở từng phép tính; không đổi mặt slide, thứ tự hoặc số. Reviewer DeepSeek và GLM được gọi lại với đầy đủ bảng/lân cận27–36; cả hai xác nhận v5=v4, phần dư3 và không đổi mạch câu hỏi. Mạch viết được rà lại các trang27–36 và40–45 sau chỉnh cục bộ.
+
+### Rà phần tổng hợp và kiểm định bản ghép
+
+- Writer và reviewer sinh viên: requested/observed z-ai/glm-5.3-flash; reviewer toán: requested/observed deepseek/deepseek-v4-flash-0731; provider OpenRouter. Điều phối viên phát hiện bản đầu dùng nhầm hệ số2gamma/(1−gamma) ở đáp án45, dù gamma0,5 vô tình cho đúng số2. Đã yêu cầu sửa thành chặn phần dư/(1−gamma), rồi hai vai rà bản sửa xác nhận đúng. Patch đạt giới hạn lượt công cụ sau khi đã ghi thay đổi; điều phối viên đối chiếu tệp thật và chỉ chấp nhận phần đã kiểm, không coi mã thoát lỗi là bằng chứng hoàn tất.
+- Bảng tổng hợp42 chuyển toàn chiều ngang;43 gắn9 với giá trị tối ưu tại s0;45 nhắc phần dư theo chuẩn vô cùng. Hai điểm ngắt giữa dấu bằng và số được tách thành dòng chủ động; kiểm lại41–45 không còn lỗi hiển thị. Nguồn hw3.pdf được đặt trực tiếp trên trang bài tập.
+- Chỉ mục của Bài 04 giữ đúng một liên kết đến HTML hoàn chỉnh. Bỏ liên kết đến lecture-note.md còn theo bộ số cũ; không xóa tệp đó hoặc đổi tài nguyên của các bài khác. Ghi chú diễn giả mới nằm đầy đủ trong HTML.
+- Bản ghép 45 mã liên tục, 7 phần có số trang5/7/6/8/8/7/4. Outline/storyboard khớp từng mã và thời lượng10/18/17/23/23/20/9, tổng 120 phút. Đây là dự toán, chưa phải kết quả chạy thử với lớp.
+- Đã duyệt cả 45 trang, 90 lượt kiểm ở 1280×720 và 960×540: không lỗi nghiêm trọng về tràn/chồng/cắt/công thức/tài nguyên. Bàn phím, ghi chú và nguồn hoạt động; không phụ thuộc mạng cốt lõi. Các bài và mẫu đều dùng lecture-slide.css; CSS chung không bị sửa. Các số và ngưỡng được tính lại bằng phân số chính xác.
+-842 công thức trong năm tệp Markdown planning qua KaTeX cục bộ: không lỗi; đường dẫn cục bộ tồn tại, dấu công thức đúng quy ước. SVG đều có role và mô tả; không nhúng raster vào RevealJS. Nhãn nhỏ nhất của đồ thị đã tăng lên30,72px khi hiển thị1280.
+- Tự kiểm no-ai-slop/eval.md: giữ ý và dữ kiện có căn cứ, lời giảng trực tiếp, bỏ chỉ dẫn người soạn và lời dẫn rỗng; không dùng câu hỏi tu từ/cảm thán/ca tụng. Rà theo quill xác nhận vấn đề→trực giác→ví dụ→hình thức→ứng dụng→kiểm tra, các ranh giới và phần kết nối lại mở đầu. Không tạoquill.json.
+
+### Năm báo cáo cuối — tóm lược sau phân xử
+
+Các bảng sau tóm lược báo cáo độc lập, không phải lời tự đánh giá của tác tử soạn. Bằng chứng runtime và phạm vi của từng vai đã ghi ở trên.
+
+| Vai | Mức độ | Slide | Vấn đề/bằng chứng | Quyết định |
+|---|---|---|---|---|
+| Sinh viên | Nhẹ, đề nghị sai | 29 | Đề nghị thay−0,375 bằng−1,875 do đọc v3 thay v4 khi tính lượt5 | Giữ số; bổ sung tên bảng/ô nguồn; GLM rà lại27–36 xác nhận đúng |
+| RL | Đề nghị bắt buộc bị bác | 34 | Đề nghị phần dư6; báo cáo trộn v2 vàv3 trong cùng lượt | T*v3=v4, hiệu lớn nhất3; DeepSeek rà lại toàn phép tính xác nhận |
+| Toán | Không còn lỗi | 01–45 | Kiểm mô hình, chuỗi chính sách, lưới, chứng minh, ngưỡng và bảng trả; kết luận cuối PASS | Giữ nội dung; tự tính bằng phân số để đối chiếu |
+| Giảng dạy | Không còn lỗi | 01–45 | Ví dụ đi trước hình thức; đơn điệu trước cải thiện; co trước Banach/phần dư | Giữ chu trình và mức chứng minh |
+| Mạch viết | Không còn lỗi | 01–45 | Mở bài hai trạng thái được giải ở43; cầu nối giữa các phần và bảy câu hỏi đầy đủ | Giữ thứ tự; rà lại27–36,40–45 sau chỉnh cục bộ: PASS |
 
 ## Lập dàn bài theo skill — 23-09-2026
 

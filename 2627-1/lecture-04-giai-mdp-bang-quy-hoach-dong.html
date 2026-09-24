@@ -788,12 +788,90 @@ Tính theo chặn vừa suy ra: sai số bị chặn bởi $\rho(v)/(1-\gamma)=0
 </section>
 
 </section>
-<section>
-<section data-slide-id="D08"><h2>Chọn công cụ theo dữ kiện</h2><table><tr><th>Mục tiêu</th><th>Lựa chọn</th></tr><tr><td>Biết mô hình, đánh giá $\pi$</td><td>Lặp $T^\pi$ hoặc giải hệ</td></tr><tr><td>Biết mô hình, tối ưu</td><td>PI chính xác hoặc VI</td></tr><tr><td>VI cần chặn mất mát</td><td>Kiểm phần dư; trích từ cùng $v$</td></tr><tr><td>Không biết mô hình</td><td>Ước lượng từ trải nghiệm</td></tr></table><div class="box">MDP hữu hạn và mô hình chuyển–thưởng đã biết cho phép tính giá trị và chính sách tối ưu. Khi không biết mô hình, ta chuyển sang ước lượng từ trải nghiệm ở Bài 05.</div><p>Nhấn ↓ để làm bài tập.</p><aside class="notes">Thu hồi đầu vào và đầu ra ở P01. PI và VI thuộc nhánh biết mô hình. Bài 05 bắt đầu nhánh không biết mô hình và phải ước lượng từ trải nghiệm.<p class="note-source"><strong>Nguồn:</strong> Tổng hợp tr. 2–38 và phần giá trị hành động tối ưu.</p></aside></section>
-<section data-slide-id="X09"><h2>Bài tập 9: một lượt VI</h2><p>$\mathcal S=\{s_0,s_1,s_2\}$, $\mathcal A=\{a,b\}$, $\gamma=0{,}9$, $V_0=0$.</p><table><tr><th>$(s,a)$</th><th>Kết quả $(p,r,s')$</th></tr><tr><td>$(s_0,a)$</td><td>$0{,}5:(1,s_0);\ 0{,}5:(-1,s_2)$</td></tr><tr><td>$(s_0,b)$</td><td>$0{,}5:(0,s_1);\ 0{,}5:(2,s_2)$</td></tr><tr><td>$(s_1,a)$</td><td>$(1,2,s_0)$</td></tr><tr><td>$(s_1,b)$</td><td>$(1,-1,s_1)$</td></tr><tr><td>$(s_2,a)$</td><td>$(1,2,s_1)$</td></tr><tr><td>$(s_2,b)$</td><td>$(1,0,s_0)$</td></tr></table><div class="check"><strong>Câu hỏi:</strong> tính $V_1$, rồi trích chính sách tham lam theo $V_1$.</div><aside class="notes">Từ $V_0=0$, các cực đại cho $V_1=(1,2,2)$. Dùng chính $V_1$: $Q_{V_1}(s_0,a)=1{,}35$, $Q_{V_1}(s_0,b)=2{,}8$; tại $s_1$ được $(2{,}9,0{,}8)$; tại $s_2$ được $(3{,}8,0{,}9)$. Do đó chính sách tham lam theo $V_1$ là $(b,a,a)$.<p class="note-source"><strong>Nguồn:</strong> hw3.pdf, Bài 9, phần 1; phép tính được khai triển. Phần 2 được lược vì trùng chu trình đánh giá–cải thiện ở B01–B03 và không nằm trong 12 phút đã phân bổ.</p></aside></section>
-<section data-slide-id="X06"><h2>Bài tập 6: đánh giá dạng ma trận</h2><p>Chứng minh $(I-\gamma P_\pi)v_\pi=r_\pi$ và tính khả nghịch khi $0\lt\gamma\lt1$.</p><aside class="notes">Có thể dùng bán kính phổ của $P_\pi$ hoặc chuỗi Neumann để chứng minh khả nghịch.<p class="note-source"><strong>Nguồn:</strong> hw3.pdf, Bài 6.</p></aside></section>
-<section data-slide-id="X04"><h2>Bài tập 4: lịch cập nhật</h2><p>Phân biệt đồng bộ và bất đồng bộ; nêu vai trò của thứ tự, công bằng và điểm bất động.</p><aside class="notes">Hai cách có cùng điểm bất động dưới điều kiện hội tụ phù hợp. Không suy ra bất đồng bộ luôn nhanh hơn.<p class="note-source"><strong>Nguồn:</strong> hw3.pdf, Bài 4.</p></aside></section>
-<section data-slide-id="X07"><h2>Bài tập 7: tính đơn điệu</h2><p>Nếu $u\le v$, chứng minh $T^\pi u\le T^\pi v$ và $T_*u\le T_*v$.</p><aside class="notes">Dùng trọng số xác suất không âm. Với $T_*$, áp bất đẳng thức cho từng hành động rồi lấy cực đại.<p class="note-source"><strong>Nguồn:</strong> hw3.pdf, Bài 7.</p></aside></section>
+<section aria-label="Tổng hợp và kết luận">
+
+<section data-slide-id="L04-S42">
+<h2>Chọn quy trình theo đầu ra cần tính</h2>
+<table>
+<tr><th>Phương pháp</th><th>Đầu vào</th><th>Bước chính</th><th>Đầu ra và dừng</th></tr>
+<tr><td>Đánh giá</td><td>Mô hình $p,r$ và $\pi$</td><td>Giải hệ hoặc lặp $T^\pi$</td><td>$v^\pi$ hoặc ước lượng</td></tr>
+<tr><td>Lặp chính sách</td><td>Mô hình</td><td>Đánh giá–cải thiện</td><td>$\pi_*,v_*$ khi ổn định</td></tr>
+<tr><td>Lặp giá trị</td><td>Mô hình</td><td>Lặp $T_*$</td><td>$v,\pi_v$ khi phần dư nhỏ</td></tr>
+</table>
+<p>Bảo đảm: mô hình đúng, hữu hạn, thưởng bị chặn và $0\le\gamma<1$.</p>
+<aside class="notes">
+<p>Bảng này gom lại ba quy trình của bài. Nếu chỉ cần giá trị của một chính sách cho trước, đánh giá chính sách là đủ: lập hệ phương trình Bellman hoặc lặp toán tử $T^\pi$ cho tới khi giá trị hội tụ. Nếu cần chính sách tốt, có hai đường: lặp chính sách đánh giá chính xác rồi cải thiện, giữ hành động cũ khi hòa, dừng khi chính sách không đổi nữa; còn lặp giá trị cập nhật bảng giá trị trực tiếp bằng $T_*$ và trích chính sách ở cuối, dừng khi phần dư nhỏ dưới ngưỡng hoặc khi hết ngân sách tính. Nhánh hết ngân sách trả kết quả chưa chứng nhận đạt ngưỡng. Cả hai đều cần mô hình chuyển tiếp và thưởng, vì mọi phép tổng đều theo $p$. Khi mô hình không có, ba quy trình này không chạy được và ta phải chuyển sang học từ trải nghiệm, nội dung của Bài 05. Đây cũng là khung để đọc lại lời giải ví dụ mở đầu.</p>
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 12–14, 20, 24, 29, 38.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S43">
+<h2>Lời giải cho bài toán mở đầu</h2>
+<div class="grid2">
+<div>
+<p>Chính sách tối ưu: $\pi_*=(b,b)$.</p><p>Giá trị tối ưu: $v_*=(9,20)$.</p>
+<table>
+<tr><th>$Q_{v_*}$</th><th>$a$</th><th>$b$</th></tr>
+<tr><td>$s_0$</td><td>$6{,}5$</td><td>$\mathbf{9}$</td></tr>
+<tr><td>$s_1$</td><td>$9{,}5$</td><td>$\mathbf{20}$</td></tr>
+</table>
+<p>Cực đại ở $b$ tại mỗi trạng thái; $T_*v_*=v_*$.</p>
+</div>
+<div class="box">
+<p>$Q_{v_*}(s_0,b)=-1+0{,}5\cdot 20=9$</p>
+<p>$Q_{v_*}(s_1,b)=10+0{,}5\cdot 20=20$</p>
+<p>Với $\gamma=0{,}5$, dãy thưởng $-1,10,10,\ldots$ cho giá trị $9$ tại $s_0$.</p>
+</div>
+</div>
+<aside class="notes">
+<p>Quay lại bài toán hai trạng thái ở mở đầu. Với mô hình đã cho và gamma bằng 0,5, chính sách luôn chọn b là tối ưu, cho giá trị 9 ở s0 và 20 ở s1. Bảng q dưới v* xác nhận điều đó: tại s0, chọn b một lần rồi tiếp tục tối ưu cho âm 1 cộng 0,5 nhân 20, tức 9; chọn a cho 2 cộng 0,5 nhân giá trị tối ưu tại s0 là 9, tức 6,5, vì a đưa hệ thống về s0 với giá trị 9 chứ không phải 4 của chính sách luôn chọn a. Tại s1, b cho 10 cộng 0,5 nhân 20 bằng 20, còn a cho 5 cộng 0,5 nhân 9 bằng 9,5. Vì cực đại rơi ở b ở cả hai trạng thái, toán tử Bellman tối ưu giữ nguyên v*, đây là chứng nhận Bellman. Giá trị ở s0 tăng từ 4 lên 9 nhờ đổi quyết định dài hạn, trên cùng mô hình và hệ số chiết khấu. Các bạn lặp lại đúng các bước này trong bài tập.</p>
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 17–21, 31–33; tham số điều chỉnh.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S44">
+<h2>Bài tập và tài liệu đọc</h2>
+<p>Bài tập trong <strong>hw3.pdf</strong>.</p>
+<div class="grid3">
+<div class="card">
+<p><strong>Bài 9</strong></p>
+<p>Tính một lượt lặp giá trị và một bước cải thiện trên MDP ba trạng thái.</p>
+</div>
+<div class="card">
+<p><strong>Bài 6</strong></p>
+<p>Lập hệ Bellman và giải thích tính khả nghịch của hệ.</p>
+</div>
+<div class="card">
+<p><strong>Bài 3/7</strong></p>
+<p>Viết chứng minh tồn tại và tính đơn điệu bằng lời của mình, nêu từng giả thiết và bước dùng giả thiết đó.</p>
+</div>
+</div>
+<div class="box">
+<p>Đọc lại lecture04-solving-MDP.pdf, tr. 20–24, 31–34.</p>
+</div>
+<aside class="notes">
+<p>Ba sản phẩm cần nộp. Bài 9 yêu cầu tự tay tính một lượt lặp giá trị rồi một bước cải thiện trên MDP ba trạng thái; đây là cách kiểm tra bạn hiểu đúng thứ tự cập nhật và cách trích chính sách. Bài 6 hỏi lập hệ Bellman cho đánh giá chính sách và giải thích vì sao hệ khả nghịch, gắn với giả thiết gamma nhỏ hơn một. Bài 3 và 7 yêu cầu viết lại chứng minh về sự tồn tại điểm bất động và tính đơn điệu bằng lời của mình, chỉ rõ mỗi giả thiết được dùng ở bước nào. Đọc lại các trang 20 đến 24 và 31 đến 34 của bài giảng trước khi làm. Phần Monte Carlo, Q-learning và xấp xỉ hàm trong tài liệu chưa phải kiến thức đã dạy, không cần làm ở bài này.</p>
+<p class="note-source"><strong>Nguồn:</strong> hw3.pdf, tr. 1–2, B3/B6/B7/B9; lecture04-solving-MDP.pdf, tr. 20–24, 31–34.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S45">
+<h2>Câu hỏi: đánh giá một kết quả lập kế hoạch</h2>
+<div class="box">
+<p>MDP hữu hạn, mô hình chính xác; $\gamma=0{,}5$.</p><p>Phần dư $\rho(v)=0{,}1$. Nhận định: chính sách $\pi_v$ chắc chắn tối ưu tuyệt đối.</p>
+</div>
+<p>Câu hỏi:</p>
+<ul>
+<li>Kết luận nào về $v$ được bảo đảm?</li>
+<li>Kết luận tối ưu tuyệt đối của $\pi_v$ đã có đủ căn cứ chưa?</li>
+<li>Thuật toán nào cho chứng nhận chính sách ổn định khi đánh giá chính xác và giữ hòa?</li>
+</ul>
+<aside class="notes">
+<p>Đáp án: phần dư ở đây dùng chuẩn vô cùng, $\rho(v)=\|T_*v-v\|_\infty$. Từ $\rho(v)=0{,}1$ suy ra $\|v-v_*\|_\infty\le\frac{\rho}{1-\gamma}=\frac{0{,}1}{1-0{,}5}=0{,}2$, vì sai số giá trị bị chặn bởi $\frac{\rho}{1-\gamma}$ với hệ số $\frac{1}{1-\gamma}$. Phần dư dương chưa đủ để chứng nhận $\pi_v$ tối ưu tuyệt đối; chính sách này có thể đã tối ưu, nhưng chưa có bằng chứng, vì gần đúng giá trị không đồng nhất với tối ưu chính sách. Lặp chính sách đánh giá chính xác, giữ hòa, dừng khi không đổi cho chứng nhận này. Kết quả tính toán cần đi kèm bảng đã kiểm, phần dư và điều kiện áp dụng của chứng nhận.</p>
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 20, 24, 31–34, 38.</p>
+</aside>
+</section>
+
 </section>
 <div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 04</div>
 </div></div>
