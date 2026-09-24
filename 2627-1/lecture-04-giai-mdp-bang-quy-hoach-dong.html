@@ -511,18 +511,144 @@ Hai toán tử cùng nhận một bảng giá trị và cùng trả ra một b�
 </section>
 
 </section>
-<section>
-<section data-slide-id="C00"><h2>Gridworld năm ô</h2><img class="figure" src="img/lec-04/gridworld.svg" alt="Năm ô c1 đến c5 với hành động trái và phải; c5 là trạng thái kết thúc hấp thụ."/><ul class="compact"><li>$\gamma=0{,}9$; tại $c_1$–$c_4$, chọn Left hoặc Right và chuyển tất định.</li><li>Left tại $c_1$ giữ nguyên; chuyển thường nhận $-1$.</li><li>Chuyển $c_4\to c_5$ nhận $+10$ thay cho $-1$; $v(c_5)=0$.</li></ul><aside class="notes">Đây là mô hình đầy đủ để tái tạo các lượt quét. Không sao lưu trạng thái kết thúc; sau khi vào $c_5$, phần thưởng về sau bằng không.<p class="note-source"><strong>Nguồn:</strong> tr. 25; bổ sung gamma và quy ước biên.</p></aside></section>
-<section data-slide-id="C01"><h2>Lượt sao lưu đầu</h2><p>Từ $v_0=0$, thử hai hành động tại từng ô:</p><div class="math-large">$$v_1=(-1,-1,-1,10,0).$$</div><aside class="notes">Mọi trạng thái đọc cùng bảng $v_0$. Lợi ích ở đích mới truyền tới $c_4$ sau một lượt.<p class="note-source"><strong>Nguồn:</strong> tr. 26.</p></aside></section>
-<section data-slide-id="C02"><h2>Giá trị lan ngược</h2><table><tr><th>$k$</th><th>$c_1$</th><th>$c_2$</th><th>$c_3$</th><th>$c_4$</th><th>$c_5$</th></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>1</td><td>-1</td><td>-1</td><td>-1</td><td>10</td><td>0</td></tr><tr><td>2</td><td>-1,9</td><td>-1,9</td><td>8</td><td>10</td><td>0</td></tr><tr><td>3</td><td>-2,71</td><td>6,2</td><td>8</td><td>10</td><td>0</td></tr><tr><td>4</td><td>4,58</td><td>6,2</td><td>8</td><td>10</td><td>0</td></tr></table><aside class="notes">Mỗi lượt truyền lợi ích thêm một cạnh. Các số dùng gamma bằng 0,9 và cập nhật đồng bộ.<p class="note-source"><strong>Nguồn:</strong> tr. 27.</p></aside></section>
-<section data-slide-id="C03"><h2>Lặp giá trị</h2><div class="math-large">$$v_{k+1}=T_*v_k.$$</div><ul><li>Không đánh giá trọn một chính sách trung gian.</li><li>Mỗi sao lưu vừa nhìn trước vừa chọn hành động.</li><li>Trích chính sách từ chính bảng $v$ dùng để kiểm phần dư.</li></ul><aside class="notes">Công thức tổng quát xuất hiện sau mô hình và các lượt quét cụ thể.<p class="note-source"><strong>Nguồn:</strong> tr. 23.</p></aside></section>
-<section data-slide-id="C04"><h2>Một lượt lặp giá trị</h2><div class="codebox">Đầu vào: $M$, bảng $v$.<br/>$v_{\mathrm{old}}\leftarrow v$.<br/>Với mọi $s$: $v(s)\leftarrow(T_*v_{\mathrm{old}})(s)$.<br/>$\Delta\leftarrow\lVert v-v_{\mathrm{old}}\rVert_\infty$.</div><p>Chi phí một lượt:</p><div class="math-large">$$C_{\mathrm{model}}=O\!\left(\sum_s\sum_{a\in\mathcal A(s)}|\operatorname{supp}p_{s,a}|\right).$$</div><aside class="notes">Tên biến toán học dùng $v_{\mathrm{old}}$, không dùng từ tiếng Việt trong mã. $\Delta$ đo thay đổi giữa hai lượt, chưa phải phần dư tại bảng mới.<p class="note-source"><strong>Nguồn:</strong> tr. 24; bổ sung giao diện và chi phí.</p></aside></section>
-<section data-slide-id="C09"><h2>Kiểm phần dư và tái sử dụng lượt quét</h2><div class="codebox">Tính $w\leftarrow T_*v$ và $\rho\leftarrow\lVert w-v\rVert_\infty$.<br/>Với $\gamma\gt0$, nếu $\rho\le\varepsilon_{\mathrm{pol}}\cdot(1-\gamma)^2/(2\gamma)$, trả $v,\pi_v$.<br/>Nếu chưa dừng: đặt $v\leftarrow w$ và lặp; không tính lại lượt quét vừa có.</div><div class="box">Ở đây $\varepsilon_{\mathrm{pol}}$ là mức mất mát chính sách cho phép: chặn phần dư theo ngưỡng này bảo đảm $L\le\varepsilon_{\mathrm{pol}}$. Lượt $T_*v$ vừa kiểm phần dư, vừa là lượt VI kế tiếp khi chưa dừng.</div><aside class="notes">Phần dư và chính sách tham lam dùng cùng bảng $v$ tại thời điểm kiểm. Nếu không đạt ngưỡng, $w$ được tái sử dụng làm bảng kế tiếp. Nếu gamma bằng không, một lượt sao lưu đủ.<p class="note-source"><strong>Nguồn:</strong> tr. 24, 34; bổ sung phép kiểm phần dư tái lập.</p></aside></section>
-<section data-slide-id="C05"><h2>Trích chính sách từ cùng bảng</h2><div class="math-large">$$\pi_v(s)\in\arg\max_a\sum_{s',r}p(s',r\mid s,a)[r+\gamma v(s')].$$</div><div class="check"><strong>Câu hỏi:</strong> nếu phần dư tính trên $v$ nhưng chính sách trích từ $v'$ khác, chặn nào không còn áp dụng?</div><p class="fragment answer">Chặn mất mát của chính sách tham lam theo $v$.</p><aside class="notes">Đẳng thức $T^{\pi_v}v=T_*v$ chỉ đúng khi chính sách tham lam theo chính hàm $v$ dùng trong phần dư.<p class="note-source"><strong>Nguồn:</strong> tr. 24, 28; bổ sung kiểm tra.</p></aside></section>
-<section data-slide-id="C06"><h2>Chi phí phép tính chính</h2><table><tr><th>Trường hợp</th><th>Chi phí</th></tr><tr><td>PI: giải hệ đặc + tham lam</td><td>$O(|\mathcal S|^3)+C_{\mathrm{model}}$</td></tr><tr><td>Mỗi lượt $T_*$</td><td>$C_{\mathrm{model}}$</td></tr><tr><td>Kiểm phần dư đầu tiên sau khởi tạo</td><td>Thêm $C_{\mathrm{model}}$</td></tr><tr><td>Kiểm tiếp theo nếu chưa dừng</td><td>Tái sử dụng $w$; mỗi lần thêm $C_{\mathrm{model}}$</td></tr></table><aside class="notes">Sau khi có bảng $v$, mỗi lần tính $w=T_*v$ vừa kiểm phần dư vừa tạo bảng kế tiếp nếu cần. Vì vậy không lặp lại cùng một lượt quét.<p class="note-source"><strong>Nguồn:</strong> tr. 29; bổ sung chi phí và tái sử dụng.</p></aside></section>
-<section data-slide-id="C07"><h2>Lặp giá trị bất đồng bộ</h2><ul><li>Cập nhật bằng $T_*$, không phải $T^\pi$.</li><li>Dùng giá trị mới nhất; có thể đổi thứ tự quét.</li><li>Mỗi trạng thái phải được cập nhật vô hạn lần; dữ liệu không được cũ vô hạn.</li></ul><aside class="notes">Đích là điểm bất động tối ưu. Không phải mọi lịch cập nhật đều hội tụ.<p class="note-source"><strong>Nguồn:</strong> tr. 15; bổ sung phân biệt và điều kiện.</p></aside></section>
-<section data-slide-id="C08"><h2>Tiêu chuẩn dừng cần chứng minh</h2><p>Phần dư $\rho(v)=\lVert T_*v-v\rVert_\infty$ đo độ lệch khỏi Bellman tối ưu.</p><ol><li>Chứng minh $T_*$ co và có điểm bất động duy nhất.</li><li>Chuyển phần dư thành sai số giá trị.</li><li>Chuyển sai số thành mất mát của $\pi_v$.</li></ol><p>Phần bảo đảm tiếp theo xử lý ba bước theo thứ tự này.</p><aside class="notes">Trang này chỉ đặt lộ trình chứng minh, chưa dùng chặn như một kết quả đã biết.<p class="note-source"><strong>Nguồn:</strong> tr. 30–34; sắp lại.</p></aside></section>
+<section aria-label="Phần 5. Lặp giá trị">
+
+  <section data-slide-id="L04-S27">
+    <h2>Cập nhật từ bảng giá trị hiện có</h2>
+    <p>Lặp giá trị cập nhật trực tiếp từ bảng hiện có, với $\gamma=0{,}5$.</p>
+    <img class="figure" src="img/lec-04/gridworld.svg" alt="Lưới5ô, đi trái/phải thưởng−1; riêng c4 sang c5 thưởng24. c5kết thúc. Đi trái tại c1 đứng yên.">
+    <p>Sau khi nhận thưởng vào đích, quá trình kết thúc: $v(c_5)=0$.</p>
+    <aside class="notes">
+      <p>Phần trước đánh giá từng chính sách rồi so sánh, tốn kém khi không gian chính sách lớn. Lặp giá trị đi đường khác: tại mỗi trạng thái, nhìn trước một bước trên bảng giá trị đang có rồi lấy cực đại, không cần hoàn thành đánh giá của chính sách nào. Lưới năm ô đủ nhỏ để tính tay. Từ $c_4$ sang $c_5$ thưởng 24, các bước còn lại thưởng $-1$ vì mỗi bước đi tốn một đơn vị. Ra trái ở $c_1$ thì đứng yên và vẫn mất $-1$, nên đứng yên không phải lối thoát. Sau khi đến đích, quá trình kết thúc và không nhận thêm thưởng, do đó $c_5$ có giá trị 0. Lượt đầu tiên với bảng khởi tạo bằng 0 sẽ cho thấy phần thưởng ở đích bắt đầu lan.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 23, 25; tham số điều chỉnh.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S28">
+    <h2>Một lượt quét trên lưới</h2>
+    <div class="figure">
+      <table>
+        <caption>Mọi ô của $v_1$ đều tính từ bảng $v_0$</caption>
+        <tr><th></th><th>$c_1$</th><th>$c_2$</th><th>$c_3$</th><th>$c_4$</th><th>$c_5$</th></tr>
+        <tr><th>$v_0$</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><th>$v_1$</th><td>$-1$</td><td>$-1$</td><td>$-1$</td><td>24</td><td>0</td></tr>
+      </table>
+    </div>
+    <p>Tại $c_4$: đi phải cho $24+0{,}5\cdot 0=24$. Các ô xa đích chỉ thấy chi phí bước đi $-1$.</p>
+    <aside class="notes">
+      <p>Bảng khởi tạo toàn 0. Một lượt đồng bộ nghĩa là mọi trạng thái đều tính từ bảng cũ $v_0$, không dùng giá trị vừa cập nhật trong cùng lượt. Tại $c_4$, đi phải nhận ngay 24 cộng hệ số chiết khấu nhân giá trị $c_5$ bằng 0, nên được 24; đi trái chỉ được $-1$. Ba ô còn lại không kề đích, mọi hành động đều dẫn tới ô có giá trị 0 trong bảng cũ $v_0$, nên chúng chỉ ghi nhận chi phí bước đi $-1$. Việc các ô này chưa thấy đích không có nghĩa đường đi từ đó thiếu giá trị dài hạn; thông tin về phần thưởng 24 cần thêm lượt quét mới truyền ngược tới. Lượt sau sẽ cho thấy lan truyền đó.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 25–26; tham số điều chỉnh.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S29">
+    <h2>Giá trị lan dần từ đích</h2>
+    <div class="figure">
+      <table>
+        <caption>Bảng giá trị theo lượt quét $k$</caption>
+        <tr><th>$k$</th><th>$c_1$</th><th>$c_2$</th><th>$c_3$</th><th>$c_4$</th><th>$c_5$</th></tr>
+        <tr><th>0</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><th>1</th><td>$-1$</td><td>$-1$</td><td>$-1$</td><td>24</td><td>0</td></tr>
+        <tr><th>2</th><td>$-1{,}5$</td><td>$-1{,}5$</td><td>11</td><td>24</td><td>0</td></tr>
+        <tr><th>3</th><td>$-1{,}75$</td><td>4,5</td><td>11</td><td>24</td><td>0</td></tr>
+        <tr><th>4</th><td>1,25</td><td>4,5</td><td>11</td><td>24</td><td>0</td></tr>
+      </table>
+    </div>
+    <p>$v_2(c_3)=-1+0{,}5\cdot 24=11$; &nbsp; $v_3(c_2)=-1+0{,}5\cdot 11=4{,}5$.</p>
+    <aside class="notes">
+      <p>Đọc bảng theo lượt. Tại lượt 2, $c_3$ nhìn thấy $c_4$ mang 24: $v_2(c_3)=-1+0{,}5\cdot 24=11$. Tại lượt 3, $c_2$ nhận từ $c_3$: $-1+0{,}5\cdot 11=4{,}5$. Mỗi lượt, thông tin về phần thưởng 24 lùi thêm một ô, các ô chưa nhận được ảnh hưởng này vẫn chịu chi phí bước đi. Ở lượt4, $c_1$ nhận giá trị từ $c_2$: $-1+0{,}5\cdot4{,}5=1{,}25$. Kiểm lượt5 cho $v_5=v_4$; chẳng hạn $v_5(c_1)=\max\{-0{,}375,1{,}25\}=1{,}25$. Điểm bất động ở ví dụ này đến sau hữu hạn lượt vì lưới tất định và ngắn, không suy ra mọi MDP đều dừng chính xác sau hữu hạn lượt. Công thức tổng quát sẽ giữ cùng chỉ số lượt và cùng quy ước dùng bảng cũ.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 27–28; đã tính lại toàn bảng, tham số điều chỉnh.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S30">
+    <h2>Quy tắc lặp giá trị</h2>
+    <p class="math-large">$$v_{k+1}(s)=\max_a\sum_{s',r}p(s',r\mid s,a)\,\bigl[r+\gamma v_k(s')\bigr]$$</p>
+    <div class="grid2">
+      <div class="card">
+        <p>$v_2(c_3)=\max\{-1{,}5,11\}=11$.</p>
+      </div>
+      <div class="card">
+        <p>$k$ đếm lượt quét trên mô hình, không phải bước thời gian tương tác.</p>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>Công thức khái quát đúng phép tính tay trên lưới: tại mỗi trạng thái, xét mọi hành động, lấy kỳ vọng thưởng ngay cộng hệ số chiết khấu nhân giá trị bảng cũ, rồi lấy cực đại. Đối chiếu với ví dụ: $v_2(c_3)$ dùng $v_1$, hành động đi phải cho $-1+0{,}5\cdot 24=11$, đi trái cho $-1{,}5$, cực đại là 11. $k$ là lượt tính trên mô hình, mỗi lượt quét toàn bộ không gian trạng thái, không phải bước thời gian của một tập dữ liệu tương tác. Với $v_0=0$, có thể diễn giải $v_k$ là giá trị tối ưu khi còn đúng $k$ quyết định và giá trị cuối bằng 0; với khởi tạo khác, diễn giải này chỉ đúng nếu nói rõ thưởng cuối. $v_k$ không nhất thiết bằng giá trị dài hạn của một chính sách dừng.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 23–24, 26–27.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S31">
+    <h2>Quy trình lặp giá trị có kiểm tra dừng</h2>
+    <p>Đầu vào: mô hình, $v_0$, ngưỡng phần dư $\theta>0$, ngân sách $K\ge 1$.</p>
+    <ol>
+      <li>Từ $v$, tính bảng $Q_v$ cho mọi trạng thái–hành động.</li>
+      <li>Lấy $w(s)=\max_a Q_v(s,a)$ và $\pi_v(s)\in\arg\max_a Q_v(s,a)$.</li>
+      <li>Đo phần dư $\rho(v)=\max_s|w(s)-v(s)|$.</li>
+      <li>Nếu $\rho(v)\le\theta$ hoặc hết $K$ lượt: trả $v,\pi_v,\rho(v)$.<br>Còn lại: gán $v=w$ rồi lặp.</li>
+    </ol>
+    <p class="box">Bảng trả là $v$ đã kiểm. Kết quả ghi rõ đạt ngưỡng hay hết ngân sách.</p>
+    <aside class="notes">
+      <p>Quy trình cần bốn thành phần. Trước hết, với bảng hiện tại $v$, tính $Q_v(s,a)$ cho từng cặp trạng thái–hành động; một lượt tính này phục vụ cả ba việc sau, không tính lặp hai lần. Từ bảng $Q_v$ lấy $w(s)=\max_a Q_v(s,a)$ và chính sách $\pi_v(s)\in\arg\max_a Q_v(s,a)$, phá hòa theo thứ tự cố định. Rồi tính phần dư $\rho(v)=\max_s|w(s)-v(s)|$. Nếu $\rho(v)\le\theta$, trả $v$, $\pi_v$, $\rho(v)$. Nếu chưa đạt mà còn lượt, đặt $v\leftarrow w$ và quét tiếp. Nếu hết $K$ lượt, trả chính bảng $v$ đã kiểm cùng $\pi_v$, $\rho(v)$ và nhãn hết ngân sách, chưa chứng nhận đạt ngưỡng; không âm thầm trả $w$ chưa được kiểm. Trạng thái kết thúc giữ 0. Chưa gọi $\theta$ là sai số giá trị; phần sau lập quan hệ đó.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 24, 34.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S32">
+    <h2>Trích chính sách từ cùng bảng giá trị</h2>
+    <p>$\pi_v(s)\in\arg\max_a Q_v(s,a)$, &nbsp; và &nbsp; $T^{\pi_v}v=T_*v$.</p>
+    <div class="grid2">
+      <div class="card">
+        <p><strong>Nhánh tính điểm, dùng $v_1$:</strong> tại $c_3$, điểm trái $-1+0{,}5\cdot(-1)=-1{,}5$; điểm phải $-1+0{,}5\cdot 24=11$; chọn phải.</p>
+      </div>
+      <div class="card">
+        <p><strong>Nhánh phần dư, dùng $v_1$:</strong> $\rho(v_1)=\max_s|w(s)-v_1(s)|$.</p>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>Cùng một bảng $v_1=(-1,-1,-1,24,0)$ cấp dữ liệu cho hai việc. Nhánh tính điểm: tại $c_3$, đi trái nhìn trước sang $c_2$ cho $-1+0{,}5\cdot(-1)=-1{,}5$; đi phải sang $c_4$ cho $-1+0{,}5\cdot 24=11$, nên chọn phải. Số 11 chính là $Q_{v_1}(c_3,a_R)$ với $a_R$ là hành động đi phải; đây là phép nhìn trước một bước từ $v_1$, chưa phải giá trị thật của chính sách vừa trích. Nhánh phần dư cũng dùng $v_1$: so $w(s)$ với $v_1(s)$ trên toàn bảng. Đồng nhất thức $T^{\pi_v}v=T_*v$ bảo đảm chính sách trích từ bảng chính là chính sách tham lam của phép cập nhật. Không lẫn $v$ với $w$: $v$ là bảng đang kiểm, $w$ là bảng dự kiến sau lượt.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 24, 26, 28; tham số điều chỉnh.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S33">
+    <h2>Chi phí của một lượt tính</h2>
+    <p>Đặt $n=|\mathcal S|$, $m=\max_s|\mathcal A(s)|$.</p>
+    <div class="figure">
+      <table>
+        <caption>Thao tác của mỗi phương pháp trong một lượt</caption>
+        <tr><th>Phương pháp</th><th>Thao tác mỗi lượt</th><th>Chi phí</th></tr>
+        <tr><td>Lặp giá trị, mô hình dày</td><td>Tính tổng theo trạng thái kế tiếp</td><td>$O(n^2m)$</td></tr>
+        <tr><td>Lặp giá trị, mô hình thưa</td><td>Duyệt các nhánh có xác suất khác 0</td><td>theo số nhánh</td></tr>
+        <tr><td>Lặp chính sách chính xác</td><td>Giải hệ dày và cải thiện</td><td>$O(n^3)$ mỗi lần giải</td></tr>
+      </table>
+    </div>
+    <aside class="notes">
+      <p>Đếm phép tính. Một lượt lặp giá trị với mô hình chuyển dày phải tổng trên mọi cặp trạng thái–hành động và mọi cặp chuyển, cho $O(n^2m)$; nếu mô hình thưa, chi phí theo số nhánh có xác suất khác 0. Lặp chính sách chính xác phải giải hệ tuyến tính dày, thường tốn $O(n^3)$, rồi mới cải thiện chính sách. Về bộ nhớ: bảng giá trị đồng bộ dùng $O(n)$ bộ nhớ bổ sung nếu giữ cực đại theo từng trạng thái; lưu toàn mô hình dày cần $O(n^2m)$. Chi phí một lượt chưa cho biết cần bao nhiêu lượt để dừng, và số lượt của hai thuật toán không cùng đơn vị công việc, không khẳng định phương pháp nào luôn nhanh hơn; cần kết quả hội tụ ở phần sau.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 29; định lượng chi phí từ phép tổng và giải hệ.</p>
+    </aside>
+  </section>
+
+  <section data-slide-id="L04-S34">
+    <h2>Câu hỏi: tính lượt tiếp theo</h2>
+    <div class="figure">
+      <table>
+        <caption>Bảng $v_2$ và hai ô cần tính của $v_3$</caption>
+        <tr><th></th><th>$c_1$</th><th>$c_2$</th><th>$c_3$</th><th>$c_4$</th><th>$c_5$</th></tr>
+        <tr><th>$v_2$</th><td>$-1{,}5$</td><td>$-1{,}5$</td><td>11</td><td>24</td><td>0</td></tr>
+        <tr><th>$v_3$</th><td>?</td><td>?</td><td>11</td><td>24</td><td>0</td></tr>
+      </table>
+    </div>
+    <p><strong>Câu hỏi:</strong> Tính $v_3(c_1),v_3(c_2)$. Giá trị $c_4$ không đổi đã đủ kết luận toàn thuật toán hội tụ hay chưa?</p>
+    <p class="fragment"><strong>Đáp án:</strong> $v_3(c_1)=-1{,}75$, $v_3(c_2)=4{,}5$; $c_4$ không đổi chưa đủ kết luận hội tụ vì các trạng thái khác còn thay đổi.</p>
+    <aside class="notes">
+      <p>Chỉ dùng $v_2$ trong mọi phép tính, không dùng $v_3(c_1)$ vừa tính được. Tại $c_1$: đi trái đứng yên cho $-1+0{,}5\cdot(-1{,}5)=-1{,}75$; đi phải cho $-1+0{,}5\cdot(-1{,}5)=-1{,}75$; vậy $v_3(c_1)=-1{,}75$. Tại $c_2$: đi trái cho $-1+0{,}5\cdot(-1{,}5)=-1{,}75$; đi phải cho $-1+0{,}5\cdot 11=4{,}5$; vậy $v_3(c_2)=4{,}5$. Lỗi dễ nhầm là lấy $v_3(c_1)$ mới tính để cập nhật $c_2$, tức quét không đồng bộ. Về hội tụ: $c_4$ giữ 24 qua hai lượt, nhưng $c_1$ và $c_2$ vẫn thay đổi, nên một ô ổn định chưa đủ; phần dư $\rho(v_3)=3$ vẫn dương vì $c_1$ đổi từ $-1{,}75$ lên $1{,}25$.</p>
+      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 25–27; tham số điều chỉnh.</p>
+    </aside>
+  </section>
+
 </section>
+
 <section>
 <section data-slide-id="D00"><h2>Ba câu hỏi hội tụ</h2><ul><li>Điểm bất động có duy nhất không?</li><li>Mọi khởi tạo có tiến tới đó không?</li><li>Một chính sách có đạt điểm đó không?</li></ul><div class="box">Công cụ: tính co trong chuẩn vô cùng.</div><aside class="notes">Quay lại giả thiết và chuẩn đã định nghĩa ở đầu bài.<p class="note-source"><strong>Nguồn:</strong> tr. 30–32.</p></aside></section>
 <section data-slide-id="D01"><h2>Bất đẳng thức cực đại</h2><div class="math-large">$$|\max_a x_a-\max_a y_a|\le\max_a|x_a-y_a|.$$</div><p>Suy ra $|(T_*u)(s)-(T_*v)(s)|\le\gamma\lVert u-v\rVert_\infty$.</p><p>Bổ đề đơn điệu:</p><ul><li>$T^\pi$ đơn điệu do kỳ vọng có trọng số không âm.</li><li>$T_*$ đơn điệu do phép max bảo toàn thứ tự.</li></ul><aside class="notes">Chọn chỉ số đạt cực đại, chặn một chiều rồi đổi vai. Đây là bước xử lý phép cực đại. Đơn điệu không phải hệ quả trực tiếp của bất đẳng thức trị tuyệt đối: với $T^\pi$ nó đến từ kỳ vọng có trọng số không âm, với $T_*$ nó đến từ tính bảo toàn thứ tự của phép max.<p class="note-source"><strong>Nguồn:</strong> tr. 31; mở bước chứng minh.</p></aside></section>

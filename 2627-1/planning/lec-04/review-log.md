@@ -25,8 +25,8 @@
 | 1 | 01–05 | Đã kiểm nội dung, số học và hai khung hiển thị | `ae1cc0a` |
 | 2 | 06–12 | Đã kiểm nội dung và hai khung hiển thị | `dfb5d73` |
 | 3 | 13–18 | Đã kiểm nội dung và hai khung hiển thị | `8d0dd23` |
-| 4 | 19–26 | Đã kiểm nội dung và hai khung hiển thị | Commit lặp chính sách trong lịch sử Git |
-| 5 | 27–34 | Chưa triển khai | — |
+| 4 | 19–26 | Đã kiểm nội dung và hai khung hiển thị | `1dcb88d` |
+| 5 | 27–34 | Đã kiểm nội dung và hai khung hiển thị | Commit lặp giá trị trong lịch sử Git |
 | 6 | 35–41 | Chưa triển khai | — |
 | 7 | 42–45 | Chưa triển khai | — |
 
@@ -69,6 +69,13 @@
 - Writer và reviewer sinh viên: requested/observed `z-ai/glm-5.3-flash`; reviewer toán: requested/observed `deepseek/deepseek-v4-flash-0731`; provider OpenRouter. Rà bản sửa xác nhận chuỗi (4,7)→(4,20)→(9,20), quy tắc giữ hòa, đơn điệu, chặn đuôi và cặp chính sách–giá trị trả về đúng.
 - Chấp nhận góp ý ghi20 là giá trị tại s1, thêm hệ của pi2 vào notes, và kiểm hành động a tại pi2 cho6,5/9,5 thấp hơn b cho9/20. Không nhồi các lời cảnh báo lặp vào mặt thuật toán; bước trả đã gắn đúng pi và v của nó, notes giải thích rõ.
 - Đã xem tám trang, kiểm hai viewport; công thức, bảng, quy trình bốn bước không tràn/chồng hay ngắt bất thường, không lỗi tài nguyên/KaTeX/bàn phím. Bổ sung sau rà chỉ nằm trong lời giảng, không đổi bố cục hay thứ tự.
+
+### Rà phần lặp giá trị
+
+- Writer và reviewer sinh viên: requested/observed `z-ai/glm-5.3-flash`; reviewer toán: requested/observed `deepseek/deepseek-v4-flash-0731`; provider OpenRouter. Bảng lưới qua bốn cập nhật và lượt kiểm thứ5 đã tính bằng phân số; khớp các báo cáo rà.
+- Điều phối viên thay đường dẫn lưu đồ không tồn tại do writer tự thêm bằng bốn bước HTML đầy đủ. Sửa caption mô tả mũi tên/viền không có, sửa số thập phân chưa đặt trong công thức và nhắc câu hỏi trước đáp án.
+- Chấp nhận giải thích bước c1 nhận ảnh hưởng đích: −1+0,5×4,5=1,25; ghi rõ v5=v4. Bác bỏ phép tính minh họa sai của reviewer rằng đi trái tại c1 đọc4,5: đi trái tự khép đọc1,25, cho−0,375; đi phải cho1,25. Bổ sung phần dư của v3 bằng3 và làm rõ giá trị0 ở lượt đầu thuộc bảng v0.
+- Đã xem tám trang và SVG lưới mới; hai viewport không có lỗi kỹ thuật. Rút cụm lặp ở S32 để nhãn v1 không xuống dòng riêng; giữ font và CSS chung. Mỗi phần thưởng, trạng thái và lượt được gắn nhãn nhất quán.
 
 ## Lập dàn bài theo skill — 23-09-2026
 
