@@ -369,11 +369,147 @@ Hai toán tử cùng nhận một bảng giá trị và cùng trả ra một b�
   </section>
 
 </section>
-<section>
-<section data-slide-id="B02"><h2>Cải thiện một bước</h2><table><tr><th>Trạng thái</th><th>$a$</th><th>$b$</th><th>Chọn</th></tr><tr><td>$s_0$</td><td>$10$</td><td>$9{,}9$</td><td>$a$</td></tr><tr><td>$s_1$</td><td>$11$</td><td>$12{,}9$</td><td>$b$</td></tr></table><p>$\pi_1=(a,b)$.</p><aside class="notes">Mọi so sánh dùng cùng $v_{\pi_0}$. Hành động $b$ ở $s_1$ cho $3+0,9\cdot11=12,9$.<p class="note-source"><strong>Nguồn:</strong> tr. 19.</p></aside></section>
-<section data-slide-id="B03"><h2>Vòng thứ hai</h2><div class="grid2"><div class="card"><h3>Đánh giá $\pi_1$</h3><p>$v_{\pi_1}=(10,30)$</p><p>$q_{\pi_1}(s_0,b)=0+0{,}9\cdot30=27$</p></div><div class="card"><h3>Cải thiện</h3><p>$\pi_2=(b,b)$</p><p>$v_{\pi_2}=(27,30)$</p></div></div><aside class="notes">Giá trị hành động $q_{\pi_1}(s_0,b)=27$ giải thích trực tiếp vì sao hành động ở $s_0$ đổi sang $b$. Chuỗi giá trị là $(10,11)\to(10,30)\to(27,30)$.<p class="note-source"><strong>Nguồn:</strong> tr. 18–19; bổ sung phép tính trung gian.</p></aside></section>
-<section data-slide-id="B06"><h2>Lặp chính sách chính xác</h2><div class="codebox">Đầu vào: $M$, chính sách Markov dừng $\pi$, thứ tự hành động cố định.<br/>1. Giải chính xác $v=T^\pi v$.<br/>2. Đặt $\pi'(s)$ là phần tử đầu của $\arg\max_a\sum_{s',r}p(s',r\mid s,a)[r+\gamma v(s')]$.<br/>3. Nếu $\pi'=\pi$, trả về $(\pi,v)$; nếu không, đặt $\pi\leftarrow\pi'$ và lặp.</div><div class="check"><strong>Câu hỏi:</strong> vì sao không được đổi tùy ý giữa các hành động đồng hạng?</div><p class="fragment answer">Phá hòa tùy ý có thể tạo chu trình chính sách; quy tắc cố định loại trừ chu trình này.</p><aside class="notes">Thứ tự toàn cục cố định làm quy tắc phá hòa có tính tái lập. Giải hệ đặc tốn $O(|\mathcal S|^3)$; bước tham lam tốn một lượt duyệt mô hình.<p class="note-source"><strong>Nguồn:</strong> tr. 20; bổ sung phá hòa, dừng và chi phí.</p></aside></section>
-<section data-slide-id="B08"><h2>Bảo đảm của lặp chính sách</h2><div class="math-large">$$T^{\pi'}v_\pi=T_*v_\pi\ge T^\pi v_\pi=v_\pi.$$</div><p>Tính đơn điệu và tính co cho $v_{\pi'}\ge v_\pi$.</p><p>Số chính sách xác định tổng quát là $\displaystyle\prod_{s\in\mathcal S}|\mathcal A(s)|$; nếu mọi trạng thái có cùng tập hành động thì bằng $|\mathcal A|^{|\mathcal S|}$.</p><div class="box">Với đánh giá chính xác và phá hòa cố định, số chính sách xác định hữu hạn nên thuật toán dừng tại chính sách tối ưu.</div><p>Phần sau giữ ý tưởng sao lưu Bellman nhưng bỏ bước giải hệ: lặp giá trị trên Gridworld.</p><aside class="notes">Nếu chính sách thay đổi ngoài các hành động đồng hạng, cải thiện nghiêm ở ít nhất một trạng thái. Bảo đảm dừng hữu hạn phụ thuộc đánh giá chính xác và quy tắc phá hòa cố định.<p class="note-source"><strong>Nguồn:</strong> tr. 21, 33; làm rõ miền áp dụng.</p></aside></section>
+<section aria-label="Phần 4. Lặp chính sách">
+
+<section data-slide-id="L04-S19">
+<h2>Nhu cầu cải thiện chính sách</h2>
+<div class="grid2">
+<div class="card"><p>Tiếp tục theo $\pi_0=(a,a)$:</p><p class="math-large">$v^{\pi_0}(s_1)=7$.</p></div>
+<div class="card"><p>Chọn $b$ một lần, rồi theo $\pi_0$:</p><p class="math-large">$q^{\pi_0}(s_1,b)=13{,}5$.</p></div>
+</div>
+<p>$$q^{\pi_0}(s_1,b)=10+0{,}5\cdot7=13{,}5>7$$</p>
+<p>Chính sách mới phải được đánh giá với những lần chọn hành động tiếp theo.</p>
+<aside class="notes">
+<p>Phần trước kết thúc ở bảng giá trị của $\pi_0$, nhưng bảng đó chưa nói chính sách là tốt nhất. Tại $s_1$, giá trị khi tiếp tục theo $\pi_0$ là 7, còn nếu chọn $b$ một lần rồi quay về theo $\pi_0$ thì kỳ vọng là $10+0{,}5\cdot7=13{,}5$. Hai con số này không cùng bản chất: 7 là giá trị của chính sách, 13,5 là giá trị của một hành động đơn lẻ trong chính sách đó. Sai lầm phổ biến là coi 13,5 là giá trị của chính sách mới. Chính sách mới $\pi_1$ chọn $b$ tại mọi lần đến $s_1$, nên đường đi của nó khác hẳn đường đi một lần rồi quay về; giá trị của $\pi_1$ tại $s_1$ là 20 và phải được đánh giá riêng theo mô hình của chính sách mới, đó là nội dung tiếp theo.</p>
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 19; tham số điều chỉnh.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S20">
+<h2>Cải thiện bằng một bước nhìn trước</h2>
+<div class="grid2">
+<div class="box">
+<table class="check">
+<caption>$q^{\pi_0}$ và lựa chọn tham lam</caption>
+<tr><th></th><th>$a$</th><th>$b$</th></tr>
+<tr><th>$s_0$</th><td><strong>4 — chọn</strong></td><td>2,5</td></tr>
+<tr><th>$s_1$</th><td>7</td><td><strong>13,5 — chọn</strong></td></tr>
+</table>
+</div>
+<div class="box">
+<p>Tham lam từng trạng thái:</p>
+<p>$s_0$: $4 \gt 2{,}5$ nên giữ $a$; $s_1$: $13{,}5 \gt 7$ nên đổi sang $b$.</p>
+<p class="math-large">$\pi_0 \to \pi_1=(a,b)$.</p>
+</div>
+</div>
+<aside class="notes">
+<p>Bước cải thiện so sánh các hành động tại từng trạng thái một cách độc lập. Tại $s_0$, hành động $a$ cho 4 lớn hơn 2,5 của $b$, nên giữ $a$. Tại $s_1$, $b$ cho 13,5 lớn hơn 7, nên đổi sang $b$. Kết quả là $\pi_1=(a,b)$. Mỗi hàng của bảng $q^{\pi_0}$ được xét riêng; các số trong bảng là giá trị của hành động một lần rồi tiếp tục theo $\pi_0$, nên phần tiếp diễn vẫn theo $\pi_0$. Giá trị của chính sách mới $\pi_1$ chưa được tính: bảng $q^{\pi_0}$ chỉ dùng để chọn hành động, còn giá trị của $\pi_1$ phải tính lại từ đầu theo mô hình của $\pi_1$, đó là nội dung tiếp theo.</p>
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 19; tham số điều chỉnh.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S21">
+<h2>Đánh giá lại sau cải thiện</h2>
+<div class="grid2">
+<div class="box">
+<table class="check">
+<caption>Chính sách và giá trị</caption>
+<tr><th>Chính sách</th><th>$v(s_0)$</th><th>$v(s_1)$</th></tr>
+<tr><td>$\pi_0=(a,a)$</td><td>4</td><td>7</td></tr>
+<tr><td>$\pi_1=(a,b)$</td><td>4</td><td>20</td></tr>
+<tr><td>$\pi_2=(b,b)$</td><td>9</td><td>20</td></tr>
+</table>
+</div>
+<div class="box">
+<p>Với $\pi_1=(a,b)$:</p>
+<p class="math-large">$q^{\pi_1}(s_0,b)=9 \gt 4$.</p>
+<p>Do đó $\pi_2=(b,b)$, và $v^{\pi_2}=(9,20)$.</p>
+</div>
+</div>
+<aside class="notes">
+<p>Ở $s_1$, $\pi_1$ chọn $b$ nên $y=10+0{,}5y$, cho $y=20$. Ở $s_0$, $\pi_1$ vẫn chọn $a$ về $s_0$: $x=2+0{,}5x$, cho $x=4$. Cặp giá trị là $(4,20)$. Điểm hành động $b$ tại $s_0$ bằng $-1+0{,}5\times20=9\gt4$, nên $\pi_2=(b,b)$. Với $\pi_2$, $y=10+0{,}5y=20$ và $x=-1+0{,}5\cdot20=9$, nên giá trị là $(9,20)$. Từ $\pi_0$ sang $\pi_1$ giá trị $s_0$ giữ nguyên 4; từ $\pi_1$ sang $\pi_2$ giá trị $s_1$ giữ nguyên 20. Đây là những đẳng thức do đường đi của chính sách, giải thích các giá trị được giữ nguyên.</p>
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 19; tham số điều chỉnh.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S22">
+<h2>Quy tắc cải thiện chính sách</h2>
+<div class="box">
+<p class="math-large">$\pi'(s)\in\operatorname{argmax}_a Q_{v^\pi}(s,a)$.</p>
+<p>Quy tắc hòa: nếu hành động cũ của $\pi$ thuộc argmax thì giữ hành động cũ; nếu không, chọn theo thứ tự cố định của tập hành động.</p>
+<p>Mọi so sánh dùng $v^\pi$ cũ, chưa cập nhật.</p>
+</div>
+<aside class="notes">
+<p>Quy tắc tham lam cần được phát biểu chặt để thuật toán tái lập được, và mỗi chính sách $\pi$, $\pi'$ ở đây là xác định. Với $q^{\pi_0}$: tại $s_1$, hành động $b$ thuộc argmax nên được chọn, còn hành động cũ $a$ không thuộc argmax. Khi hai hành động bằng nhau, giữ hành động cũ giúp tránh đổi qua lại giữa các hành động đồng hạng qua các vòng lặp. Điều kiện để chứng minh định lý kế tiếp là tính đơn điệu: nếu $u\le v$ theo từng trạng thái thì $Q_u(s,a)\le Q_v(s,a)$, vì $\gamma\ge0$ và các xác suất chuyển không âm; do đó $T^{\pi'}u\le T^{\pi'}v$ với mọi chính sách $\pi'$. Đây là giả thiết được dùng ngay ở định lý sau.</p>
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 20; bổ sung phần hòa để thuật toán tái lập.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S23">
+<h2>Định lý cải thiện chính sách</h2>
+<div class="box">
+<p>Giả thiết: MDP hữu hạn, thưởng bị chặn, $0\le\gamma\lt1$; $\pi'$ tham lam theo $v^\pi$.</p>
+<p class="math-large">$v^\pi\le v^{\pi'}$ theo từng trạng thái.</p>
+<p class="math-large">$v^\pi\le T^{\pi'}v^\pi\le (T^{\pi'})^2v^\pi\le\cdots\le v^{\pi'}$.</p>
+<p>Nếu $\pi$ chưa tối ưu, tăng nghiêm ngặt ở ít nhất một trạng thái.</p>
+</div>
+<aside class="notes">
+<p>Định lý đứng trên giả thiết MDP hữu hạn, thưởng bị chặn và $0\le\gamma\lt1$, với $\pi'$ tham lam theo $v^\pi$. Chuỗi bất đẳng thức bắt đầu từ khai triển: $T^{\pi'}v^\pi=\max_a Q_{v^\pi}\ge T^\pi v^\pi=v^\pi$, vì hành động của $\pi$ là một ứng viên trong phép max. Áp dụng $T^{\pi'}$ lặp lại và dùng tính đơn điệu vừa thiết lập, ta được $v^\pi\le T^{\pi'}v^\pi\le (T^{\pi'})^2v^\pi\le\cdots$. Hạng đuôi sau $n$ lần lặp có dạng $\gamma^n\mathbb E_{\pi'}[v^\pi(S_n)]$; đặt $R_{\max}=\max|R|$, ta có $\|v^\pi\|_\infty\le R_{\max}/(1-\gamma)$, và vì $0\le\gamma\lt1$ hạng đuôi tiến về 0, nên dãy hội tụ về $v^{\pi'}$. Kết luận $v^\pi\le v^{\pi'}$. Nếu $\pi$ chưa tối ưu thì tại ít nhất một trạng thái phép max chọn hành động khác, và bất đẳng thức nghiêm ngặt tại đó. Chứng minh chỉ dùng đơn điệu và hạng đuôi chiết khấu.</p>
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 21.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S24">
+<h2>Quy trình lặp chính sách</h2>
+<div class="box">
+<p><strong>Đầu vào:</strong> mô hình; ngân sách vòng lặp $K\ge1$; khởi tạo $\pi$ xác định.</p>
+<ol>
+<li>Đánh giá chính xác: giải $(I-\gamma P^\pi)v=r^\pi$.</li>
+<li>Cải thiện tham lam, giữ hòa theo quy tắc đã nêu, được $\pi'$.</li>
+<li>Nếu $\pi'=\pi$: trả $\pi$ và $v^\pi$.</li>
+<li>Nếu hết $K$: trả $\pi$, $v^\pi$ với nhãn "chưa chứng nhận"; còn lại đặt $\pi=\pi'$ và lặp.</li>
+</ol>
+</div>
+<aside class="notes">
+<p>Thuật toán ghép hai khối. Đầu vào gồm mô hình, ngân sách vòng lặp $K\ge1$ và một chính sách khởi tạo $\pi$ xác định. Đánh giá giải hệ tuyến tính $(I-\gamma P^\pi)v=r^\pi$, trong đó $I$ là ma trận đơn vị cỡ $n\times n$, với $n$ là số trạng thái, $P^\pi$ là ma trận chuyển của $\pi$ và $r^\pi$ là vectơ phần thưởng kỳ vọng của $\pi$. Cải thiện tham lam trên bảng $Q$ vừa tính cho $\pi'$. Nếu $\pi'=\pi$, trả $\pi$ cùng $v^\pi$. Nếu ngân sách cạn khi bước cải thiện vẫn đổi hành động, kết quả trả về là chính sách vừa được đánh giá cùng giá trị của nó, với nhãn chưa chứng nhận tối ưu; tuyệt đối không trả $\pi'$ chưa đánh giá ghép với bảng giá trị của chính sách cũ. Định lý cải thiện giải thích vì sao dừng khi chính sách ổn định.</p>
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 20, 33.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S25">
+<h2>Chính sách ổn định và dừng hữu hạn</h2>
+<div class="grid2">
+<div class="box">
+<p>Hai trạng thái, mỗi trạng thái hai hành động: $2\times2=4$ chính sách xác định.</p>
+<p class="math-large">$\pi_0\to\pi_1\to\pi_2\to$ dừng.</p>
+</div>
+<div class="box">
+<p>Đổi chính sách thì giá trị tăng nghiêm ngặt ở ít nhất một trạng thái, nên không lặp lại chính sách.</p>
+<p>Điều kiện: đánh giá chính xác từng vòng; hòa giữ chính sách cũ.</p>
+<p>Khi $\pi$ ổn định: $T_*v^\pi=v^\pi$, tức tối ưu Bellman.</p>
+</div>
+</div>
+<aside class="notes">
+<p>Trong không gian hữu hạn với mỗi tập hành động khác rỗng, số chính sách xác định là $\prod_s|A(s)|$, ở ví dụ này là 4. Định lý cải thiện cho biết mỗi lần đổi chính sách, giá trị tăng nghiêm ngặt ở ít nhất một trạng thái, nên một chính sách không thể xuất hiện hai lần; quy tắc hòa giữ chính sách cũ nên không tạo vòng lặp qua các hành động đồng hạng. Với $\pi_2$, hành động $a$ cho $6{,}5$ tại $s_0$ và $9{,}5$ tại $s_1$, đều thấp hơn $9$ và $20$ của $b$; bước cải thiện giữ $\pi_2$. Do đó thuật toán dừng sau số hữu hạn vòng, và chính sách ổn định thỏa phương trình tối ưu Bellman $T_*v^\pi=v^\pi$. Bảo đảm này dựa trên đánh giá chính xác từng vòng và quy tắc hòa; nó không suy rộng sang bản đánh giá bị cắt ngắn. Chứng minh đầy đủ của định lý Bellman tối ưu sẽ ở Phần 6.</p>
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 9, 33.</p>
+</aside>
+</section>
+
+<section data-slide-id="L04-S26">
+<h2>Câu hỏi: kiểm tra bước cải thiện</h2>
+<div class="box">
+<p>Câu hỏi: cho $v^{\pi_1}=(4,20)$. Hai giá trị $Q$ tại $s_0$ là gì? $\pi_2$ là gì? Vì sao cần giữ hành động cũ khi hòa?</p>
+</div>
+<div class="box fragment">
+<p>$q^{\pi_1}(s_0,a)=2+0{,}5\cdot4=4$.</p><p>$q^{\pi_1}(s_0,b)=-1+0{,}5\cdot20=9$.</p>
+<p>$\pi_2=(b,b)$. Giữ hòa tránh đổi qua lại giữa các hành động đồng hạng.</p>
+</div>
+<aside class="notes">
+<p>Tính hai giá trị $Q$ tại $s_0$ bằng bảng $v^{\pi_1}$ vừa đánh giá. Hành động $a$ về $s_0$ với thưởng 2, cộng $0{,}5$ lần giá trị 4, cho 4. Hành động $b$ đến $s_1$ với thưởng $-1$, cộng $0{,}5$ lần giá trị 20, cho 9. Vì 9 lớn hơn 4, chính sách sau cải thiện là $\pi_2=(b,b)$. Mọi so sánh dùng $v^{\pi_1}$ cũ, chưa cập nhật. Về tiêu chí dừng, không kết luận rằng cải thiện nghiêm ngặt tại mọi trạng thái; ở đây chỉ $s_0$ tăng. Khi hai hành động đồng hạng, giữ hành động cũ ngăn thuật toán dao động giữa các chính sách tương đương.</p>
+<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 19–21, 33; tham số điều chỉnh.</p>
+</aside>
+</section>
+
 </section>
 <section>
 <section data-slide-id="C00"><h2>Gridworld năm ô</h2><img class="figure" src="img/lec-04/gridworld.svg" alt="Năm ô c1 đến c5 với hành động trái và phải; c5 là trạng thái kết thúc hấp thụ."/><ul class="compact"><li>$\gamma=0{,}9$; tại $c_1$–$c_4$, chọn Left hoặc Right và chuyển tất định.</li><li>Left tại $c_1$ giữ nguyên; chuyển thường nhận $-1$.</li><li>Chuyển $c_4\to c_5$ nhận $+10$ thay cho $-1$; $v(c_5)=0$.</li></ul><aside class="notes">Đây là mô hình đầy đủ để tái tạo các lượt quét. Không sao lưu trạng thái kết thúc; sau khi vào $c_5$, phần thưởng về sau bằng không.<p class="note-source"><strong>Nguồn:</strong> tr. 25; bổ sung gamma và quy ước biên.</p></aside></section>

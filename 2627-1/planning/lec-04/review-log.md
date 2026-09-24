@@ -24,8 +24,8 @@
 |---|---|---|---|
 | 1 | 01–05 | Đã kiểm nội dung, số học và hai khung hiển thị | `ae1cc0a` |
 | 2 | 06–12 | Đã kiểm nội dung và hai khung hiển thị | `dfb5d73` |
-| 3 | 13–18 | Đã kiểm nội dung và hai khung hiển thị | Commit đánh giá chính sách trong lịch sử Git |
-| 4 | 19–26 | Chưa triển khai | — |
+| 3 | 13–18 | Đã kiểm nội dung và hai khung hiển thị | `8d0dd23` |
+| 4 | 19–26 | Đã kiểm nội dung và hai khung hiển thị | Commit lặp chính sách trong lịch sử Git |
 | 5 | 27–34 | Chưa triển khai | — |
 | 6 | 35–41 | Chưa triển khai | — |
 | 7 | 42–45 | Chưa triển khai | — |
@@ -62,6 +62,13 @@
 - Writer và reviewer sinh viên: requested/observed `z-ai/glm-5.3-flash`; reviewer toán: requested/observed `deepseek/deepseek-v4-flash-0731`; provider OpenRouter. Xác nhận hệ cho (4,7), các lượt (2,5) rồi (3,6), cập nhật tại chỗ (2,6), câu hỏi (3,5;6,5). Các tiêu đề “lỗi” trong báo cáo toán đều tự xác nhận công thức đúng, không có sửa toán bắt buộc.
 - Chấp nhận làm rõ trạng thái kết thúc giữ giá trị0 và định nghĩa n,m trong chi phí. Thay bố cục ba cột thuật toán bằng bốn bước toàn chiều ngang; tách từng phương trình đáp án để không ngắt sau dấu nhân. Hình chỉ giữ hai cạnh a để tập trung vào chính sách cố định.
 - Kiểm sáu trang mới cùng biên hai trang trước ở1280×720 và960×540: không lỗi kỹ thuật. Sau chỉnh ngắt dòng, kiểm lại14–18; không tràn/chồng/KaTeX/tài nguyên; đã xem lại16–18. Phép tính tại chỗ dùng chữ thân bài; chú thích điều kiện hội tụ vẫn đọc được.
+
+### Rà phần lặp chính sách
+
+- Writer lần đầu bị lặp công cụ, đã gọi lại với thư mục mới và nhiệm vụ ghi trực tiếp; không đổi mô hình. Bản nội dung đầu có lỗi trong notes: dùng nhầm trạng thái tiếp diễn tại s0, mô tả sai chính sách mới chỉ đổi hành động một lần, sai quan hệ argmax. Điều phối viên không đưa bản đó vào HTML và yêu cầu writer viết lại với phép tính cụ thể. Các lỗi đã được sửa, cả mặt và lời giảng dùng cùng mô hình.
+- Writer và reviewer sinh viên: requested/observed `z-ai/glm-5.3-flash`; reviewer toán: requested/observed `deepseek/deepseek-v4-flash-0731`; provider OpenRouter. Rà bản sửa xác nhận chuỗi (4,7)→(4,20)→(9,20), quy tắc giữ hòa, đơn điệu, chặn đuôi và cặp chính sách–giá trị trả về đúng.
+- Chấp nhận góp ý ghi20 là giá trị tại s1, thêm hệ của pi2 vào notes, và kiểm hành động a tại pi2 cho6,5/9,5 thấp hơn b cho9/20. Không nhồi các lời cảnh báo lặp vào mặt thuật toán; bước trả đã gắn đúng pi và v của nó, notes giải thích rõ.
+- Đã xem tám trang, kiểm hai viewport; công thức, bảng, quy trình bốn bước không tràn/chồng hay ngắt bất thường, không lỗi tài nguyên/KaTeX/bàn phím. Bổ sung sau rà chỉ nằm trong lời giảng, không đổi bố cục hay thứ tự.
 
 ## Lập dàn bài theo skill — 23-09-2026
 
