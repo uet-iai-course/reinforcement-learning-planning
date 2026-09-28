@@ -1,886 +1,355 @@
 <!doctype html>
 <html lang="vi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bài 04: Giải MDP bằng quy hoạch động</title>
-<link rel="stylesheet" href="revealjs/dist/reset.css">
-<link rel="stylesheet" href="revealjs/dist/reveal.css">
-<link rel="stylesheet" href="revealjs/dist/theme/white.css">
-<link rel="stylesheet" href="plugin/highlight/monokai.css">
-<link rel="stylesheet" href="lecture-slide.css">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="Bài 04 Học tăng cường: đánh giá và cải thiện chính sách, lặp chính sách, lặp giá trị và quy hoạch động bất đồng bộ."/>
+<title>Bài 04: Giải MDP bằng quy hoạch động · Học tăng cường</title>
+<link rel="stylesheet" href="revealjs/dist/reset.css"/>
+<link rel="stylesheet" href="revealjs/dist/reveal.css"/>
+<link rel="stylesheet" href="revealjs/dist/theme/white.css"/>
+<link rel="stylesheet" href="plugin/highlight/monokai.css"/>
+<link rel="stylesheet" href="lecture-slide.css"/>
 </head>
 <body>
 <div class="reveal lecture-deck"><div class="slides">
-<section aria-label="Mở đầu và động lực">
-  <section data-slide-id="L04-S01">
-    <h1>Giải MDP bằng quy hoạch động</h1>
-    <p class="caption">Học tăng cường — Bài 04 — Học kỳ 1, năm học 2026–2027</p>
-    <p>Quy trình quyết định Markov (MDP)</p>
-    <div class="box">
-      <p>Đầu vào: mô hình MDP với trạng thái, hành động, phần thưởng và hệ số chiết khấu.</p>
-      <p>Đầu ra: chính sách hành động cùng căn cứ đánh giá chất lượng của nó.</p>
-    </div>
-    <aside class="notes">
-      <p>Bài trước chúng ta đã mô tả quy trình quyết định Markov bằng hàm giá trị và phương trình Bellman, nhưng mới dừng ở mức mô tả. Hôm nay vấn đề chuyển sang tính: cho trước mô hình đầy đủ, làm thế nào tính được giá trị dài hạn của mỗi chính sách và tìm ra chính sách tốt nhất. Cả bài sẽ xây dựng ba năng lực: tính giá trị một chính sách, cải thiện chính sách bằng cách đổi hành động, và kiểm tra khi nào được phép dừng. Đây là nền tảng cho các thuật toán học khi mô hình chưa biết ở các bài sau.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 1–2.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S02">
-    <h2>Nội dung bài giảng</h2>
-    <div class="grid2">
-      <div class="card">
-        <p>1. Phương trình Bellman tối ưu</p>
-        <p>2. Đánh giá một chính sách</p>
-        <p>3. Lặp chính sách</p>
-      </div>
-      <div class="card">
-        <p>4. Lặp giá trị</p>
-        <p>5. Hội tụ và sai số</p>
-        <p>6. Tổng hợp và so sánh</p>
-      </div>
-    </div>
-    <div class="box">
-      <p>Sản phẩm cần đạt: tính giá trị một lượt, giải thích một lần đổi hành động, kiểm tra một ngưỡng dừng.</p>
-    </div>
-    <aside class="notes">
-      <p>Lộ trình gồm sáu phần. Phần một xây dựng phương trình Bellman tối ưu, phần hai đánh giá một chính sách cho trước, phần ba và bốn là hai thuật toán lặp chính sách và lặp giá trị, phần năm nói về hội tụ và sai số, phần sáu tổng hợp. Tiên quyết cần nhớ từ Bài 03 là dạng kỳ vọng của phương trình Bellman và tổng thưởng chiết khấu với chỉ số $R_{t+1}$ cho phần thưởng nhận sau khi thực hiện hành động. Ba năng lực sẽ được kiểm tra: tính trọn một lượt đánh giá, giải thích vì sao một lần đổi hành động làm giá trị tăng, và kiểm tra điều kiện dừng bằng ngưỡng. Bài toán hai trạng thái ngay sau đây sẽ cho thấy vì sao cần cả ba.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 2–3.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S03">
-    <h2>Lập kế hoạch từ mô hình đã biết</h2>
-    <img class="figure" src="img/lec-04/two-state.svg" alt="Sơ đồ hai trạng thái s0 và s1 với bốn chuyển tất định: chọn a ở s0 nhận thưởng 2 và ở lại s0, chọn b ở s0 nhận thưởng −1 và sang s1, chọn a ở s1 nhận thưởng 5 và về s0, chọn b ở s1 nhận thưởng 10 và ở lại s1" />
-    <div class="box">
-      <p>Hệ số chiết khấu $\gamma = 0{,}5$. Nhãn mỗi cạnh ghi hành động và phần thưởng nhận được; nút chỉ ghi tên trạng thái.</p>
-    </div>
-    <aside class="notes">
-      <p>Đây là mô hình làm việc xuyên suốt bài hôm nay. Hai trạng thái $s_0$ và $s_1$, mỗi trạng thái có hai hành động $a$ và $b$, mọi chuyển đều tất định. Ở $s_0$, chọn $a$ nhận thưởng 2 và ở lại $s_0$; chọn $b$ nhận thưởng −1 nhưng sang $s_1$. Ở $s_1$, chọn $a$ nhận 5 và về $s_0$; chọn $b$ nhận 10 và ở lại $s_1$. Hệ số chiết khấu bằng 0,5. Vì mô hình cho biết đủ xác suất chuyển và phân phối thưởng, ta tính được kỳ vọng của tổng thưởng chiết khấu ngay trên giấy, nghĩa là kỳ vọng của phần thưởng cộng giá trị tiếp diễn đã chiết khấu, mà không cần lấy mẫu trải nghiệm. Vấn đề là chọn hành động ở cả hai trạng thái sao cho tổng dài hạn lớn nhất, và bốn cạnh này sẽ được dùng lại liên tục.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 4, 12, 17; tham số điều chỉnh.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S04">
-    <h2>Phần thưởng trước mắt và dài hạn</h2>
-    <div class="grid2">
-      <div class="card">
-        <p><strong>Luôn chọn $a$ từ $s_0$</strong></p>
-        <table>
-          <tr><th>$R_1$</th><th>$R_2$</th><th>$R_3$</th><th>…</th></tr>
-          <tr><td>2</td><td>2</td><td>2</td><td>…</td></tr>
-        </table>
-        <p class="math-large">$$\frac{2}{1-0{,}5} = 4$$</p>
-      </div>
-      <div class="card">
-        <p><strong>Chọn $b$ rồi luôn $b$ ở $s_1$</strong></p>
-        <table>
-          <tr><th>$R_1$</th><th>$R_2$</th><th>$R_3$</th><th>…</th></tr>
-          <tr><td>−1</td><td>10</td><td>10</td><td>…</td></tr>
-        </table>
-        <p class="math-large">$$-1 + \frac{0{,}5\cdot 10}{1-0{,}5} = 9$$</p>
-      </div>
-    </div>
-    <div class="box">
-      <p>Cùng xuất phát từ $s_0$: chấp nhận phần thưởng đầu thấp hơn có thể đem lại tổng dài hạn cao hơn.</p>
-    </div>
-    <aside class="notes">
-      <p>So hai chính sách cùng xuất phát từ $s_0$. Chính sách thứ nhất luôn chọn $a$: mỗi bước nhận thưởng 2, chuỗi lặp vô hạn nên tổng là cấp số nhân với mẫu số $1-\gamma$, cho kết quả 4. Chính sách thứ hai chọn $b$ một lần, nhận −1, rồi ở $s_1$ luôn chọn $b$ và nhận 10 mãi. Tổng gồm phần thưởng đầu −1 cộng phần tiếp diễn chiết khấu: $0{,}5$ nhân 10 chia $1-0{,}5$, cho 9. Ba số cần tách bạch: phần thưởng đầu, giá trị của phần tiếp diễn, và tổng. Chính sách thứ hai thua ở bước đầu nhưng thắng về dài hạn, vì hành động $b$ ở $s_1$ nhận thưởng 10 ở mọi bước. Đây mới là so sánh hai chính sách cụ thể; chưa chứng minh được rằng một trong hai là tối ưu trên toàn bộ các chính sách.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 5, 17–19; tham số điều chỉnh.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S05">
-    <h2>Câu hỏi: giá trị của một bước nhìn trước</h2>
-    <p><strong>Câu hỏi:</strong> tính giá trị của việc chọn $b$ tại $s_0$ rồi dùng bảng tiếp diễn đã cho; chỉ ra hai dữ kiện lấy từ mô hình.</p>
-    <div class="grid2">
-      <div class="card">
-        <p><strong>Dữ kiện</strong></p>
-        <p>Chính sách luôn chọn $a$:</p><p>$v(s_0)=4$, $v(s_1)=7$.</p><p>Hệ số chiết khấu $\gamma=0{,}5$.</p>
-        <p>Chọn $b$ ở $s_0$: nhận thưởng $r=-1$ và chuyển đến $s_1$ với xác suất 1.</p>
-      </div>
-      <div class="card">
-        <p><strong>Phép tính</strong></p>
-        <p class="fragment math-large">$$-1 + 0{,}5\cdot 7 = 2{,}5$$</p>
-        <p class="fragment">Hai dữ kiện lấy từ mô hình: thưởng $-1$ trên cạnh, và chuyển đến $s_1$ với xác suất 1.</p>
-      </div>
-    </div>
-    <aside class="notes">
-      <p>Trước khi sang phần tối ưu, kiểm tra lại phép nhìn trước một bước. Đề cho bảng tiếp diễn $v(s_0)=4$, $v(s_1)=7$ và $\gamma=0{,}5$. Hành động $b$ ở $s_0$ nhận thưởng −1 và đưa tới $s_1$ chắc chắn. Giá trị của lựa chọn này là phần thưởng −1 cộng hệ số 0,5 nhân giá trị tiếp diễn 7, cho 2,5. Bốn đại lượng trong phép tính có vai trò khác nhau: −1 là phần thưởng trên cạnh, 0,5 là hệ số chiết khấu, 7 là giá trị tiếp diễn của trạng thái kế tiếp, 2,5 là kết quả. Lỗi thường gặp là coi 7 hoặc 2,5 là phần thưởng nhận ngay; cả hai đều không phải. Từ phép tính này, phần hai sẽ đặt mục tiêu tối ưu đồng thời hành động đầu và phần tiếp diễn.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 6, 17–19; tham số điều chỉnh.</p>
-    </aside>
-  </section>
+<section>
+<section data-slide-id="L04-A01">
+<h1>Giải MDP bằng quy hoạch động</h1>
+<h3>Bài 04 · Học tăng cường</h3>
+<p>Quá trình quyết định Markov (MDP)</p>
+<p>Học kỳ 1 · Năm học 2026–2027</p>
+<p>Trường Đại học Công nghệ · Đại học Quốc gia Hà Nội</p>
+<div class="box">Tính giá trị và lựa chọn chính sách từ mô hình môi trường đã biết.</div>
+<aside class="notes"><p>Phạm vi là lập kế hoạch trong MDP hữu hạn với mô hình chuyển và phần thưởng đã biết. Quy hoạch động dùng mô hình này để tính giá trị của chính sách và xác định lựa chọn tối ưu.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 1; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, chương 4, tr. 73.</p></aside>
 </section>
-<section aria-label="Bellman tối ưu">
-
-<section data-slide-id="L04-S06">
-<h2>Hành động đầu và phần tiếp diễn</h2>
-<figure>
-<svg role="img" width="1040" viewBox="0 0 1040 280" xmlns="http://www.w3.org/2000/svg">
-<title>Sơ đồ cây một bước từ s0 với hai hành động a, b</title>
-<desc>Từ s0, hành động a dẫn tới ô s0 với thưởng 2 và phần tiếp diễn từ s0; hành động b dẫn tới ô s1 với thưởng −1 và phần tiếp diễn từ s1.</desc>
-<rect x="0" y="0" width="1040" height="280" fill="#EDF4FF"/>
-<circle cx="520" cy="55" r="42" fill="#F7EFE6" stroke="#2F3E7A" stroke-width="3"/>
-<text x="520" y="68" font-size="36" fill="#2F3E7A" text-anchor="middle">s₀</text>
-<line x1="486" y1="80" x2="300" y2="150" stroke="#2F3E7A" stroke-width="3"/>
-<polygon points="300,150 316,138 310,156" fill="#2F3E7A"/>
-<text x="330" y="120" font-size="36" fill="#2F3E7A">a</text>
-<line x1="554" y1="80" x2="740" y2="150" stroke="#B15A2B" stroke-width="3"/>
-<polygon points="740,150 724,138 730,156" fill="#B15A2B"/>
-<text x="700" y="120" font-size="36" fill="#B15A2B">b</text>
-<rect x="140" y="160" width="320" height="100" fill="#F7EFE6" stroke="#2F3E7A" stroke-width="3"/>
-<text x="300" y="205" font-size="36" fill="#2F3E7A" text-anchor="middle">s₀, thưởng 2</text>
-<text x="300" y="248" font-size="36" fill="#2F3E7A" text-anchor="middle">tiếp diễn từ s₀</text>
-<rect x="580" y="160" width="320" height="100" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/>
-<text x="740" y="205" font-size="36" fill="#B15A2B" text-anchor="middle">s₁, thưởng −1</text>
-<text x="740" y="248" font-size="36" fill="#B15A2B" text-anchor="middle">tiếp diễn từ s₁</text>
-</svg>
-</figure>
-<p>Đánh giá một hành động: giữ phần tiếp diễn theo chính sách cố định $\pi$.</p>
-<p>Tối ưu: chọn phần tiếp diễn tốt nhất từ trạng thái đến.</p>
-<aside class="notes">
-Mỗi lựa chọn gồm ba phần: hành động đầu, chuyển trạng thái, rồi một chính sách tiếp diễn từ trạng thái mới. Khi đánh giá một hành động cụ thể, ta giữ nguyên phần tiếp diễn theo chính sách đang xét, nên hai nhánh trong hình dùng cùng quy ước tiếp diễn. Khi tìm giá trị tối ưu, phần tiếp diễn không bị ràng buộc nữa: từ trạng thái đến, ta được phép chọn chính sách tối ưu. Với chuyển trạng thái ngẫu nhiên, phải lấy kỳ vọng theo xác suất môi trường trước khi so sánh các hành động; tác tử không được chọn kết quả ngẫu nhiên. Cách tách này đặt tên cho phép tính áp dụng lên một bảng tiếp diễn bất kỳ.
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 6–8, 17; tham số điều chỉnh.</p>
-</aside>
+<section data-slide-id="L04-A02">
+<h2>Nội dung và mục tiêu</h2>
+<img class="figure" src="img/lec-04/dp04-roadmap.svg" alt="Đánh giá chính sách tạo giá trị; cải thiện tạo chính sách mới; lặp chính sách và lặp giá trị tìm nghiệm; lịch cập nhật phân bổ việc tính."/><div class="grid2"><div class="card"><h3>Mục tiêu</h3><ul><li>Thực hiện cập nhật và cải thiện chính sách.</li><li>Kiểm tra hội tụ, sai số và điều kiện dừng.</li><li>So sánh các cách tổ chức tính toán.</li></ul></div><div class="card"><h3>Kiến thức tiên quyết</h3><ul><li>MDP và tổng phần thưởng chiết khấu.</li><li>Kỳ vọng có điều kiện.</li><li>Vector và hệ phương trình tuyến tính.</li></ul></div></div>
+<aside class="notes"><p>Các thuật toán sau dùng lại cùng mô hình và quy ước thưởng. Đánh giá giữ chính sách cố định; điều khiển cho phép thay chính sách.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 2–3; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.1–4.7, tr. 74–88.</p></aside>
 </section>
-
-<section data-slide-id="L04-S07">
-<h2>Điểm của hành động từ bảng giá trị</h2>
-<p>Bảng tiếp diễn $v=(4,7)$ của chính sách $\pi_0=(a,a)$.</p>
-<div class="grid2">
-<div>
-<table>
-<tr><th></th><th>a</th><th>b</th></tr>
-<tr><th>s₀</th><td>4</td><td>2,5</td></tr>
-<tr><th>s₁</th><td>7</td><td>13,5</td></tr>
-</table>
-</div>
-<div class="card">
-<p>$Q_v(s_1,b)=10+0{,}5\cdot 7=13{,}5$</p>
-<p>Thưởng ngay cộng giá trị tiếp diễn đã chiết khấu.</p>
-</div>
-</div>
-<p>$$Q_v(s,a)=\sum_{s',r}p(s',r\mid s,a)\,[\,r+\gamma v(s')\,]$$</p>
-<aside class="notes">
-Bảng $v=(4,7)$ là giá trị của chính sách $\pi_0=(a,a)$, nên bảng điểm vừa tính chính là $q^{\pi_0}$, chưa phải $q_*$. Cách tính từng ô: lấy thưởng nhận được, cộng giá trị của trạng thái đến nhân với hệ số chiết khấu, rồi lấy kỳ vọng theo xác suất chuyển. Ô $Q_v(s_1,b)$ minh họa trọn một bước: thưởng 10 cộng $0{,}5$ lần 7. Hai ô 4 và 7 trùng với $v$ vì đó là các hành động mà $\pi_0$ đã chọn, phần tiếp diễn quay lại chính bảng đang đánh giá. Ký hiệu $Q_v$ gắn với bảng $v$ cụ thể, để không nhầm với giá trị hành động tối ưu.
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 6, 17–19; tham số điều chỉnh.</p>
-</aside>
+<section data-slide-id="L04-A03">
+<h2>Bài toán lập kế hoạch với mô hình đã biết</h2>
+<div class="grid2"><div class="card"><h3>Dữ kiện</h3><ul><li>Tập trạng thái $\mathcal S$ và tập hành động $\mathcal A(s)$ hữu hạn.</li><li>Mô hình chuyển–thưởng $p(s',r\mid s,a)$ đã biết.</li><li>Phần thưởng bị chặn; $0\le\gamma&lt;1$.</li></ul></div><div class="card"><h3>Bài toán điều khiển</h3><p>Tìm chính sách có tổng phần thưởng chiết khấu kỳ vọng lớn nhất tại mọi trạng thái.</p><p>Đánh giá chính sách hiện tại cung cấp căn cứ để thay đổi lựa chọn.</p></div></div>
+<div class="math-large">$$p(s',r\mid s,a)=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a).$$</div>
+<p class="caption">Giả thiết Markov: trạng thái và hành động hiện tại xác định phân phối bước kế tiếp.</p>
+<aside class="notes"><p>$\mathcal S$ gồm các trạng thái chưa kết thúc; mỗi $\mathcal A(s)$ hữu hạn và khác rỗng. Nếu có trạng thái kết thúc $s_{\mathrm{term}}$, đặt $\mathcal S^+=\mathcal S\cup\{s_{\mathrm{term}}\}$; nếu không có kết thúc, $\mathcal S^+=\mathcal S$. Trong mọi tổng theo trạng thái kế tiếp, $s'$ chạy trên $\mathcal S^+$. Các bảng giá trị được mở rộng bằng $0$ tại trạng thái kết thúc. Trước khi kết thúc, $S_t\in\mathcal S$, $A_t\in\mathcal A(S_t)$ và $R_{t+1}\in\mathcal R\subset\mathbb R$; tập phần thưởng trong các tổng của bài là hữu hạn. Với mỗi $(s,a)$, $\sum_{s',r}p(s',r\mid s,a)=1$. Bài này xét trạng thái quan sát đầy đủ. Quan sát cảm biến nói chung không tự đồng nhất với trạng thái Markov. Chính sách ngẫu nhiên $\pi(a\mid s)$ là phân phối trên $\mathcal A(s)$; chính sách dừng không phụ thuộc thời điểm. Mô hình là dữ kiện đã biết, khác với chỉ biết phần thưởng của mỗi hành động.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 4, 12; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §3.1, §4 mở đầu, tr. 73.</p></aside>
 </section>
-
-<section data-slide-id="L04-S08">
-<h2>Giá trị tối ưu</h2>
-<p>MDP có hữu hạn trạng thái và hành động, thưởng bị chặn, $0\le\gamma\lt1$.</p>
-<div class="grid2">
-<div class="card">
-<p>$v_*(s)=\sup_{\pi\in\Pi}v^\pi(s)$</p>
-<p>Cận trên nhỏ nhất của giá trị trạng thái trên lớp chính sách $\Pi$.</p>
-</div>
-<div class="card">
-<p>$q_*(s,a)=\sup_{\pi\in\Pi}q^\pi(s,a)$</p>
-<p>Cận trên nhỏ nhất của giá trị hành động trên lớp chính sách $\Pi$.</p>
-</div>
-</div>
-<p>$$v_*(s)=\max_{a\in\mathcal A(s)}q_*(s,a)$$</p>
-<aside class="notes">
-Lớp $\Pi$ gồm các chính sách hợp lệ, có thể phụ thuộc lịch sử. Định nghĩa dùng supremum, tức cận trên nhỏ nhất, trước khi chứng minh có chính sách đạt được nó; phần chứng minh nằm bằng tính co của toán tử. Quy ước cho $q^\pi(s,a)$: khởi đầu tại $s$, ấn định hành động đầu là $a$, rồi theo $\pi$ từ bước sau; không điều kiện hóa trên một hành động có xác suất bằng không. Tính chất Markov cho phép viết phần tiếp diễn bằng giá trị của trạng thái kế tiếp, dẫn tới quan hệ giữa $v_*$ và $q_*$: giá trị tối ưu của một trạng thái bằng cực đại theo hành động của $q_*$.
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 7–9.</p>
-</aside>
+<section data-slide-id="L04-A04">
+<h2>Mô hình hai trạng thái</h2>
+<div class="grid2"><div><img class="figure" src="img/lec-04/dp04-two-state.svg" alt="Hai trạng thái: s0 chọn a trở về s0 thưởng 1, chọn b sang s1 thưởng 0; s1 chọn a sang s0 thưởng 2, chọn b ở s1 thưởng 3."/></div><div><table><thead><tr><th scope="col">$s$</th><th scope="col">$a$</th><th scope="col">$s'$</th><th scope="col">$r$</th></tr></thead><tbody><tr><td>$s_0$</td><td>$a$</td><td>$s_0$</td><td>1</td></tr><tr><td>$s_0$</td><td>$b$</td><td>$s_1$</td><td>0</td></tr><tr><td>$s_1$</td><td>$a$</td><td>$s_0$</td><td>2</td></tr><tr><td>$s_1$</td><td>$b$</td><td>$s_1$</td><td>3</td></tr></tbody></table><p>$\gamma=0{,}9$; mọi chuyển tiếp có xác suất $1$.</p></div></div>
+<div class="box">$\pi_0=(a,a)$ theo thứ tự $(s_0,s_1)$. Bài toán tiếp diễn, không có trạng thái kết thúc.</div>
+<aside class="notes"><p>Hành động có phần thưởng trước mắt cao nhất chưa đủ để kết luận chính sách tối ưu. Mỗi chuyển tiếp ở đây có xác suất 1; không có bước lấy mẫu trong phép tính quy hoạch động.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17–18</p></aside>
 </section>
-
-<section data-slide-id="L04-S09">
-<h2>Bellman tối ưu cho giá trị trạng thái</h2>
-<p>$$v_*(s)=\max_a\sum_{s',r}p(s',r\mid s,a)\,[\,r+\gamma v_*(s')\,]$$</p>
-<div class="grid2">
-<div class="card">
-<p>1. Lấy kỳ vọng cho từng hành động</p>
-<p>Tổng theo $s',r$ với xác suất môi trường.</p>
-</div>
-<div class="card">
-<p>2. Chọn giá trị lớn nhất</p>
-<p>Cực đại theo $a$ sau khi các kỳ vọng đã có.</p>
-</div>
-</div>
-<aside class="notes">
-Phép tính có thứ tự: trước hết, với mỗi hành động, lấy kỳ vọng phần thưởng và giá trị tiếp diễn theo phân phối của môi trường; sau đó mới so các hành động và lấy cực đại. Thứ tự này khác với việc cho tác tử chọn cả kết quả ngẫu nhiên. So với phương trình Bellman kỳ vọng, điểm thay đổi duy nhất là thay trung bình theo chính sách $\pi$ bằng phép cực đại theo hành động. Đây là phương trình đặc trưng của giá trị tối ưu, chưa phải cách giải bằng cách thay số đã biết; sự tồn tại và tính duy nhất của nghiệm được chứng minh bằng tính co của toán tử.
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 6, 8.</p>
-</aside>
+<section data-slide-id="L04-A05">
+<h2>Kiểm tra dữ kiện và phần thưởng chiết khấu</h2>
+<p>Xuất phát tại $s_1$, theo $\pi_0=(a,a)$, với $\gamma=0{,}9$.</p>
+<div class="grid2"><div><img class="figure" src="img/lec-04/dp04-two-state.svg" alt="Mô hình hai trạng thái với chính sách ban đầu chọn a ở cả hai trạng thái."/></div><div class="check"><strong>Câu hỏi:</strong><ol><li>Xác định ba phần thưởng đầu và tổng chiết khấu của chúng.</li><li>Nêu dữ kiện còn thiếu nếu chỉ biết phần thưởng của từng hành động.</li></ol></div></div>
+<div class="math-large">$$G_t=\sum_{j=0}^{\infty}\gamma^jR_{t+1+j}.$$</div>
+<aside class="notes"><p><strong>Lời giải.</strong> Từ $s_1$: các phần thưởng là $2,1,1$; tổng $2+0.9+0.9^2=3.71$. Cần mô hình chuyển để xác định trạng thái tiếp theo; bảng thưởng riêng không đủ.</p><p>Phần thưởng đầu có chỉ số $t+1$ vì nó được nhận sau hành động tại thời điểm $t$. Tổng ba bước là một tổng cắt ngắn, chưa phải giá trị vô hạn.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 5, 17–18</p></aside>
 </section>
-
-<section data-slide-id="L04-S10">
-<h2>Giá trị hành động và chính sách tham lam</h2>
-<p>$$q_*(s,a)=\sum_{s',r}p(s',r\mid s,a)\,[\,r+\gamma\max_{a'}q_*(s',a')\,]$$</p>
-<p>$$\pi_*(s)\in\arg\max_a q_*(s,a)$$</p>
-<p>$\max$ trả một giá trị; $\arg\max$ trả tập hành động đạt giá trị đó.</p>
-<p>Cực đại áp dụng cho mọi hành động ở trạng thái kế tiếp, trong khi $a$ đã cố định.</p>
-<aside class="notes">
-Trong công thức $q_*$, hành động đầu $a$ đã được ấn định; phép cực đại chỉ xuất hiện ở trạng thái kế tiếp, trên mọi hành động khả dĩ tại đó. Hai ký hiệu cần tách bạch: $\max$ cho ra một con số, còn $\arg\max$ cho ra tập các hành động đạt con số đó, nên chính sách tham lam được viết bằng dấu thuộc tập. Khi đã có $q_*$, chọn tại mỗi trạng thái một hành động trong tập ấy là đủ. Chính sách tham lam dựng theo một bảng xấp xỉ của $q_*$ chưa mặc nhiên tối ưu; chứng minh cho phép dựng theo $q_*$ đúng sẽ đến sau.
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 7–9.</p>
-</aside>
 </section>
-
-<section data-slide-id="L04-S11">
-<h2>Hai toán tử Bellman</h2>
-<div class="grid2">
-<div class="card">
-<p>$(T^\pi v)(s)=\sum_a\pi(a\mid s)\,Q_v(s,a)$</p>
-<p>Giữ chính sách Markov dừng khi trộn các ô theo $\pi$.</p>
-</div>
-<div class="card">
-<p>$(T_*v)(s)=\max_a Q_v(s,a)$</p>
-<p>Chọn hành động theo chính bảng đang có.</p>
-</div>
-</div>
-<p>Hai toán tử đều nhận bảng $v\in\mathcal V=\mathbb R^{|\mathcal S|}$ và trả một bảng mới.</p>
-<p>Điểm bất động là bảng không đổi sau phép tính: $v^\pi=T^\pi v^\pi$ và $v_*=T_*v_*$.</p>
-<aside class="notes">
-Hai toán tử cùng nhận một bảng giá trị và cùng trả ra một bảng mới, khác nhau ở khối chọn hành động. Toán tử $T^\pi$ lấy trung bình theo xác suất chính sách, nên nó giữ nguyên chính sách Markov dừng đang xét. Toán tử $T_*$ lấy cực đại theo từng hàng, tức chọn hành động tốt nhất theo chính bảng đang có. Điểm bất động của một toán tử là bảng mà khi áp dụng phép tính, kết quả không đổi; $v^\pi$ là điểm bất động của $T^\pi$ và $v_*$ là điểm bất động của $T_*$. Việc áp dụng toán tử một lần có cho ngay nghiệm tối ưu hay không là câu hỏi phần sau sẽ trả lời.
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 10, 13.</p>
-</aside>
+<section>
+<section data-slide-id="L04-B01">
+<h2>Dự đoán giá trị của chính sách cố định</h2>
+<p>Với $\pi_0=(a,a)$, tổng thưởng gồm vô hạn hạng. Sau một chuyển tiếp, phần tiếp nối lại bắt đầu từ một trạng thái trong mô hình.</p><img class="figure" src="img/lec-04/dp04-expectation-backup.svg" alt="Cập nhật kỳ vọng: từ trạng thái qua hành động do chính sách chọn, xét các kết quả chuyển và cộng phần thưởng với giá trị tiếp nối."/><div class="box">Một bảng giá trị hiện có ước lượng phần thưởng về sau. Chính sách được giữ cố định trong toàn bộ quá trình đánh giá.</div>
+<aside class="notes"><p>Đây là bài toán dự đoán. Chính sách không thay đổi trong suốt đánh giá. Cập nhật kỳ vọng sử dụng mọi kết quả có thể theo mô hình, khác với một chuyển tiếp lấy mẫu.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 6, 12–14; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.1, tr. 74–75.</p></aside>
 </section>
-
-<section data-slide-id="L04-S12">
-<h2>Câu hỏi: một cập nhật có phải nghiệm tối ưu</h2>
-<div class="grid2">
-<div>
-<p>$v=(4,7)$</p>
-<table>
-<tr><th>$Q_v$</th><th>a</th><th>b</th></tr>
-<tr><th>s₀</th><td>4</td><td>2,5</td></tr>
-<tr><th>s₁</th><td>7</td><td>13,5</td></tr>
-</table>
-</div>
-<div class="box">
-<p>Câu hỏi: Tính $T_*v$ và kết luận bảng $v$ đã phải giá trị tối ưu hay chưa.</p>
-<div class="fragment">
-<p>$T_*v=(4,\,13{,}5)\ne(4,7)$, nên $v$ chưa phải $v_*$.</p>
-<p>Cực đại được lấy theo hành động trong từng hàng.</p>
-</div>
-</div>
-</div>
-<aside class="notes">
-Áp dụng $T_*$ lên từng hàng của bảng: tại $s_0$, cực đại giữa 4 và 2,5 cho 4; tại $s_1$, cực đại giữa 7 và 13,5 cho 13,5. Vậy một bước cập nhật cho bảng $(4,\,13{,}5)$, khác với $(4,7)$, nên bảng đã cho chưa phải $v_*$. Lỗi dễ gặp là chỉ kiểm tra một thành phần không đổi rồi kết luận điểm bất động; phải kiểm tra toàn bảng. Cũng cần tách ba đại lượng: $Q_v$ là bảng điểm từ một bảng $v$ cụ thể, $T_*v$ là kết quả một lần cập nhật, còn $v_*$ là nghiệm của phương trình. Phần tiếp theo giữ chính sách cố định để tính bảng giá trị một cách có hệ thống.
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 10, 17–19; tham số điều chỉnh.</p>
-</aside>
+<section data-slide-id="L04-B02">
+<h2>Hai lượt đánh giá từ bảng giá trị bằng không</h2>
+<p>Chính sách $\pi_0=(a,a)$; $\gamma=0{,}9$; cập nhật đồng bộ.</p>
+<div class="grid2"><div class="card"><h3>Từ $V_0=(0,0)$</h3><p>$V_1(s_0)=1+0{,}9\cdot0=1$.</p><p>$V_1(s_1)=2+0{,}9\cdot0=2$.</p><div class="math-large">$V_1=(1,2)$</div></div><div class="card"><h3>Từ $V_1=(1,2)$</h3><p>$V_2(s_0)=1+0{,}9\cdot1=1{,}9$.</p><p>$V_2(s_1)=2+0{,}9\cdot1=2{,}9$.</p><div class="math-large">$V_2=(1{,}9;\,2{,}9)$</div></div></div>
+<div class="box">Cả hai ô của bảng mới đều đọc từ cùng bảng cũ. $V_k$ là bảng ước lượng sau $k$ lượt.</div>
+<aside class="notes"><p>Giá trị 2.9 của $s_1$ ở lượt hai dùng $V_1(s_0)=1$. Nếu dùng ngay giá trị mới 1.9 sẽ đổi thuật toán và cho 3.71 ở ô đó.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 14, 17–18</p></aside>
 </section>
-
+<section data-slide-id="L04-B03">
+<h2>Hàm giá trị và phương trình Bellman kỳ vọng</h2>
+<p>$v_\pi(s)$ là kỳ vọng của tổng thưởng khi bắt đầu tại $s$ và theo chính sách $\pi$.</p>
+<div class="math-large">$$v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s].$$</div>
+<div class="math-large">$$v_\pi(s)=\sum_a\pi(a\mid s)\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma v_\pi(s')\bigr].$$</div>
+<div class="grid2"><div class="card">$v_{\pi_0}(s_0)=1+0{,}9v_{\pi_0}(s_0)$</div><div class="card">$v_{\pi_0}(s_1)=2+0{,}9v_{\pi_0}(s_0)$</div></div>
+<aside class="notes"><p>Kỳ vọng bao gồm ngẫu nhiên của chính sách và môi trường. Tách $G_t=R_{t+1}+\gamma G_{t+1}$, rồi lấy kỳ vọng theo hành động và kết quả chuyển, cho phương trình Bellman kỳ vọng. Hai vế cùng chứa $v_\pi$, nên đây là phương trình xác định giá trị chính xác. Trong mô hình hai trạng thái, chính sách và động lực đều xác định nên các tổng chỉ còn một hạng. Nếu có trạng thái kết thúc, giá trị tiếp nối của nó bằng 0; phần thưởng khi đi vào trạng thái đó vẫn được tính.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 5–6; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.1, (4.3)–(4.4), tr. 74.</p></aside>
 </section>
-<section aria-label="Phần 3. Đánh giá chính sách">
-
-  <section data-slide-id="L04-S13">
-    <h2>Giá trị của chính sách cố định</h2>
-    <p>Giữ $\pi_0=(a,a)$ và $\gamma=0{,}5$. Tìm giá trị dài hạn tại hai trạng thái.</p>
-    <img class="figure" src="img/lec-04/policy-evaluation.svg" alt="Hai chuyển theo chính sách luôn a: s0 về s0 nhận thưởng 2; s1 về s0 nhận thưởng 5.">
-    <aside class="notes">
-      <p>Ở hai phần trước chúng ta đã có mô hình và khái niệm giá trị. Giờ đặt một quy tắc hành động cố định: chính sách $\pi_0$ chọn $a$ ở cả hai trạng thái. Câu hỏi là giá trị của chính sách này bằng bao nhiêu tại $s_0$ và $s_1$. Ta đang đo giá trị của một quy tắc đã cho. Vì $\pi_0$ chọn duy nhất hành động $a$ tại mỗi trạng thái, kỳ vọng rút gọn thành một phương trình mỗi trạng thái: phần thưởng ngay cộng $\gamma$ nhân giá trị trạng thái kế. Phần thưởng tương lai bị nhân $\gamma$ mỗi bước, nên đóng góp của nó giảm dần. Quan hệ giữa giá trị hiện tại và giá trị kế tiếp tạo thành một hệ phương trình.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 14, 17; tham số điều chỉnh.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S14">
-    <h2>Hai phương trình Bellman</h2>
-    <p>Đặt $x=v^{\pi_0}(s_0)$, $y=v^{\pi_0}(s_1)$. Cấu trúc chung: giá trị hiện tại bằng phần thưởng cộng chiết khấu giá trị kế.</p>
-    <div class="grid2">
-      <div class="card">
-        <p class="math-large">$$x = 2 + 0{,}5\,x$$</p>
-        <p class="caption">từ chuyển $s_0\xrightarrow{a}s_0$, thưởng $2$.</p>
-      </div>
-      <div class="card">
-        <p class="math-large">$$y = 5 + 0{,}5\,x$$</p>
-        <p class="caption">từ chuyển $s_1\xrightarrow{a}s_0$, thưởng $5$.</p>
-      </div>
-    </div>
-    <p class="math-large">$$x = \frac{2}{1-0{,}5} = 4,\qquad y = 5 + 0{,}5\cdot 4 = 7$$</p>
-    <aside class="notes">
-      <p>Phương trình thứ nhất chỉ chứa $x$ vì $s_0$ đi về chính nó: $x=2+0{,}5x$, giải ra $x=4$. Đây là tổng của cấp số nhân với công bội $0{,}5$. Phương trình thứ hai dùng giá trị vừa tìm được: $y=5+0{,}5\cdot4=7$. Kiểm lại: $y$ nhận thưởng $5$ ngay, cộng một nửa giá trị của $s_0$ nơi nó quay về. Lỗi thường gặp là thay $x$ bằng $y$ ở phương trình thứ hai; hãy theo đúng cạnh của mô hình. Cặp $(4,7)$ là nghiệm chính xác của hệ, và sẽ là chuẩn đối chiếu khi ta xấp xỉ bằng lặp từ bảng $0$ bằng các lượt quét.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 6, 18; tham số điều chỉnh.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S15">
-    <h2>Đánh giá bằng các lượt quét</h2>
-    <p>Khởi tạo $v_0=(0,0)$ và cập nhật đồng bộ $v_{k+1}=T^{\pi_0}v_k$: mọi trạng thái đều dùng bảng cũ $v_k$.</p>
-    <table>
-      <tr><th></th><th>$v_0$</th><th>$v_1$</th><th>$v_2$</th><th>$v^{\pi_0}$</th></tr>
-      <tr><th>$s_0$</th><td>0</td><td>2</td><td>3</td><td>4</td></tr>
-      <tr><th>$s_1$</th><td>0</td><td>5</td><td>6</td><td>7</td></tr>
-    </table>
-    <div class="box">
-      <p>Phép tính mẫu: $v_2(s_1)=5+0{,}5\cdot v_1(s_0)=5+0{,}5\cdot2=6$ — thưởng $5$, giá trị cũ $2$, kết quả $6$.</p>
-    </div>
-    <aside class="notes">
-      <p>Thay vì giải hệ, ta lặp. Bắt đầu từ bảng $0$, một lượt quét áp dụng toán tử $T^{\pi_0}$ cho từng trạng thái: $v_1(s_0)=2+0{,}5\cdot0=2$, $v_1(s_1)=5+0{,}5\cdot0=5$. Lượt hai cho $(3,6)$. Trong phép tính $v_2(s_1)$, ba đại lượng có vai trò khác nhau: thưởng tức thời $5$, giá trị cũ $v_1(s_0)=2$ lấy từ bảng trước, và kết quả $6$. Nhầm thưởng với giá trị cũ là lỗi phổ biến nhất ở đây. Dãy $(0,0)$, $(2,5)$, $(3,6)$ tiến dần về nghiệm $(4,7)$; mỗi lượt đưa bảng gần hơn một bước chiết khấu. Quy trình cần một ngưỡng dừng và giới hạn số lượt.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 14, 17; tham số điều chỉnh.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S16">
-    <h2>Quy trình đánh giá chính sách</h2>
-    <p>Đầu vào: mô hình, $\pi$ cố định, $\theta>0$, $K\ge1$.<br>Khởi tạo $v$; trạng thái kết thúc giữ giá trị 0.</p>
-    <ol>
-      <li>Tính đồng bộ $w=T^\pi v$.</li>
-      <li>Đo thay đổi lớn nhất $\delta=\max_s|w(s)-v(s)|$.</li>
-      <li>Nếu $\delta\le\theta$: trả $w$, đã đạt ngưỡng.</li>
-      <li>Nếu hết $K$ lượt: trả $w$, hết ngân sách.<br>Còn lại: gán $v=w$ rồi lặp.</li>
-    </ol>
-    <p class="box">Hết ngân sách không chứng nhận sai số mong muốn.</p>
-    <aside class="notes">
-      <p>Quy trình gồm bốn phần. Đầu vào là mô hình, chính sách cố định, ngưỡng dương $\theta$ và ngân sách lượt $K$. Khởi tạo bảng giá trị, riêng trạng thái kết thúc giữ $0$ vì không còn tương lai. Mỗi lượt tính bảng mới $w$ bằng toán tử $T^\pi$, rồi đo $\delta$: thay đổi lớn nhất giữa hai bảng trên mọi trạng thái. Nếu $\delta\le\theta$ ta trả $w$ kèm nhãn đạt ngưỡng; nếu đã dùng hết $K$ lượt mà chưa đạt, trả $w$ cuối cùng kèm nhãn hết ngân sách — hai nhãn này phải phân biệt, vì hết ngân sách không bảo đảm sai số mong muốn. Điều kiện hội tụ thật sự là $\gamma&lt;1$, không phải việc có đủ $K$. Với $n$ trạng thái, nhiều nhất $m$ hành động mỗi trạng thái và mô hình chuyển dày, mỗi lượt quét cho chính sách ngẫu nhiên tốn $O(n^2m)$ phép tính. Quy trình này trả bảng mới $w$; lặp giá trị sau này sẽ trả bảng $v$ dùng để trích chính sách — hai quy ước không được tráo.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 6, 14, 34; hw3 B6.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S17">
-    <h2>Hai lịch cập nhật</h2>
-    <div class="grid2">
-      <div class="card">
-        <p><strong>Đồng bộ</strong></p>
-        <p>Từ $v_0=(0,0)$: cả hai trạng thái dùng bảng cũ.</p>
-        <p class="math-large">$v_1=(2,\;5)$</p>
-        <p>$v_1(s_1)=5+0{,}5\cdot0=5$.</p>
-      </div>
-      <div class="card">
-        <p><strong>Tại chỗ</strong></p>
-        <p>Theo thứ tự $s_0$ rồi $s_1$; bước thứ hai dùng giá trị $s_0$ vừa tính.</p>
-        <p class="math-large">$v_1=(2,\;6)$</p>
-        <p>$v_1(s_1)=5+0{,}5\cdot2=6$.</p>
-      </div>
-    </div>
-    <p class="caption">Mỗi cập nhật phải dùng đúng Bellman theo bảng hiện có; mỗi trạng thái phải được cập nhật vô hạn lần để có bảo đảm hội tụ.</p>
-    <aside class="notes">
-      <p>Hai lịch cho kết quả khác nhau từ cùng bảng $0$. Đồng bộ: mọi trạng thái đọc giá trị từ bảng cũ, nên $s_1$ thấy $v_0(s_0)=0$ và nhận $5$. Tại chỗ: ta cập nhật $s_0$ trước, được $2$, rồi $s_1$ đọc ngay giá trị mới đó, nhận $5+0{,}5\cdot2=6$. Khác biệt một đơn vị đến hoàn toàn từ ô nguồn được dùng. Tại chỗ truyền thông tin mới trong cùng lượt; hiệu quả phụ thuộc mô hình và thứ tự cập nhật. Điều bắt buộc là mỗi cập nhật dùng đúng phương trình Bellman với bảng hiện có, và mỗi trạng thái được cập nhật vô hạn lần — nếu một trạng thái bị bỏ qua mãi thì không có bảo đảm hội tụ.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 15; tham số điều chỉnh.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S18">
-    <h2>Câu hỏi: đánh giá chính sách</h2>
-    <div class="box">
-      <p><strong>Câu hỏi:</strong> Cho $\pi_0=(a,a)$, $v_2=(3,6)$, $\gamma=0{,}5$. Tính $v_3=T^{\pi_0}v_2$ đồng bộ. Vì sao phép cập nhật không có $\max$?</p>
-    </div>
-    <div class="fragment">
-      <p><strong>Đáp án:</strong> $v_3=(3{,}5,\;6{,}5)$.</p><p>$v_3(s_0)=2+0{,}5\cdot3=3{,}5$.</p><p>$v_3(s_1)=5+0{,}5\cdot3=6{,}5$.</p>
-      <p>Không có $\max$ vì chính sách được giữ cố định: mỗi trạng thái chỉ có một hành động theo $\pi_0$, không có gì để so sánh.</p>
-    </div>
-    <aside class="notes">
-      <p>Công thức cho biết đúng ô giá trị cần dùng trước khi thay số. Cùng một hành động $a$ ở cả hai trạng thái: $v_3(s_0)=2+0{,}5\cdot v_2(s_0)=2+1{,}5=3{,}5$; $v_3(s_1)=5+0{,}5\cdot v_2(s_0)=5+1{,}5=6{,}5$. Cả hai dòng đều đọc giá trị của $s_0$, vì đó là trạng thái kế theo chính sách. Về câu hỏi thứ hai: toán tử $T^\pi$ đánh giá một chính sách đã cho, nên chính sách xác định $\pi_0$ chọn duy nhất hành động $a$ ở mỗi trạng thái; $\max$ chỉ xuất hiện khi ta được phép chọn hành động tốt nhất. Khi thêm $\max$ vào phép cập nhật, ta bước sang phần tiếp theo: cải thiện chính sách.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 14, 17; tham số điều chỉnh.</p>
-    </aside>
-  </section>
-
+<section data-slide-id="L04-B04">
+<h2>Toán tử đánh giá chính sách</h2>
+<p>Toán tử $T_\pi$ biến bảng $V:\mathcal S\to\mathbb R$ thành bảng mới, với $p$ và $\pi$ cố định.</p>
+<div class="math-large">$$(T_\pi V)(s)=\sum_a\pi(a\mid s)\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma V(s')\bigr].$$</div>
+<div class="grid2"><div class="card"><h3>Quy tắc lặp</h3><div class="math-large">$V_{k+1}=T_\pi V_k$</div><p>$k$ đếm lượt tính toán.</p></div><div class="card"><h3>Nghiệm đánh giá</h3><div class="math-large">$v_\pi=T_\pi v_\pi$</div><p>$v_\pi$ là điểm bất động.</p></div></div>
+<aside class="notes"><p>Bảng $V$ có $|\mathcal S|$ thành phần chưa kết thúc và được mở rộng bằng $V(s_{\mathrm{term}})=0$. Tổng theo $s'$ gồm cả trạng thái kết thúc, nên phần thưởng của chuyển vào đích vẫn được tính.</p><p>Chỉ số $t$ đếm bước tương tác, còn $k$ đếm lượt cập nhật toàn bảng. Với $V_0=0$, $V_k$ bằng kỳ vọng tổng thưởng cắt ngắn sau $k$ bước. Khởi tạo khác không thì có thêm giá trị cuối ước lượng. Trong ví dụ, cả hai giá trị mới đều sử dụng ô $s_0$ của bảng cũ, đúng với hai phép tính đã thực hiện. Toán tử cung cấp phép cập nhật; thuật toán còn phải quy định cách lưu bảng và thời điểm dừng. Cách xây mục tiêu cập nhật từ ước lượng giá trị tiếp nối được gọi là bootstrapping.</p><p>Với chính sách ngẫu nhiên đều $\pi(a\mid s)=\pi(b\mid s)=1/2$, giữ nguyên mô hình hai trạng thái và $\gamma=0{,}9$. Từ $V_0=0$, một lượt cho $V_1(s_0)=0{,}5(1)+0{,}5(0)=0{,}5$ và $V_1(s_1)=0{,}5(2)+0{,}5(3)=2{,}5$. Kết quả khác chính sách $\pi_0=(a,a)$ vì mỗi trạng thái lấy trung bình hai hành động.</p><p>Với chính sách ban đầu $\pi_0=(a,a)$, hai bảng đã tính là $V_1=(1,2)$ và $V_2=(1{,}9;2{,}9)$. Độ lệch lớn nhất giữa $V_1$ và một cập nhật Bellman của nó là $\max\{|1{,}9-1|,|2{,}9-2|\}=0{,}9$. Đại lượng này đo độ không khớp của $V_1$ với phương trình Bellman; điều kiện dừng cần liên hệ độ lệch đo được với sai số so với nghiệm chưa biết.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 10, 14; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.1, (4.5), tr. 74–75.</p></aside>
 </section>
-<section aria-label="Phần 4. Lặp chính sách">
-
-<section data-slide-id="L04-S19">
-<h2>Nhu cầu cải thiện chính sách</h2>
-<div class="grid2">
-<div class="card"><p>Tiếp tục theo $\pi_0=(a,a)$:</p><p class="math-large">$v^{\pi_0}(s_1)=7$.</p></div>
-<div class="card"><p>Chọn $b$ một lần, rồi theo $\pi_0$:</p><p class="math-large">$q^{\pi_0}(s_1,b)=13{,}5$.</p></div>
-</div>
-<p>$$q^{\pi_0}(s_1,b)=10+0{,}5\cdot7=13{,}5>7$$</p>
-<p>Chính sách mới phải được đánh giá với những lần chọn hành động tiếp theo.</p>
-<aside class="notes">
-<p>Phần trước kết thúc ở bảng giá trị của $\pi_0$, nhưng bảng đó chưa nói chính sách là tốt nhất. Tại $s_1$, giá trị khi tiếp tục theo $\pi_0$ là 7, còn nếu chọn $b$ một lần rồi quay về theo $\pi_0$ thì kỳ vọng là $10+0{,}5\cdot7=13{,}5$. Hai con số này không cùng bản chất: 7 là giá trị của chính sách, 13,5 là giá trị của một hành động đơn lẻ trong chính sách đó. Sai lầm phổ biến là coi 13,5 là giá trị của chính sách mới. Chính sách mới $\pi_1$ chọn $b$ tại mọi lần đến $s_1$, nên đường đi của nó khác hẳn đường đi một lần rồi quay về; giá trị của $\pi_1$ tại $s_1$ là 20 và phải được đánh giá riêng theo mô hình của chính sách mới, đó là nội dung tiếp theo.</p>
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 19; tham số điều chỉnh.</p>
-</aside>
+<section data-slide-id="L04-B05">
+<h2>Thuật toán đánh giá chính sách đồng bộ</h2>
+<p>Đầu vào: $p,\pi,\gamma$; ngưỡng $\eta&gt;0$; tối đa $K$ lượt nhận bảng mới.</p>
+<p>Chuẩn vô cùng: $\|U-V\|_\infty=\max_s|U(s)-V(s)|$.<br/>Phần dư: $b_\pi(V)=\|T_\pi V-V\|_\infty$.</p>
+<ol><li>Khởi tạo $V=0$; giữ giá trị trạng thái kết thúc bằng $0$.</li><li>Tính $W=T_\pi V$ từ bảng $V$ cố định; đặt $b=\|W-V\|_\infty$.</li><li>Nếu $b\le\eta$, trả $(V,b)$; nếu chưa đạt và còn lượt, nhận $V\leftarrow W$ rồi lặp lại.</li><li>Khi hết $K$ lượt, tính lại $b_\pi(V)$ trên bảng cuối; trả $(V,b_\pi(V))$ cùng kết quả kiểm tra ngưỡng.</li></ol>
+<aside class="notes"><p>Đầu ra là bảng xấp xỉ $v_\pi$ và phần dư đo trên chính bảng đó. $K$ là số nguyên không âm; một lượt nhận bảng tăng bộ đếm lên 1. Phép tính $W$ để kiểm phần dư không thay đổi $V$. Nếu ngưỡng đạt ở bước kiểm, thuật toán trả $V$, không trả $W$. Khi đã nhận đủ $K$ bảng, một phép áp dụng $T_\pi$ nữa xác định phần dư của bảng cuối. Trạng thái kết thúc không có hành động cần đánh giá và luôn giữ giá trị 0. Cập nhật đồng bộ cố định bảng đọc trong cả lượt; thứ tự ghi các ô của $W$ không ảnh hưởng kết quả. Dữ liệu là mô hình đầy đủ. Hết ngân sách không chứng minh hội tụ; nếu phần dư còn vượt ngưỡng, đầu ra chưa đạt yêu cầu độ chính xác. Tính co liên hệ phần dư đo được với sai số so với nghiệm chưa biết.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 14–15; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.1, tr. 74–75</p></aside>
 </section>
-
-<section data-slide-id="L04-S20">
-<h2>Cải thiện bằng một bước nhìn trước</h2>
-<div class="grid2">
-<div class="box">
-<table class="check">
-<caption>$q^{\pi_0}$ và lựa chọn tham lam</caption>
-<tr><th></th><th>$a$</th><th>$b$</th></tr>
-<tr><th>$s_0$</th><td><strong>4 — chọn</strong></td><td>2,5</td></tr>
-<tr><th>$s_1$</th><td>7</td><td><strong>13,5 — chọn</strong></td></tr>
-</table>
-</div>
-<div class="box">
-<p>Tham lam từng trạng thái:</p>
-<p>$s_0$: $4 \gt 2{,}5$ nên giữ $a$; $s_1$: $13{,}5 \gt 7$ nên đổi sang $b$.</p>
-<p class="math-large">$\pi_0 \to \pi_1=(a,b)$.</p>
-</div>
-</div>
-<aside class="notes">
-<p>Bước cải thiện so sánh các hành động tại từng trạng thái một cách độc lập. Tại $s_0$, hành động $a$ cho 4 lớn hơn 2,5 của $b$, nên giữ $a$. Tại $s_1$, $b$ cho 13,5 lớn hơn 7, nên đổi sang $b$. Kết quả là $\pi_1=(a,b)$. Mỗi hàng của bảng $q^{\pi_0}$ được xét riêng; các số trong bảng là giá trị của hành động một lần rồi tiếp tục theo $\pi_0$, nên phần tiếp diễn vẫn theo $\pi_0$. Giá trị của chính sách mới $\pi_1$ chưa được tính: bảng $q^{\pi_0}$ chỉ dùng để chọn hành động, còn giá trị của $\pi_1$ phải tính lại từ đầu theo mô hình của $\pi_1$, đó là nội dung tiếp theo.</p>
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 19; tham số điều chỉnh.</p>
-</aside>
+<section data-slide-id="L04-B06">
+<h2>Hội tụ và sai số đánh giá</h2>
+<p>Với MDP hữu hạn, phần thưởng bị chặn và $0\le\gamma&lt;1$:</p>
+<div class="math-large">$$\|T_\pi U-T_\pi V\|_\infty\le\gamma\|U-V\|_\infty.$$</div>
+<p>Lặp đồng bộ từ bảng hữu hạn bất kỳ hội tụ đến nghiệm duy nhất $v_\pi$.</p>
+<div class="math-large">$$\|V-v_\pi\|_\infty\le\frac{b_\pi(V)}{1-\gamma}.$$</div>
+<div class="box">Phần dư được đo trên bảng trả về. Với $\gamma=1$, bảo đảm trên không áp dụng.</div>
+<aside class="notes"><p>Tổng có trọng số xác suất không tăng độ lệch lớn nhất; nhân với $\gamma<1$ tạo tính co. Với $v_\pi=T_\pi v_\pi$, bất đẳng thức tam giác cho $\|V-v_\pi\|_\infty\le b_\pi(V)+\gamma\|V-v_\pi\|_\infty$, từ đó suy ra chặn sai số. Chặn này là hệ quả của tính co, không phải định nghĩa phần dư. Với $\gamma=1$, một bài toán có kết thúc cần giả thiết riêng bảo đảm kết thúc và giá trị hữu hạn dưới chính sách đang xét. Chỉ có một trạng thái kết thúc chưa đủ để mọi chính sách đều kết thúc.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 14, 31–32 (mở rộng lập luận sang $T_\pi$); Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.1, tr. 74–75.</p></aside>
 </section>
-
-<section data-slide-id="L04-S21">
-<h2>Đánh giá lại sau cải thiện</h2>
-<div class="grid2">
-<div class="box">
-<table class="check">
-<caption>Chính sách và giá trị</caption>
-<tr><th>Chính sách</th><th>$v(s_0)$</th><th>$v(s_1)$</th></tr>
-<tr><td>$\pi_0=(a,a)$</td><td>4</td><td>7</td></tr>
-<tr><td>$\pi_1=(a,b)$</td><td>4</td><td>20</td></tr>
-<tr><td>$\pi_2=(b,b)$</td><td>9</td><td>20</td></tr>
-</table>
-</div>
-<div class="box">
-<p>Với $\pi_1=(a,b)$:</p>
-<p class="math-large">$q^{\pi_1}(s_0,b)=9 \gt 4$.</p>
-<p>Do đó $\pi_2=(b,b)$, và $v^{\pi_2}=(9,20)$.</p>
-</div>
-</div>
-<aside class="notes">
-<p>Ở $s_1$, $\pi_1$ chọn $b$ nên $y=10+0{,}5y$, cho $y=20$. Ở $s_0$, $\pi_1$ vẫn chọn $a$ về $s_0$: $x=2+0{,}5x$, cho $x=4$. Cặp giá trị là $(4,20)$. Điểm hành động $b$ tại $s_0$ bằng $-1+0{,}5\times20=9\gt4$, nên $\pi_2=(b,b)$. Với $\pi_2$, $y=10+0{,}5y=20$ và $x=-1+0{,}5\cdot20=9$, nên giá trị là $(9,20)$. Từ $\pi_0$ sang $\pi_1$ giá trị $s_0$ giữ nguyên 4; từ $\pi_1$ sang $\pi_2$ giá trị $s_1$ giữ nguyên 20. Đây là những đẳng thức do đường đi của chính sách, giải thích các giá trị được giữ nguyên.</p>
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 19; tham số điều chỉnh.</p>
-</aside>
+<section data-slide-id="L04-B07">
+<h2>Nghiệm đánh giá của chính sách ban đầu</h2>
+<div class="grid2"><div><p>Đặt $x=v_{\pi_0}(s_0)$, $y=v_{\pi_0}(s_1)$.</p><div class="math-large">$$\begin{aligned}x&amp;=1+0{,}9x,\\y&amp;=2+0{,}9x.\end{aligned}$$</div><div class="box">$x=10$, $y=11$; do đó $v_{\pi_0}=(10,11)$.</div></div><div><table><thead><tr><th scope="col">Bảng</th><th scope="col">$s_0$</th><th scope="col">$s_1$</th></tr></thead><tbody><tr><td>$V_0$</td><td>0</td><td>0</td></tr><tr><td>$V_1$</td><td>1</td><td>2</td></tr><tr><td>$V_2$</td><td>1,9</td><td>2,9</td></tr><tr><td>$v_{\pi_0}$</td><td>10</td><td>11</td></tr></tbody></table></div></div><p>Giá trị của chính sách hiện tại trở thành giá trị tiếp nối để so sánh các hành động.</p>
+<aside class="notes"><p>Với $n=|\mathcal S|$, đặt $P_\pi\in\mathbb R^{n\times n}$ là ma trận chuyển giữa các trạng thái chưa kết thúc theo chính sách và $r_\pi,v_\pi\in\mathbb R^n$. Các phần tử là $P_\pi(s,s')=\sum_a\pi(a\mid s)\sum_r p(s',r\mid s,a)$ và $r_\pi(s)=\sum_a\pi(a\mid s)\sum_{s',r}p(s',r\mid s,a)r$. Trong $P_\pi$, $s,s'\in\mathcal S$ và tổng mỗi hàng không vượt $1$; phần xác suất thiếu là chuyển vào trạng thái kết thúc. Tổng định nghĩa $r_\pi$ lấy $s'\in\mathcal S^+$ để tính cả thưởng khi đi vào đích. Hệ Bellman có dạng $(I-\gamma P_\pi)v_\pi=r_\pi$. Với $\gamma<1$, ma trận hệ khả nghịch. Giải hệ trực tiếp và đánh giá lặp tìm cùng nghiệm. Trong ví dụ, $V_1,V_2$ chỉ chứa phần thưởng của một hoặc hai bước do khởi tạo bằng 0.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 6, 18; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.1, tr. 74.</p></aside>
 </section>
-
-<section data-slide-id="L04-S22">
-<h2>Quy tắc cải thiện chính sách</h2>
-<div class="box">
-<p class="math-large">$\pi'(s)\in\operatorname{argmax}_a Q_{v^\pi}(s,a)$.</p>
-<p>Quy tắc hòa: nếu hành động cũ của $\pi$ thuộc argmax thì giữ hành động cũ; nếu không, chọn theo thứ tự cố định của tập hành động.</p>
-<p>Mọi so sánh dùng $v^\pi$ cũ, chưa cập nhật.</p>
-</div>
-<aside class="notes">
-<p>Quy tắc tham lam cần được phát biểu chặt để thuật toán tái lập được, và mỗi chính sách $\pi$, $\pi'$ ở đây là xác định. Với $q^{\pi_0}$: tại $s_1$, hành động $b$ thuộc argmax nên được chọn, còn hành động cũ $a$ không thuộc argmax. Khi hai hành động bằng nhau, giữ hành động cũ giúp tránh đổi qua lại giữa các hành động đồng hạng qua các vòng lặp. Điều kiện để chứng minh định lý kế tiếp là tính đơn điệu: nếu $u\le v$ theo từng trạng thái thì $Q_u(s,a)\le Q_v(s,a)$, vì $\gamma\ge0$ và các xác suất chuyển không âm; do đó $T^{\pi'}u\le T^{\pi'}v$ với mọi chính sách $\pi'$. Đây là giả thiết được dùng ngay ở định lý sau.</p>
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 20; bổ sung phần hòa để thuật toán tái lập.</p>
-</aside>
+<section data-slide-id="L04-B08">
+<h2>Kiểm tra một lượt đánh giá</h2>
+<p>Cho $\pi_0=(a,a)$, $\gamma=0{,}9$ và bảng cũ $V_2=(1{,}9;\,2{,}9)$.</p>
+<div class="grid2"><div><table><thead><tr><th scope="col">$s$</th><th scope="col">$a$</th><th scope="col">$s'$</th><th scope="col">$r$</th></tr></thead><tbody><tr><td>$s_0$</td><td>$a$</td><td>$s_0$</td><td>1</td></tr><tr><td>$s_0$</td><td>$b$</td><td>$s_1$</td><td>0</td></tr><tr><td>$s_1$</td><td>$a$</td><td>$s_0$</td><td>2</td></tr><tr><td>$s_1$</td><td>$b$</td><td>$s_1$</td><td>3</td></tr></tbody></table></div><div class="check"><strong>Câu hỏi:</strong><ol><li>Tính bảng đồng bộ $V_3$.</li><li>Tính $b_{\pi_0}(V_2)$ và chặn sai số của $V_2$.</li><li>Giải thích vì sao chưa được gọi $V_3$ là $v_{\pi_0}$.</li></ol></div></div>
+<aside class="notes"><p><strong>Lời giải.</strong> $V_3=(2.71,3.71)$; $b_{\pi_0}(V_2)=0.81$; chặn sai số $0.81/0.1=8.1$. $V_3$ chưa thỏa điểm bất động và khác $(10,11)$.</p><p>Chuẩn vô cùng lấy độ lệch lớn nhất giữa các trạng thái. Mức thay đổi của lượt hiện tại không bằng sai số thật so với nghiệm chưa biết.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 14, 17–18</p></aside>
 </section>
-
-<section data-slide-id="L04-S23">
-<h2>Định lý cải thiện chính sách</h2>
-<div class="box">
-<p>Giả thiết: MDP hữu hạn, thưởng bị chặn, $0\le\gamma\lt1$; $\pi'$ tham lam theo $v^\pi$.</p>
-<p class="math-large">$v^\pi\le v^{\pi'}$ theo từng trạng thái.</p>
-<p class="math-large">$v^\pi\le T^{\pi'}v^\pi\le (T^{\pi'})^2v^\pi\le\cdots\le v^{\pi'}$.</p>
-<p>Nếu $\pi$ chưa tối ưu, tăng nghiêm ngặt ở ít nhất một trạng thái.</p>
-</div>
-<aside class="notes">
-<p>Định lý đứng trên giả thiết MDP hữu hạn, thưởng bị chặn và $0\le\gamma\lt1$, với $\pi'$ tham lam theo $v^\pi$. Chuỗi bất đẳng thức bắt đầu từ khai triển: $T^{\pi'}v^\pi=\max_a Q_{v^\pi}\ge T^\pi v^\pi=v^\pi$, vì hành động của $\pi$ là một ứng viên trong phép max. Áp dụng $T^{\pi'}$ lặp lại và dùng tính đơn điệu vừa thiết lập, ta được $v^\pi\le T^{\pi'}v^\pi\le (T^{\pi'})^2v^\pi\le\cdots$. Hạng đuôi sau $n$ lần lặp có dạng $\gamma^n\mathbb E_{\pi'}[v^\pi(S_n)]$; đặt $R_{\max}=\max|R|$, ta có $\|v^\pi\|_\infty\le R_{\max}/(1-\gamma)$, và vì $0\le\gamma\lt1$ hạng đuôi tiến về 0, nên dãy hội tụ về $v^{\pi'}$. Kết luận $v^\pi\le v^{\pi'}$. Nếu $\pi$ chưa tối ưu thì tại ít nhất một trạng thái phép max chọn hành động khác, và bất đẳng thức nghiêm ngặt tại đó. Chứng minh chỉ dùng đơn điệu và hạng đuôi chiết khấu.</p>
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 21.</p>
-</aside>
 </section>
-
-<section data-slide-id="L04-S24">
-<h2>Quy trình lặp chính sách</h2>
-<div class="box">
-<p><strong>Đầu vào:</strong> mô hình; ngân sách vòng lặp $K\ge1$; khởi tạo $\pi$ xác định.</p>
-<ol>
-<li>Đánh giá chính xác: giải $(I-\gamma P^\pi)v=r^\pi$.</li>
-<li>Cải thiện tham lam, giữ hòa theo quy tắc đã nêu, được $\pi'$.</li>
-<li>Nếu $\pi'=\pi$: trả $\pi$ và $v^\pi$.</li>
-<li>Nếu hết $K$: trả $\pi$, $v^\pi$ với nhãn "chưa chứng nhận"; còn lại đặt $\pi=\pi'$ và lặp.</li>
-</ol>
-</div>
-<aside class="notes">
-<p>Thuật toán ghép hai khối. Đầu vào gồm mô hình, ngân sách vòng lặp $K\ge1$ và một chính sách khởi tạo $\pi$ xác định. Đánh giá giải hệ tuyến tính $(I-\gamma P^\pi)v=r^\pi$, trong đó $I$ là ma trận đơn vị cỡ $n\times n$, với $n$ là số trạng thái, $P^\pi$ là ma trận chuyển của $\pi$ và $r^\pi$ là vectơ phần thưởng kỳ vọng của $\pi$. Cải thiện tham lam trên bảng $Q$ vừa tính cho $\pi'$. Nếu $\pi'=\pi$, trả $\pi$ cùng $v^\pi$. Nếu ngân sách cạn khi bước cải thiện vẫn đổi hành động, kết quả trả về là chính sách vừa được đánh giá cùng giá trị của nó, với nhãn chưa chứng nhận tối ưu; tuyệt đối không trả $\pi'$ chưa đánh giá ghép với bảng giá trị của chính sách cũ. Định lý cải thiện giải thích vì sao dừng khi chính sách ổn định.</p>
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 20, 33.</p>
-</aside>
+<section>
+<section data-slide-id="L04-C01">
+<h2>Lựa chọn hành động từ giá trị tiếp nối</h2>
+<p>Đã biết giá trị của chính sách hiện tại: $v_{\pi_0}=(10,11)$.</p>
+<div class="grid2"><div class="card"><h3>Lựa chọn ở bước đầu</h3><p>Tại một trạng thái, xét từng hành động có thể thực hiện.</p><p>Phần thưởng nhận ngay phụ thuộc hành động đó.</p></div><div class="card"><h3>Chính sách tiếp nối</h3><p>Sau bước đầu, tiếp tục theo $\pi_0$.</p><p>Giá trị của trạng thái kế tiếp lấy từ cùng $v_{\pi_0}$.</p></div></div>
+<div class="box">So sánh phần thưởng trước mắt cộng giá trị tiếp nối chuẩn bị cho việc thay đổi chính sách.</div>
+<aside class="notes"><p>Thử một hành động rồi tiếp tục theo chính sách cũ khác với thay chính sách vĩnh viễn. Định lý cải thiện sẽ nối hai phát biểu đó.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 19; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.2, tr. 76, 78.</p></aside>
 </section>
-
-<section data-slide-id="L04-S25">
-<h2>Chính sách ổn định và dừng hữu hạn</h2>
-<div class="grid2">
-<div class="box">
-<p>Hai trạng thái, mỗi trạng thái hai hành động: $2\times2=4$ chính sách xác định.</p>
-<p class="math-large">$\pi_0\to\pi_1\to\pi_2\to$ dừng.</p>
-</div>
-<div class="box">
-<p>Đổi chính sách thì giá trị tăng nghiêm ngặt ở ít nhất một trạng thái, nên không lặp lại chính sách.</p>
-<p>Điều kiện: đánh giá chính xác từng vòng; hòa giữ chính sách cũ.</p>
-<p>Khi $\pi$ ổn định: $T_*v^\pi=v^\pi$, tức tối ưu Bellman.</p>
-</div>
-</div>
-<aside class="notes">
-<p>Trong không gian hữu hạn với mỗi tập hành động khác rỗng, số chính sách xác định là $\prod_s|A(s)|$, ở ví dụ này là 4. Định lý cải thiện cho biết mỗi lần đổi chính sách, giá trị tăng nghiêm ngặt ở ít nhất một trạng thái, nên một chính sách không thể xuất hiện hai lần; quy tắc hòa giữ chính sách cũ nên không tạo vòng lặp qua các hành động đồng hạng. Với $\pi_2$, hành động $a$ cho $6{,}5$ tại $s_0$ và $9{,}5$ tại $s_1$, đều thấp hơn $9$ và $20$ của $b$; bước cải thiện giữ $\pi_2$. Do đó thuật toán dừng sau số hữu hạn vòng, và chính sách ổn định thỏa phương trình tối ưu Bellman $T_*v^\pi=v^\pi$. Bảo đảm này dựa trên đánh giá chính xác từng vòng và quy tắc hòa; nó không suy rộng sang bản đánh giá bị cắt ngắn. Chứng minh đầy đủ của định lý Bellman tối ưu sẽ ở Phần 6.</p>
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 9, 33.</p>
-</aside>
+<section data-slide-id="L04-C02">
+<h2>So sánh hành động tại trạng thái thứ hai</h2>
+<div class="grid2"><div><img class="figure" src="img/lec-04/dp04-one-step-choice.svg" alt="Từ s1: hành động a nhận thưởng 2 rồi tới s0 có giá trị tiếp nối 10; b nhận thưởng 3 rồi tới s1 có giá trị tiếp nối 11."/></div><div><div class="card"><h3>Hành động thứ nhất</h3><p>Chọn $a$ tại $s_1$.</p><div class="math-large">$2+0{,}9\cdot10=11$</div></div><div class="card"><h3>Hành động thứ hai</h3><p>Chọn $b$ tại $s_1$.</p><div class="math-large">$3+0{,}9\cdot11=12{,}9$</div></div></div></div>
+<div class="box">Hai nhánh đều theo $\pi_0$ sau bước đầu. Hành động $b$ cho giá trị nhìn trước lớn hơn.</div>
+<aside class="notes"><p>Số 12.9 chưa phải $v_{\pi_1}(s_1)$, vì chính sách tiếp nối trong phép tính vẫn là $\pi_0$. Giá trị sau khi đổi vĩnh viễn sang $b$ sẽ phải được đánh giá lại.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17–19; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, (4.6), tr. 78.</p></aside>
 </section>
-
-<section data-slide-id="L04-S26">
-<h2>Câu hỏi: kiểm tra bước cải thiện</h2>
-<div class="box">
-<p>Câu hỏi: cho $v^{\pi_1}=(4,20)$. Hai giá trị $Q$ tại $s_0$ là gì? $\pi_2$ là gì? Vì sao cần giữ hành động cũ khi hòa?</p>
-</div>
-<div class="box fragment">
-<p>$q^{\pi_1}(s_0,a)=2+0{,}5\cdot4=4$.</p><p>$q^{\pi_1}(s_0,b)=-1+0{,}5\cdot20=9$.</p>
-<p>$\pi_2=(b,b)$. Giữ hòa tránh đổi qua lại giữa các hành động đồng hạng.</p>
-</div>
-<aside class="notes">
-<p>Tính hai giá trị $Q$ tại $s_0$ bằng bảng $v^{\pi_1}$ vừa đánh giá. Hành động $a$ về $s_0$ với thưởng 2, cộng $0{,}5$ lần giá trị 4, cho 4. Hành động $b$ đến $s_1$ với thưởng $-1$, cộng $0{,}5$ lần giá trị 20, cho 9. Vì 9 lớn hơn 4, chính sách sau cải thiện là $\pi_2=(b,b)$. Mọi so sánh dùng $v^{\pi_1}$ cũ, chưa cập nhật. Về tiêu chí dừng, không kết luận rằng cải thiện nghiêm ngặt tại mọi trạng thái; ở đây chỉ $s_0$ tăng. Khi hai hành động đồng hạng, giữ hành động cũ ngăn thuật toán dao động giữa các chính sách tương đương.</p>
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 19–21, 33; tham số điều chỉnh.</p>
-</aside>
+<section data-slide-id="L04-C03">
+<h2>Giá trị hành động theo chính sách</h2>
+<p>$q_\pi(s,a)$ là tổng thưởng kỳ vọng khi bắt đầu tại $s$, chọn $a$, rồi theo $\pi$.</p>
+<div class="math-large">$$q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma v_\pi(s')\bigr].$$</div>
+<div class="math-large">$$v_\pi(s)=\sum_a\pi(a\mid s)q_\pi(s,a).$$</div>
+<div class="box">$q_{\pi_0}(s_1,a)=11$ và $q_{\pi_0}(s_1,b)=12{,}9$.</div>
+<aside class="notes"><p>Miền của $q_\pi$ gồm các cặp $s\in\mathcal S$, $a\in\mathcal A(s)$. Ký hiệu kỳ vọng $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$ được hiểu với hành động đầu được ấn định là $a$, kể cả khi $\pi(a\mid s)=0$. Sau hành động đầu, chính sách $\pi$ quyết định các hành động tiếp theo. Thay $v_\pi(s')=\sum_{a'}\pi(a'\mid s')q_\pi(s',a')$ vào công thức một bước cho phương trình Bellman của giá trị hành động:
+$$q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)\left[r+\gamma\sum_{a'}\pi(a'\mid s')q_\pi(s',a')\right].$$
+Giá trị trạng thái là trung bình theo chính sách; điểm của từng hành động cho phép so sánh một lựa chọn mới với trung bình này.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 5–6, 19; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.2, (4.6), tr. 78.</p></aside>
 </section>
-
+<section data-slide-id="L04-C04">
+<h2>Cải thiện chính sách bằng lựa chọn tham lam</h2>
+<p>Với giá trị chính xác $v_\pi$, giữ nguyên bảng này khi chọn hành động ở mọi trạng thái.</p>
+<div class="math-large">$$\pi'(s)\in\arg\max_{a\in\mathcal A(s)}q_\pi(s,a).$$</div>
+<p>Giữ hành động cũ nếu nó còn đạt cực đại; nếu cần đổi, chọn theo một thứ tự cố định.</p>
+<div class="box"><strong>Định lý cải thiện chính sách.</strong> Với MDP hữu hạn chiết khấu, nếu
+$$q_\pi(s,\pi'(s))\ge v_\pi(s)\quad\text{với mọi }s,$$
+thì $v_{\pi'}(s)\ge v_\pi(s)$ với mọi $s$.</div>
+<aside class="notes"><p>Chính sách $\pi,\pi'$ ở quy tắc phá hòa được xét là dừng và xác định. $\arg\max$ là tập hành động cùng đạt giá trị lớn nhất. Hành động tham lam thỏa điều kiện cải thiện vì hành động của chính sách cũ cũng là một ứng viên. Với chính sách cũ ngẫu nhiên, $\max_a q_\pi(s,a)\ge\sum_a\pi(a\mid s)q_\pi(s,a)=v_\pi(s)$ nên cùng lập luận áp dụng cho chính sách mới xác định. Nếu điều kiện cải thiện nghiêm tại một trạng thái, giá trị mới tăng nghiêm tại trạng thái đó; không khẳng định tăng nghiêm ở mọi trạng thái. Phá hòa ổn định ngăn việc đổi tùy ý giữa các hành động đồng giá trị.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 19–21; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.2, (4.7)–(4.9), tr. 78–79</p></aside>
 </section>
-<section aria-label="Phần 5. Lặp giá trị">
-
-  <section data-slide-id="L04-S27">
-    <h2>Cập nhật từ bảng giá trị hiện có</h2>
-    <p>Lặp giá trị cập nhật trực tiếp từ bảng hiện có, với $\gamma=0{,}5$.</p>
-    <img class="figure" src="img/lec-04/gridworld.svg" alt="Lưới5ô, đi trái/phải thưởng−1; riêng c4 sang c5 thưởng24. c5kết thúc. Đi trái tại c1 đứng yên.">
-    <p>Sau khi nhận thưởng vào đích, quá trình kết thúc: $v(c_5)=0$.</p>
-    <aside class="notes">
-      <p>Phần trước đánh giá từng chính sách rồi so sánh, tốn kém khi không gian chính sách lớn. Lặp giá trị đi đường khác: tại mỗi trạng thái, nhìn trước một bước trên bảng giá trị đang có rồi lấy cực đại, không cần hoàn thành đánh giá của chính sách nào. Lưới năm ô đủ nhỏ để tính tay. Từ $c_4$ sang $c_5$ thưởng 24, các bước còn lại thưởng $-1$ vì mỗi bước đi tốn một đơn vị. Ra trái ở $c_1$ thì đứng yên và vẫn mất $-1$, nên đứng yên không phải lối thoát. Sau khi đến đích, quá trình kết thúc và không nhận thêm thưởng, do đó $c_5$ có giá trị 0. Lượt đầu tiên với bảng khởi tạo bằng 0 sẽ cho thấy phần thưởng ở đích bắt đầu lan.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 23, 25; tham số điều chỉnh.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S28">
-    <h2>Một lượt quét trên lưới</h2>
-    <div class="figure">
-      <table>
-        <caption>Mọi ô của $v_1$ đều tính từ bảng $v_0$</caption>
-        <tr><th></th><th>$c_1$</th><th>$c_2$</th><th>$c_3$</th><th>$c_4$</th><th>$c_5$</th></tr>
-        <tr><th>$v_0$</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-        <tr><th>$v_1$</th><td>$-1$</td><td>$-1$</td><td>$-1$</td><td>24</td><td>0</td></tr>
-      </table>
-    </div>
-    <p>Tại $c_4$: đi phải cho $24+0{,}5\cdot 0=24$. Các ô xa đích chỉ thấy chi phí bước đi $-1$.</p>
-    <aside class="notes">
-      <p>Bảng khởi tạo toàn 0. Một lượt đồng bộ nghĩa là mọi trạng thái đều tính từ bảng cũ $v_0$, không dùng giá trị vừa cập nhật trong cùng lượt. Tại $c_4$, đi phải nhận ngay 24 cộng hệ số chiết khấu nhân giá trị $c_5$ bằng 0, nên được 24; đi trái chỉ được $-1$. Ba ô còn lại không kề đích, mọi hành động đều dẫn tới ô có giá trị 0 trong bảng cũ $v_0$, nên chúng chỉ ghi nhận chi phí bước đi $-1$. Việc các ô này chưa thấy đích không có nghĩa đường đi từ đó thiếu giá trị dài hạn; thông tin về phần thưởng 24 cần thêm lượt quét mới truyền ngược tới. Lượt sau sẽ cho thấy lan truyền đó.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 25–26; tham số điều chỉnh.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S29">
-    <h2>Giá trị lan dần từ đích</h2>
-    <div class="figure">
-      <table>
-        <caption>Bảng giá trị theo lượt quét $k$</caption>
-        <tr><th>$k$</th><th>$c_1$</th><th>$c_2$</th><th>$c_3$</th><th>$c_4$</th><th>$c_5$</th></tr>
-        <tr><th>0</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-        <tr><th>1</th><td>$-1$</td><td>$-1$</td><td>$-1$</td><td>24</td><td>0</td></tr>
-        <tr><th>2</th><td>$-1{,}5$</td><td>$-1{,}5$</td><td>11</td><td>24</td><td>0</td></tr>
-        <tr><th>3</th><td>$-1{,}75$</td><td>4,5</td><td>11</td><td>24</td><td>0</td></tr>
-        <tr><th>4</th><td>1,25</td><td>4,5</td><td>11</td><td>24</td><td>0</td></tr>
-      </table>
-    </div>
-    <p>$v_2(c_3)=-1+0{,}5\cdot 24=11$; &nbsp; $v_3(c_2)=-1+0{,}5\cdot 11=4{,}5$.</p>
-    <aside class="notes">
-      <p>Đọc bảng theo lượt. Tại lượt 2, $c_3$ nhìn thấy $c_4$ mang 24: $v_2(c_3)=-1+0{,}5\cdot 24=11$. Tại lượt 3, $c_2$ nhận từ $c_3$: $-1+0{,}5\cdot 11=4{,}5$. Mỗi lượt, thông tin về phần thưởng 24 lùi thêm một ô, các ô chưa nhận được ảnh hưởng này vẫn chịu chi phí bước đi. Ở lượt 4, $c_1$ đọc $v_3(c_2)=4{,}5$, nên đi phải cho $-1+0{,}5\cdot4{,}5=1{,}25$. Kiểm lượt 5 dùng bảng $v_4$: đi trái tự khép đọc $v_4(c_1)=1{,}25$, cho $-0{,}375$; đi phải đọc $v_4(c_2)=4{,}5$, cho $1{,}25$. Cực đại vẫn là $1{,}25$. Các ô còn lại cũng không đổi, nên $v_5=v_4$. Điểm bất động ở ví dụ này đến sau hữu hạn lượt vì lưới tất định và ngắn, không suy ra mọi MDP đều dừng chính xác sau hữu hạn lượt. Công thức tổng quát sẽ giữ cùng chỉ số lượt và cùng quy ước dùng bảng cũ.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 27–28; đã tính lại toàn bảng, tham số điều chỉnh.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S30">
-    <h2>Quy tắc lặp giá trị</h2>
-    <p class="math-large">$$v_{k+1}(s)=\max_a\sum_{s',r}p(s',r\mid s,a)\,\bigl[r+\gamma v_k(s')\bigr]$$</p>
-    <div class="grid2">
-      <div class="card">
-        <p>$v_2(c_3)=\max\{-1{,}5,11\}=11$.</p>
-      </div>
-      <div class="card">
-        <p>$k$ đếm lượt quét trên mô hình, không phải bước thời gian tương tác.</p>
-      </div>
-    </div>
-    <aside class="notes">
-      <p>Công thức khái quát đúng phép tính tay trên lưới: tại mỗi trạng thái, xét mọi hành động, lấy kỳ vọng thưởng ngay cộng hệ số chiết khấu nhân giá trị bảng cũ, rồi lấy cực đại. Đối chiếu với ví dụ: $v_2(c_3)$ dùng $v_1$, hành động đi phải cho $-1+0{,}5\cdot 24=11$, đi trái cho $-1{,}5$, cực đại là 11. $k$ là lượt tính trên mô hình, mỗi lượt quét toàn bộ không gian trạng thái, không phải bước thời gian của một tập dữ liệu tương tác. Với $v_0=0$, có thể diễn giải $v_k$ là giá trị tối ưu khi còn đúng $k$ quyết định và giá trị cuối bằng 0; với khởi tạo khác, diễn giải này chỉ đúng nếu nói rõ thưởng cuối. $v_k$ không nhất thiết bằng giá trị dài hạn của một chính sách dừng.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 23–24, 26–27.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S31">
-    <h2>Quy trình lặp giá trị có kiểm tra dừng</h2>
-    <p>Đầu vào: mô hình, $v_0$, ngưỡng phần dư $\theta>0$, ngân sách $K\ge 1$.</p>
-    <ol>
-      <li>Từ $v$, tính bảng $Q_v$ cho mọi trạng thái–hành động.</li>
-      <li>Lấy $w(s)=\max_a Q_v(s,a)$ và $\pi_v(s)\in\arg\max_a Q_v(s,a)$.</li>
-      <li>Đo phần dư $\rho(v)=\max_s|w(s)-v(s)|$.</li>
-      <li>Nếu $\rho(v)\le\theta$ hoặc hết $K$ lượt: trả $v,\pi_v,\rho(v)$.<br>Còn lại: gán $v=w$ rồi lặp.</li>
-    </ol>
-    <p class="box">Bảng trả là $v$ đã kiểm. Kết quả ghi rõ đạt ngưỡng hay hết ngân sách.</p>
-    <aside class="notes">
-      <p>Quy trình cần bốn thành phần. Trước hết, với bảng hiện tại $v$, tính $Q_v(s,a)$ cho từng cặp trạng thái–hành động; một lượt tính này phục vụ cả ba việc sau, không tính lặp hai lần. Từ bảng $Q_v$ lấy $w(s)=\max_a Q_v(s,a)$ và chính sách $\pi_v(s)\in\arg\max_a Q_v(s,a)$, phá hòa theo thứ tự cố định. Rồi tính phần dư $\rho(v)=\max_s|w(s)-v(s)|$. Nếu $\rho(v)\le\theta$, trả $v$, $\pi_v$, $\rho(v)$. Nếu chưa đạt mà còn lượt, đặt $v\leftarrow w$ và quét tiếp. Nếu hết $K$ lượt, trả chính bảng $v$ đã kiểm cùng $\pi_v$, $\rho(v)$ và nhãn hết ngân sách, chưa chứng nhận đạt ngưỡng; không âm thầm trả $w$ chưa được kiểm. Trạng thái kết thúc giữ 0. Chưa gọi $\theta$ là sai số giá trị; phần sau lập quan hệ đó.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 24, 34.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S32">
-    <h2>Trích chính sách từ cùng bảng giá trị</h2>
-    <p>$\pi_v(s)\in\arg\max_a Q_v(s,a)$, &nbsp; và &nbsp; $T^{\pi_v}v=T_*v$.</p>
-    <div class="grid2">
-      <div class="card">
-        <p><strong>Nhánh tính điểm, dùng $v_1$:</strong> tại $c_3$, điểm trái $-1+0{,}5\cdot(-1)=-1{,}5$; điểm phải $-1+0{,}5\cdot 24=11$; chọn phải.</p>
-      </div>
-      <div class="card">
-        <p><strong>Nhánh phần dư, dùng $v_1$:</strong> $\rho(v_1)=\max_s|w(s)-v_1(s)|$.</p>
-      </div>
-    </div>
-    <aside class="notes">
-      <p>Cùng một bảng $v_1=(-1,-1,-1,24,0)$ cấp dữ liệu cho hai việc. Nhánh tính điểm: tại $c_3$, đi trái nhìn trước sang $c_2$ cho $-1+0{,}5\cdot(-1)=-1{,}5$; đi phải sang $c_4$ cho $-1+0{,}5\cdot 24=11$, nên chọn phải. Số 11 chính là $Q_{v_1}(c_3,a_R)$ với $a_R$ là hành động đi phải; đây là phép nhìn trước một bước từ $v_1$, chưa phải giá trị thật của chính sách vừa trích. Nhánh phần dư cũng dùng $v_1$: so $w(s)$ với $v_1(s)$ trên toàn bảng. Đồng nhất thức $T^{\pi_v}v=T_*v$ bảo đảm chính sách trích từ bảng chính là chính sách tham lam của phép cập nhật. Không lẫn $v$ với $w$: $v$ là bảng đang kiểm, $w$ là bảng dự kiến sau lượt.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 24, 26, 28; tham số điều chỉnh.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S33">
-    <h2>Chi phí của một lượt tính</h2>
-    <p>Đặt $n=|\mathcal S|$, $m=\max_s|\mathcal A(s)|$.</p>
-    <div class="figure">
-      <table>
-        <caption>Thao tác của mỗi phương pháp trong một lượt</caption>
-        <tr><th>Phương pháp</th><th>Thao tác mỗi lượt</th><th>Chi phí</th></tr>
-        <tr><td>Lặp giá trị, mô hình dày</td><td>Tính tổng theo trạng thái kế tiếp</td><td>$O(n^2m)$</td></tr>
-        <tr><td>Lặp giá trị, mô hình thưa</td><td>Duyệt các nhánh có xác suất khác 0</td><td>theo số nhánh</td></tr>
-        <tr><td>Lặp chính sách chính xác</td><td>Giải hệ dày và cải thiện</td><td>$O(n^3)$ mỗi lần giải</td></tr>
-      </table>
-    </div>
-    <aside class="notes">
-      <p>Đếm phép tính. Một lượt lặp giá trị với mô hình chuyển dày phải tổng trên mọi cặp trạng thái–hành động và mọi cặp chuyển, cho $O(n^2m)$; nếu mô hình thưa, chi phí theo số nhánh có xác suất khác 0. Lặp chính sách chính xác phải giải hệ tuyến tính dày, thường tốn $O(n^3)$, rồi mới cải thiện chính sách. Về bộ nhớ: bảng giá trị đồng bộ dùng $O(n)$ bộ nhớ bổ sung nếu giữ cực đại theo từng trạng thái; lưu toàn mô hình dày cần $O(n^2m)$. Chi phí một lượt chưa cho biết cần bao nhiêu lượt để dừng, và số lượt của hai thuật toán không cùng đơn vị công việc, không khẳng định phương pháp nào luôn nhanh hơn; cần kết quả hội tụ ở phần sau.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 29; định lượng chi phí từ phép tổng và giải hệ.</p>
-    </aside>
-  </section>
-
-  <section data-slide-id="L04-S34">
-    <h2>Câu hỏi: tính lượt tiếp theo</h2>
-    <div class="figure">
-      <table>
-        <caption>Bảng $v_2$ và hai ô cần tính của $v_3$</caption>
-        <tr><th></th><th>$c_1$</th><th>$c_2$</th><th>$c_3$</th><th>$c_4$</th><th>$c_5$</th></tr>
-        <tr><th>$v_2$</th><td>$-1{,}5$</td><td>$-1{,}5$</td><td>11</td><td>24</td><td>0</td></tr>
-        <tr><th>$v_3$</th><td>?</td><td>?</td><td>11</td><td>24</td><td>0</td></tr>
-      </table>
-    </div>
-    <p><strong>Câu hỏi:</strong> Tính $v_3(c_1),v_3(c_2)$. Giá trị $c_4$ không đổi đã đủ kết luận toàn thuật toán hội tụ hay chưa?</p>
-    <p class="fragment"><strong>Đáp án:</strong> $v_3(c_1)=-1{,}75$, $v_3(c_2)=4{,}5$; $c_4$ không đổi chưa đủ kết luận hội tụ vì các trạng thái khác còn thay đổi.</p>
-    <aside class="notes">
-      <p>Chỉ dùng $v_2$ trong mọi phép tính, không dùng $v_3(c_1)$ vừa tính được. Tại $c_1$: đi trái đứng yên cho $-1+0{,}5\cdot(-1{,}5)=-1{,}75$; đi phải cho $-1+0{,}5\cdot(-1{,}5)=-1{,}75$; vậy $v_3(c_1)=-1{,}75$. Tại $c_2$: đi trái cho $-1+0{,}5\cdot(-1{,}5)=-1{,}75$; đi phải cho $-1+0{,}5\cdot 11=4{,}5$; vậy $v_3(c_2)=4{,}5$. Lỗi dễ nhầm là lấy $v_3(c_1)$ mới tính để cập nhật $c_2$, tức quét không đồng bộ. Về hội tụ: $c_4$ giữ 24 qua hai lượt, nhưng $c_1$ và $c_2$ vẫn thay đổi, nên một ô ổn định chưa đủ. Bảng đang kiểm là $v_3=(-1{,}75,4{,}5,11,24,0)$; cập nhật đồng bộ cho $T_*v_3=v_4=(1{,}25,4{,}5,11,24,0)$. Vì vậy $\rho(v_3)=\|v_4-v_3\|_\infty=3$: chỉ ô $c_1$ còn thay đổi.</p>
-      <p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 25–27; tham số điều chỉnh.</p>
-    </aside>
-  </section>
-
+<section data-slide-id="L04-C05">
+<h2>Lập luận của định lý cải thiện chính sách</h2>
+<p>Từ điều kiện cải thiện: $v_\pi\le T_{\pi'}v_\pi$, với bất đẳng thức theo từng trạng thái.</p>
+<div class="math-large">$$v_\pi\le T_{\pi'}v_\pi\le(T_{\pi'})^2v_\pi\le\cdots\longrightarrow v_{\pi'}.$$</div>
+<div class="grid2"><div class="card"><h3>Bảo toàn thứ tự</h3><p>$U\le V\Rightarrow T_{\pi'}U\le T_{\pi'}V$.</p><p>Xác suất và $\gamma$ đều không âm.</p></div><div class="card"><h3>Giới hạn của dãy</h3><p>$T_{\pi'}$ co khi $0\le\gamma&lt;1$.</p><p>Điểm bất động là $v_{\pi'}$.</p></div></div>
+<aside class="notes"><p>Vì $\pi'$ xác định, $(T_{\pi'}v_\pi)(s)=q_\pi(s,\pi'(s))$. Do đó giả thiết của định lý là bất đẳng thức đầu tiên. Áp dụng cùng toán tử đơn điệu lên hai vế tạo từng bất đẳng thức tiếp theo. Tính co bảo đảm $(T_{\pi'})^k v_\pi\to v_{\pi'}$ từ bảng khởi tạo hữu hạn $v_\pi$. Lấy giới hạn theo từng trạng thái cho $v_\pi\le v_{\pi'}$. Trong cách chứng minh bằng tổng thưởng, giả thiết phần thưởng bị chặn và $\gamma<1$ làm phần đuôi chiết khấu triệt tiêu. Phép tính số minh họa điều kiện; lập luận này cung cấp kết quả cho toàn bộ lớp MDP đã nêu.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 21; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.2, tr. 78–79.</p></aside>
 </section>
-
-<section aria-label="Hội tụ và sai số">
-
-<section data-slide-id="L04-S35">
-<h2>Khoảng cách giữa hai bảng giá trị</h2>
-<div class="grid2">
-<div class="card">
-<p><strong>Trước cập nhật</strong></p>
-<table>
-<tr><th>Trạng thái</th><th>$u$</th><th>$v$</th><th>Chênh</th></tr>
-<tr><td>$s_0$</td><td>4</td><td>8</td><td>4</td></tr>
-<tr><td>$s_1$</td><td>7</td><td>9</td><td>2</td></tr>
-</table>
-<p class="caption">Chênh lệch tối đa: 4</p>
-</div>
-<div class="card">
-<p><strong>Sau cập nhật $T_*$</strong></p>
-<table>
-<tr><th>Trạng thái</th><th>$T_*u$</th><th>$T_*v$</th><th>Chênh</th></tr>
-<tr><td>$s_0$</td><td>4</td><td>6</td><td>2</td></tr>
-<tr><td>$s_1$</td><td>13,5</td><td>14,5</td><td>1</td></tr>
-</table>
-<p class="caption">Với $\gamma=0{,}5$: chênh lệch tối đa $2$</p>
-</div>
-</div>
-<p class="math-large">$\|u-v\|_\infty=\max_s|u(s)-v(s)|$</p>
-<aside class="notes">
-Hai bảng $u$ và $v$ ở đây không cần là giá trị của chính sách nào; chúng chỉ là hai bảng số bất kỳ. Ta đo khoảng cách bằng chuẩn vô cùng, tức chênh lệch lớn nhất trên từng trạng thái. Trước cập nhật chênh lệch tối đa là 4 tại $s_0$. Sau một lần áp dụng $T_*$, tại $s_0$ ta tính $T_*v(s_0)=\max\{2+0{,}5\cdot8,\,-1+0{,}5\cdot9\}=6$, còn $T_*u(s_0)=4$, nên chênh lệch còn 2. Tại $s_1$, $T_*v(s_1)=\max\{5+0{,}5\cdot8,\,10+0{,}5\cdot9\}=14{,}5$ và $T_*u(s_1)=13{,}5$, chênh lệch còn 1. Phần thưởng trùng nhau triệt tiêu, chỉ còn phần chiết khấu nhân với chênh cũ, nên khoảng cách giảm từ 4 xuống 2, đúng hệ số $\gamma=0{,}5$. Ví dụ này gợi ý một tính chất tổng quát, và cần được chứng minh cho mọi cặp bảng.
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 10, 17, 31; tham số điều chỉnh.</p>
-</aside>
+<section data-slide-id="L04-C06">
+<h2>Chính sách sau lần cải thiện đầu</h2>
+<table><thead><tr><th scope="col">Trạng thái</th><th scope="col">$q_{\pi_0}(s,a)$</th><th scope="col">$q_{\pi_0}(s,b)$</th><th scope="col">Hành động mới</th></tr></thead><tbody><tr><td>$s_0$</td><td>10</td><td>9,9</td><td>$a$</td></tr><tr><td>$s_1$</td><td>11</td><td>12,9</td><td>$b$</td></tr></tbody></table><div class="grid2"><div class="card"><h3>Chính sách sau cải thiện</h3><div class="math-large">$\pi_1=(a,b)$</div><p>Tại $s_0$, $a$ vẫn tốt hơn khi tiếp nối theo $\pi_0$.</p></div><div class="card"><h3>Đánh giá chính sách mới</h3><p>$x=1+0{,}9x$; $y=3+0{,}9y$.</p><div class="math-large">$v_{\pi_1}=(10,30)$</div></div></div>
+<aside class="notes"><p>Tại $s_0$, $q_{\pi_0}(s_0,a)=1+0{,}9\cdot10=10$ và $q_{\pi_0}(s_0,b)=0+0{,}9\cdot11=9{,}9$. Vì vậy cải thiện lần đầu chỉ đổi hành động ở $s_1$. Giá trị mới tại $s_1$ là 30 vì chính sách $\pi_1$ chọn $b$ tại mọi lần ở $s_1$. Điểm $12{,}9$ trước đó chỉ chọn $b$ một lần rồi tiếp tục theo $\pi_0$. Giá trị tiếp nối tăng từ 11 lên 30 có thể thay đổi lựa chọn tại $s_0$ ở lần cải thiện sau.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 18–19; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.2–4.3, tr. 79–80</p></aside>
 </section>
-
-<section data-slide-id="L04-S36">
-<h2>Tính co của toán tử Bellman</h2>
-<p>Với $0\le\gamma<1$ và mọi $u,v\in\mathcal V$:</p>
-<p>$$\|T_*u-T_*v\|_\infty\le\gamma\|u-v\|_\infty$$</p>
-<div class="box">
-<p>$|\max_a x_a-\max_a y_a|\le\max_a|x_a-y_a|$.</p>
-</div>
-<div class="box">
-<p>Trọng số xác suất không âm và có tổng 1.</p>
-</div>
-<p>$T^\pi$ với $\pi$ cố định cũng thỏa chặn này.</p>
-<aside class="notes">
-Với cùng cặp trạng thái–hành động, hai bảng chỉ khác phần tiếp diễn. Vì vậy $Q_u(s,a)-Q_v(s,a)=\gamma\sum_{s',r}p(s',r\mid s,a)[u(s')-v(s')]$. Phần thưởng triệt tiêu trong phép trừ này, kể cả khi thưởng phụ thuộc kết quả chuyển. Lấy trị tuyệt đối và dùng bất đẳng thức tam giác, mỗi chênh bị chặn bởi $\gamma\|u-v\|_\infty$, vì các xác suất không âm và có tổng 1. Bất đẳng thức giữa hai cực đại truyền chặn ấy sang $T_*$; lấy cực đại trên các trạng thái cho kết quả. Với $T^\pi$, lấy thêm trung bình theo chính sách cố định cũng giữ chặn. Điều kiện $0\le\gamma<1$ làm hệ số co nhỏ hơn 1; khi gamma bằng 0, một lần cập nhật đã không phụ thuộc bảng đầu.
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 31.</p>
-</aside>
+<section data-slide-id="L04-C07">
+<h2>Kiểm tra lựa chọn theo giá trị chính sách</h2>
+<p>Cho $\pi_1=(a,b)$ và giá trị chính xác $v_{\pi_1}=(10,30)$.</p>
+<div class="grid2"><div><img class="figure" src="img/lec-04/dp04-two-state.svg" alt="Bốn chuyển tiếp của MDP hai trạng thái, dùng cùng dữ kiện để cải thiện chính sách pi1."/></div><div class="check"><strong>Câu hỏi:</strong><ol><li>Tính $q_{\pi_1}(s_0,a)$ và $q_{\pi_1}(s_0,b)$.</li><li>Xác định hành động mới tại $s_0$.</li><li>Giải thích sự khác biệt so với cải thiện từ $\pi_0$.</li></ol></div></div>
+<aside class="notes"><p><strong>Lời giải.</strong> $q_{\pi_1}(s_0,a)=10$; $q_{\pi_1}(s_0,b)=27$; chọn $b$. Giá trị tiếp nối tại $s_1$ tăng từ 11 lên 30, nên chính sách mới chuyển từ $s_0$ sang $s_1$.</p><p>Hành động tối đa hóa phần thưởng tức thời ở $s_0$ là $a$, nhưng phần giá trị tiếp nối thay đổi lựa chọn.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17–19</p></aside>
 </section>
-
-<section data-slide-id="L04-S37">
-<h2>Điểm bất động và chính sách tối ưu</h2>
-<p>Định lý Banach: ánh xạ co trên không gian đầy đủ có đúng một điểm bất động và lặp tiến tới điểm đó.</p>
-<div class="grid2">
-<div class="card">
-<p><strong>Chặn mọi chính sách</strong></p>
-<p>$\mathcal V=\mathbb R^n$ với chuẩn vô cùng đầy đủ, nên $T_*$ có điểm bất động $\bar v$; mọi $v^\pi$ không vượt $\bar v$.</p>
-</div>
-<div class="card">
-<p><strong>Đạt bằng chính sách tham lam</strong></p>
-<p>Chọn $\bar\pi$ tham lam theo $\bar v$: $T^{\bar\pi}\bar v=T_*\bar v=\bar v$, nên $v^{\bar\pi}=\bar v$.</p>
-</div>
-</div>
-<p class="math-large">Suy ra $\bar v=v_*$.</p>
-<aside class="notes">
-Banach áp dụng vì $\mathbb R^n$ với chuẩn vô cùng là không gian đầy đủ và $T_*$ là ánh xạ co. Gọi điểm bất động duy nhất là $\bar v$. Trước hết, $\bar v$ chặn giá trị của mọi chính sách, kể cả chính sách phụ thuộc lịch sử. Với lịch sử $H_t$, điều kiện Markov và phép cực đại cho $\bar v(S_t)\ge\mathbb E_\pi[R_{t+1}+\gamma\bar v(S_{t+1})\mid H_t]$. Lấy kỳ vọng rồi lặp bất đẳng thức $N$ bước, ta được cận cho tổng thưởng $N$ bước cộng hạng đuôi $\gamma^N\bar v(S_N)$. Hạng đuôi có trị tuyệt đối không quá $\gamma^N\|\bar v\|_\infty$, tiến về 0; do đó $v^\pi\le\bar v$. Tiếp theo, chọn chính sách Markov dừng xác định $\bar\pi$ tham lam theo $\bar v$. Khi ấy $T^{\bar\pi}\bar v=T_*\bar v=\bar v$. Toán tử $T^{\bar\pi}$ cũng co và có điểm bất động duy nhất là $v^{\bar\pi}$, nên $v^{\bar\pi}=\bar v$. Một chính sách đạt cận trên của mọi chính sách, suy ra $\bar v=v_*$.
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 9, 10, 31–32.</p>
-</aside>
 </section>
-
-<section data-slide-id="L04-S38">
-<h2>Hội tụ hình học của lặp giá trị</h2>
-<p class="math-large">$\|v_k-v_*\|_\infty\le\gamma^k\,\|v_0-v_*\|_\infty$</p>
-<div class="figure">
-<img src="img/lec-04/convergence.svg" alt="Đồ thị chặn sai số 64 nhân 0,5 mũ k theo số lượt k, trục tung log2 với mốc 1 và 0,5, đường ngưỡng 1, chạm ngưỡng 1 tại lượt 6, xuống 0,5 tại lượt 7">
-</div>
-<p class="caption">Chặn lý thuyết với sai số đầu giả định 64, $\gamma=0{,}5$: 6 lượt còn 1, 7 lượt còn $0{,}5$; không phải số liệu thực nghiệm.</p>
-<aside class="notes">
-Hệ quả của tính co là chặn hội tụ hình học: sau $k$ lượt cập nhật, sai số so với $v_*$ giảm ít nhất theo $\gamma^k$. Để đọc số cụ thể, ta giả định sai số đầu là 64; đây là con số minh họa, không lấy từ lưới năm ô. Với $\gamma=0{,}5$, chặn là $64\cdot(0{,}5)^k$. Điều kiện $64\cdot(0{,}5)^k<1$ tương đương $2^{6-k}<1$, tức $k>6$: sau 6 lượt chặn bằng đúng 1, sau 7 lượt còn 0,5. Trục tung của hình dùng thang log2 để hai mốc 1 và 0,5 đọc được rõ. Cần phân biệt chặn lý thuyết với thực nghiệm: bảy lượt là đủ theo chặn, không phải số lượt tối thiểu thực của mọi MDP. Hạn chế là $v_*$ chưa biết nên chặn chứa sai số ban đầu khó dùng trực tiếp; phần dư cung cấp một đại lượng tính được.
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 32, 34; tham số điều chỉnh.</p>
-</aside>
+<section>
+<section data-slide-id="L04-D01">
+<h2>Lặp đánh giá và cải thiện chính sách</h2>
+<p>Chính sách thay đổi làm thay đổi giá trị tiếp nối. Vì vậy chính sách mới phải được đánh giá lại.</p><img class="figure" src="img/lec-04/dp04-policy-iteration.svg" alt="Chu trình lặp chính sách: chính sách pi qua đánh giá với pi cố định tạo giá trị; cải thiện với giá trị cố định tạo chính sách mới."/><div class="box">$i$ đếm lần cải thiện chính sách; $k$ đếm lượt đánh giá; $t$ đếm bước tương tác.</div>
+<aside class="notes"><p>Lặp chính sách giải bài toán điều khiển với mô hình đã biết. Hai phép toán thay đổi hai đối tượng khác nhau; giá trị hoặc chính sách phải được giữ cố định đúng lúc.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 13, 19–20; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.3, tr. 80.</p></aside>
 </section>
-
-<section data-slide-id="L04-S39">
-<h2>Phần dư Bellman và ngưỡng dừng</h2>
-<p class="math-large">$\rho(v)=\|T_*v-v\|_\infty$</p>
-<p class="math-large">$e=\|v-v_*\|_\infty\le\rho(v)+\gamma e\;\Rightarrow\;e\le\dfrac{\rho(v)}{1-\gamma}$</p>
-<div class="box">
-<p>Với $\gamma=0{,}5$, muốn sai số $e\le\varepsilon_v=0{,}2$: dùng ngưỡng $\theta=(1-\gamma)\varepsilon_v=0{,}1$ cho phần dư $\rho(v)$.</p>
-</div>
-<aside class="notes">
-Phần dư $\rho(v)$ đo được trực tiếp từ bảng hiện có, trong khi sai số $e$ so với $v_*$ thì không. Suy diễn dùng bất đẳng thức tam giác: $\|v-v_*\|_\infty\le\|v-T_*v\|_\infty+\|T_*v-T_*v_*\|_\infty$. Hạng thứ nhất chính là $\rho(v)$. Hạng thứ hai bị chặn bởi $\gamma\|v-v_*\|_\infty$ nhờ tính co, vì $v_*$ là điểm bất động. Ghép lại: $e\le\rho(v)+\gamma e$, chuyển hạng về một vế cho $e\le\rho(v)/(1-\gamma)$. Số cụ thể: với $\gamma=0{,}5$ và mục tiêu sai số $\varepsilon_v=0{,}2$, ngưỡng dừng trên phần dư là $\theta=(1-0{,}5)\cdot0{,}2=0{,}1$. Ngưỡng 0,1 áp dụng cho phần dư, còn mức 0,2 áp dụng cho sai số giá trị. Nếu dùng bản trả $w=Tv$ làm đánh giá chính sách như ở phần trước, chặn của $w$ là $\gamma\|Tv-v\|_\infty/(1-\gamma)$, khác hệ số với bảng $v$; hai bảng cần phân biệt rõ, không đổi hệ số ngầm.
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 31–34.</p>
-</aside>
+<section data-slide-id="L04-D02">
+<h2>Quỹ đạo lặp chính sách trên hai trạng thái</h2>
+<table><thead><tr><th scope="col">Chính sách $\pi_i$</th><th scope="col">Giá trị $v_{\pi_i}$</th><th scope="col">Sau cải thiện</th></tr></thead><tbody><tr><td>$(a,a)$</td><td>$(10,11)$</td><td>$(a,b)$</td></tr><tr><td>$(a,b)$</td><td>$(10,30)$</td><td>$(b,b)$</td></tr><tr><td>$(b,b)$</td><td>$(27,30)$</td><td>$(b,b)$</td></tr></tbody></table><div class="grid2"><div class="card"><h3>Trạng thái thứ nhất</h3><p>Tại $s_0$, theo $(b,b)$:</p><p>Chọn $a$: $25{,}3$; chọn $b$: $27$.</p></div><div class="card"><h3>Trạng thái thứ hai</h3><p>Tại $s_1$, theo $(b,b)$:</p><p>Chọn $a$: $26{,}3$; chọn $b$: $30$.</p></div></div>
+<p>Chính sách cuối không đổi sau bước cải thiện theo giá trị chính xác của nó.</p>
+<aside class="notes"><p>Mỗi hàng đánh giá chính xác chính sách ở cột đầu rồi dùng đúng giá trị của hàng đó để cải thiện. Hàng giữa khôi phục bước $v_{(a,b)}=(10,30)$ cần để giải thích việc $s_0$ đổi sang $b$. Với chính sách $(b,b)$, hệ là $x=0{,}9y$, $y=3+0{,}9y$, nên $(x,y)=(27,30)$. Bốn giá trị hành động là $1+0{,}9\cdot27=25{,}3$, $0{,}9\cdot30=27$, $2+0{,}9\cdot27=26{,}3$ và $3+0{,}9\cdot30=30$. Cả hai hành động đang chọn đều đạt cực đại.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17–20</p></aside>
 </section>
-
-<section data-slide-id="L04-S40">
-<h2>Giới hạn của mô hình dạng bảng</h2>
-<div class="grid2">
-<div class="card">
-<p><strong>Bốn biến trạng thái</strong></p>
-<p>$x,\dot x$: mỗi biến 3 khoảng; $\theta,\dot\theta$: mỗi biến 6 khoảng.</p>
-<p>$3\times3\times6\times6=324$ ô.</p>
-</div>
-<div class="card">
-<p><strong>Còn thiếu</strong></p>
-<p>Chưa có hạt nhân chuyển và phần thưởng; chưa bảo đảm trạng thái gộp có tính Markov.</p>
-</div>
-</div>
-<div class="figure short">
-<img src="img/lec-04/cartpole.svg" alt="Sơ đồ gom trạng thái liên tục của CartPole thành chỉ số ô rời rạc: hai điểm liên tục khác nhau rơi vào cùng một ô, dẫn tới mô hình xấp xỉ cần xác định chuyển và thưởng">
-</div>
-
-<aside class="notes">
-CartPole có trạng thái liên tục gồm vị trí $x$, vận tốc $\dot x$, góc $\theta$ và vận tốc góc $\dot\theta$. Chia $x$ và $\dot x$ mỗi biến thành 3 khoảng, $\theta$ và $\dot\theta$ mỗi biến 6 khoảng, ta được $3\times3\times6\times6=324$ ô, tức một biểu diễn hữu hạn đủ để lập bảng. Nhưng rời rạc hóa chỉ tạo trạng thái gộp; nó chưa cung cấp hạt nhân chuyển và phần thưởng cho mô hình bảng, cũng chưa bảo đảm trạng thái gộp có tính Markov. Hình minh họa hai điểm liên tục khác nhau rơi vào cùng một ô: thông tin bị gộp mất. Cần phân biệt hai loại sai số: sai số lặp giá trị trên mô hình đã cho, và sai số do rời rạc hóa hoặc ước lượng mô hình. Tối ưu mô hình hữu hạn không tự chứng minh tối ưu trên môi trường liên tục, nên mọi bảo đảm như ngưỡng dừng phải kiểm tra lại miền áp dụng.
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 35–37.</p>
-</aside>
+<section data-slide-id="L04-D03">
+<h2>Thuật toán lặp chính sách</h2>
+<p>Đầu vào: mô hình $p$, $0\le\gamma&lt;1$, chính sách xác định $\pi_0$, ngân sách $I_{\max}\ge1$ vòng.</p>
+<ol><li>Khởi tạo $\pi=\pi_0$.</li><li>Đánh giá chính xác $\pi$ bằng hệ Bellman, thu được $v_\pi$.</li><li>Giữ $v_\pi$ cố định; tạo $\pi'$ tham lam theo $q_\pi$. Giữ hành động cũ khi hòa, nếu cần đổi thì theo thứ tự cố định.</li><li>Nếu $\pi'=\pi$, trả $(\pi,v_\pi)$ với trạng thái ổn định.</li><li>Nếu hết ngân sách, trả cặp vừa đánh giá $(\pi,v_\pi)$. Nếu còn, nhận $\pi\leftarrow\pi'$ và lặp từ đánh giá.</li></ol>
+<aside class="notes"><p>Đầu ra là một chính sách cùng giá trị của chính sách đó; khi dừng vì ngân sách, cặp trả về chưa được chứng nhận tối ưu nếu chính sách còn thay đổi. Bộ đếm tăng sau mỗi vòng đánh giá và cải thiện; tối đa $I_{\max}$ vòng được thực hiện. Trong nhiệm vụ có kết thúc, giữ giá trị trạng thái kết thúc bằng 0 và không gán hành động cho trạng thái đó. Bảo đảm dừng hữu hạn ở đây sử dụng đánh giá chính xác. Giải hệ tuyến tính là một cách xác định giá trị đó về mặt toán học. Tính toán số thực hoặc đánh giá lặp theo ngưỡng chỉ trả xấp xỉ và cần kiểm tra phần dư. Một vòng ngoài có thể chứa nhiều lượt đánh giá; không đồng nhất vòng ngoài với một lượt quét giá trị.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 20, 33–34; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.3, tr. 80, Bài tập 4.4 tr. 82.</p></aside>
 </section>
-
-<section data-slide-id="L04-S41">
-<h2>Câu hỏi: kiểm tra sai số và giả thiết</h2>
-<div class="box">
-<p><strong>Câu hỏi:</strong> MDP hữu hạn đã biết mô hình có $\rho(v)=0{,}15$, $\gamma=0{,}5$. Chặn sai số giá trị bằng bao nhiêu; đã bảo đảm ngưỡng $0{,}2$ chưa; chứng minh còn dùng được khi $\gamma=1$ không?</p>
-</div>
-<div class="grid2">
-<div class="card fragment">
-<p><strong>Trường hợp chiết khấu</strong></p>
-<p>$e\le\dfrac{0{,}15}{1-0{,}5}=0{,}3$: chưa bảo đảm ngưỡng $0{,}2$.</p>
-</div>
-<div class="card fragment">
-<p><strong>Trường hợp $\gamma=1$</strong></p>
-<p>Mất tính co nghiêm ngặt; mẫu số $1-\gamma$ bằng 0, cần giả thiết hoặc lập luận khác.</p>
-</div>
-</div>
-<aside class="notes">
-Tính theo chặn vừa suy ra: sai số bị chặn bởi $\rho(v)/(1-\gamma)=0{,}15/0{,}5=0{,}3$. Con số 0,3 chỉ là cận trên, nên kết luận đúng là chưa bảo đảm ngưỡng 0,2, không phải chắc chắn sai số lớn hơn 0,2; sai số thực tế có thể nhỏ hơn 0,2. Muốn bảo đảm, cần phần dư không vượt $(1-\gamma)\cdot0{,}2=0{,}1$, tức phải lặp thêm cho tới khi $\rho(v)$ không vượt mức đó. Trường hợp thứ hai: thay riêng $\gamma$ bằng 1 làm mất tính co nghiêm ngặt của toán tử Bellman, và mẫu số $1-\gamma$ trong chặn bằng 0 nên công thức không xác định. Chứng minh dựa trên giả thiết $\gamma<1$; khi giả thiết bị bỏ, cần giả thiết hoặc lập luận khác. Hai điều kiện này sẽ được dùng lại khi chọn và đánh giá thuật toán ở phần kết.
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 31–34; tham số điều chỉnh.</p>
-</aside>
+<section data-slide-id="L04-D04">
+<h2>Chính sách ổn định và nghiệm tối ưu</h2>
+<p>Giá trị tối ưu: $v_*(s)=\max_\pi v_\pi(s)$.</p>
+<p>Khi đánh giá chính xác và cải thiện không đổi chính sách:</p>
+<div class="math-large">$$v_\pi(s)=\max_a\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma v_\pi(s')\bigr].$$</div>
+<div class="box">Trong MDP hữu hạn, thưởng bị chặn và $0\le\gamma&lt;1$, điều kiện Bellman tối ưu cho $v_\pi=v_*$.</div>
+<p>Với mô hình hai trạng thái: $\pi_*=(b,b)$ và $v_*=(27,30)$.</p>
+<aside class="notes"><p>Đánh giá cho $v_\pi=T_\pi v_\pi$, còn chính sách ổn định tham lam theo $v_\pi$ nên vế phải đồng thời là cực đại trên hành động. Đây là phương trình Bellman tối ưu. Trong MDP hữu hạn chiết khấu, toán tử tối ưu có điểm bất động duy nhất; tính co sẽ được thiết lập khi xét lặp giá trị. Tập hành động hữu hạn bảo đảm cực đại được đạt. Chọn một hành động cực đại ở mỗi trạng thái tạo chính sách tối ưu dừng, xác định. Giá trị hành động tối ưu là $q_*(s,a)=\max_\pi q_\pi(s,a)$, với $v_*(s)=\max_a q_*(s,a)$. Với cặp $(b,b),(27,30)$, cả hai vế Bellman tối ưu bằng nhau ở từng trạng thái.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 7–9, 33; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.2–4.3, tr. 79–80</p></aside>
 </section>
-
+<section data-slide-id="L04-D05">
+<h2>Dừng hữu hạn và đánh giá gần đúng</h2>
+<div class="grid2"><div class="card"><h3>Đánh giá chính xác</h3><p>Số chính sách xác định hữu hạn:</p><div class="math-large">$\displaystyle\prod_{s\in\mathcal S}|\mathcal A(s)|$</div><p>Mỗi lần đổi chính sách có cải thiện nghiêm ở ít nhất một trạng thái.</p></div><div class="card"><h3>Đánh giá gần đúng</h3><p>Bảng theo ngưỡng chỉ xấp xỉ $v_\pi$.</p><p>Chính sách không đổi theo bảng đó chưa đủ chứng nhận tối ưu chính xác.</p></div></div>
+<div class="box">Đánh giá chính xác và phá hòa ổn định bảo đảm lặp chính sách dừng hữu hạn.</div>
+<aside class="notes"><p>Nếu hành động cũ không còn trong tập cực đại, hành động mới có giá trị hành động lớn hơn nghiêm tại trạng thái đó. Định lý cải thiện cho giá trị không giảm ở mọi trạng thái và tăng nghiêm ít nhất tại trạng thái đổi. Vì không thể quay về một chính sách đã có giá trị thấp hơn, số chính sách hữu hạn dẫn đến dừng. Chỉ viện dẫn số chính sách hữu hạn không loại được việc dao động giữa các chính sách đồng giá trị; quy tắc giữ hòa xử lý trường hợp này. Nếu có $m$ hành động tại mỗi trong $n$ trạng thái, số chính sách là $m^n$. Kết quả này không cho một số vòng nhỏ bảo đảm trong mọi bài toán. Với đánh giá gần đúng, cần kiểm chứng sai số của bảng hoặc điều kiện tối ưu phù hợp.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 33–34; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.3, tr. 80, Bài tập 4.4 tr. 82.</p></aside>
 </section>
-<section aria-label="Tổng hợp và kết luận">
-
-<section data-slide-id="L04-S42">
-<h2>Chọn quy trình theo đầu ra cần tính</h2>
-<table>
-<tr><th>Phương pháp</th><th>Đầu vào</th><th>Bước chính</th><th>Đầu ra và dừng</th></tr>
-<tr><td>Đánh giá</td><td>Mô hình $p,r$ và $\pi$</td><td>Giải hệ hoặc lặp $T^\pi$</td><td>$v^\pi$ hoặc ước lượng</td></tr>
-<tr><td>Lặp chính sách</td><td>Mô hình</td><td>Đánh giá–cải thiện</td><td>$\pi_*,v_*$ khi ổn định</td></tr>
-<tr><td>Lặp giá trị</td><td>Mô hình</td><td>Lặp $T_*$</td><td>$v,\pi_v$ khi phần dư nhỏ</td></tr>
-</table>
-<p>Bảo đảm: mô hình đúng, hữu hạn, thưởng bị chặn và $0\le\gamma<1$.</p>
-<aside class="notes">
-<p>Bảng này gom lại ba quy trình của bài. Nếu chỉ cần giá trị của một chính sách cho trước, đánh giá chính sách là đủ: lập hệ phương trình Bellman hoặc lặp toán tử $T^\pi$ cho tới khi giá trị hội tụ. Nếu cần chính sách tốt, có hai đường: lặp chính sách đánh giá chính xác rồi cải thiện, giữ hành động cũ khi hòa, dừng khi chính sách không đổi nữa; còn lặp giá trị cập nhật bảng giá trị trực tiếp bằng $T_*$ và trích chính sách ở cuối, dừng khi phần dư nhỏ dưới ngưỡng hoặc khi hết ngân sách tính. Nhánh hết ngân sách trả kết quả chưa chứng nhận đạt ngưỡng. Cả hai đều cần mô hình chuyển tiếp và thưởng, vì mọi phép tổng đều theo $p$. Khi mô hình không có, ba quy trình này không chạy được và ta phải chuyển sang học từ trải nghiệm, nội dung của Bài 05. Đây cũng là khung để đọc lại lời giải ví dụ mở đầu.</p>
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 12–14, 20, 24, 29, 38.</p>
-</aside>
+<section data-slide-id="L04-D06">
+<h2>Kiểm tra điều kiện dừng của lặp chính sách</h2>
+<p>Một chương trình giữ $\pi=(a,b)$ và bảng gần đúng $V=(0,0)$.</p>
+<div class="grid2"><div><table><thead><tr><th scope="col">$s$</th><th scope="col">$a$</th><th scope="col">$s'$</th><th scope="col">$r$</th></tr></thead><tbody><tr><td>$s_0$</td><td>$a$</td><td>$s_0$</td><td>1</td></tr><tr><td>$s_0$</td><td>$b$</td><td>$s_1$</td><td>0</td></tr><tr><td>$s_1$</td><td>$a$</td><td>$s_0$</td><td>2</td></tr><tr><td>$s_1$</td><td>$b$</td><td>$s_1$</td><td>3</td></tr></tbody></table><p>$\gamma=0{,}9$.</p></div><div class="check"><strong>Câu hỏi:</strong><ol><li>Tính bốn điểm nhìn trước từ $V$.</li><li>Xác định chính sách tham lam theo bảng đó.</li><li>Đánh giá kết luận “chính sách không đổi nên đã tối ưu”.</li></ol></div></div>
+<aside class="notes"><p><strong>Lời giải.</strong> Các điểm là $1,0,2,3$, nên $(a,b)$ tham lam theo $V$. Nhưng $v_{(a,b)}=(10,30)$ và chính sách $(b,b)$ có giá trị $(27,30)$; kết luận tối ưu không hợp lệ. Thiếu đánh giá chính xác hoặc chứng nhận sai số thích hợp.</p><p>Phép chọn hành động có thể đúng đối với bảng sai. Để áp dụng định lý dừng chính xác, bảng phải là giá trị của chính sách đang giữ.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17–20, 34</p></aside>
 </section>
-
-<section data-slide-id="L04-S43">
-<h2>Lời giải cho bài toán mở đầu</h2>
-<div class="grid2">
-<div>
-<p>Chính sách tối ưu: $\pi_*=(b,b)$.</p><p>Giá trị tối ưu: $v_*=(9,20)$.</p>
-<table>
-<tr><th>$Q_{v_*}$</th><th>$a$</th><th>$b$</th></tr>
-<tr><td>$s_0$</td><td>$6{,}5$</td><td>$\mathbf{9}$</td></tr>
-<tr><td>$s_1$</td><td>$9{,}5$</td><td>$\mathbf{20}$</td></tr>
-</table>
-<p>Cực đại ở $b$ tại mỗi trạng thái; $T_*v_*=v_*$.</p>
-</div>
-<div class="box">
-<p>$Q_{v_*}(s_0,b)=-1+0{,}5\cdot 20=9$</p>
-<p>$Q_{v_*}(s_1,b)=10+0{,}5\cdot 20=20$</p>
-<p>Với $\gamma=0{,}5$, dãy thưởng $-1,10,10,\ldots$ cho giá trị $9$ tại $s_0$.</p>
-</div>
-</div>
-<aside class="notes">
-<p>Quay lại bài toán hai trạng thái ở mở đầu. Với mô hình đã cho và gamma bằng 0,5, chính sách luôn chọn b là tối ưu, cho giá trị 9 ở s0 và 20 ở s1. Bảng q dưới v* xác nhận điều đó: tại s0, chọn b một lần rồi tiếp tục tối ưu cho âm 1 cộng 0,5 nhân 20, tức 9; chọn a cho 2 cộng 0,5 nhân giá trị tối ưu tại s0 là 9, tức 6,5, vì a đưa hệ thống về s0 với giá trị 9 chứ không phải 4 của chính sách luôn chọn a. Tại s1, b cho 10 cộng 0,5 nhân 20 bằng 20, còn a cho 5 cộng 0,5 nhân 9 bằng 9,5. Vì cực đại rơi ở b ở cả hai trạng thái, toán tử Bellman tối ưu giữ nguyên v*, đây là chứng nhận Bellman. Giá trị ở s0 tăng từ 4 lên 9 nhờ đổi quyết định dài hạn, trên cùng mô hình và hệ số chiết khấu. Các bạn lặp lại đúng các bước này trong bài tập.</p>
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 17–21, 31–33; tham số điều chỉnh.</p>
-</aside>
 </section>
-
-<section data-slide-id="L04-S44">
-<h2>Bài tập và tài liệu đọc</h2>
-<p>Bài tập trong <strong>hw3.pdf</strong>.</p>
-<div class="grid3">
-<div class="card">
-<p><strong>Bài 9</strong></p>
-<p>Tính một lượt lặp giá trị và một bước cải thiện trên MDP ba trạng thái.</p>
-</div>
-<div class="card">
-<p><strong>Bài 6</strong></p>
-<p>Lập hệ Bellman và giải thích tính khả nghịch của hệ.</p>
-</div>
-<div class="card">
-<p><strong>Bài 3/7</strong></p>
-<p>Viết chứng minh tồn tại và tính đơn điệu bằng lời của mình, nêu từng giả thiết và bước dùng giả thiết đó.</p>
-</div>
-</div>
-<div class="box">
-<p>Đọc lại lecture04-solving-MDP.pdf, tr. 20–24, 31–34.</p>
-</div>
-<aside class="notes">
-<p>Ba sản phẩm cần nộp. Bài 9 yêu cầu tự tay tính một lượt lặp giá trị rồi một bước cải thiện trên MDP ba trạng thái; đây là cách kiểm tra bạn hiểu đúng thứ tự cập nhật và cách trích chính sách. Bài 6 hỏi lập hệ Bellman cho đánh giá chính sách và giải thích vì sao hệ khả nghịch, gắn với giả thiết gamma nhỏ hơn một. Bài 3 và 7 yêu cầu viết lại chứng minh về sự tồn tại điểm bất động và tính đơn điệu bằng lời của mình, chỉ rõ mỗi giả thiết được dùng ở bước nào. Đọc lại các trang 20 đến 24 và 31 đến 34 của bài giảng trước khi làm. Phần Monte Carlo, Q-learning và xấp xỉ hàm trong tài liệu chưa phải kiến thức đã dạy, không cần làm ở bài này.</p>
-<p class="note-source"><strong>Nguồn:</strong> hw3.pdf, tr. 1–2, B3/B6/B7/B9; lecture04-solving-MDP.pdf, tr. 20–24, 31–34.</p>
-</aside>
+<section>
+<section data-slide-id="L04-E01">
+<h2>Cắt ngắn đánh giá trong bài toán điều khiển</h2>
+<p>Lặp chính sách hoàn tất đánh giá trước mỗi lần cải thiện. Đánh giá có thể cần nhiều lượt tính.</p>
+<div class="grid3"><div class="card"><h3>Nhìn trước</h3><p>Dùng bảng hiện tại để tính từng nhánh hành động.</p></div><div class="card"><h3>Chọn cực đại</h3><p>Lấy điểm lớn nhất tại mỗi trạng thái.</p></div><div class="card"><h3>Cập nhật giá trị</h3><p>Dùng kết quả làm bảng tiếp nối cho lượt sau.</p></div></div>
+<div class="box">Cắt ngắn đánh giá sau một lượt tạo quy tắc lặp giá trị. Bảng hiện tại không cần là giá trị chính xác của một chính sách.</div>
+<aside class="notes"><p>Cập nhật tối ưu gộp lựa chọn tham lam với một bước dùng giá trị tiếp nối. Nó không đòi bảng hiện tại phải bằng giá trị chính xác của một chính sách.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 23; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.4, tr. 82–83.</p></aside>
 </section>
-
-<section data-slide-id="L04-S45">
-<h2>Câu hỏi: đánh giá một kết quả lập kế hoạch</h2>
-<div class="box">
-<p>MDP hữu hạn, mô hình chính xác; $\gamma=0{,}5$.</p><p>Phần dư $\rho(v)=0{,}1$. Nhận định: chính sách $\pi_v$ chắc chắn tối ưu tuyệt đối.</p>
-</div>
-<p>Câu hỏi:</p>
-<ul>
-<li>Kết luận nào về $v$ được bảo đảm?</li>
-<li>Kết luận tối ưu tuyệt đối của $\pi_v$ đã có đủ căn cứ chưa?</li>
-<li>Thuật toán nào cho chứng nhận chính sách ổn định khi đánh giá chính xác và giữ hòa?</li>
-</ul>
-<aside class="notes">
-<p>Đáp án: phần dư ở đây dùng chuẩn vô cùng, $\rho(v)=\|T_*v-v\|_\infty$. Từ $\rho(v)=0{,}1$ suy ra $\|v-v_*\|_\infty\le\frac{\rho}{1-\gamma}=\frac{0{,}1}{1-0{,}5}=0{,}2$, vì sai số giá trị bị chặn bởi $\frac{\rho}{1-\gamma}$ với hệ số $\frac{1}{1-\gamma}$. Phần dư dương chưa đủ để chứng nhận $\pi_v$ tối ưu tuyệt đối; chính sách này có thể đã tối ưu, nhưng chưa có bằng chứng, vì gần đúng giá trị không đồng nhất với tối ưu chính sách. Lặp chính sách đánh giá chính xác, giữ hòa, dừng khi không đổi cho chứng nhận này. Kết quả tính toán cần đi kèm bảng đã kiểm, phần dư và điều kiện áp dụng của chứng nhận.</p>
-<p class="note-source"><strong>Nguồn:</strong> lecture04-solving-MDP.pdf, tr. 20, 24, 31–34, 38.</p>
-</aside>
+<section data-slide-id="L04-E02">
+<h2>Hai lượt lặp giá trị trên cùng mô hình</h2>
+<p>Từ $V_0=(0,0)$: $V_1=(\max\{1,0\},\max\{2,3\})=(1,3)$.</p>
+<p>Lượt thứ hai dùng toàn bộ giá trị tiếp nối từ $V_1$:</p><table><thead><tr><th scope="col">Trạng thái</th><th scope="col">Nhánh $a$</th><th scope="col">Nhánh $b$</th><th scope="col">Cực đại</th></tr></thead><tbody><tr><td>$s_0$</td><td>$1+0{,}9\cdot1=1{,}9$</td><td>$0+0{,}9\cdot3=2{,}7$</td><td>2,7</td></tr><tr><td>$s_1$</td><td>$2+0{,}9\cdot1=2{,}9$</td><td>$3+0{,}9\cdot3=5{,}7$</td><td>5,7</td></tr></tbody></table><div class="math-large">$$V_2=(2{,}7;\,5{,}7).$$</div>
+<div class="box">Đánh giá giữ một chính sách cố định; lặp giá trị lấy cực đại trên các hành động.</div>
+<aside class="notes"><p>Lượt đầu đánh giá chính sách $(a,a)$ cho $(1,2)$, còn lặp giá trị cho $(1,3)$. Sự khác biệt tại $s_1$ đến từ phép cực đại trên các hành động.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17, 23–24</p></aside>
 </section>
-
+<section data-slide-id="L04-E03">
+<h2>Toán tử Bellman tối ưu</h2>
+<p>Điểm nhìn trước từ một bảng bất kỳ $V$:</p>
+<div class="math-large">$$Q_V(s,a)=\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma V(s')\bigr].$$</div>
+<div class="grid2"><div class="card"><h3>Toán tử tối ưu</h3><div class="math-large">$(T_*V)(s)=\max_a Q_V(s,a)$</div></div><div class="card"><h3>Quy tắc lặp</h3><div class="math-large">$V_{k+1}=T_*V_k$</div></div></div>
+<p>$V=v_\pi\Rightarrow Q_V=q_\pi$; $V=v_*\Rightarrow Q_V=q_*$. Điểm bất động tối ưu thỏa $v_*=T_*v_*$.</p>
+<aside class="notes"><p>$Q_V$ là ký hiệu cho phép nhìn trước từ bảng đang xét, không mặc nhiên là giá trị hành động của một chính sách. Cực đại đặt ngoài kỳ vọng: tác tử chọn hành động trước khi kết quả ngẫu nhiên của môi trường được biết. Đổi thứ tự này sẽ cho phép chọn hành động theo kết quả chưa quan sát được. Tại trạng thái kết thúc, giá trị tiếp nối bằng 0 và không lấy cực đại trên một tập hành động rỗng. Phương trình Bellman cho giá trị hành động tối ưu là
+$$q_*(s,a)=\sum_{s',r}p(s',r\mid s,a)\left[r+\gamma\max_{a'}q_*(s',a')\right],$$
+với số hạng tiếp nối bằng 0 nếu $s'$ là trạng thái kết thúc.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 8, 10, 23; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.4, (4.10), tr. 83</p></aside>
+</section>
+<section data-slide-id="L04-E04">
+<h2>Thuật toán lặp giá trị đồng bộ</h2>
+<p>Đầu vào: $p,\gamma$, ngưỡng $\eta&gt;0$ và tối đa $K$ lượt nhận bảng mới.</p>
+<p>Phần dư tối ưu: $b_*(V)=\|T_*V-V\|_\infty$.</p>
+<ol><li>Khởi tạo $V=0$; giữ giá trị trạng thái kết thúc bằng $0$.</li><li>Tính $W=T_*V$ từ bảng cố định; đặt $b=\|W-V\|_\infty$.</li><li>Nếu $b\le\eta$, kết thúc với $V$; nếu chưa đạt và còn lượt, nhận $V\leftarrow W$ rồi lặp lại.</li><li>Khi hết $K$ lượt, tính lại $b_*(V)$ trên bảng cuối.</li></ol>
+<div class="box">Trả $V$, $\pi_V(s)\in\arg\max_a Q_V(s,a)$ và phần dư của $V$, kèm kết quả kiểm tra ngưỡng.</div>
+<aside class="notes"><p>Ngân sách $K$ là số nguyên không âm, đếm số lần nhận bảng mới. Nếu dừng vì phần dư nhỏ, $V$ là bảng đã được kiểm; $W=T_*V$ chỉ là bảng dùng để đo phần dư. Nếu đã nhận đủ $K$ bảng mới, tính lại phần dư trên bảng cuối trước khi trả. Chính sách được trích sau cập nhật từ chính bảng công bố, với một thứ tự phá hòa cố định. Mỗi trạng thái chưa kết thúc cần nhìn trước theo tất cả hành động; không thể chọn hành động bằng cách chỉ lấy cực đại trực tiếp của $V(s)$. Các bước dùng kỳ vọng theo mô hình đầy đủ. Hết ngân sách không chứng minh hội tụ, còn đạt ngưỡng chỉ chứng nhận một chặn sai số giá trị khi kết hợp với tính co.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 24, 34; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.4, tr. 83</p></aside>
+</section>
+<section data-slide-id="L04-E05">
+<h2>Tính co và hội tụ của lặp giá trị</h2>
+<p>MDP hữu hạn, phần thưởng bị chặn và $0\le\gamma&lt;1$.</p>
+<div class="math-large">$$\|T_*U-T_*V\|_\infty\le\gamma\|U-V\|_\infty.$$</div>
+<p>Toán tử có điểm bất động duy nhất $v_*$. Lặp đồng bộ hội tụ từ mọi bảng hữu hạn.</p>
+<div class="math-large">$$\|V_k-v_*\|_\infty\le\gamma^k\|V_0-v_*\|_\infty.$$</div>
+<div class="box">Chặn theo nghiệm chưa biết mô tả tốc độ hội tụ; phép kiểm thực hành cần đại lượng tính được từ bảng hiện tại.</div>
+<aside class="notes"><p>Với mỗi trạng thái, dùng $|\max_a x_a-\max_a y_a|\le\max_a|x_a-y_a|$. Hiệu của hai điểm nhìn trước chỉ còn $\gamma\sum_{s',r}p(s',r\mid s,a)[U(s')-V(s')]$ vì các phần thưởng triệt tiêu. Lấy trị tuyệt đối, dùng tổng xác suất bằng 1 rồi lấy cực đại theo trạng thái cho bất đẳng thức co. Lặp bất đẳng thức với $T_*v_*=v_*$ cho chặn sai số sau $k$ lượt. Hữu hạn lượt thường chỉ tạo xấp xỉ. Khi $\gamma=1$, hệ số không còn nhỏ hơn 1, nên chứng minh này không cho bảo đảm tương tự.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 31–32; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.4, tr. 83 cho kết quả hội tụ, chứng minh co theo nguồn bài giảng.</p></aside>
+</section>
+<section data-slide-id="L04-E06">
+<h2>Lan truyền giá trị trên lưới năm ô</h2>
+<div class="grid2"><div><img class="figure" src="img/lec-04/dp04-five-cell.svg" alt="Lưới c1 đến c5: đi trái hoặc phải; ra ngoài tại c1 ở lại; c5 là ô kết thúc, mũi tên phải biểu diễn chính sách tối ưu."/><ul><li>Hành động: trái hoặc phải; $c_5$ kết thúc.</li><li>$\gamma=0{,}9$.</li><li>Thưởng $10$ khi $c_4\to c_5$; các bước khác nhận $-1$.</li><li>Trái ở $c_1$: ở lại, nhận $-1$.</li></ul></div><div><table><thead><tr><th scope="col">$k$</th><th scope="col">$c_1$</th><th scope="col">$c_2$</th><th scope="col">$c_3$</th><th scope="col">$c_4$</th><th scope="col">$c_5$</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>1</td><td>−1</td><td>−1</td><td>−1</td><td>10</td><td>0</td></tr><tr><td>2</td><td>−1,9</td><td>−1,9</td><td>8</td><td>10</td><td>0</td></tr><tr><td>3</td><td>−2,71</td><td>6,2</td><td>8</td><td>10</td><td>0</td></tr><tr><td>4</td><td>4,58</td><td>6,2</td><td>8</td><td>10</td><td>0</td></tr></tbody></table><p class="caption">$V_2(c_3)=\max\{-1{,}9;\,8\}=8$. Mỗi lượt đồng bộ truyền giá trị thêm một ô.</p></div></div>
+<aside class="notes"><p>Động lực của lưới này là xác định. $V(c_5)=0$ ở mọi lượt; phần thưởng 10 được nhận một lần khi đi vào $c_5$, không được gán làm giá trị tiếp nối của trạng thái kết thúc. Đi trái ở $c_1$ giữ nguyên trạng thái và nhận thưởng $-1$. Từ bảng $V_1$, đi trái ở $c_3$ cho $-1+0{,}9(-1)=-1{,}9$; đi phải cho $-1+0{,}9(10)=8$. Bảng $V_4=(4{,}58;6{,}2;8;10;0)$ thỏa $T_*V_4=V_4$, tức $V_5=V_4$. Các điểm chọn trái tại $c_1,\ldots,c_4$ lần lượt là $3{,}122;3{,}122;4{,}58;6{,}2$, đều nhỏ hơn điểm chọn phải tương ứng $4{,}58;6{,}2;8;10$. Vì vậy chính sách tối ưu đi phải tại bốn ô chưa kết thúc. Các mũi tên trong hình biểu diễn chính sách này, không loại bỏ hành động trái khỏi mô hình.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 25–28</p></aside>
+</section>
+<section data-slide-id="L04-E07">
+<h2>Phần dư Bellman và ngưỡng sai số</h2>
+<div class="math-large">$$\|V-v_*\|_\infty\le\frac{b_*(V)}{1-\gamma}.$$</div>
+<div class="grid2"><div class="card"><h3>Ngưỡng cho sai số giá trị</h3><p>Với $\gamma=0{,}9$, điều kiện đủ cho sai số không quá $\varepsilon=0{,}1$:</p><div class="math-large">$b_*(V)\le0{,}01$</div></div><div class="card"><h3>Mô hình hai trạng thái</h3><p>$V_1=(1,3)$; chính sách tham lam là $(b,b)$.</p><p>Phần dư $2{,}7$; sai số giá trị $27$.</p></div></div>
+<div class="box">Chính sách trích có thể đã tối ưu khi bảng giá trị còn cách xa nghiệm.</div>
+<aside class="notes"><p>Lưới năm ô đã đạt điểm bất động tại $V_4$. Trong mô hình hai trạng thái, bảng $V_1=(1,3)$ còn khác $v_*=(27,30)$ dù chính sách trích đã là $(b,b)$; chặn phần dư định lượng sai số của bảng này.</p><p>Bất đẳng thức tam giác và tính co cho $\|V-v_*\|_\infty\le\|V-T_*V\|_\infty+\|T_*V-T_*v_*\|_\infty\le b_*(V)+\gamma\|V-v_*\|_\infty$. Chuyển vế cho chặn đã nêu. Đây là hệ quả được suy từ tính co. Để sai số giá trị không quá $\varepsilon$, đủ có $b_*(V)\le(1-\gamma)\varepsilon$. Ngưỡng sai số giá trị không tự trở thành ngưỡng cùng cỡ cho tổn thất chính sách. Trong mô hình hai trạng thái, $V_{55}\approx(26{,}908702;29{,}908702)$ có phần dư khoảng $0{,}00913$, chặn và sai số thật cùng khoảng $0{,}09130$. Với cập nhật đồng bộ, $\|V_{k+1}-V_k\|_\infty$ là phần dư của $V_k$; nếu trả bảng mới cần gắn chặn với đúng chỉ số.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 31–34</p></aside>
+</section>
+<section data-slide-id="L04-E08">
+<h2>Kiểm tra cập nhật và trạng thái kết thúc</h2>
+<p>Lưới năm ô: $\gamma=0{,}9$ và $V_2=(-1{,}9;-1{,}9;8;10;0)$.</p>
+<div class="grid2"><div><img class="figure" src="img/lec-04/dp04-five-cell.svg" alt="Lưới năm ô; biên trái ở lại và ô c5 kết thúc."/><p>Thưởng $10$ khi $c_4\to c_5$; các bước khác nhận $-1$.</p></div><div class="check"><strong>Câu hỏi:</strong><ol><li>Tính $V_3(c_1)$ và $V_3(c_2)$ bằng cập nhật đồng bộ.</li><li>Giải thích vì sao $V_3(c_5)=0$ dù bước đi vào $c_5$ nhận thưởng $10$.</li></ol></div></div>
+<aside class="notes"><p><strong>Lời giải.</strong> $V_3(c_1)=-2.71$; $V_3(c_2)=\max(-2.71,6.2)=6.2$. Thưởng 10 được nhận trên chuyển tiếp đi vào đích; sau kết thúc không còn phần thưởng tiếp nối.</p><p>Phép tính có hai nhánh ở mỗi ô. Đi trái ở biên trái và đi phải từ $c_1$ đều tới giá trị -1.9 của bảng cũ.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 25–28</p></aside>
+</section>
+</section>
+<section>
+<section data-slide-id="L04-F01">
+<h2>Chi phí của một lượt cập nhật</h2>
+<p>Đặt $n=|\mathcal S|$, tối đa $m$ hành động và tối đa $d$ trạng thái kế tiếp cho mỗi cặp $(s,a)$.</p><table><thead><tr><th scope="col">Biểu diễn mô hình</th><th scope="col">Một lượt lặp giá trị</th><th scope="col">Bộ nhớ mô hình</th></tr></thead><tbody><tr><td>Đặc: xét mọi trạng thái kế tiếp</td><td>$O(n^2m)$</td><td>$O(n^2m)$</td></tr><tr><td>Thưa: lưu các chuyển có thể xảy ra</td><td>$O(nmd)$</td><td>$O(nmd)$</td></tr></tbody></table><p>Giả sử đã gộp phần thưởng thành kỳ vọng. Bảng giá trị và chính sách cần $O(n)$ bộ nhớ.</p>
+<div class="box">Một lượt quét tính trên toàn bộ trạng thái. Thay lịch cập nhật có thể phân bổ công việc theo từng trạng thái.</div>
+<aside class="notes"><p>Đặt $P(s'\mid s,a)=\sum_r p(s',r\mid s,a)$ và $\bar r(s,a)=\sum_{s',r}p(s',r\mid s,a)r$. Sau khi gộp thưởng, mỗi điểm nhìn trước là $\bar r(s,a)+\gamma\sum_{s'}P(s'\mid s,a)V(s')$. Mô hình đặc đòi $n$ trạng thái nhân tối đa $m$ hành động nhân $n$ trạng thái kế tiếp. Bước cải thiện có cùng chi phí $O(n^2m)$ với biểu diễn này. Đánh giá chính sách xác định cần $O(n^2)$ mỗi lượt, còn khử Gauss hệ đặc cần $O(n^3)$. Với chính sách ngẫu nhiên, có thể lập $P_\pi,r_\pi$ trước để mỗi lượt đánh giá còn $O(n^2)$, nhưng phải tính cả chi phí lập. Hai bảng đồng bộ vẫn có bộ nhớ $O(n)$. Nếu tính trực tiếp tổng chung theo cả $s'$ và $r$, chi phí phụ thuộc số kết quả chuyển–thưởng được lưu.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 29, 37; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.5, §4.7, tr. 85, 87–88</p></aside>
+</section>
+<section data-slide-id="L04-F02">
+<h2>Cập nhật tại chỗ và thứ tự trạng thái</h2>
+<div class="grid2"><div><img class="figure" src="img/lec-04/dp04-update-order.svg" alt="Đánh giá tại chỗ: từ bảng không, cập nhật s0 thành 1 rồi dùng giá trị mới đó cập nhật s1 thành 2,9."/></div><div><p>Đánh giá $\pi_0=(a,a)$ từ bảng $0$, theo thứ tự $s_0,s_1$:</p><p>$V(s_0)\leftarrow1$.</p><p>$V(s_1)\leftarrow2+0{,}9\cdot1=2{,}9$.</p><div class="box">Tại chỗ: $(1;2{,}9)$.<br/>Đồng bộ: $(1,2)$.</div></div></div>
+<p>Lặp giá trị tại chỗ trên lưới, theo thứ tự $c_4,c_3,c_2,c_1$, truyền phần thưởng ở đích về $c_1$ trong một lượt.</p>
+<aside class="notes"><p>Ví dụ hai trạng thái dùng $T_{\pi_0}$ để đánh giá chính sách cố định. Ví dụ lưới dùng $T_*$ để lặp giá trị tại chỗ. Từ bảng không, cập nhật $c_4$ cho $\max\{-1,10\}=10$; cập nhật $c_3$ sau đó dùng ngay giá trị mới của $c_4$, cho $\max\{-1,-1+0{,}9\cdot10\}=8$. Hai ví dụ cùng dùng bảng hiện có, nhưng khác cách chọn hành động.</p><p>Lưới ngược thứ tự cho $(4.58,6.2,8,10,0)$ từ bảng không; đây là tính chất ví dụ này, không phải bảo đảm một lượt cho mọi MDP. Thay đổi lớn nhất trong lượt tại chỗ không trực tiếp bằng phần dư của bảng cuối.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 15, 25–28; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.1, §4.5, tr. 75, 85.</p></aside>
+</section>
+<section data-slide-id="L04-F03">
+<h2>Lặp giá trị bất đồng bộ</h2>
+<p>Đầu vào: mô hình, $\gamma$, $V=0$, lịch chọn trạng thái, ngưỡng $\eta$ và ngân sách cập nhật.</p>
+<ol><li>Chọn một trạng thái chưa kết thúc $s$ theo lịch.</li><li>Nhận $V(s)\leftarrow(T_*V)(s)$ từ bảng hiện có; giữ các ô khác.</li><li>Tại các mốc kiểm tra và khi hết ngân sách, cố định bảng để tính $b_*(V)$. Dừng nếu đạt ngưỡng hoặc hết ngân sách.</li></ol>
+<p>Trả $V$, chính sách tham lam theo $V$ và phần dư.</p>
+<div class="box">Với MDP hữu hạn chiết khấu và giá trị mới nhất, nếu mọi trạng thái chưa kết thúc được cập nhật vô hạn lần thì $V\to v_*$.</div>
+<aside class="notes"><p>Quy trình này dùng $T_*$ để giải bài toán điều khiển; thay bằng $T_\pi$ sẽ đánh giá một chính sách cố định. Cơ chế đọc giá trị mới nhất được giữ nguyên. Trên mô hình hai trạng thái, từ bảng $(1,0)$, cập nhật tối ưu tại $s_1$ cho $\max\{2+0{,}9\cdot1,3+0{,}9\cdot0\}=3$, còn đánh giá $\pi_0$ cho $2{,}9$.</p><p>Ngưỡng $\eta>0$ và ngân sách hữu hạn là các tham số thực hành. Tại các mốc kiểm tra, nếu phần dư vượt ngưỡng và còn ngân sách thì tiếp tục cập nhật. Trạng thái kết thúc giữ giá trị 0; điều kiện cập nhật vô hạn lần áp dụng cho mọi trạng thái chưa kết thúc. Bảo đảm xét cập nhật dùng giá trị mới nhất, không bao gồm truyền giá trị trễ. Quét tại chỗ là một lịch hệ thống; quy hoạch động bất đồng bộ tổng quát không cần chia thành các lượt quét toàn bộ. Áp dụng lịch $c_4,c_3,c_2,c_1$ cho lưới từ bảng không được $(4{,}58;6{,}2;8;10;0)$. Cố định bảng cuối rồi tính toàn bộ $T_*V$ cho đúng chính bảng đó, nên phần dư bằng 0; chính sách trích đi phải tại mọi ô chưa kết thúc. Độ thay đổi lớn nhất trong lượt tại chỗ không được đồng nhất với phần dư của bảng cuối.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 15; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.5, tr. 85–86.</p></aside>
+</section>
+<section data-slide-id="L04-F04">
+<h2>Lặp chính sách tổng quát</h2>
+<p>Lặp chính sách tổng quát (GPI) mô tả tương tác giữa đánh giá và cải thiện.</p><img class="figure" src="img/lec-04/dp04-gpi.svg" alt="Hai quá trình tương tác: đánh giá điều chỉnh bảng V theo chính sách; cải thiện điều chỉnh chính sách theo bảng V."/><div class="grid3"><div class="card"><h3>Lặp chính sách</h3><p>Hoàn tất đánh giá rồi cải thiện.</p></div><div class="card"><h3>Lặp giá trị</h3><p>Một lượt cập nhật tối ưu.</p></div><div class="card"><h3>Bất đồng bộ</h3><p>Đan xen theo từng trạng thái.</p></div></div>
+<aside class="notes"><p>GPI là khuôn mô tả sự tương tác của hai quá trình với mức độ hoàn tất khác nhau. Tại điểm ổn định chính xác chung, $V=v_\pi$ và $\pi(s)\in\arg\max_a Q_V(s,a)$. Do đó $V=T_\pi V=T_*V$, suy ra $V=v_*$ trong MDP hữu hạn chiết khấu. Đánh giá thay đổi giá trị cho phù hợp chính sách; cải thiện thay đổi chính sách cho phù hợp giá trị. Lặp chính sách, lặp giá trị và lịch bất đồng bộ đã xét là các cách tổ chức sự tương tác này. Khuôn GPI không tự bảo đảm mọi cách xen kẽ tùy ý hay mọi đánh giá gần đúng đều hội tụ. Các cách tổ chức cập nhật đã xét vẫn cần biểu diễn trạng thái hữu hạn và mô hình đã biết. CartPole có trạng thái liên tục, nên việc tạo biểu diễn hữu hạn còn phải xét ảnh hưởng của gộp trạng thái.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 13, 23, 29; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.6, tr. 86–87.</p></aside>
+</section>
+<section data-slide-id="L04-F05">
+<h2>Rời rạc hóa và mô hình CartPole</h2>
+<div class="grid2"><div><img class="figure" src="img/lec-04/dp04-cartpole-bins.svg" alt="CartPole gồm xe và cột; trạng thái có vị trí xe, vận tốc xe, góc cột, vận tốc góc; các biến được chia lần lượt thành 3, 3, 6, 6 khoảng."/></div><div><p>Trạng thái liên tục:</p><div class="math-large">$(x,\dot x,\theta,\dot\theta)$</div><p>Chia lần lượt $3,3,6,6$ khoảng:</p><div class="math-large">$3\cdot3\cdot6\cdot6=324$</div><p>Hai hành động: đẩy trái hoặc đẩy phải.</p></div></div>
+<div class="box">324 tổ hợp là biểu diễn xấp xỉ. Vẫn cần mô hình chuyển–thưởng và kiểm tra ảnh hưởng của gộp trạng thái.</div>
+<aside class="notes"><p>Ánh xạ rời rạc hóa có dạng $(x,\dot x,\theta,\dot\theta)\mapsto(b_x,b_{\dot x},b_\theta,b_{\dot\theta})$, trong đó mỗi $b$ là chỉ số khoảng của biến tương ứng. Hai trạng thái liên tục trong cùng ô có thể dẫn đến phân phối chuyển khác nhau. Do đó rời rạc hóa chưa tự bảo đảm tính Markov, cũng chưa cung cấp mô hình $p(s',r\mid s,a)$. Số 324 đếm các tổ hợp khoảng, chưa mặc nhiên bao gồm trạng thái kết thúc riêng nếu cách biểu diễn cần nó. Tăng số khoảng làm tăng số ô theo tích các kích thước; giảm số khoảng tăng mức gộp. Chính sách tối ưu của mô hình gộp chưa tự là chính sách tối ưu trong môi trường liên tục.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 35–37; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, chương 4 mở đầu, tr. 73.</p></aside>
+</section>
+<section data-slide-id="L04-F06">
+<h2>Kiểm tra lịch cập nhật và dữ kiện mô hình</h2>
+<div class="grid2"><div class="card"><h3>Lịch cập nhật</h3><p>MDP hai trạng thái, khởi tạo $V=0$, chỉ cập nhật $s_0$ mãi mãi.</p></div><div class="card"><h3>Biểu diễn CartPole</h3><p>Có bảng 324 tổ hợp nhưng chưa có phân phối chuyển–thưởng.</p></div></div>
+<div class="check"><strong>Câu hỏi:</strong><ol><li>Xác định điều kiện hội tụ bị vi phạm và giá trị không được khôi phục ở tình huống thứ nhất.</li><li>Xác định dữ kiện còn thiếu để chạy quy hoạch động ở tình huống thứ hai.</li></ol></div>
+<aside class="notes"><p><strong>Lời giải.</strong> $s_1$ không được cập nhật, nên giữ 0 thay vì 30; điều kiện mọi trạng thái xuất hiện vô hạn lần bị vi phạm. CartPole còn thiếu mô hình $p(s',r\mid s,a)$ và đánh giá tính phù hợp Markov của biểu diễn gộp.</p><p>Tăng số lần tính không khắc phục việc bỏ một trạng thái hoặc thiếu mô hình. Phải kiểm tra điều kiện của thuật toán trước khi diễn giải đầu ra.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 15, 35–37; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.5, tr. 85.</p></aside>
+</section>
+</section>
+<section>
+<section data-slide-id="L04-G01">
+<h2>Kết quả của bài toán lập kế hoạch</h2>
+<p>Mô hình chuyển–thưởng đã biết cho phép đánh giá chính sách và so sánh các lựa chọn theo tổng thưởng dài hạn.</p>
+<div class="grid2"><div class="card"><h3>Lặp chính sách</h3><p>Đánh giá chính sách → cải thiện → đánh giá lại.</p></div><div class="card"><h3>Lặp giá trị</h3><p>Cập nhật tối ưu trên bảng hiện tại → trích chính sách.</p></div></div>
+<div class="math-large">$$\pi_*=(b,b),\qquad v_*=(27,30).$$</div>
+<div class="box">Kết quả được kiểm bằng điều kiện ổn định chính xác hoặc phần dư trên chính bảng trả về.</div>
+<aside class="notes"><p>Điểm chung của hai thuật toán là sử dụng kỳ vọng theo mô hình và giá trị tiếp nối. Bootstrapping là dùng ước lượng giá trị tiếp nối để xây mục tiêu cập nhật; yêu cầu có mô hình là điều kiện riêng để tính đầy đủ kỳ vọng trong các phương pháp quy hoạch động đã xét. Số lượt hữu hạn cần đi kèm phần dư hoặc điều kiện dừng chính xác để đánh giá độ tin cậy.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 18–24, 38; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.8, tr. 88–89.</p></aside>
+</section>
+<section data-slide-id="L04-G02">
+<h2>Lựa chọn phương pháp và điều kiện áp dụng</h2>
+<table><thead><tr><th scope="col">Phương pháp</th><th scope="col">Tổ chức cập nhật</th><th scope="col">Kiểm tra đầu ra</th></tr></thead><tbody><tr><td>Lặp chính sách</td><td>Đánh giá rồi cải thiện</td><td>Đánh giá chính xác; chính sách ổn định</td></tr><tr><td>Lặp giá trị</td><td>Cực đại từ bảng cũ</td><td>Phần dư của bảng cuối</td></tr><tr><td>Bất đồng bộ</td><td>Cập nhật từng trạng thái</td><td>Phần dư toàn cục; lịch bao phủ</td></tr></tbody></table><p>Cả ba cách trong bài đều dùng mô hình hữu hạn đã biết, phần thưởng bị chặn và $0\le\gamma&lt;1$.</p>
+<p>Thời gian tính phụ thuộc mô hình, khởi tạo, lịch cập nhật và ngưỡng sai số.</p>
+<aside class="notes"><p>Một lần lặp chính sách ngoài không tương đương một lượt lặp giá trị. Khi $\gamma$ gần 1, chặn co yếu hơn; đây không phải dự đoán tuyệt đối về thời gian chạy trên mọi bài toán.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 29–34; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.7–4.8, tr. 87–89.</p></aside>
+</section>
+<section data-slide-id="L04-G03">
+<h2>Bài tập lưới có chuyển tiếp ngẫu nhiên</h2>
+<div class="grid2"><div><img class="figure" src="img/lec-04/dp04-stochastic-grid.svg" alt="Từ c4 khi chọn phải: xác suất 0,8 tới c5 nhận 10; 0,1 ở c4 nhận -1; 0,1 tới c3 nhận -1."/><p>Đúng hướng: $0{,}8$; đứng yên: $0{,}1$; ngược hướng: $0{,}1$.</p></div><div><ul><li>Hành động: trái hoặc phải.</li><li>$\gamma=0{,}9$; $V(c_5)=0$.</li><li>Ra ngoài tại $c_1$: ở lại.</li><li>Thưởng $10$ khi thực tế $c_4\to c_5$; các bước khác nhận $-1$.</li></ul><div class="check"><strong>Câu hỏi:</strong> Lặp giá trị đồng bộ từ $V_0=0$: tính $V_1$ và $V_2(c_3)$. Ghi đủ xác suất và phần thưởng.</div></div></div>
+<p class="caption">Dữ kiện: bài tập tuần 4.</p>
+<aside class="notes"><p>Với $V_0=0$, tại $c_4$ chọn phải cho $0{,}8(10)+0{,}1(-1)+0{,}1(-1)=7{,}8$; chọn trái cho $0{,}8(-1)+0{,}1(-1)+0{,}1(10)=0{,}1$. Ở các ô khác, phần thưởng bước đầu đều bằng $-1$. Bởi vậy $V_1=(-1;-1;-1;7{,}8;0)$. Từ $c_3$, chọn phải ở lượt sau cho $-1+0{,}9[0{,}8(7{,}8)+0{,}1(-1)+0{,}1(-1)]=4{,}436$. Chọn trái cho $-1+0{,}9[0{,}8(-1)+0{,}1(-1)+0{,}1(7{,}8)]=-1{,}108$, nên $V_2(c_3)=4{,}436$. Với bảng bất kỳ,
+$$Q_V(c_4,\text{phải})=0{,}8\cdot10+0{,}1[-1+0{,}9V(c_4)]+0{,}1[-1+0{,}9V(c_3)].$$
+Chuyển vào đích nhận thưởng 10 kể cả khi đó là kết quả đi ngược hành động đã chọn. Tại $c_1$, xác suất chuyển ra ngoài được gộp vào xác suất ở lại. Các quy ước này xác định đủ mô hình để áp dụng thuật toán.</p><p class="note-source"><strong>Nguồn:</strong> Bài tập tuần 4, <em>hw04.pdf</em> tr. 1</p></aside>
+</section>
+<section data-slide-id="L04-G04">
+<h2>Kiểm tra nghiệm và chứng nhận tối ưu</h2>
+<p>Cho bảng $V=(27,30)$ trong mô hình hai trạng thái, với $\gamma=0{,}9$.</p>
+<div class="grid2"><div><table><thead><tr><th scope="col">$s$</th><th scope="col">$a$</th><th scope="col">$s'$</th><th scope="col">$r$</th></tr></thead><tbody><tr><td>$s_0$</td><td>$a$</td><td>$s_0$</td><td>1</td></tr><tr><td>$s_0$</td><td>$b$</td><td>$s_1$</td><td>0</td></tr><tr><td>$s_1$</td><td>$a$</td><td>$s_0$</td><td>2</td></tr><tr><td>$s_1$</td><td>$b$</td><td>$s_1$</td><td>3</td></tr></tbody></table></div><div class="check"><strong>Câu hỏi:</strong><ol><li>Tính bốn $Q_V$, chính sách tham lam và $b_*(V)$.</li><li>Nêu căn cứ kết luận tối ưu.</li><li>Nếu chỉ có bộ mô phỏng sinh từng chuyển tiếp, phép tính nào chưa được cung cấp trực tiếp?</li></ol></div></div>
+<aside class="notes"><p><strong>Lời giải.</strong> $Q_V=(25.3,27;26.3,30)$; chính sách $(b,b)$; $T_*V=V$ nên $b_*(V)=0$ và $V=v_*$. Căn cứ là MDP hữu hạn, thưởng bị chặn, $\gamma=0.9<1$ và tính duy nhất điểm bất động. Bộ mô phỏng chưa cung cấp trực tiếp kỳ vọng đầy đủ theo $p$; cần xây mô hình hoặc phương pháp lấy mẫu ngoài phạm vi.</p><p>Phần dư bằng 0 chứng nhận điểm bất động trong mô hình đã cho. Chứng nhận đó phụ thuộc độ đúng của mô hình; không tự chuyển thành bảo đảm cho một mô hình xấp xỉ khác.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17–19, 31–38</p></aside>
+</section>
+<section data-slide-id="L04-G05">
+<h2>Tài liệu đọc và bài tập tiếp nối</h2>
+<p>Richard S. Sutton và Andrew G. Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2.</p>
+<ul><li>§4.1–4.4, tr. 74–84: đánh giá, cải thiện, lặp chính sách và lặp giá trị.</li><li>§4.5–4.8, tr. 85–89: bất đồng bộ, GPI, hiệu quả và giới hạn.</li><li>Bài tập 4.3 và 4.4: giá trị hành động và phá hòa.</li><li>Ví dụ 4.1: lưới $4\times4$ không chiết khấu; cần điều kiện kết thúc riêng.</li></ul>
+<p>Hoàn thiện bài lưới ngẫu nhiên từ dữ kiện bài tập tuần 4.</p>
+<p><a href="material-viewer.html?doc=materials/lec-04/lecture-note.md&amp;deck=lecture-04-giai-mdp-bang-quy-hoach-dong.html">Ghi chú chuyên sâu</a></p>
+<aside class="notes"><p>Các mục §4.1–4.4 xây dựng ba thuật toán chính từ phương trình Bellman; các mục sau thay cách tổ chức cập nhật và phân tích giới hạn của mô hình dạng bảng. Bài tập 4.3 yêu cầu viết phiên bản đánh giá giá trị hành động; Bài tập 4.4 xét lỗi dừng do phá hòa không ổn định. Ví dụ 4.1 sử dụng $\gamma=1$ và chính sách ngẫu nhiên đều trong lưới có kết thúc; bảo đảm đánh giá phụ thuộc điều kiện kết thúc và giá trị hữu hạn dưới chính sách đang xét. Chặn chia cho $1-\gamma$ không áp dụng cho trường hợp đó. Ghi chú chuyên sâu có các ví dụ bổ sung với bộ số riêng; định nghĩa và điều kiện của thuật toán được dùng nhất quán.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.1–4.8, tr. 74–89, Bài tập 4.3 tr. 76, Bài tập 4.4 tr. 82; Bài tập tuần 4, <em>hw04.pdf</em> tr. 1.</p></aside>
+</section>
 </section>
 <div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 04</div>
 </div></div>
 <script src="revealjs/dist/reveal.js"></script>
 <script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
 <script src="plugin/highlight/highlight.js"></script>
 <script src="plugin/math/math.js"></script>
 <script>
-Reveal.initialize({width:1280,height:720,margin:.04,controlsLayout:"edges",slideNumber:true,hashOneBasedIndex:true,hash:true,katex:{local:"vendor/katex"},plugins:[RevealHighlight,RevealNotes,RevealMath.KaTeX]});
+Reveal.initialize({
+  width:1280, height:720, margin:.04, controlsLayout:"edges",
+  slideNumber:true, hashOneBasedIndex:true, hash:true,
+  katex:{local:"vendor/katex"},
+  plugins:[RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX]
+});
 </script>
 </body>
 </html>

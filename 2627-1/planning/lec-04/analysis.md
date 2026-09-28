@@ -1,218 +1,124 @@
-# Phân tích học liệu và thiết kế Bài 04
+# Phân tích học thuật và thiết kế Bài 04
 
-Phân tích ban đầu ngày 23-09-2026; cập nhật để triển khai ngày 24-09-2026. Tiến độ HTML/SVG và kiểm định được ghi trong review-log. Dàn bài đích có 45 slide, 120 phút, bảy phần và bảy slide kiểm tra riêng. Các mục tiêu MT1–MT6 được phát biểu trong [outline.md](outline.md).
+Bài 04 — Giải MDP bằng quy hoạch động. Học phần Học tăng cường, học kỳ 1 năm học 2026–2027. Người học: sinh viên đại học đã học học máy, học sâu và thuật toán; tiên quyết dùng trực tiếp là MDP, xác suất có điều kiện, tổng chiết khấu, vector, chuẩn vô cùng được định nghĩa lại và hệ tuyến tính.
 
-## 1. Bài toán giảng dạy
+Vấn đề trung tâm: từ mô hình chuyển–thưởng đã biết, tính giá trị của một chính sách, cải thiện lựa chọn và tìm chính sách tối ưu có điều kiện kiểm chứng. Phần trình chiếu gồm **45 trang, 7 mạch, 120 phút**; thời gian đã gồm các câu kiểm tra riêng và chữa ngắn. **30 phút còn lại của buổi 150 phút dành cho chữa bài tập** theo nguồn; không tự tạo code demo vì PDF và tài liệu tuần 4 không có chương trình.
 
-Bài 03 đã thiết lập MDP, phần thưởng tích lũy, chính sách và Bellman kỳ vọng. Bài 04 cần biến mô hình đã biết thành một phương pháp tính chính sách, đồng thời phân biệt ba sản phẩm: giá trị của chính sách cố định, bảng giá trị đang được lặp và giá trị tối ưu. Sinh viên phải tự tính được một lượt, giải thích một lần đổi hành động và kiểm tra điều kiện dừng.
+Đây là bản dàn bài mới, không dùng dàn bài cũ làm khung. Chỉ dẫn cụ thể của người dùng cho phép thay thứ tự nguồn để theo Sutton–Barto chương 4: đánh giá → cải thiện → lặp chính sách → lặp giá trị → bất đồng bộ/GPI/hiệu quả. Chủ đề và dữ kiện của PDF nguồn được bảo toàn qua ánh xạ đủ 38 trang. Kế hoạch đã được chấp nhận và triển khai ngày 2026-09-28. Năm vai đã rà độc lập cùng bản cố định; các sửa cục bộ sau rà được cập nhật trong hồ sơ này. Bằng chứng kiểm định và trạng thái rà lại nằm trong review-log.md.
 
-Người học là sinh viên năm 3 có nền xác suất, đại số tuyến tính, thuật toán, học máy và học sâu. Phát biểu và áp dụng định lý điểm bất động trong không gian hữu hạn; không yêu cầu học trước giải tích hàm. Chứng minh tính co, cải thiện và chặn phần dư được trình bày bằng bất đẳng thức, kỳ vọng và tổng chiết khấu.
+## Mục tiêu học tập
 
-Giới hạn: MDP hữu hạn, các tập hành động hữu hạn khác rỗng, phần thưởng bị chặn, mô hình đã biết, $0\le\gamma<1$. Không giảng thuật toán phi mô hình, xấp xỉ hàm, trường hợp không chiết khấu tổng quát hay chứng minh hội tụ của phương pháp trong không gian liên tục. CartPole chỉ là trường hợp kiểm tra giới hạn biểu diễn.
+| Mã | Năng lực quan sát được | Kiểm tra chính |
+|---|---|---|
+| MT1 | Xác định mô hình, chính sách, phần thưởng và tổng chiết khấu trong bài toán lập kế hoạch. | Kiểm tra mở đầu |
+| MT2 | Tính một lượt đánh giá đồng bộ, phân biệt $V_k$ với $v_\pi$, dùng phần dư đánh giá. | Kiểm tra đánh giá chính sách |
+| MT3 | Tính $q_\pi$, chọn hành động cải thiện và giải thích vì sao giá trị không giảm dưới giả thiết. | Kiểm tra cải thiện |
+| MT4 | Thực hiện một lần lặp chính sách và phân biệt bảo đảm đánh giá chính xác với dừng gần đúng. | Kiểm tra lặp chính sách |
+| MT5 | Thực hiện lặp giá trị, trích chính sách và kiểm tra phần dư trên đúng bảng trả về. | Kiểm tra lặp giá trị; kiểm tra tổng hợp |
+| MT6 | So sánh đồng bộ, tại chỗ, bất đồng bộ; nêu điều kiện lịch, chi phí và giới hạn mô hình. | Kiểm tra thực hành; kiểm tra tổng hợp |
 
-Tuyến 120 phút gồm hoạt động tính tay và hỏi–chữa. Theo cấu trúc học phần, còn 30 phút chữa bài ngoài tuyến này; chưa xây thêm học liệu mã vì nguồn không có mã tương ứng.
+## Học liệu và mức truy cập
 
-## 2. Kiểm kê học liệu
-
-| Mã | Tài liệu và thông tin xác minh | Phạm vi đã đọc | Vai trò |
+| Mã | Tài liệu, tác giả/đơn vị, năm | Đường dẫn hoặc URL | Vị trí đã đọc và vai trò |
 |---|---|---|---|
-| NG1 | [lecture04-solving-MDP.pdf](../../../RL-hk2-2025-2026/lecture04-solving-MDP.pdf), Tạ Việt Cường, 19-03-2026; 38 trang, số PDF trùng số in | Toàn bộ 1–38; xem hình trực tiếp tr.17,25,36 | Nguồn nội dung chính |
-| NG2 | [hw3.pdf](../../../RL-hk2-2025-2026/resources/hw3.pdf), “Bài tập tuần 3 – Giải bài toán MDP”, Tạ Việt Cường, 08-05-2026 | Toàn bộ văn bản; chọn B1–B7, B9 ở tr.1–2 | Bài tập phù hợp; B8 mở rộng, phần lớn B10 vượt phạm vi |
-| NG3 | [hw04.pdf](../../../RL-hk2-2025-2026/resources/hw04.pdf), “Bài tập tuần 4 – Đánh giá chính sách”, 26-03-2026 | Toàn bộ một trang | Đối chiếu ví dụ; có nội dung MC/TD và lưới có nhiễu, không đồng nhất với NG1 |
-| NG4 | [Bài giảng hiện có](../../lecture-04-giai-mdp-bang-quy-hoach-dong.html) và [ghi chú học liệu](../../materials/lec-04/lecture-note.md) | Đọc cấu trúc, ký hiệu và các cụm ví dụ/bảo đảm; kiểm kế hoạch cũ | Đối chiếu triển khai, không thay quyền ưu tiên của NG1 |
-| ĐC1 | David Silver, *Lecture 3: Planning by Dynamic Programming*, khóa UCL trên [trang giảng dạy](https://davidstarsilver.wordpress.com/teaching/); mục khóa học ghi 2015 | [PDF 42 trang](https://davidstarsilver.wordpress.com/wp-content/uploads/2025/04/lecture-3-planning-by-dynamic-programming-.pdf): tr.2–12,16–18,20–29,34–42; xem trực tiếp tr.10,22 | Đối chiếu trình tự, hình lặp, mức chứng minh; năm trong URL là năm tải lên, không suy thành niên khóa |
-| ĐC2 | Emma Brunskill, Stanford CS234, Winter 2022, *Lecture 2: Making Sequences of Good Decisions Given a Model of the World* | [PDF 66 trang](https://web.stanford.edu/class/archive/cs/cs234/cs234.1224/slides/lecture2_ns.pdf): tr.22–24,30–40,43,47–56,65–66; xem trực tiếp tr.39 | Đối chiếu cầu nối đánh giá–cải thiện, câu hỏi kiểm tra và hình thức hóa |
+| NG1 | Tạ Việt Cường, “Giải bài toán MDPs với Quy Hoạch động”, 19-03-2026; PDF Beamer | `RL-hk2-2025-2026/lecture04-solving-MDP.pdf` | Đủ 38 trang; số in trùng số PDF. Nguồn chủ đề, ví dụ, bảng, hình và bài toán CartPole. |
+| NG2 | Richard S. Sutton, Andrew G. Barto, *Reinforcement Learning: An Introduction*, ấn bản 2, bản quyền 2018/2020 | [PDF của tác giả](http://incompleteideas.net/book/RLbook2020.pdf) | Ch. 4, tr. in 73–89/PDF 95–111; Ch. 3, §3.1 tr. 47–49, §3.3–3.5 tr. 54–59, §3.6 tr. 62–65. Sườn mới theo yêu cầu người dùng, hệ ký hiệu và kiểm chứng. |
+| NG3 | Tạ Việt Cường, “Bài tập tuần 4 – Đánh giá chính sách”, 26-03-2026 | `RL-hk2-2025-2026/resources/hw04.pdf` | Toàn bộ 1 trang: hai trạng thái, lưới nhiễu; câu Monte Carlo/sai phân thời gian ngoài phạm vi. |
+| NG4 | Phiếu bài tập `hw3.pdf`; không suy đoán thêm tác giả/năm từ tên tệp | `RL-hk2-2025-2026/resources/hw3.pdf` | Đủ 4 trang được tác tử nguồn kiểm kê; các bài 1–9 ở tr. 1–2 hỗ trợ tiên quyết và chữa bài; phần sau vượt phạm vi. |
+| NG5 | Stanford CS234, Emma Brunskill, Winter 2026, Lecture 2, *Making Sequences of Good Decisions Given a Model of the World*; bộ 58 trang | [PDF bài giảng](https://web.stanford.edu/class/cs234/slides/lecture2pre.pdf), [trang môn](https://web.stanford.edu/class/cs234/) | Tr. 1–42, 49–51; xem hình tr. 13. Đối chiếu bố cục học thuật, ví dụ tính và câu kiểm tra; không thay nguồn toán chính. |
+| NG6 | UCL, David Silver, Advanced Topics 2015, Lecture 3, *Planning by Dynamic Programming*; bộ 42 trang | [PDF bài giảng](https://davidstarsilver.wordpress.com/wp-content/uploads/2025/04/lecture-3-planning-by-dynamic-programming-.pdf), [trang giảng dạy](https://davidstarsilver.wordpress.com/teaching/) | Tr. 1–31, 35–42; xem hình tr. 10. Đối chiếu trực giác, cập nhật và phụ lục hội tụ. Năm đường dẫn 2025 không phải niên khóa. |
+| NG7 | Bài 03 và cấu trúc kỹ thuật hiện có trong kho | `2627-1/lecture-template.html`, `2627-1/lecture-slide.css`, `2627-1/index.html`; bài giảng và ghi chú Bài 03 | Mẫu/CSS/index đã đọc để giữ cấu trúc, không lấy nội dung bài mẫu. Tác tử nguồn kiểm tra ký hiệu Bài 03 và đầu ra: so sánh $q_\pi$ chưa tự chứng minh tối ưu. |
 
-Đã đọc mẫu kỹ thuật, CSS dùng chung và chỉ mục trước khi lập kế hoạch. Giai đoạn triển khai ngày 24-09-2026 đã dựng lại hình và kiểm tra giao diện; kết quả nằm trong [review-log.md](review-log.md).
+NG2 được tải đủ 548 trang, 73.129.769 byte; SHA-256 `2dd0d71d9ee883fbeb99f9b888c65ac3255fae2512203d11b18e838befffe9a6`. Bản HTTPS gặp lỗi chứng chỉ/502; bản HTTP hoàn chỉnh được đọc bằng công cụ PDF. Văn bản trích mất một số dấu âm và ký tự $\gamma$, nên các công thức được đối chiếu nội dung gốc và báo cáo số. Công cụ chụp PDF Stanford gặp lỗi bộ nhớ đệm; tác tử nghiên cứu đã tải PDF và xem ảnh cục bộ. Không dùng tài liệu chưa đọc làm bằng chứng.
 
-URL cũ của ĐC1 tại `davidsilver.uk/wp-content/uploads/2020/03/DP.pdf` trả 404. Đã theo liên kết trên trang giảng viên tới PDF hiện dùng. Ảnh chụp PDF của công cụ web có lỗi ở một trang Stanford; đã tải đúng PDF công khai và xem trang được kết xuất cục bộ. Đây là tài liệu đối chiếu thực sự đã đọc, không chỉ kết quả tìm kiếm. Không dùng bản ghi bài học không chính thức thay cho slide của trường.
+Các báo cáo nguồn độc lập được điều phối viên chấp nhận: `/tmp/rl04-rebuild/source-report.md`, `research.md`, `numeric-report.md`. Tác tử soạn trực tiếp đọc bản trích đủ 38 trang và §4.1–4.8 của sách; chi tiết kiểm kê hw3, Bài 03 và hai bộ đại học dựa trên báo cáo đọc độc lập nêu rõ ở trên.
 
-## 3. Đối chiếu hai bộ slide đại học
+## Đối chiếu hai bộ trang chiếu đại học
 
-### UCL / David Silver
+| Nguồn | Quan sát trực tiếp theo trang | Nhận định và quyết định cho bài mới |
+|---|---|---|
+| Stanford/NG5 | Tr. 5–13 nối mô hình với đánh giá; tr. 13 có tính một bước; tr. 18–31 xây dựng cải thiện/lặp chính sách; tr. 32–42 có lặp giá trị và hội tụ. | Giữ nhịp cơ chế–bài tính–kiểm tra, nhưng đặt bước tính tay trước công thức tổng quát theo quy ước địa phương. Không sao chép lỗi tr. 38 thiếu hệ số co nhỏ hơn 1 và tr. 34 khởi chỉ số không nhất quán của bản pre. |
+| UCL/Silver/NG6 | Tr. 5 phân biệt dự đoán/điều khiển; tr. 7–11 theo dõi lưới; tr. 16–18 nối cải thiện, đánh giá cắt ngắn và lặp giá trị; tr. 27–29 tách bất đồng bộ/tại chỗ; tr. 37–42 bổ sung chứng minh. | Giữ một ví dụ qua nhiều cơ chế và sơ đồ các nhánh cập nhật. Dùng hai trạng thái từ nguồn địa phương thay lưới của Silver. Giữ phác thảo co đủ dùng, không biến phụ lục chứng minh thành trục chính. |
 
-**Quan sát:** tr.2 chia đánh giá, lặp chính sách, lặp giá trị, mở rộng và ánh xạ co; tr.9–11 đặt bảng giá trị cạnh mũi tên chính sách; tr.22 cho thấy thông tin lan qua lưới; phần co đứng cuối. **Quyết định thiết kế:** giữ ví dụ số của NG1, dùng cách hiện bảng theo từng lượt và đặt chứng minh sau cơ chế. Không nhập nguyên lưới không chiết khấu của ĐC1 vào giả thiết $\gamma<1$ của bài. [PDF, tr.2,9–11,22,34–42](https://davidstarsilver.wordpress.com/wp-content/uploads/2025/04/lecture-3-planning-by-dynamic-programming-.pdf).
+Quan sát nguồn và lựa chọn sư phạm được tách riêng. Hai bộ từ hai trường đã đủ căn cứ đối chiếu; không bổ sung bộ thứ ba chỉ để tăng số lượng. Không chép tài sản hay CSS. Bố cục theo mẫu/CSS cục bộ: một luận điểm mỗi trang, hình hoặc công thức lớn, ví dụ số dùng lại và kiểm tra sau cụm.
 
-### Stanford / Emma Brunskill
+## Khái niệm và quan hệ phụ thuộc
 
-**Quan sát:** tr.36–39 tách tính giá trị hành động, tham lam một bước và giá trị của chính sách mới; tr.43 có kiểm tra lặp chính sách. Tr.53 viết điều kiện với hệ số 1, chưa đủ cho tính co nghiêm ngặt. **Quyết định thiết kế:** tách hai lần đánh giá trong ví dụ nguồn; đặt câu hỏi sau mỗi phần; dùng hệ số $\gamma<1$ và chặn rõ ràng. Không nhập phần chân trời hữu hạn thành một tuyến mới. [PDF, tr.36–43,53–56](https://web.stanford.edu/class/archive/cs/cs234/cs234.1224/slides/lecture2_ns.pdf).
-
-Các quyết định trên là nhận định sư phạm cho bài hiện tại. Chỉ dùng hai bộ đối chiếu vì đã bao phủ đúng các cơ chế và mức chứng minh cần thiết; không thêm nguồn chỉ để đủ số.
-
-## 4. Bản đồ khái niệm và tiên quyết
-
-| Nhóm | Khái niệm | Kiến thức đầu vào | Năng lực và lỗi cần phân biệt | Đầu ra dùng tiếp |
+| Mã | Vai trò | Tiên quyết | Năng lực và phân biệt cần kiểm | Đầu ra dùng tiếp |
 |---|---|---|---|---|
-| Tiên quyết | MDP, kỳ vọng, $G_t,v^\pi,q^\pi$ | Bài 03 | Nhận đúng trạng thái kế tiếp và chiết khấu; không đồng nhất thưởng với tổng thưởng | Phép nhìn trước |
-| Trọng tâm 1 | Bellman tối ưu | Một bước kỳ vọng | Phân biệt $Q_v,q^\pi,q_*$; thứ tự tổng theo môi trường rồi max theo hành động | Hai toán tử và chính sách tham lam |
-| Trọng tâm 2 | Đánh giá chính sách | Bellman kỳ vọng, giải hệ | Tính $v^\pi$ chính xác hoặc xấp xỉ khi giữ $\pi$ cố định | Bảng cho cải thiện |
-| Trọng tâm 3 | Cải thiện và lặp chính sách | Giá trị chính sách, argmax | Tính bước đổi, đánh giá lại, giữ hòa; phân biệt đánh giá chính xác và bị cắt | Chính sách ổn định, nhu cầu giảm chi phí |
-| Trọng tâm 4 | Lặp giá trị | $T_*$, cập nhật đồng bộ | Tính một lượt, trích chính sách theo cùng bảng; không gọi mọi bảng trung gian là $v^\pi$ | Dãy bảng và phần dư |
-| Trọng tâm 5 | Hội tụ và kiểm soát sai số | Không gian bảng hữu hạn, kỳ vọng, bất đẳng thức | Giải thích co, điểm bất động, tồn tại tối ưu và chặn sai số từ phần dư | Căn cứ dừng và giới hạn |
-| Hỗ trợ | Đồng bộ/tại chỗ, chi phí, rời rạc hóa | Các thuật toán đã có | Không suy tại chỗ luôn nhanh; không suy chia ô là đã có MDP chính xác | Chọn cách sử dụng |
-| Đọc thêm | Chặn mất mát chính sách, chứng minh chi tiết Banach, MDP liên tục | Các kết quả chính | Giữ mức năm 3 của tuyến chính | Tự học, không kiểm tra bắt buộc |
+| KN0: mô hình, tổng thưởng, chính sách | Nhắc lại | Xác suất, quỹ đạo Markov | MT1: trạng thái/quan sát; mô hình/chính sách; thưởng/tổng thưởng | Đánh giá chính sách |
+| KN1: đánh giá chính sách | Trọng tâm, thuật toán và khái niệm | KN0; bảng ước lượng, kỳ vọng | MT2: tính lượt; phân biệt $V_k,v_\pi$; bảng cũ/mới | Căn cứ chọn hành động |
+| KN2: cải thiện chính sách | Trọng tâm, khái niệm và quy tắc | KN1; giá trị tiếp nối | MT3: tính $q_\pi$ và hành động mới; một thay đổi đầu tiên/đổi chính sách vĩnh viễn | Chu trình điều khiển |
+| KN3: lặp chính sách | Trọng tâm, thuật toán | KN1–KN2; đánh giá chính xác | MT4: lần theo chu trình; giữ hòa; ổn định gần đúng/điểm tối ưu | Giới hạn chi phí đánh giá đầy đủ |
+| KN4: lặp giá trị | Trọng tâm, thuật toán | KN2–KN3; cực đại và giá trị tiếp nối | MT5: tính cập nhật tối ưu, chính sách trích, phần dư đúng bảng | Tổ chức lịch tính toán |
+| KN5: bất đồng bộ | Trọng tâm ở mức một trạng thái, thuật toán | KN1/KN4; bảng hiện có | MT6: tại chỗ/bất đồng bộ; điều kiện mọi trạng thái được cập nhật | Phân bổ chi phí và giới hạn |
+| KN6: GPI | Hỗ trợ tổng hợp | KN1–KN5 | MT6: nhận diện hai quá trình; không coi mọi xen kẽ đều có bảo đảm | So sánh phương pháp |
+| KN7: rời rạc hóa CartPole | Ứng dụng giới hạn | Mô hình Markov, chi phí bảng | MT6: 324 ô biểu diễn không tự cung cấp mô hình | Kiểm tra điều kiện sử dụng |
+| KN8: lưới ngẫu nhiên | Luyện tập tổng hợp | KN4; kỳ vọng và terminal | MT2/MT5: trọng số xác suất và thưởng của chuyển thực tế | Bài tập có lời giải kiểm chứng |
 
-Mạch phụ thuộc: MDP/Bellman kỳ vọng → nhìn trước → Bellman tối ưu và toán tử → đánh giá → cải thiện/lặp chính sách → lặp giá trị → tính co/điểm bất động/sai số → quyết định phương pháp. Chứng minh tính co được hoãn, nhưng điều kiện và kết luận cần dùng đã phát biểu rõ. Định lý cải thiện trước đó dùng khai triển và đuôi chiết khấu, không viện dẫn một chứng minh chưa có.
+Đồ thị phụ thuộc là KN0 → KN1 → KN2 → KN3 → KN4 → KN5; KN6 tổng hợp KN1–KN5, KN7 kiểm giới hạn mô hình, KN8 dùng lại KN4. Tính co theo chính sách được đặt trong đánh giá để hỗ trợ chứng minh cải thiện; tính co tối ưu xuất hiện sau ví dụ lặp giá trị. Bellman tối ưu không mở đầu bài vì khi đó chưa có nhu cầu chọn hành động từ một bảng giá trị. Định lý tối ưu ở lặp chính sách được phát biểu với giả thiết, sau đó tính duy nhất được chứng minh trong lặp giá trị; không lấy suy luận vòng làm chứng minh.
 
-## 5. Lựa chọn mạch trình bày và ví dụ
+## Phiếu lựa chọn cho từng khái niệm trọng tâm
 
-### Bellman tối ưu
+### KN1 — Đánh giá chính sách
 
-Nhu cầu là chọn hành động dựa trên cả phần tiếp diễn. Cây một bước tạo trực giác; bảng $v=(4,7)$ cho phép tính cụ thể; sau đó mới định nghĩa $v_*,q_*$ và viết Bellman. Ứng dụng là tính điểm hành động và lấy cực đại; câu kiểm tra yêu cầu phân biệt một cập nhật với nghiệm bất động. Giữ thứ tự chủ đề NG1 nhưng đưa mô hình tr.17 lên mở đầu để mọi ký hiệu có đối tượng.
+Vấn đề là tổng thưởng vô hạn của chính sách $(a,a)$ chưa được tính. Trực giác dùng thưởng một bước cộng giá trị tiếp nối. Ví dụ tính hai lượt $(0,0)\to(1,2)\to(1.9,2.9)$ trước định nghĩa $v_\pi$, $T_\pi$ và quy trình. Ứng dụng giải hệ được $(10,11)$; kiểm tra lượt tiếp theo và phần dư. Sơ đồ có một trạng thái gốc, nhánh theo chính sách và mô hình; bảng cũ/mới tách rõ. Phương án mở bằng hệ ma trận bị loại vì che cơ chế cập nhật; hệ tuyến tính được giữ như đối chiếu. Lưới $4\times4$ của sách chuyển đọc thêm vì $\gamma=1$ cần giả thiết riêng. Hình thức hóa HT1–HT5. Kết quả giá trị chính xác trở thành dữ kiện của nhìn trước một bước.
 
-Phương án khác là bắt đầu ngay bằng $v_*=\max_\pi v^\pi$ như nguồn. Không chọn vì sinh viên chưa có một quyết định cụ thể và dễ nhầm tối ưu phần tiếp diễn với tham lam theo bảng bất kỳ. Phương án học đánh giá trước toàn bộ Bellman tối ưu như ĐC1 hợp lý cho bài khác, nhưng đổi nhiều hơn mạch NG1; ở đây chỉ nhắc Bellman kỳ vọng và giới thiệu nhu cầu tối ưu trước.
+### KN2 — Cải thiện chính sách
 
-### Đánh giá chính sách
+Vấn đề là chọn hành động tốt hơn khi đã có $v_{\pi_0}=(10,11)$. So sánh tại $s_1$ cho 11 và 12.9 trước định nghĩa $q_\pi$. Quy tắc tham lam và định lý được phác thảo bằng đơn điệu và hội tụ $T_{\pi'}$. Ứng dụng tạo $(a,b)$ rồi đánh giá được $(10,30)$; kiểm tra tại $s_0$ cho 10 và 27. Hình hai nhánh đều ghi tiếp tục theo chính sách cũ. Không dùng riêng thưởng tức thời để giải thích tham lam; không gọi 12.9 là giá trị 30 của chính sách mới. Hình thức hóa HT6–HT7. Bước đánh giá còn thiếu của nguồn được khôi phục để tạo nhu cầu lặp.
 
-Hai phương trình của $\pi_0=(a,a)$ cho chuẩn chính xác; các bảng từ 0 cho trực giác xấp xỉ; rồi trình bày quy trình đánh giá và lịch cập nhật. Mỗi ví dụ vẫn dùng bốn cạnh đã thấy từ mở đầu. Câu kiểm tra tính lượt thứ ba và giải thích vì sao không có max. Không dùng một MDP mới cho phần này.
+### KN3 — Lặp chính sách
 
-### Cải thiện và lặp chính sách
+Vấn đề là một lần cải thiện chưa tối ưu. Trực giác xen kẽ hai đối tượng cố định; ví dụ đủ chuỗi $(a,a)\to(a,b)\to(b,b)$ trước giả mã. Quy trình dùng đánh giá chính xác, giữ hành động cũ khi hòa và trả cặp chính sách–giá trị tương ứng. Ứng dụng kiểm nghiệm $(27,30)$ thỏa lựa chọn tham lam; kiểm tra phản ví dụ bảng $V=0$ làm $(a,b)$ ổn định nhưng chưa tối ưu. Sơ đồ có nhãn hai đầu ra, không chỉ vòng lặp trang trí. Phương án dùng đánh giá theo ngưỡng nhưng tuyên bố dừng tối ưu chính xác bị loại; xấp xỉ được nêu như giới hạn riêng. Hình thức hóa HT8–HT10. Chi phí đánh giá đầy đủ dẫn tới lặp giá trị.
 
-Bắt đầu tại $s_1$: chọn $b$ một lần rồi theo $\pi_0$ có giá trị $13{,}5$, lớn hơn 7. Tính toàn bảng, thu $\pi_1$, đánh giá lại rồi mới thu $\pi_2$. Quy tắc, định lý và thuật toán đứng sau hai vòng tính tay. Câu kiểm tra dùng cùng dữ kiện và hỏi thêm vai trò giữ hòa. Việc tách bước đánh giá lại sửa khoảng nhảy trên NG1 tr.19.
+### KN4 — Lặp giá trị
 
-### Lặp giá trị
+Vấn đề là giảm mức hoàn tất đánh giá trước khi cải thiện. Trực giác chọn nhánh lớn nhất, ví dụ $V_1=(1,3)$ và $V_2=(2.7,5.7)$ trước $Q_V,T_*$. Quy trình đồng bộ trả bảng đã kiểm phần dư; chứng minh co dùng bất đẳng thức cực đại và tổng xác suất. Ứng dụng lưới năm ô giữ bảng nguồn, bổ sung biên trái và kiểm $V_5=V_4$; kiểm tra hai ô của lượt kế. Lưới bổ sung biểu diễn đường lan truyền, còn hai trạng thái giữ liên tục khi so sánh thuật toán. Hình thức hóa HT11–HT14. Không lấy chính sách sớm ổn định làm chứng minh giá trị đã hội tụ. Đầu ra cần được tính hiệu quả khi mô hình lớn.
 
-Nhu cầu là tránh đánh giá đầy đủ một chính sách ở mỗi vòng. Lưới năm ô trực quan hơn hai trạng thái cho cơ chế lan truyền; hiện một lượt và bảng bốn lượt trước công thức. Quy trình trả cùng bảng đã đo phần dư, rồi thực hành trích chính sách. Câu kiểm tra tính ô xa đích và bác bỏ kết luận hội tụ chỉ từ một ô.
+### KN5 — Quy hoạch động bất đồng bộ
 
-### Hội tụ và sai số
+Vấn đề là quét toàn bảng có thể tốn nhiều tính toán. Ví dụ tại chỗ cho $(1,2.9)$ thay $(1,2)$, rồi lưới quét ngược cho phép thấy giá trị mới lan truyền. Quy trình chọn từng trạng thái dùng bảng mới nhất, kèm giả thiết mọi trạng thái được cập nhật vô hạn lần trong xét hội tụ. Ứng dụng trên lưới kiểm phần dư toàn cục bằng 0 sau quét ngược; kiểm tra lịch bỏ $s_1$ và điều kiện mô hình. Không đồng nhất với xử lý song song, không bàn trường hợp giá trị truyền trễ. Hình thức hóa HT15–HT16. GPI ở HT17 dùng chu trình rút gọn vì tổng hợp hai thao tác đã học, không phải thuật toán trọng tâm mới.
 
-Hai bảng trong chính MDP hai trạng thái tạo ví dụ về khoảng cách co; tiếp theo là chuẩn, định lý co, điểm bất động và chính sách đạt cận. Chặn hình học làm lộ thiếu hụt thực hành: chưa biết $v_*$. Phần dư giải quyết thiếu hụt đó. CartPole kiểm tra lại miền áp dụng; câu hỏi tính chặn và xét giới hạn $\gamma=1$. Không mở phần bằng thuật ngữ Banach.
+## Danh mục hình thức hóa và mức chứng minh
 
-### So sánh ví dụ trực quan
+Miền chung cho các bảo đảm: $\mathcal S,\mathcal A(s)$ hữu hạn, phần thưởng bị chặn, mô hình đã biết, $0\le\gamma<1$, bảng khởi tạo hữu hạn. Trạng thái kết thúc nếu có luôn có giá trị 0. “Chính xác” là giá trị toán học, khác với kết quả số theo ngưỡng.
 
-| Phương án | Giá trị sư phạm | Quyết định |
-|---|---|---|
-| MDP hai trạng thái NG1 tr.17 | Chỉ bốn cạnh; giải hệ, tính bảng hành động và hai vòng cải thiện bằng tay | Ví dụ xuyên suốt phần 1–4 và kiểm chứng cuối |
-| Lưới năm ô NG1 tr.25 | Nhìn thấy phần thưởng lan từ đích; giữ nguyên dữ kiện nguồn và kiểm từng ô | Ví dụ chính phần 5 |
-| MDP ba trạng thái NG2 B9 | Có chuyển ngẫu nhiên, kiểm tổng kỳ vọng và max | Bài tập sau tuyến chính; đủ dữ kiện trong tài liệu nguồn |
-| Lưới nhiễu NG3 B10 | Làm rõ kỳ vọng khi hành động không tất định | Đọc thêm có chỉ dẫn; không trộn bảng số với lưới NG1 |
-| Lưới lớn/cho thuê xe từ nguồn đối chiếu | Minh họa phong phú nhưng tăng dữ kiện và tiên quyết | Không đưa vào tuyến 120 phút |
-| CartPole NG1 tr.35–37 | Phân biệt biểu diễn hữu hạn, mô hình và tính Markov | Giữ ở cuối phần 6; không dùng như bằng chứng thực nghiệm |
+| Mã và loại | Nội dung chính xác, ý nghĩa | Mức trình bày và căn cứ | Nơi dùng |
+|---|---|---|---|
+| HT1, định nghĩa/phương trình | $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$ và Bellman kỳ vọng | Phát biểu, giải thích từng trọng số; NG2 (4.3)–(4.4), tr. 74/PDF 96 | Đánh giá và hệ ví dụ |
+| HT2, định nghĩa toán tử | $T_\pi$ là tổng theo $\pi,p$ của $r+\gamma V(s')$ | Ánh xạ trực tiếp từ hai lượt tính; NG1 tr. 10,14; NG2 (4.5), tr. 74 | Quy tắc đồng bộ và chứng minh |
+| HT3, thuật toán/định nghĩa | Đồng bộ hai bảng, phần dư $b_\pi(V)=\|T_\pi V-V\|_\infty$ | Quy trình đầy đủ trong outline; phần dư trả đúng bảng là bổ sung suy luận | Kiểm tra độ chính xác đánh giá |
+| HT4, định lý/hệ quả | $\|T_\pi U-T_\pi V\|_\infty\le\gamma\|U-V\|_\infty$; sai số không quá $b_\pi(V)/(1-\gamma)$ | Phác thảo trọng số không âm và tam giác; phát triển từ NG1 tr. 31–32, NG2 tr. 74–75 cho hội tụ | Cải thiện chính sách, tiêu chuẩn dừng |
+| HT5, biểu diễn tuyến tính | $(I-\gamma P_\pi)v_\pi=r_\pi$, kích thước $n\times n$ và $n$ | Đối chiếu, không chứng minh nghịch đảo trong tuyến chính; NG1 tr. 6; NG2 tr. 74 | Nghiệm $(10,11)$ và đánh giá chính xác |
+| HT6, định nghĩa | $q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)[r+\gamma v_\pi(s')]$; $v_\pi=\sum_a\pi q_\pi$ | Định nghĩa + áp dụng; NG2 (4.6), tr. 78/PDF 100 | Chọn hành động |
+| HT7, định lý | Nếu $q_\pi(s,\pi'(s))\ge v_\pi(s)$ mọi $s$, thì $v_{\pi'}\ge v_\pi$ | Phác thảo lặp toán tử đơn điệu; NG1 tr. 21, NG2 (4.7)–(4.9), tr. 78–79 | Cải thiện và dừng PI |
+| HT8, thuật toán | Đánh giá chính xác → tham lam giữ hòa → kiểm ổn định | Đầu vào/ra, ngân sách, terminal, giá trị cố định trong outline; NG1 tr. 20; NG2 tr. 80,82 | Điều khiển trên ví dụ hai trạng thái |
+| HT9, định nghĩa/định lý | $v_*=\max_\pi v_\pi$, $q_*=\max_\pi q_\pi$; chính sách tham lam theo giá trị của nó thỏa Bellman tối ưu | Phát biểu tồn tại và lập luận điểm bất động; NG1 tr. 7–9; NG2 §3.6, tr. 62–65; tr. 79–80 | Chứng nhận chính sách ổn định |
+| HT10, định lý | PI chính xác với giữ hòa dừng hữu hạn; số chính sách $\prod_s\lvert\mathcal A(s)\rvert$ | Phác thảo cải thiện nghiêm ở ít nhất một trạng thái + hữu hạn; NG1 tr. 33, NG2 tr. 80, Ex. 4.4 tr. 82 | Giới hạn đánh giá gần đúng |
+| HT11, định nghĩa | $Q_V=\sum p[r+\gamma V]$, $(T_*V)(s)=\max_aQ_V(s,a)$ | Giải thích max sau kỳ vọng; NG1 tr. 8,10,23; NG2 (4.10), tr. 83 | Lặp giá trị và trích chính sách |
+| HT12, thuật toán | Đồng bộ $V\leftarrow T_*V$, trích $\pi_V$ theo đúng bảng trả và đo $b_*(V)$ | Quy trình đầy đủ trong outline; điều chỉnh ngưỡng có căn cứ; NG1 tr. 24,34; NG2 tr. 83 | Nghiệm gần đúng có phần dư |
+| HT13, định lý | $T_*$ co hệ số $\gamma$, $\|V_k-v_*\|_\infty\le\gamma^k\|V_0-v_*\|_\infty$ | Phác thảo bất đẳng thức max và chuẩn; NG1 tr. 31–32 | Hội tụ và tính duy nhất |
+| HT14, hệ quả tự suy | $\|V-v_*\|_\infty\le b_*(V)/(1-\gamma)$ | Ba dòng tam giác + co; không gán nguyên công thức cho sách Ch. 4 | Ngưỡng sai số $0.1\Rightarrow b\le0.01$ khi $\gamma=0.9$ |
+| HT15, đếm chi phí | Một lượt tối ưu $O(n^2m)$ đặc, $O(nmd)$ thưa; mô hình đặc $O(n^2m)$, bảng $O(n)$ | Đếm số nhánh khi thưởng đã gộp; NG2 §4.7 cho bối cảnh, không gán số phép toán tự đếm cho sách | Lịch cập nhật và CartPole |
+| HT16, thuật toán/định lý | Một trạng thái dùng bảng hiện có; mọi trạng thái cập nhật vô hạn lần thì hội tụ dưới giả thiết chung | Phát biểu và áp dụng, không chứng minh bất đồng bộ đầy đủ; NG2 §4.5 tr. 85–86 | Kiểm tra lịch |
+| HT17, khái niệm/hệ quả | GPI phối hợp đánh giá và cải thiện; điểm chung chính xác $V=v_\pi$, $\pi$ tham lam theo $V$ là tối ưu | Tổng hợp từ cơ chế đã học; NG2 §4.6 tr. 86–87 | So sánh thuật toán; không bảo đảm mọi xấp xỉ |
 
-## 6. Bộ số sư phạm và kết quả đã kiểm — cập nhật 24-09-2026
+## Quyết định về ví dụ và hình
 
-Người dùng yêu cầu lựa chọn số để tránh lẫn các đại lượng khi giảng. Giữ cấu trúc hai ví dụ của NG1 nhưng thay tham số; số dưới đây là ví dụ thích nghi, không phải số trích nguyên văn từ PDF.
+Ví dụ hai trạng thái giữ nguyên thưởng $(1,0,2,3)$ và $\gamma=0.9$ của NG1 tr. 17–19. Nó cho đủ hai lần cải thiện và đối chiếu cùng mô hình giữa đánh giá, PI, VI. Lưới năm ô bổ sung trực giác lan truyền và trạng thái kết thúc; không thay ví dụ trung tâm. Lưới ngẫu nhiên lấy dữ kiện NG3 và bổ sung công khai biên/thưởng/yêu cầu. Lưới $4\times4$ không chiết khấu của sách, bài thuê xe và con bạc không vào tuyến chính vì thêm dữ kiện, giả thiết hoặc yêu cầu mã vượt thời lượng và nguồn được chọn.
 
-Mô hình hai trạng thái dùng $\gamma=0{,}5$: tại $s_0$, $a$ cho thưởng 2 và về $s_0$, $b$ cho thưởng −1 và tới $s_1$; tại $s_1$, $a$ cho thưởng 5 và về $s_0$, $b$ cho thưởng 10 và ở $s_1$. Bốn phần thưởng khác nhau, cũng khác các giá trị chính sách ban đầu 4,7 và giá trị tối ưu 9,20. Phép tính mẫu $-1+0{,}5\cdot7=2{,}5$ có bốn số khác nhau ứng với thưởng, chiết khấu, phần tiếp diễn và kết quả.
+Tất cả hình dự kiến là SVG có mô tả thay thế; bảng dùng HTML, công thức dùng KaTeX, giả mã dùng văn bản HTML. Không có hình thực nghiệm, ảnh chụp hoặc logo cần ngoại lệ raster. Tên mới dùng tiền tố `dp04-` để không ghi đè năm SVG đang phục vụ ghi chú chuyên sâu với bộ số khác. Đặc tả từng hình nằm trong outline và storyboard.
 
-| Chính sách | Giá trị | $q^\pi(s_0,a),q^\pi(s_0,b)$ | $q^\pi(s_1,a),q^\pi(s_1,b)$ | Cải thiện |
-|---|---|---|---|---|
-| $(a,a)$ | $(4,7)$ | $(4,2{,}5)$ | $(7,13{,}5)$ | $(a,b)$ |
-| $(a,b)$ | $(4,20)$ | $(4,9)$ | $(7,20)$ | $(b,b)$ |
-| $(b,b)$ | $(9,20)$ | $(6{,}5,9)$ | $(9{,}5,20)$ | Không đổi |
+## Phạm vi, sai khác và giới hạn bàn giao kế hoạch
 
-Bảng giá trị hành động phải dùng phần tiếp diễn của đúng chính sách: $q_*(s_0,a)=2+0{,}5\cdot9=6{,}5$, còn $q^{\pi_0}(s_0,a)=2+0{,}5\cdot4=4$. Chọn $a$ một lần rồi theo chính sách tối ưu khác với luôn chọn $a$.
+Thứ tự mới được người dùng yêu cầu; không chỉ sắp xếp cục bộ nguồn. Bốn mục lục lặp bỏ trang riêng; các công thức tối ưu và hội tụ chuyển về nơi có nhu cầu. Ma trận và Bellman $q$ giữ trong ghi chú; các điều kiện bị thiếu được bổ sung có nguồn. Bảng ánh xạ từng trang nằm trong outline; lý do từng trang và chu trình học tập nằm trong storyboard.
 
-Đánh giá đồng bộ $\pi_0$ từ 0: $(0,0)\to(2,5)\to(3,6)\to(3{,}5,6{,}5)$. Cập nhật tại chỗ theo thứ tự $s_0,s_1$ cho lượt đầu $(2,6)$. Ví dụ co dùng $u=(4,7),v=(8,9)$: khoảng cách 4, sau toán tử thành $T_*u=(4,13{,}5),T_*v=(6,14{,}5)$, khoảng cách 2.
+Không có phần thực hành mã riêng. 30 phút chữa bài dự kiến: 15 phút lưới ngẫu nhiên tuần 4, 10 phút lần theo PI và lỗi dừng gần đúng, 5 phút đối chiếu điều kiện mô hình. Bài 9 của hw3 là bài thêm nếu người học cần luyện ở nhà, không cộng vào 150 phút. Câu Monte Carlo/sai phân thời gian và các bài Q-learning/xấp xỉ hàm không đưa vào tuyến chính.
 
-Lưới giữ bước thường thưởng −1, thay thưởng vào đích bằng 24 và dùng $\gamma=0{,}5$. Ra trái tại $c_1$ thì đứng yên và nhận −1; $c_5$ kết thúc, giá trị0 và không nhận thưởng sau kết thúc.
+Các số được kiểm chứng độc lập bằng phân số hữu tỉ: đánh giá $(10,11)$; chuỗi PI $(a,a)\to(a,b)\to(b,b)$ và giá trị $(10,11)\to(10,30)\to(27,30)$; VI $(1,3),(2.7,5.7),(5.13,8.13),(7.317,10.317)$; lưới xác định $(4.58,6.2,8,10,0)$; lưới nhiễu $V_1=(-1,-1,-1,7.8,0)$, $V_2(c_3)=4.436$. Chi tiết phép tính và các giả thiết bổ sung đã được chấp nhận ở báo cáo số. Các phép kiểm số trên thuộc giai đoạn lập kế hoạch. Bản HTML sau triển khai đã được năm vai rà trên cùng bản cố định; mọi kiểm định sau sửa được ghi riêng trong review-log.md.
 
-| Lượt | $c_1$ | $c_2$ | $c_3$ | $c_4$ | $c_5$ |
-|---|---:|---:|---:|---:|---:|
-| 0 | 0 | 0 | 0 | 0 | 0 |
-| 1 | -1 | -1 | -1 | 24 | 0 |
-| 2 | -1,5 | -1,5 | 11 | 24 | 0 |
-| 3 | -1,75 | 4,5 | 11 | 24 | 0 |
-| 4 | 1,25 | 4,5 | 11 | 24 | 0 |
-| 5 (kiểm) | 1,25 | 4,5 | 11 | 24 | 0 |
 
-Chặn hội tụ minh họa dùng sai số đầu64: $64(0{,}5)^6=1$, $64(0{,}5)^7=0{,}5$. Phần dư0,15 cho chặn sai số0,3; muốn sai số không quá0,2 thì dùng ngưỡng phần dư0,1. Mỗi số luôn gắn với tên đại lượng, không chỉ hiện số rời.
+## Quyết định sau rà độc lập — 2026-09-28
 
-Không ép mọi ô số phải khác nhau: các ô giống nhau do cùng khoảng cách, cùng bước thưởng, điểm bất động hoặc đẳng thức $q^\pi(s,\pi(s))=v^\pi(s)$ có ý nghĩa toán học. Chỉ các trùng hợp không phục vụ cơ chế mới cần tránh. Nguồn gốc vẫn được đối chiếu: NG1 dùng thưởng1/0/2/3, hệ số 0,9 và lưới thưởng đích 10; bộ số mới là thay đổi được người dùng yêu cầu. Các bài tập chỉ dẫn trong hw3.pdf giữ nguyên tham số riêng của tài liệu đó.
-
-## 7. Danh mục hình thức hóa ở mức năm 3
-
-### Định nghĩa và ký hiệu
-
-- **HT1:** $G_t=\sum_{k\ge0}\gamma^kR_{t+k+1}$, $v^\pi$ và $q^\pi$ là giá trị thật dưới chính sách. Bước đầu trong $q^\pi(s,a)$ được ấn định; $v_*,q_*$ lấy supremum trước khi có định lý tồn tại. Phát biểu và áp dụng, không lặp lại toàn bộ định nghĩa MDP. NG1 tr.4–8.
-- **HT2:** $Q_v(s,a)=\sum_{s',r}p(s',r\mid s,a)[r+\gamma v(s')]$, $(T^\pi v)(s)=\sum_a\pi(a\mid s)Q_v(s,a)$, $(T_*v)(s)=\max_aQ_v(s,a)$; miền $\mathcal V=\mathbb R^{|\mathcal S|}$. Chính sách trong $T^\pi$ là Markov dừng. Dùng để tính, không gọi toán tử là một giá trị vô hướng. NG1 tr.10.
-- **HT3:** chuẩn vô cùng $\|v\|_\infty=\max_s|v(s)|$ và phần dư $\rho(v)=\|T_*v-v\|_\infty$. Ví dụ hai bảng đứng trước tính chất tổng quát. NG1 tr.24,31,34; phần dư được đặt tên để làm rõ đại lượng nguồn đang tính.
-
-### Các kết quả và mức chứng minh
-
-| Mục | Phát biểu, giả thiết | Mức trình bày và nơi dùng |
-|---|---|---|
-| HT4: Bellman | $v^\pi=T^\pi v^\pi$; $v_*=T_*v_*$; $q_*(s,a)=\mathbb E[R_1+\gamma\max_{a'}q_*(S_1,a')]$ với hành động đầu cố định | Giải thích phân rã một bước; tính tồn tại/tính duy nhất chứng minh phần 6. NG1 tr.6,8–10 |
-| HT5: đánh giá | $(I-\gamma P^\pi)v^\pi=r^\pi$; $I-\gamma P^\pi$ khả nghịch vì $\rho(\gamma P^\pi)\le\gamma<1$ | Giải hệ 2 ẩn; phần chứng minh nghịch đảo bằng chuỗi hình học ma trận giao NG2 B6. Không dùng nghịch đảo tường minh làm thuật toán số. NG1 tr.6,18 |
-| HT6: cải thiện | Với $\pi'$ tham lam theo $v^\pi$, $v^{\pi'}\ge v^\pi$; nếu $\pi$ chưa tối ưu thì nghiêm ngặt ở ít nhất một trạng thái | Phác thảo bằng $v^\pi\le T^{\pi'}v^\pi$, tính đơn điệu và hạng đuôi chiết khấu tiến về 0. Không nói nghiêm ngặt ở mọi trạng thái. NG1 tr.21 |
-| HT7: lặp chính sách | Đánh giá chính xác, giữ hành động cũ khi hòa, tập chính sách xác định hữu hạn → dừng hữu hạn tại chính sách tối ưu | Lập luận không lặp lại và ổn định thỏa Bellman tối ưu. Số chính sách là $\prod_s|\mathcal A(s)|$; nếu cùng tập hành động là $|\mathcal A|^{|\mathcal S|}$. NG1 tr.20,33 |
-| HT8: tính co | $\|T_*u-T_*v\|_\infty\le\gamma\|u-v\|_\infty$; tương tự $T^\pi$ với $\pi$ cố định | Chứng minh bước cực đại và kỳ vọng đủ trên lớp; điều kiện quyết định là $\gamma<1$. NG1 tr.31 |
-| HT9: tồn tại tối ưu | Co trên $\mathbb R^n$ cho điểm bất động duy nhất $\bar v$; mọi chính sách bị chặn trên bởi $\bar v$; một chính sách dừng xác định tham lam đạt nó | Phát biểu Banach, trình bày sơ đồ chặn trên/đạt cận; nhánh đạt cận dùng $T^{\bar\pi}\bar v=\bar v$. Quy nạp theo toàn lịch sử để chứng minh nhánh chặn trên nằm trong ghi chú đọc thêm, không trình bày trọn trong 4 phút. Kết luận $\bar v=v_*$. NG1 tr.9,31–32 |
-| HT10: hội tụ | $\|v_k-v_*\|_\infty\le\gamma^k\|v_0-v_*\|_\infty$ | Suy từ co bằng lặp bất đẳng thức; ví dụ 7 lượt là phép tính theo chặn. NG1 tr.32 |
-| HT11: sai số thực hành | $\|v-v_*\|_\infty\le\rho(v)/(1-\gamma)$ | Chứng minh $e\le\rho+\gamma e$; áp dụng chọn ngưỡng. Nếu trả $Tv$ sau khi đo $\delta=\|Tv-v\|$, chặn là $\gamma\delta/(1-\gamma)$ cho bảng mới. Suy ra từ NG1 tr.31–34 |
-
-Với đánh giá chính sách, thay $T_*,v_*$ bằng $T^\pi,v^\pi$ trong chặn phần dư. Cả hai trường hợp cần tính phần dư trên toàn bảng, không thay bằng chênh lệch cục bộ tùy ý của một lượt tại chỗ.
-
-**Đọc thêm, không thuộc kiểm tra tuyến chính:** nếu $\pi_v$ tham lam theo $v$, tính chính xác trên cùng mô hình, thì
-
-$$\|v_*-v^{\pi_v}\|_\infty\le\frac{2\gamma}{1-\gamma}\|v-v_*\|_\infty\le\frac{2\gamma}{(1-\gamma)^2}\rho(v).$$
-
-Gợi ý suy diễn: dùng $T^{\pi_v}v=T_*v$, thêm và bớt hai hạng tại $v$, rồi áp dụng tính co để có $d\le2\gamma e+\gamma d$. Chặn này có trong kế hoạch cũ; chuyển ra khỏi tuyến chính để dành thời gian cho bảy câu kiểm tra và hai thuật toán. Phần dư dương không chứng nhận tối ưu tuyệt đối của chính sách; trường hợp $\gamma=0$ được xử lý trực tiếp, không chia cho $\gamma$.
-
-## 8. Đặc tả hình, bảng và nội dung phải chuyển khi triển khai
-
-| Tài sản nguồn | Điều phải giữ | Đặc tả đích |
-|---|---|---|
-| NG1 tr.13, chu trình đánh giá–cải thiện | Chiều hai mũi tên, giá trị/chính sách ở mỗi bước | Sơ đồ SVG hai khối; thêm nhánh dừng ổn định ở thuật toán |
-| NG1 tr.17, MDP hai trạng thái | Hai vòng tự khép, hai cạnh chéo, nhãn $a/1,b/0,a/2,b/3$, $\gamma=0{,}9$ | Một SVG dùng lại, cấu trúc nguồn giữ nguyên; thay thưởng thành 2/−1/5/10 và hệ số 0,5 theo yêu cầu người dùng; dùng nhãn cùng độ dày cạnh |
-| NG1 tr.17–19, bảng và phép tính | Đúng bốn chuyển và ba chính sách | Bảng HTML/công thức, không chuyển thành ảnh; tách rõ đánh giá lại $\pi_1$ |
-| NG1 tr.25–28, lưới và bảng lặp | Năm ô, đích $c_5$, thưởng, dữ kiện từng lượt | SVG lưới và bảng HTML riêng; hiện từng lượt, không chụp raster nguồn |
-| NG1 tr.29, so sánh | Khác nhau giữa đánh giá đầy đủ và một phép Bellman tối ưu | Bảng ba tiêu chí có thao tác/chi phí cụ thể |
-| NG1 tr.36, sơ đồ rời rạc hóa | Bốn biến, số khoảng và tổng 324 | SVG thêm bước xác định mô hình; không hàm ý chia ô tự bảo đảm Markov |
-| Chặn hình học, tính lại từ NG1 tr.32 | Thay minh họa thành $64\cdot(0{,}5)^k$, ngưỡng1, mốc6 và7 | Đồ thị SVG có tên trục; ghi “chặn lý thuyết” |
-| NG1 tr.6–10,14,20–24,31–34 | Công thức, giả mã, giả thiết | KaTeX/HTML và khối giả mã; mỗi trang một bước, không dùng ảnh công thức |
-
-Trong lần lập dàn bài này chỉ tạo đặc tả. Mẫu slide/CSS vẫn là nền giao diện cho lần triển khai sau; không sao chép CSS hoặc tài sản của hai trường.
-
-## 9. Ánh xạ đủ 38 trang nguồn
-
-| Trang NG1 | Nội dung | Slide đề xuất | Quyết định và lý do |
-|---:|---|---|---|
-| 1 | Tiêu đề | 01 | Giữ chủ đề, sửa học kỳ theo dự án |
-| 2 | Mục tiêu | 02 và phần đầu outline | Sửa thành năng lực kiểm tra được; không chen trước slide nội dung |
-| 3 | Nội dung | 02 | Sửa thành bảy phần theo nhu cầu học tập |
-| 4 | MDP | 03, quy ước | Gộp ôn tập vào mô hình dùng xuyên suốt |
-| 5 | Tổng thưởng và giá trị | 04–08 | Sửa “hàm phần thưởng” thành phần thưởng tích lũy; nhắc theo nhu cầu |
-| 6 | Bellman kỳ vọng | 05–07,11,13–16 | Tách tính tay, quan hệ và hệ tuyến tính |
-| 7 | Tối ưu | 08,10 | Giữ; dùng supremum và làm rõ hành động đầu |
-| 8 | Bellman tối ưu | 09–10 | Tách giá trị trạng thái và hành động |
-| 9 | Tồn tại tối ưu | 10,37 | Nêu điều kiện sớm, chuyển chứng minh sau tính co |
-| 10 | Toán tử | 11,30,35–39 | Giữ, bổ sung miền và chuẩn tại nơi cần |
-| 11 | Mục lục lặp | 02 | Gộp để tránh phần trang trí |
-| 12 | Quy hoạch động, giả thiết | 03,27,40,42 | Giữ đầu vào mô hình; giới hạn tuyến chính ở chiết khấu |
-| 13 | Đánh giá–cải thiện | 19–25 | Dùng sau khi đã có bảng giá trị, thay sơ đồ đứng riêng |
-| 14 | Đánh giá lặp | 13,15–16,18 | Ví dụ trước quy trình; thêm dừng rõ bảng trả |
-| 15 | Đồng bộ/bất đồng bộ | 17 | Sửa: tại chỗ là một lịch bất đồng bộ; thêm điều kiện cập nhật công bằng |
-| 16 | Mục lục lặp | 02 | Gộp |
-| 17 | Mô hình hai trạng thái | 03–07,13–26,35,43 | Giữ dữ kiện; đưa lên sớm, tái sử dụng |
-| 18 | Đánh giá $\pi_0$ | 14–15 | Giữ, tính lại |
-| 19 | Cải thiện và nghiệm | 19–21,26,43 | Tách bước đánh giá $\pi_1$ và chứng nhận cuối |
-| 20 | Lặp chính sách | 22,24–26 | Giữ; đặc tả đánh giá chính xác, giữ hòa, ngân sách |
-| 21 | Cải thiện chính sách | 23 | Giữ, mở bước đơn điệu/đuôi chiết khấu |
-| 22 | Mục lục lặp | 02 | Gộp |
-| 23 | Ý tưởng lặp giá trị | 27–30 | Chuyển lưới lên trước công thức |
-| 24 | Thuật toán và dừng | 30–32,39,45 | Tách; phần dư, chính sách và bảng trả phải nhất quán |
-| 25 | Mô hình lưới | 27 | Giữ; bổ sung biên và hấp thụ |
-| 26 | Lượt đầu | 28 | Giữ, tính lại |
-| 27 | Các lượt tiếp | 29,34 | Giữ, tính lại; dùng làm câu kiểm tra |
-| 28 | Chính sách lưới | 29,32 | Giữ; không nhầm bảng trung gian và giá trị chính sách |
-| 29 | So sánh PI/VI | 33,42 | Thay nhận xét định tính bằng thao tác và chi phí |
-| 30 | Nhu cầu hội tụ | 35 | Gắn nhu cầu với khoảng cách giữa hai bảng |
-| 31 | Tính co | 35–37 | Trực giác và ví dụ trước định lý; mở chứng minh |
-| 32 | Hội tụ | 37–38 | Tách tồn tại/đạt cận và tốc độ hội tụ |
-| 33 | Dừng PI | 25 | Chuyển về ngay sau quy trình PI; thêm giữ hòa |
-| 34 | Sai số và dừng | 31,38–39,41,45 | Sửa chặn theo đúng bảng, thêm ứng dụng ngưỡng |
-| 35 | CartPole liên tục | 40 | Gộp với 36–37 để kiểm tra giả thiết |
-| 36 | Rời rạc hóa | 40 | Giữ 324 ô; sửa hàm ý tự tạo MDP chính xác |
-| 37 | Hạn chế | 40,42 | Giữ; phân biệt sai số mô hình và sai số tính toán |
-| 38 | Tổng kết | 42–45 | Trở lại vấn đề mở đầu, chỉ dẫn bài tập và kiểm tra tổng hợp |
-
-## 10. Các sửa đổi quan trọng so với kế hoạch cũ
-
-- Kế hoạch cũ có chỗ gán $(10,11)$ cho giá trị tiếp diễn tối ưu; theo mô hình đầy đủ tr.17–19 đây là $v^{\pi_0}$, còn $v_*=(27,30)$. Đây là lỗi của bản cũ theo tham số gốc. Bản triển khai mới dùng bộ số thích nghi ở mục6 và giữ phân biệt giữa giá trị chính sách với giá trị tối ưu; ghi chú học liệu cũ chưa được đồng bộ trong yêu cầu này.
-- Tách đánh giá chính sách thành phần riêng, thay 38 slide chính bằng 45 slide với đủ bảy kiểm tra; không thêm một ví dụ lớn ngoài nguồn.
-- Đưa chuẩn vô cùng tới nơi cần dùng thay vì mở bài bằng không gian hàm; tại thuật toán dừng giải thích ngắn nó là chênh lệch lớn nhất.
-- Khôi phục $q_*$ và Bellman cho $q_*$ từ NG1 tr.7–8. Đây đã là nội dung nguồn, không ghi nhầm là nội dung mới do bản chuyển đổi bổ sung.
-- Chứng minh tồn tại ở sau co để tránh lập luận vòng; bảo đảm PI nằm ngay sau thuật toán, với lời dẫn rõ tới nền tảng chung ở phần 6.
-- Chặn mất mát chính sách là đọc thêm; phần chính vẫn chứng minh chặn sai số giá trị để ngưỡng dừng có ý nghĩa. Lược phần này có lý do về tải học và phạm vi NG1.
-- NG3 có hai mục cùng nhãn “Bài 1” và ví dụ lưới nhiễu; tham chiếu theo nội dung, không tự sửa số bài rồi coi đó là bản gốc.
+Năm vai chấp nhận tuyến bảy mạch; sửa cục bộ miền trạng thái, ví dụ chính sách ngẫu nhiên, phần dư trước định nghĩa, tín hiệu đổi mô hình và toán tử, câu nối tới CartPole và thuật ngữ. Hai quy trình chính trong ghi chú được thống nhất với deck về số lần nhận bảng mới và bảng đã kiểm; bộ số riêng được giữ. Quyết định theo trang ở storyboard.md và hồ sơ từng phát hiện ở review-log.md. Không thay thứ tự, số trang hoặc thời lượng.
