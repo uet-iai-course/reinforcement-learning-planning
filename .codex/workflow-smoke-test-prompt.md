@@ -1,76 +1,43 @@
-# Prompt kiểm thử quy trình đa tác tử
+# Kiểm thử quy trình tác tử gốc của Codex
 
-Thực hiện kiểm thử khói quy trình đa tác tử trong `AGENTS.md`. Đây chỉ là kiểm
-thử điều phối; không chuyển bài giảng và không sửa bất kỳ tệp nào trong kho.
+Kiểm thử điều phối theo `AGENTS.md`; không chuyển bài giảng hoặc sửa tệp
+trong kho. Ghi nhận `git status --short` trước và sau để phân biệt thay đổi
+đã có với thay đổi do kiểm thử.
 
-## Yêu cầu
+## Trình tự
 
-1. Đọc `AGENTS.md` và xác nhận ba vai trò dự án đã được nạp:
-
-   - `openrouter_reader`;
-   - `openrouter_reviewer`;
-   - `openrouter_writer`.
-
-   Gọi ba vai trò bằng các lệnh tương ứng trong `openrouter-mcp/`, luôn truyền
-   `--json`. Không dùng `collaboration.spawn_agent` cho kiểm thử này.
-
-2. Giao một `openrouter_reader` nhiệm vụ hẹp:
-
-   - đọc `AGENTS.md`;
-   - tóm tắt trách nhiệm của điều phối viên và thứ tự các giai đoạn;
-   - trích dẫn dòng làm bằng chứng;
-   - không sửa tệp.
-
-   Codex chính phải rà và chấp nhận hoặc bác bỏ kết quả trước khi tiếp tục.
-
-3. Sau khi kết quả trên được chấp nhận, chạy song song hai
-   `openrouter_reviewer`:
-
-   - reviewer A kiểm tra độ chính xác của bản tóm tắt so với `AGENTS.md`;
-   - reviewer B kiểm tra xem bản tóm tắt có bỏ sót ràng buộc đa tác tử, quyền
-     ghi và kiểm định cuối hay không.
-
-   Mỗi báo cáo dùng các trường: `mức độ`, `vị trí`, `vấn đề`, `bằng chứng`,
-   `đề xuất sửa`.
-
-4. Sau khi hai reviewer hoàn tất, giao `openrouter_writer` một nhiệm vụ ghi có
-   phạm vi hẹp:
-
-   - chỉ tạo `/tmp/rl-plan-openrouter-smoke/worker-check.txt`;
-   - ghi tên vai trò, model và provider mà worker được cấu hình sử dụng;
-   - không sửa tệp trong kho;
-   - không xóa hoặc hoàn tác thay đổi của người khác.
-
-   Không chạy worker ghi nào khác song song.
-
-5. Codex chính phải:
-
-   - kiểm tra độc lập mọi đầu ra;
-   - xác minh tệp tạm tồn tại và nội dung đúng;
-   - xóa tệp tạm sau khi kiểm tra;
-   - kiểm tra `git status --short` để xác nhận kiểm thử không tạo thay đổi mới
-     trong kho;
-   - không coi lời tự khai của worker là bằng chứng duy nhất về model/provider;
-   - báo rõ model và provider quan sát được từ cấu hình hoặc runtime;
-   - không âm thầm chuyển sang worker mặc định nếu OpenRouter thất bại.
-
-6. Báo cáo cuối theo bảng:
-
-   - vai trò;
-   - trạng thái;
-   - model;
-   - provider;
-   - nhiệm vụ;
-   - bằng chứng hoàn thành;
-   - kết quả rà của Codex chính.
+1. Đọc `AGENTS.md`. Mọi tác tử trong kiểm thử dùng
+   `collaboration.spawn_agent` với `model: "gpt-6-astra"` và
+   `fork_turns: "none"` hoặc số lượt phù hợp. Không dùng OpenRouter,
+   script gọi mô hình qua API/CLI hoặc nạp `.env`, `.env.*` hay khóa API.
+2. Giao một tác tử chỉ đọc `AGENTS.md`, tóm tắt trách nhiệm của điều phối
+   viên và thứ tự các giai đoạn, kèm số dòng làm bằng chứng. Codex chính
+   kiểm tra và chấp nhận kết quả trước bước tiếp theo.
+3. Giao hai tác tử rà soát chỉ đọc độc lập; chạy song song trong giới hạn
+   khả dụng. Tác tử thứ nhất đối chiếu độ chính xác của bản tóm tắt.
+   Tác tử thứ hai kiểm tra ràng buộc về mô hình, quyền ghi, năm vai rà
+   soát, văn phong học thuật và kiểm định cuối. Báo cáo gồm `mức độ`,
+   `vị trí`, `vấn đề`, `bằng chứng`, `đề xuất sửa`.
+4. Sau khi hai báo cáo hoàn tất, Codex chính tạo một thư mục tạm duy nhất
+   bằng `mktemp -d /tmp/rl-plan-native-smoke.XXXXXX`. Giao một tác tử chỉ
+   tạo `worker-check.txt` trong thư mục đó, ghi vai trò và kết quả nhiệm
+   vụ; không yêu cầu tác tử tự chứng thực mô hình hoặc tuyến xác thực.
+   Không cho phép sửa tệp trong kho hoặc chạy tác tử ghi khác đồng thời.
+5. Codex chính đọc và kiểm tra tệp kết quả, chỉ xóa tệp và thư mục tạm
+   vừa tạo, rồi đối chiếu trạng thái Git với bản đầu. Kiểm tra độc lập
+   mọi đầu ra; không chấp nhận báo cáo hoàn thành nếu chưa có bằng chứng.
+6. Báo cáo tên tác tử, vai trò, mô hình đã chỉ định từ lời gọi công cụ,
+   trạng thái, bằng chứng hoàn thành và kết quả kiểm tra của Codex chính.
+   Chỉ ghi mô hình thực chạy hoặc tuyến xác thực nếu công cụ cung cấp;
+   nếu không, ghi rõ chưa có bằng chứng này.
 
 ## Tiêu chí đạt
 
-- Cả ba loại worker đều khởi chạy bằng `z-ai/glm-5.3-flash` qua OpenRouter.
-- Hai reviewer chạy độc lập.
-- Chỉ một writer chạy và chỉ ghi trong `/tmp`.
-- Codex chính rà đầu ra thay vì chấp nhận tự động.
-- Không có thay đổi mới trong kho.
+- Tất cả tác tử được tạo qua cơ chế gốc với GPT-6-Astra được chỉ định.
+- Hai báo cáo rà soát độc lập và được Codex chính kiểm tra.
+- Chỉ một tác tử ghi tệp, trong thư mục tạm được giao.
+- Kiểm thử không phát sinh thay đổi trong kho; tệp tạm được dọn sau kiểm tra.
 
-Nếu một worker không khởi chạy, dừng kiểm thử, giữ nguyên kho và báo nguyên văn
-lỗi cùng giai đoạn thất bại.
+Nếu không tạo được tác tử theo quy định, báo lỗi và giai đoạn bị chặn.
+Tiếp tục kiểm tra độc lập đã được phép; không thay mô hình, dùng OpenRouter
+hoặc script gọi mô hình để hoàn tất kiểm thử.

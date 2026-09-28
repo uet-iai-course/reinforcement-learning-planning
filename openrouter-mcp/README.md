@@ -1,5 +1,10 @@
 # Cầu nối worker MCP–OpenRouter theo vai trò
 
+> Thành phần này thuộc quy trình cũ và không được dùng cho tác vụ hiện hành
+> trong kho. Quy định tại `../AGENTS.md` yêu cầu tác tử gốc của Codex với
+> GPT-6-Astra. Các lệnh, cấu hình khóa và hướng dẫn bên dưới chỉ được giữ để
+> truy nguyên lịch sử; không phải hướng dẫn khởi chạy hiện hành.
+
 Thành phần này gọi worker trực tiếp qua Chat Completions API của OpenRouter và
 cung cấp công cụ MCP theo vai trò:
 

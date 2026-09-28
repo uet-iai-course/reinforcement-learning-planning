@@ -1,52 +1,57 @@
-# Codex điều phối worker qua OpenRouter MCP
+# Điều phối tác tử gốc của Codex
 
-Khởi chạy Codex bằng `./codex-orchestrator`. Codex chính vẫn dùng nhà cung cấp
-đang cấu hình cho người dùng. Ba worker dự án được gọi bằng các tiến trình CLI
-trong `openrouter-mcp/`, không qua `collaboration.spawn_agent`:
-
-- `openrouter_reader` → `openrouter-mcp-reader`;
-- `openrouter_reviewer` → `openrouter-mcp-reviewer`;
-- `openrouter_writer` → `openrouter-mcp-writer`.
+Quy trình hiện hành theo [AGENTS.md](../AGENTS.md), tham khảo quy định của
+`../math-4-AI/AGENTS.md`: mọi tác tử con, kể cả tác tử tạo tiếp, dùng
+GPT-6-Astra qua cơ chế tác tử gốc của Codex trong phiên dùng gói thuê bao.
+Không dùng OpenRouter, cầu nối `openrouter-mcp/` hoặc script gọi mô hình qua
+API/CLI. Các cấu hình và ủy quyền OpenRouter trước đây hết hiệu lực.
 
 ## Khởi chạy
 
-Đặt khóa trong `.env` ở gốc kho; cầu nối chỉ nạp `OPENROUTER_API_KEY` ở phía
-điều phối viên và không đưa tệp hoặc giá trị khóa cho worker:
+Khởi chạy phiên Codex đã xác thực bằng gói thuê bao:
 
 ```bash
-OPENROUTER_API_KEY="..."
 ./codex-orchestrator
 ```
 
-Có thể truyền thẳng câu lệnh hoặc tùy chọn Codex:
+Lệnh này gọi Codex tại gốc kho và chuyển tiếp các đối số. Nó không cấu hình
+nhà cung cấp, đổi mô hình chính hoặc nạp khóa. Không đọc hay nạp `.env`,
+`.env.*` hoặc bí mật để xác thực tác tử.
 
-```bash
-./codex-orchestrator "Dùng các tác tử theo quy trình trong AGENTS.md."
-```
+## Phân công và kiểm định
 
-Có thể dùng biến môi trường đã export thay cho `.env`. Cài môi trường cầu nối
-một lần bằng `cd openrouter-mcp && uv sync`. Mỗi lệnh worker phải dùng `--json`
-để trả metadata model/provider cùng nội dung.
+- Tạo tác tử bằng `collaboration.spawn_agent` với `model: "gpt-6-astra"`
+  và `fork_turns: "none"` hoặc số lượt phù hợp. Giao tiếp và tiếp tục nhiệm
+  vụ qua các công cụ `collaboration` tương ứng.
+- Mỗi nhiệm vụ phải có vai trò, đầu vào, đầu ra, phạm vi tệp và điều kiện
+  hoàn thành. Các vai lập kế hoạch, phân tích nguồn và rà soát chỉ đọc tệp.
+  Chỉ một tác tử được ghi tệp tại một thời điểm.
+- Giữ đủ năm vai rà soát độc lập; chạy song song trong giới hạn khả dụng,
+  chia lượt khi cần. Mọi tác tử rà cùng một bản đã cố định.
+- Codex chính duyệt kế hoạch, hợp nhất báo cáo, kiểm tra thay đổi trong tệp
+  và xác minh đầu ra trước khi bàn giao.
+- Ghi tên tác tử, vai trò và mô hình chỉ định từ lời gọi công cụ. Chỉ ghi
+  mô hình thực chạy hoặc tuyến xác thực khi công cụ cung cấp bằng chứng;
+  không dùng lời tự khai của tác tử thay cho bằng chứng.
+- Nếu không tạo được tác tử theo quy định, báo lỗi và dừng phần phụ thuộc;
+  tiếp tục việc độc lập đã được phép, không chuyển ngầm sang OpenRouter
+  hoặc mô hình khác.
 
-## Mô hình worker và trách nhiệm điều phối
+Tiêu đề, nội dung và ghi chú phải có văn phong trang trọng, học thuật,
+được biên tập và tự kiểm theo `$no-ai-slop`. Không đưa văn nói mô phỏng hay
+chỉ dẫn điều phối vào trang chiếu hoặc ghi chú diễn giả. Yêu cầu học tập và
+các bước thuật toán vẫn được dùng đúng chức năng.
 
-Mỗi worker chỉ nhận một nhiệm vụ hẹp, có đầu vào, đầu ra và phạm vi tệp cụ
-thể. Reader và reviewer chỉ nhận
-công cụ đọc. Writer nhận `write_text_file` và `replace_text_file`, nhưng chỉ
-ghi được bên trong `--repo-root` của tiến trình. Mọi vai trò đều bị chặn đọc,
-tìm kiếm hoặc ghi `.env` và các biến thể `.env.*`.
+Kịch bản kiểm thử điều phối nằm tại
+[workflow-smoke-test-prompt.md](workflow-smoke-test-prompt.md).
 
-Codex chính phải đối chiếu `requested_model`, `observed_model` và `provider`
-do cầu nối thu từ phản hồi OpenRouter; lời tự khai trong nội dung worker không
-phải bằng chứng runtime. Nếu một worker lỗi, dừng giai đoạn phụ thuộc và báo
-nguyên văn lỗi. Không gọi worker mặc định thay thế.
+## Hồ sơ OpenRouter đã ngừng sử dụng
 
-Để đổi mô hình, đặt `OPENROUTER_MODEL` hoặc truyền `--model`. Mô hình thay thế
-phải hỗ trợ tool calling trên OpenRouter.
+Toàn bộ phần còn lại của tệp là hồ sơ cấu hình và kết quả thực thi trước
+khi chuyển sang tác tử gốc. Các lệnh, mô hình, ngân sách, quyền truy cập
+và chỉ dẫn nạp khóa bên dưới không áp dụng cho công việc hiện hành.
 
-Không thêm khóa API, tệp `.env`, lịch sử phiên hoặc dữ liệu xác thực vào kho.
-
-## Cấu hình đã kiểm chứng cho pipeline lecture note và slide deck
+### Cấu hình cũ cho ghi chú bài giảng và bộ trang chiếu
 
 Chạy trong `openrouter-mcp/` và đặt cache của `uv` tại thư mục tạm để không
 phụ thuộc quyền ghi vào cache người dùng:
