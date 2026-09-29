@@ -1,660 +1,1001 @@
-# Bài 06 — Điều khiển phi mô hình
+# Bài 06. Điều khiển phi mô hình
 
-## Mục tiêu và kiến thức tiên quyết
+Học phần Học tăng cường · Học kỳ 1, năm học 2026–2027.
 
-- Phân biệt dự đoán (prediction) với điều khiển (control) và theo chính sách (on-policy) với khác chính sách (off-policy).
-- Tạo chính sách $\varepsilon$-tham lam từ bảng $Q$ với quy tắc phá hòa tất định.
-- Thực hiện điều khiển Monte Carlo (MC) lần ghé đầu, SARSA và Q-learning dạng bảng trên một lượt dùng chung.
-- Phát biểu đúng điều kiện hội tụ: GLIE, độ phủ vô hạn, bước học Robbins–Monro, trên miền cặp khả đạt $\mathcal X_{\mathrm{reach}}$.
-
-Kiến thức tiên quyết: MDP hữu hạn, hàm giá trị $v_\pi$ và $q_\pi$, dự đoán MC và TD(0) từ Bài 05.
-
-## Bản đồ chủ đề
-
-Bản đồ gồm bốn nhóm: `cốt lõi` (12 chủ đề), `cầu nối` (1 chủ đề), `bổ sung` (2 chủ đề) và `đọc thêm`. Ba nhóm đầu có topic ID. Hai chủ đề bổ sung là chủ đề 12, nhánh mở rộng 5 phút quay lại bài toán dự đoán, và chủ đề 14, nhánh linh hoạt 5 phút về chi phí bảng cùng chặn Hoeffding. Chủ đề 15 là kết luận cốt lõi: thu hồi mục tiêu, neo ba bài tập dọc và nối sang Bài 07. Nhóm đọc thêm là phần mở rộng của bảng phân loại ở PDF tr. 23 (DQN, policy gradient, actor–critic); tuyến này không có topic ID, chỉ để định vị và không được dạy trong bài.
-
-Thời lượng: tuyến cốt lõi 110 phút; chủ đề 12 và chủ đề 14 là hai nhánh bổ sung, mỗi nhánh 5 phút, nâng tổng trình chiếu lên 120 phút; ba bài tập X01–X03 nặng 5–10–15 phút, tổng 30 phút.
-
-### 01. Dự đoán sang điều khiển phi mô hình
-
-- Nhóm: `cốt lõi`.
-- Vai trò trong mạch: chuyển từ Bài 05 (chính sách cố định) sang mục tiêu học chính sách và $Q$.
-- Kết nối vào: dự đoán MC và TD(0).
-- Kết nối ra: công cụ chọn hành động ở chủ đề 02.
-- Nguồn: PDF tr. 1–3, 6; slide P00–P02.
-
-### 02. Giá trị hành động và chính sách epsilon-tham lam
-
-- Nhóm: `cốt lõi`.
-- Vai trò trong mạch: $Q$ và phá hòa tất định là nền cho cả ba thuật toán.
-- Kết nối vào: miền $\mathcal X$ và vòng điều khiển.
-- Kết nối ra: ba thuật toán MC, SARSA, Q-learning.
-- Nguồn: PDF tr. 7, 10–11; slide A00–A01.
-
-### 03. Theo chính sách và khác chính sách
-
-- Nhóm: `cốt lõi`.
-- Vai trò trong mạch: phân loại chính sách hành vi $\mu$ và chính sách đích $\pi$.
-- Kết nối vào: chính sách $\varepsilon$-tham lam.
-- Kết nối ra: SARSA (theo chính sách) và Q-learning (khác chính sách).
-- Nguồn: PDF tr. 8; slide A02.
-
-### 04. Chuỗi năm trạng thái và quy tắc số tất định
-
-- Nhóm: `cốt lõi`.
-- Vai trò trong mạch: một bảng $Q_0$ và một lượt dùng chung cho ba phép cập nhật.
-- Kết nối vào: chính sách $\varepsilon$-tham lam.
-- Kết nối ra: ba phép cập nhật số ở các chủ đề 05, 08, 10.
-- Nguồn: PDF tr. 15–17; slide A03–A04.
-
-### 05. Điều khiển MC lần ghé đầu
-
-- Nhóm: `cốt lõi`.
-- Vai trò trong mạch: phần thưởng tích lũy → thuật toán đầy đủ → bảng trung bình mẫu và $\alpha$ hằng.
-- Kết nối vào: lượt dùng chung ở chủ đề 04.
-- Kết nối ra: câu hỏi cải thiện ở chủ đề 06.
-- Nguồn: PDF tr. 10–11, 15–17; slide B00–B04.
-
-### 06. Cải thiện cần $q_\pi$ chính xác
-
-- Nhóm: `cầu nối`.
-- Vai trò trong mạch: một mẫu $Q$ còn nhiễu không cho cải thiện đơn điệu; định lý cải thiện dùng $q_\pi$ chính xác.
-- Kết nối vào: hai bảng cập nhật MC.
-- Kết nối ra: điều kiện dài hạn GLIE ở chủ đề 07.
-- Nguồn: PDF tr. 24; slide B05.
-
-### 07. GLIE và hội tụ điều khiển MC
-
-- Nhóm: `cốt lõi`.
-- Vai trò trong mạch: thăm dò vô hạn và tham lam ở giới hạn.
-- Kết nối vào: định lý cải thiện $\varepsilon$-mềm.
-- Kết nối ra: cùng hai điều kiện xuất hiện lại ở hội tụ SARSA.
-- Nguồn: PDF tr. 25–26; slide B06.
-
-### 08. SARSA dạng bảng và ví dụ
-
-- Nhóm: `cốt lõi`.
-- Vai trò trong mạch: đích dùng hành động kế tiếp thật sự; cập nhật tại chỗ trên lượt dùng chung.
-- Kết nối vào: bảng $Q_0$ và lượt ở chủ đề 04.
-- Kết nối ra: điều kiện hội tụ ở chủ đề 09.
-- Nguồn: PDF tr. 12–14, 17–18; slide C00–C04.
-
-### 09. Hội tụ SARSA
-
-- Nhóm: `cốt lõi`.
-- Vai trò trong mạch: GLIE cộng Robbins–Monro theo từng cặp, kết luận trên miền khả đạt.
-- Kết nối vào: thuật toán SARSA.
-- Kết nối ra: đối chiếu với điều kiện hội tụ Q-learning.
-- Nguồn: PDF tr. 27; slide C05.
-
-### 10. Q-learning dạng bảng và ví dụ
-
-- Nhóm: `cốt lõi`.
-- Vai trò trong mạch: đích cực đại; đối chiếu trực tiếp với SARSA trên cùng lượt.
-- Kết nối vào: chuyển $(C,0)\to B$ và hai giá trị tại B.
-- Kết nối ra: điều kiện hội tụ ở chủ đề 11.
-- Nguồn: PDF tr. 20–21; slide D00–D04.
-
-### 11. Hội tụ Q-learning
-
-- Nhóm: `cốt lõi`.
-- Vai trò trong mạch: độ phủ vô hạn cộng Robbins–Monro; không bắt buộc GLIE.
-- Kết nối vào: thuật toán Q-learning.
-- Kết nối ra: nhánh dự đoán khác chính sách ở chủ đề 12.
-- Nguồn: PDF tr. 28; slide D05.
-
-### 12. Dự đoán khác chính sách cho $V$
-
-- Nhóm: `bổ sung`.
-- Vai trò trong mạch: lấy mẫu quan trọng (importance sampling) một bước; không phải thuật toán điều khiển thứ tư.
-- Kết nối vào: phân biệt $\mu$ và $\pi$ ở chủ đề 03.
-- Kết nối ra: quay lại ba thuật toán điều khiển chính.
-- Nguồn: PDF tr. 18–19; slide D06–D07.
-
-### 13. Ba thuật toán, ba cơ chế
-
-- Nhóm: `cốt lõi`.
-- Vai trò trong mạch: so đích, thời điểm cập nhật, quan hệ chính sách và điều kiện hành vi.
-- Kết nối vào: cả ba thuật toán.
-- Kết nối ra: chi phí ở chủ đề 14.
-- Nguồn: PDF tr. 22–23, 30; slide E00.
-
-### 14. Chi phí bảng và chặn Hoeffding
-
-- Nhóm: `bổ sung`.
-- Vai trò trong mạch: chi phí bộ nhớ và chọn hành động; chặn xác suất chỉ cho trung bình vô hướng i.i.d. cố định.
-- Kết nối vào: bảng tổng hợp.
-- Kết nối ra: giới hạn kết luận ở chủ đề 15.
-- Nguồn: PDF tr. 29; slide E01–E02.
-
-### 15. Phạm vi kết luận và cầu nối sang xấp xỉ hàm
-
-- Nhóm: `cốt lõi`.
-- Vai trò trong mạch: thu hồi mục tiêu, ba bài tập tổng hợp, mở Bài 07.
-- Kết nối vào: toàn bài.
-- Kết nối ra: Bài 07 thay bảng bằng hàm xấp xỉ.
-- Nguồn: PDF tr. 23, 25–30; slide E03, X01–X03.
-
-## Ký hiệu và quy ước
-
-- $\mathcal S$: tập trạng thái hữu hạn; $\mathcal A(s)$: tập hành động hợp lệ tại $s$; $m_s=|\mathcal A(s)|$; $A_{\max}=\max_{s\in\mathcal S}|\mathcal A(s)|$.
-- $\mathcal X=\{(s,a):s\in\mathcal S,\ a\in\mathcal A(s)\}$: tập cặp trạng thái–hành động hợp lệ.
-- $\mathcal X_{\mathrm{reach}}\subseteq\mathcal X$: các cặp có thể được ghé từ phân phối khởi đầu dưới cơ chế thăm dò đang xét. Mọi kết luận hội tụ của bài chỉ phát biểu trên miền này.
-- $Q_t(s,a)$: bảng ước lượng trên $\mathcal X$ trước cập nhật thứ $t$; $q_\pi(s,a)$ và $q_*(s,a)$: giá trị hành động thật của $\pi$ và giá trị tối ưu.
-- $g_Q(s)\in\arg\max_{a\in\mathcal A(s)}Q(s,a)$: một hành động tham lam theo quy tắc phá hòa cố định.
-- $\mu_t$: chính sách hành vi tại chuyển $t$; $\mu$: chính sách hành vi sinh dữ liệu; $\pi$: chính sách đích.
-- $\rho_t=\pi(A_t\mid S_t)/\mu_t(A_t\mid S_t)$: tỉ số lấy mẫu độ quan trọng từng bước.
-- $N(s,a)$, $N_k(s,a)$: bộ đếm cập nhật của cặp; $N_k(s,a)$ là giá trị đến hết lượt $k$.
-- $\alpha_n(s,a)$: bước học ở lần cập nhật thứ $n$ của cặp $(s,a)$.
-- $Y_t^{\mathrm{SARSA}}=R_{t+1}+\gamma Q_t(S_{t+1},A_{t+1})$; $Y_t^Q=R_{t+1}+\gamma\max_aQ_t(S_{t+1},a)$.
-- Chỉ số $k$ đánh lượt, $t$ đánh chuyển, $n$ đánh lần cập nhật riêng của từng cặp. Trạng thái kết thúc có giá trị 0. Toàn bài dùng $0\le\gamma\le1$; các định lý hội tụ dùng $0\le\gamma<1$ với MDP hữu hạn và phần thưởng bị chặn.
+Điều khiển Monte Carlo (MC), Sarsa và Q-learning học giá trị hành động từ kinh nghiệm. Bài toán được xét có tập trạng thái và hành động hữu hạn, với giá trị được biểu diễn bằng bảng. Mỗi phương pháp được xác định qua dữ liệu quan sát, mục tiêu cập nhật và điều kiện bảo đảm hội tụ.
 
 <!-- note-topic-id: lec-06-topic-01 -->
-## Dự đoán sang điều khiển phi mô hình
+## 1. Bài toán điều khiển từ kinh nghiệm
 
-Bài 05 giữ chính sách cố định và chỉ ước lượng giá trị. Khi mô hình chuyển và hàm thưởng không được cung cấp, tác tử chỉ quan sát các chuyển $(S_t,A_t,R_{t+1},S_{t+1})$. Câu hỏi của bài này: làm sao học trực tiếp một chính sách tốt, hoặc học $Q$ để suy ra chính sách tối ưu, chỉ từ dữ liệu tương tác.
+### 1.1. Quyết định tại một trạng thái
 
-Trực giác: điều khiển là vòng lặp hai việc. Chính sách hiện tại sinh trải nghiệm; trải nghiệm cập nhật bảng $Q$; bảng $Q$ mới lại suy ra chính sách tốt hơn. Thành phần làm phân phối dữ liệu thay đổi trong lúc học là chính sách hành vi, vì nó được suy ra lại từ $Q$ sau mỗi lần cập nhật.
+Xét chuỗi năm trạng thái A–B–C–D–E. Mỗi lượt tương tác bắt đầu tại D. Tác tử cần chọn đi trái hoặc đi phải từ kinh nghiệm đã thu được. Đi phải từ D kết thúc ngay tại E và nhận thưởng 10. Đi trái mở ra một phần tiếp nối; kết quả của lựa chọn này còn phụ thuộc các hành động sau đó.
 
-Thiết lập của bài là MDP bảng hữu hạn với phần thưởng bị chặn. MC chỉ áp dụng khi lượt kết thúc gần chắc chắn và phần thưởng tích lũy hữu hạn. Bài toán theo lượt đặt giá trị trạng thái kết thúc bằng không. Nguồn tr. 15 ghi môi trường "tối đa 3 bước" nhưng không nêu quy ước phần thưởng tích lũy nếu cắt trước trạng thái kết thúc, nên bài không dùng mệnh đề này; giả thiết kết thúc gần chắc chắn của MC vẫn phải nêu riêng.
+![Chuỗi A–B–C–D–E với D là trạng thái đầu; A và E kết thúc; nhãn cạnh chỉ hành động và phần thưởng nhận trên chuyển tiếp.](img/lec-06/chain-five-states.svg)
 
-::: example Vòng học trên một lượt
-Chính sách $\varepsilon$-tham lam theo $Q$ chọn hành động tại mỗi trạng thái; môi trường trả về phần thưởng và trạng thái kế tiếp; sau lượt (hoặc sau mỗi chuyển, tùy thuật toán), bảng $Q$ được cập nhật; chính sách được suy ra lại. Không bước nào dùng xác suất chuyển $P$ hay kỳ vọng thưởng $R$ của MDP.
-:::
+Tập trạng thái không kết thúc là $\mathcal S=\{B,C,D\}$. Tập có bổ sung trạng thái kết thúc là $\mathcal S^+=\{A,B,C,D,E\}$. Tại mỗi $s\in\mathcal S$, tập hành động hợp lệ là $\mathcal A(s)=\{0,1\}$: hành động 0 đi trái, hành động 1 đi phải. Chuyển trạng thái là tất định. Thưởng được nhận khi chuyển vào trạng thái kế tiếp:
 
-::: exercise Câu hỏi kiểm tra
-Phân biệt dự đoán và điều khiển bằng một câu mỗi loại, và chỉ ra thành phần nào trong vòng học làm phân phối dữ liệu thay đổi.
+| Trạng thái kế tiếp | Phần thưởng |
+|---|---:|
+| A | 1000 |
+| E | 10 |
+| B, C hoặc D | $-1$ |
+
+Hệ số chiết khấu của ví dụ là $\gamma=1$. Lượt kết thúc khi vào A hoặc E; sau đó không có hành động trong lượt ấy. Giá trị tiếp nối tại trạng thái kết thúc bằng 0 vì phần thưởng cuối đã được nhận trên chuyển tiếp. Việc dừng ghi dữ liệu tại B, C hoặc D không biến trạng thái đó thành trạng thái kết thúc.
+
+Mô hình này được công bố để kiểm tra phép tính. Các thuật toán phi mô hình chỉ sử dụng mẫu tương tác và tập hành động hợp lệ; chúng không dùng xác suất chuyển hay kỳ vọng phần thưởng để tính cập nhật.
+
+### 1.2. Từ dự đoán đến điều khiển
+
+Trong bài toán dự đoán, chính sách được cho trước và cần ước lượng giá trị của nó. Trong bài toán điều khiển, cách chọn hành động cũng cần được cải thiện. Một giá trị trạng thái mô tả kết quả trung bình khi tiếp tục theo chính sách, nhưng chưa tách riêng ảnh hưởng của từng hành động tại trạng thái ấy. Khi không biết mô hình chuyển, việc so sánh hành động cần các ước lượng theo cặp trạng thái–hành động.
+
+Các tiên quyết gồm quá trình quyết định Markov (MDP), chính sách, kỳ vọng có điều kiện, giá trị trạng thái và lợi tức. Giả thiết Markov yêu cầu phân phối trạng thái kế tiếp và phần thưởng, khi đã biết trạng thái hiện tại và hành động, không còn phụ thuộc phần lịch sử trước đó. Bài học xét trạng thái được quan sát đầy đủ và động lực môi trường không đổi theo thời gian. Monte Carlo dự đoán dùng lợi tức của một lượt hoàn chỉnh; phương pháp sai phân thời gian (TD), với biến thể TD(0), dùng thưởng vừa nhận cùng một ước lượng giá trị tiếp nối.
+
+Sau bài học, người học cần thực hiện được các công việc sau:
+
+- Diễn giải giá trị hành động và phân biệt giá trị đúng với bảng ước lượng.
+- Tính xác suất chọn hành động có thăm dò, kể cả khi nhiều hành động đồng hạng.
+- Thực hiện MC lần ghé đầu, Sarsa và Q-learning trên dữ liệu đã cho.
+- Giải thích vai trò của hành động kế tiếp, chính sách hành vi và trạng thái kết thúc.
+- Kiểm tra các giả thiết về dữ liệu, bước học và thăm dò trước khi viện dẫn hội tụ.
+
+### 1.3. Câu hỏi kiểm tra 1: thông tin trong một mẫu
+
+::: exercise
+Câu hỏi: Cho mẫu $(D,1,10,E)$. Xác định trạng thái đầu, hành động, phần thưởng và trạng thái kế tiếp. Mẫu này cung cấp dữ liệu quan sát nào về hành động trái tại D? Xác định số hành động còn thực hiện trong lượt.
 :::
 
 ::: hint
-So sánh đối tượng được học: giá trị của một chính sách cố định hay chính sách đang thay đổi.
+Đọc bộ bốn theo thứ tự trạng thái, hành động, thưởng, trạng thái kế tiếp. Phân biệt một hành động đã được thực hiện với hành động chưa xuất hiện trong dữ liệu. Dùng quy ước kết thúc tại A và E.
 :::
 
 ::: solution
-Dự đoán: giữ $\pi$ cố định, ước lượng $v_\pi$ hoặc $q_\pi$. Điều khiển: vừa ước lượng $Q$, vừa cải thiện chính sách sinh dữ liệu. Thành phần làm phân phối dữ liệu thay đổi là chính sách hành vi, vì nó được suy ra lại từ bảng $Q$ sau mỗi lần cập nhật. (Nguồn: PDF tr. 3, 6; slide P01.)
+Trạng thái đầu là D; hành động 1 đi phải; phần thưởng là 10; trạng thái kế tiếp là E. E kết thúc lượt, nên không còn hành động nào trong lượt.
+
+Mẫu không chứa lần thực hiện hành động 0 tại D hoặc lợi tức sau hành động ấy. Thông tin mô hình của bài tập có thể được dùng cho một suy luận riêng, nhưng mẫu đi phải chưa phải một quan sát của hành động trái. Việc học để so sánh hai hành động cần giữ các ước lượng riêng cho hai cặp $(D,0)$ và $(D,1)$.
 :::
+
+Nguồn: Tạ Việt Cường, [Điều khiển phi mô hình](../RL-hk2-2025-2026/lecture-06-model-free-control.pdf), tr. 3–7, 15–16; Sutton và Barto, [Reinforcement Learning: An Introduction, ấn bản 2](https://incompleteideas.net/book/the-book-2nd.html), §5.2 và §6.2.
 
 <!-- note-topic-id: lec-06-topic-02 -->
-## Giá trị hành động và chính sách epsilon-tham lam
+## 2. Giá trị hành động và thăm dò
 
-Vấn đề: để cải thiện chính sách cần so sánh các hành động tại cùng một trạng thái; $v_\pi(s)$ không cho phép so sánh đó, $q_\pi(s,a)$ cho phép. Vì mô hình không có, ta học bảng $Q$ trên miền $\mathcal X=\{(s,a):s\in\mathcal S,\ a\in\mathcal A(s)\}$, tức tập các cặp trạng thái–hành động hợp lệ đã nêu ở mục Ký hiệu; bảng là một hàm $Q:\mathcal X\to\mathbb R$ ước lượng từ mẫu.
+### 2.1. Hai ước lượng tại cùng trạng thái
 
-Trực giác: từ bảng $Q$ suy ra hành động tham lam $g_Q(s)$ bằng quy tắc phá hòa tất định, ví dụ chọn hành động có chỉ số nhỏ nhất trong các hành động đạt cực đại. Lý do cần phá hòa tất định: nếu có nhiều hành động cùng đạt cực đại, quy tắc cố định giúp $g_Q(s)$ là một hàm xác định của bảng $Q$, để chính sách suy ra và các phát biểu sau này không phụ thuộc lựa chọn tùy ý. Quy tắc này chỉ làm $g_Q$ xác định; nó không tự là điều kiện đủ cho hội tụ. Chính sách tham lam một mình không thăm dò, nên điều khiển dùng chính sách $\varepsilon$-tham lam.
+Bảng $Q$ chứa một số thực cho mỗi cặp $(s,a)$ với $s\in\mathcal S$ và $a\in\mathcal A(s)$. Trong chuỗi A–E, bảng có sáu ô. Bảng khởi tạo I được dùng cho ví dụ MC tham lam và cho hai lần chạy riêng của Sarsa, Q-learning:
 
-Định nghĩa. Với $m_s=|\mathcal A(s)|$ và $g_Q(s)$ đã cố định:
+| Trạng thái | $Q_0(s,0)$: trái | $Q_0(s,1)$: phải |
+|---|---:|---:|
+| B | 0 | 1 |
+| C | 1 | 0 |
+| D | 0 | 1 |
 
-$$\pi_\varepsilon(a\mid s)=\begin{cases}1-\varepsilon+\varepsilon/m_s,&a=g_Q(s),\\ \varepsilon/m_s,&a\ne g_Q(s).\end{cases}$$
+Tại D, chọn hành động có giá trị lớn nhất trong bảng dẫn tới đi phải. Các số khởi tạo chưa phải quan sát và chưa xác định giá trị đúng. Nếu mọi lượt đều bắt đầu ở D rồi đi phải tới E, ô $(D,0)$ không nhận thêm dữ liệu. Trong biểu diễn bảng, cập nhật một cặp không trực tiếp thay đổi ước lượng của các cặp khác, dù các trạng thái có đặc điểm tương tự.
 
-Cơ chế: với xác suất $1-\varepsilon$ chọn $g_Q(s)$; với xác suất $\varepsilon$ chọn đều trong $\mathcal A(s)$. Vì nhánh thăm dò cũng có thể chọn $g_Q(s)$, xác suất tổng của hành động này là $1-\varepsilon+\varepsilon/m_s$, mỗi hành động khác nhận $\varepsilon/m_s$.
+Xét riêng chính sách tiếp nối $\pi_L$, luôn chọn trái tại B, C và D. Nếu hành động đầu tại D là 0, phần tiếp nối theo $\pi_L$ tạo lượt D–C–B–A, với tổng phần thưởng $-1-1+1000=998$. Nếu hành động đầu tại D là 1, lượt kết thúc ngay tại E và nhận 10. Hai số này mô tả hai hành động đầu dưới cùng một chính sách tiếp nối; chúng khác các số khởi tạo trong bảng I.
 
-::: example Tính xác suất $\varepsilon$-tham lam
-Tại một trạng thái có $m_s=2$ hành động, $\varepsilon=0{,}25$, hành động tham lam là 1. Khi đó $\pi_\varepsilon(1\mid s)=1-0{,}25+0{,}25/2=0{,}875$ và $\pi_\varepsilon(0\mid s)=0{,}25/2=0{,}125$. Tổng hai xác suất bằng 1.
+### 2.2. Lợi tức và giá trị đúng
+
+Trong một lượt, $S_t$ là trạng thái tại thời điểm $t$, $A_t$ là hành động được thực hiện và $R_{t+1}$ là phần thưởng nhận sau hành động ấy. $T$ là thời điểm kết thúc thật của lượt. Lợi tức từ thời điểm $t<T$ là
+
+$$
+G_t=\sum_{j=t}^{T-1}\gamma^{j-t}R_{j+1},\qquad G_T=0.
+$$
+
+Với $0\le\gamma\le1$, mỗi phần thưởng được nhân với hệ số chiết khấu theo số bước kể từ $t$. Khi dùng kỳ vọng ở $\gamma=1$, cần giả thiết lợi tức khả tích, tức $\mathbb E[|G_t|]<\infty$. Trong miền thưởng bị chặn và $0\le\gamma<1$, tổng chiết khấu bị chặn ngay cả khi quá trình tiếp tục vô hạn. Với bài toán tiếp tục, tổng được hiểu là chuỗi vô hạn; với bài toán kết thúc, có thể đặt các thưởng sau kết thúc bằng 0.
+
+Chính sách $\pi(a\mid s)$ cho xác suất chọn hành động $a$ tại trạng thái $s$. Với một chính sách cố định theo thời gian, giá trị trạng thái và giá trị hành động lần lượt là
+
+$$
+v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s],\qquad
+q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a].
+$$
+
+Trong $q_\pi(s,a)$, hành động đầu được cố định bằng $a$; các hành động sau được lấy theo $\pi$. Kỳ vọng bao gồm cả ngẫu nhiên của môi trường và của chính sách. Do đó
+
+$$
+v_\pi(s)=\sum_{a\in\mathcal A(s)}\pi(a\mid s)q_\pi(s,a).
+$$
+
+$Q(s,a)$ là ước lượng được khởi tạo và cập nhật bằng dữ liệu. Ký hiệu chữ thường $q_\pi$ chỉ giá trị đúng của chính sách xác định. Trong miền bài toán có giá trị tối ưu hữu hạn, $q_*(s,a)=\sup_\pi q_\pi(s,a)$ là giá trị hành động tối ưu; các kết quả hội tụ tới $q_*$ ở phần sau được phát biểu trong miền hữu hạn có chiết khấu.
+
+::: example
+Với chính sách $\pi_L$, hai giá trị tại D là
+
+$$
+q_{\pi_L}(D,0)=998,\qquad q_{\pi_L}(D,1)=10.
+$$
+
+Sau hành động đầu cố định, chính sách $\pi_L$ dẫn tới kết thúc sau hữu hạn bước. Chính sách tham lam của bảng I lại đi từ B sang C và từ C về B. Vòng này nhận thưởng $-1$ ở mỗi bước. Với $\gamma=1$, lợi tức của vòng không khả tích và không cho một giá trị hữu hạn. Vì vậy không được gán 998 cho hành động trái tại D dưới chính sách tiếp nối tham lam của bảng I.
 :::
 
-::: exercise Câu hỏi kiểm tra
-Với $m_s=4$, $\varepsilon=0{,}2$ và hành động tham lam là 2, tính $\pi_\varepsilon(a\mid s)$ cho từng $a\in\{0,1,2,3\}$ và kiểm tra tổng bằng 1.
+![Chính sách tham lam từ bảng I tạo vòng B–C nhận thưởng âm; từ D đi phải tới E và kết thúc.](img/lec-06/greedy-chain.svg)
+
+### 2.3. Đánh giá, cải thiện và thu thập dữ liệu
+
+Đánh giá chính sách cập nhật ước lượng giá trị từ dữ liệu. Cải thiện chính sách thay đổi phân phối chọn hành động theo các ước lượng ấy. Chính sách mới tiếp tục sinh dữ liệu, nên cách chọn hành động quyết định các ô nào của bảng được cập nhật.
+
+![Vòng điều khiển gồm dữ liệu tương tác, cập nhật bảng Q, xác định chính sách và tương tác tiếp với môi trường.](img/lec-06/control-loop.svg)
+
+Thăm dò tạo cơ hội quan sát các hành động chưa được ưu tiên. Tại D của bảng I, dành xác suất $\varepsilon=1/4$ để chọn đều trong hai hành động; với xác suất $1-\varepsilon=3/4$, chọn hành động cực đại 1. Khi đó
+
+$$
+\Pr(A=0\mid D)=\frac14\frac12=\frac18,
+\qquad
+\Pr(A=1\mid D)=\frac34+\frac14\frac12=\frac78.
+$$
+
+Nhánh thăm dò chọn trong toàn bộ tập hành động, nên cũng có thể chọn hành động cực đại. Quy tắc xác suất này sử dụng các lần lấy mẫu ngẫu nhiên thích hợp; dãy số tất định ngắn trong một bài tính chỉ cung cấp dữ kiện để thực hiện thao tác.
+
+### 2.4. Chính sách $\varepsilon$-tham lam
+
+Đặt $m(s)=|\mathcal A(s)|$ và gọi tập hành động đạt cực đại của hàng $s$ là
+
+$$
+\mathcal G_Q(s)=\operatorname*{arg\,max}_{a\in\mathcal A(s)}Q(s,a).
+$$
+
+Quy ước chia đều phần khai thác giữa các hành động đồng hạng cho phân phối
+
+$$
+\pi_\varepsilon(a\mid s)
+=\frac{\varepsilon}{m(s)}
++(1-\varepsilon)\frac{\mathbf 1\{a\in\mathcal G_Q(s)\}}{|\mathcal G_Q(s)|},
+\qquad 0\le\varepsilon\le1.
+$$
+
+Ký hiệu $\mathbf1\{E\}$ bằng 1 khi mệnh đề $E$ đúng và bằng 0 khi sai. Thành phần chọn đều có tổng $\varepsilon$; thành phần khai thác có tổng $1-\varepsilon$. Mỗi xác suất không âm và tổng bằng 1. Nếu hai hành động đồng hạng, mỗi hành động có xác suất $1/2$ với mọi $\varepsilon$ theo quy ước này.
+
+Một chính sách thuộc lớp $\varepsilon$-mềm nếu
+
+$$
+\pi(a\mid s)\ge\frac{\varepsilon}{m(s)}
+\quad\forall s\in\mathcal S,\ a\in\mathcal A(s).
+$$
+
+Chính sách $\varepsilon$-tham lam ở trên thuộc lớp này. Một chính sách $\varepsilon$-mềm bất kỳ còn có thể phân bổ phần xác suất dư cho các hành động không cực đại. Với $\varepsilon>0$, điều kiện mềm cho mỗi hành động xác suất dương khi trạng thái đã được ghé; khả năng đạt tới trạng thái cần được xét riêng.
+
+### 2.5. Cải thiện trong lớp chính sách mềm
+
+Xét MDP hữu hạn, có động lực không đổi theo thời gian, có phần thưởng bị chặn và $0\le\gamma<1$. Cố định cùng $\varepsilon\in[0,1)$. Cho $\pi$ là chính sách $\varepsilon$-mềm và biết chính xác $q_\pi$. Nếu $\pi'$ là chính sách $\varepsilon$-tham lam theo $q_\pi$, thì
+
+$$
+v_{\pi'}(s)\ge v_\pi(s)\qquad\forall s\in\mathcal S.
+$$
+
+::: proof
+Với mỗi trạng thái $s$, đặt
+
+$$
+w(a\mid s)=\frac{\pi(a\mid s)-\varepsilon/m(s)}{1-\varepsilon}.
+$$
+
+Do $\pi$ là $\varepsilon$-mềm, các trọng số $w(a\mid s)$ không âm. Tổng của chúng bằng $(1-\varepsilon)/(1-\varepsilon)=1$. Bởi trung bình có trọng số không vượt giá trị lớn nhất,
+
+$$
+\begin{aligned}
+\sum_a\pi'(a\mid s)q_\pi(s,a)
+&=\frac{\varepsilon}{m(s)}\sum_aq_\pi(s,a)
+ +(1-\varepsilon)\max_aq_\pi(s,a)\\
+&\ge\frac{\varepsilon}{m(s)}\sum_aq_\pi(s,a)
+ +(1-\varepsilon)\sum_aw(a\mid s)q_\pi(s,a)\\
+&=\sum_a\pi(a\mid s)q_\pi(s,a)=v_\pi(s).
+\end{aligned}
+$$
+
+Để suy từ bất đẳng thức một bước sang giá trị toàn bộ phần tiếp nối, đặt $P(s'\mid s,a)$ là xác suất chuyển và $\bar r(s,a)=\mathbb E[R_{t+1}\mid S_t=s,A_t=a]$ là thưởng kỳ vọng. Với một hàm bị chặn $u$ trên trạng thái, quy ước $u=0$ tại trạng thái kết thúc và định nghĩa toán tử Bellman của $\pi'$:
+
+$$
+(T^{\pi'}u)(s)=\sum_a\pi'(a\mid s)
+\left[\bar r(s,a)+\gamma\sum_{s'\in\mathcal S^+}P(s'\mid s,a)u(s')\right].
+$$
+
+Phương trình Bellman của $q_\pi$ cho $(T^{\pi'}v_\pi)(s)=\sum_a\pi'(a\mid s)q_\pi(s,a)\ge v_\pi(s)$. Toán tử bảo toàn thứ tự vì các hệ số xác suất và $\gamma$ không âm. Đặt $u_0=v_\pi$ và $u_{j+1}=T^{\pi'}u_j$. Từ $u_1\ge u_0$, quy nạp cho $u_{j+1}\ge u_j\ge v_\pi$.
+
+Với hai hàm bị chặn $u,z$ và chuẩn cực đại $\|u\|_\infty=\max_s|u(s)|$, tổng xác suất bằng 1 cho
+
+$$
+\|T^{\pi'}u-T^{\pi'}z\|_\infty\le\gamma\|u-z\|_\infty.
+$$
+
+Vì $\gamma<1$, các lần lặp hội tụ tới điểm bất động duy nhất $v_{\pi'}$. Lấy giới hạn trong $u_j\ge v_\pi$ suy ra $v_{\pi'}\ge v_\pi$.
+
+Khi $\varepsilon=1$, mọi xác suất phải bằng $1/m(s)$ để vừa thỏa cận dưới vừa có tổng 1. Hai chính sách đều là chính sách đều, nên có đẳng thức. Trường hợp này được xử lý riêng, không chia cho $1-\varepsilon$.
+:::
+
+Mệnh đề sử dụng giá trị chính xác $q_\pi$. Một bảng $Q$ từ mẫu có thể xếp sai thứ tự hành động, nên mệnh đề chưa chứng minh mỗi cập nhật mẫu làm tăng giá trị thật. Khi giữ $\varepsilon>0$, việc cải thiện diễn ra trong lớp chính sách mềm tương ứng; giá trị tốt nhất trong lớp ấy có thể thấp hơn giá trị tối ưu trên toàn bộ chính sách.
+
+### 2.6. Câu hỏi kiểm tra 2: xác suất và đối tượng ước lượng
+
+::: exercise
+Câu hỏi: Cho $Q(D,0)=0$, $Q(D,1)=1$ và $\varepsilon=1/4$.
+
+1. Tính xác suất của mỗi hành động theo quy tắc $\varepsilon$-tham lam.
+2. Tính lại khi hai ô đều bằng 1 và phần khai thác chia đều.
+3. Diễn giải hành động đầu và chính sách tiếp nối trong $q_\pi(D,0)$.
+4. Xác định bảng khởi tạo đã đủ căn cứ để áp dụng mệnh đề cải thiện chính sách hay chưa.
 :::
 
 ::: hint
-Nhớ rằng nhánh thăm dò chọn đều trên cả $m_s$ hành động, gồm cả hành động tham lam.
+Tách xác suất của nhánh thăm dò và nhánh khai thác. Trong định nghĩa $q_\pi$, phân biệt hành động được điều kiện hóa với các hành động tiếp theo. Đối chiếu giả thiết giá trị chính xác và miền chiết khấu của mệnh đề.
 :::
 
 ::: solution
-Hành động 2: $1-0{,}2+0{,}2/4=0{,}85$. Ba hành động còn lại mỗi cái $0{,}2/4=0{,}05$. Tổng $0{,}85+3\cdot0{,}05=1$. (Nguồn: PDF tr. 10–11; slide A01.)
+Khi hành động 1 cực đại duy nhất, phân phối là $(1/8,7/8)$. Khi đồng hạng, mỗi hành động nhận $\varepsilon/2+(1-\varepsilon)/2=1/2$.
+
+$q_\pi(D,0)$ cố định hành động đầu bằng 0 và dùng $\pi$ cho mọi hành động tiếp theo. Bảng khởi tạo chưa được xác nhận bằng $q_\pi$, nên chưa đủ để áp dụng mệnh đề cải thiện. Ngoài ra, mệnh đề đã nêu dùng $\gamma<1$, còn chuỗi minh họa dùng $\gamma=1$; áp dụng một kết quả không chiết khấu cần giả thiết riêng.
 :::
+
+Nguồn: Tạ Việt Cường, [bài giảng nguồn](../RL-hk2-2025-2026/lecture-06-model-free-control.pdf), tr. 6–7, 11, 15–17, 24; Sutton và Barto, [giáo trình](https://incompleteideas.net/book/the-book-2nd.html), §§5.2–5.4, tr. 96–103. Quy ước chia đều giữa các cực đại được nêu tường minh để xử lý đồng hạng.
 
 <!-- note-topic-id: lec-06-topic-03 -->
-## Theo chính sách và khác chính sách
+## 3. Điều khiển Monte Carlo
 
-Vấn đề: nguồn tr. 8 mô tả on/off-policy bằng mức độ "gần trùng nhau" giữa các chính sách, cách nói không xác định đối tượng học. Cách phát biểu đúng tách hai vai trò: chính sách hành vi $\mu$ sinh dữ liệu và chính sách đích $\pi$ là đối tượng được học hoặc tối ưu.
+### 3.1. Giá trị hành động từ lượt hoàn chỉnh
 
-Trực giác: cùng một dữ liệu từ $\mu$ có thể dùng để học chính $\mu$ đang hành động, hoặc để học một $\pi$ khác. Cách hiệu chỉnh phụ thuộc thuật toán; khác chính sách không mặc nhiên cần lấy mẫu độ quan trọng.
+Một lượt hoàn chỉnh cung cấp lợi tức sau mỗi cặp trạng thái–hành động đã xuất hiện. MC dùng các lợi tức ấy để cập nhật $Q$, rồi xác định chính sách cho lượt tiếp theo. Chính sách sinh hành động được giữ cố định trong từng lượt, nên lợi tức sau hành động đầu đánh giá chính phần tiếp nối theo chính sách đã sinh dữ liệu. Đây là điều khiển theo chính sách.
 
-| | Theo chính sách | Khác chính sách |
-|---|---|---|
-| Dữ liệu | $\mu$ | $\mu$ |
-| Đối tượng học | cùng chính sách đang hành động | một chính sách đích $\pi$ khác |
-| Ví dụ trong bài | Điều khiển MC đang xét; SARSA | Q-learning; đánh giá có hiệu chỉnh |
+Với bảng I, chọn tham lam tại D tạo lượt D–E, có lợi tức 10. Đặt $N(D,1)=0$ trước khi nhận mẫu, trong đó $N(s,a)$ đếm số lợi tức thực sự dùng cho cặp $(s,a)$. Sau mẫu đầu, $N(D,1)=1$ và
 
-::: exercise Câu hỏi kiểm tra
-Xác định $\mu$ và $\pi$ cho SARSA và cho Q-learning, và giải thích vì sao Q-learning là khác chính sách dù không nhân tỉ số lấy mẫu độ quan trọng.
+$$
+Q(D,1)=1+\frac{10-1}{1}=10.
+$$
+
+Các ô khác giữ nguyên. Giá trị khởi tạo 1 không phải một mẫu quan sát; lấy trung bình $(1+10)/2$ sẽ thêm một quan sát không có trong dữ liệu.
+
+### 3.2. Lần ghé đầu theo cặp và trung bình mẫu
+
+Lần ghé đầu của $(s,a)$ là thời điểm nhỏ nhất $t$ trong lượt thỏa $(S_t,A_t)=(s,a)$. Hai lần ghé cùng một trạng thái nhưng chọn hai hành động khác nhau thuộc hai cặp khác nhau. Với MC lần ghé đầu, mỗi cặp đóng góp nhiều nhất một lợi tức trong một lượt.
+
+Lợi tức được tính lùi từ thời điểm kết thúc:
+
+$$
+G_T=0,\qquad G_t=R_{t+1}+\gamma G_{t+1},\quad t=T-1,\ldots,0.
+$$
+
+Nếu $t$ là lần ghé đầu của $(s,a)$, cập nhật
+
+$$
+\begin{aligned}
+N(s,a)&\leftarrow N(s,a)+1,\\
+Q(s,a)&\leftarrow Q(s,a)+\frac{G_t-Q(s,a)}{N(s,a)}.
+\end{aligned}
+$$
+
+Bộ đếm tăng trước phép chia. Việc tính lợi tức theo thứ tự ngược không đổi nghĩa của lần ghé đầu: chỉ số nhỏ nhất theo thời gian vẫn quyết định mẫu được dùng.
+
+::: derivation
+Gọi $g_1,\ldots,g_n$ là các lợi tức đã chọn cho một cặp qua những lượt có cặp ấy. Với $N_0=0$, cập nhật đầu tiên cho $Q^{(1)}=g_1$. Giả sử sau $n-1$ mẫu, $Q^{(n-1)}=(g_1+\cdots+g_{n-1})/(n-1)$. Khi nhận mẫu thứ $n$,
+
+$$
+Q^{(n)}=Q^{(n-1)}+\frac{g_n-Q^{(n-1)}}n
+=\frac{(n-1)Q^{(n-1)}+g_n}n
+=\frac1n\sum_{i=1}^ng_i.
+$$
+
+Ở đây chỉ số trong ngoặc đếm số lợi tức của cặp đang xét. Nó không phải số lượt toàn cục. Đẳng thức chứng minh dạng trung bình số học của cập nhật; bảo đảm thống kê còn phụ thuộc quá trình sinh các lợi tức.
 :::
 
-::: hint
-Xem đích cập nhật của mỗi thuật toán: đích chứa hành động của chính sách nào?
-:::
+### 3.3. Lấy mẫu từ dãy số của bài tập
 
-::: solution
-SARSA: $\mu$ là chính sách $\varepsilon$-tham lam đang học và $\pi$ cũng chính là $\mu$, vì đích dùng $A_{t+1}$ do $\mu$ chọn. Q-learning: $\mu$ là chính sách hành vi $\varepsilon$-tham lam, còn $\pi$ là chính sách tham lam ngầm thể hiện qua cực đại $\max_aQ(S_{t+1},a)$ trong đích; vì đích không dùng hành động của $\mu$ nên thuật toán khác chính sách, và dạng bảng cập nhật chuẩn không cần nhân $\rho_t$. (Nguồn: PDF tr. 8; slide A02; xem áp dụng ở chủ đề 08, 10, 12.)
-:::
-
-<!-- note-topic-id: lec-06-topic-04 -->
-## Chuỗi năm trạng thái và quy tắc số tất định
-
-Vấn đề: ba thuật toán cần một ví dụ số chung để so sánh. Bài dùng một môi trường, một bảng khởi tạo $Q_0$ và một lượt cố định.
-
-Môi trường: năm trạng thái theo hàng $A\ B\ C\ D\ E$; $A$ và $E$ kết thúc; $D$ là trạng thái bắt đầu; hành động 0 đi trái, 1 đi phải; môi trường tất định; $\gamma=1$ trong ví dụ; thưởng vào $A$ là $+1000$, vào $E$ là $+10$, các chuyển khác là $-1$. Bảng thống nhất:
+Ví dụ tiếp theo dùng bảng II riêng, giữ hai hàng B, C của bảng I và đổi hàng D:
 
 | Trạng thái | $Q_0(s,0)$ | $Q_0(s,1)$ |
-|---|---|---|
+|---|---:|---:|
 | B | 0 | 1 |
 | C | 1 | 0 |
 | D | 1 | 0 |
 
-$Q$ ở trạng thái kết thúc bằng 0. Với bảng này, quan hệ chuyển tham lam là $D\to C$, $C\to B$, $B\to C$: nếu bỏ bộ đếm giới hạn thời gian, quan hệ đó có thể lặp giữa B và C. Sơ đồ B–C chỉ là quan hệ chuyển tham lam theo bảng $Q_0$ thống nhất, không phải MRP đầy đủ của môi trường có giới hạn thời gian. Lượt dùng để tính kết thúc ở $A$ sau đúng ba chuyển.
+Cho $\varepsilon=1/4$, $x_0=1$ và
 
-Giới hạn: quy tắc số chỉ để tái tạo lượt minh họa, không phải bộ lấy mẫu đúng của chính sách $\varepsilon$-tham lam và không dùng để kiểm chứng phân phối.
+$$
+x_j=(2x_{j-1}+1)\bmod5,\qquad u_j=\frac{x_j+1}{5},\quad j=1,2,\ldots.
+$$
 
-Quy tắc số tất định để cố định lượt:
+Chỉ số $j$ đếm số đã tiêu thụ, khác thời điểm tương tác $t$. Với mỗi lần chọn hành động, đọc một số $u$. Nếu $u>1/4$, chọn hành động cực đại. Nếu $u\le1/4$, đọc thêm một số: chọn trái khi số bổ sung không vượt $1/2$, chọn phải trong trường hợp còn lại. Các hàng được dùng ở đây có cực đại duy nhất.
 
-- Sinh dãy: $u_t=(x_t+1)/5$ với $x_t=(2x_{t-1}+1)\bmod 5$, $x_0=1$, cho $u_1,u_2,u_3,u_4=0{,}8;\,0{,}6;\,0{,}2;\,0{,}4$.
-- Mở cổng: đặt $\varepsilon=0{,}25$; thăm dò khi $u_t\le\varepsilon$.
-- Chọn hành động khi cổng mở: dùng số kế, chọn hành động 0 nếu $u_{t+1}\le0{,}5$, ngược lại chọn 1.
-- Áp dụng: tại D, $u_1=0{,}8>0{,}25$ nên khai thác, chọn hành động tham lam 0; tại C, $u_2=0{,}6>0{,}25$ nên khai thác, chọn 0; tại B, $u_3=0{,}2\le0{,}25$ mở cổng thăm dò, số kế $u_4=0{,}4\le0{,}5$ chọn hành động 0. Lượt là $(D,0)\to(C,0)\to(B,0)\to A$.
+| Trạng thái | Số quyết định nhánh | Số bổ sung | Hành động |
+|---|---:|---:|---|
+| D | $u_1=4/5$ | Không dùng | 0, cực đại |
+| C | $u_2=3/5$ | Không dùng | 0, cực đại |
+| B | $u_3=1/5$ | $u_4=2/5$ | 0, thăm dò |
 
-::: example Tái tạo lượt từ quy tắc số
-Kiểm tra từng bước như trên: hai lần khai thác tại D và C theo hành động tham lam, một lần thăm dò tại B với số kế chọn 0, rồi chuyển sang $A$ và kết thúc. Ba cặp được ghé là $(D,0)$, $(C,0)$, $(B,0)$.
-:::
+Dãy trạng thái bộ sinh là $x_1=3,x_2=2,x_3=0,x_4=1$. Quy tắc tiêu thụ số cho lượt D–C–B–A. Dãy tất định này có chu kỳ, không tạo các mẫu đều độc lập và không chứng minh độ phủ dài hạn của thuật toán.
 
-::: exercise Câu hỏi kiểm tra
-Dùng cùng quy tắc số nhưng đổi cổng thành $\varepsilon=0{,}5$: lượt mới đi qua những cặp nào, và kết thúc ở đâu?
+### 3.4. Quy trình MC qua nhiều lượt
+
+Đầu vào gồm môi trường lấy mẫu, tập hành động hợp lệ, phân phối trạng thái đầu $d_0$ trên $\mathcal S$, hệ số $\gamma$, bảng hữu hạn $Q_0$, lịch $0<\varepsilon_k\le1$ và ngân sách $K$ lượt hoàn chỉnh, với $K$ là số nguyên dương. Các chính sách được dùng phải sinh lượt kết thúc gần chắc chắn và có lợi tức khả tích. Đầu ra là bảng $Q$ cùng chính sách mềm hiện hành từ bảng ấy.
+
+1. Khởi tạo một lần $Q\leftarrow Q_0$ và $N(s,a)\leftarrow0$ cho mọi cặp hợp lệ.
+2. Với mỗi lượt $k=1,\ldots,K$, đặt lại quỹ đạo và ánh xạ chỉ số ghé đầu $f$; giữ nguyên $Q,N$ đã tích lũy. Ký hiệu $Q^{[k]}$ là bảng trước lượt. Cố định $\pi_k$ bằng chính sách $\varepsilon_k$-tham lam theo $Q^{[k]}$, rồi lấy $S_0\sim d_0$.
+3. Tại thời điểm $t$ của lượt, lấy $A_t\sim\pi_k(\cdot\mid S_t)$, thực hiện hành động và nhận $R_{t+1},S_{t+1}$. Lưu chuyển tiếp. Nếu cặp $(S_t,A_t)$ chưa có trong $f$, đặt $f(S_t,A_t)=t$. Lặp tới trạng thái kết thúc; gọi thời điểm đó là $T$. Bảng và chính sách không đổi trong lúc thu thập.
+4. Đặt $G_T=0$ và tính $G_t$ theo truy hồi lùi. Với mỗi cặp xuất hiện trong lượt, dùng duy nhất lợi tức $G_{f(s,a)}$, tăng $N(s,a)$ rồi áp dụng cập nhật trung bình mẫu.
+5. Tạo chính sách $\varepsilon_k$-tham lam theo bảng mới. Nếu còn lượt, bước 2 dùng $\varepsilon_{k+1}$ cùng bảng giữ lại; nếu $k=K$, trả bảng và chính sách vừa tạo.
+
+Cải thiện sau lượt không thay đổi chính sách đã sinh lượt vừa hoàn tất. Một tiền tố bị cắt tại trạng thái chưa kết thúc không đủ cho quy trình MC dùng lợi tức hoàn chỉnh này.
+
+Đặt $M=\sum_{s\in\mathcal S}m(s)$ là số cặp hợp lệ. Lưu $Q,N$, quỹ đạo và $f$ cần bộ nhớ $O(M+T)$ cho lượt hiện tại. Với phép tra cứu chỉ số ghé đầu trong thời gian hằng, tính lợi tức và chọn mẫu cần $O(T)$; chi phí tìm cực đại để chọn hoặc cập nhật chính sách được cộng riêng. Ngân sách $K$ xác định điểm dừng thực hành, không phải chứng nhận hội tụ.
+
+### 3.5. Cập nhật từ lượt D–C–B–A
+
+![Lượt D–C–B–A gồm ba hành động trái, nhận thưởng âm một, âm một và một nghìn; lợi tức lần lượt là 998, 999 và 1000.](img/lec-06/episode-return.svg)
+
+Với $\gamma=1$, tính từ cuối lượt cho $G_2=1000$, $G_1=999$ và $G_0=998$. Mỗi cặp xuất hiện một lần. Khởi tạo $N_0=0$ cho bảng II, kết quả sau lượt là
+
+| Trạng thái | $Q(s,0)$ | $Q(s,1)$ | $N(s,0)$ | $N(s,1)$ |
+|---|---:|---:|---:|---:|
+| B | 1000 | 1 | 1 | 0 |
+| C | 999 | 0 | 1 | 0 |
+| D | 998 | 0 | 1 | 0 |
+
+Chính sách mềm từ bảng mới ưu tiên trái tại D. Kết quả này là một cập nhật từ dữ liệu; nó chưa chứng nhận giá trị chính sách tăng sau từng mẫu. Các lợi tức ở những lượt khác nhau có thể được sinh bởi những chính sách khác nhau.
+
+### 3.6. Câu hỏi kiểm tra 3: lần ghé đầu và mọi lần ghé
+
+::: exercise
+Câu hỏi: Cho lượt D–C–D–C–B–A với dãy hành động $0,1,0,0,0$, dãy thưởng $-1,-1,-1,-1,1000$ và $\gamma=1$. Với $N_0(D,0)=0$, tính $Q(D,0)$ và $N(D,0)$ sau MC lần ghé đầu. Tính lại nếu dùng mọi lần ghé với trung bình mẫu.
 :::
 
 ::: hint
-Xét lần lượt $u_1,u_2,u_3$ với cổng mới; chỉ dùng số kế khi cổng thăm dò mở, và sau một lần dùng $u_{t+1}$ để chọn hành động, số tiếp theo là $u_{t+2}$.
+Đánh số thời điểm từ 0. Tính lợi tức lùi, sau đó chọn các thời điểm có đúng cặp $(D,0)$. Lần ghé đầu được xác định theo chiều thời gian, dù lợi tức được tính theo chiều ngược.
 :::
 
 ::: solution
-Tại D, $u_1=0{,}8>0{,}5$: khai thác, chọn 0, đến C. Tại C, $u_2=0{,}6>0{,}5$: khai thác, chọn 0, đến B. Tại B, $u_3=0{,}2\le0{,}5$: thăm dò; số kế $u_4=0{,}4\le0{,}5$ chọn hành động 0, về C. Tại C, $u_5=0{,}8>0{,}5$: khai thác, chọn 0, đến B. Lượt tiếp tục luân chuyển B–C và không kết thúc sau ba chuyển; điều này cho thấy quan hệ chuyển tham lam có thể lặp khi bỏ giới hạn thời gian, đúng như cảnh báo ở đầu mục. Lưu ý: ví dụ này cố ý bỏ giới hạn thời gian mà nguồn không định nghĩa đầy đủ, nên chỉ dùng để minh họa quan hệ chuyển, không phải mô tả môi trường gốc. (Nguồn: PDF tr. 15–17; slide A03–A04.)
+Các lợi tức theo thứ tự thời gian là $996,997,998,999,1000$. Cặp $(D,0)$ xuất hiện tại $t=0$ và $t=2$, với lợi tức tương ứng 996 và 998.
+
+MC lần ghé đầu dùng mẫu 996, nên $Q(D,0)=996$ và $N(D,0)=1$. MC mọi lần ghé dùng cả hai mẫu, nên $Q(D,0)=(996+998)/2=997$ và $N(D,0)=2$. Giá trị khởi tạo không tính thành mẫu. Tại C, hai lần ghé dùng hai hành động khác nhau; $(C,1)$ và $(C,0)$ được xử lý thành hai cặp riêng.
 :::
+
+Nguồn: Tạ Việt Cường, [bài giảng nguồn](../RL-hk2-2025-2026/lecture-06-model-free-control.pdf), tr. 10–11, 15–17; Sutton và Barto, [giáo trình](https://incompleteideas.net/book/the-book-2nd.html), tr. 93, 99–103. Quy ước tiêu thụ số được làm rõ để xác định duy nhất lượt của bài tập; thuật toán chính dùng lần ghé đầu theo cặp.
+
+<!-- note-topic-id: lec-06-topic-04 -->
+## 4. Sarsa: cập nhật theo hành động kế tiếp
+
+### 4.1. Mục tiêu một bước khi lượt chưa kết thúc
+
+Sau chuyển D–C, phần thưởng $-1$ đã được quan sát nhưng phần cuối lượt chưa có. MC còn thiếu lợi tức hoàn chỉnh. Sarsa thay phần tiếp nối chưa quan sát bằng giá trị ước lượng của hành động đã chọn tại C. Một cập nhật vì thế có thể thực hiện trước khi biết toàn bộ kết quả của lượt.
+
+Các phép tính Sarsa và Q-learning dưới đây dùng $\gamma=1$, bước học $\alpha=0.8=4/5$ và hai bản sao riêng của bảng I:
+
+| Trạng thái | $Q_0(s,0)$ | $Q_0(s,1)$ |
+|---|---:|---:|
+| B | 0 | 1 |
+| C | 1 | 0 |
+| D | 0 | 1 |
+
+Năm mẫu được cho trước như sau. Ký hiệu $S,A,R,S',A'$ rút gọn cho trạng thái hiện tại, hành động, thưởng vừa nhận, trạng thái kế tiếp và hành động kế tiếp.
+
+| Mẫu | $S$ | $A$ | $R$ | $S'$ | $A'$ của Sarsa |
+|---:|---|---:|---:|---|---|
+| 1 | D | 0 | $-1$ | C | 0 |
+| 2 | C | 0 | $-1$ | B | 0 |
+| 3 | B | 0 | 1000 | A | Không có |
+| 4 | D | 1 | 10 | E | Không có |
+| 5 | D | 0 | $-1$ | C | 0 |
+
+Ba mẫu đầu thuộc lượt D–C–B–A. Mẫu 4 thuộc lượt mới D–E. Mẫu 5 thuộc một lượt mới nữa, có dữ liệu hiện tại dừng ở C. Sau A và E, trạng thái đầu được đặt lại về D; bảng giá trị được giữ. C ở mẫu 5 vẫn chưa kết thúc.
+
+Các hành động này là dữ kiện để tính, không phải quỹ đạo duy nhất suy ra từ $\varepsilon=1/4$ hay từ dãy số trong phần MC. Chúng đều có xác suất dương dưới một hành vi $\varepsilon$-tham lam với $\varepsilon>0$. Đối chiếu hai thuật toán trên cùng các mẫu là đối chiếu có điều kiện trên dữ liệu; hai quá trình học không vì thế có cùng phân phối quỹ đạo.
+
+### 4.2. Hai bước tính đầu tiên
+
+Ở mẫu 1, Sarsa nhận thưởng $-1$ rồi dùng giá trị $Q(C,0)=1$ của hành động kế tiếp đã chọn. Mục tiêu là $-1+1=0$, bằng giá trị cũ $Q(D,0)=0$, nên ô này giữ nguyên.
+
+Ở mẫu 2, hành động kế tiếp tại B là 0, có giá trị $Q(B,0)=0$. Mục tiêu bằng $-1+0=-1$. So với ước lượng hiện tại $Q(C,0)=1$, sai lệch bằng $-2$, cho
+
+$$
+Q(C,0)\leftarrow1+0.8(-1-1)=-0.6.
+$$
+
+![Mục tiêu Sarsa cho chuyển từ cặp C, trái tới B dùng hành động trái đã chọn tại B, có giá trị bằng 0; mục tiêu bằng âm một.](img/lec-06/sarsa-target.svg)
+
+Giá trị $Q(B,1)=1$ không tham gia mục tiêu này vì hành động 1 chưa được chọn để tiếp tục lượt. Mọi giá trị phía bên phải được đọc trước khi đổi ô $(C,0)$.
+
+### 4.3. Quy tắc cập nhật
+
+Ký hiệu $Q_t$ là bảng ngay trước cập nhật tại bước tương tác $t$. Nếu trạng thái kế tiếp chưa kết thúc, chọn $A_{t+1}$ theo chính sách từ $Q_t$ và đặt
+
+$$
+Y_t=
+\begin{cases}
+R_{t+1}+\gamma Q_t(S_{t+1},A_{t+1}), & S_{t+1}\in\mathcal S,\\
+R_{t+1}, & S_{t+1}\text{ kết thúc}.
+\end{cases}
+$$
+
+Với bước học $\alpha_t\in(0,1]$, cập nhật
+
+$$
+\begin{aligned}
+\delta_t&=Y_t-Q_t(S_t,A_t),\\
+Q_{t+1}(S_t,A_t)&=Q_t(S_t,A_t)+\alpha_t\delta_t.
+\end{aligned}
+$$
+
+Các ô khác giữ nguyên. $Y_t$ là mục tiêu cập nhật; $\delta_t$ là sai lệch giữa mục tiêu ấy với ước lượng hiện hành, chưa phải sai số thật so với $q_\pi$ hoặc $q_*$. Tên Sarsa gắn với bộ năm $(S_t,A_t,R_{t+1},S_{t+1},A_{t+1})$.
+
+Chính sách chọn hành động trong tương tác cũng chọn hành động của phần tiếp nối trong mục tiêu, nên Sarsa là phương pháp theo chính sách. $A_{t+1}$ được lấy trước cập nhật; nếu tiếp tục tương tác, phải thực hiện chính hành động đã lấy. Chọn lại từ bảng mới có thể làm hành động được thực hiện khác với hành động đã dùng trong mục tiêu.
+
+Tại trạng thái kết thúc, không lấy $A_{t+1}$. Mục tiêu chỉ bằng phần thưởng vừa nhận. Phần thưởng khi vào A hoặc E không được cộng lần nữa như một giá trị tiếp nối.
+
+### 4.4. Quy trình Sarsa với ngân sách cập nhật
+
+Đầu vào gồm môi trường lấy mẫu, tập hành động, phân phối đầu $d_0$ trên $\mathcal S$, $\gamma$, bảng hữu hạn $Q_0$, lịch thăm dò, lịch bước học và ngân sách $H$ cập nhật, với $H$ là số nguyên dương. Đầu ra là bảng $Q$ cùng chính sách $\varepsilon$-tham lam hiện hành. Ký hiệu $h$ đếm số cập nhật đã thực hiện trên toàn bộ các lượt; $n(s,a)$ đếm riêng số cập nhật đã hoàn thành của cặp $(s,a)$.
+
+1. Đặt $Q\leftarrow Q_0$, $h\leftarrow0$ và $n(s,a)\leftarrow0$. Lấy trạng thái đầu $S\sim d_0$ và hành động $A$ theo chính sách mềm từ bảng hiện tại.
+2. Trước khi thực hiện $A$, chọn bước học $\alpha_{n(S,A)+1}(S,A)$ từ thông tin đã có. Chỉ số $n(S,A)+1$ là số thứ tự của cập nhật sắp thực hiện. Thực hiện $A$ và nhận $R,S'$.
+3. Nếu $S'$ chưa kết thúc, lấy một lần $A'$ theo chính sách từ bảng $Q$ chưa cập nhật, rồi tính $Y=R+\gamma Q(S',A')$. Nếu $S'$ kết thúc, đặt $Y=R$ và không chọn $A'$.
+4. Đọc giá trị cũ của ô $(S,A)$ và cập nhật $Q(S,A)\leftarrow Q(S,A)+\alpha_{n(S,A)+1}(S,A)[Y-Q(S,A)]$. Tăng $n(S,A)$ và $h$ lên 1.
+5. Nếu $h=H$, trả bảng và chính sách hiện hành. Nếu còn ngân sách và $S'$ chưa kết thúc, đặt $(S,A)\leftarrow(S',A')$ rồi về bước 2. Nếu còn ngân sách và $S'$ kết thúc, lấy trạng thái đầu mới cùng hành động đầu theo bảng hiện tại, rồi về bước 2; giữ $Q$ và các bộ đếm.
+
+Ở cập nhật cuối, nếu $S'$ chưa kết thúc thì vẫn cần lấy $A'$ để tạo mục tiêu. Ngân sách có thể dừng trước khi hành động ấy được thực hiện, nhưng không xóa giá trị tiếp nối. Kết thúc lượt là sự kiện của môi trường; hết ngân sách là điểm dừng của thuật toán.
+
+Bộ nhớ bảng và các bộ đếm là $O(M)$. Khi đã có $A'$, việc tạo mục tiêu chỉ cần một lần tra cứu giá trị. Chọn hành động $\varepsilon$-tham lam bằng cách duyệt hàng có thể tốn $O(m(S'))$. Sarsa không cần lưu cả lượt để cập nhật.
+
+### 4.5. Bảng Sarsa sau từng mẫu
+
+Mỗi hàng dưới đây dùng bảng sau các mẫu trước đó trong chính lần chạy Sarsa:
+
+| Mẫu | Ô cập nhật | Giá trị cũ | $Y$ | $\delta$ | Giá trị mới |
+|---:|---|---:|---:|---:|---:|
+| 1 | $(D,0)$ | 0 | 0 | 0 | 0 |
+| 2 | $(C,0)$ | 1 | $-1$ | $-2$ | $-0.6$ |
+| 3 | $(B,0)$ | 0 | 1000 | 1000 | 800 |
+| 4 | $(D,1)$ | 1 | 10 | 9 | 8.2 |
+| 5 | $(D,0)$ | 0 | $-1.6$ | $-1.6$ | $-1.28$ |
+
+Mẫu 3 chuyển vào A, cho $0+0.8(1000-0)=800$. Mẫu 4 chuyển vào E, cho $1+0.8(10-1)=8.2$. Mẫu 5 dùng giá trị đã cập nhật $Q(C,0)=-0.6$, nên mục tiêu bằng $-1-0.6=-1.6$.
+
+Mỗi ô của ba cột trạng thái trong bảng sau ghi cặp giá trị theo thứ tự hành động $(0,1)$:
+
+| Sau mẫu | Hàng B | Hàng C | Hàng D |
+|---:|---|---|---|
+| 0: khởi tạo | $(0,1)$ | $(1,0)$ | $(0,1)$ |
+| 1 | $(0,1)$ | $(1,0)$ | $(0,1)$ |
+| 2 | $(0,1)$ | $(-0.6,0)$ | $(0,1)$ |
+| 3 | $(800,1)$ | $(-0.6,0)$ | $(0,1)$ |
+| 4 | $(800,1)$ | $(-0.6,0)$ | $(0,8.2)$ |
+| 5 | $(800,1)$ | $(-0.6,0)$ | $(-1.28,8.2)$ |
+
+Các số thập phân đều chính xác: $-0.6=-3/5$, $8.2=41/5$, $-1.28=-32/25$. Bảng cuối ưu tiên phải tại D. Năm mẫu chỉ xác định bảng hiện tại; chúng chưa chứng nhận chính sách tối ưu.
+
+### 4.6. Câu hỏi kiểm tra 4: cập nhật từ tiền tố
+
+::: exercise
+Câu hỏi: Sau bốn mẫu, cho $Q(D,0)=0$, $Q(C,0)=-0.6$ và mẫu thứ năm $(D,0,-1,C,0)$, với $\gamma=1$, $\alpha=0.8$.
+
+1. Tính $Y$, $\delta$ và giá trị mới của $Q(D,0)$.
+2. Xác định thời điểm lấy $A'$ và hành động phải dùng nếu tiếp tục tương tác.
+3. Giải thích ảnh hưởng của việc hết ngân sách tới phần giá trị tiếp nối tại C.
+:::
+
+::: hint
+Dùng giá trị tại C sau bốn mẫu, không dùng lại bảng khởi tạo. Phân biệt trạng thái chưa kết thúc với điểm dừng thu thập dữ liệu.
+:::
+
+::: solution
+Mục tiêu $Y=-1+(-0.6)=-1.6$; sai lệch $\delta=-1.6-0=-1.6$; do đó cập nhật $Q(D,0)\leftarrow0+0.8(-1.6)=-1.28$.
+
+$A'=0$ được chọn trước cập nhật. Nếu tiếp tục tương tác, thực hiện chính hành động đó. Nếu ngân sách kết thúc sau cập nhật, không cần thực hiện $A'$. Trong cả hai trường hợp, C vẫn là trạng thái không kết thúc và mục tiêu vẫn chứa $Q(C,0)$. MC dùng lợi tức hoàn chỉnh chưa thể cập nhật từ riêng tiền tố D–C này.
+:::
+
+Nguồn: Tạ Việt Cường, [bài giảng nguồn](../RL-hk2-2025-2026/lecture-06-model-free-control.pdf), tr. 12–15, 18; Sutton và Barto, [giáo trình](https://incompleteideas.net/book/the-book-2nd.html), §6.4, tr. 129–130. Năm mẫu và ranh giới lượt được công bố đầy đủ để bài tính có đầu vào xác định.
 
 <!-- note-topic-id: lec-06-topic-05 -->
-## Điều khiển MC lần ghé đầu
+## 5. Q-learning: tách hành vi và mục tiêu
 
-Vấn đề: điều khiển MC đánh giá trực tiếp $Q(s,a)$ từ phần thưởng tích lũy đầy đủ của mỗi lần ghé đầu tiên đến một cặp trong lượt, rồi cải thiện chính sách theo $Q$ mới.
+### 5.1. Hai vai của chính sách
 
-Trên lượt $(D,0)\to(C,0)\to(B,0)\to A$ với phần thưởng $(-1,-1,+1000)$ và $\gamma=1$:
+Ở mẫu 2, Sarsa dùng hành động trái tại B vì đó là hành động đã chọn để tiếp tục. Hành vi thăm dò có thể chọn một hành động chưa đạt cực đại của bảng. Nếu mục tiêu học dùng giá trị cực đại tại trạng thái kế tiếp, hành động tạo dữ liệu và hành động dùng để xác định đích có thể khác nhau.
 
-$$G(D,0)=998,\qquad G(C,0)=999,\qquad G(B,0)=1000.$$
+Chính sách hành vi $b$ chọn các hành động tương tác với môi trường. Chính sách đích $\pi$ mô tả cách lựa chọn được đánh giá hoặc cải thiện. Trong Q-learning một bước, hành vi sinh mẫu, còn đích là lựa chọn tham lam từ bảng hiện hành. Vì hai vai được tách, Q-learning là phương pháp khác chính sách.
 
-Tại D cộng đủ ba phần thưởng; tại C cộng hai phần thưởng cuối; tại B chỉ có phần thưởng vào A. Các cặp chỉ xuất hiện một lần nên lần ghé đầu và mọi lần ghé trùng nhau trên lượt này.
+![Chính sách hành vi chọn hành động và sinh mẫu môi trường; bảng Q dùng mẫu chuyển cùng cực đại tại trạng thái kế tiếp để tạo mục tiêu cập nhật.](img/lec-06/behavior-target.svg)
 
-**Thuật toán điều khiển MC lần ghé đầu (dạng bảng).**
+### 5.2. Mục tiêu cực đại trên cùng dữ liệu
 
-- Đầu vào: bộ sinh lượt kết thúc gần chắc chắn, tức $\Pr(T<\infty)=1$; phần thưởng tích lũy hữu hạn hoặc bị chặn; $\gamma$; lịch $\varepsilon_k$; ngân sách $K$; quy tắc lần ghé và bước học.
-- Khởi tạo: $Q(s,a)$ tùy ý với $Q(\text{kết thúc},\cdot)=0$; $N(s,a)=0$ nếu dùng trung bình mẫu; $\pi_1$ là $\varepsilon_1$-tham lam theo $Q$.
-- Vòng lặp, với $k=1,\dots,K$:
-  1. Sinh một lượt đến trạng thái kết thúc; giả thiết việc này xảy ra gần chắc chắn.
-  2. Tính phần thưởng tích lũy hữu hạn $G_t$ ngược từ cuối lượt.
-  3. Với lần xuất hiện đầu của mỗi $(S_t,A_t)$: tăng $N(S_t,A_t)$; đặt $Q(S_t,A_t)\leftarrow Q(S_t,A_t)+(G_t-Q(S_t,A_t))/N(S_t,A_t)$.
-  4. Với mỗi trạng thái đã ghé, cập nhật $\pi_{k+1}$ thành $\varepsilon_{k+1}$-tham lam theo $Q$.
-- Dừng: hết $K$ lượt hoặc tiêu chuẩn đã định trước.
-- Đầu ra: bảng $Q$ và chính sách $g_Q$.
-- Chi phí: lượt dài $T_k$ tốn $O(T_kA_{\max})$ nếu cập nhật chính sách tại các trạng thái đã ghé; quét toàn bảng tốn thêm $O(\sum_s|\mathcal A(s)|)$; bộ nhớ $O(\sum_s|\mathcal A(s)|+T_k)$.
-- Điều kiện áp dụng: lượt kết thúc gần chắc chắn ($\Pr(T<\infty)=1$) và phần thưởng tích lũy hữu hạn hoặc bị chặn. Nếu với xác suất dương, lượt không bao giờ kết thúc và $\gamma=1$, phần thưởng tích lũy có thể không xác định hoặc không hữu hạn.
+Đặt lại bảng I cho một lần chạy Q-learning riêng. Mẫu 1 vẫn có mục tiêu $-1+\max(1,0)=0$, nên $Q(D,0)$ giữ nguyên. Trước mẫu 2, hàng B vẫn bằng $(0,1)$. Q-learning dùng giá trị lớn nhất bằng 1, cho
 
-::: example Hai bảng cập nhật trên cùng lượt
-Trung bình mẫu (bước $1/N$, với $N$ mới bằng 1 cho cả ba cặp):
+$$
+Y=-1+\max(0,1)=0,\qquad
+Q(C,0)\leftarrow1+0.8(0-1)=0.2.
+$$
 
-| Cặp | $Q_0$ | $G$ | $N$ mới | $Q_1$ |
-|---|---|---|---|---|
-| $(D,0)$ | 1 | 998 | 1 | 998 |
-| $(C,0)$ | 1 | 999 | 1 | 999 |
-| $(B,0)$ | 0 | 1000 | 1 | 1000 |
+![Mục tiêu Q-learning cho cùng chuyển từ C tới B dùng giá trị cực đại 1 trong hàng B; mục tiêu bằng 0 dù hành động tiếp theo trong dữ liệu là trái.](img/lec-06/q-learning-target.svg)
 
-Các ô còn lại giữ nguyên; hành động 0 mới trở thành tham lam ở B, còn hành động 0 vẫn tham lam tại C và D. Cùng lượt với $\alpha=0{,}8$, tức $Q\leftarrow Q+0{,}8(G-Q)$:
+Sarsa cho $-0.6$ tại cùng ô vì dùng giá trị của hành động 0 đã chọn. Q-learning cho $0.2$ vì dùng cực đại của hàng B. Giá trị cực đại này thuộc bảng ước lượng, chưa phải giá trị tốt nhất thật của trạng thái B.
 
-| Cặp | $Q_0$ | $G$ | $Q_1$ |
-|---|---|---|---|
-| $(D,0)$ | 1 | 998 | 798,6 |
-| $(C,0)$ | 1 | 999 | 799,4 |
-| $(B,0)$ | 0 | 1000 | 800 |
+### 5.3. Quy tắc Q-learning
 
-Hai bảng khác nhau vì trung bình mẫu dùng bước $1/N=1$ cho mẫu đầu, còn $\alpha=0{,}8$ chỉ đi 80% quãng đường tới phần thưởng tích lũy. Ví dụ $\gamma=1$, $\alpha=0{,}8$ chỉ minh họa phép cập nhật, không phải bằng chứng hội tụ.
-:::
+Với $Q_t$ là bảng trước cập nhật, đặt
 
-::: exercise Câu hỏi kiểm tra
-Trên cùng lượt, dùng $\alpha=0{,}5$: tính $Q_1$ của ba cặp $(D,0)$, $(C,0)$, $(B,0)$ và giải thích vì sao kết quả khác trung bình mẫu.
+$$
+Y_t=
+\begin{cases}
+R_{t+1}+\gamma\displaystyle\max_{a\in\mathcal A(S_{t+1})}Q_t(S_{t+1},a),
+& S_{t+1}\in\mathcal S,\\
+R_{t+1}, & S_{t+1}\text{ kết thúc}.
+\end{cases}
+$$
+
+Sau đó dùng
+
+$$
+Q_{t+1}(S_t,A_t)=Q_t(S_t,A_t)
++\alpha_t\left[Y_t-Q_t(S_t,A_t)\right].
+$$
+
+Các ô khác giữ nguyên. Bộ bốn $(S_t,A_t,R_{t+1},S_{t+1})$ đủ để tạo mục tiêu; không cần hành động kế tiếp đã lấy mẫu. Toàn bộ phép cực đại và giá trị cũ trong vế phải đều dùng cùng bảng $Q_t$.
+
+Q-learning tính trực tiếp cực đại trên các hành động hợp lệ. Nó không dùng một hành động kế tiếp lấy từ $b$ để ước lượng kỳ vọng dưới chính sách đích, nên cập nhật một bước này không cần tỉ số lấy mẫu quan trọng. Điều kiện dữ liệu đúng môi trường và có độ phủ vẫn cần được kiểm tra.
+
+### 5.4. Quy trình Q-learning
+
+Đầu vào gồm môi trường lấy mẫu, tập hành động, phân phối đầu $d_0$ trên $\mathcal S$, $\gamma$, bảng hữu hạn $Q_0$, quy tắc hành vi $b$, lịch bước học và ngân sách $H$ cập nhật. $b$ có thể được xây dựng bằng quy tắc $\varepsilon$-tham lam từ bảng hiện hành. Đầu ra gồm bảng $Q$ và chính sách tham lam rút từ bảng. Nếu còn tương tác, hành vi có thể tiếp tục thăm dò.
+
+1. Đặt $Q\leftarrow Q_0$, $h\leftarrow0$, $n(s,a)\leftarrow0$ và lấy $S\sim d_0$.
+2. Chọn $A$ theo $b$ ở trạng thái $S$. Chọn bước học $\alpha_{n(S,A)+1}(S,A)$ từ thông tin hiện có trước mẫu. Thực hiện hành động, nhận $R,S'$.
+3. Nếu $S'$ chưa kết thúc, tính $Y=R+\gamma\max_{a\in\mathcal A(S')}Q(S',a)$ từ bảng chưa cập nhật. Nếu $S'$ kết thúc, đặt $Y=R$.
+4. Cập nhật ô $(S,A)$ theo quy tắc Q-learning, rồi tăng $n(S,A)$ và $h$ lên 1.
+5. Nếu $h=H$, trả bảng và chính sách tham lam hiện hành. Nếu còn ngân sách, đặt $S\leftarrow S'$ khi chưa kết thúc hoặc lấy trạng thái đầu mới khi đã kết thúc; giữ bảng và bộ đếm, rồi về bước 2.
+
+Hành động thực hiện sau cập nhật vẫn do $b$ chọn. Việc dừng ở một trạng thái chưa kết thúc không xóa số hạng cực đại trong mục tiêu cuối. Bộ nhớ là $O(M)$; tìm trực tiếp cực đại tại $S'$ cần $O(m(S'))$, ngoài chi phí chọn hành vi. Không cần lưu cả lượt.
+
+### 5.5. Bảng Q-learning sau từng mẫu
+
+Lần chạy này bắt đầu lại từ bảng I và dùng đúng năm mẫu đã công bố ở phần Sarsa. Giá trị mới từ một mẫu chỉ được chuyển sang các mẫu sau trong chính bảng Q-learning.
+
+| Mẫu | Ô cập nhật | Giá trị cũ | $Y$ | $\delta$ | Giá trị mới |
+|---:|---|---:|---:|---:|---:|
+| 1 | $(D,0)$ | 0 | 0 | 0 | 0 |
+| 2 | $(C,0)$ | 1 | 0 | $-1$ | 0.2 |
+| 3 | $(B,0)$ | 0 | 1000 | 1000 | 800 |
+| 4 | $(D,1)$ | 1 | 10 | 9 | 8.2 |
+| 5 | $(D,0)$ | 0 | $-0.8$ | $-0.8$ | $-0.64$ |
+
+Trước mẫu 5, hàng C bằng $(0.2,0)$. Do đó
+
+$$
+Y=-1+\max(0.2,0)=-0.8,
+\qquad Q(D,0)\leftarrow0+0.8(-0.8)=-0.64.
+$$
+
+Bảng đầy đủ sau mỗi mẫu, với các cặp giá trị ghi theo thứ tự hành động $(0,1)$, là
+
+| Sau mẫu | Hàng B | Hàng C | Hàng D |
+|---:|---|---|---|
+| 0: khởi tạo | $(0,1)$ | $(1,0)$ | $(0,1)$ |
+| 1 | $(0,1)$ | $(1,0)$ | $(0,1)$ |
+| 2 | $(0,1)$ | $(0.2,0)$ | $(0,1)$ |
+| 3 | $(800,1)$ | $(0.2,0)$ | $(0,1)$ |
+| 4 | $(800,1)$ | $(0.2,0)$ | $(0,8.2)$ |
+| 5 | $(800,1)$ | $(0.2,0)$ | $(-0.64,8.2)$ |
+
+Các số $0.2=1/5$ và $-0.64=-16/25$ là chính xác. Khác biệt với Sarsa xuất hiện ở mục tiêu dùng hàng B cho mẫu 2, rồi truyền từ giá trị tại C về D ở mẫu 5. Hai mẫu chuyển vào A và E có cùng mục tiêu trong cả hai thuật toán.
+
+### 5.6. Điều kiện sử dụng dữ liệu hành vi
+
+Mẫu chuyển và thưởng phải phản ánh động lực của MDP theo cặp được cập nhật. Dữ liệu từ một hành vi khác có thể phục vụ Q-learning trong cùng môi trường; dữ liệu từ một động lực khác cần được phân tích riêng. Phát lại vô hạn một tập mẫu hữu hạn không tự khôi phục đúng phân phối chuyển của môi trường và không tự thỏa giả thiết lấy mẫu của định lý hội tụ.
+
+Trong đánh giá khác chính sách nói chung, điều kiện hỗ trợ hành động yêu cầu $\pi(a\mid s)>0$ kéo theo $b(a\mid s)>0$. Điều kiện này đảm bảo một hành động đích có thể được lấy mẫu khi đã ở $s$. Để học toàn bảng còn cần đạt tới và cập nhật các cặp cần học đủ lâu. Nhãn khác chính sách tự nó chưa xác định một ưu thế hiệu quả mẫu trên mọi bài toán.
+
+### 5.7. Câu hỏi kiểm tra 5: so sánh hai mục tiêu
+
+::: exercise
+Câu hỏi: Cho cùng một bảng có $Q(B,0)=800$, $Q(B,1)=1$, chuyển $(C,0,-1,B)$ và $\gamma=1$. Sarsa đã chọn $A'=1$.
+
+1. Tính mục tiêu Sarsa và mục tiêu Q-learning.
+2. Nêu điều kiện để hai mục tiêu trùng nhau tại một trạng thái chưa kết thúc, khi dùng cùng bảng, cùng thưởng và $\gamma=1$.
 :::
 
 ::: hint
-Áp dụng $Q_1=Q_0+\alpha(G-Q_0)$ cho từng cặp với $G$ đã cho.
+Sarsa phải dùng hành động $A'=1$ đã cho. Q-learning dùng cực đại của hàng B. So sánh hai số hạng tiếp nối mà không đổi hành động trong dữ liệu.
 :::
 
 ::: solution
-$(D,0)$: $1+0{,}5(998-1)=499{,}5$. $(C,0)$: $1+0{,}5(999-1)=500$. $(B,0)$: $0+0{,}5(1000-0)=500$. Khác trung bình mẫu vì bước $0{,}5$ giữ 50% giá trị khởi tạo, trong khi trung bình mẫu với mẫu đầu dùng bước 1 và thay hoàn toàn giá trị khởi tạo bằng phần thưởng tích lũy. (Nguồn: PDF tr. 10, 17; slide B00–B04.)
+Mục tiêu Sarsa là $-1+Q(B,1)=0$. Mục tiêu Q-learning là $-1+\max(800,1)=799$.
+
+Với trạng thái kế tiếp chưa kết thúc và $\gamma=1$, hai mục tiêu bằng nhau khi
+
+$$
+Q(S',A')=\max_{a\in\mathcal A(S')}Q(S',a),
+$$
+
+tức $A'\in\mathcal G_Q(S')$. Không cần cực đại duy nhất. Khi chuyển vào trạng thái kết thúc, cả hai dùng mục tiêu bằng thưởng và thuộc nhánh riêng. Trùng mục tiêu ở một bước chưa suy ra hai quá trình có cùng quỹ đạo hoặc cùng chính sách hành vi trong giới hạn.
 :::
+
+Nguồn: Tạ Việt Cường, [bài giảng nguồn](../RL-hk2-2025-2026/lecture-06-model-free-control.pdf), tr. 8, 19–21, 28; Sutton và Barto, [giáo trình](https://incompleteideas.net/book/the-book-2nd.html), tr. 103–105 và §6.5, tr. 131. Khởi tạo Q-learning dùng bảng I để đối chiếu mục tiêu trên cùng dữ kiện với Sarsa.
 
 <!-- note-topic-id: lec-06-topic-06 -->
-## Cải thiện cần $q_\pi$ chính xác
+## 6. Điều kiện bảo đảm hội tụ
 
-Vấn đề: hai bảng ở chủ đề 05 đều từ một lượt, nên chỉ từ một phần thưởng tích lũy, còn nhiễu. Khi nào việc cải thiện chính sách theo giá trị hành động bảo đảm giá trị trạng thái không giảm?
+### 6.1. Miền của kết quả lý thuyết
 
-Trực giác: định lý cải thiện chính sách cần kỳ vọng đúng theo chính sách, tức $q_\pi$ chính xác, chứ không phải một mẫu. Một phần thưởng tích lũy và một bảng $Q$ còn nhiễu không bảo đảm giá trị tăng đơn điệu sau mỗi lượt.
+Các bảng sau năm mẫu kiểm tra được cơ chế cập nhật. Hội tụ tới giá trị tối ưu là kết luận về một quá trình học dài hạn và cần giả thiết bổ sung. Kết quả ở đây xét MDP hữu hạn, có động lực không đổi theo thời gian, phần thưởng bị chặn, $0\le\gamma<1$, biểu diễn dạng bảng và $Q_0$ hữu hạn.
 
-**Mệnh đề cải thiện cho lớp $\varepsilon$-mềm.** Chính sách $\varepsilon$-tham lam là một trường hợp đặc biệt của lớp $\varepsilon$-mềm; mệnh đề sau áp dụng cho cả lớp này và là bước dẫn tới điều kiện GLIE ở chủ đề 07. Giả sử $\pi$ là chính sách $\varepsilon$-mềm, tức $\pi(a\mid s)\ge\varepsilon/m_s$ với mọi $a$, và đã biết đúng $q_\pi$. Lấy $\pi'$ là $\varepsilon$-tham lam theo $q_\pi$. Khi đó với mọi $s$:
+Mẫu trạng thái kế tiếp và phần thưởng, có điều kiện theo lịch sử đã quan sát cùng cặp hiện tại, phải tuân theo động lực của MDP. Mọi cặp không kết thúc cần học được cập nhật vô hạn lần gần chắc chắn. Các bước học được chọn từ thông tin có trước mẫu dùng cho cập nhật và thỏa điều kiện theo từng cặp ở mục 6.3.
 
-$$\sum_a\pi'(a\mid s)\,q_\pi(s,a)=\frac{\varepsilon}{m_s}\sum_aq_\pi(s,a)+(1-\varepsilon)\max_aq_\pi(s,a)\ge v_\pi(s),$$
+Ví dụ chuỗi A–E dùng $\gamma=1$ và bước học $0.8$ để tính tay, nên không thuộc phát biểu có chiết khấu này. Sự tồn tại của A và E chưa đảm bảo mọi chính sách đều kết thúc; vòng B–C đã cho một trường hợp ngược lại. Các kết quả không chiết khấu cần giả thiết hấp thụ và kiểm soát lợi tức riêng. Hết ngân sách chỉ trả một bảng hiện hành.
 
-suy ra từ định lý cải thiện chính sách: $v_{\pi'}(s)\ge v_\pi(s)$ với mọi $s\in\mathcal S$.
+### 6.2. Tham lam trong giới hạn với thăm dò vô hạn
 
-Giới hạn: thuật toán MC chỉ có $Q$ ước lượng thay cho $q_\pi$ chính xác, nên không có bảo đảm tăng đơn điệu từng lượt; mệnh đề trên là cầu nối lý thuyết, ứng dụng của nó nằm ở điều kiện dài hạn GLIE ở chủ đề 07.
+Với hai hành động và một cực đại duy nhất, $\varepsilon=1/4$ giữ xác suất chọn cực đại bằng $7/8$. Cho $\varepsilon$ giảm về 0 làm xác suất ấy tiến về 1. Tuy nhiên, hành động ít được chọn và các trạng thái cần qua nhiều bước thăm dò vẫn phải nhận đủ dữ liệu.
 
-::: exercise Câu hỏi kiểm tra
-Phát biểu đúng giả thiết của mệnh đề cải thiện: $\pi$ thuộc lớp nào và $\pi'$ được xây từ đại lượng nào? Vì sao một mẫu phần thưởng tích lũy không đủ để áp dụng mệnh đề?
+Điều kiện **tham lam trong giới hạn với thăm dò vô hạn (GLIE)** bao gồm hai yêu cầu. Dùng $t$ làm chỉ số tương tác toàn bộ quá trình; $C_t(s,a)$ đếm số lần thăm cặp đến bước $t$. Với $Q_t$ là bảng trước cập nhật, đặt
+
+$$
+\mathcal G_t(s)=\operatorname*{arg\,max}_{a\in\mathcal A(s)}Q_t(s,a).
+$$
+
+Gọi $\pi_t$ là quy tắc chọn hành động theo chính bảng hiện hành ấy. Trong phạm vi các cặp cần học, yêu cầu gần chắc chắn
+
+$$
+C_t(s,a)\longrightarrow\infty,
+\qquad
+\sum_{a\in\mathcal G_t(s)}\pi_t(a\mid s)\longrightarrow1.
+$$
+
+Yêu cầu thứ nhất là độ phủ vô hạn. Yêu cầu thứ hai là khối xác suất tập trung trên các hành động cực đại của bảng hiện hành. Nó cho phép đồng hạng và không bắt buộc chính sách hội tụ tới một hành động duy nhất. Trong Sarsa, quy tắc từ $Q_t$ chọn $A_{t+1}$ trước cập nhật, còn $A_t$ đã được chọn ở bước trước.
+
+Với MC, $k$ là chỉ số lượt, $Q^{[k]}$ là bảng trước lượt và $\pi_k$ được giữ suốt lượt. Phiên bản GLIE theo lượt dùng bộ đếm lần thăm, tập cực đại và chính sách tại cùng thời điểm trước lượt. Bộ đếm lần thăm $C$ khác $N$ đếm lợi tức MC được chọn.
+
+Đối với chính sách $\varepsilon_k$-tham lam, $\varepsilon_k\to0$ đảm bảo yêu cầu tham lam trong giới hạn. Nó chưa chứng minh thăm vô hạn. Lịch $\varepsilon_k=1/k$ theo lượt cũng cần kiểm tra khả năng đạt tới trạng thái và phân phối khởi đầu; giảm xác suất thăm dò ở mỗi trạng thái chưa đảm bảo một chuỗi các hành động thăm dò cần thiết xảy ra vô hạn lần.
+
+### 6.3. Bước học theo từng cặp
+
+Với một cặp $(s,a)$, đánh số $n=1,2,\ldots$ theo các lần cập nhật riêng của cặp đó. Điều kiện Robbins–Monro được dùng ở đây là
+
+$$
+0<\alpha_n(s,a)\le1,
+\qquad
+\sum_{n=1}^\infty\alpha_n(s,a)=\infty,
+\qquad
+\sum_{n=1}^\infty\alpha_n(s,a)^2<\infty.
+$$
+
+Tổng thứ nhất không cho ảnh hưởng tích lũy của các mẫu mới kết thúc quá sớm. Tổng bình phương hữu hạn kiểm soát phần nhiễu tích lũy trong các định lý đang xét. Hai điều kiện này là thành phần của một chứng minh hội tụ, không phải tiêu chuẩn xác nhận hội tụ sau hữu hạn bước.
+
+Lịch $\alpha_n=1/n$ có tổng điều hòa phân kỳ và tổng bình phương hội tụ. Với $\alpha_n=0.8$, mỗi số hạng bình phương là $0.64$, nên tổng bình phương phân kỳ.
+
+::: example
+Giả sử một cặp chỉ được cập nhật tại các thời điểm toàn cục $t_n=2^n$. Nếu dùng lịch toàn cục $\alpha_t=1/t$, tổng bước học thực sự nhận bởi cặp ấy là
+
+$$
+\sum_{n=1}^\infty\alpha_{t_n}=\sum_{n=1}^\infty2^{-n}=1<\infty.
+$$
+
+Vì vậy việc $\sum_t1/t$ phân kỳ trên toàn bộ quá trình chưa đủ để suy điều kiện theo từng cặp. Với bộ đếm đã hoàn thành $n(s,a)$ cập nhật, bước tiếp theo dùng $1/[n(s,a)+1]$ nếu chọn lịch nghịch đảo số cập nhật.
+:::
+
+### 6.4. Bảo đảm cho Sarsa và Q-learning
+
+Dưới các giả thiết nền ở mục 6.1, mọi cặp được cập nhật vô hạn gần chắc chắn và bước học theo cặp thỏa mục 6.3, Q-learning hội tụ
+
+$$
+Q_t(s,a)\longrightarrow q_*(s,a)
+$$
+
+gần chắc chắn với mọi cặp hợp lệ.
+
+Chính sách hành vi có thể tiếp tục thăm dò vì mục tiêu Q-learning đã dùng cực đại. Hành vi vẫn phải duy trì độ phủ và sinh mẫu đúng động lực có điều kiện.
+
+Sarsa có cùng kết luận khi bổ sung điều kiện chính sách trở nên tham lam theo bảng hiện hành. Cùng với thăm vô hạn, đây là điều kiện GLIE tương ứng. Với $\varepsilon>0$ cố định và một cực đại duy nhất, khối xác suất trên cực đại chưa tiến tới 1, nên không áp dụng được kết luận này của Sarsa.
+
+Các kết quả được đối chiếu với [Singh và cộng sự, Định lý 1, tr. 294–295](https://ics.uci.edu/~dechter/courses/ics-295/winter-2018/papers/2000-singh-littmansingh98convergence.pdf) và [Watkins–Dayan, định lý Q-learning, tr. 282](https://www.ece.uvic.ca/~bctill/papers/learning/Watkins_Dayan_1992.pdf). Khi có nhiều hành động tối ưu đồng hạng, hội tụ của bảng không bắt buộc phân phối hành động phải hội tụ tới một chính sách duy nhất.
+
+Với MC, trung bình mẫu khi đánh giá một chính sách cố định và mệnh đề cải thiện khi biết $q_\pi$ chính xác là hai kết quả riêng. Trong điều khiển, lượt $k$ được sinh bởi $\pi_k$; các lợi tức từ các lượt khác nhau không tự có cùng kỳ vọng $q_\pi$ cố định. Hai yêu cầu GLIE không thay thế chứng minh cho một biến thể MC cụ thể. Các bảo đảm chuyên biệt phải khớp thuật toán, cách khởi đầu và lịch cập nhật, như các biến thể trong [Tsitsiklis, On the Convergence of Optimistic Policy Iteration](https://www.jmlr.org/papers/volume3/tsitsiklis02a/tsitsiklis02a.pdf), tr. 60, 66–67, 72.
+
+### 6.5. Câu hỏi kiểm tra 6: phạm vi áp dụng định lý
+
+::: exercise
+Câu hỏi: Giả sử MDP hữu hạn, có động lực không đổi theo thời gian, thưởng bị chặn, $\gamma=0.9$, $Q_0$ hữu hạn; mẫu đúng môi trường và mọi cặp được cập nhật vô hạn. Xác định trường hợp đủ điều kiện cho kết luận hội tụ tới $q_*$ đã nêu và giả thiết còn thiếu trong các trường hợp còn lại:
+
+| Trường hợp | Thuật toán và hành vi | Bước học theo cặp |
+|---|---|---|
+| a | Q-learning, $\varepsilon$-tham lam với $\varepsilon=0.25$ | $\alpha_n=1/n$ |
+| b | Sarsa, $\varepsilon$-tham lam với $\varepsilon=0.25$ | $\alpha_n=1/n$ |
+| c | Sarsa với GLIE | $\alpha_n=0.8$ |
+
+Các trạng thái xét có hai hành động; ở trường hợp b có trạng thái giữ một cực đại duy nhất.
 :::
 
 ::: hint
-So sánh hai đại lượng: $q_\pi$ chính xác và một giá trị $Q$ vừa cập nhật từ một phần thưởng tích lũy.
+Kiểm riêng điều kiện bước học và yêu cầu đối với hành vi của từng thuật toán. Trong trường hợp b, tính khối xác suất trên cực đại. Trong trường hợp c, xét tổng bình phương bước học.
 :::
 
 ::: solution
-$\pi$ phải là chính sách $\varepsilon$-mềm với $\pi(a\mid s)\ge\varepsilon/m_s$; $\pi'$ là $\varepsilon$-tham lam theo $q_\pi$ chính xác. Một phần thưởng tích lũy chỉ cho một mẫu nhiễu của $q_\pi$, không cho kỳ vọng đúng, nên bất đẳng thức $\sum_a\pi'(a\mid s)q_\pi(s,a)\ge v_\pi(s)$ chưa được bảo đảm với bảng ước lượng; do đó không suy ra tăng đơn điệu sau mỗi lượt. (Nguồn: PDF tr. 24; slide B05.)
+Trường hợp a thỏa các điều kiện đã nêu: lịch $1/n$ thỏa hai tổng và Q-learning không yêu cầu hành vi trở nên tham lam.
+
+Trường hợp b thiếu yêu cầu tham lam trong giới hạn. Tại trạng thái có cực đại duy nhất, khối xác suất trên cực đại bằng $7/8$, không tiến tới 1.
+
+Trường hợp c vi phạm tổng bình phương hữu hạn vì $\sum_n0.8^2=\infty$. Trong b và c, định lý đang xét chưa áp dụng; thiếu một giả thiết không chứng minh thuật toán chắc chắn phân kỳ.
 :::
+
+Nguồn: Tạ Việt Cường, [bài giảng nguồn](../RL-hk2-2025-2026/lecture-06-model-free-control.pdf), tr. 25–28; Sutton và Barto, [giáo trình](https://incompleteideas.net/book/the-book-2nd.html), tr. 99–103, 129–131. Định nghĩa GLIE và điều kiện dài hạn theo Singh và cộng sự, tr. 290–295, 302–304; trường hợp không chiết khấu cần giả thiết riêng như Watkins–Dayan, tr. 285–286.
 
 <!-- note-topic-id: lec-06-topic-07 -->
-## GLIE và hội tụ điều khiển MC
+## 7. Tổng hợp, bài tập và đọc thêm
 
-Vấn đề: mệnh đề cải thiện cần $q_\pi$ chính xác về lâu dài; cần điều kiện nào để thăm dò không tắt sớm và ước lượng hội tụ?
+### 7.1. Chọn phương pháp theo dữ liệu và mục tiêu
 
-Trực giác: hai việc phải xảy ra đồng thời — mọi cặp tiếp tục được ghé để trung bình mẫu hội tụ, và chính sách dần tham lam để tiến về tối ưu.
+Ba phương pháp đều học bảng giá trị hành động, nhưng dùng dữ liệu và mục tiêu khác nhau:
 
-**Định nghĩa GLIE** (Greedy in the Limit with Infinite Exploration). Với quy tắc phá hòa tất định, dãy chính sách $\{\pi_k\}$ là GLIE khi đồng thời thỏa hai điều kiện: (1) thăm dò vô hạn, tức $N_k(s,a)\to\infty$ với mọi $(s,a)\in\mathcal X_{\mathrm{reach}}$; và (2) tham lam ở giới hạn, tức khối xác suất ngoài hành động tham lam tiến về 0:
-
-$$N_k(s,a)\to\infty,\qquad \sum_{b\ne g_{Q_k}(s)}\pi_k(b\mid s)\to0.$$
-
-Điều thứ nhất bảo đảm tiếp tục học mọi cặp khả đạt; điều thứ hai làm khối xác suất ngoài hành động tham lam tiến về 0. Ví dụ kinh điển là $\varepsilon_k$-tham lam với $\varepsilon_k=1/k$; tuy vậy, một lịch $\varepsilon$ cụ thể không tự chứng minh số lần ghé vô hạn, vì điều đó còn phụ thuộc phân phối khởi đầu và động lực MDP. Ví dụ về bước học thỏa điều kiện Robbins–Monro theo từng cặp: $\alpha_n(s,a)=1/n$ có $\sum_n1/n=\infty$ và $\sum_n1/n^2<\infty$.
-
-**Định lý hội tụ điều khiển MC.** Nếu điều khiển Monte Carlo dùng một dãy chính sách GLIE, lượt kết thúc gần chắc chắn và phần thưởng tích lũy bị chặn, thì với trung bình mẫu $1/N$, hoặc bước Robbins–Monro theo từng cặp, $Q(s,a)\to q_*(s,a)$ trên $\mathcal X_{\mathrm{reach}}$ trong trường hợp bảng hữu hạn. Bước học $\alpha=0{,}8$ hằng không thuộc bảo đảm này.
-
-::: exercise Câu hỏi kiểm tra
-Liệt kê hai điều kiện của GLIE và giải thích vì sao $\varepsilon_k=1/k$ chưa tự bảo đảm điều kiện thứ nhất.
-:::
-
-::: hint
-Điều kiện thứ nhất nói về bộ đếm $N_k(s,a)$; hãy hỏi điều gì quyết định cặp nào được ghé.
-:::
-
-::: solution
-GLIE gồm: (1) mọi cặp khả đạt được ghé vô hạn lần, $N_k(s,a)\to\infty$; (2) chính sách hội tụ về tham lam, tổng xác suất ngoài hành động tham lam tiến về 0. Lịch $\varepsilon_k=1/k$ chỉ làm $\varepsilon_k\to0$, tức điều kiện (2); số lần ghé còn phụ thuộc phân phối khởi đầu và động lực MDP, nên điều kiện (1) phải được kiểm tra riêng trên cơ chế hành vi. (Nguồn: PDF tr. 25–26; slide B06.)
-:::
-
-<!-- note-topic-id: lec-06-topic-08 -->
-## SARSA dạng bảng và ví dụ
-
-Vấn đề: MC phải chờ hết lượt. Điều khiển TD cập nhật ngay sau mỗi chuyển bằng đích bootstrap một bước; câu hỏi cốt lõi là chọn đích nào. SARSA trả lời: dùng hành động kế tiếp mà chính sách đang học sẽ thực hiện.
-
-Trực giác qua một chuyển: SARSA và Q-learning đều khởi động lại từ $Q_0$ ở chủ đề 04. Trên lượt cố định, sau chuyển $(C,0)\to B$ thì hành động kế tiếp thật sự là $A'=0$ (do thăm dò), dù hành động tham lam tại B là 1. Nếu đánh giá đúng hành vi, cập nhật ở C phải đọc $Q(B,0)$, vì đó là hành động hành vi sẽ thực hiện.
-
-**Đích SARSA.** Với $A_{t+1}\sim\mu_t(\cdot\mid S_{t+1})$ là hành động chính sách đang học sẽ thực hiện:
-
-$$Y_t^{\mathrm{SARSA}}=R_{t+1}+\gamma Q_t(S_{t+1},A_{t+1}),$$
-$$Q_{t+1}(S_t,A_t)=Q_t(S_t,A_t)+\alpha_t(S_t,A_t)\bigl[Y_t^{\mathrm{SARSA}}-Q_t(S_t,A_t)\bigr].$$
-
-Trong công thức theo thời gian, $\alpha_t(S_t,A_t)$ là bước học được dùng tại chuyển $t$; nếu lịch được đánh chỉ số theo số lần ghé thì đại lượng này bằng $\alpha_{N_t(S_t,A_t)}(S_t,A_t)$.
-
-Tên SARSA đến từ chuỗi năm biến $(S_t,A_t,R_{t+1},S_{t+1},A_{t+1})$. Thuật toán theo chính sách vì $A_{t+1}$ đi vào đích được lấy theo chính sách đang học.
-
-**Thuật toán SARSA dạng bảng.**
-
-- Đầu vào: môi trường; $\gamma$; lịch theo lượt $\varepsilon_k$; lịch theo lần ghé $\alpha_n(s,a)$; ngân sách $K$.
-- Khởi tạo: $Q(s,a)$ tùy ý với $Q(\text{kết thúc},\cdot)=0$; $N(s,a)=0$.
-- Vòng lặp, với lượt $k=1,\dots,K$:
-  1. Đặt lại $S\leftarrow S_0$; chọn $A$ theo $\varepsilon_k$-tham lam.
-  2. Lặp: thực hiện $A$, quan sát $R,S'$; tăng $N(S,A)$; đặt $\alpha\leftarrow\alpha_{N(S,A)}(S,A)$.
-     - Nếu $S'$ kết thúc: cập nhật với đích $R$; dừng vòng lượt.
-     - Nếu chưa: chọn $A'$ theo $\varepsilon_k$-tham lam; cập nhật với đích $R+\gamma Q(S',A')$; gán $S\leftarrow S'$, $A\leftarrow A'$.
-- Dừng: sau $K$ lượt hoặc tiêu chuẩn đặt trước.
-- Đầu ra: bảng $Q$ và chính sách $g_Q$.
-- Chi phí: chọn hành động tốn $O(A_{\max})$; bảng tốn $O(|\mathcal X|)$.
-
-::: example SARSA trên lượt dùng chung, $\alpha=0{,}8$, cập nhật tại chỗ
-
-| Chuyển | Đích SARSA | Ô trước | Ô sau |
+| Phương pháp | Dữ liệu cần cho cập nhật | Mục tiêu | Thời điểm cập nhật |
 |---|---|---|---|
-| $(D,0)\to C$, $A'=0$ | $-1+Q(C,0)=0$ | $Q(D,0)=1$ | $0{,}2$ |
-| $(C,0)\to B$, $A'=0$ | $-1+Q(B,0)=-1$ | $Q(C,0)=1$ | $-0{,}6$ |
-| $(B,0)\to A$ | $1000$ | $Q(B,0)=0$ | $800$ |
+| MC theo chính sách, lần ghé đầu | Lượt hoàn chỉnh | $G_t$ | Sau lượt |
+| Sarsa | Bộ năm trạng thái, hành động, thưởng, trạng thái tiếp, hành động tiếp | $R+\gamma Q(S',A')$ | Sau một chuyển và chọn $A'$ |
+| Q-learning | Bộ bốn trạng thái, hành động, thưởng, trạng thái tiếp | $R+\gamma\max_aQ(S',a)$ | Sau một chuyển |
 
-Ở hàng hai, hành động kế tiếp thật sự tại B là trái do thăm dò. Hàng cuối dùng nhánh trạng thái kết thúc. Kết quả: $Q(D,0)=0{,}2$, $Q(C,0)=-0{,}6$, $Q(B,0)=800$.
-:::
+Hai mục tiêu TD trong bảng áp dụng khi trạng thái kế tiếp chưa kết thúc. Khi kết thúc, cả hai chỉ dùng $R$. MC lưu thêm quỹ đạo để tính lợi tức; Sarsa và Q-learning không cần chờ hoặc lưu toàn bộ lượt.
 
-Kiểm tra cơ chế: trong kịch bản giả định thay hành động thăm dò tại B bằng hành động phải, đích tại C là $-1+Q(B,1)=0$ và giá trị mới là $1+0{,}8(0-1)=0{,}2$. Kịch bản này chỉ thay $A_{t+1}$ trong đích cập nhật $Q(C,0)$; nó không mô tả một lượt vật lý mới.
+Quyết định tại D sau các dữ liệu đã xét là:
 
-::: exercise Câu hỏi kiểm tra
-Tính lại đích và giá trị mới của $Q(C,0)$ trong hai trường hợp $A_{t+1}=0$ và $A_{t+1}=1$ tại B, với $\alpha=0{,}8$, và chỉ ra trường hợp nào làm $Q(C,0)$ trùng với kết quả Q-learning.
-:::
+| Lần chạy | Hàng D, theo thứ tự $(0,1)$ | Hành động cực đại |
+|---|---|---|
+| MC tham lam, bảng I, lượt D–E | $(0,10)$ | Phải |
+| MC, bảng II, lượt D–C–B–A | $(998,0)$ | Trái |
+| Sarsa, bảng I, năm mẫu | $(-1.28,8.2)$ | Phải |
+| Q-learning, bảng I, cùng năm mẫu | $(-0.64,8.2)$ | Phải |
 
-::: hint
-Đích SARSA tại C là $-1+Q(B,A_{t+1})$; hai giá trị tại B là $Q(B,0)=0$ và $Q(B,1)=1$.
-:::
+Mỗi hàng phải được gắn với đúng khởi tạo và dữ liệu. Hai lần chạy MC dùng dữ liệu khác nhau và một lần dùng bảng đầu khác, nên bảng tổng hợp chưa tạo phép so sánh công bằng về hiệu quả học. Sarsa và Q-learning có cùng dữ liệu nhưng dùng mục tiêu khác. Một lựa chọn cực đại từ bảng hữu hạn mẫu chưa chứng nhận chính sách tối ưu.
 
-::: solution
-Trường hợp $A_{t+1}=0$: đích $-1+0=-1$, giá trị mới $1+0{,}8(-1-1)=-0{,}6$. Trường hợp $A_{t+1}=1$: đích $-1+1=0$, giá trị mới $1+0{,}8(0-1)=0{,}2$. Trường hợp thứ hai trùng với kết quả Q-learning tại ô $(C,0)$, vì Q-learning dùng cực đại $\max_aQ(B,a)=Q(B,1)=1$ thay cho hành động kế tiếp. (Nguồn: PDF tr. 12–14, 17–18; slide C00–C04.)
-:::
+### 7.2. Câu hỏi kiểm tra 7: lựa chọn có điều kiện
 
-<!-- note-topic-id: lec-06-topic-09 -->
-## Hội tụ SARSA
+::: exercise
+Câu hỏi: Chọn MC, Sarsa hoặc Q-learning phù hợp với từng yêu cầu và giải thích bằng dữ liệu cùng mục tiêu cập nhật.
 
-Vấn đề: ví dụ số dùng $\gamma=1$ và $\alpha=0{,}8$ hằng; những lựa chọn đó không chứng minh hội tụ. Cần phát biểu đúng điều kiện.
+1. Dùng lợi tức hoàn chỉnh và thay chính sách sau lượt.
+2. Cập nhật trong lượt bằng giá trị của hành động thực sự sẽ thực hiện.
+3. Có mẫu $(S,A,R,S')$ từ hành vi còn thăm dò và muốn dùng cực đại của bảng làm mục tiêu tiếp nối.
 
-**Định lý hội tụ SARSA dạng bảng.** Trong MDP hữu hạn, phần thưởng bị chặn và $0\le\gamma<1$, SARSA thỏa $Q(s,a)\to q_*(s,a)$ gần chắc chắn trên $\mathcal X_{\mathrm{reach}}$ nếu:
-
-- chính sách hành vi là GLIE với quy tắc phá hòa tất định;
-- mọi $(s,a)\in\mathcal X_{\mathrm{reach}}$ được cập nhật vô hạn lần;
-- với từng cặp đó, $\sum_n\alpha_n(s,a)=\infty$ và $\sum_n\alpha_n(s,a)^2<\infty$ (điều kiện Robbins–Monro theo từng cặp).
-
-Có thể đọc hai tổng là "tiếp tục học, nhưng nhiễu giảm dần". Bộ đếm $n$ là số lần cập nhật riêng của từng cặp, không phải chỉ số toàn cục. Kết luận chỉ phát biểu trên miền khả đạt; ví dụ $\gamma=1$ và $\alpha=0{,}8$ chỉ minh họa cập nhật.
-
-::: exercise Câu hỏi kiểm tra
-Một báo cáo dùng $\alpha=0{,}1$ hằng chung cho mọi cặp và $\varepsilon_k=1/k$, rồi kết luận SARSA hội tụ về $q_*$. Liệt kê các giả thiết của định lý mà báo cáo còn thiếu.
+Với trường hợp 3, nêu hai điều kiện cần kiểm trước khi viện dẫn hội tụ tới $q_*$.
 :::
 
 ::: hint
-So từng giả thiết của định lý với những gì báo cáo cung cấp; chú ý chỉ số của bước học.
+Đối chiếu thời điểm có đủ dữ liệu và cách tạo phần tiếp nối. Với bảo đảm dài hạn, kiểm số cập nhật của từng cặp và các tổng bước học, cùng miền giả thiết của định lý.
 :::
 
 ::: solution
-Báo cáo thiếu các giả thiết sau. (1) Bước học: $\alpha$ hằng không thỏa Robbins–Monro, vì $\sum_n\alpha_n(s,a)^2<\infty$ yêu cầu nhiễu bước học giảm dần; điều kiện phải áp dụng cho số lần cập nhật riêng của từng cặp $\alpha_n(s,a)$, không phải chỉ số toàn cục. (2) Cơ chế hành vi: $\varepsilon_k=1/k$ chỉ hướng tới tham lam ở giới hạn; GLIE còn cần mọi cặp khả đạt được ghé vô hạn lần, điều này phải do cơ chế hành vi bảo đảm. (3) Thiết lập: định lý cần MDP hữu hạn, thưởng bị chặn và $\gamma<1$. Với SARSA, mỗi lần ghé một cặp tạo đúng một cập nhật, nên điều kiện định lý là số lần cập nhật của từng cặp tiến tới vô hạn. (Nguồn: PDF tr. 27; slide C05.)
+Trường hợp 1 phù hợp với MC theo chính sách, lần ghé đầu; cần lượt kết thúc thật và bộ đếm đúng theo các lợi tức được chọn. Trường hợp 2 phù hợp với Sarsa; cần lấy $A'$ trước cập nhật và giữ để thực hiện nếu còn tương tác. Trường hợp 3 phù hợp với Q-learning; mục tiêu trực tiếp dùng cực đại từ bảng.
+
+Hai điều kiện cần kiểm là mọi cặp cần học được cập nhật vô hạn gần chắc chắn và bước học thỏa hai tổng Robbins–Monro theo cặp. Để dùng định lý còn cần MDP hữu hạn, có động lực không đổi theo thời gian, thưởng bị chặn, $\gamma<1$, $Q_0$ hữu hạn, mẫu đúng động lực có điều kiện và bước học được chọn từ thông tin có trước mẫu. Một bộ dữ liệu đầy đủ có thể dùng cho nhiều thuật toán; các yêu cầu trên xác định cả dữ liệu lẫn loại mục tiêu.
 :::
 
-<!-- note-topic-id: lec-06-topic-10 -->
-## Q-learning dạng bảng và ví dụ
+### 7.3. Bài 10 trong bộ bài tập: MC và Q-learning trên sáu trạng thái
 
-Vấn đề: cùng chuyển $(C,0)\to B$ với $R=-1$, hành vi đã chọn $A'=0$, nhưng bảng có hai giá trị khác nhau tại B: hành động đã lấy mẫu $Q(B,0)=0$ và hành động tham lam $\max_aQ(B,a)=Q(B,1)=1$. Nếu mục tiêu là chính sách tham lam, nên dùng đại lượng nào? Q-learning trả lời: dùng cực đại.
+Bài tập này dùng môi trường riêng A–B–C–D–E–F, với A và F kết thúc, mỗi lượt bắt đầu tại D. Tập trạng thái không kết thúc là $\{B,C,D,E\}$; tại mỗi trạng thái có hai hành động 0: trái và 1: phải. Hệ số chiết khấu là $\gamma=1/2$.
 
-**Đích Q-learning.**
+Các chuyển thông thường đi một ô theo hướng của hành động. Riêng hành động trái tại B dẫn tới A với xác suất 0.9 và ở lại B với xác suất 0.1. Thưởng được xác định theo trạng thái đi tới: vào A nhận 10, vào F nhận $-2$, vào B, C, D hoặc E nhận $-1$. Bảng đầu riêng của bài tập là
 
-$$Y_t^Q=R_{t+1}+\gamma\max_{a\in\mathcal A(S_{t+1})}Q_t(S_{t+1},a),$$
-$$Q_{t+1}(S_t,A_t)=Q_t(S_t,A_t)+\alpha_t(S_t,A_t)\bigl[Y_t^Q-Q_t(S_t,A_t)\bigr].$$
+| Trạng thái | $Q_0(s,0)$ | $Q_0(s,1)$ |
+|---|---:|---:|
+| B | $-1$ | 1 |
+| C | 0 | 2 |
+| D | 1 | 0 |
+| E | 1 | 5 |
 
-Hành động $A_t$ do hành vi sinh; đích không dùng $A_{t+1}$ đã lấy mẫu. Đích tham lam biểu diễn chính sách đích, nên Q-learning là khác chính sách và có xu hướng học trực tiếp $q_*$.
+Hai lượt quan sát, viết mỗi chuyển theo thứ tự $(S,A,R,S')$, là
 
-**Thuật toán Q-learning dạng bảng.**
+$$
+\begin{aligned}
+\tau_1:\quad &(D,0,-1,C),\ (C,0,-1,B),\\
+             &(B,0,-1,B),\ (B,0,10,A),\\
+\tau_2:\quad &(D,1,-1,E),\ (E,1,-2,F).
+\end{aligned}
+$$
 
-- Đầu vào: môi trường; $\gamma$; chính sách hành vi $\mu_t$ tại chuyển $t$ với cơ chế bảo đảm mọi cặp trong $\mathcal X_{\mathrm{reach}}$ được cập nhật vô hạn lần; lịch theo lần ghé $\alpha_n(s,a)$; ngân sách $K$.
-- Khởi tạo: $Q(s,a)$ tùy ý với $Q(\text{kết thúc},\cdot)=0$; $N(s,a)=0$.
-- Vòng lặp, với lượt $k=1,\dots,K$:
-  1. Đặt lại $S\leftarrow S_0$.
-  2. Lặp: chọn $A\sim\mu_t(\cdot\mid S)$; thực hiện $A$, quan sát $R,S'$; tăng $N(S,A)$; đặt $\alpha\leftarrow\alpha_{N(S,A)}(S,A)$.
-     - Nếu $S'$ kết thúc: cập nhật với đích $R$; dừng vòng lượt.
-     - Nếu chưa: cập nhật với đích $R+\gamma\max_aQ(S',a)$; gán $S\leftarrow S'$.
-- Dừng: sau $K$ lượt hoặc tiêu chuẩn đặt trước.
-- Đầu ra: bảng $Q$ và chính sách $g_Q$.
-- Chi phí: chọn hành động và đọc cực đại tốn $O(A_{\max})$; bảng tốn $O(|\mathcal X|)$. Không lấy cực đại ở trạng thái kết thúc.
+Bài gốc giới hạn mỗi lượt ở năm bước. Hai lượt đã cho dài bốn và hai bước, đều kết thúc thật tại A hoặc F trước giới hạn. Vì vậy các lợi tức sau đây được tính từ các lượt hoàn chỉnh. Những dữ kiện này không dùng lại hệ số chiết khấu, phần thưởng hay bảng đầu của chuỗi A–E.
 
-::: example Q-learning trên cùng lượt, $\alpha=0{,}8$, cập nhật tại chỗ
+::: exercise
+Câu hỏi: Với hai bản sao riêng của bảng đầu trên:
 
-| Chuyển | Đích Q-learning | Ô trước | Ô sau |
-|---|---|---|---|
-| $(D,0)\to C$ | $-1+\max_aQ(C,a)=0$ | $Q(D,0)=1$ | $0{,}2$ |
-| $(C,0)\to B$ | $-1+\max_aQ(B,a)=0$ | $Q(C,0)=1$ | $0{,}2$ |
-| $(B,0)\to A$ | $1000$ | $Q(B,0)=0$ | $800$ |
-
-Tại B, cực đại bằng 1 ở hành động phải dù lượt thực tế chọn trái; do đó đích ở C bằng 0 và $Q(C,0)$ thành $0{,}2$. Kết quả: $Q(D,0)=0{,}2$, $Q(C,0)=0{,}2$, $Q(B,0)=800$. Khác biệt duy nhất với SARSA trên lượt này nằm ở ô $(C,0)$, đến từ $Q(B,0)=0$ so với $\max_aQ(B,a)=1$.
-:::
-
-So đích trên một trục: MC dùng phần thưởng tích lũy; SARSA dùng hành động kế tiếp; Q-learning dùng cực đại ở trạng thái kế tiếp. Trên lượt này, chỉ SARSA dùng quyết định thăm dò tại B trong đích cập nhật ở C; Q-learning thay quyết định đó bằng cực đại; MC dùng toàn bộ kết quả nên quyết định tại B đi vào phần thưởng tích lũy nhưng không qua một đích bootstrap ở C.
-
-::: exercise Câu hỏi kiểm tra
-Giải thích vì sao $Q(C,0)$ sau cập nhật khác nhau giữa SARSA và Q-learning trên cùng lượt, và tính đích Q-learning tại chuyển $(C,0)\to B$.
+1. Cập nhật MC lần ghé đầu theo cặp trên $\tau_1$ rồi $\tau_2$, với mọi bộ đếm ban đầu bằng 0. Tính riêng ô $(B,0)$ nếu thay bằng mọi lần ghé.
+2. Đặt lại bảng đầu và cập nhật Q-learning với $\alpha=1$ qua cả sáu mẫu theo thứ tự đã cho. Trình bày giá trị mới của mỗi ô được cập nhật và bảng cuối.
 :::
 
 ::: hint
-So sánh hai đại lượng đi vào đích tại B: hành động đã lấy mẫu và hành động tham lam.
+Ở lượt thứ nhất, cặp $(B,0)$ xuất hiện hai lần, với hai lợi tức khác nhau. MC lần ghé đầu chọn lần có chỉ số nhỏ hơn. Với Q-learning và $\alpha=1$, giá trị mới bằng mục tiêu; mục tiêu phải dùng bảng hiện hành trước từng mẫu, kể cả chuyển tự quay về B.
 :::
 
 ::: solution
-SARSA dùng hành động kế tiếp thật sự $A'=0$ nên đích là $-1+Q(B,0)=-1$, cho $Q(C,0)=-0{,}6$. Q-learning dùng cực đại nên đích là $-1+\max_aQ(B,a)=-1+1=0$, cho $Q(C,0)=0{,}2$. Khác biệt duy nhất đến từ $Q(B,0)=0$ so với $\max_aQ(B,a)=1$. (Nguồn: PDF tr. 20–21; slide D00–D04.)
+Với lượt $\tau_1$, tính lùi cho
+
+$$
+\begin{aligned}
+G_3&=10,\\
+G_2&=-1+\tfrac12\cdot10=4,\\
+G_1&=-1+\tfrac12\cdot4=1,\\
+G_0&=-1+\tfrac12\cdot1=-\tfrac12.
+\end{aligned}
+$$
+
+Lần ghé đầu của $(B,0)$ là $t=2$, có lợi tức 4. Lần thứ hai có lợi tức 10 và không được dùng trong MC lần ghé đầu. Với lượt $\tau_2$, hai lợi tức là $-1+(1/2)(-2)=-2$ và $-2$.
+
+Sau cả hai lượt, MC lần ghé đầu cho
+
+| Trạng thái | $Q(s,0)$ | $Q(s,1)$ | $N(s,0)$ | $N(s,1)$ |
+|---|---:|---:|---:|---:|
+| B | 4 | 1 | 1 | 0 |
+| C | 1 | 2 | 1 | 0 |
+| D | $-1/2$ | $-2$ | 1 | 1 |
+| E | 1 | $-2$ | 0 | 1 |
+
+Những ô chưa có mẫu giữ giá trị khởi tạo và bộ đếm 0. Nếu dùng mọi lần ghé, riêng ô $(B,0)$ nhận hai mẫu 4 và 10, nên bằng 7 với bộ đếm 2.
+
+Q-learning bắt đầu lại từ bảng đầu riêng của bài tập. Vì $\alpha=1$, kết quả mỗi mẫu là
+
+| Mẫu | Ô cập nhật | Mục tiêu và giá trị mới |
+|---:|---|---|
+| 1: D đến C | $(D,0)$ | $-1+\tfrac12\max(0,2)=0$ |
+| 2: C đến B | $(C,0)$ | $-1+\tfrac12\max(-1,1)=-\tfrac12$ |
+| 3: B ở lại B | $(B,0)$ | $-1+\tfrac12\max(-1,1)=-\tfrac12$ |
+| 4: B đến A | $(B,0)$ | $10$ |
+| 5: D đến E | $(D,1)$ | $-1+\tfrac12\max(1,5)=\tfrac32$ |
+| 6: E đến F | $(E,1)$ | $-2$ |
+
+Ở mẫu 3, hàng B trong vế phải vẫn là hàng trước cập nhật: $(-1,1)$. Mẫu 4 mới thay ô $(B,0)$ bằng 10. Bảng cuối Q-learning là
+
+| Trạng thái | $Q(s,0)$ | $Q(s,1)$ |
+|---|---:|---:|
+| B | 10 | 1 |
+| C | $-1/2$ | 2 |
+| D | 0 | $3/2$ |
+| E | 1 | $-2$ |
+
+Xác suất 0.9 và 0.1 mô tả nguồn sinh chuyển ngẫu nhiên. Với các mẫu đã cho, Q-learning sử dụng kết quả chuyển thực sự quan sát được; không thay mẫu bằng kỳ vọng theo hai xác suất đó.
 :::
 
-<!-- note-topic-id: lec-06-topic-11 -->
-## Hội tụ Q-learning
+Nguồn: Tạ Việt Cường, [Bài tập tuần 3, Bài 10](../RL-hk2-2025-2026/resources/hw3.pdf), tr. 2–3. Phần trên giải các yêu cầu MC và Q-learning dạng bảng.
 
-Vấn đề: Q-learning tách chính sách hành vi khỏi đích học; điều kiện hội tụ của nó khác SARSA ở thành phần nào?
+### 7.4. Đọc thêm: dự đoán TD(0) khác chính sách
 
-**Định lý hội tụ Q-learning dạng bảng.** Với MDP hữu hạn, phần thưởng bị chặn và $0\le\gamma<1$, nếu:
+Phần này xét dự đoán giá trị trạng thái của một chính sách đích $\pi$ cố định. Dữ liệu được sinh bởi chính sách hành vi $b$. Xét MDP hữu hạn, có động lực không đổi theo thời gian, thưởng bị chặn và $0\le\gamma<1$. Bảng $V_t(s)$ ước lượng $v_\pi(s)$; đặt giá trị tại trạng thái kết thúc bằng 0.
 
-- mọi $(s,a)\in\mathcal X_{\mathrm{reach}}$ được cập nhật vô hạn lần dưới chính sách hành vi $\mu_t$;
-- với từng cặp đó, $\sum_n\alpha_n(s,a)=\infty$ và $\sum_n\alpha_n(s,a)^2<\infty$;
+Để hiệu chỉnh phân phối hành động, yêu cầu
 
-thì $Q(s,a)\to q_*(s,a)$ gần chắc chắn trên $\mathcal X_{\mathrm{reach}}$.
+$$
+\pi(a\mid s)>0\ \Longrightarrow\ b(a\mid s)>0.
+$$
 
-Khác SARSA, Q-learning không yêu cầu thành phần “tham lam ở giới hạn” của GLIE: chính sách hành vi không cần hội tụ về tham lam. Thuật toán vẫn cần thành phần “thăm dò vô hạn”, tức số lần cập nhật của từng cặp trong $\mathcal X_{\mathrm{reach}}$ tiến tới vô hạn. Q-learning dạng bảng không cần tỉ số lấy mẫu độ quan trọng vì đích là toán tử Bellman tối ưu, không phụ thuộc hành động kế tiếp của hành vi. Ví dụ $\gamma=1$, $\alpha=0{,}8$ và một lượt chỉ minh họa phép cập nhật; chúng không chứng minh hội tụ.
+Với hành động thực sự lấy từ $b$, định nghĩa tỉ số lấy mẫu quan trọng
 
-::: exercise Câu hỏi kiểm tra
-Liệt kê giả thiết hội tụ của Q-learning và chỉ ra giả thiết nào của SARSA không còn bắt buộc.
+$$
+\rho_t=\frac{\pi(A_t\mid S_t)}{b(A_t\mid S_t)}.
+$$
+
+Mẫu có $b(A_t\mid S_t)>0$, nên mẫu số được xác định. Các hành động có xác suất hành vi bằng 0 không được lấy mẫu. Điều kiện hỗ trợ đảm bảo không thiếu hành động có khối xác suất dương dưới chính sách đích.
+
+Dạng cập nhật nhân tỉ số vào mục tiêu là
+
+$$
+V_{t+1}(S_t)=V_t(S_t)+\alpha_t
+\left\{\rho_t\left[R_{t+1}+\gamma V_t(S_{t+1})\right]-V_t(S_t)\right\}.
+$$
+
+Các ô khác giữ nguyên. Khi trạng thái kế tiếp kết thúc, số hạng $V_t(S_{t+1})$ bằng 0. Công thức cập nhật bảng giá trị trạng thái $V$, nên thuộc dự đoán TD(0) khác chính sách. Sarsa trong phần chính cập nhật bảng giá trị hành động $Q$ và dùng hành động kế tiếp.
+
+::: proof
+Gọi $\mathcal F_t$ là thông tin có trước khi lấy $A_t$, gồm trạng thái hiện tại, bảng $V_t$ và các phân phối hành động đang dùng. Điều kiện hóa theo $\mathcal F_t$ và $S_t=s$ giữ cố định các đại lượng này. Đặt
+
+$$
+Y_t=R_{t+1}+\gamma V_t(S_{t+1}).
+$$
+
+Động lực môi trường theo cặp cho
+
+$$
+\begin{aligned}
+\mathbb E_b[\rho_tY_t\mid\mathcal F_t,S_t=s]
+&=\sum_{a:b(a\mid s)>0}b(a\mid s)\frac{\pi(a\mid s)}{b(a\mid s)}
+\mathbb E[Y_t\mid\mathcal F_t,S_t=s,A_t=a]\\
+&=\sum_a\pi(a\mid s)
+\left[\bar r(s,a)+\gamma\sum_{s'}P(s'\mid s,a)V_t(s')\right]\\
+&=(T^\pi V_t)(s).
+\end{aligned}
+$$
+
+$P$ và $\bar r$ lần lượt là xác suất chuyển và thưởng kỳ vọng; chúng chỉ dùng trong lập luận kỳ vọng, không phải đầu vào cần biết của cập nhật. $T^\pi$ là toán tử Bellman của chính sách cố định $\pi$. Điều kiện hỗ trợ cho phép đổi tổng trên hỗ trợ của $b$ thành tổng theo $\pi$. Do đó
+
+$$
+\mathbb E_b[\rho_tY_t-V_t(s)\mid\mathcal F_t,S_t=s]
+=(T^\pi V_t)(s)-V_t(s).
+$$
+
+Đồng thời,
+
+$$
+\mathbb E_b[\rho_t\mid\mathcal F_t,S_t=s]
+=\sum_{a:b(a\mid s)>0}\pi(a\mid s)=1.
+$$
+
+Vì vậy dạng nhân tỉ số vào toàn bộ sai lệch cũng thỏa
+
+$$
+\mathbb E_b[\rho_t(Y_t-V_t(s))\mid\mathcal F_t,S_t=s]
+=(T^\pi V_t)(s)-V_t(s).
+$$
+
+Hai gia số chưa nhân bước học khác nhau trên từng mẫu:
+
+$$
+[\rho_tY_t-V_t(s)]-\rho_t[Y_t-V_t(s)]
+=(\rho_t-1)V_t(s).
+$$
+
+Hiệu này có kỳ vọng có điều kiện bằng 0. Hai gia số chưa nhân bước học có cùng kỳ vọng có điều kiện nhưng có nhiễu khác nhau; đẳng thức không cho một thứ tự phương sai chung.
 :::
 
-::: hint
-So sánh hai danh sách giả thiết ở chủ đề 09 và chủ đề này.
+Kỳ vọng vừa tính là sai lệch Bellman của bảng hiện hành $V_t$. Khi $V_t$ chưa bằng $v_\pi$, mục tiêu một bước không tự là ước lượng không chệch của giá trị thật $v_\pi(s)$. Chứng minh kỳ vọng một bước cũng chưa tự chứng minh hội tụ của một quá trình đổi chính sách hoặc dùng xấp xỉ hàm.
+
+Điều kiện hỗ trợ để định nghĩa tỉ số khác với việc trạng thái cần đánh giá được ghé và cập nhật đủ lâu. Q-learning một bước ở phần chính tạo mục tiêu bằng cực đại trực tiếp nên không cần hiệu chỉnh một hành động kế tiếp lấy từ hành vi bằng tỉ số này.
+
+Nguồn: công thức cập nhật $V$ nhân tỉ số vào riêng mục tiêu trong [bài giảng nguồn, tr. 19](../RL-hk2-2025-2026/lecture-06-model-free-control.pdf); đối chiếu dạng nhân toàn bộ sai lệch với Sutton và Barto, [giáo trình](https://incompleteideas.net/book/the-book-2nd.html), §7.3, công thức (7.9)–(7.10), tr. 148, khi số bước bằng 1.
+
+### 7.5. Đọc thêm: sai số đánh giá một chính sách cố định
+
+Cố định một chính sách $\pi$ và phân phối trạng thái đầu $d_0$. Mục tiêu đánh giá là đại lượng vô hướng
+
+$$
+J_{d_0}(\pi)=\mathbb E_{S_0\sim d_0,\pi}[G_0].
+$$
+
+Nếu $d_0$ tập trung tại một trạng thái $s$, đại lượng này bằng $v_\pi(s)$. Trong mục này, $n$ là số lượt đánh giá độc lập, khác số cập nhật theo cặp ở phần bước học. Cố định $n\ge1$ trước khi lấy dữ liệu. Mỗi lượt bắt đầu độc lập theo cùng $d_0$, thực hiện cùng $\pi$ và được quan sát hoàn chỉnh. Gọi $G^{(i)}$ là lợi tức ngẫu nhiên từ đầu lượt thứ $i$, với $i=1,\ldots,n$. Ước lượng là
+
+$$
+\widehat J_n=\frac1n\sum_{i=1}^nG^{(i)}.
+$$
+
+Giả sử có các số hữu hạn $L,U$ sao cho $L\le G^{(i)}\le U$ gần chắc chắn và đặt độ rộng $B=U-L>0$. Với sai số $\eta>0$, bất đẳng thức Hoeffding hai phía cho
+
+$$
+\Pr\left\{\left|\widehat J_n-J_{d_0}(\pi)\right|>\eta\right\}
+\le2\exp\left(-\frac{2n\eta^2}{B^2}\right).
+$$
+
+Đặt $\delta\in(0,1)$ là cận xác suất vi phạm chặn sai số; ký hiệu này khác sai lệch TD $\delta_t$. Với xác suất ít nhất $1-\delta$,
+
+$$
+\left|\widehat J_n-J_{d_0}(\pi)\right|
+\le B\sqrt{\frac{\log(2/\delta)}{2n}}.
+$$
+
+::: proof
+Các biến $G^{(i)}$ độc lập, có cùng kỳ vọng $J_{d_0}(\pi)$ và mỗi biến nằm trong đoạn độ rộng $B$. Áp dụng Hoeffding cho tổng $\sum_{i=1}^nG^{(i)}$ với độ lệch $n\eta$ cho đuôi trên:
+
+$$
+\Pr\left\{\sum_{i=1}^nG^{(i)}-nJ_{d_0}(\pi)>n\eta\right\}
+\le\exp\left(-\frac{2(n\eta)^2}{\sum_{i=1}^n B^2}\right)
+=\exp\left(-\frac{2n\eta^2}{B^2}\right).
+$$
+
+Áp dụng tương tự cho các biến $-G^{(i)}$ cho đuôi dưới. Cộng hai xác suất cho chặn hai phía. Giải phương trình $2\exp(-2n\eta^2/B^2)=\delta$ theo $\eta$ cho bán kính sai số đã nêu.
+
+Muốn bán kính không vượt mức $\eta$ cho trước, chọn số nguyên $n$ thỏa
+
+$$
+n\ge\left\lceil\frac{B^2}{2\eta^2}\log\frac2\delta\right\rceil.
+$$
+
+Nếu $B=0$, lợi tức là hằng số và trung bình bằng kỳ vọng; không cần dùng biểu thức có mẫu số $B^2$.
 :::
 
-::: solution
-Q-learning cần: MDP hữu hạn, thưởng bị chặn, $0\le\gamma<1$; mọi $(s,a)\in\mathcal X_{\mathrm{reach}}$ được cập nhật vô hạn lần dưới $\mu_t$; bước học Robbins–Monro theo từng cặp. Giả thiết không còn bắt buộc là GLIE, cụ thể là hành vi tham lam ở giới hạn; chỉ cần độ phủ vô hạn. Cả hai vẫn cần Robbins–Monro theo từng cặp. (Nguồn: PDF tr. 28; slide D05.)
-:::
+Độ rộng phải được tính từ khoảng lợi tức, không chỉ từ một cận trị tuyệt đối của phần thưởng. Với $0\le\gamma<1$, chuỗi hình học cho các lựa chọn sau:
 
-<!-- note-topic-id: lec-06-topic-12 -->
-## Dự đoán khác chính sách cho $V$
+| Giả thiết phần thưởng | Khoảng chứa lợi tức | Độ rộng dùng được |
+|---|---|---|
+| $0\le R\le R_{\max}$ | $[0,R_{\max}/(1-\gamma)]$ | $B=R_{\max}/(1-\gamma)$ |
+| $\lvert R\rvert\le R_{\max}$ | $[-R_{\max}/(1-\gamma),R_{\max}/(1-\gamma)]$ | $B=2R_{\max}/(1-\gamma)$ |
 
-Vấn đề: khi dữ liệu sinh bởi chính sách hành vi $\mu$ nhưng ta muốn ước lượng giá trị của chính sách đích $\pi$ cố định, phân phối lấy mẫu của $\mu$ khác phân phối của $\pi$ và cần hiệu chỉnh.
+Vì vậy cận thưởng có dấu làm độ rộng được bảo đảm lớn gấp đôi so với giả thiết thưởng không âm cùng $R_{\max}$. Với $\gamma=1$, công thức chia cho $1-\gamma$ không áp dụng. Nếu mọi lượt dài không quá một số cố định $H$ và $|R|\le R_{\max}$, có thể dùng khoảng $[-HR_{\max},HR_{\max}]$. Chỉ biết kết thúc gần chắc chắn, khi độ dài lượt không bị chặn, chưa đảm bảo một độ rộng lợi tức hữu hạn. Vì thế chặn chiết khấu trên không được áp ngầm cho chuỗi A–E có $\gamma=1$.
 
-Trực giác: các chuyển xảy ra theo $\mu$ với tần số khác $\pi$; nhân tỉ số xác suất đưa phân phối về của $\pi$. Điều kiện hỗ trợ yêu cầu hỗ trợ của $\pi(\cdot\mid s)$ là tập con của hỗ trợ của $\mu_t(\cdot\mid s)$ tại mỗi trạng thái khả đạt:
+Các phần thưởng bên trong một lượt có thể phụ thuộc nhau. Yêu cầu độc lập ở đây đặt lên các lợi tức hoàn chỉnh $G^{(i)}$ của những lượt khác nhau. Nhiều lần ghé trong cùng một lượt không tự cung cấp các mẫu độc lập. Nếu chính sách đổi giữa các lượt, các kỳ vọng không còn nhất thiết bằng cùng $J_{d_0}(\pi)$.
 
-$$\forall(s,a)\in\mathcal X_{\mathrm{reach}}:\quad \pi(a\mid s)>0\Longrightarrow\mu_t(a\mid s)>0.$$
+Chặn đánh giá một chính sách tại số lượt $n$ cố định không xác định số mẫu cần để tìm chính sách tối ưu hoặc học thích nghi toàn bảng $Q$. Nó cũng không tự đúng đồng thời tại mọi thời điểm dừng phụ thuộc dữ liệu. Số lượt $n$ khác số chuyển môi trường; số chuyển đã thu là tổng độ dài các lượt. Với một quá trình tiếp tục, việc cắt tổng lợi tức tại một số bước hữu hạn còn tạo sai số cắt ngắn cần kiểm riêng.
 
-Nếu điều kiện hỗ trợ bị vi phạm, hành động mà $\pi$ cần có thể không xuất hiện trong dữ liệu và phép hiệu chỉnh không xác định. Khi điều kiện thỏa, với hành động đã lấy mẫu, $\rho_t=\pi(A_t\mid S_t)/\mu_t(A_t\mid S_t)$ là hữu hạn.
+Nguồn: [Hoeffding, Probability Inequalities for Sums of Bounded Random Variables](https://www.cs.rpi.edu/academics/courses/spring06/random/hoefding.pdf), Định lý 2, tr. 16; đại lượng đánh giá và giả thiết làm rõ cho chặn trong [bài giảng nguồn, tr. 29](../RL-hk2-2025-2026/lecture-06-model-free-control.pdf).
 
-**TD(0) khác chính sách cho giá trị trạng thái:**
+### 7.6. Tài liệu học tiếp
 
-$$V(S_t)\leftarrow V(S_t)+\alpha_t\rho_t\bigl[R_{t+1}+\gamma V(S_{t+1})-V(S_t)\bigr].$$
+Sutton và Barto, [Reinforcement Learning: An Introduction, ấn bản 2](https://incompleteideas.net/book/the-book-2nd.html), §§5.2–5.4 trình bày giá trị hành động, điều khiển Monte Carlo và chính sách mềm; §§6.4–6.5 trình bày Sarsa và Q-learning. Đối với mỗi thuật toán, việc đối chiếu cần giữ đủ đầu vào, mục tiêu, thời điểm chọn hành động và nhánh trạng thái kết thúc.
 
-- Đầu vào: $\pi$, $\mu$, $V_0$, $\gamma$, lịch bước học $\alpha_t$ và luồng chuyển. Đầu ra: $V$; dừng theo ngân sách.
-- Nếu $S_{t+1}$ kết thúc, đặt $V(S_{t+1})=0$.
-- Mỗi chuyển tốn $O(1)$ chỉ khi các xác suất của $\pi$ và $\mu$ được lưu bảng và tra trực tiếp.
-- Chỉ cần một hệ số lấy mẫu độ quan trọng từng bước, thường có phương sai thấp hơn lấy mẫu độ quan trọng MC trên cả quỹ đạo.
-
-Giới hạn: đây là bài toán dự đoán $V$, không phải thuật toán điều khiển thứ tư. Q-learning là khác chính sách nhưng cập nhật bảng chuẩn không nhân tỉ số này.
-
-::: example Ví dụ tỉ số từng bước
-Nếu $\pi(A_t\mid S_t)=1$ và $\mu_t(A_t\mid S_t)=0{,}25$ thì $\rho_t=4$. Cập nhật nhân sai số TD với hệ số $4\alpha_t$.
-:::
-
-::: exercise Câu hỏi kiểm tra
-Với $\pi(A_t\mid S_t)=0{,}5$, $\mu_t(A_t\mid S_t)=0{,}25$, $R_{t+1}=-1$, $\gamma=1$, $V(S_{t+1})=2$, $V(S_t)=1$ và $\alpha_t=0{,}1$: tính $\rho_t$ và giá trị mới của $V(S_t)$.
-:::
-
-::: hint
-Tính sai số TD trước, rồi nhân với $\rho_t\alpha_t$.
-:::
-
-::: solution
-$\rho_t=0{,}5/0{,}25=2$. Sai số TD là $-1+1\cdot2-1=0$, nên giá trị mới $V(S_t)=1+0{,}1\cdot2\cdot0=1$, không đổi. (Nguồn: PDF tr. 18–19; slide D06–D07.)
-:::
-
-<!-- note-topic-id: lec-06-topic-13 -->
-## Ba thuật toán, ba cơ chế
-
-Vấn đề: sau ba thuật toán, cần một bảng so sánh để tránh nhầm cơ chế. Phạm vi: chỉ ba thuật toán bảng của bài; không đưa DQN, actor-critic hoặc xấp xỉ hàm vào phân loại vì chúng cần giả thiết và cơ chế khác.
-
-| | Điều khiển MC đang xét | SARSA | Q-learning |
-|---|---|---|---|
-| Đích | $G_t$ | $R+\gamma Q(S',A')$ | $R+\gamma\max_aQ(S',a)$ |
-| Cập nhật | sau lượt | sau chuyển | sau chuyển |
-| Quan hệ chính sách | theo chính sách | theo chính sách | khác chính sách |
-| Điều kiện hành vi | GLIE và lượt kết thúc | GLIE | cập nhật vô hạn từng cặp |
-| Bước học trong định lý | Robbins–Monro theo từng cặp | Robbins–Monro theo từng cặp | Robbins–Monro theo từng cặp |
-
-GLIE gồm độ phủ vô hạn và tham lam ở giới hạn; bảo đảm hội tụ còn cần bước học phù hợp. Ba thuật toán khác nhau ở ba điểm: loại mục tiêu học (phần thưởng tích lũy đầy đủ hay bootstrap), theo chính sách hay khác chính sách, và cách cải thiện chính sách.
-
-::: exercise Câu hỏi kiểm tra
-Điền vào bảng so sánh: với mỗi thuật toán, nêu đích, thời điểm cập nhật, quan hệ chính sách và điều kiện hành vi.
-:::
-
-::: hint
-Dùng đúng bốn hàng của bảng; điều kiện hành vi của MC gồm hai thành phần.
-:::
-
-::: solution
-Điều khiển MC: đích $G_t$, cập nhật sau lượt, theo chính sách, cần GLIE và lượt kết thúc. SARSA: đích $R+\gamma Q(S',A')$, cập nhật sau chuyển, theo chính sách, cần GLIE. Q-learning: đích $R+\gamma\max_aQ(S',a)$, cập nhật sau chuyển, khác chính sách, cần cập nhật vô hạn từng cặp. (Nguồn: PDF tr. 22–23, 30; slide E00.)
-:::
-
-<!-- note-topic-id: lec-06-topic-14 -->
-## Chi phí bảng và chặn Hoeffding
-
-Vấn đề: chi phí tính toán của biểu diễn bảng không được nhầm với độ phức tạp mẫu.
-
-Chi phí của biểu diễn bảng:
-
-- Bộ nhớ của cả ba phương pháp: $O(|\mathcal X|)$; MC còn giữ lượt $O(T)$.
-- SARSA đọc một giá trị $Q(S',A')$ trong $O(1)$, nhưng chọn $A'$ theo $\varepsilon$-tham lam có thể cần quét $\mathcal A(S')$.
-- Q-learning đọc cực đại bằng cách quét $\mathcal A(S')$ nếu không duy trì cấu trúc phụ.
-- Số mẫu để đạt một sai số cho trước còn phụ thuộc độ phủ, nhiễu, bước học và động lực MDP.
-
-**Chặn Hoeffding và phạm vi.** Với chính sách và phân phối khởi đầu cố định, nếu $G_1,\dots,G_n$ là các phần thưởng tích lũy i.i.d. với $G_i\in[L,U]$ và $0<\delta<1$, thì với xác suất ít nhất $1-\delta$:
-
-$$\left|\frac1n\sum_{i=1}^nG_i-\mathbb E[G]\right|\le(U-L)\sqrt{\frac{\log(2/\delta)}{2n}}.$$
-
-Sai số giảm theo tốc độ $O(n^{-1/2})$ và chặn không phụ thuộc trực tiếp vào kích thước không gian trạng thái. Giới hạn: đây là chặn điểm cho một trung bình vô hướng cố định; không phải chặn đồng thời cho mọi trạng thái, mọi chính sách hoặc quá trình điều khiển thích nghi. Nếu phần thưởng có thể âm, phải dùng đúng khoảng $[L,U]$ của phần thưởng tích lũy.
-
-::: exercise Câu hỏi kiểm tra
-Với $n=100$, phần thưởng tích lũy bị chặn trong $[0,1000]$ và $\delta=0{,}05$: tính chặn Hoeffding cho sai số của trung bình mẫu, và nêu hai giả thiết bắt buộc để chặn áp dụng.
-:::
-
-::: hint
-Thay trực tiếp vào công thức; $\log(2/\delta)=\log 40$.
-:::
-
-::: solution
-Chặn là $(1000-0)\sqrt{\log(40)/(2\cdot100)}=1000\sqrt{3{,}6889/200}\approx1000\cdot0{,}1358\approx135{,}8$. Hai giả thiết bắt buộc: các phần thưởng tích lũy i.i.d. dưới cùng một chính sách và phân phối khởi đầu cố định, và phần thưởng tích lũy bị chặn trong khoảng đã cho với $0<\delta<1$. Chặn này không suy sang điều khiển thích nghi. (Nguồn: PDF tr. 29; slide E01–E02.)
-:::
-
-<!-- note-topic-id: lec-06-topic-15 -->
-## Phạm vi kết luận và cầu nối sang xấp xỉ hàm
-
-Thu hồi mục tiêu trong phạm vi bảng hữu hạn:
-
-1. Điều khiển phi mô hình bảng học $Q$ từ trải nghiệm và cải thiện chính sách.
-2. MC dùng phần thưởng tích lũy; SARSA dùng hành động kế tiếp; Q-learning dùng cực đại.
-3. GLIE, độ phủ và Robbins–Monro là các giả thiết phải kiểm tra, phát biểu trên $\mathcal X_{\mathrm{reach}}$ với MDP hữu hạn, thưởng bị chặn và $\gamma<1$.
-
-Ba bài tập dọc tổng hợp: tái tạo lượt và phản biện quy tắc số như một bộ lấy mẫu; đối chiếu ba bảng cập nhật và dùng kịch bản giả định đổi riêng $A_{t+1}$ tại B để tính lại cập nhật ở C; sửa một lập luận hội tụ bằng cách khôi phục miền hữu hạn, thưởng bị chặn, $\gamma<1$, tách GLIE của SARSA khỏi độ phủ và Robbins–Monro mà Q-learning vẫn cần.
-
-Cầu nối: Bài 07 thay bảng giá trị bằng hàm xấp xỉ và xét lại các bảo đảm hội tụ; không mang nguyên định lý dạng bảng sang thiết lập đó.
-
-::: exercise Câu hỏi kiểm tra
-Một báo cáo ghi: "$\varepsilon_k=1/k$ và $\alpha=0{,}1$, nên SARSA chắc chắn hội tụ về $q_*$." Liệt kê giả thiết còn thiếu, đề xuất một lịch $\alpha_n(s,a)$ hợp lệ, và nêu phần nào của kết luận thay đổi đối với Q-learning.
-:::
-
-::: hint
-Kiểm tra ba nhóm giả thiết: thiết lập MDP, cơ chế hành vi, và bước học theo từng cặp.
-:::
-
-::: solution
-Cần MDP hữu hạn, thưởng bị chặn và $\gamma<1$; $\alpha$ hằng không thỏa Robbins–Monro, có thể dùng $\alpha_n(s,a)=1/n$ theo từng cặp. SARSA còn cần GLIE, tức ngoài $\varepsilon_k\to0$ phải có độ phủ vô hạn từng cặp khả đạt. Q-learning không cần hành vi tham lam ở giới hạn, nhưng cả hai vẫn cần mọi cặp trong $\mathcal X_{\mathrm{reach}}$ được cập nhật vô hạn và Robbins–Monro theo từng cặp. (Nguồn: PDF tr. 23, 25–30; slide E03, X01–X03.)
-:::
-
-## Tài liệu tham khảo
-
-- Tạ Việt Cường. *Lecture 06: Điều khiển phi mô hình — Monte Carlo Control, SARSA, Q-Learning và tính chất hội tụ*. Bài giảng Học tăng cường, học kỳ 2 năm học 2025–2026, tr. 1–30. Tệp nguồn: `RL-hk2-2025-2026/lecture-06-model-free-control.pdf`.
-- Bản trình chiếu đã hiệu chỉnh: `2627-1/lecture-06-dieu-khien-phi-mo-hinh.html`, các mã trang P00–P03, A00–A04, B00–B06, C00–C05, D00–D07, E00–E03, X01–X03.
+Các bài tính trong [bài giảng nguồn, tr. 16–18 và 21](../RL-hk2-2025-2026/lecture-06-model-free-control.pdf) và [Bài 10 của bộ bài tập](../RL-hk2-2025-2026/resources/hw3.pdf) cung cấp dữ liệu để tái thực hiện các cập nhật. Các bảng và lời giải ở trên chỉ rõ khởi tạo, thứ tự mẫu và các giả thiết dùng cho từng kết quả.

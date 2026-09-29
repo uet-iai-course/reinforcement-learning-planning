@@ -1,35 +1,443 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Bài 05: Dự đoán phi mô hình</title><link rel="stylesheet" href="revealjs/dist/reset.css"/><link rel="stylesheet" href="revealjs/dist/reveal.css"/><link rel="stylesheet" href="revealjs/dist/theme/white.css"/><link rel="stylesheet" href="plugin/highlight/monokai.css"/><link rel="stylesheet" href="lecture-slide.css"/><style>.reveal .slides section[data-slide-id]{font-size:.82em}.reveal h1,.reveal h2{color:#2F3E7A}.box{border-left:5px solid #B15A2B;background:#F7EFE6;padding:.45em .7em;border-radius:8px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.7em;align-items:center}.card{border:1px solid #ddd;border-radius:8px;padding:.4em .6em}.figure{display:block;margin:.12em auto;width:min(100%,940px);max-height:350px}.grid2 .figure{width:100%;max-width:100%}.math-large{font-size:1.08em;text-align:center}.check{background:#EDF4FF;border:2px solid #2F3E7A;border-radius:8px;padding:.4em .65em}.answer{border-left:4px solid #2E7D32;padding-left:.55em;color:#245C2B}.note-source{font-size:.9em;color:#444}.reveal table{font-size:.92em}.reveal th{background:#F7EFE6}.compact li{margin:.07em 0}.small{font-size:.78em}.warn{color:#A33A1F;font-weight:700}</style></head><body><div class="reveal"><div class="slides">
-<section><section data-slide-id="P00" data-note-topic-id="lec-05-topic-01"><h1>Dự đoán phi mô hình</h1><h3>Monte Carlo và sai phân thời gian</h3><p>Bài 05 · Học tăng cường · Học kỳ 1, 2026–2027</p><aside class="notes">Bài 04 tính kỳ vọng từ mô hình đã biết. Bài này giữ chính sách cố định nhưng thay mô hình bằng các quỹ đạo lấy mẫu.<p class="note-source"><strong>Nguồn:</strong> lecture-05-du-doan-phi-mo-hinh.pdf, tr. 1, 15.</p></aside></section>
-<section data-slide-id="P01" data-note-topic-id="lec-05-topic-01"><h2>Bài toán dự đoán</h2><div class="grid2"><div class="card"><h3>Đã cho</h3><ul><li>MDP bảng hữu hạn nhưng chưa biết mô hình.</li><li>Chính sách Markov dừng $\pi(a\mid s)$.</li><li>Dữ liệu theo chính sách $\pi$.</li></ul></div><div class="card"><h3>Cần ước lượng</h3><p>$$v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s].$$</p><p>Không cải thiện chính sách.</p></div></div><aside class="notes">“Theo chính sách” nghĩa là chính sách sinh dữ liệu cũng là chính sách được đánh giá. Không mở sang điều khiển, khác chính sách hay Q-learning.<p class="note-source"><strong>Nguồn:</strong> tr. 15–16; làm chặt phạm vi.</p></aside></section>
-<section data-slide-id="P02" data-note-topic-id="lec-05-topic-01"><h2>Giả thiết và đối tượng cần học</h2><ul class="compact"><li>$\mathcal S$ hữu hạn; phần thưởng bị chặn; $0\le\gamma\le1$.</li><li>Monte Carlo dùng bài toán theo lượt, kết thúc gần như chắc chắn dưới $\pi$; $V(\text{kết thúc})=0$.</li><li>$v_\pi(s)$ là giá trị thật, cố định bởi MDP và $\pi$.</li><li>$V_t(s)$ là bảng ước lượng trước cập nhật ở bước $t$.</li></ul><div class="check"><strong>Câu hỏi:</strong> đại lượng nào là đích cố định, đại lượng nào thay đổi khi học?</div><p class="fragment answer">$v_\pi$ là đích cố định; $V_t$ thay đổi sau mỗi cập nhật.</p><aside class="notes">Các đích mẫu và sai số được giới thiệu tại phương pháp tương ứng. Hành động vẫn sinh theo chính sách cố định; ta chỉ học giá trị trạng thái.<p class="note-source"><strong>Nguồn:</strong> tr. 15–18, 24–25; bổ sung kiểu đại lượng.</p></aside></section></section>
-<section><section data-slide-id="A00" data-note-topic-id="lec-05-topic-02"><h2>Một lượt trước công thức</h2><img class="figure" src="img/lec-05/short-walk.svg" alt="Môi trường L, S, x, G với hành động dự định đi phải và nhiễu đảo chiều"/><p>Chính sách dự định đi Right; mỗi chuyển bị đảo chiều sang trái với xác suất $0{,}2$.</p><p>Lấy được lượt $e_1:S\to x\to S\to x\to G$ với thưởng chuyển $(0,0,0,+1)$.</p><aside class="notes">Dùng x cho ô không tên. Hai trạng thái kết thúc L và G có giá trị bằng không sau khi vào; phần thưởng nằm trên chuyển tiếp vào chúng.<p class="note-source"><strong>Nguồn:</strong> tr. 19–20; hình vẽ lại.</p></aside></section>
-<section data-slide-id="A01" data-note-topic-id="lec-05-topic-02"><h2>Đích Monte Carlo là toàn bộ phần còn lại</h2><p>Với lượt kết thúc tại thời điểm $T$:</p><div class="math-large">$$G_t=\sum_{k=0}^{T-t-1}\gamma^kR_{t+k+1}.$$</div><p>Trong $e_1$, $\gamma=1$ nên mọi lần ghé $S$ và $x$ có $G_t=+1$.</p><div class="box">Chỉ cập nhật sau khi đã biết điểm kết thúc của lượt.</div><aside class="notes">Chỉ số cuối là R_T, ứng với chuyển vào trạng thái kết thúc S_T. V bằng không ở trạng thái kết thúc nên không có phần thưởng tiếp diễn.<p class="note-source"><strong>Nguồn:</strong> tr. 17, 20.</p></aside></section>
-<section data-slide-id="A02" data-note-topic-id="lec-05-topic-03"><h2>Thuật toán MC lần ghé đầu</h2><div class="grid2"><div class="card"><h3>Đầu vào và khởi tạo</h3><ul class="compact"><li>$\pi,\gamma$; bộ sinh lượt theo $\pi$.</li><li>Ngân sách $M$ lượt hoặc tiêu chuẩn dừng.</li><li>$V(s)=0,N(s)=0$; $V(\text{kết thúc})=0$.</li></ul></div><div class="card"><h3>Mỗi lượt</h3><ol class="compact"><li>Sinh quỹ đạo tới kết thúc.</li><li>Tính $G_t$ ngược từ cuối lượt.</li><li>Với lần ghé đầu của mỗi $s$: tăng $N(s)$ và cập nhật trung bình.</li></ol></div></div><p>Mỗi trạng thái tối đa một mẫu trong mỗi lượt.</p><div class="math-large">$$N(s)\leftarrow N(s)+1,\qquad V(s)\leftarrow V(s)+\frac{G_t-V(s)}{N(s)}.$$</div><p><strong>Đầu ra:</strong> $V$. Mỗi lượt dài $T_e$: thời gian $O(T_e)$; bảng $O(|\mathcal S|)$, quỹ đạo tạm $O(T_e)$.</p><aside class="notes">Một trạng thái đóng góp nhiều nhất một mẫu trong mỗi lượt. Các lượt được khởi động lại độc lập dưới cùng chính sách. Nếu dùng khởi tạo khác không, vẫn giữ giá trị trạng thái kết thúc bằng không.<p class="note-source"><strong>Nguồn:</strong> tr. 18, 21; bổ sung giao diện, vòng lặp, dừng và chi phí.</p></aside></section>
-<section data-slide-id="A03" data-note-topic-id="lec-05-topic-04"><h2>Trung bình mẫu trên hai lượt</h2><p>$V_0(S)=V_0(x)=0$, $\gamma=1$; mỗi trạng thái lấy mẫu ở lần ghé đầu.</p><table><tr><th>Lượt</th><th>$(G(S),G(x))$</th><th>$(N(S),N(x))$</th><th>$(V(S),V(x))$</th></tr><tr><td>$e_1:S\to x\to S\to x\to G$</td><td>$(+1,+1)$</td><td>$(1,1)$</td><td>$(1,1)$</td></tr><tr><td>$e_2:S\to x\to S\to L$</td><td>$(-1,-1)$</td><td>$(2,2)$</td><td>$(0,0)$</td></tr></table><div class="box">Hai lượt đối nghịch cho trung bình mẫu bằng $0$ ở cả S và x.</div><aside class="notes">Áp dụng trọn thuật toán trước khi xét bước học hằng số. Mỗi lượt cung cấp đúng một mẫu cho S và một mẫu cho x, dù mỗi trạng thái xuất hiện nhiều lần.<p class="note-source"><strong>Nguồn:</strong> tr. 20–22; hoàn thiện hai lượt.</p></aside></section>
-<section data-slide-id="A04" data-note-topic-id="lec-05-topic-05"><h2>Giá trị chuẩn chỉ để đối chiếu</h2><div class="grid2"><div><p>Giải hệ Bellman của mô hình thật cho:</p><div class="math-large">$$v_\pi(S)=\frac{11}{21}\approx0{,}524,$$ $$v_\pi(x)=\frac{19}{21}\approx0{,}905.$$</div></div><div class="box"><strong>Sau hai lượt:</strong> MC cho $(0,0)$. Hai giá trị chuẩn chỉ đo sai số; thuật toán không dùng chúng.</div></div><aside class="notes">Giá trị chuẩn đối chiếu xuất hiện sau ước lượng đầu tiên để người học không nhầm nó với đầu vào. Sai số lớn sau hai lượt phản ánh cỡ mẫu rất nhỏ, không bác bỏ tính nhất quán dài hạn.<p class="note-source"><strong>Nguồn:</strong> tr. 19; sửa số nguồn sang phân số chính xác.</p></aside></section>
-<section data-slide-id="A05" data-note-topic-id="lec-05-topic-06"><h2>Quy tắc lấy mẫu và bước học độc lập</h2><img class="figure" style="max-height:270px" src="img/lec-05/design-grid.svg" alt="Ma trận lần ghé đầu hoặc mọi lần ghé, kết hợp trung bình mẫu hoặc alpha hằng số"/><p>Giữ lần ghé đầu nhưng đổi sang $\alpha=0{,}5$: sau $e_1$ có $(0{,}5,0{,}5)$; sau $e_2$ có $(-0{,}25,-0{,}25)$.</p><aside class="notes">Trung bình mẫu dùng bước $1/N(s)$ và cho $(0,0)$ sau hai lượt. Alpha hằng dùng cùng các mẫu nhưng đặt trọng số lớn hơn lên lượt mới, nên cho kết quả khác. Bài tập nguồn trộn hai trục; ma trận sửa phân loại đó.<p class="note-source"><strong>Nguồn:</strong> tr. 18, 20–22; hw05 Bài 5.</p></aside></section>
-<section data-slide-id="A06" data-note-topic-id="lec-05-topic-06"><h2>Mọi lần ghé: cùng lượt, nhiều mẫu</h2><p>Các cột sau $e_2$ tiếp tục từ giá trị đã có sau $e_1$.</p><table><tr><th>Quy tắc</th><th>S sau $e_1$</th><th>x sau $e_1$</th><th>S sau $e_2$</th><th>x sau $e_2$</th></tr><tr><td>Trung bình mẫu</td><td>$1$</td><td>$1$</td><td>$0$</td><td>$1/3$</td></tr><tr><td>MC mọi lần ghé<br/>$\alpha=0{,}5$, xử lý theo $t$ tăng dần</td><td>$0{,}75$</td><td>$0{,}75$</td><td>$-0{,}5625$</td><td>$-0{,}125$</td></tr></table><div class="box">Các mẫu trong cùng lượt phụ thuộc nhau; thứ tự xử lý ảnh hưởng kết quả khi $\alpha$ hằng.</div><aside class="notes">Chỉ xử lý sau kết thúc và sau khi đã tính các G. Lượt đầu cho mỗi trạng thái hai mẫu cộng một nên trung bình vẫn bằng một; lượt hai cho S hai mẫu âm một và x một mẫu âm một.<p class="note-source"><strong>Nguồn:</strong> suy tính từ tr. 20–22; so sánh bổ sung.</p></aside></section>
-<section data-slide-id="A07" data-note-topic-id="lec-05-topic-11"><h2>Khi nào trung bình mẫu hội tụ?</h2><ul><li>Các lượt được khởi động lại độc lập và sinh theo cùng $\pi$.</li><li>$G_t$ có kỳ vọng hữu hạn; mỗi trạng thái cần đánh giá xuất hiện trong vô hạn lượt.</li><li>Khi đó, trung bình lần ghé đầu hội tụ về $v_\pi(s)$ theo luật số lớn.</li><li>$\alpha$ hằng không có cùng bảo đảm hội tụ điểm; nó tiếp tục bám dữ liệu mới.</li></ul><aside class="notes">Phát biểu chính dành cho MC lần ghé đầu. Mọi lần ghé cần luật số lớn phù hợp vì các mẫu trong cùng lượt phụ thuộc nhau. Không trộn alpha hằng với bảo đảm của bước $1/N$.
-<p class="note-source"><strong>Nguồn:</strong> tr. 18, 21–23; bổ sung điều kiện.</p></aside></section>
-<section data-slide-id="A08" data-note-topic-id="lec-05-topic-06"><h2>Kiểm tra cách gọi thuật toán</h2><div class="check"><strong>Câu hỏi:</strong> mô tả “Monte Carlo gia tăng” đã đủ để tái tạo kết quả chưa?</div><p class="fragment answer">Chưa. Phải nêu lần ghé đầu hay mọi lần ghé, và $1/N$ hay $\alpha$ hằng số.</p><div class="box">TD thay toàn bộ phần thưởng tích lũy bằng đích một bước $R_{t+1}+\gamma V_t(S_{t+1})$, nên cập nhật trước khi lượt kết thúc.</div><aside class="notes">Dùng câu hỏi này để ngăn việc đối chiếu các bảng số mà thiếu quy tắc cập nhật. TD dùng một trục thiết kế khác, thay toàn bộ phần thưởng tích lũy bằng đích một bước.<p class="note-source"><strong>Nguồn:</strong> tr. 18, 21; hw05 Bài 5.</p></aside></section></section>
-<section><section data-slide-id="B00" data-note-topic-id="lec-05-topic-07"><h2>Một chuyển tiếp trước công thức</h2><p>Ở thời điểm $t$, quan sát mẫu $(S_t,R_{t+1},S_{t+1})=(S,0,x)$.</p><div class="grid2"><div class="card"><h3>Biết ngay</h3><p>$R_{t+1}=0$ và ước lượng hiện tại $V_t(x)$.</p></div><div class="card"><h3>Chưa biết</h3><p>Phần thưởng kết thúc của lượt.</p></div></div><p>TD có thể tạo một đích học trước khi lượt kết thúc.</p><aside class="notes">Hành động không xuất hiện trong công thức giá trị trạng thái vì dữ liệu đã được sinh theo chính sách cố định. Đây là chuyển tiếp mẫu, không phải mô hình xác suất.<p class="note-source"><strong>Nguồn:</strong> tr. 16, 24.</p></aside></section>
-<section data-slide-id="B01" data-note-topic-id="lec-05-topic-07"><h2>Đích MC, đích TD và sai số TD</h2><table><tr><th>Ký hiệu</th><th>Vai trò</th></tr><tr><td>$G_t$</td><td>Đích MC, biết sau khi lượt kết thúc</td></tr><tr><td>$Y_t^{\mathrm{TD}}$</td><td>Đích TD một bước, dùng $V_t$ ở trạng thái kế tiếp</td></tr><tr><td>$\delta_t$</td><td>Sai số TD: $Y_t^{\mathrm{TD}}-V_t(S_t)$</td></tr></table><p>$v_\pi$ vẫn là đích thật; $V_t$ vẫn là bảng đang học.</p><aside class="notes">G_t không phải đại lượng mới của TD. Chỉ số t trên V nhấn mạnh giá trị được đọc trước cập nhật hiện tại.<p class="note-source"><strong>Nguồn:</strong> tr. 17, 24–25; chuẩn hóa ký hiệu.</p></aside></section>
-<section data-slide-id="B02" data-note-topic-id="lec-05-topic-08"><h2>Thuật toán TD(0) dạng bảng</h2><div class="grid2"><div class="card"><h3>Đầu vào và khởi tạo</h3><ul class="compact"><li>$\pi,\gamma$; bộ sinh chuyển theo $\pi$.</li><li>Lịch bước học $\alpha_n(s)$; ngân sách hoặc tiêu chuẩn dừng.</li><li>Khởi tạo $V$ và $n(s)=0$; đặt $V(\text{kết thúc})=0$.</li></ul></div><div class="card"><h3>Mỗi chuyển</h3><ol class="compact"><li>Chọn $A\sim\pi(\cdot\mid S)$; quan sát $R,S'$.</li><li>Tăng $n(S)$; tính $Y=R+\gamma V(S')$ và $\delta=Y-V(S)$.</li><li>$V(S)\leftarrow V(S)+\alpha_{n(S)}(S)\delta$; đặt $S\leftarrow S'$.</li></ol></div></div><p>Lặp đến kết thúc rồi khởi động lượt mới. <strong>Đầu ra:</strong> $V$. Mỗi lượt dài $T_e$: $O(T_e)$ thời gian, $O(|\mathcal S|)$ bộ nhớ.</p><aside class="notes">n là số lần trạng thái S đã được cập nhật, không nhất thiết là chỉ số thời gian toàn cục. Cập nhật tại chỗ: chuyển sau đọc bảng mới nhất. Alpha hằng trong ví dụ chỉ minh họa động lực, không phải lịch hội tụ.<p class="note-source"><strong>Nguồn:</strong> tr. 24–25; bổ sung giao diện, vòng lặp, dừng và chi phí.</p></aside></section>
-<section data-slide-id="B03" data-note-topic-id="lec-05-topic-09"><h2>TD tuần tự trên lượt đầu</h2><p>$V_0(S)=V_0(x)=0$, $\alpha=0{,}5$, $\gamma=1$.</p><table><tr><th>Chuyển</th><th>$V(S),V(x)$ trước</th><th>$Y^{\mathrm{TD}}$</th><th>$\delta$</th><th>sau</th></tr><tr><td>$S\to x,0$</td><td>$(0,0)$</td><td>$0$</td><td>$0$</td><td>$(0,0)$</td></tr><tr><td>$x\to S,0$</td><td>$(0,0)$</td><td>$0$</td><td>$0$</td><td>$(0,0)$</td></tr><tr><td>$S\to x,0$</td><td>$(0,0)$</td><td>$0$</td><td>$0$</td><td>$(0,0)$</td></tr><tr><td>$x\to G,+1$</td><td>$(0,0)$</td><td>$1$</td><td>$1$</td><td>$(0,0{,}5)$</td></tr></table><aside class="notes">Bảng cập nhật tại chỗ theo thứ tự chuyển tiếp. Kết quả sau lượt đầu là S bằng không, x bằng 0,5.<p class="note-source"><strong>Nguồn:</strong> tr. 29; mở đầy đủ các bước.</p></aside></section>
-<section data-slide-id="B04" data-note-topic-id="lec-05-topic-09"><h2>TD tuần tự trên lượt thứ hai</h2><p>Tiếp tục từ $(V(S),V(x))=(0,0{,}5)$.</p><table><tr><th>Chuyển</th><th>trước</th><th>$Y^{\mathrm{TD}}$</th><th>$\delta$</th><th>sau</th></tr><tr><td>$S\to x,0$</td><td>$(0,0{,}5)$</td><td>$0{,}5$</td><td>$0{,}5$</td><td>$(0{,}25,0{,}5)$</td></tr><tr><td>$x\to S,0$</td><td>$(0{,}25,0{,}5)$</td><td>$0{,}25$</td><td>$-0{,}25$</td><td>$(0{,}25,0{,}375)$</td></tr><tr><td>$S\to L,-1$</td><td>$(0{,}25,0{,}375)$</td><td>$-1$</td><td>$-1{,}25$</td><td>$(-0{,}375,0{,}375)$</td></tr></table><aside class="notes">Đích ở hàng hai dùng S bằng 0,25 vừa cập nhật ở hàng một. Kết quả cuối là S âm 0,375 và x dương 0,375.<p class="note-source"><strong>Nguồn:</strong> hw05 Bài 7; tính đầy đủ.</p></aside></section>
-<section data-slide-id="B05" data-note-topic-id="lec-05-topic-09"><h2>TD cập nhật sớm hơn, không thấy xa hơn</h2><img class="figure" src="img/lec-05/mc-td-timeline.svg" alt="TD cập nhật sau từng chuyển còn Monte Carlo chờ lượt kết thúc"/><ul><li>TD cập nhật sau từng chuyển bằng thưởng tức thời và $V$ kế tiếp.</li><li>MC chờ kết thúc, rồi dùng kết quả kết thúc cho mọi lần ghé đã chọn trong toàn lượt.</li></ul><aside class="notes">Trên lượt đầu với khởi tạo bằng không, TD chỉ thay đổi x ở chuyển cuối. MC sau kết thúc thay đổi cả S và x. “Cập nhật sớm hơn” không đồng nghĩa “truyền kết quả cuối nhanh hơn trong mọi lượt”.<p class="note-source"><strong>Nguồn:</strong> tr. 24–25, 29; hình vẽ lại và sửa kết luận quá mạnh.</p></aside></section>
-<section data-slide-id="B06" data-note-topic-id="lec-05-topic-10"><h2>Từ một mẫu đến toán tử Bellman</h2><p>Giữ $V_t$ cố định khi lấy kỳ vọng theo chuyển tiếp dưới $\pi$:</p><div class="math-large">$$(T^\pi V)(s)=\mathbb E_\pi\!\left[R_{t+1}+\gamma V(S_{t+1})\mid S_t=s\right],$$ $$\mathbb E_\pi[Y_t^{\mathrm{TD}}\mid S_t=s,V_t]=(T^\pi V_t)(s),$$ $$\mathbb E_\pi[\delta_t\mid S_t=s,V_t]=(T^\pi V_t)(s)-V_t(s).$$</div><ul><li>Mỗi $\delta_t$ là một mẫu nhiễu của sai số Bellman.</li><li>Với $\gamma\lt1$, $T^\pi$ co hệ số $\gamma$ và có điểm bất động duy nhất $v_\pi$.</li></ul><aside class="notes">Giá trị $\delta=-1{,}25$ ở B04 là một mẫu nhiễu; một chuyển chưa xác định dấu của sai số Bellman kỳ vọng. TD(0) là xấp xỉ ngẫu nhiên của sai số Bellman kỳ vọng này. Định nghĩa bằng kỳ vọng có điều kiện dùng được cho phần thưởng rời rạc hoặc liên tục. Khi $V_t\ne v_\pi$, đích dùng phần đuôi xấp xỉ nên có thể chệch so với đích lý tưởng dùng $v_\pi$. Với $\gamma=1$, không viện dẫn tính co nghiêm trong chuẩn vô cùng.<p class="note-source"><strong>Nguồn:</strong> tr. 25–28; bổ sung định nghĩa toán tử và cầu nối kỳ vọng.</p></aside></section>
-<section data-slide-id="B07" data-note-topic-id="lec-05-topic-11"><h2>Bước học giảm dần cho TD(0)</h2><p>Với mỗi trạng thái $s$, gọi $n$ là số lần đã cập nhật $s$. Một lịch điển hình là $\alpha_n(s)=1/n$.</p><div class="math-large">$$0\lt\alpha_n(s)\le1,\qquad \sum_{n=1}^{\infty}\alpha_n(s)=\infty,\qquad \sum_{n=1}^{\infty}\alpha_n(s)^2\lt\infty.$$</div><p>Mỗi trạng thái cần được cập nhật vô hạn lần. Khi đó $V_n(s)\to v_\pi(s)$ gần chắc chắn nếu:</p><ul class="compact"><li>$\gamma\lt1$; hoặc</li><li class="fragment">$\gamma=1$ theo lượt, các lượt được khởi động lại và trạng thái kết thúc hấp thụ.</li><li class="fragment">$\pi$ đúng đắn: từ mọi trạng thái có thể đạt được dưới $\pi$, lượt kết thúc với xác suất $1$; các trạng thái không kết thúc là quá độ.</li></ul><div class="box">Tổng $\sum_n\alpha_n=\infty$ để tiếp tục điều chỉnh khi còn sai số; tổng $\sum_n\alpha_n^2\lt\infty$ để nhiễu không tích lũy vô hạn.</div><aside class="notes">Cả hai nhánh còn cần MDP hữu hạn, phần thưởng bị chặn và dữ liệu theo pi. Miền trạng thái có thể đạt được được xác định từ phân phối khởi tạo dưới pi. Hai tổng bước học đọc riêng: tổng alpha phân kỳ để tiếp tục điều chỉnh khi còn sai số, tổng bình phương hữu hạn để nhiễu không tích lũy vô hạn. Alpha bằng 0,5 trong ví dụ không thỏa điều kiện tổng bình phương hữu hạn.<p class="note-source"><strong>Nguồn:</strong> tr. 28; bổ sung điều kiện và kết luận hội tụ.</p></aside></section>
-<section data-slide-id="B08" data-note-topic-id="lec-05-topic-09"><h2>Kiểm tra đích cập nhật</h2><div class="check"><strong>Câu hỏi:</strong> trong chuyển $x\to S$ của lượt hai, vì sao đích là $0{,}25$ chứ không phải $0$?</div><p class="fragment answer">Cập nhật tại chỗ đọc $V(S)=0{,}25$ vừa được tạo ở chuyển trước.</p><aside class="notes">Câu hỏi kiểm tra quy ước trước cập nhật và tại chỗ. Nếu dùng hai bảng cố định trong cả lượt, kết quả sẽ khác và phải ghi rõ quy ước đó.<p class="note-source"><strong>Nguồn:</strong> hw05 Bài 7; kiểm tra bổ sung.</p></aside></section></section>
-<section><section data-slide-id="C00" data-note-topic-id="lec-05-topic-12"><h2>Đi bộ dài với thưởng thưa</h2><p>Bản đồ: $L\;\cdot\;S\;\cdot\;\cdot\;\cdot\;G$; chính sách dự định Right, xác suất đảo chiều $0{,}2$, $\gamma=0{,}99$.</p><ul><li>Ba ô không tên nằm giữa S và G: từ S tới G mất bốn chuyển, tới L mất hai chuyển.</li><li>Chỉ chuyển vào L hoặc G có thưởng $-1$ hoặc $+1$.</li><li>Độ dài và nhiễu làm $G_t$ phụ thuộc mạnh vào quỹ đạo đã lấy mẫu.</li></ul><aside class="notes">Các dấu chấm là ô trung gian không tên. Không dùng các giá trị chuẩn in trong nguồn vì chúng không tái tạo nhất quán từ mô hình đã nêu.<p class="note-source"><strong>Nguồn:</strong> tr. 30.</p></aside></section>
-<section data-slide-id="C01" data-note-topic-id="lec-05-topic-12"><h2>Chỉ số thời gian quyết định số mũ</h2><img class="figure" src="img/lec-05/long-walk.svg" alt="Quỹ đạo tới G sau bốn chuyển cho gamma mũ ba và tới L sau hai chuyển cho âm gamma"/><div class="grid2"><div class="card"><p>$G_t=\gamma^3(+1)=0{,}970299$.</p></div><div class="card"><p>$G_t=\gamma(-1)=-0{,}99$.</p></div></div><aside class="notes">Phần thưởng ở chuyển thứ tư mang hệ số gamma mũ ba vì R t cộng bốn ứng với k bằng ba. Phần thưởng ở chuyển thứ hai mang hệ số gamma. Đây là sửa lỗi số mũ và số thập phân của nguồn.<p class="note-source"><strong>Nguồn:</strong> tr. 31; vẽ lại và sửa chỉ số.</p></aside></section>
-<section data-slide-id="C02" data-note-topic-id="lec-05-topic-13"><h2>Trở lại lượt ngắn: phạm vi tác động</h2><p>$S\to x\to S\to x\to G$, $\gamma=1$, $\alpha=0{,}5$, $V_0(S)=V_0(x)=0$.</p><div class="check"><strong>Câu hỏi:</strong> sau một lượt, kết quả $+1$ tác động tới trạng thái nào?</div><div class="grid2 fragment"><div class="card"><h3>MC lần ghé đầu</h3><p>Sau kết thúc, S và x đều đổi: $(0{,}5,0{,}5)$.</p></div><div class="card"><h3>TD(0) tại chỗ</h3><p>Chỉ x đổi ở chuyển cuối: $(0,0{,}5)$.</p></div></div><aside class="notes">Tiêu đề báo rõ việc chuyển từ đi bộ dài về ví dụ ngắn. Cùng alpha và cùng khởi tạo giúp đối chiếu thời điểm cập nhật với phạm vi mà kết quả cuối tác động sau một lượt.<p class="note-source"><strong>Nguồn:</strong> tr. 29; chốt dữ kiện và kết quả.</p></aside></section>
-<section data-slide-id="C03" data-note-topic-id="lec-05-topic-13"><h2>Đích khác nhau tạo chệch–phương sai khác nhau</h2><table><tr><th></th><th>Monte Carlo</th><th>TD(0)</th></tr><tr><td>Đích</td><td>$G_t$ sau kết thúc</td><td>$R_{t+1}+\gamma V_t(S_{t+1})$</td></tr><tr><td>Nguồn biến động</td><td>toàn bộ thưởng và chuyển tiếp còn lại</td><td>một chuyển và giá trị kế tiếp</td></tr><tr><td>Dùng ước lượng kế tiếp</td><td>không</td><td>có</td></tr><tr><td>Chệch của đích</td><td>không, nếu lấy mẫu đúng</td><td>có thể có khi $V_t\ne v_\pi$</td></tr></table><p>Trên quỹ đạo dài và nhiễu, đích TD thường biến động ít hơn vì thay phần đuôi ngẫu nhiên bằng $V_t$; đây không phải xếp hạng phổ quát.</p><aside class="notes">G_t cộng nhiều phần thưởng và chịu nhiều chuyển tiếp ngẫu nhiên. TD dùng một chuyển rồi thay phần còn lại bằng ước lượng hiện tại, nên thường giảm biến động nhưng có thể đưa chệch từ V t vào đích. Mức chệch, phương sai và tốc độ còn phụ thuộc môi trường, khởi tạo và bước học.<p class="note-source"><strong>Nguồn:</strong> tr. 26–28, 31; hiệu chỉnh mệnh đề.</p></aside></section>
-<section data-slide-id="C04" data-note-topic-id="lec-05-topic-14"><h2>Tiêu chí chọn phương pháp</h2><ul><li>Dùng MC khi lượt kết thúc rõ, có thể chờ và cần đích không dùng ước lượng kế tiếp.</li><li>Dùng TD khi cần cập nhật giữa lượt hoặc lượt dài, và chấp nhận đích dùng $V_t(S_{t+1})$.</li><li>Chọn $1/N$ hoặc lịch bước học giảm dần nếu cần hội tụ điểm; dùng $\alpha$ hằng để tiếp tục bám dữ liệu mới.</li></ul><aside class="notes">Không đồng nhất lựa chọn bước học với lựa chọn MC hay TD. Không kết luận một phương pháp luôn nhanh hơn hoặc hiệu quả mẫu hơn.<p class="note-source"><strong>Nguồn:</strong> tr. 28, 31; biên tập lại.</p></aside></section>
-<section data-slide-id="C05" data-note-topic-id="lec-05-topic-12"><h2>Kiểm tra quỹ đạo dài</h2><div class="check"><strong>Câu hỏi:</strong> nếu phần thưởng $+1$ là $R_{t+4}$, hệ số chiết khấu là $\gamma^3$ hay $\gamma^4$?</div><p class="fragment answer">$\gamma^3$, vì $R_{t+k+1}$ mang hệ số $\gamma^k$.</p><aside class="notes">Yêu cầu người học viết k bằng ba trước khi bấm máy. Với gamma 0,99, kết quả là 0,970299.<p class="note-source"><strong>Nguồn:</strong> tr. 31; kiểm tra sửa lỗi chỉ số.</p></aside></section>
-<section data-slide-id="C06" data-note-topic-id="lec-05-topic-14"><h2>Phạm vi kết luận</h2><ul><li>Chỉ dự đoán $v_\pi$ cho một chính sách cố định.</li><li>Chỉ dữ liệu theo chính sách.</li><li>Chỉ biểu diễn bảng; không xấp xỉ hàm.</li><li>Không có điều khiển, khác chính sách hay giá trị hành động.</li></ul><div class="box">Thay đổi chính sách làm thay đổi phân phối dữ liệu và đích cần ước lượng.</div><aside class="notes">Trang này chặn việc suy diễn sang Q-learning hoặc điều khiển. Bài tiếp theo mới xử lý cải thiện chính sách trong bối cảnh phi mô hình.<p class="note-source"><strong>Nguồn:</strong> tr. 15, 32–33; làm rõ phạm vi.</p></aside></section>
-<section data-slide-id="C07" data-note-topic-id="lec-05-topic-14"><h2>Tự kiểm ba khác biệt</h2><ol><li>MC và TD khác đích cập nhật như thế nào?</li><li>Phương pháp nào cần thấy trạng thái kết thúc trước cập nhật?</li><li>Điều kiện bước học nào dùng cho hội tụ TD dạng bảng?</li></ol><div class="fragment answer">$G_t$ so với đích một bước; MC phải chờ kết thúc; $\sum_n\alpha_n=\infty$, $\sum_n\alpha_n^2\lt\infty$ và cập nhật vô hạn lần.</div><aside class="notes">Không hỏi phương pháp nào luôn nhanh hơn. Có thể yêu cầu sinh viên giải thích hai tổng bằng câu “học mãi nhưng nhiễu giảm dần”.<p class="note-source"><strong>Nguồn:</strong> tr. 24–28, 33.</p></aside></section></section>
-<section><section data-slide-id="D00" data-note-topic-id="lec-05-topic-15"><h2>Năm ý cần giữ</h2><ol><li>Phi mô hình vẫn cần dữ liệu đúng chính sách cần đánh giá.</li><li>Monte Carlo tách quy tắc lần ghé khỏi quy tắc bước học.</li><li>TD tách $v_\pi$, $V_t$, $Y_t^{\mathrm{TD}}$ và $\delta_t$.</li><li>Bảo đảm hội tụ luôn đi cùng giả thiết.</li><li>So sánh chệch–phương sai là cơ chế có điều kiện, không có xếp hạng phổ quát.</li></ol><aside class="notes">Dùng năm ý này để nối lại toàn bài. Các bảng số minh họa quy tắc, không thay cho định lý hội tụ; so sánh chệch–phương sai phụ thuộc môi trường, khởi tạo và bước học.<p class="note-source"><strong>Nguồn:</strong> tổng hợp tr. 15–33.</p></aside></section>
-<section data-slide-id="D01" data-note-topic-id="lec-05-topic-15"><h2>Từ dự đoán sang điều khiển</h2><p>Bài này giữ $\pi$ cố định và học $v_\pi$ từ trải nghiệm.</p><div class="box">Bài sau vừa đánh giá vừa cải thiện chính sách từ trải nghiệm.</div><div class="check"><strong>Câu hỏi:</strong> thành phần nào phải thay đổi khi chuyển từ dự đoán sang điều khiển?</div><p class="fragment answer">Chính sách không còn cố định; thường cần giá trị hành động để so sánh các hành động.</p><aside class="notes">Không giới thiệu thuật toán điều khiển cụ thể ở đây.<p class="note-source"><strong>Nguồn:</strong> tr. 32–33.</p></aside></section>
-<section data-slide-id="X07" data-note-topic-id="lec-05-topic-15"><h2>Bài tập: giải thích ba kết quả</h2><p>Trên cùng hai lượt $e_1$ tới G và $e_2$ tới L, với $V_0(S)=V_0(x)=0$:</p><table><tr><th>Phương pháp</th><th>$(V(S),V(x))$ sau $e_2$</th></tr><tr><td>MC lần ghé đầu, trung bình mẫu</td><td>$(0,0)$</td></tr><tr><td>MC lần ghé đầu, $\alpha=0{,}5$</td><td>$(-0{,}25,-0{,}25)$</td></tr><tr><td>TD(0) tại chỗ, $\alpha=0{,}5$</td><td>$(-0{,}375,0{,}375)$</td></tr></table><div class="check"><strong>Câu hỏi:</strong> chỉ ra lựa chọn về mẫu, bước học và thời điểm cập nhật tạo ra từng khác biệt.</div><aside class="notes">Không yêu cầu lặp lại toàn bộ số học đã giải. Sinh viên phải nối mỗi kết quả với cơ chế: trung bình hai mẫu, trọng số alpha hằng và cập nhật một bước tại chỗ.<p class="note-source"><strong>Nguồn:</strong> hw05, Bài 7; chuyển thành bài giải thích.</p></aside></section><section data-slide-id="X03" data-note-topic-id="lec-05-topic-15"><h2>Bài tập: ba đại lượng TD</h2><p>Cho chuyển $(S_t,R_{t+1},S_{t+1})=(s,2,s')$, $\gamma=0{,}9$, $V_t(s)=4$, $V_t(s')=5$, $\alpha_{n(s)}(s)=0{,}1$.</p><ol><li>Tính $Y_t^{\mathrm{TD}}$.</li><li>Tính $\delta_t$.</li><li>Tính $V_{t+1}(s)$.</li></ol><aside class="notes">Đáp số: 6,5; 2,5; 4,25. Bài tự đủ và kiểm tra đúng chỉ số trước/sau.<p class="note-source"><strong>Nguồn:</strong> hw05, Bài 3; bổ sung số để tự đủ.</p></aside></section><section data-slide-id="X04" data-note-topic-id="lec-05-topic-15"><h2>Bài tập: chệch và phương sai</h2><p>Xét một bài toán theo lượt dài, phần thưởng chỉ xuất hiện ở cuối và chuyển tiếp có nhiễu.</p><ol><li>Liệt kê nguồn ngẫu nhiên đi vào $G_t$.</li><li>Giải thích vì sao $R_{t+1}+\gamma v_\pi(S_{t+1})$ là đích lý tưởng.</li><li>Giải thích độ chệch có thể có khi thay $v_\pi$ bằng $V_t$.</li><li>Nêu vì sao không thể kết luận TD luôn nhanh hơn.</li></ol><aside class="notes">Yêu cầu phân biệt cơ chế thường gặp với định lý phổ quát. Không chấp nhận câu trả lời chỉ ghi “MC phương sai cao, TD phương sai thấp”.<p class="note-source"><strong>Nguồn:</strong> hw05, Bài 4; làm rõ yêu cầu.</p></aside></section></section>
-<div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 05</div></div></div><script src="revealjs/dist/reveal.js"></script><script src="plugin/notes/notes.js"></script><script src="plugin/highlight/highlight.js"></script><script src="plugin/math/math.js"></script><script>Reveal.initialize({width:1280,height:720,margin:.04,controlsLayout:"edges",slideNumber:true,hashOneBasedIndex:true,hash:true,katex:{local:"vendor/katex"},plugins:[RevealHighlight,RevealNotes,RevealMath.KaTeX]});</script></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>Bài 05: Dự đoán phi mô hình · Học tăng cường</title>
+<link rel="stylesheet" href="revealjs/dist/reset.css"/>
+<link rel="stylesheet" href="revealjs/dist/reveal.css"/>
+<link rel="stylesheet" href="revealjs/dist/theme/white.css"/>
+<link rel="stylesheet" href="plugin/highlight/monokai.css"/>
+<link rel="stylesheet" href="lecture-slide.css"/>
+<style>
+/* Giả mã đủ thao tác trên hai trang thuật toán, không thay hệ giao diện chung. */
+.reveal.lecture-deck section[data-slide-id="L05-B10"] .algorithm,
+.reveal.lecture-deck section[data-slide-id="L05-C05"] .algorithm { font-size: .82em; line-height: 1.35; }
+.reveal.lecture-deck section[data-slide-id="L05-B10"] .algorithm p,
+.reveal.lecture-deck section[data-slide-id="L05-C05"] .algorithm p { margin: .25em 0; }
+.reveal.lecture-deck section[data-slide-id="L05-B10"] .algorithm li,
+.reveal.lecture-deck section[data-slide-id="L05-C05"] .algorithm li { margin: .16em 0; }
+.reveal.lecture-deck section[data-slide-id="L05-D09"] .grid2 { grid-template-columns: .92fr 1.08fr; align-items: start; }
+.reveal.lecture-deck section[data-slide-id="L05-D09"] .card { font-size: .9em; }
+.reveal.lecture-deck section[data-slide-id="L05-D09"] .card p { margin: .4em 0; }
+.reveal.lecture-deck section[data-slide-id="L05-D05"] .math-large:last-of-type { font-size: 1em; }
+.reveal.lecture-deck section[data-slide-id="L05-B12"] .card,
+.reveal.lecture-deck section[data-slide-id="L05-E04"] .card { margin-top: .3em; }
+.reveal.lecture-deck section[data-slide-id="L05-B12"] .card p,
+.reveal.lecture-deck section[data-slide-id="L05-E04"] .card p { margin: .25em 0; }
+.reveal.lecture-deck section[data-slide-id="L05-B02"] .figure { max-height: 175px; }
+.reveal.lecture-deck section[data-slide-id="L05-D04"] .figure { max-height: 280px; }
+.reveal.lecture-deck section[data-slide-id="L05-D11"] .figure { max-height: 205px; }
+.reveal.lecture-deck section[data-slide-id="L05-D11"] .card p,
+.reveal.lecture-deck section[data-slide-id="L05-D06"] .card p { margin: .25em 0; }
+.reveal.lecture-deck section[data-slide-id="L05-A02"] .figure { max-height: 150px; }
+</style>
+</head>
+<body>
+<div class="reveal lecture-deck"><div class="slides">
+<section>
+<section data-slide-id="L05-A01" data-note-topic-id="lec-05-topic-01">
+<h1>Dự đoán phi mô hình</h1>
+
+<h3>Bài 05 · Học tăng cường</h3>
+<p>Học kỳ 1 · Năm học 2026–2027</p>
+<div class="box">Đánh giá một chính sách cố định từ dữ liệu tương tác.</div>
+<p>Monte Carlo (MC) và sai phân thời gian (TD)</p>
+<aside class="notes"><p>Bài toán dự đoán giữ nguyên chính sách sinh dữ liệu và ước lượng giá trị của chính sách ấy. Monte Carlo dùng lợi tức của các lượt hoàn chỉnh. Sai phân thời gian dùng phần thưởng vừa quan sát và ước lượng tại trạng thái kế tiếp.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 1; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, Ch. 5–6. Thông tin học phần theo danh mục học kỳ 1, 2026–2027.</p></aside>
+</section>
+<section data-slide-id="L05-A02" data-note-topic-id="lec-05-topic-01">
+<h2>Nội dung và mục tiêu</h2>
+<img class="figure short" src="img/lec-05/learning-route.svg" alt="Từ dữ liệu tương tác đến lợi tức, cập nhật một bước, so sánh giả thiết và lựa chọn phương pháp"/>
+<div class="grid3"><div class="card"><h3>Tính và chọn mẫu</h3><p>Tính lợi tức; phân biệt lần ghé đầu tiên và mọi lần ghé.</p></div><div class="card"><h3>Thực hiện cập nhật</h3><p>Lần theo Monte Carlo và TD(0) trên cùng dữ liệu.</p></div><div class="card"><h3>So sánh có điều kiện</h3><p>Nêu mục tiêu, giả thiết và tiêu chuẩn đánh giá.</p></div></div>
+<p class="caption">Tiên quyết: chính sách, giá trị trạng thái, kỳ vọng và Bellman kỳ vọng.</p>
+<aside class="notes"><p>Đối tượng chung là kỳ vọng lợi tức dưới chính sách đã cho. Các lượt hoàn chỉnh cho phép tính mẫu lợi tức; một chuyển cho phép tạo mục tiêu dựa trên bảng giá trị hiện tại. So sánh hai cách dự đoán cần kiểm soát dữ liệu, bước học và tiêu chuẩn đánh giá.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 2, 15; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, Ch. 5 tr. 91; Ch. 6 tr. 119.</p></aside>
+</section>
+<section data-slide-id="L05-A03" data-note-topic-id="lec-05-topic-01">
+<h2>Đánh giá chính sách khi thiếu mô hình</h2>
+
+<p>Ước lượng kết quả dài hạn từ một trạng thái khi chính sách giữ cố định.</p>
+<div class="grid2"><div class="card"><h3>Đầu vào của quy hoạch động</h3><ul><li>Phân phối chuyển trạng thái.</li><li>Phần thưởng kỳ vọng.</li><li>Kỳ vọng được tính từ mô hình.</li></ul></div><div class="card"><h3>Đầu vào của dự đoán phi mô hình</h3><ul><li>Các trạng thái và hành động đã xảy ra.</li><li>Phần thưởng thực nhận.</li><li>Kỳ vọng được ước lượng từ mẫu.</li></ul></div></div>
+<div class="box">Đầu ra cần tìm là bảng giá trị trạng thái của chính sách đang xét.</div>
+<aside class="notes"><p>Môi trường có thể cung cấp tương tác trực tiếp hoặc mẫu từ bộ mô phỏng. Thuật toán phi mô hình không cần nhận mô hình chuyển và phần thưởng kỳ vọng làm đầu vào. Mô hình được cho trong một bài tập vẫn có thể dùng riêng để tính giá trị chuẩn, sau đó đối chiếu ước lượng học từ mẫu. Chính sách không được cải thiện trong bài toán dự đoán này.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 6, 15–16; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, Ch. 5 tr. 91.</p></aside>
+</section>
+<section data-slide-id="L05-A04" data-note-topic-id="lec-05-topic-01">
+<h2>Dữ liệu và giá trị cần dự đoán</h2>
+
+<div class="math-large">$(S_t,A_t,R_{t+1},S_{t+1}),\qquad A_t\sim\pi(\cdot\mid S_t)$</div>
+<div class="grid2"><div class="card"><h3>Dữ liệu theo chính sách</h3><p>$\pi$ Markov, cố định; môi trường Markov dừng.</p><p>Trạng thái được quan sát đầy đủ; $\mathcal S$ hữu hạn.</p></div><div class="card"><h3>Đại lượng cần học</h3><p>$G_t$: tổng phần thưởng chiết khấu, gọi ngắn là <em>lợi tức</em>.</p><p>$v_\pi$: giá trị thật; $V$: bảng ước lượng.</p></div></div>
+<div class="math-large">$v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$</div>
+<p class="caption">$T$: thời điểm kết thúc; $\mathcal S^+$ gồm cả trạng thái kết thúc.<br/>Giá trị ở trạng thái kết thúc bằng $0$; $0\le\gamma\le1$.</p>
+<aside class="notes"><p>$S_t\in\mathcal S$, $A_t$ thuộc tập hành động hợp lệ tại $S_t$, $R_{t+1}\in\mathbb R$ và $S_{t+1}\in\mathcal S^+$. Phần thưởng của chuyển từ thời điểm $t$ đến $t+1$ mang chỉ số $t+1$. Kỳ vọng lấy theo chính sách $\pi$ và động lực môi trường, có điều kiện trạng thái hiện tại bằng $s$. Trong phạm vi này, trạng thái chứa đủ thông tin Markov; một quan sát bất kỳ chưa chắc thỏa điều kiện ấy. Cắt thu thập dữ liệu theo ngân sách không tự tạo một trạng thái kết thúc. Trường hợp $\gamma=1$ cần lượt kết thúc hợp lệ và lợi tức khả tích.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 3, 15–17; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 tr. 92; §6.1 tr. 119–120.</p></aside>
+</section>
+<section data-slide-id="L05-A05" data-note-topic-id="lec-05-topic-01">
+<h2>Kiểm tra bài toán dự đoán</h2>
+
+<p>Chính sách luôn chọn sang phải. Một chuyển quan sát được:</p>
+<div class="math-large">$S\xrightarrow{\,\text{thưởng }0\,}X$</div>
+<p>Xác suất thực sự đi theo từng hướng chưa biết.</p>
+<div class="check"><div><strong>Câu hỏi:</strong></div><ol><li>Xác định bốn thành phần của mẫu quan sát.</li><li>Nêu đại lượng cần ước lượng khi chính sách giữ cố định.</li><li>Xác định thông tin còn thiếu để đánh giá bằng quy hoạch động.</li></ol></div>
+<aside class="notes"><p>Mẫu quan sát là $(S,\text{sang phải},0,X)$. Đối tượng cần ước lượng là $v_\pi(s)$ tại các trạng thái quan tâm. Đánh giá bằng quy hoạch động cần mô hình chuyển và phần thưởng kỳ vọng; một chuyển chỉ cung cấp một kết quả đã xảy ra. Phân phối chung $p(s',r\mid s,a)$ cũng đủ để tính các kỳ vọng này, nhưng không cần biết toàn bộ phân phối phần thưởng nếu đã có kỳ vọng phù hợp. Thưởng bằng $0$ ở mẫu này không chứng minh mọi chuyển đều có thưởng bằng $0$, cũng không xác định kỳ vọng dài hạn.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 15–16; Bài tập tuần 5, bài 2; dữ kiện chuỗi của bài giảng gốc.</p></aside>
+</section>
+</section>
+<section>
+<section data-slide-id="L05-B01" data-note-topic-id="lec-05-topic-02">
+<h2>Lượt kết thúc trong chuỗi ngắn</h2>
+<img class="figure" src="img/lec-05/short-walk.svg" alt="Chuỗi L, S, X, G; đi phải với xác suất 0.8, trái 0.2; thưởng vào L là âm 1, vào G là 1; L và G kết thúc"/>
+<div class="grid2"><div class="card"><p>Chính sách luôn chọn sang phải.</p><p>Môi trường có thể đưa tác tử sang trái.</p></div><div class="card"><p>$\mathcal S=\{S,X\}$, $\gamma=1$.</p><p>Ước lượng $v_\pi(S)$ và $v_\pi(X)$ từ các lượt.</p></div></div>
+<aside class="notes"><p>Từ mỗi trạng thái không kết thúc, xác suất sang phải là $0.8$ và sang trái là $0.2$. Phần thưởng nằm trên chuyển vào $L$ hoặc $G$; giá trị tiếp nối ở hai trạng thái kết thúc bằng $0$. Trong chuỗi hữu hạn này, lượt kết thúc hầu chắc chắn và có thời gian kết thúc kỳ vọng hữu hạn. Các xác suất xác định môi trường và phục vụ kiểm chứng; thuật toán Monte Carlo chỉ dùng các lượt được quan sát. Ký hiệu $X$ chỉ ô dấu chấm trong hình nguồn.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 19–20; Bài tập tuần 5, bài 7.</p></aside>
+</section>
+<section data-slide-id="L05-B02" data-note-topic-id="lec-05-topic-02">
+<h2>Lợi tức sau mỗi lần ghé</h2>
+<img class="figure short" src="img/lec-05/episode-one.svg" alt="Lượt thứ nhất S, X, S, X, G, bốn phần thưởng lần lượt 0, 0, 0, 1"/><img class="figure short" src="img/lec-05/episode-two.svg" alt="Lượt thứ hai S, X, S, L, ba phần thưởng lần lượt 0, 0, âm 1"/>
+<div class="box">Với $\gamma=1$, mỗi lần ghé $S$ hoặc $X$ có lợi tức $+1$ trong $e_1$ và $-1$ trong $e_2$.</div>
+<aside class="notes"><p>Ở lần ghé đầu của $e_1$, tổng thưởng còn lại là $0+0+0+1=1$. Sau các lần ghé khác trong cùng lượt, thưởng cuối vẫn bằng $1$ và các thưởng trước đó đều bằng $0$. Tương tự, mỗi phần đuôi bắt đầu ở $S$ hoặc $X$ trong $e_2$ có tổng bằng $-1$. Việc các lợi tức trong một lượt bằng nhau ở đây phụ thuộc $\gamma=1$ và cấu hình thưởng; nó không phải tính chất chung của mọi quỹ đạo.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 20, 22, 29; Bài tập tuần 5, bài 7.</p></aside>
+</section>
+<section data-slide-id="L05-B03" data-note-topic-id="lec-05-topic-02">
+<h2>Tổng phần thưởng chiết khấu</h2>
+
+<p>Với $t&lt;T$, thưởng đầu tiên sau $S_t$ là $R_{t+1}$.</p>
+<div class="math-large">$$G_t=\sum_{k=t}^{T-1}\gamma^{k-t}R_{k+1},\qquad G_T=0.$$</div>
+<div class="math-large">$$G_t=R_{t+1}+\gamma G_{t+1}.$$</div>
+<div class="card"><p>Trong $e_1$, $T=4$ và $(R_1,R_2,R_3,R_4)=(0,0,0,1)$.</p><p class="math-large">$G_0=0+\gamma\,0+\gamma^2\,0+\gamma^3\,1=\gamma^3,\quad G_3=1.$</p></div>
+
+<aside class="notes"><p>Tách số hạng $k=t$ khỏi tổng rồi đặt $\gamma$ ra ngoài phần còn lại cho đẳng thức truy hồi. Công thức dùng để tính các lợi tức theo chiều ngược, bắt đầu từ $G_T=0$. Với $\gamma=1$, hai phép tính của lượt ngắn trở về tổng phần thưởng không chiết khấu. Trong bài toán không kết thúc, việc đặt $\gamma=1$ không tự bảo đảm một tổng hữu hạn.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 17; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 tr. 92; §6.1 tr. 119–120.</p></aside>
+</section>
+<section data-slide-id="L05-B04" data-note-topic-id="lec-05-topic-06">
+<h2>Lần ghé đầu tiên và mọi lần ghé</h2>
+
+<p>$e_1:S\to X\to S\to X\to G$; $e_2:S\to X\to S\to L$; $\gamma=1$.</p><table><thead><tr><th>Trạng thái</th><th>Lần ghé đầu tiên</th><th>Mọi lần ghé</th></tr></thead><tbody><tr><td>$S$</td><td>Mẫu $(1,-1)$<br/>Trung bình $0$</td><td>Mẫu $(1,1,-1,-1)$<br/>Trung bình $0$</td></tr><tr><td>$X$</td><td>Mẫu $(1,-1)$<br/>Trung bình $0$</td><td>Mẫu $(1,1,-1)$<br/>Trung bình $1/3$</td></tr></tbody></table>
+<div class="box">Lần ghé đầu tiên được xác định theo chiều thời gian trong từng lượt.</div>
+<aside class="notes"><p>Trong $e_1$, $S$ xuất hiện tại $t=0,2$ và $X$ tại $t=1,3$. Quy tắc lần ghé đầu tiên chọn $t=0,1$; quy tắc mọi lần ghé chọn cả bốn vị trí. Trong $e_2$, $S$ xuất hiện hai lần, $X$ một lần. Vì thế, hai quy tắc cho các tập mẫu khác nhau tại $X$. Các lợi tức trong cùng lượt có thể phụ thuộc nhau; tăng số mẫu được chọn không đồng nghĩa tăng tương ứng số quan sát độc lập.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 18, 20, 22; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 tr. 92–93.</p></aside>
+</section>
+<section data-slide-id="L05-B05" data-note-topic-id="lec-05-topic-04">
+<h2>Ước lượng Monte Carlo</h2>
+
+<p>$g_i(s)$ là mẫu lợi tức thứ $i$ được chọn tại trạng thái $s$.</p>
+<div class="math-large">$$V_n(s)=\frac1n\sum_{i=1}^{n}g_i(s).$$</div>
+<div class="grid2"><div class="card"><h3>Tập mẫu tại $X$</h3><p>Theo mọi lần ghé: $(1,1,-1)$.</p><p>$n=3$ mẫu được chọn.</p></div><div class="card"><h3>Trung bình mẫu</h3><div class="math-large">$V_3(X)=\dfrac{1+1-1}{3}=\dfrac13$</div></div></div>
+<p class="caption">$n$ đếm mẫu của riêng trạng thái $s$; $v_\pi(s)$ là kỳ vọng cần ước lượng.</p>
+<aside class="notes"><p>Monte Carlo dùng các lợi tức đã quan sát dưới chính sách cố định để ước lượng giá trị. Với trung bình mẫu, mỗi lợi tức được chọn có trọng số bằng $1/n$. Chỉ số $i$ đánh thứ tự các mẫu của một trạng thái, không phải thời điểm tương tác toàn cục. Khi trạng thái chưa có mẫu, bảng vẫn chứa giá trị khởi tạo. Nhận thêm mẫu tạo nhu cầu cập nhật trung bình mà không giữ toàn bộ lịch sử lợi tức.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 18; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 tr. 92–93.</p></aside>
+</section>
+<section data-slide-id="L05-B06" data-note-topic-id="lec-05-topic-06">
+<h2>Thêm một mẫu vào trung bình</h2>
+
+<div class="grid3"><div class="card"><h3>Hai mẫu cũ</h3><p>$(1,1)$ tại $X$.</p><p>Số mẫu $2$, trung bình $1$.</p></div><div class="card"><h3>Mẫu mới</h3><p>Lợi tức $-1$.</p><p>Số mẫu mới bằng $3$.</p></div><div class="card"><h3>Trung bình mới</h3><p>$\dfrac{2\cdot1+(-1)}3=\dfrac13$.</p></div></div>
+<div class="math-large">$$1+\frac13(-1-1)=\frac13.$$</div>
+<div class="box">Trung bình thay đổi bằng một phần ba của sai lệch giữa mẫu mới và trung bình cũ.</div>
+<aside class="notes"><p>Tổng của hai mẫu cũ bằng số mẫu nhân trung bình, tức $2\cdot1$. Sau khi thêm $-1$, tổng mới bằng $1$ và số mẫu bằng $3$. Dạng cập nhật sai lệch giữ đúng kết quả ấy. Để tổng hợp các lợi tức đã chọn, chỉ cần lưu bộ đếm và trung bình của từng trạng thái. Quy trình Monte Carlo còn cần dữ liệu của lượt hiện tại để tính lợi tức trước khi chọn mẫu.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §2.4 tr. 30–31; phép tính từ hai lượt trong bài giảng gốc.</p></aside>
+</section>
+<section data-slide-id="L05-B07" data-note-topic-id="lec-05-topic-06">
+<h2>Trung bình mẫu dạng gia tăng</h2>
+
+<p>Tách mẫu thứ $n$ khỏi tổng của $n-1$ mẫu đã có:</p>
+<div class="math-large">$$V_n(s)=\frac{(n-1)V_{n-1}(s)+g_n(s)}n.$$</div>
+<div class="math-large">$$V_n(s)=V_{n-1}(s)+\frac1n\bigl[g_n(s)-V_{n-1}(s)\bigr].$$</div>
+<div class="box">Khởi tạo $N(s)=0$. Khi nhận mẫu hợp lệ, tăng $N(s)$ rồi dùng bước học $1/N(s)$.</div>
+<p class="caption">Bước học nghịch đảo số mẫu tái tạo chính xác trung bình số học.</p>
+<aside class="notes"><p>Đẳng thức thứ hai thu được bằng cách viết $(n-1)/n=1-1/n$. Số đếm thuộc riêng trạng thái $s$, nên thay $1/n$ bằng nghịch đảo thời điểm toàn cục thường không còn cho trung bình mẫu tại $s$. Khi $n=1$, hệ số của giá trị khởi tạo bằng $0$ và ước lượng bằng mẫu đầu tiên, bất kể giá trị khởi tạo.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 21; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §2.4 tr. 30–31.</p></aside>
+</section>
+<section data-slide-id="L05-B08" data-note-topic-id="lec-05-topic-06">
+<h2>Bước học hằng và trọng số mẫu</h2>
+
+<p>Cùng mẫu $(1,-1)$ và cùng giá trị khởi tạo $0$:</p><table><thead><tr><th>Sau mẫu</th><th>Trung bình mẫu</th><th>Bước học hằng $\alpha=0.5$</th></tr></thead><tbody><tr><td>$+1$</td><td>$1$</td><td>$0+0.5(1-0)=0.5$</td></tr><tr><td>$-1$</td><td>$0$</td><td>$0.5+0.5(-1-0.5)=-0.25$</td></tr></tbody></table>
+<div class="math-large">$$V_n=(1-\alpha)V_{n-1}+\alpha g_n,\qquad 0&lt;\alpha\le1.$$</div>
+<p class="caption">Với $0&lt;\alpha&lt;1$, khởi tạo còn ảnh hưởng; mẫu gần đây có trọng số lớn hơn.<br/>Với $\alpha=1$, ước lượng bằng mẫu mới nhất.</p>
+<aside class="notes"><p>Khai triển lặp cho $V_n=(1-\alpha)^nV_0+\sum_{i=1}^{n}\alpha(1-\alpha)^{n-i}g_i$. Với $0&lt;\alpha&lt;1$, trọng số của một mẫu giảm theo khoảng cách đến lần cập nhật hiện tại. Với $\alpha=1$, $V_n=g_n$ từ lần cập nhật đầu tiên, nên ảnh hưởng khởi tạo bằng $0$. Đây là quy tắc trọng số khác trung bình số học. Trên mẫu ngẫu nhiên mới, bước học hằng có thể duy trì dao động quanh giá trị cần dự đoán; nó không tự bảo đảm hội tụ đúng. Kết quả $0.5$ sau lượt đầu trong nguồn tương ứng khởi tạo $0$ và bước học $0.5$ khi chỉ dùng một mẫu mỗi trạng thái.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 20–23; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §2.5 tr. 32–33.</p></aside>
+</section>
+<section data-slide-id="L05-B09" data-note-topic-id="lec-05-topic-06">
+<h2>Hai lựa chọn độc lập trong MC</h2>
+
+<p>Chỉ dùng $e_1:S\to X\to S\to X\to G$; khởi tạo $V=0$, $\gamma=1$.</p><table><thead><tr><th>Quy tắc chọn mẫu</th><th>Trung bình mẫu</th><th>Bước hằng $\alpha=0.5$</th></tr></thead><tbody><tr><td>Lần ghé đầu tiên</td><td>$(V(S),V(X))=(1,1)$</td><td>$(0.5,0.5)$</td></tr><tr><td>Mọi lần ghé</td><td>$(V(S),V(X))=(1,1)$</td><td>$(0.75,0.75)$</td></tr></tbody></table>
+<div class="box">Một cấu hình MC cần nêu cả quy tắc chọn lần ghé và quy tắc bước học.</div>
+<p class="caption">Với bước hằng, hai mẫu $+1$ tạo chuỗi cập nhật $0\to0.5\to0.75$.</p>
+<aside class="notes"><p>Các quy tắc lần ghé xác định tập mẫu. Các quy tắc bước học xác định cách kết hợp tập mẫu ấy. Vì vậy MC gia tăng có thể dùng lần ghé đầu tiên hoặc mọi lần ghé. Trong lượt đang xét, mọi lợi tức bằng $1$ nên các trung bình đều bằng $1$; kết quả với bước hằng vẫn khác vì số lần cập nhật khác nhau.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 tr. 92–93; §6.1 tr. 119; Bài tập tuần 5, bài 5 được hiệu chỉnh.</p></aside>
+</section>
+<section data-slide-id="L05-B10" data-note-topic-id="lec-05-topic-03">
+<h2>Quy trình dự đoán Monte Carlo</h2>
+
+<div class="algorithm">
+<p><strong>Đầu vào:</strong> $\pi,\gamma$, số lượt $M$, quy tắc lần ghé và $\alpha_n(s)$. <strong>Đầu ra:</strong> $V$.</p>
+<ol>
+<li>Khởi tạo $V$ tùy ý, $N(s)=0$; giá trị ở trạng thái kết thúc bằng $0$.</li>
+<li>Lặp $M$ lượt: thu $S_0,A_0,R_1,\ldots,S_T$ theo $\pi$ đến khi kết thúc.</li>
+<li>Đặt $G_T=0$; với $t=T-1,\ldots,0$: $G_t=R_{t+1}+\gamma G_{t+1}$.</li>
+<li>Đặt tập đã ghé $H=\varnothing$; duyệt xuôi $t=0,\ldots,T-1$, đặt $s=S_t$.</li>
+<li>Nếu dùng mọi lần ghé, hoặc $s\notin H$ khi dùng lần ghé đầu tiên:<br/>
+$N(s)\leftarrow N(s)+1$;<br/>
+$V(s)\leftarrow V(s)+\alpha_{N(s)}(s)[G_t-V(s)]$;<br/>
+$H\leftarrow H\cup\{s\}$.</li>
+<li>Tiếp tục lượt tiếp theo; trả về $V$ sau đủ $M$ lượt.</li>
+</ol>
+</div>
+<aside class="notes"><p>Lượt sinh bởi chính sách cố định cung cấp toàn bộ phần thưởng cần để tính các lợi tức. Duyệt lùi chỉ phục vụ tính $G_t$; chọn lần ghé và cập nhật diễn ra theo chiều xuôi. Nếu duyệt lùi đồng thời loại các trạng thái đã gặp, thuật toán sẽ chọn lần ghé cuối theo thời gian. Với trung bình mẫu, đặt $\alpha_{N(s)}(s)=1/N(s)$; với bước hằng, đặt cùng một $\alpha$ cho các lần cập nhật. Trạng thái kết thúc không được cập nhật. $M$ là ngân sách toàn bộ việc học, còn $T$ là thời điểm một lượt thực sự kết thúc.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 tr. 92; §2.4 tr. 30–31; quy trình hai lượt duyệt để chọn đúng mẫu theo thời gian.</p></aside>
+</section>
+<section data-slide-id="L05-B11" data-note-topic-id="lec-05-topic-04">
+<h2>MC trên lượt thứ hai</h2>
+
+<p>Tiếp tục sau $e_1$ với $\alpha=0.5$, $\gamma=1$; $e_2:S\to X\to S\to L$.</p>
+<p>Mỗi lợi tức được chọn trong $e_2$ đều bằng $-1$.</p><table><thead><tr><th>Quy tắc</th><th>Tại $S$</th><th>Tại $X$</th></tr></thead><tbody><tr><td>Lần ghé đầu tiên</td><td>$0.5\to-0.25$</td><td>$0.5\to-0.25$</td></tr><tr><td>Mọi lần ghé</td><td>$0.75\to-0.125\to-0.5625$</td><td>$0.75\to-0.125$</td></tr></tbody></table>
+<div class="math-large">$0.75+0.5(-1-0.75)=-0.125$</div>
+<p class="caption">Mỗi cấu hình được chạy riêng từ bảng $0$ qua đúng hai lượt.</p>
+<aside class="notes"><p>Với lần ghé đầu tiên, một cập nhật từ $0.5$ và mục tiêu $-1$ cho $0.5+0.5(-1-0.5)=-0.25$. Với mọi lần ghé, $S$ nhận hai cập nhật: lần đầu cho $-0.125$, lần sau cho $-0.125+0.5(-1+0.125)=-0.5625$. $X$ chỉ xuất hiện một lần trong $e_2$ nên dừng ở $-0.125$. Hai cấu hình có các bảng đầu lượt khác nhau do đã xử lý $e_1$ theo những tập mẫu khác nhau.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 22, 29; Bài tập tuần 5, bài 7.</p></aside>
+</section>
+<section data-slide-id="L05-B12" data-note-topic-id="lec-05-topic-11">
+<h2>Giả thiết của ước lượng Monte Carlo</h2>
+
+<p>Lợi tức khả tích từ $\pi$ có kỳ vọng điều kiện $v_\pi(s)$.</p>
+<div class="grid2"><div class="card"><h3>Trung bình lần ghé đầu tiên</h3><p>$n$ cố định; mẫu độc lập, cùng phân phối: ước lượng không chệch.</p><p>Với phương sai hữu hạn, trung bình mẫu hội tụ theo luật số lớn.</p></div>
+<div class="card"><h3>Các quy tắc khác</h3><p>Mọi lần ghé: mẫu có thể phụ thuộc trong lượt; tính nhất quán dựa trên các lượt độc lập.</p><p>Với $0&lt;\alpha&lt;1$, khởi tạo còn ảnh hưởng; $\alpha=1$ giữ mẫu mới nhất.</p></div></div>
+<aside class="notes"><p>Phát biểu không chệch phải chỉ rõ đối tượng: mỗi mẫu lợi tức hợp lệ có kỳ vọng là giá trị cần dự đoán; trung bình của số mẫu cố định thừa hưởng tính chất ấy khi các mẫu có cùng kỳ vọng. Đối với lần ghé đầu tiên, các lượt độc lập cung cấp một khung độc lập, cùng phân phối thuận tiện. Trong khung này, khi $n\to\infty$, trung bình mẫu hội tụ về $v_\pi(s)$. Giả thiết phương sai hữu hạn là điều kiện đủ được chọn ở đây, không phải điều kiện cần của mọi dạng luật số lớn. Với mọi lần ghé, các mẫu trong cùng lượt có thể phụ thuộc, và trung bình hữu hạn mẫu không được tuyên bố luôn không chệch. Khả năng tính đúng một bảng sau hai lượt không là bằng chứng hội tụ.</p><p>Trong quá trình phần thưởng Markov hữu hạn do chính sách Markov dừng, cố định tạo ra, giả sử phần thưởng bị chặn, quá trình kết thúc hầu chắc chắn từ mọi trạng thái không kết thúc đang xét, các lượt được khởi động độc lập theo cùng phân phối và trạng thái $s$ được ghé với xác suất dương. Với $0\le\gamma\le1$ và bước học $1/N(s)$, trung bình mọi lần ghé hội tụ hầu chắc chắn về $v_\pi(s)$ khi số lượt hoàn chỉnh tiến vô hạn. Luật số lớn được áp dụng theo lượt cho tổng lợi tức và số lần ghé, rồi lấy tỷ số. Kết quả không yêu cầu các mẫu trong cùng lượt độc lập, không bảo đảm không chệch ở số lượt hữu hạn và không áp dụng nguyên văn cho bước học hằng.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 tr. 92–93; §2.5 tr. 32–33; hiệu chỉnh phát biểu ở bài giảng gốc tr. 23.</p></aside>
+</section>
+<section data-slide-id="L05-B13" data-note-topic-id="lec-05-topic-06">
+<h2>Kiểm tra lựa chọn mẫu MC</h2>
+
+<p>$e_1:S\to X\to S\to X\to G$, thưởng $(0,0,0,1)$.</p>
+<p>$e_2:S\to X\to S\to L$, thưởng $(0,0,-1)$.</p>
+<p>$\gamma=1$; bảng ban đầu bằng $0$.</p>
+<div class="check"><strong>Câu hỏi:</strong><ol><li>Tại $X$, lập dãy lợi tức theo lần ghé đầu tiên và mọi lần ghé; tính hai trung bình.</li><li>Dùng lần ghé đầu tiên với $\alpha=0.5$: tính $V(X)$ sau mỗi lượt và giải thích sự khác biệt.</li></ol></div>
+<aside class="notes"><p>$X$ xuất hiện tại hai vị trí trong $e_1$ và một vị trí trong $e_2$. Lần ghé đầu tiên chọn $(1,-1)$ nên trung bình bằng $0$; mọi lần ghé chọn $(1,1,-1)$ nên trung bình bằng $1/3$. Với lần ghé đầu tiên và bước học $0.5$, ước lượng lần lượt là $0+0.5(1-0)=0.5$ và $0.5+0.5(-1-0.5)=-0.25$. Khác biệt sau hai lượt đến từ trọng số của mẫu và khởi tạo; tập mẫu trong phép tính cuối vẫn là $(1,-1)$.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 20, 22; Bài tập tuần 5, bài 5 và 7 được hiệu chỉnh.</p></aside>
+</section>
+</section>
+<section>
+<section data-slide-id="L05-C01" data-note-topic-id="lec-05-topic-07">
+<h2>Cập nhật trước khi lượt kết thúc</h2>
+<img class="figure" src="img/lec-05/unfinished-episode.svg" alt="Chuyển S đến X với thưởng 0 đã quan sát; phần đuôi dẫn tới L hoặc G chưa quan sát"/>
+<div class="grid2"><div class="card"><h3>Đã có</h3><p>Trạng thái $S$, hành động, thưởng $0$ và trạng thái sau $X$.</p></div><div class="card"><h3>Chưa có</h3><p>Kết quả cuối lượt và lợi tức $G_0$.</p></div></div>
+<div class="box">Cập nhật ngay sau chuyển cần một ước lượng cho phần lợi tức còn lại.</div>
+<aside class="notes"><p>Tiền tố $S\to X$ có thể thuộc một lượt kết thúc tại $G$ hoặc tại $L$. Monte Carlo đầy đủ chưa thể tính lợi tức nếu phần đuôi chưa được quan sát. Bảng hiện tại đã chứa một dự đoán cho phần còn lại bắt đầu ở $X$. Dùng dự đoán ấy cho phép tạo mục tiêu sớm hơn thời điểm kết thúc; chất lượng mục tiêu phụ thuộc vào ước lượng đang có.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 24; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §6.1 tr. 119–120.</p></aside>
+</section>
+<section data-slide-id="L05-C02" data-note-topic-id="lec-05-topic-07">
+<h2>Dự đoán phần còn lại từ trạng thái sau</h2>
+<img class="figure" src="img/lec-05/mc-td-targets.svg" alt="Monte Carlo quan sát toàn bộ phần đuôi tới trạng thái kết thúc; TD dùng một chuyển rồi giá trị ước lượng tại trạng thái sau"/>
+<div class="math-large">$G_t=R_{t+1}+\gamma G_{t+1}$</div>
+<div class="box">Mục tiêu một bước dùng thưởng vừa nhận và ước lượng phần còn lại.</div>
+<aside class="notes"><p>Trong đẳng thức lợi tức, $R_{t+1}$ được biết sau một chuyển còn $G_{t+1}$ cần phần đuôi của lượt. TD thay phần chưa biết bằng $V_t(S_{t+1})$. Cơ chế dùng một ước lượng hiện có để cập nhật ước lượng khác được gọi là bootstrap trong tài liệu. Giá trị lấy từ bảng là một dự đoán về lợi tức, khác với phần thưởng đã quan sát trực tiếp.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 24–25; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §6.1 tr. 120–121.</p></aside>
+</section>
+<section data-slide-id="L05-C03" data-note-topic-id="lec-05-topic-07">
+<h2>Một bước cập nhật từ S đến X</h2>
+
+<p>Bảng cho trước: $V(S)=0$, $V(X)=0.5$; $\gamma=1$, $\alpha=0.5$.</p>
+<div class="math-large">$S\xrightarrow{\,\text{thưởng }0\,}X$</div>
+<div class="grid3"><div class="card"><h3>Mục tiêu</h3><p>$0+1\cdot0.5=0.5$</p><p>Thưởng và giá trị sau.</p></div><div class="card"><h3>Sai số</h3><p>$0.5-0=0.5$</p><p>Mục tiêu trừ giá trị cũ.</p></div><div class="card"><h3>Giá trị mới tại S</h3><p>$0+0.5\cdot0.5=0.25$</p><p>Điều chỉnh theo sai số.</p></div></div>
+<p class="caption">$V(X)$ giữ nguyên $0.5$ trong bước cập nhật này.</p>
+<aside class="notes"><p>Các giá trị $0$ và $0.5$ là dữ kiện đầu vào của phép tính. Mục tiêu gồm thưởng $0$ và ước lượng phần còn lại $0.5$. Khoảng cách từ giá trị cũ tại $S$ tới mục tiêu bằng $0.5$; bước học $0.5$ lấy một nửa khoảng cách ấy. Chỉ phần tử ứng với trạng thái hiện tại $S$ thay đổi. Bảng cho trước này cũng là kết quả sau lượt TD đầu tiên từ khởi tạo $0$, được tính đầy đủ bằng cùng quy tắc.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §6.1 tr. 119–120; phép tính trên chuỗi của bài giảng gốc.</p></aside>
+</section>
+<section data-slide-id="L05-C04" data-note-topic-id="lec-05-topic-07">
+<h2>Mục tiêu và sai số TD(0)</h2>
+
+<p>$V_t$ là toàn bộ bảng trước cập nhật; $n$ đếm lần cập nhật của $S_t$.</p>
+<div class="math-large">$$\begin{aligned}
+Y_t&amp;=R_{t+1}+\gamma V_t(S_{t+1}),\\
+\delta_t&amp;=Y_t-V_t(S_t),\\
+V_{t+1}(S_t)&amp;=V_t(S_t)+\alpha_n(S_t)\delta_t.
+\end{aligned}$$</div>
+<div class="box">Chỉ $V(S_t)$ được cập nhật; các phần tử khác giữ nguyên.</div>
+<p class="caption">Sai số TD là mục tiêu một bước trừ giá trị cũ.</p>
+<aside class="notes"><p>Cả giá trị hiện tại và giá trị trạng thái sau ở vế phải được đọc từ cùng bảng $V_t$. Khi mục tiêu lớn hơn giá trị cũ, $\delta_t$ dương và cập nhật làm giá trị tăng; khi mục tiêu thấp hơn, dấu đổi lại. Nói chung, $\delta_t$ khác sai số thật $v_\pi(S_t)-V_t(S_t)$ vì mục tiêu dùng một chuyển ngẫu nhiên và một bảng ước lượng. Nếu đặt lại chỉ số thời gian ở lượt mới, bảng ước lượng vẫn được giữ từ các lượt trước.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 25; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §6.1 tr. 119–121.</p></aside>
+</section>
+<section data-slide-id="L05-C05" data-note-topic-id="lec-05-topic-08">
+<h2>Quy trình dự đoán TD(0)</h2>
+
+<div class="algorithm">
+<p><strong>Đầu vào:</strong> $\pi,\gamma,\alpha_n(s)$ và ngân sách $B$ chuyển. <strong>Đầu ra:</strong> $V$.</p>
+<ol>
+<li>Khởi tạo $V$, $N(s)=0$; giá trị ở trạng thái kết thúc bằng $0$.</li>
+<li>Bắt đầu một lượt ở trạng thái $S_0$ không kết thúc.</li>
+<li>Khi còn ngân sách: chọn $A_t\sim\pi(\cdot\mid S_t)$.</li>
+<li>Quan sát $R_{t+1},S_{t+1}$; tăng $N(S_t)$ và đặt $n=N(S_t)$.</li>
+<li>Đọc cùng bảng hiện tại $V_t$:<br/>
+$Y_t=R_{t+1}+\gamma V_t(S_{t+1})$, $\delta_t=Y_t-V_t(S_t)$.</li>
+<li>Ghi $V(S_t)\leftarrow V_t(S_t)+\alpha_n(S_t)\delta_t$.</li>
+<li>Giảm ngân sách một chuyển; nhận $S_{t+1}$ làm trạng thái hiện tại.</li>
+<li>Nếu đã kết thúc và còn ngân sách, bắt đầu lượt mới; hết ngân sách thì trả $V$.</li>
+</ol>
+</div>
+<aside class="notes"><p>Ở đầu lượt, trạng thái ban đầu lấy từ cơ chế khởi tạo của bài toán. Mẫu tại mỗi bước được sinh bởi chính sách cố định đang đánh giá. Cả hai phép đọc trên vế phải diễn ra trước phép ghi, kể cả khi trạng thái sau trùng trạng thái hiện tại. Trạng thái kết thúc có giá trị $0$ và không phát sinh hành động tiếp theo trong lượt. Kết thúc một lượt cho phép bắt đầu lượt mới; hết ngân sách dừng toàn bộ thuật toán. Nếu ngân sách hết giữa lượt, trạng thái hiện tại không được đổi thành trạng thái kết thúc.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 25; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §6.1 tr. 120, quy trình TD(0).</p></aside>
+</section>
+<section data-slide-id="L05-C06" data-note-topic-id="lec-05-topic-08">
+<h2>Trạng thái kết thúc và tự chuyển</h2>
+
+<div class="grid2"><div class="card"><h3>Chuyển vào trạng thái kết thúc</h3><div class="math-large">$X\xrightarrow{\,+1\,}G$</div><p>$V_t(G)=0$.</p><p>Mục tiêu $Y_t=1+\gamma\cdot0=1$.</p></div><div class="card"><h3>Tự chuyển</h3><p>$s\to s$, thưởng $0$; $\gamma=0.9$.</p><p>$V_t(s)=2$, $\alpha=0.5$.</p><p>$Y_t=1.8$, $\delta_t=-0.2$.</p><p>$V_{t+1}(s)=2+0.5(-0.2)=1.9$.</p></div></div>
+<div class="box">Cả hai lần đọc trong tự chuyển dùng cùng giá trị trước cập nhật.</div>
+<aside class="notes"><p>Phần thưởng $+1$ nằm trên chuyển vào $G$; nó không phải giá trị tương lai của $G$. Ở tự chuyển, mục tiêu bằng $0+0.9\cdot2=1.8$ và sai số bằng $1.8-2=-0.2$. Phép tính tự chuyển kiểm việc đọc bảng cũ, không mô tả một chuyển có thể xảy ra trong chuỗi ngắn. Việc thu thập bị ngắt theo thời gian không tương đương kết thúc thật và không cho phép tự đặt giá trị tiếp nối bằng $0$.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §6.1 tr. 120; trạng thái kết thúc từ bài giảng gốc tr. 19; tự chuyển là phép kiểm quy tắc, phù hợp dạng chuyển ở Bài tập tuần 5, bài 6.</p></aside>
+</section>
+<section data-slide-id="L05-C07" data-note-topic-id="lec-05-topic-09">
+<h2>TD(0) trên lượt thứ nhất</h2>
+
+<p>$e_1:S\to X\to S\to X\to G$; $V(S)=V(X)=0$, $\alpha=0.5$, $\gamma=1$.</p><table><thead><tr><th>$t$</th><th>Chuyển</th><th>Thưởng</th><th>Mục tiêu</th><th>$V(S)$ sau bước</th><th>$V(X)$ sau bước</th></tr></thead><tbody><tr><td>0</td><td>$S\to X$</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>1</td><td>$X\to S$</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>2</td><td>$S\to X$</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>3</td><td>$X\to G$</td><td>1</td><td>1</td><td>0</td><td>0.5</td></tr></tbody></table>
+<div class="box">Trong lượt đầu từ bảng $0$, thưởng cuối trực tiếp cập nhật $X$ ngay trước $G$.</div>
+<aside class="notes"><p>Ba chuyển đầu có thưởng bằng $0$ và giá trị tại trạng thái sau bằng $0$, nên mục tiêu và cập nhật đều bằng $0$. Chuyển cuối có mục tiêu $1+1\cdot0=1$; do đó $V(X)=0+0.5(1-0)=0.5$. Bảng cuối là $(0,0.5)$, trùng dữ kiện đã dùng trong phép tính một bước. Quy trình trực tuyến không quay lại các chuyển trước để sửa $S$ sau khi $X$ vừa thay đổi; làm vậy sẽ là tái sử dụng dữ liệu.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 29; Bài tập tuần 5, bài 7.</p></aside>
+</section>
+<section data-slide-id="L05-C08" data-note-topic-id="lec-05-topic-09">
+<h2>TD(0) trên lượt thứ hai</h2>
+
+<p>$e_2:S\to X\to S\to L$; bắt đầu từ $(V(S),V(X))=(0,0.5)$.</p>
+<p>Giữ $\alpha=0.5$, $\gamma=1$.</p><table><thead><tr><th>Chuyển</th><th>Thưởng</th><th>Mục tiêu</th><th>$V(S)$ sau bước</th><th>$V(X)$ sau bước</th></tr></thead><tbody><tr><td>$S\to X$</td><td>0</td><td>0.5</td><td>0.25</td><td>0.5</td></tr><tr><td>$X\to S$</td><td>0</td><td>0.25</td><td>0.25</td><td>0.375</td></tr><tr><td>$S\to L$</td><td>−1</td><td>−1</td><td>−0.375</td><td>0.375</td></tr></tbody></table>
+<div class="math-large">$0.25+0.5(-1-0.25)=-0.375$</div>
+<p class="caption">Chuyển $X\to S$ dùng giá trị $V(S)=0.25$ vừa được cập nhật.</p>
+<aside class="notes"><p>Bước đầu cho $V(S)=0+0.5(0.5-0)=0.25$. Bước thứ hai đọc bảng sau bước đầu, nên $V(X)=0.5+0.5(0.25-0.5)=0.375$. Bước cuối có giá trị tiếp nối tại $L$ bằng $0$, mục tiêu bằng $-1$ và giá trị mới tại $S$ bằng $-0.375$. Bảng được cập nhật tại chỗ giữa các chuyển. Trong từng chuyển, mọi giá trị ở vế phải vẫn được đọc trước phép ghi.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 29; Bài tập tuần 5, bài 7.</p></aside>
+</section>
+<section data-slide-id="L05-C09" data-note-topic-id="lec-05-topic-08">
+<h2>Thông tin và chi phí cập nhật</h2>
+<table><thead><tr><th>Quy trình dạng bảng</th><th>Monte Carlo gia tăng</th><th>TD(0)</th></tr></thead><tbody><tr><td>Thời điểm có mục tiêu</td><td>Sau khi lượt kết thúc</td><td>Sau một chuyển</td></tr><tr><td>Dữ liệu tạm</td><td>Một lượt để tính lợi tức</td><td>Chuyển hiện tại</td></tr><tr><td>Bộ nhớ</td><td>$O(|\mathcal S|+T)$</td><td>$O(|\mathcal S|)$</td></tr><tr><td>Phép tính</td><td>$O(T)$ cho một lượt</td><td>$O(1)$ cho một chuyển</td></tr></tbody></table>
+<p class="caption">Chi phí áp dụng cho hai quy trình đang xét, với truy cập bảng và tập đã ghé trong thời gian hằng.</p>
+<div class="box">Chi phí một cập nhật và số mẫu cần để đạt sai số cho trước là hai đại lượng khác nhau.</div>
+<aside class="notes"><p>Bảng giá trị và bộ đếm chiếm bộ nhớ tỷ lệ với số trạng thái. Giả mã MC giữ một lượt để tính lùi lợi tức rồi chọn mẫu theo chiều xuôi; hai lần duyệt vẫn có độ phức tạp $O(T)$. Tập đã ghé có thể biểu diễn bằng bảng đánh dấu. TD xử lý một chuyển với số phép toán hằng nhưng vẫn lưu bảng cho các trạng thái. Các chi phí này không là bảo đảm về tốc độ hội tụ hoặc hiệu quả sử dụng dữ liệu.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §6.1–6.2 tr. 119–124; phân tích trực tiếp hai giả mã trong bài.</p></aside>
+</section>
+<section data-slide-id="L05-C10" data-note-topic-id="lec-05-topic-08">
+<h2>Kiểm tra một bước TD(0)</h2>
+
+<p>Bảng ban đầu: $V(S)=0.25$, $V(X)=0.5$, $V(L)=0$.</p>
+<p>$\alpha=0.5$, $\gamma=1$; hai trường hợp được xét riêng.</p>
+<div class="grid2"><div class="card"><h3>Trường hợp 1</h3><div class="math-large">$S\xrightarrow{\,0\,}X$</div><p>$X$ chưa kết thúc.</p></div><div class="card"><h3>Trường hợp 2</h3><div class="math-large">$S\xrightarrow{\,-1\,}L$</div><p>$L$ kết thúc.</p></div></div>
+<div class="check"><strong>Câu hỏi:</strong> Tính mục tiêu, sai số TD và giá trị mới tại $S$ trong mỗi trường hợp. Nêu các phần tử giữ nguyên.</div>
+<aside class="notes"><p>Trường hợp 1: $Y=0+0.5=0.5$, $\delta=0.5-0.25=0.25$, $V(S)=0.25+0.5\cdot0.25=0.375$. Trường hợp 2 bắt đầu lại từ cùng bảng ban đầu: $Y=-1+0=-1$, $\delta=-1-0.25=-1.25$, $V(S)=0.25+0.5(-1.25)=-0.375$. Trong cả hai trường hợp, $V(X)=0.5$ và $V(L)=0$ giữ nguyên. Thưởng âm khi vào $L$ chỉ được tính một lần.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §6.1; Bài tập tuần 5, bài 3 và 7; phép tính kiểm tra trực tiếp quy tắc TD(0).</p></aside>
+</section>
+</section>
+<section>
+<section data-slide-id="L05-D01" data-note-topic-id="lec-05-topic-09">
+<h2>Hai thuật toán trên cùng hai lượt</h2>
+
+<p>Cùng bảng ban đầu $0$, $\alpha=0.5$, $\gamma=1$ và dữ liệu $e_1,e_2$.</p><table><thead><tr><th>Phương pháp</th><th>Sau $e_1$</th><th>Sau $e_2$</th></tr></thead><tbody><tr><td>MC lần ghé đầu tiên</td><td>$(0.5,0.5)$</td><td>$(-0.25,-0.25)$</td></tr><tr><td>TD(0) trực tuyến</td><td>$(0,0.5)$</td><td>$(-0.375,0.375)$</td></tr></tbody></table>
+<p class="caption">Mỗi cặp ghi $(V(S),V(X))$.</p>
+<div class="grid2"><div class="card"><h3>Monte Carlo</h3><p>Dùng lợi tức hoàn chỉnh để cập nhật những lần ghé đã chọn.</p></div><div class="card"><h3>TD(0)</h3><p>Dùng thưởng và giá trị trạng thái sau ở từng chuyển.</p></div></div>
+<aside class="notes"><p>Sau lượt đầu, MC đã cập nhật cả $S$ và $X$ từ lợi tức $1$. TD chỉ làm thay đổi $X$ ở chuyển cuối vì ba mục tiêu trước đó bằng $0$. Ở lượt thứ hai, TD truyền ảnh hưởng của giá trị đang có tại $X$ sang $S$ ngay ở chuyển đầu. Khác biệt thời điểm cập nhật và mục tiêu giải thích các bảng khác nhau. Muốn đánh giá độ chính xác của chúng, cần một giá trị chuẩn hoặc tiêu chuẩn sai số phù hợp; hai lượt chưa chứng minh ưu thế phổ quát.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 29; Bài tập tuần 5, bài 7.</p></aside>
+</section>
+<section data-slide-id="L05-D02" data-note-topic-id="lec-05-topic-05">
+<h2>Giá trị chuẩn của chuỗi ngắn</h2>
+<img class="figure short" src="img/lec-05/short-walk.svg" alt="Mô hình chuỗi ngắn để kiểm chứng giá trị chuẩn, thưởng ở cạnh và giá trị trạng thái kết thúc bằng 0"/>
+<div class="grid2"><div class="card"><h3>Bellman kỳ vọng</h3><p>$v_\pi(S)=-0.2+0.8v_\pi(X)$</p><p>$v_\pi(X)=0.8+0.2v_\pi(S)$</p></div><div class="card"><h3>Nghiệm chuẩn</h3><p>$v_\pi(S)=11/21\approx0.524$</p><p>$v_\pi(X)=19/21\approx0.905$</p></div></div>
+<p class="caption">Mô hình dùng để đối chiếu; MC và TD học từ hai lượt mẫu.</p>
+<aside class="notes"><p>Thay phương trình của $X$ vào phương trình của $S$ cho $v_\pi(S)=-0.2+0.8(0.8+0.2v_\pi(S))$, tức $0.84v_\pi(S)=0.44$. Vì vậy $v_\pi(S)=11/21$ và $v_\pi(X)=19/21$. Giá trị thật lấy kỳ vọng theo mọi khả năng của môi trường, còn các bảng sau hai lượt chỉ phản ánh dữ liệu đã quan sát. Hai thuật toán không được cung cấp các nghiệm chuẩn này khi cập nhật.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 19; Bellman kỳ vọng từ kiến thức tiên quyết.</p></aside>
+</section>
+<section data-slide-id="L05-D03" data-note-topic-id="lec-05-topic-12">
+<h2>Chuỗi dài và phần thưởng cuối lượt</h2>
+<img class="figure" src="img/lec-05/long-walk.svg" alt="Chuỗi L, x1, S, x3, x4, x5, G; bắt đầu tại S; đi phải 0.8, trái 0.2; gamma 0.99"/>
+<div class="grid2"><div class="card"><p>Từ $S$: ít nhất $4$ chuyển tới $G$, hoặc $2$ chuyển tới $L$.</p><p>$\gamma=0.99$.</p></div><div class="card"><p>Giá trị chuẩn:</p><p>$v_\pi(S)\approx0.829$;<br/>$v_\pi(x_5)\approx0.992$.</p></div></div>
+<p class="caption">Khoảng cách đến thưởng và đường đi quyết định mức chiết khấu của lợi tức.</p>
+<aside class="notes"><p>Giá trị trạng thái kết thúc bằng $0$; thưởng vào $L$ là $-1$, vào $G$ là $+1$, các chuyển khác có thưởng $0$. Đặt $u_1=v_\pi(x_1)$, $u_2=v_\pi(S)$, $u_3=v_\pi(x_3)$, $u_4=v_\pi(x_4)$, $u_5=v_\pi(x_5)$. Hệ chuẩn là $u_1=-0.2+0.99(0.8u_2)$; $u_i=0.99(0.2u_{i-1}+0.8u_{i+1})$ với $i=2,3,4$; $u_5=0.8+0.99(0.2u_4)$. Giải hệ cho $u_2=0.8292187977$ và $u_5=0.9921556969$.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 30.</p></aside>
+</section>
+<section data-slide-id="L05-D04" data-note-topic-id="lec-05-topic-12">
+<h2>Đường đi và số mũ chiết khấu</h2>
+<img class="figure" src="img/lec-05/long-returns.svg" alt="Hai đường riêng: S đến G qua x3, x4, x5 có bốn chuyển; S đến L qua x1 có hai chuyển"/>
+<div class="grid2"><div class="card"><h3>Bốn chuyển đến G</h3><div class="math-large">$G_0=0.99^3=0.970299$</div></div><div class="card"><h3>Hai chuyển đến L</h3><div class="math-large">$G_0=-0.99$</div></div></div>
+<p class="caption">Hai lợi tức mẫu khác $v_\pi(S)\approx0.829$ của chuỗi dài.<br/>So sánh mục tiêu cần tách kỳ vọng khỏi biến thiên quanh kỳ vọng.</p>
+<aside class="notes"><p>Đường đến $G$ có dãy thưởng $(0,0,0,1)$ nên thưởng cuối mang chỉ số $R_4$ và hệ số $\gamma^3$. Đường đến $L$ có thưởng $(0,-1)$ nên thưởng cuối mang chỉ số $R_2$ và hệ số $\gamma$. Thưởng ở chuyển thứ $m$ có hệ số $\gamma^{m-1}$ trong lợi tức ban đầu. Nguồn ghi các số mũ $4$ và $2$; hai số mũ đúng là $3$ và $1$. Hai lợi tức này là kết quả mẫu tại $S$, khác giá trị kỳ vọng $v_\pi(S)\approx0.829218798$. Phân tích mục tiêu cần tách kỳ vọng khỏi biến thiên quanh kỳ vọng. Hai quỹ đạo chưa đủ xác định phân phối hay phương sai tổng thể và chưa đo tốc độ học của phương pháp.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 31; số mũ được sửa theo định nghĩa lợi tức.</p></aside>
+</section>
+<section data-slide-id="L05-D05" data-note-topic-id="lec-05-topic-10">
+<h2>Kỳ vọng của hai mục tiêu</h2>
+
+<p>Chuỗi ngắn: $\gamma=1$; giữ $V(X)=0.5$, $V(L)=0$.</p>
+<p>$Y=R_{t+1}+\gamma V(S_{t+1})$. Từ $S$: $Y=-1$ với xác suất $0.2$;<br/>$Y=0.5$ với xác suất $0.8$.</p>
+<div class="math-large">$\mathbb E_\pi[Y\mid S_t=S]=0.2(-1)+0.8(0.5)=0.2\ne\frac{11}{21}.$</div>
+<p>Với bảng $V$ cố định và mẫu mới theo $\pi$:</p>
+<div class="math-large">$$\begin{aligned}
+\mathbb E_\pi[Y\mid S_t=s]-v_\pi(s)
+&amp;=\gamma\,\mathbb E_\pi\!\left[\vphantom{\big|}V(S_{t+1})-v_\pi(S_{t+1})\mid S_t=s\right].
+\end{aligned}$$</div>
+<p class="caption">MC: $\mathbb E_\pi[G_t\mid S_t=s]=v_\pi(s)$. TD có sai lệch bằng $0$ nếu $V=v_\pi$ tại các trạng thái kế tiếp.</p>
+<aside class="notes"><p>Trong chuỗi ngắn, chuyển từ $S$ đến $L$ nhận thưởng $-1$, còn chuyển đến $X$ nhận $0$. Với bảng đã cho, hai mục tiêu là $-1$ và $0.5$; kỳ vọng bằng $1/5$. Giá trị chuẩn là $11/21$, nên sai lệch bằng $1/5-11/21=-34/105$. Bảng được giữ cố định nhưng mục tiêu vẫn thay đổi theo chuyển được lấy mẫu.</p><p>Bellman kỳ vọng cho $v_\pi(s)=\mathbb E_\pi[R_{t+1}+\gamma v_\pi(S_{t+1})\mid S_t=s]$. Trừ đẳng thức ấy khỏi kỳ vọng mục tiêu TD thu được công thức sai lệch. Bảng $V$ cố định không làm $V(S_{t+1})$ thành hằng vì $S_{t+1}$ vẫn ngẫu nhiên. Công thức nói về kỳ vọng của mục tiêu với một bảng cố định, không đồng nhất với tính chệch của toàn bộ bộ ước lượng sau nhiều cập nhật. TD có thể có sai lệch; giá trị tiếp nối đúng hoặc sai số bù trừ trong kỳ vọng có thể làm sai lệch bằng $0$.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 26–27 được hiệu chỉnh; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §6.1–6.2 tr. 120–124; hệ quả của Bellman kỳ vọng.</p></aside>
+</section>
+<section data-slide-id="L05-D06" data-note-topic-id="lec-05-topic-13">
+<h2>Nguồn ngẫu nhiên trong mục tiêu</h2>
+<img class="figure short" src="img/lec-05/target-randomness.svg" alt="Từ một chuyển đầu có nhiều phần đuôi khả dĩ; MC giữ phần đuôi quan sát, mục tiêu lý tưởng thay phần đuôi bằng kỳ vọng"/>
+<div class="grid2"><div class="card"><h3>Monte Carlo</h3><p>Phụ thuộc thưởng và chuyển trạng thái đến cuối lượt.</p></div><div class="card"><h3>TD(0)</h3><p>Vẫn ngẫu nhiên qua thưởng đầu và trạng thái sau; còn chịu sai số của $V$.</p></div></div>
+<div class="box">Mục tiêu TD với bảng $V$ bất kỳ không có bảo đảm phương sai nhỏ hơn MC.</div>
+<aside class="notes"><p>Giả sử môi trường Markov dừng, chính sách Markov cố định và $G_t$ có mômen bậc hai hữu hạn. Đặt $Y^*=R_{t+1}+\gamma v_\pi(S_{t+1})$ và $\mathcal F_1=\sigma(R_{t+1},S_{t+1})$, xét có điều kiện $S_t=s$. Khi đó $Y^*=\mathbb E_\pi[G_t\mid S_t=s,\mathcal F_1]$. Luật phương sai toàn phần cho $\operatorname{Var}_\pi(G_t\mid S_t=s)=\operatorname{Var}_\pi(Y^*\mid S_t=s)+\mathbb E_\pi[\operatorname{Var}_\pi(G_t\mid S_t=s,\mathcal F_1)\mid S_t=s]$. Vì hạng cuối không âm, phương sai của $Y^*$ không lớn hơn của $G_t$. Thay $v_\pi$ bằng một bảng $V$ tùy ý làm mất lập luận kỳ vọng có điều kiện này; không có thứ tự phương sai phổ quát cho mọi bảng đang học.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 26–28 được giới hạn; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §6.2 tr. 124; suy luận bằng luật phương sai toàn phần.</p></aside>
+</section>
+<section data-slide-id="L05-D07" data-note-topic-id="lec-05-topic-11">
+<h2>Điều kiện học từ mẫu mới</h2>
+
+<div class="grid2"><div class="card"><h3>Bài toán và dữ liệu</h3><ul><li>Hữu hạn, Markov dừng; $\pi$ cố định.</li><li>Thưởng bị chặn.</li><li>$\gamma&lt;1$, hoặc lượt kết thúc hợp lệ.</li><li>Mỗi trạng thái cần học được cập nhật vô hạn.</li></ul></div><div class="card"><h3>Bước học theo trạng thái</h3><div class="math-large">$\sum_{n=1}^{\infty}\alpha_n(s)=\infty,$</div><div class="math-large">$\sum_{n=1}^{\infty}\alpha_n(s)^2&lt;\infty.$</div><p>Ví dụ: $\alpha_n(s)=1/n$.</p></div></div>
+<div class="box">Với các giả thiết trên, TD(0) dạng bảng hội tụ về $v_\pi$. Bước hằng không thỏa điều kiện tổng bình phương.</div>
+<aside class="notes"><p>Các điều kiện được xét đồng thời cho dự đoán theo chính sách từ mẫu mới. Với $\gamma=1$, bài toán phải có cấu trúc kết thúc hợp lệ như chuỗi hữu hạn hấp thụ đang xét; không thể chỉ thay $\gamma$ trong một lập luận phép co của trường hợp chiết khấu. Chỉ số $n$ đếm cập nhật của riêng trạng thái. Với hằng số $\alpha&gt;0$, tổng $\sum_n\alpha^2$ phân kỳ, nên bảo đảm bước học giảm không áp dụng và dao động có thể còn. Dừng vì hết ngân sách hoặc một vài lượt cho kết quả đúng không chứng minh hội tụ. Với MC mọi lần ghé, kết quả đã nêu dùng trung bình $1/N(s)$ trong quá trình hữu hạn, thưởng bị chặn, kết thúc hầu chắc chắn từ mọi trạng thái đang xét; các lượt độc lập cùng phân phối khởi tạo và xác suất ghé $s$ dương. Tính nhất quán dựa trên luật số lớn theo lượt, không coi các mẫu trong cùng lượt độc lập.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §2.5 tr. 33; §6.2 tr. 124–125; bài giảng gốc tr. 28 được hiệu chỉnh.</p></aside>
+</section>
+<section data-slide-id="L05-D08" data-note-topic-id="lec-05-topic-16">
+<h2>Tám lượt dữ liệu cố định</h2>
+
+<p>$\mathcal S=\{A,B\}$, $\gamma=1$; $\mathcal D$ gồm đúng tám lượt đã kết thúc.</p><table><thead><tr><th>Số lượt</th><th>Quỹ đạo và phần thưởng</th></tr></thead><tbody><tr><td>1</td><td>$A\xrightarrow{\,0\,}B\xrightarrow{\,0\,}\text{kết thúc}$</td></tr><tr><td>6</td><td>$B\xrightarrow{\,1\,}\text{kết thúc}$</td></tr><tr><td>1</td><td>$B\xrightarrow{\,0\,}\text{kết thúc}$</td></tr></tbody></table>
+<div class="grid2"><div class="card"><p>$A$ chỉ xuất hiện trong lượt có lợi tức $0$.</p></div><div class="card"><p>$B$ xuất hiện tám lần; sáu lượt nhận thưởng cuối $1$.</p></div></div>
+<div class="box">Dự đoán giá trị của $A$ khi dùng lại dữ liệu này, không thu thêm lượt.</div>
+<aside class="notes"><p>Tập dữ liệu chứa một lần ghé $A$ và tám lần ghé $B$. Thông tin trực tiếp về lợi tức ở $A$ bằng $0$, trong khi quan hệ chuyển từ $A$ tới $B$ liên kết dự đoán của hai trạng thái. Đây là bài toán dự đoán từ dữ liệu cố định. Nó có mục tiêu phân tích khác với việc liên tục nhận mẫu mới và giảm bước học theo số lần ghé.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §6.3, Ví dụ 6.4, tr. 127–128.</p></aside>
+</section>
+<section data-slide-id="L05-D09" data-note-topic-id="lec-05-topic-16">
+<h2>Cập nhật theo lô với bảng cố định</h2>
+
+<div class="grid2"><div class="card"><h3>Một lượt quét từ bảng 0</h3><p>$V_0(A)=V_0(B)=0$, $\alpha=1/8$.</p><p>Tổng sai số tại $A$: $0$; tại $B$: $6$.</p><p>$\Delta_0(A)=0$, $\Delta_0(B)=6/8$.</p><div class="math-large">$(V_1(A),V_1(B))=(0,0.75)$</div><p>Kết quả như nhau cho MC và TD.</p><p>$k$: lượt quét; $\Delta_k(s)$: tổng gia số tại $s$.</p><p>$\varepsilon$: ngưỡng; $K$: số quét tối đa.</p></div><div class="card"><h3>Quy trình dùng lại dữ liệu</h3><ol><li>Chọn $V_0,\alpha,\varepsilon,K$.</li><li>Giữ $V_k$; đặt $\Delta_k(s)=0$.</li><li>Với mỗi mẫu tại $s$, tính $y$ và cộng:<br/>$\Delta_k(s)\leftarrow\Delta_k(s)+\alpha[y-V_k(s)]$.</li><li>Ghi đồng thời khi hết lượt quét:<br/>$V_{k+1}(s)=V_k(s)+\Delta_k(s)$.</li><li>Dừng khi thay đổi nhỏ hơn $\varepsilon$ hoặc đủ $K$ lượt quét; nếu chưa, lặp.</li></ol></div></div>
+<p class="caption">Mục tiêu $y$: MC dùng lợi tức; TD dùng thưởng và giá trị kế tiếp trong $V_k$.</p>
+<aside class="notes"><p>$k$ là chỉ số lượt quét dữ liệu, khác thời điểm tương tác $t$. Đầu vào gồm dữ liệu cố định $\mathcal D$, $\gamma$, bảng khởi tạo, bước học $\alpha$, ngưỡng $\varepsilon$ và ngân sách $K$. Với mỗi trạng thái, cộng $\Delta_k(s)=\alpha\sum_{i:S_i=s}[y_i(V_k)-V_k(s)]$ rồi ghi đồng thời $V_{k+1}(s)=V_k(s)+\Delta_k(s)$. MC lấy $y_i=G_i$ đã tính trong lượt tương ứng; TD lấy $y_i=R_{i+1}+\gamma V_k(S_{i+1})$. Trạng thái kết thúc giữ $0$. Có thể dừng khi $\max_s|V_{k+1}(s)-V_k(s)|&lt;\varepsilon$ hoặc đạt $K$.</p><p>Riêng dữ liệu A–B, TD thỏa $V_{k+1}(A)=V_k(A)+\alpha[V_k(B)-V_k(A)]$ và $V_{k+1}(B)=V_k(B)+\alpha[6-8V_k(B)]$. Điều kiện $0&lt;\alpha&lt;1/4$ đủ để hai truy hồi ổn định trong ví dụ này; $1/8$ là một lựa chọn hợp lệ. Mỗi lượt quét cần công việc tỷ lệ số chuyển trong dữ liệu, cùng bộ nhớ cho dữ liệu và bảng. Ngưỡng dừng là tiêu chuẩn thực hành, không tự chứng minh nghiệm chính xác hoặc hội tụ trong mọi bài toán.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §6.3 tr. 126–128; phép quét từ dữ liệu Ví dụ 6.4.</p></aside>
+</section>
+<section data-slide-id="L05-D10" data-note-topic-id="lec-05-topic-16">
+<h2>Nghiệm MC trên dữ liệu A–B</h2>
+
+<div class="grid2"><div class="card"><h3>Lợi tức tại A</h3><p>Một mẫu $0$.</p><div class="math-large">$V_{\mathrm{MC}}(A)=0$</div></div><div class="card"><h3>Lợi tức tại B</h3><p>Sáu mẫu $1$ và hai mẫu $0$.</p><div class="math-large">$V_{\mathrm{MC}}(B)=6/8=0.75$</div></div></div>
+<p>MC khớp các lợi tức đã quan sát bằng bình phương tối thiểu:</p>
+<div class="math-large">$\min_v\;v^2\quad\text{tại }A;\qquad\min_v\;6(1-v)^2+2v^2\quad\text{tại }B.$</div>
+<div class="box">Quét MC tiếp từ $(0,0.75)$ không thay đổi bảng.</div>
+<aside class="notes"><p>Tại $A$, bình phương sai số với lợi tức duy nhất bằng $v^2$ và nhỏ nhất ở $v=0$. Tại $B$, đạo hàm tổng bình phương là $16v-12$, cho nghiệm $v=3/4$. Khi dùng bảng $(0,3/4)$, tổng sai số ở cả hai trạng thái bằng $0$, nên lượt quét MC tiếp không tạo gia số. Từ “nghiệm” ở đây gắn với tiêu chuẩn khớp lợi tức trong dữ liệu, chưa cho biết sai số so với giá trị của môi trường thật.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §6.3, Ví dụ 6.4, tr. 127–128.</p></aside>
+</section>
+<section data-slide-id="L05-D11" data-note-topic-id="lec-05-topic-16">
+<h2>Nghiệm TD trên dữ liệu A–B</h2>
+<img class="figure short" src="img/lec-05/ab-empirical.svg" alt="Mô hình ước lượng từ tám lượt: A đến B với xác suất 1 và thưởng 0; B kết thúc với thưởng 1 xác suất 6 phần 8 và thưởng 0 xác suất 2 phần 8"/>
+<div class="grid2"><div class="card"><h3>Tổng sai số bằng 0</h3><p>$0=V(B)-V(A)$</p><p>$0=6-8V(B)$</p><p>$V_{\mathrm{TD}}(A)=V_{\mathrm{TD}}(B)=0.75$.</p></div><div class="card"><h3>Lượt quét thứ hai</h3><p>Từ $(0,0.75)$, $\alpha=1/8$:</p><p>$V_2(A)=\frac18\cdot0.75=0.09375$.</p><p>$V_2(B)=0.75$.</p></div></div>
+<p class="caption">TD khớp quan hệ chuyển ước lượng từ dữ liệu; hai lượt quét chưa đạt nghiệm giới hạn.</p>
+<aside class="notes"><p>Dữ liệu có đúng một chuyển từ $A$ sang $B$ với thưởng $0$, nên tổng sai số ở $A$ bằng $V(B)-V(A)$. Tại $B$, sáu thưởng $1$ và hai thưởng $0$ cho tổng $6-8V(B)$. Hai điều kiện triệt tiêu cho nghiệm $(3/4,3/4)$. TD có thể đạt nghiệm này qua cập nhật theo lô mà không xây mô hình tường minh; sơ đồ mô hình thực nghiệm giải thích nghiệm. Giá trị $0.75$ không được xác nhận là giá trị thật của $A$ chỉ từ tám lượt. Bảng sau quét thứ hai cho một bước tiến đến nghiệm, không phải bằng chứng đã hội tụ.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §6.3, Ví dụ 6.4, tr. 127–128.</p></aside>
+</section>
+<section data-slide-id="L05-D12" data-note-topic-id="lec-05-topic-16">
+<h2>Kiểm tra kết luận từ dữ liệu hữu hạn</h2>
+
+<p>Trên tám lượt A–B, MC theo lô cho $(0,0.75)$;<br/>TD theo lô cho $(0.75,0.75)$.</p>
+<div class="check"><strong>Câu hỏi:</strong><ol><li>Giải thích sự khác biệt tại $A$ bằng tiêu chuẩn của mỗi phương pháp.</li><li>Đánh giá nhận định: “TD luôn chính xác hơn vì phương sai luôn thấp hơn”.</li><li>Đánh giá nhận định: “Bước học hằng luôn hội tụ đúng khi lấy thêm mẫu”.</li></ol></div>
+<p class="caption">Mỗi kết luận cần nêu dữ liệu, đối tượng so sánh và giả thiết.</p>
+<aside class="notes"><p>MC khớp lợi tức duy nhất bằng $0$ tại $A$. TD khớp quan hệ $A\to B$ và giá trị $B=0.75$ ước lượng từ cả tám lượt. Hai tiêu chuẩn giải thích hai nghiệm; dữ liệu không chứng minh TD đúng hơn đối với mọi môi trường thật. Nhận định về phương sai không được bảo đảm vì bất đẳng thức đã chứng minh chỉ áp dụng cho mục tiêu lý tưởng dùng $v_\pi$, không phải mọi bảng $V$. Nhận định về bước hằng cũng không được bảo đảm: trên mẫu mới, tổng bình phương bước học phân kỳ và dao động có thể tồn tại. Cập nhật lặp trên một tập dữ liệu cố định là một bài toán khác.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §6.2–6.3 tr. 124–128; Bài tập tuần 5, bài 4–5 được hiệu chỉnh.</p></aside>
+</section>
+</section>
+<section>
+<section data-slide-id="L05-E01" data-note-topic-id="lec-05-topic-14">
+<h2>Lựa chọn phương pháp dự đoán</h2>
+<table><thead><tr><th>Thông tin và yêu cầu</th><th>Lựa chọn có căn cứ</th></tr></thead><tbody><tr><td>Có lượt hoàn chỉnh; khớp lợi tức quan sát</td><td>MC với mục tiêu $G_t$; chỉ rõ lần ghé và bước học.</td></tr><tr><td>Cần cập nhật ngay sau một chuyển</td><td>TD(0) với mục tiêu $R_{t+1}+\gamma V_t(S_{t+1})$; trạng thái phải đủ thông tin Markov.</td></tr><tr><td>Tập dữ liệu được giữ cố định</td><td>Xác định tiêu chuẩn: lợi tức quan sát hoặc quan hệ Markov thực nghiệm.</td></tr></tbody></table>
+<div class="box">Cả hai phương pháp dự đoán giá trị của chính sách đã cho từ dữ liệu tương tác.</div>
+<aside class="notes"><p>MC phù hợp trực tiếp với mục tiêu tổng hợp các kết quả hoàn chỉnh đã quan sát. TD cho phép cập nhật giữa lượt bằng một mục tiêu sử dụng giá trị tiếp nối đang ước lượng. Với dữ liệu cố định, tiêu chuẩn khớp dữ liệu phải được xác định trước khi gọi một kết quả tốt hơn. Các lựa chọn này không xếp hạng hiệu quả mẫu của hai phương pháp trên mọi môi trường.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 28, 33; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 và §6.1–6.3.</p></aside>
+</section>
+<section data-slide-id="L05-E02" data-note-topic-id="lec-05-topic-15">
+<h2>Năng lực và giới hạn sau bài học</h2>
+<table><thead><tr><th>Năng lực</th><th>Bằng chứng và giới hạn</th></tr></thead><tbody><tr><td>Lập mẫu lợi tức</td><td>Tính đúng số mũ và chọn lần ghé; MC đầy đủ cần lượt kết thúc.</td></tr><tr><td>Thực hiện cập nhật</td><td>Lần theo MC và TD(0); TD dùng ước lượng ở trạng thái sau.</td></tr><tr><td>Giải thích khác biệt</td><td>Đối chiếu dữ liệu và tiêu chuẩn; hội tụ cần điều kiện về mẫu và bước học.</td></tr></tbody></table>
+<p class="caption">Chính sách giữ cố định; giá trị thật và bảng ước lượng được phân biệt trong toàn bộ phép tính.</p>
+<aside class="notes"><p>Hai lượt chuỗi ngắn kiểm tra khả năng chọn mẫu, áp dụng bước học và đọc đúng bảng trước mỗi cập nhật. Hai đường chuỗi dài kiểm tra chỉ số chiết khấu mà không thay thế phân tích phương sai. Dữ liệu A–B kiểm tra cách giải thích hai nghiệm qua những tiêu chuẩn khác nhau. Các kết luận hội tụ thuộc phạm vi dự đoán dạng bảng với dữ liệu và giả thiết đã nêu; chúng không được suy ra từ riêng một bảng hữu hạn mẫu.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 32–33; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 và §6.1–6.3.</p></aside>
+</section>
+<section data-slide-id="L05-E03" data-note-topic-id="lec-05-topic-15">
+<h2>Bài tập về dự đoán phi mô hình</h2>
+
+<div class="grid3"><div class="card"><h3>Bài 1–3</h3><p>Phân biệt dữ liệu, mục tiêu và thời điểm cập nhật.</p><p>Tính mục tiêu và sai số TD(0).</p></div><div class="card"><h3>Bài 4–5</h3><p>So sánh theo giả thiết; phân biệt hai trục MC.</p><p>Nêu điều kiện thay cho kết luận tuyệt đối.</p></div><div class="card"><h3>Bài 6–7</h3><p>Giải giá trị chuẩn bằng Bellman kỳ vọng.</p><p>Tính bảng sau các lượt đã cho.</p></div></div>
+<div class="check"><strong>Câu hỏi:</strong> Hoàn thành các bài tập; ở bài 7, chỉ rõ quy tắc lần ghé trước khi tính MC.</div>
+<p><a href="../RL-hk2-2025-2026/resources/hw05-model-free-prediction.pdf">Bài tập tuần 5</a> · <a href="material-viewer.html?doc=materials/lec-05/lecture-note.md&amp;deck=lecture-05-du-doan-phi-mo-hinh.html">Ghi chú và lời giải</a></p>
+<aside class="notes"><p>Bài 1–3 yêu cầu phân biệt mẫu chuyển, lợi tức hoàn chỉnh và mục tiêu một bước. Bài 4 được hiểu là phân tích nguồn sai lệch, phương sai và giới hạn kết luận trong lượt dài, thưởng thưa; không có tiền đề TD luôn nhanh hơn. Bài 5 tách chọn lần ghé khỏi bước học: lần ghé đầu tiên hoặc mọi lần ghé có thể kết hợp với $1/n$ hoặc bước hằng. Bài 6 dùng mô hình để tạo giá trị chuẩn, còn bài 7 chạy riêng từng phương pháp trên cùng dữ liệu.</p><p>Ở bài 6, $c_5$ kết thúc, $\gamma=0.9$, xác suất phải/đứng/trái là $0.8/0.1/0.1$, vượt biên thì đứng. Mọi chuyển thưởng $-1$ trừ $c_4\to c_5$ thưởng $10$. Với $v_5=0$, các phương trình là $v_1=-1+0.9(0.2v_1+0.8v_2)$; $v_2=-1+0.9(0.1v_1+0.1v_2+0.8v_3)$; $v_3=-1+0.9(0.1v_2+0.1v_3+0.8v_4)$; $v_4=7.8+0.9(0.1v_3+0.1v_4)$. Nghiệm xấp xỉ $(2.658941901,4.417128276,6.639280500,9.228060709)$. Biên trái làm xác suất đứng tại $c_1$ thành $0.2$.</p><p>Bài 7 dùng $e_1,e_2$, $\gamma=1$, $\alpha=0.5$, mỗi phương pháp khởi tạo riêng từ $0$. MC lần ghé đầu tiên kết thúc ở $(-0.25,-0.25)$; MC mọi lần ghé ở $(-0.5625,-0.125)$; TD(0) ở $(-0.375,0.375)$. Các bước trung gian phải dùng đúng bảng và tập mẫu của từng cấu hình.</p><p class="note-source"><strong>Nguồn:</strong> Bài tập tuần 5, tr. 1–2, bài 1–7; hiệu chỉnh giả thiết bài 4–5 và quy tắc lần ghé bài 7.</p></aside>
+</section>
+<section data-slide-id="L05-E04" data-note-topic-id="lec-05-topic-15">
+<h2>Kiểm tra lựa chọn và điều kiện</h2>
+
+<div class="check"><strong>Câu hỏi:</strong></div>
+<div class="card"><h3>1. Lượt hoàn chỉnh của chuỗi ngắn</h3><p>Sau $e_1$, nêu hai lựa chọn cần xác định trước khi báo cáo kết quả MC.</p></div>
+<div class="card"><h3>2. Tiền tố chưa kết thúc</h3><p>Sau chuyển đầu, chọn một cách cập nhật đã học và nêu thông tin cần có.</p></div>
+<div class="card"><h3>3. Tám lượt A–B cố định</h3><p>Nêu điều kiện để gọi một nghiệm là tốt hơn nghiệm kia.</p></div>
+<aside class="notes"><p>Với lượt hoàn chỉnh, cần xác định quy tắc lần ghé và quy tắc bước học, cùng giá trị khởi tạo khi nó còn ảnh hưởng. Với tiền tố chưa kết thúc, TD(0) dùng thưởng, trạng thái sau, bảng hiện tại, $\gamma$ và bước học để tạo mục tiêu $R_{t+1}+\gamma V_t(S_{t+1})$. Với tám lượt A–B, cần xác định tiêu chuẩn khớp lợi tức hay khớp quan hệ Markov thực nghiệm. Muốn so sánh sai số với môi trường thật cần giá trị chuẩn hoặc dữ liệu đánh giá phù hợp. Tập tám lượt chưa chứng minh ưu thế phổ quát của một phương pháp.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 15–33; Bài tập tuần 5; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 và §6.1–6.3.</p></aside>
+</section>
+<section data-slide-id="L05-E05" data-note-topic-id="lec-05-topic-15">
+<h2>Tài liệu đọc và bài tập tiếp tục</h2>
+
+<p>Richard S. Sutton và Andrew G. Barto<br/><em>Reinforcement Learning: An Introduction</em>, ấn bản 2.</p><table><thead><tr><th>Vị trí đọc</th><th>Nhiệm vụ</th></tr></thead><tbody><tr><td>§5.1, tr. 92–96</td><td>Dựng tập mẫu và thực hiện dự đoán Monte Carlo.</td></tr><tr><td>§6.1–6.3, tr. 119–128</td><td>Lần theo TD(0); giải thích hai nghiệm trên dữ liệu cố định.</td></tr><tr><td>§2.4–2.5, tr. 30–33</td><td>Đối chiếu trọng số mẫu và điều kiện bước học.</td></tr></tbody></table>
+<p class="caption">Bài tập tuần 5, bài 6–7: đối chiếu giá trị chuẩn và cập nhật theo dữ liệu.</p>
+<aside class="notes"><p>Số trang sách được dẫn theo trang in của ấn bản 2. Mục 5.1 định nghĩa hai cách chọn lần ghé và dự đoán Monte Carlo. Các mục 6.1–6.3 xây dựng TD(0), so sánh với MC và phân biệt tiêu chuẩn khi dữ liệu hữu hạn được dùng lại. Các mục 2.4–2.5 giải thích trung bình gia tăng, bước học hằng và lịch bước học giảm. Bài 6–7 của bộ bài tập gắn những kết quả này với hệ Bellman và các phép cập nhật có thể kiểm bằng tay.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §2.4–2.5, §5.1, §6.1–6.3; Bài tập tuần 5, bài 6–7.</p></aside>
+</section>
+</section>
+<div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 05</div>
+</div></div>
+<script src="revealjs/dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script src="plugin/math/math.js"></script>
+<script>
+Reveal.initialize({width:1280,height:720,margin:.04,controlsLayout:"edges",slideNumber:true,hashOneBasedIndex:true,hash:true,katex:{local:"vendor/katex"},plugins:[RevealHighlight,RevealNotes,RevealMath.KaTeX]});
+</script>
+</body>
+</html>
