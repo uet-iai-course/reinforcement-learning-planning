@@ -470,3 +470,117 @@ Phiên không có Browser tích hợp của Codex. Kiểm giao diện Codex Slid
 Điều phối viên chỉ sửa trạng thái nghiệm thu trong planning sau các tái kiểm; không sửa nội dung học thuật, HTML, học liệu hoặc SVG đã được xác nhận. Các đoạn trạng thái mới được đọc lại theo no-ai-slop Edit: câu nêu rõ việc đã làm, phạm vi và giới hạn, không thêm lời ca tụng hoặc bảo đảm ngoài bằng chứng. Việc này không thay luận điểm, thứ tự, ký hiệu hoặc thời lượng đã qua Quill.
 
 Kết quả: bộ sản phẩm Bài 06 đáp ứng phạm vi đã giao và đủ điều kiện bàn giao. Các giới hạn công cụ/thiết bị nêu trên không được trình bày thành kết quả đã kiểm. Nội dung sửa có chủ ý so với nguồn và quyết định không áp dụng đề xuất đều đã ghi trong dàn bài và nhật ký.
+
+
+## Rà soát từng trang và biên tập lại — 01-10-2026
+
+Yêu cầu của người dùng: duyệt lần lượt từng trang Bài 06, xác định trang muốn nói gì, đề xuất và sửa để tiêu đề ngắn gọn, học thuật; mạch lập luận chặt; khái niệm không xuất hiện đột ngột hay khiên cưỡng; xong mỗi trang thì sửa mục ghi chú bài giảng tương ứng; rồi commit và push. Bảng rà soát do điều phối (phiên chính, Claude Code, Opus 5.5) lập sau khi đọc deck, ghi chú và nguồn 30 trang. Biên tập: Agent fork, Opus 5.5 (kế thừa phiên); là tác tử duy nhất ghi tệp trong lượt này. Quy ước dùng chung với Bài 05: trang kiểm tra có tiêu đề "Kiểm tra …"; tiêu đề không viết tắt "MC"; thuật toán hai trang có tiêu đề "Thuật toán X: …".
+
+Không đổi: 45 trang, bảy mạch, mọi `data-slide-id` và `data-note-topic-id`, phút mỗi trang (tổng 120), SVG, `lecture-slide.css`, `index.html`. CSS cục bộ thêm: bỏ `text-transform` cho KaTeX trong tiêu đề B06, B07, C04; giới hạn hình E07 ở 200px.
+
+### Bảng từng trang (theo thứ tự trình chiếu mới)
+
+| Mã trang | Trang muốn nói gì | Vấn đề | Đề xuất và thay đổi | Quyết định | Thay đổi ghi chú |
+|---|---|---|---|---|---|
+| L06-A01 | Tên bài và ba phương pháp | Không | Điều khiển phi mô hình (giữ). Không đổi. | giữ | Không |
+| L06-A02 | Lộ trình bảy mạch và mục tiêu | Mục tiêu chung chung ("Kiểm tra điều kiện sử dụng và bảo đảm") | Nội dung và mục tiêu (giữ). Ba mục tiêu cụ thể: tính cập nhật MC/Sarsa/Q-learning trên bảng giá trị hành động; phân biệt chính sách sinh dữ liệu với chính sách được học; nêu điều kiện thăm dò và bước học để hội tụ tới giá trị tối ưu. Mục 6 đổi thành "Điều kiện hội tụ". | sửa | topic-01: danh sách năng lực thống nhất với ba mục tiêu |
+| L06-A04 | Nhắc dự đoán, đặt bài toán điều khiển | Chưa nêu mục tiêu điều khiển; đứng sau ví dụ | Từ dự đoán đến điều khiển (giữ). Đặt trước A03 để bài toán điều khiển đứng trước ví dụ (nguồn tr. 6 trước tr. 15). Thêm hộp mục tiêu điều khiển theo nguồn tr. 6; gộp hai dòng tiên quyết thành một. | sửa, đổi chỗ | topic-01: mục 1.1 "Từ dự đoán đến điều khiển" lên đầu, thêm câu mục tiêu điều khiển |
+| L06-A03 | Giới thiệu môi trường chuỗi năm trạng thái | Ví dụ đứng trước phát biểu bài toán | Quyết định từ kinh nghiệm lấy mẫu → Chuỗi năm trạng thái. Tiêu đề gọi tên ví dụ; trang đứng sau A04. | sửa, đổi chỗ | topic-01: mục 1.2 "Chuỗi năm trạng thái" |
+| L06-A05 | Phân biệt thông tin trong một mẫu | Tiêu đề không theo quy ước kiểm tra | Thông tin có trong một mẫu → Kiểm tra thông tin trong một mẫu. Tiêu đề theo quy ước "Kiểm tra …". | sửa | topic-01: mục 1.3 đổi tiêu đề |
+| L06-B01 | Bảng $Q$ cho từng cặp, chọn bằng cực đại | Thiếu lý do cần $Q$ thay vì $V$ | Giá trị của từng hành động → Giá trị hành động. Câu mở nêu lý do cần $Q$ thay vì $V$ khi thiếu mô hình (nguồn tr. 7); ghi chú nêu kỳ vọng một bước cần $p(s',r\mid s,a)$. | sửa | topic-02: mục 2.1 thêm lý do (kỳ vọng một bước cần mô hình) |
+| L06-B02 | Định nghĩa $q_\pi$, ví dụ $\pi_L$ | $q_*$ chỉ nêu bằng tên | Giá trị đúng và bảng ước lượng → Giá trị hành động của một chính sách. Viết $q_*(s,a)=\max_\pi q_\pi(s,a)$ trên mặt trang; ghi chú nêu cực đại đạt được trong MDP hữu hạn có chiết khấu. | sửa | topic-02: mục 2.2 viết $q_*=\max_\pi q_\pi$ |
+| L06-B03 | Vòng đánh giá–cải thiện; hành động chưa thử thiếu dữ liệu | Ý chính nêu trừu tượng | Đánh giá và cải thiện từ dữ liệu → Nhu cầu thăm dò. Hộp nêu ví dụ cụ thể: bảng I tham lam tại D luôn đi phải, $Q(D,0)$ không nhận mẫu dù lợi tức đi trái là 998. | sửa | topic-02: mục 2.3 "Nhu cầu thăm dò" với ví dụ bảng I |
+| L06-B04 | Tính tay xác suất ε-tham lam tại D | Tiêu đề không gọi tên nội dung | Phân bổ xác suất thăm dò → Xác suất chọn hành động tại D. Tiêu đề. | sửa | topic-02: tách mục 2.4 "Xác suất chọn hành động tại D" |
+| L06-B05 | Công thức ε-tham lam và lớp mềm | Không | Chính sách $\varepsilon$-tham lam (giữ). Không đổi. | giữ | Đánh số lại 2.5 |
+| L06-B06 | ε-tham lam theo $q_\pi$ không làm giá trị giảm | Tiêu đề không gọi tên kết quả | Cải thiện với giá trị chính xác → Cải thiện chính sách $\varepsilon$-tham lam. Tiêu đề gọi tên kết quả; dòng cuối nêu ý nghĩa: với $q_\pi$ chính xác, vòng đánh giá–cải thiện giữ thăm dò mà không làm giảm giá trị. | sửa | topic-02: mục 2.6 đổi tiêu đề, thêm câu ý nghĩa |
+| L06-B07 | Kiểm tra xác suất và đối tượng $q_\pi$ | Tiêu đề | Xác suất và đối tượng được ước lượng → Kiểm tra chính sách $\varepsilon$-tham lam. Tiêu đề. | sửa | topic-02: mục 2.7 đổi tiêu đề |
+| L06-C01 | Vòng lượt → lợi tức → $Q$ → chính sách | Tiêu đề; hình trùng B03 | Giá trị hành động từ lượt hoàn chỉnh → Điều khiển Monte Carlo. Tiêu đề; hình vòng lặp giữ vì hộp trên trang cụ thể hóa vòng ở B03 bằng lợi tức của lượt. | sửa | topic-03: tách mục 3.1 "Điều khiển Monte Carlo" |
+| L06-C02 | Một lượt tham lam D→E, $Q(D,1)=10$ | Tiêu đề | Một cập nhật Monte Carlo → Monte Carlo với chính sách tham lam. Tiêu đề. | sửa | topic-03: mục 3.2 riêng |
+| L06-C03 | Quy tắc lần ghé đầu và trung bình mẫu | Tiêu đề | Trung bình mẫu theo lần ghé đầu → Cập nhật Monte Carlo theo lần ghé đầu. Tiêu đề. | sửa | topic-03: mục 3.3 đổi tiêu đề |
+| L06-C04 | Lấy mẫu ε-tham lam bằng dãy số | Thiếu lý do dùng dãy số | Lấy mẫu một lượt từ dãy số đã cho → Lấy mẫu $\varepsilon$-tham lam bằng dãy số cho trước. Câu mở nêu lý do dùng dãy số: mọi người tái tạo cùng một lượt. | sửa | topic-03: mục 3.4 thêm câu lý do |
+| L06-C07 | Cập nhật từ lượt D–C–B–A | Bị thuật toán C05–C06 chen giữa ví dụ | Cập nhật từ lượt D–C–B–A (giữ). Đặt ngay sau C04 để ví dụ lấy mẫu và cập nhật liền mạch trước thuật toán tổng quát. | giữ, đổi chỗ | topic-03: mục 3.5 đứng ngay sau 3.4 |
+| L06-C05 | Thuật toán MC: sinh lượt và tính lợi tức | Tiêu đề viết tắt; lịch $\varepsilon_k$ chưa có ví dụ | MC: thu thập và tính lợi tức → Thuật toán điều khiển Monte Carlo: sinh lượt. Tiêu đề; đầu vào nêu ví dụ lịch $\varepsilon_k=1/k$ (nguồn tr. 11), ghi chú nối sang phần hội tụ. | sửa | topic-03: mục 3.6 "Thuật toán điều khiển Monte Carlo", thêm $\varepsilon_k=1/k$ và câu nối phần 6 |
+| L06-C06 | Thuật toán MC: cập nhật và cải thiện | Tiêu đề viết tắt | MC: cập nhật và cải thiện chính sách → Thuật toán điều khiển Monte Carlo: cập nhật. Tiêu đề. | sửa | Gộp trong mục 3.6 |
+| L06-C08 | Kiểm tra lần ghé đầu và mọi lần ghé | Tiêu đề | Lần ghé đầu của cặp → Kiểm tra lần ghé đầu của cặp. Tiêu đề. | sửa | topic-03: mục 3.7 đổi tiêu đề |
+| L06-D01 | MC cần lượt hoàn chỉnh; cập nhật một bước | Tên Sarsa xuất hiện đột ngột | Cập nhật khi lượt chưa kết thúc → Từ Monte Carlo sang cập nhật một bước. Hộp nêu tên Sarsa lấy từ bộ năm $(S,A,R,S',A')$ (nguồn tr. 13); ghi chú nêu dạng cập nhật chung và câu hỏi chọn mục tiêu (nguồn tr. 12). | sửa | topic-04: mục 4.1 thêm dạng cập nhật chung và nguồn gốc tên |
+| L06-D02 | Năm mẫu và bảng I dùng chung | Tiêu đề | Dữ liệu chung cho cập nhật một bước → Năm mẫu chuyển dùng chung. Tiêu đề. | sửa | topic-04: tách mục 4.2 |
+| L06-D03 | Hai cập nhật Sarsa đầu | Underbrace KaTeX vượt khung | Hai bước tính Sarsa → Hai cập nhật Sarsa đầu tiên. Thay hai underbrace KaTeX (nét vượt khung) bằng một dòng văn bản có cùng số liệu. | sửa | topic-04: mục 4.3 đổi tiêu đề |
+| L06-D04 | Công thức Sarsa | Chưa gọi tên học theo chính sách | Mục tiêu Sarsa → Quy tắc cập nhật Sarsa. Câu cuối gọi tên học theo chính sách (on-policy) theo nguồn tr. 13. | sửa | topic-04: mục 4.4 gọi tên on-policy |
+| L06-D05 | Thuật toán Sarsa trong lượt | Tiêu đề | Sarsa: khởi tạo và bước không kết thúc → Thuật toán Sarsa: bước trong lượt. Tiêu đề. | sửa | topic-04: mục 4.5 "Thuật toán Sarsa" |
+| L06-D06 | Thuật toán Sarsa khi kết thúc/hết ngân sách | Tiêu đề | Sarsa: kết thúc và ngân sách chạy → Thuật toán Sarsa: kết thúc và dừng. Tiêu đề. | sửa | Gộp trong mục 4.5 |
+| L06-D07 | Mục tiêu khi vào trạng thái kết thúc | Tiêu đề | Cập nhật khi chuyển vào trạng thái kết thúc → Sarsa tại trạng thái kết thúc. Tiêu đề. | sửa | topic-04: mục 4.6 thêm câu về giá trị tiếp nối bằng 0 |
+| L06-D08 | Kiểm tra Sarsa từ tiền tố | Tiêu đề | Cập nhật Sarsa từ tiền tố → Kiểm tra cập nhật Sarsa từ tiền tố. Tiêu đề. | sửa | topic-04: mục 4.7 đổi tiêu đề |
+| L06-E01 | Tách hành vi và đích | Thiếu vấn đề dẫn vào; on/off-policy chưa định nghĩa | Chính sách hành vi và chính sách đích (giữ). Câu mở nêu vấn đề: mục tiêu Sarsa dùng hành động thăm dò; định nghĩa học theo chính sách ($b=\pi$) và khác chính sách ($b\ne\pi$) theo nguồn tr. 8; hình cỡ ngắn. | sửa | topic-05: mục 5.1 thêm câu vấn đề và định nghĩa |
+| L06-E02 | Mẫu 2 với mục tiêu cực đại | Tiêu đề | Một mục tiêu cực đại → Một cập nhật Q-learning. Tiêu đề. | sửa | topic-05: mục 5.2 đổi tiêu đề |
+| L06-E03 | Công thức Q-learning | Tiêu đề | Quy tắc Q-learning → Quy tắc cập nhật Q-learning. Tiêu đề. | sửa | topic-05: mục 5.3 đổi tiêu đề |
+| L06-E04 | Thuật toán Q-learning: lấy mẫu | Tiêu đề | Q-learning: lấy mẫu và cập nhật → Thuật toán Q-learning: lấy mẫu và cập nhật. Tiêu đề. | sửa | topic-05: mục 5.4 "Thuật toán Q-learning" |
+| L06-E05 | Thuật toán Q-learning: kết thúc, chi phí | Tiêu đề | Q-learning: kết thúc và chi phí → Thuật toán Q-learning: kết thúc và chi phí. Tiêu đề. | sửa | Gộp trong mục 5.4 |
+| L06-E06 | Hai bảng trên cùng năm mẫu | Tiêu đề | Hai bảng từ cùng năm mẫu → Sarsa và Q-learning trên cùng năm mẫu. Tiêu đề. | sửa | topic-05: mục 5.5 đổi tiêu đề |
+| L06-E07 | Điều kiện dùng dữ liệu hành vi | Thiếu lý do không cần hệ số lấy mẫu quan trọng | Điều kiện sử dụng dữ liệu hành vi → Dữ liệu hành vi trong Q-learning. Mặt trang nêu lý do Q-learning một bước không cần hệ số lấy mẫu quan trọng (nguồn tr. 19); $b$ chỉ quyết định cặp được cập nhật; điều kiện MDP và độ phủ trong hộp; câu về tập dữ liệu hữu hạn chuyển vào ghi chú; hình giới hạn 200px. | sửa | topic-05: mục 5.6 thêm đoạn mở |
+| L06-E08 | Kiểm tra hai mục tiêu một bước | Tiêu đề | So sánh hai mục tiêu một bước → Kiểm tra mục tiêu Sarsa và Q-learning. Tiêu đề. | sửa | topic-05: mục 5.7 đổi tiêu đề |
+| L06-F01 | Miền giả thiết của định lý | Tiêu đề | Phạm vi của bảo đảm hội tụ → Giả thiết chung của các định lý hội tụ. Tiêu đề. | sửa | topic-06: mục 6.1 đổi tiêu đề |
+| L06-F02 | Định nghĩa GLIE | Tên mới, chưa nối lịch $\varepsilon_k$ | Hai yêu cầu của GLIE → Điều kiện GLIE. Nối lại lịch $\varepsilon_k$ của Monte Carlo; ví dụ $\varepsilon_k=1/k\to0$ (nguồn tr. 25). | sửa | topic-06: mục 6.2 nối lịch $\varepsilon_k$ |
+| L06-F03 | Điều kiện bước học theo cặp | Tên Robbins–Monro chỉ xuất hiện ở F04 | Bước học theo từng cặp → Điều kiện Robbins–Monro. Gọi tên Robbins–Monro tại trang nêu điều kiện; công thức đặt trước hai ví dụ; ghi chú thêm diễn giải hai tổng (Sutton–Barto §2.5). | sửa | topic-06: mục 6.3 "Điều kiện Robbins–Monro" |
+| L06-F04 | Hội tụ của Sarsa và Q-learning | Không | Hội tụ của Sarsa và Q-learning (giữ). Không đổi. | giữ | topic-06: mục 6.4 đổi tiêu đề cho khớp |
+| L06-F05 | Kiểm tra giả thiết | Tiêu đề | Kiểm tra giả thiết bảo đảm → Kiểm tra giả thiết hội tụ. Tiêu đề. | sửa | topic-06: mục 6.5 đổi tiêu đề |
+| L06-G01 | Bảng so sánh ba phương pháp | Thiếu câu nối Bài 07 | Dữ liệu và mục tiêu của ba phương pháp → Tổng kết ba phương pháp. Hộp nêu một ô cho mỗi cặp; chú thích nối Bài 07 (xấp xỉ hàm) theo nguồn tr. 7, 30. | sửa | topic-07: mục 7.1 "Tổng kết ba phương pháp", thêm giới hạn bảng và câu nối |
+| L06-G02 | Trở lại quyết định tại D | Tiêu đề | Quyết định tại D sau các mẫu đã cho → Quyết định tại D sau các cập nhật. Tiêu đề. | sửa | topic-07: tách mục 7.2 |
+| L06-G03 | Kiểm tra lựa chọn phương pháp | Tiêu đề | Lựa chọn phương pháp có điều kiện → Kiểm tra lựa chọn phương pháp. Tiêu đề. | sửa | topic-07: mục 7.3 đổi tiêu đề |
+| L06-G04 | Bài tập và đọc thêm | Không | Bài tập và tài liệu đọc (giữ). Không đổi. | giữ | Đánh số lại 7.4–7.7 |
+
+Không có đề xuất bị từ chối. Điều chỉnh khi làm: C01 giữ hình vòng điều khiển vì hộp trên trang đã nêu cụ thể vòng bằng lợi tức của lượt; E07 gộp hai câu về mục tiêu và hệ số lấy mẫu quan trọng thành một câu để trang vừa khung; A04 gộp hai dòng tiên quyết thành một vì hộp mục tiêu mới làm trang chạm đáy khung.
+
+### Sai lệch so với storyboard cũ và nguồn
+
+- Đổi thứ tự A04 trước A03: nguồn đặt bài toán điều khiển (tr. 6) trước ví dụ chuỗi năm trạng thái (tr. 15).
+- Đổi thứ tự C07 ngay sau C04: ví dụ lấy mẫu (nguồn tr. 17) và cập nhật từ cùng lượt liền mạch trước thuật toán tổng quát; nguồn không có trang thuật toán MC tách riêng ở vị trí này.
+- Bổ sung có nguồn: lý do dùng $Q$ (tr. 7); mục tiêu điều khiển (tr. 6); tên Sarsa và học theo chính sách (tr. 13); dạng cập nhật chung, câu hỏi chọn mục tiêu (tr. 12); học theo/khác chính sách (tr. 8); lịch $\varepsilon_k=1/k$ (tr. 11, 25); hệ số lấy mẫu quan trọng (tr. 19); giới hạn bảng $Q$ và câu nối Bài 07 (tr. 7, 30); diễn giải hai tổng Robbins–Monro (Sutton–Barto §2.5).
+
+### Tự kiểm no-ai-slop Edit và liên tục
+
+Phạm vi: mọi câu mới hoặc sửa trên mặt trang, ghi chú diễn giả liên quan và các đoạn mới của ghi chú bài giảng. Đối chiếu `eval.md`: không thêm khẳng định thiếu nguồn; không có tương phản nhị phân, câu đệm, siêu ngôn ngữ, dấu hai chấm kiểu tiết lộ hay chữ đậm trang trí; dấu hai chấm chỉ dùng cho nhãn ("Điều khiển:", "Điều kiện:", "Mẫu 2:") và khai báo. Đã sửa: "mọi người tái tạo" thành "người học tái tạo được" (văn nói); "sai phân thời gian TD(0)" thành "sai phân thời gian (TD)" theo quy tắc viết tắt. Liên tục theo danh sách Outline/Threads/Concept của quill: các khái niệm $q_*$, học theo/khác chính sách, GLIE, Robbins–Monro nay được gọi tên trước lần dùng đầu; thứ tự tiểu mục ghi chú khớp thứ tự trang mới; tham chiếu chéo trong ghi chú (mục 3.6 → phần 6, mục 5.6 → mục đọc thêm 7.5, mục 6.1/6.3) đã kiểm lại. Không tạo `quill.json`.
+
+### Kiểm tra của biên tập
+
+`git diff --check` đạt; 52 thẻ `<section>` mở và đóng; 45 `data-slide-id` duy nhất. Playwright (server cổng 8766, `wait_until="load"`, tắt hiệu ứng chuyển trang) cả 45 trang ở 1600×900 và 390×844: không lỗi console hoặc trang, không `.katex-error`, không tài nguyên hỏng, không cuộn ngang, chữ thân không dưới 0.75em; không trang nào đè chân trang (trước khi sửa, E07 đè 54px; đã sửa). Ảnh đã xem: A04, B03, C04, D03, E01, E07, F03. Trình xem ghi chú: không `.katex-error`, không yêu cầu mạng ngoài; lỗi CSP script nội dòng là lỗi có sẵn của trình xem. Chưa commit, chưa push.
+
+
+### Rà soát độc lập và vòng sửa — 01-10-2026
+
+Ba người rà soát độc lập, chỉ đọc, trên bản nháp sau lượt biên tập trên: toán học và RL; mạch lập luận và góc nhìn sinh viên; phê bình học thuật kèm no-ai-slop Detect. Theo thông báo của điều phối, cả ba là Agent fork, Opus 5.5; biên tập ghi theo thông báo, không tự kiểm được lệnh gọi. Không có phát hiện chặn bàn giao hoặc nghiêm trọng.
+
+| Mức độ | Trang | Vấn đề | Người rà | Quyết định | Trạng thái |
+|---|---|---|---|---|---|
+| trung bình | L06-F02, ghi chú 6.2 | "Lịch $\varepsilon_k$ … là một ví dụ" chưa nói ví dụ của yêu cầu nào; dễ hiểu là đủ GLIE | toán, mạch, học thuật | Thay bằng: lịch $\varepsilon_k=1/k$ thỏa tham lam trong giới hạn; thăm vô hạn cần kiểm riêng. Bỏ dòng cuối trùng ý | đã sửa |
+| trung bình | L06-E07, ghi chú 5.6 | Giới thiệu lấy mẫu quan trọng chỉ để nói không cần; ghi chú diễn giả có chuỗi rào đón | mạch, toán (nhẹ), học thuật | Mặt trang: mục tiêu cực đại không dùng hành động kế tiếp của $b$; $b$ quyết định cặp và tần suất cập nhật. Trường hợp cần hệ số (nguồn tr. 19) và lý do $A_t$ đã cho đưa vào ghi chú diễn giả và mục 5.6; giữ một câu điều kiện hội tụ | đã sửa |
+| nhẹ | L06-B01, ghi chú 2.1 | Lý do cần $Q$ nêu chưa đủ (thiếu phần thưởng và xác suất) | toán | "…dẫn tới những $s'$ và phần thưởng nào, với xác suất bao nhiêu" | đã sửa |
+| nhẹ | L06-F03 (ghi chú diễn giả) | Diễn giải tổng bình phương mơ hồ | toán | "giữ tổng phương sai của nhiễu tích lũy hữu hạn, nên ước lượng ổn định dần" | đã sửa |
+| nhẹ | L06-D04, L06-E01, ghi chú 3.1, 4.4, 5.1; ghi chú diễn giả C01, D01, D04 | Thuật ngữ học theo chính sách dùng trước định nghĩa; tiếng Anh lặp | mạch, học thuật | D04 không kèm tiếng Anh; E01 giữ dạng đầy đủ và nhắc MC, Sarsa là học theo chính sách; 3.1 và ghi chú C01, D01 viết "dữ liệu sinh từ chính sách đang được cải thiện/đang học"; ghi chú D04 nêu hệ quả $A'$ phải được thực hiện đúng như đã lấy | đã sửa |
+| nhẹ | L06-B03, L06-C01 | Vòng đánh giá–cải thiện chưa được định nghĩa trên trang; C01 chưa nói quan hệ với B03 | mạch | B03 thêm dòng định nghĩa vòng; hộp C01 nêu cụ thể hóa vòng bằng lợi tức của lượt | đã sửa |
+| nhẹ | L06-D01 | Dạng cập nhật chung chỉ có trong ghi chú | mạch | Đưa công thức lên mặt trang (nguồn tr. 12) | đã sửa |
+| nhẹ | L06-D02 | Chưa nói vì sao các hành động cho trước hợp lệ | mạch | Chú thích: mỗi hành động có xác suất dương dưới $\varepsilon$-tham lam, $\varepsilon=1/4$ (đúng vì mọi hành động nhận ít nhất $\varepsilon/2=1/8$; nguồn tr. 17–18) | đã sửa |
+| nhẹ | L06-C08, ghi chú 3.7 | Mọi lần ghé chưa nối với Bài 05 | mạch | Thêm "(quy tắc của Bài 05)" | đã sửa |
+| nhẹ | Ghi chú 3.1, 4.6 | Tiêu đề trùng tên phần; 4.6 không khớp D07 | mạch | "Vòng điều khiển Monte Carlo"; "Sarsa tại trạng thái kết thúc" | đã sửa |
+| trung bình | Ghi chú diễn giả D01, F03, B03 | Câu rào đón lặp | học thuật | Bỏ ba câu; giới hạn nêu một lần ở trang có điều kiện tương ứng | đã sửa |
+| nhẹ | Ghi chú diễn giả C05, A02, G01, B02; ghi chú 2.6 | Bình luận quy trình, lặp mặt trang | học thuật | C05 chỉ dẫn nguồn (câu "đặc tả bộ đếm, ngân sách và lần ghé đầu được bổ sung" ghi lại ở đây: bộ đếm, ngân sách, chỉ số ghé đầu là đặc tả bổ sung của bài, không có trong nguồn tr. 10–11); A02 gộp một câu; G01 bỏ đoạn lặp chú thích; B02 "Hai giá trị này là giá trị đúng của $\pi_L$, không phải số khởi tạo trong bảng I"; 2.6 bỏ câu lặp | đã sửa |
+| — | L06-C07, L06-D02 (dẫn nguồn) | Cảnh báo dẫn "Bài 7, hw07-function-approximation.pdf" | (cảnh báo) | Từ chối: điều phối đã kiểm, hw07 Bài 7 chứa đúng chuỗi R(A)=1000 và các mẫu (D,0,−1,C), (C,0,−1,B), (B,0,+1000,A); dẫn nguồn đúng | từ chối |
+
+Kiểm tra sau vòng sửa: `git diff --check` đạt; 52 thẻ `<section>` mở và đóng; 45 `data-slide-id` duy nhất. Playwright (cổng 8766, `wait_until="load"`, tắt hiệu ứng chuyển trang) cả 45 trang ở 1600×900 và 390×844: không lỗi console hoặc trang, không `.katex-error`, không tài nguyên hỏng, không cuộn ngang, không trang nào đè chân trang (B01, E07, F02 từng đè 3–38px trong lúc sửa; đã rút gọn chữ và gộp dòng, không giảm cỡ chữ). Ảnh đã xem: D01, E07. Tự kiểm no-ai-slop Edit trên các câu mới: không tương phản nhị phân, rào đón lặp hoặc dấu hai chấm tiết lộ. Chưa commit, chưa push.
+
+### Rà lại sau vòng sửa — 01-10-2026
+
+Người rà toán học và người rà mạch lập luận rà lại các trang đã đổi (theo thông báo của điều phối): kết quả **đạt**, kèm ba phát hiện nhẹ.
+
+| Mức độ | Trang | Vấn đề | Người rà | Quyết định | Trạng thái |
+|---|---|---|---|---|---|
+| nhẹ | L06-E07 (ghi chú diễn giả) | "vì vậy được thay bằng yêu cầu độ phủ" gợi ý độ phủ là điều kiện tương đương với điều kiện hỗ trợ | toán | "trong Q-learning, vai trò tương ứng là yêu cầu độ phủ"; ghi chú 5.6 không có câu này | đã sửa |
+| nhẹ | L06-E07 | Hai câu về vai trò của $b$ lặp ý | mạch | Gộp: "$b$ chỉ ảnh hưởng tới dữ liệu: cặp nào được cập nhật và với tần suất nào" | đã sửa |
+| nhẹ | L06-F04, ghi chú 6.4 | Câu phủ định về Monte Carlo trên mặt trang | mạch | Phát biểu phạm vi: bài trình bày định lý cho Sarsa và Q-learning; kết quả GLIE cho điều khiển Monte Carlo (nguồn tr. 26) không được chứng minh trong bài; lý do (lợi tức dưới chính sách thay đổi) ở ghi chú diễn giả và mục 6.4 | đã sửa |
+
+Kiểm tra sau ba sửa cuối: `git diff --check` đạt; Playwright 45 trang ở 1600×900 và 390×844 không lỗi, không `.katex-error`, không tràn; không trang nào đè chân trang. Chưa commit.
+
+### Kiểm định cuối của điều phối — 01-10-2026
+
+Bằng chứng vai trò theo lệnh gọi công cụ của phiên chính: một tác tử biên tập (Agent, `subagent_type: fork`, kế thừa Opus 5.5 của phiên; tiếp tục bằng SendMessage cho ba vòng sửa) và ba tác tử rà soát chỉ đọc chạy song song (Agent, `fork`): toán học và RL; mạch lập luận và góc nhìn sinh viên; phê bình học thuật kèm no-ai-slop Detect. Rà lại sau sửa dùng lại hai tác tử toán học và mạch lập luận qua SendMessage; cả hai kết luận đạt. Mức effort của phiên không xác nhận được từ trong phiên.
+
+Kiểm trình duyệt do điều phối tự chạy (Playwright Chromium, `reloadserver` cổng 8766 vì cổng 8765 đang phục vụ dự án khác; tắt hiệu ứng chuyển trang): cả 45 trang theo thứ tự mới ở 1600×900 và 390×844 không có lỗi console hoặc trang, không `.katex-error`, không tài nguyên hỏng hay yêu cầu mạng ngoài, không cuộn ngang, không vượt khung 720, không đè chân trang, chữ thân ≥ 0.75em. Lỗi tràn nét underbrace ở L06-D03 trước khi sửa không còn. Ảnh đã xem: B03, D03, E07, F04. Trình xem ghi chú: không `.katex-error`, không yêu cầu mạng ngoài; lỗi CSP về script nội dòng có sẵn ở trình xem (tái hiện trên Bài 04). `git diff --check` đạt.
