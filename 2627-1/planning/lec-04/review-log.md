@@ -1313,3 +1313,9 @@ Nguồn: báo cáo rà lại toán–câu nối của lượt sửa bổ sung A�
 - Phát hiện (nhẹ; no-ai-slop: tham chiếu điều hướng trong ghi chú diễn giả): notes viết “tính co ở trang sau bảo đảm đây là điểm bất động duy nhất”.
 - Quyết định: “tính co của $T_\pi$ bảo đảm đây là điểm bất động duy nhất.” Mặt trang không đổi.
 - Kiểm tra: 626/720; hai kích thước đạt, không lỗi, không cờ đè chân trang.
+
+#### L04-B06 — Sửa nhẹ lượt cuối
+
+- Phát hiện (nhẹ, độ chính xác): “thu hẹp độ lệch … theo hệ số $\gamma$” gợi ý hệ số co đúng bằng $\gamma$ và không nói độ lệch lấy cực đại.
+- Quyết định: “$T_\pi$ nhân độ lệch lớn nhất giữa hai bảng bất kỳ $U,V$ với hệ số không quá $\gamma$:”, khớp $\|T_\pi U-T_\pi V\|_\infty\le\gamma\|U-V\|_\infty$.
+- Kiểm tra: 616/720; câu vẫn một dòng; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
