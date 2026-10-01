@@ -1056,3 +1056,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, “tại chỗ” không được định nghĩa trên mặt trang. Trung bình, ví dụ lưới chỉ là mệnh đề không có số, và dùng $T_*$ trong khi ví dụ bên trái dùng $T_{\pi_0}$ mà không nói rõ.
 - Quyết định: sửa. Tiêu đề giữ. Thêm định nghĩa “Tại chỗ: giá trị mới ghi đè ngay và được dùng cho các ô sau trong cùng lượt.” Phép tính hai trạng thái gộp thành một dòng (kết quả ở hộp). Dòng lưới ghi rõ $T_*$ và kết quả “một lượt cho $(4{,}58;6{,}2;8;10;0)$, bằng $V_4$ của bốn lượt đồng bộ”. Notes đổi dấu thập phân và thêm hai bước $c_2$, $c_1$.
 - Kiểm tra: bản đầu tràn (744/720), rồi công thức bị ngắt dòng; rút phép tính, 626/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-F03 — Thuật toán lặp giá trị bất đồng bộ
+
+- Trang muốn nói: cập nhật từng trạng thái theo một lịch, dùng giá trị mới nhất; hội tụ khi mọi trạng thái chưa kết thúc được cập nhật vô hạn lần.
+- Vấn đề: nhẹ, ý “quét tại chỗ là một lịch cụ thể; bất đồng bộ tổng quát không cần quét đủ lượt” chỉ có trong notes, trong khi đây là cầu nối từ trang tại chỗ. Nhẹ, tiêu đề không cho biết trang là quy trình; notes còn “mô hình hai trạng thái”.
+- Quyết định: sửa. Tiêu đề “Thuật toán lặp giá trị bất đồng bộ”. Thêm câu mở “Mỗi bước cập nhật một trạng thái do lịch chọn; quét tại chỗ là một lịch cụ thể.” Gộp câu đầu ra vào bước 3 để giữ trang trong khung. Notes: “MDP hai trạng thái”. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: bản đầu tràn (743/720); gộp đầu ra vào bước 3, 612/720; hai kích thước đạt, không lỗi; đã xem ảnh.

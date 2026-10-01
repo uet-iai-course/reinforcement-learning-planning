@@ -573,7 +573,7 @@ Chức năng: Tổ chức tính toán và giới hạn. Đầu vào: Cập nhậ
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Lưới ngược thứ tự cho $(4.58,6.2,8,10,0)$ từ bảng không; đây là tính chất ví dụ này, không phải bảo đảm một lượt cho mọi MDP. Thay đổi lớn nhất trong lượt tại chỗ không trực tiếp bằng phần dư của bảng cuối. Gọi rõ lặp giá trị tại chỗ trên lưới: từ bảng không, $c_4$ nhận $\max\{-1,10\}=10$, rồi $c_3$ nhận $\max\{-1,-1+0.9\cdot10\}=8$. Giữ ví dụ đánh giá theo $\pi_0$ để đối chiếu đồng bộ/tại chỗ; không đồng nhất hai toán tử.
 
-#### L04-F03 — Lặp giá trị bất đồng bộ
+#### L04-F03 — Thuật toán lặp giá trị bất đồng bộ
 
 - **Vai trò và mục tiêu:** Quy trình và điều kiện sử dụng; MT6
 - **Luận điểm trung tâm:** Bất đồng bộ cho phép chọn trạng thái cập nhật linh hoạt nhưng phải tiếp tục cập nhật mọi trạng thái.

@@ -396,7 +396,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `sửa`. Sửa cách nguồn gọi tại chỗ và bất đồng bộ như đồng nghĩa; nối bằng ví dụ kiểm tra được.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-F03 — Lặp giá trị bất đồng bộ
+### L04-F03 — Thuật toán lặp giá trị bất đồng bộ
 
 - **Chức năng và nhu cầu học tập:** Quy trình và điều kiện sử dụng. Bất đồng bộ cho phép chọn trạng thái cập nhật linh hoạt nhưng phải tiếp tục cập nhật mọi trạng thái.
 - **Đầu vào và quan hệ với trang trước:** Cơ chế dùng giá trị mới nhất được giữ; ví dụ lưới dùng $T_*$ dẫn tới lặp giá trị bất đồng bộ, khác ví dụ đánh giá hai trạng thái dùng $T_{\pi_0}$.
