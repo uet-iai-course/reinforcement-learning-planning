@@ -98,7 +98,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `gộp`. Ghép điều kiện áp dụng với bài toán cụ thể; nhắc tiên quyết trước khi tính.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
-### L04-A04 — Mô hình hai trạng thái
+### L04-A04 — MDP hai trạng thái
 
 - **Chức năng và nhu cầu học tập:** Ví dụ dẫn nhập. Bốn chuyển tiếp xác định đủ để so sánh lựa chọn hiện tại và phần thưởng tiếp nối.
 - **Đầu vào và quan hệ với trang trước:** Mô hình hữu hạn đã biết được biểu diễn bằng bốn chuyển tiếp của một ví dụ cụ thể.

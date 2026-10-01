@@ -825,3 +825,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, thuật ngữ “quy hoạch động” trong tên bài chưa được định nghĩa trên mặt trang nào. Nhẹ, tiêu đề có từ thừa “Bài toán”. Nhẹ, “Đánh giá chính sách hiện tại cung cấp căn cứ để thay đổi lựa chọn.” dùng động từ mạnh giả tạo.
 - Quyết định: sửa. Tiêu đề “Lập kế hoạch với mô hình đã biết”. Thay câu trên bằng định nghĩa “Quy hoạch động: nhóm thuật toán tính chính sách tối ưu từ mô hình MDP đầy đủ.” theo Sutton–Barto chương 4, tr. 73, nguồn đã có trong notes. Ý “giá trị của chính sách là căn cứ để đổi lựa chọn” chuyển xuống notes. Đồng bộ tiêu đề và ý chính ở outline, storyboard.
 - Kiểm tra: 665/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-A04 — MDP hai trạng thái
+
+- Trang muốn nói: bốn chuyển tiếp xác định và chính sách ban đầu $\pi_0$ là dữ kiện dùng xuyên suốt bài.
+- Vấn đề: trung bình, tiêu đề “Mô hình hai trạng thái” trùng nghĩa với “mô hình $p$”. Trung bình, $\pi_0=(a,a)$ chưa được nói là chính sách xác định, nên $\pi(a\mid s)$ ở B03 xuất hiện đột ngột. Trung bình, lý do cần ví dụ (thưởng trước mắt chưa đủ để chọn) chỉ có trong notes.
+- Quyết định: sửa. Tiêu đề “MDP hai trạng thái”. Box nêu “Chính sách xác định $\pi_0=(a,a)$: chọn $a$ tại $s_0$ và tại $s_1$, tức $\pi_0(a\mid s)=1$.” Thêm chú thích nêu vấn đề: tại $s_0$, $a$ cho thưởng tức thời lớn hơn, nhưng chỉ $b$ dẫn tới $s_1$ có thưởng $2$ và $3$; dữ kiện đã kiểm theo bảng. Notes giữ thứ tự $(s_0,s_1)$ và giải thích vì sao cần tính phần thưởng sau bước đầu. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 665/720; hai kích thước đạt, không lỗi; đã xem ảnh.

@@ -99,7 +99,7 @@ Chức năng: Thiết lập bài toán. Đầu vào: MDP, xác suất có điề
 - **Thời lượng:** 2 phút
 - **Ghi chú học thuật dự kiến:** Trạng thái chứa thông tin cần thiết để mô tả phân phối bước kế tiếp. Bài này xét trạng thái quan sát đầy đủ; quan sát cảm biến nói chung không tự đồng nhất với trạng thái Markov. Mô hình là dữ kiện, không được suy ra chỉ từ một bảng phần thưởng. $\mathcal S$ gồm trạng thái chưa kết thúc; $\mathcal A(s)$ hữu hạn khác rỗng. Tổng theo $s'$ lấy trên $\mathcal S^+$, gồm cả đích nếu có. Mọi bảng mở rộng bằng $0$ tại đích.
 
-#### L04-A04 — Mô hình hai trạng thái
+#### L04-A04 — MDP hai trạng thái
 
 - **Vai trò và mục tiêu:** Ví dụ dẫn nhập; MT1
 - **Luận điểm trung tâm:** Bốn chuyển tiếp xác định đủ để so sánh lựa chọn hiện tại và phần thưởng tiếp nối.
