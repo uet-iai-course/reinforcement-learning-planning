@@ -66,11 +66,11 @@
 </section>
 <section data-slide-id="L04-B03">
 <h2>Phương trình Bellman kỳ vọng</h2>
-<p>Các bảng $V_k$ xấp xỉ hàm giá trị $v_\pi(s)$: kỳ vọng của tổng thưởng khi bắt đầu tại $s$ và theo $\pi$.</p>
+<p>Các bảng $V_k$ ước lượng hàm giá trị $v_\pi(s)$: kỳ vọng của tổng thưởng chiết khấu khi bắt đầu tại $s$ và theo $\pi$.</p>
 <div class="math-large">$$v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s].$$</div>
 <div class="math-large">$$v_\pi(s)=\sum_a\pi(a\mid s)\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma v_\pi(s')\bigr].$$</div>
 <div class="grid2"><div class="card">$v_{\pi_0}(s_0)=1+0{,}9\,v_{\pi_0}(s_0)$</div><div class="card">$v_{\pi_0}(s_1)=2+0{,}9\,v_{\pi_0}(s_0)$</div></div>
-<p class="caption">Phép tính của hai lượt đánh giá với $V_k$, $V_{k+1}$ thay bằng cùng $v_{\pi_0}$; chính sách và mô hình xác định nên mỗi tổng còn một hạng.</p>
+<p class="caption">Hai thẻ trên lấy từ phép tính hai lượt đánh giá, với $V_k$ và $V_{k+1}$ cùng thay bằng $v_{\pi_0}$; chính sách và mô hình xác định nên mỗi tổng còn một hạng.</p>
 <aside class="notes"><p>Kỳ vọng bao gồm ngẫu nhiên của chính sách và môi trường. Dùng $G_t=R_{t+1}+\gamma G_{t+1}$, rồi lấy kỳ vọng theo hành động và kết quả chuyển, cho phương trình Bellman kỳ vọng. Hai vế cùng chứa $v_\pi$, nên đây là phương trình xác định giá trị chính xác. Ký hiệu $\pi(a\mid s)$ là xác suất chọn $a$ tại $s$; với chính sách xác định, xác suất này bằng 1 tại hành động được chọn. Nếu có trạng thái kết thúc, giá trị tiếp nối của nó bằng 0; phần thưởng khi đi vào trạng thái đó vẫn được tính.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 5–6; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.1, (4.3)–(4.4), tr. 74.</p></aside>
 </section>
 <section data-slide-id="L04-B04">

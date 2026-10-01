@@ -1147,3 +1147,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện: (nhẹ, độ chính xác) mặt trang viết “tổng thưởng kỳ vọng”, thiếu “chiết khấu”; $V(s')$ ước lượng $\mathbb E_\pi[G_{t+1}\mid S_{t+1}=s']$. (Trung bình, mạch viết) câu mở không còn nêu lý do tách đệ quy $G_t$. (Nhẹ, mạch viết) hộp dùng “từng ô” trước khi khái niệm bảng xuất hiện ở trang sau.
 - Quyết định: sửa. Câu mở “Bài toán dự đoán: tính tổng thưởng chiết khấu kỳ vọng từ mỗi trạng thái theo $\pi_0$.”; công thức $G_t=R_{t+1}+\gamma G_{t+1}$ giữ dạng khối ngay sau, trình bày phép tách hạng đầu của tổng vô hạn (diễn giải trong notes). Hộp: “Giá trị tiếp nối $V(s')$ ước lượng tổng thưởng chiết khấu kỳ vọng từ trạng thái kế tiếp $s'$; thay $G_{t+1}$ bằng $V(s')$ cho giá trị mới của mỗi trạng thái.” Bản đề xuất đầy đủ (giữ “Đánh giá chính sách (bài toán dự đoán)… khi luôn theo $\pi_0=(a,a)$. Tổng có vô hạn hạng; tách hạng đầu:” và hộp dài) làm trang cao 735/720 và đè chân trang; bản đưa công thức vào nội dòng làm công thức bị ngắt dòng. Vì vậy câu mở rút còn một dòng; tên “đánh giá chính sách” đã ở tiêu đề, $\pi_0=(a,a)$ đã ở trang ví dụ.
 - Kiểm tra: 648/720; hai kích thước đạt, không lỗi; đã xem ảnh 16:9, hộp cách chân trang.
+
+#### L04-B03 — Sửa bổ sung sau rà lại
+
+- Phát hiện (nhẹ, mạch viết): chú thích “Phép tính của hai lượt đánh giá với $V_k$, $V_{k+1}$ thay bằng…” thiếu chủ thể; câu mở dùng “xấp xỉ” khẳng định trước kết quả hội tụ ở trang hội tụ.
+- Quyết định: sửa. Câu mở “Các bảng $V_k$ ước lượng hàm giá trị $v_\pi(s)$: kỳ vọng của tổng thưởng chiết khấu…”; chú thích “Hai thẻ trên lấy từ phép tính hai lượt đánh giá, với $V_k$ và $V_{k+1}$ cùng thay bằng $v_{\pi_0}$; …”. Không ghi mã trang trên mặt trang.
+- Kiểm tra: 655/720; hai kích thước đạt, không lỗi; đã xem ảnh 16:9.
