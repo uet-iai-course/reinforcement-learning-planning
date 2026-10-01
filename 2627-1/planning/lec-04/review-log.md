@@ -1000,3 +1000,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: nhẹ, cụm “trên cùng mô hình” trong tiêu đề mơ hồ. Nhẹ, hành động đạt cực đại không ghi trên mặt trang, trong khi trang thuật toán trích $\pi_V$ và trang phần dư dùng “chính sách tham lam là $(b,b)$”.
 - Quyết định: sửa. Tiêu đề “Hai lượt lặp giá trị đồng bộ” (song song “Hai lượt đánh giá đồng bộ”). Hộp thêm “Ở lượt hai, cực đại đạt tại $(b,b)$.” (báo cáo gốc viết “cả hai lượt”, sai vì lượt một cực đại tại $(a,b)$; dùng bản đã sửa). Notes ghi hành động cực đại của từng lượt. Bỏ câu dẫn “Mỗi ô lấy giá trị nhìn trước lớn nhất…” vì làm trang tràn (727/720) và trùng thẻ ở trang trước. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: 678/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-E03 — Toán tử Bellman tối ưu
+
+- Trang muốn nói: ký hiệu hóa phép tính tay của lặp giá trị thành giá trị nhìn trước $Q_V$ và toán tử $T_*$; $v_*$ là điểm bất động của $T_*$.
+- Vấn đề: trung bình, mặt trang dùng $q_*$ (“$V=v_*\Rightarrow Q_V=q_*$”) trong khi $q_*$ chỉ được định nghĩa trong notes trang chính sách ổn định. Trung bình, không nối với bảng tính tay ở trang trước. Nhẹ, “Điểm bất động tối ưu thỏa $v_*=T_*v_*$” không gợi lại phương trình Bellman tối ưu đã có.
+- Quyết định: sửa. Tiêu đề giữ. Câu mở: “Mỗi ô của bảng lượt hai là một giá trị nhìn trước từ $V_1$.” Dòng cuối: “Với $V=v_\pi$, $Q_V=q_\pi$. Phương trình Bellman tối ưu, đã gặp khi xét chính sách ổn định, viết gọn là $v_*=T_*v_*$.” Chuyển $q_*$ và $V=v_*\Rightarrow Q_V=q_*$ vào notes cùng định nghĩa $q_*$.
+- Kiểm tra: 634/720; hai kích thước đạt, không lỗi; đã xem ảnh.
