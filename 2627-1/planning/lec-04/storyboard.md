@@ -438,7 +438,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Đầu vào và quan hệ với trang trước:** Những điều kiện sử dụng được thu hồi cùng nghiệm của bài toán hai trạng thái.
 - **Sản phẩm và mục tiêu:** MT1–MT5; Mô hình hai trạng thái có chính sách tối ưu $(b,b)$ với giá trị $(27,30)$.
 - **Đầu ra cho trang sau:** Hai thuật toán cho cùng nghiệm nhưng yêu cầu so sánh cấu trúc công việc và độ chính xác.
-- **Quyết định:** `sửa`. Kết luận quay lại bài toán đầu, đối chiếu đầu ra thay vì chỉ nhắc mục lục.
+- **Quyết định:** `sửa`. Kết luận quay lại bài toán đầu, đối chiếu đầu ra thay vì chỉ nhắc mục lục. Rà ngày 2026-10-01: câu mở nhắc lại nguyên văn bài toán điều khiển của trang lập kế hoạch với mô hình đã biết.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
 ### L04-G02 — So sánh các phương pháp quy hoạch động

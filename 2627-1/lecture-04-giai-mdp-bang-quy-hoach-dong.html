@@ -308,11 +308,11 @@ với số hạng tiếp nối bằng 0 nếu $s'$ là trạng thái kết thúc
 <section>
 <section data-slide-id="L04-G01">
 <h2>Kết quả của bài toán lập kế hoạch</h2>
-<p>Mô hình chuyển–thưởng đã biết cho phép đánh giá chính sách và so sánh các lựa chọn theo tổng thưởng dài hạn.</p>
-<div class="grid2"><div class="card"><h3>Lặp chính sách</h3><p>Đánh giá chính sách → cải thiện → đánh giá lại.</p></div><div class="card"><h3>Lặp giá trị</h3><p>Cập nhật tối ưu trên bảng hiện tại → trích chính sách.</p></div></div>
+<p>Bài toán mở đầu: từ mô hình chuyển–thưởng đã biết, tìm chính sách có tổng thưởng chiết khấu kỳ vọng lớn nhất tại mọi trạng thái.</p>
+<div class="grid2"><div class="card"><h3>Lặp chính sách</h3><p>Đánh giá chính sách → cải thiện → đánh giá lại.</p></div><div class="card"><h3>Lặp giá trị</h3><p>Cập nhật tối ưu trên bảng hiện tại → chính sách tham lam.</p></div></div>
 <div class="math-large">$$\pi_*=(b,b),\qquad v_*=(27,30).$$</div>
-<div class="box">Kết quả được kiểm bằng điều kiện ổn định chính xác hoặc phần dư trên chính bảng trả về.</div>
-<aside class="notes"><p>Điểm chung của hai thuật toán là sử dụng kỳ vọng theo mô hình và giá trị tiếp nối. Bootstrapping là dùng ước lượng giá trị tiếp nối để xây mục tiêu cập nhật; yêu cầu có mô hình là điều kiện riêng để tính đầy đủ kỳ vọng trong các phương pháp quy hoạch động đã xét. Số lượt hữu hạn cần đi kèm phần dư hoặc điều kiện dừng chính xác để đánh giá độ tin cậy. Bốn mục tiêu nêu ở phần mở đầu ứng với các phép tính đánh giá và cải thiện trên MDP hai trạng thái, hai thuật toán lặp cho cùng nghiệm $(b,b)$, $(27,30)$, chặn sai số theo phần dư, và bảng so sánh cách tổ chức cập nhật ở trang sau.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 18–24, 38; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.8, tr. 88–89.</p></aside>
+<div class="box">Kết quả được kiểm bằng chính sách ổn định hoặc phần dư của bảng trả về.</div>
+<aside class="notes"><p>Điểm chung của hai thuật toán là sử dụng kỳ vọng theo mô hình và giá trị tiếp nối. Bootstrapping là dùng ước lượng giá trị tiếp nối để xây mục tiêu cập nhật; yêu cầu có mô hình là điều kiện riêng để tính đầy đủ kỳ vọng trong các phương pháp quy hoạch động đã xét. Số lượt hữu hạn cần đi kèm phần dư hoặc điều kiện dừng chính xác để đánh giá độ tin cậy. Bốn mục tiêu nêu ở phần mở đầu ứng với các phép tính đánh giá và cải thiện trên MDP hai trạng thái, lặp chính sách dừng tại $(b,b)$ với $v_*=(27,30)$, lặp giá trị cho cùng chính sách tham lam và bảng hội tụ tới $(27,30)$, chặn sai số theo phần dư, và bảng so sánh cách tổ chức cập nhật ở trang sau.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 18–24, 38; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.8, tr. 88–89.</p></aside>
 </section>
 <section data-slide-id="L04-G02">
 <h2>So sánh các phương pháp quy hoạch động</h2>

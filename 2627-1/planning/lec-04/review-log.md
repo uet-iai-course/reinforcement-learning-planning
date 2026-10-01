@@ -1267,3 +1267,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện (nhẹ, mạch viết): “Khi cả hai cùng ổn định” dùng “ổn định” cho một quá trình, trong khi thuật ngữ này mới được định nghĩa cho chính sách.
 - Quyết định: hộp thành “Khi cả $V$ và $\pi$ không còn đổi: $V=v_\pi$, $\pi$ tham lam theo $V$, nên $V=T_*V=v_*$.” Bản dài “Khi đánh giá không còn đổi $V$ và cải thiện không còn đổi $\pi$” xuống hai dòng, cao 735 và đè chân trang, nên rút. Thẻ “Lặp chính sách” thành “Tính đủ $v_\pi$ rồi cải thiện.” để thẻ còn một dòng và hộp cách chân trang. Ghi nhận ngoài phạm vi: nhãn “Cải thiện” trong `dp04-gpi.svg` chạm cung mũi tên, cần sửa SVG ở lượt riêng.
 - Kiểm tra: 648/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-G01 — Sửa bổ sung sau rà lại
+
+- Phát hiện: (nhẹ, mạch viết) vấn đề mở đầu chỉ được thu hồi ngầm qua kết quả, chưa nhắc lại bài toán. (Nhẹ, độ chính xác) notes viết “hai thuật toán lặp cho cùng nghiệm $(b,b)$, $(27,30)$”, trong khi lặp giá trị với số lượt hữu hạn chỉ cho bảng tiến tới $(27,30)$. Thẻ lặp giá trị dùng “trích chính sách”.
+- Quyết định: câu mở “Bài toán mở đầu: từ mô hình chuyển–thưởng đã biết, tìm chính sách có tổng thưởng chiết khấu kỳ vọng lớn nhất tại mọi trạng thái.” Thẻ lặp giá trị “Cập nhật tối ưu trên bảng hiện tại → chính sách tham lam.” Hộp rút thành “Kết quả được kiểm bằng chính sách ổn định hoặc phần dư của bảng trả về.” để bỏ chữ rơi dòng và giữ khoảng cách với chân trang. Notes: “lặp chính sách dừng tại $(b,b)$ với $v_*=(27,30)$, lặp giá trị cho cùng chính sách tham lam và bảng hội tụ tới $(27,30)$”.
+- Kiểm tra: bản trung gian 660 với hộp hai dòng sát chân trang; bản cuối 616/720, hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
