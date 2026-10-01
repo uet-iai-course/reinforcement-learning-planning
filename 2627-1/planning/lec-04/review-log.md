@@ -1279,3 +1279,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện (nhẹ, mạch viết): thuật ngữ “lịch bao phủ” chỉ xuất hiện ở trang này; trang thuật toán bất đồng bộ nêu điều kiện bằng lời. Notes dùng “lần lặp chính sách ngoài”, lệch quy ước “vòng”.
 - Quyết định: ô kiểm tra đầu ra của dòng bất đồng bộ thành “Phần dư; mọi trạng thái được cập nhật vô hạn lần” (bản có “toàn cục” làm ô xuống dòng). Notes: “Một vòng lặp chính sách không tương đương một lượt lặp giá trị.”
 - Kiểm tra: 481/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9, mỗi ô của bảng một dòng.
+
+#### L04-G04 — Sửa bổ sung sau rà lại
+
+- Phát hiện (nhẹ, mạch viết): ký hiệu $v_{(a,b)}$ không thống nhất với tên $\pi_1=(a,b)$ đã đặt ở trang lặp chính sách trên MDP hai trạng thái.
+- Quyết định: câu mở thành “MDP hai trạng thái, $\gamma=0{,}9$; $U=v_{\pi_1}=(10,30)$ với $\pi_1=(a,b)$; $V=(27,30)$.” Câu hỏi 2 rút thành “Xác định bảng nào là $v_*$ và căn cứ.” để không rơi chữ. Notes ghi “giá trị chính xác của $\pi_1=(a,b)$”. Outline đồng bộ.
+- Kiểm tra: bản trung gian (câu mở hai dòng) cao 680 với khung câu hỏi sát chân trang; bản cuối 581/720, hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
