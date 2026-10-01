@@ -353,7 +353,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Đánh
 - **Luận điểm trung tâm:** Một lần cải thiện thay đổi giá trị, vì vậy quá trình phải lặp lại trên chính sách mới.
 - **Ý chính:** Đánh giá $\pi_i$ cho $v_{\pi_i}$; cải thiện theo giá trị đó cho $\pi_{i+1}$. Khi chính sách thay đổi, bảng của chính sách cũ không còn là nghiệm đánh giá của chính sách mới.
 - **Ví dụ/hình dự kiến:** SVG dp04-policy-iteration.svg: chu trình chính sách → đánh giá → giá trị → cải thiện → chính sách; mũi tên có sản phẩm.
-- **Hình thức hóa:** $i$ đếm lần cải thiện chính sách; phân biệt với $k$ đếm lượt đánh giá và $t$ đếm bước tương tác.
+- **Hình thức hóa:** $i$ đếm vòng cải thiện; phân biệt với $k$ đếm lượt đánh giá lặp. Mạch D không dùng chỉ số bước tương tác $t$.
 - **Kết nối vào:** Lần cải thiện kế tiếp cho thấy nhu cầu lặp lại hai thao tác trên chính sách mới.
 - **Kết nối ra:** Chu trình tổng quát được lần theo bằng toàn bộ chuỗi chính sách và giá trị của ví dụ.
 - **Nguồn:** NG1, tr. 13, 19–20; NG2, §4.3, tr. in 80 (PDF 102).

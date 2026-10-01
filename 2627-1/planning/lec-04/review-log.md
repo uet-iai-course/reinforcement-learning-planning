@@ -1347,3 +1347,9 @@ Nguồn phát hiện: tác tử kết nối và mạch viết rà toàn bộ 45 
 - Phát hiện (trung bình, tải nhận thức): trang dồn năm ý (nhu cầu, chính sách tham lam, phá hòa, định lý, lý do chính sách tham lam thỏa giả thiết); phá hòa chưa có nhu cầu ở mạch C, chỉ được dùng từ lặp chính sách.
 - Quyết định: bỏ dòng “Phá hòa: …” khỏi mặt trang; quy tắc chọn khi hòa chuyển vào notes C04, nêu rằng tên “quy tắc phá hòa” được giới thiệu cùng định nghĩa chính sách ổn định (D02). Storyboard và outline C04 đồng bộ.
 - Kiểm tra: mặt trang chỉ còn nhắc “phá hòa” từ D02 trở đi (grep); 16:9 cao 521/720, không cờ đè chân trang, KaTeX không lỗi; hai kích thước đạt; đã xem ảnh 16:9.
+
+#### L04-D01 — Sửa theo rà mạch toàn bài
+
+- Phát hiện (nhẹ): dòng ký hiệu kể cả $t$ (bước tương tác), trong khi mạch D không dùng $t$; “lần cải thiện” lệch quy ước “vòng” cho vòng ngoài của lặp chính sách.
+- Quyết định: hộp thành “$i$ đếm vòng cải thiện; $k$ đếm lượt đánh giá lặp.” Outline D01 đồng bộ.
+- Kiểm tra: 16:9 cao 631/720, không cờ đè chân trang, hai kích thước đạt; đã xem ảnh 16:9.
