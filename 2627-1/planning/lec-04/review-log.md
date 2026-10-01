@@ -986,3 +986,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: nhẹ, tiêu đề dài (“Kiểm tra điều kiện dừng của lặp chính sách”). Thuật ngữ “giá trị nhìn trước” đã khớp định nghĩa ở C01 sau commit thống nhất thuật ngữ.
 - Quyết định: sửa tiêu đề thành “Kiểm tra điều kiện dừng”; nội dung và notes giữ. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: 556/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-E01 — Cắt ngắn bước đánh giá
+
+- Trang muốn nói: cắt bước đánh giá của lặp chính sách còn một lượt rồi gộp với lựa chọn tham lam cho quy tắc lặp giá trị; bảng trung gian không là giá trị của chính sách nào, nên điều kiện dừng đổi sang phần dư.
+- Vấn đề: trung bình, nhu cầu cắt ngắn chỉ nêu chung (“Đánh giá có thể cần nhiều lượt tính.”), không dùng số liệu của mạch B. Trung bình (báo cáo mạch), D05–D06 vừa kết luận đánh giá gần đúng không chứng nhận tối ưu, E01 lại cắt đánh giá mà không nêu tiêu chuẩn dừng mới. Nhẹ, tiêu đề dài, cụm “trong bài toán điều khiển” thừa.
+- Quyết định: sửa. Tiêu đề “Cắt ngắn bước đánh giá”. Câu mở nêu sai số $10\cdot0{,}9^k$ và 44 lượt (đã kiểm: $V_k(s_0)=10(1-0{,}9^k)$, $V_k(s_1)=11-10\cdot0{,}9^k$; $0{,}9^{43}\approx0{,}0108$, $0{,}9^{44}\approx0{,}0097$). Hộp thêm điều kiện dừng theo phần dư của toán tử tối ưu. Notes thêm phép tính 44 lượt và cầu nối “tham lam + một lượt đánh giá = cực đại”. Đồng bộ tiêu đề và quyết định ở outline, storyboard.
+- Kiểm tra: 630/720; hai kích thước đạt, không lỗi KaTeX/JS/tài nguyên; đã xem ảnh.

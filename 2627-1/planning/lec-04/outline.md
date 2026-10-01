@@ -434,7 +434,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Đánh
 
 Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp chính sách và nhu cầu cắt ngắn đánh giá. Đầu ra: Cập nhật tối ưu, phần dư và chính sách trích; nhu cầu phân bổ công việc. Mục tiêu: MT5. Thời lượng: 22 phút; kiểm tra riêng L04-E08.
 
-#### L04-E01 — Cắt ngắn đánh giá trong bài toán điều khiển
+#### L04-E01 — Cắt ngắn bước đánh giá
 
 - **Vai trò và mục tiêu:** Vấn đề và trực giác; MT5
 - **Luận điểm trung tâm:** Lặp giá trị chọn hành động tốt nhất trong mỗi cập nhật mà không hoàn tất đánh giá một chính sách.

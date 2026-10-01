@@ -305,13 +305,13 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `thêm`. Kiểm tra một lỗi dừng có thể gặp khi dùng đánh giá gần đúng.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-E01 — Cắt ngắn đánh giá trong bài toán điều khiển
+### L04-E01 — Cắt ngắn bước đánh giá
 
 - **Chức năng và nhu cầu học tập:** Vấn đề và trực giác. Lặp giá trị chọn hành động tốt nhất trong mỗi cập nhật mà không hoàn tất đánh giá một chính sách.
 - **Đầu vào và quan hệ với trang trước:** Chi phí đánh giá đầy đủ và giới hạn dừng gần đúng dẫn tới cập nhật điều khiển cắt ngắn.
 - **Sản phẩm và mục tiêu:** MT5; Lặp giá trị chọn hành động tốt nhất trong mỗi cập nhật mà không hoàn tất đánh giá một chính sách.
 - **Đầu ra cho trang sau:** Phép chọn nhánh lớn nhất được thử trên cùng bốn chuyển tiếp trước khi viết toán tử.
-- **Quyết định:** `sửa`. Mở lặp giá trị bằng giới hạn chi phí của lặp chính sách trước công thức.
+- **Quyết định:** `sửa`. Mở lặp giá trị bằng giới hạn chi phí của lặp chính sách trước công thức. Rà ngày 2026-10-01: nêu chi phí bằng số (44 lượt đánh giá $\pi_0$ để sai số không quá $0{,}1$) và đổi tiêu chuẩn dừng từ chính sách ổn định sang phần dư của toán tử tối ưu.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
 ### L04-E02 — Hai lượt lặp giá trị trên cùng mô hình
