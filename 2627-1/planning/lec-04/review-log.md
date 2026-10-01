@@ -979,3 +979,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, thiếu mắt xích “không chính sách nào lặp lại” trên mặt trang (chỉ có trong notes); mặt trang chỉ có số chính sách hữu hạn và “cải thiện nghiêm ở ít nhất một trạng thái”. Trung bình, “phá hòa ổn định” và “quy tắc giữ hòa” (notes) là hai tên khác cho quy tắc đã đặt tên ở C04.
 - Quyết định: sửa. Tiêu đề giữ. Dòng cuối thẻ trái: “Mỗi lần đổi, giá trị không giảm và tăng nghiêm ở ít nhất một trạng thái, nên không chính sách nào lặp lại.” Hộp: “Đánh giá chính xác cùng quy tắc phá hòa bảo đảm dừng sau hữu hạn vòng.” Notes thống nhất “quy tắc phá hòa”.
 - Kiểm tra: rút hộp để không còn một chữ rơi xuống dòng riêng; 612/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-D06 — Kiểm tra điều kiện dừng
+
+- Trang muốn nói: chính sách không đổi khi cải thiện theo một bảng sai chưa phải tối ưu; định lý dừng chỉ áp dụng khi bảng là giá trị chính xác của chính sách đang giữ. Lời giải đã kiểm: bốn giá trị nhìn trước từ $V=(0,0)$ là $1,0,2,3$; $(a,b)$ tham lam theo $V$; $v_{(a,b)}=(10,30)$ kém $(27,30)$ của $(b,b)$.
+- Vấn đề: nhẹ, tiêu đề dài (“Kiểm tra điều kiện dừng của lặp chính sách”). Thuật ngữ “giá trị nhìn trước” đã khớp định nghĩa ở C01 sau commit thống nhất thuật ngữ.
+- Quyết định: sửa tiêu đề thành “Kiểm tra điều kiện dừng”; nội dung và notes giữ. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 556/720; hai kích thước đạt, không lỗi; đã xem ảnh.

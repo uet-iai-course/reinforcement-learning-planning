@@ -296,7 +296,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `sửa`. Khôi phục các giả thiết bị thiếu trong suy luận dừng của nguồn.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-D06 — Kiểm tra điều kiện dừng của lặp chính sách
+### L04-D06 — Kiểm tra điều kiện dừng
 
 - **Chức năng và nhu cầu học tập:** Kiểm tra lặp chính sách. Ổn định của chính sách chỉ có ý nghĩa cùng độ chính xác của bảng dùng để cải thiện.
 - **Đầu vào và quan hệ với trang trước:** Một bảng gần đúng cung cấp trường hợp kiểm tra giới hạn của tiêu chuẩn ổn định.

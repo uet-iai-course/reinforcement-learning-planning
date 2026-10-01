@@ -412,7 +412,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Đánh
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Với cùng số hành động $m$ tại $n$ trạng thái, số chính sách bằng $m^n$. Tính hữu hạn riêng nó không loại dao động giữa các chính sách cùng giá trị. Nếu bảng ước lượng bằng không, chính sách $(a,b)$ đã tham lam theo bảng đó nhưng chưa tối ưu.
 
-#### L04-D06 — Kiểm tra điều kiện dừng của lặp chính sách
+#### L04-D06 — Kiểm tra điều kiện dừng
 
 - **Vai trò và mục tiêu:** Kiểm tra lặp chính sách; MT4
 - **Luận điểm trung tâm:** Ổn định của chính sách chỉ có ý nghĩa cùng độ chính xác của bảng dùng để cải thiện.
