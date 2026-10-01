@@ -1201,3 +1201,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện: (trung bình, độ chính xác) hộp “phương trình này có nghiệm duy nhất $v_*$, nên $v_\pi=v_*$” ngầm giả định $v_*=\max_\pi v_\pi$ là nghiệm của phương trình Bellman tối ưu, điều chưa chứng minh tại điểm này; tính duy nhất dựa trên tính co của toán tử tối ưu ở mạch sau. (Nhẹ, độ chính xác) chuỗi $v_\pi(s)=q_\pi(s,\pi(s))=\max_a q_\pi(s,a)$ cần $\pi$ xác định và đánh giá chính xác, chỉ có trong notes. (Nhẹ, mạch viết) thiếu tham chiếu về sau cho tính duy nhất.
 - Quyết định: sửa. Hộp chứng minh trực tiếp bằng công cụ đã có: “Với mọi $\pi'$: $(T_{\pi'}v_\pi)(s)=\sum_a\pi'(a\mid s)q_\pi(s,a)\le\max_a q_\pi(s,a)=v_\pi(s)$; tính đơn điệu và tính co cho $v_{\pi'}\le v_\pi$. Vậy $v_\pi=v_*$.” Đã kiểm: $T_{\pi'}v_\pi\le v_\pi$, áp dụng lặp toán tử đơn điệu cho $(T_{\pi'})^k v_\pi\le v_\pi$, tính co cho giới hạn $v_{\pi'}$. Dòng thứ hai: “Với $\pi$ xác định, ổn định và $v_\pi$ chính xác: …”. Notes nêu giả thiết của lập luận (MDP hữu hạn, thưởng bị chặn, $0\le\gamma<1$) và chuyển nhận xét về nghiệm duy nhất của phương trình Bellman tối ưu (tính co của toán tử tối ưu, ở mạch lặp giá trị) thành nhận xét bổ sung. Bản hộp dài theo nguyên văn đề xuất làm trang cao 709/720 và đè chân trang, nên rút câu “Lập luận đơn điệu–co của định lý cải thiện, với chiều bất đẳng thức đảo ngược” thành “tính đơn điệu và tính co”. Đồng bộ outline, storyboard.
 - Kiểm tra: 658/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-D06 — Sửa bổ sung sau rà lại
+
+- Phát hiện (nhẹ, mạch viết): notes viết $v_{(a,b)}$ và “chính sách $(b,b)$”, không thống nhất với tên $\pi_1,\pi_2$ đã đặt ở trang lặp chính sách trên MDP hai trạng thái.
+- Quyết định: sửa lời giải trong notes thành “$v_{\pi_1}=(10,30)$ với $\pi_1=(a,b)$, còn $\pi_2=(b,b)$ có giá trị $(27,30)$”. Mặt trang không đổi.
+- Kiểm tra: 556/720; hai kích thước đạt, không lỗi.
