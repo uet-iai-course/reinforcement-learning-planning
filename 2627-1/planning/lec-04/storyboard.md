@@ -125,7 +125,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `tách`. Tách trực giác ra trước phương trình và thuật toán đánh giá.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
-### L04-B02 — Hai lượt đánh giá từ bảng giá trị bằng không
+### L04-B02 — Hai lượt đánh giá đồng bộ
 
 - **Chức năng và nhu cầu học tập:** Ví dụ tính tay. Một lượt đồng bộ dùng cùng bảng cũ cho mọi trạng thái.
 - **Đầu vào và quan hệ với trang trước:** Giá trị tiếp nối được thay bằng bảng hiện có để thực hiện lượt tính đầu tiên.

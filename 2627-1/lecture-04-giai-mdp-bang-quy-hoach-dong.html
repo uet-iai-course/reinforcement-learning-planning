@@ -58,11 +58,11 @@
 <aside class="notes"><p>Đây là bài toán dự đoán: chính sách là một chính sách cố định bất kỳ, $\pi_0$ chỉ là ví dụ, và chính sách không thay đổi trong suốt đánh giá. Tổng thưởng là tổng chiết khấu $G_t$. Hệ thức $G_t=R_{t+1}+\gamma G_{t+1}$ có được khi tách hạng $j=0$ khỏi tổng chiết khấu và đặt thừa số $\gamma$ ra ngoài phần còn lại. Khi bảng chưa đúng, thay $G_{t+1}$ bằng $V(s')$ chỉ cho một xấp xỉ; khi bảng bằng giá trị chính xác, lấy kỳ vọng hai vế cho phương trình Bellman kỳ vọng. Cập nhật kỳ vọng sử dụng mọi kết quả có thể theo mô hình, khác với một chuyển tiếp lấy mẫu.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 6, 12–14; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.1, tr. 74–75.</p></aside>
 </section>
 <section data-slide-id="L04-B02">
-<h2>Hai lượt đánh giá từ bảng giá trị bằng không</h2>
-<p>Chính sách $\pi_0=(a,a)$; $\gamma=0{,}9$; cập nhật đồng bộ.</p>
-<div class="grid2"><div class="card"><h3>Từ $V_0=(0,0)$</h3><p>$V_1(s_0)=1+0{,}9\cdot0=1$.</p><p>$V_1(s_1)=2+0{,}9\cdot0=2$.</p><div class="math-large">$V_1=(1,2)$</div></div><div class="card"><h3>Từ $V_1=(1,2)$</h3><p>$V_2(s_0)=1+0{,}9\cdot1=1{,}9$.</p><p>$V_2(s_1)=2+0{,}9\cdot1=2{,}9$.</p><div class="math-large">$V_2=(1{,}9;\,2{,}9)$</div></div></div>
-<div class="box">Cả hai ô của bảng mới đều đọc từ cùng bảng cũ. $V_k$ là bảng ước lượng sau $k$ lượt.</div>
-<aside class="notes"><p>Giá trị 2.9 của $s_1$ ở lượt hai dùng $V_1(s_0)=1$. Nếu dùng ngay giá trị mới 1.9 sẽ đổi thuật toán và cho 3.71 ở ô đó.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 14, 17–18</p></aside>
+<h2>Hai lượt đánh giá đồng bộ</h2>
+<p>Chính sách $\pi_0=(a,a)$, $\gamma=0{,}9$. Giá trị mới bằng thưởng một bước cộng $0{,}9$ nhân giá trị cũ của trạng thái kế tiếp.</p>
+<div class="grid2"><div class="card"><h3>Từ $V_0=(0,0)$</h3><p>$V_1(s_0)=1+0{,}9\,V_0(s_0)=1$.</p><p>$V_1(s_1)=2+0{,}9\,V_0(s_0)=2$.</p><div class="math-large">$V_1=(1,2)$</div></div><div class="card"><h3>Từ $V_1=(1,2)$</h3><p>$V_2(s_0)=1+0{,}9\,V_1(s_0)=1{,}9$.</p><p>$V_2(s_1)=2+0{,}9\,V_1(s_0)=2{,}9$.</p><div class="math-large">$V_2=(1{,}9;\,2{,}9)$</div></div></div>
+<div class="box">Cập nhật đồng bộ: mọi ô của bảng mới đọc từ cùng bảng cũ. Một lượt cập nhật mỗi trạng thái một lần; $V_k$ là bảng sau $k$ lượt.</div>
+<aside class="notes"><p>Cả hai ô đọc ô $s_0$ của bảng cũ vì $\pi_0$ chọn $a$ ở cả hai trạng thái và hành động $a$ đều dẫn tới $s_0$. Giá trị $2{,}9$ của $s_1$ ở lượt hai dùng $V_1(s_0)=1$. Nếu dùng ngay giá trị mới $1{,}9$, phép tính thành $2+0{,}9\cdot1{,}9=3{,}71$; đó là một thuật toán khác, cập nhật tại chỗ.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 14, 17–18</p></aside>
 </section>
 <section data-slide-id="L04-B03">
 <h2>Hàm giá trị và phương trình Bellman kỳ vọng</h2>

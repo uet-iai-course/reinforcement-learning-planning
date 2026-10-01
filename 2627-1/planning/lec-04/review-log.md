@@ -846,3 +846,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: nghiêm trọng, thuật ngữ “đánh giá chính sách” chưa được gọi tên dù B04 dùng ngay trong tiêu đề. Nghiêm trọng, ý thay phần tiếp nối bằng bảng hiện có chỉ được nói mờ (“Một bảng giá trị hiện có ước lượng phần thưởng về sau.”). Trung bình, hệ thức $G_t=R_{t+1}+\gamma G_{t+1}$ chỉ có trong notes B03. Trung bình, “giá trị tiếp nối” là thuật ngữ xương sống nhưng chưa có định nghĩa trên mặt trang. Trung bình, tiêu đề dùng “Dự đoán” trong khi cả mạch dùng “đánh giá”.
 - Quyết định: sửa. Tiêu đề “Bài toán đánh giá chính sách”. Mặt trang gọi tên “Đánh giá chính sách (bài toán dự đoán)”, đưa hệ thức $G_t=R_{t+1}+\gamma G_{t+1}$ lên và định nghĩa giá trị tiếp nối $V(s')$ trong box. Câu “chính sách được giữ cố định” và cách suy hệ thức chuyển xuống notes. Hình dùng lớp có sẵn `figure short` để không tràn; nhãn hình vẫn đọc được. Đồng bộ tiêu đề ở outline, storyboard và mục hình thức hóa trong outline.
 - Kiểm tra: lần đầu 726/720 (tràn), sau khi rút câu và dùng `figure short` còn 692/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-B02 — Hai lượt đánh giá đồng bộ
+
+- Trang muốn nói: một lượt đồng bộ tính mọi ô từ cùng bảng cũ theo quy tắc thưởng một bước cộng giá trị cũ chiết khấu của trạng thái kế tiếp.
+- Vấn đề: trung bình, phép tính không ghi ô nào của bảng cũ được đọc (“$V_1(s_1)=2+0{,}9\cdot0=2$”), nên ký hiệu $V_k(s')$ không truyền sang công thức ở B03–B04. Trung bình, chưa có câu trực giác cho quy tắc tính. Nhẹ, “cập nhật đồng bộ” dùng ở dòng đầu nhưng chỉ được giải thích ở box. Nhẹ, tiêu đề chín từ. Nhẹ, notes dùng dấu chấm thập phân.
+- Quyết định: sửa. Tiêu đề “Hai lượt đánh giá đồng bộ”. Dòng đầu nêu quy tắc bằng lời. Bốn phép tính viết $V_{k+1}(s)=r+0{,}9\,V_k(s_0)$; số liệu đã kiểm: $V_1=(1,2)$, $V_2=(1{,}9;2{,}9)$. Box định nghĩa cập nhật đồng bộ và “lượt” (cập nhật mỗi trạng thái một lần). Notes giải thích vì sao cả hai ô đọc $s_0$ và gọi tên cập nhật tại chỗ cho phép tính $2+0{,}9\cdot1{,}9=3{,}71$. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 670/720; hai kích thước đạt, không lỗi; đã xem ảnh.

@@ -147,7 +147,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Mô h�
 - **Thời lượng:** 2 phút
 - **Ghi chú học thuật dự kiến:** Đây là bài toán dự đoán. Chính sách không thay đổi trong suốt đánh giá. Cập nhật kỳ vọng sử dụng mọi kết quả có thể theo mô hình, khác với một chuyển tiếp lấy mẫu.
 
-#### L04-B02 — Hai lượt đánh giá từ bảng giá trị bằng không
+#### L04-B02 — Hai lượt đánh giá đồng bộ
 
 - **Vai trò và mục tiêu:** Ví dụ tính tay; MT2
 - **Luận điểm trung tâm:** Một lượt đồng bộ dùng cùng bảng cũ cho mọi trạng thái.
