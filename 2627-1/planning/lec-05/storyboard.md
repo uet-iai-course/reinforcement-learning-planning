@@ -54,7 +54,7 @@ Tổng **45 trang, 120 phút**. Mỗi mạch là một `<section>` ngoài; từn
 - Dạng khái niệm và ứng dụng phân tích, nhận đầu vào là hai thuật toán đã chạy. Năng lực cần kiểm là xác định đúng đối tượng của kết luận: mục tiêu, ước lượng, mẫu hay nghiệm trên dữ liệu.
 - Vấn đề + ví dụ dẫn nhập: L05-D01 hai bảng khác nhau trên cùng hai lượt; L05-D02 cung cấp giá trị chuẩn để phân biệt ước lượng với giá trị thật. L05-D03 chuỗi dài làm cụ thể tác động của độ dài và chiết khấu.
 - Trực giác và ví dụ tính: L05-D04 hai lợi tức 0.970299 và −0.99; cả hai khác giá trị chuẩn tại $S$ của chuỗi dài, làm rõ nhu cầu tách kỳ vọng khỏi biến thiên; không tính phương sai tổng thể. Dữ kiện bốn/hai chuyển và phần thưởng cuối nối trực tiếp về chỉ số của $G_t$ ở L05-B03.
-- Ví dụ nối trước hình thức: L05-D05 quay về chuỗi ngắn đã biết, giữ $\gamma=1,V(X)=0.5,V(L)=0$; hai mục tiêu $-1,0.5$ với xác suất $0.2,0.8$ cho kỳ vọng $0.2$, khác $v_\pi(S)=11/21$. Mục tiêu học tập là phân biệt giữ bảng cố định với lấy trung bình qua chuyển kế tiếp. Dữ kiện của B01/C03/D02 truyền sang $R,S_{t+1},V$ trong đẳng thức HT5. Hình thức: L05-D05 nêu công thức sai lệch sau ví dụ; L05-D06 mô tả nguồn ngẫu nhiên và điều kiện trường hợp lý tưởng. Ghi chú giải thích V cố định nhưng $V(S_{t+1})$ vẫn ngẫu nhiên. L05-D07 nêu điều kiện hội tụ, không suy từ một ví dụ hữu hạn.
+- Ví dụ nối trước hình thức: L05-D05 quay về chuỗi ngắn đã biết, giữ $\gamma=1,V(X)=0.5,V(L)=0$; hai mục tiêu $-1,0.5$ với xác suất $0.2,0.8$ cho kỳ vọng $0.2$, khác $v_\pi(S)=11/21$. Mục tiêu học tập là phân biệt giữ bảng cố định với lấy trung bình qua chuyển kế tiếp. Dữ kiện của B01/C03/D02 truyền sang $R,S_{t+1},V$ trong đẳng thức HT5. Hình thức: L05-D05 gọi tên độ chệch sau ví dụ số rồi nêu công thức độ chệch tổng quát; L05-D06 nêu bất đẳng thức phương sai cho mục tiêu lý tưởng và giới hạn của nó với bảng $V$ đang học. Ghi chú giải thích V cố định nhưng $V(S_{t+1})$ vẫn ngẫu nhiên. L05-D07 nêu điều kiện hội tụ, không suy từ một ví dụ hữu hạn.
 - Ứng dụng tiếp: các phân biệt mẫu mới/dữ liệu cố định và tiêu chuẩn đánh giá được dùng ở L05-D08–L05-D11. Kiểm tra L05-D12 đo cả hai cụm D1/D2, thời gian chỉ tính một lần trong 15 phút D2.
 - Câu nối ra: “Khi không có thêm mẫu, việc dùng lại cùng dữ liệu tạo bài toán so sánh theo tiêu chuẩn trên tập dữ liệu đó.”
 - Không áp dụng giả mã độc lập cho D1 vì đây là phân tích hai quy tắc đã có. Không đưa điều khiển hoặc xấp xỉ hàm làm phản ví dụ mới. Các bước khái niệm được gộp theo đại lượng cần phân biệt; không coi hai quỹ đạo là chứng minh.
@@ -72,7 +72,7 @@ Tổng **45 trang, 120 phút**. Mỗi mạch là một `<section>` ngoài; từn
 ### Cụm E: lựa chọn, tự kiểm và bài tập, 12 phút
 
 - Loại kết luận: không mở khái niệm trọng tâm mới. Đầu vào là các cơ chế, phép tính, điều kiện và hai tiêu chuẩn đã có.
-- Thu hồi bài toán ở L05-E01: cùng mục tiêu giá trị chính sách cố định, lựa chọn dựa trên dữ liệu hoàn chỉnh, tiền tố hay dữ liệu cố định. L05-E02 đối chiếu ba nhóm năng lực với giới hạn tương ứng.
+- Thu hồi bài toán ở L05-E01: cùng mục tiêu giá trị chính sách cố định, lựa chọn dựa trên dữ liệu hoàn chỉnh, tiền tố hay dữ liệu cố định. L05-E02 tổng kết hai phương pháp theo sáu tiêu chí có điều kiện và nối sang Bài 06.
 - Ứng dụng tự luyện: L05-E03 dẫn đủ bảy bài HW05 theo nhóm sản phẩm, với hiệu chỉnh tiền đề được ghi rõ. Kiểm tra riêng L05-E04 phối hợp chọn mẫu, chọn mục tiêu và tiêu chuẩn so sánh. L05-E05 gắn tài liệu đọc với năng lực cần củng cố.
 - Chu trình mới không áp dụng: các bước vấn đề, trực giác và hình thức đã được xây dựng ở A–D; kết luận chỉ thu hồi và đánh giá. Câu hỏi L05-E04 không sử dụng công thức hoặc giả thiết chưa dạy.
 - Đầu ra: người học có thể nêu cách dự đoán từ dữ liệu, thực hiện một cập nhật và giới hạn kết luận. 12 phút gồm kiểm tra 4 phút; 30 phút chữa HW05 được tính riêng, không giấu trong kết luận.
@@ -98,6 +98,7 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.1; thông tin học phần theo AGENTS.md và index.html. Quyết định `sửa`.
 - **Bố cục và đối tượng:** Không cần hình; trang tên xác định đúng bài và đối tượng học.
 - **Thời lượng:** 1 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `giữ`; trang đạt tiêu chí tiêu đề, mạch và cách dẫn khái niệm.
 
 #### L05-A02: Nội dung và mục tiêu
 
@@ -108,8 +109,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.2, 15; SB Ch.5 tr.91, Ch.6 tr.119. Quyết định `sửa`.
 - **Bố cục và đối tượng:** Sơ đồ mũi tên bằng HTML hoặc SVG nội dòng; mỗi nút là một đầu ra học tập, không chỉ tên phần.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Ba thẻ mục tiêu được viết lại theo ba mạch nội dung: Monte Carlo; sai phân thời gian TD(0); so sánh hai phương pháp (độ chệch, phương sai, điều kiện hội tụ, dữ liệu cố định). Lý do: thẻ cũ không khớp mạch B–D và thẻ "So sánh có điều kiện" mơ hồ.
 
-#### L05-A03: Đánh giá chính sách khi thiếu mô hình
+#### L05-A03: Đánh giá chính sách khi chưa biết mô hình
 
 - **Lý do tồn tại và nhu cầu:** Thu gọn phần ôn thành đúng thiếu hụt tạo nhu cầu MC; không dạy lại điều khiển.
 - **Vai trò, mục tiêu và sản phẩm:** Vấn đề; MT1. Người học cần giải thích hoặc thực hiện được kết luận: Các mẫu tương tác có thể thay dữ liệu mô hình trong việc ước lượng giá trị của cùng chính sách.
@@ -118,8 +120,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.6, 15–16; SB Ch.5 tr.91; UCL tr.3; ST tr.2–5. Quyết định `gộp`.
 - **Bố cục và đối tượng:** Hai cột dữ liệu mô hình và dữ liệu mẫu cùng hướng tới nhãn giá trị của chính sách; chưa có cây xác suất chi tiết.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Câu mở nêu bài toán dự đoán: cho $\pi$ cố định, ước lượng $v_\pi(s)$ tại mọi trạng thái. Lý do: câu cũ là cụm danh từ cụt, chưa nêu bài toán.
 
-#### L05-A04: Dữ liệu và giá trị cần dự đoán
+#### L05-A04: Mẫu chuyển và giá trị cần ước lượng
 
 - **Lý do tồn tại và nhu cầu:** Khôi phục đủ kiểu đại lượng và quy ước trước khi dùng lại ký hiệu nguồn.
 - **Vai trò, mục tiêu và sản phẩm:** Trực giác và nhắc định nghĩa; MT1. Người học cần giải thích hoặc thực hiện được kết luận: Một chuyển quan sát được cung cấp phần thưởng tức thời; giá trị mô tả kỳ vọng phần thưởng tích lũy về sau.
@@ -128,8 +131,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.3, 15–17; SB §5.1 tr.92, §6.1 tr.119–120. Quyết định `gộp`.
 - **Bố cục và đối tượng:** Một cạnh chuyển có nhãn hành động và thưởng; nhãn $t,t+1$ đặt đúng vị trí.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Giữ mẫu chuyển, $v_\pi=\mathbb E_\pi[G_t\mid S_t=s]$, phân biệt $v_\pi$/$V$ và giả thiết dữ liệu; chuyển $T$, $\mathcal S^+$, giá trị kết thúc bằng 0 và điều kiện $\gamma$ sang L05-B03. Lý do: giảm số ký hiệu mở cùng lúc trước ví dụ.
 
-#### L05-A05: Kiểm tra bài toán dự đoán
+#### L05-A05: Kiểm tra mẫu chuyển và mô hình
 
 - **Lý do tồn tại và nhu cầu:** Kiểm tra tiên quyết và nhu cầu trước khi mở khái niệm MC, theo yêu cầu mỗi mạch có trang kiểm tra riêng.
 - **Vai trò, mục tiêu và sản phẩm:** Kiểm tra riêng của mạch A; MT1. Người học cần giải thích hoặc thực hiện được kết luận: Dữ liệu mẫu và đối tượng dự đoán phải được xác định trước khi chọn thuật toán.
@@ -139,13 +143,15 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Bố cục và đối tượng:** Một cạnh $S\to X$ có nhãn thưởng 0; không hiển thị xác suất chuyển chưa được cung cấp trong câu hỏi.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
 - **Kiểm tra và sản phẩm cần nộp:** Xác định (a) bốn thành phần của mẫu quan sát; (b) đại lượng cần ước lượng khi chính sách giữ cố định; (c) thông tin còn thiếu để đánh giá bằng quy hoạch động.
-- **Đáp án đối chiếu:** $(S,\text{sang phải},0,X)$; cần $v_\pi$ tại các trạng thái quan tâm; thiếu phân phối chuyển và phần thưởng cho các khả năng, một mẫu không thay thế toàn bộ mô hình.
+- **Đáp án đối chiếu:** $(s,a,0,s')$ với $a$ là hành động sang phải; cần $v_\pi$ tại các trạng thái quan tâm; thiếu phân phối chuyển và phần thưởng cho các khả năng, một mẫu không thay thế toàn bộ mô hình.
 - **Tiêu chí:** Đúng chỉ số phần thưởng, không chuyển mục tiêu sang tìm chính sách tối ưu, không suy xác suất từ một mẫu.
 - **Phân bổ hoạt động:** 1 phút tự xác định, 1 phút trả lời, 1 phút đối chiếu; đã nằm trong 3 phút.
+- **Rà soát 01-10-2026:** `sửa`; Câu hỏi dùng ký hiệu chung $s\to s'$ với hành động $a$ và thưởng 0, không dùng $S,X$ trước khi chuỗi ngắn được giới thiệu. Đáp án: $(s,a,0,s')$.
+- **Sửa sau rà 01-10-2026:** `sửa`; Ngữ cảnh "tác tử" thay "robot"; hành động sang phải ký hiệu $a$.
 
 ### Mạch B: Dự đoán Monte Carlo
 
-#### L05-B01: Lượt kết thúc trong chuỗi ngắn
+#### L05-B01: Chuỗi ngắn và ý tưởng Monte Carlo
 
 - **Lý do tồn tại và nhu cầu:** Giữ môi trường nguồn làm ví dụ xuyên suốt, đặt trước định nghĩa MC.
 - **Vai trò, mục tiêu và sản phẩm:** Vấn đề và ví dụ dẫn nhập MC; MT2. Người học cần giải thích hoặc thực hiện được kết luận: Một lượt kết thúc cho biết kết quả thực tế sau khi ghé trạng thái.
@@ -154,6 +160,7 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.19–20; HW05 bài 7. Quyết định `giữ`.
 - **Bố cục và đối tượng:** `short-walk.svg`; xác suất trên cạnh và thưởng nhận khi vào trạng thái kết thúc tách khỏi nhãn giá trị trạng thái kết thúc.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Thêm định nghĩa lượt và hộp ý tưởng Monte Carlo (giá trị là kỳ vọng lợi tức, nên ước lượng bằng trung bình lợi tức quan sát trong các lượt hoàn chỉnh) theo nguồn tr.17. Lý do: ý tưởng cốt lõi trước đây chưa xuất hiện trên mặt trang.
 
 #### L05-B02: Lợi tức sau mỗi lần ghé
 
@@ -164,8 +171,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.20, 22, 29; HW05 bài 7. Quyết định `tách`.
 - **Bố cục và đối tượng:** `episode-one.svg` và `episode-two.svg`; mỗi lần ghé là một nút riêng, phần đuôi lượt của một nút được đánh dấu.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `giữ`; trang đạt tiêu chí tiêu đề, mạch và cách dẫn khái niệm.
 
-#### L05-B03: Tổng phần thưởng chiết khấu
+#### L05-B03: Lợi tức chiết khấu
 
 - **Lý do tồn tại và nhu cầu:** Sửa dòng công thức bị cắt trong nguồn và thiết lập chỉ số dùng lại ở chuỗi dài.
 - **Vai trò, mục tiêu và sản phẩm:** Hình thức khái niệm lợi tức; MT2. Người học cần giải thích hoặc thực hiện được kết luận: Phần thưởng nhận ngay có số mũ 0; mỗi bước xa hơn thêm một hệ số chiết khấu.
@@ -174,6 +182,8 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.17; SB §5.1 tr.92 và §6.1 tr.119–120. Quyết định `sửa`.
 - **Bố cục và đối tượng:** Một hàng thời gian của $e_1$ có bốn cạnh, ghi số mũ 0,1,2,3 dưới phần thưởng.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Tiêu đề gọi tên khái niệm. Câu mở khai báo $T$ và $0\le\gamma\le1$; $\mathcal S^+$ và quy ước trạng thái kết thúc chuyển từ L05-A04 vào ghi chú diễn giả.
+- **Sửa sau rà 01-10-2026:** `sửa`; Câu mở thêm "giá trị ở trạng thái kết thúc bằng $0$".
 
 #### L05-B04: Lần ghé đầu tiên và mọi lần ghé
 
@@ -184,6 +194,7 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.18, 20, 22; SB §5.1 tr.92–93; phép tính từ hai lượt nguồn. Quyết định `sửa`.
 - **Bố cục và đối tượng:** Hai quỹ đạo đánh dấu các vị trí được chọn; bảng hai hàng S/X và hai cột quy tắc. Các tập mẫu và số đếm là HTML.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Câu mở nêu lý do cần quy tắc: một trạng thái có thể xuất hiện nhiều lần trong một lượt.
 
 #### L05-B05: Ước lượng Monte Carlo
 
@@ -194,8 +205,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §5.1 tr.92–93; L05 tr.18. Quyết định `sửa`.
 - **Bố cục và đối tượng:** Ba ô mẫu của X nối đến một ô trung bình; không cần môi trường mới.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `giữ`; trang đạt tiêu chí tiêu đề, mạch và cách dẫn khái niệm.
 
-#### L05-B06: Thêm một mẫu vào trung bình
+#### L05-B06: Cập nhật trung bình khi có mẫu mới
 
 - **Lý do tồn tại và nhu cầu:** Khôi phục ví dụ số trước công thức gia tăng thay cho việc trình bày công thức ngay ở nguồn tr.21.
 - **Vai trò, mục tiêu và sản phẩm:** Vấn đề, trực giác và tính tay gia tăng; MT3. Người học cần giải thích hoặc thực hiện được kết luận: Tổng thông tin cần giữ của các mẫu cũ là số mẫu và trung bình hiện tại.
@@ -204,8 +216,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §2.4 tr.30–31; dữ liệu X từ L05-B04. Quyết định `thêm`.
 - **Bố cục và đối tượng:** Hai khối số: n cũ bằng 2, V cũ bằng 1; mẫu mới −1; kết quả $1/3$.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Câu mở nêu yêu cầu chỉ lưu trung bình và số mẫu. Lý do: vấn đề của trang trước chỉ có trong ghi chú.
 
-#### L05-B07: Trung bình mẫu dạng gia tăng
+#### L05-B07: Trung bình gia tăng
 
 - **Lý do tồn tại và nhu cầu:** Giữ công thức nguồn và thêm suy diễn ngắn đủ để hiểu vai trò bộ đếm.
 - **Vai trò, mục tiêu và sản phẩm:** Hình thức và chứng minh ngắn; MT3. Người học cần giải thích hoặc thực hiện được kết luận: Bước học nghịch đảo số mẫu tái tạo chính xác trung bình số học.
@@ -214,8 +227,10 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §2.4 tr.30–31; L05 tr.21. Quyết định `giữ`.
 - **Bố cục và đối tượng:** Hai dòng biến đổi lớn; không thêm hình cạnh công thức.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Rút gọn tiêu đề.
+- **Sửa sau rà 01-10-2026:** `sửa`; Gọi tên mục tiêu cập nhật: $g_n(s)$ là mục tiêu trong $V\leftarrow V+\alpha[\text{mục tiêu}-V]$.
 
-#### L05-B08: Bước học hằng và trọng số mẫu
+#### L05-B08: Bước học hằng
 
 - **Lý do tồn tại và nhu cầu:** Bổ sung giả thiết bước học thiếu trong nguồn và phân biệt trung bình với trọng số mũ.
 - **Vai trò, mục tiêu và sản phẩm:** Ví dụ rồi quy tắc biến thể; MT3. Người học cần giải thích hoặc thực hiện được kết luận: Với $0<\alpha<1$, khởi tạo còn ảnh hưởng và mẫu gần đây có trọng số lớn hơn; với $\alpha=1$, ước lượng bằng mẫu mới nhất.
@@ -224,8 +239,10 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §2.5 tr.32–33; L05 tr.20–23. Quyết định `sửa`.
 - **Bố cục và đối tượng:** Hai cột tính trên cùng hai mẫu $(1,-1)$, đồng nhất khởi tạo và thứ tự.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Câu mở nêu lý do dùng bước hằng khi môi trường thay đổi theo thời gian (nguồn tr.21). Lý do: bước hằng trước đây xuất hiện không có động cơ.
+- **Sửa sau rà 01-10-2026:** `sửa`; Câu mở nêu môi trường không dừng nằm ngoài giả thiết của bài; $\alpha=0.5$ cho thấy cách đặt trọng số theo thời gian; dẫn bài giảng gốc tr.21 trong ghi chú diễn giả.
 
-#### L05-B09: Hai lựa chọn độc lập trong MC
+#### L05-B09: Hai lựa chọn của Monte Carlo
 
 - **Lý do tồn tại và nhu cầu:** Loại nhầm lẫn quyết định mẫu với quyết định trọng số trước quy trình đầy đủ.
 - **Vai trò, mục tiêu và sản phẩm:** Ứng dụng phân loại; MT2–MT3. Người học cần giải thích hoặc thực hiện được kết luận: Quy tắc chọn lần ghé và quy tắc bước học là hai quyết định độc lập.
@@ -234,8 +251,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §5.1 tr.92–93, §6.1 tr.119; HW05 bài 5 được sửa. Quyết định `thêm`.
 - **Bố cục và đối tượng:** Bảng HTML có chú thích dữ liệu và bước học; không tô màu làm tín hiệu duy nhất.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Viết đầy đủ tên phương pháp trong tiêu đề.
 
-#### L05-B10: Quy trình dự đoán Monte Carlo
+#### L05-B10: Thuật toán dự đoán Monte Carlo
 
 - **Lý do tồn tại và nhu cầu:** Nguồn chưa có giả mã đủ đầu vào, quy tắc chọn mẫu, thứ tự và dừng; bổ sung từ SB để người học thực hiện được thuật toán.
 - **Vai trò, mục tiêu và sản phẩm:** Thuật toán đầy đủ; MT2–MT3. Người học cần giải thích hoặc thực hiện được kết luận: Tính lợi tức trước rồi chọn lần ghé theo thời gian giúp triển khai MC đúng quy tắc.
@@ -244,8 +262,10 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §5.1 tr.92; §2.4 tr.30–31; bản diễn đạt hai lượt quét tương đương về tập mẫu với MC lần ghé đầu. Quyết định `thêm`.
 - **Bố cục và đối tượng:** Giả mã khoảng 10–12 dòng ở cỡ chữ chuẩn; tách phần tính lợi tức và phần cập nhật bằng khoảng trắng.
 - **Thời lượng:** 4 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Đổi "quy trình" thành "thuật toán" cho thống nhất với L05-C05.
+- **Sửa sau rà 01-10-2026:** `sửa`; Chữ giả mã nâng từ 0.82em lên 0.92em (CSS cục bộ), trang vẫn vừa khung.
 
-#### L05-B11: MC trên lượt thứ hai
+#### L05-B11: Monte Carlo trên lượt thứ hai
 
 - **Lý do tồn tại và nhu cầu:** Bài nguồn chưa chỉ rõ lần ghé; nêu hai phiên bản và đáp án nhất quán.
 - **Vai trò, mục tiêu và sản phẩm:** Ứng dụng thuật toán; MT3. Người học cần giải thích hoặc thực hiện được kết luận: Số lần cập nhật quyết định kết quả MC khi bước học giữ hằng.
@@ -254,8 +274,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.22, 29; HW05 bài 7; kiểm toán số độc lập. Quyết định `sửa`.
 - **Bố cục và đối tượng:** Quỹ đạo $e_2$ và bảng các giá trị trung gian; mỗi cột ghi rõ cách chọn lần ghé.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Viết đầy đủ tên phương pháp.
 
-#### L05-B12: Giả thiết của ước lượng Monte Carlo
+#### L05-B12: Tính không chệch và hội tụ của Monte Carlo
 
 - **Lý do tồn tại và nhu cầu:** Giữ tính chất có căn cứ và loại phát biểu không chệch bao trùm mọi biến thể MC.
 - **Vai trò, mục tiêu và sản phẩm:** Điều kiện và giới hạn; MT3–MT5. Người học cần giải thích hoặc thực hiện được kết luận: Tính chất của lợi tức không tự động là tính chất của mọi cách kết hợp lợi tức.
@@ -265,8 +286,10 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Bố cục và đối tượng:** Ba nhãn đối tượng: lợi tức, trung bình mẫu, bảng dùng bước hằng; mỗi nhãn kèm điều kiện tương ứng.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
 - **Điều kiện bổ sung sau rà:** Với quá trình phần thưởng Markov hữu hạn do chính sách Markov dừng, cố định tạo ra, phần thưởng bị chặn, kết thúc hầu chắc chắn từ mọi trạng thái không kết thúc đang xét, các lượt khởi động độc lập theo cùng phân phối và xác suất ghé $s$ dương, trung bình mọi lần ghé với $0\le\gamma\le1$ và bước học $1/N(s)$ hội tụ hầu chắc chắn về $v_\pi(s)$ khi số lượt hoàn chỉnh tăng vô hạn. Kết luận ở ghi chú/học liệu; mặt trang phân biệt phụ thuộc trong lượt, nhất quán và ảnh hưởng khởi tạo có điều kiện. M01/RL-02 và M02/RL-03/ACA-01.
+- **Rà soát 01-10-2026:** `sửa`; Tiêu đề nêu kết quả thay vì "giả thiết". Ba thẻ: lần ghé đầu tiên; mọi lần ghé; bước học hằng. Chú thích nêu giả thiết của hai kết quả hội tụ.
+- **Sửa sau rà 01-10-2026:** `sửa`; Định nghĩa ngắn "ước lượng không chệch: kỳ vọng bằng $v_\pi(s)$"; chú thích giả thiết viết liền: lượt độc lập, cùng phân phối, kết thúc hầu chắc chắn, thưởng bị chặn, $s$ được ghé với xác suất dương; ghi chú diễn giả nêu tính Markov cho thời điểm ghé ngẫu nhiên; thẻ bước hằng viết dạng khẳng định có điều kiện.
 
-#### L05-B13: Kiểm tra lựa chọn mẫu MC
+#### L05-B13: Kiểm tra chọn mẫu Monte Carlo
 
 - **Lý do tồn tại và nhu cầu:** Kiểm tra riêng hai trục vừa học bằng số cho đáp án khác nhau.
 - **Vai trò, mục tiêu và sản phẩm:** Kiểm tra riêng của mạch B; MT2–MT3. Người học cần giải thích hoặc thực hiện được kết luận: Một kết quả MC chỉ xác định khi cả tập mẫu và bước học đã được chỉ rõ.
@@ -279,10 +302,11 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Đáp án đối chiếu:** Lần ghé đầu tiên $(1,-1)$ cho 0; mọi lần ghé $(1,1,-1)$ cho $1/3$. Bước hằng cho $0.5$ rồi $-0.25$ vì mẫu cũ và khởi tạo có trọng số khác trung bình số học.
 - **Tiêu chí:** Chọn đúng ba mẫu của X theo mọi lần ghé, đếm n riêng cho X, phân biệt trọng số với chọn mẫu.
 - **Phân bổ hoạt động:** 1 phút tính, 1 phút đối chiếu cặp kết quả, 1 phút giải thích; nằm trong 3 phút.
+- **Rà soát 01-10-2026:** `sửa`; Viết đầy đủ tên phương pháp.
 
 ### Mạch C: Dự đoán sai phân thời gian TD(0)
 
-#### L05-C01: Cập nhật trước khi lượt kết thúc
+#### L05-C01: Cập nhật khi lượt chưa kết thúc
 
 - **Lý do tồn tại và nhu cầu:** Giữ động lực cập nhật một bước của nguồn bằng chính ví dụ đã học.
 - **Vai trò, mục tiêu và sản phẩm:** Vấn đề TD; MT4. Người học cần giải thích hoặc thực hiện được kết luận: MC đầy đủ chưa có mục tiêu khi phần đuôi của lượt chưa được quan sát.
@@ -291,8 +315,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.24; SB §6.1 tr.119–120. Quyết định `giữ`.
 - **Bố cục và đối tượng:** Quỹ đạo $e_1$ chỉ hiện cạnh đầu, phần tương lai nét đứt có nhãn chưa quan sát.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Chỉnh câu chữ tiêu đề.
 
-#### L05-C02: Dự đoán phần còn lại từ trạng thái sau
+#### L05-C02: Mục tiêu một bước
 
 - **Lý do tồn tại và nhu cầu:** Diễn giải đối tượng trước công thức; giữ thuật ngữ khi cần nhưng không dùng từ phỏng đoán thay ước lượng.
 - **Vai trò, mục tiêu và sản phẩm:** Trực giác; MT4. Người học cần giải thích hoặc thực hiện được kết luận: Thưởng vừa nhận cộng ước lượng ở trạng thái sau tạo một mục tiêu có sẵn sau một bước.
@@ -301,8 +326,10 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §6.1 tr.120–121; L05 tr.24–25. Quyết định `sửa`.
 - **Bố cục và đối tượng:** `mc-td-targets.svg`; một nhánh quan sát tới $t+1$ rồi hộp V, đối chiếu quỹ đạo đầy đủ MC.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Hiển thị $G_t=R_{t+1}+\gamma G_{t+1}\approx R_{t+1}+\gamma V(S_{t+1})$ và gọi tên bootstrap trên mặt trang (nguồn tr.24). Lý do: phép thay thế cốt lõi trước đây chỉ có trong ghi chú.
+- **Sửa sau rà 01-10-2026:** `sửa`; Bỏ dấu ≈; hiển thị $G_t=R_{t+1}+\gamma G_{t+1}$ và $v_\pi(S_{t+1})=\mathbb E_\pi[G_{t+1}\mid S_{t+1}]$; hộp nêu mục tiêu một bước thay mục tiêu $G_t$ của Monte Carlo; hình dùng cỡ ngắn.
 
-#### L05-C03: Một bước cập nhật từ S đến X
+#### L05-C03: Một bước cập nhật TD
 
 - **Lý do tồn tại và nhu cầu:** Bổ sung bước tính tay trước ký hiệu TD, không thêm môi trường.
 - **Vai trò, mục tiêu và sản phẩm:** Ví dụ tính tay; MT4. Người học cần giải thích hoặc thực hiện được kết luận: TD điều chỉnh ước lượng hiện tại theo khoảng cách đến mục tiêu một bước.
@@ -311,6 +338,8 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** Quy tắc SB §6.1 tr.119–120; phép tính từ trạng thái sau $e_1$ của ví dụ nguồn, chưa yêu cầu người học biết cách tạo bảng ấy. Quyết định `thêm`.
 - **Bố cục và đối tượng:** Một cạnh chuyển và ba ô tính mục tiêu, sai số, giá trị mới; số 0.5 ở X ghi rõ là bảng cho trước.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Rút gọn tiêu đề.
+- **Sửa sau rà 01-10-2026:** `sửa`; Chú thích nêu bảng $V(S)=0$, $V(X)=0.5$ là kết quả TD(0) sau $e_1$, được tính lại khi chạy TD(0) trên lượt thứ nhất.
 
 #### L05-C04: Mục tiêu và sai số TD(0)
 
@@ -321,8 +350,10 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §6.1 tr.119–121; L05 tr.25. Quyết định `tách`.
 - **Bố cục và đối tượng:** Công thức lớn và chú thích ngắn dưới từng thành phần; không dùng bảng mô hình chuyển.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Chú thích giải thích tên gọi: $\delta_t$ là hiệu giữa hai dự đoán ở hai thời điểm liên tiếp.
+- **Sửa sau rà 01-10-2026:** `sửa`; Chú thích: $\delta_t$ là hiệu giữa mục tiêu dựa trên dự đoán tại $t+1$ và dự đoán tại $t$.
 
-#### L05-C05: Quy trình dự đoán TD(0)
+#### L05-C05: Thuật toán TD(0)
 
 - **Lý do tồn tại và nhu cầu:** Hoàn thiện đầu vào, nguồn dữ liệu, thứ tự và dừng mà nguồn chưa diễn đạt đủ.
 - **Vai trò, mục tiêu và sản phẩm:** Thuật toán đầy đủ; MT4. Người học cần giải thích hoặc thực hiện được kết luận: TD(0) cập nhật sau mỗi chuyển do chính sách cố định sinh ra.
@@ -331,6 +362,8 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §6.1 tr.120, hộp TD(0); L05 tr.25. Quyết định `thêm`.
 - **Bố cục và đối tượng:** Giả mã khoảng 10 dòng; nhãn đầu vào và đầu ra đặt ngoài vòng lặp.
 - **Thời lượng:** 4 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Rút gọn tiêu đề.
+- **Sửa sau rà 01-10-2026:** `sửa`; Chữ giả mã nâng từ 0.82em lên 0.92em (CSS cục bộ), trang vẫn vừa khung.
 
 #### L05-C06: Trạng thái kết thúc và tự chuyển
 
@@ -341,6 +374,8 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §6.1 tr.120; trạng thái kết thúc từ L05 tr.19; tự chuyển là ví dụ kiểm toán quy tắc do bài soạn tạo, phù hợp tự chuyển HW05 bài 6. Quyết định `thêm`.
 - **Bố cục và đối tượng:** Hai cạnh nhỏ: một đến trạng thái kết thúc, một vòng tự chuyển có đầy đủ nhãn.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Câu mở nêu hai trường hợp biên và gắn tự chuyển với việc đứng yên trong chuỗi năm ô của HW05 bài 6. Lý do: tự chuyển trước đây xuất hiện khiên cưỡng.
+- **Sửa sau rà 01-10-2026:** `sửa`; Mặt trang chỉ nêu tự chuyển xảy ra khi tác tử đứng yên; dẫn chiếu HW05 bài 6 và "số liệu minh họa" chuyển vào ghi chú diễn giả.
 
 #### L05-C07: TD(0) trên lượt thứ nhất
 
@@ -351,6 +386,7 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.29; HW05 bài 7; kiểm toán số độc lập. Quyết định `sửa`.
 - **Bố cục và đối tượng:** Quỹ đạo $e_1$ và bảng bốn hàng, cột t, trạng thái, thưởng, mục tiêu, V(S), V(X).
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `giữ`; trang đạt tiêu chí tiêu đề, mạch và cách dẫn khái niệm.
 
 #### L05-C08: TD(0) trên lượt thứ hai
 
@@ -361,8 +397,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.29; HW05 bài 7; kiểm toán số độc lập. Quyết định `sửa`.
 - **Bố cục và đối tượng:** Bảng ba hàng đồng bộ vị trí với quỹ đạo; mũi tên chỉ giá trị S=0.25 được dùng ở bước thứ hai.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `giữ`; trang đạt tiêu chí tiêu đề, mạch và cách dẫn khái niệm.
 
-#### L05-C09: Thông tin và chi phí cập nhật
+#### L05-C09: Chi phí bộ nhớ và tính toán
 
 - **Lý do tồn tại và nhu cầu:** Thay bảng ưu/nhược tuyệt đối của nguồn bằng thông tin và chi phí có phạm vi.
 - **Vai trò, mục tiêu và sản phẩm:** Điều kiện thực hiện; MT4–MT5. Người học cần giải thích hoặc thực hiện được kết luận: TD xử lý một chuyển bằng lượng tính toán không phụ thuộc độ dài lượt.
@@ -371,6 +408,7 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §6.1–6.2 tr.119–124; phân tích chi phí trực tiếp từ giả mã. Quyết định `sửa`.
 - **Bố cục và đối tượng:** Bảng hai hàng MC/TD, ba cột thời điểm, dữ liệu tạm, chi phí; chú thích đây là quy trình dạng bảng đang học.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Tiêu đề nêu đúng nội dung bảng.
 
 #### L05-C10: Kiểm tra một bước TD(0)
 
@@ -385,10 +423,11 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Đáp án đối chiếu:** (a) Y=0.5, sai số 0.25, V(S)=0.375; (b) Y=−1, sai số −1.25, V(S)=−0.375. Cả hai trường hợp V(X) giữ 0.5, V(L)=0.
 - **Tiêu chí:** Hai trường hợp bắt đầu độc lập từ cùng bảng; không coi thưởng −1 khi vào trạng thái kết thúc là giá trị tiếp nối để cộng lần nữa; đúng dấu và chỉ sửa S.
 - **Phân bổ hoạt động:** 1 phút tính, 1 phút trình bày, 1 phút đối chiếu; nằm trong 3 phút.
+- **Rà soát 01-10-2026:** `giữ`; trang đạt tiêu chí tiêu đề, mạch và cách dẫn khái niệm.
 
 ### Mạch D: So sánh theo dữ liệu và giả thiết
 
-#### L05-D01: Hai thuật toán trên cùng hai lượt
+#### L05-D01: Monte Carlo và TD(0) trên cùng dữ liệu
 
 - **Lý do tồn tại và nhu cầu:** Giữ so sánh nguồn nhưng gắn đủ điều kiện và loại kết luận vượt dữ liệu.
 - **Vai trò, mục tiêu và sản phẩm:** Vấn đề so sánh và ví dụ; MT5. Người học cần giải thích hoặc thực hiện được kết luận: MC và TD(0) tạo các bảng khác nhau vì dùng mục tiêu và thời điểm cập nhật khác nhau.
@@ -397,6 +436,8 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.29; HW05 bài 7; số đã kiểm ở L05-B11, L05-C07–L05-C08. Quyết định `sửa`.
 - **Bố cục và đối tượng:** Bảng HTML hai phương pháp, hai mốc; dùng lại sơ đồ mục tiêu nếu còn khoảng trống.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Thêm hộp nêu nhu cầu giá trị chuẩn để đánh giá hai bảng.
+- **Sửa sau rà 01-10-2026:** `sửa`; Hộp: "Để xác định bảng nào gần $v_\pi$ hơn, cần giá trị chuẩn của môi trường."
 
 #### L05-D02: Giá trị chuẩn của chuỗi ngắn
 
@@ -407,8 +448,10 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.19; kiểm toán số độc lập; Bellman kỳ vọng đã học ở Bài 04. Quyết định `giữ`.
 - **Bố cục và đối tượng:** `short-walk.svg` với hàng giá trị thật tại S,X; giá trị ở trạng thái kết thúc tiếp tục ghi 0.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Câu mở: mô hình chuỗi ngắn đã biết trong ví dụ, nên $v_\pi$ được tính từ Bellman kỳ vọng.
+- **Sửa sau rà 01-10-2026:** `sửa`; Chú thích nối ra: độ lệch của hai bảng được phân tích qua kỳ vọng (độ chệch) và biến thiên (phương sai) của mục tiêu; hình giới hạn 150px.
 
-#### L05-D03: Chuỗi dài và phần thưởng cuối lượt
+#### L05-D03: Chuỗi dài với thưởng thưa
 
 - **Lý do tồn tại và nhu cầu:** Giữ ví dụ dài riêng của nguồn và dùng nó cho vấn đề số mũ, độ dài đường đi.
 - **Vai trò, mục tiêu và sản phẩm:** Vấn đề và ví dụ dẫn nhập so sánh; MT2–MT5. Người học cần giải thích hoặc thực hiện được kết luận: Khoảng cách đến phần thưởng và chiết khấu làm các lợi tức khác nhau theo đường đi.
@@ -417,8 +460,10 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.30; kiểm toán số độc lập. Quyết định `giữ`.
 - **Bố cục và đối tượng:** `long-walk.svg`; giữ đúng vị trí bắt đầu và nhãn thưởng cạnh, giá trị ở trạng thái kết thúc bằng 0.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Chú thích nêu lý do xét chuỗi dài: lợi tức phụ thuộc nhiều chuyển ngẫu nhiên hơn; thưởng chỉ khi vào $L$ hoặc $G$ (nguồn tr.30).
+- **Sửa sau rà 01-10-2026:** `sửa`; Câu lý do chuỗi dài lên làm câu mở; hai thẻ gộp mỗi thẻ một dòng; hình dùng cỡ ngắn.
 
-#### L05-D04: Đường đi và số mũ chiết khấu
+#### L05-D04: Biến thiên của lợi tức
 
 - **Lý do tồn tại và nhu cầu:** Sửa lỗi lệch chỉ số chiết khấu và giới hạn kết luận theo đúng dữ liệu.
 - **Vai trò, mục tiêu và sản phẩm:** Ví dụ tính tay và trực giác biến thiên; MT2–MT5. Người học tính được số mũ $\gamma^{m-1}$ và phân biệt hai lợi tức mẫu từ $S$ với giá trị kỳ vọng tại chính $S$.
@@ -427,8 +472,10 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.31; kiểm toán số độc lập. Quyết định `sửa`.
 - **Bố cục và đối tượng:** `long-returns.svg`; công thức KaTeX đặt cạnh mỗi quỹ đạo với chỉ số thưởng cuối.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Tiêu đề nêu luận điểm thay cho chi tiết số mũ; giữ hiệu chỉnh số mũ trong ghi chú.
+- **Sửa sau rà 01-10-2026:** `sửa`; Chú thích nêu thứ tự xét: kỳ vọng (độ chệch) rồi phương sai.
 
-#### L05-D05: Kỳ vọng của hai mục tiêu
+#### L05-D05: Độ chệch của mục tiêu TD
 
 - **Lý do tồn tại và nhu cầu:** Thay so sánh nhị phân của nguồn bằng điều kiện và đại lượng chính xác.
 - **Vai trò, mục tiêu và sản phẩm:** Ví dụ rồi hình thức so sánh sai lệch; MT5. Người học tính kỳ vọng qua các chuyển kế tiếp khi bảng cố định, sau đó giải thích sai lệch qua sai số giá trị tiếp nối.
@@ -437,8 +484,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §6.1–6.2 tr.120–124; L05 tr.26–27 được sửa; hệ quả từ Bellman kỳ vọng. Quyết định `sửa`.
 - **Bố cục và đối tượng:** Dữ kiện và hai mục tiêu, phép tính kỳ vọng số, rồi công thức sai lệch tổng quát; phép trừ dài ở ghi chú. Giữ cỡ chữ và ngân sách 3 phút.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Gọi tên độ chệch của mục tiêu (kỳ vọng mục tiêu trừ $v_\pi(s)$) ngay sau ví dụ số, giữ thứ tự ví dụ trước hình thức; chú thích nêu độ chệch của MC bằng 0 và điều kiện để độ chệch TD bằng 0. Số liệu giữ nguyên: $0.2(-1)+0.8(0.5)=0.2$, $1/5-11/21=-34/105$.
 
-#### L05-D06: Nguồn ngẫu nhiên trong mục tiêu
+#### L05-D06: Phương sai của mục tiêu
 
 - **Lý do tồn tại và nhu cầu:** Gộp hai trang nguồn lặp về phương sai và bỏ mức độ không định lượng.
 - **Vai trò, mục tiêu và sản phẩm:** Trực giác và giới hạn phương sai; MT5. Người học cần giải thích hoặc thực hiện được kết luận: MC dùng phần đuôi quỹ đạo ngẫu nhiên; TD thay phần đuôi bằng một giá trị ước lượng.
@@ -448,8 +496,10 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Bố cục và đối tượng:** Cây nhỏ một bước rồi hai phần đuôi; MC giữ một đuôi quan sát, mục tiêu lý tưởng thay bằng kỳ vọng. Hình là quan hệ, không có số thực nghiệm.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
 - **Ngân sách theo SV-R2:** 3 phút cho nguồn ngẫu nhiên, cơ chế kỳ vọng phần đuôi và giới hạn của $V$ bất kỳ. Chứng minh dùng $\mathcal F_1$ và luật phương sai toàn phần thuộc phần đọc phụ trợ; chưa có dữ liệu diễn tập.
+- **Rà soát 01-10-2026:** `sửa`; Mặt trang nêu bất đẳng thức $\operatorname{Var}(R_{t+1}+\gamma v_\pi(S_{t+1})\mid s)\le\operatorname{Var}(G_t\mid s)$ và giới hạn với bảng $V$ đang học; hai thẻ nguồn ngẫu nhiên gộp thành một câu; hình giảm còn 200px. Lý do: kết quả dương trước đây chỉ có trong ghi chú.
+- **Sửa sau rà 01-10-2026:** `sửa`; Mặt trang thêm giả thiết Markov và mômen bậc hai hữu hạn; tách nguồn ngẫu nhiên (thưởng đầu, trạng thái sau) khỏi sai số tất định của $V$; hộp viết dạng khẳng định có điều kiện; hình giới hạn 170px.
 
-#### L05-D07: Điều kiện học từ mẫu mới
+#### L05-D07: Điều kiện hội tụ của TD(0)
 
 - **Lý do tồn tại và nhu cầu:** Bổ sung điều kiện còn thiếu; phân biệt bảo đảm với tiêu chuẩn dừng thực hành.
 - **Vai trò, mục tiêu và sản phẩm:** Điều kiện áp dụng và hội tụ; MT5–MT6. Người học cần giải thích hoặc thực hiện được kết luận: Bảo đảm hội tụ phụ thuộc dữ liệu và bước học, không chỉ tên thuật toán.
@@ -458,8 +508,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §2.5 tr.33; §6.2 tr.124–125; L05 tr.28 được giới hạn. Quyết định `sửa`.
 - **Bố cục và đối tượng:** Hai nhóm điều kiện: bài toán/dữ liệu và bước học; không dựng đồ thị hội tụ minh họa giả.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Tiêu đề gọi tên kết quả; hộp nêu "với xác suất 1".
 
-#### L05-D08: Tám lượt dữ liệu cố định
+#### L05-D08: Dự đoán trên dữ liệu cố định
 
 - **Lý do tồn tại và nhu cầu:** Bổ sung ví dụ tối giản tạo hai nghiệm khác nhau theo sườn SB §6.3.
 - **Vai trò, mục tiêu và sản phẩm:** Vấn đề và ví dụ dẫn nhập theo lô; MT5. Người học cần giải thích hoặc thực hiện được kết luận: Kinh nghiệm trực tiếp của A và thông tin về trạng thái kế tiếp B có thể gợi hai giá trị khác nhau.
@@ -468,8 +519,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §6.3, Ví dụ 6.4 tr.127–128; đối chiếu UCL tr.22–23, ST tr.48. Quyết định `thêm`.
 - **Bố cục và đối tượng:** Bảng ba nhóm lượt có số lượng 1,6,1 và tổng số 8; trạng thái kết thúc được thể hiện rõ.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Câu mở nối từ mẫu mới sang dùng lại dữ liệu (Sutton–Barto §6.3); nhiệm vụ dự đoán $A$ chuyển lên dòng dữ kiện; hai thẻ rút gọn.
 
-#### L05-D09: Cập nhật theo lô với bảng cố định
+#### L05-D09: Cập nhật theo lô
 
 - **Lý do tồn tại và nhu cầu:** Chuẩn bị thuật toán theo lô trước khi so sánh nghiệm, tránh gọi một lần chạy trực tuyến là theo lô.
 - **Vai trò, mục tiêu và sản phẩm:** Tính tay rồi quy trình theo lô; MT5. Người học cần giải thích hoặc thực hiện được kết luận: Trong một lượt quét theo lô, mọi sai số được tính từ cùng bảng trước lượt quét.
@@ -478,8 +530,10 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §6.3 tr.126–128; phép quét số từ dữ liệu Ví dụ 6.4. Quyết định `thêm`.
 - **Bố cục và đối tượng:** Một phép tính đầu tiên cạnh quy trình năm bước; ký hiệu được khai báo trên mặt trang, gồm phép cộng và phép ghi. Không thêm một lượt quét thứ hai hoặc giảm cỡ chữ.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Rút gọn tiêu đề.
+- **Sửa sau rà 01-10-2026:** `sửa`; Khai báo $k$, $\Delta_k(s)$ đặt đầu thẻ ví dụ trước khi dùng $\Delta_0$; $\varepsilon$, $K$ khai báo ngay ở bước 1; tiêu đề thẻ "Quét đầu, MC và TD".
 
-#### L05-D10: Nghiệm MC trên dữ liệu A–B
+#### L05-D10: Nghiệm Monte Carlo theo lô
 
 - **Lý do tồn tại và nhu cầu:** Tính đầy đủ tiêu chuẩn MC trước khi đưa nghiệm TD khác, không chỉ hiện hai con số.
 - **Vai trò, mục tiêu và sản phẩm:** Hình thức và ứng dụng theo lô MC; MT5. Người học cần giải thích hoặc thực hiện được kết luận: MC khớp các lợi tức đã quan sát tại mỗi trạng thái.
@@ -488,8 +542,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §6.3 tr.127–128, Ví dụ 6.4. Quyết định `thêm`.
 - **Bố cục và đối tượng:** Hai nhóm mẫu A và B nối tới nghiệm; mục tiêu bình phương ở một dòng riêng.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Tiêu đề thống nhất với L05-D09.
 
-#### L05-D11: Nghiệm TD trên dữ liệu A–B
+#### L05-D11: Nghiệm TD theo lô
 
 - **Lý do tồn tại và nhu cầu:** Làm rõ nguồn khác biệt của hai nghiệm và phân biệt bảng sau quét với nghiệm giới hạn.
 - **Vai trò, mục tiêu và sản phẩm:** Hình thức và ứng dụng theo lô TD; MT5. Người học cần giải thích hoặc thực hiện được kết luận: TD khớp quan hệ chuyển trạng thái ước lượng từ dữ liệu.
@@ -498,6 +553,7 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB §6.3 tr.127–128, Ví dụ 6.4; kiểm toán số độc lập. Quyết định `thêm`.
 - **Bố cục và đối tượng:** `ab-empirical.svg` ghi rõ mô hình ước lượng từ tám lượt, cạnh thưởng và giá trị ở trạng thái kết thúc bằng 0.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Tiêu đề thống nhất với L05-D09.
 
 #### L05-D12: Kiểm tra kết luận từ dữ liệu hữu hạn
 
@@ -512,6 +568,7 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Đáp án đối chiếu:** MC khớp lợi tức duy nhất 0 của A; TD khớp A→B và trung bình B=0.75. Hai mệnh đề đều không được bảo đảm: phương sai của TD dùng V học được không có thứ tự phổ quát; bước hằng trên mẫu mới không thỏa điều kiện tổng bình phương và có thể dao động.
 - **Tiêu chí:** Nêu đúng hai tiêu chuẩn, phân biệt dữ liệu cố định/mẫu mới, không dùng kết quả A–B làm chứng minh TD đúng hơn môi trường thật.
 - **Phân bổ hoạt động:** 1.5 phút lập luận, 1 phút trả lời, 1.5 phút đối chiếu; nằm trong 4 phút.
+- **Rà soát 01-10-2026:** `giữ`; trang đạt tiêu chí tiêu đề, mạch và cách dẫn khái niệm.
 
 ### Mạch E: Kết luận và tự kiểm tra
 
@@ -524,8 +581,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** Tổng hợp SB §5.1, §6.1–6.3; L05 tr.28, 33. Quyết định `sửa`.
 - **Bố cục và đối tượng:** Bảng ba trường hợp, thông tin, lựa chọn và điều kiện; không thêm khái niệm mới.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `giữ`; trang đạt tiêu chí tiêu đề, mạch và cách dẫn khái niệm.
 
-#### L05-E02: Năng lực và giới hạn sau bài học
+#### L05-E02: Tổng kết Monte Carlo và TD(0)
 
 - **Lý do tồn tại và nhu cầu:** Gộp câu hỏi mở rộng và tổng kết thành đối chiếu mục tiêu có giới hạn, tránh thêm trọng tâm cuối bài.
 - **Vai trò, mục tiêu và sản phẩm:** Đối chiếu mục tiêu; MT1–MT6. Người học cần giải thích hoặc thực hiện được kết luận: Người học có thể thực hiện dự đoán dạng bảng và kiểm tra điều kiện của kết luận.
@@ -534,8 +592,11 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** L05 tr.32–33; SB §5.1 và §6.1–6.3. Quyết định `gộp`.
 - **Bố cục và đối tượng:** Ba hàng năng lực đi cùng bằng chứng đã thực hiện; không hiện mã trang hoặc mã mục tiêu trên mặt trang.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Thay bảng năng lực bằng bảng tổng kết sáu tiêu chí (mục tiêu, thời điểm cập nhật, độ chệch, phương sai, hội tụ trên mẫu mới, dữ liệu cố định), mỗi ô giữ điều kiện đã học; chú thích nối Bài 06. Khôi phục bảng so sánh nguồn tr.31 và tổng kết tr.33 ở dạng có điều kiện; câu nối theo câu hỏi mở tr.32.
+- **Sửa sau rà 01-10-2026:** `sửa`; Dòng hội tụ nêu kết quả "về $v_\pi$ khi …"; phương sai MC "có thể lớn khi lượt dài"; chú thích thêm giả thiết của dòng hội tụ; bỏ câu bình luận nguồn khỏi ghi chú diễn giả (lưu trong review-log).
+- **Thứ tự E01→E02:** `giữ`; E01 trả lời trực tiếp bài toán mở đầu bằng lựa chọn phương pháp; E02 tổng kết tính chất hai phương pháp và nối sang Bài 06, nên khép phần kết luận trước bài tập. Đề xuất đổi thứ tự bị từ chối sau rà soát 01-10-2026; người rà mạch lập luận xác nhận lý do hợp lệ.
 
-#### L05-E03: Bài tập về dự đoán phi mô hình
+#### L05-E03: Bài tập tuần 5
 
 - **Lý do tồn tại và nhu cầu:** Giữ đủ bài tập nguồn với các hiệu chỉnh học thuật; phân biệt 120 phút chính và 30 phút chữa bài trong tệp quy trình.
 - **Vai trò, mục tiêu và sản phẩm:** Bài tập có nguồn; MT1–MT6. Người học cần giải thích hoặc thực hiện được kết luận: Bảy bài tập nguồn kiểm tra từ dữ liệu, cơ chế đến phép tính và giới hạn kết luận.
@@ -544,6 +605,7 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** HW05 tr.1–2, bài 1–7; sửa giả thiết theo nhật ký. Quyết định `sửa`.
 - **Bố cục và đối tượng:** Ba nhóm bài tập bằng HTML, mỗi nhóm một sản phẩm cụ thể; không nhồi toàn đề bảy bài lên một trang.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Rút gọn tiêu đề.
 
 #### L05-E04: Kiểm tra lựa chọn và điều kiện
 
@@ -558,8 +620,9 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Đáp án đối chiếu:** (a) Quy tắc lần ghé và quy tắc bước học/khởi tạo. (b) TD(0), cần thưởng, trạng thái sau, bảng V, gamma và bước học; mục tiêu $R+\gamma V(S')$. (c) Cần tiêu chuẩn đánh giá: khớp lợi tức quan sát hay khớp cấu trúc Markov thực nghiệm; để so sánh với môi trường thật cần dữ liệu hoặc giá trị chuẩn phù hợp, tám lượt chưa chứng minh ưu thế phổ quát.
 - **Tiêu chí:** Liên kết lựa chọn với dữ kiện; nêu mục tiêu đúng; không đổi chính sách hay giả định biết mô hình ngầm; phân biệt sai số dữ liệu với sai số giá trị thật.
 - **Phân bổ hoạt động:** 1.5 phút chọn và ghi điều kiện, 1 phút trả lời, 1.5 phút đối chiếu; nằm trong 4 phút.
+- **Rà soát 01-10-2026:** `giữ`; trang đạt tiêu chí tiêu đề, mạch và cách dẫn khái niệm.
 
-#### L05-E05: Tài liệu đọc và bài tập tiếp tục
+#### L05-E05: Tài liệu đọc
 
 - **Lý do tồn tại và nhu cầu:** Cung cấp đường đọc có vị trí cụ thể và nhiệm vụ tiếp tục, không lặp tổng kết một lần nữa.
 - **Vai trò, mục tiêu và sản phẩm:** Kết thúc bằng nhiệm vụ cụ thể; MT2–MT6. Người học cần giải thích hoặc thực hiện được kết luận: Các mục đọc tương ứng trực tiếp với ba năng lực còn cần tự kiểm.
@@ -568,6 +631,7 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Nguồn và quyết định:** SB các mục đã kiểm; HW05 bài 6–7. Quyết định `thêm`.
 - **Bố cục và đối tượng:** Không cần hình; danh mục ba mục sách và một tài liệu bài tập, cỡ chữ đọc được.
 - **Thời lượng:** 1 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
+- **Rà soát 01-10-2026:** `sửa`; Rút gọn tiêu đề.
 
 ## Quyết định cấu trúc và sai khác so với nguồn
 

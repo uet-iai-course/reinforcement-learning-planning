@@ -380,3 +380,134 @@ Bài mới dùng Sutton–Barto §5.1, §6.1–6.3 cùng §2.4–2.5 làm sườ
 Bộ trang chiếu dùng khung trình chiếu 1280 × 720; trên điện thoại, toàn khung co nhỏ. Học liệu cung cấp đường đọc riêng đã được kiểm trên màn hình hẹp. Chưa có diễn tập lớp học để đo thời lượng thực tế; chứng minh phương sai trong notes là phần đọc phụ trợ. Không có ngoại lệ raster. Bản PDF xuất từ lần trước không thuộc lần bàn giao này; các tệp hiện tại chưa được commit hoặc push.
 
 Bản RevealJS: [mở tại cổng 8765](http://localhost:8765/2627-1/lecture-05-du-doan-phi-mo-hinh.html). Học liệu: [ghi chú Bài 05](http://localhost:8765/2627-1/material-viewer.html?doc=materials/lec-05/lecture-note.md&deck=lecture-05-du-doan-phi-mo-hinh.html).
+
+## Rà soát từng trang và biên tập lại — 01-10-2026
+
+Yêu cầu của người dùng: duyệt lần lượt từng trang, xác định trang muốn nói gì, đề xuất và sửa để tiêu đề ngắn gọn, học thuật; mạch lập luận chặt; khái niệm không xuất hiện đột ngột hoặc khiên cưỡng; sau mỗi trang sửa mục ghi chú bài giảng tương ứng. Bảng rà soát do điều phối (phiên chính, Opus 5.5) lập sau khi đọc deck, ghi chú, PDF nguồn 33 trang và HW05. Biên tập: Agent fork, Opus 5.5 (kế thừa phiên), effort theo phiên; là tác tử duy nhất ghi tệp trong lượt này.
+
+Không đổi: 45 trang, thứ tự trang, năm mạch, phân bổ 120 phút, mọi `data-slide-id` và `data-note-topic-id`, SVG, `lecture-slide.css`, `index.html`. CSS cục bộ thêm một dòng giới hạn hình L05-D06 (200px) và bỏ quy tắc `.card` của L05-D06 không còn dùng.
+
+### Bảng từng trang
+
+| Mã trang | Trang muốn nói gì | Vấn đề | Đề xuất | Quyết định | Thay đổi ghi chú |
+|---|---|---|---|---|---|
+| L05-A01 | Tên bài, phạm vi MC/TD | Không | Giữ | giữ | Không |
+| L05-A02 | Lộ trình và mục tiêu | Ba thẻ không khớp mạch B–D; "So sánh có điều kiện" mơ hồ | Ba thẻ theo ba mạch | sửa | Đoạn mở đầu nêu ba phần của bài |
+| L05-A03 | Cùng đầu ra $v_\pi$, đầu vào đổi từ mô hình sang mẫu | Câu mở cụt, chưa nêu bài toán | Tiêu đề "Đánh giá chính sách khi chưa biết mô hình"; câu mở nêu bài toán dự đoán | sửa | topic-01 mở bằng phát biểu bài toán dự đoán |
+| L05-A04 | Mẫu chuyển và đại lượng $v_\pi$ | Quá nhiều ký hiệu ($T$, $\mathcal S^+$, quy ước kết thúc, $\gamma$) trước ví dụ | Tiêu đề "Mẫu chuyển và giá trị cần ước lượng"; chuyển $T$, $\mathcal S^+$ sang B03 | sửa | topic-01 đổi tiêu đề mục; đoạn quy ước kết thúc chuyển sang topic-02 |
+| L05-A05 | Phân biệt một mẫu với mô hình | Dùng $S$, $X$ trước khi giới thiệu chuỗi ngắn | Câu hỏi bằng ký hiệu chung $s\to s'$ | sửa | Câu hỏi và lời giải topic-01 dùng $(s,a,0,s')$ |
+| L05-B01 | Ví dụ xuyên suốt và nhiệm vụ | Ý tưởng MC (nguồn tr.17) và khái niệm lượt chưa có trên mặt trang | Định nghĩa lượt; hộp ý tưởng MC; tiêu đề "Chuỗi ngắn và ý tưởng Monte Carlo" | sửa | topic-02 thêm định nghĩa lượt và đoạn ý tưởng MC; tiêu đề mục "Lượt và lợi tức" |
+| L05-B02 | Lợi tức +1/−1 của hai lượt | Không | Giữ | giữ | Không |
+| L05-B03 | Định nghĩa lợi tức sau ví dụ | Tiêu đề tả công thức | "Lợi tức chiết khấu"; nhận $T$, $\gamma$ từ A04; $\mathcal S^+$ vào ghi chú diễn giả | sửa | topic-02 nhận đoạn $\mathcal S$, $\mathcal S^+$ và quy ước kết thúc |
+| L05-B04 | Hai quy tắc chọn mẫu | Thiếu lý do cần quy tắc | Câu mở: một trạng thái có thể xuất hiện nhiều lần | sửa | topic-04 thêm câu lý do |
+| L05-B05 | Trung bình mẫu | Không | Giữ | giữ | topic-04 đổi tiêu đề mục thành "Ước lượng Monte Carlo" |
+| L05-B06 | Cập nhật trung bình không lưu mẫu cũ | Nhu cầu chỉ có trong ghi chú | "Cập nhật trung bình khi có mẫu mới"; câu "Yêu cầu:" | sửa | topic-06 thêm câu nêu nhu cầu bộ nhớ |
+| L05-B07 | Dạng gia tăng tổng quát | Tiêu đề dài | "Trung bình gia tăng" | sửa | Không |
+| L05-B08 | Thay $1/n$ bằng $\alpha$ | Bước hằng xuất hiện không có động cơ | "Bước học hằng"; câu mở theo nguồn tr.21 | sửa | topic-06 thêm lý do dùng bước hằng (nguồn tr.21) |
+| L05-B09 | Hai lựa chọn độc lập | Viết tắt trong tiêu đề | "Hai lựa chọn của Monte Carlo" | sửa | Không |
+| L05-B10 | Thuật toán MC | "Quy trình" không thống nhất | "Thuật toán dự đoán Monte Carlo" | sửa | topic-03 đổi tiêu đề mục |
+| L05-B11 | MC trên $e_2$ | Viết tắt trong tiêu đề | "Monte Carlo trên lượt thứ hai" | sửa | Không |
+| L05-B12 | Tính chất thống kê | Tiêu đề "giả thiết" nhưng nội dung là kết quả; câu mở nặng | "Tính không chệch và hội tụ của Monte Carlo"; ba thẻ; chú thích giả thiết | sửa | topic-11 đổi tiêu đề "Tính không chệch và điều kiện hội tụ", thêm câu mở và đoạn bước hằng |
+| L05-B13 | Kiểm tra chọn mẫu | Viết tắt trong tiêu đề | "Kiểm tra chọn mẫu Monte Carlo" | sửa | Không |
+| L05-C01 | Hạn chế MC tạo nhu cầu TD | Câu chữ tiêu đề | "Cập nhật khi lượt chưa kết thúc" | sửa | topic-07 câu mở nêu MC chỉ cập nhật khi lượt kết thúc |
+| L05-C02 | Thay $G_{t+1}$ bằng $V(S_{t+1})$ | Phép thay và tên bootstrap chỉ có trong ghi chú | "Mục tiêu một bước"; hiển thị $G_t\approx R_{t+1}+\gamma V(S_{t+1})$; gọi tên bootstrap | sửa | topic-07 đặt công thức xấp xỉ trước ví dụ, theo đúng thứ tự trang |
+| L05-C03 | Tính tay một bước | Tiêu đề dài | "Một bước cập nhật TD" | sửa | Không |
+| L05-C04 | Công thức TD(0) | Tên "sai phân thời gian" chưa giải thích | Chú thích về hiệu hai dự đoán liên tiếp | sửa | topic-07 thêm câu giải thích tên gọi |
+| L05-C05 | Thuật toán TD(0) | Tiêu đề | "Thuật toán TD(0)" | sửa | topic-08 đổi tiêu đề "Thuật toán TD(0) và các trường hợp biên" |
+| L05-C06 | Hai trường hợp biên | Tự chuyển khiên cưỡng | Câu mở gắn tự chuyển với việc đứng yên ở HW05 bài 6 | sửa | topic-08 thêm cùng liên hệ |
+| L05-C07 | TD(0) trên $e_1$ | Không | Giữ | giữ | Không |
+| L05-C08 | TD(0) trên $e_2$ | Không | Giữ | giữ | Không |
+| L05-C09 | Chi phí hai thuật toán | Tiêu đề không nêu nội dung bảng | "Chi phí bộ nhớ và tính toán" | sửa | Không |
+| L05-C10 | Kiểm tra một bước TD(0) | Không | Giữ | giữ | Không |
+| L05-D01 | Hai bảng khác nhau | Câu nối sang giá trị chuẩn chỉ trong ghi chú | "Monte Carlo và TD(0) trên cùng dữ liệu"; hộp nêu nhu cầu giá trị chuẩn | sửa | topic-05 câu mở nối từ hai bảng |
+| L05-D02 | Giá trị chuẩn | Thiếu câu nêu vì sao tính được $v_\pi$ | Câu mở: mô hình đã biết trong ví dụ | sửa | topic-05 cùng câu |
+| L05-D03 | Chuỗi dài | Lý do đưa chuỗi dài chưa rõ | "Chuỗi dài với thưởng thưa"; chú thích nêu lý do | sửa | topic-12 câu mở; tiêu đề "Chuỗi dài và biến thiên của lợi tức" |
+| L05-D04 | Hai lợi tức cùng $S$ khác xa nhau | Tiêu đề nhấn chi tiết số mũ | "Biến thiên của lợi tức" | sửa | Không |
+| L05-D05 | Kỳ vọng mục tiêu TD lệch $v_\pi$ | Thuật ngữ độ chệch (nguồn tr.26) không được gọi tên | "Độ chệch của mục tiêu TD"; gọi tên độ chệch sau ví dụ số | sửa | topic-10 đổi tiêu đề; định nghĩa độ chệch sau ví dụ số; độ chệch của $G_t$ bằng 0 |
+| L05-D06 | So sánh phương sai | Kết quả dương chỉ trong ghi chú | "Phương sai của mục tiêu"; hiển thị bất đẳng thức và giới hạn | sửa | topic-13 đổi tiêu đề "Phương sai của mục tiêu" |
+| L05-D07 | Điều kiện hội tụ TD(0) | Tiêu đề không gọi tên kết quả | "Điều kiện hội tụ của TD(0)"; "với xác suất 1" | sửa | Không (đã có trong topic-11) |
+| L05-D08 | Chuyển sang dùng lại dữ liệu | Bước chuyển từ D07 đột ngột | "Dự đoán trên dữ liệu cố định"; câu mở nối (Sutton–Barto §6.3) | sửa | topic-16 đổi tiêu đề, thêm câu nối từ mẫu mới |
+| L05-D09 | Cập nhật theo lô | Tiêu đề dài | "Cập nhật theo lô" | sửa | Không |
+| L05-D10 | Nghiệm MC theo lô | Tiêu đề không thống nhất với D09 | "Nghiệm Monte Carlo theo lô" | sửa | Không |
+| L05-D11 | Nghiệm TD theo lô | Như trên | "Nghiệm TD theo lô" | sửa | Không |
+| L05-D12 | Kiểm tra kết luận | Không | Giữ | giữ | Không |
+| L05-E01 | Lựa chọn phương pháp | Không | Giữ | giữ | Không |
+| L05-E02 | Năng lực sau bài | Trùng chức năng A02/E04; thiếu bảng tổng kết nguồn tr.31, 33 | "Tổng kết Monte Carlo và TD(0)"; bảng sáu tiêu chí có điều kiện; câu nối Bài 06 | sửa | topic-15 đổi tiêu đề "Tổng kết, bài tập và tài liệu đọc"; thay đoạn năng lực bằng bảng tổng kết và câu nối Bài 06 |
+| L05-E03 | Bài tập tuần 5 | Tiêu đề dài | "Bài tập tuần 5" | sửa | Không |
+| L05-E04 | Kiểm tra lựa chọn | Không | Giữ | giữ | Không |
+| L05-E05 | Tài liệu đọc | Tiêu đề dài | "Tài liệu đọc" | sửa | Không |
+
+Đề xuất bị điều chỉnh: L05-D05 ban đầu đặt định nghĩa độ chệch đầu trang; biên tập chuyển xuống sau ví dụ số để không mở khái niệm bằng định nghĩa. L05-B01 bỏ dòng "Ước lượng $v_\pi(S)$ và $v_\pi(X)$ từ các lượt" vì hộp ý tưởng MC đã nêu nhiệm vụ và trang cần vừa khung. L05-D06 gộp hai thẻ nguồn ngẫu nhiên thành một câu để có chỗ cho bất đẳng thức. L05-D08 bỏ hộp cuối, chuyển nhiệm vụ dự đoán $A$ lên dòng dữ kiện. Không có đề xuất bị từ chối.
+
+### Sai lệch so với nguồn
+
+- L05-E02 khôi phục bảng so sánh nguồn tr.31 và tổng kết tr.33 ở dạng có điều kiện; các nhận định không điều kiện của nguồn (TD phương sai thấp hơn, học nhanh hơn với thưởng thưa) không được giữ, lý do đã ghi ở các mục trước của nhật ký.
+- L05-E02 thêm câu nối Bài 06 theo câu hỏi mở nguồn tr.32 về cải thiện chính sách.
+- L05-B01 đưa ý tưởng MC nguồn tr.17 lên mặt trang; L05-B08 đưa lý do bước hằng nguồn tr.21 lên mặt trang; L05-C02 đưa thuật ngữ bootstrap nguồn tr.24 lên mặt trang.
+- L05-D05 dùng thuật ngữ độ chệch theo nguồn tr.26, kèm điều kiện để độ chệch bằng 0.
+
+### Kiểm tra
+
+- `git diff --check` đạt; 50 thẻ `<section>` mở và đóng; 45 `data-slide-id` duy nhất; 45 `data-note-topic-id`.
+- Số tính lại: $0.2(-1)+0.8(0.5)=0.2$; $1/5-11/21=-34/105$; các số khác giữ nguyên từ bản đã kiểm.
+- Playwright Chromium, server `python3 -m reloadserver 8766` tại gốc kho (cổng 8765 đang do dự án khác dùng): cả 45 trang ở 1600×900 và 390×844, tắt hiệu ứng chuyển trang, mở bằng `Reveal.slide(h, v, 99)`. Không có lỗi console hoặc trang, không có `.katex-error`, không có yêu cầu mạng ngoài, không tràn ngang; chiều cao nội dung mọi trang ≤ 720; cỡ chữ thân nhỏ nhất 0.82em. Ảnh đã xem: A04, B01, B12, D02, D05, D06, D08, E02.
+- Trình xem học liệu: 642 công thức KaTeX, không có `.katex-error`, không có yêu cầu mạng ngoài. Lỗi CSP về script nội dòng xuất hiện ở mọi ghi chú, kể cả Bài 04, do script tự nạp lại của reloadserver; không liên quan thay đổi.
+
+### Tự kiểm no-ai-slop Edit
+
+Phạm vi: mọi tiêu đề, câu và chú thích mới trên mặt trang; ghi chú diễn giả đã sửa (A02, A04, A05, B01, B03, B12, C02, D05, E02); các đoạn mới hoặc sửa trong lecture-note.md (đoạn mở đầu, topic-01, 02, 04, 06, 07, 08, 05, 12, 10, 13, 11, 16, 15); các mục hiệu chỉnh trong outline.md và storyboard.md. Đối chiếu eval.md: giữ ý và không thêm khẳng định ngoài nguồn (mục nguyên tắc 1, 7, 8); không dùng từ cấm hoặc trạng từ rỗng; không có tương phản nhị phân, câu hỏi tu từ, kết thúc tóm tắt, câu "sâu sắc" cuối đoạn; không có gạch ngang dài mới; dấu hai chấm chỉ dùng cho nhãn ("Lượt:", "Yêu cầu:", "Ý tưởng Monte Carlo:", "Câu hỏi:") và danh sách; chữ đậm chỉ cho thuật ngữ được định nghĩa. Hai câu dẫn bảng trong ghi chú ("Bảng dưới thu gọn…", "Các kết quả dưới đây cho biết…") được giữ vì có chức năng định hướng nội dung học. Văn phong học thuật và độ chính xác toán học được ưu tiên hơn lời khuyên về giọng cá nhân của kỹ năng.
+
+Quill (Outline, Threads, Concept, chỉ dùng như danh sách kiểm): thứ tự khái niệm lượt → lợi tức → chọn mẫu → trung bình → bước học → thuật toán → tính chất; mục tiêu một bước → bootstrap → sai số TD; độ chệch → phương sai → hội tụ → dữ liệu cố định → tổng kết. Thuật ngữ "độ chệch", "bootstrap", "lượt", "bước học hằng" được khai báo trước lần dùng trong cả deck và ghi chú. Không tạo quill.json.
+
+Chưa commit, chưa push. Cần rà toán học và mạch lập luận trên các trang đã đổi nội dung trước khi commit.
+
+### Rà soát độc lập và vòng sửa — 01-10-2026
+
+Ba người rà soát độc lập, chỉ đọc, trên bản nháp đã đóng băng sau lượt biên tập ở trên: (1) toán học và RL; (2) mạch lập luận và góc nhìn sinh viên; (3) phê bình học thuật kèm no-ai-slop Detect. Theo thông tin điều phối chuyển cho biên tập, cả ba là Agent fork, Opus 5.5. Biên tập ghi vai trò theo thông báo của điều phối, không tự kiểm được lệnh gọi công cụ. Không có phát hiện mức chặn bàn giao hoặc nghiêm trọng. Điều phối chuyển các phát hiện dưới dạng danh sách đã hợp nhất, không kèm mức độ từng mục. Vì vậy cột mức độ ghi "≤ trung bình" cho mọi mục; riêng mục cỡ chữ giả mã được đánh dấu theo bằng chứng đo.
+
+| Mức độ | Trang | Vấn đề | Quyết định | Trạng thái |
+|---|---|---|---|---|
+| ≤ trung bình (cỡ chữ dưới ngưỡng 0.75em) | L05-B10, L05-C05 | Chữ giả mã 0.82em so với nền trang (người rà đo được khoảng 23px) | Nâng CSS cục bộ `.algorithm` lên 0.92em (30.9px theo tọa độ trang 1280×720); trang cao 633 và 643 | đã sửa |
+| ≤ trung bình | L05-B07; L05-C02 | Chưa gọi tên "mục tiêu cập nhật"; C02 cần nêu mục tiêu $G_t$ của MC bị thay | B07 thêm câu về mục tiêu cập nhật; C02 nêu mục tiêu một bước thay $G_t$; topic-06, topic-07 đồng bộ | đã sửa |
+| ≤ trung bình | L05-C02, topic-07 | Dấu ≈ giữa $G_t$ và mục tiêu TD dễ hiểu sai | Bỏ ≈; viết $G_t=R_{t+1}+\gamma G_{t+1}$, thay $G_{t+1}$ bằng $V(S_{t+1})$, ước lượng của $v_\pi(S_{t+1})=\mathbb E_\pi[G_{t+1}\mid S_{t+1}]$ | đã sửa |
+| ≤ trung bình | L05-C04 | Giải thích $\delta_t$ chưa khớp topic-07 | Hiệu giữa mục tiêu dựa trên dự đoán tại $t+1$ và dự đoán tại $t$, cả hai nơi | đã sửa |
+| ≤ trung bình | L05-B12, topic-11 | Thiếu định nghĩa không chệch; chú thích giả thiết ngắt dòng gượng; ghi chú diễn giả có câu thừa | Thêm định nghĩa; chú thích một câu liền với các giả thiết; ghi chú nêu tính Markov cho thời điểm ghé ngẫu nhiên; bỏ hai câu thừa | đã sửa |
+| ≤ trung bình | L05-B08, topic-06 | Lý do bước hằng dựa vào môi trường không dừng, ngoài giả thiết của bài | Nêu rõ ngoài giả thiết; $\alpha=0.5$ để đối chiếu ví dụ nguồn và thấy trọng số theo thời gian; không dùng dấu hai chấm tiết lộ | đã sửa |
+| nhẹ | L05-B03 | Câu mở thiếu quy ước giá trị trạng thái kết thúc | Thêm "giá trị ở trạng thái kết thúc bằng $0$" | đã sửa |
+| nhẹ | L05-A05, topic-01 | "robot" không thống nhất thuật ngữ tác tử | "Tác tử"; "chính sách luôn chọn hành động sang phải, ký hiệu $a$" | đã sửa |
+| nhẹ | L05-C03 | Bảng cho trước không rõ xuất xứ | Chú thích nêu đây là kết quả TD(0) sau $e_1$, được tính lại ở lượt thứ nhất; topic-07 đồng bộ | đã sửa |
+| nhẹ | L05-C06, topic-08 | Dẫn chiếu bài tập trên mặt trang dài | Mặt trang chỉ nêu tự chuyển khi đứng yên; HW05 bài 6 và "số liệu minh họa" vào ghi chú | đã sửa |
+| nhẹ | L05-D01, topic-05 | Câu hộp thiếu cấu trúc mục đích | "Để xác định bảng nào gần $v_\pi$ hơn, cần giá trị chuẩn của môi trường." | đã sửa |
+| ≤ trung bình | L05-D02, D03, D04 | Thiếu câu nối ra sang độ chệch và phương sai; lý do chuỗi dài nằm ở chú thích; thứ tự xét chưa nêu | D02 chú thích nối ra; D03 câu lý do làm câu mở; D04 chú thích nêu thứ tự kỳ vọng rồi phương sai; topic-05, topic-12 đồng bộ | đã sửa |
+| ≤ trung bình | L05-D06, topic-13 | Bất đẳng thức thiếu giả thiết trên mặt trang; gộp nguồn ngẫu nhiên với sai số tất định của $V$ | Thêm giả thiết Markov và mômen bậc hai hữu hạn; tách hai nguồn | đã sửa |
+| nhẹ | L05-D09 | Ký hiệu $k$, $\Delta_k$, $\varepsilon$, $K$ được khai báo sau khi dùng; thẻ dày | Khai báo $k$, $\Delta_k(s)$ đầu thẻ; $\varepsilon$, $K$ ở bước 1; bỏ hai dòng thừa | đã sửa |
+| ≤ trung bình | L05-E02, topic-15 | Ô hội tụ chỉ liệt kê điều kiện, chưa nêu kết quả; ô phương sai MC không so sánh được; thiếu giả thiết; ghi chú có câu bình luận quy trình về nguồn | Ô hội tụ "về $v_\pi$ khi …"; MC "có thể lớn khi lượt dài"; chú thích giả thiết; bỏ câu bình luận nguồn (giữ ở đây: bài giảng gốc tr.26–28, 31 so sánh MC/TD bằng nhận định không kèm điều kiện; bảng chỉ giữ nhận định đã chứng minh hoặc dẫn nguồn) | đã sửa |
+| nhẹ | topic-10 | "**có thể** chệch, không bắt buộc luôn chệch" vừa rào đón vừa in đậm trang trí | "Mục tiêu TD chệch khi sai số ở các trạng thái kế tiếp không triệt tiêu trong kỳ vọng." | đã sửa |
+| nhẹ | topic-11; topic-03 | Câu mở siêu ngôn ngữ; ghi chú thiếu dẫn chiếu khớp vị trí B12 | Bỏ câu "Các kết quả dưới đây…"; cuối topic-03 dẫn chiếu mục tính không chệch và điều kiện hội tụ | đã sửa |
+| nhẹ | L05-A04 (ghi chú diễn giả) | Câu kể tiến trình | "…được định nghĩa cùng ví dụ chuỗi ngắn" | đã sửa |
+| nhẹ | L05-B12, D06, D07, E02 | Lặp cụm "không có bảo đảm…" | Mỗi trang nêu điều kiện một lần dưới dạng khẳng định có điều kiện; mặt trang D06, D07, E02 còn 0 lần, B12 còn 1 lần trong ghi chú diễn giả | đã sửa |
+| nhẹ | L05-E01/E02 | Đề xuất đổi thứ tự hai trang kết luận | Từ chối. E01 trả lời trực tiếp bài toán mở đầu; E02 tổng kết tính chất và nối sang Bài 06, phù hợp làm trang khép bài trước bài tập | từ chối |
+
+Để giữ các trang vừa khung sau khi thêm chữ: C02 và D03 dùng hình cỡ ngắn; D02 (150px) và D06 (170px) có giới hạn hình cục bộ; thẻ thứ ba của B12 và hai thẻ của D03 được rút gọn. Không thu nhỏ chữ.
+
+Kiểm tra sau vòng sửa: `git diff --check` đạt; 50 thẻ `<section>` mở và đóng; 45 `data-slide-id` duy nhất. Playwright trên cổng 8766 với `wait_until="load"`, tắt hiệu ứng chuyển trang, kiểm tra các trang đã đổi ở 1600×900 và 390×844: không có lỗi console hoặc trang, không có `.katex-error`, không có yêu cầu mạng ngoài, không tràn ngang; chiều cao nội dung ≤ 720. Ảnh đã xem: B12, C02, D09, E02. Tự kiểm no-ai-slop Edit trên các câu mới theo eval.md: không có tương phản nhị phân, câu rào đón lặp, dấu hai chấm tiết lộ hay chữ đậm trang trí; dấu hai chấm chỉ dùng cho nhãn và khai báo ký hiệu. Chưa commit, chưa push.
+
+### Rà lại sau vòng sửa — 01-10-2026
+
+Người rà toán học và người rà mạch lập luận rà lại các trang đã đổi. Theo thông báo của điều phối, kết quả là **đạt**, kèm ba phát hiện nhẹ. Người rà mạch xác nhận lý do từ chối đổi thứ tự E01/E02 là hợp lệ; lý do được ghi thêm vào storyboard.
+
+| Mức độ | Trang | Vấn đề | Quyết định | Trạng thái |
+|---|---|---|---|---|
+| nhẹ (toán) | L05-B12, topic-11 | Danh sách giả thiết hội tụ thiếu "quá trình hữu hạn" | Thêm vào đầu danh sách trên chú thích B12; topic-11 đã có "quá trình phần thưởng Markov hữu hạn" | đã sửa |
+| nhẹ (mạch) | L05-B12, topic-11 | "Mỗi mẫu giữ trọng số $\alpha$" sai với bước hằng | Mẫu mới nhất có trọng số $\alpha$, mẫu cũ hơn giảm theo $(1-\alpha)$; ghi chú diễn giả nêu trọng số $\alpha(1-\alpha)^j$; topic-11 đồng bộ | đã sửa |
+| nhẹ (toán) | L05-D02, topic-05 | Câu nối ra ngụ ý độ chệch và phương sai giải thích toàn bộ độ lệch | "Một phần độ lệch…; phần còn lại phụ thuộc bước học, khởi tạo và số mẫu" | đã sửa |
+
+Để B12 vừa khung sau câu trọng số mới, ba thẻ được rút gọn; ý "khởi tạo còn ảnh hưởng" của bước hằng chuyển khỏi thẻ, vẫn nằm ở chú thích L05-B08 và ghi chú diễn giả. Chú thích B12 nêu đích hội tụ $v_\pi(s)$ một lần cho cả hai kết quả. Kiểm tra: `git diff --check` đạt; Playwright cổng 8766, `wait_until="load"`, B12 (cao 679) và D02 (cao 654) ở 1600×900 và 390×844: không lỗi, không `.katex-error`, không yêu cầu mạng ngoài, không tràn. Chưa commit, chưa push.
+
+Phát hiện của điều phối khi kiểm trình duyệt ở 1600×900 (nhẹ, bố cục): đáy nội dung đè hoặc chạm đỉnh dòng chân trang (863px) ở B03, C02, D06, E02, B01, B07, D01. Đã sửa bằng CSS cục bộ chỉ cho bảy trang này: thu khoảng cách dưới tiêu đề, quanh `.math-large`, `.box` và `.caption`; thu lề công thức hiển thị ở B03 và B07. Không đổi chữ, không giảm cỡ chữ, không sửa `lecture-slide.css`. Sau sửa, `footer_check.py` không còn trang nào đè ngoài mạch A, nơi chân trang bị ẩn. Playwright ở 1600×900 và 390×844 không có lỗi và không tràn. Trạng thái: đã sửa.
+
+### Kiểm định cuối của điều phối — 01-10-2026
+
+Bằng chứng vai trò theo lệnh gọi công cụ của phiên chính: một tác tử biên tập (Agent, `subagent_type: fork`, kế thừa Opus 5.5 của phiên; được tiếp tục bằng SendMessage cho ba vòng sửa) và ba tác tử rà soát chỉ đọc chạy song song (Agent, `fork`): toán học và RL; mạch lập luận và góc nhìn sinh viên; phê bình học thuật kèm no-ai-slop Detect. Rà lại sau sửa dùng lại hai tác tử toán học và mạch lập luận qua SendMessage. Mức effort của phiên không xác nhận được từ trong phiên. Ghi chú: trong bảng rà lại, nguồn của hai phát hiện đã được điều phối hiệu chỉnh (trọng số bước hằng ở B12 do người rà mạch nêu; câu nối D02 do người rà toán nêu).
+
+Kiểm trình duyệt do điều phối tự chạy (Playwright Chromium, server `reloadserver` cổng 8766 vì cổng 8765 đang phục vụ dự án khác; tắt hiệu ứng chuyển trang): cả 45 trang ở 1600×900 và 390×844 không có lỗi console hoặc trang, không có `.katex-error`, không có tài nguyên hỏng hay yêu cầu mạng ngoài, không cuộn ngang; không trang nào có nội dung vượt khung 720 hoặc đè chân trang; chữ giả mã B10, C05 nay ≥ 0.75em. Ảnh đã xem: A04, B03, B10, B12, C02, D06, D09 (hẹp), E02. Ở 390px Reveal chuyển sang chế độ cuộn dọc. Trình xem ghi chú: không `.katex-error`, không yêu cầu mạng ngoài; lỗi CSP về script nội dòng có sẵn ở trình xem (tái hiện trên ghi chú Bài 04), không do thay đổi này. `git diff --check` đạt.
