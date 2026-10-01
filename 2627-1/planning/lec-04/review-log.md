@@ -1084,3 +1084,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, câu 1 “giá trị không được khôi phục” mơ hồ; lời giải chỉ nêu $V(s_1)=0$, bỏ qua hệ quả $V(s_0)\to10$ thay vì $27$ (đã kiểm: $x=\max\{1+0{,}9x;0\}$ có nghiệm $x=10$). Nhẹ, notes có câu khuyên răn “Phải kiểm tra điều kiện của thuật toán trước khi diễn giải đầu ra.” Nhẹ, tiêu đề dài.
 - Quyết định: sửa. Tiêu đề “Kiểm tra lịch cập nhật và mô hình”. Câu 1 yêu cầu giới hạn của $V(s_0)$, giá trị $V(s_1)$, so sánh với $v_*=(27,30)$ và nêu điều kiện bị vi phạm. Lời giải thêm phép tính $V(s_0)\to10$. Xóa câu khuyên răn trong notes. Đồng bộ tiêu đề, yêu cầu và đáp án ở outline, storyboard.
 - Kiểm tra: 583/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-G01 — Kết quả của bài toán lập kế hoạch
+
+- Trang muốn nói: quay lại bài toán lập kế hoạch đã nêu ở phần mở đầu với hai lời giải, nghiệm $(b,b)$, $(27,30)$ và cách kiểm chứng (ổn định chính xác hoặc phần dư).
+- Vấn đề: nhẹ, chưa đối chiếu với các mục tiêu ở trang mở đầu; phần so sánh cách tổ chức đã có ở trang sau.
+- Quyết định: giữ mặt trang và tiêu đề. Notes thêm một câu ánh xạ bốn mục tiêu ở trang mở đầu với các phép tính, hai thuật toán, chặn phần dư và bảng so sánh. Câu đầu ra cho bài sau đặt ở trang tài liệu đọc.
+- Kiểm tra: mặt trang không đổi; chạy lại kiểm hai kích thước, không tràn, không lỗi.
