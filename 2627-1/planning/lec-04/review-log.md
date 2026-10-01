@@ -1021,3 +1021,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, hộp cũ nêu nhu cầu “phép kiểm thực hành cần đại lượng tính được” nhưng trang lưới chen giữa trước khi phần dư được dùng. Nhẹ, không gợi lại tính co của $T_\pi$ đã có, làm tính co của $T_*$ trông như kết quả mới tách rời. Nhẹ, tiêu đề dài.
 - Quyết định: sửa. Tiêu đề “Hội tụ của lặp giá trị”. Câu mở nối với $T_\pi$ (cùng giả thiết, $T_*$ cũng co). Câu giữa “Do đó $T_*$ có điểm bất động duy nhất…”. Hộp nêu đúng kết luận của trang: chặn theo $\gamma^k$ chứa $v_*$ chưa biết nên chưa là điều kiện dừng; câu nhu cầu đại lượng tính được chuyển lên đầu trang phần dư (giữ thứ tự E05–E07, bác đề xuất đổi thứ tự). Notes thêm chặn $30\cdot0{,}9^k$ cho MDP hai trạng thái (đã kiểm: $\|V_0-v_*\|_\infty=30$; sai số thật $27\cdot0{,}9^{k-1}=30\cdot0{,}9^k$ với $k\ge1$). Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: lần đầu “$0\le\gamma<1$” bị ngắt dòng giữa công thức; viết lại câu mở, 635/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-E06 — Lan truyền giá trị trên lưới năm ô
+
+- Trang muốn nói: lặp giá trị đồng bộ trên mô hình có trạng thái kết thúc; mỗi lượt truyền giá trị thêm một ô và bảng đạt điểm bất động $V_4$. Bảng số đã kiểm.
+- Vấn đề: nhẹ, mặt trang không ghi $V_4$ là điểm bất động, trong khi trang phần dư và câu hỏi kiểm tra trên lưới dùng điều này. Nhẹ, notes liệt kê sẵn mọi giá trị nhìn trước từ $V_4$, trùng đáp án câu hỏi kiểm tra mới trên lưới.
+- Quyết định: sửa. Tiêu đề giữ. Chú thích thêm “$V_5=V_4$”. Notes ghi $V_4=v_*$ và kết luận chính sách đi phải, bỏ danh sách số (chuyển sang lời giải của trang kiểm tra lưới). Thuật ngữ “giá trị nhìn trước” đã thống nhất từ commit 0.
+- Kiểm tra: 666/720; hai kích thước đạt, không lỗi; đã xem ảnh.
