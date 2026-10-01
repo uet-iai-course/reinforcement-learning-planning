@@ -1371,3 +1371,9 @@ Nguồn phát hiện: tác tử kết nối và mạch viết rà toàn bộ 45 
 - Phát hiện (trung bình ×2): hộp dùng “phần dư của toán tử tối ưu” trước khi $T_*$ và $\Delta_*$ được định nghĩa (E03–E04); câu cơ chế “… đánh giá đúng một lượt cho giá trị nhìn trước lớn nhất” không rõ chủ ngữ và kết quả.
 - Quyết định: hộp thành “Chọn tham lam theo bảng hiện tại rồi đánh giá đúng một lượt: giá trị mới tại mỗi trạng thái bằng giá trị nhìn trước lớn nhất. Đó là lặp giá trị (value iteration); điều kiện dừng dùng phần dư, như ở đánh giá chính sách.” Notes ghi phần dư của toán tử tối ưu được định nghĩa cùng quy trình lặp giá trị. Storyboard E01 đồng bộ.
 - Kiểm tra: 16:9 cao 636/720, không cờ đè chân trang, hai kích thước đạt; đã xem ảnh 16:9.
+
+#### L04-E07 — Sửa theo rà mạch toàn bài
+
+- Phát hiện (nhẹ, toán): “sai số không quá $0{,}1$ khi: $\Delta_*(V)\le0{,}01$” đọc như điều kiện cần và đủ; đây chỉ là điều kiện đủ.
+- Quyết định: “Với $\gamma=0{,}9$, sai số $\le0{,}1$ nếu:”. Bản trung gian “… không quá $0{,}1$ nếu:” làm dòng xuống hàng và trang cao 703, hộp đè chân trang; đã rút bằng ký hiệu $\le$.
+- Kiểm tra: 16:9 cao 659/720, không cờ đè chân trang, hai kích thước đạt; đã xem ảnh 16:9.
