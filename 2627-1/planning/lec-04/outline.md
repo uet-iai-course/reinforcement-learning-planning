@@ -325,7 +325,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Giá t
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Giá trị 30 khác với giá trị nhìn trước 12.9 vì từ $s_1$ chính sách mới chọn $b$ ở mọi lần quay lại. Kết quả $(10,30)$ vẫn có thể tạo lựa chọn tốt hơn tại $s_0$.
 
-#### L04-C07 — Kiểm tra lựa chọn theo giá trị chính sách
+#### L04-C07 — Kiểm tra cải thiện chính sách
 
 - **Vai trò và mục tiêu:** Kiểm tra cải thiện; MT3
 - **Luận điểm trung tâm:** Tham lam phải được tính theo giá trị của chính sách đang được cải thiện.

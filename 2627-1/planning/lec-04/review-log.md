@@ -937,3 +937,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, hệ quả chính (đối chiếu định lý, giá trị tiếp nối 11 → 30) chỉ có trong notes, trong khi đó là ý nối sang C07. Nhẹ, “$x=1+0{,}9x$; $y=3+0{,}9y$” không nói đây là hệ Bellman của $\pi_1$. Nhẹ, notes dùng “Điểm $12{,}9$”.
 - Quyết định: sửa. Tiêu đề “Lần cải thiện thứ nhất”. Thẻ phải: “Hệ Bellman của $\pi_1$: …”. Thêm hộp “$v_{\pi_1}\ge v_{\pi_0}$ theo từng trạng thái; giá trị tiếp nối tại $s_1$ tăng từ 11 lên 30.” Notes nêu $x,y$ và đổi sang “giá trị nhìn trước”. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: 658/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-C07 — Kiểm tra cải thiện chính sách
+
+- Trang muốn nói: lần cải thiện thứ hai phải dùng $v_{\pi_1}=(10,30)$; với giá trị này, tại $s_0$ chọn $b$ vì $27>10$.
+- Vấn đề: nhẹ, tiêu đề “Kiểm tra lựa chọn theo giá trị chính sách” mơ hồ, chưa theo mẫu “Kiểm tra” + tên khái niệm của mạch. Nhẹ, câu 3 “Giải thích sự khác biệt so với cải thiện từ $\pi_0$.” chưa nói khác biệt ở đâu.
+- Quyết định: sửa. Tiêu đề “Kiểm tra cải thiện chính sách” (dùng chữ, không đưa $\pi_1$ vào tiêu đề; tiêu đề chữ hoa làm sai ký hiệu toán viết thường). Câu 3: “Giải thích vì sao lựa chọn tại $s_0$ khác lần cải thiện từ $\pi_0$.” Lời giải ghi phép tính $1+0{,}9\cdot10=10$ và $0+0{,}9\cdot30=27$. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 518/720; hai kích thước đạt, không lỗi; đã xem ảnh.

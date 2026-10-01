@@ -155,10 +155,10 @@ Giá trị trạng thái là trung bình theo chính sách; giá trị của t�
 <aside class="notes"><p>Tại $s_0$, $q_{\pi_0}(s_0,a)=1+0{,}9\cdot10=10$ và $q_{\pi_0}(s_0,b)=0+0{,}9\cdot11=9{,}9$. Vì vậy cải thiện lần đầu chỉ đổi hành động ở $s_1$. Với $x=v_{\pi_1}(s_0)$, $y=v_{\pi_1}(s_1)$, hệ cho $x=10$, $y=30$. Giá trị mới tại $s_1$ là 30 vì chính sách $\pi_1$ chọn $b$ tại mọi lần ở $s_1$. Giá trị nhìn trước $12{,}9$ trước đó chỉ chọn $b$ một lần rồi tiếp tục theo $\pi_0$. Giá trị tiếp nối tăng từ 11 lên 30 có thể thay đổi lựa chọn tại $s_0$ ở lần cải thiện sau.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 18–19; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.2–4.3, tr. 79–80</p></aside>
 </section>
 <section data-slide-id="L04-C07">
-<h2>Kiểm tra lựa chọn theo giá trị chính sách</h2>
+<h2>Kiểm tra cải thiện chính sách</h2>
 <p>Cho $\pi_1=(a,b)$ và giá trị chính xác $v_{\pi_1}=(10,30)$.</p>
-<div class="grid2"><div><img class="figure" src="img/lec-04/dp04-two-state.svg" alt="Bốn chuyển tiếp của MDP hai trạng thái, dùng cùng dữ kiện để cải thiện chính sách pi1."/></div><div class="check"><strong>Câu hỏi:</strong><ol><li>Tính $q_{\pi_1}(s_0,a)$ và $q_{\pi_1}(s_0,b)$.</li><li>Xác định hành động mới tại $s_0$.</li><li>Giải thích sự khác biệt so với cải thiện từ $\pi_0$.</li></ol></div></div>
-<aside class="notes"><p><strong>Lời giải.</strong> $q_{\pi_1}(s_0,a)=10$; $q_{\pi_1}(s_0,b)=27$; chọn $b$. Giá trị tiếp nối tại $s_1$ tăng từ 11 lên 30, nên chính sách mới chuyển từ $s_0$ sang $s_1$.</p><p>Hành động tối đa hóa phần thưởng tức thời ở $s_0$ là $a$, nhưng phần giá trị tiếp nối thay đổi lựa chọn.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17–19</p></aside>
+<div class="grid2"><div><img class="figure" src="img/lec-04/dp04-two-state.svg" alt="Bốn chuyển tiếp của MDP hai trạng thái, dùng cùng dữ kiện để cải thiện chính sách pi1."/></div><div class="check"><strong>Câu hỏi:</strong><ol><li>Tính $q_{\pi_1}(s_0,a)$ và $q_{\pi_1}(s_0,b)$.</li><li>Xác định hành động mới tại $s_0$.</li><li>Giải thích vì sao lựa chọn tại $s_0$ khác lần cải thiện từ $\pi_0$.</li></ol></div></div>
+<aside class="notes"><p><strong>Lời giải.</strong> $q_{\pi_1}(s_0,a)=1+0{,}9\cdot10=10$; $q_{\pi_1}(s_0,b)=0+0{,}9\cdot30=27$; chọn $b$. Giá trị tiếp nối tại $s_1$ tăng từ 11 lên 30, nên chính sách mới chuyển từ $s_0$ sang $s_1$.</p><p>Hành động tối đa hóa phần thưởng tức thời ở $s_0$ là $a$, nhưng phần giá trị tiếp nối thay đổi lựa chọn.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17–19</p></aside>
 </section>
 </section>
 <section>

@@ -242,7 +242,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `thêm`. Khôi phục bước nguồn đã rút gọn; đây là đầu vào trực tiếp cho lần cải thiện kế tiếp.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-C07 — Kiểm tra lựa chọn theo giá trị chính sách
+### L04-C07 — Kiểm tra cải thiện chính sách
 
 - **Chức năng và nhu cầu học tập:** Kiểm tra cải thiện. Tham lam phải được tính theo giá trị của chính sách đang được cải thiện.
 - **Đầu vào và quan hệ với trang trước:** Giá trị sau lần đổi chính sách cung cấp dữ kiện cho một lần lựa chọn mới.
