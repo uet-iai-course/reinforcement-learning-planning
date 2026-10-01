@@ -1243,3 +1243,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện: (nghiêm trọng, hiển thị) điều phối viên kiểm trực quan toàn bài thấy hộp cuối đè lên dòng chân trang ở 1600×900 (đáy nội dung 694 px, chân trang 691 px). (Nhẹ, mạch viết) hộp nhắc lại ý của thẻ phải; thuật ngữ “chính sách trích” lệch với “chính sách tham lam theo $V$”.
 - Quyết định: sửa. Bỏ câu “Chính sách tham lam $(b,b)$ đã tối ưu.” trong thẻ phải; hộp cụ thể hóa thành “Chính sách tham lam theo $V_1$ là $(b,b)$ và đã tối ưu.” (bản hai dòng có “còn cách $v_*$ một khoảng 27” làm trang cao 703, đè chân trang, nên rút). Câu tổng quát “Chính sách tham lam có thể đã tối ưu khi bảng giá trị còn cách xa nghiệm” chuyển xuống notes. Trong outline và storyboard, “chính sách trích” đổi thành “chính sách tham lam (theo bảng)”.
 - Kiểm tra: 659/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9, hộp cách chân trang.
+
+#### L04-E08 — Sửa bổ sung sau rà lại
+
+- Phát hiện (nhẹ, mạch viết): xác định $\Delta_*(V_4)$ cần giá trị nhìn trước ở cả bốn ô chưa kết thúc, nhưng câu hỏi chỉ yêu cầu hai ô; “chính sách trích” lệch thuật ngữ.
+- Quyết định: câu 1 thành “Tính $T_*V_4$ (hai giá trị nhìn trước tại mỗi ô chưa kết thúc); xác định $\Delta_*(V_4)$ và chính sách tham lam theo $V_4$.” Lời giải ghi đủ tám giá trị: $c_1$: $3{,}122$ và $4{,}58$; $c_2$: $3{,}122$ và $6{,}2$; $c_3$: $4{,}58$ và $8$; $c_4$: $6{,}2$ và $10$ (đã tính lại), nên $T_*V_4=V_4$ và $\Delta_*(V_4)=0$. Outline và storyboard đồng bộ. Ghi nhận: hình lưới có chú thích “Mũi tên: chính sách tối ưu” gợi trước đáp án chính sách; giữ vì là hình nguồn dùng chung với trang lan truyền giá trị, phép tính phần dư vẫn là năng lực được đo.
+- Kiểm tra: 589/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.

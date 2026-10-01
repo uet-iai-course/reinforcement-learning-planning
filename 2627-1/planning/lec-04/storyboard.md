@@ -375,7 +375,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Đầu vào và quan hệ với trang trước:** Toán tử tối ưu, chặn phần dư và quy ước kết thúc được kiểm tra trên bảng $V_4$ của lưới.
 - **Sản phẩm và mục tiêu:** MT5; Tính giá trị nhìn trước từ $V_4$, kết luận $\Delta_*(V_4)=0$ và đặt thưởng đúng trên chuyển tiếp.
 - **Đầu ra cho trang sau:** Một lượt tính đúng vẫn có thể tốn kém; chi phí phụ thuộc số trạng thái và nhánh chuyển.
-- **Quyết định:** `thêm`. Đo cơ chế cực đại, phần dư và quy ước kết thúc. Rà ngày 2026-10-01: đổi dữ kiện từ $V_2$ sang $V_4$ vì đáp án cũ đã in sẵn trong bảng lan truyền ở trang trước.
+- **Quyết định:** `thêm`. Đo cơ chế cực đại, phần dư và quy ước kết thúc. Rà ngày 2026-10-01: đổi dữ kiện từ $V_2$ sang $V_4$ vì đáp án cũ đã in sẵn trong bảng lan truyền ở trang trước. Sửa bổ sung sau rà lại: câu 1 yêu cầu tính toàn bộ $T_*V_4$, vì xác định phần dư cần cả bốn ô chưa kết thúc.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
 ### L04-F01 — Chi phí một lượt quét

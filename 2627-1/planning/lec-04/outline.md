@@ -530,16 +530,16 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 - **Vai trò và mục tiêu:** Kiểm tra lặp giá trị; MT5
 - **Luận điểm trung tâm:** Phần dư bằng 0 chứng nhận điểm bất động; giá trị kết thúc giữ bằng không.
 - **Ý chính:** Trong lưới đã học, cho $V_4=(4{,}58;6{,}2;8;10;0)$, $\gamma=0{,}9$ và cùng quy ước thưởng. Bảng này không in sẵn các giá trị nhìn trước, nên câu hỏi đo được phép tính và phần dư.
-- **Ví dụ/hình dự kiến:** Hiển thị $V_4$ và sơ đồ biên; yêu cầu tính giá trị nhìn trước tại hai ô.
+- **Ví dụ/hình dự kiến:** Hiển thị $V_4$ và sơ đồ biên; yêu cầu tính giá trị nhìn trước tại mọi ô chưa kết thúc.
 - **Hình thức hóa:** Dùng HT11–HT12 và chặn phần dư.
 - **Kết nối vào:** Quy tắc đồng bộ và quy ước kết thúc được kiểm tra bằng hai phép tính trên bảng đã cho.
 - **Kết nối ra:** Một lượt tính đúng vẫn có thể tốn kém; chi phí phụ thuộc số trạng thái và nhánh chuyển.
 - **Nguồn:** NG1, tr. 25–28; câu kiểm tra từ dữ kiện nguồn.
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Phép tính có hai nhánh ở mỗi ô. Đi trái ở biên trái giữ nguyên trạng thái, nên giá trị tiếp nối là $V_4(c_1)$.
-- **Yêu cầu trên mặt trang:** Câu hỏi: Tính hai giá trị nhìn trước tại $c_1$ và tại $c_3$ từ $V_4$; xác định $\Delta_*(V_4)$ và chính sách tham lam. Giải thích vì sao $V_4(c_5)=0$ dù chuyển $c_4\to c_5$ nhận thưởng 10.
+- **Yêu cầu trên mặt trang:** Câu hỏi: Tính $T_*V_4$ (hai giá trị nhìn trước tại mỗi ô chưa kết thúc); xác định $\Delta_*(V_4)$ và chính sách tham lam theo $V_4$. Giải thích vì sao $V_4(c_5)=0$ dù chuyển $c_4\to c_5$ nhận thưởng 10.
 - **Kiến thức được đo:** MT5; các công thức và dữ kiện đã trình bày trước trang này.
-- **Đáp án/gợi ý trong ghi chú:** $c_1$: trái $3{,}122$, phải $4{,}58$; $c_3$: trái $4{,}58$, phải $8$; $T_*V_4=V_4$, $\Delta_*(V_4)=0$; chính sách đi phải tại $c_1,\ldots,c_4$. Thưởng 10 được nhận trên chuyển tiếp đi vào đích; sau kết thúc không còn phần thưởng tiếp nối.
+- **Đáp án/gợi ý trong ghi chú:** $c_1$: trái $3{,}122$, phải $4{,}58$; $c_2$: trái $3{,}122$, phải $6{,}2$; $c_3$: trái $4{,}58$, phải $8$; $c_4$: trái $6{,}2$, phải $10$; $T_*V_4=V_4$, $\Delta_*(V_4)=0$; chính sách đi phải tại $c_1,\ldots,c_4$. Thưởng 10 được nhận trên chuyển tiếp đi vào đích; sau kết thúc không còn phần thưởng tiếp nối.
 - **Tiêu chí đánh giá:** Tính đúng giá trị nhìn trước từ $V_4$, kết luận phần dư bằng 0 và đặt thưởng đúng trên chuyển tiếp.
 - **Thời gian hoạt động:** 1 phút lập phép tính, 1 phút trả lời, 1 phút đối chiếu; đã tính trong thời lượng của trang.
 
