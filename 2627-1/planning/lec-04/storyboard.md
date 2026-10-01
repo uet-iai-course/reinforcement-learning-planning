@@ -222,7 +222,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Đầu vào và quan hệ với trang trước:** Giá trị hành động cung cấp tiêu chí lựa chọn chính sách mới tại mọi trạng thái.
 - **Sản phẩm và mục tiêu:** MT3; Chọn hành động cực đại theo giá trị của chính sách cũ tạo chính sách không kém tại mọi trạng thái.
 - **Đầu ra cho trang sau:** Bảo đảm không giảm giá trị cần lập luận vượt ra ngoài một phép thử số.
-- **Quyết định:** `sửa`. Nêu đủ đầu vào và điều kiện của định lý; bổ sung quy tắc phá hòa từ sách.
+- **Quyết định:** `sửa`. Nêu đủ đầu vào và điều kiện của định lý. Quy tắc chọn khi hòa nằm trong ghi chú; tên "quy tắc phá hòa" được giới thiệu tại L04-D02, nơi lặp chính sách cần đến nó (giảm tải cho trang này).
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
 ### L04-C05 — Chứng minh định lý cải thiện

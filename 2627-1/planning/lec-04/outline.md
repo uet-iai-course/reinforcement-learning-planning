@@ -290,7 +290,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Giá t
 
 - **Vai trò và mục tiêu:** Quy tắc và định lý; MT3
 - **Luận điểm trung tâm:** Chọn hành động cực đại theo giá trị của chính sách cũ tạo chính sách không kém tại mọi trạng thái.
-- **Ý chính:** Đầu vào là giá trị chính xác $v_\pi$. Với mọi trạng thái, tính các $q_\pi$ rồi chọn $\pi'(s)\in\arg\max_a q_\pi(s,a)$. Giá trị $v_\pi$ được giữ nguyên trong toàn bộ bước chọn. Nếu hành động cũ cùng đạt cực đại thì giữ nó.
+- **Ý chính:** Đầu vào là giá trị chính xác $v_\pi$. Với mọi trạng thái, tính các $q_\pi$ rồi chọn $\pi'(s)\in\arg\max_a q_\pi(s,a)$. Giá trị $v_\pi$ được giữ nguyên trong toàn bộ bước chọn. Quy tắc chọn khi hòa (giữ hành động cũ nếu nó cùng đạt cực đại) chỉ nêu trong ghi chú; tên quy tắc phá hòa được giới thiệu tại L04-D02.
 - **Ví dụ/hình dự kiến:** Hai cột đầu vào cố định $v_\pi$ và đầu ra $\pi'$; không cập nhật giá trị xen giữa các trạng thái.
 - **Hình thức hóa:** HT7: Nếu $q_\pi(s,\pi'(s))\ge v_\pi(s)$ với mọi $s$, thì $v_{\pi'}(s)\ge v_\pi(s)$ với mọi $s$. Giả thiết: MDP hữu hạn chiết khấu, chính sách dừng xác định, giá trị chính xác.
 - **Kết nối vào:** Giá trị hành động cung cấp tiêu chí lựa chọn chính sách mới tại mọi trạng thái.

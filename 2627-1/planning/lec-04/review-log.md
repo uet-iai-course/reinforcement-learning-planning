@@ -1337,3 +1337,13 @@ Nguồn: báo cáo rà lại toán–câu nối của lượt sửa bổ sung A�
 - Phát hiện (nhẹ, đánh giá; ghi nhận ở lượt bổ sung E–G): hình dp04-five-cell.svg có bốn mũi tên phải và chú thích “Mũi tên: chính sách tối ưu”, làm lộ đáp án câu hỏi về chính sách tham lam theo $V_4$.
 - Quyết định: tạo `2627-1/img/lec-04/dp04-five-cell-plain.svg` từ cùng hình: giữ năm ô, nhãn c₁–c₅, viền kép của ô kết thúc, nhãn “Đích” và vòng “Trái ở c₁: ở lại”; bỏ bốn mũi tên chính sách, chú thích và marker không dùng; cắt khoảng trống đáy (chiều cao 247 → 195). `role="img"`, `<title>` “Lưới năm ô”, `<desc>` nêu hình không biểu diễn chính sách. E08 dùng hình mới với alt tương ứng; E06 giữ hình cũ. Storyboard (bảng tài sản) và outline (mục E08) đồng bộ.
 - Kiểm tra: SVG hợp lệ; E08 589/720 và E06 666/720, hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9 của E08.
+
+### Sửa theo rà mạch toàn bài
+
+Nguồn phát hiện: tác tử kết nối và mạch viết rà toàn bộ 45 trang tại `e4dcb5a` (fork, Opus 5.5 kế thừa phiên điều phối), sau khi mở đầu A02 và kết luận G01, G05 thay đổi. Báo cáo không có lỗi chặn bàn giao hay nghiêm trọng; ba lỗi trung bình (E01 ×2, C04) và các lỗi nhẹ dưới đây. Tác tử chỉnh sửa (fork, Opus 5.5) áp dụng tuần tự từ `6aa819c`, mỗi trang một commit; biên tập theo no-ai-slop (Edit) và tự đối chiếu eval.md.
+
+#### L04-C04 — Sửa theo rà mạch toàn bài
+
+- Phát hiện (trung bình, tải nhận thức): trang dồn năm ý (nhu cầu, chính sách tham lam, phá hòa, định lý, lý do chính sách tham lam thỏa giả thiết); phá hòa chưa có nhu cầu ở mạch C, chỉ được dùng từ lặp chính sách.
+- Quyết định: bỏ dòng “Phá hòa: …” khỏi mặt trang; quy tắc chọn khi hòa chuyển vào notes C04, nêu rằng tên “quy tắc phá hòa” được giới thiệu cùng định nghĩa chính sách ổn định (D02). Storyboard và outline C04 đồng bộ.
+- Kiểm tra: mặt trang chỉ còn nhắc “phá hòa” từ D02 trở đi (grep); 16:9 cao 521/720, không cờ đè chân trang, KaTeX không lỗi; hai kích thước đạt; đã xem ảnh 16:9.
