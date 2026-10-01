@@ -43,11 +43,11 @@
 <aside class="notes"><p>Cặp $(a,a)$ viết theo thứ tự $(s_0,s_1)$. Hành động có phần thưởng trước mắt cao nhất chưa đủ để kết luận chính sách tối ưu: so sánh hai hành động tại $s_0$ phải tính cả phần thưởng nhận được sau khi tới trạng thái kế tiếp. Mỗi chuyển tiếp ở đây có xác suất 1; không có bước lấy mẫu trong phép tính quy hoạch động.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17–18</p></aside>
 </section>
 <section data-slide-id="L04-A05">
-<h2>Kiểm tra dữ kiện và phần thưởng chiết khấu</h2>
+<h2>Kiểm tra tổng thưởng chiết khấu</h2>
 <p>Xuất phát tại $s_1$, theo $\pi_0=(a,a)$, với $\gamma=0{,}9$.</p>
-<div class="grid2"><div><img class="figure" src="img/lec-04/dp04-two-state.svg" alt="Mô hình hai trạng thái với chính sách ban đầu chọn a ở cả hai trạng thái."/></div><div class="check"><strong>Câu hỏi:</strong><ol><li>Xác định ba phần thưởng đầu và tổng chiết khấu của chúng.</li><li>Nêu dữ kiện còn thiếu nếu chỉ biết phần thưởng của từng hành động.</li></ol></div></div>
-<div class="math-large">$$G_t=\sum_{j=0}^{\infty}\gamma^jR_{t+1+j}.$$</div>
-<aside class="notes"><p><strong>Lời giải.</strong> Từ $s_1$: các phần thưởng là $2,1,1$; tổng $2+0.9+0.9^2=3.71$. Cần mô hình chuyển để xác định trạng thái tiếp theo; bảng thưởng riêng không đủ.</p><p>Phần thưởng đầu có chỉ số $t+1$ vì nó được nhận sau hành động tại thời điểm $t$. Tổng ba bước là một tổng cắt ngắn, chưa phải giá trị vô hạn.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 5, 17–18</p></aside>
+<div class="math-large">$G_t=\sum_{j=0}^{\infty}\gamma^jR_{t+1+j}$</div>
+<div class="grid2"><div><img class="figure" src="img/lec-04/dp04-two-state.svg" alt="MDP hai trạng thái với chính sách ban đầu chọn a ở cả hai trạng thái."/></div><div class="check"><strong>Câu hỏi:</strong><ol><li>Xác định ba phần thưởng đầu và tổng chiết khấu của chúng.</li><li>Nêu dữ kiện còn thiếu nếu chỉ biết phần thưởng của từng hành động.</li></ol></div></div>
+<aside class="notes"><p><strong>Lời giải.</strong> Từ $s_1$: các phần thưởng là $2$, $1$, $1$; tổng $2+0{,}9+0{,}9^2=3{,}71$. Cần mô hình chuyển để xác định trạng thái tiếp theo; bảng thưởng riêng không đủ.</p><p>Phần thưởng đầu có chỉ số $t+1$ vì nó được nhận sau hành động tại thời điểm $t$. Tổng ba bước là một tổng cắt ngắn, chưa phải giá trị vô hạn.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 5, 17–18</p></aside>
 </section>
 </section>
 <section>

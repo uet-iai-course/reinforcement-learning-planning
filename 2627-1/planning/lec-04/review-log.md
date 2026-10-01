@@ -832,3 +832,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, tiêu đề “Mô hình hai trạng thái” trùng nghĩa với “mô hình $p$”. Trung bình, $\pi_0=(a,a)$ chưa được nói là chính sách xác định, nên $\pi(a\mid s)$ ở B03 xuất hiện đột ngột. Trung bình, lý do cần ví dụ (thưởng trước mắt chưa đủ để chọn) chỉ có trong notes.
 - Quyết định: sửa. Tiêu đề “MDP hai trạng thái”. Box nêu “Chính sách xác định $\pi_0=(a,a)$: chọn $a$ tại $s_0$ và tại $s_1$, tức $\pi_0(a\mid s)=1$.” Thêm chú thích nêu vấn đề: tại $s_0$, $a$ cho thưởng tức thời lớn hơn, nhưng chỉ $b$ dẫn tới $s_1$ có thưởng $2$ và $3$; dữ kiện đã kiểm theo bảng. Notes giữ thứ tự $(s_0,s_1)$ và giải thích vì sao cần tính phần thưởng sau bước đầu. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: 665/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-A05 — Kiểm tra tổng thưởng chiết khấu
+
+- Trang muốn nói: tính tổng chiết khấu cắt ngắn ba bước theo $\pi_0$ và chỉ ra rằng chỉ biết phần thưởng của từng hành động thì chưa đủ.
+- Vấn đề: trung bình, công thức $G_t$ đặt sau câu hỏi, dữ kiện đứng sau yêu cầu. Nhẹ, tiêu đề tám từ. Nhẹ, notes dùng dấu chấm thập phân. Lời giải đã kiểm: thưởng $2$, $1$, $1$; tổng $3{,}71$.
+- Quyết định: sửa. Tiêu đề “Kiểm tra tổng thưởng chiết khấu”. Công thức $G_t$ đặt trước câu hỏi, dạng nội dòng trong khối công thức lớn; dạng hiển thị làm trang cao 713/720 và tiêu đề chạm nút điều hướng. Sửa dấu phẩy thập phân trong notes và alt hình. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 602/720; hai kích thước đạt, không lỗi; đã xem ảnh.

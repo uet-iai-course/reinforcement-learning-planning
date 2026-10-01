@@ -107,7 +107,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `sửa`. Đưa ví dụ nguồn lên phần mở đầu để thiết lập dữ kiện dùng xuyên suốt.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-A05 — Kiểm tra dữ kiện và phần thưởng chiết khấu
+### L04-A05 — Kiểm tra tổng thưởng chiết khấu
 
 - **Chức năng và nhu cầu học tập:** Kiểm tra mở đầu. Chính sách cố định và mô hình xác định hoàn toàn quỹ đạo trong ví dụ này.
 - **Đầu vào và quan hệ với trang trước:** Dữ kiện bốn chuyển tiếp đủ để kiểm tra một quỹ đạo theo chính sách cố định.

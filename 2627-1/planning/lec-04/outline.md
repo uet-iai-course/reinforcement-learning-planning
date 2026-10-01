@@ -112,7 +112,7 @@ Chức năng: Thiết lập bài toán. Đầu vào: MDP, xác suất có điề
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Hành động có phần thưởng trước mắt cao nhất chưa đủ để kết luận chính sách tối ưu. Mỗi chuyển tiếp ở đây có xác suất 1; không có bước lấy mẫu trong phép tính quy hoạch động.
 
-#### L04-A05 — Kiểm tra dữ kiện và phần thưởng chiết khấu
+#### L04-A05 — Kiểm tra tổng thưởng chiết khấu
 
 - **Vai trò và mục tiêu:** Kiểm tra mở đầu; MT1
 - **Luận điểm trung tâm:** Chính sách cố định và mô hình xác định hoàn toàn quỹ đạo trong ví dụ này.
