@@ -1028,3 +1028,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: nhẹ, mặt trang không ghi $V_4$ là điểm bất động, trong khi trang phần dư và câu hỏi kiểm tra trên lưới dùng điều này. Nhẹ, notes liệt kê sẵn mọi giá trị nhìn trước từ $V_4$, trùng đáp án câu hỏi kiểm tra mới trên lưới.
 - Quyết định: sửa. Tiêu đề giữ. Chú thích thêm “$V_5=V_4$”. Notes ghi $V_4=v_*$ và kết luận chính sách đi phải, bỏ danh sách số (chuyển sang lời giải của trang kiểm tra lưới). Thuật ngữ “giá trị nhìn trước” đã thống nhất từ commit 0.
 - Kiểm tra: 666/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-E07 — Phần dư và điều kiện dừng
+
+- Trang muốn nói: phần dư tính được từ bảng hiện tại chặn sai số so với $v_*$, nên dùng làm điều kiện dừng; chính sách trích có thể đã tối ưu khi bảng còn xa nghiệm.
+- Vấn đề: trung bình, trang mở bằng công thức, nhu cầu nằm ở trang hội tụ cách hai trang. Nhẹ, “sai số giá trị 27” mơ hồ giữa chặn và sai số thật (cả hai bằng 27: $2{,}7/0{,}1=27$; $\|V_1-v_*\|_\infty=\max\{26;27\}=27$). Nhẹ, tiêu đề nên nêu chức năng. Nhẹ, thẻ “Mô hình hai trạng thái” lệch tên “MDP hai trạng thái”.
+- Quyết định: sửa. Tiêu đề “Phần dư và điều kiện dừng”. Thêm câu mở nêu nhu cầu và nối với $\Delta_\pi$. Thẻ phải: “MDP hai trạng thái”; “$\Delta_*(V_1)=2{,}7$; chặn và sai số thật đều bằng $27$”; “Chính sách tham lam $(b,b)$ đã tối ưu.” Thẻ trái rút còn “sai số không quá $0{,}1$ khi $\Delta_*(V)\le0{,}01$”. Notes bỏ câu về lưới (đã chuyển sang trang lưới), đổi “mô hình hai trạng thái” thành “MDP hai trạng thái”. Đồng bộ tiêu đề và quyết định ở outline, storyboard.
+- Kiểm tra: bản đầu tràn (748/720); rút hai thẻ, 694/720; hai kích thước đạt, không lỗi; đã xem ảnh.

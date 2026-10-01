@@ -360,13 +360,13 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Vị trí trực quan sau kiểm ảnh:** Chú thích phép tính đặt ngay dưới bảng trong cột phải; hình và quy ước giữ ở cột trái. Chuyển nguyên nội dung để tránh chân trang và mũi tên điều hướng, không giảm cỡ chữ.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-E07 — Phần dư Bellman và ngưỡng sai số
+### L04-E07 — Phần dư và điều kiện dừng
 
 - **Chức năng và nhu cầu học tập:** Ứng dụng bảo đảm. Ngưỡng phần dư xác định chặn sai số của chính bảng đang được trả về.
 - **Đầu vào và quan hệ với trang trước:** Lưới đã đạt điểm bất động ở $V_4$; mô hình hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách trích đã tối ưu. Phần dư phân biệt hai tình huống.
 - **Sản phẩm và mục tiêu:** MT5; Ngưỡng phần dư xác định chặn sai số của chính bảng đang được trả về.
 - **Đầu ra cho trang sau:** Quy tắc đồng bộ và quy ước kết thúc được kiểm tra bằng hai phép tính trên bảng đã cho.
-- **Quyết định:** `thêm`. Biến tiêu chuẩn dừng nguồn thành chứng nhận có ý nghĩa định lượng.
+- **Quyết định:** `thêm`. Biến tiêu chuẩn dừng nguồn thành chứng nhận có ý nghĩa định lượng. Rà ngày 2026-10-01: câu nhu cầu “điều kiện dừng cần đại lượng tính được từ $V$” đặt ở đầu trang, nối với chặn tương tự cho $\Delta_\pi$.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
 ### L04-E08 — Kiểm tra cập nhật và trạng thái kết thúc

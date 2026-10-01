@@ -512,7 +512,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Phần thưởng 10 xuất hiện một lần khi đi vào $c_5$, không gán giá trị 10 cho trạng thái kết thúc. Nghiệm cuối là điểm bất động; chọn phải ở bốn ô chưa kết thúc. Tính số dùng bảng cũ của cùng lượt. Kiểm lại toàn bảng cho $V_5=V_4$, không chỉ một ô. Điểm chọn trái ở bốn ô là $3.122,3.122,4.58,6.2$, đều nhỏ hơn điểm chọn phải.
 
-#### L04-E07 — Phần dư Bellman và ngưỡng sai số
+#### L04-E07 — Phần dư và điều kiện dừng
 
 - **Vai trò và mục tiêu:** Ứng dụng bảo đảm; MT5
 - **Luận điểm trung tâm:** Ngưỡng phần dư xác định chặn sai số của chính bảng đang được trả về.
