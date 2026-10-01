@@ -1377,3 +1377,9 @@ Nguồn phát hiện: tác tử kết nối và mạch viết rà toàn bộ 45 
 - Phát hiện (nhẹ, toán): “sai số không quá $0{,}1$ khi: $\Delta_*(V)\le0{,}01$” đọc như điều kiện cần và đủ; đây chỉ là điều kiện đủ.
 - Quyết định: “Với $\gamma=0{,}9$, sai số $\le0{,}1$ nếu:”. Bản trung gian “… không quá $0{,}1$ nếu:” làm dòng xuống hàng và trang cao 703, hộp đè chân trang; đã rút bằng ký hiệu $\le$.
 - Kiểm tra: 16:9 cao 659/720, không cờ đè chân trang, hai kích thước đạt; đã xem ảnh 16:9.
+
+#### L04-F01 — Sửa theo rà mạch toàn bài
+
+- Phát hiện (nhẹ, toán): hộp “Hai hướng giảm việc tính: dùng ngay giá trị mới trong cùng lượt; …” gợi rằng cập nhật tại chỗ giảm phép tính trong một lượt; thực tế nó tác động lên số lượt cần thiết.
+- Quyết định: “Hai hướng giảm tổng việc tính: dùng ngay giá trị mới, thường giảm số lượt; chỉ cập nhật các trạng thái do một lịch chọn.” Chữ “thường” giữ đúng mức của Sutton–Barto §4.1, tr. 75 (cập nhật tại chỗ thường hội tụ nhanh hơn), không thành bảo đảm.
+- Kiểm tra: 16:9 cao 636/720, không cờ đè chân trang, hai kích thước đạt; đã xem ảnh 16:9.
