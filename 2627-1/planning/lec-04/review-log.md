@@ -1112,3 +1112,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, câu 1 cũ với $V=(27,30)$ lặp đúng bốn số $25{,}3$; $27$; $26{,}3$; $30$ đã in trên mặt trang lặp chính sách trên MDP hai trạng thái, nên không đo năng lực mới. Trung bình, chưa kiểm phân biệt $v_\pi$ với $v_*$ bằng phần dư. Nhẹ, tiêu đề dài; mặt trang còn “mô hình hai trạng thái”; lời giải dùng dấu chấm thập phân.
 - Quyết định: sửa. Tiêu đề “Kiểm tra nghiệm tối ưu”. Dữ kiện: “MDP hai trạng thái, $\gamma=0{,}9$; hai bảng $U=(10,30)=v_{(a,b)}$ và $V=(27,30)$.” Câu 1: tính $T_*U$, $T_*V$, $\Delta_*(U)$, $\Delta_*(V)$ và hai chính sách tham lam; câu 2: xác định bảng nào là $v_*$ và căn cứ; câu 3 giữ. Lời giải đã kiểm: $T_*U=(\max\{10;27\},\max\{11;30\})=(27,30)$, $\Delta_*(U)=17$; $T_*V=V$, $\Delta_*(V)=0$; cả hai bảng cho chính sách tham lam $(b,b)$; chặn phần dư của $U$ là $170$, sai số thật $17$. Đồng bộ outline (ý chính, yêu cầu, đáp án, tiêu chí) và storyboard.
 - Kiểm tra: 628/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-G05 — Tài liệu đọc và bài tập tiếp nối
+
+- Trang muốn nói: tài liệu đọc, bài tập tiếp nối và kiến thức mang sang bài sau.
+- Vấn đề: nhẹ, nhãn liên kết “Ghi chú chuyên sâu” mang tính quảng bá và lệch tên “Ghi chú bài giảng” trên trang chỉ mục. Nhẹ (báo cáo mạch và báo cáo E–G), chưa nêu kiến thức cần mang sang Bài 05.
+- Quyết định: sửa. Tiêu đề giữ. Nhãn liên kết “Ghi chú bài giảng Bài 04”. Thêm câu “Khi không có $p$, giá trị phải ước lượng từ các chuyển tiếp lấy mẫu.” (căn cứ: tên Bài 05 “Dự đoán phi mô hình” trong chỉ mục và câu hỏi về bộ mô phỏng ở trang kiểm tra nghiệm tối ưu). Notes đổi tên ghi chú và thêm câu nối sang dự đoán phi mô hình. Đồng bộ quyết định ở storyboard.
+- Kiểm tra: 627/720; hai kích thước đạt, không lỗi; đã xem ảnh; liên kết trình đọc ghi chú không đổi đích.

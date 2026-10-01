@@ -474,7 +474,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Đầu vào và quan hệ với trang trước:** Năng lực kiểm chứng được củng cố bằng các mục đọc và bài tập gắn với chương 4.
 - **Sản phẩm và mục tiêu:** MT1–MT6; Chương 4 củng cố quan hệ giữa đánh giá, cải thiện và các cách tổ chức cập nhật.
 - **Đầu ra cho trang sau:** Bài học kết thúc bằng nhiệm vụ tính và đọc đã có tiên quyết; không mở thuật toán mới.
-- **Quyết định:** `thêm`. Gắn đọc thêm với phần đã học và nguồn xác minh; giữ 30 phút chữa bài, không tự tạo code demo.
+- **Quyết định:** `thêm`. Gắn đọc thêm với phần đã học và nguồn xác minh; giữ 30 phút chữa bài, không tự tạo code demo. Rà ngày 2026-10-01: thêm đầu ra cho bài sau (khi không có $p$, giá trị ước lượng từ chuyển tiếp lấy mẫu; căn cứ tên Bài 05 “Dự đoán phi mô hình”) và đổi nhãn liên kết thành “Ghi chú bài giảng Bài 04”.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
 
