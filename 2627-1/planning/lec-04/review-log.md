@@ -1353,3 +1353,9 @@ Nguồn phát hiện: tác tử kết nối và mạch viết rà toàn bộ 45 
 - Phát hiện (nhẹ): dòng ký hiệu kể cả $t$ (bước tương tác), trong khi mạch D không dùng $t$; “lần cải thiện” lệch quy ước “vòng” cho vòng ngoài của lặp chính sách.
 - Quyết định: hộp thành “$i$ đếm vòng cải thiện; $k$ đếm lượt đánh giá lặp.” Outline D01 đồng bộ.
 - Kiểm tra: 16:9 cao 631/720, không cờ đè chân trang, hai kích thước đạt; đã xem ảnh 16:9.
+
+#### L04-D02 — Sửa theo rà mạch toàn bài
+
+- Phát hiện (đi cùng mục trung bình của C04): sau khi bỏ dòng phá hòa ở C04, tên quy tắc cần được giới thiệu tại trang đầu tiên dùng nó.
+- Quyết định: định nghĩa “Chính sách ổn định: cải thiện theo giá trị chính xác của nó không đổi chính sách; khi hòa, giữ hành động cũ (quy tắc phá hòa).” Notes nêu quy tắc đầy đủ (thứ tự cố định khi hành động cũ không đạt cực đại) và hệ quả khi thiếu quy tắc: phép kiểm $\pi'=\pi$ có thể không thỏa dù chính sách đã tối ưu (Sutton–Barto, Bài tập 4.4). D03 (“áp dụng quy tắc phá hòa”) và D05 (“quy tắc phá hòa”) dùng đúng tên. Outline và storyboard D02 đồng bộ.
+- Kiểm tra: 16:9 cao 617/720, không cờ đè chân trang, hai kích thước đạt; đã xem ảnh 16:9.

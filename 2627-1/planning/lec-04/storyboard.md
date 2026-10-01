@@ -267,7 +267,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Đầu vào và quan hệ với trang trước:** Chu trình tổng quát được lần theo bằng toàn bộ chuỗi chính sách và giá trị của ví dụ.
 - **Sản phẩm và mục tiêu:** MT4; Hai lần đổi chính sách đưa ví dụ từ $(a,a)$ đến $(b,b)$.
 - **Đầu ra cho trang sau:** Chuỗi số được chuyển thành quy trình có đầu vào, đầu ra và điều kiện dừng rõ ràng.
-- **Quyết định:** `sửa`. Mở rộng ví dụ bị rút gọn trong nguồn thành toàn bộ lần lặp có thể kiểm tra.
+- **Quyết định:** `sửa`. Mở rộng ví dụ bị rút gọn trong nguồn thành toàn bộ lần lặp có thể kiểm tra. Trang định nghĩa chính sách ổn định và giới thiệu quy tắc phá hòa, được dùng ở L04-D03 và L04-D05.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
 ### L04-D03 — Thuật toán lặp chính sách

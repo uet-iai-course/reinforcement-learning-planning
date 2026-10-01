@@ -366,7 +366,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Đánh
 - **Luận điểm trung tâm:** Hai lần đổi chính sách đưa ví dụ từ $(a,a)$ đến $(b,b)$.
 - **Ý chính:** Chuỗi đầy đủ: $(a,a)\to(10,11)\to(a,b)\to(10,30)\to(b,b)\to(27,30)$. Với $(b,b)$, so sánh tại $s_0$: $25.3<27$; tại $s_1$: $26.3<30$; chính sách không đổi.
 - **Ví dụ/hình dự kiến:** Bảng ba hàng: chính sách, giá trị được đánh giá, hành động sau cải thiện; bốn giá trị nhìn trước của hàng cuối ở ghi chú.
-- **Hình thức hóa:** Áp dụng HT1, HT6–HT7; chưa dùng Bellman tối ưu làm điểm xuất phát.
+- **Hình thức hóa:** Áp dụng HT1, HT6–HT7; chưa dùng Bellman tối ưu làm điểm xuất phát. Định nghĩa chính sách ổn định và giới thiệu quy tắc phá hòa (giữ hành động cũ khi hòa) trên mặt trang; quy tắc đầy đủ trong ghi chú.
 - **Kết nối vào:** Chu trình tổng quát được lần theo bằng toàn bộ chuỗi chính sách và giá trị của ví dụ.
 - **Kết nối ra:** Chuỗi số được chuyển thành quy trình có đầu vào, đầu ra và điều kiện dừng rõ ràng.
 - **Nguồn:** NG1, tr. 17–20; số kiểm chứng độc lập.
