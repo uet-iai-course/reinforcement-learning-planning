@@ -1359,3 +1359,9 @@ Nguồn phát hiện: tác tử kết nối và mạch viết rà toàn bộ 45 
 - Phát hiện (đi cùng mục trung bình của C04): sau khi bỏ dòng phá hòa ở C04, tên quy tắc cần được giới thiệu tại trang đầu tiên dùng nó.
 - Quyết định: định nghĩa “Chính sách ổn định: cải thiện theo giá trị chính xác của nó không đổi chính sách; khi hòa, giữ hành động cũ (quy tắc phá hòa).” Notes nêu quy tắc đầy đủ (thứ tự cố định khi hành động cũ không đạt cực đại) và hệ quả khi thiếu quy tắc: phép kiểm $\pi'=\pi$ có thể không thỏa dù chính sách đã tối ưu (Sutton–Barto, Bài tập 4.4). D03 (“áp dụng quy tắc phá hòa”) và D05 (“quy tắc phá hòa”) dùng đúng tên. Outline và storyboard D02 đồng bộ.
 - Kiểm tra: 16:9 cao 617/720, không cờ đè chân trang, hai kích thước đạt; đã xem ảnh 16:9.
+
+#### L04-D06 — Sửa theo rà mạch toàn bài
+
+- Phát hiện (nhẹ): câu hỏi dùng “giá trị nhìn trước từ $V$” cho bảng bất kỳ, trong khi C01 định nghĩa theo $v_{\pi_0}$; dạng tổng quát $Q_V$ đến E03 mới có.
+- Quyết định: thêm vào notes “Giá trị nhìn trước tính theo cùng công thức như với $v_\pi$, với bảng $V$ thay cho $v_\pi$.” Mặt trang giữ nguyên.
+- Kiểm tra: mặt trang không đổi (556/720); notes hiển thị KaTeX không lỗi; hai kích thước đạt.
