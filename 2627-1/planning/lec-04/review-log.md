@@ -1177,3 +1177,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện (trung bình, độ chính xác; nhẹ, mạch viết): định nghĩa trên mặt trang “Giá trị nhìn trước của một hành động: $r+\gamma\,v_{\pi_0}(s')$” thiếu kỳ vọng theo $p$, nên chỉ đúng khi chuyển tiếp xác định; định nghĩa này được dùng lại ở trang kiểm tra điều kiện dừng và trong $Q_V$ của toán tử tối ưu, nơi có tổng theo $p$.
 - Quyết định: sửa hộp thành “Giá trị nhìn trước của hành động $a$ tại $s$: $\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma\,v_{\pi_0}(s')\bigr]$. Với chuyển tiếp xác định, chỉ còn $r+\gamma\,v_{\pi_0}(s')$.” Notes thay câu kỳ vọng (nay đã ở mặt trang) bằng diễn giải hai thành phần. Rút một dòng trong thẻ phải để giữ chiều cao. Đồng bộ storyboard.
 - Kiểm tra: 661/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9, hộp cách chân trang.
+
+#### L04-C04 — Sửa bổ sung sau rà lại
+
+- Phát hiện: (trung bình, mạch viết; nhẹ, độ chính xác) câu nhu cầu “Đổi hành động tại mọi trạng thái cần bảo đảm giá trị không giảm” nhầm vấn đề: $12{,}9$ chỉ sai khi việc đổi là vĩnh viễn, tức ở mọi lần gặp trạng thái. (Nhẹ, mạch viết) $\arg\max$ được dùng ở dòng chính sách tham lam nhưng dòng sau mới giải thích.
+- Quyết định: sửa. Câu nhu cầu: “Giá trị $12{,}9$ chỉ đổi hành động ở bước đầu, sau đó vẫn theo $\pi_0$. Đổi hành động ở mọi lần gặp trạng thái, đồng thời tại nhiều trạng thái, cần một bảo đảm giá trị không giảm.” Gộp giải thích $\arg\max$ vào dòng chính sách tham lam (“tập hành động đạt cực đại của $q_\pi$…”); dòng phá hòa chỉ còn quy tắc.
+- Kiểm tra: 585/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
