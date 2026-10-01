@@ -60,6 +60,7 @@ F02 là ví dụ dẫn nhập đồng thời làm cụ thể vấn đề F01: m�
 | dp04-one-step-choice.svg | L04-C02 | Hai nhánh từ s1, phần thưởng 2/3, giá trị tiếp nối 10/11 | Vẽ lại quan hệ NG1 tr. 19, chỉ tiếp tục theo pi0 |
 | dp04-policy-iteration.svg | L04-D01 | Hai thao tác nối chính sách và giá trị; nhãn đại lượng giữ cố định | Vẽ lại NG1 tr. 13, NG2 §4.3 |
 | dp04-five-cell.svg | L04-E06,E08,F02–F03 | Năm ô, biên trái ở lại, c5 kết thúc; bốn mũi tên phải khi thể hiện chính sách | NG1 tr. 25,28; bổ sung biên thiếu đã ghi |
+| dp04-five-cell-plain.svg | L04-E08 | Cùng lưới năm ô, biên trái ở lại, c5 kết thúc; không có mũi tên chính sách để không lộ đáp án câu hỏi chính sách tham lam | NG1 tr. 25,28; tách từ dp04-five-cell.svg |
 | dp04-update-order.svg | L04-F02 | Hai bảng hoặc một bảng với thứ tự đánh số; mũi tên giá trị mới được dùng tiếp | NG1 tr. 15; NG2 tr. 75,85 |
 | dp04-gpi.svg | L04-F04 | Hai quá trình hướng tới $V=v_\pi$ và chính sách tham lam theo V | Sơ đồ khái niệm mới theo NG2 §4.6, không sao chép hình |
 | dp04-cartpole-bins.svg | L04-F05 | Bốn biến liên tục, số khoảng 3/3/6/6, 324 ô; mô hình còn cần xác định | Vẽ kỹ thuật từ NG1 tr. 35–37 |

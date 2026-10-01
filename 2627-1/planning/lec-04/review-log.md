@@ -1331,3 +1331,9 @@ Nguồn: báo cáo rà lại toán–câu nối của lượt sửa bổ sung A�
 - Phát hiện (nhẹ, hiển thị; ghi nhận ở lượt bổ sung E–G): nhãn “Cải thiện” chạm cung mũi tên phía trên. Cung cũ `M482 53 Q584 -6 683 53` có điểm giữa ở y ≈ 23,5, trong khi chữ chiếm y ≈ 8–35.
 - Quyết định: hạ cung thành `M482 75 Q584 25 683 75` (điểm giữa y ≈ 50). Hai đầu cung vẫn nằm ở mép hai hộp, chiều mũi tên và mọi nhãn giữ nguyên; `role="img"`, `<title>`, `<desc>` và alt của trang không đổi.
 - Kiểm tra: ảnh SVG riêng có khoảng hở rõ giữa nhãn và cung; trang 648/720, hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-E08 — Sửa nhẹ lượt cuối (hình dp04-five-cell-plain.svg)
+
+- Phát hiện (nhẹ, đánh giá; ghi nhận ở lượt bổ sung E–G): hình dp04-five-cell.svg có bốn mũi tên phải và chú thích “Mũi tên: chính sách tối ưu”, làm lộ đáp án câu hỏi về chính sách tham lam theo $V_4$.
+- Quyết định: tạo `2627-1/img/lec-04/dp04-five-cell-plain.svg` từ cùng hình: giữ năm ô, nhãn c₁–c₅, viền kép của ô kết thúc, nhãn “Đích” và vòng “Trái ở c₁: ở lại”; bỏ bốn mũi tên chính sách, chú thích và marker không dùng; cắt khoảng trống đáy (chiều cao 247 → 195). `role="img"`, `<title>` “Lưới năm ô”, `<desc>` nêu hình không biểu diễn chính sách. E08 dùng hình mới với alt tương ứng; E06 giữ hình cũ. Storyboard (bảng tài sản) và outline (mục E08) đồng bộ.
+- Kiểm tra: SVG hợp lệ; E08 589/720 và E06 666/720, hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9 của E08.

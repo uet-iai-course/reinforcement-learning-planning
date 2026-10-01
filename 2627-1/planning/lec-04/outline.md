@@ -530,7 +530,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 - **Vai trò và mục tiêu:** Kiểm tra lặp giá trị; MT5
 - **Luận điểm trung tâm:** Phần dư bằng 0 chứng nhận điểm bất động; giá trị kết thúc giữ bằng không.
 - **Ý chính:** Trong lưới đã học, cho $V_4=(4{,}58;6{,}2;8;10;0)$, $\gamma=0{,}9$ và cùng quy ước thưởng. Bảng này không in sẵn các giá trị nhìn trước, nên câu hỏi đo được phép tính và phần dư.
-- **Ví dụ/hình dự kiến:** Hiển thị $V_4$ và sơ đồ biên; yêu cầu tính giá trị nhìn trước tại mọi ô chưa kết thúc.
+- **Ví dụ/hình dự kiến:** Hiển thị $V_4$ và sơ đồ biên dp04-five-cell-plain.svg (không có mũi tên chính sách); yêu cầu tính giá trị nhìn trước tại mọi ô chưa kết thúc.
 - **Hình thức hóa:** Dùng HT11–HT12 và chặn phần dư.
 - **Kết nối vào:** Quy tắc đồng bộ và quy ước kết thúc được kiểm tra bằng hai phép tính trên bảng đã cho.
 - **Kết nối ra:** Một lượt tính đúng vẫn có thể tốn kém; chi phí phụ thuộc số trạng thái và nhánh chuyển.
