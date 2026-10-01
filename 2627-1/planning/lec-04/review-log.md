@@ -1249,3 +1249,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện (nhẹ, mạch viết): xác định $\Delta_*(V_4)$ cần giá trị nhìn trước ở cả bốn ô chưa kết thúc, nhưng câu hỏi chỉ yêu cầu hai ô; “chính sách trích” lệch thuật ngữ.
 - Quyết định: câu 1 thành “Tính $T_*V_4$ (hai giá trị nhìn trước tại mỗi ô chưa kết thúc); xác định $\Delta_*(V_4)$ và chính sách tham lam theo $V_4$.” Lời giải ghi đủ tám giá trị: $c_1$: $3{,}122$ và $4{,}58$; $c_2$: $3{,}122$ và $6{,}2$; $c_3$: $4{,}58$ và $8$; $c_4$: $6{,}2$ và $10$ (đã tính lại), nên $T_*V_4=V_4$ và $\Delta_*(V_4)=0$. Outline và storyboard đồng bộ. Ghi nhận: hình lưới có chú thích “Mũi tên: chính sách tối ưu” gợi trước đáp án chính sách; giữ vì là hình nguồn dùng chung với trang lan truyền giá trị, phép tính phần dư vẫn là năng lực được đo.
 - Kiểm tra: 589/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-F01 — Sửa bổ sung sau rà lại
+
+- Phát hiện (nhẹ, no-ai-slop: câu lặp): hộp “Lượt đồng bộ chỉ đọc bảng cũ và quét mọi trạng thái” nhắc lại câu mở của trang.
+- Quyết định: hộp thành “Hai hướng giảm việc tính: dùng ngay giá trị mới trong cùng lượt; chỉ cập nhật các trạng thái do một lịch chọn.” Hai hướng vẫn dẫn tới trang cập nhật tại chỗ và trang bất đồng bộ.
+- Kiểm tra: 636/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
