@@ -312,7 +312,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Giá t
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Hệ số xác suất và $\gamma$ không âm bảo toàn thứ tự. Giá trị bị chặn cùng $\gamma<1$ bảo đảm phần tiếp nối xa mất ảnh hưởng. Một ví dụ số chỉ minh họa điều kiện; chuỗi bất đẳng thức mới cung cấp lập luận tổng quát.
 
-#### L04-C06 — Chính sách sau lần cải thiện đầu
+#### L04-C06 — Lần cải thiện thứ nhất
 
 - **Vai trò và mục tiêu:** Ứng dụng; MT3
 - **Luận điểm trung tâm:** Cải thiện đồng thời tại hai trạng thái tạo $(a,b)$ và cần đánh giá lại giá trị.

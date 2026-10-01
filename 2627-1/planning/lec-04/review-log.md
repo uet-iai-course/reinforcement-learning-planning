@@ -930,3 +930,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: nghiêm trọng, bước đầu của chứng minh thiếu căn cứ trên mặt trang; đẳng thức $(T_{\pi'}v_\pi)(s)=q_\pi(s,\pi'(s))$ chỉ có trong notes, còn mặt trang ghi “Từ điều kiện cải thiện: $v_\pi\le T_{\pi'}v_\pi$”. Trung bình, không nói dãy là đánh giá lặp $\pi'$ đã học ở mạch B và thiếu câu kết luận. Nhẹ, thẻ “Bảo toàn thứ tự” lệch tên “đơn điệu” trong notes, storyboard. Nhẹ (Detect, metadiscourse) trong notes: “Phép tính số minh họa điều kiện; lập luận này cung cấp kết quả cho toàn bộ lớp MDP đã nêu.”
 - Quyết định: sửa. Tiêu đề “Chứng minh định lý cải thiện”. Dòng đầu đưa đẳng thức cầu nối lên mặt trang. Thẻ “Tính đơn điệu”. Thẻ giới hạn: dãy là đánh giá lặp $\pi'$ xuất phát từ $v_\pi$; do tính co, dãy hội tụ về $v_{\pi'}$; vậy $v_\pi\le v_{\pi'}$. Notes giải thích vì sao đẳng thức đúng (tổng theo hành động còn một hạng) và bỏ câu metadiscourse. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: tách câu kết luận để KaTeX không ngắt giữa bất đẳng thức; 635/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-C06 — Lần cải thiện thứ nhất
+
+- Trang muốn nói: cải thiện từ $\pi_0$ chỉ đổi hành động tại $s_1$, cho $\pi_1=(a,b)$ với $v_{\pi_1}=(10,30)\ge v_{\pi_0}=(10,11)$; giá trị tiếp nối tại $s_1$ tăng nên lựa chọn ở $s_0$ có thể đổi. Số liệu đã kiểm: $q_{\pi_0}(s_0,a)=10$, $q_{\pi_0}(s_0,b)=9{,}9$; $x=1/0{,}1=10$, $y=3/0{,}1=30$.
+- Vấn đề: trung bình, hệ quả chính (đối chiếu định lý, giá trị tiếp nối 11 → 30) chỉ có trong notes, trong khi đó là ý nối sang C07. Nhẹ, “$x=1+0{,}9x$; $y=3+0{,}9y$” không nói đây là hệ Bellman của $\pi_1$. Nhẹ, notes dùng “Điểm $12{,}9$”.
+- Quyết định: sửa. Tiêu đề “Lần cải thiện thứ nhất”. Thẻ phải: “Hệ Bellman của $\pi_1$: …”. Thêm hộp “$v_{\pi_1}\ge v_{\pi_0}$ theo từng trạng thái; giá trị tiếp nối tại $s_1$ tăng từ 11 lên 30.” Notes nêu $x,y$ và đổi sang “giá trị nhìn trước”. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 658/720; hai kích thước đạt, không lỗi; đã xem ảnh.

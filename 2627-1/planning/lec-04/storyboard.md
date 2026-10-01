@@ -233,7 +233,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `giữ`. Giữ phác thảo nguồn, đặt ngay sau định lý và nối với tính co đã chuẩn bị.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-C06 — Chính sách sau lần cải thiện đầu
+### L04-C06 — Lần cải thiện thứ nhất
 
 - **Chức năng và nhu cầu học tập:** Ứng dụng. Cải thiện đồng thời tại hai trạng thái tạo $(a,b)$ và cần đánh giá lại giá trị.
 - **Đầu vào và quan hệ với trang trước:** Tính đơn điệu cho phép áp dụng quy tắc trên toàn bộ mô hình hai trạng thái.
