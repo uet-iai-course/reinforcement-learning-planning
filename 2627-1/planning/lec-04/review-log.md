@@ -874,3 +874,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: nghiêm trọng, bốn ký hiệu mới ($\|\cdot\|_\infty$, phần dư, $\eta$, $K$) xuất hiện cùng lúc, không có nhu cầu đi trước; mặt trang không nói vì sao cần đại lượng dừng. Trung bình, bước 3–4 dài và lặp ý (“Khi hết $K$ lượt, tính lại … trên bảng cuối; trả … cùng kết quả kiểm tra ngưỡng.”).
 - Quyết định: sửa. Tiêu đề giữ. Mở bằng nhu cầu: sau hữu hạn lượt, bảng chỉ xấp xỉ $v_\pi$. Định nghĩa phần dư kèm ví dụ $\Delta_{\pi_0}(V_1)=\max\{0{,}9;0{,}9\}=0{,}9$ (đã kiểm: $T_{\pi_0}V_1=(1{,}9;2{,}9)$). Quy trình ba bước; ngữ nghĩa giữ nguyên: kiểm ngưỡng ưu tiên, trả $V$ không trả $W$, sau lần nhận bảng thứ $K$ bước 2 đo phần dư của bảng cuối, $K=0$ trả bảng khởi tạo. Notes cập nhật theo bước mới và nhận đoạn ví dụ chuyển từ B04. Đồng bộ outline, storyboard.
 - Kiểm tra: 648/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-B06 — Hội tụ của đánh giá lặp
+
+- Trang muốn nói: khi $\gamma<1$, $T_\pi$ là ánh xạ co; vì vậy đánh giá lặp hội tụ tới $v_\pi$ duy nhất và phần dư chặn được sai số.
+- Vấn đề: trung bình, mặt trang không gọi tên “tính co” dù C05 (“$T_{\pi'}$ co”) và E05 dùng lại thuật ngữ này. Nhẹ, thiếu nhãn tính chất và hệ quả. Nhẹ, tiêu đề chưa song song với E05.
+- Quyết định: sửa. Tiêu đề “Hội tụ của đánh giá lặp”. Giả thiết nêu thành một dòng riêng, kèm điều kiện không áp dụng khi $\gamma=1$. Thêm nhãn “Tính co.” với diễn giải bằng lời trước bất đẳng thức và nhãn “Hệ quả.” trước chặn sai số. Box cũ bỏ để tránh đè chân trang (bản đầu cao 711/720); ý “phần dư đo trên bảng trả về” chuyển xuống notes. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 616/720; hai kích thước đạt, không lỗi; đã xem ảnh.

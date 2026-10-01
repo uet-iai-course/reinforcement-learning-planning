@@ -199,7 +199,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Mô h�
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Cập nhật đồng bộ cố định bảng đọc trong cả lượt, nên kết quả không phụ thuộc thứ tự ghi các ô của bảng mới. Cập nhật tại chỗ sử dụng cả giá trị vừa ghi và có kết quả trung gian phụ thuộc thứ tự. Ngân sách là giới hạn tài nguyên, không chứng minh hội tụ. Dữ liệu dùng để cập nhật là mô hình đầy đủ. $K$ là số nguyên không âm, đếm số lần nhận $V\leftarrow W$; tính thêm phần dư trên bảng cuối, kể cả khi $K=0$. Ví dụ độ lệch $0.9$ đã nằm cuối notes B04 nên không lặp trên mặt B05.
 
-#### L04-B06 — Hội tụ và sai số đánh giá
+#### L04-B06 — Hội tụ của đánh giá lặp
 
 - **Vai trò và mục tiêu:** Bảo đảm có điều kiện; MT2
 - **Luận điểm trung tâm:** Chiết khấu nhỏ hơn 1 làm sai số đánh giá co lại và biến phần dư thành chặn sai số.

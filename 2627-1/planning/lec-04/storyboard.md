@@ -161,7 +161,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `sửa`. Khôi phục đầu vào, đầu ra và dừng; thống nhất cách cập nhật với ví dụ. Bản 2026-10-01 nêu nhu cầu đại lượng dừng và ví dụ phần dư $0{,}9$ trước định nghĩa; quy trình còn ba bước.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-B06 — Hội tụ và sai số đánh giá
+### L04-B06 — Hội tụ của đánh giá lặp
 
 - **Chức năng và nhu cầu học tập:** Bảo đảm có điều kiện. Chiết khấu nhỏ hơn 1 làm sai số đánh giá co lại và biến phần dư thành chặn sai số.
 - **Đầu vào và quan hệ với trang trước:** Phần dư đo được cần được liên hệ với sai số so với nghiệm chính xác.
