@@ -77,7 +77,7 @@ Chức năng: Thiết lập bài toán. Đầu vào: MDP, xác suất có điề
 
 - **Vai trò và mục tiêu:** Bản đồ nội dung; MT1–MT6
 - **Luận điểm trung tâm:** Đánh giá chính sách cung cấp căn cứ cho cải thiện và các thuật toán điều khiển.
-- **Ý chính:** Mạch nội dung: đánh giá chính sách → cải thiện chính sách → lặp chính sách → lặp giá trị → quy hoạch động bất đồng bộ. Mục tiêu trên mặt trang (sửa 2026-10-01): đánh giá và cải thiện chính sách; thực hiện lặp chính sách, lặp giá trị; chặn sai số bằng phần dư; so sánh cập nhật đồng bộ và bất đồng bộ. Tiên quyết: kỳ vọng có điều kiện, tổng chiết khấu, MDP và hệ tuyến tính.
+- **Ý chính:** Mạch nội dung: đánh giá chính sách → cải thiện chính sách → lặp chính sách → lặp giá trị → quy hoạch động bất đồng bộ. Mục tiêu trên mặt trang (sửa 2026-10-01): tính $v_\pi$ và cải thiện chính sách; thực hiện lặp chính sách, lặp giá trị; chặn sai số bằng phần dư; so sánh ba cách tổ chức tính toán (lặp chính sách, lặp giá trị, cập nhật bất đồng bộ). Tiên quyết: kỳ vọng có điều kiện, tổng chiết khấu, MDP và hệ tuyến tính.
 - **Ví dụ/hình dự kiến:** Sơ đồ năm nút có nhãn sản phẩm: giá trị của chính sách, chính sách mới, chính sách ổn định, giá trị tối ưu, lịch cập nhật.
 - **Hình thức hóa:** Không thêm định nghĩa; mục tiêu chi tiết ở hồ sơ kế hoạch.
 - **Kết nối vào:** Chủ đề lập kế hoạch được cụ thể hóa bằng chuỗi năng lực cần thực hiện.

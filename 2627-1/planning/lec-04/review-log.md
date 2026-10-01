@@ -1119,3 +1119,13 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: nhẹ, nhãn liên kết “Ghi chú chuyên sâu” mang tính quảng bá và lệch tên “Ghi chú bài giảng” trên trang chỉ mục. Nhẹ (báo cáo mạch và báo cáo E–G), chưa nêu kiến thức cần mang sang Bài 05.
 - Quyết định: sửa. Tiêu đề giữ. Nhãn liên kết “Ghi chú bài giảng Bài 04”. Thêm câu “Khi không có $p$, giá trị phải ước lượng từ các chuyển tiếp lấy mẫu.” (căn cứ: tên Bài 05 “Dự đoán phi mô hình” trong chỉ mục và câu hỏi về bộ mô phỏng ở trang kiểm tra nghiệm tối ưu). Notes đổi tên ghi chú và thêm câu nối sang dự đoán phi mô hình. Đồng bộ quyết định ở storyboard.
 - Kiểm tra: 627/720; hai kích thước đạt, không lỗi; đã xem ảnh; liên kết trình đọc ghi chú không đổi đích.
+
+### Sửa bổ sung sau rà lại
+
+Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ chính xác toán học–thuật toán; kết nối và mạch viết) sau lượt sửa A–B (c8994c6..8e3415a) và C–D (8e3415a..72276e2). Điều phối viên đã chấp nhận hàng đợi sửa; tác tử chỉnh sửa loại fork, mô hình Opus 5.5 kế thừa phiên điều phối, áp dụng tuần tự, mỗi trang một commit. Không có phát hiện chặn bàn giao hay nghiêm trọng.
+
+#### L04-A02 — Sửa bổ sung sau rà lại
+
+- Phát hiện (trung bình, mạch viết): mục tiêu 4 “So sánh cập nhật đồng bộ và bất đồng bộ” hẹp hơn bảng so sánh ở phần kết luận, vốn so sánh lặp chính sách, lặp giá trị và cập nhật bất đồng bộ; mục tiêu 1 “Đánh giá và cải thiện chính sách” không có động từ đo được.
+- Quyết định: sửa. Mục tiêu 1 “Tính $v_\pi$ và cải thiện chính sách.”; mục tiêu 4 “So sánh ba cách tổ chức tính toán.”; notes nêu ba cách được so sánh. Bản đề xuất dài (“Tính giá trị của chính sách và cải thiện chính sách”, “So sánh lặp chính sách, lặp giá trị và cập nhật bất đồng bộ”) làm trang cao 712/720 và chạm mép dưới, nên không áp dụng nguyên văn. Đồng bộ ý chính ở outline.
+- Kiểm tra: 658/720; hai kích thước đạt, không lỗi; đã xem ảnh 16:9.
