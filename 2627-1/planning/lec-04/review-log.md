@@ -1091,3 +1091,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: nhẹ, chưa đối chiếu với các mục tiêu ở trang mở đầu; phần so sánh cách tổ chức đã có ở trang sau.
 - Quyết định: giữ mặt trang và tiêu đề. Notes thêm một câu ánh xạ bốn mục tiêu ở trang mở đầu với các phép tính, hai thuật toán, chặn phần dư và bảng so sánh. Câu đầu ra cho bài sau đặt ở trang tài liệu đọc.
 - Kiểm tra: mặt trang không đổi; chạy lại kiểm hai kích thước, không tràn, không lỗi.
+
+### L04-G02 — So sánh các phương pháp quy hoạch động
+
+- Trang muốn nói: so sánh ba cách tổ chức cập nhật theo cách kiểm tra đầu ra và giả thiết chung.
+- Vấn đề: nhẹ, tiêu đề “Lựa chọn phương pháp…” hứa tiêu chí chọn mà bảng không cung cấp; bảng chỉ so sánh. Nhẹ, dòng giả thiết bị ngắt giữa “$0\le$” và “$\gamma<1$”.
+- Quyết định: sửa. Tiêu đề “So sánh các phương pháp quy hoạch động” (gọi lại mục tiêu so sánh ở trang mở đầu). Viết lại dòng giả thiết, đưa $0\le\gamma<1$ lên đầu để công thức không bị ngắt. Notes giữ. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 481/720; hai kích thước đạt, không lỗi; đã xem ảnh.

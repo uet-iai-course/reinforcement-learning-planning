@@ -647,7 +647,7 @@ Chức năng: Kết luận và vận dụng tổng hợp. Đầu vào: Kết qu�
 - **Thời lượng:** 2 phút
 - **Ghi chú học thuật dự kiến:** Điểm chung của hai thuật toán là sử dụng kỳ vọng theo mô hình và giá trị tiếp nối. Số lượt hữu hạn cần đi kèm phần dư hoặc điều kiện dừng chính xác để đánh giá độ tin cậy. Bootstrapping là dùng ước lượng tiếp nối để xây mục tiêu; yêu cầu mô hình đầy đủ để tính kỳ vọng là một đặc điểm riêng.
 
-#### L04-G02 — Lựa chọn phương pháp và điều kiện áp dụng
+#### L04-G02 — So sánh các phương pháp quy hoạch động
 
 - **Vai trò và mục tiêu:** Tổng hợp so sánh; MT4–MT6
 - **Luận điểm trung tâm:** So sánh phương pháp phải dùng cùng đơn vị công việc và cùng yêu cầu độ chính xác.

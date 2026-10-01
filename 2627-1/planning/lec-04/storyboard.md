@@ -441,7 +441,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `sửa`. Kết luận quay lại bài toán đầu, đối chiếu đầu ra thay vì chỉ nhắc mục lục.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
-### L04-G02 — Lựa chọn phương pháp và điều kiện áp dụng
+### L04-G02 — So sánh các phương pháp quy hoạch động
 
 - **Chức năng và nhu cầu học tập:** Tổng hợp so sánh. So sánh phương pháp phải dùng cùng đơn vị công việc và cùng yêu cầu độ chính xác.
 - **Đầu vào và quan hệ với trang trước:** Hai thuật toán cho cùng nghiệm nhưng yêu cầu so sánh cấu trúc công việc và độ chính xác.
