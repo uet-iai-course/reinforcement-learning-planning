@@ -170,7 +170,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `thêm`. Bổ sung bảo đảm ngay cạnh thuật toán; không gom toàn bộ lý thuyết ở cuối bài.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-B07 — Nghiệm đánh giá của chính sách ban đầu
+### L04-B07 — Giá trị chính xác của chính sách ban đầu
 
 - **Chức năng và nhu cầu học tập:** Ứng dụng và đối chiếu. Giải hệ Bellman cho nghiệm chính xác để đối chiếu bảng lặp.
 - **Đầu vào và quan hệ với trang trước:** Bảo đảm hội tụ được đối chiếu với nghiệm giải trực tiếp của ví dụ nhỏ.

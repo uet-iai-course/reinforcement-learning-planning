@@ -212,7 +212,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Mô h�
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Tổng có trọng số xác suất không tăng độ lệch lớn nhất; hệ số $\gamma$ tạo tính co. Chặn phần dư suy ra từ bất đẳng thức tam giác và tính co. Với $\gamma=1$, lập luận này không áp dụng; có trạng thái kết thúc riêng lẻ chưa đủ bảo đảm mọi chính sách kết thúc.
 
-#### L04-B07 — Nghiệm đánh giá của chính sách ban đầu
+#### L04-B07 — Giá trị chính xác của chính sách ban đầu
 
 - **Vai trò và mục tiêu:** Ứng dụng và đối chiếu; MT2
 - **Luận điểm trung tâm:** Giải hệ Bellman cho nghiệm chính xác để đối chiếu bảng lặp.
