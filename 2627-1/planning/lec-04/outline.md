@@ -447,7 +447,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 - **Thời lượng:** 2 phút
 - **Ghi chú học thuật dự kiến:** Cập nhật tối ưu gộp lựa chọn tham lam với một bước dùng giá trị tiếp nối. Nó không đòi bảng hiện tại phải bằng giá trị chính xác của một chính sách.
 
-#### L04-E02 — Hai lượt lặp giá trị trên cùng mô hình
+#### L04-E02 — Hai lượt lặp giá trị đồng bộ
 
 - **Vai trò và mục tiêu:** Ví dụ tính tay; MT5
 - **Luận điểm trung tâm:** Phép cực đại thay việc giữ hành động của chính sách trong mỗi lượt đồng bộ.

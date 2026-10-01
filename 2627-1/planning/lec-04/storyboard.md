@@ -314,7 +314,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `sửa`. Mở lặp giá trị bằng giới hạn chi phí của lặp chính sách trước công thức. Rà ngày 2026-10-01: nêu chi phí bằng số (44 lượt đánh giá $\pi_0$ để sai số không quá $0{,}1$) và đổi tiêu chuẩn dừng từ chính sách ổn định sang phần dư của toán tử tối ưu.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
-### L04-E02 — Hai lượt lặp giá trị trên cùng mô hình
+### L04-E02 — Hai lượt lặp giá trị đồng bộ
 
 - **Chức năng và nhu cầu học tập:** Ví dụ tính tay. Phép cực đại thay việc giữ hành động của chính sách trong mỗi lượt đồng bộ.
 - **Đầu vào và quan hệ với trang trước:** Phép chọn nhánh lớn nhất được thử trên cùng bốn chuyển tiếp trước khi viết toán tử.

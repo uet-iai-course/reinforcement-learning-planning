@@ -993,3 +993,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, nhu cầu cắt ngắn chỉ nêu chung (“Đánh giá có thể cần nhiều lượt tính.”), không dùng số liệu của mạch B. Trung bình (báo cáo mạch), D05–D06 vừa kết luận đánh giá gần đúng không chứng nhận tối ưu, E01 lại cắt đánh giá mà không nêu tiêu chuẩn dừng mới. Nhẹ, tiêu đề dài, cụm “trong bài toán điều khiển” thừa.
 - Quyết định: sửa. Tiêu đề “Cắt ngắn bước đánh giá”. Câu mở nêu sai số $10\cdot0{,}9^k$ và 44 lượt (đã kiểm: $V_k(s_0)=10(1-0{,}9^k)$, $V_k(s_1)=11-10\cdot0{,}9^k$; $0{,}9^{43}\approx0{,}0108$, $0{,}9^{44}\approx0{,}0097$). Hộp thêm điều kiện dừng theo phần dư của toán tử tối ưu. Notes thêm phép tính 44 lượt và cầu nối “tham lam + một lượt đánh giá = cực đại”. Đồng bộ tiêu đề và quyết định ở outline, storyboard.
 - Kiểm tra: 630/720; hai kích thước đạt, không lỗi KaTeX/JS/tài nguyên; đã xem ảnh.
+
+### L04-E02 — Hai lượt lặp giá trị đồng bộ
+
+- Trang muốn nói: tính tay hai lượt lặp giá trị đồng bộ trên MDP hai trạng thái; khác đánh giá chính sách ở phép cực đại trên các hành động. Số đã kiểm: $V_1=(1,3)$, $V_2=(2{,}7;5{,}7)$.
+- Vấn đề: nhẹ, cụm “trên cùng mô hình” trong tiêu đề mơ hồ. Nhẹ, hành động đạt cực đại không ghi trên mặt trang, trong khi trang thuật toán trích $\pi_V$ và trang phần dư dùng “chính sách tham lam là $(b,b)$”.
+- Quyết định: sửa. Tiêu đề “Hai lượt lặp giá trị đồng bộ” (song song “Hai lượt đánh giá đồng bộ”). Hộp thêm “Ở lượt hai, cực đại đạt tại $(b,b)$.” (báo cáo gốc viết “cả hai lượt”, sai vì lượt một cực đại tại $(a,b)$; dùng bản đã sửa). Notes ghi hành động cực đại của từng lượt. Bỏ câu dẫn “Mỗi ô lấy giá trị nhìn trước lớn nhất…” vì làm trang tràn (727/720) và trùng thẻ ở trang trước. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 678/720; hai kích thước đạt, không lỗi; đã xem ảnh.

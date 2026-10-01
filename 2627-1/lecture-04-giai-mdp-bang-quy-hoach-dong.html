@@ -210,11 +210,11 @@ Giá trị trạng thái là trung bình theo chính sách; giá trị của t�
 <aside class="notes"><p>Với $\pi_0=(a,a)$, đánh giá đồng bộ từ bảng không cho $V_k(s_0)=10(1-0{,}9^k)$ và $V_k(s_1)=11-10\cdot0{,}9^k$, nên sai số so với $v_{\pi_0}=(10,11)$ là $10\cdot0{,}9^k$ ở cả hai trạng thái. Vì $0{,}9^{43}\approx0{,}0108$ và $0{,}9^{44}\approx0{,}0097$, cần $44$ lượt để sai số không quá $0{,}1$.</p><p>Nếu chọn hành động tham lam theo bảng hiện tại rồi chỉ đánh giá một lượt, giá trị mới tại $s$ bằng giá trị nhìn trước lớn nhất. Hai bước cải thiện và đánh giá vì vậy gộp thành một phép cực đại. Bảng sau mỗi lượt nói chung không bằng giá trị chính xác của chính sách nào, nên tiêu chuẩn chính sách ổn định của lặp chính sách không áp dụng; điều kiện dừng dựa trên phần dư của toán tử tối ưu.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 23; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.4, tr. 82–83.</p></aside>
 </section>
 <section data-slide-id="L04-E02">
-<h2>Hai lượt lặp giá trị trên cùng mô hình</h2>
+<h2>Hai lượt lặp giá trị đồng bộ</h2>
 <p>Từ $V_0=(0,0)$: $V_1=(\max\{1,0\},\max\{2,3\})=(1,3)$.</p>
 <p>Lượt thứ hai dùng toàn bộ giá trị tiếp nối từ $V_1$:</p><table><thead><tr><th scope="col">Trạng thái</th><th scope="col">Nhánh $a$</th><th scope="col">Nhánh $b$</th><th scope="col">Cực đại</th></tr></thead><tbody><tr><td>$s_0$</td><td>$1+0{,}9\cdot1=1{,}9$</td><td>$0+0{,}9\cdot3=2{,}7$</td><td>2,7</td></tr><tr><td>$s_1$</td><td>$2+0{,}9\cdot1=2{,}9$</td><td>$3+0{,}9\cdot3=5{,}7$</td><td>5,7</td></tr></tbody></table><div class="math-large">$$V_2=(2{,}7;\,5{,}7).$$</div>
-<div class="box">Đánh giá giữ một chính sách cố định; lặp giá trị lấy cực đại trên các hành động.</div>
-<aside class="notes"><p>Lượt đầu đánh giá chính sách $(a,a)$ cho $(1,2)$, còn lặp giá trị cho $(1,3)$. Sự khác biệt tại $s_1$ đến từ phép cực đại trên các hành động.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17, 23–24</p></aside>
+<div class="box">Đánh giá giữ một chính sách cố định; lặp giá trị lấy cực đại trên các hành động. Ở lượt hai, cực đại đạt tại $(b,b)$.</div>
+<aside class="notes"><p>Lượt đầu đánh giá chính sách $(a,a)$ cho $(1,2)$, còn lặp giá trị cho $(1,3)$. Sự khác biệt tại $s_1$ đến từ phép cực đại trên các hành động. Hành động đạt cực đại ở lượt một là $(a,b)$ vì $1&gt;0$ tại $s_0$ và $3&gt;2$ tại $s_1$; ở lượt hai là $(b,b)$ vì $2{,}7&gt;1{,}9$ và $5{,}7&gt;2{,}9$. Chính sách tham lam theo bảng có thể đổi giữa các lượt trong khi bảng còn xa nghiệm.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17, 23–24</p></aside>
 </section>
 <section data-slide-id="L04-E03">
 <h2>Toán tử Bellman tối ưu</h2>
