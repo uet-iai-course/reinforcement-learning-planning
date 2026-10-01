@@ -1213,3 +1213,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện (trung bình, độ chính xác, thuật ngữ): `materials/lec-04/lecture-note.md` còn gọi $Q_V$ là “điểm”/“bảng điểm” ở bảng ký hiệu, tiêu đề mục và hai câu giải thích, lệch thuật ngữ “giá trị nhìn trước” của bài giảng.
 - Quyết định: đổi bốn chỗ thành “giá trị nhìn trước”, gồm tiêu đề mục “Giá trị nhìn trước $Q_V$ từ một bảng giá trị”. Không có liên kết hay `note-topic-id` nào trỏ tới tiêu đề cũ. Các chữ “điểm” khác (điểm bất động, hai điểm liên tục trong một ô rời rạc hóa) giữ nguyên vì khác nghĩa.
 - Kiểm tra: trình đọc ghi chú tại cổng 8766 ở 1600×900 và 390×844: 1.108 biểu thức KaTeX, không `.katex-error`, không tràn ngang, tiêu đề mới hiển thị, không còn cụm cũ. Lỗi CSP trong console đến từ đoạn script tự tải lại do `reloadserver` chèn khi phục vụ, không có trong `material-viewer.html`.
+
+#### L04-E01 — Sửa bổ sung sau rà lại
+
+- Phát hiện (trung bình, mạch viết): câu mở lấy 44 lượt đánh giá lặp làm chi phí của lặp chính sách, trong khi thuật toán lặp chính sách đánh giá chính xác bằng hệ Bellman. Mắt xích “chọn tham lam rồi đánh giá đúng một lượt cho phép cực đại” chỉ có trong notes.
+- Quyết định: sửa. Câu mở nêu hai cách có $v_\pi$: giải hệ tuyến tính với $|\mathcal S|$ ẩn hoặc đánh giá lặp nhiều lượt; giữ số liệu $10\cdot0{,}9^k$ và 44 lượt. Hộp: “Chọn tham lam theo bảng hiện tại rồi đánh giá đúng một lượt cho giá trị nhìn trước lớn nhất. Đó là lặp giá trị; điều kiện dừng là phần dư của toán tử tối ưu.” Thẻ trái rút còn hai dòng. Notes bỏ câu trùng mặt trang, thêm chi phí $O(|\mathcal S|^3)$ của giải hệ đặc. Ý “thay cho chính sách ổn định” giữ trong notes.
+- Kiểm tra: bản đầu cao 688 và hộp chạm chân trang (đã xem ảnh); sau rút gọn 593/720, hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.

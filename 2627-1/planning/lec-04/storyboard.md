@@ -311,7 +311,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Đầu vào và quan hệ với trang trước:** Chi phí đánh giá đầy đủ và giới hạn dừng gần đúng dẫn tới cập nhật điều khiển cắt ngắn.
 - **Sản phẩm và mục tiêu:** MT5; Lặp giá trị chọn hành động tốt nhất trong mỗi cập nhật mà không hoàn tất đánh giá một chính sách.
 - **Đầu ra cho trang sau:** Phép chọn nhánh lớn nhất được thử trên cùng bốn chuyển tiếp trước khi viết toán tử.
-- **Quyết định:** `sửa`. Mở lặp giá trị bằng giới hạn chi phí của lặp chính sách trước công thức. Rà ngày 2026-10-01: nêu chi phí bằng số (44 lượt đánh giá $\pi_0$ để sai số không quá $0{,}1$) và đổi tiêu chuẩn dừng từ chính sách ổn định sang phần dư của toán tử tối ưu.
+- **Quyết định:** `sửa`. Mở lặp giá trị bằng giới hạn chi phí của lặp chính sách trước công thức. Rà ngày 2026-10-01: nêu chi phí bằng số (44 lượt đánh giá $\pi_0$ để sai số không quá $0{,}1$) và đổi tiêu chuẩn dừng từ chính sách ổn định sang phần dư của toán tử tối ưu. Sửa bổ sung sau rà lại: câu mở nêu hai cách có $v_\pi$ (giải hệ tuyến tính hoặc đánh giá lặp); hộp nêu cơ chế chọn tham lam rồi đánh giá đúng một lượt cho giá trị nhìn trước lớn nhất.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
 ### L04-E02 — Hai lượt lặp giá trị đồng bộ
