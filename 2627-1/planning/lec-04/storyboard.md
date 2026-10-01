@@ -284,7 +284,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Đầu vào và quan hệ với trang trước:** Kết quả không đổi chính sách được kiểm tra bằng điều kiện Bellman tối ưu.
 - **Sản phẩm và mục tiêu:** MT4; Chính sách tham lam theo chính giá trị của nó thỏa phương trình Bellman tối ưu.
 - **Đầu ra cho trang sau:** Điều kiện ổn định cần đi cùng lập luận dừng hữu hạn và độ chính xác đánh giá.
-- **Quyết định:** `sửa`. Hoãn tối ưu Bellman tới khi người học đã thấy một chính sách ổn định.
+- **Quyết định:** `sửa`. Hoãn tối ưu Bellman tới khi người học đã thấy một chính sách ổn định. Rà lại 2026-10-01: kết luận $v_\pi=v_*$ được chứng minh bằng công cụ đã có (đơn điệu, co của $T_{\pi'}$), không dựa vào tính co của toán tử tối ưu chưa học.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
 ### L04-D05 — Dừng hữu hạn và đánh giá gần đúng

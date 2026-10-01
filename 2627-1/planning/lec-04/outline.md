@@ -391,7 +391,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Đánh
 - **Vai trò và mục tiêu:** Định lý và điều kiện điểm bất động; MT4
 - **Luận điểm trung tâm:** Chính sách tham lam theo chính giá trị của nó thỏa phương trình Bellman tối ưu.
 - **Ý chính:** Định nghĩa $v_*(s)=\max_\pi v_\pi(s)$, $q_*(s,a)=\max_\pi q_\pi(s,a)$. Nếu đánh giá chính xác và bước cải thiện không đổi chính sách, thì $v_\pi(s)=\max_a\sum_{s',r}p(s',r\mid s,a)[r+\gamma v_\pi(s')]$. Trong MDP hữu hạn chiết khấu, nghiệm là $v_*$ và có chính sách tối ưu dừng, xác định. Áp dụng: với $(b,b)$ và giá trị $(27,30)$, các cực đại lần lượt bằng 27 và 30 nên chính sách này đạt điều kiện.
-- **Ví dụ/hình dự kiến:** Một đẳng thức nối đánh giá với cực đại; định nghĩa $q_*$ và lập luận phụ trong ghi chú để mặt trang có một kết quả chính.
+- **Ví dụ/hình dự kiến:** Một đẳng thức nối đánh giá với cực đại; định nghĩa $q_*$ và lập luận phụ trong ghi chú để mặt trang có một kết quả chính. Bổ sung sau rà lại 2026-10-01: hộp trên mặt trang chứng minh trực tiếp $v_\pi=v_*$: với mọi $\pi'$, $T_{\pi'}v_\pi\le v_\pi$ vì trung bình theo $\pi'$ không vượt cực đại; tính đơn điệu và tính co (như định lý cải thiện, chiều ngược) cho $v_{\pi'}\le v_\pi$. Không viện dẫn tính duy nhất của nghiệm tối ưu, vốn được thiết lập ở mạch lặp giá trị.
 - **Hình thức hóa:** HT9: điều kiện tối ưu Bellman và tồn tại chính sách tối ưu dừng xác định; nêu giả thiết hữu hạn, thưởng bị chặn, $\gamma<1$.
 - **Kết nối vào:** Kết quả không đổi chính sách được kiểm tra bằng điều kiện Bellman tối ưu.
 - **Kết nối ra:** Điều kiện ổn định cần đi cùng lập luận dừng hữu hạn và độ chính xác đánh giá.
