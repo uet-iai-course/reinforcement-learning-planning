@@ -1307,3 +1307,9 @@ Nguồn: báo cáo rà lại toán–câu nối của lượt sửa bổ sung A�
 - Phát hiện (nhẹ): mặt trang gắn bài toán dự đoán riêng với $\pi_0$, trong khi notes nêu $\pi_0$ chỉ là ví dụ; lý do tách hạng đầu (tổng vô hạn hạng) chỉ ngầm định.
 - Quyết định: “Bài toán dự đoán: với $\pi$ cố định, tính tổng thưởng chiết khấu kỳ vọng từ mỗi trạng thái.” Bản có “(vô hạn hạng)” làm câu xuống dòng và chạm chân trang (692), nên ý “tổng gồm vô hạn hạng, không cộng trực tiếp được” đặt trong notes.
 - Kiểm tra: 648/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-B04 — Sửa nhẹ lượt cuối
+
+- Phát hiện (nhẹ; no-ai-slop: tham chiếu điều hướng trong ghi chú diễn giả): notes viết “tính co ở trang sau bảo đảm đây là điểm bất động duy nhất”.
+- Quyết định: “tính co của $T_\pi$ bảo đảm đây là điểm bất động duy nhất.” Mặt trang không đổi.
+- Kiểm tra: 626/720; hai kích thước đạt, không lỗi, không cờ đè chân trang.
