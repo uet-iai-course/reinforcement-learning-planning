@@ -1183,3 +1183,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện: (trung bình, mạch viết; nhẹ, độ chính xác) câu nhu cầu “Đổi hành động tại mọi trạng thái cần bảo đảm giá trị không giảm” nhầm vấn đề: $12{,}9$ chỉ sai khi việc đổi là vĩnh viễn, tức ở mọi lần gặp trạng thái. (Nhẹ, mạch viết) $\arg\max$ được dùng ở dòng chính sách tham lam nhưng dòng sau mới giải thích.
 - Quyết định: sửa. Câu nhu cầu: “Giá trị $12{,}9$ chỉ đổi hành động ở bước đầu, sau đó vẫn theo $\pi_0$. Đổi hành động ở mọi lần gặp trạng thái, đồng thời tại nhiều trạng thái, cần một bảo đảm giá trị không giảm.” Gộp giải thích $\arg\max$ vào dòng chính sách tham lam (“tập hành động đạt cực đại của $q_\pi$…”); dòng phá hòa chỉ còn quy tắc.
 - Kiểm tra: 585/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-C06 — Sửa bổ sung sau rà lại
+
+- Phát hiện (nhẹ, mạch viết): mặt trang dùng lại ẩn $x,y$ (ở trang giá trị chính xác của chính sách ban đầu là ẩn của $v_{\pi_0}$) cho $v_{\pi_1}$ mà không nói lại.
+- Quyết định: sửa thành “Hệ Bellman của $\pi_1$, với $(x,y)=v_{\pi_1}$: $x=1+0{,}9x$; $y=3+0{,}9y$.” Kết quả $(10,30)$ không đổi.
+- Kiểm tra: 658/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
