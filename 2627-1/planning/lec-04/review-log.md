@@ -902,3 +902,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, trang chưa nêu bài toán cần giải (“Đã biết giá trị của chính sách hiện tại: $v_{\pi_0}=(10,11)$.”). Trung bình (Detect, mục đích mơ hồ, thiếu $\gamma$): “So sánh phần thưởng trước mắt cộng giá trị tiếp nối chuẩn bị cho việc thay đổi chính sách.” Trung bình, thuật ngữ “giá trị nhìn trước” được dùng từ C02 nhưng chưa định nghĩa trên mặt trang. Nhẹ, tiêu đề dài.
 - Quyết định: sửa. Tiêu đề “Đổi hành động ở bước đầu”. Dòng đầu nêu bài toán điều khiển: xác định có nên đổi hành động của $\pi_0$ tại một trạng thái. Hộp cuối định nghĩa giá trị nhìn trước $r+\gamma\,v_{\pi_0}(s')$. Notes thêm kỳ vọng theo $p$ khi chuyển tiếp ngẫu nhiên và việc giữ $v_{\pi_0}$ cố định. Đồng bộ tiêu đề và ý chính ở outline, storyboard.
 - Kiểm tra: 650/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-C02 — So sánh hai nhánh hành động
+
+- Trang muốn nói: tại $s_1$, chọn $b$ một bước rồi theo $\pi_0$ cho giá trị nhìn trước $12{,}9$, lớn hơn $v_{\pi_0}(s_1)=11$ của hành động cũ.
+- Vấn đề: trung bình, trang không nói nhánh $a$ là hành động của $\pi_0$, nên không thấy $12{,}9$ vượt giá trị hiện tại. Nhẹ, thẻ “Hành động thứ nhất” và “Chọn $a$ tại $s_1$” lặp ý. Nhẹ, notes dùng dấu chấm thập phân (“Số 12.9”).
+- Quyết định: sửa. Đề xuất tiêu đề “So sánh hai hành động tại $s_1$” (quyết định chung) KHÔNG áp dụng: CSS chung đặt tiêu đề `h2`/`h3` chữ hoa, nên KaTeX hiển thị $s_1$ thành $S_1$ và $a$ thành $A$, làm sai ký hiệu (biến ngẫu nhiên $S_t$ khác trạng thái $s$). Tiêu đề chọn “So sánh hai nhánh hành động”; thẻ đặt tên “Giữ hành động cũ”, “Đổi hành động”, ký hiệu chuyển xuống dòng thân. Hộp cuối: “Giá trị nhìn trước của $b$ vượt $v_{\pi_0}(s_1)=11$.” Notes đổi $12{,}9$. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: bản có thêm mệnh đề trong hộp cao 714/720, đã rút còn 671/720; hai kích thước đạt, không lỗi; đã xem ảnh.

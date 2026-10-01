@@ -260,7 +260,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Giá t
 - **Thời lượng:** 2 phút
 - **Ghi chú học thuật dự kiến:** Thử một hành động rồi tiếp tục theo chính sách cũ khác với thay chính sách vĩnh viễn. Định lý cải thiện sẽ nối hai phát biểu đó.
 
-#### L04-C02 — So sánh hành động tại trạng thái thứ hai
+#### L04-C02 — So sánh hai nhánh hành động
 
 - **Vai trò và mục tiêu:** Ví dụ tính tay; MT3
 - **Luận điểm trung tâm:** Tại $s_1$, hành động $b$ có giá trị nhìn trước lớn hơn khi dùng cùng giá trị tiếp nối.

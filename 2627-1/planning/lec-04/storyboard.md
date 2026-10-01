@@ -197,7 +197,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `tách`. Đưa đối tượng so sánh trước ký hiệu giá trị hành động.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
-### L04-C02 — So sánh hành động tại trạng thái thứ hai
+### L04-C02 — So sánh hai nhánh hành động
 
 - **Chức năng và nhu cầu học tập:** Ví dụ tính tay. Tại $s_1$, hành động $b$ có giá trị nhìn trước lớn hơn khi dùng cùng giá trị tiếp nối.
 - **Đầu vào và quan hệ với trang trước:** So sánh một thay đổi tại bước đầu được tính trên hai nhánh của trạng thái thứ hai.

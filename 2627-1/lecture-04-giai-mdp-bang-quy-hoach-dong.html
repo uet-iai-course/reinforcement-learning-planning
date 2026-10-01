@@ -119,10 +119,10 @@
 <aside class="notes"><p>Khi chuyển tiếp ngẫu nhiên, giá trị nhìn trước là kỳ vọng của $r+\gamma\,v_{\pi_0}(s')$ theo $p(s',r\mid s,a)$. Bảng $v_{\pi_0}$ được giữ cố định khi so sánh mọi hành động. Thử một hành động rồi tiếp tục theo chính sách cũ khác với thay chính sách vĩnh viễn; định lý cải thiện chính sách nối hai phát biểu đó.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 19; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.2, tr. 76, 78.</p></aside>
 </section>
 <section data-slide-id="L04-C02">
-<h2>So sánh hành động tại trạng thái thứ hai</h2>
-<div class="grid2"><div><img class="figure" src="img/lec-04/dp04-one-step-choice.svg" alt="Từ s1: hành động a nhận thưởng 2 rồi tới s0 có giá trị tiếp nối 10; b nhận thưởng 3 rồi tới s1 có giá trị tiếp nối 11."/></div><div><div class="card"><h3>Hành động thứ nhất</h3><p>Chọn $a$ tại $s_1$.</p><div class="math-large">$2+0{,}9\cdot10=11$</div></div><div class="card"><h3>Hành động thứ hai</h3><p>Chọn $b$ tại $s_1$.</p><div class="math-large">$3+0{,}9\cdot11=12{,}9$</div></div></div></div>
-<div class="box">Hai nhánh đều theo $\pi_0$ sau bước đầu. Hành động $b$ cho giá trị nhìn trước lớn hơn.</div>
-<aside class="notes"><p>Số 12.9 chưa phải $v_{\pi_1}(s_1)$, vì chính sách tiếp nối trong phép tính vẫn là $\pi_0$. Giá trị sau khi đổi vĩnh viễn sang $b$ sẽ phải được đánh giá lại.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17–19; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, (4.6), tr. 78.</p></aside>
+<h2>So sánh hai nhánh hành động</h2>
+<div class="grid2"><div><img class="figure" src="img/lec-04/dp04-one-step-choice.svg" alt="Từ s1: hành động a nhận thưởng 2 rồi tới s0 có giá trị tiếp nối 10; b nhận thưởng 3 rồi tới s1 có giá trị tiếp nối 11."/></div><div><div class="card"><h3>Giữ hành động cũ</h3><p>Chọn $a$ tại $s_1$, tới $s_0$.</p><div class="math-large">$2+0{,}9\cdot10=11$</div></div><div class="card"><h3>Đổi hành động</h3><p>Chọn $b$ tại $s_1$, ở lại $s_1$.</p><div class="math-large">$3+0{,}9\cdot11=12{,}9$</div></div></div></div>
+<div class="box">Hai nhánh đều theo $\pi_0$ sau bước đầu. Giá trị nhìn trước của $b$ vượt $v_{\pi_0}(s_1)=11$.</div>
+<aside class="notes"><p>Số $12{,}9$ chưa phải $v_{\pi_1}(s_1)$, vì chính sách tiếp nối trong phép tính vẫn là $\pi_0$. Giá trị sau khi đổi vĩnh viễn sang $b$ sẽ phải được đánh giá lại.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17–19; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, (4.6), tr. 78.</p></aside>
 </section>
 <section data-slide-id="L04-C03">
 <h2>Giá trị hành động theo chính sách</h2>
