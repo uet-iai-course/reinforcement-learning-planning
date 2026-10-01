@@ -260,7 +260,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `gộp`. Đặt chu trình tổng quát sau khi hai phép toán đã được học và kiểm tra.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
-### L04-D02 — Quỹ đạo lặp chính sách trên hai trạng thái
+### L04-D02 — Lặp chính sách trên MDP hai trạng thái
 
 - **Chức năng và nhu cầu học tập:** Ví dụ một lần lặp đầy đủ. Hai lần đổi chính sách đưa ví dụ từ $(a,a)$ đến $(b,b)$.
 - **Đầu vào và quan hệ với trang trước:** Chu trình tổng quát được lần theo bằng toàn bộ chuỗi chính sách và giá trị của ví dụ.

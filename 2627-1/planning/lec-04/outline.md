@@ -360,7 +360,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Đánh
 - **Thời lượng:** 2 phút
 - **Ghi chú học thuật dự kiến:** Lặp chính sách giải bài toán điều khiển với mô hình đã biết. Hai phép toán thay đổi hai đối tượng khác nhau; giá trị hoặc chính sách phải được giữ cố định đúng lúc.
 
-#### L04-D02 — Quỹ đạo lặp chính sách trên hai trạng thái
+#### L04-D02 — Lặp chính sách trên MDP hai trạng thái
 
 - **Vai trò và mục tiêu:** Ví dụ một lần lặp đầy đủ; MT4
 - **Luận điểm trung tâm:** Hai lần đổi chính sách đưa ví dụ từ $(a,a)$ đến $(b,b)$.

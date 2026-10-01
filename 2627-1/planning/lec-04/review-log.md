@@ -951,3 +951,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, thuật ngữ “lặp chính sách” chưa được gọi tên trên mặt trang (chỉ có trong notes và alt của hình) nhưng D02 dùng ngay. Trung bình, câu mở chung chung (“Chính sách thay đổi làm thay đổi giá trị tiếp nối. Vì vậy chính sách mới phải được đánh giá lại.”), không dùng bằng chứng từ C06–C07. Nhẹ, tiêu đề kể hai thao tác thay vì gọi tên khái niệm.
 - Quyết định: sửa. Tiêu đề “Chu trình lặp chính sách”. Câu mở dùng bằng chứng 11 → 30 và lựa chọn tại $s_0$ đổi theo, rồi định nghĩa “Lặp chính sách (policy iteration) xen kẽ đánh giá và cải thiện cho đến khi chính sách không đổi.” Câu chung cũ chuyển xuống notes. Hình giữ nguyên. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: 631/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-D02 — Lặp chính sách trên MDP hai trạng thái
+
+- Trang muốn nói: hai lần đổi chính sách đưa $(a,a)$ tới $(b,b)$; chính sách này không đổi khi cải thiện theo giá trị chính xác của nó, nên là chính sách ổn định. Số liệu đã kiểm: $(b,b)$ có $x=0{,}9y$, $y=3+0{,}9y$ nên $(27,30)$; $q_{\pi_2}=(25{,}3;\,27;\,26{,}3;\,30)$.
+- Vấn đề: trung bình, “quỹ đạo” là thuật ngữ RL chỉ chuỗi trạng thái–hành động–phần thưởng, dùng cho dãy kết quả thuật toán gây nhầm. Trung bình, “chính sách ổn định” dùng ở D03, D04 mà chưa định nghĩa. Nhẹ, chỉ số $i$ giới thiệu ở D01 nhưng bảng không có cột $i$. Nhẹ, thẻ “Trạng thái thứ nhất” và “Tại $s_0$, theo $(b,b)$:” lặp ý; các số chưa được gọi là $q_{\pi_2}$.
+- Quyết định: sửa. Tiêu đề “Lặp chính sách trên MDP hai trạng thái”. Bảng thêm cột $i$ (0, 1, 2). Thẻ ghi $q_{\pi_2}(s,\cdot)$ trên một dòng; giữ tên thẻ bằng chữ (không đưa $s_0$ vào `h3` vì chữ hoa làm sai ký hiệu). Câu cuối định nghĩa “Chính sách ổn định” và nêu $\pi_2=(b,b)$ ổn định. Notes dùng $v_{\pi_1}$, $\pi_2$. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: bản đầu cao 689/720, tiêu đề chạm mũi tên điều hướng dọc; gộp hai dòng $q$ mỗi thẻ, còn 617/720. Hai kích thước đạt, không lỗi; đã xem ảnh.
