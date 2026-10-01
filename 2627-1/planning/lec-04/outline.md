@@ -191,7 +191,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Mô h�
 - **Vai trò và mục tiêu:** Quy trình đầy đủ; MT2
 - **Luận điểm trung tâm:** Hai bảng tách giá trị cũ và mới, còn phần dư kiểm tra độ chính xác của bảng được trả về.
 - **Ý chính:** Đầu vào $p,\pi,\gamma$, ngưỡng phần dư $\eta>0$, ngân sách $K$; khởi tạo $V=0$, giá trị kết thúc bằng 0. Tính $W=T_\pi V$ từ bản chụp cố định. Nếu $\|W-V\|_\infty\le\eta$, trả $V$ cùng phần dư. Nếu chưa đạt và còn ngân sách, đặt $V\leftarrow W$. Khi hết ngân sách, tính lại phần dư trên bảng cuối và trả trạng thái chưa chứng nhận nếu còn vượt ngưỡng.
-- **Ví dụ/hình dự kiến:** Mở bằng nhu cầu đại lượng dừng tính được và ví dụ $\Delta_{\pi_0}(V_1)=0{,}9$; giả mã ba bước (sửa 2026-10-01: gộp kiểm ngưỡng và hết ngân sách vào một bước, cùng ngữ nghĩa).
+- **Ví dụ/hình dự kiến:** Mở bằng nhu cầu đại lượng dừng tính được và ví dụ $\Delta_{\pi_0}(V_1)=0{,}9$; giả mã ba bước (sửa 2026-10-01: gộp kiểm ngưỡng và hết ngân sách vào một bước, cùng ngữ nghĩa; bổ sung sau rà lại: bộ đếm $k$ khởi tạo $0$, dừng khi $k=K$, tăng sau mỗi lần nhận bảng).
 - **Hình thức hóa:** HT3: $\Delta_\pi(V)=\|T_\pi V-V\|_\infty$; thao tác kiểm tra không ghi đè $V$. Chuẩn vô cùng là $\|U-V\|_\infty=\max_{s\in\mathcal S}|U(s)-V(s)|$.
 - **Kết nối vào:** Quy tắc cập nhật cần quy định bảng đọc, bảng ghi và thời điểm dừng.
 - **Kết nối ra:** Phần dư đo được cần được liên hệ với sai số so với nghiệm chính xác.

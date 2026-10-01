@@ -1159,3 +1159,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện: (nhẹ, độ chính xác) notes viết “tính duy nhất cần thêm giả thiết $\gamma<1$”; $\gamma<1$ là điều kiện đủ đã giả thiết cho toàn bài, không phải điều kiện cần. (Nhẹ, mạch viết) notes gọi một biểu thức là “phương trình”. Notes còn “mô hình hai trạng thái”. Kiểm trực quan bổ sung: thẻ “Quy tắc lặp” chạm dòng chân trang ở 1600×900 (đáy 689, chân trang 689).
 - Quyết định: sửa notes thành “Biểu thức định nghĩa $T_\pi$ là vế phải của phương trình Bellman kỳ vọng với $V$ thay cho $v_\pi$; vì vậy $v_\pi$ là một điểm bất động; với $0\le\gamma<1$, tính co ở trang sau bảo đảm đây là điểm bất động duy nhất.”; “MDP hai trạng thái”. Mặt trang: gộp hai dòng trong thẻ thành “Đã tính: $V_1=T_\pi V_0$, $V_2=T_\pi V_1$.” để bỏ chồng lấn; nội dung không đổi.
 - Kiểm tra: 626/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-B05 — Sửa bổ sung sau rà lại
+
+- Phát hiện: (nhẹ, độ chính xác) “bảng chỉ xấp xỉ $v_\pi$” quá tuyệt đối; bộ đếm dùng cho điều kiện “đã nhận $K$ bảng mới” không được khởi tạo trên mặt trang. (Nhẹ, mạch viết, no-ai-slop câu lặp) notes đoạn 1 và đoạn 2 cùng nói tính co liên hệ phần dư với sai số.
+- Quyết định: sửa. “bảng nói chung chỉ xấp xỉ $v_\pi$”; bước 1 “Khởi tạo $V=0$, $k=0$”; bước 3 “Nếu $\Delta\le\eta$ hoặc $k=K$: … Ngược lại, $V\leftarrow W$, $k\leftarrow k+1$ rồi quay lại bước 2.” Ngữ nghĩa giữ nguyên: $K=0$ trả bảng khởi tạo cùng phần dư của nó; sau lần nhận bảng thứ $K$, bước 2 đo phần dư của bảng cuối; trả $V$, không trả $W$. Notes xóa câu lặp ở đoạn 1, gộp hai câu cuối đoạn 2; giữ phép tính $|1{,}9-1|$, $|2{,}9-2|$ vì mặt trang chỉ ghi $\max\{0{,}9;0{,}9\}$. Đồng bộ outline. Trang thuật toán lặp giá trị đồng bộ dùng cùng khuôn nhưng chưa có bộ đếm $k$; ngoài phạm vi lượt này, đã báo điều phối viên.
+- Kiểm tra: 648/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
