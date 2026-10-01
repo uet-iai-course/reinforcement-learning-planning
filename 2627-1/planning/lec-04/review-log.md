@@ -1291,3 +1291,13 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện: (nhẹ, mạch viết) bài tập tuần 4 và đầu ra cho bài sau nằm chung một đoạn dù không liên quan. (Nhẹ, độ chính xác; no-ai-slop: lời bình về bố cục văn bản) notes viết “câu cuối của trang chỉ ra giới hạn này”, trong khi dòng cuối là liên kết.
 - Quyết định: tách thành hai phần; câu “Khi không có $p$, giá trị phải ước lượng từ các chuyển tiếp lấy mẫu.” đặt trong hộp. Notes: “Mọi phép tính trong bài dùng kỳ vọng đầy đủ theo $p$. Khi không có $p$, kỳ vọng này không tính trực tiếp được; dự đoán phi mô hình ở bài sau ước lượng giá trị từ chuyển tiếp lấy mẫu.” Dòng tài liệu viết tắt tên tác giả (“R. S. Sutton và A. G. Barto”) để không rơi chữ “2.” và giữ khoảng cách giữa liên kết với chân trang.
 - Kiểm tra: bản trung gian 680 với liên kết sát chân trang; bản cuối 637/720, hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+### Sửa nhẹ lượt cuối
+
+Nguồn: báo cáo rà lại toán–câu nối của lượt sửa bổ sung A–D (5 phát hiện nhẹ) và hai lỗi hình được lượt bổ sung E–G ghi nhận. Tác tử chỉnh sửa: fork, Opus 5.5 kế thừa phiên điều phối. Kiểm trực quan tại cổng 8766.
+
+#### L04-A02 — Sửa nhẹ lượt cuối
+
+- Phát hiện (nhẹ): mục tiêu “Tính $v_\pi$ và cải thiện chính sách.” dùng ký hiệu $v_\pi$ ở trang bản đồ, trước khi hàm giá trị được định nghĩa.
+- Quyết định: “Tính giá trị và cải thiện chính sách.” Độ dài tương đương.
+- Kiểm tra: 658/720; hai kích thước đạt, không lỗi; đã xem ảnh 16:9.
