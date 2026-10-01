@@ -972,3 +972,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, $v_*$ xuất hiện đột ngột (“Giá trị tối ưu: $v_*(s)=\max_\pi v_\pi(s)$.”), không nối với mục tiêu “lớn nhất tại mọi trạng thái” ở A03. Trung bình, bước $v_\pi(s)=q_\pi(s,\pi(s))=\max_a q_\pi(s,a)$ chỉ có trong notes. Trung bình, công thức khối chưa có nhãn “phương trình Bellman tối ưu” trên mặt trang. Nhẹ, tính duy nhất được chứng minh ở mạch E; notes đã ghi.
 - Quyết định: sửa. Tiêu đề “Chính sách ổn định là tối ưu”. Dòng đầu nêu mục tiêu điều khiển là giá trị tối ưu tại mọi $s$. Dòng hai đưa chuỗi $v_\pi(s)=q_\pi(s,\pi(s))=\max_a q_\pi(s,a)$ lên mặt trang và gọi tên phương trình Bellman tối ưu. Hộp: “phương trình này có nghiệm duy nhất $v_*$, nên $v_\pi=v_*$.” “Mô hình hai trạng thái” → “MDP hai trạng thái”. Notes giải thích vì sao chính sách ổn định thỏa $\pi(s)\in\arg\max_a q_\pi(s,a)$ (quy tắc phá hòa). Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: 658/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-D05 — Dừng hữu hạn và đánh giá gần đúng
+
+- Trang muốn nói: với đánh giá chính xác và quy tắc phá hòa, lặp chính sách dừng sau hữu hạn vòng; đánh giá gần đúng không có bảo đảm này.
+- Vấn đề: trung bình, thiếu mắt xích “không chính sách nào lặp lại” trên mặt trang (chỉ có trong notes); mặt trang chỉ có số chính sách hữu hạn và “cải thiện nghiêm ở ít nhất một trạng thái”. Trung bình, “phá hòa ổn định” và “quy tắc giữ hòa” (notes) là hai tên khác cho quy tắc đã đặt tên ở C04.
+- Quyết định: sửa. Tiêu đề giữ. Dòng cuối thẻ trái: “Mỗi lần đổi, giá trị không giảm và tăng nghiêm ở ít nhất một trạng thái, nên không chính sách nào lặp lại.” Hộp: “Đánh giá chính xác cùng quy tắc phá hòa bảo đảm dừng sau hữu hạn vòng.” Notes thống nhất “quy tắc phá hòa”.
+- Kiểm tra: rút hộp để không còn một chữ rơi xuống dòng riêng; 612/720; hai kích thước đạt, không lỗi; đã xem ảnh.
