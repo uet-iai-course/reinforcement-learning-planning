@@ -839,3 +839,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, công thức $G_t$ đặt sau câu hỏi, dữ kiện đứng sau yêu cầu. Nhẹ, tiêu đề tám từ. Nhẹ, notes dùng dấu chấm thập phân. Lời giải đã kiểm: thưởng $2$, $1$, $1$; tổng $3{,}71$.
 - Quyết định: sửa. Tiêu đề “Kiểm tra tổng thưởng chiết khấu”. Công thức $G_t$ đặt trước câu hỏi, dạng nội dòng trong khối công thức lớn; dạng hiển thị làm trang cao 713/720 và tiêu đề chạm nút điều hướng. Sửa dấu phẩy thập phân trong notes và alt hình. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: 602/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-B01 — Bài toán đánh giá chính sách
+
+- Trang muốn nói: đánh giá chính sách là tính tổng thưởng kỳ vọng của một chính sách cố định; phần tiếp nối của tổng lại là cùng bài toán, xuất phát từ trạng thái kế tiếp.
+- Vấn đề: nghiêm trọng, thuật ngữ “đánh giá chính sách” chưa được gọi tên dù B04 dùng ngay trong tiêu đề. Nghiêm trọng, ý thay phần tiếp nối bằng bảng hiện có chỉ được nói mờ (“Một bảng giá trị hiện có ước lượng phần thưởng về sau.”). Trung bình, hệ thức $G_t=R_{t+1}+\gamma G_{t+1}$ chỉ có trong notes B03. Trung bình, “giá trị tiếp nối” là thuật ngữ xương sống nhưng chưa có định nghĩa trên mặt trang. Trung bình, tiêu đề dùng “Dự đoán” trong khi cả mạch dùng “đánh giá”.
+- Quyết định: sửa. Tiêu đề “Bài toán đánh giá chính sách”. Mặt trang gọi tên “Đánh giá chính sách (bài toán dự đoán)”, đưa hệ thức $G_t=R_{t+1}+\gamma G_{t+1}$ lên và định nghĩa giá trị tiếp nối $V(s')$ trong box. Câu “chính sách được giữ cố định” và cách suy hệ thức chuyển xuống notes. Hình dùng lớp có sẵn `figure short` để không tràn; nhãn hình vẫn đọc được. Đồng bộ tiêu đề ở outline, storyboard và mục hình thức hóa trong outline.
+- Kiểm tra: lần đầu 726/720 (tràn), sau khi rút câu và dùng `figure short` còn 692/720; hai kích thước đạt, không lỗi; đã xem ảnh.

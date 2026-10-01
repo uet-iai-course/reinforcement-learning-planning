@@ -134,13 +134,13 @@ Chức năng: Thiết lập bài toán. Đầu vào: MDP, xác suất có điề
 
 Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Mô hình đã biết và chính sách cố định. Đầu ra: Giá trị chính xác hoặc bảng có phần dư; làm đầu vào so sánh hành động. Mục tiêu: MT2. Thời lượng: 22 phút; kiểm tra riêng L04-B08.
 
-#### L04-B01 — Dự đoán giá trị của chính sách cố định
+#### L04-B01 — Bài toán đánh giá chính sách
 
 - **Vai trò và mục tiêu:** Vấn đề và trực giác; MT2
 - **Luận điểm trung tâm:** Đánh giá chính sách cộng thưởng hiện tại với giá trị tiếp nối theo chính sách đó.
 - **Ý chính:** Giữ $\pi_0=(a,a)$. Tổng thưởng có vô hạn hạng, nhưng sau một chuyển tiếp bài toán trở lại một trạng thái trong cùng mô hình. Một bảng giá trị gần đúng cung cấp ước lượng cho phần tiếp nối.
 - **Ví dụ/hình dự kiến:** SVG dp04-expectation-backup.svg: trạng thái gốc, hành động do chính sách chọn, các kết quả chuyển–thưởng; nhãn trung bình theo mô hình.
-- **Hình thức hóa:** Chưa đưa quy tắc tổng quát; dùng lời và sơ đồ một bước.
+- **Hình thức hóa:** Gọi tên đánh giá chính sách (bài toán dự đoán); nêu hệ thức $G_t=R_{t+1}+\gamma G_{t+1}$ suy từ định nghĩa tổng chiết khấu và định nghĩa giá trị tiếp nối $V(s')$. Chưa đưa quy tắc cập nhật tổng quát.
 - **Kết nối vào:** Tổng ba bước chưa bao gồm phần thưởng về sau; đánh giá cần một biểu diễn cho phần tiếp nối.
 - **Kết nối ra:** Giá trị tiếp nối được thay bằng bảng hiện có để thực hiện lượt tính đầu tiên.
 - **Nguồn:** NG1, tr. 6, 12–14; NG2, §4.1, tr. in 74–75 (PDF 96–97).

@@ -116,7 +116,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `thêm`. Kiểm tra đúng tiên quyết và nhu cầu tính giá trị mà không đòi hỏi Bellman.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
-### L04-B01 — Dự đoán giá trị của chính sách cố định
+### L04-B01 — Bài toán đánh giá chính sách
 
 - **Chức năng và nhu cầu học tập:** Vấn đề và trực giác. Đánh giá chính sách cộng thưởng hiện tại với giá trị tiếp nối theo chính sách đó.
 - **Đầu vào và quan hệ với trang trước:** Tổng ba bước chưa bao gồm phần thưởng về sau; đánh giá cần một biểu diễn cho phần tiếp nối.
