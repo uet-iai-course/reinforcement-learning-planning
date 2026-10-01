@@ -86,11 +86,11 @@ Chức năng: Thiết lập bài toán. Đầu vào: MDP, xác suất có điề
 - **Thời lượng:** 2 phút
 - **Ghi chú học thuật dự kiến:** Mọi thuật toán trong bài dùng cùng mô hình chuyển–thưởng và quy ước chiết khấu. Đánh giá giữ chính sách cố định; điều khiển cho phép thay chính sách. Ánh xạ bốn mục tiêu sang các mạch.
 
-#### L04-A03 — Bài toán lập kế hoạch với mô hình đã biết
+#### L04-A03 — Lập kế hoạch với mô hình đã biết
 
 - **Vai trò và mục tiêu:** Vấn đề trung tâm; MT1
 - **Luận điểm trung tâm:** Mô hình cho phép tính kỳ vọng của quyết định trước khi thực hiện tương tác.
-- **Ý chính:** Cho tập trạng thái và hành động hữu hạn, phân phối chuyển–thưởng đã biết và hệ số chiết khấu nhỏ hơn 1. Cần tìm chính sách có tổng phần thưởng chiết khấu kỳ vọng lớn nhất tại mọi trạng thái. Giá trị của chính sách hiện tại là đại lượng cần tính trước.
+- **Ý chính:** Cho tập trạng thái và hành động hữu hạn, phân phối chuyển–thưởng đã biết và hệ số chiết khấu nhỏ hơn 1. Cần tìm chính sách có tổng phần thưởng chiết khấu kỳ vọng lớn nhất tại mọi trạng thái. Mặt trang định nghĩa quy hoạch động là nhóm thuật toán tính chính sách tối ưu từ mô hình MDP đầy đủ (NG2, chương 4, tr. 73). Giá trị của chính sách hiện tại là đại lượng cần tính trước; ý này nằm trong notes.
 - **Ví dụ/hình dự kiến:** Hai khối mô hình và chính sách dẫn tới bảng giá trị; phân biệt dữ kiện với đầu ra cần tìm.
 - **Hình thức hóa:** Nhắc giả thiết Markov: $p(s',r\mid s,a)=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a)$; mọi tổng xác suất bằng 1. $0\le\gamma<1$; phần thưởng bị chặn. Miền: $S_t\in\mathcal S$, $A_t\in\mathcal A(S_t)$, $R_{t+1}\in\mathcal R\subset\mathbb R$; $\pi(a\mid s)$ là phân phối hành động.
 - **Kết nối vào:** Chuỗi đánh giá và cải thiện cần bắt đầu từ dữ kiện mô hình và mục tiêu điều khiển.

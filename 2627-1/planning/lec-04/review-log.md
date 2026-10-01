@@ -818,3 +818,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, mục tiêu không đo được: “Thực hiện cập nhật và cải thiện chính sách.” không nói cập nhật đại lượng nào; “Kiểm tra hội tụ, sai số và điều kiện dừng.” không gắn với phép tính cụ thể. Nhẹ, câu đầu notes “Các thuật toán sau dùng lại…” là lời dẫn rỗng.
 - Quyết định: sửa. Bốn mục tiêu một dòng: đánh giá và cải thiện chính sách; thực hiện lặp chính sách, lặp giá trị; chặn sai số bằng phần dư; so sánh cập nhật đồng bộ và bất đồng bộ. Bản đề xuất ba mục dài làm trang cao 705/720 nên được tách thành bốn mục ngắn. Notes nêu ánh xạ mục tiêu sang các mạch. Đồng bộ outline.
 - Kiểm tra: 665/720 ở 16:9; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-A03 — Lập kế hoạch với mô hình đã biết
+
+- Trang muốn nói: dữ kiện của MDP hữu hạn có mô hình đã biết và bài toán tìm chính sách tối ưu tại mọi trạng thái.
+- Vấn đề: trung bình, thuật ngữ “quy hoạch động” trong tên bài chưa được định nghĩa trên mặt trang nào. Nhẹ, tiêu đề có từ thừa “Bài toán”. Nhẹ, “Đánh giá chính sách hiện tại cung cấp căn cứ để thay đổi lựa chọn.” dùng động từ mạnh giả tạo.
+- Quyết định: sửa. Tiêu đề “Lập kế hoạch với mô hình đã biết”. Thay câu trên bằng định nghĩa “Quy hoạch động: nhóm thuật toán tính chính sách tối ưu từ mô hình MDP đầy đủ.” theo Sutton–Barto chương 4, tr. 73, nguồn đã có trong notes. Ý “giá trị của chính sách là căn cứ để đổi lựa chọn” chuyển xuống notes. Đồng bộ tiêu đề và ý chính ở outline, storyboard.
+- Kiểm tra: 665/720; hai kích thước đạt, không lỗi; đã xem ảnh.

@@ -89,7 +89,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `sửa`. Thay mục lục nguồn bằng thứ tự chương 4 theo chỉ dẫn cụ thể của người dùng.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
-### L04-A03 — Bài toán lập kế hoạch với mô hình đã biết
+### L04-A03 — Lập kế hoạch với mô hình đã biết
 
 - **Chức năng và nhu cầu học tập:** Vấn đề trung tâm. Mô hình cho phép tính kỳ vọng của quyết định trước khi thực hiện tương tác.
 - **Đầu vào và quan hệ với trang trước:** Chuỗi đánh giá và cải thiện cần bắt đầu từ dữ kiện mô hình và mục tiêu điều khiển.
