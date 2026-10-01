@@ -888,3 +888,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: nhẹ, tiêu đề “Nghiệm đánh giá của chính sách ban đầu” vòng. Nhẹ, hộp kết quả ngắt dòng giữa đẳng thức $v_{\pi_0}=(10,11)$.
 - Quyết định: sửa tiêu đề thành “Giá trị chính xác của chính sách ban đầu” (dùng chữ, không đưa $\pi_0$ vào tiêu đề). Hộp kết quả tách hai dòng. Nội dung khác giữ. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: 578/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-B08 — Kiểm tra đánh giá chính sách
+
+- Trang muốn nói: người học tự tính $V_3$, phần dư và chặn sai số, rồi phân biệt bảng ước lượng với nghiệm chính xác.
+- Vấn đề: nhẹ, câu 3 diễn đạt vụng (“Giải thích vì sao chưa được gọi $V_3$ là $v_{\pi_0}$.”). Nhẹ, lời giải trong notes dùng dấu chấm thập phân. Nhẹ, tiêu đề chưa theo mẫu “Kiểm tra” + tên khái niệm của mạch.
+- Quyết định: sửa. Tiêu đề “Kiểm tra đánh giá chính sách”. Câu 3: “Giải thích vì sao $V_3$ chưa phải là $v_{\pi_0}$.” Lời giải đã kiểm: $V_3=(2{,}71;3{,}71)$, $\Delta_{\pi_0}(V_2)=0{,}81$, chặn $8{,}1$; notes thêm rằng sai số thật của $V_2$ cũng bằng $8{,}1$. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 548/720; hai kích thước đạt, không lỗi; đã xem ảnh.

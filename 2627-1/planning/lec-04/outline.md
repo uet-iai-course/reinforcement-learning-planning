@@ -225,7 +225,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Mô h�
 - **Thời lượng:** 2 phút
 - **Ghi chú học thuật dự kiến:** Với chính sách cố định, các phương trình tuyến tính ghép tất cả trạng thái. Giải trực tiếp và đánh giá lặp cùng nhằm tìm một nghiệm, nhưng có chi phí khác nhau. Nghiệm này sẽ làm giá trị tiếp nối khi so sánh hành động. $P_\pi$ chỉ chuyển giữa trạng thái chưa kết thúc, tổng hàng không vượt $1$; $r_\pi$ tính cả thưởng khi chuyển vào đích qua tổng trên $\mathcal S^+$.
 
-#### L04-B08 — Kiểm tra một lượt đánh giá
+#### L04-B08 — Kiểm tra đánh giá chính sách
 
 - **Vai trò và mục tiêu:** Kiểm tra đánh giá chính sách; MT2
 - **Luận điểm trung tâm:** Kết quả đánh giá phụ thuộc việc giữ nguyên bảng ở vế phải.

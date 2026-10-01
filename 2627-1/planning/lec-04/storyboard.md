@@ -179,7 +179,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `giữ`. Giữ phép tính nguồn và dùng nó để kiểm chứng thuật toán vừa xây dựng.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
-### L04-B08 — Kiểm tra một lượt đánh giá
+### L04-B08 — Kiểm tra đánh giá chính sách
 
 - **Chức năng và nhu cầu học tập:** Kiểm tra đánh giá chính sách. Kết quả đánh giá phụ thuộc việc giữ nguyên bảng ở vế phải.
 - **Đầu vào và quan hệ với trang trước:** Nghiệm và bảng ước lượng cho phép kiểm tra riêng thao tác cập nhật và chặn sai số.
