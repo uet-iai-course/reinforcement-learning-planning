@@ -660,7 +660,7 @@ Chức năng: Kết luận và vận dụng tổng hợp. Đầu vào: Kết qu�
 - **Thời lượng:** 2 phút
 - **Ghi chú học thuật dự kiến:** Một lần lặp chính sách ngoài không tương đương một lượt lặp giá trị. Khi $\gamma$ gần 1, chặn co yếu hơn; đây không phải dự đoán tuyệt đối về thời gian chạy trên mọi bài toán.
 
-#### L04-G03 — Bài tập lưới có chuyển tiếp ngẫu nhiên
+#### L04-G03 — Bài tập lưới ngẫu nhiên
 
 - **Vai trò và mục tiêu:** Bài tập tổng hợp được chuẩn bị; MT2, MT5
 - **Luận điểm trung tâm:** Kỳ vọng trong cập nhật phải ghép xác suất với phần thưởng của chuyển thực tế.

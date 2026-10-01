@@ -1098,3 +1098,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: nhẹ, tiêu đề “Lựa chọn phương pháp…” hứa tiêu chí chọn mà bảng không cung cấp; bảng chỉ so sánh. Nhẹ, dòng giả thiết bị ngắt giữa “$0\le$” và “$\gamma<1$”.
 - Quyết định: sửa. Tiêu đề “So sánh các phương pháp quy hoạch động” (gọi lại mục tiêu so sánh ở trang mở đầu). Viết lại dòng giả thiết, đưa $0\le\gamma<1$ lên đầu để công thức không bị ngắt. Notes giữ. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: 481/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-G03 — Bài tập lưới ngẫu nhiên
+
+- Trang muốn nói: vận dụng lặp giá trị khi chuyển tiếp ngẫu nhiên; mỗi giá trị nhìn trước là kỳ vọng theo xác suất trượt. Lời giải đã kiểm: $7{,}8$; $0{,}1$; $V_1=(-1;-1;-1;7{,}8;0)$; $V_2(c_3)=4{,}436$ (trái $-1{,}108$).
+- Vấn đề: trung bình, “Thưởng $10$ khi thực tế $c_4\to c_5$” dùng chữ “thực tế” kiểu văn nói và mơ hồ; lời giải tính cả nhánh trượt ngược vào $c_5$ vẫn nhận 10 mà mặt trang không nói rõ. Nhẹ, chú thích “Dữ kiện: bài tập tuần 4.” là nguồn trên mặt trang (notes đã trích hw04). Nhẹ, tiêu đề dài; câu hỏi bị ngắt giữa “$V_0=$” và “$0$”.
+- Quyết định: sửa. Tiêu đề “Bài tập lưới ngẫu nhiên”. Dòng thưởng: “Thưởng $10$ khi chuyển vào $c_5$, kể cả do trượt; các bước khác nhận $-1$.” Xóa chú thích nguồn trên mặt trang. Viết lại câu hỏi để công thức không bị ngắt. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 609/720; hai kích thước đạt, không lỗi; đã xem ảnh.

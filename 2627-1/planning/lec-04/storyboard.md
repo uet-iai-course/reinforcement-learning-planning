@@ -450,7 +450,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `sửa`. Thay phát biểu so sánh thiếu điều kiện trong nguồn bằng tiêu chí có thể kiểm tra.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
-### L04-G03 — Bài tập lưới có chuyển tiếp ngẫu nhiên
+### L04-G03 — Bài tập lưới ngẫu nhiên
 
 - **Chức năng và nhu cầu học tập:** Bài tập tổng hợp được chuẩn bị. Kỳ vọng trong cập nhật phải ghép xác suất với phần thưởng của chuyển thực tế.
 - **Đầu vào và quan hệ với trang trước:** So sánh kỳ vọng và mô hình được vận dụng khi chuyển tiếp của lưới trở thành ngẫu nhiên.
