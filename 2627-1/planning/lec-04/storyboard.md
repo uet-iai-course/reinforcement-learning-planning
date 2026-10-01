@@ -378,7 +378,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `thêm`. Đo cơ chế cực đại, phần dư và quy ước kết thúc. Rà ngày 2026-10-01: đổi dữ kiện từ $V_2$ sang $V_4$ vì đáp án cũ đã in sẵn trong bảng lan truyền ở trang trước.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-F01 — Chi phí của một lượt cập nhật
+### L04-F01 — Chi phí một lượt quét
 
 - **Chức năng và nhu cầu học tập:** Giới hạn và trực giác. Quét toàn bộ mô hình có thể chiếm phần lớn chi phí, nên cách phân bổ cập nhật cần được lựa chọn.
 - **Đầu vào và quan hệ với trang trước:** Một lượt tính đúng vẫn có thể tốn kém; chi phí phụ thuộc số trạng thái và nhánh chuyển.

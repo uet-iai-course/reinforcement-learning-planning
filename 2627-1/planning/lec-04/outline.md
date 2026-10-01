@@ -547,7 +547,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 
 Chức năng: Tổ chức tính toán và giới hạn. Đầu vào: Cập nhật kỳ vọng, lặp chính sách, lặp giá trị. Đầu ra: Lịch cập nhật, điều kiện bao phủ, GPI và giới hạn mô hình. Mục tiêu: MT6. Thời lượng: 16 phút; kiểm tra riêng L04-F06.
 
-#### L04-F01 — Chi phí của một lượt cập nhật
+#### L04-F01 — Chi phí một lượt quét
 
 - **Vai trò và mục tiêu:** Giới hạn và trực giác; MT6
 - **Luận điểm trung tâm:** Quét toàn bộ mô hình có thể chiếm phần lớn chi phí, nên cách phân bổ cập nhật cần được lựa chọn.

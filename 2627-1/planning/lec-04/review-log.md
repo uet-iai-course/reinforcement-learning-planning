@@ -1042,3 +1042,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, câu 1 cũ yêu cầu tính $V_3(c_1)$, $V_3(c_2)$, nhưng đáp án $-2{,}71$ và $6{,}2$ đã in ở hàng $k=3$ của bảng lan truyền; câu hỏi không đo được năng lực. Nhẹ, chưa kiểm phần dư vừa học. Nhẹ, tiêu đề dài.
 - Quyết định: sửa. Tiêu đề “Kiểm tra lặp giá trị trên lưới”. Dữ kiện $V_4=(4{,}58;6{,}2;8;10;0)$. Câu 1: tính hai giá trị nhìn trước tại $c_1$ và $c_3$, xác định $\Delta_*(V_4)$ và chính sách trích. Câu 2 giữ, đổi chỉ số thành $V_4(c_5)$. Lời giải đã kiểm: $c_1$ trái $3{,}122$, phải $4{,}58$; $c_3$ trái $4{,}58$, phải $8$; $c_2$: $\max\{3{,}122;6{,}2\}$; $c_4$: $\max\{6{,}2;10\}$; $T_*V_4=V_4$, $\Delta_*(V_4)=0$, chính sách đi phải. Đồng bộ outline (luận điểm, ý chính, yêu cầu, đáp án, tiêu chí) và storyboard.
 - Kiểm tra: 560/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-F01 — Chi phí một lượt quét
+
+- Trang muốn nói: một lượt quét toàn bảng tốn $O(n^2m)$ với mô hình đặc hoặc $O(nmd)$ với mô hình thưa; vì vậy cần cách phân bổ công việc khác lượt đồng bộ.
+- Vấn đề: trung bình, trang mở mạch F mà không có điểm vào từ mạch E (“Đặt $n=|\mathcal S|$…” ngay dòng đầu). Trung bình, “Thay lịch cập nhật” trong hộp xuất hiện đột ngột vì khái niệm lịch chưa có. Nhẹ, giả thiết “đã gộp phần thưởng thành kỳ vọng” đứng sau bảng dù bảng dựa vào nó.
+- Quyết định: sửa. Tiêu đề “Chi phí một lượt quét”. Câu mở nối với lượt đồng bộ của đánh giá và lặp giá trị, đưa giả thiết gộp thưởng lên trước bảng. Hộp nêu hai hướng thay đổi cụ thể: dùng ngay giá trị mới trong cùng lượt (trang tại chỗ) và chọn trạng thái cần cập nhật (trang bất đồng bộ). Notes giữ. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 636/720; hai kích thước đạt, không lỗi; đã xem ảnh.
