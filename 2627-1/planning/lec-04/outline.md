@@ -299,7 +299,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Giá t
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Bất đẳng thức là so sánh theo từng trạng thái. Nếu điều kiện cải thiện nghiêm tại một trạng thái, giá trị mới cũng tăng nghiêm tại trạng thái đó. Quy tắc giữ hành động cũ khi hòa loại bỏ việc đổi chính sách chỉ do hòa và là một cách bảo đảm dừng hữu hạn; đây không phải cách xử lý hòa duy nhất.
 
-#### L04-C05 — Lập luận của định lý cải thiện chính sách
+#### L04-C05 — Chứng minh định lý cải thiện
 
 - **Vai trò và mục tiêu:** Phác thảo chứng minh; MT3
 - **Luận điểm trung tâm:** Tính đơn điệu truyền lợi ích của lựa chọn một bước đến toàn bộ giá trị chính sách mới.

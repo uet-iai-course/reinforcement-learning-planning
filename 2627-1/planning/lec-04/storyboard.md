@@ -224,7 +224,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `sửa`. Nêu đủ đầu vào và điều kiện của định lý; bổ sung quy tắc phá hòa từ sách.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-C05 — Lập luận của định lý cải thiện chính sách
+### L04-C05 — Chứng minh định lý cải thiện
 
 - **Chức năng và nhu cầu học tập:** Phác thảo chứng minh. Tính đơn điệu truyền lợi ích của lựa chọn một bước đến toàn bộ giá trị chính sách mới.
 - **Đầu vào và quan hệ với trang trước:** Bảo đảm không giảm giá trị cần lập luận vượt ra ngoài một phép thử số.
