@@ -347,7 +347,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Giá t
 
 Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Đánh giá, cải thiện, tính co theo chính sách. Đầu ra: Chính sách ổn định và điều kiện tối ưu; giới hạn chi phí đánh giá đầy đủ. Mục tiêu: MT4. Thời lượng: 18 phút; kiểm tra riêng L04-D06.
 
-#### L04-D01 — Lặp đánh giá và cải thiện chính sách
+#### L04-D01 — Chu trình lặp chính sách
 
 - **Vai trò và mục tiêu:** Vấn đề và trực giác; MT4
 - **Luận điểm trung tâm:** Một lần cải thiện thay đổi giá trị, vì vậy quá trình phải lặp lại trên chính sách mới.

@@ -944,3 +944,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: nhẹ, tiêu đề “Kiểm tra lựa chọn theo giá trị chính sách” mơ hồ, chưa theo mẫu “Kiểm tra” + tên khái niệm của mạch. Nhẹ, câu 3 “Giải thích sự khác biệt so với cải thiện từ $\pi_0$.” chưa nói khác biệt ở đâu.
 - Quyết định: sửa. Tiêu đề “Kiểm tra cải thiện chính sách” (dùng chữ, không đưa $\pi_1$ vào tiêu đề; tiêu đề chữ hoa làm sai ký hiệu toán viết thường). Câu 3: “Giải thích vì sao lựa chọn tại $s_0$ khác lần cải thiện từ $\pi_0$.” Lời giải ghi phép tính $1+0{,}9\cdot10=10$ và $0+0{,}9\cdot30=27$. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: 518/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-D01 — Chu trình lặp chính sách
+
+- Trang muốn nói: đổi chính sách làm đổi giá trị tiếp nối, nên phải xen kẽ đánh giá và cải thiện; chu trình này là lặp chính sách.
+- Vấn đề: trung bình, thuật ngữ “lặp chính sách” chưa được gọi tên trên mặt trang (chỉ có trong notes và alt của hình) nhưng D02 dùng ngay. Trung bình, câu mở chung chung (“Chính sách thay đổi làm thay đổi giá trị tiếp nối. Vì vậy chính sách mới phải được đánh giá lại.”), không dùng bằng chứng từ C06–C07. Nhẹ, tiêu đề kể hai thao tác thay vì gọi tên khái niệm.
+- Quyết định: sửa. Tiêu đề “Chu trình lặp chính sách”. Câu mở dùng bằng chứng 11 → 30 và lựa chọn tại $s_0$ đổi theo, rồi định nghĩa “Lặp chính sách (policy iteration) xen kẽ đánh giá và cải thiện cho đến khi chính sách không đổi.” Câu chung cũ chuyển xuống notes. Hình giữ nguyên. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 631/720; hai kích thước đạt, không lỗi; đã xem ảnh.

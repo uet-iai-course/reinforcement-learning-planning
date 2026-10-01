@@ -163,9 +163,9 @@ Giá trị trạng thái là trung bình theo chính sách; giá trị của t�
 </section>
 <section>
 <section data-slide-id="L04-D01">
-<h2>Lặp đánh giá và cải thiện chính sách</h2>
-<p>Chính sách thay đổi làm thay đổi giá trị tiếp nối. Vì vậy chính sách mới phải được đánh giá lại.</p><img class="figure" src="img/lec-04/dp04-policy-iteration.svg" alt="Chu trình lặp chính sách: chính sách pi qua đánh giá với pi cố định tạo giá trị; cải thiện với giá trị cố định tạo chính sách mới."/><div class="box">$i$ đếm lần cải thiện chính sách; $k$ đếm lượt đánh giá; $t$ đếm bước tương tác.</div>
-<aside class="notes"><p>Lặp chính sách giải bài toán điều khiển với mô hình đã biết. Hai phép toán thay đổi hai đối tượng khác nhau; giá trị hoặc chính sách phải được giữ cố định đúng lúc.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 13, 19–20; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.3, tr. 80.</p></aside>
+<h2>Chu trình lặp chính sách</h2>
+<p>Từ $\pi_0$ sang $\pi_1$, giá trị tại $s_1$ tăng từ 11 lên 30 và lựa chọn tại $s_0$ đổi theo. <strong>Lặp chính sách</strong> (policy iteration) xen kẽ đánh giá và cải thiện cho đến khi chính sách không đổi.</p><img class="figure" src="img/lec-04/dp04-policy-iteration.svg" alt="Chu trình lặp chính sách: chính sách pi qua đánh giá với pi cố định tạo giá trị; cải thiện với giá trị cố định tạo chính sách mới."/><div class="box">$i$ đếm lần cải thiện chính sách; $k$ đếm lượt đánh giá; $t$ đếm bước tương tác.</div>
+<aside class="notes"><p>Chính sách thay đổi làm thay đổi giá trị tiếp nối, nên chính sách mới phải được đánh giá lại trước lần cải thiện kế tiếp. Lặp chính sách giải bài toán điều khiển với mô hình đã biết. Hai phép toán thay đổi hai đối tượng khác nhau; giá trị hoặc chính sách phải được giữ cố định đúng lúc.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 13, 19–20; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.3, tr. 80.</p></aside>
 </section>
 <section data-slide-id="L04-D02">
 <h2>Quỹ đạo lặp chính sách trên hai trạng thái</h2>

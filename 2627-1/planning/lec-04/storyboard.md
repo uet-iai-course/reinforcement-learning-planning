@@ -251,7 +251,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `thêm`. Kiểm tra việc tái sử dụng bảng vừa đánh giá trước khi chuyển sang vòng lặp hoàn chỉnh.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-D01 — Lặp đánh giá và cải thiện chính sách
+### L04-D01 — Chu trình lặp chính sách
 
 - **Chức năng và nhu cầu học tập:** Vấn đề và trực giác. Một lần cải thiện thay đổi giá trị, vì vậy quá trình phải lặp lại trên chính sách mới.
 - **Đầu vào và quan hệ với trang trước:** Lần cải thiện kế tiếp cho thấy nhu cầu lặp lại hai thao tác trên chính sách mới.
