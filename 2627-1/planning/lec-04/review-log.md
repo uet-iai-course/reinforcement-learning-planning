@@ -1077,3 +1077,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, rời rạc hóa xuất hiện đột ngột; mặt trang không nêu nhu cầu “các quy trình trên cần tập trạng thái hữu hạn và mô hình $p$ đã biết” (câu nối chỉ có trong notes trang GPI). Nhẹ, tiêu đề gộp hai ý.
 - Quyết định: sửa. Tiêu đề “Rời rạc hóa trạng thái CartPole”. Thêm câu mở “Các quy trình trên cần trạng thái hữu hạn và $p$ đã biết; CartPole có trạng thái liên tục.” Gộp “Trạng thái $(x,\dot x,\theta,\dot\theta)$; chia lần lượt $3,3,6,6$ khoảng” thành một dòng để tránh lặp “liên tục”. Giữ kích thước hình để nhãn hình đọc được (đã thử lớp `figure short`, nhãn còn khoảng 0,56em nên bỏ). Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: bản đầu 703/720 với hộp chạm chân trang; rút câu mở, 656/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-F06 — Kiểm tra lịch cập nhật và mô hình
+
+- Trang muốn nói: kiểm tra hai điều kiện áp dụng: lịch phải bao phủ mọi trạng thái chưa kết thúc và mô hình phải được biết.
+- Vấn đề: trung bình, câu 1 “giá trị không được khôi phục” mơ hồ; lời giải chỉ nêu $V(s_1)=0$, bỏ qua hệ quả $V(s_0)\to10$ thay vì $27$ (đã kiểm: $x=\max\{1+0{,}9x;0\}$ có nghiệm $x=10$). Nhẹ, notes có câu khuyên răn “Phải kiểm tra điều kiện của thuật toán trước khi diễn giải đầu ra.” Nhẹ, tiêu đề dài.
+- Quyết định: sửa. Tiêu đề “Kiểm tra lịch cập nhật và mô hình”. Câu 1 yêu cầu giới hạn của $V(s_0)$, giá trị $V(s_1)$, so sánh với $v_*=(27,30)$ và nêu điều kiện bị vi phạm. Lời giải thêm phép tính $V(s_0)\to10$. Xóa câu khuyên răn trong notes. Đồng bộ tiêu đề, yêu cầu và đáp án ở outline, storyboard.
+- Kiểm tra: 583/720; hai kích thước đạt, không lỗi; đã xem ảnh.

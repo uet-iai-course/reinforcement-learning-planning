@@ -423,7 +423,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `gộp`. Giữ đầy đủ giới hạn nguồn trong một ứng dụng; sửa hàm ý rời rạc hóa tự tạo MDP chính xác.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
-### L04-F06 — Kiểm tra lịch cập nhật và dữ kiện mô hình
+### L04-F06 — Kiểm tra lịch cập nhật và mô hình
 
 - **Chức năng và nhu cầu học tập:** Kiểm tra quy hoạch động thực hành. Lịch cập nhật và mô hình hợp lệ là hai điều kiện độc lập của phép giải.
 - **Đầu vào và quan hệ với trang trước:** Các điều kiện về lịch và mô hình được kiểm tra bằng hai trường hợp thiếu dữ kiện.

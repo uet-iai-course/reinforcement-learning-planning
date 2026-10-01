@@ -612,7 +612,7 @@ Chức năng: Tổ chức tính toán và giới hạn. Đầu vào: Cập nhậ
 - **Thời lượng:** 2 phút
 - **Ghi chú học thuật dự kiến:** Hai trạng thái liên tục trong cùng ô có thể có phân phối chuyển khác nhau. Việc gộp không tự bảo đảm Markov; cần mô hình xấp xỉ và đánh giá sai số. Tối ưu trong mô hình gộp không tự chứng nhận tối ưu của hệ liên tục.
 
-#### L04-F06 — Kiểm tra lịch cập nhật và dữ kiện mô hình
+#### L04-F06 — Kiểm tra lịch cập nhật và mô hình
 
 - **Vai trò và mục tiêu:** Kiểm tra quy hoạch động thực hành; MT6
 - **Luận điểm trung tâm:** Lịch cập nhật và mô hình hợp lệ là hai điều kiện độc lập của phép giải.
@@ -624,9 +624,9 @@ Chức năng: Tổ chức tính toán và giới hạn. Đầu vào: Cập nhậ
 - **Nguồn:** NG1, tr. 15, 35–37; NG2, §4.5, tr. in 85 (PDF 107).
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Tăng số lần tính không khắc phục việc bỏ một trạng thái hoặc thiếu mô hình. Phải kiểm tra điều kiện của thuật toán trước khi diễn giải đầu ra.
-- **Yêu cầu trên mặt trang:** Câu hỏi: Với lịch chỉ cập nhật $s_0$, điều kiện hội tụ nào bị vi phạm và giá trị nào không thể được khôi phục? Bảng 324 tổ hợp đã đủ để chạy quy hoạch động hay chưa; nêu dữ kiện còn thiếu.
+- **Yêu cầu trên mặt trang:** Câu hỏi: Với lịch chỉ cập nhật $s_0$, xác định giới hạn của $V(s_0)$ và giá trị của $V(s_1)$, so sánh với $v_*=(27,30)$ và nêu điều kiện hội tụ bị vi phạm. Bảng 324 tổ hợp đã đủ để chạy quy hoạch động hay chưa; nêu dữ kiện còn thiếu.
 - **Kiến thức được đo:** MT6; các công thức và dữ kiện đã trình bày trước trang này.
-- **Đáp án/gợi ý trong ghi chú:** $s_1$ không được cập nhật, nên giữ 0 thay vì 30; điều kiện mọi trạng thái xuất hiện vô hạn lần bị vi phạm. CartPole còn thiếu mô hình $p(s',r\mid s,a)$ và đánh giá tính phù hợp Markov của biểu diễn gộp.
+- **Đáp án/gợi ý trong ghi chú:** $V(s_1)$ giữ 0 thay vì 30; $V(s_0)\to10$ (nghiệm của $x=\max\{1+0{,}9x;0\}$) thay vì 27; điều kiện mọi trạng thái chưa kết thúc được cập nhật vô hạn lần bị vi phạm. CartPole còn thiếu mô hình $p(s',r\mid s,a)$ và đánh giá tính phù hợp Markov của biểu diễn gộp.
 - **Tiêu chí đánh giá:** Nêu đúng điều kiện lịch, hậu quả số ở $s_1$ và phân biệt biểu diễn trạng thái với mô hình.
 - **Thời gian hoạt động:** 1 phút lập phép tính, 1 phút trả lời, 1 phút đối chiếu; đã tính trong thời lượng của trang.
 
