@@ -525,22 +525,22 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 - **Thời lượng:** 2 phút
 - **Ghi chú học thuật dự kiến:** Chính sách có thể đạt tối ưu trước khi bảng giá trị hội tụ. Ngưỡng sai số giá trị không được gọi là ngưỡng tổn thất chính sách. Với mô hình hai trạng thái, lượt 55 đạt phần dư khoảng 0.00913. Chặn sai số tương ứng xấp xỉ 0.0913.
 
-#### L04-E08 — Kiểm tra cập nhật và trạng thái kết thúc
+#### L04-E08 — Kiểm tra lặp giá trị trên lưới
 
 - **Vai trò và mục tiêu:** Kiểm tra lặp giá trị; MT5
-- **Luận điểm trung tâm:** Mỗi lượt phải giữ giá trị kết thúc bằng không và dùng đúng bảng tiếp nối.
-- **Ý chính:** Trong lưới đã học, cho $V_2=(-1.9,-1.9,8,10,0)$, $\gamma=0.9$ và cùng quy ước thưởng. Dòng dữ kiện ghi rõ “Lưới năm ô” để xác định miền của bảng.
-- **Ví dụ/hình dự kiến:** Hiển thị bảng $V_2$ và sơ đồ biên; yêu cầu tính hai ô.
-- **Hình thức hóa:** Dùng HT11–HT12.
+- **Luận điểm trung tâm:** Phần dư bằng 0 chứng nhận điểm bất động; giá trị kết thúc giữ bằng không.
+- **Ý chính:** Trong lưới đã học, cho $V_4=(4{,}58;6{,}2;8;10;0)$, $\gamma=0{,}9$ và cùng quy ước thưởng. Bảng này không in sẵn các giá trị nhìn trước, nên câu hỏi đo được phép tính và phần dư.
+- **Ví dụ/hình dự kiến:** Hiển thị $V_4$ và sơ đồ biên; yêu cầu tính giá trị nhìn trước tại hai ô.
+- **Hình thức hóa:** Dùng HT11–HT12 và chặn phần dư.
 - **Kết nối vào:** Quy tắc đồng bộ và quy ước kết thúc được kiểm tra bằng hai phép tính trên bảng đã cho.
 - **Kết nối ra:** Một lượt tính đúng vẫn có thể tốn kém; chi phí phụ thuộc số trạng thái và nhánh chuyển.
 - **Nguồn:** NG1, tr. 25–28; câu kiểm tra từ dữ kiện nguồn.
 - **Thời lượng:** 3 phút
-- **Ghi chú học thuật dự kiến:** Phép tính có hai nhánh ở mỗi ô. Đi trái ở biên trái và đi phải từ $c_1$ đều tới giá trị -1.9 của bảng cũ.
-- **Yêu cầu trên mặt trang:** Câu hỏi: Tính $V_3(c_1)$ và $V_3(c_2)$. Giải thích vì sao giữ $V_3(c_5)=0$ dù chuyển $c_4\to c_5$ nhận thưởng 10.
+- **Ghi chú học thuật dự kiến:** Phép tính có hai nhánh ở mỗi ô. Đi trái ở biên trái giữ nguyên trạng thái, nên giá trị tiếp nối là $V_4(c_1)$.
+- **Yêu cầu trên mặt trang:** Câu hỏi: Tính hai giá trị nhìn trước tại $c_1$ và tại $c_3$ từ $V_4$; xác định $\Delta_*(V_4)$ và chính sách trích. Giải thích vì sao $V_4(c_5)=0$ dù chuyển $c_4\to c_5$ nhận thưởng 10.
 - **Kiến thức được đo:** MT5; các công thức và dữ kiện đã trình bày trước trang này.
-- **Đáp án/gợi ý trong ghi chú:** $V_3(c_1)=-2.71$; $V_3(c_2)=\max(-2.71,6.2)=6.2$. Thưởng 10 được nhận trên chuyển tiếp đi vào đích; sau kết thúc không còn phần thưởng tiếp nối.
-- **Tiêu chí đánh giá:** Tính đúng từ $V_2$, không dùng giá trị vừa cập nhật và đặt thưởng đúng trên chuyển tiếp.
+- **Đáp án/gợi ý trong ghi chú:** $c_1$: trái $3{,}122$, phải $4{,}58$; $c_3$: trái $4{,}58$, phải $8$; $T_*V_4=V_4$, $\Delta_*(V_4)=0$; chính sách đi phải tại $c_1,\ldots,c_4$. Thưởng 10 được nhận trên chuyển tiếp đi vào đích; sau kết thúc không còn phần thưởng tiếp nối.
+- **Tiêu chí đánh giá:** Tính đúng giá trị nhìn trước từ $V_4$, kết luận phần dư bằng 0 và đặt thưởng đúng trên chuyển tiếp.
 - **Thời gian hoạt động:** 1 phút lập phép tính, 1 phút trả lời, 1 phút đối chiếu; đã tính trong thời lượng của trang.
 
 ### Mạch F. Quy hoạch động trong thực hành

@@ -1035,3 +1035,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, trang mở bằng công thức, nhu cầu nằm ở trang hội tụ cách hai trang. Nhẹ, “sai số giá trị 27” mơ hồ giữa chặn và sai số thật (cả hai bằng 27: $2{,}7/0{,}1=27$; $\|V_1-v_*\|_\infty=\max\{26;27\}=27$). Nhẹ, tiêu đề nên nêu chức năng. Nhẹ, thẻ “Mô hình hai trạng thái” lệch tên “MDP hai trạng thái”.
 - Quyết định: sửa. Tiêu đề “Phần dư và điều kiện dừng”. Thêm câu mở nêu nhu cầu và nối với $\Delta_\pi$. Thẻ phải: “MDP hai trạng thái”; “$\Delta_*(V_1)=2{,}7$; chặn và sai số thật đều bằng $27$”; “Chính sách tham lam $(b,b)$ đã tối ưu.” Thẻ trái rút còn “sai số không quá $0{,}1$ khi $\Delta_*(V)\le0{,}01$”. Notes bỏ câu về lưới (đã chuyển sang trang lưới), đổi “mô hình hai trạng thái” thành “MDP hai trạng thái”. Đồng bộ tiêu đề và quyết định ở outline, storyboard.
 - Kiểm tra: bản đầu tràn (748/720); rút hai thẻ, 694/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-E08 — Kiểm tra lặp giá trị trên lưới
+
+- Trang muốn nói: kiểm tra cập nhật tối ưu, phần dư và quy ước trạng thái kết thúc trên lưới.
+- Vấn đề: trung bình, câu 1 cũ yêu cầu tính $V_3(c_1)$, $V_3(c_2)$, nhưng đáp án $-2{,}71$ và $6{,}2$ đã in ở hàng $k=3$ của bảng lan truyền; câu hỏi không đo được năng lực. Nhẹ, chưa kiểm phần dư vừa học. Nhẹ, tiêu đề dài.
+- Quyết định: sửa. Tiêu đề “Kiểm tra lặp giá trị trên lưới”. Dữ kiện $V_4=(4{,}58;6{,}2;8;10;0)$. Câu 1: tính hai giá trị nhìn trước tại $c_1$ và $c_3$, xác định $\Delta_*(V_4)$ và chính sách trích. Câu 2 giữ, đổi chỉ số thành $V_4(c_5)$. Lời giải đã kiểm: $c_1$ trái $3{,}122$, phải $4{,}58$; $c_3$ trái $4{,}58$, phải $8$; $c_2$: $\max\{3{,}122;6{,}2\}$; $c_4$: $\max\{6{,}2;10\}$; $T_*V_4=V_4$, $\Delta_*(V_4)=0$, chính sách đi phải. Đồng bộ outline (luận điểm, ý chính, yêu cầu, đáp án, tiêu chí) và storyboard.
+- Kiểm tra: 560/720; hai kích thước đạt, không lỗi; đã xem ảnh.

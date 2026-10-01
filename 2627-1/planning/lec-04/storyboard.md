@@ -369,13 +369,13 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `thêm`. Biến tiêu chuẩn dừng nguồn thành chứng nhận có ý nghĩa định lượng. Rà ngày 2026-10-01: câu nhu cầu “điều kiện dừng cần đại lượng tính được từ $V$” đặt ở đầu trang, nối với chặn tương tự cho $\Delta_\pi$.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
 
-### L04-E08 — Kiểm tra cập nhật và trạng thái kết thúc
+### L04-E08 — Kiểm tra lặp giá trị trên lưới
 
-- **Chức năng và nhu cầu học tập:** Kiểm tra lặp giá trị. Mỗi lượt phải giữ giá trị kết thúc bằng không và dùng đúng bảng tiếp nối.
-- **Đầu vào và quan hệ với trang trước:** Quy tắc đồng bộ và quy ước kết thúc được kiểm tra bằng hai phép tính trên bảng đã cho.
-- **Sản phẩm và mục tiêu:** MT5; Tính đúng từ $V_2$, không dùng giá trị vừa cập nhật và đặt thưởng đúng trên chuyển tiếp.
+- **Chức năng và nhu cầu học tập:** Kiểm tra lặp giá trị. Phần dư bằng 0 chứng nhận điểm bất động; giá trị kết thúc giữ bằng không.
+- **Đầu vào và quan hệ với trang trước:** Toán tử tối ưu, chặn phần dư và quy ước kết thúc được kiểm tra trên bảng $V_4$ của lưới.
+- **Sản phẩm và mục tiêu:** MT5; Tính giá trị nhìn trước từ $V_4$, kết luận $\Delta_*(V_4)=0$ và đặt thưởng đúng trên chuyển tiếp.
 - **Đầu ra cho trang sau:** Một lượt tính đúng vẫn có thể tốn kém; chi phí phụ thuộc số trạng thái và nhánh chuyển.
-- **Quyết định:** `thêm`. Đo cơ chế cực đại, cập nhật đồng bộ và quy ước kết thúc.
+- **Quyết định:** `thêm`. Đo cơ chế cực đại, phần dư và quy ước kết thúc. Rà ngày 2026-10-01: đổi dữ kiện từ $V_2$ sang $V_4$ vì đáp án cũ đã in sẵn trong bảng lan truyền ở trang trước.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
 ### L04-F01 — Chi phí của một lượt cập nhật
