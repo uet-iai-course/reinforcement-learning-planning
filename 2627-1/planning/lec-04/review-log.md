@@ -1325,3 +1325,9 @@ Nguồn: báo cáo rà lại toán–câu nối của lượt sửa bổ sung A�
 - Phát hiện (nhẹ, độ chính xác): lập luận “với mọi $\pi'$” dùng $T_{\pi'}$, toán tử chỉ định nghĩa cho chính sách Markov dừng; bài chưa nêu lớp chính sách mà cực đại trong $v_*$ được lấy.
 - Quyết định: hộp viết “Với mọi $\pi'$ dừng:”. Notes thêm: “Cực đại trong $v_*$ lấy trên các chính sách dừng $\pi(a\mid s)$ đã định nghĩa ở phần mở đầu; xét cả chính sách phụ thuộc lịch sử thì cần lập luận khác, kết luận không đổi.”
 - Kiểm tra: 658/720, chiều cao không đổi; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-F04 — Sửa nhẹ lượt cuối (hình dp04-gpi.svg)
+
+- Phát hiện (nhẹ, hiển thị; ghi nhận ở lượt bổ sung E–G): nhãn “Cải thiện” chạm cung mũi tên phía trên. Cung cũ `M482 53 Q584 -6 683 53` có điểm giữa ở y ≈ 23,5, trong khi chữ chiếm y ≈ 8–35.
+- Quyết định: hạ cung thành `M482 75 Q584 25 683 75` (điểm giữa y ≈ 50). Hai đầu cung vẫn nằm ở mép hai hộp, chiều mũi tên và mọi nhãn giữ nguyên; `role="img"`, `<title>`, `<desc>` và alt của trang không đổi.
+- Kiểm tra: ảnh SVG riêng có khoảng hở rõ giữa nhãn và cung; trang 648/720, hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
