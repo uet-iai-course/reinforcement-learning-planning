@@ -77,14 +77,14 @@ Chức năng: Thiết lập bài toán. Đầu vào: MDP, xác suất có điề
 
 - **Vai trò và mục tiêu:** Bản đồ nội dung; MT1–MT6
 - **Luận điểm trung tâm:** Đánh giá chính sách cung cấp căn cứ cho cải thiện và các thuật toán điều khiển.
-- **Ý chính:** Mạch nội dung: đánh giá chính sách → cải thiện chính sách → lặp chính sách → lặp giá trị → quy hoạch động bất đồng bộ. Mục tiêu: thực hiện cập nhật; giải thích điều kiện bảo đảm; so sánh các cách tổ chức tính toán. Tiên quyết: kỳ vọng có điều kiện, tổng chiết khấu, MDP và hệ tuyến tính.
+- **Ý chính:** Mạch nội dung: đánh giá chính sách → cải thiện chính sách → lặp chính sách → lặp giá trị → quy hoạch động bất đồng bộ. Mục tiêu trên mặt trang (sửa 2026-10-01): đánh giá và cải thiện chính sách; thực hiện lặp chính sách, lặp giá trị; chặn sai số bằng phần dư; so sánh cập nhật đồng bộ và bất đồng bộ. Tiên quyết: kỳ vọng có điều kiện, tổng chiết khấu, MDP và hệ tuyến tính.
 - **Ví dụ/hình dự kiến:** Sơ đồ năm nút có nhãn sản phẩm: giá trị của chính sách, chính sách mới, chính sách ổn định, giá trị tối ưu, lịch cập nhật.
 - **Hình thức hóa:** Không thêm định nghĩa; mục tiêu chi tiết ở hồ sơ kế hoạch.
 - **Kết nối vào:** Chủ đề lập kế hoạch được cụ thể hóa bằng chuỗi năng lực cần thực hiện.
 - **Kết nối ra:** Chuỗi đánh giá và cải thiện cần bắt đầu từ dữ kiện mô hình và mục tiêu điều khiển.
 - **Nguồn:** NG1, tr. 2–3; NG2, §4.1–4.7, tr. in 74–88 (PDF 96–110).
 - **Thời lượng:** 2 phút
-- **Ghi chú học thuật dự kiến:** Các thuật toán sau dùng lại cùng mô hình và quy ước thưởng. Đánh giá giữ chính sách cố định; điều khiển cho phép thay chính sách.
+- **Ghi chú học thuật dự kiến:** Mọi thuật toán trong bài dùng cùng mô hình chuyển–thưởng và quy ước chiết khấu. Đánh giá giữ chính sách cố định; điều khiển cho phép thay chính sách. Ánh xạ bốn mục tiêu sang các mạch.
 
 #### L04-A03 — Bài toán lập kế hoạch với mô hình đã biết
 

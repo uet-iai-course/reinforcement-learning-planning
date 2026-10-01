@@ -811,3 +811,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: nhẹ, dòng “Quá trình quyết định Markov (MDP)” đứng như phụ đề rời; dòng này viết đầy đủ chữ viết tắt của tiêu đề nên vẫn có chức năng.
 - Quyết định: giữ nguyên. Không có vấn đề vượt mức nhẹ.
 - Kiểm tra: không đổi nội dung; trang đạt ở lượt kiểm toàn bài trước đó.
+
+### L04-A02 — Nội dung và mục tiêu
+
+- Trang muốn nói: bản đồ năm thành phần của bài, các mục tiêu học tập và kiến thức tiên quyết.
+- Vấn đề: trung bình, mục tiêu không đo được: “Thực hiện cập nhật và cải thiện chính sách.” không nói cập nhật đại lượng nào; “Kiểm tra hội tụ, sai số và điều kiện dừng.” không gắn với phép tính cụ thể. Nhẹ, câu đầu notes “Các thuật toán sau dùng lại…” là lời dẫn rỗng.
+- Quyết định: sửa. Bốn mục tiêu một dòng: đánh giá và cải thiện chính sách; thực hiện lặp chính sách, lặp giá trị; chặn sai số bằng phần dư; so sánh cập nhật đồng bộ và bất đồng bộ. Bản đề xuất ba mục dài làm trang cao 705/720 nên được tách thành bốn mục ngắn. Notes nêu ánh xạ mục tiêu sang các mạch. Đồng bộ outline.
+- Kiểm tra: 665/720 ở 16:9; hai kích thước đạt, không lỗi; đã xem ảnh.
