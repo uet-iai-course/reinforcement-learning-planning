@@ -112,11 +112,11 @@
 </section>
 <section>
 <section data-slide-id="L04-C01">
-<h2>Lựa chọn hành động từ giá trị tiếp nối</h2>
-<p>Đã biết giá trị của chính sách hiện tại: $v_{\pi_0}=(10,11)$.</p>
+<h2>Đổi hành động ở bước đầu</h2>
+<p>Đã biết $v_{\pi_0}=(10,11)$. Bài toán điều khiển: xác định có nên đổi hành động của $\pi_0$ tại một trạng thái.</p>
 <div class="grid2"><div class="card"><h3>Lựa chọn ở bước đầu</h3><p>Tại một trạng thái, xét từng hành động có thể thực hiện.</p><p>Phần thưởng nhận ngay phụ thuộc hành động đó.</p></div><div class="card"><h3>Chính sách tiếp nối</h3><p>Sau bước đầu, tiếp tục theo $\pi_0$.</p><p>Giá trị của trạng thái kế tiếp lấy từ cùng $v_{\pi_0}$.</p></div></div>
-<div class="box">So sánh phần thưởng trước mắt cộng giá trị tiếp nối chuẩn bị cho việc thay đổi chính sách.</div>
-<aside class="notes"><p>Thử một hành động rồi tiếp tục theo chính sách cũ khác với thay chính sách vĩnh viễn. Định lý cải thiện sẽ nối hai phát biểu đó.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 19; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.2, tr. 76, 78.</p></aside>
+<div class="box"><strong>Giá trị nhìn trước</strong> của một hành động: $r+\gamma\,v_{\pi_0}(s')$, gồm phần thưởng nhận ngay và giá trị tiếp nối chiết khấu.</div>
+<aside class="notes"><p>Khi chuyển tiếp ngẫu nhiên, giá trị nhìn trước là kỳ vọng của $r+\gamma\,v_{\pi_0}(s')$ theo $p(s',r\mid s,a)$. Bảng $v_{\pi_0}$ được giữ cố định khi so sánh mọi hành động. Thử một hành động rồi tiếp tục theo chính sách cũ khác với thay chính sách vĩnh viễn; định lý cải thiện chính sách nối hai phát biểu đó.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 19; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.2, tr. 76, 78.</p></aside>
 </section>
 <section data-slide-id="L04-C02">
 <h2>So sánh hành động tại trạng thái thứ hai</h2>

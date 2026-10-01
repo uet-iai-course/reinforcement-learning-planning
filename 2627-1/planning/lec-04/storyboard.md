@@ -188,9 +188,9 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `thêm`. Đo khả năng tính và phân biệt bảng ước lượng với giá trị chính xác.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-C01 — Lựa chọn hành động từ giá trị tiếp nối
+### L04-C01 — Đổi hành động ở bước đầu
 
-- **Chức năng và nhu cầu học tập:** Vấn đề và trực giác. Giá trị của chính sách hiện tại cho phép đánh giá một thay đổi hành động ở bước đầu.
+- **Chức năng và nhu cầu học tập:** Vấn đề và trực giác. Giá trị của chính sách hiện tại cho phép đánh giá một thay đổi hành động ở bước đầu; định nghĩa giá trị nhìn trước $r+\gamma\,v_{\pi_0}(s')$.
 - **Đầu vào và quan hệ với trang trước:** Giá trị của chính sách cố định đã có; phần điều khiển cần so sánh các hành động khác.
 - **Sản phẩm và mục tiêu:** MT3; Giá trị của chính sách hiện tại cho phép đánh giá một thay đổi hành động ở bước đầu.
 - **Đầu ra cho trang sau:** So sánh một thay đổi tại bước đầu được tính trên hai nhánh của trạng thái thứ hai.

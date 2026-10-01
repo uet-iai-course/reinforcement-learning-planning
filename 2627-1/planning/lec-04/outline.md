@@ -247,11 +247,11 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Mô h�
 
 Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Giá trị của chính sách đã đánh giá. Đầu ra: Chính sách mới không kém; nhu cầu đánh giá lại chính sách mới. Mục tiêu: MT3. Thời lượng: 20 phút; kiểm tra riêng L04-C07.
 
-#### L04-C01 — Lựa chọn hành động từ giá trị tiếp nối
+#### L04-C01 — Đổi hành động ở bước đầu
 
 - **Vai trò và mục tiêu:** Vấn đề và trực giác; MT3
 - **Luận điểm trung tâm:** Giá trị của chính sách hiện tại cho phép đánh giá một thay đổi hành động ở bước đầu.
-- **Ý chính:** Đã biết $v_{\pi_0}=(10,11)$. Xét chọn một hành động khác tại bước đầu, rồi theo $\pi_0$ ở mọi bước sau. So sánh tổng thưởng của hai lựa chọn tại cùng trạng thái.
+- **Ý chính:** Đã biết $v_{\pi_0}=(10,11)$. Bài toán điều khiển: xác định có nên đổi hành động của $\pi_0$ tại một trạng thái. Xét chọn một hành động khác tại bước đầu, rồi theo $\pi_0$ ở mọi bước sau. Giá trị nhìn trước $r+\gamma\,v_{\pi_0}(s')$ là đại lượng so sánh.
 - **Ví dụ/hình dự kiến:** Hai nhánh hành động từ một trạng thái, mỗi nhánh nối với hộp tiếp tục theo $\pi_0$.
 - **Hình thức hóa:** Chưa viết định nghĩa $q_\pi$; thiết lập nghĩa của phần tiếp nối.
 - **Kết nối vào:** Giá trị của chính sách cố định đã có; phần điều khiển cần so sánh các hành động khác.

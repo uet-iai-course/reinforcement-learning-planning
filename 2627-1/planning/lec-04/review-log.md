@@ -895,3 +895,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: nhẹ, câu 3 diễn đạt vụng (“Giải thích vì sao chưa được gọi $V_3$ là $v_{\pi_0}$.”). Nhẹ, lời giải trong notes dùng dấu chấm thập phân. Nhẹ, tiêu đề chưa theo mẫu “Kiểm tra” + tên khái niệm của mạch.
 - Quyết định: sửa. Tiêu đề “Kiểm tra đánh giá chính sách”. Câu 3: “Giải thích vì sao $V_3$ chưa phải là $v_{\pi_0}$.” Lời giải đã kiểm: $V_3=(2{,}71;3{,}71)$, $\Delta_{\pi_0}(V_2)=0{,}81$, chặn $8{,}1$; notes thêm rằng sai số thật của $V_2$ cũng bằng $8{,}1$. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: 548/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-C01 — Đổi hành động ở bước đầu
+
+- Trang muốn nói: khi đã biết $v_{\pi_0}$, có thể đánh giá việc đổi hành động ở bước đầu rồi tiếp tục theo $\pi_0$; đại lượng so sánh là giá trị nhìn trước.
+- Vấn đề: trung bình, trang chưa nêu bài toán cần giải (“Đã biết giá trị của chính sách hiện tại: $v_{\pi_0}=(10,11)$.”). Trung bình (Detect, mục đích mơ hồ, thiếu $\gamma$): “So sánh phần thưởng trước mắt cộng giá trị tiếp nối chuẩn bị cho việc thay đổi chính sách.” Trung bình, thuật ngữ “giá trị nhìn trước” được dùng từ C02 nhưng chưa định nghĩa trên mặt trang. Nhẹ, tiêu đề dài.
+- Quyết định: sửa. Tiêu đề “Đổi hành động ở bước đầu”. Dòng đầu nêu bài toán điều khiển: xác định có nên đổi hành động của $\pi_0$ tại một trạng thái. Hộp cuối định nghĩa giá trị nhìn trước $r+\gamma\,v_{\pi_0}(s')$. Notes thêm kỳ vọng theo $p$ khi chuyển tiếp ngẫu nhiên và việc giữ $v_{\pi_0}$ cố định. Đồng bộ tiêu đề và ý chính ở outline, storyboard.
+- Kiểm tra: 650/720; hai kích thước đạt, không lỗi; đã xem ảnh.
