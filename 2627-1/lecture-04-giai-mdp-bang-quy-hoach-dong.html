@@ -235,13 +235,13 @@ với số hạng tiếp nối bằng 0 nếu $s'$ là trạng thái kết thúc
 <aside class="notes"><p>Ngân sách $K$ là số nguyên không âm, đếm số lần nhận bảng mới. Nếu dừng vì phần dư nhỏ, $V$ là bảng đã được kiểm; $W=T_*V$ chỉ là bảng dùng để đo phần dư. Sau lần nhận bảng thứ $K$, bước 2 áp dụng $T_*$ thêm một lần để đo phần dư của bảng cuối; với $K=0$, thuật toán trả bảng khởi tạo cùng phần dư của nó. Với MDP hai trạng thái và $K=1$, thuật toán trả $V_1=(1,3)$, $\Delta_*(V_1)=2{,}7$ và chính sách $(b,b)$. Chính sách được trích sau cập nhật từ chính bảng công bố, với một thứ tự phá hòa cố định. Mỗi trạng thái chưa kết thúc cần nhìn trước theo tất cả hành động; không thể chọn hành động bằng cách chỉ lấy cực đại trực tiếp của $V(s)$. Các bước dùng kỳ vọng theo mô hình đầy đủ. Hết ngân sách không chứng minh hội tụ, còn đạt ngưỡng chỉ chứng nhận một chặn sai số giá trị khi kết hợp với tính co.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 24, 34; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.4, tr. 83</p></aside>
 </section>
 <section data-slide-id="L04-E05">
-<h2>Tính co và hội tụ của lặp giá trị</h2>
-<p>MDP hữu hạn, phần thưởng bị chặn và $0\le\gamma&lt;1$.</p>
+<h2>Hội tụ của lặp giá trị</h2>
+<p>Với cùng giả thiết như $T_\pi$ (MDP hữu hạn, thưởng bị chặn, $0\le\gamma&lt;1$), toán tử $T_*$ cũng co:</p>
 <div class="math-large">$$\|T_*U-T_*V\|_\infty\le\gamma\|U-V\|_\infty.$$</div>
-<p>Toán tử có điểm bất động duy nhất $v_*$. Lặp đồng bộ hội tụ từ mọi bảng hữu hạn.</p>
+<p>Do đó $T_*$ có điểm bất động duy nhất $v_*$, và lặp đồng bộ hội tụ từ mọi bảng hữu hạn:</p>
 <div class="math-large">$$\|V_k-v_*\|_\infty\le\gamma^k\|V_0-v_*\|_\infty.$$</div>
-<div class="box">Chặn theo nghiệm chưa biết mô tả tốc độ hội tụ; phép kiểm thực hành cần đại lượng tính được từ bảng hiện tại.</div>
-<aside class="notes"><p>Với mỗi trạng thái, dùng $|\max_a x_a-\max_a y_a|\le\max_a|x_a-y_a|$. Hiệu của hai giá trị nhìn trước chỉ còn $\gamma\sum_{s',r}p(s',r\mid s,a)[U(s')-V(s')]$ vì các phần thưởng triệt tiêu. Lấy trị tuyệt đối, dùng tổng xác suất bằng 1 rồi lấy cực đại theo trạng thái cho bất đẳng thức co. Lặp bất đẳng thức với $T_*v_*=v_*$ cho chặn sai số sau $k$ lượt. Hữu hạn lượt thường chỉ tạo xấp xỉ. Khi $\gamma=1$, hệ số không còn nhỏ hơn 1, nên chứng minh này không cho bảo đảm tương tự.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 31–32; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.4, tr. 83 cho kết quả hội tụ, chứng minh co theo nguồn bài giảng.</p></aside>
+<div class="box">Chặn theo $\gamma^k$ cho tốc độ hội tụ nhưng chứa $v_*$ chưa biết, nên chưa dùng được làm điều kiện dừng.</div>
+<aside class="notes"><p>Với mỗi trạng thái, dùng $|\max_a x_a-\max_a y_a|\le\max_a|x_a-y_a|$. Hiệu của hai giá trị nhìn trước chỉ còn $\gamma\sum_{s',r}p(s',r\mid s,a)[U(s')-V(s')]$ vì các phần thưởng triệt tiêu. Lấy trị tuyệt đối, dùng tổng xác suất bằng 1 rồi lấy cực đại theo trạng thái cho bất đẳng thức co. Lặp bất đẳng thức với $T_*v_*=v_*$ cho chặn sai số sau $k$ lượt. Hữu hạn lượt thường chỉ tạo xấp xỉ. Trên MDP hai trạng thái từ $V_0=0$, $\|V_0-v_*\|_\infty=30$, nên chặn sau $k$ lượt là $30\cdot0{,}9^k$. Khi $\gamma=1$, hệ số không còn nhỏ hơn 1, nên chứng minh này không cho bảo đảm tương tự.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 31–32; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.4, tr. 83 cho kết quả hội tụ, chứng minh co theo nguồn bài giảng.</p></aside>
 </section>
 <section data-slide-id="L04-E06">
 <h2>Lan truyền giá trị trên lưới năm ô</h2>

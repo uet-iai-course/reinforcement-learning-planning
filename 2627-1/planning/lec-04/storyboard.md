@@ -341,7 +341,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `sửa`. Làm rõ đầu ra và chỉ số dừng, tránh lẫn mức thay đổi với phần dư của bảng mới. Rà ngày 2026-10-01: quy trình còn ba bước theo cùng khuôn với thuật toán đánh giá chính sách đồng bộ.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-E05 — Tính co và hội tụ của lặp giá trị
+### L04-E05 — Hội tụ của lặp giá trị
 
 - **Chức năng và nhu cầu học tập:** Định lý và phác thảo chứng minh. Cực đại theo hành động vẫn bảo toàn tính co khi hệ số chiết khấu nhỏ hơn 1.
 - **Đầu vào và quan hệ với trang trước:** Vòng lặp có tiêu chuẩn dừng cần bảo đảm rằng toán tử tiến tới đúng điểm bất động.

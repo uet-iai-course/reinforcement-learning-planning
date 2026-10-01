@@ -486,7 +486,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Nếu tính $W=T_*V$ rồi trả $W$, mức thay đổi vừa đo là phần dư của $V$ cũ. Bản giả mã này trả đúng bảng đã kiểm hoặc tính lại phần dư khi bảng cuối đã đổi. Mọi phép cập nhật dùng mô hình, không dùng dữ liệu lấy mẫu.
 
-#### L04-E05 — Tính co và hội tụ của lặp giá trị
+#### L04-E05 — Hội tụ của lặp giá trị
 
 - **Vai trò và mục tiêu:** Định lý và phác thảo chứng minh; MT5
 - **Luận điểm trung tâm:** Cực đại theo hành động vẫn bảo toàn tính co khi hệ số chiết khấu nhỏ hơn 1.
