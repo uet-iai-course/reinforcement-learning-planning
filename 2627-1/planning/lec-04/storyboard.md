@@ -206,7 +206,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `tách`. Tách bước tính trước định nghĩa để tránh đồng nhất nhìn trước với giá trị chính sách mới.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-C03 — Giá trị hành động theo chính sách
+### L04-C03 — Hàm giá trị hành động
 
 - **Chức năng và nhu cầu học tập:** Định nghĩa và ánh xạ. Giá trị hành động cố định hành động đầu và cố định chính sách từ bước kế tiếp.
 - **Đầu vào và quan hệ với trang trước:** Hai giá trị nhìn trước xác định đối tượng được gọi là giá trị hành động theo chính sách.

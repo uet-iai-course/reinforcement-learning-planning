@@ -273,7 +273,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Giá t
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Số 12.9 chưa phải $v_{\pi_1}(s_1)$, vì chính sách tiếp nối trong phép tính vẫn là $\pi_0$. Giá trị sau khi đổi vĩnh viễn sang $b$ sẽ phải được đánh giá lại.
 
-#### L04-C03 — Giá trị hành động theo chính sách
+#### L04-C03 — Hàm giá trị hành động
 
 - **Vai trò và mục tiêu:** Định nghĩa và ánh xạ; MT3
 - **Luận điểm trung tâm:** Giá trị hành động cố định hành động đầu và cố định chính sách từ bước kế tiếp.

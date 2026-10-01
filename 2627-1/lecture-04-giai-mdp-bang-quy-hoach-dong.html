@@ -125,12 +125,12 @@
 <aside class="notes"><p>Số $12{,}9$ chưa phải $v_{\pi_1}(s_1)$, vì chính sách tiếp nối trong phép tính vẫn là $\pi_0$. Giá trị sau khi đổi vĩnh viễn sang $b$ sẽ phải được đánh giá lại.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17–19; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, (4.6), tr. 78.</p></aside>
 </section>
 <section data-slide-id="L04-C03">
-<h2>Giá trị hành động theo chính sách</h2>
-<p>$q_\pi(s,a)$ là tổng thưởng kỳ vọng khi bắt đầu tại $s$, chọn $a$, rồi theo $\pi$.</p>
+<h2>Hàm giá trị hành động</h2>
+<p><strong>Định nghĩa.</strong> $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$: bắt đầu tại $s$, chọn $a$, sau đó theo $\pi$. Tách bước đầu cho dạng tính được:</p>
 <div class="math-large">$$q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma v_\pi(s')\bigr].$$</div>
 <div class="math-large">$$v_\pi(s)=\sum_a\pi(a\mid s)q_\pi(s,a).$$</div>
-<div class="box">$q_{\pi_0}(s_1,a)=11$ và $q_{\pi_0}(s_1,b)=12{,}9$.</div>
-<aside class="notes"><p>Miền của $q_\pi$ gồm các cặp $s\in\mathcal S$, $a\in\mathcal A(s)$. Ký hiệu kỳ vọng $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$ được hiểu với hành động đầu được ấn định là $a$, kể cả khi $\pi(a\mid s)=0$. Sau hành động đầu, chính sách $\pi$ quyết định các hành động tiếp theo. Thay $v_\pi(s')=\sum_{a'}\pi(a'\mid s')q_\pi(s',a')$ vào công thức một bước cho phương trình Bellman của giá trị hành động:
+<div class="box">Hai giá trị nhìn trước tại $s_1$ là $q_{\pi_0}(s_1,a)=11$ và $q_{\pi_0}(s_1,b)=12{,}9$.</div>
+<aside class="notes"><p>Miền của $q_\pi$ gồm các cặp $s\in\mathcal S$, $a\in\mathcal A(s)$. Trong kỳ vọng định nghĩa $q_\pi$, hành động đầu được ấn định là $a$, kể cả khi $\pi(a\mid s)=0$. Sau hành động đầu, chính sách $\pi$ quyết định các hành động tiếp theo. Thay $v_\pi(s')=\sum_{a'}\pi(a'\mid s')q_\pi(s',a')$ vào công thức một bước cho phương trình Bellman của giá trị hành động:
 $$q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)\left[r+\gamma\sum_{a'}\pi(a'\mid s')q_\pi(s',a')\right].$$
 Giá trị trạng thái là trung bình theo chính sách; giá trị của từng hành động cho phép so sánh một lựa chọn mới với trung bình này.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 5–6, 19; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.2, (4.6), tr. 78.</p></aside>
 </section>

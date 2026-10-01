@@ -909,3 +909,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, trang không nói nhánh $a$ là hành động của $\pi_0$, nên không thấy $12{,}9$ vượt giá trị hiện tại. Nhẹ, thẻ “Hành động thứ nhất” và “Chọn $a$ tại $s_1$” lặp ý. Nhẹ, notes dùng dấu chấm thập phân (“Số 12.9”).
 - Quyết định: sửa. Đề xuất tiêu đề “So sánh hai hành động tại $s_1$” (quyết định chung) KHÔNG áp dụng: CSS chung đặt tiêu đề `h2`/`h3` chữ hoa, nên KaTeX hiển thị $s_1$ thành $S_1$ và $a$ thành $A$, làm sai ký hiệu (biến ngẫu nhiên $S_t$ khác trạng thái $s$). Tiêu đề chọn “So sánh hai nhánh hành động”; thẻ đặt tên “Giữ hành động cũ”, “Đổi hành động”, ký hiệu chuyển xuống dòng thân. Hộp cuối: “Giá trị nhìn trước của $b$ vượt $v_{\pi_0}(s_1)=11$.” Notes đổi $12{,}9$. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: bản có thêm mệnh đề trong hộp cao 714/720, đã rút còn 671/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-C03 — Hàm giá trị hành động
+
+- Trang muốn nói: $q_\pi(s,a)$ cố định hành động đầu rồi theo $\pi$; tách bước đầu cho dạng tính được, và hai giá trị nhìn trước ở trang trước chính là $q_{\pi_0}(s_1,\cdot)$.
+- Vấn đề: trung bình, mặt trang không phân biệt định nghĩa với tính chất; định nghĩa bằng kỳ vọng chỉ có trong notes nên công thức tổng một bước trông như định nghĩa. Nhẹ, hộp cuối không nói hai số là giá trị nhìn trước vừa tính. Nhẹ, tiêu đề chưa song song với “Phương trình Bellman kỳ vọng”/“Hàm giá trị” ở mạch B.
+- Quyết định: sửa. Tiêu đề “Hàm giá trị hành động”. Dòng đầu gắn nhãn “Định nghĩa.” với $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$ và câu “Tách bước đầu cho dạng tính được:”. Hộp cuối: “Hai giá trị nhìn trước tại $s_1$ là …”. Notes bỏ câu lặp định nghĩa, giữ quy ước $\pi(a\mid s)=0$. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 613/720; hai kích thước đạt, không lỗi; đã xem ảnh.
