@@ -1135,3 +1135,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện (trung bình, mạch viết): câu mới trong notes “Các thuật toán quy hoạch động trong bài đều bắt đầu từ giá trị của một chính sách đã cho” sai với lặp giá trị, vốn khởi tạo từ một bảng bất kỳ.
 - Quyết định: sửa notes thành “Bước đầu của lập kế hoạch là đánh giá một chính sách đã cho; giá trị của nó là căn cứ để đổi lựa chọn hành động.” Mặt trang không đổi.
 - Kiểm tra: 665/720; hai kích thước đạt, không lỗi.
+
+#### L04-A04 — Sửa bổ sung sau rà lại
+
+- Phát hiện (nhẹ, độ chính xác): “$\pi_0(a\mid s)=1$” thiếu lượng từ; chữ $a$ vừa là tên hành động vừa trùng biến hành động tổng quát.
+- Quyết định: sửa hộp thành “$\pi_0(a\mid s)=1$ với mọi $s\in\{s_0,s_1\}$”.
+- Kiểm tra: 673/720; hai kích thước đạt, không lỗi; đã xem ảnh 16:9, chú thích cuối không chạm mép dưới.

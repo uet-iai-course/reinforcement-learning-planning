@@ -38,7 +38,7 @@
 <section data-slide-id="L04-A04">
 <h2>MDP hai trạng thái</h2>
 <div class="grid2"><div><img class="figure" src="img/lec-04/dp04-two-state.svg" alt="Hai trạng thái: s0 chọn a trở về s0 thưởng 1, chọn b sang s1 thưởng 0; s1 chọn a sang s0 thưởng 2, chọn b ở s1 thưởng 3."/></div><div><table><thead><tr><th scope="col">$s$</th><th scope="col">$a$</th><th scope="col">$s'$</th><th scope="col">$r$</th></tr></thead><tbody><tr><td>$s_0$</td><td>$a$</td><td>$s_0$</td><td>1</td></tr><tr><td>$s_0$</td><td>$b$</td><td>$s_1$</td><td>0</td></tr><tr><td>$s_1$</td><td>$a$</td><td>$s_0$</td><td>2</td></tr><tr><td>$s_1$</td><td>$b$</td><td>$s_1$</td><td>3</td></tr></tbody></table><p>$\gamma=0{,}9$; mọi chuyển tiếp có xác suất $1$.</p></div></div>
-<div class="box">Chính sách xác định $\pi_0=(a,a)$: chọn $a$ tại $s_0$ và tại $s_1$, tức $\pi_0(a\mid s)=1$. Bài toán tiếp diễn, không có trạng thái kết thúc.</div>
+<div class="box">Chính sách xác định $\pi_0=(a,a)$: chọn $a$ tại $s_0$ và tại $s_1$, tức $\pi_0(a\mid s)=1$ với mọi $s\in\{s_0,s_1\}$. Bài toán tiếp diễn, không có trạng thái kết thúc.</div>
 <p class="caption">Tại $s_0$, $a$ cho thưởng tức thời lớn hơn $b$, nhưng chỉ $b$ dẫn tới $s_1$, nơi có thưởng $2$ và $3$.</p>
 <aside class="notes"><p>Cặp $(a,a)$ viết theo thứ tự $(s_0,s_1)$. Hành động có phần thưởng trước mắt cao nhất chưa đủ để kết luận chính sách tối ưu: so sánh hai hành động tại $s_0$ phải tính cả phần thưởng nhận được sau khi tới trạng thái kế tiếp. Mỗi chuyển tiếp ở đây có xác suất 1; không có bước lấy mẫu trong phép tính quy hoạch động.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17–18</p></aside>
 </section>
