@@ -190,7 +190,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 
 ### L04-C01 — Đổi hành động ở bước đầu
 
-- **Chức năng và nhu cầu học tập:** Vấn đề và trực giác. Giá trị của chính sách hiện tại cho phép đánh giá một thay đổi hành động ở bước đầu; định nghĩa giá trị nhìn trước $r+\gamma\,v_{\pi_0}(s')$.
+- **Chức năng và nhu cầu học tập:** Vấn đề và trực giác. Giá trị của chính sách hiện tại cho phép đánh giá một thay đổi hành động ở bước đầu; định nghĩa giá trị nhìn trước $\sum_{s',r}p(s',r\mid s,a)[r+\gamma\,v_{\pi_0}(s')]$, với dạng rút gọn $r+\gamma\,v_{\pi_0}(s')$ khi chuyển tiếp xác định.
 - **Đầu vào và quan hệ với trang trước:** Giá trị của chính sách cố định đã có; phần điều khiển cần so sánh các hành động khác.
 - **Sản phẩm và mục tiêu:** MT3; Giá trị của chính sách hiện tại cho phép đánh giá một thay đổi hành động ở bước đầu.
 - **Đầu ra cho trang sau:** So sánh một thay đổi tại bước đầu được tính trên hai nhánh của trạng thái thứ hai.

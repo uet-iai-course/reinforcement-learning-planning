@@ -1171,3 +1171,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện: (trung bình, mạch viết) câu “Sau một lượt, độ lệch lớn nhất giữa hai bảng không vượt quá $\gamma$ nhân độ lệch cũ” dễ đọc thành hai bảng liên tiếp $V_k,V_{k+1}$, trong khi bất đẳng thức nói về $T_\pi$ áp lên hai bảng bất kỳ. (Nhẹ, độ chính xác) “không áp dụng khi $\gamma=1$” đứng sau danh sách giả thiết, chưa rõ chủ thể. (Nhẹ, mạch viết) tiêu đề “đánh giá lặp” lệch thuật ngữ với trang thuật toán đánh giá chính sách.
 - Quyết định: sửa. Tiêu đề “Hội tụ của đánh giá chính sách” (đồng bộ outline, storyboard). Câu tính co: “$T_\pi$ thu hẹp độ lệch giữa hai bảng bất kỳ $U,V$ theo hệ số $\gamma$:”. Dòng giả thiết chỉ còn “MDP hữu hạn, phần thưởng bị chặn, $0\le\gamma<1$.”; câu “các kết quả trên trang không áp dụng khi $\gamma=1$” chuyển xuống notes. Bản đề xuất đầy đủ cho hai câu này làm trang cao 719/720 và đè chân trang, nên rút gọn như trên.
 - Kiểm tra: 616/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-C01 — Sửa bổ sung sau rà lại
+
+- Phát hiện (trung bình, độ chính xác; nhẹ, mạch viết): định nghĩa trên mặt trang “Giá trị nhìn trước của một hành động: $r+\gamma\,v_{\pi_0}(s')$” thiếu kỳ vọng theo $p$, nên chỉ đúng khi chuyển tiếp xác định; định nghĩa này được dùng lại ở trang kiểm tra điều kiện dừng và trong $Q_V$ của toán tử tối ưu, nơi có tổng theo $p$.
+- Quyết định: sửa hộp thành “Giá trị nhìn trước của hành động $a$ tại $s$: $\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma\,v_{\pi_0}(s')\bigr]$. Với chuyển tiếp xác định, chỉ còn $r+\gamma\,v_{\pi_0}(s')$.” Notes thay câu kỳ vọng (nay đã ở mặt trang) bằng diễn giải hai thành phần. Rút một dòng trong thẻ phải để giữ chiều cao. Đồng bộ storyboard.
+- Kiểm tra: 661/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9, hộp cách chân trang.
