@@ -804,3 +804,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Thuật ngữ “giá trị nhìn trước” thay “điểm nhìn trước” và “điểm” cho đại lượng $\sum_{s',r}p(s',r\mid s,a)[r+\gamma V(s')]$; “lượt” chỉ một lần cập nhật mọi trạng thái chưa kết thúc, “vòng” chỉ vòng ngoài của lặp chính sách.
 - Đề xuất đổi thứ tự E05→E07→E06 bị bác: giữ thứ tự nguồn đã duyệt; câu nêu nhu cầu đại lượng dừng tính được chuyển lên đầu E07.
 - Kiểm trực quan sau đổi ký hiệu: B05, B06, B08, E04, E07, F03, G04 đạt ở hai kích thước, không lỗi.
+
+### L04-A01 — Giải MDP bằng quy hoạch động
+
+- Trang muốn nói: bài 04 tính giá trị và chọn chính sách từ mô hình môi trường đã biết.
+- Vấn đề: nhẹ, dòng “Quá trình quyết định Markov (MDP)” đứng như phụ đề rời; dòng này viết đầy đủ chữ viết tắt của tiêu đề nên vẫn có chức năng.
+- Quyết định: giữ nguyên. Không có vấn đề vượt mức nhẹ.
+- Kiểm tra: không đổi nội dung; trang đạt ở lượt kiểm toàn bài trước đó.
