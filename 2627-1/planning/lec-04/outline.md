@@ -286,7 +286,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Giá t
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Thay $v_\pi(s')$ bằng trung bình theo chính sách cho phương trình $q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)[r+\gamma\sum_{a'}\pi(a'\mid s')q_\pi(s',a')]$. Hành động đầu được ấn định, còn hành động kế tiếp được lấy trung bình theo $\pi$.
 
-#### L04-C04 — Cải thiện chính sách bằng lựa chọn tham lam
+#### L04-C04 — Cải thiện chính sách tham lam
 
 - **Vai trò và mục tiêu:** Quy tắc và định lý; MT3
 - **Luận điểm trung tâm:** Chọn hành động cực đại theo giá trị của chính sách cũ tạo chính sách không kém tại mọi trạng thái.

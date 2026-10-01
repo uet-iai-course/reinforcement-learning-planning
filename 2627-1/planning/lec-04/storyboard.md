@@ -215,7 +215,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `sửa`. Chuẩn hóa giá trị hành động và dời phương trình phụ vào ghi chú.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-C04 — Cải thiện chính sách bằng lựa chọn tham lam
+### L04-C04 — Cải thiện chính sách tham lam
 
 - **Chức năng và nhu cầu học tập:** Quy tắc và định lý. Chọn hành động cực đại theo giá trị của chính sách cũ tạo chính sách không kém tại mọi trạng thái.
 - **Đầu vào và quan hệ với trang trước:** Giá trị hành động cung cấp tiêu chí lựa chọn chính sách mới tại mọi trạng thái.

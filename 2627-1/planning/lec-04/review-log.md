@@ -916,3 +916,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, mặt trang không phân biệt định nghĩa với tính chất; định nghĩa bằng kỳ vọng chỉ có trong notes nên công thức tổng một bước trông như định nghĩa. Nhẹ, hộp cuối không nói hai số là giá trị nhìn trước vừa tính. Nhẹ, tiêu đề chưa song song với “Phương trình Bellman kỳ vọng”/“Hàm giá trị” ở mạch B.
 - Quyết định: sửa. Tiêu đề “Hàm giá trị hành động”. Dòng đầu gắn nhãn “Định nghĩa.” với $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$ và câu “Tách bước đầu cho dạng tính được:”. Hộp cuối: “Hai giá trị nhìn trước tại $s_1$ là …”. Notes bỏ câu lặp định nghĩa, giữ quy ước $\pi(a\mid s)=0$. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: 613/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-C04 — Cải thiện chính sách tham lam
+
+- Trang muốn nói: chọn hành động cực đại theo $q_\pi$ (với $v_\pi$ chính xác cố định) cho chính sách không kém $\pi$ tại mọi trạng thái; quy tắc phá hòa giữ hành động cũ khi hòa.
+- Vấn đề: trung bình, định lý xuất hiện chưa có nhu cầu trên mặt trang (lý do “$12{,}9$ giả định tiếp nối theo $\pi_0$” chỉ có trong notes C02). Trung bình, “tham lam” và $\arg\max$ chưa giải thích trên mặt trang. Trung bình, lý do chính sách tham lam thỏa giả thiết định lý chỉ có trong notes. Trung bình, quy tắc phá hòa chưa có tên dù D05 gọi “phá hòa ổn định”. Nhẹ, câu khó đọc “Với giá trị chính xác $v_\pi$, giữ nguyên bảng này khi chọn hành động ở mọi trạng thái.”
+- Quyết định: sửa. Tiêu đề “Cải thiện chính sách tham lam”. Thêm câu nhu cầu nối với $12{,}9$. Định nghĩa chính sách tham lam nội dòng; câu “$\arg\max$ là tập hành động đạt cực đại” và nhãn “Phá hòa:”. Hộp định lý thêm câu “Chính sách tham lam thỏa giả thiết vì $\max_a q_\pi(s,a)\ge\sum_a\pi(a\mid s)q_\pi(s,a)=v_\pi(s)$.” Notes tách trường hợp chính sách cũ xác định và ngẫu nhiên, đổi “phá hòa ổn định” thành “quy tắc phá hòa”. Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: bản giữ công thức $\arg\max$ dạng khối cao 767/720 (tràn); chuyển công thức thành nội dòng, còn 626/720. Hai kích thước đạt, không lỗi; đã xem ảnh.
