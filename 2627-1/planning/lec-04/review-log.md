@@ -1189,3 +1189,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện (nhẹ, mạch viết): mặt trang dùng lại ẩn $x,y$ (ở trang giá trị chính xác của chính sách ban đầu là ẩn của $v_{\pi_0}$) cho $v_{\pi_1}$ mà không nói lại.
 - Quyết định: sửa thành “Hệ Bellman của $\pi_1$, với $(x,y)=v_{\pi_1}$: $x=1+0{,}9x$; $y=3+0{,}9y$.” Kết quả $(10,30)$ không đổi.
 - Kiểm tra: 658/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-D02 — Sửa bổ sung sau rà lại
+
+- Phát hiện (nhẹ, độ chính xác): định nghĩa chính sách ổn định không nhắc quy tắc phá hòa; thiếu điều kiện này, khi có hòa chính sách có thể đổi giữa các hành động đồng giá trị.
+- Quyết định: sửa thành “cải thiện theo giá trị chính xác của nó, với quy tắc phá hòa, không đổi chính sách.”
+- Kiểm tra: 617/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.

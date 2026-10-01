@@ -170,7 +170,7 @@ Giá trị trạng thái là trung bình theo chính sách; giá trị của t�
 <section data-slide-id="L04-D02">
 <h2>Lặp chính sách trên MDP hai trạng thái</h2>
 <table><thead><tr><th scope="col">$i$</th><th scope="col">Chính sách $\pi_i$</th><th scope="col">Giá trị $v_{\pi_i}$</th><th scope="col">Sau cải thiện</th></tr></thead><tbody><tr><td>0</td><td>$(a,a)$</td><td>$(10,11)$</td><td>$(a,b)$</td></tr><tr><td>1</td><td>$(a,b)$</td><td>$(10,30)$</td><td>$(b,b)$</td></tr><tr><td>2</td><td>$(b,b)$</td><td>$(27,30)$</td><td>$(b,b)$</td></tr></tbody></table><div class="grid2"><div class="card"><h3>Trạng thái thứ nhất</h3><p>$q_{\pi_2}(s_0,a)=25{,}3$; $q_{\pi_2}(s_0,b)=27$</p></div><div class="card"><h3>Trạng thái thứ hai</h3><p>$q_{\pi_2}(s_1,a)=26{,}3$; $q_{\pi_2}(s_1,b)=30$</p></div></div>
-<p><strong>Chính sách ổn định:</strong> cải thiện theo giá trị chính xác của nó không đổi chính sách. Ở đây $\pi_2=(b,b)$ ổn định.</p>
+<p><strong>Chính sách ổn định:</strong> cải thiện theo giá trị chính xác của nó, với quy tắc phá hòa, không đổi chính sách. Ở đây $\pi_2=(b,b)$ ổn định.</p>
 <aside class="notes"><p>Mỗi hàng đánh giá chính xác chính sách ở cột đầu rồi dùng đúng giá trị của hàng đó để cải thiện. Hàng giữa khôi phục bước $v_{\pi_1}=(10,30)$ cần để giải thích việc $s_0$ đổi sang $b$. Với chính sách $\pi_2=(b,b)$, hệ là $x=0{,}9y$, $y=3+0{,}9y$, nên $(x,y)=(27,30)$. Bốn giá trị hành động $q_{\pi_2}$ là $1+0{,}9\cdot27=25{,}3$, $0{,}9\cdot30=27$, $2+0{,}9\cdot27=26{,}3$ và $3+0{,}9\cdot30=30$. Cả hai hành động đang chọn đều đạt cực đại.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 17–20</p></aside>
 </section>
 <section data-slide-id="L04-D03">
