@@ -1365,3 +1365,9 @@ Nguồn phát hiện: tác tử kết nối và mạch viết rà toàn bộ 45 
 - Phát hiện (nhẹ): câu hỏi dùng “giá trị nhìn trước từ $V$” cho bảng bất kỳ, trong khi C01 định nghĩa theo $v_{\pi_0}$; dạng tổng quát $Q_V$ đến E03 mới có.
 - Quyết định: thêm vào notes “Giá trị nhìn trước tính theo cùng công thức như với $v_\pi$, với bảng $V$ thay cho $v_\pi$.” Mặt trang giữ nguyên.
 - Kiểm tra: mặt trang không đổi (556/720); notes hiển thị KaTeX không lỗi; hai kích thước đạt.
+
+#### L04-E01 — Sửa theo rà mạch toàn bài
+
+- Phát hiện (trung bình ×2): hộp dùng “phần dư của toán tử tối ưu” trước khi $T_*$ và $\Delta_*$ được định nghĩa (E03–E04); câu cơ chế “… đánh giá đúng một lượt cho giá trị nhìn trước lớn nhất” không rõ chủ ngữ và kết quả.
+- Quyết định: hộp thành “Chọn tham lam theo bảng hiện tại rồi đánh giá đúng một lượt: giá trị mới tại mỗi trạng thái bằng giá trị nhìn trước lớn nhất. Đó là lặp giá trị (value iteration); điều kiện dừng dùng phần dư, như ở đánh giá chính sách.” Notes ghi phần dư của toán tử tối ưu được định nghĩa cùng quy trình lặp giá trị. Storyboard E01 đồng bộ.
+- Kiểm tra: 16:9 cao 636/720, không cờ đè chân trang, hai kích thước đạt; đã xem ảnh 16:9.
