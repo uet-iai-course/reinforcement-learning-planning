@@ -1255,3 +1255,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện (nhẹ, no-ai-slop: câu lặp): hộp “Lượt đồng bộ chỉ đọc bảng cũ và quét mọi trạng thái” nhắc lại câu mở của trang.
 - Quyết định: hộp thành “Hai hướng giảm việc tính: dùng ngay giá trị mới trong cùng lượt; chỉ cập nhật các trạng thái do một lịch chọn.” Hai hướng vẫn dẫn tới trang cập nhật tại chỗ và trang bất đồng bộ.
 - Kiểm tra: 636/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-F03 — Sửa bổ sung sau rà lại
+
+- Phát hiện: (trung bình, mạch viết) bước ứng dụng của cụm bất đồng bộ, được storyboard đặt ở trang này, chỉ có trong notes. (Nhẹ) “lịch” và “bất đồng bộ” chưa được gọi tên như khái niệm; notes còn “chính sách trích”.
+- Quyết định: sửa. Câu mở “Bất đồng bộ: từng trạng thái được cập nhật theo lịch, đọc giá trị mới nhất.” Đầu vào và đầu ra gộp một dòng. Bước 1 gồm khởi tạo $V=0$; bước 3 “Tại mốc kiểm tra: cố định bảng, tính $\Delta_*(V)$; dừng nếu đạt ngưỡng hoặc hết ngân sách.” Hộp “$V\to v_*$ nếu mọi trạng thái chưa kết thúc được cập nhật vô hạn lần.” Thêm dòng ứng dụng “Trên lưới, lịch $c_4,c_3,c_2,c_1$ cho $\Delta_*(V)=0$ sau một lượt; mọi ô chọn đi phải.” Để không tràn, các chi tiết sau chuyển xuống notes: giả thiết MDP hữu hạn, thưởng bị chặn, $0\le\gamma<1$; lịch là dãy trạng thái được chọn và quét tại chỗ là một lịch cụ thể; thời điểm hết ngân sách luôn là một mốc kiểm tra. Notes bỏ câu trùng với dòng ứng dụng. Không gọi tên “lịch bao phủ”; trang so sánh phương pháp sẽ dùng mô tả bằng lời.
+- Kiểm tra: bản đầu (thêm dòng ứng dụng, giữ câu dài) cao 771, sau đó 818, tràn và đè chân trang; bản cuối 635/720, hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.

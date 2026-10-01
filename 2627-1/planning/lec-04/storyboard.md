@@ -402,7 +402,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Đầu vào và quan hệ với trang trước:** Cơ chế dùng giá trị mới nhất được giữ; ví dụ lưới dùng $T_*$ dẫn tới lặp giá trị bất đồng bộ, khác ví dụ đánh giá hai trạng thái dùng $T_{\pi_0}$.
 - **Sản phẩm và mục tiêu:** MT6; Bất đồng bộ cho phép chọn trạng thái cập nhật linh hoạt nhưng phải tiếp tục cập nhật mọi trạng thái.
 - **Đầu ra cho trang sau:** Các lịch khác nhau được đặt trong quan hệ chung giữa đánh giá và cải thiện.
-- **Quyết định:** `thêm`. Bổ sung quy trình bất đồng bộ và điều kiện hội tụ từ chương 4.
+- **Quyết định:** `thêm`. Bổ sung quy trình bất đồng bộ và điều kiện hội tụ từ chương 4. Rà ngày 2026-10-01: mặt trang định nghĩa bất đồng bộ, gộp đầu vào và đầu ra thành một dòng, và đưa bước ứng dụng lên mặt trang: lịch $c_4,c_3,c_2,c_1$ trên lưới cho $\Delta_*(V)=0$ sau một lượt, chính sách tham lam đi phải. Giả thiết MDP hữu hạn, $\gamma<1$ và việc quét tại chỗ là một lịch cụ thể chuyển xuống notes.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
 ### L04-F04 — Lặp chính sách tổng quát
