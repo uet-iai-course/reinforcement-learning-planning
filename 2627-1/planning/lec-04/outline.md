@@ -160,7 +160,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Mô h�
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Giá trị 2.9 của $s_1$ ở lượt hai dùng $V_1(s_0)=1$. Nếu dùng ngay giá trị mới 1.9 sẽ đổi thuật toán và cho 3.71 ở ô đó.
 
-#### L04-B03 — Hàm giá trị và phương trình Bellman kỳ vọng
+#### L04-B03 — Phương trình Bellman kỳ vọng
 
 - **Vai trò và mục tiêu:** Định nghĩa; MT2
 - **Luận điểm trung tâm:** Giá trị chính xác là kỳ vọng của tổng thưởng và thỏa quan hệ đệ quy một bước.

@@ -853,3 +853,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, phép tính không ghi ô nào của bảng cũ được đọc (“$V_1(s_1)=2+0{,}9\cdot0=2$”), nên ký hiệu $V_k(s')$ không truyền sang công thức ở B03–B04. Trung bình, chưa có câu trực giác cho quy tắc tính. Nhẹ, “cập nhật đồng bộ” dùng ở dòng đầu nhưng chỉ được giải thích ở box. Nhẹ, tiêu đề chín từ. Nhẹ, notes dùng dấu chấm thập phân.
 - Quyết định: sửa. Tiêu đề “Hai lượt đánh giá đồng bộ”. Dòng đầu nêu quy tắc bằng lời. Bốn phép tính viết $V_{k+1}(s)=r+0{,}9\,V_k(s_0)$; số liệu đã kiểm: $V_1=(1,2)$, $V_2=(1{,}9;2{,}9)$. Box định nghĩa cập nhật đồng bộ và “lượt” (cập nhật mỗi trạng thái một lần). Notes giải thích vì sao cả hai ô đọc $s_0$ và gọi tên cập nhật tại chỗ cho phép tính $2+0{,}9\cdot1{,}9=3{,}71$. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: 670/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-B03 — Phương trình Bellman kỳ vọng
+
+- Trang muốn nói: $v_\pi$ là kỳ vọng của tổng thưởng và thỏa quan hệ một bước, với cùng ẩn $v_\pi$ ở hai vế.
+- Vấn đề: trung bình, chưa có cầu nối với phép tính tay ở B02; mặt trang không nói phương trình là phép tính đó với $V_k$, $V_{k+1}$ thay bằng cùng $v_\pi$. Trung bình, $\pi(a\mid s)$ và tổng theo $a$, $s'$, $r$ xuất hiện trong khi ví dụ là xác định. Nhẹ, tiêu đề tám từ.
+- Quyết định: sửa. Tiêu đề “Phương trình Bellman kỳ vọng” (giữ “kỳ vọng” để đối lập với “tối ưu” ở D04, E03). Dòng đầu nối các bảng $V_k$ với hàm giá trị $v_\pi$. Thêm chú thích: phép tính hai lượt với $V_k$, $V_{k+1}$ thay bằng cùng $v_{\pi_0}$, mỗi tổng còn một hạng. Notes giải thích $\pi(a\mid s)$ cho chính sách xác định (A04 đã nêu $\pi_0(a\mid s)=1$). Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 656/720; hai kích thước đạt, không lỗi; đã xem ảnh.

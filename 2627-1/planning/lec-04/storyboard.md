@@ -134,7 +134,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `thêm`. Bổ sung bước tính trước hình thức hóa; bảo toàn mô hình nguồn.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-B03 — Hàm giá trị và phương trình Bellman kỳ vọng
+### L04-B03 — Phương trình Bellman kỳ vọng
 
 - **Chức năng và nhu cầu học tập:** Định nghĩa. Giá trị chính xác là kỳ vọng của tổng thưởng và thỏa quan hệ đệ quy một bước.
 - **Đầu vào và quan hệ với trang trước:** Các phép tính một bước được khái quát thành giá trị chính xác và phương trình kỳ vọng.
