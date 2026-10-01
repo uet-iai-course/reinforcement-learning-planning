@@ -1105,3 +1105,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, “Thưởng $10$ khi thực tế $c_4\to c_5$” dùng chữ “thực tế” kiểu văn nói và mơ hồ; lời giải tính cả nhánh trượt ngược vào $c_5$ vẫn nhận 10 mà mặt trang không nói rõ. Nhẹ, chú thích “Dữ kiện: bài tập tuần 4.” là nguồn trên mặt trang (notes đã trích hw04). Nhẹ, tiêu đề dài; câu hỏi bị ngắt giữa “$V_0=$” và “$0$”.
 - Quyết định: sửa. Tiêu đề “Bài tập lưới ngẫu nhiên”. Dòng thưởng: “Thưởng $10$ khi chuyển vào $c_5$, kể cả do trượt; các bước khác nhận $-1$.” Xóa chú thích nguồn trên mặt trang. Viết lại câu hỏi để công thức không bị ngắt. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: 609/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-G04 — Kiểm tra nghiệm tối ưu
+
+- Trang muốn nói: chứng nhận một bảng là $v_*$ bằng phần dư bằng 0, phân biệt với giá trị chính xác của một chính sách chưa tối ưu, và nhận ra phép tính này cần mô hình.
+- Vấn đề: trung bình, câu 1 cũ với $V=(27,30)$ lặp đúng bốn số $25{,}3$; $27$; $26{,}3$; $30$ đã in trên mặt trang lặp chính sách trên MDP hai trạng thái, nên không đo năng lực mới. Trung bình, chưa kiểm phân biệt $v_\pi$ với $v_*$ bằng phần dư. Nhẹ, tiêu đề dài; mặt trang còn “mô hình hai trạng thái”; lời giải dùng dấu chấm thập phân.
+- Quyết định: sửa. Tiêu đề “Kiểm tra nghiệm tối ưu”. Dữ kiện: “MDP hai trạng thái, $\gamma=0{,}9$; hai bảng $U=(10,30)=v_{(a,b)}$ và $V=(27,30)$.” Câu 1: tính $T_*U$, $T_*V$, $\Delta_*(U)$, $\Delta_*(V)$ và hai chính sách tham lam; câu 2: xác định bảng nào là $v_*$ và căn cứ; câu 3 giữ. Lời giải đã kiểm: $T_*U=(\max\{10;27\},\max\{11;30\})=(27,30)$, $\Delta_*(U)=17$; $T_*V=V$, $\Delta_*(V)=0$; cả hai bảng cho chính sách tham lam $(b,b)$; chặn phần dư của $U$ là $170$, sai số thật $17$. Đồng bộ outline (ý chính, yêu cầu, đáp án, tiêu chí) và storyboard.
+- Kiểm tra: 628/720; hai kích thước đạt, không lỗi; đã xem ảnh.

@@ -459,13 +459,13 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `sửa`. Hoàn thiện bài tập nguồn đang thiếu quy ước và yêu cầu; không tạo chương trình mới.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-G04 — Kiểm tra nghiệm và chứng nhận tối ưu
+### L04-G04 — Kiểm tra nghiệm tối ưu
 
 - **Chức năng và nhu cầu học tập:** Kiểm tra tổng hợp. Một nghiệm điều khiển được kiểm tra bằng hành động tham lam và phần dư Bellman cùng giả thiết.
 - **Đầu vào và quan hệ với trang trước:** Bài tập dùng kỳ vọng dẫn tới kiểm tra tổng hợp cách chứng nhận nghiệm từ mô hình.
-- **Sản phẩm và mục tiêu:** MT3–MT6; Đúng bốn điểm, đúng phần dư của bảng đã cho, nêu giả thiết và phân biệt mẫu với mô hình đầy đủ.
+- **Sản phẩm và mục tiêu:** MT3–MT6; Đúng $T_*U$, $T_*V$ và phần dư của từng bảng, phân biệt $v_{(a,b)}$ với $v_*$, nêu giả thiết và phân biệt mẫu với mô hình đầy đủ.
 - **Đầu ra cho trang sau:** Năng lực kiểm chứng được củng cố bằng các mục đọc và bài tập gắn với chương 4.
-- **Quyết định:** `thêm`. Đo việc nối giá trị, chính sách, hội tụ và mô hình trong cùng một kết luận.
+- **Quyết định:** `thêm`. Đo việc nối giá trị, chính sách, hội tụ và mô hình trong cùng một kết luận. Rà ngày 2026-10-01: thay câu tính bốn giá trị nhìn trước từ $(27,30)$ (đã in ở trang lặp chính sách) bằng cặp bảng $U=v_{(a,b)}$, $V$ để đo phân biệt $v_\pi$ với $v_*$.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
 ### L04-G05 — Tài liệu đọc và bài tập tiếp nối

@@ -678,11 +678,11 @@ Chức năng: Kết luận và vận dụng tổng hợp. Đầu vào: Kết qu�
 - **Tiêu chí đánh giá:** Mỗi tổng đủ ba kết quả, thưởng gắn với chuyển thực tế và giữ đích bằng 0.
 - **Thời gian hoạt động:** 1 phút đọc quy ước, 1 phút lập kỳ vọng tại ô sát đích, 1 phút đối chiếu; lời giải toàn bài được chữa trong 30 phút riêng; đã tính trong thời lượng của trang.
 
-#### L04-G04 — Kiểm tra nghiệm và chứng nhận tối ưu
+#### L04-G04 — Kiểm tra nghiệm tối ưu
 
 - **Vai trò và mục tiêu:** Kiểm tra tổng hợp; MT3–MT6
 - **Luận điểm trung tâm:** Một nghiệm điều khiển được kiểm tra bằng hành động tham lam và phần dư Bellman cùng giả thiết.
-- **Ý chính:** Cho mô hình hai trạng thái của bài và bảng $V=(27,30)$. Cần kiểm tra đầu ra và xác định giới hạn khi chuyển sang môi trường chỉ có bộ mô phỏng.
+- **Ý chính:** Cho MDP hai trạng thái của bài và hai bảng $U=(10,30)=v_{(a,b)}$, $V=(27,30)$. Cần phân biệt giá trị chính xác của một chính sách với $v_*$ bằng phần dư, và xác định giới hạn khi chỉ có bộ mô phỏng.
 - **Ví dụ/hình dự kiến:** Bảng hai giá trị và mô hình bốn chuyển tiếp; đáp án không lộ trên mặt trang.
 - **Hình thức hóa:** Dùng HT11–HT14 và điều kiện đầu vào của HT12.
 - **Kết nối vào:** Bài tập dùng kỳ vọng dẫn tới kiểm tra tổng hợp cách chứng nhận nghiệm từ mô hình.
@@ -690,10 +690,10 @@ Chức năng: Kết luận và vận dụng tổng hợp. Đầu vào: Kết qu�
 - **Nguồn:** NG1, tr. 17–19, 31–38; câu kiểm tra tổng hợp từ nguồn.
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Phần dư bằng 0 chứng nhận điểm bất động trong mô hình đã cho. Chứng nhận đó phụ thuộc độ đúng của mô hình; không tự chuyển thành bảo đảm cho một mô hình xấp xỉ khác.
-- **Yêu cầu trên mặt trang:** Câu hỏi: Tính bốn $Q_V$, suy ra chính sách tham lam và phần dư $\Delta_*(V)$. Nêu căn cứ kết luận tối ưu. Nếu chỉ có bộ mô phỏng sinh một chuyển tiếp mỗi lần gọi, bước nào của thuật toán chưa được cung cấp trực tiếp?
+- **Yêu cầu trên mặt trang:** Câu hỏi: Tính $T_*U$, $T_*V$, $\Delta_*(U)$, $\Delta_*(V)$ và hai chính sách tham lam. Xác định bảng nào là $v_*$; nêu căn cứ. Nếu chỉ có bộ mô phỏng sinh một chuyển tiếp mỗi lần gọi, bước nào của thuật toán chưa được cung cấp trực tiếp?
 - **Kiến thức được đo:** MT3–MT6; các công thức và dữ kiện đã trình bày trước trang này.
-- **Đáp án/gợi ý trong ghi chú:** $Q_V=(25.3,27;26.3,30)$; chính sách $(b,b)$; $T_*V=V$ nên $\Delta_*(V)=0$ và $V=v_*$. Căn cứ là MDP hữu hạn, thưởng bị chặn, $\gamma=0.9<1$ và tính duy nhất điểm bất động. Bộ mô phỏng chưa cung cấp trực tiếp kỳ vọng đầy đủ theo $p$; cần xây mô hình hoặc phương pháp lấy mẫu ngoài phạm vi.
-- **Tiêu chí đánh giá:** Đúng bốn điểm, đúng phần dư của bảng đã cho, nêu giả thiết và phân biệt mẫu với mô hình đầy đủ.
+- **Đáp án/gợi ý trong ghi chú:** $T_*U=(27,30)$, $\Delta_*(U)=17$, tham lam $(b,b)$; $T_*V=V$, $\Delta_*(V)=0$, tham lam $(b,b)$; vậy $V=v_*$. Căn cứ là MDP hữu hạn, thưởng bị chặn, $\gamma=0{,}9<1$ và tính duy nhất điểm bất động. $U$ là giá trị chính xác của $(a,b)$ nhưng không thỏa phương trình Bellman tối ưu. Bộ mô phỏng chưa cung cấp trực tiếp kỳ vọng đầy đủ theo $p$; cần xây mô hình hoặc phương pháp lấy mẫu ngoài phạm vi.
+- **Tiêu chí đánh giá:** Đúng hai bảng $T_*U$, $T_*V$, đúng phần dư của từng bảng, phân biệt $v_\pi$ với $v_*$, nêu giả thiết và phân biệt mẫu với mô hình đầy đủ.
 - **Thời gian hoạt động:** 1 phút lập phép tính, 1 phút trả lời, 1 phút đối chiếu; đã tính trong thời lượng của trang.
 
 #### L04-G05 — Tài liệu đọc và bài tập tiếp nối
