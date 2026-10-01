@@ -958,3 +958,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, “quỹ đạo” là thuật ngữ RL chỉ chuỗi trạng thái–hành động–phần thưởng, dùng cho dãy kết quả thuật toán gây nhầm. Trung bình, “chính sách ổn định” dùng ở D03, D04 mà chưa định nghĩa. Nhẹ, chỉ số $i$ giới thiệu ở D01 nhưng bảng không có cột $i$. Nhẹ, thẻ “Trạng thái thứ nhất” và “Tại $s_0$, theo $(b,b)$:” lặp ý; các số chưa được gọi là $q_{\pi_2}$.
 - Quyết định: sửa. Tiêu đề “Lặp chính sách trên MDP hai trạng thái”. Bảng thêm cột $i$ (0, 1, 2). Thẻ ghi $q_{\pi_2}(s,\cdot)$ trên một dòng; giữ tên thẻ bằng chữ (không đưa $s_0$ vào `h3` vì chữ hoa làm sai ký hiệu). Câu cuối định nghĩa “Chính sách ổn định” và nêu $\pi_2=(b,b)$ ổn định. Notes dùng $v_{\pi_1}$, $\pi_2$. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: bản đầu cao 689/720, tiêu đề chạm mũi tên điều hướng dọc; gộp hai dòng $q$ mỗi thẻ, còn 617/720. Hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-D03 — Thuật toán lặp chính sách
+
+- Trang muốn nói: quy trình đầy đủ gồm đầu vào, đánh giá chính xác, cải thiện tham lam có quy tắc phá hòa, dừng khi chính sách ổn định hoặc hết ngân sách.
+- Vấn đề: trung bình (xung đột thuật ngữ), bước 4 “trả $(\pi,v_\pi)$ với trạng thái ổn định”, chữ “trạng thái” trùng với trạng thái MDP. Nhẹ, bước 5 không nêu kết luận khi hết ngân sách, không đối xứng với bước 4. Nhẹ, bước 3 diễn đạt lại quy tắc phá hòa thay vì dùng tên đã đặt ở C04.
+- Quyết định: sửa. Tiêu đề giữ. Bước 3 “áp dụng quy tắc phá hòa”. Bước 4 “trả $(\pi,v_\pi)$ và kết luận chính sách ổn định”. Bước 5 “trả $(\pi,v_\pi)$ và kết luận chưa ổn định”; “lặp từ bước 2”. Notes giữ (đã nêu cặp trả về khi hết ngân sách chưa được chứng nhận tối ưu).
+- Kiểm tra: 521/720; hai kích thước đạt, không lỗi; đã xem ảnh.
