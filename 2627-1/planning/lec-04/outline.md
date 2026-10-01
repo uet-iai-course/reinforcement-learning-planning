@@ -477,7 +477,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 
 - **Vai trò và mục tiêu:** Quy trình đầy đủ; MT5
 - **Luận điểm trung tâm:** Thuật toán trả bảng giá trị, chính sách tham lam theo chính bảng đó và phần dư kiểm chứng.
-- **Ý chính:** Đặt $\Delta_*(V)=\|T_*V-V\|_\infty$ trước khi xét điều kiện dừng. Đầu vào $p,\gamma$, ngưỡng $\eta>0$, ngân sách $K$. Khởi tạo $V=0$, giữ giá trị kết thúc bằng 0. Tính $W=T_*V$ từ bản chụp cố định. Nếu $\|W-V\|_\infty\le\eta$, trả $V$ và chính sách tham lam theo $V$. Nếu chưa đạt thì nhận $W$ làm bảng hiện tại khi còn ngân sách. Khi hết ngân sách, tính phần dư trên bảng cuối; trả kèm trạng thái đạt/chưa đạt ngưỡng.
+- **Ý chính:** Đặt $\Delta_*(V)=\|T_*V-V\|_\infty$ trước khi xét điều kiện dừng. Đầu vào $p,\gamma$, ngưỡng $\eta>0$, ngân sách $K$. Khởi tạo $V=0$, giữ giá trị kết thúc bằng 0. Tính $W=T_*V$ từ bản chụp cố định. Bước 3 gộp hai điều kiện dừng như thuật toán đánh giá: nếu $\|W-V\|_\infty\le\eta$ hoặc đã nhận $K$ bảng mới, trả $V$, phần dư và kết quả so ngưỡng; ngược lại nhận $W$ làm bảng hiện tại. Chính sách tham lam trích từ chính bảng trả về.
 - **Ví dụ/hình dự kiến:** Giả mã 8–10 dòng; phép trích chính sách bên ngoài vòng cập nhật; không dùng khối mã chương trình.
 - **Hình thức hóa:** HT12: $\Delta_*(V)=\|T_*V-V\|_\infty$; $\pi_V(s)\in\arg\max_aQ_V(s,a)$.
 - **Kết nối vào:** Toán tử tối ưu được đặt trong vòng lặp và ghép với chính sách trích từ bảng trả về.

@@ -1007,3 +1007,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, mặt trang dùng $q_*$ (“$V=v_*\Rightarrow Q_V=q_*$”) trong khi $q_*$ chỉ được định nghĩa trong notes trang chính sách ổn định. Trung bình, không nối với bảng tính tay ở trang trước. Nhẹ, “Điểm bất động tối ưu thỏa $v_*=T_*v_*$” không gợi lại phương trình Bellman tối ưu đã có.
 - Quyết định: sửa. Tiêu đề giữ. Câu mở: “Mỗi ô của bảng lượt hai là một giá trị nhìn trước từ $V_1$.” Dòng cuối: “Với $V=v_\pi$, $Q_V=q_\pi$. Phương trình Bellman tối ưu, đã gặp khi xét chính sách ổn định, viết gọn là $v_*=T_*v_*$.” Chuyển $q_*$ và $V=v_*\Rightarrow Q_V=q_*$ vào notes cùng định nghĩa $q_*$.
 - Kiểm tra: 634/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-E04 — Thuật toán lặp giá trị đồng bộ
+
+- Trang muốn nói: quy trình đầy đủ của lặp giá trị đồng bộ gồm đầu vào, phần dư tối ưu, điều kiện dừng và đầu ra kèm chính sách trích từ bảng trả về.
+- Vấn đề: nhẹ, $\Delta_*$ được định nghĩa như ký hiệu mới, không gợi lại $\Delta_\pi$ của thuật toán đánh giá. Nhẹ, $\pi_V$ trong hộp không có tên gọi. Trung bình (báo cáo lượt 1), khuôn bốn bước khác khuôn ba bước của thuật toán đánh giá đã sửa, làm mất ký hiệu chung để so sánh.
+- Quyết định: sửa. Tiêu đề giữ. Định nghĩa “Phần dư tối ưu, thay $T_\pi$ bằng $T_*$ trong $\Delta_\pi$”. Quy trình ba bước cùng khuôn: kiểm ngưỡng hoặc đủ $K$ bảng mới thì trả $(V,\Delta)$ và kết quả so ngưỡng, ngược lại $V\leftarrow W$. Hộp gọi tên chính sách tham lam trích từ chính bảng trả về. Notes thay câu cũ về hết ngân sách bằng mô tả lần nhận bảng thứ $K$, trường hợp $K=0$ và ví dụ $K=1$ trên MDP hai trạng thái ($V_1=(1,3)$, $\Delta_*(V_1)=2{,}7$, chính sách $(b,b)$; đã kiểm: $T_*V_1=(2{,}7;5{,}7)$, phần dư $\max\{1{,}7;2{,}7\}=2{,}7$). Đồng bộ ý chính ở outline và quyết định ở storyboard.
+- Kiểm tra: 620/720; hai kích thước đạt, không lỗi; đã xem ảnh.

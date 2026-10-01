@@ -228,11 +228,11 @@ với số hạng tiếp nối bằng 0 nếu $s'$ là trạng thái kết thúc
 </section>
 <section data-slide-id="L04-E04">
 <h2>Thuật toán lặp giá trị đồng bộ</h2>
-<p>Đầu vào: $p,\gamma$, ngưỡng $\eta&gt;0$ và tối đa $K$ lượt nhận bảng mới.</p>
-<p>Phần dư tối ưu: $\Delta_*(V)=\|T_*V-V\|_\infty$.</p>
-<ol><li>Khởi tạo $V=0$; giữ giá trị trạng thái kết thúc bằng $0$.</li><li>Tính $W=T_*V$ từ bảng cố định; đặt $\Delta=\|W-V\|_\infty$.</li><li>Nếu $\Delta\le\eta$, kết thúc với $V$; nếu chưa đạt và còn lượt, nhận $V\leftarrow W$ rồi lặp lại.</li><li>Khi hết $K$ lượt, tính lại $\Delta_*(V)$ trên bảng cuối.</li></ol>
-<div class="box">Trả $V$, $\pi_V(s)\in\arg\max_a Q_V(s,a)$ và phần dư của $V$, kèm kết quả kiểm tra ngưỡng.</div>
-<aside class="notes"><p>Ngân sách $K$ là số nguyên không âm, đếm số lần nhận bảng mới. Nếu dừng vì phần dư nhỏ, $V$ là bảng đã được kiểm; $W=T_*V$ chỉ là bảng dùng để đo phần dư. Nếu đã nhận đủ $K$ bảng mới, tính lại phần dư trên bảng cuối trước khi trả. Chính sách được trích sau cập nhật từ chính bảng công bố, với một thứ tự phá hòa cố định. Mỗi trạng thái chưa kết thúc cần nhìn trước theo tất cả hành động; không thể chọn hành động bằng cách chỉ lấy cực đại trực tiếp của $V(s)$. Các bước dùng kỳ vọng theo mô hình đầy đủ. Hết ngân sách không chứng minh hội tụ, còn đạt ngưỡng chỉ chứng nhận một chặn sai số giá trị khi kết hợp với tính co.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 24, 34; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.4, tr. 83</p></aside>
+<p>Phần dư tối ưu, thay $T_\pi$ bằng $T_*$ trong $\Delta_\pi$: $\Delta_*(V)=\|T_*V-V\|_\infty$.</p>
+<p>Đầu vào: $p,\gamma$; ngưỡng $\eta&gt;0$; tối đa $K$ lần nhận bảng mới.</p>
+<ol><li>Khởi tạo $V=0$; trạng thái kết thúc giữ giá trị $0$.</li><li>Tính $W=T_*V$ từ bảng $V$ cố định; đặt $\Delta=\|W-V\|_\infty$.</li><li>Nếu $\Delta\le\eta$ hoặc đã nhận $K$ bảng mới: trả $(V,\Delta)$ và kết quả so ngưỡng. Ngược lại, $V\leftarrow W$ rồi quay lại bước 2.</li></ol>
+<div class="box">Đầu ra gồm thêm chính sách tham lam $\pi_V(s)\in\arg\max_a Q_V(s,a)$, trích từ chính bảng trả về.</div>
+<aside class="notes"><p>Ngân sách $K$ là số nguyên không âm, đếm số lần nhận bảng mới. Nếu dừng vì phần dư nhỏ, $V$ là bảng đã được kiểm; $W=T_*V$ chỉ là bảng dùng để đo phần dư. Sau lần nhận bảng thứ $K$, bước 2 áp dụng $T_*$ thêm một lần để đo phần dư của bảng cuối; với $K=0$, thuật toán trả bảng khởi tạo cùng phần dư của nó. Với MDP hai trạng thái và $K=1$, thuật toán trả $V_1=(1,3)$, $\Delta_*(V_1)=2{,}7$ và chính sách $(b,b)$. Chính sách được trích sau cập nhật từ chính bảng công bố, với một thứ tự phá hòa cố định. Mỗi trạng thái chưa kết thúc cần nhìn trước theo tất cả hành động; không thể chọn hành động bằng cách chỉ lấy cực đại trực tiếp của $V(s)$. Các bước dùng kỳ vọng theo mô hình đầy đủ. Hết ngân sách không chứng minh hội tụ, còn đạt ngưỡng chỉ chứng nhận một chặn sai số giá trị khi kết hợp với tính co.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 24, 34; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.4, tr. 83</p></aside>
 </section>
 <section data-slide-id="L04-E05">
 <h2>Tính co và hội tụ của lặp giá trị</h2>

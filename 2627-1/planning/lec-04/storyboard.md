@@ -338,7 +338,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Đầu vào và quan hệ với trang trước:** Toán tử tối ưu được đặt trong vòng lặp và ghép với chính sách trích từ bảng trả về.
 - **Sản phẩm và mục tiêu:** MT5; Thuật toán trả bảng giá trị, chính sách tham lam theo chính bảng đó và phần dư kiểm chứng.
 - **Đầu ra cho trang sau:** Vòng lặp có tiêu chuẩn dừng cần bảo đảm rằng toán tử tiến tới đúng điểm bất động.
-- **Quyết định:** `sửa`. Làm rõ đầu ra và chỉ số dừng, tránh lẫn mức thay đổi với phần dư của bảng mới.
+- **Quyết định:** `sửa`. Làm rõ đầu ra và chỉ số dừng, tránh lẫn mức thay đổi với phần dư của bảng mới. Rà ngày 2026-10-01: quy trình còn ba bước theo cùng khuôn với thuật toán đánh giá chính sách đồng bộ.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
 ### L04-E05 — Tính co và hội tụ của lặp giá trị
