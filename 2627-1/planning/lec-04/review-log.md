@@ -1231,3 +1231,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện: (nhẹ, độ chính xác) ví dụ $K=1$ trong notes thiếu ngưỡng; kết quả “trả $V_1$” chỉ đúng khi $\eta<2{,}7$. (Nhất quán) quy trình chưa có bộ đếm $k$ như thuật toán đánh giá chính sách đồng bộ sau sửa bổ sung.
 - Quyết định: sửa. Bước 1 “Khởi tạo $V=0$, $k=0$”; bước 3 “Nếu $\Delta\le\eta$ hoặc $k=K$ … $V\leftarrow W$, $k\leftarrow k+1$ rồi quay lại bước 2”, trùng từng chữ với quy trình đánh giá ngoài $T_*$. Notes: ví dụ ghi “$K=1$ và $\eta=0{,}01$ … (chưa đạt ngưỡng)”; “chính sách trích sau cập nhật từ chính bảng công bố” → “chính sách tham lam được lấy từ chính bảng trả về”.
 - Kiểm tra: 620/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-E06 — Sửa bổ sung sau rà lại
+
+- Phát hiện (nhẹ, mạch viết): trang chưa nối với kết quả hội tụ của trang trước; chú thích chỉ ghi $V_5=V_4$.
+- Quyết định: chú thích ghi “$V_5=V_4=v_*$”, nối điểm bất động của ví dụ với nghiệm duy nhất vừa chứng minh. Notes đã có câu “đây là $v_*$ của lưới”, giữ nguyên.
+- Kiểm tra: 666/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9 (chú thích hai dòng ở cột phải, cách chân trang).
