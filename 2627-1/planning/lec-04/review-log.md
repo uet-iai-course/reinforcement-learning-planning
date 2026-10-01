@@ -1207,3 +1207,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện (nhẹ, mạch viết): notes viết $v_{(a,b)}$ và “chính sách $(b,b)$”, không thống nhất với tên $\pi_1,\pi_2$ đã đặt ở trang lặp chính sách trên MDP hai trạng thái.
 - Quyết định: sửa lời giải trong notes thành “$v_{\pi_1}=(10,30)$ với $\pi_1=(a,b)$, còn $\pi_2=(b,b)$ có giá trị $(27,30)$”. Mặt trang không đổi.
 - Kiểm tra: 556/720; hai kích thước đạt, không lỗi.
+
+#### Ghi chú bài giảng — Sửa bổ sung sau rà lại
+
+- Phát hiện (trung bình, độ chính xác, thuật ngữ): `materials/lec-04/lecture-note.md` còn gọi $Q_V$ là “điểm”/“bảng điểm” ở bảng ký hiệu, tiêu đề mục và hai câu giải thích, lệch thuật ngữ “giá trị nhìn trước” của bài giảng.
+- Quyết định: đổi bốn chỗ thành “giá trị nhìn trước”, gồm tiêu đề mục “Giá trị nhìn trước $Q_V$ từ một bảng giá trị”. Không có liên kết hay `note-topic-id` nào trỏ tới tiêu đề cũ. Các chữ “điểm” khác (điểm bất động, hai điểm liên tục trong một ô rời rạc hóa) giữ nguyên vì khác nghĩa.
+- Kiểm tra: trình đọc ghi chú tại cổng 8766 ở 1600×900 và 390×844: 1.108 biểu thức KaTeX, không `.katex-error`, không tràn ngang, tiêu đề mới hiển thị, không còn cụm cũ. Lỗi CSP trong console đến từ đoạn script tự tải lại do `reloadserver` chèn khi phục vụ, không có trong `material-viewer.html`.

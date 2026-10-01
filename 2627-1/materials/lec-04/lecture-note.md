@@ -26,7 +26,7 @@ Nếu có trạng thái kết thúc $s_{\mathrm{term}}$, đặt $\mathcal S^+=\m
 | $G_0$ | tổng thưởng chiết khấu tính từ thời điểm khởi đầu |
 | $v_\pi(s)$ | giá trị trạng thái của chính sách $\pi$: $v_\pi(s) = \mathbb E_\pi[\,G_0 \mid S_0 = s\,]$, kỳ vọng tính từ thời điểm khởi đầu |
 | $q_\pi(s,a)$ | giá trị hành động: ấn định hành động đầu $a$ rồi theo $\pi$ từ bước sau, kể cả khi $\pi(a\mid s)=0$ |
-| $Q_V(s,a)$ | điểm của hành động tính từ một bảng $V$ bất kỳ; với chính sách Markov dừng, $Q_{v_\pi} = q_\pi$ |
+| $Q_V(s,a)$ | giá trị nhìn trước của hành động tính từ một bảng $V$ bất kỳ; với chính sách Markov dừng, $Q_{v_\pi} = q_\pi$ |
 | $v_*, q_*$ | giá trị tối ưu, định nghĩa bằng $\sup$ trên lớp chính sách $\Pi$ |
 | $T_\pi, T_*$ | hai toán tử Bellman nhận và trả bảng $V$, định nghĩa ở phần 2 |
 | $V$, $V_k$, $W$ | bảng giá trị bất kỳ, bảng sau $k$ lượt cập nhật đồng bộ và bảng mới tạm; khác với giá trị chính xác $v_\pi$ hoặc $v_*$ |
@@ -102,7 +102,7 @@ Trong phép tính, $-1$ là phần thưởng trên cạnh, $0{,}5$ là hệ số
 
 Mỗi lựa chọn tại một trạng thái gồm ba phần: hành động đầu, chuyển trạng thái, rồi một chính sách tiếp diễn từ trạng thái mới. Giá trị của một hành động giữ phần tiếp diễn theo chính sách đang xét $\pi$. Giá trị tối ưu xét phần tiếp diễn tốt nhất có thể từ trạng thái kế tiếp. Với chuyển trạng thái ngẫu nhiên, phải lấy kỳ vọng theo xác suất môi trường trước khi so sánh các hành động; tác tử không được chọn kết quả ngẫu nhiên. Phép nhìn trước một bước cũng có thể tính trên một bảng giá trị tiếp diễn bất kỳ.
 
-### Bảng điểm $Q_V$ từ một bảng giá trị
+### Giá trị nhìn trước $Q_V$ từ một bảng giá trị
 
 Cho bảng tiếp diễn $V = (4, 7)$ của chính sách $\pi_0 = (a,a)$. Điểm của từng cặp (trạng thái, hành động) là thưởng ngay cộng giá trị tiếp diễn đã chiết khấu, lấy kỳ vọng theo xác suất chuyển:
 
@@ -119,11 +119,11 @@ Với mô hình xác định, bảng $Q_V$ là:
 
 ### Định nghĩa $Q_V$ và quan hệ với $q_\pi$
 
-Ký hiệu $Q_V$ gắn với một bảng $V$ cụ thể: nó là điểm của hành động tính từ bảng đó, chưa phải giá trị hành động của một chính sách. Ngược lại, $q_\pi(s,a)$ được định nghĩa bằng giá trị của quy trình: khởi đầu tại $s$, ấn định hành động đầu là $a$, rồi theo $\pi$ từ bước sau; quy ước này có nghĩa kể cả khi $\pi(a \mid s) = 0$. Chỉ với chính sách Markov dừng, khi bảng $V$ đúng bằng $v_\pi$, phần tiếp diễn theo $\pi$ quay lại chính bảng đang đánh giá, nên hai khái niệm trùng nhau qua bảng trạng thái:
+Ký hiệu $Q_V$ gắn với một bảng $V$ cụ thể: nó là giá trị nhìn trước của hành động tính từ bảng đó, chưa phải giá trị hành động của một chính sách. Ngược lại, $q_\pi(s,a)$ được định nghĩa bằng giá trị của quy trình: khởi đầu tại $s$, ấn định hành động đầu là $a$, rồi theo $\pi$ từ bước sau; quy ước này có nghĩa kể cả khi $\pi(a \mid s) = 0$. Chỉ với chính sách Markov dừng, khi bảng $V$ đúng bằng $v_\pi$, phần tiếp diễn theo $\pi$ quay lại chính bảng đang đánh giá, nên hai khái niệm trùng nhau qua bảng trạng thái:
 
 $$Q_{v_\pi}(s,a) = q_\pi(s,a).$$
 
-Với bảng $V = (4,7) = v_{\pi_0}$, bảng điểm vừa tính chính là $q_{\pi_0}$, chưa phải $q_*$.
+Với bảng $V = (4,7) = v_{\pi_0}$, bảng giá trị nhìn trước vừa tính chính là $q_{\pi_0}$, chưa phải $q_*$.
 
 ### Giá trị tối ưu và cận trên nhỏ nhất
 
