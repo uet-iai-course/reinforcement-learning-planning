@@ -1319,3 +1319,9 @@ Nguồn: báo cáo rà lại toán–câu nối của lượt sửa bổ sung A�
 - Phát hiện (nhẹ, độ chính xác): “thu hẹp độ lệch … theo hệ số $\gamma$” gợi ý hệ số co đúng bằng $\gamma$ và không nói độ lệch lấy cực đại.
 - Quyết định: “$T_\pi$ nhân độ lệch lớn nhất giữa hai bảng bất kỳ $U,V$ với hệ số không quá $\gamma$:”, khớp $\|T_\pi U-T_\pi V\|_\infty\le\gamma\|U-V\|_\infty$.
 - Kiểm tra: 616/720; câu vẫn một dòng; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-D04 — Sửa nhẹ lượt cuối
+
+- Phát hiện (nhẹ, độ chính xác): lập luận “với mọi $\pi'$” dùng $T_{\pi'}$, toán tử chỉ định nghĩa cho chính sách Markov dừng; bài chưa nêu lớp chính sách mà cực đại trong $v_*$ được lấy.
+- Quyết định: hộp viết “Với mọi $\pi'$ dừng:”. Notes thêm: “Cực đại trong $v_*$ lấy trên các chính sách dừng $\pi(a\mid s)$ đã định nghĩa ở phần mở đầu; xét cả chính sách phụ thuộc lịch sử thì cần lập luận khác, kết luận không đổi.”
+- Kiểm tra: 658/720, chiều cao không đổi; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
