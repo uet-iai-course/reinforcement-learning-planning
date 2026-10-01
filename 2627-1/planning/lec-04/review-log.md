@@ -789,3 +789,18 @@ Các tệp phân tích, outline, storyboard, nhật ký, HTML và lecture note �
 Điều phối viên sửa 13 lần thiếu dấu gạch chéo trong công thức của bảng quyết định ở nhật ký sau hợp nhất; đây chỉ là sửa ký hiệu trong hồ sơ, không đổi HTML, note, SVG, lập luận hoặc quyết định.
 
 Hash sản phẩm cuối: HTML 7955b78ca08d9efab4965b8ffa1b0ade3a392d491092dc67dac034f0cda82aba; note ff2077f17aa9ea3d081640f56de6422f08273abaef39a012f24d228806762838; SVG chu trình 2dba0580245918311cf12df6d32aa5edd2e7fbccee2d0341a6344f7ce92ec41c.
+
+## Rà soát từng trang theo yêu cầu ngày 2026-10-01
+
+Yêu cầu của người dùng: duyệt lần lượt từng trang, xác định trang muốn nói gì, vấn đề còn tồn tại và đề xuất sửa; chỉnh sửa để tiêu đề ngắn gọn, học thuật, mạch lập luận chặt chẽ và khái niệm không xuất hiện đột ngột; commit và push sau mỗi trang.
+
+Tác tử: điều phối viên là phiên Claude Code chính. Bốn tác tử rà soát chỉ đọc (dải A01–B08, dải C01–D06, dải E01–G05, kết nối và mạch viết toàn bài) và các tác tử chỉnh sửa tuần tự đều tạo bằng công cụ `Agent` loại `fork`, kế thừa mô hình Claude Opus 5.5 của phiên điều phối. Mô hình ghi theo lời gọi công cụ, không theo lời tự khai của tác tử. Các tác tử rà dùng `no-ai-slop` chế độ Detect; tác tử chỉnh sửa dùng chế độ Edit và tự kiểm theo `eval.md`; tác tử mạch viết dùng `quill` làm danh mục kiểm tra, không tạo `quill.json`.
+
+Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy chủ `python3 -m reloadserver 8766` tại thư mục gốc. Cổng 8765 đang do một phiên khác chiếm để phục vụ kho `ds-foundation-algorithms`; tiến trình đó không bị dừng. Mỗi trang được kiểm tràn dọc ở khung 1280 × 720, tràn ngang, lỗi KaTeX, ảnh hỏng, cỡ chữ nhỏ nhất, lỗi JavaScript và yêu cầu thất bại.
+
+### Quyết định chung
+
+- Ký hiệu phần dư đổi từ $b_\pi(V)$, $b_*(V)$ thành $\Delta_\pi(V)$, $\Delta_*(V)$; biến cục bộ trong giả mã đổi thành $\Delta$. Lý do: chữ $b$ trùng tên hành động $b$ của MDP hai trạng thái, ví dụ câu hỏi G04 đặt “chính sách tham lam” $(b,b)$ cạnh $b_*(V)$. Đồng bộ trong HTML, outline, storyboard và ghi chú bài giảng; các mục nhật ký cũ giữ nguyên ký hiệu lịch sử.
+- Thuật ngữ “giá trị nhìn trước” thay “điểm nhìn trước” và “điểm” cho đại lượng $\sum_{s',r}p(s',r\mid s,a)[r+\gamma V(s')]$; “lượt” chỉ một lần cập nhật mọi trạng thái chưa kết thúc, “vòng” chỉ vòng ngoài của lặp chính sách.
+- Đề xuất đổi thứ tự E05→E07→E06 bị bác: giữ thứ tự nguồn đã duyệt; câu nêu nhu cầu đại lượng dừng tính được chuyển lên đầu E07.
+- Kiểm trực quan sau đổi ký hiệu: B05, B06, B08, E04, E07, F03, G04 đạt ở hai kích thước, không lỗi.

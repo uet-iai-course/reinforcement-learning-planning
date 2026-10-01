@@ -202,14 +202,14 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Chức năng và nhu cầu học tập:** Ví dụ tính tay. Tại $s_1$, hành động $b$ có giá trị nhìn trước lớn hơn khi dùng cùng giá trị tiếp nối.
 - **Đầu vào và quan hệ với trang trước:** So sánh một thay đổi tại bước đầu được tính trên hai nhánh của trạng thái thứ hai.
 - **Sản phẩm và mục tiêu:** MT3; Tại $s_1$, hành động $b$ có giá trị nhìn trước lớn hơn khi dùng cùng giá trị tiếp nối.
-- **Đầu ra cho trang sau:** Hai điểm nhìn trước xác định đối tượng được gọi là giá trị hành động theo chính sách.
+- **Đầu ra cho trang sau:** Hai giá trị nhìn trước xác định đối tượng được gọi là giá trị hành động theo chính sách.
 - **Quyết định:** `tách`. Tách bước tính trước định nghĩa để tránh đồng nhất nhìn trước với giá trị chính sách mới.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
 ### L04-C03 — Giá trị hành động theo chính sách
 
 - **Chức năng và nhu cầu học tập:** Định nghĩa và ánh xạ. Giá trị hành động cố định hành động đầu và cố định chính sách từ bước kế tiếp.
-- **Đầu vào và quan hệ với trang trước:** Hai điểm nhìn trước xác định đối tượng được gọi là giá trị hành động theo chính sách.
+- **Đầu vào và quan hệ với trang trước:** Hai giá trị nhìn trước xác định đối tượng được gọi là giá trị hành động theo chính sách.
 - **Sản phẩm và mục tiêu:** MT3; Giá trị hành động cố định hành động đầu và cố định chính sách từ bước kế tiếp.
 - **Đầu ra cho trang sau:** Giá trị hành động cung cấp tiêu chí lựa chọn chính sách mới tại mọi trạng thái.
 - **Quyết định:** `sửa`. Chuẩn hóa giá trị hành động và dời phương trình phụ vào ghi chú.
@@ -329,7 +329,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Đầu vào và quan hệ với trang trước:** Phép cực đại từ bảng tùy ý cần ký hiệu riêng để phân biệt với giá trị hành động chính xác.
 - **Sản phẩm và mục tiêu:** MT5; Toán tử tối ưu trả giá trị lớn nhất của các nhánh nhìn trước từ cùng một bảng.
 - **Đầu ra cho trang sau:** Toán tử tối ưu được đặt trong vòng lặp và ghép với chính sách trích từ bảng trả về.
-- **Quyết định:** `sửa`. Chuẩn hóa toán tử và phân biệt điểm nhìn trước với giá trị hành động của chính sách.
+- **Quyết định:** `sửa`. Chuẩn hóa toán tử và phân biệt giá trị nhìn trước với giá trị hành động của chính sách.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
 ### L04-E04 — Thuật toán lặp giá trị đồng bộ

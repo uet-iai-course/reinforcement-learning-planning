@@ -30,7 +30,7 @@ Nếu có trạng thái kết thúc $s_{\mathrm{term}}$, đặt $\mathcal S^+=\m
 | $v_*, q_*$ | giá trị tối ưu, định nghĩa bằng $\sup$ trên lớp chính sách $\Pi$ |
 | $T_\pi, T_*$ | hai toán tử Bellman nhận và trả bảng $V$, định nghĩa ở phần 2 |
 | $V$, $V_k$, $W$ | bảng giá trị bất kỳ, bảng sau $k$ lượt cập nhật đồng bộ và bảng mới tạm; khác với giá trị chính xác $v_\pi$ hoặc $v_*$ |
-| $b_\pi(V)$, $b_*(V)$ | phần dư Bellman của bảng $V$ đối với $T_\pi$ và $T_*$ |
+| $\Delta_\pi(V)$, $\Delta_*(V)$ | phần dư Bellman của bảng $V$ đối với $T_\pi$ và $T_*$ |
 | $\eta$, $\varepsilon$ | ngưỡng phần dư và sai số giá trị yêu cầu |
 | $K$ | số nguyên không âm, giới hạn số lần nhận bảng mới trong đánh giá chính sách và lặp giá trị |
 | $I_{\max}$ | số nguyên dương, giới hạn số vòng đánh giá–cải thiện trong lặp chính sách |
@@ -237,11 +237,11 @@ Cùng xuất phát từ $V_0=(0,0)$, hai lịch cho kết quả khác nhau ngay 
 Đầu vào gồm mô hình $p(s',r\mid s,a)$, chính sách $\pi$ cố định, $0\le\gamma<1$, ngưỡng phần dư $\eta>0$ và ngân sách $K$ là số nguyên không âm. $K$ đếm số lần nhận bảng mới, không đếm riêng các phép tính dùng để kiểm phần dư.
 
 1. Khởi tạo $V=0$, bộ đếm $k=0$; giữ giá trị trạng thái kết thúc bằng $0$.
-2. Tính đồng bộ $W=T_\pi V$ từ bảng $V$ cố định; đo $b=\lVert W-V\rVert_\infty=b_\pi(V)$.
-3. Nếu $b\le\eta$, trả $(V,b)$ với nhãn *đạt ngưỡng*. Nếu $k=K$ mà $b>\eta$, trả $(V,b)$ với nhãn *hết ngân sách, chưa đạt ngưỡng*.
-4. Nếu $b>\eta$ và $k<K$, nhận $V\leftarrow W$, tăng $k\leftarrow k+1$ rồi lặp từ bước 2.
+2. Tính đồng bộ $W=T_\pi V$ từ bảng $V$ cố định; đo $\Delta=\lVert W-V\rVert_\infty=\Delta_\pi(V)$.
+3. Nếu $\Delta\le\eta$, trả $(V,\Delta)$ với nhãn *đạt ngưỡng*. Nếu $k=K$ mà $\Delta>\eta$, trả $(V,\Delta)$ với nhãn *hết ngân sách, chưa đạt ngưỡng*.
+4. Nếu $\Delta>\eta$ và $k<K$, nhận $V\leftarrow W$, tăng $k\leftarrow k+1$ rồi lặp từ bước 2.
 
-Sau lần nhận bảng thứ $K$, bước 2 áp dụng $T_\pi$ thêm một lần để đo phần dư của chính bảng cuối. Với $K=0$, thuật toán kiểm và trả bảng khởi tạo. Mọi nhánh dừng đều trả $V$ đã đo phần dư; $W$ là bảng tạm dùng cho phép kiểm. Sai số của bảng trả được chặn bởi $\lVert V-v_\pi\rVert_\infty\le b_\pi(V)/(1-\gamma)$, chứng minh ở phần 6. Nhãn hết ngân sách không chứng nhận sai số mong muốn.
+Sau lần nhận bảng thứ $K$, bước 2 áp dụng $T_\pi$ thêm một lần để đo phần dư của chính bảng cuối. Với $K=0$, thuật toán kiểm và trả bảng khởi tạo. Mọi nhánh dừng đều trả $V$ đã đo phần dư; $W$ là bảng tạm dùng cho phép kiểm. Sai số của bảng trả được chặn bởi $\lVert V-v_\pi\rVert_\infty\le \Delta_\pi(V)/(1-\gamma)$, chứng minh ở phần 6. Nhãn hết ngân sách không chứng nhận sai số mong muốn.
 
 Cập nhật dùng giá trị tiếp nối ước lượng để xây mục tiêu mới; cơ chế này được gọi là bootstrapping. Hội tụ của dãy đánh giá dùng các giả thiết đã nêu, trong đó $\gamma<1$; ngân sách hữu hạn chỉ giới hạn số bảng được nhận. Với $n$ trạng thái, nhiều nhất $m$ hành động mỗi trạng thái và mô hình chuyển đặc, mỗi phép áp dụng $T_\pi$ cho chính sách ngẫu nhiên tốn $O(n^2m)$ phép tính khi đã gộp phần thưởng kỳ vọng hoặc số kết quả thưởng trên mỗi nhánh bị chặn. Thuật toán nhận tối đa $K$ bảng mới và dùng tối đa $K+1$ phép áp dụng toán tử, kể cả kiểm phần dư cuối.
 
@@ -419,10 +419,10 @@ Thuật toán liên quan: lặp giá trị; Sutton–Barto, §4.4, tr. 82–84.
 
 1. Tính $Q_V(s,a)$ cho mọi cặp trạng thái chưa kết thúc–hành động từ cùng bảng $V$ cố định.
 2. Đặt $W(s)=\max_a Q_V(s,a)$ và $\pi_V(s)\in\arg\max_a Q_V(s,a)$, phá hòa theo thứ tự cố định.
-3. Đo $b=\lVert W-V\rVert_\infty=b_*(V)$. Nếu $b\le\eta$, trả $(V,\pi_V,b)$ với nhãn *đạt ngưỡng*. Nếu $k=K$ mà $b>\eta$, trả cùng bộ ba với nhãn *hết ngân sách, chưa đạt ngưỡng*.
-4. Nếu $b>\eta$ và $k<K$, nhận $V\leftarrow W$, tăng $k\leftarrow k+1$ rồi lặp từ bước 1.
+3. Đo $\Delta=\lVert W-V\rVert_\infty=\Delta_*(V)$. Nếu $\Delta\le\eta$, trả $(V,\pi_V,\Delta)$ với nhãn *đạt ngưỡng*. Nếu $k=K$ mà $\Delta>\eta$, trả cùng bộ ba với nhãn *hết ngân sách, chưa đạt ngưỡng*.
+4. Nếu $\Delta>\eta$ và $k<K$, nhận $V\leftarrow W$, tăng $k\leftarrow k+1$ rồi lặp từ bước 1.
 
-Sau lần nhận bảng thứ $K$, thuật toán tính lại $Q_V$, $\pi_V$ và $b_*(V)$ từ chính bảng cuối trước khi trả. Với $K=0$, bảng khởi tạo được kiểm và dùng để trích chính sách. Bảng $W$ chỉ phục vụ phép kiểm hiện tại hoặc được nhận ở bước 4; phần dư vừa đo thuộc $V$. Như vậy bảng công bố, chính sách trích và phần dư luôn cùng dùng một $V$. Mỗi bảng $Q_V$ phục vụ cả cập nhật dự kiến, trích chính sách và kiểm phần dư. Ngưỡng $\eta$ áp dụng cho phần dư; phần 6 thiết lập chặn sai số giá trị từ phần dư này. Thuật toán dùng tối đa $K+1$ phép áp dụng toán tử, kể cả phép kiểm cuối, và nhận tối đa $K$ bảng mới.
+Sau lần nhận bảng thứ $K$, thuật toán tính lại $Q_V$, $\pi_V$ và $\Delta_*(V)$ từ chính bảng cuối trước khi trả. Với $K=0$, bảng khởi tạo được kiểm và dùng để trích chính sách. Bảng $W$ chỉ phục vụ phép kiểm hiện tại hoặc được nhận ở bước 4; phần dư vừa đo thuộc $V$. Như vậy bảng công bố, chính sách trích và phần dư luôn cùng dùng một $V$. Mỗi bảng $Q_V$ phục vụ cả cập nhật dự kiến, trích chính sách và kiểm phần dư. Ngưỡng $\eta$ áp dụng cho phần dư; phần 6 thiết lập chặn sai số giá trị từ phần dư này. Thuật toán dùng tối đa $K+1$ phép áp dụng toán tử, kể cả phép kiểm cuối, và nhận tối đa $K$ bảng mới.
 
 ### Trích chính sách từ cùng bảng giá trị
 
@@ -430,7 +430,7 @@ $$
 \pi_V(s)\in\arg\max_a Q_V(s,a),\qquad T_{\pi_V}V=T_*V
 $$
 
-Cùng một bảng $V_1=(-1,-1,-1,24,0)$ cấp dữ liệu cho hai nhánh. Nhánh tính điểm: tại $c_3$, đi trái nhìn trước sang $c_2$ cho $-1+0{,}5\cdot(-1)=-1{,}5$; đi phải sang $c_4$ cho $-1+0{,}5\cdot 24=11$; chọn phải. Số $11$ chính là $Q_{V_1}(c_3,a_R)$ với $a_R$ là hành động đi phải; đây là phép nhìn trước một bước từ $V_1$, chưa phải giá trị thật của chính sách vừa trích. Nhánh phần dư cũng dùng $V_1$: so $W(s)$ với $V_1(s)$ trên toàn bảng, $b_*(V_1)=\max_s\lvert W(s)-V_1(s)\rvert$.
+Cùng một bảng $V_1=(-1,-1,-1,24,0)$ cấp dữ liệu cho hai nhánh. Nhánh tính giá trị nhìn trước: tại $c_3$, đi trái nhìn trước sang $c_2$ cho $-1+0{,}5\cdot(-1)=-1{,}5$; đi phải sang $c_4$ cho $-1+0{,}5\cdot 24=11$; chọn phải. Số $11$ chính là $Q_{V_1}(c_3,a_R)$ với $a_R$ là hành động đi phải; đây là phép nhìn trước một bước từ $V_1$, chưa phải giá trị thật của chính sách vừa trích. Nhánh phần dư cũng dùng $V_1$: so $W(s)$ với $V_1(s)$ trên toàn bảng, $\Delta_*(V_1)=\max_s\lvert W(s)-V_1(s)\rvert$.
 
 Đồng nhất thức $T_{\pi_V}V=T_*V$ bảo đảm chính sách trích từ bảng $V$ chính là chính sách tham lam của phép cập nhật $T_*$: cực đại hóa theo hành động trong $T_*V$ và chọn $\pi_V$ từ $Q_V$ là cùng một phép tính. Trong quy trình, $V$ là bảng đang kiểm, $W$ là bảng cập nhật dự kiến và $\pi_V$ được trích từ $V$.
 
@@ -455,9 +455,9 @@ Phân tích chi phí sử dụng cách đếm phép toán ở trên; đối chi�
 ::: exercise Câu hỏi:
 Cho lưới năm ô với $\gamma=0{,}5$, bước thường thưởng $-1$, chuyển $c_4\to c_5$ thưởng $24$, đi trái ở $c_1$ đứng yên, $c_5$ kết thúc với giá trị 0. Bảng hiện tại là $V_2=(-1{,}5,\,-1{,}5,\,11,\,24,\,0)$.
 
-(a) Tính $V_3(c_1)$ và $V_3(c_2)$ theo cập nhật đồng bộ, nêu rõ điểm nhìn trước của mỗi hành động.
+(a) Tính $V_3(c_1)$ và $V_3(c_2)$ theo cập nhật đồng bộ, nêu rõ giá trị nhìn trước của mỗi hành động.
 
-(b) Biết $V_4=(1{,}25,\,4{,}5,\,11,\,24,\,0)$, tính $b_*(V_3)$.
+(b) Biết $V_4=(1{,}25,\,4{,}5,\,11,\,24,\,0)$, tính $\Delta_*(V_3)$.
 
 (c) Ô $c_4$ không đổi qua hai lượt. Điều đó đã đủ kết luận toàn thuật toán hội tụ chưa? Vì sao?
 :::
@@ -469,9 +469,9 @@ Trong mỗi phép tính chỉ được dùng bảng $V_2$, kể cả khi $V_3(c_
 ::: solution
 (a) Tại $c_1$, hai hành động: đi trái tự khép đọc $V_2(c_1)=-1{,}5$, cho $-1+0{,}5\cdot(-1{,}5)=-1{,}75$; đi phải sang $c_2$ đọc $V_2(c_2)=-1{,}5$, cho $-1+0{,}5\cdot(-1{,}5)=-1{,}75$. Cực đại là $-1{,}75$, nên $V_3(c_1)=-1{,}75$. Tại $c_2$: đi trái sang $c_1$ đọc $V_2(c_1)=-1{,}5$, cho $-1{,}75$; đi phải sang $c_3$ đọc $V_2(c_3)=11$, cho $-1+0{,}5\cdot 11=4{,}5$. Cực đại là $4{,}5$, vậy $V_3(c_2)=4{,}5$. Nếu dùng $V_3(c_1)=-1{,}75$ cho phép tính tại $c_2$ thì nhánh đi trái thành $-1+0{,}5\cdot(-1{,}75)=-1{,}875$, vẫn nhỏ hơn $4{,}5$ nên kết quả $V_3(c_2)$ không đổi. Phép tính đó vẫn vi phạm quy ước đồng bộ vì sử dụng giá trị mới trong cùng lượt.
 
-(b) Vì $V_4=T_*V_3$, phần dư của $V_3$ là chuẩn vô cùng của hiệu hai bảng. Hiệu $V_4-V_3=(3,\,0,\,0,\,0,\,0)$, chỉ ô $c_1$ khác nhau, nên $b_*(V_3)=\lVert V_4-V_3\rVert_\infty=3$.
+(b) Vì $V_4=T_*V_3$, phần dư của $V_3$ là chuẩn vô cùng của hiệu hai bảng. Hiệu $V_4-V_3=(3,\,0,\,0,\,0,\,0)$, chỉ ô $c_1$ khác nhau, nên $\Delta_*(V_3)=\lVert V_4-V_3\rVert_\infty=3$.
 
-(c) Chưa đủ. $c_4$ giữ 24 qua hai lượt, nhưng $c_1$ và $c_2$ vẫn thay đổi giữa $V_2$ và $V_3$; phần dư $b_*(V_3)=3$ đo trên toàn bảng vẫn lớn. Đạt ngưỡng dừng phải kiểm phần dư trên toàn bộ bảng, không phải khi một ô riêng lẻ ổn định; còn hội tụ là tính chất của cả dãy giá trị, không kết luận được từ một lượt.
+(c) Chưa đủ. $c_4$ giữ 24 qua hai lượt, nhưng $c_1$ và $c_2$ vẫn thay đổi giữa $V_2$ và $V_3$; phần dư $\Delta_*(V_3)=3$ đo trên toàn bảng vẫn lớn. Đạt ngưỡng dừng phải kiểm phần dư trên toàn bộ bảng, không phải khi một ô riêng lẻ ổn định; còn hội tụ là tính chất của cả dãy giá trị, không kết luận được từ một lượt.
 :::
 
 <!-- note-topic-id: lec-04-part-06 -->
@@ -586,21 +586,21 @@ Cần phân biệt chặn lý thuyết với thực nghiệm: bảy lượt là 
 
 Định nghĩa phần dư
 
-$$b_*(V)=\lVert T_*V-V\rVert_\infty,$$
+$$\Delta_*(V)=\lVert T_*V-V\rVert_\infty,$$
 
 đo được trực tiếp từ bảng hiện có, trong khi sai số $e=\lVert V-v_*\rVert_\infty$ thì không. Suy diễn dùng bất đẳng thức tam giác:
 
 $$\lVert V-v_*\rVert_\infty\le\lVert V-T_*V\rVert_\infty+\lVert T_*V-T_*v_*\rVert_\infty.$$
 
-Hạng thứ nhất chính là $b_*(V)$. Hạng thứ hai bị chặn bởi $\gamma\lVert V-v_*\rVert_\infty$ nhờ tính co, vì $v_*$ là điểm bất động. Ghép lại:
+Hạng thứ nhất chính là $\Delta_*(V)$. Hạng thứ hai bị chặn bởi $\gamma\lVert V-v_*\rVert_\infty$ nhờ tính co, vì $v_*$ là điểm bất động. Ghép lại:
 
-$$e\le b_*(V)+\gamma e\;\Rightarrow\;(1-\gamma)e\le b_*(V)\;\Rightarrow\;e\le\frac{b_*(V)}{1-\gamma}.$$
+$$e\le \Delta_*(V)+\gamma e\;\Rightarrow\;(1-\gamma)e\le \Delta_*(V)\;\Rightarrow\;e\le\frac{\Delta_*(V)}{1-\gamma}.$$
 
-Số cụ thể: với $\gamma=0{,}5$ và mục tiêu sai số $\varepsilon=0{,}2$, ngưỡng dừng trên phần dư là $\eta=(1-\gamma)\varepsilon=0{,}1$. Ngưỡng $0{,}1$ áp dụng cho phần dư, còn mức $0{,}2$ áp dụng cho sai số giá trị; hai mức này không tráo cho nhau. Nếu dùng bảng cập nhật $W=T_\pi V$ làm đánh giá chính sách $\pi$, đặt $b_\pi(V)=\lVert T_\pi V-V\rVert_\infty$; vì $v_\pi$ là điểm bất động của $T_\pi$, tam giác và tính co cho $\lVert V-v_\pi\rVert_\infty\le b_\pi(V)/(1-\gamma)$, do đó
+Số cụ thể: với $\gamma=0{,}5$ và mục tiêu sai số $\varepsilon=0{,}2$, ngưỡng dừng trên phần dư là $\eta=(1-\gamma)\varepsilon=0{,}1$. Ngưỡng $0{,}1$ áp dụng cho phần dư, còn mức $0{,}2$ áp dụng cho sai số giá trị; hai mức này không tráo cho nhau. Nếu dùng bảng cập nhật $W=T_\pi V$ làm đánh giá chính sách $\pi$, đặt $\Delta_\pi(V)=\lVert T_\pi V-V\rVert_\infty$; vì $v_\pi$ là điểm bất động của $T_\pi$, tam giác và tính co cho $\lVert V-v_\pi\rVert_\infty\le \Delta_\pi(V)/(1-\gamma)$, do đó
 
-$$\lVert W-v_\pi\rVert_\infty=\lVert T_\pi V-T_\pi v_\pi\rVert_\infty\le\gamma\lVert V-v_\pi\rVert_\infty\le\frac{\gamma\,b_\pi(V)}{1-\gamma}.$$
+$$\lVert W-v_\pi\rVert_\infty=\lVert T_\pi V-T_\pi v_\pi\rVert_\infty\le\gamma\lVert V-v_\pi\rVert_\infty\le\frac{\gamma\,\Delta_\pi(V)}{1-\gamma}.$$
 
-Sai số của $W$ không vượt quá $\gamma$ lần sai số của $V$. Đây là hệ quả cho bảng sau cập nhật, cũng áp dụng cho biến thể chọn trả $W$. Quy trình chính ở phần 3 trả $V$ đã đo phần dư, nên dùng chặn $b_\pi(V)/(1-\gamma)$.
+Sai số của $W$ không vượt quá $\gamma$ lần sai số của $V$. Đây là hệ quả cho bảng sau cập nhật, cũng áp dụng cho biến thể chọn trả $W$. Quy trình chính ở phần 3 trả $V$ đã đo phần dư, nên dùng chặn $\Delta_\pi(V)/(1-\gamma)$.
 
 ### Giới hạn của mô hình dạng bảng: ví dụ CartPole
 
@@ -612,18 +612,18 @@ tức một biểu diễn hữu hạn đủ để lập bảng. Nhưng rời r�
 
 ![Hai trạng thái liên tục khác nhau của CartPole được gộp vào cùng một ô; mô hình chuyển và phần thưởng của ô vẫn cần được xác định.](img/lec-04/cartpole.svg)
 
-Cần phân biệt hai loại sai số: sai số lặp giá trị trên mô hình đã cho (được chặn bởi $b_*(V)/(1-\gamma)$), và sai số do rời rạc hóa hoặc ước lượng mô hình. Tối ưu mô hình hữu hạn không tự chứng minh tối ưu trên môi trường liên tục, nên mọi bảo đảm như ngưỡng dừng phải kiểm tra lại miền áp dụng.
+Cần phân biệt hai loại sai số: sai số lặp giá trị trên mô hình đã cho (được chặn bởi $\Delta_*(V)/(1-\gamma)$), và sai số do rời rạc hóa hoặc ước lượng mô hình. Tối ưu mô hình hữu hạn không tự chứng minh tối ưu trên môi trường liên tục, nên mọi bảo đảm như ngưỡng dừng phải kiểm tra lại miền áp dụng.
 
 ::: exercise Câu hỏi:
-MDP hữu hạn đã biết mô hình có phần dư $b_*(V)=0{,}15$ theo chuẩn vô cùng và $\gamma=0{,}5$. (a) Chặn sai số giá trị $e=\lVert V-v_*\rVert_\infty$ bằng bao nhiêu? (b) Kết quả đó đã bảo đảm ngưỡng $e\le 0{,}2$ chưa? Nêu một điều kiện đủ trên $b_*(V)$ theo chặn phần dư. (c) Chứng minh phần dư còn dùng được khi $\gamma=1$ không? Giải thích từng bước.
+MDP hữu hạn đã biết mô hình có phần dư $\Delta_*(V)=0{,}15$ theo chuẩn vô cùng và $\gamma=0{,}5$. (a) Chặn sai số giá trị $e=\lVert V-v_*\rVert_\infty$ bằng bao nhiêu? (b) Kết quả đó đã bảo đảm ngưỡng $e\le 0{,}2$ chưa? Nêu một điều kiện đủ trên $\Delta_*(V)$ theo chặn phần dư. (c) Chứng minh phần dư còn dùng được khi $\gamma=1$ không? Giải thích từng bước.
 :::
 
 ::: hint
-Dùng chặn $e\le b_*(V)/(1-\gamma)$; một cận trên không cho biết chiều ngược lại; xác định bước sử dụng giả thiết $\gamma<1$ trong chứng minh tính co.
+Dùng chặn $e\le \Delta_*(V)/(1-\gamma)$; một cận trên không cho biết chiều ngược lại; xác định bước sử dụng giả thiết $\gamma<1$ trong chứng minh tính co.
 :::
 
 ::: solution
-(a) Áp dụng trực tiếp: $e\le b_*(V)/(1-\gamma)=0{,}15/0{,}5=0{,}3$. (b) Chưa bảo đảm ngưỡng $0{,}2$: chặn cho biết $e\le 0{,}3$, sai số thực tế có thể nhỏ hơn $0{,}2$ nhưng chưa có bảo đảm. Một điều kiện đủ để bảo đảm $e\le 0{,}2$ bằng chặn này là $b_*(V)\le(1-\gamma)\cdot 0{,}2=0{,}5\cdot 0{,}2=0{,}1$. Để đạt chứng nhận theo chặn đang dùng, tiếp tục lặp cho tới khi phần dư không vượt $0{,}1$. Nếu $b_*(V)=0{,}1$ thì $e\le 0{,}1/0{,}5=0{,}2$, đúng yêu cầu. (c) Không. Khi $\gamma=1$, bất đẳng thức trên không còn bảo đảm hệ số co nhỏ hơn $1$; đồng thời mẫu số $1-\gamma$ bằng $0$ khiến công thức $e\le b_*(V)/(1-\gamma)$ không xác định. Chứng minh dựa trên giả thiết $\gamma<1$; bỏ giả thiết đó thì cần các giả thiết và lập luận khác, chẳng hạn các điều kiện bổ sung về chuyển tiếp và phần thưởng cùng một chứng minh hội tụ riêng; các trường hợp đó nằm ngoài phạm vi bài này.
+(a) Áp dụng trực tiếp: $e\le \Delta_*(V)/(1-\gamma)=0{,}15/0{,}5=0{,}3$. (b) Chưa bảo đảm ngưỡng $0{,}2$: chặn cho biết $e\le 0{,}3$, sai số thực tế có thể nhỏ hơn $0{,}2$ nhưng chưa có bảo đảm. Một điều kiện đủ để bảo đảm $e\le 0{,}2$ bằng chặn này là $\Delta_*(V)\le(1-\gamma)\cdot 0{,}2=0{,}5\cdot 0{,}2=0{,}1$. Để đạt chứng nhận theo chặn đang dùng, tiếp tục lặp cho tới khi phần dư không vượt $0{,}1$. Nếu $\Delta_*(V)=0{,}1$ thì $e\le 0{,}1/0{,}5=0{,}2$, đúng yêu cầu. (c) Không. Khi $\gamma=1$, bất đẳng thức trên không còn bảo đảm hệ số co nhỏ hơn $1$; đồng thời mẫu số $1-\gamma$ bằng $0$ khiến công thức $e\le \Delta_*(V)/(1-\gamma)$ không xác định. Chứng minh dựa trên giả thiết $\gamma<1$; bỏ giả thiết đó thì cần các giả thiết và lập luận khác, chẳng hạn các điều kiện bổ sung về chuyển tiếp và phần thưởng cùng một chứng minh hội tụ riêng; các trường hợp đó nằm ngoài phạm vi bài này.
 :::
 
 <!-- note-topic-id: lec-04-part-07 -->
@@ -662,15 +662,15 @@ $$Q_{v_*}(s_1,b)=10+0{,}5\cdot 20=20,\qquad Q_{v_*}(s_1,a)=5+0{,}5\cdot 9=9{,}5.
 Với $\gamma=0{,}5$, dãy thưởng $-1,10,10,\ldots$ cho giá trị $-1+0{,}5\cdot 20=9$ tại $s_0$. Giá trị ở $s_0$ tăng từ $4$ lên $9$ nhờ đổi quyết định dài hạn, trên cùng mô hình và hệ số chiết khấu. Kết luận này liên quan trực tiếp bảng phương pháp: bài toán có mô hình nên lặp giá trị hoặc lặp chính sách đều chạy được, và bảng $Q_{v_*}$ đúng là đầu ra cần kiểm khi trích chính sách từ bảng giá trị.
 
 ::: exercise Câu hỏi:
-MDP hữu hạn, mô hình chính xác, $\gamma=0{,}5$, lặp giá trị dừng với phần dư $b_*(V)=0{,}1$ theo chuẩn vô cùng và trích chính sách $\pi_V$. (a) Kết luận nào về $V$ được bảo đảm, kèm công thức? (b) Nhận định "$\pi_V$ chắc chắn tối ưu tuyệt đối" có đủ căn cứ chưa, vì sao? (c) Thuật toán nào cho chứng nhận chính sách ổn định khi đánh giá chính xác và giữ hòa?
+MDP hữu hạn, mô hình chính xác, $\gamma=0{,}5$, lặp giá trị dừng với phần dư $\Delta_*(V)=0{,}1$ theo chuẩn vô cùng và trích chính sách $\pi_V$. (a) Kết luận nào về $V$ được bảo đảm, kèm công thức? (b) Nhận định "$\pi_V$ chắc chắn tối ưu tuyệt đối" có đủ căn cứ chưa, vì sao? (c) Thuật toán nào cho chứng nhận chính sách ổn định khi đánh giá chính xác và giữ hòa?
 :::
 
 ::: hint
-Dùng $e\le b_*(V)/(1-\gamma)$ với $b_*(V)=0{,}1$; phân biệt bảo đảm về giá trị gần đúng với chứng nhận tối ưu chính sách; áp dụng quy tắc giữ hòa của lặp chính sách.
+Dùng $e\le \Delta_*(V)/(1-\gamma)$ với $\Delta_*(V)=0{,}1$; phân biệt bảo đảm về giá trị gần đúng với chứng nhận tối ưu chính sách; áp dụng quy tắc giữ hòa của lặp chính sách.
 :::
 
 ::: solution
-(a) Vì sai số giá trị bị chặn bởi phần dư với hệ số $1/(1-\gamma)$, $\lVert V-v_*\rVert_\infty\le 0{,}1/0{,}5=0{,}2$. Bất đẳng thức tam giác cho $e\le b_*(V)+\gamma e$, chuyển vế được $e\le b_*(V)/(1-\gamma)$; thay số cho $0{,}2$. (b) Chưa đủ căn cứ. Phần dư $0{,}1$ chỉ cho chặn sai số giá trị $0{,}2$; một bảng giá trị gần đúng không đồng nhất với chính sách tối ưu, nên $\pi_V$ có thể đã tối ưu nhưng chưa có bằng chứng. Một cách chứng nhận tối ưu là đánh giá chính sách chính xác rồi kiểm tra điều kiện $T_*v_\pi=v_\pi$; lặp chính sách là một phương pháp cung cấp cả hai yếu tố đó khi hội tụ ổn định, nhưng không phải phương pháp duy nhất. Chứng nhận Bellman trong ví dụ hai trạng thái ở trên vẫn có giá trị theo nghĩa này. (c) Lặp chính sách đánh giá chính xác từng chính sách, cải thiện tham lam, giữ hành động cũ khi hòa, và dừng khi chính sách không đổi giữa hai lần cải thiện liên tiếp; lúc đó chính sách ổn định và là tối ưu trên mô hình đã cho.
+(a) Vì sai số giá trị bị chặn bởi phần dư với hệ số $1/(1-\gamma)$, $\lVert V-v_*\rVert_\infty\le 0{,}1/0{,}5=0{,}2$. Bất đẳng thức tam giác cho $e\le \Delta_*(V)+\gamma e$, chuyển vế được $e\le \Delta_*(V)/(1-\gamma)$; thay số cho $0{,}2$. (b) Chưa đủ căn cứ. Phần dư $0{,}1$ chỉ cho chặn sai số giá trị $0{,}2$; một bảng giá trị gần đúng không đồng nhất với chính sách tối ưu, nên $\pi_V$ có thể đã tối ưu nhưng chưa có bằng chứng. Một cách chứng nhận tối ưu là đánh giá chính sách chính xác rồi kiểm tra điều kiện $T_*v_\pi=v_\pi$; lặp chính sách là một phương pháp cung cấp cả hai yếu tố đó khi hội tụ ổn định, nhưng không phải phương pháp duy nhất. Chứng nhận Bellman trong ví dụ hai trạng thái ở trên vẫn có giá trị theo nghĩa này. (c) Lặp chính sách đánh giá chính xác từng chính sách, cải thiện tham lam, giữ hành động cũ khi hòa, và dừng khi chính sách không đổi giữa hai lần cải thiện liên tiếp; lúc đó chính sách ổn định và là tối ưu trên mô hình đã cho.
 :::
 
 ### Bài tập tự luyện

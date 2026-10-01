@@ -47,8 +47,8 @@ Tổng: **45 trang; 120 phút**. Kiểm tra riêng của từng mạch: A05, B08
 | $v_*,q_*$ | Giá trị tối ưu | Không đổi qua lại với $v^*$ hoặc $v^\pi$ trong bài mới. |
 | $V$, $V_k$, $W$ | Bảng ước lượng hiện có, sau $k$ lượt, và bảng mới tạm | Chữ hoa; $k$ chỉ lượt tính toán, $i$ chỉ lần cải thiện chính sách. Cặp trả từ PI phải thuộc cùng một chính sách. |
 | $T_\pi,T_*$ | Toán tử Bellman đánh giá và tối ưu trên bảng giá trị | Định nghĩa sau bước tính tương ứng; $V_{k+1}=TV_k$ dùng cho đồng bộ. |
-| $Q_V(s,a)$ | Điểm nhìn trước từ bảng tùy ý $V$ | Chỉ giới thiệu khi cần ở lặp giá trị; $Q_{v_\pi}=q_\pi$, không đồng nhất $Q_V$ với $q_\pi$ nói chung. |
-| $b_\pi(V),b_*(V)$ | Phần dư của bảng $V$: $\|T_\pi V-V\|_\infty$, $\|T_*V-V\|_\infty$ | Tính khi giữ nguyên bảng trả; mức đổi lớn nhất của lượt tại chỗ không tự bằng phần dư. |
+| $Q_V(s,a)$ | Giá trị nhìn trước từ bảng tùy ý $V$ | Chỉ giới thiệu khi cần ở lặp giá trị; $Q_{v_\pi}=q_\pi$, không đồng nhất $Q_V$ với $q_\pi$ nói chung. |
+| $\Delta_\pi(V),\Delta_*(V)$ | Phần dư của bảng $V$: $\|T_\pi V-V\|_\infty$, $\|T_*V-V\|_\infty$ | Tính khi giữ nguyên bảng trả; mức đổi lớn nhất của lượt tại chỗ không tự bằng phần dư. |
 | $\eta,\varepsilon,K,I_{\max}$ | Ngưỡng phần dư, sai số giá trị yêu cầu, ngân sách cập nhật, ngân sách PI | $K\ge0$ đếm số lần nhận bảng mới; $I_{\max}\ge1$ đếm vòng lặp chính sách. Dùng $\eta$ để tránh trùng $\theta$ là góc CartPole. Hết ngân sách không là bằng chứng hội tụ. |
 | $P_\pi,r_\pi$ | Ma trận chuyển $n\times n$, vector thưởng kỳ vọng $n$ dưới chính sách | $P_\pi(s,s')=\sum_a\pi(a\mid s)\sum_rp(s',r\mid s,a)$, $r_\pi(s)=\sum_a\pi(a\mid s)\bar r(s,a)$. |
 
@@ -192,7 +192,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Mô h�
 - **Luận điểm trung tâm:** Hai bảng tách giá trị cũ và mới, còn phần dư kiểm tra độ chính xác của bảng được trả về.
 - **Ý chính:** Đầu vào $p,\pi,\gamma$, ngưỡng phần dư $\eta>0$, ngân sách $K$; khởi tạo $V=0$, giá trị kết thúc bằng 0. Tính $W=T_\pi V$ từ bản chụp cố định. Nếu $\|W-V\|_\infty\le\eta$, trả $V$ cùng phần dư. Nếu chưa đạt và còn ngân sách, đặt $V\leftarrow W$. Khi hết ngân sách, tính lại phần dư trên bảng cuối và trả trạng thái chưa chứng nhận nếu còn vượt ngưỡng.
 - **Ví dụ/hình dự kiến:** Giả mã HTML 7–9 dòng; đầu vào và đầu ra đặt tách khỏi vòng lặp.
-- **Hình thức hóa:** HT3: $b_\pi(V)=\|T_\pi V-V\|_\infty$; thao tác kiểm tra không ghi đè $V$. Chuẩn vô cùng là $\|U-V\|_\infty=\max_{s\in\mathcal S}|U(s)-V(s)|$.
+- **Hình thức hóa:** HT3: $\Delta_\pi(V)=\|T_\pi V-V\|_\infty$; thao tác kiểm tra không ghi đè $V$. Chuẩn vô cùng là $\|U-V\|_\infty=\max_{s\in\mathcal S}|U(s)-V(s)|$.
 - **Kết nối vào:** Quy tắc cập nhật cần quy định bảng đọc, bảng ghi và thời điểm dừng.
 - **Kết nối ra:** Phần dư đo được cần được liên hệ với sai số so với nghiệm chính xác.
 - **Nguồn:** NG1, tr. 14–15; NG2, §4.1, tr. in 74–75 (PDF 96–97); tiêu chuẩn phần dư là bổ sung sư phạm.
@@ -203,9 +203,9 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Mô h�
 
 - **Vai trò và mục tiêu:** Bảo đảm có điều kiện; MT2
 - **Luận điểm trung tâm:** Chiết khấu nhỏ hơn 1 làm sai số đánh giá co lại và biến phần dư thành chặn sai số.
-- **Ý chính:** Với MDP hữu hạn và thưởng bị chặn, $T_\pi$ co theo chuẩn vô cùng. Vì vậy lặp đồng bộ từ bảng hữu hạn bất kỳ hội tụ đến $v_\pi$. Nếu $b_\pi(V)\le\eta$, sai số không quá $\eta/(1-\gamma)$.
+- **Ý chính:** Với MDP hữu hạn và thưởng bị chặn, $T_\pi$ co theo chuẩn vô cùng. Vì vậy lặp đồng bộ từ bảng hữu hạn bất kỳ hội tụ đến $v_\pi$. Nếu $\Delta_\pi(V)\le\eta$, sai số không quá $\eta/(1-\gamma)$.
 - **Ví dụ/hình dự kiến:** Công thức co và chặn phần dư; không dùng đồ thị dữ liệu thực nghiệm.
-- **Hình thức hóa:** HT4: $\|T_\pi U-T_\pi V\|_\infty\le\gamma\|U-V\|_\infty$; $\|V-v_\pi\|_\infty\le b_\pi(V)/(1-\gamma)$.
+- **Hình thức hóa:** HT4: $\|T_\pi U-T_\pi V\|_\infty\le\gamma\|U-V\|_\infty$; $\|V-v_\pi\|_\infty\le \Delta_\pi(V)/(1-\gamma)$.
 - **Kết nối vào:** Phần dư đo được cần được liên hệ với sai số so với nghiệm chính xác.
 - **Kết nối ra:** Bảo đảm hội tụ được đối chiếu với nghiệm giải trực tiếp của ví dụ nhỏ.
 - **Nguồn:** NG1, tr. 14, 31–32 (mở rộng lập luận sang $T_\pi$); NG2, §4.1, tr. in 74–75 (PDF 96–97).
@@ -237,9 +237,9 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Mô h�
 - **Nguồn:** NG1, tr. 14, 17–18; câu kiểm tra suy từ dữ kiện nguồn.
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Chuẩn vô cùng lấy độ lệch lớn nhất giữa các trạng thái. Mức thay đổi của lượt hiện tại không bằng sai số thật so với nghiệm chưa biết.
-- **Yêu cầu trên mặt trang:** Câu hỏi: Tính $V_3$. Tính $b_{\pi_0}(V_2)$ và chặn sai số của $V_2$. Giải thích vì sao chưa được gọi $V_3$ là $v_{\pi_0}$.
+- **Yêu cầu trên mặt trang:** Câu hỏi: Tính $V_3$. Tính $\Delta_{\pi_0}(V_2)$ và chặn sai số của $V_2$. Giải thích vì sao chưa được gọi $V_3$ là $v_{\pi_0}$.
 - **Kiến thức được đo:** MT2; các công thức và dữ kiện đã trình bày trước trang này.
-- **Đáp án/gợi ý trong ghi chú:** $V_3=(2.71,3.71)$; $b_{\pi_0}(V_2)=0.81$; chặn sai số $0.81/0.1=8.1$. $V_3$ chưa thỏa điểm bất động và khác $(10,11)$.
+- **Đáp án/gợi ý trong ghi chú:** $V_3=(2.71,3.71)$; $\Delta_{\pi_0}(V_2)=0.81$; chặn sai số $0.81/0.1=8.1$. $V_3$ chưa thỏa điểm bất động và khác $(10,11)$.
 - **Tiêu chí đánh giá:** Tính đúng hai ô từ cùng $V_2$, lấy chuẩn đúng và gắn chặn với đúng bảng $V_2$.
 - **Thời gian hoạt động:** 1 phút lập phép tính, 1 phút trả lời, 1 phút đối chiếu; đã tính trong thời lượng của trang.
 
@@ -268,7 +268,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Giá t
 - **Ví dụ/hình dự kiến:** SVG dp04-one-step-choice.svg: hai nhánh từ $s_1$, nhãn thưởng 2/3 và giá trị tiếp nối 10/11; hai kết quả lớn.
 - **Hình thức hóa:** Phép tính cụ thể chuẩn bị HT6.
 - **Kết nối vào:** So sánh một thay đổi tại bước đầu được tính trên hai nhánh của trạng thái thứ hai.
-- **Kết nối ra:** Hai điểm nhìn trước xác định đối tượng được gọi là giá trị hành động theo chính sách.
+- **Kết nối ra:** Hai giá trị nhìn trước xác định đối tượng được gọi là giá trị hành động theo chính sách.
 - **Nguồn:** NG1, tr. 17–19; NG2, (4.6), tr. in 78 (PDF 100).
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Số 12.9 chưa phải $v_{\pi_1}(s_1)$, vì chính sách tiếp nối trong phép tính vẫn là $\pi_0$. Giá trị sau khi đổi vĩnh viễn sang $b$ sẽ phải được đánh giá lại.
@@ -280,7 +280,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Giá t
 - **Ý chính:** $q_\pi(s,a)$ được định nghĩa cho $s\in\mathcal S$, $a\in\mathcal A(s)$. $v_\pi(s)$ là trung bình của $q_\pi(s,a)$ theo chính sách. Trong ví dụ, $q_{\pi_0}(s_1,a)=11$, $q_{\pi_0}(s_1,b)=12.9$.
 - **Ví dụ/hình dự kiến:** Công thức một bước trên cùng; phép tính từ ví dụ nối bằng nhãn từng thành phần.
 - **Hình thức hóa:** HT6: $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]=\sum_{s',r}p(s',r\mid s,a)[r+\gamma v_\pi(s')]$; $v_\pi(s)=\sum_a\pi(a\mid s)q_\pi(s,a)$.
-- **Kết nối vào:** Hai điểm nhìn trước xác định đối tượng được gọi là giá trị hành động theo chính sách.
+- **Kết nối vào:** Hai giá trị nhìn trước xác định đối tượng được gọi là giá trị hành động theo chính sách.
 - **Kết nối ra:** Giá trị hành động cung cấp tiêu chí lựa chọn chính sách mới tại mọi trạng thái.
 - **Nguồn:** NG1, tr. 5–6, 19; NG2, §4.2, (4.6), tr. in 78 (PDF 100).
 - **Thời lượng:** 3 phút
@@ -323,7 +323,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Giá t
 - **Kết nối ra:** Giá trị sau lần đổi chính sách cung cấp dữ kiện cho một lần lựa chọn mới.
 - **Nguồn:** NG1, tr. 18–19; NG2, §4.2–4.3, tr. in 79–80 (PDF 101–102); bước đánh giá giữa hai chính sách được khôi phục.
 - **Thời lượng:** 3 phút
-- **Ghi chú học thuật dự kiến:** Giá trị 30 khác với điểm nhìn trước 12.9 vì từ $s_1$ chính sách mới chọn $b$ ở mọi lần quay lại. Kết quả $(10,30)$ vẫn có thể tạo lựa chọn tốt hơn tại $s_0$.
+- **Ghi chú học thuật dự kiến:** Giá trị 30 khác với giá trị nhìn trước 12.9 vì từ $s_1$ chính sách mới chọn $b$ ở mọi lần quay lại. Kết quả $(10,30)$ vẫn có thể tạo lựa chọn tốt hơn tại $s_0$.
 
 #### L04-C07 — Kiểm tra lựa chọn theo giá trị chính sách
 
@@ -365,7 +365,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Đánh
 - **Vai trò và mục tiêu:** Ví dụ một lần lặp đầy đủ; MT4
 - **Luận điểm trung tâm:** Hai lần đổi chính sách đưa ví dụ từ $(a,a)$ đến $(b,b)$.
 - **Ý chính:** Chuỗi đầy đủ: $(a,a)\to(10,11)\to(a,b)\to(10,30)\to(b,b)\to(27,30)$. Với $(b,b)$, so sánh tại $s_0$: $25.3<27$; tại $s_1$: $26.3<30$; chính sách không đổi.
-- **Ví dụ/hình dự kiến:** Bảng ba hàng: chính sách, giá trị được đánh giá, hành động sau cải thiện; bốn điểm nhìn trước của hàng cuối ở ghi chú.
+- **Ví dụ/hình dự kiến:** Bảng ba hàng: chính sách, giá trị được đánh giá, hành động sau cải thiện; bốn giá trị nhìn trước của hàng cuối ở ghi chú.
 - **Hình thức hóa:** Áp dụng HT1, HT6–HT7; chưa dùng Bellman tối ưu làm điểm xuất phát.
 - **Kết nối vào:** Chu trình tổng quát được lần theo bằng toàn bộ chuỗi chính sách và giá trị của ví dụ.
 - **Kết nối ra:** Chuỗi số được chuyển thành quy trình có đầu vào, đầu ra và điều kiện dừng rõ ràng.
@@ -424,7 +424,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Đánh
 - **Nguồn:** NG1, tr. 17–20, 34; phản ví dụ tính trực tiếp từ dữ kiện nguồn.
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Phép chọn hành động có thể đúng đối với bảng sai. Để áp dụng định lý dừng chính xác, bảng phải là giá trị của chính sách đang giữ.
-- **Yêu cầu trên mặt trang:** Câu hỏi: Xác định bốn điểm nhìn trước theo $V$. Kết luận chương trình đã tìm được chính sách tối ưu có hợp lệ hay không; nêu căn cứ.
+- **Yêu cầu trên mặt trang:** Câu hỏi: Xác định bốn giá trị nhìn trước theo $V$. Kết luận chương trình đã tìm được chính sách tối ưu có hợp lệ hay không; nêu căn cứ.
 - **Kiến thức được đo:** MT4; các công thức và dữ kiện đã trình bày trước trang này.
 - **Đáp án/gợi ý trong ghi chú:** Các điểm là $1,0,2,3$, nên $(a,b)$ tham lam theo $V$. Nhưng $v_{(a,b)}=(10,30)$ và chính sách $(b,b)$ có giá trị $(27,30)$; kết luận tối ưu không hợp lệ. Thiếu đánh giá chính xác hoặc chứng nhận sai số thích hợp.
 - **Tiêu chí đánh giá:** Phân biệt đúng bảng $V$ với $v_\pi$ và dùng một so sánh giá trị đã biết để bác kết luận.
@@ -464,7 +464,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 
 - **Vai trò và mục tiêu:** Hình thức hóa; MT5
 - **Luận điểm trung tâm:** Toán tử tối ưu trả giá trị lớn nhất của các nhánh nhìn trước từ cùng một bảng.
-- **Ý chính:** Định nghĩa $Q_V(s,a)$ là điểm nhìn trước một bước từ bảng $V$. $(T_*V)(s)=\max_a Q_V(s,a)$ và $V_{k+1}=T_*V_k$. Khi $V=v_\pi$, có $Q_V=q_\pi$; với $V=v_*$ có $Q_V=q_*$.
+- **Ý chính:** Định nghĩa $Q_V(s,a)$ là giá trị nhìn trước một bước từ bảng $V$. $(T_*V)(s)=\max_a Q_V(s,a)$ và $V_{k+1}=T_*V_k$. Khi $V=v_\pi$, có $Q_V=q_\pi$; với $V=v_*$ có $Q_V=q_*$.
 - **Ví dụ/hình dự kiến:** Một định nghĩa phụ $Q_V$ và công thức toán tử; sơ đồ max khác nhãn với sơ đồ kỳ vọng.
 - **Hình thức hóa:** HT11: $Q_V(s,a)=\sum_{s',r}p(s',r\mid s,a)[r+\gamma V(s')]$; $v_*=T_*v_*$.
 - **Kết nối vào:** Phép cực đại từ bảng tùy ý cần ký hiệu riêng để phân biệt với giá trị hành động chính xác.
@@ -477,9 +477,9 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 
 - **Vai trò và mục tiêu:** Quy trình đầy đủ; MT5
 - **Luận điểm trung tâm:** Thuật toán trả bảng giá trị, chính sách tham lam theo chính bảng đó và phần dư kiểm chứng.
-- **Ý chính:** Đặt $b_*(V)=\|T_*V-V\|_\infty$ trước khi xét điều kiện dừng. Đầu vào $p,\gamma$, ngưỡng $\eta>0$, ngân sách $K$. Khởi tạo $V=0$, giữ giá trị kết thúc bằng 0. Tính $W=T_*V$ từ bản chụp cố định. Nếu $\|W-V\|_\infty\le\eta$, trả $V$ và chính sách tham lam theo $V$. Nếu chưa đạt thì nhận $W$ làm bảng hiện tại khi còn ngân sách. Khi hết ngân sách, tính phần dư trên bảng cuối; trả kèm trạng thái đạt/chưa đạt ngưỡng.
+- **Ý chính:** Đặt $\Delta_*(V)=\|T_*V-V\|_\infty$ trước khi xét điều kiện dừng. Đầu vào $p,\gamma$, ngưỡng $\eta>0$, ngân sách $K$. Khởi tạo $V=0$, giữ giá trị kết thúc bằng 0. Tính $W=T_*V$ từ bản chụp cố định. Nếu $\|W-V\|_\infty\le\eta$, trả $V$ và chính sách tham lam theo $V$. Nếu chưa đạt thì nhận $W$ làm bảng hiện tại khi còn ngân sách. Khi hết ngân sách, tính phần dư trên bảng cuối; trả kèm trạng thái đạt/chưa đạt ngưỡng.
 - **Ví dụ/hình dự kiến:** Giả mã 8–10 dòng; phép trích chính sách bên ngoài vòng cập nhật; không dùng khối mã chương trình.
-- **Hình thức hóa:** HT12: $b_*(V)=\|T_*V-V\|_\infty$; $\pi_V(s)\in\arg\max_aQ_V(s,a)$.
+- **Hình thức hóa:** HT12: $\Delta_*(V)=\|T_*V-V\|_\infty$; $\pi_V(s)\in\arg\max_aQ_V(s,a)$.
 - **Kết nối vào:** Toán tử tối ưu được đặt trong vòng lặp và ghép với chính sách trích từ bảng trả về.
 - **Kết nối ra:** Vòng lặp có tiêu chuẩn dừng cần bảo đảm rằng toán tử tiến tới đúng điểm bất động.
 - **Nguồn:** NG1, tr. 24, 34; NG2, §4.4, tr. in 83 (PDF 105); điều chỉnh phần dư để đúng bảng trả về.
@@ -516,9 +516,9 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 
 - **Vai trò và mục tiêu:** Ứng dụng bảo đảm; MT5
 - **Luận điểm trung tâm:** Ngưỡng phần dư xác định chặn sai số của chính bảng đang được trả về.
-- **Ý chính:** $\|V-v_*\|_\infty\le b_*(V)/(1-\gamma)$. Với $\gamma=0.9$ và sai số mục tiêu $\varepsilon=0.1$, một điều kiện đủ theo chặn phần dư là $b_*(V)\le0.01$. Ở ví dụ hai trạng thái, $V_1=(1,3)$ có chính sách tham lam $(b,b)$ nhưng phần dư 2.7 và sai số giá trị 27.
+- **Ý chính:** $\|V-v_*\|_\infty\le \Delta_*(V)/(1-\gamma)$. Với $\gamma=0.9$ và sai số mục tiêu $\varepsilon=0.1$, một điều kiện đủ theo chặn phần dư là $\Delta_*(V)\le0.01$. Ở ví dụ hai trạng thái, $V_1=(1,3)$ có chính sách tham lam $(b,b)$ nhưng phần dư 2.7 và sai số giá trị 27.
 - **Ví dụ/hình dự kiến:** Thang ba đại lượng: bảng, phần dư, chặn sai số; ví dụ số ngắn. Thẻ ví dụ ghi rõ “Mô hình hai trạng thái”, còn $V_1=(1,3)$ nằm trong thân thẻ.
-- **Hình thức hóa:** HT14: bất đẳng thức tam giác cho $\|V-v_*\|_\infty\le b_*(V)+\gamma\|V-v_*\|_\infty$; điều kiện $b_*(V)\le(1-\gamma)\varepsilon$.
+- **Hình thức hóa:** HT14: bất đẳng thức tam giác cho $\|V-v_*\|_\infty\le \Delta_*(V)+\gamma\|V-v_*\|_\infty$; điều kiện $\Delta_*(V)\le(1-\gamma)\varepsilon$.
 - **Kết nối vào:** Lưới đã đạt điểm bất động ở $V_4$; mô hình hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách trích đã tối ưu. Phần dư phân biệt hai tình huống.
 - **Kết nối ra:** Quy tắc đồng bộ và quy ước kết thúc được kiểm tra bằng hai phép tính trên bảng đã cho.
 - **Nguồn:** NG1, tr. 31–34; hệ quả được suy và kiểm chứng từ tính co, không gán nguyên công thức cho sách.
@@ -690,9 +690,9 @@ Chức năng: Kết luận và vận dụng tổng hợp. Đầu vào: Kết qu�
 - **Nguồn:** NG1, tr. 17–19, 31–38; câu kiểm tra tổng hợp từ nguồn.
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Phần dư bằng 0 chứng nhận điểm bất động trong mô hình đã cho. Chứng nhận đó phụ thuộc độ đúng của mô hình; không tự chuyển thành bảo đảm cho một mô hình xấp xỉ khác.
-- **Yêu cầu trên mặt trang:** Câu hỏi: Tính bốn $Q_V$, suy ra chính sách tham lam và phần dư $b_*(V)$. Nêu căn cứ kết luận tối ưu. Nếu chỉ có bộ mô phỏng sinh một chuyển tiếp mỗi lần gọi, bước nào của thuật toán chưa được cung cấp trực tiếp?
+- **Yêu cầu trên mặt trang:** Câu hỏi: Tính bốn $Q_V$, suy ra chính sách tham lam và phần dư $\Delta_*(V)$. Nêu căn cứ kết luận tối ưu. Nếu chỉ có bộ mô phỏng sinh một chuyển tiếp mỗi lần gọi, bước nào của thuật toán chưa được cung cấp trực tiếp?
 - **Kiến thức được đo:** MT3–MT6; các công thức và dữ kiện đã trình bày trước trang này.
-- **Đáp án/gợi ý trong ghi chú:** $Q_V=(25.3,27;26.3,30)$; chính sách $(b,b)$; $T_*V=V$ nên $b_*(V)=0$ và $V=v_*$. Căn cứ là MDP hữu hạn, thưởng bị chặn, $\gamma=0.9<1$ và tính duy nhất điểm bất động. Bộ mô phỏng chưa cung cấp trực tiếp kỳ vọng đầy đủ theo $p$; cần xây mô hình hoặc phương pháp lấy mẫu ngoài phạm vi.
+- **Đáp án/gợi ý trong ghi chú:** $Q_V=(25.3,27;26.3,30)$; chính sách $(b,b)$; $T_*V=V$ nên $\Delta_*(V)=0$ và $V=v_*$. Căn cứ là MDP hữu hạn, thưởng bị chặn, $\gamma=0.9<1$ và tính duy nhất điểm bất động. Bộ mô phỏng chưa cung cấp trực tiếp kỳ vọng đầy đủ theo $p$; cần xây mô hình hoặc phương pháp lấy mẫu ngoài phạm vi.
 - **Tiêu chí đánh giá:** Đúng bốn điểm, đúng phần dư của bảng đã cho, nêu giả thiết và phân biệt mẫu với mô hình đầy đủ.
 - **Thời gian hoạt động:** 1 phút lập phép tính, 1 phút trả lời, 1 phút đối chiếu; đã tính trong thời lượng của trang.
 
@@ -758,7 +758,7 @@ Số trang in và số trang PDF của NG1 trùng nhau. “Bỏ” dưới đây
 ## Tự kiểm và giới hạn
 
 - Các mạch lần lượt có 5, 8, 7, 6, 8, 6, 5 trang; thời lượng 10, 22, 20, 18, 22, 16, 12 phút, cộng đúng 120. Bảy trang kiểm tra riêng có dữ kiện, đáp án và tiêu chí; bài tập G03 có nhiệm vụ và giả thiết bổ sung.
-- Định nghĩa phần dư/chuẩn ở đánh giá xuất hiện trước điều kiện dừng sử dụng chúng. Lặp giá trị định nghĩa $b_*$ ở trang giả mã; chặn sai số có sau tính co. Thuật toán dùng ngưỡng phần dư $\eta$, chưa gọi nó là ngưỡng sai số khi chưa có HT14.
+- Định nghĩa phần dư/chuẩn ở đánh giá xuất hiện trước điều kiện dừng sử dụng chúng. Lặp giá trị định nghĩa $\Delta_*$ ở trang giả mã; chặn sai số có sau tính co. Thuật toán dùng ngưỡng phần dư $\eta$, chưa gọi nó là ngưỡng sai số khi chưa có HT14.
 - Mỗi khái niệm trọng tâm có phép tính trước quy tắc tổng quát và ứng dụng sau quy trình. Ma trận/Bellman $q$/GPI là phần hỗ trợ được ghi rõ mức rút gọn; không dùng chúng để đưa tiên quyết chưa chuẩn bị.
 - Biên tập theo no-ai-slop/Edit và tự đối chiếu eval.md: giữ thuật ngữ, giả thiết, điều kiện và chức năng kiểm tra; loại lời dẫn, lời điều phối, tiêu đề tu từ và nhận định thiếu căn cứ. Kết quả chi tiết trong review-log.md.
 - Các ghi chú ở đây là nội dung học thuật dự kiến. Nhãn trường, mã, nguồn kỹ thuật và thời lượng của kế hoạch không đưa nguyên vào mặt trang hoặc ghi chú diễn giả. Bản kế hoạch đang chờ kiểm định độc lập và chấp nhận của điều phối viên trước khi viết HTML.
