@@ -14,7 +14,7 @@ Vấn đề trung tâm: từ mô hình chuyển–thưởng đã biết, tính g
 | B. Đánh giá chính sách | Phát triển kiến thức và luyện tập | Mô hình đã biết và chính sách cố định | Giá trị chính xác hoặc bảng có phần dư; làm đầu vào so sánh hành động | L04-B01–L04-B08 | 22 | L04-B08 |
 | C. Cải thiện chính sách | Phát triển kiến thức và luyện tập | Giá trị của chính sách đã đánh giá | Chính sách mới không kém; nhu cầu đánh giá lại chính sách mới | L04-C01–L04-C07 | 20 | L04-C07 |
 | D. Lặp chính sách | Phát triển thuật toán và luyện tập | Đánh giá, cải thiện, tính co theo chính sách | Chính sách ổn định và điều kiện tối ưu; giới hạn chi phí đánh giá đầy đủ | L04-D01–L04-D06 | 18 | L04-D06 |
-| E. Lặp giá trị | Phát triển thuật toán và luyện tập | Lặp chính sách và nhu cầu cắt ngắn đánh giá | Cập nhật tối ưu, phần dư và chính sách trích; nhu cầu phân bổ công việc | L04-E01–L04-E08 | 22 | L04-E08 |
+| E. Lặp giá trị | Phát triển thuật toán và luyện tập | Lặp chính sách và nhu cầu cắt ngắn đánh giá | Cập nhật tối ưu, phần dư và chính sách tham lam; nhu cầu phân bổ công việc | L04-E01–L04-E08 | 22 | L04-E08 |
 | F. Quy hoạch động trong thực hành | Tổ chức tính toán và giới hạn | Cập nhật kỳ vọng, lặp chính sách, lặp giá trị | Lịch cập nhật, điều kiện bao phủ, GPI và giới hạn mô hình | L04-F01–L04-F06 | 16 | L04-F06 |
 | G. Tổng hợp và bài tập | Kết luận và vận dụng tổng hợp | Kết quả của sáu mạch trước | Kiểm tra nghiệm, so sánh phương pháp theo giả thiết; bài tập và tài liệu đọc | L04-G01–L04-G05 | 12 | L04-G04 |
 
@@ -328,14 +328,14 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Chức năng và nhu cầu học tập:** Hình thức hóa. Toán tử tối ưu trả giá trị lớn nhất của các nhánh nhìn trước từ cùng một bảng.
 - **Đầu vào và quan hệ với trang trước:** Phép cực đại từ bảng tùy ý cần ký hiệu riêng để phân biệt với giá trị hành động chính xác.
 - **Sản phẩm và mục tiêu:** MT5; Toán tử tối ưu trả giá trị lớn nhất của các nhánh nhìn trước từ cùng một bảng.
-- **Đầu ra cho trang sau:** Toán tử tối ưu được đặt trong vòng lặp và ghép với chính sách trích từ bảng trả về.
+- **Đầu ra cho trang sau:** Toán tử tối ưu được đặt trong vòng lặp và ghép với chính sách tham lam theo bảng trả về.
 - **Quyết định:** `sửa`. Chuẩn hóa toán tử và phân biệt giá trị nhìn trước với giá trị hành động của chính sách.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
 ### L04-E04 — Thuật toán lặp giá trị đồng bộ
 
 - **Chức năng và nhu cầu học tập:** Quy trình đầy đủ. Thuật toán trả bảng giá trị, chính sách tham lam theo chính bảng đó và phần dư kiểm chứng.
-- **Đầu vào và quan hệ với trang trước:** Toán tử tối ưu được đặt trong vòng lặp và ghép với chính sách trích từ bảng trả về.
+- **Đầu vào và quan hệ với trang trước:** Toán tử tối ưu được đặt trong vòng lặp và ghép với chính sách tham lam theo bảng trả về.
 - **Sản phẩm và mục tiêu:** MT5; Thuật toán trả bảng giá trị, chính sách tham lam theo chính bảng đó và phần dư kiểm chứng.
 - **Đầu ra cho trang sau:** Vòng lặp có tiêu chuẩn dừng cần bảo đảm rằng toán tử tiến tới đúng điểm bất động.
 - **Quyết định:** `sửa`. Làm rõ đầu ra và chỉ số dừng, tránh lẫn mức thay đổi với phần dư của bảng mới. Rà ngày 2026-10-01: quy trình còn ba bước theo cùng khuôn với thuật toán đánh giá chính sách đồng bộ. Sửa bổ sung sau rà lại: thêm bộ đếm $k$ giống quy trình đánh giá.
@@ -355,7 +355,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Chức năng và nhu cầu học tập:** Ứng dụng trực quan. Cập nhật đồng bộ lan truyền phần thưởng kết thúc lùi từng bước qua lưới.
 - **Đầu vào và quan hệ với trang trước:** Bảo đảm của cập nhật tối ưu được áp dụng để đọc sự lan truyền giá trị trên lưới.
 - **Sản phẩm và mục tiêu:** MT5; Cập nhật đồng bộ lan truyền phần thưởng kết thúc lùi từng bước qua lưới.
-- **Đầu ra cho trang sau:** Lưới đã đạt điểm bất động ở $V_4$; mô hình hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách trích đã tối ưu. Phần dư phân biệt hai tình huống.
+- **Đầu ra cho trang sau:** Lưới đã đạt điểm bất động ở $V_4$; mô hình hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách tham lam đã tối ưu. Phần dư phân biệt hai tình huống.
 - **Quyết định:** `gộp`. Ghép bốn trang nguồn thành một ứng dụng sau khi cơ chế đã rõ; dùng hình và bảng thay diễn giải lặp.
 - **Vị trí trực quan sau kiểm ảnh:** Chú thích phép tính đặt ngay dưới bảng trong cột phải; hình và quy ước giữ ở cột trái. Chuyển nguyên nội dung để tránh chân trang và mũi tên điều hướng, không giảm cỡ chữ.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
@@ -363,7 +363,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 ### L04-E07 — Phần dư và điều kiện dừng
 
 - **Chức năng và nhu cầu học tập:** Ứng dụng bảo đảm. Ngưỡng phần dư xác định chặn sai số của chính bảng đang được trả về.
-- **Đầu vào và quan hệ với trang trước:** Lưới đã đạt điểm bất động ở $V_4$; mô hình hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách trích đã tối ưu. Phần dư phân biệt hai tình huống.
+- **Đầu vào và quan hệ với trang trước:** Lưới đã đạt điểm bất động ở $V_4$; mô hình hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách tham lam đã tối ưu. Phần dư phân biệt hai tình huống.
 - **Sản phẩm và mục tiêu:** MT5; Ngưỡng phần dư xác định chặn sai số của chính bảng đang được trả về.
 - **Đầu ra cho trang sau:** Quy tắc đồng bộ và quy ước kết thúc được kiểm tra bằng hai phép tính trên bảng đã cho.
 - **Quyết định:** `thêm`. Biến tiêu chuẩn dừng nguồn thành chứng nhận có ý nghĩa định lượng. Rà ngày 2026-10-01: câu nhu cầu “điều kiện dừng cần đại lượng tính được từ $V$” đặt ở đầu trang, nối với chặn tương tự cho $\Delta_\pi$.

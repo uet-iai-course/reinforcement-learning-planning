@@ -27,7 +27,7 @@ Phân tích và nguồn chi tiết: [analysis.md](analysis.md). Cấu trúc họ
 | B. Đánh giá chính sách | Phát triển kiến thức và luyện tập | Mô hình đã biết và chính sách cố định | Giá trị chính xác hoặc bảng có phần dư; làm đầu vào so sánh hành động | L04-B01–L04-B08 | 22 | L04-B08 |
 | C. Cải thiện chính sách | Phát triển kiến thức và luyện tập | Giá trị của chính sách đã đánh giá | Chính sách mới không kém; nhu cầu đánh giá lại chính sách mới | L04-C01–L04-C07 | 20 | L04-C07 |
 | D. Lặp chính sách | Phát triển thuật toán và luyện tập | Đánh giá, cải thiện, tính co theo chính sách | Chính sách ổn định và điều kiện tối ưu; giới hạn chi phí đánh giá đầy đủ | L04-D01–L04-D06 | 18 | L04-D06 |
-| E. Lặp giá trị | Phát triển thuật toán và luyện tập | Lặp chính sách và nhu cầu cắt ngắn đánh giá | Cập nhật tối ưu, phần dư và chính sách trích; nhu cầu phân bổ công việc | L04-E01–L04-E08 | 22 | L04-E08 |
+| E. Lặp giá trị | Phát triển thuật toán và luyện tập | Lặp chính sách và nhu cầu cắt ngắn đánh giá | Cập nhật tối ưu, phần dư và chính sách tham lam; nhu cầu phân bổ công việc | L04-E01–L04-E08 | 22 | L04-E08 |
 | F. Quy hoạch động trong thực hành | Tổ chức tính toán và giới hạn | Cập nhật kỳ vọng, lặp chính sách, lặp giá trị | Lịch cập nhật, điều kiện bao phủ, GPI và giới hạn mô hình | L04-F01–L04-F06 | 16 | L04-F06 |
 | G. Tổng hợp và bài tập | Kết luận và vận dụng tổng hợp | Kết quả của sáu mạch trước | Kiểm tra nghiệm, so sánh phương pháp theo giả thiết; bài tập và tài liệu đọc | L04-G01–L04-G05 | 12 | L04-G04 |
 
@@ -432,7 +432,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Đánh
 
 ### Mạch E. Lặp giá trị
 
-Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp chính sách và nhu cầu cắt ngắn đánh giá. Đầu ra: Cập nhật tối ưu, phần dư và chính sách trích; nhu cầu phân bổ công việc. Mục tiêu: MT5. Thời lượng: 22 phút; kiểm tra riêng L04-E08.
+Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp chính sách và nhu cầu cắt ngắn đánh giá. Đầu ra: Cập nhật tối ưu, phần dư và chính sách tham lam; nhu cầu phân bổ công việc. Mục tiêu: MT5. Thời lượng: 22 phút; kiểm tra riêng L04-E08.
 
 #### L04-E01 — Cắt ngắn bước đánh giá
 
@@ -468,7 +468,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 - **Ví dụ/hình dự kiến:** Một định nghĩa phụ $Q_V$ và công thức toán tử; sơ đồ max khác nhãn với sơ đồ kỳ vọng.
 - **Hình thức hóa:** HT11: $Q_V(s,a)=\sum_{s',r}p(s',r\mid s,a)[r+\gamma V(s')]$; $v_*=T_*v_*$.
 - **Kết nối vào:** Phép cực đại từ bảng tùy ý cần ký hiệu riêng để phân biệt với giá trị hành động chính xác.
-- **Kết nối ra:** Toán tử tối ưu được đặt trong vòng lặp và ghép với chính sách trích từ bảng trả về.
+- **Kết nối ra:** Toán tử tối ưu được đặt trong vòng lặp và ghép với chính sách tham lam theo bảng trả về.
 - **Nguồn:** NG1, tr. 8, 10, 23; NG2, §4.4, (4.10), tr. in 83 (PDF 105); ký hiệu $Q_V$ do bài giảng định nghĩa.
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Phương trình cho giá trị hành động tối ưu là $q_*(s,a)=\sum_{s',r}p(s',r\mid s,a)[r+\gamma\max_{a'}q_*(s',a')]$. Với trạng thái kết thúc, giá trị tiếp nối bằng 0 và không lấy cực đại trên tập hành động rỗng.
@@ -480,7 +480,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 - **Ý chính:** Đặt $\Delta_*(V)=\|T_*V-V\|_\infty$ trước khi xét điều kiện dừng. Đầu vào $p,\gamma$, ngưỡng $\eta>0$, ngân sách $K$. Khởi tạo $V=0$, giữ giá trị kết thúc bằng 0. Tính $W=T_*V$ từ bản chụp cố định. Bước 3 gộp hai điều kiện dừng như thuật toán đánh giá: nếu $\|W-V\|_\infty\le\eta$ hoặc đã nhận $K$ bảng mới, trả $V$, phần dư và kết quả so ngưỡng; ngược lại nhận $W$ làm bảng hiện tại. Chính sách tham lam trích từ chính bảng trả về.
 - **Ví dụ/hình dự kiến:** Giả mã 8–10 dòng; phép trích chính sách bên ngoài vòng cập nhật; không dùng khối mã chương trình.
 - **Hình thức hóa:** HT12: $\Delta_*(V)=\|T_*V-V\|_\infty$; $\pi_V(s)\in\arg\max_aQ_V(s,a)$.
-- **Kết nối vào:** Toán tử tối ưu được đặt trong vòng lặp và ghép với chính sách trích từ bảng trả về.
+- **Kết nối vào:** Toán tử tối ưu được đặt trong vòng lặp và ghép với chính sách tham lam theo bảng trả về.
 - **Kết nối ra:** Vòng lặp có tiêu chuẩn dừng cần bảo đảm rằng toán tử tiến tới đúng điểm bất động.
 - **Nguồn:** NG1, tr. 24, 34; NG2, §4.4, tr. in 83 (PDF 105); điều chỉnh phần dư để đúng bảng trả về.
 - **Thời lượng:** 3 phút
@@ -507,7 +507,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 - **Ví dụ/hình dự kiến:** SVG dp04-five-cell.svg có biên trái và đích; bảng HTML bốn lượt; nhãn từng ô, mũi tên hướng phải không chỉ dùng màu.
 - **Hình thức hóa:** Áp dụng HT11–HT12; phép tính mẫu $V_2(c_3)=\max(-1.9,8)=8$.
 - **Kết nối vào:** Bảo đảm của cập nhật tối ưu được áp dụng để đọc sự lan truyền giá trị trên lưới.
-- **Kết nối ra:** Lưới đã đạt điểm bất động ở $V_4$; mô hình hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách trích đã tối ưu. Phần dư phân biệt hai tình huống.
+- **Kết nối ra:** Lưới đã đạt điểm bất động ở $V_4$; mô hình hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách tham lam đã tối ưu. Phần dư phân biệt hai tình huống.
 - **Nguồn:** NG1, tr. 25–28; bổ sung quy ước biên được ghi công khai; số kiểm chứng độc lập.
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Phần thưởng 10 xuất hiện một lần khi đi vào $c_5$, không gán giá trị 10 cho trạng thái kết thúc. Nghiệm cuối là điểm bất động; chọn phải ở bốn ô chưa kết thúc. Tính số dùng bảng cũ của cùng lượt. Kiểm lại toàn bảng cho $V_5=V_4$, không chỉ một ô. Điểm chọn trái ở bốn ô là $3.122,3.122,4.58,6.2$, đều nhỏ hơn điểm chọn phải.
@@ -519,7 +519,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 - **Ý chính:** $\|V-v_*\|_\infty\le \Delta_*(V)/(1-\gamma)$. Với $\gamma=0.9$ và sai số mục tiêu $\varepsilon=0.1$, một điều kiện đủ theo chặn phần dư là $\Delta_*(V)\le0.01$. Ở ví dụ hai trạng thái, $V_1=(1,3)$ có chính sách tham lam $(b,b)$ nhưng phần dư 2.7 và sai số giá trị 27.
 - **Ví dụ/hình dự kiến:** Thang ba đại lượng: bảng, phần dư, chặn sai số; ví dụ số ngắn. Thẻ ví dụ ghi rõ “Mô hình hai trạng thái”, còn $V_1=(1,3)$ nằm trong thân thẻ.
 - **Hình thức hóa:** HT14: bất đẳng thức tam giác cho $\|V-v_*\|_\infty\le \Delta_*(V)+\gamma\|V-v_*\|_\infty$; điều kiện $\Delta_*(V)\le(1-\gamma)\varepsilon$.
-- **Kết nối vào:** Lưới đã đạt điểm bất động ở $V_4$; mô hình hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách trích đã tối ưu. Phần dư phân biệt hai tình huống.
+- **Kết nối vào:** Lưới đã đạt điểm bất động ở $V_4$; mô hình hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách tham lam đã tối ưu. Phần dư phân biệt hai tình huống.
 - **Kết nối ra:** Quy tắc đồng bộ và quy ước kết thúc được kiểm tra bằng hai phép tính trên bảng đã cho.
 - **Nguồn:** NG1, tr. 31–34; hệ quả được suy và kiểm chứng từ tính co, không gán nguyên công thức cho sách.
 - **Thời lượng:** 2 phút
@@ -537,7 +537,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 - **Nguồn:** NG1, tr. 25–28; câu kiểm tra từ dữ kiện nguồn.
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Phép tính có hai nhánh ở mỗi ô. Đi trái ở biên trái giữ nguyên trạng thái, nên giá trị tiếp nối là $V_4(c_1)$.
-- **Yêu cầu trên mặt trang:** Câu hỏi: Tính hai giá trị nhìn trước tại $c_1$ và tại $c_3$ từ $V_4$; xác định $\Delta_*(V_4)$ và chính sách trích. Giải thích vì sao $V_4(c_5)=0$ dù chuyển $c_4\to c_5$ nhận thưởng 10.
+- **Yêu cầu trên mặt trang:** Câu hỏi: Tính hai giá trị nhìn trước tại $c_1$ và tại $c_3$ từ $V_4$; xác định $\Delta_*(V_4)$ và chính sách tham lam. Giải thích vì sao $V_4(c_5)=0$ dù chuyển $c_4\to c_5$ nhận thưởng 10.
 - **Kiến thức được đo:** MT5; các công thức và dữ kiện đã trình bày trước trang này.
 - **Đáp án/gợi ý trong ghi chú:** $c_1$: trái $3{,}122$, phải $4{,}58$; $c_3$: trái $4{,}58$, phải $8$; $T_*V_4=V_4$, $\Delta_*(V_4)=0$; chính sách đi phải tại $c_1,\ldots,c_4$. Thưởng 10 được nhận trên chuyển tiếp đi vào đích; sau kết thúc không còn phần thưởng tiếp nối.
 - **Tiêu chí đánh giá:** Tính đúng giá trị nhìn trước từ $V_4$, kết luận phần dư bằng 0 và đặt thưởng đúng trên chuyển tiếp.
@@ -584,7 +584,7 @@ Chức năng: Tổ chức tính toán và giới hạn. Đầu vào: Cập nhậ
 - **Kết nối ra:** Các lịch khác nhau được đặt trong quan hệ chung giữa đánh giá và cải thiện.
 - **Nguồn:** NG1, tr. 15; NG2, §4.5, tr. in 85–86 (PDF 107–108).
 - **Thời lượng:** 3 phút
-- **Ghi chú học thuật dự kiến:** Một lượt quét tại chỗ là trường hợp có lịch hệ thống; bất đồng bộ tổng quát không cần lượt quét. Lịch chỉ cập nhật $s_0$ trong ví dụ hai trạng thái bỏ mất giá trị 30 ở $s_1$; không thỏa điều kiện hội tụ. Bản trình bày không bao gồm giá trị truyền trễ. Áp dụng quy trình vào lưới sau lịch $c_4,c_3,c_2,c_1$: bảng cuối $(4.58,6.2,8,10,0)$ có phần dư toàn cục bằng 0 và chính sách trích chọn phải ở mọi ô chưa kết thúc. Phần dư được tính sau khi cố định toàn bảng. Từ bảng $(1,0)$ trong mô hình hai trạng thái, $T_*$ cập nhật tại $s_1$ thành $\max\{2.9,3\}=3$, còn $T_{\pi_0}$ cho $2.9$. Thành phần truyền từ F02 là cơ chế đọc bảng mới và ví dụ lưới tối ưu, không phải đầu ra đánh giá $(1,2.9)$.
+- **Ghi chú học thuật dự kiến:** Một lượt quét tại chỗ là trường hợp có lịch hệ thống; bất đồng bộ tổng quát không cần lượt quét. Lịch chỉ cập nhật $s_0$ trong ví dụ hai trạng thái bỏ mất giá trị 30 ở $s_1$; không thỏa điều kiện hội tụ. Bản trình bày không bao gồm giá trị truyền trễ. Áp dụng quy trình vào lưới sau lịch $c_4,c_3,c_2,c_1$: bảng cuối $(4.58,6.2,8,10,0)$ có phần dư toàn cục bằng 0 và chính sách tham lam chọn phải ở mọi ô chưa kết thúc. Phần dư được tính sau khi cố định toàn bảng. Từ bảng $(1,0)$ trong mô hình hai trạng thái, $T_*$ cập nhật tại $s_1$ thành $\max\{2.9,3\}=3$, còn $T_{\pi_0}$ cho $2.9$. Thành phần truyền từ F02 là cơ chế đọc bảng mới và ví dụ lưới tối ưu, không phải đầu ra đánh giá $(1,2.9)$.
 
 #### L04-F04 — Lặp chính sách tổng quát
 
