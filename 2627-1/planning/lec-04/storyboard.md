@@ -278,7 +278,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `sửa`. Bổ sung đầu ra nhất quán, ngân sách, phá hòa và phân biệt bảo đảm exact/approximate.
 - **Thời lượng:** 4 phút, trong tổng của mạch.
 
-### L04-D04 — Chính sách ổn định và nghiệm tối ưu
+### L04-D04 — Chính sách ổn định là tối ưu
 
 - **Chức năng và nhu cầu học tập:** Định lý và điều kiện điểm bất động. Chính sách tham lam theo chính giá trị của nó thỏa phương trình Bellman tối ưu.
 - **Đầu vào và quan hệ với trang trước:** Kết quả không đổi chính sách được kiểm tra bằng điều kiện Bellman tối ưu.

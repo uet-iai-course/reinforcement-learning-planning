@@ -180,13 +180,13 @@ Giá trị trạng thái là trung bình theo chính sách; giá trị của t�
 <aside class="notes"><p>Đầu ra là một chính sách cùng giá trị của chính sách đó; khi dừng vì ngân sách, cặp trả về chưa được chứng nhận tối ưu nếu chính sách còn thay đổi. Bộ đếm tăng sau mỗi vòng đánh giá và cải thiện; tối đa $I_{\max}$ vòng được thực hiện. Trong nhiệm vụ có kết thúc, giữ giá trị trạng thái kết thúc bằng 0 và không gán hành động cho trạng thái đó. Bảo đảm dừng hữu hạn ở đây sử dụng đánh giá chính xác. Giải hệ tuyến tính là một cách xác định giá trị đó về mặt toán học. Tính toán số thực hoặc đánh giá lặp theo ngưỡng chỉ trả xấp xỉ và cần kiểm tra phần dư. Một vòng ngoài có thể chứa nhiều lượt đánh giá; không đồng nhất vòng ngoài với một lượt quét giá trị.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 20, 33–34; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.3, tr. 80, Bài tập 4.4 tr. 82.</p></aside>
 </section>
 <section data-slide-id="L04-D04">
-<h2>Chính sách ổn định và nghiệm tối ưu</h2>
-<p>Giá trị tối ưu: $v_*(s)=\max_\pi v_\pi(s)$.</p>
-<p>Khi đánh giá chính xác và cải thiện không đổi chính sách:</p>
+<h2>Chính sách ổn định là tối ưu</h2>
+<p>Mục tiêu điều khiển là giá trị tối ưu $v_*(s)=\max_\pi v_\pi(s)$ tại mọi $s$.</p>
+<p>Với $\pi$ ổn định, $v_\pi(s)=q_\pi(s,\pi(s))=\max_a q_\pi(s,a)$, tức <strong>phương trình Bellman tối ưu</strong>:</p>
 <div class="math-large">$$v_\pi(s)=\max_a\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma v_\pi(s')\bigr].$$</div>
-<div class="box">Trong MDP hữu hạn, thưởng bị chặn và $0\le\gamma&lt;1$, điều kiện Bellman tối ưu cho $v_\pi=v_*$.</div>
-<p>Với mô hình hai trạng thái: $\pi_*=(b,b)$ và $v_*=(27,30)$.</p>
-<aside class="notes"><p>Đánh giá cho $v_\pi=T_\pi v_\pi$, còn chính sách ổn định tham lam theo $v_\pi$ nên vế phải đồng thời là cực đại trên hành động. Đây là phương trình Bellman tối ưu. Trong MDP hữu hạn chiết khấu, toán tử tối ưu có điểm bất động duy nhất; tính co sẽ được thiết lập khi xét lặp giá trị. Tập hành động hữu hạn bảo đảm cực đại được đạt. Chọn một hành động cực đại ở mỗi trạng thái tạo chính sách tối ưu dừng, xác định. Giá trị hành động tối ưu là $q_*(s,a)=\max_\pi q_\pi(s,a)$, với $v_*(s)=\max_a q_*(s,a)$. Với cặp $(b,b),(27,30)$, cả hai vế Bellman tối ưu bằng nhau ở từng trạng thái.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 7–9, 33; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.2–4.3, tr. 79–80</p></aside>
+<div class="box">Trong MDP hữu hạn, thưởng bị chặn và $0\le\gamma&lt;1$, phương trình này có nghiệm duy nhất $v_*$, nên $v_\pi=v_*$.</div>
+<p>Với MDP hai trạng thái: $\pi_*=(b,b)$ và $v_*=(27,30)$.</p>
+<aside class="notes"><p>Đẳng thức $v_\pi(s)=q_\pi(s,\pi(s))$ đúng vì $\pi$ xác định. Chính sách ổn định thỏa $\pi(s)\in\arg\max_a q_\pi(s,a)$, vì nếu không, quy tắc phá hòa đã đổi hành động. Đánh giá cho $v_\pi=T_\pi v_\pi$, còn chính sách ổn định tham lam theo $v_\pi$ nên vế phải đồng thời là cực đại trên hành động. Đây là phương trình Bellman tối ưu. Trong MDP hữu hạn chiết khấu, toán tử tối ưu có điểm bất động duy nhất; tính co sẽ được thiết lập khi xét lặp giá trị. Tập hành động hữu hạn bảo đảm cực đại được đạt. Chọn một hành động cực đại ở mỗi trạng thái tạo chính sách tối ưu dừng, xác định. Giá trị hành động tối ưu là $q_*(s,a)=\max_\pi q_\pi(s,a)$, với $v_*(s)=\max_a q_*(s,a)$. Với cặp $(b,b),(27,30)$, cả hai vế Bellman tối ưu bằng nhau ở từng trạng thái.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 7–9, 33; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.2–4.3, tr. 79–80</p></aside>
 </section>
 <section data-slide-id="L04-D05">
 <h2>Dừng hữu hạn và đánh giá gần đúng</h2>

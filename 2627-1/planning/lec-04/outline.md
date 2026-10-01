@@ -386,7 +386,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Đánh
 - **Thời lượng:** 4 phút
 - **Ghi chú học thuật dự kiến:** Giải hệ tuyến tính là cách xác định đánh giá chính xác trên bài hữu hạn. Với số thực máy tính hoặc đánh giá lặp theo ngưỡng, kết quả là gần đúng; phần dư của bảng cuối cần được báo. Một lần lặp ngoài có thể gồm nhiều lượt đánh giá.
 
-#### L04-D04 — Chính sách ổn định và nghiệm tối ưu
+#### L04-D04 — Chính sách ổn định là tối ưu
 
 - **Vai trò và mục tiêu:** Định lý và điều kiện điểm bất động; MT4
 - **Luận điểm trung tâm:** Chính sách tham lam theo chính giá trị của nó thỏa phương trình Bellman tối ưu.

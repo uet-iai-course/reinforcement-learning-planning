@@ -965,3 +965,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình (xung đột thuật ngữ), bước 4 “trả $(\pi,v_\pi)$ với trạng thái ổn định”, chữ “trạng thái” trùng với trạng thái MDP. Nhẹ, bước 5 không nêu kết luận khi hết ngân sách, không đối xứng với bước 4. Nhẹ, bước 3 diễn đạt lại quy tắc phá hòa thay vì dùng tên đã đặt ở C04.
 - Quyết định: sửa. Tiêu đề giữ. Bước 3 “áp dụng quy tắc phá hòa”. Bước 4 “trả $(\pi,v_\pi)$ và kết luận chính sách ổn định”. Bước 5 “trả $(\pi,v_\pi)$ và kết luận chưa ổn định”; “lặp từ bước 2”. Notes giữ (đã nêu cặp trả về khi hết ngân sách chưa được chứng nhận tối ưu).
 - Kiểm tra: 521/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-D04 — Chính sách ổn định là tối ưu
+
+- Trang muốn nói: chính sách ổn định thỏa phương trình Bellman tối ưu; trong MDP hữu hạn chiết khấu phương trình này có nghiệm duy nhất $v_*$, nên chính sách ổn định là tối ưu. Với ví dụ: $\pi_*=(b,b)$, $v_*=(27,30)$.
+- Vấn đề: trung bình, $v_*$ xuất hiện đột ngột (“Giá trị tối ưu: $v_*(s)=\max_\pi v_\pi(s)$.”), không nối với mục tiêu “lớn nhất tại mọi trạng thái” ở A03. Trung bình, bước $v_\pi(s)=q_\pi(s,\pi(s))=\max_a q_\pi(s,a)$ chỉ có trong notes. Trung bình, công thức khối chưa có nhãn “phương trình Bellman tối ưu” trên mặt trang. Nhẹ, tính duy nhất được chứng minh ở mạch E; notes đã ghi.
+- Quyết định: sửa. Tiêu đề “Chính sách ổn định là tối ưu”. Dòng đầu nêu mục tiêu điều khiển là giá trị tối ưu tại mọi $s$. Dòng hai đưa chuỗi $v_\pi(s)=q_\pi(s,\pi(s))=\max_a q_\pi(s,a)$ lên mặt trang và gọi tên phương trình Bellman tối ưu. Hộp: “phương trình này có nghiệm duy nhất $v_*$, nên $v_\pi=v_*$.” “Mô hình hai trạng thái” → “MDP hai trạng thái”. Notes giải thích vì sao chính sách ổn định thỏa $\pi(s)\in\arg\max_a q_\pi(s,a)$ (quy tắc phá hòa). Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: 658/720; hai kích thước đạt, không lỗi; đã xem ảnh.
