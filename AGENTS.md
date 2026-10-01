@@ -31,9 +31,9 @@ Mỗi yêu cầu phải tạo hoặc cập nhật:
 - Không dùng câu hỏi tu từ, câu cảm thán, lời ca tụng, khẩu hiệu hoặc cách diễn đạt quảng bá.
 - Không thêm nhận định, số liệu, nguồn hoặc ví dụ không có căn cứ.
 - Trong mọi tệp Markdown, chỉ dùng `$...$` cho công thức nội dòng và `$$...$$` cho công thức khối.
-- Bắt buộc dùng `$no-ai-slop` khi soạn, sửa hoặc rà tiêu đề, nội dung trang chiếu, ghi chú và học liệu. Đọc `SKILL.md` trước khi áp dụng. Tác tử soạn hoặc chỉnh sửa dùng chế độ Edit, biên tập rồi tự đối chiếu `eval.md` và sửa các mục chưa đạt trước khi bàn giao. Tác tử rà soát chỉ đọc dùng chế độ Detect, nêu mẫu diễn đạt có vấn đề, trích đoạn làm bằng chứng và đề xuất sửa; không chỉnh tệp. Loại lời dẫn rỗng, lời nhấn mạnh thiếu căn cứ, câu lặp, đổi từ đồng nghĩa tùy tiện, nhịp câu khuôn mẫu và kết luận kịch tính. Ghi phạm vi cùng kết quả kiểm tra trong `review-log.md`; không dùng điểm từ bộ phát hiện AI hoặc suy đoán tác giả làm bằng chứng.
-- Khi áp dụng `$no-ai-slop`, giữ nguyên ý nguồn, giả thiết, ký hiệu, phép suy luận và các phân biệt toán học, thuật toán cần thiết. Văn phong học thuật của học phần được ưu tiên hơn gợi ý của kỹ năng về giữ giọng nói, hài hước hoặc câu rời. Giữ định nghĩa, nhãn kết quả, câu hỏi đánh giá và phần tổng kết khi chúng có chức năng học tập rõ.
-- Dùng `$quill` để rà dàn ý, thứ tự khái niệm, thuật ngữ và tính liên tục giữa các phần. Không khởi tạo `quill.json`; công việc này không phải dự án sách.
+- Bắt buộc dùng kỹ năng `no-ai-slop` của Claude Code (`~/.claude/skills/no-ai-slop/`, nạp bằng công cụ `Skill`) khi soạn, sửa hoặc rà tiêu đề, nội dung trang chiếu, ghi chú và học liệu. Đọc `SKILL.md` trước khi áp dụng. Tác tử soạn hoặc chỉnh sửa dùng chế độ Edit, biên tập rồi tự đối chiếu `eval.md` và sửa các mục chưa đạt trước khi bàn giao. Tác tử rà soát chỉ đọc dùng chế độ Detect, nêu mẫu diễn đạt có vấn đề, trích đoạn làm bằng chứng và đề xuất sửa; không chỉnh tệp. Loại lời dẫn rỗng, lời nhấn mạnh thiếu căn cứ, câu lặp, đổi từ đồng nghĩa tùy tiện, nhịp câu khuôn mẫu và kết luận kịch tính. Ghi phạm vi cùng kết quả kiểm tra trong `review-log.md`; không dùng điểm từ bộ phát hiện AI hoặc suy đoán tác giả làm bằng chứng.
+- Khi áp dụng `no-ai-slop`, giữ nguyên ý nguồn, giả thiết, ký hiệu, phép suy luận và các phân biệt toán học, thuật toán cần thiết. Văn phong học thuật của học phần được ưu tiên hơn gợi ý của kỹ năng về giữ giọng nói, hài hước hoặc câu rời. Giữ định nghĩa, nhãn kết quả, câu hỏi đánh giá và phần tổng kết khi chúng có chức năng học tập rõ.
+- Dùng kỹ năng `quill` của Claude Code (`~/.claude/skills/quill/`) để rà dàn ý, thứ tự khái niệm, thuật ngữ và tính liên tục giữa các phần. Không khởi tạo `quill.json`; công việc này không phải dự án sách.
 
 ## Thứ tự ưu tiên
 
@@ -224,7 +224,7 @@ Storyboard phải chỉ ra cho từng cụm:
 
 ### 1. Điều phối và lập kế hoạch
 
-Điều phối viên kiểm kê nguồn, xác nhận đầu ra và mở dự án bền vững trong Codex Slides. Giao một tác tử lập kế hoạch riêng trước khi phân tích chi tiết hoặc sửa tệp.
+Điều phối viên kiểm kê nguồn và xác nhận đầu ra. Giao một tác tử lập kế hoạch riêng trước khi phân tích chi tiết hoặc sửa tệp.
 
 Tác tử lập kế hoạch:
 
@@ -253,8 +253,8 @@ Giao một tác tử chỉ đọc:
 Giao một tác tử soạn:
 
 - tạo `outline.md`, `storyboard.md`, HTML và SVG theo đặc tả;
-- viết tiêu đề, nội dung và ghi chú bằng tiếng Việt theo văn phong học thuật; biên tập bằng `$no-ai-slop` và tự kiểm theo `eval.md`;
-- dùng `$quill` để kiểm tra mạch phần, chuyển ý, thuật ngữ và ký hiệu;
+- viết tiêu đề, nội dung và ghi chú bằng tiếng Việt theo văn phong học thuật; biên tập bằng `no-ai-slop` và tự kiểm theo `eval.md`;
+- dùng `quill` để kiểm tra mạch phần, chuyển ý, thuật ngữ và ký hiệu;
 - giữ thứ tự nguồn trừ các thay đổi đã được phê duyệt;
 - thêm ghi chú diễn giả và nguồn;
 - không sửa RevealJS, tiện ích (plugin) hoặc CSS dùng chung nếu có thể giải quyết trong tệp bài giảng;
@@ -288,7 +288,7 @@ Sau bản nháp đầu, giao đủ năm vai cho năm tác tử chỉ đọc đ�
 
 Mức độ gồm `chặn bàn giao`, `nghiêm trọng`, `trung bình`, `nhẹ`. Mọi lỗi `chặn bàn giao` và `nghiêm trọng` phải được xử lý.
 
-Vai phản biện học thuật và giảng dạy đồng thời rà văn phong của tiêu đề, nội dung và ghi chú bằng chế độ Detect của `$no-ai-slop`. Báo cáo phải trích dẫn cụ thể văn nói, lời dẫn rỗng hoặc chỉ dẫn điều phối còn xuất hiện; đề xuất sửa phải giữ nguyên điều kiện toán học và ý nghĩa thuật toán.
+Vai phản biện học thuật và giảng dạy đồng thời rà văn phong của tiêu đề, nội dung và ghi chú bằng chế độ Detect của `no-ai-slop`. Báo cáo phải trích dẫn cụ thể văn nói, lời dẫn rỗng hoặc chỉ dẫn điều phối còn xuất hiện; đề xuất sửa phải giữ nguyên điều kiện toán học và ý nghĩa thuật toán.
 
 Đối với vai kết nối và mạch viết, dùng mức `chặn bàn giao` khi thiếu mạch mở đầu hoặc mạch kết luận, số mạch ngoài khoảng 5–7 mà không có ngoại lệ hợp lệ, không xác định được tuyến chính hoặc kết luận mâu thuẫn với vấn đề đã thiết lập; `nghiêm trọng` khi một phần trọng tâm bị đứt khỏi tuyến chính, lặp chức năng hoặc không tạo bước tiến; `trung bình` khi điểm vào, đầu ra hay câu chuyển giữa hai phần còn mờ; `nhẹ` khi mạch đúng nhưng tín hiệu chuyển ý hoặc thứ bậc nhấn chưa rõ. Sau khi thêm, bỏ, gộp, tách, đổi thứ tự trang hoặc sửa câu chuyển làm thay đổi mạch bài, phải giao lại vai này rà các trang bị ảnh hưởng, hai trang lân cận mỗi phía và mọi ranh giới phần liên quan. Nếu thay đổi mở bài, kết bài hoặc luận điểm trung tâm, phải rà lại toàn bộ bộ trang chiếu.
 
@@ -319,12 +319,12 @@ Các tác tử sửa tệp không được chạy song song.
 - chạy `python3 -m reloadserver 8765` tại thư mục gốc; cổng là đối số vị trí, không dùng `--port`;
 - mở `http://localhost:8765/2627-1/lecture-NN-<ten-bai>.html` và duyệt mọi trang ngang, trang dọc;
 - kiểm tra tràn chữ, chữ nhỏ, chồng lấn, công thức, hình, tương phản và bàn phím ở khung 16:9 và một màn hình hẹp;
-- dùng Codex Slides để rà soát trực quan sau cùng và xác minh thay đổi hiển thị đúng;
+- rà soát trực quan sau cùng bằng trình duyệt (Chromium không giao diện qua Playwright), lưu ảnh chụp ở khung 16:9 và màn hình hẹp làm bằng chứng cho các trang bị ảnh hưởng, và xác minh thay đổi đã lưu trong tệp của kho hiển thị đúng;
 - kiểm tra đủ năm báo cáo độc lập; mọi vấn đề về vai trò trong mạch, kết nối vào–ra và tuyến lập luận phải có quyết định cùng bằng chứng rà lại;
-- kiểm tra tiêu đề, nội dung, ghi chú và học liệu có văn phong trang trọng, học thuật; không còn văn nói mô phỏng hoặc chỉ dẫn điều phối trên trang chiếu và trong ghi chú; xác nhận phạm vi biên tập cùng kết quả tự kiểm `$no-ai-slop` trong nhật ký;
+- kiểm tra tiêu đề, nội dung, ghi chú và học liệu có văn phong trang trọng, học thuật; không còn văn nói mô phỏng hoặc chỉ dẫn điều phối trên trang chiếu và trong ghi chú; xác nhận phạm vi biên tập cùng kết quả tự kiểm `no-ai-slop` trong nhật ký;
 - chạy lại kiểm định sau mỗi lần sửa lỗi chặn bàn giao hoặc nghiêm trọng.
 
-Nếu Codex Slides không khả dụng, phải báo rõ giới hạn, tiếp tục đầy đủ các kiểm tra RevealJS cục bộ và không tuyên bố đã rà bằng Codex Slides.
+Nếu không mở được trình duyệt để rà soát trực quan, phải báo rõ giới hạn, tiếp tục đầy đủ các kiểm tra tĩnh còn lại và không tuyên bố đã kiểm tra trực quan.
 
 ## Cập nhật `index.html`
 
@@ -340,26 +340,26 @@ Nếu Codex Slides không khả dụng, phải báo rõ giới hạn, tiếp t�
 Chỉ bàn giao khi:
 
 - bản RevealJS giữ đúng ý chính và mạch nguồn, còn mọi sai khác đều được ghi;
-- tiêu đề, nội dung, ghi chú diễn giả và học liệu bằng tiếng Việt, có văn phong trang trọng, học thuật; đã biên tập và tự kiểm theo `$no-ai-slop`, không còn văn nói mô phỏng hoặc chỉ dẫn điều phối trong sản phẩm;
+- tiêu đề, nội dung, ghi chú diễn giả và học liệu bằng tiếng Việt, có văn phong trang trọng, học thuật; đã biên tập và tự kiểm theo `no-ai-slop`, không còn văn nói mô phỏng hoặc chỉ dẫn điều phối trong sản phẩm;
 - outline, storyboard và nhật ký nằm đúng `planning/lec-NN/`;
 - mọi hình đã được vẽ lại thành SVG hoặc có ngoại lệ raster được người dùng duyệt;
 - năm báo cáo độc lập đã có và mọi lỗi bắt buộc đã được xử lý;
 - công thức, ví dụ số, giả mã và giả thiết đã được kiểm tra;
 - bộ trang chiếu chạy tại cổng `8765`, không có lỗi hiển thị hoặc tài nguyên hỏng nghiêm trọng;
 - `index.html` liên kết đúng tới tệp HTML của bài và không liên kết tới các tệp quy trình;
-- nội dung trong kho khớp với bản đã rà trong Codex Slides, hoặc giới hạn công cụ đã được ghi rõ.
+- bản RevealJS trong kho là đúng phiên bản đã được rà soát trực quan trên trình duyệt, hoặc giới hạn công cụ đã được ghi rõ.
 
 Khi bàn giao, nêu ngắn gọn: tệp trang chiếu, URL cục bộ, tệp nguồn, hình đã vẽ lại, các kiểm tra đã chạy, sai khác có chủ ý, ngoại lệ và giới hạn còn lại.
 
 ## Điều phối mô hình trong dự án
 
-- Codex chính giữ vai trò điều phối viên: phân rã công việc, duyệt kế hoạch, hợp nhất kết quả và kiểm định đầu ra.
-- Mọi tác tử con, kể cả tác tử do tác tử con tạo tiếp, phải dùng GPT-6-Astra qua cơ chế tác tử gốc của Codex trong phiên dùng gói thuê bao (subscription), theo quy định tham khảo tại `../math-4-AI/AGENTS.md`. Tạo tác tử bằng `collaboration.spawn_agent` với `model: "gpt-6-astra"`; chọn `fork_turns: "none"` hoặc số lượt phù hợp khi công cụ yêu cầu để đặt mô hình tường minh. Giao tiếp và tiếp tục nhiệm vụ bằng các công cụ `collaboration` tương ứng.
-- Không dùng OpenRouter, cầu nối trong `openrouter-mcp/`, các script OpenRouter hoặc lời gọi mô hình qua API/CLI để thay cơ chế tác tử gốc. Các ủy quyền OpenRouter và cấu hình trong hồ sơ lịch sử không áp dụng cho quy trình hiện hành.
+- Phiên Claude Code chính giữ vai trò điều phối viên và chạy **Claude Opus 5.5** (`claude-opus-5-5`) với mức suy luận (reasoning effort) `high`: phân rã công việc, duyệt kế hoạch, hợp nhất kết quả và kiểm định đầu ra. Nếu phiên đang chạy mô hình hoặc mức suy luận khác, báo rõ trước khi giao việc; không tự coi phiên đó là điều phối viên hợp lệ.
+- Mọi tác tử con, kể cả tác tử do tác tử con tạo tiếp, phải dùng **Claude Opus 5.5** với mức suy luận `high` qua cơ chế tác tử gốc của Claude Code, theo quy định tham khảo tại `../math-4-AI/AGENTS.md`. Tạo tác tử bằng công cụ `Agent` với loại tác tử có định nghĩa trong `.claude/agents/` khai báo mô hình `claude-opus-5-5` và mức suy luận `high`; tác tử loại `fork` kế thừa mô hình của điều phối viên. Không giao vai trong quy trình cho loại tác tử cố định mô hình hoặc mức suy luận khác. Tiếp tục nhiệm vụ của tác tử đã tạo bằng `SendMessage`; lời gọi `Agent` mới tạo một tác tử mới.
+- Không dùng OpenRouter, cầu nối trong `openrouter-mcp/`, các script OpenRouter, `codex-orchestrator` hoặc lời gọi mô hình qua API/CLI để thay cơ chế tác tử gốc của Claude Code. Các ủy quyền OpenRouter, GPT-6-Astra và cấu hình trong hồ sơ lịch sử (kể cả `.codex/`) không áp dụng cho quy trình hiện hành.
 - Không đọc, nạp hoặc gửi `.env`, `.env.*` ở bất kỳ thư mục nào; không dùng khóa API hay bí mật để tạo hoặc xác thực tác tử. Không đưa bí mật, kể cả trong tệp có tên thông thường, vào lời nhắc, tệp đính kèm, kết quả công cụ hoặc nhật ký.
 - Mỗi nhiệm vụ phải có vai trò, đầu vào, đầu ra, phạm vi tệp và điều kiện hoàn thành cụ thể. Tác tử chỉ đọc có thể chạy song song trong giới hạn khả dụng; chỉ một tác tử được ghi tệp tại một thời điểm. Điều phối viên phải chấp nhận hoặc bác bỏ kết quả trước giai đoạn phụ thuộc.
-- Ghi tên tác tử, vai trò và mô hình đã chỉ định từ lời gọi công cụ trong nhật ký. Chỉ ghi mô hình thực chạy hoặc tuyến xác thực khi công cụ cung cấp bằng chứng; không coi lời tự khai của tác tử là bằng chứng thực thi.
-- Nếu không tạo được tác tử GPT-6-Astra qua cơ chế gốc, báo rõ giới hạn và dừng phần việc phụ thuộc. Tiếp tục các việc độc lập đã được phép; không chuyển ngầm sang mô hình khác, OpenRouter hoặc script gọi mô hình.
+- Ghi tên tác tử, vai trò, loại tác tử, mô hình và mức suy luận đã chỉ định từ lời gọi công cụ hoặc định nghĩa tác tử trong nhật ký. Chỉ ghi mô hình thực chạy hoặc tuyến xác thực khi công cụ cung cấp bằng chứng; không coi lời tự khai của tác tử là bằng chứng thực thi.
+- Nếu không tạo được tác tử Claude Opus 5.5 với mức suy luận `high` qua cơ chế gốc, báo rõ giới hạn và dừng phần việc phụ thuộc. Tiếp tục các việc độc lập đã được phép; không chuyển ngầm sang mô hình khác, OpenRouter hoặc script gọi mô hình.
 
 ### Chọn phạm vi rà soát
 
