@@ -860,3 +860,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, chưa có cầu nối với phép tính tay ở B02; mặt trang không nói phương trình là phép tính đó với $V_k$, $V_{k+1}$ thay bằng cùng $v_\pi$. Trung bình, $\pi(a\mid s)$ và tổng theo $a$, $s'$, $r$ xuất hiện trong khi ví dụ là xác định. Nhẹ, tiêu đề tám từ.
 - Quyết định: sửa. Tiêu đề “Phương trình Bellman kỳ vọng” (giữ “kỳ vọng” để đối lập với “tối ưu” ở D04, E03). Dòng đầu nối các bảng $V_k$ với hàm giá trị $v_\pi$. Thêm chú thích: phép tính hai lượt với $V_k$, $V_{k+1}$ thay bằng cùng $v_{\pi_0}$, mỗi tổng còn một hạng. Notes giải thích $\pi(a\mid s)$ cho chính sách xác định (A04 đã nêu $\pi_0(a\mid s)=1$). Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: 656/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-B04 — Toán tử đánh giá chính sách
+
+- Trang muốn nói: thay $v_\pi$ ở vế phải bằng một bảng bất kỳ cho toán tử $T_\pi$; lặp toán tử này là phép tính ở B02, và $v_\pi$ là điểm bất động của nó.
+- Vấn đề: trung bình, $T_\pi$ được đưa ra mà mặt trang không nêu thao tác sinh ra nó (“Toán tử $T_\pi$ biến bảng … thành bảng mới”). Trung bình, mặt trang không chỉ ra hai lượt ở B02 chính là $V_1=T_\pi V_0$, $V_2=T_\pi V_1$. Nhẹ, “điểm bất động” chỉ được nêu tên. Trung bình, notes quá tải: đoạn về độ lệch $0{,}9$ phục vụ nhu cầu tiêu chuẩn dừng của B05.
+- Quyết định: sửa. Tiêu đề giữ. Dòng đầu: “Thay $v_\pi$ ở vế phải phương trình Bellman bằng một bảng $V$ bất kỳ; $p$ và $\pi$ giữ cố định.” Thẻ quy tắc lặp ghi hai lượt đã tính; thẻ nghiệm ghi “$v_\pi$ là điểm bất động của $T_\pi$”, notes thêm rằng tính duy nhất cần $\gamma<1$. Đoạn notes về độ lệch $0{,}9$ chuyển sang notes B05. “Lượt cập nhật toàn bảng” đổi thành “lượt”.
+- Kiểm tra: 689/720; dòng “Hai lượt đã tính” tách khỏi công thức để KaTeX không ngắt giữa đẳng thức; hai kích thước đạt, không lỗi; đã xem ảnh.
