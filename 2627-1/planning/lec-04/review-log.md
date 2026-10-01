@@ -867,3 +867,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, $T_\pi$ được đưa ra mà mặt trang không nêu thao tác sinh ra nó (“Toán tử $T_\pi$ biến bảng … thành bảng mới”). Trung bình, mặt trang không chỉ ra hai lượt ở B02 chính là $V_1=T_\pi V_0$, $V_2=T_\pi V_1$. Nhẹ, “điểm bất động” chỉ được nêu tên. Trung bình, notes quá tải: đoạn về độ lệch $0{,}9$ phục vụ nhu cầu tiêu chuẩn dừng của B05.
 - Quyết định: sửa. Tiêu đề giữ. Dòng đầu: “Thay $v_\pi$ ở vế phải phương trình Bellman bằng một bảng $V$ bất kỳ; $p$ và $\pi$ giữ cố định.” Thẻ quy tắc lặp ghi hai lượt đã tính; thẻ nghiệm ghi “$v_\pi$ là điểm bất động của $T_\pi$”, notes thêm rằng tính duy nhất cần $\gamma<1$. Đoạn notes về độ lệch $0{,}9$ chuyển sang notes B05. “Lượt cập nhật toàn bảng” đổi thành “lượt”.
 - Kiểm tra: 689/720; dòng “Hai lượt đã tính” tách khỏi công thức để KaTeX không ngắt giữa đẳng thức; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-B05 — Thuật toán đánh giá chính sách đồng bộ
+
+- Trang muốn nói: quy trình hai bảng với phép dừng theo phần dư tính được từ bảng hiện có.
+- Vấn đề: nghiêm trọng, bốn ký hiệu mới ($\|\cdot\|_\infty$, phần dư, $\eta$, $K$) xuất hiện cùng lúc, không có nhu cầu đi trước; mặt trang không nói vì sao cần đại lượng dừng. Trung bình, bước 3–4 dài và lặp ý (“Khi hết $K$ lượt, tính lại … trên bảng cuối; trả … cùng kết quả kiểm tra ngưỡng.”).
+- Quyết định: sửa. Tiêu đề giữ. Mở bằng nhu cầu: sau hữu hạn lượt, bảng chỉ xấp xỉ $v_\pi$. Định nghĩa phần dư kèm ví dụ $\Delta_{\pi_0}(V_1)=\max\{0{,}9;0{,}9\}=0{,}9$ (đã kiểm: $T_{\pi_0}V_1=(1{,}9;2{,}9)$). Quy trình ba bước; ngữ nghĩa giữ nguyên: kiểm ngưỡng ưu tiên, trả $V$ không trả $W$, sau lần nhận bảng thứ $K$ bước 2 đo phần dư của bảng cuối, $K=0$ trả bảng khởi tạo. Notes cập nhật theo bước mới và nhận đoạn ví dụ chuyển từ B04. Đồng bộ outline, storyboard.
+- Kiểm tra: 648/720; hai kích thước đạt, không lỗi; đã xem ảnh.

@@ -158,7 +158,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Đầu vào và quan hệ với trang trước:** Quy tắc cập nhật cần quy định bảng đọc, bảng ghi và thời điểm dừng.
 - **Sản phẩm và mục tiêu:** MT2; Hai bảng tách giá trị cũ và mới, còn phần dư kiểm tra độ chính xác của bảng được trả về.
 - **Đầu ra cho trang sau:** Phần dư đo được cần được liên hệ với sai số so với nghiệm chính xác.
-- **Quyết định:** `sửa`. Khôi phục đầu vào, đầu ra và dừng; thống nhất cách cập nhật với ví dụ.
+- **Quyết định:** `sửa`. Khôi phục đầu vào, đầu ra và dừng; thống nhất cách cập nhật với ví dụ. Bản 2026-10-01 nêu nhu cầu đại lượng dừng và ví dụ phần dư $0{,}9$ trước định nghĩa; quy trình còn ba bước.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
 ### L04-B06 — Hội tụ và sai số đánh giá
