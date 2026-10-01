@@ -6,11 +6,24 @@ Vấn đề trung tâm: từ mô hình chuyển–thưởng đã biết, tính g
 
 Đây là bản dàn bài mới, không dùng dàn bài cũ làm khung. Chỉ dẫn cụ thể của người dùng cho phép thay thứ tự nguồn để theo Sutton–Barto chương 4: đánh giá → cải thiện → lặp chính sách → lặp giá trị → bất đồng bộ/GPI/hiệu quả. Chủ đề và dữ kiện của PDF nguồn được bảo toàn qua ánh xạ đủ 38 trang. Kế hoạch đã được chấp nhận và triển khai ngày 2026-09-28. Năm vai đã rà độc lập cùng bản cố định; các sửa cục bộ sau rà được cập nhật trong hồ sơ này. Bằng chứng kiểm định và trạng thái rà lại nằm trong review-log.md.
 
+## Ánh xạ mục tiêu hiển thị và mục tiêu chi tiết
+
+Trang L04-A02 hiển thị bốn mục tiêu rút gọn; outline.md giữ sáu mục tiêu chi tiết MT1–MT6 dùng cho kiểm tra.
+
+| Mục tiêu trên L04-A02 | Mục tiêu chi tiết | Kiểm tra |
+|---|---|---|
+| Tính giá trị và cải thiện chính sách. | MT2, MT3 | L04-B08, L04-C07 |
+| Thực hiện lặp chính sách, lặp giá trị. | MT4, MT5 | L04-D06, L04-E08 |
+| Chặn sai số bằng phần dư. | MT2, MT5 | L04-B08, L04-E08, L04-G04 |
+| So sánh ba cách tổ chức tính toán. | MT6 | L04-F06, L04-G02, L04-G04 |
+
+MT1 (xác định mô hình, chính sách, phần thưởng và tổng chiết khấu) là năng lực đầu vào của mạch A, được kiểm tra tại L04-A05; không hiển thị thành mục tiêu riêng trên L04-A02.
+
 ## Bản đồ hành trình
 
 | Mạch | Vai trò | Đầu vào | Đầu ra và đóng góp | Trang | Phút | Kiểm tra riêng |
 |---|---|---|---|---|---:|---|
-| A. Mở đầu | Thiết lập bài toán | MDP, xác suất có điều kiện và tổng chiết khấu | Mô hình hai trạng thái và nhu cầu đánh giá một chính sách cố định | L04-A01–L04-A05 | 10 | L04-A05 |
+| A. Mở đầu | Thiết lập bài toán | MDP, xác suất có điều kiện và tổng chiết khấu | MDP hai trạng thái và nhu cầu đánh giá một chính sách cố định | L04-A01–L04-A05 | 10 | L04-A05 |
 | B. Đánh giá chính sách | Phát triển kiến thức và luyện tập | Mô hình đã biết và chính sách cố định | Giá trị chính xác hoặc bảng có phần dư; làm đầu vào so sánh hành động | L04-B01–L04-B08 | 22 | L04-B08 |
 | C. Cải thiện chính sách | Phát triển kiến thức và luyện tập | Giá trị của chính sách đã đánh giá | Chính sách mới không kém; nhu cầu đánh giá lại chính sách mới | L04-C01–L04-C07 | 20 | L04-C07 |
 | D. Lặp chính sách | Phát triển thuật toán và luyện tập | Đánh giá, cải thiện, tính co theo chính sách | Chính sách ổn định và điều kiện tối ưu; giới hạn chi phí đánh giá đầy đủ | L04-D01–L04-D06 | 18 | L04-D06 |
@@ -59,7 +72,7 @@ F02 là ví dụ dẫn nhập đồng thời làm cụ thể vấn đề F01: m�
 | dp04-expectation-backup.svg | L04-B01 | Trung bình theo chính sách rồi theo chuyển–thưởng; giá trị tiếp nối có nhãn | Vẽ sơ đồ cơ chế từ NG2 §4.1 |
 | dp04-one-step-choice.svg | L04-C02 | Hai nhánh từ s1, phần thưởng 2/3, giá trị tiếp nối 10/11 | Vẽ lại quan hệ NG1 tr. 19, chỉ tiếp tục theo pi0 |
 | dp04-policy-iteration.svg | L04-D01 | Hai thao tác nối chính sách và giá trị; nhãn đại lượng giữ cố định | Vẽ lại NG1 tr. 13, NG2 §4.3 |
-| dp04-five-cell.svg | L04-E06,E08,F02–F03 | Năm ô, biên trái ở lại, c5 kết thúc; bốn mũi tên phải khi thể hiện chính sách | NG1 tr. 25,28; bổ sung biên thiếu đã ghi |
+| dp04-five-cell.svg | L04-E06,F02–F03 | Năm ô, biên trái ở lại, c5 kết thúc; bốn mũi tên phải khi thể hiện chính sách | NG1 tr. 25,28; bổ sung biên thiếu đã ghi |
 | dp04-five-cell-plain.svg | L04-E08 | Cùng lưới năm ô, biên trái ở lại, c5 kết thúc; không có mũi tên chính sách để không lộ đáp án câu hỏi chính sách tham lam | NG1 tr. 25,28; tách từ dp04-five-cell.svg |
 | dp04-update-order.svg | L04-F02 | Hai bảng hoặc một bảng với thứ tự đánh số; mũi tên giá trị mới được dùng tiếp | NG1 tr. 15; NG2 tr. 75,85 |
 | dp04-gpi.svg | L04-F04 | Hai quá trình hướng tới $V=v_\pi$ và chính sách tham lam theo V | Sơ đồ khái niệm mới theo NG2 §4.6, không sao chép hình |
@@ -230,14 +243,14 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Chức năng và nhu cầu học tập:** Phác thảo chứng minh. Tính đơn điệu truyền lợi ích của lựa chọn một bước đến toàn bộ giá trị chính sách mới.
 - **Đầu vào và quan hệ với trang trước:** Bảo đảm không giảm giá trị cần lập luận vượt ra ngoài một phép thử số.
 - **Sản phẩm và mục tiêu:** MT3; Tính đơn điệu truyền lợi ích của lựa chọn một bước đến toàn bộ giá trị chính sách mới.
-- **Đầu ra cho trang sau:** Tính đơn điệu cho phép áp dụng quy tắc trên toàn bộ mô hình hai trạng thái.
+- **Đầu ra cho trang sau:** Tính đơn điệu cho phép áp dụng quy tắc trên toàn bộ MDP hai trạng thái.
 - **Quyết định:** `giữ`. Giữ phác thảo nguồn, đặt ngay sau định lý và nối với tính co đã chuẩn bị.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
 ### L04-C06 — Lần cải thiện thứ nhất
 
 - **Chức năng và nhu cầu học tập:** Ứng dụng. Cải thiện đồng thời tại hai trạng thái tạo $(a,b)$ và cần đánh giá lại giá trị.
-- **Đầu vào và quan hệ với trang trước:** Tính đơn điệu cho phép áp dụng quy tắc trên toàn bộ mô hình hai trạng thái.
+- **Đầu vào và quan hệ với trang trước:** Tính đơn điệu cho phép áp dụng quy tắc trên toàn bộ MDP hai trạng thái.
 - **Sản phẩm và mục tiêu:** MT3; Cải thiện đồng thời tại hai trạng thái tạo $(a,b)$ và cần đánh giá lại giá trị.
 - **Đầu ra cho trang sau:** Giá trị sau lần đổi chính sách cung cấp dữ kiện cho một lần lựa chọn mới.
 - **Quyết định:** `thêm`. Khôi phục bước nguồn đã rút gọn; đây là đầu vào trực tiếp cho lần cải thiện kế tiếp.
@@ -356,7 +369,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Chức năng và nhu cầu học tập:** Ứng dụng trực quan. Cập nhật đồng bộ lan truyền phần thưởng kết thúc lùi từng bước qua lưới.
 - **Đầu vào và quan hệ với trang trước:** Bảo đảm của cập nhật tối ưu được áp dụng để đọc sự lan truyền giá trị trên lưới.
 - **Sản phẩm và mục tiêu:** MT5; Cập nhật đồng bộ lan truyền phần thưởng kết thúc lùi từng bước qua lưới.
-- **Đầu ra cho trang sau:** Lưới đã đạt điểm bất động ở $V_4$; mô hình hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách tham lam đã tối ưu. Phần dư phân biệt hai tình huống.
+- **Đầu ra cho trang sau:** Lưới đã đạt điểm bất động ở $V_4$; MDP hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách tham lam đã tối ưu. Phần dư phân biệt hai tình huống.
 - **Quyết định:** `gộp`. Ghép bốn trang nguồn thành một ứng dụng sau khi cơ chế đã rõ; dùng hình và bảng thay diễn giải lặp.
 - **Vị trí trực quan sau kiểm ảnh:** Chú thích phép tính đặt ngay dưới bảng trong cột phải; hình và quy ước giữ ở cột trái. Chuyển nguyên nội dung để tránh chân trang và mũi tên điều hướng, không giảm cỡ chữ.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
@@ -364,7 +377,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 ### L04-E07 — Phần dư và điều kiện dừng
 
 - **Chức năng và nhu cầu học tập:** Ứng dụng bảo đảm. Ngưỡng phần dư xác định chặn sai số của chính bảng đang được trả về.
-- **Đầu vào và quan hệ với trang trước:** Lưới đã đạt điểm bất động ở $V_4$; mô hình hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách tham lam đã tối ưu. Phần dư phân biệt hai tình huống.
+- **Đầu vào và quan hệ với trang trước:** Lưới đã đạt điểm bất động ở $V_4$; MDP hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách tham lam đã tối ưu. Phần dư phân biệt hai tình huống.
 - **Sản phẩm và mục tiêu:** MT5; Ngưỡng phần dư xác định chặn sai số của chính bảng đang được trả về.
 - **Đầu ra cho trang sau:** Quy tắc đồng bộ và quy ước kết thúc được kiểm tra bằng hai phép tính trên bảng đã cho.
 - **Quyết định:** `thêm`. Biến tiêu chuẩn dừng nguồn thành chứng nhận có ý nghĩa định lượng. Rà ngày 2026-10-01: câu nhu cầu “điều kiện dừng cần đại lượng tính được từ $V$” đặt ở đầu trang, nối với chặn tương tự cho $\Delta_\pi$.
@@ -435,9 +448,9 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 
 ### L04-G01 — Kết quả của bài toán lập kế hoạch
 
-- **Chức năng và nhu cầu học tập:** Tổng hợp theo vấn đề mở đầu. Mô hình hai trạng thái có chính sách tối ưu $(b,b)$ với giá trị $(27,30)$.
+- **Chức năng và nhu cầu học tập:** Tổng hợp theo vấn đề mở đầu. MDP hai trạng thái có chính sách tối ưu $(b,b)$ với giá trị $(27,30)$.
 - **Đầu vào và quan hệ với trang trước:** Những điều kiện sử dụng được thu hồi cùng nghiệm của bài toán hai trạng thái.
-- **Sản phẩm và mục tiêu:** MT1–MT5; Mô hình hai trạng thái có chính sách tối ưu $(b,b)$ với giá trị $(27,30)$.
+- **Sản phẩm và mục tiêu:** MT1–MT5; MDP hai trạng thái có chính sách tối ưu $(b,b)$ với giá trị $(27,30)$.
 - **Đầu ra cho trang sau:** Hai thuật toán cho cùng nghiệm nhưng yêu cầu so sánh cấu trúc công việc và độ chính xác.
 - **Quyết định:** `sửa`. Kết luận quay lại bài toán đầu, đối chiếu đầu ra thay vì chỉ nhắc mục lục. Rà ngày 2026-10-01: câu mở nhắc lại nguyên văn bài toán điều khiển của trang lập kế hoạch với mô hình đã biết.
 - **Thời lượng:** 2 phút, trong tổng của mạch.
@@ -499,7 +512,7 @@ Giữ nguyên 45 mã, thứ tự, bảy mạch và 120 phút. Các quyết đị
 | B03–B06 | `sửa`: tính chính sách ngẫu nhiên trong notes B04 sau định nghĩa toán tử; đặt độ lệch 0,9 ở cuối notes trước định nghĩa phần dư B05 | Trung bình hai hành động cho (0,5;2,5); quay lại chính sách ban đầu để so hai bảng (1,2) và (1,9;2,9); B06 liên hệ độ lệch đo được với sai số |
 | B04, G01 | `sửa`: gọi tên bootstrapping rồi thu hồi ở kết luận | Cơ chế dùng ước lượng tiếp nối khác với yêu cầu có mô hình để tính đầy đủ kỳ vọng |
 | D01 | `sửa`: nhãn giá trị trong SVG dùng chỉ số dưới đúng | Quan hệ đánh giá–cải thiện và đại lượng cố định không đổi |
-| E06–E08 | `sửa`: gọi tên mô hình khi đổi ví dụ, nêu trái/phải và phân biệt lưới đã đạt điểm bất động với bảng hai trạng thái còn sai số | E07 ghi mô hình hai trạng thái; E08 ghi lưới năm ô; ngưỡng phần dư là điều kiện đủ |
+| E06–E08 | `sửa`: gọi tên mô hình khi đổi ví dụ, nêu trái/phải và phân biệt lưới đã đạt điểm bất động với bảng hai trạng thái còn sai số | E07 ghi MDP hai trạng thái; E08 ghi lưới năm ô; ngưỡng phần dư là điều kiện đủ |
 | F02–F03 | `sửa`: gọi rõ lặp giá trị tại chỗ và lặp giá trị bất đồng bộ | Cơ chế đọc giá trị mới được truyền; toán tử đánh giá cho 2,9 khác toán tử tối ưu cho 3 ở cùng bảng (1,0) |
 | F04–F05 | `sửa`: đưa câu nối về biểu diễn hữu hạn và mô hình đã biết vào notes F04 | Giới hạn gộp CartPole dùng cùng giả thiết, F06 kiểm điều kiện mô hình |
 | E06, G03 | `sửa`: bỏ bình luận công việc biên soạn khỏi sản phẩm | Quy ước biên trái, thưởng theo chuyển thực tế và lý do bổ sung vẫn lưu trong hồ sơ này và nhật ký |

@@ -23,7 +23,7 @@ Phân tích và nguồn chi tiết: [analysis.md](analysis.md). Cấu trúc họ
 
 | Mạch | Vai trò | Đầu vào | Đầu ra và đóng góp | Trang | Phút | Kiểm tra riêng |
 |---|---|---|---|---|---:|---|
-| A. Mở đầu | Thiết lập bài toán | MDP, xác suất có điều kiện và tổng chiết khấu | Mô hình hai trạng thái và nhu cầu đánh giá một chính sách cố định | L04-A01–L04-A05 | 10 | L04-A05 |
+| A. Mở đầu | Thiết lập bài toán | MDP, xác suất có điều kiện và tổng chiết khấu | MDP hai trạng thái và nhu cầu đánh giá một chính sách cố định | L04-A01–L04-A05 | 10 | L04-A05 |
 | B. Đánh giá chính sách | Phát triển kiến thức và luyện tập | Mô hình đã biết và chính sách cố định | Giá trị chính xác hoặc bảng có phần dư; làm đầu vào so sánh hành động | L04-B01–L04-B08 | 22 | L04-B08 |
 | C. Cải thiện chính sách | Phát triển kiến thức và luyện tập | Giá trị của chính sách đã đánh giá | Chính sách mới không kém; nhu cầu đánh giá lại chính sách mới | L04-C01–L04-C07 | 20 | L04-C07 |
 | D. Lặp chính sách | Phát triển thuật toán và luyện tập | Đánh giá, cải thiện, tính co theo chính sách | Chính sách ổn định và điều kiện tối ưu; giới hạn chi phí đánh giá đầy đủ | L04-D01–L04-D06 | 18 | L04-D06 |
@@ -37,7 +37,7 @@ Tổng: **45 trang; 120 phút**. Kiểm tra riêng của từng mạch: A05, B08
 
 | Ký hiệu/thuật ngữ | Miền và nghĩa | Quy ước sử dụng |
 |---|---|---|
-| $\mathcal S$, $\mathcal A(s)$, $\mathcal R$ | Tập hữu hạn các trạng thái chưa kết thúc, hành động hợp lệ khác rỗng và phần thưởng thực | Nếu có kết thúc, $\mathcal S^+=\mathcal S\cup\{s_\mathrm{term}\}$; mô hình hai trạng thái là tiếp diễn. |
+| $\mathcal S$, $\mathcal A(s)$, $\mathcal R$ | Tập hữu hạn các trạng thái chưa kết thúc, hành động hợp lệ khác rỗng và phần thưởng thực | Nếu có kết thúc, $\mathcal S^+=\mathcal S\cup\{s_\mathrm{term}\}$; MDP hai trạng thái là tiếp diễn. |
 | $S_t,A_t,R_{t+1}$ | Trạng thái, hành động tại $t$, phần thưởng nhận sau hành động | $t$ chỉ thời gian tương tác; viết $R_{t+1}$, không đổi thành $R_t$ trong cùng quy ước. |
 | $p(s',r\mid s,a)$ | Phân phối chung trạng thái kế tiếp và thưởng, tổng bằng 1 | Markov và bất biến theo thời gian trong bài; dữ kiện đã biết. Tổng theo $s'\in\mathcal S^+$ và $r\in\mathcal R$. |
 | $P(s'\mid s,a)$, $\bar r(s,a)$ | Các đại lượng suy ra từ phân phối chung | $P=\sum_rp$; $\bar r=\sum_{s',r}rp$. Chỉ dùng khi giải thích chi phí hoặc ma trận; không coi là phần thưởng độc lập khác. |
@@ -58,7 +58,7 @@ Thuật ngữ cố định: **đánh giá chính sách**, **cải thiện chính
 
 ### Mạch A. Mở đầu
 
-Chức năng: Thiết lập bài toán. Đầu vào: MDP, xác suất có điều kiện và tổng chiết khấu. Đầu ra: Mô hình hai trạng thái và nhu cầu đánh giá một chính sách cố định. Mục tiêu: MT1. Thời lượng: 10 phút; kiểm tra riêng L04-A05.
+Chức năng: Thiết lập bài toán. Đầu vào: MDP, xác suất có điều kiện và tổng chiết khấu. Đầu ra: MDP hai trạng thái và nhu cầu đánh giá một chính sách cố định. Mục tiêu: MT1. Thời lượng: 10 phút; kiểm tra riêng L04-A05.
 
 #### L04-A01 — Giải MDP bằng quy hoạch động
 
@@ -307,7 +307,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Giá t
 - **Ví dụ/hình dự kiến:** Chuỗi ba bất đẳng thức lớn; mũi tên giới hạn với nhãn $0\le\gamma<1$.
 - **Hình thức hóa:** HT7, chứng minh: $v_\pi\le T_{\pi'}v_\pi\le(T_{\pi'})^2v_\pi\le\cdots\to v_{\pi'}$. Đơn điệu: $U\le V\Rightarrow T_{\pi'}U\le T_{\pi'}V$.
 - **Kết nối vào:** Bảo đảm không giảm giá trị cần lập luận vượt ra ngoài một phép thử số.
-- **Kết nối ra:** Tính đơn điệu cho phép áp dụng quy tắc trên toàn bộ mô hình hai trạng thái.
+- **Kết nối ra:** Tính đơn điệu cho phép áp dụng quy tắc trên toàn bộ MDP hai trạng thái.
 - **Nguồn:** NG1, tr. 21; NG2, §4.2, tr. in 78–79 (PDF 100–101).
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Hệ số xác suất và $\gamma$ không âm bảo toàn thứ tự. Giá trị bị chặn cùng $\gamma<1$ bảo đảm phần tiếp nối xa mất ảnh hưởng. Một ví dụ số chỉ minh họa điều kiện; chuỗi bất đẳng thức mới cung cấp lập luận tổng quát.
@@ -319,7 +319,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Giá t
 - **Ý chính:** Tại $s_0$: $q_{\pi_0}(s_0,a)=10$, $q_{\pi_0}(s_0,b)=9.9$, nên giữ $a$. Tại $s_1$: chọn $b$. Do đó $\pi_1=(a,b)$. Giải hệ $x=1+0.9x$, $y=3+0.9y$ được $v_{\pi_1}=(10,30)$.
 - **Ví dụ/hình dự kiến:** Bảng HTML hai trạng thái × hai hành động; bên dưới ghi chính sách mới và giá trị mới.
 - **Hình thức hóa:** Áp dụng HT6–HT7 và hệ Bellman HT1; không thêm định nghĩa.
-- **Kết nối vào:** Tính đơn điệu cho phép áp dụng quy tắc trên toàn bộ mô hình hai trạng thái.
+- **Kết nối vào:** Tính đơn điệu cho phép áp dụng quy tắc trên toàn bộ MDP hai trạng thái.
 - **Kết nối ra:** Giá trị sau lần đổi chính sách cung cấp dữ kiện cho một lần lựa chọn mới.
 - **Nguồn:** NG1, tr. 18–19; NG2, §4.2–4.3, tr. in 79–80 (PDF 101–102); bước đánh giá giữa hai chính sách được khôi phục.
 - **Thời lượng:** 3 phút
@@ -329,7 +329,7 @@ Chức năng: Phát triển kiến thức và luyện tập. Đầu vào: Giá t
 
 - **Vai trò và mục tiêu:** Kiểm tra cải thiện; MT3
 - **Luận điểm trung tâm:** Tham lam phải được tính theo giá trị của chính sách đang được cải thiện.
-- **Ý chính:** Cho $\pi_1=(a,b)$ và $v_{\pi_1}=(10,30)$ trong cùng mô hình hai trạng thái.
+- **Ý chính:** Cho $\pi_1=(a,b)$ và $v_{\pi_1}=(10,30)$ trong cùng MDP hai trạng thái.
 - **Ví dụ/hình dự kiến:** Bảng mô hình và giá trị mới; không hiển thị đáp án ban đầu.
 - **Hình thức hóa:** Dùng HT6 và HT7.
 - **Kết nối vào:** Giá trị sau lần đổi chính sách cung cấp dữ kiện cho một lần lựa chọn mới.
@@ -416,7 +416,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Đánh
 
 - **Vai trò và mục tiêu:** Kiểm tra lặp chính sách; MT4
 - **Luận điểm trung tâm:** Ổn định của chính sách chỉ có ý nghĩa cùng độ chính xác của bảng dùng để cải thiện.
-- **Ý chính:** Trong mô hình hai trạng thái, một chương trình đang giữ $\pi=(a,b)$ và bảng gần đúng $V=(0,0)$. Bước tham lam vẫn cho $(a,b)$.
+- **Ý chính:** Trong MDP hai trạng thái, một chương trình đang giữ $\pi=(a,b)$ và bảng gần đúng $V=(0,0)$. Bước tham lam vẫn cho $(a,b)$.
 - **Ví dụ/hình dự kiến:** Hai đầu vào hiện rõ; gợi ý tính bốn tổng thưởng một bước trong ghi chú.
 - **Hình thức hóa:** Dùng HT6, HT8–HT10; chưa yêu cầu toán tử tối ưu có tên.
 - **Kết nối vào:** Một bảng gần đúng cung cấp trường hợp kiểm tra giới hạn của tiêu chuẩn ổn định.
@@ -507,7 +507,7 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 - **Ví dụ/hình dự kiến:** SVG dp04-five-cell.svg có biên trái và đích; bảng HTML bốn lượt; nhãn từng ô, mũi tên hướng phải không chỉ dùng màu.
 - **Hình thức hóa:** Áp dụng HT11–HT12; phép tính mẫu $V_2(c_3)=\max(-1.9,8)=8$.
 - **Kết nối vào:** Bảo đảm của cập nhật tối ưu được áp dụng để đọc sự lan truyền giá trị trên lưới.
-- **Kết nối ra:** Lưới đã đạt điểm bất động ở $V_4$; mô hình hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách tham lam đã tối ưu. Phần dư phân biệt hai tình huống.
+- **Kết nối ra:** Lưới đã đạt điểm bất động ở $V_4$; MDP hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách tham lam đã tối ưu. Phần dư phân biệt hai tình huống.
 - **Nguồn:** NG1, tr. 25–28; bổ sung quy ước biên được ghi công khai; số kiểm chứng độc lập.
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** Phần thưởng 10 xuất hiện một lần khi đi vào $c_5$, không gán giá trị 10 cho trạng thái kết thúc. Nghiệm cuối là điểm bất động; chọn phải ở bốn ô chưa kết thúc. Tính số dùng bảng cũ của cùng lượt. Kiểm lại toàn bảng cho $V_5=V_4$, không chỉ một ô. Điểm chọn trái ở bốn ô là $3.122,3.122,4.58,6.2$, đều nhỏ hơn điểm chọn phải.
@@ -517,13 +517,13 @@ Chức năng: Phát triển thuật toán và luyện tập. Đầu vào: Lặp 
 - **Vai trò và mục tiêu:** Ứng dụng bảo đảm; MT5
 - **Luận điểm trung tâm:** Ngưỡng phần dư xác định chặn sai số của chính bảng đang được trả về.
 - **Ý chính:** $\|V-v_*\|_\infty\le \Delta_*(V)/(1-\gamma)$. Với $\gamma=0.9$ và sai số mục tiêu $\varepsilon=0.1$, một điều kiện đủ theo chặn phần dư là $\Delta_*(V)\le0.01$. Ở ví dụ hai trạng thái, $V_1=(1,3)$ có chính sách tham lam $(b,b)$ nhưng phần dư 2.7 và sai số giá trị 27.
-- **Ví dụ/hình dự kiến:** Thang ba đại lượng: bảng, phần dư, chặn sai số; ví dụ số ngắn. Thẻ ví dụ ghi rõ “Mô hình hai trạng thái”, còn $V_1=(1,3)$ nằm trong thân thẻ.
+- **Ví dụ/hình dự kiến:** Thang ba đại lượng: bảng, phần dư, chặn sai số; ví dụ số ngắn. Thẻ ví dụ ghi rõ “MDP hai trạng thái”, còn $V_1=(1,3)$ nằm trong thân thẻ.
 - **Hình thức hóa:** HT14: bất đẳng thức tam giác cho $\|V-v_*\|_\infty\le \Delta_*(V)+\gamma\|V-v_*\|_\infty$; điều kiện $\Delta_*(V)\le(1-\gamma)\varepsilon$.
-- **Kết nối vào:** Lưới đã đạt điểm bất động ở $V_4$; mô hình hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách tham lam đã tối ưu. Phần dư phân biệt hai tình huống.
+- **Kết nối vào:** Lưới đã đạt điểm bất động ở $V_4$; MDP hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách tham lam đã tối ưu. Phần dư phân biệt hai tình huống.
 - **Kết nối ra:** Quy tắc đồng bộ và quy ước kết thúc được kiểm tra bằng hai phép tính trên bảng đã cho.
 - **Nguồn:** NG1, tr. 31–34; hệ quả được suy và kiểm chứng từ tính co, không gán nguyên công thức cho sách.
 - **Thời lượng:** 2 phút
-- **Ghi chú học thuật dự kiến:** Chính sách có thể đạt tối ưu trước khi bảng giá trị hội tụ. Ngưỡng sai số giá trị không được gọi là ngưỡng tổn thất chính sách. Với mô hình hai trạng thái, lượt 55 đạt phần dư khoảng 0.00913. Chặn sai số tương ứng xấp xỉ 0.0913.
+- **Ghi chú học thuật dự kiến:** Chính sách có thể đạt tối ưu trước khi bảng giá trị hội tụ. Ngưỡng sai số giá trị không được gọi là ngưỡng tổn thất chính sách. Với MDP hai trạng thái, lượt 55 đạt phần dư khoảng 0.00913. Chặn sai số tương ứng xấp xỉ 0.0913.
 
 #### L04-E08 — Kiểm tra lặp giá trị trên lưới
 
@@ -584,7 +584,7 @@ Chức năng: Tổ chức tính toán và giới hạn. Đầu vào: Cập nhậ
 - **Kết nối ra:** Các lịch khác nhau được đặt trong quan hệ chung giữa đánh giá và cải thiện.
 - **Nguồn:** NG1, tr. 15; NG2, §4.5, tr. in 85–86 (PDF 107–108).
 - **Thời lượng:** 3 phút
-- **Ghi chú học thuật dự kiến:** Một lượt quét tại chỗ là trường hợp có lịch hệ thống; bất đồng bộ tổng quát không cần lượt quét. Lịch chỉ cập nhật $s_0$ trong ví dụ hai trạng thái bỏ mất giá trị 30 ở $s_1$; không thỏa điều kiện hội tụ. Bản trình bày không bao gồm giá trị truyền trễ. Áp dụng quy trình vào lưới sau lịch $c_4,c_3,c_2,c_1$: bảng cuối $(4.58,6.2,8,10,0)$ có phần dư toàn cục bằng 0 và chính sách tham lam chọn phải ở mọi ô chưa kết thúc. Phần dư được tính sau khi cố định toàn bảng. Từ bảng $(1,0)$ trong mô hình hai trạng thái, $T_*$ cập nhật tại $s_1$ thành $\max\{2.9,3\}=3$, còn $T_{\pi_0}$ cho $2.9$. Thành phần truyền từ F02 là cơ chế đọc bảng mới và ví dụ lưới tối ưu, không phải đầu ra đánh giá $(1,2.9)$.
+- **Ghi chú học thuật dự kiến:** Một lượt quét tại chỗ là trường hợp có lịch hệ thống; bất đồng bộ tổng quát không cần lượt quét. Lịch chỉ cập nhật $s_0$ trong ví dụ hai trạng thái bỏ mất giá trị 30 ở $s_1$; không thỏa điều kiện hội tụ. Bản trình bày không bao gồm giá trị truyền trễ. Áp dụng quy trình vào lưới sau lịch $c_4,c_3,c_2,c_1$: bảng cuối $(4.58,6.2,8,10,0)$ có phần dư toàn cục bằng 0 và chính sách tham lam chọn phải ở mọi ô chưa kết thúc. Phần dư được tính sau khi cố định toàn bảng. Từ bảng $(1,0)$ trong MDP hai trạng thái, $T_*$ cập nhật tại $s_1$ thành $\max\{2.9,3\}=3$, còn $T_{\pi_0}$ cho $2.9$. Thành phần truyền từ F02 là cơ chế đọc bảng mới và ví dụ lưới tối ưu, không phải đầu ra đánh giá $(1,2.9)$.
 
 #### L04-F04 — Lặp chính sách tổng quát
 
@@ -616,7 +616,7 @@ Chức năng: Tổ chức tính toán và giới hạn. Đầu vào: Cập nhậ
 
 - **Vai trò và mục tiêu:** Kiểm tra quy hoạch động thực hành; MT6
 - **Luận điểm trung tâm:** Lịch cập nhật và mô hình hợp lệ là hai điều kiện độc lập của phép giải.
-- **Ý chính:** Trong mô hình hai trạng thái, xét lịch chỉ cập nhật $s_0$ từ bảng không. Trong CartPole, xét bảng 324 tổ hợp nhưng chưa có phân phối chuyển–thưởng.
+- **Ý chính:** Trong MDP hai trạng thái, xét lịch chỉ cập nhật $s_0$ từ bảng không. Trong CartPole, xét bảng 324 tổ hợp nhưng chưa có phân phối chuyển–thưởng.
 - **Ví dụ/hình dự kiến:** Hai tình huống ngắn, không cần hình mới.
 - **Hình thức hóa:** Dùng HT16 và dữ kiện CartPole đã học.
 - **Kết nối vào:** Các điều kiện về lịch và mô hình được kiểm tra bằng hai trường hợp thiếu dữ kiện.
@@ -637,7 +637,7 @@ Chức năng: Kết luận và vận dụng tổng hợp. Đầu vào: Kết qu�
 #### L04-G01 — Kết quả của bài toán lập kế hoạch
 
 - **Vai trò và mục tiêu:** Tổng hợp theo vấn đề mở đầu; MT1–MT5
-- **Luận điểm trung tâm:** Mô hình hai trạng thái có chính sách tối ưu $(b,b)$ với giá trị $(27,30)$.
+- **Luận điểm trung tâm:** MDP hai trạng thái có chính sách tối ưu $(b,b)$ với giá trị $(27,30)$.
 - **Ý chính:** Đánh giá tạo giá trị của chính sách đang xét; cải thiện dùng giá trị đó để thay hành động; lặp chính sách hoặc lặp giá trị tìm nghiệm tối ưu. Trong ví dụ, cả hai phương pháp quy về $v_*=(27,30)$ và cùng lựa chọn $b$ tại hai trạng thái.
 - **Ví dụ/hình dự kiến:** Sơ đồ dữ kiện nguồn → hai nhánh thuật toán → cùng cặp đầu ra; không lặp toàn bộ bảng số.
 - **Hình thức hóa:** Thu hồi HT8 và HT12; không thêm khái niệm.

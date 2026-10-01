@@ -1389,3 +1389,9 @@ Nguồn phát hiện: tác tử kết nối và mạch viết rà toàn bộ 45 
 - Phát hiện (nhẹ, tải): trang dồn định nghĩa, đầu vào–đầu ra, ba bước, điều kiện hội tụ và ứng dụng; hai dòng cuối (điều kiện hội tụ và kết quả trên lưới) đứng rời nhau sát chân trang.
 - Quyết định: gộp thành một hộp “Hội tụ: $V\to v_*$ nếu mọi trạng thái chưa kết thúc được cập nhật vô hạn lần. Trên lưới, lịch $c_4,c_3,c_2,c_1$ cho $\Delta_*(V)=0$ sau một lượt; mọi ô chọn đi phải.” Nội dung không đổi.
 - Kiểm tra: 16:9 cao 615/720 (trước 635), không cờ đè chân trang, hai kích thước đạt; đã xem ảnh 16:9.
+
+#### Hồ sơ outline.md và storyboard.md — Sửa theo rà mạch toàn bài
+
+- Phát hiện (nhẹ): hồ sơ còn dùng “mô hình hai trạng thái”, lệch thuật ngữ “MDP hai trạng thái” trên mặt trang; storyboard ghi MT1–MT6 trong khi L04-A02 hiển thị bốn mục tiêu, ánh xạ chỉ có trong notes A02. Bảng tài sản còn ghi dp04-five-cell.svg dùng ở E08 dù E08 đã chuyển sang dp04-five-cell-plain.svg.
+- Quyết định: thay thuật ngữ trong outline.md (14 chỗ) và storyboard.md (8 chỗ); thêm mục “Ánh xạ mục tiêu hiển thị và mục tiêu chi tiết” vào storyboard.md (bốn mục tiêu A02 → MT2–MT6 cùng trang kiểm tra; MT1 là năng lực đầu vào, kiểm tại A05); sửa dòng tài sản dp04-five-cell.svg thành L04-E06, F02–F03.
+- Kiểm tra: grep không còn “mô hình hai trạng thái” trong hai hồ sơ; HTML không đổi.
