@@ -1129,3 +1129,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện (trung bình, mạch viết): mục tiêu 4 “So sánh cập nhật đồng bộ và bất đồng bộ” hẹp hơn bảng so sánh ở phần kết luận, vốn so sánh lặp chính sách, lặp giá trị và cập nhật bất đồng bộ; mục tiêu 1 “Đánh giá và cải thiện chính sách” không có động từ đo được.
 - Quyết định: sửa. Mục tiêu 1 “Tính $v_\pi$ và cải thiện chính sách.”; mục tiêu 4 “So sánh ba cách tổ chức tính toán.”; notes nêu ba cách được so sánh. Bản đề xuất dài (“Tính giá trị của chính sách và cải thiện chính sách”, “So sánh lặp chính sách, lặp giá trị và cập nhật bất đồng bộ”) làm trang cao 712/720 và chạm mép dưới, nên không áp dụng nguyên văn. Đồng bộ ý chính ở outline.
 - Kiểm tra: 658/720; hai kích thước đạt, không lỗi; đã xem ảnh 16:9.
+
+#### L04-A03 — Sửa bổ sung sau rà lại
+
+- Phát hiện (trung bình, mạch viết): câu mới trong notes “Các thuật toán quy hoạch động trong bài đều bắt đầu từ giá trị của một chính sách đã cho” sai với lặp giá trị, vốn khởi tạo từ một bảng bất kỳ.
+- Quyết định: sửa notes thành “Bước đầu của lập kế hoạch là đánh giá một chính sách đã cho; giá trị của nó là căn cứ để đổi lựa chọn hành động.” Mặt trang không đổi.
+- Kiểm tra: 665/720; hai kích thước đạt, không lỗi.
