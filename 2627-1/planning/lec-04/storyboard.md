@@ -414,7 +414,7 @@ Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục 
 - **Quyết định:** `thêm`. Bổ sung khái niệm hỗ trợ của chương 4 để nối các thuật toán, không tạo một thuật toán mới.
 - **Thời lượng:** 3 phút, trong tổng của mạch.
 
-### L04-F05 — Rời rạc hóa và mô hình CartPole
+### L04-F05 — Rời rạc hóa trạng thái CartPole
 
 - **Chức năng và nhu cầu học tập:** Ứng dụng giới hạn. Rời rạc hóa giảm biểu diễn liên tục về bảng hữu hạn nhưng chưa cung cấp mô hình Markov phù hợp.
 - **Đầu vào và quan hệ với trang trước:** Các cách tổ chức cập nhật vẫn cần biểu diễn trạng thái hữu hạn và mô hình đã biết. CartPole có trạng thái liên tục, nên việc tạo biểu diễn hữu hạn còn phải xét ảnh hưởng của gộp trạng thái.

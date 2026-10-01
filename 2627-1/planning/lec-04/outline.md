@@ -599,7 +599,7 @@ Chức năng: Tổ chức tính toán và giới hạn. Đầu vào: Cập nhậ
 - **Thời lượng:** 3 phút
 - **Ghi chú học thuật dự kiến:** GPI là khuôn mô tả tương tác giữa hai quá trình, không là bảo đảm hội tụ cho mọi cách xen kẽ hay mọi xấp xỉ. Ứng dụng là nhận diện thành phần cố định và thành phần thay đổi của ba thuật toán đã có. Các cách tổ chức cập nhật vẫn cần biểu diễn trạng thái hữu hạn và mô hình đã biết. CartPole có trạng thái liên tục, nên việc tạo biểu diễn hữu hạn còn phải xét ảnh hưởng của gộp trạng thái.
 
-#### L04-F05 — Rời rạc hóa và mô hình CartPole
+#### L04-F05 — Rời rạc hóa trạng thái CartPole
 
 - **Vai trò và mục tiêu:** Ứng dụng giới hạn; MT6
 - **Luận điểm trung tâm:** Rời rạc hóa giảm biểu diễn liên tục về bảng hữu hạn nhưng chưa cung cấp mô hình Markov phù hợp.

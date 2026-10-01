@@ -1070,3 +1070,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: trung bình, mặt trang chỉ mô tả, chưa nêu kết quả; phát biểu “ổn định chung ⇒ $V=v_*$” chỉ có trong notes. Nhẹ, câu “GPI mô tả tương tác…” chưa nói GPI gọi chung điều gì.
 - Quyết định: sửa. Tiêu đề giữ. Câu mở “Lặp chính sách tổng quát (GPI) gọi chung sự xen kẽ giữa đánh giá và cải thiện.” Thêm hộp “Khi cả hai cùng ổn định, $V=v_\pi$ và $\pi$ tham lam theo $V$, nên $V=T_*V=v_*$.” Rút chữ ba thẻ để giữ trang trong khung; ý “khác nhau ở mức hoàn tất đánh giá” chuyển vào notes. Câu nối sang CartPole đặt ở trang rời rạc hóa (theo báo cáo E–G).
 - Kiểm tra: bản đầu tràn (779/720), rút thẻ còn 727, rút câu mở còn 683/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-F05 — Rời rạc hóa trạng thái CartPole
+
+- Trang muốn nói: áp dụng quy hoạch động cho trạng thái liên tục cần rời rạc hóa (ở đây $3\cdot3\cdot6\cdot6=324$ ô, đã kiểm) và vẫn cần mô hình chuyển–thưởng.
+- Vấn đề: trung bình, rời rạc hóa xuất hiện đột ngột; mặt trang không nêu nhu cầu “các quy trình trên cần tập trạng thái hữu hạn và mô hình $p$ đã biết” (câu nối chỉ có trong notes trang GPI). Nhẹ, tiêu đề gộp hai ý.
+- Quyết định: sửa. Tiêu đề “Rời rạc hóa trạng thái CartPole”. Thêm câu mở “Các quy trình trên cần trạng thái hữu hạn và $p$ đã biết; CartPole có trạng thái liên tục.” Gộp “Trạng thái $(x,\dot x,\theta,\dot\theta)$; chia lần lượt $3,3,6,6$ khoảng” thành một dòng để tránh lặp “liên tục”. Giữ kích thước hình để nhãn hình đọc được (đã thử lớp `figure short`, nhãn còn khoảng 0,56em nên bỏ). Đồng bộ tiêu đề ở outline, storyboard.
+- Kiểm tra: bản đầu 703/720 với hộp chạm chân trang; rút câu mở, 656/720; hai kích thước đạt, không lỗi; đã xem ảnh.
