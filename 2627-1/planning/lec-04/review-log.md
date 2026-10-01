@@ -1153,3 +1153,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện (nhẹ, mạch viết): chú thích “Phép tính của hai lượt đánh giá với $V_k$, $V_{k+1}$ thay bằng…” thiếu chủ thể; câu mở dùng “xấp xỉ” khẳng định trước kết quả hội tụ ở trang hội tụ.
 - Quyết định: sửa. Câu mở “Các bảng $V_k$ ước lượng hàm giá trị $v_\pi(s)$: kỳ vọng của tổng thưởng chiết khấu…”; chú thích “Hai thẻ trên lấy từ phép tính hai lượt đánh giá, với $V_k$ và $V_{k+1}$ cùng thay bằng $v_{\pi_0}$; …”. Không ghi mã trang trên mặt trang.
 - Kiểm tra: 655/720; hai kích thước đạt, không lỗi; đã xem ảnh 16:9.
+
+#### L04-B04 — Sửa bổ sung sau rà lại
+
+- Phát hiện: (nhẹ, độ chính xác) notes viết “tính duy nhất cần thêm giả thiết $\gamma<1$”; $\gamma<1$ là điều kiện đủ đã giả thiết cho toàn bài, không phải điều kiện cần. (Nhẹ, mạch viết) notes gọi một biểu thức là “phương trình”. Notes còn “mô hình hai trạng thái”. Kiểm trực quan bổ sung: thẻ “Quy tắc lặp” chạm dòng chân trang ở 1600×900 (đáy 689, chân trang 689).
+- Quyết định: sửa notes thành “Biểu thức định nghĩa $T_\pi$ là vế phải của phương trình Bellman kỳ vọng với $V$ thay cho $v_\pi$; vì vậy $v_\pi$ là một điểm bất động; với $0\le\gamma<1$, tính co ở trang sau bảo đảm đây là điểm bất động duy nhất.”; “MDP hai trạng thái”. Mặt trang: gộp hai dòng trong thẻ thành “Đã tính: $V_1=T_\pi V_0$, $V_2=T_\pi V_1$.” để bỏ chồng lấn; nội dung không đổi.
+- Kiểm tra: 626/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
