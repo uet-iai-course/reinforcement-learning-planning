@@ -218,11 +218,11 @@ Giá trị trạng thái là trung bình theo chính sách; giá trị của t�
 </section>
 <section data-slide-id="L04-E03">
 <h2>Toán tử Bellman tối ưu</h2>
-<p>Mỗi ô của bảng lượt hai là một giá trị nhìn trước từ $V_1$. Với bảng bất kỳ $V$:</p>
+<p>Hai cột nhánh ở lượt hai là các giá trị nhìn trước từ $V_1$. Với bảng bất kỳ $V$:</p>
 <div class="math-large">$$Q_V(s,a)=\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma V(s')\bigr].$$</div>
 <div class="grid2"><div class="card"><h3>Toán tử tối ưu</h3><div class="math-large">$(T_*V)(s)=\max_a Q_V(s,a)$</div></div><div class="card"><h3>Quy tắc lặp</h3><div class="math-large">$V_{k+1}=T_*V_k$</div></div></div>
 <p>Với $V=v_\pi$, $Q_V=q_\pi$. Phương trình Bellman tối ưu, đã gặp khi xét chính sách ổn định, viết gọn là $v_*=T_*v_*$.</p>
-<aside class="notes"><p>$Q_V$ là ký hiệu cho phép nhìn trước từ bảng đang xét, không mặc nhiên là giá trị hành động của một chính sách. Cực đại đặt ngoài kỳ vọng: tác tử chọn hành động trước khi kết quả ngẫu nhiên của môi trường được biết. Đổi thứ tự này sẽ cho phép chọn hành động theo kết quả chưa quan sát được. Tại trạng thái kết thúc, giá trị tiếp nối bằng 0 và không lấy cực đại trên một tập hành động rỗng. Giá trị hành động tối ưu $q_*(s,a)=\max_\pi q_\pi(s,a)$ ứng với việc chọn $a$ rồi theo một chính sách tối ưu; với $V=v_*$, $Q_V=q_*$. Phương trình Bellman cho giá trị hành động tối ưu là
+<aside class="notes"><p>Cột cực đại của bảng lượt hai là $T_*V_1=(2{,}7;5{,}7)$, tức $V_2$. $Q_V$ là ký hiệu cho phép nhìn trước từ bảng đang xét, không mặc nhiên là giá trị hành động của một chính sách. Cực đại đặt ngoài kỳ vọng: tác tử chọn hành động trước khi kết quả ngẫu nhiên của môi trường được biết. Đổi thứ tự này sẽ cho phép chọn hành động theo kết quả chưa quan sát được. Tại trạng thái kết thúc, giá trị tiếp nối bằng 0 và không lấy cực đại trên một tập hành động rỗng. Giá trị hành động tối ưu $q_*(s,a)=\max_\pi q_\pi(s,a)$ ứng với việc chọn $a$ rồi theo một chính sách tối ưu; với $V=v_*$, $Q_V=q_*$. Phương trình Bellman cho giá trị hành động tối ưu là
 $$q_*(s,a)=\sum_{s',r}p(s',r\mid s,a)\left[r+\gamma\max_{a'}q_*(s',a')\right],$$
 với số hạng tiếp nối bằng 0 nếu $s'$ là trạng thái kết thúc.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 8, 10, 23; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.4, (4.10), tr. 83</p></aside>
 </section>

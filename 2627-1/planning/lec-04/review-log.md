@@ -1219,3 +1219,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện (trung bình, mạch viết): câu mở lấy 44 lượt đánh giá lặp làm chi phí của lặp chính sách, trong khi thuật toán lặp chính sách đánh giá chính xác bằng hệ Bellman. Mắt xích “chọn tham lam rồi đánh giá đúng một lượt cho phép cực đại” chỉ có trong notes.
 - Quyết định: sửa. Câu mở nêu hai cách có $v_\pi$: giải hệ tuyến tính với $|\mathcal S|$ ẩn hoặc đánh giá lặp nhiều lượt; giữ số liệu $10\cdot0{,}9^k$ và 44 lượt. Hộp: “Chọn tham lam theo bảng hiện tại rồi đánh giá đúng một lượt cho giá trị nhìn trước lớn nhất. Đó là lặp giá trị; điều kiện dừng là phần dư của toán tử tối ưu.” Thẻ trái rút còn hai dòng. Notes bỏ câu trùng mặt trang, thêm chi phí $O(|\mathcal S|^3)$ của giải hệ đặc. Ý “thay cho chính sách ổn định” giữ trong notes.
 - Kiểm tra: bản đầu cao 688 và hộp chạm chân trang (đã xem ảnh); sau rút gọn 593/720, hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-E03 — Sửa bổ sung sau rà lại
+
+- Phát hiện (nhẹ, độ chính xác): “Mỗi ô của bảng lượt hai là một giá trị nhìn trước từ $V_1$” không chính xác, vì cột cực đại là $T_*V_1$.
+- Quyết định: sửa câu mở thành “Hai cột nhánh ở lượt hai là các giá trị nhìn trước từ $V_1$. Với bảng bất kỳ $V$:”. Không đưa $T_*V_1$ lên trước định nghĩa $T_*$ trên cùng trang; notes thêm “Cột cực đại của bảng lượt hai là $T_*V_1=(2{,}7;5{,}7)$, tức $V_2$.”
+- Kiểm tra: bản dài (có “cột cực đại là bảng mới”) xuống dòng, cao 685; bản ngắn 634/720, hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
