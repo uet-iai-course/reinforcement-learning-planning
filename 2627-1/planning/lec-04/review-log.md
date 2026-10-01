@@ -1273,3 +1273,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện: (nhẹ, mạch viết) vấn đề mở đầu chỉ được thu hồi ngầm qua kết quả, chưa nhắc lại bài toán. (Nhẹ, độ chính xác) notes viết “hai thuật toán lặp cho cùng nghiệm $(b,b)$, $(27,30)$”, trong khi lặp giá trị với số lượt hữu hạn chỉ cho bảng tiến tới $(27,30)$. Thẻ lặp giá trị dùng “trích chính sách”.
 - Quyết định: câu mở “Bài toán mở đầu: từ mô hình chuyển–thưởng đã biết, tìm chính sách có tổng thưởng chiết khấu kỳ vọng lớn nhất tại mọi trạng thái.” Thẻ lặp giá trị “Cập nhật tối ưu trên bảng hiện tại → chính sách tham lam.” Hộp rút thành “Kết quả được kiểm bằng chính sách ổn định hoặc phần dư của bảng trả về.” để bỏ chữ rơi dòng và giữ khoảng cách với chân trang. Notes: “lặp chính sách dừng tại $(b,b)$ với $v_*=(27,30)$, lặp giá trị cho cùng chính sách tham lam và bảng hội tụ tới $(27,30)$”.
 - Kiểm tra: bản trung gian 660 với hộp hai dòng sát chân trang; bản cuối 616/720, hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-G02 — Sửa bổ sung sau rà lại
+
+- Phát hiện (nhẹ, mạch viết): thuật ngữ “lịch bao phủ” chỉ xuất hiện ở trang này; trang thuật toán bất đồng bộ nêu điều kiện bằng lời. Notes dùng “lần lặp chính sách ngoài”, lệch quy ước “vòng”.
+- Quyết định: ô kiểm tra đầu ra của dòng bất đồng bộ thành “Phần dư; mọi trạng thái được cập nhật vô hạn lần” (bản có “toàn cục” làm ô xuống dòng). Notes: “Một vòng lặp chính sách không tương đương một lượt lặp giá trị.”
+- Kiểm tra: 481/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9, mỗi ô của bảng một dòng.

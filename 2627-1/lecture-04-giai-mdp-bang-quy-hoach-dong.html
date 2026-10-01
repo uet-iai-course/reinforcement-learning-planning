@@ -316,9 +316,9 @@ với số hạng tiếp nối bằng 0 nếu $s'$ là trạng thái kết thúc
 </section>
 <section data-slide-id="L04-G02">
 <h2>So sánh các phương pháp quy hoạch động</h2>
-<table><thead><tr><th scope="col">Phương pháp</th><th scope="col">Tổ chức cập nhật</th><th scope="col">Kiểm tra đầu ra</th></tr></thead><tbody><tr><td>Lặp chính sách</td><td>Đánh giá rồi cải thiện</td><td>Đánh giá chính xác; chính sách ổn định</td></tr><tr><td>Lặp giá trị</td><td>Cực đại từ bảng cũ</td><td>Phần dư của bảng cuối</td></tr><tr><td>Bất đồng bộ</td><td>Cập nhật từng trạng thái</td><td>Phần dư toàn cục; lịch bao phủ</td></tr></tbody></table><p>Cả ba phương pháp đều giả thiết $0\le\gamma&lt;1$, mô hình hữu hạn đã biết và phần thưởng bị chặn.</p>
+<table><thead><tr><th scope="col">Phương pháp</th><th scope="col">Tổ chức cập nhật</th><th scope="col">Kiểm tra đầu ra</th></tr></thead><tbody><tr><td>Lặp chính sách</td><td>Đánh giá rồi cải thiện</td><td>Đánh giá chính xác; chính sách ổn định</td></tr><tr><td>Lặp giá trị</td><td>Cực đại từ bảng cũ</td><td>Phần dư của bảng cuối</td></tr><tr><td>Bất đồng bộ</td><td>Cập nhật từng trạng thái</td><td>Phần dư; mọi trạng thái được cập nhật vô hạn lần</td></tr></tbody></table><p>Cả ba phương pháp đều giả thiết $0\le\gamma&lt;1$, mô hình hữu hạn đã biết và phần thưởng bị chặn.</p>
 <p>Thời gian tính phụ thuộc mô hình, khởi tạo, lịch cập nhật và ngưỡng sai số.</p>
-<aside class="notes"><p>Một lần lặp chính sách ngoài không tương đương một lượt lặp giá trị. Khi $\gamma$ gần 1, chặn co yếu hơn; đây không phải dự đoán tuyệt đối về thời gian chạy trên mọi bài toán.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 29–34; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.7–4.8, tr. 87–89.</p></aside>
+<aside class="notes"><p>Một vòng lặp chính sách không tương đương một lượt lặp giá trị. Khi $\gamma$ gần 1, chặn co yếu hơn; đây không phải dự đoán tuyệt đối về thời gian chạy trên mọi bài toán.</p><p class="note-source"><strong>Nguồn:</strong> Tạ Việt Cường, <em>Bài 04: Giải MDP</em>, tr. 29–34; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §4.7–4.8, tr. 87–89.</p></aside>
 </section>
 <section data-slide-id="L04-G03">
 <h2>Bài tập lưới ngẫu nhiên</h2>
