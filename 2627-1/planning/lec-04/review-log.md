@@ -1225,3 +1225,9 @@ Phạm vi: các phát hiện của hai lượt rà lại chỉ đọc (độ ch�
 - Phát hiện (nhẹ, độ chính xác): “Mỗi ô của bảng lượt hai là một giá trị nhìn trước từ $V_1$” không chính xác, vì cột cực đại là $T_*V_1$.
 - Quyết định: sửa câu mở thành “Hai cột nhánh ở lượt hai là các giá trị nhìn trước từ $V_1$. Với bảng bất kỳ $V$:”. Không đưa $T_*V_1$ lên trước định nghĩa $T_*$ trên cùng trang; notes thêm “Cột cực đại của bảng lượt hai là $T_*V_1=(2{,}7;5{,}7)$, tức $V_2$.”
 - Kiểm tra: bản dài (có “cột cực đại là bảng mới”) xuống dòng, cao 685; bản ngắn 634/720, hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
+
+#### L04-E04 — Sửa bổ sung sau rà lại
+
+- Phát hiện: (nhẹ, độ chính xác) ví dụ $K=1$ trong notes thiếu ngưỡng; kết quả “trả $V_1$” chỉ đúng khi $\eta<2{,}7$. (Nhất quán) quy trình chưa có bộ đếm $k$ như thuật toán đánh giá chính sách đồng bộ sau sửa bổ sung.
+- Quyết định: sửa. Bước 1 “Khởi tạo $V=0$, $k=0$”; bước 3 “Nếu $\Delta\le\eta$ hoặc $k=K$ … $V\leftarrow W$, $k\leftarrow k+1$ rồi quay lại bước 2”, trùng từng chữ với quy trình đánh giá ngoài $T_*$. Notes: ví dụ ghi “$K=1$ và $\eta=0{,}01$ … (chưa đạt ngưỡng)”; “chính sách trích sau cập nhật từ chính bảng công bố” → “chính sách tham lam được lấy từ chính bảng trả về”.
+- Kiểm tra: 620/720; hai kích thước đạt, không lỗi, không cờ đè chân trang; đã xem ảnh 16:9.
