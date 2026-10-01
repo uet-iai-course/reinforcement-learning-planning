@@ -1063,3 +1063,10 @@ Kiểm tra trực quan: Playwright Chromium ở 1600 × 900 và 390 × 844, máy
 - Vấn đề: nhẹ, ý “quét tại chỗ là một lịch cụ thể; bất đồng bộ tổng quát không cần quét đủ lượt” chỉ có trong notes, trong khi đây là cầu nối từ trang tại chỗ. Nhẹ, tiêu đề không cho biết trang là quy trình; notes còn “mô hình hai trạng thái”.
 - Quyết định: sửa. Tiêu đề “Thuật toán lặp giá trị bất đồng bộ”. Thêm câu mở “Mỗi bước cập nhật một trạng thái do lịch chọn; quét tại chỗ là một lịch cụ thể.” Gộp câu đầu ra vào bước 3 để giữ trang trong khung. Notes: “MDP hai trạng thái”. Đồng bộ tiêu đề ở outline, storyboard.
 - Kiểm tra: bản đầu tràn (743/720); gộp đầu ra vào bước 3, 612/720; hai kích thước đạt, không lỗi; đã xem ảnh.
+
+### L04-F04 — Lặp chính sách tổng quát
+
+- Trang muốn nói: lặp chính sách, lặp giá trị và lịch bất đồng bộ là các cách xen kẽ đánh giá và cải thiện; khi cả hai quá trình cùng ổn định thì đạt tối ưu.
+- Vấn đề: trung bình, mặt trang chỉ mô tả, chưa nêu kết quả; phát biểu “ổn định chung ⇒ $V=v_*$” chỉ có trong notes. Nhẹ, câu “GPI mô tả tương tác…” chưa nói GPI gọi chung điều gì.
+- Quyết định: sửa. Tiêu đề giữ. Câu mở “Lặp chính sách tổng quát (GPI) gọi chung sự xen kẽ giữa đánh giá và cải thiện.” Thêm hộp “Khi cả hai cùng ổn định, $V=v_\pi$ và $\pi$ tham lam theo $V$, nên $V=T_*V=v_*$.” Rút chữ ba thẻ để giữ trang trong khung; ý “khác nhau ở mức hoàn tất đánh giá” chuyển vào notes. Câu nối sang CartPole đặt ở trang rời rạc hóa (theo báo cáo E–G).
+- Kiểm tra: bản đầu tràn (779/720), rút thẻ còn 727, rút câu mở còn 683/720; hai kích thước đạt, không lỗi; đã xem ảnh.
