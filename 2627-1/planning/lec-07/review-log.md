@@ -282,3 +282,11 @@ Kiểm trình duyệt (Playwright, `reloadserver` cổng 8766, 39 trang, 1600×9
 
 | Mã trang | Trang muốn nói gì | Vấn đề | Đề xuất và thay đổi | Quyết định | Thay đổi ghi chú bài giảng |
 |---|---|---|---|---|---|
+| L07-01 | Tên bài và nội dung chính | Thiếu dòng bài và học phần, tác giả nguồn, liên kết ghi chú như L06-A01; phụ đề liệt kê thuật ngữ rời ("sai phân thời gian và điều khiển") | Tiêu đề giữ "Xấp xỉ hàm trong Học tăng cường". Thêm "Bài 07 · Học tăng cường", dòng nội dung "Xấp xỉ tuyến tính theo đặc trưng, Monte Carlo, sai phân thời gian (TD), Sarsa và Q-learning", học kỳ, tác giả bài giảng nguồn, liên kết ghi chú bài giảng. Ghi chú diễn giả: một cập nhật đổi nhiều dự đoán; bảo đảm hội tụ dạng bảng phải xét lại; nguồn tr. 1, 21–23 (bỏ tr. 2–4 vì mục lục và bảng phân loại không dùng ở trang này). Thêm thẻ Bài 7 vào `index.html` với hai liên kết bài giảng và ghi chú | sửa | Tiêu đề "Bài 07. Xấp xỉ hàm trong Học tăng cường"; thêm dòng học phần và đoạn giới thiệu (lớp tuyến tính, MC và TD cho dự đoán, Sarsa và mục tiêu Q-learning, điều kiện bảo đảm) |
+
+### Phát hiện rà soát theo trang
+
+| Mức độ | Trang | Vấn đề | Người rà | Quyết định | Trạng thái |
+|---|---|---|---|---|---|
+| trung bình | L07-01 (`index.html`, thẻ Bài 7) | Câu mô tả "Monte Carlo và TD(0) bán gradient" đọc thành Monte Carlo cũng dùng bán gradient | mạch (trung bình), toán (nhẹ) | "gradient Monte Carlo và bán gradient sai phân thời gian TD(0)" | đã sửa |
+| nhẹ | L07-01 | Dòng nội dung thiếu Q-learning; "đặc trưng tuyến tính" dễ hiểu là đặc trưng là hàm tuyến tính | mạch | "Xấp xỉ tuyến tính theo đặc trưng, Monte Carlo, sai phân thời gian (TD), Sarsa và Q-learning" | đã sửa |

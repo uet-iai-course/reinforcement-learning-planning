@@ -18,7 +18,7 @@ Các khoảng trang trên không chồng lấn. Tổng phần chính là 110 ph�
 
 | Mã | Luận điểm và bước học | Nguồn | Phút | Câu nối |
 |---|---|---|---:|---|
-| `L07-01` | Mở bài: thay bảng bằng hàm tham số. | tr. 1–4, 21–23 | 2 | Từ tên bài sang giới hạn của kết quả dạng bảng. |
+| `L07-01` | Mở bài: tên bài, nội dung chính (xấp xỉ tuyến tính theo đặc trưng, Monte Carlo, TD, Sarsa, Q-learning), tác giả nguồn và liên kết ghi chú bài giảng; ghi chú diễn giả nêu vấn đề thay bảng bằng hàm tham số dùng chung. | tr. 1, 21–23 | 2 | Từ tên bài sang bảng giá trị của Bài 05–06 và lý do thay bằng hàm xấp xỉ. |
 | `L07-02` | Nêu giới hạn: kết quả dạng bảng không tự chuyển sang xấp xỉ. | tr. 5–20 | 3 | Xác định phần kiến thức mới cần xây dựng. |
 | `L07-03` | Nêu sản phẩm học tập có thể kiểm tra. | tr. 21–44 | 2 | Ba trục phân tích (loại đích, quan hệ hành vi–đích, cách cải thiện chính sách) dẫn đường cho toàn bộ các mạch sau. |
 | `L07-04` | Vấn đề: bộ nhớ, mẫu và thiếu tổng quát hóa. | tr. 22–23 | 3 | Dùng chung tham số để chia sẻ thông tin. |

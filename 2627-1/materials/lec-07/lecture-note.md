@@ -1,4 +1,8 @@
-# Bài 07 — Hàm xấp xỉ trong Học tăng cường
+# Bài 07. Xấp xỉ hàm trong Học tăng cường
+
+Học phần Học tăng cường · Học kỳ 1, năm học 2026–2027.
+
+Khi không gian trạng thái lớn hoặc liên tục, bảng giá trị của Bài 05–06 được thay bằng một hàm có tham số dùng chung. Bài này dùng lớp hàm tuyến tính theo đặc trưng, xây dựng cập nhật Monte Carlo (MC) và sai phân thời gian (TD) cho dự đoán, rồi Sarsa và mục tiêu Q-learning cho điều khiển. Mỗi bảo đảm hội tụ được nêu cùng giả thiết về chính sách, đặc trưng, phân phối dữ liệu và bước học.
 
 ## Mục tiêu và kiến thức tiên quyết
 
