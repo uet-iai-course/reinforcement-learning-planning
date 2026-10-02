@@ -273,36 +273,38 @@ Nguồn (tr. 34) phát biểu hội tụ của Monte Carlo "trên phân phối d
 
 ### 4.2. Xấp xỉ tuyến tính
 
-Vấn đề: chọn lớp hàm nào để xấp xỉ giá trị?
-
-Trực giác: lớp đơn giản nhất và có nhiều bảo đảm lý thuyết nhất là lớp hàm tuyến tính theo tham số: giá trị là tích vô hướng giữa vector đặc trưng của trạng thái và vector trọng số.
-
-Hình thức. Xấp xỉ tuyến tính được định nghĩa là
+Sau khi có tiêu chí $J_\mu$, cần chọn dạng của $\hat v$. Lớp hàm dùng trong bài là lớp tuyến tính theo tham số: dự đoán là tích vô hướng giữa vector đặc trưng và vector tham số (nguồn tr. 24),
 
 $$\hat v(s,w) = x(s)^\top w, \qquad \hat q(s,a,w) = x(s,a)^\top w,$$
 
-trong đó $x(s) \in \mathbb R^d$ và $x(s,a) \in \mathbb R^d$ là các vector đặc trưng, $w \in \mathbb R^d$ là vector trọng số. Các dạng xấp xỉ khác nêu trong nguồn gồm cây quyết định, rừng ngẫu nhiên, kernel, láng giềng gần nhất, cơ sở Fourier và tile coding; mạng nơ-ron mạnh về biểu diễn nhưng tối ưu khó hơn và ít bảo đảm tổng quát. Bài này tập trung vào lớp tuyến tính vì mọi kết quả hội tụ cổ điển đều được phát biểu cho lớp này.
+trong đó $x(s)\in\mathbb R^d$, $x(s,a)\in\mathbb R^d$ và $w\in\mathbb R^d$, nên mỗi dự đoán là một số. Gradient theo tham số là
 
-Khác biệt với học có giám sát: trong Học tăng cường, "nhãn" thường là đích tự khởi tạo hoặc tổng thưởng ngẫu nhiên,
+$$\nabla_w \hat v(s,w) = x(s), \qquad \nabla_w \hat q(s,a,w) = x(s,a),$$
+
+không phụ thuộc $w$. Vì vậy mọi cập nhật trong bài có dạng cộng vào $w$ một bội của vector đặc trưng, như quy tắc ở mục 3.2. Chi phí một lần dự đoán hoặc cập nhật tỉ lệ với số thành phần khác 0 của vector đặc trưng.
+
+Nguồn tr. 25–26 còn nêu các lớp hàm khác: cây quyết định, rừng ngẫu nhiên, kernel, láng giềng gần nhất, cơ sở Fourier, tile coding và mạng nơ-ron; mạng nơ-ron biểu diễn mạnh nhưng tối ưu khó hơn và có ít bảo đảm hơn. Bài này dùng lớp tuyến tính vì gradient đơn giản và các kết quả hội tụ được nêu trong bài đều phát biểu cho lớp này. Đặc trưng $x(s,a)$ cho cặp trạng thái–hành động được xây dựng ở mục 5.
+
+Giới hạn: khi $w$ chạy trên $\mathbb R^d$, các hàm $\hat v(\cdot,w)$ tạo thành không gian con sinh bởi các thành phần đặc trưng. Hàm giá trị nằm ngoài không gian con này có sai số xấp xỉ không xóa được bằng cách học $w$.
+
+Phân biệt với học có giám sát: trong học tăng cường, giá trị dùng làm "nhãn" là lợi tức ngẫu nhiên hoặc mục tiêu chứa ước lượng hiện tại (nguồn tr. 27),
 
 $$y_t^{\mathrm{MC}} = G_t, \qquad y_t^{\mathrm{TD}} = R_{t+1} + \gamma\, \hat v(S_{t+1}, w),$$
 
 nên dữ liệu vừa phụ thuộc chính sách, vừa phụ thuộc chính mô hình đang học.
 
-Ví dụ về cấu trúc đặc trưng cho điều khiển: nếu $\psi(s)\in\mathbb R^p$ là đặc trưng trạng thái và $e_a\in\mathbb R^m$ là mã một-nóng của hành động, có thể chọn $x(s,a)=e_a\otimes\psi(s)\in\mathbb R^{mp}$. Mỗi hành động khi đó đọc một khối $p$ trọng số. Đây là một lựa chọn; ví dụ tính tay phía sau dùng đặc trưng ba chiều được thiết kế trực tiếp cho $(s,a)$.
-
-Giới hạn: lớp tuyến tính chỉ biểu diễn được các hàm giá trị nằm trong không gian sinh bởi các đặc trưng; phần thiếu hụt là sai số xấp xỉ không thể xoá bằng cách học $w$.
+Đặc trưng cho điều khiển: nếu $\psi(s)\in\mathbb R^p$ là đặc trưng trạng thái và $e_a\in\mathbb R^m$ là mã một-nóng của hành động, có thể chọn $x(s,a)=e_a\otimes\psi(s)\in\mathbb R^{mp}$. Mỗi hành động khi đó đọc một khối $p$ trọng số. Ví dụ tính tay phía sau dùng đặc trưng ba chiều được thiết kế trực tiếp cho $(s,a)$.
 
 ::: exercise Câu hỏi kiểm tra
-Với $x(s) \in \mathbb R^d$, tập hợp $\{\hat v(\cdot, w) : w \in \mathbb R^d\}$ là gì về mặt hình học, và vì sao nó là một không gian con chứ không phải toàn bộ không gian hàm trên $\mathcal S$?
+Với $x(s) \in \mathbb R^d$, tập hợp $\{\hat v(\cdot, w) : w \in \mathbb R^d\}$ là gì về mặt hình học, và vì sao nói chung nó không phải toàn bộ không gian hàm trên $\mathcal S$?
 :::
 
 ::: hint
-Xét tổ hợp tuyến tính của hai trọng số $w_1, w_2$ và giá trị tương ứng.
+Xét tổ hợp tuyến tính $a w_1 + b w_2$ của hai vector tham số và dự đoán tương ứng.
 :::
 
 ::: solution
-Tập đó là không gian con có số chiều bằng hạng của ma trận đặc trưng $\Phi$, nên không vượt quá $d$. Nó do các thành phần của $x$ sinh ra. Thật vậy, $\hat v(\cdot, \theta w_1 + (1-\theta) w_2) = \theta \hat v(\cdot, w_1) + (1-\theta) \hat v(\cdot, w_2)$, nên tập này đóng với tổ hợp tuyến tính. Khi $\operatorname{rank}(\Phi) < |\mathcal S|$, không gian con này không chứa mọi hàm trên $\mathcal S$; vì vậy tồn tại hàm giá trị có sai số xấp xỉ không thể loại bỏ chỉ bằng cách học $w$.
+Với $\mathcal S$ hữu hạn, xếp các $x(s)^\top$ thành hàng của ma trận $\Phi$; khi đó vector dự đoán là $\Phi w$. Vì $\hat v(\cdot, a w_1 + b w_2) = a\,\hat v(\cdot, w_1) + b\,\hat v(\cdot, w_2)$, tập này đóng với tổ hợp tuyến tính, tức là không gian con cột của $\Phi$, có số chiều $\operatorname{rank}(\Phi)\le d$. Khi $\operatorname{rank}(\Phi) < |\mathcal S|$, không gian con này không chứa mọi hàm trên $\mathcal S$, nên tồn tại hàm giá trị có sai số xấp xỉ không thể loại bỏ chỉ bằng cách học $w$.
 :::
 
 <!-- note-topic-id: lec-07-topic-04 -->
