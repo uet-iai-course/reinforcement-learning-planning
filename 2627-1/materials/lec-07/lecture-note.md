@@ -128,12 +128,12 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 13 chủ đề `lec-07-topic
 - Kết nối ra: Monte Carlo phải chờ hết lượt, dẫn tới TD(0).
 - Nguồn: tr. 34; bài tập 4 và 6.
 
-### Khung đích và thực hành điều khiển
+### Thực hành: chuỗi năm trạng thái
 
 - Nhóm: `đọc thêm/thực hành`.
-- Vai trò trong mạch: thực hành tổng hợp sau phần tổng kết, dùng cho chữa bài 7–8.
-- Kết nối vào: SARSA tuyến tính và đích Q-learning.
-- Kết nối ra: cung cấp bằng chứng tính toán để kết luận thu hồi mục tiêu bài học.
+- Vai trò trong mạch: thực hành sau phần tổng kết, dùng cho chữa bài 7–8 (Monte Carlo trên một lượt, Sarsa trên ba mẫu) và khung mục tiêu cập nhật.
+- Kết nối vào: chuỗi và đặc trưng của mục 12.2, Sarsa tuyến tính và mục tiêu Q-learning.
+- Kết nối ra: củng cố các cập nhật Monte Carlo và Sarsa bằng phép tính đầy đủ trên cùng một thiết lập.
 - Nguồn: tr. 40 và bài tập 7–8.
 
 ## Ký hiệu và quy ước
@@ -961,84 +961,56 @@ Monte Carlo gần hồi quy nhất vì mục tiêu $G_t$ không phụ thuộc $w
 :::
 
 <!-- note-topic-id: lec-07-topic-16 -->
-## Khung đích và thực hành điều khiển
+## 16. Thực hành: chuỗi năm trạng thái
 
-### Phân loại đích
+Hai bài tập 7 và 8 của phiếu bài tập tuần 7 dùng chuỗi năm trạng thái và đặc trưng của mục 12.2 (nguồn tr. 40): $A$ và $E$ kết thúc, $D$ là trạng thái đầu, hành động $0$ đi trái và $1$ đi phải, chuyển tất định, lượt tối đa ba bước, $\gamma=1$; thưởng vào $A$ bằng $1000$, vào $E$ bằng $10$, các chuyển khác bằng $-1$. Xấp xỉ tuyến tính
 
-Vấn đề: trước khi tính tay, cần một khung phân loại thống nhất để không nhầm đích của từng thuật toán.
+$$\hat q(s,a,w)=x(s,a)^\top w,\qquad x(s,a)=\big(d_{\text{trái}}(s);\,u(a);\,1\big)^\top,$$
 
-Trực giác: mọi thuật toán trong bài đều có dạng cập nhật $w_{t+1} = w_t + \alpha_t (y_t - \hat q(S_t, A_t, w_t)) x(S_t, A_t)$; chúng chỉ khác nhau ở đích $y_t$ và ở chính sách sinh dữ liệu.
+với $d_{\text{trái}}(B)=1$, $d_{\text{trái}}(C)=2$, $d_{\text{trái}}(D)=3$, $u(0)=1$, $u(1)=-1$; $[w]_i$ là thành phần thứ $i$ của $w$.
 
-Hình thức, bốn đích:
+### 16.1. Bài tập: Monte Carlo trên một lượt
 
-- Điều khiển MC: $y_t = G_t$, tổng thưởng đầy đủ của lượt.
-- Dự đoán TD(0): $y_t = R_{t+1} + \gamma x(S_{t+1})^\top w_t$.
-- SARSA: $y_t = R_{t+1} + \gamma x(S_{t+1}, A_{t+1})^\top w_t$, với $A_{t+1}$ từ chính sách hành vi.
-- Q-learning: $y_t = R_{t+1} + \gamma \max_a x(S_{t+1}, a)^\top w_t$.
+::: exercise Bài tập 7
+Cho $w_0=(1;1;-1)^\top$, $\alpha=0{,}1$ và một lượt duy nhất
 
-Ứng dụng: bảng này là bản đồ khi tính tay — xác định đích trước, rồi áp cùng một khuôn cập nhật. Giới hạn: chỉ MC có đích độc lập với $w$; ba đích còn lại đều tự khởi tạo và do đó là bán gradient.
+$$(D,0,-1,C),\quad (C,0,-1,B),\quad (B,0,1000,A).$$
 
-::: exercise Câu hỏi kiểm tra
-Với cùng một mẫu chuyển tiếp $(S_t, A_t, R_{t+1}, S_{t+1})$, viết cả bốn đích và chỉ ra đích nào trùng nhau trong trường hợp nào.
+1. Tính các lợi tức $G_0$, $G_1$, $G_2$.
+2. Viết các vector đặc trưng $x(D,0)$, $x(C,0)$, $x(B,0)$.
+3. Cập nhật trọng số theo đúng thứ tự thời gian trong lượt bằng cập nhật Monte Carlo $w_{t+1}=w_t+\alpha\big(G_t-x(S_t,A_t)^\top w_t\big)x(S_t,A_t)$.
+4. Tính $\hat q(D,0,w_3)$, $\hat q(C,0,w_3)$, $\hat q(B,0,w_3)$.
 :::
 
 ::: hint
-So sánh $\gamma x(S_{t+1}, A_{t+1})^\top w_t$ với $\gamma \max_a x(S_{t+1}, a)^\top w_t$.
+Với $\gamma=1$, $G_t$ là tổng phần thưởng từ $t+1$ đến hết lượt. Mỗi lần cập nhật dùng $w$ vừa có từ lần trước.
 :::
 
 ::: solution
-Bốn đích như trên. Dự đoán TD(0) và SARSA dùng hai loại hàm khác nhau: TD dùng giá trị trạng thái, còn SARSA dùng giá trị hành động. Nếu quy ước $v(S_{t+1})=q(S_{t+1},A_{t+1})$ trong trường hợp chỉ có một hành động khả dụng, hai đích có cùng giá trị số. SARSA và Q-learning trùng khi hành động $A_{t+1}$ do chính sách hành vi chọn cũng là hành động tham lam tại $S_{t+1}$. MC khác các đích còn lại vì dùng tổng thưởng đầy đủ và không tự khởi tạo.
+(1) $G_2=1000$, $G_1=-1+1000=999$, $G_0=-1-1+1000=998$.
+
+(2) $x(D,0)=(3;1;1)^\top$, $x(C,0)=(2;1;1)^\top$, $x(B,0)=(1;1;1)^\top$.
+
+(3) Lần 1, $(D,0)$: $\hat q(D,0,w_0)=3\cdot1+1\cdot1+1\cdot(-1)=3$; sai số $998-3=995$; bước $\alpha\cdot995=99{,}5$;
+
+$$w_1=(1;1;-1)^\top+99{,}5\,(3;1;1)^\top=(299{,}5;\,100{,}5;\,98{,}5)^\top.$$
+
+Lần 2, $(C,0)$: $\hat q(C,0,w_1)=2\cdot299{,}5+100{,}5+98{,}5=798$; sai số $999-798=201$; bước $20{,}1$;
+
+$$w_2=w_1+20{,}1\,(2;1;1)^\top=(339{,}7;\,120{,}6;\,118{,}6)^\top.$$
+
+Lần 3, $(B,0)$: $\hat q(B,0,w_2)=339{,}7+120{,}6+118{,}6=578{,}9$; sai số $1000-578{,}9=421{,}1$; bước $42{,}11$;
+
+$$w_3=w_2+42{,}11\,(1;1;1)^\top=(381{,}81;\,162{,}71;\,160{,}71)^\top.$$
+
+(4) $\hat q(D,0,w_3)=3\cdot381{,}81+162{,}71+160{,}71=1468{,}85$; $\hat q(C,0,w_3)=2\cdot381{,}81+323{,}42=1087{,}04$; $\hat q(B,0,w_3)=381{,}81+323{,}42=705{,}23$.
 :::
 
-### Tính tay đánh giá MC và SARSA trên chuỗi năm trạng thái
+Phép tính chỉ đánh giá giá trị hành động trên một lượt, chưa có bước cải thiện chính sách. Giá trị cuối tại $D$ vượt $G_0=998$ vì hai lý do. Thứ nhất, $\|x(D,0)\|^2=11$, nên $\alpha\|x(D,0)\|^2=1{,}1>1$: ngay lần 1, $\hat q(D,0,w_1)=3+1{,}1\cdot995=1097{,}5$ đã vượt mục tiêu, giống ví dụ Sarsa ở mục 12.4 ($\alpha\|x\|^2=2{,}2$) và khác ví dụ ở mục 7.2 ($\alpha\|x\|^2=0{,}5$). Thứ hai, hai lần cập nhật sau tại $C$ và $B$ tiếp tục kéo $\hat q(D,0)$ lên qua tham số dùng chung. Phiếu bài tập ghi "semi-gradient"; mục tiêu Monte Carlo $G_t$ không chứa $w$, nên cập nhật này là gradient đầy đủ (mục 6).
 
-Vấn đề: kiểm chứng toàn bộ khuôn lý thuyết bằng hai phép tính đầy đủ trên chuỗi $A\ B\ C\ D\ E$.
+### 16.2. Bài tập: Sarsa trên ba mẫu
 
-Thiết lập (tr. 40 và bài tập 7–8). $A$ và $E$ là trạng thái kết thúc; $D$ là trạng thái bắt đầu; hành động $0$ là đi trái, $1$ là đi phải; môi trường tất định, tối đa 3 bước, $\gamma = 1$. Phần thưởng: $R(A) = 1000$, $R(E) = 10$, mọi phần thưởng còn lại bằng $-1$ (phần thưởng gắn với trạng thái kết thúc được nhận khi bước vào trạng thái đó). Xấp xỉ tuyến tính cho $Q$:
-
-$$\hat q(s,a,w) = x(s,a)^\top w, \qquad x(s,a) = \begin{bmatrix} d_{\text{left}}(s) \\ u(a) \\ 1 \end{bmatrix},$$
-
-trong đó $d_{\text{left}}(B) = 1$, $d_{\text{left}}(C) = 2$, $d_{\text{left}}(D) = 3$ (khoảng cách tới tường trái), và $u(0) = +1$, $u(1) = -1$.
-
-#### Bài 7: đánh giá MC trên một lượt trong quá trình điều khiển
-
-Cho $w_0 = [1, 1, -1]^\top$, $\alpha = 0.1$, và một lượt duy nhất. Phép tính này chỉ cập nhật giá trị; chưa thực hiện bước cải thiện chính sách.
-
-$$(D, 0, -1, C),\quad (C, 0, -1, B),\quad (B, 0, +1000, A).$$
-
-Bước 1 — các tổng thưởng. Với $\gamma = 1$, $G_t$ là tổng phần thưởng từ thời điểm $t$ đến hết lượt:
-
-$$G_2 = R_3 = +1000, \qquad G_1 = R_2 + R_3 = -1 + 1000 = 999, \qquad G_0 = R_1 + R_2 + R_3 = -1 - 1 + 1000 = 998.$$
-
-Bước 2 — các vector đặc trưng:
-
-$$x(D,0) = \begin{bmatrix} 3 \\ +1 \\ 1 \end{bmatrix}, \qquad x(C,0) = \begin{bmatrix} 2 \\ +1 \\ 1 \end{bmatrix}, \qquad x(B,0) = \begin{bmatrix} 1 \\ +1 \\ 1 \end{bmatrix}.$$
-
-Bước 3 — cập nhật MC theo đúng thứ tự thời gian, $w_{t+1} = w_t + \alpha (G_t - x_t^\top w_t) x_t$.
-
-Lần 1, $(D,0)$, $G_0 = 998$: $x_0^\top w_0 = 3(1) + 1(1) + 1(-1) = 3$; sai số $998 - 3 = 995$; bước $\alpha \cdot 995 = 99.5$;
-
-$$w_1 = \begin{bmatrix} 1 \\ 1 \\ -1 \end{bmatrix} + 99.5 \begin{bmatrix} 3 \\ 1 \\ 1 \end{bmatrix} = \begin{bmatrix} 299.5 \\ 100.5 \\ 98.5 \end{bmatrix}.$$
-
-Lần 2, $(C,0)$, $G_1 = 999$: $x_1^\top w_1 = 2(299.5) + 100.5 + 98.5 = 599 + 199 = 798$; sai số $999 - 798 = 201$; bước $0.1 \cdot 201 = 20.1$;
-
-$$w_2 = \begin{bmatrix} 299.5 \\ 100.5 \\ 98.5 \end{bmatrix} + 20.1 \begin{bmatrix} 2 \\ 1 \\ 1 \end{bmatrix} = \begin{bmatrix} 339.7 \\ 120.6 \\ 118.6 \end{bmatrix}.$$
-
-Lần 3, $(B,0)$, $G_2 = 1000$: $x_2^\top w_2 = 339.7 + 120.6 + 118.6 = 578.9$; sai số $1000 - 578.9 = 421.1$; bước $0.1 \cdot 421.1 = 42.11$;
-
-$$w_3 = \begin{bmatrix} 339.7 \\ 120.6 \\ 118.6 \end{bmatrix} + 42.11 \begin{bmatrix} 1 \\ 1 \\ 1 \end{bmatrix} = \begin{bmatrix} 381.81 \\ 162.71 \\ 160.71 \end{bmatrix}.$$
-
-Bước 4 — giá trị xấp xỉ cuối cùng:
-
-$$\hat q(D,0) = 3(381.81) + 162.71 + 160.71 = 1145.43 + 323.42 = 1468.85,$$
-$$\hat q(C,0) = 2(381.81) + 162.71 + 160.71 = 763.62 + 323.42 = 1087.04,$$
-$$\hat q(B,0) = 381.81 + 162.71 + 160.71 = 705.23.$$
-
-Nhận xét: một lượt duy nhất với đích $+1000$ đẩy trọng số lên rất mạnh; các giá trị xấp xỉ vượt xa tổng thưởng thực tế vì chỉ có một mẫu và bước học cố định $\alpha = 0.1$. Điều này minh họa vì sao phân tích hội tụ cần điều kiện thích hợp cho dãy bước học.
-
-#### Bài 8: SARSA, tự tính lại đầy đủ
-
-Cho $w_0 = [1, 1, -1]^\top$, $\alpha = 0.2$, $\epsilon = 0.25$, và ba mẫu liên tiếp. Giá trị $\epsilon$ mô tả chính sách hành vi đã sinh mẫu; ba mẫu đã cho sẵn nên $\epsilon$ không đi vào phép cập nhật dưới đây.
+Cho $w_0 = [1, 1, -1]^\top$, $\alpha = 0.2$, $\varepsilon = 0.25$, và ba mẫu liên tiếp. Giá trị $\varepsilon$ mô tả chính sách hành vi đã sinh mẫu; ba mẫu đã cho sẵn nên $\varepsilon$ không đi vào phép cập nhật dưới đây.
 
 $$(D, 0, -1, C, 0), \qquad (C, 1, -1, D, 1), \qquad (D, 1, +10, E, \text{terminal}).$$
 
@@ -1088,6 +1060,29 @@ Tính $\delta_1$ từ công thức; với phần kiểm tra, tính $\hat q(D,1,w
 
 ::: solution
 $\delta_1=-1-2.6+2.4=-1.2$. Phần kiểm tra: $\hat q(D,1,w_3)-\hat q(D,0,w_3)=27.424-23.296=4.128$; hai vector đặc trưng chỉ khác thành phần $u(a)$, nên chênh lệch bằng $[w_3]_2(-1-1)=-2[w_3]_2=-2(-2.064)=4.128$.
+:::
+
+### 16.3. Khung mục tiêu cập nhật
+
+Các quy tắc trong bài có chung dạng: tham số được cộng thêm bước học nhân sai số giữa mục tiêu $y_t$ và dự đoán, nhân vector đặc trưng. Dự đoán dùng $\hat v(S_t,w_t)=x(S_t)^\top w_t$; điều khiển dùng $\hat q(S_t,A_t,w_t)=x(S_t,A_t)^\top w_t$. Các quy tắc khác nhau ở mục tiêu $y_t$ và ở chính sách sinh dữ liệu:
+
+| Quy tắc | Mục tiêu $y_t$ | Chứa $w_t$ |
+|---|---|---|
+| Monte Carlo (dự đoán hoặc điều khiển) | $G_t$ | không: gradient đầy đủ |
+| TD(0) dự đoán | $R_{t+1}+\gamma\,x(S_{t+1})^\top w_t$ | có: bán gradient |
+| Sarsa | $R_{t+1}+\gamma\,x(S_{t+1},A_{t+1})^\top w_t$, $A_{t+1}$ từ chính sách hành vi | có: bán gradient |
+| Q-learning | $R_{t+1}+\gamma\max_{a'}x(S_{t+1},a')^\top w_t$ | có: bán gradient |
+
+::: exercise Câu hỏi kiểm tra
+Với cùng một mẫu $(S_t,A_t,R_{t+1},S_{t+1},A_{t+1})$, xác định khi nào mục tiêu Sarsa và mục tiêu Q-learning bằng nhau.
+:::
+
+::: hint
+So sánh $x(S_{t+1},A_{t+1})^\top w_t$ với $\max_{a'}x(S_{t+1},a')^\top w_t$.
+:::
+
+::: solution
+Hai mục tiêu bằng nhau khi hành động $A_{t+1}$ do chính sách hành vi chọn cũng đạt cực đại của $\hat q(S_{t+1},\cdot,w_t)$, tức là hành động tham lam tại $S_{t+1}$. Mục tiêu TD(0) dự đoán dùng giá trị trạng thái nên thuộc bài toán khác (dự đoán); mục tiêu Monte Carlo dùng lợi tức đầy đủ và không bootstrap.
 :::
 
 ## Tài liệu tham khảo
