@@ -652,7 +652,22 @@ So sánh hai đại lượng: $\|\Pi_D T_\pi \hat v - \hat v\|_D$ và $\|v_\pi -
 Điểm cố định triệt tiêu sai số Bellman chiếu $\|\Pi_D T_\pi \hat v - \hat v\|_D$, tức khoảng cách giữa $\hat v$ và hình chiếu ảnh Bellman của nó. Nếu lớp hàm không chứa $v_\pi$, hình chiếu của $T_\pi \hat v$ nói chung không trùng hình chiếu của $v_\pi$, nên $\hat v$ tại điểm cố định có thể khác hình chiếu của $v_\pi$. TD giải bài toán điểm cố định Bellman chiếu, không trực tiếp cực tiểu khoảng cách tới $v_\pi$.
 :::
 
-Giới hạn hội tụ (phát biểu chuẩn, theo chính sách cố định): TD tuyến tính hội tụ tới $w_{\mathrm{TD}}$ khi các giả thiết sau cùng được thỏa — chính sách $\pi$ cố định, dữ liệu theo chính sách, chuỗi Markov phù hợp (chẳng hạn bất khả quy và không tuần hoàn để phân phối dừng duy nhất tồn tại), $\gamma < 1$, ma trận đặc trưng $\Phi$ đủ hạng (để $\Phi^\top D\Phi$ khả nghịch), và bước học thích hợp theo Robbins–Monro. Bảo đảm này không chuyển sang SARSA hay Q-learning với xấp xỉ hàm, vì ở đó chính sách thay đổi hoặc đích khác chính sách.
+### 10.4. Điều kiện hội tụ của TD tuyến tính
+
+Phương trình $Aw=b$ chỉ mô tả điểm dừng về trung bình. Kết quả cổ điển của Tsitsiklis và Van Roy (IEEE Transactions on Automatic Control, 1997; nguồn tr. 44–45) cho TD tuyến tính theo chính sách cần hai nhóm điều kiện:
+
+- dữ liệu: chính sách $\pi$ cố định, lấy mẫu theo chính sách; chuỗi trạng thái ergodic (từ mọi trạng thái có thể tới mọi trạng thái khác và không lặp theo chu kỳ), có phân phối dừng duy nhất với $d_\pi(s)>0$ mọi $s$;
+- hệ cập nhật: $\gamma<1$; đặc trưng bị chặn; $\Phi$ đủ hạng cột (cùng với $d_\pi>0$, điều này làm $\Phi^\top D\Phi$ khả nghịch); bước học thỏa Robbins–Monro.
+
+Dưới các điều kiện này, $w_t\to w_{\mathrm{TD}}$ với xác suất 1, trong đó $w_{\mathrm{TD}}$ là nghiệm duy nhất của $Aw=b$, tức điểm cố định Bellman chiếu.
+
+Lý do hệ trung bình $\dot w=b-Aw$ ổn định: với phân phối dừng, $\|P_\pi v\|_D\le\|v\|_D$ với mọi $v$. Thật vậy, theo từng hàng, $\big((P_\pi v)(s)\big)^2\le\sum_{s'}P_\pi(s,s')v(s')^2$ (bất đẳng thức Jensen, tổng hàng không vượt 1); nhân với $d_\pi(s)$ rồi cộng được $\|P_\pi v\|_D^2\le(d_\pi^\top P_\pi)v^2\le d_\pi^\top v^2=\|v\|_D^2$, với $v^2$ lấy bình phương từng thành phần. Trong bài toán theo lượt, $P_\pi$ dưới ngẫu nhiên và $d_\pi^\top P_\pi\le d_\pi^\top$ (phần chênh là khối lượng khởi động lại), nên bất đẳng thức vẫn đúng. Đặt $v=\Phi u$,
+
+$$u^\top Au=\|v\|_D^2-\gamma\,v^\top DP_\pi v\ge\|v\|_D^2-\gamma\|v\|_D\|P_\pi v\|_D\ge(1-\gamma)\|\Phi u\|_D^2,$$
+
+dương khi $u\ne0$ vì $\Phi$ đủ hạng cột và $d_\pi>0$. Vì vậy mọi trị riêng của $A$ có phần thực dương, $A$ khả nghịch và $w_{\mathrm{TD}}=A^{-1}b$. Hướng trung bình $b-Aw$ kéo $w$ về $w_{\mathrm{TD}}$; điều kiện Robbins–Monro và tính trộn của chuỗi làm phần nhiễu triệt tiêu. Mã hóa bốn khối ở mục 5.2 không đủ hạng cột; khi đó nghiệm tham số không duy nhất.
+
+Bảo đảm này chỉ dành cho dự đoán theo chính sách với chính sách cố định. Nó không chuyển sang Sarsa hay Q-learning với xấp xỉ hàm, vì ở đó chính sách đổi theo $w$ hoặc mục tiêu khác chính sách sinh dữ liệu (mục 12, 13).
 
 <!-- note-topic-id: lec-07-topic-09 -->
 ## So sánh MC–TD
@@ -934,7 +949,7 @@ MC gần hồi quy nhất vì đích hoàn chỉnh không phụ thuộc $w$. TD(
 - Tạ Việt Cường. Lecture 07: Hàm xấp xỉ trong Reinforcement Learning. VNU-UET, tháng 4 năm 2026, tr. 1–45.
 - Tạ Việt Cường. Bài tập tuần 7 — Function Approximation, ngày 8 tháng 4 năm 2026, bài 1–8.
 - David Silver. Lecture 6: Value Function Approximation. UCL RL Course.
-- J. Tsitsiklis và B. Van Roy. Analysis of temporal-difference learning with function approximation. 1996.
+- J. Tsitsiklis và B. Van Roy. An Analysis of Temporal-Difference Learning with Function Approximation. IEEE Transactions on Automatic Control, 1997 (danh mục của bài giảng nguồn ghi năm 1996).
 - J. Bhandari, D. Russo, R. Singal. A Finite Time Analysis of Temporal Difference Learning With Linear Function Approximation. COLT 2018 / Operations Research 2021.
 - C. Jin, Z. Yang, Z. Wang, M. I. Jordan. Provably Efficient Reinforcement Learning with Linear Function Approximation. COLT 2020.
 - S. Zou, T. Xu, Y. Liang. Finite-Sample Analysis for SARSA with Linear Function Approximation. NeurIPS 2019.
