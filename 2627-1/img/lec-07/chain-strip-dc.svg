@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -60 1300 142" role="img" aria-labelledby="t d">
+<title id="t">Chuỗi năm trạng thái, tô chuyển D sang C</title><desc id="d">Chuỗi A, B, C, D, E trên một hàng. D là trạng thái đầu; A và E viền kép, là trạng thái kết thúc. Mũi tên phía trên đi sang trái (hành động 0), phía dưới đi sang phải (hành động 1); nhãn là hành động rồi phần thưởng: vào A thưởng 1000, vào E thưởng 10, chuyển khác −1. Dưới B, C, D ghi d trái bằng 1, 2, 3. Mũi tên D sang C (hành động 0, thưởng −1) được vẽ đậm hơn: đó là chuyển trong mẫu (D, 0, −1, C, 0).</desc>
+<defs><marker id="an" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2F3E7A"/></marker><marker id="anh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="2.6" markerHeight="2.6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2F3E7A"/></marker><marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#B15A2B"/></marker></defs>
+<g font-family="Arial, Helvetica, sans-serif" fill="#28313D">
+<line x1="306" y1="-12" x2="116" y2="-12" stroke="#2F3E7A" stroke-width="4" marker-end="url(#an)"/>
+<text x="210.0" y="-30" text-anchor="middle" font-size="34">0 · 1000</text>
+<line x1="566" y1="-12" x2="376" y2="-12" stroke="#2F3E7A" stroke-width="4" marker-end="url(#an)"/>
+<text x="470.0" y="-30" text-anchor="middle" font-size="34">0 · −1</text>
+<line x1="826" y1="-12" x2="636" y2="-12" stroke="#2F3E7A" stroke-width="9" marker-end="url(#anh)"/>
+<text x="730.0" y="-30" text-anchor="middle" font-size="34" font-weight="bold">0 · −1</text>
+<line x1="374" y1="12" x2="564" y2="12" stroke="#B15A2B" stroke-width="4" marker-end="url(#ao)"/>
+<text x="470.0" y="58" text-anchor="middle" font-size="34">1 · −1</text>
+<line x1="634" y1="12" x2="824" y2="12" stroke="#B15A2B" stroke-width="4" marker-end="url(#ao)"/>
+<text x="730.0" y="58" text-anchor="middle" font-size="34">1 · −1</text>
+<line x1="894" y1="12" x2="1084" y2="12" stroke="#B15A2B" stroke-width="4" marker-end="url(#ao)"/>
+<text x="990.0" y="58" text-anchor="middle" font-size="34">1 · 10</text>
+<circle cx="80" cy="0" r="32" fill="white" stroke="#2F3E7A" stroke-width="4"/>
+<circle cx="80" cy="0" r="25" fill="none" stroke="#2F3E7A" stroke-width="2"/>
+<text x="80" y="12" text-anchor="middle" font-size="34" font-weight="bold">A</text>
+<circle cx="340" cy="0" r="32" fill="white" stroke="#2F3E7A" stroke-width="4"/>
+<text x="340" y="12" text-anchor="middle" font-size="34" font-weight="bold">B</text>
+<circle cx="600" cy="0" r="32" fill="white" stroke="#2F3E7A" stroke-width="4"/>
+<text x="600" y="12" text-anchor="middle" font-size="34" font-weight="bold">C</text>
+<circle cx="860" cy="0" r="32" fill="white" stroke="#B15A2B" stroke-width="6"/>
+<text x="860" y="12" text-anchor="middle" font-size="34" font-weight="bold">D</text>
+<circle cx="1120" cy="0" r="32" fill="white" stroke="#2F3E7A" stroke-width="4"/>
+<circle cx="1120" cy="0" r="25" fill="none" stroke="#2F3E7A" stroke-width="2"/>
+<text x="1120" y="12" text-anchor="middle" font-size="34" font-weight="bold">E</text>
+<text x="340" y="70" text-anchor="middle" font-size="32" fill="#2F3E7A">d<tspan font-size="22" dy="6">trái</tspan><tspan dy="-6"> = 1</tspan></text>
+<text x="600" y="70" text-anchor="middle" font-size="32" fill="#2F3E7A">d<tspan font-size="22" dy="6">trái</tspan><tspan dy="-6"> = 2</tspan></text>
+<text x="860" y="70" text-anchor="middle" font-size="32" fill="#2F3E7A">d<tspan font-size="22" dy="6">trái</tspan><tspan dy="-6"> = 3</tspan></text>
+<text x="896" y="-34" text-anchor="start" font-size="32" font-weight="bold" fill="#B15A2B">bắt đầu</text>
+<text x="80" y="70" text-anchor="middle" font-size="32">kết thúc</text>
+<text x="1156" y="-34" text-anchor="start" font-size="32">kết thúc</text>
+</g></svg>

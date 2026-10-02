@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1270 414" role="img" aria-labelledby="t d">
+<title id="t">Vòng học điều khiển với hàm xấp xỉ</title>
+<desc id="d">Sáu khối nối thành vòng: tham số w cho q̂(s, a, w); q̂ xác định chính sách ε-tham lam π_w; chính sách sinh dữ liệu (S, A, R, S′); dữ liệu cho mục tiêu y, với TD mục tiêu chứa w; mục tiêu cho cập nhật w theo δ = y − q̂; cập nhật quay lại tham số w. Vì vậy khi w đổi, chính sách và dữ liệu cũng đổi.</desc>
+<defs><marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2F3E7A"/></marker></defs>
+<g font-family="Arial, Helvetica, sans-serif" fill="#28313D">
+<rect x="60" y="40" width="330" height="112" rx="14" fill="#EEF2FA" stroke="#2F3E7A" stroke-width="3"/>
+<text x="225.0" y="108.0" text-anchor="middle" font-size="36">tham số w</text>
+<rect x="470" y="40" width="330" height="112" rx="14" fill="#EEF2FA" stroke="#2F3E7A" stroke-width="3"/>
+<text x="635.0" y="108.0" text-anchor="middle" font-size="36">q̂(s, a, w)</text>
+<rect x="880" y="40" width="330" height="112" rx="14" fill="#EEF2FA" stroke="#2F3E7A" stroke-width="3"/>
+<text x="1045.0" y="84" text-anchor="middle" font-size="34">chính sách</text>
+<text x="1045.0" y="128" text-anchor="middle" font-size="34">ε-tham lam π<tspan font-size="26" dy="8">w</tspan></text>
+<rect x="880" y="262" width="330" height="112" rx="14" fill="#EEF2FA" stroke="#2F3E7A" stroke-width="3"/>
+<text x="1045.0" y="306" text-anchor="middle" font-size="34">dữ liệu</text>
+<text x="1045.0" y="350" text-anchor="middle" font-size="34">(S, A, R, S′)</text>
+<rect x="470" y="262" width="330" height="112" rx="14" fill="#EEF2FA" stroke="#2F3E7A" stroke-width="3"/>
+<text x="635.0" y="306" text-anchor="middle" font-size="34">mục tiêu y</text>
+<text x="635.0" y="350" text-anchor="middle" font-size="34">(TD: chứa w)</text>
+<rect x="60" y="262" width="330" height="112" rx="14" fill="#EEF2FA" stroke="#2F3E7A" stroke-width="3"/>
+<text x="225.0" y="306" text-anchor="middle" font-size="34">cập nhật w</text>
+<text x="225.0" y="350" text-anchor="middle" font-size="34">theo δ = y − q̂</text>
+<line x1="390" y1="96" x2="466" y2="96" stroke="#2F3E7A" stroke-width="4" marker-end="url(#m)"/>
+<line x1="800" y1="96" x2="876" y2="96" stroke="#2F3E7A" stroke-width="4" marker-end="url(#m)"/>
+<line x1="1045" y1="152" x2="1045" y2="258" stroke="#2F3E7A" stroke-width="4" marker-end="url(#m)"/>
+<line x1="880" y1="318" x2="804" y2="318" stroke="#2F3E7A" stroke-width="4" marker-end="url(#m)"/>
+<line x1="470" y1="318" x2="394" y2="318" stroke="#2F3E7A" stroke-width="4" marker-end="url(#m)"/>
+<line x1="225" y1="262" x2="225" y2="156" stroke="#2F3E7A" stroke-width="4" marker-end="url(#m)"/>
+</g></svg>
