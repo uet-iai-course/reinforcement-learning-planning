@@ -543,7 +543,21 @@ $$\mathbb E_\pi[y_t^{\mathrm{TD}}\mid S_t]-v_\pi(S_t)=\gamma\,\mathbb E_\pi\big[
 
 nên khi $\hat v\ne v_\pi$ mục tiêu nói chung không còn là mẫu không chệch của $v_\pi(S_t)$ như lợi tức ở mục 7.1; độ chệch bằng $\gamma$ nhân sai số dự đoán trung bình ở trạng thái kế tiếp. Đổi lại, mục tiêu một bước chỉ chứa một phần thưởng ngẫu nhiên nên trong các thiết lập thường gặp có phương sai nhỏ hơn lợi tức đầy đủ (nguồn tr. 35), dù điều này không đúng trong mọi bài toán.
 
-Thay $y_t=y_t^{\mathrm{TD}}$ vào dạng cập nhật của mục 6.1, cập nhật tuyến tính là
+### 9.2. Một cập nhật TD(0)
+
+Cho $x(S_t)=(1;2)^\top$, $x(S_{t+1})=(2;0)^\top$, $w_t=(0{,}5;1)^\top$, $R_{t+1}=1$, $\gamma=0{,}9$ và $\alpha=0{,}1$. Cả hai dự đoán dùng cùng $w_t$, tính trước khi cập nhật:
+
+$$\hat v(S_t,w_t)=0{,}5+2=2{,}5,\qquad \hat v(S_{t+1},w_t)=1+0=1,$$
+
+$$y_t^{\mathrm{TD}}=1+0{,}9\cdot1=1{,}9,\qquad \delta_t=1{,}9-2{,}5=-0{,}6.$$
+
+Quy tắc giống Monte Carlo, với mục tiêu TD thay cho lợi tức, $\Delta w=\alpha\,\delta_t\,x(S_t)$; vector cập nhật là $x(S_t)$ của trạng thái hiện tại, không phải $x(S_{t+1})$:
+
+$$w_{t+1}=(0{,}5;1)^\top+0{,}1\cdot(-0{,}6)\cdot(1;2)^\top=(0{,}5;1)^\top-(0{,}06;0{,}12)^\top=(0{,}44;0{,}88)^\top.$$
+
+Dự đoán mới tại $S_t$ là $0{,}44+1{,}76=2{,}2$, giảm về phía mục tiêu $1{,}9$. Sau cập nhật, mục tiêu cũng đổi: $\hat v(S_{t+1},w_{t+1})=0{,}88$, nên nếu tính lại, mục tiêu là $1+0{,}9\cdot0{,}88=1{,}792$. Monte Carlo không có hiện tượng này vì $G_t$ không chứa $w$.
+
+Tổng quát, thay $y_t=y_t^{\mathrm{TD}}$ vào dạng cập nhật của mục 6.1, cập nhật tuyến tính là
 
 $$w_{t+1} = w_t + \alpha_t \delta_t x(S_t), \qquad \delta_t = R_{t+1} + \gamma x(S_{t+1})^\top w_t - x(S_t)^\top w_t.$$
 
