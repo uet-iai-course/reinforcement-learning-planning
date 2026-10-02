@@ -7,12 +7,12 @@
 | Định hướng | `L07-01`, `L07-02` | `L07-02` | không áp dụng: chỉ nối từ Bài 06 | không áp dụng | `L07-03` xác định sản phẩm học tập | `L07-03` | kết quả dạng bảng → phạm vi mới | 7 | 0 |
 | Xấp xỉ và đặc trưng | `L07-04` | `L07-05` | `L07-06` | `L07-07`, `L07-08`, `L07-10` | `L07-09`, `L07-11` | `L07-11` | bảng tra → mô hình tuyến tính có miền, kích thước và giới hạn biểu diễn | 21 | 2 |
 | MC tuyến tính | `L07-12` | `L07-13` | `L07-14` | `L07-15`, `L07-16` | `L07-16`, `X02` | `L07-16`, `X01` | return $G_t$ → gradient đầy đủ và cập nhật tuần tự | 19 | 2 |
-| TD tuyến tính và Bellman chiếu | `L07-18` | `L07-18` | `L07-19`; ví dụ hình học `L07-21` | `L07-20`, `L07-22`, `L07-23` | `L07-24` | `L07-24`, `L07-35` | chuyển tiếp một bước → bán gradient → hình chiếu → trực giao → điểm cố định | 26 | 4 |
+| TD tuyến tính và Bellman chiếu | `L07-18` | `L07-18` | `L07-19`; ví dụ hình học `L07-21` | `L07-20`, `L07-20b`, `L07-22`, `L07-23` | `L07-24` | `L07-24`, `L07-35` | chuyển tiếp một bước → bán gradient → thuật toán → hình chiếu → trực giao → điểm cố định | 27 | 3 |
 | So sánh MC–TD | `L07-25` | `L07-25` | không áp dụng: tổng hợp hai cụm đã có ví dụ | không áp dụng | `L07-25` | `L07-25` | hai đích đã học → phân biệt đối tượng phân tích | 3 | 0 |
 | Điều khiển | `L07-26` | `L07-26`, `L07-28` | `L07-27` | `L07-28`, `L07-29` | `L07-30` | `L07-28`, `X03` | đặc trưng $x(s,a)$ → SARSA với chính sách $\varepsilon$-greedy hiện hành | 18 | 1 |
 | Khác chính sách và bất ổn | `L07-31` | phần mở đầu `L07-31` | so sánh đích trên mẫu `L07-30` | quy tắc đích ở `L07-31`; phân loại ở `L07-32` | `L07-33`, `L07-34` | `L07-31`, `L07-33`, `L07-35` | đổi hành động kế tiếp sang cực đại → nhận diện trường hợp cần phân tích riêng | 16 | 1 |
 
-Các khoảng trang trên không chồng lấn. Tổng phần chính là 110 phút cốt lõi và 10 phút linh hoạt; tổng chữa bài là 30 phút (`X01`: 8, `X02`: 10, `X03`: 12). Ký hiệu $x$, $w$, $G_t$ và $\delta_t$ được truyền nguyên dạng từ ví dụ sang công thức và bài tập.
+Các khoảng trang trên không chồng lấn. Tổng phần chính là 111 phút cốt lõi và 9 phút linh hoạt; tổng chữa bài là 30 phút (`X01`: 8, `X02`: 10, `X03`: 12). Ký hiệu $x$, $w$, $G_t$ và $\delta_t$ được truyền nguyên dạng từ ví dụ sang công thức và bài tập.
 
 ## Bản đồ từng trang
 
@@ -37,10 +37,11 @@ Các khoảng trang trên không chồng lấn. Tổng phần chính là 110 ph�
 | `L07-17` | Điều kiện hội tụ của Monte Carlo tuyến tính theo nguồn tr. 34 (iid, đặc trưng bị chặn, Robbins–Monro); phân tích phương sai–độ lệch cho thấy cực tiểu trùng cực tiểu $J_\mu$; giả thiết cố định $\pi,\mu$, đặc trưng, $\mathbb E[G_t^2]<\infty$; nghiệm bằng $v_\pi$ chỉ khi lớp hàm chứa $v_\pi$. | tr. 34; HW4, HW6 | 4 | Monte Carlo chờ hết lượt; chuyển sang TD(0) cập nhật sau mỗi chuyển tiếp. |
 | `L07-18` | Vấn đề và trực giác TD: Monte Carlo chờ hết lượt; TD(0) thay $G_{t+1}$ bằng $\hat v(S_{t+1},w_t)$, mục tiêu $y_t^{\mathrm{TD}}$, sai số TD $\delta_t$; cập nhật sau mỗi chuyển tiếp; mục tiêu chứa $w_t$ nên chệch khi $\hat v\ne v_\pi$; trạng thái kết thúc có giá trị tiếp nối 0. | tr. 27, 35–36 | 4 | Tính một chuyển tiếp trước khi khái quát. |
 | `L07-19` | Ví dụ số TD một bước: $\hat v(S_t)=2{,}5$, $\hat v(S_{t+1})=1$, $y^{\mathrm{TD}}=1{,}9$, $\delta_t=-0{,}6$, $w_{t+1}=(0{,}44;0{,}88)^T$, dự đoán mới $2{,}2$; quy tắc như Monte Carlo với mục tiêu TD; mục tiêu cũng đổi sau cập nhật (ghi chú). | suy ra từ tr. 35–36 | 4 | Khái quát thành bán gradient và thuật toán. |
-| `L07-20` | Hình thức và giao diện thuật toán TD tuyến tính. | tr. 32, 35–36 | 4 | Xem ảnh Bellman có nằm trong lớp biểu diễn không. |
+| `L07-20` | Hình thức: gradient đầy đủ của $\tfrac12\delta_t(w)^2$, TD(0) bỏ số hạng $\gamma x(S_{t+1})$ nên là bán gradient (câu hỏi nguồn tr. 32); quy tắc tuyến tính; bán gradient không là bước giảm của một mất mát cố định. | tr. 32, 35–36 | 3 | Đóng gói quy tắc thành thuật toán. |
+| `L07-20b` | Thuật toán TD(0) tuyến tính: đầu vào/đầu ra, ngân sách chuyển tiếp, giá trị tiếp nối 0 khi kết thúc, $y$ và $\delta$ tính bằng cùng $w$. | tr. 35–36 | 2 | Xem ảnh Bellman có nằm trong lớp biểu diễn không. |
 | `L07-21` | Trực giác và ví dụ hình học: Bellman đưa giá trị ra ngoài lớp biểu diễn. | HW5 | 4 | Chuyển phép chiếu thành điều kiện trực giao. |
 | `L07-22` | Điều kiện trực giao và phép khai triển thành $Aw=b$. | HW5 | 4 | Viết điểm cố định chiếu. |
-| `L07-23` | Hình thức: điểm cố định Bellman chiếu. | HW5 | 6 | Gắn phương trình với điều kiện hội tụ. |
+| `L07-23` | Hình thức: điểm cố định Bellman chiếu. | HW5 | 5 | Gắn phương trình với điều kiện hội tụ. |
 | `L07-24` | Điều kiện dữ liệu, bước học và tính ổn định của hệ trung bình TD. | tr. 35–37; HW5–6 | 4 | So sánh đích MC và TD trước khi điều khiển. |
 | `L07-25` | So sánh cấu trúc đích và đối tượng phân tích. | tr. 33–37 | 3 | Thay V bằng Q để chọn hành động. |
 | `L07-26` | Vấn đề điều khiển và hai chính sách. | tr. 38–39 | 3 | Chọn đặc trưng hành động cho ví dụ. |
@@ -58,7 +59,7 @@ Các khoảng trang trên không chồng lấn. Tổng phần chính là 110 ph�
 | `X02` | Chữa HW7: ba cập nhật MC. | HW7 | 10 | Giữ cùng đặc trưng cho SARSA. |
 | `X03` | Chữa HW8: ba cập nhật SARSA. | HW8 | 12 | Kết thúc bằng kiểm tra chỉ số và terminal. |
 
-Mười phút linh hoạt nằm trong các khoảng không chồng lấn: `L07-04`–`L07-11` (2), `L07-12`–`L07-17` (2), `L07-18`–`L07-25` (4), `L07-26`–`L07-30` (1), `L07-31`–`L07-36` (1). Có thể rút phần trao đổi ở `L07-06`, `L07-16`, `L07-22`, `L07-23`, `L07-30` và `L07-33`. Không hiển thị phân tuyến hoặc thời lượng trên trang chiếu và ghi chú.
+Chín phút linh hoạt nằm trong các khoảng không chồng lấn: `L07-04`–`L07-11` (2), `L07-12`–`L07-17` (2), `L07-18`–`L07-25` (3), `L07-26`–`L07-30` (1), `L07-31`–`L07-36` (1). Có thể rút phần trao đổi ở `L07-06`, `L07-16`, `L07-22`, `L07-23`, `L07-30` và `L07-33`. Không hiển thị phân tuyến hoặc thời lượng trên trang chiếu và ghi chú.
 
 ## Bản đồ sáu mạch
 
@@ -75,7 +76,7 @@ Bảy cụm khái niệm được chứa trong sáu mạch; cụm so sánh MC–
 
 ## Ánh xạ hai chiều ghi chú–trang chiếu
 
-Mỗi trang trong 39 trang chiếu (`L07-01`–`L07-36` và `X01`–`X03`) thuộc đúng một chủ đề; cả 16 chủ đề đều có trang tương ứng. Bảng dưới đây đối chiếu trực tiếp với thuộc tính `data-note-topic-id` trong HTML.
+Mỗi trang trong 40 trang chiếu (`L07-01`–`L07-36`, `L07-20b` và `X01`–`X03`) thuộc đúng một chủ đề; cả 16 chủ đề đều có trang tương ứng. Bảng dưới đây đối chiếu trực tiếp với thuộc tính `data-note-topic-id` trong HTML.
 
 | Topic | Trang chiếu |
 |---|---|
@@ -87,7 +88,7 @@ Mỗi trang trong 39 trang chiếu (`L07-01`–`L07-36` và `X01`–`X03`) thu�
 | `lec-07-topic-05` | `L07-12` |
 | `lec-07-topic-06` | `L07-13`, `L07-14`, `L07-15`, `L07-16` |
 | `lec-07-topic-15` | `L07-17`, `X01` |
-| `lec-07-topic-07` | `L07-18`, `L07-19`, `L07-20` |
+| `lec-07-topic-07` | `L07-18`, `L07-19`, `L07-20`, `L07-20b` |
 | `lec-07-topic-08` | `L07-21`, `L07-22`, `L07-23`, `L07-24` |
 | `lec-07-topic-09` | `L07-25` |
 | `lec-07-topic-10` | `L07-26`, `L07-27`, `L07-28`, `L07-29`, `L07-30` |

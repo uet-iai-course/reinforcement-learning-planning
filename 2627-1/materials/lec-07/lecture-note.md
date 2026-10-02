@@ -557,22 +557,40 @@ $$w_{t+1}=(0{,}5;1)^\top+0{,}1\cdot(-0{,}6)\cdot(1;2)^\top=(0{,}5;1)^\top-(0{,}0
 
 Dự đoán mới tại $S_t$ là $0{,}44+1{,}76=2{,}2$, giảm về phía mục tiêu $1{,}9$. Sau cập nhật, mục tiêu cũng đổi: $\hat v(S_{t+1},w_{t+1})=0{,}88$, nên nếu tính lại, mục tiêu là $1+0{,}9\cdot0{,}88=1{,}792$. Monte Carlo không có hiện tượng này vì $G_t$ không chứa $w$.
 
-Tổng quát, thay $y_t=y_t^{\mathrm{TD}}$ vào dạng cập nhật của mục 6.1, cập nhật tuyến tính là
+### 9.3. Bán gradient TD(0) tuyến tính
 
-$$w_{t+1} = w_t + \alpha_t \delta_t x(S_t), \qquad \delta_t = R_{t+1} + \gamma x(S_{t+1})^\top w_t - x(S_t)^\top w_t.$$
+Mục tiêu TD chứa $w$. Với $\delta_t(w)=R_{t+1}+\gamma x(S_{t+1})^\top w-x(S_t)^\top w$, gradient đầy đủ của $\tfrac12\delta_t(w)^2$ là
 
-Đây là bán gradient: nó là gradient của $\frac{1}{2}\big(y_t^{\mathrm{TD}} - \hat v(S_t,w)\big)^2$ chỉ khi coi đích là hằng số, bỏ qua sự phụ thuộc của $y_t^{\mathrm{TD}}$ vào $w_t$. Vì vậy không thể phân tích nó như hồi quy SGD thông thường; cần công cụ khác — toán tử Bellman chiếu — ở chủ đề tiếp theo.
+$$\nabla_w\tfrac12\delta_t(w)^2=\delta_t(w)\big(\gamma x(S_{t+1})-x(S_t)\big),$$
+
+nên bước giảm theo gradient đầy đủ là $\delta_t(w)\big(x(S_t)-\gamma x(S_{t+1})\big)$. TD(0) bỏ phần $\gamma\delta_t x(S_{t+1})$ của gradient, phần đến từ mục tiêu, tức giữ mục tiêu cố định khi lấy đạo hàm; vì vậy gọi là bán gradient (nguồn tr. 32, 35–36). Thay $y_t=y_t^{\mathrm{TD}}$ vào dạng cập nhật của mục 6.1 được cập nhật tuyến tính
+
+$$\delta_t = R_{t+1} + \gamma x(S_{t+1})^\top w_t - x(S_t)^\top w_t, \qquad w_{t+1} = w_t + \alpha_t \delta_t x(S_t),$$
+
+cùng quy tắc $\Delta w=\alpha\,\delta_t\,x(S_t)$ của mục 9.2. Số hạng bị bỏ đến từ việc mục tiêu thay đổi theo $w$, đúng hiện tượng ở mục 9.2 (mục tiêu từ $1{,}9$ thành $1{,}792$). Bán gradient không phải bước giảm của một mất mát cố định, nên không phân tích được như SGD của Monte Carlo ở mục 8; mục 10 tìm điểm mà nó hướng tới. Lấy gradient đầy đủ của $\tfrac12\delta_t^2$ dẫn tới một bài toán khác, cực tiểu sai số TD bình phương, không xét trong bài.
+
+### 9.4. Thuật toán TD(0) tuyến tính
+
+Đầu vào: chính sách $\pi$ cố định, đặc trưng $x$, hệ số chiết khấu $\gamma$, trọng số khởi tạo $w_0$, bước học $\alpha_n$, ngân sách $N$ chuyển tiếp. Đầu ra: $w$.
+
+1. Khởi tạo $w\leftarrow w_0$; lấy trạng thái đầu $S$.
+2. Lặp $n=1,\dots,N$: chọn $A\sim\pi(\cdot\mid S)$, quan sát $R$ và $S'$, rồi làm các bước 3–5.
+3. Nếu $S'$ là trạng thái kết thúc thì $y\leftarrow R$; ngược lại $y\leftarrow R+\gamma x(S')^\top w$.
+4. $\delta\leftarrow y-x(S)^\top w$; $w\leftarrow w+\alpha_n\,\delta\,x(S)$.
+5. Nếu $S'$ kết thúc, lấy trạng thái đầu mới cho $S$; ngược lại $S\leftarrow S'$.
+
+Mỗi bước dùng một chuyển tiếp, không cần chờ hết lượt; $y$ và $\delta$ tính bằng cùng $w$ trước khi cập nhật. Thuật toán dừng theo ngân sách $N$ hoặc một tiêu chuẩn đặt trước; một giá trị $\delta$ nhỏ ở một mẫu không chứng minh $w$ đã hội tụ. Bảo đảm hội tụ ở mục 10 cần dữ liệu sinh theo chính sách cố định $\pi$. Vì bán gradient không giảm một mất mát cố định, muốn biết $w$ dừng ở đâu khi lặp đủ lâu cần xét ảnh Bellman của $\hat v$ và lớp biểu diễn (mục 10). Chi phí mỗi bước tỉ lệ với số thành phần khác 0 của $x(S)$ và $x(S')$; bộ nhớ là $d$ tham số.
 
 ::: exercise Câu hỏi kiểm tra
-Viết gradient đầy đủ của hàm mất mát $\frac{1}{2}\big(y_t^{\mathrm{TD}}(w) - x(S_t)^\top w\big)^2$ với $y_t^{\mathrm{TD}}(w) = R_{t+1} + \gamma x(S_{t+1})^\top w$, rồi chỉ ra số hạng mà cập nhật bán gradient bỏ qua.
+Viết gradient đầy đủ của mất mát $\frac{1}{2}\big(y_t^{\mathrm{TD}}(w) - x(S_t)^\top w\big)^2$ với $y_t^{\mathrm{TD}}(w) = R_{t+1} + \gamma x(S_{t+1})^\top w$, rồi chỉ ra số hạng mà cập nhật bán gradient bỏ qua. Với số liệu của mục 9.2, tính số hạng đó tại $w_t$.
 :::
 
 ::: hint
-Đạo hàm theo quy tắc tích: $\nabla (y(w) - x^\top w)^2$ có hai số hạng.
+Đạo hàm theo quy tắc chuỗi: $e(w)=y_t^{\mathrm{TD}}(w)-x(S_t)^\top w$ phụ thuộc $w$ qua cả hai dự đoán.
 :::
 
 ::: solution
-Đặt $e(w) = y_t^{\mathrm{TD}}(w) - x(S_t)^\top w = R_{t+1} + \gamma x(S_{t+1})^\top w - x(S_t)^\top w$. Khi đó $\nabla_w e = \gamma x(S_{t+1}) - x(S_t)$ và gradient đầy đủ của $\frac12e(w)^2$ là $e(w)\big(\gamma x(S_{t+1}) - x(S_t)\big)$. Bước hạ gradient vì thế tỉ lệ với $e(w)[x(S_t)-\gamma x(S_{t+1})]$. Cập nhật bán gradient chỉ giữ phần $e(w_t)x(S_t)$, tức bỏ qua số hạng $-\gamma e(w_t)x(S_{t+1})$.
+Đặt $e(w) = y_t^{\mathrm{TD}}(w) - x(S_t)^\top w = R_{t+1} + \gamma x(S_{t+1})^\top w - x(S_t)^\top w$. Khi đó $\nabla_w e = \gamma x(S_{t+1}) - x(S_t)$ và gradient đầy đủ của $\frac12e(w)^2$ là $e(w)\big(\gamma x(S_{t+1}) - x(S_t)\big)$. Bước hạ gradient vì thế tỉ lệ với $e(w)[x(S_t)-\gamma x(S_{t+1})]$. Cập nhật bán gradient chỉ giữ phần $e(w_t)x(S_t)$, tức bỏ qua số hạng $-\gamma e(w_t)x(S_{t+1})$. Với số liệu mục 9.2, $e(w_t)=\delta_t=-0{,}6$: phần giữ lại là $-0{,}6\,(1;2)^\top=(-0{,}6;-1{,}2)^\top$, số hạng bị bỏ là $-0{,}9\cdot(-0{,}6)\,(2;0)^\top=(1{,}08;0)^\top$; hướng giảm theo gradient đầy đủ là tổng $(0{,}48;-1{,}2)^\top$.
 :::
 
 <!-- note-topic-id: lec-07-topic-08 -->

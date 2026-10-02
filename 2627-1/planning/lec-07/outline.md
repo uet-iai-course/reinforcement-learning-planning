@@ -6,7 +6,7 @@
 - Nguồn bài tập: `RL-hk2-2025-2026/resources/hw07-function-approximation.pdf`, 3 trang, 8 bài.
 - Đối tượng: sinh viên đã học MDP, MC, TD(0), SARSA và Q-learning dạng bảng.
 - Tiên quyết đại số tuyến tính: tích vô hướng có trọng số (dạng $u^TDv$), phép chiếu trực giao lên không gian con và trị riêng của ma trận; sinh viên cần dùng chúng ở phần Bellman chiếu.
-- Phần trình chiếu: 120 phút, gồm 110 phút cốt lõi và 10 phút linh hoạt.
+- Phần trình chiếu: 120 phút, gồm 111 phút cốt lõi và 9 phút linh hoạt.
 - Chữa bài: 30 phút ở ba trang dọc `X01`–`X03`, ngoài 120 phút chính.
 - Không có code demo trong nguồn.
 - Bảng phân loại nguồn tr. 4 (actor-critic/policy methods) được bỏ riêng vì ngoài phạm vi bài; ba điểm đối chiếu thuật toán ở tr. 3 (loại mục tiêu, theo hay khác chính sách, cách cải thiện chính sách) được nêu ở `L07-02`.
@@ -30,13 +30,13 @@ Sáu mạch chứa bảy cụm khái niệm: cụm so sánh MC–TD nằm cuối
 | M1 Mở đầu và đích học tập | `L07-01`–`L07-03` | Cầu nối dạng bảng, ba trục phân tích và kết quả học tập | 7 | 0 |
 | M2 Nhu cầu xấp xỉ, đặc trưng, biểu diễn | `L07-04`–`L07-11` | Vấn đề bảng tra, chia sẻ tham số, ví dụ, tuyến tính và giới hạn đặc trưng | 21 | 2 |
 | M3 MC tuyến tính | `L07-12`–`L07-17` | Phân loại đích, return, ví dụ, gradient, thuật toán và điều kiện | 19 | 2 |
-| M4 TD, Bellman chiếu và so sánh MC–TD | `L07-18`–`L07-25` | Bootstrap, ví dụ số, bán gradient, phép chiếu, hội tụ và đối chiếu hai đích | 29 | 4 |
+| M4 TD, Bellman chiếu và so sánh MC–TD | `L07-18`–`L07-25` | Bootstrap, ví dụ số, bán gradient, thuật toán TD(0), phép chiếu, hội tụ và đối chiếu hai đích | 30 | 3 |
 | M5 Điều khiển và SARSA tuyến tính | `L07-26`–`L07-30` | Giá trị hành động, chuỗi ví dụ, SARSA và cập nhật số | 18 | 1 |
 | M6 Q-learning, deadly triad, phạm vi, kết luận | `L07-31`–`L07-36` | Đích Q-learning, bộ ba bất ổn, phạm vi lý thuyết, kết luận và kiểm tra | 16 | 1 |
-| Tổng | 36 trang chính |  | 110 | 10 |
+| Tổng | 37 trang chính |  | 111 | 9 |
 | Chữa bài (dọc, ngoài 120 phút) | `X01`–`X03` | Đạo hàm MC, MC tuần tự, SARSA tuần tự | 30 | 0 |
 
-Tổng kiểm tra: $7+23+21+(30+3)+19+17=120$ phút chính; $30+3$ là hai cụm TD và so sánh MC–TD cùng nằm trong M4. Chữa bài $8+10+12=30$ phút.
+Tổng kiểm tra: $7+23+21+(30+3)+19+17=120$ phút chính; $30+3$ là hai cụm TD và so sánh MC–TD cùng nằm trong M4. Chữa bài $8+10+12=30$ phút. Ngày 02-10-2026 tách thuật toán TD(0) sang `L07-20b`, lấy 1 phút linh hoạt của M4 từ phần trao đổi ở `L07-23` (6 → 5 phút); tổng mạch và tổng 120 phút không đổi.
 
 ## Ánh xạ nguồn
 
@@ -50,7 +50,7 @@ Tổng kiểm tra: $7+23+21+(30+3)+19+17=120$ phút chính; $30+3$ là hai cụm
 | 27 | giữ, sửa | `L07-12`–`L07-13`, `L07-18` | Phân biệt rõ đích MC không phụ thuộc $w$ và đích TD phụ thuộc $w$. |
 | 28–30 | giữ, vẽ lại | `L07-09` | Thay ảnh miền ứng dụng bằng SVG khái niệm, không dùng ảnh raster. |
 | 31 | giữ, tách | `L07-09`–`L07-11`, `L07-27` | Giữ vector điều hướng và mã hóa bốn khối $[\phi(s);e_a;\phi(s)\otimes e_a;1]$ của nguồn; xác định đặc trưng ba chiều của chuỗi là một mã hóa khác. |
-| 32 | sửa, tách | `L07-12`, `L07-15`, `L07-20` | Đặt ví dụ trước hình thức; MC là gradient đầy đủ, TD mới dùng bán gradient khi bỏ đạo hàm qua bootstrap. |
+| 32 | sửa, tách | `L07-12`, `L07-15`, `L07-20` (câu hỏi "vì sao gọi là bán gradient") | Đặt ví dụ trước hình thức; MC là gradient đầy đủ, TD mới dùng bán gradient khi bỏ đạo hàm qua bootstrap. |
 | 33–34 | giữ, sửa | `L07-13`–`L07-17` | Bổ sung giao diện thuật toán và điều kiện phân phối lấy mẫu. |
 | 35–36 | giữ, mở rộng | `L07-18`–`L07-24` | Đặt hình học trước đại số; bổ sung điều kiện trực giao, $A$, $b$, $D$, $\Phi$, $P_\pi$, $r_\pi$ và giả thiết. |
 | 37 | giữ, sửa | `L07-25` | Giữ so sánh có thể kiểm chứng; lược tuyên bố hiệu năng quá rộng. |
@@ -85,13 +85,13 @@ Tổng kiểm tra: $7+23+21+(30+3)+19+17=120$ phút chính; $30+3$ là hai cụm
 | $G_t$ | return từ thời điểm $t$ đến cuối lượt |
 | $\delta_t$ | sai số TD của một chuyển tiếp |
 
-## Danh mục đầy đủ 39 mã trang
+## Danh mục đầy đủ 40 mã trang
 
-M1: `L07-01`, `L07-02`, `L07-03`. M2: `L07-04`, `L07-05`, `L07-06`, `L07-07`, `L07-08`, `L07-09`, `L07-10`, `L07-11`. M3: `L07-12`, `L07-13`, `L07-14`, `L07-15`, `L07-16`, `L07-17`. M4: `L07-18`, `L07-19`, `L07-20`, `L07-21`, `L07-22`, `L07-23`, `L07-24`, `L07-25`. M5: `L07-26`, `L07-27`, `L07-28`, `L07-29`, `L07-30`. M6: `L07-31`, `L07-32`, `L07-33`, `L07-34`, `L07-35`, `L07-36`. Dọc: `X01`, `X02`, `X03`.
+M1: `L07-01`, `L07-02`, `L07-03`. M2: `L07-04`, `L07-05`, `L07-06`, `L07-07`, `L07-08`, `L07-09`, `L07-10`, `L07-11`. M3: `L07-12`, `L07-13`, `L07-14`, `L07-15`, `L07-16`, `L07-17`. M4: `L07-18`, `L07-19`, `L07-20`, `L07-20b`, `L07-21`, `L07-22`, `L07-23`, `L07-24`, `L07-25`. M5: `L07-26`, `L07-27`, `L07-28`, `L07-29`, `L07-30`. M6: `L07-31`, `L07-32`, `L07-33`, `L07-34`, `L07-35`, `L07-36`. Dọc: `X01`, `X02`, `X03`.
 
 ## Ánh xạ hai chiều ghi chú–trang chiếu
 
-Mỗi trang trong 39 trang chiếu (`L07-01`–`L07-36` và `X01`–`X03`) thuộc đúng một chủ đề; cả 16 chủ đề đều có trang tương ứng. Bảng dưới đây đối chiếu trực tiếp với thuộc tính `data-note-topic-id` trong HTML.
+Mỗi trang trong 40 trang chiếu (`L07-01`–`L07-36`, `L07-20b` và `X01`–`X03`) thuộc đúng một chủ đề; cả 16 chủ đề đều có trang tương ứng. Bảng dưới đây đối chiếu trực tiếp với thuộc tính `data-note-topic-id` trong HTML.
 
 | Topic | Trang chiếu |
 |---|---|
@@ -103,7 +103,7 @@ Mỗi trang trong 39 trang chiếu (`L07-01`–`L07-36` và `X01`–`X03`) thu�
 | `lec-07-topic-05` | `L07-12` |
 | `lec-07-topic-06` | `L07-13`, `L07-14`, `L07-15`, `L07-16` |
 | `lec-07-topic-15` | `L07-17`, `X01` |
-| `lec-07-topic-07` | `L07-18`, `L07-19`, `L07-20` |
+| `lec-07-topic-07` | `L07-18`, `L07-19`, `L07-20`, `L07-20b` |
 | `lec-07-topic-08` | `L07-21`, `L07-22`, `L07-23`, `L07-24` |
 | `lec-07-topic-09` | `L07-25` |
 | `lec-07-topic-10` | `L07-26`, `L07-27`, `L07-28`, `L07-29`, `L07-30` |
