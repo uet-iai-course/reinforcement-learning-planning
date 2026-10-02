@@ -114,15 +114,16 @@ Mỗi trang trong 40 trang chiếu (`L07-01`–`L07-36`, `L07-20b` và `X01`–`
 
 ## Tài sản trực quan
 
-Tám SVG được vẽ lại trong `2627-1/img/lec-07/`:
+Bảy SVG được vẽ lại trong `2627-1/img/lec-07/`:
 
 1. `tabular-vs-parametric.svg`;
 2. `shared-parameter-effect.svg`;
 3. `linear-pipeline.svg`;
 4. `feature-domains.svg`;
 5. `projected-bellman.svg`;
-6. `mc-vs-td-targets.svg`;
-7. `five-state-features.svg`;
-8. `deadly-triad.svg`.
+6. `five-state-features.svg`;
+7. `deadly-triad.svg`.
+
+Ngày 02-10-2026 xóa `mc-vs-td-targets.svg`: hình không đọc được khi đặt cùng bảng sáu hàng ở `L07-25`, nội dung trùng hàng "Mục tiêu" của bảng; tệp vẫn còn trong lịch sử git.
 
 Không dùng ảnh raster, tài nguyên mạng hoặc tài sản ngoài bài.

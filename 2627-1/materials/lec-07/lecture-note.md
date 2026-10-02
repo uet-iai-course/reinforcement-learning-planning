@@ -72,11 +72,11 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Kết nối ra: nền cho so sánh MC–TD và giới hạn lý thuyết.
 - Nguồn: bài tập 5.
 
-### So sánh MC–TD
+### Hai mục tiêu dự đoán
 
 - Nhóm: `cốt lõi`.
-- Vai trò trong mạch: tổng hợp khác biệt về đích, độ chệch, phương sai, cập nhật trực tuyến và lý thuyết.
-- Kết nối vào: MC gradient và TD bán gradient.
+- Vai trò trong mạch: tổng hợp khác biệt về mục tiêu, kỳ vọng, phương sai, thời điểm cập nhật, loại gradient và nghiệm tuyến tính.
+- Kết nối vào: Monte Carlo gradient đầy đủ và TD bán gradient, điểm cố định Bellman chiếu.
 - Kết nối ra: dẫn tới điều khiển với giá trị hành động.
 - Nguồn: tr. 37 và bài tập 2.
 
@@ -670,35 +670,35 @@ dương khi $u\ne0$ vì $\Phi$ đủ hạng cột và $d_\pi>0$. Vì vậy mọi
 Bảo đảm này chỉ dành cho dự đoán theo chính sách với chính sách cố định. Nó không chuyển sang Sarsa hay Q-learning với xấp xỉ hàm, vì ở đó chính sách đổi theo $w$ hoặc mục tiêu khác chính sách sinh dữ liệu (mục 12, 13).
 
 <!-- note-topic-id: lec-07-topic-09 -->
-## So sánh MC–TD
+## 11. Hai mục tiêu dự đoán
 
-Vấn đề: sau khi có cả hai cập nhật, cần đối chiếu để biết khi nào dùng cái nào.
+### 11.1. So sánh Monte Carlo và TD(0)
 
-Trực giác: MC "dễ hiểu về mặt thống kê", TD "mạnh hơn về mặt tính toán". Trong RL hiện đại, TD/bootstrapping thắng về hiệu năng, nhưng lý thuyết khó hơn đáng kể.
+Cả Monte Carlo và TD(0) đều dự đoán $v_\pi$ với chính sách $\pi$ cố định. Bảng dưới gom các kết quả của mục 7–10, theo bảng so sánh ở nguồn tr. 37:
 
-Hình thức, bảng so sánh theo tr. 37:
-
-| Tiêu chí | MC | TD |
+| Tiêu chí | Monte Carlo | TD(0) |
 |---|---|---|
-| Đích | $G_t$ | $R_{t+1} + \gamma \hat v(S_{t+1}, w_t)$ |
-| Độ chệch | không chệch theo tổng thưởng | có độ chệch do tự khởi tạo |
-| Phương sai | cao | thường thấp hơn |
-| Cập nhật trực tuyến | phải chờ hết lượt | thực hiện sau từng bước |
-| Lý thuyết | gần hồi quy | xấp xỉ ngẫu nhiên và Bellman chiếu |
-| Khác chính sách + xấp xỉ hàm | có thể dùng lấy mẫu quan trọng nhưng phương sai lớn | có nguy cơ phân kỳ do bộ ba bất ổn |
+| Mục tiêu | $G_t$ | $R_{t+1} + \gamma \hat v(S_{t+1}, w)$ |
+| Thời điểm cập nhật | cuối lượt | sau mỗi chuyển tiếp |
+| Kỳ vọng mục tiêu | bằng $v_\pi(S_t)$ | nói chung lệch khi $\hat v$ sai |
+| Phương sai mục tiêu | thường cao hơn | thường thấp hơn |
+| Loại cập nhật | gradient đầy đủ | bán gradient |
+| Nghiệm tuyến tính | điểm cực tiểu $J_\mu$ ($\Pi_Dv_\pi$ khi $\mu=d_\pi$) | điểm cố định Bellman chiếu |
 
-Ứng dụng và giới hạn: MC phù hợp khi cần đích không chệch và lượt ngắn; TD phù hợp khi cần cập nhật trực tuyến và phương sai thấp. Với dữ liệu khác chính sách kết hợp xấp xỉ hàm, MC có thể dùng lấy mẫu quan trọng nhưng phương sai lớn, còn TD có nguy cơ phân kỳ do bộ ba bất ổn.
+Kỳ vọng của mục tiêu Monte Carlo bằng $v_\pi(S_t)$ (mục 7.1); độ chệch của mục tiêu TD bằng $\gamma$ nhân sai số dự đoán trung bình ở trạng thái kế tiếp (mục 9.1). Hàng phương sai theo nguồn tr. 37 và chỉ đúng trong các thiết lập thường gặp: mục tiêu TD chứa một phần thưởng ngẫu nhiên, lợi tức chứa cả phần còn lại của lượt. Với cùng đặc trưng, hai phương pháp nói chung cho hai dự đoán khác nhau khi hội tụ: với $\mu=d_\pi$, Monte Carlo cho $\Pi_Dv_\pi$, TD cho điểm cố định của $\Pi_DT_\pi$ (mục 10.3).
+
+Nguồn tóm tắt: Monte Carlo dễ phân tích về thống kê vì gần bài toán hồi quy; TD hiệu quả hơn về tính toán vì cập nhật trực tuyến, nhưng phân tích khó hơn. Bảng nguồn còn một hàng về học khác chính sách cùng xấp xỉ hàm: Monte Carlo có thể dùng lấy mẫu quan trọng nhưng phương sai lớn, TD có nguy cơ phân kỳ; hàng này được xét ở mục 13 cùng bộ ba bất ổn. Phần tiếp theo chuyển từ dự đoán sang điều khiển, nơi cần $\hat q$ và chính sách thay đổi theo $w$.
 
 ::: exercise Câu hỏi kiểm tra (bài tập 2)
-So sánh dự đoán MC và dự đoán TD(0) với xấp xỉ tuyến tính theo bốn tiêu chí: dạng đích, độ chệch/phương sai, khả năng cập nhật trực tuyến và độ khó phân tích lý thuyết.
+So sánh dự đoán Monte Carlo và dự đoán TD(0) với xấp xỉ tuyến tính theo bốn tiêu chí: dạng mục tiêu, độ chệch và phương sai, khả năng cập nhật trực tuyến, độ khó phân tích lý thuyết.
 :::
 
 ::: hint
-Dùng bảng trên; với lý thuyết, nhớ MC gần hồi quy còn TD cần toán tử Bellman chiếu.
+Dùng bảng trên; với lý thuyết, nhớ Monte Carlo gần hồi quy còn TD cần toán tử Bellman chiếu.
 :::
 
 ::: solution
-MC dùng đích $G_t$ — tổng thưởng đầy đủ, không phụ thuộc $w$ — nên không chệch theo tổng thưởng nhưng có phương sai cao; TD dùng $R_{t+1} + \gamma x(S_{t+1})^\top w_t$ nên có độ chệch do tự khởi tạo nhưng thường có phương sai thấp hơn. MC phải chờ hết lượt; TD cập nhật ngay sau mỗi bước. Về lý thuyết, MC-SGD gần hồi quy SGD chuẩn với dữ liệu độc lập cùng phân phối và điều kiện Robbins–Monro; TD tuyến tính cần phân tích xấp xỉ ngẫu nhiên với toán tử Bellman chiếu, giả thiết chuỗi Markov phù hợp, $\gamma < 1$ và $\Phi$ đủ hạng.
+Monte Carlo dùng mục tiêu $G_t$, lợi tức đầy đủ không phụ thuộc $w$, nên kỳ vọng của mục tiêu bằng $v_\pi(S_t)$ nhưng phương sai thường cao. TD(0) dùng $R_{t+1} + \gamma x(S_{t+1})^\top w_t$, nên mục tiêu nói chung lệch khi $\hat v$ sai nhưng phương sai thường thấp hơn. Monte Carlo phải chờ hết lượt; TD cập nhật ngay sau mỗi chuyển tiếp. Về lý thuyết, Monte Carlo là hạ gradient ngẫu nhiên trên sai số bình phương, hội tụ tới cực tiểu $J_\mu$ dưới điều kiện lấy mẫu và Robbins–Monro (mục 8.1); TD tuyến tính cần phân tích hệ trung bình $b-Aw$ và toán tử Bellman chiếu, với chuỗi ergodic, $\gamma < 1$, $\Phi$ đủ hạng cột và Robbins–Monro (mục 10.4).
 :::
 
 <!-- note-topic-id: lec-07-topic-10 -->
