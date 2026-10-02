@@ -624,13 +624,21 @@ trong đó bước cuối thay $T_\pi(\Phi w)=r_\pi+\gamma P_\pi\Phi w$. Đây l
 
 Trọng số là $d_\pi$ vì khi dữ liệu sinh theo $\pi$, trạng thái $s$ được cập nhật với tần suất dài hạn $d_\pi(s)$. Với bài toán theo lượt, $d_\pi$ là tần suất thăm dài hạn khi các lượt nối tiếp nhau; $P_\pi$ trong $T_\pi$ chỉ gồm chuyển giữa các trạng thái chưa kết thúc (giá trị tại trạng thái kết thúc bằng 0). TD dừng về trung bình khi $b-Aw=0$, tức $\Phi^\top D z=0$: phần dư Bellman $z=T_\pi(\Phi w)-\Phi w$ trực giao với mọi cột $\phi_j$ của $\Phi$ theo tích vô hướng $\langle u,v\rangle_D=u^\top Dv$.
 
-Điều kiện trực giao này là phương trình điểm cố định. Nếu tồn tại $w_{\mathrm{TD}}$ với $b-Aw_{\mathrm{TD}}=0$, tức $\Phi^\top D\, r_\pi = \Phi^\top D (I - \gamma P_\pi) \Phi w_{\mathrm{TD}}$, nhân hai vế với $\Phi(\Phi^\top D \Phi)^{-1}$ (khi $\Phi^\top D\Phi$ khả nghịch) và dùng $T_\pi(\Phi w) = r_\pi + \gamma P_\pi \Phi w$:
+### 10.3. Điểm cố định Bellman chiếu
 
-$$\Phi w_{\mathrm{TD}} = \Phi(\Phi^\top D\Phi)^{-1}\Phi^\top D\,\big(r_\pi + \gamma P_\pi \Phi w_{\mathrm{TD}}\big) = \Pi_D T_\pi(\Phi w_{\mathrm{TD}}),$$
+Phép chiếu theo $D$ đưa một vector $v$ tới điểm gần nhất trong lớp $\{\Phi w\}$ theo chuẩn $\|v\|_D=\sqrt{v^\top Dv}$; đây là chuẩn khi mọi trạng thái có $d_\pi(s)>0$ (chuỗi ergodic, giả thiết ở mục 10.4). Khi $\Phi^\top D\Phi$ khả nghịch,
 
-trong đó $\Pi_D v = \Phi(\Phi^\top D \Phi)^{-1}\Phi^\top D\, v$ là phép chiếu trực giao theo tích vô hướng $\langle\cdot,\cdot\rangle_D$. Ý nghĩa: $\hat v = \Phi w_{\mathrm{TD}}$ là hình chiếu theo $D$ của $T_\pi \hat v$ xuống lớp biểu diễn; TD không tìm $v_\pi$ mà tìm điểm trùng với hình chiếu ảnh Bellman của chính nó.
+$$\Pi_D=\Phi(\Phi^\top D\Phi)^{-1}\Phi^\top D.$$
 
-Giới hạn hội tụ (phát biểu chuẩn, theo chính sách cố định): TD tuyến tính hội tụ tới $w_{\mathrm{TD}}$ khi các giả thiết sau cùng được thỏa — chính sách $\pi$ cố định, dữ liệu theo chính sách, chuỗi Markov phù hợp (chẳng hạn bất khả quy và không tuần hoàn để phân phối dừng duy nhất tồn tại), $\gamma < 1$, ma trận đặc trưng $\Phi$ đủ hạng (để $\Phi^\top D\Phi$ khả nghịch), và bước học thích hợp theo Robbins–Monro. Bảo đảm này không chuyển sang SARSA hay Q-learning với xấp xỉ hàm, vì ở đó chính sách thay đổi hoặc đích khác chính sách.
+Hình chiếu đặc trưng bởi phần dư trực giao với các cột của $\Phi$ theo $D$: $\Phi^\top D(v-\Pi_Dv)=0$. Vì vậy điều kiện dừng ở mục 10.2 tương đương với phương trình điểm cố định
+
+$$\Phi w_{\mathrm{TD}}=\Pi_D T_\pi(\Phi w_{\mathrm{TD}})\iff Aw_{\mathrm{TD}}=b.$$
+
+Chứng minh (Bài tập 5). Từ $b-Aw=0$, tức $\Phi^\top D\big(T_\pi(\Phi w)-\Phi w\big)=0$, nhân trái với $\Phi(\Phi^\top D\Phi)^{-1}$ được $\Pi_DT_\pi(\Phi w)-\Phi(\Phi^\top D\Phi)^{-1}\Phi^\top D\Phi w=\Pi_DT_\pi(\Phi w)-\Phi w=0$. Ngược lại, nếu $\Phi w=\Pi_DT_\pi(\Phi w)$ thì nhân trái với $\Phi^\top D$ và dùng $\Phi^\top D\Pi_D=\Phi^\top D$ được $\Phi^\top D\Phi w=\Phi^\top DT_\pi(\Phi w)$, tức $b-Aw=0$. Trên hình của mục 10.1, điểm cố định là trường hợp $\Pi T_\pi(\Phi w)$ trùng với chính $\Phi w$.
+
+Ý nghĩa. TD hướng tới điểm cố định của toán tử Bellman chiếu $\Pi_DT_\pi$. Monte Carlo với $\mu=d_\pi$ cực tiểu $J_\mu=\tfrac12\|v_\pi-\Phi w\|_D^2$, nên hướng tới hình chiếu $\Pi_Dv_\pi$ của giá trị thật (mục 8.1); hai điểm chỉ trùng nhau trong trường hợp đặc biệt, chẳng hạn khi $v_\pi$ nằm trong lớp biểu diễn. Phép so sánh với $\Pi_Dv_\pi$ là diễn giải bổ sung từ ý lệch mục tiêu ở nguồn (tr. 43): TD giải phương trình điểm cố định Bellman chiếu, không trực tiếp cực tiểu sai số tới $v_\pi$.
+
+Điều kiện khả nghịch chỉ cần để viết $\Pi_D$ bằng nghịch đảo và để vector tham số nghiệm là duy nhất. Nếu $\Phi$ không đủ hạng cột, dùng giả nghịch đảo; hình chiếu $\Pi_Dv$ vẫn xác định dù nhiều $w$ cho cùng dự đoán. Phương trình chỉ mô tả điểm dừng về trung bình; mục 10.4 nêu điều kiện để dãy cập nhật ngẫu nhiên thật sự hội tụ tới $w_{\mathrm{TD}}$.
 
 ::: exercise Câu hỏi kiểm tra
 Giải thích vì sao phương trình $\Phi w_{\mathrm{TD}} = \Pi_D T_\pi(\Phi w_{\mathrm{TD}})$ cho thấy TD triệt tiêu sai số Bellman chiếu chứ không trực tiếp cực tiểu sai số $\|\hat v - v_\pi\|_D$.
@@ -643,6 +651,8 @@ So sánh hai đại lượng: $\|\Pi_D T_\pi \hat v - \hat v\|_D$ và $\|v_\pi -
 ::: solution
 Điểm cố định triệt tiêu sai số Bellman chiếu $\|\Pi_D T_\pi \hat v - \hat v\|_D$, tức khoảng cách giữa $\hat v$ và hình chiếu ảnh Bellman của nó. Nếu lớp hàm không chứa $v_\pi$, hình chiếu của $T_\pi \hat v$ nói chung không trùng hình chiếu của $v_\pi$, nên $\hat v$ tại điểm cố định có thể khác hình chiếu của $v_\pi$. TD giải bài toán điểm cố định Bellman chiếu, không trực tiếp cực tiểu khoảng cách tới $v_\pi$.
 :::
+
+Giới hạn hội tụ (phát biểu chuẩn, theo chính sách cố định): TD tuyến tính hội tụ tới $w_{\mathrm{TD}}$ khi các giả thiết sau cùng được thỏa — chính sách $\pi$ cố định, dữ liệu theo chính sách, chuỗi Markov phù hợp (chẳng hạn bất khả quy và không tuần hoàn để phân phối dừng duy nhất tồn tại), $\gamma < 1$, ma trận đặc trưng $\Phi$ đủ hạng (để $\Phi^\top D\Phi$ khả nghịch), và bước học thích hợp theo Robbins–Monro. Bảo đảm này không chuyển sang SARSA hay Q-learning với xấp xỉ hàm, vì ở đó chính sách thay đổi hoặc đích khác chính sách.
 
 <!-- note-topic-id: lec-07-topic-09 -->
 ## So sánh MC–TD
