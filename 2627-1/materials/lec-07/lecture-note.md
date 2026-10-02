@@ -24,13 +24,13 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Kết nối ra: dẫn tới xấp xỉ tuyến tính cụ thể.
 - Nguồn: tr. 23.
 
-### Xấp xỉ tuyến tính và miền/kích thước
+### Bài toán dự đoán và xấp xỉ tuyến tính
 
 - Nhóm: `cốt lõi`.
-- Vai trò trong mạch: chuẩn hoá ký hiệu $x$, $w$, $\Phi$ dùng suốt bài.
+- Vai trò trong mạch: phát biểu bài toán dự đoán với $J_\mu$, chuẩn hoá ký hiệu $x$, $w$, $\Phi$ dùng suốt bài.
 - Kết nối vào: ý tưởng hàm tham số.
 - Kết nối ra: nền cho mọi cập nhật MC/TD tuyến tính phía sau.
-- Nguồn: tr. 24–31.
+- Nguồn: tr. 23–27, 34; $J_\mu$ theo Sutton và Barto, §9.2.
 
 ### Thiết kế đặc trưng và giới hạn biểu diễn
 
@@ -257,7 +257,21 @@ $\Delta w=(0{,}2;\,0)^T$. Do đó $\Delta\hat v(s)=0{,}2$, $\Delta\hat v(s')=0$ 
 :::
 
 <!-- note-topic-id: lec-07-topic-03 -->
-## Xấp xỉ tuyến tính và miền/kích thước
+## 4. Bài toán dự đoán và xấp xỉ tuyến tính
+
+### 4.1. Bài toán dự đoán với hàm xấp xỉ
+
+Thiết lập: chính sách $\pi$ cố định trên quá trình quyết định Markov (MDP) có phần thưởng bị chặn; trạng thái $S_t\in\mathcal S$, phần thưởng $R_{t+1}\in\mathbb R$; $0\le\gamma<1$, hoặc mọi lượt kết thúc với xác suất 1. Các điều kiện này bảo đảm $v_\pi$ tồn tại và hữu hạn (nguồn tr. 7–8 dùng giả thiết phần thưởng bị chặn). Mỗi trạng thái có vector đặc trưng $x(s)\in\mathbb R^d$; dự đoán $\hat v(s,w)$ phụ thuộc tham số $w\in\mathbb R^d$.
+
+Cần chọn $w$ để $\hat v(\cdot,w)$ gần $v_\pi$. Muốn sửa $w$ có hướng, cần một tiêu chí đo $\hat v$ gần $v_\pi$ đến đâu; tiêu chí được dùng là sai số bình phương có trọng số
+
+$$J_\mu(w)=\tfrac12\sum_{s\in\mathcal S}\mu(s)\bigl(v_\pi(s)-\hat v(s,w)\bigr)^2,\qquad \mu(s)\ge0,\ \sum_s\mu(s)=1,$$
+
+trong đó $\mu$ là phân phối của các trạng thái dùng để học, thường là tần suất trạng thái khi chạy $\pi$; trạng thái có $\mu(s)$ lớn được ưu tiên độ chính xác. Khi lớp hàm không chứa $v_\pi$, không có $w$ làm sai số bằng 0 ở mọi trạng thái, nên đổi $\mu$ có thể đổi nghiệm tốt nhất. Với không gian trạng thái liên tục, tổng được thay bằng kỳ vọng theo $\mu$. Ký hiệu $d_\pi$ dành cho phân phối dừng của chuỗi trạng thái dưới $\pi$, dùng ở phần TD; hai phân phối chỉ trùng nhau khi $\mu$ được chọn bằng $d_\pi$.
+
+Nguồn (tr. 34) phát biểu hội tụ của Monte Carlo "trên phân phối dữ liệu"; $J_\mu$ nêu tường minh phân phối đó và tương ứng sai số giá trị $\overline{VE}$ ở Sutton và Barto (ấn bản 2, §9.2), thêm hệ số $\tfrac12$ để gọn đạo hàm. Vì $v_\pi$ chưa biết, các phần sau thay $v_\pi(S_t)$ bằng mục tiêu cập nhật tính từ mẫu.
+
+### 4.2. Xấp xỉ tuyến tính
 
 Vấn đề: chọn lớp hàm nào để xấp xỉ giá trị?
 
