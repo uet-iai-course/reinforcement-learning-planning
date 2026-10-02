@@ -483,3 +483,29 @@ Quy ước số và vector của lượt này: dấu phẩy thập phân; vector
 Phạm vi đã làm: bước 0 (chuyển sang `lecture-deck`) và 40 trang theo thứ tự trình chiếu, gồm trang thêm L07-20b và đổi chỗ L07-30 trước L07-29; mỗi trang một commit (deck, mục ghi chú bài giảng tương ứng, planning), push ngay sau commit; thẻ Bài 7 trên `index.html` thêm ở commit của L07-01. Mỗi trang qua: bảng rà soát của điều phối (`.lec07-work/plan-lec07.md`) → tác tử biên tập (no-ai-slop Edit, tự rà góc nhìn sinh viên và toán) → hai tác tử rà soát chỉ đọc chạy song song (toán–RL; mạch lập luận–góc nhìn sinh viên kèm no-ai-slop Detect) → áp phát hiện (một số sửa nhẹ do điều phối làm trực tiếp, đã ghi) → kiểm trình duyệt → commit, push. Không có phát hiện chặn bàn giao hoặc nghiêm trọng còn mở; mọi phát hiện trung bình đã sửa; các cờ cỡ chữ ghi "giữ" kèm lý do.
 
 Kiểm của điều phối (Playwright Chromium, `reloadserver` cổng 8766, tắt hiệu ứng chuyển trang): 40 trang ở 1600×900 và 390×844, 80/80 đạt: không lỗi console hoặc trang, không `.katex-error`, không tài nguyên hỏng, không yêu cầu mạng ngoài, không cuộn ngang, không tràn khung hoặc đè chân trang; điều hướng bàn phím chạy. 40 `data-slide-id` duy nhất, sáu `<section>` ngoài; ghi chú diễn giả không chứa mã trang hay lời chỉ đạo giảng viên. Ảnh đã xem trực tiếp ở mỗi bước trang. Trình xem ghi chú: 1066 biểu thức KaTeX, 0 lỗi, không yêu cầu mạng ngoài; lỗi CSP về script nội dòng có sẵn ở trình xem. `index.html`: hai liên kết của thẻ Bài 7 (bài giảng, ghi chú) trả 200. Thư mục làm việc `.lec07-work/` (bị `.gitignore` bỏ qua) được xóa sau khi xong.
+
+## Rút gọn chữ trên trang — 03-10-2026
+
+Yêu cầu của người dùng: một số trang quá nhiều chữ, giải thích dài dòng; rút gọn theo `no-ai-slop` (Edit), giọng ngắn gọn, học thuật; dùng hình minh họa khi hợp lý; không tham chiếu "ví dụ/trang trước", thay bằng hình hoặc nêu lại dữ kiện.
+
+Quy ước: mặt trang giữ luận điểm, công thức, dữ kiện và câu hỏi; lý giải, điều kiện phụ và liên hệ nguồn chuyển vào ghi chú diễn giả, không mất nội dung. Ghi chú bài giảng chỉ sửa khi nội dung hoặc hình trên mặt trang đổi. Mục tiêu khoảng ≤85 từ chữ (không tính công thức và tiêu đề) cho trang nội dung; không giảm cỡ chữ; giữ đúng toán và các sửa của lượt rà trước. Số từ đo bằng cùng một script trên mặt trang (bỏ ghi chú diễn giả, công thức `$…$`, `$$…$$` và tiêu đề `h2`).
+
+Vai trò: biên tập là tác tử "Editor lượt hai" (fork, Opus 5.5, effort high), tác tử duy nhất ghi tệp; rà soát do hai tác tử rà soát cũ của lượt 02-10-2026 đảm nhận, theo phân công của điều phối.
+
+### Bảng từng trang
+
+| Trang | Vấn đề | Thay đổi | Ghi chú diễn giả/ghi chú bài giảng |
+|---|---|---|---|
+| L07-02 | 108 từ; thẻ "Bài 05–06" liệt kê đủ điều kiện hội tụ dạng bảng; thẻ "Bài này" hai câu | 74 từ. Thẻ trái còn một câu ("Mỗi trạng thái hoặc cặp có một giá trị riêng; chứng minh hội tụ xét từng ô"); thẻ phải còn một câu ("dùng chung $w$, nên một cập nhật đổi ước lượng ở nhiều trạng thái"); giữ hộp ba điểm đối chiếu, bỏ "trong bài" | Ghi chú diễn giả nhận điều kiện thăm vô hạn lần, Robbins–Monro, GLIE (Monte Carlo, Sarsa), Q-learning dạng bảng và câu "lập luận theo từng ô không còn áp dụng trực tiếp". Ghi chú bài giảng 1.1 đã có đủ, không sửa |
+| L07-04 | 120 từ; câu mở có nhận xét "dễ phân tích nhưng khó mở rộng"; ý thứ ba kèm lý giải dài | 84 từ. Câu mở chỉ nêu bảng lưu gì; ba ý ngắn, mỗi ý một dòng; ý thứ ba giữ định nghĩa iid | Ghi chú diễn giả nhận "bảng dễ phân tích nhưng khó mở rộng" và lý giải "mẫu trong lượt phụ thuộc nhau, phân phối trạng thái đổi theo chính sách". Ghi chú bài giảng 2.1 đã có đủ, không sửa |
+| L07-07 | Thiết lập dài; câu $\mu$ kèm "$\mu(s)$ lớn được ưu tiên"; câu dẫn "theo sai số bình phương có trọng số" lặp nghĩa công thức | 59 từ. Gộp thiết lập vào một ý; câu dẫn "Chọn $w$ để $\hat v(\cdot,w)$ gần $v_\pi$:"; câu $\mu$ chỉ còn định nghĩa; hộp viết lại gọn | Ghi chú diễn giả nhận "sai số bình phương có trọng số" và "trạng thái có $\mu(s)$ lớn được ưu tiên". Ghi chú bài giảng 4.1 đã có đủ, không sửa |
+| L07-11 | 102 từ; ví dụ đặc trưng hằng và điều kiện "$\mathcal S$ hữu hạn" trên mặt trang; hộp mở bằng "Tổng quát hơn" | 81 từ. Bỏ ví dụ đặc trưng hằng và "Tổng quát hơn"; hộp một câu: lớp $\{\Phi w\}$ và sai số xấp xỉ là khoảng cách theo trọng số $\mu$ | Ghi chú diễn giả nhận ví dụ đặc trưng hằng (điều kiện $\mathcal S$ hữu hạn đã có trong ghi chú). Ghi chú bài giảng 5.3 đã có đủ, không sửa |
+
+### Phát hiện rà soát của đợt rút gọn
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa | trạng thái |
+|---|---|---|---|---|---|
+| nhẹ | L07-11, hộp | Bỏ "($\mathcal S$ hữu hạn)" khi $\Phi$ xuất hiện lần đầu | toán, mạch | Giữ lại "($\mathcal S$ hữu hạn)" (điều phối sửa trực tiếp) | đã sửa |
+| nhẹ | L07-07, hộp | "mục tiêu tính từ mẫu" lệch thuật ngữ "mục tiêu cập nhật" | toán | "mục tiêu cập nhật tính từ mẫu" (điều phối) | đã sửa |
+| nhẹ | L07-02, thẻ phải | Mất vế hệ quả nối hai thẻ | mạch | Thêm "; lập luận theo từng ô không còn dùng trực tiếp" (điều phối) | đã sửa |
+| nhẹ | L07-04, ý 3 | Nhãn không iid thiếu lý do mà L07-17, L07-24 dựa vào | mạch | Thêm ": mẫu trong lượt phụ thuộc nhau" (điều phối) | đã sửa |
