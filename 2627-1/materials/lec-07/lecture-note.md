@@ -56,11 +56,11 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Kết nối ra: đối chiếu với bán gradient TD.
 - Nguồn: tr. 33–34 và bài tập 4.
 
-### TD(0) bán gradient
+### TD(0) với hàm xấp xỉ
 
 - Nhóm: `cốt lõi`.
-- Vai trò trong mạch: mạch TD, cập nhật với đích tự khởi tạo (*bootstrap*).
-- Kết nối vào: MC gradient đầy đủ.
+- Vai trò trong mạch: mục tiêu một bước có bootstrap, cập nhật bán gradient sau mỗi chuyển tiếp.
+- Kết nối vào: Monte Carlo phải chờ hết lượt.
 - Kết nối ra: dẫn tới phân tích Bellman chiếu.
 - Nguồn: tr. 35–36.
 
@@ -527,19 +527,27 @@ $\nabla_w^2 \ell_t(w) = x(S_t)x(S_t)^\top$, là ma trận bán xác định dư�
 :::
 
 <!-- note-topic-id: lec-07-topic-07 -->
-## TD(0) bán gradient
+## 9. TD(0) với hàm xấp xỉ
 
-Vấn đề: TD(0) muốn cập nhật trực tuyến ngay sau mỗi bước chuyển, không chờ hết lượt; đích của nó là gì và cập nhật có tính chất gì?
+### 9.1. Mục tiêu TD(0) với hàm xấp xỉ
 
-Trực giác: thay vì chờ tổng thưởng đầy đủ, TD dùng ước lượng hiện tại của trạng thái kế làm một phần đích. Cách tự khởi tạo này giảm phương sai và cho phép cập nhật trực tuyến, nhưng đích bị chệch vì dựa trên $w_t$ chưa hội tụ.
+Monte Carlo phải chờ hết lượt để có $G_t=R_{t+1}+\gamma G_{t+1}$. Như TD(0) dạng bảng ở Bài 05, TD(0) thay phần còn lại $G_{t+1}$ bằng dự đoán hiện tại (nguồn tr. 35):
 
-Hình thức. Đích TD là $y_t^{\mathrm{TD}} = R_{t+1} + \gamma \hat v(S_{t+1}, w_t)$, và cập nhật tuyến tính là
+$$y_t^{\mathrm{TD}} = R_{t+1} + \gamma \hat v(S_{t+1}, w_t), \qquad \delta_t = y_t^{\mathrm{TD}} - \hat v(S_t, w_t).$$
+
+Đại lượng $\delta_t$ gọi là sai số TD. Cập nhật thực hiện ngay sau một chuyển tiếp, không chờ hết lượt. Phần thưởng mang chỉ số $t+1$ vì nó nhận được sau khi rời $S_t$. Nếu $S_{t+1}$ là trạng thái kết thúc thì giá trị tiếp nối bằng 0 và mục tiêu là $R_{t+1}$.
+
+Mục tiêu chứa $w_t$ (bootstrap). Với $\pi$ cố định,
+
+$$\mathbb E_\pi[y_t^{\mathrm{TD}}\mid S_t]-v_\pi(S_t)=\gamma\,\mathbb E_\pi\big[\hat v(S_{t+1},w_t)-v_\pi(S_{t+1})\mid S_t\big],$$
+
+nên khi $\hat v\ne v_\pi$ mục tiêu nói chung không còn là mẫu không chệch của $v_\pi(S_t)$ như lợi tức ở mục 7.1; độ chệch bằng $\gamma$ nhân sai số dự đoán trung bình ở trạng thái kế tiếp. Đổi lại, mục tiêu một bước chỉ chứa một phần thưởng ngẫu nhiên nên trong các thiết lập thường gặp có phương sai nhỏ hơn lợi tức đầy đủ (nguồn tr. 35), dù điều này không đúng trong mọi bài toán.
+
+Thay $y_t=y_t^{\mathrm{TD}}$ vào dạng cập nhật của mục 6.1, cập nhật tuyến tính là
 
 $$w_{t+1} = w_t + \alpha_t \delta_t x(S_t), \qquad \delta_t = R_{t+1} + \gamma x(S_{t+1})^\top w_t - x(S_t)^\top w_t.$$
 
 Đây là bán gradient: nó là gradient của $\frac{1}{2}\big(y_t^{\mathrm{TD}} - \hat v(S_t,w)\big)^2$ chỉ khi coi đích là hằng số, bỏ qua sự phụ thuộc của $y_t^{\mathrm{TD}}$ vào $w_t$. Vì vậy không thể phân tích nó như hồi quy SGD thông thường; cần công cụ khác — toán tử Bellman chiếu — ở chủ đề tiếp theo.
-
-Ưu điểm: cập nhật trực tuyến; trong các thiết lập quen thuộc, đích một bước thường có phương sai có điều kiện thấp hơn tổng thưởng MC. Nhược điểm: đích tự khởi tạo bị chệch.
 
 ::: exercise Câu hỏi kiểm tra
 Viết gradient đầy đủ của hàm mất mát $\frac{1}{2}\big(y_t^{\mathrm{TD}}(w) - x(S_t)^\top w\big)^2$ với $y_t^{\mathrm{TD}}(w) = R_{t+1} + \gamma x(S_{t+1})^\top w$, rồi chỉ ra số hạng mà cập nhật bán gradient bỏ qua.
