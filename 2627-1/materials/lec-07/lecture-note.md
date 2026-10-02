@@ -40,12 +40,12 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Kết nối ra: đặc trưng cho cặp trạng thái–hành động dùng lại trong ví dụ chuỗi; sai số xấp xỉ tách khỏi sai số ước lượng trước khi xây dựng mục tiêu cập nhật.
 - Nguồn: tr. 28–31.
 
-### Phân loại đích MC/TD
+### Mục tiêu cập nhật
 
 - Nhóm: `cốt lõi`.
-- Vai trò trong mạch: phân biệt hai loại "nhãn" trong RL với học có giám sát.
-- Kết nối vào: xấp xỉ tuyến tính.
-- Kết nối ra: dẫn tới hai cập nhật MC và TD.
+- Vai trò trong mạch: thay $v_\pi$ chưa biết bằng mục tiêu tính từ mẫu; phân biệt mục tiêu không chứa $w$ (gradient đầy đủ) với mục tiêu chứa $w$ (bán gradient).
+- Kết nối vào: tiêu chí $J_\mu$ và lớp hàm tuyến tính.
+- Kết nối ra: dẫn tới cập nhật Monte Carlo và TD.
 - Nguồn: tr. 27, 32.
 
 ### MC với gradient đầy đủ
@@ -287,12 +287,6 @@ Nguồn tr. 25–26 còn nêu các lớp hàm khác: cây quyết định, rừn
 
 Giới hạn: khi $w$ chạy trên $\mathbb R^d$, các hàm $\hat v(\cdot,w)$ tạo thành không gian con sinh bởi các thành phần đặc trưng. Hàm giá trị nằm ngoài không gian con này có sai số xấp xỉ không xóa được bằng cách học $w$.
 
-Phân biệt với học có giám sát: trong học tăng cường, giá trị dùng làm "nhãn" là lợi tức ngẫu nhiên hoặc mục tiêu chứa ước lượng hiện tại (nguồn tr. 27),
-
-$$y_t^{\mathrm{MC}} = G_t, \qquad y_t^{\mathrm{TD}} = R_{t+1} + \gamma\, \hat v(S_{t+1}, w),$$
-
-nên dữ liệu vừa phụ thuộc chính sách, vừa phụ thuộc chính mô hình đang học.
-
 ::: exercise Câu hỏi kiểm tra
 Với $x(s) \in \mathbb R^d$, tập hợp $\{\hat v(\cdot, w) : w \in \mathbb R^d\}$ là gì về mặt hình học, và vì sao nói chung nó không phải toàn bộ không gian hàm trên $\mathcal S$?
 :::
@@ -378,25 +372,30 @@ $J_\mu=\tfrac12\bigl[\tfrac12(0-c)^2+\tfrac12(2-c)^2\bigr]$. Đạo hàm theo $c
 
 
 <!-- note-topic-id: lec-07-topic-05 -->
-## Phân loại đích MC/TD
+## 6. Mục tiêu cập nhật
 
-Vấn đề: khi thay bảng bằng hàm xấp xỉ, "nhãn" để học lấy từ đâu? Đây là điểm phân loại các thuật toán.
+### 6.1. Mục tiêu mẫu thay cho giá trị thật
 
-Trực giác: trong học có giám sát, nhãn là cố định. Trong Học tăng cường, nguồn chỉ ra hai loại đích: tổng thưởng đầy đủ $G_t$ của Monte Carlo và đích tự khởi tạo $R_{t+1} + \gamma \hat v(S_{t+1}, w)$ của TD. Ba điểm phân biệt Monte Carlo, TD, SARSA và Q-learning là loại đích, dữ liệu theo chính sách hay khác chính sách, và cách cải thiện chính sách.
+Tiêu chí $J_\mu$ ở mục 4.1 cần $v_\pi(S_t)$, nhưng $v_\pi$ chưa biết. Các thuật toán trong bài thay $v_\pi(S_t)$ bằng một mục tiêu cập nhật $y_t$ tính từ mẫu (nguồn tr. 27, 32):
 
-Hình thức: ta thường tối thiểu hoá lỗi bình phương cục bộ
+$$y_t^{\mathrm{MC}} = G_t, \qquad y_t^{\mathrm{TD}} = R_{t+1} + \gamma\, \hat v(S_{t+1}, w),$$
 
-$$J_t(w) = \frac{1}{2}\big(y_t - \hat v(S_t, w)\big)^2,$$
+trong đó $G_t$ là lợi tức từ thời điểm $t$ đến cuối lượt (mục 7), còn mục tiêu TD dùng dự đoán hiện tại ở trạng thái kế tiếp (bootstrap). Với mỗi mẫu, xét mất mát bình phương cục bộ
 
-suy ra cập nhật SGD/bán gradient
+$$\ell_t(w) = \frac{1}{2}\big(y_t - \hat v(S_t, w)\big)^2.$$
 
-$$w_{t+1} = w_t + \alpha_t \big(y_t - \hat v(S_t, w_t)\big) \nabla_w \hat v(S_t, w_t).$$
+Cả hai trường hợp dẫn tới cùng một dạng cập nhật
 
-Trường hợp tuyến tính, với $x_t = x(S_t)$:
+$$w_{t+1} = w_t + \alpha_t \big(y_t - \hat v(S_t, w_t)\big) \nabla_w \hat v(S_t, w_t),$$
 
-$$w_{t+1} = w_t + \alpha_t \big(y_t - x_t^\top w_t\big) x_t.$$
+với trường hợp tuyến tính $w_{t+1} = w_t + \alpha_t \big(y_t - x(S_t)^\top w_t\big) x(S_t)$. Khác biệt nằm ở việc mục tiêu có chứa $w$ hay không:
 
-Ứng dụng và giới hạn: vì đích $y_t^{\mathrm{TD}}$ phụ thuộc vào $w_t$ đang được cập nhật, gradient của hàm mất mát theo nghĩa đầy đủ không còn là $\big(y_t - \hat v\big)\nabla \hat v$; đây là lý do gọi là bán gradient, được phân tích kỹ ở hai chủ đề tiếp theo.
+- mục tiêu Monte Carlo $G_t$ không chứa $w$, nên biểu thức trên đúng là bước giảm theo gradient đầy đủ của $\ell_t$, đạo hàm chỉ đi qua $\hat v(S_t,w)$;
+- mục tiêu TD chứa $w$ qua $\hat v(S_{t+1},w)$; cập nhật TD giữ $y_t$ cố định khi lấy đạo hàm, nên chỉ là bán gradient. Phần TD (mục 9) phân tích số hạng bị bỏ.
+
+Loại mục tiêu là điểm đối chiếu thứ nhất nêu ở mục 1.1. Tên gradient đầy đủ hay bán gradient phụ thuộc đạo hàm có đi qua mục tiêu hay không, không phụ thuộc mô hình có tuyến tính hay không.
+
+Khác với học có giám sát, "nhãn" $y_t$ ở đây phụ thuộc chính sách sinh dữ liệu, và với TD còn phụ thuộc chính mô hình đang học (nguồn tr. 27). Nguồn gọi chung công thức cập nhật là SGD/bán gradient; bài này tách hai trường hợp theo việc mục tiêu có chứa $w$.
 
 ::: exercise Câu hỏi kiểm tra
 Viết $y_t^{\mathrm{TD}}$ tường minh và chỉ ra thành phần nào của nó phụ thuộc vào $w_t$.
@@ -407,7 +406,7 @@ Thay $\hat v(S_{t+1}, w)$ bằng $x(S_{t+1})^\top w$.
 :::
 
 ::: solution
-$y_t^{\mathrm{TD}} = R_{t+1} + \gamma\, x(S_{t+1})^\top w_t$. Thành phần $R_{t+1}$ không phụ thuộc $w_t$, còn $\gamma\, x(S_{t+1})^\top w_t$ phụ thuộc vào trọng số hiện tại. Vì đích di chuyển theo $w_t$, đạo hàm của $J_t$ theo $w$ đầy đủ sẽ có thêm số hạng từ $\partial y_t^{\mathrm{TD}}/\partial w$, mà cập nhật bán gradient bỏ qua số hạng đó.
+$y_t^{\mathrm{TD}} = R_{t+1} + \gamma\, x(S_{t+1})^\top w_t$. Thành phần $R_{t+1}$ không phụ thuộc $w_t$, còn $\gamma\, x(S_{t+1})^\top w_t$ phụ thuộc vào trọng số hiện tại. Vì mục tiêu thay đổi theo $w$, đạo hàm đầy đủ của $\ell_t$ có thêm số hạng từ $\partial y_t^{\mathrm{TD}}/\partial w$; cập nhật bán gradient bỏ qua số hạng đó.
 :::
 
 <!-- note-topic-id: lec-07-topic-06 -->
