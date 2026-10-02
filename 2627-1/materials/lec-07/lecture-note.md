@@ -730,34 +730,30 @@ $$\hat q(s,1,w)-\hat q(s,0,w)=[w]_2\,\big(u(1)-u(0)\big)=-2[w]_2$$
 
 ở mọi $s$, trong đó $[w]_2$ là thành phần thứ hai của $w$ (hệ số của $u(a)$; ký hiệu $[w]_i$ để không lẫn với $w_t$ theo thời gian), và hành động tham lam như nhau ở B, C, D. Trong ví dụ này, đi trái là tối ưu ở mọi trạng thái, nên hạn chế đó chưa gây sai lựa chọn. Mục 16 dùng cùng thiết lập cho Bài tập 7 và 8.
 
-Hình thức. Hai cập nhật quen thuộc với hàm xấp xỉ:
+### 12.3. Mục tiêu Sarsa với hàm xấp xỉ
 
-SARSA (theo chính sách):
+Như Sarsa dạng bảng ở Bài 06, thay $Q(S',A')$ bằng $\hat q(S',A',w)$ (nguồn tr. 38). Hành động được chọn theo chính sách $\varepsilon$-tham lam hiện hành theo $\hat q(\cdot,\cdot,w_t)$, phá hòa theo một quy tắc cố định:
 
 $$\delta_t = R_{t+1} + \gamma \hat q(S_{t+1}, A_{t+1}, w_t) - \hat q(S_t, A_t, w_t), \qquad w_{t+1} = w_t + \alpha_t \delta_t \nabla_w \hat q(S_t, A_t, w_t).$$
 
-Q-learning (khác chính sách):
+Với $\hat q$ tuyến tính, $\nabla_w\hat q(S_t,A_t,w)=x(S_t,A_t)$, đặc trưng của cặp vừa thực hiện, không phải $x(S_t)$:
 
-$$\delta_t = R_{t+1} + \gamma \max_a \hat q(S_{t+1}, a, w_t) - \hat q(S_t, A_t, w_t).$$
+$$w_{t+1} = w_t + \alpha_t \delta_t x(S_t, A_t), \qquad \delta_t = R_{t+1} + \gamma x(S_{t+1}, A_{t+1})^\top w_t - x(S_t, A_t)^\top w_t.$$
 
-Trường hợp tuyến tính với $x(s,a)$, SARSA trở thành
+$A_{t+1}$ là hành động chính sách hiện hành thực sự chọn, kể cả khi thăm dò, nên Sarsa học theo chính sách. Nếu $S_{t+1}$ là trạng thái kết thúc thì giá trị tiếp nối bằng 0 và mục tiêu là $R_{t+1}$. Cả hai giá trị trong $\delta_t$ dùng cùng $w_t$, tính trước khi cập nhật. Thay $A_{t+1}$ bằng hành động tham lam thì mục tiêu thành mục tiêu Q-learning (mục 13).
 
-$$w_{t+1} = w_t + \alpha_t \delta_t x(S_t, A_t), \qquad \delta_t = R_{t+1} + \gamma x(S_{t+1}, A_{t+1})^\top w_t - x(S_t, A_t)^\top w_t,$$
-
-với quy ước $\hat q(E, \cdot, w) = 0$ khi $S_{t+1}$ là trạng thái kết thúc. Tính tay đầy đủ ở chủ đề thực hành.
-
-Ứng dụng và giới hạn: SARSA tuyến tính vẫn dùng dữ liệu theo chính sách như SARSA dạng bảng, nhưng các bảo đảm hội tụ dạng bảng (MDP hữu hạn, $\gamma < 1$, GLIE, Robbins–Monro) không tự động chuyển sang trường hợp xấp xỉ hàm. Các kết quả hữu hạn thời gian cho SARSA tuyến tính cần giả thiết cấu trúc mạnh hơn.
+Sau mỗi cập nhật $w$, chính sách $\varepsilon$-tham lam suy ra từ $\hat q$ có thể đổi. Vì vậy Sarsa với xấp xỉ hàm không còn là dự đoán dưới một chính sách cố định; bảo đảm của TD tuyến tính ở mục 10.4 và các bảo đảm dạng bảng của Bài 06 (GLIE, Robbins–Monro) không chuyển trực tiếp sang trường hợp này. Bài không phát biểu kết quả hội tụ tổng quát cho Sarsa với xấp xỉ hàm (nguồn tr. 39); các kết quả hữu hạn mẫu cho Sarsa tuyến tính (nguồn tr. 45) cần giả thiết riêng.
 
 ::: exercise Câu hỏi kiểm tra
-Vì sao trong SARSA tuyến tính, đích $\gamma x(S_{t+1}, A_{t+1})^\top w_t$ dùng hành động $A_{t+1}$ thực tế, còn Q-learning dùng $\max_a$?
+Vì sao trong Sarsa tuyến tính, mục tiêu dùng $\gamma x(S_{t+1}, A_{t+1})^\top w_t$ với hành động $A_{t+1}$ thực tế, còn Q-learning dùng $\max_a$?
 :::
 
 ::: hint
-Nhớ SARSA là thuật toán theo chính sách: hành động kế tiếp được lấy từ chính sách hành vi.
+Sarsa là thuật toán học theo chính sách: hành động kế tiếp được lấy từ chính sách đang chạy.
 :::
 
 ::: solution
-SARSA đánh giá chính sách hành vi đang chạy, nên đích phải là giá trị của cặp $(S_{t+1}, A_{t+1})$ mà chính sách đó thực sự chọn tiếp — do đó cần $A_{t+1}$ được lấy mẫu. Q-learning học $q_*$ bất kể chính sách hành vi, nên đích thay hành động kế bằng giá trị tốt nhất $\max_a \hat q(S_{t+1}, a, w_t)$. Q-learning vì thế là thuật toán khác chính sách; khi kết hợp đích tự khởi tạo với xấp xỉ hàm, nó có đủ ba thành phần của bộ ba bất ổn.
+Sarsa đánh giá chính sách đang chạy, nên mục tiêu phải là giá trị của cặp $(S_{t+1}, A_{t+1})$ mà chính sách đó thực sự chọn tiếp; do đó cần $A_{t+1}$ được lấy mẫu. Q-learning nhắm tới $q_*$ bất kể chính sách hành vi, nên mục tiêu thay hành động kế bằng giá trị tốt nhất $\max_a \hat q(S_{t+1}, a, w_t)$. Q-learning vì thế là thuật toán khác chính sách; khi kết hợp mục tiêu bootstrap với xấp xỉ hàm, nó có đủ ba thành phần của bộ ba bất ổn (mục 13).
 :::
 
 <!-- note-topic-id: lec-07-topic-11 -->
