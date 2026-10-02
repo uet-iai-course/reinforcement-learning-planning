@@ -33,7 +33,7 @@ Các khoảng trang trên không chồng lấn. Tổng phần chính là 110 ph�
 | `L07-13` | Trực giác: lợi tức $G_t$ làm mục tiêu Monte Carlo; không bootstrap, không chứa $w$, phải chờ hết lượt; $\mathbb E_\pi[G_t\mid S_t=s]=v_\pi(s)$ nên $G_t$ là mẫu không chệch của $v_\pi(S_t)$; phương sai lớn. | tr. 27, 33 | 3 | Dùng một mẫu để xác định hướng sửa. |
 | `L07-14` | Ví dụ số Monte Carlo trước khi đạo hàm: $\hat v=1$, $e_t=4$, $w_{t+1}=(1{,}8;-0{,}6)^T$, dự đoán mới $3$ (sai lệch từ $4$ xuống $2$); quy tắc $\Delta w=\alpha e_t x(S_t)$ dùng lại từ phần tổng quát hóa. | suy ra từ tr. 33 | 4 | Khái quát hướng sửa bằng gradient của mất mát mẫu. |
 | `L07-15` | Hình thức: quy tắc của ví dụ là bước hạ gradient trên $\ell_t(w)=\tfrac12(G_t-\hat v)^2$; $\nabla_w\ell_t$, cập nhật tuyến tính; $G_t$ không chứa $w$ nên là gradient đầy đủ; gọi tên SGD. | tr. 32–34; HW4 | 4 | Đóng gói thành thuật toán. |
-| `L07-16` | Thuật toán MC tuyến tính, ứng dụng chia sẻ và kiểm tra. | tr. 33–34; HW4, HW7 | 3 | Nêu điều kiện để lặp cập nhật có bảo đảm. |
+| `L07-16` | Thuật toán Monte Carlo tuyến tính: đầu vào/đầu ra, chỉ số $n$ của bước học khác $t$, sinh lượt, tính lùi lợi tức, cập nhật tuần tự mọi lần ghé; câu hỏi tổng quát hóa ($\Delta\hat v=0{,}8$ tại đặc trưng $(1;0)^T$). | tr. 33–34; HW4, HW7 | 3 | Nêu điều kiện để lặp cập nhật có bảo đảm. |
 | `L07-17` | Hai nhóm điều kiện MC–SGD; đủ hạng chỉ để có nghiệm tham số duy nhất. | tr. 27, 34 | 4 | Đổi đích sang bootstrap một bước. |
 | `L07-18` | Vấn đề và trực giác TD: cập nhật sớm bằng dự đoán kế tiếp. | tr. 27, 35–36 | 4 | Tính một chuyển tiếp trước khi khái quát. |
 | `L07-19` | Ví dụ số TD một bước, gồm chỉ số và hướng cập nhật. | suy ra từ tr. 35–36 | 4 | Khái quát thành bán gradient và thuật toán. |

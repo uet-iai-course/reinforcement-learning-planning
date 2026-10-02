@@ -454,7 +454,18 @@ $$\mathbb E\big[\nabla_w\ell_t(w)\big] = -\mathbb E_\mu\big[(v_\pi(S_t)-\hat v(S
 
 Vậy về trung bình, mỗi bước đi theo hướng giảm của $J_\mu$. Các mẫu trong cùng một lượt tương quan với nhau, nên điều kiện hội tụ cần giả thiết về cách lấy mẫu (độc lập, hoặc chuỗi Markov trộn). Mục 8 nêu điều kiện để dãy bước như vậy hội tụ, cùng phép đạo hàm chi tiết (Bài tập 4) và vai trò của điều kiện bước học.
 
-Với bình phương tối thiểu tuyến tính theo lô, Monte Carlo gần bài toán hồi quy chuẩn (nguồn tr. 33).
+### 7.4. Thuật toán Monte Carlo tuyến tính
+
+Đầu vào: chính sách $\pi$ cố định, đặc trưng $x$, hệ số chiết khấu $\gamma$, trọng số khởi tạo $w_0$, số lượt $K$ và lịch bước học $\alpha_n$, trong đó $n$ đếm số lần cập nhật (khác thời điểm $t$ trong lượt). Đầu ra: $w$.
+
+1. Khởi tạo $w\leftarrow w_0$, $n\leftarrow1$. Lặp lại $K$ lượt các bước 2–4.
+2. Sinh một lượt $S_0,R_1,S_1,\dots,S_T$ theo $\pi$ tới khi kết thúc.
+3. Tính lùi lợi tức: $G_T=0$, $G_t=R_{t+1}+\gamma G_{t+1}$ với $t=T-1,\dots,0$.
+4. Với $t=0,\dots,T-1$ (mọi lần ghé): $e_t\leftarrow G_t-x(S_t)^\top w$; $w\leftarrow w+\alpha_n e_t\,x(S_t)$; $n\leftarrow n+1$.
+
+Bước 4 cập nhật tuần tự theo thứ tự thời gian: mẫu kế tiếp dùng $w$ vừa cập nhật, nên kết quả khác với việc gom cả lượt thành một bước theo tổng gradient. Thuật toán dùng mọi lần ghé; muốn dùng lần ghé đầu thì chỉ cập nhật tại lần đầu trạng thái xuất hiện trong lượt (Bài 05). Lợi tức tính từ quỹ đạo và không tính lại khi $w$ đổi. Chi phí mỗi bước tỉ lệ với số thành phần khác 0 của $x(S_t)$; bộ nhớ là $d$ tham số. Nếu thay các bước ngẫu nhiên bằng bình phương tối thiểu trên cả tập dữ liệu (theo lô), Monte Carlo tuyến tính gần bài toán hồi quy chuẩn (nguồn tr. 33).
+
+Ví dụ: ở mục 7.2, $\Delta w=(0{,}8;0{,}4)^\top$. Trạng thái có đặc trưng $(1;0)^\top$ không được cập nhật trực tiếp, nhưng dự đoán của nó tăng $x^\top\Delta w=1\cdot0{,}8+0\cdot0{,}4=0{,}8$ vì dùng chung thành phần thứ nhất của $w$. Mục 16 (Bài tập 7) tính đủ một lượt cho sẵn theo cùng thuật toán, với $x(S_t,A_t)$ thay cho $x(S_t)$ để ước lượng giá trị hành động.
 
 Điều kiện hội tụ: nếu dữ liệu i.i.d., đặc trưng bị chặn, $\sum_t \alpha_t = \infty$ và $\sum_t \alpha_t^2 < \infty$, thì MC-SGD hội tụ tới nghiệm tối ưu của lỗi bình phương trên phân phối dữ liệu. Lưu ý đây là hội tụ tới nghiệm hồi quy tốt nhất, không phải nhất thiết tới $v^\pi$, trừ khi lớp hàm chứa được $v^\pi$.
 
