@@ -754,6 +754,19 @@ $$w_1=w_0+0{,}2\cdot(-2)\cdot(3;1;1)^\top=(1;1;-1)^\top-(1{,}2;0{,}4;0{,}4)^\top
 
 Mục tiêu $-1+2=1$ nhỏ hơn dự đoán $3$, nên dự đoán tại $(D,0)$ giảm: $\hat q(D,0,w_1)=-0{,}6+0{,}6-1{,}4=-1{,}4$. Vì $\alpha\|x(D,0)\|^2=0{,}2\cdot11=2{,}2>1$, bước cập nhật vượt qua mục tiêu (so với mục 7.2, nơi $\alpha\|x(S_t)\|^2=0{,}5<1$). Nhờ $w$ dùng chung, dự đoán tại cặp khác cũng đổi: $\hat q(C,0,w_1)=-0{,}4+0{,}6-1{,}4=-1{,}2$. Trong Bài tập 8, $\varepsilon=0{,}25$ mô tả chính sách đã sinh các hành động, nhưng không tham gia số học vì hành động kế tiếp đã cho trong mẫu. Mục 16 tính đủ ba cập nhật của Bài tập 8.
 
+### 12.5. Thuật toán Sarsa với hàm xấp xỉ
+
+Đầu vào: đặc trưng $x(s,a)$, $\varepsilon$, quy tắc phá hòa, hệ số chiết khấu $\gamma$, trọng số khởi tạo $w_0$, bước học $\alpha_n$, số lượt $K$. Đầu ra: $w$ và chính sách $\varepsilon$-tham lam theo $\hat q$.
+
+1. Đặt $w\leftarrow w_0$, $n\leftarrow1$. Lặp $K$ lượt: lấy trạng thái đầu $S$, chọn $A$ theo $\varepsilon$-tham lam của $\hat q(S,\cdot,w)$.
+2. Thực hiện $A$, nhận $R$, $S'$. Nếu $S'$ kết thúc: $y\leftarrow R$; ngược lại chọn $A'$ theo $\varepsilon$-tham lam của $\hat q(S',\cdot,w)$, $y\leftarrow R+\gamma\hat q(S',A',w)$.
+3. $w\leftarrow w+\alpha_n\big[y-\hat q(S,A,w)\big]x(S,A)$; $n\leftarrow n+1$.
+4. Nếu $S'$ chưa kết thúc: $S\leftarrow S'$, $A\leftarrow A'$, quay lại bước 2.
+
+$A'$ được chọn bằng $w$ trước cập nhật của chuyển tiếp đó, như trong ví dụ ở mục 12.4; lần chọn tiếp theo dùng $w$ mới. Với $\hat q$ tuyến tính, gradient là $x(S,A)$. Cập nhật là bán gradient như TD(0): mục tiêu chứa $\hat q(S',A',w)$ nhưng được giữ cố định khi lấy đạo hàm.
+
+Bảo đảm của TD tuyến tính (mục 10.4) cần chính sách cố định; ở Sarsa chính sách đổi theo $w$, nên kết quả hội tụ cần giả thiết riêng (nguồn tr. 39). Các phân tích như của Zou, Xu và Liang trong danh mục tài liệu của nguồn (tr. 45) đặt giả thiết về thăm dò, bước học và cách chính sách phụ thuộc $w$. Thay $A'$ trong mục tiêu bằng hành động cực đại thì được Q-learning, học khác chính sách (mục 13).
+
 ::: exercise Câu hỏi kiểm tra
 Vì sao trong Sarsa tuyến tính, mục tiêu dùng $\gamma x(S_{t+1}, A_{t+1})^\top w_t$ với hành động $A_{t+1}$ thực tế, còn Q-learning dùng $\max_a$?
 :::
