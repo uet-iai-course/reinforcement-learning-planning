@@ -131,7 +131,7 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 13 chủ đề `lec-07-topic
 ### Thực hành: chuỗi năm trạng thái
 
 - Nhóm: `đọc thêm/thực hành`.
-- Vai trò trong mạch: thực hành sau phần tổng kết, dùng cho chữa bài 7–8 (Monte Carlo trên một lượt, Sarsa trên ba mẫu) và khung mục tiêu cập nhật.
+- Vai trò trong mạch: thực hành sau phần tổng kết, dùng cho chữa bài 7–8 (Monte Carlo trên một lượt, ba cập nhật Sarsa) và khung mục tiêu cập nhật.
 - Kết nối vào: chuỗi và đặc trưng của mục 12.2, Sarsa tuyến tính và mục tiêu Q-learning.
 - Kết nối ra: củng cố các cập nhật Monte Carlo và Sarsa bằng phép tính đầy đủ trên cùng một thiết lập.
 - Nguồn: tr. 40 và bài tập 7–8.
@@ -1008,58 +1008,53 @@ $$w_3=w_2+42{,}11\,(1;1;1)^\top=(381{,}81;\,162{,}71;\,160{,}71)^\top.$$
 
 Phép tính chỉ đánh giá giá trị hành động trên một lượt, chưa có bước cải thiện chính sách. Giá trị cuối tại $D$ vượt $G_0=998$ vì hai lý do. Thứ nhất, $\|x(D,0)\|^2=11$, nên $\alpha\|x(D,0)\|^2=1{,}1>1$: ngay lần 1, $\hat q(D,0,w_1)=3+1{,}1\cdot995=1097{,}5$ đã vượt mục tiêu, giống ví dụ Sarsa ở mục 12.4 ($\alpha\|x\|^2=2{,}2$) và khác ví dụ ở mục 7.2 ($\alpha\|x\|^2=0{,}5$). Thứ hai, hai lần cập nhật sau tại $C$ và $B$ tiếp tục kéo $\hat q(D,0)$ lên qua tham số dùng chung. Phiếu bài tập ghi "semi-gradient"; mục tiêu Monte Carlo $G_t$ không chứa $w$, nên cập nhật này là gradient đầy đủ (mục 6).
 
-### 16.2. Bài tập: Sarsa trên ba mẫu
+### 16.2. Bài tập: ba cập nhật Sarsa
 
-Cho $w_0 = [1, 1, -1]^\top$, $\alpha = 0.2$, $\varepsilon = 0.25$, và ba mẫu liên tiếp. Giá trị $\varepsilon$ mô tả chính sách hành vi đã sinh mẫu; ba mẫu đã cho sẵn nên $\varepsilon$ không đi vào phép cập nhật dưới đây.
+::: exercise Bài tập 8
+Cho $w_0=(1;1;-1)^\top$, $\alpha=0{,}2$, $\varepsilon=0{,}25$ và ba mẫu liên tiếp
 
-$$(D, 0, -1, C, 0), \qquad (C, 1, -1, D, 1), \qquad (D, 1, +10, E, \text{terminal}).$$
+$$(D,0,-1,C,0),\qquad (C,1,-1,D,1),\qquad (D,1,10,E,\text{kết thúc}).$$
 
-Cập nhật $w_{t+1} = w_t + \alpha \delta_t x(S_t, A_t)$ với $\delta_t = R_{t+1} + \gamma \hat q(S_{t+1}, A_{t+1}, w_t) - \hat q(S_t, A_t, w_t)$, $\gamma = 1$, và $\hat q(E, \cdot, w) = 0$.
+Dùng cập nhật Sarsa $w_{t+1}=w_t+\alpha\,\delta_t\,x(S_t,A_t)$ với $\delta_t=R_{t+1}+\gamma\,\hat q(S_{t+1},A_{t+1},w_t)-\hat q(S_t,A_t,w_t)$, $\gamma=1$ và $\hat q(E,\cdot,w)=0$.
 
-Các vector đặc trưng cần dùng: $x(D,0) = [3, +1, 1]^\top$, $x(C,0) = [2, +1, 1]^\top$, $x(C,1) = [2, -1, 1]^\top$, $x(D,1) = [3, -1, 1]^\top$.
-
-Mẫu 1: $(D, 0, -1, C, 0)$.
-
-$$\hat q(D,0,w_0) = 3(1) + 1(1) + 1(-1) = 3, \qquad \hat q(C,0,w_0) = 2(1) + 1(1) + 1(-1) = 2.$$
-
-$$\delta_0 = -1 + 1 \cdot \hat q(C,0,w_0) - \hat q(D,0,w_0) = -1 + 2 - 3 = -2.$$
-
-$$w_1 = w_0 + 0.2 \cdot (-2) \begin{bmatrix} 3 \\ 1 \\ 1 \end{bmatrix} = \begin{bmatrix} 1 \\ 1 \\ -1 \end{bmatrix} - \begin{bmatrix} 1.2 \\ 0.4 \\ 0.4 \end{bmatrix} = \begin{bmatrix} -0.2 \\ 0.6 \\ -1.4 \end{bmatrix}.$$
-
-Mẫu 2: $(C, 1, -1, D, 1)$.
-
-$$\hat q(C,1,w_1) = 2(-0.2) - 0.6 - 1.4 = -2.4, \qquad \hat q(D,1,w_1) = 3(-0.2) - 0.6 - 1.4 = -2.6.$$
-
-$$\delta_1 = -1 + \hat q(D,1,w_1) - \hat q(C,1,w_1) = -1 - 2.6 + 2.4 = -1.2.$$
-
-$$w_2 = w_1 + 0.2 \cdot (-1.2) \begin{bmatrix} 2 \\ -1 \\ 1 \end{bmatrix} = \begin{bmatrix} -0.2 \\ 0.6 \\ -1.4 \end{bmatrix} + \begin{bmatrix} -0.48 \\ 0.24 \\ -0.24 \end{bmatrix} = \begin{bmatrix} -0.68 \\ 0.84 \\ -1.64 \end{bmatrix}.$$
-
-Mẫu 3: $(D, 1, +10, E, \text{terminal})$, với $\hat q(E,\cdot,w_2) = 0$.
-
-$$\hat q(D,1,w_2) = 3(-0.68) - 0.84 - 1.64 = -4.52.$$
-
-$$\delta_2 = +10 + 0 - (-4.52) = 14.52.$$
-
-$$w_3 = w_2 + 0.2 \cdot 14.52 \begin{bmatrix} 3 \\ -1 \\ 1 \end{bmatrix} = \begin{bmatrix} -0.68 \\ 0.84 \\ -1.64 \end{bmatrix} + 2.904 \begin{bmatrix} 3 \\ -1 \\ 1 \end{bmatrix} = \begin{bmatrix} 8.032 \\ -2.064 \\ 1.264 \end{bmatrix}.$$
-
-Trọng số cuối cùng $w_3 = [8.032, -2.064, 1.264]^\top$. Giá trị xấp xỉ mới:
-
-$$\hat q(D,0,w_3) = 3(8.032) - 2.064 + 1.264 = 23.296,$$
-$$\hat q(C,1,w_3) = 2(8.032) + 2.064 + 1.264 = 19.392,$$
-$$\hat q(D,1,w_3) = 3(8.032) + 2.064 + 1.264 = 27.424.$$
-
-Nhận xét: mẫu 3 với phần thưởng $+10$ vào trạng thái kết thúc $E$ tạo bước cập nhật lớn $\delta_2 = 14.52$; sau ba mẫu, $\hat q(D,1)$ vượt $\hat q(D,0)$.
-
-::: exercise Câu hỏi kiểm tra
-Trong bài 8, vì sao $\delta_1=-1.2$? Kiểm tra lại rằng $\hat q(D,1,w_3)-\hat q(D,0,w_3)=-2[w_3]_2$.
+1. Tính $\delta_t$ và $w_{t+1}$ theo thứ tự ba mẫu.
+2. Tính giá trị mới $\hat q(D,0,w_3)$, $\hat q(C,1,w_3)$, $\hat q(D,1,w_3)$.
 :::
 
 ::: hint
-Tính $\delta_1$ từ công thức; với phần kiểm tra, tính $\hat q(D,1,w_3) - \hat q(D,0,w_3)$ theo thành phần thứ hai của $w_3$.
+Hai giá trị $\hat q$ trong cùng một $\delta_t$ dùng trọng số $w_t$ trước cập nhật. Ở mẫu đi vào trạng thái kết thúc, phần bootstrap bằng 0. Giá trị $\varepsilon$ mô tả chính sách đã sinh mẫu; các hành động kế tiếp đã cho nên $\varepsilon$ không vào phép tính.
 :::
 
 ::: solution
-$\delta_1=-1-2.6+2.4=-1.2$. Phần kiểm tra: $\hat q(D,1,w_3)-\hat q(D,0,w_3)=27.424-23.296=4.128$; hai vector đặc trưng chỉ khác thành phần $u(a)$, nên chênh lệch bằng $[w_3]_2(-1-1)=-2[w_3]_2=-2(-2.064)=4.128$.
+Các vector đặc trưng: $x(D,0)=(3;1;1)^\top$, $x(C,0)=(2;1;1)^\top$, $x(C,1)=(2;-1;1)^\top$, $x(D,1)=(3;-1;1)^\top$.
+
+Mẫu 1, $(D,0,-1,C,0)$: $\hat q(D,0,w_0)=3+1-1=3$, $\hat q(C,0,w_0)=2+1-1=2$;
+
+$$\delta_0=-1+2-3=-2,\qquad w_1=(1;1;-1)^\top+0{,}2\cdot(-2)\,(3;1;1)^\top=(-0{,}2;\,0{,}6;\,-1{,}4)^\top.$$
+
+Mẫu 2, $(C,1,-1,D,1)$: $\hat q(C,1,w_1)=-0{,}4-0{,}6-1{,}4=-2{,}4$, $\hat q(D,1,w_1)=-0{,}6-0{,}6-1{,}4=-2{,}6$;
+
+$$\delta_1=-1-2{,}6+2{,}4=-1{,}2,\qquad w_2=w_1+0{,}2\cdot(-1{,}2)\,(2;-1;1)^\top=(-0{,}68;\,0{,}84;\,-1{,}64)^\top.$$
+
+Mẫu 3, $(D,1,10,E,\text{kết thúc})$: $\hat q(D,1,w_2)=-2{,}04-0{,}84-1{,}64=-4{,}52$, $\hat q(E,\cdot,w_2)=0$;
+
+$$\delta_2=10+0+4{,}52=14{,}52,\qquad w_3=w_2+2{,}904\,(3;-1;1)^\top=(8{,}032;\,-2{,}064;\,1{,}264)^\top.$$
+
+Giá trị mới: $\hat q(D,0,w_3)=24{,}096-2{,}064+1{,}264=23{,}296$; $\hat q(C,1,w_3)=16{,}064+2{,}064+1{,}264=19{,}392$; $\hat q(D,1,w_3)=24{,}096+2{,}064+1{,}264=27{,}424$.
+:::
+
+Sau ba mẫu, $\hat q(D,1)>\hat q(D,0)$, dù đi trái là tối ưu. Với đặc trưng này, $\hat q(s,1)-\hat q(s,0)=-2[w]_2$ ở mọi trạng thái (mục 12.2), nên thứ tự giữa hai hành động do một thành phần $[w]_2$ quyết định. Mẫu cuối có phần thưởng $10$ và $\alpha\|x(D,1)\|^2=0{,}2\cdot11=2{,}2>1$, nên một cập nhật lớn đẩy $[w]_2$ xuống $-2{,}064$; ba mẫu của một lượt ngắn chưa đủ để ước lượng đúng thứ tự giữa hai hành động.
+
+::: exercise Câu hỏi kiểm tra
+Kiểm tra lại $\delta_1=-1{,}2$, rồi kiểm tra $\hat q(D,1,w_3)-\hat q(D,0,w_3)=-2[w_3]_2$.
+:::
+
+::: hint
+$x(D,1)$ và $x(D,0)$ chỉ khác thành phần thứ hai, $u(1)-u(0)=-2$.
+:::
+
+::: solution
+$\delta_1=-1+\hat q(D,1,w_1)-\hat q(C,1,w_1)=-1-2{,}6+2{,}4=-1{,}2$. Hiệu: $\hat q(D,1,w_3)-\hat q(D,0,w_3)=27{,}424-23{,}296=4{,}128$; vì hai vector đặc trưng chỉ khác thành phần $u(a)$, hiệu bằng $(u(1)-u(0))[w_3]_2=-2[w_3]_2=-2\cdot(-2{,}064)=4{,}128$.
 :::
 
 ### 16.3. Khung mục tiêu cập nhật
