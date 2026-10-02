@@ -502,28 +502,51 @@ Monte Carlo phải chờ hết lượt mới có mục tiêu; mục 9 xét TD(0)
 
 ### 8.2. Bài tập: đạo hàm cập nhật Monte Carlo
 
-Bài tập 4. Cho $\hat v(s,w) = x(s)^\top w$ (phiếu bài tập viết $\phi(s)$) và mất mát $\ell_t(w) = \frac{1}{2}\big(G_t - x(S_t)^\top w\big)^2$. Đạo hàm theo $w$:
+::: exercise Bài tập 4
+Cho $\hat v(s,w)=x(s)^\top w$ (phiếu bài tập viết $\phi(s)$) và mất mát Monte Carlo của một mẫu
 
-$$\nabla_w \ell_t(w) = \frac{1}{2} \cdot 2\big(G_t - x(S_t)^\top w\big) \cdot (-x(S_t)) = -\big(G_t - x(S_t)^\top w\big)x(S_t).$$
+$$\ell_t(w)=\tfrac12\big(G_t-x(S_t)^\top w\big)^2.$$
 
-Một bước hạ gradient với bước $\alpha_t$:
 
-$$w_{t+1} = w_t - \alpha_t \nabla_w \ell_t(w_t) = w_t + \alpha_t \big(G_t - x(S_t)^\top w_t\big)x(S_t),$$
-
-đúng công thức yêu cầu. Điều kiện để cập nhật hội tụ về cực tiểu toàn cục là các điều kiện ở mục 8.1: bước học thỏa Robbins–Monro, đặc trưng bị chặn, mômen hữu hạn và giả thiết lấy mẫu phù hợp (iid như nguồn tr. 34, hoặc chuỗi Markov trộn).
-
-Bài tập 6, vai trò của hai điều kiện Robbins–Monro. Điều kiện $\sum_n \alpha_n = \infty$ bảo đảm tổng các bước đủ lớn để thuật toán còn tiếp tục học: nếu tổng hữu hạn, $w$ có thể dừng ở nơi chưa tới nghiệm. Điều kiện $\sum_n \alpha_n^2 < \infty$ giữ tổng phương sai của nhiễu tích lũy $\sum_n \alpha_n^2\,\mathrm{Var}[\text{nhiễu}_n]$ hữu hạn khi phương sai nhiễu bị chặn, nên nhiễu không đẩy $w$ đi xa mãi. Hai điều kiện này dùng cho cả Monte Carlo và TD với xấp xỉ hàm.
-
-::: exercise Câu hỏi kiểm tra
-Tính Hessian của $\ell_t(w)$ và suy ra $\ell_t$ lồi; từ đó giải thích vì sao cực tiểu địa phương là cực tiểu toàn cục.
+1. Tính $\nabla_w\ell_t(w)$.
+2. Suy ra một bước hạ gradient với bước học $\alpha_t$.
+3. Nêu điều kiện để cập nhật hội tụ về cực tiểu toàn cục.
 :::
 
 ::: hint
-Tính đạo hàm bậc hai của $\frac{1}{2}(G_t - x^\top w)^2$ theo $w$.
+Dùng quy tắc dây chuyền và lưu ý $G_t$ không phụ thuộc $w$. Với câu 3, tính Hessian của $\ell_t$ rồi đối chiếu các điều kiện ở mục 8.1.
 :::
 
 ::: solution
-$\nabla_w^2 \ell_t(w) = x(S_t)x(S_t)^\top$, là ma trận bán xác định dương vì $u^\top x(S_t)x(S_t)^\top u = (x(S_t)^\top u)^2 \ge 0$ với mọi $u$. Hàm lồi nên mọi cực tiểu địa phương là cực tiểu toàn cục; do đó hạ gradient với bước học thỏa Robbins–Monro và dữ liệu phù hợp hội tụ về cực tiểu toàn cục của sai số bình phương trên phân phối dữ liệu.
+(1) Theo quy tắc dây chuyền,
+
+$$\nabla_w \ell_t(w) = \tfrac12 \cdot 2\big(G_t - x(S_t)^\top w\big) \cdot \big(-x(S_t)\big) = -\big(G_t - x(S_t)^\top w\big)x(S_t).$$
+
+Vì $G_t$ không phụ thuộc $w$, đây là gradient đầy đủ của $\ell_t$.
+
+(2) Bước hạ gradient đi ngược chiều gradient:
+
+$$w_{t+1} = w_t - \alpha_t \nabla_w \ell_t(w_t) = w_t + \alpha_t \big(G_t - x(S_t)^\top w_t\big)x(S_t),$$
+
+đúng cập nhật Monte Carlo cần chứng minh.
+
+(3) Hessian $\nabla_w^2\ell_t(w)=x(S_t)x(S_t)^\top\succeq0$, vì $u^\top x(S_t)x(S_t)^\top u=(x(S_t)^\top u)^2\ge0$ với mọi $u$; mất mát lồi, nên mọi cực tiểu địa phương là cực tiểu toàn cục. Các điều kiện (mục 8.1): $\pi$, $\mu$ cố định; $\mathbb E[G_t^2]<\infty$; đặc trưng bị chặn; mẫu iid (như nguồn tr. 34) hoặc chuỗi Markov trộn cho các mẫu trong cùng lượt; bước học thỏa Robbins–Monro. Khi đó $w_t$ hội tụ tới tập cực tiểu của mất mát kỳ vọng, cũng là tập cực tiểu của $J_\mu$. Ma trận $\mathbb E[x(S_t)x(S_t)^\top]$ đủ hạng chỉ cần để vector tham số cực tiểu là duy nhất.
+:::
+
+::: exercise Bài tập 6
+Giả sử dãy bước học $\{\alpha_n\}_{n\ge1}$ thỏa điều kiện Robbins–Monro
+
+$$\sum_n \alpha_n = \infty, \qquad \sum_n \alpha_n^2 < \infty$$
+
+(phiếu bài tập viết chỉ số $t$). Giải thích vì sao hai điều kiện này phù hợp cho Monte Carlo và TD với xấp xỉ hàm: điều kiện thứ nhất giúp thuật toán còn tiếp tục học, điều kiện thứ hai giúp nhiễu tích lũy vẫn hữu hạn.
+:::
+
+::: hint
+Với điều kiện thứ nhất, xét tổng quãng đường $w$ có thể đi khi $\sum_n\alpha_n<\infty$. Với điều kiện thứ hai, xét tổng phương sai của nhiễu tích lũy $\sum_n \alpha_n^2\,\mathrm{Var}[\text{nhiễu}_n]$.
+:::
+
+::: solution
+Điều kiện $\sum_n \alpha_n = \infty$ bảo đảm tổng các bước đủ lớn để thuật toán còn tiếp tục học: nếu tổng hữu hạn và độ lớn mỗi cập nhật bị chặn, tổng quãng đường $w$ đi được bị chặn, nên với điểm khởi tạo đủ xa, $w$ có thể dừng ở nơi chưa tới nghiệm. Điều kiện $\sum_n \alpha_n^2 < \infty$ giữ tổng phương sai của nhiễu tích lũy $\sum_n \alpha_n^2\,\mathrm{Var}[\text{nhiễu}_n]$ hữu hạn khi phương sai nhiễu bị chặn, nên nhiễu không đẩy $w$ đi xa mãi. Hai điều kiện này dùng cho cả Monte Carlo và TD với xấp xỉ hàm. Ví dụ $\alpha_n=1/n$ thỏa cả hai điều kiện; $\alpha_n=1/\sqrt n$ thỏa điều kiện thứ nhất nhưng không thỏa điều kiện thứ hai (mục 8.1).
 :::
 
 <!-- note-topic-id: lec-07-topic-07 -->
