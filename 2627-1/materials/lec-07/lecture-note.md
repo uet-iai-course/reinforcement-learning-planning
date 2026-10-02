@@ -8,11 +8,11 @@ Khi không gian trạng thái lớn hoặc liên tục, bảng giá trị của 
 
 Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic-01` đến `lec-07-topic-12` tạo thành mạch chính; nhóm **cầu nối** gồm `lec-07-topic-13` tóm tắt tiên quyết từ Bài 06; nhóm **bổ sung** gồm `lec-07-topic-14` và `lec-07-topic-15` cho kết quả hiện đại và chứng minh; nhóm **đọc thêm/thực hành** gồm `lec-07-topic-16` với tính tay bài 7–8. Sáu mạch chính: mở/cầu nối 7 phút; động cơ–đặc trưng 23 phút; MC 21 phút; TD–Bellman chiếu 33 phút; điều khiển/SARSA 19 phút; Q-learning–bộ ba bất ổn–thực hành–kết luận 17 phút; tổng 120 phút. Phần chữa bài 30 phút dùng bài 4, 7 và 8. Thứ tự trình bày mỗi chủ đề theo vấn đề → trực giác → ví dụ → hình thức/thuật toán → ứng dụng/giới hạn → kiểm tra; các chủ đề 13, 14 và 15 gộp bước trực giác với ví dụ vì chúng chỉ tóm tắt hoặc nêu hướng nghiên cứu, không có ví dụ tính được trong nguồn.
 
-### Giới hạn bảng tra
+### Giới hạn của bảng tra
 
 - Nhóm: `cốt lõi`.
-- Vai trò trong mạch: mở đầu mạch động cơ, đặt vấn đề mà cả bài giải quyết.
-- Kết nối vào: bảng tra $V^\pi$, $Q^\pi$ từ Bài 06.
+- Vai trò trong mạch: mở đầu mạch nhu cầu xấp xỉ hàm, đặt vấn đề mà cả bài giải quyết.
+- Kết nối vào: bảng $V\approx v_\pi$, $Q\approx q_\pi$ của Bài 05–06.
 - Kết nối ra: dẫn tới nhu cầu chia sẻ tham số.
 - Nguồn: tr. 22–23.
 
@@ -191,26 +191,28 @@ Sau bài học, người học cần thực hiện được các công việc sa
 Kiến thức tiên quyết từ Bài 03–06: quá trình quyết định Markov (MDP), toán tử Bellman của một chính sách, dự đoán Monte Carlo và TD(0), điều khiển Monte Carlo, Sarsa và Q-learning dạng bảng, điều kiện GLIE và điều kiện Robbins–Monro. Toán cần dùng: tích vô hướng có trọng số, ma trận, phép chiếu trực giao theo chuẩn có trọng số và trị riêng. Bài không chứng minh hội tụ cho Sarsa hoặc Q-learning với xấp xỉ hàm và không xét các phương pháp actor-critic.
 
 <!-- note-topic-id: lec-07-topic-01 -->
-## Giới hạn bảng tra
+## 2. Nhu cầu xấp xỉ hàm
 
-Vấn đề: bảng tra gán một số riêng cho mỗi trạng thái hoặc mỗi cặp trạng thái–hành động, tức là học các ánh xạ $V^\pi: \mathcal S \to \mathbb R$ và $Q^\pi: \mathcal S \times \mathcal A \to \mathbb R$ dưới dạng bảng. Cách này dễ hiểu và dễ phân tích, nhưng khó mở rộng khi $|\mathcal S|$, $|\mathcal A|$ lớn hoặc liên tục.
+### 2.1. Giới hạn của bảng tra
 
-Trực giác: hai trạng thái "na ná nhau" trong bảng tra là hai ô hoàn toàn tách biệt; kinh nghiệm ở một trạng thái không giúp gì cho trạng thái kia, dù chúng giống nhau về cấu trúc. Ngoài ra, dữ liệu RL không i.i.d. và không dừng, nên việc ước lượng độc lập từng ô vừa tốn mẫu vừa lãng phí thông tin.
+Bảng lưu $V(s)\approx v_\pi(s)$ hoặc $Q(s,a)\approx q_\pi(s,a)$ riêng cho từng trạng thái hoặc từng cặp trạng thái–hành động. Cách biểu diễn này dễ phân tích nhưng khó mở rộng khi $|\mathcal S|$ hoặc $|\mathcal A|$ lớn hay liên tục (nguồn tr. 22–23). Có ba khó khăn.
 
-Hình thức: hai lợi ích chính của xấp xỉ hàm là (i) khả năng tổng quát hoá giữa các trạng thái tương tự — cập nhật ở một trạng thái kéo theo thay đổi ước lượng ở các trạng thái có đặc trưng gần nhau — và (ii) khả năng ra quyết định nhanh trong không gian lớn, vì chỉ cần tính $\hat v(s,w)$ thay vì tra bảng khổng lồ.
+1. Khi không gian trạng thái hoặc hành động lớn hay liên tục, không lưu được một ô cho mỗi phần tử. Mỗi ô cũng cần đủ lần thăm riêng để ước lượng của nó hội tụ, nên số mẫu cần có tăng theo số ô.
+2. Bảng không tổng quát hóa. Hai trạng thái có tính chất giống nhau vẫn có hai ô độc lập, nên kinh nghiệm ở một trạng thái không làm đổi ước lượng ở trạng thái kia, dù hai giá trị có thể gần nhau.
+3. Với mọi cách biểu diễn, dữ liệu học tăng cường không độc lập cùng phân phối (iid) và không dừng: các mẫu liên tiếp trong một lượt phụ thuộc nhau, và phân phối trạng thái được thăm thay đổi khi chính sách thay đổi. Khó khăn này xuất hiện lại trong giả thiết lấy mẫu của các điều kiện hội tụ ở phần Monte Carlo và TD.
 
-Giới hạn: tổng quát hoá là con dao hai lưỡi; nếu đặc trưng kém, thông tin sai ở một trạng thái lan sang các trạng thái khác. Đây là chủ đề của phần thiết kế đặc trưng.
+Mục tiếp theo thay bảng bằng một hàm có tham số dùng chung để xử lý hai khó khăn đầu.
 
 ::: exercise Câu hỏi kiểm tra
-Vì sao lập luận "dữ liệu RL không i.i.d. và không dừng" khiến bảng tra tốn mẫu hơn so với một hàm tham số chia sẻ thông tin?
+Một bảng $Q$ có $|\mathcal S|\,|\mathcal A|$ ô; một hàm tham số có $d$ tham số dùng chung với $d\ll|\mathcal S|\,|\mathcal A|$. Giải thích vì sao bảng cần nhiều mẫu hơn để có ước lượng ở mọi cặp, và nêu cái giá của việc dùng chung tham số.
 :::
 
 ::: hint
-So sánh số mẫu cần để ước lượng độc lập từng ô với số tham số của một hàm tuyến tính.
+So sánh số đại lượng cần học và xét một mẫu tại cặp $(s,a)$ làm thay đổi những ước lượng nào.
 :::
 
 ::: solution
-Với bảng tra, mỗi ô $(s,a)$ cần đủ mẫu riêng để ước lượng chính xác, và các mẫu không i.i.d. khiến việc dùng lại dữ liệu giữa các ô không tự động xảy ra. Với hàm tham số có $d$ tham số, mọi mẫu đều cập nhật cùng một $w$, nên thông tin từ một quỹ đạo được chia sẻ cho mọi trạng thái có đặc trưng tương tự; số lượng "đại lượng cần học" giảm từ cỡ $|\mathcal S \times \mathcal A|$ xuống $d$.
+Với bảng, mỗi ô chỉ thay đổi khi chính cặp đó được thăm, nên mọi cặp đều cần đủ mẫu riêng; số đại lượng cần học là $|\mathcal S|\,|\mathcal A|$. Với hàm tham số, mọi mẫu cập nhật cùng một vector $w$, nên một mẫu tại $(s,a)$ làm đổi ước lượng ở mọi cặp có đặc trưng tương tự; số đại lượng cần học giảm xuống $d$. Cái giá là một cập nhật cũng có thể làm sai lệch ước lượng ở các cặp khác, và lớp hàm có thể không biểu diễn đúng giá trị thật; hai vấn đề này được xét ở phần chia sẻ tham số và thiết kế đặc trưng.
 :::
 
 <!-- note-topic-id: lec-07-topic-02 -->
