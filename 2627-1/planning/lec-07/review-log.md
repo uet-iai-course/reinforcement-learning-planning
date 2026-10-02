@@ -468,3 +468,4 @@ Quy ước số và vector của lượt này: dấu phẩy thập phân; vector
 | X01 | mạch | nhẹ | Mặt trang chưa ghi nguồn bài tập | Mở đề bằng "Bài 4, phiếu bài tập tuần 7. Cho …" | đã sửa |
 | nhẹ | X02, tiêu đề cột bảng đáp án | Tiêu đề cột ghi chuyển vị trong khi ô viết vector cột | mạch | Bỏ $^T$ ở "(2) $x(S_t,A_t)$", "(3) $w_{t+1}$" (điều phối sửa trực tiếp) | đã sửa |
 | nhẹ | X02, đề bài | Câu (3) không ghi quy tắc cập nhật | mạch | "(3) cập nhật tuần tự $w\leftarrow w+\alpha[G_t-\hat q(S_t,A_t,w)]\,x(S_t,A_t)$", giữ công thức trên một dòng (điều phối sửa trực tiếp) | đã sửa |
+| nhẹ | X02, đề bài | Sau khi giữ công thức cập nhật trên một dòng, trang đè chân trang 6px (commit 3cb105c) | điều phối | Rút "(2) viết $x(S_t,A_t)$" và "(4) tính $\hat q$ tại ba cặp với $w_3$"; đáy 684, chân trang 704 | đã sửa |
