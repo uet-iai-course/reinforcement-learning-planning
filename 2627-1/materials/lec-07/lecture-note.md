@@ -4,16 +4,6 @@ Học phần Học tăng cường · Học kỳ 1, năm học 2026–2027.
 
 Khi không gian trạng thái lớn hoặc liên tục, bảng giá trị của Bài 05–06 được thay bằng một hàm có tham số dùng chung. Bài này dùng lớp hàm tuyến tính theo đặc trưng, xây dựng cập nhật Monte Carlo (MC) và sai phân thời gian (TD) cho dự đoán, rồi Sarsa và mục tiêu Q-learning cho điều khiển. Mỗi bảo đảm hội tụ được nêu cùng giả thiết về chính sách, đặc trưng, phân phối dữ liệu và bước học.
 
-## Mục tiêu và kiến thức tiên quyết
-
-- Giải thích vì sao bảng tra không còn phù hợp khi không gian trạng thái hoặc hành động lớn hoặc liên tục, và nêu ba lợi ích của xấp xỉ hàm: tổng quát hoá, ra quyết định nhanh và hỗ trợ không gian liên tục hoặc cao chiều.
-- Viết và phân tích xấp xỉ tuyến tính cho giá trị trạng thái $\hat v(s,w)$ và giá trị hành động $\hat q(s,a,w)$, kể cả vai trò của thiết kế đặc trưng.
-- Phân biệt cập nhật Monte Carlo với gradient đầy đủ và cập nhật TD(0) bán gradient; phát biểu đúng giả thiết và giới hạn hội tụ của TD tuyến tính theo chính sách.
-- Triển khai điều khiển với giá trị hành động: SARSA tuyến tính và đích Q-learning tuyến tính; nhận diện bộ ba bất ổn (*deadly triad*) như một nguy cơ, không phải kết luận luôn phân kỳ.
-- Tự tính lại đầy đủ bài tập 7 và 8, nêu từng vector đặc trưng, từng đích và từng bước cập nhật.
-
-Kiến thức tiên quyết từ Bài 06: quá trình quyết định Markov (MDP), dự đoán và điều khiển Monte Carlo, TD(0), SARSA, Q-learning dạng bảng, điều kiện GLIE và điều kiện Robbins–Monro. Toán cần dùng: tích vô hướng có trọng số, ma trận, phép chiếu trực giao theo chuẩn có trọng số và trị riêng.
-
 ## Bản đồ chủ đề
 
 Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic-01` đến `lec-07-topic-12` tạo thành mạch chính; nhóm **cầu nối** gồm `lec-07-topic-13` tóm tắt tiên quyết từ Bài 06; nhóm **bổ sung** gồm `lec-07-topic-14` và `lec-07-topic-15` cho kết quả hiện đại và chứng minh; nhóm **đọc thêm/thực hành** gồm `lec-07-topic-16` với tính tay bài 7–8. Sáu mạch chính: mở/cầu nối 7 phút; động cơ–đặc trưng 23 phút; MC 21 phút; TD–Bellman chiếu 33 phút; điều khiển/SARSA 19 phút; Q-learning–bộ ba bất ổn–thực hành–kết luận 17 phút; tổng 120 phút. Phần chữa bài 30 phút dùng bài 4, 7 và 8. Thứ tự trình bày mỗi chủ đề theo vấn đề → trực giác → ví dụ → hình thức/thuật toán → ứng dụng/giới hạn → kiểm tra; các chủ đề 13, 14 và 15 gộp bước trực giác với ví dụ vì chúng chỉ tóm tắt hoặc nêu hướng nghiên cứu, không có ví dụ tính được trong nguồn.
@@ -117,7 +107,7 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 ### Mở đầu: từ bảng giá trị đến hàm xấp xỉ
 
 - Nhóm: `cầu nối`.
-- Vai trò trong mạch: mở bài, nhắc điều kiện hội tụ dạng bảng và nêu ba điểm đối chiếu các thuật toán.
+- Vai trò trong mạch: mở bài, nhắc điều kiện hội tụ dạng bảng, nêu ba điểm đối chiếu các thuật toán, nội dung và mục tiêu học tập.
 - Kết nối vào: bảng giá trị, điều kiện GLIE và Robbins–Monro của Bài 05–06.
 - Kết nối ra: câu hỏi điều gì thay đổi khi $Q$ là hàm tuyến tính dẫn vào nội dung mới.
 - Nguồn: tr. 3, 5–20; chỉ tóm tắt điều kiện, không trình bày lại chứng minh dài.
@@ -185,6 +175,20 @@ Xét trung bình mẫu $Q_k(s,a)$ của một cặp chỉ có hữu hạn mẫu 
 ::: solution
 GLIE yêu cầu (i) $\lim_{k\to\infty} N_k(s,a) = \infty$ cho mọi cặp $(s,a)$ và (ii) $\pi_k$ hội tụ về chính sách tham lam theo $Q_k$. Nếu một cặp chỉ được thăm hữu hạn lần, trung bình mẫu tại cặp đó dừng ở một số hữu hạn mẫu nên sai số có thể không biến mất. Khi đó không thể kết luận $Q_k \to q_*$ cho mọi cặp, và chính sách tham lam theo $Q_k$ có thể bỏ qua một hành động có giá trị lớn hơn.
 :::
+
+### 1.2. Nội dung và mục tiêu
+
+Bài gồm năm phần: hàm xấp xỉ và đặc trưng; Monte Carlo với hàm xấp xỉ; TD(0) và Bellman chiếu; điều khiển và Sarsa; Q-learning và bộ ba bất ổn. Phần bài tập chữa Bài 4, 7 và 8 của phiếu bài tập tuần 7. Dự đoán, với chính sách cố định, được xét trước điều khiển, khi chính sách thay đổi theo tham số. Các ví dụ số ở phần điều khiển và phần bài tập dùng chuỗi năm trạng thái của Bài 06 với một vector đặc trưng ba chiều.
+
+Sau bài học, người học cần thực hiện được các công việc sau:
+
+- Viết $\hat v$, $\hat q$ tuyến tính theo đặc trưng, nêu miền và kích thước.
+- Tính cập nhật Monte Carlo, TD(0) và Sarsa tuyến tính trên ví dụ số.
+- Phân biệt gradient đầy đủ (Monte Carlo) với bán gradient (TD).
+- Nêu điểm cố định Bellman chiếu và giả thiết hội tụ của TD tuyến tính.
+- Phân biệt mục tiêu Sarsa và Q-learning; nhận diện bộ ba bất ổn (deadly triad) trong một quy tắc cập nhật.
+
+Kiến thức tiên quyết từ Bài 03–06: quá trình quyết định Markov (MDP), toán tử Bellman của một chính sách, dự đoán Monte Carlo và TD(0), điều khiển Monte Carlo, Sarsa và Q-learning dạng bảng, điều kiện GLIE và điều kiện Robbins–Monro. Toán cần dùng: tích vô hướng có trọng số, ma trận, phép chiếu trực giao theo chuẩn có trọng số và trị riêng. Bài không chứng minh hội tụ cho Sarsa hoặc Q-learning với xấp xỉ hàm và không xét các phương pháp actor-critic.
 
 <!-- note-topic-id: lec-07-topic-01 -->
 ## Giới hạn bảng tra

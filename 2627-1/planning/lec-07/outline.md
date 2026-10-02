@@ -13,15 +13,13 @@
 
 ## Mục tiêu
 
-Sau bài học, sinh viên có thể:
+Sau bài học, sinh viên có thể (khớp mặt trang `L07-03` và mục 1.2 của ghi chú bài giảng):
 
-1. giải thích giới hạn của bảng tra và cơ chế tổng quát hóa qua tham số dùng chung;
-2. định nghĩa xấp xỉ tuyến tính cho $v_\pi$ và $q_\pi$, gồm miền và kích thước;
-3. phân biệt gradient đầy đủ của MC với bán gradient của TD;
-4. triển khai MC, TD(0), SARSA tuyến tính và phân biệt đích Q-learning;
-5. giải thích điểm cố định $\Phi w=\Pi_D T_\pi(\Phi w)$ cùng các giả thiết;
-6. nhận diện xấp xỉ hàm, bootstrap và học khác chính sách trong deadly triad;
-7. tự tính các cập nhật tuần tự trong Bài 7 và Bài 8 của phiếu bài tập.
+1. viết xấp xỉ tuyến tính $\hat v$, $\hat q$ theo đặc trưng, nêu miền và kích thước;
+2. tính cập nhật Monte Carlo, TD(0) và Sarsa tuyến tính trên ví dụ số, gồm Bài 7 và Bài 8 của phiếu bài tập;
+3. phân biệt gradient đầy đủ (Monte Carlo) với bán gradient (TD);
+4. nêu điểm cố định Bellman chiếu $\Phi w=\Pi_D T_\pi(\Phi w)$ cùng giả thiết hội tụ;
+5. phân biệt mục tiêu Sarsa và Q-learning; nhận diện bộ ba bất ổn (xấp xỉ hàm, bootstrap, học khác chính sách) trong một quy tắc cập nhật.
 
 ## Dàn ý theo sáu mạch và thời lượng
 
