@@ -659,6 +659,8 @@ Hình chiếu đặc trưng bởi phần dư trực giao với các cột của 
 
 $$\Phi w_{\mathrm{TD}}=\Pi_D T_\pi(\Phi w_{\mathrm{TD}})\iff Aw_{\mathrm{TD}}=b.$$
 
+Trên hình của mục 10.1, điểm cố định là trường hợp hình chiếu $\Pi_DT_\pi(\Phi w)$ trùng với chính $\Phi w$.
+
 Chứng minh (Bài tập 5). Từ $b-Aw=0$, tức $\Phi^\top D\big(T_\pi(\Phi w)-\Phi w\big)=0$, nhân trái với $\Phi(\Phi^\top D\Phi)^{-1}$ được $\Pi_DT_\pi(\Phi w)-\Phi(\Phi^\top D\Phi)^{-1}\Phi^\top D\Phi w=\Pi_DT_\pi(\Phi w)-\Phi w=0$. Ngược lại, nếu $\Phi w=\Pi_DT_\pi(\Phi w)$ thì nhân trái với $\Phi^\top D$ và dùng $\Phi^\top D\Pi_D=\Phi^\top D$ được $\Phi^\top D\Phi w=\Phi^\top DT_\pi(\Phi w)$, tức $b-Aw=0$. Trên hình của mục 10.1, điểm cố định là trường hợp $\Pi T_\pi(\Phi w)$ trùng với chính $\Phi w$.
 
 Ý nghĩa. TD hướng tới điểm cố định của toán tử Bellman chiếu $\Pi_DT_\pi$. Monte Carlo với $\mu=d_\pi$ cực tiểu $J_\mu=\tfrac12\|v_\pi-\Phi w\|_D^2$, nên hướng tới hình chiếu $\Pi_Dv_\pi$ của giá trị thật (mục 8.1); hai điểm chỉ trùng nhau trong trường hợp đặc biệt, chẳng hạn khi $v_\pi$ nằm trong lớp biểu diễn. Phép so sánh với $\Pi_Dv_\pi$ là diễn giải bổ sung từ ý lệch mục tiêu ở nguồn (tr. 43): TD giải phương trình điểm cố định Bellman chiếu, không trực tiếp cực tiểu sai số tới $v_\pi$.
