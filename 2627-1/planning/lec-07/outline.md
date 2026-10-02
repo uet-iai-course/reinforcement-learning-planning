@@ -114,15 +114,20 @@ Mỗi trang trong 40 trang chiếu (`L07-01`–`L07-36`, `L07-20b` và `X01`–`
 
 ## Tài sản trực quan
 
-Bảy SVG được vẽ lại trong `2627-1/img/lec-07/`:
+Mười SVG trong `2627-1/img/lec-07/` được deck dùng:
 
-1. `tabular-vs-parametric.svg`;
-2. `shared-parameter-effect.svg`;
-3. `linear-pipeline.svg`;
-4. `feature-domains.svg`;
-5. `projected-bellman.svg`;
-6. `five-state-features.svg`;
-7. `deadly-triad.svg`.
+1. `tabular-vs-parametric.svg` (`L07-05`);
+2. `shared-parameter-effect.svg` (`L07-06`);
+3. `linear-pipeline.svg` (`L07-08`);
+4. `feature-domains.svg` (`L07-09`);
+5. `mc-update-vector.svg` (`L07-14`; thêm 03-10-2026, bước cập nhật Monte Carlo trong mặt phẳng tham số);
+6. `projected-bellman.svg` (`L07-21`, tái dùng ở `L07-23`);
+7. `control-loop.svg` (`L07-26`; thêm 03-10-2026, vòng học điều khiển);
+8. `five-state-features.svg` (`L07-27`);
+9. `chain-strip-dc.svg` (`L07-30`; thêm 03-10-2026, dải chuỗi một hàng, cạnh D → C đậm);
+10. `deadly-triad.svg` (`L07-32`).
+
+Ngày 03-10-2026 tạo thêm `chain-strip.svg` (dải chuỗi không tô cạnh) cho `L07-31`, `X02`, `X03`, nhưng cả ba trang tràn khung khi chèn dải ở chiều cao giữ nhãn đọc được (112 px); các trang này nêu đặc trưng bằng chữ; tệp đã xóa vì không trang nào dùng.
 
 Ngày 02-10-2026 xóa `mc-vs-td-targets.svg`: hình không đọc được khi đặt cùng bảng sáu hàng ở `L07-25`, nội dung trùng hàng "Mục tiêu" của bảng; tệp vẫn còn trong lịch sử git.
 
