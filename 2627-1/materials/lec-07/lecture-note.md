@@ -88,7 +88,7 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Kết nối ra: dẫn tới Q-learning và bộ ba bất ổn.
 - Nguồn: tr. 38–40 và bài tập 8.
 
-### Đích Q-learning tuyến tính và bộ ba bất ổn
+### Q-learning và bộ ba bất ổn
 
 - Nhóm: `cốt lõi`.
 - Vai trò trong mạch: nêu đích khác chính sách và nguy cơ bất ổn.
@@ -780,9 +780,19 @@ Sarsa đánh giá chính sách đang chạy, nên mục tiêu phải là giá tr
 :::
 
 <!-- note-topic-id: lec-07-topic-11 -->
-## Đích Q-learning tuyến tính và bộ ba bất ổn
+## 13. Q-learning và bộ ba bất ổn
 
-Vấn đề: Q-learning tuyến tính có hội tụ như SARSA tuyến tính không?
+### 13.1. Mục tiêu Q-learning với hàm xấp xỉ
+
+Thay $A_{t+1}$ trong mục tiêu Sarsa bằng hành động cực đại, như Q-learning dạng bảng ở Bài 06 (nguồn tr. 38):
+
+$$y_t=\begin{cases}R_{t+1}, & S_{t+1}\ \text{kết thúc},\\ R_{t+1}+\gamma\max_{a'}\hat q(S_{t+1},a',w_t), & \text{ngược lại},\end{cases}\qquad w_{t+1}=w_t+\alpha\big(y_t-\hat q(S_t,A_t,w_t)\big)x(S_t,A_t).$$
+
+Ở trạng thái kết thúc không lấy cực đại, vì không còn hành động. Dữ liệu do chính sách hành vi $\varepsilon$-tham lam sinh, còn mục tiêu theo chính sách tham lam, nên Q-learning học khác chính sách (điểm đối chiếu thứ hai ở mục 1.1).
+
+Ví dụ: với mẫu $(D,0,-1,C,0)$ và $w_0=(1;1;-1)^\top$ của mục 12.4, $x(C,1)=(2;-1;1)^\top$ cho $\hat q(C,1,w_0)=2-1-1=0$, còn $\hat q(C,0,w_0)=2$. Mục tiêu Q-learning là $-1+\max(2,0)=1$, trùng mục tiêu Sarsa $-1+2=1$, vì hành động 0 vừa được chọn vừa đạt cực đại. Nếu hành động kế tiếp trong mẫu là hành động thăm dò không tham lam, hai mục tiêu khác nhau. Mục này chỉ phân biệt hai quy tắc mục tiêu; nó không khẳng định Q-learning tuyến tính hội tụ tới $q_*$ (nguồn tr. 41).
+
+### 13.2. Bộ ba bất ổn
 
 Trực giác: đích Q-learning tuyến tính là $R_{t+1} + \gamma \max_a x(S_{t+1}, a)^\top w_t$; nó vừa tự khởi tạo vì phụ thuộc $w_t$, vừa khác chính sách vì dữ liệu đến từ chính sách hành vi, vừa dùng xấp xỉ hàm. Ba thành phần này đồng thời tạo thành bộ ba bất ổn:
 
