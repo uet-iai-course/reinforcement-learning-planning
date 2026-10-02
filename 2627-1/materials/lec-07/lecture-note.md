@@ -792,28 +792,28 @@ $$y_t=\begin{cases}R_{t+1}, & S_{t+1}\ \text{kết thúc},\\ R_{t+1}+\gamma\max_
 
 Ví dụ: với mẫu $(D,0,-1,C,0)$ và $w_0=(1;1;-1)^\top$ của mục 12.4, $x(C,1)=(2;-1;1)^\top$ cho $\hat q(C,1,w_0)=2-1-1=0$, còn $\hat q(C,0,w_0)=2$. Mục tiêu Q-learning là $-1+\max(2,0)=1$, trùng mục tiêu Sarsa $-1+2=1$, vì hành động 0 vừa được chọn vừa đạt cực đại. Nếu hành động kế tiếp trong mẫu là hành động thăm dò không tham lam, hai mục tiêu khác nhau. Mục này chỉ phân biệt hai quy tắc mục tiêu; nó không khẳng định Q-learning tuyến tính hội tụ tới $q_*$ (nguồn tr. 41).
 
-### 13.2. Bộ ba bất ổn
+### 13.2. Bộ ba bất ổn (deadly triad)
 
-Trực giác: đích Q-learning tuyến tính là $R_{t+1} + \gamma \max_a x(S_{t+1}, a)^\top w_t$; nó vừa tự khởi tạo vì phụ thuộc $w_t$, vừa khác chính sách vì dữ liệu đến từ chính sách hành vi, vừa dùng xấp xỉ hàm. Ba thành phần này đồng thời tạo thành bộ ba bất ổn:
+Q-learning tuyến tính có đủ ba yếu tố: mục tiêu $R_{t+1}+\gamma\max_{a'}x(S_{t+1},a')^\top w_t$ chứa $w_t$ (bootstrap), dữ liệu đến từ chính sách hành vi khác chính sách tham lam (học khác chính sách), và giá trị được biểu diễn bằng hàm tham số (xấp xỉ hàm). Theo nguồn (tr. 41), khi ba yếu tố
 
-$$\text{tự khởi tạo} + \text{khác chính sách} + \text{xấp xỉ hàm},$$
+$$\text{bootstrap} + \text{khác chính sách} + \text{xấp xỉ hàm}$$
 
-có thể làm TD hoặc Q-learning phân kỳ. Bộ ba bất ổn là một nguy cơ, không phải kết luận rằng mọi lần chạy đều phân kỳ; TD tuyến tính theo chính sách với chính sách cố định vẫn hội tụ dưới giả thiết phù hợp. Vì vậy Q-learning tuyến tính khác chính sách cần các điều kiện chặt hơn.
+cùng có mặt, TD và Q-learning có thể phân kỳ; vì vậy bảo đảm hội tụ cho Q-learning tuyến tính cần điều kiện riêng, chặt hơn TD theo chính sách. Đây là nhận định về khả năng phân kỳ trong một lớp thiết lập. Muốn kết luận một thuật toán cụ thể phân kỳ hay hội tụ cần ví dụ phản chứng hoặc định lý riêng; một ví dụ phân kỳ kinh điển là ví dụ của Baird (đọc thêm Sutton và Barto, ấn bản 2, §11.2–11.3).
 
-Các hướng khắc phục nêu trong nguồn gồm điều chỉnh trọng số cho dữ liệu khác chính sách, mạng mục tiêu, điều chuẩn và cắt ngưỡng; chúng đặc biệt quan trọng trong Học tăng cường sâu.
+Bỏ một yếu tố thì nguồn bất ổn này không còn: TD tuyến tính theo chính sách (mục 10.4) và Q-learning dạng bảng (Bài 06) hội tụ, mỗi trường hợp dưới giả thiết riêng; Monte Carlo không bootstrap, khi khác chính sách dùng lấy mẫu quan trọng nhưng phương sai có thể lớn (nguồn tr. 37, hàng cuối bảng so sánh).
 
-Ứng dụng và giới hạn: với MC khác chính sách, có thể dùng lấy mẫu quan trọng nhưng phương sai lớn. Với TD khác chính sách, nguy cơ phân kỳ là rào cản lý thuyết chính và chưa được giải quyết triệt để; nhiều cách ổn định hoá cần giả thiết mạnh hoặc dẫn tới nghiệm chệch.
+Hướng khắc phục (nguồn tr. 41): đổi trọng số cập nhật để ổn định học khác chính sách; mạng mục tiêu (target network), điều chuẩn (regularization) và cắt ngưỡng (truncation/clipping), đặc biệt quan trọng trong học tăng cường sâu. Bài 08 xét mạng mục tiêu. Nguồn (tr. 43) cũng ghi nhận rằng vấn đề này chưa được giải quyết triệt để: nhiều cách ổn định hóa cần giả thiết mạnh hoặc dẫn tới nghiệm chệch.
 
 ::: exercise Câu hỏi kiểm tra (bài tập 3)
 Trình bày bộ ba bất ổn và giải thích vì sao từng thành phần riêng lẻ không gây vấn đề tương tự.
 :::
 
 ::: hint
-Xét từng cặp: tự khởi tạo + xấp xỉ hàm theo chính sách; tự khởi tạo + khác chính sách dạng bảng; khác chính sách + xấp xỉ hàm không tự khởi tạo.
+Xét từng cặp: bootstrap cùng xấp xỉ hàm theo chính sách; bootstrap cùng khác chính sách dạng bảng; khác chính sách cùng xấp xỉ hàm không bootstrap.
 :::
 
 ::: solution
-Bộ ba bất ổn là sự kết hợp của tự khởi tạo, dữ liệu khác chính sách và xấp xỉ hàm; nó có thể làm TD hoặc Q-learning bất ổn hay phân kỳ. Trong các trường hợp đối chiếu, phương pháp dạng bảng vẫn giữ cấu trúc toán tử Bellman; TD tuyến tính theo chính sách với chính sách cố định hội tụ tới điểm cố định Bellman chiếu dưới giả thiết phù hợp; MC khác chính sách không tự khởi tạo có thể dùng lấy mẫu quan trọng. Khi cả ba thành phần xuất hiện, phép cập nhật không còn tương ứng với một toán tử co trên không gian tham số, còn sai số xấp xỉ lan truyền qua đích tự khởi tạo. Đây là nguy cơ, không phải kết luận luôn phân kỳ.
+Bộ ba bất ổn là sự kết hợp của bootstrap, dữ liệu khác chính sách và xấp xỉ hàm; khi cả ba cùng có mặt, TD hoặc Q-learning có thể phân kỳ. Trong các trường hợp đối chiếu: Q-learning dạng bảng vẫn hội tụ dù học khác chính sách; TD tuyến tính theo chính sách với chính sách cố định hội tụ tới điểm cố định Bellman chiếu dưới các giả thiết của mục 10.4; Monte Carlo khác chính sách không bootstrap có thể dùng lấy mẫu quan trọng. Khi cả ba yếu tố xuất hiện, hướng cập nhật trung bình không còn được bảo đảm kéo $w$ về một điểm cố định, và sai số xấp xỉ lan truyền qua mục tiêu bootstrap. Đây là khả năng phân kỳ trong một lớp thiết lập; mỗi thuật toán cần phân tích riêng.
 :::
 
 <!-- note-topic-id: lec-07-topic-14 -->
