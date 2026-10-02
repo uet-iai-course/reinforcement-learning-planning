@@ -48,11 +48,11 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Kết nối ra: dẫn tới cập nhật Monte Carlo và TD.
 - Nguồn: tr. 27, 32.
 
-### MC với gradient đầy đủ
+### Monte Carlo với hàm xấp xỉ
 
 - Nhóm: `cốt lõi`.
-- Vai trò trong mạch: mạch MC, cập nhật gradient thật trên mất mát bình phương.
-- Kết nối vào: phân loại đích.
+- Vai trò trong mạch: lợi tức làm mục tiêu không chệch, cập nhật theo gradient đầy đủ của mất mát bình phương.
+- Kết nối vào: mục tiêu cập nhật.
 - Kết nối ra: đối chiếu với bán gradient TD.
 - Nguồn: tr. 33–34 và bài tập 4.
 
@@ -410,23 +410,27 @@ $y_t^{\mathrm{TD}} = R_{t+1} + \gamma\, x(S_{t+1})^\top w_t$. Thành phần $R_{
 :::
 
 <!-- note-topic-id: lec-07-topic-06 -->
-## MC với gradient đầy đủ
+## 7. Monte Carlo với hàm xấp xỉ
 
-Vấn đề: cập nhật Monte Carlo với hàm xấp xỉ là gì, và nó có phải là hạ gradient thật không?
+### 7.1. Lợi tức làm mục tiêu Monte Carlo
 
-Trực giác: MC dùng tổng thưởng đầy đủ của lượt làm đích; đích này không phụ thuộc $w$, nên nó giống một nhãn cố định trong học có giám sát.
+Với lượt kết thúc ở thời điểm $T$, mục tiêu Monte Carlo (MC) là lợi tức từ thời điểm $t$ (nguồn tr. 33):
 
-Hình thức. Đích MC là tổng lợi ích
+$$G_t = \sum_{k=0}^{T-t-1} \gamma^k R_{t+1+k}, \qquad y_t^{\mathrm{MC}} = G_t.$$
 
-$$G_t = \sum_{k=0}^{T-t-1} \gamma^k R_{t+1+k},$$
+Mục tiêu này không bootstrap và không chứa $w$, nhưng chỉ biết được khi lượt kết thúc. Với chính sách $\pi$ cố định, định nghĩa giá trị trạng thái (Bài 03) cho
 
-và cập nhật là
+$$\mathbb E_\pi[G_t \mid S_t = s] = v_\pi(s),$$
+
+nên $G_t$ là mẫu không chệch của $v_\pi(S_t)$; thay $v_\pi(S_t)$ trong $J_\mu$ bằng $G_t$ đúng theo kỳ vọng. Lợi tức tồn tại và hữu hạn dưới các điều kiện ở mục 4.1. Đổi lại, $G_t$ cộng nhiều phần thưởng ngẫu nhiên nên thường có phương sai lớn (nguồn tr. 33). Đẳng thức trên chỉ nói về từng mẫu $G_t$: nó không nói vector $w$ học được từ hữu hạn mẫu là không chệch, và không xác định $\mu$, vốn do cách lấy các trạng thái $S_t$ quyết định. Mục tiêu TD không có tính chất không chệch này khi $\hat v\ne v_\pi$ (mục 11 đối chiếu hai phương pháp).
+
+Phần còn lại của mục 7 dùng mục tiêu này để xây dựng cập nhật: thay $y_t=G_t$ vào dạng cập nhật của mục 6.1,
 
 $$w_{t+1} = w_t + \alpha_t \big(G_t - \hat v(S_t, w_t)\big) \nabla_w \hat v(S_t, w_t).$$
 
 Đây là gradient đầy đủ: vì $G_t$ không phụ thuộc $w$, số hạng này chính là $-\nabla_w \ell_t(w_t)$ với mất mát cục bộ $\ell_t(w) = \frac{1}{2}\big(G_t - \hat v(S_t,w)\big)^2$. Chứng minh từng bước ở chủ đề bổ sung 15.
 
-Ưu điểm và nhược điểm: đích không tự khởi tạo nên không chệch theo tổng thưởng; nhược điểm là phương sai lớn và phải chờ hết lượt. Với bình phương tối thiểu tuyến tính theo lô, MC gần bài toán hồi quy chuẩn.
+Với bình phương tối thiểu tuyến tính theo lô, Monte Carlo gần bài toán hồi quy chuẩn (nguồn tr. 33).
 
 Điều kiện hội tụ: nếu dữ liệu i.i.d., đặc trưng bị chặn, $\sum_t \alpha_t = \infty$ và $\sum_t \alpha_t^2 < \infty$, thì MC-SGD hội tụ tới nghiệm tối ưu của lỗi bình phương trên phân phối dữ liệu. Lưu ý đây là hội tụ tới nghiệm hồi quy tốt nhất, không phải nhất thiết tới $v^\pi$, trừ khi lớp hàm chứa được $v^\pi$.
 
