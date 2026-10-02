@@ -610,38 +610,38 @@ $$\mathbb E_\pi\big[R_{t+1}+\gamma x(S_{t+1})^\top w\mid S_t=s\big]=r_\pi(s)+\ga
 
 Vector $T_\pi(\Phi w)$ nói chung nằm ngoài lớp biểu diễn; gần nó nhất trong lớp là hình chiếu $\Pi T_\pi(\Phi w)$. Mục 10.2 và 10.3 cho thấy TD dừng tại $w$ thỏa $\Phi w=\Pi T_\pi(\Phi w)$, với phép chiếu theo trọng số $D$. Ví dụ: lớp chỉ chứa các vector $c(1;1)^\top$ và $T_\pi(\Phi w)=(2;0)^\top$. Không tham số nào biểu diễn đúng $(2;0)^\top$; hình chiếu trực giao (theo tích vô hướng thông thường) lên đường thẳng là $\frac{a^\top u}{a^\top a}a$ với $a=(1;1)^\top$, $u=(2;0)^\top$, tức $\tfrac{2}{2}(1;1)^\top=(1;1)^\top$. Trong TD, các trạng thái không được thăm đều nhau, nên phép chiếu dùng tích vô hướng có trọng số $u^\top Dv$; mục 10.2 cho thấy trọng số đó xuất hiện từ trung bình của cập nhật TD. Phần này dùng kiến thức đại số tuyến tính về phép chiếu trực giao lên không gian con.
 
-Hình thức và phát biểu. Xét TD(0) tuyến tính với
+### 10.2. Hướng cập nhật trung bình của TD
 
-$$w_{t+1} = w_t + \alpha_t \delta_t x(S_t), \qquad \delta_t = R_{t+1} + \gamma x(S_{t+1})^\top w_t - x(S_t)^\top w_t.$$
+Xét cập nhật TD(0) tuyến tính $w_{t+1}=w_t+\alpha_t\delta_t x(S_t)$ với $\delta_t=R_{t+1}+\gamma x(S_{t+1})^\top w_t-x(S_t)^\top w_t$. Giả sử chuỗi trạng thái dưới $\pi$ có phân phối dừng duy nhất $d_\pi$ (điều kiện này được nêu cùng các giả thiết hội tụ ở mục 10.4). Lấy $S_t$ theo $d_\pi$, tức tần suất dài hạn của mỗi trạng thái khi chạy $\pi$; trong ký hiệu của mục 4.1, đây là trường hợp $\mu=d_\pi$. Giữ $w$ cố định. Theo kỳ vọng một bước ở mục 10.1,
 
-Ký hiệu $\Phi$ là ma trận đặc trưng (hàng thứ $s$ là $x(s)^\top$), $D$ là ma trận chéo của phân phối dừng theo chính sách $d$, $P_\pi$ là ma trận chuyển theo chính sách $\pi$, $r_\pi$ là vector phần thưởng kỳ vọng. Toán tử Bellman theo chính sách là $T^\pi v = r_\pi + \gamma P_\pi v$. Nếu tồn tại điểm cố định $w_{\mathrm{TD}}$ của cập nhật kỳ vọng thì nó thỏa
+$$\mathbb E[\delta_t x(S_t)\mid S_t=s]=x(s)\Big(\mathbb E_\pi\big[R_{t+1}+\gamma x(S_{t+1})^\top w\mid S_t=s\big]-x(s)^\top w\Big)=x(s)\big((T_\pi\Phi w)(s)-(\Phi w)(s)\big).$$
 
-$$\Phi w_{\mathrm{TD}} = \Pi_D T^\pi (\Phi w_{\mathrm{TD}}),$$
+Lấy trung bình theo $d_\pi$, với $D=\operatorname{diag}(d_\pi)$ và $z=T_\pi(\Phi w)-\Phi w$,
 
-trong đó $\Pi_D$ là phép chiếu trực giao theo chuẩn $D$, tức $\Pi_D v = \Phi(\Phi^\top D \Phi)^{-1}\Phi^\top D\, v$ khi $\Phi^\top D \Phi$ khả nghịch.
+$$\mathbb E[\delta_t x(S_t)]=\sum_s d_\pi(s)\,x(s)\,z(s)=\Phi^\top D\big(T_\pi(\Phi w)-\Phi w\big)=\underbrace{\Phi^\top D r_\pi}_{b}-\underbrace{\Phi^\top D(I-\gamma P_\pi)\Phi}_{A}\,w,$$
 
-Chứng minh (bài tập 5). Lấy kỳ vọng có điều kiện của $\delta_t x(S_t)$ tại điểm cố định. Với phân phối dừng $d$,
+trong đó bước cuối thay $T_\pi(\Phi w)=r_\pi+\gamma P_\pi\Phi w$. Đây là gợi ý của Bài tập 5: viết kỳ vọng của $\delta_t x(S_t)$ dưới dạng $b-Aw$.
 
-$$\mathbb E_\pi[\delta_t x(S_t)] = \mathbb E_\pi\big[(R_{t+1} + \gamma x(S_{t+1})^\top w - x(S_t)^\top w)x(S_t)\big] = b - A w,$$
+Trọng số là $d_\pi$ vì khi dữ liệu sinh theo $\pi$, trạng thái $s$ được cập nhật với tần suất dài hạn $d_\pi(s)$. Với bài toán theo lượt, $d_\pi$ là tần suất thăm dài hạn khi các lượt nối tiếp nhau; $P_\pi$ trong $T_\pi$ chỉ gồm chuyển giữa các trạng thái chưa kết thúc (giá trị tại trạng thái kết thúc bằng 0). TD dừng về trung bình khi $b-Aw=0$, tức $\Phi^\top D z=0$: phần dư Bellman $z=T_\pi(\Phi w)-\Phi w$ trực giao với mọi cột $\phi_j$ của $\Phi$ theo tích vô hướng $\langle u,v\rangle_D=u^\top Dv$.
 
-trong đó $b = \Phi^\top D\, r_\pi$ và $A = \Phi^\top D (I - \gamma P_\pi)\Phi$. Điểm cố định thỏa $b - A w_{\mathrm{TD}} = 0$, tức $\Phi^\top D\, r_\pi = \Phi^\top D (I - \gamma P_\pi) \Phi w_{\mathrm{TD}}$. Nhân hai vế với $(\Phi^\top D \Phi)^{-1}\Phi^\top D$ và dùng $T^\pi(\Phi w) = r_\pi + \gamma P_\pi \Phi w$:
+Điều kiện trực giao này là phương trình điểm cố định. Nếu tồn tại $w_{\mathrm{TD}}$ với $b-Aw_{\mathrm{TD}}=0$, tức $\Phi^\top D\, r_\pi = \Phi^\top D (I - \gamma P_\pi) \Phi w_{\mathrm{TD}}$, nhân hai vế với $\Phi(\Phi^\top D \Phi)^{-1}$ (khi $\Phi^\top D\Phi$ khả nghịch) và dùng $T_\pi(\Phi w) = r_\pi + \gamma P_\pi \Phi w$:
 
-$$\Phi w_{\mathrm{TD}} = \Phi(\Phi^\top D\Phi)^{-1}\Phi^\top D\,\big(r_\pi + \gamma P_\pi \Phi w_{\mathrm{TD}}\big) = \Pi_D T^\pi(\Phi w_{\mathrm{TD}}),$$
+$$\Phi w_{\mathrm{TD}} = \Phi(\Phi^\top D\Phi)^{-1}\Phi^\top D\,\big(r_\pi + \gamma P_\pi \Phi w_{\mathrm{TD}}\big) = \Pi_D T_\pi(\Phi w_{\mathrm{TD}}),$$
 
-điều phải chứng minh. Ý nghĩa: $\hat v = \Phi w_{\mathrm{TD}}$ là hình chiếu trực giao theo chuẩn $D$ của $T^\pi \hat v$ xuống không gian sinh bởi đặc trưng — TD không tìm $v^\pi$ mà tìm điểm gần nhất có thể với hình ảnh Bellman của chính nó.
+trong đó $\Pi_D v = \Phi(\Phi^\top D \Phi)^{-1}\Phi^\top D\, v$ là phép chiếu trực giao theo tích vô hướng $\langle\cdot,\cdot\rangle_D$. Ý nghĩa: $\hat v = \Phi w_{\mathrm{TD}}$ là hình chiếu theo $D$ của $T_\pi \hat v$ xuống lớp biểu diễn; TD không tìm $v_\pi$ mà tìm điểm trùng với hình chiếu ảnh Bellman của chính nó.
 
 Giới hạn hội tụ (phát biểu chuẩn, theo chính sách cố định): TD tuyến tính hội tụ tới $w_{\mathrm{TD}}$ khi các giả thiết sau cùng được thỏa — chính sách $\pi$ cố định, dữ liệu theo chính sách, chuỗi Markov phù hợp (chẳng hạn bất khả quy và không tuần hoàn để phân phối dừng duy nhất tồn tại), $\gamma < 1$, ma trận đặc trưng $\Phi$ đủ hạng (để $\Phi^\top D\Phi$ khả nghịch), và bước học thích hợp theo Robbins–Monro. Bảo đảm này không chuyển sang SARSA hay Q-learning với xấp xỉ hàm, vì ở đó chính sách thay đổi hoặc đích khác chính sách.
 
 ::: exercise Câu hỏi kiểm tra
-Giải thích vì sao phương trình $\Phi w_{\mathrm{TD}} = \Pi_D T^\pi(\Phi w_{\mathrm{TD}})$ cho thấy TD triệt tiêu sai số Bellman chiếu chứ không trực tiếp tối ưu lỗi $\|\hat v - v^\pi\|_D$.
+Giải thích vì sao phương trình $\Phi w_{\mathrm{TD}} = \Pi_D T_\pi(\Phi w_{\mathrm{TD}})$ cho thấy TD triệt tiêu sai số Bellman chiếu chứ không trực tiếp cực tiểu sai số $\|\hat v - v_\pi\|_D$.
 :::
 
 ::: hint
-So sánh hai đại lượng: $\|\Pi_D T^\pi \hat v - \hat v\|_D$ và $\|v^\pi - \hat v\|_D$.
+So sánh hai đại lượng: $\|\Pi_D T_\pi \hat v - \hat v\|_D$ và $\|v_\pi - \hat v\|_D$.
 :::
 
 ::: solution
-Điểm cố định triệt tiêu sai số Bellman chiếu $\|\Pi_D T^\pi \hat v - \hat v\|_D$, tức khoảng cách giữa $\hat v$ và hình Bellman chiếu của nó. Nếu lớp hàm không chứa $v^\pi$, hình chiếu của $T^\pi \hat v$ nói chung không phải là hình chiếu của $v^\pi$, nên $\hat v$ tại điểm cố định khác với phép chiếu của $v^\pi$. Đây là hiện tượng lệch mục tiêu: TD giải bài toán điểm cố định Bellman chiếu, không trực tiếp tối thiểu hoá khoảng cách tới $v^\pi$.
+Điểm cố định triệt tiêu sai số Bellman chiếu $\|\Pi_D T_\pi \hat v - \hat v\|_D$, tức khoảng cách giữa $\hat v$ và hình chiếu ảnh Bellman của nó. Nếu lớp hàm không chứa $v_\pi$, hình chiếu của $T_\pi \hat v$ nói chung không trùng hình chiếu của $v_\pi$, nên $\hat v$ tại điểm cố định có thể khác hình chiếu của $v_\pi$. TD giải bài toán điểm cố định Bellman chiếu, không trực tiếp cực tiểu khoảng cách tới $v_\pi$.
 :::
 
 <!-- note-topic-id: lec-07-topic-09 -->

@@ -40,7 +40,7 @@ Các khoảng trang trên không chồng lấn. Tổng phần chính là 111 ph�
 | `L07-20` | Hình thức: gradient đầy đủ của $\tfrac12\delta_t(w)^2$, TD(0) bỏ số hạng $\gamma x(S_{t+1})$ nên là bán gradient (câu hỏi nguồn tr. 32); quy tắc tuyến tính; bán gradient không là bước giảm của một mất mát cố định. | tr. 32, 35–36 | 3 | Đóng gói quy tắc thành thuật toán. |
 | `L07-20b` | Thuật toán TD(0) tuyến tính: đầu vào/đầu ra, ngân sách chuyển tiếp, giá trị tiếp nối 0 khi kết thúc, $y$ và $\delta$ tính bằng cùng $w$. | tr. 35–36 | 2 | Xem ảnh Bellman có nằm trong lớp biểu diễn không. |
 | `L07-21` | Vấn đề và trực giác: TD(0) dừng ở đâu; $\mathcal S$ hữu hạn, $\Phi$, lớp $\{\Phi w\}$, $T_\pi v=r_\pi+\gamma P_\pi v$; trung bình mục tiêu TD là $T_\pi(\Phi w)$, nói chung ngoài lớp nên TD chỉ khớp hình chiếu; ví dụ $(2;0)^T$ chiếu lên đường $c(1;1)^T$ cho $(1;1)^T$. | tr. 37; HW5 | 4 | Trọng số của phép chiếu xuất hiện từ trung bình cập nhật TD. |
-| `L07-22` | Điều kiện trực giao và phép khai triển thành $Aw=b$. | HW5 | 4 | Viết điểm cố định chiếu. |
+| `L07-22` | Hình thức: với $S_t\sim d_\pi$ (phân phối dừng, $\mu=d_\pi$) và $w$ cố định, $\mathbb E[\delta_tx(S_t)]=\Phi^TD(T_\pi\Phi w-\Phi w)=b-Aw$; TD dừng về trung bình khi phần dư Bellman trực giao với các cột $\Phi$ theo $\langle u,v\rangle_D$. | HW5; tr. 37 | 4 | Chuyển điều kiện trực giao thành phương trình điểm cố định. |
 | `L07-23` | Hình thức: điểm cố định Bellman chiếu. | HW5 | 5 | Gắn phương trình với điều kiện hội tụ. |
 | `L07-24` | Điều kiện dữ liệu, bước học và tính ổn định của hệ trung bình TD. | tr. 35–37; HW5–6 | 4 | So sánh đích MC và TD trước khi điều khiển. |
 | `L07-25` | So sánh cấu trúc đích và đối tượng phân tích. | tr. 33–37 | 3 | Thay V bằng Q để chọn hành động. |
