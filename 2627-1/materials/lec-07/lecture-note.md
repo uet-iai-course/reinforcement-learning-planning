@@ -16,10 +16,10 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Kết nối ra: dẫn tới nhu cầu chia sẻ tham số.
 - Nguồn: tr. 22–23.
 
-### Chia sẻ tham số
+### Hàm có tham số dùng chung
 
 - Nhóm: `cốt lõi`.
-- Vai trò trong mạch: nêu ý tưởng học hàm tham số và lợi ích chia sẻ thông tin.
+- Vai trò trong mạch: nêu ý tưởng học hàm có tham số, ba lợi ích và hệ quả một cập nhật đổi nhiều dự đoán.
 - Kết nối vào: giới hạn bảng tra.
 - Kết nối ra: dẫn tới xấp xỉ tuyến tính cụ thể.
 - Nguồn: tr. 23.
@@ -216,15 +216,19 @@ Với bảng, mỗi ô chỉ thay đổi khi chính cặp đó được thăm, n
 :::
 
 <!-- note-topic-id: lec-07-topic-02 -->
-## Chia sẻ tham số
+## 3. Hàm có tham số dùng chung
 
-Vấn đề: làm sao học một ước lượng giá trị mà không cần một tham số riêng cho mỗi trạng thái?
+### 3.1. Hàm giá trị có tham số
 
-Trực giác: thay vì lưu bảng, học một hàm tham số $\hat v(s,w) \approx V^\pi(s)$ hoặc $\hat q(s,a,w) \approx Q^\pi(s,a)$, trong đó $w$ là vector trọng số dùng chung cho mọi trạng thái. Cùng một bộ $w$ phục vụ mọi truy vấn, nên mỗi cập nhật điều chỉnh cách đánh giá của cả lớp trạng thái.
+Thay bảng bằng một hàm có tham số (nguồn tr. 23):
 
-Hình thức: cách tiếp cận này mang lại ba lợi ích nêu trong nguồn: quyết định nhanh, chia sẻ thông tin giữa nhiều trạng thái, và hỗ trợ không gian trạng thái liên tục hoặc cao chiều.
+$$\hat v(s,w)\approx v_\pi(s),\qquad \hat q(s,a,w)\approx q_\pi(s,a),$$
 
-Ứng dụng và giới hạn: chia sẻ tham số là nền của nhiều phương pháp Học tăng cường hiện đại, nhưng nó cũng tạo tương tác giữa các cặp trạng thái–hành động. Một cập nhật tại $(s,a)$ làm thay đổi $\hat q$ tại các cặp khác; đây là một thành phần của bộ ba bất ổn sẽ gặp ở phần sau.
+trong đó $w\in\mathbb R^d$ là vector tham số dùng chung cho mọi trạng thái. Nguồn nêu ba lợi ích: quyết định nhanh, vì chỉ cần tính một hàm thay vì tra một bảng rất lớn; chia sẻ thông tin giữa các trạng thái qua $w$; và hỗ trợ không gian trạng thái liên tục hoặc nhiều chiều.
+
+Trong hình minh họa của trang chiếu, trạng thái $s$ được đưa qua vector đặc trưng $x(s)$, rồi qua vector tham số $w$ để cho dự đoán $\hat v(s,w)$; dạng tuyến tính $\hat v(s,w)=x(s)^Tw$ được định nghĩa ở phần xấp xỉ tuyến tính. Số tham số $d$ thường nhỏ hơn nhiều so với số trạng thái, nhưng điều này không bắt buộc. Hàm có tham số cho ra một dự đoán ở cả trạng thái chưa gặp trong dữ liệu; dự đoán đó đúng đến đâu phụ thuộc vào đặc trưng và dữ liệu.
+
+Vì $w$ dùng chung, một cập nhật có thể làm thay đổi dự đoán ở nhiều trạng thái. Với dạng tuyến tính, điều này xảy ra ở $s'$ khi $x(s)$ và $x(s')$ không trực giao; nếu đặc trưng là vector one-hot của trạng thái thì mô hình trở về bảng tra. Cơ chế này cho phép tổng quát hóa, nhưng cũng có thể làm sai lệch ước lượng ở trạng thái khác; nó là một thành phần của bộ ba bất ổn ở phần Q-learning.
 
 ::: exercise Câu hỏi kiểm tra
 Cho hai trạng thái $s_1 \ne s_2$ với $x(s_1) = x(s_2)$. Vì sao với hàm tham số ta bắt buộc có $\hat v(s_1,w) = \hat v(s_2,w)$, và điều đó nói lên điều gì?
