@@ -6,7 +6,7 @@ Khi không gian trạng thái lớn hoặc liên tục, bảng giá trị của 
 
 ## Bản đồ chủ đề
 
-Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic-01` đến `lec-07-topic-12` tạo thành mạch chính; nhóm **cầu nối** gồm `lec-07-topic-13` tóm tắt tiên quyết từ Bài 06; nhóm **bổ sung** gồm `lec-07-topic-14` và `lec-07-topic-15` cho kết quả hiện đại và chứng minh; nhóm **đọc thêm/thực hành** gồm `lec-07-topic-16` với tính tay bài 7–8. Sáu mạch chính: mở/cầu nối 7 phút; động cơ–đặc trưng 23 phút; MC 21 phút; TD–Bellman chiếu 33 phút; điều khiển/SARSA 19 phút; Q-learning–bộ ba bất ổn–thực hành–kết luận 17 phút; tổng 120 phút. Phần chữa bài 30 phút dùng bài 4, 7 và 8. Thứ tự trình bày mỗi chủ đề theo vấn đề → trực giác → ví dụ → hình thức/thuật toán → ứng dụng/giới hạn → kiểm tra; các chủ đề 13, 14 và 15 gộp bước trực giác với ví dụ vì chúng chỉ tóm tắt hoặc nêu hướng nghiên cứu, không có ví dụ tính được trong nguồn.
+Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 13 chủ đề `lec-07-topic-01` đến `lec-07-topic-12` và `lec-07-topic-14` tạo thành mạch chính (riêng mục 14.2 của `lec-07-topic-14` là đọc thêm); nhóm **cầu nối** gồm `lec-07-topic-13` tóm tắt tiên quyết từ Bài 06; nhóm **bổ sung** gồm `lec-07-topic-15` cho điều kiện hội tụ của Monte Carlo tuyến tính; nhóm **đọc thêm/thực hành** gồm `lec-07-topic-16` với tính tay bài 7–8. Sáu mạch chính: mở/cầu nối 7 phút; động cơ–đặc trưng 23 phút; MC 21 phút; TD–Bellman chiếu 33 phút; điều khiển/SARSA 19 phút; Q-learning–bộ ba bất ổn–thực hành–kết luận 17 phút; tổng 120 phút. Phần chữa bài 30 phút dùng bài 4, 7 và 8. Thứ tự trình bày mỗi chủ đề theo vấn đề → trực giác → ví dụ → hình thức/thuật toán → ứng dụng/giới hạn → kiểm tra; các chủ đề 13, 14 và 15 gộp bước trực giác với ví dụ vì chúng chỉ tóm tắt hoặc nêu hướng nghiên cứu, không có ví dụ tính được trong nguồn.
 
 ### Giới hạn của bảng tra
 
@@ -96,6 +96,14 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Kết nối ra: dẫn tới giới hạn lý thuyết và kết luận.
 - Nguồn: tr. 38–41 và bài tập 3.
 
+### Phạm vi lý thuyết
+
+- Nhóm: `cốt lõi`; mục 14.2 (kết quả cho MDP tuyến tính) là đọc thêm.
+- Vai trò trong mạch: bảng phạm vi các kết quả hội tụ đã dùng trong bài; đọc thêm kết quả cho MDP tuyến tính.
+- Kết nối vào: phân loại bằng ba câu kiểm tra bộ ba bất ổn.
+- Kết nối ra: kiểm tra mạch suy luận và tổng kết.
+- Nguồn: tr. 34, 41–44; kết quả MDP tuyến tính ở tr. 42 chỉ nêu bậc độ hối tiếc.
+
 ### Phạm vi lý thuyết, giới hạn và kết luận
 
 - Nhóm: `cốt lõi`.
@@ -111,14 +119,6 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Kết nối vào: bảng giá trị, điều kiện GLIE và Robbins–Monro của Bài 05–06.
 - Kết nối ra: câu hỏi điều gì thay đổi khi $Q$ là hàm tuyến tính dẫn vào nội dung mới.
 - Nguồn: tr. 3, 5–20; chỉ tóm tắt điều kiện, không trình bày lại chứng minh dài.
-
-### Kết quả MDP tuyến tính
-
-- Nhóm: `bổ sung`.
-- Vai trò trong mạch: cho thấy lý thuyết hiện đại tiến gần thực tế.
-- Kết nối vào: nguy cơ của bộ ba bất ổn trong điều khiển khác chính sách.
-- Kết nối ra: dẫn tới danh sách vấn đề mở.
-- Nguồn: tr. 42; chỉ nêu hướng nghiên cứu và ký hiệu, không phát biểu định lý đầy đủ vì nguồn thiếu thiết lập chi tiết.
 
 ### Hội tụ của Monte Carlo tuyến tính
 
@@ -840,24 +840,41 @@ Sarsa tuyến tính có hai câu đầu trả lời có. Hành động $A_{t+1}$
 Ba câu kiểm tra chỉ dùng để phân loại; cách khắc phục là các hướng ở mục 13.2. Giảm bước học có thể đổi hành vi số của một lần chạy nhưng không tự tạo một định lý hội tụ. Phần tiếp theo nêu phạm vi của các kết quả lý thuyết trong bài. Nguồn: tr. 41–43; Bài tập tuần 7, Bài 3.
 
 <!-- note-topic-id: lec-07-topic-14 -->
-## Kết quả MDP tuyến tính
+## 14. Phạm vi lý thuyết
 
-Vấn đề: lý thuyết hiện đại nói gì về bảo đảm cho xấp xỉ tuyến tính trong điều khiển?
+### 14.1. Phạm vi các kết quả hội tụ
 
-Hướng nghiên cứu: trong lớp MDP tuyến tính — nơi cấu trúc MDP được biểu diễn qua đặc trưng chiều $d$ — kết quả của Jin và cộng sự (2020) cho thấy một biến thể lạc quan của lặp giá trị bình phương tối thiểu (LSVI) đạt độ hối tiếc cỡ $\tilde O(\sqrt{d^3 H^3 T})$ trong thiết lập theo lượt với chân trời $H$, không phụ thuộc trực tiếp vào số trạng thái hay số hành động. Với cấu trúc tuyến tính đúng, độ khó phụ thuộc chiều đặc trưng thay vì kích thước bảng.
+Các mục trước dùng hai kết quả hội tụ, mỗi kết quả gắn với một thiết lập. Bảng sau ghi lại thiết lập của từng kết quả và chỉ ra những trường hợp chúng không phủ tới.
 
-Giới hạn của phát biểu trong nguồn: nguồn chỉ nêu kết quả ở mức định hướng, thiếu định nghĩa chính xác về MDP tuyến tính, cách xây dựng khoảng tin cậy và các hằng số. Vì vậy phần này chỉ ghi nhận hướng nghiên cứu và bậc độ hối tiếc, không phát biểu định lý đầy đủ hay suy rộng sang xấp xỉ hàm tổng quát.
+| Thiết lập | Kết quả trong bài |
+|---|---|
+| Monte Carlo tuyến tính, $\pi$ và $\mu$ cố định | SGD trên mục tiêu bình phương lồi; hội tụ tới điểm cực tiểu $J_\mu$ dưới điều kiện lấy mẫu và Robbins–Monro (mục 8.1) |
+| TD tuyến tính theo chính sách, chuỗi ergodic với phân phối dừng $d_\pi$ | hội tụ tới điểm cố định Bellman chiếu, dưới các điều kiện của Tsitsiklis và Van Roy (mục 10.4) |
+| Điều khiển (Sarsa) hoặc khác chính sách (Q-learning) với xấp xỉ hàm | không suy ra từ hai kết quả trên; cần giả thiết riêng (mục 12, 13) |
+| Xấp xỉ phi tuyến, mạng nơ-ron | cần phân tích riêng cho thuật toán và kiến trúc |
+
+Hai dòng đầu khác nhau ở phân phối: $\mu$ là phân phối trọng số trong mục tiêu $J_\mu$, còn $d_\pi$ là phân phối dừng của chuỗi trạng thái khi đi theo $\pi$. Với $\mu=d_\pi$, hai điểm hội tụ nói chung vẫn khác nhau: Monte Carlo cho $\Pi_D v_\pi$, TD cho điểm cố định của $\Pi_D T_\pi$ (mục 11).
+
+Ở dòng thứ ba, giả thiết chính sách cố định không còn: trong Sarsa, chính sách đổi theo $w$; trong Q-learning, dữ liệu đến từ chính sách khác chính sách đích. Bộ ba bất ổn (mục 13.2) chỉ ra trường hợp có thể phân kỳ. Dòng cuối ứng với học tăng cường sâu ở Bài 08.
+
+Nguồn (tr. 43) liệt kê các vấn đề mở, trong đó: chưa có lý thuyết tổng quát cho xấp xỉ sâu như DQN hay actor-critic sâu; bộ ba bất ổn chưa được giải quyết triệt để. TD tìm điểm cố định Bellman chiếu; mục tiêu này không trực tiếp đo chất lượng điều khiển (nguồn tr. 43). Nguồn của mục: tr. 34, 41–44.
+
+### 14.2. Đọc thêm: kết quả cho MDP tuyến tính
+
+Nguồn (tr. 42) nêu kết quả của Jin và cộng sự (2020; danh mục nguồn tr. 45): trong MDP tuyến tính theo lượt với chiều đặc trưng $d$ và chân trời $H$, một biến thể lạc quan của lặp giá trị bình phương tối thiểu (least-squares value iteration, LSVI) đạt độ hối tiếc $\tilde O(\sqrt{d^3 H^3 T})$, không phụ thuộc trực tiếp vào số trạng thái hay số hành động. Kết quả này dựa trên giả thiết cấu trúc của MDP tuyến tính, nằm ngoài bốn thiết lập ở mục 14.1 và không áp dụng cho các thuật toán trong bảng.
+
+Nguồn chỉ nêu bậc độ hối tiếc, không nêu định nghĩa chính xác của MDP tuyến tính, cách xây dựng khoảng tin cậy hay các hằng số. Vì vậy mục này chỉ ghi nhận hướng nghiên cứu.
 
 ::: exercise Câu hỏi kiểm tra
-Độ hối tiếc $\tilde O(\sqrt{d^3 H^3 T})$ phụ thuộc những đại lượng nào và không phụ thuộc những đại lượng nào? Điều đó nói lên điều gì về vai trò của đặc trưng?
+Xác định các đại lượng mà độ hối tiếc $\tilde O(\sqrt{d^3 H^3 T})$ phụ thuộc và không phụ thuộc trực tiếp; nêu ý nghĩa đối với vai trò của đặc trưng.
 :::
 
 ::: hint
-Đọc kỹ phát biểu: $d$, $H$, $T$ so với số trạng thái và số hành động.
+So sánh các đại lượng $d$, $H$, $T$ trong biểu thức với số trạng thái và số hành động.
 :::
 
 ::: solution
-Độ hối tiếc phụ thuộc chiều đặc trưng $d$, chân trời $H$ và số bước tương tác $T$, và không phụ thuộc trực tiếp vào $|\mathcal S|$ hay $|\mathcal A|$. Với MDP tuyến tính, độ khó được đo bằng chiều của cấu trúc tuyến tính chứ không bằng kích thước không gian trạng thái–hành động.
+Độ hối tiếc phụ thuộc chiều đặc trưng $d$, chân trời $H$ và số bước tương tác $T$, và không phụ thuộc trực tiếp vào $|\mathcal S|$ hay $|\mathcal A|$. Dưới giả thiết MDP tuyến tính, độ khó được đo bằng chiều đặc trưng thay cho kích thước không gian trạng thái–hành động.
 :::
 
 <!-- note-topic-id: lec-07-topic-16 -->
