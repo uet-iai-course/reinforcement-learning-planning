@@ -8,7 +8,7 @@ Khi không gian trạng thái lớn hoặc liên tục, bảng giá trị của 
 
 Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 13 chủ đề `lec-07-topic-01` đến `lec-07-topic-12` và `lec-07-topic-14` tạo thành mạch chính (riêng mục 14.2 của `lec-07-topic-14` là đọc thêm); nhóm **cầu nối** gồm `lec-07-topic-13` tóm tắt tiên quyết từ Bài 06; nhóm **bổ sung** gồm `lec-07-topic-15` cho điều kiện hội tụ của Monte Carlo tuyến tính; nhóm **đọc thêm/thực hành** gồm `lec-07-topic-16` với tính tay bài 7–8. Sáu mạch chính: mở đầu và cầu nối; động cơ và đặc trưng; Monte Carlo; TD và Bellman chiếu; điều khiển và Sarsa; Q-learning, bộ ba bất ổn, phạm vi lý thuyết và tổng kết. Phần chữa bài dùng bài 4, 7 và 8. Thứ tự trình bày mỗi chủ đề theo vấn đề → trực giác → ví dụ → hình thức/thuật toán → ứng dụng/giới hạn → kiểm tra; các chủ đề 13, 14 và 15 gộp bước trực giác với ví dụ vì chúng chỉ tóm tắt hoặc nêu hướng nghiên cứu, không có ví dụ tính được trong nguồn.
 
-### Giới hạn của bảng tra
+### Nhu cầu xấp xỉ hàm
 
 - Nhóm: `cốt lõi`.
 - Vai trò trong mạch: mở đầu mạch nhu cầu xấp xỉ hàm, đặt vấn đề mà cả bài giải quyết.
@@ -27,9 +27,9 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 13 chủ đề `lec-07-topic
 ### Bài toán dự đoán và xấp xỉ tuyến tính
 
 - Nhóm: `cốt lõi`.
-- Vai trò trong mạch: phát biểu bài toán dự đoán với $J_\mu$, chuẩn hoá ký hiệu $x$, $w$, $\Phi$ dùng suốt bài.
+- Vai trò trong mạch: phát biểu bài toán dự đoán với $J_\mu$, chuẩn hóa ký hiệu $x$, $w$, $\Phi$ dùng suốt bài.
 - Kết nối vào: ý tưởng hàm tham số.
-- Kết nối ra: nền cho mọi cập nhật MC/TD tuyến tính phía sau.
+- Kết nối ra: nền cho mọi cập nhật Monte Carlo và TD tuyến tính phía sau.
 - Nguồn: tr. 23–27, 34; $J_\mu$ theo Sutton và Barto, §9.2.
 
 ### Đặc trưng và giới hạn biểu diễn
@@ -69,7 +69,7 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 13 chủ đề `lec-07-topic
 - Nhóm: `cốt lõi`.
 - Vai trò trong mạch: mô tả nghiệm mà TD tuyến tính hướng tới.
 - Kết nối vào: TD(0) bán gradient.
-- Kết nối ra: nền cho so sánh MC–TD và giới hạn lý thuyết.
+- Kết nối ra: nền cho so sánh Monte Carlo và TD, và cho giới hạn lý thuyết.
 - Nguồn: bài tập 5.
 
 ### Hai mục tiêu dự đoán
@@ -91,7 +91,7 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 13 chủ đề `lec-07-topic
 ### Q-learning và bộ ba bất ổn
 
 - Nhóm: `cốt lõi`.
-- Vai trò trong mạch: nêu đích khác chính sách và nguy cơ bất ổn.
+- Vai trò trong mạch: nêu mục tiêu khác chính sách và nguy cơ bất ổn.
 - Kết nối vào: Sarsa tuyến tính.
 - Kết nối ra: dẫn tới giới hạn lý thuyết và kết luận.
 - Nguồn: tr. 38–41 và bài tập 3.
@@ -112,7 +112,7 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 13 chủ đề `lec-07-topic
 - Kết nối ra: học tăng cường sâu ở Bài 08; bài tập thực hành điều khiển.
 - Nguồn: tổng hợp tr. 22–44; Bài tập tuần 7.
 
-### Mở đầu: từ bảng giá trị đến hàm xấp xỉ
+### Mở đầu
 
 - Nhóm: `cầu nối`.
 - Vai trò trong mạch: mở bài, nhắc điều kiện hội tụ dạng bảng, nêu ba điểm đối chiếu các thuật toán, nội dung và mục tiêu học tập.
@@ -143,7 +143,7 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 13 chủ đề `lec-07-topic
 - Chỉ số thời gian $t = 0, 1, 2, \dots$; phần thưởng nhận được khi chuyển ra khỏi $S_t$ là $R_{t+1}$, trạng thái kế là $S_{t+1}$. Phần thưởng gắn với trạng thái kết thúc được ký hiệu $R(A) = 1000$, $R(E) = 10$; mọi phần thưởng còn lại bằng $-1$; hệ số chiết khấu $\gamma = 1$ trong ví dụ chuỗi.
 - Vector đặc trưng $x(s) \in \mathbb R^d$ cho giá trị trạng thái, $x(s,a) \in \mathbb R^d$ cho giá trị hành động; vector trọng số $w \in \mathbb R^d$; $w_t$ là trọng số sau $t$ lần cập nhật, $w_0$ là khởi tạo.
 - $\Phi$ là ma trận đặc trưng với hàng là $x(s)^\top$; $D$ là ma trận chéo chứa phân phối dừng theo chính sách $d(s)$; $P_\pi$ là ma trận chuyển theo chính sách $\pi$; $r_\pi$ là vector phần thưởng kỳ vọng theo $\pi$.
-- $\mu$ là phân phối trọng số trong mục tiêu hồi quy MC; không đồng nhất $\mu$ với phân phối dừng $d$ nếu chưa có giả thiết tương ứng.
+- $\mu$ là phân phối trọng số trong mục tiêu hồi quy Monte Carlo; không đồng nhất $\mu$ với phân phối dừng $d$ nếu chưa có giả thiết tương ứng.
 - Kỳ vọng $\mathbb E_\pi[\cdot]$ tính theo quỹ đạo sinh bởi $\pi$; kỳ vọng có điều kiện $\mathbb E[\cdot \mid S_t = s, A_t = a]$.
 - Bước học $\alpha_t$ theo số lần cập nhật; trong tính tay, $\alpha$ là hằng số cho từng bài.
 
@@ -306,7 +306,7 @@ Với $\mathcal S$ hữu hạn, xếp các $x(s)^\top$ thành hàng của ma tr�
 
 Với lớp tuyến tính, mọi thông tin mô hình dùng được về trạng thái nằm trong vector đặc trưng $x(s)$. Nguồn (tr. 31) cho ví dụ một bài toán điều hướng:
 
-$$x(s) = [\,\text{khoảng cách tới đích},\ \text{khoảng cách tới vật cản},\ \text{tốc độ},\ 1\,]^\top.$$
+$$x(s) = \big(\text{khoảng cách tới đích};\ \text{khoảng cách tới vật cản};\ \text{tốc độ};\ 1\big)^\top.$$
 
 Thành phần hằng $1$ có trọng số riêng, nên $\hat v$ có hệ số chặn: dự đoán có thể khác 0 khi mọi đại lượng đo được bằng 0. Các ví dụ CartPole, Lunar Lander và cờ vua của nguồn (tr. 28–30) cho thấy loại đại lượng thường dùng: vị trí, vận tốc của xe cùng góc, vận tốc góc của cột; trạng thái động học của tàu đổ bộ; quân, lượt đi và cấu trúc bàn cờ. Đây là minh họa, không phải bộ đặc trưng đầy đủ cho các bài toán đó.
 
@@ -414,7 +414,7 @@ $y_t^{\mathrm{TD}} = R_{t+1} + \gamma\, x(S_{t+1})^\top w_t$. Thành phần $R_{
 
 ### 7.1. Lợi tức làm mục tiêu Monte Carlo
 
-Với lượt kết thúc ở thời điểm $T$, mục tiêu Monte Carlo (MC) là lợi tức từ thời điểm $t$ (nguồn tr. 33):
+Với lượt kết thúc ở thời điểm $T$, mục tiêu Monte Carlo là lợi tức từ thời điểm $t$ (nguồn tr. 33):
 
 $$G_t = \sum_{k=0}^{T-t-1} \gamma^k R_{t+1+k}, \qquad y_t^{\mathrm{MC}} = G_t.$$
 

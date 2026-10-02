@@ -6,11 +6,11 @@
 |---|---|---|---|---|---|---|---|---:|---:|
 | Định hướng | `L07-01`, `L07-02` | `L07-02` | không áp dụng: chỉ nối từ Bài 06 | không áp dụng | `L07-03` xác định sản phẩm học tập | `L07-03` | kết quả dạng bảng → phạm vi mới | 7 | 0 |
 | Xấp xỉ và đặc trưng | `L07-04` | `L07-05` | `L07-06` | `L07-07`, `L07-08`, `L07-10` | `L07-09`, `L07-11` | `L07-11` | bảng tra → mô hình tuyến tính có miền, kích thước và giới hạn biểu diễn | 21 | 2 |
-| MC tuyến tính | `L07-12` | `L07-13` | `L07-14` | `L07-15`, `L07-16` | `L07-16`, `X02` | `L07-16`, `X01` | return $G_t$ → gradient đầy đủ và cập nhật tuần tự | 19 | 2 |
+| Monte Carlo tuyến tính | `L07-12` | `L07-13` | `L07-14` | `L07-15`, `L07-16` | `L07-16`, `X02` | `L07-16`, `X01` | lợi tức $G_t$ → gradient đầy đủ và cập nhật tuần tự | 19 | 2 |
 | TD tuyến tính và Bellman chiếu | `L07-18` | `L07-18` | `L07-19`; ví dụ hình học `L07-21` | `L07-20`, `L07-20b`, `L07-22`, `L07-23` | `L07-24` | `L07-24`, `L07-35` | chuyển tiếp một bước → bán gradient → thuật toán → hình chiếu → trực giao → điểm cố định | 27 | 3 |
-| So sánh MC–TD | `L07-25` | `L07-25` | không áp dụng: tổng hợp hai cụm đã có ví dụ | không áp dụng | `L07-25` | `L07-25` | hai đích đã học → phân biệt đối tượng phân tích | 3 | 0 |
-| Điều khiển | `L07-26` | `L07-26`, `L07-28` | `L07-27`, `L07-30` (một bước số trước thuật toán) | `L07-28`, `L07-29` | `L07-30` | `L07-28`, `X03` | đặc trưng $x(s,a)$ → SARSA với chính sách $\varepsilon$-greedy hiện hành | 18 | 1 |
-| Khác chính sách và bất ổn | `L07-31` | phần mở đầu `L07-31` | so sánh đích trên mẫu `L07-30` | quy tắc đích ở `L07-31`; phân loại ở `L07-32` | `L07-33`, `L07-34` | `L07-31`, `L07-33`, `L07-35` | đổi hành động kế tiếp sang cực đại → nhận diện trường hợp cần phân tích riêng | 16 | 1 |
+| So sánh Monte Carlo–TD | `L07-25` | `L07-25` | không áp dụng: tổng hợp hai cụm đã có ví dụ | không áp dụng | `L07-25` | `L07-25` | hai mục tiêu đã học → phân biệt đối tượng phân tích | 3 | 0 |
+| Điều khiển | `L07-26` | `L07-26`, `L07-28` | `L07-27`, `L07-30` (một bước số trước thuật toán) | `L07-28`, `L07-29` | `L07-30` | `L07-28`, `X03` | đặc trưng $x(s,a)$ → Sarsa với chính sách $\varepsilon$-tham lam hiện hành | 18 | 1 |
+| Khác chính sách và bất ổn | `L07-31` | phần mở đầu `L07-31` | so sánh mục tiêu trên mẫu `L07-30` | quy tắc mục tiêu ở `L07-31`; phân loại ở `L07-32` | `L07-33`, `L07-34` | `L07-31`, `L07-33`, `L07-35` | đổi hành động kế tiếp sang cực đại → nhận diện trường hợp cần phân tích riêng | 16 | 1 |
 
 Các khoảng trang trên không chồng lấn. Tổng phần chính là 111 phút cốt lõi và 9 phút linh hoạt; tổng chữa bài là 30 phút (`X01`: 8, `X02`: 10, `X03`: 12). Ký hiệu $x$, $w$, $G_t$ và $\delta_t$ được truyền nguyên dạng từ ví dụ sang công thức và bài tập.
 
@@ -44,7 +44,7 @@ Các khoảng trang trên không chồng lấn. Tổng phần chính là 111 ph�
 | `L07-23` | Hình thức: phép chiếu theo $D$ (điểm gần nhất theo $\|\cdot\|_D$), $\Pi_D=\Phi(\Phi^TD\Phi)^{-1}\Phi^TD$; điều kiện dừng tương đương $\Phi w_{\mathrm{TD}}=\Pi_DT_\pi(\Phi w_{\mathrm{TD}})\iff Aw_{\mathrm{TD}}=b$; TD tìm điểm cố định của $\Pi_DT_\pi$, khác $\Pi_Dv_\pi$ của Monte Carlo (tr. 43). | HW5; tr. 43 | 5 | Gắn phương trình với điều kiện hội tụ. |
 | `L07-24` | Ứng dụng và kiểm tra: điều kiện hội tụ của TD tuyến tính (Tsitsiklis và Van Roy, 1997): dữ liệu theo $\pi$ cố định, chuỗi ergodic với $d_\pi>0$; $\gamma<1$, đặc trưng bị chặn, $\Phi$ đủ hạng cột, Robbins–Monro; $u^TAu\ge(1-\gamma)\|\Phi u\|_D^2$ nên hệ trung bình ổn định, $w_t\to w_{\mathrm{TD}}$; câu hỏi đối tượng hội tụ. | tr. 35–37, 44–45; HW5–6 | 4 | So sánh mục tiêu Monte Carlo và TD trước khi điều khiển. |
 | `L07-25` | Tổng hợp: bảng sáu hàng so sánh Monte Carlo và TD(0) (mục tiêu, thời điểm cập nhật, kỳ vọng mục tiêu, phương sai, loại cập nhật, nghiệm tuyến tính). | tr. 33–37 | 3 | Cả hai dự đoán với $\pi$ cố định; điều khiển cần $\hat q$ và chính sách thay đổi. |
-| `L07-26` | Vấn đề điều khiển: dự đoán giữ $\pi$ cố định; chọn hành động không có mô hình cần $\hat q\approx q_\pi$ hoặc $q_*$ và $\pi_w\in\arg\max\hat q$; điểm đối chiếu thứ hai (hành vi/đích) và thứ ba (cải thiện chính sách); vừa bootstrap vừa cải thiện chính sách nên mục tiêu đổi liên tục (tr. 39). | tr. 38–39 | 3 | Chọn đặc trưng hành động cho ví dụ chuỗi. |
+| `L07-26` | Vấn đề điều khiển: dự đoán giữ $\pi$ cố định; chọn hành động không có mô hình cần $\hat q\approx q_\pi$ hoặc $q_*$ và $\pi_w\in\arg\max\hat q$; điểm đối chiếu thứ hai (chính sách hành vi/chính sách đích) và thứ ba (cải thiện chính sách); vừa bootstrap vừa cải thiện chính sách nên mục tiêu đổi liên tục (tr. 39). | tr. 38–39 | 3 | Chọn đặc trưng hành động cho ví dụ chuỗi. |
 | `L07-27` | Ví dụ: chuỗi năm trạng thái của Bài 06 ($\gamma=1$, lượt tối đa ba bước), đặc trưng $x(s,a)=(d_{\text{trái}};u(a);1)^T$; hệ quả $\hat q(s,1)-\hat q(s,0)=-2w_2$ ở mọi $s$ nên hành động tham lam như nhau ở B, C, D. | tr. 40; HW7–8 | 5 | Dùng hành động kế tiếp thật trong Sarsa. |
 | `L07-28` | Hình thức và trực giác Sarsa: thay $Q(S',A')$ bằng $\hat q(S',A',w)$; chính sách $\varepsilon$-tham lam hiện hành, phá hòa cố định; $\delta_t$ và $w_{t+1}=w_t+\alpha\delta_tx(S_t,A_t)$; $A_{t+1}$ do chính sách hiện hành chọn (học theo chính sách); câu hỏi thay bằng hành động tham lam. | tr. 38–39; HW8 | 3 | Tính một cập nhật Sarsa trên chuỗi. |
 | `L07-30` | Ví dụ tính tay một bước Sarsa (HW8, mẫu $(D,0,-1,C,0)$, $\gamma=1$): $\hat q(D,0)=3$, $\hat q(C,0)=2$, $\delta_0=-2$, $w_1=(-0{,}2;0{,}6;-1{,}4)^T$; đặt trước thuật toán. | HW8 | 4 | Đóng gói các bước thành thuật toán Sarsa. |
@@ -63,16 +63,16 @@ Chín phút linh hoạt nằm trong các khoảng không chồng lấn: `L07-04`
 
 ## Bản đồ sáu mạch
 
-Bảy cụm khái niệm được chứa trong sáu mạch; cụm so sánh MC–TD nằm cuối M4.
+Bảy cụm khái niệm được chứa trong sáu mạch; cụm so sánh Monte Carlo–TD nằm cuối M4.
 
 | Mạch | Chức năng | Kết nối vào | Đầu ra | Cụm chứa | Trang |
 |---|---|---|---|---|---|
-| M1 | Mở đầu, cầu nối từ dạng bảng, ba trục phân tích và đích học tập | Kết quả dạng bảng của Bài 06 | Ba trục dùng xuyên bài và kỳ vọng học tập | Định hướng | `L07-01`–`L07-03` |
+| M1 | Mở đầu, cầu nối từ dạng bảng, ba trục phân tích và mục tiêu học tập | Kết quả dạng bảng của Bài 06 | Ba trục dùng xuyên bài và kỳ vọng học tập | Định hướng | `L07-01`–`L07-03` |
 | M2 | Lý do cần xấp xỉ, chia sẻ tham số, đặc trưng và giới hạn biểu diễn | Ba trục của M1 | Lớp hàm tuyến tính với miền, kích thước và giới hạn rõ | Xấp xỉ và đặc trưng | `L07-04`–`L07-11` |
-| M3 | Phân loại đích, MC tuyến tính từ ví dụ đến thuật toán và điều kiện | Lớp hàm của M2 | Thuật toán MC tuyến tính và điều kiện SGD | MC tuyến tính | `L07-12`–`L07-17` |
-| M4 | TD(0), bán gradient, Bellman chiếu và so sánh MC–TD | Đích MC của M3 | Điểm cố định Bellman chiếu; bảng so sánh hai đích | TD tuyến tính và Bellman chiếu; so sánh MC–TD (cuối mạch) | `L07-18`–`L07-25` |
-| M5 | Điều khiển: giá trị hành động, SARSA tuyến tính và cập nhật số | Điểm cố định và so sánh của M4 | Thuật toán SARSA control và một bước số | Điều khiển | `L07-26`–`L07-30` |
-| M6 | Q-learning, deadly triad, phạm vi lý thuyết, kết luận và chữa bài dọc | SARSA của M5 | Phân biệt đích max, chẩn đoán bất ổn, ranh giới lý thuyết | Khác chính sách và bất ổn | `L07-31`–`L07-36` |
+| M3 | Phân loại mục tiêu, Monte Carlo tuyến tính từ ví dụ đến thuật toán và điều kiện | Lớp hàm của M2 | Thuật toán Monte Carlo tuyến tính và điều kiện SGD | Monte Carlo tuyến tính | `L07-12`–`L07-17` |
+| M4 | TD(0), bán gradient, Bellman chiếu và so sánh Monte Carlo–TD | Mục tiêu Monte Carlo của M3 | Điểm cố định Bellman chiếu; bảng so sánh hai mục tiêu | TD tuyến tính và Bellman chiếu; so sánh Monte Carlo–TD (cuối mạch) | `L07-18`–`L07-25` |
+| M5 | Điều khiển: giá trị hành động, Sarsa tuyến tính và cập nhật số | Điểm cố định và so sánh của M4 | Thuật toán Sarsa control và một bước số | Điều khiển | `L07-26`–`L07-30` |
+| M6 | Q-learning, deadly triad, phạm vi lý thuyết, kết luận và chữa bài dọc | Sarsa của M5 | Phân biệt mục tiêu max, chẩn đoán bất ổn, ranh giới lý thuyết | Khác chính sách và bất ổn | `L07-31`–`L07-36` |
 
 ## Ánh xạ hai chiều ghi chú–trang chiếu
 

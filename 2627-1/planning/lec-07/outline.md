@@ -4,7 +4,7 @@
 
 - Nguồn chính: `RL-hk2-2025-2026/lecture-07.pdf`, 45 trang.
 - Nguồn bài tập: `RL-hk2-2025-2026/resources/hw07-function-approximation.pdf`, 3 trang, 8 bài.
-- Đối tượng: sinh viên đã học MDP, MC, TD(0), SARSA và Q-learning dạng bảng.
+- Đối tượng: sinh viên đã học MDP, Monte Carlo, TD(0), Sarsa và Q-learning dạng bảng.
 - Tiên quyết đại số tuyến tính: tích vô hướng có trọng số (dạng $u^TDv$), phép chiếu trực giao lên không gian con và trị riêng của ma trận; sinh viên cần dùng chúng ở phần Bellman chiếu.
 - Phần trình chiếu: 120 phút, gồm 111 phút cốt lõi và 9 phút linh hoạt.
 - Chữa bài: 30 phút ở ba trang dọc `X01`–`X03`, ngoài 120 phút chính.
@@ -23,20 +23,20 @@ Sau bài học, sinh viên có thể (khớp mặt trang `L07-03` và mục 1.2 
 
 ## Dàn ý theo sáu mạch và thời lượng
 
-Sáu mạch chứa bảy cụm khái niệm: cụm so sánh MC–TD nằm cuối M4, nên không cần mạch thứ bảy.
+Sáu mạch chứa bảy cụm khái niệm: cụm so sánh Monte Carlo–TD nằm cuối M4, nên không cần mạch thứ bảy.
 
 | Mạch | Trang | Nội dung | Cốt lõi | Linh hoạt |
 |---|---|---|---:|---:|
-| M1 Mở đầu và đích học tập | `L07-01`–`L07-03` | Cầu nối dạng bảng, ba trục phân tích và kết quả học tập | 7 | 0 |
+| M1 Mở đầu và mục tiêu học tập | `L07-01`–`L07-03` | Cầu nối dạng bảng, ba trục phân tích và kết quả học tập | 7 | 0 |
 | M2 Nhu cầu xấp xỉ, đặc trưng, biểu diễn | `L07-04`–`L07-11` | Vấn đề bảng tra, chia sẻ tham số, ví dụ, tuyến tính và giới hạn đặc trưng | 21 | 2 |
-| M3 MC tuyến tính | `L07-12`–`L07-17` | Phân loại đích, return, ví dụ, gradient, thuật toán và điều kiện | 19 | 2 |
-| M4 TD, Bellman chiếu và so sánh MC–TD | `L07-18`–`L07-25` | Bootstrap, ví dụ số, bán gradient, thuật toán TD(0), phép chiếu, hội tụ và đối chiếu hai đích | 30 | 3 |
-| M5 Điều khiển và SARSA tuyến tính | `L07-26`–`L07-30` | Giá trị hành động, chuỗi ví dụ, SARSA và cập nhật số | 18 | 1 |
-| M6 Q-learning, deadly triad, phạm vi, kết luận | `L07-31`–`L07-36` | Đích Q-learning, bộ ba bất ổn, phạm vi lý thuyết, kết luận và kiểm tra | 16 | 1 |
+| M3 Monte Carlo tuyến tính | `L07-12`–`L07-17` | Phân loại mục tiêu, lợi tức, ví dụ, gradient, thuật toán và điều kiện | 19 | 2 |
+| M4 TD, Bellman chiếu và so sánh Monte Carlo–TD | `L07-18`–`L07-25` | Bootstrap, ví dụ số, bán gradient, thuật toán TD(0), phép chiếu, hội tụ và đối chiếu hai mục tiêu | 30 | 3 |
+| M5 Điều khiển và Sarsa tuyến tính | `L07-26`–`L07-30` | Giá trị hành động, chuỗi ví dụ, Sarsa và cập nhật số | 18 | 1 |
+| M6 Q-learning, deadly triad, phạm vi, kết luận | `L07-31`–`L07-36` | Mục tiêu Q-learning, bộ ba bất ổn, phạm vi lý thuyết, kết luận và kiểm tra | 16 | 1 |
 | Tổng | 37 trang chính |  | 111 | 9 |
-| Chữa bài (dọc, ngoài 120 phút) | `X01`–`X03` | Đạo hàm MC, MC tuần tự, SARSA tuần tự | 30 | 0 |
+| Chữa bài (dọc, ngoài 120 phút) | `X01`–`X03` | Đạo hàm cập nhật Monte Carlo, Monte Carlo trên một lượt, ba cập nhật Sarsa | 30 | 0 |
 
-Tổng kiểm tra: $7+23+21+(30+3)+19+17=120$ phút chính; $30+3$ là hai cụm TD và so sánh MC–TD cùng nằm trong M4. Chữa bài $8+10+12=30$ phút. Ngày 02-10-2026 tách thuật toán TD(0) sang `L07-20b`, lấy 1 phút linh hoạt của M4 từ phần trao đổi ở `L07-23` (6 → 5 phút); tổng mạch và tổng 120 phút không đổi.
+Tổng kiểm tra: $7+23+21+(30+3)+19+17=120$ phút chính; $30+3$ là hai cụm TD và so sánh Monte Carlo–TD cùng nằm trong M4. Chữa bài $8+10+12=30$ phút. Ngày 02-10-2026 tách thuật toán TD(0) sang `L07-20b`, lấy 1 phút linh hoạt của M4 từ phần trao đổi ở `L07-23` (6 → 5 phút); tổng mạch và tổng 120 phút không đổi.
 
 ## Ánh xạ nguồn
 
@@ -47,24 +47,24 @@ Tổng kiểm tra: $7+23+21+(30+3)+19+17=120$ phút chính; $30+3$ là hai cụm
 | 21 | bỏ | — | Trang mục lục trung gian không tạo bước kiến thức. |
 | 22–23 | giữ, tách | `L07-04`–`L07-06` | Tách vấn đề, mô hình tham số và cơ chế chia sẻ tham số. |
 | 24–26 | giữ, gộp | `L07-08`, `L07-34`, `L07-36` | Dạy tuyến tính trong bài; chỉ nêu ranh giới với mô hình phi tuyến. |
-| 27 | giữ, sửa | `L07-12`–`L07-13`, `L07-18` | Phân biệt rõ đích MC không phụ thuộc $w$ và đích TD phụ thuộc $w$. |
+| 27 | giữ, sửa | `L07-12`–`L07-13`, `L07-18` | Phân biệt rõ mục tiêu Monte Carlo không phụ thuộc $w$ và mục tiêu TD phụ thuộc $w$. |
 | 28–30 | giữ, vẽ lại | `L07-09` | Thay ảnh miền ứng dụng bằng SVG khái niệm, không dùng ảnh raster. |
 | 31 | giữ, tách | `L07-09`–`L07-11`, `L07-27` | Giữ vector điều hướng và mã hóa bốn khối $[\phi(s);e_a;\phi(s)\otimes e_a;1]$ của nguồn; xác định đặc trưng ba chiều của chuỗi là một mã hóa khác. |
-| 32 | sửa, tách | `L07-12`, `L07-15`, `L07-20` (câu hỏi "vì sao gọi là bán gradient") | Đặt ví dụ trước hình thức; MC là gradient đầy đủ, TD mới dùng bán gradient khi bỏ đạo hàm qua bootstrap. |
+| 32 | sửa, tách | `L07-12`, `L07-15`, `L07-20` (câu hỏi "vì sao gọi là bán gradient") | Đặt ví dụ trước hình thức; Monte Carlo là gradient đầy đủ, TD mới dùng bán gradient khi bỏ đạo hàm qua bootstrap. |
 | 33–34 | giữ, sửa | `L07-13`–`L07-17` | Bổ sung giao diện thuật toán và điều kiện phân phối lấy mẫu. |
 | 35–36 | giữ, mở rộng | `L07-18`–`L07-24` | Đặt hình học trước đại số; bổ sung điều kiện trực giao, $A$, $b$, $D$, $\Phi$, $P_\pi$, $r_\pi$ và giả thiết. |
 | 37 | giữ, sửa | `L07-25` | Giữ so sánh có thể kiểm chứng; lược tuyên bố hiệu năng quá rộng. |
-| 38–39 | giữ, sắp lại | `L07-26`, `L07-28`–`L07-31` | Đặt SARSA control trước; chỉ dùng Q-learning để phân biệt quy tắc đích và miền cực đại. |
+| 38–39 | giữ, sắp lại | `L07-26`, `L07-28`–`L07-31` | Đặt Sarsa control trước; chỉ dùng Q-learning để phân biệt quy tắc mục tiêu và miền cực đại. |
 | 40 | giữ, sửa | `L07-27`, `L07-30`, `X02`, `X03` | Nêu $\gamma=1$, lượt dài tối đa ba bước và vai trò chỉ sinh dữ liệu của $\varepsilon$ khi chuỗi đã cho. |
 | 41 | giữ, sửa | `L07-32`–`L07-33` | Deadly triad có thể gây phân kỳ, không phải luôn gây phân kỳ. |
-| 42–43 | gộp | `L07-34` | Không dạy chi tiết LSVI vì nguồn không đủ thiết lập; giữ ranh giới lý thuyết. |
-| 44 | bỏ một phần | `L07-35`–`L07-36` | Bỏ bound $\widetilde O(d/\varepsilon^2)$ do thiếu mô hình và thước đo sai số. |
+| 42–43 | gộp | `L07-34` | Bảng phạm vi các kết quả hội tụ; kết quả LSVI (Jin và cộng sự, 2020) và vấn đề mở chỉ ở ghi chú diễn giả và mục 14.2, vì nguồn không đủ thiết lập. |
+| 44 | giữ, bỏ một phần | `L07-36` | Bỏ bound $\widetilde O(d/\varepsilon^2)$ do thiếu mô hình và thước đo sai số. |
 | 45 | giữ trong ghi chú | nhiều trang | Nguồn được đặt sát mệnh đề thay vì một trang tài liệu tham khảo dày. |
-| HW 1–3 | chuyển sang tự học | `note-for-author.md`, ghi chú `L07-36` | Câu trình bày lặp với nội dung chính. |
-| HW 4 | giữ | `X01` | Bài đạo hàm trực tiếp. |
-| HW 5–6 | linh hoạt/tự học | `L07-21`–`L07-24`, `note-for-author.md` | Nội dung đã được giải thích trong phần Bellman chiếu và điều kiện bước học. |
-| HW 7 | giữ, tính lại | `X02` | Chữa cập nhật MC tuần tự. |
-| HW 8 | giữ, tính lại | `L07-30`, `X03` | Chuẩn bị một bước trong bài chính và chữa đủ ba bước. |
+| HW 1–3 | tự ôn | ghi chú diễn giả `L07-36`; ghi chú bài giảng mục 2.1, 11.1 (bài tập 2), 13.2 (bài tập 3) | Câu trình bày lặp với nội dung chính; lời giải có trong ghi chú bài giảng. |
+| HW 4 | giữ | `X01` | Đạo hàm cập nhật Monte Carlo; mục 8.2. |
+| HW 5–6 | tự ôn | `L07-22`–`L07-24`; ghi chú bài giảng mục 10.2–10.3 (bài tập 5), 8.2 (bài tập 6) | Nội dung đã được giải thích trong phần Bellman chiếu và điều kiện bước học. |
+| HW 7 | giữ, tính lại | `X02` | Monte Carlo trên một lượt; mục 16.1. |
+| HW 8 | giữ, tính lại | `L07-30`, `X03` | Một bước trong bài chính (`L07-30`), ba cập nhật Sarsa ở `X03` và mục 16.2. |
 
 ## Thuật ngữ và ký hiệu
 
@@ -75,14 +75,14 @@ Tổng kiểm tra: $7+23+21+(30+3)+19+17=120$ phút chính; $30+3$ là hai cụm
 | $w\in\mathbb R^d$ | vector tham số dùng chung |
 | $\hat v(s,w)=x(s)^Tw$ | xấp xỉ giá trị trạng thái |
 | $\hat q(s,a,w)=x(s,a)^Tw$ | xấp xỉ giá trị hành động |
-| $\mu$ | phân phối trọng số hoặc lấy mẫu cố định của mục tiêu MC |
+| $\mu$ | phân phối trọng số hoặc lấy mẫu cố định của mục tiêu Monte Carlo |
 | $d_\pi$ | phân phối dừng của chuỗi theo chính sách $\pi$ |
 | $D=\operatorname{diag}(d_\pi)$ | ma trận trọng số cho tích vô hướng và phép chiếu |
 | $\Phi\in\mathbb R^{|\mathcal S|\times d}$ | ma trận có hàng $s$ là $x(s)^T$ |
 | $P_\pi$, $r_\pi$ | ma trận chuyển và vector phần thưởng kỳ vọng theo $\pi$ |
 | $T_\pi v=r_\pi+\gamma P_\pi v$ | toán tử Bellman theo chính sách |
 | $\Pi_D$ | phép chiếu trực giao lên $\operatorname{col}(\Phi)$ theo chuẩn $D$ |
-| $G_t$ | return từ thời điểm $t$ đến cuối lượt |
+| $G_t$ | lợi tức từ thời điểm $t$ đến cuối lượt |
 | $\delta_t$ | sai số TD của một chuyển tiếp |
 
 ## Danh mục đầy đủ 40 mã trang
