@@ -120,13 +120,13 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Kết nối ra: dẫn tới danh sách vấn đề mở.
 - Nguồn: tr. 42; chỉ nêu hướng nghiên cứu và ký hiệu, không phát biểu định lý đầy đủ vì nguồn thiếu thiết lập chi tiết.
 
-### Chứng minh MC-SGD và vai trò Robbins–Monro
+### Hội tụ của Monte Carlo tuyến tính
 
 - Nhóm: `bổ sung`.
-- Vai trò trong mạch: củng cố nền toán của cập nhật MC và bước học.
-- Kết nối vào: MC với gradient đầy đủ.
-- Kết nối ra: làm rõ đối chiếu gradient đầy đủ của MC với bán gradient của TD.
-- Nguồn: bài tập 4 và 6.
+- Vai trò trong mạch: điều kiện hội tụ của Monte Carlo tuyến tính, nghiệm là cực tiểu $J_\mu$; phép đạo hàm và vai trò Robbins–Monro (bài tập 4, 6).
+- Kết nối vào: gradient và thuật toán Monte Carlo.
+- Kết nối ra: Monte Carlo phải chờ hết lượt, dẫn tới TD(0).
+- Nguồn: tr. 34; bài tập 4 và 6.
 
 ### Khung đích và thực hành điều khiển
 
@@ -467,8 +467,6 @@ Bước 4 cập nhật tuần tự theo thứ tự thời gian: mẫu kế tiế
 
 Ví dụ: ở mục 7.2, $\Delta w=(0{,}8;0{,}4)^\top$. Trạng thái có đặc trưng $(1;0)^\top$ không được cập nhật trực tiếp, nhưng dự đoán của nó tăng $x^\top\Delta w=1\cdot0{,}8+0\cdot0{,}4=0{,}8$ vì dùng chung thành phần thứ nhất của $w$. Mục 16 (Bài tập 7) tính đủ một lượt cho sẵn theo cùng thuật toán, với $x(S_t,A_t)$ thay cho $x(S_t)$ để ước lượng giá trị hành động.
 
-Điều kiện hội tụ: nếu dữ liệu i.i.d., đặc trưng bị chặn, $\sum_t \alpha_t = \infty$ và $\sum_t \alpha_t^2 < \infty$, thì MC-SGD hội tụ tới nghiệm tối ưu của lỗi bình phương trên phân phối dữ liệu. Lưu ý đây là hội tụ tới nghiệm hồi quy tốt nhất, không phải nhất thiết tới $v^\pi$, trừ khi lớp hàm chứa được $v^\pi$.
-
 ::: exercise Câu hỏi kiểm tra
 Giải thích vì sao cập nhật Monte Carlo với hàm xấp xỉ là gradient đầy đủ, trong khi cùng dạng công thức với mục tiêu TD thì không.
 :::
@@ -482,11 +480,29 @@ Với Monte Carlo, mục tiêu $G_t$ chỉ phụ thuộc phần thưởng trên 
 :::
 
 <!-- note-topic-id: lec-07-topic-15 -->
-## Chứng minh MC-SGD và vai trò Robbins–Monro
+## 8. Hội tụ của Monte Carlo tuyến tính
 
-Vấn đề: chứng minh chính xác rằng một bước hạ gradient trên mất mát MC cục bộ cho ra công thức cập nhật đã nêu, và giải thích vì sao điều kiện Robbins–Monro phù hợp.
+### 8.1. Điều kiện hội tụ của Monte Carlo tuyến tính
 
-Chứng minh (bài tập 4). Cho $\hat v(s,w) = x(s)^\top w$ và mất mát $\ell_t(w) = \frac{1}{2}\big(G_t - x(S_t)^\top w\big)^2$. Đạo hàm theo $w$:
+Nếu dữ liệu độc lập cùng phân phối (iid), đặc trưng bị chặn và bước học thỏa điều kiện Robbins–Monro
+
+$$\sum_n \alpha_n = \infty, \qquad \sum_n \alpha_n^2 < \infty,$$
+
+thì SGD với mục tiêu Monte Carlo hội tụ tới cực tiểu của sai số bình phương trên phân phối dữ liệu (nguồn tr. 34). Ví dụ $\alpha_n=1/n$ thỏa cả hai điều kiện; $\alpha_n=1/\sqrt n$ thỏa điều kiện thứ nhất nhưng không thỏa điều kiện thứ hai.
+
+Cực tiểu đó là cực tiểu của $J_\mu$. Với $S_t\sim\mu$ và $\mathbb E_\pi[G_t\mid S_t]=v_\pi(S_t)$,
+
+$$\mathbb E\big[(G_t-\hat v(S_t,w))^2 \mid S_t\big] = \mathrm{Var}(G_t\mid S_t) + \big(v_\pi(S_t)-\hat v(S_t,w)\big)^2,$$
+
+và số hạng phương sai không phụ thuộc $w$, nên mất mát kỳ vọng với $G_t$ và $J_\mu$ có cùng điểm cực tiểu. Vì vậy dự đoán hội tụ tới điểm cực tiểu $J_\mu$ trong lớp tuyến tính; điểm này bằng $v_\pi$ chỉ khi lớp hàm chứa $v_\pi$, phần dư là sai số xấp xỉ của mục 5.3.
+
+Giả thiết đi kèm: chính sách $\pi$, phân phối $\mu$ và đặc trưng cố định; lợi tức có mômen bậc hai hữu hạn, $\mathbb E[G_t^2]<\infty$. Tính lồi không phải giả thiết mà là hệ quả: với mô hình tuyến tính, Hessian của mất mát là $x(S_t)x(S_t)^\top\succeq0$, nên mất mát lồi theo $w$. Các mẫu trong cùng một lượt tương quan, nên giả thiết iid của nguồn không khớp trực tiếp với cách lấy mẫu theo lượt; khi đó cần định lý cho dữ liệu từ chuỗi Markov trộn, với giả thiết riêng. Ma trận mômen $\mathbb E[x(S_t)x(S_t)^\top]$ đủ hạng chỉ cần để vector tham số tối ưu là duy nhất; mã hóa bốn khối ở mục 5.2 không đủ hạng, nhưng dự đoán tối ưu vẫn xác định. Nếu $\pi$ hoặc $\mu$ thay đổi trong quá trình học, đây không còn là cùng một bài toán tối ưu cố định.
+
+Monte Carlo phải chờ hết lượt mới có mục tiêu; mục 9 xét TD(0), cập nhật sau mỗi chuyển tiếp.
+
+### 8.2. Bài tập: đạo hàm cập nhật Monte Carlo
+
+Bài tập 4. Cho $\hat v(s,w) = x(s)^\top w$ (phiếu bài tập viết $\phi(s)$) và mất mát $\ell_t(w) = \frac{1}{2}\big(G_t - x(S_t)^\top w\big)^2$. Đạo hàm theo $w$:
 
 $$\nabla_w \ell_t(w) = \frac{1}{2} \cdot 2\big(G_t - x(S_t)^\top w\big) \cdot (-x(S_t)) = -\big(G_t - x(S_t)^\top w\big)x(S_t).$$
 
@@ -494,9 +510,9 @@ Một bước hạ gradient với bước $\alpha_t$:
 
 $$w_{t+1} = w_t - \alpha_t \nabla_w \ell_t(w_t) = w_t + \alpha_t \big(G_t - x(S_t)^\top w_t\big)x(S_t),$$
 
-đúng công thức yêu cầu. Vì $\ell_t$ là hàm bậc hai lồi theo $w$ (ma trận Hessian $x(S_t)x(S_t)^\top \succeq 0$), điều kiện để hội tụ về cực tiểu toàn cục là: dãy bước học thỏa Robbins–Monro $\sum_t \alpha_t = \infty$, $\sum_t \alpha_t^2 < \infty$; đặc trưng bị chặn; và dữ liệu có phân phối đủ để mất mát kỳ vọng có cực tiểu (ví dụ dữ liệu i.i.d. như phát biểu ở tr. 34).
+đúng công thức yêu cầu. Điều kiện để cập nhật hội tụ về cực tiểu toàn cục là các điều kiện ở mục 8.1: bước học thỏa Robbins–Monro, đặc trưng bị chặn, mômen hữu hạn và giả thiết lấy mẫu phù hợp (iid như nguồn tr. 34, hoặc chuỗi Markov trộn).
 
-Vai trò của Robbins–Monro (bài tập 6). Hai điều kiện $\sum_t \alpha_t = \infty$ và $\sum_t \alpha_t^2 < \infty$ phù hợp cho MC-SGD và TD-SGD vì: điều kiện thứ nhất bảo đảm tổng bước học đủ lớn để thuật toán còn tiếp tục học — nếu tổng hữu hạn thì $w$ dừng ở nơi chưa hội tụ; điều kiện thứ hai bảo đảm phương sai của nhiễu tích luỹ hữu hạn — tổng $\sum_t \alpha_t^2 \cdot \mathrm{Var}[\text{nhiễu}_t]$ hội tụ, nên nhiễu ngẫu nhiên không đẩy $w$ đi xa vĩnh viễn. Ví dụ $\alpha_t = 1/t$ thỏa cả hai; $\alpha_t = 1/\sqrt{t}$ thỏa điều kiện một nhưng không thỏa điều kiện hai.
+Bài tập 6, vai trò của hai điều kiện Robbins–Monro. Điều kiện $\sum_n \alpha_n = \infty$ bảo đảm tổng các bước đủ lớn để thuật toán còn tiếp tục học: nếu tổng hữu hạn, $w$ có thể dừng ở nơi chưa tới nghiệm. Điều kiện $\sum_n \alpha_n^2 < \infty$ giữ tổng phương sai của nhiễu tích lũy $\sum_n \alpha_n^2\,\mathrm{Var}[\text{nhiễu}_n]$ hữu hạn khi phương sai nhiễu bị chặn, nên nhiễu không đẩy $w$ đi xa mãi. Hai điều kiện này dùng cho cả Monte Carlo và TD với xấp xỉ hàm.
 
 ::: exercise Câu hỏi kiểm tra
 Tính Hessian của $\ell_t(w)$ và suy ra $\ell_t$ lồi; từ đó giải thích vì sao cực tiểu địa phương là cực tiểu toàn cục.
@@ -507,7 +523,7 @@ Tính đạo hàm bậc hai của $\frac{1}{2}(G_t - x^\top w)^2$ theo $w$.
 :::
 
 ::: solution
-$\nabla_w^2 \ell_t(w) = x(S_t)x(S_t)^\top$, là ma trận bán xác định dương vì $u^\top x(S_t)x(S_t)^\top u = (x(S_t)^\top u)^2 \ge 0$ với mọi $u$. Hàm lồi nên mọi cực tiểu địa phương là cực tiểu toàn cục; do đó hạ gradient với bước học thỏa Robbins–Monro và dữ liệu phù hợp hội tụ về cực tiểu toàn cục của lỗi bình phương trên phân phối dữ liệu.
+$\nabla_w^2 \ell_t(w) = x(S_t)x(S_t)^\top$, là ma trận bán xác định dương vì $u^\top x(S_t)x(S_t)^\top u = (x(S_t)^\top u)^2 \ge 0$ với mọi $u$. Hàm lồi nên mọi cực tiểu địa phương là cực tiểu toàn cục; do đó hạ gradient với bước học thỏa Robbins–Monro và dữ liệu phù hợp hội tụ về cực tiểu toàn cục của sai số bình phương trên phân phối dữ liệu.
 :::
 
 <!-- note-topic-id: lec-07-topic-07 -->
