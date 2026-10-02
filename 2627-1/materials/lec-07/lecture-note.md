@@ -744,6 +744,16 @@ $A_{t+1}$ là hành động chính sách hiện hành thực sự chọn, kể c
 
 Sau mỗi cập nhật $w$, chính sách $\varepsilon$-tham lam suy ra từ $\hat q$ có thể đổi. Vì vậy Sarsa với xấp xỉ hàm không còn là dự đoán dưới một chính sách cố định; bảo đảm của TD tuyến tính ở mục 10.4 và các bảo đảm dạng bảng của Bài 06 (GLIE, Robbins–Monro) không chuyển trực tiếp sang trường hợp này. Bài không phát biểu kết quả hội tụ tổng quát cho Sarsa với xấp xỉ hàm (nguồn tr. 39); các kết quả hữu hạn mẫu cho Sarsa tuyến tính (nguồn tr. 45) cần giả thiết riêng.
 
+### 12.4. Một cập nhật Sarsa trên chuỗi
+
+Trên chuỗi năm trạng thái của mục 12.2, cho $\gamma=1$, $w_0=(1;1;-1)^\top$, $\alpha=0{,}2$ và mẫu đầu tiên ($t=0$): $(S_0,A_0,R_1,S_1,A_1)=(D,0,-1,C,0)$; bộ năm này cho tên Sarsa. Đặc trưng là $x(D,0)=(3;1;1)^\top$ và $x(C,0)=(2;1;1)^\top$. Cả hai dự đoán dùng $w_0$, tính trước khi cập nhật:
+
+$$\hat q(D,0,w_0)=3+1-1=3,\qquad \hat q(C,0,w_0)=2+1-1=2,\qquad \delta_0=-1+1\cdot2-3=-2,$$
+
+$$w_1=w_0+0{,}2\cdot(-2)\cdot(3;1;1)^\top=(1;1;-1)^\top-(1{,}2;0{,}4;0{,}4)^\top=(-0{,}2;0{,}6;-1{,}4)^\top.$$
+
+Mục tiêu $-1+2=1$ nhỏ hơn dự đoán $3$, nên dự đoán tại $(D,0)$ giảm: $\hat q(D,0,w_1)=-0{,}6+0{,}6-1{,}4=-1{,}4$. Vì $\alpha\|x(D,0)\|^2=0{,}2\cdot11=2{,}2>1$, bước cập nhật vượt qua mục tiêu (so với mục 7.2, nơi $\alpha\|x(S_t)\|^2=0{,}5<1$). Nhờ $w$ dùng chung, dự đoán tại cặp khác cũng đổi: $\hat q(C,0,w_1)=-0{,}4+0{,}6-1{,}4=-1{,}2$. Trong Bài tập 8, $\varepsilon=0{,}25$ mô tả chính sách đã sinh các hành động, nhưng không tham gia số học vì hành động kế tiếp đã cho trong mẫu. Mục 16 tính đủ ba cập nhật của Bài tập 8.
+
 ::: exercise Câu hỏi kiểm tra
 Vì sao trong Sarsa tuyến tính, mục tiêu dùng $\gamma x(S_{t+1}, A_{t+1})^\top w_t$ với hành động $A_{t+1}$ thực tế, còn Q-learning dùng $\max_a$?
 :::

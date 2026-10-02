@@ -9,7 +9,7 @@
 | MC tuyến tính | `L07-12` | `L07-13` | `L07-14` | `L07-15`, `L07-16` | `L07-16`, `X02` | `L07-16`, `X01` | return $G_t$ → gradient đầy đủ và cập nhật tuần tự | 19 | 2 |
 | TD tuyến tính và Bellman chiếu | `L07-18` | `L07-18` | `L07-19`; ví dụ hình học `L07-21` | `L07-20`, `L07-20b`, `L07-22`, `L07-23` | `L07-24` | `L07-24`, `L07-35` | chuyển tiếp một bước → bán gradient → thuật toán → hình chiếu → trực giao → điểm cố định | 27 | 3 |
 | So sánh MC–TD | `L07-25` | `L07-25` | không áp dụng: tổng hợp hai cụm đã có ví dụ | không áp dụng | `L07-25` | `L07-25` | hai đích đã học → phân biệt đối tượng phân tích | 3 | 0 |
-| Điều khiển | `L07-26` | `L07-26`, `L07-28` | `L07-27` | `L07-28`, `L07-29` | `L07-30` | `L07-28`, `X03` | đặc trưng $x(s,a)$ → SARSA với chính sách $\varepsilon$-greedy hiện hành | 18 | 1 |
+| Điều khiển | `L07-26` | `L07-26`, `L07-28` | `L07-27`, `L07-30` (một bước số trước thuật toán) | `L07-28`, `L07-29` | `L07-30` | `L07-28`, `X03` | đặc trưng $x(s,a)$ → SARSA với chính sách $\varepsilon$-greedy hiện hành | 18 | 1 |
 | Khác chính sách và bất ổn | `L07-31` | phần mở đầu `L07-31` | so sánh đích trên mẫu `L07-30` | quy tắc đích ở `L07-31`; phân loại ở `L07-32` | `L07-33`, `L07-34` | `L07-31`, `L07-33`, `L07-35` | đổi hành động kế tiếp sang cực đại → nhận diện trường hợp cần phân tích riêng | 16 | 1 |
 
 Các khoảng trang trên không chồng lấn. Tổng phần chính là 111 phút cốt lõi và 9 phút linh hoạt; tổng chữa bài là 30 phút (`X01`: 8, `X02`: 10, `X03`: 12). Ký hiệu $x$, $w$, $G_t$ và $\delta_t$ được truyền nguyên dạng từ ví dụ sang công thức và bài tập.
@@ -47,8 +47,8 @@ Các khoảng trang trên không chồng lấn. Tổng phần chính là 111 ph�
 | `L07-26` | Vấn đề điều khiển: dự đoán giữ $\pi$ cố định; chọn hành động không có mô hình cần $\hat q\approx q_\pi$ hoặc $q_*$ và $\pi_w\in\arg\max\hat q$; điểm đối chiếu thứ hai (hành vi/đích) và thứ ba (cải thiện chính sách); vừa bootstrap vừa cải thiện chính sách nên mục tiêu đổi liên tục (tr. 39). | tr. 38–39 | 3 | Chọn đặc trưng hành động cho ví dụ chuỗi. |
 | `L07-27` | Ví dụ: chuỗi năm trạng thái của Bài 06 ($\gamma=1$, lượt tối đa ba bước), đặc trưng $x(s,a)=(d_{\text{trái}};u(a);1)^T$; hệ quả $\hat q(s,1)-\hat q(s,0)=-2w_2$ ở mọi $s$ nên hành động tham lam như nhau ở B, C, D. | tr. 40; HW7–8 | 5 | Dùng hành động kế tiếp thật trong Sarsa. |
 | `L07-28` | Hình thức và trực giác Sarsa: thay $Q(S',A')$ bằng $\hat q(S',A',w)$; chính sách $\varepsilon$-tham lam hiện hành, phá hòa cố định; $\delta_t$ và $w_{t+1}=w_t+\alpha\delta_tx(S_t,A_t)$; $A_{t+1}$ do chính sách hiện hành chọn (học theo chính sách); câu hỏi thay bằng hành động tham lam. | tr. 38–39; HW8 | 3 | Tính một cập nhật Sarsa trên chuỗi. |
-| `L07-29` | Thuật toán SARSA control, phá hòa và cảnh báo hội tụ. | tr. 38–39 | 4 | Thực hiện một bước số. |
-| `L07-30` | Ví dụ bước đầu của HW8 với $\gamma=1$. | HW8 | 4 | So đích trên cùng mẫu khi thay hành động kế tiếp bằng cực đại. |
+| `L07-30` | Ví dụ tính tay một bước Sarsa (HW8, mẫu $(D,0,-1,C,0)$, $\gamma=1$): $\hat q(D,0)=3$, $\hat q(C,0)=2$, $\delta_0=-2$, $w_1=(-0{,}2;0{,}6;-1{,}4)^T$; đặt trước thuật toán. | HW8 | 4 | Đóng gói các bước thành thuật toán Sarsa. |
+| `L07-29` | Thuật toán SARSA control, phá hòa và cảnh báo hội tụ. | tr. 38–39 | 4 | Kiểm mục tiêu Q-learning trên cùng mẫu $(D,0,-1,C,0)$. |
 | `L07-31` | Quy tắc đích Q-learning, trường hợp kết thúc, miền cực đại và kiểm tra. | tr. 38–41 | 4 | Phân loại ba cơ chế của thiết lập khác chính sách. |
 | `L07-32` | Hình thức hóa bộ ba bất ổn và mức khẳng định có điều kiện. | tr. 41 | 3 | Áp dụng phân loại vào Q-learning vừa xét. |
 | `L07-33` | Ứng dụng và kiểm tra bằng ba câu chẩn đoán. | tr. 41–43 | 3 | Đặt kết luận vào đúng phạm vi lý thuyết. |
@@ -91,7 +91,7 @@ Mỗi trang trong 40 trang chiếu (`L07-01`–`L07-36`, `L07-20b` và `X01`–`
 | `lec-07-topic-07` | `L07-18`, `L07-19`, `L07-20`, `L07-20b` |
 | `lec-07-topic-08` | `L07-21`, `L07-22`, `L07-23`, `L07-24` |
 | `lec-07-topic-09` | `L07-25` |
-| `lec-07-topic-10` | `L07-26`, `L07-27`, `L07-28`, `L07-29`, `L07-30` |
+| `lec-07-topic-10` | `L07-26`, `L07-27`, `L07-28`, `L07-30`, `L07-29` |
 | `lec-07-topic-11` | `L07-31`, `L07-32`, `L07-33` |
 | `lec-07-topic-14` | `L07-34` |
 | `lec-07-topic-12` | `L07-35`, `L07-36` |
