@@ -436,18 +436,30 @@ $$w_{t+1}=w_t+0{,}1\cdot4\cdot(2;1)^\top=(1;-1)^\top+(0{,}8;0{,}4)^\top=(1{,}8;-
 
 Dự đoán mới là $x(S_t)^\top w_{t+1}=3{,}6-0{,}6=3$, nên sai lệch giảm từ $4$ xuống $2$. Mức tăng của dự đoán bằng $\alpha e_t\|x(S_t)\|^2=0{,}1\cdot4\cdot5=2$; nếu $e_t<0$, dự đoán giảm. Lợi tức $G_t$ do quỹ đạo cung cấp và không được tính lại khi $w$ đổi, vì mục tiêu Monte Carlo không chứa $w$. Mục 7.3 chỉ ra quy tắc này là bước giảm theo gradient của mất mát mẫu.
 
-Các đoạn sau dùng mục tiêu này để xây dựng cập nhật: thay $y_t=G_t$ vào dạng cập nhật của mục 6.1,
+### 7.3. Gradient của mất mát Monte Carlo
 
-$$w_{t+1} = w_t + \alpha_t \big(G_t - \hat v(S_t, w_t)\big) \nabla_w \hat v(S_t, w_t).$$
+Quy tắc ở mục 7.2 là một bước hạ gradient trên mất mát của một mẫu $(S_t,G_t)$. Thay $y_t=G_t$ vào mất mát mẫu của mục 6.1 và lấy đạo hàm theo quy tắc chuỗi:
 
-Đây là gradient đầy đủ: vì $G_t$ không phụ thuộc $w$, số hạng này chính là $-\nabla_w \ell_t(w_t)$ với mất mát cục bộ $\ell_t(w) = \frac{1}{2}\big(G_t - \hat v(S_t,w)\big)^2$. Chứng minh từng bước ở chủ đề bổ sung 15.
+$$\ell_t(w) = \frac{1}{2}\big(G_t - \hat v(S_t,w)\big)^2, \qquad \nabla_w\ell_t(w) = -\big(G_t - \hat v(S_t,w)\big)\nabla_w \hat v(S_t,w).$$
+
+Bước $w_{t+1}=w_t-\alpha_t\nabla_w\ell_t(w_t)$ cho
+
+$$w_{t+1} = w_t + \alpha_t \big(G_t - \hat v(S_t, w_t)\big) \nabla_w \hat v(S_t, w_t),$$
+
+và với mô hình tuyến tính, $\nabla_w\hat v(S_t,w)=x(S_t)$, nên $w_{t+1}=w_t+\alpha_t\big(G_t-x(S_t)^\top w_t\big)x(S_t)$. Với các số ở mục 7.2 và $\alpha_t=0{,}1$, công thức cho đúng $w_{t+1}=(1{,}8;-0{,}6)^\top$. Vì $G_t$ không phụ thuộc $w$, đây là gradient đầy đủ của mất mát mẫu. Mỗi bước chỉ dùng một mẫu nên phương pháp là hạ gradient ngẫu nhiên (SGD); nguồn gọi chung công thức là SGD/bán gradient, còn bài này gọi trường hợp mục tiêu $G_t$ là gradient đầy đủ.
+
+Với $w$ cố định (không phụ thuộc mẫu đang dùng) và $\mathbb E|G_t|<\infty$, lấy kỳ vọng theo trạng thái mẫu $S_t\sim\mu$ và dùng $\mathbb E_\pi[G_t\mid S_t]=v_\pi(S_t)$:
+
+$$\mathbb E\big[\nabla_w\ell_t(w)\big] = -\mathbb E_\mu\big[(v_\pi(S_t)-\hat v(S_t,w))\,x(S_t)\big] = \nabla_w J_\mu(w).$$
+
+Vậy về trung bình, mỗi bước đi theo hướng giảm của $J_\mu$. Các mẫu trong cùng một lượt tương quan với nhau, nên điều kiện hội tụ cần giả thiết về cách lấy mẫu (độc lập, hoặc chuỗi Markov trộn). Mục 8 nêu điều kiện để dãy bước như vậy hội tụ, cùng phép đạo hàm chi tiết (Bài tập 4) và vai trò của điều kiện bước học.
 
 Với bình phương tối thiểu tuyến tính theo lô, Monte Carlo gần bài toán hồi quy chuẩn (nguồn tr. 33).
 
 Điều kiện hội tụ: nếu dữ liệu i.i.d., đặc trưng bị chặn, $\sum_t \alpha_t = \infty$ và $\sum_t \alpha_t^2 < \infty$, thì MC-SGD hội tụ tới nghiệm tối ưu của lỗi bình phương trên phân phối dữ liệu. Lưu ý đây là hội tụ tới nghiệm hồi quy tốt nhất, không phải nhất thiết tới $v^\pi$, trừ khi lớp hàm chứa được $v^\pi$.
 
 ::: exercise Câu hỏi kiểm tra
-Cho biết vì sao cập nhật MC với hàm xấp xỉ là gradient đầy đủ, trong khi cùng một dạng công thức với đích TD thì không.
+Giải thích vì sao cập nhật Monte Carlo với hàm xấp xỉ là gradient đầy đủ, trong khi cùng dạng công thức với mục tiêu TD thì không.
 :::
 
 ::: hint
@@ -455,7 +467,7 @@ So sánh sự phụ thuộc của $G_t$ và của $R_{t+1} + \gamma \hat v(S_{t+
 :::
 
 ::: solution
-Với MC, đích $G_t$ chỉ phụ thuộc phần thưởng và quỹ đạo, không phụ thuộc $w$, nên $\nabla_w \frac{1}{2}(G_t - \hat v(S_t,w))^2 = -(G_t - \hat v(S_t,w))\nabla_w \hat v(S_t,w)$ chính xác. Với TD, đặt $\delta_t(w)=R_{t+1}+\gamma\hat v(S_{t+1},w)-\hat v(S_t,w)$. Bước hạ gradient đầy đủ của $\frac12\delta_t(w)^2$ tỉ lệ với $\delta_t(w)[\nabla_w\hat v(S_t,w)-\gamma\nabla_w\hat v(S_{t+1},w)]$. Cập nhật TD chỉ giữ số hạng thứ nhất và bỏ số hạng chứa gradient tại trạng thái kế, nên là bán gradient.
+Với Monte Carlo, mục tiêu $G_t$ chỉ phụ thuộc phần thưởng trên quỹ đạo, không phụ thuộc $w$, nên $\nabla_w \frac{1}{2}(G_t - \hat v(S_t,w))^2 = -(G_t - \hat v(S_t,w))\nabla_w \hat v(S_t,w)$ đúng chính xác. Với TD, đặt $\delta_t(w)=R_{t+1}+\gamma\hat v(S_{t+1},w)-\hat v(S_t,w)$. Bước giảm theo gradient đầy đủ của $\frac12\delta_t(w)^2$ tỉ lệ với $\delta_t(w)[\nabla_w\hat v(S_t,w)-\gamma\nabla_w\hat v(S_{t+1},w)]$. Cập nhật TD chỉ giữ số hạng thứ nhất và bỏ số hạng chứa gradient tại trạng thái kế tiếp, nên là bán gradient.
 :::
 
 <!-- note-topic-id: lec-07-topic-15 -->
