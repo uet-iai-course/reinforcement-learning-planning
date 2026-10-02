@@ -37,7 +37,7 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Nhóm: `cốt lõi`.
 - Vai trò trong mạch: cho thấy chất lượng đặc trưng quyết định chất lượng xấp xỉ.
 - Kết nối vào: xấp xỉ tuyến tính.
-- Kết nối ra: đặc trưng cho cặp trạng thái–hành động và nhập nhằng đặc trưng, dùng lại trong ví dụ chuỗi phía sau.
+- Kết nối ra: đặc trưng cho cặp trạng thái–hành động dùng lại trong ví dụ chuỗi; sai số xấp xỉ tách khỏi sai số ước lượng trước khi xây dựng mục tiêu cập nhật.
 - Nguồn: tr. 28–31.
 
 ### Phân loại đích MC/TD
@@ -324,6 +324,18 @@ Ba nhận xét của nguồn (tr. 31):
 
 Đặc trưng tốt giữ thông tin cần để dự đoán lợi tức dưới chính sách đang xét. Trong ví dụ chuỗi năm trạng thái ở phần điều khiển, đặc trưng $x(s,a)$ gồm khoảng cách tới tường trái, dấu của hành động và hằng số $1$; với bài toán lớn hơn, chọn đặc trưng là vấn đề mở. Mục 5.2 xây dựng đặc trưng cho cặp trạng thái–hành động; mục 5.3 xét nhập nhằng.
 
+::: exercise Câu hỏi kiểm tra
+Cho ba trạng thái $B, C, D$ với khoảng cách tới tường trái lần lượt $1, 2, 3$. Nếu hàm giá trị thực tăng tuyến tính theo khoảng cách này, vì sao đặc trưng $d_{\text{left}}(s)$ là lựa chọn tốt? Ngược lại, nếu giá trị thực không tuyến tính theo khoảng cách thì sao?
+:::
+
+::: hint
+Xét $\hat v(s) = a\,d_{\text{left}}(s) + b$ và hỏi lớp này chứa những hàm nào.
+:::
+
+::: solution
+Nếu $v$ tuyến tính theo $d_{\text{left}}$, thì $v(s) = a\,d_{\text{left}}(s) + b$ với một cặp $a,b$, và lớp xấp xỉ chứa đúng hàm này nên sai số xấp xỉ bằng không. Nếu $v$ không tuyến tính theo khoảng cách, chẳng hạn có dạng bậc hai, thì mọi hàm trong lớp đều lệch; học trọng số chỉ tìm được phép chiếu tốt nhất, và sai số xấp xỉ còn lại không thể xóa bằng dữ liệu nhiều hơn.
+:::
+
 ### 5.2. Đặc trưng cho cặp trạng thái–hành động
 
 Điều khiển cần giá trị hành động $\hat q(s,a,w)=x(s,a)^\top w$, nên vector đặc trưng phải phụ thuộc cả trạng thái lẫn hành động. Với đặc trưng trạng thái $\phi(s)\in\mathbb R^p$, $m$ hành động rời rạc và mã one-hot $e_a\in\mathbb R^m$ (thành phần thứ $a$ bằng 1, còn lại bằng 0), nguồn (tr. 31) ghép bốn khối:
@@ -340,17 +352,30 @@ Khối $\phi(s)$ cho trọng số $w^{(1)}$ mọi hành động dùng chung; kh�
 
 Đổi thứ tự thành $e_a\otimes\phi(s)$ chỉ hoán vị tọa độ của khối này; lớp hàm không đổi. Khối $\phi(s)$ bằng tổng theo hành động của các tọa độ tương ứng trong khối tích Kronecker, và $1$ bằng tổng các thành phần của $e_a$. Vì vậy lớp hàm trùng với lớp của $[e_a;\phi(s)\otimes e_a]$, ma trận đặc trưng không đủ hạng cột và $w$ không duy nhất; hai khối dư giữ phần dùng chung giữa các hành động. Đây là một cách mã hóa; có thể thiết kế đặc trưng trực tiếp cho $(s,a)$. Ví dụ chuỗi năm trạng thái ở phần điều khiển dùng đặc trưng ba chiều gồm khoảng cách tới tường trái, dấu của hành động và hằng số $1$.
 
+### 5.3. Nhập nhằng đặc trưng (aliasing)
+
+Vì $\hat v(s,w)=x(s)^\top w$ chỉ phụ thuộc $s$ qua $x(s)$, hai trạng thái có cùng vector đặc trưng luôn nhận cùng dự đoán:
+
+$$x(s_1)=x(s_2)\ \Longrightarrow\ \hat v(s_1,w)=\hat v(s_2,w)\quad\forall w.$$
+
+Nếu $v_\pi(s_1)\ne v_\pi(s_2)$, không có $w$ nào cho đúng cả hai giá trị; đây là hiện tượng nhập nhằng (aliasing) mà nguồn (tr. 31) nêu như một hệ quả của đặc trưng kém. Trường hợp cực đoan: chỉ dùng đặc trưng hằng $x(s)=1$ thì mọi trạng thái cùng dự đoán $w$.
+
+Tổng quát hơn, với $\mathcal S$ hữu hạn, xếp các $x(s)^\top$ thành hàng của ma trận $\Phi$; mọi vector dự đoán có dạng $\Phi w$, nằm trong không gian cột của $\Phi$ (bài kiểm tra ở mục 4). Sai số xấp xỉ được đo bằng $\min_w J_\mu(w)$, bằng một nửa bình phương khoảng cách (chuẩn trọng số $\mu$) từ $v_\pi$ tới lớp này. Cần tách nó khỏi sai số ước lượng: sai số xấp xỉ không đổi khi thêm dữ liệu, còn sai số ước lượng đến từ số mẫu hữu hạn và nhiễu, có thể giảm khi thêm mẫu. Muốn giảm sai số xấp xỉ phải đổi đặc trưng.
+
+Vì $v_\pi$ chưa biết (mục 4.1), phần tiếp theo xác định mục tiêu cập nhật tính từ mẫu để học $w$.
+
 ::: exercise Câu hỏi kiểm tra
-Cho ba trạng thái $B, C, D$ với khoảng cách tới tường trái lần lượt $1, 2, 3$. Nếu hàm giá trị thực tăng tuyến tính theo khoảng cách này, vì sao đặc trưng $d_{\text{left}}(s)$ là lựa chọn tốt? Ngược lại, nếu giá trị thực không tuyến tính theo khoảng cách thì sao?
+Cho hai trạng thái $s_1\ne s_2$ với $x(s_1)=x(s_2)$ và $v_\pi(s_1)=0$, $v_\pi(s_2)=2$, $\mu(s_1)=\mu(s_2)=\tfrac12$, không có trạng thái nào khác. Tìm dự đoán chung $c=\hat v(s_1,w)=\hat v(s_2,w)$ làm nhỏ nhất $J_\mu$ và giá trị nhỏ nhất đó, giả sử $c$ có thể nhận mọi giá trị thực.
 :::
 
 ::: hint
-Xét $\hat v(s) = a\,d_{\text{left}}(s) + b$ và hỏi lớp này chứa những hàm nào.
+Viết $J_\mu$ theo $c$ rồi lấy đạo hàm theo $c$.
 :::
 
 ::: solution
-Nếu $v$ tuyến tính theo $d_{\text{left}}$, thì $v(s) = a\,d_{\text{left}}(s) + b$ với một cặp $a,b$, và lớp xấp xỉ chứa đúng hàm này nên sai số xấp xỉ bằng không. Nếu $v$ không tuyến tính theo khoảng cách, chẳng hạn có dạng bậc hai, thì mọi hàm trong lớp đều lệch; học trọng số chỉ tìm được phép chiếu tốt nhất, và sai số xấp xỉ còn lại không thể xóa bằng dữ liệu nhiều hơn.
+$J_\mu=\tfrac12\bigl[\tfrac12(0-c)^2+\tfrac12(2-c)^2\bigr]$. Đạo hàm theo $c$ bằng $\tfrac12\bigl[c-(2-c)\bigr]=c-1$, bằng 0 khi $c=1$. Khi đó $J_\mu=\tfrac12\bigl[\tfrac12+\tfrac12\bigr]=\tfrac12$. Giá trị $\tfrac12$ là sai số xấp xỉ, ứng với khoảng cách 1 theo chuẩn trọng số $\mu$ ($\tfrac12\cdot1^2$): dù có bao nhiêu dữ liệu, mô hình với đặc trưng này không thể đạt $J_\mu$ nhỏ hơn.
 :::
+
 
 <!-- note-topic-id: lec-07-topic-05 -->
 ## Phân loại đích MC/TD
