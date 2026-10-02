@@ -716,6 +716,20 @@ trong đó $x(s,a)$ là đặc trưng cặp trạng thái–hành động (mục
 
 Điều khiển cải thiện chính sách trong lúc học; với TD (Sarsa, Q-learning), mục tiêu còn bootstrap. Vì vậy mục tiêu thay đổi liên tục và dữ liệu không còn đến từ một phân phối cố định (nguồn tr. 39). Điểm cố định Bellman chiếu của mục 10 được chứng minh cho một chính sách cố định, nên không tự bảo đảm chính sách tham lam suy ra từ $\hat q$ là chính sách tốt. Nguồn tr. 39 đặt câu hỏi Monte Carlo hay TD(0) khó hội tụ hơn trong điều khiển; với xấp xỉ hàm, cả hai đều mất giả thiết chính sách cố định, và TD còn thêm mục tiêu bootstrap.
 
+### 12.2. Chuỗi năm trạng thái với đặc trưng tuyến tính
+
+Các ví dụ điều khiển và bài tập dùng chuỗi năm trạng thái của Bài 06 (nguồn tr. 40; Bài tập 7–8): $\mathcal S=\{A,B,C,D,E\}$, D là trạng thái đầu, A và E là trạng thái kết thúc; hành động 0 đi trái, 1 đi phải; môi trường tất định; thưởng khi đi vào A bằng 1000, vào E bằng 10, các chuyển khác bằng $-1$; $\gamma=1$; mỗi lượt tối đa ba bước. Giới hạn ba bước do nguồn nêu bằng lời; có thể xem đây là bài toán chân trời hữu hạn, và nếu cần trạng thái Markov thuần nhất thì thêm chỉ số thời gian vào trạng thái. $\gamma=1$ hợp lệ vì mỗi lượt hữu hạn nên lợi tức hữu hạn.
+
+Đặc trưng ba chiều được thiết kế trực tiếp cho cặp $(s,a)$:
+
+$$x(s,a)=\begin{bmatrix}d_{\text{trái}}(s)\\u(a)\\1\end{bmatrix},\qquad u(0)=1,\ u(1)=-1,\qquad \hat q(s,a,w)=x(s,a)^\top w,$$
+
+với $d_{\text{trái}}(B)=1$, $d_{\text{trái}}(C)=2$, $d_{\text{trái}}(D)=3$ là khoảng cách tới tường trái. Đây không phải mã hóa bốn khối của mục 5.2: nó thiếu khối tích Kronecker, nên
+
+$$\hat q(s,1,w)-\hat q(s,0,w)=[w]_2\,\big(u(1)-u(0)\big)=-2[w]_2$$
+
+ở mọi $s$, trong đó $[w]_2$ là thành phần thứ hai của $w$ (hệ số của $u(a)$; ký hiệu $[w]_i$ để không lẫn với $w_t$ theo thời gian), và hành động tham lam như nhau ở B, C, D. Trong ví dụ này, đi trái là tối ưu ở mọi trạng thái, nên hạn chế đó chưa gây sai lựa chọn. Mục 16 dùng cùng thiết lập cho Bài tập 7 và 8.
+
 Hình thức. Hai cập nhật quen thuộc với hàm xấp xỉ:
 
 SARSA (theo chính sách):
@@ -913,7 +927,7 @@ $$\hat q(D,1,w_3) = 3(8.032) + 2.064 + 1.264 = 27.424.$$
 Nhận xét: mẫu 3 với phần thưởng $+10$ vào trạng thái kết thúc $E$ tạo bước cập nhật lớn $\delta_2 = 14.52$; sau ba mẫu, $\hat q(D,1)$ vượt $\hat q(D,0)$.
 
 ::: exercise Câu hỏi kiểm tra
-Trong bài 8, vì sao $\delta_1=-1.2$? Kiểm tra lại rằng $\hat q(D,1,w_3)-\hat q(D,0,w_3)=-2w_{3,2}$.
+Trong bài 8, vì sao $\delta_1=-1.2$? Kiểm tra lại rằng $\hat q(D,1,w_3)-\hat q(D,0,w_3)=-2[w_3]_2$.
 :::
 
 ::: hint
@@ -921,7 +935,7 @@ Tính $\delta_1$ từ công thức; với phần kiểm tra, tính $\hat q(D,1,w
 :::
 
 ::: solution
-$\delta_1=-1-2.6+2.4=-1.2$. Phần kiểm tra: $\hat q(D,1,w_3)-\hat q(D,0,w_3)=27.424-23.296=4.128$; hai vector đặc trưng chỉ khác thành phần $u(a)$, nên chênh lệch bằng $w_{3,2}(-1-1)=-2w_{3,2}=-2(-2.064)=4.128$.
+$\delta_1=-1-2.6+2.4=-1.2$. Phần kiểm tra: $\hat q(D,1,w_3)-\hat q(D,0,w_3)=27.424-23.296=4.128$; hai vector đặc trưng chỉ khác thành phần $u(a)$, nên chênh lệch bằng $[w_3]_2(-1-1)=-2[w_3]_2=-2(-2.064)=4.128$.
 :::
 
 <!-- note-topic-id: lec-07-topic-12 -->
