@@ -47,7 +47,7 @@ Tệp này giữ các chỉ dẫn biên tập không được đưa lên mặt t
 
 - Không thêm mã trang, nhãn phân tuyến hoặc thời lượng vào mặt trang và ghi chú.
 - Không dùng “bán gradient MC”.
-- Phân biệt mã hóa khối $e_a\otimes\phi(s)$ ở `L07-10` với đặc trưng ba chiều được thiết kế trực tiếp cho $(s,a)$ ở `L07-27`.
+- Phân biệt mã hóa bốn khối $[\phi(s);e_a;\phi(s)\otimes e_a;1]$ ở `L07-10` với đặc trưng ba chiều được thiết kế trực tiếp cho $(s,a)$ ở `L07-27`. Thứ tự $\phi(s)\otimes e_a$ hay $e_a\otimes\phi(s)$ chỉ hoán vị tọa độ, không đổi lớp hàm.
 - Với giá trị hành động, cập nhật tuyến tính dùng $x(S_t,A_t)$, không dùng $x(S_t)$.
 - Nếu sửa một công thức TD hoặc SARSA, phải tính lại toàn bộ ví dụ số phụ thuộc công thức đó.
 - Nội dung hiển thị và ghi chú đã được viết bằng câu ngắn, trực tiếp; khi sửa, kiểm lại theo `no-ai-slop/eval.md` và giữ thuật ngữ nhất quán theo mạch Quill.

@@ -293,8 +293,6 @@ $$y_t^{\mathrm{MC}} = G_t, \qquad y_t^{\mathrm{TD}} = R_{t+1} + \gamma\, \hat v(
 
 nên dữ liệu vừa phụ thuộc chính sách, vừa phụ thuộc chính mô hình đang học.
 
-Đặc trưng cho điều khiển: nếu $\psi(s)\in\mathbb R^p$ là đặc trưng trạng thái và $e_a\in\mathbb R^m$ là mã một-nóng của hành động, có thể chọn $x(s,a)=e_a\otimes\psi(s)\in\mathbb R^{mp}$. Mỗi hành động khi đó đọc một khối $p$ trọng số. Ví dụ tính tay phía sau dùng đặc trưng ba chiều được thiết kế trực tiếp cho $(s,a)$.
-
 ::: exercise Câu hỏi kiểm tra
 Với $x(s) \in \mathbb R^d$, tập hợp $\{\hat v(\cdot, w) : w \in \mathbb R^d\}$ là gì về mặt hình học, và vì sao nói chung nó không phải toàn bộ không gian hàm trên $\mathcal S$?
 :::
@@ -325,6 +323,22 @@ Ba nhận xét của nguồn (tr. 31):
 - phần lớn lý thuyết cổ điển giả sử đặc trưng đã cho trước; việc học biểu diễn hầu như nằm ngoài các định lý đó.
 
 Đặc trưng tốt giữ thông tin cần để dự đoán lợi tức dưới chính sách đang xét. Trong ví dụ chuỗi năm trạng thái ở phần điều khiển, đặc trưng $x(s,a)$ gồm khoảng cách tới tường trái, dấu của hành động và hằng số $1$; với bài toán lớn hơn, chọn đặc trưng là vấn đề mở. Mục 5.2 xây dựng đặc trưng cho cặp trạng thái–hành động; mục 5.3 xét nhập nhằng.
+
+### 5.2. Đặc trưng cho cặp trạng thái–hành động
+
+Điều khiển cần giá trị hành động $\hat q(s,a,w)=x(s,a)^\top w$, nên vector đặc trưng phải phụ thuộc cả trạng thái lẫn hành động. Với đặc trưng trạng thái $\phi(s)\in\mathbb R^p$, $m$ hành động rời rạc và mã one-hot $e_a\in\mathbb R^m$ (thành phần thứ $a$ bằng 1, còn lại bằng 0), nguồn (tr. 31) ghép bốn khối:
+
+$$x(s,a)=\begin{bmatrix}\phi(s)\\ e_a\\ \phi(s)\otimes e_a\\ 1\end{bmatrix}\in\mathbb R^{p+m+mp+1}.$$
+
+Tích Kronecker $\phi(s)\otimes e_a$ thay mỗi thành phần $\phi_i$ bằng khối $\phi_i e_a$. Ví dụ với $p=m=2$, $\phi(s)=(\phi_1;\phi_2)^\top$ và hành động thứ nhất, $\phi(s)\otimes e_1=(\phi_1;0;\phi_2;0)^\top$.
+
+Tách $w$ theo bốn khối thành $w^{(1)}\in\mathbb R^p$, $c\in\mathbb R^m$, các vector $u_1,\dots,u_m\in\mathbb R^p$ và hệ số $b$. Khi đó
+
+$$\hat q(s,a,w)=\phi(s)^\top\bigl(w^{(1)}+u_a\bigr)+c_a+b.$$
+
+Khối $\phi(s)$ cho trọng số $w^{(1)}$ mọi hành động dùng chung; khối $e_a$ cho hằng số $c_a$ riêng của hành động $a$; khối tích Kronecker cho trọng số $u_a$ riêng của hành động $a$ trên $\phi(s)$; thành phần $1$ cho hệ số chặn chung. Nếu bỏ khối tích Kronecker, hiệu $\hat q(s,a,w)-\hat q(s,a',w)=c_a-c_{a'}$ không phụ thuộc trạng thái, nên hành động tham lam như nhau ở mọi trạng thái.
+
+Đổi thứ tự thành $e_a\otimes\phi(s)$ chỉ hoán vị tọa độ của khối này; lớp hàm không đổi. Khối $\phi(s)$ bằng tổng theo hành động của các tọa độ tương ứng trong khối tích Kronecker, và $1$ bằng tổng các thành phần của $e_a$. Vì vậy lớp hàm trùng với lớp của $[e_a;\phi(s)\otimes e_a]$, ma trận đặc trưng không đủ hạng cột và $w$ không duy nhất; hai khối dư giữ phần dùng chung giữa các hành động. Đây là một cách mã hóa; có thể thiết kế đặc trưng trực tiếp cho $(s,a)$. Ví dụ chuỗi năm trạng thái ở phần điều khiển dùng đặc trưng ba chiều gồm khoảng cách tới tường trái, dấu của hành động và hằng số $1$.
 
 ::: exercise Câu hỏi kiểm tra
 Cho ba trạng thái $B, C, D$ với khoảng cách tới tường trái lần lượt $1, 2, 3$. Nếu hàm giá trị thực tăng tuyến tính theo khoảng cách này, vì sao đặc trưng $d_{\text{left}}(s)$ là lựa chọn tốt? Ngược lại, nếu giá trị thực không tuyến tính theo khoảng cách thì sao?

@@ -49,7 +49,7 @@ Tổng kiểm tra: $7+23+21+(30+3)+19+17=120$ phút chính; $30+3$ là hai cụm
 | 24–26 | giữ, gộp | `L07-08`, `L07-34`, `L07-36` | Dạy tuyến tính trong bài; chỉ nêu ranh giới với mô hình phi tuyến. |
 | 27 | giữ, sửa | `L07-12`–`L07-13`, `L07-18` | Phân biệt rõ đích MC không phụ thuộc $w$ và đích TD phụ thuộc $w$. |
 | 28–30 | giữ, vẽ lại | `L07-09` | Thay ảnh miền ứng dụng bằng SVG khái niệm, không dùng ảnh raster. |
-| 31 | sửa, tách | `L07-10`–`L07-11`, `L07-27` | Dùng $e_a\otimes\phi(s)$ cho mã hóa khối; xác định đặc trưng ba chiều của chuỗi là một mã hóa khác. |
+| 31 | giữ, tách | `L07-09`–`L07-11`, `L07-27` | Giữ vector điều hướng và mã hóa bốn khối $[\phi(s);e_a;\phi(s)\otimes e_a;1]$ của nguồn; xác định đặc trưng ba chiều của chuỗi là một mã hóa khác. |
 | 32 | sửa, tách | `L07-12`, `L07-15`, `L07-20` | Đặt ví dụ trước hình thức; MC là gradient đầy đủ, TD mới dùng bán gradient khi bỏ đạo hàm qua bootstrap. |
 | 33–34 | giữ, sửa | `L07-13`–`L07-17` | Bổ sung giao diện thuật toán và điều kiện phân phối lấy mẫu. |
 | 35–36 | giữ, mở rộng | `L07-18`–`L07-24` | Đặt hình học trước đại số; bổ sung điều kiện trực giao, $A$, $b$, $D$, $\Phi$, $P_\pi$, $r_\pi$ và giả thiết. |
