@@ -732,7 +732,7 @@ $$\hat q(s,1,w)-\hat q(s,0,w)=[w]_2\,\big(u(1)-u(0)\big)=-2[w]_2$$
 
 ### 12.3. Mục tiêu Sarsa với hàm xấp xỉ
 
-Như Sarsa dạng bảng ở Bài 06, thay $Q(S',A')$ bằng $\hat q(S',A',w)$ (nguồn tr. 38). Hành động được chọn theo chính sách $\varepsilon$-tham lam hiện hành theo $\hat q(\cdot,\cdot,w_t)$, phá hòa theo một quy tắc cố định:
+Như Sarsa dạng bảng ở Bài 06, thay $Q(S_{t+1},A_{t+1})$ bằng $\hat q(S_{t+1},A_{t+1},w_t)$ (nguồn tr. 38). Hành động được chọn theo chính sách $\varepsilon$-tham lam hiện hành theo $\hat q(\cdot,\cdot,w_t)$, phá hòa theo một quy tắc cố định:
 
 $$\delta_t = R_{t+1} + \gamma \hat q(S_{t+1}, A_{t+1}, w_t) - \hat q(S_t, A_t, w_t), \qquad w_{t+1} = w_t + \alpha_t \delta_t \nabla_w \hat q(S_t, A_t, w_t).$$
 
