@@ -424,7 +424,19 @@ $$\mathbb E_\pi[G_t \mid S_t = s] = v_\pi(s),$$
 
 nên $G_t$ là mẫu không chệch của $v_\pi(S_t)$; thay $v_\pi(S_t)$ trong $J_\mu$ bằng $G_t$ đúng theo kỳ vọng. Lợi tức tồn tại và hữu hạn dưới các điều kiện ở mục 4.1. Đổi lại, $G_t$ cộng nhiều phần thưởng ngẫu nhiên nên thường có phương sai lớn (nguồn tr. 33). Đẳng thức trên chỉ nói về từng mẫu $G_t$: nó không nói vector $w$ học được từ hữu hạn mẫu là không chệch, và không xác định $\mu$, vốn do cách lấy các trạng thái $S_t$ quyết định. Mục tiêu TD không có tính chất không chệch này khi $\hat v\ne v_\pi$ (mục 11 đối chiếu hai phương pháp).
 
-Phần còn lại của mục 7 dùng mục tiêu này để xây dựng cập nhật: thay $y_t=G_t$ vào dạng cập nhật của mục 6.1,
+### 7.2. Một cập nhật Monte Carlo
+
+Cho $x(S_t)=(2;1)^\top$, $w_t=(1;-1)^\top$, lợi tức $G_t=5$ và $\alpha=0{,}1$. Dự đoán hiện tại và sai lệch (mục tiêu trừ dự đoán, như ở mục 3.2) là
+
+$$\hat v(S_t,w_t)=x(S_t)^\top w_t=2-1=1,\qquad e_t=G_t-\hat v(S_t,w_t)=4.$$
+
+Lợi tức lớn hơn dự đoán, nên tăng dự đoán theo hướng $x(S_t)$ bằng quy tắc $\Delta w=\alpha e_t\,x(S_t)$:
+
+$$w_{t+1}=w_t+0{,}1\cdot4\cdot(2;1)^\top=(1;-1)^\top+(0{,}8;0{,}4)^\top=(1{,}8;-0{,}6)^\top.$$
+
+Dự đoán mới là $x(S_t)^\top w_{t+1}=3{,}6-0{,}6=3$, nên sai lệch giảm từ $4$ xuống $2$. Mức tăng của dự đoán bằng $\alpha e_t\|x(S_t)\|^2=0{,}1\cdot4\cdot5=2$; nếu $e_t<0$, dự đoán giảm. Lợi tức $G_t$ do quỹ đạo cung cấp và không được tính lại khi $w$ đổi, vì mục tiêu Monte Carlo không chứa $w$. Mục 7.3 chỉ ra quy tắc này là bước giảm theo gradient của mất mát mẫu.
+
+Các đoạn sau dùng mục tiêu này để xây dựng cập nhật: thay $y_t=G_t$ vào dạng cập nhật của mục 6.1,
 
 $$w_{t+1} = w_t + \alpha_t \big(G_t - \hat v(S_t, w_t)\big) \nabla_w \hat v(S_t, w_t).$$
 
