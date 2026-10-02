@@ -104,13 +104,13 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 13 chủ đề `lec-07-topic
 - Kết nối ra: kiểm tra mạch suy luận và tổng kết.
 - Nguồn: tr. 34, 41–44; kết quả MDP tuyến tính ở tr. 42 chỉ nêu bậc độ hối tiếc.
 
-### Phạm vi lý thuyết, giới hạn và kết luận
+### Kiểm tra tổng hợp và tổng kết
 
 - Nhóm: `cốt lõi`.
-- Vai trò trong mạch: đóng mạch, nêu các vấn đề mở.
-- Kết nối vào: kết quả hiện đại và hai bài tính tay đã tổng hợp toàn bài.
-- Kết nối ra: định hướng đọc thêm.
-- Nguồn: tr. 43–44.
+- Vai trò trong mạch: năm bước phân tích một quy tắc cập nhật, áp dụng cho TD(0) tuyến tính; tổng kết bài.
+- Kết nối vào: bảng phạm vi các kết quả hội tụ.
+- Kết nối ra: học tăng cường sâu ở Bài 08; bài tập thực hành điều khiển.
+- Nguồn: tổng hợp tr. 22–44; Bài tập tuần 7.
 
 ### Mở đầu: từ bảng giá trị đến hàm xấp xỉ
 
@@ -131,7 +131,7 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 13 chủ đề `lec-07-topic
 ### Khung đích và thực hành điều khiển
 
 - Nhóm: `đọc thêm/thực hành`.
-- Vai trò trong mạch: thực hành tổng hợp trước khi kết luận, dùng cho chữa bài 7–8.
+- Vai trò trong mạch: thực hành tổng hợp sau phần tổng kết, dùng cho chữa bài 7–8.
 - Kết nối vào: SARSA tuyến tính và đích Q-learning.
 - Kết nối ra: cung cấp bằng chứng tính toán để kết luận thu hồi mục tiêu bài học.
 - Nguồn: tr. 40 và bài tập 7–8.
@@ -877,6 +877,62 @@ So sánh các đại lượng $d$, $H$, $T$ trong biểu thức với số trạ
 Độ hối tiếc phụ thuộc chiều đặc trưng $d$, chân trời $H$ và số bước tương tác $T$, và không phụ thuộc trực tiếp vào $|\mathcal S|$ hay $|\mathcal A|$. Dưới giả thiết MDP tuyến tính, độ khó được đo bằng chiều đặc trưng thay cho kích thước không gian trạng thái–hành động.
 :::
 
+<!-- note-topic-id: lec-07-topic-12 -->
+## 15. Kiểm tra tổng hợp và tổng kết
+
+### 15.1. Kiểm tra phân tích một quy tắc cập nhật
+
+Năm bước sau dùng để phân tích một quy tắc cập nhật mới trước khi nêu kết luận về nó:
+
+1. Đặc trưng xác định trên trạng thái hay cặp trạng thái–hành động; kích thước của $x$ và $w$.
+2. Mục tiêu có chứa $w$ không: gradient đầy đủ hay bán gradient.
+3. Viết cập nhật; nêu đại lượng giữ cố định khi lấy đạo hàm.
+4. Chính sách sinh dữ liệu và chính sách được đánh giá: theo hay khác chính sách; cố định hay đổi theo $w$.
+5. Chỉ nêu hội tụ khi giả thiết lấy mẫu, hạng và bước học khớp một dòng của bảng phạm vi (mục 14.1).
+
+Bước 2 ứng với điểm đối chiếu thứ nhất ở mục 1.1 (lợi tức đầy đủ hay bootstrap). Bước 4 ứng với điểm thứ hai (theo hay khác chính sách) và điểm thứ ba (cách cải thiện chính sách): trong dự đoán, chính sách cố định; trong điều khiển, chính sách được cải thiện theo $\hat q$ nên đổi theo $w$.
+
+::: exercise Câu hỏi kiểm tra
+Áp dụng năm bước cho TD(0) tuyến tính với chính sách $\pi$ cố định.
+:::
+
+::: hint
+Đi lần lượt năm bước; ở bước 5, tìm dòng của bảng mục 14.1 có cùng thiết lập.
+:::
+
+::: solution
+(1) $x(s)\in\mathbb R^d$, $w\in\mathbb R^d$. (2) Mục tiêu $R_{t+1}+\gamma x(S_{t+1})^\top w_t$ chứa $w_t$, nên cập nhật là bán gradient. (3) $w_{t+1}=w_t+\alpha_t\big(R_{t+1}+\gamma x(S_{t+1})^\top w_t-x(S_t)^\top w_t\big)x(S_t)$; mục tiêu được giữ cố định, chỉ lấy đạo hàm qua $\hat v(S_t,w)$. (4) Dữ liệu sinh theo $\pi$ và chính sách được đánh giá cũng là $\pi$, cố định: theo chính sách. (5) Khớp dòng TD của bảng ở mục 14.1: với chuỗi ergodic, $d_\pi(s)>0$, $\gamma<1$, đặc trưng bị chặn, $\Phi$ đủ hạng cột và bước học Robbins–Monro (mục 10.4), $w_t$ hội tụ với xác suất 1 tới $w_{\mathrm{TD}}$, nghiệm duy nhất của $Aw=b$, thỏa $\Phi w_{\mathrm{TD}}=\Pi_D T_\pi(\Phi w_{\mathrm{TD}})$.
+:::
+
+Nếu một bước không khớp, chẳng hạn chính sách đổi theo $w$ như trong Sarsa (mục 12), chưa đủ cơ sở để nêu kết luận hội tụ từ bảng phạm vi. Nguồn: tổng hợp tr. 22–43; Bài tập tuần 7.
+
+### 15.2. Hạn chế lý thuyết và kết luận
+
+Vấn đề: tổng hợp những gì lý thuyết bảo đảm và những gì còn thiếu sau các ví dụ tính tay.
+
+Các hạn chế lý thuyết theo tr. 43:
+
+1. Xấp xỉ phi tuyến và mạng sâu chưa có lý thuyết tổng quát cho DQN hoặc actor–critic ngoài một số trường hợp đặc biệt.
+2. Bộ ba bất ổn chưa được giải quyết triệt để; nhiều cách ổn định hoá cần giả thiết mạnh hoặc dẫn tới nghiệm chệch.
+3. Phần lớn định lý giả sử đặc trưng đã phù hợp, chưa giải thích đầy đủ quá trình học biểu diễn.
+4. TD triệt tiêu sai số Bellman chiếu, không trực tiếp tối thiểu hoá sai số so với $v^\pi$ hoặc chất lượng chính sách cuối.
+5. Bảo đảm khám phá với xấp xỉ hàm tổng quát còn hạn chế và phụ thuộc mạnh vào cấu trúc bài toán.
+6. Trong học tăng cường ngoại tuyến, phân phối hành vi có thể không phủ đủ các trạng thái–hành động cần đánh giá.
+
+Kết luận theo tr. 44: xấp xỉ hàm giúp Học tăng cường làm việc với không gian trạng thái lớn hoặc liên tục. Monte Carlo gần bài toán hồi quy vì đích không phụ thuộc trọng số đang học, nhưng có phương sai lớn và phải chờ hết lượt. TD cập nhật sau từng bước và thường có phương sai thấp hơn, song dùng đích tự khởi tạo nên cần phân tích điểm cố định Bellman chiếu. Khi chuyển sang điều khiển, chính sách thay đổi; trường hợp khác chính sách còn có nguy cơ của bộ ba bất ổn. Vì vậy mọi bảo đảm hội tụ phải đi kèm đúng giả thiết về chính sách, đặc trưng, chuỗi Markov và bước học.
+
+::: exercise Câu hỏi kiểm tra
+Xếp bốn trường hợp MC, TD(0), SARSA và Q-learning với xấp xỉ tuyến tính theo mức độ khó của phân tích hội tụ; nêu yếu tố làm mỗi trường hợp khó hơn trường hợp trước.
+:::
+
+::: hint
+Phân biệt đích hoàn chỉnh với đích tự khởi tạo, theo chính sách với khác chính sách, và dự đoán với điều khiển.
+:::
+
+::: solution
+MC gần hồi quy nhất vì đích hoàn chỉnh không phụ thuộc $w$. TD(0) khó hơn vì tự khởi tạo đích, nhưng với chính sách cố định và các giả thiết đã nêu, TD tuyến tính theo chính sách hội tụ tới điểm cố định Bellman chiếu. SARSA khó hơn nữa vì vừa tự khởi tạo vừa cải thiện chính sách trong quá trình học. Q-learning tuyến tính khác chính sách kết hợp đủ ba thành phần của bộ ba bất ổn, nên không được suy ra bảo đảm hội tụ từ TD dự đoán. Đây là thứ tự về độ khó phân tích, không phải bảng xếp hạng hiệu quả thực nghiệm.
+:::
+
 <!-- note-topic-id: lec-07-topic-16 -->
 ## Khung đích và thực hành điều khiển
 
@@ -1005,34 +1061,6 @@ Tính $\delta_1$ từ công thức; với phần kiểm tra, tính $\hat q(D,1,w
 
 ::: solution
 $\delta_1=-1-2.6+2.4=-1.2$. Phần kiểm tra: $\hat q(D,1,w_3)-\hat q(D,0,w_3)=27.424-23.296=4.128$; hai vector đặc trưng chỉ khác thành phần $u(a)$, nên chênh lệch bằng $[w_3]_2(-1-1)=-2[w_3]_2=-2(-2.064)=4.128$.
-:::
-
-<!-- note-topic-id: lec-07-topic-12 -->
-## Phạm vi lý thuyết, giới hạn và kết luận
-
-Vấn đề: tổng hợp những gì lý thuyết bảo đảm và những gì còn thiếu sau các ví dụ tính tay.
-
-Các hạn chế lý thuyết theo tr. 43:
-
-1. Xấp xỉ phi tuyến và mạng sâu chưa có lý thuyết tổng quát cho DQN hoặc actor–critic ngoài một số trường hợp đặc biệt.
-2. Bộ ba bất ổn chưa được giải quyết triệt để; nhiều cách ổn định hoá cần giả thiết mạnh hoặc dẫn tới nghiệm chệch.
-3. Phần lớn định lý giả sử đặc trưng đã phù hợp, chưa giải thích đầy đủ quá trình học biểu diễn.
-4. TD triệt tiêu sai số Bellman chiếu, không trực tiếp tối thiểu hoá sai số so với $v^\pi$ hoặc chất lượng chính sách cuối.
-5. Bảo đảm khám phá với xấp xỉ hàm tổng quát còn hạn chế và phụ thuộc mạnh vào cấu trúc bài toán.
-6. Trong học tăng cường ngoại tuyến, phân phối hành vi có thể không phủ đủ các trạng thái–hành động cần đánh giá.
-
-Kết luận theo tr. 44: xấp xỉ hàm giúp Học tăng cường làm việc với không gian trạng thái lớn hoặc liên tục. Monte Carlo gần bài toán hồi quy vì đích không phụ thuộc trọng số đang học, nhưng có phương sai lớn và phải chờ hết lượt. TD cập nhật sau từng bước và thường có phương sai thấp hơn, song dùng đích tự khởi tạo nên cần phân tích điểm cố định Bellman chiếu. Khi chuyển sang điều khiển, chính sách thay đổi; trường hợp khác chính sách còn có nguy cơ của bộ ba bất ổn. Vì vậy mọi bảo đảm hội tụ phải đi kèm đúng giả thiết về chính sách, đặc trưng, chuỗi Markov và bước học.
-
-::: exercise Câu hỏi kiểm tra
-Xếp bốn trường hợp MC, TD(0), SARSA và Q-learning với xấp xỉ tuyến tính theo mức độ khó của phân tích hội tụ; nêu yếu tố làm mỗi trường hợp khó hơn trường hợp trước.
-:::
-
-::: hint
-Phân biệt đích hoàn chỉnh với đích tự khởi tạo, theo chính sách với khác chính sách, và dự đoán với điều khiển.
-:::
-
-::: solution
-MC gần hồi quy nhất vì đích hoàn chỉnh không phụ thuộc $w$. TD(0) khó hơn vì tự khởi tạo đích, nhưng với chính sách cố định và các giả thiết đã nêu, TD tuyến tính theo chính sách hội tụ tới điểm cố định Bellman chiếu. SARSA khó hơn nữa vì vừa tự khởi tạo vừa cải thiện chính sách trong quá trình học. Q-learning tuyến tính khác chính sách kết hợp đủ ba thành phần của bộ ba bất ổn, nên không được suy ra bảo đảm hội tụ từ TD dự đoán. Đây là thứ tự về độ khó phân tích, không phải bảng xếp hạng hiệu quả thực nghiệm.
 :::
 
 ## Tài liệu tham khảo
