@@ -594,11 +594,21 @@ Viết gradient đầy đủ của mất mát $\frac{1}{2}\big(y_t^{\mathrm{TD}}
 :::
 
 <!-- note-topic-id: lec-07-topic-08 -->
-## Điểm cố định Bellman chiếu
+## 10. Điểm cố định Bellman chiếu
 
-Vấn đề: nếu cập nhật TD tuyến tính hội tụ, nó hội tụ về đâu? Vì đích bán gradient không phải gradient thật, nghiệm không phải là nghiệm hồi quy tối thiểu lỗi bình phương thông thường.
+### 10.1. Ảnh Bellman và phép chiếu
 
-Trực giác: TD kỳ vọng hoạt động như một phép lặp trên $w$; điểm dừng là nơi cập nhật kỳ vọng bằng không, tức vector đặc trưng trung bình của sai số TD triệt tiêu.
+Bán gradient TD(0) không giảm một mất mát cố định (mục 9.3), nên cần cách khác để biết $w$ dừng ở đâu. Xét $\mathcal S$ hữu hạn. Hàm giá trị là một vector trong $\mathbb R^{|\mathcal S|}$; ma trận $\Phi$ có hàng $x(s)^\top$ (mục 5.3), nên mọi dự đoán thuộc lớp biểu diễn $\{\Phi w: w\in\mathbb R^d\}$. Toán tử Bellman của chính sách $\pi$ là
+
+$$T_\pi v = r_\pi + \gamma P_\pi v,$$
+
+với $r_\pi(s)$ là phần thưởng kỳ vọng một bước và $P_\pi(s,s')$ là xác suất chuyển dưới $\pi$; $v_\pi$ là điểm cố định $T_\pi v_\pi=v_\pi$ (Bài 03–04).
+
+Trung bình mục tiêu TD tại mỗi trạng thái chính là ảnh Bellman của dự đoán hiện tại:
+
+$$\mathbb E_\pi\big[R_{t+1}+\gamma x(S_{t+1})^\top w\mid S_t=s\big]=r_\pi(s)+\gamma\sum_{s'}P_\pi(s,s')\,x(s')^\top w=\big(T_\pi(\Phi w)\big)(s).$$
+
+Vector $T_\pi(\Phi w)$ nói chung nằm ngoài lớp biểu diễn; gần nó nhất trong lớp là hình chiếu $\Pi T_\pi(\Phi w)$. Mục 10.2 và 10.3 cho thấy TD dừng tại $w$ thỏa $\Phi w=\Pi T_\pi(\Phi w)$, với phép chiếu theo trọng số $D$. Ví dụ: lớp chỉ chứa các vector $c(1;1)^\top$ và $T_\pi(\Phi w)=(2;0)^\top$. Không tham số nào biểu diễn đúng $(2;0)^\top$; hình chiếu trực giao (theo tích vô hướng thông thường) lên đường thẳng là $\frac{a^\top u}{a^\top a}a$ với $a=(1;1)^\top$, $u=(2;0)^\top$, tức $\tfrac{2}{2}(1;1)^\top=(1;1)^\top$. Trong TD, các trạng thái không được thăm đều nhau, nên phép chiếu dùng tích vô hướng có trọng số $u^\top Dv$; mục 10.2 cho thấy trọng số đó xuất hiện từ trung bình của cập nhật TD. Phần này dùng kiến thức đại số tuyến tính về phép chiếu trực giao lên không gian con.
 
 Hình thức và phát biểu. Xét TD(0) tuyến tính với
 
