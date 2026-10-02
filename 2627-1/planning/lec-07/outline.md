@@ -9,7 +9,7 @@
 - Phần trình chiếu: 120 phút, gồm 110 phút cốt lõi và 10 phút linh hoạt.
 - Chữa bài: 30 phút ở ba trang dọc `X01`–`X03`, ngoài 120 phút chính.
 - Không có code demo trong nguồn.
-- Bảng phân loại nguồn tr. 4 (actor-critic/policy methods) được bỏ riêng vì ngoài phạm vi bài; ba trục liên quan (loại đích, quan hệ hành vi–đích, cách cải thiện chính sách) được giữ ở `L07-03`.
+- Bảng phân loại nguồn tr. 4 (actor-critic/policy methods) được bỏ riêng vì ngoài phạm vi bài; ba điểm đối chiếu thuật toán ở tr. 3 (loại mục tiêu, theo hay khác chính sách, cách cải thiện chính sách) được nêu ở `L07-02`.
 
 ## Mục tiêu
 
@@ -44,8 +44,8 @@ Tổng kiểm tra: $7+23+21+(30+3)+19+17=120$ phút chính; $30+3$ là hai cụm
 
 | Trang nguồn | Quyết định | Trang đích | Lý do |
 |---:|---|---|---|
-| 1–4 | giữ, gộp | `L07-01`, `L07-03` | Giữ tên bài, phạm vi và kết quả học tập; bỏ trang mục lục lặp. |
-| 5–20 | gộp, sửa | `L07-02` | Hội tụ dạng bảng đã có ở Bài 06; phác thảo nguồn chuyển từ chính sách cố định sang chính sách thay đổi chưa đủ chặt. |
+| 1–4 | giữ, gộp | `L07-01`–`L07-03` | Giữ tên bài, phạm vi và kết quả học tập; ba điểm đối chiếu tr. 3 đưa vào `L07-02`; bỏ trang mục lục lặp. |
+| 5–20 | gộp, sửa | `L07-02` | Chỉ tóm tắt điều kiện hội tụ dạng bảng (thăm mọi cặp vô hạn lần, GLIE, Robbins–Monro); không lặp phác thảo chứng minh, vì bước chuyển từ chính sách cố định sang chính sách thay đổi trong nguồn chưa đủ chặt. |
 | 21 | bỏ | — | Trang mục lục trung gian không tạo bước kiến thức. |
 | 22–23 | giữ, tách | `L07-04`–`L07-06` | Tách vấn đề, mô hình tham số và cơ chế chia sẻ tham số. |
 | 24–26 | giữ, gộp | `L07-08`, `L07-34`, `L07-36` | Dạy tuyến tính trong bài; chỉ nêu ranh giới với mô hình phi tuyến. |

@@ -12,7 +12,7 @@ Khi không gian trạng thái lớn hoặc liên tục, bảng giá trị của 
 - Triển khai điều khiển với giá trị hành động: SARSA tuyến tính và đích Q-learning tuyến tính; nhận diện bộ ba bất ổn (*deadly triad*) như một nguy cơ, không phải kết luận luôn phân kỳ.
 - Tự tính lại đầy đủ bài tập 7 và 8, nêu từng vector đặc trưng, từng đích và từng bước cập nhật.
 
-Kiến thức tiên quyết từ Bài 06: quy trình quyết định Markov (MDP), dự đoán và điều khiển Monte Carlo, TD(0), SARSA, Q-learning dạng bảng, điều kiện GLIE và điều kiện Robbins–Monro. Toán cần dùng: tích vô hướng có trọng số, ma trận, phép chiếu trực giao theo chuẩn có trọng số và trị riêng.
+Kiến thức tiên quyết từ Bài 06: quá trình quyết định Markov (MDP), dự đoán và điều khiển Monte Carlo, TD(0), SARSA, Q-learning dạng bảng, điều kiện GLIE và điều kiện Robbins–Monro. Toán cần dùng: tích vô hướng có trọng số, ma trận, phép chiếu trực giao theo chuẩn có trọng số và trị riêng.
 
 ## Bản đồ chủ đề
 
@@ -114,13 +114,13 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Kết nối ra: định hướng đọc thêm.
 - Nguồn: tr. 43–44.
 
-### Hội tụ dạng bảng từ Bài 06
+### Mở đầu: từ bảng giá trị đến hàm xấp xỉ
 
 - Nhóm: `cầu nối`.
-- Vai trò trong mạch: mở bài, nhắc kết quả tiên quyết.
-- Kết nối vào: chứng minh điều khiển MC với GLIE và SARSA dạng bảng từ Bài 06.
-- Kết nối ra: câu hỏi "chuyện gì xảy ra nếu $Q$ là hàm tuyến tính" dẫn vào nội dung mới.
-- Nguồn: tr. 5–20, chỉ tóm tắt điều kiện, không trình bày lại chứng minh dài.
+- Vai trò trong mạch: mở bài, nhắc điều kiện hội tụ dạng bảng và nêu ba điểm đối chiếu các thuật toán.
+- Kết nối vào: bảng giá trị, điều kiện GLIE và Robbins–Monro của Bài 05–06.
+- Kết nối ra: câu hỏi điều gì thay đổi khi $Q$ là hàm tuyến tính dẫn vào nội dung mới.
+- Nguồn: tr. 3, 5–20; chỉ tóm tắt điều kiện, không trình bày lại chứng minh dài.
 
 ### Kết quả MDP tuyến tính
 
@@ -158,24 +158,32 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Bước học $\alpha_t$ theo số lần cập nhật; trong tính tay, $\alpha$ là hằng số cho từng bài.
 
 <!-- note-topic-id: lec-07-topic-13 -->
-## Cầu nối: hội tụ dạng bảng từ Bài 06
+## 1. Mở đầu
 
-Vấn đề: trước khi thêm hàm xấp xỉ, cần nhớ chính xác những gì đã được bảo đảm trong trường hợp bảng tra, để biết chính xác cái gì mất đi khi thay bảng bằng hàm tham số.
+### 1.1. Từ bảng giá trị đến hàm xấp xỉ
 
-Trực giác và tóm tắt điều kiện. Bài 06 đã cho thấy các kết luận hội tụ dạng bảng luôn đi kèm điều kiện: MDP hữu hạn, phần thưởng bị chặn, mọi cặp trạng thái–hành động được thăm đủ, chính sách tiến dần về tham lam khi điều khiển, và bước học thỏa Robbins–Monro đối với cập nhật sai phân thời gian. Bài này chỉ dùng bài học đó làm cầu nối; không lặp lại phác thảo chứng minh ở tr. 5–20 vì việc chuyển từ chính sách cố định sang dãy chính sách thay đổi cần lập luận riêng.
+Monte Carlo, TD(0), Sarsa và Q-learning ở Bài 05–06 lưu một giá trị riêng cho mỗi trạng thái hoặc mỗi cặp trạng thái–hành động. Các kết luận hội tụ dạng bảng đi kèm điều kiện: MDP hữu hạn, phần thưởng bị chặn, mọi trạng thái (hoặc cặp) được thăm vô hạn lần, và bước học thỏa Robbins–Monro với cập nhật sai phân thời gian. Điều khiển Monte Carlo và Sarsa cần thêm điều kiện tham lam trong giới hạn với thăm dò vô hạn (GLIE); Q-learning dạng bảng chỉ cần thăm mọi cặp vô hạn lần và bước học Robbins–Monro. Lập luận chứng minh dựa vào việc mỗi cặp có ước lượng riêng, được cập nhật vô hạn lần và không bị cập nhật ở cặp khác làm thay đổi. Nguồn tr. 5–20 trình bày phác thảo chứng minh cho điều khiển Monte Carlo với GLIE và cho Sarsa; bài này không lặp lại các phác thảo đó.
 
-Giới hạn của bảng tra: không thể lưu hết mọi trạng thái và hành động khi $|\mathcal S|$, $|\mathcal A|$ lớn hoặc liên tục; không tổng quát hoá giữa các trạng thái "na ná nhau"; dữ liệu RL không i.i.d. và không dừng. Câu hỏi kết nối của nguồn: chuyện gì xảy ra nếu hàm $Q$ là hàm tuyến tính hoặc mạng sâu? Toàn bộ phần còn lại của bài trả lời câu hỏi này.
+Bài này thay bảng bằng hàm $\hat v(s,w)$ và $\hat q(s,a,w)$ với vector tham số $w$ dùng chung cho mọi trạng thái. Một cập nhật tại một trạng thái làm đổi ước lượng ở nhiều trạng thái khác, nên lập luận hội tụ theo từng ô của bảng không còn áp dụng trực tiếp. Nguồn tr. 16 đặt câu hỏi điều gì xảy ra khi $Q$ là hàm tuyến tính hoặc mạng sâu; phần còn lại của bài trả lời câu hỏi này cho lớp hàm tuyến tính.
+
+Các thuật toán trong bài được đối chiếu theo ba điểm (nguồn tr. 3):
+
+1. loại mục tiêu cập nhật: lợi tức đầy đủ hay bootstrap, tức mục tiêu chứa ước lượng hiện tại, như mục tiêu TD(0) ở Bài 05;
+2. học theo chính sách (dữ liệu sinh từ chính sách đang học) hay khác chính sách;
+3. cách cải thiện chính sách.
+
+Dự đoán học $v_\pi$ hoặc $q_\pi$ của một chính sách cố định; điều khiển vừa đánh giá vừa cải thiện chính sách.
 
 ::: exercise Câu hỏi kiểm tra
-Nêu hai điều kiện của GLIE và giải thích vì sao thiếu điều kiện khám phá vô hạn làm chứng minh bảng tra sụp đổ.
+Nêu hai điều kiện của GLIE và giải thích vì sao thiếu điều kiện thăm vô hạn thì kết luận hội tụ dạng bảng không còn đứng vững.
 :::
 
 ::: hint
-Xem lại Bước 1 của chứng minh điều khiển MC: vai trò của $N_k(s,a) \to \infty$ đối với trung bình mẫu.
+Xét trung bình mẫu $Q_k(s,a)$ của một cặp chỉ có hữu hạn mẫu khi $k\to\infty$.
 :::
 
 ::: solution
-GLIE yêu cầu (i) $\lim_{k\to\infty} N_k(s,a) = \infty$ cho mọi cặp $(s,a)$ và (ii) $\pi_k$ hội tụ về chính sách tham lam. Nếu một cặp chỉ được thăm hữu hạn lần, trung bình mẫu tại cặp đó dừng ở một số hữu hạn mẫu nên sai số có thể không biến mất; khi đó không thể kết luận $Q_k \to q_*$ cho mọi cặp, và phản chứng ở Bước 4 không còn giá trị vì đánh giá chưa chính xác.
+GLIE yêu cầu (i) $\lim_{k\to\infty} N_k(s,a) = \infty$ cho mọi cặp $(s,a)$ và (ii) $\pi_k$ hội tụ về chính sách tham lam theo $Q_k$. Nếu một cặp chỉ được thăm hữu hạn lần, trung bình mẫu tại cặp đó dừng ở một số hữu hạn mẫu nên sai số có thể không biến mất. Khi đó không thể kết luận $Q_k \to q_*$ cho mọi cặp, và chính sách tham lam theo $Q_k$ có thể bỏ qua một hành động có giá trị lớn hơn.
 :::
 
 <!-- note-topic-id: lec-07-topic-01 -->
