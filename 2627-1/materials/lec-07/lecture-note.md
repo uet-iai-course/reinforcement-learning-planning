@@ -434,6 +434,8 @@ Lợi tức lớn hơn dự đoán, nên tăng dự đoán theo hướng $x(S_t)
 
 $$w_{t+1}=w_t+0{,}1\cdot4\cdot(2;1)^\top=(1;-1)^\top+(0{,}8;0{,}4)^\top=(1{,}8;-0{,}6)^\top.$$
 
+Trong mặt phẳng tham số, $w$ dịch một đoạn $0{,}4\,x(S_t)$ song song với vector đặc trưng, từ $w_t=(1;-1)^\top$ tới $w_{t+1}=(1{,}8;-0{,}6)^\top$.
+
 Dự đoán mới là $x(S_t)^\top w_{t+1}=3{,}6-0{,}6=3$, nên sai lệch giảm từ $4$ xuống $2$. Mức tăng của dự đoán bằng $\alpha e_t\|x(S_t)\|^2=0{,}1\cdot4\cdot5=2$; nếu $e_t<0$, dự đoán giảm. Lợi tức $G_t$ do quỹ đạo cung cấp và không được tính lại khi $w$ đổi, vì mục tiêu Monte Carlo không chứa $w$. Mục 7.3 chỉ ra quy tắc này là bước giảm theo gradient của mất mát mẫu.
 
 ### 7.3. Gradient của mất mát Monte Carlo

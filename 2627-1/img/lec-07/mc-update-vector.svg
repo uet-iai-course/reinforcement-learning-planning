@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 -175 440 345" role="img" aria-labelledby="t d">
+  <title id="t">Một cập nhật Monte Carlo trong không gian tham số</title>
+  <desc id="d">Mặt phẳng tham số hai chiều. Từ gốc O vẽ vector w_t = (1; −1) và vector đặc trưng x(S_t) = (2; 1) nét đứt. Từ đầu mút w_t, mũi tên 0,4·x(S_t) dẫn tới w_{t+1} = (1,8; −0,6).</desc>
+  <defs>
+    <marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2F3E7A"/></marker>
+    <marker id="aho" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#B5582A"/></marker>
+    <marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker>
+  </defs>
+  <g font-family="'Times New Roman', Times, serif" font-style="italic">
+  <!-- trục; 1 đơn vị = 110 px, trục tung hướng lên -->
+  <line x1="-40" y1="0" x2="300" y2="0" stroke="#999" stroke-width="2"/>
+  <line x1="0" y1="135" x2="0" y2="-150" stroke="#999" stroke-width="2"/>
+  <text x="-12" y="30" font-size="40" fill="#555" font-style="normal" text-anchor="end">O</text>
+  <line x1="0" y1="0" x2="214" y2="-107" stroke="#555" stroke-width="3" stroke-dasharray="10 7" marker-end="url(#ahg)"/>
+  <text x="140" y="-128" font-size="44" fill="#555">x(S<tspan font-size="30" dy="7">t</tspan><tspan dx="4" dy="-7">)</tspan></text>
+  <line x1="0" y1="0" x2="106" y2="106" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ahb)"/>
+  <text x="8" y="118" font-size="44" fill="#2F3E7A">w<tspan font-size="30" dy="7">t</tspan></text>
+  <line x1="110" y1="110" x2="193" y2="69" stroke="#B5582A" stroke-width="4" marker-end="url(#aho)"/>
+  <text x="150" y="155" font-size="40" fill="#B5582A"><tspan font-style="normal">0,4·</tspan>x(S<tspan font-size="28" dy="6">t</tspan><tspan dx="4" dy="-6">)</tspan></text>
+  <line x1="0" y1="0" x2="193" y2="64" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ahb)"/>
+  <text x="208" y="70" font-size="44" fill="#2F3E7A">w<tspan font-size="30" dy="7">t+1</tspan></text>
+  </g>
+</svg>
