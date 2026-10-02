@@ -32,12 +32,12 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Kết nối ra: nền cho mọi cập nhật MC/TD tuyến tính phía sau.
 - Nguồn: tr. 23–27, 34; $J_\mu$ theo Sutton và Barto, §9.2.
 
-### Thiết kế đặc trưng và giới hạn biểu diễn
+### Đặc trưng và giới hạn biểu diễn
 
 - Nhóm: `cốt lõi`.
 - Vai trò trong mạch: cho thấy chất lượng đặc trưng quyết định chất lượng xấp xỉ.
 - Kết nối vào: xấp xỉ tuyến tính.
-- Kết nối ra: giải thích sai số xấp xỉ và aliasing trong ví dụ chuỗi phía sau.
+- Kết nối ra: đặc trưng cho cặp trạng thái–hành động và nhập nhằng đặc trưng, dùng lại trong ví dụ chuỗi phía sau.
 - Nguồn: tr. 28–31.
 
 ### Phân loại đích MC/TD
@@ -308,19 +308,23 @@ Với $\mathcal S$ hữu hạn, xếp các $x(s)^\top$ thành hàng của ma tr�
 :::
 
 <!-- note-topic-id: lec-07-topic-04 -->
-## Thiết kế đặc trưng và giới hạn biểu diễn
+## 5. Đặc trưng và giới hạn biểu diễn
 
-Vấn đề: chất lượng của xấp xỉ tuyến tính phụ thuộc hoàn toàn vào việc đặc trưng được thiết kế thế nào.
+### 5.1. Thiết kế đặc trưng
 
-Trực giác qua ví dụ trong nguồn: với một bài toán điều hướng, có thể dùng vector
+Với lớp tuyến tính, mọi thông tin mô hình dùng được về trạng thái nằm trong vector đặc trưng $x(s)$. Nguồn (tr. 31) cho ví dụ một bài toán điều hướng:
 
 $$x(s) = [\,\text{khoảng cách tới đích},\ \text{khoảng cách tới vật cản},\ \text{tốc độ},\ 1\,]^\top.$$
 
-Các ví dụ minh hoạ trong nguồn gồm Cartpole, Lunar Lander và cờ vua, nơi đặc trưng tóm tắt tình thế thành vài con số có ý nghĩa.
+Thành phần hằng $1$ có trọng số riêng, nên $\hat v$ có hệ số chặn: dự đoán có thể khác 0 khi mọi đại lượng đo được bằng 0. Các ví dụ CartPole, Lunar Lander và cờ vua của nguồn (tr. 28–30) cho thấy loại đại lượng thường dùng: vị trí, vận tốc của xe cùng góc, vận tốc góc của cột; trạng thái động học của tàu đổ bộ; quân, lượt đi và cấu trúc bàn cờ. Đây là minh họa, không phải bộ đặc trưng đầy đủ cho các bài toán đó.
 
-Hình thức: đặc trưng tốt làm bài toán gần tuyến tính hơn, tức hàm giá trị thực gần nằm trong không gian sinh bởi đặc trưng; đặc trưng kém gây sai số xấp xỉ, hiện tượng aliasing — hai trạng thái cần giá trị khác nhau bị biểu diễn giống nhau — và chính sách kém. Phần lớn lý thuyết cổ điển giả sử đặc trưng đã biết trước và tốt sẵn; việc học biểu diễn hầu như nằm ngoài các định lý đó.
+Ba nhận xét của nguồn (tr. 31):
 
-Ứng dụng và giới hạn: trong ví dụ chuỗi năm trạng thái ở phần thực hành, đặc trưng $x(s,a)$ gồm khoảng cách tới tường trái, dấu hành động và hằng số $1$; đặc trưng này đủ để phân biệt các cặp $(s,a)$ trong ví dụ, nhưng với bài toán lớn hơn, việc chọn đặc trưng là vấn đề mở.
+- đặc trưng tốt làm bài toán gần tuyến tính hơn, tức $v_\pi$ gần nằm trong lớp $\{x^\top w : w\in\mathbb R^d\}$;
+- đặc trưng kém gây sai số xấp xỉ, nhập nhằng (hai trạng thái cần giá trị khác nhau nhận cùng vector đặc trưng) và chính sách kém;
+- phần lớn lý thuyết cổ điển giả sử đặc trưng đã cho trước; việc học biểu diễn hầu như nằm ngoài các định lý đó.
+
+Đặc trưng tốt giữ thông tin cần để dự đoán lợi tức dưới chính sách đang xét. Trong ví dụ chuỗi năm trạng thái ở phần điều khiển, đặc trưng $x(s,a)$ gồm khoảng cách tới tường trái, dấu của hành động và hằng số $1$; với bài toán lớn hơn, chọn đặc trưng là vấn đề mở. Mục 5.2 xây dựng đặc trưng cho cặp trạng thái–hành động; mục 5.3 xét nhập nhằng.
 
 ::: exercise Câu hỏi kiểm tra
 Cho ba trạng thái $B, C, D$ với khoảng cách tới tường trái lần lượt $1, 2, 3$. Nếu hàm giá trị thực tăng tuyến tính theo khoảng cách này, vì sao đặc trưng $d_{\text{left}}(s)$ là lựa chọn tốt? Ngược lại, nếu giá trị thực không tuyến tính theo khoảng cách thì sao?
@@ -331,7 +335,7 @@ Xét $\hat v(s) = a\,d_{\text{left}}(s) + b$ và hỏi lớp này chứa những
 :::
 
 ::: solution
-Nếu $v$ tuyến tính theo $d_{\text{left}}$, thì $v(s) = a\,d_{\text{left}}(s) + b$ với một cặp $a,b$, và lớp xấp xỉ chứa đúng hàm này nên sai số xấp xỉ bằng không. Nếu $v$ không tuyến tính theo khoảng cách, chẳng hạn có dạng bậc hai, thì mọi hàm trong lớp đều lệch; học trọng số chỉ tìm được phép chiếu tốt nhất, và sai số xấp xỉ còn lại không thể xoá bằng dữ liệu nhiều hơn.
+Nếu $v$ tuyến tính theo $d_{\text{left}}$, thì $v(s) = a\,d_{\text{left}}(s) + b$ với một cặp $a,b$, và lớp xấp xỉ chứa đúng hàm này nên sai số xấp xỉ bằng không. Nếu $v$ không tuyến tính theo khoảng cách, chẳng hạn có dạng bậc hai, thì mọi hàm trong lớp đều lệch; học trọng số chỉ tìm được phép chiếu tốt nhất, và sai số xấp xỉ còn lại không thể xóa bằng dữ liệu nhiều hơn.
 :::
 
 <!-- note-topic-id: lec-07-topic-05 -->
