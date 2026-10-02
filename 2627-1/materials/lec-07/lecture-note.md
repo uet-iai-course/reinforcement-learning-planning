@@ -816,6 +816,29 @@ Xét từng cặp: bootstrap cùng xấp xỉ hàm theo chính sách; bootstrap 
 Bộ ba bất ổn là sự kết hợp của bootstrap, dữ liệu khác chính sách và xấp xỉ hàm; khi cả ba cùng có mặt, TD hoặc Q-learning có thể phân kỳ. Trong các trường hợp đối chiếu: Q-learning dạng bảng vẫn hội tụ dù học khác chính sách; TD tuyến tính theo chính sách với chính sách cố định hội tụ tới điểm cố định Bellman chiếu dưới các giả thiết của mục 10.4; Monte Carlo khác chính sách không bootstrap có thể dùng lấy mẫu quan trọng. Khi cả ba yếu tố xuất hiện, hướng cập nhật trung bình không còn được bảo đảm kéo $w$ về một điểm cố định, và sai số xấp xỉ lan truyền qua mục tiêu bootstrap. Đây là khả năng phân kỳ trong một lớp thiết lập; mỗi thuật toán cần phân tích riêng.
 :::
 
+### 13.3. Kiểm tra bộ ba bất ổn
+
+Ba yếu tố của mục 13.2 được nhận diện trong một quy tắc cập nhật bằng ba câu kiểm tra:
+
+| Câu kiểm tra | Câu hỏi | Trả lời có nghĩa là |
+|---|---|---|
+| Biểu diễn | Một cập nhật có đổi nhiều dự đoán qua tham số chung không? | xấp xỉ hàm |
+| Mục tiêu | Mục tiêu có chứa dự đoán đang học không? | bootstrap |
+| Phân phối | Chính sách sinh dữ liệu có khác chính sách đích không? | học khác chính sách |
+
+Áp dụng cho hai quy tắc điều khiển tuyến tính đã học:
+
+| Quy tắc | Biểu diễn | Mục tiêu | Phân phối | Kết luận |
+|---|---|---|---|---|
+| Q-learning tuyến tính | có | có | có | đủ ba: cần phân tích ổn định riêng |
+| Sarsa tuyến tính | có | có | không | chưa đủ ba; nhưng chính sách đổi theo $w$, nên vẫn cần giả thiết riêng |
+
+Q-learning tuyến tính dùng chung $w$ trong $\hat q(s,a,w)=x(s,a)^\top w$; mục tiêu $R_{t+1}+\gamma\max_{a'}x(S_{t+1},a')^\top w_t$ chứa $w_t$; dữ liệu sinh từ chính sách ε-tham lam, còn mục tiêu ứng với chính sách tham lam. Đủ ba yếu tố nghĩa là thuật toán thuộc lớp có thể phân kỳ và cần phân tích ổn định riêng; điều này không có nghĩa mỗi lần chạy chắc chắn phân kỳ.
+
+Sarsa tuyến tính có hai câu đầu trả lời có. Hành động $A_{t+1}$ trong mục tiêu $R_{t+1}+\gamma\,x(S_{t+1},A_{t+1})^\top w_t$ được chọn bởi chính sách ε-tham lam đang sinh dữ liệu, nên Sarsa học theo chính sách và chưa đủ ba yếu tố. Tuy vậy chính sách ε-tham lam đổi theo $w$, nên kết quả hội tụ của TD dự đoán với chính sách cố định (mục 10.4) không áp dụng trực tiếp.
+
+Ba câu kiểm tra chỉ dùng để phân loại; cách khắc phục là các hướng ở mục 13.2. Giảm bước học có thể đổi hành vi số của một lần chạy nhưng không tự tạo một định lý hội tụ. Phần tiếp theo nêu phạm vi của các kết quả lý thuyết trong bài. Nguồn: tr. 41–43; Bài tập tuần 7, Bài 3.
+
 <!-- note-topic-id: lec-07-topic-14 -->
 ## Kết quả MDP tuyến tính
 
