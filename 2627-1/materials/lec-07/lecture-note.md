@@ -80,11 +80,11 @@ Bản đồ bốn nhóm: nhóm **cốt lõi** gồm 12 chủ đề `lec-07-topic
 - Kết nối ra: dẫn tới điều khiển với giá trị hành động.
 - Nguồn: tr. 37 và bài tập 2.
 
-### Điều khiển với giá trị hành động và SARSA tuyến tính
+### Điều khiển với xấp xỉ hàm
 
 - Nhóm: `cốt lõi`.
-- Vai trò trong mạch: chuyển từ dự đoán $v$ sang điều khiển $q$.
-- Kết nối vào: so sánh MC–TD.
+- Vai trò trong mạch: chuyển từ dự đoán với chính sách cố định sang điều khiển với giá trị hành động; Sarsa tuyến tính trên chuỗi năm trạng thái.
+- Kết nối vào: so sánh Monte Carlo và TD(0).
 - Kết nối ra: dẫn tới Q-learning và bộ ba bất ổn.
 - Nguồn: tr. 38–40 và bài tập 8.
 
@@ -702,11 +702,19 @@ Monte Carlo dùng mục tiêu $G_t$, lợi tức đầy đủ không phụ thu�
 :::
 
 <!-- note-topic-id: lec-07-topic-10 -->
-## Điều khiển với giá trị hành động và SARSA tuyến tính
+## 12. Điều khiển với xấp xỉ hàm
 
-Vấn đề: để điều khiển, ta cần ước lượng giá trị hành động chứ không chỉ giá trị trạng thái.
+### 12.1. Giá trị hành động cho điều khiển
 
-Trực giác: xấp xỉ $\hat q(s,a,w) \approx Q^\pi(s,a)$ hoặc $Q^*(s,a)$, rồi rút chính sách tham lam $\pi_w(s) \in \arg\max_a \hat q(s,a,w)$. Bài toán điều khiển vừa tự khởi tạo đích, vừa cải thiện chính sách, nên đích thay đổi liên tục.
+Phần dự đoán (mục 7–11) giữ chính sách $\pi$ cố định. Điều khiển phải chọn hành động mà không có mô hình. Với giá trị trạng thái, chọn hành động tham lam cần mô hình để tính $\sum_{s',r}p(s',r\mid s,a)[r+\gamma v(s')]$; với giá trị hành động, chỉ cần so sánh các giá trị. Vì vậy, như Bài 06, ta học giá trị hành động (nguồn tr. 38):
+
+$\hat q(s,a,w)=x(s,a)^\top w$ xấp xỉ $q_\pi$ của chính sách đang chạy (Sarsa) hoặc $q_*$ (Q-learning), và chính sách tham lam là
+
+$$\pi_w(s)\in\arg\max_{a\in\mathcal A(s)}\hat q(s,a,w),$$
+
+trong đó $x(s,a)$ là đặc trưng cặp trạng thái–hành động (mục 5.2) và $\pi_w$ phá hòa theo một quy tắc cố định. Hai điểm đối chiếu của mục 1.1 xuất hiện ở đây: chính sách hành vi sinh dữ liệu còn chính sách đích xác định giá trị cần học, và chính sách hành vi cần thăm dò, thường là $\varepsilon$-tham lam theo $\hat q$ như Bài 06; chính sách được cải thiện theo $\hat q$, nên thay đổi khi $w$ thay đổi.
+
+Điều khiển cải thiện chính sách trong lúc học; với TD (Sarsa, Q-learning), mục tiêu còn bootstrap. Vì vậy mục tiêu thay đổi liên tục và dữ liệu không còn đến từ một phân phối cố định (nguồn tr. 39). Điểm cố định Bellman chiếu của mục 10 được chứng minh cho một chính sách cố định, nên không tự bảo đảm chính sách tham lam suy ra từ $\hat q$ là chính sách tốt. Nguồn tr. 39 đặt câu hỏi Monte Carlo hay TD(0) khó hội tụ hơn trong điều khiển; với xấp xỉ hàm, cả hai đều mất giả thiết chính sách cố định, và TD còn thêm mục tiêu bootstrap.
 
 Hình thức. Hai cập nhật quen thuộc với hàm xấp xỉ:
 
