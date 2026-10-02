@@ -263,3 +263,22 @@ Các lượt GLM hoàn tất ở vòng 3. Reviewer DeepSeek ban đầu đọc nh
 - Chromium duyệt lại đủ 39 trang ở 1280×720 và 800×600: 39 mã trang duy nhất, 39 `data-note-topic-id`, đủ 16 chủ đề, không lỗi KaTeX, console, tài nguyên, bàn phím hoặc phần tử vượt khung trang hiện tại.
 - Ba Design Files `lecture-07-xap-xi-ham.html`, `outline.md`, `storyboard.md` đã được ghi lại trong dự án Codex Slides `20260824191033-chuy-n-lecture-7-h-m-x-p-x-trong-h-c-t-n-6jd4` và đọc lại khớp từng byte với kho.
 - Codex Slides trả handoff tới Design Files nhưng Codex in-editor Browser không có trong phiên này. Không tuyên bố đã rà trực quan bằng giao diện đó; ảnh Chromium cục bộ là bằng chứng hiển thị cuối.
+
+## Rà soát từng trang và biên tập lại — 02-10-2026
+
+Yêu cầu của người dùng: duyệt lần lượt từng trang Bài 07; với mỗi trang xác định trang muốn nói gì, vấn đề còn lại và đề xuất sửa; sửa để tiêu đề ngắn gọn, học thuật, mạch lập luận chặt, khái niệm không xuất hiện đột ngột; duyệt lại theo góc nhìn sinh viên; xong mỗi trang thì sửa mục ghi chú bài giảng tương ứng, gắn bài lên `index.html`, commit và push theo từng trang.
+
+Vai trò (bằng chứng: lệnh gọi công cụ của phiên chính): điều phối là phiên chính, Claude Code, Opus 5.5, lập bảng rà soát sau khi đọc deck, ghi chú, dàn bài, storyboard, nguồn 45 trang và phiếu bài tập; biên tập là một Agent `fork` (kế thừa Opus 5.5 của phiên), tác tử duy nhất ghi tệp, được tiếp tục bằng SendMessage cho từng trang; hai tác tử rà soát chỉ đọc (Agent `fork`): toán học và RL; mạch lập luận, góc nhìn sinh viên kèm no-ai-slop Detect. Mức effort của phiên không xác nhận được từ trong phiên.
+
+Quy ước dùng chung với Bài 05–06: "lợi tức" thay "return"; "mục tiêu" (mục tiêu cập nhật) thay "đích", giữ "chính sách đích"; "Sarsa", "$\varepsilon$-tham lam"; tiêu đề không viết tắt "MC"; trang kiểm tra có tiêu đề "Kiểm tra …"; trang thuật toán "Thuật toán …". Mỗi commit gồm deck, mục ghi chú bài giảng tương ứng và planning của đúng trang đó.
+
+### Bước 0: chuyển sang hệ CSS dùng chung
+
+Deck dùng `class="reveal lecture-deck"`; bỏ các luật CSS cục bộ trùng `lecture-slide.css` (cỡ chữ trang, màu tiêu đề, `.box`, `.grid2`, `.grid3`, `.card`, `.figure`, `.math-large`, `.check`, `.note-source`, bảng). Giữ tạm `.answer`, `.codebox`, `.compact`, `.warn`. Thêm `text-transform:none` cho KaTeX trong `h2` (tiêu đề L07-22 trước đó hiện "AW = B"). Bỏ plugin Markdown, giống Bài 06. L07-25 dùng `figure short`; X01 thu khoảng cách dọc cục bộ. Không đổi chữ.
+
+Kiểm trình duyệt (Playwright, `reloadserver` cổng 8766, 39 trang, 1600×900 và 390×844): không lỗi console, không `.katex-error`, không yêu cầu mạng ngoài, không cuộn ngang. L07-32 hết tràn 46px nhờ luật `.figure` dùng chung. L07-17 còn đè chân trang 15px (trước là 7px), xử lý ở bước của trang này. Ảnh đã xem: L07-22, L07-32.
+
+### Bảng từng trang
+
+| Mã trang | Trang muốn nói gì | Vấn đề | Đề xuất và thay đổi | Quyết định | Thay đổi ghi chú bài giảng |
+|---|---|---|---|---|---|

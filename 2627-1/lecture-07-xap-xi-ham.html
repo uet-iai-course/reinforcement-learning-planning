@@ -10,24 +10,17 @@
   <link rel="stylesheet" href="plugin/highlight/monokai.css"/>
   <link rel="stylesheet" href="lecture-slide.css"/>
   <style>
-    .reveal .slides section[data-slide-id]{font-size:.82em}
-    .reveal h1,.reveal h2{color:#2F3E7A}
-    .box{border-left:5px solid #B15A2B;background:#F7EFE6;padding:.45em .7em;border-radius:8px}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.7em;align-items:center}
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.55em;align-items:stretch}
-    .card{border:1px solid #ddd;border-radius:8px;padding:.4em .6em}
-    .figure{display:block;margin:.12em auto;width:min(100%,970px);max-height:340px}
-    .math-large{font-size:1.08em;text-align:center}
-    .check{background:#EDF4FF;border:2px solid #2F3E7A;border-radius:8px;padding:.4em .65em}
+    .reveal h2 .katex{text-transform:none}
     .answer{border-left:4px solid #2E7D32;padding-left:.55em;color:#245C2B}
-    .note-source{font-size:.9em;color:#444}
-    .reveal table{font-size:.94em}.reveal th{background:#F7EFE6}
     .compact li{margin:.06em 0}
     .warn{color:#A33A1F;font-weight:700}
+    .reveal section[data-slide-id="X01"] .math-large{margin:.3em 0}
+    .reveal section[data-slide-id="X01"] li{margin:.08em 0}
+    .reveal section[data-slide-id="X01"] .answer{margin:.3em 0}
     .codebox{font-family:"Courier New",monospace;background:#f4f4f4;border-radius:8px;padding:.35em .55em;font-size:.94em;line-height:1.28}
   </style>
 </head>
-<body><div class="reveal"><div class="slides">
+<body><div class="reveal lecture-deck"><div class="slides">
 
 <section>
   <section data-slide-id="L07-01" data-note-topic-id="lec-07-topic-13"><h1>Xấp xỉ hàm trong Học tăng cường</h1><h3>Đặc trưng tuyến tính, Monte Carlo, sai phân thời gian và điều khiển</h3><p>Bài 07 · Học tăng cường · Học kỳ 1, 2026–2027</p><aside class="notes">Các bài trước lưu một giá trị cho mỗi trạng thái hoặc cặp trạng thái–hành động. Bài này thay bảng bằng một hàm tham số, nên một cập nhật có thể ảnh hưởng đến nhiều dự đoán.<p class="note-source"><strong>Nguồn:</strong> lecture-07.pdf, tr. 1–4, 21–23.</p></aside></section>
@@ -63,7 +56,7 @@
   <section data-slide-id="L07-22" data-note-topic-id="lec-07-topic-08"><h2>Trực giao dẫn đến $Aw=b$</h2><p>Với $\Phi$ chứa các hàng $x(s)^T$, $D=\operatorname{diag}(d_\pi)$ và $T_\pi v=r_\pi+\gamma P_\pi v$, phần dư chiếu phải trực giao với mọi cột của $\Phi$:</p><div class="math-large">$$\Phi^TD\bigl[T_\pi(\Phi w)-\Phi w\bigr]=0.$$</div><p>Khai triển cho</p><div class="math-large">$$\underbrace{\Phi^TD(I-\gamma P_\pi)\Phi}_{A}w=\underbrace{\Phi^TDr_\pi}_{b}.$$</div><aside class="notes">Đây là cầu nối còn thiếu giữa hình học và phương trình hướng cập nhật trung bình. Kỳ vọng của delta nhân x dưới phân phối dừng d pi bằng b trừ A w. Không cần nghịch đảo A để viết điều kiện trực giao.<p class="note-source"><strong>Nguồn:</strong> Bài tập tuần 7, Bài 5; triển khai điều kiện trực giao.</p></aside></section>
   <section data-slide-id="L07-23" data-note-topic-id="lec-07-topic-08"><h2>Điểm cố định Bellman chiếu</h2><p>Phép chiếu trực giao theo trọng số $D$ là</p><div class="math-large">$$\Pi_D=\Phi(\Phi^TD\Phi)^{-1}\Phi^TD.$$</div><p>Nếu $\Phi^TD\Phi$ khả nghịch, nghiệm TD thỏa</p><div class="math-large">$$\Phi w_{\mathrm{TD}}=\Pi_D T_\pi(\Phi w_{\mathrm{TD}}).$$</div><p>Điều kiện trực giao ở trang trước cho phương trình tương đương $Aw_{\mathrm{TD}}=b$.</p><aside class="notes">Pi D là phép chiếu theo tích vô hướng u chuyển vị D v. Khả nghịch chỉ cần để viết công thức nghịch đảo và có nghiệm tham số duy nhất. Nếu không đủ hạng, dùng giả nghịch đảo; dự đoán chiếu vẫn có thể xác định dù vector tham số không duy nhất.<p class="note-source"><strong>Nguồn:</strong> Bài tập tuần 7, Bài 5; bổ sung định nghĩa và giả thiết.</p></aside></section>
   <section data-slide-id="L07-24" data-note-topic-id="lec-07-topic-08"><h2>Khi nào TD tuyến tính có bảo đảm</h2><div class="grid2"><div class="card"><h3>Dữ liệu</h3><p>$\pi$ cố định, lấy mẫu theo chính sách; chuỗi ergodic có phân phối dừng $d_\pi$.</p></div><div class="card"><h3>Hệ cập nhật</h3><p>$\gamma&lt;1$, mômen phù hợp, bước Robbins–Monro; hướng trung bình $b-Aw$ ổn định.</p></div></div><p>$A$ ổn định nghĩa là các trị riêng có phần thực dương; đủ hạng giúp nghiệm tham số là duy nhất.</p><div class="check"><strong>Câu hỏi:</strong> kết luận hội tụ nhắm đến đối tượng nào?</div><p class="fragment answer">Nghiệm của $Aw=b$, tương đương điểm cố định Bellman chiếu dưới các giả thiết đã nêu.</p><aside class="notes">Trong thiết lập on-policy hữu hạn chuẩn, các điều kiện về chuỗi, gamma và đặc trưng thường được dùng để suy tính ổn định cần thiết của A. Trang này tách trực giác khỏi chi tiết định lý: phép lặp ngẫu nhiên phải co về nghiệm của hệ trung bình. Không mở rộng kết luận sang điều khiển, khác chính sách hoặc mạng nơ-ron.<p class="note-source"><strong>Nguồn:</strong> lecture-07.pdf, tr. 35–37; Bài tập tuần 7, Bài 5–6; làm rõ điều kiện.</p></aside></section>
-  <section data-slide-id="L07-25" data-note-topic-id="lec-07-topic-09"><h2>MC và TD dùng hai đích khác nhau</h2><img class="figure" src="img/lec-07/mc-vs-td-targets.svg" alt="Monte Carlo dùng return đến cuối lượt, TD dùng phần thưởng một bước và dự đoán kế tiếp"/><table><tr><th></th><th>MC</th><th>TD(0)</th></tr><tr><td>Cập nhật</td><td>sau khi có return</td><td>sau mỗi chuyển tiếp</td></tr><tr><td>Đích</td><td>không bootstrap</td><td>bootstrap</td></tr><tr><td>Phân tích tuyến tính</td><td>hồi quy có giám sát</td><td>Bellman chiếu</td></tr></table><aside class="notes">Khác biệt nguồn sai số đích: MC dùng return G t đến cuối lượt, không bootstrap, nên sai số không phụ thuộc ước lượng hiện tại; TD dùng đích bootstrap R cộng gamma nhân dự đoán kế tiếp, phụ thuộc w t đang học, nên sai số đổi theo ước lượng. Chỉ trong ghi chú: phương sai có điều kiện của đích TD thường nhỏ hơn trong các thiết lập quen thuộc, nhưng không tuyên bố luôn thấp hơn trong mọi bài toán. MC và TD có thể hội tụ đến hai nghiệm xấp xỉ khác nhau dù dùng cùng đặc trưng.<p class="note-source"><strong>Nguồn:</strong> lecture-07.pdf, tr. 33–37; hình vẽ lại và lược nhận định quá rộng.</p></aside></section>
+  <section data-slide-id="L07-25" data-note-topic-id="lec-07-topic-09"><h2>MC và TD dùng hai đích khác nhau</h2><img class="figure short" src="img/lec-07/mc-vs-td-targets.svg" alt="Monte Carlo dùng return đến cuối lượt, TD dùng phần thưởng một bước và dự đoán kế tiếp"/><table><tr><th></th><th>MC</th><th>TD(0)</th></tr><tr><td>Cập nhật</td><td>sau khi có return</td><td>sau mỗi chuyển tiếp</td></tr><tr><td>Đích</td><td>không bootstrap</td><td>bootstrap</td></tr><tr><td>Phân tích tuyến tính</td><td>hồi quy có giám sát</td><td>Bellman chiếu</td></tr></table><aside class="notes">Khác biệt nguồn sai số đích: MC dùng return G t đến cuối lượt, không bootstrap, nên sai số không phụ thuộc ước lượng hiện tại; TD dùng đích bootstrap R cộng gamma nhân dự đoán kế tiếp, phụ thuộc w t đang học, nên sai số đổi theo ước lượng. Chỉ trong ghi chú: phương sai có điều kiện của đích TD thường nhỏ hơn trong các thiết lập quen thuộc, nhưng không tuyên bố luôn thấp hơn trong mọi bài toán. MC và TD có thể hội tụ đến hai nghiệm xấp xỉ khác nhau dù dùng cùng đặc trưng.<p class="note-source"><strong>Nguồn:</strong> lecture-07.pdf, tr. 33–37; hình vẽ lại và lược nhận định quá rộng.</p></aside></section>
 </section>
 
 <section>
@@ -91,8 +84,7 @@
 </div></div>
 <script src="revealjs/dist/reveal.js"></script>
 <script src="plugin/notes/notes.js"></script>
-<script src="plugin/markdown/markdown.js"></script>
 <script src="plugin/highlight/highlight.js"></script>
 <script src="plugin/math/math.js"></script>
-<script>Reveal.initialize({width:1280,height:720,margin:.04,controlsLayout:"edges",slideNumber:true,hashOneBasedIndex:true,hash:true,katex:{local:"vendor/katex"},plugins:[RevealMarkdown,RevealHighlight,RevealNotes,RevealMath.KaTeX]});</script>
+<script>Reveal.initialize({width:1280,height:720,margin:.04,controlsLayout:"edges",slideNumber:true,hashOneBasedIndex:true,hash:true,katex:{local:"vendor/katex"},plugins:[RevealHighlight,RevealNotes,RevealMath.KaTeX]});</script>
 </body></html>
