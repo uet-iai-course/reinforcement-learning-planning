@@ -228,18 +228,32 @@ trong đó $w\in\mathbb R^d$ là vector tham số dùng chung cho mọi trạng 
 
 Trong hình minh họa của trang chiếu, trạng thái $s$ được đưa qua vector đặc trưng $x(s)$, rồi qua vector tham số $w$ để cho dự đoán $\hat v(s,w)$; dạng tuyến tính $\hat v(s,w)=x(s)^Tw$ được định nghĩa ở phần xấp xỉ tuyến tính. Số tham số $d$ thường nhỏ hơn nhiều so với số trạng thái, nhưng điều này không bắt buộc. Hàm có tham số cho ra một dự đoán ở cả trạng thái chưa gặp trong dữ liệu; dự đoán đó đúng đến đâu phụ thuộc vào đặc trưng và dữ liệu.
 
-Vì $w$ dùng chung, một cập nhật có thể làm thay đổi dự đoán ở nhiều trạng thái. Với dạng tuyến tính, điều này xảy ra ở $s'$ khi $x(s)$ và $x(s')$ không trực giao; nếu đặc trưng là vector one-hot của trạng thái thì mô hình trở về bảng tra. Cơ chế này cho phép tổng quát hóa, nhưng cũng có thể làm sai lệch ước lượng ở trạng thái khác; nó là một thành phần của bộ ba bất ổn ở phần Q-learning.
+Vì $w$ dùng chung, một cập nhật có thể làm thay đổi dự đoán ở nhiều trạng thái; mục 3.2 tính một ví dụ.
+
+### 3.2. Tổng quát hóa qua tham số dùng chung
+
+Với dạng tuyến tính $\hat v(s,w)=x(s)^Tw$, dự đoán là tổ hợp tuyến tính các thành phần của $x(s)$ với hệ số $w$. Với sai lệch $e$ bằng mục tiêu cập nhật trừ $\hat v(s,w)$, quy tắc cập nhật cộng vào $w$ lượng $\Delta w=\alpha e\,x(s)$. Quy tắc này được suy ra ở phần Monte Carlo từ gradient của sai số bình phương; ở đây chỉ dùng hướng sửa của nó: khi $e>0$, $w$ dịch theo hướng làm $x(s)^Tw$ tăng.
+
+Ví dụ. Cho $x(s)=(1;1)^T$, $x(s')=(1;0{,}5)^T$, $w=(0;0)^T$, $e=2$, $\alpha=0{,}1$. Khi đó
+
+$$\Delta w=0{,}1\cdot2\cdot(1;1)^T=(0{,}2;\,0{,}2)^T,\qquad \Delta\hat v(s)=x(s)^T\Delta w=0{,}4,\qquad \Delta\hat v(s')=x(s')^T\Delta w=0{,}2+0{,}1=0{,}3.$$
+
+Mẫu chỉ được quan sát tại $s$, nhưng dự đoán tại $s'$ cũng tăng. Tổng quát,
+
+$$\Delta\hat v(s')=x(s')^T\Delta w=\alpha e\,x(s')^Tx(s),$$
+
+nên mức lan sang $s'$ tỉ lệ với tích vô hướng hai vector đặc trưng. Khi $x(s')^Tx(s)=0$, cập nhật tại $s$ không làm đổi dự đoán tại $s'$; nếu đặc trưng là vector one-hot của trạng thái, mọi cặp đặc trưng khác nhau trực giao và mô hình trở về bảng tra. Cùng cơ chế cũng lan sai lệch: nếu mục tiêu tại $s$ sai, dự đoán ở $s'$ bị kéo theo, và đó là cái giá của tổng quát hóa. Hiện tượng này là một thành phần của bộ ba bất ổn ở phần Q-learning.
 
 ::: exercise Câu hỏi kiểm tra
-Cho hai trạng thái $s_1 \ne s_2$ với $x(s_1) = x(s_2)$. Vì sao với hàm tham số ta bắt buộc có $\hat v(s_1,w) = \hat v(s_2,w)$, và điều đó nói lên điều gì?
+Cho $x(s)=(1;0)^T$, $x(s')=(0;1)^T$, $x(s'')=(-1;1)^T$, $w=(0;0)^T$, $e=2$, $\alpha=0{,}1$. Tính độ đổi dự đoán tại $s$, $s'$, $s''$ sau một cập nhật tại $s$ và giải thích dấu của từng kết quả.
 :::
 
 ::: hint
-Viết định nghĩa $\hat v(s,w)$ theo $x(s)$ và $w$.
+Tính $\Delta w=\alpha e\,x(s)$, rồi dùng $\Delta\hat v(\cdot)=x(\cdot)^T\Delta w$.
 :::
 
 ::: solution
-Vì $\hat v(s,w) = x(s)^\top w$ chỉ phụ thuộc vào $s$ qua $x(s)$, hai trạng thái có cùng vector đặc trưng có cùng ước lượng. Đây chính là cơ chế tổng quát hoá: hàm không phân biệt được hai trạng thái mà đặc trưng không phân biệt; chất lượng của xấp xỉ vì vậy phụ thuộc hoàn toàn vào việc đặc trưng có tách biệt đúng các trạng thái cần phân biệt hay không.
+$\Delta w=(0{,}2;\,0)^T$. Do đó $\Delta\hat v(s)=0{,}2$, $\Delta\hat v(s')=0$ và $\Delta\hat v(s'')=-0{,}2$. Vì $x(s')^Tx(s)=0$, cập nhật tại $s$ không ảnh hưởng tới $s'$. Vì $x(s'')^Tx(s)=-1<0$, dự đoán tại $s''$ đổi ngược chiều với dự đoán tại $s$.
 :::
 
 <!-- note-topic-id: lec-07-topic-03 -->
