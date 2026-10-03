@@ -20,7 +20,7 @@
 
 .term-card {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(440px, 0.85fr);
+  grid-template-columns: minmax(0, 0.8fr) minmax(500px, 1.2fr);
   gap: 28px;
   min-height: 0;
 }
@@ -102,4 +102,21 @@
     box-shadow: none;
     break-inside: avoid;
   }
+}
+
+.resource-links {
+  display: grid;
+  gap: 6px;
+}
+
+.resource-alt {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 650;
+  text-align: center;
+  text-underline-offset: 2px;
+}
+
+.resource-alt:hover {
+  color: var(--accent-dark);
 }

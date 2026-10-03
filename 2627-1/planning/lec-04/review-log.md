@@ -1395,3 +1395,81 @@ Nguồn phát hiện: tác tử kết nối và mạch viết rà toàn bộ 45 
 - Phát hiện (nhẹ): hồ sơ còn dùng “mô hình hai trạng thái”, lệch thuật ngữ “MDP hai trạng thái” trên mặt trang; storyboard ghi MT1–MT6 trong khi L04-A02 hiển thị bốn mục tiêu, ánh xạ chỉ có trong notes A02. Bảng tài sản còn ghi dp04-five-cell.svg dùng ở E08 dù E08 đã chuyển sang dp04-five-cell-plain.svg.
 - Quyết định: thay thuật ngữ trong outline.md (14 chỗ) và storyboard.md (8 chỗ); thêm mục “Ánh xạ mục tiêu hiển thị và mục tiêu chi tiết” vào storyboard.md (bốn mục tiêu A02 → MT2–MT6 cùng trang kiểm tra; MT1 là năng lực đầu vào, kiểm tại A05); sửa dòng tài sản dp04-five-cell.svg thành L04-E06, F02–F03.
 - Kiểm tra: grep không còn “mô hình hai trạng thái” trong hai hồ sơ; HTML không đổi.
+
+## Bài thực hành: CartPole rời rạc hóa giải bằng quy hoạch động (2026-10-03)
+
+### Phạm vi và quyết định
+
+- Yêu cầu của người dùng: bài thực hành nối tiếp Bài 04 gồm dựng môi trường, đánh giá qua nhiều episode, huấn luyện bằng lặp chính sách và lặp giá trị trên CartPole đã rời rạc hóa; notebook mẫu có tính sư phạm, cuối bài có gợi mở cải tiến; notebook standalone (tự cài gói); thêm ô Markdown giải thích bằng công thức trong bài và chú thích code; gắn vào cột thứ ba của `2627-1/index.html`. Đây là yêu cầu trực tiếp nên ngoại lệ "không tự tạo notebook" của AGENTS.md được áp dụng.
+- Sản phẩm: `2627-1/materials/lec-04/thuc-hanh-cartpole-quy-hoach-dong.ipynb` (79 ô trước khi thêm trực quan hóa, 96 ô sau đó; lưu kèm output; ô code đầu `%pip install -q "gymnasium>=1.0" numpy matplotlib`).
+- Nguồn: Tạ Việt Cường, *Bài 04: Giải MDP*, tr. 35–37 (trạng thái $(x,\dot x,\theta,\dot\theta)$, chia 3, 3, 6, 6 khoảng thành 324 ô, cần mô hình chuyển hoặc mô phỏng để ước lượng xác suất chuyển, hạn chế của lượng tử hóa); ký hiệu và quy trình theo `materials/lec-04/lecture-note.md` (đánh giá chính sách bốn bước với $\eta$, $K$; lặp chính sách giải $(I-\gamma P_\pi)V=r_\pi$ với quy tắc giữ hòa; lặp giá trị trả $(V,\pi_V,\Delta)$ từ cùng một $V$; chặn $\Delta_*(V)/(1-\gamma)$); Sutton–Barto ấn bản 2 §4.1–4.4, tr. 74–84; Singh và Yee (1994), Machine Learning 16:227–233 cho chặn mất mát của chính sách tham lam.
+- Lựa chọn thiết kế (công khai trong notebook): mô hình $(\hat p,\hat r)$ ước lượng bằng gán trạng thái đều trong ô, $M=200$ mẫu mỗi ô; $\gamma=0{,}99$, $\varepsilon=0{,}01$, $\eta=(1-\gamma)\varepsilon$; trạng thái kết thúc riêng $s_{\mathrm{term}}$; điểm cắt $\dot\theta$ chọn sau thử nghiệm sơ bộ, kết quả nhạy với hạt giống mô hình (mục 8.1 báo trung bình và độ lệch chuẩn trên 5 hạt giống).
+- Index: thêm nhóm **Thực hành** cho mọi thẻ; Bài 4 có liên kết Colab (từ repo GitHub công khai, hoạt động sau khi push) và liên kết tải `.ipynb`; các bài khác ghi `Chưa có`. `material-index.css`: cột tài nguyên `minmax(500px, 1.2fr)`, thêm `.resource-links`, `.resource-alt`.
+
+### Tác tử
+
+| Vai trò | Loại | Mô hình | Effort | Ghi file |
+|---|---|---|---|---|
+| Điều phối, kiểm tra cuối, index | phiên chính | claude-opus-5-5 | high | `index.html`, `material-index.css`, nhật ký này |
+| Soạn thảo, sau đó biên tập hai lượt | fork (Agent tool) | claude-opus-5-5 (kế thừa) | high | notebook |
+| Rà soát học tăng cường và toán/thuật toán | fork | claude-opus-5-5 | high | không |
+| Rà soát góc nhìn sinh viên, kiểm thử standalone | fork | claude-opus-5-5 | high | không |
+| Rà soát sư phạm, mạch, văn phong (no-ai-slop Detect) | fork | claude-opus-5-5 | high | không |
+| Rà soát lại toán | fork | claude-opus-5-5 | high | không |
+| Rà soát lại mạch và văn phong (no-ai-slop Detect) | fork | claude-opus-5-5 | high | không |
+
+Chỉ một tác tử ghi notebook tại mỗi thời điểm; các vai rà soát chạy song song, chỉ đọc.
+
+### Phát hiện và quyết định (vòng rà soát 1)
+
+| mức độ | vị trí | vấn đề | quyết định | trạng thái |
+|---|---|---|---|---|
+| nghiêm trọng | `policy_iteration` | Hết $I_{\max}$ trả chính sách chưa đánh giá với $V$ của chính sách cũ | Kiểm `i == I_max` trước khi nhận `pi_new`; thêm phép thử $I_{\max}=2$ | đã sửa |
+| nghiêm trọng | mục 5, nhiệm vụ 8 | Coi entropy dương của $\hat p(\cdot\mid s,a)$ là không Markov | Định nghĩa không Markov qua phụ thuộc lịch sử; entropy chỉ đo phân tán; nhiệm vụ 8 thêm kiểm TV $\hat p(s'\mid s,a,s_{\text{trước}})$ với mốc hoán vị | đã sửa |
+| nghiêm trọng | các hàm thuật toán | Tham số mặc định `P=P, R=R, gamma=GAMMA` làm phần mở rộng dùng nhầm mô hình cũ | Bắt buộc truyền `P, R, gamma`; thêm `build_tabular_mdp`, `run_pipeline`, mục "Quy trình làm lại" | đã sửa |
+| trung bình | rời rạc hóa $\theta$ | Điểm cắt giữa bằng $2{,}78\cdot10^{-17}$, $\theta=0$ rơi vào $b_\theta=2$ | Điểm cắt tường minh, `assert` $b_\theta(0)=3$ | đã sửa |
+| trung bình | mục 6, 7 | Dùng $v_\pi$ trước khi giải thích; thiếu tính tay từ $V_0=0$ | Thứ tự 6.1 $T_{\pi_0}$ tính tay → giải hệ → lặp có ngưỡng → $Q$ → giữ hòa → vòng lặp; 7.1 tính tay $V_1,V_2,V_3$ (cần $V_3$ vì bộ tích phân Euler cho cùng xác suất kết thúc ở hai hành động) | đã sửa |
+| trung bình | mục 5 | Thiếu ví dụ nhỏ cho ước lượng mô hình | Ví dụ ô 130, $M=5$; nối với độ phủ 64/324 | đã sửa |
+| trung bình | mục 4, 8 | Chưa công khai cách chọn điểm cắt, kết quả nhạy hạt giống | Công khai; 8.1 năm hạt giống mô hình | đã sửa |
+| trung bình | mục 3, 8 | So sánh bằng khoảng tin cậy chồng nhau thay vì ghép cặp | `paired_difference`: $\bar d\pm1{,}96\,\mathrm{SE}(d)$ | đã sửa |
+| trung bình | mục 8 | Thiếu nguồn sai lệch thống kê và phân phối trạng thái đầu; chiều tác động của cắt ngắn | Bốn nguồn, có số in ra | đã sửa |
+| trung bình | ô cài đặt, bảng ký hiệu, tham chiếu chéo | Cảnh báo khởi động lại kernel; $\hat p$ so với $p$; "lượt"/"lượt quét"; tham chiếu phần 3 sai | Sửa theo đề xuất | đã sửa |
+| nhẹ | nhiều ô | Lặp tại chỗ lệch một lượt; "rất ít"; viết tắt; hình mathtext; nhịp "Ô dưới"; nhiệm vụ Bài 05; trang Sutton–Barto; câu cơ chế vật lý | Sửa theo đề xuất | đã sửa |
+
+Đề xuất không làm đúng nguyên văn: ghi "điểm cắt chọn với hạt giống 2026" bị thay bằng mô tả đúng thực tế của thử nghiệm sơ bộ (hạt giống mô hình 0–3, hạt giống đánh giá từ 1000).
+
+### Phát hiện và quyết định (rà soát lại)
+
+| mức độ | vị trí | vấn đề | quyết định | trạng thái |
+|---|---|---|---|---|
+| trung bình | 6.1, 6.4, 7 | Chuỗi đẳng thức đặt công thức với $p$ bằng công thức với $\hat p$ | Tách: công thức Bài 04, rồi "trên MDP ước lượng thay $p$ bằng $\hat p$" | đã sửa |
+| trung bình | 7.5 | Ngưỡng phân biệt hành động sai | Ngưỡng $2\gamma\lVert V-v_*\rVert_\infty$ kèm lập luận và số in ra | đã sửa |
+| trung bình | ví dụ 1×1×6×6 | Output 500/500 không diễn giải, dễ suy diễn sai | Ô diễn giải: một hạt giống, chạm trần, $x$ không kiểm soát | đã sửa |
+| trung bình | 7.1/7.2 | Output tính tay nằm dưới mục quy trình | Tách ô, đối chiếu sau khi định nghĩa hàm | đã sửa |
+| trung bình | Quy trình làm lại | Thiếu chính sách khởi tạo cỡ mới | Bổ sung `np.zeros(n, dtype=int)` và cách đánh giá | đã sửa |
+| nhẹ | nhiều ô | Câu Markov; tầm nhìn hiệu dụng $e^{-1}$; "phá hòa" đụng nghĩa; bằng chứng lực đẩy; TD(0); số chiều tham số hóa; ví dụ thu dữ liệu có thăm dò; chú thích | Sửa theo đề xuất | đã sửa |
+
+### Kiểm tra
+
+- `no-ai-slop`: tác tử soạn dùng chế độ Edit và tự kiểm `eval.md` sau mỗi lượt (đạt); hai vai rà soát dùng Detect trên toàn bộ ô Markdown, các mẫu còn lại đã sửa. Phạm vi: mọi ô Markdown, lời giải trong `<details>`, chú thích code.
+- Chạy: nbclient chạy hết 79 ô không lỗi, khoảng 33 giây; chạy lặp lại cho cùng số liệu (trừ số giây). Kiểm thử standalone trong venv mới chỉ có ipykernel/nbclient: ô `%pip` tự cài gymnasium 1.3.0, numpy 2.5.3, matplotlib 3.11.2, không cần khởi động lại kernel, 0 lỗi. Chưa chạy trên Colab.
+- `nbformat.validate` đạt; công thức Markdown chỉ dùng `$...$` và `$$...$$`; đã xem hình chính sách, phần dư Bellman và boxplot.
+- Index: Playwright Chromium 1600×900 và 390×844, cùng các độ rộng 901, 960, 1024, 1280: không lỗi console, không tài nguyên hỏng, không cuộn ngang; tệp `.ipynb` trả HTTP 200 từ server tại gốc repo.
+- Kết quả chính (100 lượt, cùng tập hạt giống, gymnasium 1.3.0): ngẫu nhiên 22,5; theo dấu góc 43,6; lặp chính sách và lặp giá trị 343,4 (SE 9,2); hai chính sách trùng ở mọi ô.
+
+### Bổ sung trực quan hóa chính sách
+
+- Yêu cầu của người dùng: "thêm demo visualization trực tiếp trên notebook cho các policy sau khi đánh giá (phần 8)" và "trực quan hoá cả sau khi đánh giá các chính sách baseline (ngẫu nhiên và góc)".
+- Thực hiện (tác tử biên tập, fork, claude-opus-5-5, high): mục 3.1 định nghĩa `record_episode`, `end_reason`, `plot_trajectories`, `draw_cartpole`, `cartpole_player`; ghi một lượt của hai chính sách tham chiếu trên hạt giống 10004, đồ thị $\theta(t)$, $x(t)$ với ngưỡng, trình phát hai ô. Mục 8.2 dùng lại các hàm cho bốn chính sách cùng hạt giống, thêm dải ảnh tĩnh và một **Câu hỏi:**. Phần 8 đánh số lại 8.1–8.3; nhiệm vụ 12 mới ở phần 10.
+- Quyết định kỹ thuật: bản đầu dùng `FuncAnimation.to_jshtml` ở dpi 55 (notebook 2,22 MB), điều phối xem khung PNG thấy chữ và hình quá nhỏ; chuyển sang trình phát `<canvas>` vẽ từ mảng trạng thái (Phát/Dừng, thanh tua, tốc độ 0,25×–1×; 1× = 20 ms mỗi bước = $\tau$), không thêm phụ thuộc, không tải từ mạng, có dòng nhắc khi JavaScript không chạy. Notebook còn 0,55 MB. Không dùng `pygame`/`render_mode` để giữ notebook standalone; hướng này để ở nhiệm vụ 12.
+
+| mức độ | vị trí | vấn đề | quyết định | trạng thái |
+|---|---|---|---|---|
+| trung bình | 8.2, lời giải | Khẳng định nguyên nhân xe trôi chưa kiểm chứng và gắn sai với nguồn sai lệch thứ ba | Viết thành hai giả thuyết (độ rộng khoảng $x$ 1,6 m, có in tỉ lệ tổ hợp đổi hành động theo $b_x$; tầm nhìn hiệu dụng của $\gamma=0{,}99$), dẫn tới nhiệm vụ 1 và 5 | đã sửa |
+| nhẹ | 8.2, lời giải | "phần lớn" nhẹ hơn output 98/100 | Dẫn đúng output | đã sửa |
+| nhẹ | 3.1 | Khẳng định chạy được trên Jupyter/Colab chưa kiểm; giọng giới thiệu | Viết có điều kiện, ghi mới kiểm trên Chromium; bỏ cụm quảng bá | đã sửa |
+| nhẹ | `cartpole_player` | Trùng `id` khi hiển thị lại cùng dữ liệu | Bộ đếm tăng dần ghép md5 | đã sửa |
+| nhẹ | nhiệm vụ 12 | `cell_label(s, CUTS)` dễ hiểu nhầm đối số | Ghi rõ chỉ số ô | đã sửa |
+
+- Rà soát lại (fork, claude-opus-5-5, high, chỉ đọc, gộp vai toán và mạch cho sửa cục bộ): xác nhận hình học ($\theta>0$ nghiêng phải, cột dài `2*length`, hành động 1 đẩy phải), tái lập lượt bằng `assert` với phép đánh giá, lý do kết thúc, trình phát không lỗi console và không request mạng trên Playwright Chromium, hai trình phát độc lập, đánh số và tham chiếu chéo đúng; no-ai-slop Detect còn một cụm quảng bá, đã sửa.
+- Kiểm tra cuối của điều phối: đã xem khung trình phát ở kích thước hiển thị, đồ thị $\theta(t)$/$x(t)$ và dải ảnh tĩnh; `nbformat.validate` đạt; 96 ô, không ô lỗi, không ô chưa chạy, không URL ngoài trong output; nbclient chạy khoảng 34 giây, output tất định trừ số giây; index vẫn đạt ở 1600×900 và 390×844. Chưa mở thử trên Jupyter hoặc Colab thật.
