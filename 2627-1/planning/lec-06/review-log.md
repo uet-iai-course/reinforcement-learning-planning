@@ -584,3 +584,53 @@ Kiểm tra sau ba sửa cuối: `git diff --check` đạt; Playwright 45 trang �
 Bằng chứng vai trò theo lệnh gọi công cụ của phiên chính: một tác tử biên tập (Agent, `subagent_type: fork`, kế thừa Opus 5.5 của phiên; tiếp tục bằng SendMessage cho ba vòng sửa) và ba tác tử rà soát chỉ đọc chạy song song (Agent, `fork`): toán học và RL; mạch lập luận và góc nhìn sinh viên; phê bình học thuật kèm no-ai-slop Detect. Rà lại sau sửa dùng lại hai tác tử toán học và mạch lập luận qua SendMessage; cả hai kết luận đạt. Mức effort của phiên không xác nhận được từ trong phiên.
 
 Kiểm trình duyệt do điều phối tự chạy (Playwright Chromium, `reloadserver` cổng 8766 vì cổng 8765 đang phục vụ dự án khác; tắt hiệu ứng chuyển trang): cả 45 trang theo thứ tự mới ở 1600×900 và 390×844 không có lỗi console hoặc trang, không `.katex-error`, không tài nguyên hỏng hay yêu cầu mạng ngoài, không cuộn ngang, không vượt khung 720, không đè chân trang, chữ thân ≥ 0.75em. Lỗi tràn nét underbrace ở L06-D03 trước khi sửa không còn. Ảnh đã xem: B03, D03, E07, F04. Trình xem ghi chú: không `.katex-error`, không yêu cầu mạng ngoài; lỗi CSP về script nội dòng có sẵn ở trình xem (tái hiện trên Bài 04). `git diff --check` đạt.
+
+## Bài thực hành: điều khiển Sarsa và Q-learning trên LunarLander không gió (2026-10-03)
+
+### Phạm vi và quyết định
+
+- Yêu cầu của người dùng (mục tiêu phiên): "tiếp tục làm thực hành cho bài 6, điều khiển SARSA và Q-Learning, phi mô hình, dùng Lunar Lander (không có gió)", cùng các yêu cầu chung đã nêu cho thực hành Bài 04–05: notebook standalone tự cài gói, các bước chi tiết có tính sư phạm, đánh giá qua nhiều lượt, ô Markdown giải thích bằng công thức trong bài, chú thích code, trực quan hóa trực tiếp các chính sách sau khi đánh giá (kể cả baseline), gợi mở cuối bài, cột Thực hành trong `2627-1/index.html`. Đây là yêu cầu trực tiếp nên ngoại lệ "không tự tạo notebook" của AGENTS.md được áp dụng.
+- Sản phẩm: `2627-1/materials/lec-06/thuc-hanh-lunarlander-dieu-khien-phi-mo-hinh.ipynb` (62 ô, 0,82 MB, lưu kèm output; ô code đầu `%pip install -q "gymnasium[box2d]>=1.0" numpy matplotlib`; chạy khoảng 3,5 phút trên CPU).
+- Nguồn: bài giảng gốc `lecture-06-model-free-control.pdf` tr. 8, 11, 12–15, 20–21, 24, 25, 26–28 (đã đối chiếu bằng pdftotext); ký hiệu và quy trình theo `materials/lec-06/lecture-note.md` ($\pi_\varepsilon$ chia đều khi đồng hạng; Sarsa và Q-learning 5 bước; GLIE; Robbins–Monro theo cặp; định lý hội tụ); Singh và cộng sự (2000), Watkins–Dayan (1992) như ghi chú; Sutton–Barto ấn bản 2 §6.4–6.7 cho Expected Sarsa và Double Q-learning ở phần gợi mở (số trang §6.6–6.7, §9.5.4 chưa đối chiếu bản in). Bài giảng gốc không có ví dụ LunarLander.
+- Thiết kế: `LunarLander-v3`, `enable_wind=False`; mốc ngẫu nhiên và hàm `heuristic`; lưới 2187 ô (8748 cặp), $Q_0=0$; $\varepsilon_k$ giảm tuyến tính từ 1 xuống 0,05 trong 1500 lượt; $\alpha_n=\max(0{,}05,n^{-0,6})$ theo cặp; $\gamma=0{,}99$; 3000 lượt mỗi thuật toán; đánh giá định kỳ trên `VALID_SEED`, đánh giá cuối trên `TEST_SEED` mới; lượt cắt ngắn bootstrap. Cấu hình chọn qua thử nghiệm sơ bộ đánh giá trên hạt giống riêng (900000, 700000); dữ liệu sơ bộ được nhúng trong notebook như bảng ghi nhận ngoài notebook, kèm nhận xét kết quả Sarsa của notebook (26,2) thấp hơn mọi lần thử cùng lịch. Notebook nêu cấu hình không thỏa GLIE và Robbins–Monro, ô gộp không Markov, nên không khẳng định hội tụ.
+- Index: thẻ Bài 6 có link Colab và link tải `.ipynb` trong nhóm **Thực hành**.
+
+### Tác tử
+
+| Vai trò | Loại | Mô hình | Effort | Ghi file |
+|---|---|---|---|---|
+| Điều phối, kiểm tra cuối, index, nhật ký | phiên chính | claude-opus-5-5 | high | `index.html`, nhật ký này |
+| Soạn thảo, sau đó biên tập hai lượt | fork (Agent tool) | claude-opus-5-5 (kế thừa) | high | notebook |
+| Rà soát học tăng cường và toán/thuật toán | fork | claude-opus-5-5 | high | không |
+| Rà soát góc nhìn sinh viên | fork | claude-opus-5-5 | high | không |
+| Rà soát sư phạm, mạch, văn phong (no-ai-slop Detect) | fork | claude-opus-5-5 | high | không |
+| Rà soát lại (gộp toán và mạch/văn phong) | fork | claude-opus-5-5 | high | không |
+
+### Phát hiện và quyết định (vòng rà soát 1)
+
+Không có phát hiện chặn bàn giao hay nghiêm trọng.
+
+| mức độ | vị trí | vấn đề | quyết định | trạng thái |
+|---|---|---|---|---|
+| trung bình | 9.2, ô 29 | $\max_aQ$ được gọi là dự đoán lợi tức của chính sách tham lam; hai bảng có đích khác nhau | Sarsa hướng tới $q$ của chính sách hành vi, Q-learning hướng tới $q_*$ trên ô; in so sánh 100 lượt (Sarsa đánh giá thấp, Q-learning đánh giá cao), diễn giải có điều kiện, nêu thiên lệch chọn lượt minh họa | đã sửa |
+| trung bình | 8.2 | Khẳng định dựa trên thử nghiệm ngoài notebook | Bảng dữ liệu sơ bộ ghi rõ nguồn và hạt giống; nêu kết quả notebook thấp hơn; sửa câu về hạt giống | đã sửa |
+| trung bình | 4 | "Lưới 2187 ô tốt nhất" không đúng cho Q-learning | Viết theo đúng thử nghiệm | đã sửa |
+| trung bình | ô 3, 38 | Tham chiếu "mục 8.3" không tồn tại | Sửa thành 8.2 | đã sửa |
+| trung bình | 8.2 | Chưa giải thích khoảng cách tới heuristic; cơ chế cắt ngắn chưa đo | Bốn giả thuyết trỏ tới nhiệm vụ; in số đo lượt cắt ngắn (tàu chủ yếu lơ lửng) | đã sửa |
+| trung bình | ô 0, 34 | Chưa báo trước thời gian chạy | Ghi thời gian notebook, mỗi thuật toán, `train_and_test`, nhiệm vụ 1 | đã sửa |
+| trung bình | toàn bài | GLIE, MDP chưa viết đầy đủ | Viết đầy đủ lần đầu | đã sửa |
+| trung bình (điều phối) | 8.1 | Đường đánh giá định kỳ dao động mạnh chưa giải thích | Ba nguồn dao động, nguyên tắc chọn điểm dừng theo `VALID_SEED`, nhiệm vụ 10 | đã sửa |
+| nhẹ | nhiều ô | So sánh bội; đồng hạng; weasel "thước đo thường dùng"; câu về động cơ; metadiscourse ở 9.3; bước trực giác ε-tham lam; dẫn trang; cập nhật có bootstrap khác 0; Box2D trên Colab; Double Q-learning; "ô"/"ô mã"; hình quỹ đạo; thứ tự `terminated`/`truncated` | Sửa theo đề xuất | đã sửa |
+
+### Rà soát lại
+
+Không có phát hiện chặn, nghiêm trọng hay trung bình. Bảy mục nhẹ đã sửa: số cập nhật trace in từ output; "$\alpha_1R=R$" chỉ ở lần cập nhật đầu của mỗi cặp; SE dùng `np.sqrt(len(d))`; điểm cố định Q-learning trên ô gộp phụ thuộc phân phối ghé; bảng có thể tiếp tục dao động; câu về nhiên liệu và lực đẩy; dòng nguồn tr. 12–15.
+
+### Kiểm tra
+
+- `no-ai-slop`: tác tử soạn dùng Edit và tự kiểm `eval.md` sau mỗi lượt (đạt); hai vai rà soát dùng Detect trên toàn bộ ô Markdown, lời giải `<details>` và chú thích code; các mẫu còn lại đã sửa.
+- Chạy: nbclient chạy hết 62 ô không lỗi, khoảng 210 giây; hai lần chạy trùng nhau (văn bản trừ số giây, HTML, PNG). Kiểm thử standalone trong venv mới chỉ có ipykernel/nbclient/nbformat ở bản nháp: ô `%pip` cài gymnasium 1.3.0 và Box2D, không cần khởi động lại kernel, 0 lỗi, 225 giây kể cả cài; ô cài gói không đổi sau đó. Chưa chạy trên Colab.
+- Trình phát canvas (Playwright Chromium): không lỗi console, không gọi mạng, 50 bước/s.
+- Kiểm của điều phối: `nbformat.validate` đạt; không ô lỗi, không ô chưa chạy, không stderr, không URL ngoài trong output, không dấu hỏi trong Markdown; công thức chỉ dùng `$...$`/`$$...$$`; đã xem đường học, trình phát bốn chính sách, bản đồ hành động, $\max_aQ$ so với $G_t$.
+- Index: Playwright Chromium 1600×900 và 390×844 trên server cổng 8766 (gốc repo): không lỗi console, không tài nguyên hỏng, không cuộn ngang; `.ipynb` trả HTTP 200.
+- Kết quả chính (100 lượt `TEST_SEED`, gymnasium 1.3.0): ngẫu nhiên −194,8; heuristic 236,9; Sarsa tham lam 26,2 ± 14,0 (38% nằm yên, 18% rơi, 44% cắt ngắn); Q-learning tham lam −6,6 ± 17,2 (37% nằm yên, 61% rơi, 2% cắt ngắn); Sarsa − Q-learning 32,8 ± 46,2, chưa xếp hạng được.
