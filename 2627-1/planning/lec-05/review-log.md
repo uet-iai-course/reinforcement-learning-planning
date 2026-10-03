@@ -511,3 +511,54 @@ Phát hiện của điều phối khi kiểm trình duyệt ở 1600×900 (nhẹ
 Bằng chứng vai trò theo lệnh gọi công cụ của phiên chính: một tác tử biên tập (Agent, `subagent_type: fork`, kế thừa Opus 5.5 của phiên; được tiếp tục bằng SendMessage cho ba vòng sửa) và ba tác tử rà soát chỉ đọc chạy song song (Agent, `fork`): toán học và RL; mạch lập luận và góc nhìn sinh viên; phê bình học thuật kèm no-ai-slop Detect. Rà lại sau sửa dùng lại hai tác tử toán học và mạch lập luận qua SendMessage. Mức effort của phiên không xác nhận được từ trong phiên. Ghi chú: trong bảng rà lại, nguồn của hai phát hiện đã được điều phối hiệu chỉnh (trọng số bước hằng ở B12 do người rà mạch nêu; câu nối D02 do người rà toán nêu).
 
 Kiểm trình duyệt do điều phối tự chạy (Playwright Chromium, server `reloadserver` cổng 8766 vì cổng 8765 đang phục vụ dự án khác; tắt hiệu ứng chuyển trang): cả 45 trang ở 1600×900 và 390×844 không có lỗi console hoặc trang, không có `.katex-error`, không có tài nguyên hỏng hay yêu cầu mạng ngoài, không cuộn ngang; không trang nào có nội dung vượt khung 720 hoặc đè chân trang; chữ giả mã B10, C05 nay ≥ 0.75em. Ảnh đã xem: A04, B03, B10, B12, C02, D06, D09 (hẹp), E02. Ở 390px Reveal chuyển sang chế độ cuộn dọc. Trình xem ghi chú: không `.katex-error`, không yêu cầu mạng ngoài; lỗi CSP về script nội dòng có sẵn ở trình xem (tái hiện trên ghi chú Bài 04), không do thay đổi này. `git diff --check` đạt.
+
+## Bài thực hành: dự đoán Monte Carlo và TD(0) trên LunarLander không gió (2026-10-03)
+
+### Phạm vi và quyết định
+
+- Yêu cầu của người dùng: "tiếp tục làm thực hành cho bài 5, Monte Carlo và TD(0), phi mô hình, dùng Lunar Lander (không có gió)", cùng các yêu cầu chung đã nêu cho thực hành Bài 04: notebook standalone tự cài gói, các bước chi tiết có tính sư phạm, đánh giá qua nhiều lượt, ô Markdown giải thích bằng công thức trong bài, chú thích code, trực quan hóa trực tiếp các chính sách sau khi đánh giá (kể cả baseline), gợi mở cuối bài, cột Thực hành trong `2627-1/index.html`. Đây là yêu cầu trực tiếp nên ngoại lệ "không tự tạo notebook" của AGENTS.md được áp dụng.
+- Sản phẩm: `2627-1/materials/lec-05/thuc-hanh-lunarlander-du-doan-phi-mo-hinh.ipynb` (73 ô, 0,65 MB, lưu kèm output; ô code đầu `%pip install -q "gymnasium[box2d]>=1.0" numpy matplotlib`).
+- Nguồn: bài giảng gốc `lecture-05-du-doan-phi-mo-hinh.pdf` tr. 17–18, 21–28 (đã đối chiếu nguyên văn tr. 26–28); ký hiệu và quy trình theo `materials/lec-05/lecture-note.md` (MC 6 bước, TD(0) 6 bước, điều kiện bước học, cập nhật theo lô 5 bước, ví dụ A, B); Sutton–Barto ấn bản 2 §5.1 tr. 92–93, §6.1–6.3 tr. 119–128 (Ví dụ 6.4); các mục xem trước §6.4–6.5, §7.1, §9.3 và Tsitsiklis & Van Roy (1997), IEEE TAC 42(5):674–690 chỉ dẫn ở mức gợi mở, số trang chưa đối chiếu bản in. Bài giảng gốc không có ví dụ LunarLander; môi trường là lựa chọn của người dùng.
+- Thiết kế: `LunarLander-v3`, `enable_wind=False`; chính sách cần đánh giá $\pi$ là hàm `heuristic` của gymnasium trộn hành động ngẫu nhiên với $\varepsilon=0{,}1$, đối chứng heuristic thuần và chính sách ngẫu nhiên; $\gamma=0{,}99$; rời rạc hóa 8 biến thành 9216 ô theo ý nghĩa vật lý; 2000 lượt huấn luyện, 500 lượt kiểm tra với dãy hạt giống tách biệt; thước đo không cần mô hình $J(V)$ trên tập kiểm tra (nêu rõ thước đo ưu tiên đích của MC mọi lần ghé) và $V(S_0)$ so với $\mathbb E_\pi[G_0]$ (kiểm tra thô); MC theo lô và TD theo lô (bước $\alpha/N(s)$, đối chiếu nghiệm $(I-\gamma\hat P)V=\hat r$, nối thực hành Bài 04). Cách chia ô có nhìn vào tập kiểm tra; điều này được công khai trong notebook.
+- Index: thẻ Bài 5 có link Colab và link tải `.ipynb` trong nhóm **Thực hành**.
+
+### Tác tử
+
+| Vai trò | Loại | Mô hình | Effort | Ghi file |
+|---|---|---|---|---|
+| Điều phối, kiểm tra cuối, index, nhật ký | phiên chính | claude-opus-5-5 | high | `index.html`, nhật ký này |
+| Soạn thảo, sau đó biên tập hai lượt | fork (Agent tool) | claude-opus-5-5 (kế thừa) | high | notebook |
+| Rà soát học tăng cường và toán/thuật toán | fork | claude-opus-5-5 | high | không |
+| Rà soát góc nhìn sinh viên, kiểm thử standalone | fork | claude-opus-5-5 | high | không |
+| Rà soát sư phạm, mạch, văn phong (no-ai-slop Detect) | fork | claude-opus-5-5 | high | không |
+| Rà soát lại (gộp toán và mạch/văn phong) | fork | claude-opus-5-5 | high | không |
+
+### Phát hiện và quyết định (vòng rà soát 1)
+
+Không có phát hiện chặn bàn giao hay nghiêm trọng.
+
+| mức độ | vị trí | vấn đề | quyết định | trạng thái |
+|---|---|---|---|---|
+| trung bình | mục 2 | Câu "bước đầu chỉ có chi phí nhiên liệu" sai: `reset()` gọi `step(0)` nên `prev_shaping` đã đặt | Bỏ câu, nêu cơ chế, kiểm công thức thưởng trên mọi bước | đã sửa |
+| trung bình | phần 8 | Giải thích TD với $\alpha_n=1/n$ sai trọng tâm | Cơ chế tự chuyển: sai số còn lại $\approx n^{-(1-\gamma)}$, tỉ số đo được $\approx0{,}09$; Robbins–Monro là bảo đảm tiệm cận và giả thiết Markov | đã sửa |
+| trung bình | phần 8 | Chênh lệch MC lần ghé đầu/mọi lần ghé gán cho một nguyên nhân | Hai nguyên nhân, in số mẫu | đã sửa |
+| trung bình | phần 8 | Điểm xuất phát đường học TD và đường bảng hằng chưa giải thích; chưa nối độ chệch–phương sai tr. 26–28 | In $J(\mathbf 0)$, diễn giải, nối tr. 26–28 và ghi chú; nhiệm vụ khởi tạo bằng trung bình lợi tức | đã sửa |
+| trung bình | phần 8–9 | $\mathbb E_\pi[G_0]$ thực ra trên 493/500 lượt; TD theo lô và MC theo lô không cùng dữ liệu (7,7% số chuyển) | $G_0$ trên 500 lượt với chặn đuôi tiên nghiệm; TD theo lô cùng dữ liệu với MC, báo cả hai | đã sửa |
+| trung bình | mục 7 | TD(0) thiếu câu hỏi kiểm tra | Câu hỏi tự chuyển, bảng ký hiệu → biến | đã sửa |
+| trung bình | ô 10, phần 10 | $v_\pi$ dễ bị hiểu là mức "tốt" của vị trí | Nêu $v_\pi$ là phần thưởng còn lại, đẳng thức $G_t$ với $\gamma=1$, câu hỏi; diễn giải bản đồ có điều kiện; mục 10.1 kiểm hai giả thuyết bằng số đo | đã sửa |
+| trung bình | mục 3.1 | Thiếu trực quan hóa baseline heuristic thuần | Ba chính sách cùng hạt giống trong đồ thị và trình phát | đã sửa |
+| trung bình | nhiệm vụ gió | Lẫn quan sát không Markov với môi trường không dừng | Tách hai ý, chỉ dùng tr. 21 cho trường hợp đổi `wind_power` trong lúc học | đã sửa |
+| trung bình | ô 31 | Trỏ tới phép đo không có | Sửa tham chiếu, bỏ metadiscourse | đã sửa |
+| nhẹ | nhiều ô | Tính tay có thưởng định hình; histogram chung bins; `paired_difference`; chú thích JavaScript; $\hat P$ so với $P_\pi$; `prediction_pipeline`; khung TD n bước; cảnh báo pygame/pygame-ce trên Colab; "vector one-hot"; nhãn "π (ε = 0,1)"; cơ chế chưa đo viết "có thể"; Markdown trước ô hình; dòng nguồn mỗi mục | Sửa theo đề xuất | đã sửa |
+
+### Rà soát lại
+
+Không có phát hiện chặn, nghiêm trọng hay trung bình. Bốn mục nhẹ đã sửa: chặn đuôi $G_0$ dựa trên khoảng tiên nghiệm của $\Phi$ thay vì cực đại mẫu (đuôi $\le0{,}21$ so với $1{,}96\,\mathrm{SE}=2{,}70$); mục 10.1 chỉ dùng lượt kết thúc và in $\overline{\gamma^{T-1-t}}$; "$G_t$ không chệch đối với $\mu$ trên ô gộp"; nhãn đường bảng hằng. Trích dẫn tr. 28 ("Thường hiệu quả mẫu tốt hơn MC") đã đối chiếu nguyên văn.
+
+### Kiểm tra
+
+- `no-ai-slop`: tác tử soạn dùng Edit và tự kiểm `eval.md` sau mỗi lượt (đạt); hai vai rà soát dùng Detect trên toàn bộ ô Markdown, lời giải `<details>` và chú thích code; các mẫu còn lại đã sửa.
+- Chạy: nbclient chạy hết 73 ô không lỗi, khoảng 72 giây; hai lần chạy cho văn bản, HTML trình phát và PNG trùng nhau (trừ số giây). Kiểm thử standalone trong venv mới chỉ có ipykernel/nbclient/nbformat: ô `%pip` cài gymnasium 1.3.0, Box2D 2.3.10 (wheel), pygame-ce; không cần khởi động lại kernel; 0 lỗi, không stderr. Chưa chạy trên Colab.
+- Kiểm của điều phối: `nbformat.validate` đạt; không ô lỗi, không ô chưa chạy, không URL ngoài trong output, không stderr; công thức Markdown chỉ dùng `$...$`/`$$...$$`; đã xem hình quỹ đạo ba chính sách, histogram, đường học, $G_t$ so với $V$ dọc lượt và khung trình phát.
+- Index: Playwright Chromium 1600×900 và 390×844 trên server cổng 8766 (gốc repo): không lỗi console, không tài nguyên hỏng, không cuộn ngang; `.ipynb` trả HTTP 200.
+- Kết quả chính (gymnasium 1.3.0): $\mathbb E_\pi[G_0]=56{,}04\pm2{,}70$; $J$: MC theo lô 1627, TD theo lô cùng dữ liệu 1803, TD(0) $\alpha=0{,}5$ 2101, TD(0) $1/n$ 5158, mốc bảng hằng 3021, $J(\mathbf 0)=5797$.
