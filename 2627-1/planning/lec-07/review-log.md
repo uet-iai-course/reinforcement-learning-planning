@@ -622,3 +622,10 @@ Không có phát hiện chặn, nghiêm trọng hay trung bình. Bảy mục nh�
 - Kiểm của điều phối: `nbformat.validate` đạt; không ô lỗi, ô chưa chạy, stderr, URL ngoài, dấu hỏi trong Markdown; công thức chỉ dùng `$...$`/`$$...$$`; đủ mục 0–16; đã xem bản đồ $\hat v$ (Fourier so với bảng), đường học, trình phát bốn ô, $\lVert w\rVert$.
 - Index: Playwright Chromium 1600×900 và 390×844 trên server cổng 8766 (gốc repo): không lỗi console, không tài nguyên hỏng, không cuộn ngang; `.ipynb` trả HTTP 200.
 - Kết quả chính: dự đoán $J$ trên tập kiểm tra (MC theo lô / LSTD trên lượt kết thúc): tuyến tính 2472,5 / 2569,5; Fourier bậc 3 1481,0 / 1622,2; mốc bảng 9216 ô 1626,8. Điều khiển trên `TEST_SEED`: Sarsa tuyến tính 200,9 ± 15,7; Q-learning tuyến tính 205,3 ± 8,4; heuristic 236,9; heuristic − Q-learning 31,6 ± 24,2; Sarsa − Q-learning −4,4 ± 36,1; $\max_a\hat q(S_0)-G_0$: Sarsa −7,9 ± 3,2, Q-learning +12,4 ± 2,2; $\lVert w\rVert$ không phân kỳ trong 3000 lượt. Thử nghiệm ngoài notebook: Q-learning Fourier bậc 3 có một hạt giống 25,2 (84% rơi).
+
+### Sửa lỗi `AssertionError` ở mục 12.2 (2026-10-04)
+
+- Phát hiện (người dùng báo): ô mã đánh giá cuối ở mục 12.2 dừng với `AssertionError` khi chạy ngoài môi trường soạn.
+- Nguyên nhân: ô mã dùng `assert` so tổng thưởng của hai mốc trên `TEST_SEED` với số in ở notebook Bài 06 (−194,8; 236,9) với dung sai 0,06. Hai số chỉ tái lập với đúng phiên bản gymnasium 1.3.0, Box2D 2.3.10, numpy 2.5.3; phiên bản khác (vd trên Colab) làm mô phỏng lệch nhẹ.
+- Quyết định: thay `assert` bằng phép so sánh có thông báo; khi trùng in đúng dòng cũ, khi khác in hai bộ số và ghi số Bài 06 chỉ để tham khảo. Ô Markdown 59 nêu điều kiện cùng phiên bản gói. Rà toàn bộ `assert` của bốn notebook thực hành: các `assert` còn lại kiểm tính nhất quán nội bộ hoặc dùng quan sát tự đặt; `assert` điểm cắt nằm giữa phân vị 5%–95% ở Bài 05 có biên độ khoảng 0,1 nên giữ.
+- Kiểm tra: thử hai nhánh bằng dữ liệu giả; chạy lại toàn notebook bằng nbclient không lỗi, output mọi ô trùng bản trước trừ số giây; notebook trong repo chỉ đổi nguồn ô 59, 60, output giữ nguyên; `nbformat.validate` đạt.
