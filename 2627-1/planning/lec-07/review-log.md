@@ -629,3 +629,47 @@ Không có phát hiện chặn, nghiêm trọng hay trung bình. Bảy mục nh�
 - Nguyên nhân: ô mã dùng `assert` so tổng thưởng của hai mốc trên `TEST_SEED` với số in ở notebook Bài 06 (−194,8; 236,9) với dung sai 0,06. Hai số chỉ tái lập với đúng phiên bản gymnasium 1.3.0, Box2D 2.3.10, numpy 2.5.3; phiên bản khác (vd trên Colab) làm mô phỏng lệch nhẹ.
 - Quyết định: thay `assert` bằng phép so sánh có thông báo; khi trùng in đúng dòng cũ, khi khác in hai bộ số và ghi số Bài 06 chỉ để tham khảo. Ô Markdown 59 nêu điều kiện cùng phiên bản gói. Rà toàn bộ `assert` của bốn notebook thực hành: các `assert` còn lại kiểm tính nhất quán nội bộ hoặc dùng quan sát tự đặt; `assert` điểm cắt nằm giữa phân vị 5%–95% ở Bài 05 có biên độ khoảng 0,1 nên giữ.
 - Kiểm tra: thử hai nhánh bằng dữ liệu giả; chạy lại toàn notebook bằng nbclient không lỗi, output mọi ô trùng bản trước trừ số giây; notebook trong repo chỉ đổi nguồn ô 59, 60, output giữ nguyên; `nbformat.validate` đạt.
+
+## Bài thực hành thứ hai: điều khiển tuyến tính trên Flappy Bird (2026-10-04)
+
+### Phạm vi và quyết định
+
+- Yêu cầu của người dùng: "thêm 1 bài thực hành cho Bài 7, với Flappy Bird"; "chỉ cần phần điều khiển (tất nhiên vẫn có đánh giá và trực quan hoá sau khi huấn luyện)"; "thử một số họ đặc trưng để so sánh"; "có thể phối hợp các họ đặc trưng"; cùng các yêu cầu chung của bài thực hành (standalone, ô Markdown giải thích bằng công thức, chú thích code, trực quan hóa chính sách kể cả baseline, gợi mở, cột Thực hành).
+- Sản phẩm: `2627-1/materials/lec-07/thuc-hanh-flappybird-dieu-khien-tuyen-tinh.ipynb` (54 ô, 1,14 MB, lưu kèm output; ô code đầu `%pip install -q "flappy-bird-gymnasium>=0.4" numpy matplotlib`; chạy khoảng 4 phút).
+- Môi trường: `flappy-bird-gymnasium` 0.4.0, `FlappyBird-v0` với `use_lidar=False` (12 biến chuẩn hóa), thưởng +0,1 / +1 khi qua ống / −0,5 khi vượt mép trên (thay cho phần thưởng của bước) / −1 khi va chạm; không có giới hạn bước nên dùng `score_limit=50` làm cắt ngắn (bootstrap). Đã kiểm `reset(seed)` tái lập. Bài giảng gốc không có ví dụ Flappy Bird; môi trường là lựa chọn của người dùng.
+- Thiết kế: chỉ phần điều khiển. Hai mốc: ngẫu nhiên $p=0{,}08$ và luật tay "vỗ khi $\Delta y>0{,}02$ và $v_y>0$" (đã thử 4 ngưỡng, công khai). Đặc trưng không rời rạc hóa: đại lượng dẫn xuất $\psi(s)$ (khoảng cách ngang tới ống, độ lệch dọc so với tâm khe, $v_y$, độ lệch với ống sau) từ quan sát hiện tại; bốn họ trong notebook: thô (13), dẫn xuất (5), Fourier bậc 3 trên dẫn xuất (256), họ ghép thô + Fourier (268); các họ khác (đa thức, Fourier bậc 4/5 trên 3 biến, các họ ghép khác) trong bảng thử nghiệm nhúng. $x(s,a)$ bốn khối, $d=3p+3$; $\alpha=\kappa/\mathbb E\lVert x\rVert^2$, $\kappa=0{,}5$; $K=4000$; $\varepsilon$ 1→0,01 trong 1200 lượt. So sánh họ bằng Q-learning trên `VALID_SEED`, chọn họ theo quy tắc đặt trước (chọn `four3`), huấn luyện thêm Sarsa, đánh giá cuối trên `TEST_SEED`.
+- Chọn cấu hình: khoảng 210 lần chạy ngoài notebook (tổ hợp từ $\kappa\in\{0{,}05;0{,}2;0{,}5;1\}$, $K\in\{2000;3000;4000;8000\}$, nhiều họ, 3 hạt giống) đánh giá trên hạt giống 800000+$i$; bảng `TUNE` và `TUNE_OTHER` nhúng; thiên lệch chọn cấu hình (họ, $\kappa$, $K$, ngưỡng luật tay) được công khai.
+- Index: thẻ Bài 7, nhóm **Thực hành** có hai nút "Lunar Lander" và "Flappy Bird" (mở Colab, có `title` và `aria-label`) cùng hai link tải `.ipynb`.
+
+### Tác tử
+
+| Vai trò | Loại | Mô hình | Effort | Ghi file |
+|---|---|---|---|---|
+| Điều phối, kiểm tra cuối, index, nhật ký | phiên chính | claude-opus-5-5 | high | `index.html`, nhật ký này |
+| Giai đoạn 1: thử nghiệm | fork (Agent tool) | claude-opus-5-5 (kế thừa) | high | tệp tạm |
+| Giai đoạn 2: dựng notebook, sau đó biên tập hai lượt | fork | claude-opus-5-5 | high | notebook |
+| Rà soát học tăng cường và toán/thuật toán | fork | claude-opus-5-5 | high | không |
+| Rà soát gộp góc nhìn sinh viên và sư phạm/văn phong (no-ai-slop Detect) | fork | claude-opus-5-5 | high | không |
+| Rà soát lại (gộp toán và mạch/văn phong) | fork | claude-opus-5-5 | high | không |
+
+### Phát hiện và quyết định
+
+| mức độ | vị trí | vấn đề | quyết định | trạng thái |
+|---|---|---|---|---|
+| nghiêm trọng | Câu hỏi mục 6 | Lời giải nói lớp siêu phẳng của họ dẫn xuất không biểu diễn được luật tốt; sai — lớp này chứa luật tốt | Lời giải: Q-learning khớp $q$ (phi tuyến theo $z$), không tối ưu chính sách; thêm ô mã đánh giá hai luật afin trên `VALID_SEED` (35,20 và 32,65 ống so với 0,00) | đã sửa |
+| trung bình | ô 0 | Công thức $d$ sai | $d=3p+3$ | đã sửa |
+| trung bình | toàn bài | $c$, $d$, $u$ nhiều nghĩa | $\kappa$ cho bước học, $\psi(s)$ cho đại lượng dẫn xuất, $\Delta g_i$ cho hiệu ghép cặp; $c$, $c_a$, $u_a$ theo ghi chú | đã sửa |
+| trung bình | mục 6, 10 | So $\lVert w\rVert$ giữa các họ khác thang | In $\max\lvert\hat q\rvert$; chỉ so trong cùng họ giữa Q-learning và Sarsa, viết "có thể" | đã sửa |
+| trung bình | 9.3 | "vùng hiếm được ghé" chưa đo; mô tả hình chưa khớp | Đo tỉ lệ bước tâm chim cao hơn đỉnh khe (1,6% và 1,0%); mô tả theo hình | đã sửa |
+| trung bình | bảng thử nghiệm | Chưa công khai lưới $\kappa$, $K$ | Bảng `TUNE_OTHER`, dẫn số nhạy với $\kappa$ | đã sửa |
+| trung bình | họ ghép | Thiếu bước kiểm tra | Câu hỏi về họ ghép | đã sửa |
+| nhẹ | nhiều ô | Chú giải đường nét đứt; cùng bước va chạm; ví dụ tính tay tách (a)/(b); tái lập LO/HI (không assert); suy ra 18 bước từ hằng số mã nguồn; TD, lidar viết đầy đủ; `key="score"`; −0,5 thay phần thưởng; "Bài học:"; câu nhân quả chưa đo; thời gian chạy; in $\lVert w\rVert$ cuối; kiểu nét | Sửa theo đề xuất | đã sửa |
+
+### Kiểm tra
+
+- `no-ai-slop`: tác tử soạn/biên tập dùng Edit và tự kiểm `eval.md` (đạt); hai vai rà soát dùng Detect.
+- Chạy: nbclient chạy hết không lỗi, khoảng 241–249 giây; hai lần chạy trùng nhau trừ số giây. Kiểm thử standalone trong venv mới chỉ có ipykernel/nbclient/nbformat ở bản nháp: không lỗi, 259 giây kể cả cài gói; ô cài gói không đổi sau đó. Chưa chạy trên Colab.
+- Trình phát canvas viết mới cho Flappy Bird (Playwright Chromium): không lỗi console, không gọi mạng, khoảng 31–32 bước/s.
+- Kiểm của điều phối: `nbformat.validate` đạt; không ô lỗi, ô chưa chạy, stderr, URL ngoài, dấu hỏi trong Markdown; mọi `assert` chỉ kiểm nhất quán nội bộ hoặc với số tự đặt (không phụ thuộc phiên bản gói); đã xem trình phát bốn ô, đường học và $\lVert w\rVert$ của bốn họ, lát cắt chính sách.
+- Index: Playwright Chromium 1600×900 và 390×844: không lỗi console, không tài nguyên hỏng, không cuộn ngang; hai `.ipynb` trả HTTP 200.
+- Kết quả chính (gymnasium 1.3.0, flappy-bird-gymnasium 0.4.0): so sánh họ trên `VALID_SEED` (Q-learning, số ống): thô 0,40; dẫn xuất 0,00; Fourier bậc 3 34,70; ghép thô + Fourier 25,05. Đánh giá cuối 100 lượt `TEST_SEED`: ngẫu nhiên 0,03; luật tay 34,30; Sarsa tuyến tính 38,04; Q-learning tuyến tính 28,86; Sarsa − luật tay 3,74 ± 2,90; Q-learning − Sarsa −9,18 ± 4,50.
