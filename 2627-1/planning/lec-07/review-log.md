@@ -566,3 +566,59 @@ Vai trò: biên tập là tác tử "Editor lượt hai" (fork, Opus 5.5, effort
 ### Kiểm định cuối của lượt rút gọn — 03-10-2026
 
 Năm đợt, mỗi đợt: biên tập (Agent fork, no-ai-slop Edit) → hai tác tử rà soát chỉ đọc mới (Agent fork, Opus 5.5; toán–RL; mạch lập luận–góc nhìn sinh viên kèm no-ai-slop Detect; tạo lại vì hai tác tử rà cũ không tiếp tục được sau khi phiên đổi) → áp phát hiện → kiểm trình duyệt → commit, push. Không còn phát hiện chặn bàn giao, nghiêm trọng hay trung bình mở. Mặt trang không còn câu trỏ "ví dụ/trang trước"; chỗ cần nhắc dùng hình (`mc-update-vector.svg` ở L07-14, `projected-bellman.svg` ở L07-23, `control-loop.svg` ở L07-26, `chain-strip-dc.svg` ở L07-30) hoặc nêu lại dữ kiện (L07-16, L07-22, L07-31, X02, X03). Kiểm của điều phối (Playwright, `reloadserver` cổng 8766): 40 trang ở 1600×900 và 390×844, 80/80 đạt, không lỗi console, không yêu cầu mạng ngoài, không tràn khung; trình xem ghi chú 1082 biểu thức KaTeX, 0 lỗi. Thư mục làm việc `.lec07-work/` (bị `.gitignore` bỏ qua) xóa sau khi xong.
+
+## Bài thực hành: xấp xỉ hàm tuyến tính trên LunarLander không gió (2026-10-04)
+
+### Phạm vi và quyết định
+
+- Yêu cầu của người dùng: "làm bài thực hành cho bài 07, học xấp xỉ bằng hàm tuyến tính, không cần rời rạc hoá trạng thái nữa", sau đó "phần gợi mở có thể gợi mở về Double Q-Learning"; cùng các yêu cầu chung đã nêu cho thực hành Bài 04–06 (notebook standalone, ô Markdown giải thích bằng công thức trong bài, chú thích code, đánh giá qua nhiều lượt, trực quan hóa chính sách sau khi đánh giá kể cả baseline, gợi mở cuối bài, cột Thực hành trong `2627-1/index.html`). Đây là yêu cầu trực tiếp nên ngoại lệ "không tự tạo notebook" của AGENTS.md được áp dụng.
+- Sản phẩm: `2627-1/materials/lec-07/thuc-hanh-lunarlander-xap-xi-tuyen-tinh.ipynb` (81 ô, 1,0 MB, lưu kèm output; ô code đầu `%pip install -q "gymnasium[box2d]>=1.0" numpy matplotlib`; chạy khoảng 7–8 phút trên CPU, bộ nhớ đỉnh đo được khoảng 0,5 GB).
+- Nguồn: bài giảng gốc `lecture-07.pdf` tr. 24–26, 28–31 (ví dụ Lunar Lander tr. 29, mã hóa $x(s,a)$ tr. 31), 32–33, 37–39, 41, 43–45 (đối chiếu bằng pdftotext); ký hiệu và quy trình theo `materials/lec-07/lecture-note.md` (MC tuyến tính 7.4, TD(0) bán gradient 9.4, điểm cố định Bellman chiếu 10.3–10.4, Sarsa tuyến tính 12.5, Q-learning 13.1, bộ ba bất ổn 13.2, phạm vi 14); Sutton–Barto ấn bản 2 §6.7, §9.2, §9.4, §9.5.2, §9.5.4, §9.6, §9.8, §10.1, §11.2; Tsitsiklis–Van Roy (1997); Konidaris và cộng sự (2011); Lagoudakis–Parr (2003); van Hasselt (2010); Zou, Xu, Liang (2019) như bài giảng gốc tr. 45.
+- Thiết kế: không rời rạc hóa; quan sát chuẩn hóa về $[0,1]$ (biên chọn không dùng tập kiểm tra); bốn họ đặc trưng (tuyến tính, đa thức bậc 2, Fourier bậc 2 và 3 với tối đa hai biến tương tác). Phần A dự đoán chính sách $\pi$ của Bài 05 (cùng dữ liệu, mốc bảng 9216 ô khớp 1627): MC tuyến tính, TD(0) bán gradient, MC theo lô, TD bình phương tối thiểu (LSTD) trên toàn bộ và trên đúng các lượt kết thúc. Phần B điều khiển: $x(s,a)$ bốn khối trên Fourier bậc 3 ($d=785$), Sarsa và Q-learning tuyến tính, $\alpha=0{,}1/\mathbb E\lVert x\rVert^2$, $K=3000$, $\varepsilon$ 1→0,05 trong 1500 lượt; đánh giá cuối trên `TEST_SEED` cùng quy ước Bài 06 (hai mốc trùng số, có `assert`).
+- Chọn cấu hình: thử nghiệm ngoài notebook (60 cấu hình dự đoán; 18 cấu hình điều khiển × 3 hạt giống) đánh giá trên hạt giống 800000+$i$ tách khỏi `VALID_SEED`/`TEST_SEED`; bảng `TUNE_PRED`, `TUNE_CTRL`, `TUNE_WNORM` nhúng trong notebook; thiên lệch chọn cấu hình được công khai.
+- Quy trình kỹ thuật: hai lần tác tử soạn đầu bị dừng do API hết thời gian chờ trước khi tạo file; công việc được chia giai đoạn (thử nghiệm → dựng phần A → dựng phần B) với giới hạn kích thước mỗi lần ghi file.
+- Index: thẻ Bài 7 có link Colab và link tải `.ipynb` trong nhóm **Thực hành**.
+
+### Tác tử
+
+| Vai trò | Loại | Mô hình | Effort | Ghi file |
+|---|---|---|---|---|
+| Điều phối, chọn cấu hình từ thử nghiệm, kiểm tra cuối, index, nhật ký | phiên chính | claude-opus-5-5 | high | `index.html`, nhật ký này |
+| Soạn (hai lần bị dừng do lỗi API, chưa tạo file) | fork (Agent tool) | claude-opus-5-5 (kế thừa) | high | không |
+| Giai đoạn 1: thử nghiệm (dừng do lỗi API sau khi khởi chạy lưới; điều phối đọc kết quả) | fork | claude-opus-5-5 | high | tệp tạm |
+| Giai đoạn 2a: dựng phần A | fork | claude-opus-5-5 | high | tệp tạm |
+| Giai đoạn 2b: dựng phần B, hoàn tất, sau đó biên tập hai lượt | fork | claude-opus-5-5 | high | notebook |
+| Rà soát học tăng cường và toán/thuật toán | fork | claude-opus-5-5 | high | không |
+| Rà soát góc nhìn sinh viên | fork | claude-opus-5-5 | high | không |
+| Rà soát sư phạm, mạch, văn phong (no-ai-slop Detect) | fork | claude-opus-5-5 | high | không |
+| Rà soát lại (gộp toán và mạch/văn phong) | fork | claude-opus-5-5 | high | không |
+
+### Phát hiện và quyết định (vòng rà soát 1)
+
+Không có phát hiện chặn bàn giao hay nghiêm trọng.
+
+| mức độ | vị trí | vấn đề | quyết định | trạng thái |
+|---|---|---|---|---|
+| trung bình | mục 8 | MC theo lô bỏ 42 lượt cắt ngắn, LSTD dùng cả → không cùng dữ liệu | Thêm LSTD trên lượt kết thúc; đọc bảng theo số cùng dữ liệu | đã sửa |
+| trung bình | 12.1 | Điểm −12201 của Sarsa chưa nêu cơ chế | Số đo 94% bước vượt biên cắt $y$/$v_y$; "phù hợp với" nhập nhằng do cắt biên; nhiệm vụ nới biên | đã sửa |
+| trung bình | 12.1–12.2 | Hai mốc heuristic (255,4 và 236,9) chưa giải thích | Nêu hai tập lượt khác nhau, so sánh chính thức trên `TEST_SEED` | đã sửa |
+| trung bình | mục 8, ô 0, 24 | $P_\pi$, $r_\pi$, $T_\pi$, $\Pi_D$, $\overline{\mathrm{VE}}$, $\mu$ chưa định nghĩa; $D$ theo lượt | Bổ sung ký hiệu; $D$ là phân phối ghé theo lượt; chặn §9.4 ghi cho trường hợp liên tục | đã sửa |
+| trung bình | mục 11 | Ví dụ tính tay đứng sau quy trình | Tính tay bằng số trước quy trình, có `assert` | đã sửa |
+| trung bình | 12.3 | Câu "Sarsa nằm trong khoảng thử nghiệm" sai; số 58% không có trong output | Viết theo số; thêm cột cắt ngắn | đã sửa |
+| trung bình | ô 0, 78 | TD, LSTD, LSPI, DQN chưa viết đầy đủ | Viết đầy đủ lần đầu | đã sửa |
+| trung bình | nhiệm vụ 1 | Khung Double Q-learning chưa đủ để làm nhiệm vụ | `greedy_double`, ghi $\lVert w\rVert$, đánh giá định kỳ, độ lệch $\tfrac12(\hat q_1+\hat q_2)$, chi phí, bảng `TUNE_WNORM` | đã sửa |
+| trung bình | ô 25 | `mean_sqnorm` tạo ma trận lớn (~1,5–2 GB) | Cộng dồn theo lượt, $\alpha$ không đổi; ghi yêu cầu bộ nhớ | đã sửa |
+| nhẹ | nhiều ô | Phân rã $J$ không cần Markov; trích dẫn tr. 39/tr. 45; câu về heuristic và +100 chiết khấu; ô 31 cùng thang; ngoại suy LSTD; chú thích ô vẽ; thời gian mỗi thuật toán; `N_VALID`; trùng giá trị hạt giống | Sửa theo đề xuất | đã sửa |
+
+### Rà soát lại
+
+Không có phát hiện chặn, nghiêm trọng hay trung bình. Bảy mục nhẹ (chỉ ô Markdown) đã sửa: câu so sánh với heuristic; vị trí bảng `TUNE_WNORM`; số cập nhật lưu; MC theo lô hướng tới hình chiếu của $\bar g$; "có thể thấp hơn" cho Sarsa; "Double DQN (biến thể của mạng Q sâu)"; mục tiêu Q-learning không có bảo đảm điểm dừng với xấp xỉ hàm. Kiểm bằng python: chỉ 7 ô Markdown đổi, ô mã và output giữ nguyên.
+
+### Kiểm tra
+
+- `no-ai-slop`: tác tử soạn/biên tập dùng Edit và tự kiểm `eval.md` (đạt); hai vai rà soát dùng Detect trên toàn bộ ô Markdown, lời giải `<details>` và chú thích code.
+- Chạy: nbclient chạy hết không lỗi, 440–454 giây; hai lần chạy trùng nhau (văn bản trừ số giây, HTML, PNG). Kiểm thử standalone trong venv mới chỉ có ipykernel/nbclient/nbformat: không lỗi, 482 giây kể cả cài gói; ô cài gói không đổi sau đó. Chưa chạy trên Colab.
+- Trình phát canvas (Playwright Chromium): không lỗi console, không gọi mạng, 50 bước/s.
+- Kiểm của điều phối: `nbformat.validate` đạt; không ô lỗi, ô chưa chạy, stderr, URL ngoài, dấu hỏi trong Markdown; công thức chỉ dùng `$...$`/`$$...$$`; đủ mục 0–16; đã xem bản đồ $\hat v$ (Fourier so với bảng), đường học, trình phát bốn ô, $\lVert w\rVert$.
+- Index: Playwright Chromium 1600×900 và 390×844 trên server cổng 8766 (gốc repo): không lỗi console, không tài nguyên hỏng, không cuộn ngang; `.ipynb` trả HTTP 200.
+- Kết quả chính: dự đoán $J$ trên tập kiểm tra (MC theo lô / LSTD trên lượt kết thúc): tuyến tính 2472,5 / 2569,5; Fourier bậc 3 1481,0 / 1622,2; mốc bảng 9216 ô 1626,8. Điều khiển trên `TEST_SEED`: Sarsa tuyến tính 200,9 ± 15,7; Q-learning tuyến tính 205,3 ± 8,4; heuristic 236,9; heuristic − Q-learning 31,6 ± 24,2; Sarsa − Q-learning −4,4 ± 36,1; $\max_a\hat q(S_0)-G_0$: Sarsa −7,9 ± 3,2, Q-learning +12,4 ± 2,2; $\lVert w\rVert$ không phân kỳ trong 3000 lượt. Thử nghiệm ngoài notebook: Q-learning Fourier bậc 3 có một hạt giống 25,2 (84% rơi).
