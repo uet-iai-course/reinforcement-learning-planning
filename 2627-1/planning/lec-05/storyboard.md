@@ -31,8 +31,8 @@ Tổng **45 trang, 120 phút**. Mỗi mạch là một `<section>` ngoài; từn
 
 - Dạng kết hợp: khái niệm lợi tức và ước lượng MC; thuật toán MC với hai trục lựa chọn. Năng lực nhận diện là chọn đúng mẫu và phân biệt trọng số; năng lực sử dụng là tính bảng sau từng lượt.
 - Vấn đề + ví dụ dẫn nhập: L05-B01 đặt nhiệm vụ dự đoán S/X; L05-B02 cho hai lượt cụ thể. Ví dụ làm rõ thiếu hụt kỳ vọng chưa biết bằng hai kết quả quan sát +1/−1; chuỗi L,S,X,G, cùng chính sách và $\gamma=1$ được dùng tiếp.
-- Trực giác: L05-B02 mỗi lần ghé nhận phần thưởng còn lại. Hình thức lợi tức: L05-B03 sau phép cộng số. Ví dụ lựa chọn: L05-B04 đánh dấu các lần ghé, trước định nghĩa ước lượng L05-B05.
-- Chu trình phụ bước học: vấn đề lưu lịch sử + trực giác + tính tay L05-B06; hình thức và chứng minh L05-B07; ví dụ bước hằng trước quy tắc L05-B08; ứng dụng phân loại L05-B09. Bốn trang này nằm trong 35 phút, không là một mạch riêng.
+- Trực giác: L05-B02 định nghĩa lần ghé và ghi lợi tức dưới từng nút. Hình thức lợi tức: L05-B03 sau phép cộng số, kèm bảng tính ngược. Ví dụ lựa chọn: L05-B04 phát biểu hai quy tắc, lập bảng thời điểm ghé, giải thích trọng số $2/3$ và nêu kỳ vọng $v_\pi(s)$ của từng mẫu theo tính Markov, trước định nghĩa ước lượng L05-B05 (bảng theo dõi $n$, tổng, $V_n$ tại $X$).
+- Chu trình phụ bước học: vấn đề tính trung bình mới chỉ từ trung bình cũ, số mẫu và mẫu mới + trực giác (trục số) + tính tay hai cách L05-B06; hình thức và chứng minh L05-B07; ví dụ bước hằng trước quy tắc L05-B08; ứng dụng phân loại L05-B09. Bốn trang này nằm trong 35 phút, không là một mạch riêng.
 - Quy trình đầy đủ: L05-B10 có đầu vào, khởi tạo, tính lùi lợi tức, chọn xuôi lần ghé, bước học, trạng thái kết thúc và dừng. Dữ kiện truyền sang ký hiệu: các giá trị +1/−1 thành $g_i(s)$; số lần được chọn thành $N(s)$; phép sửa 0→0.5 thành cập nhật với $\alpha$.
 - Ứng dụng: L05-B11 chạy $e_2$ sau $e_1$ cho cả hai quy tắc lần ghé. Điều kiện thống kê: L05-B12. Kiểm tra riêng: L05-B13; đáp án trung bình của X lần ghé đầu 0, mọi lần ghé $1/3$, bước hằng lần ghé đầu −0.25.
 - Câu nối giữa các bước: kết quả sau một lần ghé → cần quy tắc chọn mẫu → cần cách kết hợp mẫu → cần quy trình giữ đúng cả hai lựa chọn → cần phân biệt kết quả tính được với bảo đảm thống kê.
@@ -169,32 +169,35 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Đầu vào → đầu ra:** Môi trường L05-B01 → đại lượng còn lại sau từng thời điểm → tổng quát hóa ở L05-B03.
 - **Dữ kiện/hình thức được truyền:** Chưa viết tổng ký hiệu; tính trực tiếp $0+0+0+1=1$ và $0+0-1=-1$.
 - **Nguồn và quyết định:** L05 tr.20, 22, 29; HW05 bài 7. Quyết định `tách`.
-- **Bố cục và đối tượng:** `episode-one.svg` và `episode-two.svg`; mỗi lần ghé là một nút riêng, phần đuôi lượt của một nút được đánh dấu.
+- **Bố cục và đối tượng:** Câu định nghĩa "lần ghé"; `episode-one.svg` và `episode-two.svg`, mỗi lần ghé là một nút riêng, hàng $G_t$ dưới từng nút, ngoặc nét đứt đánh dấu phần đuôi sau $t=1$ trong $e_1$; hộp tính hai phần đuôi.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
 - **Rà soát 01-10-2026:** `giữ`; trang đạt tiêu chí tiêu đề, mạch và cách dẫn khái niệm.
+- **Rà soát 06-10-2026:** `sửa`; Định nghĩa "lần ghé" lên mặt trang; SVG thêm hàng $G_t$ và ngoặc phần đuôi. Lý do: bố cục cũ hứa đánh dấu phần đuôi nhưng hình không có; phép cộng chỉ nằm trong ghi chú.
 
 #### L05-B03: Lợi tức chiết khấu
 
 - **Lý do tồn tại và nhu cầu:** Sửa dòng công thức bị cắt trong nguồn và thiết lập chỉ số dùng lại ở chuỗi dài.
 - **Vai trò, mục tiêu và sản phẩm:** Hình thức khái niệm lợi tức; MT2. Người học cần giải thích hoặc thực hiện được kết luận: Phần thưởng nhận ngay có số mũ 0; mỗi bước xa hơn thêm một hệ số chiết khấu.
-- **Đầu vào → đầu ra:** Phép cộng L05-B02 → lợi tức có chỉ số chính xác → lựa chọn những lợi tức đưa vào trung bình ở L05-B04.
+- **Đầu vào → đầu ra:** Phép cộng L05-B02 → lợi tức có chỉ số chính xác → lựa chọn những lợi tức đưa vào trung bình ở L05-B04; thứ tự tính ngược dùng lại ở L05-B10.
 - **Dữ kiện/hình thức được truyền:** HT1: $G_t=\sum_{k=t}^{T-1}\gamma^{k-t}R_{k+1}=R_{t+1}+\gamma G_{t+1}$.
 - **Nguồn và quyết định:** L05 tr.17; SB §5.1 tr.92 và §6.1 tr.119–120. Quyết định `sửa`.
-- **Bố cục và đối tượng:** Một hàng thời gian của $e_1$ có bốn cạnh, ghi số mũ 0,1,2,3 dưới phần thưởng.
+- **Bố cục và đối tượng:** Câu mở khai báo $T$, $G_T=0$, $\gamma$; một dòng công thức tổng và truy hồi; bảng tính ngược trên $e_1$ (hàng $R_{t+1}$, $G_t$); chú thích nối về L05-B02.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
 - **Rà soát 01-10-2026:** `sửa`; Tiêu đề gọi tên khái niệm. Câu mở khai báo $T$ và $0\le\gamma\le1$; $\mathcal S^+$ và quy ước trạng thái kết thúc chuyển từ L05-A04 vào ghi chú diễn giả.
 - **Sửa sau rà 01-10-2026:** `sửa`; Câu mở thêm "giá trị ở trạng thái kết thúc bằng $0$".
+- **Rà soát 06-10-2026:** `sửa`; Bảng tính ngược trên $e_1$ thay thẻ $G_0,G_3$; gộp hai công thức; bỏ CSS cục bộ. Lý do: công thức truy hồi chưa được dùng trên mặt trang, thiếu nối về L05-B02.
 
 #### L05-B04: Lần ghé đầu tiên và mọi lần ghé
 
 - **Lý do tồn tại và nhu cầu:** Bổ sung quy tắc mọi lần ghé từ SB và tạo số khác nhau để đo đúng sự phân biệt.
-- **Vai trò, mục tiêu và sản phẩm:** Ví dụ lựa chọn mẫu; MT2. Người học cần giải thích hoặc thực hiện được kết luận: Hai quy tắc MC khác nhau ở những lần ghé được đưa vào tập mẫu.
+- **Vai trò, mục tiêu và sản phẩm:** Ví dụ lựa chọn mẫu; MT2. Người học cần giải thích hoặc thực hiện được kết luận: Hai quy tắc MC khác nhau ở những lần ghé được đưa vào tập mẫu; theo tính Markov, mỗi mẫu của cả hai quy tắc có kỳ vọng $v_\pi(s)$.
 - **Đầu vào → đầu ra:** Lợi tức L05-B03 → chọn dữ liệu thống kê → định nghĩa ước lượng MC L05-B05.
 - **Dữ kiện/hình thức được truyền:** HT2 được chuẩn bị bằng tập mẫu; chưa đồng nhất quy tắc chọn mẫu với bước học.
 - **Nguồn và quyết định:** L05 tr.18, 20, 22; SB §5.1 tr.92–93; phép tính từ hai lượt nguồn. Quyết định `sửa`.
-- **Bố cục và đối tượng:** Hai quỹ đạo đánh dấu các vị trí được chọn; bảng hai hàng S/X và hai cột quy tắc. Các tập mẫu và số đếm là HTML.
+- **Bố cục và đối tượng:** Hai dòng quy tắc có nhãn đậm (lần ghé đầu tiên lấy $G_t$ tại thời điểm sớm nhất có $S_t=s$; mọi lần ghé lấy $G_t$ tại mọi thời điểm có $S_t=s$); ký hiệu $t_1<t_2<\cdots$ ở ghi chú; bảng hai hàng S/X với cột thời điểm ghé ghi rõ từng lượt và hai cột quy tắc; câu giải thích tại $X$ mọi lần ghé lấy hai mẫu từ $e_1$ và một mẫu từ $e_2$, nên $e_1$ chiếm trọng số $2/3$; hộp kỳ vọng theo tính Markov. Các tập mẫu và số đếm là HTML. Lập luận thời điểm dừng ở ghi chú.
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
 - **Rà soát 01-10-2026:** `sửa`; Câu mở nêu lý do cần quy tắc: một trạng thái có thể xuất hiện nhiều lần trong một lượt.
+- **Rà soát 06-10-2026:** `sửa`; Phát biểu hai quy tắc (hai dòng nhãn đậm); cột thời điểm ghé ghi rõ từng lượt; câu giải thích trọng số $2/3$ để bảng ($0$ và $1/3$ tại $X$) không mâu thuẫn với hộp; hộp nêu theo tính Markov mỗi mẫu của cả hai quy tắc có kỳ vọng $v_\pi(s)$ (yêu cầu của người dùng). Lý do: trang cũ không phát biểu quy tắc, hộp cuối không mang thông tin.
 
 #### L05-B05: Ước lượng Monte Carlo
 
@@ -203,20 +206,22 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Đầu vào → đầu ra:** Tập mẫu L05-B04 → phép kết hợp chính thức → nhu cầu cập nhật khi nhận thêm mẫu L05-B06.
 - **Dữ kiện/hình thức được truyền:** HT2: $V_n(s)=\frac1n\sum_{i=1}^{n}g_i(s)$.
 - **Nguồn và quyết định:** SB §5.1 tr.92–93; L05 tr.18. Quyết định `sửa`.
-- **Bố cục và đối tượng:** Ba ô mẫu của X nối đến một ô trung bình; không cần môi trường mới.
+- **Bố cục và đối tượng:** Dòng ký hiệu $g_i(s)$, $n=N(s)$; công thức đặt cạnh bảng theo dõi tại X (mọi lần ghé) với cột $g_n(X)$, $n$, tổng, $V_n(X)$; không cần môi trường mới.
 - **Thời lượng:** 2 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
 - **Rà soát 01-10-2026:** `giữ`; trang đạt tiêu chí tiêu đề, mạch và cách dẫn khái niệm.
+- **Rà soát 06-10-2026:** `sửa`; Bảng theo dõi $n$, tổng, $V_n(X)$ thay hai thẻ lặp L05-B04; ghi chú nêu dạng bộ đếm và tổng của nguồn tr.18. Lý do: tránh trùng và chuẩn bị trạng thái đầu của L05-B06.
 
 #### L05-B06: Cập nhật trung bình khi có mẫu mới
 
 - **Lý do tồn tại và nhu cầu:** Khôi phục ví dụ số trước công thức gia tăng thay cho việc trình bày công thức ngay ở nguồn tr.21.
-- **Vai trò, mục tiêu và sản phẩm:** Vấn đề, trực giác và tính tay gia tăng; MT3. Người học cần giải thích hoặc thực hiện được kết luận: Tổng thông tin cần giữ của các mẫu cũ là số mẫu và trung bình hiện tại.
+- **Vai trò, mục tiêu và sản phẩm:** Vấn đề, trực giác và tính tay gia tăng; MT3. Người học cần giải thích hoặc thực hiện được kết luận: Trung bình mới bằng trung bình cũ dịch về phía mẫu mới một phần $1/n$ sai lệch; chỉ cần số mẫu, trung bình cũ và mẫu mới.
 - **Đầu vào → đầu ra:** Tổng L05-B05 → phép điều chỉnh dùng đủ thông tin → chứng minh đẳng thức tổng quát L05-B07.
 - **Dữ kiện/hình thức được truyền:** Ví dụ $1+\frac13(-1-1)=\frac13$ chuẩn bị HT3.
-- **Nguồn và quyết định:** SB §2.4 tr.30–31; dữ liệu X từ L05-B04. Quyết định `thêm`.
-- **Bố cục và đối tượng:** Hai khối số: n cũ bằng 2, V cũ bằng 1; mẫu mới −1; kết quả $1/3$.
+- **Nguồn và quyết định:** SB §2.4 tr.30–31; L05 tr.18; dữ liệu X từ L05-B04. Quyết định `thêm`.
+- **Bố cục và đối tượng:** Câu yêu cầu (tính trung bình mới chỉ từ trung bình cũ, số mẫu và mẫu mới) và dòng dữ kiện (2 mẫu, trung bình 1, mẫu mới −1); hai thẻ "Tính lại từ tổng" và "Sửa trung bình cũ"; trục số SVG nội tuyến; hộp "một phần ba của sai lệch".
 - **Thời lượng:** 3 phút; các nội dung giải thích và ghi chú chi tiết theo mục tương ứng trong outline.
 - **Rà soát 01-10-2026:** `sửa`; Câu mở nêu yêu cầu chỉ lưu trung bình và số mẫu. Lý do: vấn đề của trang trước chỉ có trong ghi chú.
+- **Rà soát 06-10-2026:** `sửa`; Hai cách tính cạnh nhau, trục số, lý do bộ nhớ sửa theo SB §2.4. Lý do: phân biệt hai cách tính và nêu cấu trúc dịch về mục tiêu dùng lại ở L05-B08 và mạch C.
 
 #### L05-B07: Trung bình gia tăng
 
@@ -288,6 +293,7 @@ Ghi chú diễn giả chỉ chứa giải thích học thuật, giả thiết, l
 - **Điều kiện bổ sung sau rà:** Với quá trình phần thưởng Markov hữu hạn do chính sách Markov dừng, cố định tạo ra, phần thưởng bị chặn, kết thúc hầu chắc chắn từ mọi trạng thái không kết thúc đang xét, các lượt khởi động độc lập theo cùng phân phối và xác suất ghé $s$ dương, trung bình mọi lần ghé với $0\le\gamma\le1$ và bước học $1/N(s)$ hội tụ hầu chắc chắn về $v_\pi(s)$ khi số lượt hoàn chỉnh tăng vô hạn. Kết luận ở ghi chú/học liệu; mặt trang phân biệt phụ thuộc trong lượt, nhất quán và ảnh hưởng khởi tạo có điều kiện. M01/RL-02 và M02/RL-03/ACA-01.
 - **Rà soát 01-10-2026:** `sửa`; Tiêu đề nêu kết quả thay vì "giả thiết". Ba thẻ: lần ghé đầu tiên; mọi lần ghé; bước học hằng. Chú thích nêu giả thiết của hai kết quả hội tụ.
 - **Sửa sau rà 01-10-2026:** `sửa`; Định nghĩa ngắn "ước lượng không chệch: kỳ vọng bằng $v_\pi(s)$"; chú thích giả thiết viết liền: lượt độc lập, cùng phân phối, kết thúc hầu chắc chắn, thưởng bị chặn, $s$ được ghé với xác suất dương; ghi chú diễn giả nêu tính Markov cho thời điểm ghé ngẫu nhiên; thẻ bước hằng viết dạng khẳng định có điều kiện.
+- **Rà soát 06-10-2026:** `sửa`; Câu mở thêm "Theo tính Markov", nối với L05-B04. Phần còn lại giữ.
 
 #### L05-B13: Kiểm tra chọn mẫu Monte Carlo
 

@@ -53,11 +53,11 @@ Với $\gamma=1$, hai lượt quan sát là
 $$e_1:S\to X\to S\to X\to G,\qquad (R_1,R_2,R_3,R_4)=(0,0,0,1),$$
 $$e_2:S\to X\to S\to L,\qquad (R_1,R_2,R_3)=(0,0,-1).$$
 
-Mỗi lần ghé $S$ hoặc $X$ trong $e_1$ có tổng thưởng còn lại bằng $1$; trong $e_2$ tổng ấy bằng $-1$. Các giá trị bằng nhau trong từng lượt do $\gamma=1$ và chỉ có thưởng cuối lượt, không phải tính chất chung của mọi quỹ đạo.
+Một **lần ghé** trạng thái $s$ là một thời điểm $t$ có $S_t=s$. Với $\gamma=1$, lợi tức của lần ghé ấy là tổng phần thưởng từ sau $t$ đến cuối lượt. Chẳng hạn, phần đuôi sau lần ghé $X$ tại $t=1$ trong $e_1$ gồm ba chuyển với tổng thưởng $0+0+1=1$. Mỗi lần ghé $S$ hoặc $X$ trong $e_1$ có tổng thưởng còn lại bằng $1$; trong $e_2$ tổng ấy bằng $-1$. Các lần ghé lặp là những thời điểm khác nhau nên mỗi lần có lợi tức riêng. Các giá trị bằng nhau trong từng lượt do $\gamma=1$ và chỉ có thưởng cuối lượt, không phải tính chất chung của mọi quỹ đạo.
 
-![Lượt e1 có bốn chuyển, đi qua S và X hai lần trước khi nhận thưởng 1 tại chuyển vào G.](img/lec-05/episode-one.svg)
+![Lượt e1 có bốn chuyển, đi qua S và X hai lần trước khi nhận thưởng 1 tại chuyển vào G; hàng G_t ghi lợi tức 1, 1, 1, 1 và 0 tại G; ngoặc nét đứt đánh dấu phần đuôi sau t = 1.](img/lec-05/episode-one.svg)
 
-![Lượt e2 đi qua S, X, S rồi nhận thưởng âm 1 trên chuyển vào L.](img/lec-05/episode-two.svg)
+![Lượt e2 đi qua S, X, S rồi nhận thưởng âm 1 trên chuyển vào L; hàng G_t ghi lợi tức âm 1, âm 1, âm 1 và 0 tại L.](img/lec-05/episode-two.svg)
 
 Với lượt kết thúc tại thời điểm $T$, **lợi tức chiết khấu** được định nghĩa bởi
 
@@ -67,7 +67,14 @@ Tách phần thưởng đầu tiên khỏi tổng cho
 
 $$G_t=R_{t+1}+\gamma G_{t+1}.$$
 
-Thưởng nhận ngay $R_{t+1}$ có hệ số $1$. Trong $e_1$, $T=4$, nên $G_0=\gamma^3$ và $G_3=1$. Đẳng thức truy hồi cho phép tính các lợi tức theo chiều ngược từ cuối lượt.
+Thưởng nhận ngay $R_{t+1}$ có hệ số $1$. Đẳng thức truy hồi cho phép tính các lợi tức theo chiều ngược từ cuối lượt. Trong $e_1$, $T=4$:
+
+| $t$ | $4$ | $3$ | $2$ | $1$ | $0$ |
+|---|---|---|---|---|---|
+| $R_{t+1}$ | | $1$ | $0$ | $0$ | $0$ |
+| $G_t$ | $0$ | $1+\gamma\cdot0=1$ | $0+\gamma\cdot1=\gamma$ | $\gamma^2$ | $\gamma^3$ |
+
+Thưởng $R_4$ nhận trên chuyển thứ tư tính từ $S_0$, nên mang hệ số $\gamma^{4-1}=\gamma^3$. Với $\gamma=1$, $G_0=G_1=G_2=G_3=1$, đúng các lợi tức của $e_1$ khi cộng trực tiếp.
 
 Từ đây, $\mathcal S$ chỉ tập hữu hạn các trạng thái không kết thúc; $\mathcal S^+$ bổ sung các trạng thái kết thúc. Giá trị tiếp nối ở trạng thái kết thúc bằng $0$, còn phần thưởng nhận trên chuyển vào trạng thái ấy vẫn được tính. Dừng thu thập do hết ngân sách không tự biến một trạng thái thành trạng thái kết thúc.
 
@@ -90,7 +97,7 @@ Nguồn: bài giảng gốc, tr.17, 19–22; Bài tập tuần 5, bài 7; Sutton
 <!-- note-topic-id: lec-05-topic-04 -->
 ### Ước lượng Monte Carlo
 
-Trong $e_1$, cả $S$ và $X$ đều xuất hiện hai lần, nên cần quy tắc xác định lợi tức nào được đưa vào trung bình. Quy tắc **lần ghé đầu tiên** chọn thời điểm sớm nhất mà một trạng thái xuất hiện trong từng lượt. Với hai lượt $e_1,e_2$, mỗi trạng thái $S,X$ nhận một mẫu $+1$ từ $e_1$ và một mẫu $-1$ từ $e_2$. Trung bình các mẫu cho ước lượng MC:
+Trong $e_1$, cả $S$ và $X$ đều xuất hiện hai lần, nên cần quy tắc xác định lợi tức nào được đưa vào trung bình. Gọi $t_1<t_2<\cdots$ là các thời điểm có $S_t=s$ trong một lượt. Quy tắc **lần ghé đầu tiên** chỉ lấy $G_{t_1}$, nên mỗi lượt cho tối đa một mẫu tại $s$. Với hai lượt $e_1,e_2$, mỗi trạng thái $S,X$ nhận một mẫu $+1$ từ $e_1$ và một mẫu $-1$ từ $e_2$. Trung bình các mẫu cho ước lượng MC:
 
 | Lượt đã xử lý | Mẫu mới tại S và X | Số mẫu mỗi trạng thái | $(V(S),V(X))$ |
 |---|---|---|---|
@@ -101,9 +108,17 @@ Tổng quát, gọi $g_i(s)$ là mẫu lợi tức thứ $i$ được chọn t�
 
 $$V_n(s)=\frac1n\sum_{i=1}^n g_i(s).$$
 
-Chỉ số $n$ đếm mẫu tại $s$, không phải thời điểm tương tác toàn cục. Khi chưa có mẫu, bảng vẫn chứa giá trị khởi tạo. Hai lượt cho trung bình bằng $0$ không xác định giá trị thật của chính sách; đây là một ước lượng hữu hạn mẫu.
+Chỉ số $n=N(s)$ đếm mẫu tại $s$, không phải thời điểm tương tác toàn cục. Bài giảng gốc (tr.18) lưu bộ đếm $N(s)$ và tổng lợi tức của từng trạng thái, ký hiệu tổng là $S(s)$; ghi chú này gọi đại lượng ấy là tổng các mẫu để tránh trùng với trạng thái $S$. Ước lượng bằng tổng chia bộ đếm. Khi chưa có mẫu, bảng vẫn chứa giá trị khởi tạo. Hai lượt cho trung bình bằng $0$ không xác định giá trị thật của chính sách; đây là một ước lượng hữu hạn mẫu.
 
-Nếu chọn quy tắc **mọi lần ghé**, mỗi thời điểm có trạng thái $s$ đều cung cấp một mẫu. Khi đó, $X$ có dãy $(1,1,-1)$ và trung bình $1/3$. Quy tắc lựa chọn mẫu phải được xác định trước khi tính trung bình.
+Nếu chọn quy tắc **mọi lần ghé**, mọi $G_{t_k}$ đều được lấy, nên mỗi lần ghé cung cấp một mẫu. Khi đó, $X$ nhận lần lượt các mẫu $1,1,-1$:
+
+| Mẫu mới $g_n(X)$ | $n$ | Tổng các mẫu | $V_n(X)$ |
+|---|---|---|---|
+| $1$ | $1$ | $1$ | $1$ |
+| $1$ | $2$ | $2$ | $1$ |
+| $-1$ | $3$ | $1$ | $1/3$ |
+
+Quy tắc lựa chọn mẫu phải được xác định trước khi tính trung bình.
 
 ::: exercise Câu hỏi:
 Dùng lần ghé đầu tiên và trung bình mẫu trên $e_1,e_2$. Tính $V(S),V(X)$ sau riêng $e_1$, rồi sau cả hai lượt. Giải thích nguyên nhân hai giá trị cuối bằng $0$.
@@ -129,11 +144,17 @@ Trong $e_1$, $S$ xuất hiện ở thời điểm $0,2$, còn $X$ ở thời đi
 | $S$ | $(1,-1)$, trung bình $0$ | $(1,1,-1,-1)$, trung bình $0$ |
 | $X$ | $(1,-1)$, trung bình $0$ | $(1,1,-1)$, trung bình $1/3$ |
 
-Các lợi tức trong cùng lượt có thể phụ thuộc nhau vì dùng chung phần đuôi. Số mẫu được chọn không đồng nhất với số quan sát độc lập.
+Lần ghé thứ $k$ xảy ra tại $t_k$ hay không chỉ phụ thuộc lịch sử đến $t_k$, nên $t_k$ là một thời điểm dừng. Với chính sách Markov cố định và môi trường Markov dừng, tính Markov mạnh cho thấy phần lượt từ $t_k$ có cùng phân phối với một lượt bắt đầu tại $s$, do đó
 
-Khi số lượt tăng, lưu mọi lợi tức đã chọn để tính lại trung bình đòi hỏi bộ nhớ tăng theo số mẫu. Trung bình có thể được cập nhật chỉ từ trung bình hiện tại và số mẫu. Đối với $X$ theo mọi lần ghé, hai mẫu đầu $(1,1)$ có trung bình $1$. Khi thêm mẫu $-1$, trung bình mới là
+$$\mathbb E_\pi\bigl[G_{t_k}\mid\text{lần ghé thứ }k\text{ xảy ra}\bigr]=v_\pi(s)$$
 
-$$\frac{2\cdot1-1}{3}=1+\frac13(-1-1)=\frac13.$$
+với mọi $k$, không riêng $k=1$. Như vậy mỗi mẫu của cả hai quy tắc có kỳ vọng $v_\pi(s)$. Các lợi tức trong cùng lượt vẫn phụ thuộc nhau vì dùng chung phần đuôi; hai mẫu $1,1$ của $X$ trong $e_1$ cùng đến từ một kết cục là về $G$. Số mẫu được chọn vì thế không đồng nhất với số quan sát độc lập. Sự phụ thuộc trong lượt không tự gây chệch; số mẫu mỗi lượt ngẫu nhiên và tương quan với lợi tức làm trung bình mọi lần ghé có dạng tỉ số, nên không được khẳng định không chệch ở số lượt hữu hạn; điều kiện cho các kết quả về trung bình nằm ở mục tính không chệch và điều kiện hội tụ. Tại $S$, mỗi lượt cho hai mẫu bằng nhau, nên hai quy tắc cùng trung bình $0$. Tại $X$, $e_1$ cho hai mẫu và $e_2$ cho một mẫu, nên trung bình mọi lần ghé đặt trọng số $2/3$ cho kết cục của $e_1$.
+
+Khi số lượt tăng, lưu mọi lợi tức đã chọn để tính lại trung bình đòi hỏi bộ nhớ tăng theo số mẫu. Trung bình có thể được cập nhật chỉ từ trung bình hiện tại, số mẫu và mẫu mới. Đối với $X$ theo mọi lần ghé, hai mẫu đầu $(1,1)$ có trung bình $1$. Khi thêm mẫu $-1$, có hai cách tính cùng kết quả:
+
+$$\frac{2\cdot1-1}{3}=\frac13,\qquad 1+\frac13(-1-1)=\frac13.$$
+
+Cách thứ nhất tính lại từ tổng; cách thứ hai sửa trung bình cũ. Lưu tổng và bộ đếm như bài giảng gốc cũng không cần lịch sử. Dạng sửa trung bình có thêm một cấu trúc: trung bình mới dịch về phía mẫu mới một phần ba khoảng cách. Khoảng cách từ $1$ đến $-1$ bằng $2$, và trung bình dịch $2/3$, từ $1$ về $1/3$.
 
 Tổng của $n-1$ mẫu cũ bằng $(n-1)V_{n-1}(s)$. Vì thế,
 

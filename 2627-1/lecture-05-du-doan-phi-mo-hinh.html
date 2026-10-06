@@ -25,7 +25,8 @@
 .reveal.lecture-deck section[data-slide-id="L05-E04"] .card { margin-top: .3em; }
 .reveal.lecture-deck section[data-slide-id="L05-B12"] .card p,
 .reveal.lecture-deck section[data-slide-id="L05-E04"] .card p { margin: .25em 0; }
-.reveal.lecture-deck section[data-slide-id="L05-B02"] .figure { max-height: 175px; }
+.reveal.lecture-deck section[data-slide-id="L05-B02"] .figure { max-height: 182px; }
+.reveal.lecture-deck section[data-slide-id="L05-B06"] .mean-shift { width: 100%; max-height: 166px; }
 .reveal.lecture-deck section[data-slide-id="L05-D04"] .figure { max-height: 280px; }
 .reveal.lecture-deck section[data-slide-id="L05-D11"] .figure { max-height: 205px; }
 .reveal.lecture-deck section[data-slide-id="L05-D06"] .figure { max-height: 170px; }
@@ -34,34 +35,29 @@
 .reveal.lecture-deck section[data-slide-id="L05-A02"] .figure { max-height: 150px; }
 /* Giảm khoảng cách dọc để nội dung không chạm dòng chân trang; cỡ chữ giữ nguyên. */
 .reveal.lecture-deck section[data-slide-id="L05-B01"] h2,
-.reveal.lecture-deck section[data-slide-id="L05-B03"] h2,
 .reveal.lecture-deck section[data-slide-id="L05-B07"] h2,
 .reveal.lecture-deck section[data-slide-id="L05-C02"] h2,
 .reveal.lecture-deck section[data-slide-id="L05-D01"] h2,
 .reveal.lecture-deck section[data-slide-id="L05-D06"] h2,
 .reveal.lecture-deck section[data-slide-id="L05-E02"] h2 { margin-bottom: .4em; }
 .reveal.lecture-deck section[data-slide-id="L05-B01"] .math-large,
-.reveal.lecture-deck section[data-slide-id="L05-B03"] .math-large,
 .reveal.lecture-deck section[data-slide-id="L05-B07"] .math-large,
 .reveal.lecture-deck section[data-slide-id="L05-C02"] .math-large,
 .reveal.lecture-deck section[data-slide-id="L05-D01"] .math-large,
 .reveal.lecture-deck section[data-slide-id="L05-D06"] .math-large,
 .reveal.lecture-deck section[data-slide-id="L05-E02"] .math-large { margin: .3em 0; }
 .reveal.lecture-deck section[data-slide-id="L05-B01"] .box,
-.reveal.lecture-deck section[data-slide-id="L05-B03"] .box,
 .reveal.lecture-deck section[data-slide-id="L05-B07"] .box,
 .reveal.lecture-deck section[data-slide-id="L05-C02"] .box,
 .reveal.lecture-deck section[data-slide-id="L05-D01"] .box,
 .reveal.lecture-deck section[data-slide-id="L05-D06"] .box,
 .reveal.lecture-deck section[data-slide-id="L05-E02"] .box,
 .reveal.lecture-deck section[data-slide-id="L05-B01"] .caption,
-.reveal.lecture-deck section[data-slide-id="L05-B03"] .caption,
 .reveal.lecture-deck section[data-slide-id="L05-B07"] .caption,
 .reveal.lecture-deck section[data-slide-id="L05-C02"] .caption,
 .reveal.lecture-deck section[data-slide-id="L05-D01"] .caption,
 .reveal.lecture-deck section[data-slide-id="L05-D06"] .caption,
 .reveal.lecture-deck section[data-slide-id="L05-E02"] .caption { margin-top: .3em; margin-bottom: .2em; }
-.reveal.lecture-deck section[data-slide-id="L05-B03"] .katex-display,
 .reveal.lecture-deck section[data-slide-id="L05-B07"] .katex-display { margin: .25em 0; }
 </style>
 </head>
@@ -122,45 +118,46 @@
 </section>
 <section data-slide-id="L05-B02" data-note-topic-id="lec-05-topic-02">
 <h2>Lợi tức sau mỗi lần ghé</h2>
-<img class="figure short" src="img/lec-05/episode-one.svg" alt="Lượt thứ nhất S, X, S, X, G, bốn phần thưởng lần lượt 0, 0, 0, 1"/><img class="figure short" src="img/lec-05/episode-two.svg" alt="Lượt thứ hai S, X, S, L, ba phần thưởng lần lượt 0, 0, âm 1"/>
-<div class="box">Với $\gamma=1$, mỗi lần ghé $S$ hoặc $X$ có lợi tức $+1$ trong $e_1$ và $-1$ trong $e_2$.</div>
-<aside class="notes"><p>Ở lần ghé đầu của $e_1$, tổng thưởng còn lại là $0+0+0+1=1$. Sau các lần ghé khác trong cùng lượt, thưởng cuối vẫn bằng $1$ và các thưởng trước đó đều bằng $0$. Tương tự, mỗi phần đuôi bắt đầu ở $S$ hoặc $X$ trong $e_2$ có tổng bằng $-1$. Việc các lợi tức trong một lượt bằng nhau ở đây phụ thuộc $\gamma=1$ và cấu hình thưởng; nó không phải tính chất chung của mọi quỹ đạo.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 20, 22, 29; Bài tập tuần 5, bài 7.</p></aside>
+<p>Một <strong>lần ghé</strong> trạng thái $s$ là một thời điểm $t$ có $S_t=s$. Với $\gamma=1$, lợi tức của lần ghé ấy là tổng phần thưởng từ sau $t$ đến cuối lượt.</p>
+<img class="figure short" src="img/lec-05/episode-one.svg" alt="Lượt thứ nhất S, X, S, X, G tại t bằng 0 đến 4, phần thưởng 0, 0, 0, 1; hàng lợi tức G_t là 1, 1, 1, 1 và 0 tại G; ngoặc nét đứt đánh dấu phần đuôi sau t bằng 1"/><img class="figure short" src="img/lec-05/episode-two.svg" alt="Lượt thứ hai S, X, S, L tại t bằng 0 đến 3, phần thưởng 0, 0, âm 1; hàng lợi tức G_t là âm 1, âm 1, âm 1 và 0 tại L"/>
+<div class="box">$X$ tại $t=1$ trong $e_1$: $0+0+1=1$; $S$ tại $t=2$ trong $e_2$: $-1$.</div>
+<aside class="notes"><p>Ở lần ghé đầu của $e_1$, tổng thưởng còn lại là $0+0+0+1=1$. Phần đuôi sau $t=1$ gồm ba chuyển từ $X$ đến $G$, với tổng thưởng $0+0+1=1$. Mỗi lần ghé lặp lại là một thời điểm khác nên có lợi tức riêng; trong hai lượt này các lợi tức trùng giá trị. Mỗi phần đuôi bắt đầu ở $S$ hoặc $X$ trong $e_2$ có tổng bằng $-1$. Việc các lợi tức trong một lượt bằng nhau ở đây phụ thuộc $\gamma=1$ và cấu hình thưởng; nó không phải tính chất chung của mọi quỹ đạo. Lợi tức tại trạng thái kết thúc bằng $0$ vì sau đó không còn phần thưởng.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 20, 22, 29; Bài tập tuần 5, bài 7.</p></aside>
 </section>
 <section data-slide-id="L05-B03" data-note-topic-id="lec-05-topic-02">
 <h2>Lợi tức chiết khấu</h2>
 
-<p>Lượt kết thúc tại thời điểm $T$; giá trị ở trạng thái kết thúc bằng $0$; $0\le\gamma\le1$.<br/>Với $t&lt;T$, thưởng đầu tiên sau $S_t$ là $R_{t+1}$.</p>
-<div class="math-large">$$G_t=\sum_{k=t}^{T-1}\gamma^{k-t}R_{k+1},\qquad G_T=0.$$</div>
-<div class="math-large">$$G_t=R_{t+1}+\gamma G_{t+1}.$$</div>
-<div class="card"><p>Trong $e_1$, $T=4$ và $(R_1,R_2,R_3,R_4)=(0,0,0,1)$.</p><p class="math-large">$G_0=0+\gamma\,0+\gamma^2\,0+\gamma^3\,1=\gamma^3,\quad G_3=1.$</p></div>
+<p>Lượt kết thúc tại $T$ với $G_T=0$ và $0\le\gamma\le1$. Thưởng đầu tiên sau $S_t$ là $R_{t+1}$.</p>
+<div class="math-large">$$G_t=\sum_{k=t}^{T-1}\gamma^{k-t}R_{k+1}=R_{t+1}+\gamma G_{t+1}.$$</div>
+<table><thead><tr><th>$e_1$, tính ngược</th><th>$t=4$</th><th>$t=3$</th><th>$t=2$</th><th>$t=1$</th><th>$t=0$</th></tr></thead><tbody><tr><td>$R_{t+1}$</td><td></td><td>$1$</td><td>$0$</td><td>$0$</td><td>$0$</td></tr><tr><td>$G_t$</td><td>$0$</td><td>$1+\gamma\cdot0=1$</td><td>$0+\gamma\cdot1=\gamma$</td><td>$\gamma^2$</td><td>$\gamma^3$</td></tr></tbody></table>
+<p class="caption">Với $\gamma=1$: $G_0=G_1=G_2=G_3=1$, đúng các lợi tức của $e_1$ khi cộng trực tiếp.</p>
 
-<aside class="notes"><p>Tách số hạng $k=t$ khỏi tổng rồi đặt $\gamma$ ra ngoài phần còn lại cho đẳng thức truy hồi. Công thức dùng để tính các lợi tức theo chiều ngược, bắt đầu từ $G_T=0$. Với $\gamma=1$, hai phép tính của lượt ngắn trở về tổng phần thưởng không chiết khấu. Tập $\mathcal S^+$ gồm $\mathcal S$ và các trạng thái kết thúc; giá trị tiếp nối ở trạng thái kết thúc bằng $0$, còn phần thưởng nhận trên chuyển vào trạng thái ấy vẫn được tính. Dừng thu thập do hết ngân sách không tự tạo một trạng thái kết thúc. Trong bài toán không kết thúc, việc đặt $\gamma=1$ không tự bảo đảm một tổng hữu hạn; trường hợp $\gamma=1$ cần lượt kết thúc hợp lệ và lợi tức khả tích.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 17; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 tr. 92; §6.1 tr. 119–120.</p></aside>
+<aside class="notes"><p>Tách số hạng $k=t$ khỏi tổng rồi đặt $\gamma$ ra ngoài phần còn lại cho đẳng thức truy hồi. Bảng tính từ $t=T$ về $t=0$: $G_3=R_4+\gamma G_4=1$, $G_2=R_3+\gamma G_3=\gamma$, $G_1=\gamma^2$, $G_0=\gamma^3$; thuật toán Monte Carlo dùng đúng thứ tự này. Thưởng $R_4$ nhận trên chuyển thứ tư tính từ $S_0$, nên mang hệ số $\gamma^{4-1}=\gamma^3$. Tập $\mathcal S^+$ gồm $\mathcal S$ và các trạng thái kết thúc; giá trị tiếp nối ở trạng thái kết thúc bằng $0$, còn phần thưởng nhận trên chuyển vào trạng thái ấy vẫn được tính. Dừng thu thập do hết ngân sách không tự tạo một trạng thái kết thúc. Trong bài toán không kết thúc, việc đặt $\gamma=1$ không tự bảo đảm một tổng hữu hạn; trường hợp $\gamma=1$ cần lượt kết thúc hợp lệ và lợi tức khả tích.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 17; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 tr. 92; §6.1 tr. 119–120.</p></aside>
 </section>
 <section data-slide-id="L05-B04" data-note-topic-id="lec-05-topic-06">
 <h2>Lần ghé đầu tiên và mọi lần ghé</h2>
 
-<p>Một trạng thái có thể xuất hiện nhiều lần trong một lượt, nên cần quy tắc chọn lợi tức làm mẫu.</p>
-<p>$e_1:S\to X\to S\to X\to G$; $e_2:S\to X\to S\to L$; $\gamma=1$.</p><table><thead><tr><th>Trạng thái</th><th>Lần ghé đầu tiên</th><th>Mọi lần ghé</th></tr></thead><tbody><tr><td>$S$</td><td>Mẫu $(1,-1)$<br/>Trung bình $0$</td><td>Mẫu $(1,1,-1,-1)$<br/>Trung bình $0$</td></tr><tr><td>$X$</td><td>Mẫu $(1,-1)$<br/>Trung bình $0$</td><td>Mẫu $(1,1,-1)$<br/>Trung bình $1/3$</td></tr></tbody></table>
-<div class="box">Lần ghé đầu tiên được xác định theo chiều thời gian trong từng lượt.</div>
-<aside class="notes"><p>Trong $e_1$, $S$ xuất hiện tại $t=0,2$ và $X$ tại $t=1,3$. Quy tắc lần ghé đầu tiên chọn $t=0,1$; quy tắc mọi lần ghé chọn cả bốn vị trí. Trong $e_2$, $S$ xuất hiện hai lần, $X$ một lần. Vì thế, hai quy tắc cho các tập mẫu khác nhau tại $X$. Các lợi tức trong cùng lượt có thể phụ thuộc nhau; tăng số mẫu được chọn không đồng nghĩa tăng tương ứng số quan sát độc lập.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 18, 20, 22; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 tr. 92–93.</p></aside>
+<ul><li><strong>Lần ghé đầu tiên:</strong> chỉ lấy $G_t$ tại thời điểm sớm nhất có $S_t=s$ trong lượt.</li><li><strong>Mọi lần ghé:</strong> lấy $G_t$ tại mọi thời điểm có $S_t=s$.</li></ul>
+<table><thead><tr><th>Trạng thái</th><th>Thời điểm ghé</th><th>Lần ghé đầu tiên</th><th>Mọi lần ghé</th></tr></thead><tbody><tr><td>$S$</td><td>$e_1$: $0,2$ · $e_2$: $0,2$</td><td>$(1,-1)$, trung bình $0$</td><td>$(1,1,-1,-1)$, trung bình $0$</td></tr><tr><td>$X$</td><td>$e_1$: $1,3$ · $e_2$: $1$</td><td>$(1,-1)$, trung bình $0$</td><td>$(1,1,-1)$, trung bình $1/3$</td></tr></tbody></table>
+<p>Tại $X$, mọi lần ghé lấy hai mẫu từ $e_1$ và một mẫu từ $e_2$, nên $e_1$ chiếm $2/3$ trọng số.</p>
+<div class="box">Theo tính Markov, phần lượt sau mỗi lần ghé $s$ có cùng phân phối với một lượt bắt đầu tại $s$. Vì vậy mỗi mẫu của cả hai quy tắc có kỳ vọng $v_\pi(s)$.</div>
+<aside class="notes"><p>Trong $e_1$, $S$ xuất hiện tại $t=0,2$ và $X$ tại $t=1,3$; trong $e_2$, $S$ tại $t=0,2$ và $X$ tại $t=1$. Gọi $t_1&lt;t_2&lt;\cdots$ là các thời điểm có $S_t=s$ trong một lượt. Quy tắc lần ghé đầu tiên chọn $G_{t_1}$, nên mỗi lượt cho tối đa một mẫu; quy tắc mọi lần ghé chọn mọi $G_{t_k}$. Lần ghé thứ $k$ xảy ra tại $t_k$ hay không chỉ phụ thuộc lịch sử đến $t_k$, nên $t_k$ là một thời điểm dừng. Với chính sách Markov cố định và môi trường Markov dừng, tính Markov mạnh cho thấy phần lượt từ $t_k$ có cùng phân phối với một lượt bắt đầu tại $s$, do đó $\mathbb E_\pi[G_{t_k}\mid\text{lần ghé thứ }k\text{ xảy ra}]=v_\pi(s)$ với mọi $k$, không riêng $k=1$.</p><p>Từng mẫu có kỳ vọng $v_\pi(s)$. Các mẫu trong cùng lượt dùng chung phần đuôi; hai mẫu $1,1$ của $X$ trong $e_1$ cùng đến từ một kết cục là về $G$. Sự phụ thuộc trong lượt không tự gây chệch; số mẫu mỗi lượt ngẫu nhiên và tương quan với lợi tức làm trung bình mọi lần ghé có dạng tỉ số, nên không được khẳng định không chệch ở số lượt hữu hạn. Điều kiện cho các kết quả về trung bình nằm ở trang "Tính không chệch và hội tụ của Monte Carlo". Tại $S$, mỗi lượt cho hai mẫu bằng nhau, nên hai quy tắc cùng trung bình $0$. Tại $X$, $e_1$ cho hai mẫu và $e_2$ cho một mẫu, nên trung bình mọi lần ghé đặt trọng số $2/3$ cho kết cục của $e_1$.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 18, 20, 22; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 tr. 92–93.</p></aside>
 </section>
 <section data-slide-id="L05-B05" data-note-topic-id="lec-05-topic-04">
 <h2>Ước lượng Monte Carlo</h2>
 
-<p>$g_i(s)$ là mẫu lợi tức thứ $i$ được chọn tại trạng thái $s$.</p>
-<div class="math-large">$$V_n(s)=\frac1n\sum_{i=1}^{n}g_i(s).$$</div>
-<div class="grid2"><div class="card"><h3>Tập mẫu tại $X$</h3><p>Theo mọi lần ghé: $(1,1,-1)$.</p><p>$n=3$ mẫu được chọn.</p></div><div class="card"><h3>Trung bình mẫu</h3><div class="math-large">$V_3(X)=\dfrac{1+1-1}{3}=\dfrac13$</div></div></div>
-<p class="caption">$n$ đếm mẫu của riêng trạng thái $s$; $v_\pi(s)$ là kỳ vọng cần ước lượng.</p>
-<aside class="notes"><p>Monte Carlo dùng các lợi tức đã quan sát dưới chính sách cố định để ước lượng giá trị. Với trung bình mẫu, mỗi lợi tức được chọn có trọng số bằng $1/n$. Chỉ số $i$ đánh thứ tự các mẫu của một trạng thái, không phải thời điểm tương tác toàn cục. Khi trạng thái chưa có mẫu, bảng vẫn chứa giá trị khởi tạo. Nhận thêm mẫu tạo nhu cầu cập nhật trung bình mà không giữ toàn bộ lịch sử lợi tức.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 18; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 tr. 92–93.</p></aside>
+<p>$g_i(s)$: mẫu lợi tức thứ $i$ được chọn tại $s$; $n=N(s)$: số mẫu đã chọn tại $s$.</p>
+<div class="grid2"><div><div class="math-large">$$V_n(s)=\frac1n\sum_{i=1}^{n}g_i(s).$$</div></div><div><p>Tại $X$, theo mọi lần ghé:</p><table><thead><tr><th>$g_n(X)$</th><th>$n$</th><th>Tổng</th><th>$V_n(X)$</th></tr></thead><tbody><tr><td>$1$</td><td>$1$</td><td>$1$</td><td>$1$</td></tr><tr><td>$1$</td><td>$2$</td><td>$2$</td><td>$1$</td></tr><tr><td>$-1$</td><td>$3$</td><td>$1$</td><td>$1/3$</td></tr></tbody></table></div></div>
+<p class="caption">$v_\pi(s)$ là kỳ vọng cần ước lượng; $V_n(s)$ là trung bình của $n$ mẫu đã chọn.</p>
+<aside class="notes"><p>Monte Carlo dùng các lợi tức đã quan sát dưới chính sách cố định để ước lượng giá trị. Với trung bình mẫu, mỗi lợi tức được chọn có trọng số bằng $1/n$. Chỉ số $i$ đánh thứ tự các mẫu của một trạng thái, không phải thời điểm tương tác toàn cục. Bảng xử lý ba mẫu của $X$ theo thứ tự xuất hiện: hai mẫu từ $e_1$, rồi một mẫu từ $e_2$. Bài giảng gốc lưu bộ đếm $N(s)$ và tổng lợi tức, ký hiệu $S(s)$ trong nguồn; ở đây gọi là tổng các mẫu để tránh trùng với trạng thái $S$. Hai cột giữa của bảng là hai đại lượng ấy. Khi trạng thái chưa có mẫu, bảng giá trị vẫn chứa giá trị khởi tạo.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc, tr. 18; Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §5.1 tr. 92–93.</p></aside>
 </section>
 <section data-slide-id="L05-B06" data-note-topic-id="lec-05-topic-06">
 <h2>Cập nhật trung bình khi có mẫu mới</h2>
 
-<p>Yêu cầu: cập nhật trung bình chỉ từ trung bình hiện tại và số mẫu, không lưu mọi lợi tức cũ.</p>
-<div class="grid3"><div class="card"><h3>Hai mẫu cũ</h3><p>$(1,1)$ tại $X$.</p><p>Số mẫu $2$, trung bình $1$.</p></div><div class="card"><h3>Mẫu mới</h3><p>Lợi tức $-1$.</p><p>Số mẫu mới bằng $3$.</p></div><div class="card"><h3>Trung bình mới</h3><p>$\dfrac{2\cdot1+(-1)}3=\dfrac13$.</p></div></div>
-<div class="math-large">$$1+\frac13(-1-1)=\frac13.$$</div>
+<p>Yêu cầu: tính trung bình mới chỉ từ trung bình cũ, số mẫu và mẫu mới. Tại $X$ đã có $2$ mẫu với trung bình $1$; mẫu mới $g_3(X)=-1$.</p>
+<div class="grid2"><div class="card"><h3>Tính lại từ tổng</h3><p class="math-large">$\dfrac{2\cdot1+(-1)}{3}=\dfrac13$</p></div><div class="card"><h3>Sửa trung bình cũ</h3><p class="math-large">$1+\dfrac13\bigl(-1-1\bigr)=\dfrac13$</p></div></div>
+<svg class="figure mean-shift" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 192" role="img" aria-labelledby="b06-title b06-desc"><title id="b06-title">Trung bình dịch về phía mẫu mới</title><desc id="b06-desc">Trục số từ âm 1 đến 1. Mẫu mới âm 1 vẽ bằng hình vuông, trung bình cũ 1 vẽ bằng hình tròn rỗng, trung bình mới 1/3 vẽ bằng hình tròn đặc. Mũi tên từ 1 đến 1/3 dài bằng một phần ba đoạn nét đứt từ âm 1 đến 1, đoạn có độ dài 2.</desc><defs><marker id="b06-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#2F3E7A"/></marker></defs><g font-family="Arial, sans-serif" fill="#263238"><text x="100" y="28" text-anchor="middle" font-size="30">mẫu mới</text><text x="633.3" y="28" text-anchor="middle" font-size="30">trung bình mới</text><text x="900" y="28" text-anchor="middle" font-size="30">trung bình cũ</text><path d="M893 52 L645 52" stroke="#2F3E7A" stroke-width="3" fill="none" marker-end="url(#b06-arr)"/><path d="M70 85 L930 85" stroke="#263238" stroke-width="2.5"/><path d="M500 77 L500 93" stroke="#263238" stroke-width="2.5"/><rect x="88" y="73" width="24" height="24" fill="#B15A2B"/><circle cx="633.3" cy="85" r="12" fill="#2F3E7A"/><circle cx="900" cy="85" r="12" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="3"/><text x="100" y="122" text-anchor="middle" font-size="30">−1</text><text x="500" y="122" text-anchor="middle" font-size="30">0</text><text x="633.3" y="122" text-anchor="middle" font-size="30">1/3</text><text x="900" y="122" text-anchor="middle" font-size="30">1</text><path d="M100 132 L100 141 L900 141 L900 132" stroke="#263238" stroke-width="2" stroke-dasharray="8 6" fill="none"/><text x="500" y="178" text-anchor="middle" font-size="30">khoảng cách 2; mũi tên dài 2/3</text></g></svg>
 <div class="box">Trung bình thay đổi bằng một phần ba của sai lệch giữa mẫu mới và trung bình cũ.</div>
-<aside class="notes"><p>Tổng của hai mẫu cũ bằng số mẫu nhân trung bình, tức $2\cdot1$. Sau khi thêm $-1$, tổng mới bằng $1$ và số mẫu bằng $3$. Dạng cập nhật sai lệch giữ đúng kết quả ấy. Để tổng hợp các lợi tức đã chọn, chỉ cần lưu bộ đếm và trung bình của từng trạng thái. Quy trình Monte Carlo còn cần dữ liệu của lượt hiện tại để tính lợi tức trước khi chọn mẫu.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §2.4 tr. 30–31; phép tính từ hai lượt trong bài giảng gốc.</p></aside>
+<aside class="notes"><p>Tổng của hai mẫu cũ bằng số mẫu nhân trung bình, tức $2\cdot1$. Sau khi thêm $-1$, tổng mới bằng $1$ và số mẫu bằng $3$. Hai cách tính cho cùng kết quả và cùng chỉ cần số mẫu, trung bình cũ và mẫu mới, không cần các lợi tức cũ; lưu bộ đếm và tổng như bài giảng gốc cũng không cần lịch sử. Dạng sửa trung bình có thêm một cấu trúc: ước lượng mới bằng ước lượng cũ cộng một bước nhân với sai lệch giữa mục tiêu và ước lượng cũ. Thay bước $1/n$ bằng một hằng số cho quy tắc bước học hằng; thay lợi tức bằng mục tiêu một bước cho TD(0). Trên trục số, khoảng cách từ trung bình cũ $1$ đến mẫu mới $-1$ bằng $2$, và trung bình mới dịch $2/3$ về phía mẫu mới. Quy trình Monte Carlo còn cần dữ liệu của lượt hiện tại để tính lợi tức trước khi chọn mẫu.</p><p class="note-source"><strong>Nguồn:</strong> Sutton–Barto, <em>Reinforcement Learning: An Introduction</em>, ấn bản 2, §2.4 tr. 30–31; Bài giảng gốc, tr. 18; phép tính từ hai lượt trong bài giảng gốc.</p></aside>
 </section>
 <section data-slide-id="L05-B07" data-note-topic-id="lec-05-topic-06">
 <h2>Trung bình gia tăng</h2>
@@ -221,7 +218,7 @@ $H\leftarrow H\cup\{s\}$.</li>
 <section data-slide-id="L05-B12" data-note-topic-id="lec-05-topic-11">
 <h2>Tính không chệch và hội tụ của Monte Carlo</h2>
 
-<p>Lợi tức sau mỗi lần ghé $s$ có kỳ vọng $v_\pi(s)$. Ước lượng <em>không chệch</em>: kỳ vọng bằng $v_\pi(s)$.</p>
+<p>Theo tính Markov, lợi tức sau mỗi lần ghé $s$ có kỳ vọng $v_\pi(s)$. Ước lượng <em>không chệch</em>: kỳ vọng bằng $v_\pi(s)$.</p>
 <div class="grid3"><div class="card"><h3>Lần ghé đầu tiên</h3><p>Lượt độc lập cho mẫu độc lập, cùng phân phối.</p><p>Trung bình không chệch, hội tụ theo luật số lớn.</p></div>
 <div class="card"><h3>Mọi lần ghé</h3><p>Mẫu trong cùng lượt có thể phụ thuộc nhau.</p><p>Trung bình vẫn hội tụ khi số lượt tăng vô hạn.</p></div>
 <div class="card"><h3>Bước học hằng</h3><p>Mẫu mới nhất có trọng số $\alpha$; mẫu cũ hơn giảm theo $(1-\alpha)$.</p><p>Ước lượng dao động khi lợi tức ngẫu nhiên.</p></div></div>

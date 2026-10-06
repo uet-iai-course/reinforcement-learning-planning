@@ -512,6 +512,73 @@ Bằng chứng vai trò theo lệnh gọi công cụ của phiên chính: một 
 
 Kiểm trình duyệt do điều phối tự chạy (Playwright Chromium, server `reloadserver` cổng 8766 vì cổng 8765 đang phục vụ dự án khác; tắt hiệu ứng chuyển trang): cả 45 trang ở 1600×900 và 390×844 không có lỗi console hoặc trang, không có `.katex-error`, không có tài nguyên hỏng hay yêu cầu mạng ngoài, không cuộn ngang; không trang nào có nội dung vượt khung 720 hoặc đè chân trang; chữ giả mã B10, C05 nay ≥ 0.75em. Ảnh đã xem: A04, B03, B10, B12, C02, D06, D09 (hẹp), E02. Ở 390px Reveal chuyển sang chế độ cuộn dọc. Trình xem ghi chú: không `.katex-error`, không yêu cầu mạng ngoài; lỗi CSP về script nội dòng có sẵn ở trình xem (tái hiện trên ghi chú Bài 04), không do thay đổi này. `git diff --check` đạt.
 
+## Rà soát và trình bày lại L05-B02–L05-B06 — 06-10-2026
+
+### Yêu cầu và phạm vi
+
+Người dùng hỏi trang L05-B04 muốn nói gì và quy tắc chọn lợi tức làm mẫu là gì; mặt trang khi đó nêu nhu cầu có quy tắc nhưng không phát biểu quy tắc. Yêu cầu tiếp theo: chạy quy trình sửa cho L05-B02–L05-B06, xác định ý trung tâm của từng trang và tìm cách thể hiện tốt hơn. Yêu cầu bổ sung: đưa vào ý "mỗi mẫu mọi lần ghé có kỳ vọng $v_\pi(s)$ nhờ tính Markov".
+
+Không đổi số trang, thứ tự trang, năm mạch, thời lượng, `data-slide-id` hay `data-note-topic-id`. Không sửa `lecture-slide.css` hay `index.html`.
+
+### Tác tử
+
+Bằng chứng là các lệnh gọi công cụ Agent/SendMessage của phiên điều phối.
+
+| Vai trò | Loại | Mô hình | Effort | Ghi file |
+|---|---|---|---|---|
+| Điều phối, kiểm cuối, nhật ký | phiên chính | claude-opus-5-5 | theo cấu hình phiên | `review-log.md` |
+| Phân tích ý trung tâm và đề xuất trình bày B02–B06 | fork (Agent tool) | claude-opus-5-5 (kế thừa) | kế thừa | không |
+| Biên tập, ba vòng (tiếp tục bằng SendMessage) | fork | claude-opus-5-5 (kế thừa) | kế thừa | deck, hai SVG, outline, storyboard, lecture-note |
+| Rà lại toán/thuật toán và RL, hai vòng | fork | claude-opus-5-5 (kế thừa) | kế thừa | không |
+| Rà lại mạch, góc nhìn sinh viên, văn phong (no-ai-slop Detect), hai vòng | fork | claude-opus-5-5 (kế thừa) | kế thừa | không |
+
+Chỉ một tác tử ghi file tại mỗi thời điểm; hai tác tử rà lại chạy song song, chỉ đọc.
+
+### Ý trung tâm và thay đổi theo trang
+
+| Trang | Ý trung tâm | Vấn đề trước khi sửa | Thay đổi | Quyết định |
+|---|---|---|---|---|
+| L05-B02 | Mỗi lần ghé là một thời điểm $t$ có $S_t=s$, có lợi tức riêng bằng tổng thưởng phần đuôi | "Lần ghé" chưa được định nghĩa; phép cộng phần đuôi chỉ có trong ghi chú | Câu định nghĩa lần ghé; `episode-one.svg`, `episode-two.svg` thêm hàng $G_t$, ngoặc nét đứt "phần đuôi sau t = 1", viewBox 1080×222, chữ 32; hộp ví dụ $0+0+1=1$ và $-1$; `max-height` cục bộ 182px | sửa |
+| L05-B03 | $G_t$ có hệ số $\gamma^{k-t}$ và tính ngược từ $G_T=0$ | Công thức truy hồi chưa được dùng; không nối về B02 | Gộp tổng và truy hồi một dòng; bảng tính ngược trên $e_1$; chú thích $\gamma=1$ thu lại B02; bỏ bốn quy tắc CSS cục bộ | sửa |
+| L05-B04 | Hai quy tắc chọn mẫu; mỗi mẫu có kỳ vọng $v_\pi(s)$ nhờ tính Markov; hai quy tắc khác nhau ở số mẫu mỗi lượt | Không phát biểu quy tắc; hộp cuối không mang thông tin | Hai dòng quy tắc có nhãn; cột "Thời điểm ghé"; câu trọng số $2/3$ của $e_1$ tại $X$; hộp tính Markov. Ghi chú: thời điểm dừng, tính Markov mạnh, phụ thuộc trong lượt, nguồn gây chệch của trung bình mọi lần ghé | sửa |
+| L05-B05 | Ước lượng MC là trung bình các mẫu đã chọn, $n=N(s)$ | Ví dụ lặp ô bảng B04 | Bảng theo dõi $g_n$, $n$, tổng, $V_n(X)$; ghi chú nêu dạng bộ đếm và tổng của nguồn tr. 18, đổi tên $S(s)$ thành "tổng" để tránh trùng trạng thái $S$ | sửa |
+| L05-B06 | Trung bình mới bằng trung bình cũ cộng $1/n$ sai lệch, dịch về phía mẫu mới | Hai cách tính không được gọi tên; lý do bộ nhớ nửa đúng | Câu yêu cầu; hai thẻ "Tính lại từ tổng", "Sửa trung bình cũ"; trục số SVG inline (`role="img"`, hình dạng chấm khác nhau); ghi chú: tổng và bộ đếm cũng không cần lịch sử, dạng sửa trung bình được dùng lại ở bước học hằng và TD(0) | sửa |
+| L05-B12 | Không đổi ý | Câu mở chưa nêu lý do | "Theo tính Markov, lợi tức sau mỗi lần ghé…" | sửa |
+
+Đồng bộ: `outline.md`, `storyboard.md` (B02–B06, B12, chu trình khái niệm cụm B, chu trình phụ bước học), `lecture-note.md` topic-02, topic-04, topic-06 và alt hai hình. Topic-11 không đổi, đã đối chiếu nhất quán.
+
+### Phát hiện và quyết định
+
+| mức độ | trang chiếu / vị trí | vấn đề | quyết định | trạng thái |
+|---|---|---|---|---|
+| trung bình (mạch, vòng 1) | L05-B04 | Bảng cho $0$ và $1/3$ tại $X$ cạnh hộp "mỗi mẫu có kỳ vọng $v_\pi(s)$", lời giải chỉ ở ghi chú | Thay thẻ quy tắc bằng hai dòng; thêm câu trọng số $2/3$ trên mặt trang | đã sửa |
+| trung bình (mạch, vòng 1) | L05-B06, storyboard | Mất bước vấn đề của chu trình phụ | Câu "Yêu cầu: …"; sửa dòng chu trình phụ | đã sửa |
+| trung bình (mạch, vòng 1) | L05-B02 | Chữ trong SVG khoảng 0,5em | Thu viewBox, chữ 32; đo 0,78em ở 1600×900 | đã sửa |
+| trung bình (toán, vòng 1) | lecture-note topic-04 | Câu sau bảng bị marked đưa vào bảng | Chèn dòng trống; rà toàn ghi chú | đã sửa |
+| trung bình (toán, vòng 1) | L05-B04 ghi chú, topic-06 | Lý do trùng trung bình tại $S$ nêu thiếu | "mỗi lượt cho hai mẫu bằng nhau" | đã sửa |
+| nhẹ (toán + mạch) | L05-B04 ghi chú, topic-06 | Gán tính thời điểm dừng cho giả thiết Markov | Tách: $t_k$ là thời điểm dừng theo định nghĩa; Markov dùng cho bước Markov mạnh | đã sửa |
+| nhẹ (toán) | L05-B03 ghi chú, topic-02 | "cách bốn chuyển" dễ hiểu thành $\gamma^4$ | "chuyển thứ tư … $\gamma^{4-1}=\gamma^3$" | đã sửa |
+| nhẹ (mạch) | L05-B04 ghi chú | Tham chiếu mơ hồ | Ghi tên trang "Tính không chệch và hội tụ của Monte Carlo" | đã sửa |
+| nhẹ (mạch) | L05-B04 | Cột thời điểm ghé khó đọc | "$e_1$: … · $e_2$: …" | đã sửa |
+| nhẹ (mạch) | L05-B06 | Nhãn trục số nhỏ | Chữ 30, đo 0,77em | đã sửa |
+| nhẹ (mạch) | L05-B05/L05-B06 | Hàng 3 bảng B05 và thẻ "Tính lại từ tổng" là cùng phép tính | Từ chối: B06 cần đặt hai cách tính cạnh nhau để so thông tin mỗi cách dùng | không sửa |
+| nhẹ (toán, vòng 2) | L05-B04 ghi chú, topic-06 | Ngụ ý phụ thuộc trong lượt gây chệch | Ghi chú: phụ thuộc không tự gây chệch; số mẫu mỗi lượt ngẫu nhiên, tương quan với lợi tức cho dạng tỉ số; mặt trang bỏ "phụ thuộc nhau" | đã sửa |
+| nhẹ (toán, vòng 2) | L05-B06 SVG | Chân chữ dòng cuối sát mép viewBox | viewBox cao 192, `max-height` 166px | đã sửa |
+| nhẹ (mạch, vòng 2) | L05-B04, L05-B06 | Viết hoa sau dấu hai chấm khác quy ước deck | Viết thường | đã sửa |
+
+Vòng 2: rà lại toán đạt; rà lại mạch đạt; không còn phát hiện chặn, nghiêm trọng hay trung bình. Các sửa vòng 3 chỉ thuộc các mục nhẹ trên, điều phối kiểm lại bằng diff và trình duyệt.
+
+### no-ai-slop và Quill
+
+Biên tập dùng chế độ Edit trên mặt trang, ghi chú diễn giả B02–B06, B12, mục outline/storyboard và topic-02/04/06, tự đối chiếu `eval.md` sau mỗi vòng: đạt. Rà mạch dùng Detect trên cùng phạm vi; mẫu còn lại (tham chiếu mơ hồ, viết hoa sau dấu hai chấm) đã sửa. Thứ tự chu trình khái niệm cụm B được kiểm theo danh mục Revise/Threads của Quill, không tạo `quill.json`.
+
+### Kiểm tra
+
+- Playwright Chromium, server gốc repo cổng 8766, 1600×900 và 390×844: toàn bộ 45 trang không `.katex-error`, không phần tử tràn, không cuộn ngang, không lỗi console, không tải từ ngoài, không tài nguyên lõi hỏng (chỉ yêu cầu long-poll `api-reloadserver/wait-for-reload` của server phát triển bị hủy khi đóng trang); cỡ chữ nhỏ nhất ≥0,82em. Điều phối đã xem ảnh B02–B06.
+- Chiều cao trang sau sửa: B02 680, B03 603, B04 637, B05 548, B06 689 trên 720. B06 nằm trong mức của các trang không sửa (E02 696, C02 691); mũi tên điều hướng trên chạm vùng tiêu đề ở các trang cao này là giới hạn chung của deck.
+- Viewer ghi chú: 0 `.katex-error`, hai SVG tải được, bảng topic-04 đúng. Lỗi CSP về inline script và việc hình `img/lec-*` bị cắt/cuộn ngang do `min-width: 900px` trong `material-viewer.css` có từ trước, áp cho mọi bài; không sửa trong phạm vi này.
+- `git diff --check` đạt.
+
 ## Bài thực hành: dự đoán Monte Carlo và TD(0) trên LunarLander không gió (2026-10-03)
 
 ### Phạm vi và quyết định
