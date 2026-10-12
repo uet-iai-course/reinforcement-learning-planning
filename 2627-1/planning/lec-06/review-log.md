@@ -651,3 +651,186 @@ Không có phát hiện chặn, nghiêm trọng hay trung bình. Bảy mục nh�
 | nhẹ | phần 11, ô 0 | Lời giải về độ phủ; câu về sd; cắt ngắn tăng ở Q-learning; nhánh chạm đất của heuristic; "cùng mã"; chú thích code và công thức trước 11.5; nhịp "Ô mã dưới"; thời gian chạy | Sửa theo đề xuất | đã sửa |
 
 - Kiểm tra: nbclient chạy hết 82 ô không lỗi, khoảng 7,5–8 phút; hai lần chạy trùng nhau; `nbformat.validate` đạt; không ô lỗi, ô chưa chạy, stderr, URL ngoài, dấu hỏi trong Markdown; bốn trình phát không lỗi console, không gọi mạng (Playwright Chromium); điều phối đã xem đường đánh giá định kỳ trước/sau, trình phát bốn ô và bản đồ hành động so với heuristic. `no-ai-slop` Edit (tác tử soạn) và Detect (rà soát lại) trên phần 11. Notebook 1,29 MB. Chưa chạy trên Colab; thời gian trên Colab có thể vượt 9 phút.
+
+## Đợt sửa 2026-10-12 — Giai đoạn I: ghi chú bài giảng
+
+### Tác tử và phạm vi
+
+- Vai: tác tử soạn ghi chú bài giảng Bài 06 (giai đoạn I), viết tệp. Loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high`, theo brief chung `brief_note_writer.md`; điều phối viên đối chiếu với lời gọi công cụ. Không commit, không push.
+- Đầu vào đã đọc: `planning/quyet-dinh-chuan-2026-10-12.md` (mục 1–4, 6, 8), `planning/lec-06/revision-plan-2026-10-12.md` (A, B, C, D), `AGENTS.md` (các mục được giao), mẫu `materials/_templates/lecture-note.md`, sản phẩm mẫu `math-4-AI/2627-1/materials/lec-07/lecture-note.md` (chỉ cách trình bày), ghi chú cũ, mã chủ đề trên deck, ô Markdown và output của notebook `thuc-hanh-lunarlander-dieu-khien-phi-mo-hinh.ipynb`, bài giảng gốc `lecture-06-model-free-control.pdf` (30 trang), các tệp `RL-hk2-2025-2026/resources/` (không có tệp tuần 6; Bài 10 của `hw3.pdf` được ghi chú cũ dùng và theo kế hoạch C chuyển sang `exercises.md`).
+- Tệp đã ghi: `2627-1/materials/lec-06/lecture-note.md` (viết lại toàn bộ); `2627-1/img/lec-06/chapter-structure.svg` (mới, hình cấu trúc chương, có `<title>`, `<desc>`, nhãn chữ, nét liền/nét đứt kèm chú thích chữ); mục này của `review-log.md`. Không sửa deck, `outline.md`, `storyboard.md`, `index.html`, CSS, viewer, notebook hay SVG cũ.
+
+### Giáo trình và nguồn đã tham khảo theo mục
+
+| Mục của ghi chú | Nguồn đối chiếu cách dẫn dắt và diễn giải |
+|---|---|
+| Mở chương, Mục 1.1 | Bài giảng gốc tr. 3–7, 15; Sutton và Barto (2018) §3.5–3.6 ($q_\pi$, $q_*$); giáo trình *Học máy thống kê*, mục học hàm Q (dẫn từ giới hạn của quy hoạch động sang học từ mẫu, thuật ngữ) |
+| Mục 1.2 | Bài giảng gốc tr. 6–8, 11; Sutton và Barto §5.4 (tr. 100–101, chính sách $\varepsilon$-mềm, $\varepsilon$-tham lam) |
+| Mục 1.3 | Bài giảng gốc tr. 24; Sutton và Barto §4.2 (tr. 78–80) và §5.4 (tr. 101–103, chứng minh cải thiện và lớp $\varepsilon$-mềm); tính co của $T^\pi$ theo ghi chú Bài 04 |
+| Mục 2 | Bài giảng gốc tr. 9–11, 16–17; Sutton và Barto §5.1 (tr. 92–93, lần ghé đầu), §5.3–5.4 (tr. 97–103) |
+| Mục 3 | Bài giảng gốc tr. 12–14, 18; Sutton và Barto §6.4 (tr. 129–130) |
+| Mục 4 | Bài giảng gốc tr. 8, 19–21; Sutton và Barto §6.5 (tr. 131–132, Ví dụ 6.6) |
+| Mục 5 | Bài giảng gốc tr. 11, 25–28; Sutton và Barto §2.5 (công thức (2.7), tr. 33), §5.3 (tr. 99, câu hỏi mở về hội tụ của Monte Carlo), §6.4–6.5; Watkins và Dayan (1992); Singh và cộng sự (2000, Định lý 1); Bertsekas và Tsitsiklis (1996) chỉ dẫn mục |
+| Mục 6 (đọc thêm) | Bài giảng gốc tr. 19, 29; Sutton và Barto §7.3 (công thức (7.9)–(7.10), tr. 148); Hoeffding (1963, Định lý 2) |
+| Tình huống, Ứng dụng | Notebook Bài 06 phần 2–13; bài giảng gốc tr. 15–16; Sutton và Barto §6.7 (tr. 134–136) |
+
+Trang Sutton và Barto đã xác minh trên bản PDF (trang in = trang PDF − 22): tr. 33, 78–80, 92–93, 97–103, 129–132, 148. Trang Watkins–Dayan (tr. 282) và Singh và cộng sự (tr. 294–295) giữ theo ghi chú cũ, chưa xác minh lại trong đợt này vì không có bản PDF trong kho. Không dịch hay chép đoạn văn của giáo trình nào.
+
+### Số hiệu cuối cùng
+
+- Bộ đếm chung (27): Định nghĩa 06.1 (bảng $Q$, $q_*$); Nhận xét 06.2 (vòng B–C); Định nghĩa 06.3 ($\varepsilon$-tham lam), 06.4 ($\varepsilon$-mềm); Bổ đề 06.5 ($T^\pi$ đơn điệu, co); Mệnh đề 06.6 (cải thiện $\varepsilon$-tham lam); Nhận xét 06.7; Định nghĩa 06.8 (lần ghé đầu của cặp); Thuật toán 06.9 (Monte Carlo); Nhận xét 06.10; Định nghĩa 06.11 (mục tiêu Sarsa); Thuật toán 06.12 (Sarsa); Nhận xét 06.13 (kết thúc, cắt ngắn, ngân sách); Định nghĩa 06.14 (hành vi, đích); Định nghĩa 06.15 (mục tiêu Q-learning); Thuật toán 06.16 (Q-learning); Nhận xét 06.17; Nhận xét 06.18 (giả thiết nền); Định nghĩa 06.19 (GLIE), 06.20 (Robbins–Monro theo cặp); Định lý 06.21 (Q-learning), 06.22 (Sarsa với GLIE); Nhận xét 06.23 (Monte Carlo); Định nghĩa 06.24; Mệnh đề 06.25, 06.26; Nhận xét 06.27. Trùng bảng B2.
+- Ví dụ (15): 06.1 dãy năm ô; 06.2 bảng nghiêng phải; 06.3 chính sách luôn đi trái; 06.4 xác suất tại D; 06.5 một trạng thái ba hành động (mới); 06.6 lượt tham lam D→E; 06.7 lượt thăm dò bằng dãy số; 06.8 cập nhật D–C–B–A; 06.9 năm mẫu, hai cập nhật Sarsa đầu; 06.10 Sarsa trên năm mẫu; 06.11 một cập nhật Q-learning; 06.12 Sarsa và Q-learning trên năm mẫu; 06.13 một chuyển của tàu đổ bộ; 06.14 khối xác suất tham lam và số lần thử khi $\varepsilon$ giảm; 06.15 ba lịch bước học.
+- Bài tập (12): 06.1–06.6 trong các mục (trùng các bài tập trang chiếu của kế hoạch C), 06.7–06.12 thuộc "Bài tập củng cố". Tình huống 06.1, 06.2.
+- `note-topic-id`: giữ `lec-06-topic-01` … `07`; thêm `lec-06-topic-08` (Mục 6, đọc thêm) và `lec-06-topic-09` (tình huống áp dụng, nhóm bổ sung). Vị trí: 01 trước `## 1.` (phần mở bài toán trung tâm), 02 trước `### 1.1`, 03–06 trước `## 2.`–`## 5.`, 08 trước `## 6.`, 09 trước tình huống, 07 trước "Tóm tắt chương".
+
+### Sai khác so với kế hoạch B và lý do
+
+| Mục | Sai khác | Lý do |
+|---|---|---|
+| Ví dụ | Thêm Ví dụ 06.5 trước Mệnh đề 06.6; các ví dụ 06.5–06.13 của B2 dịch thành 06.6–06.12 và 06.14–06.15; ví dụ tàu đổ bộ (B2 ghi 06.14 nếu dùng) thành 06.13, đặt sau Thuật toán 06.16 | Chuẩn "ví dụ tính tay trước phát biểu tổng quát" cho Mệnh đề 06.6; ví dụ một bước cho $q_\pi$ chính xác nên kiểm được cả kết luận về $v_{\pi'}$ và làm phản ví dụ cho hai giả thiết. Deck đồng bộ số hiệu ở giai đoạn II |
+| Mục 1.3 | Danh sách "Bỏ giả thiết": $q_\pi$ chính xác và $\varepsilon$-mềm dùng môi trường của Ví dụ 06.5 thay cho bảng nghiêng phải | Phản ví dụ tính được chính xác; với dãy năm ô và $\gamma=1$ giá trị chính sách mềm có phân số lớn ($171\,337/200$) |
+| Mục 5 | Thí nghiệm mở mục dùng dãy năm ô với $\gamma=0{,}9$ ($q_*(\mathrm D,0)=808{,}1$) làm phản ví dụ "bỏ độ phủ" trong miền định lý; phản ví dụ "bỏ GLIE" dẫn Ví dụ 6.6 của Sutton và Barto | Kế hoạch gợi ý "$Q(\mathrm D,0)$ không được cập nhật" nhưng dãy gốc dùng $\gamma=1$ nằm ngoài định lý |
+| Ví dụ 06.14 | Thêm trường hợp $\varepsilon_k=1/k^2$ và bổ đề Borel–Cantelli (phát biểu tại chỗ) | Phản ví dụ cụ thể cho nhầm lẫn "$\varepsilon_k\to0$ là đủ cho GLIE" |
+| Ví dụ 06.15(b) | Thêm mục tiêu $\pm1$ để tính phương sai dừng $2/3$ với bước hằng $0{,}8$ | Phản ví dụ định lượng cho "bỏ Robbins–Monro" |
+| Tình huống 06.2 | Tính đủ năm cập nhật Sarsa trên vòng B–C với hành vi tham lam; dùng giới hạn ba bước của nguồn (tr. 15) để minh họa cắt ngắn | Kế hoạch chỉ nêu định tính; số liệu tự tính, ghi rõ không phải bảo đảm |
+| Bài tập 06.10 | Hai lượt D–C–B–A cùng cập nhật đầu của lượt ba thay vì "một lượt" | Một lượt chưa cho thấy giá trị lan lùi chậm và $Q(\mathrm D,0)$ giảm ở lượt 2 |
+| Bài tập 06.12 | Thêm câu (b) khối $0{,}9625$ và câu (c) giả thiết Markov | Phủ mục tiêu 5 bằng bài toán LunarLander; câu (a) ghi nguồn notebook phần 5 |
+| Mục 2–4 | Không có tiểu mục "Kiểm tra lựa chọn phương pháp" và Bài 10 hw3 của ghi chú cũ | Kế hoạch B1: chuyển sang `exercises.md` (06.13, 06.17) |
+| Q-learning | Giữ bảng nghiêng phải cho Q-learning (nguồn tr. 21 dùng bảng nghiêng trái), ghi lý do ngay trong ghi chú sau Ví dụ 06.12 | Giữ quyết định đã duyệt ở đợt 2026-09-29: mọi khác biệt giữa hai thuật toán đến từ mục tiêu |
+| Độ dài | `wc` 27 333 (âm tiết, gồm công thức và bảng); khoảng 23 900 khi bỏ công thức, bảng và `alt`; vượt đích 16 000–19 000 của B4 | Thêm Bổ đề 06.5 có chứng minh, Ví dụ 06.5, hai tình huống có số liệu, sáu bài tập củng cố có lời giải; sản phẩm mẫu math-4-AI Bài 07 dài 34 853 theo cùng cách đếm. Đề nghị rà mạch viết xem có đoạn nào cần cắt |
+
+### Số liệu đã tính lại (script phân số `verify06.py`, `chain06.py` trong scratchpad)
+
+Năm mẫu Sarsa: $0;\,-3/5;\,800;\,41/5;\,-32/25$. Q-learning: $0;\,1/5;\,800;\,41/5;\,-16/25$. Bài tập 06.10: lượt 1 cho $(\mathrm D,0)=1/2$, $(\mathrm C,0)=1/2$, $(\mathrm B,0)=500$; lượt 2 cho $0$, $999/4$, $750$; lượt 3 cho $(\mathrm D,0)=995/8$. Vòng B–C (Tình huống 06.2): $0;\,1/5;\,-11/25;\,-19/25;\,800$. Lợi tức Bài tập 06.3: $996,997,998,999,1000$. Ví dụ 06.5 và Bài tập 06.11: $-0{,}2\to2{,}6$; $0{,}2\to2{,}6$; $w=(1/7,0,6/7)$. Tàu đổ bộ: $0{,}48\to2{,}748$; $3{,}45\to3{,}045$; $-100\to-7{,}3$ (khớp output notebook). $\gamma=0{,}9$: $q_*(\mathrm D,0)=808{,}1$, vòng B–C cho $q_{\pi_I}(\mathrm D,0)=-10$. Khối xác suất $0{,}9625$, $0{,}9925$. Hoeffding: $n\ge\lceil50\ln40\rceil=185$. Phương sai dừng $0{,}64/0{,}96=2/3$. Bài tập 06.9: $20^{5/3}\approx147{,}4$. Khoảng $32{,}8\pm46{,}2=[-13{,}4;\,79{,}0]$.
+
+### Biên tập `no-ai-slop` (Edit) và tự đối chiếu `eval.md`
+
+- Phạm vi: toàn bộ văn xuôi, tiêu đề, khối, lời giải và `alt` của ghi chú mới.
+- Đã sửa trong lượt tự kiểm: ẩn dụ "hai bánh răng"; "hành vi không còn quan trọng"; ba câu "không phải… mà…" đổi thành câu khẳng định (còn lại là phân biệt toán học có chức năng, giữ theo `AGENTS.md`); câu hỏi treo cuối Mục 4 và câu dẫn có dấu hai chấm ở Mục 1.3; "Mục này…" ở Mục 6 (tài liệu làm chủ ngữ); hai đoạn kết mục đổi nhịp để tránh lặp khuôn "Như vậy, chúng ta đã…"; tham chiếu "ở trên" thay bằng số hiệu; ký hiệu $E$ (trùng ô E) đổi thành $\mathcal E_k$ và $\mathbf 1\{\cdot\}$.
+- Kết quả đối chiếu `eval.md`: đạt các mục về lời dẫn rỗng, từ cấm, tương phản nhị phân không chức năng, kết thúc tóm tắt kịch tính, định dạng (không in đậm trang trí ngoài nhãn bước và nhãn giai đoạn theo chuẩn), gạch ngang dài (chỉ còn trong tiêu đề theo khuôn `# Bài 06 — …` và tên bài giảng gốc). Ghi nhận: các đoạn kết mục dùng cùng một khung ba ý theo yêu cầu của `AGENTS.md`, nên nhịp tương tự nhau là có chủ đích.
+- `quill` (chỉ dùng bảng kiểm Outline, Threads, Concept, Revise; không tạo `quill.json`): mọi khái niệm được định nghĩa trước lần dùng (riêng Borel–Cantelli và GLIE được phát biểu tại chỗ); các "sợi" mở ở Mục 1 (vòng B–C, $q_\pi$ chính xác, độ phủ của $(\mathrm D,0)$) được đóng ở Tình huống 06.2, Nhận xét 06.7 và Mục 5; tham chiếu tiến chỉ có ở hình cấu trúc chương và Mục 2 ("Mục 4 định nghĩa thuật ngữ này").
+
+### Kiểm tra đã chạy
+
+- `note_check.py`: 27 khối bộ đếm chung, 15 ví dụ, 12 bài tập, không khoảng trống, không trùng, không khối lạ hay lồng, không khối chưa đánh số, không câu cấm, 0 dấu `\(`/`\[`.
+- `check_note.py 06 lecture-06-dieu-khien-phi-mo-hinh.html` (server cổng 8766): 1600×900 và 390×844 đều 0 lỗi KaTeX, 0 lỗi console, 0 yêu cầu ngoài hay hỏng, 85 khối, 28 khối gập. Cờ `overflow` ở 390×844 là `true` (scrollWidth 476): trang không cuộn ngang được (`scrollTo` giữ `scrollX=0`); phần tràn là bảng (tự cuộn, `overflow-x:auto`) và công thức khối cuộn trong khối KaTeX; ghi chú Bài 05 và Bài 07 cho cùng cờ (510, 554). Ở 1600×900, công thức khối Hoeffding tràn 9 px đã được tách hai dòng; chuỗi căn cứ dài trong `aligned` đã đổi thành nhãn (1), (2)… kèm câu "Căn cứ của từng dòng" để không bị cắt. Đã xem ảnh chứng minh Mệnh đề 06.6 ở 1600×900.
+
+### Giới hạn còn lại
+
+- Kết quả của Bài 03–05 được dẫn theo mục ("ghi chú Bài 03, Mục 3–4", "Bài 04, Mục 1–4", "Bài 05, Mục 1–3") theo dàn mục trong kế hoạch sửa của các bài đó, vì bảy ghi chú được viết lại song song; đợt đồng bộ sau thay bằng số hiệu `0N.k` và kiểm lại số mục.
+- Notebook Bài 06 còn dẫn số mục của ghi chú cũ (mục 2.1, 2.3, 2.5, 4.4–4.7, 5.1–5.7, 6.1–6.5); cần cập nhật ở giai đoạn III. Ánh xạ: 2.x cũ → Mục 1; 3.x → Mục 2; 4.x → Mục 3; 5.x → Mục 4; 6.x → Mục 5; 7.5–7.6 → Mục 6.
+- Deck chưa đồng bộ: số hiệu ví dụ lệch kế hoạch A (xem bảng sai khác), mã chủ đề mới 08–09, tên mạch 4–5 đổi theo tiêu đề mục.
+- Chỗ cần tác tử rà toán soi kỹ: chứng minh Bổ đề 06.5 và Mệnh đề 06.6 (Bước 4 dùng $T^{\pi'}v_\pi$); lập luận độc lập của các biến cố $\mathcal E_k$ trong Ví dụ 06.14; phát biểu giả thiết của Định lý 06.21–06.22 so với Watkins–Dayan và Singh và cộng sự (nhất là $\alpha\in(0,1]$ so với $[0,1)$, chặn phương sai phần thưởng); khẳng định "sau một thời điểm ngẫu nhiên, chính sách tham lam theo $Q_t$ là tối ưu"; Tình huống 06.2.
+
+### Vòng sửa sau hai báo cáo rà soát (vai A toán, vai B mạch viết) — 2026-10-12
+
+Tác tử soạn ghi chú Bài 06 tiếp tục (cùng vai, loại, mô hình Opus 5.5, mức `high`), sửa theo quyết định của điều phối viên; chỉ sửa `materials/lec-06/lecture-note.md` và tệp này; không commit. Thuật ngữ chốt cho học phần đã áp dụng: "hầu chắc chắn (almost surely)"; toán tử $T_\pi$, $T_{\pi'}$, $T_*$ viết chỉ số dưới; mức xác suất của Hoeffding là $\beta$.
+
+**Số từ (`wc`).** Trước vòng sửa: 27 333. Sau vòng sửa: 24 966. Phần vượt 20 000 giữ lại vì chương có hai tình huống áp dụng có số liệu, bốn chứng minh hoặc ý tưởng chứng minh có căn cứ từng dòng, mười lăm ví dụ tính tay và mười hai bài tập có lời giải; các phần được giữ nguyên theo quyết định (Tình huống 06.2, Ví dụ 06.5, Ví dụ 06.14, danh sách "Bỏ giả thiết") chiếm khoảng 1 900 từ.
+
+**Số hiệu thay đổi.**
+
+- Bổ đề 06.5 thành Nhận xét 06.5 (Nhắc lại: toán tử Bellman của một chính sách), bỏ chứng minh; Bước 4–5 của chứng minh Mệnh đề 06.6 gộp thành một Bước 4 dùng `aligned`.
+- Định nghĩa 06.1 chỉ còn "Bảng giá trị hành động"; $q_*$ chuyển thành câu nhắc lại Bài 04 (Mục 3–4) sau định nghĩa.
+- Mục 5: GLIE thành Định nghĩa 06.18, Robbins–Monro theo cặp thành Định nghĩa 06.19, giả thiết nền thành Nhận xét 06.20 và được chuyển xuống ngay trước Định lý 06.21 (P-22). Định lý 06.21, 06.22, Nhận xét 06.23 và mọi số hiệu khác giữ nguyên. Danh sách theo mục trong "Tóm tắt chương" đã cập nhật.
+- Ví dụ 06.14 đổi tiêu đề và dữ kiện (cặp $(\mathrm D,0)$ cố định); Ví dụ 06.15 đổi thành "Lịch bước học toàn cục và một cặp được cập nhật thưa" (chỉ còn trường hợp $t_n=2^n$).
+- Bài tập 06.2, 06.4, 06.9, 06.12 đổi dữ kiện hoặc câu hỏi (P-18, P-07, P-19).
+
+**Bảng ánh xạ dẫn chéo sang ghi chú Bài 03–05 hiện có trên đĩa (P-02).**
+
+| Nội dung dẫn | Vị trí trên đĩa | Cách dẫn trong ghi chú 06 |
+|---|---|---|
+| MDP hữu hạn, lợi tức | Bài 03, Mục 1–2 (Định nghĩa 03.7, 03.9; Mệnh đề 03.11) | ghi chú Bài 03, Mục 1–2 |
+| $v_\pi$, $q_\pi$ | Bài 03, Mục 3 (Định nghĩa 03.15, 03.16) | ghi chú Bài 03, Mục 3 |
+| $v_\pi=\sum_a\pi q_\pi$, $q_\pi=r+\gamma\sum p\,v_\pi$, Bellman kỳ vọng | Bài 03, Mục 4 (Định lý 03.21, Mệnh đề 03.22–03.23) | ghi chú Bài 03, Mục 4 |
+| $T_\pi$ đơn điệu, co, điểm bất động | Bài 04, Mục 1 (Bổ đề 04.2, Mệnh đề 04.4, Định lý 04.5, Hệ quả 04.6) | ghi chú Bài 04, Mục 1 |
+| Định lý cải thiện chính sách | Bài 04, Mục 2 (Định lý 04.13) | ghi chú Bài 04, Mục 2 |
+| $v_*$, $q_*$ | Bài 04, Mục 3 (Định nghĩa 04.19) | ghi chú Bài 04, Mục 3 |
+| $T_*$ co, tồn tại chính sách tối ưu dừng | Bài 04, Mục 4 (Mệnh đề 04.24, Định lý 04.25) | ghi chú Bài 04, Mục 4 |
+| Lần ghé, Monte Carlo dự đoán, trung bình gia tăng | Bài 05, Mục 2 (Định nghĩa 05.6, 05.8; Mệnh đề 05.9) | ghi chú Bài 05, Mục 2 |
+| Khung cập nhật chung | Bài 05, Mục 1 (Định nghĩa 05.10 ở Mục 2) | ghi chú Bài 05, Mục 1 và 3 |
+| TD(0) | Bài 05, Mục 3 (Định nghĩa 05.19) | ghi chú Bài 05, Mục 3 |
+| Hội tụ TD(0), Robbins–Monro theo trạng thái, $n^{-p}$ | Bài 05, Mục 4 (Định lý 05.30, mục 4.4; ý $n^{-p}$ nằm ở một bài tập củng cố của Bài 05) | ghi chú Bài 05, Mục 4 |
+
+Đợt đồng bộ sau có thể thay "ghi chú Bài 0N, Mục k" bằng các số hiệu trong cột giữa.
+
+**Phát hiện và xử lý.**
+
+| Mã | Mức | Trạng thái | Xử lý |
+|---|---|---|---|
+| A1 | nghiêm trọng | đã sửa | Ví dụ 06.14: dữ kiện "ở mọi lượt, hàng D có cùng cực đại duy nhất là hành động 1"; $\mathcal E_k$ = chọn hành động 0 tại D ở đầu lượt $k$; xác suất có điều kiện hằng $\varepsilon_k/2$ ⇒ độc lập; hai chiều Borel–Cantelli cho kết luận về cặp $(\mathrm D,0)$; với $1/k^2$ thêm lý do hành động 1 kết thúc lượt nên $(\mathrm D,0)$ chỉ xuất hiện trong lượt có $\mathcal E_k$. Đoạn sau ví dụ nêu dạng có điều kiện của Borel–Cantelli khi cực đại đổi chỗ |
+| A2 | trung bình | đã sửa | Phạm vi Định lý 06.21: câu về $0\le\alpha_n<1$ của Watkins–Dayan và hữu hạn lần $\alpha_n=1$ |
+| A3 | nhẹ | đã sửa | Trang GLIE tr. 291–292, Định lý 1 tr. 294–295; câu "Định nghĩa 06.18 mạnh hơn, thay giả thiết liên thông" trong Định lý 06.22 |
+| A4 | nhẹ | đã sửa | Tình huống 06.2: câu dẫn bảng theo bước 2 của Thuật toán 06.12; câu Q-learning nêu $S'\ne S$ và dẫn đoạn sau Thuật toán 06.16 |
+| A5 | nhẹ | đã sửa | "hàng B đổi cực đại sau cập nhật thứ ba và lượt kết thúc ở chuyển thứ năm" |
+| A6 | nhẹ | đã sửa | Câu "283 cập nhật" bỏ khỏi "Trong thực hành" Mục 3 (cùng phương án rút gọn của vai B) |
+| A7 | nhẹ | đã sửa | Câu: ví dụ vách đá không chiết khấu nên không cô lập GLIE |
+| A8 | nhẹ | đã sửa | Bài tập 06.8 câu 4 thêm điều kiện; lời giải dẫn Bài 04 và nêu $q_*$ chưa định nghĩa khi $\gamma=1$ |
+| P-01 | trung bình | đã sửa | Bổ đề 06.5 → Nhận xét 06.5 nhắc lại, bỏ chứng minh; sửa câu "có thêm tính đơn điệu"; Bước 4 Mệnh đề 06.6 dẫn lập luận Bài 04 |
+| P-02 | trung bình | đã sửa | Số mục theo bảng ánh xạ trên |
+| P-03 | trung bình | đã sửa | Định nghĩa 06.1 chỉ còn bảng; $q_*$ nhắc lại dạng Bài 04, dạng $\max_\pi q_\pi$ suy từ định lý tồn tại |
+| P-04 | trung bình | đã sửa | $T_\pi$, $T_{\pi'}$, $T_*$ toàn tệp; bảng ký hiệu |
+| P-05 | trung bình | đã sửa | "hầu chắc chắn (almost surely)" ở lần đầu, 16 chỗ |
+| P-06 | trung bình | đã sửa | Khối `derivation` thay bằng hai câu nhắc lại (Bài 05, Mục 2) |
+| P-07 | nhẹ | đã sửa | Ví dụ 06.15 giữ (c), (a)(b) thành câu nhắc lại; phương sai $2/3$ chuyển vào gạch "Bỏ Robbins–Monro"; Bài tập 06.9 bỏ câu chứng minh $n^{-p}$, giữ và mở rộng phần lịch có sàn |
+| P-08 | trung bình | đã sửa | Ví dụ 06.10 có bảng ba mẫu còn lại trong "Dữ kiện"; Ví dụ 06.12 nêu bảng và dẫn số hiệu nguồn |
+| P-09 | trung bình | đã sửa | Mọi câu "Mục N làm…", "Chương dùng…", "Chương gọi…" viết lại với "chúng ta" hoặc đối tượng làm chủ ngữ |
+| P-10 | trung bình | đã sửa | Bỏ câu "Không có mạch nào…" |
+| P-11 | trung bình | đã sửa | Mục 6 mở bằng bài toán $b=(1/8,7/8)$, $\pi_L$; kết mục nêu giới hạn hai kết quả và nối Tình huống 06.1 |
+| P-12 | trung bình | đã sửa | Câu nối chỉ còn ở một phía tại các ranh giới Mục 1/2, 2/3, 3/4, 4/5 |
+| P-13 | trung bình | đã sửa | Tách các đoạn nhiều ý; ba hệ quả Sarsa/Q-learning thành danh sách |
+| P-14 | trung bình | đã sửa | Chuỗi quan hệ trong Bước 4 đặt trong `aligned` |
+| P-15 | trung bình | đã sửa | Hai công thức cập nhật của Mục 6.1 thành hai dòng hiển thị, mỗi dòng có câu dẫn; không còn ngoặc lồng |
+| P-16 | trung bình | đã sửa | "điều kiện của ô $Q(S_t,A_t)$ được cập nhật, tức của $q_*(S_t,A_t)$" |
+| P-17 | nhẹ | đã sửa | Mức xác suất $\beta$; tổng $\sum1/k^2\approx1{,}645$ thay cho biểu thức chứa $\pi$; $T$ theo P-04 |
+| P-18 | trung bình | đã sửa | Bài tập 06.2 dùng $\varepsilon=0{,}2$ và một trạng thái ba hành động; Bài tập 06.4 dùng $\alpha=0{,}5$ và thêm câu trạng thái kết thúc; bản trùng trang chiếu để cho `exercises.md` |
+| P-19 | nhẹ | đã sửa | Bài tập 06.12 câu 2 dùng $\varepsilon_{\min}=0{,}01$ của thiết lập tinh chỉnh |
+| P-20 | nhẹ | đã sửa | "Trong thực hành" Mục 5 rút còn hai câu dẫn Tình huống 06.1 |
+| P-21 | nhẹ | đã sửa | $f(s,a)$ vào bảng ký hiệu; công thức cần nhớ viết $Y=G_{f(s,a)}$, $\alpha=1/N(s,a)$ sau khi tăng $N$ |
+| P-22 | nhẹ | đã sửa | Giả thiết nền thành Nhận xét 06.20 đặt ngay trước Định lý 06.21 |
+| P-23 | nhẹ | đã sửa | Tiên quyết phát biểu lại đúng giả thiết Định lý 05.29 ($\gamma=1$ với lượt kết thúc xác suất 1; $\alpha_n\in[0,1]$) |
+| P-24 | nhẹ | đã sửa | Trực giác $q_\pi$ mở bằng "Nhắc lại từ Bài 03" |
+| P-25 | nhẹ | đã sửa | Câu kết "Trong thực hành" Mục 4 nêu việc đánh giá chạy chính sách đích tham lam |
+| P-26 | nhẹ | đã sửa | Bỏ câu bình về kiểu nét của hình |
+| P-27 | nhẹ | đã sửa | Ý "Monte Carlo không cập nhật được từ tiền tố" giữ ở Nhận xét 06.10 và đoạn mở Mục 3; các chỗ khác dẫn Nhận xét 06.10 hoặc bỏ; Nhận xét 06.13 mở bằng câu dẫn Nhận xét 06.10 |
+| Phép thử đọc 190 | trung bình | đã sửa | Câu "lượt minh họa tối đa ba bước" chuyển vào Tình huống 06.2 |
+| Phép thử đọc 715 | trung bình | đã sửa | "Các hành động $A$ và $A'$ trong bảng là dữ kiện cho trước…" |
+| Phép thử đọc 1043 | trung bình | đã sửa | Bỏ so sánh đích/hành vi và "bảy phép so sánh" |
+| Phép thử đọc 1331 | trung bình | đã sửa | Bỏ "nghiên cứu tinh chỉnh" và $-19\,484{,}6$; nêu lý do chặn Hoeffding không có $B$ |
+| Phép thử đọc 1366 | trung bình | đã sửa | Đoạn đánh giá cao viết lại: nói rõ hai đại lượng được so và kết luận |
+| Phép thử đọc 1368 | trung bình | đã sửa | Thiết lập tinh chỉnh còn một câu: "cách chia ô dựng từ các đại lượng mà bộ điều khiển heuristic tính từ quan sát" |
+| Phép thử đọc 417 | trung bình | đã sửa | "Chứng minh Mệnh đề 06.6 dưới đây dùng…" |
+
+Không bác bỏ phát hiện nào. Rút gọn thêm theo phương án vừa phải của vai B: Mục 6 (giữ một dạng gia số trong Mệnh đề 06.25, bỏ Bước 3 "hai dạng"; Mệnh đề 06.26 thay chứng minh ba bước bằng dẫn Hoeffding kèm một đoạn ý tưởng), Tình huống 06.1 (gộp "Thay đổi biểu diễn" và "Giới hạn"), bản đồ chủ đề, các đoạn "Trong thực hành", tóm tắt chương và nhiều đoạn văn dài.
+
+**Kiểm tra sau vòng sửa.** `note_check.py`: 27 khối bộ đếm chung (06.1–06.27, không khoảng trống, không trùng), 15 ví dụ, 12 bài tập, không khối lạ hay lồng, không khối chưa đánh số, không câu cấm. `check_note.py 06 lecture-06-dieu-khien-phi-mo-hinh.html`: 1600×900 và 390×844 đều 0 lỗi KaTeX, 0 lỗi console, 0 yêu cầu ngoài hay hỏng, `overflow` false ở cả hai kích thước; ở 1600×900 không còn công thức khối nào tràn. Đã xem ảnh chứng minh Mệnh đề 06.6 và Ví dụ 06.14. `no-ai-slop` Edit trên toàn bộ đoạn được sửa, tự đối chiếu `eval.md`: đạt (đã sửa thêm các câu tài liệu làm chủ ngữ phát sinh khi rút gọn).
+
+### Rà lại vòng 2 và sửa — 2026-10-12
+
+Hai tác tử rà lại chỉ đọc (vai A toán và vai B mạch viết, Opus 5.5, mức `high`, `no-ai-slop` Detect cho vai B) báo 0 chặn bàn giao, 0 nghiêm trọng; vai A 6 nhẹ, vai B 2 trung bình và 11 nhẹ. Tác tử soạn (cùng vai, Opus 5.5, `high`) sửa toàn bộ theo quyết định của điều phối viên; không commit. Thuật ngữ chốt mới: "lần ghé đầu tiên (first-visit)", "mọi lần ghé (every-visit)" theo Định nghĩa 05.6. Bảng ánh xạ ở vòng trước đã sửa dòng hội tụ TD(0) thành Định lý 05.30, mục 4.4 (A-5).
+
+| Mã | Mức | Trạng thái | Xử lý |
+|---|---|---|---|
+| A-1 | nhẹ | đã sửa | Gạch "Trường hợp trùng nhau": với hành vi tham lam, $A'\in\mathcal G_{Q_t}(S')$ nên hai mục tiêu bằng nhau trên cùng dữ liệu; điều kiện $S'\ne S$ và cùng quy tắc phá hòa chỉ cần để hai thuật toán chọn cùng hành động tiếp theo |
+| A-2 | nhẹ | đã sửa | Ví dụ 06.14: bỏ "như trong thí nghiệm ở đầu mục"; thêm câu giả định tách riêng vai trò của lịch $\varepsilon_k$, trường hợp cực đại đổi chỗ xét sau ví dụ |
+| A-3 | nhẹ | đã sửa | Đoạn sau Thuật toán 06.9: "bước cải thiện $\varepsilon$-tham lam có dạng của Mệnh đề 06.6, áp dụng cho bảng ước lượng (Nhận xét 06.7)" |
+| A-4 | nhẹ | đã sửa | Bài tập 06.2: câu dẫn nói rõ câu 1, 3, 4 thuộc dãy năm ô, câu 2 xét một trạng thái ngoài dãy (cùng R-13) |
+| A-5 | nhẹ | đã sửa | Tiên quyết hội tụ TD(0) thêm "dữ liệu sinh theo $\pi$"; ý $n^{-p}$ ghi là từ một bài tập củng cố của ghi chú Bài 05; bảng ánh xạ sửa thành Định lý 05.30, mục 4.4 |
+| A-6 | nhẹ | đã sửa | Phạm vi Định lý 06.21: "với lịch tất định theo số lần cập nhật" |
+| R-01 | trung bình | đã sửa | Ví dụ 06.12: bảng năm mẫu $(S,A,R,S')$ trong "Dữ kiện" |
+| R-02 | trung bình | đã sửa | 22 chỗ "lần ghé đầu" đổi thành "lần ghé đầu tiên" (gồm tiên quyết, bảng ký hiệu, Định nghĩa 06.8, Thuật toán 06.9, Bài tập 06.3, tóm tắt, tài liệu tham khảo) |
+| R-03 | nhẹ | đã sửa | "trong Mục 4, chúng ta xét điều khiển khác chính sách; trong Mục 6, chúng ta xét dự đoán khác chính sách" |
+| R-04 | nhẹ | đã sửa | Đoạn sau Ví dụ 06.14: trường hợp cực đại đổi chỗ "cần một lập luận riêng … nằm ngoài phạm vi chương" |
+| R-05 | nhẹ | đã sửa | Nhận xét 06.20: "Việc dãy có hai trạng thái kết thúc A và E không bảo đảm…" |
+| R-06 | nhẹ | đã sửa | Tình huống 06.1: "Khoảng $\pm1{,}96$ sai số chuẩn của cả hai hiệu đều không chứa $0$" |
+| R-07 | nhẹ | đã sửa | Mở Mục 5 bằng "Xét dãy năm ô với $\gamma=0{,}9$"; kết Mục 6: "Hai kết quả có phạm vi hẹp. Mệnh đề thứ nhất…" |
+| R-08 | nhẹ | đã sửa | Bài tập 06.2 câu 2: hàng $(4;1;1)$, $\varepsilon=0{,}6$, lời giải $(0{,}6;\,0{,}2;\,0{,}2)$ |
+| R-09 | nhẹ | đã sửa | Ranh giới 3/4: bỏ câu nhiệm vụ ở cuối Mục 3; ranh giới 4/5: bỏ câu nhiệm vụ ở cuối Mục 4, đoạn mở Mục 5 viết lại thành câu nêu loại giả thiết |
+| R-10 | nhẹ | đã sửa | Ngoặc lồng: "công thức 2.7", "công thức 7.9–7.10" ở thân bài và tài liệu tham khảo |
+| R-11 | nhẹ | đã sửa | Bước 4 Mệnh đề 06.6: bốn dòng `aligned`, mỗi dòng một quan hệ, nhãn (1)–(4) kèm căn cứ |
+| R-12 | nhẹ | đã sửa | Đoạn mở Mục 6 tách hai đoạn; bỏ câu nhắc $n^{-p}$ ở Mục 5.3; "(Mục 5.4)" thành "(danh sách \"Bỏ giả thiết\" sau Định lý 06.22)" |
+| R-13 | nhẹ | đã sửa | Tiên quyết định lý cải thiện thêm "MDP hữu hạn, phần thưởng bị chặn, $0\le\gamma<1$, $\pi$ dừng"; đề Bài tập 06.2 câu 4 chép bảng nghiêng phải |
+
+Không bác bỏ phát hiện nào. Số từ (`wc`): 24 966 trước vòng 2, 24 997 sau vòng 2. Để giữ dưới 25 000, rút gọn thêm: diễn giải Ví dụ 06.12, Nhận xét 06.23, đoạn sau Ví dụ 06.12, danh sách "Ứng dụng", vài câu của Tình huống 06.1, mục Sutton và Barto trong tài liệu tham khảo; bỏ dòng "Đọc tiếp".
+
+Kiểm tra: `note_check.py` 27/15/12 khối liên tục, không khối lạ, lồng, chưa đánh số hay câu cấm; `check_note.py 06 lecture-06-dieu-khien-phi-mo-hinh.html` 0 lỗi KaTeX, 0 lỗi console, 0 yêu cầu ngoài, `overflow` false ở 1600×900 và 390×844. `no-ai-slop` Edit trên mọi câu sửa, tự đối chiếu `eval.md`: đạt (đã loại câu mở kịch tính, dấu hai chấm hé lộ, câu tài liệu làm chủ ngữ).

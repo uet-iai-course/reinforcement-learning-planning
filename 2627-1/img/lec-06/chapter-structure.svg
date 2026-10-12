@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="470" viewBox="0 0 1120 470" role="img" aria-labelledby="title desc">
+<title id="title">Cấu trúc chương điều khiển phi mô hình</title><desc id="desc">Ô trên cùng: Mục 1, bảng Q theo cặp trạng thái–hành động và chính sách epsilon-tham lam, Mệnh đề 06.6. Mũi tên xuống dải khung chung Q(S,A) nhận Q(S,A) cộng alpha nhân hiệu Y trừ Q(S,A). Từ dải này ba mũi tên xuống ba ô: Mục 2 Monte Carlo với Y là lợi tức G của lượt hoàn chỉnh; Mục 3 Sarsa với Y bằng R cộng gamma nhân Q(S', A'); Mục 4 Q-learning với Y bằng R cộng gamma nhân cực đại của Q(S', ·). Từ ô Sarsa và ô Q-learning, mũi tên nét liền xuống ô dưới cùng: Mục 5, GLIE và điều kiện Robbins–Monro theo cặp cho Q hội tụ tới q sao, Định lý 06.21 và 06.22. Từ ô Monte Carlo, mũi tên nét đứt xuống cùng ô, chú thích: Monte Carlo điều khiển không có định lý hội tụ trong chương, Nhận xét 06.23.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#2F3E7A"/></marker><marker id="arrow-o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#B15A2B"/></marker></defs>
+<g font-family="Arial, Helvetica, sans-serif" fill="#28313D">
+<rect x="160" y="16" width="800" height="64" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="560" y="57" text-anchor="middle" font-size="24">Mục 1 · Bảng Q theo cặp, chính sách ε-tham lam (Mệnh đề 06.6)</text>
+<path d="M 560 82 L 560 106" fill="none" stroke="#2F3E7A" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="20" y="112" width="1080" height="52" rx="10" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2"/>
+<text x="560" y="146" text-anchor="middle" font-size="24">Khung chung: Q(S, A) ← Q(S, A) + α [ Y − Q(S, A) ]</text>
+<path d="M 190 166 L 190 190" fill="none" stroke="#2F3E7A" stroke-width="4" marker-end="url(#arrow)"/>
+<path d="M 560 166 L 560 190" fill="none" stroke="#2F3E7A" stroke-width="4" marker-end="url(#arrow)"/>
+<path d="M 930 166 L 930 190" fill="none" stroke="#2F3E7A" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="20" y="196" width="340" height="108" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="190" y="238" text-anchor="middle" font-size="24">Mục 2 · Monte Carlo</text>
+<text x="190" y="278" text-anchor="middle" font-size="22">Y = G, lượt hoàn chỉnh</text>
+<rect x="390" y="196" width="340" height="108" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="560" y="238" text-anchor="middle" font-size="24">Mục 3 · Sarsa</text>
+<text x="560" y="278" text-anchor="middle" font-size="22">Y = R + γ Q(S′, A′)</text>
+<rect x="760" y="196" width="340" height="108" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="930" y="238" text-anchor="middle" font-size="24">Mục 4 · Q-learning</text>
+<text x="930" y="278" text-anchor="middle" font-size="22">Y = R + γ max Q(S′, ·)</text>
+<path d="M 190 306 L 300 350" fill="none" stroke="#B15A2B" stroke-width="4" stroke-dasharray="10 8" marker-end="url(#arrow-o)"/>
+<path d="M 560 306 L 560 350" fill="none" stroke="#2F3E7A" stroke-width="4" marker-end="url(#arrow)"/>
+<path d="M 930 306 L 820 350" fill="none" stroke="#2F3E7A" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="160" y="356" width="800" height="64" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="560" y="397" text-anchor="middle" font-size="22">Mục 5 · GLIE, Robbins–Monro theo cặp ⇒ Q → q* (Định lý 06.21, 06.22)</text>
+<text x="20" y="456" font-size="20">Nét đứt: Monte Carlo điều khiển không có định lý hội tụ trong chương (Nhận xét 06.23).</text>
+</g></svg>
