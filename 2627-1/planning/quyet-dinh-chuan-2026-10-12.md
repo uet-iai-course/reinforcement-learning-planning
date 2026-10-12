@@ -19,6 +19,7 @@
 | agent | tác tử (agent) | tác nhân |
 | almost surely | hầu chắc chắn (almost surely) | gần chắc chắn |
 | Bellman operator | $T_\pi$, $T_*$ (chỉ số dưới, theo Bài 04–05) | $T^\pi$ |
+| ma trận chuyển và thưởng theo chính sách | $P_\pi$, $r_\pi$ (chỉ số dưới, cùng chuỗi $T_\pi$, $v_\pi$); Bài 03 hiện viết $P^\pi$, $r^\pi$, sửa ở đợt đồng bộ chéo | $P^\pi$, $r^\pi$ |
 | first-visit, every-visit | lần ghé đầu tiên (first-visit), mọi lần ghé (every-visit); theo Định nghĩa 05.6 | lần ghé đầu |
 
 Thuật ngữ tiếng Anh đặt trong ngoặc ở lần xuất hiện đầu của mỗi tài liệu. "Lời giải", không "Đáp án". Thuật ngữ mới của bài ghi vào bảng Việt–Anh trong `outline.md`.
