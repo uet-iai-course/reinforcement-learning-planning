@@ -687,3 +687,217 @@ Không có phát hiện chặn, nghiêm trọng hay trung bình. Bảy mục nh�
 - Thực hiện (tác tử biên tập Flappy Bird, fork, claude-opus-5-5, high): thêm `K_DOUBLE = 8000` cho `train_double`, giữ họ `four3`, $\alpha$ mỗi vector, `eps_fn` của mục 7 (chọn trước khi chạy để chỉ đổi số lượt), hạt giống không đổi; in số cập nhật thực tế của mỗi vector (552 057 và 551 143) cạnh Q-learning 4000 lượt (718 864); đường học trục tới 8000 có vạch lượt 4000; cập nhật mọi số liệu và lời đọc của mục 13, Tổng kết, nhiệm vụ 1 (đề xuất huấn luyện Q-learning 8000 lượt để tách hai yếu tố), thời gian chạy (khoảng 6–7 phút, 374–377 giây). Output ô 0–53 trùng commit `6ab245f`.
 - Kết quả (lần chạy này): Double Q-learning 38,24 ± 1,79 ống trên `TEST_SEED` (56% đạt 50 ống); Double Q − Q-learning 9,38 ± 4,75; − Sarsa 0,20 ± 4,25; − luật tay 3,94 ± 4,06; $\max_a\bar q(S_0)-G_0=-1{,}15\pm0{,}27$. Notebook nêu Double Q dùng gấp đôi số lượt nên chênh lệch với Q-learning trộn bộ ước lượng kép và lượng dữ liệu; các lần thử khi soạn với $K=8000$ cho 26,9 / 17,8 / 0 ống, nên không kết luận chung.
 - Rà soát lại nhanh (fork, claude-opus-5-5, high, chỉ đọc): không có phát hiện chặn, nghiêm trọng hay trung bình; bốn mục nhẹ (chỉ Markdown) điều phối đã sửa: bỏ câu "Theo yêu cầu của người dùng" khỏi văn bản cho sinh viên và viết "số cập nhật cùng cỡ" thay cho "xấp xỉ"; ghi "theo hình" cho các số đọc từ hình; ghi rõ số 0,06 thuộc phiên bản trước của notebook. `nbformat.validate` đạt; nbclient chạy hai lần không lỗi, tất định; trình phát không lỗi console, không gọi mạng.
+
+## Đợt sửa 2026-10-12 — Giai đoạn I: ghi chú bài giảng
+
+### Tác tử và phạm vi
+
+| vai | loại | mô hình | mức | ghi tệp |
+|---|---|---|---|---|
+| Soạn ghi chú bài giảng Bài 07 (viết lại toàn bộ) | `general-purpose` (theo brief; bằng chứng lời gọi công cụ do điều phối viên ghi) | claude-opus-5-5 | high | `materials/lec-07/lecture-note.md`; hai SVG mới; mục này của review-log |
+
+- Tệp đã đọc: `quyet-dinh-chuan-2026-10-12.md`, `revision-plan-2026-10-12.md` (mục A–D), các mục được giao của `AGENTS.md`, mẫu `materials/_templates/lecture-note.md`, mẫu math-4-AI Bài 07, ghi chú cũ (1 097 dòng), deck hiện tại, `note-for-author.md`, ô Markdown và output của hai notebook, Bài tập tuần 7 (2025–2026). Không có tệp đề bài tập tuần 8 trong `RL-hk2-2025-2026/resources/`.
+- Tệp ghi: `2627-1/materials/lec-07/lecture-note.md` (viết lại); `2627-1/img/lec-07/chapter-map.svg` (cấu trúc chương, Mục 1) và `2627-1/img/lec-07/two-state-features.svg` (Ví dụ 07.11 và 07.15), cả hai có `<title>`, `<desc>`, nhãn chữ, nét liền/nét đứt kèm nhãn nên màu không là tín hiệu duy nhất. Không sửa SVG cũ, deck, outline, storyboard, index, CSS, viewer, notebook. Không commit.
+- Độ dài: 19 878 từ (`wc -w`, kể cả ký hiệu công thức), dưới trần 20 000; bản cũ 15 777 từ.
+
+### Cấu trúc và ánh xạ mạch
+
+Sáu mục nội dung ứng với mạch 2–7 của deck bảy mạch (quyết định chung, mục 8); mạch 1 (mở đầu) ứng với Mục tiêu học tập, Kiến thức tiên quyết, Bảng ký hiệu và đoạn mở của Mục 1. Mục 1: hàm tuyến tính theo đặc trưng (mạch 2). Mục 2: Monte Carlo gradient (mạch 3). Mục 3: TD(0) bán gradient và điểm cố định Bellman chiếu (mạch 4). Mục 4: Sarsa bán gradient (mạch 5). Mục 5: Q-learning bán gradient và bộ ba bất ổn (mạch 6). Mục 6: phạm vi bảo đảm và năm bước phân tích (mạch 7, không đưa khái niệm mới). Có đủ 11 thành phần của chương.
+
+`note-topic-id` (mỗi mã đúng một lần, viewer kiểm): 01 (1.1), 02 (1.2), 03 (1.3), 04 (1.4), 05 (2.1), 06 (2.2), 15 (2.3), 07 (3.1), 08 (3.2), 09 (3.3), 10 (4.1–4.2), 16 (4.3), 11 (5.1), 17 (5.2, mới), 14 (6.1), 12 (6.2), 18 (6.3, mới), 13 (Kiến thức tiên quyết). Đổi nhóm: `topic-15` từ bổ sung sang cốt lõi (trang 34 của nguồn phát biểu kết quả, mục tiêu học tập 3–4 cần nó); `topic-16` từ nhóm ngoài chuẩn "đọc thêm/thực hành" sang bổ sung (khoảng trống: tính tay trọn một lượt; nguồn: Bài tập tuần 7, bài 7–8); `topic-17` tách từ `topic-11`; `topic-18` (MDP tuyến tính, đọc thêm) tách từ `topic-14`. Deck giai đoạn II cần ánh xạ lại `data-note-topic-id` theo danh sách này.
+
+### Giáo trình đã tham khảo theo mục (đối chiếu cách dẫn dắt, không dịch, không chép)
+
+| Mục | Giáo trình và mục |
+|---|---|
+| Kiến thức tiên quyết, giọng kể | Giáo trình *Học máy thống kê*, chương 6 (giọng "chúng ta/ta", tương ứng ký hiệu $Q_w$, $\phi(s,a)$); ghi chú Bài 03–06 đang viết song song (đối chiếu số mục `##` qua bản đồ chủ đề của từng ghi chú tại thời điểm soạn) |
+| 1.1–1.2 | Sutton và Barto (2018) §9.1 (tr. 198), §9.5 (Fourier, mã hóa lưới ô), §9.7 (mạng nơ-ron) |
+| 1.3 | Sutton và Barto (2018) §9.2 (tr. 199): $\overline{\mathrm{VE}}$, phân phối theo chính sách, trường hợp theo lượt (9.2)–(9.3) |
+| 1.4 | Bài giảng gốc trang 28–31; Sutton và Barto (2018) §9.5 |
+| 2.1–2.3 | Sutton và Barto (2018) §9.3 (tr. 200–203): (9.7), hộp Gradient Monte Carlo tr. 202, điều kiện giảm bước; §9.6 cho bước học chuẩn hóa; Bertsekas và Tsitsiklis (1996) chương 4 (dẫn chương cho Bước 3 của chứng minh Định lý 07.17) |
+| 3.1 | Sutton và Barto (2018) §9.3 (tr. 202–203): khái niệm bán gradient, hộp TD(0) bán gradient |
+| 3.2–3.3 | Sutton và Barto (2018) §9.4 (tr. 204–209): (9.11)–(9.12), hộp chứng minh tr. 206–207 (cách lập luận cột tổng; ghi chú dùng lập luận Jensen–Cauchy–Schwarz khác), chặn (9.14) tr. 207, ghi chú về trường hợp theo lượt và điều kiện kỹ thuật tr. 208; §9.8 (LSTD) cho đoạn Trong thực hành; Tsitsiklis và Van Roy (1997); Bertsekas và Tsitsiklis (1996) chương 6 |
+| 4 | Sutton và Barto (2018) §10.1 (tr. 243–244): (10.1)–(10.2), câu "với chính sách cố định hội tụ như TD(0)", hộp Sarsa bán gradient theo lượt |
+| 5 | Sutton và Barto (2018) §11.2 (tr. 260): ví dụ $w\to2w$; §11.3 (tr. 264–265): định nghĩa bộ ba bất ổn, "hai trong ba thì tránh được", nguy cơ có ngay trong dự đoán; §6.7 cho Double Q-learning |
+| 6 | Bài giảng gốc trang 41–45; Jin và cộng sự (2020) chỉ qua trang 42 của nguồn |
+
+Số mục và chương của Bertsekas và Tsitsiklis (1996) ghi theo trí nhớ (chương 4: thuật toán lặp ngẫu nhiên; chương 6: quy hoạch động xấp xỉ, TD với xấp xỉ tuyến tính); kho không có bản sách để xác minh, nên chỉ dẫn chương, không dẫn trang.
+
+### Số hiệu cuối cùng
+
+- Bộ đếm chung (42): 07.1 Định nghĩa (hàm có tham số, xấp xỉ tuyến tính); 07.2 Mệnh đề (mức lan); 07.3 Hệ quả (đặc trưng chỉ thị); 07.4 Nhận xét (lớp hàm khác); 07.5 Định nghĩa (bài toán dự đoán, $J_\mu$); 07.6 Định nghĩa (ma trận đặc trưng, lớp biểu diễn); 07.7 Định nghĩa (bốn khối); 07.8 Mệnh đề (khối Kronecker); 07.9 Nhận xét (không đủ hạng cột); 07.10 Mệnh đề (nhập nhằng, cận (1.5)); 07.11 Định nghĩa (sai số xấp xỉ, ước lượng); 07.12 Định nghĩa (mục tiêu, mất mát mẫu, gradient đầy đủ); 07.13 Mệnh đề (lợi tức không chệch); 07.14 Mệnh đề (SGD trên $J_\mu$); 07.15 Thuật toán (Monte Carlo gradient); 07.16 Bổ đề (phương sai–độ lệch); 07.17 Định lý (hội tụ Monte Carlo tuyến tính); 07.18 Nhận xét (Robbins–Monro); 07.19 Định nghĩa (mục tiêu TD, sai số TD); 07.20 Mệnh đề (độ chệch mục tiêu TD); 07.21 Định nghĩa (bán gradient); 07.22 Thuật toán (TD(0) bán gradient); 07.23 Nhận xét (kết thúc, cắt ngắn, dừng); 07.24 Định nghĩa ($\Pi_D$, Bellman chiếu); 07.25 Mệnh đề ($b-Aw$); 07.26 Mệnh đề (điểm dừng là điểm cố định); 07.27 Bổ đề ($P_\pi$ không giãn); 07.28 Mệnh đề ($A$ xác định dương, $w_{\mathrm{TD}}$ duy nhất); 07.29 Định lý (Tsitsiklis–Van Roy); 07.30 Nhận xét (so sánh, chặn (9.14)); 07.31 Định nghĩa ($\pi_w$); 07.32 Mệnh đề ($-2[w]_2$); 07.33 Thuật toán (Sarsa); 07.34 Nhận xét (phạm vi Sarsa); 07.35 Định nghĩa (mục tiêu Q-learning); 07.36 Thuật toán (Q-learning, bổ sung); 07.37 Mệnh đề (phân kỳ hai trạng thái); 07.38 Định nghĩa (bộ ba bất ổn); 07.39 Nhận xét (đọc đúng khẳng định); 07.40 Nhận xét (bảng phạm vi); 07.41 Nhận xét (năm bước); 07.42 Nhận xét (MDP tuyến tính).
+- Ví dụ (16): 07.1 Lunar Lander rời rạc hóa; 07.2 cập nhật lan; 07.3 hai trạng thái đổi trọng số; 07.4 đặc trưng Lunar Lander; 07.5 tích Kronecker; 07.6 hai quan sát cùng đặc trưng; 07.7 hai mục tiêu cho một mẫu; 07.8 một cập nhật Monte Carlo; 07.9 một cập nhật TD(0); 07.10 hình chiếu lên đường thẳng; 07.11 hai trạng thái đặc trưng 1 và 2; 07.12 chuỗi năm trạng thái; 07.13 một cập nhật Sarsa; 07.14 hai mục tiêu trên mẫu thứ hai; 07.15 phân kỳ $w\to2w$; 07.16 năm bước cho TD(0).
+- Bài tập (19): 07.1–07.3 (Mục 1), 07.4–07.6 (Mục 2), 07.7–07.9 (Mục 3), 07.10–07.12 (Mục 4), 07.13 (Mục 5), 07.14–07.19 (Bài tập củng cố, hai bài mỗi mức). Tình huống 07.1, 07.2. Phương trình đánh số: (1.1)–(1.5), (2.1), (3.1)–(3.3), (5.1).
+- Ánh xạ bài tập cũ: Bài tập 4 → 07.5; Bài tập 6 → 07.6; Bài tập 5 → Mệnh đề 07.26 và 07.8; bài 2 → 07.9; Bài tập 7 → 07.10; Bài tập 8 → 07.11; bài 3 → 07.13. Câu hỏi GLIE (dòng 167 cũ) và câu hỏi LSVI (dòng 895 cũ) bỏ, theo kế hoạch B2. Câu hỏi năm bước cho TD(0) (dòng 922 cũ) thành Ví dụ 07.16; câu hỏi xếp bốn phương pháp (dòng 955 cũ) thay bằng bảng Nhận xét 07.40 và Bài tập 07.18; câu hỏi "khi nào hai mục tiêu bằng nhau" (dòng 1075 cũ) gộp vào Ví dụ 07.14 và đoạn sau Định nghĩa 07.35.
+
+### Sai khác so với kế hoạch B và lý do
+
+1. Sáu mục thay năm (quyết định chung mục 8, brief); Mục 6 nhận Nhận xét 07.40–07.42 và Ví dụ 07.16.
+2. Số hiệu lệch kế hoạch B2: gộp "hàm có tham số" và "xấp xỉ tuyến tính" thành Định nghĩa 07.1 vì Mệnh đề 07.2 cần dạng tuyến tính; hệ quả "$w_{\mathrm{TD}}$ duy nhất" gộp vào Mệnh đề 07.28; định lý TD thành 07.29; bộ ba bất ổn là Định nghĩa 07.38 (kế hoạch: nhận xét) vì là khái niệm trọng tâm cần định nghĩa có ba yếu tố; thêm Nhận xét 07.41 (năm bước, từ mục 15.1 cũ). Ví dụ có 16 thay 14: thêm 07.7 (bước ví dụ của chủ đề "mục tiêu cập nhật") và 07.16; Ví dụ 07.6 dùng nhập nhằng do cắt biên của notebook Lunar Lander vì số liệu hai trạng thái cùng đặc trưng đã ở Ví dụ 07.3.
+3. Ký hiệu, để mỗi chữ một nghĩa: số chiều của $\phi(s)$ là $k$ (không dùng $p$, trùng $p(s',r\mid s,a)$); vector chỉ thị $\mathbf 1_a$ (không dùng $e_a$, trùng $e_t$); bốn khối tham số $w^{(1)},\dots,w^{(4)}$ với $w^{(3)}_a$ (không dùng $c_a$, $u_a$, $b$, trùng $u(a)$, $b$ của $Aw=b$); giữ $u(a)$ theo quyết định chung; $J_{\mathrm{kt}}$ cho thước đo của notebook; $\kappa$ cho hằng bước học; tên trạng thái chuỗi chữ đứng; `^\top` thống nhất. Giai đoạn II (deck: L07-10 viết $e_a$, $c_a$, $u_a$, $b$, $p$) và giai đoạn III (Markdown notebook: $p$, $c$, mục cũ) cần đồng bộ.
+4. Định lý 07.17 thêm giả thiết $\Sigma_\mu$ xác định dương để kết luận "hội tụ tới điểm cực tiểu duy nhất"; nguồn trang 34 chỉ nêu iid, đặc trưng bị chặn, Robbins–Monro. Định lý 07.29 phát biểu cho bài toán không kết thúc; trường hợp theo lượt chỉ dẫn Sutton và Barto (2018, tr. 208).
+5. Phần bổ sung đã được duyệt (quyết định chung mục 8): Thuật toán 07.36 (theo quy trình hai notebook, chọn hành động mới bằng $w$ đã cập nhật); Ví dụ 07.11 (Bellman chiếu hai trạng thái); Ví dụ 07.15 và Mệnh đề 07.37 ($w\to2w$, Sutton và Barto §11.2); Ví dụ 07.14 (hai mục tiêu trên mẫu thứ hai); số liệu notebook ở Ví dụ 07.1. Bổ sung thêm chưa có trong danh sách duyệt, cần điều phối viên xác nhận: Ví dụ 07.7 (số liệu sư phạm, dùng lại số của Ví dụ 07.8); Bài tập 07.8(b) (biến thể $r_\pi=(0;1)$ của Ví dụ 07.11); Bài tập 07.12, 07.15, 07.16, 07.17 (bài củng cố mới, tính trên dữ kiện đã có).
+6. Ví dụ dự đoán giữ số cũ, chỉ gọi tên "trạng thái hai đặc trưng" (L07-06 → Ví dụ 07.2; L07-14 → 07.8; L07-19 → 07.9).
+7. Độ dài 19 878 từ, cao hơn đích 18 000–19 500 của kế hoạch B1 nhưng dưới trần; để giữ trần, các đoạn diễn giải được viết gọn hơn dự tính.
+
+### Số liệu đã tính lại (bằng tay và bằng phân số chính xác trong Python)
+
+- Ví dụ 07.1: $1\,896/9\,216\approx0{,}206$; $9\,216-1\,896=7\,320$.
+- Ví dụ 07.2: $\Delta w=(0{,}2;0{,}2)$; $+0{,}4$, $+0{,}3$. Bài tập 07.1: $0{,}2$; $0$; $-0{,}2$.
+- Ví dụ 07.3, Bài tập 07.3, Mệnh đề 07.10: $c^*=2\mu_2$; $\tfrac12$ và $\tfrac38$; cận $\tfrac12\mu_1\mu_2(v_1-v_2)^2/(\mu_1+\mu_2)$; $2p(1-p)$.
+- Ví dụ 07.4: $9$; $1+18+135+2=156$; $(1{,}403+0{,}25)/1{,}85\approx0{,}8935$, $2z-1\approx0{,}787$. Ví dụ 07.6: $1{,}054$, $1{,}108$.
+- Ví dụ 07.7: $1{,}9$ và $2{,}62$. Ví dụ 07.8: $(1{,}8;-0{,}6)$, dự đoán $3$, mức tăng $2$.
+- Ví dụ 07.9, Bài tập 07.7: $y=1{,}9$, $\delta=-0{,}6$, $(0{,}44;0{,}88)$, $2{,}2$, $1{,}792$; giữ lại $(-0{,}6;-1{,}2)$, bỏ $(-1{,}08;0)$, hướng đầy đủ $(0{,}48;-1{,}2)$.
+- Ví dụ 07.11: $v_\pi=(5{,}5;4{,}5)$; $w_{\mathrm{MC}}=2{,}9$; $A=19/40=0{,}475$, $b=\tfrac12$, $w_{\mathrm{TD}}=20/19$; $2J_\mu$: $4{,}225$ và $18421/1444\approx12{,}757$, tỉ số $\approx3{,}02$; $T_\pi(\Phi w_{\mathrm{TD}})=(46/19;27/19)$, hệ số hình chiếu $20/19$; $A\ge0{,}25$. Bài tập 07.8: $v_\pi=(4{,}5;5{,}5)$, $w_{\mathrm{MC}}=3{,}1$, $w_{\mathrm{TD}}=40/19$, $T_\pi(\Phi w)=(54/19;73/19)$.
+- Ví dụ 07.12–07.14, Bài tập 07.10, 07.11, 07.16: $\hat q(\cdot,\cdot,w_0)$; $w_1=(-0{,}2;0{,}6;-1{,}4)$; Monte Carlo $w_3=(381{,}81;162{,}71;160{,}71)$, giá trị $1\,468{,}85$, $1\,087{,}04$, $705{,}23$ (trùng `note-for-author.md`); Sarsa $w_2=(-0{,}68;0{,}84;-1{,}64)$, $w_3=(8{,}032;-2{,}064;1{,}264)$, giá trị $23{,}296$, $19{,}392$, $27{,}424$ (trùng); mẫu 2: Sarsa $-3{,}6$, $\delta=-1{,}2$; Q-learning $-2{,}4$, $\delta=0$; Q-learning $w_3=(7{,}36;-1{,}92;1{,}12)$, $21{,}28$, $25{,}12$.
+- Ví dụ 07.15, Mệnh đề 07.37: $\delta=0{,}8w$, $w_t=1{,}08^t$, $w_2=1{,}1664$, $w_{30}\approx10{,}06$; $A_{\text{khác}}=1-2\gamma=-0{,}8$.
+- Bài tập 07.14, 07.18: $8\,748$; $d=785$; $d=771=3k+3$. Bài tập 07.15: $(1\,000;999;998)$, $(8;9;10)$, $w=(-1;1\,001)$, $(1;7)$; $\gamma=0{,}5$: $(1\,000;499;248{,}5)$.
+- Số liệu notebook (một lần chạy đã nhúng, đối chiếu output): Lunar Lander mục 5–8 ($J$: 5 797,1; 3 021,2; 1 626,8; 2 190,1; 1 855,2; 1 481,0; 1 622,2; hạng 156/156; 42 lượt cắt ngắn, 7,7%; $x(S_1)^\top w_1=0{,}5832$), mục 12.2 (200,9 ± 15,7; 205,3 ± 8,4; 236,9; Bài 06 gốc 26,2), mục 13.2 (−7,9 ± 3,2; +12,4 ± 2,2), mục 13.3 (42,3 → 52,2); Flappy Bird mục 6 (0,00; 0,40; 34,70; bảng thử nghiệm `poly2` 1 895,1 và 15,1; `four3` $K=4000$: 36,3 ± 1,4 và 35,0 ± 3,6), mục 7 (‖w‖ cuối 5,08 và 6,86), mục 8 (38,04 ± 1,61; 28,86 ± 1,98; 34,30 ± 1,30; −9,18 ± 4,50), mục 13 (38,24 ± 1,79).
+
+### Chỗ cần tác tử rà toán soi
+
+- Bước 3 của chứng minh Định lý 07.17: điều kiện "phương sai nhiễu bị chặn bởi hằng số nhân $1+\lVert w_n\rVert^2$" và việc dẫn chương 4 của Bertsekas và Tsitsiklis (1996) đủ cho kết luận hội tụ với xác suất 1.
+- Bổ đề 07.27 và Mệnh đề 07.28 chỉ chứng minh cho bài toán không kết thúc; câu về bài toán theo lượt chỉ dẫn nguồn.
+- Ví dụ 07.15: diễn đạt "chỉ chuyển $s_1\to s_2$ được cập nhật" như một phân phối cập nhật khác chính sách (theo Sutton và Barto §11.2, $\rho_t=1$ trên chuyển này).
+- Bài tập 07.13(d) và Bài tập 07.19(b): phát biểu về Monte Carlo khác chính sách và về đích "hình chiếu của $\bar g$" khi quan sát không Markov.
+- Nhận xét 07.34: câu "với chính sách cố định, Sarsa hội tụ như TD(0)" dựa trên Sutton và Barto (2018, §10.1, tr. 244).
+
+### Tham chiếu chéo và giới hạn còn lại
+
+- Kết quả của Bài 03–06 được dẫn theo "ghi chú Bài 0N, Mục k" kèm phát biểu lại (quyết định chung mục 4), chưa có số hiệu `0N.k`. Số mục dùng theo bản đồ chủ đề của các ghi chú đang viết song song lúc soạn: Bài 03 Mục 2 (lợi tức), Mục 3 (hàm giá trị), Mục 4–5 (Bellman, dạng ma trận); Bài 04 Mục 1 (đánh giá chính sách, $T_\pi$); Bài 05 Mục 2 (Monte Carlo), Mục 3 (TD(0)), Mục 4 (điều kiện hội tụ); Bài 06 Mục 1 (giá trị hành động, ε-tham lam), Mục 3 (Sarsa), Mục 4 (Q-learning), Mục 5 (điều kiện hội tụ). Đợt đồng bộ sau cần kiểm lại số mục và thay bằng số hiệu.
+- Hai notebook còn dẫn số mục của ghi chú cũ (3.2, 10.4, 12.5, 13.1, 14, ...) và dùng $p$, $c$, $u_a$; cần sửa ở giai đoạn III.
+- Thuật toán 07.36 là bổ sung ngoài bài giảng gốc; deck cần ghi sai khác khi đưa lên trang.
+
+### Tự kiểm `no-ai-slop` (chế độ Edit) theo `eval.md`
+
+Phạm vi: toàn bộ văn bản của ghi chú. Kết quả: các mục "Editing principles" 1–11 đạt (không thêm nhận định không nguồn; số liệu thực hành đều kèm "một lần chạy đã nhúng trong notebook" hoặc "bảng thử nghiệm khi soạn"; câu chủ động, chủ ngữ "chúng ta/ta" hoặc đối tượng toán học). "Words to cut" đạt (không có từ cấm; không "rất", "thực sự" dùng làm nhấn mạnh). "Patterns to cut": đã sửa 14 câu lấy tài liệu làm chủ ngữ ("Chương này…", "Mục này…") thành "chúng ta"; không câu hỏi tu từ, không dấu chấm than, không kết kịch tính; tương phản "có thể phân kỳ, không phải luôn phân kỳ" giữ vì là phân biệt toán học; gạch ngang dài chỉ ở tiêu đề chương và tên tài liệu nguồn. "Final read": đoạn kết mục cùng khuôn "Như vậy… Tuy nhiên… Trong Mục N+1…" theo yêu cầu của `AGENTS.md`. Không dùng điểm của bộ phát hiện AI.
+
+Rà dàn ý theo `quill` (Outline, Threads, Concept; không tạo `quill.json`): mỗi khái niệm được định nghĩa trước lần dùng đầu ($\Phi$ ở 07.6 trước Mục 3; $d_\pi$ nêu ở Mục 1.3 trước 07.24; $\pi_w$ ở 07.31 trước 07.36); các "sợi" mở ở Mục 1 được đóng: mức lan (07.2) → phân kỳ (07.37); nhập nhằng (07.10) → Tình huống 07.2; không đủ hạng cột (07.9) → giả thiết 4 của 07.29 và Bài tập 07.18; hai đích (07.17, 07.29) → Ví dụ 07.11, Tình huống 07.1.
+
+### Kết quả hai script
+
+- `note_check.py`: 19 878 từ (lần chạy cuối); khối: 16 ví dụ, 12 định nghĩa, 11 mệnh đề, 16 chứng minh, 1 hệ quả, 10 nhận xét, 19 bài tập/gợi ý/lời giải, 4 thuật toán, 2 bổ đề, 2 định lý, 2 tình huống; số hiệu chung 42, ví dụ 16, bài tập 19, không khoảng trống, không trùng, không khối lạ, không khối chưa đánh số, không mẫu câu cấm.
+- `check_note.py 07 lecture-07-xap-xi-ham.html` (cổng 8766): 1600×900 và 390×844 đều 0 lỗi KaTeX, 0 lỗi console, không tài nguyên ngoài, không tràn ngang (đã bỏ một công thức nội dòng dài ở Ví dụ 07.4 gây tràn ở màn hẹp). Đã xem ảnh chụp viewer các khối Định lý 07.29, Ví dụ 07.11, bảng Nhận xét 07.40 ở hai cỡ, và ảnh PNG của hai SVG mới.
+
+### Rà soát giai đoạn I và sửa theo quyết định của điều phối viên (2026-10-12)
+
+**Tác tử rà soát.** Vai A (độ chính xác toán học và thuật toán) và Vai B (mạch viết, chuẩn giáo trình, văn phong, `no-ai-slop` chế độ Detect), mỗi vai một tác tử Opus 5.5 (`claude-opus-5-5`), mức `high`, chỉ đọc, trên cùng bản ghi chú 19 878 từ. Báo cáo nằm ở scratchpad của phiên (`review-07-A.md`, `review-07-B.md`). Kết quả: 0 chặn bàn giao, 0 nghiêm trọng; Vai A 9 trung bình, 10 nhẹ; Vai B 18 trung bình, 17 nhẹ, 8 chỗ lặp. Tác tử sửa: chính tác tử soạn (vai soạn, Opus 5.5, `high`), chế độ Edit của `no-ai-slop`.
+
+**Phát hiện và xử lý.** Mã A1–A19 theo thứ tự bảng của Vai A; B, C, L theo báo cáo Vai B.
+
+| mã | mức | vị trí | vấn đề | quyết định | trạng thái |
+|---|---|---|---|---|---|
+| A1 | trung bình | Ví dụ 07.13–07.14, Bài tập 07.11, 07.13 | ba mẫu Sarsa không phải một quỹ đạo liên tiếp | giữ số; thêm câu "các mẫu được cho độc lập như phiếu bài tập" ở 4.3, Bài tập 07.11, Ví dụ 07.14; bỏ chỉ số $A_1$, $A_2$; sai lệch nguồn (hw07, bài 8 ghi "3 mẫu liên tiếp") ghi ở đây | đã sửa |
+| A2 | trung bình | Ví dụ 07.15, đoạn đọc hình, chú thích hình | 07.15 khác mô hình, không chỉ khác phân phối | nêu rõ mảnh MDP của Sutton–Barto tr. 260 (một hành động ở $s_1$, tất định, thưởng 0, $\rho_t=1$), chỉ chung đặc trưng; sửa đoạn đọc hình, `alt`, `<desc>` và thêm dòng "s₁: một hành động, tất định, ρ = 1" trong `two-state-features.svg` | đã sửa |
+| A3 | trung bình | Bài tập 07.19(b), Mục 1.3 | đích Monte Carlo theo lô | hình chiếu theo $\lVert\cdot\rVert_\mu$ của $\bar g$, $\mu$ là phân phối ghé trên lượt kết thúc thật; trùng $v_\pi$ chỉ khi Markov và không bỏ lượt; thêm "theo phân phối ghé" ở bảng ký hiệu và Mục 1.3 | đã sửa |
+| A4 | trung bình | Bài tập 07.14(d) (số cũ 07.13) | kết luận không rõ | (d) chỉ nhận diện ba yếu tố, thêm câu Định lý 07.17 không áp dụng nguyên văn vì giả thiết 2, dẫn ghi chú Bài 06, Mục 6 | đã sửa |
+| A5 | trung bình | Nhận xét 07.40, Ví dụ 07.16 | thiếu "không kết thúc", "phần thưởng bị chặn" | thêm vào hàng TD và dữ kiện, bước 5 của ví dụ | đã sửa |
+| A6 | trung bình | Thuật toán 07.22, 07.33, 07.36 | không xử lý cắt ngắn | thêm "giới hạn số bước" vào đầu vào và bước sang lượt mới sau cập nhật có bootstrap; Thuật toán 07.15 bỏ lượt cắt ngắn ở bước 1 | đã sửa |
+| A7 | trung bình | Bài tập 07.17 | kiểm tra lại sai chiều | "điều kiện là đủ, không phải cần" | đã sửa |
+| A8 | trung bình | Mục 4.2, 5.1 | so sánh chọn lọc với Bài 06 | thêm 202,8 (Sarsa) và 235,5 (Q-learning) của bảng tinh chỉnh kèm lưu ý; "cùng lịch $\varepsilon_k$ và cùng $K$" | đã sửa |
+| A9 | trung bình | Mục 1.4 | "cùng bước học" sai | "cùng hằng $\kappa$ của bước học chuẩn hóa" | đã sửa |
+| A10 | nhẹ | Định lý 07.17, Bước 3 | thiếu câu nối dạng cận nhiễu | thêm $\lVert w\rVert^2\le c'(1+\lVert\nabla J_\mu\rVert^2)$, kết luận $\nabla J_\mu(w_n)\to0$ | đã sửa |
+| A11 | nhẹ | đoạn mở Mục 1, kết Mục 2 | nói "chứng minh hội tụ" | "xác định điểm đích và phát biểu, kèm nguồn" | đã sửa |
+| A12 | nhẹ | Nhận xét 07.40, Định lý 07.17 | "chuỗi có tính trộn" vượt phạm vi | bỏ; ghi "cần một phiên bản khác, không trình bày" | đã sửa |
+| A13 | nhẹ | Mục 5.1 | ± là độ lệch chuẩn | ghi "(độ lệch chuẩn qua ba hạt giống)" | đã sửa |
+| A14 | nhẹ | Ứng dụng | hai khẳng định quá mức | "phù hợp với"; "khi chính sách được giữ cố định" | đã sửa |
+| A15 | nhẹ | Mục 2.3, Tình huống 07.1 | quy nguyên nhân 2 190,1 − 1 481,0 | "một lượt với bước hằng nhỏ chưa tới nghiệm; bước hằng cũng không thỏa Robbins–Monro" | đã sửa |
+| A16 | nhẹ | Tình huống 07.1 | đếm sai giả thiết | "ba giả thiết không thỏa và một chưa chắc" | đã sửa |
+| A17 | nhẹ | danh sách "Bỏ" của Định lý 07.29 | "$A$ có thể âm" | "không xác định dương; trong Ví dụ 07.15, $A=1-2\gamma<0$" | đã sửa |
+| A18 | nhẹ | Định nghĩa 07.5 | điều kiện $v_\pi$ hữu hạn | "thời gian kết thúc kỳ vọng hữu hạn" | đã sửa |
+| A19 | nhẹ | ký hiệu, thuật ngữ | $u_j,\ell_j$; $\mu=(p;1-p)$; $G_n$; $a=(1;1)$; "với xác suất 1"; "tổng thưởng" | $\underline o_j,\overline o_j$; $\mu=(\beta;1-\beta)$; $G^{(n)}$, $S^{(n)}$; "hầu chắc chắn (almost surely)" ở lần đầu; "tổng phần thưởng không chiết khấu của lượt" định nghĩa một lần ở Mục 4.2. Riêng $a=(1;1)$: **không đổi thành $e$** vì $e$, $e_t$ đã là sai lệch (Ví dụ 07.2, Mệnh đề 07.2); dùng $f=(1;1)$, $h=(2;0)$, hệ số $\lambda$ | đã sửa (lệch đề xuất về chữ $e$) |
+| B1 | trung bình | các đoạn trực giác | thiếu câu "chưa phải định nghĩa" | thêm ở 1.1, 1.2, 1.3, 1.4, 2.1, 3.1, 3.2, 4.1, 5.1 | đã sửa |
+| B2 | trung bình | nhiều đoạn | quá bốn câu, nhiều luận điểm | tách hoặc rút; đoạn thực hành 5.1 tách hiệu năng và đánh giá quá cao | đã sửa |
+| B3 | trung bình | Mệnh đề 07.8, 5.2, đề bài tập | (a), (b) viết liền | danh sách; 5.2 dạng "Bỏ <yếu tố>: …" | đã sửa |
+| B4 | trung bình | Ví dụ 07.1, 07.12, Bài tập 07.5, 07.6, 07.8, 07.9, 07.14 | ngoặc lồng, nhiều ngoặc | nguồn thành câu riêng | đã sửa |
+| B5 | trung bình | sau Mệnh đề 07.25, trước 07.28 | thiếu câu đọc (3.3) và câu nối | thêm hai câu | đã sửa |
+| B6 | trung bình | Công thức cần nhớ | ba khối liền nhau | thêm dòng gọi tên trước mỗi khối | đã sửa |
+| B7 | trung bình | năm ranh giới mục | câu nối ở hai phía | giữ "Trong Mục N+1…" ở cuối mục; đoạn mở chỉ nêu thiếu hụt bằng số liệu và nhu cầu | đã sửa |
+| B8 | trung bình | mở Mục 6 | bài toán mở không được trả lời | đổi bài toán mở cho khớp Ví dụ 07.16, Bài tập 07.18; "chưa được phân tích ở Mục 2–5" | đã sửa |
+| B9 | trung bình | 6.3 | khái niệm mới ở mạch kết luận | bỏ 6.3 và Nhận xét 07.42; một câu đọc thêm có nguồn ở "Hướng dẫn đọc thêm", dùng $N$ thay $T$; `lec-07-topic-18` đặt trước mục đó | đã sửa |
+| B10 | trung bình | = A11 | | | đã sửa |
+| B11 | trung bình | Tóm tắt | chỉ liệt kê nhãn | mỗi kết quả một mệnh đề ngắn | đã sửa |
+| B12 | trung bình | Bài tập 07.16 (số cũ 07.15) | không tự chứa | chép dữ kiện chuỗi | đã sửa |
+| B13 | trung bình | tiên quyết, Định nghĩa 07.38 | chính sách hành vi/đích chưa nhắc lại | thêm vào tiên quyết (ghi chú Bài 06, Mục 1, 3, 4); câu quan hệ sau Định nghĩa 07.38 | đã sửa |
+| B14 | trung bình | Nhận xét 07.18, Bài tập 07.6 | Robbins–Monro trình bày như mới | Nhận xét 07.18 thành "Nhắc lại (ghi chú Bài 05, Mục 2 và Mục 4)" kèm điểm mới (nhiễu vector, cận $C(1+\lVert w\rVert^2)$); bỏ 07.6(b) | đã sửa |
+| B15 | trung bình | bảng ký hiệu, chỉ số | thiếu ký hiệu; $w_t$/$w_n$ lẫn | $w_n$, $\alpha_n$ theo số cập nhật, $t$ cho thời điểm mẫu, sửa (2.1), (3.1), (3.2), (5.1), các ví dụ, Bài tập 07.5, Định lý 07.29; thêm $w_{\mathrm{MC}}$, $\Sigma_\mu$, $J_{\mathrm{kt}}$, $\bar g$, $u(a)$, $d_{\text{trái}}$ vào bảng. Hình `mc-update-vector.svg` (cũ) vẫn ghi $w_t$; đoạn đọc hình nêu tương ứng | đã sửa |
+| B16 | trung bình | Mục 4.2 | ± ba nghĩa | quy ước ở lần đầu (SE; nửa khoảng tin cậy 95 % cho hiệu ghép cặp); giải thích hiệu ghép cặp, hạt giống ngẫu nhiên (random seed); ghi độ lệch chuẩn ở chỗ dùng | đã sửa |
+| B17 | trung bình | = A8 | | | đã sửa |
+| B18 | trung bình | tiên quyết | chuỗi tối giản, lấy mẫu quan trọng chưa nhắc lại | thêm hai dòng tiên quyết (ghi chú Bài 03, Mục 5; ghi chú Bài 06, Mục 6); bỏ "có tính trộn" | đã sửa |
+| C1 | nhẹ | thuật ngữ tiếng Anh | không ở lần đầu | semi-gradient, aliasing, deadly triad ở Mục tiêu; feature ở đoạn mở; SGD ở Mục 2.1; truncation ở Thuật toán 07.15; replay buffer ở kết Mục 6; bỏ lặp sau đó | đã sửa |
+| C2 | nhẹ | = A19 "tổng thưởng" | | | đã sửa |
+| C3 | nhẹ | nhiều chỗ | nguồn, notebook làm chủ ngữ | "Theo bài giảng gốc …", "Trong notebook …" | đã sửa |
+| C4 | nhẹ | Nhận xét 07.9, Ví dụ 07.10, Định nghĩa 07.24, Ví dụ 07.4 | $b$, $u$, $a$, $c$ nhiều nghĩa | $a'$; $f$, $h$, $\lambda$; bỏ $u$ trong 07.24; Fourier dùng $\eta$; $c$ chỉ còn "dự đoán chung, hằng số" | đã sửa |
+| C5 | nhẹ | Mệnh đề 07.13 | phần đầu là định nghĩa | ghi "nhắc lại từ ghi chú Bài 03, Mục 3" | đã sửa |
+| C6 | nhẹ | Ví dụ 07.7 | $w'$ không nguồn | "tham số sau cập nhật của Ví dụ 07.8" | đã sửa |
+| C7 | nhẹ | Bài tập 07.12, 07.13 | thiếu dữ kiện | thêm $x(s,a)$ và giá trị so sánh | đã sửa |
+| C8 | nhẹ | Tình huống 07.1, 07.2 | đếm sai; dẫn sai Nhận xét 07.9 | sửa đếm; giả thiết 1 dẫn Nhận xét 07.34, Định nghĩa 07.38; giả thiết 4 dẫn 07.9 | đã sửa |
+| C9 | nhẹ | 6.1, 6.2 | mở thẳng bằng khối | thêm câu dẫn | đã sửa |
+| C10 | nhẹ | Tình huống 07.2, đoạn sau Định nghĩa 07.35 | câu kết lặp; chuỗi hai chấm | bỏ câu lặp; viết thành câu | đã sửa |
+| C11 | nhẹ | kết Mục 3, Tóm tắt | nêu hội tụ không giả thiết | thêm "dưới giả thiết của Định lý 07.29", "khi mẫu độc lập và bước Robbins–Monro" | đã sửa |
+| C12 | nhẹ | 91, 297, 409, 630, 1214, 1283 | "đã cho"; ký hiệu chưa gọi tên; thang 167,6; $C$; đồng vị ngữ; vì sao chỉ một chuyển được cập nhật | "sẽ cho"; gọi tên $\underline o_j$, $\overline o_j$, giải thích phép đếm 156; câu 167,6 bỏ khỏi bản cuối khi rút độ dài (Ví dụ 07.6 giữ ý nhập nhằng); "$C(1+\lVert w_n\rVert^2)$ với một hằng số $C$"; tách câu; giải thích tỉ số lấy mẫu quan trọng $0$/$1$ | đã sửa |
+| C13 | nhẹ | sau Thuật toán 07.36 | thiếu khác biệt thời điểm chọn hành động | thêm | đã sửa |
+| C14 | nhẹ | Ứng dụng | mục thứ tư chung chung | nêu kết quả cụ thể dùng trong hai notebook | đã sửa |
+| C15 | nhẹ | độ dài | | rút: 19 895 từ | đã sửa |
+| C16 | nhẹ | Mục 5.1 | không có bài tập sau mục | chuyển bài Q-learning ba cập nhật về cuối 5.1 | đã sửa |
+| C17 | nhẹ | thuật ngữ | đồng nghĩa "chính sách sinh dữ liệu/hành vi" | dùng "chính sách hành vi" sau khi nhắc lại; "phân phối cập nhật" | đã sửa |
+| L1 | lặp | năm ranh giới | = B7 | | đã sửa |
+| L2 | lặp | Bài tập 07.6 | = B14 | lời giải dẫn Nhận xét 07.18 | đã sửa |
+| L3 | lặp | Bài tập 07.8(a) | lặp chứng minh Mệnh đề 07.26 | đổi thành câu hỏi về vai trò khả nghịch của $\Phi^\top D\Phi$ | đã sửa |
+| L4 | lặp | lời giải 07.9 | chép bảng | dẫn bảng Nhận xét 07.30 | đã sửa |
+| L5 | lặp | `poly2` ở 5.2 và Tình huống 07.2 | | giữ ở 5.2; **vẫn chép lại** trong Tình huống 07.2 với ghi "chép lại từ Mục 5.2", vì khối `application` phải tự chứa dữ kiện (`AGENTS.md`, "Ví dụ và bài tập tự chứa tại chỗ") | lệch một phần |
+| L6 | lặp | thực hành 2.3, 3.2 | lặp Tình huống 07.1, Bài tập 07.19(c) | bỏ câu lặp | đã sửa |
+| L7 | lặp | ε-tham lam hai lần | | viết đủ ở tiên quyết; Định nghĩa 07.31 dẫn lại | đã sửa |
+| L8 | lặp | "Monte Carlo là gradient đầy đủ" bốn lần | | giữ ở Mục 2.1 và Tóm tắt; bỏ ở 3.1 và gợi ý Bài tập 07.10 | đã sửa |
+
+**Bổ sung của điều phối viên (thuật ngữ).** "lần ghé đầu tiên (first-visit)" và "mọi lần ghé (every-visit)" theo Định nghĩa 05.6; ghi chú dùng đúng hai cụm này, tiếng Anh ở lần đầu (đoạn trước Thuật toán 07.15 và đoạn sau thuật toán).
+
+**Đổi số hiệu.** Nhận xét 07.42 bị bỏ (bộ đếm chung còn 07.1–07.41, không đổi số khối khác). Bài tập: 07.16 cũ (ba cập nhật Q-learning) → 07.13; 07.13 cũ (bộ ba bất ổn) → 07.14; 07.14 cũ → 07.15; 07.15 cũ → 07.16; 07.1–07.12 và 07.17–07.19 giữ số. Ví dụ, tình huống, phương trình (1.1)–(1.5), (2.1), (3.1)–(3.3), (5.1) giữ số. Kế hoạch C (`exercises.md`) cần cập nhật: bài trùng trang chiếu L07-33 nay là Bài tập 07.14.
+
+**Chuyển sang danh sách cho `exercises.md`.** Bài tập 07.6(b) cũ (phân loại $\alpha_n=1/n$, $1/\sqrt n$, $0{,}01$, $1/n^2$ theo hai điều kiện Robbins–Monro); Bài tập 07.8(a) cũ (từ $b-Aw$ suy ra $\Phi w=\Pi_DT_\pi\Phi w$, nay là chứng minh Mệnh đề 07.26); Nhận xét 07.42 cũ (MDP tuyến tính) chỉ còn ở phần đọc thêm.
+
+**Phần toán đã đổi, cần rà lại.** Bước 3 chứng minh Định lý 07.17; ký hiệu $w_n$, $\alpha_n$, $(S^{(n)},G^{(n)})$ trong (2.1), (3.1), (3.2), (5.1), Định nghĩa 07.19, 07.21, 07.35, Ví dụ 07.8, 07.9, 07.15, Định lý 07.17, 07.29, Mệnh đề 07.37; dữ kiện Ví dụ 07.15; Bài tập 07.8(a) mới; Bài tập 07.14(d), 07.17 (kiểm tra lại), 07.19(b); hàng TD của Nhận xét 07.40 và Ví dụ 07.16; bước cắt ngắn trong Thuật toán 07.15, 07.22, 07.33, 07.36; Định nghĩa 07.5; Nhận xét 07.18; ba dòng tiên quyết mới (chuỗi Markov, chính sách hành vi/đích, lấy mẫu quan trọng); Ví dụ 07.10 đổi tên biến.
+
+**Tự kiểm `no-ai-slop` (Edit) theo `eval.md`.** Phạm vi: toàn bộ ghi chú sau sửa. Đạt: không thêm nhận định không nguồn; nguồn và notebook không còn làm chủ ngữ ở câu dẫn; không câu hỏi tu từ, không chấm than; tương phản "có thể phân kỳ / luôn phân kỳ" giữ vì là phân biệt toán học; đoạn kết mục giữ khuôn "Như vậy… Tuy nhiên… Trong Mục N+1…" theo `AGENTS.md`; câu nối chỉ ở một phía ranh giới. Một số đoạn diễn giải được rút gọn để giữ trần 20 000 từ.
+
+**Kiểm tra sau sửa.** `note_check.py`: 19 895 từ; 41 khối bộ đếm chung, 16 ví dụ, 19 bài tập, không khoảng trống, không trùng, không mẫu câu cấm. Script kiểm tham chiếu chéo trong scratchpad: mọi "Định nghĩa/Định lý/Mệnh đề/Bổ đề/Hệ quả/Nhận xét/Thuật toán/Ví dụ/Bài tập 07.k" trỏ tới khối tồn tại; nhãn phương trình khớp. `check_note.py 07 lecture-07-xap-xi-ham.html`: 1600×900 và 390×844 đều 0 lỗi KaTeX, 0 lỗi console, không tài nguyên ngoài, không tràn ngang. Đã xem ảnh PNG của `two-state-features.svg` sau khi sửa. `git diff --check` sạch. Không commit.
+
+### Rà lại vòng 2 và sửa (2026-10-12)
+
+**Tác tử rà lại.** Vai A (toán, thuật toán) và Vai B (mạch viết, `no-ai-slop` Detect), Opus 5.5 (`claude-opus-5-5`), mức `high`, chỉ đọc, trên bản 19 895 từ. Báo cáo: `recheck-07-A.md` (3 trung bình, 7 nhẹ), `recheck-07-B.md` (R1–R3 trung bình, N1–N11 nhẹ); 0 chặn, 0 nghiêm trọng. Vai B chấp nhận hai chỗ lệch A19 ($f$, $h$, $\lambda$) và L5. Tác tử sửa: tác tử soạn, Opus 5.5, `high`, `no-ai-slop` Edit.
+
+| mã | mức | vị trí | vấn đề | xử lý | trạng thái |
+|---|---|---|---|---|---|
+| A2-1 | trung bình | bảng ký hiệu, (2.1), Định nghĩa 07.19, 07.35, Định lý 07.17, các thuật toán, Ví dụ 07.16 | chỉ số lệch một bậc | bỏ "lần cập nhật thứ $n$", viết "lần cập nhật đưa $w_n$ thành $w_{n+1}$, với bước $\alpha_n$"; bảng: "$\alpha_n$: bước học của lần cập nhật từ $w_n$"; khởi tạo $n\leftarrow0$; Thuật toán 07.22 lặp $n=0,\dots,N-1$; $\alpha_n=1/(n+1)$ ở Ví dụ 07.16, Bài tập 07.6, tiên quyết; $1/(n+1)^2$ trong danh sách "Bỏ" | đã sửa |
+| A2-2 | trung bình | 4.3, Bài tập 07.11, Ví dụ 07.14 | gán sai nguồn cho "độc lập" | câu "Phiếu bài tập gọi ba mẫu là liên tiếp; nhưng mẫu 1 … nên ở đây coi ba mẫu là độc lập" chuyển vào Bài tập 07.11; bỏ câu ở đầu 4.3; Ví dụ 07.14 "coi là độc lập như ở đó" | đã sửa |
+| A2-3 = R1 | trung bình | tiên quyết | dẫn Bài 03 cho khái niệm không có ở đó | xem mục đồng bộ chéo dưới | đã sửa |
+| A2-4 | nhẹ | Bài tập 07.11 | thay đặc trưng chỉ ở $x(S_t)$ | thay cả $x(S_t)$, $x(S_{t+1})$ | đã sửa |
+| A2-5 | nhẹ | tiên quyết, hình hai trạng thái | $\rho$ chưa định nghĩa | thêm $\rho_t=\pi(A_t\mid S_t)/\pi_b(A_t\mid S_t)$ (Định nghĩa 06.24); Ví dụ 07.15 ghi $\rho_t$ | đã sửa |
+| A2-6 | nhẹ | lời giải Bài tập 07.6 | cận phụ thuộc $\lVert w_n\rVert$ | thêm câu về lập luận $w_n$ không tiến ra vô cùng (Bước 3 của Định lý 07.17) | đã sửa |
+| A2-7 | nhẹ | Bài tập 07.19(b) | "chỉ khi" sai chiều | "khi … ; bỏ lượt cắt ngắn có thể làm lệch phân phối ghé và $\bar g$" | đã sửa |
+| A2-8 | nhẹ | mở Mục 2 | $G_t$ không có ở mọi thời điểm | "$546\,869$ chuyển, trong đó $504\,869$ thuộc lượt kết thúc thật" | đã sửa |
+| A2-9 | nhẹ | Nhận xét 07.40 hàng Monte Carlo | thiếu "đặc trưng bị chặn" | thêm | đã sửa |
+| A2-10 | nhẹ | `mc-update-vector.svg` | nhãn $w_t$ | đổi nhãn và `desc` thành $w_n$, $w_{n+1}$; sửa `alt`; bỏ câu đối chiếu chỉ số trong đoạn đọc hình | đã sửa |
+| R2 | trung bình | mở Mục 4 | tham chiếu tiến | mô tả chuỗi $\mathrm A$–$\mathrm E$ tại chỗ | đã sửa |
+| R3 | trung bình | 5.1, Ứng dụng | ± đọc sai nghĩa | ghi "hiệu ghép cặp trên cùng $100$ lượt, nửa khoảng tin cậy $95\%$" | đã sửa |
+| N1 | nhẹ | mở Mục 6 | Double Q treo; câu siêu văn bản | thêm câu áp năm bước cho Double Q-learning cuối 6.2; bỏ "Không có khái niệm mới ở đây" | đã sửa |
+| N2 | nhẹ | tiên quyết, 4.2 | $b$, $a\pm b$, $\varepsilon_k$ | chính sách hành vi $\pi_b$ (thêm vào bảng ký hiệu); quy ước "trung bình ± sai số chuẩn" bằng lời; "cùng lịch giảm $\varepsilon$ theo lượt và cùng số lượt" | đã sửa |
+| N3 | nhẹ | 4.2 | quy ước ± khó tra | chép vào "Quy ước đọc"; 4.2 dẫn lại | đã sửa |
+| N4 | nhẹ | 4.2 | vế mơ hồ | "chênh lệch không quy được riêng cho biểu diễn tuyến tính" | đã sửa |
+| N5 | nhẹ | tiên quyết | thiếu thuật ngữ tiếng Anh | "(importance sampling)" | đã sửa |
+| N6 | nhẹ | 2.1 | câu lặp với 3.1 | bỏ câu ở 2.1, giữ ở 3.1 | đã sửa |
+| N7 | nhẹ | Bài tập 07.8(a) | đề khó đọc, nguồn sai | "Chỉ ra bước nào … cần $\Phi^\top D\Phi$ khả nghịch"; "dựa trên bài 5" | đã sửa |
+| N8 | nhẹ | mở Mục 2 | = A2-8 | | đã sửa |
+| N9 | nhẹ | 1.4, sau Định lý 07.29, Tình huống 07.1 | rút gọn làm mất ý | khôi phục lý do của `der`; nêu đích mới; "có $J_{\mathrm{kt}}$ thấp hơn" | đã sửa |
+| N10 | nhẹ | bản đồ chủ đề | cột "vào → ra" mất vế | đổi tên cột thành "Vai trò; dẫn tới" | đã sửa |
+| N11 | nhẹ | tài liệu tham khảo | mất ánh xạ mục–trang | khôi phục dòng ánh xạ | đã sửa |
+
+Ngoài bảng: Nhận xét 07.41 bước 4 viết "chính sách hành vi" (C17 còn sót); bớt ngoặc ở đoạn thực hành 2.3 và Nhận xét 07.30 (B4 còn sót).
+
+**Đồng bộ chéo.** Ghi chú Bài 03–06 không có khái niệm chuỗi tối giản, không tuần hoàn và phân phối dừng. Dòng tiên quyết nay chỉ dẫn ghi chú Bài 03, Mục 5.2 cho ma trận $P_\pi$ của chuỗi Markov cảm sinh; phần còn lại ghi là kiến thức xác suất tiên quyết bổ sung, nguồn Sutton và Barto (2018), §9.2 và §10.3, kèm câu "chỉ cần tối giản cho tính duy nhất; không tuần hoàn là giả thiết riêng của Định lý 07.29". Đợt đồng bộ sau có thể cân nhắc đưa các khái niệm này vào ghi chú Bài 03 hoặc Bài 05.
+
+**Số từ.** Trước vòng 2: 19 895; sau: 20 196, trong giới hạn 20 300 điều phối viên cho phép. Không bỏ khối, không đổi số hiệu.
+
+**Tự kiểm `no-ai-slop` (Edit).** Phạm vi: các câu đã sửa. Đã bỏ câu siêu văn bản, văn nói "thắng", vế mơ hồ; không thêm nhận định không nguồn; tiếng Anh ở lần đầu cho "importance sampling". Đạt theo `eval.md`.
+
+**Kiểm tra.** `note_check.py`: 20 196 từ; bộ đếm chung 41, ví dụ 16, bài tập 19, không khoảng trống, không trùng, không mẫu câu cấm. Script tham chiếu chéo: không tham chiếu treo; không còn "$n\leftarrow1$", "thứ $n$", "$1/n$". `check_note.py`: 1600×900 và 390×844 đều 0 lỗi KaTeX, 0 lỗi console, không tài nguyên ngoài, không tràn ngang. Đã xem ảnh PNG của `mc-update-vector.svg` sau khi đổi nhãn. `git diff --check` sạch. Không commit.

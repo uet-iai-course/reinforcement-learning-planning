@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+<title id="title">Cấu trúc của chương: bốn quy tắc cập nhật theo loại mục tiêu và nguồn dữ liệu</title>
+<desc id="desc">Ô trên cùng: bảng tra một ô cho mỗi trạng thái được thay bằng hàm tuyến tính v̂(s,w) = x(s)ᵀw và q̂(s,a,w) = x(s,a)ᵀw (Mục 1). Bên dưới là lưới hai hàng, ba cột. Hàng một: mục tiêu là lợi tức G_t, không chứa w. Hàng hai: mục tiêu bootstrap, chứa w. Cột một: dự đoán với chính sách cố định. Cột hai: điều khiển theo chính sách. Cột ba: điều khiển khác chính sách. Ô hàng một cột một: Monte Carlo gradient, Mục 2, hội tụ tới cực tiểu của J_μ. Ô hàng hai cột một: TD(0) bán gradient, Mục 3, hội tụ tới điểm cố định Bellman chiếu w_TD. Ô hàng hai cột hai: Sarsa bán gradient, Mục 4, không có bảo đảm chung. Ô hàng hai cột ba: Q-learning bán gradient, Mục 5, đủ bộ ba bất ổn, có thể phân kỳ. Hai ô còn lại của hàng một ghi không xét trong chương. Dải dưới cùng: Mục 6, phạm vi bảo đảm và năm bước phân tích một quy tắc cập nhật.</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2F3E7A"/></marker></defs>
+<g font-family="Arial, Helvetica, sans-serif" fill="#28313D">
+<rect x="40" y="20" width="330" height="80" rx="12" fill="#F4F4F4" stroke="#555" stroke-width="3"/>
+<text x="205" y="55" text-anchor="middle" font-size="26" font-weight="bold">Bảng tra</text>
+<text x="205" y="86" text-anchor="middle" font-size="22">một ô cho mỗi trạng thái</text>
+<path d="M375 60 H455" stroke="#2F3E7A" stroke-width="5" marker-end="url(#ar)"/>
+<rect x="465" y="20" width="695" height="80" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="812" y="55" text-anchor="middle" font-size="26" font-weight="bold">Hàm tuyến tính dùng chung w (Mục 1)</text>
+<text x="812" y="86" text-anchor="middle" font-size="22" font-style="italic">v̂(s,w) = x(s)ᵀw,   q̂(s,a,w) = x(s,a)ᵀw</text>
+<text x="420" y="150" text-anchor="middle" font-size="22" font-weight="bold">Dự đoán,</text>
+<text x="420" y="176" text-anchor="middle" font-size="22" font-weight="bold">π cố định</text>
+<text x="690" y="150" text-anchor="middle" font-size="22" font-weight="bold">Điều khiển,</text>
+<text x="690" y="176" text-anchor="middle" font-size="22" font-weight="bold">theo chính sách</text>
+<text x="960" y="150" text-anchor="middle" font-size="22" font-weight="bold">Điều khiển,</text>
+<text x="960" y="176" text-anchor="middle" font-size="22" font-weight="bold">khác chính sách</text>
+<text x="40" y="250" font-size="22" font-weight="bold">Mục tiêu G<tspan font-size="16" dy="5">t</tspan></text>
+<text x="40" y="282" font-size="20">không chứa w</text>
+<text x="40" y="410" font-size="22" font-weight="bold">Mục tiêu</text>
+<text x="40" y="438" font-size="22" font-weight="bold">bootstrap</text>
+<text x="40" y="468" font-size="20">chứa w</text>
+<rect x="295" y="195" width="250" height="130" rx="12" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="4"/>
+<text x="420" y="232" text-anchor="middle" font-size="22" font-weight="bold">Monte Carlo</text>
+<text x="420" y="260" text-anchor="middle" font-size="22" font-weight="bold">gradient · Mục 2</text>
+<text x="420" y="292" text-anchor="middle" font-size="19">hội tụ tới cực tiểu</text>
+<text x="420" y="315" text-anchor="middle" font-size="19">của J<tspan font-size="14" dy="5">μ</tspan></text>
+<rect x="565" y="195" width="250" height="130" rx="12" fill="#F4F4F4" stroke="#999" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="690" y="268" text-anchor="middle" font-size="19" fill="#555">không xét trong chương</text>
+<rect x="835" y="195" width="250" height="130" rx="12" fill="#F4F4F4" stroke="#999" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="960" y="268" text-anchor="middle" font-size="19" fill="#555">không xét trong chương</text>
+<rect x="295" y="355" width="250" height="140" rx="12" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="4"/>
+<text x="420" y="392" text-anchor="middle" font-size="22" font-weight="bold">TD(0) bán</text>
+<text x="420" y="420" text-anchor="middle" font-size="22" font-weight="bold">gradient · Mục 3</text>
+<text x="420" y="452" text-anchor="middle" font-size="19">hội tụ tới điểm cố định</text>
+<text x="420" y="476" text-anchor="middle" font-size="19">Bellman chiếu w<tspan font-size="14" dy="5">TD</tspan></text>
+<rect x="565" y="355" width="250" height="140" rx="12" fill="#FFFFFF" stroke="#B15A2B" stroke-width="4"/>
+<text x="690" y="392" text-anchor="middle" font-size="22" font-weight="bold">Sarsa bán</text>
+<text x="690" y="420" text-anchor="middle" font-size="22" font-weight="bold">gradient · Mục 4</text>
+<text x="690" y="452" text-anchor="middle" font-size="19">chính sách đổi theo w:</text>
+<text x="690" y="476" text-anchor="middle" font-size="19">không có bảo đảm chung</text>
+<rect x="835" y="355" width="250" height="140" rx="12" fill="#FFFFFF" stroke="#B15A2B" stroke-width="4" stroke-dasharray="14 5"/>
+<text x="960" y="392" text-anchor="middle" font-size="22" font-weight="bold">Q-learning bán</text>
+<text x="960" y="420" text-anchor="middle" font-size="22" font-weight="bold">gradient · Mục 5</text>
+<text x="960" y="452" text-anchor="middle" font-size="19">đủ bộ ba bất ổn:</text>
+<text x="960" y="476" text-anchor="middle" font-size="19">có thể phân kỳ</text>
+<rect x="40" y="530" width="1120" height="80" rx="12" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/>
+<text x="600" y="565" text-anchor="middle" font-size="24" font-weight="bold">Mục 6: phạm vi bảo đảm</text>
+<text x="600" y="595" text-anchor="middle" font-size="21">đối chiếu mỗi quy tắc với giả thiết của kết quả; năm bước phân tích một quy tắc cập nhật</text>
+</g>
+</svg>
