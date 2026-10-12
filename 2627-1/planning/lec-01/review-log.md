@@ -1046,3 +1046,296 @@ Chứng minh câu (a) theo từng bước: nếu diễn biến đến bước $j
 
 **Kiểm tra lại.** Tổng số hành động của lượt là $2+3=5$, đúng bằng $L$, nên lần hút cuối vẫn kịp trước khi lượt bị cắt.
 :::
+
+## Đợt sửa 2026-10-12 — Giai đoạn II: bộ trang chiếu
+
+### Tác tử và phạm vi
+
+- Vai: tác tử soạn deck Bài 01 (viết tệp), theo brief `brief_deck_writer.md` của điều phối viên; loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` theo brief (điều phối viên ghi bằng chứng từ lệnh gọi công cụ). Không commit, không push.
+- Tệp ghi: `lecture-01-gioi-thieu-hoc-tang-cuong.html` (viết lại toàn bộ), `planning/lec-01/outline.md`, `storyboard.md` (viết lại), mục này của `review-log.md`; SVG trong `img/lec-01/` (bảng dưới). Không sửa ghi chú bài giảng, `lecture-slide.css`, `index.html`, viewer, tệp bài khác.
+- Đã đọc: `quyet-dinh-chuan-2026-10-12.md`, `revision-plan-2026-10-12.md` (A, D), `AGENTS.md` (các mục brief nêu), `CLAUDE.md`, ghi chú `e860f53`, các mục giai đoạn I của nhật ký này, deck cũ, `lecture-slide.css`, deck mẫu math-4-AI Bài 07 (mở đầu, trang tiêu đề mạch, mạch kết luận), `no-ai-slop` (`SKILL.md`, `eval.md`).
+
+### Cấu trúc mới
+
+- 7 mạch, 69 trang (cũ: 42 trang, 7 `<section>` ngoài kèm phụ lục). Trang tiêu đề mạch AT, CT, DT, ET, GT, ZT (`id` `mach-2` … `mach-7`); mạch E và F cũ gộp thành mạch 5.
+- Mạch mở đầu: P00 (câu luận đề), P01a "Tiên quyết và quy ước", P01 (6 mục tiêu theo ghi chú), P02 "Nội dung" (7 dòng), P03 "Vấn đề trung tâm".
+- Mạch kết luận: ZT, Z01–Z01b (bảng tổng kết tách hai trang), Z02–Z02b (bài tổng hợp có lời giải), Z03 (kết luận có điều kiện, "Nguồn:"), H04 "Câu hỏi tự kiểm tra", Z00 (bảng `Mạch | Bài tập`, tài liệu đọc, liên kết viewer ghi chú, dòng nối Bài 02).
+- Bỏ khối `<style>` cục bộ (`font-size:.84em`, `.reveal table{font-size:.82em}`, hệ lớp `.box/.card/.grid2/.check` riêng); dùng `class="reveal lecture-deck"` của `lecture-slide.css` như deck 02–07. Thêm `scrollActivationWidth:null` vào `Reveal.initialize` (như deck 02) để khung 390 px vẫn là chế độ trình chiếu, không chuyển sang chế độ cuộn; các thiết lập bắt buộc khác giữ nguyên.
+- Số hiệu kết quả theo ghi chú `e860f53` (bộ đếm chung 01.1–01.22, Ví dụ 01.1–01.10, Bài tập 01.1–01.11), chỉ ghi trong ghi chú diễn giả, tối đa một lần mỗi trang; danh sách trong `outline.md`.
+
+### Bảng mã trang cũ → mới
+
+| Cũ | Mới |
+|---|---|
+| P00, P01, P02 | giữ mã, sửa nội dung |
+| — | thêm P01a, P03 |
+| A00 | giữ mã, đổi thành "Robot dọn dãy bốn ô" |
+| A01 | giữ mã; phần trạng thái, quan sát tách sang A01c |
+| A02 | bỏ, gộp vào A03 |
+| A03, A04 | giữ mã, sửa |
+| B00 | bỏ |
+| B01, B02 | gộp thành B01 "Ví dụ: AlphaGo và thao tác robot" |
+| C00 | giữ mã, đổi thành "Phần thưởng và nhãn", mang hình của C02 |
+| C01 | giữ mã, đổi thành ví dụ đổi thứ tự; định nghĩa sang C04b |
+| C02 | bỏ (hình lên C00) |
+| C03, C04 | gộp thành C03 |
+| C05 | giữ mã, thành "Bài tập: nhận dạng tín hiệu học" |
+| D00–D03 | giữ mã, sửa |
+| E00, E01, E02 | giữ mã; E01 tách thành E01 và E01b |
+| F00, F01 | giữ mã; F01 gộp F01 và F02 cũ |
+| F02 | mã dùng lại cho trang Nhận xét 01.17 (nội dung khác trang "Khai thác" cũ) |
+| F03 | giữ mã, thành "Bài tập: chọn chế độ hút" |
+| G00–G04 | giữ mã, sửa; công thức chọn nước của G03 cũ sang G03d |
+| H04 | giữ mã, thành "Câu hỏi tự kiểm tra"; gộp H05 |
+| H05, H06, H07 | bỏ (H06–H07 thành Bài tập 01.16 [Tìm hiểu]) |
+| Z00 | giữ mã, thành "Bài tập về nhà và tài liệu đọc" |
+| H00–H03 | bỏ: phụ lục thông tin tổ chức của bản nguồn tháng 02/2026 chưa được xác nhận cho học kỳ này, nhãn "Phụ lục:" ngoài danh sách cho phép, H03 có chỉ dẫn giảng viên (quyết định chung §8) |
+| — | thêm AT, A00b, A01c, A01d, A05, A06, CT, C04b, C04c, C06, DT, D02b, D02c, D03b, D04, D05, ET, E00b, E01b, E03, E04, E02a, F00b, F04, GT, G02b, G02c, G03b, G03c, G03d, G05, ZT, Z01, Z01b, Z02, Z02b, Z03 |
+
+### Mật độ (`density.py`)
+
+| | Trước | Sau |
+|---|---:|---:|
+| Số trang | 42 | 69 |
+| Âm tiết trung bình | 40,5 | 49,7 |
+| Trang > 40 âm tiết | 20 | 55 |
+| Trang > 60 âm tiết | 7 | 1 (P01, 77, trần 80 của trang mục tiêu) |
+| Dòng `<-- VƯỢT` | 23 | 2 (P01; P02 7 dòng), cả hai có ngoại lệ trong `storyboard.md` |
+
+Deck cũ đạt trung bình thấp hơn nhờ CSS thu chữ và ít nội dung hơn; deck mới không thu chữ, nhưng 55 trang vẫn trên đích 40 (dấu câu sau công thức bị đếm là token). Đây là chỗ cần rà soát sinh viên đo lại.
+
+### SVG
+
+| Tệp | Thao tác |
+|---|---|
+| `tictactoe-search.svg` | vẽ lại: gốc là thế cờ $s$, đủ bốn nhánh $a=3,6,7,9$, ô vừa đánh đóng khung đứt nét, nước 9 thắng, ba nước trả lời của O dưới mỗi nhánh còn lại; chữ ≥ 25 đơn vị |
+| `robot-manipulation.svg` | mới: gộp hai hình nội dòng của B02 cũ (gắp và sắp xếp; đổi tư thế vật), giữ nguyên hình học |
+| `agent-environment.svg` | sửa bố cục: nhãn "quan sát, phần thưởng" đè lên khối, chuyển xuống dưới; thêm phông Arial; nội dung không đổi |
+| `control-learning.svg` | sửa: nhãn "dữ liệu cập nhật quyết định" tràn khung, tách hai dòng |
+| `explore-exploit.svg` | sửa: chữ tràn ra ngoài hai vòng tròn, phóng to vòng tròn |
+| `uncertainty.svg` | sửa: chỉ một trong ba mũi tên có đầu mũi tên (marker trên đường gộp), tách ba đường; chữ "trạng thái" tràn khỏi vòng tròn |
+
+Không còn dùng trong deck: `tictactoe-value.svg` (chỉ ba nhánh, nhãn $V^\pi$; thay bằng bảng G03), `rl-fields.svg` (ghi chú đã bỏ ở giai đoạn I), `chapter-map.svg` và `tictactoe-four-moves.svg` (ghi chú dùng; chữ quá nhỏ ở khung trang chiếu nên deck dùng bảng). Không xóa tệp nào. Đề nghị điều phối viên xóa `tictactoe-value.svg` và `rl-fields.svg`; `course-map.svg` vẫn được `index.html` dùng.
+
+### Sai lệch so với kế hoạch A và lý do
+
+- 69 trang thay vì khoảng 58: mỗi cụm có trang lời giải riêng trên mặt trang (A06, C06, D05, E04, F04, G05, Z02b) và các định nghĩa dài được tách để không thu chữ. Vẫn trong khoảng 60–70 của quyết định chung §5.
+- P01 có 6 mục tiêu theo ghi chú `e860f53`, không 5 như A2. P03 không đặt `agent-environment.svg`: sáu dòng đã kín khung.
+- A02 gộp vào A03 thay vì sửa riêng; B01 và B02 gộp một trang; C02 bỏ, hình lên C00; C03 gộp C04; C00 dùng một ví dụ dẫn nhập (nhãn và phần thưởng ở ô 1) thay vì ba, vì ba tình huống ảnh và học tập trùng Bài tập 01.2.
+- Lượt "phải, phải, phải, hút" đặt ở A00b (mạch 2, theo Ví dụ 01.1 của ghi chú) thay vì D00; D00 gộp vấn đề, trực giác, ví dụ tổng còn lại (Ví dụ 01.3).
+- Thêm E02a (Ví dụ 01.8 mô hình đúng và sai) theo ghi chú; A3 chỉ có một dòng ví dụ ở E02.
+- G03b là Mệnh đề 01.20 (phân tích một bước), G03d là nước khai thác một bước (A3 đặt nước khai thác ở G03b và chưa có trang mệnh đề); G03c mới cho $v_{\pi_u}(s)=\frac12$.
+- Bảng tổng kết tách Z01 và Z01b; bỏ hàng giả thuyết phần thưởng (là giả thuyết, không phải kết quả; ghi trong ghi chú diễn giả Z01).
+- Bài tổng hợp Z02 đổi dữ kiện so với A2 và kế hoạch C (robot từ ô 2, $L=3$, $\pi_u$; (a) $S_0$, $O_0$; (b) $G_t$ ngược; (c) $v_{\pi_u}(h_0)=\frac1{27}$; (d) nước khai thác một bước tại $h_0$ là phải). Lý do: dữ kiện A2 (ô 1, $L=5$, $\pi_1$) trùng Ví dụ 01.1 và Bài tập 01.5(c), câu (c) có giá trị hiển nhiên $1$. Đã tính tay: chỉ dãy phải, phải, hút thành công, $(\frac13)^3=\frac1{27}$; sau trái (ô 1, còn 2 hành động) và sau hút (ô 2, còn 2) giá trị $0$, sau phải (ô 3, còn 2) giá trị $(\frac13)^2=\frac19$; kiểm $\frac13(0+\frac19+0)=\frac1{27}$. `exercises.md` (giai đoạn III) cần dùng cùng dữ kiện cho Bài tập 01.13 và dẫn tới Z02, Z02b.
+- Z00 dùng bảng `Mạch | Bài tập` xoay ngang (hai dòng) để giữ ≤ 6 dòng. Bài tập 01.12–01.16 là số hiệu dự kiến của `exercises.md` (01.12 giá trị khi tất định, theo nhật ký giai đoạn I; 01.13 tổng hợp; 01.14, 01.15, 01.16 theo kế hoạch C). Liên kết "Bài tập" trên Z00 chưa đặt vì tệp chưa có; giai đoạn III thêm "· Bài tập" vào dòng liên kết.
+- Tên hành động và quan sát viết ngoài KaTeX trên deck (ghi chú dùng `\text{…}`): `\text{sạch}`, `\text{bẩn}` làm KaTeX cảnh báo "No character metrics" với ký tự ạ, ẩ.
+
+### Đề nghị sửa ghi chú
+
+Không có mâu thuẫn số liệu giữa deck và ghi chú. Mọi số trên deck đã tính lại: Ví dụ 01.4 ($0{,}7$; $0{,}8$; $0{,}9$; $1$; $0$), Ví dụ 01.7 ($0$ và $1$), Ví dụ 01.9 ($[0{,}367;\,0{,}700]$, $[\frac{12}{21},\frac{13}{21}]$), Ví dụ 01.10 (bảng 9 dòng, kỳ vọng $\frac13,0,\frac23,1$; X thắng $\frac23$, O thắng $\frac16$, hòa $\frac16$, $v_{\pi_u}(s)=\frac12$), Bài tập 01.3, 01.5, 01.6, 01.7.
+
+### Đề nghị cho `lecture-slide.css`
+
+- `.reveal.lecture-deck table{font-size:.9em}` trong khi section đã `.8em`: chữ trong bảng là $0{,}72$em của cỡ gốc (30,24 px trên khung 1280), dưới mức $0{,}75$em của `AGENTS.md`. Đề nghị đặt bảng `1em` (tương đối section) hoặc ghi ngoại lệ chung. Không sửa trong đợt này.
+
+### Tự kiểm `no-ai-slop` (Edit) và `eval.md`
+
+- Phạm vi: mọi tiêu đề, mặt trang và ghi chú diễn giả của deck.
+- Đã bỏ: lời chỉ đường và lời quy trình ("phần E", "Tiếp theo:", "Trang này", "Đáp án", "bản chuyển đổi"), câu hỏi không nhãn, nhãn ngoài danh sách ("Ghi nhớ:", "Chi phí:", "Rủi ro:", "Bài toán:", "Ví dụ giả định:", "Ba dấu hiệu:", "Phụ lục:"), URL trong ghi chú, câu điều hướng "Hai trang sau…", câu "dự kiến mang số" trong ghi chú Z02, tương phản nhị phân "không là nhãn" trên P03.
+- Đối chiếu `eval.md`: không từ cấm, không câu hỏi tu từ, không mở ghi chú bằng "Trang này" hay tài liệu làm chủ ngữ, không câu kết châm ngôn, không "chúng ta", "ta thấy", "rõ ràng", "hãy" trên deck. Giữ có chủ đích: câu "Nhầm lẫn thường gặp là…" trong nhiều ghi chú (chức năng học tập), các dòng "X: kết luận" dạng mệnh đề có điều kiện ở P03, Z03. Kết quả: đạt.
+- Ghi chú diễn giả: 40–150 âm tiết ở 63/69 trang; sáu trang 151–163 âm tiết (P03, E02, G03, G03b, G03d, Z00), mức `nhẹ`; G03b là trang mệnh đề.
+- `quill` (Outline, Concept, Threads làm bảng kiểm): mỗi ký hiệu xuất hiện trên mặt trang sau trang định nghĩa hoặc dòng "Ký hiệu:" của P01a ($\pi_1$ được nêu lại ở E03; $\sigma$ ở G02 trước G02c); luồng robot mở ở A00, đóng ở Z02b; luồng thế cờ $s$ mở ở E00, đóng ở G03d và Z03.
+
+### Kiểm trình duyệt
+
+- Script Playwright Chromium trong scratchpad (`d01/check_deck.py`), cổng 8766, chặn yêu cầu `api-reloadserver` để trang không tự tải lại khi tác tử khác ghi tệp, tắt hiệu ứng chuyển trang khi đo.
+- 1600×900 và 390×844, đủ 69 trang (`Reveal.slide(h,v,99)`): 0 lỗi và 0 cảnh báo console, 0 lỗi trang, 0 `.katex-error`, 0 yêu cầu ra ngoài localhost, 0 yêu cầu hỏng, không tràn ngang; mọi phần tử nằm trong khung 1280×720 (so `getBoundingClientRect` với `.reveal .slides`). Số trên sáu trang tiêu đề mạch khớp "Nội dung" và chỉ số ngang (`mach-N` ở `#/N`). Phím mũi tên phải chuyển trang. Mọi `src`, `href` cục bộ tồn tại.
+- Đã xem ảnh chụp mọi trang ở 1600 px (bảng ghép `d01/all0.png` … `all6.png`) và các trang tiêu đề mạch, Z01, Z01b, G01 ở 390 px; ảnh lưu tại scratchpad `d01/shots/`.
+- `git diff --check`: sạch.
+
+## Rà soát năm vai và biên tập (giai đoạn II)
+
+### Tác tử
+
+- Năm tác tử rà soát chỉ đọc (Opus 5.5, `high`, theo phân công của điều phối viên): SV (góc nhìn sinh viên, đo mật độ), RL (chuyên gia), TOAN (toán và thuật toán), PB (phản biện sư phạm, `no-ai-slop` Detect), MACH (kết nối và mạch). Báo cáo: `scratchpad/deckrev-01-{SV,RL,TOAN,PB,MACH}.md`.
+- Biên tập viên: chính tác tử soạn deck (Opus 5.5, `high`, `general-purpose`), theo brief `brief_deck_editor.md` và quyết định của điều phối viên. Không commit.
+- Kết quả rà: 0 chặn; 1 nghiêm trọng (RL-1); trung bình: RL 5, TOAN 3, SV 6, PB 13, MACH 7 (nhiều mục trùng nhau giữa các vai).
+- Thư mục scratchpad của phiên không còn dùng được giữa vòng này; script kiểm và ảnh chụp của vòng biên tập nằm ở `~/.cache/rl01edit/` (ngoài kho).
+
+### Bảng phát hiện và xử lý
+
+| Mã | Trang | Mức | Trạng thái |
+|---|---|---|---|
+| RL-1 | G03d, mạch 6 | nghiêm trọng | đã sửa: thêm G03e "Học giá trị thế cờ từ các ván đã chơi", vẽ lại Hình 1.1 (nguồn tr. 30) thành `tictactoe-learning.svg`; F02 đổi thành ứng dụng trên Tic-tac-toe nối sang G03e; Z03 ghi chú thêm giới hạn thứ tư; GT dòng dẫn mới |
+| RL-2 | C04b | trung bình | đã sửa: dòng "Hai đặc trưng: thử và sai (trial-and-error) và phản hồi trễ" |
+| RL-3 | G00, G02, E00, G04, G05 | trung bình | đã sửa: "phiên X", "số nước X đã đi"; "lượt" chỉ cho episode, cả trong ghi chú diễn giả và SVG cây trò chơi |
+| RL-4 | D02c | trung bình | đã sửa: $L=4$ trên mặt trang, diễn giải so với hút trước (lợi tức lớn nhất $0$) |
+| RL-5 | A04 | trung bình | đã sửa: dãy hành động cố định, luật ngẫu nhiên chưa biết; ghi chú nêu quy hoạch động Bài 04 |
+| RL-6 | storyboard | trung bình | đã sửa: phút theo cụm; C05–C06, D04–D05, G04–G05 vào khối 30 phút; mạch 6 lên 26 phút |
+| RL-7 | P01a | nhẹ | đã sửa: bỏ "không giả thiết Markov" khỏi mặt trang; ghi chú nêu tính Markov của quan sát |
+| RL-8 | P03 | nhẹ | đã sửa: "kỳ vọng" ở dòng 6 |
+| RL-9 | E02 | nhẹ | đã sửa |
+| RL-10 | B01 | nhẹ | đã sửa: ghi chú "lập kế hoạch bằng tìm kiếm cây trên luật cờ"; mặt trang "Khi phần thưởng chỉ đặt ở bước cuối" |
+| RL-11 | G03d | nhẹ | đã sửa: "$\gamma\lt1$ hoặc khi mọi lượt kết thúc" |
+| RL-12 | Z01 | nhẹ | đã sửa: "lượt hữu hạn; $G_T=0$"; ghi chú nêu dạng có chiết khấu |
+| RL-13 | thuật ngữ | nhẹ | đã sửa: episode, reward, policy, return ở P01a; greedy ở F01; TD ở ghi chú D02b |
+| RL-14 | E01b, G03d | nhẹ | đã sửa: câu dự đoán (prediction) ở ghi chú E01b, điều khiển (control) ở ghi chú G03d |
+| RL-15 | E01 | nhẹ | đã sửa theo brief mục 5: "chính sách xác định (deterministic policy)" |
+| RL-16 | Z00 | nhẹ | đã sửa theo brief mục 4 |
+| RL-17 | số hiệu trong ghi chú | nhẹ | đã sửa: mỗi trang một số hiệu kết quả; danh sách trong outline cập nhật |
+| TOAN-1 | D02c | trung bình | đã sửa (như RL-4) |
+| TOAN-2 | G03d, Z02 | trung bình | đã sửa: "Giả thiết: ba điều kiện rút gọn", "Dạng khác:" trên lịch sử; Z02(d) "dạng trên lịch sử" |
+| TOAN-3 | P03, Z01b, Z03 | trung bình | đã sửa: "quan sát đầy đủ, O và $\pi$ theo thế cờ" |
+| TOAN-4 | G03b | nhẹ | đã sửa: ghi chú nêu trường hợp $\pi(a\mid h)=0$ |
+| TOAN-5 | F00b, F02 | nhẹ | đã sửa: "không đổi được quyết định, vì $\frac{12}{21}\approx0{,}571>0{,}55$" |
+| TOAN-6 | F00b, F04 | nhẹ | đã sửa: $\big[\frac{11}{30},\frac7{10}\big]\approx[0{,}367;\,0{,}700]$ |
+| TOAN-7 | Z01 hàng 1 | nhẹ | đã sửa: "không giả thiết quan sát đầy đủ" |
+| TOAN-8 | G03d | nhẹ | đã sửa (như RL-11) |
+| TOAN-9 | E02a | nhẹ | đã sửa: M2 dự báo $\widehat R_3=1$ trên mặt trang |
+| TOAN-10 | Z01, Z01b | nhẹ | đã sửa: tên cột thống nhất; số hiệu bỏ khỏi ghi chú Z01 |
+| SV-1 | B01 | trung bình | đã sửa: bỏ `.card` |
+| SV-2 | "lượt" | trung bình | đã sửa (như RL-3) |
+| SV-3 | G03d, Z02, Z01b | trung bình | đã sửa (như TOAN-2, TOAN-3) |
+| SV-4 | A05, A06 | trung bình | đã sửa theo Bài tập 01.1 |
+| SV-5 | G02 | trung bình | đã sửa: định nghĩa $\tilde s$ |
+| SV-6 | A04, B01 (SVG) | trung bình | đã sửa: `uncertainty.svg` chữ 36–44, `robot-manipulation.svg` chữ 50; A04 đưa hình ra hàng riêng |
+| SV-7 | A03, F02, A01, C00 (SVG) | nhẹ | đã sửa A03, F02 (chữ 32–38, hình ra hàng riêng); A01, C00 giữ (0,53–0,58em; hình dùng chung với ghi chú, ghi chú bài giảng hiển thị lớn) |
+| SV-8 | P01a | nhẹ | đã sửa |
+| SV-9 | P03 | nhẹ | đã sửa: "Chính sách chọn, giá trị đánh giá" thay ký hiệu |
+| SV-10 | A00 | nhẹ | đã sửa: bỏ dòng mặt trang lặp hình (không sửa SVG vì ghi chú dùng chung) |
+| SV-11 | E00b | nhẹ | đã sửa |
+| SV-12 | F00 | nhẹ | đã sửa |
+| SV-13 | E02a | nhẹ | đã sửa |
+| SV-14 | Z01, Z01b | nhẹ | đã sửa: cột thống nhất, công thức nhóm trong `{…}` để không ngắt, dòng viết tắt $h,a$ |
+| SV-15 | G03 | nhẹ | đã sửa: `\dfrac` ở cột kỳ vọng |
+| SV-16 | H04 câu 1 | nhẹ | đã sửa |
+| SV-17 | "bước thứ tư" | nhẹ | đã sửa: $R_4$ |
+| SV-18 | ghi chú dài | nhẹ | đã sửa: mọi ghi chú 40–150 âm tiết sau rút gọn |
+| SV-19 | storyboard | nhẹ | đã sửa (như RL-6) |
+| PB-1 | G03 | trung bình | đã sửa: "Nhu cầu:" |
+| PB-2 | G04–G05 | trung bình | đã sửa: H04 câu 3 kiểm nước khai thác với $\pi_w$ |
+| PB-3 | "lượt" | trung bình | đã sửa (như RL-3) |
+| PB-4 | D02c | trung bình | đã sửa (như RL-4) |
+| PB-5 | C00 | trung bình | đã sửa theo quyết định điều phối viên; trường hợp hai lần trái vào ghi chú |
+| PB-6 | E00b, E01b | trung bình | đã sửa: cầu nối trong ghi chú E01b |
+| PB-7 | F00 | trung bình | đã sửa |
+| PB-8 | D00 | trung bình | đã sửa: dòng $1=0+1$, $1=1+0$ |
+| PB-9 | Z02, G03d | trung bình | đã sửa (như TOAN-2) |
+| PB-10 | G02, G02c | trung bình | đã sửa (như SV-5) |
+| PB-11 | G01 | trung bình | đã sửa: hai dòng mới |
+| PB-12 | P01a | trung bình | đã sửa |
+| PB-13 | ghi chú trang tiêu đề mạch | trung bình | đã sửa: sáu ghi chú viết lại, mở bằng đối tượng kế thừa, đổi khuôn câu |
+| PB-14 | A04 | nhẹ | đã sửa |
+| PB-15 | AT | nhẹ | đã sửa (MACH 3.1a) |
+| PB-16 | GT | nhẹ | đã sửa (MACH 3.4) |
+| PB-17 | P03 | nhẹ | đã sửa |
+| PB-18 | E00 | nhẹ | đã sửa: quy tắc viết bằng lời, tên đặt ở E01 |
+| PB-19 | E02 | nhẹ | đã sửa |
+| PB-20 | D02b | nhẹ | đã sửa |
+| PB-21 | D01, C04b | nhẹ | từ chối một phần: tiếng Anh đã gom ở P01a; D01 là định nghĩa chính thức nên không đổi thành "Nhắc lại:" |
+| PB-22 | A00b | nhẹ | đã sửa |
+| PB-23 | C05(d) | nhẹ | đã sửa |
+| PB-24 | A03 | nhẹ | đã sửa |
+| PB-25 | G02b | nhẹ | đã sửa |
+| PB-26 | Z01, Z01b | nhẹ | đã sửa |
+| PB-27 | H04 | nhẹ | đã sửa: câu 3 về $\pi_w$ (theo MACH 3.5 thay cho đề xuất "O đổi cách chơi"; chọn vì kiểm kết quả chính của mạch 6) |
+| PB-28 | Z03 | nhẹ | đã sửa (Z03 viết lại song song P03) |
+| PB-29 | D03 | nhẹ | đã sửa |
+| PB-30 | E04 | nhẹ | đã sửa |
+| PB-31 | ghi chú P01, P03, A00, G03, Z01, F02, C03 | nhẹ | đã sửa; lý do thiết kế chuyển sang storyboard |
+| PB-32 | A05, A06 | nhẹ | đã sửa (như SV-4) |
+| MACH-3.1 | AT, A00, A03 | trung bình | đã sửa (a)–(d) |
+| MACH-3.2 | ET, F00 | trung bình | đã sửa |
+| MACH-3.3 | F02 | trung bình | đã sửa: ứng dụng trên Tic-tac-toe |
+| MACH-3.4 | GT | trung bình | đã sửa (rút còn 20 âm tiết) |
+| MACH-3.5 | G04–G05, H04 | trung bình | đã sửa: dời G04–G05 lên sau G02c; H04 câu 3 |
+| MACH-3.6 | Z03, G03d | trung bình | đã sửa: G03e và giới hạn thứ tư trong ghi chú Z03 |
+| MACH-3.7 | Z01b, Z02 | trung bình | đã sửa |
+| MACH-3.8 | P03, Z03, Z01 | trung bình | đã sửa: Z03 năm dòng 2–6 song song P03; Z01 thêm hàng ba dạng tín hiệu học |
+| MACH-3.9 | D04–D05 | nhẹ | đã sửa |
+| MACH-3.10 | C00 | nhẹ | đã sửa |
+| MACH-3.11 | E02a | nhẹ | đã sửa |
+| MACH-3.12 | G00 | nhẹ | đã sửa |
+| MACH-3.13 | G01 | nhẹ | đã sửa |
+| MACH-3.14 | H04 câu 2, 3 | nhẹ | đã sửa: câu 2 nối mạch 2 và 4 (trái ở bước 0: $T=5$, $G_0=1$) |
+| MACH-3.15 | P03 | nhẹ | đã sửa dòng 3; vế "dữ liệu do chính hành động sinh ra" không thêm vào khung vì trần 60 |
+| MACH-3.16 | Z01 | nhẹ | đã sửa |
+| MACH-3.17 | Z00 | nhẹ | không còn áp dụng: bảng chỉ ghi bài tập đã có (brief mục 4) |
+
+### Trang đổi, thêm, dời
+
+- Thêm: G03e. Sửa mặt trang: P01a, P03, AT, A00, A00b, A03, A04, A05, A06, B01, C00, C04b, C04c, C05, D00, D02b, D02c, D03, ET, E00, E01, E00b, E03, E04, E02a, E02, F00, F00b, F01, F02, F04, GT, G00, G01, G02, G02b, G03, G03d, Z01, Z01b, Z02, Z03, H04, Z00, G04, G05. Chỉ sửa ghi chú: P01, CT, DT, ZT, C03, E01b, G03b.
+- Dời: A05–A06 lên sau A01d; D04–D05 lên sau D02c; G04–G05 lên sau G02c.
+- SVG: mới `tictactoe-learning.svg`; sửa `uncertainty.svg`, `robot-manipulation.svg`, `control-learning.svg`, `explore-exploit.svg` (chữ lớn hơn), `tictactoe-search.svg` ("đến phiên X").
+
+### Đề nghị sửa ghi chú (sau giai đoạn II)
+
+| Vị trí trong ghi chú | Nội dung sửa | Nguồn |
+|---|---|---|
+| Ví dụ 01.4 | Đặt $L=4$ (deck D02c đã đổi); "Diễn giải" so với hút trước, lợi tức lớn nhất $0$. Với $L=5$, hút trước rồi đi đúng đường cũng cho $0{,}7$ | RL, TOAN, PB 4 |
+| §5.1, Định nghĩa 01.18, Ví dụ 01.6, 01.7, 01.10, Bài tập 01.7 | "lượt của X / đến lượt X" thành "nước đi / phiên của X"; "lượt" chỉ cho episode | RL, SV, PB 3 |
+| Định nghĩa 01.5 hoặc Nhận xét 01.6 | Thêm "thử và sai (trial-and-error)" cùng phản hồi trễ | RL |
+| Nhận xét 01.4, ý 3 | Tách kế hoạch vòng hở khỏi chính sách phản hồi khi đã biết luật ngẫu nhiên (Bài 04) | RL |
+| §4.2 sau Ví dụ 01.7 | Câu giải thích vì sao giá trị chỉ phụ thuộc thế cờ trong ví dụ ($\pi_u,\pi_w$ không nhớ nước trước, nước cuối của O bị buộc), dẫn tới Nhận xét 01.19 | PB 6 |
+| Đầu §4.4 | Cầu nối sang bài toán chọn lặp lại một bước, giá trị của $a$ là kỳ vọng phần thưởng một bước | PB 7 |
+| Nhận xét 01.17 | "gần như không đổi được quyết định" thành "không đổi được quyết định ($\frac{12}{21}>0{,}55$)" | TOAN |
+| Bài tập 01.6, "Kiểm tra lại" | Khoảng viết $\approx[0{,}367;\,0{,}700]$ hoặc $\big[\frac{11}{30},\frac7{10}\big]$ | TOAN |
+| Đoạn sau Ví dụ 01.1, đoạn mở §1 (dòng 143) | "chỉ phần thưởng $+1$ ở cuối lượt phân biệt được" mâu thuẫn trường hợp một lần trái; nêu trường hợp hai lần trái hoặc nói rõ $R_4$ | PB 5 |
+| Chính sách tất định | "chính sách tất định" thành "chính sách xác định (deterministic policy)" theo brief mục 5 | biên tập viên |
+
+### Số hiệu dự kiến cho `exercises.md` (giai đoạn III)
+
+01.12 giá trị khi môi trường và chính sách tất định (nguyên văn trong mục giai đoạn I); 01.13 bài tổng hợp robot từ ô 2, $L=3$, $\pi_u$, đúng dữ kiện và lời giải Z02–Z02b; 01.14 hai thiết kế phần thưởng robot dọn nhà; 01.15 đăng ký môn học hoặc xe tự hành (mạch 3 và 5); 01.16 [Tìm hiểu] tác tử nhiều nhiệm vụ và mô hình thế giới. Z00 chỉ ghi "Tệp bài tập: chưa có".
+
+### Mật độ sau biên tập
+
+70 trang; trung bình 51,0 âm tiết; 57 trang trên 40; 1 trang trên 60 (P01, 77, trần 80); dòng `<-- VƯỢT`: P01 và P02, đều có ngoại lệ.
+
+### `no-ai-slop` (Edit) và kiểm tra
+
+- Tự kiểm theo `eval.md` trên mọi mặt trang và ghi chú đã đổi: không "Trang này", không tài liệu làm chủ ngữ (sáu ghi chú trang tiêu đề mạch mở bằng đối tượng kế thừa, khuôn câu khác nhau), không lời điều hướng ("hai trang sau" đã bỏ), không câu kết châm ngôn (E04 kết bằng số), không tương phản nhị phân mới. Đạt.
+- `density.py`: 0 dòng vượt không có ngoại lệ. Playwright 1600×900 và 390×844, 70 trang: 0 lỗi và 0 cảnh báo console (kể cả KaTeX), 0 `.katex-error`, 0 yêu cầu ra ngoài, 0 tài nguyên hỏng, không tràn ngang; chỉ báo vượt khung ở E02 là các `span` khung đỡ (`pstrut`, `svg-align`) của `\widehat`, không hiển thị (đã kiểm từng lớp, ảnh chụp sạch). Số trên trang tiêu đề mạch khớp `#/N`. Đã xem ảnh chụp mọi trang đổi ở 1600 px và G03e, A04 ở 390 px (`~/.cache/rl01edit/shots/`, bảng ghép `c0.png`–`c6.png`).
+- `git diff --check`: sạch.
+
+## Rà lại vòng 2 và sửa (giai đoạn II, trước commit)
+
+Hai tác tử rà lại chỉ đọc (Opus 5.5, `high`): TOAN (`scratchpad/deckrecheck-01-TOAN.md`: 1 trung bình, 5 nhẹ) và MACH (`scratchpad/deckrecheck-01-MACH.md`: 2 trung bình R1–R2, 8 nhẹ R3–R10). Không còn chặn hay nghiêm trọng. Biên tập viên (cùng tác tử, Opus 5.5 `high`) sửa theo quyết định của điều phối viên. Không commit.
+
+| Mã | Trang | Mức | Trạng thái |
+|---|---|---|---|
+| TOAN-H04 | H04 câu 2 | trung bình | đã sửa: "Từ ô 1, $L=5$, phần thưởng gốc: …; tính $T,\ G_0$" |
+| TOAN-G03d | G03d | nhẹ | đã sửa: "Dạng khác: trên lịch sử, không cần ba điều kiện: thay $s,S_{t+1},\mathcal A(s)$ bằng $h,H_{t+1},\mathcal A(h)$" |
+| TOAN-G03e | G03e ghi chú | nhẹ | đã sửa: a, c, e, g là thế cờ dạng $\tilde s$, trạng thái sau nước đi (afterstate) |
+| TOAN-F02 | F02 | nhẹ | đã sửa: tiêu chí thăm dò là nước không dẫn tới giá trị ước lượng cao nhất; gộp với R9: "thế cờ chưa thử có thể không bao giờ được thử" |
+| TOAN-F04 | F04 ghi chú | nhẹ | đã sửa: $\big[\tfrac{11}{30},\tfrac7{10}\big]$ |
+| TOAN-D02c | D02c ghi chú | nhẹ | đã sửa: "mọi $G_t$ với $t\lt T$" |
+| R1 | G02b–G03, G00 | trung bình | đã sửa: thứ tự G02b → G04 → G05 → G02c → G03; G03 nêu lại thế cờ $s$ ngay trong dòng "Nhu cầu:" (gộp với "Nhắc lại:" để giữ 6 dòng cùng bảng 5 hàng); G00 đổi tiêu đề "Ví dụ: thế cờ bốn ô trống"; storyboard ghi G02c là cầu nối vào cụm phân tích một bước |
+| R2 | storyboard | trung bình | đã sửa: G03c bỏ khỏi danh sách có thể bỏ; F02 giữ trong danh sách; ghi chú G03e có "(phần 5)" |
+| R3 | Z03 dòng 2–3 | nhẹ | đã sửa theo đề xuất; dòng Nguồn rút; Z03 còn 60 âm tiết |
+| R4 | ghi chú P02, P03 | nhẹ | đã sửa: thêm câu về học giá trị thế cờ từ các ván đã chơi |
+| R5 | D03 ghi chú | nhẹ | đã sửa: "Ví dụ chi phí di chuyển và bài tập va ghế cho thấy…" |
+| R6 | C06 ghi chú | nhẹ | đã sửa: "ba trong bốn khác biệt của Học tăng cường" |
+| R7 | G03e ghi chú | nhẹ | đã sửa theo câu đề xuất |
+| R8 | GT | nhẹ | đã sửa: từ khóa "Mô hình hóa · Cây trò chơi · Phân tích một bước · Khai thác · Học từ ván chơi" (rút "Nước khai thác một bước" thành "Khai thác" để dòng ≤ 20 âm tiết) |
+| R9 | F02 | nhẹ | đã sửa (gộp với TOAN-F02) |
+| R10 | G04 ghi chú, `tictactoe-search.svg` | nhẹ | đã sửa: "phiên đi", "đến phiên X" trong `<desc>` |
+
+Đề nghị sửa ghi chú bổ sung (thêm vào bảng "Đề nghị sửa ghi chú (sau giai đoạn II)"):
+
+| Vị trí trong ghi chú | Nội dung sửa | Nguồn |
+|---|---|---|
+| `img/lec-01/tictactoe-four-moves.svg` (chỉ ghi chú dùng) | "thế cờ s, đến lượt X" và "X chọn đều ở các lượt sau" thành "phiên"; sửa cả `<desc>` và alt trong ghi chú | MACH rà lại |
+| Ví dụ 01.9 | Tùy chọn: "dịch trung bình của A tối đa $\frac1{21}$" viết thành "trung bình mới của A thuộc $[\frac{12}{21},\frac{13}{21}]$, rộng $\frac1{21}$", như F00b | TOAN rà lại |
+
+Kiểm tra sau sửa:
+- `density.py`: chỉ P01 và P02 vượt, đều có ngoại lệ trong storyboard; Z03, H04 ở 60 âm tiết.
+- `scratchpad/deck_check.py` (cổng 8799), 70 trang ở 1600×900 và 390×844: 0 lỗi, 0 cảnh báo console, 0 `.katex-error`, 0 yêu cầu ngoài, 0 yêu cầu hỏng, không cuộn ngang, đủ 6 trang tiêu đề mạch. Cờ `overflow` (P01a, D02, G03b, G03d) và `small_font` là báo động giả của các `span` KaTeX ẩn, như vai SV đã kiểm ở vòng trước; ảnh chụp các trang này sạch.
+- Ghi chú diễn giả: mọi trang 40–150 âm tiết.
+- Đã xem ảnh 1600 px của G00, G04, G02c, G03, G03d, G03e, F02, Z03, H04, GT (`scratchpad/ed01r2/shots/`, bảng ghép `scratchpad/ed01r2/s1.png`).
+- `git diff --check`: sạch.
+
+### Quyết định của điều phối viên (2026-10-12, giai đoạn II, deck)
+
+- Tác tử: tác tử soạn kiêm biên tập (general-purpose, claude-opus-5-5, high) hai vòng; rà lại toán và rà lại mạch (general-purpose, claude-opus-5-5, high, chỉ đọc); điều phối viên Claude Fable 5.1 (medium).
+- Kiểm độc lập của điều phối viên sau vòng 2: `density.py` chỉ gắn cờ các trang có lý do trong `storyboard.md`; Playwright 1600×900 và 390×844: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, đủ 6 trang tiêu đề mạch; ảnh các trang đổi ở vòng 2 đã xem; `git diff --check` sạch.
+- Quyết định: **chấp nhận**; commit `fix(lecture-01)`.

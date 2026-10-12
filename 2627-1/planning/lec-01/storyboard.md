@@ -1,114 +1,162 @@
 # Storyboard Bài 01: Giới thiệu Học tăng cường
 
-## Bản đồ 7 mạch ngoài
+Bản sau vòng biên tập theo năm báo cáo rà soát (giai đoạn II, 2026-10-12): 70 trang, 7 mạch, 6 trang tiêu đề mạch. Âm tiết đo bằng `density.py` của đợt sửa (token theo khoảng trắng sau khi bỏ KaTeX, tiêu đề, ghi chú; dấu câu đứng sau công thức cũng bị đếm). Quyết định `giữ | sửa | gộp | tách | thêm | bỏ` so với deck 42 trang trước đợt sửa; cột "Vòng biên tập" ghi thay đổi sau rà soát và mã phát hiện (SV, RL, TOAN, PB, MACH).
 
-HTML hiện hành có đúng 7 `<section>` ngoài, khớp giới hạn 5–7 mạch: mạch 1 gộp P+A+B (mở đầu), mạch 7 gộp H+Z (kết luận và bài tập). Tổng mạch 1–6 là 120 phút trình chiếu chính; mạch 7 là 30 phút bài tập. H00–H03 nằm trong stack dọc dưới Z00, không thuộc tuyến 150 phút.
+## Bản đồ mạch
 
-| Mạch | Trang | Chức năng | Kết nối vào | Đầu ra | Đóng góp mục tiêu | Thời lượng |
-|---|---|---|---|---|---|---:|
-| 1. Mở đầu: P+A+B | P00–P02, A00–A04, B00–B02 | Đặt vấn đề, xác lập ngôn ngữ tác tử–môi trường, nêu giới hạn mô hình cố định, dẫn nhập hai trường hợp ứng dụng | Vào bài từ không có trang trước; P00 mở tuyến | Người học nêu được vì sao quyết định phải học từ tương tác và có hai ca ứng dụng để đối chiếu | LLO1 | 30 phút |
-| 2. Tín hiệu học: C | C00–C05 | Xác định khung học và phân biệt ba dạng tín hiệu | Từ B02: hai ca đều học từ tương tác, cần biết tín hiệu nào hướng dẫn | Tiêu chí nhận dạng Học tăng cường qua tương tác, dữ liệu phụ thuộc thời gian, phản hồi trễ | LLO1, LLO2 | 22 phút |
-| 3. Phần thưởng: D | D00–D03 | Hình thức hóa phần thưởng một bước và phần thưởng tích lũy | Từ C05: phản hồi trễ cần được định lượng | Công thức $G_t=\sum_{k=t+1}^{T}R_k$ và giả thuyết phần thưởng có điều kiện | LLO1 | 18 phút |
-| 4. Thành phần: E | E00–E02 | Định nghĩa chính sách, hàm giá trị, mô hình tùy chọn | Từ D03: mục tiêu là cực đại hóa kỳ vọng của $G_t$; E00 mở bằng câu nối: để cực đại hóa kỳ vọng của $G_t$, tác tử phải tách hai việc: chọn nước đi và đánh giá thế cờ | $\pi(a\mid h_t)$, $V^\pi(h_t)$, phân biệt có mô hình và phi mô hình | LLO3 | 18 phút |
-| 5. Thăm dò–khai thác: F | F00–F03 | Gắn đánh đổi thăm dò–khai thác vào chính sách vừa định nghĩa | Từ E02: chính sách và giá trị là công cụ để chọn hành động; F03 ghi chú nối khai thác với chọn theo giá trị ước lượng và thăm dò với $\pi$ đặt xác suất khác không | Quyết định có dữ kiện thiếu được nêu tường minh | LLO1, LLO3 | 14 phút |
-| 6. Tic-tac-toe: G | G00–G04 | Áp dụng toàn bộ khung vào một bài toán kiểm chứng được | Từ F03: G00 mở bằng câu nối "gắn khái niệm đã định nghĩa vào một bài toán cụ thể" | Mô hình hóa trạng thái–hành động–thưởng và phép chọn khai thác một bước (ghi chú G03 nêu $G_t=R_{t+1}+G_{t+1}$) | LLO3, LLO4 | 18 phút |
-| 7. Kết luận và bài tập: H+Z | H04–H07, Z00 | Chữa câu hỏi ôn tập, hai thảo luận mở rộng, giao tự kiểm tra | Từ G04: kiến thức đã khép, chuyển sang đánh giá và thảo luận | Câu trả lời ôn tập, hai thảo luận có giới hạn, nhiệm vụ tự kiểm tra | LLO1–LLO4 | 30 phút |
+| Mạch | Loại | Trang tiêu đề mạch | Chức năng | Đầu vào | Đầu ra | Đóng góp cho vấn đề trung tâm | Phút |
+|---|---|---|---|---|---|---|---:|
+| 1. Mở đầu | mở đầu | P00 (bìa) | Luận đề, tiên quyết và quy ước, mục tiêu, nội dung, vấn đề trung tâm | — | Bài toán: chọn hành động khi đánh giá chỉ đến sau cả chuỗi | Câu trả lời có điều kiện của từng mạch | 8 |
+| 2. Tác tử học từ tương tác | phát triển, khái niệm | AT (`mach-2`) | Vòng tương tác, trạng thái, quan sát, lịch sử; giới hạn mô hình cố định | Robot dọn dãy bốn ô | $S_t,O_t,A_t,R_{t+1},H_t$; nhu cầu học | Ai chọn, ai sinh dữ liệu, dữ liệu gồm gì | 18 |
+| 3. Tín hiệu học và dữ liệu tương tác | phát triển, khái niệm | CT (`mach-3`) | Phần thưởng so với nhãn; thứ tự dữ liệu; thử và sai, phản hồi trễ | Vòng tương tác | Tiêu chí nhận dạng; nhu cầu đo hậu quả dài hạn | Tín hiệu là phần thưởng | 11 |
+| 4. Phần thưởng và lợi tức | phát triển, khái niệm + kết quả | DT (`mach-4`) | Lượt, $T$, lợi tức, hệ thức đệ quy, giả thuyết phần thưởng | Phản hồi trễ | $G_t=R_{t+1}+G_{t+1}$; mục tiêu $\mathbb E[G_0]$ | Hậu quả dài hạn đo bằng $G_t$ | 16 |
+| 5. Chính sách, hàm giá trị, mô hình và thăm dò | phát triển, khái niệm | ET (`mach-5`) | Chính sách, giá trị, mô hình; thăm dò và khai thác (cả trên Tic-tac-toe) | Lợi tức của một lượt | $\pi$, $v_\pi(h)$, mô hình, hành động tham lam | Tách chọn khỏi đánh giá; ít mẫu cần thăm dò | 27 |
+| 6. Tic-tac-toe như một bài toán Học tăng cường | ứng dụng + kết quả | GT (`mach-6`) | Mô hình hóa, rút gọn lịch sử, phân tích một bước, nước khai thác một bước, học giá trị từ ván chơi | $\pi$, $v_\pi$, khai thác, thăm dò | Mệnh đề 01.20, $a^*=9$, $v_{\pi_u}(s)=\frac12$; cập nhật từ ván chơi | Chọn bằng một bước nhìn trước; khi thiếu mô hình thì học | 26 |
+| 7. Tổng kết và chuyển tiếp | kết luận | ZT (`mach-7`) | Tổng kết có giả thiết, bài tổng hợp, kết luận song song với P03, tự kiểm tra, bài tập về nhà | Mọi kết quả | Năng lực mang sang Bài 02 | Trả lời có điều kiện, có số liệu | 14 |
 
-Phân bổ 30 phút mạch 7: H04 6 phút, H05 7 phút, H06 7 phút, H07 7 phút, Z00 3 phút. Không có code demo vì bản nguồn không có nội dung mã.
+Tổng 120 phút. Ba cặp bài tập C05–C06, D04–D05, G04–G05 được chữa trong khối 30 phút bài tập, không tính vào 120 phút; trên lớp chỉ nêu đề. Các cặp còn lại (A05–A06, E03–E04, F03–F04, Z02–Z02b) chữa trên lớp, khoảng 3 phút mỗi cặp. Trang có thể bỏ khi thiếu giờ: B01, D03b, F02 (nội dung có trong ghi chú bài giảng). G03c không bỏ được: đây là trang duy nhất có $v_{\pi_u}(s)=\frac12$, dùng ở G00, Z03 (rà lại vòng 2, R2).
 
-## Ánh xạ cụm trọng tâm
+## Cụm khái niệm và thời lượng
 
-Mỗi cụm theo thứ tự bắt buộc: vấn đề → trực giác → ví dụ → hình thức/thuật toán → ứng dụng → kiểm tra. Bước gộp hoặc không áp dụng được ghi kèm lý do.
+| Cụm | Mạch | Vấn đề | Trực giác | Ví dụ | Hình thức | Ứng dụng | Kiểm tra | Phút | Ghi chú bước |
+|---|---|---|---|---|---|---|---|---:|---|
+| Tác tử, môi trường, vòng tương tác | 2 | A00 | A01 | A00b | A01 (Định nghĩa 01.1) | A01d | A05–A06 | 7 | Ví dụ dẫn nhập A00b đứng trước trực giác, làm cụ thể "phần thưởng chỉ đến ở $R_4$" |
+| Trạng thái, quan sát, lịch sử | 2 | A00 | A01c | A00b | A01c (Định nghĩa 01.2) | A01d | A05–A06 | 5 | Bài tập đặt ngay sau ứng dụng (MACH 3.1d) |
+| Giới hạn mô hình cố định (phụ) | 2 | A03 (Nhu cầu:) | A03 (hình) | A03 | không áp dụng: nhận xét, không có định nghĩa | A04, B01 | B01 (câu hỏi, lời giải trong ghi chú) | 6 | Chu trình rút gọn |
+| Ba dạng tín hiệu học | 3 | C00 | C00 (hình), C01 | C01 | C03, C04b (Định nghĩa 01.5) | C04c | C05–C06 (khối 30 phút) | 11 | |
+| Phần thưởng, lượt, lợi tức, hệ thức đệ quy | 4 | D00 | D00 (Trực quan, $1=0+1$) | D00 | D01, D02, D02b (Định nghĩa 01.7, 01.8, Mệnh đề 01.9) | D02c | D04–D05 (khối 30 phút) | 12 | Bài tập đặt ngay sau ứng dụng (MACH 3.9) |
+| Giả thuyết phần thưởng (phụ) | 4 | D03 (ghi chú) | D03 | D03b | D03 (Nhận xét 01.10) | D03b | D03b (Câu hỏi:) | 4 | Chu trình rút gọn |
+| Chính sách | 5 | E00 | E01 | E00 (bằng lời) | E01 (Định nghĩa 01.11) | E00b | E03–E04 | 6 | $\pi_w,\pi_u,\pi_1$ được đặt tên ở E01 (PB 18) |
+| Hàm giá trị | 5 | E00 | E00b | E00b | E01b (Định nghĩa 01.12) | G03 | E03–E04 | 7 | |
+| Mô hình (phụ) | 5 | E02a (Nhu cầu:) | E02a | E02a | E02 (Định nghĩa 01.14) | G03d, Z02b | H04 câu 4 | 4 | |
+| Thăm dò và khai thác | 5 | F00 | F00b | F00b | F01 (Định nghĩa 01.16) | F02 (Tic-tac-toe), G03e | F03–F04 | 10 | |
+| Mô hình hóa Tic-tac-toe | 6 | G00 | G01 | G00 | G02, G02b (Định nghĩa 01.18) | G04–G05 (khối 30 phút) | G04–G05 | 9 | Bài tập đặt ngay sau G02b vì chỉ dùng Định nghĩa 01.18 và luật một bước (rà lại vòng 2, R1) |
+| Phân tích một bước, nước khai thác một bước | 6 | G02c (cầu nối: giá trị viết trên thế cờ), G03 (Nhu cầu:) | G01, G03c | G03, G03c (Ví dụ 01.10) | G03b (Mệnh đề 01.20), G03d (Định nghĩa 01.21) | G03d ($a^*=9$), Z02b | H04 câu 3, Z02 | 12 | |
+| Học giá trị thế cờ từ ván chơi (phụ) | 6 | G03d (Lưu ý: cần mô hình) | G03e (hình) | G03e (Hình 1.1 của Sutton và Barto) | không áp dụng: thuật toán thuộc Bài 05 | — | — | 5 | Chu trình rút gọn; quyết định điều phối viên |
 
-| Cụm | Vấn đề | Trực giác | Ví dụ | Hình thức/thuật toán | Ứng dụng | Kiểm tra | Ghi chú bước |
+Không có thuật toán: nguồn không có thuật toán, ghi chú cũng không có khối `algorithm`.
+
+## Từng trang
+
+Âm tiết: trước đợt sửa → sau vòng biên tập ("—" khi trang mới).
+
+### Mạch 1. Mở đầu (8 phút)
+
+| ID | Vị trí, bước | Lý do tồn tại | Nối trước → sau | Mục tiêu | Quyết định | Vòng biên tập | Âm tiết |
 |---|---|---|---|---|---|---|---|
-| 1. Tác tử học (A00–A04) | A00: robot dọn nhà phải chọn hành động khi hậu quả đến sau tương tác | A00: vòng tương tác tác tử–môi trường | A00: robot dọn nhà | A01: tách tác tử, môi trường, trạng thái, quan sát | A02–A03: ghi nhớ–thích nghi–khái quát; điều khiển mô hình cố định | A04: giới hạn mô hình cố định, hai khả năng có/phi mô hình | B00–B02 không phải bước kiểm tra của cụm này mà là trường hợp ứng dụng dẫn nhập, đặt sau A04 để cho thấy hai miền thực tế đòi hỏi học từ tương tác trước khi vào khung hình thức |
-| 1b. Trường hợp ứng dụng dẫn nhập (B00–B02) | B00: hai miền thực tế nào đòi hỏi học từ tương tác | B00: trò chơi và tương tác vật lý đều cho phản hồi trễ | B01: AlphaGo; B02: thao tác robot | Không áp dụng — khái niệm hình thức chưa được định nghĩa, đây là dẫn nhập có chủ ý | B01–B02 chính là bước ứng dụng | B02: câu hỏi quan sát nào đổi sau mỗi thao tác, tiêu chí nào chỉ đánh giá sau cả chuỗi | Vai trò là dẫn nhập, không phải ví dụ đến muộn; cầu nối ra C00: hai ca đều học từ tương tác, phần sau xác định tín hiệu học |
-| 2. Tín hiệu học (C00–C05) | C00: tín hiệu nào hướng dẫn tác tử khi không có hành động đúng từng bước | C01–C02: hành động hiện tại làm đổi dữ liệu sau; sơ đồ đối chiếu ba dạng tín hiệu | C05: tình huống robot chọn đường đi | C03–C04: học có giám sát và không giám sát | C05: nhận dạng Học tăng cường qua tương tác và phản hồi trễ | C05: vì sao không tráo thứ tự mẫu | C05 gộp ví dụ, ứng dụng và kiểm tra vì cùng dùng một tình huống để nhận dạng quan hệ phụ thuộc thời gian; C02 là sơ đồ đối chiếu, không phải ví dụ |
-| 3. Phần thưởng (D00–D03) | D00: hậu quả của $A_t$ được đo bằng gì | D00: quỹ đạo $S_0,\ldots,S_4$ với cặp $A_t,R_{t+1}$ | D02: tính $G_0=0+0+0+1=1$ với $T=4$ | D01: định nghĩa $R_{t+1}\in\mathbb R$ sau $A_t$; D02: $G_t=\sum_{k=t+1}^{T}R_k$ | D03: cờ và robot dọn nhà | D03: nêu mục tiêu chưa được phản ánh bởi cách đặt phần thưởng | Bước kiểm tra gộp vào ứng dụng D03 vì mức phù hợp của phần thưởng là đối tượng cần đánh giá |
-| 4. Thành phần (E00–E02) | E00: để cực đại hóa kỳ vọng của $G_t$, tác tử phải tách hai việc chọn nước và đánh giá thế cờ | E00: hai nhiệm vụ khác nhau trên cùng một thế cờ | E00: một thế cờ Tic-tac-toe (luật đầy đủ ở G00, dẫn rõ trên trang) | E01: $\pi(a\mid h_t)$, $V^\pi(h_t)=\mathbb E_\pi[G_t\mid H_t=h_t]$; E02: mô hình dự báo $(\widehat S_{t+1},\widehat R_{t+1})$ | E02: phân biệt có mô hình và phi mô hình | E02: câu hỏi mô hình có bắt buộc không | Ứng dụng tổng hợp của cụm nằm ở G03 (cầu nối E01→G03, xem bảng trang); G03–G04 thuộc cụm 6, cụm 4 không đếm trùng thời lượng |
-| 5. Thăm dò–khai thác (F00–F03) | F00: chọn nước đã đánh giá cao hay nước còn ít dữ liệu | F00: hai mục tiêu xung đột trong ngắn hạn | F03: bảng hai hành động A (20 lần, 0,60) và B (2 lần, 0,55) | F01–F02: định nghĩa thăm dò và khai thác; khai thác tương ứng chọn theo giá trị ước lượng, thăm dò tương ứng $\pi$ đặt xác suất khác không cho hành động ít dữ liệu | F03: quyết định khi chưa biết đủ | F03: nêu dữ kiện còn thiếu trước khi quyết định | Bước ví dụ gộp vào kiểm tra F03 vì bảng số vừa là ví dụ vừa là nhiệm vụ; ví dụ ngoài miền Tic-tac-toe được ghi lý do: cô lập đánh đổi khỏi luật trò chơi |
-| 6. Tic-tac-toe (G00–G04) | G00: chọn nước hợp lệ để đạt kết quả cuối tốt, đối thủ chọn đều | G01: cây tìm kiếm đánh giá chuỗi nước đi | G02: cùng một thế cờ sinh các nước hợp lệ | G02: $S_t$, $\mathcal A(S_t)$, $A_t\in\mathcal A(S_t)$, thưởng $+1/0/-1$ theo góc nhìn tác tử | G03: so sánh thưởng tức thời cộng giá trị tiếp diễn dưới cùng $\pi$ | G04: kiểm tra mô hình hóa với ô 5 không hợp lệ | G03 là ứng dụng tổng hợp dùng định nghĩa E01; G04 là kiểm tra của cụm 6, không trùng chức năng với H05 (G04 tập trung mô hình hóa trạng thái–hành động–thưởng, H05 hỏi vai trò thành phần ở mức khái niệm) |
+| P00 | bìa, điểm vào mạch 1 | Luận đề, học phần, đơn vị, học kỳ | — → P01a | tất cả | sửa | — | 25 → 45 |
+| P01a | tiên quyết | Nhắc lại kỳ vọng có điều kiện, kỳ vọng toàn phần, học có giám sát; ký hiệu; thuật ngữ tiếng Anh gom ở đây | P00 → P01 | 3, 4, 6 | thêm | thêm kỳ vọng toàn phần, thuật ngữ episode, reward, policy, return; bỏ $\gamma$, Markov khỏi mặt trang (PB 12, SV, RL) | — → 60 |
+| P01 | mục tiêu | Sáu sản phẩm kiểm tra được | P01a → P02 | tất cả | sửa | ghi chú nêu sản phẩm (PB 31) | 80 → 77 (ngoại lệ trần 80) |
+| P02 | nội dung | Bảy mạch đánh số | P01 → P03 | — | sửa | — | 63 → 44 (7 dòng, ngoại lệ quyết định chung §5) |
+| P03 | vấn đề trung tâm | Bài toán và câu trả lời có điều kiện của mạch 2–6 | P02 → AT | tất cả | thêm | dòng 3, 5, 6 viết lại; dòng 6 nêu đủ giả thiết và "kỳ vọng" (MACH 3.15, PB 17, TOAN, RL) | — → 59 |
 
-## Bảng theo từng trang
+### Mạch 2. Tác tử học từ tương tác (18 phút)
 
-Mỗi trang có một hàng: lý do tồn tại kiểm chứng được, nguồn, quyết định, kết nối từ trang trước và ra trang sau.
+| ID | Vị trí, bước | Lý do tồn tại | Nối trước → sau | Mục tiêu | Quyết định | Vòng biên tập | Âm tiết |
+|---|---|---|---|---|---|---|---|
+| AT | điểm vào mạch 2 | Tách tác tử khỏi môi trường, ghi lịch sử | P03 → A00 | 1 | thêm | dòng dẫn mới (MACH 3.1a); ghi chú viết lại | — → 39 |
+| A00 | vấn đề + ví dụ dẫn nhập | Robot dọn dãy bốn ô | AT → A00b | 1 | sửa | nhu cầu riêng của mạch (MACH 3.1b); bỏ dòng lặp với hình (SV) | 16 → 30 |
+| A00b | ví dụ | Một lượt tính tay (Ví dụ 01.1) | A00 → A01 | 1, 3 | thêm | dòng cuối thành "Diễn giải:" (PB 22) | — → 35 |
+| A01 | trực giác + hình thức | Vòng tương tác (Định nghĩa 01.1) | A00b → A01c | 1 | sửa | — | 57 → 53 |
+| A01c | trực giác + hình thức | Trạng thái, quan sát, lịch sử (Định nghĩa 01.2) | A01 → A01d | 1 | thêm | — | — → 59 |
+| A01d | ứng dụng | $\mathcal S$, $\mathcal O$, $H_3$ của robot | A01c → A05 | 1 | thêm | — | — → 56 |
+| A05 | kiểm tra | Bài tập 01.1 | A01d → A06 | 1 | thêm | dời lên sau A01d (MACH 3.1d); câu (c) theo ghi chú (SV, PB 32) | — → 58 |
+| A06 | lời giải | Lời giải trên mặt trang | A05 → A03 | 1 | thêm | câu (c) sửa theo đề | — → 59 |
+| A03 | vấn đề cụm phụ | Khi nào chương trình viết sẵn đủ | A06 → A04 | 1 | gộp A02 | thêm "Nhu cầu:" (MACH 3.1c, PB 24); hình ra hàng riêng, chữ SVG lớn hơn (SV) | 33 → 49 |
+| A04 | ứng dụng cụm phụ | Ba giới hạn có số (Nhận xét 01.4) | A03 → B01 | 1 | sửa | kế hoạch vòng hở, luật ngẫu nhiên chưa biết, liệt kê không khả thi (RL, PB 14); hình ra hàng riêng | 53 → 56 |
+| B01 | ứng dụng | AlphaGo và thao tác robot | A04 → CT | 1 | gộp B00–B02 | bỏ `.card` (SV); ghi chú AlphaGo sửa (RL); chữ SVG lớn hơn | 86 → 54 |
 
-| ID | Lý do tồn tại (kiểm chứng được) | Nguồn | Quyết định | Kết nối từ trang trước | Kết nối ra trang sau |
-|---|---|---|---|---|---|
-| P00 | Xác lập tên bài, học kỳ và bối cảnh; người học cần biết đang ở đâu | Nguồn 1 | sửa tên học phần và niên khóa | Mở đầu tuyến | P01: mục tiêu học tập |
-| P01 | Nêu bốn sản phẩm học tập quan sát được, làm tiêu chí hoàn thành; nêu tiên quyết xác suất cơ bản (kỳ vọng có điều kiện) và đại số tuyến tính cơ bản | Nguồn 2, 17–30, 37 | thêm | P00 | P02: bản đồ nội dung |
-| P02 | Cho thấy tuyến nhu cầu–khung học–kiểm tra, rồi báo điểm bắt đầu ở nhu cầu học của tác tử | Nguồn 2 | sửa sau tái kiểm định | P01 | A00: mở mạch tác tử học (ranh giới mạch 1 nội bộ P→A) |
-| A00 | Đặt vấn đề bằng robot dọn nhà và vòng tương tác trước khi tách thành phần | Nguồn 3–4, 7 | sửa | P02 (hai trang lân cận tại ranh giới P02/A00 cần rà lại sau đổi section) | A01: tách tác tử và môi trường |
-| A01 | Phân biệt trạng thái với quan sát, tránh đồng nhất tình huống thực với dữ liệu nhận được | Nguồn 4–5 | gộp, sửa sau phản biện | A00 | A02: nhu cầu học |
-| A02 | Ba năng lực ghi nhớ–thích nghi–khái quát giải thích vì sao tác tử phải học | Nguồn 6 | giữ | A01 | A03: cách tiếp cận điều khiển |
-| A03 | Mô tả giả định mô hình được cung cấp và giữ cố định, làm đối tượng so sánh | Nguồn 6 | sửa sau phản biện | A02 | A04: giới hạn của mô hình cố định |
-| A04 | Khép nhu cầu: môi trường đổi và không gian lớn; dẫn tới phần E thay vì dùng cặp thuật ngữ có mô hình/phi mô hình trước khi E02 định nghĩa | Nguồn 7–9 | gộp, sửa sau phản biện; mặt trang diễn đạt "cách tác tử sử dụng hoặc không sử dụng mô hình được định nghĩa ở phần sau" | A03 | B00 (hai trang lân cận tại ranh giới A04/B00 cần rà lại sau đổi section); câu nối: hai miền dưới đây cho thấy quyết định phải học từ tương tác |
-| B00 | Báo trước hai trường hợp ứng dụng dẫn nhập dùng để đối chiếu học từ tương tác và phản hồi trễ; ghi rõ đây là ví dụ dẫn nhập, khái niệm hình thức ở phần E trở đi | Nguồn 10–13 | sửa | A04 | B01: AlphaGo |
-| B01 | Ca ứng dụng trò chơi: học cách đánh giá nước đi kết hợp tìm kiếm cây, có nguồn truy nguyên | Nguồn 11; Silver et al. 2016 | sửa sau phản biện | B00 | B02: thao tác robot |
-| B02 | Ca ứng dụng tương tác vật lý, đặt câu hỏi và báo bước tiếp theo là xác định tín hiệu học chung; ghi chú nhắc đây là ví dụ dẫn nhập sẽ được phân tích sau | Nguồn 12–13 | sửa sau tái kiểm định | B01 | C00 (mạch 2): hai ca đều học từ tương tác, phần sau xác định tín hiệu học |
-| C00 | Đặt nhu cầu xác định tín hiệu học khi không có hành động đúng từng bước | Nguồn 16, 18 | sửa | B02 | C01: khung học từ tương tác |
-| C01 | Phát biểu khung học và quan hệ phụ thuộc thời gian của dữ liệu tương tác | Nguồn 9, 17 | sửa sau phản biện | C00 | C02: ba dạng tín hiệu |
-| C02 | Đặt ba dạng tín hiệu cạnh nhau làm tiêu chí phân biệt | Nguồn 19 | sửa | C01 | C03: học có giám sát |
-| C03 | Làm rõ nhãn mục tiêu trực tiếp, tránh gọi mọi phản hồi là phần thưởng | Nguồn 19–20 | tách | C02 | C04: học không giám sát |
-| C04 | Hoàn chỉnh đối chiếu ba dạng học bằng dữ liệu không nhãn | Nguồn 19 | tách | C03 | C05: nhận dạng tín hiệu học |
-| C05 | Tình huống robot chọn đường đi vừa là ví dụ vừa là kiểm tra quan hệ phụ thuộc thời gian và dấu hiệu nhận dạng Học tăng cường | Nguồn 21 | sửa sau phản biện | C04 | D00 (mạch 3): phản hồi trễ cần được định lượng |
-| D00 | Quỹ đạo $S_0$ đến $S_4$ với cặp $A_t,R_{t+1}$ làm trực giác chỉ số trước công thức | Nguồn 23–25 | sửa sau phản biện | C05 | D01: định nghĩa phần thưởng |
-| D01 | Định nghĩa $R_{t+1}$ sau $A_t$, miền chỉ số và trạng thái kết thúc $S_T$ | Nguồn 23 | sửa sau phản biện | D00 | D02: phần thưởng tích lũy |
-| D02 | Ví dụ số $G_0=0+0+0+1=1$ với $T=4$ khớp hình trước khi khái quát; định nghĩa $T$ là chỉ số trạng thái kết thúc và nêu $R_1=R_2=R_3=0$, $R_4=1$ | Nguồn 25 | sửa sau phản biện | D01 | D03: giả thuyết phần thưởng |
-| D03 | Giả thuyết phần thưởng có điều kiện mô hình hóa, kèm giới hạn qua cờ và robot dọn nhà | Nguồn 6–8, 24–25 | sửa sau phản biện; ghi chú D03 nêu mục tiêu được hiện thực hóa ở phần E qua chính sách và hàm giá trị | D02 | E00 (mạch 4): mục tiêu là cực đại hóa kỳ vọng của $G_t$; chính sách là đại lượng điều khiển, hàm giá trị đánh giá kỳ vọng đó |
-| E00 | Câu nối trực tiếp từ D03: để cực đại hóa kỳ vọng của $G_t$, tác tử phải tách hai việc chọn nước và đánh giá thế cờ, trước khi gọi tên thành phần | Nguồn 26, 29–30 | sửa | D03 | E01: chính sách và hàm giá trị |
-| E01 | Định nghĩa $\pi(a\mid h_t)$ và $V^\pi(h_t)=\mathbb E_\pi[G_t\mid H_t=h_t]$ với nguồn ngẫu nhiên tường minh; ghi chú nêu điều kiện Markov/quan sát đầy đủ cho phép viết $V^\pi(S_t)$ | Nguồn 26; David Silver, Lecture 1 | sửa sau phản biện | E00 | E02: mô hình môi trường; cầu nối E01→G03: trong Tic-tac-toe quan sát đầy đủ, lịch sử $h_t$ rút gọn thành cặp (thế cờ $S_t$, lượt chơi), nên $V^\pi$ dùng ở G03 là cùng một định nghĩa; kỳ vọng lấy theo cả $\pi$ và phân phối đều của đối thủ |
-| E02 | Phân biệt có mô hình và phi mô hình bằng dự báo $(\widehat S_{t+1},\widehat R_{t+1})$; mô hình là tùy chọn | Nguồn 26 | sửa sau phản biện | E01 | F00 (mạch 5): chính sách và giá trị là công cụ chọn hành động |
-| F00 | Tình huống chọn giữa nước đã đánh giá cao và nước ít dữ liệu đặt vấn đề đánh đổi | Nguồn 27 | sửa | E02 | F01: thăm dò |
-| F01 | Mục tiêu và chi phí của thăm dò; không đồng nhất với ngẫu nhiên vô điều kiện | Nguồn 27 | tách | F00 | F02: khai thác |
-| F02 | Mục tiêu và rủi ro của khai thác; nối với chọn theo giá trị ước lượng như G03 | Nguồn 27 | tách | F01 | F03: quyết định khi chưa biết đủ |
-| F03 | Bảng giả định hai hành động kiểm tra đánh đổi; yêu cầu nêu dữ kiện còn thiếu; ghi chú nối khai thác với chọn theo giá trị ước lượng và thăm dò với $\pi$ đặt xác suất khác không | Nguồn 27 | thêm, sửa sau phản biện | F02 | G00 (mạch 6): câu nối "gắn khái niệm đã định nghĩa vào một bài toán cụ thể" |
-| G00 | Giới thiệu miền Tic-tac-toe với giả thiết đối thủ chọn đều trên nước hợp lệ; mở bằng câu nối từ F03 | Nguồn 28 | sửa sau phản biện | F03 | G01: tìm kiếm trên cây |
-| G01 | Một thế cờ cụ thể minh họa ba nhánh tìm kiếm hợp lệ, nền kiểm chứng được trước cách học | Nguồn 28 | sửa sau phản biện | G00 | G02: biểu diễn bài toán |
-| G02 | Chốt hành động, phần thưởng và cầu nối $h_t\leftrightarrow(S_t,\text{lượt})$ cho trò chơi quan sát đầy đủ | Nguồn 29–30 | sửa sau tái kiểm định | G01 | G03: đánh giá thế cờ |
-| G03 | Áp dụng kỳ vọng điều kiện; nêu trên mặt trang cầu nối lịch sử–trạng thái và nguồn ngẫu nhiên; ghi chú nêu $G_t=R_{t+1}+G_{t+1}$ làm nền của công thức | Nguồn 26, 29–30 | sửa sau tái kiểm định | G02 | G04: kiểm tra mô hình hóa |
-| G04 | Kiểm tra mô hình hóa khi đến lượt X và ô 5 không hợp lệ; không lặp chức năng H05 | Nguồn 26, 29–30 | sửa sau tái kiểm định | G03 | H04 (mạch 7): kiến thức đã khép, chuyển sang ôn tập |
-| H04 | Gom câu hỏi về mô hình cố định, dữ liệu phụ thuộc thời gian và phản hồi trễ; câu dẫn mặt trang: ví dụ Tic-tac-toe khép phần lý thuyết; trang sau chữa câu hỏi ôn tập, rồi chuyển sang hai thảo luận | Nguồn 38–40 | chuyển, sửa sau phản biện | G04 | H05: ôn tập thành phần |
-| H05 | Gom câu hỏi về vai trò thành phần, đánh đổi và nhiệm vụ chuyển giao robot dọn nhà; hỏi vai trò ở mức khái niệm, khác G04 | Nguồn 41–42 | gộp | H04 | H06: chuyển từ kiểm tra khái niệm sang thảo luận mở |
-| H06 | Báo chuyển từ ôn tập sang thảo luận, rồi xét tác tử tổng quát với giới hạn | Nguồn 14–15, 43 | sửa sau tái kiểm định | H05 | H07: mô hình thế giới |
-| H07 | Thảo luận lợi ích và rủi ro của mô hình thế giới; phân biệt dự báo với quyết định | Nguồn 44 | sửa | H06 | Z00 (hai trang lân cận tại ranh giới H07/Z00 cần rà lại sau đổi section) |
-| Z00 | Thu hồi ba dấu hiệu nhận dạng, giao tự kiểm tra, tài liệu đọc và lối vào phụ lục; ghi chú mở bằng câu "Hai thảo luận vừa rồi khép phần mở rộng" nối H07→Z00; hướng dẫn mở phụ lục nằm trong ghi chú, không trên mặt trang | Nguồn 34, 45 | sửa sau tái kiểm định | H07 | Kết thúc tuyến ngang; ghi chú dẫn tới H00 dọc |
-| H00 | Đưa thông tin tổ chức chưa xác nhận vào nhánh dọc dưới Z00 để truy nguyên | Nguồn 31–32 | chuyển phụ lục dọc | Z00 ↓ | H01 |
-| H01 | Lưu mô tả chuẩn đầu ra của học phần trong nguồn, không dùng mã CLO | Nguồn 32 | sửa | H00 | H02 |
-| H02 | Lưu kế hoạch và tài liệu trong nguồn để đối chiếu, không coi là lịch hiện hành | Nguồn 33–34 | gộp | H01 | H03 |
-| H03 | Lưu đánh giá và tiên quyết trong nguồn với trạng thái chưa áp dụng | Nguồn 35, 37 | gộp | H02 | Hết phụ lục |
+### Mạch 3. Tín hiệu học và dữ liệu tương tác (11 phút)
 
-## Phạm vi rà lại sau đổi section
+| ID | Vị trí, bước | Lý do tồn tại | Nối trước → sau | Mục tiêu | Quyết định | Vòng biên tập | Âm tiết |
+|---|---|---|---|---|---|---|---|
+| CT | điểm vào mạch 3 | So phần thưởng với nhãn, thứ tự dữ liệu | B01 → C00 | 2 | thêm | ghi chú viết lại (PB 13) | — → 38 |
+| C00 | vấn đề + trực giác | Nhãn ở ô 1 so với phần thưởng | CT → C01 | 2 | sửa | dòng cuối: phần thưởng chỉ đánh giá hành động đã chọn (PB 5, MACH 3.10) | 29 → 51 |
+| C01 | trực giác + ví dụ | Đổi thứ tự mẫu (Ví dụ 01.2) | C00 → C03 | 2 | sửa | — | 59 → 56 |
+| C03 | hình thức | Học có giám sát, không giám sát | C01 → C04b | 2 | gộp C03, C04 | ghi chú bỏ câu lặp (PB 31) | 74 → 52 |
+| C04b | hình thức | Học tăng cường (Định nghĩa 01.5) | C03 → C04c | 2 | thêm | thêm thử và sai (trial-and-error), phản hồi trễ (RL) | — → 59 |
+| C04c | ứng dụng | Bốn khác biệt (Nhận xét 01.6) | C04b → C05 | 2 | thêm | "bước thứ tư" → $R_4$ (SV) | — → 55 |
+| C05 | kiểm tra | Bài tập 01.2 | C04c → C06 | 2 | sửa | (d) nêu việc tự chọn cách học (PB 23); chữa trong khối 30 phút | 49 → 58 |
+| C06 | lời giải | Lời giải trên mặt trang | C05 → DT | 2 | thêm | khối 30 phút | — → 57 |
 
-Việc gộp về 7 mạch ngoài làm đổi ranh giới tại ba điểm. Sau mỗi lần chỉnh sửa ảnh hưởng cấu trúc section, rà lại toàn bộ mạch và hai trang lân cận tại:
+### Mạch 4. Phần thưởng và lợi tức (16 phút)
 
-- P02/A00: ranh giới mạch mở đầu nội bộ (P → A), câu nối bản đồ sang tác tử học.
-- A04/B00: ranh giới từ giới hạn mô hình cố định sang trường hợp ứng dụng dẫn nhập, câu nối "hai miền đòi hỏi học từ tương tác".
-- H07/Z00: ranh giới mạch kết, câu nối thảo luận sang tài liệu đọc và tự kiểm tra, khâu thu hồi trọng tâm P02.
+| ID | Vị trí, bước | Lý do tồn tại | Nối trước → sau | Mục tiêu | Quyết định | Vòng biên tập | Âm tiết |
+|---|---|---|---|---|---|---|---|
+| DT | điểm vào mạch 4 | Cộng phần thưởng đến hết lượt | C06 → D00 | 3 | thêm | ghi chú viết lại | — → 36 |
+| D00 | vấn đề + trực giác + ví dụ | Tổng còn lại $1,1,1,1,0$; $1=0+1$ | DT → D01 | 3 | sửa | thêm dòng trực giác của hệ thức đệ quy (PB 8) | 9 → 48 |
+| D01 | hình thức | Định nghĩa 01.7 | D00 → D02 | 3 | sửa | — | 32 → 56 |
+| D02 | hình thức | Lợi tức (Định nghĩa 01.8) | D01 → D02b | 3 | sửa | — | 38 → 25 |
+| D02b | kết quả | Mệnh đề 01.9 | D02 → D02c | 3 | thêm | Ý nghĩa trước Chứng minh, Lưu ý vào ghi chú (PB 20); thêm TD (RL) | — → 44 |
+| D02c | ứng dụng | Ví dụ 01.4 với $L=4$ | D02b → D04 | 3 | thêm | đặt $L=4$, diễn giải so với hút trước (TOAN, RL, PB 4); lệch ghi chú tạm thời | — → 52 |
+| D04 | kiểm tra | Bài tập 01.3 | D02c → D05 | 3 | thêm | dời lên sau D02c (MACH 3.9); khối 30 phút | — → 46 |
+| D05 | lời giải | Lời giải trên mặt trang | D04 → D03 | 3 | thêm | khối 30 phút | — → 35 |
+| D03 | cụm phụ | Giả thuyết phần thưởng (Nhận xét 01.10) | D05 → D03b | 3 | tách | "không phải định lý" (PB 29) | 76 → 59 |
+| D03b | ví dụ + kiểm tra | Bình hoa (Ví dụ 01.5) | D03 → ET | 3 | thêm | có thể bỏ khi thiếu giờ | — → 59 |
 
-## Quy ước
+### Mạch 5. Chính sách, hàm giá trị, mô hình và thăm dò (27 phút)
 
-- Mọi công thức Markdown dùng $...$; không dùng ký hiệu khác.
-- Thuật ngữ theo bảng thuật ngữ trong outline: tác tử, môi trường, $R_{t+1}$, $G_t$, $h_t$, $\pi(a\mid h_t)$, $V^\pi(h_t)$, $\mathcal A(S_t)$, mô hình môi trường.
-- Không tạo `quill.json`; mạch trạng thái/quan sát → dữ liệu thời gian → phần thưởng → chính sách/giá trị → Tic-tac-toe giữ liên tục theo Quill ở chế độ rà mạch.
-- Không có code demo vì bản nguồn không có nội dung mã.
+| ID | Vị trí, bước | Lý do tồn tại | Nối trước → sau | Mục tiêu | Quyết định | Vòng biên tập | Âm tiết |
+|---|---|---|---|---|---|---|---|
+| ET | điểm vào mạch 5 | Tách chọn khỏi đánh giá, ước lượng khi thiếu dữ liệu | D03b → E00 | 4, 5 | thêm | dòng dẫn bao cả cụm thăm dò (MACH 3.2) | — → 35 |
+| E00 | vấn đề + ví dụ | Thế cờ $s$, hai quy tắc viết bằng lời (Ví dụ 01.6) | ET → E01 | 4 | sửa | tên $\pi_w,\pi_u$ chuyển sang E01 (PB 18); "phiên X" (RL, PB, SV) | 22 → 58 |
+| E01 | trực giác + hình thức | Chính sách (Định nghĩa 01.11); chính sách xác định | E00 → E00b | 4 | tách | đặt tên $\pi_w,\pi_u,\pi_1$; thuật ngữ "chính sách xác định (deterministic policy)" (brief mục 5) | 32 → 59 |
+| E00b | ví dụ | Giá trị thế cờ hai ô trống (Ví dụ 01.7) | E01 → E01b | 4 | thêm | "kỳ vọng của lợi tức" (SV) | — → 59 |
+| E01b | hình thức | Hàm giá trị (Định nghĩa 01.12) | E00b → E03 | 4 | tách | ghi chú: cầu nối thế cờ–lịch sử (PB 6), dự đoán (RL) | — → 59 |
+| E03 | kiểm tra | Bài tập 01.5 | E01b → E04 | 4 | thêm | (c) dùng $\pi_1$ đã đặt tên ở E01 | — → 53 |
+| E04 | lời giải | Lời giải trên mặt trang | E03 → E02a | 4 | thêm | kết bằng số (PB 30) | — → 42 |
+| E02a | vấn đề + ví dụ cụm mô hình | M1, M2 (Ví dụ 01.8) | E04 → E02 | 4 | thêm | M2 dự báo $\widehat R_3=1$ (SV, TOAN); ghi chú nối từ E04 (MACH 3.11) | — → 59 |
+| E02 | hình thức | Định nghĩa 01.14 | E02a → F00 | 4 | sửa | "trạng thái hoặc lịch sử"; phi mô hình học chính sách hoặc hàm giá trị (RL, PB 19) | 62 → 58 |
+| F00 | vấn đề | Hai chế độ hút, bài toán một bước | E02 → F00b | 5 | sửa | nhu cầu nối với phi mô hình; "Bài toán một bước, lặp lại" (MACH 3.2, PB 7, SV) | 17 → 56 |
+| F00b | trực giác + ví dụ | Ví dụ 01.9 | F00 → F01 | 5 | thêm | khoảng viết phân số đúng và xấp xỉ (TOAN) | — → 52 |
+| F01 | hình thức | Định nghĩa 01.16 | F00b → F02 | 5 | gộp F01, F02 cũ | thêm "(greedy)" (RL) | 64 → 46 |
+| F02 | ứng dụng | Thăm dò và khai thác trong Tic-tac-toe (nguồn tr. 27) | F01 → F03 | 5 | sửa | đổi thành ứng dụng trên Tic-tac-toe, nối sang G03e (MACH 3.3, quyết định điều phối viên); có thể bỏ khi thiếu giờ | — → 48 |
+| F03 | kiểm tra | Bài tập 01.6 | F02 → F04 | 5 | sửa | — | 46 → 54 |
+| F04 | lời giải | Lời giải trên mặt trang | F03 → GT | 5 | thêm | khoảng xấp xỉ (TOAN) | — → 40 |
 
-## Ánh xạ hai chiều note ↔ deck (10 `note-topic-id`)
+### Mạch 6. Tic-tac-toe như một bài toán Học tăng cường (26 phút)
 
-Bảng ánh xạ hai chiều giữa 10 `note-topic-id` trong `materials/lec-01/lecture-note.md` và các `data-slide-id` của deck 42 trang; mỗi dòng đọc được theo cả hai chiều:
+| ID | Vị trí, bước | Lý do tồn tại | Nối trước → sau | Mục tiêu | Quyết định | Vòng biên tập | Âm tiết |
+|---|---|---|---|---|---|---|---|
+| GT | điểm vào mạch 6; bước vấn đề của cụm phân tích một bước | Tách kỳ vọng lợi tức thành phần thưởng và giá trị kế tiếp | F04 → G00 | 6 | thêm | dòng dẫn mới (MACH 3.4, PB 16); từ khóa có "Mô hình hóa", "Học từ ván chơi" (vòng 2, R8) | — → 40 |
+| G00 | vấn đề + ví dụ | "Ví dụ: thế cờ bốn ô trống": thế cờ $s$, phiên đi, $\mathcal A(s)$ | GT → G01 | 6 | sửa | "Nhắc lại:" thế cờ $s$ (MACH 3.12); "phiên X", "số nước X đã đi"; tiêu đề đổi (vòng 2, R1) | 45 → 52 |
+| G01 | trực giác | Cây trò chơi, 10 nhánh, nhìn một bước | G00 → G02 | 6 | sửa | thêm hai dòng (PB 11, MACH 3.13) | 28 → 42 |
+| G02 | hình thức | Định nghĩa 01.18 | G01 → G02b | 6 | sửa | định nghĩa $\tilde s$ (PB 10, SV) | 41 → 58 |
+| G02b | hình thức | Luật một bước | G02 → G04 | 6 | thêm | Lưu ý rút (PB 25) | — → 56 |
+| G02c | cầu nối vào cụm phân tích một bước | Ba điều kiện rút gọn (Nhận xét 01.19) | G05 → G03 | 6 | thêm | dời sau G04–G05 (vòng 2, R1) | — → 55 |
+| G04 | kiểm tra | Bài tập 01.7 | G02b → G05 | 6 | sửa | dời lên sau G02b (MACH 3.5, vòng 2 R1); khối 30 phút | 52 → 55 |
+| G05 | lời giải | Lời giải trên mặt trang | G04 → G02c | 6 | thêm | khối 30 phút | — → 53 |
+| G03 | vấn đề + ví dụ | Bảng kỳ vọng bốn nước (Ví dụ 01.10) | G02c → G03c | 6 | sửa | "Nhu cầu:" (PB 1) nêu lại thế cờ $s$ ngay trong dòng (vòng 2, R1; gộp với "Nhắc lại" để giữ 6 dòng); phân số lớn (SV) | 13 → 34 |
+| G03c | ví dụ, tiếp | $v_{\pi_u}(s)=\frac12$ | G03 → G03b | 6 | thêm | không bỏ được (vòng 2, R2) | — → 49 |
+| G03b | kết quả | Mệnh đề 01.20 | G03c → G03d | 6 | thêm | ghi chú: kỳ vọng khi $\pi(a\mid h)=0$ (TOAN) | — → 38 |
+| G03d | hình thức + ứng dụng | Định nghĩa 01.21 | G03b → G03e | 6 | thêm | "Giả thiết:", "Dạng khác:" trên lịch sử (TOAN, PB 9, SV); ghi chú $\gamma\lt1$, điều khiển (RL) | — → 56 |
+| G03e | trực giác cụm phụ | Học giá trị thế cờ từ các ván đã chơi; Hình 1.1 vẽ lại | G03d → ZT | 6 | thêm | phát hiện nghiêm trọng RL, quyết định điều phối viên | — → 50 |
 
-| `note-topic-id` | Chủ đề | `data-slide-id` (deck) | Ghi chú đồng bộ |
+### Mạch 7. Tổng kết và chuyển tiếp (14 phút)
+
+| ID | Vị trí, bước | Lý do tồn tại | Nối trước → sau | Mục tiêu | Quyết định | Vòng biên tập | Âm tiết |
+|---|---|---|---|---|---|---|---|
+| ZT | điểm vào mạch 7 | Giữ đủ giả thiết | G03e → Z01 | tất cả | thêm | ghi chú viết lại | — → 37 |
+| Z01 | tổng kết (1/2) | Tương tác, tín hiệu học, lợi tức, giá trị | ZT → Z01b | 1–4 | thêm | thêm hàng ba dạng tín hiệu học; cột "Công thức hoặc thuật toán"; công thức không ngắt (MACH 3.8, SV, TOAN, RL) | — → 56 |
+| Z01b | tổng kết (2/2) | Thăm dò, phân tích một bước, nước khai thác | Z01 → Z02 | 5, 6 | thêm | giả thiết dạng lịch sử và dạng thế cờ tách rõ; dòng viết tắt (MACH 3.7, TOAN, SV) | — → 59 |
+| Z02 | bài tổng hợp | Robot từ ô 2, $L=3$, $\pi_u$ | Z01b → Z02b | 1, 3, 4, 6 | thêm | (d) ghi "theo $v_{\pi_u}$, dạng trên lịch sử" | — → 58 |
+| Z02b | lời giải | $\frac1{27}$; $0,\frac19,0$ | Z02 → Z03 | 1, 3, 4, 6 | thêm | — | — → 54 |
+| Z03 | trả lời vấn đề trung tâm | Năm dòng song song với P03, có số liệu; "Nguồn:" | Z02b → H04 | tất cả | thêm | viết lại (MACH 3.8, brief mục 11); giới hạn thứ tư trong ghi chú (MACH 3.6) | — → 59 |
+| H04 | câu hỏi tự kiểm tra | Bốn câu nối các mạch | Z03 → Z00 | 1, 3, 4, 6 | sửa | câu 1, 2, 3 đổi (SV, MACH 3.5, 3.14, PB 27) | 106 → 60 |
+| Z00 | bài tập về nhà | Bảng `Mạch \| Bài tập` chỉ số thật; "Tệp bài tập: chưa có" | H04 → — | tất cả | sửa | theo brief mục 4 | 82 → 57 |
+
+## Ngoại lệ mật độ
+
+| Trang | Đo được | Trần áp dụng | Lý do |
 |---|---|---|---|
-| `lec-01-topic-01` | Tác tử học từ tương tác | A00–A04 | Trạng thái khác quan sát (A01); i.i.d. không thỏa (C01 cùng cụm) |
-| `lec-01-topic-02` | Khung RL và ba dạng tín hiệu | C00–C05 | Nhận dạng qua tương tác + phản hồi trễ (C05) |
-| `lec-01-topic-03` | Phần thưởng và kết quả dài hạn | D00–D03 | $R_{t+1}$, $G_t=\sum_{k=t+1}^{T}R_k$, ví dụ $G_0=1$ |
-| `lec-01-topic-04` | Chính sách, hàm giá trị, mô hình tùy chọn | E00–E02 | $\pi(a\mid h_t)$, $V^\pi(h_t)$; có/phi mô hình ở E02 |
-| `lec-01-topic-05` | Thăm dò và khai thác | F00–F03 | Bảng A/B giả định; khai thác ↔ chọn theo giá trị ước lượng |
-| `lec-01-topic-06` | Mô hình hóa Tic-tac-toe | G00–G04 | $\mathcal A(S_t)$, thưởng $+1/0/-1$, kiểm tra ô 5 |
-| `lec-01-topic-07` | Cầu nối $V^\pi(h_t)\to V^\pi(S_t)$ | E01, G03 | $h_t\leftrightarrow(S_t,\text{lượt})$ trên mặt G03 |
-| `lec-01-topic-08` | Giới hạn mô hình điều khiển cố định | A03–A04 | Mô hình cố định vs học từ tương tác |
-| `lec-01-topic-09` | AlphaGo và thao tác robot | B00–B02 | Dẫn nhập ứng dụng, không suy thuật toán |
-| `lec-01-topic-10` | Giả thuyết phần thưởng | D03 | Câu giả định mô hình hóa, kỳ vọng theo $\pi$ và môi trường |
+| P01 | 77 âm tiết, 6 dòng | 80 (trang mục tiêu) | Sáu mục tiêu theo ghi chú bài giảng |
+| P02 | 44 âm tiết, 7 dòng | 7 dòng khi bài có 7 mạch (quyết định chung §5) | Mỗi mạch một dòng |
 
-Điều kiện đồng bộ: mỗi `note-topic-id` xuất hiện ở ít nhất một `data-slide-id`; mỗi cụm trọng tâm của deck phải truy về ít nhất một `note-topic-id`. Chu trình mỗi khái niệm trọng tâm: vấn đề → trực giác → ví dụ → hình thức/thuật toán → ứng dụng → kiểm tra (xem bảng cụm trong storyboard).
+Mọi trang còn lại ≤ 60 âm tiết, ≤ 6 dòng, ≤ 20 âm tiết mỗi dòng, ≤ 3 công thức hiển thị. 57/70 trang trên đích 40 (trung bình 51,0); không trang nào dùng CSS thu chữ.
+
+## Quyết định thiết kế ghi lại (chuyển từ ghi chú diễn giả)
+
+- Giả thuyết phần thưởng không có hàng trong bảng tổng kết vì là giả thuyết mô hình hóa, không phải kết quả.
+- Thế cờ $s$ là số liệu sư phạm tự xây dựng (thế cờ của nguồn tr. 28–29 đã kết thúc).
+- Hình 1.1 của Sutton và Barto (nguồn tr. 30) vẽ lại theo chiều ngang trong `tictactoe-learning.svg` để chữ đủ lớn trên khung 16:9; giữ đúng các nút a–g, e*, đường chấm cho nước không đi, hai mũi tên cập nhật c→a và g→e, không cập nhật sau nước thăm dò.
+- AT dòng dẫn theo MACH 3.1a; nhu cầu "mô hình viết sẵn sai" giữ ở A03–A04 theo thứ tự nguồn.
