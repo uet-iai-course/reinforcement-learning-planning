@@ -17,6 +17,9 @@
 | semi-gradient | bán gradient (semi-gradient); Monte Carlo với xấp xỉ hàm là "Monte Carlo gradient", không phải bán gradient | bán gradient MC |
 | on-policy, off-policy | theo chính sách (on-policy), khác chính sách (off-policy) | — |
 | agent | tác tử (agent) | tác nhân |
+| almost surely | hầu chắc chắn (almost surely) | gần chắc chắn |
+| Bellman operator | $T_\pi$, $T_*$ (chỉ số dưới, theo Bài 04–05) | $T^\pi$ |
+| first-visit, every-visit | lần ghé đầu tiên (first-visit), mọi lần ghé (every-visit); theo Định nghĩa 05.6 | lần ghé đầu |
 
 Thuật ngữ tiếng Anh đặt trong ngoặc ở lần xuất hiện đầu của mỗi tài liệu. "Lời giải", không "Đáp án". Thuật ngữ mới của bài ghi vào bảng Việt–Anh trong `outline.md`.
 
@@ -28,6 +31,7 @@ Thuật ngữ tiếng Anh đặt trong ngoặc ở lần xuất hiện đầu c�
 - Chi phí mỗi bước trong ví dụ thiết kế phần thưởng: $c$ (không dùng $\alpha$, dành cho bước học). Ngưỡng dừng của các phép lặp: $\theta$ (Sutton và Barto); $\varepsilon$ dành cho chính sách $\varepsilon$-tham lam.
 - Phản ví dụ hàm lợi ích trong Bài 02 dùng $W$ thay $V$.
 - Dấu thập phân: dấu phẩy trong deck và ghi chú, viết `0{,}5` trong KaTeX và "0,5" trong chữ; các số trong notebook (mã và kết quả in ra) giữ dấu chấm, ô Markdown của notebook không sửa trong đợt này trừ tham chiếu mục.
+- Lịch sử $H_t$: Bài 01 định nghĩa trên quan sát, $H_t=(O_0,A_0,R_1,\dots,O_t)$ (bài chưa giả thiết quan sát đầy đủ, theo Sutton và Barto §17.3); từ Bài 02 trở đi, trong khung quan sát đầy đủ, $H_t=(S_0,A_0,R_1,\dots,S_t)$ và ghi chú Bài 02 nêu một câu rằng đây là trường hợp $O_t=S_t$ của định nghĩa ở Bài 01.
 - Chỉ số thời gian: $R_{t+1}$ là phần thưởng của chuyển từ $t$ sang $t+1$; $G_T=0$; giá trị trạng thái kết thúc bằng $0$.
 
 ## 3. Nguồn và trích dẫn
