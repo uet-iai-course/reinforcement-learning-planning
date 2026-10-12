@@ -1226,3 +1226,196 @@ Reviewer chỉ đọc bằng chứng trong prompt với no-tools: toàn ghi chú
 - Đã xem trực tiếp các SVG dùng lại và bố cục ghi chú. Không thêm hình, ngoại lệ raster hay phụ thuộc mạng. Phạm vi là tài liệu trong material-viewer; không sửa hoặc tuyên bố rà deck bằng Codex Slides.
 - SHA-256 của bản ghi chú đã kiểm: 0e62f470b3adba08a2c35e667b7d6458ab25d375570951b80087048e1031e9e6.
 - Sau hợp nhất, không còn lỗi chặn bàn giao hoặc nghiêm trọng chưa xử lý. Các báo cáo sai đã có quyết định kèm bằng chứng và kết quả rà lại.
+
+## Đợt sửa 2026-10-12 — Giai đoạn I: ghi chú bài giảng
+
+### Tác tử và phạm vi
+
+- Vai: tác tử soạn ghi chú bài giảng (viết tệp), theo `brief_note_writer.md` của điều phối viên. Loại tác tử ghi theo brief: `general-purpose`; mô hình Claude Opus 5.5 (`claude-opus-5-5`), mức `high`. Không commit, không push.
+- Tệp đã ghi: `2627-1/materials/lec-03/lecture-note.md` (viết lại toàn bộ); ba SVG mới `2627-1/img/lec-03/chapter-structure.svg`, `backup-diagrams.svg`, `gridworld-5x5.svg` (mỗi tệp có `<title>`, `<desc>`, `role="img"`; tín hiệu không dựa vào màu: vòng tròn rỗng/chấm đặc, viền đứt, nhãn chữ). Không sửa deck, outline, storyboard, index, CSS, viewer, notebook, SVG cũ.
+- Đầu vào đã đọc: `quyet-dinh-chuan-2026-10-12.md`; `revision-plan-2026-10-12.md` (mục A, B, C, D); `AGENTS.md` các mục brief chỉ định; mẫu `materials/_templates/lecture-note.md`; ghi chú mẫu math-4-AI Bài 07 (chỉ cách trình bày); ghi chú cũ và deck hiện tại của Bài 03; ghi chú cũ Bài 02 (để phát biểu lại tiên quyết); `hw02.pdf`; ô Markdown và output đã nhúng của notebook CartPole Bài 04; `no-ai-slop` (`SKILL.md`, `eval.md`); `quill/references/workflows.md` (Outline, Threads, Concept, Revise); Sutton và Barto (2018) chương 3 và §4.1 trên bản PDF (trang in = trang PDF − 22); giáo trình *Học máy thống kê* chương 06 (`sec_mdp_introduction.tex`, `sec_dynamic_progamming.tex`); Bài giảng gốc PPTX trang 26–60.
+
+### Giáo trình đã tham khảo theo mục
+
+Chỉ tham khảo cách dẫn dắt, ví dụ và diễn giải; không dịch, không chép đoạn văn.
+
+| Mục ghi chú | Giáo trình, mục và trang | Điều lấy sang |
+|---|---|---|
+| Mở chương, Mục 1 | Sutton và Barto (2018) §3.1, tr. 47–53: (3.1)–(3.6), tính Markov là hạn chế đặt lên trạng thái (tr. 49), ví dụ 3.3 robot thu gom lon (tr. 52–53); SML `sec_mdp_introduction.tex` (tính chất Markov, bộ $\langle S,A,T,R,\gamma\rangle$); Bài giảng gốc tr. 29, 49 | Thứ tự Markov → $p$ → MDP; quy ước $R_{t+1}$; lạm dụng ký hiệu $p$ ba đối số; câu đối chiếu SML ở Bảng ký hiệu và sau Định nghĩa 03.7 |
+| Mục 2 | Sutton và Barto (2018) §3.3–3.4, tr. 54–58: (3.7)–(3.11), mục tiêu cận thị khi $\gamma=0$ (tr. 55), trạng thái hấp thụ; SML "Giá trị của quỹ đạo" $U(\tau)$; Bài giảng gốc tr. 36–38 | Mệnh đề 03.10 (quy ước đệm), Nhận xét 03.12, đối chiếu $U(\tau)=G_0$ |
+| Mục 3 | Sutton và Barto (2018) §3.5, tr. 58: (3.12)–(3.13); SML chính sách đơn định và ngẫu nhiên; Bài giảng gốc tr. 39, 52–53 | Định nghĩa 03.13, 03.15, 03.16; thí nghiệm ấn định hành động đầu |
+| Mục 4 | Sutton và Barto (2018) tr. 59–62: (3.14), sơ đồ dự phòng của $v_\pi$ và $q_\pi$, bài tập 3.12, 3.13, 3.17–3.19; SML `sec_dynamic_progamming.tex` ($V^\pi$ đệ quy, $Q^\pi$); Bài giảng gốc tr. 44–46, 56–57 | Định lý 03.21, Mệnh đề 03.22–03.23, Hệ quả 03.24; hình `backup-diagrams.svg` vẽ lại |
+| Mục 5 | Sutton và Barto (2018) tr. 60 (giá trị là nghiệm duy nhất của phương trình Bellman), §4.1 tr. 74 (tồn tại và duy nhất khi $\gamma<1$ hoặc bảo đảm kết thúc); Puterman (1994) §6.1 (dẫn mục, không ghi trang); Bài giảng gốc tr. 30, 34, 47–48; Bài tập tuần 2 bài 3–4 | Định nghĩa 03.26, Định lý 03.28 (Neumann), Nhận xét 03.30 |
+| Tình huống | Sutton và Barto (2018) ví dụ 3.5 và hình 3.2 tr. 60, bài tập 3.14; ví dụ 3.4 tr. 56; notebook CartPole Bài 04 (phần 5, 6.2, 8.1, 8.3) | Tình huống 03.1 (vẽ lại `gridworld-5x5.svg`), Tình huống 03.2, Bài tập 03.15 |
+
+### Số hiệu cuối cùng
+
+- Bộ đếm chung: Định nghĩa 03.1 (quỹ đạo, lịch sử), 03.2 (tính Markov), Nhận xét 03.3, Định nghĩa 03.4 (hàm động lực), Nhận xét 03.5, Mệnh đề 03.6, Định nghĩa 03.7 (MDP hữu hạn), 03.8 (lượt, hai loại nhiệm vụ), 03.9 (lợi tức), Mệnh đề 03.10, 03.11 (cận), Nhận xét 03.12, Định nghĩa 03.13 (chính sách Markov dừng), Mệnh đề 03.14 (xác suất đoạn quỹ đạo), Định nghĩa 03.15 ($v_\pi$), 03.16 ($q_\pi$), Nhận xét 03.17, Bổ đề 03.18, 03.19, 03.20, Định lý 03.21 (Bellman cho $v_\pi$), Mệnh đề 03.22, 03.23, Hệ quả 03.24 (Bellman cho $q_\pi$), Nhận xét 03.25, Định nghĩa 03.26 (chuỗi Markov, MRP cảm sinh), Mệnh đề 03.27 (dạng ma trận), Định lý 03.28 (nghiệm duy nhất, Neumann), Thuật toán 03.29, Nhận xét 03.30, 03.31.
+- Ví dụ 03.1–03.18: robot; một bước; hai lịch sử; phản ví dụ hai phòng; bảng phản hồi; L–Tìm; bộ MDP; hai dãy thưởng; cận 6; chính sách chia đều; kỳ vọng hai bước từ H ($21/8$); ba thí nghiệm từ L ($1/8$, $5/4$, $1$); phương trình tại L; hai nhánh L–Tìm; hệ và nghiệm $(13/4,\,7/4)$; kiểm bằng $q$ ($15/8$, $13/8$); gộp nhánh, $P^\pi$, $r^\pi$; nghịch đảo và chuỗi Neumann.
+- Bài tập 03.1–03.9 trong các mục; 03.10–03.15 củng cố (nhận biết 03.10, 03.11; tính toán 03.12, 03.13; vận dụng 03.14, 03.15). Số 03.16 trở đi để dành cho `exercises.md`. Tình huống 03.1 (lưới 5×5), 03.2 (CartPole rời rạc hóa).
+- `note-topic-id`: `lec-03-part-01` (§1.1–1.2), `-02` (§1.3–1.5), `-03` (§2), `-04` (§3), `-05` (§4), `-06` (§5), `-07` (Tình huống; thay chủ đề cũ "Tổng hợp và vận dụng"), `-08` (Tóm tắt, bài tập củng cố; mới), `-09` (cầu nối xác suất, đặt trước Kiến thức tiên quyết; mới), `-10` (đọc thêm; mới).
+
+### Số liệu đã tính lại (phân số chính xác bằng Python `fractions`)
+
+$p$ chuẩn hóa; $r(\mathrm L,\mathrm{tim})=-1/2$; $(0,2,2)\to3/2$, $(1,1,1)\to7/4$; kỳ vọng hai bước từ H $21/8$, từ L $9/8$; ba thí nghiệm từ L $1/8$, $5/4$, $1$; $v_\pi=(13/4,\,7/4)$ bằng khử thế, nghịch đảo $(I-\gamma P^\pi)^{-1}=\bigl(\begin{smallmatrix}3/2&1/2\\1/2&3/2\end{smallmatrix}\bigr)$ và chuỗi Neumann ($(P^\pi)^2=P^\pi$); $q_\pi(\mathrm L,\cdot)=(3/4,\,15/8,\,13/8)$; $q_\pi(\mathrm H,\mathrm{tim})=13/4$, $q_\pi(\mathrm H,\mathrm{cho})=21/8$; luôn Chờ tại L $v=(10/3,\,2)$; robot $\beta=3/4$: $r(\mathrm L,\mathrm{tim})=3/4$, $q_\pi(\mathrm L,\mathrm{tim})=29/16$; lượt $T=3$, $R=(1,-1,2)$, $\gamma=0{,}9$: $G=(1{,}72;\,0{,}8;\,2;\,0)$; cận $v_\pi(\mathrm H)\in[9/8,\,33/8]$. Lưới 5×5: giải hệ 25 ẩn bằng khử Gauss trên số hữu tỉ, khớp hình 3.2 của Sutton và Barto sau làm tròn; $v(\mathrm A)=8{,}789=10+0{,}9\cdot(-1{,}345)$, $v(\mathrm B)=5{,}322$, góc trên trái $3{,}309$, ô giữa $0{,}673$, ô cạnh trái hàng 3 $0{,}051$ đều thỏa (4.5) với giá trị ba chữ số. CartPole: $(1-0{,}99^9)/0{,}01\approx8{,}65$. Số liệu notebook chỉ lấy từ output đã nhúng (324 ô, $M=200$, entropy $1{,}815$ và $1{,}052$ nat, phần dư $2{,}1\cdot10^{-14}$, $v_{\pi_0}\in[6{,}335;\,31{,}080]$, $84{,}473$ so với $95{,}377\pm0{,}370$, chênh $10{,}904$, cắt ngắn $\le0{,}657$, năm hạt giống mô hình $219{,}2$–$500{,}0$).
+
+### Sai khác so với kế hoạch B và lý do
+
+- Thêm Ví dụ 03.18 (nghịch đảo và chuỗi Neumann cho robot) để có bước tính tay của phần (c) Định lý 03.28 trước Thuật toán 03.29; B2 dừng ở Ví dụ 03.17.
+- Mệnh đề 03.14 có chứng minh đầy đủ (B2 không ghi `proof`). Bổ đề 03.20 chứng minh bằng quy nạp theo số bước rồi qua giới hạn với cận phần đuôi; Bước 1 lặp lại lập luận của Mệnh đề 03.14 để chỉ rõ chỗ dùng giả thiết, theo yêu cầu "chứng minh quy nạp" của điều phối viên. Bổ đề 03.20 thêm phần (c) trả lại tham chiếu tiến của Định nghĩa 03.15 (kỳ vọng không phụ thuộc $t$).
+- Định nghĩa 03.16 nêu rõ $q_\pi(s,a)$ khi $\pi(a\mid s)=0$ bằng quá trình ấn định hành động; Mệnh đề 03.22 chứng minh trên quá trình đó.
+- Định lý 03.21 và 03.28 phát biểu cho phần thưởng bị chặn và $\gamma<1$; nhiệm vụ có kết thúc với $\gamma=1$ chỉ nêu ở Phạm vi, dẫn Sutton và Barto (2018, §4.1, tr. 74), không chứng minh.
+- Định lý 03.28 chứng minh khả nghịch bằng hạt nhân tầm thường (chuẩn cực đại) và chuỗi Neumann bằng khai triển lặp quy nạp; không dùng chuẩn ma trận cảm sinh.
+- Mục 7 cũ giải thể: ba giá trị $q_\pi(\mathrm L,\cdot)$ thành Bài tập 03.9 và đoạn "Trở lại bài toán mở đầu" trong Tóm tắt chương (dùng `robot-p07-three-actions-values.svg`); bảng hw02 bỏ khỏi thân bài, hw02 dẫn ở Hướng dẫn đọc thêm.
+- Bài tập 03.15 thay "mô hình hóa theo hw02 bài 10" của B4 bằng kiểm phương trình Bellman trên lưới 5×5 (theo Sutton và Barto bài tập 3.14), vì bài mô hình hóa mở đã có ở `exercises.md` (kế hoạch C, 03.18) và cần dữ kiện kiểm được trong ghi chú. Bài tập 03.10 dùng cờ ca-rô $3\times3$ để tránh khẳng định về luật hòa cờ vua.
+- Ví dụ 03.4 (phản ví dụ) dùng robot luân phiên hai phòng, số liệu sư phạm tự xây dựng; Bài tập 03.1(b) dùng robot đặt cố định ở một trong hai vị trí để lịch sử tiết lộ vị trí.
+- Thuật ngữ "Bài giảng gốc (2025–2026), trang N" ứng với số trang PPTX `lecture2-3-MDPswithKeyConcepts.pptx`.
+- Độ dài: khoảng 24 000 từ (âm tiết) văn xuôi không kể công thức và `alt` (28 750 theo `wc -w`), vượt đích 13 000–15 000 của B4 và mức "thường" 8 000–20 000 của `AGENTS.md`. Lý do: 31 kết quả đánh số với chứng minh theo bước, 18 ví dụ có kiểm tra lại, 15 bài tập có lời giải đầy đủ, hai tình huống. Các chỗ có thể rút nếu rà soát yêu cầu: Nhận xét 03.5, đoạn "Trong thực hành" sau Mệnh đề 03.6 (trùng một phần với đoạn sau Định nghĩa 03.4), Bước 1 của Bổ đề 03.20 (trùng Mệnh đề 03.14), Bài tập 03.7.
+- SVG cũ không dùng trong ghi chú (để giai đoạn deck quyết định): `robot-p02-uncertain-feedback.svg`, `robot-p03-reward-timeline.svg`, `robot-p04-continuing-branches.svg`, `robot-p04-policy-choices.svg`, `robot-p05-one-step-lookahead.svg`, `robot-p07-branch-wait.svg`. `alt` trong ghi chú được viết lại theo nội dung hình thật; `aria-label` dính chữ trong SVG cũ (ví dụ "thưởng2") chưa sửa, thuộc giai đoạn deck.
+
+### Giới hạn còn lại
+
+- Kết quả Bài 02 dẫn bằng "ghi chú Bài 02, Mục k" theo cấu trúc mới trong kế hoạch Bài 02 (Mục 1 vòng tương tác, Mục 2 tính Markov, Mục 3 chính sách, Mục 4 lợi tức, giá trị, mô hình), kèm phát biểu lại; Bài 04–08 dẫn bằng tên, chưa có số hiệu. Đợt đồng bộ sau thay bằng số hiệu `0N.k`.
+- Puterman (1994) §6.1 và Bertsekas (2019) "chương về bài toán vô hạn chiết khấu" dẫn theo mục, chưa đối chiếu trên bản sách.
+- Số liệu CartPole là một lần chạy đã nhúng trong notebook; con số chênh $10{,}904$ phụ thuộc cách chia ô và hạt giống.
+- Chỗ đề nghị tác tử rà toán soi kỹ: điều kiện xác suất dương và quá trình xuất phát tại $s$ trong Bổ đề 03.20; định nghĩa $q_\pi$ khi $\pi(a\mid s)=0$ và Bước 1–2 của chứng minh Mệnh đề 03.22; Bước 1 của Định lý 03.28 với $P^\pi$ dưới ngẫu nhiên (có trạng thái kết thúc); câu đọc $(P^\pi)^kr^\pi(s)=\mathbb E_\pi[R_{k+1}\mid S_0=s]$ sau Định lý 03.28; khẳng định ở Bỏ giả thiết của Định lý 03.28 rằng với $\gamma=1$ hệ của robot vô nghiệm (cộng hai phương trình cho $0=5/2$); lập luận vật lý của Bài tập 03.11.
+
+### Tự kiểm `no-ai-slop` (chế độ Edit) và `quill`
+
+- Phạm vi: toàn bộ `lecture-note.md`. Đối chiếu `eval.md`: giữ ý nguồn, không thêm số liệu không căn cứ (mọi bộ số tự xây dựng có nhãn); không từ cấm; không câu hỏi tu từ; không câu cảm thán; gạch dài chỉ ở tiêu đề `#` và một ô bảng; không chữ đậm trang trí ngoài nhãn giai đoạn và nhãn giả thiết theo `AGENTS.md`.
+- Đã sửa trong lượt tự kiểm: ba câu "Mục này …" làm chủ ngữ tài liệu và một đoạn "Mục 1 mô tả …, Mục 2 gộp …" đổi sang giọng "chúng ta"; một câu hỏi ở 1.2 đổi thành câu trần thuật; bỏ khẳng định không có căn cứ "giải trực tiếp nhanh hơn mọi phương pháp lặp" và "không khả thi", thay bằng số phép tính; bỏ câu tham chiếu tới tệp bài tập chưa có; sửa phép kiểm xác suất trong lời giải Bài tập 03.1.
+- Còn chấp nhận: năm đoạn kết mục cùng mở "Như vậy" và có "Tuy nhiên", vì `AGENTS.md` quy định cấu trúc ba ý của đoạn kết; các cặp "X, không phải Y" giữ lại khi chúng là phân biệt toán học cần thiết (kỳ vọng với giá trị thực nhận, cận với giá trị, xác suất chính sách với xác suất phản hồi).
+- `quill` (Outline, Threads, Concept, Revise dùng làm bảng kiểm, không tạo `quill.json`): thứ tự khái niệm trạng thái Markov → $p$ → MDP → lợi tức → chính sách → $v_\pi$, $q_\pi$ → Bellman → MRP → dạng ma trận → thuật toán; mỗi ký hiệu xuất hiện sau định nghĩa hoặc dòng nhắc lại. Các "mạch mở" đều đóng: tính không phụ thuộc $t$ của $v_\pi$ (mở ở Định nghĩa 03.15, đóng ở Bổ đề 03.20(c)); $q_\pi$ khi $\pi(a\mid s)=0$ (mở ở Định nghĩa 03.16, đóng ở Mệnh đề 03.22); tính duy nhất (mở ở Định lý 03.21, đóng ở Định lý 03.28); câu hỏi tối ưu (mở ở Ví dụ 03.16, chuyển rõ sang Bài 04 ở Nhận xét 03.31, Bài tập 03.8–03.9, Tóm tắt).
+
+### Kết quả hai script
+
+- `note_check.py`: 31 môi trường bộ đếm chung (03.1–03.31), 18 ví dụ, 15 bài tập, không khoảng trống, không trùng; 15 `hint`, 15 `solution`, 13 `proof`, 2 `application`; không khối lạ, không khối lồng, không khối thiếu số hiệu; không mẫu câu cấm; 0 dấu `\(`, `\[`.
+- `check_note.py 03 lecture-03-qua-trinh-quyet-dinh-markov.html` (server cổng 8766): 1600×900 và 390×844 đều 0 lỗi KaTeX, 109 khối, 0 lỗi console, 0 yêu cầu ngoài, không tràn ngang trang (lần chạy đầu có một công thức nội dòng dài ở Bổ đề 03.20(a) gây tràn ở 390 px; đã tách). Kiểm thêm bằng script riêng: không công thức khối nào tràn khung ở 1600 px sau khi tách mười công thức dài thành `aligned` nhiều dòng; đã xem ảnh chụp Định lý 03.21, chứng minh Bổ đề 03.20, Mệnh đề 03.27, Định lý 03.28 (390 px), Bảng ký hiệu (390 px), Tình huống (1600 px) và ba SVG mới.
+
+## Đợt sửa 2026-10-12 — Giai đoạn I: chỉnh sửa theo hai báo cáo rà soát
+
+Tác tử soạn ghi chú (cùng tác tử của mục trên; Claude Opus 5.5, mức `high`) sửa theo `review-03-A.md` (vai toán: 1 nghiêm trọng, 6 trung bình, 10 nhẹ) và `review-03-B.md` (vai mạch viết: 2 nghiêm trọng, 11 trung bình, 17 nhẹ) cùng quyết định của điều phối viên. Tệp sửa: `materials/lec-03/lecture-note.md` (viết lại theo từng mục), mục này của review-log. Không sửa SVG; không commit. Số dòng trong cột "Dòng mới" là của tệp sau sửa.
+
+### Số từ
+
+- Trước: 28 750 từ theo `wc -w` (khoảng 24 000 âm tiết văn xuôi).
+- Sau: 23 000 từ theo `wc -w`. Vượt đích khoảng 22 000 của điều phối viên khoảng 1 000 từ và vượt mức "thường" 20 000 của `AGENTS.md` khoảng 3 000 từ. Lý do: các khối bắt buộc (31 kết quả đánh số với chứng minh theo bước, 17 ví dụ có kiểm tra lại, 14 bài tập có lời giải, 2 tình huống) chiếm khoảng 14 000 từ theo ước tính của vai B; phần tăng thêm so với dự tính của vai B đến từ các bổ sung bắt buộc của vai A (Bổ đề 03.20(c)(d) và phân phối đầu, quy ước trạng thái hấp thụ, kiểm tra đầu vào của thuật toán, câu đổi thứ tự kỳ vọng và chuỗi) và bước trực giác $v_\pi$ (N2). Đã làm toàn bộ nhóm A, nhóm B, nhóm C và ba mục được duyệt của nhóm D.
+
+### Bốn gợi ý cắt của tác tử soạn (theo đánh giá của vai B)
+
+1. Nhận xét 03.5: giữ ý tính dừng khác tính Markov, gộp ý phản hồi đồng thời và giả thiết thưởng cố định thành một đoạn (dòng 292).
+2. "Trong thực hành" sau Mệnh đề 03.6: bỏ; ý mảng thưởng bằng $1$ gộp vào đoạn "Trong thực hành" sau Định nghĩa 03.4 (dòng 298).
+3. Bước 1 của Bổ đề 03.20: thay bằng dẫn (3.2); lập luận quy nạp chuyển vào chứng minh Mệnh đề 03.14, viết lại thành quy nạp theo $K$ (dòng 625–640, 950).
+4. Bài tập 03.7: bỏ câu (a); giữ câu chỗ dùng tính Markov và thêm câu chỗ dùng tính dừng (dòng 1180).
+
+### Phát hiện và xử lý
+
+| Mã | Mức | Xử lý | Trạng thái | Dòng mới |
+|---|---|---|---|---|
+| A1 | nghiêm trọng | Bỏ câu "lợi tức trung bình … 219,2 tới 500,0"; các số còn lại của Tình huống 03.2 đều là lợi tức chiết khấu ($\le100$) | đã sửa | 1564 |
+| A2 | trung bình | Thêm bước 1 kiểm tra đầu vào và kiểm tra tổng hàng $P^\pi\le1$ ở bước 3; bước 6 chỉ còn kiểm sai số số học | đã sửa | 1443–1452 |
+| A3 | trung bình | Định nghĩa 03.16 thống nhất bằng quá trình ấn định $(s,a)$; thêm Bổ đề 03.20(d); Điều kiện áp dụng ghi "chính sách chỉ cần được tuân theo từ thời điểm đang xét"; Mệnh đề 03.22, 03.23 chứng minh qua (b), (d) | đã sửa | 724–735, 909–951, 1090, 1112 |
+| A4 | trung bình | Quy ước trạng thái hấp thụ (hành động giả, phần thưởng $0$) ghi ở Nhận xét 03.10 và nhắc một lần ngay trước Mệnh đề 03.14; Mệnh đề 03.14, Bổ đề 03.20 dẫn quy ước này | đã sửa | 460, 610 |
+| A5 | trung bình | Định nghĩa 03.13 nêu phân phối đầu $\mu$; Định nghĩa 03.15 định nghĩa $v_\pi(s)=\mathbb E_\pi[G_0\mid S_0=s]$ trên quá trình xuất phát tại $s$ và giải thích ký hiệu; Bổ đề 03.20(c) chứng minh trùng $\mathbb E_\pi[G_t\mid S_t=s]$ với mọi $t$, mọi phân phối đầu | đã sửa | 589–604, 678–690, 909 |
+| A6 | trung bình | Bỏ Bài tập 03.11 khỏi ghi chú (điều phối viên chọn bỏ); bản sửa theo đề xuất của vai A chuyển cho `exercises.md` (dưới) | đã xử lý | — |
+| A7 | trung bình | Số mẫu mỗi ô viết $N_{\text{mẫu}}=200$; $M$ chỉ còn nghĩa cận phần thưởng | đã sửa | 298, 1554 |
+| A8 | nhẹ | "kỳ vọng của hai số hạng đầu của lợi tức trong ba thí nghiệm định nghĩa $q_\pi(\mathrm L,\cdot)$" | đã sửa | 735 |
+| A9 | nhẹ | "Mọi lợi tức của robot với $\gamma=1/2$" | đã sửa | 522 |
+| A10 | nhẹ | Bổ đề 03.20 ghi $s\in\mathcal S$; Bước 1 nhắc quy ước tích bằng $0$ | đã sửa | 913, 950 |
+| A11 | nhẹ | Chuỗi Markov là $(\mathcal S,P^\pi)$ dưới ngẫu nhiên, nêu phần xác suất còn thiếu là xác suất tới trạng thái kết thúc; MRP là $(\mathcal S,P^\pi,r^\pi,\gamma)$ | đã sửa | 1290 |
+| A12 | nhẹ | Câu diễn giải $(P^\pi)^kr^\pi$ thêm quy ước $R_{k+1}=0$ sau kết thúc và căn cứ đổi thứ tự kỳ vọng với chuỗi (đuôi chặn bởi $\gamma^KM/(1-\gamma)$) | đã sửa | 1399 |
+| A13 | nhẹ | "Bước 2 và Bước 5 của chứng minh dùng $\gamma<1$" | đã sửa | 1406 |
+| A14 | nhẹ | Bỏ câu "tổng được thay bằng tích phân mà không đổi lập luận"; còn "mọi kỳ vọng một bước là tổng hữu hạn" | đã sửa | 152 |
+| A15 | nhẹ | Bỏ $\alpha$, viết "hai tham số xác suất của ví dụ gốc đều được chọn bằng $1/2$"; bỏ câu "quỹ đạo $L$ bước" (cùng câu đối chiếu SML ở Mục 2) | đã sửa | 108 |
+| A16 | nhẹ | Bài tập 03.1(b) đưa chính sách "ở mọi bước Tìm hoặc Chờ, mỗi hành động $1/2$" vào Dữ kiện | đã sửa | 210 |
+| A17 | nhẹ | Định nghĩa 03.4 viết $p$ là đối tượng gốc thỏa chuẩn hóa (1.3); (1.4) đúng mỗi khi sự kiện điều kiện có xác suất dương; đổi thứ tự hai nhãn (1.3), (1.4) | đã sửa | 266–282 |
+| N1 | nghiêm trọng | Như A1 | đã sửa | 1564 |
+| N2 | nghiêm trọng | Thêm đoạn trực giác trước Định nghĩa 03.15: kéo cây hai bước xuống mọi tầng, lấy trung bình lợi tức đầy đủ, nói rõ chưa phải định nghĩa | đã sửa | 676 |
+| T1 | trung bình | Tách hoặc rút các đoạn dài (mở chương, Bảng ký hiệu, mở và kết các mục, 722, 741, 1149, 1540) | đã sửa | 78–86, 49–53, 576–582, 1397–1399 |
+| T2 | trung bình | Đưa ra `$$` các công thức nội dòng dài ở Bổ đề 03.20 (1071, 1081), Bổ đề 03.19 (1035), Định lý 03.28 Bước 4 (1535); 1312 nằm trong câu (a) đã bỏ của Bài tập 03.7 | đã sửa | 875, 955–974, 1380 |
+| T3 | trung bình | $N_{\text{mẫu}}$; dung sai $\delta$ thay $\tau$; bỏ "quỹ đạo $L$ bước"; bỏ câu đối chiếu SML ở 579, 1159; câu SML ở Bảng ký hiệu nói rõ $T$ của giáo trình khác $T$ của chương | đã sửa | 53, 1441 |
+| T4 | trung bình | Định nghĩa 03.1 nêu $\mathcal S$, $\mathcal S^+$ | đã sửa | 133 |
+| T5 | trung bình | Ví dụ 03.7 cũ bỏ (bộ MDP robot thành một câu); Ví dụ 03.15, 03.16, 03.17 (mới) và Bài tập 03.13 (mới) chép lại dữ kiện | đã sửa | 370, 1244, 1266, 1408, 1705 |
+| T6 | trung bình | Bài tập 03.7(b) hỏi chỗ dùng tính dừng; mục tiêu 2 nhận Bài tập 03.10, 03.12 | đã sửa | 8–12, 1180 |
+| T7 | trung bình | Như A14 | đã sửa | 152 |
+| T8 | trung bình | Bỏ câu khoảng $6{,}335$–$31{,}080$ và thuật ngữ "tầm nhìn hiệu dụng" ở Mục 2; luật theo dấu góc chỉ xuất hiện ở Tình huống 03.2, sau định nghĩa | đã sửa | 533, 1554 |
+| T9 | trung bình | Bỏ tham chiếu tiến MRP ở Mục 1.5 | đã sửa | 370–372 |
+| T10 | trung bình | "Hậu quả quan sát được" nói rõ đổi sang chính sách khác và điều tạm chấp nhận (chính sách Markov dừng cố định trên ô; cách tìm thuộc Bài 04) | đã sửa | 1564 |
+| T11 | trung bình | Bỏ các lần lặp "so sánh $q$ chưa chứng minh tối ưu" (giữ Nhận xét 03.31, Bài tập 03.9, Tóm tắt), "trung bình khác cực đại" (giữ Nhận xét 03.25), đối chiếu SML (giữ Bảng ký hiệu và Hướng dẫn đọc thêm) | đã sửa | — |
+| nhẹ 741–743 | nhẹ | Không thêm khối Nhận xét mới để giữ bộ đếm chung; viết thành câu "Nhầm lẫn thường gặp là nghĩ đổi chính sách thì đổi mô hình …" | sửa một phần | 606 |
+| nhẹ 1544 | nhẹ | Thêm "cộng hai phương trình được $0=5/2$, nên hệ vô nghiệm" | đã sửa | 1403 |
+| nhẹ tài liệu làm chủ ngữ (379, 484, 1444, 1670, 1962) | nhẹ | Viết lại với "ta", "chúng ta" hoặc đối tượng làm chủ ngữ | đã sửa | — |
+| nhẹ "ta" cho kế hoạch (391, 827, 835, 1403) | nhẹ | Đổi sang "chúng ta" | đã sửa | — |
+| nhẹ ngoặc lồng (379, 443, 871, 1097, 1115, 1466) | nhẹ | Viết lại các câu liên quan | đã sửa | — |
+| nhẹ hai công thức liền nhau (418–426, 1768–1784) | nhẹ | Mệnh đề 03.6 gộp câu dẫn; Công thức cần nhớ có câu dẫn trước mỗi công thức | đã sửa | 318–330, 1600–1625 |
+| nhẹ Ví dụ 03.3, 03.4 thiếu kiểm tra lại | nhẹ | Thêm "Kiểm tra lại" | đã sửa | 160, 183 |
+| nhẹ dòng trống trước `###` (548, 780, 1003) | nhẹ | Viết lại toàn bộ; mọi `###` có dòng trống trước | đã sửa | — |
+| nhẹ TD(0) chưa đầy đủ (1161, 1736) | nhẹ | Viết đầy đủ cập nhật với bước học $\alpha$ | đã sửa | 1040, 1574 |
+| nhẹ đổi từ đồng nghĩa (49/1432/1442, 835/914) | nhẹ | Thống nhất "thưởng kỳ vọng" cho $r(s,a)$, $r^\pi$; "thí nghiệm" cho ấn định hành động | đã sửa | — |
+| nhẹ mẫu no-ai-slop (167, 171, 1097, 1099, 1724) | nhẹ | Bỏ "trả món nợ", "Ba bước đã đủ.", câu kết kịch tính của Tình huống 03.2, cặp "X, không phải Y" ở đoạn đọc hình mở chương | đã sửa | — |
+| nhẹ 540 câu khó hiểu | nhẹ | Viết lại phần Diễn giải của Ví dụ 03.7 (mới) | đã sửa | 405–425 |
+| nhẹ 1005 "hình trong Ví dụ 03.10" | nhẹ | "hình ở tiểu mục 3.1" | đã sửa | 862 |
+| nhẹ 1607 $\pi(s)$, $s_{\mathrm{term}}$ chưa định nghĩa | nhẹ | Đoạn "Trong thực hành" sau Nhận xét 03.30 viết lại không dùng hai ký hiệu này | đã sửa | 1463 |
+| nhẹ 667 "tham lam" | nhẹ | Nhận xét 03.12 dùng "cận thị" và phân biệt với chính sách tham lam theo giá trị của Bài 04 | đã sửa | 527–531 |
+| nhẹ 289 câu chưa rõ | nhẹ | Viết lại gạch thứ hai của Nhận xét 03.3 (hai cách sửa, ví dụ tóm tắt lịch sử) | đã sửa | 200 |
+| nhẹ 135 nguồn yếu | nhẹ | Ghi rõ trang 58 dẫn tài liệu xác suất nào | đã sửa | 72 |
+| Phép thử đọc | — | 239 (A14), 289, 391 (giải thích $325$ cột), 484 (T9), 540, 670 (T8), 959 ($r^\pi$ không còn dùng trước định nghĩa: câu "Hiệu bằng hiệu thưởng kỳ vọng" ở Ví dụ 03.14 nằm sau (5.1)), 1544, 1607, 1717 (entropy "của các phân phối $\hat p(\cdot\mid s,a)$"), 1722 (A1) | đã sửa | 298, 1559 |
+
+Bác bỏ: không có phát hiện nào bị bác bỏ. Một phát hiện sửa một phần (741–743, không thêm khối Nhận xét để giữ số hiệu bộ đếm chung theo quyết định 4 của điều phối viên). Bản đồ chủ đề chuyển sang dạng bảng đủ trường (Nhóm, Chủ đề và mã, Vai trò, Kết nối vào, Kết nối ra, Mục, Nguồn; khoảng trống của mục cầu nối và bổ sung ghi trong cột Vai trò); đây là sai khác với dạng danh sách của mẫu `materials/_templates/lecture-note.md`, được điều phối viên cho phép.
+
+### Danh sách cắt đã thực hiện
+
+- Nhóm A: lộ trình năm mục còn một câu; đoạn bài toán robot ở mở chương rút; đối chiếu SML chỉ giữ ở Bảng ký hiệu và Hướng dẫn đọc thêm; thứ tự Bài giảng gốc chỉ giữ ở Hướng dẫn đọc thêm và một câu ở Mục 5.2; câu thiếu hụt lặp ở bốn ranh giới mục; đoạn đọc hình chỉ chép ví dụ; "Trong thực hành" sau Mệnh đề 03.6; Nhận xét 03.5; nhầm lẫn nhắc lại; Nhận xét 03.25 còn hai gạch; Nhận xét 03.30 còn hai gạch; Bước 1 Bổ đề 03.20; Bài tập 03.7(a); Bài tập 03.9 thu về câu (c), Ví dụ 03.15 thêm $q_\pi(\mathrm L,\mathrm{tim})=3/4$; kiểm ô góc của Tình huống 03.1; trang nguồn ở Hướng dẫn đọc thêm; Bài tập 03.2(a)(c); Bài tập 03.3 thay dữ kiện mới $(2,-3,1)$; Bài tập 03.5(b)(c); rút chứng minh Mệnh đề 03.6, 03.22; "Lập hệ" của Ví dụ 03.14; câu cuối của Tình huống 03.2.
+- Nhóm B: bỏ mười hình `robot-p01-timestep-axis`, `robot-p01-two-histories`, `robot-p03-discounted-bands`, `robot-p05-low-battery-branches`, `robot-p06-policy-evaluation-setup`, `robot-p04-forced-first-action`, `robot-p07-three-actions-values`, `robot-p03-episodic-continuing`, `robot-p03-geometric-series`, `robot-p02-search-outcomes` cùng đoạn đọc hình; giữ sáu hình `chapter-structure`, `robot-p01-recycling-robot-low`, `robot-p04-two-layers`, `robot-p04-two-step-tree`, `backup-diagrams`, `gridworld-5x5`. Bỏ Bài tập 03.11 cũ và 03.12(c) cũ; Mệnh đề 03.10 hạ thành Nhận xét 03.10 giữ số; Tình huống 03.2 rút; bản đồ chủ đề thành bảng; rút bốn gạch tiên quyết Bài 02, Bài tập 03.10, câu (c) của Bài tập 03.4.
+- Nhóm C: biên tập một ý một đoạn ở các đoạn đã liệt kê.
+- Nhóm D (được duyệt): bỏ Ví dụ 03.7 cũ (bộ MDP robot thành một câu ở Mục 1.5); rút "Trở lại bài toán mở đầu" thành một câu trong đoạn Tóm tắt (bỏ hình ba giá trị hành động); bỏ chuỗi Neumann khỏi Ví dụ 03.17 (mới), giữ nghịch đảo. Không gộp Bổ đề 03.19, giữ Bài tập 03.14 (cũ 03.15), giữ chứng minh 03.28(c).
+
+### Số hiệu mới
+
+- Bộ đếm chung giữ nguyên 03.1–03.31; Mệnh đề 03.10 cũ thành Nhận xét 03.10 (Quy ước trạng thái hấp thụ). Thay đổi nội dung cần rà lại: Định nghĩa 03.4 (thứ tự nhãn (1.3) chuẩn hóa, (1.4) xác suất có điều kiện), Định nghĩa 03.13 (phân phối đầu), Mệnh đề 03.14 (chứng minh quy nạp), Định nghĩa 03.15 ($v_\pi$ trên quá trình xuất phát tại $s$; bước trực giác mới trước định nghĩa), Định nghĩa 03.16 (quá trình ấn định), Bổ đề 03.20 (giả thiết mới, phần (c), (d), chứng minh mới), Mệnh đề 03.22, 03.23 (chứng minh qua Bổ đề 03.20(b), (d)), Định nghĩa 03.26 ($(\mathcal S,P^\pi)$), Thuật toán 03.29 (bước kiểm tra, $\delta$, bảy bước).
+- Ví dụ (17), ánh xạ cũ → mới: 03.1–03.6 giữ; 03.7 cũ bỏ; 03.8→03.7, 03.9→03.8, 03.10→03.9, 03.11→03.10, 03.12→03.11, 03.13→03.12, 03.14→03.13, 03.15→03.14, 03.16→03.15, 03.17→03.16, 03.18→03.17.
+- Bài tập (14), ánh xạ cũ → mới: 03.1–03.10 giữ số (03.2, 03.3, 03.4, 03.5, 03.7, 03.9, 03.10 đổi nội dung như trên); 03.11 cũ bỏ; 03.12→03.11, 03.13→03.12, 03.14→03.13, 03.15→03.14.
+- Tình huống 03.1, 03.2 giữ số. `note-topic-id` giữ nguyên mười mã.
+- Lưu ý cho giai đoạn deck và `exercises.md`: các số hiệu Ví dụ và Bài tập ở kế hoạch C (03.16 trở đi cho `exercises.md`) không đổi; số Bài tập 03.15 trở đi bỏ trống trong ghi chú, nên `exercises.md` có thể bắt đầu từ 03.15 hoặc giữ 03.16 theo kế hoạch.
+
+### Bài tập chuyển cho `exercises.md` (đề và lời giải)
+
+1. **Bài tập 03.11 cũ (vận dụng), sửa theo phát hiện A6.** Dữ kiện: trong CartPole, bộ mô phỏng cập nhật theo phương pháp Euler với bước $\tau=0{,}02$ giây: $x_{t+1}=x_t+\tau\dot x_t$ và $\dot x_{t+1}=\dot x_t+\tau\ddot x_t$, trong đó gia tốc $\ddot x_t$ phụ thuộc trạng thái và hành động tại $t$; suy ra $x_{t+1}=2x_t-x_{t-1}+\tau^2\ddot x_{t-1}$. Một tác tử chỉ quan sát $x$ và dùng nó làm trạng thái. Yêu cầu: (a) xét hai lịch sử kết thúc ở $x_t=0{,}10$ với $x_{t-1}=0{,}09$ và $x_{t-1}=0{,}11$, giải thích vì sao dự báo $x_{t+1}$ khác nhau; (b) kết luận về tính Markov của $x$, hiểu (1.2) theo phân phối có điều kiện (hoặc sau khi rời rạc hóa $x$); (c) nêu cách sửa. Lời giải: (a) theo công thức, $x_{t+1}\approx2x_t-x_{t-1}$ sai khác một số hạng cỡ $\tau^2=4\cdot10^{-4}$ nhân gia tốc, nên $x_{t+1}\approx0{,}11$ ở lịch sử thứ nhất và $\approx0{,}09$ ở lịch sử thứ hai; hai lịch sử cho biết vận tốc ở bước trước $\dot x_{t-1}=(x_t-x_{t-1})/\tau=\pm0{,}5$ m/s có dấu ngược nhau; (b) hai lịch sử kết thúc ở cùng $x_t$ cho hai phân phối khác nhau của $x_{t+1}$, nên $x$ không có tính Markov; (c) dùng đủ $(x,\dot x,\theta,\dot\theta)$, hoặc cặp $(x_{t-1},x_t)$ để suy ra vận tốc ở bước trước (vẫn cần $\theta,\dot\theta$ để dự báo kết thúc).
+2. **Bài tập 03.12(c) cũ (nhận biết).** Dữ kiện: robot của Ví dụ 03.1, chính sách chia đều tại pin thấp, $\gamma=1/2$, $v_\pi=(13/4,\,7/4)$; kỳ vọng hai bước từ pin cao là $21/8$. Yêu cầu: giải thích vì sao $q_\pi(\mathrm H,\mathrm{cho})=21/8$ trùng kỳ vọng hai bước từ pin cao là trùng hợp số học. Lời giải: $21/8$ của kỳ vọng hai bước là $\mathbb E_\pi[R_1+\gamma R_2\mid S_0=\mathrm H]$ với hành động đầu Tìm; $q_\pi(\mathrm H,\mathrm{cho})=1+\tfrac12\cdot\tfrac{13}4$ là toàn bộ lợi tức kỳ vọng khi ấn định Chờ. Đổi phần thưởng của Chờ ở pin cao thành $\tfrac12$ làm $q_\pi(\mathrm H,\mathrm{cho})=\tfrac{17}8$ nhưng không đổi $21/8$, vì chính sách không chọn Chờ ở pin cao.
+3. **Bài tập 03.2(a)(c) cũ (nhận biết).** Dữ kiện: bảng phản hồi của Ví dụ 03.5. Yêu cầu: (a) đọc $p(\mathrm H,0\mid\mathrm L,\mathrm{sac})$ và kiểm tra chuẩn hóa của cặp $(\mathrm L,\mathrm{sac})$; (c) biết phần thưởng sau $(\mathrm L,\mathrm{tim})$ là $-3$, xác định trạng thái kế tiếp và giải thích vì sao trạng thái kế tiếp và phần thưởng không độc lập. Lời giải: (a) hàng duy nhất $(\mathrm H,0)$ nên $p=1$, tổng nhóm bằng $1$; (c) trạng thái kế tiếp là $\mathrm H$; nếu độc lập thì $\Pr(S_{t+1}=\mathrm H,R_{t+1}=-3)=\tfrac12\cdot\tfrac12=\tfrac14$, nhưng giá trị thật là $\tfrac12$.
+4. **Bài tập 03.3(b)(c) cũ (tính toán).** Dữ kiện: robot bắt đầu ở $\mathrm L$, ba phần thưởng đầu $(0,2,2)$, $\mathcal R=\{-3,0,1,2\}$. Yêu cầu: (b) tính $R_1+\gamma R_2+\gamma^2R_3$ với $\gamma=1/2$ và $\gamma=0$; (c) với $\gamma=1/2$, khoảng chứa $G_0$ trên mọi quỹ đạo và vì sao $G_0\ne6$ không mâu thuẫn với cận. Lời giải: (b) $\tfrac32$ và $0$; (c) $M=3$ nên $-6\le G_0\le6$; đây là cận trị tuyệt đối, không phải giá trị; phần đuôi sau bước ba có trị tuyệt đối không quá $\tfrac34$, nên $G_0$ của đường này nằm trong $[\tfrac34,\tfrac94]$.
+5. **Bài tập 03.5(b)(c) cũ (nhận biết).** Dữ kiện: robot với chính sách chia đều tại pin thấp. Yêu cầu: (b) thí nghiệm tính $q_\pi(\mathrm L,\mathrm{tim})$ buộc robot Tìm bao nhiêu lần, từ bước nào trở lại chính sách; (c) vì sao $q_\pi(\mathrm L,\mathrm{tim})$ có nghĩa dù $\pi(\mathrm{tim}\mid\mathrm L)=0$. Lời giải: (b) đúng một lần tại $t$, từ $t+1$ theo $\pi$; (c) Định nghĩa 03.16 dùng quá trình ấn định hành động, không chia cho $\pi(\mathrm{tim}\mid\mathrm L)$; Ví dụ 03.11 tính hai số hạng đầu bằng $\tfrac18$, Ví dụ 03.15 cho $q_\pi(\mathrm L,\mathrm{tim})=\tfrac34$.
+
+### Kết quả kiểm tra sau sửa
+
+- `note_check.py`: 31 môi trường bộ đếm chung (03.1–03.31), 17 ví dụ, 14 bài tập, không khoảng trống, không trùng; 14 `hint`, 14 `solution`, 12 `proof`, 2 `application`; không khối lạ, lồng hoặc thiếu số hiệu; không mẫu câu cấm; 0 dấu `\(`, `\[`.
+- `check_note.py 03 lecture-03-qua-trinh-quyet-dinh-markov.html`: 1600×900 và 390×844 đều 0 lỗi KaTeX, 104 khối, 0 lỗi console, 0 yêu cầu ngoài, không tràn ngang trang. Kiểm thêm: không công thức khối nào tràn khung ở 1600 px (đã tách công thức Bước 1 của Mệnh đề 03.14). Ở 390 px, `scrollWidth` của tài liệu đo được $482$ do bảng và MathML ẩn nằm trong vùng cuộn riêng; trang không cuộn ngang được (`scrollX` giữ $0$). Đã xem ảnh chụp Bản đồ chủ đề (1600 px) và Bổ đề 03.20 (390 px).
+- Tự kiểm `no-ai-slop` (Edit) trên toàn tệp sau sửa: không từ cấm, không câu hỏi, không câu dẫn rỗng; các mẫu vai B nêu đã bỏ.
+
+## Rà lại vòng 2 — ghi chú Bài 03 (2026-10-12)
+
+Hai tác tử rà lại chỉ đọc, Claude Opus 5.5 mức `high`: vai toán (`recheck-03-A.md`: 17 phát hiện cũ đều đạt; 0 trung bình, 4 nhẹ mới) và vai mạch viết (`recheck-03-B.md`: N1, N2, T2–T11 đạt, T1 đạt một phần; 0 trung bình, 12 nhẹ trong ghi chú, 1 lưu ý cho `exercises.md`). Tác tử soạn sửa toàn bộ theo đề xuất; chỉ sửa `lecture-note.md` và mục này; không commit. Số từ: 23 003 trước, 23 098 sau (`wc -w`, trong giới hạn 23 100).
+
+| Mã | Mức | Vị trí cũ | Xử lý | Trạng thái | Dòng mới |
+|---|---|---|---|---|---|
+| A-1 | nhẹ | 689 | Căn cứ "theo (3.2) và Bổ đề 03.20(b) với $t=0$, $h_0=(s)$" | đã sửa | 695 |
+| A-2 | nhẹ | 1088 | Mệnh đề 03.22 Bước 1 thêm trường hợp $s'$ kết thúc: $G_1=0=v_\pi(s')$ (Nhận xét 03.10) | đã sửa | 1094 |
+| A-3 | nhẹ | 603 | Định nghĩa 03.13 thêm câu: ký hiệu $\Pr_\pi$, $\mathbb E_\pi$ cũng dùng cho quá trình chỉ theo $\pi$ từ một thời điểm, như quá trình ấn định | đã sửa | 609 |
+| A-4 | nhẹ | 1443, 1445 | Thuật toán 03.29: "tổng $1$ trong dung sai $\delta$"; "tổng không quá $1+\delta$" | đã sửa | 1449, 1451 |
+| B-1 | nhẹ | 82, 1582, 1765 | Bỏ tài liệu làm chủ ngữ: "Chúng ta xây dựng…", "Câu hỏi xuất phát là…", "ở ghi chú này, MDP được trình bày trước…" | đã sửa | 83, 1588, 1771 |
+| B-2 | nhẹ | 398/403, 555/560, 791/796 | Đoạn kết mục chỉ giữ một mệnh đề thiếu hụt khái quát; số liệu cụ thể để ở đoạn mở mục sau (đoạn mở Mục 4 dẫn Ví dụ 03.10, Bài tập 03.4) | đã sửa | 402, 561, 797, 802 |
+| B-3 | nhẹ | 298, 472, 293 | Tách đoạn 298 sau "Muốn có bảng, phải ước lượng."; tách 472 trước "Lập luận này dùng hai điều"; Nhận xét 03.5 thành hai gạch | đã sửa | 302, 478, 294–295 |
+| B-4 | nhẹ | 80 | "Chờ cho ngay $1$" | đã sửa | 81 |
+| B-5 | nhẹ | 179 | Thêm "Ví dụ 03.3 là một trường hợp của (1.2) …" | đã sửa | 180 |
+| B-6 | nhẹ | 942 | Bổ đề 03.20 Bước 1 ghi cả tính Markov (qua Định nghĩa 03.7 và (3.1) trong Mệnh đề 03.14) và tính dừng | đã sửa | 948 |
+| B-7 | nhẹ | 1181 | Bài tập 03.7 chép dữ kiện của Ví dụ 03.4 (hai lịch sử, phần thưởng bước sau $0$ và $1$) | đã sửa | 1187 |
+| B-8 | nhẹ | 7, 8, 78 | "quá trình quyết định Markov (Markov decision process, MDP)" ở dòng 7; "lợi tức (return)" ở dòng 8; "quỹ đạo (trajectory)" ở mở Mục 1 | đã sửa | 7, 8, 79 |
+| B-9 | nhẹ | 819, 705 | "thưởng kỳ vọng một bước dưới chính sách"; "ấn định hành động $a$ ở bước đầu" | đã sửa | 825, 711 |
+| B-10 | nhẹ | bảng ký hiệu | Thêm dòng $\mu$ (phân phối của $S_0$) | đã sửa | 46 |
+| B-11 | nhẹ | 1574 | Bỏ lặp công thức TD(0); dẫn tới đoạn "Trong thực hành" sau Định lý 03.21 | đã sửa | 1580 |
+| B-12 | nhẹ | 72 | Ghi tác giả: D. P. Bertsekas và J. N. Tsitsiklis, *Introduction to Probability*, chương 7. Trang 58 của Bài giảng gốc chỉ ghi tên sách và chương; tác giả xác định theo tên sách và tên chương ("Markov Chains"), cần điều phối viên xác nhận nếu muốn trích chặt | đã sửa | 73 |
+| B-13 | nhẹ (ngoài ghi chú) | review-log, bài chuyển 1 | Khi soạn `exercises.md` (giai đoạn III), đổi bước thời gian Euler $\tau=0{,}02$ giây thành $\Delta t=0{,}02$ giây để không trùng chữ với $U(\tau)$ của giáo trình; ghi chú không đổi | ghi nhận cho giai đoạn III | — |
+
+Kiểm tra sau sửa: `note_check.py` cho 31 môi trường bộ đếm chung, 17 ví dụ, 14 bài tập, liên tục, không trùng, không khối lạ, không mẫu câu cấm. `check_note.py 03 lecture-03-qua-trinh-quyet-dinh-markov.html` cho 0 lỗi KaTeX, 104 khối, 0 lỗi console, 0 yêu cầu ra ngoài, không tràn ở 1600×900 và 390×844. Không công thức khối nào tràn khung ở 1600 px. `git diff --check` sạch.
+
+Tự kiểm `no-ai-slop` (Edit) trên các câu đã sửa: hết tài liệu làm chủ ngữ; các câu kết mục bỏ phần nhắc lại số liệu; không câu hỏi, không từ cấm, không câu kết kịch tính.

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 470" role="img" aria-labelledby="bd-title bd-desc" font-family="Arial,sans-serif">
+<title id="bd-title">Sơ đồ dự phòng của v_π và q_π</title>
+<desc id="bd-desc">Hai sơ đồ cây. Vòng tròn rỗng là trạng thái, chấm tròn đặc là cặp trạng thái–hành động. Bên trái, sơ đồ của v_π: gốc là trạng thái s; ba cạnh mang nhãn π(a | s) đi xuống ba chấm đặc ứng với ba hành động a; từ mỗi chấm đặc hai cạnh mang nhãn p(s', r | s, a) và phần thưởng r đi xuống hai vòng tròn rỗng s'. Bên phải, sơ đồ của q_π: gốc là chấm đặc (s, a); hai cạnh mang nhãn p(s', r | s, a) và r đi xuống hai vòng tròn rỗng s'; từ mỗi s' hai cạnh mang nhãn π(a' | s') đi xuống hai chấm đặc a'. Dòng chú thích: giá trị ở gốc bằng trung bình có trọng số của r + γ nhân giá trị ở tầng dưới.</desc>
+<rect x="0" y="0" width="1100" height="470" fill="#ffffff"/>
+<g font-size="24" text-anchor="middle" fill="#1d1d1d" font-weight="bold">
+<text x="270" y="34">Sơ đồ dự phòng của v<tspan baseline-shift="sub" font-size="18">π</tspan></text>
+<text x="820" y="34">Sơ đồ dự phòng của q<tspan baseline-shift="sub" font-size="18">π</tspan></text>
+</g>
+<g stroke="#2F3E7A" stroke-width="2.5">
+<path d="M270 94L110 196M270 94L270 196M270 94L430 196"/>
+<path d="M110 206L60 318M110 206L160 318M270 206L220 318M270 206L320 318M430 206L380 318M430 206L480 318"/>
+<path d="M820 90L700 192M820 90L940 192"/>
+<path d="M700 214L640 318M700 214L760 318M940 214L880 318M940 214L1000 318"/>
+</g>
+<g stroke="#2F3E7A" stroke-width="2.5" fill="#ffffff">
+<circle cx="270" cy="72" r="22"/>
+<circle cx="60" cy="338" r="20"/><circle cx="160" cy="338" r="20"/>
+<circle cx="220" cy="338" r="20"/><circle cx="320" cy="338" r="20"/>
+<circle cx="380" cy="338" r="20"/><circle cx="480" cy="338" r="20"/>
+<circle cx="700" cy="203" r="20"/><circle cx="940" cy="203" r="20"/>
+</g>
+<g fill="#2F3E7A">
+<circle cx="110" cy="203" r="10"/><circle cx="270" cy="203" r="10"/><circle cx="430" cy="203" r="10"/>
+<circle cx="820" cy="80" r="11"/>
+<circle cx="640" cy="328" r="10"/><circle cx="760" cy="328" r="10"/>
+<circle cx="880" cy="328" r="10"/><circle cx="1000" cy="328" r="10"/>
+</g>
+<g font-size="21" fill="#1d1d1d" text-anchor="middle">
+<text x="270" y="80">s</text>
+<text x="178" y="136" text-anchor="end">π(a | s)</text>
+<text x="94" y="210" text-anchor="end">a</text>
+<text x="210" y="270" text-anchor="end">p, r</text>
+<text x="60" y="345">s′</text><text x="160" y="345">s′</text><text x="220" y="345">s′</text><text x="320" y="345">s′</text><text x="380" y="345">s′</text><text x="480" y="345">s′</text>
+<text x="880" y="72" text-anchor="start">(s, a)</text>
+<text x="700" y="210">s′</text><text x="940" y="210">s′</text>
+<text x="700" y="132" text-anchor="end">p(s′, r | s, a), r</text>
+<text x="820" y="272">π(a′ | s′)</text>
+<text x="640" y="362">a′</text><text x="760" y="362">a′</text><text x="880" y="362">a′</text><text x="1000" y="362">a′</text>
+</g>
+<g font-size="20" fill="#1d1d1d">
+<circle cx="40" cy="410" r="12" fill="#ffffff" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="62" y="417">trạng thái</text>
+<circle cx="200" cy="410" r="8" fill="#2F3E7A"/>
+<text x="218" y="417">cặp trạng thái–hành động</text>
+<text x="40" y="452">Giá trị ở gốc = trung bình có trọng số của r + γ × giá trị ở tầng dưới.</text>
+</g>
+</svg>
