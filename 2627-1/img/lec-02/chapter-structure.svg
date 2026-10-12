@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc">
+<title id="title">Cấu trúc của Bài 02 trên vòng tương tác</title>
+<desc id="desc">Hai khối Tác tử và Môi trường nối bằng hai mũi tên. Mũi tên trên đi từ tác tử sang môi trường, ghi hành động A t, Mục 1. Mũi tên dưới đi từ môi trường về tác tử, ghi phần thưởng R t cộng 1 và quan sát O t cộng 1, Mục 1. Trong khối Tác tử: biểu diễn X t tính từ dữ liệu đến thời điểm t, Mục 2; chính sách pi của a cho x, Mục 3. Trong khối Môi trường: trạng thái S t và tính Markov, Mục 2; hàm động lực p của s phẩy, r cho s, a, Mục 4. Khối dưới cùng nhận chuỗi phần thưởng: lợi tức G t và hàm giá trị v pi của s, Mục 4; thiết kế phần thưởng với chi phí c và phạt h quyết định hành vi tối ưu, Mục 5.</desc>
+<defs><marker id="m" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#B15A2B"/></marker>
+<marker id="g" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#424954"/></marker></defs>
+<rect width="900" height="470" fill="#fff"/>
+<g font-family="Arial,sans-serif" fill="#202838">
+<rect x="30" y="40" width="330" height="200" rx="18" fill="#F7EFE6" stroke="#2F3E7A" stroke-width="4"/>
+<text x="195" y="78" text-anchor="middle" font-size="28" font-weight="bold" fill="#2F3E7A">TÁC TỬ</text>
+<text x="52" y="122" font-size="19">Biểu diễn Xₜ từ dữ liệu đến t</text>
+<text x="52" y="148" font-size="17" fill="#424954">Mục 2</text>
+<text x="52" y="192" font-size="19">Chính sách π(a | x)</text>
+<text x="52" y="218" font-size="17" fill="#424954">Mục 3</text>
+<rect x="540" y="40" width="330" height="200" rx="18" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/>
+<text x="705" y="78" text-anchor="middle" font-size="28" font-weight="bold" fill="#2F3E7A">MÔI TRƯỜNG</text>
+<text x="562" y="122" font-size="19">Trạng thái Sₜ, tính Markov</text>
+<text x="562" y="148" font-size="17" fill="#424954">Mục 2</text>
+<text x="562" y="192" font-size="19">Hàm động lực p(s′, r | s, a)</text>
+<text x="562" y="218" font-size="17" fill="#424954">Mục 4</text>
+<path d="M362 95H532" stroke="#B15A2B" stroke-width="5" marker-end="url(#m)"/>
+<text x="450" y="70" text-anchor="middle" font-size="19">Hành động Aₜ</text>
+<text x="450" y="122" text-anchor="middle" font-size="17" fill="#424954">Mục 1</text>
+<path d="M538 185H368" stroke="#B15A2B" stroke-width="5" marker-end="url(#m)"/>
+<text x="450" y="165" text-anchor="middle" font-size="19">Rₜ₊₁, Oₜ₊₁</text>
+<text x="445" y="212" text-anchor="middle" font-size="17" fill="#424954">Mục 1</text>
+<path d="M500 192V318" stroke="#424954" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#g)"/>
+<text x="512" y="270" font-size="17" fill="#424954">chuỗi Rₜ₊₁, Rₜ₊₂, …</text>
+<rect x="150" y="325" width="600" height="120" rx="18" fill="#fff" stroke="#2F3E7A" stroke-width="3"/>
+<text x="172" y="362" font-size="19">Lợi tức Gₜ = Σₖ γᵏ Rₜ₊ₖ₊₁ và hàm giá trị v<tspan font-size="14" dy="5">π</tspan><tspan dy="-5">(s)</tspan></text>
+<text x="172" y="386" font-size="17" fill="#424954">Mục 4</text>
+<text x="172" y="418" font-size="19">Thiết kế phần thưởng (c, h) → hành vi tối ưu</text>
+<text x="172" y="440" font-size="17" fill="#424954">Mục 5</text>
+</g>
+</svg>

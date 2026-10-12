@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 500" role="img" aria-labelledby="title desc">
+<title id="title">Lợi tức của hai đường theo chi phí mỗi bước c</title>
+<desc id="desc">Trục ngang là chi phí mỗi bước c từ 0 đến 4, trục dọc là lợi tức G0 từ trạng thái xuất phát với hệ số chiết khấu 1. Đường liền là lợi tức đến đích, 10 trừ 6c, đi từ 10 tại c bằng 0 xuống âm 14 tại c bằng 4. Đường đứt là lợi tức vào hố, âm 2c, đi từ 0 xuống âm 8. Hai đường cắt nhau tại c bằng 2,5 với lợi tức âm 5. Bên trái giao điểm tác tử tối ưu chọn đích, bên phải chọn hố.</desc>
+<rect width="860" height="500" fill="#fff"/>
+<g font-family="Arial,sans-serif" fill="#202838">
+<g stroke="#d5d9df" stroke-width="1">
+<path d="M90 50H770M90 120H770M90 190H770M90 260H770M90 330H770M90 400H770"/>
+</g>
+<path d="M90 30V400H780" fill="none" stroke="#202838" stroke-width="2"/>
+<g font-size="18" text-anchor="end">
+<text x="80" y="56">10</text><text x="80" y="126">5</text><text x="80" y="196">0</text><text x="80" y="266">−5</text><text x="80" y="336">−10</text><text x="80" y="406">−15</text>
+</g>
+<g font-size="18" text-anchor="middle">
+<text x="90" y="426">0</text><text x="260" y="426">1</text><text x="430" y="426">2</text><text x="515" y="426">2,5</text><text x="600" y="426">3</text><text x="770" y="426">4</text>
+<text x="430" y="470">Chi phí mỗi bước c</text>
+</g>
+<text x="30" y="225" font-size="18" text-anchor="middle" transform="rotate(-90 30 225)">Lợi tức G₀ (γ = 1)</text>
+<path d="M90 50L770 386" stroke="#334879" stroke-width="5"/>
+<path d="M90 190L770 302" stroke="#B15A2B" stroke-width="5" stroke-dasharray="14 8"/>
+<path d="M515 40V400" stroke="#6b6f78" stroke-width="2" stroke-dasharray="4 5"/>
+<circle cx="515" cy="260" r="8" fill="#fff" stroke="#202838" stroke-width="3"/>
+<text x="530" y="246" font-size="18">(2,5; −5): ngang nhau</text>
+<text x="300" y="120" font-size="20" fill="#334879">Đích: 10 − 6c (đường liền)</text>
+<text x="612" y="272" font-size="20" fill="#B15A2B">Hố: −2c (đường đứt)</text>
+<text x="300" y="380" font-size="20" text-anchor="middle">c &lt; 2,5: chọn đích</text>
+<text x="650" y="380" font-size="20" text-anchor="middle">c &gt; 2,5: chọn hố</text>
+</g>
+</svg>

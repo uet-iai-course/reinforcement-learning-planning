@@ -2446,3 +2446,298 @@ Runtime: requested_model `z-ai/glm-5.3-flash`; observed_model `z-ai/glm-5.3-flas
 Không phát hiện lỗi thực trong ba đoạn được đọc.
 
 Phạm vi chỉ ba chỉnh sửa câu chữ; không thay cho các báo cáo toàn văn và recheck toán đã ghi ở trên. Sau các sửa này, kiểm định viewer đã chạy lại trên tệp trong kho: nội dung qua HTTP khớp byte, 350 công thức, 6 hình, 7 bộ câu hỏi/lời giải, hai kích thước màn hình đều đạt. `git diff --check` đạt; chỉ bốn tệp ghi chú và planning của bài 02 thay đổi.
+
+## Đợt sửa 2026-10-12 — Giai đoạn I: ghi chú bài giảng
+
+### Tác tử và phạm vi
+
+- Vai trò: tác tử soạn ghi chú bài giảng Bài 02 (viết tệp), làm theo `brief_note_writer.md` của điều phối viên. Loại và mô hình theo brief: `general-purpose`, Opus 5.5 (`claude-opus-5-5`), mức `high`; điều phối viên đối chiếu với lệnh gọi công cụ.
+- Tệp đã ghi: `2627-1/materials/lec-02/lecture-note.md` (viết lại toàn bộ); ba SVG mới `img/lec-02/chapter-structure.svg`, `img/lec-02/goal-hole-threshold.svg`, `img/lec-02/aliasing-pair.svg` (có `<title>`, `<desc>`, nhãn chữ; nét liền/đứt và gạch chéo thay cho màu làm tín hiệu). Không sửa deck, SVG cũ, outline, storyboard, index, CSS, viewer. Không commit.
+- Đã đọc: `quyet-dinh-chuan-2026-10-12.md`, `revision-plan-2026-10-12.md` (A, B, C, quyết định điều phối viên), các mục bắt buộc của `AGENTS.md`, mẫu ghi chú, ghi chú mẫu math-4-AI Bài 07, ghi chú và deck Bài 02 hiện tại, `hw02.pdf`, PPTX nguồn trang 1–30, các notebook Bài 04–07 (chỉ ô Markdown), `no-ai-slop` (SKILL.md, eval.md), `quill` (Outline, Threads, Concept, Revise). Không tạo `quill.json`.
+
+### Giáo trình đã tham khảo theo mục
+
+| Mục ghi chú | Nguồn đối chiếu cách dẫn dắt (không dịch, không chép) |
+|---|---|
+| Mở chương, Mục 1 | Sutton và Barto (2018) §3.1 tr. 47–50 (ranh giới theo quyền điều khiển, tr. 50), §3.2 tr. 53–54 (giả thuyết phần thưởng, ví dụ cờ thắng/thua/hòa, phần thưởng nói điều cần đạt); PPTX tr. 4, 7–11, 14–15, 25–26; hw02 bài 1 |
+| Mục 2 | Sutton và Barto §3.1 tr. 49 (Markov là ràng buộc lên trạng thái), §17.3 tr. 464–468 (lịch sử, trạng thái Markov, lịch sử bậc $k$ tr. 468); PPTX tr. 15–19, 27; SML `sec_mdp_introduction.tex` (tính chất Markov, quan sát đầy đủ/không đầy đủ); hw02 bài 2 |
+| Mục 3 | Sutton và Barto §3.5 tr. 58; Puterman (1994) §2.1 (phân loại chính sách, dẫn mục không ghi trang); SML (chính sách đơn định, ngẫu nhiên); PPTX tr. 20–21, 26; hw02 bài 6 |
+| Mục 4.1 | Russell và Norvig (2020), AIMA ấn bản 4, §17.1.1 tr. 565–566 (PDF tr. 578–579): ưu tiên dừng, khẳng định chỉ lợi ích cộng có chiết khấu thỏa tính dừng (không chứng minh), chặn $R_{\max}/(1-\gamma)$, chính sách không dừng khi có hạn chót. Đã xác minh nội dung và số trang, nên dẫn theo quyết định 12 |
+| Mục 4.2–4.5 | Sutton và Barto §3.3 tr. 54–56 ($G_T=0$, hệ thức (3.9), $\gamma=0$ cận thị), §3.4 tr. 57 (trạng thái hấp thụ), §3.5 tr. 58 (3.12), §3.1 tr. 48–49 ((3.2)–(3.5)); PPTX tr. 10, 13, 22–24, 26 |
+| Mục 5 | Ví dụ mê cung đích–hố đã được người dùng duyệt; Sutton và Barto §17.4 tr. 469–470 (cách nhận thưởng ngoài ý muốn, phần thưởng phụ cho mục tiêu trung gian) |
+| Tình huống, bài tập củng cố | hw02 bài 5, 6, 10; Sutton và Barto §13.1, Ví dụ 13.1 tr. 323 (hành lang đảo chiều, $p\approx0{,}59$, giá trị $\approx-11{,}6$) |
+
+### Số hiệu cuối cùng
+
+- Bộ đếm chung (29): Định nghĩa 02.1, 02.2; Nhận xét 02.3, 02.4, 02.5; Định nghĩa 02.6, 02.7, 02.8, 02.9, 02.10; Mệnh đề 02.11 (có `proof`); Nhận xét 02.12; Định nghĩa 02.13, 02.14; Nhận xét 02.15; Định nghĩa 02.16, 02.17; Định lý 02.18 (có `proof` ba bước); Nhận xét 02.19; Định nghĩa 02.20; Mệnh đề 02.21 (có `proof`); Định nghĩa 02.22; Nhận xét 02.23; Định nghĩa 02.24, 02.25; Nhận xét 02.26; Mệnh đề 02.27 (có `proof` bốn bước); Nhận xét 02.28, 02.29. Không có thuật toán (nguồn không có).
+- Ví dụ 02.1–02.20 đúng thứ tự B2. Bài tập 02.1–02.9 cuối các mục, 02.10–02.14 trong Bài tập củng cố. Tình huống 02.1, 02.2.
+- `note-topic-id`: giữ `lec-02-part-01`…`lec-02-part-07` (part-01 trước Mục tiêu học tập, part-02…06 trước `## 1.`…`## 5.`, part-07 trước Tóm tắt chương); chủ đề mới `lec-02-topic-01`…`lec-02-topic-15`, cùng thứ tự với Bản đồ chủ đề.
+
+### Sai khác so với kế hoạch B và lý do
+
+1. Chuỗi phần thưởng trong Mục 4.1 ký hiệu $\sigma,\sigma'$ thay cho $a,b$ của deck, vì $a$ đã là hành động; phản ví dụ dùng $W$ theo quyết định chung. Deck cần đồng bộ ở giai đoạn II.
+2. Mã bốn ô kề được định nghĩa là "$1$ khi bước theo hướng đó giữ tác tử đứng yên", để ô $(7,6)$ có Đông $=0$ (lối vào $\mathrm G$) và $(0,2)$ có Tây $=1$ (biên). Deck cần dùng cùng định nghĩa.
+3. Ví dụ 02.9 (chìa khóa) được cụ thể hóa: chìa khóa ở ngõ cụt $(4,2)$, cửa ở lối $(7,6)\to\mathrm G$; hai lịch sử có cùng độ dài $t=17$ và chính sách có mọi hướng với xác suất dương, để phản ví dụ đúng với Định nghĩa 02.10 (có chỉ số thời gian cố định). Đường 18 bước của Ví dụ 02.4 chính là đường nhặt chìa khóa.
+4. Ví dụ 02.14 dùng ba bước cuối của đường 16 bước ($t=13$) thay cho "ba bước $-1$" chung chung, để Bài tập 02.6 (ba bước $-1$ với $\gamma=0$ và $1$) không trùng ví dụ.
+5. Mệnh đề 02.21 gồm cả hệ thức truy hồi $G_t=R_{t+1}+\gamma G_{t+1}$ (phần a) và chặn (phần b), vì hệ thức được dùng trong Ví dụ 02.14, Tình huống 02.1 và là cầu sang Bellman ở Bài 03.
+6. Sau Định lý 02.18 có danh sách "Bỏ…" cho cả bốn giả thiết: dạng cộng ($W$), dùng chung trọng số (trung bình, $\sigma=(1)$, $\sigma'=(0,2)$, $r=3$), không tăng ($2^{i-1}$), dương ($(1,0,0,\dots)$). Ví dụ 02.13 thêm bộ trọng số $(1;0{,}5;0{,}5)$ làm ưu tiên chặt thành ngang nhau.
+7. Bài tập 02.7: ví dụ 02.15 đã cho $v_\pi=-4$ với $\gamma=1$, nên bài tập hỏi $\gamma=0{,}5$, tìm $q$ để $v_\pi=-4{,}5$, và phân biệt $G_t$ với $v_\pi$. Bài tập 02.8 thêm câu phạt trượt $-2$ (trạng thái kế tiếp và phần thưởng không độc lập) và câu bảng mô hình không hợp lệ.
+8. Bài tập củng cố: 02.11 thêm câu (b) phần thưởng dương mỗi bước trên mê cung đích–hố để mục tiêu 5 có bài trong nhóm củng cố; 02.12 dùng xuất phát ngẫu nhiên tại $(1,1)$ hoặc $(2,1)$ để hai lịch sử cùng $t$; 02.14 là hành lang đảo chiều của Sutton và Barto, Ví dụ 13.1, tính trọn ($p^*=2-\sqrt2$, $V_1=6+4\sqrt2$), để không lặp Tình huống 02.2.
+9. Tình huống 02.1: hành lang kho năm ô thay cho kho dạng lưới, để tính $v_\pi$ chính xác; trường hợp quan sát một phần là mất tín hiệu định vị (chỉ còn mức pin) thay cho cảm biến va chạm.
+10. Tình huống 02.2: tìm được trên `source-policy.svg` cặp $\mathrm A=(1,1)$, $\mathrm B=(5,3)$ cùng mã $(1,0,0,1)$ cần Đông và Nam; chứng minh mọi chính sách xác định trên mã thất bại; chính sách ngẫu nhiên $p=0{,}5$ cho kỳ vọng $20$ bước (tốt nhất trong họ một tham số); cửa sổ hai quan sát cho $16$ bước. Hình mới `aliasing-pair.svg`.
+11. "Trong thực hành" về tính Markov: kế hoạch B4 nhắc cửa sổ khung hình chồng trên CartPole và Flappy Bird, nhưng hai notebook dùng quan sát vector, không chồng khung. Ghi chú dùng các chi tiết có trong notebook: vận tốc trong quan sát CartPole, $324$ ô và nhiệm vụ kiểm tra Markov của notebook Bài 04, chỉ số gió ẩn của Lunar Lander, $v_y$ trong quan sát Flappy Bird. Chỉ dùng hằng số cấu hình ($\gamma=0{,}99$, $324$ ô, $1\,000$ bước, $50$ ống, $\varepsilon=0{,}1$, phần thưởng của Flappy Bird), không dùng số liệu kết quả.
+12. Ký hiệu thưởng kỳ vọng là $r(s,a)$ theo quyết định chung §2 (thống nhất Bài 03), thay $\bar r(s,a)$ của B6; bảng ký hiệu ghi rõ ngoại lệ của chữ $r$. Thêm $\mathcal S^+$ cho trạng thái kết thúc.
+13. Hình: `incentive-threshold.svg` dùng $\alpha$, nên ghi chú dùng hình mới `goal-hole-threshold.svg` với $c$; giai đoạn deck sửa hoặc thay hình cũ. Thêm `chapter-structure.svg` cho yêu cầu "hình minh họa cấu trúc của chương" ở đầu Mục 1. Không dùng `interaction-timeline.svg`, `learning-signals.svg`, `maze-local.svg` và các SVG cũ khác.
+14. Nguồn: bỏ CS188 (không có bản cục bộ để xác minh); giữ Shakerinava và Ravanbakhsh (2022) chỉ như con trỏ đọc thêm, chưa xác minh trên bản cục bộ; Puterman §2.1 dẫn mục, không ghi trang.
+15. Độ dài: $27\,813$ từ theo cách đếm khoảng trắng của `note_check.py` (khoảng $25\,700$ khi bỏ công thức, bảng và chú thích), vượt đích $12\,000$–$14\,000$ của B4 và mức thường gặp $20\,000$ của `AGENTS.md`. Lý do: tiếng Việt đếm theo âm tiết; chương có 29 kết quả đánh số, 4 chứng minh, 20 ví dụ, 14 bài tập có lời giải đầy đủ và hai tình huống tính trọn. Điều phối viên quyết định có cần rút gọn.
+
+### Giới hạn còn lại
+
+- Kết quả Bài 01 được dẫn bằng "ghi chú Bài 01, Mục k" và phát biểu lại (Mục 1–2: tác tử học từ tương tác; Mục 3: lượt, lợi tức không chiết khấu, $G_t=R_{t+1}+G_{t+1}$; Mục 4: chính sách, giá trị, mô hình trực quan), theo quyết định 11; đợt đồng bộ sau thay bằng số hiệu `01.k`. Các dẫn chiếu tới Bài 03–07 cũng chỉ theo tên bài.
+- Mục "Bài tập củng cố" không còn câu dẫn tới `exercises.md` (tệp chưa có); khi tệp được viết, cần thêm liên kết.
+- Deck cần đồng bộ ở giai đoạn II: ký hiệu $\sigma$, định nghĩa mã bốn ô kề, $c$ thay $\alpha$, cách đánh số Ví dụ và Bài tập, hai lịch sử cùng độ dài của ví dụ chìa khóa, ba SVG mới.
+
+### Điểm cần tác tử rà toán soi
+
+- Bước 2 của chứng minh Mệnh đề 02.11 (đẳng thức hai biến cố điều kiện).
+- Phản ví dụ của Nhận xét 02.23 ($\Pr(T-t>k)=1/(k+1)$, $\mathbb E[T-t]=\infty$) và khẳng định với hữu hạn trạng thái.
+- Bước 2–3 của chứng minh Mệnh đề 02.27 (quỹ đạo không kết thúc, chính sách ngẫu nhiên với lợi tức $-\infty$).
+- Lập luận "mọi chính sách xác định trên mã đều thất bại" và công thức $16+2(1-p)/p+2p/(1-p)$ trong Tình huống 02.2 (đã kiểm bằng lặp số: $p=0{,}5$ cho $20$, $p=0{,}3$ và $0{,}7$ cho $21{,}52$; tìm kiếm vét cạn chính sách xác định trên mã không tìm được chính sách nào tới $\mathrm G$).
+- Khẳng định trong Định nghĩa 02.22 rằng vế phải không phụ thuộc $t$ dưới ba giả thiết đầu (nêu lý do, không chứng minh).
+
+### Số liệu đã tính lại
+
+Mê cung $8\times8$: 27 ô trống, 37 tường; đường chính sách 16 bước; bảng giá trị nguồn khớp khoảng cách theo mũi tên ở mọi ô ((4,2) $=-12$, (1,5) $=-24$); chính sách nguồn tối ưu. Mã bốn ô kề của mọi ô; cặp cùng mã trên đường đi; cửa sổ hai quan sát không có xung đột trên đường 16 bước. Ví dụ 02.12 ($0{,}45$; $0{,}05$; $0{,}25$; $0{,}25$). Ví dụ 02.13–02.15, 02.19–02.20. Tình huống 02.1 ($3{,}851$; $2{,}4659$; $-4{,}0951$; xác suất $0{,}6561$, $0{,}26244$, $0{,}08146$; $v_\pi\approx2{,}840$; với pin $4$: $\approx1{,}344$). Bài tập 02.6–02.9, 02.11 ($\gamma=1/\sqrt{10}$; $6{,}373$), 02.13 ($8{,}784$; $T=22$), 02.14 ($V_1=12$ tại $p=0{,}5$; $p^*=2-\sqrt2$; $6+4\sqrt2\approx11{,}66$).
+
+### Tự kiểm `no-ai-slop` (chế độ Edit) theo `eval.md`
+
+Phạm vi: toàn bộ văn bản của `lecture-note.md`. Đã sửa: câu lấy tài liệu làm chủ ngữ ("Mục 2 tách…", "Chương này…", "Bài 05 ước lượng…", "notebook Bài 04 ước lượng…") thành câu với "chúng ta" hoặc đối tượng toán học; bỏ "nhấn mạnh", "hiển nhiên", "câu hỏi tự nhiên", "tốt hơn nhiều", "yếu hơn vẻ ngoài", "thấp hơn rõ", một câu khẳng định không có căn cứ về giới hạn MC/TD, một câu dẫn tới tệp chưa tồn tại. Giữ các đối lập "X, không phải Y" khi chúng là phân biệt toán học bắt buộc ($R_{t+1}$ với $R_t$, trạng thái với biểu diễn, giả thuyết với định lý). Kết quả eval: đạt các mục về từ cấm, metadiscourse, câu kết kịch tính, định dạng; nhịp "Như vậy… Tuy nhiên… Trong Mục…" ở kết mục là cấu trúc bắt buộc của `AGENTS.md`, không coi là nhịp khuôn mẫu. Không dùng điểm từ bộ phát hiện AI. `quill` dùng như bảng kiểm thứ tự khái niệm: mỗi ký hiệu xuất hiện sau định nghĩa (đã đối chiếu $\mathcal S^+$, $r(s,a)$, $\sigma$, $X_t$, $H_t$); luồng mở/đóng giữa các mục khớp kết mục và mở mục sau.
+
+### Kết quả kiểm tra
+
+- `note_check.py`: 0 lỗi khối, số hiệu liên tục (bộ đếm chung 29, Ví dụ 20, Bài tập 14), không khối chưa đánh số, không mẫu câu cấm, 0 dấu `\(`/`\[`.
+- `check_note.py 02 lecture-02-giao-dien-tac-tu-moi-truong.html` (server cổng 8766): 1600×900 và 390×844 đều 0 lỗi KaTeX, 0 lỗi console, 0 tài nguyên lỗi hoặc ngoài, không tràn ngang, 97 khối, 11 hình tải được. Đã đổi một bảng bốn cột trong Tình huống 02.1 thành danh sách và tách một công thức nội dòng dài để hết tràn ở 390 px.
+- `git diff --check` trên tệp ghi chú: đạt.
+
+### Lượt rà soát ghi chú và lượt sửa (2026-10-12)
+
+**Tác tử rà.** Hai tác tử rà chỉ đọc, Opus 5.5 mức `high`, do điều phối viên giao: Vai A (độ chính xác toán học, báo cáo `scratchpad/review-02-A.md`: 0 chặn, 0 nghiêm trọng, 3 trung bình, 11 nhẹ) và Vai B (mạch viết, chuẩn giáo trình, `no-ai-slop` Detect, báo cáo `scratchpad/review-02-B.md`: 0 chặn, 1 nghiêm trọng, 14 trung bình, 21 nhẹ). Tác tử soạn (vai trò như mục trên) sửa theo quyết định của điều phối viên; không commit.
+
+**Số từ.** Trước: 27 813. Sau: 20 204 (đích ≤ 21 000), đếm bằng `note_check.py`. Ghi chú được viết lại theo cấu trúc mới, bản trước lưu ở `scratchpad/gen02/lecture-note-v1.md` (ngoài kho).
+
+**Bảng đổi số hiệu (cũ → mới).**
+
+| Loại | Cũ → mới |
+|---|---|
+| Bộ đếm chung | 02.1 → bỏ (Nhắc lại Định nghĩa 01.1, Mục 1.1); 02.2 → Định nghĩa 02.1 (Mẫu chuyển); 02.3, 02.4, 02.5 → bỏ (Nhắc lại Định nghĩa 01.5, Nhận xét 01.6, 01.10, Mục 1.3); 02.6 + 02.7 → Định nghĩa 02.2; 02.8 → Định nghĩa 02.3; Định nghĩa 02.9 → Nhận xét 02.4; 02.10 → Định nghĩa 02.5; 02.11 → Mệnh đề 02.6; 02.12 → Nhận xét 02.7; 02.13 + 02.14 → Định nghĩa 02.8; 02.15 → Nhận xét 02.9; 02.16 + 02.17 → Định nghĩa 02.10; 02.18 → Định lý 02.11; 02.19 → bỏ (ý $\gamma=0$ vào Mục 4.2, ý $U^3$ vào Đọc thêm); 02.20 → Định nghĩa 02.12; 02.21 → Mệnh đề 02.13; 02.22 → Định nghĩa 02.14; 02.23 → Nhận xét 02.15; 02.24 → Định nghĩa 02.16 (Hàm động lực); 02.25 → một câu sau Định nghĩa 02.16, dẫn Mệnh đề 03.6; 02.26 → Nhận xét 02.17; 02.27 → Mệnh đề 02.18; 02.28 → Nhận xét 02.19; 02.29 → Nhận xét 02.20. Còn 9 định nghĩa, 7 nhận xét, 3 mệnh đề, 1 định lý (bộ đếm 02.1–02.20). |
+| Ví dụ | 02.1 → 02.1; 02.2 → bỏ; 02.3 → 02.2; 02.4 → 02.3; 02.5 → bỏ (giữ hình `delayed-feedback.svg`); 02.6 → 02.4; 02.7 → 02.5; 02.8 → bỏ (giữ hình `full-partial-observation.svg`); 02.9 → 02.6; 02.10 → 02.7; 02.11 → bỏ; 02.12 → 02.8; 02.13 → 02.9; 02.14 → 02.10; 02.15 → 02.11; 02.16 → 02.12; 02.17 → 02.13; 02.18 → 02.14; 02.19 + 02.20 → 02.15. |
+| Bài tập | 02.1 → 02.1 (đổi sang bước tại $(6,1)$); 02.2 → chuyển sang `exercises.md`; 02.3 → 02.2; 02.4 → 02.3; 02.5 → 02.4; 02.6 → 02.5 (đề mới); 02.7 → 02.6; 02.8 → 02.7 (câu b, c chuyển đi); 02.9 → 02.8; 02.10 → 02.9; 02.11 → 02.10; 02.12 → 02.11; 02.13 → 02.12; 02.14 → chuyển sang `exercises.md`; 02.13 mới (chính sách trên tọa độ trong mê cung có chìa khóa). |
+| `note-topic-id` | Giữ `part-01`…`part-07`, `topic-01, 03, 05, 06, 07, 08, 09, 10, 11, 12, 14, 15`. Bỏ `topic-02` (thành Nhắc lại), `topic-04` (gộp vào `topic-05`), `topic-13` (gộp vào `topic-12`). |
+
+Số mục 1.1, 2.5, 3, 4.2, 4.5 được giữ, vì ghi chú Bài 01 dẫn "Bài 02, Mục 1.1 / 2.5 / 3 / 4.2 / 4.5". Ghi chú Bài 03 hiện dẫn Bài 02 theo mục 1–4 và mô tả Bài 02 "ở mức trực quan"; cần đồng bộ ở đợt số hiệu.
+
+**Phát hiện và xử lý.**
+
+| Mã | Mức | Trạng thái | Quyết định và cách xử lý |
+|---|---|---|---|
+| A-1 | trung bình | đã sửa | Câu dẫn thành "vai trò khác nhau"; gạch "dùng chung trọng số" dùng phản ví dụ $w^{(n)}=(1,\gamma,\dots,\gamma^{n-2},b\gamma^{n-1})$, $b\ne1$; gạch "tính dương" thành lập luận giả thiết thừa ($w_3\le w_2$ cho $\gamma\ge0$, $(1,0,0,\dots)$ loại $\gamma=0$); gạch "không tăng" ghi chỉ dùng cho $\gamma\le1$ (cũng xử lý P24). |
+| A-2 | trung bình | đã sửa | Mệnh đề 02.18: Bước 3 viết lại ($G_0\le M$ hầu như mọi nơi, $\mathbb E[G_0]\in[-\infty,M]$); thêm Bước 5 (chính sách tối ưu kết thúc tại $\mathrm G$, hoặc $\mathrm H$, với xác suất 1); kết luận sửa theo. |
+| A-3 | trung bình | đã sửa | Sau Định nghĩa 02.3: "(2.2) là trường hợp $O_t=S_t$ của Định nghĩa 01.2" (cùng P3). |
+| A-4 | nhẹ | đã sửa | Nhận xét 02.15: trạng thái $n$ = số bước cộng 1, xuất phát $n=1$, $\mathbb E[T-t\mid S_t=1]$; thêm lý do cho trường hợp hữu hạn trạng thái. |
+| A-5 | nhẹ | đã sửa | Thêm quy ước "giới hạn tổng riêng" ở Mục 4.2, dẫn lại ở Tình huống 02.2; câu hỏi Bài tập 02.10(b) thành "không cho giá trị tối ưu hữu hạn". |
+| A-6 | nhẹ | đã sửa | Tình huống 02.2: thêm vế "nếu chính sách khác Bắc/Tây thì không tới $\mathrm A$/$\mathrm B$". |
+| A-7 | nhẹ | đã sửa | Mệnh đề 02.6, Bước 2: thêm câu chọn kết cục. |
+| A-8 | nhẹ | đã sửa | Nhận xét 02.7: "trong $h'$ đúng mười một bước", thêm câu khoảng cách lớn tùy ý; Tình huống 02.2 dẫn "không có cửa sổ hữu hạn nào đủ cho mọi bài toán". |
+| A-9 | nhẹ | đã sửa | "đúng năm ô", chuyển vào Nhận xét 02.4. |
+| A-10 | nhẹ | đã sửa một phần | Alt trong ghi chú và chú giải `aliasing-pair.svg` sửa; `state-observation-representation.svg` (SVG cũ) để giai đoạn II. |
+| A-11 | nhẹ | đã sửa | Bỏ vế "chính sách không đổi theo thời gian có nghĩa"; thay bằng câu nêu cần tính Markov và không có hạn chót (cùng P11). |
+| A-12 | nhẹ | đã sửa | Quy ước $X_0=(O_0,\varnothing,\varnothing)$. |
+| A-13 | nhẹ | đã sửa | Mệnh đề 02.13 tách phần (c) cho $T<\infty$. |
+| A-14 | nhẹ | đã sửa | Thêm câu quy tắc nhân sau Định nghĩa 02.14. |
+| P1 | nghiêm trọng | đã sửa | Kiến thức tiên quyết viết thành các mục Nhắc lại với số hiệu hiện tại của Bài 01 (01.1, 01.2, 01.3, 01.5, 01.6, 01.7, 01.8, 01.9, 01.10, 01.11, 01.12, 01.14, 01.15); bỏ mọi câu "ở mức trực quan"; quan hệ thật: Định nghĩa 02.8 với $X_t=H_t$ cho lại 01.11, $v_\pi(s)$ là trường hợp riêng của $v_\pi(h)$. |
+| P2 | trung bình | đã sửa | A1–A5: Mục 1.1 và 1.3 thành Nhắc lại; Ví dụ 02.2, 02.5 cũ bỏ; Bài tập 02.2 cũ chuyển đi. |
+| P3 | trung bình | đã sửa | Như A-3. |
+| P4 | trung bình | đã sửa | Định nghĩa 02.9 thành Nhận xét 02.4, nêu là tổng quát hóa Định nghĩa 01.2. |
+| P5 | trung bình | đã sửa | Gộp thành Định nghĩa 02.8, câu "với $X_t=H_t$ ta được lại 01.11". |
+| P6 | trung bình | đã sửa | Câu nối $v_\pi(s)$ với $v_\pi(h)$ sau Định nghĩa 02.14. |
+| P7 | trung bình | đã sửa | $p$ gọi là "hàm động lực (dynamics function), tức mô hình đúng của môi trường"; mô hình của Định nghĩa 01.14 là ước lượng $\hat p$. Cần thêm vào bảng thuật ngữ trong `outline.md` ở giai đoạn II. |
+| P8 | trung bình | đã sửa | 15 định nghĩa còn 9; bảng đổi số hiệu ở trên. |
+| P9 | trung bình | đã sửa | Làm A1–A11, B1–B4, C1–C9, D1–D2, E1–E8, F và D3, H1, H3; 27 813 → 20 204 từ. Ngoại lệ: B4 làm một phần (giữ chặn cho $T<\infty$ thành Mệnh đề 02.13(c), vì A-13 yêu cầu và Nhận xét 02.15, Bài tập 02.12 dùng); A4 làm một phần (giữ hình `delayed-feedback.svg` với hai câu đọc hình, vì brief Bài 02 yêu cầu nhúng hình này); E1 giữ 12 chủ đề thay vì 11, để nhóm `cầu nối` không rỗng ("Từ lợi tức của một lượt đến kỳ vọng"); B3 giữ phản ví dụ thành một gạch đầu dòng ngắn, vì A-4 yêu cầu sửa chứ không bỏ. |
+| P10 | trung bình | đã sửa | "Trong thực hành" Mục 5 và mục Ứng dụng dẫn gạch "Bỏ $c\ge0$" sau Mệnh đề 02.18. |
+| P11 | trung bình | đã sửa | Như A-11. |
+| P12 | trung bình | đã sửa | Bỏ câu gộp hai việc. |
+| P13 | trung bình | đã sửa | Thêm câu trực giác "Về mặt ý tưởng… đây chưa phải định nghĩa" ở 1.2, 2.3, 2.4, 4.2, 4.4, 4.5, 5.1. |
+| P14 | trung bình | đã sửa | Tách đoạn quy ước sau bảng ký hiệu thành bốn đoạn; tách đoạn "Trong thực hành" Mục 2; rút các đoạn dài. |
+| P15 | trung bình | đã sửa | Kết mục chỉ nêu kết quả và thiếu hụt; đoạn mở mục nêu bài toán cụ thể, không lặp. |
+| P16 | nhẹ | đã sửa | Chỉ dùng "mẫu chuyển (transition)". |
+| P17 | nhẹ | đã sửa | Thêm thuật ngữ gốc ở lần đầu: transition, representation, Markov property, deterministic/stochastic policy, return, dynamics function, discount factor, history, trajectory, policy, MDP, POMDP, utility, myopic, ε-greedy, temporal difference (TD), dynamic programming, prediction, control. |
+| P18 | nhẹ | đã sửa | Ví dụ 02.6 chép lại dãy ô; Ví dụ 02.15 gộp bảng và tự chứa. |
+| P19 | nhẹ | đã sửa | Như A-10. |
+| P20 | nhẹ | đã sửa | Hết khi gộp Định nghĩa 02.2. |
+| P21 | nhẹ | đã sửa | Bỏ ngoặc lồng trong dẫn Sutton–Barto và Tình huống 02.1. |
+| P22 | nhẹ | đã sửa | Câu trong Định nghĩa 02.8 viết lại đủ thành phần. |
+| P23 | nhẹ | đã sửa | Đoạn quy ước sau bảng ký hiệu phân biệt ba nghĩa của "dừng" và "kết thúc". |
+| P24 | nhẹ | đã sửa | Như A-1. |
+| P25 | nhẹ | đã sửa | "một nguyên nhân có thể của khác biệt đó". |
+| P26 | nhẹ | đã sửa | $\mathcal A(s)$ nhắc lại trong Kiến thức tiên quyết (Định nghĩa 01.2) và trong Định nghĩa 02.8. |
+| P27 | nhẹ | đã sửa | Bỏ các câu lấy chương, mục, notebook làm chủ ngữ. |
+| P28 | nhẹ | đã sửa | Bỏ Shakerinava và Ravanbakhsh (2022): không xác minh được bằng trang cụ thể. |
+| S1 | nhẹ | đã sửa | Bỏ năm câu "Ở Mục k…" (C9). |
+| S2 | nhẹ | đã sửa | Bỏ công thức "Cần nhìn N điều". |
+| S3 | nhẹ | đã sửa | Bỏ hoặc đổi các câu chủ đề đếm số, còn "Mệnh đề có hai giới hạn" và "Định nghĩa có ba thành phần". |
+| S4 | nhẹ | đã sửa | Hết khi Mục 1.1 thành Nhắc lại. |
+| S5 | nhẹ | đã sửa | Bỏ ẩn dụ "mua được với giá". |
+| S6 | nhẹ | đã sửa | Bỏ "Đổi lại". |
+| S7 | nhẹ | đã sửa | Bỏ hai nhận định chuẩn tắc không nguồn trong Nhận xét 02.20; giữ giới hạn của phép so sánh. |
+| S8 | nhẹ | đã sửa | Bỏ "Câu hỏi tiếp theo là…". |
+
+**Đề xuất không làm hoặc làm một phần.** B4, A4, E1, B3 như ghi ở dòng P9. Ngoài ra, C7 còn ba chỗ nhắc "Đông và Nam cùng nhận $-1$ tại $(4,1)$" (Ví dụ 02.3, đoạn đọc hình phản hồi trễ, mở Mục 4), vì mỗi chỗ dùng ý đó cho một kết luận khác. Bài tập 02.8 cũ câu (c) ($c=2$, $h=0$) bị bỏ để giữ đích độ dài.
+
+**Phần toán đã đổi (cho lượt rà lại).** Định lý 02.11: danh sách vai trò giả thiết (phản ví dụ $w^{(n)}$, lập luận giả thiết dương thừa). Mệnh đề 02.18: Bước 3 viết lại, Bước 5 mới, kết luận mới. Mệnh đề 02.6: câu thêm ở Bước 2. Mệnh đề 02.13: tách (c). Nhận xét 02.15: phản ví dụ và lý do hữu hạn trạng thái. Nhận xét 02.7: lập luận cửa sổ. Câu quy tắc nhân sau Định nghĩa 02.14. Bài tập mới hoặc đổi đề: 02.1 (bước tại $(6,1)$), 02.4(b) (xác suất ở lại $x$ sau hai bước, $0{,}57$), 02.5 (chuỗi $2,0,-1,4$: $2{,}25$; $-1{,}875$; $2$; $5$), 02.13 (chính sách trên tọa độ trong mê cung có chìa khóa). Tình huống 02.2 bỏ phần tối ưu $p$, giữ $p=0{,}5$.
+
+**Tự kiểm `no-ai-slop` (Edit) theo `eval.md`.** Đạt: không từ cấm, không câu dẫn rỗng, không metadiscourse kiểu "cần nhìn", không ẩn dụ, không tài liệu làm chủ ngữ; các đối lập "X, không phải Y" còn lại là phân biệt toán học. Câu hỏi nghiên cứu còn hai chỗ (Mục 2.5 và mở Mục 5), đều được trả lời ngay sau.
+
+**Kiểm tra.** `note_check.py`: bộ đếm chung 20, Ví dụ 15, Bài tập 13, không khoảng trống, không trùng, không khối chưa đánh số, không mẫu cấm. `check_note.py 02 lecture-02-giao-dien-tac-tu-moi-truong.html` (cổng 8766): 1600×900 và 390×844 đều 0 lỗi KaTeX, 0 lỗi console, 0 tài nguyên ngoài hoặc lỗi, không tràn ngang, 80 khối.
+
+**Chuyển sang `exercises.md` (chép nguyên đề, gợi ý, lời giải của bản trước; số hiệu sẽ cấp khi viết `exercises.md`).**
+
+```markdown
+::: exercise Bài tập 02.2 (Nhận diện tín hiệu học)
+Theo Bài tập tuần 2 (2025–2026), bài 1. Xét ba tình huống.
+
+1. Một mô hình phân loại ảnh được huấn luyện trên $10\,000$ ảnh, mỗi ảnh có nhãn "mèo" hoặc "chó".
+2. Một thuật toán chia $5\,000$ khách hàng thành nhóm theo lịch sử mua hàng, không có nhãn nhóm nào cho trước.
+3. Một robot hút bụi chọn hướng đi ở mỗi bước; nó nhận phần thưởng $+1$ khi về tới trạm sạc và $0$ ở mọi bước khác.
+
+- (a) Với mỗi tình huống, xác định khung học, loại tín hiệu và thời điểm nhận tín hiệu.
+- (b) Giải thích vì sao tín hiệu ở tình huống 3 được xem là trễ.
+- (c) Ở tình huống 3, nêu một hậu quả của việc thưởng $0$ ở mọi bước chưa về trạm đối với việc so sánh hai đường về trạm dài khác nhau.
+:::
+
+::: hint
+Dùng bảng của Nhận xét 02.3. Ở câu (c), so sánh tổng phần thưởng của một đường về trạm sau 5 bước và một đường sau 50 bước.
+:::
+
+::: solution
+**Câu (a).**
+
+- Tình huống 1 là học có giám sát: tín hiệu là nhãn đúng của từng ảnh, có sẵn khi học.
+- Tình huống 2 là học không giám sát: không có nhãn, thuật toán tìm cấu trúc trong dữ liệu.
+- Tình huống 3 là học tăng cường: tín hiệu là phần thưởng, nhận sau hành động qua tương tác.
+
+**Câu (b).** Phần thưởng $+1$ chỉ đến ở bước về tới trạm, trong khi mọi hành động trước đó đều góp phần vào việc về tới trạm và đều nhận $0$ (Nhận xét 02.5). Phần thưởng ngay sau một hành động không cho biết hành động đó tốt hay xấu.
+
+**Câu (c).** Với cách thưởng này và không chiết khấu, đường 5 bước và đường 50 bước cùng có tổng phần thưởng $+1$. Tiêu chí tổng phần thưởng vì thế không ưu tiên đường ngắn; muốn ưu tiên đường ngắn cần phạt mỗi bước như mê cung $8\times8$, hoặc chiết khấu như ở Mục 4.
+
+**Kiểm tra lại.** Ở câu (c), tổng của đường $k$ bước là $(k-1)\cdot0+1=1$ với mọi $k\ge1$.
+:::
+
+::: exercise Bài tập 02.8 (Mô hình của bước trượt)
+Biến thể trơn của mê cung $8\times8$: tại $(0,2)$, bước Đông đưa tác tử tới $(1,2)$ với xác suất $0{,}8$ và giữ tác tử tại $(0,2)$ với xác suất $0{,}2$; mọi bước nhận $-1$.
+
+- (a) Viết $p(s',r\mid(0,2),\text{Đông})$ cho mọi cặp có xác suất dương, rồi tính $p(s'\mid(0,2),\text{Đông})$ và $r((0,2),\text{Đông})$.
+- (b) Người thiết kế đổi phần thưởng: bước trượt nhận $-2$, bước thành công vẫn nhận $-1$. Viết lại mô hình và tính $r((0,2),\text{Đông})$. Trạng thái kế tiếp và phần thưởng có độc lập không.
+- (c) Một bảng mô hình ghi $p((1,2),-1\mid(0,2),\text{Đông})=0{,}8$ và $p((1,2),-2\mid(0,2),\text{Đông})=0{,}3$. Bảng này có hợp lệ không.
+:::
+
+::: hint
+Dùng (4.10)–(4.12). Ở câu (b), so sánh $\Pr(S_{t+1}=(1,2),R_{t+1}=-1)$ với tích hai xác suất biên.
+:::
+
+::: solution
+**Câu (a).** $p((1,2),-1\mid(0,2),\text{Đông})=0{,}8$ và $p((0,2),-1\mid(0,2),\text{Đông})=0{,}2$. Do đó $p((1,2)\mid\cdot)=0{,}8$, $p((0,2)\mid\cdot)=0{,}2$, và $r((0,2),\text{Đông})=-1\cdot0{,}8+(-1)\cdot0{,}2=-1$.
+
+**Câu (b).** $p((1,2),-1\mid(0,2),\text{Đông})=0{,}8$ và $p((0,2),-2\mid(0,2),\text{Đông})=0{,}2$. Thưởng kỳ vọng $r((0,2),\text{Đông})=0{,}8\cdot(-1)+0{,}2\cdot(-2)=-1{,}2$. Không độc lập: $\Pr(S_{t+1}=(1,2))\cdot\Pr(R_{t+1}=-1)=0{,}8\cdot0{,}8=0{,}64$, khác xác suất đồng thời $0{,}8$.
+
+**Câu (c).** Không hợp lệ: hai số đã vượt tổng $1$, vì $0{,}8+0{,}3=1{,}1$, trái với (4.10).
+
+**Kiểm tra lại.** Ở câu (b), $p(s'\mid s,a)$ giống câu (a), nhưng $r(s,a)$ khác; xác suất chuyển không chứa thông tin về phần thưởng.
+:::
+
+::: exercise Bài tập 02.14 (Hành lang ba ô với hành động đảo chiều)
+Theo Sutton và Barto (2018, §13.1, Ví dụ 13.1) và Bài tập tuần 2 (2025–2026), bài 6. Một hành lang có ba ô chưa kết thúc $1,2,3$ từ trái sang phải; đích $\mathrm G$ ở bên phải ô $3$. Có hai hành động, Trái và Phải. Ở ô $1$ và ô $3$, hai hành động có tác dụng thông thường; Trái ở ô $1$ giữ tác tử tại ô $1$. Ở ô $2$, tác dụng bị đảo: Phải đưa tác tử về ô $1$, Trái đưa tác tử sang ô $3$. Mỗi bước nhận $-1$, $\gamma=1$, xuất phát tại ô $1$. Cảm biến cho cùng một quan sát ở cả ba ô, nên biểu diễn $X_t$ là hằng số.
+
+- (a) Chỉ ra rằng cả hai chính sách xác định trên $X$ không tới $\mathrm G$.
+- (b) Với chính sách ngẫu nhiên chọn Phải với xác suất $p\in(0,1)$, gọi $V_i$ là số bước kỳ vọng từ ô $i$ tới $\mathrm G$. Viết hệ ba phương trình, giải ra $V_1$ theo $p$, và tính lợi tức kỳ vọng từ ô $1$ khi $p=0{,}5$.
+- (c) Tìm $p$ làm $V_1$ nhỏ nhất và giá trị nhỏ nhất đó.
+- (d) Giải thích vì sao bài toán này cần chính sách ngẫu nhiên, theo ngôn ngữ của Định nghĩa 02.9 và 02.14.
+:::
+
+::: hint
+Phương trình cho ô $1$: $V_1=1+pV_2+(1-p)V_1$. Ở câu (c), đạo hàm của $V_1(p)$ bằng $0$ dẫn tới một phương trình bậc hai.
+:::
+
+::: solution
+**Câu (a).** Luôn Phải: ô $1\to$ ô $2\to$ ô $1\to\cdots$, không bao giờ tới ô $3$. Luôn Trái: tác tử đứng yên ở ô $1$ mãi. Lợi tức của cả hai là $-\infty$.
+
+**Câu (b).** Theo luật chuyển,
+$$
+\begin{aligned}
+V_1&=1+pV_2+(1-p)V_1,\\
+V_2&=1+pV_1+(1-p)V_3,\\
+V_3&=1+p\cdot0+(1-p)V_2 .
+\end{aligned}
+$$
+Phương trình đầu cho $V_1=1/p+V_2$; phương trình cuối cho $V_3=1+(1-p)V_2$. Thế vào phương trình giữa:
+$$
+\begin{aligned}
+V_2&=1+p\Bigl(\frac1p+V_2\Bigr)+(1-p)\bigl(1+(1-p)V_2\bigr)
+&&\text{(thế }V_1,V_3)\\
+&=3-p+\bigl(p+(1-p)^2\bigr)V_2
+&&\text{(gom số hạng)}.
+\end{aligned}
+$$
+Vì $1-p-(1-p)^2=p(1-p)$, ta được $V_2=\dfrac{3-p}{p(1-p)}$ và
+$$
+V_1=\frac1p+\frac{3-p}{p(1-p)}=\frac{4-2p}{p(1-p)}.
+$$
+Với $p=0{,}5$: $V_1=3/0{,}25=12$, nên lợi tức kỳ vọng từ ô $1$ là $-12$.
+
+**Câu (c).** Đạo hàm của $V_1(p)=(4-2p)/(p-p^2)$ bằng $0$ khi $-2(p-p^2)-(4-2p)(1-2p)=0$, tức $p^2-4p+2=0$. Nghiệm trong $(0,1)$ là $p=2-\sqrt2\approx0{,}586$. Khi đó $p(1-p)=3\sqrt2-4$ và
+$$
+V_1=\frac{2\sqrt2}{3\sqrt2-4}=6+4\sqrt2\approx11{,}66 .
+$$
+Kết quả khớp với Sutton và Barto (2018, trang 323): xác suất tốt nhất khoảng $0{,}59$, giá trị khoảng $-11{,}6$.
+
+**Câu (d).** Ba ô cho cùng quan sát, nên môi trường được quan sát một phần (Định nghĩa 02.9) và mọi chính sách trên $X$ chọn cùng một phân phối ở cả ba ô. Ô $2$ cần hành động ngược với ô $1$ và ô $3$, nên mọi chính sách xác định thất bại theo câu (a); chính sách ngẫu nhiên (Định nghĩa 02.14) trộn hai hành động và tới đích với xác suất $1$.
+
+**Kiểm tra lại.** Với $p=0{,}5$: $V_2=10$, $V_3=1+0{,}5\cdot10=6$, và phương trình giữa cho $1+0{,}5\cdot12+0{,}5\cdot6=10=V_2$.
+:::
+```
+
+### Rà lại vòng 2 và lượt sửa cuối (2026-10-12)
+
+**Tác tử rà.** Hai tác tử rà lại chỉ đọc, Opus 5.5 mức `high`, do điều phối viên giao: Vai A (`scratchpad/recheck-02-A.md`: 0 trung bình, 7 nhẹ; xác nhận 14 phát hiện vòng 1 đã sửa đúng, mọi số liệu và tham chiếu số hiệu khớp) và Vai B (`scratchpad/recheck-02-B.md`: 1 trung bình R1, 16 nhẹ R2–R17). Không còn phát hiện chặn hay nghiêm trọng. Tác tử soạn sửa theo quyết định của điều phối viên; không commit.
+
+**Số từ.** Trước: 20 214. Sau: 20 475 (giới hạn ≤ 20 500). Bản trước lượt sửa lưu ở `scratchpad/gen02/lecture-note-v2.md`, ngoài kho.
+
+| Mã | Mức | Trạng thái | Xử lý |
+|---|---|---|---|
+| A2-1 | nhẹ | đã sửa | Phản ví dụ "dùng chung trọng số": thêm $\gamma\in(0,1]$ và $0<b<1$. |
+| A2-2 | nhẹ | đã sửa | Câu tổng kết bước–giả thiết sau Định lý 02.11 nêu tính dương (cho $\gamma>0$, thay được bằng gạch cuối) và tính không tăng; khớp Bước 2 (cùng R5). |
+| A2-3 | nhẹ | đã sửa | Nhận xét 02.15: thêm tiền đề "từ mọi trạng thái đạt được lượt kết thúc với xác suất 1" và cách chọn $N=\max_sN_s$, $\varepsilon$ nhỏ nhất. |
+| A2-4 | nhẹ | đã sửa | "các xác suất ở vế phải của (2.3)" thay "xác suất chuyển" sau Định nghĩa 02.14. |
+| A2-5 | nhẹ | đã sửa | $v_\pi(s)$ là trường hợp riêng của $v_\pi(h)$ "với $\gamma=1$; khi $\gamma<1$, thay $G_t$ trong (4.1) của Bài 01 bằng lợi tức chiết khấu". |
+| A2-6 | nhẹ | đã sửa | Mô hình của Định nghĩa 01.14 "nói chung là một xấp xỉ $\hat p$ của $p$ (trùng $p$ khi người thiết kế cung cấp đúng)". |
+| A2-7 | nhẹ | đã sửa | (a) Định nghĩa 02.8 dùng $\mathcal A(x)$, $\pi(x)\in\mathcal A(x)$ (cùng R3). (b) Alt và nhãn `chapter-structure.svg` đổi thành "Hàm động lực" (cùng R6). |
+| R1 | trung bình | đã sửa | Thêm câu "Trong Mục N+1, chúng ta…" vào kết §1–§4. |
+| R2 | nhẹ | đã sửa | Bài tập 02.10(b) chép lại độ dài hai đường và "có thể đi vòng". |
+| R3 | nhẹ | đã sửa | Như A2-7(a). |
+| R4 | nhẹ | đã sửa | Nêu cả chiều tổng quát hóa (lịch sử quan sát cho lại 01.11) và chiều thu hẹp (biểu diễn gọn hơn lịch sử). |
+| R5 | nhẹ | đã sửa | Như A2-2. |
+| R6 | nhẹ | đã sửa | Như A2-7(b); đã xem lại hình sau khi đổi nhãn. |
+| R7 | nhẹ | đã sửa | Bỏ lựa chọn "phần thưởng" ở Bài tập 02.9. |
+| R8 | nhẹ | đã sửa | Bài tập 02.5(b) nhắc $\gamma=0{,}5$. |
+| R9 | nhẹ | đã sửa | Tình huống 02.1: thêm hệ quả của việc mất định vị. |
+| R10 | nhẹ | đã sửa | Mã `lec-02-topic-01` chuyển xuống trước "### 1.2 Mẫu chuyển". |
+| R11 | nhẹ | đã sửa | Tách câu giới hạn của quan sát đầy đủ thành đoạn riêng ở Mục 2.4. |
+| R12 | nhẹ | đã sửa | Tình huống 02.1: tên hai kết cục đặt trong mệnh đề, bỏ hai ngoặc. |
+| R13 | nhẹ | đã sửa | "(agent)", "(environment)", "(reward)" chuyển lên lần xuất hiện đầu ở Mục tiêu học tập. |
+| R14 | nhẹ | đã sửa | "Phép so sánh có giới hạn. Mô hình giả định…". |
+| R15 | nhẹ | đã sửa | Đổi khuôn "Về mặt ý tưởng… đây chưa phải định nghĩa" ở 1.2, 2.3, 3.1, 4.2, 4.5; giữ ở các chỗ còn lại. |
+| R16 | nhẹ | không sửa | Số hiệu Mệnh đề 03.6, 03.11 hiện đúng; kiểm lại ở đợt đồng bộ số hiệu. |
+| R17 | nhẹ | để giai đoạn III | Khối bài tập chuyển sang `exercises.md` (cuối mục trước) còn số hiệu cũ; đánh số lại theo bảng cũ → mới khi viết `exercises.md`. |
+
+**Tự kiểm `no-ai-slop` (Edit) theo `eval.md`.** Các câu thêm không có từ cấm, metadiscourse hay dấu hai chấm kiểu tiết lộ; khuôn câu trực giác đã đa dạng hóa; câu nối kết mục nêu việc cụ thể của mục sau.
+
+**Kiểm tra.** `note_check.py`: bộ đếm chung 20, Ví dụ 15, Bài tập 13, không khoảng trống, không trùng, không khối chưa đánh số, không mẫu cấm. `check_note.py 02 lecture-02-giao-dien-tac-tu-moi-truong.html` (cổng 8766): 1600×900 và 390×844 đều 0 lỗi KaTeX, 0 lỗi console, 0 tài nguyên ngoài hoặc lỗi, không tràn ngang, 80 khối. `git diff --check` trên ghi chú và `img/lec-02`: đạt.
