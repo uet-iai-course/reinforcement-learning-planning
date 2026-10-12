@@ -758,3 +758,291 @@ Quyết định của điều phối viên:
 ### Giới hạn công cụ
 
 - Không thể rà bằng Codex Slides: runtime cục bộ dùng Node v18.19.1 trong khi plugin cần Node 20+, và máy chủ dừng với `ReferenceError: File is not defined`. Đã tiếp tục đầy đủ kiểm tra RevealJS cục bộ; không tuyên bố đã xác minh bằng Codex Slides.
+
+## Đợt sửa 2026-10-12 — Giai đoạn I: ghi chú bài giảng
+
+### Tác tử và phạm vi
+
+- Vai: tác tử soạn ghi chú bài giảng Bài 01 (viết tệp). Loại `general-purpose` theo brief của điều phối viên; mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` theo brief. Không commit, không push.
+- Tệp ghi: `2627-1/materials/lec-01/lecture-note.md` (viết lại toàn bộ); thêm ba SVG mới cho ghi chú: `img/lec-01/chapter-map.svg` (cấu trúc chương), `img/lec-01/robot-four-cells.svg` (môi trường robot dọn dãy bốn ô), `img/lec-01/tictactoe-four-moves.svg` (bốn nước 3, 6, 7, 9 cùng kỳ vọng một bước). Không sửa SVG cũ, deck, outline, storyboard, index.
+- Đầu vào đã đọc: `quyet-dinh-chuan-2026-10-12.md` (mục 1–4, 6, 8), `revision-plan-2026-10-12.md` (A, B, C, D), `AGENTS.md` (các mục brief yêu cầu), mẫu `materials/_templates/lecture-note.md`, mẫu math-4-AI Bài 07 (chỉ cách trình bày), ghi chú và deck cũ, `no-ai-slop` (`SKILL.md`, `eval.md`), `quill/references/workflows.md` (Outline, Threads, Concept, Revise), Sutton và Barto (2018) bản PDF, văn bản và hình trang 28–30 của PPTX nguồn (chỉ đọc).
+
+### Kiểm thế cờ gốc (quyết định chung mục 8)
+
+- Hình trang 28–29 của PPTX nguồn là thế cờ X O O / O X X / _ _ X (X ở ô 1, 5, 6, 9; O ở ô 2, 3, 4): bốn X, ba O, X đã thắng theo đường chéo 1–5–9. Đây là thế cờ đã kết thúc của Sutton và Barto (2018, §1.5, tr. 8), không phải thế cờ chờ X chọn nước. Trang 30 là Hình 1.1 của Sutton và Barto (dãy nước đi), không có thế cờ riêng.
+- Vì vậy nguồn không có thế cờ "2 X, 3 O". Ghi chú dùng thế cờ của `tictactoe-board.svg` (X ở 1, 5; O ở 2, 4, 8; trống 3, 6, 7, 9) như số liệu sư phạm tự xây dựng, nêu rõ O đi trước (đếm quân) và đến lượt X ở bước $t=2$, và tính đủ bốn nhánh, gồm $a=6$. Hai SVG cũ `tictactoe-search.svg` và `tictactoe-value.svg` chỉ vẽ ba nhánh nên ghi chú không dùng; việc sửa hai SVG này (thêm nhánh $a=6$, gọi đúng thế cờ sau nước của X) thuộc giai đoạn deck.
+
+### Số liệu đã tính lại (bằng tay và bằng mã phân số trong scratchpad)
+
+- Tic-tac-toe, thế cờ $s$, X và O chọn đều: kỳ vọng một bước $a=3$: $\frac13$; $a=6$: $0$ (giá trị ba thế cờ kế tiếp $\frac12$, $0$, $-\frac12$); $a=7$: $\frac23$; $a=9$: $1$. $v_{\pi_u}(s)=\frac12$; xác suất X thắng $\frac23$, O thắng $\frac16$, hòa $\frac16$. $a^*=9$.
+- Ví dụ 01.9: thế cờ hai ô trống (X 1, 3, 5; O 2, 4, 7, 8): $v_{\pi_u}=0$, $v_{\pi_w}=1$.
+- Bài tập 01.8 ($\pi_w$: thắng ngay nếu có, nếu không chọn đều): $a=3,7,9$ cho $1$, $a=6$ cho $\frac12$; $\arg\max=\{3,7,9\}$.
+- Bài tập 01.7 (X 3, 4, 9; O 1, 5, 7; trống 2, 6, 8; X đi trước): nước 6 thắng qua cột 3–6–9.
+- Robot dọn dãy bốn ô: Ví dụ 01.5 $G_0=\dots=G_3=1$; Ví dụ 01.6 (chi phí di chuyển $c=0{,}1$) $G=(0{,}7;0{,}8;0{,}9;1;0)$; Ví dụ 01.7 lượt B sau sửa phần thưởng $G_0=0$; Bài tập 01.3 $(0,-1,0,1)$: $G_0=0$, $G_1=0$, $G_3=1$; Bài tập 01.5 ($L=4$, phải/hút mỗi $\frac12$) $v=\frac1{16}$; Tình huống 01.1 ($L=5$, chọn đều ba hành động) bảng $w(k,m)$ và $v_{\pi_u}(h_0)=\frac8{243}$, kiểm bằng đếm $1+5$ dãy thành công; nước khai thác một bước tại $h_0$ là $\text{phải}$ ($\frac6{81}$ so với $\frac1{81}$); Tình huống 01.2 $v_{\pi_1}(h_a)=1$, $v_{\pi_1}(h_b)=0$.
+- Ví dụ 01.10: một lần thử thêm dịch $\bar r(\mathrm A)$ trong $[\frac{12}{21},\frac{13}{21}]$, $\bar r(\mathrm B)$ trong $[\frac{1{,}1}3,\frac{2{,}1}3]$; Bài tập 01.6: $\frac{2{,}00}3\approx0{,}667$ và $0{,}50$.
+
+### Lỗi của bản cũ đã sửa
+
+- $V^\pi$ đổi thành $v_\pi$; "phần thưởng tích lũy" đổi thành "lợi tức (return)".
+- Giá trị sau nước thắng: bản cũ (dòng 202) ghi $+1$; nay giá trị của lịch sử đã kết thúc bằng $0$, phần thưởng $+1$ nằm ở $R_{t+1}$ (Nhận xét 01.15, Bài tập 01.7, 01.10).
+- Tập hành động hợp lệ $\{3,7,9\}$ sửa thành $\{3,6,7,9\}$; chỉ số bước Tic-tac-toe đếm theo lượt của X, nước của O thuộc môi trường; trạng thái không cần "lượt chơi".
+- Rút gọn lịch sử thành thế cờ có đủ ba điều kiện (Nhận xét 01.21); phép chọn nước có Mệnh đề 01.22 và chứng minh theo bước.
+- Bỏ mọi lời quy trình ("bước thuật toán không áp dụng", "cần ghi vào nhật ký", "note"), bỏ liên kết URL và tên tệp nguồn; trích dẫn "Bài giảng gốc (2025–2026), trang N".
+
+### Giáo trình đã tham khảo theo mục (tham khảo cách dẫn dắt, không dịch, không chép)
+
+| Mục của ghi chú | Giáo trình và mục |
+|---|---|
+| Mở chương, Mục 1 | Sutton và Barto (2018) §1.1 (tr. 1–4), §3.1 (tr. 47–53, ranh giới tác tử–môi trường, chỉ số $R_{t+1}$), §1.4 (tr. 7–8, cách hiểu trạng thái); *Học máy thống kê* `sec_mdp_introduction.tex` (dẫn từ học có giám sát sang tương tác; giáo trình dùng "tác nhân"/"tác tử", học phần dùng "tác tử") |
+| Mục 2 | Sutton và Barto (2018) §1.1; Goodfellow, Bengio và Courville (2016) §5.1.3 (chỉ dẫn mục, không ghi trang) |
+| Mục 3 | Sutton và Barto (2018) §3.2 (tr. 53–54, giả thuyết phần thưởng), §3.3 (tr. 54–57, lượt và lợi tức), §3.4 (tr. 57, quy ước trạng thái kết thúc) |
+| Mục 4 | Sutton và Barto (2018) §1.3 (tr. 6–7, bốn thành phần, phần thưởng khác giá trị), §3.5 (tr. 58), §2.1–2.2 (tr. 25–28, hành động tham lam, khai thác, thăm dò), §8.1 (tr. 159–161, lập kế hoạch) |
+| Mục 5 | Sutton và Barto (2018) §1.5 (tr. 8–13, đối thủ không hoàn hảo, bảng giá trị, nước thăm dò), §6.8 (tr. 136–137, trạng thái sau nước đi) |
+| Tình huống | Sutton và Barto (2018) §17.3 (tr. 464, quan sát và trạng thái) cho Tình huống 01.2 |
+
+Ví dụ xuyên suốt robot dọn dãy bốn ô là phiên bản thu nhỏ tự xây dựng (theo plan A5 và quyết định chung mục 8), ghi là số liệu sư phạm trong đoạn quy ước sau bảng ký hiệu.
+
+### Số hiệu cuối cùng
+
+- Bộ đếm chung (24): Định nghĩa 01.1, 01.2; Nhận xét 01.3, 01.4, 01.5; Định nghĩa 01.6; Nhận xét 01.7, 01.8; Định nghĩa 01.9, 01.10; Mệnh đề 01.11; Nhận xét 01.12; Định nghĩa 01.13, 01.14; Nhận xét 01.15; Định nghĩa 01.16; Nhận xét 01.17; Định nghĩa 01.18; Nhận xét 01.19; Định nghĩa 01.20; Nhận xét 01.21; Mệnh đề 01.22; Định nghĩa 01.23; Nhận xét 01.24.
+- Ví dụ 01.1–01.12; Bài tập 01.1–01.8 trong mục, 01.9–01.12 củng cố; Tình huống 01.1, 01.2. Công thức đánh số (3.1), (3.2), (4.1), (5.1), (5.2), (5.3). Không có khối `algorithm` (nguồn không có thuật toán).
+- `note-topic-id`: giữ `lec-01-topic-01`…`10` (topic-07 đổi tên "Lịch sử và thế cờ trong Tic-tac-toe", Mục 5.2); thêm `lec-01-topic-11` (đọc thêm: tác tử nhiều nhiệm vụ và mô hình thế giới).
+
+### Sai khác so với kế hoạch B và lý do
+
+- Độ dài: 25 696 từ theo `wc -w` (khoảng 24 800 khi tính mỗi công thức một từ), vượt đích 12 000–14 000 của B4 và mức thường gặp 8 000–20 000. Lý do: mọi ví dụ, bài tập, tình huống tự chứa dữ kiện; Ví dụ 01.12 và Bài tập 01.8 liệt kê đủ mười nhánh của cây hai lượt; Tình huống 01.1 có bảng tính ngược đầy đủ. Điều phối viên quyết định có cần rút gọn hay không.
+- Mệnh đề 01.22 phát biểu ba phần: (a), (b) trên lịch sử, không cần Markov; (c) trên thế cờ dưới Nhận xét 01.21. Kế hoạch đặt mệnh đề chỉ cho Tic-tac-toe; dạng trên lịch sử cần cho Tình huống 01.1.
+- Tình huống 01.1 dùng $L=5$ và chính sách chọn đều ba hành động ($v=\frac8{243}$) thay cho "cắt sau 6 bước" của B4, để thống nhất $L=5$ với Ví dụ 01.1 và Bài tập 01.13 của kế hoạch C; thêm bước chọn hành động đầu bằng Định nghĩa 01.23. Bài tập 01.5 giữ $L=4$ (ghi rõ trong khối) để giữ kết quả $\frac1{16}$ của kế hoạch.
+- Mục 1 thêm mục con 1.4 (Nhận xét 01.4, 01.5) và 1.5 (Ví dụ 01.2, 01.3) theo thứ tự B2; Bài tập 01.1 dùng robot bắt đầu ở ô 3 để khác Ví dụ 01.1.
+- Bài tập 01.2 dùng năm tình huống (a)–(e), gồm câu hỏi "học một môn học" của nguồn trang 20, thay cho "4 mẫu".
+- Ví dụ 01.6 thêm cách đặt phần thưởng có chi phí di chuyển $c=0{,}1$ để các $G_t$ khác nhau và minh họa ý "hy sinh phần thưởng tức thời" của nguồn trang 25.
+- Không dùng `tictactoe-search.svg`, `tictactoe-value.svg`, `uncertainty.svg`, `course-map.svg` (hai hình đầu thiếu nhánh $a=6$; hai hình sau không có chỗ trong chương).
+
+### Giới hạn còn lại
+
+- Kết quả của bài khác được dẫn bằng "Bài 0N" kèm phát biểu lại một câu, chưa có số hiệu `0N.k`; đợt đồng bộ sau thay bằng số hiệu.
+- Bài tập 01.16 được nhắc trong "Hướng dẫn đọc thêm" trước khi `exercises.md` tồn tại.
+- Deck hiện tại còn lệch ghi chú ($V^\pi$, $\{3,7,9\}$, giá trị sau nước thắng, thiếu Mệnh đề 01.22); giai đoạn II sửa theo ghi chú.
+- Các chỗ nhờ tác tử rà toán soi kỹ: chứng minh Mệnh đề 01.22 Bước 2 (điều kiện hóa theo $H_{t+1}$, quy ước kỳ vọng khi chọn $a$ mà $\pi(a\mid h)=0$); lập luận Nhận xét 01.21; bảng $w(k,m)$ của Tình huống 01.1.
+
+### Tự kiểm `no-ai-slop` (chế độ Edit) và `quill`
+
+- Phạm vi: toàn bộ văn bản của ghi chú. Đối chiếu `eval.md`: không câu hỏi tu từ, không mệnh lệnh "hãy", không lời quy trình hay lời giảng viên, tài liệu không làm chủ ngữ; đã bỏ "nhấn mạnh", "rất"; một dấu gạch dài duy nhất ở tiêu đề `#` theo mẫu; danh sách chỉ dùng cho mục song song; đoạn kết mục là văn xuôi ba ý. Mẫu lặp có chủ đích được giữ vì có chức năng học tập: câu "Nhầm lẫn thường gặp là…" (6 lần) và nhãn giai đoạn trong ví dụ (Dữ kiện, Tính, Diễn giải, Kiểm tra lại). Kết quả: đạt, không còn mục `fail`.
+- `quill` (Outline, Concept, Threads làm bảng kiểm, không tạo `quill.json`): mỗi khái niệm được định nghĩa trước lần dùng; các tham chiếu tiến (Định nghĩa 01.9 trong Định nghĩa 01.1; Định nghĩa 01.16 trong Nhận xét 01.5; Bài tập 01.8 trong Nhận xét 01.24) đều nêu điều đang tạm chấp nhận; luồng "lịch sử → thế cờ" mở ở Mục 1.3, đóng ở Nhận xét 01.21 và Tình huống 01.2; luồng "ước lượng $\bar r$ → nước khai thác" mở ở Định nghĩa 01.18, đóng ở Định nghĩa 01.23.
+
+### Kết quả hai script
+
+- `note_check.py`: 24 môi trường bộ đếm chung, 12 ví dụ, 12 bài tập, không khoảng trống, không trùng, không khối lạ hay lồng, không khối chưa đánh số, không mẫu câu cấm, không `\(`/`\[`.
+- `check_note.py 01 lecture-01-gioi-thieu-hoc-tang-cuong.html` (cổng 8766): 1600×900 và 390×844 đều 0 lỗi KaTeX, 0 lỗi console, 0 yêu cầu ngoài hoặc thất bại, không tràn ngang (đã sửa bảng ký hiệu từng làm tràn ở 390 px). Đã xem ảnh chụp khối chứng minh Mệnh đề 01.22 (1600 px) và Ví dụ 01.12 (390 px), cùng ảnh ba SVG mới.
+
+## Đợt sửa 2026-10-12 — Giai đoạn I: sửa ghi chú theo hai báo cáo rà soát (vai A toán, vai B mạch viết)
+
+Tác tử soạn ghi chú Bài 01 (cùng phiên trên; Opus 5.5, `high`), sửa theo quyết định của điều phối viên. Tệp sửa: `materials/lec-01/lecture-note.md`. Không thêm hay sửa SVG trong đợt này. Không commit.
+
+### Số từ
+
+- Trước: 25 696 (`wc -w`). Sau: 21 037.
+- Đã làm toàn bộ C1–C46 và O2, O3, O5, O6, O7, O8, O9, O10, O11; không làm O1, O4, O12.
+- Vẫn vượt đích 18 000–19 000 khoảng 2 000 từ. Phần thêm theo yêu cầu rà soát chiếm khoảng 700 từ: quy ước kỳ vọng xác suất 0 (A1), phản ví dụ điều kiện 2 (A2), ba lý do ở Tình huống 01.1 (A3), chia bước Nhận xét 01.19 (B9), ví dụ mô hình (B12), chép lại dữ kiện vào khối (B7). Bảng 9 dòng của Ví dụ 01.10 (O5) tốn thêm ký tự `|` khi đếm bằng `wc`.
+- Ứng viên cắt tiếp, cần điều phối viên quyết định: Bài tập 01.11 (khoảng 400 từ); hai tình huống (d), (e) của Bài tập 01.2; rút bản đồ chủ đề còn ba trường.
+
+### Đánh số lại
+
+| Cũ | Mới |
+|---|---|
+| Định nghĩa/Nhận xét/Mệnh đề 01.1–01.3 | giữ |
+| Nhận xét 01.4 (ghi nhớ, thích nghi, khái quát) | bỏ (O3); còn một câu ở Mục 1.4 |
+| Nhận xét 01.5 | Nhận xét 01.4 |
+| Định nghĩa 01.6 | Định nghĩa 01.5 |
+| Nhận xét 01.7 + 01.8 | gộp thành Nhận xét 01.6 (C12) |
+| 01.9, 01.10, 01.11, 01.12 | 01.7, 01.8, Mệnh đề 01.9, Nhận xét 01.10 |
+| 01.13–01.19 | 01.11–01.17 |
+| 01.20–01.24 | 01.18–01.22 |
+| Ví dụ 01.2, 01.3 (AlphaGo, thao tác robot) | bỏ (O2); dữ kiện nằm ở Bài tập 01.9, 01.12 |
+| Ví dụ 01.4–01.10 | Ví dụ 01.2–01.7, 01.9 |
+| (mới) | Ví dụ 01.8 (Mô hình đúng và mô hình sai của robot), B12 |
+| Ví dụ 01.11 (thế cờ bốn ô trống) | bỏ khối; nội dung ở đoạn đọc hình Mục 5.1 (C31) |
+| Ví dụ 01.12 | Ví dụ 01.10 |
+| Bài tập 01.1–01.12, Tình huống 01.1–01.2 | giữ số |
+
+Danh sách cuối:
+- Bộ đếm chung (22): Định nghĩa 01.1, 01.2; Nhận xét 01.3, 01.4; Định nghĩa 01.5; Nhận xét 01.6; Định nghĩa 01.7, 01.8; Mệnh đề 01.9; Nhận xét 01.10; Định nghĩa 01.11, 01.12; Nhận xét 01.13; Định nghĩa 01.14; Nhận xét 01.15; Định nghĩa 01.16; Nhận xét 01.17; Định nghĩa 01.18; Nhận xét 01.19; Mệnh đề 01.20; Định nghĩa 01.21; Nhận xét 01.22.
+- Ví dụ 01.1–01.10.
+
+`note-topic-id`:
+- `lec-01-topic-09` (AlphaGo và thao tác robot) được rút khỏi bản đồ vì chủ đề không còn là một mục. Deck không tham chiếu mã này (đã kiểm `grep`).
+- Các mã còn lại giữ nguyên.
+
+Giai đoạn II cần đồng bộ deck với số hiệu mới.
+
+### Phát hiện và xử lý
+
+| Mã | Trạng thái | Xử lý (vị trí mới) |
+|---|---|---|
+| A1 | đã sửa | Kiến thức tiên quyết thêm "tổng lấy trên các $z$ có $\Pr(Z=z,Y=y)>0$". Định nghĩa 01.12 thêm quy ước kỳ vọng trên phân phối diễn biến bắt đầu từ $h$, trùng kỳ vọng có điều kiện khi xác suất dương; hiểu tương tự cho $\mathbb E_\pi[\cdot\mid H_t=h,A_t=a]$. Bước 3 Mệnh đề 01.20 thêm câu về số hạng $\pi(a\mid h)=0$. Ví dụ sau Định nghĩa 01.12 đổi sang $h=(\text{sạch},\text{trái},0,\text{sạch})$, $v_{\pi_1}(h)=1$ |
+| A2 | đã sửa | "Bỏ điều kiện 2" sau Nhận xét 01.19 dùng luật O mới (chọn đều, trừ khi nước trước là ô 4 thì đánh ô nhỏ nhất) và hai lịch sử O4, X1, O2, X5, O8 / O2, X1, O8, X5, O4 |
+| A3 | đã sửa | Tình huống 01.1 mục 3: ba lý do riêng (k là hàm của lịch sử; $\pi_u$ không dùng lịch sử nên không cần quan sát đầy đủ; luật chỉ phụ thuộc $(k,m)$) |
+| A4 | đã sửa | Tình huống 01.2: biểu diễn "vị trí $k$ suy ra bằng cách áp luật dịch chuyển từ ô 1, cùng số hành động còn lại" |
+| A5 | đã sửa | Bài tập 01.3(b) giới hạn $t=0..3$ và nêu $G_4=0$ |
+| A6 | đã sửa | Bài tập 01.4(b): tính ngược cần $T-1$ phép cộng ($T=4$: 3); "Trong thực hành" sau Mệnh đề 01.9 bỏ con số $T$ |
+| A7 | đã sửa | Sau Định nghĩa 01.12: "phần thưởng trong một lượt thuộc một tập hữu hạn và $T\le L$" |
+| A8 | đã sửa | $\pi_w$ ở Ví dụ 01.6, Ví dụ 01.7, Bài tập 01.8: "nhiều nước thắng ngay thì chọn đều trong số đó" |
+| A9 | đã sửa | Dòng $\sigma$ bỏ khỏi bảng ký hiệu (O6); Định nghĩa 01.18 và Nhận xét 01.19 dùng $\tilde s$ |
+| A10 | đã sửa | Nhận xét 01.22: "với $\gamma<1$ hoặc khi mọi lượt kết thúc" |
+| A11 | đã sửa | Một đoạn sau Định nghĩa 01.12: trạng thái ẩn tương thích với luật cố định theo $(h,a)$ |
+| B1 | đã sửa | Rút phần trùng Bài 02 theo bảng 3.3. Dẫn "Bài 02, Mục 1.1" (ranh giới), "Mục 2.5" (Markov), "Mục 3" (chính sách), "Mục 4.2" (chiết khấu), "Mục 4.5" (mô hình), "Mục 5" (thiết kế phần thưởng), "Mục 2.4–2.5" (Tình huống 01.2) |
+| B2 | đã sửa | Viết lại đoạn mở Mục 2, 3, 4, 5, không lặp kết mục trước |
+| B3 | đã sửa | Định nghĩa 01.7: phần thưởng bị chặn; trong các lượt nhiều bước của chương thuộc tập hữu hạn |
+| B4 | đã sửa | Như A3 |
+| B5 | đã sửa | Sau Định nghĩa 01.16: "một ước lượng của kỳ vọng lợi tức sau hành động; dạng chính xác có ở Mục 5" |
+| B6 | đã sửa | Bỏ Ví dụ 01.2, 01.3 cũ (O2) và gạch AlphaGo ở nhận xét mô hình; Nhận xét 01.22 gạch 1 bỏ số liệu của Bài tập 01.8 |
+| B7 | đã sửa | Chép dữ kiện vào Bài tập 01.11(b) (đổi lịch sử thành $(\text{sạch},\text{phải},0,\text{sạch},\text{hút},0,\text{sạch})$, $v=1$), Tình huống 01.2, Ví dụ 01.6 (luật Tic-tac-toe), Ví dụ 01.7, Bài tập 01.2(c) |
+| B8 | đã sửa | Bỏ `rl-fields.svg` và đoạn đọc hình |
+| B9 | đã sửa | Nhận xét 01.19 chia ba bước có nhãn: một bước, quy nạp theo bước, kỳ vọng |
+| B10 | đã sửa | Tình huống 01.1 và Ví dụ 01.10 dùng `aligned` và bảng; Bài tập 01.8 dùng `aligned` |
+| B11 | đã sửa | Tách hoặc rút các đoạn nhiều ý (kết mục 3, 4, 5; "Trong thực hành" Mục 5; diễn giải chính sách, mô hình, thăm dò) |
+| B12 | đã sửa | Câu trực giác trước Định nghĩa 01.18 (Mục 5.1); Ví dụ 01.8 trước Định nghĩa 01.14; lý do "không áp dụng" ghi dưới đây |
+| B13 | không đổi | Theo quyết định 2 của điều phối viên (quyết định chung mục 2): Bài 01 giữ $H_t$ trên quan sát |
+| B14 | sửa một phần ở vòng này (câu L509 thực tế chưa đổi; ghi "đã sửa" là sai); hoàn tất ở vòng rà lại 2, mã R6 | Định nghĩa 01.2 thêm "luật của môi trường"; L509 (hai cụm chêm) chưa sửa ở vòng này; Định nghĩa 01.12 nêu rõ "dưới một cách chọn hành động nào đó" cùng quy ước xác suất 0; sau Mệnh đề 01.20 thêm đoạn giải thích $\mathbb E_\pi$ và $\mathbb E$; Tình huống 01.2 sửa biểu diễn; L414 bỏ cùng hình |
+| N1 | đã sửa | Đổi các câu "Chương này…", "Mục N làm…" của chính ghi chú sang "chúng ta" hoặc bị động |
+| N2 | đã sửa | Nhận xét 01.10 dùng "tổng các phần thưởng nhận được" |
+| N3 | đã sửa | Còn một lần nêu "giả thuyết mô hình hóa" |
+| N4 | đã sửa | Bỏ khuôn "Ví dụ 01.k cho thấy ba điều" |
+| N5 | đã sửa | Bỏ hai tương phản nhị phân (Mục 1.3, Tình huống 01.2) |
+| N6 | đã sửa | Bỏ câu kết châm ngôn ở phần đọc thêm |
+| N7 | đã sửa | Bỏ "nước 6 dễ bị bỏ sót", "gồm cả ô 6" |
+| N8 | đã sửa | Bỏ bình luận "lỗi đánh máy" khỏi ghi chú; lý do vẫn ghi ở review-log |
+| N9 | đã sửa | Bảng ký hiệu thêm $\pi_1,\pi_u,\pi_w$ và $\mathbb E_\pi$, $\mathbb E$ |
+| N10 | đã sửa | Đổi thành "Mô tả này chưa phải định nghĩa" |
+| N11 | đã sửa | "Mục 5.2"; vai trò giả thiết của Mệnh đề 01.20 thành danh sách "Bỏ…" |
+| N12 | đã sửa | Từ 21 còn 5 câu lấy bài giảng gốc làm chủ ngữ, giữ ở chỗ cần quy nhận định cho nguồn; còn lại trích trong ngoặc |
+| N13 | đã sửa | Công thức mất mát chỉ còn ở Kiến thức tiên quyết |
+| N14 | đã sửa | Bài tập 01.10 đổi sang lợi tức theo hai góc nhìn X và O |
+| N15 | đã sửa | Trỏ Bài 02 về Markov còn ba chỗ: mở chương, Mục 1.3, Tình huống 01.2 |
+| N16 | đã sửa | Câu trực giác trước Định nghĩa 01.2 |
+| N17 | đã sửa | Như B14 về (5.1) |
+
+### Bước 4–5 "không áp dụng" của mẫu tám bước
+
+Các khái niệm tác tử, môi trường, trạng thái, quan sát (Mục 1), ba dạng tín hiệu học (Mục 2), chính sách, hàm giá trị, mô hình (Mục 4.1–4.3) và thăm dò, khai thác (Mục 4.4) là khái niệm định nghĩa. Nguồn (trang 4–27) không nêu kết quả hay thuật toán nào cho chúng. Vì vậy bước 4 (kết quả hoặc thuật toán) và bước 5 (chứng minh) không áp dụng. Kết quả của chương chỉ có Mệnh đề 01.9 (Mục 3) và Mệnh đề 01.20 (Mục 5), cả hai có chứng minh.
+
+Bước "kiểm tra" của khái niệm mô hình nằm ở Bài tập 01.9(b) và 01.12(b) trong phần củng cố, không có bài tập ngay trong Mục 4.3.
+
+### Tình huống 01.1 mới (tự tính lại)
+
+- Thiết lập: $L=4$, ba hành động chọn đều.
+- $w(4,1)=\frac13$, $w(3,2)=\frac19$, $w(2,3)=\frac1{27}$, $w(1,4)=\frac1{81}$; mọi $w(k,m)$ với $m<5-k$ bằng $0$.
+- $v_{\pi_u}(h_0)=\frac1{81}$; kỳ vọng một bước (trái, phải, hút) $=(0,\frac1{27},0)$; $a^*=\text{phải}$.
+- Kiểm tra: $\frac13\cdot\frac1{27}=\frac1{81}=(\frac13)^4$.
+- Bài tập 01.5 giữ $L=4$, hai hành động: $\frac1{16}$.
+
+### Hai đề nghị chuyển cho tác tử Bài 02
+
+1. Nhận xét 02.3 (Ba dạng tín hiệu học) đổi thành dòng "Nhắc lại:", dẫn Định nghĩa 01.5 và Nhận xét 01.6 của ghi chú Bài 01, kèm phát biểu lại một câu.
+2. Câu tiên quyết "Chính sách, hàm giá trị và mô hình ở mức trực quan (ghi chú Bài 01, Mục 4)" sửa thành dẫn Định nghĩa 01.11, 01.12 (chính sách và giá trị trên lịch sử) và Định nghĩa 01.14 (mô hình).
+
+### Kiểm tra sau sửa
+
+- `note_check.py`: 22 môi trường bộ đếm chung, 10 ví dụ, 12 bài tập. Không khoảng trống, không trùng, không khối lồng hay khối lạ, không mẫu câu cấm.
+- Tham chiếu chéo: kiểm bằng script, mọi "Định nghĩa/Mệnh đề/Nhận xét/Ví dụ/Bài tập 01.k" trỏ đúng loại và số. Ngoại lệ có chủ đích là Bài tập 01.16, thuộc tệp bài tập sau này.
+- `check_note.py 01 lecture-01-gioi-thieu-hoc-tang-cuong.html`: 1600×900 và 390×844 đều 0 lỗi KaTeX, 0 lỗi console, 0 yêu cầu ngoài, không tràn ngang. Đã xem ảnh chụp Ví dụ 01.10 (1600 px) và Tình huống 01.1 (390 px; khối `aligned` cuộn ngang trong `.katex-display`).
+- `no-ai-slop` (Edit) tự kiểm lại trên phần đã sửa: đạt.
+
+## Đợt sửa 2026-10-12 — Giai đoạn I: rà lại vòng 2 và sửa (vòng cuối trước commit)
+
+Hai tác tử rà lại chỉ đọc (Opus 5.5, `high`), theo phân công của điều phối viên:
+- Vai A (toán): `scratchpad/recheck-01-A.md`, 2 trung bình, 4 nhẹ.
+- Vai B (mạch viết): `scratchpad/recheck-01-B.md`, 5 trung bình R1–R5, 11 nhẹ R6–R16.
+
+Không còn phát hiện chặn bàn giao hay nghiêm trọng. Tác tử soạn ghi chú sửa theo quyết định của điều phối viên. Tệp sửa: `materials/lec-01/lecture-note.md` và tệp này. Không sửa SVG. Không commit.
+
+### Rà lại vòng 2: phát hiện và xử lý
+
+| Mã | Mức | Trạng thái | Xử lý |
+|---|---|---|---|
+| A-1 | trung bình | đã sửa | Bước 2 của Nhận xét 01.19 viết lại đúng câu đề xuất: giả thiết quy nạp trên phân phối đồng thời của $(A_t,R_{t+1},S_{t+1},\dots,A_j,R_{j+1},S_{j+1})$ |
+| A-2 | trung bình | đã sửa | Như R1 |
+| A-3 | nhẹ | đã sửa | Bài tập 01.5(c) dẫn Định nghĩa 01.12 thay cho Nhận xét 01.13 |
+| A-4 | nhẹ | đã sửa | Ví dụ 01.10, "Ba nước còn lại": đường duy nhất O còn có thể hoàn thành là 7–8–9, cần cả ô 7 và ô 9; với $a=7$ đường này đã bị chặn |
+| A-5 | nhẹ | đã sửa | Tình huống 01.1, dẫn ngược: "dùng giả thiết 1–3" |
+| A-6 | nhẹ | đã sửa | Bảng ký hiệu và Ví dụ 01.7 thêm vế "nhiều nước thắng thì chọn đều" cho $\pi_w$ |
+| A (tùy chọn) | — | đã sửa | Gộp vào R2: "với phân phối trạng thái đầu cố định". Phản ví dụ bỏ điều kiện 2 ghi thêm hai giá trị $\frac12$ và $\frac34$ dưới $\pi_u$; đã tính lại tay: $\frac14(1+\frac12+\frac12+1)=\frac34$ |
+| R1 | trung bình | đã sửa | Xóa hai tiêu đề lặp "### Mức tính toán hoặc chứng minh" và "### Mức vận dụng" |
+| R2 | trung bình | đã sửa | Đoạn trạng thái ẩn sau Định nghĩa 01.12 thay bằng một công thức Bayes $\Pr(S_t=s\mid H_t=h)$; tích $\prod_k\pi(a_k\mid h_k)$ triệt tiêu giữa tử và mẫu, kèm "với phân phối trạng thái đầu cố định" |
+| R3 | trung bình | đã sửa | Đoạn đọc hình Mục 5.1 tách thành danh sách bốn ý: ai đi trước, chưa ai thắng, tập hành động hợp lệ, chỉ số bước |
+| R4 | trung bình | đã sửa | Câu cuối Nhận xét 01.4: "Trong cách thiết kế truyền thống, mô hình được cho trước và giữ cố định; Học tăng cường có thể học hoặc cập nhật mô hình từ tương tác (Định nghĩa 01.14)." |
+| R5 | trung bình | sửa một phần, có lý do | Xem mục "Số từ" bên dưới |
+| R6 | nhẹ | đã sửa | Sau Định nghĩa 01.8: "(3.1) cộng các phần thưởng từ $R_{t+1}$ đến $R_T$. $R_{t+1}$ là phần thưởng đầu tiên chịu ảnh hưởng của $A_t$." Dòng B14 của vòng trước đã được sửa lại cho đúng |
+| R7 | nhẹ | đã sửa | Bỏ câu "Nếu rác chuyển sang ô 2…" ở đoạn mở Mục 1.4 |
+| R8 | nhẹ | đã sửa | Đọc hình ba dạng tín hiệu: thêm "ở khối có giám sát / không giám sát / tăng cường" |
+| R9 | nhẹ | đã sửa | Bài tập 01.2(c) thêm "lượt bị cắt sau $L=5$ hành động" |
+| R10 | nhẹ | đã sửa | Nhận xét 01.10: "Đây là một giả thuyết mô hình hóa: chưa có chứng minh rằng…" |
+| R11 | nhẹ | đã sửa | Thêm câu giải thích ký hiệu: "Viết O4 cho "O đánh ô 4"" |
+| R12 | nhẹ | đã sửa | Mở chương: "Bài 02 bổ sung hệ số chiết khấu và giả thiết đó, gọi là tính Markov" |
+| R13 | nhẹ | đã sửa | Gạch Nhận xét 01.6 đổi thành "Dữ liệu không độc lập, không cùng phân phối"; chú "(independent and identically distributed, i.i.d.)" chuyển lên phần tiên quyết |
+| R14 | nhẹ | đã sửa | Mở Mục 3 bỏ vế lặp kết Mục 2 |
+| R15 | nhẹ | đã sửa | Câu so sánh với học có giám sát sau Định nghĩa 01.1 tách thành đoạn riêng |
+| R16 | nhẹ | đã sửa | Đổi tiêu đề thành "Nhận xét 01.6 (Bốn khác biệt của Học tăng cường)", cập nhật tóm tắt |
+
+### Cắt độ dài theo quyết định
+
+- Chuyển Bài tập 01.11 cũ (Giá trị khi mọi thứ tất định) sang `exercises.md`. Nguyên văn đề, gợi ý và lời giải chép ở cuối mục này.
+- Bỏ Bài tập 01.2(d) (sinh viên so với lời giải mẫu); (e) cũ thành (d).
+- E2: rút đoạn i.i.d. trong Nhận xét 01.6 còn một câu; định nghĩa i.i.d. chuyển lên phần tiên quyết.
+- E3: rút "Điều kiện áp dụng" của Mệnh đề 01.20 còn một câu.
+- E4: bỏ câu (d) của Bài tập 01.12 cũ (thăm dò).
+- E5: bỏ câu (c) của Bài tập 01.9 (phần thưởng 0 và giá trị).
+- Không làm E6 (giữ ba hình) và E7 (giữ Bài tập 01.8); không gọt bản đồ chủ đề.
+
+### Đánh số lại bài tập
+
+| Cũ | Mới |
+|---|---|
+| Bài tập 01.1–01.10 | giữ |
+| Bài tập 01.11 (Giá trị khi mọi thứ tất định) | chuyển sang `exercises.md`, đề nghị số 01.12 |
+| Bài tập 01.12 (Bàn tay robot xoay khối) | Bài tập 01.11 |
+| Bài tập 01.13–01.16 (kế hoạch C, `exercises.md`) | giữ |
+
+Bộ đếm Bài tập trong ghi chú liên tục từ 01.1 đến 01.11. Bộ đếm chung (22) và Ví dụ 01.1–01.10 không đổi.
+
+### Số từ
+
+- Trước vòng này: 21 037 (`wc -w`). Sau: 20 474.
+- Vẫn vượt đích ≤ 20 000 khoảng 470 từ. Theo quyết định, không cắt thêm. Lý do vượt:
+  - Vòng này thêm khoảng 300 từ theo yêu cầu: công thức Bayes và câu dẫn (R2), danh sách bốn ý (R3), câu giải thích ký hiệu nước đi cùng hai giá trị $\frac12$, $\frac34$ (R11, A-2), giả thiết quy nạp đầy đủ (A-1).
+  - Phần còn lại là các mục được giữ theo danh sách "Không cắt" và quyết định không làm E6, E7.
+
+### `no-ai-slop` (Edit) và kiểm tra
+
+- Tự kiểm theo `eval.md` trên mọi đoạn đã đổi: không câu hỏi tu từ, không "hãy", không tài liệu làm chủ ngữ, không tương phản nhị phân mới, không câu kết châm ngôn; danh sách mới (R3) là các ý song song. Đạt.
+- `note_check.py`: 22 môi trường bộ đếm chung, 10 ví dụ, 11 bài tập; không khoảng trống, không trùng, không lồng khối, không mẫu câu cấm.
+- Tham chiếu chéo kiểm bằng script: chỉ "Bài tập 01.16" không khớp, đúng như ngoại lệ có chủ đích.
+- `check_note.py 01 lecture-01-gioi-thieu-hoc-tang-cuong.html`: 1600×900 và 390×844 đều 0 lỗi KaTeX, 69 khối, 0 lỗi console, 0 yêu cầu ngoài, không tràn ngang.
+- `git diff --check` sạch.
+
+### Nguyên văn Bài tập 01.11 cũ (chuyển sang `exercises.md`, đề nghị số 01.12)
+
+::: exercise Bài tập 01.11 (Giá trị khi mọi thứ tất định)
+Giả sử môi trường tất định, tức là với mỗi lịch sử và hành động, phần thưởng kế tiếp, quan sát kế tiếp và việc lượt có kết thúc hay không được xác định duy nhất, và chính sách $\pi$ tất định. Cho một lịch sử $h$ đến bước $t$.
+
+- (a) Chứng minh rằng từ $h$, lượt có đúng một diễn biến tiếp theo, và $v_\pi(h)$ bằng lợi tức $G_t$ của diễn biến đó.
+- (b) Áp dụng cho robot dọn dãy bốn ô: robot bắt đầu ở ô 1, chỉ ô 4 có rác; $\text{trái}$, $\text{phải}$ dịch một ô, đứng yên nếu đi ra ngoài dãy; hút ở ô 4 khi còn rác cho $+1$ và kết thúc lượt, mọi bước khác cho $0$; cảm biến báo $\text{sạch}$ hoặc $\text{bẩn}$; $L=5$. Chính sách $\pi_1$: thấy $\text{sạch}$ thì $\text{phải}$, thấy $\text{bẩn}$ thì $\text{hút}$. Lịch sử $h=(\text{sạch},\text{phải},0,\text{sạch},\text{hút},0,\text{sạch})$.
+:::
+
+::: hint
+Chứng minh câu (a) theo từng bước: nếu diễn biến đến bước $j$ là duy nhất, thì hành động và phản hồi ở bước $j$ cũng duy nhất.
+:::
+
+::: solution
+**Câu (a).** Lập luận theo bước $j=t,t+1,\dots$.
+
+**Bước 1 (một bước duy nhất).** Giả sử lịch sử đến bước $j$ được xác định duy nhất, là $h_j$; với $j=t$ thì $h_t=h$. Vì $\pi$ tất định, $A_j$ là hành động duy nhất mà $\pi(\cdot\mid h_j)$ gán xác suất $1$. Vì môi trường tất định, $R_{j+1}$, $O_{j+1}$ và việc kết thúc được xác định duy nhất từ $h_j$ và $A_j$. Do đó lịch sử đến bước $j+1$ cũng duy nhất.
+
+**Bước 2 (cả diễn biến duy nhất).** Lượt kết thúc sau nhiều nhất $L$ bước, nên sau hữu hạn lần áp dụng Bước 1, cả diễn biến từ $h$ đến khi kết thúc là duy nhất, với một lợi tức $g$ xác định.
+
+**Bước 3 (kỳ vọng của một hằng số).** Dưới điều kiện $H_t=h$, $G_t$ nhận giá trị $g$ với xác suất $1$, nên $v_\pi(h)=\mathbb E_\pi[G_t\mid H_t=h]=g$. $\square$
+
+**Câu (b).** Theo $h$, robot sang ô 2 ở bước $0$ rồi hút tại ô 2 sạch, nên ở bước $2$ robot đứng ở ô 2 và còn ba hành động. Theo $\pi_1$, robot sang phải tới ô 3, sang phải tới ô 4, rồi thấy $\text{bẩn}$ và hút ở hành động thứ năm: $R_3=R_4=0$, $R_5=+1$, $T=5\le L$. Vậy $G_2=1$ và $v_{\pi_1}(h)=1$.
+
+**Kiểm tra lại.** Tổng số hành động của lượt là $2+3=5$, đúng bằng $L$, nên lần hút cuối vẫn kịp trước khi lượt bị cắt.
+:::
