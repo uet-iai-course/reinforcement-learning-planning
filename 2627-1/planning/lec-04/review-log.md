@@ -1649,3 +1649,269 @@ Không bác bỏ phát hiện nào. Số hiệu không đổi so với vòng 1 (
 **Kết quả kiểm tra.** `note_check.py`: bộ đếm chung 35, ví dụ 18, bài tập 9, không khoảng trống, không trùng, không khối lạ. `check_note.py 04 lecture-04-giai-mdp-bang-quy-hoach-dong.html`: 1600×900 và 390×844, 0 lỗi KaTeX, 0 lỗi console, không tài nguyên ngoài; ở 1600×900 không công thức nào tràn khung. `git diff --check` sạch. Không còn chuỗi "Tình huống 04.3" hay "thôi co" trong ghi chú.
 
 **`no-ai-slop` (Edit) trên phần sửa.** Đối chiếu `eval.md`: đạt. Đoạn $\gamma=1$ tách thành danh sách theo giả thiết; không thêm tương phản "không phải… mà", câu hỏi tu từ hay mục làm chủ ngữ.
+
+## Đợt sửa 2026-10-12 — Giai đoạn II: bộ trang chiếu
+
+### Tác tử và phạm vi
+
+- Vai: tác tử soạn sửa deck Bài 04 (viết tệp), theo `scratchpad/brief_deck_writer.md`. Loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` (theo lời gọi của điều phối viên; điều phối viên đối chiếu với lời gọi công cụ). Không commit.
+- Tệp ghi: `2627-1/lecture-04-giai-mdp-bang-quy-hoach-dong.html` (viết lại toàn bộ thân deck, giữ phần đầu, chân trang, cấu hình RevealJS và plugin cục bộ); `planning/lec-04/outline.md`, `storyboard.md` (viết lại); mục này của `review-log.md`; tiêu đề `<title>` trong ba SVG (`dp04-two-state.svg`: "Mô hình hai trạng thái"; `dp04-five-cell.svg`, `dp04-five-cell-plain.svg`: "Dãy năm ô…"). Không sửa `lecture-note.md`, `lecture-slide.css`, `index.html`, notebook, tệp của bài khác.
+- Căn cứ: quyết định chung `planning/quyet-dinh-chuan-2026-10-12.md`; kế hoạch `revision-plan-2026-10-12.md` mục A, D; `AGENTS.md` các mục được giao; ghi chú bài giảng đã commit (`36e8a5b`); deck mẫu `math-4-AI` Bài 07 (chỉ cấu trúc). Kỹ năng `no-ai-slop` nạp bằng công cụ `Skill`, chế độ Edit; `quill` dùng phần Outline, Threads, Concept, Revise làm bảng kiểm, không tạo `quill.json`.
+
+### Kết quả chính
+
+- 7 mạch (giữ theo A1); 45 → 76 trang; 6 trang tiêu đề mạch L04-B00…G00 với `id="mach-2"`…`mach-7`, số trong `span.strand-number` khớp trang "Nội dung" và `#/N` (kiểm bằng trình duyệt).
+- Mạch mở đầu: bìa có câu luận đề, "Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội", "Năm học 2026–2027, học kỳ 1", không tên giảng viên → Tiên quyết và quy ước → Mục tiêu học tập → Nội dung → Vấn đề trung tâm → Cấu trúc một phép cập nhật quy hoạch động → ví dụ xuyên suốt → bài tập lợi tức.
+- Mạch kết luận: tiêu đề "Tổng kết và chuyển tiếp"; bảng tổng kết (2 trang, 6 hàng); bảng khung chung; bảng hội tụ; bài tập tổng hợp có lời giải trên mặt trang; trả lời vấn đề trung tâm có dòng "Nguồn:"; Câu hỏi tự kiểm tra (4 câu); bài tự làm dãy năm ô trơn trượt; Bài tập về nhà và tài liệu đọc với bảng `Mạch | Bài tập`, "Tài liệu đọc:", liên kết viewer ghi chú, "Bài tập: chưa có", dòng nối Bài 05.
+- Ký hiệu theo ghi chú: $\mathrm s_0,\mathrm s_1$, $\mathrm a,\mathrm b$, $\mathrm c_k$, $\mathrm{trai}$, $\mathrm{phai}$ chữ đứng; ngưỡng $\theta$, sai số cho phép $\kappa$, góc cột $\phi$; "lợi tức", "lượt quét", "quy tắc phá hòa", "mô hình hai trạng thái", "dãy năm ô", "dãy năm ô trơn trượt", "CartPole rời rạc hóa". Số hiệu kết quả của ghi chú dẫn tối đa một lần mỗi trang.
+- Mỗi cụm khái niệm có một bài tập với "Lời giải:" trên mặt trang: B08b (04.1), C07b (04.2), D06b (04.3), E08b (04.4), F06b (04.5), G04b (04.6); A05 có lời giải dạng fragment. Mọi lời giải cùng kết quả với ghi chú.
+
+### Bảng mã trang cũ → mới
+
+| Trang cũ | Trang mới | Quyết định |
+|---|---|---|
+| A01 | A01 | sửa |
+| A02 | A02, A02b | tách |
+| A03 | A01b, A03, A03b | tách |
+| A04, A05 | A04, A05 | sửa |
+| B01–B04 | B01–B04 | sửa |
+| B05 | B05 (phần dư), B05b (thuật toán) | tách |
+| B06 | B06 (tính co), B06c (hội tụ), B06b (chặn phần dư) | tách |
+| B07 | B07 | sửa |
+| B08 | B08, B08b | tách |
+| C01 | C01 (công thức chuyển sang C03) | tách |
+| C02, C03, C05, C06 | giữ mã | sửa |
+| C04 | C04, C04b | tách |
+| C07 | C07, C07b | tách |
+| D01, D03, D05 | giữ mã | sửa |
+| D02 | D02, D02b | tách |
+| D04 | D04 (giá trị tối ưu), D04b (Bellman tối ưu) | tách |
+| D06 | D06, D06b | tách |
+| E01 | E01, E01b | tách |
+| E02, E03, E04, E05, E07 | giữ mã | sửa |
+| E05 | E05; thêm E03b (tính co $T_*$), E05b (tồn tại chính sách tối ưu) | tách, thêm |
+| E06 | E06, E06b | tách |
+| E08 | E08, E08b | tách |
+| F01, F02, F04, F05 | giữ mã; thêm F05b | sửa, thêm |
+| F03 | F03, F03b | tách |
+| F06 | F06, F06b | tách |
+| G01 | G01, G01b | tách |
+| G02 | G02, G02b | tách |
+| G03, G05 | giữ mã | sửa |
+| G04 | G04, G04b | tách |
+| — | B00, C00, D00, E00, F00, G00 (tiêu đề mạch); G06, G07 | thêm |
+
+Không bỏ trang cũ nào. 31 trang thêm.
+
+### Sai lệch so với kế hoạch A và lý do
+
+| Vị trí | Kế hoạch A | Đã làm | Lý do |
+|---|---|---|---|
+| Mạch 2, thứ tự | B05 phần dư và B05b thuật toán đứng trước B06 tính co | Thứ tự: B04 → B06 tính co → B06c hội tụ → B07 giá trị chính xác → B05 phần dư → B06b chặn → B05b thuật toán | Theo thứ tự Mục 1.3–1.4 của ghi chú đã commit (Mệnh đề 04.4, Hệ quả 04.6, Ví dụ 04.5 trước Định nghĩa 04.7) |
+| B06c, E03b, E05b | Không có trang riêng | Thêm | Một kết quả mỗi trang: Hệ quả 04.6, Mệnh đề 04.24 và Định lý 04.25 là kết quả riêng của ghi chú; Định lý 04.25 trả lời phần "so với mọi chính sách" của vấn đề trung tâm |
+| D04b | Trang "Chứng minh: tính tối ưu của chính sách ổn định" riêng | Gộp thành dòng "Chứng minh." trên D04b, các bước trong ghi chú diễn giả | Giữ số trang; chứng minh gói trong một dòng theo mẫu trang kết quả |
+| F05b | Không có | Thêm trang ứng dụng Tình huống 04.1–04.2 | Kế hoạch A4 (KN7) đòi bước ứng dụng nối số liệu notebook; quyết định chung mục 6 |
+| G01 | Một bảng sáu hàng, tách nếu vượt | Tách G01, G01b | Bảng sáu hàng vượt sáu dòng |
+| G05 | Bảng `Mạch \| Bài tập` từng mạch | Hai hàng gộp mạch 2–4 và 5–7, ba cột (Mạch, Bài tập trong ghi chú, Tệp bài tập) | Giữ ≤ 6 dòng khi thêm "Tài liệu đọc:", liên kết viewer và dòng nối Bài 05; số hiệu 04.10–04.15 là dự kiến theo kế hoạch C |
+| A02b | Thêm dòng "Đọc trước" | Dòng này nằm trong ghi chú diễn giả | Bảy dòng mạch đã là ngoại lệ 7 dòng |
+| Ký hiệu | $\eta=(1-\gamma)\varepsilon$, "quy tắc giữ hòa" (A1–A3) | $\theta=(1-\gamma)\kappa$, "quy tắc phá hòa" | Quyết định chung mục 1–2 và ghi chú đã commit |
+| Tiêu đề có công thức | "Bài tập: lợi tức từ $s_1$", "Ví dụ: hai nhánh tại $s_1$", "Bài tập: cải thiện từ $\pi_1$" | "Bài tập: lợi tức của chính sách ban đầu", "Ví dụ: hai nhánh hành động", "Bài tập: lần cải thiện thứ hai"; B06 "Tính co của toán tử đánh giá", E03b "Tính co của toán tử tối ưu", C01 "Đổi hành động tại một trạng thái" | Chủ đề `white` đặt `text-transform: uppercase` cho `h2`; kiểm trình duyệt cho thấy $\mathrm s_1$ hiện thành "S1" và $\pi$ thành "Π" |
+| E06b | "Diễn giải: $V_5=V_4$ nên $V_4=v_*$" | Kết luận này để cho Bài tập 04.4 (E08/E08b) | Tránh lộ lời giải trước bài tập |
+| Mục tiêu A02 | Năm mục tiêu với sản phẩm 04.1–04.5 và Tình huống | Năm mục tiêu với 04.1–04.5; Tình huống ghi trong ghi chú diễn giả | Trần 80 âm tiết |
+
+### Mật độ (đo bằng `scratchpad/density.py`)
+
+| | Trước | Sau |
+|---|---:|---:|
+| Số trang | 45 | 76 |
+| Dòng có cờ "VƯỢT" | 33 | 3 (A02 79/80, A02b 7 dòng, G02b 73/80; ngoại lệ ghi trong storyboard) |
+| Trang trên 60 âm tiết | 15 | 2 (A02, G02b; cả hai là loại trần 80) |
+| Trang trên 40 âm tiết | 38 | 55 (đều ≤ 60, trừ hai trang trên) |
+| Trang trên 1,5 lần trần | 4 (E01 123, F01 103, F03 98, G05 100) | 0 |
+
+Không còn CSS cục bộ nào trong deck (deck cũ cũng không có khối `<style>`); không dùng lớp thu chữ. Bảng số âm tiết trước/sau của 15 trang vượt trần nằm trong `storyboard.md`, mục "Ngoại lệ mật độ".
+
+### SVG
+
+- Sửa tiêu đề trong `dp04-two-state.svg`, `dp04-five-cell.svg`, `dp04-five-cell-plain.svg` theo tên ví dụ xuyên suốt; không đổi nhãn hay hình.
+- Dùng thêm `dp04-convergence-bound.svg` (tạo ở giai đoạn I) trên L04-E05. Không tạo SVG mới.
+- Deck dùng: `dp04-roadmap`, `dp04-two-state`, `dp04-expectation-backup`, `dp04-one-step-choice`, `dp04-policy-iteration`, `dp04-convergence-bound`, `dp04-five-cell-plain`, `dp04-update-order`, `dp04-gpi`, `dp04-cartpole-bins`, `dp04-stochastic-grid`. `dp04-five-cell.svg` chỉ ghi chú bài giảng dùng.
+- Bảy SVG cũ không còn tệp nào dẫn tới (`two-state.svg`, `policy-evaluation.svg`, `gridworld.svg`, `convergence.svg`, `cartpole.svg`, `bellman-choice.svg`, `dp-cycle.svg`, đã kiểm bằng `grep` trên `.html`, `.md`, `.ipynb`, `.js`). Không xóa trong đợt này; đề nghị điều phối viên quyết định xóa.
+
+### Đề nghị sửa ghi chú
+
+- `dp04-cartpole-bins.svg` ghi góc cột bằng chữ theta, còn ghi chú và deck dùng $\phi$; ghi chú Mục 5.4 có câu "Hình dùng chữ theta cho góc, mà chương này ký hiệu là $\phi$". Đề nghị: đổi nhãn SVG sang φ và bỏ câu này trong ghi chú cùng một lần sửa. Deck hiện ghi chú sự khác biệt trong ghi chú diễn giả của L04-F05.
+- Không phát hiện chỗ ghi chú sai khi đối chiếu số liệu đưa lên deck.
+
+### Đề nghị cho `lecture-slide.css`
+
+- Thêm `.reveal.lecture-deck h2 .katex { text-transform: none; }` để tiêu đề được chứa công thức mà không đổi $\mathrm s_1$ thành "S1", $\pi$ thành "Π". Deck này đã tránh công thức trong tiêu đề nên không phụ thuộc đề nghị.
+- `reveal.css` đặt `list-style-type: decimal` cho `ol`, nên `ol type="a"` vẫn hiện 1, 2, 3. Deck dùng dòng "(a) …" trong `<p>`; nếu muốn dùng danh sách chữ cái, cần quy tắc `.reveal ol[type="a"] { list-style-type: lower-alpha; }`.
+
+### Số liệu đã tính lại
+
+$3{,}71$; $V_1=(1,2)$, $V_2=(1{,}9;2{,}9)$, $V_3=(2{,}71;3{,}71)$, $\Delta_{\pi_0}(V_2)=0{,}81$, chặn $8{,}1$; $v_{\pi_0}=(10,11)$, sai số $10\cdot0{,}9^k$; $0{,}9^{43}\approx0{,}0108$, $0{,}9^{44}\approx0{,}0097$; $q_{\pi_0}=10;9{,}9;11;12{,}9$; $v_{\pi_1}=(10,30)$; $q_{\pi_1}(\mathrm s_0,\cdot)=10;27$; $v_{(\mathrm b,\mathrm b)}=(27,30)$, $q=25{,}3;27;26{,}3;30$; $v_{(\mathrm b,\mathrm a)}\approx(9{,}47;10{,}53)$; $T_{\pi_0}(10,11)=(10,11)$, độ lệch $11\to9$; $T_*(10,11)=(10;12{,}9)$, $T_*(0,0)=(1,3)$, khoảng cách $9{,}9$; lặp giá trị $(1,3)$, $(2{,}7;5{,}7)$, $\Delta_*(V_1)=2{,}7$; $30\cdot0{,}9^{54}\approx0{,}101$, $30\cdot0{,}9^{55}\approx0{,}091$; dãy năm ô $V_1..V_4$, $T_*V_4=V_4$ ($3{,}122$; $4{,}58$; $6{,}2$; $8$; $10$); trơn trượt $V_1(\mathrm c_4)=7{,}8$, nhánh trái $0{,}1$, $V_2(\mathrm c_3)=4{,}436$, nhánh trái $-1{,}108$; lịch chỉ $\mathrm s_0$: giới hạn $10$; $T_*U=(27,30)$, $\Delta_*(U)=17$, chặn $170$; $210\,600$ và $7\,776$ số hạng; $1+0{,}99\cdot0{,}565=1{,}55935$; $2+0{,}9\cdot2{,}71=4{,}439$ (lỗi tại chỗ ở ghi chú B08b). Số liệu notebook lấy nguyên từ ghi chú (một lần chạy đã nhúng).
+
+### Tự kiểm `no-ai-slop` (Edit) và `quill`
+
+- Phạm vi: mặt trang và ghi chú diễn giả của cả 76 trang, alt hình. Đối chiếu `eval.md`: đạt. Đã sửa trong lúc soạn: bỏ dấu hai chấm kiểu "tiết lộ" ở Ý nghĩa của C04b, đổi bốn trong tám ghi chú bài tập cùng mở bằng "Bài tập kiểm…" sang câu mở khác, bỏ từ "mạch" (nhãn quy trình) khỏi ghi chú diễn giả, đổi câu "Phần này giao cho phần…" thành "Kết quả giao cho … là …". Không có câu hỏi tu từ ngoài nhãn "Câu hỏi:", không "ta thấy", "chúng ta", "rõ ràng", "hãy" trên mặt trang, không dấu gạch dài, không ghi chú mở bằng "Trang này".
+- `quill` (bảng kiểm): mọi ký hiệu xuất hiện sau dòng "Ký hiệu:" hoặc định nghĩa ($\theta$, $\kappa$ ở B06b trước B05b; $Q_V$ ở C03 trước C04; $\pi_*$, $v_*$ ở D04 trước D04b, E03); luồng mở ở mạch 1 (tổng vô hạn, $\gamma<1$, CartPole) đóng ở B07, B06c (ghi chú), F05–F05b; mỗi trang tiêu đề mạch nêu đầu vào và đầu ra trong ghi chú diễn giả.
+
+### Kiểm trình duyệt
+
+- Server `reloadserver` cổng 8766 (cwd kho). Script Playwright `scratchpad/check_deck04.py` chặn yêu cầu `/api-reloadserver/` để trang không tự tải lại khi tác tử khác ghi tệp, tắt hiệu ứng chuyển trang khi đo.
+- 1600×900: duyệt cả 76 trang (`Reveal.slide(h,v,99)`); 0 lỗi console/trang, 0 `.katex-error`, 0 yêu cầu ra ngoài localhost, 0 yêu cầu lỗi, không cuộn ngang; mọi trang nằm trong khung (cao nhất L04-F05, 705/720 px khung gốc); chữ thân nhỏ nhất 30,24 px (0,9 em của bảng). Hai cờ còn lại là dương tính giả đã xem ảnh: L04-G04 (phần tử SVG ẩn của `\xrightarrow`), L04-F05 (705 px, vừa khung).
+- 390×844: RevealJS chuyển sang chế độ cuộn; 76 trang, 0 lỗi, không cuộn ngang ở tài liệu lẫn từng trang; trang tiêu đề mạch đúng số. Bàn phím: phím phải chuyển sang mạch kế.
+- Ảnh đã xem: L04-A03, A05, B01, B02, B06, C03, C06, D02b, E05, F00 (hai cỡ), F04, F05, G01, G02b, G04, G05 tại `scratchpad/deck04shots/`.
+- `git diff --check` sạch cho deck, SVG và ba tệp planning.
+
+## Rà soát năm vai và biên tập (giai đoạn II)
+
+### Tác tử
+
+- Năm tác tử rà soát chỉ đọc, Opus 5.5 (`claude-opus-5-5`), mức `high`, do điều phối viên tạo: SV (góc nhìn sinh viên, đo mật độ), RL (chuyên gia), TOAN (toán và thuật toán), PB (phản biện sư phạm, `no-ai-slop` Detect), MACH (kết nối và mạch). Báo cáo: `deckrev-04-{SV,RL,TOAN,PB,MACH}.md` trong scratchpad của phiên điều phối.
+- Tổng hợp: 0 chặn bàn giao; 1 nghiêm trọng (PB, B01); trung bình: PB 12, RL 6, SV 7, TOAN 1, MACH 5 (nhiều phát hiện trùng nhau); nhẹ: PB 12, RL 11, SV 13, TOAN 18, MACH 12.
+- Biên tập viên: chính tác tử soạn deck (Opus 5.5, `high`, `general-purpose`), theo `brief_deck_editor.md` và quyết định của điều phối viên cho các chỗ có nhiều phương án. Không commit. `no-ai-slop` chế độ Edit.
+
+### Trang đã đổi, thêm, bỏ, dời
+
+- Thêm: L04-A01c (tách "Ký hiệu:" khỏi A01b, thêm $P_\pi$, $r_\pi$), L04-E05c (Chứng minh: tồn tại chính sách tối ưu), L04-E06c (Ví dụ: dãy năm ô trơn trượt, từ phần đầu G03 cũ).
+- Bỏ: L04-G03 (phần $V_2(\mathrm c_3)$ và chọn $\theta$ để cho tệp bài tập, dự kiến Bài tập 04.13).
+- Dời: L04-D05 lên ngay sau L04-D03 (thứ tự ghi chú Mục 3.2).
+- Sửa mặt trang: A01, A01b, A02, A03, A03b, A05; B00 (từ khóa), B01, B05, B05b, B06, B06b, B06c, B07, B08; C01 (tiêu đề), C03, C04, C04b, C07; D01, D02b, D03, D04, D04b, D05, D06; E00 (từ khóa), E04, E05, E05b, E06, E08; F00 (dòng dẫn), F01, F03, F03b, F04, F05, F05b (tiêu đề và nội dung), F06; G00 (dòng dẫn), G01, G01b, G02, G02b, G04, G04b, G05, G06.
+- Sửa chỉ ghi chú diễn giả: B06c, C01, C00, D00, E00, E01b, E03, E07, F00, F04, G00, G07 và các trang có ghi chú mới ở trên.
+- `Reveal.initialize` thêm `scrollActivationWidth:null`. Không còn `\text{}` có chữ Việt (dùng `\forall`).
+- SVG: `dp04-cartpole-bins.svg` đổi nhãn θ, θ̇ thành φ, φ̇ (cả mô tả); `dp04-convergence-bound.svg` phóng chữ (17 → 30, chỉ số 12 → 20), rút nhãn trục tung thành "Sai số (thang log)", dời hai chú thích để không chồng đường, mở rộng khung nhìn.
+- Deck: 76 → 78 trang, 7 mạch; storyboard cộng đúng 120 phút.
+
+### Bảng phát hiện
+
+| mã | trang | mức | xử lý | trạng thái |
+|---|---|---|---|---|
+| PB-1 | B01 | nghiêm trọng | "Nhắc lại:" hệ $(I-\gamma P_\pi)v_\pi=r_\pi$, chi phí $O(n^3)$; "Nhu cầu:" phép lặp rẻ hơn, dùng được khi thay trung bình bằng cực đại; $P_\pi$, $r_\pi$ định nghĩa ở A01c | đã sửa |
+| PB-2, RL-3, MACH-ngoài vai | ví dụ xác định | trung bình | Thêm E06c (nhánh tại $\mathrm c_4$: $7{,}8$ và $0{,}1$); bỏ G03 | đã sửa |
+| PB-3, MACH-P6 | B06, B06c, B07 | trung bình | B06 thêm "Trực quan.", gộp chuẩn vô cùng vào "Nhu cầu:"; B07 nối "$(10,11)$ là $v_{\pi_0}$"; "Lưu ý:" chuyển từ B06c sang B07 | đã sửa |
+| PB-4, TOAN, SV, MACH | B07, D03 ($P_\pi$, $r_\pi$) | trung bình | Định nghĩa ở A01c ("Ký hiệu:") và nhắc ở B01 | đã sửa |
+| PB-5, MACH-P2 | D01 | trung bình | Nhu cầu mới: dừng khi nào, chính sách lúc dừng có tối ưu không | đã sửa |
+| PB-6, TOAN, RL, SV | D04, D04b | trung bình/nhẹ | D04: "Nhắc lại:" chính sách nhớ lịch sử, $v_\pi(s)=\mathbb E_\pi[G_0\mid S_0=s]$, gắn bốn bảng với bốn chính sách; D04b: "Ý nghĩa:", "Lưu ý:" (tính Markov, định lý tồn tại); ghi chú sửa "tính co" thành "tính Markov" | đã sửa |
+| PB-7, TOAN, SV | D05, G01b, G02b | trung bình | D05 thêm "MDP hữu hạn", "không giảm, tăng nghiêm ngặt ở ít nhất một trạng thái", số chính sách hữu hạn; G01b, G02b dòng giả thiết chung | đã sửa |
+| PB-8, RL-4 | E05b | trung bình | "Chứng minh" tách thành trang E05c (dòng chứng minh làm trang vượt 6 dòng); "Hệ quả." thay "Ý nghĩa:"; "Dạng khác:" phương trình cho $q_*$, ví dụ $q_*(\mathrm s_0,\mathrm b)=27$ | đã sửa |
+| PB-9, MACH-P1 | A03 | trung bình | Dòng 4, 5, 6 theo quyết định của điều phối viên | đã sửa (ngoại lệ 76/80) |
+| PB-10, MACH-P11 | F01 | trung bình | Mở bằng "Nhu cầu:"; CartPole ghi "(cuối phần)" | đã sửa |
+| PB-11, RL-1, SV, TOAN | F05b | trung bình | "số bước giữ cột"; lợi tức chiết khấu $95{,}38$ so với $v_*$ của MDP ước lượng $84{,}47$; chênh $10{,}9$; chặn lặp $\theta/(1-\gamma)=0{,}01$; tiêu đề "Chính sách tối ưu của CartPole rời rạc hóa" | đã sửa |
+| PB-12, SV, RL, MACH-P14 | G05 | trung bình | Bảng chỉ ghi bài tập của ghi chú; 04.7, 04.8 xếp vào mạch 5; "Tệp bài tập: chưa có"; bỏ mô tả tệp trong ghi chú diễn giả | đã sửa (hàng gộp 2–4, 5–7 giữ để không quá 6 dòng; mạch của từng bài ghi trong ô) |
+| PB-13, MACH-P15 | ghi chú B00…G00 | trung bình | Viết lại, mở bằng đối tượng kế thừa, đổi cấu trúc câu, bỏ "Nhiệm vụ của phần này" | đã sửa |
+| RL-2, SV | A01b (chính sách dừng) | trung bình | "Nhắc lại: chính sách Markov dừng (stationary policy)…"; phân biệt với dừng thuật toán trong ghi chú A01b, D05; "Markov dừng" trên các trang kết quả | đã sửa |
+| RL-5 | E07 | trung bình | Ghi chú thêm chặn Singh và Yee (1994), $2\gamma\kappa/(1-\gamma)=1{,}8$ | đã sửa |
+| RL-6 | F05 | trung bình | Ghi chú thêm $k^4$ ô, lời nguyền số chiều (curse of dimensionality), dẫn sang Bài 07 | đã sửa |
+| SV | A01 | trung bình | Luận đề theo điều phối viên (toán tử Bellman tối ưu, chính sách tham lam) | đã sửa |
+| SV | F05 | trung bình | Giải thích $0{,}435=\hat p(s_{\mathrm{term}}\mid71,a)$, $\approx1{,}559$; "Nhu cầu:" (MACH-P3); SVG φ | đã sửa |
+| SV | E05 | trung bình | Phóng chữ SVG; hình cỡ `figure` (chữ hiện ≈ 0,68em) | đã sửa |
+| TOAN-1 | G02b, G01b | trung bình | Dòng "Chung:" MDP hữu hạn có tính Markov, $p$ đã biết, $0\le\gamma<1$ | đã sửa |
+| MACH-P3 | F00 | trung bình | Dòng dẫn: "Muốn áp dụng quy hoạch động cho bài toán lớn, phải chọn lịch phủ mọi trạng thái và kiểm điều kiện mô hình." | đã sửa |
+| MACH-P4 | G01, G01b | trung bình | Hàng đặt theo kết quả (04.6, 04.8, 04.13, 04.20, 04.25 với $v_*=T_*v_*$, 04.27, 04.32) | đã sửa |
+| MACH-P5 | G03 | trung bình | Bỏ trang; phần đầu thành E06c | đã sửa |
+| MACH-P7 | B05b | nhẹ | "Ví dụ." $\kappa=0{,}1$, dừng ở $k=44$ | đã sửa |
+| MACH-P8, PB, TOAN, RL, SV | D05 thứ tự | nhẹ | Dời lên sau D03 | đã sửa |
+| MACH-P9 | D04b | nhẹ | "Lưu ý:" dẫn sang định lý tồn tại | đã sửa |
+| MACH-P10 | E06 | nhẹ | Dòng nêu vì sao có ví dụ thứ hai | đã sửa |
+| MACH-P11 | F03 | nhẹ | "Quy hoạch động bất đồng bộ … tổng quát hóa cập nhật tại chỗ" | đã sửa |
+| MACH-P12 | F05b → F06 thứ tự | nhẹ | Giữ thứ tự theo ghi chú §5 | từ chối: deck theo thứ tự ghi chú; dòng dẫn G00 vẫn nối được qua F06b (điều kiện lịch) |
+| MACH-P13, RL | G06 | nhẹ | Viết song song từng dòng với A03, có số liệu, thêm dòng lịch | đã sửa (ngoại lệ 7 dòng, 79/80) |
+| MACH-P16, PB, RL | B00, E00, G00 | nhẹ | Bỏ KaTeX ở dòng dẫn và từ khóa | đã sửa |
+| MACH-P17, TOAN, RL | A01 | nhẹ | "toán tử Bellman tối ưu" | đã sửa |
+| PB | A02 | nhẹ | MT2 "kiểm giá trị không giảm"; MT5 dẫn thêm 04.6 | đã sửa |
+| PB | thuật ngữ tiếng Anh ở lần dùng đầu | nhẹ | "planning", "dynamic programming" lên bìa; "còn gọi là" ở B01 | sửa một phần: "lặp chính sách", "lặp giá trị", "tham lam" giữ tiếng Anh ở trang định nghĩa (D01, E01b, C04) vì A02 (79/80) và A03 (76/80) đã sát trần |
+| PB | B05, B06b, C03, C04b (vị trí số hiệu) | nhẹ | Số hiệu đặt sau câu phát biểu | đã sửa |
+| PB | ghi chú B01, C01, D01, E01b ("Đây là mô tả") | nhẹ | Thay bằng điều còn thiếu | đã sửa |
+| PB | ghi chú A01 | nhẹ | Bỏ "Bài này" làm chủ ngữ | đã sửa |
+| PB | F03 (mốc kiểm tra) | nhẹ | "mốc kiểm tra gồm $j=K$", "$K$ bước" | đã sửa |
+| PB | KN5 ứng dụng | nhẹ | Storyboard ghi "không áp dụng trên mặt trang" kèm lý do | đã sửa |
+| PB | C01, F05b (tiêu đề) | nhẹ | "Phép đổi hành động tại một trạng thái"; "Chính sách tối ưu của CartPole rời rạc hóa" | đã sửa |
+| PB | A05 (b) | nhẹ | "Nêu cột của bảng mô hình cần dùng ngoài cột phần thưởng" | đã sửa |
+| PB | ghi chú B06b | nhẹ | "không thể thay bằng hằng số nhỏ hơn dùng chung cho mọi bài toán" | đã sửa |
+| RL | storyboard 119,5 phút | nhẹ | Cộng lại đúng 120 | đã sửa |
+| RL | "thưởng bị chặn" | nhẹ | Thống nhất "phần thưởng bị chặn" | đã sửa |
+| RL | ghi chú F05b (random seed) | nhẹ | "hạt giống ngẫu nhiên (random seed)" | đã sửa |
+| RL | ghi chú G06 (model-based, Q-learning, DQN) | nhẹ | Thêm | đã sửa |
+| RL | ghi chú F04 ($m$ lượt quét) | nhẹ | Thêm | đã sửa |
+| TOAN | ghi chú B06c, G02b, G07 ($k\ge1$) | nhẹ | Thêm | đã sửa |
+| TOAN | ghi chú B06 (tỉ lệ co) | nhẹ | "giảm ít nhất theo tỉ lệ $\beta$" | đã sửa |
+| TOAN | B05b, E04 (nhãn khi trùng) | nhẹ | Ưu tiên "đạt ngưỡng" | đã sửa |
+| TOAN | C04 ($\pi$ cũ) | nhẹ | "giữ $\pi(s)$ của chính sách cũ $\pi$"; "chính sách xác định (deterministic policy)" | đã sửa |
+| TOAN | F03b ($V_j$) | nhẹ | "$V_j$ là bảng sau $j$ bước" | đã sửa |
+| TOAN | G02 (hết $K$) | nhẹ | Thêm | đã sửa |
+| TOAN | G05 (04.7, 04.8) | nhẹ | Xếp vào mạch 5 | đã sửa |
+| SV | KaTeX `\text{với mọi}` (C04, C04b, D02b) | nhẹ | Dùng `\forall` | đã sửa |
+| SV | B01, D01, F04 (hình nhỏ) | nhẹ | Hình ra hàng riêng | đã sửa |
+| SV | C02, F02 (nhãn ≈ 0,6em) | nhẹ | Đo kích thước hiện: nhãn ≈ 0,63–0,67em | giữ, đạt mức 0,6em của brief mục 8 |
+| SV | A03b (thuật ngữ chưa định nghĩa) | nhẹ | "phần dư, tức mức thay đổi sau một lượt quét"; "(phần 6)" | đã sửa |
+| SV | C04b (giả thiết hai chỗ) | nhẹ | Gộp vào "Giả thiết:" | đã sửa |
+| SV | D03 bước 4 | nhẹ | "trả $(\pi,v_\pi)$" | đã sửa |
+| SV | G04b, G01 (ngắt công thức) | nhẹ | G04b (b) rút ngắn; G01 hàng viết lại | đã sửa |
+| SV | khung đề bài (B08, C07, D06, E08, F06, G04, A05) | nhẹ | Dữ kiện ra ngoài khung; khung chỉ giữ "Câu hỏi:" và các ý | đã sửa |
+| SV | 390 px chế độ cuộn | nhẹ | `scrollActivationWidth:null` | đã sửa |
+| SV | bàn phím bỏ qua trang dọc | nhẹ | Hành vi chuẩn của RevealJS | từ chối: không đổi cấu hình điều hướng chung |
+
+### Đề nghị sửa ghi chú (sau giai đoạn II)
+
+| vị trí trong ghi chú | nội dung sửa | nguồn |
+|---|---|---|
+| Tình huống 04.1–04.2 (dòng ~1599, ~1620) | "tổng thưởng trung bình" → "số bước trung bình (lợi tức không chiết khấu)" | PB, RL |
+| Kiến thức tiên quyết (dòng 19), Bảng ký hiệu (dòng 41) | "chính sách dừng" → "chính sách Markov dừng (stationary policy)", một câu phân biệt với dừng thuật toán | RL, SV |
+| Bảng ký hiệu, dòng $K$ | $K$ là số lượt quét (Thuật toán 04.9, 04.28) hoặc số bước cập nhật (Thuật toán 04.31) | TOAN |
+| Ví dụ 04.4 | Nối: $U=(10,11)$ không đổi dưới $T_{\pi_0}$; Ví dụ 04.5 cho $U=v_{\pi_0}$ | PB |
+| Định lý 04.25(c) hoặc nhận xét sau | Dạng đệ quy $q_*(s,a)=\sum p\,[r+\gamma\max_{a'}q_*(s',a')]$ (nguồn tr. 8) | RL |
+| Nhận xét 04.30 hoặc 04.35 | Số ô $k^4$ khi tăng số khoảng chia; lời nguyền số chiều (Sutton và Barto, §4.7) | RL |
+| Mục 5.4, các tình huống | "hạt giống ngẫu nhiên (random seed)" ở lần dùng đầu | RL |
+| Mục 5.4 | Bỏ câu "Hình dùng chữ theta cho góc…": `dp04-cartpole-bins.svg` đã đổi sang φ trong vòng này, nên câu này hiện **lệch tạm thời** với hình | tác tử soạn, TOAN, SV, PB |
+| Mục 4.4, hình `dp04-convergence-bound.svg` | Nhãn trục tung trong hình đổi thành "Sai số (thang log)"; alt của ghi chú vẫn đúng | tác tử soạn |
+
+### Số hiệu bài tập dự kiến cho giai đoạn III
+
+04.10 (mạch 2, dạng ma trận và tính khả nghịch); 04.11 (mạch 3, tính đơn điệu của $T_\pi$, $T_*$); 04.12 (mạch 4, mô hình ba trạng thái); 04.13 (mạch 5, dãy năm ô trơn trượt: $V_1=(-1;-1;-1;7{,}8;0)$, $V_2(\mathrm c_3)=4{,}436$, nhánh trái $-1{,}108$, $\theta=0{,}01$ cho $\kappa=0{,}1$); 04.14, 04.15 (mạch 6, lập trình trên notebook). Deck không ghi các số này.
+
+### Mật độ sau biên tập
+
+78 trang; 67 không bị gắn cờ; 11 trang có ngoại lệ ghi trong storyboard (A01 bìa; A02, A03, G01, G01b, G02b, G06 loại trần 80; A02b và G06 về số dòng; dòng dẫn B00/E00/F00/G00 ≤ 25 âm tiết; F03 62/60 do dấu câu sau công thức). Không trang nào vượt 1,5 lần trần. Ghi chú diễn giả: mọi trang 40–150 âm tiết.
+
+### Kiểm tra sau biên tập
+
+- Playwright Chromium, cổng 8766, chặn `/api-reloadserver/`, tắt hiệu ứng chuyển trang; duyệt cả 78 trang ở 1600×900 và 390×844 (390 px nay không vào chế độ cuộn): 0 lỗi console, **0 cảnh báo** (kể cả KaTeX), 0 `.katex-error`, 0 yêu cầu ra ngoài localhost, không cuộn ngang, không phần tử nào vượt khung 1280×720 (sát nhất L04-F05: còn 46 px). Trang tiêu đề mạch 2.–7. khớp chỉ số ngang $h+1$. Kích thước hiện của hình đã đo (roadmap, expectation-backup, policy-iteration chiếm cả bề rộng 1160 px; convergence-bound 603 px; cartpole-bins 437×260).
+- **Giới hạn:** thư mục scratchpad của phiên bị thu hồi giữa vòng biên tập, nên lần này không lưu được ảnh chụp để tự xem; kiểm trình duyệt chỉ dựa trên số đo hình học. Điều phối viên nên chụp và xem lại các trang đã đổi (danh sách ở mục đầu) trước khi chốt.
+- `git diff --check` sạch.
+- `no-ai-slop` (Edit) trên các đoạn mới: đạt; đã bỏ "Quan trọng hơn" (ghi chú B01), các câu siêu ngôn "Đây là mô tả", khung câu lặp ở ghi chú trang tiêu đề mạch.
+
+### Rà lại vòng 2 và sửa (giai đoạn II)
+
+Hai tác tử rà lại chỉ đọc, Opus 5.5 `high`: TOAN (2 trung bình, 5 nhẹ) và MACH (1 trung bình T1 trùng TOAN, 8 nhẹ N1–N8, 3 ngoài vai). Biên tập viên: tác tử soạn deck, Opus 5.5 `high`. Không commit.
+
+| mã | trang | mức | xử lý | trạng thái |
+|---|---|---|---|---|
+| TOAN-1 | D05 | trung bình | Chứng minh: "giá trị không giảm và tăng nghiêm ngặt ở ít nhất một trạng thái. Do đó dãy không lặp lại; số chính sách xác định hữu hạn nên thuật toán dừng." | đã sửa (ngoại lệ 67/60 ghi storyboard) |
+| TOAN-2, MACH-T1 | G01b hàng 1 | trung bình | "Dừng hữu hạn (Mệnh đề 04.18) \| Đánh giá chính xác; phá hòa \| Sau tối đa ∏ vòng, tại $\pi$ ổn định". Hàng Định lý 04.20 không thêm vì vượt 6 dòng và 80 âm tiết; $v_\pi=T_*v_\pi$ (Định lý 04.20) nêu trong ghi chú diễn giả G01b | đã sửa |
+| TOAN-3 | B07, B05b ($k\ge1$) | nhẹ | Thêm "với $k\ge1$"; G06 dòng 2 cũng thêm | đã sửa |
+| TOAN-4 | E05b ($q_*$) | nhẹ | "Dạng khác:" mở bằng $q_*(s,a)=Q_{v_*}(s,a)$ | đã sửa |
+| TOAN-5 | F05 | nhẹ | "với cả hai $a$" | đã sửa |
+| TOAN-6 | D05 ($I_{\max}$) | nhẹ | Giả thiết thêm "$I_{\max}$ đủ lớn" | đã sửa |
+| TOAN-7, MACH ngoài vai | A01c | nhẹ | "$r_\pi$ là phần thưởng kỳ vọng một bước, cả hai dưới $\pi$" | đã sửa |
+| MACH-N1 | A03, G06 | nhẹ | A03 dòng 4 "…tại chính sách ổn định"; $0\le\gamma<1$ đưa lên dòng "Nhu cầu:" của A03 và dòng mở của G06; bỏ "Khi $\gamma<1$," ở dòng 2 và 5; G06 dòng 4 "…tại $(\mathrm b,\mathrm b)$ ổn định" | đã sửa |
+| MACH-N2 | E06c | nhẹ | Mở bằng "Nhu cầu: kỳ vọng theo $p$ khi một hành động có ba kết quả chuyển." | đã sửa |
+| MACH-N3 | ghi chú E00 | nhẹ | "Cặp $(\mathrm b,\mathrm b)$, $(27,30)$, tối ưu trong lớp chính sách Markov dừng" | đã sửa |
+| MACH-N4 | ghi chú B00 | nhẹ | $(10,11)$ dùng ở phần cải thiện; $\theta$ dùng lại ở lặp giá trị | đã sửa |
+| MACH-N5 | ghi chú A01 | nhẹ | Tham lam ở phần cải thiện, $T_*$ ở phần lặp giá trị | đã sửa |
+| MACH-N6 | G05 | nhẹ | Ghi mạch cho từng bài: 04.1 (mạch 2), 04.2 (mạch 3), 04.3 (mạch 4), 04.6 (mạch 7) | đã sửa |
+| MACH-N7 | storyboard | nhẹ | KN1 vấn đề B01; KN7 $\approx1{,}559$; G01b bốn hàng; F03 = 60 (bỏ ngoại lệ), thêm ngoại lệ D05; bảng trước → sau thay bằng số hiện tại; "lớp chính sách Markov dừng" | đã sửa |
+| MACH-N8 | A03, nhãn hình lộ trình | nhẹ (tùy chọn) | Giữ nhãn "Phân bổ tính" | từ chối: `dp04-roadmap.svg` dùng chung với ghi chú bài giảng, alt trong ghi chú ghi "phân bổ tính"; đổi nhãn sẽ tạo lệch ghi chú–hình |
+| MACH ngoài vai | E06c, `dp04-stochastic-grid.svg` | nhẹ | "Hành động chọn: phai" (không dấu, khớp tên hành động của deck); hình chỉ deck dùng | đã sửa |
+| MACH ngoài vai | footer ẩn ở mạch 1 | nhẹ | Không sửa CSS chung | ghi đề nghị dưới đây |
+
+**Đề nghị cho `lecture-slide.css`.** Quy tắc `.reveal section:first-of-type.present~.footer` ẩn chân trang trên mọi trang của mạch ngoài thứ nhất (9 trang của mạch 1 ở deck này), không chỉ trên bìa. Đề nghị thu hẹp về trang bìa, chẳng hạn `.reveal .slides > section:first-of-type > section:first-of-type.present ~ .footer` (cần kiểm mọi deck).
+
+**Kiểm tra.** `density.py`: 11 dòng gắn cờ (A01, A02, A02b, A03, D05, F00, G00, G01, G01b, G02b, G06), đều có ngoại lệ trong storyboard. `deck_check.py` (server tĩnh cổng 8799) ở 1600×900 và 390×844: 78 trang, 0 lỗi/cảnh báo console, 0 `.katex-error`, 0 yêu cầu ngoài, 0 yêu cầu lỗi, không cuộn ngang. Cột "overflow"/"small_font" của script là dương tính giả do phần tử phụ của KaTeX (vai SV đã xác nhận); đo riêng hộp nội dung so với khung 1280×720: không trang nào tràn, sát nhất F05 còn 21 px. Ảnh đã xem (1600×900): A03, D05, E05b, E06c, G01b, G05, G06; các trang tiêu đề mạch chụp lại ở `scratchpad/d04r2/`. `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-12, giai đoạn II, deck)
+
+- Tác tử: tác tử soạn kiêm biên tập (general-purpose, claude-opus-5-5, high) hai vòng; rà lại toán và rà lại mạch (general-purpose, claude-opus-5-5, high, chỉ đọc); điều phối viên Claude Fable 5.1 (medium).
+- Kiểm độc lập của điều phối viên sau vòng 2: `density.py` chỉ gắn cờ các trang có lý do trong `storyboard.md`; Playwright 1600×900 và 390×844: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, đủ 6 trang tiêu đề mạch; ảnh các trang đổi ở vòng 2 đã xem; `git diff --check` sạch.
+- Quyết định: **chấp nhận**; commit `fix(lecture-04)`.

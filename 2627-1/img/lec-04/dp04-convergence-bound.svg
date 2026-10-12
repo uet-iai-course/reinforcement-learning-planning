@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="790" height="450" viewBox="-30 0 790 450" role="img" aria-labelledby="title desc">
 <title id="title">Chặn hội tụ của lặp giá trị trên mô hình hai trạng thái</title>
 <desc id="desc">Trục hoành là số lượt quét k từ 0 đến 60, trục tung thang logarit từ 0,01 đến 100. Đường liền là chặn 30 nhân 0,9 mũ k. Các chấm tròn là sai số đo được giữa bảng V_k của lặp giá trị từ bảng không và v_* bằng (27, 30), lấy theo chuẩn vô cùng, tại k = 0, 5, 10, ..., 60; mọi chấm nằm đúng trên đường. Đường nằm ngang nét đứt ở mức 0,1 cắt đường chặn giữa k = 54 và k = 55; đường thẳng đứng nét đứt đánh dấu k = 55, lượt quét đầu tiên có sai số không quá 0,1.</desc>
-<g font-family="Arial, Helvetica, sans-serif" fill="#202938" font-size="17">
+<g font-family="Arial, Helvetica, sans-serif" fill="#202938" font-size="30">
 <line x1="96" y1="360.0" x2="720" y2="360.0" stroke="#D5DAE3" stroke-width="1"/>
 <text x="86" y="366.0" text-anchor="end">0,01</text>
 <line x1="96" y1="284.0" x2="720" y2="284.0" stroke="#D5DAE3" stroke-width="1"/>
@@ -13,23 +13,23 @@
 <line x1="96" y1="56.0" x2="720" y2="56.0" stroke="#D5DAE3" stroke-width="1"/>
 <text x="86" y="62.0" text-anchor="end">100</text>
 <line x1="96.0" y1="360" x2="96.0" y2="366" stroke="#5A6475" stroke-width="1.5"/>
-<text x="96.0" y="386" text-anchor="middle">0</text>
+<text x="96.0" y="394" text-anchor="middle">0</text>
 <line x1="200.0" y1="360" x2="200.0" y2="366" stroke="#5A6475" stroke-width="1.5"/>
-<text x="200.0" y="386" text-anchor="middle">10</text>
+<text x="200.0" y="394" text-anchor="middle">10</text>
 <line x1="304.0" y1="360" x2="304.0" y2="366" stroke="#5A6475" stroke-width="1.5"/>
-<text x="304.0" y="386" text-anchor="middle">20</text>
+<text x="304.0" y="394" text-anchor="middle">20</text>
 <line x1="408.0" y1="360" x2="408.0" y2="366" stroke="#5A6475" stroke-width="1.5"/>
-<text x="408.0" y="386" text-anchor="middle">30</text>
+<text x="408.0" y="394" text-anchor="middle">30</text>
 <line x1="512.0" y1="360" x2="512.0" y2="366" stroke="#5A6475" stroke-width="1.5"/>
-<text x="512.0" y="386" text-anchor="middle">40</text>
+<text x="512.0" y="394" text-anchor="middle">40</text>
 <line x1="616.0" y1="360" x2="616.0" y2="366" stroke="#5A6475" stroke-width="1.5"/>
-<text x="616.0" y="386" text-anchor="middle">50</text>
+<text x="616.0" y="394" text-anchor="middle">50</text>
 <line x1="720.0" y1="360" x2="720.0" y2="366" stroke="#5A6475" stroke-width="1.5"/>
-<text x="720.0" y="386" text-anchor="middle">60</text>
+<text x="720.0" y="394" text-anchor="middle">60</text>
 <line x1="96" y1="360" x2="720" y2="360" stroke="#5A6475" stroke-width="1.5"/>
 <line x1="96" y1="56" x2="96" y2="360" stroke="#5A6475" stroke-width="1.5"/>
-<text x="408.0" y="414" text-anchor="middle">Số lượt quét k</text>
-<text x="22" y="208.0" text-anchor="middle" transform="rotate(-90 22 208.0)">Sai số theo chuẩn vô cùng (thang log)</text>
+<text x="408.0" y="436" text-anchor="middle">Số lượt quét k</text>
+<text x="-6" y="208.0" text-anchor="middle" transform="rotate(-90 -6 208.0)">Sai số (thang log)</text>
 <line x1="96" y1="284.0" x2="720" y2="284.0" stroke="#B15A2B" stroke-width="2" stroke-dasharray="7 5"/>
 <text x="104" y="276.0" fill="#B15A2B">ngưỡng sai số 0,1</text>
 <line x1="668.0" y1="56" x2="668.0" y2="360" stroke="#B15A2B" stroke-width="2" stroke-dasharray="3 4"/>
@@ -48,6 +48,6 @@
 <circle cx="616.0" cy="269.6" r="5" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2"/>
 <circle cx="668.0" cy="287.0" r="5" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2"/>
 <circle cx="720.0" cy="304.4" r="5" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2"/>
-<text x="241.6" y="130.4" fill="#2F3E7A">đường liền: chặn 30 · 0,9<tspan baseline-shift="super" font-size="12">k</tspan></text>
-<text x="116.8" y="224.9" fill="#2F3E7A">chấm tròn: sai số đo được ‖V<tspan baseline-shift="sub" font-size="12">k</tspan> − v<tspan baseline-shift="sub" font-size="12">*</tspan>‖</text>
+<text x="236" y="112" fill="#2F3E7A">đường liền: chặn 30 · 0,9<tspan baseline-shift="super" font-size="20">k</tspan></text>
+<text x="104" y="338" fill="#2F3E7A">chấm tròn: sai số đo được ‖V<tspan baseline-shift="sub" font-size="20">k</tspan> − v<tspan baseline-shift="sub" font-size="20">*</tspan>‖</text>
 </g></svg>

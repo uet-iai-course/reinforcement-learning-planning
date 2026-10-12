@@ -1,522 +1,214 @@
-# Storyboard mới Bài 04
+# Storyboard Bài 04 — Giải MDP bằng quy hoạch động
 
-Bài 04 — Giải MDP bằng quy hoạch động. Học phần Học tăng cường, học kỳ 1 năm học 2026–2027. Người học: sinh viên đại học đã học học máy, học sâu và thuật toán; tiên quyết dùng trực tiếp là MDP, xác suất có điều kiện, tổng chiết khấu, vector, chuẩn vô cùng được định nghĩa lại và hệ tuyến tính.
+Bản storyboard theo chuẩn 2026-10-12, khớp deck `2627-1/lecture-04-giai-mdp-bang-quy-hoach-dong.html` sau giai đoạn II. Deck có **78 trang trong 7 mạch** (sau vòng biên tập theo năm báo cáo rà soát), trình chiếu **120 phút**; 30 phút còn lại của buổi dành cho chữa bài tập và bài thực hành CartPole. Ghi chú bài giảng (`materials/lec-04/lecture-note.md`, commit `36e8a5b`) là nguồn chuẩn; mỗi trang dẫn tối đa một số hiệu kết quả của ghi chú. Bản storyboard trước (45 trang) được thay toàn bộ; lịch sử nằm trong `review-log.md`.
 
-Vấn đề trung tâm: từ mô hình chuyển–thưởng đã biết, tính giá trị của một chính sách, cải thiện lựa chọn và tìm chính sách tối ưu có điều kiện kiểm chứng. Phần trình chiếu gồm **45 trang, 7 mạch, 120 phút**; thời gian đã gồm các câu kiểm tra riêng và chữa ngắn. **30 phút còn lại của buổi 150 phút dành cho chữa bài tập** theo nguồn; không tự tạo code demo vì PDF và tài liệu tuần 4 không có chương trình.
+## Bản đồ mạch
 
-Đây là bản dàn bài mới, không dùng dàn bài cũ làm khung. Chỉ dẫn cụ thể của người dùng cho phép thay thứ tự nguồn để theo Sutton–Barto chương 4: đánh giá → cải thiện → lặp chính sách → lặp giá trị → bất đồng bộ/GPI/hiệu quả. Chủ đề và dữ kiện của PDF nguồn được bảo toàn qua ánh xạ đủ 38 trang. Kế hoạch đã được chấp nhận và triển khai ngày 2026-09-28. Năm vai đã rà độc lập cùng bản cố định; các sửa cục bộ sau rà được cập nhật trong hồ sơ này. Bằng chứng kiểm định và trạng thái rà lại nằm trong review-log.md.
+| N | Mạch | Loại | Trang tiêu đề mạch | Chức năng riêng | Đầu vào từ mạch trước | Đầu ra cho mạch sau | Đóng góp cho vấn đề trung tâm | Trang | Phút |
+|---|---|---|---|---|---|---|---|---:|---:|
+| 1 | Mở đầu | mở đầu | L04-A01 (bìa) | Đặt bài toán lập kế hoạch, khung chung, ví dụ xuyên suốt | Bài 03: MDP, lợi tức, Bellman kỳ vọng | Mô hình hai trạng thái, $\pi_0$; nhu cầu tính kỳ vọng của tổng vô hạn | Phát biểu bài toán và câu trả lời có điều kiện | 9 | 10 |
+| 2 | Đánh giá chính sách | phát triển kiến thức, thuật toán | L04-B00, `mach-2` | Tính $v_\pi$ bằng lượt quét, chứng minh hội tụ, dừng có chặn | Mô hình, $\pi_0$ | $v_{\pi_0}=(10,11)$; phần dư; $\theta=(1-\gamma)\kappa$ | Giá trị của một chính sách là điểm bất động của $T_\pi$ | 13 | 24 |
+| 3 | Cải thiện chính sách | phát triển kiến thức | L04-C00, `mach-3` | Đổi hành động theo nhìn trước mà giá trị không giảm | $v_{\pi_0}$ | $\pi_1$, $v_{\pi_1}=(10,30)$; nhu cầu đánh giá lại | Bước tiến tới chính sách tốt hơn | 10 | 18 |
+| 4 | Lặp chính sách | phát triển thuật toán | L04-D00, `mach-4` | Xen kẽ đánh giá chính xác và cải thiện; tối ưu của chính sách ổn định | Định lý cải thiện, $\pi_1$ | $(\mathrm b,\mathrm b)$, $(27,30)$, Bellman tối ưu; chi phí đánh giá đầy đủ | Nghiệm tối ưu trong lớp chính sách Markov dừng sau hữu hạn vòng | 10 | 18 |
+| 5 | Lặp giá trị | phát triển thuật toán | L04-E00, `mach-5` | Gộp cải thiện vào lượt quét; tồn tại chính sách tối ưu; ngưỡng dừng | Bellman tối ưu, chi phí đánh giá | $T_*$, Định lý 04.25, ngưỡng $\theta$; chi phí một lượt quét | Thay chuỗi quyết định bằng điểm bất động của $T_*$ | 16 | 24,5 |
+| 6 | Lịch cập nhật và giới hạn của mô hình bảng | ứng dụng, giới hạn | L04-F00, `mach-6` | Chi phí, tại chỗ, bất đồng bộ, GPI, CartPole | $T_*$, giới hạn lượt quét toàn bộ | Điều kiện lịch, điều kiện mô hình | Phạm vi áp dụng và cách tổ chức tính | 10 | 14 |
+| 7 | Tổng kết và chuyển tiếp | kết luận | L04-G00, `mach-7` | Tổng kết theo giả thiết, bài tập tổng hợp, trả lời vấn đề trung tâm | Kết quả mạch 2–6 | Nhu cầu của Bài 05 | Kết luận có điều kiện | 10 | 11,5 |
 
-## Ánh xạ mục tiêu hiển thị và mục tiêu chi tiết
+Tổng 78 trang, 120 phút. Bảy mạch theo kế hoạch A1 (không gộp cải thiện với lặp chính sách, vì nguồn và Sutton và Barto tách hai mục).
 
-Trang L04-A02 hiển thị bốn mục tiêu rút gọn; outline.md giữ sáu mục tiêu chi tiết MT1–MT6 dùng cho kiểm tra.
+**Ngoại lệ số trang.** Quyết định chung mục 5 chấp nhận 60–70 trang khi phân bổ đủ 120 phút. Deck có 78 trang, vượt 8 trang so với mức trên, vì: sáu trang tiêu đề mạch (khoảng 0,5 phút mỗi trang), sáu trang lời giải tách ("…b") đọc nhanh, các trang tách để giữ trần mật độ, và ba trang thêm theo năm báo cáo rà soát (A01c, E05c, E06c; bỏ G03). Thời lượng từng trang cộng đủ 120 phút. **Có thể bỏ khi thiếu giờ** (nội dung còn trong ghi chú bài giảng): L04-B06c (Hệ quả 04.6), L04-E05c (chứng minh Định lý 04.25), L04-F04 (GPI), L04-F05b (Tình huống 04.1–04.2).
 
-| Mục tiêu trên L04-A02 | Mục tiêu chi tiết | Kiểm tra |
-|---|---|---|
-| Tính giá trị và cải thiện chính sách. | MT2, MT3 | L04-B08, L04-C07 |
-| Thực hiện lặp chính sách, lặp giá trị. | MT4, MT5 | L04-D06, L04-E08 |
-| Chặn sai số bằng phần dư. | MT2, MT5 | L04-B08, L04-E08, L04-G04 |
-| So sánh ba cách tổ chức tính toán. | MT6 | L04-F06, L04-G02, L04-G04 |
+**Khối 30 phút ngoài phần trình chiếu:** chữa Bài tập 04.7–04.9 của ghi chú, phần còn lại của dãy năm ô trơn trượt ($V_2(\mathrm c_3)$, chọn $\theta$; dự kiến Bài tập 04.13 của tệp bài tập) và bài thực hành CartPole. Bảy cặp bài tập có lời giải trên mặt trang (A05, B08/B08b, C07/C07b, D06/D06b, E08/E08b, F06/F06b, G04/G04b) nằm trong 120 phút.
 
-MT1 (xác định mô hình, chính sách, phần thưởng và tổng chiết khấu) là năng lực đầu vào của mạch A, được kiểm tra tại L04-A05; không hiển thị thành mục tiêu riêng trên L04-A02.
+## Cụm khái niệm và sáu bước
 
-## Bản đồ hành trình
+| Cụm | Dạng | Vấn đề | Trực giác | Ví dụ | Hình thức / thuật toán | Ứng dụng | Kiểm tra | Phút |
+|---|---|---|---|---|---|---|---|---:|
+| Mô hình và lợi tức (rút gọn, nhắc Bài 03) | khái niệm | A03 | A04 (diễn giải trong ghi chú) | A04 | A01b, A01c (Nhắc lại, Ký hiệu) | A05 | A05 (lời giải fragment) | 10 |
+| KN1 Đánh giá chính sách | thuật toán | B01 (Nhắc lại: giải hệ tốn $O(n^3)$; Nhu cầu: phép lặp rẻ hơn, dùng được khi thay trung bình bằng cực đại) | B01 (Trực quan., hình cập nhật kỳ vọng) | B02 (tính tay hai lượt quét, trước giả mã B05b) | B03, B04, B06, B06c, B05, B06b, B05b | B07 (giá trị chính xác, sai số $10\cdot0{,}9^k$) | B08/B08b (Bài tập 04.1, lời giải trên mặt trang) | 24 |
+| KN2 Cải thiện chính sách | khái niệm | C01 | C01 (Trực quan.) | C02 (hai nhánh: 11 và 12,9) | C03, C04, C04b, C05 | C06 ($\pi_1$, $(10,30)$) | C07/C07b (Bài tập 04.2) | 18 |
+| KN3 Lặp chính sách | thuật toán | D01 | D01 (hình chu trình) | D02 (tính tay ba vòng, trước giả mã D03) | D02b, D03, D05, D04, D04b | D04b (ghi chú) chứng nhận $(27,30)$; D05 (ghi chú) ví dụ ba vòng | D06/D06b (Bài tập 04.3) | 18 |
+| KN4 Lặp giá trị | thuật toán | E01 (44 lượt quét, $O(n^3)$) | E01b | E02 (tính tay hai lượt quét, trước giả mã E04) | E03, E03b, E05b, E05c, E05, E07, E04 | E06, E06b (dãy năm ô), E06c (dãy năm ô trơn trượt: kỳ vọng nhiều nhánh) | E08/E08b (Bài tập 04.4) | 24,5 |
+| KN5 Quy hoạch động bất đồng bộ | thuật toán | F01 (chi phí) và dòng "Nhu cầu:" của F02 | F02 (định nghĩa tại chỗ bằng lời, hình thứ tự cập nhật) | F02 (tính tay một lượt tại chỗ, trước F03) | F03, F03b | không áp dụng trên mặt trang: notebook chưa nhúng kết quả lịch bất đồng bộ; ghi chú diễn giả F06b nêu lịch theo quỹ đạo chỉ ghé 64/324 ô | F06/F06b (Bài tập 04.5) | 8 |
+| KN6 GPI (rút gọn) | khái niệm phụ | F04 (ba thuật toán đã học) | F04 (hình hai quá trình) | không áp dụng: dùng lại ba thuật toán đã tính | F04 | không áp dụng | G07 không hỏi riêng; G02 đặt ba phương pháp cạnh nhau | 2 |
+| KN7 Mô hình bảng của CartPole (ứng dụng giới hạn) | ứng dụng | F05 (trạng thái liên tục) | F05 (hình) | F05 (ô 71: $\approx1{,}559$) | không áp dụng: ánh xạ rời rạc hóa ở ghi chú | F05b (Tình huống 04.1–04.2) | G07 câu 3 | 4 |
+| Tổng kết | kết luận | G00 | không áp dụng | G04 (tổng hợp) | không có khái niệm mới | G06 | G07 | 11,5 |
 
-| Mạch | Vai trò | Đầu vào | Đầu ra và đóng góp | Trang | Phút | Kiểm tra riêng |
-|---|---|---|---|---|---:|---|
-| A. Mở đầu | Thiết lập bài toán | MDP, xác suất có điều kiện và tổng chiết khấu | MDP hai trạng thái và nhu cầu đánh giá một chính sách cố định | L04-A01–L04-A05 | 10 | L04-A05 |
-| B. Đánh giá chính sách | Phát triển kiến thức và luyện tập | Mô hình đã biết và chính sách cố định | Giá trị chính xác hoặc bảng có phần dư; làm đầu vào so sánh hành động | L04-B01–L04-B08 | 22 | L04-B08 |
-| C. Cải thiện chính sách | Phát triển kiến thức và luyện tập | Giá trị của chính sách đã đánh giá | Chính sách mới không kém; nhu cầu đánh giá lại chính sách mới | L04-C01–L04-C07 | 20 | L04-C07 |
-| D. Lặp chính sách | Phát triển thuật toán và luyện tập | Đánh giá, cải thiện, tính co theo chính sách | Chính sách ổn định và điều kiện tối ưu; giới hạn chi phí đánh giá đầy đủ | L04-D01–L04-D06 | 18 | L04-D06 |
-| E. Lặp giá trị | Phát triển thuật toán và luyện tập | Lặp chính sách và nhu cầu cắt ngắn đánh giá | Cập nhật tối ưu, phần dư và chính sách tham lam; nhu cầu phân bổ công việc | L04-E01–L04-E08 | 22 | L04-E08 |
-| F. Quy hoạch động trong thực hành | Tổ chức tính toán và giới hạn | Cập nhật kỳ vọng, lặp chính sách, lặp giá trị | Lịch cập nhật, điều kiện bao phủ, GPI và giới hạn mô hình | L04-F01–L04-F06 | 16 | L04-F06 |
-| G. Tổng hợp và bài tập | Kết luận và vận dụng tổng hợp | Kết quả của sáu mạch trước | Kiểm tra nghiệm, so sánh phương pháp theo giả thiết; bài tập và tài liệu đọc | L04-G01–L04-G05 | 12 | L04-G04 |
+Ví dụ dẫn nhập: A04 làm cụ thể vấn đề A03; B02 truyền quy tắc $V_{k+1}(\mathrm s)=r+0{,}9V_k(\mathrm s_0)$ sang $T_\pi$ (B04) và sang Thuật toán 04.9 (B05b); C02 truyền phép "thưởng + $\gamma\cdot$ tiếp nối" sang $Q_V$ (C03); D02 truyền bảng ba vòng sang D02b, D03; E02 truyền cột "Cực đại" sang $T_*$ (E03) và hai lần lặp đầu của Thuật toán 04.28 (E04); F02 truyền cơ chế đọc giá trị mới nhất sang Thuật toán 04.31 (F03).
 
+Mỗi thuật toán có tính tay trước giả mã và cho cùng kết quả với giả mã: B02 → B05b ($V_1$, $V_2$; dừng ở $k=44$ với $\theta=0{,}01$); D02 → D03 (ba vòng); E02 → E04 ($V_1=(1,3)$, $V_2=(2{,}7;5{,}7)$); F02 → F03 (lịch ngược cho $V_4$).
 
-Mạch A thiết lập quyết định cần tối ưu và dữ kiện. B cung cấp giá trị của một chính sách. C dùng giá trị đó để thay hành động. D lặp hai phép toán và xác định điều kiện tối ưu. E cắt ngắn đánh giá để xây cập nhật tối ưu có chứng nhận sai số. F thay lịch và xem giới hạn mô hình. G quay lại nghiệm, kiểm chứng và bài tập. Thứ tự này theo yêu cầu mới về chương 4, thay cấu trúc nguồn bắt đầu bằng toàn bộ hệ tối ưu Bellman.
+Các khái niệm phụ đi chu trình rút gọn có lý do: GPI chỉ gọi tên khuôn chung của ba thuật toán đã học; CartPole là ứng dụng của điều kiện mô hình, không dạy kỹ thuật rời rạc hóa mới; mạch tổng kết không đưa khái niệm mới.
 
-## Chu trình của các cụm trọng tâm
+## Thời lượng theo trang
 
-| Cụm | Vấn đề | Trực giác | Ví dụ trước hình thức | Hình thức/quy trình | Ứng dụng sau hình thức | Kiểm tra | Phút |
-|---|---|---|---|---|---|---|---:|
-| Nhắc mô hình và tổng thưởng | L04-A03 | L04-A03–A04 | L04-A04 | L04-A03 nhắc tiên quyết; công thức tổng thưởng ở A05 là tiên quyết | Quỹ đạo cụ thể L04-A05 | L04-A05 | 10 |
-| KN1 đánh giá | L04-B01 | L04-B01 | L04-B02 | L04-B03–B06; quy trình đủ B05 | L04-B07, giải hệ và đối chiếu bảng lặp | L04-B08 | 22 |
-| KN2 cải thiện | L04-C01 | L04-C01 | L04-C02 | L04-C03–C05; quy tắc chọn đủ C04 | L04-C06, đổi chính sách rồi đánh giá lại | L04-C07 | 20 |
-| KN3 lặp chính sách | L04-D01 | L04-D01 | L04-D02 | L04-D03; điều kiện D04–D05 | L04-D04, chứng nhận cặp $(b,b),(27,30)$ | L04-D06 | 18 |
-| KN4 lặp giá trị | L04-E01 | L04-E01 | L04-E02 | L04-E03–E05; quy trình đủ E04 | L04-E06 lưới và E07 phần dư | L04-E08 | 22 |
-| KN5 bất đồng bộ | L04-F01 | L04-F02 | L04-F02 | L04-F03 | L04-F03, kiểm phần dư sau lịch ngược trên lưới | L04-F06 | 9, gồm F01–F03 và phần lịch ở F06 |
-| KN6 GPI, KN7 mô hình gộp | L04-F04–F05 tổng hợp giới hạn đã có | Sơ đồ hai quá trình F04; bốn biến F05 | PI/VI đã tính, 324 tổ hợp F05 | Định nghĩa GPI F04 và ánh xạ F05 | Phân loại PI/VI/bất đồng bộ và nêu mô hình còn thiếu | Phần mô hình ở L04-F06 | 7; tổng F là 16 |
-| Tổng hợp và luyện tập | Thu hồi bài toán L04-G01 | Liên hệ hai quy trình L04-G01–G02 | Lưới nhiễu L04-G03 | Không thêm khái niệm trọng tâm | Lập kỳ vọng G03 và kiểm nghiệm G04 | L04-G04 | 12 |
+| Mạch | Trang và phút | Tổng |
+|---|---|---:|
+| 1 | A01 0,5; A01b 1; A01c 1; A02 1; A02b 0,5; A03 2; A03b 1; A04 1,5; A05 1,5 | 10 |
+| 2 | B00 0,5; B01 2; B02 2; B03 1,5; B04 2,5; B06 2,5; B06c 2; B07 2; B05 1,5; B06b 2; B05b 2; B08 2; B08b 1,5 | 24 |
+| 3 | C00 0,5; C01 1,5; C02 2; C03 2; C04 2; C04b 2,5; C05 2,5; C06 2; C07 1,5; C07b 1,5 | 18 |
+| 4 | D00 0,5; D01 1,5; D02 2; D02b 2; D03 2; D05 2; D04 2; D04b 2,5; D06 2; D06b 1,5 | 18 |
+| 5 | E00 0,5; E01 1,5; E01b 1; E02 2; E03 2; E03b 1,5; E05b 2; E05c 2; E05 1,5; E07 2; E04 2; E06 1; E06b 1; E06c 1,5; E08 1,5; E08b 1,5 | 24,5 |
+| 6 | F00 0,5; F01 1,5; F02 1,5; F03 1,5; F03b 1,5; F04 1,5; F05 1,5; F05b 1,5; F06 1,5; F06b 1,5 | 14 |
+| 7 | G00 0,5; G01 1,5; G01b 1,5; G02 0,5; G02b 1; G04 1,5; G04b 1,5; G06 1,5; G07 1; G05 1 | 11,5 |
 
-Chu trình A và G được rút gọn có chủ ý: A chỉ nhắc kiến thức đã học và thiết lập nhu cầu; G không thêm định nghĩa. GPI là khái niệm hỗ trợ mô tả các quy trình đã thực hiện; ví dụ là chính các lần lặp đã học, không mở thuật toán mới. CartPole là ứng dụng điều kiện mô hình, không dạy thuật toán rời rạc hóa mới. Các bước “không áp dụng” ở G là định nghĩa/chứng minh mới, vì đưa thêm chúng sẽ phá chức năng kết luận.
+## Ngoại lệ mật độ
 
-F02 là ví dụ dẫn nhập đồng thời làm cụ thể vấn đề F01: một lượt quét có thể truyền thông tin nhanh hơn nếu giá trị mới được dùng ngay. Ví dụ đánh giá hai trạng thái truyền cơ chế đọc giá trị mới nhất, không truyền nguyên bảng $(1,2)$ sang $T_*$. Ví dụ lặp giá trị tại chỗ trên lưới truyền toán tử tối ưu và lịch $c_4,c_3,c_2,c_1$: $c_4$ nhận $10$, rồi $c_3$ nhận $\max\{-1,8\}=8$. F03 có ứng dụng sau hình thức: chạy lịch ngược đã nêu, cố định bảng cuối để xác nhận phần dư 0 và trích chính sách. F06 kiểm tra cả lịch bao phủ và mô hình; phân bổ 1 phút của câu kiểm tra cho lịch và 2 phút cho mô hình tạo tổng thời gian trong bảng trên.
+Số âm tiết đo bằng thuật toán của `density.py` (đếm cả dấu câu đứng sau công thức như một token). Sau rà lại vòng 2, 67/78 trang không bị gắn cờ; 11 trang có ngoại lệ (F03 nay đúng 60, không còn ngoại lệ):
 
-### Dữ kiện và ký hiệu được truyền
-
-| Cụm | Đầu vào và dữ kiện giữ nguyên | Sản phẩm học tập | Giới hạn cần bảo toàn |
+| Trang | Đo được | Trần áp dụng | Lý do |
 |---|---|---|---|
-| B | Bốn cạnh từ A04, $\pi_0=(a,a)$, $\gamma=0.9$, $V_0=0$ | Hai lượt tính và nghiệm $(10,11)$; phần dư gắn với bảng đúng | $V_k$ không phải $v_{\pi_k}$; chỉ số k không phải t |
-| C | $v_{\pi_0}=(10,11)$ từ B07 | $q$ của cùng chính sách, $(a,b)$ và $(10,30)$ | Điểm 12.9 là tiếp tục theo chính sách cũ, khác 30 |
-| D | $(a,b)$, $(10,30)$ và hành động b tại $s_0$ | Chuỗi PI đầy đủ, cặp chính sách–giá trị nhất quán | Đánh giá chính xác, giữ hòa; mọi kết luận hữu hạn có điều kiện |
-| E | Cùng MDP hai trạng thái, bảng không, cơ chế nhìn trước | $(1,3)$ rồi $(2.7,5.7)$, toán tử và phần dư | $Q_V$ chỉ là ký hiệu phụ; max ở ngoài kỳ vọng |
-| E lưới | $c_1\ldots c_5$, thưởng -1/10, biên trái, terminal 0 | Bảng nguồn, chính sách phải và kiểm $V_5=V_4$ | Thưởng nhận khi vào đích; không cộng tiếp sau kết thúc |
-| F | Phép đánh giá/lặp giá trị đã học, lịch cập nhật chỉ định | Phân biệt đồng bộ/tại chỗ/bất đồng bộ; GPI và điều kiện mô hình | Không bỏ trạng thái; không suy Markov từ 324 ô |
-| G | Bảng $(27,30)$; lưới thêm xác suất 0.8/0.1/0.1 | Kiểm chứng tối ưu và phép tính kỳ vọng có mô hình | Các quy ước bổ sung ở bài tập được nêu công khai |
+| L04-A01 Bìa | 75 âm tiết, 6 dòng, dòng dài nhất 22 | không phải trang nội dung | Bìa gồm tên học phần, số bài, thuật ngữ gốc, câu luận đề hai câu do điều phối viên chốt, đơn vị |
+| L04-A02 Mục tiêu học tập | 79, 5 dòng | 80 (trang mục tiêu) | Năm mục tiêu, mỗi mục tiêu kèm sản phẩm kiểm tra |
+| L04-A02b Nội dung | 31, 7 dòng | 6 dòng | Bảy mạch; quyết định chung mục 5 cho phép 7 dòng |
+| L04-A03 Vấn đề trung tâm | 74, 6 dòng | 80 (trang tổng quan, cùng loại với trang tổng kết) | Năm câu trả lời có điều kiện theo quyết định của điều phối viên (thêm điều kiện đánh giá chính xác, $v_*=T_*v_*$, chứng nhận chỉ thuộc MDP đã cho) |
+| L04-G06 Trả lời vấn đề trung tâm | 79, 7 dòng | 80; 7 dòng | Viết song song từng dòng với A03 (brief mục 11) và có dòng "Nguồn:" bắt buộc |
+| L04-G01, G01b Tổng kết | 74 và 80, ≤ 6 dòng | 80 (tổng kết) | Bảng ba cột kèm dòng giả thiết chung |
+| L04-G02b Hội tụ | 77, 6 dòng | 80 (bảng so sánh) | Bảng bốn hàng và dòng giả thiết chung |
+| L04-B00, E00, F00, G00 (trang tiêu đề mạch) | dòng dẫn 20–24 âm tiết | 25 (dòng dẫn trang tiêu đề mạch) | Script áp trần 20 cho mọi dòng; quy định riêng của trang tiêu đề mạch là ≤ 25 |
+| L04-D05 Dừng hữu hạn | 67, 4 dòng | 60 | Hai câu chứng minh theo rà lại vòng 2 (TOAN): giá trị tăng nghiêm ngặt ở ít nhất một trạng thái nên dãy không lặp; số chính sách hữu hạn nên thuật toán dừng; giả thiết thêm $I_{\max}$ đủ lớn |
 
-## Đặc tả trực quan
+61 trang trên mức đích 40 nhưng không vượt trần (ngoài các ngoại lệ trên).
 
-| Tệp SVG dự kiến trong img/lec-04 | Trang dùng | Đối tượng và kết luận | Nguồn/quyết định |
-|---|---|---|---|
-| dp04-roadmap.svg | L04-A02 | Năm thành phần từ đánh giá đến tổ chức lịch cập nhật; nhãn đầu ra của từng thành phần | Sơ đồ hóa bản đồ nội dung đã duyệt, không thêm khái niệm |
-| dp04-two-state.svg | L04-A04 và các ví dụ B–E | Hai nút, bốn cung, nhãn hành động/thưởng và gamma; chiều mũi tên phân biệt các nhánh | Vẽ lại NG1 tr. 17, không thay dữ kiện |
-| dp04-expectation-backup.svg | L04-B01 | Trung bình theo chính sách rồi theo chuyển–thưởng; giá trị tiếp nối có nhãn | Vẽ sơ đồ cơ chế từ NG2 §4.1 |
-| dp04-one-step-choice.svg | L04-C02 | Hai nhánh từ s1, phần thưởng 2/3, giá trị tiếp nối 10/11 | Vẽ lại quan hệ NG1 tr. 19, chỉ tiếp tục theo pi0 |
-| dp04-policy-iteration.svg | L04-D01 | Hai thao tác nối chính sách và giá trị; nhãn đại lượng giữ cố định | Vẽ lại NG1 tr. 13, NG2 §4.3 |
-| dp04-five-cell.svg | L04-E06,F02–F03 | Năm ô, biên trái ở lại, c5 kết thúc; bốn mũi tên phải khi thể hiện chính sách | NG1 tr. 25,28; bổ sung biên thiếu đã ghi |
-| dp04-five-cell-plain.svg | L04-E08 | Cùng lưới năm ô, biên trái ở lại, c5 kết thúc; không có mũi tên chính sách để không lộ đáp án câu hỏi chính sách tham lam | NG1 tr. 25,28; tách từ dp04-five-cell.svg |
-| dp04-update-order.svg | L04-F02 | Hai bảng hoặc một bảng với thứ tự đánh số; mũi tên giá trị mới được dùng tiếp | NG1 tr. 15; NG2 tr. 75,85 |
-| dp04-gpi.svg | L04-F04 | Hai quá trình hướng tới $V=v_\pi$ và chính sách tham lam theo V | Sơ đồ khái niệm mới theo NG2 §4.6, không sao chép hình |
-| dp04-cartpole-bins.svg | L04-F05 | Bốn biến liên tục, số khoảng 3/3/6/6, 324 ô; mô hình còn cần xác định | Vẽ kỹ thuật từ NG1 tr. 35–37 |
-| dp04-stochastic-grid.svg | L04-G03 | Ba kết quả từ c4; xác suất, phần thưởng và terminal được ghi trên nhánh | NG3 tr. 1; quy ước bổ sung rõ |
+### Trang vượt trần trước khi sửa (số âm tiết trước → sau)
 
-Mọi SVG có `role="img"`, `title`/`desc` và mô tả thay thế cụ thể khi nhúng. Bảng số là HTML, công thức là KaTeX, không chụp raster. Không chỉ dùng màu để phân biệt hành động/lịch; dùng nhãn, mũi tên, nét và số thứ tự. Bài mới không sửa năm hình của ghi chú chuyên sâu đang dùng bộ số khác. Không tạo hình AI, không tải tài sản cốt lõi từ mạng.
+Số "sau" là số đo hiện tại (sau rà lại vòng 2).
+
+| Trang cũ | Trước | Quyết định | Trang mới và số âm tiết sau |
+|---|---:|---|---|
+| A03 | 76 | tách | A01b 45; A01c 45; A03 74 (ngoại lệ); A03b 57 |
+| B05 | 78 | tách | B05 49; B05b 59 |
+| C01 | 83 | tách | C01 57; giá trị nhìn trước chuyển sang C03 49 |
+| C04 | 84 | tách | C04 60; C04b 51 |
+| D03 | 70 | sửa | D03 60 |
+| D05 | 76 | sửa | D05 67 (ngoại lệ); phần đánh giá gần đúng chuyển sang D06 |
+| E01 | 123 | tách | E01 45; E01b 55 |
+| E04 | 71 | sửa | E04 59 |
+| E06 | 65 | tách | E06 55; E06b 17 |
+| F01 | 103 | sửa | F01 56 |
+| F03 | 98 | tách | F03 60; F03b 60 |
+| F06 | 74 | tách | F06 58; F06b 50 |
+| G01 | 72 | sửa | G01 74; G01b 80 (trần 80) |
+| G02 | 93 | tách | G02 45; G02b 77 (trần 80) |
+| G05 | 100 | sửa | G05 60 |
+
+Các trang cũ vượt về số dòng, dòng dài hoặc số khung (A02, A04, B01–B03, B07, B08, C05, C06, D01, D02, D06, E02, E08, F02, F04, F05, G04) đều đã đưa về ≤ 6 dòng, ≤ 20 âm tiết mỗi dòng, ≤ 3 công thức hiển thị và ≤ 1 khung; không dùng CSS thu chữ.
 
 ## Quyết định theo từng trang
 
-Nội dung, công thức và lời giải chi tiết ở outline.md. Các mục dưới đây ghi lý do tồn tại, sản phẩm và kết nối để kiểm định tuyến lập luận; nhãn và thời lượng chỉ là metadata kế hoạch.
-
-### L04-A01 — Giải MDP bằng quy hoạch động
-
-- **Chức năng và nhu cầu học tập:** Mở đầu. Quy hoạch động tính giá trị và chính sách từ mô hình môi trường đã biết.
-- **Đầu vào và quan hệ với trang trước:** Tiên quyết Bài 03 và yêu cầu giải bài toán lập kế hoạch.
-- **Sản phẩm và mục tiêu:** MT1–MT6; Quy hoạch động tính giá trị và chính sách từ mô hình môi trường đã biết.
-- **Đầu ra cho trang sau:** Chủ đề lập kế hoạch được cụ thể hóa bằng chuỗi năng lực cần thực hiện.
-- **Quyết định:** `sửa`. Cập nhật định danh học phần và học kỳ, giữ chủ đề nguồn.
-- **Thời lượng:** 1 phút, trong tổng của mạch.
-
-### L04-A02 — Nội dung và mục tiêu
-
-- **Chức năng và nhu cầu học tập:** Bản đồ nội dung. Đánh giá chính sách cung cấp căn cứ cho cải thiện và các thuật toán điều khiển.
-- **Đầu vào và quan hệ với trang trước:** Chủ đề lập kế hoạch được cụ thể hóa bằng chuỗi năng lực cần thực hiện.
-- **Sản phẩm và mục tiêu:** MT1–MT6; Đánh giá chính sách cung cấp căn cứ cho cải thiện và các thuật toán điều khiển.
-- **Đầu ra cho trang sau:** Chuỗi đánh giá và cải thiện cần bắt đầu từ dữ kiện mô hình và mục tiêu điều khiển.
-- **Quyết định:** `sửa`. Thay mục lục nguồn bằng thứ tự chương 4 theo chỉ dẫn cụ thể của người dùng.
-- **Thời lượng:** 2 phút, trong tổng của mạch.
-
-### L04-A03 — Lập kế hoạch với mô hình đã biết
-
-- **Chức năng và nhu cầu học tập:** Vấn đề trung tâm. Mô hình cho phép tính kỳ vọng của quyết định trước khi thực hiện tương tác.
-- **Đầu vào và quan hệ với trang trước:** Chuỗi đánh giá và cải thiện cần bắt đầu từ dữ kiện mô hình và mục tiêu điều khiển.
-- **Sản phẩm và mục tiêu:** MT1; Mô hình cho phép tính kỳ vọng của quyết định trước khi thực hiện tương tác.
-- **Đầu ra cho trang sau:** Mô hình hữu hạn đã biết được biểu diễn bằng bốn chuyển tiếp của một ví dụ cụ thể.
-- **Quyết định:** `gộp`. Ghép điều kiện áp dụng với bài toán cụ thể; nhắc tiên quyết trước khi tính.
-- **Thời lượng:** 2 phút, trong tổng của mạch.
-
-### L04-A04 — MDP hai trạng thái
-
-- **Chức năng và nhu cầu học tập:** Ví dụ dẫn nhập. Bốn chuyển tiếp xác định đủ để so sánh lựa chọn hiện tại và phần thưởng tiếp nối.
-- **Đầu vào và quan hệ với trang trước:** Mô hình hữu hạn đã biết được biểu diễn bằng bốn chuyển tiếp của một ví dụ cụ thể.
-- **Sản phẩm và mục tiêu:** MT1; Bốn chuyển tiếp xác định đủ để so sánh lựa chọn hiện tại và phần thưởng tiếp nối.
-- **Đầu ra cho trang sau:** Dữ kiện bốn chuyển tiếp đủ để kiểm tra một quỹ đạo theo chính sách cố định.
-- **Quyết định:** `sửa`. Đưa ví dụ nguồn lên phần mở đầu để thiết lập dữ kiện dùng xuyên suốt.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-A05 — Kiểm tra tổng thưởng chiết khấu
-
-- **Chức năng và nhu cầu học tập:** Kiểm tra mở đầu. Chính sách cố định và mô hình xác định hoàn toàn quỹ đạo trong ví dụ này.
-- **Đầu vào và quan hệ với trang trước:** Dữ kiện bốn chuyển tiếp đủ để kiểm tra một quỹ đạo theo chính sách cố định.
-- **Sản phẩm và mục tiêu:** MT1; Đúng thứ tự thưởng, hệ số chiết khấu và phân biệt thưởng với mô hình chuyển.
-- **Đầu ra cho trang sau:** Tổng ba bước chưa bao gồm phần thưởng về sau; đánh giá cần một biểu diễn cho phần tiếp nối.
-- **Quyết định:** `thêm`. Kiểm tra đúng tiên quyết và nhu cầu tính giá trị mà không đòi hỏi Bellman.
-- **Thời lượng:** 2 phút, trong tổng của mạch.
-
-### L04-B01 — Bài toán đánh giá chính sách
-
-- **Chức năng và nhu cầu học tập:** Vấn đề và trực giác. Đánh giá chính sách cộng thưởng hiện tại với giá trị tiếp nối theo chính sách đó.
-- **Đầu vào và quan hệ với trang trước:** Tổng ba bước chưa bao gồm phần thưởng về sau; đánh giá cần một biểu diễn cho phần tiếp nối.
-- **Sản phẩm và mục tiêu:** MT2; Đánh giá chính sách cộng thưởng hiện tại với giá trị tiếp nối theo chính sách đó.
-- **Đầu ra cho trang sau:** Giá trị tiếp nối được thay bằng bảng hiện có để thực hiện lượt tính đầu tiên.
-- **Quyết định:** `tách`. Tách trực giác ra trước phương trình và thuật toán đánh giá.
-- **Thời lượng:** 2 phút, trong tổng của mạch.
-
-### L04-B02 — Hai lượt đánh giá đồng bộ
-
-- **Chức năng và nhu cầu học tập:** Ví dụ tính tay. Một lượt đồng bộ dùng cùng bảng cũ cho mọi trạng thái.
-- **Đầu vào và quan hệ với trang trước:** Giá trị tiếp nối được thay bằng bảng hiện có để thực hiện lượt tính đầu tiên.
-- **Sản phẩm và mục tiêu:** MT2; Một lượt đồng bộ dùng cùng bảng cũ cho mọi trạng thái.
-- **Đầu ra cho trang sau:** Các phép tính một bước được khái quát thành giá trị chính xác và phương trình kỳ vọng.
-- **Quyết định:** `thêm`. Bổ sung bước tính trước hình thức hóa; bảo toàn mô hình nguồn.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-B03 — Phương trình Bellman kỳ vọng
-
-- **Chức năng và nhu cầu học tập:** Định nghĩa. Giá trị chính xác là kỳ vọng của tổng thưởng và thỏa quan hệ đệ quy một bước.
-- **Đầu vào và quan hệ với trang trước:** Các phép tính một bước được khái quát thành giá trị chính xác và phương trình kỳ vọng.
-- **Sản phẩm và mục tiêu:** MT2; Giá trị chính xác là kỳ vọng của tổng thưởng và thỏa quan hệ đệ quy một bước.
-- **Đầu ra cho trang sau:** Nghiệm ở cả hai vế được thay bằng bảng hiện có để tạo toán tử cập nhật.
-- **Quyết định:** `sửa`. Chuẩn hóa chỉ số dưới và đưa định nghĩa sau ví dụ tính.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-B04 — Toán tử đánh giá chính sách
-
-- **Chức năng và nhu cầu học tập:** Hình thức và quy tắc cập nhật. Lặp đánh giá thay nghiệm chưa biết trong phương trình Bellman bằng bảng của lượt trước.
-- **Đầu vào và quan hệ với trang trước:** Nghiệm ở cả hai vế được thay bằng bảng hiện có để tạo toán tử cập nhật.
-- **Sản phẩm và mục tiêu:** MT2; Lặp đánh giá thay nghiệm chưa biết trong phương trình Bellman bằng bảng của lượt trước.
-- **Đầu ra cho trang sau:** Quy tắc cập nhật cần quy định bảng đọc, bảng ghi và thời điểm dừng.
-- **Quyết định:** `tách`. Định nghĩa riêng toán tử theo chính sách; toán tử tối ưu được hoãn tới lặp giá trị.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-B05 — Thuật toán đánh giá chính sách đồng bộ
-
-- **Chức năng và nhu cầu học tập:** Quy trình đầy đủ. Hai bảng tách giá trị cũ và mới, còn phần dư kiểm tra độ chính xác của bảng được trả về.
-- **Đầu vào và quan hệ với trang trước:** Quy tắc cập nhật cần quy định bảng đọc, bảng ghi và thời điểm dừng.
-- **Sản phẩm và mục tiêu:** MT2; Hai bảng tách giá trị cũ và mới, còn phần dư kiểm tra độ chính xác của bảng được trả về.
-- **Đầu ra cho trang sau:** Phần dư đo được cần được liên hệ với sai số so với nghiệm chính xác.
-- **Quyết định:** `sửa`. Khôi phục đầu vào, đầu ra và dừng; thống nhất cách cập nhật với ví dụ. Bản 2026-10-01 nêu nhu cầu đại lượng dừng và ví dụ phần dư $0{,}9$ trước định nghĩa; quy trình còn ba bước.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-B06 — Hội tụ của đánh giá chính sách
-
-- **Chức năng và nhu cầu học tập:** Bảo đảm có điều kiện. Chiết khấu nhỏ hơn 1 làm sai số đánh giá co lại và biến phần dư thành chặn sai số.
-- **Đầu vào và quan hệ với trang trước:** Phần dư đo được cần được liên hệ với sai số so với nghiệm chính xác.
-- **Sản phẩm và mục tiêu:** MT2; Chiết khấu nhỏ hơn 1 làm sai số đánh giá co lại và biến phần dư thành chặn sai số.
-- **Đầu ra cho trang sau:** Bảo đảm hội tụ được đối chiếu với nghiệm giải trực tiếp của ví dụ nhỏ.
-- **Quyết định:** `thêm`. Bổ sung bảo đảm ngay cạnh thuật toán; không gom toàn bộ lý thuyết ở cuối bài.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-B07 — Giá trị chính xác của chính sách ban đầu
-
-- **Chức năng và nhu cầu học tập:** Ứng dụng và đối chiếu. Giải hệ Bellman cho nghiệm chính xác để đối chiếu bảng lặp.
-- **Đầu vào và quan hệ với trang trước:** Bảo đảm hội tụ được đối chiếu với nghiệm giải trực tiếp của ví dụ nhỏ.
-- **Sản phẩm và mục tiêu:** MT2; Giải hệ Bellman cho nghiệm chính xác để đối chiếu bảng lặp.
-- **Đầu ra cho trang sau:** Nghiệm và bảng ước lượng cho phép kiểm tra riêng thao tác cập nhật và chặn sai số.
-- **Quyết định:** `giữ`. Giữ phép tính nguồn và dùng nó để kiểm chứng thuật toán vừa xây dựng.
-- **Thời lượng:** 2 phút, trong tổng của mạch.
-
-### L04-B08 — Kiểm tra đánh giá chính sách
-
-- **Chức năng và nhu cầu học tập:** Kiểm tra đánh giá chính sách. Kết quả đánh giá phụ thuộc việc giữ nguyên bảng ở vế phải.
-- **Đầu vào và quan hệ với trang trước:** Nghiệm và bảng ước lượng cho phép kiểm tra riêng thao tác cập nhật và chặn sai số.
-- **Sản phẩm và mục tiêu:** MT2; Tính đúng hai ô từ cùng $V_2$, lấy chuẩn đúng và gắn chặn với đúng bảng $V_2$.
-- **Đầu ra cho trang sau:** Giá trị của chính sách cố định đã có; phần điều khiển cần so sánh các hành động khác.
-- **Quyết định:** `thêm`. Đo khả năng tính và phân biệt bảng ước lượng với giá trị chính xác.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-C01 — Đổi hành động ở bước đầu
-
-- **Chức năng và nhu cầu học tập:** Vấn đề và trực giác. Giá trị của chính sách hiện tại cho phép đánh giá một thay đổi hành động ở bước đầu; định nghĩa giá trị nhìn trước $\sum_{s',r}p(s',r\mid s,a)[r+\gamma\,v_{\pi_0}(s')]$, với dạng rút gọn $r+\gamma\,v_{\pi_0}(s')$ khi chuyển tiếp xác định.
-- **Đầu vào và quan hệ với trang trước:** Giá trị của chính sách cố định đã có; phần điều khiển cần so sánh các hành động khác.
-- **Sản phẩm và mục tiêu:** MT3; Giá trị của chính sách hiện tại cho phép đánh giá một thay đổi hành động ở bước đầu.
-- **Đầu ra cho trang sau:** So sánh một thay đổi tại bước đầu được tính trên hai nhánh của trạng thái thứ hai.
-- **Quyết định:** `tách`. Đưa đối tượng so sánh trước ký hiệu giá trị hành động.
-- **Thời lượng:** 2 phút, trong tổng của mạch.
-
-### L04-C02 — So sánh hai nhánh hành động
-
-- **Chức năng và nhu cầu học tập:** Ví dụ tính tay. Tại $s_1$, hành động $b$ có giá trị nhìn trước lớn hơn khi dùng cùng giá trị tiếp nối.
-- **Đầu vào và quan hệ với trang trước:** So sánh một thay đổi tại bước đầu được tính trên hai nhánh của trạng thái thứ hai.
-- **Sản phẩm và mục tiêu:** MT3; Tại $s_1$, hành động $b$ có giá trị nhìn trước lớn hơn khi dùng cùng giá trị tiếp nối.
-- **Đầu ra cho trang sau:** Hai giá trị nhìn trước xác định đối tượng được gọi là giá trị hành động theo chính sách.
-- **Quyết định:** `tách`. Tách bước tính trước định nghĩa để tránh đồng nhất nhìn trước với giá trị chính sách mới.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-C03 — Hàm giá trị hành động
-
-- **Chức năng và nhu cầu học tập:** Định nghĩa và ánh xạ. Giá trị hành động cố định hành động đầu và cố định chính sách từ bước kế tiếp.
-- **Đầu vào và quan hệ với trang trước:** Hai giá trị nhìn trước xác định đối tượng được gọi là giá trị hành động theo chính sách.
-- **Sản phẩm và mục tiêu:** MT3; Giá trị hành động cố định hành động đầu và cố định chính sách từ bước kế tiếp.
-- **Đầu ra cho trang sau:** Giá trị hành động cung cấp tiêu chí lựa chọn chính sách mới tại mọi trạng thái.
-- **Quyết định:** `sửa`. Chuẩn hóa giá trị hành động và dời phương trình phụ vào ghi chú.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-C04 — Cải thiện chính sách tham lam
-
-- **Chức năng và nhu cầu học tập:** Quy tắc và định lý. Chọn hành động cực đại theo giá trị của chính sách cũ tạo chính sách không kém tại mọi trạng thái.
-- **Đầu vào và quan hệ với trang trước:** Giá trị hành động cung cấp tiêu chí lựa chọn chính sách mới tại mọi trạng thái.
-- **Sản phẩm và mục tiêu:** MT3; Chọn hành động cực đại theo giá trị của chính sách cũ tạo chính sách không kém tại mọi trạng thái.
-- **Đầu ra cho trang sau:** Bảo đảm không giảm giá trị cần lập luận vượt ra ngoài một phép thử số.
-- **Quyết định:** `sửa`. Nêu đủ đầu vào và điều kiện của định lý. Quy tắc chọn khi hòa nằm trong ghi chú; tên "quy tắc phá hòa" được giới thiệu tại L04-D02, nơi lặp chính sách cần đến nó (giảm tải cho trang này).
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-C05 — Chứng minh định lý cải thiện
-
-- **Chức năng và nhu cầu học tập:** Phác thảo chứng minh. Tính đơn điệu truyền lợi ích của lựa chọn một bước đến toàn bộ giá trị chính sách mới.
-- **Đầu vào và quan hệ với trang trước:** Bảo đảm không giảm giá trị cần lập luận vượt ra ngoài một phép thử số.
-- **Sản phẩm và mục tiêu:** MT3; Tính đơn điệu truyền lợi ích của lựa chọn một bước đến toàn bộ giá trị chính sách mới.
-- **Đầu ra cho trang sau:** Tính đơn điệu cho phép áp dụng quy tắc trên toàn bộ MDP hai trạng thái.
-- **Quyết định:** `giữ`. Giữ phác thảo nguồn, đặt ngay sau định lý và nối với tính co đã chuẩn bị.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-C06 — Lần cải thiện thứ nhất
-
-- **Chức năng và nhu cầu học tập:** Ứng dụng. Cải thiện đồng thời tại hai trạng thái tạo $(a,b)$ và cần đánh giá lại giá trị.
-- **Đầu vào và quan hệ với trang trước:** Tính đơn điệu cho phép áp dụng quy tắc trên toàn bộ MDP hai trạng thái.
-- **Sản phẩm và mục tiêu:** MT3; Cải thiện đồng thời tại hai trạng thái tạo $(a,b)$ và cần đánh giá lại giá trị.
-- **Đầu ra cho trang sau:** Giá trị sau lần đổi chính sách cung cấp dữ kiện cho một lần lựa chọn mới.
-- **Quyết định:** `thêm`. Khôi phục bước nguồn đã rút gọn; đây là đầu vào trực tiếp cho lần cải thiện kế tiếp.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-C07 — Kiểm tra cải thiện chính sách
-
-- **Chức năng và nhu cầu học tập:** Kiểm tra cải thiện. Tham lam phải được tính theo giá trị của chính sách đang được cải thiện.
-- **Đầu vào và quan hệ với trang trước:** Giá trị sau lần đổi chính sách cung cấp dữ kiện cho một lần lựa chọn mới.
-- **Sản phẩm và mục tiêu:** MT3; Giữ cùng $v_{\pi_1}$ trong cả hai nhánh, tính đúng và giải thích bằng phần tiếp nối.
-- **Đầu ra cho trang sau:** Lần cải thiện kế tiếp cho thấy nhu cầu lặp lại hai thao tác trên chính sách mới.
-- **Quyết định:** `thêm`. Kiểm tra việc tái sử dụng bảng vừa đánh giá trước khi chuyển sang vòng lặp hoàn chỉnh.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-D01 — Chu trình lặp chính sách
-
-- **Chức năng và nhu cầu học tập:** Vấn đề và trực giác. Một lần cải thiện thay đổi giá trị, vì vậy quá trình phải lặp lại trên chính sách mới.
-- **Đầu vào và quan hệ với trang trước:** Lần cải thiện kế tiếp cho thấy nhu cầu lặp lại hai thao tác trên chính sách mới.
-- **Sản phẩm và mục tiêu:** MT4; Một lần cải thiện thay đổi giá trị, vì vậy quá trình phải lặp lại trên chính sách mới.
-- **Đầu ra cho trang sau:** Chu trình tổng quát được lần theo bằng toàn bộ chuỗi chính sách và giá trị của ví dụ.
-- **Quyết định:** `gộp`. Đặt chu trình tổng quát sau khi hai phép toán đã được học và kiểm tra.
-- **Thời lượng:** 2 phút, trong tổng của mạch.
-
-### L04-D02 — Lặp chính sách trên MDP hai trạng thái
-
-- **Chức năng và nhu cầu học tập:** Ví dụ một lần lặp đầy đủ. Hai lần đổi chính sách đưa ví dụ từ $(a,a)$ đến $(b,b)$.
-- **Đầu vào và quan hệ với trang trước:** Chu trình tổng quát được lần theo bằng toàn bộ chuỗi chính sách và giá trị của ví dụ.
-- **Sản phẩm và mục tiêu:** MT4; Hai lần đổi chính sách đưa ví dụ từ $(a,a)$ đến $(b,b)$.
-- **Đầu ra cho trang sau:** Chuỗi số được chuyển thành quy trình có đầu vào, đầu ra và điều kiện dừng rõ ràng.
-- **Quyết định:** `sửa`. Mở rộng ví dụ bị rút gọn trong nguồn thành toàn bộ lần lặp có thể kiểm tra. Trang định nghĩa chính sách ổn định và giới thiệu quy tắc phá hòa, được dùng ở L04-D03 và L04-D05.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-D03 — Thuật toán lặp chính sách
-
-- **Chức năng và nhu cầu học tập:** Quy trình đầy đủ. Lặp chính sách chính xác xen kẽ giải hệ Bellman và cải thiện với quy tắc phá hòa ổn định.
-- **Đầu vào và quan hệ với trang trước:** Chuỗi số được chuyển thành quy trình có đầu vào, đầu ra và điều kiện dừng rõ ràng.
-- **Sản phẩm và mục tiêu:** MT4; Lặp chính sách chính xác xen kẽ giải hệ Bellman và cải thiện với quy tắc phá hòa ổn định.
-- **Đầu ra cho trang sau:** Kết quả không đổi chính sách được kiểm tra bằng điều kiện Bellman tối ưu.
-- **Quyết định:** `sửa`. Bổ sung đầu ra nhất quán, ngân sách, phá hòa và phân biệt bảo đảm exact/approximate.
-- **Thời lượng:** 4 phút, trong tổng của mạch.
-
-### L04-D04 — Chính sách ổn định là tối ưu
-
-- **Chức năng và nhu cầu học tập:** Định lý và điều kiện điểm bất động. Chính sách tham lam theo chính giá trị của nó thỏa phương trình Bellman tối ưu.
-- **Đầu vào và quan hệ với trang trước:** Kết quả không đổi chính sách được kiểm tra bằng điều kiện Bellman tối ưu.
-- **Sản phẩm và mục tiêu:** MT4; Chính sách tham lam theo chính giá trị của nó thỏa phương trình Bellman tối ưu.
-- **Đầu ra cho trang sau:** Điều kiện ổn định cần đi cùng lập luận dừng hữu hạn và độ chính xác đánh giá.
-- **Quyết định:** `sửa`. Hoãn tối ưu Bellman tới khi người học đã thấy một chính sách ổn định. Rà lại 2026-10-01: kết luận $v_\pi=v_*$ được chứng minh bằng công cụ đã có (đơn điệu, co của $T_{\pi'}$), không dựa vào tính co của toán tử tối ưu chưa học.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-D05 — Dừng hữu hạn và đánh giá gần đúng
-
-- **Chức năng và nhu cầu học tập:** Bảo đảm và giới hạn. Dừng hữu hạn của lặp chính sách cần đánh giá chính xác và tránh đổi hành động chỉ vì hòa.
-- **Đầu vào và quan hệ với trang trước:** Điều kiện ổn định cần đi cùng lập luận dừng hữu hạn và độ chính xác đánh giá.
-- **Sản phẩm và mục tiêu:** MT4; Dừng hữu hạn của lặp chính sách cần đánh giá chính xác và tránh đổi hành động chỉ vì hòa.
-- **Đầu ra cho trang sau:** Một bảng gần đúng cung cấp trường hợp kiểm tra giới hạn của tiêu chuẩn ổn định.
-- **Quyết định:** `sửa`. Khôi phục các giả thiết bị thiếu trong suy luận dừng của nguồn.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-D06 — Kiểm tra điều kiện dừng
-
-- **Chức năng và nhu cầu học tập:** Kiểm tra lặp chính sách. Ổn định của chính sách chỉ có ý nghĩa cùng độ chính xác của bảng dùng để cải thiện.
-- **Đầu vào và quan hệ với trang trước:** Một bảng gần đúng cung cấp trường hợp kiểm tra giới hạn của tiêu chuẩn ổn định.
-- **Sản phẩm và mục tiêu:** MT4; Phân biệt đúng bảng $V$ với $v_\pi$ và dùng một so sánh giá trị đã biết để bác kết luận.
-- **Đầu ra cho trang sau:** Chi phí đánh giá đầy đủ và giới hạn dừng gần đúng dẫn tới cập nhật điều khiển cắt ngắn.
-- **Quyết định:** `thêm`. Kiểm tra một lỗi dừng có thể gặp khi dùng đánh giá gần đúng.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-E01 — Cắt ngắn bước đánh giá
-
-- **Chức năng và nhu cầu học tập:** Vấn đề và trực giác. Lặp giá trị chọn hành động tốt nhất trong mỗi cập nhật mà không hoàn tất đánh giá một chính sách.
-- **Đầu vào và quan hệ với trang trước:** Chi phí đánh giá đầy đủ và giới hạn dừng gần đúng dẫn tới cập nhật điều khiển cắt ngắn.
-- **Sản phẩm và mục tiêu:** MT5; Lặp giá trị chọn hành động tốt nhất trong mỗi cập nhật mà không hoàn tất đánh giá một chính sách.
-- **Đầu ra cho trang sau:** Phép chọn nhánh lớn nhất được thử trên cùng bốn chuyển tiếp trước khi viết toán tử.
-- **Quyết định:** `sửa`. Mở lặp giá trị bằng giới hạn chi phí của lặp chính sách trước công thức. Rà ngày 2026-10-01: nêu chi phí bằng số (44 lượt đánh giá $\pi_0$ để sai số không quá $0{,}1$) và đổi tiêu chuẩn dừng từ chính sách ổn định sang phần dư của toán tử tối ưu. Sửa bổ sung sau rà lại: câu mở nêu hai cách có $v_\pi$ (giải hệ tuyến tính hoặc đánh giá lặp); hộp nêu cơ chế chọn tham lam rồi đánh giá đúng một lượt cho giá trị nhìn trước lớn nhất. Sửa theo rà mạch toàn bài: gọi tên lặp giá trị (value iteration) tại đây; điều kiện dừng nêu là “phần dư, như ở đánh giá chính sách”, không dùng $T_*$ trước khi định nghĩa ở L04-E03.
-- **Thời lượng:** 2 phút, trong tổng của mạch.
-
-### L04-E02 — Hai lượt lặp giá trị đồng bộ
-
-- **Chức năng và nhu cầu học tập:** Ví dụ tính tay. Phép cực đại thay việc giữ hành động của chính sách trong mỗi lượt đồng bộ.
-- **Đầu vào và quan hệ với trang trước:** Phép chọn nhánh lớn nhất được thử trên cùng bốn chuyển tiếp trước khi viết toán tử.
-- **Sản phẩm và mục tiêu:** MT5; Phép cực đại thay việc giữ hành động của chính sách trong mỗi lượt đồng bộ.
-- **Đầu ra cho trang sau:** Phép cực đại từ bảng tùy ý cần ký hiệu riêng để phân biệt với giá trị hành động chính xác.
-- **Quyết định:** `thêm`. Giữ ví dụ xuyên suốt để đối chiếu trực tiếp hai quy tắc cập nhật.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-E03 — Toán tử Bellman tối ưu
-
-- **Chức năng và nhu cầu học tập:** Hình thức hóa. Toán tử tối ưu trả giá trị lớn nhất của các nhánh nhìn trước từ cùng một bảng.
-- **Đầu vào và quan hệ với trang trước:** Phép cực đại từ bảng tùy ý cần ký hiệu riêng để phân biệt với giá trị hành động chính xác.
-- **Sản phẩm và mục tiêu:** MT5; Toán tử tối ưu trả giá trị lớn nhất của các nhánh nhìn trước từ cùng một bảng.
-- **Đầu ra cho trang sau:** Toán tử tối ưu được đặt trong vòng lặp và ghép với chính sách tham lam theo bảng trả về.
-- **Quyết định:** `sửa`. Chuẩn hóa toán tử và phân biệt giá trị nhìn trước với giá trị hành động của chính sách.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-E04 — Thuật toán lặp giá trị đồng bộ
-
-- **Chức năng và nhu cầu học tập:** Quy trình đầy đủ. Thuật toán trả bảng giá trị, chính sách tham lam theo chính bảng đó và phần dư kiểm chứng.
-- **Đầu vào và quan hệ với trang trước:** Toán tử tối ưu được đặt trong vòng lặp và ghép với chính sách tham lam theo bảng trả về.
-- **Sản phẩm và mục tiêu:** MT5; Thuật toán trả bảng giá trị, chính sách tham lam theo chính bảng đó và phần dư kiểm chứng.
-- **Đầu ra cho trang sau:** Vòng lặp có tiêu chuẩn dừng cần bảo đảm rằng toán tử tiến tới đúng điểm bất động.
-- **Quyết định:** `sửa`. Làm rõ đầu ra và chỉ số dừng, tránh lẫn mức thay đổi với phần dư của bảng mới. Rà ngày 2026-10-01: quy trình còn ba bước theo cùng khuôn với thuật toán đánh giá chính sách đồng bộ. Sửa bổ sung sau rà lại: thêm bộ đếm $k$ giống quy trình đánh giá.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-E05 — Hội tụ của lặp giá trị
-
-- **Chức năng và nhu cầu học tập:** Định lý và phác thảo chứng minh. Cực đại theo hành động vẫn bảo toàn tính co khi hệ số chiết khấu nhỏ hơn 1.
-- **Đầu vào và quan hệ với trang trước:** Vòng lặp có tiêu chuẩn dừng cần bảo đảm rằng toán tử tiến tới đúng điểm bất động.
-- **Sản phẩm và mục tiêu:** MT5; Cực đại theo hành động vẫn bảo toàn tính co khi hệ số chiết khấu nhỏ hơn 1.
-- **Đầu ra cho trang sau:** Bảo đảm của cập nhật tối ưu được áp dụng để đọc sự lan truyền giá trị trên lưới.
-- **Quyết định:** `sửa`. Giữ kết quả nguồn và đặt sau thuật toán để trả lời nhu cầu bảo đảm.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-E06 — Lan truyền giá trị trên lưới năm ô
-
-- **Chức năng và nhu cầu học tập:** Ứng dụng trực quan. Cập nhật đồng bộ lan truyền phần thưởng kết thúc lùi từng bước qua lưới.
-- **Đầu vào và quan hệ với trang trước:** Bảo đảm của cập nhật tối ưu được áp dụng để đọc sự lan truyền giá trị trên lưới.
-- **Sản phẩm và mục tiêu:** MT5; Cập nhật đồng bộ lan truyền phần thưởng kết thúc lùi từng bước qua lưới.
-- **Đầu ra cho trang sau:** Lưới đã đạt điểm bất động ở $V_4$; MDP hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách tham lam đã tối ưu. Phần dư phân biệt hai tình huống.
-- **Quyết định:** `gộp`. Ghép bốn trang nguồn thành một ứng dụng sau khi cơ chế đã rõ; dùng hình và bảng thay diễn giải lặp.
-- **Vị trí trực quan sau kiểm ảnh:** Chú thích phép tính đặt ngay dưới bảng trong cột phải; hình và quy ước giữ ở cột trái. Chuyển nguyên nội dung để tránh chân trang và mũi tên điều hướng, không giảm cỡ chữ.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-E07 — Phần dư và điều kiện dừng
-
-- **Chức năng và nhu cầu học tập:** Ứng dụng bảo đảm. Ngưỡng phần dư xác định chặn sai số của chính bảng đang được trả về.
-- **Đầu vào và quan hệ với trang trước:** Lưới đã đạt điểm bất động ở $V_4$; MDP hai trạng thái có bảng $V_1=(1,3)$ còn sai số dù chính sách tham lam đã tối ưu. Phần dư phân biệt hai tình huống.
-- **Sản phẩm và mục tiêu:** MT5; Ngưỡng phần dư xác định chặn sai số của chính bảng đang được trả về.
-- **Đầu ra cho trang sau:** Quy tắc đồng bộ và quy ước kết thúc được kiểm tra bằng hai phép tính trên bảng đã cho.
-- **Quyết định:** `thêm`. Biến tiêu chuẩn dừng nguồn thành chứng nhận có ý nghĩa định lượng. Rà ngày 2026-10-01: câu nhu cầu “điều kiện dừng cần đại lượng tính được từ $V$” đặt ở đầu trang, nối với chặn tương tự cho $\Delta_\pi$.
-- **Thời lượng:** 2 phút, trong tổng của mạch.
-
-### L04-E08 — Kiểm tra lặp giá trị trên lưới
-
-- **Chức năng và nhu cầu học tập:** Kiểm tra lặp giá trị. Phần dư bằng 0 chứng nhận điểm bất động; giá trị kết thúc giữ bằng không.
-- **Đầu vào và quan hệ với trang trước:** Toán tử tối ưu, chặn phần dư và quy ước kết thúc được kiểm tra trên bảng $V_4$ của lưới.
-- **Sản phẩm và mục tiêu:** MT5; Tính giá trị nhìn trước từ $V_4$, kết luận $\Delta_*(V_4)=0$ và đặt thưởng đúng trên chuyển tiếp.
-- **Đầu ra cho trang sau:** Một lượt tính đúng vẫn có thể tốn kém; chi phí phụ thuộc số trạng thái và nhánh chuyển.
-- **Quyết định:** `thêm`. Đo cơ chế cực đại, phần dư và quy ước kết thúc. Rà ngày 2026-10-01: đổi dữ kiện từ $V_2$ sang $V_4$ vì đáp án cũ đã in sẵn trong bảng lan truyền ở trang trước. Sửa bổ sung sau rà lại: câu 1 yêu cầu tính toàn bộ $T_*V_4$, vì xác định phần dư cần cả bốn ô chưa kết thúc.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-F01 — Chi phí một lượt quét
-
-- **Chức năng và nhu cầu học tập:** Giới hạn và trực giác. Quét toàn bộ mô hình có thể chiếm phần lớn chi phí, nên cách phân bổ cập nhật cần được lựa chọn.
-- **Đầu vào và quan hệ với trang trước:** Một lượt tính đúng vẫn có thể tốn kém; chi phí phụ thuộc số trạng thái và nhánh chuyển.
-- **Sản phẩm và mục tiêu:** MT6; Quét toàn bộ mô hình có thể chiếm phần lớn chi phí, nên cách phân bổ cập nhật cần được lựa chọn.
-- **Đầu ra cho trang sau:** Chi phí quét gợi nhu cầu dùng ngay giá trị mới và lựa chọn thứ tự cập nhật.
-- **Quyết định:** `sửa`. Thay so sánh nhanh/chậm thiếu điều kiện bằng đơn vị công việc và giả thiết mô hình.
-- **Thời lượng:** 2 phút, trong tổng của mạch.
-
-### L04-F02 — Cập nhật tại chỗ và thứ tự trạng thái
-
-- **Chức năng và nhu cầu học tập:** Ví dụ dẫn nhập và trực giác. Giá trị vừa tính có thể được dùng ngay, làm kết quả một lượt phụ thuộc thứ tự cập nhật.
-- **Đầu vào và quan hệ với trang trước:** Chi phí quét gợi nhu cầu dùng ngay giá trị mới và lựa chọn thứ tự cập nhật.
-- **Sản phẩm và mục tiêu:** MT6; Giá trị vừa tính có thể được dùng ngay, làm kết quả một lượt phụ thuộc thứ tự cập nhật.
-- **Đầu ra cho trang sau:** Cơ chế dùng giá trị mới nhất được giữ; ví dụ lưới dùng $T_*$ dẫn tới lặp giá trị bất đồng bộ, khác ví dụ đánh giá hai trạng thái dùng $T_{\pi_0}$.
-- **Quyết định:** `sửa`. Sửa cách nguồn gọi tại chỗ và bất đồng bộ như đồng nghĩa; nối bằng ví dụ kiểm tra được.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-F03 — Thuật toán lặp giá trị bất đồng bộ
-
-- **Chức năng và nhu cầu học tập:** Quy trình và điều kiện sử dụng. Bất đồng bộ cho phép chọn trạng thái cập nhật linh hoạt nhưng phải tiếp tục cập nhật mọi trạng thái.
-- **Đầu vào và quan hệ với trang trước:** Cơ chế dùng giá trị mới nhất được giữ; ví dụ lưới dùng $T_*$ dẫn tới lặp giá trị bất đồng bộ, khác ví dụ đánh giá hai trạng thái dùng $T_{\pi_0}$.
-- **Sản phẩm và mục tiêu:** MT6; Bất đồng bộ cho phép chọn trạng thái cập nhật linh hoạt nhưng phải tiếp tục cập nhật mọi trạng thái.
-- **Đầu ra cho trang sau:** Các lịch khác nhau được đặt trong quan hệ chung giữa đánh giá và cải thiện.
-- **Quyết định:** `thêm`. Bổ sung quy trình bất đồng bộ và điều kiện hội tụ từ chương 4. Rà ngày 2026-10-01: mặt trang định nghĩa bất đồng bộ, gộp đầu vào và đầu ra thành một dòng, và đưa bước ứng dụng lên mặt trang: lịch $c_4,c_3,c_2,c_1$ trên lưới cho $\Delta_*(V)=0$ sau một lượt, chính sách tham lam đi phải. Giả thiết MDP hữu hạn, $\gamma<1$ và việc quét tại chỗ là một lịch cụ thể chuyển xuống notes.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-F04 — Lặp chính sách tổng quát
-
-- **Chức năng và nhu cầu học tập:** Khái niệm hỗ trợ và ứng dụng phân loại. Các phương pháp quy hoạch động phối hợp đánh giá và cải thiện với mức hoàn tất khác nhau.
-- **Đầu vào và quan hệ với trang trước:** Các lịch khác nhau được đặt trong quan hệ chung giữa đánh giá và cải thiện.
-- **Sản phẩm và mục tiêu:** MT6; Các phương pháp quy hoạch động phối hợp đánh giá và cải thiện với mức hoàn tất khác nhau.
-- **Đầu ra cho trang sau:** Các cách tổ chức cập nhật vẫn cần biểu diễn trạng thái hữu hạn và mô hình đã biết. CartPole có trạng thái liên tục, nên việc tạo biểu diễn hữu hạn còn phải xét ảnh hưởng của gộp trạng thái.
-- **Quyết định:** `thêm`. Bổ sung khái niệm hỗ trợ của chương 4 để nối các thuật toán, không tạo một thuật toán mới.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-F05 — Rời rạc hóa trạng thái CartPole
-
-- **Chức năng và nhu cầu học tập:** Ứng dụng giới hạn. Rời rạc hóa giảm biểu diễn liên tục về bảng hữu hạn nhưng chưa cung cấp mô hình Markov phù hợp.
-- **Đầu vào và quan hệ với trang trước:** Các cách tổ chức cập nhật vẫn cần biểu diễn trạng thái hữu hạn và mô hình đã biết. CartPole có trạng thái liên tục, nên việc tạo biểu diễn hữu hạn còn phải xét ảnh hưởng của gộp trạng thái.
-- **Sản phẩm và mục tiêu:** MT6; Rời rạc hóa giảm biểu diễn liên tục về bảng hữu hạn nhưng chưa cung cấp mô hình Markov phù hợp.
-- **Đầu ra cho trang sau:** Các điều kiện về lịch và mô hình được kiểm tra bằng hai trường hợp thiếu dữ kiện.
-- **Quyết định:** `gộp`. Giữ đầy đủ giới hạn nguồn trong một ứng dụng; sửa hàm ý rời rạc hóa tự tạo MDP chính xác.
-- **Thời lượng:** 2 phút, trong tổng của mạch.
-
-### L04-F06 — Kiểm tra lịch cập nhật và mô hình
-
-- **Chức năng và nhu cầu học tập:** Kiểm tra quy hoạch động thực hành. Lịch cập nhật và mô hình hợp lệ là hai điều kiện độc lập của phép giải.
-- **Đầu vào và quan hệ với trang trước:** Các điều kiện về lịch và mô hình được kiểm tra bằng hai trường hợp thiếu dữ kiện.
-- **Sản phẩm và mục tiêu:** MT6; Nêu đúng điều kiện lịch, hậu quả số ở $s_1$ và phân biệt biểu diễn trạng thái với mô hình.
-- **Đầu ra cho trang sau:** Những điều kiện sử dụng được thu hồi cùng nghiệm của bài toán hai trạng thái.
-- **Quyết định:** `thêm`. Đánh giá khả năng xác định điều kiện thiếu trong ứng dụng thực hành.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-G01 — Kết quả của bài toán lập kế hoạch
-
-- **Chức năng và nhu cầu học tập:** Tổng hợp theo vấn đề mở đầu. MDP hai trạng thái có chính sách tối ưu $(b,b)$ với giá trị $(27,30)$.
-- **Đầu vào và quan hệ với trang trước:** Những điều kiện sử dụng được thu hồi cùng nghiệm của bài toán hai trạng thái.
-- **Sản phẩm và mục tiêu:** MT1–MT5; MDP hai trạng thái có chính sách tối ưu $(b,b)$ với giá trị $(27,30)$.
-- **Đầu ra cho trang sau:** Hai thuật toán cho cùng nghiệm nhưng yêu cầu so sánh cấu trúc công việc và độ chính xác.
-- **Quyết định:** `sửa`. Kết luận quay lại bài toán đầu, đối chiếu đầu ra thay vì chỉ nhắc mục lục. Rà ngày 2026-10-01: câu mở nhắc lại nguyên văn bài toán điều khiển của trang lập kế hoạch với mô hình đã biết.
-- **Thời lượng:** 2 phút, trong tổng của mạch.
-
-### L04-G02 — So sánh các phương pháp quy hoạch động
-
-- **Chức năng và nhu cầu học tập:** Tổng hợp so sánh. So sánh phương pháp phải dùng cùng đơn vị công việc và cùng yêu cầu độ chính xác.
-- **Đầu vào và quan hệ với trang trước:** Hai thuật toán cho cùng nghiệm nhưng yêu cầu so sánh cấu trúc công việc và độ chính xác.
-- **Sản phẩm và mục tiêu:** MT4–MT6; So sánh phương pháp phải dùng cùng đơn vị công việc và cùng yêu cầu độ chính xác.
-- **Đầu ra cho trang sau:** So sánh kỳ vọng và mô hình được vận dụng khi chuyển tiếp của lưới trở thành ngẫu nhiên.
-- **Quyết định:** `sửa`. Thay phát biểu so sánh thiếu điều kiện trong nguồn bằng tiêu chí có thể kiểm tra.
-- **Thời lượng:** 2 phút, trong tổng của mạch.
-
-### L04-G03 — Bài tập lưới ngẫu nhiên
-
-- **Chức năng và nhu cầu học tập:** Bài tập tổng hợp được chuẩn bị. Kỳ vọng trong cập nhật phải ghép xác suất với phần thưởng của chuyển thực tế.
-- **Đầu vào và quan hệ với trang trước:** So sánh kỳ vọng và mô hình được vận dụng khi chuyển tiếp của lưới trở thành ngẫu nhiên.
-- **Sản phẩm và mục tiêu:** MT2, MT5; Mỗi tổng đủ ba kết quả, thưởng gắn với chuyển thực tế và giữ đích bằng 0.
-- **Đầu ra cho trang sau:** Bài tập dùng kỳ vọng dẫn tới kiểm tra tổng hợp cách chứng nhận nghiệm từ mô hình.
-- **Quyết định:** `sửa`. Hoàn thiện bài tập nguồn đang thiếu quy ước và yêu cầu; không tạo chương trình mới.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-G04 — Kiểm tra nghiệm tối ưu
-
-- **Chức năng và nhu cầu học tập:** Kiểm tra tổng hợp. Một nghiệm điều khiển được kiểm tra bằng hành động tham lam và phần dư Bellman cùng giả thiết.
-- **Đầu vào và quan hệ với trang trước:** Bài tập dùng kỳ vọng dẫn tới kiểm tra tổng hợp cách chứng nhận nghiệm từ mô hình.
-- **Sản phẩm và mục tiêu:** MT3–MT6; Đúng $T_*U$, $T_*V$ và phần dư của từng bảng, phân biệt $v_{(a,b)}$ với $v_*$, nêu giả thiết và phân biệt mẫu với mô hình đầy đủ.
-- **Đầu ra cho trang sau:** Năng lực kiểm chứng được củng cố bằng các mục đọc và bài tập gắn với chương 4.
-- **Quyết định:** `thêm`. Đo việc nối giá trị, chính sách, hội tụ và mô hình trong cùng một kết luận. Rà ngày 2026-10-01: thay câu tính bốn giá trị nhìn trước từ $(27,30)$ (đã in ở trang lặp chính sách) bằng cặp bảng $U=v_{(a,b)}$, $V$ để đo phân biệt $v_\pi$ với $v_*$.
-- **Thời lượng:** 3 phút, trong tổng của mạch.
-
-### L04-G05 — Tài liệu đọc và bài tập tiếp nối
-
-- **Chức năng và nhu cầu học tập:** Kết luận và đọc thêm. Chương 4 củng cố quan hệ giữa đánh giá, cải thiện và các cách tổ chức cập nhật.
-- **Đầu vào và quan hệ với trang trước:** Năng lực kiểm chứng được củng cố bằng các mục đọc và bài tập gắn với chương 4.
-- **Sản phẩm và mục tiêu:** MT1–MT6; Chương 4 củng cố quan hệ giữa đánh giá, cải thiện và các cách tổ chức cập nhật.
-- **Đầu ra cho trang sau:** Bài học kết thúc bằng nhiệm vụ tính và đọc đã có tiên quyết; không mở thuật toán mới.
-- **Quyết định:** `thêm`. Gắn đọc thêm với phần đã học và nguồn xác minh; giữ 30 phút chữa bài, không tự tạo code demo. Rà ngày 2026-10-01: thêm đầu ra cho bài sau (khi không có $p$, giá trị ước lượng từ chuyển tiếp lấy mẫu; căn cứ tên Bài 05 “Dự đoán phi mô hình”) và đổi nhãn liên kết thành “Ghi chú bài giảng Bài 04”.
-- **Thời lượng:** 2 phút, trong tổng của mạch.
-
-
-## Rủi ro triển khai và điều kiện chấp nhận
-
-- E06 chứa lưới, bảng bốn lượt và quy ước; dùng hình gọn phía trên, bảng lớn, dời phép tính nhánh và kiểm điểm bất động vào notes. Nếu cần tách vì tràn, phải cân lại 45 trang/120 phút và ghi quyết định, không thu nhỏ chữ dưới chuẩn.
-- D03 và E04 cần giả mã đủ đầu vào/ra nhưng không nhồi diễn giải. Các giới hạn đánh giá gần đúng và phần dư có trang riêng, chỉ giữ quy tắc hoạt động trên trang giả mã.
-- D04 phát biểu tối ưu trước chứng minh co tối ưu; nói đúng là kết quả đã có căn cứ NG2, không tuyên bố ví dụ là chứng minh. E05 hoàn thiện căn cứ tính duy nhất. C05 chỉ cần co theo chính sách đã có ở B06.
-- F04 là khuôn tổng hợp, không phát biểu hội tụ cho mọi lịch xấp xỉ. F05 không coi lượng tử hóa tự tạo MDP chính xác. Nội dung công khai tránh các nhãn điều phối và thời lượng.
-- Ở giai đoạn lập kế hoạch ngày 2026-09-28, HTML/SVG mới chưa được dựng. Sau triển khai và năm báo cáo độc lập, các quyết định sửa cục bộ đã được cập nhật trong hồ sơ này; kiểm định cuối phải xác nhận bản sau sửa và các ranh giới bị ảnh hưởng.
-
-
-## Đồng bộ sau năm báo cáo độc lập — 2026-09-28
-
-Giữ nguyên 45 mã, thứ tự, bảy mạch và 120 phút. Các quyết định sửa dưới đây dùng dữ kiện hiện có; không thêm trang hay code demo.
-
-| Trang/cụm | Quyết định và lý do | Dữ kiện/kết nối cần rà lại |
-|---|---|---|
-| A02 | `sửa`: mục tiêu so sánh các cách tổ chức tính toán khớp nhiệm vụ đã có | MT6 giữ nguyên; không thêm tình huống đánh giá lên trang |
-| A03, B04, B07 | `sửa`: khai báo miền chưa kết thúc và tổng gồm đích | Bảng mở rộng bằng 0; ma trận trên trạng thái chưa kết thúc; thưởng vào đích vẫn tính |
-| B03–B06 | `sửa`: tính chính sách ngẫu nhiên trong notes B04 sau định nghĩa toán tử; đặt độ lệch 0,9 ở cuối notes trước định nghĩa phần dư B05 | Trung bình hai hành động cho (0,5;2,5); quay lại chính sách ban đầu để so hai bảng (1,2) và (1,9;2,9); B06 liên hệ độ lệch đo được với sai số |
-| B04, G01 | `sửa`: gọi tên bootstrapping rồi thu hồi ở kết luận | Cơ chế dùng ước lượng tiếp nối khác với yêu cầu có mô hình để tính đầy đủ kỳ vọng |
-| D01 | `sửa`: nhãn giá trị trong SVG dùng chỉ số dưới đúng | Quan hệ đánh giá–cải thiện và đại lượng cố định không đổi |
-| E06–E08 | `sửa`: gọi tên mô hình khi đổi ví dụ, nêu trái/phải và phân biệt lưới đã đạt điểm bất động với bảng hai trạng thái còn sai số | E07 ghi MDP hai trạng thái; E08 ghi lưới năm ô; ngưỡng phần dư là điều kiện đủ |
-| F02–F03 | `sửa`: gọi rõ lặp giá trị tại chỗ và lặp giá trị bất đồng bộ | Cơ chế đọc giá trị mới được truyền; toán tử đánh giá cho 2,9 khác toán tử tối ưu cho 3 ở cùng bảng (1,0) |
-| F04–F05 | `sửa`: đưa câu nối về biểu diễn hữu hạn và mô hình đã biết vào notes F04 | Giới hạn gộp CartPole dùng cùng giả thiết, F06 kiểm điều kiện mô hình |
-| E06, G03 | `sửa`: bỏ bình luận công việc biên soạn khỏi sản phẩm | Quy ước biên trái, thưởng theo chuyển thực tế và lý do bổ sung vẫn lưu trong hồ sơ này và nhật ký |
-| G03 | `sửa`: nêu trái/phải và lặp giá trị đồng bộ từ bảng không | Giữ xác suất 0,8/0,1/0,1 và lời giải 7,8; 4,436 |
-| Ghi chú chuyên sâu | `sửa`: thống nhất bảng trả và ngân sách của đánh giá/lặp giá trị với deck | K đếm số lần nhận bảng mới; I_max đếm vòng lặp chính sách; giữ hệ quả riêng cho W và bộ số gamma=0,5 |
-
-Cụm phần dư theo chu trình rút gọn trong đánh giá: nhu cầu dừng từ B04; ví dụ độ lệch 0,9 cuối notes B04; chuẩn/phần dư và quy trình B05; chặn có điều kiện B06; áp dụng đối chiếu nghiệm B07; kiểm B08. Trình tự của mạch B không đổi. Báo cáo quyết định chi tiết và trạng thái rà lại nằm trong review-log.md.
+Cột "Quyết định" so với deck trước đợt sửa (45 trang). Mã trang cũ được giữ khi nội dung còn; trang tách và trang lời giải nhận hậu tố `b`, `c`; trang tiêu đề mạch nhận mã `<tiền tố>00`. Thứ tự trình chiếu không theo thứ tự chữ cái của mã (ví dụ B06 đứng trước B05) vì thứ tự khái niệm theo ghi chú bài giảng.
+
+### Mạch 1. Mở đầu
+
+| Mã | Tiêu đề | Lý do tồn tại, nhu cầu | Trước → sau | Mục tiêu | Quyết định |
+|---|---|---|---|---|---|
+| L04-A01 | Giải MDP bằng quy hoạch động | Bìa, điểm vào mạch 1; câu luận đề nêu kết quả trung tâm | — → A01b | toàn bài | sửa: thêm luận đề, thuật ngữ gốc MDP, bỏ hộp nhiệm vụ |
+| L04-A01b | Tiên quyết và quy ước | Nhắc lại MDP, lợi tức, chính sách Markov dừng, Bellman kỳ vọng | A01 → A01c | MT1–MT5 | thêm (tách từ A03 cũ và ghi chú của nó) |
+| L04-A01c | Tiên quyết và quy ước | Ký hiệu miền, $P_\pi$, $r_\pi$, chỉ số, kỳ vọng | A01b → A02 | MT1–MT5 | thêm (vòng biên tập: tách để giữ trần khi thêm $P_\pi$, $r_\pi$ và chính sách Markov dừng) |
+| L04-A02 | Mục tiêu học tập | Năm mục tiêu, mỗi mục tiêu một bài tập | A01c → A02b | MT1–MT5 | tách từ A02 cũ; ngoại lệ trần 80 |
+| L04-A02b | Nội dung | Bảy mạch đánh số khớp `#/N` và trang tiêu đề mạch | A02 → A03 | — | thêm; ngoại lệ 7 dòng |
+| L04-A03 | Vấn đề trung tâm | Bài toán một dòng và câu trả lời có điều kiện của mạch 2–6, hình lộ trình | A02b → A03b | toàn bài | sửa (tách từ A03 cũ) |
+| L04-A03b | Cấu trúc một phép cập nhật quy hoạch động | Khung chung bốn thành phần của mọi thuật toán | A03 → A04 | MT5 | thêm (kế hoạch A2) |
+| L04-A04 | Ví dụ: mô hình hai trạng thái | Ví dụ xuyên suốt; làm cụ thể vấn đề A03 | A03b → A05 | MT1 | sửa: tiêu đề, tên chữ đứng, gom dữ kiện |
+| L04-A05 | Bài tập: lợi tức của chính sách ban đầu | Kiểm lợi tức và vai trò của mô hình; lời giải fragment | A04 → B00 | đầu vào | sửa: "Bài tập:", lời giải trên mặt trang |
+
+### Mạch 2. Đánh giá chính sách
+
+| Mã | Tiêu đề | Lý do tồn tại, nhu cầu | Trước → sau | Mục tiêu | Quyết định |
+|---|---|---|---|---|---|
+| L04-B00 | 2. Đánh giá chính sách | Điểm vào mạch 2; dòng dẫn nêu nhu cầu so sánh hành động; ngoài hành trình khái niệm | A05 → B01 | MT1 | thêm |
+| L04-B01 | Giá trị dài hạn của chính sách cố định | Bước vấn đề và trực giác của KN1: tổng vô hạn, thay đuôi bằng bảng | B00 → B02 | MT1 | sửa: tiêu đề khác tên mạch, "Nhu cầu:", "Trực quan." |
+| L04-B02 | Ví dụ: mô hình hai trạng thái, hai lượt quét | Tính tay trước giả mã; bảng cố định "Lượt quét \| $V_k(\mathrm s_0)$ \| $V_k(\mathrm s_1)$" | B01 → B03 | MT1 | sửa |
+| L04-B03 | Phương trình Bellman kỳ vọng | Nhắc lại kết quả Bài 03, nối với quy tắc lượt quét | B02 → B04 | MT1 | sửa: "Nhắc lại:", hai khối công thức |
+| L04-B04 | Toán tử Bellman đánh giá | Định nghĩa 04.1, lượt quét đồng bộ, điểm bất động, mục tiêu bootstrap | B03 → B06 | MT1 | sửa |
+| L04-B06 | Tính co của toán tử đánh giá | Nhu cầu hội tụ, chuẩn vô cùng, ví dụ hai bảng, Mệnh đề 04.4 | B04 → B06c | MT1 | tách từ B06 cũ |
+| L04-B06c | Hội tụ của đánh giá chính sách | Hệ quả 04.6: nghiệm duy nhất, tốc độ $\gamma^k$ | B06 → B07 | MT1 | thêm (tách từ B06 cũ; theo thứ tự ghi chú) |
+| L04-B07 | Ví dụ: mô hình hai trạng thái, giá trị chính xác | Ứng dụng KN1: $(10,11)$, sai số $10\cdot0{,}9^k$ | B06c → B05 | MT1 | sửa |
+| L04-B05 | Phần dư Bellman | Nhu cầu đại lượng dừng tính được; Định nghĩa 04.7; ví dụ $V_1$ | B07 → B06b | MT1 | tách từ B05 cũ |
+| L04-B06b | Chặn sai số theo phần dư | Hệ quả 04.8, ngưỡng $\theta=(1-\gamma)\kappa$ | B05 → B05b | MT1 | tách từ B06 cũ |
+| L04-B05b | Thuật toán đánh giá chính sách đồng bộ | Thuật toán 04.9 đủ đầu vào, đầu ra, khởi tạo, dừng | B06b → B08 | MT1 | tách từ B05 cũ |
+| L04-B08 | Bài tập: lượt quét thứ ba và chặn sai số | Kiểm KN1 (Bài tập 04.1) | B05b → B08b | MT1 | tách từ B08 cũ |
+| L04-B08b | Bài tập: lượt quét thứ ba và chặn sai số | Lời giải trên mặt trang | B08 → C00 | MT1 | thêm |
+
+### Mạch 3. Cải thiện chính sách
+
+| Mã | Tiêu đề | Lý do tồn tại, nhu cầu | Trước → sau | Mục tiêu | Quyết định |
+|---|---|---|---|---|---|
+| L04-C00 | 3. Cải thiện chính sách | Điểm vào mạch 3; dòng dẫn là bước vấn đề của KN2 | B08b → C01 | MT2 | thêm |
+| L04-C01 | Phép đổi hành động tại một trạng thái | Vấn đề và trực giác của KN2 trên $\mathrm s_1$; thuật ngữ điều khiển | C00 → C02 | MT2 | tách từ C01 cũ (công thức chuyển sang C03) |
+| L04-C02 | Ví dụ: hai nhánh hành động | Ví dụ 04.8: 11 và 12,9 | C01 → C03 | MT2 | sửa: bảng "Nhánh \| Thưởng \| Tiếp nối \| Nhìn trước" |
+| L04-C03 | Giá trị nhìn trước một bước | Định nghĩa 04.11; nhắc lại $q_\pi$ | C02 → C04 | MT2 | sửa |
+| L04-C04 | Chính sách tham lam | Định nghĩa 04.12 với quy tắc phá hòa | C03 → C04b | MT2 | tách từ C04 cũ |
+| L04-C04b | Định lý cải thiện chính sách | Định lý 04.13 với giả thiết trên mặt trang | C04 → C05 | MT2 | tách từ C04 cũ |
+| L04-C05 | Chứng minh: định lý cải thiện chính sách | Bốn bước: xác định, đơn điệu, lặp, giới hạn | C04b → C06 | MT2 | sửa |
+| L04-C06 | Ví dụ: mô hình hai trạng thái, lần cải thiện thứ nhất | Ứng dụng KN2: $\pi_1$, $(10,30)$ | C05 → C07 | MT2 | sửa |
+| L04-C07 | Bài tập: lần cải thiện thứ hai | Kiểm KN2 (Bài tập 04.2) | C06 → C07b | MT2 | tách từ C07 cũ |
+| L04-C07b | Bài tập: lần cải thiện thứ hai | Lời giải trên mặt trang; cho $(\mathrm b,\mathrm b)$ dùng ở mạch 4 | C07 → D00 | MT2 | thêm |
+
+### Mạch 4. Lặp chính sách
+
+| Mã | Tiêu đề | Lý do tồn tại, nhu cầu | Trước → sau | Mục tiêu | Quyết định |
+|---|---|---|---|---|---|
+| L04-D00 | 4. Lặp chính sách | Điểm vào mạch 4; dòng dẫn là bước vấn đề của KN3 | C07b → D01 | MT3 | thêm |
+| L04-D01 | Đánh giá lại sau mỗi lần cải thiện | Vấn đề, trực giác KN3; hình chu trình; thuật ngữ | D00 → D02 | MT3 | sửa: tiêu đề khác tên mạch, "Nhu cầu:" |
+| L04-D02 | Ví dụ: mô hình hai trạng thái, ba vòng lặp chính sách | Tính tay ba vòng trước giả mã | D01 → D02b | MT3 | tách từ D02 cũ |
+| L04-D02b | Chính sách ổn định | Định nghĩa 04.16 và kiểm tra bốn giá trị $q_{\pi_2}$ | D02 → D03 | MT3 | tách từ D02 cũ |
+| L04-D03 | Thuật toán lặp chính sách | Thuật toán 04.17 | D02b → D05 | MT3 | sửa |
+| L04-D04 | Giá trị tối ưu | Nhu cầu so với mọi chính sách, bốn giá trị, Định nghĩa 04.19 | D05 → D04b | MT3 | tách từ D04 cũ; bước vấn đề đã báo trước ở A03 |
+| L04-D04b | Phương trình Bellman tối ưu | Định lý 04.20, "Ý nghĩa:", "Lưu ý:" dẫn sang định lý tồn tại; chứng minh và ví dụ $(27,30)$ trong ghi chú diễn giả | D04 → D06 | MT3 | tách từ D04 cũ (vòng biên tập: dòng chứng minh và ví dụ chuyển vào ghi chú để giữ trần) |
+| L04-D05 | Dừng hữu hạn của lặp chính sách | Mệnh đề 04.18; đặt ngay sau D03 theo thứ tự ghi chú Mục 3.2 | D03 → D04 | MT3 | sửa (phần đánh giá gần đúng chuyển sang D06; vòng biên tập dời lên sau D03) |
+| L04-D06 | Bài tập: kết luận dừng từ bảng gần đúng | Kiểm KN3 (Bài tập 04.3) | D04b → D06b | MT3 | tách từ D06 cũ |
+| L04-D06b | Bài tập: kết luận dừng từ bảng gần đúng | Lời giải trên mặt trang | D06 → E00 | MT3 | thêm |
+
+### Mạch 5. Lặp giá trị
+
+| Mã | Tiêu đề | Lý do tồn tại, nhu cầu | Trước → sau | Mục tiêu | Quyết định |
+|---|---|---|---|---|---|
+| L04-E00 | 5. Lặp giá trị | Điểm vào mạch 5; dòng dẫn nêu giới hạn của lặp chính sách | D06b → E01 | MT4 | thêm |
+| L04-E01 | Chi phí của đánh giá đầy đủ | Vấn đề KN4: 44 lượt quét, $O(n^3)$, tham lam đúng sớm | E00 → E01b | MT4 | tách từ E01 cũ |
+| L04-E01b | Ý tưởng lặp giá trị | Trực giác KN4 và thuật ngữ | E01 → E02 | MT4 | tách từ E01 cũ |
+| L04-E02 | Ví dụ: mô hình hai trạng thái, hai lượt quét lặp giá trị | Tính tay trước giả mã | E01b → E03 | MT4 | sửa |
+| L04-E03 | Toán tử Bellman tối ưu | Định nghĩa 04.22, phần dư tối ưu | E02 → E03b | MT4 | sửa |
+| L04-E03b | Tính co của toán tử tối ưu | Mệnh đề 04.24 với ví dụ đạt dấu bằng | E03 → E05b | MT4 | thêm (tách từ E05 cũ) |
+| L04-E05b | Tồn tại chính sách tối ưu | Định lý 04.25: $v_*$ là điểm bất động, tối ưu trên mọi chính sách; Hệ quả; dạng $q_*$ | E03b → E05c | MT4 | thêm (deck cũ chỉ nêu trong ghi chú diễn giả; ghi chú bài giảng có Định lý 04.25) |
+| L04-E05c | Chứng minh: tồn tại chính sách tối ưu | Bốn bước: Banach, tham lam đạt, Markov chặn chính sách nhớ lịch sử, qua giới hạn; có thể bỏ khi thiếu giờ | E05b → E05 | MT4 | thêm (vòng biên tập, theo PB) |
+| L04-E05 | Hội tụ của lặp giá trị | Hệ quả 04.26 với hình `dp04-convergence-bound.svg` (chữ hình đã phóng) | E05c → E07 | MT4 | sửa |
+| L04-E07 | Chặn sai số theo phần dư tối ưu | Hệ quả 04.27, ngưỡng, ví dụ $V_1$, $V_{55}$ | E05 → E04 | MT4 | sửa (đưa lên trước dãy năm ô) |
+| L04-E04 | Thuật toán lặp giá trị đồng bộ | Thuật toán 04.28 | E07 → E06 | MT4 | sửa |
+| L04-E06 | Ví dụ: dãy năm ô | Dữ kiện ví dụ thứ hai có trạng thái kết thúc | E04 → E06b | MT4 | tách từ E06 cũ |
+| L04-E06b | Ví dụ: dãy năm ô, bốn lượt quét | Ứng dụng KN4 | E06 → E06c | MT4 | tách từ E06 cũ |
+| L04-E06c | Ví dụ: dãy năm ô trơn trượt | Kỳ vọng theo $p$ với ba kết quả chuyển tại $\mathrm c_4$ (7,8 và 0,1) | E06b → E08 | MT4 | thêm (chuyển phần đầu của G03 cũ, theo RL, PB, MACH) |
+| L04-E08 | Bài tập: điểm bất động trên dãy năm ô | Kiểm KN4 (Bài tập 04.4) | E06c → E08b | MT4 | tách từ E08 cũ |
+| L04-E08b | Bài tập: điểm bất động trên dãy năm ô | Lời giải trên mặt trang | E08 → F00 | MT4 | thêm |
+
+### Mạch 6. Lịch cập nhật và giới hạn của mô hình bảng
+
+| Mã | Tiêu đề | Lý do tồn tại, nhu cầu | Trước → sau | Mục tiêu | Quyết định |
+|---|---|---|---|---|---|
+| L04-F00 | 6. Lịch cập nhật và giới hạn của mô hình bảng | Điểm vào mạch 6 | E08b → F01 | MT5 | thêm |
+| L04-F01 | Chi phí một lượt quét | Vấn đề KN5: Nhận xét 04.30 với số liệu CartPole | F00 → F02 | MT5 | sửa |
+| L04-F02 | Ví dụ: cập nhật tại chỗ | Nhu cầu, định nghĩa bằng lời và tính tay trên hai mô hình | F01 → F03 | MT5 | sửa |
+| L04-F03 | Thuật toán lặp giá trị bất đồng bộ | Thuật toán 04.31 | F02 → F03b | MT5 | tách từ F03 cũ |
+| L04-F03b | Hội tụ của quy hoạch động bất đồng bộ | Định lý 04.32 với giả thiết vô hạn lần trên mặt trang | F03 → F04 | MT5 | tách từ F03 cũ |
+| L04-F04 | Lặp chính sách tổng quát | Định nghĩa 04.34, bảng mức hoàn tất đánh giá | F03b → F05 | MT5 | sửa |
+| L04-F05 | Ví dụ: CartPole rời rạc hóa | 324 ô, $\hat p$, hai lượt quét tại ô 71 | F04 → F05b | MT5 | sửa: thêm số liệu notebook (Ví dụ 04.18) |
+| L04-F05b | Chính sách tối ưu của CartPole rời rạc hóa | Ứng dụng: Tình huống 04.1–04.2, khoảng cách giữa MDP ước lượng và môi trường | F05 → F06 | MT5 | thêm (sai lệch so với A3, ghi trong review-log) |
+| L04-F06 | Bài tập: lịch bỏ sót một trạng thái | Kiểm KN5 (Bài tập 04.5) | F05b → F06b | MT5 | tách từ F06 cũ (câu CartPole chuyển sang G07) |
+| L04-F06b | Bài tập: lịch bỏ sót một trạng thái | Lời giải trên mặt trang | F06 → G00 | MT5 | thêm |
+
+### Mạch 7. Tổng kết và chuyển tiếp
+
+| Mã | Tiêu đề | Lý do tồn tại, nhu cầu | Trước → sau | Mục tiêu | Quyết định |
+|---|---|---|---|---|---|
+| L04-G00 | 7. Tổng kết và chuyển tiếp | Điểm vào mạch 7 | F06b → G01 | toàn bài | thêm |
+| L04-G01 | Tổng kết | Bảng `Kết quả \| Giả thiết không được bỏ \| Công thức hoặc thuật toán`, ba hàng đầu | G00 → G01b | MT1–MT2 | sửa (thay G01 cũ) |
+| L04-G01b | Tổng kết | Bốn hàng sau của bảng tổng kết (Mệnh đề 04.18, Định lý 04.25, Hệ quả 04.27, Định lý 04.32) | G01 → G02 | MT3–MT5 | thêm (tách để giữ ≤ 6 dòng) |
+| L04-G02 | So sánh các phương pháp quy hoạch động | Bảng `Phương pháp \| Quy tắc cập nhật \| Dữ liệu dùng \| Điều kiện dừng` | G01b → G02b | MT3–MT5 | sửa |
+| L04-G02b | Hội tụ của các phương pháp quy hoạch động | Bảng `Phương pháp \| Giả thiết không được bỏ \| Kết luận` | G02 → G04 | MT3–MT5 | tách từ G02 cũ |
+| L04-G04 | Bài tập: chứng nhận nghiệm tối ưu | Bài tập tổng hợp (Bài tập 04.6) | G02b → G04b | MT3–MT5 | tách từ G04 cũ (câu 3 cũ chuyển sang G07) |
+| L04-G04b | Bài tập: chứng nhận nghiệm tối ưu | Lời giải trên mặt trang | G04 → G06 | MT3–MT5 | thêm |
+| L04-G06 | Trả lời vấn đề trung tâm | Kết luận có điều kiện và dòng "Nguồn:" | G04b → G07 | toàn bài | thêm |
+| L04-G07 | Câu hỏi tự kiểm tra | Bốn câu, mỗi câu kiểm một giả thiết hoặc phân biệt | G06 → G05 | toàn bài | thêm |
+| L04-G05 | Bài tập về nhà và tài liệu đọc | Bảng `Mạch \| Bài tập` (chỉ bài tập của ghi chú), "Tệp bài tập: chưa có", tài liệu đọc, liên kết viewer, dòng nối Bài 05 | G07 → — | toàn bài | sửa |
+
+Bài tập có lời giải trên mặt trang: A05 (fragment), B08b, C07b, D06b, E08b, F06b, G04b. G03 (bài tự làm) đã bỏ khỏi deck trong vòng biên tập: phần đầu thành ví dụ E06c, phần còn lại để cho tệp bài tập (dự kiến 04.13).
