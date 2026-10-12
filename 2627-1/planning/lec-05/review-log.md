@@ -629,3 +629,505 @@ Không có phát hiện chặn, nghiêm trọng hay trung bình. Bốn mục nh�
 - Kiểm của điều phối: `nbformat.validate` đạt; không ô lỗi, không ô chưa chạy, không URL ngoài trong output, không stderr; công thức Markdown chỉ dùng `$...$`/`$$...$$`; đã xem hình quỹ đạo ba chính sách, histogram, đường học, $G_t$ so với $V$ dọc lượt và khung trình phát.
 - Index: Playwright Chromium 1600×900 và 390×844 trên server cổng 8766 (gốc repo): không lỗi console, không tài nguyên hỏng, không cuộn ngang; `.ipynb` trả HTTP 200.
 - Kết quả chính (gymnasium 1.3.0): $\mathbb E_\pi[G_0]=56{,}04\pm2{,}70$; $J$: MC theo lô 1627, TD theo lô cùng dữ liệu 1803, TD(0) $\alpha=0{,}5$ 2101, TD(0) $1/n$ 5158, mốc bảng hằng 3021, $J(\mathbf 0)=5797$.
+
+## Đợt sửa 2026-10-12 — Giai đoạn I: ghi chú bài giảng
+
+### Tác tử
+
+| Vai trò | Loại | Mô hình | Effort | Ghi file |
+|---|---|---|---|---|
+| Soạn ghi chú bài giảng Bài 05 (giai đoạn I) | general-purpose (theo brief của điều phối viên) | claude-opus-5-5 | high | `materials/lec-05/lecture-note.md`, `img/lec-05/variance-decomposition.svg`, nhật ký này |
+
+Không commit. Không sửa deck, `outline.md`, `storyboard.md`, notebook, index, CSS hay SVG đã có.
+
+### Phạm vi
+
+Viết lại toàn bộ `lecture-note.md` theo `AGENTS.md` §"Tiêu chuẩn giáo trình cho ghi chú bài giảng", mẫu `materials/_templates/lecture-note.md`, quyết định chung `planning/quyet-dinh-chuan-2026-10-12.md` (mục 1–4, 6, 8 Bài 05) và mục B của `revision-plan-2026-10-12.md`. Đủ 11 thành phần: tiêu đề, giới thiệu một đoạn, mục tiêu MT1–MT6, kiến thức tiên quyết (dẫn "ghi chú Bài 0N, Mục k" kèm phát biểu lại), bảng ký hiệu, bản đồ chủ đề bốn nhóm (23 `note-topic-id`), năm mục nội dung ứng với mạch 1–5, tình huống áp dụng và ứng dụng (mạch 6), tóm tắt chương, bài tập củng cố ba mức, hướng dẫn đọc thêm. Khoảng 32 600 từ theo `wc -w` (tính cả LaTeX và bảng).
+
+Ví dụ xuyên suốt "dãy bốn ô" được gọi là "tàu đổ bộ thu nhỏ" ($\mathrm L$ là "rơi", $\mathrm G$ là "nằm yên"), giữ nguyên số liệu và hai lượt $e_1$, $e_2$; "chuỗi dài" thành "dãy bảy ô", giữ số liệu. Tên ô chữ đứng; hành động $\mathrm{tien}$. Dấu thập phân phẩy. Ngưỡng dừng $\theta$; $\Delta_k(s)$ được gọi tên "tổng gia số của lượt quét $k$". Bỏ mọi liên kết PDF nguồn, thay bằng "Bài giảng gốc (2025–2026), trang N" và "Bài tập tuần 5 (2025–2026), bài k". Ba lời giải HW05 bài 5–7 của ghi chú cũ chuyển ra khỏi ghi chú (chờ `exercises.md`, giai đoạn III); số liệu bài 7 vẫn có trong Ví dụ 05.7, 05.12, 05.13, 05.16.
+
+### Giáo trình đã tham khảo theo mục
+
+Sutton và Barto (2018) đọc trực tiếp trên bản PDF `/data/tqlong/qa/sources/sutton-barto-rl2020` (trang in = trang PDF − 22); chỉ tham khảo cách dẫn dắt và phát biểu, không dịch, không chép.
+
+| Mục ghi chú | Giáo trình và mục | Điều đã học |
+|---|---|---|
+| Mục 1 | S&B §5.1 tr. 92 (đoạn mở), §6.1 tr. 119; mở đầu chương 6 tr. 119 | Mở bằng giới hạn của quy hoạch động: cần mô hình; dự đoán trước điều khiển |
+| 1.2, 2.4–2.5 | S&B §2.4 tr. 30–31 (dạng NewEstimate = OldEstimate + StepSize[Target − OldEstimate], (2.4)); §2.5 tr. 32–33 ((2.6), (2.7)) | Khung cập nhật chung; trọng số bước hằng; điều kiện bước học |
+| 2.1 | S&B §3.3–3.4 tr. 54–57 | Lượt, lợi tức, quy ước kết thúc và $\gamma=1$ |
+| 2.2–2.3, 2.6 | S&B §5.1 tr. 92–93 (lần ghé, hộp giả mã first-visit duyệt lùi) | Định nghĩa hai quy tắc; ghi chú giữ thuật toán hai pha (lùi tính $G$, xuôi chọn lần ghé) như deck, lý do: tách hai việc cho người học |
+| 2.7–2.8 | S&B §5.1 tr. 93 (hội tụ, không chệch, $1/\sqrt n$; dẫn Singh và Sutton 1996); chú dẫn chương 5 tr. 116 | Phát biểu hai kết quả; chứng minh mọi lần ghé bằng luật số lớn theo lượt là bổ sung của tác tử soạn (đủ bước) |
+| 3.1–3.2 | S&B §6.1 tr. 119–121 (TD(0), hộp giả mã, sai số TD (6.5), (6.6), so sánh mục tiêu MC/DP/TD) | Mục tiêu TD là kết hợp lấy mẫu và bootstrap; thứ tự đọc–ghi |
+| 4.3–4.5 | S&B §6.1 tr. 120 ((6.3)–(6.4)); §6.2 tr. 124 | Độ chệch qua Bellman kỳ vọng; phương sai: chỉ phát biểu cho mục tiêu lý tưởng (luật phương sai toàn phần) |
+| 4.6 | S&B §6.2 tr. 124 (phát biểu hội tụ với (2.7)); chú dẫn chương 6 tr. 139 (Dayan 1992; Jaakkola, Jordan, Singh 1994; Tsitsiklis 1994) | Định lý 05.29 dẫn nguồn có mục và trang; chứng minh ngoài phạm vi, nêu ý tưởng |
+| 5 | S&B §6.3 tr. 126–128 (cập nhật theo lô, Ví dụ 6.4, ước lượng tương đương chắc chắn, chi phí $n^2$, $n^3$) | Hai nghiệm theo lô; chứng minh hội tụ TD theo lô với $\alpha N(s)\le1$ là bổ sung của tác tử soạn |
+| Hướng dẫn đọc thêm | S&B §7.1 tr. 142–145 | Chủ đề đọc thêm TD $n$ bước |
+
+Không đọc trực tiếp trong đợt này: giáo trình *Học máy thống kê* (giọng kể theo `AGENTS.md` và bộ mẫu Bài 07 của math-4-AI), Szepesvári (2010), Bertsekas và Tsitsiklis (1996). Bertsekas và Tsitsiklis (1996) chỉ được dẫn ở mức chương trong mục đọc thêm, theo danh mục tài liệu của S&B; thông tin xuất bản của Dayan (1992), Jaakkola và cộng sự (1994), Tsitsiklis (1994), Singh và Sutton (1996), Tsitsiklis và Van Roy (1997) đối chiếu với danh mục tài liệu của S&B.
+
+### Số hiệu cuối cùng
+
+- Bộ đếm chung: 05.1 Định nghĩa (bài toán dự đoán phi mô hình); 05.2 Nhận xét; 05.3 Định nghĩa (lượt, lợi tức); 05.4 Mệnh đề (truy hồi); 05.5 Bổ đề (đuôi hình học của $T$); 05.6 Định nghĩa (lần ghé); 05.7 Mệnh đề (kỳ vọng sau lần ghé thứ $k$); 05.8 Định nghĩa (ước lượng MC); 05.9 Mệnh đề (trung bình gia tăng); 05.10 Định nghĩa (mục tiêu cập nhật, bước học); 05.11 Mệnh đề (trọng số bước hằng); 05.12 Nhận xét (hai trục); 05.13 Thuật toán (dự đoán MC); 05.14 Nhận xét; 05.15 Định nghĩa (không chệch, hội tụ h.c.c.); 05.16 Định lý (MC lần ghé đầu tiên); 05.17 Định lý (MC mọi lần ghé); 05.18 Nhận xét (bước hằng không hội tụ); 05.19 Định nghĩa (mục tiêu TD, sai số TD); 05.20 Thuật toán (TD(0)); 05.21 Nhận xét (kết thúc, tự chuyển, cắt ngắn); 05.22 Nhận xét (chi phí); 05.23 Định nghĩa (độ chệch của mục tiêu); 05.24 Mệnh đề (độ chệch mục tiêu TD); 05.25 Hệ quả; 05.26 Mệnh đề (kỳ vọng sai số TD là phần dư Bellman); 05.27 Định lý (phương sai mục tiêu lý tưởng); 05.28 Nhận xét; 05.29 Định lý (hội tụ TD(0)); 05.30 Nhận xét; 05.31 Thuật toán (cập nhật theo lô); 05.32 Mệnh đề (nghiệm MC theo lô); 05.33 Mệnh đề (nghiệm TD theo lô); 05.34 Nhận xét.
+- Ví dụ 05.1–05.25; Tình huống 05.1–05.2; Bài tập 05.1–05.22 (05.1–05.16 trong mục, 05.17–05.22 củng cố). `exercises.md` bắt đầu từ Bài tập 05.23.
+- Bài tập trùng trang chiếu theo kế hoạch C: B13 ↔ Bài tập 05.5; C10 ↔ Bài tập 05.9. Bài tập 05.20 (lượt thứ ba $e_3$) là bài "E06" của kế hoạch A2; `exercises.md` không lặp đề này (bỏ mục tùy chọn 05.32 của kế hoạch C).
+
+### Sai khác so với kế hoạch B và lý do
+
+- Năm mục nội dung thay bốn mục của B1, theo lưu ý riêng Bài 05 của điều phối viên: Mục 1 (mạch 1: bài toán, ví dụ xuyên suốt, khung cập nhật), Mục 2–5 (mạch 2–5), mạch 6 thành tình huống và tóm tắt.
+- Số hiệu lệch B2 từ 05.5: thêm Bổ đề 05.5 (đuôi hình học) để Mệnh đề 05.7, Định lý 05.16–05.17 có giả thiết khả tích đủ; thêm Định nghĩa 05.15 (không chệch, hội tụ h.c.c.) và Nhận xét 05.18 (phương sai giới hạn $\alpha\sigma^2/(2-\alpha)$ của bước hằng) thay Nhận xét 05.14 của B2; thêm Nhận xét 05.14 về hai chiều duyệt. Định lý mọi lần ghé (05.17) có chứng minh đủ bằng luật số lớn theo lượt thay vì "ngoài phạm vi".
+- Ví dụ thêm: 05.9 (phân phối mẫu tại $\mathrm S$, $\operatorname{Var}=320/441$), 05.10 (ô chờ: mọi lần ghé chệch $-1/2$ ở một lượt; số liệu sư phạm tự xây dựng), 05.14 (hai chuyển thật của notebook thay số liệu tự chuyển giả định), 05.15 (điểm cố định $r/(1-\gamma)$), 05.22 (ba lịch bước học). Ví dụ 05.19 của B2 (ô tự chuyển Lunar Lander) thành Ví dụ 05.14–05.15.
+- Chủ đề mới: `lec-05-topic-17` (khung chung), `-18` (trung bình gia tăng và bước hằng), `-19` (không chệch và hội tụ MC), `-20` (cầu nối tiên quyết), `-21` (bổ sung: chệch của mọi lần ghé), `-22` (bổ sung: tự chuyển), `-23` (đọc thêm: sai số MC là tổng sai số TD). Các mã `-01`…`-16` giữ cho chủ đề còn tồn tại; `-06` nay chỉ "lần ghé", `-11` nay chỉ hội tụ TD(0).
+- Bài tập củng cố "chứng minh 05.9 bằng quy nạp" của B4 không dùng vì Mệnh đề 05.11 đã chứng minh bằng quy nạp trong mục; thay bằng Bài tập 05.19 (sai số MC bằng tổng sai số TD, S&B (6.6)).
+- Tình huống 05.2 chọn "coi điểm cắt là trạng thái kết thúc" (tính trên tàu đổ bộ thu nhỏ với cắt sau hai chuyển: độ chệch $-0{,}16\cdot11/21\approx-0{,}084$) cùng số liệu notebook; phần "ô gộp không Markov" nằm trong Tình huống 05.1.
+- SVG: dùng `design-grid.svg` (Mục 2.5). Không dùng `mc-td-timeline.svg` vì nhãn "S₁=x" (chữ thường) lệch tên ô $\mathrm X$; đề nghị giai đoạn deck xóa hoặc sửa nhãn rồi ghi lại. Thêm `variance-decomposition.svg` (thanh xếp chồng phân rã phương sai, có `<title>`, `<desc>`, gạch chéo phân biệt hai phần không chỉ bằng màu, dấu thập phân phẩy).
+
+### Số liệu đã tính lại
+
+$v_\pi(\mathrm S)=11/21$, $v_\pi(\mathrm X)=19/21$; $\Pr(G_0=1\mid\mathrm S)=16/21$; $\operatorname{Var}(G_t\mid\mathrm S)=320/441$, $\operatorname{Var}(Y^*\mid\mathrm S)=256/441$, hiệu $64/441$ (20%); tại $\mathrm X$: $80/441$, $16/441$; độ chệch mục tiêu TD tại $\mathrm S$ với $V(\mathrm X)=0{,}5$: $-34/105$; với $V=(1,1)$: $8/105$ tại $\mathrm S$, $2/21$ tại $\mathrm X$; bảng độ lệch (sau $e_1$: $-1/42$, $-17/42$, $-11/21$; sau $e_2$: $-65/84$, $-97/84$, $-151/168$, $-89/168$; MC mọi lần ghé $-365/336$, $-173/168$; sau $e_3$: $-25/168$, $-89/168$, $-73/336$); dãy bảy ô (phân số chính xác, $\gamma=99/100$): $u\approx(0{,}4567;\ 0{,}8292;\ 0{,}9328;\ 0{,}9705;\ 0{,}9922)$, $m(\mathrm S)\approx0{,}9051$, $\operatorname{Var}(G_t)\approx0{,}2175$, $\operatorname{Var}(Y^*)\approx0{,}0355$, tỉ lệ đuôi $0{,}837$; bốn cấu hình MC, TD(0) trên $e_1,e_2,e_3$; $\varepsilon_0=0{,}84$ cho Bổ đề 05.5; ô chờ $\mathbb E[N]=2$, $\mathbb E[N^2]=6$; phương sai giới hạn bước hằng $0{,}242$ ($\alpha=0{,}5$), $0{,}038$ ($\alpha=0{,}1$); $n=291$ lượt cho độ lệch chuẩn $\le0{,}05$; tích $\prod(1-1/(k+1)^2)\to1/2$; A–B: $V_2(\mathrm A)=3/32$, $V_3(\mathrm A)=45/256$, $V_k(\mathrm A)=\tfrac34[1-(7/8)^{k-1}]$, dừng với $\theta=0{,}01$ ở $k=18$, sai số $0{,}068$; $0{,}995^{100}\approx0{,}606$, $0{,}995^{460}\approx0{,}0997$; Ví dụ 05.14 tính lại từ output notebook ($44{,}3715$, $0{,}5215$, $67{,}168$). Các con số của notebook (J, $V(S_0)$, số lượt cắt ngắn, tỉ lệ tự chuyển) chép từ output đã nhúng, gymnasium 1.3.0.
+
+### Giới hạn còn lại
+
+- Tham chiếu chéo tới Bài 03, 04 dùng "ghi chú Bài 0N, Mục k" theo kế hoạch sửa của hai bài đó (Bài 03: Mục 1–4; Bài 04: Mục 1); cần đồng bộ sang số hiệu `0N.k` ở đợt sau. Bài 06, 07, 08 được dẫn theo bài, không theo mục.
+- Viewer ở 390×844 báo `scrollWidth > clientWidth` (510 so với 390): nguồn là các phần tử `.katex-mathml` (đặt `position:absolute`) nằm trong bảng cuộn ngang; nội dung nhìn thấy không tràn, bảng và công thức khối cuộn trong khung. Hiện tượng giống ghi chú Bài 07; sửa cần một luật trong `material-viewer.css` (ví dụ `position:relative` cho ô bảng), ngoài phạm vi tác tử này.
+- Các SVG cũ của Bài 05 dùng dấu chấm thập phân (`0.8`, `0.2`) và nhãn `x₁` chữ thường; việc sửa thuộc giai đoạn deck.
+- Notebook dẫn ghi chú theo tên mục cũ ("mục Thuật toán TD(0) và các trường hợp biên", "mục Độ chệch…", "quy trình sáu bước"); ánh xạ mới: Mục 3.2 / Thuật toán 05.20, Mục 4.3 / Mệnh đề 05.24, Mục 4.5 / Định lý 05.27, Mục 5 / Thuật toán 05.31, Thuật toán 05.13. Sửa ở giai đoạn III.
+- Các chỗ đề nghị tác tử rà toán soi kỹ: chứng minh Định lý 05.17 (đổi thứ tự tổng–kỳ vọng, khả tích $Z_e$); Bước 2 của Bổ đề 05.5 (tính Markov tại thời điểm cố định $jn$); Bước 2–4 của chứng minh Mệnh đề 05.33 (ma trận không âm, trường hợp $\gamma=1$); phát biểu giả thiết $\gamma=1$ của Định lý 05.29; diễn giải "Bước 1, 2, 4 của Định lý 05.17 không cần Markov" trong Tình huống 05.1.
+
+### Tự kiểm `no-ai-slop` (Edit) và `quill`
+
+- Phạm vi: toàn bộ `lecture-note.md`. Đã đọc `SKILL.md` và đối chiếu `eval.md` sau khi soạn. Đạt: không từ cấm hay trạng từ rỗng; không câu hỏi tu từ, không mở mục bằng định nghĩa; không "rõ ràng", "dễ thấy", "suy ra ngay"; một gạch dài duy nhất ở tiêu đề theo mẫu; không đoạn tóm tắt lặp lại cuối mục ngoài đoạn kết mục ba ý bắt buộc. Đã sửa trong lúc tự kiểm: "suy ra ngay", "thực chất là", "chính là", hai chỗ nhắc "trang chiếu" trong bản đồ chủ đề, một câu cơ chế chưa có căn cứ về ô 3426 (thay bằng phát biểu theo notebook), một ví dụ bù trừ độ chệch dùng $V(\mathrm L)\ne0$ (thay bằng ví dụ trên dãy bảy ô). Còn lại có chủ đích: câu "Mô tả này chưa phải định nghĩa/định lý" lặp lại vì `AGENTS.md` bắt buộc; đoạn kết mục mở bằng "Như vậy," theo mẫu.
+- `quill` (Outline, Threads, Concept, Revise dùng làm bảng kiểm, không tạo `quill.json`): mỗi khái niệm trọng tâm đi đủ vấn đề → trực giác → ví dụ → hình thức → kết quả/thuật toán → ứng dụng ("Trong thực hành", tình huống) → kiểm tra (bài tập); ba thuật toán đều có ví dụ tính tay trước khối `algorithm` (05.8 → 05.13; 05.11–05.12 → 05.20; 05.23–05.24 → 05.31). Sợi chỉ mở ở Mục 1 (bốn câu hỏi) đóng ở Mục 2 (mục tiêu, hội tụ MC), Mục 3 (cập nhật sớm), Mục 4 (độ chệch, phương sai, hội tụ TD), Mục 5 (dữ liệu cố định). Thuật ngữ thống nhất: lợi tức, lượt, lần ghé, mục tiêu cập nhật, mục tiêu bootstrap, sai số TD, độ chệch, phần dư Bellman (khớp Bài 04), cập nhật theo lô, lượt quét.
+
+### Kiểm tra
+
+- `note_check.py`: 34 số hiệu chung liên tục (không khuyết, không trùng), 25 ví dụ, 22 bài tập; không khối lạ, không khối chưa đánh số, không mẫu câu cấm; không `\(`/`\[`.
+- `check_note.py 05 lecture-05-du-doan-phi-mo-hinh.html` (server cổng 8766): 0 lỗi KaTeX, 140 khối, 0 lỗi console, không yêu cầu ra ngoài, không tài nguyên hỏng ở 1600×900 và 390×844; `overflow` false ở 1600, true ở 390 do `.katex-mathml` trong bảng cuộn (xem Giới hạn).
+- Đã xem ảnh chụp: Ví dụ 05.8 và chứng minh Định lý 05.27 ở 1600; Ví dụ 05.21 ở 390; `variance-decomposition.svg` hiển thị độc lập. Công thức khối duy nhất bị cắt ở 1600 (chứng minh Mệnh đề 05.24, Bước 3 của Định lý 05.27) đã rút gọn bằng ký hiệu $\mathbb E_s$; kiểm lại không còn công thức khối nào vượt khung ở 1600.
+
+## Đợt sửa 2026-10-12 — Giai đoạn I, vòng sửa sau rà soát vai A và vai B
+
+### Tác tử và phạm vi
+
+Cùng tác tử soạn của mục trên (general-purpose theo brief, claude-opus-5-5, effort high), sửa theo quyết định của điều phối viên trên hai báo cáo `review-05-A.md` (vai toán) và `review-05-B.md` (vai mạch viết). Chỉ ghi `materials/lec-05/lecture-note.md` và nhật ký này; không tạo SVG mới trong vòng này. Không commit.
+
+### Số từ
+
+Trước: 32 643 (`wc -w`). Sau: 28 304 (`wc -w`); 27 887 khi tính mỗi công thức nội dòng là một từ và bỏ công thức khối.
+
+Chưa đạt đích dưới 25 000. Lý do: đã làm toàn bộ mức A (A1–A20), mức B trừ B3, C2–C5 và C6 trên đúng các đoạn được liệt kê; không làm mức D và không mở rộng C6 ra các đoạn khác theo quyết định. Phần sửa bắt buộc của vai A và vai B thêm khoảng 900 từ: Nhận xét 05.18 thay Mục 2.8, đoạn ý tưởng của Bổ đề 05.5, đoạn trường hợp $\gamma=1$ sau chứng minh Mệnh đề 05.34, câu về $\gamma=1$ cho Định lý 05.30, quy ước đọc dạng danh sách, thuật ngữ gốc ở lần đầu, tách câu trong đoạn mở. Bảng Bản đồ chủ đề còn 1 128 từ, cao hơn ước lượng 900 của vai B vì giữ cột Nguồn có số trang. Muốn xuống dưới 25 000 cần thêm mức D hoặc C6 trên toàn tệp; đề nghị điều phối viên chọn. Phần vượt 20 000: chương có năm mục nội dung, 35 môi trường đánh số có chứng minh đủ bước, hai tình huống và bảng số liệu notebook; các phần này đều là thành phần bắt buộc.
+
+### Phát hiện và xử lý
+
+Cột "Dòng mới" ghi số dòng trong `lecture-note.md` sau vòng sửa; "—" là phần bị cắt hoặc chuyển.
+
+| Mã | Mức | Xử lý | Trạng thái | Dòng mới |
+|---|---|---|---|---|
+| A-1 | nghiêm trọng | Viết lại: phần dao động quanh lợi tức kỳ vọng theo ô không vượt $J$ nhỏ nhất (khoảng 1627); 3021 là $J$ của bảng hằng. Ở Tình huống 05.1, câu về bảng hằng tách khỏi câu phân rã | đã sửa | 1404, 1732 |
+| A-2 | trung bình | Đoạn mở và dòng đầu bảng của mục Tình huống: hội tụ về trung bình lợi tức theo lần ghé qua Bước 1 và 4 của chứng minh Định lý 05.17; bằng $v_\pi$ chỉ khi Markov | đã sửa | 1710, 1714 |
+| A-3 | trung bình | Tình huống 05.2: mục tiêu trên chuyển tại điểm cắt lệch $-11/21$ so với mục tiêu lý tưởng; nêu không cùng loại với $-0{,}084$; bỏ dẫn Mệnh đề 05.25 | đã sửa | 1772 |
+| A-4 | trung bình | "Bước 1 và 4 không dùng Markov; khả tích ở Bước 2 suy từ $T\le1000$; lượt giữ lại vẫn độc lập cùng phân phối"; sửa Dẫn ngược | đã sửa | 1748, 1754 |
+| A-5 | nhẹ | Bước 2 Định lý 05.17: chặn $\sum_k\lvert G_{t_k}\rvert\mathbf 1\{N\ge k\}\le R_{\max}T_e^2$; câu về $k$ có xác suất $0$ | đã sửa | 780, 792 |
+| A-6 | nhẹ | Nhận xét 05.19: thêm lập luận không hội tụ h.c.c. | đã sửa | 810 |
+| A-7 | nhẹ | Ý tưởng chứng minh Định lý 05.30: thêm trường hợp $\gamma=1$ (chuẩn có trọng số, Dayan 1992) | đã sửa | 1470 |
+| A-8 | nhẹ | Bài tập 05.15 cũ (giá trị khi $\gamma=1$) | bỏ cùng bài tập theo quyết định 3 | — |
+| A-9 | nhẹ | Thực hành Mục 4.2: $v_\pi$ của ô không định nghĩa; dùng lợi tức kỳ vọng theo ô, "theo nghĩa gần đúng" | đã sửa | 1248 |
+| A-10 | nhẹ | "trong cả 2000 lượt của lần chạy" | đã sửa | 1404 |
+| A-11 | nhẹ | Ghi "trung bình qua năm thứ tự lượt" ở thực hành Mục 2.6, 4.2, 4.4; câu giải thích 2101 so 2085 trong Tình huống 05.1 | đã sửa | 813, 1248, 1483, 1734 |
+| A-12 | nhẹ | Ví dụ 05.11: ghi số chữ số thập phân in ra và việc dùng giá trị đã làm tròn | đã sửa | 988 |
+| A-13 | nhẹ | Thuật toán 05.32: Monte Carlo theo lô dùng mọi lần ghé; Mục 5.3: $N(s)$ là số lần ghé, cũng là số chuyển rời $s$ | đã sửa | 1545, 1591 |
+| B-1 | nghiêm trọng | Cắt theo mức A, B (trừ B3), C2–C5, C6 có giới hạn; 32 643 → 28 304 | sửa một phần; còn vượt đích, xem mục Số từ | — |
+| B-2 | trung bình | Bỏ 05.4, 05.10, 05.13, 05.15, 05.8(b), 05.16(b)(c); chuyển 05.5, 05.9, 05.6(b), 05.11, ô chờ, 05.22 sang danh sách dưới | đã sửa | — |
+| B-3 | trung bình | Gộp 2.3 vào trung bình gia tăng (Mục 2.3), Ví dụ 05.3 làm ví dụ trước Định nghĩa 05.8; thêm câu trực giác cho bước hằng | đã sửa | 443, 534 |
+| B-4 | trung bình | Thay lời quy trình bằng câu quy ước dẫn mục | đã sửa | 19 |
+| B-5 | trung bình | $n\to\lvert\mathcal S\rvert$ trong Bổ đề 05.5; $H\to\mathcal H$ cho tập đã ghé; ma trận $M$ biến mất cùng chứng minh rút gọn của Mệnh đề 05.34 (không cần $A_\beta$); $Z\to I_1$ trong chứng minh Định lý 05.28; giữ $Z_e$ ở Định lý 05.17 | đã sửa | 300, 623, 652, 1360 |
+| B-6 | trung bình | Thuật ngữ gốc ở lần đầu: prediction, episode, return, update target, bias, batch updating (đoạn mở); truncated episode, visit, first-visit, every-visit, step size, terminal state, self-transition, variance (Mục tiêu); MDP, Bellman residual, almost surely (Tiên quyết); sweep (Bảng ký hiệu); Markov reward process (Mục 5.3). Bỏ bản lặp ở định nghĩa sau | đã sửa | 3–13, 21–26, 54, 1626 |
+| B-7 | trung bình | Định nghĩa ngắn $J$ ở lần dùng đầu (thực hành Mục 2.6) | đã sửa | 813 |
+| B-8 | trung bình | Như A-11 | đã sửa | 1734 |
+| B-9 | trung bình | Quy ước đọc thành danh sách | đã sửa | 60–66 |
+| B-10 | trung bình | Chứng minh Mệnh đề 05.34 rút gọn: Bước 1, ánh xạ co khi $\gamma<1$, Banach; $\gamma=1$ thành đoạn ý tưởng | đã sửa | 1647 |
+| B-11 | trung bình | $\hat r$, $\hat P$, $\hat T$ đưa vào Giả thiết của Mệnh đề 05.34 | đã sửa | 1628 |
+| B-12 | trung bình | Tách đoạn mở Mục 4.4 (bài toán / trực giác) | đã sửa | 1433 |
+| B-13 | trung bình | Ví dụ 05.21, 05.22, Bài tập 05.9, 05.10 nêu lại dữ liệu tám lượt; 05.10 cũ, 05.7(c) cũ bỏ | đã sửa | 1512, 1569, 1689, 1847 |
+| B-14 | trung bình | Tiên quyết nêu cả phần dư Bellman tại $s$ và chuẩn cực đại của nó | đã sửa | 25 |
+| B-15 | trung bình | Ghi mục "Sửa kế hoạch C" dưới đây | đã sửa | — |
+| B-16 | trung bình | Kết mục 2, 3, 4 rút còn một câu nối; giữ đoạn mở mục sau | đã sửa | 835, 1059, 1487 |
+| B-17 | nhẹ | Gạch "Bỏ dùng $v_\pi$" dẫn Nhận xét 05.29 | đã sửa | 1390 |
+| B-18 | nhẹ | Đoạn mở Mục 5 không liệt kê lại dữ liệu; bỏ "Hai cách đọc" trong Ví dụ 05.20 | đã sửa | 1491 |
+| B-19 | nhẹ | Ví dụ bù trừ thành một câu, bỏ tham chiếu tiến | đã sửa | 1214 |
+| B-20 | nhẹ | Bước nhận xét ngoài khối `remark` ở 2.1, 2.2 | chấp nhận, không sửa: các đoạn "Bỏ giả thiết" theo mẫu `AGENTS.md` cho bản đọc định lý | — |
+| B-21 | nhẹ | Bỏ hai câu nhãn rỗng | đã sửa | 616, 924 |
+| B-22 | nhẹ | Lời giải cập nhật ba dòng ở Bài tập 05.13; hai bài còn lại đã chuyển | đã sửa | 1940 |
+| B-23 | nhẹ | Tách câu nhiều ngoặc ở đoạn mở và Ví dụ 05.1 | đã sửa | 3, 124 |
+| B-24 | nhẹ | $\varepsilon_0\to\rho$ | đã sửa | 297, 312 |
+| B-25 | nhẹ | $G_{\max}$ | bỏ cùng đoạn "Trên Lunar Lander" (C3) | — |
+| B-26 | nhẹ | Câu về tệp bài tập viết ở dạng tồn tại độc lập, không dẫn liên kết | đã sửa | 1843 |
+| B-27 | nhẹ | Xấp xỉ $n^{-(1-\gamma)}$ bỏ cùng B5; thực hành Mục 4.4 nêu hệ số $1-(1-\gamma)/n$ có lý do trực tiếp | đã sửa | 1483 |
+| B-28 | nhẹ | Nhiều ngoặc dẫn số hiệu | chấp nhận theo đề xuất | — |
+| slop 374 | — | "Một phép tính nhỏ cho thấy cơ chế." | bỏ cả đoạn (A3) | — |
+| slop 372 | — | "Bài toán dự đoán đã đặt xong;" | viết lại | 197 |
+| slop 1639 | — | "Độ chệch là một nửa của bức tranh." | thay câu nối thường | 1272 |
+| slop 1375, 1835 | — | "Ví dụ X cho thấy hai điều." | bỏ, nêu thẳng | 1039, 1447 |
+| slop 2119 | — | "Chương còn lại một việc:" | câu thường | 1705 |
+| slop 751 | — | "Cấu trúc này đáng được đặt tên riêng" | "Ta đặt tên cho cấu trúc này vì…" | 518 |
+
+Mức cắt đã làm: A1 (Bản đồ chủ đề thành bảng `Chủ đề (note-topic-id) | Nhóm | Mục | Vai trò | Vào → Ra | Nguồn`; sai khác so với mẫu dạng danh sách, được điều phối viên cho phép), A2–A20; B1, B2, B4–B10 (B9: chuyển Bài tập 05.22 cũ); C2 (tự chuyển gộp vào Mục 3.2 sau Nhận xét 05.22), C3, C4, C5 (2.3→2.4 cũ, 4.1→4.2 cũ, 4.4→4.5 cũ; Nhận xét 05.14 chỉ giữ ý trạng thái kết thúc và lượt dừng giữa chừng; rút gạch "Bỏ tính Markov" ở 2.2), C6 trên đoạn 1191, 1526, 1613, 1727, 2093, 2124, 2147 cũ. Không làm: B3 (giữ chứng minh Định lý 05.17, vai A xác nhận đúng), C1, mức D.
+
+### Cấu trúc và số hiệu mới
+
+Mục: 1.1–1.2; 2.1 Lượt và lợi tức, 2.2 Lần ghé, 2.3 Ước lượng Monte Carlo và trung bình gia tăng, 2.4 Bước học hằng và bốn cấu hình, 2.5 Thuật toán, 2.6 Không chệch và hội tụ (Nhận xét 05.18 thay Mục 2.8); 3.1, 3.2 (gồm phần tự chuyển); 4.1 Hai bảng và giá trị chuẩn, 4.2 Độ chệch, 4.3 Biến thiên và phương sai, 4.4 Hội tụ TD(0); 5.1–5.3. Giữ đủ 23 `note-topic-id`.
+
+- Bộ đếm chung 05.1–05.35: 05.1–05.17 giữ số; mới 05.18 Nhận xét (mọi lần ghé chệch ở số lượt hữu hạn); cũ 05.18–05.34 thành 05.19–05.35 (Định nghĩa TD 05.20, Thuật toán TD(0) 05.21, Nhận xét 05.22, 05.23, Định nghĩa 05.24, Mệnh đề 05.25, Hệ quả 05.26, Mệnh đề 05.27, Định lý 05.28, Nhận xét 05.29, Định lý 05.30, Nhận xét 05.31, Thuật toán 05.32, Mệnh đề 05.33, 05.34, Nhận xét 05.35). Trong bảng "Phát hiện và xử lý" ở trên, số hiệu viết theo đánh số mới.
+- Ví dụ 05.1–05.22. Ánh xạ cũ → mới: 1, 2, 3 giữ; 4 bỏ; 5→4; 6 gộp vào 7→5; 8→6; 9→7; 10 chuyển; 11→8; 12→9; 13→10; 14→11; 15→12; 16→13; 17→14; 18→15; 19→16; 20→17; 21→18; 22→19; 23→20; 24→21; 25→22.
+- Bài tập 05.1–05.14. Ánh xạ cũ → mới: 1, 2, 3 giữ; 6→4 (bỏ câu b); 7→5 (bỏ câu c); 8→6 (bỏ câu b); 12→7; 14→8; 16→9 (chỉ câu a); 17→10; 18→11; 19→12; 20→13; 21→14. Bỏ: 4, 10, 13, 15. Chuyển: 5, 9, 11, 22. `exercises.md` tiếp theo từ Bài tập 05.15.
+- Bài tập trùng trang chiếu: B13 và C10 nay không còn trong ghi chú (05.5 và 05.9 cũ đã chuyển).
+
+### Chuyển cho exercises.md
+
+Đề, gợi ý và lời giải giữ nguyên văn từ bản trước vòng sửa (số hiệu cũ), để giai đoạn III đánh số lại từ 05.15:
+
+- Bài tập 05.5 cũ: trùng trang B13; gộp với C 05.24 nhưng bỏ phần chứng minh lại Mệnh đề 05.11.
+- Bài tập 05.6 cũ, chỉ câu (b): giả thiết độc lập cùng phân phối của mẫu lần ghé đầu tiên.
+- Bài tập 05.9 cũ: trùng trang C10; lời giải khớp Ví dụ 05.10 mới.
+- Bài tập 05.11 cũ: gộp với C 05.25 (HW05 bài 7), thêm câu về mọi lần ghé.
+- Ví dụ 05.10 cũ (ô chờ) và Bài tập 05.7 cũ câu (c): một bài mức chứng minh về độ chệch của mọi lần ghé; ghi chú giữ tóm tắt ở Nhận xét 05.18.
+- Bài tập 05.22 cũ: tự chuyển trên Lunar Lander; gộp với C 05.26, chỉ giữ một bài.
+
+```markdown
+::: exercise Bài tập 05.5
+Dữ kiện: hai lượt $e_1:\mathrm S\to\mathrm X\to\mathrm S\to\mathrm X\to\mathrm G$ với phần thưởng $(0,0,0,1)$ và $e_2:\mathrm S\to\mathrm X\to\mathrm S\to\mathrm L$ với phần thưởng $(0,0,-1)$; $\gamma=1$; bảng ban đầu bằng $0$.
+
+(a) Tại $\mathrm X$, lập dãy lợi tức theo lần ghé đầu tiên và theo mọi lần ghé; tính hai trung bình.
+(b) Dùng lần ghé đầu tiên với bước hằng $\alpha=0{,}5$: tính $V(\mathrm X)$ sau mỗi lượt và giải thích vì sao kết quả khác trung bình ở (a), dù tập mẫu giống nhau.
+:::
+
+::: hint
+$\mathrm X$ xuất hiện hai lần trong $e_1$ và một lần trong $e_2$. Ở câu (b), dùng Mệnh đề 05.11 để viết kết quả thành tổng có trọng số.
+:::
+
+::: solution
+(a) Lần ghé đầu tiên chọn $(1,-1)$, trung bình $0$. Mọi lần ghé chọn $(1,1,-1)$, trung bình $1/3$.
+
+(b) Sau $e_1$: $0+0{,}5\cdot(1-0)=0{,}5$. Sau $e_2$: $0{,}5+0{,}5\cdot(-1-0{,}5)=-0{,}25$. Theo Mệnh đề 05.11, $-0{,}25=0{,}25\cdot0+0{,}25\cdot1+0{,}5\cdot(-1)$: giá trị khởi tạo còn trọng số $0{,}25$, và mẫu mới $-1$ có trọng số $0{,}5$ lớn hơn mẫu cũ. Trung bình mẫu đặt trọng số $0{,}5$ cho mỗi mẫu và $0$ cho giá trị khởi tạo.
+
+**Kiểm tra lại.** Hàng thứ ba của Ví dụ 05.7 ghi $V(\mathrm X)=0{,}5$ sau $e_1$ và $-0{,}25$ sau $e_2$.
+:::
+
+
+::: exercise Bài tập 05.6
+Dữ kiện: lượt $e_1:\mathrm S\to\mathrm X\to\mathrm S\to\mathrm X\to\mathrm G$ của tàu đổ bộ thu nhỏ.
+
+(a) Mỗi trạng thái $\mathrm S$, $\mathrm X$ cung cấp bao nhiêu mẫu theo lần ghé đầu tiên và theo mọi lần ghé.
+(b) Nêu giả thiết cho phép coi các mẫu lần ghé đầu tiên từ những lượt khác nhau là độc lập cùng phân phối.
+(c) Giải thích vì sao bước 4 của Thuật toán 05.13 duyệt xuôi chứ không duyệt lùi.
+:::
+
+::: hint
+Lần ghé đầu tiên được xác định riêng trong từng lượt. Ở câu (c), xét thứ tự các thời điểm ghé $\mathrm S$ trong $e_1$.
+:::
+
+::: solution
+(a) Mỗi trạng thái cho một mẫu theo lần ghé đầu tiên và hai mẫu theo mọi lần ghé.
+
+(b) Các lượt được sinh độc lập, cùng phân phối trạng thái đầu, dưới cùng chính sách cố định và môi trường dừng. Khi đó mẫu lần ghé đầu tiên của mỗi lượt là một hàm của riêng lượt đó, nên các mẫu từ những lượt khác nhau độc lập cùng phân phối. Các mẫu trong cùng một lượt thì có thể phụ thuộc nhau.
+
+(c) Lần ghé đầu tiên của $\mathrm S$ là $t=0$. Duyệt lùi gặp $t=2$ trước; nếu đánh dấu $\mathrm S$ ở đó và bỏ qua $t=0$, mẫu được giữ là $G_2$, tức lần ghé cuối cùng. Với $\gamma<1$, $G_2=\gamma$ khác $G_0=\gamma^3$ (Ví dụ 05.2).
+
+**Kiểm tra lại.** Với $\gamma=0{,}9$: $G_0=0{,}729$, $G_2=0{,}9$; hai quy tắc cho hai mẫu khác nhau.
+:::
+
+
+::: exercise Bài tập 05.9
+Dữ kiện: tàu đổ bộ thu nhỏ, $\gamma=1$, $\alpha=0{,}5$; bảng ban đầu $V(\mathrm S)=0{,}25$, $V(\mathrm X)=0{,}5$, $V(\mathrm L)=0$. Xét riêng hai trường hợp, mỗi trường hợp bắt đầu từ cùng bảng ban đầu:
+
+(a) chuyển $\mathrm S\to\mathrm X$ với phần thưởng $0$;
+(b) chuyển $\mathrm S\to\mathrm L$ với phần thưởng $-1$.
+
+Với mỗi trường hợp, tính mục tiêu, sai số TD, giá trị mới tại $\mathrm S$, và nêu các phần tử giữ nguyên.
+:::
+
+::: hint
+Trong trường hợp (b), trạng thái sau là trạng thái kết thúc. Trường hợp (b) không dùng kết quả của trường hợp (a).
+:::
+
+::: solution
+(a) $Y=0+0{,}5=0{,}5$; $\delta=0{,}5-0{,}25=0{,}25$; $V(\mathrm S)=0{,}25+0{,}5\cdot0{,}25=0{,}375$.
+
+(b) $Y=-1+0=-1$; $\delta=-1-0{,}25=-1{,}25$; $V(\mathrm S)=0{,}25+0{,}5\cdot(-1{,}25)=-0{,}375$.
+
+Trong cả hai trường hợp, $V(\mathrm X)=0{,}5$ và $V(\mathrm L)=0$ giữ nguyên.
+
+**Kiểm tra lại.** Ở (b), phần thưởng $-1$ xuất hiện một lần trong mục tiêu; giá trị tiếp nối $V(\mathrm L)=0$.
+:::
+
+
+::: exercise Bài tập 05.11
+Dữ kiện: tàu đổ bộ thu nhỏ với giá trị chuẩn $v_\pi(\mathrm S)=11/21$, $v_\pi(\mathrm X)=19/21$. Monte Carlo mọi lần ghé với $\alpha=0{,}5$, khởi tạo $0$, cho $(V(\mathrm S),V(\mathrm X))=(-0{,}5625;\ -0{,}125)$ sau hai lượt $e_1$, $e_2$ (Ví dụ 05.7).
+
+(a) Tính độ lệch tại hai trạng thái.
+(b) So với Monte Carlo lần ghé đầu tiên cùng bước học, sau $e_2$ (Ví dụ 05.18), và giải thích chênh lệch bằng Mệnh đề 05.11.
+:::
+
+::: hint
+Tại $\mathrm S$, mọi lần ghé thực hiện hai cập nhật với mục tiêu $-1$ trong $e_2$.
+:::
+
+::: solution
+(a) $-0{,}5625-11/21=-365/336\approx-1{,}086$ tại $\mathrm S$; $-0{,}125-19/21=-173/168\approx-1{,}030$ tại $\mathrm X$.
+
+(b) Lần ghé đầu tiên cho độ lệch $-0{,}774$ và $-1{,}155$. Tại $\mathrm S$, mọi lần ghé lệch xa hơn vì hai mẫu $-1$ cuối cùng nhận trọng số $0{,}5$ và $0{,}25$ theo Mệnh đề 05.11, tổng $0{,}75$ cho kết cục rơi. Tại $\mathrm X$, mọi lần ghé gần hơn vì $e_1$ góp hai mẫu $1$, kéo giá trị lên $0{,}75$ trước khi gặp mẫu $-1$.
+
+**Kiểm tra lại.** Theo Mệnh đề 05.11 với bốn mẫu $(1,1,-1,-1)$ và $\alpha=0{,}5$: $V_4=0{,}0625\cdot0+0{,}0625\cdot1+0{,}125\cdot1+0{,}25\cdot(-1)+0{,}5\cdot(-1)=-0{,}5625$.
+:::
+
+
+::: exercise Bài tập 05.7
+(a) Với tàu đổ bộ thu nhỏ của Ví dụ 05.9 ($v_\pi(\mathrm S)=11/21$, $\operatorname{Var}(G_0)=320/441$), tìm số lượt nhỏ nhất để độ lệch chuẩn của trung bình lần ghé đầu tiên tại $\mathrm S$ không vượt $0{,}05$.
+
+(b) Với cùng phương sai mẫu, tính độ lệch chuẩn giới hạn của Monte Carlo lần ghé đầu tiên với bước hằng $\alpha=0{,}1$, và so với kết quả (a).
+
+(c) Trong ô chờ của Ví dụ 05.10, một lượt có $N=4$ lần ghé. Tính ước lượng lần ghé đầu tiên và ước lượng mọi lần ghé từ riêng lượt này.
+:::
+
+::: hint
+(a) Giải $\sqrt{(320/441)/n}\le0{,}05$. (b) Dùng Nhận xét 05.18. (c) Tại lần ghé thứ $k$, lợi tức là $N-k$.
+:::
+
+::: solution
+(a) Điều kiện là $n\ge(320/441)/0{,}0025\approx290{,}2$, nên cần $n=291$ lượt.
+
+(b) Phương sai giới hạn là $\alpha\sigma^2/(2-\alpha)=0{,}1\cdot0{,}7256/1{,}9\approx0{,}0382$, độ lệch chuẩn khoảng $0{,}195$. Trung bình mẫu đạt độ lệch chuẩn $0{,}05$ sau $291$ lượt và tiếp tục giảm; bước hằng $0{,}1$ dừng ở khoảng $0{,}195$ dù chạy bao lâu.
+
+(c) Các lợi tức là $3,2,1,0$. Lần ghé đầu tiên cho $3$; mọi lần ghé cho trung bình $(3+2+1+0)/4=1{,}5=(N-1)/2$.
+
+**Kiểm tra lại.** Ở (a), $\sqrt{0{,}7256/291}\approx0{,}0499\le0{,}05$, còn $\sqrt{0{,}7256/290}\approx0{,}05002>0{,}05$.
+:::
+
+
+::: exercise Bài tập 05.22
+Dữ kiện: một ô của Lunar Lander trong đó tàu chỉ tự chuyển, với cùng phần thưởng $r$ mỗi bước; $\gamma=0{,}99$; TD(0) (Ví dụ 05.15).
+
+(a) Với bước hằng $\alpha=0{,}5$, tìm số tự chuyển nhỏ nhất để khoảng cách tới điểm cố định $r/(1-\gamma)$ còn không quá $10\%$ khoảng cách ban đầu.
+(b) Với bước $\alpha_n=1/n$ và xấp xỉ hệ số thu hẹp bằng $n^{-(1-\gamma)}$, ước lượng số tự chuyển cần cho cùng yêu cầu.
+(c) Giải thích vì sao Monte Carlo không gặp vấn đề này.
+:::
+
+::: hint
+(a) Giải $0{,}995^k\le0{,}1$. (b) Giải $n^{-0{,}01}\le0{,}1$.
+:::
+
+::: solution
+(a) $k\ge\ln0{,}1/\ln0{,}995\approx(-2{,}3026)/(-0{,}0050125)\approx459{,}4$, nên cần $460$ tự chuyển, tức $9{,}2$ giây mô phỏng với bước $0{,}02$ giây.
+
+(b) $n^{-0{,}01}\le0{,}1$ tương đương $n\ge10^{100}$: lịch $1/n$ thỏa điều kiện Robbins–Monro nhưng không thu hẹp được khoảng cách trong bất kỳ số lần cập nhật thực tế nào.
+
+(c) Mục tiêu Monte Carlo là $G_t$, đã chứa mọi phần thưởng về sau, kể cả phần thưởng $\pm100$ ở cuối lượt, nên không phụ thuộc giá trị của ô kế tiếp và không bị chuỗi tự chuyển làm chậm.
+
+**Kiểm tra lại.** $0{,}995^{460}=e^{460\ln0{,}995}\approx e^{-2{,}306}\approx0{,}0997\le0{,}1$, còn $0{,}995^{459}\approx0{,}1002$.
+:::
+
+
+::: example Ví dụ 05.10 (Ô chờ: mọi lần ghé chệch, lần ghé đầu tiên không chệch)
+**Mô hình.** Một trạng thái không kết thúc $\mathrm C$ và một trạng thái kết thúc. Từ $\mathrm C$, với xác suất $1/2$ tàu ở lại $\mathrm C$ và nhận phần thưởng $1$; với xác suất $1/2$ lượt kết thúc với phần thưởng $0$. Hệ số $\gamma=1$; mọi lượt bắt đầu ở $\mathrm C$.
+
+**Giá trị chuẩn.** Phương trình Bellman kỳ vọng: $v=\tfrac12(1+v)+\tfrac12\cdot0$, nên $v_\pi(\mathrm C)=1$.
+
+**Số lần ghé và lợi tức.** Gọi $N$ là số lần ghé $\mathrm C$ trong một lượt. Lượt gồm $N-1$ lần ở lại rồi một lần kết thúc, nên $\Pr(N=m)=(1/2)^m$ với $m\ge1$, và $\mathbb E[N]=2$, $\mathbb E[N^2]=6$. Tại lần ghé thứ $k$, còn $N-k$ lần ở lại, nên $G_{t_k}=N-k$.
+
+**Lần ghé đầu tiên, một lượt.** Mẫu là $G_{t_1}=N-1$, kỳ vọng $\mathbb E[N]-1=1=v_\pi(\mathrm C)$: không chệch.
+
+**Mọi lần ghé, một lượt.** Ước lượng là trung bình của $N$ mẫu:
+
+$$
+\hat v=\frac1N\sum_{k=1}^{N}(N-k)=\frac{N-1}{2},\qquad\mathbb E[\hat v]=\frac{\mathbb E[N]-1}{2}=\frac12\ne1 .
+$$
+
+**Giới hạn khi số lượt tăng.** Theo Bước 4 của chứng minh Định lý 05.17, giới hạn là $\mathbb E[Z]/\mathbb E[N]$ với $Z=\sum_k(N-k)=N(N-1)/2$, nên giới hạn bằng $\dfrac{(\mathbb E[N^2]-\mathbb E[N])/2}{\mathbb E[N]}=\dfrac{(6-2)/2}{2}=1$.
+
+**Kiểm tra lại.** Với một lượt có $N=3$: các mẫu mọi lần ghé là $2,1,0$, trung bình $1$; mẫu lần ghé đầu tiên là $2$. Hai con số đều là mẫu; chỉ kỳ vọng qua mọi lượt mới cho thấy độ chệch $-1/2$.
+:::
+```
+
+### Sửa kế hoạch C (theo B-15)
+
+- C 05.24: bỏ phần chứng minh lại Mệnh đề 05.11 (ghi chú đã chứng minh); giữ bốn cấu hình và gộp với Bài tập 05.5 cũ.
+- C 05.25 (HW05 bài 7): kết quả đã giải ở Ví dụ 05.5, 05.6, 05.9, 05.10 mới; đặt câu hỏi khác, ví dụ mọi lần ghé hoặc $\gamma=0{,}9$, và gộp Bài tập 05.11 cũ.
+- C 05.26 [Lập trình]: chỉ giữ phần lập trình; phần tính tay tự chuyển dùng Bài tập 05.22 cũ ở trên, không lặp hai lần.
+- C 05.28: phản ví dụ $V(\mathrm X)=10$, phương sai $19{,}36$ đã có ở Nhận xét 05.29; đổi số liệu phản ví dụ.
+- C 05.29: trùng Bài tập 05.14 của ghi chú (lượt dài, thưởng thưa); đổi biến thể, ví dụ thêm điều kiện cắt ngắn, hoặc bỏ.
+- Mục tùy chọn 05.32 (lượt thứ ba $e_3$): đã là Bài tập 05.13 của ghi chú; bỏ khỏi `exercises.md`.
+- Số hiệu `exercises.md` bắt đầu từ Bài tập 05.15 (sửa thành 05.14 ở vòng cắt độ dài, rồi 05.16 ở vòng rà lại 2).
+
+### Kiểm tra sau vòng sửa
+
+- `note_check.py`: 35 số hiệu chung liên tục, 22 ví dụ, 14 bài tập; không khuyết, không trùng; không khối lạ, không khối chưa đánh số, không mẫu câu cấm; không `\(`/`\[`.
+- `check_note.py 05 lecture-05-du-doan-phi-mo-hinh.html`: 0 lỗi KaTeX, 113 khối, 0 lỗi console, không yêu cầu ra ngoài, không tài nguyên hỏng; `overflow` false ở cả 1600×900 và 390×844.
+- `no-ai-slop` (Edit, tự kiểm `eval.md`) trên mọi đoạn đã sửa: các mẫu vai B nêu đã xử lý; không thêm câu mở rỗng, câu kết kịch tính hay lời nhấn mạnh mới.
+
+## Đợt sửa 2026-10-12 — Giai đoạn I, vòng cắt độ dài theo quyết định thứ hai của điều phối viên
+
+Tác tử: cùng tác tử soạn (general-purpose theo brief, claude-opus-5-5, effort high); `no-ai-slop` Edit, tự kiểm `eval.md` trên mọi đoạn đã viết lại. Không commit.
+
+### Số từ
+
+Trước: 28 304 (`wc -w`). Sau: 24 980. Bản đồ chủ đề: 1 128 → 592 từ.
+
+Phần vượt 20 000: chương có năm mục nội dung, 35 môi trường đánh số có chứng minh hoặc dẫn nguồn, 22 ví dụ tính tay, hai tình huống áp dụng và bảng số liệu notebook. Mọi thành phần này đều bắt buộc theo `AGENTS.md`, và tám bước của mỗi khái niệm trọng tâm được giữ nguyên.
+
+### Bản đồ chủ đề (quyết định 3)
+
+Bảng còn bốn cột `Chủ đề (note-topic-id) | Nhóm | Mục | Vai trò → sản phẩm dùng tiếp`, mỗi chủ đề một dòng. Đã bỏ cột Nguồn có số trang; số trang có ở mục Hướng dẫn đọc thêm và trong nhật ký này. Giữ đủ 23 mã.
+
+### Mức D (quyết định 1)
+
+Báo cáo `review-05-B.md` chỉ ghi nhãn "D1–D5", không ghi nội dung. Tác tử soạn hiểu mức D là các phép cắt có mất chi tiết nhưng không đụng chứng minh đã rút, không đụng tình huống và không bỏ bước nào trong tám bước. Các phép cắt đã làm:
+
+- **D-a.** Nhận xét 05.23 (chi phí): bỏ bảng bốn dòng, giữ cùng các bậc chi phí trong hai câu.
+- **D-b.** Nhận xét 05.19 (bước hằng): bỏ độ lệch chuẩn $0{,}49$ và phép tính chi tiết; giữ hai phương sai giới hạn $\approx0{,}242$ và $\approx0{,}038$ cùng lập luận không hội tụ hầu chắc chắn.
+- **D-c.** Nhận xét 05.29: bỏ phép tính chi tiết của sai số bình phương trung bình; giữ hai kết quả $\approx0{,}465$ và $\approx72{,}3$.
+- **D-d.** Kiểm lại sau Mệnh đề 05.25: rút còn một biểu thức.
+- **D-e.** Tình huống 05.1: rút hai gạch Diễn giải và đoạn Giới hạn. Nội dung toán của vai A (Bước 1, 4; $T\le1000$; $\mu$) giữ nguyên.
+- **D-f.** Ví dụ 05.1: bỏ câu kiểm về xác suất $0{,}2$ của chuyển lùi. Ví dụ 05.7: rút dòng Kiểm tra lại.
+- **D-g.** Tiên quyết: bỏ câu "Cả hai cách tính đều cần mô hình", vì Mục 1 nêu lại ý này.
+
+### C6 mở rộng (quyết định 2)
+
+Biên tập gọn văn xuôi trên toàn tệp, theo nguyên tắc một ý một đoạn và bỏ câu lặp hoặc câu dẫn. Các đoạn đã viết lại:
+
+- **Mục 1:** đoạn mở, đoạn lộ trình và đọc hình; Mục 1.1: trực giác, đọc hình, các đoạn sau Định nghĩa 05.1, Nhận xét 05.2, Bài tập 05.1(c); Mục 1.2: đoạn mở và kết mục.
+- **Mục 2:** đoạn mở; 2.1: trực giác, đọc hình, diễn giải định nghĩa, trường hợp giới hạn, đoạn trước và sau Mệnh đề 05.4, ví dụ $\rho$, thực hành; 2.2: trực giác, diễn giải định nghĩa, sau Mệnh đề 05.7, thực hành, kiểm tra Bài tập 05.3; 2.3–2.4: đoạn mở, sau Mệnh đề 05.11; 2.6: đoạn mở, Nhận xét 05.18 (ô chờ), thực hành, kết mục.
+- **Mục 3:** đoạn mở, trực giác, sau Định nghĩa 05.20, nhầm lẫn thường gặp, sau Thuật toán 05.21, phần tự chuyển, thực hành, kết mục.
+- **Mục 4:** đoạn mở; 4.1: sau hai ví dụ; 4.2: đoạn mở, sau Định nghĩa 05.24, thực hành; 4.3: đoạn mở, sau Ví dụ 05.17, trước Ví dụ 05.18, đọc hình, sau Định lý 05.28, gạch "Bỏ tính Markov", thực hành; 4.4: đoạn mở, sau Ví dụ 05.19, ý tưởng chứng minh Định lý 05.30 (giữ đủ nguồn và trường hợp $\gamma=1$), so sánh với Monte Carlo, thực hành, kết mục.
+- **Mục 5:** đoạn mở, trực giác 5.1, Ví dụ 05.21, đoạn trước và sau Thuật toán 05.32, sau Ví dụ 05.22, đoạn mở 5.3, đọc hình, thực hành, kết mục.
+- **Phần sau Mục 5:** đoạn mở của mục Tình huống áp dụng và ứng dụng; Tóm tắt chương (đoạn kể chuyện còn bảy câu, danh sách Mục 2 và Mục 4 gọn hơn, đoạn giới hạn); lời giải Bài tập 05.13; đoạn đọc thêm `topic-23`; câu mở Bảng ký hiệu và Bản đồ chủ đề.
+
+Không viết lại: các chứng minh (Mệnh đề 05.4, 05.7, 05.9, 05.11, 05.25, 05.27, 05.33, 05.34; Định lý 05.16, 05.17, 05.28; Hệ quả 05.26) và đoạn ý tưởng của Bổ đề 05.5 và Mệnh đề 05.34 khi $\gamma=1$.
+
+### Bài tập chuyển thêm (quyết định 4)
+
+Chuyển Bài tập 05.13 (lượt thứ ba $e_3$, mức tính toán, cùng cách tính với Ví dụ 05.5 và 05.9) sang danh sách cho `exercises.md`. Đây cũng là mục tùy chọn E06/05.32 của kế hoạch C. Bài tập 05.14 cũ (vận dụng) đổi số thành 05.13. Ghi chú còn Bài tập 05.1–05.13, và `exercises.md` bắt đầu từ Bài tập 05.14 (sửa dòng tương ứng ở mục "Sửa kế hoạch C" phía trên). Bảng ánh xạ mục tiêu ở đầu mục Bài tập củng cố đã cập nhật.
+
+```markdown
+::: exercise Bài tập 05.13
+Dữ kiện: tàu đổ bộ thu nhỏ, $\gamma=1$, $\alpha=0{,}5$, giá trị chuẩn $v_\pi(\mathrm S)=11/21$, $v_\pi(\mathrm X)=19/21$. Sau hai lượt $e_1$, $e_2$, Monte Carlo lần ghé đầu tiên với bước hằng cho $(V(\mathrm S),V(\mathrm X))=(-0{,}25;\ -0{,}25)$, còn TD(0) cho $(-0{,}375;\ 0{,}375)$. Lượt thứ ba là $e_3:\mathrm S\to\mathrm X\to\mathrm G$ với phần thưởng $(0,1)$.
+
+(a) Tiếp tục mỗi phương pháp trên $e_3$.
+(b) Tính độ lệch của hai bảng so với giá trị chuẩn và so với Ví dụ 05.15.
+:::
+
+::: hint
+Monte Carlo: hai lợi tức của $e_3$ đều bằng $1$. TD(0): chuyển thứ hai đọc bảng sau chuyển thứ nhất.
+:::
+
+::: solution
+(a) Monte Carlo: $V(\mathrm S)=-0{,}25+0{,}5\cdot(1+0{,}25)=0{,}375$ và $V(\mathrm X)=0{,}375$ theo cùng phép tính.
+
+TD(0), chuyển $\mathrm S\to\mathrm X$:
+
+$$
+\begin{aligned}
+Y&=0+0{,}375=0{,}375,\\
+\delta&=0{,}375-(-0{,}375)=0{,}75,\\
+V(\mathrm S)&=-0{,}375+0{,}5\cdot0{,}75=0 .
+\end{aligned}
+$$
+
+Chuyển $\mathrm X\to\mathrm G$:
+
+$$
+\begin{aligned}
+Y&=1+0=1,\\
+\delta&=1-0{,}375=0{,}625,\\
+V(\mathrm X)&=0{,}375+0{,}5\cdot0{,}625=0{,}6875 .
+\end{aligned}
+$$
+
+(b) Monte Carlo: $0{,}375-11/21=-25/168\approx-0{,}149$ tại $\mathrm S$; $0{,}375-19/21=-89/168\approx-0{,}530$ tại $\mathrm X$. TD(0): $0-11/21\approx-0{,}524$ tại $\mathrm S$; $0{,}6875-19/21=-73/336\approx-0{,}217$ tại $\mathrm X$. So với sau $e_2$, cả hai bảng gần giá trị chuẩn hơn ở cả hai trạng thái, và mỗi phương pháp vẫn gần hơn ở một trạng thái, như trong Ví dụ 05.15.
+
+**Kiểm tra lại.** Ở TD(0), $V(\mathrm S)$ mới bằng $0$ vì $\delta=0{,}75$ nhân $\alpha=0{,}5$ bù đúng $-0{,}375$.
+:::
+
+```
+
+### Số hiệu và phần toán đã đổi trong vòng này
+
+- Số hiệu: chỉ Bài tập 05.14 → 05.13; bộ đếm chung (05.1–05.35) và Ví dụ (05.1–05.22) không đổi.
+- Phần toán đã viết lại câu chữ, cần rà lại:
+  - Nhận xét 05.18 (ô chờ), Nhận xét 05.19, Nhận xét 05.23 (chi phí), Nhận xét 05.29 (sai số bình phương trung bình);
+  - dòng kiểm sau Mệnh đề 05.25;
+  - đoạn ý tưởng chứng minh Định lý 05.30 và đoạn so sánh với Định lý 05.16, 05.17 ("Monte Carlo cần đúng $1/N(s)$, một lịch Robbins–Monro");
+  - thực hành Mục 4.4 (hệ số $1-(1-\gamma)/n$);
+  - ví dụ $\rho=0{,}84$ sau Bổ đề 05.5;
+  - đoạn thực hành Mục 4.3 (3021 và 1627);
+  - gạch Diễn giải của Tình huống 05.1.
+
+### Kiểm tra
+
+- `note_check.py`: 35 số hiệu chung, 22 ví dụ, 13 bài tập, liên tục, không trùng; không khối lạ, không khối chưa đánh số, không mẫu câu cấm.
+- `check_note.py 05 lecture-05-du-doan-phi-mo-hinh.html`: 0 lỗi KaTeX, 110 khối, 0 lỗi console, không yêu cầu ra ngoài, `overflow` false ở 1600×900 và 390×844.
+
+## Đợt sửa 2026-10-12 — Giai đoạn I, rà lại vòng 2
+
+Hai tác tử rà soát chỉ đọc (Opus 5.5, effort high, theo điều phối viên): vai A (`recheck-05-A.md`, P-1…P-9) và vai B (`recheck-05-B.md`, N-1…N-17). Tác tử soạn sửa theo quyết định của điều phối viên, dùng `no-ai-slop` Edit và tự kiểm `eval.md` trên mọi đoạn đã sửa. Không commit.
+
+### Số từ
+
+Trước: 24 980. Sau: 25 291 (`wc -w`), dưới trần mới 25 300.
+
+Lý do vượt 25 000: N-1 (nghiêm trọng) đưa lại hai bài tập vào Mục 3.2 và 4.1, khoảng +400 từ, để khôi phục bước 8 (bài tập ngay sau mục) và phủ mục tiêu 3–4. Phần bù gồm:
+- N-7 (bỏ câu lặp bốn lần);
+- rút hai đoạn "Trong thực hành" của Mục 4.3 và 4.4;
+- bỏ câu thứ hai ở đoạn mở mục Tình huống áp dụng;
+- rút lời giải các bài đưa về.
+
+### Rà lại vòng 2
+
+Cột "Dòng" ghi số dòng trong `lecture-note.md` sau vòng sửa này.
+
+| Mã | Mức | Xử lý | Trạng thái | Dòng |
+|---|---|---|---|---|
+| P-1 / N-15(b) | trung bình | "Định lý 05.16, 05.17 được chứng minh cho $1/N(s)$, lịch tái tạo đúng trung bình mẫu; Định lý 05.30 cho TD(0) chấp nhận mọi lịch Robbins–Monro" | đã sửa | 1530 |
+| P-2 / N-3 | trung bình | Tình huống 05.1: "Bảng dưới…", so $5157{,}9$ với $5086$ cùng cấu hình; Mục 4.4 thêm câu: $5086$ là trung bình qua năm thứ tự lượt, $5157{,}9$ là một thứ tự | đã sửa | 1806, 1533 |
+| P-3 / N-4 | trung bình | Nhận xét 05.18 tách ba gạch; nêu $\mathbb E[N]=2$, $\mathbb E[N^2]=6$, $\frac1N\sum(N-k)=(N-1)/2$, giới hạn $\frac{(6-2)/2}{2}$ | đã sửa | 801–805 |
+| P-4 | nhẹ | Nhận xét 05.19: "độc lập cùng phân phối" | đã sửa | 809 |
+| P-5 | nhẹ | Ý tưởng Mệnh đề 05.34 khi $\gamma=1$: "sau khi bỏ các vòng lặp", "$\Phi^{\lvert\mathcal S_{\mathcal D}\rvert}$ là ánh xạ co" | đã sửa | 1742 |
+| P-6 | nhẹ | Mệnh đề 05.34, Điều kiện áp dụng: khi $\gamma<1$ không cần giả thiết lượt kết thúc | đã sửa | 1714 |
+| P-7 / N-11 | nhẹ | Tiên quyết: ánh xạ co có đúng một điểm bất động, phép lặp hội tụ về nó | đã sửa | 25 |
+| P-8 | nhẹ | Đoạn mở mục Tình huống: "khi trạng thái không Markov và độ dài lượt bị chặn, xem Diễn giải"; ô bảng rút gọn | đã sửa | 1782, 1786 |
+| P-9 | nhẹ | Ý tưởng Định lý 05.30: phương sai có điều kiện không vượt $A+B\lVert V_t\rVert_\infty^2$ | đã sửa | 1519 |
+| N-1 | nghiêm trọng | (a) lượt $e_3$ về cuối Mục 4.1 (Bài tập 05.8); (c) câu (a) của bài tự chuyển cũ về cuối Mục 3.2 (Bài tập 05.7); (d) bài lịch Robbins–Monro lên cuối Mục 4.4 (Bài tập 05.11). Không làm (b) | đã sửa | 1052, 1137, 1535 |
+| N-2 | trung bình | "Sau kỳ vọng (Mục 4.2), chúng ta xét dao động…" | đã sửa | 1321 |
+| N-5 | trung bình | Tình huống 05.2: thêm "Xử lý đúng và giới hạn" | đã sửa | 1846 |
+| N-6 | nhẹ | Bỏ vế lặp ở đoạn mở Mục 5 | đã sửa | 1563 |
+| N-7 | nhẹ | Bỏ câu thứ hai ở đoạn mở mục Tình huống; rút ô bảng; giữ ở Diễn giải và Dẫn ngược | đã sửa | 1782, 1786 |
+| N-8 | nhẹ | $n\to\lvert\mathcal S_{\mathcal D}\rvert$ | đã sửa | 1757 |
+| N-9 | nhẹ | Thuật ngữ gốc dời về lần đầu: variance (dòng 3), TD error (48), transition sample (77), unbiased (84), on-policy (153); bỏ bản sau | đã sửa | 3, 48, 77, 84, 153 |
+| N-10 | nhẹ | Mục tiêu 1: ", theo Mục 2.1" | đã sửa | 9 |
+| N-12 | nhẹ | "tiền đề tuyệt đối của bài 4" | đã sửa | 2001 |
+| N-13 | nhẹ | Nhận xét 05.23 hai câu; Nhận xét 05.31 hai gạch cho hai điều kiện bước học | đã sửa | 1046, 1524 |
+| N-14 | nhẹ | Kết mục 5: khi trạng thái không Markov, không nghiệm nào được bảo đảm gần $v_\pi$ | đã sửa | 1777 |
+| N-15(a) | nhẹ | Bỏ cấu trúc "không… mà…" ở đoạn đọc hình phương sai | đã sửa | 1388 |
+| N-16 | nhẹ | "Chứng minh nằm ngoài phạm vi học phần", dẫn Bertsekas và Tsitsiklis (1996, chương 2). Chưa xác minh được mục cụ thể nên giữ mức chương | đã sửa | 310 |
+| N-17 | nhẹ | "(Ví dụ 05.14, Mục 4.1)" | đã sửa | 104 |
+| rút thực hành Mục 4.3, 4.4 | — | Bù độ dài theo quyết định | đã sửa | 1453, 1533 |
+| A2-1 | nhẹ | Bài tập 05.8, lời giải (b): "So với sau $e_2$ (Ví dụ 05.15), cả hai bảng gần giá trị chuẩn hơn ở cả hai trạng thái; Monte Carlo vẫn gần hơn tại $\mathrm S$, TD(0) gần hơn tại $\mathrm X$." | đã sửa | 1171 |
+| A2-2 | nhẹ | Tình huống 05.2: "chỉ học từ các lượt kết thúc trước điểm cắt, nên ước lượng có điều kiện trên sự kiện đó" | đã sửa | 1846 |
+
+### Ánh xạ số hiệu bài tập vòng này
+
+Cũ → mới:
+- giữ số: 05.1, 05.2, 05.3, 05.4, 05.5, 05.6;
+- 05.7 → 05.9; 05.8 → 05.10; 05.9 → 05.12; 05.10 → 05.13; 05.11 (Robbins–Monro, chuyển lên Mục 4.4) giữ 05.11; 05.12 → 05.14; 05.13 → 05.15;
+- mới đưa về: Bài tập 05.7 (tự chuyển, Mục 3.2), Bài tập 05.8 (lượt $e_3$, Mục 4.1).
+
+Ghi chú có Bài tập 05.1–05.15; `exercises.md` bắt đầu từ Bài tập 05.16. Bảng mục tiêu ↔ bài tập ở dòng 1917 đã cập nhật.
+
+### Cập nhật danh sách chuyển cho exercises.md
+
+- Bỏ khỏi danh sách: Bài tập $e_3$ (nay là Bài tập 05.8 của ghi chú) và câu (a) của bài tự chuyển cũ (nay là Bài tập 05.7). `exercises.md` không lặp hai đề này.
+- Còn trong danh sách: 05.5, 05.6(b), 05.9, 05.11 cũ của vòng đầu; ô chờ cùng 05.7(c) cũ; câu (b) và (c) của bài tự chuyển cũ (lịch $1/n$, so với Monte Carlo).
+- Kế hoạch C: mục tùy chọn E06/05.32 vẫn bỏ khỏi `exercises.md`, vì là Bài tập 05.8 của ghi chú.
+
+### Kiểm tra
+
+- `note_check.py`: 35 số hiệu chung, 22 ví dụ, 15 bài tập liên tục; không khối lạ, không mẫu câu cấm.
+- `check_note.py 05 lecture-05-du-doan-phi-mo-hinh.html`: 0 lỗi KaTeX, 116 khối, 0 lỗi console, không yêu cầu ra ngoài, `overflow` false ở 1600×900 và 390×844.
