@@ -119,6 +119,68 @@
     font-weight: 600;
 }
 
+/* Trang tiêu đề mạch: section.strand-title > div.strand-title-body
+   (h2 > span.strand-number + tên mạch, p.strand-lead, p.strand-keys). */
+.reveal .slides section.strand-title {
+    text-align: left;
+}
+
+.reveal .slides section.strand-title .strand-title-body {
+    max-width: 26em;
+    margin: 0;
+    padding: .2em 0 .2em .9em;
+    border-left: .2em solid #B15A2B;
+}
+
+/* Deck đặt center:false: đẩy khối xuống gần giữa khung. */
+.reveal:not(.center) .slides section.strand-title .strand-title-body {
+    margin-top: 4.5em;
+}
+
+.reveal .slides section.strand-title h2 {
+    font-size: 1.9em;
+    line-height: 1.15;
+    margin: 0 0 .45em;
+    padding: 0;
+    border: 0;
+    color: #2F3E7A;
+    text-transform: none;
+}
+
+.reveal .slides section.strand-title .strand-number {
+    display: block;
+    font-size: .6em;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: .15em;
+}
+
+.reveal .slides section.strand-title .strand-lead {
+    font-size: 1.05em;
+    line-height: 1.35;
+    margin: 0 0 .5em;
+    color: #263238;
+}
+
+.reveal .slides section.strand-title .strand-keys {
+    font-size: .9em;
+    line-height: 1.35;
+    color: #555;
+    margin: 0;
+}
+
+@media (max-width: 760px) {
+    .reveal .slides section.strand-title .strand-title-body,
+    .reveal:not(.center) .slides section.strand-title .strand-title-body {
+        max-width: none;
+        margin-top: 1.2em;
+    }
+
+    .reveal .slides section.strand-title h2 {
+        font-size: 1.5em;
+    }
+}
+
 .reveal .fragment.blur {
     filter: blur(5px);
 }

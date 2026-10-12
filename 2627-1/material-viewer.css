@@ -292,6 +292,76 @@
   background: #faf6fc;
 }
 
+/* Môi trường giáo trình. Màu lấy từ hệ hiện có: mực (--text), nhấn
+   (--accent, --accent-dark), nâu nền trang (116, 82, 56) và nền mã. */
+.material-block--definition {
+  border-color: rgba(24, 34, 45, 0.32);
+  border-left: 6px solid var(--text);
+  background: #fff;
+}
+
+.material-block--definition > h3 {
+  color: var(--text);
+}
+
+.material-block--theorem,
+.material-block--proposition,
+.material-block--lemma,
+.material-block--corollary {
+  border-color: rgba(177, 90, 43, 0.3);
+  border-left: 6px solid var(--accent-dark);
+  background: rgba(177, 90, 43, 0.06);
+}
+
+.material-block--remark {
+  border-style: dashed;
+  border-color: var(--line-strong);
+  border-left: 3px solid var(--muted);
+  background: transparent;
+}
+
+.material-block--remark > h3 {
+  color: var(--muted);
+  font-style: italic;
+  font-weight: 650;
+}
+
+.material-block--algorithm {
+  border-color: rgba(24, 34, 45, 0.2);
+  border-left-color: #18222d;
+  background: rgba(24, 34, 45, 0.05);
+}
+
+.material-block--algorithm > h3 {
+  color: var(--text);
+}
+
+.material-block--algorithm ol {
+  padding-left: 2em;
+  list-style: decimal;
+}
+
+.material-block--algorithm ol > li {
+  margin: 0.35em 0;
+  padding-left: 0.25em;
+}
+
+.material-block--algorithm ol > li::marker {
+  color: var(--text);
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+.material-block--application {
+  border-color: rgba(116, 82, 56, 0.28);
+  border-left: 6px double rgb(116, 82, 56);
+  background: rgba(116, 82, 56, 0.07);
+}
+
+.material-block--application > h3 {
+  color: rgb(116, 82, 56);
+}
+
 @media (max-width: 860px) {
   .material-header {
     align-items: flex-start;
