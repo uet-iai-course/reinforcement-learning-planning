@@ -228,7 +228,7 @@ Trang tiêu đề mạch có một mục riêng trong storyboard với đủ cá
 - Nêu miền, kiểu, kích thước, chỉ số thời gian, quy ước kỳ vọng và điều kiện dừng trước khi sử dụng.
 - Dùng ký hiệu nhất quán từ ví dụ sang công thức, giả mã, ứng dụng và bài tập.
 - Phân biệt bài toán dự đoán với điều khiển; theo chính sách với khác chính sách; có mô hình với phi mô hình; giá trị trạng thái với giá trị hành động khi phù hợp.
-- Với quy trình quyết định Markov, nêu rõ giả thiết Markov, không gian, động lực chuyển, phần thưởng và hệ số chiết khấu.
+- Với quá trình quyết định Markov, nêu rõ giả thiết Markov, không gian, động lực chuyển, phần thưởng và hệ số chiết khấu.
 - Với phương trình Bellman hoặc quy tắc cập nhật, kiểm tra chỉ số, điều kiện hóa, dấu, hệ số chiết khấu, mục tiêu cập nhật và đại lượng được giữ cố định.
 - Với thuật toán, nêu đầu vào, đầu ra, giả mã hoặc sơ đồ, tiêu chuẩn dừng, chi phí chính, điều kiện hội tụ và giới hạn thực hành khi nguồn có hoặc khi thiếu chúng sẽ gây hiểu sai.
 - Với học sâu trong Học tăng cường, phân biệt mạng trực tuyến, mạng mục tiêu, bộ nhớ phát lại, mục tiêu bootstrap, hành vi thăm dò và chính sách đánh giá khi phù hợp.
@@ -374,7 +374,7 @@ Phép thử duy nhất: một sinh viên có đủ kiến thức tiên quyết, 
 
 ### Tham khảo cách diễn giải của giáo trình
 
-Khi soạn hoặc sửa một ghi chú, tác tử soạn phải đối chiếu với cách các giáo trình chuẩn trình bày cùng chủ đề và ghi vào `review-log.md` giáo trình nào, mục nào đã được tham khảo cho từng mục của chương. Giáo trình chuẩn của học phần: Sutton và Barto (2018) *Reinforcement Learning: An Introduction* cho toàn bộ học phần; Puterman (1994) *Markov Decision Processes* và Bertsekas (2019) *Reinforcement Learning and Optimal Control* cho quy trình quyết định Markov và quy hoạch động; Szepesvári (2010) *Algorithms for Reinforcement Learning* cho phát biểu gọn các thuật toán và điều kiện hội tụ; Bertsekas và Tsitsiklis (1996) *Neuro-Dynamic Programming* cho xấp xỉ hàm; Goodfellow, Bengio và Courville (2016) *Deep Learning* cho phần mạng trong Học tăng cường sâu; chương Học tăng cường của giáo trình *Học máy thống kê* của tác giả (`../SML-textbook-main.zip`, `chapters/06_reinforcement_learning/`) cho giọng kể, cách dẫn dắt và thuật ngữ tiếng Việt. Bộ trang chiếu nguồn trong `RL-hk2-2025-2026/` vẫn quyết định phạm vi và thứ tự.
+Khi soạn hoặc sửa một ghi chú, tác tử soạn phải đối chiếu với cách các giáo trình chuẩn trình bày cùng chủ đề và ghi vào `review-log.md` giáo trình nào, mục nào đã được tham khảo cho từng mục của chương. Giáo trình chuẩn của học phần: Sutton và Barto (2018) *Reinforcement Learning: An Introduction* cho toàn bộ học phần; Puterman (1994) *Markov Decision Processes* và Bertsekas (2019) *Reinforcement Learning and Optimal Control* cho quá trình quyết định Markov và quy hoạch động; Szepesvári (2010) *Algorithms for Reinforcement Learning* cho phát biểu gọn các thuật toán và điều kiện hội tụ; Bertsekas và Tsitsiklis (1996) *Neuro-Dynamic Programming* cho xấp xỉ hàm; Goodfellow, Bengio và Courville (2016) *Deep Learning* cho phần mạng trong Học tăng cường sâu; chương Học tăng cường của giáo trình *Học máy thống kê* của tác giả (`../SML-textbook-main.zip`, `chapters/06_reinforcement_learning/`) cho giọng kể, cách dẫn dắt và thuật ngữ tiếng Việt. Bộ trang chiếu nguồn trong `RL-hk2-2025-2026/` vẫn quyết định phạm vi và thứ tự.
 
 Những điều cần học từ giáo trình và chuyển vào ghi chú:
 
