@@ -1,161 +1,200 @@
-# Dàn bài mới Bài 06: Điều khiển phi mô hình
+# Dàn bài Bài 06: Điều khiển phi mô hình
 
-Ngày lập: 29-09-2026. Trạng thái: đã triển khai, được năm vai độc lập rà và được điều phối viên chấp nhận làm đầu vào biên tập; bản dàn bài đã cập nhật sau biên tập, hoàn tất tái kiểm toán học và mạch viết, kiểm định kỹ thuật và trực quan cuối. [Phân tích và nguồn](analysis.md), [đặc tả từng trang](storyboard.md), [nhật ký](review-log.md). Dàn cũ không được dùng làm đầu vào. Các mã chỉ dùng nội bộ, không xuất hiện trên mặt trang hoặc trong ghi chú diễn giả.
+Ngày lập lại: 2026-10-12, đợt sửa theo chuẩn 2026-10-12 (giai đoạn II, bộ trang chiếu); cập nhật cùng ngày sau vòng biên tập theo năm báo cáo rà soát (xem `review-log.md`, mục "Rà soát năm vai và biên tập (giai đoạn II)"). Bản này thay dàn bài ngày 29-09-2026. Căn cứ: ghi chú bài giảng đã commit `19323ad` (`materials/lec-06/lecture-note.md`), kế hoạch `revision-plan-2026-10-12.md` mục A và D, `planning/quyet-dinh-chuan-2026-10-12.md`. Đặc tả từng trang ở [storyboard.md](storyboard.md); nhật ký ở [review-log.md](review-log.md). Mã trang chỉ dùng nội bộ, không xuất hiện trên mặt trang hay trong ghi chú diễn giả.
 
-## Thông tin chung và mục tiêu
+## Thông tin chung
 
-Học phần Học tăng cường, học kỳ 1 năm học 2026–2027; sinh viên đại học đã học học máy, học sâu và thuật toán. Tiên quyết được nhắc: quá trình quyết định Markov (MDP), chính sách, kỳ vọng có điều kiện, giá trị trạng thái, đánh giá–cải thiện chính sách, Monte Carlo (MC), sai phân thời gian (TD). Nguồn bắt buộc: Tạ Việt Cường, `RL-hk2-2025-2026/lecture-06-model-free-control.pdf`, 30 trang. Không gán tên đơn vị chưa xác minh. Sườn học thuật: Sutton–Barto §§5.2–5.4, §§6.4–6.5; dùng đúng quan hệ tiên quyết và đặc tả thuật toán của sách.
+Học phần Học tăng cường, năm học 2026–2027, học kỳ 1; sinh viên đã học học máy, học sâu, thuật toán và Bài 01–05. Nguồn bắt buộc: bài giảng gốc (2025–2026) `lecture-06-model-free-control.pdf`, 30 trang. Đơn vị trên bìa: "Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội" (quyết định chung §5). Deck có 75 trang trong 7 mạch, 120 phút trình chiếu; 30 phút còn lại dành cho chữa bài và bài thực hành LunarLander đã có, không tạo code demo mới.
 
-Vấn đề trung tâm là học giá trị hành động từ lượt hoặc chuyển tiếp để chọn hành động tại D trong chuỗi A–E, đồng thời xác định giới hạn của bảng học được. Toàn bài dùng 45 trang trong bảy section ngoài, 120 phút gồm kiểm tra; 30 phút chữa bài riêng. Nguồn không có code demo, nên không tạo notebook/chương trình. Các dạng xấp xỉ hàm, thuật toán sâu, nhiều bước và chứng minh hội tụ đầy đủ nằm ngoài phạm vi.
+## Mục tiêu học tập (trùng ghi chú bài giảng)
 
-| Mục tiêu | Năng lực | Nội dung chuẩn bị | Kiểm tra |
+| Mục tiêu | Năng lực | Trang xây dựng | Trang kiểm tra (lời giải trên mặt trang) |
 |---|---|---|---|
-| MT1 | Phân biệt dự đoán/điều khiển, $q_\pi$/Q và thông tin có trong mẫu | A03–B03 | A05, B07 |
-| MT2 | Tính $\varepsilon$-tham lam và xác định vai hành vi/đích | B04–B06, E01/E07 | B07, E08 |
-| MT3 | Tính lợi tức, MC lần ghé đầu theo cặp, dùng đúng N | C01–C07 | C08 |
-| MT4 | Tính Sarsa, giữ thứ tự chọn $A'$ và xử lý trạng thái kết thúc | D01–D07 | D08 |
-| MT5 | Tính Q-learning, so sánh mục tiêu trên cùng bảng/dữ liệu | E01–E07 | E08 |
-| MT6 | Kiểm giả thiết hội tụ và phân biệt với dừng theo ngân sách | F01–F04 | F05, G03 |
-| MT7 | Chọn phương pháp và giải thích quyết định từ dữ liệu hữu hạn | G01–G02 | G03 |
+| MT1 | Phân biệt $q_\pi$, $q_*$, bảng $Q$; xác định thông tin trong một mẫu chuyển | A05, B01, B08, B02 | A05 (fragment), B07/B10 câu 3 |
+| MT2 | Tính phân phối $\varepsilon$-tham lam, kể cả đồng hạng; kiểm điều kiện của Mệnh đề 06.6 | B03, B04, B05, B11, B06, B09 | B07/B10 |
+| MT3 | Thực hiện Monte Carlo lần ghé đầu tiên theo cặp, bộ đếm $N$ đúng | C01–C07, C05, C06, C10 | C08/C09 |
+| MT4 | Thực hiện cập nhật Sarsa và Q-learning; xử lý trạng thái kết thúc, cắt ngắn; phân biệt hành vi với đích | D01–D07, D06, E01–E07, E11 | D08/D11, E08/E12 |
+| MT5 | Kiểm giả thiết của các định lý hội tụ; phân biệt với dừng theo ngân sách | F12–F13 | F05/F09, G03/G07, G08 |
 
-## Thuật ngữ và ký hiệu
+## Khung lý thuyết chung
 
-| Thuật ngữ/ký hiệu | Quy ước thống nhất |
-|---|---|
-| Động lực không đổi theo thời gian | Phân phối chuyển và phần thưởng theo cặp không thay đổi theo thời gian; phân biệt với kết thúc lượt và dừng ngân sách. |
-| Tác tử, môi trường, trạng thái | Bài xét trạng thái Markov quan sát được; không thay “trạng thái” bằng “quan sát” tùy câu. Mô hình p không là đầu vào của thuật toán. |
-| $\mathcal S,\mathcal S^+,\mathcal A(s)$ | Tập trạng thái không kết thúc; tập có bổ sung trạng thái kết thúc; tập hành động hợp lệ tại s. Bảng gồm $M=\sum_{s\in\mathcal S}|\mathcal A(s)|$ ô. |
-| $S_t,A_t,R_{t+1}$ | Trạng thái và hành động ở thời điểm t; thưởng nhận sau hành động ấy. t là chỉ số tương tác; có thể đặt lại mốc trong một lượt khi ghi rõ. |
-| $G_t,T,\gamma$ | Lợi tức: tổng phần thưởng chiết khấu từ t; T thời điểm kết thúc thật của lượt; $G_T=0$. $\gamma=1$ cần lợi tức tồn tại/khả tích khi dùng kỳ vọng. T không là ngân sách chạy. |
-| $v_\pi,q_\pi,q_*$ | Giá trị đúng; $q_\pi(s,a)$ cố định hành động đầu a, các hành động sau theo $\pi$; $q_*$ giá trị hành động tối ưu. |
-| $V,Q,Q_t,Q^{[k]}$ | Bảng ước lượng; $Q_t$ ngay trước cập nhật bước t; $Q^{[k]}$ trước lượt MC k. Dữ liệu và giả mã phải chỉ rõ đang dùng bảng nào. |
-| $\pi,b$ | Chính sách đích và chính sách hành vi. Theo chính sách dùng cùng quy tắc chọn hành động và quy tắc trong mục tiêu. Q-learning: b sinh hành động, đích tham lam rút từ Q. |
-| $m(s),\mathcal G_Q(s)$ | Số hành động và tập hành động đạt cực đại; chia đều phần khai thác khi đồng hạng. |
-| $N(s,a),n,\alpha_n(s,a)$ | N đếm các lợi tức MC được chọn; n đếm cập nhật riêng của một cặp khi xét bước học. $N_0=0$; giá trị khởi tạo không là giả quan sát. |
-| $C_t(s,a),\pi_t,\mathcal G_t(s)$ | Số lần thăm đến bước t; quy tắc chọn hành động theo $Q_t$; tập cực đại của chính bảng ấy. Dùng cho GLIE theo tương tác, không thay C bằng N của MC. |
-| k | Chỉ số lượt MC hoặc lịch $\varepsilon_k$ giữ cố định trong lượt; không thay n hoặc t bằng k. |
-| $Y_t,\delta_t$ | Mục tiêu cập nhật và $\delta_t=Y_t-Q_t(S_t,A_t)$; không phải sai số thật so với $q_\pi$ hoặc $q_*$. |
-| $x_j,u_j$ | Trạng thái bộ sinh và số thao tác của bài nguồn 17; j đếm số tiêu thụ, không là t của môi trường. Không dùng $r_t$ vì dễ lẫn thưởng R. |
-| Lượt; lần ghé đầu; mọi lần ghé | Lượt kết thúc tại A/E. Lần ghé đầu xác định theo chiều thời gian và theo cặp $(s,a)$, dù G được tính lùi. |
-| MC; TD; Sarsa; Q-learning | Viết đầy đủ Monte Carlo (MC), sai phân thời gian (TD) ở lần xuất hiện đầu. Dùng nhất quán “Sarsa”, “thăm dò”, “tham lam”, “bước học”, “mục tiêu cập nhật”, “theo chính sách”, “khác chính sách”. |
-| GLIE | Lần đầu: “tham lam trong giới hạn với thăm dò vô hạn (GLIE)”; gồm bao phủ và khối xác suất trên tập cực đại tiến tới 1. |
+- **Vấn đề trung tâm.** Chọn hành động tại D của dãy năm ô khi không biết mô hình; tác tử chỉ thấy mẫu.
+- **Đối tượng và ký hiệu chung.** MDP hữu hạn với $p(s',r\mid s,a)$ tác tử không biết; $\mathcal S$ (không kết thúc), $\mathcal S^+$; $\mathcal A(s)$, $m(s)$; $R_{t+1}$, $G_t$, $G_T=0$; giá trị trạng thái kết thúc bằng $0$; $q_\pi$, $q_*$ (giá trị thật) khác bảng $Q$ (ước lượng, Định nghĩa 06.1); tên ô viết chữ đứng $\mathrm A,\dots,\mathrm E$.
+- **Khung cập nhật chung (trang A09).** $Q(S_t,A_t)\leftarrow Q(S_t,A_t)+\alpha_t[Y_t-Q(S_t,A_t)]$; ba phương pháp khác nhau ở dữ liệu tạo $Y_t$ và thời điểm cập nhật.
+- **Giả thiết.** Phép tính tay dùng dãy năm ô với $\gamma=1$, bước học hằng $0{,}8$ (ngoài miền định lý); các định lý dùng giả thiết nền (MDP hữu hạn, động lực dừng, phần thưởng bị chặn, $0\le\gamma<1$, $Q_0$ hữu hạn, mẫu sinh từ MDP) cộng độ phủ, Robbins–Monro theo cặp, GLIE với Sarsa; mạch 6 dùng dãy năm ô với $\gamma=0{,}9$.
+- **Chuỗi định nghĩa → kết quả → phương pháp.** Bảng $Q$ (06.1) → chính sách $\varepsilon$-tham lam, $\varepsilon$-mềm (06.3, 06.4) → cải thiện $\varepsilon$-tham lam (Mệnh đề 06.6) → lần ghé đầu tiên của cặp (06.8) → Monte Carlo (Thuật toán 06.9) → mục tiêu Sarsa (06.11) → Sarsa (06.12) → hành vi và đích (06.14) → mục tiêu Q-learning (06.15) → Q-learning (06.16) → GLIE (06.18), Robbins–Monro theo cặp (06.19) → Định lý 06.21 (Q-learning), 06.22 (Sarsa).
+- **Giới hạn áp dụng.** Biểu diễn bảng; kết luận tiệm cận; điều khiển Monte Carlo không có định lý hội tụ trong bài (Nhận xét 06.23; nêu trên mặt F08 và G06); $\gamma=1$ nằm ngoài giả thiết của hai định lý vì toán tử Bellman tối ưu không còn co theo chuẩn cực đại (F13); bài thực hành LunarLander vi phạm tính Markov, Robbins–Monro và GLIE; bảng không tổng quát hóa giữa các ô (dẫn sang Bài 07).
 
-### Đối chiếu trực tiếp với Bài 05
+## Bảng thuật ngữ Việt–Anh
 
-| Bài 05 đã xác nhận | Bài 06 giữ hoặc mở rộng |
-|---|---|
-| $\mathcal S$ không kết thúc, $\mathcal S^+$ có kết thúc | Giữ; A/E thuộc $\mathcal S^+\setminus\mathcal S$; không tạo hàng Q trạng thái kết thúc có hành động giả. |
-| $R_{t+1}$ và “lợi tức” $G_t$ | Giữ chỉ số và thuật ngữ; không luân phiên gọi G là thưởng tức thời. |
-| $v_\pi$ khác V, $q_\pi$ khác Q | Giữ; tập trung vào giá trị hành động để cải thiện chính sách. |
-| b hành vi, $\pi$ đích | Giữ; nguồn 19 dùng $\mu$, ánh xạ sang b một lần trong đọc thêm. |
-| Kết thúc thật khác cắt dữ liệu | Giữ; mẫu 5 dừng ngân sách ở C vẫn dùng giá trị tiếp nối. |
+| Tiếng Việt | Tiếng Anh | Trang xuất hiện đầu trên mặt trang |
+|---|---|---|
+| mục tiêu cập nhật | update target | A01 |
+| giá trị hành động | action value | B02 |
+| tham lam | greedy | A07 |
+| phần thưởng | reward | A07 |
+| chính sách $\varepsilon$-tham lam | $\varepsilon$-greedy policy | A02 |
+| thăm dò | exploration | A02 |
+| lần ghé đầu tiên | first-visit | A02 |
+| lượt | episode | A02 |
+| học theo chính sách | on-policy | A02 |
+| học khác chính sách | off-policy | A02 |
+| ngân sách | budget | A02 |
+| lợi tức | return | A03 |
+| bước học | step size | A09 |
+| tác tử | agent | A05 |
+| khai thác | exploitation | B04 |
+| chính sách $\varepsilon$-mềm | $\varepsilon$-soft policy | B05 |
+| quy tắc phá hòa | tie-breaking | B05 |
+| quá trình quyết định Markov (MDP) | Markov decision process | B06 (đủ tên tiếng Anh và viết tắt trên mặt trang) |
+| hầu chắc chắn | almost surely | C05 |
+| cắt ngắn | truncation | C10 |
+| mọi lần ghé | every-visit | C08 |
+| sai phân thời gian TD(0) | temporal difference | A07 (tên Việt trên mặt trang; tên tiếng Anh trong ghi chú diễn giả A07), D01 |
+| chính sách hành vi | behavior policy | E09 |
+| chính sách đích | target policy | E09 |
+| tỉ số lấy mẫu quan trọng | importance sampling ratio | E07 |
+| tham lam trong giới hạn với thăm dò vô hạn (GLIE) | greedy in the limit with infinite exploration | F02 (mặt trang) |
+| điều kiện Robbins–Monro theo cặp | Robbins–Monro conditions | F03 |
+| tàu đổ bộ | LunarLander | C10 |
+| mục tiêu bootstrap | bootstrap target | ghi chú diễn giả A09 |
+| sai số TD | TD error | D04 (nhắc lại Bài 05; thay chữ "sai lệch" của bản trước) |
+| khối cực đại (tổng xác suất trên tập cực đại) | — (thuật ngữ nội bộ của học phần) | F06; dùng thống nhất ở F09, G07 và ghi chú diễn giả, thay "khối trên cực đại", "khối xác suất tham lam" |
+| điều khiển Monte Carlo | Monte Carlo control | C00 (tên mạch 3); dạng duy nhất, không viết "Monte Carlo điều khiển" |
+| thăm dò vô hạn (độ phủ) | infinite exploration (coverage) | A03 (độ phủ), F02 |
+| chính sách Markov dừng | stationary policy | ghi chú diễn giả B02 (phân biệt với dừng thuật toán) |
+| chính sách xác định | deterministic policy | ghi chú diễn giả B06 |
+| điểm bắt đầu thăm dò | exploring starts | ghi chú diễn giả F08 |
+| bán gradient | semi-gradient | ghi chú diễn giả A09 (cầu sang Bài 07) |
 
 ## Bản đồ bảy mạch
 
-| Mạch | Vai trò, chức năng | Đầu vào | Đầu ra và kết nối tiếp | Trang | Phút | Kiểm tra |
-|---|---|---|---|---|---:|---|
-| A. Bài toán điều khiển | Mở đầu; thiết lập quyết định tại D và loại dữ liệu | MDP, dự đoán MC/TD | Mẫu của một hành động chưa đủ so sánh mọi hành động; cần bảng Q | A01, A02, A04, A03, A05 | 10 | A05 |
-| B. Giá trị hành động và thăm dò | Khái niệm; xác định đối tượng học và quy tắc lấy hành động | Vấn đề thiếu dữ liệu của A | $q_\pi$/Q, phân phối mềm, vòng đánh giá–cải thiện; cần ước lượng từ lượt | B01–B07 | 18 | B07 |
-| C. Điều khiển Monte Carlo | Thuật toán; học từ lượt hoàn chỉnh | Lợi tức, cặp, thăm dò | Quy trình lần ghé đầu MC và giới hạn chờ hết lượt | C01–C04, C07, C05, C06, C08 | 22 | C08 |
-| D. Sarsa | Thuật toán; dùng mục tiêu một bước theo hành vi | MC, TD(0), Q, hành vi mềm | Quy trình và bảng cập nhật; mục tiêu còn phụ thuộc hành động thăm dò | D01–D08 | 22 | D08 |
-| E. Q-learning | Khái niệm và thuật toán; tách hành vi/đích | Sarsa và năm mẫu đã công bố | Mục tiêu cực đại, so sánh hai bảng; cần xét điều kiện dài hạn | E01–E08 | 22 | E08 |
-| F. Điều kiện bảo đảm | Khái niệm và áp dụng; giới hạn suy luận từ mẫu | Cơ chế ba thuật toán | Bao phủ, GLIE, bước học theo cặp, định lý có giả thiết | F01–F05 | 16 | F05 |
-| G. Tổng hợp và kết luận | Thu hồi quyết định tại D; chọn phương pháp | Dữ liệu, mục tiêu, điều kiện | Chọn phương pháp có lý do; bài tập và đọc thêm có phạm vi rõ | G01–G04 | 10 | G03 |
-| **Tổng** | **7 mạch, gồm mở đầu và kết luận** | | | **45 trang** | **120** | **7 trang riêng** |
+| N | Mạch | Trang tiêu đề mạch (`id`) | Chức năng | Đầu vào → đầu ra | Trang | Phút |
+|---|---|---|---|---|---|---:|
+| 1 | Mở đầu | A01 (bìa) | Đặt bài toán, tiên quyết, mục tiêu, khung cập nhật | Bài 03–05 → bài toán tại D và khung $Q\leftarrow Q+\alpha[Y-Q]$ | A01, A07, A02, A08, A03, A09 | 8 |
+| 2 | Giá trị hành động và thăm dò | B00 (`mach-2`) | Khái niệm $Q$, $\varepsilon$-tham lam, cải thiện trong lớp $\varepsilon$-mềm | $q_\pi$, định lý cải thiện → bảng $Q$ và quy tắc chọn hành động | 13 | 21 |
+| 3 | Điều khiển Monte Carlo | C00 (`mach-3`) | Thuật toán học từ lượt hoàn chỉnh | $q_\pi$ cần đo từ mẫu → Thuật toán 06.9 và giới hạn chờ lượt | 11 | 18 |
+| 4 | Sarsa và mục tiêu một bước | D00 (`mach-4`) | Thuật toán với mục tiêu bootstrap theo hành động kế tiếp | giới hạn Monte Carlo, TD(0) → Thuật toán 06.12, ba sự kiện dừng | 11 | 18 |
+| 5 | Q-learning và học khác chính sách | E00 (`mach-5`) | Tách hành vi và đích; mục tiêu cực đại | mục tiêu Sarsa phụ thuộc thăm dò → Thuật toán 06.16, so sánh trên cùng dữ liệu | 12 | 19,5 |
+| 6 | Điều kiện hội tụ | F00 (`mach-6`) | Giả thiết để $Q_t\to q_*$ | bảng hữu hạn mẫu → GLIE, Robbins–Monro theo cặp, Định lý 06.21–06.22 | 12 | 19,5 |
+| 7 | Tổng kết và chuyển tiếp | G00 (`mach-7`) | Tổng kết, áp dụng LunarLander, trả lời vấn đề trung tâm | toàn bài → bảng giả thiết, bài tập, Bài 07 | 10 | 16 |
+| | **Tổng** | | | | **75** | **120** |
 
 ## Dàn từng trang
 
-Mỗi hàng là một luận điểm, không phải toàn bộ chữ trên mặt slide. Storyboard là phần đặc tả chi tiết của dàn bài này: đủ công thức, ví dụ, nguồn/trang, ghi chú, lý do thay đổi, quan hệ trước–sau và đáp án. Mã đầy đủ thêm tiền tố `L06-`.
+Mỗi hàng là luận điểm trung tâm của trang; mã đầy đủ có tiền tố `L06-`. Phút cộng theo mạch ở bản đồ trên.
 
-| Mã | Tiêu đề | Nội dung trung tâm và sản phẩm | Phút |
-|---|---|---|---:|
-| A01 | Điều khiển phi mô hình | Bài 06, học phần, học kỳ; MC, Sarsa, Q-learning; tác giả nguồn đúng | 1 |
-| A02 | Nội dung và mục tiêu | Bản đồ bảy mạch; năng lực tính, so sánh và kiểm giả thiết | 2 |
-| A04 | Từ dự đoán đến điều khiển | Ôn MDP/MC/TD; chính sách cho trước khác chính sách cần cải thiện | 2 |
-| A03 | Chuỗi năm trạng thái | Chuỗi A–E, thưởng trên cạnh, bắt đầu D; cần chọn trái/phải từ dữ liệu | 3 |
-| A05 | Kiểm tra thông tin trong một mẫu | Câu hỏi xác định dữ kiện và phần còn thiếu từ $(D,1,10,E)$ | 2 |
-| B01 | Giá trị hành động | Bảng I tách hai ô ở D, quy tắc tham lam ban đầu và nhu cầu đánh giá; notes nêu giới hạn chia sẻ thông tin trực tiếp giữa các ô | 2 |
-| B02 | Giá trị hành động của một chính sách | Chính sách tiếp nối $\pi_L$; định nghĩa $q_\pi$, $G_t$, chỉ số/giả thiết; phân biệt Q và $q_*$ | 3 |
-| B03 | Nhu cầu thăm dò | Vòng dữ liệu–Q–chính sách; hạn chế của hành động ít được thử | 2 |
-| B04 | Xác suất chọn hành động tại D | Ví dụ hai hành động, $\varepsilon=1/4$, xác suất 7/8 và 1/8 | 3 |
-| B05 | Chính sách $\varepsilon$-tham lam | Công thức với tập cực đại, đồng hạng và lớp $\varepsilon$-mềm | 2 |
-| B06 | Cải thiện chính sách $\varepsilon$-tham lam | Cùng $\varepsilon$, $q_\pi$ chính xác, kết luận không giảm; phác thảo ở notes | 3 |
-| B07 | Kiểm tra chính sách $\varepsilon$-tham lam | Câu hỏi tính phân phối, đồng hạng, diễn giải $q_\pi(D,0)$ và giới hạn của Q khởi tạo | 3 |
-| C01 | Điều khiển Monte Carlo | Gắn lợi tức của lượt với cặp; chính sách sinh lượt giữ cố định | 2 |
-| C02 | Monte Carlo với chính sách tham lam | Bảng I, D→E, N0=0; mẫu đầu thay Q(D,1) bằng 10 | 2 |
-| C03 | Cập nhật Monte Carlo theo lần ghé đầu | G tính lùi; N tăng trước phép chia; lần đầu theo cặp | 3 |
-| C04 | Lấy mẫu $\varepsilon$-tham lam bằng dãy số cho trước | Bảng II, quy tắc tiêu thụ hai số khi thăm dò; xác định quỹ đạo | 3 |
-| C07 | Cập nhật từ lượt D–C–B–A | 998,999,1000; bảng cuối MC và hành động từ bảng | 3 |
-| C05 | Thuật toán điều khiển Monte Carlo: sinh lượt | Đầu vào/khởi tạo; sinh lượt trọn vẹn, ghi chỉ số ghé đầu trước khi tăng thời gian rồi tính G | 3 |
-| C06 | Thuật toán điều khiển Monte Carlo: cập nhật | Chọn lần ghé đầu, cập nhật N/Q, chính sách lượt sau, dừng và chi phí | 3 |
-| C08 | Kiểm tra lần ghé đầu của cặp | Câu hỏi quỹ đạo lặp D0; phân biệt lần ghé đầu, mọi lần ghé và bộ đếm | 3 |
-| D01 | Từ Monte Carlo sang cập nhật một bước | Giá trị tiếp nối ước lượng thay phần lợi tức chưa quan sát | 2 |
-| D02 | Năm mẫu chuyển dùng chung | Bảng I, năm mẫu, α=0.8, ranh giới ba lượt; hành động cho trước | 2 |
-| D03 | Hai cập nhật Sarsa đầu tiên | Mẫu 1 cho 0; mẫu 2 mục tiêu−1, sai lệch−2, Q mới−0.6 | 3 |
-| D04 | Quy tắc cập nhật Sarsa | Công thức từ năm biến, bảng trước cập nhật, nhánh trạng thái kết thúc | 3 |
-| D05 | Thuật toán Sarsa: bước trong lượt | Đầu vào/đầu ra, chọn A đầu, chọn A' trước cập nhật và giữ để thực hiện | 3 |
-| D06 | Thuật toán Sarsa: kết thúc và dừng | Chỉ tái khởi đầu khi kết thúc và còn ngân sách; dừng toàn bộ, bộ nhớ và chi phí | 3 |
-| D07 | Sarsa tại trạng thái kết thúc | Mẫu 3/4 cho 800 và 8.2; bảng trước mẫu 5 | 3 |
-| D08 | Kiểm tra cập nhật Sarsa từ tiền tố | Câu hỏi mẫu 5 cho −1.28, thứ tự chọn A' và giới hạn ngân sách | 3 |
-| E01 | Chính sách hành vi và chính sách đích | Tách hành động sinh dữ liệu với hành động trong mục tiêu | 2 |
-| E02 | Một cập nhật Q-learning | Đặt lại bảng I; mẫu 2 cho mục tiêu 0 và Q mới 0.2 | 3 |
-| E03 | Quy tắc cập nhật Q-learning | Cực đại từ cùng bảng trước cập nhật; trạng thái kết thúc có mục tiêu R | 3 |
-| E04 | Thuật toán Q-learning: lấy mẫu và cập nhật | Đầu vào/đầu ra; b chọn A; bốn biến đủ để tạo mục tiêu | 3 |
-| E05 | Thuật toán Q-learning: kết thúc và chi phí | Chỉ tái khởi đầu khi kết thúc và còn ngân sách; dừng toàn bộ, chi phí cực đại/bộ nhớ | 2 |
-| E06 | Sarsa và Q-learning trên cùng năm mẫu | Kết quả đủ 5 mẫu, khác biệt bắt đầu tại C và truyền về D | 3 |
-| E07 | Dữ liệu hành vi trong Q-learning | Đúng MDP, độ phủ, dữ liệu cũ; khác chính sách không tự bảo đảm hiệu quả mẫu | 3 |
-| E08 | Kiểm tra mục tiêu Sarsa và Q-learning | Câu hỏi cùng bảng B=(800,1), A'=1; tính 0 và 799, điều kiện trùng | 3 |
-| F01 | Giả thiết chung của các định lý hội tụ | Phép tính hữu hạn khác định lý; miền MDP hữu hạn, động lực không đổi theo thời gian, thưởng chặn, γ<1 | 3 |
-| F02 | Điều kiện GLIE | Thăm vô hạn và tham lam trong giới hạn; lịch giảm chưa suy độ phủ | 3 |
-| F03 | Điều kiện Robbins–Monro | 1/n, hằng 0.8 và đếm theo t khác n; Robbins–Monro | 3 |
-| F04 | Hội tụ của Sarsa và Q-learning | Điều kiện chung; Sarsa thêm giới hạn tham lam, Q-learning không cần; giới hạn MC | 4 |
-| F05 | Kiểm tra giả thiết hội tụ | Câu hỏi phân loại lịch và hành vi dưới miền chiết khấu đã cho | 3 |
-| G01 | Tổng kết ba phương pháp | Bảng so sánh thời điểm cập nhật, đích, hành vi, bộ nhớ | 3 |
-| G02 | Quyết định tại D sau các cập nhật | Thu hồi mở bài: bảng hữu hạn dẫn lựa chọn nhưng chưa chứng minh tối ưu | 2 |
-| G03 | Kiểm tra lựa chọn phương pháp | Câu hỏi ba trường hợp dữ liệu/mục tiêu; nêu thiếu giả thiết | 3 |
-| G04 | Bài tập và tài liệu đọc | Nhiệm vụ chữa nguồn 16–18/21, H03; SB; đọc thêm sửa nguồn 19/29 | 2 |
+| Vị trí | Mã | Tiêu đề | Luận điểm trung tâm | Phút |
+|---|---|---|---|---:|
+| #/1/1 | A01 | Điều khiển phi mô hình | Bìa; luận đề: ba phương pháp khác nhau ở mục tiêu cập nhật | 0,5 |
+| #/1/2 | A07 | Tiên quyết và quy ước | Nhắc lại $q_\pi$, $v_\pi$ (Bài 03); cải thiện tham lam, $v_*=T_*v_*$ với $T_*$ co, $q_*$ từ $v_*$ (Bài 04); Monte Carlo, TD(0), Robbins–Monro theo trạng thái (Bài 05); ký hiệu $\mathcal S$, $\mathcal S^+$, $m(s)$, $R_{t+1}$, $d_0$ (quy ước $\mathbb E_\pi$ trong ghi chú diễn giả) | 1,5 |
+| #/1/3 | A02 | Mục tiêu học tập | Năm mục tiêu trùng ghi chú | 1 |
+| #/1/4 | A08 | Nội dung | Bảy mạch đánh số khớp trang tiêu đề mạch | 1 |
+| #/1/5 | A03 | Vấn đề trung tâm | Chọn hành động tại D; câu trả lời có điều kiện của mạch 2–6 | 2,5 |
+| #/1/6 | A09 | Khung chung của quy tắc cập nhật | Bài 05 cập nhật $V$ với $\pi$ cố định; chọn hành động theo $V$ cần $p$, $r$, theo $Q$ thì không; $Q\leftarrow Q+\alpha_t[Y_t-Q]$; ba phương pháp khác ở $Y_t$ | 1,5 |
+| #/2/1 | B00 | Giá trị hành động và thăm dò | Trang tiêu đề mạch 2 | 0,5 |
+| #/2/2 | A05 | Thông tin trong một mẫu chuyển | Nhu cầu và ví dụ dẫn nhập $(\mathrm D,1,10,\mathrm E)$: không có dữ liệu về $(\mathrm D,0)$ | 1,5 |
+| #/2/3 | B01 | Ví dụ: bảng khởi tạo nghiêng phải | Bảng số khởi tạo chưa là quan sát; xếp phải trên trái tại D | 1,5 |
+| #/2/4 | B08 | Ví dụ: chính sách luôn đi trái | Hành động đầu cố định, tiếp nối theo $\pi_L$: 998 và 10 | 1,5 |
+| #/2/5 | B02 | Bảng giá trị hành động | Nhắc lại $q_\pi$; Định nghĩa 06.1; nhắc lại $q_*$ | 2 |
+| #/2/6 | B03 | Nhu cầu thăm dò | Tham lam theo bảng nghiêng phải không bao giờ thử $(\mathrm D,0)$ | 1,5 |
+| #/2/7 | B04 | Ví dụ: xác suất chọn hành động tại D | $\varepsilon=\tfrac14$: $(\tfrac18,\tfrac78)$; đồng hạng $(\tfrac12,\tfrac12)$ | 1,5 |
+| #/2/8 | B05 | Chính sách $\varepsilon$-tham lam | Định nghĩa 06.3, 06.4 | 2 |
+| #/2/9 | B11 | Cải thiện chính sách khi giữ thăm dò | Nhu cầu, ví dụ một trạng thái ba hành động ($-0{,}2\to2{,}6$), trực quan phần sàn | 2 |
+| #/2/10 | B06 | Cải thiện chính sách $\varepsilon$-tham lam | Mệnh đề 06.6 với giả thiết và kết luận | 1,5 |
+| #/2/11 | B09 | Chứng minh: cải thiện chính sách $\varepsilon$-tham lam | Trọng số $w_a=w(a\mid s)$, bất đẳng thức một bước, $q_\pi=r+\gamma\sum p\,v_\pi$ cho vế trái $T_{\pi'}v_\pi$, đơn điệu và co của $T_{\pi'}$ | 2,5 |
+| #/2/12 | B07 | Bài tập: chính sách $\varepsilon$-tham lam trên dãy năm ô | Đề Bài tập 06.2 của ghi chú | 1,5 |
+| #/2/13 | B10 | Bài tập: chính sách $\varepsilon$-tham lam trên dãy năm ô | Lời giải: $(0{,}1;0{,}9)$, $(0{,}6;0{,}2;0{,}2)$, chưa đủ điều kiện của mệnh đề | 1,5 |
+| #/3/1 | C00 | Điều khiển Monte Carlo | Trang tiêu đề mạch 3 | 0,5 |
+| #/3/2 | C01 | Lợi tức của cặp trạng thái–hành động | Nhu cầu đo $q_\pi$ từ lượt; trực quan vòng sinh lượt–gắn lợi tức–lập chính sách | 1,5 |
+| #/3/3 | C02 | Ví dụ: một lượt tham lam D→E | $N(\mathrm D,1)=1$, $Q(\mathrm D,1)=10$; khởi tạo không là quan sát | 1,5 |
+| #/3/4 | C03 | Lần ghé đầu tiên của cặp | Định nghĩa 06.8; trung bình gia tăng với $N$ từ 0 | 2 |
+| #/3/5 | C04 | Ví dụ: lượt thăm dò trên dãy năm ô | Dãy số cho trước sinh lượt D→C→B→A | 2 |
+| #/3/6 | C07 | Ví dụ: lượt thăm dò trên dãy năm ô, cập nhật lần ghé đầu tiên | $998,999,1000$; hàng D xếp trái | 2 |
+| #/3/7 | C05 | Thuật toán điều khiển Monte Carlo: đầu vào | Thuật toán 06.9: đầu vào, đầu ra, giả thiết kết thúc, ngân sách $K$ | 1,5 |
+| #/3/8 | C06 | Thuật toán điều khiển Monte Carlo: các bước | Năm bước; $Q$, $\pi_k$ cố định trong lượt | 2 |
+| #/3/9 | C10 | Điều khiển Monte Carlo trên lượt bị cắt | Nhận xét 06.10; tàu đổ bộ (chính sách tham lam học trong bài thực hành): lượt dài, 44% bị cắt | 1,5 |
+| #/3/10 | C08 | Bài tập: lần ghé đầu tiên trên lượt có cặp lặp | Đề Bài tập 06.3 | 1,5 |
+| #/3/11 | C09 | Bài tập: lần ghé đầu tiên trên lượt có cặp lặp | Lời giải 996, 997 | 2 |
+| #/4/1 | D00 | Sarsa và mục tiêu một bước | Trang tiêu đề mạch 4 | 0,5 |
+| #/4/2 | D01 | Mục tiêu một bước cho giá trị hành động | Nhu cầu sau D→C; nhắc lại TD(0); trực quan $-1+\gamma Q(\mathrm C,A')$ | 2 |
+| #/4/3 | D02 | Ví dụ: năm mẫu chuyển trên dãy năm ô | Dữ kiện năm mẫu dùng chung | 1,5 |
+| #/4/4 | D03 | Ví dụ: năm mẫu chuyển, Sarsa ở mẫu 1–2 | $0$ và $-0{,}6$; hành động đã lấy mẫu vào mục tiêu | 2 |
+| #/4/5 | D04 | Mục tiêu Sarsa | Định nghĩa 06.11; sai số TD; bộ năm; $A_{t+1}$ từ chính sách sinh dữ liệu | 1,5 |
+| #/4/6 | D05 | Thuật toán Sarsa: đầu vào | Thuật toán 06.12: đầu vào, đầu ra, giả thiết, khởi tạo, dừng | 1,5 |
+| #/4/7 | D10 | Thuật toán Sarsa: các bước | Năm bước; $A'$ chọn một lần trước cập nhật | 2 |
+| #/4/8 | D07 | Ví dụ: năm mẫu chuyển, Sarsa ở mẫu 3–5 | $800$, $8{,}2$, $-1{,}28$; 1000 chưa truyền về D | 2 |
+| #/4/9 | D06 | Kết thúc lượt, cắt ngắn và hết ngân sách | Nhận xét 06.13 dạng bảng: chỉ kết thúc lượt bỏ số hạng $\gamma Q_t(S_{t+1},A_{t+1})$; tàu đổ bộ | 1,5 |
+| #/4/10 | D08 | Bài tập: cập nhật Sarsa với bước học khác | Đề Bài tập 06.4 ($\alpha=0{,}5$) | 1,5 |
+| #/4/11 | D11 | Bài tập: cập nhật Sarsa với bước học khác | Lời giải $-0{,}8$, $-0{,}5$; mục tiêu không đổi khi hết ngân sách | 2 |
+| #/5/1 | E00 | Q-learning và học khác chính sách | Trang tiêu đề mạch 5 | 0,5 |
+| #/5/2 | E01 | Mục tiêu Sarsa và hành động thăm dò | Nhu cầu, ví dụ mẫu 2, trực quan hai vai | 1,5 |
+| #/5/3 | E09 | Chính sách hành vi và chính sách đích | Định nghĩa 06.14; hình hai đường | 2 |
+| #/5/4 | E02 | Ví dụ: năm mẫu chuyển, Q-learning ở mẫu 1–2 | Mẫu 2 cho $0{,}2$ thay vì $-0{,}6$ | 2 |
+| #/5/5 | E03 | Mục tiêu Q-learning | Định nghĩa 06.15; bộ bốn (điều kiện trùng mục tiêu chuyển vào ghi chú diễn giả, để bài tập E08 câu 2 là bước suy luận) | 1,5 |
+| #/5/6 | E04 | Thuật toán Q-learning: đầu vào | Thuật toán 06.16: đầu vào, đầu ra, khởi tạo | 1,5 |
+| #/5/7 | E10 | Thuật toán Q-learning: các bước | Bốn bước; chọn hành động sau cập nhật | 1,5 |
+| #/5/8 | E06 | Ví dụ: năm mẫu chuyển, Sarsa và Q-learning | Bảng so sánh năm mẫu; $-1{,}28$ và $-0{,}64$ | 2 |
+| #/5/9 | E07 | Dữ liệu hành vi trong Q-learning | Tỉ số $\rho=\pi/b$ của dự đoán TD(0) khác chính sách; Nhận xét 06.17: Q-learning một bước không cần $\rho$, vẫn cần độ phủ | 2 |
+| #/5/10 | E11 | Ví dụ: một chuyển của tàu đổ bộ | $2{,}748$ và $3{,}045$ trên dữ liệu notebook; đứng sát bài tập E08 vì cùng so hai mục tiêu trên một chuyển | 1,5 |
+| #/5/11 | E08 | Bài tập: mục tiêu Sarsa và Q-learning trên cùng chuyển | Đề Bài tập 06.5 | 1,5 |
+| #/5/12 | E12 | Bài tập: mục tiêu Sarsa và Q-learning trên cùng chuyển | Lời giải $0$, $799$, điều kiện $A'\in\mathcal G_Q$ | 2 |
+| #/6/1 | F00 | Điều kiện hội tụ | Trang tiêu đề mạch 6 | 0,5 |
+| #/6/2 | F12 | Bảng Q khi một cặp không được thử | Nhu cầu; $\gamma=0{,}9$: $q_*(\mathrm D,0)=808{,}1$, ô giữ 0 | 2 |
+| #/6/3 | F10 | Cập nhật mẫu và phương trình Bellman tối ưu | Trực quan: bước lặp có nhiễu của toán tử co | 2 |
+| #/6/4 | F06 | Ví dụ: khối cực đại khi $\varepsilon$ giảm | $\tfrac14$, $1/k$, $1/k^2$; Borel–Cantelli | 2 |
+| #/6/5 | F02 | Tham lam trong giới hạn với thăm dò vô hạn | Định nghĩa 06.18 | 1,5 |
+| #/6/6 | F07 | Ví dụ: một cặp được cập nhật thưa | $\sum2^{-n}=1$; lịch toàn cục không đủ | 1,5 |
+| #/6/7 | F03 | Điều kiện Robbins–Monro theo cặp | Định nghĩa 06.19 | 1,5 |
+| #/6/8 | F04 | Hội tụ của Q-learning dạng bảng | Định lý 06.21 | 2 |
+| #/6/9 | F08 | Hội tụ của Sarsa dạng bảng | Định lý 06.22; điều khiển Monte Carlo trộn lợi tức nhiều $\pi_k$, chưa có định lý hội tụ tổng quát | 2 |
+| #/6/10 | F13 | Vai trò của từng giả thiết | Bốn phản ví dụ khi bỏ giả thiết; $\gamma=1$: toán tử không còn co, định lý không áp dụng | 1,5 |
+| #/6/11 | F05 | Bài tập: kiểm giả thiết hội tụ | Đề Bài tập 06.6 | 1,5 |
+| #/6/12 | F09 | Bài tập: kiểm giả thiết hội tụ | Lời giải a/b/c | 1,5 |
+| #/7/1 | G00 | Tổng kết và chuyển tiếp | Trang tiêu đề mạch 7 | 0,5 |
+| #/7/2 | G05 | Kết quả về giá trị hành động và thăm dò | Bảng kết quả–giả thiết–công thức: ba khái niệm | 1,5 |
+| #/7/3 | G09 | Kết quả về ba thuật toán | Bảng kết quả–giả thiết–công thức: ba thuật toán | 1,5 |
+| #/7/4 | G01 | Khung chung của ba phương pháp | Phương pháp–quy tắc–dữ liệu (kèm theo/khác chính sách)–dừng | 1,5 |
+| #/7/5 | G06 | Điều kiện hội tụ của ba phương pháp | Phương pháp–giả thiết–kết luận; thứ tự hàng Monte Carlo, Sarsa, Q-learning như G09, G01 | 1,5 |
+| #/7/6 | G03 | Bài tập: chọn phương pháp cho tàu đổ bộ | Bài tập tổng hợp trên LunarLander | 2 |
+| #/7/7 | G07 | Bài tập: chọn phương pháp cho tàu đổ bộ | Lời giải; số liệu một lần chạy (trung bình ± sai số chuẩn); hiệu ghép cặp chứa 0, chưa xếp hạng được | 2 |
+| #/7/8 | G02 | Trả lời vấn đề trung tâm | Nhắc lại bài toán tại D; bảng ba hàng D có cột khởi tạo; kết luận có điều kiện; dòng "Nguồn:" | 2 |
+| #/7/9 | G08 | Câu hỏi tự kiểm tra | Bốn câu, mỗi câu kiểm một giả thiết | 2 |
+| #/7/10 | G04 | Bài tập về nhà và tài liệu đọc | Bảng Mạch–Bài tập chỉ gồm Bài tập 06.1–06.12 của ghi chú; "Tệp bài tập: chưa có"; tài liệu đọc; ghi chú; Bài 07 | 1,5 |
 
-Sửa sau rà soát từng trang ngày 01-10-2026: bảng trên theo thứ tự trình chiếu mới. A04 đứng trước A03 để bài toán điều khiển (nguồn tr. 6) đứng trước ví dụ chuỗi năm trạng thái (nguồn tr. 15). C07 đứng ngay sau C04 để ví dụ lấy mẫu và cập nhật một lượt liền mạch trước thuật toán tổng quát C05–C06. Phút mỗi trang không đổi; tổng vẫn 120. Chi tiết từng trang ở storyboard và review-log.
+## Ánh xạ 30 trang nguồn
 
-## Ánh xạ đủ 30 trang nguồn
-
-| Trang L06 | Nội dung | Quyết định | Đích, lý do |
+| Trang nguồn | Nội dung | Đích trong deck | Quyết định |
 |---:|---|---|---|
-| 1 | Giới thiệu và tác giả | Giữ, sửa | A01; tên Sarsa và metadata đúng học phần/học kỳ, không gán đơn vị. |
-| 2 | Mục lục | Sửa | A02; bảy mạch theo phụ thuộc, ví dụ đặt tại khái niệm. |
-| 3 | Dự đoán phi mô hình | Gộp, sửa | A04–A05; đủ tiên quyết và phân biệt mô hình với mẫu. |
-| 4 | MC dự đoán, lợi tức, cập nhật | Gộp, sửa | A04, C01–C03; chuyển từ trạng thái sang cặp, không giữ “không chệch” thiếu giả thiết hoặc “không khả thi với cờ vua”. |
-| 5 | TD(0) và mục tiêu một bước | Gộp, sửa | A04, D01/D04; không suy cập nhật sớm luôn hiệu quả mẫu hơn. |
-| 6 | Vòng tương tác, điều khiển | Tách, sửa | A03–A04, B03; quy trình chạy theo ngân sách, không “đến hội tụ” mơ hồ. |
-| 7 | Q và chính sách tham lam | Tách, sửa | B01–B05, G01; tách q thật/Q, miền hành động và đồng hạng, bộ nhớ bảng; notes B01 và học liệu §2.1 giữ giới hạn không chia sẻ trực tiếp giữa các ô, dù trạng thái tương tự. |
-| 8 | Theo/khác chính sách | Sửa, tách | C01, D04, E01/E07; xác định bằng hai vai, không bằng “gần như” hoặc ưu thế mẫu chung. |
-| 9 | Một bước, tiền tố, lượt | Gộp, sửa | C01, D01–D02, E03, G01; phân biệt MC cần lượt, Sarsa cần A', Q-learning chỉ cần bộ bốn. |
-| 10 | Cập nhật MC | Tách, sửa | C02–C03, C05–C08; chọn lần ghé đầu theo cặp, N0=0 và quy trình đủ. |
-| 11 | Cải thiện MC, lịch 1/k | Tách, sửa | C05–C06, F02; π cố định trong lượt, giảm epsilon chưa tự GLIE. |
-| 12 | Từ MC sang TD control | Giữ, tách | D01/D03/D04; bước số trước quy tắc chung. |
-| 13 | Sarsa | Tách, sửa | D03–D04; mục tiêu đúng bảng, hành động kế tiếp và nhánh trạng thái kết thúc. |
-| 14 | Giả mã Sarsa | Tách, sửa | D05–D06; không chọn A' tại trạng thái kết thúc, ngân sách toàn bộ và chi phí. |
-| 15 | Chuỗi năm trạng thái, bảng I | Tách, sửa | A03, B01/B04, C02, D02; đưa dữ kiện sớm; sửa ba bước thành độ dài mẫu, thưởng trên cạnh. |
-| 16 | MC tham lam và quá trình cảm sinh | Giữ, sửa | B04/C02; giữ vòng B↔C, chỉ lượt từ D hoàn tất; chữa riêng 30 phút. |
-| 17 | MC thăm dò, bảng II, bộ sinh số | Tách, sửa | C04/C07; u_j, thứ tự tiêu thụ số, đầu mút, N0=0; dãy tất định chỉ cho thao tác. |
-| 18 | Sarsa năm mẫu, α 0.8 | Tách, sửa | D02–D08; bổ sung mẫu và biên lượt đã công bố, không suy quỹ đạo từ epsilon. |
-| 19 | Công thức V mang nhãn Sarsa | Sửa, chuyển đọc thêm | E01/E07 giữ vai hành vi/đích; học liệu §7.4 triển khai đặc tả analysis §7 DT1: V và tỉ số nhân mục tiêu, đẳng thức kỳ vọng của gia số chưa nhân bước học; G04 dẫn đọc. Không có slide công thức IS trong tuyến chính. |
-| 20 | Q-learning | Tách, sửa, thêm | E02–E05; ví dụ trước công thức; quy trình đủ từ SB tr. 131; mục tiêu cực đại là ước lượng. |
-| 21 | Q-learning năm mẫu, bảng II | Sửa, tách | E02/E06/E08; đổi sang bảng I và cùng 5 mẫu với Sarsa để chỉ thay mục tiêu, hai bảng chạy riêng. |
-| 22 | Dự đoán/điều khiển, so sánh | Gộp, sửa | A04, G01–G03; giữ ba phương pháp đã học, không mở actor–critic. |
-| 23 | Ma trận họ thuật toán | Gộp, bỏ một phần | G01 chỉ đối chiếu MC/Sarsa/Q-learning. Lược Expected Sarsa, TD(λ), REINFORCE, REINFORCE with Advantage, A2C, A3C, TRPO, PPO, DQN, Double DQN, Dueling DQN, DDPG, TD3, SAC, IMPALA: chưa có tiên quyết/thuật toán và nguồn trộn các tiêu chí phân loại. TD(0) giữ ở tiên quyết, không gọi là thuật toán điều khiển. |
-| 24 | Cải thiện epsilon-tham lam | Sửa, chuyển cục bộ | B06; gần cơ chế thăm dò, cùng epsilon, q chính xác, giả thiết γ<1; proof dài trong notes. |
-| 25 | GLIE | Sửa | F02/F05; chỉ số t nhất quán, tập cực đại xử lý đồng hạng, gần chắc chắn, lịch 1/k không tự độ phủ. |
-| 26 | Hội tụ MC từ GLIE | Sửa | F04 và notes; bỏ định lý thiếu giả thiết, tách trung bình cố định với chính sách đổi. Không tuyên bố tình trạng nghiên cứu hiện nay. |
-| 27 | Hội tụ Sarsa | Sửa | F01/F03/F04; đủ miền định lý, bước học theo cặp, chính sách giới hạn tham lam. |
-| 28 | Hội tụ Q-learning | Sửa | E07, F01/F03/F04; hành vi cần phủ, không cần tham lam; không tuyên bố ưu thế mẫu chung. |
-| 29 | Chặn MC hữu hạn mẫu | Sửa, chuyển đọc thêm | Học liệu §7.5 theo analysis §7 DT2, G04 dẫn đọc; định nghĩa J, lợi tức độc lập, độ rộng B, n cố định; không gọi độ phức tạp điều khiển, không áp γ 1. |
-| 30 | Tổng kết | Sửa | G01–G04; thu hồi quyết định ở D, đối chiếu mục tiêu và kiểm tra tổng hợp; lược câu quảng bá học sâu. |
+| 1 | Giới thiệu | A01 | sửa: luận đề, đơn vị theo quyết định chung |
+| 2 | Mục lục | A02, A08 | tách: mục tiêu và nội dung |
+| 3 | Dự đoán phi mô hình | A07, A05 | gộp vào nhắc lại và trang vấn đề |
+| 4 | Monte Carlo dự đoán | A07, C01 | nhắc lại, chuyển từ trạng thái sang cặp |
+| 5 | TD(0) | A09, D01 | nhắc lại, khung chung |
+| 6 | Vòng tương tác, điều khiển | A03, B03 | giữ ý, hình vòng điều khiển |
+| 7 | $Q$, chính sách tham lam | B02, B04, B05 | tách khái niệm và ví dụ |
+| 8 | Theo/khác chính sách | E09, E07 | định nghĩa bằng hai vai |
+| 9 | Một bước, lượt | C01, D01 | gộp vào nhu cầu |
+| 10 | Cập nhật Monte Carlo | C03, C05, C06 | lần ghé đầu tiên theo cặp, $N$ từ 0 |
+| 11 | Cải thiện Monte Carlo, $\varepsilon_k=1/k$ | C05, F06 | lịch thăm dò; ghi chú diễn giả |
+| 12 | Từ Monte Carlo sang TD điều khiển | D01 | tiêu đề không dùng "Từ…sang…" |
+| 13 | Sarsa | D03, D04 | ví dụ trước định nghĩa |
+| 14 | Giả mã Sarsa | D05, D10 | tách đầu vào và các bước |
+| 15 | Dãy năm ô, bảng nghiêng phải | A03, A05, B01 | ví dụ xuyên suốt |
+| 16 | Monte Carlo tham lam, quá trình cảm sinh | C02; vòng B–C trong ghi chú diễn giả B02, F13 | ví dụ, phản ví dụ $\gamma=1$ |
+| 17 | Monte Carlo thăm dò, bảng nghiêng trái, dãy số | C04, C07 | giữ, đổi ký hiệu $u_j$ |
+| 18 | Sarsa năm mẫu, $\alpha=0{,}8$ | D02, D03, D07 | hoàn thiện $A'$ và biên lượt |
+| 19 | TD(0) khác chính sách | E07 (một dòng trên mặt trang về tỉ số $\rho$; chi tiết ở ghi chú diễn giả); đọc thêm Mục 6 của ghi chú | chuyển đọc thêm, giữ nhu cầu trên mặt trang |
+| 20 | Q-learning | E02, E03, E04, E10 | ví dụ trước công thức; giả mã bổ sung |
+| 21 | Q-learning năm mẫu (bảng nghiêng trái) | E02, E06 | dùng bảng nghiêng phải cho cả hai thuật toán |
+| 22 | Dự đoán/điều khiển, so sánh | G01 | bảng khung chung |
+| 23 | Ma trận họ thuật toán | không dùng | lược: ngoài phạm vi bài |
+| 24 | Cải thiện $\varepsilon$-tham lam | B11, B06, B09 | ví dụ, mệnh đề, chứng minh |
+| 25 | GLIE | F06, F02 | ví dụ trước định nghĩa |
+| 26 | Hội tụ Monte Carlo với GLIE | ghi chú diễn giả F08, G06 | không phát biểu thành định lý |
+| 27 | Hội tụ Sarsa | F07, F03, F08 | Robbins–Monro theo cặp, GLIE |
+| 28 | Hội tụ Q-learning; Q-learning nhạy hơn với sai số do cực đại | F04, E07; ghi chú diễn giả E03, G01 (ước lượng cao do cực đại, Sutton và Barto §6.7, nối sang Bài 09) | độ phủ, không cần GLIE; nhận định về cực đại giữ ở ghi chú diễn giả |
+| 29 | Chặn Monte Carlo hữu hạn mẫu | đọc thêm Mục 6 của ghi chú (G04 ghi chú diễn giả) | chuyển đọc thêm |
+| 30 | Tổng kết | G05, G09, G02 | bảng giả thiết, trả lời vấn đề trung tâm |
 
-Các phần thêm có căn cứ: bảy trang kiểm tra; khung mục tiêu/tiên quyết; cơ chế chia đều đồng hạng; giả mã Q-learning; nhánh trạng thái kết thúc, chi phí và ngân sách; ví dụ C08 suy từ môi trường nguồn; ví dụ E08 suy từ bảng đã tính. Không thêm nguồn số liệu thực nghiệm. 30/30 trang đều có đích hoặc quyết định lược rõ.
-
-## Điều kiện triển khai và tự kiểm
-
-Học liệu đã ánh xạ bảy mạch với `lec-06-topic-01` tới `lec-06-topic-07`; các mã chỉ nằm trong thuộc tính/comment nội bộ. DT1/DT2 nằm ở mục đọc thêm của chủ đề 07, không tạo section chính thứ tám. Dùng nguồn, bảng ký hiệu và dữ kiện trong bản này làm cơ sở, không đọc lại nội dung Bài 06 cũ để tái sử dụng.
-
-Tổng thời lượng đã cộng đúng 120 phút; bảy kiểm tra đều có dữ kiện, lời giải và tiêu chí trong storyboard. Mẫu số, trạng thái kết thúc, chỉ số thời gian và sự khác nhau Q/q được chốt trước giả mã. no-ai-slop Edit đã loại lời dẫn rỗng, diễn đạt so sánh thiếu phạm vi và thuật ngữ luân phiên; tự kiểm eval giữ định nghĩa, giả thiết và yêu cầu học tập. Quill xác nhận đầu ra mỗi mạch được dùng ở mạch kế, kết luận dùng lại quyết định D, không có khái niệm trọng tâm mới ở kết bài. Bản nháp HTML và học liệu đã được kiểm kỹ thuật và rà độc lập; phạm vi thực kiểm nằm trong review-log. Các vùng thay đổi sau biên tập đã được tái kiểm và kiểm định cuối trên đúng bản mới; bằng chứng và giới hạn nằm trong review-log.
+Phần bổ sung ngoài nguồn có căn cứ trong ghi chú bài giảng: ví dụ một trạng thái ba hành động (B11), lượt có cặp lặp (C08), mẫu tàu đổ bộ (C10, E11, G03), dãy năm ô với $\gamma=0{,}9$ (F12, F13), phản ví dụ bước hằng (F13). Các bộ số tự xây dựng là số liệu sư phạm, ghi trong ghi chú diễn giả.
