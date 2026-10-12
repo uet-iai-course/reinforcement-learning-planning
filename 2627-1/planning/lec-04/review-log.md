@@ -1473,3 +1473,179 @@ Chỉ một tác tử ghi notebook tại mỗi thời điểm; các vai rà soá
 
 - Rà soát lại (fork, claude-opus-5-5, high, chỉ đọc, gộp vai toán và mạch cho sửa cục bộ): xác nhận hình học ($\theta>0$ nghiêng phải, cột dài `2*length`, hành động 1 đẩy phải), tái lập lượt bằng `assert` với phép đánh giá, lý do kết thúc, trình phát không lỗi console và không request mạng trên Playwright Chromium, hai trình phát độc lập, đánh số và tham chiếu chéo đúng; no-ai-slop Detect còn một cụm quảng bá, đã sửa.
 - Kiểm tra cuối của điều phối: đã xem khung trình phát ở kích thước hiển thị, đồ thị $\theta(t)$/$x(t)$ và dải ảnh tĩnh; `nbformat.validate` đạt; 96 ô, không ô lỗi, không ô chưa chạy, không URL ngoài trong output; nbclient chạy khoảng 34 giây, output tất định trừ số giây; index vẫn đạt ở 1600×900 và 390×844. Chưa mở thử trên Jupyter hoặc Colab thật.
+
+## Đợt sửa 2026-10-12 — Giai đoạn I: ghi chú bài giảng
+
+### Tác tử và phạm vi
+
+- Vai: tác tử soạn ghi chú bài giảng Bài 04 (viết tệp). Loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high`, theo brief của điều phối viên; điều phối viên đối chiếu với lời gọi công cụ. Không commit.
+- Tệp ghi: `2627-1/materials/lec-04/lecture-note.md` (viết lại toàn bộ); tạo mới `2627-1/img/lec-04/dp04-convergence-bound.svg`; mục này của `review-log.md`. Không sửa deck, `outline.md`, `storyboard.md`, SVG cũ, notebook, `index.html`.
+- Căn cứ: `planning/quyet-dinh-chuan-2026-10-12.md` (mục 1–4, 6, 8), `planning/lec-04/revision-plan-2026-10-12.md` mục B, `AGENTS.md` các mục được giao, mẫu `materials/_templates/lecture-note.md`, sản phẩm mẫu `math-4-AI` Bài 07 (chỉ cách trình bày), deck hiện tại, ghi chú cũ, ô Markdown và output đã nhúng của notebook, `hw3.pdf`, `hw04.pdf`.
+
+### Cấu trúc và số hiệu cuối cùng
+
+- Mười một thành phần: tiêu đề; (giới thiệu bỏ, bài toán trung tâm nêu ở đầu Mục 1); Mục tiêu học tập; Kiến thức tiên quyết; Bảng ký hiệu (25 dòng); Bản đồ chủ đề (5 cốt lõi, 3 cầu nối, 4 bổ sung, 1 đọc thêm); Mục 1–5 ứng với mạch 2–6; Tình huống áp dụng và ứng dụng; Tóm tắt chương; Bài tập củng cố ba mức; Hướng dẫn đọc thêm và tài liệu tham khảo.
+- `note-topic-id`: giữ `lec-04-part-01`…`-07`; mới `lec-04-part-08` (phần dư), `-09` (lặp chính sách), `-10` (lịch cập nhật, bất đồng bộ), `-11` (tồn tại chính sách tối ưu), `-12` (CartPole rời rạc hóa), `-13` (đọc thêm). `-06` chuyển từ "tính co và hội tụ" sang Mục 1.3; `-07` chuyển từ "chọn quy trình" sang Mục 5.3 (GPI và bảng so sánh).
+- Bộ đếm chung 04.1–04.34: Định nghĩa 04.1 ($T_\pi$, lượt quét đồng bộ); Bổ đề 04.2 (đơn điệu); Định nghĩa 04.3 (chuẩn vô cùng, ánh xạ co); Mệnh đề 04.4 ($T_\pi$ co); Định lý 04.5 (điểm bất động trên $\mathbb R^n$, có chứng minh); Hệ quả 04.6 (nghiệm đánh giá chính sách, dạng ma trận); Định nghĩa 04.7 (phần dư); Hệ quả 04.8 (chặn theo phần dư); Thuật toán 04.9 (đánh giá đồng bộ có ngưỡng); Nhận xét 04.10; Định nghĩa 04.11 ($Q_V$); Định nghĩa 04.12 (tham lam, quy tắc phá hòa); Định lý 04.13 (cải thiện chính sách); Thuật toán 04.14 (cải thiện tham lam); Nhận xét 04.15; Định nghĩa 04.16 (chính sách ổn định); Thuật toán 04.17 (lặp chính sách); Mệnh đề 04.18 (dừng hữu hạn); Định nghĩa 04.19 ($v_*$, $q_*$, chính sách tối ưu, sup trên $\Pi$); Định lý 04.20 (chính sách ổn định thỏa Bellman tối ưu, tối ưu trên lớp dừng); Nhận xét 04.21; Định nghĩa 04.22 ($T_*$, $\Delta_*$); Bổ đề 04.23; Mệnh đề 04.24 ($T_*$ co); Định lý 04.25 (tồn tại chính sách tối ưu dừng xác định, $v_*$ điểm bất động duy nhất, kể cả so với chính sách phụ thuộc lịch sử); Hệ quả 04.26 (hội tụ hình học); Hệ quả 04.27 (chặn theo $\Delta_*$, $\theta=(1-\gamma)\kappa$); Thuật toán 04.28 (lặp giá trị); Nhận xét 04.29; Mệnh đề 04.30 (chi phí một lượt quét); Thuật toán 04.31 (lặp giá trị bất đồng bộ); Định lý 04.32 (hội tụ bất đồng bộ, có chứng minh); Định nghĩa 04.33 (GPI); Nhận xét 04.34.
+- Ví dụ 04.1–04.18; Bài tập 04.1–04.6 trong các mục (trùng B08, C07, D06, E08, F06, G04 theo kế hoạch C), 04.7–04.9 ở Bài tập củng cố; Tình huống 04.1–04.3. Mỗi bài tập có `hint` và `solution`.
+- Mỗi thuật toán có ví dụ tính tay đứng trước khối `algorithm`: 04.9 ← Ví dụ 04.2, 04.6; 04.14 ← Ví dụ 04.9; 04.17 ← Ví dụ 04.11; 04.28 ← Ví dụ 04.13; 04.31 ← Ví dụ 04.16.
+
+### Sai khác so với kế hoạch B và lý do
+
+| mức độ | vị trí | sai khác | lý do | trạng thái |
+|---|---|---|---|---|
+| — | toàn tệp | Bỏ bộ số riêng ($\gamma=0{,}5$, thưởng $(2,-1,5,10)$, lưới 24, chặn 64); dùng bộ số của deck và nguồn | Quyết định chung mục 6, 8 | đã làm |
+| — | ký hiệu | Ngưỡng dừng $\theta$ (thay $\eta$ của deck và kế hoạch B6); sai số cho phép $\kappa$ (không dùng $\varepsilon$, dành cho chính sách $\varepsilon$-tham lam); góc cột CartPole $\phi$ (vì $\theta$ đã dành cho ngưỡng) | Quyết định chung mục 2; mỗi chữ một nghĩa. Deck, `dp04-cartpole-bins.svg` và notebook còn dùng $\eta$, $\varepsilon$, theta; Bảng ký hiệu nêu tương ứng. Giai đoạn II cần đổi deck sang $\theta$, $\kappa$ và quyết định nhãn góc trong SVG | cần điều phối viên xác nhận $\kappa$ |
+| — | ký hiệu | Tên trạng thái, hành động viết chữ đứng: $\mathrm s_0,\mathrm s_1$, $\mathrm a,\mathrm b$, $\mathrm c_1..\mathrm c_5$, $\mathrm{trai},\mathrm{phai}$ | Quyết định chung mục 2; tránh trùng biến $a$, $s$ | giai đoạn II đồng bộ deck |
+| — | Mục 1.3, 5.2 | Định lý Banach (04.5) và hội tụ bất đồng bộ (04.32) được chứng minh đầy đủ thay vì "ngoài phạm vi" | Có chứng minh sơ cấp gọn trên $\mathbb R^n$ và theo đoạn phủ; tránh nguồn chưa xác minh số trang | đã làm |
+| — | Mục 2 | Thêm Thuật toán 04.14 (cải thiện tham lam) và Ví dụ 04.10 phần 2–3 (chính sách ngẫu nhiên đều, $v=(14,16)$, cải thiện tới $(\mathrm b,\mathrm b)$; số liệu sư phạm tự xây dựng) | Brief yêu cầu thuật toán cải thiện có ví dụ tính tay; minh họa giả thiết $\pi$ ngẫu nhiên của Định lý 04.13 | đã làm |
+| — | Mục 1 | Ví dụ 04.7: Thuật toán 04.9 dừng ở $k=44$ với $\theta=0{,}01$; nối con số 44 của deck E01 với điều kiện dừng | Thống nhất ví dụ với thuật toán | đã làm |
+| — | Mục 3–4 | Thứ tự theo deck: $v_*$ định nghĩa ở Mục 3 sau ví dụ ba vòng; Định lý 04.20 giới hạn ở lớp dừng, Định lý 04.25 mở rộng sang $\Pi$ | Kế hoạch B6 mục 2; tránh mở khái niệm bằng định nghĩa | đã làm |
+| — | Tình huống | Thêm Tình huống 04.3 ($\gamma=1$ trên mô hình hai trạng thái) | Kế hoạch B4 cho phép; minh họa giả thiết $\gamma<1$ | đã làm |
+| — | Bài tập củng cố | Ba bài 04.7–04.9 gộp hw3 bài 1–2, bài 5 và 3, bài 4 và 8 thay vì sáu bài | Giữ bộ đếm 04.10+ cho `exercises.md` theo kế hoạch C | đã làm |
+| — | hình | Không còn dùng `two-state.svg`, `policy-evaluation.svg`, `gridworld.svg`, `convergence.svg`, `cartpole.svg` (cùng `bellman-choice.svg`, `dp-cycle.svg` vốn không dùng); vẽ mới `dp04-convergence-bound.svg` ($30\cdot0{,}9^k$ và sai số đo được, thang log, ngưỡng 0,1, $k=55$). Không xóa SVG cũ | Quyết định chung mục 8; xóa thuộc giai đoạn II | giai đoạn II quyết định |
+| — | độ dài | 27 431 từ theo `wc` (khoảng 23 900 ngoài công thức), vượt mức thường 8 000–20 000 | Đủ tám bước cho năm khái niệm trọng tâm, chứng minh theo bước, ba tình huống; sản phẩm mẫu math-4-AI Bài 07 có 34 853 từ | ghi nhận |
+
+### Giáo trình đã tham khảo theo mục (đối chiếu cách dẫn dắt, không dịch, không chép)
+
+| Mục | Giáo trình và vị trí đã đọc | Điều học được |
+|---|---|---|
+| 1 | Sutton và Barto (2018), §4.1, tr. 74–76 (PDF tr. 96–98): đánh giá lặp, cập nhật kỳ vọng, cập nhật tại chỗ, Ví dụ 4.1 | Tên "expected update", "sweep"; gọi bài toán là dự đoán; tại chỗ là biến thể |
+| 2 | Sutton và Barto (2018), §4.2, tr. 76–80 (PDF tr. 98–102), (4.6)–(4.9), định lý cải thiện tr. 78 | Thứ tự: thử một hành động rồi theo $\pi$ → định lý → tham lam; strict tại trạng thái |
+| 3 | Sutton và Barto (2018), §4.3, tr. 80–82, Bài tập 4.4 (PDF tr. 104) | Lỗi không dừng khi không có quy tắc phá hòa |
+| 4 | Sutton và Barto (2018), §4.4, tr. 82–84, (4.10) (PDF tr. 105–106); *Học máy thống kê* ch. 06, `sec_dynamic_progamming.tex`, tiểu mục "Thuật toán lặp giá trị" | Lặp giá trị là Bellman tối ưu biến thành quy tắc cập nhật; cách đọc $V_k$ là giá trị tối ưu $k$ bước, "nhìn về phía trước một bước" |
+| 5 | Sutton và Barto (2018), §4.5, tr. 85–86 (PDF tr. 107–108), §4.6–4.7, tr. 86–88 | Phát biểu hội tụ bất đồng bộ khi mọi trạng thái xuất hiện vô hạn lần (tr. 85); Bertsekas và Tsitsiklis (1989) được dẫn ở phần ghi chú lịch sử chương 4, tr. 90 (đã sửa theo A3); GPI là khuôn mô tả |
+| Tình huống | Bài thực hành CartPole (output đã nhúng); Sutton và Barto (2018), Ví dụ 4.1, tr. 76–77 | Số liệu "Trong thực hành"; trường hợp $\gamma=1$ cần điều kiện kết thúc |
+
+Puterman (1994) §6.1–6.5, Bertsekas và Tsitsiklis (1989), Szepesvári (2010) không có bản trong kho: chỉ dẫn mục theo kế hoạch B5, không ghi trang; Szepesvári không được dẫn trong ghi chú.
+
+### Số liệu đã tính lại (script trong scratchpad của phiên, Python thuần)
+
+- Mô hình hai trạng thái, $\gamma=0{,}9$: $G$ cắt ngắn $3{,}71$; lượt quét $\pi_0$: $(1,2)$, $(1{,}9;2{,}9)$, $(2{,}71;3{,}71)$; $v_{\pi_0}=(10,11)$; sai số $10\cdot0{,}9^k$; $\Delta_{\pi_0}(V_k)=0{,}9^k$; dừng ở $k=44$ với $\theta=0{,}01$ ($0{,}9^{43}\approx0{,}0108$, $0{,}9^{44}\approx0{,}0097$); $q_{\pi_0}$: $10;9{,}9;11;12{,}9$; $v_{\pi_1}=(10,30)$; $q_{\pi_1}(\mathrm s_0,\cdot)=10;27$; $v_{(\mathrm b,\mathrm b)}=(27,30)$, $q$: $25{,}3;27;26{,}3;30$; $v_{(\mathrm b,\mathrm a)}\approx(9{,}47;10{,}53)$; ngẫu nhiên đều: một lượt $(0{,}5;2{,}5)$, $v=(14,16)$, $q$: $13{,}6;14{,}4;14{,}6;17{,}4$.
+- Tính co: $U=(10,11)$, $V=0$: $T_{\pi_0}$ cho khoảng cách $9\le9{,}9$; $T_*$ cho $9{,}9=0{,}9\cdot11$.
+- Lặp giá trị: $(1,3)$, $(2{,}7;5{,}7)$; sai số thật trùng $30\cdot0{,}9^k$ với mọi $k$; $\Delta_*(V_1)=2{,}7$, chặn 27; $k=55$ đầu tiên đạt sai số $\le0{,}1$ ($30\cdot0{,}9^{54}\approx0{,}101$); $V_{55}\approx(26{,}9087;29{,}9087)$, $\Delta\approx0{,}00913$; $T_*U=(27,30)$, $\Delta_*(U)=17$, chặn 170.
+- Dãy năm ô: $V_1..V_4$ như bảng, $V_5=V_4$; $T_*V_4$: $3{,}122/4{,}58$, $3{,}122/6{,}2$, $4{,}58/8$, $6{,}2/10$; tại chỗ ngược: $V_4$ sau một lượt; xuôi: $(-1,-1,-1,10,0)$; trơn trượt (chỉ dùng ở exercises): $V_1=(-1,-1,-1,7{,}8,0)$, $V_2(\mathrm c_3)=4{,}436$.
+- Bất đồng bộ chỉ $\mathrm s_0$: giới hạn $10$. $\gamma=1$: $V_k=(k,k+1)$.
+- CartPole: $3\cdot3\cdot6\cdot6=324$; ô 130; $210\,600$ và $7\,776$ số hạng; $1+0{,}99\cdot0{,}565=1{,}55935$; $343{,}4/43{,}6\approx7{,}9$; $0{,}99^{500}/0{,}01\approx0{,}657$; $324-64=260$.
+
+### Tự kiểm `no-ai-slop` (chế độ Edit) và `quill`
+
+- Phạm vi: toàn bộ văn xuôi, khối định nghĩa, định lý, chứng minh, ví dụ, bài tập, lời giải, alt hình. Đối chiếu `eval.md`: đạt. Đã sửa: "thực sự cần", "chưa có lý do hiển nhiên", tương phản "không chỉ … mà", "Mục này xét" (tài liệu làm chủ ngữ), một câu bình luận "con số đáng ghi lại", câu hỏi trong đề bài đổi sang yêu cầu. Giữ các câu "đây chưa phải định nghĩa" theo yêu cầu bước trực giác của `AGENTS.md`. Một dấu gạch dài duy nhất ở tiêu đề.
+- `quill` (Outline, Threads, Concept, Revise làm bảng kiểm, không tạo `quill.json`): mọi ký hiệu dùng sau khi được định nghĩa hoặc có trong Bảng ký hiệu; tham chiếu tiến (Định lý 04.25 từ Mục 3, Mục 5 từ Mục 1.2) nêu điều đang tạm chấp nhận; các "luồng" mở ở Mục 1 (44 lượt quét, $\gamma=1$, CartPole) được đóng ở Mục 4, Tình huống 04.3, Mục 5.4 và Tình huống 04.1–04.2; mỗi `##` mở bằng bài toán trên ví dụ xuyên suốt và kết bằng đoạn văn xuôi ba ý.
+
+### Kết quả hai script
+
+- `note_check.py`: bộ đếm chung 34, ví dụ 18, bài tập 9, không khoảng trống, không trùng, không khối lạ, không khối chưa đánh số; còn hai lần chữ "trang chiếu" trong Bản đồ chủ đề theo mẫu.
+- `check_note.py 04 lecture-04-giai-mdp-bang-quy-hoach-dong.html`: 1600×900 và 390×844, 0 lỗi KaTeX, 0 lỗi console, không tài nguyên ngoài, không tràn trang. Đo thêm: ở 1600×900 không công thức nào tràn khung; ở 390×844 các công thức dài cuộn ngang trong khối như ghi chú Bài 05 đã công bố.
+
+### Giới hạn còn lại
+
+- Kết quả Bài 03 được dẫn bằng "ghi chú Bài 03, Mục k" theo cấu trúc 5 mục trong kế hoạch Bài 03 (Mục 1 Markov và mô hình, 2 lợi tức, 3 chính sách và hàm giá trị, 4 Bellman kỳ vọng, 5 đánh giá bằng hệ tuyến tính); đợt đồng bộ sau cần thay bằng số hiệu `03.k` và kiểm lại số mục khi ghi chú Bài 03 mới hoàn tất.
+- Các chỗ đề nghị tác tử rà toán soi kỹ: Bước 3–5 của chứng minh Định lý 04.25 (điều kiện hóa theo lịch sử, đổi giới hạn và kỳ vọng); phản ví dụ $F(V)=V+e^{-V}$ trên $[0,\infty)$ sau Định lý 04.5; Định lý 04.32 và phát biểu điều kiện dừng của Thuật toán 04.31; lời giải Bài tập 04.9(c) về trạng thái liên tục.
+- Mục Puterman, Bertsekas và Tsitsiklis chưa xác minh trên bản sách.
+
+### Rà soát vòng 1 và sửa (giai đoạn I)
+
+- Hai báo cáo chỉ đọc: vai A (toán, thuật toán; 0 nghiêm trọng, 5 trung bình, 10 nhẹ) và vai B (mạch viết, chuẩn giáo trình, văn phong, `no-ai-slop` Detect; 2 nghiêm trọng, 16 trung bình, 15 nhẹ). Quyết định của điều phối viên: sửa toàn bộ A1–A15, B1–B33; chấp nhận $\theta$, $\kappa$, $\phi$; đổi $P(s'\mid s,a)$, $\bar r$ thành $p(s'\mid s,a)$, $r(s,a)$; thực hiện 13 mục cắt của vai B và bảng trùng lặp của vai A; đích dưới 25 000 từ.
+- Tác tử sửa: chính tác tử soạn (Opus 5.5, `high`), tiếp tục cùng phiên. Không commit.
+- Số từ theo `wc`: trước 27 464, sau 24 991.
+
+| mã | mức độ | vị trí | xử lý | trạng thái |
+|---|---|---|---|---|
+| A1 | trung bình | sau Định lý 04.5 | Thay $V+e^{-V}$ trên $[0,\infty)$ bằng $F(V)=\sqrt{V^2+1}$ trên $\mathbb R$, có công thức tỉ lệ giảm và lý do không có điểm bất động | đã sửa |
+| A2 | trung bình | mở Mục 5 | "chỉ thay đổi đúng một ô" → "chỉ đưa ảnh hưởng của phần thưởng 10 lùi thêm một ô" | đã sửa |
+| A3 | trung bình | sau Nhận xét 04.33; Tài liệu tham khảo; review-log | Sutton và Barto §4.5, tr. 85 phát biểu kết quả; ghi chú lịch sử tr. 90 dẫn Bertsekas và Tsitsiklis (1989) | đã sửa |
+| A4 | trung bình | Tình huống 04.2 | Viết lại vi phạm Markov theo phân phối ô kế tiếp phụ thuộc vị trí trong ô và lịch sử | đã sửa |
+| A5 | trung bình | Thuật toán 04.31, điều kiện dừng | Thêm dòng $\Delta_*(V)\le(1+\gamma)\lVert V-v_*\rVert_\infty$ có căn cứ; tách trường hợp $K=\infty$ và $K$ hữu hạn | đã sửa |
+| A6 | nhẹ | Định lý 04.25, Bước 5 | Thay định lý hội tụ bị chặn bằng chặn đuôi $\gamma^NR_{\max}/(1-\gamma)$ | đã sửa |
+| A7 | nhẹ | Định lý 04.25, Bước 3 | Thêm câu: $\mathbb E_\pi$, $\Pr$ có điều kiện $S_0=s$ | đã sửa |
+| A8 | nhẹ | Bảng ký hiệu, Thuật toán 04.9, Mục 5.1, Nhận xét 04.30 | $p(s'\mid s,a)$, $r(s,a)$ theo quyết định chung | đã sửa |
+| A9 | nhẹ | Đọc thêm | $m\to\ell$; "trùng với lặp giá trị" | đã sửa |
+| A10 | nhẹ | Thuật toán 04.31, Định lý 04.32 | Lịch $\sigma_0,\sigma_1,\dots$ | đã sửa |
+| A11 | nhẹ | Nhận xét 04.33 | Câu về trạng thái bị bỏ qua viết có điều kiện, dẫn Bài tập 04.5 | đã sửa |
+| A12 | nhẹ | Định nghĩa 04.1 | $\gamma\in[0,1]$; kết quả hội tụ giữ $\gamma<1$ | đã sửa |
+| A13 | nhẹ | Nhận xét 04.29 | Thu hẹp thành "không là giá trị của chính sách xác định nào" | đã sửa |
+| A14 | nhẹ | Bài tập 04.9(c) | Ba chỗ dùng tính hữu hạn thành danh sách, thêm ý tổng thành tích phân; ý đo được và không gian hàm ghi "ngoài phạm vi học phần" | đã sửa |
+| A15 | nhẹ | "Trong thực hành" Mục 4.4 | Thêm $\Delta_*(V_k)\le\gamma^k\Delta_*(V_0)$ và $\theta=(1-\gamma)\cdot0{,}01$ theo từng $\gamma$ | đã sửa |
+| B1 | nghiêm trọng | mở Mục 5 | Như A2 | đã sửa |
+| B2 | nghiêm trọng | Mục 3.3 | Thêm đoạn trực giác trước Định nghĩa 04.19: so từng trạng thái, bốn chính sách xác định, chính sách nhớ lịch sử; chuyển phần đối chiếu bốn chính sách từ Ví dụ 04.12 lên đây | đã sửa |
+| B3 | trung bình | Kiến thức tiên quyết | Bỏ câu quy trình; thay bằng câu quy ước cách dẫn | đã sửa |
+| B4 | trung bình | sau Định lý 04.13 | "$1$ và $0$ tại $\mathrm s_0$; $2$ và $3$ tại $\mathrm s_1$"; giải tại chỗ $(27,30)$, $(10,30)$ | đã sửa |
+| B5 | trung bình | sau Định lý 04.13 | Phản ví dụ bỏ (2.2): $(\mathrm b,\mathrm a)$ với $(9{,}47;10{,}53)<(10,11)$ | đã sửa |
+| B6 | trung bình | "Trong thực hành" Mục 2 | Giải thích "chính sách theo dấu góc" tại chỗ | đã sửa |
+| B7 | trung bình | sau Định lý 04.25 | Bỏ khẳng định quá mức; "Tình huống 04.2 xét hệ quả của việc mất tính Markov" | đã sửa |
+| B8 | trung bình | Định lý 04.25, Bước 5 | Như A6 | đã sửa |
+| B9 | trung bình | Mục 5.3 | Thêm đoạn đọc hình GPI và câu "chưa phải định nghĩa"; bỏ "kéo về hai phía" | đã sửa |
+| B10 | trung bình | Đọc thêm | Như A9 | đã sửa |
+| B11 | trung bình | Ví dụ 04.14, 04.16 | Ví dụ 04.14 chỉ kiểm $\mathrm c_1$ bằng lợi tức đi phải; Ví dụ 04.16 tự tính $T_*$ tại $\mathrm c_1$; đoạn sau hình chính sách trỏ Bài tập 04.4 | đã sửa |
+| B12 | trung bình | Thuật toán 04.31 | Như A5 | đã sửa |
+| B13 | trung bình | Định lý 04.5 Bước 2; Định lý 04.13 Bước 2; Định lý 04.32 Bước 2 | Đặt `aligned` có căn cứ cột phải; Định lý 04.5 Bước 2 gộp thành một chuỗi `aligned` | đã sửa |
+| B14 | trung bình | quy ước sau Bảng ký hiệu; đọc (1.1); sau (3.1); sau Định nghĩa 04.22; "Trong thực hành" 4.4; Bài tập 04.9(c) | Tách đoạn, danh sách | đã sửa |
+| B15 | trung bình | Mục 5.2 | Thêm Nhận xét 04.33 (lượt quét tại chỗ là trường hợp riêng; lượng thay đổi khác phần dư; vai trò "vô hạn lần"); câu dẫn trước Định lý 04.32 nêu Mệnh đề 04.24 và Định lý 04.25(a) | đã sửa |
+| B16 | trung bình | Bài tập 04.9(c) | Như A14 | đã sửa |
+| B17 | trung bình | ranh giới Mục 1/2, 2/3, 3/4, 4/5 | Ý thứ ba của đoạn kết còn một mệnh đề; số liệu giữ ở đoạn mở mục sau | đã sửa |
+| B18 | trung bình | toàn tệp | 27 464 → 24 991 từ | đã sửa |
+| B19 | nhẹ | mở Mục 1, Tóm tắt, sau Ví dụ 04.5, đoạn kết các mục, "Trong thực hành" 4.4, 5.2 | Bỏ tài liệu/mục làm chủ ngữ ("Bài toán của chương là…", "Chúng ta xuất phát…", "trong Mục N, chúng ta…", "Một lần chạy đã nhúng…") | đã sửa |
+| B20 | nhẹ | Kiến thức tiên quyết; mở Mục 1 | Gọi tên $P_\pi$, $r_\pi$; "(Định nghĩa 04.3)" | đã sửa |
+| B21 | nhẹ | Bảng ký hiệu; Thuật toán 04.31 | Thêm $d$; lịch $\sigma_j$ | đã sửa |
+| B22 | nhẹ | mở Mục 4 | Dùng $V_1=(1,2)$: $1{,}9>1{,}8$, $4{,}8>2{,}9$ cho $(\mathrm a,\mathrm b)$ | đã sửa |
+| B23 | nhẹ | Ví dụ 04.6, sau Định nghĩa 04.22, sau hình dãy năm ô, trước Định nghĩa 04.19, sau Ví dụ 04.10 | Bỏ "không phải ngẫu nhiên", "Một lưu ý…:", "cho thấy một điều mà…", "rất mạnh:", "hứa" | đã sửa |
+| B24 | nhẹ | trước Thuật toán 04.9, 04.14, 04.28, 04.31 | Đổi cấu trúc câu dẫn bốn chỗ; giữ một chỗ trước Thuật toán 04.17 | đã sửa |
+| B25 | nhẹ | "Trong thực hành" 4.4 | Như A15 | đã sửa |
+| B26 | nhẹ | "Trong thực hành" 1.3; Tình huống 04.1 | Nêu ba trục của mảng; thay câu về hình bằng số kiểm được ($14/36$ ô) | đã sửa |
+| B27 | nhẹ | mở Mục 5.4 | Tách câu, bỏ ngoặc lồng | đã sửa |
+| B28 | nhẹ | Mệnh đề 04.24 Bước 3; Bổ đề 04.23 | Thêm nhãn bước và căn cứ dòng cuối | đã sửa |
+| B29 | nhẹ | Ví dụ 04.1; Ví dụ 04.18; Bài tập 04.5 | Kiểm tra lại bằng phép tính khác | đã sửa |
+| B30 | nhẹ | mở Bài tập củng cố | Bỏ "khi được công bố" và số hiệu chưa tồn tại | đã sửa |
+| B31 | nhẹ | sau Định lý 04.5 | Như A1 | đã sửa |
+| B32 | nhẹ | Mục tiêu 1; Bài tập 04.7 | Bài tập 04.7(a) đòi giải hệ Bellman của $\pi_1$; Mục tiêu 1 dẫn thêm 04.7 | đã sửa |
+| B33 | nhẹ | sau Định lý 04.13, 04.20, 04.25 | "Bỏ $\gamma<1$" trỏ tới đoạn sau Ví dụ 04.5 (thay Tình huống 04.3) | đã sửa |
+
+Không bác bỏ phát hiện nào.
+
+**Cắt theo bảng của vai B và vai A.** Bản đồ chủ đề rút thành hai dòng mỗi chủ đề, giữ đủ trường của mẫu; câu nguồn sau Bảng ký hiệu rút; chứng minh Định lý 04.5 gộp Bước 2–4 cũ; Hệ quả 04.6(c) dẫn lại Bài 03, Mục 5 thay cho chứng minh khả nghịch qua tính co, bỏ phần dạng ma trận lặp ở Ví dụ 04.5; Ví dụ 04.10 bỏ phần 2–3; Tình huống 04.3 thay bằng đoạn ngắn sau Ví dụ 04.5 ($V_k=(k,k+1)$, mọi lợi tức vô hạn, $T_{\pi_0}(V+c\mathbf 1)=T_{\pi_0}V+c\mathbf 1$, cần giả thiết thay thế); Ví dụ 04.18 bỏ lượt quét thứ ba; các đoạn "Trong thực hành" bỏ câu lặp, bỏ dãy $\gamma\in\{0{,}95;0{,}995\}$, bỏ hẳn đoạn ở cuối Mục 5.4; cảnh báo "hết ngân sách" giữ ở Nhận xét 04.10 và Tóm tắt; Mệnh đề 04.30 đổi thành Nhận xét 04.30 không chứng minh; phản ví dụ $V=(0,0)$ giữ đầy đủ ở Mục 2.2 và Bài tập 04.3, các chỗ khác chỉ trỏ tới; Ví dụ 04.12 bỏ dòng đối chiếu bốn chính sách (chuyển lên trước Định nghĩa 04.19); Tình huống 04.1 phần "Áp dụng" trỏ tới các đoạn "Trong thực hành"; đoạn tóm tắt chương rút còn sáu câu.
+
+**Chuyển cho `exercises.md` (giai đoạn III).** Ví dụ 04.10 cũ, phần 2–3 (số liệu sư phạm tự xây dựng): chính sách ngẫu nhiên đều trên mô hình hai trạng thái có $v_{\pi_u}=(14,16)$ (hệ $x=0{,}5+0{,}45x+0{,}45y$, $y=2{,}5+0{,}45x+0{,}45y$); giá trị nhìn trước $13{,}6$; $14{,}4$; $14{,}6$; $17{,}4$; một bước cải thiện cho $(\mathrm b,\mathrm b)$ với (2.2) nghiêm ngặt tại cả hai trạng thái. Có thể dùng làm bài tính toán về Định lý 04.13 với chính sách ngẫu nhiên. Tình huống 04.3 cũ ($\gamma=1$) có thể thành bài vận dụng ngắn.
+
+**Số hiệu sau khi sửa** (thay danh sách trong mục trên ở các chỗ khác nhau): 04.1–04.29 giữ nguyên; Nhận xét 04.30 (chi phí một lượt quét, trước là Mệnh đề 04.30); Thuật toán 04.31; Định lý 04.32; Nhận xét 04.33 (mới: lịch cập nhật, phần dư và điều kiện "vô hạn lần"); Định nghĩa 04.34 (GPI, trước là 04.33); Nhận xét 04.35 (giới hạn của chứng nhận trên mô hình gộp, trước là 04.34). Ví dụ 04.1–04.18 giữ số hiệu (Ví dụ 04.10 chỉ còn phần đánh giá lại $\pi_1$). Bài tập 04.1–04.9 giữ số hiệu. Tình huống còn 04.1–04.2.
+
+**Độ dài.** 24 991 từ theo `wc`, vượt mức thường 20 000. Lý do: năm khái niệm trọng tâm đi đủ tám bước, năm thuật toán đều có ví dụ tính tay và khối `algorithm` đầy đủ, sáu chứng minh chia bước được giữ đầy đủ theo yêu cầu "định lý có chứng minh", và chín bài tập có lời giải; các phần còn lại đã cắt theo hai bảng cắt.
+
+**Kết quả hai script sau sửa.** `note_check.py`: bộ đếm chung 35, ví dụ 18, bài tập 9, không khoảng trống, không trùng, không khối lạ; hai chữ "trang chiếu" trong Bản đồ chủ đề theo mẫu. `check_note.py 04 lecture-04-giai-mdp-bang-quy-hoach-dong.html`: 1600×900 và 390×844, 0 lỗi KaTeX, 0 lỗi console, không tài nguyên ngoài; ở 1600×900 không công thức nào tràn khung. `git diff --check` sạch.
+
+**Tự kiểm `no-ai-slop` sau sửa.** Đoạn mới và đoạn viết lại đối chiếu `eval.md`: đạt; không còn tương phản "không phải… mà là" trong văn xuôi mới, không còn mục làm chủ ngữ ở các chỗ B19 nêu.
+
+### Rà lại vòng 2 và sửa (giai đoạn I)
+
+- Hai tác tử rà lại chỉ đọc, Opus 5.5, mức `high`: vai A (toán; 1 trung bình, 7 nhẹ) và vai B (mạch viết, `no-ai-slop` Detect; 4 trung bình R1–R4, 11 nhẹ R5–R15). Không còn phát hiện chặn bàn giao hay nghiêm trọng. Tác tử soạn sửa toàn bộ theo quyết định của điều phối viên; không commit.
+- Số từ theo `wc`: trước 24 991, sau 24 994 (phần thêm R2, R3, R4, R7, R9, R10 được bù bằng các câu rút gọn trong Ví dụ 04.1, 04.3, 04.6, 04.10, 04.13, 04.14, Tình huống 04.1, Ứng dụng, Tài liệu tham khảo).
+
+| mã | mức độ | vị trí | xử lý | trạng thái |
+|---|---|---|---|---|
+| A-1 / R1 | trung bình | Đọc thêm, gạch "Trường hợp không chiết khấu" | "Tình huống 04.3" → "đoạn sau Ví dụ 04.5" | đã sửa |
+| A-2 | nhẹ | đoạn sau Ví dụ 04.5 | $V_k=(k,k+1)$ với $k\ge1$; thêm "mọi phần thưởng không âm" | đã sửa |
+| A-3 / R6 | nhẹ | Bài tập 04.9(c) | Gợi ý đổi thành ba ý khớp lời giải (đếm chính sách, tổng theo $s'$, vectơ hữu hạn chiều); lời giải thêm "Định lý 04.25, Bước 2 vẫn đúng vì tập hành động hữu hạn" | đã sửa |
+| A-4 | nhẹ | Thuật toán 04.31, điều kiện dừng | Thêm "Gọi $V_j$ là bảng sau $j$ bước cập nhật" | đã sửa |
+| A-5 | nhẹ | Nhận xét 04.33, gạch 1 | "Lượt quét tại chỗ của lặp giá trị là trường hợp riêng…" | đã sửa |
+| A-6 | nhẹ | Đọc thêm, lặp chính sách cải biên | "$\ell=1$ trùng với lặp giá trị từ vòng thứ hai" | đã sửa |
+| A-7 | nhẹ | tương ứng ký hiệu sau Bảng ký hiệu | $R(s,a,s')$ là phần thưởng của một chuyển, $r(s,a)=\sum_{s'}p(s'\mid s,a)R(s,a,s')$ | đã sửa |
+| A-8 | nhẹ | Ví dụ 04.16, kiểm tra lại | Thêm "(ba ô còn lại: Bài tập 04.4)" | đã sửa |
+| R2 | trung bình | Ví dụ 04.10, Ví dụ 04.16(ii), Bài tập 04.6 | Chép đủ dữ kiện mô hình hai trạng thái và dãy năm ô vào khối | đã sửa |
+| R3 | trung bình | đoạn sau Ví dụ 04.5 | Câu mở và danh sách "Bỏ $\gamma<1$: …" / "Bỏ chính sách cố định: …"; "thôi co" → "không còn co"; kèm A-2 | đã sửa |
+| R4 | trung bình | "Trong thực hành" Mục 1.3, 1.4, 2.2 | 1.3 thêm mệnh đề: bảo đảm thuộc MDP 324 ô ước lượng, khoảng cách tới CartPole ở Mục 5.4; 1.4 và 2.2 thêm "trên MDP ước lượng" | đã sửa |
+| R5 | nhẹ | đoạn sau bảng GPI | Bỏ suy luận lặp "đứng yên ⇒ $v_*$", giữ một mệnh đề nối | đã sửa |
+| R7 | nhẹ | đoạn kết Mục 5 | Thêm mệnh đề: hai tình huống ở mục sau đo khoảng cách trên CartPole | đã sửa |
+| R8 | nhẹ | Ví dụ 04.18, kiểm tra lại | Bỏ câu không có số liệu đỡ | đã sửa |
+| R9 | nhẹ | Ví dụ 04.12 | Chép bốn giá trị chính sách vào Dữ kiện; kiểm tra lại dựa trên chúng | đã sửa |
+| R10 | nhẹ | sau Thuật toán 04.17 | Thêm: nhãn "chưa chứng nhận" nghĩa là chính sách có thể còn cải thiện được | đã sửa |
+| R11 | nhẹ | sau Ví dụ 04.12, gạch "Bỏ giá trị chính xác" | Trỏ thêm "phản ví dụ sau Định lý 04.13" | đã sửa |
+| R12 | nhẹ | mở Mục 2 | "Ở Mục 1, ta có…" | đã sửa |
+| R13 | nhẹ | Định lý 04.13, Bước 4 | Chuỗi đặt trong `aligned` với căn cứ Bổ đề 04.2 / Bước 1 / (2.2) | đã sửa |
+| R14 | nhẹ | Bản đồ chủ đề | "công thức (4.6) của Sutton và Barto" | đã sửa |
+| R15 | nhẹ | sau Định nghĩa 04.22 | "vì $V_1$ không là giá trị của chính sách xác định nào (Nhận xét 04.29)" | đã sửa |
+
+Không bác bỏ phát hiện nào. Số hiệu không đổi so với vòng 1 (bộ đếm chung 04.1–04.35, Ví dụ 04.1–04.18, Bài tập 04.1–04.9, Tình huống 04.1–04.2).
+
+**Kết quả kiểm tra.** `note_check.py`: bộ đếm chung 35, ví dụ 18, bài tập 9, không khoảng trống, không trùng, không khối lạ. `check_note.py 04 lecture-04-giai-mdp-bang-quy-hoach-dong.html`: 1600×900 và 390×844, 0 lỗi KaTeX, 0 lỗi console, không tài nguyên ngoài; ở 1600×900 không công thức nào tràn khung. `git diff --check` sạch. Không còn chuỗi "Tình huống 04.3" hay "thôi co" trong ghi chú.
+
+**`no-ai-slop` (Edit) trên phần sửa.** Đối chiếu `eval.md`: đạt. Đoạn $\gamma=1$ tách thành danh sách theo giả thiết; không thêm tương phản "không phải… mà", câu hỏi tu từ hay mục làm chủ ngữ.
