@@ -127,7 +127,7 @@ Mọi số trên được tính lại bằng `fractions` của Python trong đ�
 | cận thị | myopic | ghi chú diễn giả `03-06b` |
 | giá trị trạng thái | state-value function | `01-01b` |
 | giá trị hành động | action-value function | `04-07` |
-| sơ đồ cập nhật | backup diagram | ghi chú diễn giả `05-09` (thống nhất với Bài 04; ghi chú bài giảng còn viết "sơ đồ dự phòng", đề nghị sửa ghi chú) |
+| sơ đồ cập nhật | backup diagram | ghi chú diễn giả `05-09` (thống nhất với Bài 04; ghi chú bài giảng đã khớp 2026-10-14) |
 | mục tiêu bootstrap | bootstrap target | ghi chú diễn giả `05-09` |
 | đánh giá chính sách, còn gọi là bài toán dự đoán | policy evaluation; prediction | `06-01` |
 | chuỗi Markov | Markov chain | `06-06` |

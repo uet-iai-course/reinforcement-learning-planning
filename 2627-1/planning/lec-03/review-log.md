@@ -1687,3 +1687,75 @@ Không từ chối mục nào. Lưu ý cho điều phối viên: ba SVG khác kh
 - Kiểm độc lập sau vòng 2: `density.py` chỉ gắn cờ các trang có ngoại lệ trong `storyboard.md`; Playwright 1600×900 và 390×844: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, đủ trang tiêu đề mạch; ảnh các trang đổi chính xem trực tiếp; `git diff --check` sạch.
 - Ba SVG không được deck lẫn ghi chú dùng (`robot-p03-geometric-series.svg`, `robot-p07-branch-wait.svg`, `robot-p07-three-actions-values.svg`) được khôi phục về bản HEAD, không đưa vào commit.
 - Quyết định: **chấp nhận**; commit `fix(lecture-03)`.
+
+## Đợt sửa 2026-10-14 — Sửa ghi chú sau giai đoạn II
+
+### Tác tử và phạm vi
+
+- Vai: tác tử biên tập ghi chú bài giảng (viết tệp), theo `brief_note_revision.md` của điều phối viên. Loại `general-purpose`, Claude Opus 5.5 (`claude-opus-5-5`), mức `high` (theo brief; điều phối viên xác nhận bằng lệnh gọi tác tử). `no-ai-slop` chế độ Edit. Không commit, không push.
+- Tệp sửa: `materials/lec-03/lecture-note.md`; `img/lec-03/backup-diagrams.svg` (chỉ ghi chú dùng; deck không tham chiếu); mục này của review-log. Không sửa deck, `outline.md`, `storyboard.md`, `index.html`, CSS.
+- Danh sách việc: mười dòng "Đề nghị sửa ghi chú (sau giai đoạn II)", ba dòng "Đề nghị sửa ghi chú (bổ sung)" của vòng 2, và mục "Lệch tạm thời deck–ghi chú". Đối chiếu với deck đã commit (`01-01c`, `05-06`, `05-06b`, `05-09`, `05-10`, `06-06`, `06-07b`, `06-07e`, `07-00`, `07-02b`, `07-04`) và ghi chú Bài 02 (Định nghĩa 02.5, Mệnh đề 02.13).
+
+### Bảng đề nghị và trạng thái
+
+Số dòng là của tệp sau sửa.
+
+| Đề nghị | Nguồn | Xử lý | Trạng thái | Dòng mới |
+|---|---|---|---|---|
+| Mệnh đề 03.11, Bổ đề 03.18 dẫn Bài 02 | MACH 1, PB 4 | Câu dẫn trước Mệnh đề 03.11: đã có ở Mệnh đề 02.13(b) với $R_{\max}$ thay $M$; ở đây dùng cho MDP hữu hạn, chứng minh viết lại vì Bổ đề 03.20 dùng lại lập luận chuỗi trội. Câu dẫn trước Bổ đề 03.18: đã có ở Mệnh đề 02.13(a) | đã sửa | 478, 832 |
+| Tiên quyết "tính Markov trực quan" | MACH 2 | Bỏ "trực quan", dẫn Định nghĩa 02.5. Sửa kéo theo: câu mở mục Kiến thức tiên quyết ("Ghi chú Bài 02 đang được đánh số lại…") không còn đúng, thay bằng quy ước dẫn `02.k`; câu sau Nhận xét 03.3 dẫn "Định nghĩa 02.5" thay "Mục 2" | đã sửa | 16, 19, 208 |
+| Nhận xét 03.25; lời giải Bài tập 03.7(a) | PB 1 | Nhận xét 03.25: Bổ đề 03.19 dùng tính Markov một bước qua quy tắc sinh (không cần tính dừng vì chỉ xét một thời điểm); Bổ đề 03.20 dùng tính Markov cho toàn bộ phần tương lai và tính dừng của $\pi$, $p$; Bổ đề 03.18 không dùng cả hai. Lời giải 03.7(a): thêm câu về tính Markov một bước trong quy tắc sinh (trọng số $p$ của tầng phản hồi và thừa số $p$ của (3.2)), ở Ví dụ 03.4 quy tắc này cũng hỏng; câu cũ "không bằng một số $v_\pi(\mathrm L)$ chung" đổi thành "hai kỳ vọng … không thể cùng bằng $v_\pi(\mathrm L)$" theo TOAN 5 vòng 2. "Kiểm tra lại" của 03.7 ghi rõ (4.3) dùng tại $t=0$, $h_0=(s)$ | đã sửa | 1157, 1197, 1201 |
+| "sơ đồ dự phòng" → "sơ đồ cập nhật (backup diagram)" | PB 2, RL 1 | Đổi ở `alt`, đoạn đọc hình và câu sau Hệ quả 03.24; SVG `backup-diagrams.svg` đổi `<title>` và hai nhãn tiêu đề trong hình (chỉ chữ, không đổi bố cục; đã xem ảnh chụp 1100×470). `outline.md` dòng 130 còn ghi "ghi chú bài giảng còn viết 'sơ đồ dự phòng'": ngoài phạm vi tệp của đợt này, chuyển điều phối viên | đã sửa (ghi chú, SVG); outline hoãn | 1036, 1038, 1152 |
+| Định nghĩa 03.26: $\gamma$ trong bộ MRP | PB 3 | Một câu sau định nghĩa: MRP lập ra để tính giá trị của một chính sách cố định, hệ của nó chứa $\gamma$ trong mọi hệ số (hệ số $\tfrac14=\gamma\cdot\tfrac12$ của (5.1)); bộ $\mathcal M$ chỉ mô tả môi trường nên $\gamma$ đứng ngoài (tiểu mục 1.5). Khớp ghi chú diễn giả `06-06` | đã sửa | 1299 |
+| Tình huống 03.1: $-1{,}3452$ | TOAN 1 | $10+0{,}9\cdot(-1{,}3452)\approx8{,}789$; "giá trị ba chữ số" → "giá trị thập phân". Tính lại bằng khử Gauss trên số hữu tỉ: $v_\pi(\mathrm A')=-1{,}345231\ldots$, $v_\pi(\mathrm A)=8{,}789292\ldots$, $v_\pi(\mathrm B')=0{,}358186\ldots$, $v_\pi(\mathrm B)=5{,}322368\ldots$. Bản cũ $10+0{,}9\cdot(-1{,}345)=8{,}7895$ không làm tròn chắc về $8{,}789$; $5+0{,}9\cdot0{,}358=5{,}3222\approx5{,}322$ giữ nguyên | đã sửa | 1536, 1541 |
+| Thuật toán 03.29, bước 1 | TOAN 2 | Tách ba trường hợp: $\pi(\cdot\mid s)$; hàm động lực đầy đủ thì kiểm $p(\cdot,\cdot\mid s,a)$ trên $\mathcal S^+\times\mathcal R$ theo (1.3); hai mảng thì kiểm $p(\cdot\mid s,a)$ trên $\mathcal S^+$. Ký hiệu dung sai $\delta$ giữ nguyên (đồng bộ chéo hoãn) | đã sửa | 1449 |
+| Mở Mục 4: "sai số tới $3/2$" | TOAN 9 | "cận sai số $3/2$", kèm sai số thật $\tfrac{13}4-\tfrac{21}8=\tfrac58$ (pin cao, Ví dụ 03.10) và $\tfrac74-\tfrac98=\tfrac58$ (pin thấp, Bài tập 03.4) | đã sửa | 802 |
+| Tóm tắt chương: giới hạn thứ tư | RL trung bình 2 | "Bốn giới hạn còn lại": thêm "trạng thái phải có tính Markov (Tình huống 03.2)" | đã sửa | 1588 |
+| Mục tiêu 2: xếp Bài tập 03.12 vào mục tiêu 4 | SV nhẹ 10 | Từ chối chuyển. Bài tập 03.12 tính $G_3,\dots,G_0$ rồi kiểm theo Định nghĩa 03.9, tức kỹ năng "tính lợi tức chiết khấu của một dãy phần thưởng" của mục tiêu 2; mục tiêu 4 là chứng minh phương trình Bellman và định vị giả thiết, bài này không dùng kỳ vọng hay tính Markov. Ghi chú diễn giả `01-01c` của deck đã commit cũng ghép 03.12 với mục tiêu 2. Thay vào đó, mục tiêu 2 dẫn thêm Bổ đề 03.18 để lý do có mặt của 03.12 hiện rõ. Bảng `07-03` xếp 03.12 theo mạch (vị trí của Bổ đề 03.18), là cách ánh xạ khác, không mâu thuẫn | từ chối (sửa thay thế) | 8 |
+| Tóm tắt: tính duy nhất không cần giả thiết mới | MACH R2, TOAN 1 (vòng 2) | "Hai giả thiết của Định lý 03.21, MDP hữu hạn và $\gamma<1$, vừa cho lợi tức có kỳ vọng hữu hạn vừa làm $I-\gamma P^\pi$ khả nghịch, nên không cần giả thiết mới…". Sửa kéo theo cùng ý ở hai chỗ khác: đoạn sau Ví dụ 03.17 ("với cái giá là hai giả thiết thêm vào" sai vì Định lý 03.21 đã có cả hai) và câu kết Mục 4 | đã sửa | 1588, 1432, 1204 |
+| Tóm tắt: câu "Bài 04 xử lý hai giới hạn sau" | TOAN 1, TOAN 2 (vòng 2) | Gọi tên giới hạn: Bài 04 xử lý chi phí giải hệ và việc chọn chính sách khi vẫn biết mô hình; Bài 05–06 bỏ giả thiết biết $p$; giới hạn Markov xuất hiện lại ở Bài 07 (câu riêng). Khớp ghi chú diễn giả `07-00`, `07-02b` | đã sửa | 1588 |
+| Sau Định lý 03.21, gạch "Bỏ tính Markov" (tùy chọn) | TOAN 2, TOAN 5 (vòng 2) | Đã làm: với $\gamma=1/2$ và phòng đầu chọn đều, hai kỳ vọng phần tương lai sau $h$, $h'$ là $\tfrac23$, $\tfrac43$, còn $v_\pi(\mathrm L)=1$; phương trình lập từ bảng trung bình $p(\mathrm L,1\mid\mathrm L,\mathrm{cho})=p(\mathrm L,0\mid\mathrm L,\mathrm{cho})=\tfrac12$ tình cờ đúng ($v=\tfrac1{2(1-\gamma)}$ thỏa $v=\tfrac12+\gamma v$); phản ví dụ cho kết luận là Tình huống 03.2 | đã sửa | 1042 |
+
+Số liệu tính lại cho chỗ sửa: sau $h=(\mathrm L,\mathrm{cho},1,\mathrm L)$ robot ở phòng 2 nên $G_1=\gamma/(1-\gamma^2)=\tfrac23$; sau $h'$, $G_1=1/(1-\gamma^2)=\tfrac43$; trung bình $1=\tfrac1{2(1-\gamma)}$. Lưới 5×5 như trên (khử Gauss trên `fractions.Fraction`).
+
+Kiểm tra chéo không đổi: đoạn kết Mục 5 (dòng 1517) vẫn nêu ba giới hạn vì giới hạn Markov chỉ xuất hiện ở Tình huống 03.2 ngay sau đó; Tóm tắt chương nêu bốn. Số hiệu kết quả, ví dụ, bài tập, tình huống và `note-topic-id` giữ nguyên.
+
+### Hoãn (đồng bộ chéo, không làm ở đợt này)
+
+- $P^\pi$, $r^\pi$ → $P_\pi$, $r_\pi$.
+- $v_H$, $v_L$ → $v_{\mathrm H}$, $v_{\mathrm L}$.
+- Ký hiệu dung sai $\delta$ của Thuật toán 03.29 (trùng $\delta_t$ của Bài 05).
+- `outline.md` dòng 130: bỏ vế "ghi chú bài giảng còn viết 'sơ đồ dự phòng'" sau khi đợt này được chấp nhận.
+
+### Tự kiểm `no-ai-slop` (Edit) và kết quả kiểm tra
+
+- Phạm vi: mọi câu thêm hoặc sửa ở các dòng trong bảng trên. Đối chiếu `eval.md`: không thêm số liệu không có căn cứ (mọi số mới đã tính lại); không từ cấm, không câu hỏi, không "hãy", "ta thấy", "rõ ràng"; tài liệu không làm chủ ngữ; không câu kết kịch tính; dấu hai chấm chỉ dùng cho danh sách hoặc trước công thức. Câu "Ví dụ này làm hỏng lập luận nhưng không bác bỏ kết luận" giữ dạng đối lập vì đó là nội dung toán học cần phân biệt.
+- `note_check.py`: 31 môi trường bộ đếm chung, 17 ví dụ, 14 bài tập, không khoảng trống, không trùng; 104 khối; 0 dấu `\(`, `\[`. Số từ `wc -w`: 23 098 trước, 23 660 sau (+562, do mười ba mục thêm câu; vượt mức 23 100 của vòng trước, chờ điều phối viên quyết định có rút chỗ khác hay không).
+- `check_note.py 03 lecture-03-qua-trinh-quyet-dinh-markov.html` (cổng 8766): 1600×900 và 390×844 đều 0 lỗi KaTeX, 104 khối, 0 lỗi console, 0 yêu cầu ra ngoài, không tràn (`overflow: false`; `scrollWidth` 482 ở 390 px như vòng trước, do bảng và MathML ẩn trong vùng cuộn riêng).
+- `git diff --check` sạch trên `materials/lec-03/`, `img/lec-03/backup-diagrams.svg`, `planning/lec-03/review-log.md`. SVG phân tích được bằng `xml.dom.minidom`.
+- Ghi chú Bài 02 có thay đổi chưa commit của luồng việc khác (không do tác tử này); đã kiểm trên bản làm việc: Định nghĩa 02.5 (Tính Markov) và Mệnh đề 02.13(a)(b) giữ số hiệu và nội dung mà ghi chú Bài 03 dẫn.
+
+### Rà lại sau đợt sửa và sửa bổ sung
+
+- Tác tử rà lại: vai toán và nhất quán, `general-purpose`, Claude Opus 5.5 (`claude-opus-5-5`), mức `high`, chỉ đọc (`noterecheck-03.md`): 0 chặn, 0 nghiêm trọng, 1 trung bình, 10 nhẹ. Biên tập viên: cùng tác tử của đợt sửa trên, theo quyết định của điều phối viên; `no-ai-slop` chế độ Edit; không cắt số từ theo chỉ đạo; không commit.
+
+| Mức | Vị trí | Xử lý | Trạng thái | Dòng mới |
+|---|---|---|---|---|
+| trung bình | gạch "Bỏ tính Markov" sau Định lý 03.21; câu dẫn | "Phản ví dụ cho chính kết luận" hạ thành "Một trường hợp quan sát được là Tình huống 03.2 …, chênh lệch gộp cả khả năng ô mất tính Markov lẫn cách dựng $\hat p$"; câu dẫn đổi thành "mỗi giả thiết bị bỏ đều làm hỏng một bước của chứng minh" (đúng cho cả ba gạch) | đã sửa | 1040, 1042 |
+| nhẹ | cùng gạch | Thêm điều kiện "và phân phối phòng như nhau ở mọi bước"; bỏ "tình cờ", dùng "vẫn đúng do cấu trúc này"; ghi rõ $v_\pi(\mathrm L)=1$ là kỳ vọng của $G_0$ khi $S_0=\mathrm L$ trên quá trình thật | đã sửa | 1042 |
+| nhẹ | Nhận xét 03.25 | Bổ đề 03.19 chỉ dùng quy tắc sinh tại một thời điểm, không dùng phần "cùng hàm $p$ cho mọi $t$" (tính dừng); (4.4) vẫn đúng với hàm động lực riêng của thời điểm $t$ | đã sửa | 1157 |
+| nhẹ | lời giải Bài tập 03.7(a) | Bỏ "còn"; bỏ vế lý do lặp; dẫn Bước 1 của Mệnh đề 03.22 (như Bổ đề 03.19(b)) | đã sửa | 1197 |
+| nhẹ | sau Ví dụ 03.17 | Thêm mắt xích "(tập $\mathcal R$ hữu hạn cho $\lvert R_k\rvert\le M$)" | đã sửa | 1432 |
+| nhẹ | Tóm tắt chương | "Hai trong các giả thiết của Định lý 03.21" | đã sửa | 1588 |
+| nhẹ | sau Nhận xét 03.3 | "khớp Định nghĩa 02.5 … trong trường hợp các tập hữu hạn; định nghĩa ấy còn đòi đẳng thức với mọi chính sách của tác tử" | đã sửa | 208 |
+| nhẹ | trước Mệnh đề 03.11, trước Bổ đề 03.18 | Bỏ tài liệu làm chủ ngữ: "Cận này đã có ở Mệnh đề 02.13(b) …", "Hệ thức này đã có ở Mệnh đề 02.13(a) …"; dòng 832 bỏ "cho MDP hữu hạn" | đã sửa | 478, 832 |
+| nhẹ | Mục tiêu 2 | Thêm kỹ năng "tính lùi lợi tức theo $G_t=R_{t+1}+\gamma G_{t+1}$" | đã sửa | 8 |
+| nhẹ | "Kiểm tra lại" của Bài tập 03.7 | Điều phối viên không yêu cầu; giữ nguyên (người rà cho phép giữ) | giữ | 1201 |
+| — | `outline.md` dòng 130 | Theo cho phép của điều phối viên: bỏ vế "ghi chú bài giảng còn viết 'sơ đồ dự phòng', đề nghị sửa ghi chú", ghi "ghi chú bài giảng đã khớp 2026-10-14" | đã sửa | outline 130 |
+
+Kiểm tra sau sửa: `note_check.py` 31/17/14, liên tục, không trùng, 104 khối, 0 `\(`/`\[`; số từ `wc -w` 23 759 (không cắt theo chỉ đạo). `check_note.py 03 lecture-03-qua-trinh-quyet-dinh-markov.html` (cổng 8766): 1600×900 và 390×844 đều 0 lỗi KaTeX, 0 lỗi console, 0 yêu cầu ra ngoài, không tràn. `git diff --check` sạch trên `materials/lec-03/`, `planning/lec-03/`, `img/lec-03/`. Tự kiểm `no-ai-slop` (Edit) trên các câu đổi: không từ cấm, không câu hỏi, tài liệu không làm chủ ngữ, không "tình cờ" hay câu khẳng định vượt bằng chứng.
+
+### Quyết định của điều phối viên (2026-10-14, sửa ghi chú sau giai đoạn II)
+
+- Kiểm độc lập: `note_check.py` sạch; viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console, không tải ngoài; `backup-diagrams.svg` là XML hợp lệ, deck không dùng; `git diff --check` sạch. Rà lại toán (Opus 5.5 high, chỉ đọc): 1 trung bình, 10 nhẹ, đã sửa (một mục nhẹ giữ nguyên có lý do).
+- Quyết định: **chấp nhận**; commit `fix(materials-03)`.

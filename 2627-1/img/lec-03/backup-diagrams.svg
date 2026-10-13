@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 470" role="img" aria-labelledby="bd-title bd-desc" font-family="Arial,sans-serif">
-<title id="bd-title">Sơ đồ dự phòng của v_π và q_π</title>
+<title id="bd-title">Sơ đồ cập nhật của v_π và q_π</title>
 <desc id="bd-desc">Hai sơ đồ cây. Vòng tròn rỗng là trạng thái, chấm tròn đặc là cặp trạng thái–hành động. Bên trái, sơ đồ của v_π: gốc là trạng thái s; ba cạnh mang nhãn π(a | s) đi xuống ba chấm đặc ứng với ba hành động a; từ mỗi chấm đặc hai cạnh mang nhãn p(s', r | s, a) và phần thưởng r đi xuống hai vòng tròn rỗng s'. Bên phải, sơ đồ của q_π: gốc là chấm đặc (s, a); hai cạnh mang nhãn p(s', r | s, a) và r đi xuống hai vòng tròn rỗng s'; từ mỗi s' hai cạnh mang nhãn π(a' | s') đi xuống hai chấm đặc a'. Dòng chú thích: giá trị ở gốc bằng trung bình có trọng số của r + γ nhân giá trị ở tầng dưới.</desc>
 <rect x="0" y="0" width="1100" height="470" fill="#ffffff"/>
 <g font-size="24" text-anchor="middle" fill="#1d1d1d" font-weight="bold">
-<text x="270" y="34">Sơ đồ dự phòng của v<tspan baseline-shift="sub" font-size="18">π</tspan></text>
-<text x="820" y="34">Sơ đồ dự phòng của q<tspan baseline-shift="sub" font-size="18">π</tspan></text>
+<text x="270" y="34">Sơ đồ cập nhật của v<tspan baseline-shift="sub" font-size="18">π</tspan></text>
+<text x="820" y="34">Sơ đồ cập nhật của q<tspan baseline-shift="sub" font-size="18">π</tspan></text>
 </g>
 <g stroke="#2F3E7A" stroke-width="2.5">
 <path d="M270 94L110 196M270 94L270 196M270 94L430 196"/>
