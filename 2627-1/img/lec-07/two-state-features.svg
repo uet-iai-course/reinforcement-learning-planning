@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
 <title id="title">Hai trạng thái với đặc trưng 1 và 2: phân phối cập nhật theo chính sách và khác chính sách</title>
-<desc id="desc">Hai bảng. Bảng trái, (a) theo chính sách, Ví dụ 07.11: trạng thái s₁ có đặc trưng 1 và giá trị ước lượng w, trạng thái s₂ có đặc trưng 2 và giá trị ước lượng 2w. Từ mỗi trạng thái, chuyển tới s₁ hoặc s₂ với xác suất ½, kể cả quay lại chính nó. Rời s₁ nhận phần thưởng 1, rời s₂ nhận phần thưởng 0. Hệ số chiết khấu 0,9. Cập nhật diễn ra ở cả hai trạng thái với tần suất ½. Bảng phải, (b) khác chính sách, Ví dụ 07.15: một mảnh MDP khác, chỉ chung hai vector đặc trưng với bảng trái. Ở s₁ chỉ có một hành động, chuyển tất định sang s₂ với phần thưởng 0, tỉ số lấy mẫu quan trọng bằng 1; chỉ chuyển này được cập nhật, lặp lại nhiều lần; mỗi cập nhật nhân w với 1 + α(2γ − 1).</desc>
+<desc id="desc">Hai bảng. Bảng trái, (a) theo chính sách: trạng thái s₁ có đặc trưng 1 và giá trị ước lượng w, trạng thái s₂ có đặc trưng 2 và giá trị ước lượng 2w. Từ mỗi trạng thái, chuyển tới s₁ hoặc s₂ với xác suất ½, kể cả quay lại chính nó. Rời s₁ nhận phần thưởng 1, rời s₂ nhận phần thưởng 0. Hệ số chiết khấu 0,9. Cập nhật diễn ra ở cả hai trạng thái với tần suất ½. Bảng phải, (b) khác chính sách: một mảnh MDP khác, chỉ chung hai vector đặc trưng với bảng trái. Ở s₁ chỉ có một hành động, chuyển tất định sang s₂ với phần thưởng 0, tỉ số lấy mẫu quan trọng bằng 1; chỉ chuyển này được cập nhật, lặp lại nhiều lần; mỗi cập nhật nhân w với 1 + α(2γ − 1).</desc>
 <defs>
 <marker id="an" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2F3E7A"/></marker>
 <marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#B15A2B"/></marker>
 </defs>
 <g font-family="Arial, Helvetica, sans-serif" fill="#28313D">
 <rect x="10" y="10" width="570" height="400" rx="14" fill="none" stroke="#999" stroke-width="2"/>
-<text x="295" y="48" text-anchor="middle" font-size="25" font-weight="bold">(a) Theo chính sách · Ví dụ 07.11</text>
+<text x="295" y="48" text-anchor="middle" font-size="25" font-weight="bold">(a) Theo chính sách</text>
 <circle cx="160" cy="210" r="82" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="4"/>
 <text x="160" y="198" text-anchor="middle" font-size="28" font-weight="bold">s₁</text>
 <text x="160" y="232" text-anchor="middle" font-size="20">x = 1, v̂ = w</text>
@@ -26,7 +26,7 @@
 <text x="430" y="330" text-anchor="middle" font-size="21">rời s₂: thưởng 0</text>
 <text x="295" y="372" text-anchor="middle" font-size="21">γ = 0,9; cập nhật ở s₁ và s₂, mỗi nơi tần suất ½</text>
 <rect x="620" y="10" width="570" height="400" rx="14" fill="none" stroke="#999" stroke-width="2"/>
-<text x="905" y="48" text-anchor="middle" font-size="25" font-weight="bold">(b) Khác chính sách · Ví dụ 07.15</text>
+<text x="905" y="48" text-anchor="middle" font-size="25" font-weight="bold">(b) Khác chính sách</text>
 <circle cx="770" cy="180" r="82" fill="#FFFFFF" stroke="#B15A2B" stroke-width="4"/>
 <text x="770" y="168" text-anchor="middle" font-size="28" font-weight="bold">s₁</text>
 <text x="770" y="202" text-anchor="middle" font-size="20">x = 1, v̂ = w</text>

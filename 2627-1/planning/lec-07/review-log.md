@@ -901,3 +901,301 @@ Ngoài bảng: Nhận xét 07.41 bước 4 viết "chính sách hành vi" (C17 c
 **Tự kiểm `no-ai-slop` (Edit).** Phạm vi: các câu đã sửa. Đã bỏ câu siêu văn bản, văn nói "thắng", vế mơ hồ; không thêm nhận định không nguồn; tiếng Anh ở lần đầu cho "importance sampling". Đạt theo `eval.md`.
 
 **Kiểm tra.** `note_check.py`: 20 196 từ; bộ đếm chung 41, ví dụ 16, bài tập 19, không khoảng trống, không trùng, không mẫu câu cấm. Script tham chiếu chéo: không tham chiếu treo; không còn "$n\leftarrow1$", "thứ $n$", "$1/n$". `check_note.py`: 1600×900 và 390×844 đều 0 lỗi KaTeX, 0 lỗi console, không tài nguyên ngoài, không tràn ngang. Đã xem ảnh PNG của `mc-update-vector.svg` sau khi đổi nhãn. `git diff --check` sạch. Không commit.
+
+## Đợt sửa 2026-10-12 — Giai đoạn II: bộ trang chiếu
+
+### Tác tử và phạm vi
+
+| vai | loại | mô hình | mức | ghi tệp |
+|---|---|---|---|---|
+| Sửa bộ trang chiếu Bài 07 (soạn, viết tệp) | `general-purpose` (theo brief; bằng chứng lời gọi công cụ do điều phối viên ghi) | claude-opus-5-5 | high | `lecture-07-xap-xi-ham.html`; `planning/lec-07/outline.md`, `storyboard.md` (viết lại); mục này của review-log |
+
+- Tệp đã đọc: brief chung `brief_deck_writer.md`; `planning/quyet-dinh-chuan-2026-10-12.md`; `planning/lec-07/revision-plan-2026-10-12.md` (A1–A5, B6, C, D); các mục được giao của `AGENTS.md` và `CLAUDE.md`; ghi chú bài giảng đã commit (`7d686bf`, đọc toàn bộ); deck, outline, storyboard cũ; các mục "Đợt sửa 2026-10-12 — Giai đoạn I" của nhật ký này; `lecture-slide.css`; deck mẫu math-4-AI Bài 07; `no-ai-slop` (`SKILL.md`, `eval.md`); `quill/references/workflows.md`.
+- Không sửa: ghi chú bài giảng, `lecture-slide.css`, `index.html`, viewer, notebook, mẫu, SVG (không SVG nào cần sửa hay thêm), tệp của bài khác. `note-for-author.md` của bài nằm ngoài phạm vi ghi của brief nên chưa thêm dòng "Hồ sơ lịch sử…" theo quyết định chung mục 5. Không commit.
+- Bản deck trước khi sửa lưu ở scratchpad của phiên (`d07/deck07-before.html`).
+
+### Kết quả
+
+- 7 mạch (6 → 7), 70 trang (40 → 70; 64 trang trong 120 phút, 6 trang chữa bài `X01`/`X01b`, `X02`/`X02b`, `X03`/`X03b`). Trang tiêu đề mạch `L07-M2T`…`L07-M7T`, `id="mach-2"`…`"mach-7"`, số trong `span.strand-number` khớp trang "Nội dung" và `#/N`.
+- Mạch mở đầu: `L07-01` (bìa, luận đề, đơn vị, năm học; bỏ tên tác giả nguồn khỏi mặt trang), `L07-01b` (Tiên quyết và quy ước), `L07-03` (sáu mục tiêu), `L07-03b` (Nội dung), `L07-03c` (Vấn đề trung tâm), `L07-02` (Khung chung của quy tắc cập nhật).
+- Mạch kết luận: `L07-36`, `L07-36b` (bảng kết quả), `L07-36c` (bảng khung chung), `L07-34` (bảng phạm vi), `L07-35`/`L07-35b` (bài tập tổng hợp Flappy Bird, Bài tập 07.18), `L07-36d` (trả lời vấn đề trung tâm, dòng "Nguồn:"), `L07-36e` (Câu hỏi tự kiểm tra), `L07-36f` (Bài tập về nhà và tài liệu đọc, liên kết viewer, nối Bài 08).
+- Bỏ toàn bộ khối `<style>` cục bộ (khoảng 100 luật, kể cả `.math-large{font-size:.85em}` ở `L07-09` và lớp `.answer`, `.figure.strip`, `.triad-tag`).
+- Ký hiệu đồng bộ ghi chú: `^\top`; $\mathbf 1_a$; $k$; $w^{(1)}$–$w^{(4)}$; $w_n$, $\alpha_n$; tên trạng thái $\mathrm A$–$\mathrm E$ chữ đứng; dấu phẩy thập phân; "Monte Carlo gradient", "bán gradient (semi-gradient)", "hầu chắc chắn (almost surely)", "lần ghé đầu tiên (first-visit)", "mọi lần ghé (every-visit)". Trích dẫn nguồn dạng "bài giảng gốc (2025–2026), trang N", "Bài tập tuần 7 (2025–2026), bài k", chỉ trong ghi chú diễn giả (trừ dòng "Nguồn:" bắt buộc ở `L07-36d`).
+- Số hiệu kết quả của ghi chú xuất hiện tối đa một lần mỗi mặt trang, sau phát biểu bằng lời.
+
+### Bảng mã trang cũ → mới
+
+| Cũ | Mới | Ghi chú |
+|---|---|---|
+| `L07-01` | `L07-01` | sửa |
+| `L07-02` | `L07-01b` + `L07-02` | tách: phần nhắc lại sang `L07-01b`; `L07-02` thành khung chung, đặt sau `L07-03c` |
+| `L07-03` | `L07-03` + `L07-03b` | tách mục tiêu và nội dung |
+| — | `L07-03c`, `L07-M2T`…`L07-M7T` | thêm |
+| `L07-04`–`L07-06` | giữ mã | sửa |
+| `L07-07` | `L07-07` + `L07-07b` | tách (vấn đề và ví dụ; định nghĩa) |
+| `L07-08` | `L07-08` | sửa, đặt trước `L07-07` |
+| `L07-09` | `L07-09` | sửa |
+| `L07-10` | `L07-10` + `L07-10b` | tách |
+| `L07-11` | `L07-11` + `L07-11b` | tách |
+| `L07-12`, `L07-13` | `L07-12`, `L07-13` | `L07-13` gộp định nghĩa mục tiêu cập nhật (Định nghĩa 07.12) với nội dung lợi tức cũ |
+| `L07-14`–`L07-16` | giữ mã | sửa |
+| `L07-17` | `L07-17` + `L07-17b` | tách |
+| `L07-18`–`L07-20b` | giữ mã | sửa; `L07-20` đổi tên "Cập nhật bán gradient" |
+| — | `L07-20c` | thêm (Bài tập 07.7) |
+| `L07-21`–`L07-23` | giữ mã | sửa |
+| — | `L07-23b` | thêm (Ví dụ 07.11) |
+| `L07-24` | `L07-24` + `L07-24b` + `L07-24c` | tách; `L07-24c` là Bài tập 07.8 (b) |
+| `L07-25`–`L07-30` | giữ mã | sửa; thứ tự `L07-27` → `L07-30` → `L07-28` → `L07-29` |
+| `L07-31` | `L07-31` + `L07-31b` + `L07-31c` | tách; `L07-31c` là Thuật toán 07.36 (bổ sung) |
+| `L07-32` | `L07-32b` + `L07-32` | thêm ví dụ phân kỳ trước định nghĩa |
+| `L07-33` | `L07-33` + `L07-33b` | tách đề và lời giải |
+| `L07-34` | `L07-34` | chuyển sang mạch 7, thành bảng phạm vi ba cột |
+| `L07-35` | `L07-35` + `L07-35b` | thay câu hỏi TD(0) bằng Bài tập 07.18 (Flappy Bird) |
+| `L07-36` | `L07-36`, `L07-36b`, `L07-36c`, `L07-36d`, `L07-36e`, `L07-36f` | tách theo mẫu mạch kết luận |
+| `X01` | `X01` + `X01b` | chuyển về mạch 3, tách lời giải |
+| `X02`, `X03` | `X02` + `X02b`, `X03` + `X03b` | chuyển về cuối mạch 5, tách lời giải |
+
+Không trang nào bị bỏ hẳn. Không học liệu nào liên kết tới mã trang hay `#/` của deck (đã kiểm bằng `grep` trong `materials/`, `index.html`, notebook).
+
+### Mật độ (script `density.py` của phiên)
+
+- Trước: 40 trang; 36 trang trên 40 âm tiết, 21 trang trên 60; 31 dòng có cờ vượt (âm tiết, dòng, âm tiết/dòng hoặc công thức).
+- Sau: 70 trang; 52 trang trên 40 âm tiết (đều ≤ 60 ở trang nội dung), 7 trang trên 60 (`L07-03` 74, `L07-03c` 67, `L07-36` 66, `L07-36b` 64, `L07-34` 72, `L07-36d` 74, `L07-36f` 67), đều là trang mục tiêu, tổng quan, tổng kết hoặc bảng với trần 80; 11 dòng có cờ, tất cả có ngoại lệ ghi trong `storyboard.md` (kể cả `L07-03b` 8 dòng, `L07-25` 7 dòng, hai dòng dẫn 22 âm tiết của trang tiêu đề mạch, trần dòng dẫn 25).
+- Script đếm cả dấu câu đứng sau công thức và số trong bảng; nhiều danh sách ký hiệu được gộp vào một khối KaTeX để không tạo token dấu phẩy.
+- Bảng trước/sau từng trang vượt trần ở `storyboard.md`, mục "Ngoại lệ mật độ".
+
+### Sai lệch so với kế hoạch A và lý do
+
+1. **Mã trang tiêu đề mạch:** `L07-M<k>T` theo quyết định chung mục 5, không dùng `L07-<chữ mạch>00` của kế hoạch A1.
+2. **Tên mạch 3, 4, 6** theo tiêu đề Mục 2, 3, 5 của ghi chú đã commit: "Monte Carlo gradient với hàm xấp xỉ", "TD(0) bán gradient và điểm cố định Bellman chiếu", "Q-learning bán gradient và bộ ba bất ổn" (kế hoạch: "Bán gradient TD(0)…", "Học khác chính sách và bộ ba bất ổn").
+3. **Thời lượng mạch 6–7:** 13 + 13 thay 12 + 14, vì mạch 6 có bảy trang nội dung (thêm thuật toán Q-learning và ví dụ phân kỳ).
+4. **Sáu mục tiêu** (kế hoạch: năm) theo mục "Mục tiêu học tập" của ghi chú.
+5. **Gộp để giữ 64 trang chính** (kế hoạch ước khoảng 66): ví dụ hai trạng thái đổi $\mu$ đặt cùng trang vấn đề `L07-07` (không có `L07-07b` ví dụ riêng; `L07-07b` là định nghĩa); ví dụ hai mục tiêu Sarsa/Q-learning đặt ở `L07-31` (kế hoạch `L07-31b`); Mệnh đề 07.20 (độ chệch mục tiêu TD) đặt ở `L07-18`; Mệnh đề 07.32 thành dòng "Diễn giải:" ở `L07-27`; `L07-13` cũ (lợi tức) gộp với Định nghĩa 07.12. Ví dụ hình chiếu Euclid giữ là một dòng "Ví dụ." ở `L07-21`.
+6. **Thêm ngoài danh sách A3:** `L07-24c` (Bài tập 07.8 (b)) để cụm Bellman chiếu có bài tập với lời giải trên mặt trang; `L07-17b` và `L07-24b` theo A3.
+7. **Ví dụ phân kỳ trước định nghĩa:** `L07-32b` đứng trước `L07-32` để cụm bộ ba bất ổn mở bằng vấn đề và ví dụ.
+8. **`X02`, `X03` ở cuối mạch 5** (kế hoạch: `X02` ngay sau `L07-27`), theo thứ tự Mục 4.3 của ghi chú; so sánh Monte Carlo với Sarsa trên cùng chuỗi vẫn giữ.
+9. **`L07-20c`:** phần bị bỏ là $\gamma\delta_tx(S_{t+1})=(-1{,}08;0)$ theo Bài tập 07.7 của ghi chú; kế hoạch A3 ghi $(1{,}08;0)$.
+10. **Bài tập về nhà:** bảng `Mạch | Bài tập` dùng số hiệu Bài tập 07.1–07.19 của ghi chú (tệp `exercises.md` chưa có; kế hoạch C giữ số hiệu bài trùng ghi chú). Liên kết chỉ trỏ tới ghi chú bài giảng; "Bài tập" để chữ thường, chưa có liên kết vì `exercises.md` chưa tồn tại (cần thêm ở giai đoạn III).
+11. **Không dùng `chapter-map.svg`** trên trang chiếu: nhãn "Mục 1–6" của ghi chú lệch một với số mạch của deck.
+12. **Tiêu đề `L07-11` và `L07-32`** bỏ phần tiếng Anh trong ngoặc vì "nhập nhằng (aliasing)", "bộ ba bất ổn (deadly triad)" đã xuất hiện ở `L07-03`.
+
+Phần bổ sung ngoài nguồn đã được duyệt (quyết định chung mục 8) và có trên trang: Thuật toán 07.36 (`L07-31c`), Ví dụ 07.11 (`L07-23b`), Ví dụ 07.15 (`L07-32b`), Ví dụ 07.14 (`L07-31`), số liệu notebook (`L07-04`, `L07-12`, `L07-18`). Bài tập 07.8 (b) ở `L07-24c` là bài củng cố của ghi chú (giai đoạn I ghi cần điều phối viên xác nhận).
+
+### Số liệu đã tính lại
+
+Bằng phân số chính xác (Python, scratchpad `d07/calc.py`): Ví dụ 07.11 ($v_\pi=(5{,}5;4{,}5)$, $w_{\mathrm{MC}}=2{,}9$, $A=19/40$, $b=\tfrac12$, $w_{\mathrm{TD}}=20/19$, $2J_\mu=4{,}225$ và $12{,}757$); Bài tập 07.8 (b) ($v_\pi=(4{,}5;5{,}5)$, $3{,}1$, $40/19$); Bài tập 07.10 ($w_3=(381{,}81;162{,}71;160{,}71)$; $1\,468{,}85$; $1\,087{,}04$; $705{,}23$); Bài tập 07.11 ($w_1$, $w_2$, $w_3=(8{,}032;-2{,}064;1{,}264)$; $23{,}296$; $19{,}392$; $27{,}424$); Ví dụ 07.14 và Bài tập 07.13 ($\delta=0$, $w_2=w_1$; $w_3=(7{,}36;-1{,}92;1{,}12)$); $1{,}08^{30}\approx10{,}06$; $1\,896/9\,216\approx0{,}206$; $156$, $771$, $785$. Tính tay: Ví dụ 07.2, 07.3, 07.7–07.9, Bài tập 07.3, 07.7. Mọi số khớp ghi chú.
+
+### Đề nghị sửa ghi chú
+
+Không phát hiện mâu thuẫn số liệu hay ký hiệu giữa deck mới và ghi chú. Hai đề nghị nhỏ cho đợt sau:
+- `two-state-features.svg` ghi "Ví dụ 07.11", "Ví dụ 07.15" trong nhãn ô; khi hình dùng trên trang chiếu (`L07-32b`), nhãn này là số hiệu thứ hai trên mặt trang. Nếu cần, thay bằng "(a) Theo chính sách", "(b) Khác chính sách" và để số hiệu trong chú thích của ghi chú.
+- `chapter-map.svg` đánh "Mục 1–6"; nếu muốn dùng trên deck cần một bản ghi số mạch 2–7.
+
+### Đề nghị cho `lecture-slide.css`
+
+- Thêm `.reveal ol[type="a"]{list-style-type:lower-alpha}`: chủ đề RevealJS đặt `list-style-type: decimal` nên thuộc tính `type="a"` không có tác dụng; deck hiện viết "(a)", "(b)" bằng chữ trong `<p>`.
+- Cân nhắc một lớp chung cho dải hình thấp (như `.figure.strip` cũ, chiều cao khoảng 112 px) để không cần CSS cục bộ.
+
+### Tự kiểm `no-ai-slop` (chế độ Edit) theo `eval.md`
+
+Phạm vi: toàn bộ mặt trang và ghi chú diễn giả của 70 trang. Đạt: không thêm nhận định không nguồn (số liệu notebook ghi "một lần chạy đã nhúng trong notebook" hoặc "bảng thử nghiệm khi soạn"); không câu hỏi tu từ (câu hỏi chỉ ở trang "Câu hỏi:" và bài tập); không lời chỉ đường "trang sau", "phần sau", "tiếp theo" trong ghi chú diễn giả (đã thay câu "đó là trật tự của các phần sau" ở `L07-02`); không "ta thấy", "chúng ta", "rõ ràng", "hãy", "Đáp án"; không ghi chú mở bằng "Trang này"; không mã nội bộ hay mã trang trên mặt trang hoặc ghi chú. Đã sửa hai tương phản nhị phân không cần thiết (ghi chú `L07-35b`; câu lặp "bán gradient không phải tính chất của dạng hàm" ở ghi chú `L07-03`); giữ các phân biệt toán học ("có thể phân kỳ" so với "mỗi lần chạy phân kỳ", "giả thiết bị mất" so với "giả thiết đủ"). Nhãn chỉ trong danh sách cho phép, cộng "Nguồn:" bắt buộc ở `L07-36d` và dòng "Đọc trước" không in đậm ở `L07-03b`. Ghi chú diễn giả: 58/70 trang trong 40–150 âm tiết; 12 trang 151–200 (trang định nghĩa và bảng có số liệu notebook), chỉ là mức `nhẹ` theo `AGENTS.md`. Không dùng điểm của bộ phát hiện AI.
+
+Rà theo `quill` (Outline, Threads, Concept, Revise; không tạo `quill.json`): mỗi ký hiệu xuất hiện sau định nghĩa hoặc dòng "Nhắc lại:" ($G_t$, $v_\pi$ ở `L07-01b`; $\Phi$ ở `L07-07b` trước mạch 4; $d_\pi$ ở `L07-22`; $\pi_w$ ở `L07-26` trước `L07-28`; $T_\pi$ ở `L07-21`); các sợi mở được đóng: mức lan (`L07-06`) → phân kỳ (`L07-32b`); nhập nhằng (`L07-11`) → `L07-36e`; bốn khối không đủ hạng (`L07-10b`) → `L07-35b`; hai đích (`L07-17`, `L07-24`) → `L07-23b`, `L07-24c`, `L07-25`; khung chung (`L07-02`) → `L07-36c`; vấn đề trung tâm (`L07-03c`) → `L07-36d`.
+
+### Kiểm tra trình duyệt
+
+Script Playwright Chromium (scratchpad `d07/check_deck07.py`), server `reloadserver` cổng 8766 tại gốc kho, duyệt mọi trang ngang và dọc bằng `Reveal.slide(h,v,99)`:
+- 1600×900 và 390×844: 70 trang; 0 lỗi console hoặc trang; 0 `.katex-error`; 0 yêu cầu ra ngoài localhost; 0 phản hồi lỗi ≥ 400; không cuộn ngang; không tràn phải (đo theo hộp `.base` của KaTeX và mọi phần tử ngoài ghi chú); không phần tử nào cách đáy khung dưới 25 px trừ `L07-26` (cách 21 px, đã xem ảnh, không chồng chân trang); số trong `span.strand-number` khớp `#/N` và trang "Nội dung" ở cả bảy mạch.
+- Bàn phím: từ `#/1`, ArrowDown, ArrowRight (tới `#/mach-2`), ArrowLeft hoạt động; `#/4` mở trang tiêu đề mạch 4.
+- Đã xem ảnh của mọi trang ở 1600×900 (bảng ghép trong `d07/sheet-1600-*.png`), và ảnh 390×844 (`d07/sheet-390-*.png`). Ảnh từng trang ở `d07/all/`.
+- `git diff --check` sạch.
+
+### Chỗ cần rà soát soi
+
+- `L07-32b`: hình hai ô ở chiều cao 260 px, nhãn trong ô (b) nhỏ; dữ kiện của ô (b) được nêu lại bằng chữ trên mặt trang.
+- `L07-03c`, `L07-36d`: ngoại lệ trần 80 cho trang tổng quan/tổng kết.
+- `L07-31c`: "Đầu vào: như Sarsa bán gradient" dẫn lại trang trước thay vì liệt kê.
+- `L07-18`: độ chệch của mục tiêu TD (Mệnh đề 07.20) đặt cùng trang trực giác.
+- Tóm tắt bước 4 của chứng minh ở `L07-17b`, `L07-24b` chỉ là ý tưởng, dẫn nguồn trong ghi chú diễn giả.
+
+## Rà soát năm vai và biên tập (giai đoạn II), 2026-10-12 đến 2026-10-14
+
+### Tác tử
+
+| vai | loại | mô hình | mức | ghi tệp |
+|---|---|---|---|---|
+| Rà soát góc nhìn sinh viên và mật độ (SV) | `general-purpose` (theo brief; bằng chứng lời gọi công cụ do điều phối viên ghi) | claude-opus-5-5 | high | không |
+| Chuyên gia Học tăng cường (RL) | như trên | claude-opus-5-5 | high | không |
+| Toán và thuật toán (TOAN) | như trên | claude-opus-5-5 | high | không |
+| Phản biện học thuật, sư phạm, `no-ai-slop` Detect (PB) | như trên | claude-opus-5-5 | high | không |
+| Kết nối và mạch (MACH) | như trên | claude-opus-5-5 | high | không |
+| Biên tập viên (gộp năm báo cáo, viết tệp; tiếp quản từ tác tử soạn đã dừng, một lần bị ngắt giữa chừng rồi tiếp tục) | như trên | claude-opus-5-5 | high | deck, `img/lec-07/`, `outline.md`, `storyboard.md`, mục này |
+
+Năm báo cáo: 0 `chặn bàn giao`, 0 `nghiêm trọng`; trung bình SV 5, RL 2, TOAN 3, PB 12, MACH 6. Quyết định của điều phối viên (2026-10-12) được áp dụng nguyên văn trừ các chỗ ghi ở "Từ chối hoặc làm khác".
+
+### Trang đổi, thêm, bỏ (để rà lại toán và mạch)
+
+- **Thêm 5:** `L07-01c` (Tiên quyết và quy ước: ký hiệu), `L07-19b` (Độ chệch của mục tiêu TD, Mệnh đề 07.20), `L07-31d` (Bài tập 07.13: ba cập nhật Q-learning), `L07-32c` (phép tính phân kỳ, tách từ `L07-32b`). `L07-36b` giữ mã nhưng đổi nội dung. Không bỏ trang nào. Deck 70 → 74 trang (68 trong 120 phút).
+- **Sửa mặt trang:** `L07-01`, `01b`, `03`, `03b`, `03c`, M2T–M7T (dòng dẫn không KaTeX), `04`, `07`, `07b`, `09`, `10`, `10b`, `11`, `12`, `14`, `16`, `17b`, `X01`, `X01b`, `18`, `19`, `20b`, `21`, `23`, `23b`, `24`, `24b`, `25`, `26`, `27`, `29`, `30`, `X03`, `X03b`, `31`, `31b`, `31c`, `32b`, `33`, `36`, `36b`, `36c`, `34`, `36d`, `36f`.
+- **Chỉ sửa ghi chú diễn giả:** `L07-02`, `05`, `11b`, `13`, `17`, `20c`, `22`, `24c`, `28` (không đổi), `X02`, `32`, `33b`, `35`, `36e`.
+- **Cấu hình:** `scrollActivationWidth:null` trong `Reveal.initialize`.
+- **SVG:** thêm `two-state-offpolicy.svg` (một ô khác chính sách, chữ 32–34 trong viewBox 1200 × 210; ở 1600 × 900 nhãn hiển thị khoảng 0,8em); `two-state-features.svg` đổi nhãn ô thành "(a) Theo chính sách", "(b) Khác chính sách", bỏ số hiệu ví dụ (hình còn dùng trong ghi chú, không còn trên deck); `projected-bellman.svg` nhãn hình chiếu thành $\Pi_D T_\pi(\Phi w)$.
+
+### Bảng phát hiện và xử lý
+
+Trạng thái: **sửa** (theo đề xuất hoặc theo quyết định điều phối viên), **sửa khác** (giải pháp khác, có lý do), **từ chối** (có lý do).
+
+| mã | trang | mức | xử lý |
+|---|---|---|---|
+| TOAN 1 | `L07-34`, `L07-36b` | tb | sửa: danh sách TD(0) thống nhất năm mục trên `L07-34`; hàng hội tụ TD bỏ khỏi `L07-36b` (MACH 1) nên chỉ còn một danh sách |
+| TOAN 2 | `L07-32b`, `33b`, `34`, `36b` | tb | sửa: ghi "TD(0) dự đoán khác chính sách", $\rho=1$/$\rho=0$; dòng "Q-learning có cùng ba yếu tố; phản ví dụ tương tự (Sutton và Barto, 2018, §11.2)" ở `L07-32c`; ô `L07-34` "phản ví dụ của TD khác chính sách cùng bộ ba"; ghi chú `33b` (c) sửa |
+| TOAN 3 | `L07-36b` | tb | sửa: hàng "Phân kỳ trong ví dụ hai trạng thái", giả thiết $\gamma\in(\tfrac12,1)$; chỉ cập nhật $s_1\to s_2$ |
+| TOAN 4 | `L07-04` | nhẹ | sửa: "sáu biến liên tục và trạng thái chạm đất (3 mức)"; ghi chú $9\,216=3\cdot4^5\cdot3$ |
+| TOAN 5 | `L07-18` | nhẹ | sửa: Mệnh đề 07.20 sang `L07-19b` với "$\pi$ cố định và $w$ cố định, không phụ thuộc chuyển" |
+| TOAN 6 | `L07-23` | nhẹ | sửa: công thức với $w$ tổng quát |
+| TOAN 7 | `L07-17b`, `24b` | nhẹ | sửa: "Ý tưởng (Bertsekas và Tsitsiklis, 1996):", "với $\alpha$ đủ nhỏ" |
+| TOAN 8 | ghi chú `L07-35`, `10b` | nhẹ | sửa: Fourier đầy đủ bậc 3 trên 4 đại lượng dẫn xuất, $4^4=256$ |
+| TOAN 9 | ghi chú `L07-36d` | nhẹ | sửa: câu liệt kê giả thiết đã rút gọn |
+| TOAN 10 | `L07-01b` | nhẹ | sửa: giả thiết Q-learning dạng bảng lên mặt trang |
+| MACH 1 | mạch 7 | tb | sửa: `L07-36`/`36b` chỉ còn kết quả không phải hội tụ; hội tụ ở `L07-34`. Thử một trang sáu hàng: tràn đáy 71 px, nên giữ hai trang ba hàng |
+| MACH 2 | `L07-32b` | tb | sửa theo câu "Nhu cầu:" đề xuất |
+| MACH 3 | `X03b`, storyboard | tb | sửa: "Diễn giải:" $998$ so với $1$; nhãn X02 "đối chứng Monte Carlo cho K8" |
+| MACH 4 | `L07-07b` | tb | sửa: câu kết dẫn sang đặc trưng; câu "chưa tính được $J_\mu$" xuống ghi chú `L07-M3T` |
+| MACH 5 | `L07-10`/`10b` | tb | sửa khác (quyết định điều phối viên): giữ thứ tự theo ghi chú §1.4; thêm "Nhắc lại:" bốn khối ở `L07-27` và dòng hệ quả ở `L07-10` |
+| MACH 6 | `L07-01b` | tb | sửa: trang `L07-01c` "Ký hiệu:" $\hat v$, $\hat q$, $x(s)$, $\mathcal S$, $m$, $w\in\mathbb R^d$ |
+| MACH 7 | `L07-01` | nhẹ | sửa: luận đề do điều phối viên chốt |
+| MACH 8 | `L07-03c`, `36d` | nhẹ | sửa |
+| MACH 9, 10 | `L07-M6T` | nhẹ | sửa: dòng dẫn "…dùng mục tiêu cực đại và nhận diện nguy cơ phân kỳ"; ghi chú "hàng Q-learning" |
+| MACH 11 | `X03b` | nhẹ | sửa |
+| MACH 12 | `X01` | nhẹ | sửa: (b) kiểm bằng số liệu `L07-14` |
+| MACH 13 | ghi chú `L07-19` và các ghi chú gọi tên ví dụ | nhẹ | sửa: câu "mẫu mới"; gọi thống nhất "hai trạng thái cùng đặc trưng", "hai trạng thái với đặc trưng 1 và 2" |
+| MACH 14–16 | ghi chú `L07-12`, `36`, `03b`, `03c`; đọc trước | nhẹ | sửa |
+| MACH 17 | storyboard | nhẹ | sửa |
+| PB 1, 2 | `L07-01b` | tb | sửa (`L07-01b`, `L07-01c`) |
+| PB 3, 4 | `L07-10`, `27`, `X03b` | tb | sửa |
+| PB 5 | `L07-11` | tb | sửa: "Định nghĩa." nhập nhằng, dòng sai số xấp xỉ/ước lượng, số hiệu sau phát biểu |
+| PB 6 | `L07-18`, `25` | tb | sửa: "chệch" |
+| PB 7 | `L07-18` | tb | sửa: trang `L07-19b` |
+| PB 8 | `L07-23b` | tb | sửa: hai dòng trung gian trong cùng khối `aligned` (năm dòng) |
+| PB 9 | `L07-23` | tb | sửa |
+| PB 10 | `L07-31` | tb | sửa: `L07-31d` (Bài tập 07.13), đặt sau `L07-31c` |
+| PB 11 | `L07-32b` | tb | sửa: dòng "Nhu cầu:" theo MACH 2 (quyết định điều phối viên), dòng $\rho$ |
+| PB 12 | `L07-20b` | tb | sửa |
+| PB 13 | `L07-34` | tb | sửa (TOAN 1) |
+| PB nhẹ | `L07-01`, `12`, `21`, `22`, `07`, `07b`, Detect ghi chú (`01`, `02`, `03b`, `03c`, M2T–M7T, `25`, `36`, `36b`, `34`, `36f`, `05`, `13`, `17`, `24`, `23`), độ dài ghi chú, `01b` | nhẹ | sửa; ghi chú `L07-21` giữ một câu nối "$\Pi_D$ trong hình…" |
+| RL 1 | ví dụ phân kỳ | tb | sửa theo phương án (a) (quyết định điều phối viên); phương án (b) (biến thể Q-learning với $x(s_2,c)=0$) ghi làm đề nghị bài tập |
+| RL 2 | toàn deck | tb | sửa: function approximation, feature (`L07-01c`), temporal difference, full gradient (`L07-03`), value error (`L07-07b`), stationary distribution (`L07-01b`, nơi $d_\pi$ xuất hiện lần đầu, thay vì `L07-22`), projected Bellman operator (`L07-23`), behavior/target policy (`L07-31b`), irreducible/aperiodic (`L07-24`); bảng thuật ngữ outline cập nhật |
+| RL 3 | `L07-34`, `36b` | nhẹ | sửa |
+| RL 4, 6, 9 | ghi chú `L07-23b`, `30`, `25` | nhẹ | sửa |
+| RL 5, 7, 8, 10 | `L07-01`, `18`, `01b`, `33`/`34` | nhẹ | sửa (RL 8 đưa lên mặt trang thay vì ghi chú) |
+| RL 11 | thời lượng | nhẹ | sửa khác: khối 30 phút = chữa bài 22 phút + trình diễn notebook 8 phút; `L07-33`/`33b` 2 phút |
+| RL 12, 13 | hình | nhẹ | sửa |
+| SV 1 | `L07-32b` | tb | sửa: hình mới một ô chữ lớn, dòng $\rho$; tách `L07-32c` vì một trang tràn 140 px |
+| SV 2 | `L07-35b`/`10b` | tb | sửa ("Lưu ý:" ở `L07-10b`) |
+| SV 3 | `L07-24`, `01b` | tb | sửa |
+| SV 4 | `L07-27`, `30` | tb | sửa: dòng "Nhãn cạnh: hành động, phần thưởng"; không đổi nhãn SVG (xem dưới) |
+| SV 5 | `L07-11` | tb | sửa |
+| SV nhẹ | `L07-09`, `18`, KaTeX chữ Việt (`12`, `14`, `19`, `31b`, `X03`), ngắt dòng (`36b`, `36c`, `16`, `04`, `27`, `31`, `14`, `31d`), `26`, `03b`, `31c`, ghi chú > 150 | nhẹ | sửa; ngắt dòng xử lý bằng nhóm `{…}` trong KaTeX, không thêm CSS |
+| SV nhẹ | `p.strand-keys` 0,72em | nhẹ | từ chối trong phạm vi deck: CSS dùng chung; chuyển điều phối viên |
+
+### Từ chối hoặc làm khác
+
+- `d_{\text{trái}}` trong KaTeX giữ nguyên: ký hiệu của ghi chú (15 chỗ); "á" thuộc Latin-1, KaTeX không cảnh báo (console 0 cảnh báo ở hai cỡ). Mọi chữ Việt khác trong `\text{}` đã đưa ra ngoài.
+- Nhãn cạnh "0 · 1000" trong `five-state-features.svg`, `chain-strip-dc.svg` không đổi: đổi sang dấu phẩy dễ đọc thành số thập phân ($0{,}1000$); thay bằng chú giải trên mặt trang.
+- Hàng "Mạng nơ-ron" của `L07-34` chuyển vào ghi chú diễn giả: bảng năm hàng chạm đáy khung ở 16:9; Bài 08 đã có ở dòng nối của `L07-36f`.
+- `L07-24c` giữ trong 120 phút như lời giải mẫu (2,5 phút) thay vì chuyển vào khối 30 phút (SV), vì cụm Bellman chiếu cần một bài có lời giải trên mặt trang.
+- `L07-01b` tách thành `L07-01b` + `L07-01c` (cùng tiêu đề "Tiên quyết và quy ước"): một trang không chứa đủ nhắc lại và ký hiệu trong 6 dòng.
+
+### Đề nghị sửa ghi chú (sau giai đoạn II)
+
+| vị trí trong ghi chú | nội dung sửa | nguồn |
+|---|---|---|
+| dòng 99, 113 (Ví dụ 07.1) | "sáu biến liên tục và trạng thái chạm đất (3 mức)", $9\,216=3\cdot4^5\cdot3$ | TOAN 4, điều phối viên |
+| dòng 1057 (bảng Nhận xét 07.30) | "lệch" → "chệch" | PB 6 |
+| §5.2 câu mở, Ví dụ 07.15, dòng 1461 (Bài tập 07.14 (c)), 1484 (Nhận xét 07.40, hàng Q-learning), 1519, 1554, 1570 | Mệnh đề 07.37 là ví dụ TD(0) dự đoán khác chính sách; viết "Q-learning có cùng ba yếu tố; phản ví dụ tương tự (Sutton và Barto, 2018, §11.2)" thay cho "Q-learning có ví dụ phân kỳ" | TOAN 2, RL 1, MACH 2 |
+| Ví dụ 07.11 (dòng 927–941) | thêm câu: chuỗi không kết thúc, $w_{\mathrm{MC}}=\arg\min J_{d_\pi}$ là đích Monte Carlo hướng tới nếu có lợi tức đầy đủ | RL 4 |
+| bảng tiên quyết, Định lý 07.29 | "tối giản (irreducible), không tuần hoàn (aperiodic)" ở lần dùng đầu | SV |
+| lời giải Bài tập 07.11 (§4.3) | thêm "Diễn giải": cùng chuyển $(\mathrm D,0,-1,\mathrm C)$, mục tiêu Monte Carlo $998$ đẩy $\hat q(\mathrm D,0)$ lên $1\,097{,}5$, mục tiêu Sarsa $1$ kéo xuống $-1{,}4$ | MACH 3 |
+| dòng 870 (alt hình `projected-bellman.svg`) | "Π T_π(Φw)" → "Π_D T_π(Φw)" cho khớp nhãn hình mới | biên tập viên |
+
+Chỗ lệch tạm thời deck–ghi chú: `L07-04` (3 mức chạm đất), `L07-19b`/`L07-25` ("chệch"), `L07-32b`/`32c`/`34`/`36b`/`33b` (ví dụ phân kỳ gọi là TD khác chính sách) đi trước ghi chú.
+
+### Số dự kiến cho `exercises.md` (giai đoạn III)
+
+Bộ đếm Bài tập dùng chung với ghi chú (07.1–07.19 đã dùng). Dự kiến: 07.20 phân loại $\alpha_n=1/n$, $1/\sqrt n$, $0{,}01$, $1/n^2$ theo hai điều kiện Robbins–Monro (07.6(b) cũ); 07.21 từ $b-Aw=0$ suy ra $\Phi w=\Pi_DT_\pi(\Phi w)$ (07.8(a) cũ); 07.22 biến thể Q-learning của ví dụ hai trạng thái với $x(s_2,c)=0$, hành vi luôn chọn $c$, cho $w_n=1{,}08^n$ (RL 1 phương án b). Trên deck chỉ ghi "Tệp bài tập: chưa có".
+
+### Đề nghị cho `lecture-slide.css`
+
+- `p.strand-keys` 0,72em, dưới 0,75em (SV); áp cho mọi deck.
+
+### Số liệu đã tính lại (vòng biên tập)
+
+$9\,216=3\cdot4^5\cdot3$, $3\cdot4^5=3\,072$; Bài tập 07.13: mẫu 1 $y=-1+\max(2;0)=1$, $\delta=-2$; mẫu 3 $\hat q(\mathrm D,1,w_2)=-0{,}6-0{,}6-1{,}4=-2{,}6$, $\delta=12{,}6$, $w_3=(-0{,}2;0{,}6;-1{,}4)+2{,}52\cdot(3;-1;1)=(7{,}36;-1{,}92;1{,}12)$, $\hat q(\mathrm D,\cdot,w_3)=(21{,}28;25{,}12)$, hiệu $3{,}84=-2[w_3]_2$; Sarsa hiệu $4{,}128$ nên cả hai tham lam chọn đi phải tại $\mathrm D$. Ví dụ 07.11: $\bar v=\tfrac12+0{,}9\bar v\Rightarrow\bar v=5$; $\gamma P_\pi\Phi=(1{,}35;1{,}35)$. Ví dụ 07.15: $\delta=0+0{,}9\cdot2w-w=0{,}8w$; $1{,}08^{30}\approx10{,}06$; với $\gamma\le\tfrac12$ hệ số $\le1$. $X02$: $3+1{,}1\cdot995=1\,097{,}5$.
+
+### Mật độ
+
+`density2.py` (âm tiết, bỏ token chỉ gồm dấu câu): 12 trang gắn cờ, đều có ngoại lệ ở `storyboard.md` (`L07-01` luận đề, `L07-03`, `03b`, `03c`, `25`, `34`, `36d`, `36f`, bốn dòng dẫn trang tiêu đề mạch 21–24 âm tiết). `density.py` gắn thêm 6 trang (`L07-11`, `X01`, `20b`, `24b`, `X03b`, `31b`) chỉ vì token dấu câu hoặc dòng 21–23 token; theo âm tiết đều ≤ 60 và ≤ 20/dòng. Không trang nội dung nào trên 60 âm tiết. Ghi chú diễn giả: 74/74 trang trong 40–150 âm tiết.
+
+### Tự kiểm `no-ai-slop` (Edit) theo `eval.md`
+
+Phạm vi: mặt trang và ghi chú của mọi trang đã sửa. Đạt: không thêm nhận định không nguồn (câu mới về quan sát Lunar Lander không Markov theo notebook, dòng 963; phản ví dụ Q-learning dẫn Sutton và Barto §11.2); ghi chú trang tiêu đề mạch mở bằng đối tượng hoặc kết quả kế thừa, cấu trúc câu khác nhau giữa sáu mạch; bỏ câu dẫn rỗng ("Mỗi giả thiết có vai trò riêng."), câu lặp nguồn, câu mở "Bài tập kiểm tra năng lực…", chỉ đường "ví dụ kế tiếp", "thuộc mạch sau", tài liệu hay bảng làm chủ ngữ; "Phần" → "mạch". Không câu hỏi tu từ; "Vì sao" chỉ trong câu hỏi tự kiểm tra có nhãn. Nhãn trong danh sách cho phép, cộng "Nguồn:" bắt buộc và "Ý tưởng (…)" không in đậm ở bước 4 hai chứng minh. Không dùng điểm của bộ phát hiện AI.
+
+### Kiểm tra
+
+- Server `reloadserver` cổng 8799 (cwd gốc kho), Playwright Chromium; yêu cầu thăm dò tải lại được trả 200 rỗng để không làm trang tải lại giữa chừng.
+- `deck_check.py` (bản đổi cổng 8799), 1600×900 và 390×844: 74 trang, 0 lỗi hoặc cảnh báo console (kể cả KaTeX), 0 `.katex-error`, 0 yêu cầu ngoài localhost, 0 yêu cầu lỗi, không cuộn ngang, số trang tiêu đề mạch 2.–7. khớp `#/2`…`#/7`. Cờ "overflow" của script này đếm cả phần tử con của KaTeX (đã biết là giả, báo cáo SV).
+- Script đo riêng (khung 1280×720, bỏ ghi chú và `.katex-mathml`): không trang nào tràn đáy hoặc phải; `L07-36c` cách đáy 11 px, `L07-27` 24 px (đã xem ảnh, không chồng chân trang).
+- Đã tự xem ảnh 1600×900 của các trang đổi: `L07-01b`, `01c`, `10`, `11`, `14`, `19b`, `20b`, `21`, `23b`, `27`, `31b`, `31d`, `32b`, `32c`, `34`, `36b`, `36c`, `36d`. Ảnh ở scratchpad phiên, `d07e/shots/`.
+- `git diff --check` sạch.
+
+## Rà lại vòng 2 và sửa (giai đoạn II), 2026-10-14
+
+### Tác tử
+
+| vai | loại | mô hình | mức | ghi tệp |
+|---|---|---|---|---|
+| Rà lại toán và thuật toán (TOAN, `deckrecheck-07-TOAN.md`) | `general-purpose` (theo brief; bằng chứng lời gọi công cụ do điều phối viên ghi) | claude-opus-5-5 | high | không |
+| Rà lại kết nối và mạch (MACH, `deckrecheck-07-MACH.md`) | như trên | claude-opus-5-5 | high | không |
+| Biên tập viên (cùng tác tử vòng trước) | như trên | claude-opus-5-5 | high | deck, `outline.md`, `storyboard.md`, mục này |
+
+Kết quả rà lại: 0 chặn, 0 nghiêm trọng; trung bình 2 (MACH R1, R2), nhẹ TOAN 10, MACH 9.
+
+### Phát hiện và trạng thái
+
+| mã | trang | mức | trạng thái |
+|---|---|---|---|
+| MACH R1 = TOAN 3 | `L07-32b`, `L07-33` | tb | sửa: "Tỉ số lấy mẫu quan trọng (importance sampling) $\rho=\pi/\pi_b$ (Bài 06): $1$ trên $s_1\to s_2$; $0$ tại $s_2$ vì hành vi chọn hành động đích không chọn; chỉ $s_1\to s_2$ được cập nhật", tách hai dòng cho trần 20 âm tiết/dòng (55 âm tiết); bỏ "(importance sampling)" ở `L07-33` |
+| MACH R2 | `L07-31d` | tb | sửa: tách `L07-31d` (đề) và `L07-31e` (lời giải, fragment), mỗi trang 1 phút; storyboard, outline 75 trang, 69 trang trong 120 phút |
+| TOAN 1 | `L07-23b`, `L07-24c` | nhẹ | sửa: $\bar v=\tfrac12(v_1+v_2)$ ở dòng dữ kiện `L07-23b` (đặt trong `aligned` làm tràn phải 326 px) và đầu lời giải `L07-24c` |
+| TOAN 2 | ghi chú `L07-36d` | nhẹ | sửa: "dòng 2 và 3" |
+| TOAN 4 | `L07-01b` | nhẹ | sửa: "$\pi$ cố định, $\mathcal S$ hữu hạn" |
+| TOAN 5 | `L07-10b` | nhẹ | sửa: "mỗi cột của khối $\phi$ là tổng theo $a$ các cột tương ứng của khối Kronecker" |
+| TOAN 6 | `L07-25` | nhẹ | sửa: "nói chung chệch (Mệnh đề 07.20)" (trang chưa có số hiệu khác) |
+| TOAN 7 | `L07-36b` | nhẹ | sửa: "$\mathcal S$ hữu hạn; $S_t\sim d_\pi$, chuyển theo $\pi$; $w$ cố định" |
+| TOAN 8 | ghi chú `L07-35` | nhẹ | sửa: thêm $\gamma=0{,}9$, phần thưởng bị chặn, cột của $\Phi$ độc lập |
+| TOAN 9 | `L07-32c`, `L07-36b` | nhẹ | sửa: "$\lvert w_n\rvert\to\infty$ khi $w_0\ne0$" |
+| TOAN 10 = MACH N5 | `L07-34` | nhẹ | sửa: "có thể phân kỳ, không bảo đảm chung; phản ví dụ: TD khác chính sách (§11.2)" |
+| MACH N1 | `L07-01b` | nhẹ | sửa: "quá trình quyết định Markov (MDP) hữu hạn" |
+| MACH N2 | `L07-12` và các trang sau | nhẹ | sửa: lần đầu "mục tiêu TD (còn gọi là mục tiêu một bước)" ở `L07-12`, sau đó chỉ "mục tiêu TD"; câu "Diễn giải:" viết gọn để không chạm đáy |
+| MACH N3 | `L07-32c` | nhẹ | sửa: "Q-learning cũng có xấp xỉ hàm, mục tiêu bootstrap và dữ liệu khác chính sách." rồi dòng nguồn phản ví dụ |
+| MACH N4 | `L07-03`, `L07-03c`, `L07-02` | nhẹ | sửa: "theo chính sách (on-policy)" ở `L07-03c`; "(projected Bellman fixed point)" ở mục tiêu 4 của `L07-03`; bỏ "(on-policy)" lặp ở `L07-02`; `L07-03` rút hai chữ để giữ 80 |
+| MACH N6 | `L07-01b` | nhẹ | sửa: nhắc lại $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$ |
+| MACH N7 | storyboard | nhẹ | sửa: dòng K10 trong "Ghi chú về bước" |
+| MACH N8 | storyboard | nhẹ | sửa: bỏ phương án chuyển vào khối 30 phút; khi thiếu giờ `L07-31d`/`31e` thành bài tự làm |
+| MACH N9 | ghi chú `L07-19b` | nhẹ | sửa: "phương sai thường nhỏ hơn" |
+
+Đề nghị sửa ghi chú bổ sung (MACH): thêm "(còn gọi là mục tiêu TD)" vào §3.1 cho cùng cặp tên với deck.
+
+### Kiểm tra
+
+- `density2.py` (âm tiết): cờ chỉ ở 12 trang đã có ngoại lệ trong storyboard; `L07-03` 80, `L07-34` 75, `L07-25` 51. `density.py` gắn thêm 8 trang chỉ vì token dấu câu (danh sách trong storyboard). Ghi chú diễn giả 75/75 trang trong 40–150 âm tiết.
+- `deck_check.py` (cổng 8799), 1600×900 và 390×844: 75 trang, 0 lỗi hay cảnh báo console, 0 `.katex-error`, 0 yêu cầu ngoài, 0 yêu cầu lỗi, không cuộn ngang, sáu trang tiêu đề mạch đúng số.
+- Script đo khung riêng: không trang nào tràn; sát đáy nhất `L07-36c` 11 px, `L07-27` 24 px.
+- Đã xem ảnh 1600×900: `L07-12`, `23b`, `31d`, `31e`, `32b`, `32c`, `34`, `36b`.
+- `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-14, giai đoạn II, deck)
+
+- Tác tử: tác tử soạn kiêm biên tập (general-purpose, claude-opus-5-5, high) hai vòng, bị dừng một lần theo yêu cầu người dùng và nối lại sau khi rà trạng thái đĩa; rà lại toán và rà lại mạch (general-purpose, claude-opus-5-5, high, chỉ đọc); điều phối viên Claude Fable 5.1 (medium).
+- Kiểm độc lập sau vòng 2: `density.py` chỉ gắn cờ các trang có ngoại lệ hoặc chỉ do token dấu câu, đều liệt kê trong `storyboard.md`; Playwright 1600×900 và 390×844: 75 trang, 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, 6 trang tiêu đề mạch; ảnh L07-31d, 31e, 32b xem trực tiếp; bài tập ba cập nhật Q-learning tính lại đúng; `git diff --check` sạch. Ký hiệu `d_{\text{trái}}` giữ theo ghi chú (không sinh cảnh báo KaTeX), ghi nhận là ngoại lệ của quyết định 1 trong brief biên tập.
+- Quyết định: **chấp nhận**; commit `fix(lecture-07)`.

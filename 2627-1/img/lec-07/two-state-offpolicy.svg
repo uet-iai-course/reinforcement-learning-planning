@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 210" role="img" aria-labelledby="title desc">
+<title id="title">Hai trạng thái với đặc trưng 1 và 2, cập nhật khác chính sách</title>
+<desc id="desc">Trạng thái s₁ có đặc trưng 1, giá trị ước lượng w; trạng thái s₂ có đặc trưng 2, giá trị ước lượng 2w. Từ s₁ có một hành động, chuyển tất định sang s₂ với phần thưởng 0, tỉ số lấy mẫu quan trọng bằng 1, nên chuyển này được cập nhật. Tại s₂, chính sách hành vi chọn hành động mà chính sách đích không chọn, tỉ số bằng 0, nên không có cập nhật nào tại s₂.</desc>
+<defs>
+<marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#B15A2B"/></marker>
+<marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#6B7280"/></marker>
+</defs>
+<g font-family="Arial, Helvetica, sans-serif" fill="#28313D">
+<circle cx="150" cy="105" r="95" fill="#FFFFFF" stroke="#B15A2B" stroke-width="5"/>
+<text x="150" y="92" text-anchor="middle" font-size="34" font-weight="bold">s₁: x = 1</text>
+<text x="150" y="140" text-anchor="middle" font-size="34">v̂ = w</text>
+<circle cx="640" cy="105" r="95" fill="#FFFFFF" stroke="#B15A2B" stroke-width="5"/>
+<text x="640" y="92" text-anchor="middle" font-size="34" font-weight="bold">s₂: x = 2</text>
+<text x="640" y="140" text-anchor="middle" font-size="34">v̂ = 2w</text>
+<path d="M250 105 H530" fill="none" stroke="#B15A2B" stroke-width="6" marker-end="url(#ao)"/>
+<text x="392" y="84" text-anchor="middle" font-size="32">thưởng 0, ρ = 1</text>
+<text x="392" y="148" text-anchor="middle" font-size="32" font-weight="bold">được cập nhật</text>
+<path d="M740 105 H870" fill="none" stroke="#6B7280" stroke-width="5" stroke-dasharray="14 9" marker-end="url(#ag)"/>
+<text x="1030" y="92" text-anchor="middle" font-size="32">ρ = 0:</text>
+<text x="1030" y="136" text-anchor="middle" font-size="32">không cập nhật</text>
+</g>
+</svg>
