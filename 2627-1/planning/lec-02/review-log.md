@@ -3031,3 +3031,82 @@ Không có phát hiện bị từ chối.
 - Tác tử: tác tử soạn kiêm biên tập (general-purpose, claude-opus-5-5, high) hai vòng; rà lại toán và rà lại mạch (general-purpose, claude-opus-5-5, high, chỉ đọc); điều phối viên Claude Fable 5.1 (medium).
 - Kiểm độc lập sau vòng 2: `density.py` chỉ gắn cờ 01-03, 01-04, 07-03, 07-05, 07-06, đều có ngoại lệ trong `storyboard.md`; Playwright 1600×900 và 390×844: 66 trang, 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, 6 trang tiêu đề mạch; ảnh 07-05 xem trực tiếp; xác minh phát hiện chữ $k$ hai nghĩa trên deck trước khi yêu cầu sửa; `git diff --check` sạch.
 - Quyết định: **chấp nhận**; commit `fix(lecture-02)`.
+
+## Đợt sửa 2026-10-14 — Sửa ghi chú sau giai đoạn II
+
+### Tác tử và phạm vi
+
+- Vai trò: tác tử biên tập ghi chú bài giảng Bài 02 theo `brief_note_revision.md` của điều phối viên. Loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` theo brief; điều phối viên đối chiếu với lệnh gọi công cụ. Không commit.
+- Danh sách việc: mọi dòng của "Đề nghị sửa ghi chú (sau giai đoạn II)" và "Đề nghị sửa ghi chú (bổ sung)" ở trên. Bản đối chiếu: deck đã commit `lecture-02-giao-dien-tac-tu-moi-truong.html` (các trang `L02-03-02`, `03-04`, `03-06`, `03-10` … `03-16`, `04-08`, `05-01`, `05-03`, `05-05`, `05-08`, `05-11`, `05-13`).
+- Tệp đã ghi: `materials/lec-02/lecture-note.md`; `img/lec-02/chapter-structure.svg` (chỉ ghi chú dùng; nhãn "(c, h)" → "(c, c_H)" và câu tương ứng trong `desc`); mục này của nhật ký. Không sửa deck, outline, storyboard, `exercises.md`, notebook, `index.html`, SVG mà deck dùng. `state-observation-representation.svg` đã được sửa ở giai đoạn II; chỉ alt của ghi chú được viết lại cho khớp `desc` của hình.
+- Số hiệu kết quả, ví dụ, bài tập và mọi `note-topic-id` giữ nguyên (bộ đếm chung 20, Ví dụ 15, Bài tập 13 theo `note_check.py`, không khoảng trống, không trùng).
+
+### Bảng xử lý đề nghị
+
+Số dòng theo tệp sau khi sửa.
+
+| Nguồn | Vị trí | Trạng thái | Xử lý |
+|---|---|---|---|
+| RL-1 | Ví dụ 02.4 (dòng 262–266), alt hình dòng 271, đoạn đọc hình dòng 273 | đã sửa | Cảm biến trả bộ mã $O_t\in\{0,1\}^4$; câu "Bộ mã tác tử dùng là $(1,0,1,0)$" thành "Cảm biến trả quan sát $O_t=(1,0,1,0)$", tác tử dùng luôn mã thì $X_t=O_t$; nhãn khối "Ba lớp thông tin" → "Từ vị trí đến quan sát". Alt của `state-observation-representation.svg` chép theo `desc` mới của hình (khối "Bốn ô kề", "Quan sát Oₜ", mũi tên xuống "Biểu diễn Xₜ"). Đoạn đọc hình nói thông tin mất ở mũi tên vị trí → bốn ô kề, mũi tên xuống là việc tác tử tính $X_t$ (khớp ghi chú diễn giả `L02-03-02`). |
+| RL-1 | §2.2 dòng 289–295; Ví dụ 02.5 dòng 312–319 | đã sửa | Trường hợp "chỉ dùng quan sát hiện tại" ghi $X_t=O_t$; đoạn sau ba trường hợp nêu $S_t$, $O_t$, $X_t$ của Ví dụ 02.4 và hai lựa chọn biểu diễn. Ví dụ 02.5 thêm khối "Cửa sổ hai quan sát": $O_4=O_3=(1,0,1,0)$, $X_3=((1,0,1,0),\text{Đông},(1,0,0,1))$, $X_4=((1,0,1,0),\text{Đông},(1,0,1,0))$; cửa sổ tách $(2,1)$ khỏi $(3,1)$ dọc đường 16 bước, dẫn sang Tình huống 02.2 (khớp `L02-03-13`). Kéo theo: Bài tập 02.2 "quan sát là mã bốn ô kề"; Tình huống 02.2 (dòng 1077) và Bài tập 02.11 (dòng 1194) ghi "dùng luôn quan sát làm biểu diễn, $X_t=O_t$". |
+| RL-2 | §2.1 dòng 259; Nhận xét 02.4 dòng 339; cuối §2.4 dòng 346; Ví dụ 02.6 "Sửa" dòng 362; đoạn sau Định nghĩa 02.5 dòng 378, 380; Tóm tắt dòng 1136 | đã sửa | Trạng thái là biến do người mô hình chọn, có thể là cả cấu hình hoặc biến nhỏ hơn như tọa độ; Nhận xét 02.4 thêm câu phân loại đầy đủ/một phần tương đối với biến đã chọn; cấu hình đầy đủ của mọi môi trường có tính Markov (theo Định nghĩa 01.2, luật chuyển chỉ dùng cấu hình hiện tại và hành động), tính Markov mất khi biến bỏ đi phần cấu hình mà luật cần. "Quan sát đầy đủ không kéo theo tính Markov" → "đọc lại được tọa độ không kéo theo tính Markov: … tọa độ thiếu bit $k$"; thêm câu: với trạng thái (ô, $k$), cùng tác tử chỉ quan sát một phần vì quan sát $(7,6)$ ứng với $((7,6),0)$ và $((7,6),1)$ (khớp `L02-03-04`, `03-06`). |
+| R2-TOAN-1 | Kiến thức tiên quyết dòng 21; §2.1 dòng 259 | đã sửa | Dòng nhắc Định nghĩa 01.2 thêm: từ Bài 02, trạng thái là biến do người mô hình chọn, có thể nhỏ hơn cấu hình mà luật chuyển dùng tới (Mục 2.1, 2.5). |
+| RL-3 | Định nghĩa 02.5 dòng 368, đoạn đọc dòng 376; sau Định nghĩa 02.16 dòng 846 | đã sửa | Định nghĩa: "với mọi chính sách của tác tử, với các xác suất tính theo chính sách đó, mọi $t\ge0$ …". Đoạn đọc: đẳng thức đòi với mọi chính sách, nhờ đó hàm động lực ở Mục 4.5 không phụ thuộc chính sách. Sau Định nghĩa 02.16: khi $X_t=S_t$, chính sách chỉ dùng lịch sử trạng thái, nên sau khi điều kiện hóa trên $H_t=h$, $A_t=a$ vế trái của (2.3) chỉ phụ thuộc môi trường; vì (2.3) đúng với mọi chính sách, $p$ như nhau với mọi chính sách (khớp ghi chú diễn giả `L02-05-08`). |
+| RL-4 | Định nghĩa 02.14 dòng 785–794, đoạn đọc dòng 796; Nhận xét 02.15 dòng 800; Ví dụ 02.12 dòng 809; công thức cần nhớ dòng 1130 | đã sửa | (4.8) đổi thành $v_\pi(s)=\mathbb E_\pi[G_0\mid S_0=s]$ trên lượt xuất phát tại $s$; giả thiết thứ tư thành $\mathbb E_\pi[\lvert G_0\rvert\mid S_0=s]<\infty$ (khớp `L02-05-05`). Đoạn đọc: quy ước xuất phát tại $s$ cho giá trị ở ô chính sách không ghé; ba giả thiết đầu cho $\mathbb E_\pi[G_t\mid S_t=s]=v_\pi(s)$ với mọi phân phối xuất phát và mọi $t$ có $\Pr(S_t=s)>0$, kèm lý do quy tắc nhân. Ví dụ 02.12 nêu quy ước và câu "lượt xuất phát tại $(0,2)$ không ghé $(4,2)$ hay $(1,5)$; hai giá trị $-12$, $-24$ có nghĩa nhờ quy ước". Kéo theo: Nhận xét 02.15 viết $\mathbb E_\pi[T\mid S_0=s]$, phản ví dụ viết với $S_0=1$, $T$; Tóm tắt viết $v_\pi(s)=\mathbb E_\pi[G_0\mid S_0=s]$. |
+| PB-6 ($h$) | Bảng ký hiệu dòng 50; §5.2 dòng 960–1000; Bài tập 02.8; Nhận xét 02.19 dòng 1012; Nhận xét 02.20; đoạn kết §5; Tóm tắt; `chapter-structure.svg` và alt dòng 174 | đã sửa | Phạt hố $h\to c_{\mathrm H}$ (35 lần thay trong Mục 5, cộng bảng ký hiệu, (5.1) và bước 4 của chứng minh, tóm tắt). $h$ chỉ còn nghĩa lịch sử. SVG `chapter-structure.svg`: "(c, c<sub>H</sub>)" bằng `tspan`, đã xem ảnh. |
+| PB-6 ($x$) | Đoạn sau bảng ký hiệu dòng 59; Ví dụ 02.1 dòng 157; alt `source-maze.svg` dòng 168; Ví dụ 02.6, đoạn sau Định nghĩa 02.5, đọc Mệnh đề 02.6; Bài tập 02.3, 02.13; Tình huống 02.1 | đã sửa | Tọa độ ghi "(cột, hàng)", $x$ chỉ cho giá trị biểu diễn; trạng thái chìa khóa là cặp (ô, $k$), giá trị viết $((7,6),1)$, $((4,2),0)$, $((4,1),0)$ … Kéo theo: ô của robot trong Tình huống 02.1 đổi $x\to\ell$, $s=(\ell,b)$ (cùng lý do: $x$ trùng giá trị biểu diễn, mà ở đó $X_t=S_t$). Chữ $x$ trong $(x,\dot x,\theta,\dot\theta)$ của CartPole giữ nguyên vì là ký hiệu chuẩn của môi trường. |
+| PB-5 | Bài tập 02.3 dòng 441 | đã sửa | Bỏ "$\gamma=1$"; câu (b) hỏi tổng phần thưởng nên không cần $\gamma$. |
+| PB-4 | Bài tập 02.3 | từ chối | Câu kiểm tính Markov của mã bốn ô kề đã là nội dung của Bài tập 02.11 (cùng hai lịch sử, cùng kết luận); thêm câu vào 02.3 lặp bài 02.11 trong cùng chương. Deck `L02-03-15` đã dẫn "Bài tập 02.3 và 02.11", nên không còn lệch. |
+| MACH, PB-1 | §4.1 dòng 570 | đã sửa | Mở §4.1 bằng nhu cầu: tổng không chiết khấu chỉ là một số khi lượt kết thúc; với $-1$ mỗi bước và lượt không kết thúc, tổng riêng $-n\to-\infty$ cho mọi cách đi; với $+1,-1,+1,\dots$, tổng riêng dao động giữa $1$ và $0$; vì vậy xét tổng có trọng số khác $1$ (khớp `L02-05-01`, `05-11`). |
+| RL-14 | §4.2 dòng 707 | đã sửa | $\sum_{k\ge0}\gamma^k=1/(1-\gamma)$, bằng tổng trọng số của $1/(1-\gamma)$ bước không chiết khấu, gọi là chân trời hiệu dụng (effective horizon); $\gamma=0{,}99$: $100$ bước, $0{,}99^{100}\approx0{,}37$ (khớp ghi chú diễn giả `L02-05-03`). |
+| PB-10 | §2.3–2.4 | từ chối | Đổi chỗ §2.3 và §2.4 buộc Nhận xét 02.4 đứng trước Định nghĩa 02.3 hoặc phải đánh số lại, trái yêu cầu giữ số hiệu; deck giữ thứ tự hiện tại (MACH-9, PB-10 giai đoạn II). §2.3 đã nêu nhu cầu "đặt tên cho quá khứ để hỏi nó có giúp dự báo". |
+| R2-MACH-2 | §2.2 dòng 290; Nhận xét 02.7 dòng 414; Đọc thêm dòng 1263 | đã sửa | Độ dài cửa sổ $k\to m$: "$m$ quan sát gần nhất … khi $m=2$, với quy ước $X_0=(O_0,\varnothing,\varnothing)$"; Nhận xét 02.7 "chứa $(4,2)$ khi và chỉ khi $m-1\ge11$; với $m\le11$ …", tên "lịch sử bậc $k$" của Sutton và Barto giữ trong ngoặc với chú thích $k$ của sách là độ dài cửa sổ. Kéo theo: gợi ý Bài tập 02.6 đổi "$m$ bước" thành "$n$ bước" (dòng 884) để $m$ chỉ còn một nghĩa. |
+
+### Số liệu đã tính lại
+
+- Mã bốn ô kề trên đường 16 bước từ lưới của `state-observation-representation.svg`: $(0,2)$: $(1,0,1,1)$; $(1,2)$: $(0,1,0,0)$; $(1,1)$: $(1,0,0,1)$; $(2,1)$, $(3,1)$: $(1,0,1,0)$; $(4,1)$: $(1,0,0,0)$; năm ô mã $(1,0,1,0)$: $(2,1),(3,1),(5,1),(2,6),(7,6)$. $X_3\ne X_4$ như trên.
+- Cửa sổ trong Ví dụ 02.6: trong $h'$, $(4,2)$ ở $t=6$, $(7,6)$ ở $t=17$; cửa sổ $m$ tọa độ chứa $O_6$ khi và chỉ khi $17-m+1\le6$, tức $m\ge12$; với $m\le11$, hai cửa sổ (kể cả hành động xen giữa) trùng nhau.
+- $v_\pi((4,2))=-1+v_\pi((4,1))=-12$; $v_\pi((1,5))=-9+v_\pi((1,2))=-24$.
+- Phản ví dụ Nhận xét 02.15: $\Pr(T>k\mid S_0=1)=1/(k+1)$, $\mathbb E[T\mid S_0=1]=\sum_{k\ge0}1/(k+1)=\infty$.
+- $0{,}99^{100}=e^{100\ln0{,}99}\approx0{,}366$.
+- Bài tập 02.8 với $c_{\mathrm H}$: $c=3$: $-8>-6-c_{\mathrm H}\iff c_{\mathrm H}>2$; $c_{\mathrm H}=4$: $c^*=3{,}5$, tại đó hai lợi tức $-11$. Không đổi.
+
+### Tự kiểm `no-ai-slop` (Edit) theo `eval.md`
+
+- Phạm vi: mọi câu mới hoặc viết lại trong bảng trên.
+- Đã sửa trong lượt tự kiểm: bốn câu lấy mục hoặc ví dụ làm chủ ngữ ("Mục 2.5 cho thấy…", "Mục 4.5 dùng…", "Tình huống 02.2 dùng lại…", "Ví dụ 02.5 cho…") viết lại với đối tượng toán học làm chủ ngữ; câu "Đây là trường hợp chung: …" (mở bằng dấu hai chấm) viết thành câu khẳng định trực tiếp; "Tính Markov chỉ có thể mất khi … nhỏ hơn cấu hình" (khẳng định quá rộng) thành "mất khi biến được chọn bỏ đi phần cấu hình mà luật chuyển cần"; lặp "trọng số theo vị trí" ở đầu §4.1 gộp thành một câu.
+- Kết quả: không từ cấm, không "hãy", "ta thấy", "rõ ràng", câu hỏi tu từ, dấu gạch dài, "xem trang chiếu", tài liệu làm chủ ngữ. Các cặp "không chỉ với chính sách đang dùng", "phần thưởng xa hơn vẫn được tính" là phân biệt toán học cần thiết. Không dùng điểm bộ phát hiện AI.
+
+### Kiểm tra
+
+- `note_check.py materials/lec-02/lecture-note.md`: 80 khối hợp lệ; bộ đếm chung 20, Ví dụ 15, Bài tập 13, không khoảng trống, không trùng; 0 dấu `\(`/`\[`. Độ dài $21\,414$ từ theo cách đếm khoảng trắng (trước đợt sửa $20\,475$; tăng khoảng $940$ từ do các câu bổ sung). Vượt mức $20\,000$ đã ghi ở giới hạn giai đoạn I; đếm này tính cả công thức và cú pháp Markdown.
+- `check_note.py 02 lecture-02-giao-dien-tac-tu-moi-truong.html` (server `reloadserver` cổng 8766, cwd `/data/tqlong/rl-plan`): 1600×900 và 390×844 đều 0 `.katex-error`, 0 lỗi console, 0 yêu cầu lỗi hoặc ra ngoài, không tràn ngang, 80 khối.
+- `chapter-structure.svg`: XML hợp lệ; ảnh chụp Chromium 900×470 đã xem, nhãn "(c, c_H)" đọc được, không chồng chữ.
+- `git diff --check` trên `materials/lec-02`, `img/lec-02`, `planning/lec-02`: đạt.
+
+### Điểm cần tác tử rà toán soi
+
+1. Câu "cấu hình đầy đủ của mọi môi trường có tính Markov" (dòng 378) dựa trên cách đọc Định nghĩa 01.2 (luật chuyển chỉ dùng cấu hình hiện tại và hành động) cùng điều kiện "với mọi chính sách" của Định nghĩa 02.5.
+2. Lập luận $p$ không phụ thuộc chính sách (dòng 846): khi chính sách chỉ dùng lịch sử trạng thái, phân phối có điều kiện của phần cấu hình ẩn khi biết $H_t=h$ không phụ thuộc chính sách, nên vế trái của (2.3) chỉ phụ thuộc môi trường.
+3. Đoạn đọc Định nghĩa 02.14 (dòng 796): đẳng thức $\mathbb E_\pi[G_t\mid S_t=s]=v_\pi(s)$ với mọi phân phối xuất phát; với $T=\infty$ cần thêm tính khả tích đã nêu trong giả thiết thứ tư.
+
+### Rà lại sau đợt sửa và sửa bổ sung
+
+- Tác tử rà lại toán và nhất quán: `general-purpose`, `claude-opus-5-5`, mức `high`, chỉ đọc, do điều phối viên giao (báo cáo `noterecheck-02.md` trong scratchpad của điều phối viên). Kết quả: 0 chặn, 0 nghiêm trọng, 1 trung bình, 5 nhẹ. Biên tập viên: tác tử biên tập của đợt này (cùng loại, mô hình, mức). Không commit.
+
+| Mức | Vị trí | Trạng thái | Xử lý |
+|---|---|---|---|
+| trung bình | dòng 376, 846 | đã sửa | Dòng 376: "với chính sách chỉ dùng trạng thái, hàm động lực ở Mục 4.5 không phụ thuộc chính sách". Dòng 846: nêu phạm vi $X_t=S_t$ và hai bước: các thừa số $\pi(a_k\mid s_k)$ triệt tiêu trong tỉ số nên vế trái của (2.3) do môi trường quyết định; chính sách chọn đều các hành động hợp lệ đặt xác suất dương lên mọi lịch sử khả hữu, áp (2.3) cho nó nên $p$ như nhau với mọi chính sách trên trạng thái. Thêm một câu phản ví dụ cấu hình $(s,z)$, phần thưởng $z\cdot a$: $0{,}5$ dưới chính sách chọn đều, $1$ dưới chính sách chọn $1$ đúng khi $z=1$. |
+| nhẹ | dòng 796 | đã sửa | "với mọi phân phối xuất phát (cùng các xác suất chuyển của môi trường)"; "Giả thiết thứ tư bảo đảm cả hai vế là số thực". |
+| nhẹ | dòng 378 | đã sửa | "luật chuyển chỉ dùng cấu hình hiện tại, hành động và yếu tố ngẫu nhiên riêng của bước đó". |
+| nhẹ | Ví dụ 02.5, dòng 318 | đã sửa | "cửa sổ này cho mười sáu biểu diễn khác nhau; Tình huống 02.2 dùng tính chất đó để tách hai ô cùng mã $(1,1)$ và $(5,3)$". |
+| nhẹ | dòng 798 | đã sửa | "Định nghĩa liên hệ với giá trị trên lịch sử…"; "$v_\pi(h)$ của mọi lịch sử khả hữu $h$ … bằng $v_\pi(s)$, còn $v_\pi(s)$ xác định cả ở trạng thái mà không lịch sử khả hữu nào đi tới". |
+| nhẹ | `chapter-structure.svg` dòng 31 | đã sửa | Chỉ số H dùng `dy="5"`, phần sau dùng `dy="-5"`, như chỉ số π ở dòng 29; XML hợp lệ. |
+
+- Kiểm tra lại: `note_check.py` 80 khối, bộ đếm chung 20, Ví dụ 15, Bài tập 13, không khoảng trống, không trùng (độ dài $21\,579$ từ theo cách đếm khoảng trắng); `check_note.py 02 lecture-02-giao-dien-tac-tu-moi-truong.html` (cổng 8766) ở 1600×900 và 390×844: 0 `.katex-error`, 0 lỗi console, 0 yêu cầu lỗi hoặc ra ngoài, không tràn ngang; `git diff --check` trên `materials/lec-02`, `img/lec-02`, `planning/lec-02`: đạt.
+- `no-ai-slop` (Edit): các câu mới không lấy mục làm chủ ngữ, không từ cấm, không câu hỏi tu từ; câu phản ví dụ giữ vì là phân biệt toán học cần thiết cho phạm vi kết luận.
+
+### Quyết định của điều phối viên (2026-10-14, sửa ghi chú sau giai đoạn II)
+
+- Kiểm độc lập: `note_check.py` sạch; viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 80 khối, 0 lỗi console, không tải ngoài; `chapter-structure.svg` là XML hợp lệ, deck không dùng; `git diff --check` sạch. Rà lại toán (Opus 5.5 high, chỉ đọc): 1 trung bình, 5 nhẹ, đã sửa.
+- Quyết định: **chấp nhận**; commit `fix(materials-02)`.
