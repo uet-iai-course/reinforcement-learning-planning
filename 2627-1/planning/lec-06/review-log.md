@@ -1177,3 +1177,141 @@ Sửa kéo theo (để nhất quán): tài liệu tham khảo dòng 1623 thêm "
 
 - Kiểm độc lập: `note_check.py` sạch; viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console, không tải ngoài; `git diff --check` sạch. Rà lại toán (Opus 5.5 high, chỉ đọc): 1 trung bình, 6 nhẹ, đã sửa. Điều phối viên xác nhận số mục §2.2 (bài toán đường đi ngắn nhất ngẫu nhiên) và §5.6 (Q-learning) của Bertsekas–Tsitsiklis (1996) và dữ liệu thư mục Tsitsiklis (1994), *Machine Learning* 16(3), 185–202.
 - Quyết định: **chấp nhận**; commit `fix(materials-06)`.
+
+## Đợt sửa 2026-10-12 — Giai đoạn III: bài tập
+
+### Tác tử và phạm vi
+
+- Vai: tác tử soạn `exercises.md` Bài 06 (giai đoạn III), viết tệp. Loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high`, theo `brief_exercises_writer.md` (gồm mục "Bổ sung 2026-10-14"); điều phối viên đối chiếu với lời gọi công cụ. Không commit, không push.
+- Đầu vào đã đọc: `planning/quyet-dinh-chuan-2026-10-12.md`; `revision-plan-2026-10-12.md` mục A5, B2, C, D; các mục của `AGENTS.md`, `CLAUDE.md`, `prompt_lecture_note_deck.md` theo brief; mẫu `materials/_templates/exercises.md`; sản phẩm mẫu `math-4-AI/2627-1/materials/lec-07/exercises.md` (chỉ cách trình bày); ghi chú và deck bản HEAD; các mục "Số dự kiến của `exercises.md`" và "Sai khác so với kế hoạch B" của nhật ký này; `RL-hk2-2025-2026/resources/hw3.pdf` (bài 10); bản §7.4 của ghi chú cũ (commit `ecf2738`) cho lời giải bài 10; Sutton và Barto (2018) §5.4 (PDF tr. 122–123, trang in 100–101); notebook Bài 06 phần 4–8, 10, 13 (mã và output đã nhúng); kỹ năng `no-ai-slop` (`SKILL.md`, `eval.md`).
+- Tệp đã ghi: `2627-1/materials/lec-06/exercises.md` (mới, 11 bài); mục này của `review-log.md`. Không tạo SVG. Không sửa ghi chú, deck, `outline.md`, `storyboard.md`, `index.html`, notebook, viewer, mẫu.
+
+### Danh sách bài
+
+| Bài | Mức | Mạch | Nguồn | Mục tiêu của ghi chú | Trùng trang chiếu |
+|---|---|---|---|---|---|
+| 06.1 | nhận biết | 2 | ghi chú §1.1; bài giảng gốc tr. 3, 15 | 1 | L06-A05 `#/2/2` (lời giải ở bước cuối cùng trang) |
+| 06.6 | nhận biết | 6 | ghi chú §5.4; bài giảng gốc tr. 25–28 | 5 | L06-F05 `#/6/11`, L06-F09 `#/6/12` |
+| 06.2 | tính toán | 2 | ghi chú §1.2–1.3 | 1, 2 | L06-B07 `#/2/12`, L06-B10 `#/2/13` |
+| 06.3 | tính toán | 3 | ghi chú §2.1–2.3 | 3 | L06-C08 `#/3/10`, L06-C09 `#/3/11` |
+| 06.4 | tính toán | 4 | ghi chú §3.1–3.2 | 4 | L06-D08 `#/4/10`, L06-D11 `#/4/11` |
+| 06.5 | tính toán | 5 | ghi chú §4.2–4.3 | 4 | L06-E08 `#/5/11`, L06-E12 `#/5/12` |
+| 06.13 | tính toán | 3, 5 | Bài tập tuần 3 (2025–2026), bài 10, câu 1–3; câu (d) bổ sung | 3, 4 | không |
+| 06.14 | chứng minh | 2 | ghi chú Định nghĩa 06.3–06.4, Mệnh đề 06.6, Ví dụ 06.5; Sutton và Barto §5.4, tr. 100–101 | 2 | không |
+| 06.15 | vận dụng [Lập trình] | 4 | ghi chú Nhận xét 06.13, Tình huống 06.1; notebook phần 6–8 | 4 | không |
+| 06.16 | vận dụng [Lập trình] | 6 | notebook phần 5, 6, 10, 13 (nhiệm vụ 2–3); ghi chú §5.2–5.3; Singh và cộng sự (2000) | 5 | không |
+| 06.17 | vận dụng | 7 | ghi chú Nhận xét 06.10, 06.13, Tình huống 06.1; notebook phần 4–8, 10 | 4, 5 | L06-G03 `#/7/6`, L06-G07 `#/7/7` |
+
+Cách chọn bài theo quyết định chung 2026-10-14 trong brief: sáu bài tập thân chương 06.1–06.6 của ghi chú đều có trang "Bài tập: …" trên deck nên được giữ số hiệu và phát biểu lại tự chứa; ghi chú không có bài tập thân chương nào thiếu trang deck, nên bảng mạch không có mục "ghi chú: 06.k". Ba mức có 2, 6 và 3 bài; mỗi mạch nội dung 2–7 có ít nhất hai bài, trừ mạch 7 (một bài tổng hợp); năm mục tiêu học tập đều được phủ. Bài tập 06.7–06.12 ("Bài tập củng cố" của ghi chú) không chép lại. Chỉ số `#/h/v` của 21 liên kết tới deck đã kiểm bằng Playwright (cổng 8799): mở từng URL và đọc `data-slide-id` của trang hiện hành; sáu trang tiêu đề mạch B00–G00 đúng là `#/2/1` … `#/7/1`.
+
+### Sai lệch so với kế hoạch C và lý do
+
+| Bài | Kế hoạch C | Tệp | Lý do |
+|---|---|---|---|
+| Bố cục | Mẫu sắp theo mạch | Sắp theo ba mức `## Mức …`; bảng `Mạch | Mở phần | Bài tập` giữ ánh xạ mạch | Brief giai đoạn III yêu cầu ba mục mức |
+| 06.1–06.6 | Giữ số hiệu và lời giải của ghi chú | Giữ đề, kết quả và lời giải; đổi đánh số câu từ "1., 2." sang "(a), (b)" và "**Câu (a).**"; thêm dữ kiện để tự chứa (phần thưởng của dãy năm ô ở 06.1, hành động $1$ tại D kết thúc với $10$ ở 06.2); ở 06.1(b) thay $q_{\pi_L}(\mathrm D,0)$ bằng "lượt đi trái ba lần" vì $\pi_L$ không được định nghĩa trong tệp; "Kiểm tra lại" bổ sung lỗi thường gặp lấy từ ghi chú diễn giả B10, C09, D11, E12, F09 | Chuẩn `exercises.md` (đề tự chứa, "Kiểm tra lại" nêu lỗi thường gặp); kết quả trùng ghi chú và deck |
+| 06.13 | MC lần ghé đầu và Q-learning $\alpha=1$ | Thêm câu (a) từ câu 1 của bài gốc (MRP của chính sách tham lam theo $Q_0$, lợi tức bị cắt ở bước 5, giá trị khi bỏ giới hạn) và câu (d) so hành động tham lam tại D; bỏ câu 4 của bài gốc (xấp xỉ tuyến tính, thuộc Bài 07) | Câu (a) nối với cắt ngắn của Nhận xét 06.13 và vòng lặp C–D giống vòng B–C; câu (d) cho thấy mục tiêu bootstrap dùng giá trị khởi tạo chưa quan sát |
+| 06.14 | Chứng minh $\pi_\varepsilon$ là $\varepsilon$-mềm, phản ví dụ chiều ngược, $q=(3,3,-1)$, $\varepsilon=0{,}3$ | Thêm phân loại bốn phân phối, chứng minh lớp $\varepsilon$-tham lam hữu hạn còn lớp $\varepsilon$-mềm vô hạn, trường hợp $\varepsilon=1$, và trường hợp dấu bằng của Mệnh đề 06.6 với $\pi^{(3)}=(0{,}5;\,0{,}4;\,0{,}1)$ | Ghi chú (sau Định nghĩa 06.4) đã nêu phản ví dụ hai hành động; bài cần nội dung mới, không trùng Bài tập 06.11 (dùng $\pi=(0{,}2;\,0{,}1;\,0{,}7)$) |
+| 06.15 | So $Y=R$ với bootstrap trên notebook | Thêm câu (a) tính tay với số liệu sư phạm tự xây dựng và câu (b) cận tỉ lệ cập nhật bị ảnh hưởng ($\le0{,}24\%$, $\le0{,}33\%$) từ $h$ đã nhúng | Bước tính tay trước thí nghiệm theo chuẩn bài thực hành; không khẳng định kết quả chạy chưa nhúng |
+| 06.16 | Đưa cấu hình về GLIE và Robbins–Monro; "chỉ ra giả thiết Markov vẫn không thỏa" | Bỏ câu hỏi về giả thiết Markov, chỉ nhắc trong lời giải (e) và dẫn Bài tập 06.12; thêm câu (c) thăm dò vô hạn theo từng cặp với lượt $k=2^n$ và câu (d) chứng minh $\alpha_n=1/n$ cho trung bình cộng các mục tiêu | Bài tập 06.12(c) của ghi chú ("Bài tập củng cố") đã hỏi đúng câu đó; hai tệp không được lặp đề |
+| 06.17 | Trùng G03/G07 | Ba câu (a)–(c) như G03; thêm câu (d) đọc kết quả đánh giá, ứng với hai dòng cuối của G07; thêm dữ kiện lượt dài $773$ bước, $44\%$ bị cắt ngắn cho câu (a) | Lời giải trên G07 có hai dòng về kết quả đánh giá mà câu hỏi G03 chưa hỏi; kết quả trong tệp giống G07 |
+
+### Số liệu đã tính lại (script `ex06/verify_ex06.py` trong scratchpad, phân số chính xác)
+
+- 06.2: $(0{,}1;\,0{,}9)$; $(0{,}6;\,0{,}2;\,0{,}2)$. 06.3: $996,997,998,999,1000$; mọi lần ghé $997$. 06.4: $-1{,}6$; $-0{,}8$; $-0{,}5$; với $\alpha=0{,}8$: $-1{,}28$. 06.5: $0$ và $799$. 06.6: $7/8$. Khớp ghi chú và các trang lời giải của deck.
+- 06.13: chính sách tham lam $(\mathrm B,\mathrm C,\mathrm D,\mathrm E)\mapsto(1,1,0,1)$; $v=-2$ tại cả bốn ô; lợi tức bị cắt $-31/16$; $\tau_1$: $-1/2,1,4,10$; $\tau_2$: $-2,-2$; bảng Monte Carlo B $(4;1)$, C $(1;2)$, D $(-1/2;-2)$, E $(1;-2)$; mọi lần ghé $(\mathrm B,0)=7$; Q-learning: $0,-1/2,-1/2,10,3/2,-2$, bảng B $(10;1)$, C $(-1/2;2)$, D $(0;3/2)$, E $(1;-2)$; lặp mẫu 5 cho $-1/2$. Khớp lời giải bài 10 của ghi chú cũ (`ecf2738`, §7.4).
+- 06.14: bảy phân phối $0{,}3$-tham lam; $v_{\pi^{(3)}}=v_{\pi'}=13/5$; $w=(4/7;\,3/7;\,0)$; $\pi^{(4)}$ là $0{,}15$-tham lam.
+- 06.15: Sarsa $20{,}98$; $0{,}98$; $20{,}049$. Q-learning $28{,}9$; $8{,}9$; $20{,}445$. $Y=R$: $-0{,}8$; $-20{,}8$; $18{,}96$. $3000/1\,276\,891\approx0{,}235\%$; $3000/907\,456\approx0{,}331\%$.
+- 06.16: $\varepsilon_k$ và khối tại $k=1000,2000,3000$: $0{,}1$, $0{,}925$; $0{,}05$, $0{,}9625$; $1/30$, $0{,}975$; lịch tuyến tính tại $k=1000$ (`linear_epsilon(999)`): $0{,}3673$, khối $0{,}7245$; hai lịch cắt nhau tại $k\approx108$, $1473$, $2000$. Tổng $121/64$. $1/17\approx0{,}0588$; $17^{-0{,}6}\approx0{,}1827$; $1/80\,743\approx1{,}24\cdot10^{-5}$.
+- 06.17: $20^{5/3}\approx147{,}36$; $147^{-0{,}6}\approx0{,}05007$; $148^{-0{,}6}\approx0{,}04987$; $0{,}9625$; $[-13{,}4;\,79{,}0]$.
+- Số liệu notebook dùng trong 06.15–06.17 (đọc từ output đã nhúng): $h=1\,276\,891$ (Sarsa), $907\,456$ (Q-learning); $n$ trung vị $17$, lớn nhất $80\,743$; $1334/2187$ ô được ghé; năm lần sơ bộ Sarsa $66{,}1$–$136{,}1$; đánh giá cuối $26{,}2\pm14{,}0$, $-6{,}6\pm17{,}2$, hiệu $32{,}8\pm46{,}2$; lượt dài $773$, $44\%$ cắt ngắn.
+
+### Biên tập `no-ai-slop` (Edit) và tự đối chiếu `eval.md`
+
+- Phạm vi: toàn bộ văn xuôi, đề, gợi ý, lời giải, chú thích mã của `exercises.md`.
+- Đã sửa trong lượt tự kiểm: một câu suy đoán không có căn cứ ở 06.15(c) ("đó là nơi biến thể sai tác động mạnh nhất") đổi thành dẫn số liệu notebook phần 8.2; câu so sánh hai lịch thăm dò sai ở 06.16(b) (đã tính lại bằng `linear_epsilon(k - 1)`); câu "không liên quan" ở 06.16(e) đổi thành nói rõ thăm dò ảnh hưởng độ phủ; câu kết không có chức năng ở "Kiểm tra lại" của 06.17; chữ Việt có dấu trong `\text{}` ($G_0^{\text{cắt}}$) đổi thành $G_0^{(5)}$.
+- Kết quả đối chiếu `eval.md`: không câu hỏi tu từ, không "hãy", không "rõ ràng", "dễ thấy", "Đáp án"; không tài liệu làm chủ ngữ; gạch ngang dài chỉ ở tiêu đề theo khuôn `# Bài tập Bài 06 — …`, tên bài giảng gốc và ô trống của bảng mạch (theo mẫu). Khuôn "Hai/Ba lỗi thường gặp: …" lặp ở mọi "Kiểm tra lại" là nhãn chức năng do chuẩn yêu cầu, giữ.
+
+### Kiểm tra đã chạy
+
+- `note_check.py exercises.md`: 11 khối `exercise`, 11 `hint`, 11 `solution`; không khối lạ, lồng hay chưa đóng; không trùng số; 0 dấu `\(`/`\[`. Hai cờ có chủ đích: (1) "gaps" $7$–$12$, vì Bài tập 06.7–06.12 thuộc "Bài tập củng cố" của ghi chú và không được lặp (tệp giữ số 06.1–06.6 của ghi chú theo kế hoạch C và sản phẩm mẫu math-4-AI Bài 07; số mới bắt đầu ở 06.13, kế tiếp bài cuối 06.12 của ghi chú); (2) mẫu `trang chiếu` khớp 8 dòng, gồm 7 dòng "**Trùng trang chiếu:**" bắt buộc và đoạn mở.
+- `check_note.py 06 lecture-06-dieu-khien-phi-mo-hinh.html exercises` (viewer cổng 8766): 1600×900 và 390×844 đều 0 `.katex-error`, 0 lỗi console, 0 yêu cầu ngoài hoặc hỏng, không cuộn ngang; 33 khối, 22 khối gập. Ở 1600×900 không bảng, công thức khối hay khối mã nào tràn (khối mã của 06.16 đã rút chú thích để vừa khung). Đã xem ảnh: đoạn mở và bảng mạch, lời giải 06.13, 06.16 ở 1600×900; lời giải 06.13, 06.14 ở 390×844.
+- Liên kết tới deck: 21 đích `#/h/v`, kiểm bằng Playwright (cổng 8799) như trên.
+- `git diff --check` (kể cả tệp mới qua `git add -N`, đã hoàn tác): sạch.
+
+### Đề nghị sửa deck và ghi chú
+
+| Vị trí | Nội dung sửa |
+|---|---|
+| Deck L06-G04 (`#/7/10`), bảng `Mạch | Bài tập` | Thêm số của `exercises.md`: mạch 2 thêm 06.14; mạch 3 thêm 06.13; mạch 4 thêm 06.15; mạch 5 thêm 06.13; mạch 6 thêm 06.16; mạch 7 thêm 06.17. Đổi dòng "Tệp bài tập: chưa có" thành liên kết viewer `material-viewer.html?doc=materials/lec-06/exercises.md&deck=lecture-06-dieu-khien-phi-mo-hinh.html` |
+| Deck L06-G03, ghi chú diễn giả | Tùy chọn: thêm câu hỏi (d) "Từ kết quả đánh giá, xác định đã xếp hạng được hai thuật toán chưa" để câu hỏi khớp hai dòng cuối của lời giải G07 |
+| `index.html`, thẻ Bài 06 | Nhóm "Bài tập" chuyển từ `Chưa có` sang liên kết viewer sau khi tệp qua kiểm định (việc của điều phối viên) |
+
+Không có đề nghị sửa ghi chú: mọi kết quả của Bài tập 06.1–06.6 trùng ghi chú và deck.
+
+### Chỗ cần rà toán soi
+
+- 06.14(c): khẳng định "với $\varepsilon<1$, các tập $\mathcal G_Q(s)$ khác nhau cho các phân phối khác nhau" (dùng ngầm khi nói "đúng 7"); và phát biểu trường hợp dấu bằng ở (d) ("khi và chỉ khi $w$ dồn toàn bộ khối vào các hành động cực đại").
+- 06.16(c): dùng vế thứ nhất của Borel–Cantelli với lần ghé tất định; câu về ô được ghé mọi lượt dẫn vế thứ hai dưới giả định cực đại cố định như Ví dụ 06.14.
+- 06.13(a): đọc câu 1 của bài gốc ("vẽ MRP cảm sinh") thành liệt kê chuyển, kèm lợi tức bị cắt và giá trị khi bỏ giới hạn số bước.
+- 06.15(c): lập luận lan lùi của sai lệch qua mục tiêu bootstrap được viết định tính, không có số liệu.
+
+### Rà soát ba vai và vòng sửa (giai đoạn III, 2026-10-14)
+
+- Tác tử rà soát: TOAN, SV, PB; mỗi vai một tác tử `general-purpose`, `claude-opus-5-5`, mức `high`, chỉ đọc. Báo cáo ở `scratchpad/exrev-06-{TOAN,SV,PB}.md`. Tổng: 0 chặn, 0 nghiêm trọng; TOAN 3 trung bình, 7 nhẹ; SV 3 trung bình, 11 nhẹ; PB 5 trung bình, 13 nhẹ.
+- Sửa: tác tử soạn của giai đoạn III (`general-purpose`, `claude-opus-5-5`, `high`), `no-ai-slop` Edit, theo quyết định của điều phối viên. Không commit. Bản trước vòng sửa lưu ở `scratchpad/ex06/exercises-before-rev.md`.
+
+| Mã | Mức | Vị trí | Trạng thái | Xử lý |
+|---|---|---|---|---|
+| TOAN-1 | trung bình | 06.14(c) | đã sửa | Chứng minh "đúng $2^{m}-1$" bằng hai sự kiện: mọi tập con khác rỗng $\mathcal G$ là tập cực đại của bảng $Q=\mathbf 1\{a\in\mathcal G\}$; với $\varepsilon<1$, $\mathcal G$ là tập hành động có xác suất lớn hơn $\varepsilon/m$, nên đọc lại được từ phân phối. Bỏ "liệt kê ở (b)", liệt kê bảy phân phối theo ba dạng |
+| TOAN-2 | trung bình | 06.16(c) | đã sửa | Chỉ khẳng định lịch $c/C_t(s)$ thỏa định nghĩa GLIE gốc của Singh và cộng sự (điều kiện tại trạng thái ghé vô hạn lần, giả thiết MDP liên thông), đối chiếu Định nghĩa 06.18 (mạnh hơn); câu thiếu vị ngữ viết lại; đoạn tách thành kết luận và "Liên hệ với tàu đổ bộ" (PB, 06.16(c) rút ngắn) |
+| TOAN-3 = PB-1 | trung bình | Hướng dẫn (đoạn Tàu đổ bộ); 06.15 Nguồn và đề | đã sửa | Năm lần sơ bộ $66{,}1$–$136{,}1$ ghi là "ghi nhận khi soạn notebook, chạy ngoài notebook, đánh giá trên tập hạt giống khác `TEST_SEED`" |
+| SV-1 = PB-2 = TOAN nhẹ | trung bình | 06.17 đề và (a) | đã sửa | Dùng số liệu huấn luyện của lần chạy đã nhúng (notebook ô 37, phần 8.1): $500$ lượt huấn luyện cuối của Sarsa dài trung bình $655$ bước, $7\%$ bị cắt ngắn; bỏ $773$/$44\%$ (số liệu đánh giá) khỏi lập luận về dữ liệu huấn luyện |
+| SV-2 = PB-4 | trung bình | 06.15, 06.16 | đã sửa | Thêm 06.15(e) và 06.16(f): yêu cầu chạy thật, số lần huấn luyện mới ($2$ và $3$), thời gian ước tính $80$–$105$ giây mỗi lần (notebook phần 13), sản phẩm nộp; lời giải nêu cách đọc theo điều kiện, không nêu số |
+| SV-3 | trung bình | Deck G04 | ngoài phạm vi | Đã có trong "Đề nghị sửa deck và ghi chú" của đợt soạn |
+| PB-3 | trung bình | 06.16 tiêu đề và (e) | đã sửa | Tiêu đề "Lịch thăm dò và lịch bước học của tàu đổ bộ so với GLIE và Robbins–Monro"; (e) gọi cấu hình `eps_glie` + `alpha_rm` là "gần GLIE theo nghĩa của (c)" |
+| PB-5 = TOAN nhẹ | trung bình | 06.14(d) | đã sửa | Rút về trường hợp đẳng thức: chứng minh $v_{\pi'}=v_\pi$ dù $\pi'\ne\pi$, và điều kiện cần và đủ với $\varepsilon<1$ qua đẳng thức $\sum_a\pi'q_\pi-v_\pi=(1-\varepsilon)\sum_aw(a\mid s)[\max_bq_\pi(s,b)-q_\pi(s,a)]$; trường hợp $\varepsilon=1$ nêu riêng; $w$ chuyển vào gợi ý; không lặp chuỗi phép tính của Bài tập 06.11 |
+| TOAN nhẹ | nhẹ | 06.15(b) | đã sửa | $0{,}24\%\to0{,}23\%$ |
+| TOAN nhẹ = SV | nhẹ | 06.1 | đã sửa | Đề nêu lợi tức $998=-1-1+1000$ của lượt D→C→B→A và tác tử không biết số này |
+| TOAN nhẹ | nhẹ | 06.14 gợi ý | đã sửa | "nhận nhiều nhất hai mức" |
+| TOAN nhẹ = PB | nhẹ | 06.15 Nguồn | đã sửa | `paired_difference` ở phần 3, `sarsa`, `q_learning` ở phần 6–8 |
+| TOAN nhẹ = PB | nhẹ | 06.16 đề | đã sửa | Quy ước "$k$ đếm từ $1$" và $c=100$ ghi là lựa chọn của bài |
+| SV | nhẹ | 06.4 | đã sửa | Đề nêu $Q_0(\mathrm C,0)=1$ của bảng khởi tạo nghiêng phải và $-0{,}6$ là giá trị sau một cập nhật |
+| SV | nhẹ | Hướng dẫn | đã sửa | Giải thích tên "nghiêng phải" theo hàng D; "nghiêng trái" không xuất hiện trong tệp |
+| SV | nhẹ | 06.14(c), (d) | đã sửa | Không dẫn "Bước 1", "Dòng (2)" của chứng minh; nêu thẳng lập luận |
+| SV | nhẹ | 06.13 gợi ý | đã sửa | Gợi ý (a) chỉ còn "so hai số trong từng hàng"; (b) "lần theo lượt từ D", dẫn phương trình Bellman |
+| SV = PB | nhẹ | 06.15(c) | đã sửa | Bỏ câu cuối về số liệu đánh giá |
+| SV = PB | nhẹ | Thứ tự mức vận dụng | giữ, có lý do | Trong mỗi mức, bài xếp theo số hiệu; số hiệu theo kế hoạch C và đề nghị đồng bộ G04 (06.17 là bài tổng hợp của mạch 7). Đổi chỗ 06.17 lên trước làm lệch thứ tự số |
+| SV | nhẹ | 06.16(b) | đã sửa | Bảng tách năm cột (lượt, $\varepsilon$ mới, khối mới, $\varepsilon$ tuyến tính, khối tuyến tính) |
+| SV | nhẹ | Ngắt dòng dấu câu sau KaTeX; mục lục viewer đánh số liền | ngoài phạm vi | Hạ tầng viewer |
+| PB | nhẹ | Đoạn mở | đã sửa | "giữ số hiệu và kết quả của ghi chú; đề được phát biểu lại cho tự chứa, lời giải được bổ sung các lỗi thường gặp" |
+| PB | nhẹ | 06.6 Kiểm tra lại | đã sửa | Lỗi thường gặp: coi một bước học dương bất kỳ hoặc một $\varepsilon$ dương cố định là đủ |
+| PB | nhẹ | 06.14 Kiểm tra lại | đã sửa | "Ba lỗi thường gặp: …; …; và …" |
+| PB | nhẹ | 06.13 | đã sửa | Nguồn nêu (a) ứng với câu 1, (b) mở rộng câu 1, (e) bổ sung; tách câu (a) cũ thành (a) chính sách và MRP, (b) lợi tức bị cắt và giá trị; các câu sau đổi chữ (c)–(e); thêm phương trình Bellman của chính sách vào mục "Nhắc lại"; "Trình bày bảng cuối, gồm giá trị và bộ đếm" |
+| PB | nhẹ | 06.15(d), 06.16(e), 06.17(d) | đã sửa | Cách đọc hiệu ghép cặp giảng một lần ở 06.17(d); 06.15(d), (e) và 06.16(e), (f) dẫn tới đó; 06.16(e) dùng thiết kế của 06.15(d) |
+| PB | nhẹ | "tức …" trong Kiểm tra lại | đã sửa | Bỏ ở 06.1, 06.3, 06.4, 06.5, 06.14, 06.15 |
+| PB | nhẹ | 06.16(d) nhắc lại Bài 05 | sửa một phần | Đề ghi "Nhắc lại kết quả trung bình gia tăng của Bài 05 cho mục tiêu thay đổi"; giữ chứng minh quy nạp ba dòng vì nó là căn cứ của lập luận về sàn bước học |
+| PB | nhẹ | Đồng bộ hình thức 06.1–06.6 với ghi chú | đề nghị | Xem bảng đề nghị dưới |
+| SV | nhẹ | Gợi ý 06.2(d), 06.6(c) | giữ | SV đánh giá chấp nhận được ở mức nhận biết và tính toán một bước |
+
+- Cảnh báo KaTeX về chữ Việt trong `\text{}`: tệp không còn `\text{}` chứa chữ có dấu (chỉ `\text{Sarsa}`, `\text{Q}`); cảnh báo cùng loại trong console được chấp nhận như với ghi chú. Lỗi console duy nhất SV ghi nhận là CSP chặn script do `reloadserver` cổng 8766 chèn, không thuộc nội dung.
+
+Đề nghị sửa ghi chú (bổ sung):
+
+| Vị trí trong ghi chú | Nội dung sửa | Nguồn |
+|---|---|---|
+| "Trong thực hành" sau Nhận xét 06.10 (dòng 635) | Số $773$ bước và $44\%$ cắt ngắn là của chính sách tham lam khi đánh giá (notebook ô 40), nhưng được dùng để lập luận về dữ liệu mà Thuật toán 06.9 sẽ học. Dùng số liệu huấn luyện ($500$ lượt huấn luyện cuối của Sarsa dài trung bình $655$ bước, $7\%$ bị cắt ngắn, notebook ô 37, phần 8.1) hoặc nói rõ số liệu đánh giá chỉ cho bậc độ dài lượt; giữ cùng số với Bài tập 06.17 | SV-1, PB-2, TOAN nhẹ |
+| Bài tập 06.1–06.6 | Tùy chọn: đồng bộ cách đánh câu "(a)" và phần "Kiểm tra lại" có lỗi thường gặp với `exercises.md` ở lần sửa sau | PB nhẹ |
+
+Kiểm tra sau vòng sửa:
+
+- `note_check.py`: 11 `exercise`, 11 `hint`, 11 `solution`, không khối lạ hay lồng, không trùng số; hai cờ có chủ đích như trên (khoảng trống 7–12; mẫu `trang chiếu` ở 7 dòng "Trùng trang chiếu" và đoạn mở).
+- `check_note.py 06 lecture-06-dieu-khien-phi-mo-hinh.html exercises` (cổng 8766): 1600×900 và 390×844 đều 0 `.katex-error`, 0 lỗi console, 0 yêu cầu ngoài hoặc hỏng, không cuộn ngang; 33 khối, 22 khối gập; ở 1600×900 không bảng, công thức hay khối mã nào tràn. Đã xem ảnh 06.14(c)–(d) ở 1600×900.
+- Liên kết: viewer có 21 đích khác nhau; 21 URL `#/h/v` tới deck mở bằng Playwright (cổng 8799) đều tới đúng trang (A01, B00–G00, A05, B07/B10, C08/C09, D08/D11, E08/E12, F05/F09, G03/G07, G04).
+- `git diff --check` (tệp mới qua `git add -N`, đã hoàn tác): sạch.
+- Số liệu mới tính lại: $3000/1\,276\,891=0{,}2349\%$; đẳng thức của 06.14(d) kiểm bằng biến đổi đại số và trên $\pi^{(3)}$ ($w=(4/7;3/7;0)$, hiệu bằng $0$); số liệu huấn luyện $655$ bước, $7\%$ đọc từ output ô 37; $3\times(80$–$105)$ giây $\approx4$–$5{,}5$ phút.
+
+### Quyết định của điều phối viên (2026-10-14, giai đoạn III, bài tập)
+
+- Kiểm độc lập: `note_check.py` sạch (11 bài); viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 33 khối, 0 lỗi console, không tải ngoài; `git diff --check` sạch. Ba vai rà soát chỉ đọc (Opus 5.5 high): 0 chặn, 0 nghiêm trọng; mọi mục trung bình đã sửa; các mục giữ nguyên có lý do.
+- Quyết định: **chấp nhận**; commit `feat(materials-06)`. Trang G04 của deck và nhóm "Bài tập" trên `index.html` cập nhật ở đợt sau; đề nghị sửa ghi chú (Nhận xét 06.10) để đợt đồng bộ chéo.
