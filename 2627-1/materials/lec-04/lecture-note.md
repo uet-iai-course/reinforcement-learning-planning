@@ -16,7 +16,7 @@ Cách dẫn "ghi chú Bài 03, Mục k" chỉ Mục k của ghi chú Bài 03; m�
 
 - **Quá trình quyết định Markov hữu hạn** (ghi chú Bài 03, Mục 1). Một quá trình quyết định Markov (Markov decision process, MDP) hữu hạn gồm tập trạng thái, tập hành động, tập phần thưởng hữu hạn và mô hình $p(s',r\mid s,a)=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a)$. Tính Markov: phân phối của $(S_{t+1},R_{t+1})$ chỉ phụ thuộc $(S_t,A_t)$, không phụ thuộc phần lịch sử trước đó.
 - **Lợi tức chiết khấu** (ghi chú Bài 03, Mục 2). Lợi tức (return) từ thời điểm $t$ là $G_t=\sum_{j\ge0}\gamma^jR_{t+j+1}$ và thỏa $G_t=R_{t+1}+\gamma G_{t+1}$. Khi $\lvert R_{t+1}\rvert\le R_{\max}$ với mọi $t$ và $0\le\gamma<1$, chuỗi hội tụ và $\lvert G_t\rvert\le R_{\max}/(1-\gamma)$.
-- **Chính sách và hàm giá trị** (ghi chú Bài 03, Mục 3). Chính sách dừng $\pi(a\mid s)$ là một phân phối trên các hành động hợp lệ tại $s$, không đổi theo thời gian. Giá trị trạng thái là $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$; giá trị hành động $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$ ấn định hành động đầu là $a$ rồi theo $\pi$ từ bước sau.
+- **Chính sách và hàm giá trị** (ghi chú Bài 03, Mục 3). Chính sách Markov dừng (stationary policy) $\pi(a\mid s)$ là một phân phối trên các hành động hợp lệ tại $s$, chỉ phụ thuộc trạng thái hiện tại và không đổi theo thời gian. Chữ "dừng" ở đây chỉ tính chất không đổi theo thời gian của chính sách, khác với việc dừng một thuật toán ở các mục sau. Giá trị trạng thái là $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$; giá trị hành động $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$ ấn định hành động đầu là $a$ rồi theo $\pi$ từ bước sau.
 - **Phương trình Bellman kỳ vọng** (ghi chú Bài 03, Mục 4). Với mọi $s$ và mọi hành động $a$ hợp lệ,
   $q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma v_\pi(s')\bigr]$ và $v_\pi(s)=\sum_a\pi(a\mid s)q_\pi(s,a)$; ghép hai đẳng thức cho phương trình của $v_\pi$ theo chính $v_\pi$.
 - **Đánh giá chính sách bằng hệ tuyến tính** (ghi chú Bài 03, Mục 5). Trên $n$ trạng thái chưa kết thúc, phương trình Bellman kỳ vọng là hệ tuyến tính $(I-\gamma P_\pi)v_\pi=r_\pi$, với $P_\pi$ là ma trận chuyển giữa các trạng thái chưa kết thúc và $r_\pi$ là vectơ thưởng kỳ vọng một bước dưới $\pi$; khi $0\le\gamma<1$, $I-\gamma P_\pi$ khả nghịch.
@@ -38,7 +38,7 @@ Bảng chỉ gồm các ký hiệu dùng xuyên suốt chương; ký hiệu ch�
 | $d$ | số trạng thái kế tiếp tối đa có xác suất dương của một cặp $(s,a)$ | số nguyên dương |
 | $\gamma$ | hệ số chiết khấu | $[0,1)$; $\gamma=1$ chỉ xét như phản ví dụ |
 | $G_t$ | lợi tức từ thời điểm $t$ | biến ngẫu nhiên thực |
-| $\pi(a\mid s)$, $\pi(s)$ | chính sách dừng; hành động của chính sách xác định | phân phối trên $\mathcal A(s)$; phần tử của $\mathcal A(s)$ |
+| $\pi(a\mid s)$, $\pi(s)$ | chính sách Markov dừng; hành động của chính sách xác định | phân phối trên $\mathcal A(s)$; phần tử của $\mathcal A(s)$ |
 | $\Pi$ | lớp mọi chính sách, kể cả chính sách phụ thuộc lịch sử | tập |
 | $v_\pi$, $q_\pi$ | giá trị trạng thái và giá trị hành động thật của $\pi$ | $\mathbb R^n$; hàm trên các cặp $(s,a)$ |
 | $v_*$, $q_*$, $\pi_*$ | giá trị tối ưu; một chính sách tối ưu | $\mathbb R^n$; hàm trên các cặp $(s,a)$; chính sách |
@@ -50,7 +50,7 @@ Bảng chỉ gồm các ký hiệu dùng xuyên suốt chương; ký hiệu ch�
 | $\lVert\cdot\rVert_\infty$ | chuẩn vô cùng, $\lVert U\rVert_\infty=\max_s\lvert U(s)\rvert$ | $\mathbb R^n\to[0,\infty)$ |
 | $\Delta_\pi(V)$, $\Delta_*(V)$ | phần dư Bellman của bảng $V$ đối với $T_\pi$, $T_*$ | $[0,\infty)$ |
 | $\theta$, $\kappa$ | ngưỡng dừng trên phần dư; sai số giá trị cho phép | $\theta>0$; $\kappa>0$ |
-| $K$, $I_{\max}$ | ngân sách số lượt quét; ngân sách số vòng của lặp chính sách | số nguyên không âm; số nguyên dương |
+| $K$, $I_{\max}$ | ngân sách số lượt quét (Thuật toán 04.9, 04.28) hoặc số bước cập nhật (Thuật toán 04.31); ngân sách số vòng của lặp chính sách | số nguyên không âm; số nguyên dương |
 | $\pi_V$ | chính sách tham lam theo bảng $V$ | chính sách xác định |
 | $\mathrm s_0,\mathrm s_1$; $\mathrm a,\mathrm b$; $\mathrm c_1,\dots,\mathrm c_5$; $\mathrm{trai},\mathrm{phai}$ | tên trạng thái và hành động trong các ví dụ | nhãn, không phải biến |
 
@@ -136,7 +136,7 @@ Chương có năm chủ đề cốt lõi, ba chủ đề cầu nối, bốn ch�
 
 ## 1. Đánh giá chính sách
 
-Trong Bài 03, chúng ta đã biết rằng khi mô hình $p(s',r\mid s,a)$ và một chính sách dừng $\pi$ được cho trước, giá trị $v_\pi$ thỏa phương trình Bellman kỳ vọng, và trên $n$ trạng thái chưa kết thúc, phương trình đó là một hệ tuyến tính có nghiệm duy nhất (ghi chú Bài 03, Mục 4–5). Kết quả này trả lời câu hỏi "chính sách đã cho tốt đến mức nào". Nó chưa trả lời câu hỏi mà tác tử phải trả lời khi hành động: nên chọn hành động nào tại mỗi trạng thái.
+Trong Bài 03, chúng ta đã biết rằng khi mô hình $p(s',r\mid s,a)$ và một chính sách Markov dừng $\pi$ được cho trước, giá trị $v_\pi$ thỏa phương trình Bellman kỳ vọng, và trên $n$ trạng thái chưa kết thúc, phương trình đó là một hệ tuyến tính có nghiệm duy nhất (ghi chú Bài 03, Mục 4–5). Kết quả này trả lời câu hỏi "chính sách đã cho tốt đến mức nào". Nó chưa trả lời câu hỏi mà tác tử phải trả lời khi hành động: nên chọn hành động nào tại mỗi trạng thái.
 
 Xét một mô hình có hai trạng thái $\mathrm s_0$, $\mathrm s_1$. Tại $\mathrm s_0$, hành động $\mathrm a$ cho phần thưởng $1$ và giữ tác tử ở $\mathrm s_0$, còn $\mathrm b$ cho phần thưởng $0$ nhưng đưa tác tử sang $\mathrm s_1$, nơi hai hành động cho phần thưởng $2$ và $3$. Nhìn phần thưởng trước mắt, $\mathrm a$ thắng; nhìn xa hơn, $\mathrm b$ mở đường tới phần thưởng lớn hơn. Để quyết định, chúng ta cần so sánh giá trị dài hạn, mà với $\gamma=0{,}9$ mỗi giá trị là tổng của vô hạn số hạng.
 
@@ -232,7 +232,7 @@ $$
 Mỗi lần cập nhật mọi trạng thái một lần gọi là một lượt quét (sweep). Bảng $V_k$ là bảng sau $k$ lượt quét; chỉ số $k$ đếm phép tính, không phải bước tương tác $t$. Hai lượt quét của Ví dụ 04.2 đều thực hiện cùng một phép biến đổi trên toàn bảng: nhận bảng cũ, trả bảng mới. Định nghĩa sau đặt tên cho phép biến đổi đó.
 
 ::: definition Định nghĩa 04.1 (Toán tử Bellman đánh giá, lượt quét đồng bộ)
-Cho MDP hữu hạn với mô hình $p(s',r\mid s,a)$, hệ số chiết khấu $\gamma\in[0,1]$ và chính sách dừng $\pi$. Mỗi bảng $V\in\mathbb R^n$ được mở rộng lên $\mathcal S^+$ bằng $V(s_{\mathrm{term}})=0$.
+Cho MDP hữu hạn với mô hình $p(s',r\mid s,a)$, hệ số chiết khấu $\gamma\in[0,1]$ và chính sách Markov dừng $\pi$. Mỗi bảng $V\in\mathbb R^n$ được mở rộng lên $\mathcal S^+$ bằng $V(s_{\mathrm{term}})=0$.
 
 **Toán tử Bellman đánh giá.** Toán tử Bellman (Bellman operator) của $\pi$ là ánh xạ $T_\pi:\mathbb R^n\to\mathbb R^n$ cho bởi
 
@@ -281,7 +281,7 @@ Nhầm lẫn thường gặp là đọc giá trị vừa ghi trong cùng một l
 Tính chất đầu tiên của $T_\pi$ chỉ dùng dấu của các trọng số trong (1.1): khi bảng tiếp nối tăng ở mọi trạng thái, giá trị mới không thể giảm.
 
 ::: lemma Bổ đề 04.2 (Tính đơn điệu của $T_\pi$)
-**Giả thiết.** MDP hữu hạn; $\gamma\ge0$; $\pi$ là chính sách dừng; $U,V\in\mathbb R^n$ thỏa $U\le V$ theo từng trạng thái.
+**Giả thiết.** MDP hữu hạn; $\gamma\ge0$; $\pi$ là chính sách Markov dừng; $U,V\in\mathbb R^n$ thỏa $U\le V$ theo từng trạng thái.
 
 **Kết luận.** $T_\pi U\le T_\pi V$ theo từng trạng thái.
 
@@ -324,7 +324,7 @@ $$
 
 Chênh lệch mới là $9$ tại cả hai trạng thái, nên độ chênh lớn nhất là $9$.
 
-**Diễn giải.** Phần thưởng triệt tiêu khi lấy hiệu; chỉ còn $0{,}9$ nhân chênh lệch cũ tại $\mathrm s_0$: $0{,}9\cdot10=9$.
+**Diễn giải.** Phần thưởng triệt tiêu khi lấy hiệu; chỉ còn $0{,}9$ nhân chênh lệch cũ tại $\mathrm s_0$: $0{,}9\cdot10=9$. Bảng $U$ không đổi dưới $T_{\pi_0}$, tức $T_{\pi_0}U=U$; Ví dụ 04.5 cho thấy $U=v_{\pi_0}$.
 
 **Kiểm tra lại.** $9\le0{,}9\cdot11=9{,}9$; dấu bằng không xảy ra vì $\mathrm s_0$ không phải nơi chênh lệch cũ lớn nhất.
 :::
@@ -338,7 +338,7 @@ Chênh lệch mới là $9$ tại cả hai trạng thái, nên độ chênh lớ
 Chuẩn vô cùng đo sai số xấu nhất trên các trạng thái: $\lVert V-v_\pi\rVert_\infty\le0{,}1$ nghĩa là $V$ lệch giá trị thật không quá $0{,}1$ tại mọi trạng thái. Một ánh xạ co kéo mọi cặp bảng lại gần nhau theo cùng một tỉ lệ $\beta$. Ánh xạ $F(V)=2V$ trên $\mathbb R$ nhân đôi mọi khoảng cách nên không co; $F(V)=V+1$ giữ nguyên khoảng cách, không co và không có điểm bất động. Ví dụ 04.4 là một trường hợp của mệnh đề sau.
 
 ::: proposition Mệnh đề 04.4 ($T_\pi$ là ánh xạ co)
-**Giả thiết.** MDP hữu hạn; $0\le\gamma<1$; $\pi$ là chính sách dừng.
+**Giả thiết.** MDP hữu hạn; $0\le\gamma<1$; $\pi$ là chính sách Markov dừng.
 
 **Kết luận.** Với mọi $U,V\in\mathbb R^n$,
 
@@ -432,7 +432,7 @@ Bước 1 và Bước 2 của chứng minh dùng $1-\beta>0$; Bước 2 còn dù
 Ghép Mệnh đề 04.4 với Định lý 04.5 cho câu trả lời đầy đủ về đánh giá chính sách; phần (c) dưới đây nhắc lại kết quả về hệ tuyến tính của Bài 03.
 
 ::: corollary Hệ quả 04.6 (Nghiệm của bài toán đánh giá chính sách)
-**Giả thiết.** MDP hữu hạn với phần thưởng bị chặn; $0\le\gamma<1$; $\pi$ là chính sách dừng.
+**Giả thiết.** MDP hữu hạn với phần thưởng bị chặn; $0\le\gamma<1$; $\pi$ là chính sách Markov dừng.
 
 **Kết luận.**
 
@@ -473,7 +473,7 @@ y&=2+0{,}9x.
 \end{aligned}
 $$
 
-Phương trình thứ nhất chỉ chứa $x$ vì $\mathrm a$ đưa $\mathrm s_0$ về chính nó: $0{,}1x=1$, nên $x=10$. Thế vào phương trình thứ hai, ta được $y=2+9=11$. Vậy $v_{\pi_0}=(10,11)$.
+Phương trình thứ nhất chỉ chứa $x$ vì $\mathrm a$ đưa $\mathrm s_0$ về chính nó: $0{,}1x=1$, nên $x=10$. Thế vào phương trình thứ hai, ta được $y=2+9=11$. Vậy $v_{\pi_0}=(10,11)$, chính là bảng $U$ không đổi dưới $T_{\pi_0}$ trong Ví dụ 04.4.
 
 **Sai số của các lượt quét.** Quy nạp theo $k$ từ $V_0=(0,0)$ cho $V_k(\mathrm s_0)=10(1-0{,}9^k)$ và $V_k(\mathrm s_1)=2+0{,}9V_{k-1}(\mathrm s_0)=11-10\cdot0{,}9^k$ với $k\ge1$. Do đó
 
@@ -501,7 +501,7 @@ Mỗi giả thiết của Hệ quả 04.6 bị bỏ đều có phản ví dụ t
 Hệ quả 04.6(b) cho biết sai số giảm theo $\gamma^k$, nhưng chặn chứa $v_\pi$, chính đại lượng chưa biết. Trong Ví dụ 04.5, chúng ta đo được sai số thật chỉ vì mô hình đủ nhỏ để giải hệ bằng tay. Để quyết định khi nào dừng các lượt quét, chúng ta cần một đại lượng tính được từ bảng hiện có. Đại lượng tự nhiên là mức thay đổi của bảng sau một lần áp dụng toán tử: trong Ví dụ 04.2, bảng thay đổi $2$ ở lượt quét thứ nhất và $0{,}9$ ở lượt quét thứ hai.
 
 ::: definition Định nghĩa 04.7 (Phần dư Bellman đối với $T_\pi$)
-Cho MDP hữu hạn, $\gamma\in[0,1)$ và chính sách dừng $\pi$. Phần dư Bellman (Bellman residual) của bảng $V\in\mathbb R^n$ đối với $T_\pi$ là
+Cho MDP hữu hạn, $\gamma\in[0,1)$ và chính sách Markov dừng $\pi$. Phần dư Bellman (Bellman residual) của bảng $V\in\mathbb R^n$ đối với $T_\pi$ là
 
 $$
 \Delta_\pi(V)=\lVert T_\pi V-V\rVert_\infty .
@@ -559,7 +559,7 @@ Hệ quả 04.8 đổi câu hỏi "bảng còn cách nghiệm bao xa" thành ph�
 Đến đây chúng ta có đủ thành phần cho một thuật toán: quy tắc cập nhật (Định nghĩa 04.1), bảo đảm hội tụ (Hệ quả 04.6) và đại lượng dừng có chặn sai số (Hệ quả 04.8). Khi chạy thuật toán dưới đây trên mô hình hai trạng thái, hai lần lặp đầu cho các bảng của Ví dụ 04.2, và phép kiểm dừng tại $k=1$ là phép tính của Ví dụ 04.6.
 
 ::: algorithm Thuật toán 04.9 (Đánh giá chính sách đồng bộ có ngưỡng)
-**Đầu vào.** Mô hình $p(s',r\mid s,a)$ của MDP hữu hạn; chính sách dừng $\pi$; hệ số $\gamma\in[0,1)$.
+**Đầu vào.** Mô hình $p(s',r\mid s,a)$ của MDP hữu hạn; chính sách Markov dừng $\pi$; hệ số $\gamma\in[0,1)$.
 
 **Đầu ra.** Bảng $V$, phần dư $\Delta_\pi(V)$ đo trên chính bảng đó, và nhãn "đạt ngưỡng" hoặc "hết ngân sách".
 
@@ -704,7 +704,7 @@ Chính sách tham lam nhìn đúng một bước theo bảng $V$ và giao phần
 Định lý sau cho biết vì sao đổi sang chính sách tham lam an toàn. Nó dùng tính đơn điệu (Bổ đề 04.2) để truyền một bất đẳng thức qua nhiều lần áp dụng toán tử, và Hệ quả 04.6(b) để chuyển qua giới hạn.
 
 ::: theorem Định lý 04.13 (Cải thiện chính sách)
-**Giả thiết.** MDP hữu hạn, phần thưởng bị chặn, $0\le\gamma<1$. $\pi$ là chính sách dừng (có thể ngẫu nhiên) với giá trị chính xác $v_\pi$. $\pi'$ là chính sách dừng xác định thỏa
+**Giả thiết.** MDP hữu hạn, phần thưởng bị chặn, $0\le\gamma<1$. $\pi$ là chính sách Markov dừng (có thể ngẫu nhiên) với giá trị chính xác $v_\pi$. $\pi'$ là chính sách Markov dừng xác định thỏa
 
 $$
 q_\pi\bigl(s,\pi'(s)\bigr)\ge v_\pi(s)\qquad\text{với mọi } s\in\mathcal S .
@@ -867,7 +867,7 @@ Tại cả hai trạng thái, hành động đang chọn $\mathrm b$ đạt cự
 Thuật toán dừng ở vòng $i=2$ vì cải thiện không đổi hành động nào. Định nghĩa sau gọi tên tình huống đó.
 
 ::: definition Định nghĩa 04.16 (Chính sách ổn định)
-Chính sách dừng xác định $\pi$ là ổn định nếu Thuật toán 04.14, áp dụng cho $\pi$ và giá trị chính xác $v_\pi$, trả lại chính $\pi$; tương đương, $\pi(s)\in\arg\max_{a\in\mathcal A(s)}q_\pi(s,a)$ với mọi $s\in\mathcal S$.
+Chính sách Markov dừng xác định $\pi$ là ổn định nếu Thuật toán 04.14, áp dụng cho $\pi$ và giá trị chính xác $v_\pi$, trả lại chính $\pi$; tương đương, $\pi(s)\in\arg\max_{a\in\mathcal A(s)}q_\pi(s,a)$ với mọi $s\in\mathcal S$.
 :::
 
 Hai cách phát biểu tương đương nhờ quy tắc phá hòa: Thuật toán 04.14 giữ hành động cũ khi và chỉ khi nó thuộc tập cực đại. Trong Ví dụ 04.11, $\pi_2$ ổn định, còn $\pi_1$ không ổn định vì $q_{\pi_1}(\mathrm s_0,\mathrm a)=10<27$. Tính ổn định là tính chất của cặp chính sách và giá trị chính xác của nó.
@@ -877,7 +877,7 @@ Hai cách phát biểu tương đương nhờ quy tắc phá hòa: Thuật toán
 Ví dụ 04.11 là ba vòng của thuật toán dưới đây, chạy bằng tay.
 
 ::: algorithm Thuật toán 04.17 (Lặp chính sách)
-**Đầu vào.** Mô hình $p$ của MDP hữu hạn; $\gamma\in[0,1)$; chính sách dừng xác định $\pi_0$.
+**Đầu vào.** Mô hình $p$ của MDP hữu hạn; $\gamma\in[0,1)$; chính sách Markov dừng xác định $\pi_0$.
 
 **Đầu ra.** Chính sách $\pi$, giá trị $v_\pi$ của chính sách đó, và nhãn "ổn định" hoặc "chưa chứng nhận".
 
@@ -921,7 +921,7 @@ $$
 
 nên mọi bất đẳng thức trong chuỗi là đẳng thức, mâu thuẫn với việc $v_{\pi_{i+1}}$ lớn hơn $v_{\pi_i}$ nghiêm ngặt ở một trạng thái.
 
-**Bước 3 (đếm).** Một chính sách dừng xác định chọn một phần tử của $\mathcal A(s)$ cho mỗi $s$, nên có đúng $\prod_s\lvert\mathcal A(s)\rvert$ chính sách như vậy. Theo Bước 2, các chính sách trong dãy đôi một khác nhau, nên dãy dừng sau không quá chừng đó vòng; khi dừng, cờ "ổn định" bật, tức chính sách trả về ổn định theo Định nghĩa 04.16. $\square$
+**Bước 3 (đếm).** Một chính sách Markov dừng xác định chọn một phần tử của $\mathcal A(s)$ cho mỗi $s$, nên có đúng $\prod_s\lvert\mathcal A(s)\rvert$ chính sách như vậy. Theo Bước 2, các chính sách trong dãy đôi một khác nhau, nên dãy dừng sau không quá chừng đó vòng; khi dừng, cờ "ổn định" bật, tức chính sách trả về ổn định theo Định nghĩa 04.16. $\square$
 :::
 
 Bước 1 dùng quy tắc phá hòa ở chỗ suy ra giá trị tăng nghiêm ngặt khi chính sách đổi. Giả sử tại một trạng thái có hai hành động cho cùng giá trị nhìn trước, và bước cải thiện được phép chọn tùy ý trong tập cực đại. Bước cải thiện có thể đổi sang hành động kia mà giá trị không tăng nghiêm ngặt ở đâu cả, rồi vòng sau đổi trở lại; dãy chính sách lặp vô hạn giữa hai chính sách cùng giá trị, và cờ "ổn định" không bao giờ bật. Sutton và Barto (2018, §4.3, Bài tập 4.4, tr. 82) nêu đúng lỗi này của giả mã lặp chính sách khi không có quy tắc phá hòa.
@@ -930,7 +930,7 @@ Bước 1 dùng quy tắc phá hòa ở chỗ suy ra giá trị tăng nghiêm ng
 
 Lặp chính sách dừng ở $(\mathrm b,\mathrm b)$ với giá trị $(27,30)$. Câu hỏi còn lại là có chính sách nào khác cho giá trị lớn hơn tại một trạng thái nào đó hay không. Để trả lời, chúng ta cần nói chính xác "tốt nhất" nghĩa là gì, so với lớp chính sách nào.
 
-Một cách trực quan, "tốt nhất" nghĩa là so tại từng trạng thái xuất phát với mọi cách chọn hành động. Trên mô hình hai trạng thái có bốn chính sách dừng xác định, với giá trị $(10,11)$ cho $(\mathrm a,\mathrm a)$, $(10,30)$ cho $(\mathrm a,\mathrm b)$, khoảng $(9{,}47;\,10{,}53)$ cho $(\mathrm b,\mathrm a)$ (Mục 2.2) và $(27,30)$ cho $(\mathrm b,\mathrm b)$; chính sách $(\mathrm b,\mathrm b)$ đứng đầu tại cả hai trạng thái. Tác tử còn có thể chọn ngẫu nhiên, hoặc chọn theo lịch sử, chẳng hạn đi $\mathrm b$ ở lần đầu ghé $\mathrm s_0$ và đi $\mathrm a$ ở các lần sau, nên phép so sánh phải bao cả những cách đó. Đây mới là mô tả; định nghĩa sau làm chính xác lớp chính sách và phép so sánh.
+Một cách trực quan, "tốt nhất" nghĩa là so tại từng trạng thái xuất phát với mọi cách chọn hành động. Trên mô hình hai trạng thái có bốn chính sách Markov dừng xác định, với giá trị $(10,11)$ cho $(\mathrm a,\mathrm a)$, $(10,30)$ cho $(\mathrm a,\mathrm b)$, khoảng $(9{,}47;\,10{,}53)$ cho $(\mathrm b,\mathrm a)$ (Mục 2.2) và $(27,30)$ cho $(\mathrm b,\mathrm b)$; chính sách $(\mathrm b,\mathrm b)$ đứng đầu tại cả hai trạng thái. Tác tử còn có thể chọn ngẫu nhiên, hoặc chọn theo lịch sử, chẳng hạn đi $\mathrm b$ ở lần đầu ghé $\mathrm s_0$ và đi $\mathrm a$ ở các lần sau, nên phép so sánh phải bao cả những cách đó. Đây mới là mô tả; định nghĩa sau làm chính xác lớp chính sách và phép so sánh.
 
 ::: definition Định nghĩa 04.19 (Giá trị tối ưu, chính sách tối ưu)
 Cho MDP hữu hạn, phần thưởng bị chặn, $0\le\gamma<1$, và $\Pi$ là lớp mọi chính sách, kể cả chính sách chọn hành động theo toàn bộ lịch sử $(S_0,A_0,R_1,\dots,S_t)$. Với $\pi\in\Pi$, đặt $v_\pi(s)=\mathbb E_\pi[G_0\mid S_0=s]$.
@@ -940,10 +940,10 @@ Cho MDP hữu hạn, phần thưởng bị chặn, $0\le\gamma<1$, và $\Pi$ là
 **Chính sách tối ưu.** $\pi_*\in\Pi$ là tối ưu nếu $v_{\pi_*}(s)=v_*(s)$ với mọi $s\in\mathcal S$.
 :::
 
-Định nghĩa dùng $\sup$ vì trước khi chứng minh, chúng ta chưa biết cận trên có đạt được bởi một chính sách nào hay không. Một chính sách tối ưu phải không thua mọi chính sách khác đồng thời tại mọi trạng thái xuất phát, và đến đây chúng ta chưa biết một chính sách như vậy có tồn tại hay không. Giá trị $v_*(s)\le R_{\max}/(1-\gamma)$ hữu hạn vì mọi lợi tức đều bị chặn bởi số đó. Định lý sau trả lời câu hỏi trên lớp chính sách dừng; Định lý 04.25 ở Mục 4 mở rộng kết quả sang toàn bộ $\Pi$.
+Định nghĩa dùng $\sup$ vì trước khi chứng minh, chúng ta chưa biết cận trên có đạt được bởi một chính sách nào hay không. Một chính sách tối ưu phải không thua mọi chính sách khác đồng thời tại mọi trạng thái xuất phát, và đến đây chúng ta chưa biết một chính sách như vậy có tồn tại hay không. Giá trị $v_*(s)\le R_{\max}/(1-\gamma)$ hữu hạn vì mọi lợi tức đều bị chặn bởi số đó. Định lý sau trả lời câu hỏi trên lớp chính sách Markov dừng; Định lý 04.25 ở Mục 4 mở rộng kết quả sang toàn bộ $\Pi$.
 
 ::: theorem Định lý 04.20 (Chính sách ổn định thỏa phương trình Bellman tối ưu)
-**Giả thiết.** MDP hữu hạn, phần thưởng bị chặn, $0\le\gamma<1$; $\pi$ là chính sách dừng xác định ổn định với giá trị chính xác $v_\pi$.
+**Giả thiết.** MDP hữu hạn, phần thưởng bị chặn, $0\le\gamma<1$; $\pi$ là chính sách Markov dừng xác định ổn định với giá trị chính xác $v_\pi$.
 
 **Kết luận.**
 
@@ -954,17 +954,17 @@ v_\pi(s)=\max_{a\in\mathcal A(s)}\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma v_\pi(
 \tag{3.1}
 $$
 
-- (b) Với mọi chính sách dừng $\pi'$, kể cả ngẫu nhiên, $v_{\pi'}\le v_\pi$ theo từng trạng thái.
+- (b) Với mọi chính sách Markov dừng $\pi'$, kể cả ngẫu nhiên, $v_{\pi'}\le v_\pi$ theo từng trạng thái.
 
 **Điều kiện áp dụng.** $v_\pi$ là giá trị chính xác; tính ổn định được kiểm bằng $v_\pi$, không bằng một bảng gần đúng.
 
-**Phạm vi.** Phần (b) so sánh với các chính sách dừng. So sánh với chính sách phụ thuộc lịch sử cần Định lý 04.25.
+**Phạm vi.** Phần (b) so sánh với các chính sách Markov dừng. So sánh với chính sách phụ thuộc lịch sử cần Định lý 04.25.
 :::
 
 ::: proof Chứng minh Định lý 04.20
 **Bước 1 (phương trình (3.1)).** Vì $\pi$ xác định, $v_\pi(s)=(T_\pi v_\pi)(s)=q_\pi(s,\pi(s))$. Vì $\pi$ ổn định, $\pi(s)\in\arg\max_aq_\pi(s,a)$, nên $q_\pi(s,\pi(s))=\max_aq_\pi(s,a)$. Thay $q_\pi(s,a)=Q_{v_\pi}(s,a)$ theo (2.1) cho (3.1).
 
-**Bước 2 (một lần áp dụng $T_{\pi'}$ không vượt $v_\pi$).** Với chính sách dừng $\pi'$ bất kỳ và mọi $s$,
+**Bước 2 (một lần áp dụng $T_{\pi'}$ không vượt $v_\pi$).** Với chính sách Markov dừng $\pi'$ bất kỳ và mọi $s$,
 
 $$
 \begin{aligned}
@@ -983,7 +983,7 @@ Phương trình (3.1) khác phương trình Bellman kỳ vọng (1.2) ở một 
 Phương trình (3.1) đọc bằng lời: giá trị của chính sách ổn định tại mỗi trạng thái bằng giá trị của hành động tốt nhất khi từ bước sau vẫn theo chính sách đó, nên không còn cách lệch một bước nào có lợi.
 
 ::: example Ví dụ 04.12 (Chứng nhận $(\mathrm b,\mathrm b)$ trên mô hình hai trạng thái)
-**Dữ kiện.** Mô hình hai trạng thái như Ví dụ 04.11, $\gamma=0{,}9$; $\pi_2=(\mathrm b,\mathrm b)$ ổn định với $v_{\pi_2}=(27,30)$ và các giá trị nhìn trước $25{,}3$; $27$ tại $\mathrm s_0$ và $26{,}3$; $30$ tại $\mathrm s_1$ (Ví dụ 04.11). Bốn chính sách dừng xác định có giá trị $(10,11)$, $(10,30)$, $(9{,}47;\,10{,}53)$ và $(27,30)$.
+**Dữ kiện.** Mô hình hai trạng thái như Ví dụ 04.11, $\gamma=0{,}9$; $\pi_2=(\mathrm b,\mathrm b)$ ổn định với $v_{\pi_2}=(27,30)$ và các giá trị nhìn trước $25{,}3$; $27$ tại $\mathrm s_0$ và $26{,}3$; $30$ tại $\mathrm s_1$ (Ví dụ 04.11). Bốn chính sách Markov dừng xác định có giá trị $(10,11)$, $(10,30)$, $(9{,}47;\,10{,}53)$ và $(27,30)$.
 
 **Phương trình (3.1).** $\max\{25{,}3;\,27\}=27=v_{\pi_2}(\mathrm s_0)$ và $\max\{26{,}3;\,30\}=30=v_{\pi_2}(\mathrm s_1)$.
 
@@ -1026,7 +1026,7 @@ Với $V=(0,0)$, giá trị nhìn trước chỉ còn phần thưởng của bư
 **Kiểm tra lại.** Phép chọn hành động trong (b) đúng đối với bảng $V$; lỗi nằm ở bảng, vì $V=(0,0)$ không phải giá trị của chính sách đang giữ.
 :::
 
-Như vậy, xen kẽ đánh giá chính xác với cải thiện cho thuật toán lặp chính sách (Thuật toán 04.17). Nhờ định lý cải thiện và quy tắc phá hòa, thuật toán dừng sau hữu hạn vòng (Mệnh đề 04.18) tại một chính sách ổn định, và chính sách ổn định thỏa phương trình Bellman tối ưu, không kém mọi chính sách dừng (Định lý 04.20). Trên mô hình hai trạng thái, $\pi_*=(\mathrm b,\mathrm b)$ và $v_*=(27,30)$ trong lớp chính sách dừng. Tuy nhiên, mỗi vòng đòi một lần đánh giá đầy đủ, và kết quả mới so với chính sách dừng; trong Mục 4, chúng ta bỏ đánh giá đầy đủ và mở rộng phép so sánh sang mọi chính sách.
+Như vậy, xen kẽ đánh giá chính xác với cải thiện cho thuật toán lặp chính sách (Thuật toán 04.17). Nhờ định lý cải thiện và quy tắc phá hòa, thuật toán dừng sau hữu hạn vòng (Mệnh đề 04.18) tại một chính sách ổn định, và chính sách ổn định thỏa phương trình Bellman tối ưu, không kém mọi chính sách Markov dừng (Định lý 04.20). Trên mô hình hai trạng thái, $\pi_*=(\mathrm b,\mathrm b)$ và $v_*=(27,30)$ trong lớp chính sách Markov dừng. Tuy nhiên, mỗi vòng đòi một lần đánh giá đầy đủ, và kết quả mới so với chính sách Markov dừng; trong Mục 4, chúng ta bỏ đánh giá đầy đủ và mở rộng phép so sánh sang mọi chính sách.
 
 <!-- note-topic-id: lec-04-part-05 -->
 ## 4. Lặp giá trị
@@ -1133,16 +1133,16 @@ Trên mô hình hai trạng thái với $U=(10,11)$ và $V=(0,0)$ như Ví dụ 
 <!-- note-topic-id: lec-04-part-11 -->
 ### 4.3 Tồn tại chính sách tối ưu
 
-Theo Định lý 04.5 và Mệnh đề 04.24, $T_*$ có đúng một điểm bất động. Định lý 04.20 mới so với các chính sách dừng, còn Định nghĩa 04.19 lấy cận trên trên toàn bộ $\Pi$. Định lý sau nối hai điều: điểm bất động của $T_*$ là $v_*$, và có một chính sách dừng, xác định đạt được nó.
+Theo Định lý 04.5 và Mệnh đề 04.24, $T_*$ có đúng một điểm bất động. Định lý 04.20 mới so với các chính sách Markov dừng, còn Định nghĩa 04.19 lấy cận trên trên toàn bộ $\Pi$. Định lý sau nối hai điều: điểm bất động của $T_*$ là $v_*$, và có một chính sách Markov dừng, xác định đạt được nó.
 
-::: theorem Định lý 04.25 (Tồn tại chính sách tối ưu dừng, xác định)
+::: theorem Định lý 04.25 (Tồn tại chính sách tối ưu Markov dừng, xác định)
 **Giả thiết.** MDP hữu hạn với tính Markov, phần thưởng bị chặn, $0\le\gamma<1$.
 
 **Kết luận.**
 
 - (a) Điểm bất động duy nhất $\bar V$ của $T_*$ bằng $v_*$; tức $v_*$ là nghiệm duy nhất của $V=T_*V$.
-- (b) Mọi chính sách dừng xác định tham lam theo $v_*$ là chính sách tối ưu trên toàn bộ $\Pi$.
-- (c) $v_*(s)=\max_{a\in\mathcal A(s)}q_*(s,a)$ với mọi $s$.
+- (b) Mọi chính sách Markov dừng xác định tham lam theo $v_*$ là chính sách tối ưu trên toàn bộ $\Pi$.
+- (c) $v_*(s)=\max_{a\in\mathcal A(s)}q_*(s,a)$ với mọi $s$, và $q_*$ thỏa phương trình Bellman tối ưu cho giá trị hành động: $q_*(s,a)=\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma\max_{a'\in\mathcal A(s')}q_*(s',a')\bigr]$ với mọi $s\in\mathcal S$, $a\in\mathcal A(s)$, quy ước $\max_{a'}q_*(s_{\mathrm{term}},a')=0$.
 - (d) Chính sách ổn định trả về bởi Thuật toán 04.17 là tối ưu trên toàn bộ $\Pi$.
 
 **Điều kiện áp dụng.** Tập hành động hữu hạn để cực đại đạt; tính Markov của môi trường dùng ở bước chặn chính sách phụ thuộc lịch sử.
@@ -1182,16 +1182,16 @@ $$
 
 **Bước 5 (qua giới hạn).** Số hạng $\gamma^N\mathbb E_\pi[\bar V(S_N)]$ có trị tuyệt đối không quá $\gamma^N\lVert\bar V\rVert_\infty\to0$. Phần đuôi bị bỏ của lợi tức thỏa $\bigl\lvert G_0-\sum_{t=0}^{N-1}\gamma^tR_{t+1}\bigr\rvert\le\sum_{t\ge N}\gamma^tR_{\max}=\gamma^NR_{\max}/(1-\gamma)$, nên $\bigl\lvert v_\pi(s)-\mathbb E_\pi\bigl[\sum_{t<N}\gamma^tR_{t+1}\bigr]\bigr\rvert\le\gamma^NR_{\max}/(1-\gamma)\to0$. Cho $N\to\infty$ ở Bước 4, ta được $v_\pi(s)\le\bar V(s)$ với mọi $\pi\in\Pi$.
 
-**Bước 6 (kết luận).** Từ Bước 5, $v_*(s)=\sup_\pi v_\pi(s)\le\bar V(s)$; từ Bước 2, $\bar V(s)=v_{\bar\pi}(s)\le v_*(s)$. Vậy $\bar V=v_*$, đây là (a), và chính sách $\bar\pi$, một chính sách tham lam tùy ý theo $v_*$, đạt $v_*$; đây là (b). Phần (c) là $v_*=T_*v_*$ viết lại bằng $q_*$ của Định nghĩa 04.19. Với (d), Định lý 04.20(a) cho $v_\pi=T_*v_\pi$ tại chính sách ổn định, nên $v_\pi=\bar V=v_*$ theo tính duy nhất ở Bước 1. $\square$
+**Bước 6 (kết luận).** Từ Bước 5, $v_*(s)=\sup_\pi v_\pi(s)\le\bar V(s)$; từ Bước 2, $\bar V(s)=v_{\bar\pi}(s)\le v_*(s)$. Vậy $\bar V=v_*$, đây là (a), và chính sách $\bar\pi$, một chính sách tham lam tùy ý theo $v_*$, đạt $v_*$; đây là (b). Theo Định nghĩa 04.19, $q_*(s,a)=Q_{v_*}(s,a)$, nên đẳng thức đầu của (c) là $v_*=T_*v_*$ viết lại bằng $q_*$; thế $v_*(s')=\max_{a'}q_*(s',a')$ với $s'\in\mathcal S$ và $v_*(s_{\mathrm{term}})=0$ vào định nghĩa của $q_*$, ta được đẳng thức thứ hai. Với (d), Định lý 04.20(a) cho $v_\pi=T_*v_\pi$ tại chính sách ổn định, nên $v_\pi=\bar V=v_*$ theo tính duy nhất ở Bước 1. $\square$
 :::
 
-Định lý 04.25 trả lời bài toán lập kế hoạch ở đầu chương: một chính sách tốt nhất tại mọi trạng thái đồng thời tồn tại, có thể chọn nó dừng và xác định, và chỉ cần biết $v_*$ là trích được nó bằng một phép nhìn trước. Mỗi giả thiết có vai trò riêng.
+Định lý 04.25 trả lời bài toán lập kế hoạch ở đầu chương: một chính sách tốt nhất tại mọi trạng thái đồng thời tồn tại, có thể chọn nó là chính sách Markov dừng, xác định, và chỉ cần biết $v_*$ là trích được nó bằng một phép nhìn trước. Mỗi giả thiết có vai trò riêng.
 
 - Bỏ tập hành động hữu hạn: xét một trạng thái với các hành động $\mathrm a_1,\mathrm a_2,\dots$, hành động $\mathrm a_j$ cho phần thưởng $1-1/j$ rồi kết thúc. Khi đó $v_*=1$ nhưng không chính sách nào đạt $1$; Bước 2 hỏng vì $\arg\max$ rỗng.
-- Bỏ tính Markov: nếu phân phối của $(S_{t+1},R_{t+1})$ phụ thuộc cả lịch sử, đẳng thức đầu của Bước 3 sai, và chứng minh không còn loại được khả năng một chính sách nhớ lịch sử vượt mọi chính sách dừng. Tình huống 04.2 xét hệ quả của việc mất tính Markov khi gộp trạng thái của CartPole.
+- Bỏ tính Markov: nếu phân phối của $(S_{t+1},R_{t+1})$ phụ thuộc cả lịch sử, đẳng thức đầu của Bước 3 sai, và chứng minh không còn loại được khả năng một chính sách nhớ lịch sử vượt mọi chính sách Markov dừng. Tình huống 04.2 xét hệ quả của việc mất tính Markov khi gộp trạng thái của CartPole.
 - Bỏ $\gamma<1$: Bước 1 và Bước 5 đều dùng $\gamma<1$ (đoạn sau Ví dụ 04.5).
 
-Theo phần (d), trên mô hình hai trạng thái, $(\mathrm b,\mathrm b)$ tốt nhất trong toàn bộ $\Pi$, kể cả các chính sách ngẫu nhiên và các chính sách nhớ lịch sử, và $v_*=(27,30)$.
+Theo phần (d), trên mô hình hai trạng thái, $(\mathrm b,\mathrm b)$ tốt nhất trong toàn bộ $\Pi$, kể cả các chính sách ngẫu nhiên và các chính sách nhớ lịch sử, và $v_*=(27,30)$. Bốn giá trị hành động tối ưu $q_*(\mathrm s_0,\cdot)=(25{,}3;\,27)$ và $q_*(\mathrm s_1,\cdot)=(26{,}3;\,30)$, tức các giá trị nhìn trước tính ở Ví dụ 04.11 và nhắc lại ở Ví dụ 04.12, thỏa dạng đệ quy ở (c) (Bài giảng gốc (2025–2026), trang 8); chẳng hạn $q_*(\mathrm s_0,\mathrm b)=0+0{,}9\max\{26{,}3;\,30\}=27$ và $q_*(\mathrm s_0,\mathrm a)=1+0{,}9\max\{25{,}3;\,27\}=25{,}3$.
 
 ### 4.4 Hội tụ, điều kiện dừng và thuật toán
 
@@ -1261,7 +1261,7 @@ Trên mô hình hai trạng thái với $K=1$ và $\theta=0{,}01$, thuật toán
 
 ::: remark Nhận xét 04.29 (Bảng giá trị và chính sách trích từ bảng)
 - Chính sách tham lam có thể đã tối ưu khi bảng còn xa nghiệm: với $V_1=(1,3)$, sai số $27$, chính sách trích ra đã là $(\mathrm b,\mathrm b)$. Ngược lại, phần dư nhỏ không bảo đảm chính sách trích ra tối ưu khi có hai hành động gần đồng hạng.
-- $V_1=(1,3)$ khác cả bốn giá trị của bốn chính sách dừng xác định (Mục 3.3), nên bảng giữa chừng nói chung không là giá trị của chính sách xác định nào; tiêu chuẩn "chính sách ổn định" không áp dụng cho lặp giá trị, và điều kiện dừng dựa trên phần dư.
+- $V_1=(1,3)$ khác cả bốn giá trị của bốn chính sách Markov dừng xác định (Mục 3.3), nên bảng giữa chừng nói chung không là giá trị của chính sách xác định nào; tiêu chuẩn "chính sách ổn định" không áp dụng cho lặp giá trị, và điều kiện dừng dựa trên phần dư.
 - Ngưỡng $\theta$ kiểm soát sai số của bảng; tổn thất của chính sách trích ra có chặn riêng, nêu ở mục Đọc thêm.
 :::
 
@@ -1325,7 +1325,7 @@ Nhánh $\mathrm{trai}$ tại $\mathrm c_1$ đọc giá trị tiếp nối của 
 **Kiểm tra lại.** Tại mỗi ô, nhánh $\mathrm{phai}$ lớn hơn nhánh $\mathrm{trai}$, và giá trị nhánh $\mathrm{phai}$ trùng $V_4$.
 :::
 
-Như vậy, gộp cải thiện vào một lượt quét cho toán tử Bellman tối ưu $T_*$ (Định nghĩa 04.22), một ánh xạ co (Mệnh đề 04.24). Điểm bất động duy nhất của nó là $v_*$, và một chính sách dừng, xác định tham lam theo $v_*$ là tối ưu trên mọi chính sách (Định lý 04.25). Lặp giá trị hội tụ với tốc độ $\gamma^k$ (Hệ quả 04.26), dừng theo phần dư với chặn sai số (Hệ quả 04.27), và Thuật toán 04.28 trả bảng, chính sách và phần dư của cùng một bảng. Tuy nhiên, mỗi lượt quét vẫn cập nhật mọi trạng thái từ một bảng cũ và cần $p$ đầy đủ trên một tập hữu hạn; trong Mục 5, chúng ta xét hai giới hạn này.
+Như vậy, gộp cải thiện vào một lượt quét cho toán tử Bellman tối ưu $T_*$ (Định nghĩa 04.22), một ánh xạ co (Mệnh đề 04.24). Điểm bất động duy nhất của nó là $v_*$, và một chính sách Markov dừng, xác định tham lam theo $v_*$ là tối ưu trên mọi chính sách (Định lý 04.25). Lặp giá trị hội tụ với tốc độ $\gamma^k$ (Hệ quả 04.26), dừng theo phần dư với chặn sai số (Hệ quả 04.27), và Thuật toán 04.28 trả bảng, chính sách và phần dư của cùng một bảng. Tuy nhiên, mỗi lượt quét vẫn cập nhật mọi trạng thái từ một bảng cũ và cần $p$ đầy đủ trên một tập hữu hạn; trong Mục 5, chúng ta xét hai giới hạn này.
 
 ## 5. Lịch cập nhật và giới hạn của mô hình bảng
 
@@ -1490,9 +1490,9 @@ Lặp chính sách tổng quát (generalized policy iteration, GPI) là tên chu
 
 Mọi kết quả của chương giả thiết tập trạng thái hữu hạn và mô hình $p$ đã biết. Bài giảng gốc (2025–2026), trang 35–37, dùng CartPole làm ví dụ. CartPole có trạng thái $(x,\dot x,\phi,\dot\phi)$ gồm vị trí xe, vận tốc xe, góc cột so với phương thẳng đứng và vận tốc góc, là một vectơ thực; hai hành động là đẩy xe sang trái (hành động $0$) và sang phải (hành động $1$); phần thưởng là $+1$ mỗi bước, và lượt kết thúc khi $\lvert x\rvert>2{,}4$ hoặc $\lvert\phi\rvert>12^\circ$.
 
-![Sơ đồ xe trên ray và cột gắn trên xe. Các nhãn x, x chấm chỉ vị trí và vận tốc xe; nhãn góc và vận tốc góc chỉ góc của cột. Ô bên cạnh ghi "Khoảng chia 3 · 3 · 6 · 6".](img/lec-04/dp04-cartpole-bins.svg)
+![Sơ đồ xe trên ray và cột gắn trên xe. Các nhãn x, x chấm chỉ vị trí và vận tốc xe; các nhãn φ, φ chấm chỉ góc và vận tốc góc của cột. Ô bên cạnh ghi "Khoảng chia 3 · 3 · 6 · 6".](img/lec-04/dp04-cartpole-bins.svg)
 
-Hình trên ghi bốn biến trạng thái và số khoảng chia của từng biến; mỗi tổ hợp chỉ số khoảng là một ô. Hình dùng chữ theta cho góc, mà chương này ký hiệu là $\phi$.
+Hình trên ghi bốn biến trạng thái và số khoảng chia của từng biến; mỗi tổ hợp chỉ số khoảng là một ô.
 
 ::: example Ví dụ 04.17 (Từ trạng thái liên tục tới mô hình bảng)
 **Dữ kiện.** Theo bài thực hành CartPole: $x$ chia $3$ khoảng với điểm cắt $\pm0{,}8$; $\dot x$ chia $3$ khoảng với điểm cắt $\pm0{,}5$; $\phi$ chia $6$ khoảng đều $4^\circ$ trên $[-12^\circ,12^\circ]$; $\dot\phi$ chia $6$ khoảng với điểm cắt $-\tfrac23,-\tfrac13,0,\tfrac13,\tfrac23$ rad/s. Chỉ số ô $s=((b_x\cdot3+b_{\dot x})\cdot6+b_\phi)\cdot6+b_{\dot\phi}$, với $b$ là chỉ số khoảng tính từ $0$.
@@ -1526,9 +1526,9 @@ Hai hành động cho cùng kết quả, vì trong bộ mô phỏng, vị trí v
 
 ::: remark Nhận xét 04.35 (Những gì một chứng nhận Bellman trên mô hình gộp không nói)
 - Gộp trạng thái vào ô không bảo đảm tính Markov, giả thiết của Định lý 04.25: lịch sử các ô có thể mang thông tin về vị trí bên trong ô hiện tại.
-- $\hat p$ là ước lượng từ mẫu, phụ thuộc cách lấy mẫu trong ô và hạt giống ngẫu nhiên. Một chứng nhận $\Delta_*(V)=0$ thuộc về MDP $(\hat p,\hat r)$, không thuộc về CartPole.
+- $\hat p$ là ước lượng từ mẫu, phụ thuộc cách lấy mẫu trong ô và hạt giống ngẫu nhiên (random seed). Một chứng nhận $\Delta_*(V)=0$ thuộc về MDP $(\hat p,\hat r)$, không thuộc về CartPole.
 - Sai số trong môi trường thật gồm sai số lặp, chặn được bởi Hệ quả 04.27, và sai số do rời rạc hóa và ước lượng mô hình, không có chặn nào trong chương.
-- Chia mịn hơn làm số ô tăng theo tích số khoảng: $10$ khoảng mỗi biến cho $10^4$ ô, và với cùng số mẫu, mỗi ô nhận ít dữ liệu hơn.
+- Chia mịn hơn làm số ô tăng theo tích số khoảng. Khi mỗi biến chia cùng một số khoảng, số ô là lũy thừa bậc bốn của số đó: $10$ khoảng cho $10^4$ ô, $20$ khoảng cho $1{,}6\cdot10^5$ ô; với cùng số mẫu, mỗi ô nhận ít dữ liệu hơn. Khi số biến trạng thái tăng, số ô tăng theo hàm mũ của số biến; Sutton và Barto (2018, §4.7, tr. 87) gọi hiện tượng này là lời nguyền số chiều (curse of dimensionality) và coi đó là khó khăn của chính bài toán, không riêng của quy hoạch động. Bài 07 thay bảng bằng một hàm có tham số khi số ô quá lớn.
 :::
 
 ::: exercise Bài tập 04.5 (Lịch bỏ sót một trạng thái)
@@ -1596,7 +1596,7 @@ Hai tình huống dưới đây dùng công cụ của chương trên bài thự
 
 **Kiểm tra giả thiết.** Trên MDP ước lượng, tập trạng thái và hành động hữu hạn, phần thưởng bị chặn bởi $1$, $\gamma<1$, mô hình được biết vì chính nó được lập ra, và tính Markov thỏa theo cách xây dựng. Các giả thiết của Hệ quả 04.6, Định lý 04.13, Mệnh đề 04.18 và Định lý 04.25 thỏa cho MDP này.
 
-**Áp dụng.** Thuật toán 04.17 và Thuật toán 04.28 cho cùng một chính sách trên MDP ước lượng, với các số liệu nêu ở đoạn "Trong thực hành" của Mục 3 và Mục 4; theo Định lý 04.25(d), chính sách này tối ưu cho MDP ước lượng. Một lần chạy đã nhúng trong notebook đánh giá nó trong môi trường liên tục. Trên cùng $100$ lượt với cùng tập hạt giống, tổng thưởng trung bình là $343{,}4$ (sai số chuẩn $9{,}2$), so với $22{,}5$ của chính sách ngẫu nhiên và $43{,}6$ của chính sách theo dấu góc; hiệu theo cặp so với chính sách theo dấu góc là $299{,}8\pm18{,}0$ với độ rộng $1{,}96$ sai số chuẩn.
+**Áp dụng.** Thuật toán 04.17 và Thuật toán 04.28 cho cùng một chính sách trên MDP ước lượng, với các số liệu nêu ở đoạn "Trong thực hành" của Mục 3 và Mục 4; theo Định lý 04.25(d), chính sách này tối ưu cho MDP ước lượng. Một lần chạy đã nhúng trong notebook đánh giá nó trong môi trường liên tục bằng số bước giữ cột của mỗi lượt; vì mỗi bước có phần thưởng $+1$, số bước này là lợi tức không chiết khấu của lượt. Trên cùng $100$ lượt với cùng tập hạt giống, số bước trung bình là $343{,}4$ (sai số chuẩn $9{,}2$), so với $22{,}5$ của chính sách ngẫu nhiên và $43{,}6$ của chính sách theo dấu góc; hiệu theo cặp so với chính sách theo dấu góc là $299{,}8\pm18{,}0$ với độ rộng $1{,}96$ sai số chuẩn.
 
 **Diễn giải.** Chính sách này giữ cột lâu hơn khoảng tám lần chính sách theo dấu góc. Trên lát cắt $36$ ô ứng với $x$ và $\dot x$ ở khoảng giữa, chính sách này khác chính sách theo dấu góc tại $14$ ô; theo hình chính sách của notebook, hành động ở đó đổi theo vận tốc góc $\dot\phi$, biến mà chính sách theo dấu góc bỏ qua.
 
@@ -1617,7 +1617,7 @@ Hai tình huống dưới đây dùng công cụ của chương trên bài thự
 **Hậu quả quan sát được.** Một lần chạy đã nhúng trong notebook cho các số sau.
 
 - Giá trị dự đoán $v_*$ tại ô của trạng thái đầu, trung bình trên $100$ lượt, là $84{,}47$; lợi tức chiết khấu đo được, $G_0=(1-0{,}99^T)/(1-0{,}99)$ với $T$ là độ dài lượt, trung bình là $95{,}38$ (sai số chuẩn $0{,}37$). Chênh lệch $10{,}90$ lớn hơn nhiều chặn sai số lặp $0{,}01$ và mức giảm tối đa do cắt ở $500$ bước, $0{,}99^{500}/(1-0{,}99)\approx0{,}657$.
-- Lặp lại toàn bộ chuỗi với năm hạt giống khác nhau khi ước lượng mô hình cho tổng thưởng trung bình $343{,}4$; $221{,}3$; $219{,}2$; $500{,}0$; $220{,}2$, độ lệch chuẩn giữa các hạt giống là $123{,}5$, lớn hơn nhiều sai số chuẩn của từng dòng, không vượt $9{,}2$.
+- Lặp lại toàn bộ chuỗi với năm hạt giống khác nhau khi ước lượng mô hình cho số bước trung bình $343{,}4$; $221{,}3$; $219{,}2$; $500{,}0$; $220{,}2$, độ lệch chuẩn giữa các hạt giống là $123{,}5$, lớn hơn nhiều sai số chuẩn của từng dòng, không vượt $9{,}2$.
 - Với chính sách của Tình huống 04.1, $98$ trong $100$ lượt kết thúc vì $\lvert x\rvert>2{,}4$, không vì góc cột.
 
 **Diễn giải.** Phần dư nhỏ chỉ chứng nhận sai số lặp trên MDP ước lượng (Hệ quả 04.27); sai số do gộp trạng thái và ước lượng mô hình nằm ngoài mọi chặn của chương, và ở đây lớn hơn sai số lặp ba bậc độ lớn. Muốn cải thiện trong môi trường thật, cần đổi cách rời rạc hóa hoặc cách ước lượng mô hình; giảm $\theta$ không có tác dụng.
@@ -1641,7 +1641,7 @@ Chúng ta xuất phát từ bài toán lập kế hoạch: với mô hình $p$ �
 - Mục 1: toán tử $T_\pi$, lượt quét đồng bộ (Định nghĩa 04.1); tính đơn điệu (Bổ đề 04.2); chuẩn vô cùng, ánh xạ co (Định nghĩa 04.3); $T_\pi$ co (Mệnh đề 04.4); điểm bất động (Định lý 04.5); nghiệm đánh giá chính sách (Hệ quả 04.6); phần dư (Định nghĩa 04.7); chặn theo phần dư (Hệ quả 04.8); đánh giá chính sách đồng bộ (Thuật toán 04.9); giới hạn của thuật toán (Nhận xét 04.10).
 - Mục 2: giá trị nhìn trước (Định nghĩa 04.11); chính sách tham lam, quy tắc phá hòa (Định nghĩa 04.12); cải thiện chính sách (Định lý 04.13, Thuật toán 04.14); bảng cũ không là giá trị của chính sách mới (Nhận xét 04.15).
 - Mục 3: chính sách ổn định (Định nghĩa 04.16); lặp chính sách (Thuật toán 04.17); dừng hữu hạn (Mệnh đề 04.18); giá trị và chính sách tối ưu (Định nghĩa 04.19); chính sách ổn định thỏa Bellman tối ưu (Định lý 04.20); hai cách đọc sai (Nhận xét 04.21).
-- Mục 4: toán tử $T_*$, phần dư tối ưu (Định nghĩa 04.22); cực đại không tăng chênh lệch (Bổ đề 04.23); $T_*$ co (Mệnh đề 04.24); tồn tại chính sách tối ưu dừng, xác định (Định lý 04.25); hội tụ hình học (Hệ quả 04.26); chặn theo phần dư tối ưu (Hệ quả 04.27); lặp giá trị (Thuật toán 04.28); chính sách trích từ bảng (Nhận xét 04.29).
+- Mục 4: toán tử $T_*$, phần dư tối ưu (Định nghĩa 04.22); cực đại không tăng chênh lệch (Bổ đề 04.23); $T_*$ co (Mệnh đề 04.24); tồn tại chính sách tối ưu Markov dừng, xác định (Định lý 04.25); hội tụ hình học (Hệ quả 04.26); chặn theo phần dư tối ưu (Hệ quả 04.27); lặp giá trị (Thuật toán 04.28); chính sách trích từ bảng (Nhận xét 04.29).
 - Mục 5: chi phí một lượt quét (Nhận xét 04.30); lặp giá trị bất đồng bộ (Thuật toán 04.31, Định lý 04.32); lịch cập nhật và điều kiện "vô hạn lần" (Nhận xét 04.33); lặp chính sách tổng quát (Định nghĩa 04.34); giới hạn của chứng nhận trên mô hình gộp (Nhận xét 04.35).
 - Ví dụ 04.1–04.18; Bài tập 04.1–04.9; Tình huống 04.1–04.2.
 
@@ -1712,9 +1712,9 @@ Theo $\pi_1$, $\mathrm s_0$ quay về chính nó và $\mathrm s_1$ quay về ch�
 ::: exercise Bài tập 04.8 (Giá trị trạng thái qua giá trị hành động, và đặc trưng của chính sách tối ưu)
 Theo Bài tập tuần 3 (2025–2026), bài 5 và bài 3. Xét MDP hữu hạn, phần thưởng bị chặn, $0\le\gamma<1$.
 
-(a) Chứng minh $v_\pi(s)=\sum_a\pi(a\mid s)\,q_\pi(s,a)$ cho mọi chính sách dừng $\pi$, từ định nghĩa $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$ và $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$.
+(a) Chứng minh $v_\pi(s)=\sum_a\pi(a\mid s)\,q_\pi(s,a)$ cho mọi chính sách Markov dừng $\pi$, từ định nghĩa $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$ và $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$.
 
-(b) Dùng (a) và Định lý 04.25, chứng minh: một chính sách dừng $\pi$ là tối ưu khi và chỉ khi tại mọi $s$, $\pi(a\mid s)>0$ chỉ với các $a\in\arg\max_{a'}q_*(s,a')$.
+(b) Dùng (a) và Định lý 04.25, chứng minh: một chính sách Markov dừng $\pi$ là tối ưu khi và chỉ khi tại mọi $s$, $\pi(a\mid s)>0$ chỉ với các $a\in\arg\max_{a'}q_*(s,a')$.
 :::
 
 ::: hint
@@ -1749,7 +1749,7 @@ Vậy $v_*$ là điểm bất động của $T_\pi$, và theo Hệ quả 04.6(a)
 
 **(b), chiều "chỉ nếu".** Giả sử $v_\pi=v_*$. Theo phương trình Bellman cho giá trị hành động (ghi chú Bài 03, Mục 4) và Định nghĩa 04.19, $q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)[r+\gamma v_*(s')]=q_*(s,a)$. Theo (a), $v_*(s)=\sum_a\pi(a\mid s)q_*(s,a)$. Nếu $\pi(a^\circ\mid s)>0$ với $q_*(s,a^\circ)<\max_aq_*(s,a)$, trung bình có trọng số này nhỏ hơn nghiêm ngặt $\max_aq_*(s,a)=v_*(s)$, mâu thuẫn.
 
-**Kiểm tra lại.** Trên mô hình hai trạng thái, $q_*(\mathrm s_0,\cdot)=(25{,}3;\,27)$ và $q_*(\mathrm s_1,\cdot)=(26{,}3;\,30)$, nên chính sách tối ưu dừng duy nhất là $(\mathrm b,\mathrm b)$; chính sách ngẫu nhiên đều đặt trọng số $\tfrac12$ lên $\mathrm a$, nên theo (b) nó không tối ưu.
+**Kiểm tra lại.** Trên mô hình hai trạng thái, $q_*(\mathrm s_0,\cdot)=(25{,}3;\,27)$ và $q_*(\mathrm s_1,\cdot)=(26{,}3;\,30)$, nên chính sách tối ưu Markov dừng duy nhất là $(\mathrm b,\mathrm b)$; chính sách ngẫu nhiên đều đặt trọng số $\tfrac12$ lên $\mathrm a$, nên theo (b) nó không tối ưu.
 :::
 
 ### Mức vận dụng
@@ -1798,7 +1798,7 @@ Theo Bài tập tuần 3 (2025–2026), bài 4 và bài 8. Một nhóm giải Ca
 - Tạ Việt Cường, Bài giảng gốc Bài 04: Giải MDP (2025–2026): trang 4–6, 12, 17–18 cho Mục 1.1–1.2 và mô hình hai trạng thái; trang 10, 14–15, 31–32 cho Mục 1.2–1.4; trang 19–21 cho Mục 2; trang 7–9, 13, 20, 33–34 cho Mục 3; trang 23–28, 31–34 cho Mục 4; trang 15, 29, 35–37 cho Mục 5; trang 38 cho Tóm tắt chương.
 - Tạ Việt Cường, Bài tập tuần 3 (2025–2026), "Giải bài toán MDP": bài 1–5 và 8 cho Bài tập 04.7–04.9; bài 6–7 cho Hệ quả 04.6(c) và Bổ đề 04.2. Bài tập tuần 4 (2025–2026), "Đánh giá chính sách": bài 1 cho mô hình hai trạng thái.
 - Sutton, R. S., và Barto, A. G. (2018), *Reinforcement Learning: An Introduction*, ấn bản 2, MIT Press, chương 4: §4.1, tr. 74–76 (Mục 1); §4.2, tr. 76–80, công thức (4.6)–(4.9) (Mục 2); §4.3, tr. 80–82, Bài tập 4.4 (Mục 3); §4.4, tr. 82–84, công thức (4.10) (Mục 4); §4.5–4.7, tr. 85–88 (Mục 5); §4.8, tr. 88–89 (Tóm tắt chương).
-- Puterman, M. L. (1994), *Markov Decision Processes: Discrete Stochastic Dynamic Programming*, Wiley: §6.1 (đánh giá chính sách, dạng ma trận), §6.2 (phương trình tối ưu, tồn tại chính sách tối ưu dừng xác định; Định lý 04.25), §6.3 (lặp giá trị), §6.4 (lặp chính sách), §6.5 (lặp chính sách cải biên).
+- Puterman, M. L. (1994), *Markov Decision Processes: Discrete Stochastic Dynamic Programming*, Wiley: §6.1 (đánh giá chính sách, dạng ma trận), §6.2 (phương trình tối ưu, tồn tại chính sách tối ưu Markov dừng, xác định; Định lý 04.25), §6.3 (lặp giá trị), §6.4 (lặp chính sách), §6.5 (lặp chính sách cải biên).
 - Bertsekas, D. P., và Tsitsiklis, J. N. (1989), *Parallel and Distributed Computation: Numerical Methods*, Prentice Hall: các thuật toán bất đồng bộ, được dẫn trong phần ghi chú lịch sử chương 4 của Sutton và Barto (2018, tr. 90); dùng cho Định lý 04.32.
 - Singh, S. P., và Yee, R. C. (1994), An upper bound on the loss from approximate optimal-value functions, *Machine Learning* 16, 227–233.
 - Giáo trình *Học máy thống kê* của tác giả, chương Học tăng cường, mục "Thuật toán tối ưu quy hoạch động" (tiểu mục lặp giá trị, lặp chính sách): giọng kể, cách đọc $V_k$, thuật ngữ "nhìn trước một bước".

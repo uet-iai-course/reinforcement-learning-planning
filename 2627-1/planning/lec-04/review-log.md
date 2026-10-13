@@ -1915,3 +1915,59 @@ Hai tác tử rà lại chỉ đọc, Opus 5.5 `high`: TOAN (2 trung bình, 5 nh
 - Tác tử: tác tử soạn kiêm biên tập (general-purpose, claude-opus-5-5, high) hai vòng; rà lại toán và rà lại mạch (general-purpose, claude-opus-5-5, high, chỉ đọc); điều phối viên Claude Fable 5.1 (medium).
 - Kiểm độc lập của điều phối viên sau vòng 2: `density.py` chỉ gắn cờ các trang có lý do trong `storyboard.md`; Playwright 1600×900 và 390×844: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, đủ 6 trang tiêu đề mạch; ảnh các trang đổi ở vòng 2 đã xem; `git diff --check` sạch.
 - Quyết định: **chấp nhận**; commit `fix(lecture-04)`.
+
+## Đợt sửa 2026-10-14 — Sửa ghi chú sau giai đoạn II
+
+### Tác tử và phạm vi
+
+- Vai: tác tử biên tập ghi chú bài giảng Bài 04 (viết tệp), theo `scratchpad/brief_note_revision.md`. Loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` theo lời gọi của điều phối viên (điều phối viên đối chiếu với lời gọi công cụ). Không commit.
+- Danh sách việc: mục "Đề nghị sửa ghi chú" (giai đoạn II, soạn deck) và bảng "Đề nghị sửa ghi chú (sau giai đoạn II)"; mục "Rà lại vòng 2 và sửa (giai đoạn II)" không thêm đề nghị nào cho ghi chú (MACH-N8 đã bị từ chối ở vòng đó; đề nghị về `lecture-slide.css` không thuộc đợt này).
+- Tệp ghi: `2627-1/materials/lec-04/lecture-note.md`; mục này của `review-log.md`. Không sửa SVG: `dp04-cartpole-bins.svg` đã mang nhãn φ, φ̇ từ giai đoạn II, `dp04-convergence-bound.svg` không cần đổi.
+- Không đổi số hiệu kết quả, ví dụ, bài tập, tình huống hay `note-topic-id` (kiểm bằng `note_check.py`: bộ đếm chung 35, Ví dụ 18, Bài tập 9, không trống, không trùng).
+
+### Xử lý từng đề nghị
+
+| vị trí trong ghi chú (dòng mới) | đề nghị | xử lý | trạng thái |
+|---|---|---|---|
+| Tình huống 04.1, mục "Áp dụng" (dòng 1599); Tình huống 04.2, dòng thứ hai của "Hậu quả quan sát được" (dòng 1620) | "tổng thưởng trung bình" → số bước, lợi tức không chiết khấu (PB, RL) | 04.1: "đánh giá nó … bằng số bước giữ cột của mỗi lượt; vì mỗi bước có phần thưởng $+1$, số bước này là lợi tức không chiết khấu của lượt", rồi "số bước trung bình là $343{,}4$"; 04.2: "số bước trung bình $343{,}4$; $221{,}3$; …". Khớp ghi chú diễn giả L04-F05b | đã sửa |
+| Kiến thức tiên quyết, mục "Chính sách và hàm giá trị" (dòng 19); Bảng ký hiệu, dòng $\pi$ (dòng 41) | "chính sách dừng" → "chính sách Markov dừng (stationary policy)", một câu phân biệt với dừng thuật toán (RL, SV) | Dòng 19: "Chính sách Markov dừng (stationary policy) … chỉ phụ thuộc trạng thái hiện tại và không đổi theo thời gian. Chữ "dừng" ở đây chỉ tính chất không đổi theo thời gian của chính sách, khác với việc dừng một thuật toán ở các mục sau."; dòng 41 đổi tên | đã sửa |
+| Toàn chương (35 lần trên 31 dòng; cộng dòng 19 và 41 thì cả tệp có 37 lần "Markov dừng": dòng 139, 235, 284, 341, 435, 504, 562, 707, 870, 880, 924, 933, 943, 946, 957, 961, 967, 986, 1029, 1136, 1138, 1144, 1188, 1191, 1264, 1328, 1644, 1715, 1717, 1752, 1801) | kéo theo đề nghị trên | Mọi "chính sách dừng" nghĩa dừng theo thời gian đổi thành "chính sách Markov dừng" để một khái niệm có một tên (khớp deck: A01b, B06, B06c, C04b, D04b, G01b); tiêu đề Định lý 04.25 thành "Tồn tại chính sách tối ưu Markov dừng, xác định" (số hiệu giữ). Giữ nguyên các chỗ "lặp chính sách dừng" nghĩa thuật toán dừng (dòng 903, 931, 1003) | đã sửa (nhất quán) |
+| Bảng ký hiệu, dòng $K$ (dòng 53) | $K$ là số lượt quét (Thuật toán 04.9, 04.28) hoặc số bước cập nhật (Thuật toán 04.31) (TOAN) | "ngân sách số lượt quét (Thuật toán 04.9, 04.28) hoặc số bước cập nhật (Thuật toán 04.31)" | đã sửa |
+| Ví dụ 04.4, "Diễn giải." (dòng 327); Ví dụ 04.5, "Hệ tuyến tính." (dòng 476) | Nối: $U=(10,11)$ không đổi dưới $T_{\pi_0}$; Ví dụ 04.5 cho $U=v_{\pi_0}$ (PB) | 04.4: "Bảng $U$ không đổi dưới $T_{\pi_0}$, tức $T_{\pi_0}U=U$; Ví dụ 04.5 cho thấy $U=v_{\pi_0}$."; 04.5: "Vậy $v_{\pi_0}=(10,11)$, chính là bảng $U$ không đổi dưới $T_{\pi_0}$ trong Ví dụ 04.4." | đã sửa |
+| Định lý 04.25(c) (dòng 1145), Bước 6 của chứng minh (dòng 1185), đoạn sau định lý (dòng 1194) | Dạng đệ quy $q_*(s,a)=\sum p\,[r+\gamma\max_{a'}q_*(s',a')]$ (Bài giảng gốc, trang 8) (RL) | (c) thêm phương trình Bellman tối ưu cho giá trị hành động, quy ước $\max_{a'}q_*(s_{\mathrm{term}},a')=0$; Bước 6 thêm hai câu chứng minh ($q_*=Q_{v_*}$ theo Định nghĩa 04.19, thế $v_*(s')=\max_{a'}q_*(s',a')$); đoạn sau định lý kiểm trên mô hình hai trạng thái và dẫn nguồn trang 8 (đã xem lại trang 8 của PDF nguồn). Chọn sửa (c) thay vì thêm Nhận xét để không đổi số hiệu | đã sửa |
+| Nhận xét 04.35, gạch đầu dòng cuối (dòng 1531) | Số ô $k^4$; lời nguyền số chiều (Sutton và Barto, §4.7) (RL) | "Khi mỗi biến chia cùng một số khoảng, số ô là lũy thừa bậc bốn của số đó: $10$ khoảng cho $10^4$ ô, $20$ khoảng cho $1{,}6\cdot10^5$ ô"; lời nguyền số chiều (curse of dimensionality) dẫn Sutton và Barto (2018, §4.7), kèm nhận xét của sách rằng đây là khó khăn của bài toán, không riêng của quy hoạch động (đã đối chiếu bản PDF, tr. 87); nối Bài 07. Không dùng chữ $k$ vì $k$ là chỉ số lượt quét trong bảng ký hiệu | đã sửa (diễn đạt bằng lời thay cho ký hiệu $k^4$) |
+| Nhận xét 04.35, gạch đầu dòng thứ hai (dòng 1529) | "hạt giống ngẫu nhiên (random seed)" ở lần dùng đầu (RL) | Lần dùng đầu của chương nằm ở Nhận xét 04.35, trước các tình huống; thêm "(random seed)" tại đó | đã sửa |
+| Mục 5.4, đoạn sau hình (dòng 1495); alt hình (dòng 1493) | Bỏ câu "Hình dùng chữ theta cho góc…" (tác tử soạn, TOAN, SV, PB) | Bỏ câu; alt đổi "nhãn góc và vận tốc góc" thành "các nhãn φ, φ chấm chỉ góc và vận tốc góc của cột" cho khớp SVG hiện tại (kéo theo). Câu ở dòng 66 về ký hiệu theta của notebook giữ nguyên vì notebook vẫn dùng theta | đã sửa |
+| Mục 4.4, hình `dp04-convergence-bound.svg` (dòng 1216) | Nhãn trục tung đổi thành "Sai số (thang log)"; alt vẫn đúng (tác tử soạn) | Đối chiếu SVG: trục tung 0,01–100, trục hoành 0–60, đường $30\cdot0{,}9^k$, mức $0{,}1$, $k=55$ đều khớp alt; $30\cdot0{,}9^{60}\approx0{,}054$ | không cần sửa (đã kiểm) |
+
+### Số liệu đã tính lại
+
+$T_{\pi_0}(10,11)=(1+9;\,2+9)=(10,11)$; $v_{\pi_0}=(10,11)$; $q_*(\mathrm s_0,\mathrm a)=1+0{,}9\cdot27=25{,}3$, $q_*(\mathrm s_0,\mathrm b)=0+0{,}9\max\{26{,}3;30\}=27$, $q_*(\mathrm s_1,\mathrm a)=2+0{,}9\cdot27=26{,}3$, $q_*(\mathrm s_1,\mathrm b)=3+0{,}9\cdot30=30$; $10^4$, $20^4=160\,000=1{,}6\cdot10^5$; $30\cdot0{,}9^{60}\approx0{,}0539$. Số liệu notebook ($343{,}4$; $22{,}5$; $43{,}6$; năm hạt giống) giữ nguyên, chỉ đổi tên đại lượng.
+
+### Tự kiểm `no-ai-slop` (Edit)
+
+- Phạm vi: mọi câu mới hoặc sửa nêu trong bảng trên. Đối chiếu `eval.md`: đạt. Không thêm khẳng định ngoài nguồn (dạng đệ quy theo trang 8 của nguồn; lời nguyền số chiều theo Sutton và Barto §4.7); không câu hỏi tu từ, không "hãy", tài liệu không làm chủ ngữ, không dấu gạch dài mới. Đã sửa khi tự kiểm: câu số liệu $q_*$ ban đầu lặp khung "với …, ta có …" hai lần, viết lại thành một câu kiểm; câu lời nguyền số chiều ban đầu lặp "tăng theo hàm mũ" hai lần, rút còn một; câu "số bước … chính là lợi tức không chiết khấu" ban đầu chen giữa phép so sánh số liệu, chuyển lên trước.
+
+### Kết quả kiểm
+
+- `note_check.py`: 25 299 từ; khối 96; bộ đếm chung 35, Ví dụ 18, Bài tập 9, không trống, không trùng; 0 dấu `\(`/`\[`. Hai lần khớp mẫu "trang chiếu" là dòng bản đồ chủ đề ("mạch 2 của bộ trang chiếu"), có từ trước, không phải "xem trang chiếu".
+- `check_note.py 04 lecture-04-giai-mdp-bang-quy-hoach-dong.html` (server `reloadserver` cổng 8766, cwd kho): 1600×900 và 390×844, 0 lỗi KaTeX, 96 khối, 0 lỗi console, 0 yêu cầu hỏng hoặc ra ngoài, không tràn ngang.
+- `git diff --check` sạch.
+
+### Rà lại sau đợt sửa và sửa bổ sung
+
+- Tác tử rà lại toán và nhất quán: `general-purpose`, `claude-opus-5-5`, mức `high`, chỉ đọc; báo cáo `scratchpad/noterecheck-04.md`. Kết quả: 0 chặn bàn giao, 0 nghiêm trọng, 0 trung bình, 3 nhẹ. Phần đã kiểm và chấp nhận: Định lý 04.25(c) và Bước 6, số liệu $q_*$, dẫn chiếu của Bài tập 04.8(b), 37 lần "Markov dừng" đều đúng nghĩa, dòng $K$, nối Ví dụ 04.4–04.5, Nhận xét 04.35, hai tình huống, alt hình CartPole.
+- Biên tập viên (cùng tác tử biên tập của đợt này) sửa cả ba phát hiện nhẹ:
+
+| phát hiện | xử lý | trạng thái |
+|---|---|---|
+| Dòng 1531, Nhận xét 04.35: trích dẫn §4.7 thiếu trang | "Sutton và Barto (2018, §4.7, tr. 87)" | đã sửa |
+| Review-log, số đếm "36 chỗ" không khớp danh sách | Sửa thành "35 lần trên 31 dòng; cộng dòng 19 và 41 thì cả tệp có 37 lần" (đếm bằng `grep -o`: 37) | đã sửa |
+| Dòng 1194: bốn giá trị $q_*$ tính ở Ví dụ 04.11, Ví dụ 04.12 chỉ nhắc lại | "các giá trị nhìn trước tính ở Ví dụ 04.11 và nhắc lại ở Ví dụ 04.12" | đã sửa |
+
+- Kiểm lại: `note_check.py` (bộ đếm chung 35, Ví dụ 18, Bài tập 9, không trống, không trùng; 0 dấu `\(`/`\[`); `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-14, sửa ghi chú sau giai đoạn II)
+
+- Kiểm độc lập: `note_check.py` sạch; viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 96 khối, 0 lỗi console, không tải ngoài; `git diff --check` sạch. Rà lại toán (Opus 5.5 high, chỉ đọc): 0 trung bình, 3 nhẹ đã sửa.
+- Quyết định: **chấp nhận**; commit `fix(materials-04)`.
