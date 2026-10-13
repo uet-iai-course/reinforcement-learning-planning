@@ -1109,3 +1109,71 @@ Các trang tăng mật độ do quyết định của điều phối viên (A07,
 - Tác tử: biên tập viên (general-purpose, claude-opus-5-5, high) hai vòng; rà lại toán và rà lại mạch (general-purpose, claude-opus-5-5, high, chỉ đọc); điều phối viên Claude Fable 5.1 (medium).
 - Kiểm độc lập của điều phối viên sau vòng 2: `density.py` 18 cờ, tất cả có lý do trong bảng cờ của `storyboard.md`, không trang nội dung vượt 60; Playwright 1600×900 và 390×844: 75 trang, 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, 6 trang tiêu đề mạch; ảnh A07, D03, E02, F13, G02 xem trực tiếp; tính lại bảng Q-learning E02; đối chiếu Định nghĩa 04.22 cho phát hiện A07; `git diff --check` sạch.
 - Quyết định: **chấp nhận** bản deck sau vòng 2; từ chối TOAN D05 được chấp thuận. Hai điểm thuộc CSS chung (cỡ `p.strand-keys` 0,72em; chân trang ẩn ở mạch mở đầu) chuyển sang đợt đồng bộ chéo. Commit `fix(lecture-06)` kèm `lecture-slide.css` (ba quy tắc dùng chung: bảng 0,94em, KaTeX trong tiêu đề không viết hoa, `ol[type="a"]`).
+
+## Đợt sửa 2026-10-14 — Sửa ghi chú sau giai đoạn II
+
+### Tác tử và phạm vi
+
+- Vai: tác tử biên tập ghi chú bài giảng Bài 06, viết tệp. Loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high`, theo `brief_note_revision.md`; điều phối viên đối chiếu với lời gọi công cụ. Không commit, không push.
+- Danh sách việc: bảng "Đề nghị sửa ghi chú (sau giai đoạn II)" (9 dòng, gồm hai mục tùy chọn) và bảng "Đề nghị sửa ghi chú (bổ sung)" của mục "Rà lại vòng 2 và sửa (giai đoạn II)" (1 dòng). Bản đối chiếu: deck đã commit `lecture-06-dieu-khien-phi-mo-hinh.html` (F13, F10, C04, E02).
+- Tệp đã ghi: `materials/lec-06/lecture-note.md`; mục này của `review-log.md`. Không sửa SVG, deck, `outline.md`, `storyboard.md`, `exercises.md`, notebook, `index.html`. Số hiệu kết quả, ví dụ, bài tập và `note-topic-id` giữ nguyên.
+
+### Xử lý từng đề nghị
+
+| Đề nghị (vị trí cũ) | Trạng thái | Vị trí mới và nội dung |
+|---|---|---|
+| Dòng 852, mở Mục 4 | đã sửa | Dòng 854: "giá trị của $(\mathrm C,0)$ khi từ B trở đi luôn chọn hành động tốt nhất" |
+| Mục 5.4 dòng 1172, gạch "Bỏ $\gamma<1$"; Nhận xét 06.20 và 06.2 | đã sửa | Dòng 1176: câu dẫn thành "Danh sách sau nêu hệ quả khi bỏ từng giả thiết" (bỏ "mỗi giả thiết bị bỏ đều có phản ví dụ"). Dòng 1181: với $\gamma=1$ toán tử Bellman tối ưu không còn co theo chuẩn cực đại, định lý không áp dụng, cần giả thiết thay thế; dãy năm ô không phải phản ví dụ, giá trị tối ưu (cận trên đúng của lợi tức kỳ vọng) hữu hạn: $998$ tại $(\mathrm D,0)$, $10$ tại $(\mathrm D,1)$; khung đường đi ngắn nhất ngẫu nhiên của Bertsekas và Tsitsiklis (1996, §2.2) với hai giả thiết (tồn tại chính sách dừng kết thúc hầu chắc chắn; mọi chính sách dừng còn lại có lợi tức kỳ vọng $-\infty$ từ ít nhất một trạng thái), kiểm hai giả thiết trên dãy năm ô, §5.6 cho Q-learning. Nhận xét 06.20 (dòng 1149): thêm câu giá trị tối ưu vẫn hữu hạn, điều mất đi là tính co. Nhận xét 06.2 (dòng 259–261): "$\gamma<1$ bảo đảm mọi chính sách có giá trị hữu hạn"; đoạn mới: vòng B–C chỉ cho một chính sách có giá trị không hữu hạn, cận trên đúng vẫn bằng $998$, đạt bởi $\pi_L$; dẫn tới Mục 5.4. Khớp F13 của deck |
+| Mục 5.2 dòng 1100, lịch $\varepsilon=1/t$ | đã sửa (cả hai phương án) | Dòng 1104, đoạn mới: với $t$ toàn cục vẫn phải kiểm thăm dò theo từng cặp; ví dụ số: trạng thái hai hành động chỉ được ghé tại $t_n=2^n$, tổng xác suất thử hành động không cực đại $\sum_{n\ge1}2^{-n}/2=1/2<\infty$, nên theo vế thứ nhất Borel–Cantelli chỉ hữu hạn lần thử; cùng hiện tượng với Ví dụ 06.15. Lịch theo trạng thái của Singh và cộng sự (2000): $\varepsilon=c/k$ tại lần ghé thứ $k$ của $s$, $0<c<1$ (viết bằng $k$ thay $n_t(s)$ để không trùng ký hiệu $n(s,a)$ của bảng ký hiệu); tổng $\sum_kc/(m(s)k)=\infty$; các tác giả chứng minh lịch này thỏa định nghĩa GLIE gốc |
+| Nhận xét 06.17 dòng 993 | đã sửa | Dòng 995–997: "tỉ số lấy mẫu quan trọng (importance sampling ratio)" ở cả bốn chỗ, thêm dẫn Định nghĩa 06.24 |
+| "Trong thực hành" sau Nhận xét 06.10, dòng 633 | đã sửa | Dòng 635: "các lượt của chính sách tham lam theo bảng học bằng Sarsa (Thuật toán 06.12, Mục 3)" |
+| Tóm tắt chương dòng 1401 | đã sửa | Dòng 1405: Monte Carlo xuất phát từ bảng nghiêng trái, xếp trái ($998$) trên phải ($0$); Sarsa và Q-learning xuất phát từ bảng nghiêng phải, xếp phải ($8{,}2$) trên trái (lần lượt $-1{,}28$, $-0{,}64$); thêm câu "hai khởi tạo và hai bộ dữ liệu khác nhau, nên không xếp hạng được các thuật toán" |
+| Mục 2.2 dòng 543 | đã sửa | Dòng 545: dưới bảng nghiêng phải, chính sách $1/4$-tham lam chọn $(\mathrm D,0)$ với xác suất $1/8$ ở đầu mỗi lượt khi hàng D còn xếp phải trên trái (Ví dụ 06.4), số lần thử khi $\varepsilon$ giảm ở Ví dụ 06.14; ví dụ sau minh họa thăm dò tại ô khác; bảng của bài giảng gốc (trang 17) chỉ khác ở hàng D, nơi $(\mathrm D,0)$ đã tham lam, nên bước thăm dò xảy ra tại B. Khớp ghi chú diễn giả C04 |
+| Ví dụ 06.11, tiêu đề (tùy chọn) | đã sửa | Dòng 880: "Q-learning ở mẫu 1–2", khớp E02; số hiệu giữ nguyên |
+| Alt hình dòng 593, 711, 906 (tùy chọn) | từ chối | Thống nhất ký pháp "0; thưởng −1" thành "0 · −1" đòi sửa `sarsa-target.svg` và `q-learning-target.svg`, hai hình mà deck đã commit dùng chung; alt trên deck sẽ lệch hình, và brief không cho sửa deck. Alt hiện tại của ghi chú khớp đúng nhãn trong SVG. Chuyển sang đợt đồng bộ chéo nếu điều phối viên muốn thống nhất |
+| Mục 5.1 (bổ sung, TOAN vòng 2) | đã sửa | Dòng 1067: ánh xạ biến $Q$ thành $r+\gamma\sum p\max Q$ là dạng $Q$ của toán tử Bellman tối ưu, còn $T_*$ của bảng ký hiệu tác động trên bảng $\mathcal S\to\mathbb R$; nhắc lại Mệnh đề 04.24 và Bổ đề 04.23 ($\lvert\max x-\max y\rvert\le\max\lvert x-y\rvert$); viết một dòng chặn $\gamma\lVert Q-Q'\rVert_\infty$ cho dạng $Q$ |
+
+Sửa kéo theo (để nhất quán): tài liệu tham khảo dòng 1623 thêm "lịch thăm dò theo trạng thái $c/k$ dùng ở Mục 5.2" cho Singh và cộng sự (2000); dòng 1624 thêm "§2.2 (bài toán đường đi ngắn nhất ngẫu nhiên) cho trường hợp $\gamma=1$ ở Mục 5.4" cho Bertsekas và Tsitsiklis (1996). Bài tập 06.8 câu 4 ("với $\gamma=1$, $q_*$ chưa được định nghĩa") giữ nguyên; các câu mới gọi đại lượng $998$ là "cận trên đúng của lợi tức kỳ vọng" để không mâu thuẫn với định nghĩa $q_*$ chỉ cho $\gamma<1$.
+
+### Số liệu tính lại
+
+- Giá trị tối ưu với $\gamma=1$ (lặp giá trị 200 vòng từ bảng $0$): $(\mathrm B,0)=1000$, $(\mathrm B,1)=998$, $(\mathrm C,0)=999$, $(\mathrm C,1)=997$, $(\mathrm D,0)=998$, $(\mathrm D,1)=10$. Mọi lượt kết thúc tại A có ít nhất hai bước $-1$ trước $1000$, nên lợi tức từ D không vượt $998$.
+- $\sum_{n\ge1}2^{-n}/2=1/2$ (phân số chính xác).
+- Tóm tắt: $8{,}2$, $-1{,}28$, $-0{,}64$ lấy từ Ví dụ 06.12; $998$, $0$ từ Ví dụ 06.8.
+
+### Biên tập `no-ai-slop` (Edit) và tự đối chiếu `eval.md`
+
+- Phạm vi: mọi câu mới hoặc sửa ở các dòng trên. Đạt các mục của `eval.md`: không thêm nhận định không nguồn (các nguồn mới là Bertsekas và Tsitsiklis 1996, §2.2, §5.6 và Singh và cộng sự 2000, đều đã có trong tài liệu tham khảo), không câu hỏi tu từ, không "hãy", tài liệu không làm chủ ngữ, không gạch ngang dài, không câu kết khẩu hiệu. Câu "Dãy năm ô với $\gamma=1$ không phải phản ví dụ" giữ dạng phủ định vì nó sửa đúng một khẳng định sai trước đó.
+- Số từ (`wc -w`): 24 997 trước, 25 733 sau (+736), vượt mốc 25 000 mà vòng trước tự đặt. Phần tăng đến từ các đề nghị (Mục 5.1, 5.2, 5.4, Nhận xét 06.2, 06.20); không rút gọn chỗ khác vì nằm ngoài danh sách việc. Điều phối viên quyết định có cần một lượt rút gọn riêng.
+
+### Kiểm tra đã chạy
+
+- `note_check.py`: 27 kết quả, 15 ví dụ, 12 bài tập, không trống số, không trùng; 0 dấu `\(`/`\[`; khối `:::` đủ loại.
+- `check_note.py 06 lecture-06-dieu-khien-phi-mo-hinh.html` (viewer cổng 8766, cwd server là kho): 1600×900 và 390×844 đều 0 `.katex-error`, 0 lỗi console, 0 yêu cầu ngoài hoặc hỏng, không cuộn ngang; 82 khối, 26 khối gập.
+- `git diff --check` sạch.
+
+### Chỗ cần rà toán
+
+- Phát biểu giả thiết của khung đường đi ngắn nhất ngẫu nhiên (Bertsekas và Tsitsiklis 1996, §2.2, Giả thiết 2.1–2.2) và câu "§5.6 xét Q-learning trong khung này" viết theo trí nhớ, cần đối chiếu sách.
+- Lịch $\varepsilon_t(s)=c/n_t(s)$, $0<c<1$, là GLIE theo Singh và cộng sự (2000): viết theo trí nhớ, chưa ghi số trang; cần đối chiếu bài báo.
+
+### Rà lại sau đợt sửa và sửa bổ sung
+
+- Rà lại: một tác tử chỉ đọc (general-purpose, `claude-opus-5-5`, mức `high`), toán và nhất quán trên 11 hunk của đợt sửa cùng đoạn quanh. Báo cáo ở `scratchpad/noterecheck-06.md`. Kết quả: 0 chặn, 0 nghiêm trọng, 1 trung bình, 6 nhẹ. Điều phối viên giữ số mục §2.2 (bài toán đường đi ngắn nhất ngẫu nhiên) và §5.6 (Q-learning) của Bertsekas và Tsitsiklis (1996), khớp deck đã commit.
+- Sửa: tác tử biên tập của đợt này (general-purpose, `claude-opus-5-5`, `high`), `no-ai-slop` Edit, theo quyết định của điều phối viên. Không commit.
+
+| Mã | Mức | Vị trí | Xử lý |
+|---|---|---|---|
+| R-TB | trung bình | Gạch "Bỏ $\gamma<1$" (dòng 1181) | Đã sửa: câu về §5.6 thành kết quả hội tụ của Q-learning cho khung này (Bertsekas và Tsitsiklis 1996, §5.6; Tsitsiklis 1994), với điều kiện: mọi chính sách kết thúc hầu chắc chắn, hoặc dãy $Q_t$ bị chặn hầu chắc chắn; dãy năm ô có $\pi_I$ không kết thúc nên chỉ thuộc trường hợp thứ hai. Không dẫn Yu và Bertsekas. Kéo theo: thêm mục Tsitsiklis (1994), *Machine Learning* 16, 185–202, vào tài liệu tham khảo (dòng 1625) |
+| R-N1 | nhẹ | §2.2, §5.6 | Giữ theo quyết định của điều phối viên |
+| R-N2, R-N6 | nhẹ | Nhận xét 06.20 (dòng 1149) | Đã sửa: rút thành một câu dẫn có định ngữ "cận trên đúng của lợi tức kỳ vọng", trỏ tới gạch "Bỏ $\gamma<1$" sau Định lý 06.22 |
+| R-N3 | nhẹ | Mục 5.2 (dòng 1104), tài liệu tham khảo (dòng 1623) | Đã sửa: $\varepsilon_t(s)=c/C_t(s)$ với $C_t(s)=\sum_aC_t(s,a)$ theo Định nghĩa 06.18; tổng viết $\tfrac{c}{m(s)}(1+\tfrac12+\cdots)$ để không thêm chỉ số mới; dòng 1623 ghi "$c/C_t(s)$" |
+| R-N4 | nhẹ | Mục 5.2 (dòng 1104) | Đã sửa: thêm mệnh đề "vì các lần chọn không độc lập, kết luận thử vô hạn lần cần dạng có điều kiện của bổ đề Borel–Cantelli, không phải dạng dùng ở Ví dụ 06.14" |
+| R-N5 | nhẹ | Dòng 1176, 261 | Đã sửa: "Các giả thiết có vai trò riêng; bỏ từng giả thiết dẫn tới hệ quả sau."; "…cần giả thiết thay cho $\gamma<1$, được phát biểu ở Mục 5.4." |
+
+- Kiểm lại: `note_check.py` (27 kết quả, 15 ví dụ, 12 bài tập, không trống số, không trùng, 0 dấu `\(`/`\[`); `check_note.py 06 lecture-06-dieu-khien-phi-mo-hinh.html` (cổng 8766) ở 1600×900 và 390×844: 0 `.katex-error`, 0 lỗi console, 0 yêu cầu ngoài, không cuộn ngang; `git diff --check` sạch. Số từ (`wc -w`): 25 847.
+
+### Quyết định của điều phối viên (2026-10-14, sửa ghi chú sau giai đoạn II)
+
+- Kiểm độc lập: `note_check.py` sạch; viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console, không tải ngoài; `git diff --check` sạch. Rà lại toán (Opus 5.5 high, chỉ đọc): 1 trung bình, 6 nhẹ, đã sửa. Điều phối viên xác nhận số mục §2.2 (bài toán đường đi ngắn nhất ngẫu nhiên) và §5.6 (Q-learning) của Bertsekas–Tsitsiklis (1996) và dữ liệu thư mục Tsitsiklis (1994), *Machine Learning* 16(3), 185–202.
+- Quyết định: **chấp nhận**; commit `fix(materials-06)`.
