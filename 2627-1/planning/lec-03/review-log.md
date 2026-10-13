@@ -1759,3 +1759,145 @@ Kiểm tra sau sửa: `note_check.py` 31/17/14, liên tục, không trùng, 104 
 
 - Kiểm độc lập: `note_check.py` sạch; viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console, không tải ngoài; `backup-diagrams.svg` là XML hợp lệ, deck không dùng; `git diff --check` sạch. Rà lại toán (Opus 5.5 high, chỉ đọc): 1 trung bình, 10 nhẹ, đã sửa (một mục nhẹ giữ nguyên có lý do).
 - Quyết định: **chấp nhận**; commit `fix(materials-03)`.
+
+## Đợt sửa 2026-10-12 — Giai đoạn III: bài tập
+
+### Tác tử và phạm vi
+
+- Vai: tác tử soạn `exercises.md` (viết tệp), theo `brief_exercises_writer.md` của điều phối viên, kể cả mục "Bổ sung 2026-10-14". Loại `general-purpose`, Claude Opus 5.5 (`claude-opus-5-5`), mức `high` (theo brief; điều phối viên xác nhận bằng lệnh gọi tác tử). `no-ai-slop` chế độ Edit. Không commit, không push.
+- Tệp viết: `materials/lec-03/exercises.md` (tạo mới, 590 dòng, 7 861 từ) và mục này. Không tạo SVG. Không sửa ghi chú, deck, `outline.md`, `storyboard.md`, `index.html`.
+- Đầu vào: ghi chú và deck ở HEAD (commit `8aeeb31`, `ab84df8`); kế hoạch C và D của `revision-plan-2026-10-12.md`; danh sách "Bài tập chuyển cho `exercises.md`" và mục "Số dự kiến của `exercises.md`" của tệp này; phiếu Bài tập tuần 2 (`hw02.pdf`) và Bài tập tuần 3 (`hw3.pdf`); Sutton và Barto (2018), bản PDF (trang in bằng trang PDF trừ 22); notebook CartPole của Bài 04.
+
+### Đánh số và quan hệ với ghi chú
+
+- Theo brief bổ sung 2026-10-14, tệp chỉ chứa bài mới, đánh số nối tiếp bài cuối của ghi chú: Bài tập 03.15–03.24. Bài tập 03.1–03.14 của ghi chú không chép lại; đoạn mở và bảng `Mạch | Mở phần | Bài tập` liệt kê chúng theo mạch ("ghi chú: …") và dẫn tới ghi chú.
+- Sai khác với kế hoạch C: kế hoạch ghi "03.1–03.9 giữ số hiệu và lời giải của ghi chú" trong tệp này; brief bổ sung yêu cầu bộ đếm nối tiếp, nên tác tử không chép. Lưu ý cho điều phối viên: các tệp `exercises.md` chưa commit của Bài 01, 04, 06, 07 trong cây làm việc có chép lại bài tập trong mục của ghi chú, còn Bài 02, 05 thì không; cần một quyết định chung.
+- Ánh xạ số dự kiến của kế hoạch C sang số mới: 03.16 → 03.20, 03.17 → 03.21, 03.18 → 03.24, 03.19 → 03.23. Năm bài chuyển từ ghi chú cũ: 03.2(a)(c) cũ → 03.15, 03.5(b)(c) cũ → 03.16, 03.12(c) cũ → 03.17, 03.3(b)(c) cũ → 03.18, 03.11 cũ → 03.22. Bài mới ngoài danh sách: 03.19 (phương trình Bellman cho $q_\pi$ của robot), để mạch 5 có bài tính toán trong tệp.
+
+### Danh sách bài
+
+| Số | Mức | Mạch | Mục tiêu | Nguồn | Ghi chú |
+|---|---|---|---|---|---|
+| 03.15 | nhận biết | 2 | 1 | 03.2(a)(c) cũ; S&B bài tập 3.4, tr. 53 | thêm câu (c): bảng $(\mathrm L,-\tfrac12)$, $(\mathrm H,-\tfrac12)$ cùng $p(s'\mid s,a)$, $r(s,a)$ với robot (Mệnh đề 03.6, Phạm vi) |
+| 03.16 | nhận biết | 4 | 3 | hw3 bài 1; 03.5(b)(c) cũ | thêm câu (c): $\Pr_\pi(S_t=\mathrm L,A_t=\mathrm{tim})=0$ nên kỳ vọng có điều kiện không xác định |
+| 03.17 | nhận biết | 5 | 3, 4 | 03.12(c) cũ | $q_\pi(\mathrm H,\mathrm{cho})=\tfrac{21}8$ cho làm dữ kiện (Bài tập 03.11 là bài củng cố, không giải lại) |
+| 03.18 | tính toán | 3 | 2 | 03.3(b)(c) cũ; S&B bài tập 3.8–3.9, tr. 56 | thêm $\gamma=0{,}9$, cận một phía $[-3,2]$, số $K$ của cận phần đuôi |
+| 03.19 | tính toán | 5 | 4 | S&B bài tập 3.17, tr. 61; hw02 bài 7–8; Hệ quả 03.24 | mới; hệ con ba ẩn của các cặp có $\pi>0$ |
+| 03.20 | tính toán | 6 | 5 | hw02 bài 3 | thêm (c) nghiệm chính xác, (d) $\gamma=1$: vô số nghiệm khi giữ $\mathrm s_3$, nghiệm duy nhất khi coi $\mathrm s_3$ là trạng thái kết thúc (S&B §4.1, tr. 74) |
+| 03.21 | chứng minh | 6 | 5 | hw02 bài 4; câu sau Định nghĩa 03.26 | (d) hai MDP cùng MRP, khác $q_\pi(\mathrm L,\mathrm{tim})$ |
+| 03.22 | vận dụng | 2 | 1 | 03.11 cũ (bản sửa A6); notebook Bài 04 phần 2, mục 3.1, 7.1 | $\tau$ đổi thành $\Delta t$ theo B-13; thêm giả thiết $\lvert\ddot x\rvert\le10$ m/s² |
+| 03.23 | vận dụng | 6 | 2, 5 | đoạn "Bỏ $\gamma<1$" sau Định lý 03.28; S&B §10.3, tr. 249 | thêm công thức $v_\pi$ theo $\gamma$ và phần thưởng trung bình $\tfrac54$ |
+| 03.24 | vận dụng | 7 (tổng hợp 2–6) | 1, 4, 5 | hw02 bài 10; S&B ví dụ 3.3, bài tập 3.4 | số liệu sư phạm; kế hoạch C xếp mạch 2, chuyển sang mạch 7 vì bài đi hết chuỗi mô hình → hệ → nghiệm → giả thiết |
+
+Độ phủ: mỗi mức 3–4 bài; mục tiêu 1 (03.15, 03.22, 03.24), 2 (03.18, 03.23), 3 (03.16, 03.17), 4 (03.17, 03.19, 03.24), 5 (03.20, 03.21, 03.23, 03.24); mạch 2–7 đều có bài. hw3 chỉ dùng bài 1, vì quyết định chung mục 8 dành bài 3–9 của hw3 cho Bài 04 (kế hoạch C của Bài 04 dùng bài 6, 7, 9). Ba bài chữa trong 30 phút theo kế hoạch C ứng với 03.20, 03.21 và Bài tập 03.7 của ghi chú.
+
+### Trùng trang chiếu
+
+Không bài nào trùng: mọi trang "Bài tập: …" của deck là Bài tập 03.1–03.8, 03.13 của ghi chú, không chép lại. Dòng "Nguồn" của mỗi bài dẫn trang chiếu chứa dữ kiện hoặc kết quả được dùng; chỉ số lấy bằng `Reveal.getIndices()` trên cổng 8799 (ví dụ `02-03` = `#/2/10`, `06-07c` = `#/6/10`). Trang tiêu đề mạch `02-00`…`07-00` là `#/2/1`…`#/7/1`.
+
+### Số liệu tính lại (script `scratchpad/ex03/`, `fractions.Fraction`)
+
+- 03.18: $\tfrac32$, $0$, $3{,}42$; cận phần đuôi $\tfrac34$ ($M=3$), $[-\tfrac34,\tfrac12]$ với $R\in[-3,2]$; $K=6$ ($0{,}09375$) và $K=55$ ($0{,}0913$; $K=54$ cho $0{,}1014$); khoảng $[-18{,}45;\,25{,}29]$.
+- 03.19: hệ ba ẩn cho $q=(\tfrac{13}4,\tfrac{15}8,\tfrac{13}8)$; $q_\pi(\mathrm H,\mathrm{cho})=\tfrac{21}8$, $q_\pi(\mathrm L,\mathrm{tim})=\tfrac34$; khớp Ví dụ 03.15, Bài tập 03.11.
+- 03.20: $v=(\tfrac{560}{641};\,-\tfrac{740}{641};\,0)\approx(0{,}874;\,-1{,}154;\,0)$, khớp kế hoạch C; $\gamma=1$: nghiệm $(0{,}8;-1{,}2;0)+c\mathbf 1$, hệ con định thức $0{,}25$, ma trận số lần ghé $\begin{pmatrix}2{,}8&2\\0{,}8&2\end{pmatrix}$.
+- 03.22: $\max\lvert\ddot x\rvert$ trên $\lvert\theta\rvert\le12^\circ$ là $9{,}87$ ($\lvert\dot\theta\rvert\le4$), $9{,}94$ ($\le6$), $10{,}23$ ($\le8$) với tham số mặc định của Gymnasium ($m_c=1$, $m_p=0{,}1$, nửa chiều dài $0{,}5$, lực $10$); khoảng $x_{t+1}$: $[0{,}106;0{,}114]$ và $[0{,}086;0{,}094]$. Bước $\tau=0{,}02$ giây và bộ Euler lấy từ notebook Bài 04 (ô in `core.tau`, mục 7.1).
+- 03.23: $(P^\pi)^k=P^\pi$; $\mathbb E_\pi[R_{k+1}]=\tfrac54$ với $k\ge1$; tổng $K$ bước $\tfrac{5K\pm3}4$; $v_\pi=r^\pi+\tfrac{5\gamma}{4(1-\gamma)}\mathbf 1$, tại $\gamma=\tfrac12$ cho $(\tfrac{13}4,\tfrac74)$.
+- 03.24: $P^\pi$, $r^\pi=(2,2,\tfrac12)$; $v_\pi=(\tfrac{15}4;\,\tfrac{13}4;\,\tfrac74)$; mười một hàng của $p$, tám cặp.
+- Tìm kiếm tham số cho 03.24 (Sạc từ $\mathrm L$ về $\mathrm H$ hoặc $\mathrm V$; chính sách ở $\mathrm V$, $\mathrm L$) cho phương án được chọn là phương án duy nhất có nghiệm mẫu số $4$ và nối lại robot hai mức.
+
+### Chỗ cần rà toán soi
+
+- 03.21(b): lập luận lấy trung bình theo lịch sử $h_t$ có cùng dãy trạng thái (hợp rời sai khác tập xác suất $0$).
+- 03.20(d) và 03.23(b): phát biểu về $\gamma=1$ dựa vào Sutton và Barto §4.1 và §10.3, ghi chú không chứng minh; tệp chỉ tính trực tiếp, không phát biểu định lý mới.
+- 03.22: giả thiết $\lvert\ddot x\rvert\le10$ m/s² là dữ kiện của đề, kèm điều kiện $\lvert\dot\theta\rvert\le6$ rad/s do tác tử tính.
+- 03.24(e): ví dụ hai lịch sử chỉ có xác suất dương dưới chính sách Tìm ở $\mathrm L$; đề đã nêu chính sách đó, và "Kiểm tra lại" ghi rằng với $\pi$ của đề bộ đếm luôn bằng $0$.
+
+### Đề nghị sửa deck
+
+- `07-03` (Bài tập về nhà): bảng `Mạch | Bài tập` thêm 03.15, 03.22 (mạch 2); 03.18 (3); 03.16 (4); 03.17, 03.19 (5); 03.20, 03.21, 03.23 (6); 03.24 (7). Thay "Tệp bài tập: chưa có" bằng liên kết viewer `material-viewer.html?doc=materials/lec-03/exercises.md&deck=lecture-03-qua-trinh-quyet-dinh-markov.html`. Ghi chú diễn giả của `07-03` và `01-01c` thêm số hiệu theo mục tiêu như bảng độ phủ ở trên.
+
+### Đề nghị sửa ghi chú
+
+- Câu mở "Bài tập củng cố": thêm rằng `exercises.md` có Bài tập 03.15–03.24.
+- Hướng dẫn đọc thêm, dòng Bài tập tuần 2: bài 3 → Bài tập 03.20, bài 4 → 03.21, bài 10 → 03.24; thêm Bài tập tuần 3, bài 1 → 03.16.
+- Đồng bộ chéo: tệp bài tập dùng $v_{\mathrm H}$, $v_{\mathrm L}$ (đích của danh sách đồng bộ chéo) và giữ $P^\pi$, $r^\pi$ như ghi chú; khi đổi sang $P_\pi$, $r_\pi$ thì đổi cả tệp này.
+
+### Tự kiểm `no-ai-slop` (Edit) và kết quả kiểm tra
+
+- Phạm vi: toàn bộ `exercises.md`. Đối chiếu `eval.md`: không số liệu, nguồn hay khẳng định không có căn cứ (mọi số đã tính lại; trang S&B xác minh trên bản PDF; mục notebook xác minh trên tệp); không "hãy" ngoài đề, không "ta thấy", "rõ ràng", "Đáp án", "tổng thưởng", "tác nhân"; không câu hỏi tu từ (dấu "?" duy nhất nằm trong URL); đã bỏ một cấu trúc đối lập ("$2$, không phải $3$" → "$2<M=3$"); dấu phân cách thập phân trong dãy số đổi sang dấu chấm phẩy ở 03.20(a). Các câu "không phải" còn lại là phân biệt toán học cần thiết.
+- `note_check.py`: 10 `exercise`, 10 `hint`, 10 `solution`; Bài tập 03.15–03.24 liên tục, không trùng (khoảng trống 1–14 là bài của ghi chú); không khối lạ, không lồng; 0 dấu `\(`, `\[`; mẫu "trang chiếu" chỉ khớp các dòng dẫn trang hợp lệ.
+- `check_note.py 03 lecture-03-qua-trinh-quyet-dinh-markov.html exercises` (cổng 8766): 1600×900 và 390×844 đều 0 lỗi KaTeX, 30 khối, 0 lỗi console, 0 yêu cầu ngoài, không tràn. 21 liên kết trong tệp đều trỏ tới chỉ số đã đối chiếu. Đã xem ảnh chụp (đầu trang, bảng của 03.20, lời giải 03.20 ở 390 px).
+- `git diff --check` sạch; tệp mới không có khoảng trắng cuối dòng.
+
+### Bổ sung theo quyết định chung của điều phối viên (2026-10-14): bài trùng trang chiếu
+
+- Quyết định (áp dụng mọi bài): `exercises.md` là bộ bài tập chính thức, gồm các bài tập trong thân chương của ghi chú có trang "Bài tập: …" trên deck (giữ số hiệu, phát biểu lại tự chứa dữ kiện, dòng "Trùng trang chiếu" tới trang câu hỏi và trang lời giải, kết quả giống hệt deck) và các bài mới nối tiếp bộ đếm; không chép mục "Bài tập củng cố". Lý do: thống nhất cách làm giữa các bài (mục "Đánh số" ở trên ghi Bài 01, 04, 06, 07 đã chép, Bài 02, 05, 03 chưa) và theo `AGENTS.md` ("tệp bài tập chứa bộ bài giao chính thức", "bài nào giữ số hiệu và lời giải của ghi chú"). Mục "Đánh số và quan hệ với ghi chú" và "Trùng trang chiếu" ở trên được thay bằng mục này.
+- Thêm vào tệp: Bài tập 03.1 (nhận biết, mạch 2), 03.2 (tính toán, 2), 03.3 (tính toán, 3), 03.4 (tính toán, 4), 03.5 (nhận biết, 4), 03.6 (chứng minh, 5), 03.7 (chứng minh, 5), 03.8 (vận dụng, 6), 03.13 (vận dụng, 7). Mức theo kế hoạch C; 03.5 không có trong kế hoạch C, xếp nhận biết. Bài 03.13 thuộc mục "Bài tập củng cố" của ghi chú nhưng được đưa vào theo chỉ định của điều phối viên, vì deck dùng nó làm bài tổng hợp có lời giải (`07-01`/`07-02`); dòng "Nguồn" ghi rõ. Bài 03.9 không có trang deck nên không chép.
+- Cách chép: lấy nguyên khối `exercise`/`hint`/`solution` của ghi chú bằng script (`scratchpad/ex03/extract.py`, `build.py`), chỉ đổi: tiêu đề khối có tên bài; "**(a)**" thành "**Câu (a).**"; "Robot của Ví dụ 03.1" thành "Robot thu gom lon hai mức pin" kèm phản hồi cần dùng (03.1(a), 03.5); thêm lỗi thường gặp vào "Kiểm tra lại" (lấy từ ghi chú diễn giả của trang tương ứng hoặc từ ghi chú: Nhận xét 03.25, câu sau Định nghĩa 03.13). Kết quả không đổi so với ghi chú, và ghi chú trùng deck: 03.1 ($\tfrac12$, $\tfrac14$), 03.2 (bảng năm cặp, $r(\mathrm L,\mathrm{tim})=-\tfrac12$), 03.3 ($\tfrac34$, $2$, $[0,\tfrac32]$), 03.4 ($\tfrac98$), 03.6 ($v_H=2+\tfrac14v_H+\tfrac14v_L$), 03.8 ($(\tfrac{10}3,2)$), 03.13 ($\tfrac{29}{16}$, $\tfrac{30}{16}$); 03.5, 03.7 khớp lời giải trên trang và trong ghi chú diễn giả `05-10`.
+- Liên kết "Trùng trang chiếu": 03.1 `#/2/7`, `#/2/8`; 03.2 `#/2/14`, `#/2/15`; 03.3 `#/3/6`, `#/3/7`; 03.4 và 03.5 `#/4/9`, `#/4/10` (ghi rõ câu nào của trang); 03.6 `#/5/12` (đề và lời giải cùng trang); 03.7 `#/5/11` (lời giải trong ghi chú diễn giả); 03.8 `#/6/13`, `#/6/14`; 03.13 `#/7/4`, `#/7/5`. Script đối chiếu nhãn liên kết với tiêu đề trang theo `Reveal.getIndices()`: 36 liên kết, 0 sai.
+- Sửa kèm: đoạn mở viết lại (19 bài, danh sách theo mức, bài nào giữ số hiệu, bài nào chỉ ở ghi chú); bảng `Mạch | Mở phần | Bài tập` liệt kê bài của tệp và "chỉ trong ghi chú: 03.9, 03.10, 03.11, 03.12, 03.14"; Bài tập 03.15 đổi tên thành "Phản hồi đồng thời trong bảng hàm động lực" để không trùng tên với 03.2. Trong mỗi mức, các bài xếp theo mạch.
+- Đề nghị sửa deck `07-03` cập nhật theo: mạch 2: 03.1, 03.2, 03.15, 03.22; 3: 03.3, 03.10, 03.18; 4: 03.4, 03.5, 03.16; 5: 03.6, 03.7, 03.11, 03.12, 03.17, 03.19; 6: 03.8, 03.9, 03.14, 03.20, 03.21, 03.23; 7: 03.13, 03.24; kèm liên kết viewer của `exercises.md`.
+- Kiểm tra lại: `note_check.py` 19 `exercise`, 19 `hint`, 19 `solution`, không trùng số, khoảng trống 9–12, 14 đúng các bài chỉ ở ghi chú, không khối lạ hay lồng, 0 `\(`/`\[`. `check_note.py 03 … exercises` (cổng 8766): 1600×900 và 390×844 đều 0 lỗi KaTeX, 57 khối, 0 lỗi console, 0 yêu cầu ngoài, không tràn. `git diff --check` sạch. `no-ai-slop` (Edit) trên phần thêm: không "hãy" ngoài đề, không "ta thấy", "rõ ràng", "Đáp án"; câu lỗi thường gặp thêm vào đều nêu đối tượng và hậu quả cụ thể.
+
+### Rà soát ba vai và sửa `exercises.md` (2026-10-14)
+
+- Tác tử rà soát (chỉ đọc, không commit): TOAN (toán và thuật toán, `exrev-03-TOAN.md`), SV (góc nhìn sinh viên và trình duyệt, `exrev-03-SV.md`), PB (sư phạm, văn phong, `no-ai-slop` Detect, `exrev-03-PB.md`); cả ba là `general-purpose`, Claude Opus 5.5 (`claude-opus-5-5`), mức `high`. Tổng: 0 chặn bàn giao, 0 nghiêm trọng; trung bình TOAN 2, SV 4, PB 5; nhẹ TOAN 8, SV 10, PB 11.
+- Biên tập viên: cùng tác tử soạn (`general-purpose`, Claude Opus 5.5, `high`), `no-ai-slop` chế độ Edit, sửa theo quyết định của điều phối viên; không commit. Bản trước khi sửa lưu ở `scratchpad/ex03/exercises-before-rev.md`; script sửa `rev1.py`–`rev6.py`.
+
+**Sửa quyết định chung về 03.13.** Điều phối viên rút lại quyết định tạm đưa Bài tập 03.13 vào tệp: `AGENTS.md` cấm lặp đề của mục "Bài tập củng cố" và có hiệu lực cao hơn. Bài 03.13 bị bỏ khỏi tệp. Bảng `Mạch | Mở phần | Bài tập`, hàng 7, ghi "chỉ trong ghi chú: 03.13" kèm liên kết tới trang `#/7/4` và tới ghi chú. Thay vào đó có bài mới 03.25 (vận dụng, mạch 7, theo gợi ý PB). Bài này cho xác suất cứu hộ $\rho$ và tính $q_\pi(\mathrm L,\mathrm{tim})=\tfrac{23}8-\tfrac{17}4\rho$, bằng $q_\pi(\mathrm L,\mathrm{cho})=\tfrac{15}8$ tại $\rho^*=\tfrac4{17}$. Câu (d) đánh giá chính sách "luôn Tìm ở $\mathrm L$" với $\rho=\tfrac1{10}$ và được $v=(\tfrac{59}{16},\tfrac{49}{16})$. Mọi số đều tính lại bằng `fractions`: $\rho=\tfrac12\Rightarrow\tfrac34$, $\rho=\tfrac14\Rightarrow\tfrac{29}{16}$, $\rho=\tfrac1{10}\Rightarrow\tfrac{49}{20}$; nếu dùng nhầm $v_\pi(\mathrm L)$ ở nhánh cứu hộ thì được $\rho^*=\tfrac15$. Mục "Bổ sung theo quyết định chung" ở trên được thay bởi mục này đối với 03.13.
+
+| Mã | Mức | Vị trí | Xử lý | Trạng thái |
+|---|---|---|---|---|
+| TOAN-1 | trung bình | 03.24(e) | Cố định $\pi'$ (Tìm, Chờ, Sạc mỗi $\tfrac13$ tại $\mathrm L$); thêm giả thiết xác suất cạn pin luôn nhỏ hơn $1$; lịch sử thứ hai là "vừa từ $\mathrm V$ xuống $\mathrm L$" | đã sửa |
+| TOAN-2 | trung bình | 03.18 Kiểm tra lại | Tách khẳng định cho $\gamma=\tfrac12$ (trong $[-6,6]$) và $\gamma=0{,}9$ (chứa $3{,}42$, trong $[-30,30]$) | đã sửa |
+| TOAN-3 | nhẹ | 03.20 Kiểm tra lại | Lỗi "$\gamma=1$ thì vô nghiệm" viết lại, phân biệt ba hệ (03.20 vô số nghiệm, 03.23 vô nghiệm, hệ hai ẩn nghiệm duy nhất) | đã sửa |
+| TOAN-4 | nhẹ | 03.20 Kiểm tra lại | "trong hai bước tới $\mathrm s_3$ với xác suất ít nhất $0{,}25$, nên xác suất chưa tới sau $2k$ bước không quá $0{,}75^k$" | đã sửa |
+| TOAN-5 | nhẹ | 03.20(c) | "làm tròn tới ba chữ số thập phân" | đã sửa |
+| TOAN-6 | nhẹ | 03.22(b) | Đổi thứ tự: vận tốc rồi khoảng của $x_{t+1}$ | đã sửa |
+| TOAN-7 | nhẹ | 03.23(b) | Phần thưởng thuộc $\{0,1,2\}$, không âm, tổng có nghĩa trong $[0,+\infty]$ | đã sửa |
+| TOAN-8 | nhẹ | 03.1(b) | "công thức xác suất toàn phần"; đề nghị sửa cùng chỗ trong ghi chú (dưới) | đã sửa trong tệp |
+| TOAN-9 | nhẹ | 03.21(b) | "chuỗi Markov thuần nhất theo thời gian" (đề và lời giải) | đã sửa |
+| TOAN-10 | nhẹ | 03.2 | Bỏ "Robot của Ví dụ 03.1 … Ví dụ 03.5" | đã sửa |
+| SV-1 | trung bình | 03.7 Dữ kiện | Nêu lại đủ Ví dụ 03.4 (hai phòng luân phiên, thưởng $1$/$0$, phòng đầu chọn đều, trạng thái chỉ ghi mức pin) | đã sửa |
+| SV-2 | trung bình | 03.7 Yêu cầu, Lời giải | Thêm ba dòng tóm tắt chuỗi Bổ đề 03.20(b) → Mệnh đề 03.22, 03.23 → Hệ quả 03.24; tách câu bốn tham chiếu trong lời giải (a) | đã sửa |
+| SV-3 | trung bình | công thức tràn ở 390 px | Tách `aligned` một quan hệ mỗi dòng, bỏ mọi `\text{…}` chú thích trong công thức (chuyển ra câu sau): 03.1, 03.4, 03.6, 03.8, 03.16, 03.18, 03.19, 03.20, 03.21, 03.22, 03.23, 03.24, 03.25. Đo lại: 1600 px 0 khối tràn; 390 px còn 6 công thức rộng 273–290 px trong khung 271 px (một quan hệ không tách được) và 2 bảng (03.2, 03.24) cuộn trong khung riêng | đã sửa (còn 8 khối cuộn nhẹ, chấp nhận) |
+| SV-4 | trung bình | 03.18 Kiểm tra lại | Như TOAN-2 | đã sửa |
+| SV-5 | nhẹ | Hướng dẫn | Định nghĩa $H_t$ (nghiêng, khác $\mathrm H$ đứng) | đã sửa |
+| SV-6 | nhẹ | 03.6, 03.8 | Thống nhất $v_{\mathrm H}$, $v_{\mathrm L}$ (kết quả không đổi) | đã sửa |
+| SV-7 | nhẹ | 03.3(c) | Định nghĩa $M=\max\lvert r\rvert=3$ | đã sửa |
+| SV-8 | nhẹ | 03.23(c) | Mở câu bằng "Đặt $m=\dots$" | đã sửa |
+| SV-9 | nhẹ | 03.6 | Nêu lại (4.5) trong Dữ kiện | đã sửa |
+| SV-10 | nhẹ | 03.17 mức | Giữ nhận biết; đề cho sẵn (4.6), Mức độ ghi lý do | đã sửa |
+| SV-11 | nhẹ | 03.8 vị trí | Giữ vận dụng; Mức độ ghi lý do (đánh giá và so sánh chính sách mới; xếp theo mạch) | đã sửa |
+| SV-12 | nhẹ | 03.22 Kiểm tra lại | "bán kính $0{,}004$ m của mỗi khoảng" | đã sửa |
+| SV-13 | nhẹ | 03.24 Dữ kiện | Viết lại gạch $\mathrm L$ thành các câu ngắn | đã sửa |
+| SV-14 | nhẹ | 03.21(a) ở 1600 px | Bỏ chú thích trong công thức | đã sửa |
+| PB-1 | trung bình | 03.13 | Bỏ khỏi tệp, thêm 03.25 (quyết định trên) | đã xử lý |
+| PB-2 | trung bình | dòng Nguồn 03.15–03.18, 03.22 | Bỏ "bản ghi chú trước đợt sửa 2026-10-12" và mã "A6"; thay bằng nguồn sinh viên mở được (S&B, ghi chú, phiếu, notebook, mã nguồn Gymnasium). Xuất xứ giữ trong bảng "Danh sách bài" của mục Giai đoạn III | đã sửa |
+| PB-3 | trung bình | 03.7 | Như SV-1 | đã sửa |
+| PB-4 | trung bình | mục tiêu 2 | 03.20(e): lượt $\mathrm s_1\to\mathrm s_1\to\mathrm s_2\to\mathrm s_3$, thưởng $1,1,-1$, $G_2=-1$, $G_1=0{,}1$, $G_0=1{,}09$ (kiểm trực tiếp $1+0{,}9-0{,}81$), xác suất $0{,}125$, so với $v_1\approx0{,}874$; Mức độ 03.20 thêm mục tiêu 2 | đã sửa |
+| PB-5 | trung bình | 03.21 tiêu đề | "Quá trình phần thưởng Markov cảm sinh bởi một chính sách cố định" | đã sửa |
+| PB-6 | nhẹ | 03.13 Kiểm tra lại | Không còn áp dụng (03.13 bỏ khỏi tệp) | không áp dụng |
+| PB-7 | nhẹ | Hướng dẫn | "hệ số chiết khấu (discount factor) $\gamma$"; tên tiếng Anh lần đầu: MDP, tính Markov, hàm động lực, chính sách, hàm giá trị, nhiệm vụ tiếp diễn | đã sửa |
+| PB-8 | nhẹ | MDP lần đầu | Viết đầy đủ ở Hướng dẫn; 03.21 dùng "MDP" | đã sửa |
+| PB-9 | nhẹ | 03.22 Nguồn | Thêm `CartPoleEnv.step` của Gymnasium (tham số mặc định) và S&B ví dụ 3.4, tr. 56; thêm vào Tài liệu tham khảo | đã sửa |
+| PB-10 | nhẹ | lặp ý "hành động không được chọn" | Giải một lần ở 03.17(b); 03.21(d) và 03.25(a) dẫn "cùng lập luận như lời giải Bài tập 03.17(b)" | đã sửa |
+| PB-11 | nhẹ | 03.3 và 03.18 | Mức độ 03.18 ghi "(a), (b) luyện lại dạng của Bài tập 03.3 trên một dãy khác; (c), (d) mở rộng" | đã sửa |
+| PB-12 | nhẹ | mức 03.1, thứ tự mức vận dụng | Giữ theo kế hoạch C; lý do thứ tự ghi ở Mức độ 03.8 | giữ, có lý do |
+| PB-13 | nhẹ | Hướng dẫn lộ kết quả 03.19 | Bỏ ba giá trị $q_\pi(\mathrm L,\cdot)$ khỏi Hướng dẫn (03.16 vẫn cho làm dữ kiện) | đã sửa |
+| PB-14 | nhẹ | bảng hàng 7 | "03.24 (câu (a), (b) làm được sau mạch 2)" | đã sửa |
+| PB-15 | nhẹ | tài liệu làm chủ ngữ | 03.16, 03.17, 03.23 và Hướng dẫn: "(ghi chú, Ví dụ …)", "Theo ghi chú …" | đã sửa |
+| PB-16 | nhẹ | lỗi thường gặp không kèm kết quả sai | Mọi "Kiểm tra lại" nêu kết quả sai của từng lỗi, ví dụ 03.4 ($\tfrac9{16}$, $\tfrac78$), 03.6 (phương trình $\gamma=1$; $\tfrac32+\tfrac38v_{\mathrm H}+\tfrac18v_{\mathrm L}$), 03.24 (Sạc về $\mathrm H$ cho $(\tfrac{49}{13};\tfrac{43}{13};\tfrac{25}{13})$), 03.20(e) (bắt đầu từ $G_2=0$ cho $1{,}9$) | đã sửa |
+
+Số liệu mới đã tính lại: 03.3 ($[-\tfrac{21}4,\tfrac{27}4]$ khi quên $\gamma^3$), 03.18 ($[-\tfrac92,\tfrac{15}2]$; $\tfrac54$ khi trọng số lệch), 03.4 ($\tfrac9{16}$; $\tfrac78$), 03.6 ($\tfrac32+\tfrac38v_{\mathrm H}+\tfrac18v_{\mathrm L}$), 03.20(e), 03.24 ($\tfrac{49}{13}$, $\tfrac{43}{13}$, $\tfrac{25}{13}$ từ lần tìm tham số trước), 03.25 (như trên).
+
+Cảnh báo KaTeX về ký tự tiếng Việt trong chế độ toán (chữ Việt trong `\text{…}`): chấp nhận theo điều phối viên; sau đợt sửa, tệp không còn `\text`.
+
+Đề nghị sửa ghi chú (bổ sung): Bài tập 03.1(b) trong ghi chú đổi "Theo kỳ vọng toàn phần theo vị trí" thành "Theo công thức xác suất toàn phần theo vị trí", để hai bản giữ trùng nhau (TOAN-8). Đề nghị sửa deck `07-03` (cập nhật): mạch 7 ghi 03.13 (ghi chú), 03.24, 03.25.
+
+Kiểm tra sau sửa: `note_check.py` 19 `exercise`/`hint`/`solution`, số hiệu 03.1–03.8, 03.15–03.25 không trùng (khoảng trống 9–14 là bài chỉ ở ghi chú), không khối lạ, 0 `\(`/`\[`; `check_note.py 03 … exercises` (cổng 8766) ở 1600×900 và 390×844: 0 lỗi KaTeX, 57 khối, 0 lỗi console, 0 yêu cầu ngoài, không tràn trang; 36 liên kết tới deck khớp tiêu đề trang (0 sai), 2 liên kết viewer ghi chú; `git diff --check` sạch, 0 khoảng trắng cuối dòng. Đã xem ảnh chụp lời giải 03.25 và đề 03.7 ở 1600 px, đề 03.25 ở 390 px. `no-ai-slop` (Edit) trên mọi câu thêm hoặc sửa: không "hãy" ngoài đề, không "ta thấy", "rõ ràng", "Đáp án"; tài liệu không làm chủ ngữ; các cấu trúc "thay vì" còn lại là phân biệt toán học trong danh sách lỗi.
+
+### Quyết định của điều phối viên (2026-10-14, giai đoạn III, bài tập)
+
+- Kiểm độc lập: `note_check.py` sạch (19 bài); viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 57 khối, 0 lỗi console, không tải ngoài; tính lại 03.25 ($\tfrac34$, $\tfrac{29}{16}$, $\rho^*=\tfrac4{17}$) và 03.20(e) ($-1$; 0,1; 1,09) đúng; `git diff --check` sạch. Ba vai rà soát chỉ đọc (Opus 5.5 high): 0 chặn, 0 nghiêm trọng; mọi mục trung bình đã sửa. Quyết định về 03.13: không chép bài "Bài tập củng cố" vào tệp (AGENTS.md), bảng dẫn tới ghi chú và trang deck.
+- Quyết định: **chấp nhận**; commit `feat(materials-03)`. Trang 07-03 của deck và nhóm "Bài tập" trên `index.html` cập nhật ở đợt sau; đề nghị sửa ghi chú (03.1(b) "công thức xác suất toàn phần") để đợt đồng bộ chéo.
