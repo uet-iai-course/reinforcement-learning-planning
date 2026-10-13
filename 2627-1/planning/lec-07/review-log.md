@@ -1199,3 +1199,70 @@ Kết quả rà lại: 0 chặn, 0 nghiêm trọng; trung bình 2 (MACH R1, R2),
 - Tác tử: tác tử soạn kiêm biên tập (general-purpose, claude-opus-5-5, high) hai vòng, bị dừng một lần theo yêu cầu người dùng và nối lại sau khi rà trạng thái đĩa; rà lại toán và rà lại mạch (general-purpose, claude-opus-5-5, high, chỉ đọc); điều phối viên Claude Fable 5.1 (medium).
 - Kiểm độc lập sau vòng 2: `density.py` chỉ gắn cờ các trang có ngoại lệ hoặc chỉ do token dấu câu, đều liệt kê trong `storyboard.md`; Playwright 1600×900 và 390×844: 75 trang, 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, 6 trang tiêu đề mạch; ảnh L07-31d, 31e, 32b xem trực tiếp; bài tập ba cập nhật Q-learning tính lại đúng; `git diff --check` sạch. Ký hiệu `d_{\text{trái}}` giữ theo ghi chú (không sinh cảnh báo KaTeX), ghi nhận là ngoại lệ của quyết định 1 trong brief biên tập.
 - Quyết định: **chấp nhận**; commit `fix(lecture-07)`.
+
+## Đợt sửa 2026-10-14 — Sửa ghi chú sau giai đoạn II
+
+### Tác tử
+
+| vai | loại | mô hình | mức | ghi tệp |
+|---|---|---|---|---|
+| Biên tập ghi chú bài giảng (brief `brief_note_revision.md`) | `general-purpose` (bằng chứng lời gọi công cụ do điều phối viên ghi) | claude-opus-5-5 | high | `materials/lec-07/lecture-note.md`, mục này |
+
+Danh sách việc: bảng "Đề nghị sửa ghi chú (sau giai đoạn II)", đề nghị bổ sung của MACH ở "Rà lại vòng 2 và sửa (giai đoạn II)", hai đề nghị nhỏ ở "Đề nghị sửa ghi chú" của giai đoạn II, và các sửa của `L07-01b` (TOAN 4, MACH N1, N6, RL 2) cần đồng bộ với ghi chú. Không đổi số hiệu kết quả, ví dụ, bài tập, `note-topic-id`; không sửa SVG.
+
+### Từng đề nghị và trạng thái (số dòng theo tệp mới)
+
+| đề nghị | trạng thái | vị trí mới và nội dung |
+|---|---|---|
+| Ví dụ 07.1: sáu biến liên tục và trạng thái chạm đất ($3$ mức), $9\,216=3\cdot4^5\cdot3$ (TOAN 4) | đã sửa | dòng 99: "sáu biến liên tục của Lunar Lander và số chân đang chạm đất ($3$ mức)"; dòng 113: "$3\cdot4^5=3\,072$ ô … ghép với số chân đang chạm đất ($0$, $1$ hoặc $2$, tức $3$ mức), được $9\,216=3\cdot4^5\cdot3$ ô"; dòng 121 kiểm tra $9\,216=3\,072\cdot3$. Đối chiếu notebook Bài 05: `grid_shape` thêm trục số chân $l_1+l_2\in\{0,1,2\}$, "$3\cdot4\cdot4\cdot4\cdot4\cdot4\cdot3=9216$" |
+| Nhận xét 07.30: "lệch" → "chệch" (PB 6) | đã sửa | dòng 1057: "nói chung chệch (Mệnh đề 07.20)", trùng chữ của `L07-25` |
+| §5.2, Ví dụ 07.15, Bài tập 07.14 (c), Nhận xét 07.40, các dòng 1519, 1554, 1570 cũ: Mệnh đề 07.37 là ví dụ TD(0) dự đoán khác chính sách; Q-learning có cùng ba yếu tố và phản ví dụ tương tự (Sutton và Barto, 2018, §11.2) (TOAN 2, RL 1, MACH 2) | đã sửa | dòng 1378 (câu mở §5.2: ví dụ dùng TD(0) dự đoán khác chính sách; Q-learning có cùng ba yếu tố, Sutton và Barto §11.2 dẫn phản ví dụ tương tự); dòng 1380 tiêu đề "Ví dụ 07.15 (TD(0) khác chính sách trên hai trạng thái, tham số tăng không chặn)", số hiệu giữ; dòng 1396 thêm "Quy tắc ở đây là TD(0) dự đoán, không có phép cực đại như mục tiêu Q-learning."; dòng 1408 Phạm vi Mệnh đề 07.37 "của TD(0) dự đoán khác chính sách"; dòng 1463 (Bài tập 07.14 (c)); dòng 1469 (đoạn kết §5, kéo theo: "trên một ví dụ TD(0) khác chính sách"); dòng 1486 (Nhận xét 07.40, hàng Q-learning: "phản ví dụ: TD(0) khác chính sách cùng ba yếu tố (Mệnh đề 07.37), phản ví dụ tương tự cho Q-learning (Sutton và Barto, 2018, §11.2)"); dòng 1521 (đoạn kết §6); dòng 1556 (Tình huống 07.2, Áp dụng); dòng 1572 (Tóm tắt chương). Nhận xét 07.39 giữ: câu nói về lớp phương pháp đủ ba yếu tố, đã đúng |
+| Ví dụ 07.11: chuỗi không kết thúc, $w_{\mathrm{MC}}=\arg\min J_{d_\pi}$ là đích Monte Carlo hướng tới nếu có lợi tức đầy đủ (RL 4) | đã sửa | dòng 930 (Yêu cầu: $w_{\mathrm{MC}}=\arg\min_wJ_{d_\pi}(w)$); dòng 939 (Diễn giải: "Chuỗi không kết thúc nên không quan sát được lợi tức đầy đủ nào; $w_{\mathrm{MC}}$ là điểm mà Monte Carlo gradient hướng tới nếu có lợi tức đầy đủ với $S\sim d_\pi$ (Định lý 07.17 với $\mu=d_\pi$)") |
+| Bảng tiên quyết, Định lý 07.29: "tối giản (irreducible), không tuần hoàn (aperiodic)" ở lần dùng đầu (SV) | đã sửa, làm khác ở Định lý 07.29 | dòng 23 (lần dùng đầu): "tối giản (irreducible)", "không tuần hoàn (aperiodic)". Dòng 1001 (Định lý 07.29, giả thiết 2) không lặp tên tiếng Anh vì quy tắc "tên tiếng Anh ở lần dùng đầu của tài liệu"; thêm "(theo nghĩa ở phần Kiến thức tiên quyết)" để người đọc nhảy thẳng vào định lý tìm được định nghĩa |
+| Lời giải Bài tập 07.11: Diễn giải so mục tiêu Monte Carlo $998$ với mục tiêu Sarsa $1$ (MACH 3) | đã sửa | dòng 1257: cùng chuyển $(\mathrm D,0,-1,\mathrm C)$ và cùng $w_0$; Monte Carlo ($\alpha=0{,}1$) đẩy $\hat q(\mathrm D,0)$ từ $3$ lên $3+1{,}1\cdot995=1\,097{,}5$; Sarsa ($\alpha=0{,}2$) kéo xuống $3+2{,}2\cdot(-2)=-1{,}4$; mục tiêu bootstrap chưa mang thông tin về phần thưởng $1\,000$. Ghi rõ hai bước học khác nhau vì Bài tập 07.10 dùng $0{,}1$, Bài tập 07.11 dùng $0{,}2$ |
+| Alt hình `projected-bellman.svg`: "Π T_π(Φw)" → "Π_D T_π(Φw)" (biên tập viên) | đã sửa | dòng 870; khớp nhãn "ΠD Tπ(Φw)" của SVG đã commit |
+| §3.1 "(còn gọi là mục tiêu TD)" cho cùng cặp tên với deck (MACH, rà lại vòng 2) | đã sửa, làm khác về vị trí | Deck `L07-12` dùng "mục tiêu TD (còn gọi là mục tiêu một bước)". Lần dùng đầu trong ghi chú là dòng 480 (Ví dụ 07.7), nên cặp tên đặt ở đó theo đúng thứ tự của deck; tiêu đề §3.1 (dòng 742) đổi thành "Mục tiêu TD và cập nhật bán gradient" để sau đó chỉ dùng tên chính; dòng 744 thêm "mục tiêu nhận được là mục tiêu TD của Ví dụ 07.7". Đặt "mục tiêu một bước (còn gọi là mục tiêu TD)" ở §3.1 sẽ đảo thứ tự với deck và đến sau lần dùng đầu |
+| `L07-01b` (TOAN 4, MACH N1, MACH N6, RL 2): "$\pi$ cố định, $\mathcal S$ hữu hạn", "phân phối dừng (stationary distribution)", MDP hữu hạn, nhắc lại $q_\pi$ | đã sửa phần thiếu | dòng 23: "Với $\pi$ cố định, chuỗi trạng thái …"; "Khi $\mathcal S$ hữu hạn, chuỗi tối giản có phân phối dừng (stationary distribution) duy nhất $d_\pi$". MDP hữu hạn (dòng 28) và $q_\pi$ (dòng 21) đã có, không đổi |
+| Kéo theo: viết đầy đủ TD | đã sửa | dòng 24: "TD(0) là phương pháp sai phân thời gian (temporal difference, TD) một bước", vì tiêu đề §3.1 nay dùng "mục tiêu TD" và chữ viết tắt chưa được giải nghĩa trong ghi chú; cùng cách gọi với `L07-03` |
+| `two-state-features.svg`: thay nhãn "Ví dụ 07.11/07.15" bằng "(a)/(b)" (giai đoạn II) | không cần sửa | SVG đã commit mang nhãn "(a) Theo chính sách", "(b) Khác chính sách"; đoạn văn sau hình đọc "Bảng trái … Ví dụ 07.11. Bảng phải … Ví dụ 07.15", vẫn đúng |
+| `chapter-map.svg` đánh "Mục 1–6" (giai đoạn II) | không sửa | chỉ ghi chú dùng hình này, và ghi chú đánh mục 1–6; đề nghị chỉ áp dụng nếu deck dùng hình |
+
+### Số liệu đã tính lại
+
+$3\cdot4^5=3\,072$, $3\,072\cdot3=9\,216$, $9\,216-1\,896=7\,320$, $1\,896/9\,216\approx0{,}206$; Bài tập 07.10 lần 1: $3+0{,}1\cdot995\cdot11=3+1{,}1\cdot995=1\,097{,}5$ ($\lVert x(\mathrm D,0)\rVert^2=11$); Bài tập 07.11 mẫu 1: mục tiêu $-1+\hat q(\mathrm C,0,w_0)=-1+2=1$, $\delta=-2$, $3+0{,}2\cdot11\cdot(-2)=-1{,}4$, khớp $\hat q(\mathrm D,0,w_1)=-1{,}4$ của Ví dụ 07.13. Không số nào khác thay đổi.
+
+### Độ dài
+
+Số token khoảng trắng tăng từ $20\,196$ lên $20\,569$ (đã ở trên mốc thường gặp $20\,000$ trước đợt sửa). Phần tăng chủ yếu là câu dẫn nguồn phản ví dụ Q-learning ở bảy vị trí; mỗi vị trí nằm trong một khối đọc độc lập (lời giải, bảng phạm vi, đoạn kết mục, tình huống, tóm tắt) nên giữ, đã rút gọn bốn câu sau lần viết đầu.
+
+### Tự kiểm `no-ai-slop` (Edit) theo `eval.md`
+
+Phạm vi: mọi câu thêm hoặc sửa ở trên. Đạt: không thêm nhận định không nguồn (phản ví dụ Q-learning dẫn Sutton và Barto, 2018, §11.2; phân tích $9\,216$ ô đối chiếu notebook Bài 05); không câu hỏi tu từ, không "hãy", tài liệu không làm chủ ngữ; một tên cho một khái niệm ("mục tiêu TD" sau lần dùng đầu, "phản ví dụ tương tự" giữ nguyên chữ ở mọi vị trí thay vì đổi từ đồng nghĩa); bỏ câu thừa "ví dụ không phải một lần chạy Q-learning" ở bản nháp. Không dùng điểm của bộ phát hiện AI.
+
+### Kiểm tra
+
+- `note_check.py`: 41 kết quả đánh số liên tục (07.1–07.41), 16 ví dụ, 19 bài tập, không trùng, không khoảng trống; 0 dấu `\(`/`\[`.
+- `check_note.py 07 lecture-07-xap-xi-ham.html` (viewer cổng 8766, cwd gốc kho), 1600×900 và 390×844: 0 `.katex-error`, 132 khối `:::` nhận diện, 0 lỗi console, 0 yêu cầu ngoài hoặc lỗi, không cuộn ngang.
+- `git diff --check` sạch. Không commit.
+
+### Rà lại sau đợt sửa và sửa bổ sung
+
+Tác tử rà lại: rà lại toán và nhất quán (`noterecheck-07.md`), `general-purpose`, claude-opus-5-5, high, chỉ đọc. Kết quả: 0 chặn, 0 nghiêm trọng, 1 trung bình, 6 nhẹ. Đối chiếu sách: câu duy nhất về Q-learning ở §11.2 là "counterexamples similar to Baird's showing divergence for Q-learning" (tr. 263); Bài tập 11.3 (tr. 264) áp Q-learning vào phản ví dụ Baird. Biên tập viên: cùng tác tử của đợt sửa (general-purpose, claude-opus-5-5, high).
+
+| mức | vị trí | vấn đề | trạng thái |
+|---|---|---|---|
+| trung bình | dòng 1521 (đoạn kết §6) | ghi "tương tự ví dụ TD(0) của Mệnh đề 07.37", sách so với phản ví dụ của Baird | đã sửa: "Q-learning có phản ví dụ phân kỳ tương tự phản ví dụ của Baird (Sutton và Barto, 2018, §11.2, tr. 263)" |
+| nhẹ | dòng 1378 (mở §5.2) | thiếu trang; "dẫn các phản ví dụ" nói quá; "tương tự" dễ hiểu là tương tự ví dụ $w\to2w$ | đã sửa: "theo Sutton và Barto (2018, §11.2, tr. 263), Q-learning có phản ví dụ phân kỳ tương tự phản ví dụ bảy trạng thái của Baird" |
+| nhẹ | dòng 1463, 1486, 1556, 1572 | thiếu trang; đối tượng của "tương tự" không rõ | đã sửa: mỗi chỗ ghi "tương tự phản ví dụ của Baird (Sutton và Barto, 2018, §11.2, tr. 263)" |
+| nhẹ | dòng 1469 (đoạn kết §5) | cụm "trên một ví dụ TD(0) khác chính sách" lặp câu mở §5.2 và Bài tập 07.14 (c) | đã sửa: bỏ cụm, trở về câu trước đợt sửa (vẫn đúng: Mệnh đề 07.37 cho thấy tham số có thể tăng không chặn khi đủ bộ ba bất ổn) |
+| nhẹ | dòng 937 (Ví dụ 07.11) | $J_\mu$ ở dòng Tính trong khi Yêu cầu viết $J_{d_\pi}$ | đã sửa: $2J_{d_\pi}(w_{\mathrm{MC}})$, $2J_{d_\pi}(w_{\mathrm{TD}})$ |
+| nhẹ | dòng 1257 (Bài tập 07.11, Diễn giải) | "cuối chuỗi" không rõ đầu nào; dự đoán là của cặp $(\mathrm C,0)$ | đã sửa: "dự đoán hiện tại tại $(\mathrm C,0)$ … phần thưởng $1\,000$ khi vào $\mathrm A$" |
+| nhẹ | dòng 3 và 24 | TD được giải nghĩa ở dòng 24, sau lần dùng đầu ở dòng 3 | đã sửa: dòng 3 "phương pháp sai phân thời gian (temporal difference, TD) TD(0)"; bỏ câu thêm ở dòng 24 |
+| nhẹ | toàn chương | $20\,569$ từ, trên mốc thường $20\,000$ | ghi nhận; sau sửa bổ sung $20\,598$ (thêm số trang và tên Baird ở sáu chỗ, bỏ một cụm ở dòng 1469); quyết định thuộc điều phối viên |
+
+Kiểm tra lại: `note_check.py` 41/16/19 số hiệu liên tục, không trùng, 0 `\(`/`\[`; `check_note.py 07 lecture-07-xap-xi-ham.html` (cổng 8766), 1600×900 và 390×844: 0 `.katex-error`, 132 khối, 0 lỗi console, 0 yêu cầu ngoài hoặc lỗi, không cuộn ngang; `git diff --check` sạch. `no-ai-slop` (Edit): các câu sửa giữ một cách gọi ("phản ví dụ của Baird"), có nguồn và số trang, không câu hỏi tu từ, tài liệu không làm chủ ngữ. Không commit.
+
+### Quyết định của điều phối viên (2026-10-14, sửa ghi chú sau giai đoạn II)
+
+- Kiểm độc lập: `note_check.py` sạch; viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 132 khối, 0 lỗi console, không tải ngoài; `git diff --check` sạch. Rà lại toán (Opus 5.5 high, chỉ đọc, đối chiếu Sutton–Barto §11.2 tr. 260–264): 1 trung bình, 6 nhẹ, đã sửa.
+- Quyết định: **chấp nhận**; commit `fix(materials-07)`.
