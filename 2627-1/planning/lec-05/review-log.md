@@ -1131,3 +1131,350 @@ Ghi chú có Bài tập 05.1–05.15; `exercises.md` bắt đầu từ Bài tậ
 
 - `note_check.py`: 35 số hiệu chung, 22 ví dụ, 15 bài tập liên tục; không khối lạ, không mẫu câu cấm.
 - `check_note.py 05 lecture-05-du-doan-phi-mo-hinh.html`: 0 lỗi KaTeX, 116 khối, 0 lỗi console, không yêu cầu ra ngoài, `overflow` false ở 1600×900 và 390×844.
+
+## Đợt sửa 2026-10-12 — Giai đoạn II: bộ trang chiếu
+
+### Tác tử
+
+| Vai trò | Loại | Mô hình | Effort | Ghi file |
+|---|---|---|---|---|
+| Tác tử soạn sửa deck Bài 05 (giai đoạn II) | general-purpose (theo brief `brief_deck_writer.md` của điều phối viên) | claude-opus-5-5 | high | `lecture-05-du-doan-phi-mo-hinh.html`, `img/lec-05/{short-walk,long-walk,long-returns,learning-route,target-randomness}.svg`, xóa `img/lec-05/mc-td-timeline.svg`, `planning/lec-05/{outline,storyboard}.md` (viết lại), mục này |
+
+Không commit, không push. Không sửa `lecture-note.md`, `lecture-slide.css`, `index.html`, `material-viewer.*`, notebook, mẫu, `AGENTS.md`, `CLAUDE.md` hay tệp của bài khác. Một lần lỡ chạy `git rm --cached` trên `mc-td-timeline.svg` đã được hoàn tác ngay bằng `git restore --staged`; chỉ mục git không chứa thay đổi nào của tác tử.
+
+### Phạm vi và kết quả
+
+- Deck dựng lại theo chuẩn 2026-10-12 và theo ghi chú bài giảng đã commit `e251162`: 45 → 70 trang, 5 → 6 mạch; năm trang tiêu đề mạch (`L05-B00`, `L05-C00`, `L05-D00`, `L05-DT`, `L05-E00`, `id="mach-2"`…`"mach-6"`); mạch mở đầu đủ bìa, "Tiên quyết và quy ước", "Mục tiêu học tập", "Nội dung", "Vấn đề trung tâm", "Khung chung của quy tắc cập nhật"; mạch kết luận đủ hai trang bảng tổng kết ba cột, bảng khung cập nhật, bảng điều kiện hội tụ, bài tập tổng hợp có lời giải, trang trả lời bài toán trung tâm có dòng "Nguồn:" và câu nối sang Bài 06, "Câu hỏi tự kiểm tra", "Bài tập về nhà và tài liệu đọc".
+- Bỏ toàn bộ khối `<style>` cục bộ (thu chữ `.92em`, `.9em`, `.math-large` 1em, chỉnh lề). Còn sáu thuộc tính `style="max-height:…"` trên ảnh (bố cục, không đổi cỡ chữ).
+- Số hiệu kết quả của ghi chú dẫn tối đa một lần mỗi trang, sau phát biểu bằng lời; các số còn lại nằm trong ghi chú diễn giả.
+- Ví dụ xuyên suốt: tàu đổ bộ thu nhỏ trên dãy bốn ô với $e_1$, $e_2$, $e_3$; dãy bảy ô; tám lượt $\mathrm A$, $\mathrm B$; hai chuyển Lunar Lander của notebook. Tên ô chữ đứng, dấu thập phân phẩy, ngưỡng $\theta$, thuật ngữ theo `quyet-dinh-chuan-2026-10-12.md`.
+- Bỏ liên kết PDF `../RL-hk2-2025-2026/...` trên L05-E03; nguồn ghi "Bài giảng gốc (2025–2026), trang N" và "Bài tập tuần 5 (2025–2026), bài k".
+- Đồng bộ kế hoạch với commit `bc95338` (thứ tự D05 trước D03, bảng $\operatorname{Var}=320/441$): `outline.md`, `storyboard.md` viết lại theo deck mới; bỏ câu "không tạo notebook".
+
+### Bảng mã trang cũ → mới
+
+| Cũ | Mới | Quyết định |
+|---|---|---|
+| A01, A02, A03, A04 | A01, A02 (Nội dung), A03 (Vấn đề trung tâm), A04 (Tiên quyết và quy ước) | sửa |
+| A05 | — | gộp (Bài tập 05.1 của ghi chú; ý chính vào ghi chú diễn giả B01) |
+| — | A06, A07 | thêm |
+| B01–B03, B05–B09 | cùng mã | sửa |
+| B04 | B04, B04c | tách |
+| B10 | B10, B10b | tách |
+| B11 | — | gộp vào B09 |
+| B12 | B12, B12c, B12d | tách |
+| B13 | B13, B13b | sửa, thêm lời giải |
+| — | B00, B09c | thêm |
+| C01 | — | gộp vào C02 |
+| C02–C04, C07, C08, C10 | cùng mã | sửa (C07 đặt trước C05) |
+| C05 | C05, C05b | tách |
+| C06 | C06, C06c | sửa, thêm |
+| C09 | — | bỏ (ghi chú diễn giả C05, Nhận xét 05.23) |
+| — | C00, C10b | thêm |
+| D01–D04, D07, D08, D10, D11 | cùng mã | sửa |
+| D05 | D05, D05b | tách |
+| D06 | D06, D06b | tách |
+| D09 | D09, D09b, D09c | tách |
+| D12 | D12, D12b, D13, D13b | tách |
+| — | D00, DT, D04b, D07a | thêm |
+| E01, E04 | cùng mã | sửa |
+| E02 | E02, E02b, E02c, E02d | tách |
+| E03 | E03 | sửa, gộp E05 |
+| E05 | — | gộp vào E03 |
+| — | E00, E06, E06b | thêm |
+
+Không có liên kết `#/N/M` hay `data-slide-id` nào từ học liệu khác trỏ vào deck Bài 05 (đã tìm trong `2627-1/`).
+
+### Mật độ trước và sau (`density.py`)
+
+| | Trang | Dòng `VƯỢT` | Trang > 40 âm tiết | Trang > 60 âm tiết | Trang > 90 âm tiết |
+|---|---:|---:|---:|---:|---:|
+| Trước | 45 | 36 | 33 | 22 | 5 |
+| Sau | 70 | 8 (đều có ngoại lệ trong storyboard) | 56 | 3 (A06, E02b, E02d; trần 80) | 0 |
+
+Tám dòng còn lại: L05-A06 (trang mục tiêu, 80), bốn trang tiêu đề mạch (dòng dẫn 21–22 âm tiết, quy định riêng ≤ 25), L05-E02b (66), L05-E02d (76), L05-E03 (7 dòng). Bảng từng trang trước/sau nằm trong `storyboard.md`, mục "Ngoại lệ mật độ". Đích 40 âm tiết chưa đạt ở 56 trang; trần 60 đạt ở mọi trang nội dung không thuộc diện trần 80.
+
+### SVG
+
+- `short-walk.svg`: dấu thập phân phẩy (`0,8`, `0,2`); tiêu đề "Tàu đổ bộ thu nhỏ trên dãy bốn ô"; mô tả nêu "rơi", "nằm yên".
+- `long-walk.svg`: dấu thập phân phẩy; tiêu đề "Dãy bảy ô".
+- `long-returns.svg`: dấu trừ `−1` thay gạch nối.
+- `learning-route.svg`: nhãn "Lợi tức MC" thành hai dòng "Lợi tức / Monte Carlo" (bỏ viết tắt chưa giải thích).
+- `target-randomness.svg`: "MC dùng đuôi đã xảy ra" thành "Monte Carlo dùng đuôi đã xảy ra".
+- Xóa `mc-td-timeline.svg` (không dùng ở deck lẫn ghi chú; nhãn "S₁=x" lệch tên ô), theo quyết định chung mục 8. Bản sao nằm trong thư mục tạm của phiên.
+- Deck dùng `short-walk`, `episode-one`, `episode-two`, `mc-td-targets`, `long-walk`, `long-returns`, `target-randomness`, `ab-empirical`, `learning-route`; `unfinished-episode.svg`, `design-grid.svg`, `variance-decomposition.svg` chỉ còn dùng trong ghi chú. Không xóa SVG nào mà ghi chú dùng. Không có ảnh raster.
+
+### Sai lệch so với kế hoạch A và lý do
+
+1. 70 trang thay vì khoảng 69; phân bổ 8/34/22/26/14/16 phút (kế hoạch 10/32/24/24/14/16) vì mạch 2 nhận thêm ví dụ tính tay Monte Carlo và ví dụ sai số.
+2. B01 không tách thành B01/B01b: trực giác Monte Carlo là một dòng "Trực quan." trên B01; Định nghĩa 05.1 nằm ở dòng Ký hiệu/Giả thiết của A04 và ghi chú diễn giả.
+3. B02 thành trang ví dụ hai hình lượt; B03 gộp Định nghĩa 05.3 với Mệnh đề 05.4 (bảng tính ngược vào ghi chú diễn giả), chỉ dẫn số hiệu trong ghi chú diễn giả.
+4. B08 không tách B08/B08b: ví dụ bảng và Mệnh đề 05.11 cùng trang, dưới trần.
+5. B11 gộp vào B09 (bảng bốn cấu hình có cột sau $e_2$, theo Ví dụ 05.5 của ghi chú); Nhận xét 05.12 là một dòng trên B09, `design-grid.svg` chỉ còn trong ghi chú.
+6. Thêm B09c (Ví dụ 05.6, một lượt Monte Carlo lần ghé đầu tiên) để có bước tính tay trước giả mã đúng thứ tự Mục 2.5 của ghi chú.
+7. B12 tách theo ghi chú: ví dụ sai số (Ví dụ 05.7), Định lý 05.16, Định lý 05.17; Nhận xét 05.19 (bước hằng) thành "Lưu ý:" trên B12d thay vì chuyển sang B08b.
+8. C01 gộp vào C02 để giữ tổng số trang; `unfinished-episode.svg` không còn trên deck.
+9. C06 dùng hai chuyển thật của Lunar Lander (Ví dụ 05.11) cho cả tự chuyển và trạng thái kết thúc; chuyển $\mathrm X\to\mathrm G$ đã có ở hàng cuối C07. Thêm C06c (Nhận xét 05.22).
+10. C07 (TD(0) trên $e_1$) đặt trước C05 theo thứ tự Ví dụ 05.9 → Thuật toán 05.21 của ghi chú.
+11. C09 bỏ thay vì giữ; nội dung chi phí nằm trong ghi chú diễn giả C05 và Nhận xét 05.23.
+12. Thêm D04b (trực giác $Y^*$) và D07a (Ví dụ 05.19) để cụm phương sai và cụm hội tụ TD(0) có đủ bước; thêm D09c (Ví dụ 05.22, ngưỡng $\theta$).
+13. D13 dùng ba nhận định có số liệu của ghi chú (bảng $V(\mathrm X)=10$, bước hằng $0{,}5$, lịch $n^{-0{,}6}$) thay cho đúng câu 2–4 của D12 cũ; câu "hai lượt không xếp hạng" nằm ở Diễn giải của D02.
+14. D12 thêm câu (a) $V_3(\mathrm A)$ (Bài tập 05.12 của ghi chú).
+15. E04 câu 4 hỏi hai lựa chọn của Monte Carlo (Nhận xét 05.12) thay cho câu về hai nghiệm theo lô, vì D12 (b) đã kiểm câu đó.
+16. Dòng "Tài liệu đọc trước" của A02 nằm trong ghi chú diễn giả để trang giữ ≤ 6 dòng.
+17. Câu nối sang Bài 06 đặt ở cuối L05-E01, không ở L05-E03, để E03 không vượt thêm dòng.
+
+### Bài tập trên deck và tệp bài tập
+
+L05-E03 ghi số hiệu dự kiến của `exercises.md` theo danh sách "chuyển cho exercises.md" ở các mục trên: mạch 2 → 05.16–05.18 (Bài tập 05.5 cũ trùng B13, 05.6(b) cũ, ô chờ); mạch 3 → 05.19–05.21 (Bài tập 05.9 cũ trùng C10, 05.11 cũ theo bài 7 tuần 5, tự chuyển (b)(c)); mạch 4 → 05.22–05.24 (bài 6, bài chứng minh phương sai, bài 4 của tuần 5); mạch 5 → 05.25–05.26 (ba lượt theo lô, bài lập trình). Giai đoạn III phải đối chiếu lại số hiệu, sửa cột phải của L05-E03 và thay "Bài tập: chưa có" bằng liên kết viewer. Lời giải trên B13b và C10b là lời giải chuẩn cho hai bài trùng.
+
+### Đề nghị sửa ghi chú
+
+- Mô tả thay thế của `learning-route.svg` trong ghi chú (dòng 110) ghi "Lợi tức MC"; hình nay ghi "Lợi tức / Monte Carlo". Đề nghị đổi alt thành "Lợi tức Monte Carlo" ở đợt sửa ghi chú sau. Không phát hiện mâu thuẫn số liệu nào giữa deck và ghi chú.
+
+### Đề nghị cho `lecture-slide.css`
+
+- Thêm một lớp chung cho hình thấp, ví dụ `.figure.compact { max-height: 150px; }`, để thay sáu thuộc tính `style="max-height:…"` trên ảnh của deck (B02, B06, C02, D04, D11). Không sửa CSS trong đợt này.
+
+### Ngoài phạm vi, đề nghị điều phối viên
+
+- `planning/lec-05/analysis.md` cần dòng đầu "Hồ sơ lịch sử trước đợt sửa 2026-10-12; không còn phản ánh deck hiện tại." theo quyết định chung mục 5; tệp không thuộc phạm vi ghi của brief.
+
+### Số liệu đã tính lại
+
+$v_\pi=(11/21;\ 19/21)$; $\operatorname{Var}(G_0\mid\mathrm S)=320/441$, độ lệch chuẩn $0{,}852/\sqrt n$ ($0{,}602$, $0{,}085$); bốn cấu hình Monte Carlo trên $e_1$, $e_2$; TD(0) trên $e_1$, $e_2$, $e_3$; độ lệch $(-0{,}774;\ -1{,}155)$, $(-0{,}899;\ -0{,}530)$ sau $e_2$ và $(-0{,}149;\ -0{,}530)$, $(-0{,}524;\ -0{,}217)$ sau $e_3$; độ chệch $-34/105$; $V(\mathrm X)=10$: phương sai $19{,}36$, độ chệch $\approx7{,}28$; phương sai giới hạn $0{,}5\cdot(320/441)/1{,}5\approx0{,}242$; Lunar Lander $44{,}3715$, $0{,}5215$, $43{,}90$ và $36{,}48$, $67{,}17$; lượt quét: $V_2(\mathrm A)=3/32$, $V_3(\mathrm A)=45/256$, thay đổi $0{,}0111$ ($k=17$) và $0{,}0097$ ($k=18$), $V_{19}(\mathrm A)\approx0{,}682$; ba lịch bước học. Mọi số khớp ghi chú bài giảng.
+
+### Tự kiểm `no-ai-slop` (Edit) và `quill`
+
+- Phạm vi: mặt trang và ghi chú diễn giả của cả 70 trang, tiêu đề, alt text. Đã đọc `SKILL.md`, soạn ở chế độ Edit rồi đối chiếu `eval.md`. Đạt: không từ cấm, không câu hỏi tu từ (dấu hỏi chỉ ở bốn câu tự kiểm tra có nhãn "Câu hỏi:"), không lời giảng viên, không "chúng ta", "ta thấy", "rõ ràng", "hãy", "Trang này"; không kết luận kịch tính hay chuỗi mũi tên; không gạch dài trang trí. Đã sửa trong lúc tự kiểm: viết tắt "MC" trên hai hình và alt; câu "đó là dao động, không phải độ chệch" (đối lập nhị phân) thành câu khẳng định; dấu chấm đứng một mình sau công thức trên D03. Giữ có chủ đích: nhãn "Lưu ý:" lặp ở trang thuật toán và trang kết quả vì có chức năng tách phạm vi; "không phải $v_\pi(\mathrm S)$" ở B05 vì nêu nhầm lẫn thường gặp.
+- `quill` (Outline, Threads, Concept, Revise làm bảng kiểm; không tạo `quill.json`): mười một cụm trong `storyboard.md` có đủ sáu bước hoặc ghi rõ bước gộp; ba thuật toán có tính tay trước giả mã (B09c → B10; C03, C07 → C05; D09 → D09b). Sợi chỉ "lượt bị cắt ngắn" đi qua B03, B10b, C05b, C06c, E04; sợi "bảng cố định khi lấy kỳ vọng" qua D05, D05b, E02b; sợi "giả thiết Markov" qua A04, B04c, D06b, D07, E01. Thuật ngữ thống nhất với bảng Việt–Anh của `outline.md`.
+
+### Kiểm trình duyệt
+
+- Script Playwright Chromium duyệt cả 70 trang (`Reveal.slide(h,v,99)`), ở 1600×900 và 390×844, trên máy chủ tĩnh `http.server` cổng 8799 (gốc kho) để tránh tải lại tự động của `reloadserver` trong lúc chụp; cùng kết quả trên cổng 8766: 0 lỗi console và lỗi trang, 0 `.katex-error`, 0 yêu cầu ra ngoài máy cục bộ, 0 phản hồi lỗi, không cuộn ngang, không phần tử nào vượt khung 1280×720 hay sát chân trang (ngưỡng 28 px), số trên năm trang tiêu đề mạch khớp `#/2`…`#/6`; phím mũi tên chuyển trang.
+- Đã xem ảnh chụp: năm trang tiêu đề mạch, A01, A03, A06, B01, B04, B12c, C02, C06, D03, D04b, D07, E02, E02b, E02d, E03 ở 1600×900; L05-DT, L05-E02d ở 390×844 (chế độ cuộn của RevealJS).
+- `git diff --check` sạch trên deck, SVG và planning.
+
+## Rà soát năm vai và biên tập (giai đoạn II)
+
+### Tác tử
+
+| Vai trò | Loại | Mô hình | Effort | Ghi file |
+|---|---|---|---|---|
+| Rà soát sinh viên (SV), chuyên gia Học tăng cường (RL), toán và thuật toán (TOAN), phản biện sư phạm + `no-ai-slop` Detect (PB), kết nối và mạch (MACH) | general-purpose, chỉ đọc (theo `brief_deck_reviewers.md`; mô hình và mức do điều phối viên ghi theo lệnh gọi) | claude-opus-5-5 | high | không |
+| Biên tập viên deck Bài 05 (tiếp quản tác tử soạn đã dừng; một lần bị ngắt giữa chừng rồi tiếp tục cùng phạm vi) | general-purpose (theo `brief_deck_writer.md`, `brief_deck_editor.md`) | claude-opus-5-5 | high | `lecture-05-du-doan-phi-mo-hinh.html`, `img/lec-05/mc-td-targets.svg`, `outline.md`, `storyboard.md`, mục này |
+
+Không commit. Không sửa `lecture-note.md`, `lecture-slide.css`, `index.html`, notebook hay tệp của bài khác. Kết quả rà: 0 chặn bàn giao; 1 nghiêm trọng (TOAN); nhiều trung bình trùng nhau giữa các vai.
+
+### Bảng phát hiện và xử lý
+
+Mã theo vai và số thứ tự trong báo cáo (`deckrev-05-{SV,RL,TOAN,PB,MACH}.md`). Trạng thái: đã sửa, sửa một phần, từ chối (kèm lý do).
+
+| Mã | Trang | Mức | Trạng thái và cách sửa |
+|---|---|---|---|
+| TOAN-1 | B10b (B10) | nghiêm trọng | Đã sửa: đánh số bước như Thuật toán 05.13; bước 5 gói tăng $N(s)$, phép cập nhật và thêm $s$ vào $\mathcal H$ trong cùng điều kiện; ghi chú diễn giả nêu trường hợp lần ghé thứ hai tại $\mathrm S$ của $e_2$ |
+| TOAN-2 | D11, D09b | trung bình | Đã sửa: D11 tách "Ký hiệu:" và "Giả thiết: $0<\alpha N(s)\le1$; mọi lượt của $\mathcal D$ kết thúc hoặc $\gamma<1$"; D09b "tập cố định $\mathcal D$ các lượt đã kết thúc", "(mọi lần ghé)" |
+| TOAN-3 | E02d | trung bình | Đã sửa: dòng chung "Markov, dữ liệu theo $\pi$, phần thưởng bị chặn"; Monte Carlo "lượt độc lập cùng phân phối, kết thúc; ghé $s$ với xác suất dương; $1/N(s)$ → về $v_\pi(s)$ hầu chắc chắn"; TD(0) "$\gamma<1$ hoặc lượt kết thúc; mỗi $s$ vô hạn lần; Robbins–Monro"; TD theo lô "mọi lượt kết thúc hoặc $\gamma<1$; $0<\alpha N(s)\le1$ (đủ)". Hai hàng Monte Carlo $1/N(s)$ gộp làm một để giữ trần 80; "không chệch / có thể chệch" chuyển vào ghi chú diễn giả |
+| TOAN-4 | B12c | nhẹ | Đã sửa: "lượt độc lập cùng phân phối, kết thúc hầu chắc chắn"; "phần thưởng bị chặn"; nhãn Định nghĩa/Định lý; cùng chỉ số $n$ |
+| TOAN-5 | B04c | nhẹ | Đã sửa: Giả thiết thêm "$\mathcal S$ hữu hạn", "phần thưởng bị chặn"; dòng chứng minh (có $H_t$) chuyển vào ghi chú diễn giả, nơi $H_t$ được định nghĩa |
+| TOAN-6 | B12d | nhẹ | Đã sửa: "với mẫu độc lập cùng phân phối, phương sai $\sigma^2$" trước công thức $\operatorname{Var}(V_n)\to\alpha\sigma^2/(2-\alpha)$ |
+| TOAN-7 | D05b | nhẹ | Đã sửa: "Lưu ý: mục tiêu Monte Carlo không chệch khi trạng thái Markov và $\pi$ cố định" |
+| TOAN-8 | C05b | nhẹ | Đã sửa: bước 6 "mở lượt mới, gán $S$ bằng trạng thái đầu" |
+| TOAN-9 | E06b | nhẹ | Đã sửa: "$0{,}375-(-0{,}375)=0{,}75$" |
+| TOAN-10 | B08 | nhẹ | Đã sửa: cột "Mẫu lần ghé đầu tiên tại $\mathrm X$" |
+| TOAN-11 | D07 | nhẹ | Đã sửa: $\alpha_n(s)\in[0,1]$ trong công thức hiển thị |
+| TOAN-12 | E04 (ghi chú) | nhẹ | Đã sửa: "(Hệ quả 05.26)" |
+| TOAN-13 | B05, B07, B12d, C04, D05b, D06b, D10 (+ B10, C05) | nhẹ | Đã sửa: số hiệu đặt sau phát biểu (dòng tiếp sau công thức, dòng Kết luận/Ý nghĩa, hoặc cuối bước cuối của thuật toán) |
+| TOAN-14 | C06c (ghi chú) | nhẹ | Đã sửa: "bước của TD(0) trong notebook" |
+| SV-1 | C08 | trung bình | Đã sửa: dòng dữ kiện rút gọn, Diễn giải vào ghi chú diễn giả, ô có phép tính và cột Chuyển gói trong ngoặc nhọn KaTeX để không ngắt dòng; đo lại: nội dung y 116–604 trên 720 |
+| SV-2 | A03, C02, D11 (B02, D04) | trung bình | Đã sửa: A03 bỏ hình; vẽ lại `mc-td-targets.svg` (nhãn 30–36 đơn vị, viewBox 1110×360, hiển thị 250 px, nhãn khoảng 0,7em); D11 hình 140 → 190 px; D04 230 → 255 px; B02 giữ (nhãn khoảng 0,64em, đo trên ảnh) |
+| SV-3 | B04c, B12d, E02d, A03 | trung bình | Đã sửa: $H_t$ chỉ còn trong ghi chú diễn giả và được định nghĩa; $\sigma^2$ định nghĩa ở B12d; A03 "bước học giảm dần"; B12d "Giả thiết như lần ghé đầu tiên, dùng mọi lần ghé" |
+| SV-4 | D03, D06, B01 | trung bình | Đã sửa: B01 "Tàu đổ bộ thu nhỏ (còn gọi là dãy bốn ô)"; D03 "kéo dài thành bảy ô"; D06 cột "Tàu đổ bộ thu nhỏ (bốn ô)" |
+| SV-5 | B10/B10b, C05/C05b | trung bình | Đã sửa: bước con thụt lề bằng `style="margin-left"` trên danh sách con (danh sách lồng nhau trong CSS chung thu chữ còn 0,72em nên không dùng); trang hai mở bằng "Trong vòng lặp của bước 1:"; "Giả thiết:" lên trang đầu |
+| SV-6 | D09b, D10 | trung bình | Đã sửa: chỉ số $j$ cho mẫu chuyển trong $\mathcal D$; ghi chú diễn giả phân biệt với $i$ của mạch 2 |
+| SV-7 | C06 | trung bình | Đã sửa: Nhu cầu và dòng "trạng thái gộp thành $9216$ ô" |
+| SV-8 | E03 | trung bình | Đã sửa: bảng `Mạch \| Bài tập` (hai cặp cột) với số hiệu của ghi chú; "Tệp bài tập: chưa có" |
+| SV-9 | toàn deck | trung bình | Đã sửa: `scrollActivationWidth:null` |
+| SV-10 | C03 | nhẹ | Đã sửa: khuôn bảng TD cố định, nhãn tiếng Việt ngoài KaTeX; console 0 cảnh báo |
+| SV-11 | B12d | nhẹ | Đã sửa: "hầu chắc chắn" ngoài công thức |
+| SV-12 | D09c, D13, D06b, B01, E02, C10b, E06b | nhẹ | Đã sửa: dấu chấm mồ côi (D09c, D13) và ngắt "$\gamma=$ / $0{,}99$" (D03, C06) bằng ngoặc nhọn KaTeX; ô bảng C10b, E06b để ngắt sau dấu bằng vì bảng không được rộng hơn khung |
+| SV-13 | E06b | nhẹ | Đã sửa (như TOAN-9) |
+| SV-14 | B12c | nhẹ | Đã sửa (như TOAN-4) |
+| SV-15 | B01 | nhẹ | Đã sửa: "(mô hình chỉ để kiểm tra)", "xuất phát ở $\mathrm S$" |
+| SV-16 | D05 | nhẹ | Đã sửa: dòng "Hiệu với giá trị chuẩn: …" thay công thức hiển thị không nhãn; thêm dấu chấm |
+| SV-17 | D07a | nhẹ | Đã sửa: "Nhu cầu: với bảng sau nhiều bước, chọn lịch bước học vừa tới đích vừa tắt nhiễu" |
+| SV-18 | E02/E02b | nhẹ | Đã sửa: tiêu đề "Kết quả và giả thiết không được bỏ" |
+| SV-19 | E06 | nhẹ | Đã sửa: (a), (b) trong cùng một khung "Câu hỏi:" |
+| SV-20 | ghi chú B01, B12c, D07, E01 | nhẹ | Đã sửa: rút từng ghi chú |
+| SV-21 | các trang sát nút điều hướng | nhẹ | Sửa một phần: đo lại sau sửa, không trang nào vượt 720; C02 từ y=4 xuống 19, D03 từ 0 xuống 19, D04 từ 4 xuống 16. Còn D11 (y=5), B07 (9), D09c (11) có tiêu đề không chạm mũi tên lên trên ảnh |
+| SV-22 | thời lượng | nhẹ | Từ chối phần "rút E02b/E02d về chỉ còn tên giả thiết": trái quyết định 7 và TOAN-3 (giả thiết đủ trên bảng). Thêm B04c vào danh sách có thể bỏ khi thiếu giờ; khối 30 phút ghi trong storyboard |
+| RL-1 | B12d, D07, E01 (ghi chú) | trung bình | Đã sửa: định nghĩa $J$ ở ghi chú B12d; ghi chú E01 nêu $J$ nhỏ nhất tại lợi tức kỳ vọng theo ô nên nghiêng về Monte Carlo, ô gộp không Markov |
+| RL-2 | B08 | trung bình | Đã sửa: "Nhu cầu: theo kịp môi trường thay đổi; …" |
+| RL-3 | E02b, E02d | trung bình | Đã sửa (như TOAN-3; E02b thêm "$\gamma<1$ hoặc lượt kết thúc") |
+| RL-4 | E01, D06b | trung bình | Đã sửa: ghi chú diễn giả D06b nêu có điều kiện tốc độ học (chưa có chứng minh; thực nghiệm thường cho TD nhanh hơn Monte Carlo bước hằng, Sutton và Barto §6.2, tr. 124–125) và độ nhạy với khởi tạo (bài giảng gốc tr. 28, 33). Không đặt trên mặt E01 vì trang đã ở trần |
+| RL-5 | B12c, E02, E02d | nhẹ | Đã sửa: "cùng phân phối" |
+| RL-6 | D05b | nhẹ | Đã sửa (như TOAN-7) |
+| RL-7 | B12d | nhẹ | Đã sửa (như TOAN-6) |
+| RL-8 | A07 | nhẹ | Đã sửa: "TD một bước, ký hiệu TD(0)" |
+| RL-9 | toàn deck | nhẹ | Đã sửa: batch updating (A07), incremental mean (B07), terminal state (A04), stochastic approximation (ghi chú D07), step-size schedule (B10); bảng thuật ngữ trong `outline.md` |
+| RL-10 | DT, D11, ghi chú E01 | nhẹ | Đã sửa: "quá trình phần thưởng Markov thực nghiệm"; ghi chú D11 nhắc Bài 03 |
+| RL-11 | A03 | nhẹ | Đã sửa: bỏ hình, bỏ câu đọc hình trong ghi chú |
+| RL-12 | D09b | nhẹ | Đã sửa (như TOAN-2) |
+| RL-13 | C06 (ghi chú) | nhẹ | Đã sửa: "ngắn so với kích thước một ô gộp" |
+| RL-14 | A07 (ghi chú) | nhẹ | Đã sửa: một câu gradient ngẫu nhiên, nối bán gradient Bài 07, dẫn §9.3 |
+| RL-15 | thời lượng | nhẹ | Đã sửa: thêm B04c vào danh sách tự đọc |
+| RL-16 | E06b | nhẹ | Đã sửa (như TOAN-9) |
+| RL-17 | C06 | nhẹ | Đã sửa: khuôn bảng TD cố định; giá trị cũ nằm trong cột sai số TD |
+| RL-18 | D11 | nhẹ | Đã sửa (như TOAN-2) |
+| MACH-1 | A03 | trung bình | Đã sửa: chọn phương án bỏ hình (ít chữ hơn, danh sách 2–6 là bản đồ duy nhất); `learning-route.svg` giữ nguyên cho ghi chú bài giảng |
+| MACH-2 | A03, E01 | trung bình | Đã sửa: A03 dòng 4 có vế "bỏ dao động đuôi"; E01 năm dòng 2–6 song song A03, dòng 4 có $-0{,}324$, dòng 5 nêu hai nghiệm $0$ và $3/4$ |
+| MACH-3 | C02 → C03 | trung bình | Đã sửa: Nhu cầu ở chuyển đầu của $e_2$; C03 ghi "bảng sau $e_1$", ghi chú diễn giả chỉ nguồn của bảng |
+| MACH-4 | B12, B01 | trung bình | Đã sửa: B12 "(giải từ mô hình, chỉ để đo sai số)"; ghi chú B01 "đo sai số ở mạch 2 và so hai bảng ở mạch 4"; D02 "Nhắc lại: giá trị chuẩn giải từ Bellman kỳ vọng …" |
+| MACH-5 | B13, B13b | trung bình | Đã sửa: dữ kiện mới tại $\mathrm S$ với $\gamma=0{,}9$; lời giải $-0{,}0405$, $-0{,}04525$, $-0{,}22275$ (tính lại, kiểm bằng tổng trọng số $0{,}25\cdot0+0{,}25\cdot0{,}729+0{,}5\cdot(-0{,}81)$) |
+| MACH-6 | C06 | trung bình | Đã sửa (như SV-7) |
+| MACH-7 | D06, D03, B01 | trung bình | Đã sửa (như SV-4) |
+| MACH-8 | E03 | trung bình | Đã sửa (như SV-8); Bài tập 05.1 ở hàng mạch 1; mạch 5 và 6 tách |
+| MACH-9 | D05b → D03 | nhẹ | Đã sửa: Nhu cầu D03 nêu mục tiêu Monte Carlo chứa mọi chuyển còn lại |
+| MACH-10 | D06b → D07a | nhẹ | Đã sửa: Nhu cầu D07a "với bảng sau nhiều bước" |
+| MACH-11 | DT, D08 | nhẹ | Đã sửa: ghi chú DT nêu các lượt Lunar Lander đã thu trong bài thực hành |
+| MACH-12 | ghi chú D02, B04, B05, C05b | nhẹ | Đã sửa: gọi theo đối tượng |
+| MACH-13 | A07 | nhẹ | Đã sửa: bốn dòng |
+| MACH-14 | E00/E02 | nhẹ | Đã sửa (như SV-18) |
+| MACH-15 | DT, D11, ghi chú E01 | nhẹ | Đã sửa (như RL-10) |
+| MACH-16 | D00 (ghi chú) | nhẹ | Đã sửa: rút còn khoảng 85 âm tiết |
+| MACH ngoài vai | E04 câu 1; B12c | nhẹ | Đã sửa: "vì giới hạn số bước"; nhãn "Định nghĩa." |
+| PB-1 | B13 | trung bình | Đã sửa (như MACH-5) |
+| PB-2 | D07a | trung bình | Đã sửa: Nhu cầu mới; Diễn giải phương sai giới hạn của bước hằng; hàng "$\alpha$ hằng" của bảng chuyển vào Diễn giải để giữ 6 dòng |
+| PB-3 | D03 → D04b | trung bình | Đã sửa: D04b thêm dòng "Mục tiêu TD đọc bảng đang sai; để tách dao động khỏi độ chệch, thay bảng bằng $v_\pi$" |
+| PB-4 | D07 | trung bình | Đã sửa: "Trực quan. $v_\pi$ là điểm bất động của $T_\pi$ (Bài 04); trung bình mỗi bước TD(0) đi theo $T_\pi V-V$" |
+| PB-5 | B12 | trung bình | Đã sửa (như MACH-4) |
+| PB-6 | C06 và ghi chú có $J$ | trung bình | Đã sửa (như SV-7, RL-1) |
+| PB-7 | B12d, B04c | trung bình | Đã sửa (như SV-3) |
+| PB-8 | D05b | trung bình | Đã sửa (như TOAN-7). Số hiệu "(Mệnh đề 05.7)" do điều phối viên đề xuất không đặt trên mặt trang vì D05b đã mang "(Mệnh đề 05.25)" (tối đa một số hiệu mỗi trang); tên mệnh đề kỳ vọng sau lần ghé nằm trong ghi chú diễn giả |
+| PB-9 | E02, E02b, E02d | trung bình | Đã sửa (như TOAN-3, RL-3) |
+| PB-10 | B08 | trung bình | Đã sửa (như RL-2) |
+| PB-11 | D11 | trung bình | Đã sửa (như TOAN-2) |
+| PB-12 | trang ví dụ | trung bình | Sửa một phần: thêm "Tính …" ở B09c, B12, C03, C07, C08, D01, D05, D06, D09 và Diễn giải ở C06, D07a. B09, B09c, D03 không thêm Diễn giải vì trang đã đủ 6 dòng; C07 và C08 được thêm Diễn giải ở vòng rà lại 2 (lý do cũ "đủ 6 dòng" không đúng với hai trang này, xem MACH-N1) |
+| PB-13 | E03, ghi chú B13 | trung bình | Đã sửa: bỏ cột dự kiến; bỏ câu "sẽ có trong tệp bài tập"; ghi chú E03 không mô tả tệp chưa có |
+| PB-14 | ghi chú B04, B05, B08, B12c, B13, C03, C05b, D02, D03, D06b | trung bình | Đã sửa: bỏ chỉ đường theo vị trí, gọi tên đối tượng |
+| PB-15 | ghi chú C00, D00, E00, A02, A01, E02, E02b (và B00, DT) | nhẹ | Đã sửa: mở bằng đối tượng hoặc kết quả kế thừa |
+| PB-16 | A06 (ghi chú) | nhẹ | Đã sửa: thêm câu về sản phẩm kiểm tra |
+| PB-17 | ghi chú B08, B10b, C07 | nhẹ | Đã sửa |
+| PB-18 | B06 (ghi chú) | nhẹ | Đã sửa: "mẫu mới nhỏ hơn trung bình cũ thì trung bình giảm" |
+| PB-19 | D02 và các trang dùng "độ lệch"/"sai số thật" | nhẹ | Sửa một phần: D02 ghi quy ước "độ lệch $V-v_\pi$" ở tiêu đề cột, E06 dùng cùng cụm. C04 giữ "sai số thật $v_\pi-V$" như ghi chú bài giảng; đề nghị thống nhất ở ghi chú (dưới đây) |
+| PB-20 | D13b, D13 | nhẹ | Đã sửa: "Nhận định (a), (b) sai vì…"; (c) có ngoặc kép |
+| PB-21 | D06, D08 | nhẹ | Đã sửa: "Tàu đổ bộ thu nhỏ (bốn ô)"; D08 "tám lượt $\mathrm A$, $\mathrm B$" |
+| PB-22 | DT, D11, ghi chú E01 | nhẹ | Đã sửa (như RL-10) |
+| PB-23 | B10, C05, B10b, C05b, C06c | nhẹ | Đã sửa (như SV-5, TOAN-13); C06c bỏ nhãn lặp |
+| PB-24 | C05 | nhẹ | Đã sửa: ghi chú diễn giả nêu quy ước $S$ nghiêng là biến, $\mathrm S$ đứng là tên ô |
+| PB-25 | A03, E01 | nhẹ | Đã sửa (như MACH-2) |
+| PB-26 | C10 | nhẹ | Từ chối: đổi dòng 2 sang $\mathrm X\to\mathrm G$ phá khuôn cột "$V(\mathrm S)$ sau bước"; dòng $\mathrm S\to\mathrm L$ giữ chức năng kiểm trạng thái kết thúc khi xuất phát từ cùng bảng |
+| PB-27 | các cụm hội tụ, độ chệch | nhẹ | Sửa một phần: cụm độ chệch có bước ứng dụng trên mặt D07 (điểm bất động $T_\pi$); các cụm khác giữ ứng dụng trong ghi chú diễn giả vì trang ở trần |
+| PB-28 | E00 | nhẹ | Đã sửa: "Giả thiết không được bỏ · Lựa chọn phương pháp · Điều khiển phi mô hình" |
+
+### Trang đã đổi trong vòng này
+
+A01 (ghi chú), A02 (ghi chú), A03, A04, A06 (ghi chú), A07, B00 (ghi chú), B01, B04 (ghi chú), B04c, B05, B06 (ghi chú), B07, B08, B09c, B10, B10b, B12, B12c, B12d, B13, B13b, C00 (ghi chú), C02, C03, C04, C07, C05, C05b, C08, C06, C06c, C10b (ô bảng), D00 (ghi chú), D01, D02, D05, D05b, D03, D04 (cỡ hình), D04b, D06, D06b, D07a, D07, D13, D13b, DT, D08, D09, D09b, D09c, D10, D11, E00, E02, E02b, E02d, E06, E06b, E01, E04, E03; cấu hình `scrollActivationWidth:null`. Không thêm, bỏ hay dời trang; vẫn 70 trang, 6 mạch.
+
+### SVG
+
+- Vẽ lại `mc-td-targets.svg`: cùng hai hàng, cùng nhãn và chiều mũi tên; chữ 30–36 đơn vị thay 22–31, viewBox 1110×360, hộp "Giá trị ước lượng / ở trạng thái sau" hai dòng; mô tả `desc` giữ nguyên nên alt của ghi chú bài giảng vẫn đúng.
+- `learning-route.svg` không còn trên deck; tệp giữ nguyên cho ghi chú bài giảng.
+
+### Đề nghị cho `lecture-slide.css`
+
+- Thêm lớp chung cho bước con của giả mã, ví dụ `.reveal.lecture-deck ol.substeps { margin-left: 2em; }` và `ol.substeps2 { margin-left: 4em; }`, để thay bốn thuộc tính `style="margin-left:…"` trên B10, B10b, C05, C05b. Danh sách lồng nhau không dùng được vì quy tắc `ol ol { font-size: .9em }` cho chữ 0,72em.
+- Lớp `.figure.compact` như đề nghị ở mục trước, thay các `style="max-height:…"` trên ảnh.
+
+### Đề nghị sửa ghi chú (sau giai đoạn II)
+
+| Vị trí trong ghi chú | Nội dung sửa | Nguồn |
+|---|---|---|
+| Mục 1, dòng 110 (alt và đoạn đọc hình `learning-route.svg`) | Alt ghi "Lợi tức MC"; hình nay ghi "Lợi tức / Monte Carlo". Đổi alt thành "Lợi tức Monte Carlo". Deck không còn dùng hình này | tác tử soạn, MACH-1, RL-11 |
+| Mục 4.4 hoặc Nhận xét 05.35 | Thêm câu có điều kiện về tốc độ học (chưa có chứng minh; thực nghiệm thường cho TD nhanh hơn Monte Carlo bước hằng trên bài toán ngẫu nhiên, Sutton và Barto 2018, §6.2, tr. 124–125) và về độ nhạy với khởi tạo | RL-4 |
+| Ví dụ 05.11 và Tình huống (dòng khoảng 1025, 1822) | "mỗi bước mô phỏng dài 0,02 giây, nên 70%…" thành "…ngắn so với kích thước một ô gộp, nên…" | RL-13 |
+| Dòng khoảng 1821, 1938 | Thống nhất "quá trình phần thưởng Markov thực nghiệm" | RL-10 |
+| Mục 1.2 (tùy chọn) | Một câu nối quy tắc cập nhật với bước gradient ngẫu nhiên, cầu sang bán gradient ở Bài 07 | RL-14 |
+| Mục 5, đoạn mở | Một căn cứ cụ thể cho dữ liệu cố định (bài thực hành quét lại các lượt đã thu) | MACH-11 |
+| Mục 3.1 (khoảng dòng 904) và Ví dụ 05.15 | Thống nhất tên và dấu: "sai số thật $v_\pi-V$" và "độ lệch $V-v_\pi$" | PB-19 |
+| Mục 2.6, Ví dụ 05.7 | Nêu rằng giá trị chuẩn $11/21$ giải từ mô hình chỉ để đo sai số, dùng ở cả Mục 2.6 và Mục 4 | PB-5 |
+
+Lệch tạm thời deck–ghi chú: B13/B13b dùng dữ kiện mới ($\gamma=0{,}9$ tại $\mathrm S$), không có bài tương ứng trong ghi chú; mọi số liệu khác khớp ghi chú.
+
+### Số dự kiến của `exercises.md` (cho giai đoạn III)
+
+Danh sách cũ (mạch 2 → 05.16–05.18; mạch 3 → 05.19–05.21; mạch 4 → 05.22–05.24; mạch 5 → 05.25–05.26) giữ làm dự kiến, chỉ ghi ở đây. Bài trùng trang chiếu nay là B13/B13b (dữ kiện $\gamma=0{,}9$, thay Bài tập 05.5 cũ tại $\mathrm X$) và C10/C10b. Giai đoạn III thay dòng "Tệp bài tập: chưa có" trên L05-E03 bằng liên kết viewer.
+
+### Tự kiểm `no-ai-slop` (Edit) và `quill`
+
+- Phạm vi: mặt trang và ghi chú diễn giả của mọi trang đổi trong vòng này. Soạn ở chế độ Edit, đối chiếu `eval.md`. Quét toàn deck: 0 "chúng ta", "ta thấy", "rõ ràng", "hãy", "Trang này", "Mạch này", "Bài này", "trang trước/sau", "ở trên"; dấu hỏi chỉ ở bốn câu có nhãn "Câu hỏi:" của E04; 0 chữ Việt có dấu trong `\text{}`. Đã sửa: dấu hai chấm "tiết lộ" và câu mệnh lệnh trong ghi chú B08, B10b; siêu bình luận "Khuôn bảng này được giữ…" ở C07.
+- `quill` (Outline, Threads, Concept, Revise làm bảng kiểm; không tạo `quill.json`): sợi "giá trị chuẩn" có một điểm vào (B12, giải từ mô hình) và "Nhắc lại:" ở D02; sợi tên ví dụ "tàu đổ bộ thu nhỏ (bốn ô)" → "kéo dài thành bảy ô"; sợi "bảng TD sau $e_1$" đi C07 → C03 (ghi chú) → C08 → D05; A03 và E01 song song từng dòng 2–6.
+
+### Kiểm sau sửa
+
+- `density.py`: mười dòng `<-- VƯỢT`, đều có ngoại lệ trong `storyboard.md` (A06, bốn trang tiêu đề mạch, E02, E02b, E02d, E01); mọi trang nội dung khác ≤ 60 âm tiết, ≤ 6 dòng, ≤ 20 âm tiết mỗi dòng.
+- `deck_check.py` (cổng 8799, gốc kho), 1600×900 và 390×844: 70 trang, 0 lỗi và 0 cảnh báo console (gồm KaTeX), 0 `.katex-error`, 0 yêu cầu ra ngoài máy cục bộ, 0 yêu cầu lỗi, không cuộn ngang; năm trang tiêu đề mạch B00, C00, D00, DT, E00. Ở 390×844 deck không còn chế độ cuộn.
+- Đo khung bằng script riêng (chuyển trang không hiệu ứng, so đáy nội dung với 720): không trang nào vượt khung; C08 nay 116–604. Cỡ chữ nhỏ nhất 0,752em (ô bảng).
+- Đã xem ảnh 1600×900: A03, B02, B10, B10b, B13b, C02, C03, C06, C08, C10b, D03, D04, D06b, D09c, D11, D13, E01, E02, E02d, E03, E06b; 390×844: năm trang tiêu đề mạch (DT đã xem).
+- `git diff --check` sạch.
+
+## Rà lại vòng 2 và sửa (giai đoạn II)
+
+### Tác tử
+
+| Vai trò | Loại | Mô hình | Effort | Ghi file |
+|---|---|---|---|---|
+| Rà lại toán và thuật toán (`deckrecheck-05-TOAN.md`) | general-purpose, chỉ đọc (theo lệnh gọi của điều phối viên) | claude-opus-5-5 | high | không |
+| Rà lại kết nối và mạch (`deckrecheck-05-MACH.md`) | general-purpose, chỉ đọc (theo lệnh gọi của điều phối viên) | claude-opus-5-5 | high | không |
+| Biên tập viên deck Bài 05 (cùng tác tử vòng trước) | general-purpose | claude-opus-5-5 | high | deck, `outline.md`, `storyboard.md`, mục này |
+
+Kết quả rà lại: 0 chặn, 0 nghiêm trọng; TOAN 7 nhẹ; MACH 2 trung bình, 10 nhẹ. Lỗi nghiêm trọng TOAN-1 (B10b) và các trung bình cũ được xác nhận đã sửa. Không commit.
+
+### Bảng mã và trạng thái
+
+| Mã | Trang | Mức | Trạng thái |
+|---|---|---|---|
+| MACH-T1 (gộp TOAN-2 rà lại) | E01, A03 | trung bình | Đã sửa: E01 dòng 4 "Bảng cố định: mục tiêu TD chệch $-0{,}324$ tại $\mathrm S$; $Y^*$ bỏ $20\%$ phương sai; hội tụ cần Robbins–Monro" (dùng $Y^*$, đã định nghĩa ở D04b, thay "mục tiêu lý tưởng" để giữ trần 80); dòng 6 "Chọn theo dữ liệu và giả thiết; Bài 06 cải thiện chính sách". "Lần ghé đầu tiên" cho $0{,}852/\sqrt n$ và "bảng TD(0) sau $e_1$" cho $-0{,}324$ đặt trong ghi chú E01 vì mặt trang ở trần (78/80). A03 dòng 4 "Bảng cố định: TD chệch, mục tiêu lý tưởng ít dao động; hội tụ khi bước giảm" |
+| MACH-T2 | D07 | trung bình | Đã sửa: "Trực quan. Với $T_\pi V=r_\pi+\gamma P_\pi V$ (Bài 04), $v_\pi$ là điểm bất động; …" (58 âm tiết). Phát hiện thêm khi xem ảnh: công thức Robbins–Monro tràn mép phải từ vòng trước (thêm $\alpha_n(s)\in[0,1]$); sửa bằng dòng "Lịch bước học Robbins–Monro:" và bỏ nhãn trong công thức |
+| TOAN-1 | A03 dòng 2 | nhẹ | Đã sửa: "mẫu lợi tức không chệch, trung bình hội tụ về $v_\pi$" |
+| TOAN-2 | E01 | nhẹ | Đã sửa (ghi chú diễn giả, như MACH-T1) |
+| TOAN-3 | E02b | nhẹ | Đã sửa: "lượt của $\mathcal D$ kết thúc (TD: hoặc $\gamma<1$); $\alpha N(s)<2$ (Monte Carlo), $\le1$ (TD)" |
+| TOAN-4 | E02 | nhẹ | Đã sửa: "Hàng 2 và 4 còn cần: $\pi$ cố định, trạng thái Markov, phần thưởng bị chặn" (cách viết ngắn để dòng không ngắt và bảng không chạm chân trang) |
+| TOAN-5 | D05b | nhẹ | Đã sửa: số hiệu trên dòng Ý nghĩa đổi thành "(Hệ quả 05.26)" |
+| TOAN-6, MACH-N2 | C03 | nhẹ | Đã sửa: "bảng TD(0) sau $e_1$" |
+| TOAN-7 | B12d (ghi chú) | nhẹ | Đã sửa: "với $\gamma=1$, $v_\pi(\mathrm C)=1$" |
+| MACH-N1 | C07, C08 | nhẹ | Đã sửa: Diễn giải trên mặt trang; lý do PB-12 trong mục trước được sửa |
+| MACH-N3 | B08 | nhẹ | Đã sửa: "Nhu cầu: theo kịp môi trường thay đổi (ngoài giả thiết dừng); bước $1/n$ cho mẫu thứ $1000$ trọng số $1/1000$" |
+| MACH-N4 | A03 | nhẹ | Đã sửa (như MACH-T1) |
+| MACH-N5 | D04b | nhẹ | Đã sửa: "Nhu cầu: tách dao động khỏi độ chệch khi mục tiêu TD đọc bảng đang sai; thay bảng bằng $v_\pi$" |
+| MACH-N6 | E03, ghi chú A06 | nhẹ | Đã sửa: Bài tập 05.8 chuyển sang hàng mạch 6 (bài tổng hợp E06), hàng mạch 4 còn 05.9–05.11, 05.14; ghi chú E03 nêu 05.8 nằm ở Mục 4.1 của ghi chú bài giảng; ghi chú A06 thêm 05.8 cho mục tiêu 3 và 4 |
+| MACH-N7 | B03, A03, A06 | nhẹ | Sửa một phần: "(truncated episode)" lên mặt B03 (dòng Lưu ý tách hai dòng). A03 (60) và A06 (80) đã ở trần nên không thêm tên tiếng Anh; quy ước "tên tiếng Anh ở trang định nghĩa khi trang dùng đầu đã ở trần" ghi vào bảng thuật ngữ của `outline.md` |
+| MACH-N8 | ghi chú C03, C07, A03 | nhẹ | Đã sửa: bỏ "ngay sau định nghĩa", "trước đó", "của trang tiên quyết" |
+| MACH-N9 | `storyboard.md`, `outline.md` | nhẹ | Đã sửa: câu tóm tắt và bảng trước/sau theo số đo 2026-10-14 (A03 60, E01 78, E03 54 với 6 dòng; 10 dòng vượt có ngoại lệ; 5 trang trên 60 đều trần 80); outline ghi cập nhật 2026-10-14 |
+| MACH-N10 | D07a | nhẹ | Đã sửa: "$Y_n=1$; khi đó $1-V_n=\prod…$" (công thức gói ngoặc nhọn, không ngắt dòng); "${\sigma^2,}$" không để dấu phẩy mồ côi |
+
+### Đề nghị sửa ghi chú bài giảng (bổ sung)
+
+| Vị trí trong ghi chú | Nội dung sửa | Nguồn |
+|---|---|---|
+| §1, đoạn đọc hình `learning-route.svg` (sau dòng 110) | Đoạn đọc hình gán khối "Lựa chọn" cho Mục 5, nhưng Mục 5 là dữ liệu cố định và cập nhật theo lô; hình không có khối cho Mục 5. Vẽ lại hình theo năm mục hoặc sửa đoạn đọc hình | MACH rà lại |
+| Giai đoạn III (`exercises.md`) | Đưa bài chọn mẫu tại $\mathrm S$ với $\gamma=0{,}9$ của L05-B13/B13b vào tệp bài tập làm bài trùng trang chiếu, cùng lời giải $-0{,}0405$, $-0{,}04525$, $-0{,}22275$ | điều phối viên |
+
+### Trang đổi trong vòng này và âm tiết (`density.py`)
+
+A03 60, A06 (chỉ ghi chú) 80, B03 52 (5 dòng), B08 54, B12d (chỉ ghi chú) 59, C03 60, C07 34, C08 35, D04b 52, D05b 56, D07 58 (5 dòng), D07a 51, E01 78, E02 72, E02b 80, E03 54. Ghi chú diễn giả đổi thêm ở A03, C03, C07, E01, E03.
+
+### Kiểm sau sửa
+
+- `density.py`: mười dòng `<-- VƯỢT`, đều có ngoại lệ trong `storyboard.md` (A06, B00, C00, D00, E00, E02, E02b, E02d, E01).
+- `deck_check.py` (cổng 8799), 1600×900 và 390×844: 70 trang, 0 lỗi và cảnh báo console, 0 `.katex-error`, 0 yêu cầu ra ngoài, 0 yêu cầu lỗi, không cuộn ngang, năm trang tiêu đề mạch.
+- Đo khung: không trang nào vượt 720. Thêm phép đo mép phải của mọi phần tử KaTeX: không công thức nào vượt mép phải, trừ hai đường SVG của căn bậc hai ở B12, E01 (báo giả đã biết, ảnh không tràn).
+- Đã xem ảnh 1600×900: A03, B03, B08, C03, C07, C08, D04b, D05b, D07, D07a, E01, E02, E02b, E03. D04b sát mũi tên trên nên hình `target-randomness.svg` giảm từ 260 xuống 225 px.
+- `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-14, giai đoạn II, deck)
+
+- Tác tử: tác tử soạn kiêm biên tập (general-purpose, claude-opus-5-5, high) hai vòng, bị dừng một lần theo yêu cầu người dùng và nối lại sau khi rà trạng thái đĩa; rà lại toán và rà lại mạch (general-purpose, claude-opus-5-5, high, chỉ đọc); điều phối viên Claude Fable 5.1 (medium).
+- Kiểm độc lập sau vòng 2: `density.py` chỉ gắn cờ các trang có ngoại lệ trong `storyboard.md`; Playwright 1600×900 và 390×844: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, đủ trang tiêu đề mạch; ảnh các trang đổi chính xem trực tiếp; `git diff --check` sạch.
+- `img/lec-05/mc-td-timeline.svg` không còn được deck hay ghi chú dùng (xem đề nghị ở giai đoạn I, dòng "Không dùng `mc-td-timeline.svg`"); chấp nhận xóa trong commit này. Bốn thuộc tính `style="margin-left"` cho bước con của giả mã được chấp nhận tạm; đề nghị lớp `ol.substeps` chuyển sang đợt đồng bộ chéo CSS chung.
+- Quyết định: **chấp nhận**; commit `fix(lecture-05)`.
