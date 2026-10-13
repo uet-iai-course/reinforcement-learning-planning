@@ -3110,3 +3110,121 @@ Số dòng theo tệp sau khi sửa.
 
 - Kiểm độc lập: `note_check.py` sạch; viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 80 khối, 0 lỗi console, không tải ngoài; `chapter-structure.svg` là XML hợp lệ, deck không dùng; `git diff --check` sạch. Rà lại toán (Opus 5.5 high, chỉ đọc): 1 trung bình, 5 nhẹ, đã sửa.
 - Quyết định: **chấp nhận**; commit `fix(materials-02)`.
+
+## Đợt sửa 2026-10-12 — Giai đoạn III: bài tập
+
+### Tác tử và phạm vi
+
+- Vai trò: tác tử soạn `exercises.md` Bài 02 (viết tệp), theo `brief_exercises_writer.md` của điều phối viên, kể cả mục "Bổ sung 2026-10-14" và quyết định chung 2026-10-14 (chép bài thân chương có trang "Bài tập" trên deck). Loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` theo brief; điều phối viên đối chiếu với lệnh gọi công cụ. Không commit.
+- Tệp đã ghi: `2627-1/materials/lec-02/exercises.md` (tạo mới); mục này của nhật ký. Không tạo SVG. Không sửa ghi chú, deck, outline, storyboard, `index.html`.
+- Đã đọc: `quyet-dinh-chuan-2026-10-12.md`; `revision-plan-2026-10-12.md` mục C, D và quyết định của điều phối viên; `AGENTS.md` (Ngôn ngữ và biên tập; Ghi chú bài giảng, bài tập và bài thực hành; Tiêu chuẩn nội dung Học tăng cường; Môi trường và đánh số); `CLAUDE.md` mục Exercises; `prompt_lecture_note_deck.md` Giai đoạn III; mẫu `_templates/exercises.md`; mẫu math-4-AI `lec-07/exercises.md` (chỉ cách trình bày); ghi chú và deck bản HEAD; các mục giai đoạn I–II của nhật ký này (khối "Chuyển sang `exercises.md`", số dự kiến 02.14–02.17, RL-19); `hw02.pdf`; PPTX nguồn trang 25–27; Sutton và Barto (2018) PDF trang in 55–61, 323; `no-ai-slop` (`SKILL.md`, `eval.md`).
+
+### Danh sách bài
+
+| Số hiệu | Mức | Mạch | Nguồn | Mục tiêu | Trùng deck |
+|---|---|---|---|---|---|
+| 02.1 | nhận biết | 2 | ghi chú Mục 1.2 | 1 | `L02-02-07` (#/2/6) |
+| 02.2 | nhận biết | 3 | ghi chú Mục 2; hw02 bài 2 | 2 | `L02-03-08` (#/3/8) |
+| 02.14 | nhận biết | 2 | hw02 bài 1; S&B Bài tập 3.7, tr. 56 (Bài tập 02.2 cũ của ghi chú) | 1 | — |
+| 02.15 | nhận biết | 3 | bài giảng gốc tr. 27 (câu đố năm tình huống, RL-19); hw02 bài 2 | 2 | — |
+| 02.3 | tính toán | 3 | ghi chú Mục 2.5 | 2 | `L02-03-15`/`03-16` (#/3/12, #/3/13), câu (a) |
+| 02.4 | tính toán | 4 | ghi chú Mục 3 | 3 | `L02-04-05` (#/4/8) |
+| 02.5 | tính toán | 5 | ghi chú Mục 4.1–4.2 | 4 | `L02-05-09` (#/5/9) |
+| 02.7 | tính toán | 5 | ghi chú Mục 4.5 | 4 | `L02-05-18` (#/5/15) |
+| 02.16 | tính toán | 5 | Bài tập 02.8 cũ câu (b), (c); câu (d) theo S&B Bài tập 3.11, tr. 58 | 3, 4 | — |
+| 02.17 | tính toán, chứng minh | 5 | S&B Bài tập 3.9, 3.10, tr. 56 | 4 | — |
+| 02.18 | chứng minh | 6 | S&B Bài tập 3.15, 3.16, tr. 61 | 4, 5 | — |
+| 02.8 | vận dụng | 6 | ghi chú Mục 5.2 | 5 | `L02-06-06` (#/6/7) |
+| 02.19 | vận dụng | 4 | S&B Ví dụ 13.1, tr. 323; hw02 bài 6 (Bài tập 02.14 cũ của ghi chú) | 2, 3 | — |
+| 02.20 | vận dụng | 6 | S&B Ví dụ 3.4, Bài tập 3.6, tr. 56; CartPole Bài 04 | 4, 5 | — |
+| 02.21 | vận dụng | 7 | mê cung đích–hố, Mệnh đề 02.18 | 4, 5 | `L02-07-04` (#/7/4), `L02-07-07` (#/7/5), câu (a), (b) |
+| 02.22 | vận dụng | 7 | hw02 bài 10 (giao thông) | 1, 2, 4 | — |
+
+Không chép: Bài tập 02.6 (thân chương, không có trang deck) và 02.9–02.13 (Bài tập củng cố); bảng `Mạch | Mở phần | Bài tập` ghi chúng sau liên kết "ghi chú". Chỉ số `#/h/v` đọc bằng `Reveal.getIndices()` trên server cổng 8799 và kiểm lại bằng cách mở từng hash: `#/N/1` là `L02-0N-00` với N = 2…7, `#/1/1` là bìa, `#/7/4` là `L02-07-04`, `#/7/5` là `L02-07-07`.
+
+### Sai lệch so với kế hoạch C và lý do
+
+1. Số hiệu: kế hoạch C (02.1–02.9, 02.15–02.17) được lập trước khi ghi chú đánh số lại; các bài 02.1–02.9 của C nay là bài tập của ghi chú. Tệp dùng 02.14–02.22 nối tiếp bộ đếm ghi chú. Số dự kiến của giai đoạn II đổi: 02.15 (bước trượt có phạt) → 02.16; 02.16 (hành lang đảo chiều) → 02.19; 02.17 (đích–hố có chiết khấu) → 02.21; 02.15 nay là câu đố phân loại trang 27.
+2. Bài chứng minh tính dừng từ $U([r,\sigma])=r+\gamma U(\sigma)$ của C không viết: nội dung đó đã là Bước 3 của Định lý 02.11 và gạch "Tính dương có thể bỏ" ($\gamma=0$) trong ghi chú. Thay bằng Bài tập 02.17 (chứng minh $G_t=\beta/(1-\gamma)$, nhiệm vụ tiếp diễn) và 02.18 (cộng hằng số vào phần thưởng, S&B 3.15–3.16), đều là chứng minh có giả thiết.
+3. Kế hoạch C (dòng 02.17, hw02 bài 10) cho chọn robot hút bụi hoặc đèn giao thông; chọn đèn giao thông (02.22), vì Tình huống 02.1 đã là robot giao hàng và Bài tập 02.15 đã có robot hút bụi; đề cụ thể hóa thành MDP 18 trạng thái để lời giải kiểm được. [Sửa theo PB-11, 2026-10-14.]
+4. Thêm Bài tập 02.20 (hai cách thưởng giữ cột, S&B 3.6) để nối Mục 4–5 với bài thực hành CartPole.
+5. Bài chuyển từ ghi chú: 02.14 thêm câu (c) theo S&B 3.7 (hai cách sửa, số $0{,}9^4$, $0{,}9^{49}$); dẫn "Nhận xét 02.3/02.5" cũ đổi thành Định nghĩa 01.5, Nhận xét 01.6. 02.16 phát biểu lại tự chứa (dữ kiện câu (a) cũ nay ở Bài tập 02.7), dẫn "(4.10)–(4.12)" cũ đổi thành (4.9) và công thức sau Định nghĩa 02.16, thêm câu (d) $\mathbb E_\pi[R_{t+1}\mid S_t]$. 02.19 đổi dẫn "Định nghĩa 02.9 và 02.14" cũ thành Nhận xét 02.4 và Định nghĩa 02.8, thêm câu (e) cửa sổ hai quan sát (chính sách xác định 3 bước).
+6. Bài thân chương chép lại: đề tự chứa (thêm dữ kiện bản đồ cho 02.1, 02.2, 02.4; thêm $c^*$ cho 02.8), lời giải giữ kết quả của ghi chú và deck; "Kiểm tra lại" thêm lỗi thường gặp. 02.2(b) thêm phép tính mã tại $(2,1)$, $(3,1)$ để không dựa vào Ví dụ 02.4.
+7. Số lượng: 16 bài trong tệp (nhận biết 4, tính toán hoặc chứng minh 7, vận dụng 5); cả bộ 22 bài. Mọi mục tiêu học tập 1–5 có ít nhất hai bài trong tệp.
+
+### Số liệu đã tính lại (script `/tmp/claude-1000/ex02work/calc.py`)
+
+- Bản đồ từ `source-maze.svg`: 27 ô; hàng 1: cột 1–6; hàng 2: 0, 1, 4, 6; hàng 3: 1, 2, 5, 6; hàng 4: 2, 3, 5; hàng 5: 1, 3, 5, 6; hàng 6: 1, 2, 3, 4, 6, 7.
+- 02.14: $0{,}9^4=0{,}6561$, $0{,}9^{49}\approx0{,}00573$. 02.16: $r=-1{,}2$; tích biên $0{,}64\ne0{,}8$; $\mathbb E=-1{,}14$; $0{,}56$. 02.17: $G_1=70$, $G_0=65$; $G_0=10/19$, $G_1=-10/19$. 02.18: đích $-8$, hố $-6$; $\beta=2$: $16$.
+- 02.19: $V_1(0{,}5)=12$ ($V_2=10$, $V_3=6$, lặp số); $p^*=2-\sqrt2$, $V_1=6+4\sqrt2\approx11{,}657$; chính sách theo $A_{t-1}$ tới $\mathrm G$ sau 3 bước (mô phỏng).
+- 02.20: A: $6{,}5132$, $8{,}7842$; B: $-0{,}3874$, $-0{,}1351$; tiếp diễn $-0{,}9^{19}/(1-0{,}9^{20})\approx-0{,}1538$.
+- 02.21 (khớp `L02-07-07`): $4{,}68559$; $5{,}9049$; $1{,}219$; $-8{,}152$; $-1{,}9$; $-5{,}7$; $c^*=2{,}1198$ (deck: $5{,}905/2{,}786\approx2{,}12$); sai $\gamma^6$: $1{,}908$.
+- 02.22 (liệt kê kết cục bằng mã): $r(s,\text{Giữ})=-2{,}5$, $r(s,\text{Đổi})=-3{,}5$; phản ví dụ Markov $0{,}25$ so với $0$. Lặp giá trị ($\gamma=0{,}9$) chỉ dùng để tránh khẳng định sai ở câu (d); không đưa số vào tệp.
+- Bài chép từ ghi chú: 02.1, 02.2, 02.3(a) $53$, 02.4 $0{,}3$ và $0{,}57$, 02.5 $2{,}25$, $-1{,}875$, $2$, $5$, 02.7 $-1$, 02.8 $c_{\mathrm H}>2$, $3$, $3{,}5$: khớp mặt trang deck.
+
+### Tự kiểm `no-ai-slop` (Edit) theo `eval.md`
+
+Phạm vi: toàn bộ văn bản của `exercises.md`. Đã sửa trong lượt tự kiểm: "hãy" trong gợi ý 02.15; "lượt dừng" thành "lượt kết thúc" (02.20, theo quy ước "dừng" của ghi chú); một lỗi thường gặp sai ở 02.19 (mô hình không đảo cho cùng $V_1=12$ tại $p=0{,}5$, đã thay bằng hệ quả $p=1$). Kết quả: không từ cấm, không "chúng ta", "ta thấy", "rõ ràng", "Đáp án", câu hỏi tu từ, dấu gạch dài ngoài ô trống của bảng; không tài liệu làm chủ ngữ. Các cặp đối lập còn lại là phân biệt toán học. Không dùng điểm bộ phát hiện AI.
+
+### Kiểm tra
+
+- `note_check.py`: 48 khối hợp lệ (16 bộ exercise, hint, solution), không khối lạ, không lồng; bộ đếm Bài tập 1–22 với khoảng trống 6, 9–13 đúng là các bài chỉ có trong ghi chú; mẫu "trang chiếu" chỉ ở đoạn mở và các dòng "Trùng trang chiếu"; 0 dấu `\(`/`\[`.
+- `check_note.py 02 lecture-02-giao-dien-tac-tu-moi-truong.html exercises` (cổng 8766): 1600×900 và 390×844 đều 0 `.katex-error`, 0 lỗi console, 0 tài nguyên lỗi hoặc ngoài, không tràn ngang, 48 khối. Cảnh báo KaTeX "Unrecognized Unicode character" do chữ Việt trong `\text{…}` (cùng loại với ghi chú đã duyệt). Ảnh đã xem: đầu tệp ở 1600×900, lời giải 02.22 ở 390×844 (công thức hiển thị cuộn trong khung).
+- `git diff --check`: đạt.
+
+### Đề nghị sửa deck và ghi chú (không sửa trong đợt này)
+
+1. Deck `L02-07-03`: bảng `Mạch | Bài tập` thêm 02.14–02.22 theo bảng của `exercises.md` (mạch 2: 02.14; 3: 02.15; 4: 02.19; 5: 02.16, 02.17; 6: 02.18, 02.20; 7: 02.21, 02.22); dòng "Tệp bài tập: chưa có" đổi thành liên kết `material-viewer.html?doc=materials/lec-02/exercises.md&deck=lecture-02-giao-dien-tac-tu-moi-truong.html`; ghi chú diễn giả nêu 02.14–02.22 ở tệp bài tập. Kiểm mật độ (trang hiện 70 âm tiết, trần 80).
+2. Deck `L02-07-04`/`07-07`: ghi chú diễn giả có thể dẫn "Bài tập 02.21".
+3. Ghi chú, mục "Bài tập củng cố": câu mở thêm liên kết tới `exercises.md` (giới hạn đã ghi ở giai đoạn I).
+
+### Rà soát ba vai và lượt sửa (2026-10-14)
+
+**Tác tử rà.** Ba tác tử rà chỉ đọc, `general-purpose`, `claude-opus-5-5`, mức `high`, do điều phối viên giao: TOÁN (`scratchpad/exrev-02-TOAN.md`: 0 chặn, 0 nghiêm trọng, 0 trung bình, 8 nhẹ), SV (`exrev-02-SV.md`: 3 trung bình, 9 nhẹ), PB (`exrev-02-PB.md`: 1 trung bình, 13 nhẹ, kèm `no-ai-slop` Detect). Tác tử soạn sửa theo quyết định của điều phối viên (cùng loại, mô hình, mức); không commit. Bản trước lượt sửa lưu ở `/tmp/claude-1000/ex02work/exercises-v1.md`, ngoài kho.
+
+| Mã | Mức | Trạng thái | Xử lý |
+|---|---|---|---|
+| SV-1 | trung bình | đã sửa | Bỏ chữ Việt có dấu sinh cảnh báo trong `\text{}`: chỉ số tên đường $G_{\text{đích}}$, $G_{\text{hố}}$ → $G_{\mathrm G}$, $G_{\mathrm H}$ (02.18, 02.21, có câu nói chỉ số là điểm kết thúc); 02.22 dùng $a_1$ (Giữ), $a_2$ (Đổi), $\mathrm{BN}$, $\mathrm{DT}$ (viết tắt Đông–Tây, chú giải trong đề); cột lý do `&&\text{(…)}` ở 02.16(d), 02.17(a), 02.18(a), 02.19(b) thành câu sau công thức; `\text{với mọi }` (02.14) ra ngoài công thức; chính sách ở 02.19(e) viết bằng lời. Giữ `\text{Đông}`, `\text{Bắc}`, `\text{Tây}`, `\text{Trái}` (không cảnh báo). Cảnh báo KaTeX khi tải viewer: 35 → 0. |
+| SV-2 | trung bình | đã sửa | "Hướng dẫn và ký hiệu" phát biểu lại (2.1), (2.3), (4.5), (4.6), (4.7) có nhãn, cùng tiêu chuẩn quan sát đầy đủ/một phần (Nhận xét 02.4) và (4.9). |
+| SV-3 | trung bình (ngoài tệp) | đề nghị sửa deck | `L02-07-03`, xem dưới. |
+| PB-1 | trung bình | đã sửa | 02.15(a): "Hai tình huống này khớp Mục 2.4 của ghi chú; trang 27 của bài giảng gốc chỉ nêu câu hỏi." Đề nghị sửa ghi chú §2.4, xem dưới. |
+| TOAN-1, PB-13 | nhẹ | đã sửa | 02.15(a)3: "trong đó có …" và luật 50 nước. |
+| TOAN-2 | nhẹ | đã sửa | 02.15(b): điều kiện ô trống, vua không bị chiếu, "hoặc ở một bước về sau". |
+| TOAN-3, SV | nhẹ | đã sửa | Nguồn 02.18: "Ví dụ 02.14, 02.15". |
+| TOAN-4, PB-2 | nhẹ | đã sửa | Câu nguồn số liệu thêm chuỗi của 02.17(b). |
+| TOAN-5 | nhẹ | đã sửa | "khi giới hạn tồn tại". |
+| TOAN-6 | nhẹ | đã sửa | 02.22(e): "một lịch sử với $q=1$ và một lịch sử với $q=2$ có thể cho cùng dãy quan sát". |
+| TOAN-7, SV | nhẹ | đã sửa | 02.22(f) gạch thứ ba gắn với $p$ sai (Định nghĩa 02.16). |
+| TOAN-8 | nhẹ | đã sửa | Gợi ý 02.3 thêm câu (b). |
+| SV | nhẹ | đã sửa | 02.20: Cách A, Cách B thành hai đoạn in đậm và câu dẫn; bảng (c) chuyển vị (hàng là $T$). |
+| SV | nhẹ | đã sửa một phần | Công thức rộng ở 390 px: tách `aligned` ở 02.21 (ba trọng số, hai lợi tức, câu (b)), 02.20(d), 02.16(a), 02.18(b), 02.22(c), (2.3). Còn 11 công thức trong 02.16–02.19 dài hơn khung 271 px (285–500 px), cuộn trong khung, trang không tràn ngang. |
+| SV | nhẹ | đã sửa | 02.21 chuyển lên ngay sau 02.8. |
+| SV | nhẹ | đã sửa | Tiêu đề 02.3: "Trạng thái mở rộng của mê cung có chìa khóa". |
+| SV | nhẹ | đã sửa | 02.3(b): đề nêu đường 16 bước qua $(4,1)$ tại $t=5$; lời giải nêu đường 18 bước đạt được. |
+| SV | nhẹ | đã sửa | 02.5(b): giải thích $U(\sigma)$ và $[r,\sigma]$. |
+| SV | nhẹ | đã sửa | Gợi ý 02.2: "tìm hai ô trên hàng $1$ có cùng mã". |
+| SV | nhẹ (hạ tầng) | không sửa | Mục lục viewer đánh số chồng; ngoài phạm vi tệp. |
+| PB-3 | nhẹ | đã sửa | Tên tiếng Anh ở lần đầu trong "Hướng dẫn và ký hiệu" (state, action, observation, representation, transition, Markov property, full/partial observability, transition probability, expected reward) và ở đoạn mở (reinforcement learning); 02.14 đưa (supervised/unsupervised learning) vào đề. |
+| PB-4, PB-5, PB-6, PB-7 | nhẹ | đã sửa | Bỏ hai câu kiểu dấu hai chấm ở 02.16, câu đối lập ở 02.18(a), "chính là", "gạch" → "gạch đầu dòng". |
+| PB-8 | nhẹ | đã sửa | 02.20(c) dùng $T=10$, $T=30$: A $6{,}513$, $9{,}576$; B $-0{,}387$, $-0{,}047$ (tính lại: $(1-0{,}9^{30})/0{,}1=9{,}5761$, $-0{,}9^{29}=-0{,}0471$); $8{,}784$ chỉ còn là số đối chiếu trong "Kiểm tra lại"; (d) so với $-0{,}9^{19}\approx-0{,}135$. |
+| PB-9 | nhẹ | đã sửa | Nguồn 02.20 nêu cách A khác Ví dụ 3.4 ở bước thất bại. |
+| PB-10 | nhẹ | đã sửa | Tài liệu tham khảo thêm hw02 bài 5 (Bài tập 02.10 trong ghi chú). |
+| PB-11 | nhẹ | đã sửa | Mục lệch 3 ở trên. |
+| PB-12 | nhẹ | đã sửa | Dòng Mức độ của 02.14, 02.15 ghi câu (c) ở mức vận dụng. |
+| PB-14 | nhẹ | đã sửa | Gợi ý 02.17: "chuỗi phần thưởng tạo nên $G_{t+1}$ giống chuỗi tạo nên $G_t$". |
+
+**Kiểm tra sau sửa.** `note_check.py`: 48 khối, bộ đếm Bài tập 1–22 khoảng trống 6, 9–13 (bài chỉ có trong ghi chú), không khối lạ; mẫu "trang chiếu" chỉ ở đoạn mở và các dòng "Trùng trang chiếu". `check_note.py 02 … exercises` (cổng 8766): hai cỡ 0 `.katex-error`, 0 lỗi console, 0 tài nguyên ngoài hoặc lỗi, không tràn ngang, 48 khối; cảnh báo KaTeX đếm riêng: 0 ở cả hai cỡ. Liên kết deck (cổng 8799): 17 hash mở đúng trang (`#/N/1` là `L02-0N-00`; trùng trang chiếu `#/2/6`, `#/3/8`, `#/3/12`, `#/3/13`, `#/4/8`, `#/5/9`, `#/5/15`, `#/6/7`, `#/7/4`, `#/7/5`). `git diff --check`: đạt.
+
+**`no-ai-slop` (Edit).** Các câu mới không có từ cấm, câu hỏi tu từ, "hãy", dấu hai chấm kiểu tiết lộ, tài liệu làm chủ ngữ ngoài đoạn mở theo mẫu.
+
+### Đề nghị sửa deck và ghi chú (cập nhật 2026-10-14)
+
+1. Deck `L02-07-03`: bảng `Mạch | Bài tập` thêm 02.14–02.22 (mạch 2: 02.14; 3: 02.15; 4: 02.19; 5: 02.16, 02.17; 6: 02.18, 02.20; 7: 02.21, 02.22); "Tệp bài tập: chưa có" thành liên kết `material-viewer.html?doc=materials/lec-02/exercises.md&deck=lecture-02-giao-dien-tac-tu-moi-truong.html`; cập nhật ghi chú diễn giả, đếm lại mật độ.
+2. Deck `L02-06-06`: ghi chú diễn giả "Bài tập 02.8 của ghi chú, nơi mức phạt hố ký hiệu $h$" → bỏ vế sau hoặc viết $c_{\mathrm H}$ (TOAN, ngoài phạm vi).
+3. Ghi chú §2.4: "được quan sát đầy đủ (bài giảng gốc, trang 27)" → "theo câu đố của bài giảng gốc, trang 27" hoặc bỏ dẫn trang, vì trang 27 chỉ nêu câu hỏi (PB-1).
+4. Ghi chú, mục "Bài tập củng cố": câu mở thêm liên kết tới `exercises.md`.
+
+### Quyết định của điều phối viên (2026-10-14, giai đoạn III, bài tập)
+
+- Kiểm độc lập: `note_check.py` sạch (16 bài); viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 48 khối, 0 lỗi console, không tải ngoài; `git diff --check` sạch. Ba vai rà soát chỉ đọc (Opus 5.5 high): 0 chặn, 0 nghiêm trọng; mọi mục trung bình đã sửa (cảnh báo KaTeX chữ Việt trong `\text{}` còn 0).
+- Quyết định: **chấp nhận**; commit `feat(materials-02)`. Trang L02-07-03 của deck, ghi chú diễn giả L02-06-06 và nhóm "Bài tập" trên `index.html` cập nhật ở đợt sau; đề nghị sửa ghi chú (§2.4, dòng mở "Bài tập củng cố") để đợt đồng bộ chéo.
