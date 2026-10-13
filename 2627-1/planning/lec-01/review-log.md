@@ -1412,3 +1412,139 @@ Kiểm tra sau sửa bổ sung: `wc -w` 20 900; `note_check.py` bộ đếm 22/1
 
 - Kiểm độc lập: `note_check.py` sạch; viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 69 khối, 0 lỗi console, không tải ngoài; SVG `tictactoe-four-moves.svg` là XML hợp lệ; `git diff --check` sạch. Rà lại toán (Opus 5.5 high, chỉ đọc): 2 trung bình, 7 nhẹ, đã sửa (dòng 600 giữ theo deck).
 - Quyết định: **chấp nhận**; commit `fix(materials-01)`.
+
+## Đợt sửa 2026-10-12 — Giai đoạn III: bài tập
+
+### Tác tử và phạm vi
+
+- Vai: tác tử soạn `exercises.md` Bài 01 (viết tệp), theo `brief_exercises_writer.md` của điều phối viên, kể cả mục "Bổ sung 2026-10-14". Loại `general-purpose`; mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` theo brief. Không commit, không push.
+- Tệp tạo: `materials/lec-01/exercises.md` (538 dòng, khoảng 9 700 từ). Tệp sửa: mục này của nhật ký. Không tạo SVG mới. Không sửa ghi chú, deck, outline, storyboard, `index.html`.
+- Bản đối chiếu: ghi chú và deck ở HEAD (`b8ee716`, `d9a6283`); kế hoạch C trong `revision-plan-2026-10-12.md`; nguyên văn Bài tập 01.11 cũ trong mục "Giai đoạn I: rà lại vòng 2"; số hiệu dự kiến trong mục "Số hiệu dự kiến cho `exercises.md` (giai đoạn III)".
+- Không có phiếu hw01 trong `RL-hk2-2025-2026/resources/`; mọi bài dựa trên ghi chú, bài giảng gốc (PPTX bài 1, chỉ đọc văn bản trang 8, 14–15, 20, 24–25, 43–44) và Sutton và Barto (2018) §3.2, §3.3, §8.1, §17.1 (trang in kiểm trên `extracted.md`: PDF − 22).
+
+### Danh sách bài
+
+| Số hiệu | Mức | Mạch | Nguồn | Mục tiêu (ghi chú) | Trùng deck |
+|---|---|---|---|---|---|
+| 01.1 | nhận biết | 2 | ghi chú §1.3 | 1 | A05 `#/2/7`, A06 `#/2/8` |
+| 01.2 | nhận biết | 3 | ghi chú §2.2; nguồn tr. 20 | 2 | C05 `#/3/7`, C06 `#/3/8` |
+| 01.6 | nhận biết, tính toán | 5 | ghi chú §4.4 | 5 | F03 `#/5/14`, F04 `#/5/15` |
+| 01.7 | nhận biết | 6 | ghi chú §5.1; nguồn tr. 28–30 | 6 | G04 `#/6/6`, G05 `#/6/7` |
+| 01.3 | tính toán | 4 | ghi chú §3.2–3.3 | 3 | D04 `#/4/7`, D05 `#/4/8` |
+| 01.4 | chứng minh, tính toán | 4 | ghi chú §3.3 | 3 | không |
+| 01.5 | tính toán | 5 | ghi chú §4.2 | 4 | E03 `#/5/6`, E04 `#/5/7` |
+| 01.8 | tính toán | 6 | ghi chú §5.4 | 6 | không |
+| 01.12 | chứng minh, tính toán | 5 | Bài tập 01.11 cũ của ghi chú (nhật ký giai đoạn I) | 4 | không |
+| 01.13 | vận dụng | 7 | ghi chú Mệnh đề 01.20, Tình huống 01.1 | 1, 3, 4 | Z02 `#/7/4`, Z02b `#/7/5` |
+| 01.14 | vận dụng | 4 | nguồn tr. 24–25; Sutton và Barto §3.2 tr. 53–54; Ví dụ 01.5 | 3 | không |
+| 01.15 | vận dụng | 3, 5 | nguồn tr. 8, 25; Nhận xét 01.4, 01.6; Mệnh đề 01.20 | 1, 2, 4, 5 | không |
+| 01.16 | vận dụng, [Tìm hiểu] | 7 | nguồn tr. 14–15, 43–44; Sutton và Barto §8.1 tr. 159–160, §17.1 tr. 459–460 | 1, 4 | không |
+
+Mỗi mức có ít nhất bốn bài; mọi mục tiêu 1–6 có ít nhất hai bài trong tệp. Bài tập 01.9–01.11 (mục "Bài tập củng cố" của ghi chú) không chép lại; `note_check.py` vì vậy báo khoảng trống 9, 10, 11, đúng chủ đích.
+
+Liên kết: bảy liên kết `#/N/1` tới trang tiêu đề mạch và mười bốn liên kết trùng trang chiếu đã mở bằng Playwright (cổng 8799) và đọc `data-slide-id` của trang hiện hành; tất cả đúng (P00, AT, CT, DT, ET, GT, ZT; A05/A06, C05/C06, D04/D05, E03/E04, F03/F04, G04/G05, Z02/Z02b).
+
+### Thay đổi so với bản trong ghi chú (01.1–01.8) và so với nguyên văn 01.12
+
+- Đề bài 01.1–01.8, gợi ý và các câu (a)–(c) của lời giải giữ nguyên chữ; kết quả không đổi. Thêm để đề tự chứa: tên ba dạng học ở 01.2; bảng số liệu ở 01.6 (đúng bảng F03); luật luân phiên và thắng ở 01.7; công thức (3.1), (3.2) ở 01.3, 01.4; biểu thức (5.3) ở 01.8; "(Định nghĩa 01.16)" ở lời giải 01.6(a). Gợi ý 01.7 thêm "Đếm quân của mỗi bên để biết phiên đi" (như ghi chú diễn giả G04).
+- Mọi "Kiểm tra lại" thêm lỗi thường gặp kèm kết quả sai mà lỗi dẫn tới, lấy từ ghi chú diễn giả của deck khi có (A06, C06, D05, E04, F04, G05, Z02b).
+- 01.12: đổi "môi trường tất định" thành "môi trường không ngẫu nhiên" và "chính sách tất định" thành "chính sách xác định (deterministic policy)" theo đợt sửa ghi chú 2026-10-14; tiêu đề đổi thành "Giá trị khi môi trường không ngẫu nhiên và chính sách xác định"; câu (b) thêm yêu cầu "Tính $v_{\pi_1}(h)$" và "hút làm sạch ô đang đứng"; lời giải (b) nêu rõ "theo câu (a)", "ở bước 1". Kết quả $v_{\pi_1}(h)=1$ không đổi.
+
+### Sai lệch so với kế hoạch C và lý do
+
+- 01.12 không có trong bảng kế hoạch C; được thêm theo quyết định ở giai đoạn I (chuyển từ ghi chú) và số hiệu dự kiến của giai đoạn II.
+- 01.13 dùng dữ kiện Z02 (robot từ ô 2, $L=3$, $\pi_u$), không phải "robot dãy bốn ô (a)–(d)" của A2, theo quyết định giai đoạn II.
+- 01.14: kế hoạch ghi "phạt đổ đồ"; Ví dụ 01.5 của ghi chú đã có thiết kế phạt bình hoa, nên bài dùng thiết kế đó làm D1 và thêm thiết kế D2 thưởng $b=0{,}2$ cho mỗi lần hút (mục tiêu con), có cơ sở ở Sutton và Barto §3.2 (thưởng cho mục tiêu con có thể làm tác tử đạt mục tiêu con mà bỏ mục tiêu thật). Ba lượt thay cho hai để có một lượt không hút rác.
+- 01.15 chọn đăng ký môn học (không chọn xe tự hành), có phần tính: hai lớp, hai đợt, xác suất $0{,}4$ và $0{,}8$, phần thưởng $1$ và $0{,}6$; nối với "hy sinh phần thưởng tức thời" (nguồn tr. 25, ví dụ "Take a course").
+- 01.16: thêm phần tính (a)–(c) trên hai nhiệm vụ N1, N2 của robot để bài tìm hiểu có ví dụ kiểm được; lời giải (d) là dàn ý tham khảo, mỗi ý kèm căn cứ; câu hỏi trí tuệ nhân tạo tổng quát được nêu là câu hỏi mở, không kết luận thay người học.
+- Tệp xếp theo ba mức (theo brief), không theo mạch như sản phẩm mẫu math-4-AI 07; bảng `Mạch | Mở phần | Bài tập` cho ánh xạ theo mạch.
+
+### Số liệu đã tính lại
+
+Tính bằng script trong `/tmp/claude-1000/ex01/calc.py` (phân số chính xác, duyệt mọi dãy hành động).
+
+- 01.13: dãy thành công duy nhất $\text{phải},\text{phải},\text{hút}$; $v_{\pi_u}(h_0)=\frac1{27}$; giá trị sau $\text{trái}$, $\text{phải}$, $\text{hút}$: $0$, $\frac19$, $0$; $\frac13(0+\frac19+0)=\frac1{27}$. Khớp Z02b.
+- 01.14 ($L=5$): D1: $\tau_1$ $G_0=1$, $\tau_2$ $0$, $\tau_3$ $0$; D2: $1{,}2$; $0{,}4$; $1{,}0$; $\tau_2$ dưới D2 ngược: $0;1{,}2;1{,}2;1{,}2;0{,}4;0{,}4$. Cực đại D1 $=1$; cực đại D2 $=1{,}4$, đạt đúng bởi $\text{hút},\text{phải},\text{phải},\text{phải},\text{hút}$ và $\text{phải},\text{phải},\text{hút},\text{phải},\text{hút}$; không hút rác tối đa $1{,}0$. $L=10$ (duyệt $3^{10}$ dãy): cực đại $2{,}4$, không hút rác tối đa $2{,}0$.
+- 01.15: $\mathbb E[R_1\mid\mathrm M]=0{,}4$, $\mathbb E[R_1\mid\mathrm C]=0{,}48$; $\mathbb E[G_0]$: $(\mathrm M,\mathrm M)=0{,}64$, $(\mathrm M,\mathrm C)=0{,}688$, $(\mathrm C,\mathrm M)=0{,}56$, $(\mathrm C,\mathrm C)=0{,}576$.
+- 01.16: P trên N1 $G_0=1$ ($T=4$), trên N2 $0$ ($T=5$); $\pi_1$ trên N1 $1$ ($T=4$), trên N2 $1$ ($T=2$).
+- 01.12(b): $G_2=1$, $T=5$; với $L=4$ (lỗi thường gặp) $v=0$.
+- Các số của 01.1–01.8 giữ nguyên ghi chú; đã đối chiếu lại với trang lời giải của deck (A06, C06, D05, E04, F04, G05).
+
+### `no-ai-slop` (Edit) và kiểm tra
+
+- Phạm vi: toàn bộ chữ mới (đoạn mở, hướng dẫn, 01.12–01.16, các câu "lỗi thường gặp" thêm vào 01.1–01.8). Đối chiếu `eval.md`: không câu hỏi tu từ, không "hãy", không tài liệu làm chủ ngữ, không lời quy trình, không tương phản nhị phân kiểu "không phải X mà là Y", không câu kết châm ngôn; dấu hai chấm chỉ dẫn danh sách, phép tính hoặc định nghĩa; nhận định về mô hình thế giới dẫn nguồn cụ thể (Sutton và Barto §8.1, §17.1) hoặc nêu là quan điểm có điều kiện. Câu "Hai lỗi thường gặp." lặp ở nhiều bài là nhãn có chức năng theo mẫu, giữ. Kết quả: đạt.
+- `note_check.py`: 13 khối `exercise`, 13 `hint`, 13 `solution`; không khối lạ, không lồng; bộ đếm 01.1–01.8, 01.12–01.16, không trùng; khoảng trống 9–11 có chủ đích; mẫu "trang chiếu" chỉ ở các dòng "Trùng trang chiếu" và đoạn mở; 0 dấu `\(`/`\[`.
+- `check_note.py 01 lecture-01-gioi-thieu-hoc-tang-cuong.html exercises` (viewer cổng 8766, server cwd `/data/tqlong/rl-plan`): 1600×900 và 390×844 đều 0 `.katex-error`, 39 khối, 26 khối gập, 0 lỗi console, 0 yêu cầu ngoài hay hỏng, không tràn ngang. Đã xem ảnh chụp đầu tệp (1600) và lời giải 01.14 (390): bảng năm cột của 01.14 cuộn ngang trong khung bảng ở 390 px.
+- `git diff --check` (và `git diff --no-index --check` cho tệp mới): sạch. Tệp mới nằm trong danh sách cho phép của `.gitignore` (`!2627-1/materials/**`).
+
+### Đề nghị sửa deck
+
+| Mức | Trang | Vấn đề | Đề xuất |
+|---|---|---|---|
+| trung bình | Z00 | Bảng mạch–bài tập chỉ có 01.1–01.11, không có cột mạch 7; dòng "Tệp bài tập: chưa có"; ghi chú diễn giả nói 01.1–01.11 | Thêm 01.12, 01.15 vào cột mạch 5 (01.15 cả mạch 3), 01.14 vào mạch 4, thêm cột 7 với 01.13, 01.16; thay "Tệp bài tập: chưa có" bằng liên kết "Ghi chú bài giảng · Bài tập" tới `material-viewer.html?doc=materials/lec-01/exercises.md&deck=lecture-01-gioi-thieu-hoc-tang-cuong.html`; nếu bảng xoay ngang quá rộng, gộp theo dạng "01.12–01.16 (tệp bài tập)" |
+
+### Đề nghị sửa ghi chú
+
+| Mức | Vị trí | Vấn đề | Đề xuất |
+|---|---|---|---|
+| nhẹ | Mục tiêu học tập | Chỉ dẫn Bài tập 01.1–01.11 | Có thể thêm "và tệp bài tập: 01.12–01.16" ở các mục tiêu 1, 3, 4, 5 |
+| nhẹ | Bài tập 01.6 (ghi chú) | Đề không có bảng số liệu như F03 | Không bắt buộc; tệp bài tập đã thêm bảng |
+
+### Chỗ cần rà toán soi
+
+- 01.14(b), (c): lập luận chặn trên ($1{,}2+b\cdot$ số hành động thừa) và khẳng định "đạt bởi đúng hai lượt" ($L=5$).
+- 01.15(b): công thức $\mathbb E[G_0]=\mathbb E[R_1]+\Pr(\text{thất bại})\,\mathbb E[R_2]$ dựa trên độc lập giữa hai đợt; (c) nối với Mệnh đề 01.20(a).
+- 01.16(b): khẳng định P là chính sách xác định chỉ dùng $t$ và $v_{\mathrm P}(h_0)$ bằng lợi tức của lượt duy nhất (môi trường không ngẫu nhiên, theo 01.12).
+
+### Rà soát bài tập (ba vai chỉ đọc) và sửa theo quyết định của điều phối viên
+
+- Tác tử rà soát: TOAN (độ chính xác toán học), SV (góc nhìn sinh viên), PB (sư phạm, `no-ai-slop` Detect); cả ba `general-purpose`, `claude-opus-5-5`, mức `high`, chỉ đọc. Báo cáo: `scratchpad/exrev-01-TOAN.md`, `exrev-01-SV.md`, `exrev-01-PB.md`. Tổng: 0 chặn bàn giao, 0 nghiêm trọng; trung bình: TOAN 3, SV 3 (một thuộc deck), PB 3 (một thuộc deck).
+- Biên tập: cùng tác tử soạn (Opus 5.5, `high`), `no-ai-slop` Edit. Tệp sửa: `materials/lec-01/exercises.md` (579 dòng) và mục này. Không commit.
+
+| Mã | Mức | Trạng thái | Xử lý |
+|---|---|---|---|
+| TOAN-1 | trung bình | đã sửa | 01.15 "Kiểm tra lại": nêu hai giả thiết của đề (xác suất như nhau ở hai đợt, hai đợt độc lập) và ghi Định nghĩa 01.12 không đòi chúng |
+| TOAN-2 | trung bình | đã sửa | 01.16(b): N1, N2 không ngẫu nhiên, P xác định (chọn theo $t$ đọc từ độ dài lịch sử), dẫn Bài tập 01.12(a) |
+| TOAN-3 = PB | trung bình | đã sửa | 01.16(b): "Nhận xét 01.4, ý thứ nhất: môi trường đổi" |
+| SV-1 | trung bình | đã sửa | 01.13: hai đẳng thức thành hai khối display, gọi tên (1), (2); câu (d), (e) dẫn theo tên. Ở 1600 px không còn khối nào cuộn ngang |
+| SV-2 | trung bình | đã sửa | 01.16(c): đề ghi rõ rác thật ở ô 2, mô hình ghi nhầm ở ô 3 |
+| PB-1 | trung bình | đã sửa | 01.13: giữ dữ kiện, mức và (a)–(d) khớp Z02/Z02b; dòng Nguồn ghi (c), (d) là $w(2,3)$, $w(3,2)$ của Tình huống 01.1; thêm câu (e): ô xuất phát ẩn đồng khả năng 1, 2, 3; kỳ vọng sau trái, phải, hút $0$, $\frac5{27}$, $\frac1{27}$ (cần $w(4,2)=\frac49$); nước khai thác vẫn là phải; kiểm $v_{\pi_u}(h_0)=\frac2{27}$ bằng (2) và bằng trung bình $w(1,3)=0$, $w(2,3)=\frac1{27}$, $w(3,3)=\frac5{27}$ (tính lại bằng script phân số) |
+| PB-2 | trung bình | đã sửa | Thêm tên tiếng Anh ở lần đầu: hàm giá trị (value function), hành động tham lam (greedy action), có mô hình (model-based), phi mô hình (model-free) ở mục Hướng dẫn; giả thuyết phần thưởng (reward hypothesis), mục tiêu con (subgoal, thay "việc con") ở 01.14; robot đa năng (general-purpose robot), trí tuệ nhân tạo tổng quát (artificial general intelligence), kế hoạch vòng hở (open-loop plan) ở 01.16. Tên mạch trong bảng giữ đúng deck |
+| SV/PB Z00 | trung bình | chuyển | Deck Z00 sửa trong đợt sửa deck riêng (theo quyết định của điều phối viên); đề nghị giữ nguyên như mục "Đề nghị sửa deck" ở trên |
+| TOAN 01.4 | nhẹ | đã sửa | Kiểm tra lại: lỗi đếm $m$ phép cộng cho $10$; lỗi riêng của tính ngược (coi $G_{T-1}=R_T+G_T$ là một phép cộng) cho $4$ |
+| TOAN 01.12(a) | nhẹ | đã sửa | Bước 3 dẫn cách đọc "phân phối của diễn biến bắt đầu từ $h$", đúng cả khi $\Pr_\pi(H_t=h)=0$ |
+| TOAN 01.14(b) | nhẹ | đã sửa | Thêm lý do "đúng hai dãy" (ô 1 trước lần phải đầu; ô 3 giữa lần phải thứ hai và thứ ba) |
+| TOAN 01.14(c), SV 01.14(c) | nhẹ | đã sửa | Nêu cận $G_0\le2{,}4$ và cận $2{,}0$ của lượt không hút rác; câu cuối giới hạn cho "lượt chỉ hút ở ô 1" |
+| TOAN 01.15(b) | nhẹ | đã sửa | Viết $\mathbb E[R_2\mid A_1=a_1,\ \text{đợt 1 thất bại}]$ và nêu tính độc lập |
+| TOAN 01.16(c) | nhẹ | đã sửa | "dãy ngắn nhất có tổng dự báo $1$" |
+| TOAN/SV/PB 01.2(d) | nhẹ | đã sửa | Lời giải (d) mở bằng dạng học và tín hiệu, "ba trong bốn khác biệt" (khớp C06) |
+| TOAN/SV 01.15 nguồn | nhẹ | đã sửa | Thêm Nhận xét 01.3 vào dòng Nguồn và Tài liệu tham khảo |
+| SV 01.8 `\tag` | nhẹ | đã sửa | Bỏ `\tag{5.3}`, câu dẫn ghi "Theo công thức (5.3) của ghi chú" |
+| SV 01.14 bảng | nhẹ | đã sửa | Tách hai bảng ba cột (D1, D2), cùng bố cục ba cột Lượt, Phần thưởng, $G_0$ |
+| SV 01.1, 01.13 trạng thái | nhẹ | đã sửa | Đề nêu "Trạng thái là cặp (vị trí, tình trạng ô 4)" |
+| SV/PB 01.15 $O_0$, "ở mỗi đợt" | nhẹ | đã sửa | Đề nêu $O_0$ là thông báo mở đăng ký và "ở mỗi đợt"; lời giải (a) thêm câu về nghĩa của giả thiết độc lập |
+| SV 01.3 va ghế | nhẹ | không sửa | Giữ như ghi chú và D04; đề nghị đồng bộ sau (xem dưới) |
+| SV đoạn mở, bảng mạch | nhẹ | đã sửa | Bảng ghi 01.9–01.11 "(chỉ trong ghi chú)" ở mạch 4, 5; đoạn mở nói 01.9–01.11 chỉ trong ghi chú nhưng thuộc bộ bài giao, và thứ tự số hiệu không liên tục vì xếp theo mức |
+| SV gợi ý 01.5 | nhẹ | đã sửa | Gợi ý không nêu kết luận câu (a) |
+| SV mục lục viewer | nhẹ | ngoài phạm vi | Hạ tầng viewer, ghi cho điều phối viên |
+| PB nhịp "Hai lỗi thường gặp." | nhẹ | đã sửa | Bỏ khuôn ở 01.1, 01.3, 01.4, 01.5, 01.6, 01.8, 01.12, 01.13, 01.14, 01.15, 01.16; mỗi lỗi viết thành câu có chủ ngữ và kết quả sai |
+| PB nhấn mạnh thiếu căn cứ | nhẹ | đã sửa | 01.5(c) "(Định nghĩa 01.12)"; 01.15(c) "đó là phản hồi trễ (Nhận xét 01.6)"; 01.13 "dù $v_{\pi_u}(h_0)$ chỉ bằng $\frac1{27}$", hai câu diễn giải chuyển từ "Kiểm tra lại" về cuối câu (d) |
+| PB 01.16(c) câu khái quát | nhẹ | đã sửa | Vế sai số tích lũy chuyển sang ý 5 của dàn ý (d), dẫn ghi chú Mục 4.3, đoạn "Trong thực hành" |
+| PB 01.16(d) ý 6 | nhẹ | đã sửa | "Các định nghĩa và kết quả của Bài 01 không đủ để trả lời…"; không lấy tài liệu làm chủ ngữ |
+| PB Nguồn ↔ Tài liệu tham khảo | nhẹ | đã sửa | 01.3, 01.4 thêm Sutton và Barto §3.3 tr. 54–57; 01.8 thêm bài giảng gốc tr. 28–30; §8.1 tr. 159–161 (theo ghi chú); thêm Nhận xét 01.3, Tình huống 01.2, Bài tập 01.9 |
+| PB 01.16 trang 14–15, robot hình người | nhẹ | đã sửa | Đề nối N1/N2 với ý trang 15 (khó chuyển từ cờ vua sang cờ vây) và thêm "như robot hình người" (trang 43) |
+| PB 01.14(a), 01.16(a) phần đã giải | nhẹ | đã sửa | Dòng Nguồn ghi phần lấy lại Ví dụ 01.5 và Nhận xét 01.4 |
+| PB 01.15 trạng thái ẩn | nhẹ | đã sửa | Như dòng SV/PB 01.15 |
+| PB 01.6 vị trí | nhẹ | đã sửa | Chuyển 01.6 sang mục "Mức tính toán hoặc chứng minh", sau 01.5; lý do: hai trong ba câu là phép tính; dòng Mức độ ghi lý do. Mức nhận biết còn 01.1, 01.2, 01.7 |
+| PB 01.16(d) ý 4 | nhẹ | đã sửa | Bỏ tương phản "không phải một dãy hành động định sẵn", dẫn Nhận xét 01.4, ý thứ ba |
+
+Cảnh báo KaTeX "Unrecognized Unicode character" cho chữ Việt trong `\text{…}` (SV đo 268 cảnh báo, strict mode): chấp nhận như ghi chú bài giảng, chữ hiển thị đúng; không sửa.
+
+Đề nghị sửa ghi chú (bổ sung, nhẹ): (1) Bài tập 01.2(d) của ghi chú mở bằng dạng học và tín hiệu như tệp bài tập; (2) Bài tập 01.5: gợi ý không nêu kết luận, câu (c) bỏ "như Định nghĩa 01.12 ghi rõ"; (3) Bài tập 01.3 (cùng D04): nêu va ghế không cản robot sang ô kế tiếp. Các đổi khác của 01.1–01.8 chỉ ở phần "Kiểm tra lại" và câu dẫn, kết quả không đổi.
+
+Kiểm tra sau sửa: `note_check.py` 13 `exercise`/13 `hint`/13 `solution`, bộ đếm 01.1–01.8, 01.12–01.16, khoảng trống 9–11 có chủ đích, không trùng, 0 `\(`/`\[`; `check_note.py 01 lecture-01-gioi-thieu-hoc-tang-cuong.html exercises` (cổng 8766) ở 1600×900 và 390×844: 0 `.katex-error`, 39 khối, 0 lỗi console, 0 yêu cầu ngoài hay hỏng, không tràn ngang; ở 1600 px không khối công thức hay bảng nào cuộn ngang, ở 390 px các công thức dài cuộn trong khung như ghi chú. Liên kết: 21 liên kết tới deck mở đúng trang (P00, AT, CT, DT, ET, GT, ZT, A05/A06, C05/C06, D04/D05, E03/E04, F03/F04, G04/G05, Z02/Z02b). `git diff --check` sạch. `no-ai-slop` (Edit) trên mọi câu đổi: không còn khuôn câu lặp, không nhấn mạnh thiếu căn cứ, không tài liệu làm chủ ngữ, không tương phản nhị phân; đạt.
+
+### Quyết định của điều phối viên (2026-10-14, giai đoạn III, bài tập)
+
+- Kiểm độc lập: `note_check.py` sạch (13 bài, mỗi bài có gợi ý và lời giải); viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 39 khối, 0 lỗi console, không tải ngoài; `git diff --check` sạch. Ba vai rà soát chỉ đọc (Opus 5.5 high): 0 chặn, 0 nghiêm trọng; mọi mục trung bình đã sửa. Cảnh báo KaTeX chữ Việt trong `\text{}` chấp nhận như ghi chú.
+- Quyết định: **chấp nhận**; commit `feat(materials-01)`. Trang Z00 của deck và nhóm "Bài tập" trên `index.html` cập nhật ở đợt sau.
