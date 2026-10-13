@@ -1478,3 +1478,95 @@ A03 60, A06 (chỉ ghi chú) 80, B03 52 (5 dòng), B08 54, B12d (chỉ ghi chú)
 - Kiểm độc lập sau vòng 2: `density.py` chỉ gắn cờ các trang có ngoại lệ trong `storyboard.md`; Playwright 1600×900 và 390×844: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, đủ trang tiêu đề mạch; ảnh các trang đổi chính xem trực tiếp; `git diff --check` sạch.
 - `img/lec-05/mc-td-timeline.svg` không còn được deck hay ghi chú dùng (xem đề nghị ở giai đoạn I, dòng "Không dùng `mc-td-timeline.svg`"); chấp nhận xóa trong commit này. Bốn thuộc tính `style="margin-left"` cho bước con của giả mã được chấp nhận tạm; đề nghị lớp `ol.substeps` chuyển sang đợt đồng bộ chéo CSS chung.
 - Quyết định: **chấp nhận**; commit `fix(lecture-05)`.
+
+## Đợt sửa 2026-10-14 — Sửa ghi chú sau giai đoạn II
+
+### Tác tử
+
+| Vai trò | Loại | Mô hình | Effort | Ghi file |
+|---|---|---|---|---|
+| Biên tập viên ghi chú bài giảng Bài 05 (theo `brief_note_revision.md` của điều phối viên) | general-purpose | claude-opus-5-5 | high | `materials/lec-05/lecture-note.md`, `img/lec-05/learning-route.svg`, mục này |
+
+Không commit. Không sửa deck, `outline.md`, `storyboard.md`, `exercises.md`, notebook, `index.html`, viewer, CSS hay tệp bài khác. Số hiệu kết quả, ví dụ, bài tập và mọi `note-topic-id` giữ nguyên (35 kết quả, 22 ví dụ, 15 bài tập, không khoảng trống, không trùng). Việc đưa bài $\gamma=0{,}9$ của L05-B13/B13b vào `exercises.md` thuộc giai đoạn III, không làm ở đây.
+
+### Xử lý từng đề nghị
+
+Dòng là dòng của `lecture-note.md` sau đợt sửa.
+
+| Đề nghị (nguồn) | Trạng thái | Vị trí và cách sửa |
+|---|---|---|
+| Alt `learning-route.svg` ghi "Lợi tức MC" (tác tử soạn giai đoạn II, MACH-1, RL-11) | Đã sửa | Dòng 110: alt mô tả sáu khối, "Lợi tức Monte Carlo", mỗi khối kèm mục tương ứng |
+| Đoạn đọc hình `learning-route.svg` gán khối "Lựa chọn" cho Mục 5 (MACH rà lại vòng 2) | Đã sửa, chọn phương án vẽ lại hình | `learning-route.svg` vẽ lại thành sáu khối: Dữ liệu → Lợi tức / Monte Carlo → Một bước TD → Giả thiết → Dữ liệu / cố định → Lựa chọn, dưới mỗi khối ghi "Mục 1"…"Mục 5", "Tình huống"; viewBox 1227×170, cùng màu, cùng mũi tên, chữ 25 đơn vị (nhãn mục 22); `title` giữ, `desc` viết lại. Deck không dùng hình này (đã tìm trong `2627-1/`). Dòng 112: đoạn đọc hình viết lại, khối "Dữ liệu cố định" ứng với Mục 5, khối "Lựa chọn" ứng với các tình huống áp dụng |
+| Tốc độ học và độ nhạy với khởi tạo, Mục 4.4 hoặc Nhận xét 05.35 (RL-4) | Đã sửa, đặt ở Mục 4.4 | Dòng 1535–1537, hai đoạn sau Nhận xét 05.31: ba định lý hội tụ không nói phương pháp nào nhanh hơn; chưa có chứng minh (Sutton và Barto 2018, §6.2, trang 124, đã đối chiếu bản PDF, trang PDF 146); thực nghiệm thường cho TD(0) nhanh hơn Monte Carlo bước hằng trên bài toán ngẫu nhiên, Ví dụ 6.2 trang 125. Độ nhạy với khởi tạo: bài giảng gốc trang 28 (đã đối chiếu: "Nhạy với giá trị khởi tạo hơn" ở cột TD); lý do nêu bằng kết quả của chương (Mệnh đề 05.9, 05.11: khởi tạo của Monte Carlo chỉ ảnh hưởng chính $V(s)$; mục tiêu TD đọc $V(S_{t+1})$) |
+| "0,02 giây, nên 70%…" thành "…ngắn so với kích thước một ô gộp, nên…" (RL-13) | Đã sửa | Dòng 1027 (trước Ví dụ 05.12) và dòng 1828 (Diễn giải của Tình huống 05.1, nay nêu cả lý do và hệ quả với bước $1/n$) |
+| Thống nhất "quá trình phần thưởng Markov thực nghiệm" (RL-10) | Đã sửa | Dòng 1722 (Phạm vi của Mệnh đề 05.34), 1754 (đoạn đọc `ab-empirical.svg`), 1757–1758 (Nhận xét 05.35), 1794 (bảng lựa chọn), 1827 (Tình huống 05.1), 1944 (lời giải Bài tập 05.13). Dòng 1704 giữ dạng định nghĩa "quá trình phần thưởng Markov (Markov reward process, MRP) thực nghiệm" |
+| Câu nối quy tắc cập nhật với gradient ngẫu nhiên, cầu sang bán gradient Bài 07, Mục 1.2 tùy chọn (RL-14) | Đã sửa, đặt ở Mục 2.3 | Dòng 532, đoạn ngay sau Định nghĩa 05.10. Không đặt ở Mục 1.2 vì công thức $V(s)\leftarrow V(s)+\alpha[Y-V(s)]$ chỉ xuất hiện ở Định nghĩa 05.10; cách đọc gradient cần công thức đó. Đạo hàm của $\tfrac12(Y-V)^2$ theo $V$ là $-(Y-V)$, nên $V-\alpha\cdot(-(Y-V))$ cho đúng quy tắc. Dẫn Sutton và Barto (2018, §9.3, trang 200–203, đã đối chiếu: trang PDF 222–225). Kéo theo: mục Ứng dụng (dòng 1862) bỏ "(semi-gradient)" vì thuật ngữ tiếng Anh nay xuất hiện lần đầu ở dòng 532, thay bằng "(Mục 2.3)" |
+| Căn cứ cụ thể cho dữ liệu cố định ở đoạn mở Mục 5 (MACH-11) | Đã sửa | Dòng 1569: bài thực hành Lunar Lander thu $2000$ lượt huấn luyện một lần, việc thu chiếm phần lớn thời gian chạy (notebook, phần 5), phần 9 quét lại chính tập đó (đã đối chiếu ô 28–29 và 54–57 của notebook) |
+| Thống nhất tên và dấu "sai số thật $v_\pi-V$", "độ lệch $V-v_\pi$" (PB-19) | Đã sửa | Dòng 906: sai số thật dương khi bảng đánh giá thấp. Dòng 1074: "độ lệch $V-v_\pi$ của mỗi bảng" ở đoạn mở Mục 4. Dòng 1123 (Ví dụ 05.15): độ lệch là sai số thật đổi dấu, âm khi bảng đánh giá thấp. Kéo theo: mọi chỗ "sai số của bảng" mang dấu $V-v_\pi$ đổi thành "độ lệch" (dòng 108, 1258, 1262, 1265, 1563, 1869, 1997); dòng 1182 "đo độ lệch của kỳ vọng" thành "đo khoảng cách từ kỳ vọng đó tới $v_\pi(s)$" để "độ lệch" chỉ còn một nghĩa; dòng 708 (Ví dụ 05.7) "Sai số $-0{,}524$" thành "$V_2(\mathrm S)-v_\pi(\mathrm S)=0-11/21\approx-0{,}524$; trị tuyệt đối $0{,}524$" vì Ví dụ 05.7 đứng trước Mục 3.1, nơi hai tên được đặt. Các chỗ "sai số" không mang dấu (sai số làm tròn, sai số tới nghiệm, sai số trên dữ liệu kiểm tra, "sai số của mục tiêu Monte Carlo là tổng các sai số TD") giữ nguyên |
+| Giá trị chuẩn $11/21$ giải từ mô hình chỉ để đo sai số, dùng ở Mục 2.6 và Mục 4 (PB-5) | Đã sửa | Dòng 696 (Dữ kiện của Ví dụ 05.7): giải bằng phương trình Bellman kỳ vọng (Ví dụ 05.14, Mục 4.1); mô hình chỉ để đo sai số ở Mục 2.6 và Mục 4, Monte Carlo không đọc nó |
+| Đưa bài $\gamma=0{,}9$ của L05-B13/B13b vào `exercises.md` (điều phối viên) | Không thuộc đợt này | Giai đoạn III theo brief. Lệch tạm thời deck–ghi chú tại B13/B13b vẫn còn |
+
+Không từ chối đề nghị nào.
+
+### Số liệu đã tính lại
+
+- $V_2(\mathrm S)-v_\pi(\mathrm S)=0-11/21=-0{,}5238\approx-0{,}524$; độ lệch chuẩn sau hai lượt $\sqrt{320/441}/\sqrt2=0{,}8518/1{,}4142\approx0{,}602$; $0{,}524<0{,}602$.
+- Ví dụ 05.15 không đổi số; dấu khớp quy ước mới: Monte Carlo sau $e_2$ $-65/84$, $-97/84$; TD(0) sau $e_2$ $-151/168$, $-89/168$ (âm, bảng đánh giá thấp); sai số thật tương ứng dương. Mệnh đề 05.25: $\operatorname{bias}=\gamma\,\mathbb E[V(S_{t+1})-v_\pi(S_{t+1})]$, tức $\gamma$ nhân độ lệch trung bình; kiểm trên Ví dụ 05.16: $0{,}8\cdot(0{,}5-19/21)=-34/105$.
+- Gradient: $\frac{d}{dV}\tfrac12(Y-V)^2=-(Y-V)$; $V-\alpha\cdot\bigl(-(Y-V)\bigr)=V+\alpha(Y-V)$.
+- Bước mô phỏng $0{,}02$ giây, $70\%$ tự chuyển, $2000$ lượt huấn luyện: lấy từ ghi chú và notebook đã nhúng, không tính mới.
+- Trang Sutton và Barto: trang in bằng trang PDF trừ 22; §6.2 câu "no one has been able to prove…" và "TD methods have usually been found to converge faster than constant-α MC methods on stochastic tasks" ở trang 124, Ví dụ 6.2 ở trang 125; §9.3 trang 200–203.
+
+### Tự kiểm `no-ai-slop` (Edit)
+
+- Phạm vi: mọi câu thêm hoặc sửa ở các dòng nêu trên, alt và `desc` của `learning-route.svg`. Đã đọc `SKILL.md`, soạn ở chế độ Edit, đối chiếu `eval.md`.
+- Đã sửa trong lúc tự kiểm: câu mở "Quy tắc cập nhật còn một cách đọc thứ hai" (lời dẫn rỗng) thành câu nêu thẳng kết quả; bỏ câu "Đây là quan sát thực nghiệm có điều kiện, không phải định lý của chương" (đối lập nhị phân, lặp ý câu trước); "tiến rất chậm" thành "tiến chậm"; đoạn độ nhạy khởi tạo tách để mỗi câu có tối đa một ngoặc đơn.
+- Đạt: không từ cấm, không câu hỏi tu từ, không "hãy", tài liệu không làm chủ ngữ, không gạch dài, dấu hai chấm chỉ mở phần giải thích; "chúng ta"/"ta" không đổi so với bản trước; mỗi đoạn mới tối đa bốn câu.
+
+### Kiểm sau sửa
+
+- `note_check.py`: 25 839 từ (trước đợt 25 316); bộ đếm chung 35, Ví dụ 22, Bài tập 15, không khoảng trống, không trùng; 0 dấu `\(`/`\[`.
+- `check_note.py 05 lecture-05-du-doan-phi-mo-hinh.html` (viewer cổng 8766, cwd `rl-plan`), 1600×900 và 390×844: 0 `.katex-error`, 0 lỗi console, 0 yêu cầu lỗi, 0 yêu cầu ra ngoài máy cục bộ, 116 khối, 13 tiêu đề `##` đúng thứ tự, không cuộn ngang trang.
+- `learning-route.svg`: XML hợp lệ; chụp hình riêng 1240×180 và trong viewer ở 1600×900, 390×844 (ảnh trong thư mục tạm của phiên): chữ nằm trong khối (khối 3 có lề chữ khoảng 9 đơn vị mỗi bên ở cỡ 26, nay cỡ 25), hình cuộn ngang trong khung như các hình `img/lec-*` khác theo `material-viewer.css` (rộng tối thiểu 900 px).
+- `git diff --check` sạch trên `materials/lec-05`, `img/lec-05` và `planning/lec-05`.
+
+### Rà lại sau đợt sửa và sửa bổ sung
+
+| Vai trò | Loại | Mô hình | Effort | Ghi file |
+|---|---|---|---|---|
+| Rà lại toán và nhất quán ghi chú Bài 05 (`noterecheck-05.md`) | general-purpose, chỉ đọc | claude-opus-5-5 | high | không |
+| Biên tập viên ghi chú Bài 05 (cùng tác tử của đợt sửa trên, nối tiếp theo tin nhắn của điều phối viên) | general-purpose | claude-opus-5-5 | high | `lecture-note.md`, mục này |
+
+Kết quả rà lại: 0 chặn, 0 nghiêm trọng, 1 trung bình, 6 nhẹ cho ghi chú, 4 nhẹ đề nghị cho deck. Cả bảy phát hiện cho ghi chú đã sửa, không từ chối. Dòng là dòng của ghi chú sau vòng sửa bổ sung.
+
+| Mã | Mức | Trạng thái và vị trí |
+|---|---|---|
+| TB, đoạn gradient (RL-14) | trung bình | Đã sửa, dòng 532–534, tách thành hai đoạn. Đoạn đầu: với $Y$ cho trước, quy tắc là bước giảm gradient của $\tfrac12(Y-V(s))^2$. Với $Y=G_t$, mục tiêu không phụ thuộc bảng và có kỳ vọng $v_\pi(s)$ (Mệnh đề 05.7), nên đạo hàm có kỳ vọng $-(v_\pi(s)-V(s))$; đây là gradient ngẫu nhiên thật của $\tfrac12(v_\pi(s)-V(s))^2$. Đoạn sau: mục tiêu TD chứa $V(S_{t+1})$; giữ $Y_t$ cố định là bỏ số hạng $\gamma(Y_t-V(S_t))$, đạo hàm theo $V(S_{t+1})$ khi $S_{t+1}\ne S_t$; cập nhật này là bán gradient. Gọi tên "Monte Carlo gradient" và "TD(0) bán gradient", dẫn Sutton và Barto §9.3, trang 201–202. Viết $\gamma(Y_t-V(S_t))$ thay cho $\gamma\delta_t$ vì $\delta_t$ chỉ được định nghĩa ở Mục 3.1 |
+| N1, độ nhạy khởi tạo | nhẹ | Đã sửa, dòng 1555: khởi tạo đã đi vào $V(s)$ chỉ giảm theo lịch bước tại $s$ và lan sang trạng thái đứng trước $s$. Ở tự chuyển, mục tiêu đọc chính $V_0(s)$; Ví dụ 05.12 với $\alpha=0{,}5$, $\gamma=0{,}99$ cho khoảng cách còn khoảng $61\%$ sau $100$ tự chuyển |
+| N2, tốc độ học | nhẹ | Đã sửa, dòng 1553: nêu tên Sutton và Barto ngay trong câu thực nghiệm; thêm "bài giảng gốc trang 28: TD thường hiệu quả mẫu hơn"; thêm trường hợp ngược ở Tình huống 05.1 ($J\approx2101$ với TD(0), $\alpha=0{,}5$, so với $J\approx1627$ với Monte Carlo mọi lần ghé), kèm lưu ý $J$ nghiêng về Monte Carlo |
+| N3, sai số thật và Mệnh đề 05.27 | nhẹ | Đã sửa theo phương án thêm đồng nhất thức. Dòng 1309, sau Mệnh đề 05.27: $\mathbb E_\pi[\delta_t\mid S_t=s]=(v_\pi-V)(s)-\gamma\,\mathbb E_\pi[(v_\pi-V)(S_{t+1})\mid S_t=s]$, suy từ Mệnh đề 05.25. Kiểm trên Bài tập 05.6: hai vế cùng bằng $0{,}2$, sai số thật bằng $11/21$. Dòng 908 dẫn "(Mệnh đề 05.25, 05.27)" |
+| N4, Ví dụ 05.7 | nhẹ | Đã sửa, dòng 698: "(Mục 2.6, Bài tập 05.6 và Mục 4)" |
+| N5, "0,02 giây … ô gộp" | nhẹ | Đã sửa, dòng 1029 và 1846: "trong một bước, tàu dịch chuyển ít so với kích thước một ô gộp" |
+| N6, quá trình thật và năm thuật ngữ | nhẹ | Đã sửa. Dòng 1776: "…là quá trình thật". Dòng 1218: danh sách "Nhầm lẫn thường gặp" đặt cạnh nhau sai lệch $Y-V$, sai số thật $v_\pi-V$, độ lệch $V-v_\pi$, độ chệch $\operatorname{bias}(Y;s)$ và độ lệch chuẩn. Đặt sau Định nghĩa 05.24 thay vì sau Ví dụ 05.15, vì độ chệch chỉ được định nghĩa ở Định nghĩa 05.24 |
+
+Số liệu tính lại: $\partial_{V(S_{t+1})}\tfrac12(R+\gamma V(S_{t+1})-V(S_t))^2=\gamma(Y_t-V(S_t))$; $0{,}2\cdot(-1)+0{,}8\cdot0{,}5=0{,}2$ và $11/21-0{,}8\cdot(19/21-1/2)=(11-6{,}8)/21=0{,}2$; $0{,}995^{100}\approx0{,}606$; $J$: $2100{,}8$ và $1626{,}8$ (bảng của Tình huống 05.1).
+
+`no-ai-slop` (Edit), áp cho các câu mới: không từ cấm, không câu hỏi tu từ, không "hãy", tài liệu không làm chủ ngữ, mỗi câu tối đa một ngoặc đơn, mỗi đoạn tối đa bốn câu; danh sách năm đại lượng dùng gạch đầu dòng vì các mục song song.
+
+Kiểm:
+- `note_check.py`: 26 226 từ; bộ đếm 35, Ví dụ 22, Bài tập 15, không khoảng trống, không trùng; 0 `\(`/`\[`.
+- `check_note.py 05 lecture-05-du-doan-phi-mo-hinh.html` (cổng 8766), 1600×900 và 390×844: 0 `.katex-error`, 0 lỗi console, 0 yêu cầu lỗi hoặc ra ngoài, 116 khối.
+- `git diff --check` sạch.
+
+### Đề nghị sửa deck (sau đợt sửa ghi chú)
+
+| Trang | Mức | Nội dung |
+|---|---|---|
+| L05-B12 (ghi chú diễn giả) | nhẹ | "sai số $-0{,}524$ nhỏ hơn một độ lệch chuẩn $0{,}602$" trái dấu với sai số thật $v_\pi-V$ ở C04, và so một số có dấu với độ lệch chuẩn. Sửa theo ghi chú (Ví dụ 05.7): "$V_2(\mathrm S)-v_\pi(\mathrm S)\approx-0{,}524$; trị tuyệt đối $0{,}524$ nhỏ hơn một độ lệch chuẩn $0{,}602$" |
+| L05-D05 (mặt trang) | nhẹ | "mục tiêu TD lệch $-0{,}324$": đại lượng này là độ chệch của mục tiêu ($\operatorname{bias}(Y;\mathrm S)=-34/105$), không phải độ lệch $V-v_\pi$ của D02 và E06. Đổi thành "độ chệch" hoặc "kỳ vọng thấp hơn $0{,}324$" |
+| L05-D12b (ghi chú diễn giả) | nhẹ | "quá trình thực nghiệm là quá trình thật" thành "quá trình phần thưởng Markov thực nghiệm là quá trình thật" |
+| L05-D06b (dòng Nguồn) | nhẹ | Thêm "Mục 4.4" bên cạnh "Nhận xét 05.29"; tốc độ học và độ nhạy khởi tạo nay nằm ở Mục 4.4 của ghi chú |
+
+### Quyết định của điều phối viên (2026-10-14, sửa ghi chú sau giai đoạn II)
+
+- Kiểm độc lập: `note_check.py` sạch; viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console, không tải ngoài; `learning-route.svg` là XML hợp lệ, deck không dùng; `git diff --check` sạch. Rà lại toán (Opus 5.5 high, chỉ đọc): 1 trung bình, 6 nhẹ, đã sửa. "Đề nghị sửa deck (sau đợt sửa ghi chú)" (B12, D05, D12b, D06b) để đợt đồng bộ chéo.
+- Quyết định: **chấp nhận**; commit `fix(materials-05)`.

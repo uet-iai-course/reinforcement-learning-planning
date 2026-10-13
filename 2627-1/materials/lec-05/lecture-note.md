@@ -105,11 +105,11 @@ Xét một tàu đổ bộ thu nhỏ trên dãy bốn ô $\mathrm L,\mathrm S,\m
 
 Tác tử không biết hai xác suất này; nó chỉ có hai lượt $e_1:\mathrm S\to\mathrm X\to\mathrm S\to\mathrm X\to\mathrm G$ và $e_2:\mathrm S\to\mathrm X\to\mathrm S\to\mathrm L$. Để ước lượng $v_\pi$ từ các lượt như vậy, chúng ta cần biết lấy mục tiêu cập nhật nào từ dữ liệu, cập nhật lúc nào, ước lượng có tiến tới $v_\pi$ không và dưới giả thiết nào, và khi dữ liệu không tăng thêm thì khớp dữ liệu theo tiêu chuẩn nào.
 
-Chúng ta xây dựng Monte Carlo, lấy trung bình lợi tức sau khi lượt kết thúc, và TD(0), cập nhật sau mỗi chuyển bằng phần thưởng vừa nhận cộng giá trị ước lượng tại trạng thái kế tiếp. Chúng ta chứng minh mục tiêu Monte Carlo không chệch, mục tiêu TD chệch theo sai số của bảng, mục tiêu một bước lý tưởng có phương sai không lớn hơn, và cả hai phương pháp hội tụ về $v_\pi$ dưới những điều kiện bước học khác nhau.
+Chúng ta xây dựng Monte Carlo, lấy trung bình lợi tức sau khi lượt kết thúc, và TD(0), cập nhật sau mỗi chuyển bằng phần thưởng vừa nhận cộng giá trị ước lượng tại trạng thái kế tiếp. Chúng ta chứng minh mục tiêu Monte Carlo không chệch, mục tiêu TD chệch theo độ lệch của bảng, mục tiêu một bước lý tưởng có phương sai không lớn hơn, và cả hai phương pháp hội tụ về $v_\pi$ dưới những điều kiện bước học khác nhau.
 
-![Sơ đồ năm khối nối từ trái sang phải: "Dữ liệu" (các lượt sinh theo chính sách cố định), "Lợi tức MC" (mục tiêu là lợi tức đầy đủ sau khi lượt kết thúc), "Một bước TD" (mục tiêu là phần thưởng một bước cộng giá trị ước lượng tại trạng thái sau), "Giả thiết" (độ chệch, phương sai, điều kiện hội tụ) và "Lựa chọn" (chọn phương pháp theo dữ liệu có sẵn).](img/lec-05/learning-route.svg)
+![Sơ đồ sáu khối nối từ trái sang phải, dưới mỗi khối ghi phần tương ứng của chương: "Dữ liệu" (Mục 1, các lượt sinh theo chính sách cố định), "Lợi tức Monte Carlo" (Mục 2, mục tiêu là lợi tức đầy đủ sau khi lượt kết thúc), "Một bước TD" (Mục 3, mục tiêu là phần thưởng một bước cộng giá trị ước lượng tại trạng thái sau), "Giả thiết" (Mục 4, độ chệch, phương sai, điều kiện hội tụ), "Dữ liệu cố định" (Mục 5, quét lại một tập lượt không tăng thêm) và "Lựa chọn" (tình huống áp dụng, chọn phương pháp theo dữ liệu và giả thiết).](img/lec-05/learning-route.svg)
 
-Hình trên là lộ trình của chương, đọc từ trái sang phải: khối "Dữ liệu" ứng với Mục 1, hai khối giữa là hai cách tạo mục tiêu cập nhật ở Mục 2 và Mục 3, khối "Giả thiết" ứng với Mục 4, khối "Lựa chọn" ứng với Mục 5 và các tình huống áp dụng.
+Hình trên là lộ trình của chương, đọc từ trái sang phải; dòng chữ dưới mỗi khối ghi phần tương ứng. Khối "Dữ liệu" là bài toán của Mục 1, còn hai khối kế tiếp là hai cách tạo mục tiêu cập nhật ở Mục 2 và Mục 3. Khối "Giả thiết" là phép so sánh hai mục tiêu qua độ chệch, phương sai và điều kiện hội tụ ở Mục 4. Khối "Dữ liệu cố định" là việc quét lại một tập lượt không tăng thêm ở Mục 5, và khối "Lựa chọn" là các tình huống áp dụng.
 
 <!-- note-topic-id: lec-05-topic-01 -->
 ### 1.1 Mẫu chuyển và bài toán dự đoán
@@ -529,6 +529,10 @@ trong đó $Y\in\mathbb R$ là **mục tiêu cập nhật**, một số tạo ra
 
 Mệnh đề 05.9 là trường hợp $Y=g_n(s)$, $\alpha=1/n$. Định nghĩa không nói mục tiêu phải bằng giá trị thật: lợi tức $g_n(s)$ là một mẫu ngẫu nhiên có kỳ vọng $v_\pi(s)$ theo Mệnh đề 05.7, không phải $v_\pi(s)$. Đây là khung đã nêu bằng lời ở Mục 1.2; Monte Carlo và TD(0) là hai lựa chọn của $Y$ trong cùng khung, và Mục 4 so sánh hai lựa chọn này qua kỳ vọng và phương sai của $Y$.
 
+Với một mục tiêu $Y$ cho trước, quy tắc của Định nghĩa 05.10 là một bước giảm gradient của hàm $\tfrac12\bigl(Y-V(s)\bigr)^2$ theo biến $V(s)$. Đạo hàm của hàm này là $-\bigl(Y-V(s)\bigr)$, nên trừ $\alpha$ nhân đạo hàm khỏi $V(s)$ cho đúng quy tắc trên. Với mục tiêu Monte Carlo $Y=G_t$, mục tiêu không phụ thuộc bảng và có kỳ vọng $v_\pi(s)$ theo Mệnh đề 05.7, nên đạo hàm có kỳ vọng $-\bigl(v_\pi(s)-V(s)\bigr)$, tức đạo hàm của $\tfrac12\bigl(v_\pi(s)-V(s)\bigr)^2$. Cập nhật Monte Carlo vì vậy là một bước gradient ngẫu nhiên (stochastic gradient) thật trên bình phương khoảng cách tới $v_\pi(s)$.
+
+Mục tiêu TD của Mục 3 là $Y_t=R_{t+1}+\gamma V(S_{t+1})$, chứa giá trị của chính bảng. Quy tắc vẫn giữ $Y_t$ cố định khi lấy đạo hàm, tức bỏ số hạng $\gamma\bigl(Y_t-V(S_t)\bigr)$, là đạo hàm của $\tfrac12\bigl(Y_t-V(S_t)\bigr)^2$ theo biến $V(S_{t+1})$ khi $S_{t+1}\ne S_t$; cập nhật khi đó được gọi là bán gradient (semi-gradient). Sutton và Barto (2018, §9.3, trang 201–202) gọi hai cách cập nhật này là Monte Carlo gradient và TD(0) bán gradient. Bài 07 dùng cách đọc này khi thay bảng bằng hàm có tham số.
+
 ### 2.4 Bước học hằng và bốn cấu hình Monte Carlo
 
 Với bước $1/n$, mẫu thứ $1000$ chỉ dịch ước lượng một phần nghìn khoảng cách. Bài giảng gốc (2025–2026, trang 21) thay $1/n$ bằng hằng số $\alpha$ để theo kịp môi trường thay đổi theo thời gian, trường hợp nằm ngoài giả thiết môi trường dừng của chương; bài giảng gốc và Bài tập tuần 5 (bài 7) dùng $\alpha=0{,}5$. Chúng ta cần biết bước hằng đặt trọng số cho các mẫu như thế nào. Một cách trực quan, mỗi mẫu mới luôn nhận cùng một phần $\alpha$, nên các mẫu cũ mờ dần theo cấp số nhân; mô tả này chưa phải mệnh đề.
@@ -691,7 +695,7 @@ Lần ghé đầu tiên được xác định riêng trong từng lượt. Ở c
 Sau hai lượt, lần ghé đầu tiên với trung bình mẫu cho $V(\mathrm S)=0$, trong khi $v_\pi(\mathrm S)=11/21$. Chúng ta cần biết sai số này giảm thế nào khi số lượt tăng và dưới giả thiết nào. Một cách trực quan, mỗi lượt cho một mẫu độc lập của cùng một biến ngẫu nhiên, nên trung bình tiến tới kỳ vọng theo luật số lớn; nhận xét này chưa phải định lý.
 
 ::: example Ví dụ 05.7 (Sai số của trung bình lần ghé đầu tiên tại $\mathrm S$)
-**Dữ kiện.** Tàu đổ bộ thu nhỏ của Ví dụ 05.1, $\gamma=1$, mỗi lượt bắt đầu ở $\mathrm S$. Giá trị chuẩn $v_\pi(\mathrm S)=11/21$ (Ví dụ 05.14).
+**Dữ kiện.** Tàu đổ bộ thu nhỏ của Ví dụ 05.1, $\gamma=1$, mỗi lượt bắt đầu ở $\mathrm S$. Giá trị chuẩn $v_\pi(\mathrm S)=11/21$ được giải từ mô hình bằng phương trình Bellman kỳ vọng (Ví dụ 05.14, Mục 4.1). Mô hình chỉ dùng để đo sai số (Mục 2.6, Bài tập 05.6 và Mục 4); Monte Carlo không đọc nó.
 
 **Phân phối của mẫu.** Lần ghé đầu tiên của $\mathrm S$ là $t=0$. Với $\gamma=1$ và chỉ có phần thưởng cuối, $G_0=1$ khi tàu nằm yên và $G_0=-1$ khi tàu rơi. Gọi $h$ là xác suất nằm yên; khi đó $\mathbb E[G_0]=h-(1-h)=2h-1$. Đặt bằng $11/21$ cho $h=16/21$.
 
@@ -703,7 +707,7 @@ $$
 
 **Sai số của trung bình.** Trung bình $V_n(\mathrm S)$ của $n$ mẫu độc lập có kỳ vọng $11/21$ và độ lệch chuẩn $\sqrt{320/441}/\sqrt n\approx0{,}852/\sqrt n$. Với $n=2$, độ lệch chuẩn khoảng $0{,}602$; với $n=100$, khoảng $0{,}085$.
 
-**Kiểm tra lại.** Sai số $-0{,}524$ sau hai lượt nhỏ hơn một độ lệch chuẩn $0{,}602$.
+**Kiểm tra lại.** Sau hai lượt, $V_2(\mathrm S)-v_\pi(\mathrm S)=0-11/21\approx-0{,}524$; trị tuyệt đối $0{,}524$ nhỏ hơn một độ lệch chuẩn $0{,}602$.
 :::
 
 Ví dụ 05.7 dùng hai tính chất mà định nghĩa sau đặt tên.
@@ -901,7 +905,7 @@ Hai phép đọc ở vế phải đều lấy từ cùng bảng $V_t$ trước k
 
 So với mục tiêu Monte Carlo, mục tiêu TD thay phần đuôi ngẫu nhiên bằng một ước lượng; so với $T_\pi$ của Bài 04, nó thay kỳ vọng theo mọi trạng thái kế tiếp bằng một mẫu của biểu thức bên trong $(T_\pi V)(s)$. Sutton và Barto (2018, §6.1, trang 120) gọi đây là kết hợp lấy mẫu của Monte Carlo với bootstrap của quy hoạch động.
 
-Nhầm lẫn thường gặp là coi $\delta_t$ là sai số thật $v_\pi(S_t)-V_t(S_t)$. Một sai số TD là một mẫu; quan hệ của nó với sai số thật chỉ phát biểu được qua kỳ vọng (Mệnh đề 05.27), và Bài tập 05.6 cho một mẫu trái dấu với sai số thật.
+Nhầm lẫn thường gặp là coi $\delta_t$ là sai số thật $v_\pi(S_t)-V_t(S_t)$, đại lượng dương khi bảng đánh giá thấp trạng thái $S_t$. Một sai số TD là một mẫu; quan hệ của nó với sai số thật chỉ phát biểu được qua kỳ vọng (Mệnh đề 05.25, 05.27), và Bài tập 05.6 cho một mẫu trái dấu với sai số thật.
 
 ::: exercise Bài tập 05.6
 Dữ kiện: tàu đổ bộ thu nhỏ, $\gamma=1$, bảng $V(\mathrm S)=0$, $V(\mathrm X)=0{,}5$, $V(\mathrm L)=V(\mathrm G)=0$; giá trị chuẩn $v_\pi(\mathrm S)=11/21$. Từ $\mathrm S$, chuyển sang $\mathrm X$ có xác suất $0{,}8$ với phần thưởng $0$, chuyển sang $\mathrm L$ có xác suất $0{,}2$ với phần thưởng $-1$.
@@ -1022,7 +1026,7 @@ $$
 :::
 
 <!-- note-topic-id: lec-05-topic-22 -->
-Trong notebook Lunar Lander, mỗi bước mô phỏng dài $0{,}02$ giây, nên $70\%$ số chuyển là tự chuyển. Chúng ta cần biết một chuỗi tự chuyển dài làm gì với $V(s)$, khi mỗi tự chuyển kéo $V(s)$ về phía $R+\gamma V(s)$ (Nhận xét 05.22).
+Trong notebook Lunar Lander, mỗi bước mô phỏng dài $0{,}02$ giây; trong một bước, tàu dịch chuyển ít so với kích thước một ô gộp, nên $70\%$ số chuyển là tự chuyển. Chúng ta cần biết một chuỗi tự chuyển dài làm gì với $V(s)$, khi mỗi tự chuyển kéo $V(s)$ về phía $R+\gamma V(s)$ (Nhận xét 05.22).
 
 ::: example Ví dụ 05.12 (Ô chỉ có tự chuyển)
 **Dữ kiện.** Một ô $s$ chỉ có tự chuyển, mỗi lần với cùng phần thưởng $r$; TD(0) với bước hằng $\alpha$; $\gamma<1$; giá trị đầu $V_0$.
@@ -1069,7 +1073,7 @@ Tuy nhiên, mục tiêu TD đọc một bảng đang sai; Mục 4 xét hệ qu�
 
 ## 4. Độ chệch, phương sai và hội tụ
 
-Với $\alpha=0{,}5$, Monte Carlo lần ghé đầu tiên và TD(0) cho hai bảng khác nhau từ cùng hai lượt. Để biết bảng nào gần $v_\pi$ hơn và vì sao, chúng ta cần giá trị chuẩn và cần tách độ lệch thành các nguồn: kỳ vọng của mục tiêu lệch khỏi $v_\pi$ bao nhiêu, mục tiêu dao động quanh kỳ vọng bao nhiêu, và bước học có làm dao động tắt dần không. Mục 4.1 đặt hai bảng cạnh giá trị chuẩn, Mục 4.2–4.3 xét kỳ vọng và phương sai của mục tiêu, Mục 4.4 phát biểu điều kiện hội tụ.
+Với $\alpha=0{,}5$, Monte Carlo lần ghé đầu tiên và TD(0) cho hai bảng khác nhau từ cùng hai lượt. Để biết bảng nào gần $v_\pi$ hơn và vì sao, chúng ta cần giá trị chuẩn và cần tách độ lệch $V-v_\pi$ của mỗi bảng thành các nguồn: kỳ vọng của mục tiêu lệch khỏi $v_\pi$ bao nhiêu, mục tiêu dao động quanh kỳ vọng bao nhiêu, và bước học có làm dao động tắt dần không. Mục 4.1 đặt hai bảng cạnh giá trị chuẩn, Mục 4.2–4.3 xét kỳ vọng và phương sai của mục tiêu, Mục 4.4 phát biểu điều kiện hội tụ.
 
 <!-- note-topic-id: lec-05-topic-09 -->
 ### 4.1 Hai bảng trên cùng dữ liệu và giá trị chuẩn
@@ -1118,7 +1122,7 @@ $$
 Giá trị chuẩn lấy kỳ vọng theo mọi khả năng của môi trường, còn hai bảng chỉ phản ánh hai lượt đã quan sát. Ví dụ sau đo khoảng cách giữa chúng.
 
 ::: example Ví dụ 05.15 (Độ lệch của hai bảng so với giá trị chuẩn)
-**Dữ kiện.** Hai bảng của Ví dụ 05.13 và giá trị chuẩn $v_\pi(\mathrm S)=11/21$, $v_\pi(\mathrm X)=19/21$ của Ví dụ 05.14. Độ lệch là $V-v_\pi$.
+**Dữ kiện.** Hai bảng của Ví dụ 05.13 và giá trị chuẩn $v_\pi(\mathrm S)=11/21$, $v_\pi(\mathrm X)=19/21$ của Ví dụ 05.14. Độ lệch là $V-v_\pi$, tức sai số thật $v_\pi-V$ của Mục 3.1 đổi dấu; độ lệch âm nghĩa là bảng đánh giá thấp giá trị chuẩn.
 
 | Bảng | $V(\mathrm S)$, độ lệch | $V(\mathrm X)$, độ lệch |
 |---|---|---|
@@ -1177,7 +1181,7 @@ $$
 <!-- note-topic-id: lec-05-topic-10 -->
 ### 4.2 Độ chệch của mục tiêu TD
 
-Mục tiêu Monte Carlo có kỳ vọng $v_\pi(s)$ (Mệnh đề 05.7); mục tiêu TD đọc bảng, nên kỳ vọng của nó phụ thuộc bảng, và chúng ta cần đo độ lệch của kỳ vọng đó. Một cách trực quan, nếu bảng đánh giá thấp trạng thái kế tiếp, mục tiêu TD đánh giá thấp trạng thái hiện tại theo, nhân với $\gamma$; mô tả này chưa phải định nghĩa.
+Mục tiêu Monte Carlo có kỳ vọng $v_\pi(s)$ (Mệnh đề 05.7); mục tiêu TD đọc bảng, nên kỳ vọng của nó phụ thuộc bảng, và chúng ta cần đo khoảng cách từ kỳ vọng đó tới $v_\pi(s)$. Một cách trực quan, nếu bảng đánh giá thấp trạng thái kế tiếp, mục tiêu TD đánh giá thấp trạng thái hiện tại theo, nhân với $\gamma$; mô tả này chưa phải định nghĩa.
 
 ::: example Ví dụ 05.16 (Kỳ vọng của mục tiêu TD tại $\mathrm S$)
 **Dữ kiện.** Tàu đổ bộ thu nhỏ, $\gamma=1$. Bảng TD(0) sau $e_1$ (Ví dụ 05.9) được giữ cố định: $V(\mathrm X)=0{,}5$, $V(\mathrm L)=0$. Giá trị chuẩn $v_\pi(\mathrm S)=11/21$, $v_\pi(\mathrm X)=19/21$ (Ví dụ 05.14).
@@ -1210,6 +1214,14 @@ Mục tiêu **không chệch** tại $s$ khi độ chệch bằng $0$.
 :::
 
 Định nghĩa nói về một mục tiêu với bảng cố định, kỳ vọng chỉ lấy theo phần thưởng và trạng thái kế tiếp của một mẫu mới; trong Ví dụ 05.16, $\operatorname{bias}(Y;\mathrm S)=-34/105$. Định nghĩa 05.15 thì nói về một ước lượng tính từ dữ liệu, nên một bảng không chệch vẫn có thể cho một mục tiêu TD chệch.
+
+Nhầm lẫn thường gặp là trộn năm đại lượng có tên gần nhau của chương:
+
+- sai lệch $Y-V(s)$ giữa mục tiêu và ước lượng cũ, theo Định nghĩa 05.10;
+- sai số thật $v_\pi(s)-V(s)$, theo Mục 3.1, dương khi bảng đánh giá thấp;
+- độ lệch $V(s)-v_\pi(s)$ của bảng, theo Ví dụ 05.15, là sai số thật đổi dấu;
+- độ chệch $\operatorname{bias}(Y;s)=\mathbb E_\pi[Y\mid S_t=s]-v_\pi(s)$ của một mục tiêu, theo Định nghĩa 05.24;
+- độ lệch chuẩn, căn bậc hai của phương sai, như $0{,}852/\sqrt n$ của Ví dụ 05.7.
 
 Mệnh đề sau cho công thức độ chệch của mục tiêu TD với mọi bảng. Nó chỉ cần phương trình Bellman kỳ vọng của Bài 03.
 
@@ -1253,14 +1265,14 @@ Kiểm lại trên Ví dụ 05.16: $1\cdot\bigl[0{,}8\cdot(0{,}5-19/21)+0{,}2\cd
 
 **Điều kiện áp dụng.** Bảng cố định; dữ liệu theo chính sách.
 
-**Phạm vi.** Phần (c) cho phép sai số của bảng bù trừ nhau trong kỳ vọng; không chệch không có nghĩa bảng đúng.
+**Phạm vi.** Phần (c) cho phép độ lệch của bảng bù trừ nhau trong kỳ vọng; không chệch không có nghĩa bảng đúng.
 :::
 
 ::: proof Chứng minh Hệ quả 05.26
-Phần (a) là định nghĩa của $v_\pi$; phần (b) và (c) đọc trực tiếp từ công thức của Mệnh đề 05.25, vì độ chệch là tích của $\gamma$ với kỳ vọng của sai số bảng tại trạng thái kế tiếp. $\square$
+Phần (a) là định nghĩa của $v_\pi$; phần (b) và (c) đọc trực tiếp từ công thức của Mệnh đề 05.25, vì độ chệch là tích của $\gamma$ với kỳ vọng của độ lệch $V-v_\pi$ tại trạng thái kế tiếp. $\square$
 :::
 
-Trường hợp (c) có thể xảy ra với bảng sai khi sai số tại các trạng thái kế tiếp bù trừ nhau trong kỳ vọng; trên tàu đổ bộ thu nhỏ, mỗi trạng thái chỉ có một trạng thái kế tiếp không kết thúc, nên mục tiêu tại $\mathrm S$ không chệch khi và chỉ khi $V(\mathrm X)=19/21$.
+Trường hợp (c) có thể xảy ra với bảng sai khi độ lệch tại các trạng thái kế tiếp bù trừ nhau trong kỳ vọng; trên tàu đổ bộ thu nhỏ, mỗi trạng thái chỉ có một trạng thái kế tiếp không kết thúc, nên mục tiêu tại $\mathrm S$ không chệch khi và chỉ khi $V(\mathrm X)=19/21$.
 
 Mệnh đề 05.25 nối mục tiêu TD với toán tử $T_\pi$ của Bài 04. Vì $\mathbb E_\pi[Y\mid S_t=s]=(T_\pi V)(s)$, sai số TD có kỳ vọng là phần dư Bellman tại $s$.
 
@@ -1293,6 +1305,14 @@ $$
 :::
 
 Như vậy, tính trung bình, TD(0) đi theo hướng của phép lặp $V\leftarrow T_\pi V$ của Bài 04, mỗi bước dùng một mẫu thay cho kỳ vọng; kỳ vọng của sai số TD bằng $0$ ở mọi trạng thái đúng khi $V=v_\pi$, đích của định lý hội tụ ở Mục 4.4.
+
+Kết hợp với Mệnh đề 05.25, ta viết được kỳ vọng này theo sai số thật $v_\pi-V$ của Mục 3.1. Với bảng $V=V_t$ cố định, $\mathbb E_\pi[\delta_t\mid S_t=s]=\mathbb E_\pi[Y_t\mid S_t=s]-V(s)$ bằng $v_\pi(s)+\operatorname{bias}(Y_t;s)-V(s)$, nên
+
+$$
+\mathbb E_\pi[\delta_t\mid S_t=s]=\bigl(v_\pi-V\bigr)(s)-\gamma\,\mathbb E_\pi\bigl[(v_\pi-V)(S_{t+1})\mid S_t=s\bigr].
+$$
+
+Kỳ vọng của sai số TD bằng sai số thật tại $s$ trừ $\gamma$ nhân sai số thật trung bình tại trạng thái kế tiếp, nên kỳ vọng này khác sai số thật tại $s$ về độ lớn, và có thể cả về dấu. Trên dữ kiện của Bài tập 05.6, vế trái là $0{,}2\cdot(-1)+0{,}8\cdot0{,}5=0{,}2$ và vế phải là $11/21-0{,}8\cdot(19/21-0{,}5)=4{,}2/21=0{,}2$, trong khi sai số thật tại $\mathrm S$ là $11/21\approx0{,}524$.
 
 **Trong thực hành.** Trong notebook Lunar Lander, bảng TD(0) bắt đầu bằng $\mathbf 0$. Ô gộp không Markov nên $v_\pi$ của ô không được định nghĩa; theo nghĩa gần đúng của Mệnh đề 05.25, với lợi tức kỳ vọng theo ô thay cho $v_\pi$, mục tiêu bị kéo xuống cho tới khi các ô kế tiếp nhận được thông tin. Sau $10$ lượt, trung bình qua năm thứ tự lượt, $J$ của TD(0) với $\alpha=0{,}5$ còn $5208$, gần giá trị $5797$ của bảng $\mathbf 0$.
 
@@ -1530,6 +1550,10 @@ Mỗi giả thiết của Định lý 05.30 bị bỏ đều có phản ví dụ
 So với Monte Carlo, kết luận giống nhau nhưng giả thiết bước học khác: Định lý 05.16, 05.17 được chứng minh cho $1/N(s)$, lịch tái tạo đúng trung bình mẫu; Định lý 05.30 cho TD(0) chấp nhận mọi lịch Robbins–Monro. Monte Carlo cần lượt kết thúc với mọi $\gamma$; TD(0) với $\gamma<1$ thì không.
 :::
 
+Định lý 05.16, 05.17 và 05.30 đều không nói phương pháp nào tới $v_\pi$ nhanh hơn, và Sutton và Barto (2018, §6.2, trang 124) ghi rằng chưa có chứng minh toán học cho câu hỏi này. Cũng theo Sutton và Barto, trên các bài toán ngẫu nhiên, thực nghiệm thường cho TD(0) hội tụ nhanh hơn Monte Carlo bước hằng, như ở dãy năm ô của Ví dụ 6.2 trong sách, trang 125; bài giảng gốc (trang 28) cũng ghi TD thường hiệu quả mẫu hơn Monte Carlo. Trên ô gộp không Markov của Tình huống 05.1, thứ tự ngược lại: TD(0) với $\alpha=0{,}5$ cho $J\approx2101$, còn Monte Carlo mọi lần ghé cho $J\approx1627$, với thước đo $J$ vốn nghiêng về Monte Carlo.
+
+Cùng trang 28, bài giảng gốc ghi TD nhạy với giá trị khởi tạo hơn Monte Carlo. Mục tiêu $G_t$ không đọc bảng, nên khởi tạo $V_0(s)$ chỉ ảnh hưởng tới chính $V(s)$ và mất dần theo số mẫu tại $s$: mẫu đầu tiên xóa hẳn nó khi bước là $1/N(s)$, còn với bước hằng nó giữ trọng số $(1-\alpha)^n$ sau $n$ mẫu (Mệnh đề 05.9, 05.11). Mục tiêu TD đọc $V(S_{t+1})$, nên khởi tạo của các trạng thái kế tiếp đi vào mục tiêu tại $s$; phần đã đi vào chỉ giảm theo lịch bước học tại $s$ và còn lan sang các trạng thái đứng trước $s$. Ở tự chuyển, mục tiêu đọc chính $V_0(s)$, và với $\alpha=0{,}5$, $\gamma=0{,}99$, Ví dụ 05.12 cho khoảng cách tới điểm cố định còn khoảng $61\%$ sau $100$ tự chuyển.
+
 **Trong thực hành.** Trong notebook Lunar Lander, lịch $\alpha_n=1/n$ thỏa giả thiết bước học của Định lý 05.30, nhưng sau $2000$ lượt, $J$ của TD(0) với lịch này còn $5086$, trung bình qua năm thứ tự lượt; bảng của Tình huống 05.1 ghi $5157{,}9$ cho một thứ tự lượt. Trên chuỗi tự chuyển, bước thứ $n$ chỉ thu hẹp khoảng cách tới điểm cố định của Ví dụ 05.12 theo hệ số $1-(1-\gamma)/n$, gần $1$ khi $\gamma=0{,}99$. Định lý là bảo đảm tiệm cận.
 
 ::: exercise Bài tập 05.11
@@ -1554,13 +1578,13 @@ Chuỗi $\sum_nn^{-p}$ hội tụ khi và chỉ khi $p>1$.
 **Kiểm tra lại.** Lịch $n^{-p}$ thỏa cả hai điều kiện khi và chỉ khi $1/2<p\le1$.
 :::
 
-Như vậy, mục tiêu Monte Carlo không chệch, còn độ chệch của mục tiêu TD bằng $\gamma$ nhân sai số trung bình của bảng tại trạng thái kế tiếp (Mệnh đề 05.25), và sai số TD có kỳ vọng là phần dư Bellman (Mệnh đề 05.27). Mục tiêu một bước lý tưởng có phương sai không lớn hơn $G_t$ (Định lý 05.28), nhưng với bảng đang học thì không có thứ tự chung (Nhận xét 05.29). Với lịch Robbins–Monro theo trạng thái, TD(0) hội tụ về $v_\pi$ (Định lý 05.30).
+Như vậy, mục tiêu Monte Carlo không chệch, còn độ chệch của mục tiêu TD bằng $\gamma$ nhân độ lệch trung bình của bảng tại trạng thái kế tiếp (Mệnh đề 05.25), và sai số TD có kỳ vọng là phần dư Bellman (Mệnh đề 05.27). Mục tiêu một bước lý tưởng có phương sai không lớn hơn $G_t$ (Định lý 05.28), nhưng với bảng đang học thì không có thứ tự chung (Nhận xét 05.29). Với lịch Robbins–Monro theo trạng thái, TD(0) hội tụ về $v_\pi$ (Định lý 05.30).
 
 Tuy nhiên, mọi kết quả hội tụ của Mục 2 và Mục 4 giả thiết các lượt mới tiếp tục đến, điều Mục 5 bỏ đi.
 
 ## 5. Dữ liệu cố định và cập nhật theo lô
 
-Nhiều khi ta chỉ có một tập lượt hữu hạn. Trong tám lượt của Ví dụ 6.4 của Sutton và Barto (2018, §6.3, trang 127), liệt kê ở Ví dụ 05.20, lượt duy nhất qua $\mathrm A$ có lợi tức $0$, nhưng $\mathrm A$ luôn dẫn tới $\mathrm B$, và $\mathrm B$ thường cho phần thưởng $1$. Để dự đoán $v_\pi(\mathrm A)$, chúng ta cần một quy trình dùng lại dữ liệu và cần biết nó tiến tới nghiệm nào, theo tiêu chuẩn nào.
+Nhiều khi ta chỉ có một tập lượt hữu hạn. Bài thực hành Lunar Lander là một trường hợp như vậy: $2000$ lượt huấn luyện được thu một lần, việc thu chiếm phần lớn thời gian chạy của notebook, và phần 9 của notebook quét lại chính tập lượt đó (Tình huống 05.1). Trong tám lượt của Ví dụ 6.4 của Sutton và Barto (2018, §6.3, trang 127), liệt kê ở Ví dụ 05.20, lượt duy nhất qua $\mathrm A$ có lợi tức $0$, nhưng $\mathrm A$ luôn dẫn tới $\mathrm B$, và $\mathrm B$ thường cho phần thưởng $1$. Để dự đoán $v_\pi(\mathrm A)$, chúng ta cần một quy trình dùng lại dữ liệu và cần biết nó tiến tới nghiệm nào, theo tiêu chuẩn nào.
 
 <!-- note-topic-id: lec-05-topic-16 -->
 ### 5.1 Tám lượt hai trạng thái và lượt quét đầu
@@ -1713,7 +1737,7 @@ Với mục tiêu TD, phép quét đọc giá trị của trạng thái sau, nê
 
 **Điều kiện áp dụng.** Dữ liệu cố định; điều kiện $\alpha N(s)\le1$ là đủ, không cần. Khi $\gamma<1$, không cần giả thiết mọi lượt kết thúc.
 
-**Phạm vi.** $\hat V_{\mathrm{TD}}$ là giá trị đúng của quá trình thực nghiệm $(\hat P,\hat r)$, không phải của môi trường thật. Chứng minh dưới đây đủ cho $\gamma<1$; với $\gamma=1$ chỉ nêu ý tưởng.
+**Phạm vi.** $\hat V_{\mathrm{TD}}$ là giá trị đúng của quá trình phần thưởng Markov thực nghiệm $(\hat P,\hat r)$, không phải của môi trường thật. Chứng minh dưới đây đủ cho $\gamma<1$; với $\gamma=1$ chỉ nêu ý tưởng.
 :::
 
 ::: proof Chứng minh Mệnh đề 05.34
@@ -1745,11 +1769,11 @@ Trên Ví dụ 05.20, $\hat P(\mathrm B\mid\mathrm A)=1$, $\hat r(\mathrm A)=0$,
 
 ![Mô hình ước lượng từ tám lượt: A sang B với xác suất 1 và phần thưởng 0; B kết thúc với phần thưởng 1 với xác suất 6/8 và với phần thưởng 0 với xác suất 2/8; trạng thái kết thúc có giá trị 0.](img/lec-05/ab-empirical.svg)
 
-Hình vẽ quá trình thực nghiệm $(\hat P,\hat r)$: mũi tên từ $\mathrm A$ mang tỉ lệ $1$, hai mũi tên từ $\mathrm B$ mang tỉ lệ $6/8$, $2/8$. Nghiệm TD theo lô là giá trị đúng của mô hình này; Thuật toán 05.32 tới được nó mà không dựng mô hình.
+Hình vẽ quá trình phần thưởng Markov thực nghiệm $(\hat P,\hat r)$: mũi tên từ $\mathrm A$ mang tỉ lệ $1$, hai mũi tên từ $\mathrm B$ mang tỉ lệ $6/8$, $2/8$. Nghiệm TD theo lô là giá trị đúng của mô hình này; Thuật toán 05.32 tới được nó mà không dựng mô hình.
 
 ::: remark Nhận xét 05.35 (Hai tiêu chuẩn và giới hạn của chúng)
-- Monte Carlo theo lô khớp các lợi tức đã quan sát; TD theo lô khớp quan hệ Markov ước lượng từ dữ liệu. Hai nghiệm khác nhau tại $\mathrm A$ vì hai tiêu chuẩn khác nhau, không vì một phương pháp tính sai.
-- Nghiệm TD theo lô là ước lượng tương đương chắc chắn (certainty-equivalence estimate): giá trị đúng nếu mô hình thực nghiệm là mô hình thật (Sutton và Barto, 2018, §6.3, trang 128). Nghiệm Monte Carlo có sai số bằng $0$ trên dữ liệu huấn luyện.
+- Monte Carlo theo lô khớp các lợi tức đã quan sát; TD theo lô khớp quá trình phần thưởng Markov thực nghiệm. Hai nghiệm khác nhau tại $\mathrm A$ vì hai tiêu chuẩn khác nhau, không vì một phương pháp tính sai.
+- Nghiệm TD theo lô là ước lượng tương đương chắc chắn (certainty-equivalence estimate): giá trị đúng nếu quá trình phần thưởng Markov thực nghiệm là quá trình thật (Sutton và Barto, 2018, §6.3, trang 128). Nghiệm Monte Carlo có sai số bằng $0$ trên dữ liệu huấn luyện.
 - Khi quá trình thật là Markov, nghiệm TD dùng cả tám lần ghé $\mathrm B$ cho phần sau $\mathrm A$, thay vì một lợi tức; Sutton và Barto (2018, trang 128) nêu rằng khi đó ta kỳ vọng nghiệm TD có sai số nhỏ hơn trên dữ liệu tương lai. Khi trạng thái không Markov, lập luận này mất căn cứ.
 - Tám lượt không đủ để gọi một nghiệm là đúng hơn với mọi môi trường thật.
 :::
@@ -1785,7 +1809,7 @@ Các Mục 1–5 trả lời bài toán trung tâm bằng ba kết luận có đ
 |---|---|---|
 | Có lượt hoàn chỉnh | Monte Carlo, nêu quy tắc lần ghé và bước học | Thuật toán 05.13, Định lý 05.16–05.17 |
 | Cần cập nhật sau mỗi chuyển; có lượt bị cắt ngắn; trạng thái Markov | TD(0) với lịch Robbins–Monro | Thuật toán 05.21, Định lý 05.30 |
-| Tập dữ liệu cố định, quét lại nhiều lần | Chọn tiêu chuẩn: lợi tức quan sát hoặc mô hình Markov thực nghiệm | Thuật toán 05.32, Mệnh đề 05.33–05.34 |
+| Tập dữ liệu cố định, quét lại nhiều lần | Chọn tiêu chuẩn: lợi tức quan sát hoặc quá trình phần thưởng Markov thực nghiệm | Thuật toán 05.32, Mệnh đề 05.33–05.34 |
 
 Tình huống 05.1 đối chiếu bảng trên với bài thực hành Lunar Lander; Tình huống 05.2 xét một giả thiết bị vi phạm và hậu quả của nó.
 
@@ -1818,8 +1842,8 @@ Trung bình $G_0$ trên $500$ lượt kiểm tra là $56{,}04\pm2{,}70$ với kh
 **Diễn giải.**
 
 - Bước 1 và Bước 4 của chứng minh Định lý 05.17 không dùng tính Markov; khả tích ở Bước 2 suy từ $T\le1000$ của các lượt được giữ, và các lượt giữ lại vẫn độc lập cùng phân phối. Vì vậy Monte Carlo mọi lần ghé hội tụ về $\mu$; chỉ Bước 3, nơi giới hạn được đồng nhất với $v_\pi$, cần trạng thái Markov. $J$ nhỏ nhất tại $V=\mu$, nên thước đo này nghiêng về Monte Carlo mọi lần ghé.
-- TD theo lô là giá trị đúng của quá trình Markov thực nghiệm trên ô (Mệnh đề 05.34), khác $\mu$ vì ô không Markov; trung vị của $\lvert V_{\mathrm{MC}}-V_{\mathrm{TD}}\rvert$ là $15{,}2$, một phiên bản lớn của Ví dụ 05.20.
-- TD(0) với $1/n$ còn gần bảng khởi tạo $\mathbf 0$, vì $70\%$ chuyển là tự chuyển (Ví dụ 05.12, Mục 4.4).
+- TD theo lô là giá trị đúng của quá trình phần thưởng Markov thực nghiệm trên ô (Mệnh đề 05.34), khác $\mu$ vì ô không Markov; trung vị của $\lvert V_{\mathrm{MC}}-V_{\mathrm{TD}}\rvert$ là $15{,}2$, một phiên bản lớn của Ví dụ 05.20.
+- TD(0) với $1/n$ còn gần bảng khởi tạo $\mathbf 0$. Trong một bước mô phỏng $0{,}02$ giây, tàu dịch chuyển ít so với kích thước một ô gộp, nên $70\%$ chuyển là tự chuyển, và trên chuỗi tự chuyển bước $1/n$ tiến chậm tới điểm cố định (Ví dụ 05.12, Mục 4.4).
 
 **Giới hạn.** Các số thuộc một lần chạy với gymnasium 1.3.0, một cách chia ô và các bước học đã nêu; $J$ đo khoảng cách tới $\mu$, không tới $v_\pi$ của tàu thật.
 
@@ -1853,14 +1877,14 @@ thay cho $11/21\approx0{,}524$. Độ chệch là $0{,}44-11/21=-0{,}16\cdot11/2
 **Ứng dụng.**
 
 - Bài 06 dùng lại hai mục tiêu của chương cho giá trị hành động $q_\pi(s,a)$: Monte Carlo lấy trung bình lợi tức sau lần ghé cặp trạng thái–hành động, còn Sarsa dùng mục tiêu $R_{t+1}+\gamma Q(S_{t+1},A_{t+1})$ cùng dạng Định nghĩa 05.20, và điều kiện Robbins–Monro được áp dụng theo cặp.
-- Bài 07 thay bảng bằng hàm xấp xỉ có tham số. Bảng trên ô gộp của Tình huống 05.1 là trường hợp riêng với đặc trưng là chỉ báo của ô; mục tiêu TD trở thành mục tiêu của cập nhật bán gradient (semi-gradient), và bài thực hành Lunar Lander của Bài 07 dùng lại môi trường này.
+- Bài 07 thay bảng bằng hàm xấp xỉ có tham số. Bảng trên ô gộp của Tình huống 05.1 là trường hợp riêng với đặc trưng là chỉ báo của ô; mục tiêu TD trở thành mục tiêu của cập nhật bán gradient (Mục 2.3), và bài thực hành Lunar Lander của Bài 07 dùng lại môi trường này.
 - Bài 08 dùng mục tiêu bootstrap cho mạng Q sâu, với một mạng mục tiêu giữ cố định trong một khoảng thời gian, tương tự việc giữ bảng cố định khi lấy kỳ vọng ở Mệnh đề 05.25, và một bộ nhớ phát lại dùng lại dữ liệu cũ như Thuật toán 05.32.
 - Notebook thực hành của Bài 05 cài đặt Thuật toán 05.13, 05.21, 05.32 trên Lunar Lander và đo các đại lượng của Tình huống 05.1.
 
 <!-- note-topic-id: lec-05-topic-15 -->
 ## Tóm tắt chương
 
-Chương bắt đầu từ giới hạn của Bài 04: phép lặp $V\leftarrow T_\pi V$ cần mô hình, còn tàu đổ bộ thu nhỏ chỉ cho hai lượt (Định nghĩa 05.1). Monte Carlo lấy trung bình lợi tức sau lần ghé (Định nghĩa 05.3, 05.6, 05.8); mỗi lợi tức có kỳ vọng $v_\pi(s)$ (Mệnh đề 05.7), và với bước $1/N(s)$ trung bình hội tụ về $v_\pi$ (Định lý 05.16, 05.17). TD(0) thay phần lợi tức chưa quan sát bằng giá trị ước lượng (Định nghĩa 05.20, Thuật toán 05.21), nên cập nhật sau mỗi chuyển. Mục tiêu TD chệch theo sai số của bảng (Mệnh đề 05.25), còn mục tiêu một bước lý tưởng có phương sai không lớn hơn lợi tức (Định lý 05.28). Với lịch Robbins–Monro theo trạng thái, TD(0) cũng hội tụ về $v_\pi$ (Định lý 05.30). Trên dữ liệu cố định, hai phương pháp cho hai nghiệm theo hai tiêu chuẩn (Mệnh đề 05.33, 05.34). Bài 06 dùng các ước lượng này để cải thiện chính sách.
+Chương bắt đầu từ giới hạn của Bài 04: phép lặp $V\leftarrow T_\pi V$ cần mô hình, còn tàu đổ bộ thu nhỏ chỉ cho hai lượt (Định nghĩa 05.1). Monte Carlo lấy trung bình lợi tức sau lần ghé (Định nghĩa 05.3, 05.6, 05.8); mỗi lợi tức có kỳ vọng $v_\pi(s)$ (Mệnh đề 05.7), và với bước $1/N(s)$ trung bình hội tụ về $v_\pi$ (Định lý 05.16, 05.17). TD(0) thay phần lợi tức chưa quan sát bằng giá trị ước lượng (Định nghĩa 05.20, Thuật toán 05.21), nên cập nhật sau mỗi chuyển. Mục tiêu TD chệch theo độ lệch của bảng (Mệnh đề 05.25), còn mục tiêu một bước lý tưởng có phương sai không lớn hơn lợi tức (Định lý 05.28). Với lịch Robbins–Monro theo trạng thái, TD(0) cũng hội tụ về $v_\pi$ (Định lý 05.30). Trên dữ liệu cố định, hai phương pháp cho hai nghiệm theo hai tiêu chuẩn (Mệnh đề 05.33, 05.34). Bài 06 dùng các ước lượng này để cải thiện chính sách.
 
 **Định nghĩa và kết quả theo mục.**
 
@@ -1935,7 +1959,7 @@ Lần lượt xét Nhận xét 05.12, Định nghĩa 05.20 và Nhận xét 05.35
 
 (b) TD(0), cần phần thưởng vừa nhận, $V(\mathrm X)$, $V(\mathrm S)$, $\gamma$ và bước học để tính $Y=0+\gamma V(\mathrm X)$.
 
-(c) Phải nêu tiêu chuẩn trước: khớp lợi tức quan sát hay khớp quá trình Markov thực nghiệm. Muốn so với môi trường thật cần giá trị chuẩn hoặc dữ liệu đánh giá riêng; tám lượt không đủ.
+(c) Phải nêu tiêu chuẩn trước: khớp lợi tức quan sát hay khớp quá trình phần thưởng Markov thực nghiệm. Muốn so với môi trường thật cần giá trị chuẩn hoặc dữ liệu đánh giá riêng; tám lượt không đủ.
 
 **Kiểm tra lại.** Ba câu ứng với ba dòng của bảng lựa chọn đầu mục Tình huống.
 :::
@@ -1988,7 +2012,7 @@ Phân biệt thời điểm có lợi tức đầy đủ với thời điểm c�
 ::: solution
 TD(0) đáp ứng yêu cầu cập nhật sau mỗi chuyển; Monte Carlo phải chờ lượt kết thúc. TD(0) dùng phần thưởng vừa nhận, trạng thái sau, bảng hiện tại, $\gamma$ và bước học.
 
-Giới hạn: mục tiêu TD chệch theo sai số của bảng (Mệnh đề 05.25), và với phần thưởng chỉ ở cuối, thông tin lan ngược từng chuyển một (Ví dụ 05.9, 05.13). Lợi thế phương sai của Định lý 05.28 chỉ có với mục tiêu lý tưởng (Nhận xét 05.29); tự chuyển cùng bước $1/n$ làm thông tin lan rất chậm (Ví dụ 05.12).
+Giới hạn: mục tiêu TD chệch theo độ lệch của bảng (Mệnh đề 05.25), và với phần thưởng chỉ ở cuối, thông tin lan ngược từng chuyển một (Ví dụ 05.9, 05.13). Lợi thế phương sai của Định lý 05.28 chỉ có với mục tiêu lý tưởng (Nhận xét 05.29); tự chuyển cùng bước $1/n$ làm thông tin lan rất chậm (Ví dụ 05.12).
 
 **Kiểm tra lại.** Trong Tình huống 05.1, nơi lượt dài hàng trăm bước và phần thưởng lớn ở cuối, TD(0) với $\alpha=0{,}5$ cho $J=2101$, lớn hơn $1627$ của Monte Carlo, cho thấy lựa chọn theo yêu cầu cập nhật không bảo đảm sai số nhỏ hơn.
 :::
