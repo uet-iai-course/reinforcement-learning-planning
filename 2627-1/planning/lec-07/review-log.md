@@ -1266,3 +1266,162 @@ Kiểm tra lại: `note_check.py` 41/16/19 số hiệu liên tục, không trùn
 
 - Kiểm độc lập: `note_check.py` sạch; viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 132 khối, 0 lỗi console, không tải ngoài; `git diff --check` sạch. Rà lại toán (Opus 5.5 high, chỉ đọc, đối chiếu Sutton–Barto §11.2 tr. 260–264): 1 trung bình, 6 nhẹ, đã sửa.
 - Quyết định: **chấp nhận**; commit `fix(materials-07)`.
+
+## Đợt sửa 2026-10-12 — Giai đoạn III: bài tập
+
+### Tác tử
+
+| vai | loại | mô hình | mức | ghi tệp |
+|---|---|---|---|---|
+| Soạn bài tập (brief `brief_exercises_writer.md`, kể cả mục "Bổ sung 2026-10-14") | `general-purpose` (bằng chứng lời gọi công cụ do điều phối viên ghi) | claude-opus-5-5 | high | `materials/lec-07/exercises.md` (tệp mới), mục này |
+
+Đầu vào: ghi chú và deck ở HEAD (`5a05404`), `quyet-dinh-chuan-2026-10-12.md`, kế hoạch C và D của `revision-plan-2026-10-12.md`, mục "Số dự kiến cho `exercises.md` (giai đoạn III)" ở trên, phiếu Bài tập tuần 7 (hw07, bài 1–8), hai notebook Bài 07, mẫu `materials/_templates/exercises.md`, sản phẩm mẫu math-4-AI lec-07 (chỉ cách trình bày). Không sửa ghi chú, deck, outline, storyboard, index, notebook. Không tạo SVG mới. Không commit.
+
+### Danh sách bài
+
+Theo quyết định chung 2026-10-14 trong brief: tệp chép các bài tập thân chương có trang "Bài tập: …" trên deck (giữ số hiệu, phát biểu lại đủ dữ kiện, kết quả giống deck) và thêm bài mới nối tiếp bộ đếm (07.19 là bài cuối của ghi chú). Bài thân chương không có trang deck (07.1, 07.2, 07.4, 07.6, 07.9, 07.12) chỉ ghi trong bảng `Mạch | Mở phần | Bài tập` dạng "ghi chú: 07.k" có liên kết tới ghi chú. Không chép "Bài tập củng cố" (07.15–07.19).
+
+| số hiệu | mức | mạch | nguồn | mục tiêu học tập của ghi chú | trùng deck (`#/h/v`, kiểm bằng Reveal) |
+|---|---|---|---|---|---|
+| 07.20 | nhận biết | 3 | mở rộng Bài tập 07.6 (hw07 bài 6); danh sách 07.6(b) cũ chuyển sang tệp | 6 | không |
+| 07.23 | nhận biết | 2 | hw07 bài 1; Ví dụ 07.1, notebook Lunar Lander mục 6, Flappy Bird $d=771$ | 1 | không |
+| 07.3 | tính toán | 2 | ghi chú 07.3 | 1 | `L07-11b` `#/2/12` (đề và lời giải cùng trang) |
+| 07.5 | tính toán, chứng minh | 3 | hw07 bài 4; ghi chú 07.5 | 3 | `X01` `#/3/9`, `X01b` `#/3/10` |
+| 07.7 | tính toán | 4 | ghi chú 07.7 | 2, 3 | `L07-20c` `#/4/7` (cùng trang) |
+| 07.8 | tính toán | 4 | hw07 bài 5 (câu a); ghi chú 07.8 | 4 | câu (b) trùng `L07-24c` `#/4/14` (cùng trang) |
+| 07.10 | tính toán | 5 | hw07 bài 7; ghi chú 07.10 | 2 | `X02` `#/5/7`, `X02b` `#/5/8` |
+| 07.11 | tính toán | 5 | hw07 bài 8; ghi chú 07.11 | 2 | `X03` `#/5/9`, `X03b` `#/5/10` |
+| 07.13 | tính toán | 6 | ghi chú 07.13 (dữ kiện hw07 bài 8, mục tiêu Q-learning) | 2, 5 | `L07-31d` `#/6/5`, `L07-31e` `#/6/6` |
+| 07.21 | chứng minh, tính toán | 4 | hw07 bài 5; 07.8(a) cũ chuyển sang tệp; dữ kiện câu (c) của Ví dụ 07.11 | 4 | không |
+| 07.14 | vận dụng | 6 | hw07 bài 3; ghi chú 07.14 | 5 | `L07-33` `#/6/10`, `L07-33b` `#/6/11` |
+| 07.22 | vận dụng | 6 | biến thể Q-learning của ví dụ $w\to2w$ (Sutton và Barto, 2018, §11.2, tr. 260), phương án (b) của RL 1 | 5, 6 | không (liên quan `L07-32b` `#/6/7`) |
+| 07.24 | vận dụng [Lập trình] | 3, 4 | notebook Lunar Lander mục 6–8, gợi mở 5 của mục 16 | 4, 6 | không |
+| 07.25 | vận dụng [Lập trình] | 5, 6 | notebook Flappy Bird mục 4–6, 10, bảng `TUNE` | 5, 6 | không |
+
+Mỗi mức có ít nhất hai bài (2, 8, 4). Mạch 2–6 đều có bài; sáu mục tiêu học tập của ghi chú đều có bài. Phiếu hw07: bài 1, 3, 4, 5, 7, 8 có trong tệp; bài 2 và 6 là Bài tập 07.9, 07.6 của ghi chú (bảng dẫn tới ghi chú). Liên kết `#/N/1` tới sáu trang tiêu đề mạch và `#/1/1` kiểm bằng Playwright (cổng 8799): đúng `L07-M2T` … `L07-M7T`, `L07-01`.
+
+### Sai lệch so với kế hoạch C và lý do
+
+- Kế hoạch C chép 07.1 và 07.6; theo quyết định chung 2026-10-14 hai bài này không có trang deck nên chỉ ghi "ghi chú: 07.k" trong bảng.
+- Số hiệu cũ của kế hoạch C ("07.13" bộ ba bất ổn) nay là 07.14; thêm 07.13 (ba cập nhật Q-learning), bài đã chuyển vào §5.1 và có trang `L07-31d`/`31e`.
+- 07.20–07.22 theo "Số dự kiến cho `exercises.md`" của review-log, không theo bảng C: 07.20 là phân loại bốn dãy bước học (thêm câu (c) tổng bước hữu hạn, $w_n\to5$); 07.21 là hw07 bài 5 đầy đủ (câu a, b) cộng kiểm số bằng ma trận $\Pi_D$; 07.22 là biến thể Q-learning ($x(s_2,\mathrm{ra})=0$, hành vi luôn chọn $\mathrm{ra}$, $w_n=1{,}08^n$). Bài C cũ "miền $(\alpha,\gamma)$ gây phân kỳ, cập nhật theo $d_\pi$ thì ổn định" gộp vào 07.22 câu (b), (e), (f). Hai bài [Lập trình] của C đánh số 07.24, 07.25.
+- Thêm 07.23 (hw07 bài 1): bài 1 chưa có trong ghi chú; cần thêm một bài nhận biết sau khi 07.1, 07.6 không chép.
+- 07.24: bỏ câu "giải thích vì sao LSTD có $J$ lớn hơn" của C vì trùng Bài tập 07.19(c) (bài tập củng cố); thay bằng kiểm trị riêng của $\hat A$ và đọc sai số ước lượng.
+- 07.25: bỏ phần "họ `der` so với `four3`" của C vì notebook Flappy Bird (ô sau mục 6, câu hỏi về lớp chính sách của `der`) đã có câu hỏi và lời giải; tập trung vào $\lVert w\rVert$, $\max\lvert\hat q\rvert$ và quy tắc phân loại đặt trước.
+- Bài trùng ghi chú: đề giữ dữ kiện và kết quả; lời giải viết lại theo khuôn tệp bài tập ("**Câu (a).**", một bước mỗi dòng, "**Kiểm tra lại.**" nêu lỗi thường gặp). 07.5 thêm vào câu (b) phép kiểm số của `X01` ($w_{n+1}=(1{,}8;-0{,}6)$); 07.10 thêm cột "sai lệch" vào bảng của `X02b`; 07.7 tách câu hỏi gộp thành các câu (a)–(c); 07.3 viết câu (c) thành yêu cầu "Xác định … hay không" để không kết bằng dấu hỏi.
+- Số bài là 14, trong khoảng thường gặp 8–15.
+
+### Số liệu đã tính lại
+
+Script `ex07/verify.py` trong scratchpad phiên (Python thuần, phân số chính xác khi cần). 07.3: $c^*=2(1-\beta)$, $\inf J=2\beta(1-\beta)$, $\tfrac12$ và $\tfrac38$. 07.5: $(1{,}8;-0{,}6)$. 07.7: $\delta=-0{,}6$, $(-0{,}6;-1{,}2)$, $(-1{,}08;0)$, $(0{,}48;-1{,}2)$. 07.8: $v_\pi=(4{,}5;5{,}5)$, $w_{\mathrm{MC}}=3{,}1$, $A=19/40$, $b=1$, $w_{\mathrm{TD}}=40/19$, $T_\pi\Phi w_{\mathrm{TD}}=(54/19;73/19)$; lỗi mẫu $A=0{,}25$, $w=4$. 07.10: ba hàng bảng, $(1\,468{,}85;1\,087{,}04;705{,}23)$; lỗi mẫu "dùng $w_0$ cho cả ba" cho $(598{,}8;300{,}1;298{,}1)$. 07.11: $w_3=(8{,}032;-2{,}064;1{,}264)$, $(23{,}296;19{,}392;27{,}424)$. 07.13: $w_3=(7{,}36;-1{,}92;1{,}12)$, $(21{,}28;25{,}12)$. 07.20: $w_n=10n/(n+1)$ ($5$; $20/3$) và $w_n=10-5(n+2)/(n+1)$ ($2{,}5$; $10/3$; giới hạn $5$, kiểm số $10^6$ bước cho $4{,}999995$); $\sum_{j\ge2}j^{-2}\approx0{,}645$. 07.21: $A=0{,}475$, $b=\tfrac12$, $w_{\mathrm{TD}}=20/19$, $\Pi_D=\begin{bmatrix}0{,}2&0{,}4\\0{,}4&0{,}8\end{bmatrix}$, $\Pi_DT_\pi\Phi w_{\mathrm{TD}}=(20/19;40/19)$, $b-A\cdot2{,}9=-0{,}8775$. 07.22: $1{,}08$; $1{,}1664$; $1{,}08^{30}\approx10{,}06$; $w_0=-1$: $-0{,}9$, $-0{,}81$, $-0{,}0424$; bảng $Q_k=1{,}8-0{,}8\cdot0{,}9^k$ ($1{,}08$; $1{,}152$); vòng theo chính sách $1{,}08\cdot0{,}78=0{,}8424$, mười vòng $\approx0{,}180$; $A=-0{,}4$ và $0{,}7$. 07.23: $2\cdot10^{12}$ ô, $2\cdot10^{13}$ chuyển, $\approx3{,}66\cdot10^7$ lần, $1{,}6\cdot10^{13}$ byte, $1\,896/9\,216\approx0{,}206$. 07.24 (a): $\sum\alpha_n^2\le c^2(1+n_0)$. 07.25: $\sqrt{32}\approx5{,}657$, ngưỡng $17{,}68$; $15{,}1\cdot5{,}657\approx85{,}4$; $1\,895{,}1\cdot5{,}657\approx10\,720$; $\sqrt{514}\approx22{,}67$, ngưỡng $4{,}41$. Số liệu notebook đối chiếu với output đã nhúng: $J_{\mathrm{kt}}$ $2\,190{,}1$, $1\,855{,}2$, $1\,481{,}0$, $1\,612{,}8$; $\kappa$ $0{,}01$ (MC), $0{,}03$ (TD); hạng $156/156$; $0{,}5832$; bảng `TUNE` (`poly2` $1\,895{,}1$/$15{,}1$; `four3` $8{,}8$/$6{,}9$, $36{,}6$/$29{,}7$ ống); $\max\lvert\hat q\rvert=14{,}4$.
+
+### Chỗ cần rà toán soi
+
+- 07.24 (b): áp Định lý 07.17 cho phân phối thực nghiệm (rút có hoàn lại từ $504\,869$ cặp), với giới hạn là nghiệm phương trình chuẩn; lập luận thay $v_\pi$ bằng trung bình có điều kiện thực nghiệm.
+- 07.24 (c): khẳng định "mọi trị riêng của $\hat A$ có phần thực dương thì $w_n\to\hat A^{-1}\hat b$" với mẫu độc lập và bước Robbins–Monro, dẫn "theo cùng ý tưởng như chứng minh Định lý 07.29"; về hình thức cần một định lý xấp xỉ ngẫu nhiên (chẳng hạn Bertsekas và Tsitsiklis, 1996, chương 4) có điều kiện ổn định.
+- 07.22: định nghĩa $A$ với hành động tham lam $a^*$ khi $w>0$ và $\mu=(\tfrac12;\tfrac12)$ trên hai cặp được cập nhật; câu (e) dùng phép tính trực tiếp vì chuỗi trên cặp có chu kỳ $2$ và chính sách đổi theo $w$.
+- 07.25 (b): quy tắc phân loại là một lựa chọn hợp lệ, không phải tiêu chuẩn duy nhất; ngưỡng $100$ dựa trên $\lvert R\rvert\le1$ của Flappy Bird ($+0{,}1$, $+1$, $-0{,}5$, $-1$ theo mục 2 notebook).
+
+### Đề nghị sửa deck
+
+- `L07-36f` (Bài tập về nhà và tài liệu đọc): bảng `Mạch | Bài tập` đang dùng 07.1–07.19 của ghi chú và dòng "Tệp bài tập: chưa có". Đề nghị thêm các bài chỉ có trong tệp theo mạch: mạch 2: 07.23; mạch 3: 07.20, 07.24; mạch 4: 07.21, 07.24; mạch 5: 07.25; mạch 6: 07.22, 07.25; và thay "Tệp bài tập: chưa có" bằng liên kết `material-viewer.html?doc=materials/lec-07/exercises.md&deck=lecture-07-xap-xi-ham.html` (dòng "Ghi chú bài giảng · Bài tập").
+
+### Đề nghị sửa ghi chú (đợt đồng bộ sau)
+
+- Phần tài liệu tham khảo của ghi chú ghi "Bài tập tuần 7, bài 1–8: Bài tập 07.5, 07.6, 07.8–07.11, 07.14"; có thể thêm "bài 1: Bài tập 07.23, bài 5: Bài tập 07.21 (tệp bài tập)".
+- Mục tiêu học tập 1, 4, 5, 6 có thể dẫn thêm 07.23, 07.21, 07.22, 07.20/07.24/07.25. Không bắt buộc.
+
+### Tự kiểm `no-ai-slop` (Edit) theo `eval.md`
+
+Phạm vi: toàn bộ `exercises.md`. Đạt: không thêm nhận định không nguồn (số liệu thực hành đều là output đã nhúng hoặc bảng thử nghiệm nhúng trong notebook; phản ví dụ Q-learning dẫn Sutton và Barto, 2018, §11.2, tr. 263; bài [Lập trình] nêu điều định lý dự đoán, không bịa kết quả chạy, cột "đo được" để trống); không câu hỏi tu từ, không "hãy", không "Đáp án", tài liệu không làm chủ ngữ; một tên cho một khái niệm ("mục tiêu TD", "sai lệch", "sai số TD", "phản ví dụ của Baird"); thuật ngữ tiếng Anh ở lần dùng đầu trong tệp (gồm truncation, random seed, irreducible, aperiodic, importance sampling, standard error); "Kiểm tra lại" kết thúc bằng phép kiểm cụ thể và lỗi thường gặp kèm kết quả sai, không câu kết khẩu hiệu. Gạch dài chỉ ở tiêu đề và tên phiếu bài tập. Không dùng điểm của bộ phát hiện AI.
+
+### Kiểm tra
+
+- `note_check.py` (đường dẫn tuyệt đối): 14 khối `exercise`, 14 `hint`, 14 `solution`, không khối lạ, không lồng, không trùng số; số hiệu 07.3–07.25 với các số vắng 07.1, 07.2, 07.4, 07.6, 07.9, 07.12, 07.15–07.19, đúng quyết định chung (bài thân chương không có trang deck và bài tập củng cố không chép); mẫu "trang chiếu" có 12 lượt, đều là dòng "Trùng trang chiếu" bắt buộc và đoạn mở; 0 dấu `\(`/`\[`; khoảng $10\,190$ từ.
+- `check_note.py 07 lecture-07-xap-xi-ham.html exercises` (viewer cổng 8766), 1600×900 và 390×844: 0 `.katex-error`, 42 khối nhận diện, 0 lỗi console, 0 yêu cầu ngoài hoặc lỗi, không cuộn ngang.
+- Script `ex07/links.py` (Playwright, cổng 8799): 21 liên kết `lecture-07-xap-xi-ham.html#/h/v` trỏ đúng trang (bảng trên); mọi liên kết trong viewer chỉ tới `lecture-07-xap-xi-ham.html` và `material-viewer.html`.
+- Không có khoảng trắng cuối dòng; `git diff --check` sạch với các tệp đã theo dõi. Không commit.
+
+## Rà soát ba vai và sửa (giai đoạn III, bài tập), 2026-10-14
+
+### Tác tử
+
+| vai | loại | mô hình | mức | ghi tệp |
+|---|---|---|---|---|
+| Rà toán và thuật toán (TOAN, `exrev-07-TOAN.md`) | `general-purpose` (bằng chứng lời gọi công cụ do điều phối viên ghi) | claude-opus-5-5 | high | không |
+| Góc nhìn sinh viên (SV, `exrev-07-SV.md`) | như trên | claude-opus-5-5 | high | không |
+| Sư phạm, văn phong, nguồn, `no-ai-slop` Detect (PB, `exrev-07-PB.md`) | như trên | claude-opus-5-5 | high | không |
+| Biên tập (cùng tác tử soạn bài tập) | như trên | claude-opus-5-5 | high | `exercises.md`, mục này |
+
+Kết quả: 0 chặn, 0 nghiêm trọng. TOAN 3 trung bình, 7 nhẹ; SV 2 trung bình (một ngoài tệp), 10 nhẹ; PB 5 trung bình (T3 trùng TOAN-2, T5 ngoài tệp), 20 nhẹ. Quyết định sửa của điều phối viên theo hai thông điệp ngày 2026-10-14.
+
+### Đánh số lại các bài mới (theo thứ tự xuất hiện; ghi chú và deck chưa dẫn các số này)
+
+| số cũ (mục Giai đoạn III ở trên) | số mới | bài |
+|---|---|---|
+| 07.23 | 07.20 | giới hạn của bảng tra (hw07 bài 1) |
+| 07.20 | 07.21 | bốn dãy bước học |
+| 07.21 | 07.22 | điểm dừng trung bình của TD(0) (hw07 bài 5) |
+| 07.22 | 07.23 | Q-learning trên mảnh MDP hai trạng thái |
+| 07.24, 07.25 | giữ | hai bài [Lập trình] |
+
+Mức: nhận biết 07.20, 07.21; tính toán hoặc chứng minh 07.3, 07.5, 07.7, 07.8, 07.10, 07.11, 07.13, 07.22; vận dụng 07.14, 07.23, 07.24, 07.25. Mạch: 2 → 07.3, 07.20; 3 → 07.5, 07.21, 07.24; 4 → 07.7, 07.8, 07.22, 07.24; 5 → 07.10, 07.11, 07.25; 6 → 07.13, 07.14, 07.23, 07.25; 7 → ghi chú 07.18 (trang `L07-35` `#/7/6`, `L07-35b` `#/7/7`).
+
+### Phát hiện và trạng thái (số bài theo số mới)
+
+| mã | mức | vị trí | xử lý | trạng thái |
+|---|---|---|---|---|
+| TOAN-1 = SV-1 = PB N13 | tb | 07.24(c) | đề: "kiểm điều kiện của Mệnh đề 07.28 cho $\hat A$ bằng số"; gợi ý: $z^\top\hat Az=z^\top\tfrac12(\hat A+\hat A^\top)z$; lời giải tách bốn bước có nhãn (hướng trung bình; $\lambda_{\min}(\hat A_{\mathrm s})>0$; kết luận với hàm Lyapunov $\lVert w-w^*\rVert^2$, Bertsekas và Tsitsiklis 1996 ch. 4; vì sao kiểm bằng số); "Nhận xét" nêu điều kiện yếu hơn (phần thực trị riêng dương, phương pháp ODE, Borkar và Meyn 2000) và trường hợp phần thực âm hoặc bằng $0$; thêm Borkar và Meyn (2000) vào tài liệu tham khảo | đã sửa |
+| TOAN-2 = PB T3 | tb | 07.24(d) | đề và lời giải: "sai lệch do thuật toán chưa tới điểm đích"; nêu hai lý do không đúng là sai số ước lượng (tập kiểm tra khác tiêu chí huấn luyện, hiệu có thể âm; hàng TD là khoảng cách tới điểm cố định Bellman chiếu thực nghiệm) | đã sửa |
+| TOAN-3 = SV, PB N5 | tb | 07.21(b) | bỏ "để nhiễu tích lũy không tắt dần"; viết: hai dãy nằm ngoài giả thiết nên Định lý 07.17 không kết luận; bước hằng dao động; với $1/\sqrt{n+1}$ phương sai $\approx\alpha_n\sigma^2/2\to0$; thêm lỗi "coi Robbins–Monro là điều kiện cần" | đã sửa |
+| TOAN nhẹ | nhẹ | 07.24(b) | thêm câu về trung bình có điều kiện thực nghiệm của $G$ và việc chứng minh chỉ dùng $\mathbb E[xx^\top]$, $\mathbb E[xG]$; năm gạch đầu dòng gắn số giả thiết; "$\to J_{\mathrm{kt}}$ của nghiệm phương trình chuẩn, xấp xỉ $1\,481{,}0$" | đã sửa |
+| TOAN nhẹ | nhẹ | 07.24 đề | $J_{\mathrm{kt}}$ trên mọi thời điểm của các lượt kết thúc thật trong $500$ lượt kiểm tra ($7$ lượt cắt ngắn) | đã sửa |
+| TOAN nhẹ | nhẹ | 07.23 | ký hiệu $w^{(k)}=w_{2k}$ (sau $k$ lượt), $Q^{(k)}$ | đã sửa |
+| TOAN nhẹ | nhẹ | 07.23(f) | nêu $\mu=\tfrac12$ mỗi cặp (mỗi lượt hoặc vòng cập nhật mỗi cặp một lần), $a^*$ khi $w>0$; thêm trường hợp $w<0$: $A=\tfrac12$ | đã sửa |
+| TOAN nhẹ = SV = PB N4, N7 | nhẹ | 07.20(c) | đề nêu thành phần của đặc trưng thô (hằng $1$, sáu biến chuẩn hóa về $[-1,1]$, hai cờ chân), $\alpha\approx0{,}00401$, $G_0=66{,}190$, hai ô khác nhau; câu (c) thành yêu cầu tính $x(S_1)^\top x(S_0)\approx2{,}2$; bỏ câu "Đó là tổng quát hóa: …"; thêm lỗi "chung một thành phần khác $0$ thì tích vô hướng khác $0$" | đã sửa |
+| TOAN nhẹ | nhẹ | 07.25(a) | "trong cả ba lần chạy" | đã sửa |
+| SV, PB N1, N2 | nhẹ | thứ tự, số hiệu | đánh số lại theo thứ tự xuất hiện (bảng trên); bài bảng tra đứng trước bài bước học; 07.21 ghi "nhận biết ở (a), (b); tính toán ở (c)" | đã sửa |
+| SV | nhẹ | 07.8(a) | đề nêu ba dòng biến đổi của chứng minh và dẫn Bài tập 07.22(b); gợi ý chỉ "dòng thứ hai" | đã sửa |
+| SV | nhẹ | 07.25 | đề giải thích $z(s)$ (bốn đại lượng dẫn xuất, chuẩn hóa về $[0,1]$); chép hai dòng Sarsa, Q-learning của Nhận xét 07.40; thêm độ lệch chuẩn $4{,}3$, $13{,}3$ vào đề | đã sửa |
+| SV | nhẹ | 07.23 tên hành động | $\mathrm{di},\mathrm{ve},\mathrm{ra}$ → $a_0$ (đi sang $s_2$), $a_1$ (về $s_1$), $a_2$ (ra trạng thái kết thúc), chú giải bằng chữ trong đề | đã sửa |
+| SV | nhẹ | hiển thị | tách dòng 07.23(b), (e), (f), 07.22(a), 07.24(a); đo lại: 1600×900 không khối công thức nào rộng hơn khung (trước đó 07.23(e)); 390×844 còn 19 khối cuộn ngang trong khung (trước 27), trang không tràn | đã sửa |
+| SV | tb (ngoài tệp) | deck `L07-36f` | ghi đề nghị (mục dưới) | đề nghị |
+| SV | nhẹ (ngoài tệp) | mục lục viewer đánh số chồng | ghi nhận cho điều phối viên | không sửa |
+| PB T1 | tb | đoạn mở, bảng hàng mạch 7 | hàng 7: "ghi chú: 07.18 (Bài tập củng cố)" kèm liên kết `#/7/6`, `#/7/7` (kiểm bằng Reveal: `L07-35`, `L07-35b`); đoạn mở thêm một câu; nguồn 07.25 dẫn 07.18 | đã sửa |
+| PB T2, N11 | tb, nhẹ | 07.25(b), (c) | quy tắc ba nhóm xét theo thứ tự, nhóm 3 là phần bù ("bị chặn, chính sách chưa tốt"), mỗi ngưỡng có lý do; đề (b) đòi phủ mọi lần chạy; (c) Sarsa/`poly2` chỉ là "ứng viên" | đã sửa |
+| PB T4 | tb | Hướng dẫn, 07.8, 07.22(c) | Hướng dẫn nêu ba mô hình dùng bộ đặc trưng 1 và 2; 07.8 "Kiểm tra lại": $20/19$ là nghiệm của mô hình Ví dụ 07.11; 07.22(c) đổi sang chuỗi mới (từ $s_1$ đi đều, từ $s_2$ về $s_1$; $d_\pi=(\tfrac23;\tfrac13)$, $r_\pi=(1;0)$): $A=\tfrac12$, $b=\tfrac23$, $w_{\mathrm{TD}}=\tfrac43$, $\Pi_D=\begin{bmatrix}\frac13&\frac13\\ \frac23&\frac23\end{bmatrix}$, $T_\pi\Phi w_{\mathrm{TD}}=(2{,}8;1{,}2)$, phép chiếu Euclid cho $(1{,}04;2{,}08)$; (d) $v_\pi=(\tfrac{200}{29};\tfrac{180}{29})$, $w_{\mathrm{MC}}=\tfrac{380}{87}\approx4{,}368$, $b-Aw_{\mathrm{MC}}=-\tfrac{44}{29}$ | đã sửa; cần rà toán lại 07.22(c)(d) |
+| PB T5 | tb (ngoài tệp) | deck `L07-36f` | đề nghị (mục dưới) | đề nghị |
+| PB N8, N9, N10 | nhẹ | 07.24 | gợi ý: tự sinh tập tinh chỉnh $500$ lượt với hạt giống $800000+i$ (notebook không sinh sẵn); nguồn: gợi mở 5 của mục 16 là cho phần B, ở đây áp cho phần A; đề giải thích $1\,612{,}8$ (LSTD toàn bộ dữ liệu) so với $1\,622{,}2$ (lượt kết thúc thật) | đã sửa |
+| PB N12 | nhẹ | 07.23(b) | đề hỏi mọi cặp $(\alpha,\gamma)$ để hệ số lớn hơn $1$; lời giải: mọi $\alpha>0$, $\gamma\in(\tfrac12,1)$ | đã sửa |
+| PB N14 | nhẹ | 07.24(c) | tách bước có nhãn (cùng TOAN-1) | đã sửa |
+| PB N15 | nhẹ | 07.25 gợi ý | sửa `train_linear` để tính $\max\lvert\hat q\rvert$ trên `OBS_REF` mỗi $500$ lượt; ước lượng $15$–$30$ phút từ mức $58$ giây/$4\,000$ lượt `four3` của mục 6, kèm lời khuyên đo một lần chạy trước | đã sửa |
+| PB N16 | nhẹ | 07.24, 07.25 | thêm "[Lập trình]" vào tiêu đề `###` và tiêu đề khối | đã sửa |
+| PB N17 | nhẹ | bảng mạch | thêm số mục cạnh "ghi chú: 07.k" | đã sửa |
+| PB N6, N18 | nhẹ | 07.21(c), 07.24 | "dãy dừng ở giữa đường" → "bằng một nửa $w_{\mathrm{MC}}=10$"; "output" → "kết quả in ra" | đã sửa |
+| PB N19 | nhẹ | 07.10 nguồn | ghi tên "Monte Carlo control with semi-gradient" của phiếu và quy ước của bài | đã sửa |
+| PB N20 | nhẹ | 07.11, 07.14 | giữ câu "Bảng dùng cùng cột với trang lời giải của trang chiếu", vì nối với deck | giữ |
+
+### Số liệu đã tính lại
+
+Script phân số (Python thuần): 07.22(c) $d_\pi^\top P_\pi=d_\pi^\top$ với $d_\pi=(\tfrac23;\tfrac13)$; $P_\pi\Phi=(1{,}5;1)$; $A=\tfrac12$, $b=\tfrac23$, $w_{\mathrm{TD}}=\tfrac43$; $\Pi_D$ như bảng; $\Pi_DT_\pi\Phi w_{\mathrm{TD}}=(\tfrac43;\tfrac83)$; chiếu Euclid $(1{,}04;2{,}08)$; $\Pi_D^2=\Pi_D$; $v_\pi$ thỏa $v_1=1+0{,}9(\tfrac12v_1+\tfrac12v_2)$, $v_2=0{,}9v_1$; $w_{\mathrm{MC}}=\tfrac{380}{87}$; $b-Aw_{\mathrm{MC}}=-\tfrac{44}{29}\approx-1{,}517$. 07.20(c) $0{,}5832/(0{,}00401\cdot66{,}190)\approx2{,}197$. 07.23(f) với $w<0$: $A=\tfrac12$, khớp hệ số $0{,}9$ mỗi lượt. Các số khác không đổi.
+
+### Đề nghị sửa deck (thay đề nghị ở mục Giai đoạn III, theo số mới)
+
+- `L07-36f`: bảng `Mạch | Bài tập` thêm các bài chỉ có trong tệp: mạch 2: 07.20; mạch 3: 07.21, 07.24; mạch 4: 07.22, 07.24; mạch 5: 07.25; mạch 6: 07.23, 07.25; mạch 7 giữ 07.18. Thay "Tệp bài tập: chưa có" bằng liên kết `material-viewer.html?doc=materials/lec-07/exercises.md&deck=lecture-07-xap-xi-ham.html`; cập nhật ghi chú diễn giả. Theo PB T5, đây là điều kiện trước khi đưa nhóm "Bài tập" lên `index.html`.
+- Đề nghị cho ghi chú ở mục Giai đoạn III đổi số theo bảng trên: bài 1 của phiếu là Bài tập 07.20, bài 5 là 07.22.
+
+### Tự kiểm `no-ai-slop` (Edit) theo `eval.md`
+
+Phạm vi: mọi đoạn sửa và viết lại (07.20, 07.21(b)(c), 07.8(a), 07.22, 07.23, 07.24, 07.25, đoạn mở, bảng, Hướng dẫn). Đạt: bỏ câu kết ẩn dụ và câu lộ ý sau dấu hai chấm mà PB nêu; không câu hỏi tu từ, không "hãy"; mỗi khẳng định hội tụ trong 07.24(c) có giả thiết và nguồn; ngưỡng của 07.25 được gọi là lựa chọn kèm lý do; không kết quả chạy nào bị bịa (cột "đo được" để trống). Không dùng điểm của bộ phát hiện AI.
+
+### Kiểm tra
+
+- `note_check.py`: 14 khối mỗi loại `exercise`/`hint`/`solution`, không khối lạ, không lồng, không trùng; số vắng 07.1, 07.2, 07.4, 07.6, 07.9, 07.12, 07.15–07.19 đúng quyết định chung; 12 lượt "trang chiếu" đều là dòng bắt buộc hoặc đoạn mở; 0 `\(`/`\[`; khoảng $11\,500$ từ.
+- `check_note.py 07 lecture-07-xap-xi-ham.html exercises`, 1600×900 và 390×844: 0 `.katex-error`, 42 khối, 0 lỗi console, 0 yêu cầu ngoài, không cuộn ngang trang.
+- `ex07/links.py` (Playwright, cổng 8799): 23 liên kết deck `#/h/v` trỏ đúng trang, gồm `#/7/6` `L07-35`, `#/7/7` `L07-35b`; mọi liên kết trong viewer chỉ tới `lecture-07-xap-xi-ham.html` và `material-viewer.html`.
+- `git diff --check` sạch. Không commit.
+
+### Quyết định của điều phối viên (2026-10-14, giai đoạn III, bài tập)
+
+- Kiểm độc lập: `note_check.py` sạch (14 bài); viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 42 khối, 0 lỗi console, không tải ngoài; tính lại chuỗi mới của 07.22 ($d_\pi=(\tfrac23;\tfrac13)$, $A=\tfrac12$, $b=\tfrac23$, $w_{\mathrm{TD}}=\tfrac43$, $v_\pi=(\tfrac{200}{29};\tfrac{180}{29})$, $w_{\mathrm{MC}}=\tfrac{380}{87}$, $b-Aw_{\mathrm{MC}}=-\tfrac{44}{29}$) đúng; `git diff --check` sạch. Ba vai rà soát chỉ đọc (Opus 5.5 high): 0 chặn, 0 nghiêm trọng; mọi mục trung bình đã sửa.
+- Quyết định: **chấp nhận**; commit `feat(materials-07)`. Trang L07-36f của deck và nhóm "Bài tập" trên `index.html` cập nhật ở đợt sau.
