@@ -1,133 +1,127 @@
 # Bài 02 — Giao diện tác tử–môi trường
 
-## Phạm vi
+Dàn ý cập nhật trong đợt sửa 2026-10-12 (giai đoạn II: bộ trang chiếu), khớp deck `2627-1/lecture-02-giao-dien-tac-tu-moi-truong.html` (66 trang, 7 mạch, sau vòng biên tập theo năm vai rà soát) và ghi chú bài giảng đã commit `materials/lec-02/lecture-note.md` (commit `39a1bd1`). Deck là bản tóm tắt của ghi chú; số hiệu kết quả, ví dụ và bài tập theo ghi chú.
 
-Bản viết lại từ đầu cho sinh viên năm 3 đã học học máy, học sâu, xác suất và thuật toán. Nguồn chính: `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx`, trang 1–27 trong tổng 58 trang; trang 28 mở Bài 03. Nguồn bài tập: `resources/hw02.pdf`, Bài 1, 2, 5, 6 và 10. Không có code demo trong phạm vi này.
+## Phạm vi và nguồn
 
-Phần trình chiếu chính 120 phút; 30 phút chữa bài tập nguồn. Mục tiêu: mô tả tương tác; phân biệt trạng thái/quan sát/biểu diễn; định nghĩa và áp dụng chính sách, giá trị, mô hình; phân biệt dự đoán/điều khiển; đặc tả mê cung.
+- Đối tượng: sinh viên năm 3 đã học học máy, xác suất, thuật toán; đã học Bài 01 (vòng tương tác, lượt, lợi tức không chiết khấu, chính sách và giá trị trên lịch sử).
+- Nguồn chính: bài giảng gốc (2025–2026), `lecture2-3-MDPswithKeyConcepts.pptx`, trang 1–27; trang 28 mở Bài 03. Bài tập tuần 2 (2025–2026), bài 1, 2, 5, 6, 10.
+- Nguồn đối chiếu: Sutton và Barto (2018), §3.1–3.5, §13.1, §17.3–17.4; Russell và Norvig (2020), §17.1.1; Puterman (1994), §2.1; giáo trình *Học máy thống kê*, mục "Giới thiệu về quá trình quyết định Markov".
+- Thời lượng: deck 120 phút; 30 phút chữa bài tập. Không có code demo trong deck.
 
-## Bảy phần
+## Khung lý thuyết chung
 
-| Phần | Tên | Phút |
-|---|---|---:|
-| 1 | Bài toán ra quyết định tuần tự | 8 |
-| 2 | Tương tác và phần thưởng | 17 |
-| 3 | Trạng thái và thông tin quan sát | 28 |
-| 4 | Chính sách lựa chọn hành động | 15 |
-| 5 | Hàm giá trị và mô hình môi trường | 25 |
-| 6 | Phần thưởng định hướng hành vi | 20 |
-| 7 | Tổng kết và tự kiểm tra | 7 |
+- **Vấn đề trung tâm.** Đặc tả chuỗi quyết định trên mê cung $8\times8$ (và mê cung đích–hố) sao cho đánh giá và so sánh được các cách đi.
+- **Đối tượng và ký hiệu chung.** $t\in\{0,1,2,\dots\}$; $T$ thời điểm kết thúc; $S_t\in\mathcal S$ (chưa kết thúc), $\mathcal S^+$ thêm trạng thái kết thúc; $O_t\in\mathcal O$; $X_t\in\mathcal X$; $A_t\in\mathcal A$, $\mathcal A(x)$ hành động hợp lệ; $R_{t+1}\in\mathcal R\subset\mathbb R$ là phần thưởng của chuyển từ $t$ sang $t+1$; $H_t$ lịch sử trạng thái, $\tau=H_T$; $\pi(a\mid x)$; $\gamma\in[0,1]$; $G_t$, $G_T=0$; $v_\pi(s)$, $\mathbb E_\pi$ theo chính sách và động lực; $p(s',r\mid s,a)$, $p(s'\mid s,a)$, $r(s,a)$; $c$ chi phí mỗi bước, $c_{\mathrm H}$ phạt hố (ghi chú bài giảng còn viết $h$; chữ $h$ trên deck chỉ dành cho lịch sử); nhãn nút $\mathrm S,\mathrm H,\mathrm G$ chữ đứng. Ô ghi (cột, hàng), đánh số từ $0$, hàng tăng xuống dưới; trạng thái mê cung có chìa khóa ghi (ô, $k$). Quan sát của cảm biến bốn ô kề là bộ mã, $O_t\in\{0,1\}^4$; biểu diễn có nhớ $X_t=(O_t,A_{t-1},O_{t-1})$, cửa sổ độ dài $m$ (chữ $k$ chỉ dành cho bit chìa khóa; ghi chú dùng $k$ cho cả hai). Tên hướng (Bắc, Đông, Nam, Tây) viết ngoài KaTeX.
+- **Giả thiết.** Tập trạng thái, phần thưởng đếm được; tính Markov của trạng thái được chọn; môi trường dừng; chính sách dừng; kỳ vọng hữu hạn ($\gamma<1$ và phần thưởng bị chặn, hoặc $\gamma=1$ và $\mathbb E[T-t]<\infty$); riêng ngưỡng đổi hành vi: $c\ge0$, $\gamma=1$, chuyển tất định, tác tử tối ưu.
+- **Chuỗi định nghĩa → kết quả → phương pháp.** Mẫu chuyển (02.1) → biểu diễn (02.2), lịch sử (02.3), quan sát đầy đủ (Nhận xét 02.4), tính Markov (02.5), lịch sử là trạng thái Markov (Mệnh đề 02.6) → chính sách trên biểu diễn (02.8) → lợi ích cộng và ưu tiên dừng (02.10) → trọng số hình học (Định lý 02.11) → lợi tức (02.12), truy hồi và chặn (Mệnh đề 02.13) → hàm giá trị (02.14) → hàm động lực (02.16), dự đoán và điều khiển (Nhận xét 02.17) → ngưỡng đổi hành vi (Mệnh đề 02.18). Bài không có thuật toán.
+- **Giới hạn áp dụng.** Giá trị chỉ tính được bằng liệt kê quỹ đạo; cách tính tổng quát (phương trình Bellman) thuộc Bài 03, quy hoạch động thuộc Bài 04. Quan sát một phần chỉ được xử lý bằng chính sách ngẫu nhiên hoặc cửa sổ hữu hạn trên ví dụ cụ thể.
 
-## Trạng thái triển khai
+## Bảy mạch
 
-Đã hoàn tất 7/7 phần: 41 trang, 120 phút; đủ năm báo cáo độc lập và kiểm định lại. Giới hạn rà trực quan Codex Slides được ghi trong review-log.md.
+| N | Tên mạch (trùng mục ghi chú) | Trang tiêu đề mạch | Mục ghi chú | Phút |
+|---|---|---|---|---:|
+| 1 | Mở đầu (bìa là trang tiêu đề) | `L02-01-01` | Mục tiêu, Kiến thức tiên quyết | 9 |
+| 2 | Vòng tương tác và tín hiệu thưởng | `L02-02-00`, `id="mach-2"` | §1 | 16 |
+| 3 | Thông tin khả dụng và tính Markov | `L02-03-00`, `id="mach-3"` | §2 | 27 |
+| 4 | Quy tắc chọn hành động | `L02-04-00`, `id="mach-4"` | §3, Tình huống 02.2 | 15 |
+| 5 | Lợi tức, hàm giá trị và hàm động lực | `L02-05-00`, `id="mach-5"` | §4 | 27 |
+| 6 | Thiết kế phần thưởng | `L02-06-00`, `id="mach-6"` | §5 | 14 |
+| 7 | Tổng kết và chuyển tiếp | `L02-07-00`, `id="mach-7"` | Tóm tắt chương | 12 |
 
-## Trang đích
+Tổng 120 phút.
 
-- `L02-01-01` — Bài toán ra quyết định tuần tự — PPTX trang 1 (bìa)
-- `L02-01-02` — Mê cung và chuỗi quyết định — PPTX trang 25–26 (bài toán mê cung)
-- `L02-01-03` — Mục tiêu học tập — Mục tiêu biên tập từ PPTX, trang 15–27; hw02, Bài 1, 2, 5, 6.
-- `L02-01-04` — Nội dung bài học — Cấu trúc biên tập từ PPTX, trang 2, 15–27.
-- `L02-01-05` — Câu hỏi kiểm tra — PPTX trang1–2,25; câu hỏi mở đầu về mê cung.
-- `L02-02-01` — Tác tử và môi trường — PPTX trang 4 (tác tử) và 10, 20 (thành phần giao diện)
-- `L02-02-02` — Một bước trong mê cung — PPTX trang 25–26 (bài toán mê cung), 7–9 (tín hiệu thưởng)
-- `L02-02-03` — Thứ tự tương tác — PPTX trang 14–15 (giao diện), 16 (trạng thái/quan sát)
-- `L02-02-04` — Tín hiệu học — PPTX trang 7–8 (tín hiệu học); hw02 bài 1
-- `L02-02-05` — Giả thuyết điểm thưởng — PPTX trang 9 (thưởng) và 25 (mê cung với -1 mỗi bước)
-- `L02-02-06` — Phản hồi trễ — PPTX trang 7–8 (phản hồi trễ), 11 (cờ)
-- `L02-02-07` — Câu hỏi kiểm tra — PPTX trang 27 (quiz); bài luyện suy ra từ trang 25–26 và hw02 bài 6, 10
-- `L02-03-02` — Trạng thái và quan sát — PPTX trang 16 (trạng thái/quan sát); phần biểu diễn ở trang 14-15 và 21.
-- `L02-03-11` — Định nghĩa trạng thái, quan sát và biểu diễn — PPTX trang 14–16, 21; ký hiệu hàm biểu diễn bổ sung theo yêu cầu
-- `L02-03-09` — Mẫu dữ liệu, lịch sử và quỹ đạo — PPTX trang 14–16; bổ sung theo yêu cầu, đặt sau trạng thái và quan sát
-- `L02-03-06` — Quan sát đầy đủ và một phần — PPTX trang 18 (đầy đủ) và trang 19 (một phần); hình full-partial-observation.svg từ trang 25-26.
-- `L02-03-04` — Tính Markov — PPTX trang 17 (Markov) và trang 18 (đầy đủ).
-- `L02-03-10` — Tính Markov có hạn chế khả năng mô hình hóa? — PPTX trang 17; mở rộng trạng thái bằng lịch sử bổ sung theo yêu cầu
-- `L02-03-08` — Câu hỏi kiểm tra — PPTX trang 27 (quiz); các trường hợp từ trang 16, 18, 19 và hình full-partial-observation.svg.
-- `L02-04-01` — Chính sách — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
-- `L02-04-02` — Ví dụ về chính sách — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
-- `L02-04-03` — Chính sách xác định — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
-- `L02-04-04` — Chính sách ngẫu nhiên — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
-- `L02-04-05` — Câu hỏi kiểm tra — PPTX, trang 21, 25–26; hw02, Bài 6. Ví dụ xác suất là bài luyện suy ra từ định nghĩa.
-- `L02-05-01` — Kết quả dài hạn của chính sách — PPTX trang 10, 21, 22, 23
-- `L02-05-10` — Ưu tiên dừng và tổng phần thưởng — điều kiện thêm cùng phần thưởng đầu chuỗi; tổng thường và tổng chiết khấu trong lớp lợi ích cộng có trọng số; Berkeley CS188, bài 09 (2026), trang 22; bổ sung giả thiết và chứng minh
-- `L02-05-03` — Phần thưởng tích lũy — PPTX trang 7–9, 22; hw02 bài 2
-- `L02-05-04` — Giá trị kỳ vọng — PPTX trang 22; ví dụ giả định sư phạm theo hw02 bài 5
-- `L02-05-05` — Hàm giá trị trạng thái — PPTX trang 16–18, 22; hw02 bài 5
-- `L02-05-08` — Mô hình chuyển trạng thái và phần thưởng — phân phối chung theo yêu cầu; PPTX trang 13, 23; hw02 bài 10; Sutton–Barto (2018), mục 3.1
-- `L02-05-09` — Câu hỏi kiểm tra — PPTX trang 13, 24, 27; hw02 bài 6
-- `L02-06-01` — Điểm thưởng và hành vi — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
-- `L02-06-02` — Điểm thưởng của hai lựa chọn — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
-- `L02-06-03` — Cùng môi trường, khác hành vi — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
-- `L02-06-04` — Ngưỡng thay đổi hành vi — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
-- `L02-06-05` — Thiết kế thưởng và hành vi — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
-- `L02-06-06` — Câu hỏi kiểm tra — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
-- `L02-06-07` — Khuyến khích và chế tài — ví dụ mới và liên hệ theo kế hoạch người dùng duyệt
-- `L02-07-01` — Các thành phần của bài toán — PPTX trang 10, 20, 25–26; hw02 bài 1
-- `L02-07-03` — Bài tập và tài liệu đọc — RL-hk2-2025-2026/resources/hw02.pdf, bài1,2,5,6,10; Sutton và Barto (2018), chương3; PPTX trang1–27.
-- `L02-07-02` — Câu hỏi kiểm tra — PPTX trang 16, 19, 22–23, 27; hw02 bài 2, 5
+## Mục tiêu học tập (khớp ghi chú)
 
-## Ánh xạ toàn bộ nguồn
+1. Ghi một mẫu chuyển $(O_t,A_t,R_{t+1},O_{t+1})$ với chỉ số thời gian đúng (Bài tập 02.1).
+2. Phân biệt $S_t$, $O_t$, $X_t$; kiểm tra và sửa tính Markov (Bài tập 02.2, 02.3, 02.11).
+3. Viết chính sách xác định và ngẫu nhiên trên một biểu diễn (Bài tập 02.4, 02.13).
+4. Tính lợi tức chiết khấu, $v_\pi(s)$; đọc hàm động lực $p$ (Bài tập 02.5–02.7, 02.9, 02.10(a), 02.12).
+5. Tìm ngưỡng chi phí làm tác tử tối ưu đổi hành vi (Bài tập 02.8, 02.10(b)).
 
-| Trang nguồn | Quyết định | Phần đích | Lý do |
-|---|---|---|---|
-| 1 | sửa | 1 | Cập nhật học kỳ, giữ tên bài trong phạm vi giao diện. |
-| 2 | sửa | 1 | Bản đồ bảy phần đã được chấp nhận. |
-| 3 | gộp | 1, 7 | Trang ôn tập chỉ có tiêu đề; mục tiêu và tự kiểm tra thay thế. |
-| 4 | giữ, sửa | 1, 2 | Tác tử và quan hệ nhận thông tin–quyết định–hành động. |
-| 5 | bỏ | — | Niên biểu thành tựu và ảnh robot không phục vụ mục tiêu giao diện; không giữ raster. |
-| 6 | bỏ | — | Nhận định AGI và dự báo dữ liệu không thuộc phạm vi đã duyệt, thiếu căn cứ để giảng như kết luận. |
-| 7–8 | gộp, sửa | 2 | So sánh tín hiệu, ảnh hưởng hành động tới dữ liệu, phân biệt phản hồi trễ với thưởng mỗi bước. |
-| 9 | sửa | 2, 5 | Giả thuyết phần thưởng không phải định lý; tách trực giác tích lũy và công thức. |
-| 10 | gộp | 5, 7 | Tránh lặp danh mục ba thành phần với trang 20. |
-| 11 | gộp, bỏ | 2, 6 | Giữ ví dụ thưởng khi trò chơi kết thúc ở phần 2; bỏ bàn cờ riêng phần 6. Phân biệt thưởng cuối và tổng sau kết thúc bằng đích/hố. |
-| 12 | sửa | 2 | Dùng bộ điều khiển robot để minh họa ranh giới tác tử–môi trường; ví dụ xe đã bỏ theo yêu cầu. |
-| 13 | sửa | 5 | Phạm vi mô hình theo tác vụ; bỏ câu hỏi tu từ về mô hình hoàn thiện thế giới. |
-| 14–15 | gộp, sửa | 2 | Môi trường trả quan sát/phần thưởng, không trả hành động; chỉ số phản hồi là t+1. |
-| 16 | tách | 3 | Trạng thái, quan sát và biểu diễn quyết định có miền riêng. |
-| 17 | tách, sửa | 3 | Ví dụ trước phát biểu Markov có điều kiện theo hành động và lịch sử, cả trạng thái kế tiếp và thưởng. |
-| 18 | sửa | 3 | Quan sát đầy đủ không tự là định nghĩa MDP, không đồng nghĩa biết mô hình. |
-| 19 | tách, sửa | 3 | Cùng quan sát có thể ứng với nhiều trạng thái; lịch sử hữu hạn không mặc nhiên Markov. |
-| 20–21 | tách | 4, 5 | Chính sách xác định/ngẫu nhiên; cùng ký hiệu X khi quan sát chưa đầy đủ. |
-| 22 | tách | 5 | Quỹ đạo, chiết khấu, tổng và kỳ vọng trước hàm giá trị; giả thiết kỳ vọng tồn tại. |
-| 23 | tách | 5 | Giữ phân phối chuyển và thưởng kỳ vọng của nguồn; KaTeX, không SVG công thức. |
-| 24 | gộp | 6 | Phân biệt đánh giá và điều khiển trong ghi chú tính tổng hai đường, không giữ slide riêng. |
-| 25 | giữ, thay | 1, 2, 3, 6 | Giữ mê cung nguồn ở phần đầu; phần 6 thay bằng mê cung đích/hố theo yêu cầu. |
-| 26 | giữ, thay | 4, 5, 6 | Giữ minh họa chính sách phần 4; phần 6 thay bảng giá trị nguồn bằng phân tích alpha. |
-| 27 | sửa | 3 | Phân loại theo thông tin quan sát và giả thiết; câu hỏi phần 6 thay bằng bài tập alpha. |
-| hw02 Bài 1,2,5,6,10 | giữ phạm vi, sửa cách giao | 2–7 | Câu hỏi ngắn lồng trong bài, 30 phút chữa bài; Bài10 chỉ đặc tả, không Bellman. |
+## Ví dụ xuyên suốt
 
-## Quy ước và dữ kiện xuyên suốt
+- **Mê cung $8\times8$** (bài giảng gốc, trang 25–26): 27 ô đi được, xuất phát $(0,2)$, đích $\mathrm G=(8,6)$ sau bước Đông từ $(7,6)$; tường hoặc biên giữ tác tử đứng yên; $-1$ mỗi bước kể cả bước vào $\mathrm G$; đường 16 bước. Dùng ở `L02-01-02`, `02-02`, `02-03`, `02-05`, `02-07`, `03-02`, `03-13`, `03-06`, `03-08`, `04-01`, `04-02`, `04-07`, `04-08`, `05-01`, `05-15`, `05-13`, `05-08`, `05-17`, `05-18`. Mỗi lần dùng trả lời một câu hỏi mới: một bước (mẫu chuyển), hai đường 16/18 bước (giả thuyết phần thưởng), mã bốn ô kề (biểu diễn, quan sát một phần), ba bước đầu (lịch sử), chính sách nguồn, xác suất dãy hành động, hai ô cùng mã (chính sách ngẫu nhiên), ba bước cuối (lợi tức), bảng giá trị nguồn ($-16$), hai hành động tại $(4,1)$ ($-11$ và $-13$, điều khiển), bước trượt (hàm động lực).
+- **Mê cung có chìa khóa** (biến thể sư phạm của mê cung $8\times8$): chìa khóa ở ngõ cụt $(4,2)$, cửa ở lối $(7,6)\to\mathrm G$. Dùng ở `L02-03-14`, `03-04`, `03-10`, `03-15`, `03-16`.
+- **Mê cung đích–hố** (ví dụ do người dùng duyệt, số liệu sư phạm tự xây dựng): $-c$ mỗi bước, $+10$ khi vào $\mathrm G$, phạt $c_{\mathrm H}$ khi vào $\mathrm H$ (ghi chú viết $h$); đường ngắn nhất 6 bước tới $\mathrm G$, 2 bước tới $\mathrm H$. Dùng ở mạch 6 và bài tập tổng hợp `L02-07-04`/`07-07` ($\gamma=0{,}9$).
+- **Ví dụ một lần:** robot (ranh giới), ván cờ (phản hồi trễ), hai chuỗi $(2,0)$, $(1,1)$ (ưu tiên dừng), môi trường hai nhánh (kỳ vọng), Gymnasium `env.step` (mẫu chuyển trong thực hành).
+- **Hành lang pin** (Tình huống 02.1 của ghi chú, robot giao hàng năm ô với mức pin): chỉ có trong ghi chú; deck không có trang riêng, vì mạch 5 đã đủ thời lượng. Ghi trong review-log.
 
-- $S_t\in\mathcal S$: trạng thái môi trường; $O_t\in\mathcal O$: quan sát; $X_t\in\mathcal X$: biểu diễn dùng để quyết định; $H_t$: lịch sử trạng thái–hành động–thưởng; $\tau=H_T$: quỹ đạo trạng thái hữu hạn.
-- $A_t\in\mathcal A$: hành động; $R_{t+1}\in\mathbb R$: thưởng sau hành động; $t$ là chỉ số thời gian không âm.
-- $\pi(a\mid x)$: chính sách trên biểu diễn; khi quan sát đầy đủ dùng $X_t=S_t$.
-- $T$: thời điểm kết thúc của quỹ đạo; $G_t$: thưởng tích lũy chiết khấu; $\gamma\in[0,1]$; $v_\pi(s)$: kỳ vọng dưới chính sách cố định trong thiết lập Markov với kỳ vọng hữu hạn.
-- Mê cung nguồn: 8×8, 27 ô đi được và 37 ô tường. Cột $x$ và hàng $y$ đánh số từ 0, hàng tăng xuống. Bắt đầu $(0,2)$; đích $G=(8,6)$ nằm ngoài bên phải. Tường/biên giữ nguyên vị trí, trừ bước Đông từ $(7,6)$ vào $G$; thưởng $-1$ mỗi bước kể cả bước vào đích; tới $G$ thì dừng.
-- Bảng giá trị nguồn tương ứng chính sách được vẽ, chuyển xác định, $\gamma=1$: đầu $-16$, ô $(7,6)$ là $-1$, $v_\pi(G)=0$.
-- Tham khảo bố cục: [SLIDE_STYLE_GUIDE.md](https://raw.githubusercontent.com/uet-iai-course/machine-learning/main/SLIDE_STYLE_GUIDE.md), chỉ nguyên tắc một ý/trang và trung tâm thị giác; mẫu và CSS cục bộ ưu tiên.
+## Bảng thuật ngữ Việt–Anh
 
-## Thay phần 6: phần thưởng định hướng hành vi
-
-Bảy trang, 20 phút; ví dụ mới không phải hình gốc PPTX. Mê cung có đường tới đích sáu bước và đường tới hố hai bước; cả hai là trạng thái kết thúc. Mỗi chuyển có thưởng $-\alpha$, cộng 10 khi vào đích, dùng $\gamma=1$, $\alpha\ge0$. Ngưỡng $\alpha=2{,}5$; phạt hố thêm $h$ cho ngưỡng $(10+h)/4$. Câu hỏi kiểm tra ở trang áp chót, trang cuối liên hệ xã hội theo yêu cầu cụ thể, thay quy ước câu hỏi cuối phần. Các hình cũ vẫn giữ vì được dùng ở các phần trước hoặc lưu làm tài sản nguồn.
-
-
-## Đồng bộ ghi chú với bản slide hiện tại — 2026-09-20
-
-Ghi chú `2627-1/materials/lec-02/lecture-note.md` được tổ chức lại theo bảy phần, lấy HTML hiện tại làm nguồn ưu tiên. Bản đồ dưới đây bao phủ 41 trang, gồm cả các câu hỏi và phần giải thích trong ghi chú diễn giả. Trạng thái: đã kiểm định nội dung và material-viewer tại hai kích thước màn hình; ghi nhận chi tiết trong review-log.
-
-| Phần | Chủ đề trong ghi chú | Trang chiếu tương ứng |
+| Tiếng Việt | Tiếng Anh | Ghi chú |
 |---|---|---|
-| 1 | `lec-02-part-01` | `L02-01-01`, `L02-01-02`, `L02-01-03`, `L02-01-04`, `L02-01-05` |
-| 2 | `lec-02-part-02` | `L02-02-01`, `L02-02-02`, `L02-02-03`, `L02-02-04`, `L02-02-05`, `L02-02-06`, `L02-02-07` |
-| 3 | `lec-02-part-03` | `L02-03-02`, `L02-03-11`, `L02-03-09`, `L02-03-06`, `L02-03-04`, `L02-03-10`, `L02-03-08` |
-| 4 | `lec-02-part-04` | `L02-04-01`, `L02-04-02`, `L02-04-03`, `L02-04-04`, `L02-04-05` |
-| 5 | `lec-02-part-05` | `L02-05-01`, `L02-05-10`, `L02-05-03`, `L02-05-04`, `L02-05-05`, `L02-05-08`, `L02-05-09` |
-| 6 | `lec-02-part-06` | `L02-06-01`, `L02-06-02`, `L02-06-03`, `L02-06-04`, `L02-06-05`, `L02-06-06`, `L02-06-07` |
-| 7 | `lec-02-part-07` | `L02-07-01`, `L02-07-03`, `L02-07-02` |
+| tác tử | agent | không dùng "tác nhân" |
+| môi trường | environment | |
+| hành động | action | |
+| phần thưởng | reward | không dùng "điểm thưởng" |
+| mẫu chuyển | transition | Định nghĩa 02.1 |
+| trạng thái | state | |
+| quan sát | observation | |
+| biểu diễn | representation | Định nghĩa 02.2 |
+| lịch sử | history | lịch sử trạng thái, Định nghĩa 02.3 |
+| quỹ đạo | trajectory | $\tau=H_T$ |
+| lượt | episode | không dùng "tập", "hồi" |
+| quan sát đầy đủ | full observability | Nhận xét 02.4 |
+| quan sát một phần | partial observability | |
+| tính Markov | Markov property | Định nghĩa 02.5 |
+| chính sách | policy | |
+| chính sách xác định | deterministic policy | dạng chốt cho học phần; giáo trình *Học máy thống kê*: "chính sách đơn định" |
+| chính sách dừng | stationary policy | quy tắc không đổi theo $t$; khác "dừng thuật toán" |
+| môi trường dừng | (stationary environment) | xác suất chuyển không đổi theo $t$ |
+| chính sách ngẫu nhiên | stochastic policy | |
+| lợi ích | utility | |
+| ưu tiên dừng | stationary preference | Định nghĩa 02.10 |
+| hệ số chiết khấu | discount factor | $\gamma$ |
+| lợi tức | return | không dùng "tổng thưởng", "phần thưởng tích lũy" |
+| cận thị | myopic | $\gamma=0$ |
+| hàm giá trị trạng thái | state-value function | $v_\pi$ |
+| hàm động lực | dynamics function | $p(s',r\mid s,a)$, Định nghĩa 02.16; mô hình đúng của môi trường |
+| mô hình | model | mô hình tác tử mang theo, xấp xỉ $\hat p$ của $p$ |
+| dự đoán | prediction | Nhận xét 02.17 |
+| điều khiển | control | |
+| giả thuyết phần thưởng | reward hypothesis | |
+| phản hồi trễ | delayed reward | |
+| học có giám sát, học không giám sát | supervised learning, unsupervised learning | |
+| quá trình quyết định Markov | Markov decision process, MDP | Bài 03 |
+| quá trình quyết định Markov quan sát một phần | partially observable Markov decision process, POMDP | ghi chú diễn giả `L02-03-06` |
 
-- Cốt lõi: giao diện, phần thưởng, trạng thái/quan sát/biểu diễn, lịch sử/quỹ đạo, Markov, chính sách, tổng thưởng, giá trị, mô hình chung và thiết kế thưởng.
-- Cầu nối: dữ liệu khả dụng trước hành động; lịch sử đầy đủ làm trạng thái; từ tổng thưởng một quỹ đạo đến kỳ vọng dưới chính sách. Các mục này nằm trong phần 3 và 5.
-- Bổ sung: chứng minh ưu tiên dừng trong lớp lợi ích cộng có trọng số; phân tích ngưỡng đích–hố và mức phạt bổ sung; liên hệ khuyến khích/chế tài. Đây là nội dung đã có trong slide mới, được giải thích đầy đủ hơn trong note.
-- Đọc thêm: Sutton–Barto chương 3, CS188 về ưu tiên dừng, Shakerinava–Ravanbakhsh về các tiên đề lợi ích và phạm vi bài tập tuần 2.
+## Ánh xạ nguồn
 
-Bỏ cấu trúc 12 topic cũ, ví dụ hành lang ba ô và mục mô hình thế giới riêng. Gộp dự đoán/điều khiển vào ví dụ đánh giá và lựa chọn đường đi. Mã chủ đề, phân loại nội dung và quyết định biên tập chỉ ở hồ sơ quy trình hoặc comment ẩn, không hiển thị trong phần học. HTML, SVG, CSS và index không thay đổi trong lần đồng bộ ghi chú.
+| Trang nguồn | Quyết định | Mạch | Ghi chú |
+|---|---|---|---|
+| 1 | sửa | 1 | Bìa theo chuẩn: tên bài, câu luận đề, đơn vị. |
+| 2–3 | gộp | 1 | Thay bằng "Nội dung" bảy mạch và "Tiên quyết và quy ước". |
+| 4 | giữ, sửa | 2 | Ranh giới tác tử–môi trường (`L02-02-01`). |
+| 5–6 | bỏ | — | Niên biểu, ảnh raster, nhận định AGI ngoài phạm vi (giữ quyết định cũ). |
+| 7–8 | gộp | 2 | Tín hiệu học, phản hồi trễ (`L02-02-04`, `02-06`). |
+| 9 | sửa | 2 | Giả thuyết phần thưởng là giả thuyết, không phải định lý (`L02-02-05`). |
+| 10 | gộp | 5, 7 | Ba thành phần chính sách, giá trị, mô hình (`L02-05-01`, bảng tổng kết). |
+| 11 | gộp | 2 | Ví dụ ván cờ thưởng khi kết thúc (`L02-02-06`). |
+| 12 | sửa | 2 | Robot làm ví dụ ranh giới. |
+| 13 | sửa | 5 | Mô hình theo tác vụ; hàm động lực (`L02-05-08`). |
+| 14–15 | gộp, sửa | 2, 3 | Mẫu chuyển, chỉ số $t+1$ (`L02-02-03`); lịch sử (`L02-03-09`). |
+| 16 | tách | 3 | Trạng thái, quan sát, biểu diễn (`L02-03-02`, `03-11`, `03-12`). |
+| 17 | tách, sửa | 3 | Ví dụ chìa khóa trước định nghĩa Markov; mở rộng bằng lịch sử (`L02-03-14`, `03-04`, `03-10`). |
+| 18–19 | sửa | 3 | Quan sát đầy đủ và một phần (`L02-03-06`). |
+| 20–21 | tách | 4 | Chính sách xác định, ngẫu nhiên trên biểu diễn. |
+| 22 | tách | 5 | Lợi tức, chiết khấu, kỳ vọng, hàm giá trị. |
+| 23 | sửa | 5 | Hàm động lực $p$ chữ thường. |
+| 24 | sửa | 5 | Dự đoán và điều khiển (`L02-05-17`). |
+| 25–26 | giữ | 1–5 | Mê cung, chính sách, bảng giá trị (`L02-05-13`). |
+| 27 | sửa | 3, 7 | Phân loại quan sát; câu hỏi tự kiểm tra. |
+| hw02 bài 1, 2, 5, 6, 10 | phân bổ | 2–6 | Theo bảng `Mạch | Bài tập` ở `L02-07-03`; bài 3, 4, 7, 8, 9 cho Bài 03. |
+| (bổ sung) | thêm | 5 | Ưu tiên dừng và trọng số hình học: Russell và Norvig (2020), §17.1.1; chứng minh trong ghi chú. |
+| (bổ sung) | thêm | 6 | Mê cung đích–hố, ngưỡng $c^*$: ví dụ do người dùng duyệt. |
+
+## Bản đồ chủ đề (`note-topic-id`) ↔ trang
+
+| `note-topic-id` | Chủ đề | Trang |
+|---|---|---|
+| `lec-02-part-01` | Mục tiêu, tiên quyết | `L02-01-01` … `01-02` |
+| `lec-02-part-02`, `lec-02-topic-01` | Mẫu chuyển, phần thưởng | `L02-02-00` … `02-06` |
+| `lec-02-part-03`, `topic-03`, `topic-05` | Trạng thái, quan sát, biểu diễn, lịch sử, Markov | `L02-03-00` … `03-16` |
+| `lec-02-part-04`, `topic-06`, `topic-14` | Chính sách; hai ô cùng mã | `L02-04-00` … `04-05` |
+| `lec-02-part-05`, `topic-07` … `topic-11` | Ưu tiên dừng, lợi tức, kỳ vọng, giá trị, hàm động lực | `L02-05-00` … `05-18` |
+| `lec-02-part-06`, `topic-12` | Thiết kế phần thưởng | `L02-06-00` … `06-07` |
+| `lec-02-part-07`, `topic-15` | Tóm tắt, đọc thêm | `L02-07-00` … `07-03` |

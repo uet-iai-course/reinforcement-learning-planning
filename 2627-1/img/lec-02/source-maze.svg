@@ -86,5 +86,5 @@
 <path d="M580 425.0H620" stroke="#B15A2B" stroke-width="3" marker-end="url(#arrow)"/>
 <text x="660" y="421.0" font-size="25" fill="#2F3E7A">Đích G</text>
 <text x="660" y="450.0" font-size="25" fill="#424954">(8,6)</text>
-<text x="360" y="548" font-size="23" fill="#424954">x: cột, y: hàng · Tường tô đậm · Ô đi được để trắng</text>
+<text x="360" y="548" font-size="23" fill="#424954">Tọa độ (cột, hàng) · Tường tô đậm · Ô đi được để trắng</text>
 </g></svg>

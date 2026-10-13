@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 18 690 520" role="img" aria-labelledby="title desc">
+<title id="title">Hai ô có cùng mã bốn ô kề nhưng cần hai hướng khác nhau (bản cho trang chiếu)</title>
+<desc id="desc">Mê cung tám hàng tám cột, bắt đầu tại (0,2), đích G ngoài lưới bên phải ô (7,6). Hai ô A bằng (1,1) và B bằng (5,3) được gạch chéo; cả hai có mã bốn ô kề (1,0,0,1). Mũi tên liền tại A chỉ Đông, tại B chỉ Nam: hướng cần chọn để tới đích. Mũi tên đứt hai chiều giữa A và ô (1,2), giữa B và ô (6,3): vòng lặp nếu chọn hướng kia. Chú giải nằm trên mặt trang chiếu.</desc>
+<defs><pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#fff"/><line x1="0" y1="0" x2="0" y2="10" stroke="#B15A2B" stroke-width="4"/></pattern>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#202838"/></marker>
+<marker id="ad" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#6b5a4a"/></marker></defs>
+<rect x="0" y="18" width="690" height="520" fill="#fff"/>
+<g font-family="Arial,sans-serif" text-anchor="middle">
+<rect x="110" y="60" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="168" y="60" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="226" y="60" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="284" y="60" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="342" y="60" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="400" y="60" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="458" y="60" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="516" y="60" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="110" y="118" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="168" y="118" width="58" height="58" fill="url(#hatch)" stroke="#88919e"/>
+<rect x="226" y="118" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="284" y="118" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="342" y="118" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="400" y="118" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="458" y="118" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="516" y="118" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="110" y="176" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="168" y="176" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="226" y="176" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="284" y="176" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="342" y="176" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="400" y="176" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="458" y="176" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="516" y="176" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="110" y="234" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="168" y="234" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="226" y="234" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="284" y="234" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="342" y="234" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="400" y="234" width="58" height="58" fill="url(#hatch)" stroke="#88919e"/>
+<rect x="458" y="234" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="516" y="234" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="110" y="292" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="168" y="292" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="226" y="292" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="284" y="292" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="342" y="292" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="400" y="292" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="458" y="292" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="516" y="292" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="110" y="350" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="168" y="350" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="226" y="350" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="284" y="350" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="342" y="350" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="400" y="350" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="458" y="350" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="516" y="350" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="110" y="408" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="168" y="408" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="226" y="408" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="284" y="408" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="342" y="408" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="400" y="408" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="458" y="408" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="516" y="408" width="58" height="58" fill="#fff" stroke="#88919e"/>
+<rect x="110" y="466" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="168" y="466" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="226" y="466" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="284" y="466" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="342" y="466" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="400" y="466" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="458" y="466" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<rect x="516" y="466" width="58" height="58" fill="#293247" stroke="#88919e"/>
+<text x="139.0" y="48" font-size="26" fill="#424954">0</text>
+<text x="94" y="97.0" font-size="26" fill="#424954">0</text>
+<text x="197.0" y="48" font-size="26" fill="#424954">1</text>
+<text x="94" y="155.0" font-size="26" fill="#424954">1</text>
+<text x="255.0" y="48" font-size="26" fill="#424954">2</text>
+<text x="94" y="213.0" font-size="26" fill="#424954">2</text>
+<text x="313.0" y="48" font-size="26" fill="#424954">3</text>
+<text x="94" y="271.0" font-size="26" fill="#424954">3</text>
+<text x="371.0" y="48" font-size="26" fill="#424954">4</text>
+<text x="94" y="329.0" font-size="26" fill="#424954">4</text>
+<text x="429.0" y="48" font-size="26" fill="#424954">5</text>
+<text x="94" y="387.0" font-size="26" fill="#424954">5</text>
+<text x="487.0" y="48" font-size="26" fill="#424954">6</text>
+<text x="94" y="445.0" font-size="26" fill="#424954">6</text>
+<text x="545.0" y="48" font-size="26" fill="#424954">7</text>
+<text x="94" y="503.0" font-size="26" fill="#424954">7</text>
+<text x="197.0" y="157.0" font-size="30" font-weight="bold" fill="#202838">A</text>
+<text x="429.0" y="273.0" font-size="30" font-weight="bold" fill="#202838">B</text>
+<path d="M215.0 129.0H261.0" stroke="#202838" stroke-width="4" marker-end="url(#ar)"/>
+<path d="M411.0 281.0V317.0" stroke="#202838" stroke-width="4" marker-end="url(#ar)"/>
+<path d="M181.0 163.0V211.0" stroke="#6b5a4a" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#ad)"/>
+<path d="M213.0 211.0V165.0" stroke="#6b5a4a" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#ad)"/>
+<path d="M445.0 279.0H493.0" stroke="#6b5a4a" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#ad)"/>
+<path d="M493.0 247.0H447.0" stroke="#6b5a4a" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#ad)"/>
+<text x="48" y="199.0" font-size="22" fill="#2F3E7A">Bắt</text><text x="48" y="221.0" font-size="22" fill="#2F3E7A">đầu →</text>
+<text x="626" y="446.0" font-size="28" fill="#2F3E7A">→ G</text>
+</g></svg>

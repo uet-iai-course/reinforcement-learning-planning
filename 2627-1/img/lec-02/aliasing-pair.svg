@@ -108,5 +108,5 @@
 <path d="M640 330H690" stroke="#202838" stroke-width="4" marker-end="url(#ar)"/><text x="702" y="336">hướng cần chọn</text>
 <path d="M640 370H690" stroke="#6b5a4a" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#ad)"/><text x="702" y="376">vòng lặp nếu</text><text x="702" y="400">chọn hướng kia</text>
 </g>
-<text x="450" y="572" font-size="20" fill="#424954">x: cột, y: hàng · Tường tô đậm · Ô gạch chéo: hai ô cùng mã bốn ô kề</text>
+<text x="450" y="572" font-size="20" fill="#424954">Tọa độ (cột, hàng) · Tường tô đậm · Ô gạch chéo: hai ô cùng mã bốn ô kề</text>
 </g></svg>
