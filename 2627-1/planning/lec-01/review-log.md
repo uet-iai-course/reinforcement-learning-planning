@@ -1339,3 +1339,76 @@ Kiểm tra sau sửa:
 - Tác tử: tác tử soạn kiêm biên tập (general-purpose, claude-opus-5-5, high) hai vòng; rà lại toán và rà lại mạch (general-purpose, claude-opus-5-5, high, chỉ đọc); điều phối viên Claude Fable 5.1 (medium).
 - Kiểm độc lập của điều phối viên sau vòng 2: `density.py` chỉ gắn cờ các trang có lý do trong `storyboard.md`; Playwright 1600×900 và 390×844: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, đủ 6 trang tiêu đề mạch; ảnh các trang đổi ở vòng 2 đã xem; `git diff --check` sạch.
 - Quyết định: **chấp nhận**; commit `fix(lecture-01)`.
+
+## Đợt sửa 2026-10-14 — Sửa ghi chú sau giai đoạn II
+
+### Tác tử và phạm vi
+
+- Vai: tác tử biên tập ghi chú bài giảng Bài 01 (viết tệp), theo `brief_note_revision.md` của điều phối viên. Loại `general-purpose`; mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` theo brief. Không commit, không push.
+- Danh sách việc: mười dòng của bảng "Đề nghị sửa ghi chú (sau giai đoạn II)" và hai dòng "Đề nghị sửa ghi chú bổ sung" của mục "Rà lại vòng 2 và sửa (giai đoạn II, trước commit)". Bản đối chiếu: deck đã commit (D02c, C04b, A04, E00b, E01b, F00, F00b, F04, E01, G00, G02, G04).
+- Tệp sửa: `materials/lec-01/lecture-note.md`; `img/lec-01/tictactoe-four-moves.svg` (chỉ ghi chú dùng; deck không tham chiếu tệp này); mục này của nhật ký. Không sửa deck, outline, storyboard, `exercises.md`, `index.html`.
+- Số hiệu không đổi: bộ đếm chung 01.1–01.22, Ví dụ 01.1–01.10, Bài tập 01.1–01.11, Tình huống 01.1–01.2; mọi `note-topic-id` giữ nguyên.
+
+### Từng đề nghị và xử lý
+
+Số dòng là số dòng trong ghi chú sau đợt sửa.
+
+| Đề nghị | Trạng thái | Vị trí mới và nội dung |
+|---|---|---|
+| Ví dụ 01.4: $L=4$, so với hút trước | đã sửa | Dòng 466: "$L=4$". Dòng 478 (Diễn giải): hút ở ô 1 cho $0>-0{,}1$, nhưng ba hành động còn lại không đủ để tới ô 4 rồi hút và mỗi lần di chuyển chỉ thêm $-0{,}1$, nên lợi tức lớn nhất khi hút trước là $0<0{,}7$; câu cuối nêu với $L=5$ thì hút rồi đi đúng đường cũng cho $0+3\cdot(-0{,}1)+1=0{,}7$, nên so sánh cần $L=4$; thêm vế "với cách đặt của Ví dụ 01.3, mọi $G_t$ với $t<T$ bằng $1$" như ghi chú diễn giả D02c. |
+| "lượt" của X thành "nước đi"/"phiên" | đã sửa | Dòng 570 (Ví dụ 01.6): "luân phiên đặt"; định nghĩa "nước đi (move)", "đến phiên (turn)" ở lần dùng đầu. Dòng 607 (Ví dụ 01.7), 813 (tiêu đề Mục 5.1 "Thế cờ, phiên đi và tập hành động hợp lệ"), 815 ("Mỗi nước đi của X vì vậy là một bước, còn cả ván cờ là một lượt"), 821, 824 và 829 ("đếm số nước X đã đi", như G00, G02), 831, 840, 845 (Định nghĩa 01.18 và đoạn sau), 883 (Ví dụ 01.10), 921 (alt hình), 1017 và 1027 (Bài tập 01.7), 1037 và 1072 (Bài tập 01.8, "ở nước sau"). Sau sửa, "lượt" trong ghi chú chỉ dùng cho episode; "lần lượt" chỉ còn ở hai câu về robot, nghĩa trạng từ. |
+| Thử và sai (trial-and-error) cùng phản hồi trễ | đã sửa | Dòng 332, đoạn sau Định nghĩa 01.5: "Bài giảng gốc (2025–2026, trang 17) và Sutton và Barto (2018, §1.1) nêu hai đặc trưng phân biệt Học tăng cường: thử và sai (trial-and-error) … và phản hồi trễ …". Đặt ở đoạn đọc định nghĩa, không trong khối định nghĩa, vì đây là đặc trưng, không phải điều kiện của định nghĩa. Đã kiểm văn bản trang 17 của PPTX nguồn ("Two characteristics: Trial-and-errors and Delay-outcome"). |
+| Nhận xét 01.4, ý 3: tách kế hoạch vòng hở khỏi chính sách phản hồi | đã sửa | Dòng 254: kế hoạch vòng hở (open-loop plan), tức dãy hành động định sẵn, không phản ứng được với kết quả thực; nếu luật ngẫu nhiên đã biết, một chính sách phản hồi (Định nghĩa 01.11), tính bằng quy hoạch động ở Bài 04, xử lý được mà không cần học; việc học cần khi luật chưa biết hoặc thay đổi. Khớp ghi chú diễn giả A04. |
+| §4.2 sau Ví dụ 01.7: vì sao giá trị chỉ phụ thuộc thế cờ | đã sửa | Dòng 645, sau đoạn đọc Định nghĩa 01.12 (đặt sau định nghĩa để đối số "lịch sử" đã có tên): $\pi_u$, $\pi_w$ chỉ dùng thế cờ hiện tại, không nhớ các nước trước, và nước cuối của O bị buộc; dẫn Nhận xét 01.19 ở Mục 5.2. Khớp ghi chú diễn giả E01b. |
+| Đầu §4.4: cầu nối sang bài toán chọn lặp lại một bước | đã sửa | Dòng 731: giá trị ở Mục 4.2 và lập kế hoạch ở Mục 4.3 dùng luật đã biết; tác tử phi mô hình chỉ có mẫu; bài toán chọn lặp lại một bước có mỗi lượt một hành động, nên lợi tức bằng phần thưởng một bước và giá trị của $a$ là kỳ vọng phần thưởng khi chọn $a$. Khớp F00. |
+| Nhận xét 01.17: "không đổi được quyết định" | đã sửa | Dòng 773: "không đổi được quyết định, vì trung bình mới của A ít nhất $\frac{12}{21}\approx0{,}571>0{,}55$". |
+| Bài tập 01.6, "Kiểm tra lại": viết khoảng chính xác | đã sửa | Dòng 803: $\big[\frac{11}{30},\frac7{10}\big]\approx[0{,}367;\,0{,}700]$. |
+| Mâu thuẫn "chỉ phần thưởng $+1$ ở cuối lượt phân biệt được" | đã sửa | Dòng 143: "phần thưởng $+1$ nhận sau hành động thứ tư; nếu robot sang trái hai lần ở đầu lượt, ba hành động còn lại không đủ để tới ô 4 và hút, và phần thưởng đó không đến". Dòng 176: với một lần $\text{trái}$, $+1$ đến muộn một bước ($R_5$ thay cho $R_4$), tổng phần thưởng vẫn bằng $1$; chỉ với hai lần $\text{trái}$, tổng bằng $0$. Bỏ vế mâu thuẫn. |
+| "Chính sách tất định" thành "chính sách xác định (deterministic policy)" | đã sửa | Dòng 597 (Định nghĩa 01.11) và 600 (hai chỗ). Kéo theo: hai chỗ "tất định" nói về môi trường ở Tình huống 01.1 (dòng 1090, 1092) đổi thành "không ngẫu nhiên", để một thuật ngữ tiếng Anh không ứng với hai từ tiếng Việt trong cùng chương; deck không dùng "tất định". |
+| `tictactoe-four-moves.svg`: "lượt" thành "phiên" | đã sửa | Nhãn "thế cờ s, đến phiên X", dòng chân "X chọn đều ở các phiên sau", `<desc>` sửa cùng; alt trong ghi chú (dòng 921) sửa cùng. SVG còn là XML hợp lệ (ElementTree). Chiều dài dòng chân không đổi số ký tự đáng kể ("lượt" → "phiên"). |
+| Ví dụ 01.9: khoảng của A thay cho "dịch tối đa $\frac1{21}$" | đã sửa | Dòng 747: thêm một lần thử A với $r\in[0,1]$ cho $\frac{12+r}{21}\in\big[\frac{12}{21},\frac{13}{21}\big]\approx[0{,}571;\,0{,}619]$, rộng $\frac1{21}<0{,}05$, nằm hoàn toàn trên $0{,}55$ của B, như F00b. Kéo theo trong cùng câu: khoảng của B viết $\big[\frac{11}{30},\frac7{10}\big]$ như F00b và Bài tập 01.6; "vượt quá $0{,}60$ của A" đổi thành "chứa $0{,}60$ của A" (khoảng chứa $0{,}60$, không nằm trên nó). |
+
+Không từ chối đề nghị nào.
+
+### Số liệu đã tính lại
+
+- Ví dụ 01.4 ($L=4$): $(R_1,\dots,R_4)=(-0{,}1;-0{,}1;-0{,}1;1)$, $G_4=0$, $G_3=1$, $G_2=0{,}9$, $G_1=0{,}8$, $G_0=0{,}7$; $T=4\le L$. Hút ở bước $0$ rồi ba hành động: tới ô 4 cần ba lần $\text{phải}$, không còn hành động để hút, mọi phần thưởng còn lại thuộc $\{0,-0{,}1\}$, nên lợi tức lớn nhất $0$ (ba lần hút). Với $L=5$: $0-0{,}3+1=0{,}7$.
+- Ví dụ 01.1 với một lần $\text{trái}$: $(R_1,\dots,R_5)=(0,0,0,0,1)$, $T=5$, tổng $1$; hai lần $\text{trái}$: còn ba hành động, cần bốn, tổng $0$.
+- Ví dụ 01.9: $\frac{1{,}1}{3}=\frac{11}{30}\approx0{,}3667$, $\frac{2{,}1}{3}=\frac7{10}$, độ rộng $\frac13>0{,}33$; $\frac{12}{21}\approx0{,}5714$, $\frac{13}{21}\approx0{,}6190$, độ rộng $\frac1{21}\approx0{,}0476<0{,}05$; $0{,}5714>0{,}55$, nên A vẫn tham lam sau một lần thử A bất kỳ.
+- Bài tập 01.6: $\frac23\approx0{,}667$ và $0{,}50$ đều thuộc $\big[\frac{11}{30},\frac7{10}\big]$.
+
+### Số từ
+
+- `wc -w`: trước 20 474 (HEAD), sau 20 886 (+412). Phần thêm đều do danh sách đề nghị: Nhận xét 01.4 ý 3, đoạn thử và sai, câu cầu nối sau Định nghĩa 01.12, câu mở Mục 4.4, Diễn giải Ví dụ 01.4, hai trường hợp sang trái ở dòng 143 và 176, khoảng của A ở Ví dụ 01.9. Đã rút gọn các đoạn thêm một lượt sau bản nháp đầu (bản nháp đầu 21 017). Vẫn vượt mức thường gặp 20 000 khoảng 890 từ; theo quyết định ở đợt trước, không cắt thêm nội dung khác.
+
+### `no-ai-slop` (Edit) và kiểm tra
+
+- Phạm vi: mọi câu đã thêm hoặc sửa trong ghi chú, nhãn và `<desc>` của `tictactoe-four-moves.svg`. Đối chiếu `eval.md`: không câu hỏi tu từ, không "hãy", không tài liệu làm chủ ngữ, không lời quy trình; không tương phản nhị phân mới; đã bỏ một dấu hai chấm kiểu "tiết lộ" ở Diễn giải Ví dụ 01.4 ("so sánh này mất tác dụng: …") thành câu thường có "nên"; dấu hai chấm còn lại dẫn danh sách hoặc phép tính. Không thêm nhận định không có nguồn: hai đặc trưng dẫn trang 17 nguồn và Sutton và Barto §1.1; quy hoạch động dẫn Bài 04 như ghi chú diễn giả A04. Kết quả: đạt.
+- `note_check.py`: 22 môi trường bộ đếm chung, 10 ví dụ, 11 bài tập, không khoảng trống, không trùng; 0 dấu `\(`/`\[`.
+- `check_note.py 01 lecture-01-gioi-thieu-hoc-tang-cuong.html` (viewer cổng 8766, server có cwd `/data/tqlong/rl-plan`): 1600×900 và 390×844 đều 0 `.katex-error`, 69 khối, 0 lỗi console, 0 yêu cầu ngoài hay hỏng, không tràn ngang.
+- `git diff --check`: sạch. Tệp của đợt này trong `git diff --stat`: `materials/lec-01/lecture-note.md`, `img/lec-01/tictactoe-four-moves.svg`, `planning/lec-01/review-log.md`. Cây làm việc còn thay đổi chưa commit ở tệp của các bài khác (ghi chú, nhật ký, SVG của Bài 02–06) không do đợt này tạo; không đụng tới.
+- Sau đợt này, hai "lệch tạm thời" ghi ở `outline.md` (dòng 152: $L=4$ ở D02c; "phiên"/"nước đi") đã hết lệch về phía ghi chú; dòng đó trong `outline.md` nằm ngoài phạm vi ghi của đợt này, đề nghị điều phối viên cập nhật.
+
+### Rà lại sau đợt sửa và sửa bổ sung
+
+- Tác tử rà lại: vai rà lại toán và nhất quán, chỉ đọc; `general-purpose`, `claude-opus-5-5`, `high` (báo cáo `scratchpad/noterecheck-01.md`). Kết quả: 0 chặn, 0 nghiêm trọng, 2 trung bình, 7 nhẹ. Mọi số liệu của đợt sửa đã được tính lại và khớp deck.
+- Biên tập viên (cùng tác tử của đợt sửa, Opus 5.5, `high`) sửa theo quyết định của điều phối viên; điều phối viên cho phép sửa riêng một dòng ngoài phạm vi là `outline.md` dòng 152.
+
+| Phát hiện | Mức | Trạng thái |
+|---|---|---|
+| Dòng 176, câu đầu: "quyết định quan sát kế tiếp" sai, vì cả hai trường hợp đều cho $O_1=\text{sạch}$ | trung bình | đã sửa: "… quyết định vị trí và các quan sát về sau: sau ba hành động, $O_3$ là $\text{sạch}$ (ô 3) thay vì $\text{bẩn}$ (ô 4)" (kiểm: trái, phải, phải đưa robot tới ô 3) |
+| `outline.md` dòng 152, dòng "Lệch tạm thời" đã cũ | trung bình | đã sửa: "Đã khớp với ghi chú (2026-10-14) …" |
+| Dòng 176, câu mới: chữ "chỉ" nói quá (phải, trái, … cũng cho tổng $0$) | nhẹ | đã sửa: "với hai lần $\text{trái}$ ở đầu lượt, tổng phần thưởng của lượt bằng $0$" |
+| Dòng 645: khối của tài liệu làm chủ ngữ | nhẹ | đã sửa: "Trong Ví dụ 01.7, giá trị được ghi theo thế cờ $s'$ …; điều kiện tổng quát có ở Nhận xét 01.19 (Mục 5.2)." |
+| Dòng 1090: "không ngẫu nhiên" như thể là điều kiện của Mệnh đề 01.20 | nhẹ | đã sửa: "Luật của môi trường cố định (ở đây còn không ngẫu nhiên), nên …" |
+| Dòng 332: vế giải thích thử và sai lặp câu trước; trích dẫn bài giảng gốc lặp hai lần liền nhau | nhẹ | đã sửa: "Theo bài giảng gốc (2025–2026, trang 17) và Sutton và Barto (2018, §1.1), hai đặc trưng … là thử và sai (trial-and-error), như vừa mô tả, và phản hồi trễ …"; câu sau mở bằng "Trang 9 của bài giảng gốc mô tả …" |
+| Dòng 143: "nước đi" lần đầu chưa có "(move)" | nhẹ | đã sửa: thêm "(move)" ở dòng 143, bỏ "(move)" lặp ở dòng 570 ("(turn)" vẫn ở dòng 570) |
+| Dòng 600: "xác định" hai nghĩa trong hai câu liền nhau | nhẹ | không sửa (tùy chọn theo điều phối viên): câu khớp ghi chú diễn giả E01 |
+| Số từ 20 886 vượt mức thường gặp | nhẹ | giữ quyết định cũ, không cắt |
+
+Kiểm tra sau sửa bổ sung: `wc -w` 20 900; `note_check.py` bộ đếm 22/10/11, không khoảng trống, không trùng, 0 `\(`/`\[`; `check_note.py 01 lecture-01-gioi-thieu-hoc-tang-cuong.html` (cổng 8766) ở 1600×900 và 390×844: 0 lỗi KaTeX, 69 khối, 0 lỗi console, 0 yêu cầu ngoài hay hỏng, không tràn ngang; `git diff --check` sạch. `no-ai-slop` (Edit) trên các câu đổi: không tài liệu làm chủ ngữ, không câu lặp ý, dấu hai chấm ở dòng 176 dẫn một ví dụ cụ thể có số liệu. Đạt.
+
+### Quyết định của điều phối viên (2026-10-14, sửa ghi chú sau giai đoạn II)
+
+- Kiểm độc lập: `note_check.py` sạch; viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 69 khối, 0 lỗi console, không tải ngoài; SVG `tictactoe-four-moves.svg` là XML hợp lệ; `git diff --check` sạch. Rà lại toán (Opus 5.5 high, chỉ đọc): 2 trung bình, 7 nhẹ, đã sửa (dòng 600 giữ theo deck).
+- Quyết định: **chấp nhận**; commit `fix(materials-01)`.

@@ -149,7 +149,7 @@ Tên hành động và quan sát (phải, trái, hút, sạch, bẩn) viết b�
 
 Mỗi trang dẫn tối đa một số hiệu kết quả, trong ghi chú diễn giả: Định nghĩa 01.1 (A01), 01.2 (A01c), 01.5 (C04b), 01.7 (D01), 01.8 (D02), 01.11 (E01), 01.12 (E01b), 01.14 (E02), 01.16 (F01), 01.18 (G02), 01.21 (G03d); Nhận xét 01.3 (A01d), 01.4 (A04), 01.6 (C04c), 01.10 (D03), 01.17 (F02), 01.19 (G02c), 01.22 (G03e); Mệnh đề 01.9 (D02b), 01.20 (G03b); Ví dụ 01.1 (A00b), 01.2 (C01), 01.3 (D00), 01.4 (D02c), 01.5 (D03b), 01.6 (E00), 01.7 (E00b), 01.8 (E02a), 01.9 (F00b), 01.10 (G03); Bài tập 01.1 (A05), 01.2 (C05), 01.3 (D04), 01.5 (E03), 01.6 (F03), 01.7 (G04), 01.9 (B01). Trang tổng kết Z01 không dẫn số hiệu; P01 ánh xạ mục tiêu sang số bài tập.
 
-Lệch tạm thời với ghi chú: D02c dùng $L=4$ (Ví dụ 01.4 của ghi chú ghi $L=5$); deck dùng "phiên"/"nước đi" của X thay cho "lượt của X" trong §5.1 của ghi chú. Đề nghị sửa ghi chú trong `review-log.md`.
+Đã khớp với ghi chú (2026-10-14): Ví dụ 01.4 của ghi chú dùng $L=4$ như D02c; ghi chú dùng "phiên"/"nước đi" của X như deck, "lượt" chỉ cho episode. Hết lệch tạm thời; chi tiết trong `review-log.md`, mục "Đợt sửa 2026-10-14".
 
 ## Nguồn
 
