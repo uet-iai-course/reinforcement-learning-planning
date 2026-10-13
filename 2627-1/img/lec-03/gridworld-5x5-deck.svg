@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 20 1100 435" role="img" aria-labelledby="gwd-title gwd-desc" font-family="Arial,sans-serif">
+<title id="gwd-title">Lưới 5×5: động lực đặc biệt và giá trị của chính sách đều</title>
+<desc id="gwd-desc">Hai lưới 5 hàng 5 cột. Lưới trái, (a) động lực đặc biệt: ô A ở hàng 1 cột 2, ô A' ở hàng 5 cột 2, ô B ở hàng 1 cột 4, ô B' ở hàng 3 cột 4; mũi tên từ A xuống A' ghi +10, mũi tên từ B xuống B' ghi +5. Lưới phải, (b) giá trị v_π của chính sách chọn đều bốn hành động, γ = 0,9, làm tròn một chữ số thập phân, theo hàng từ trên xuống: 3,3 8,8 4,4 5,3 1,5; 1,5 3,0 2,3 1,9 0,5; 0,1 0,7 0,7 0,4 −0,4; −1,0 −0,4 −0,4 −0,6 −1,2; −1,9 −1,3 −1,2 −1,4 −2,0.</desc>
+<defs><marker id="gwd-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#B15A2B"/></marker></defs>
+<rect x="0" y="20" width="1100" height="435" fill="#ffffff"/>
+<g font-size="26" font-weight="bold" fill="#1d1d1d" text-anchor="middle"><text x="235" y="50">(a) Động lực đặc biệt</text><text x="815" y="50">(b) v<tspan baseline-shift="sub" font-size="19">π</tspan> của chính sách đều, γ = 0,9</text></g>
+<g stroke="#2F3E7A" stroke-width="2" fill="none"><rect x="60" y="90" width="350" height="350"/>
+<path d="M130 90V440M60 160H410"/>
+<path d="M200 90V440M60 230H410"/>
+<path d="M270 90V440M60 300H410"/>
+<path d="M340 90V440M60 370H410"/>
+</g>
+<g stroke="#2F3E7A" stroke-width="2" fill="none"><rect x="640" y="90" width="350" height="350"/>
+<path d="M710 90V440M640 160H990"/>
+<path d="M780 90V440M640 230H990"/>
+<path d="M850 90V440M640 300H990"/>
+<path d="M920 90V440M640 370H990"/>
+</g>
+<rect x="132" y="92" width="66" height="66" fill="#edf4ff"/>
+<rect x="132" y="372" width="66" height="66" fill="#edf4ff"/>
+<rect x="272" y="92" width="66" height="66" fill="#edf4ff"/>
+<rect x="272" y="232" width="66" height="66" fill="#edf4ff"/>
+<text x="165" y="111" font-size="26" font-weight="bold" text-anchor="middle" fill="#1d1d1d">A</text>
+<text x="165" y="429" font-size="26" font-weight="bold" text-anchor="middle" fill="#1d1d1d">A′</text>
+<text x="305" y="111" font-size="26" font-weight="bold" text-anchor="middle" fill="#1d1d1d">B</text>
+<text x="305" y="289" font-size="26" font-weight="bold" text-anchor="middle" fill="#1d1d1d">B′</text>
+<g stroke="#B15A2B" stroke-width="3" fill="none" marker-end="url(#gwd-arrow)"><path d="M165 129V391"/><path d="M305 129V251"/></g>
+<g font-size="26" font-weight="bold" fill="#B15A2B" stroke="#ffffff" stroke-width="6" paint-order="stroke"><text x="172" y="272">+10</text><text x="312" y="200">+5</text></g>
+<text x="675" y="136" font-size="28" text-anchor="middle" fill="#1d1d1d">3,3</text>
+<text x="745" y="136" font-size="28" text-anchor="middle" fill="#1d1d1d">8,8</text>
+<text x="815" y="136" font-size="28" text-anchor="middle" fill="#1d1d1d">4,4</text>
+<text x="885" y="136" font-size="28" text-anchor="middle" fill="#1d1d1d">5,3</text>
+<text x="955" y="136" font-size="28" text-anchor="middle" fill="#1d1d1d">1,5</text>
+<text x="675" y="206" font-size="28" text-anchor="middle" fill="#1d1d1d">1,5</text>
+<text x="745" y="206" font-size="28" text-anchor="middle" fill="#1d1d1d">3,0</text>
+<text x="815" y="206" font-size="28" text-anchor="middle" fill="#1d1d1d">2,3</text>
+<text x="885" y="206" font-size="28" text-anchor="middle" fill="#1d1d1d">1,9</text>
+<text x="955" y="206" font-size="28" text-anchor="middle" fill="#1d1d1d">0,5</text>
+<text x="675" y="276" font-size="28" text-anchor="middle" fill="#1d1d1d">0,1</text>
+<text x="745" y="276" font-size="28" text-anchor="middle" fill="#1d1d1d">0,7</text>
+<text x="815" y="276" font-size="28" text-anchor="middle" fill="#1d1d1d">0,7</text>
+<text x="885" y="276" font-size="28" text-anchor="middle" fill="#1d1d1d">0,4</text>
+<text x="955" y="276" font-size="28" text-anchor="middle" fill="#1d1d1d">−0,4</text>
+<text x="675" y="346" font-size="28" text-anchor="middle" fill="#1d1d1d">−1,0</text>
+<text x="745" y="346" font-size="28" text-anchor="middle" fill="#1d1d1d">−0,4</text>
+<text x="815" y="346" font-size="28" text-anchor="middle" fill="#1d1d1d">−0,4</text>
+<text x="885" y="346" font-size="28" text-anchor="middle" fill="#1d1d1d">−0,6</text>
+<text x="955" y="346" font-size="28" text-anchor="middle" fill="#1d1d1d">−1,2</text>
+<text x="675" y="416" font-size="28" text-anchor="middle" fill="#1d1d1d">−1,9</text>
+<text x="745" y="416" font-size="28" text-anchor="middle" fill="#1d1d1d">−1,3</text>
+<text x="815" y="416" font-size="28" text-anchor="middle" fill="#1d1d1d">−1,2</text>
+<text x="885" y="416" font-size="28" text-anchor="middle" fill="#1d1d1d">−1,4</text>
+<text x="955" y="416" font-size="28" text-anchor="middle" fill="#1d1d1d">−2,0</text>
+</svg>

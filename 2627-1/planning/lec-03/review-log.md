@@ -1419,3 +1419,271 @@ Hai tác tử rà lại chỉ đọc, Claude Opus 5.5 mức `high`: vai toán (`
 Kiểm tra sau sửa: `note_check.py` cho 31 môi trường bộ đếm chung, 17 ví dụ, 14 bài tập, liên tục, không trùng, không khối lạ, không mẫu câu cấm. `check_note.py 03 lecture-03-qua-trinh-quyet-dinh-markov.html` cho 0 lỗi KaTeX, 104 khối, 0 lỗi console, 0 yêu cầu ra ngoài, không tràn ở 1600×900 và 390×844. Không công thức khối nào tràn khung ở 1600 px. `git diff --check` sạch.
 
 Tự kiểm `no-ai-slop` (Edit) trên các câu đã sửa: hết tài liệu làm chủ ngữ; các câu kết mục bỏ phần nhắc lại số liệu; không câu hỏi, không từ cấm, không câu kết kịch tính.
+
+## Đợt sửa 2026-10-12 — Giai đoạn II: bộ trang chiếu
+
+### Tác tử và phạm vi
+
+- Vai: tác tử soạn deck (viết tệp), theo `brief_deck_writer.md` của điều phối viên với NN = 03. Loại tác tử ghi theo brief: `general-purpose`; mô hình Claude Opus 5.5 (`claude-opus-5-5`), mức `high`. Không commit, không push.
+- Tệp đã ghi: `2627-1/lecture-03-qua-trinh-quyet-dinh-markov.html` (viết lại theo bảy mạch), `planning/lec-03/outline.md` và `storyboard.md` (viết lại), mục này của `review-log.md`, mười SVG cũ trong `img/lec-03/` (sửa nhãn và mô tả). Không sửa ghi chú bài giảng, `lecture-slide.css`, `index.html`, viewer, notebook, tệp của bài khác.
+- Đầu vào đã đọc: `quyet-dinh-chuan-2026-10-12.md`; `revision-plan-2026-10-12.md` mục A và D; `AGENTS.md` các mục brief chỉ định; `CLAUDE.md` mục "Deck structure and content"; ghi chú bài giảng đã commit (toàn bộ); mục "Đợt sửa 2026-10-12 — Giai đoạn I" của nhật ký này; deck, outline, storyboard cũ; `lecture-slide.css`; deck mẫu math-4-AI Bài 07 (chỉ cấu trúc mở đầu, trang tiêu đề mạch, mạch kết luận); `no-ai-slop` (`SKILL.md`, `eval.md`); `quill/references/workflows.md` (Outline, Threads, Concept, Revise; không tạo `quill.json`).
+
+### Kết quả
+
+- 7 mạch, 71 trang (trước: 7 mạch, 50 trang, chưa có trang tiêu đề mạch). Sáu trang tiêu đề mạch `L03R-0N-00`, `id="mach-N"`, N = 2…7; số trên mặt trang trùng trang "Nội dung" và chỉ số ngang RevealJS.
+- Mạch mở đầu: bìa có luận đề "Giá trị của một chính sách là nghiệm của phương trình Bellman do mô hình Markov sinh ra."; "Tiên quyết và quy ước"; "Mục tiêu học tập" (năm mục tiêu theo ghi chú); "Nội dung"; "Vấn đề trung tâm".
+- Mạch kết luận: hai trang "Tổng kết" (bảng `Kết quả | Giả thiết không được bỏ | Công thức hoặc thuật toán`, sáu hàng); bài tập tổng hợp có lời giải trên mặt trang; "Kết luận về vấn đề trung tâm" có dòng "Nguồn:"; "Câu hỏi tự kiểm tra"; "Bài tập về nhà và tài liệu đọc" với bảng `Mạch | Bài tập`, dòng "Tài liệu đọc:", liên kết viewer ghi chú và dòng nối Bài 04. Bài có một thuật toán nên không có bảng khung chung nhiều phương pháp.
+- Số liệu trên mặt trang tính lại bằng `fractions`: $v_\pi=(13/4,\,7/4)$; $\det(I-\gamma P^\pi)=1/2$, nghịch đảo $(3/2,1/2;1/2,3/2)$; $q_\pi(\mathrm L,\cdot)=(3/4,\,15/8,\,13/8)$; $q_\pi(\mathrm H,\mathrm{tim})=13/4$, $q_\pi(\mathrm H,\mathrm{cho})=21/8$; kỳ vọng hai bước $21/8$ (H), $9/8$ (L); ba thí nghiệm $1/8$, $5/4$, $1$; khoảng $[9/8,\,33/8]$; Bài tập 03.3: $3/4$, $2$, $[0,\,3/2]$; luôn Chờ $(10/3,\,2)$; rủi ro cứu hộ thấp hơn $r(\mathrm L,\mathrm{tim})=3/4$, $q_\pi(\mathrm L,\mathrm{tim})=29/16<30/16$; lưới 5×5 $10+0{,}9\cdot(-1{,}345)=8{,}7895$.
+
+### Bảng mã trang cũ → mới
+
+| Cũ | Mới | Quyết định |
+|---|---|---|
+| `01-01`, `01-02` | `01-01`, `01-02` | sửa |
+| — | `01-01b`, `01-01c`, `01-02b` | thêm |
+| — | `02-00`, `03-00`, `04-00`, `05-00`, `06-00`, `07-00` | thêm (trang tiêu đề mạch) |
+| `01-03`…`01-07` | giữ mã, chuyển sang mạch 2 | sửa |
+| — | `01-06b` | thêm |
+| `02-01` | — | bỏ (gộp vào `02-02`) |
+| `02-02`…`02-06` | giữ mã | sửa |
+| `02-07` | `02-07`, `02-07b` | tách |
+| `03-01`…`03-05` | giữ mã (thứ tự `03-01`, `03-03`, `03-02`, `03-04`, `03-05`) | sửa |
+| `03-06` | `03-06`, `03-06b` | tách |
+| `04-01` | — | bỏ (gộp vào `04-02`) |
+| `04-02`…`04-07` | giữ mã | sửa |
+| — | `04-03b` | thêm |
+| `04-08` | `04-08`, `04-08b` | tách |
+| `05-01`…`05-04` | giữ mã | sửa |
+| `05-05` | — | bỏ (gộp vào `05-04`) |
+| `05-06` | `05-06`, `05-06b` | tách |
+| `05-07`…`05-09` | giữ mã | sửa |
+| `05-10` | `05-10`, `05-10b` | tách |
+| `06-01`…`06-06` | giữ mã | sửa |
+| `06-07` | `06-07`, `06-07b`, `06-07c`, `06-07d` | tách |
+| — | `06-07e` | thêm |
+| `06-08` | `06-08`, `06-08b` | tách |
+| `07-01`, `07-02` | giữ mã, nội dung mới (bài tập tổng hợp) | sửa |
+| — | `07-01a`, `07-01b`, `07-02b` | thêm |
+| `07-03`, `07-04` | giữ mã | sửa |
+
+Không trang nào có `id` được học liệu liên kết tới (đã kiểm `grep` trong ghi chú, `index.html`, deck Bài 04); `index.html` chỉ liên kết tệp deck và viewer.
+
+### Sai khác so với kế hoạch A và lý do
+
+1. 71 trang thay vì khoảng 67: thêm `01-06b` (bước ứng dụng của tính Markov theo A4), `04-03b` (Mệnh đề 03.14), `06-07e` (ứng dụng thuật toán trên lưới 5×5, theo Tình huống 03.1), `07-01b` (bảng tổng kết sáu hàng tràn khung 16:9 nên tách hai trang); bớt bằng gộp `02-01`, `04-01`, `05-05` và gộp đề hai bài tập ở `04-08`. Thời lượng vẫn 120 phút (storyboard mục 4). Quyết định chung mục 5 chấp nhận 60–70 trang; vượt một trang, ghi ở đây để điều phối viên quyết định.
+2. Bài tập tổng hợp `07-01`/`07-02` là Bài tập 03.13 của ghi chú thay "ba hành động tại pin thấp" (A2), vì ba giá trị $q_\pi(\mathrm L,\cdot)$ đã ở `06-04` (Ví dụ 03.15); đây là rủi ro D của kế hoạch.
+3. `03-06` dùng dãy $(2,-3,1)$ theo Bài tập 03.3 đã commit, thay $(0,2,2)$ của A3; `03-03` đặt trước `03-02` theo thứ tự Mục 2 của ghi chú.
+4. Tiêu đề "Bổ đề: …", "Định lý: …" của A3 đổi thành cụm danh từ (tiền tố không có trong danh sách cho phép). Tiêu đề chứa công thức ($v_\pi$, $q_\pi$) đổi thành chữ vì `h2` của chủ đề viết hoa toàn bộ, kể cả chữ trong KaTeX ($v_\pi$ hiện thành $V_\Pi$).
+5. Mục tiêu học tập dùng năm mục tiêu của ghi chú thay bốn mục tiêu của A2.
+6. Hình `robot-p06-policy-evaluation-setup.svg` dự kiến cho `01-02b` chuyển sang `06-01` (ở `01-02b` làm tràn khung). Sơ đồ dự phòng không đặt trên deck (nhãn quá nhỏ ở cỡ trang), ghi chú diễn giả `05-09` dẫn tới hình trong ghi chú.
+7. Thêm `scrollActivationWidth:null` vào cấu hình RevealJS như deck Bài 01, Bài 02: không có tham số này, ở 390 px RevealJS chuyển sang chế độ cuộn và mã băm không cập nhật.
+8. Bảng `Mạch | Bài tập` ở `07-03` ánh xạ Bài tập 03.1–03.14 của ghi chú; `exercises.md` chưa có, mặt trang ghi "Bài tập: chưa có" thay vì liên kết hỏng, ghi chú diễn giả nêu số hiệu dự kiến từ 03.15.
+
+### Mật độ
+
+`density.py` trước sửa: 22 trang bị đánh dấu trên 50 trang (5 trang trên 60 âm tiết, các trang khác vượt dòng 20 âm tiết hoặc 6 dòng). Sau sửa: 9 dòng bị đánh dấu, đều là ngoại lệ ghi trong storyboard mục 5 (`01-01c` trang mục tiêu trần 80; `01-02` tám dòng; năm trang tiêu đề mạch với dòng dẫn 21–25 âm tiết, trần 25; `06-07d` giả mã bảy bước; `07-03` bảng bài tập về nhà). Không trang nội dung nào trên 60 âm tiết; trung bình 45 âm tiết, 45 trang trên mức đích 40 (cao nhất 59). Bảng trước/sau từng trang ở storyboard mục 5. Đã bỏ mọi `style` cục bộ (bảng `font-size:32px`, `margin`, `padding`); không thêm CSS.
+
+### SVG
+
+Không thêm SVG. Sửa mười SVG cũ: `aria-label` dính chữ hoặc quá chung được viết lại cụ thể (`robot-p02-search-outcomes`, `robot-p03-discounted-bands`, `robot-p03-episodic-continuing`, `robot-p04-two-layers`, `robot-p04-two-step-tree`, `robot-p05-low-battery-branches`, `robot-p05-one-step-lookahead`); nhãn trong hình sửa khoảng trắng ("thưởng1" → "thưởng 1" ở `robot-p05-low-battery-branches`, `robot-p05-one-step-lookahead`, `robot-p07-branch-wait`; "Tìm : 3/4" → "Tìm: 3/4" ở `robot-p07-three-actions-values`; "gamma bằng 1/2" → "γ = 1/2" ở `robot-p03-geometric-series`). Không đổi dữ liệu, mũi tên hay bố cục. Hai SVG ghi chú đang dùng (`robot-p04-two-layers`, `robot-p04-two-step-tree`) chỉ đổi `aria-label`.
+
+SVG không còn được deck hay ghi chú dùng: `robot-p02-uncertain-feedback`, `robot-p03-discounted-bands`, `robot-p03-geometric-series`, `robot-p04-continuing-branches`, `robot-p04-policy-choices`, `robot-p07-branch-wait`, `robot-p07-three-actions-values`. Chưa xóa; đề nghị điều phối viên quyết định xóa hay giữ.
+
+### Đề nghị sửa ghi chú
+
+Không phát hiện chỗ ghi chú sai. Deck dùng đúng số liệu, ký hiệu và số hiệu của ghi chú. Một chỗ cần thống nhất khi soạn `exercises.md`: ghi chú xếp Bài tập 03.12 (tính lùi $G_t$ theo Bổ đề 03.18) vào mục tiêu 2; bảng `07-03` theo đó đặt bài này ở mạch 3.
+
+### Đề nghị cho `lecture-slide.css`
+
+1. Tiêu đề `h2` viết hoa toàn bộ làm sai chữ trong công thức KaTeX ($v_\pi$ hiện thành $V_\Pi$). Đề nghị thêm `.reveal h1 .katex, .reveal h2 .katex { text-transform: none; }` để tiêu đề được chứa ký hiệu.
+2. `ol type="a"` bị chủ đề ghi đè thành số; đề nghị `.reveal ol[type="a"] { list-style-type: lower-alpha; }`. Deck hiện viết "(a)", "(b)" bằng chữ nên không phụ thuộc đề nghị này.
+
+### Việc ngoài phạm vi brief
+
+Quyết định chung mục 5 yêu cầu thêm dòng đầu "Hồ sơ lịch sử trước đợt sửa 2026-10-12; không còn phản ánh deck hiện tại." vào `detailed-slide-plan.md`, `note-for-author.md`, `storyboard-mdp-replanned.md`; brief giới hạn tệp planning được ghi ở `outline.md`, `storyboard.md`, `review-log.md`, nên chưa làm.
+
+### Tự kiểm `no-ai-slop` (chế độ Edit) và `quill`
+
+- Phạm vi: toàn bộ mặt trang và ghi chú diễn giả của deck, alt và `aria-label` của SVG đã sửa, `outline.md`, `storyboard.md`.
+- Đối chiếu `eval.md`: không thêm số liệu hay nguồn không có căn cứ (bộ số tự xây dựng được ghi "số liệu sư phạm tự xây dựng" trong ghi chú diễn giả); không từ cấm, không câu hỏi tu từ, không câu cảm thán; không "ta thấy", "chúng ta", "rõ ràng", "hãy", "Đáp án", "tổng thưởng", "điểm thưởng" trên deck; không ghi chú mở bằng "Trang này"; không lời chỉ đường (đã bỏ "Lời giải ở trang kế tiếp"); gạch dài chỉ còn là ký hiệu ô không hợp lệ trong bảng chính sách. Sửa trong lượt tự kiểm: hai cặp "X, không phải Y" không cần thiết trong ghi chú `02-02`, `05-04`; giữ các cặp mang phân biệt toán học ("kỳ vọng" với giá trị nhận được; kiểm tra số học với tiêu chuẩn hội tụ).
+- `quill` (Outline, Threads, Concept, Revise dùng làm bảng kiểm): mọi ký hiệu xuất hiện sau định nghĩa hoặc dòng nhắc lại (bảng thứ tự ở `outline.md` mục 6; đã thêm định nghĩa $v_H$, $v_L$ trên mặt `05-10b`, "(agent)" ở `04-03`); các mạch mở đều đóng: tính duy nhất (mở ở `05-06b`, đóng ở `06-07b`), so sánh $q$ chưa chứng minh tối ưu (mở ở `06-04`, đóng ở `06-08b`, `07-04`), giới hạn cần $p$ và chi phí $n^3$ (mở ở `06-07c`, đóng ở `07-02b` với dẫn Bài 04–06).
+
+### Kiểm tra trình duyệt
+
+Server `reloadserver` cổng 8766. Script Playwright Chromium (scratchpad `deck03/check_deck.py`) duyệt cả 71 trang ngang và dọc bằng `Reveal.slide(h,v,99)` ở 1600×900 và 390×844, chặn yêu cầu tải lại của reloadserver để trang không bị nạp lại giữa chừng:
+
+- 0 lỗi console và lỗi trang (chỉ còn lỗi `ERR_FAILED` do chính script chặn yêu cầu `api-reloadserver`), 0 `.katex-error`, 0 yêu cầu ra ngoài localhost, 0 tài nguyên lỗi, 0 mã trang trùng.
+- Không phần tử nào ra ngoài khung trang chiếu, không chồng lên chân trang, không tràn ngang trang, ở cả hai cỡ. Lượt đầu phát hiện và đã sửa: `01-02b`, `03-03`, `04-03`, `05-09`, `07-01a` tràn đáy; `01-04`, `03-04` chồng chân trang; công thức `05-06`, `06-06` tràn ngang; `$t<T$` ở `03-04` bị trình duyệt đọc thành thẻ HTML (đổi thành `\lt`).
+- Số trên sáu trang tiêu đề mạch trùng chỉ số ngang và trùng mục tương ứng của trang "Nội dung". Phím mũi tên chuyển trang đúng (từ mạch 2 sang mạch 3, xuống trang dọc, quay lại).
+- Cỡ chữ thân bài nhỏ nhất 30,24 px (bảng) và 33,6 px (đoạn văn) trên khung 1280×720; chú thích `.caption` 27,6 px.
+- Ảnh chụp trong scratchpad `deck03/shots/` (mọi trang ở 1600×900; trang tiêu đề mạch, `07-01a`, `07-01b`, `05-06b`, `02-05`, `06-07d`, `02-03` ở 390×844) và tấm ghép `deck03/sheets/s00.png`…`s11.png`; đã xem toàn bộ tấm ghép và các ảnh 390 px của trang tiêu đề mạch và bảng tổng kết.
+- `git diff --check` sạch trên deck, `img/lec-03/`, `planning/lec-03/`.
+
+## Rà soát năm vai và biên tập (giai đoạn II)
+
+### Tác tử
+
+- Năm vai rà soát chỉ đọc trên bản 71 trang: góc nhìn sinh viên (SV), chuyên gia Học tăng cường (RL), toán và thuật toán (TOAN), phản biện sư phạm kèm `no-ai-slop` Detect (PB), kết nối và mạch (MACH). Loại, mô hình và mức do điều phối viên tạo và ghi theo lời gọi công cụ (Claude Opus 5.5, `high`); báo cáo ở scratchpad `deckrev-03-{SV,RL,TOAN,PB,MACH}.md`.
+- Biên tập viên (viết tệp): tác tử `general-purpose`, Claude Opus 5.5 (`claude-opus-5-5`), mức `high`, theo `brief_deck_writer.md`, `brief_deck_editor.md` và quyết định của điều phối viên cho Bài 03. Không sửa ghi chú bài giảng, `lecture-slide.css`, `index.html`; không commit.
+- Tổng hợp mức: 0 chặn bàn giao; 1 nghiêm trọng (MACH F1, trùng PB 1); trung bình: MACH 3, PB 10, TOAN 2, RL 2, SV 6; nhẹ: các mục còn lại.
+
+### Trang đổi, thêm, bỏ (71 → 72 trang)
+
+- Thêm: `01-01d` (Tiên quyết và quy ước, phần ký hiệu; tách từ `01-01b`), `01-07b` (lời giải Bài tập 03.1 trên mặt trang).
+- Gộp: `03-03` vào `03-01` (nay "Lợi tức của robot": Nhắc lại Bài 02, Nhu cầu, hai dãy ba bước); bỏ hình `robot-p03-reward-timeline.svg` khỏi trang vì trang gộp tràn khung 75 px.
+- Sửa mặt trang: `01-01`, `01-01b`, `01-01c`, `01-02b`, `02-00`, `01-03`, `01-04` (tiêu đề "Quỹ đạo và lịch sử"), `01-06`, `01-06b`, `02-02`, `02-04`, `02-05`, `02-06`, `03-01`, `03-05`, `04-02`, `04-03`, `04-03b`, `04-04`, `04-05`, `04-06`, `05-00`, `05-01`, `05-03`, `05-04`, `05-06`, `05-06b`, `05-07`, `05-08`, `05-09`, `05-10`, `05-10b`, `06-01`, `06-03`, `06-05`, `06-06`, `06-07`, `06-07b`, `06-07c`, `06-07d`, `06-07e`, `06-08`, `06-08b`, `07-00`, `07-01a`, `07-01b`, `07-01`, `07-02`, `07-02b`, `07-04`, `07-03`.
+- Chỉ sửa ghi chú diễn giả: `01-02`, `01-07`, `03-00`, `03-02`, `03-04`, `04-00`, `04-07`, `04-08`, `06-00`. Các số hiệu kết quả trong ngoặc trên mặt trang dùng khoảng trắng không ngắt dòng.
+- SVG thêm (bản riêng của deck, hai hình gốc giữ nguyên vì ghi chú dùng và trích nhãn): `img/lec-03/robot-p04-two-step-tree-deck.svg` (cột "$G_0^{[2]}$; xác suất", ô "3; 1/2 (gộp H, L)"); `img/lec-03/gridworld-5x5-deck.svg` (bỏ ba dòng chú thích lặp, cắt khung, giá trị cỡ 28, nhãn cỡ 26, "+10" có viền trắng). Không xóa SVG nào.
+
+### Bảng phát hiện và trạng thái
+
+| Mã | Trang | Mức | Trạng thái |
+|---|---|---|---|
+| MACH F1 / PB 1 | `01-01b`, mạch 2–4, ghi chú `02-00`, `03-00`, `04-00`, `03-05`, `05-03` | nghiêm trọng | đã sửa theo quyết định (i)–(iv): "Nhắc lại (Bài 02):" ở `01-01b`; `01-03`, `03-01`, `04-02` mở bằng "Nhắc lại:" rồi "Nhu cầu:"; gộp `03-01`/`03-03`; ghi chú tiêu đề mạch nêu phần kế thừa và phần mới; ghi chú `03-05`, `05-03` ghi "đã có ở Bài 02 (Mệnh đề 02.13)" |
+| MACH F2 | `01-03`, `02-02` | trung bình | đã sửa: câu "bảng theo trạng thái chỉ đủ khi trạng thái giữ đủ thông tin" ở ghi chú `01-03`; mặt `02-02` "Nhờ tính Markov, phản hồi được liệt kê theo cặp $(s,a)$" |
+| MACH F3 | `06-05` | trung bình | đã sửa (cách 1): dòng "Nhu cầu:" gộp $\pi$ với $p$ |
+| MACH F4 | `07-01a` | trung bình | đã sửa: hàng "Giá trị $v_\pi$, $q_\pi$" |
+| MACH F5 | `03-02` | nhẹ | đã sửa (ghi chú) |
+| MACH F6 | `04-04` | nhẹ | đã sửa: ghi chú dẫn công thức tích; mặt trang dùng "Nhu cầu:" thay câu "Muốn…" để không thêm khuôn câu PB 12 chê |
+| MACH F7 / PB 5 | `05-07` | nhẹ / trung bình | đã sửa |
+| MACH F8 / PB 14 | `07-00` | nhẹ | đã sửa: dòng dẫn mới; từ khóa "Tính Markov · Tính dừng · Chiết khấu · Bốn giới hạn" |
+| MACH F9 | `07-04` | nhẹ | đã sửa: câu 2 thành $\gamma=0$, câu 3 thành trạng thái không ghi vị trí |
+| MACH F10 | toàn deck | nhẹ | đã sửa: "trạng thái thiếu phòng làm việc" |
+| MACH F11, F12, F13 | `06-03`, `01-02b`, `06-07c` | nhẹ | đã sửa |
+| PB 2 | `01-04` | trung bình | đã sửa |
+| PB 3 / SV 1 | `01-01d` | trung bình | đã sửa: dòng "Ký hiệu:" có $\mathcal A(s)$, $\mathcal R$, $\Pr_\pi$, $\mathbb E_\pi$, $\mathrm H$, $\mathrm L$, $\mathrm{tim},\mathrm{cho},\mathrm{sac}$; tách thành trang riêng vì một trang vượt 60 âm tiết |
+| PB 4 | `01-07b` | trung bình | đã sửa (thêm trang) |
+| PB 6 | `05-06` | trung bình | đã sửa: "Trực quan." trước Bổ đề, bỏ "Ý nghĩa:" |
+| PB 7 / SV nhẹ 1 | `05-07`, `05-09`, `05-10` | trung bình | đã sửa: hai dòng "Chứng minh."; đề `05-10` nêu chuỗi bằng lời (tính Markov của phần tương lai, $q$ theo $v$, $v$ theo $q$); số hiệu 03.20, 03.22, 03.23 để trong ghi chú diễn giả vì quyết định chung mục 6 cho tối đa một số hiệu trên mặt trang |
+| PB 8 | ghi chú `05-06`, `05-10`, lời giải câu 3 `07-04` | trung bình | đã sửa trên deck; đề nghị sửa ghi chú (dưới) |
+| PB 9 | `07-04` câu 4 | trung bình | đã sửa |
+| PB 10 | `06-07c` | trung bình | đã sửa (cách 2): "hệ hàng chục ẩn", chi phí không nhắc bước 5 |
+| PB 11 / SV 2 | `04-06` | trung bình | đã sửa: dòng thưởng kỳ vọng bước sau, Tìm viết đủ |
+| PB 12 | `03-01`, `04-02`, `01-03`, `02-02`, `04-06` | nhẹ | đã sửa: câu "Muốn…" chỉ còn trên sáu trang tiêu đề mạch |
+| PB 13 / SV 9 / TOAN | `05-00` | nhẹ | đã sửa |
+| PB 15 | `01-02b` | nhẹ | đã sửa |
+| PB 16 | `05-06b` | nhẹ | đã sửa (mặt trang và ghi chú) |
+| PB 17 | `03-05` | nhẹ | đã sửa |
+| PB 18 | `04-04`, `06-07e` | nhẹ | đã sửa |
+| PB 19 | ghi chú `06-06` | nhẹ | đã sửa (giải thích $\gamma$ trong bộ MRP); đề nghị sửa ghi chú |
+| PB 20 / RL nhẹ | ghi chú `05-09`, outline | nhẹ | đã sửa: "sơ đồ cập nhật (backup diagram)" |
+| PB 21–23 | ghi chú `01-02b`, `01-06`, `03-04`, `04-07`, `01-02`, `06-06` | nhẹ | đã sửa |
+| PB 24 | ghi chú `04-08` | nhẹ | đã sửa |
+| PB 25, 26, 27, 28 | `06-08b`, `07-02b`, `03-02`, `07-01b` | nhẹ | đã sửa |
+| TOAN 1 | `06-07b` | trung bình | đã sửa |
+| TOAN 2 / RL nhẹ | `07-02b`, `07-01b`, `01-02b` | trung bình | đã sửa |
+| TOAN 3 | `05-06`, `05-04`, `04-03`, `04-03b` | nhẹ | đã sửa |
+| TOAN 4 | `05-07`, `05-08`, `05-09`, `06-07` | nhẹ | đã sửa: "Giả thiết như Định lý 03.21"; số hiệu riêng của bốn kết quả rời khỏi mặt trang (vẫn ở dòng nguồn) để giữ một số hiệu mỗi mặt trang |
+| TOAN 5, 6, 7, 8, 9, 10 | `06-07c`/`06-07d`, `06-07e`, `07-01b`, `06-06`, `05-01`, ghi chú `03-05` | nhẹ | đã sửa |
+| TOAN 11 | $v_H$, $v_L$ | nhẹ | hoãn theo quyết định điều phối viên: giữ, ghi vào danh sách đồng bộ chéo |
+| RL trung bình 1 | phạm vi $\gamma=1$ | trung bình | đã sửa: "Lưu ý:" ở `06-07b`; ghi chú `05-06b`, `06-07b`; vế "hoặc lượt chắc chắn kết thúc" ở `07-02b` |
+| RL trung bình 2 | `07-02b`, `06-07e` | trung bình | đã sửa: dòng "Giới hạn:" bốn giới hạn; ghi chú `06-07e` nêu Tình huống 03.2 (324 ô; 84,5 so với 95,4), ghi chú `07-02b` nêu TD(0) dùng mẫu vế phải phương trình Bellman |
+| RL nhẹ | `02-00`, `06-01`, `06-07c`, thuật ngữ `01-01b`, "phần thưởng", "mô hình là $p$" (`02-06`), bìa, storyboard §6, cột `07-03` | nhẹ | đã sửa |
+| RL nhẹ $\delta$ | `06-07c` | nhẹ | hoãn: giữ $\delta$, ghi vào danh sách đồng bộ chéo |
+| SV 3, 4, 5 | `04-05`, `05-04`, `01-06b` | trung bình | đã sửa |
+| SV 6 | thời lượng | trung bình | đã sửa: storyboard §4 (trang sinh viên tự làm 3 phút, khối 30 phút, trang có thể bỏ, sửa đếm trùng 03.7/03.8) |
+| SV nhẹ 2–8, 10 | nhiều trang | nhẹ | đã sửa; ngắt dòng KaTeX xử lý bằng nhóm `{…}` |
+| SV nhẹ 11 | `02-05`, `03-05`, `04-03b`, `05-04` | nhẹ | đã sửa: mỗi trang bỏ một thành phần (Lưu ý, Trực quan, Ký hiệu chuyển đi, Ví dụ thay bằng Ký hiệu) |
+
+Từ chối hoặc áp dụng một phần (lý do):
+
+1. Ghi chú diễn giả `01-01c` giữ Bài tập 03.12 ở mục tiêu 2 vì đó là ánh xạ mục tiêu của ghi chú; bảng `07-03` xếp 03.12 ở mạch 5 theo SV nhẹ 10.
+2. "Chuỗi Bổ đề 03.20 → 03.22 → 03.23" trên đề `05-10` viết bằng lời; số hiệu ở ghi chú diễn giả (quyết định chung mục 6).
+3. Hình trục thời gian ở `03-01` bị bỏ khỏi trang gộp (tràn khung); dữ kiện $(0,2,2)$ vẫn trên mặt trang.
+4. `07-02b` 7 dòng, 75 âm tiết: ngoại lệ ghi trong storyboard mục 5 (năm dòng song song với `01-02b`, dòng giới hạn, dòng nguồn).
+
+### Lệch tạm thời deck–ghi chú
+
+- Deck nêu bốn giới hạn (thêm "trạng thái phải Markov"); Tóm tắt chương của ghi chú nêu ba.
+- Deck dùng "sơ đồ cập nhật"; ghi chú còn "sơ đồ dự phòng".
+- `06-07e` ghi $-1{,}3452$; Tình huống 03.1 ghi $-1{,}345$ với kết quả $8{,}789$.
+
+### Đề nghị sửa ghi chú (sau giai đoạn II)
+
+| Vị trí trong ghi chú | Nội dung sửa | Nguồn |
+|---|---|---|
+| Mệnh đề 03.11, Bổ đề 03.18 | Thêm câu: đã phát biểu ở ghi chú Bài 02 (Mệnh đề 02.13(a)(b)); ở đây dùng cho MDP hữu hạn | MACH đề nghị 1, PB đề nghị 4 |
+| Kiến thức tiên quyết, dòng "Trạng thái và tính Markov trực quan" | Bỏ chữ "trực quan"; dẫn Định nghĩa 02.5 | MACH đề nghị 2 |
+| Nhận xét 03.25; lời giải Bài tập 03.7(a) | "Bổ đề 03.19 dùng tính Markov một bước qua quy tắc sinh; Bổ đề 03.20 dùng tính Markov cho toàn bộ phần tương lai và tính dừng của $\pi$" | PB đề nghị 1 |
+| Dòng 1036–1038 và `outline.md` | "sơ đồ dự phòng" → "sơ đồ cập nhật (backup diagram)" | PB đề nghị 2, RL đề nghị 1 |
+| Định nghĩa 03.26 | Một câu vì sao bộ MRP chứa $\gamma$ còn MDP để $\gamma$ ngoài bộ | PB đề nghị 3 |
+| Tình huống 03.1 | $10+0{,}9\cdot(-1{,}3452)\approx8{,}789$ (hoặc $\approx8{,}79$) | TOAN đề nghị 1 |
+| Thuật toán 03.29, bước 1 | Kiểm $p(\cdot,\cdot\mid s,a)$ khi đầu vào là hàm động lực đầy đủ | TOAN đề nghị 2 |
+| Phần mở Mục 4 | "sai số tới $3/2$" → "cận sai số $3/2$" (sai số thật $5/8$) | TOAN 9 |
+| Tóm tắt chương | Thêm giới hạn thứ tư: trạng thái phải có tính Markov (Tình huống 03.2) | RL trung bình 2 (biên tập viên) |
+| Mục tiêu 2 | Cân nhắc xếp Bài tập 03.12 (tính lùi theo Bổ đề 03.18) vào mục tiêu 4 | SV nhẹ 10 |
+
+### Danh sách đồng bộ chéo
+
+- $v_H$, $v_L$ → $v_{\mathrm H}$, $v_{\mathrm L}$ (deck và ghi chú; TOAN 11).
+- Dung sai $\delta$ của Thuật toán 03.29 trùng chữ với sai số TD $\delta_t$ của Bài 05 (RL nhẹ).
+- $P^\pi$, $r^\pi$ → $P_\pi$, $r_\pi$ (quyết định chung mục 1, có từ trước).
+
+### Số dự kiến của `exercises.md` (cho giai đoạn III)
+
+Bảng `07-03` chỉ ghi Bài tập 03.1–03.14 của ghi chú và dòng "Tệp bài tập: chưa có". Bài tập bổ sung của `exercises.md` dự kiến đánh số từ 03.15 (chung bộ đếm với ghi chú). Trang có đề và lời giải để `exercises.md` liên kết "Trùng trang chiếu": `01-07`/`01-07b` (03.1), `02-07`/`02-07b` (03.2), `03-06`/`03-06b` (03.3), `04-08`/`04-08b` ((a) 03.5; (b) 03.4(a)(b); (c) 03.4(c)), `05-10b` (03.6), `05-10` (03.7, lời giải trong ghi chú diễn giả), `06-08`/`06-08b` (03.8), `07-01`/`07-02` (03.13).
+
+### Mật độ
+
+`density.py` trước vòng biên tập: 71 trang, trung bình 45,0 âm tiết, 9 dòng bị đánh dấu (đều ngoại lệ). Sau: 72 trang, trung bình 46,7, 11 dòng bị đánh dấu, đều là ngoại lệ ghi trong storyboard mục 5: `01-01` (luận đề 22 âm tiết), `01-01c` (67, trang mục tiêu), `01-02` (8 dòng), năm trang tiêu đề mạch (dòng dẫn 21–25), `06-07d` (giả mã 7 bước), `07-02b` (75 âm tiết, 7 dòng; mới), `07-03` (62, 10 dòng). Không trang nội dung nào trên 60 âm tiết ngoài ngoại lệ.
+
+### Tự kiểm `no-ai-slop` (Edit)
+
+Phạm vi: mặt trang và ghi chú diễn giả của mọi trang đã đổi, storyboard và outline phần đã đổi. Đối chiếu `eval.md`: không thêm số liệu không có căn cứ (số mới đều tính lại: $\tfrac12(2+\tfrac14)+\tfrac12(-2)=\tfrac18$; $\mathbb E_\pi[R_2]=\tfrac54$; $\gamma^2M/(1-\gamma)=\tfrac32$; $\gamma=0$ cho $v_\pi=r^\pi=(2,\tfrac12)$; $10-0{,}9\cdot1{,}3452=8{,}7893$; sai số thật hai bước $5/8$; xác suất $1/2$, $1/4$ của Bài tập 03.1; số CartPole lấy từ Tình huống 03.2); không "ta thấy", "chúng ta", "rõ ràng", "hãy", "đáp án", "tổng thưởng"; không ghi chú mở bằng "Trang này" hay lấy "Mạch/Phần/Bài này" làm chủ ngữ; câu "Muốn…" chỉ còn trên trang tiêu đề mạch; "thưởng" đứng riêng chỉ còn trong "thưởng kỳ vọng"; ghi chú diễn giả 50–150 âm tiết (đếm công thức là một từ), riêng `05-06b` đã rút còn khoảng 150. Lời dẫn theo vị trí ("trang trước", "ví dụ trước") đã thay bằng tên đối tượng.
+
+### Kiểm tra trình duyệt
+
+- `deck_check.py` của điều phối viên (cổng 8799), 1600×900 và 390×844: 72 trang, 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ra ngoài, 0 tài nguyên lỗi, không cuộn ngang; sáu trang tiêu đề mạch `02-00`…`07-00`. Cờ tràn (30 trang) là báo giả đã được vai SV xác định (phần tử MathML ẩn của KaTeX).
+- Script đo riêng (bỏ `.katex-mathml`, tắt chuyển cảnh, so với khung `.slides`, chặn yêu cầu `api-reloadserver`): 0 trang tràn ở hai cỡ sau khi sửa `03-01`, `04-06`, `05-07`, `06-07e`; chữ thân nhỏ nhất 0,80em, bảng 0,752em, `.caption` 0,656em, `.strand-keys` 0,72em. Số trên trang tiêu đề mạch trùng chỉ số ngang (ảnh 390 px).
+- Ảnh trong scratchpad `ed03/shots/` (mọi trang ở 1600×900 và các trang đổi ở 390×844; tấm ghép `sheet-*.png`); đã tự xem.
+- `git diff --check` sạch trên deck, `img/lec-03/`, `planning/lec-03/`.
+
+## Rà lại vòng 2 và sửa (giai đoạn II)
+
+### Tác tử
+
+- Hai tác tử rà lại, chỉ đọc, trên bản 72 trang sau vòng biên tập: toán và thuật toán (`deckrecheck-03-TOAN.md`) và kết nối và mạch (`deckrecheck-03-MACH.md`). Loại, mô hình và mức do điều phối viên tạo (Claude Opus 5.5, `high`). Kết quả: 0 chặn, 0 nghiêm trọng; trung bình MACH R1–R3; nhẹ TOAN 1–5 cùng một mục ngoài vai, MACH R4–R10.
+- Biên tập viên: cùng tác tử `general-purpose`, Claude Opus 5.5, mức `high`, theo quyết định vòng 2 của điều phối viên; `no-ai-slop` chế độ Edit; không sửa ghi chú bài giảng và CSS chung; không commit.
+
+### Bảng mã và trạng thái
+
+| Mã | Trang | Mức | Trạng thái |
+|---|---|---|---|
+| MACH R1 | `03-01` | trung bình | đã sửa: "Nhu cầu: Chờ mãi cho $1+1+\cdots=\infty$; cần quy ước chung cho chuỗi hữu hạn và vô hạn, và cận cho robot."; vế "phần thưởng sớm có trọng số lớn hơn" chuyển vào ghi chú diễn giả; storyboard K3 cập nhật. 51 âm tiết |
+| MACH R2 = TOAN 1 | `01-02b` dòng 6; `07-02b` dòng 4–6 | trung bình | đã sửa: "Cùng giả thiết, $\gamma<1$ làm $I-\gamma P^\pi$ khả nghịch: …"; bỏ vế "hoặc lượt chắc chắn kết thúc" khỏi mặt `07-02b` (giữ trong ghi chú `07-02b` và dòng "Lưu ý:" của `06-07b`); dòng 4 của `07-02b` thêm $v_\pi$, $q_\pi$ hữu hạn |
+| MACH R3 | `05-07`, `05-08`, `05-09`, `06-07` | trung bình | đã sửa: "Giả thiết như phương trình Bellman cho $v_\pi$" và số hiệu riêng 03.22, 03.23, 03.24, 03.27 sau phát biểu; mỗi mặt trang một số hiệu. `05-09`: câu "tổng trong bằng $0$…" tách thành dòng sau công thức để dòng giả thiết không quá 20 âm tiết |
+| TOAN 2 = MACH R4 | `07-02b`, ghi chú `07-00`, `07-02b` | nhẹ | đã sửa: thứ tự giới hạn trên mặt trang theo outline (cần biết $p$; chi phí $n^3$; chọn chính sách; trạng thái Markov); ghi chú `07-00` gọi tên giới hạn Bài 04 xử lý; ghi chú `07-02b` nêu Bài 07 gặp lại giới hạn Markov |
+| TOAN 3 | ghi chú `06-07e` | nhẹ | đã sửa: "Bước có thể hỏng…; định lý nghiệm duy nhất vẫn đúng cho MDP thay thế dựng từ các ô" |
+| TOAN 4 | `05-04` | nhẹ | đã sửa: mặt trang thêm "MDP hữu hạn"; ghi chú thêm điều kiện $\pi(a\mid s)>0$ cho đẳng thức thứ hai |
+| TOAN 5 | ghi chú `05-10` | nhẹ | đã sửa: "hai kỳ vọng phần tương lai không thể cùng bằng $v_\pi(\mathrm L)$" |
+| TOAN ngoài vai | `07-04` câu 3 | nhẹ | đã sửa: "Vị trí gần hoặc xa cửa cố định, không ghi vào trạng thái: …"; bù mật độ bằng rút gọn câu 1, 2; ghi chú câu 3 dẫn Bài tập 03.1 |
+| MACH R5 | `06-07b` | nhẹ | đã sửa: "…; với $\gamma=1$, định lý cần thêm: mọi lượt chắc chắn kết thúc." |
+| MACH R6 | `04-02`, `04-06` | nhẹ | đã sửa: `04-02` "Nhu cầu: quy tắc chọn hành động theo xác suất, dùng chung ở mọi thời điểm."; `04-06` "…; $v_\pi(\mathrm L)$ trộn các hành động theo $\pi$." |
+| MACH R7 | `01-01b`, `01-01c`, `01-03`, `01-04`, `01-06`, `02-04`, `03-04`, `04-05`; outline mục 7 | nhẹ | đã sửa theo cách (i): tiếng Anh ở lần dùng đầu (`01-01b`: Markov property, dynamics function, return, discount factor, state-value function; `01-03`: trajectory), bỏ lặp ở trang định nghĩa; `01-01b` thay "lịch sử" bằng "quá khứ" để "lịch sử (history)" vẫn ở lần dùng đầu `01-04`; outline mục 7 sửa cột lần đầu, dòng "policy" ghi rõ deck chỉ có "stationary policy". Quét lại: mỗi cụm tiếng Anh xuất hiện một lần |
+| MACH R8 | ghi chú `01-01b`, `07-00` | nhẹ | đã sửa: không lấy tài liệu làm chủ ngữ, không kể cấu trúc trang |
+| MACH R9 | ghi chú `06-07c` | nhẹ | đã sửa: "dừng sau khi trả $v$" |
+| MACH R10 | `img/lec-03/robot-p03-reward-timeline.svg`, `robot-p03-discounted-bands.svg` | nhẹ | quyết định: cả hai không được deck lẫn ghi chú bài giảng tham chiếu (`grep` trên deck và `materials/`). `robot-p03-discounted-bands.svg` khôi phục về bản HEAD bằng `git checkout --` (không xóa tệp); `robot-p03-reward-timeline.svg` không có thay đổi so với HEAD, giữ nguyên |
+
+Không từ chối mục nào. Lưu ý cho điều phối viên: ba SVG khác không còn được dùng vẫn mang thay đổi chưa commit từ lượt soạn đầu (`robot-p03-geometric-series.svg`, `robot-p07-branch-wait.svg`, `robot-p07-three-actions-values.svg`, chỉ sửa nhãn và `aria-label`); vòng này không động tới.
+
+### Đề nghị sửa ghi chú (bổ sung)
+
+| Vị trí trong ghi chú | Nội dung sửa | Nguồn |
+|---|---|---|
+| Tóm tắt chương | Nói rõ tính duy nhất không cần giả thiết mới ngoài các giả thiết của Định lý 03.21; $\gamma<1$ vừa cho kỳ vọng hữu hạn vừa làm $I-\gamma P^\pi$ khả nghịch | MACH R2, TOAN đề nghị 1 |
+| Tóm tắt chương | Khi thêm giới hạn thứ tư (trạng thái phải Markov), giữ câu "Bài 04 xử lý hai giới hạn sau" đúng: gọi tên giới hạn hoặc tách giới hạn Markov thành câu riêng | TOAN đề nghị 1, TOAN 2 |
+| Sau Định lý 03.21, gạch "Bỏ tính Markov" (tùy chọn) | Một câu: ở ví dụ một trạng thái, phương trình lập từ bảng trung bình có thể tình cờ vẫn đúng; ví dụ chỉ làm hỏng lập luận, phản ví dụ cho kết luận là Tình huống 03.2 | TOAN đề nghị 2, TOAN 5 |
+
+### Kiểm tra sau sửa
+
+- `density.py`: 72 trang; dòng bị đánh dấu chỉ còn các ngoại lệ đã ghi trong storyboard mục 5 (`01-01`, `01-01c`, `01-02`, năm trang tiêu đề mạch, `06-07d`, `07-02b` 73 âm tiết 7 dòng, `07-03`). Trang đổi: `01-01b` 60, `01-01c` 66 (trang mục tiêu), `01-02b` 60, `01-03` 60, `01-04` 30, `01-06` 39, `02-04` 49, `03-01` 51, `03-04` 37, `04-02` 46, `04-05` 57, `04-06` 39, `05-04` 40, `05-07` 57, `05-08` 41, `05-09` 37, `06-07` 33, `06-07b` 52, `07-02b` 73, `07-04` 59.
+- `deck_check.py` (cổng 8799), 1600×900 và 390×844: 72 trang, 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ra ngoài, 0 tài nguyên lỗi, không cuộn ngang; sáu trang tiêu đề mạch. Script đo riêng (bỏ `.katex-mathml`): 0 trang tràn ở hai cỡ.
+- Đã tự xem ảnh 1600×900 của mọi trang đổi (scratchpad `ed03/shots/sheet-1600-*.png`).
+- `git diff --check` sạch trên deck, `img/lec-03/`, `planning/lec-03/`.
+
+### Quyết định của điều phối viên (2026-10-14, giai đoạn II, deck)
+
+- Tác tử: tác tử soạn kiêm biên tập (general-purpose, claude-opus-5-5, high) hai vòng, bị dừng một lần theo yêu cầu người dùng và nối lại sau khi rà trạng thái đĩa; rà lại toán và rà lại mạch (general-purpose, claude-opus-5-5, high, chỉ đọc); điều phối viên Claude Fable 5.1 (medium).
+- Kiểm độc lập sau vòng 2: `density.py` chỉ gắn cờ các trang có ngoại lệ trong `storyboard.md`; Playwright 1600×900 và 390×844: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, đủ trang tiêu đề mạch; ảnh các trang đổi chính xem trực tiếp; `git diff --check` sạch.
+- Ba SVG không được deck lẫn ghi chú dùng (`robot-p03-geometric-series.svg`, `robot-p07-branch-wait.svg`, `robot-p07-three-actions-values.svg`) được khôi phục về bản HEAD, không đưa vào commit.
+- Quyết định: **chấp nhận**; commit `fix(lecture-03)`.

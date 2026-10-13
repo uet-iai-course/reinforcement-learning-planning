@@ -1,1157 +1,227 @@
-# Storyboard triển khai — Bài 03: Quá trình quyết định Markov
-
-Bản viết lại dùng robot thu gom lon. Đã triển khai 7/7 phần; 50/50 slide. [Kế hoạch đã chốt](storyboard-mdp-replanned.md) được dùng làm cơ sở; các điều chỉnh khi dựng và rà được ghi dưới đây. Bản HTML cũ đã được thay thế; không trộn các phần cũ vào deck mới.
-
-## 1. Đích học tập và quyết định về cấu trúc
-
-Sinh viên năm 3 đã học xác suất, kỳ vọng có điều kiện, đại số tuyến tính và Bài 02. Sau bài này, sinh viên phải tự làm được bốn việc: mô tả một bài toán bằng MDP; phân biệt quy luật môi trường với chính sách; suy ra Bellman từ tổng thưởng; dùng mô hình và chính sách đã cho để lập, giải và kiểm tra một hệ giá trị nhỏ.
-
-Tuyến mới lấy **robot thu gom lon** trong ví dụ 3.3 của Sutton và Barto làm ví dụ xuyên suốt. Trạng thái, hành động, xác suất, phần thưởng, chính sách và giá trị đều thuộc cùng một mô hình hai trạng thái. Sinh viên không phải chuyển giữa hai đồ thị sinh viên có đặc tả khác nhau trong lúc học ký hiệu.
-
-MDP xuất hiện ngay sau bài toán tương tác. Chuỗi Markov và quá trình phần thưởng Markov (MRP) được nhận diện sau khi cố định chính sách: chúng giải thích phép rút gọn mô hình để tính giá trị. Thứ tự này gần mạch chương 3 của giáo trình: tương tác và động lực → mục tiêu và tổng thưởng → chính sách và giá trị → Bellman. Đây là thay đổi cấu trúc có chủ ý, không chỉ sửa câu chữ của bản cũ.
-
-| Phần | Mạch chính | Đầu vào từ phần trước | Sản phẩm chuyển sang phần sau | Slide | Phút |
-|---|---|---|---|---:|---:|
-| 1 | Từ tương tác đến trạng thái Markov | Giao diện tác tử–môi trường ở Bài 02 | Biết một bước gồm gì và trạng thái cần giữ thông tin nào | 7 | 12 |
-| 2 | Mô hình xác suất của MDP | Trạng thái, hành động, phản hồi cùng một bước | Đọc và viết được $p(s',r\mid s,a)$, thưởng trung bình | 7 | 18 |
-| 3 | Phần thưởng và tổng thưởng | Quy luật phản hồi một bước | Tính và giải thích $G_t$, $\gamma$, kết thúc và tính hữu hạn | 6 | 14 |
-| 4 | Chính sách và hàm giá trị | Mô hình và tiêu chuẩn tổng thưởng | Phân biệt $\pi$, $G_t$, $v_\pi$, $q_\pi$ | 8 | 17 |
-| 5 | Phương trình Bellman | Các định nghĩa giá trị và kỳ vọng có điều kiện | Giải thích được từng dấu bằng và từng tầng lấy trung bình | 10 | 30 |
-| 6 | Đánh giá một chính sách từ mô hình | Bellman cho một chính sách cố định | Giải hệ robot; suy ra chuỗi Markov, MRP và dạng ma trận | 8 | 21 |
-| 7 | Tổng hợp và vận dụng | Mô hình, chính sách, giá trị đã tính | Nối dữ kiện với công thức, kiểm giới hạn và chuẩn bị Bài 04 | 4 | 8 |
-| **Tổng** | | | | **50** | **120** |
-
-30 phút còn lại dùng chữa bài tập nguồn, phân bổ ở cuối storyboard. Không thêm code demo. 50 slide gồm một slide tiêu đề bài, một slide nội dung, sáu slide tiêu đề phần và bảy slide câu hỏi kiểm tra. Các trang tiêu đề không chứa định nghĩa mới. Phần 1 bắt đầu bằng **“Quá trình quyết định Markov”**, tiếp theo là **“Nội dung bài học”**, rồi đi vào ví dụ; không chèn thêm trang tiêu đề phần 1. Phần 2–7 bắt đầu bằng đúng tên phần trong bảng.
-
-## 2. Nguồn và quy ước xuyên suốt
-
-Nguồn chuẩn, viết tắt **SB** trong các mục dưới: Richard S. Sutton và Andrew G. Barto, *Reinforcement Learning: An Introduction*, ấn bản 2, chương 3; [bản PDF do DTU lưu](https://www2.imm.dtu.dk/courses/02465/pensum/sutton2018.pdf). Số trang là số in trong sách. Đã đọc nội dung liên quan và xem trực tiếp trang 52 để kiểm tra đồ thị, xác suất và thưởng của robot.
-
-Nguồn học phần: `RL-hk2-2025-2026/lecture2-3-MDPswithKeyConcepts.pptx`, slide 28–58; `RL-hk2-2025-2026/resources/hw02.pdf`. Các khái niệm chính của nguồn vẫn được giữ, nhưng đổi thứ tự và ví dụ theo yêu cầu lập lại kế hoạch. Phần Bellman tối ưu và các thuật toán giải MDP thuộc Bài 04.
-
-| Nội dung | Nguồn chuẩn | Vị trí trong tuyến mới |
-|---|---|---|
-| Một bước và quỹ đạo | SB (3.1), tr.48 | Phần 1 |
-| Hạt nhân chung và chuẩn hóa | SB (3.2)–(3.3), tr.48–49 | Phần 2 |
-| Xác suất chuyển, thưởng trung bình | SB (3.4)–(3.5), tr.49 | Phần 2 |
-| Trạng thái Markov | SB §3.1, tr.49 | Phần 1, nhắc tại phần 2 |
-| Robot thu gom lon | SB ví dụ 3.3, tr.52–53 | Xuyên suốt; bản số hóa có giả thiết bổ sung bên dưới |
-| Tổng thưởng, chiết khấu, kết thúc | SB (3.7)–(3.11), tr.54–57 | Phần 3; tách tổng ở phần 5 |
-| Chính sách, giá trị trạng thái/hành động | SB §3.5, (3.12)–(3.13), tr.58 | Phần 4 |
-| Bellman kỳ vọng cho $v_\pi$ | SB (3.14), tr.59 | Phần 5 |
-| Quan hệ $v$–$q$, $q$–$v$ | SB bài tập 3.12–3.13, tr.58; 3.18–3.19, tr.62 | Phần 5 |
-| Bellman kỳ vọng cho $q_\pi$ | SB **bài tập** 3.17, tr.61 | Phần 5; không gọi là phương trình (3.17) |
-| MRP cảm sinh, hệ và ma trận | Hệ quả của các công thức trên; PPTX30,34,47–48,52; hw02 bài 3–4 | Phần 6 |
-
-### Một đặc tả robot dùng cho mọi phép tính
-
-- Trạng thái $\mathrm H$: pin cao; $\mathrm L$: pin thấp. Hành động Tìm, Chờ, Sạc; trong công thức viết $\mathrm{tim},\mathrm{cho},\mathrm{sac}$.
-- $\mathcal A(\mathrm H)=\{\mathrm{tim},\mathrm{cho}\}$; $\mathcal A(\mathrm L)=\{\mathrm{tim},\mathrm{cho},\mathrm{sac}\}$. Robot pin cao không có hành động Sạc trong mô hình này.
-- Bản số cho lớp chọn hai tham số xác suất của sách bằng $1/2$, thưởng tìm thành công bằng $2$, thưởng chờ bằng $1$, cứu hộ bằng $-3$, sạc chủ động bằng $0$. **Thêm giả thiết thưởng cố định trên từng nhánh** để xác định đầy đủ phân phối chung $p$. Sách cho thưởng kỳ vọng trên nhánh; chỉ biết kỳ vọng không đủ để xác định phân phối thưởng. Không ghi các con số do người soạn chọn thành số liệu thực nghiệm hoặc thông số nguyên văn của sách.
-- Hết pin khi Tìm ở $\mathrm L$ dẫn tới cứu hộ, trở lại $\mathrm H$ và nhận $-3$ trong cùng một bước mô hình. Không cộng thêm thưởng tìm kiếm. Cứu hộ và Sạc đều đưa về pin cao nhưng có thưởng khác nhau. Cả hai không kết thúc nhiệm vụ.
-
-| $s$ | $a$ | $s'$ | $r$ | $p(s',r\mid s,a)$ |
-|---|---|---|---:|---:|
-| H | Tìm | H | 2 | $1/2$ |
-| H | Tìm | L | 2 | $1/2$ |
-| H | Chờ | H | 1 | $1$ |
-| L | Tìm | L | 2 | $1/2$ |
-| L | Tìm | H | −3 | $1/2$ |
-| L | Chờ | L | 1 | $1$ |
-| L | Sạc | H | 0 | $1$ |
-
-Các bộ còn lại có xác suất 0. $\mathcal R=\{-3,0,1,2\}$. Bảng này là dữ kiện kiểm soát của storyboard; sinh viên nhận nó từng bước ở phần 2.
-
-Từ phần 4, dùng cùng một chính sách: tại H luôn Tìm; tại L chọn Chờ hoặc Sạc, mỗi hành động xác suất $1/2$. Những hành động khác có xác suất 0. Giữ $\gamma=1/2$. Chính sách này dùng để học cách **đánh giá**; không giả định nó tối ưu.
-
-### Thứ tự đưa ký hiệu vào
-
-| Ký hiệu | Được gọi tên/định nghĩa lần đầu | Dữ kiện có trước |
-|---|---|---|
-| $S_t,A_t,R_{t+1},S_{t+1}$ | 01-04 | Robot ở H, chọn Tìm, nhận điểm và đổi mức pin |
-| $H_t$ và tính Markov | 01-06 | Hai lịch sử cùng kết thúc ở L tại 01-05 |
-| $\mathcal S,\mathcal A(s),\mathcal R,p$ | 02-03/04 | Cây kết quả và bảng robot |
-| $p(s'\mid s,a)$, $r(s,a)$ | 02-05 | Gộp hàng và lấy trung bình trên cùng bảng |
-| $T,\mathcal S^+$ | 03-02/04 | Nhiệm vụ có kết thúc, đệm thưởng 0 |
-| $\gamma,G_t$ | 03-03/04 | Hai dãy thưởng ngắn, trọng số $1,1/2,1/4$ |
-| $\pi(a\mid s)$ | 04-03 | Bảng cách chọn hành động ở 04-02 |
-| $G_0^{[2]}$ | 04-04 | Tổng thưởng của đúng hai bước đầu, chưa phải toàn tương lai |
-| $v_\pi(s)$ | 04-05 | Trung bình có trọng số trên các nhánh cùng xuất phát |
-| $q_\pi(s,a)$ | 04-07 | Thử ấn định hành động đầu rồi trở lại cùng chính sách |
-| $v_H,v_L$ | 06-02 | Viết tắt $v_\pi(\mathrm H),v_\pi(\mathrm L)$ đã định nghĩa |
-| $P^\pi,r^\pi$, chuỗi Markov, MRP | 06-05/06 | Gộp các nhánh dưới chính sách bằng số |
-| $v,r^\pi\in\mathbb R^n$, $I$ | 06-07 | Hai phương trình đã giải, hai hàng chuyển đã tính |
-
-Quy luật môi trường và chính sách được giả sử Markov, không đổi theo thời gian khi viết các giá trị không có chỉ số $t$. Tính Markov và tính không đổi theo thời gian là hai giả thiết khác nhau. $p$ thường chỉ hạt nhân; $P^\pi$ hoa chỉ ma trận. Chữ hoa chỉ biến ngẫu nhiên, chữ thường chỉ giá trị nhận được. $R_{t+1}$ là thưởng quan sát; $r(s,a)$ là kỳ vọng một bước; $G_t$ là tổng thưởng trên quỹ đạo. Điều kiện hữu hạn của kỳ vọng phải được nêu trước khi biến đổi Bellman.
-
-## 3. Phần 1 — Từ tương tác đến trạng thái Markov
-
-**Chức năng:** đặt bài toán cần giải và xác định thông tin đầu vào đủ cho mô hình. Đầu vào là vòng tương tác ở Bài 02; đầu ra là một bước thời gian được đọc đúng và giả thiết Markov được hiểu như yêu cầu đối với trạng thái.
-
-**Mạch trình bày trước khi chia slide:**
-
-1. Giới thiệu bài giảng và đường đi của bài học.
-2. Cho robot đang pin thấp đứng trước lựa chọn tìm, chờ hoặc sạc.
-3. Theo dõi một lần lựa chọn và phản hồi để gắn chỉ số thời gian.
-4. So sánh hai lịch sử khác nhau nhưng cùng mức pin hiện tại.
-5. Phát biểu điều kiện Markov từ phép so sánh đó, rồi kiểm tra giới hạn của cách chọn trạng thái.
-
-**Chu trình học:** vấn đề/ví dụ 01-03 → trực giác 01-04/05 → hình thức 01-06 → ứng dụng và kiểm tra 01-07. Hai slide đầu định hướng; không phải hai khái niệm mới. Tổng 12 phút.
-
-### L03R-01-01 — Quá trình quyết định Markov
-
-Thời lượng: 1 phút. Vai trò: tiêu đề bài giảng, đồng thời mở phần 1.
-
-**Mặt slide:** tên bài “Quá trình quyết định Markov (MDP)”; Bài 03, Học tăng cường, học kỳ 1 năm 2026–2027, đơn vị theo mẫu hiện có. Tên viết tắt được giới thiệu cùng tên đầy đủ. Không thêm tiêu đề phần 1 riêng.
-
-**Cách thể hiện:** bố cục tiêu đề của deck; chưa đưa công thức hoặc toàn bộ đồ thị robot.
-
-**Ghi chú và cầu nối:** Bài 02 đã nhận diện các thành phần. Bài này sẽ viết quy luật tương tác bằng xác suất và dùng quy luật đó để tính kết quả dài hạn của một cách hành động. Chuyển sang bản đồ nội dung.
-
-**Nguồn:** PPTX28; mục tiêu chương 3 SB.
-
-### L03R-01-02 — Nội dung bài học
-
-Thời lượng: 1 phút. Vai trò: định hướng.
-
-**Mặt slide:** bảy tên phần theo bảng tổng quan; dòng mục tiêu “Mô tả mô hình, suy ra Bellman, tính giá trị của một chính sách”.
-
-**Cách thể hiện:** danh sách bảy mục chia hai cột, đánh dấu phần 1 đang học. Dùng tên khái niệm để định hướng, chưa đưa công thức.
-
-**Ghi chú và cầu nối:** xác suất có điều kiện, kỳ vọng và giải hệ tuyến tính là công cụ đã học. Tất cả được dùng trên cùng robot hai mức pin. Chuyển ngay sang quyết định cụ thể.
-
-**Nguồn:** mục tiêu chương 3 SB; cấu trúc do người soạn đề xuất.
-
-### L03R-01-03 — Robot thu gom lon
-
-Thời lượng: 2 phút. Vai trò: vấn đề và ví dụ mở đầu.
-
-**Mặt slide:** robot thu gom lon bằng pin sạc; H là pin cao, L là pin thấp. Tại L, robot có thể Tìm, Chờ hoặc Sạc. Tìm có thể thu được lon và cũng có thể làm cạn pin; sạc dùng một bước để phục hồi pin.
-
-**Cách thể hiện:** SVG robot đơn giản cạnh biểu tượng pin; ba nhánh lựa chọn từ L. Chưa gắn xác suất hoặc ký hiệu hàm giá trị. Caption ghi “Ví dụ robot thu gom lon, phỏng theo Sutton–Barto”.
-
-**Ghi chú và cầu nối:** mục tiêu là thu gom lâu dài; lựa chọn hiện tại thay đổi những lựa chọn có thể tiếp tục thực hiện. Trước khi so sánh chúng, cần mô tả một bước tương tác. Một bước là một chu kỳ quyết định, không nhất thiết một giây.
-
-**Nguồn:** SB ví dụ 3.3, tr.52–53.
-
-### L03R-01-04 — Một bước tương tác
-
-Thời lượng: 2 phút. Vai trò: gắn đối tượng với chỉ số.
-
-**Mặt slide:** một kết quả đã xảy ra: H → Tìm → nhận 2 điểm và sang L. Dưới hình lần lượt đặt $S_t=\mathrm H$, $A_t=\mathrm{tim}$, rồi cặp $(R_{t+1},S_{t+1})=(2,\mathrm L)$. Mẫu dữ liệu là $(S_t,A_t,R_{t+1},S_{t+1})$.
-
-**Cách thể hiện:** trục thời gian trái–phải; phần thưởng và trạng thái kế tiếp nằm cùng một phản hồi. Sau khi đọc ví dụ, mở rộng thành $S_0,A_0,R_1,S_1,A_1,R_2,S_2,\ldots$.
-
-**Ghi chú và cầu nối:** thứ tự các trường trong một bộ dữ liệu là quy ước ghi; thưởng mang chỉ số $t+1$ vì do hành động ở $t$ dẫn tới. Đây là một mẫu, chưa phải quy luật xác suất. Lịch sử chứa nhiều mẫu như vậy.
-
-**Nguồn:** SB (3.1), tr.48; số thưởng theo đặc tả minh họa.
-
-### L03R-01-05 — Hai lịch sử, cùng trạng thái hiện tại
-
-Thời lượng: 2 phút. Vai trò: trực giác Markov.
-
-**Mặt slide:** hai dải lịch sử: robot vừa tìm kiếm xong và robot vừa chờ; cả hai hiện ở L. Cả hai cùng chọn Tìm. Trong mô hình hai mức pin, phân phối phản hồi tiếp theo giống nhau.
-
-**Cách thể hiện:** hai đường quá khứ nhập vào cùng nút L, rồi dùng chung cây phản hồi chưa gắn số. Nhãn “quá khứ khác nhau”, “cùng pin hiện tại và hành động”.
-
-**Ghi chú và cầu nối:** đây là giả thiết của mô hình lý tưởng, không phải khẳng định mức pin luôn đủ cho mọi robot thật. Nếu vị trí cũng làm thay đổi cơ hội gặp lon thì trạng thái phải bổ sung vị trí. Phát biểu bằng xác suất trên trang sau.
-
-**Nguồn:** SB §3.1, tr.49; áp dụng vào ví dụ 3.3.
-
-### L03R-01-06 — Tính Markov
-
-Thời lượng: 2 phút. Vai trò: hình thức hóa trực giác vừa có.
-
-**Mặt slide:** gọi $H_t=(S_0,A_0,R_1,\ldots,S_t)$ là lịch sử tới thời điểm $t$. Với mọi phản hồi $(s',r)$:
-
-$$
-\Pr(S_{t+1}=s',R_{t+1}=r\mid H_t,A_t)
-=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t,A_t).
-$$
-
-**Cách thể hiện:** Công thức Markov toàn chiều rộng, nối trực tiếp với hình hai lịch sử đã có ở01-05. Không lặp lại hình trên cùng trang công thức.
-
-**Ghi chú và cầu nối:** các xác suất điều kiện xét ở những điều kiện có thể xảy ra. Trạng thái giữ thông tin từ quá khứ có ảnh hưởng tới phân phối bước tới. Biết trạng thái đủ không có nghĩa đã biết các xác suất trong phân phối ấy; phần 2 sẽ mô tả chúng.
-
-**Nguồn:** SB §3.1, tr.49; viết tường minh bằng lịch sử.
-
-### L03R-01-07 — Câu hỏi kiểm tra
-
-Thời lượng: 2 phút. Vai trò: ứng dụng và kiểm tra.
-
-**Mặt slide — Câu hỏi:**
-
-1. Hành động $A_t$ tạo ra $R_t$ hay $R_{t+1}$?
-2. Hai robot cùng pin thấp nhưng ở hai vị trí có cơ hội gặp lon khác nhau: chỉ dùng mức pin làm trạng thái đã đủ chưa?
-3. Quan sát đúng trạng thái có đồng nghĩa biết xác suất chuyển không?
-
-**Cách thể hiện:** danh sách đánh số; chỉ giữ biểu tượng robot và pin nhỏ nếu còn chỗ.
-
-**Ghi chú đáp án:** 1. $R_{t+1}$. 2. Chưa đủ nếu vị trí thay đổi phân phối phản hồi; cần bổ sung thông tin liên quan. 3. Không; trạng thái là đầu vào, mô hình là quy luật phản hồi có điều kiện. **Câu nối:** “Ta sẽ mô tả quy luật này bằng bảng các kết quả có thể xảy ra.”
-
-**Nguồn:** vận dụng SB §3.1 và Bài 02.
-
-## 4. Phần 2 — Mô hình xác suất của MDP
-
-**Chức năng:** biến mô tả robot thành mô hình có thể tính toán. Đầu vào là một bước phản hồi và yêu cầu Markov; đầu ra là hạt nhân chung, xác suất chuyển và thưởng trung bình. Chưa chọn chính sách.
-
-**Mạch trình bày trước khi chia slide:**
-
-1. Cố định trạng thái L và hành động Tìm để chỉ còn sự ngẫu nhiên của môi trường.
-2. Vẽ hai kết quả có cả trạng thái mới lẫn thưởng; mở rộng thành bảng của robot.
-3. Đặt tên $p$ cho xác suất trong bảng, nêu miền và điều kiện chuẩn hóa.
-4. Gộp các hàng để lấy xác suất chuyển; lấy trung bình có trọng số để có thưởng kỳ vọng.
-5. Tập hợp các đối tượng thành đặc tả MDP và kiểm tra bằng một cặp trạng thái–hành động.
-
-**Chu trình học:** vấn đề/ví dụ 02-01/02 → biểu diễn cụ thể 02-03 → hình thức 02-04 → ứng dụng và công thức suy ra 02-05 → tổng hợp 02-06 → kiểm tra 02-07. Tổng 18 phút.
-
-### L03R-02-01 — Mô hình xác suất của MDP
-
-Thời lượng: 1 phút. Vai trò: tiêu đề phần và đặt vấn đề.
-
-**Mặt slide:** đúng tiêu đề phần; một câu “Cùng pin thấp và hành động Tìm có thể dẫn tới hai phản hồi”.
-
-**Cách thể hiện:** nút L → hành động Tìm → hai ô kết quả còn để trống. Hành động là lựa chọn đã cố định, không ghi xác suất chọn hành động lên cạnh này.
-
-**Ghi chú và cầu nối:** một mẫu H→Tìm→L ở phần trước không cho biết tần suất từng kết quả. Mô hình phải mô tả mọi phản hồi có thể xảy ra sau một cặp trạng thái–hành động.
-
-**Nguồn:** SB ví dụ 3.3, tr.52–53.
-
-### L03R-02-02 — Hai phản hồi của hành động Tìm
-
-Thời lượng: 3 phút. Vai trò: ví dụ số trước ký hiệu xác suất chung.
-
-**Mặt slide:** từ L, Tìm dẫn tới L và nhận $2$ với xác suất $1/2$; hoặc cạn pin, được cứu hộ về H và nhận $-3$ với xác suất $1/2$. Từ H, Tìm dẫn tới H hoặc L, mỗi nơi $1/2$, đều nhận $2$.
-
-**Cách thể hiện:** trước hết chỉ hiện nhánh từ L. Mỗi đầu mũi tên là một ô chứa cặp “trạng thái mới; thưởng”, trọng số nằm trên cạnh. Sau khi đọc đủ nhánh, hiện thêm cây từ H. Caption “Ví dụ số: thưởng cố định trên mỗi nhánh”.
-
-**Giải thích và cầu nối:** không tách rút thăm trạng thái và thưởng thành hai lần độc lập: ở L, biết thưởng $-3$ là biết robot đã được cứu về H. Cứu hộ tính trọn trong một bước mô hình; không cộng thêm $2$. Bảng ở trang sau ghi chính những nhánh này cùng các hành động còn lại.
-
-**Nguồn:** số hóa SB ví dụ 3.3 theo đặc tả đầu storyboard.
-
-### L03R-02-03 — Bảng phản hồi của robot
-
-Thời lượng: 3 phút. Vai trò: đi từ hình sang dữ liệu mô hình.
-
-**Mặt slide:** bảng bảy hàng đã xác định ở mục 2, với các cột “hiện tại”, “hành động”, “kế tiếp”, “thưởng”, “xác suất”. Chỉ ghi các kết quả có xác suất dương.
-
-**Cách thể hiện:** giữ H–Tìm và L–Tìm từ trang trước; lần lượt thêm H–Chờ, L–Chờ, L–Sạc. Khoanh nhóm hàng theo cùng cặp hiện tại–hành động; tổng xác suất của mỗi nhóm bằng 1. Không thu nhỏ bảng để đặt thêm đồ thị đầy đủ bên cạnh.
-
-**Giải thích và cầu nối:** ở H chỉ có Tìm/Chờ; ở L thêm Sạc. Chờ giữ mức pin, nhận 1; Sạc từ L về H, nhận 0. Các ô không có trong bảng có xác suất 0. Cần một ký hiệu ngắn để truy vấn từng dòng.
-
-**Nguồn:** SB ví dụ 3.3; tinh thần bài tập 3.4, với giả thiết thưởng cố định đã nêu.
-
-### L03R-02-04 — Xác suất chuyển trạng thái và phần thưởng
-
-Thời lượng: 3 phút. Vai trò: định nghĩa hạt nhân chung.
-
-**Mặt slide:** gọi $\mathcal S$ là tập trạng thái, $\mathcal A(s)$ là tập hành động hợp lệ, $\mathcal R$ là tập điểm thưởng; cả ba loại tập đều hữu hạn. Từ một dòng cụ thể:
-
-$$p(\mathrm H,-3\mid\mathrm L,\mathrm{tim})=\frac12.$$
-
-Sau đó đưa định nghĩa và chuẩn hóa:
-
-$$p(s',r\mid s,a)=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a),$$
-$$p(s',r\mid s,a)\ge0,\qquad \sum_{s'\in\mathcal S}\sum_{r\in\mathcal R}p(s',r\mid s,a)=1.$$
-
-**Cách thể hiện:** chuyển nhãn của dòng bảng sang đúng bốn vị trí trong công thức. Cặp $(s,a)$ cố định; chỉ $(s',r)$ chạy trong tổng. Các dòng công thức xuất hiện lần lượt.
-
-**Giải thích và cầu nối:** dùng một hàm $p$ không có chỉ số thời gian nghĩa là thêm giả thiết quy luật không đổi theo thời gian. Giả thiết này khác điều kiện Markov của phần 1. Chỉ số trong SB (3.2) được dịch từ $t-1,t$ sang $t,t+1$.
-
-**Nguồn:** SB (3.2)–(3.3), tr.48–49.
-
-### L03R-02-05 — Xác suất chuyển và thưởng trung bình
-
-Thời lượng: 3 phút. Vai trò: lấy hai đại lượng từ cùng mô hình.
-
-**Mặt slide:** vẫn cố định L–Tìm. Xác suất về H là $1/2$; thưởng trung bình là
-
-$$\frac12(2)+\frac12(-3)=-\frac12.$$
-
-Đọc từ bảng rồi khái quát:
-
-$$p(s'\mid s,a)=\sum_r p(s',r\mid s,a),$$
-$$r(s,a)=\mathbb E[R_{t+1}\mid S_t=s,A_t=a]=\sum_{s',r}r\,p(s',r\mid s,a).$$
-
-**Cách thể hiện:** hai bản sao nhỏ của nhóm L–Tìm: một bản gộp theo trạng thái đích, một bản nhân thưởng với trọng số. Giữ công thức cùng các hàng vừa gộp.
-
-**Giải thích và cầu nối:** $r(s,a)$ có thể bằng $-1/2$ dù không lần nào nhận đúng điểm đó. Biến ngẫu nhiên $R_{t+1}$ và kỳ vọng $r(s,a)$ khác nhau. Khi viết $p$ ba đối số, đó là xác suất chuyển đã cộng hết các mức thưởng.
-
-**Nguồn:** SB (3.4)–(3.5), tr.49.
-
-### L03R-02-06 — Các thành phần của MDP
-
-Thời lượng: 2 phút. Vai trò: tổng hợp hình thức sau khi từng thành phần đã có nghĩa.
-
-**Mặt slide:** bốn hàng ghép tên đối tượng với robot: $\mathcal S=\{\mathrm H,\mathrm L\}$; $\mathcal A(s)$ phụ thuộc mức pin; $\mathcal R=\{-3,0,1,2\}$; $p$ là bảng phản hồi. Tóm tắt mô hình bằng
-
-$$\mathcal M=\bigl(\mathcal S,\{\mathcal A(s)\}_{s\in\mathcal S},\mathcal R,p\bigr).$$
-
-**Cách thể hiện:** mỗi hàng có biểu tượng/nhánh nhỏ đã dùng; không đưa một bộ ký hiệu đứng riêng trước ví dụ. Caption “Trạng thái Markov; quy luật phản hồi không đổi theo thời gian”.
-
-**Giải thích và cầu nối:** đây là cách gom các thành phần của §3.1 thành một bộ, không phải phương trình đánh số của sách. Bộ mô tả môi trường; tiêu chuẩn cộng thưởng và cách chọn hành động được xây dựng ở phần 3 và 4. Biết mô hình chưa tự xác định hành động tốt nhất.
-
-**Nguồn:** SB §3.1; PPTX49. Chọn cách viết bộ chưa có $\gamma$ vì tiêu chuẩn đánh giá được định nghĩa ở phần kế tiếp.
-
-### L03R-02-07 — Câu hỏi kiểm tra
-
-Thời lượng: 3 phút. Vai trò: vận dụng hạt nhân và kỳ vọng.
-
-**Mặt slide — Câu hỏi:**
-
-1. Đọc $p(\mathrm H,0\mid\mathrm L,\mathrm{sac})$ và tổng xác suất của các phản hồi sau L–Sạc.
-2. Tính thưởng trung bình khi Tìm ở L. Điểm trung bình có phải điểm robot luôn nhận không?
-3. Sau L–Tìm, nếu biết thưởng là $-3$, trạng thái kế tiếp là gì? Điều này nói gì về quan hệ giữa thưởng và trạng thái kế tiếp?
-
-**Cách thể hiện:** kèm ba hàng liên quan của bảng; sinh viên không phải nhớ toàn bộ mô hình.
-
-**Ghi chú đáp án:** 1. Cả hai bằng 1. 2. $-1/2$; kết quả thực tế chỉ là 2 hoặc −3. 3. H; hai đại lượng không độc lập trong ví dụ này. **Câu nối:** “Mô hình đã cho điểm của từng bước. Ta cần một tiêu chuẩn để tính cả chuỗi bước.”
-
-**Nguồn:** vận dụng SB (3.2)–(3.5).
-
-## 5. Phần 3 — Phần thưởng và tổng thưởng
-
-**Chức năng:** xác định đại lượng sẽ được đánh giá trong những phần sau. Đầu vào là thưởng từng bước; đầu ra là tổng thưởng trên một quỹ đạo cùng các điều kiện cho phép lấy kỳ vọng.
-
-**Mạch trình bày trước khi chia slide:**
-
-1. Theo dõi robot qua nhiều chu kỳ, phân biệt việc sạc với kết thúc nhiệm vụ.
-2. Đặt cạnh nhau hai dãy thưởng ba bước và tính điểm khi giảm trọng số theo thời gian.
-3. Từ phép tính bằng số, định nghĩa $G_t$ và $\gamma$ cho nhiệm vụ có kết thúc và nhiệm vụ tiếp diễn.
-4. Dùng một tổng hình học cụ thể để giải thích điều kiện hữu hạn; kiểm tra chỉ số và ý nghĩa của chiết khấu.
-
-**Chu trình học:** vấn đề/ví dụ 03-01/02 → trực giác và tính số 03-03 → hình thức 03-04 → điều kiện và áp dụng 03-05 → kiểm tra 03-06. Không chứng minh tính duy nhất của phép cộng từ một tiên đề preference; tổng chiết khấu là tiêu chuẩn được chọn theo giáo trình. Tổng 14 phút.
-
-### L03R-03-01 — Phần thưởng và tổng thưởng
-
-Thời lượng: 1 phút. Vai trò: tiêu đề phần.
-
-**Mặt slide:** tên phần; một dải ba lần robot hành động và ba ô điểm thưởng, kèm câu “Đánh giá kết quả của cả chuỗi hành động”.
-
-**Cách thể hiện:** trục thời gian, chưa hiện tổng vô hạn. Một ô điểm không được dùng để thay cho cả chuỗi.
-
-**Ghi chú và cầu nối:** tìm, chờ và sạc có tác động khác nhau tới các bước sau. Trước khi cộng điểm cần biết bài toán có kết thúc tự nhiên hay còn tiếp diễn.
-
-**Nguồn:** SB §3.2–3.3, tr.53–55.
-
-### L03R-03-02 — Nhiệm vụ có kết thúc và nhiệm vụ tiếp diễn
-
-Thời lượng: 3 phút. Vai trò: ví dụ làm rõ phạm vi cộng thưởng.
-
-**Mặt slide:** robot L→Sạc→H rồi tiếp tục hoạt động; cứu hộ cũng tiếp tục. Đặt cạnh một lượt đi tới đích: sau khi kết thúc, không còn thưởng của lượt ấy. Gọi $T$ là thời điểm kết thúc; robot thu gom trong mô hình đang xét có $T=\infty$.
-
-**Cách thể hiện:** hai trục thời gian; trên trục có kết thúc, đệm các số 0 sau đích theo hình ở SB §3.4. Trạng thái kết thúc có hình vuông và nhãn, không chỉ phân biệt bằng màu.
-
-**Giải thích và cầu nối:** bắt đầu lượt mới là lần tương tác mới; không nối phần thưởng của lượt mới vào tổng của lượt cũ. Một đoạn ba bước cắt ra để minh họa chưa phải một lượt hoàn chỉnh của robot. Trên cả hai trục, thưởng xảy ra ở thời điểm nào sẽ quyết định trọng số của nó.
-
-**Nguồn:** SB §3.3–3.4, tr.54–57; ví dụ mê cung đã có ở Bài 02.
-
-### L03R-03-03 — Điểm thưởng ở các thời điểm
-
-Thời lượng: 3 phút. Vai trò: tính bằng số trước định nghĩa tổng chiết khấu.
-
-**Mặt slide:** từ L, hai đoạn ba bước hợp lệ: Sạc rồi Tìm, Tìm có dãy thưởng $(0,2,2)$; Chờ ba lần có dãy $(1,1,1)$. Tổng không chiết khấu lần lượt là 4 và 3. Với trọng số $1,1/2,1/4$:
-
-$$0+\frac12\,2+\frac14\,2=\frac32,\qquad
-1+\frac12\,1+\frac14\,1=\frac74.$$
-
-**Cách thể hiện:** hai dải thưởng cùng căn thời điểm; hàng trọng số chung ở dưới. Nêu $\gamma=1/2$ là hệ số làm trọng số giảm một nửa sau mỗi bước, sau khi sinh viên đã tính hai tổng.
-
-**Giải thích và cầu nối:** so sánh này dành cho hai đoạn cụ thể, không chứng minh chính sách Chờ tốt hơn trong toàn tương lai. Chiết khấu thay đổi cách đánh giá thời điểm nhận điểm. Trang sau đặt tên cho đại lượng được cộng từ một thời điểm bất kỳ.
-
-**Nguồn:** vận dụng SB (3.8); dãy thưởng do người soạn chọn từ bảng robot.
-
-### L03R-03-04 — Tổng thưởng từ thời điểm hiện tại
-
-Thời lượng: 3 phút. Vai trò: định nghĩa $G_t$ và quy ước kết thúc.
-
-**Mặt slide:** $G_t$ là tổng thưởng kể từ sau hành động tại thời điểm $t$. Với lượt kết thúc ở $T$:
-
-$$G_t=\sum_{k=t+1}^{T}\gamma^{k-t-1}R_k.$$
-
-Với nhiệm vụ tiếp diễn hoặc sau khi đệm thưởng 0:
-
-$$G_t=\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}.$$
-
-**Cách thể hiện:** Hai cột cho lượt hữu hạn và tổng vô hạn; cột sau xuất hiện bằng fragment. Giữ cỡ chữ chung và nêu số hạng đầu cùng quy ước kết thúc.
-
-**Giải thích và cầu nối:** $\gamma\in[0,1]$; trong nhiệm vụ tiếp diễn của bài dùng $\gamma<1$. Với bài có lượt, ký hiệu $\mathcal S^+$ thêm trạng thái kết thúc vào $\mathcal S$ như sách; $G_T=0$. Các tổng qua trạng thái kế tiếp gồm cả trạng thái kết thúc nếu có. Đệm 0 là quy ước toán học, không thêm quyết định của tác tử sau khi đã kết thúc. Còn phải kiểm tra tổng và kỳ vọng có hữu hạn không.
-
-**Nguồn:** SB (3.7)–(3.8), (3.11), tr.54–57. Dịch chỉ số trong hai tổng phải được kiểm riêng; chúng cùng bắt đầu bằng $R_{t+1}$.
-
-### L03R-03-05 — Điều kiện để tổng thưởng hữu hạn
-
-Thời lượng: 2 phút. Vai trò: giải thích một giả thiết sẽ dùng trong Bellman.
-
-**Mặt slide:** nếu mỗi bước nhận 1 và $\gamma=1/2$, tổng là $1+1/2+1/4+\cdots=2$. Tổng quát, nếu $\lvert R_t\rvert\le M$ và $0\le\gamma<1$:
-
-$$\lvert G_t\rvert\le\sum_{k=0}^{\infty}\gamma^kM=\frac{M}{1-\gamma}.$$
-
-Robot có $M=3$, $\gamma=1/2$, nên $\lvert G_t\rvert\le6$ với mọi quỹ đạo.
-
-**Cách thể hiện:** tổng hình học bằng các đoạn độ dài giảm dần; chuyển từ mức thưởng 1 sang cận M. Công thức là cận trị tuyệt đối, không phải giá trị chính xác của robot.
-
-**Ghi chú và cầu nối:** cận này cũng bảo đảm kỳ vọng trị tuyệt đối hữu hạn, cho phép dùng tuyến tính và kỳ vọng lặp ở phần 5. Với $\gamma=1$, thưởng bị chặn và kỳ vọng số bước tới kết thúc hữu hạn là một điều kiện đủ. Chỉ có một trạng thái mang nhãn “kết thúc” chưa bảo đảm tác tử sẽ tới đó hoặc kỳ vọng thời gian tới đó hữu hạn.
-
-**Nguồn:** SB tr.55 sau (3.8); cận hình học và điều kiện kỳ vọng ở trường hợp $\gamma=1$ được giải thích bổ sung.
-
-### L03R-03-06 — Câu hỏi kiểm tra
-
-Thời lượng: 2 phút. Vai trò: vận dụng và kiểm chỉ số.
-
-**Mặt slide — Câu hỏi:**
-
-1. Robot về H sau Sạc có kết thúc nhiệm vụ không?
-2. Với dãy ba thưởng $(0,2,2)$ và $\gamma=1/2$, điểm của đoạn là bao nhiêu? Nếu $\gamma=0$ thì còn số hạng nào?
-3. Cận 6 ở trang trước có nghĩa mọi quỹ đạo của robot đều có tổng thưởng bằng 6 không?
-
-**Ghi chú đáp án:** 1. Không. 2. $3/2$; khi $\gamma=0$ chỉ giữ thưởng đầu, bằng 0. 3. Không, đó là cận trị tuyệt đối. **Câu nối:** “Cùng bắt đầu từ một trạng thái vẫn có nhiều tổng thưởng; cách chọn hành động và ngẫu nhiên của môi trường quyết định phân phối của chúng.”
-
-**Nguồn:** vận dụng SB §3.3–3.4.
-
-## 6. Phần 4 — Chính sách và hàm giá trị
-
-**Chức năng:** xác định phân phối tổng thưởng cần lấy kỳ vọng và phân biệt hai thí nghiệm đánh giá. Đầu vào là mô hình và $G_t$; đầu ra là $v_\pi$ và $q_\pi$ với cùng một chính sách tiếp diễn.
-
-**Mạch trình bày trước khi chia slide:**
-
-1. Cho một cách điều khiển robot bằng lời và bảng xác suất hành động.
-2. Định nghĩa chính sách từ bảng; phân biệt ngẫu nhiên của hành động với phản hồi môi trường.
-3. Tính trung bình tổng thưởng của hai bước đầu bằng cây xác suất có ít nhánh.
-4. Mở rộng đối tượng được lấy trung bình sang toàn bộ tương lai để định nghĩa giá trị trạng thái.
-5. Thay thí nghiệm: ấn định một hành động đầu rồi trở lại chính sách cũ; định nghĩa giá trị hành động.
-6. Kiểm tra sự khác nhau giữa mô hình, chính sách, một tổng thưởng và hai hàm giá trị.
-
-**Chu trình học:** vấn đề/ví dụ chính sách 04-01/02 → hình thức 04-03 → ví dụ trung bình 04-04 → định nghĩa $v$ 04-05 → thí nghiệm cụ thể 04-06 → định nghĩa $q$ 04-07 → vận dụng/kiểm tra 04-08. $v$ và $q$ có ví dụ riêng trước định nghĩa; chưa lấy công thức Bellman làm định nghĩa. Tổng 17 phút.
-
-### L03R-04-01 — Chính sách và hàm giá trị
-
-Thời lượng: 1 phút. Vai trò: tiêu đề phần.
-
-**Mặt slide:** tên phần; robot ở L với ba lựa chọn; câu “Tổng thưởng còn phụ thuộc cách chọn hành động”.
-
-**Cách thể hiện:** tái dùng ba nhánh lựa chọn, không thêm ký hiệu giá trị vào hình mở phần.
-
-**Ghi chú và cầu nối:** bảng $p$ chỉ mô tả điều xảy ra khi một hành động đã được chọn. Muốn nói đến trung bình của nhiều quỹ đạo, phải biết cách chọn các hành động trên những quỹ đạo đó.
-
-**Nguồn:** SB §3.5, tr.58.
-
-### L03R-04-02 — Một cách điều khiển robot
-
-Thời lượng: 2 phút. Vai trò: ví dụ chính sách.
-
-**Mặt slide:** tại H luôn Tìm; tại L chọn Chờ hoặc Sạc, mỗi hành động xác suất $1/2$. Bảng hai hàng ghi đủ xác suất 0 của các hành động không được chọn; ô H–Sạc là “không hợp lệ”, không ghi 0 như một hành động hợp lệ.
-
-**Cách thể hiện:** hành động được chọn bằng bảng/cây từ trạng thái; xác suất của cách chọn đặt trước nút hành động. Chưa gắn xác suất của môi trường lên cùng tầng.
-
-**Giải thích và cầu nối:** đây là một cách điều khiển cố định để đánh giá, chưa có khẳng định tối ưu. Chính sách có thể tất định ở một trạng thái và ngẫu nhiên ở trạng thái khác. Các con số trên bảng sẽ được gọi là $\pi(a\mid s)$.
-
-**Nguồn:** minh họa cho định nghĩa chính sách SB §3.5; chính sách cụ thể do người soạn chọn.
-
-### L03R-04-03 — Chính sách là phân phối trên hành động
-
-Thời lượng: 2 phút. Vai trò: định nghĩa và phân biệt hai nguồn ngẫu nhiên.
-
-**Mặt slide:** từ ô L–Chờ có $\pi(\mathrm{cho}\mid\mathrm L)=1/2$, khái quát:
-
-$$\pi(a\mid s)=\Pr(A_t=a\mid S_t=s),\qquad
-\pi(a\mid s)\ge0,\quad\sum_{a\in\mathcal A(s)}\pi(a\mid s)=1.$$
-
-**Cách thể hiện:** một cây ba tầng trạng thái → hành động → phản hồi. Tầng đầu mang $\pi$, tầng sau mang $p$; có nhãn chữ cho hai tầng, không chỉ dùng màu.
-
-**Giải thích và cầu nối:** trong bài, chính sách Markov dừng chỉ phụ thuộc trạng thái hiện tại và không đổi theo thời gian. Cố định chính sách ngẫu nhiên không loại bỏ việc rút thăm hành động. Mô hình và chính sách cùng tạo ra xác suất của một nhánh quỹ đạo.
-
-**Nguồn:** SB §3.5, tr.58; cách viết xác suất theo ký hiệu của bài.
-
-### L03R-04-04 — Trung bình trên các nhánh quỹ đạo
-
-Thời lượng: 3 phút. Vai trò: ví dụ kỳ vọng trước giá trị trạng thái.
-
-**Mặt slide:** bắt đầu ở H, theo chính sách đã cho, $\gamma=1/2$. Chỉ xét hai bước đầu, đặt $G_0^{[2]}=R_1+\gamma R_2$:
-
-| Trường hợp | Xác suất | $G_0^{[2]}$ |
-|---|---:|---:|
-| Sau bước 1 ở H, bước 2 Tìm | $1/2$ | $2+(1/2)2=3$ |
-| Sau bước 1 ở L, bước 2 Chờ | $(1/2)(1/2)=1/4$ | $2+(1/2)1=5/2$ |
-| Sau bước 1 ở L, bước 2 Sạc | $(1/2)(1/2)=1/4$ | $2+(1/2)0=2$ |
-
-$$\mathbb E_\pi[G_0^{[2]}\mid S_0=\mathrm H]
-=\frac12\,3+\frac14\,\frac52+\frac14\,2=\frac{21}{8}.$$
-
-**Cách thể hiện:** Cây hai bước với ba nhóm tổng. Hai kết quả cuối sau H–Tìm được gộp vì cùng thưởng2; phân biệt xác suất chọn hành động ở tầng giữa và xác suất nhóm tổng ở cột cuối.
-
-**Giải thích và cầu nối:** ký hiệu $\mathbb E_\pi$ lấy trung bình theo cả chính sách và môi trường. Không lấy trung bình đều ba hàng. Đây là tổng của hai bước, không phải giá trị toàn tương lai; giá trị trạng thái sẽ lấy trung bình của $G_0$ đầy đủ.
-
-**Nguồn:** phép tính từ đặc tả robot; trực giác kỳ vọng của SB (3.12).
-
-### L03R-04-05 — Giá trị trạng thái
-
-Thời lượng: 3 phút. Vai trò: định nghĩa sau phép lấy trung bình cụ thể.
-
-**Mặt slide:** xuất phát ở $s$, từ đầu đến cuối chọn hành động theo $\pi$. Giá trị trạng thái là
-
-$$v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s].$$
-
-Với robot, $v_\pi(\mathrm H)$ là kỳ vọng tổng thưởng toàn tương lai khi bắt đầu pin cao và dùng bảng chính sách vừa chọn.
-
-**Cách thể hiện:** kéo dài các nhánh hai bước bằng dấu tiếp diễn; ngoặc $G_t$ ôm cả phần tương lai. Thay ba con số hữu hạn bằng các tổng của toàn quỹ đạo; không đưa nghiệm $13/4$ trước khi lập hệ.
-
-**Giải thích và cầu nối:** $v_\pi:\mathcal S\to\mathbb R$; trạng thái kết thúc, nếu có, mang giá trị 0. $G_t$ thay đổi theo quỹ đạo; $v_\pi(s)$ là một số xác định khi mô hình, chính sách và tiêu chuẩn tổng thưởng đã cố định. Điều kiện hữu hạn đã kiểm ở phần 3. Định nghĩa này để chính sách chọn cả hành động đầu; muốn đánh giá riêng một lựa chọn, đổi thí nghiệm ở trang sau.
-
-**Nguồn:** SB (3.12), tr.58.
-
-### L03R-04-06 — Ấn định hành động đầu tiên
-
-Thời lượng: 2 phút. Vai trò: ví dụ chuẩn bị cho giá trị hành động.
-
-**Mặt slide:** xuất phát ở L; lần lượt buộc hành động đầu là Tìm, Chờ hoặc Sạc. Sau phản hồi đầu tiên, cả ba thí nghiệm đều trở lại chính sách ở 04-02.
-
-**Cách thể hiện:** ba hàng cùng xuất phát L. Khoanh hành động đầu của mỗi hàng; sau nút trạng thái mới dùng cùng hộp “tiếp tục theo $\pi$”. Nhánh Tìm giữ hai phản hồi của mô hình, không thay thành kết quả chắc chắn.
-
-**Giải thích và cầu nối:** ấn định Tìm một lần vẫn có nghĩa dù chính sách thường không chọn Tìm ở L. Không buộc robot lặp hành động đầu mãi mãi. Phân phối tổng thưởng của mỗi thí nghiệm có một kỳ vọng riêng; đó là đối tượng cần đặt tên.
-
-**Nguồn:** SB diễn giải giá trị hành động ngay trước (3.13), tr.58.
-
-### L03R-04-07 — Giá trị hành động
-
-Thời lượng: 2 phút. Vai trò: định nghĩa $q_\pi$ và miền của thí nghiệm.
-
-**Mặt slide:** tại $s$, thực hiện $a$ một lần, sau đó theo $\pi$:
-
-$$q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a],\qquad a\in\mathcal A(s).$$
-
-So với $v_\pi(s)$, khác biệt là cách xác định hành động đầu tiên.
-
-**Cách thể hiện:** đặt định nghĩa ngay dưới ba thí nghiệm rút gọn của trang trước; trên mặt có câu “Ấn định hành động đầu, rồi tiếp tục theo cùng chính sách”.
-
-**Giải thích và cầu nối:** ký hiệu kỳ vọng điều kiện được hiểu theo thí nghiệm vừa định nghĩa, kể cả khi $\pi(a\mid s)=0$; không dựa vào chia cho xác suất của một biến cố 0. $q_\pi$ tính cả tương lai, không đồng nhất với $r(s,a)$. Trạng thái kết thúc không còn hành động cần đánh giá. Hai định nghĩa sẽ cho hai cách đọc cùng phép trung bình Bellman.
-
-**Nguồn:** SB (3.13), tr.58; làm rõ quy ước hành động đầu.
-
-### L03R-04-08 — Câu hỏi kiểm tra
-
-Thời lượng: 2 phút. Vai trò: kiểm tra các đối tượng trước khi suy diễn.
-
-**Mặt slide — Câu hỏi:**
-
-1. Thay cách chọn Chờ/Sạc ở L có làm thay đổi bảng $p$ không? Có thể làm thay đổi giá trị không?
-2. $21/8$ vừa tính là kỳ vọng hai bước hay giá trị toàn tương lai?
-3. Tính $q_\pi(\mathrm L,\mathrm{tim})$ nghĩa là buộc Tìm bao nhiêu lần trước khi trở lại $\pi$?
-
-**Ghi chú đáp án:** 1. Bảng môi trường không đổi; phân phối quỹ đạo và giá trị có thể đổi. 2. Kỳ vọng của đúng hai bước. 3. Một lần, rồi theo $\pi$ kể từ trạng thái kế tiếp. **Câu nối:** “Thay vì liệt kê toàn bộ quỹ đạo, ta tách bước đầu và dùng lại giá trị của trạng thái kế tiếp.”
-
-**Nguồn:** vận dụng SB §3.5.
-
-## 7. Phần 5 — Phương trình Bellman
-
-**Chức năng:** suy ra quan hệ giữa các giá trị, giải thích vì sao không cần liệt kê mọi quỹ đạo. Đầu vào là định nghĩa $G_t,v_\pi,q_\pi$, chính sách và hạt nhân; đầu ra là ba quan hệ giá trị và hai phương trình Bellman kỳ vọng.
-
-**Mạch trình bày trước khi chia slide:**
-
-1. Tại L, đọc hai nhánh Chờ/Sạc của chính sách và viết “thưởng ngay + giá trị phần còn lại” bằng các hệ số đã biết.
-2. Chứng minh việc tách bước đầu trên một dãy thưởng; bước này chưa cần Markov.
-3. Lấy kỳ vọng theo hành động đầu bằng xác suất toàn phần.
-4. Trong mỗi hành động, lấy kỳ vọng theo cặp phản hồi $(s',r)$ bằng cùng bảng $p$.
-5. Chỉ ở đây dùng trạng thái Markov cùng chính sách dừng để thay kỳ vọng tương lai bằng $v_\pi(s')$; thu Bellman cho $v$.
-6. Giữ cố định hành động đầu để có $q$ theo $v$; lấy trung bình các $q$ để trở lại $v$.
-7. Thế $v(s')$ bằng trung bình của các $q(s',a')$ để có Bellman cho $q$.
-
-**Chu trình học:** vấn đề/ví dụ 05-01/02 → trực giác tách một bước 05-03 → hình thức và suy diễn 05-04…06 → ứng dụng cách tách cho hành động 05-07/08 → phép thế 05-09 → kiểm tra 05-10. Từng phép biến đổi là một bước cần giải thích, không gom cả chuỗi vào một trang rồi thu nhỏ chữ. Tổng 30 phút.
-
-### L03R-05-01 — Phương trình Bellman
-
-Thời lượng: 1 phút. Vai trò: tiêu đề phần.
-
-**Mặt slide:** tên phần; một trạng thái dẫn qua bước đầu tới hai ô “giá trị từ trạng thái kế tiếp”. Câu dẫn “Tách bước đầu, dùng lại giá trị của phần còn lại”.
-
-**Cách thể hiện:** hình nhìn trước một bước, nối với cây nhiều bước ở phần 4. Các ô tương lai là các đại lượng đã có định nghĩa, chưa biết giá trị số.
-
-**Ghi chú và cầu nối:** định nghĩa kỳ vọng trên toàn tương lai chưa cho cách tính gọn. Ta thử nhóm các quỹ đạo theo bước đầu, bắt đầu tại L của robot.
-
-**Nguồn:** SB diễn giải trước và sau (3.14), tr.59.
-
-### L03R-05-02 — Một bước từ pin thấp
-
-Thời lượng: 3 phút. Vai trò: phương trình ví dụ trước suy diễn tổng quát.
-
-**Mặt slide:** dưới chính sách đã chọn, tại L: Chờ nhận 1 rồi ở L; Sạc nhận 0 rồi tới H; xác suất chọn mỗi hành động $1/2$. Với $\gamma=1/2$:
-
-$$v_\pi(\mathrm L)=\frac12\left[1+\frac12v_\pi(\mathrm L)\right]
-+\frac12\left[0+\frac12v_\pi(\mathrm H)\right].$$
-
-**Cách thể hiện:** từ cây hai nhánh, thay đuôi mỗi nhánh bằng hộp $v_\pi$ tương ứng, rồi dựng từng ngoặc. Hai hệ số ngoài mang nhãn “xác suất hành động”; hệ số trước giá trị mang nhãn “chiết khấu”. Chúng có cùng số $1/2$ nhưng khác vai trò.
-
-**Giải thích và cầu nối:** mỗi ngoặc là thưởng một bước cộng giá trị tương lai đã chiết khấu. Giá trị L xuất hiện ở cả hai vế do Chờ giữ nguyên mức pin; chưa giải phương trình này. Các trang tiếp theo giải thích vì sao cấu trúc đó đúng cho mọi trạng thái.
-
-**Nguồn:** vận dụng SB (3.14) vào đặc tả robot.
-
-### L03R-05-03 — Tách phần thưởng tích lũy
-
-Thời lượng: 3 phút. Vai trò: phép biến đổi trên một quỹ đạo.
-
-**Mặt slide:**
-
-$$\begin{aligned}
-G_t&=R_{t+1}+\gamma R_{t+2}+\gamma^2R_{t+3}+\cdots\\
-&=R_{t+1}+\gamma\bigl(R_{t+2}+\gamma R_{t+3}+\cdots\bigr)\\
-&=R_{t+1}+\gamma G_{t+1}.
-\end{aligned}$$
-
-**Cách thể hiện:** mở từng dòng; ngoặc khoanh đuôi của cùng dãy thưởng. Bên dưới ghi riêng $G_{t+1}=R_{t+2}+\gamma R_{t+3}+\cdots$ để kiểm tra chỉ số. Dùng thưởng 0 sau kết thúc nếu có.
-
-**Giải thích và cầu nối:** dòng 1 khai triển định nghĩa; dòng 2 đặt $\gamma$ ra ngoài các số hạng từ bước thứ hai; dòng 3 nhận đúng tổng bắt đầu ở thời điểm $t+1$. Không dùng xác suất, chính sách hay Markov ở phép tách này. Điều kiện hội tụ đã có ở phần 3. Tiếp theo lấy kỳ vọng của đẳng thức.
-
-**Nguồn:** SB (3.9), tr.55, viết đầy đủ các số hạng.
-
-### L03R-05-04 — Lấy trung bình theo hành động đầu
-
-Thời lượng: 3 phút. Vai trò: tầng kỳ vọng thứ nhất.
-
-**Mặt slide:** từ định nghĩa giá trị và đẳng thức vừa chứng minh:
-
-$$v_\pi(s)=\mathbb E_\pi[R_{t+1}+\gamma G_{t+1}\mid S_t=s].$$
-
-Nhóm các quỹ đạo theo $A_t=a$:
-
-$$v_\pi(s)=\sum_{a\in\mathcal A(s)}\pi(a\mid s)
-\mathbb E_\pi[R_{t+1}+\gamma G_{t+1}\mid S_t=s,A_t=a].$$
-
-**Cách thể hiện:** Khối công thức căn dòng toàn chiều rộng: định nghĩa sau khi tách tổng, rồi kỳ vọng theo hành động. Không đặt cây lặp bên cạnh công thức.
-
-**Giải thích và cầu nối:** dùng kỳ vọng toàn phần theo hành động đầu, không phải chọn giá trị lớn nhất. Mô hình vẫn ngẫu nhiên bên trong mỗi hộp. Các hành động có trọng số 0 không đóng góp; khi nói riêng kỳ vọng sau một hành động, hiểu theo thí nghiệm hành động đầu đã định nghĩa ở phần 4.
-
-**Nguồn:** bước trung gian làm tường minh suy diễn SB (3.14).
-
-### L03R-05-05 — Lấy trung bình theo phản hồi môi trường
-
-Thời lượng: 4 phút. Vai trò: tầng kỳ vọng thứ hai và tuyến tính.
-
-**Mặt slide:** trước công thức, nêu quy ước điều kiện viết tắt: $s,a,s',r$ lần lượt là giá trị của $S_t,A_t,S_{t+1},R_{t+1}$. Với một hành động đã cố định:
-
-$$\begin{aligned}
-&\mathbb E_\pi[R_{t+1}+\gamma G_{t+1}\mid s,a]\\
-&\quad=\sum_{s',r}p(s',r\mid s,a)
-\left[r+\gamma\mathbb E_\pi[G_{t+1}\mid s,a,s',r]\right].
-\end{aligned}$$
-
-**Cách thể hiện:** Hai phản hồi số của L–Tìm và quy ước ký hiệu đứng trước khối kỳ vọng theo cặp phản hồi. Giữ đủ điều kiện s,a,s',r; không bỏ điều kiện ở bước này.
-
-**Giải thích từng biến đổi:** kỳ vọng toàn phần nhóm theo cặp $(S_{t+1},R_{t+1})$; trong một nhóm, $R_{t+1}=r$ đã cố định nên ra khỏi kỳ vọng; tuyến tính đưa $\gamma$ ra ngoài. Chưa bỏ điều kiện $s,a,r$ trong kỳ vọng tương lai. Không nhân xác suất thưởng với xác suất chuyển như thể chúng độc lập. Chỉ các nhóm có xác suất dương cần kỳ vọng điều kiện riêng.
-
-**Nguồn:** SB (3.14); mở riêng bước kỳ vọng lặp và giữ đầy đủ điều kiện.
-
-### L03R-05-06 — Từ trạng thái kế tiếp đến giá trị tương lai
-
-Thời lượng: 4 phút. Vai trò: chỉ rõ nơi dùng Markov và kết thúc suy diễn Bellman trạng thái.
-
-**Mặt slide:** giữ quy ước điều kiện ở trang trước. Với mô hình Markov và chính sách Markov dừng:
-
-$$\mathbb E_\pi[G_{t+1}\mid s,a,s',r]
-=\mathbb E_\pi[G_{t+1}\mid S_{t+1}=s']
-=v_\pi(s').$$
-
-Thế vào hai tầng trung bình:
-
-$$v_\pi(s)=\sum_a\pi(a\mid s)\sum_{s',r}p(s',r\mid s,a)
-\left[r+\gamma v_\pi(s')\right].$$
-
-**Cách thể hiện:** Ba giả thiết đi trước hai đẳng thức nhận diện kỳ vọng tương lai; công thức Bellman căn dòng bên dưới. Công thức là hình chính, không thêm SVG.
-
-**Giải thích từng bước:** biết $s'$ đủ để mô tả phân phối tương lai khi các hành động sau đó theo cùng chính sách; tính không đổi theo thời gian cho phép dùng cùng hàm $v_\pi$ tại $t+1$. Đây là điểm cần Markov, khác phép tách $G_t$ ở 05-03. Khi $s'$ kết thúc, dùng $v_\pi(s')=0$. Trở lại cây L và nhận lại đúng hai ngoặc của 05-02.
-
-**Nguồn:** SB (3.12), (3.14), tr.58–59.
-
-### L03R-05-07 — Giá trị hành động từ phản hồi một bước
-
-Thời lượng: 2 phút. Vai trò: áp dụng cách tách với hành động đầu đã ấn định.
-
-**Mặt slide:** trước hết đọc hai nhánh L–Tìm:
-
-$$q_\pi(\mathrm L,\mathrm{tim})=
-\frac12\left[2+\frac12v_\pi(\mathrm L)\right]
-+\frac12\left[-3+\frac12v_\pi(\mathrm H)\right].$$
-
-Từ định nghĩa $q$, tách $G_t$ và dùng đúng phép nhóm vừa chứng minh:
-
-$$\begin{aligned}
-q_\pi(s,a)&=\mathbb E_\pi[R_{t+1}+\gamma G_{t+1}\mid s,a]\\
-&=\sum_{s',r}p(s',r\mid s,a)\left[r+\gamma v_\pi(s')\right].
-\end{aligned}$$
-
-**Cách thể hiện:** Phép tính số của L–Tìm trước quan hệ q theo v tổng quát; cả hai toàn chiều rộng. Không thêm cây lặp vì hai phản hồi đã được chuẩn bị.
-
-**Giải thích và cầu nối:** không nhân thêm $\pi(a\mid s)$ ở bước đầu vì đã ấn định $a$. Chính sách vẫn quyết định phần tương lai thông qua $v_\pi$. Nếu để chính sách chọn hành động đầu, phải lấy trung bình các giá trị hành động.
-
-**Nguồn:** SB bài tập 3.13, tr.58 và 3.19, tr.62; suy ra từ các bước 05-03…06.
-
-### L03R-05-08 — Giá trị trạng thái từ các giá trị hành động
-
-Thời lượng: 3 phút. Vai trò: khép quan hệ giữa hai thí nghiệm đánh giá.
-
-**Mặt slide:** tại L, chính sách chọn hai hành động:
-
-$$v_\pi(\mathrm L)=\frac12q_\pi(\mathrm L,\mathrm{cho})
-+\frac12q_\pi(\mathrm L,\mathrm{sac}).$$
-
-Sau ví dụ, viết lại bước kỳ vọng theo hành động đầu:
-
-$$\begin{aligned}
-v_\pi(s)&=\sum_a\pi(a\mid s)\mathbb E_\pi[G_t\mid s,a]\\
-&=\sum_a\pi(a\mid s)q_\pi(s,a).
-\end{aligned}$$
-
-**Cách thể hiện:** Ví dụ v tại L là trung bình của hai q, rồi hai dòng suy diễn tổng quát. Không dùng cột hẹp hoặc hình lặp.
-
-**Giải thích và cầu nối:** Tìm không đóng góp vào $v_\pi(\mathrm L)$ của chính sách này do trọng số 0; $q_\pi(\mathrm L,\mathrm{tim})$ vẫn được định nghĩa. Quan hệ đúng tại mọi trạng thái, nên có thể dùng nó tại $s'$ để thay phần tương lai trong phương trình của $q$.
-
-**Nguồn:** SB bài tập 3.12, tr.58 và 3.18, tr.62.
-
-### L03R-05-09 — Bellman kỳ vọng cho giá trị hành động
-
-Thời lượng: 4 phút. Vai trò: phép thế từng bước, không đưa công thức cuối đột ngột.
-
-**Mặt slide:** viết quan hệ vừa có tại trạng thái kế tiếp:
-
-$$v_\pi(s')=\sum_{a'\in\mathcal A(s')}\pi(a'\mid s')q_\pi(s',a').$$
-
-Đặt cạnh phương trình $q$ theo $v$, đánh dấu vị trí sẽ thế; sau đó hiện:
-
-$$q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)
-\left[r+\gamma\sum_{a'}\pi(a'\mid s')q_\pi(s',a')\right].$$
-
-**Cách thể hiện:** Viết quan hệ ở trạng thái kế tiếp s', sau đó thế trực tiếp vào công thức q. Ba nhóm công thức đủ lớn, không thêm sơ đồ.
-
-**Giải thích từng bước:** $a$ là hành động đã thực hiện ở $t$; $a'$ là hành động chọn ở $t+1$ tại $s'$, vì vậy dùng $\pi(a'\mid s')$. Chỉ có một hệ số $\gamma$ vì từ $t$ sang $t+1$ mới qua một bước. Với trạng thái kết thúc, toàn bộ giá trị tương lai bằng 0; không yêu cầu hành động tiếp theo thực tế.
-
-**Nguồn:** lời giải bài tập 3.17, SB tr.61, từ bài tập 3.12–3.13. Không gán số phương trình (3.17).
-
-### L03R-05-10 — Câu hỏi kiểm tra
-
-Thời lượng: 3 phút. Vai trò: kiểm tra lập luận và tầng xác suất.
-
-**Mặt slide — Câu hỏi:**
-
-1. Số hạng đầu của $G_{t+1}$ là gì? Vì sao phép tách $G_t$ chưa cần Markov?
-2. Ở bước nào trong suy diễn Bellman mới dùng tính Markov và chính sách dừng?
-3. Trong $v_\pi(s)$, trọng số $\pi(a\mid s)p(s',r\mid s,a)$ mô tả điều gì? Vì sao phương trình của $q_\pi(s,a)$ không lấy trung bình hành động đầu lần nữa?
-
-**Ghi chú đáp án:** 1. $R_{t+2}$; phép tách là đại số trên một dãy đã cho. 2. Khi thay kỳ vọng phần tương lai đã điều kiện hóa bằng $v_\pi(s')$. 3. Xác suất chọn hành động rồi nhận cặp phản hồi; đây là quy tắc nhân có điều kiện, không giả thiết độc lập. Với $q$, hành động đầu đã ấn định. **Câu nối:** “Các phương trình vẫn chứa giá trị chưa biết ở cả hai vế. Với robot hai trạng thái, ta sẽ giải chúng đồng thời.”
-
-**Nguồn:** vận dụng SB (3.9), (3.14), bài tập 3.17–3.19.
-
-## 8. Phần 6 — Đánh giá một chính sách từ mô hình
-
-**Chức năng:** biến các quan hệ Bellman thành kết quả tính được, rồi nhận diện dạng tổng quát. Đầu vào là bảng robot, chính sách cố định và $\gamma=1/2$; đầu ra là nghiệm giá trị, phép kiểm bằng $q$ và cách rút MDP về MRP.
-
-**Mạch trình bày trước khi chia slide:**
-
-1. Viết đúng hai phương trình cho H và L từ hai cây một bước.
-2. Giải hệ bằng phép trừ và thế, chưa đưa nghịch đảo ma trận trước bài toán số.
-3. Dùng nghiệm tính hai giá trị hành động và kiểm lại trung bình theo chính sách.
-4. Gộp các đường đi qua hành động để tính trực tiếp xác suất chuyển và thưởng trung bình của mỗi trạng thái.
-5. Từ bảng đã gộp, định nghĩa chuỗi Markov và MRP cảm sinh; sau đó mới viết Bellman bằng ma trận.
-6. Kiểm tra bằng hành động chưa dùng trong chính sách và bằng một hàng chuyển.
-
-**Chu trình học:** vấn đề và ví dụ 06-01/02 → phép giải cụ thể 06-03 → ứng dụng/kiểm nghiệm 06-04 → ví dụ rút gọn mô hình 06-05 → hình thức MRP và ma trận 06-06/07 → kiểm tra 06-08. Phần này có hai cụm gắn nhau: giải một MDP nhỏ và khái quát phép tính thành mô hình đã gộp. Tổng 21 phút.
-
-### L03R-06-01 — Đánh giá một chính sách từ mô hình
-
-Thời lượng: 1 phút. Vai trò: tiêu đề phần.
-
-**Mặt slide:** tên phần; hai trạng thái H và L, mỗi trạng thái có một ô giá trị chưa biết. Câu dẫn “Hai trạng thái, hai giá trị cần tìm”.
-
-**Cách thể hiện:** quay về hình robot của phần 1; giữ bảng chính sách nhỏ và $\gamma=1/2$ để xác định rõ bài toán.
-
-**Ghi chú và cầu nối:** không ước lượng từ các lần chạy và không tìm chính sách tối ưu trong phép tính này. Dữ kiện đầu vào là mô hình đầy đủ và chính sách; đầu ra là giá trị kỳ vọng đúng của từng trạng thái trong mô hình đó.
-
-**Nguồn:** vận dụng SB (3.14); PPTX47–48.
-
-### L03R-06-02 — Hệ Bellman của robot
-
-Thời lượng: 2 phút. Vai trò: lập hệ từ hình.
-
-**Mặt slide:** đặt $v_H=v_\pi(\mathrm H)$, $v_L=v_\pi(\mathrm L)$. Tại H luôn Tìm; tại L chọn Chờ/Sạc như trước:
-
-$$\begin{aligned}
-v_H&=2+\frac12\left(\frac12v_H+\frac12v_L\right),\\
-v_L&=\frac12\left(1+\frac12v_L\right)
-+\frac12\left(0+\frac12v_H\right).
-\end{aligned}$$
-
-**Cách thể hiện:** đọc cây H và viết phương trình thứ nhất; đọc lại cây L của 05-02 và viết phương trình thứ hai. Đặt nhãn “chính sách”, “chuyển trạng thái”, “chiết khấu” vào các hệ số tương ứng trong lúc xây từng phương trình.
-
-**Giải thích và cầu nối:** ở H, hành động có xác suất 1 nhưng môi trường chia hai kết quả. Ở L, chính sách chia hai hành động, mỗi hành động có kết quả chắc chắn. Cả hai trường hợp dẫn tới giá trị tương lai có cùng hai ẩn. Không thay $v_L$ bằng thưởng chờ 1. Hai phương trình cần được giải đồng thời.
-
-**Nguồn:** chuyên biệt SB (3.14) theo dữ kiện đã công bố.
-
-### L03R-06-03 — Giải hai phương trình giá trị
-
-Thời lượng: 3 phút. Vai trò: biến đổi đại số đầy đủ.
-
-**Mặt slide:** khai triển hai phương trình, cùng hệ số của phần tương lai:
-
-$$\begin{aligned}
-v_H&=2+\frac14v_H+\frac14v_L,\\
-v_L&=\frac12+\frac14v_H+\frac14v_L.
-\end{aligned}$$
-
-Trừ phương trình thứ hai khỏi phương trình thứ nhất:
-
-$$v_H-v_L=\frac32.$$
-
-Thế $v_H=v_L+3/2$ vào phương trình thứ hai:
-
-$$v_L=\frac12+\frac14\left(v_L+\frac32\right)+\frac14v_L
-=\frac78+\frac12v_L.$$
-
-Suy ra $v_L=7/4$ và $v_H=13/4$.
-
-**Cách thể hiện:** Một khối căn dòng chứa hai phương trình, phép trừ, phép thế và nghiệm cuối. Các bước tách bằng khoảng trắng; kiểm thế nghiệm trong notes.
-
-**Giải thích và kiểm lại:** $13/4=2+(1/4)(13/4+7/4)$ và $7/4=1/2+(1/4)(13/4+7/4)$. Cả hai đúng. $13/4$ là giá trị toàn tương lai, khác $21/8$ của hai bước đầu; không dùng kết quả hữu hạn đó thay cho nghiệm Bellman.
-
-**Nguồn:** phép giải hệ do người soạn tính từ ví dụ; không gán nghiệm số cho sách.
-
-### L03R-06-04 — Kiểm tra giá trị bằng các hành động
-
-Thời lượng: 3 phút. Vai trò: áp dụng $q$ theo $v$ và kiểm tra $v$ theo $q$.
-
-**Mặt slide:** dùng nghiệm vừa tìm:
-
-$$q_\pi(\mathrm L,\mathrm{cho})=1+\frac12\,\frac74=\frac{15}{8},$$
-$$q_\pi(\mathrm L,\mathrm{sac})=0+\frac12\,\frac{13}{4}=\frac{13}{8}.$$
-
-Lấy trung bình theo chính sách:
-
-$$v_\pi(\mathrm L)=\frac12\,\frac{15}{8}+\frac12\,\frac{13}{8}=\frac74.$$
-
-**Cách thể hiện:** thay giá trị vào đúng hai hộp tương lai trên cây L; lần lượt hiện phép tính từng hành động, rồi lấy trung bình hai kết quả. Không đưa bảng tất cả năm $q$ cùng lúc.
-
-**Giải thích và cầu nối:** Chờ một lần rồi theo $\pi$ có giá trị cao hơn Sạc một lần rồi theo $\pi$ trong ví dụ này. Đây là so sánh với phần tiếp diễn cố định; chưa chứng minh chính sách nào tối ưu. Cả hai cách tính giá trị L trùng nhau. Có thể gộp luôn các nhánh hành động để tính trực tiếp từ trạng thái sang trạng thái.
-
-**Nguồn:** vận dụng SB bài tập 3.12–3.13.
-
-### L03R-06-05 — Gộp các nhánh dưới chính sách
-
-Thời lượng: 3 phút. Vai trò: ví dụ số cho MRP cảm sinh.
-
-**Mặt slide:** tại H, hai kết quả của Tìm có xác suất $1/2$ và thưởng 2. Tại L, Chờ đưa về L với xác suất $1/2$, Sạc đưa về H với xác suất $1/2$; thưởng trung bình bằng $(1/2)1+(1/2)0=1/2$.
-
-| Hiện tại | Kế tiếp H | Kế tiếp L | Thưởng trung bình một bước |
-|---|---:|---:|---:|
-| H | $1/2$ | $1/2$ | $2$ |
-| L | $1/2$ | $1/2$ | $1/2$ |
-
-**Cách thể hiện:** Đọc các nhánh ở H và L bằng số rồi lập bảng xác suất chuyển và thưởng trung bình. Bảng số là ví dụ trực quan trước định nghĩa MRP ở06-06.
-
-**Giải thích và cầu nối:** chính sách đã được lấy trung bình vào các trọng số; tính ngẫu nhiên vẫn còn. Bảng phụ thuộc chính sách cụ thể đang dùng. Việc chỉ còn trạng thái và chuyển tiếp dẫn đến tên gọi chuỗi Markov; giữ cả thưởng cho quá trình phần thưởng Markov.
-
-**Nguồn:** hệ quả SB (3.4)–(3.5), §3.5; hw02 bài 4.
-
-### L03R-06-06 — Chuỗi Markov và MRP dưới chính sách
-
-Thời lượng: 3 phút. Vai trò: hình thức hóa phép gộp.
-
-**Mặt slide:** ma trận chuyển dưới chính sách có phần tử
-
-$$P^\pi_{ss'}=\sum_{a\in\mathcal A(s)}\pi(a\mid s)p(s'\mid s,a),$$
-
-và thưởng trung bình của trạng thái là
-
-$$r^\pi(s)=\sum_{a\in\mathcal A(s)}\pi(a\mid s)r(s,a).$$
-
-Giữ trạng thái và chuyển tiếp: chuỗi Markov $(\mathcal S,P^\pi)$. Giữ thêm thưởng và chiết khấu: quá trình phần thưởng Markov (MRP) $(\mathcal S,P^\pi,r^\pi,\gamma)$.
-
-**Cách thể hiện:** gắn mỗi công thức với một cột của bảng vừa tính. Hàng L cho $P^\pi_{LH}=P^\pi_{LL}=1/2$, $r^\pi(L)=1/2$. Mỗi hàng của $P^\pi$ tổng bằng 1.
-
-**Giải thích và cầu nối:** hai công thức chỉ lấy trung bình những đại lượng đã định nghĩa ở 02-05. Chính sách Markov dừng làm phân phối phản hồi sau khi gộp chỉ phụ thuộc trạng thái hiện tại; vì vậy quá trình trạng thái vẫn Markov. $r^\pi$ lưu kỳ vọng thưởng cần cho bài toán giá trị; không mô tả đầy đủ phân phối thưởng. Chuỗi Markov và MRP không có một quyết định hành động mới ngoài chính sách đã gộp. Bellman của chúng chính là hệ vừa giải.
-
-**Nguồn:** suy ra từ SB (3.4)–(3.5), (3.14); khái niệm tương ứng PPTX30,34; hw02 bài 4. Không gán số phương trình SB cho định nghĩa bộ MRP.
-
-### L03R-06-07 — Bellman dưới dạng ma trận
-
-Thời lượng: 3 phút. Vai trò: khái quát hệ phương trình và xác định điều kiện giải.
-
-**Mặt slide:** chọn thứ tự trạng thái H, L; tổng quát có $n$ trạng thái. $v,r^\pi\in\mathbb R^n$ là véc-tơ cột, $P^\pi\in\mathbb R^{n\times n}$, $I$ là ma trận đơn vị. Gộp hai nhóm số hạng trong Bellman đã suy ra:
-
-$$v_\pi(s)=r^\pi(s)+\gamma\sum_{s'}P^\pi_{ss'}v_\pi(s'),$$
-$$v=r^\pi+\gamma P^\pi v
-\quad\Longleftrightarrow\quad (I-\gamma P^\pi)v=r^\pi.$$
-
-Với robot, hệ đó là
-
-$$\begin{pmatrix}3/4&-1/4\\-1/4&3/4\end{pmatrix}
-\begin{pmatrix}v_H\\v_L\end{pmatrix}
-=\begin{pmatrix}2\\1/2\end{pmatrix}.$$
-
-**Cách thể hiện:** tô một hàng để đối chiếu với phương trình H ở 06-03, rồi hàng L. Phép nhân $P^\pi v$ là các tổng có trọng số vừa học, không thêm quy tắc cập nhật mới. Công thức tổng quát xuất hiện trước ví dụ ma trận; ví dụ hệ số đã được chuẩn bị bằng hai phương trình và bảng ở các trang trước.
-
-**Giải thích và điều kiện:** đầu vào gồm mô hình, chính sách và $\gamma$; tính $P^\pi,r^\pi$ rồi giải hệ cho $v$. Với ma trận xác suất hữu hạn và $0\le\gamma<1$, hệ có nghiệm duy nhất; có thể viết $v=(I-\gamma P^\pi)^{-1}r^\pi$. Chứng minh ngắn và trường hợp $\gamma=1$ đặt trong phụ lục ghi chú của storyboard, không dùng kết luận không điều kiện. Với ma trận đặc, giải trực tiếp thường tốn $O(n^3)$ phép tính; các phương pháp lặp sẽ học ở Bài 04. Trang chính ưu tiên lập hệ, không dạy thuật toán khử mới.
-
-**Nguồn:** dạng ma trận suy ra từ SB (3.14); PPTX47–48.
-
-### L03R-06-08 — Câu hỏi kiểm tra
-
-Thời lượng: 3 phút. Vai trò: kiểm tra tính giá trị và rút gọn mô hình.
-
-**Mặt slide — Câu hỏi:** cho lại $v_H=13/4$, $v_L=7/4$, $\gamma=1/2$ và hai nhánh L–Tìm.
-
-1. Tính $q_\pi(\mathrm L,\mathrm{tim})$, dù chính sách đang dùng không chọn hành động đó tại L.
-2. Từ bảng chính sách, tính hàng chuyển và thưởng trung bình của trạng thái L.
-3. Nếu đổi chính sách, những đại lượng nào trong $p,P^\pi,r^\pi,v_\pi$ cần tính lại?
-
-**Ghi chú đáp án:**
-
-$$q_\pi(\mathrm L,\mathrm{tim})=
-\frac12\left(2+\frac12\,\frac74\right)
-+\frac12\left(-3+\frac12\,\frac{13}{4}\right)=\frac34.$$
-
-Hàng L là $(1/2,1/2)$, thưởng trung bình $1/2$. Khi đổi chính sách, giữ mô hình $p$; phải xét lại $P^\pi,r^\pi,v_\pi$. Không khẳng định mọi thay đổi chính sách luôn làm mọi số đổi. **Câu nối:** “Một bài toán đánh giá chính sách đã được giải trọn từ mô hình đến giá trị; phần cuối nối lại các bước và chuyển sang bài tập.”
-
-**Nguồn:** vận dụng SB §3.5; hw02 bài 4, 7, 8.
-
-## 9. Phần 7 — Tổng hợp và vận dụng
-
-**Chức năng:** trở lại quyết định của robot ở đầu bài và xác nhận sinh viên nối được từng đối tượng với phép tính. Đầu vào là mô hình và các giá trị đã giải; đầu ra là khả năng tự lập luận trên một quyết định, cùng nhiệm vụ luyện tập và điểm vào của Bài 04.
-
-**Mạch trình bày trước khi chia slide:**
-
-1. Trở lại robot pin thấp với các giá trị đã tính.
-2. Đọc một hành động cụ thể từ dữ kiện môi trường và giá trị tương lai, rồi nhận ra công thức tổng quát đã học.
-3. Giao bài tập theo đúng các năng lực vừa hình thành.
-4. Kiểm tra điều kiện đủ dữ liệu, phân biệt các đại lượng và phạm vi kết luận về chính sách.
-
-**Chu trình học:** ví dụ thu hồi 07-01/02 → nối lại hình thức đã biết 07-02 → vận dụng 07-03 → kiểm tra 07-04. Phần kết dùng chu trình rút gọn vì không giới thiệu khái niệm trọng tâm mới; không dựng một mô hình lớn khác ở cuối bài. Tổng 8 phút.
-
-### L03R-07-01 — Tổng hợp và vận dụng
-
-Thời lượng: 1 phút. Vai trò: tiêu đề phần và thu hồi vấn đề mở đầu.
-
-**Mặt slide:** tên phần; robot ở L, bên cạnh các giá trị Chờ $15/8$, Sạc $13/8$, Tìm $3/4$, cùng nhãn “hành động đầu, sau đó theo $\pi$”.
-
-**Cách thể hiện:** Sơ đồ ba hành động từ L với ba giá trị đã tính; giá trị gắn vào hành động, không thể hiện như một trạng thái đích chắc chắn.
-
-**Ghi chú và cầu nối:** đầu bài chỉ biết các lựa chọn và tác động tới pin. Giờ mỗi lựa chọn có một giá trị dài hạn dưới cùng cách tiếp tục. Đọc ngược một phép tính để xác nhận mô hình, chính sách và giá trị không bị lẫn nhau.
-
-**Nguồn:** kết quả ví dụ xuyên suốt; SB §3.5.
-
-### L03R-07-02 — Đọc một quyết định bằng mô hình và giá trị
-
-Thời lượng: 3 phút. Vai trò: từ ca cụ thể trở lại công thức đã học.
-
-**Mặt slide:** xét L–Chờ. Môi trường cho $p(\mathrm L,1\mid\mathrm L,\mathrm{cho})=1$; giá trị trạng thái kế tiếp là $7/4$; $\gamma=1/2$. Vì thế:
-
-$$q_\pi(\mathrm L,\mathrm{cho})=1+\frac12\,\frac74=\frac{15}{8}.$$
-
-Đối chiếu từng thành phần với công thức:
-
-$$q_\pi(s,a)=\sum_{s',r}p(s',r\mid s,a)\left[r+\gamma v_\pi(s')\right].$$
-
-**Cách thể hiện:** dùng một nhánh của robot, ánh xạ xác suất 1, thưởng 1, trạng thái L và giá trị $7/4$ vào vị trí tương ứng. Công thức tổng quát hiện sau phép tính số, không lặp lại cả cây suy diễn phần 5.
-
-**Giải thích và cầu nối:** $\pi(\mathrm{cho}\mid\mathrm L)=1/2$ là xác suất chính sách chọn hành động; nó khác xác suất phản hồi bằng 1. Không nhân $q$ với $1/2$ khi đánh giá hành động đã ấn định; chỉ dùng trọng số chính sách lúc ghép các $q$ thành $v$. Sinh viên sẽ thực hiện lại chuỗi thao tác này trên bài tập.
-
-**Nguồn:** vận dụng SB bài tập 3.13/3.19; dùng kết quả phần 6.
-
-### L03R-07-03 — Bài tập và bước tiếp theo
-
-Thời lượng: 2 phút. Vai trò: xác định đầu ra luyện tập và giới hạn bài học.
-
-**Mặt slide:** ba nhóm bài trong hw02:
-
-| Bài | Nhiệm vụ | Kết quả cần viết |
-|---|---|---|
-| 3 | Kiểm tra ma trận ba trạng thái và lập Bellman | Hàng xác suất hợp lệ; hệ ba phương trình |
-| 4 | Cố định chính sách, gộp MDP thành MRP | Công thức $P^\pi,r^\pi$ và giải thích phép trung bình |
-| 7–8 | Nối $q$ với $v$, giải thích Bellman | Phép lấy trung bình và ý nghĩa từng thành phần |
-
-Đọc SB §3.1–3.5. Bài 04: tìm chính sách tốt hơn khi biết mô hình.
-
-**Cách thể hiện:** một bảng ngắn; không chèn nguyên đề bài dài hoặc toàn bộ chương sách lên mặt slide.
-
-**Ghi chú và cầu nối:** 30 phút chữa bài ngoài tuyến 120 phút chia 10 phút cho bài 3, 10 phút cho bài 4, 10 phút cho bài 7–8. Bài 9 về Bellman tối ưu nối sang Bài 04; không suy diễn công thức tối ưu trong phần tổng kết này. Bài 10 có thể dùng luyện mô hình hóa sau giờ học nếu giảng viên giao.
-
-**Nguồn:** hw02 bài 3, 4, 7, 8, 9, 10; ranh giới SB §3.5→§3.6.
-
-### L03R-07-04 — Câu hỏi kiểm tra
-
-Thời lượng: 2 phút. Vai trò: kiểm tra tổng hợp và kết bài.
-
-**Mặt slide — Câu hỏi:**
-
-1. Biết $p(s'\mid s,a)$, chính sách và hệ số chiết khấu đã đủ để tính giá trị trạng thái $v_\pi(s)$ chưa? Còn thiếu dữ kiện nào?
-2. Một quỹ đạo có tổng thưởng khác $v_\pi(s)$ có mâu thuẫn với định nghĩa giá trị không?
-3. $q_\pi(\mathrm L,\mathrm{cho})>q_\pi(\mathrm L,\mathrm{sac})$ đã chứng minh chính sách đang dùng là tối ưu chưa?
-
-**Ghi chú đáp án:** 1. Còn thiếu mô hình thưởng; cho $r(s,a)$ là đủ cùng xác suất chuyển để viết Bellman kỳ vọng, hoặc cho hạt nhân chung $p(s',r\mid s,a)$. 2. Không; một tổng thưởng là kết quả của quỹ đạo, giá trị là kỳ vọng. 3. Chưa; ta mới so sánh hành động đầu với phần tiếp diễn theo chính sách đã cho. Bài 04 sẽ nghiên cứu việc thay đổi chính sách và mục tiêu tối ưu.
-
-**Cách thể hiện:** chỉ ba câu hỏi đánh số; đáp án nằm trong notes. Kết ở năng lực tính và giới hạn kết luận, không thêm câu khẩu hiệu hoặc lặp lại mục lục.
-
-**Nguồn:** vận dụng SB §3.1 và §3.5.
-
-## 10. Ánh xạ nguồn và các thay đổi có chủ ý
-
-| Slide PPTX | Quyết định | Nơi thực hiện trong storyboard mới | Lý do và ảnh hưởng |
+# Storyboard — Bài 03: Quá trình quyết định Markov
+
+Bản này thay storyboard trước đợt sửa 2026-10-12 và khớp deck hiện tại (`2627-1/lecture-03-qua-trinh-quyet-dinh-markov.html`, 72 trang, 7 mạch; cập nhật sau vòng biên tập năm vai rà soát ngày 2026-10-12). Nguồn nội dung: Bài giảng gốc (2025–2026), trang 28–58; Sutton và Barto (2018), chương 3 và §4.1; ghi chú bài giảng Bài 03 đã commit (`ceab04c`). Kế hoạch: `revision-plan-2026-10-12.md` mục A; quyết định chung: `../quyet-dinh-chuan-2026-10-12.md`. Mọi mã trang có tiền tố `L03R-`; bảng dưới viết gọn phần sau tiền tố.
+
+## 1. Bản đồ mạch
+
+| N | Mạch | Loại | Chức năng | Đầu vào | Đầu ra | Đóng góp cho vấn đề trung tâm | Trang tiêu đề | Trang | Phút |
+|---|---|---|---|---|---|---|---|---:|---:|
+| 1 | Mở đầu | mở đầu | Nêu luận đề, kết quả kế thừa từ Bài 02, ký hiệu, mục tiêu, bản đồ mạch, vấn đề trung tâm | Bài 02: tính Markov, hàm động lực, lợi tức với hệ thức truy hồi và cận, $v_\pi$ | Nhu cầu: cách tính giá trị mà định nghĩa của Bài 02 chưa cho | Đặt bài toán: giá trị dài hạn của một chính sách khi phản hồi ngẫu nhiên | `01-01` (bìa) | 6 | 9 |
+| 2 | Trạng thái Markov và mô hình môi trường | phát triển kiến thức (khái niệm) | Kế thừa tính Markov và hàm động lực của Bài 02; thêm điều kiện xác suất dương, phản ví dụ, bảng $p$ của robot, quy tắc sinh quỹ đạo | Vòng tương tác; hai định nghĩa của Bài 02 | $\mathcal M$ của robot, $p$, $p(s'\mid s,a)$, $r(s,a)$ | Môi trường được mô tả bằng một bảng không phụ thuộc lịch sử | `02-00` | 15 | 26,5 |
+| 3 | Lợi tức chiết khấu | phát triển kiến thức (nhắc lại và áp dụng) | Áp lợi tức của Bài 02 vào robot; quy ước hấp thụ; cận cho robot | $p$ chỉ mô tả một bước; lợi tức, hệ thức truy hồi và cận của Bài 02 | $G_t$, quy ước hấp thụ, cận $\lvert G_t\rvert\le6$ của robot | Đại lượng cần lấy kỳ vọng là hữu hạn | `03-00` | 7 | 12 |
+| 4 | Chính sách và hàm giá trị | phát triển kiến thức (khái niệm) | Kế thừa $v_\pi$ của Bài 02; định nghĩa trên quá trình xuất phát tại $s$, xác suất đoạn quỹ đạo, $q_\pi$ | $p$, $G_t$, $v_\pi$ của Bài 02 | $\pi$, xác suất đoạn quỹ đạo, $v_\pi$, $q_\pi$ | Định nghĩa đại lượng cần tính | `04-00` | 10 | 14 (+3 trong khối 30 phút) |
+| 5 | Phương trình Bellman kỳ vọng | phát triển kiến thức (kết quả và chứng minh) | Thay kỳ vọng vô hạn bằng phương trình hữu hạn ẩn | Định nghĩa $v_\pi$, $q_\pi$; hệ thức truy hồi của Bài 02 | Bellman cho $v_\pi$, $q_\pi$; quan hệ $v$–$q$ | Phương trình mà giá trị phải thỏa | `05-00` | 12 | 22,5 (+2 trong khối 30 phút) |
+| 6 | Đánh giá chính sách bằng hệ tuyến tính | phát triển kiến thức (thuật toán) và ứng dụng | Giải hệ, dạng ma trận, nghiệm duy nhất, thuật toán | Hệ Bellman | $v_\pi=(13/4,\,7/4)$, Thuật toán 03.29, lưới 5×5 | Câu trả lời bằng số cho robot và điều kiện nghiệm duy nhất | `06-00` | 14 | 25,5 |
+| 7 | Tổng kết và chuyển tiếp | kết luận | Gom kết quả và giả thiết, bài tập tổng hợp, tự kiểm tra, tài liệu | Mọi kết quả | Bốn giới hạn dẫn sang Bài 04–07 | Trả lời có điều kiện vấn đề trung tâm, song song từng dòng với `01-02b` | `07-00` | 8 | 10,5 |
+| | **Tổng** | | | | | | | **72** | **120** (+ khối 30 phút) |
+
+Bảy mạch theo kế hoạch A1 và quyết định chung mục 8 (gộp mạch "Từ tương tác đến trạng thái Markov" cũ vào mạch mô hình). Trang "Nội dung" có 7 mục cộng một dòng đọc trước (ngoại lệ mật độ, mục 5).
+
+## 2. Cụm khái niệm
+
+| Cụm | Mạch | Dạng | Vấn đề | Trực giác | Ví dụ | Hình thức | Ứng dụng | Kiểm tra | Ký hiệu và dữ kiện truyền | Gộp hoặc không áp dụng | Phút |
+|---|---|---|---|---|---|---|---|---|---|---|---:|
+| K1 Tính Markov | 2 | khái niệm (kế thừa Bài 02) | `02-00` (dòng dẫn), `01-03` ("Nhắc lại:" rồi "Nhu cầu:") | `01-05` | `01-04` (dòng "Ví dụ." trước "Định nghĩa."), `01-05` | `01-04` (quỹ đạo, lịch sử), `01-06` | `01-06b` (phản ví dụ, cách sửa) | `01-07` (sinh viên tự làm 3 phút), `01-07b` (lời giải trên mặt trang) | $(S_t,A_t,R_{t+1},S_{t+1})$, $H_t$, hai lịch sử kết thúc ở L | Ví dụ `01-04` cụ thể hóa vấn đề ở `01-03` trước trực giác; trực giác và ví dụ hai lịch sử chung trang `01-05`; định nghĩa trùng Bài 02, ghi chú diễn giả `01-06` nói rõ | 15 |
+| K2 Hàm động lực và MDP | 2 | khái niệm (kế thừa Bài 02, thêm quy tắc sinh) | `02-02` (câu nối "Nhờ tính Markov…") | `02-04` (dòng "Trực quan.") | `02-02`, `02-03` | `02-04`, `02-05`, `02-06` | `02-05` (cặp L–Tìm), `02-06` (bộ MDP robot) | `02-07`, `02-07b` (lời giải trên mặt trang) | Bảng bảy hàng → $p$; $r(\mathrm L,\mathrm{tim})=-1/2$ | Ví dụ dẫn nhập `02-02` đứng cùng vấn đề | 13 |
+| K3 Lợi tức | 3 | nhắc lại Bài 02 và áp dụng | `03-00`, `03-01` ("Nhắc lại:"; "Nhu cầu:" mở bằng ví dụ Chờ mãi cho $1+1+\cdots=\infty$) | `03-01` (Chờ mãi; trọng số giảm trong ghi chú diễn giả), ghi chú diễn giả `03-05` (Chờ mãi với $\gamma=1/2$ cho $2$) | `03-01` (hai dãy ba bước) | `03-02`, `03-04`, `03-05` | `03-05` (cận 6 của robot) | `03-06`, `03-06b` (lời giải trên mặt trang) | Trọng số $1,1/2,1/4$ → $\gamma^k$; $3/2$, $7/4$ là lợi tức cắt | `03-01` và `03-03` cũ gộp thành một trang nhắc lại áp vào robot (quyết định của điều phối viên); định nghĩa và mệnh đề giữ để có quy ước hấp thụ và số hiệu của ghi chú | 12 |
+| K4 Chính sách | 4 | khái niệm | `04-00`, `04-02` ("Nhắc lại:" $v_\pi$ của Bài 02, "Nhu cầu:") | `04-03` | `04-02` | `04-03`, `04-03b` | `04-03b` (xác suất $1/4$), `04-04` | `04-08` câu (a) | Bảng chính sách chia đều → $\pi(a\mid s)$ | Vấn đề và ví dụ dẫn nhập chung trang `04-02` | 5,5 |
+| K5 $v_\pi$ | 4 | khái niệm (kế thừa Bài 02) | `04-04` ("Nhu cầu:" một số cho mỗi trạng thái) | `04-05` (dòng "Trực quan.") | `04-04` | `04-05` | `04-05` (khoảng $[9/8,33/8]$), `06-03` | `04-08` câu (b)(c), `04-08b` | Cây hai bước → $G_0^{[2]}$ → $v_\pi$ | Vấn đề gộp với ví dụ `04-04` | 4 |
+| K6 $q_\pi$ | 4 | khái niệm | `04-06` ("Nhu cầu:") | `04-06` (thí nghiệm ấn định) | `04-06` | `04-07` | `05-07`, `06-04` | `04-08` (gián tiếp), câu hỏi tự kiểm tra 4 | Ba thí nghiệm $1/8$, $5/4$, $1$ | Vấn đề, trực giác, ví dụ chung trang `04-06` | 4 |
+| K7 Bellman cho $v_\pi$ | 5 | kết quả và chứng minh | `05-00`, `05-01` ("Nhu cầu:") | `05-01` | `05-02` | `05-03`, `05-04`, `05-06`, `05-06b` | `06-02` | `05-10` (tự làm), `05-10b` (lời giải trên mặt trang) | Phương trình tại L (4.1) → (4.5); $v_H=2+\tfrac14v_H+\tfrac14v_L$ | Định lý tách khỏi các bổ đề theo kế hoạch A3 | 16 |
+| K8 Quan hệ $v$–$q$, Bellman cho $q_\pi$ | 5 | kết quả | `05-07` ("Nhu cầu:" trên mặt trang) | `05-07` (ví dụ L–Tìm) | `05-07`, `05-08` | `05-07`, `05-08`, `05-09` (mỗi trang có dòng giả thiết; `05-07`, `05-09` có dòng "Chứng minh.") | `06-04` | `05-10` (khối 30 phút) | $q_\pi(\mathrm L,\mathrm{tim})$ theo $v_\pi$ | Ví dụ đứng trên cùng trang với mệnh đề | 6 |
+| K9 Đánh giá chính sách bằng giải hệ | 6 | thuật toán | `06-01`, `06-07c` ("Nhu cầu:" khử thế tay không dùng được cho hệ hàng chục ẩn) | `06-05` (gộp nhánh), `06-02` | `06-02`, `06-03`, `06-07` (tính tay đủ các bước) | `06-07`, `06-07b`, `06-07c`, `06-07d` | `06-04`, `06-07e` (lưới 5×5) | `06-08` (sinh viên tự làm 3 phút), `06-08b` (lời giải trên mặt trang) | Hệ (5.1) → $P^\pi$, $r^\pi$ → $(I-\gamma P^\pi)v=r^\pi$ → bước 3–6 | Tính tay (`06-02`–`06-07`) trước giả mã (`06-07d`); nghịch đảo của robot ở ghi chú diễn giả `06-07b` | 20 |
+| K10 Chuỗi Markov và MRP cảm sinh | 6 | khái niệm phụ | `06-05` ("Nhu cầu:" gộp $\pi$ với $p$) | `06-05` | `06-05` | `06-06` | `06-07` | `06-08` | Bảng gộp nhánh → $P^\pi$, $r^\pi$ | Chu trình rút gọn vì là phép gộp của K4 và K2; ghi lý do theo kế hoạch A4 | 3,5 |
+
+Mỗi cụm lớn có một bài tập có lời giải trên mặt trang: K1 (`01-07b`), K2 (`02-07b`), K3 (`03-06b`), K4–K6 (`04-08b`), K7–K8 (`05-10b`, fragment), K9 (`06-08b`). Bài tự làm có gợi ý và lời giải trong ghi chú diễn giả: `05-10`.
+
+Ví dụ xuyên suốt: robot thu gom lon hai mức pin, chính sách chia đều tại pin thấp, $\gamma=1/2$. Mỗi lần dùng lại trả lời một câu hỏi mới: một bước (`01-04`), tính Markov (`01-05`), bảng $p$ (`02-03`), lợi tức (`03-01`), cận (`03-05`), kỳ vọng hai bước (`04-04`), thí nghiệm ấn định (`04-06`), phương trình một bước (`05-02`), hệ và nghiệm (`06-02`, `06-03`), kiểm tra bằng $q$ (`06-04`), gộp nhánh (`06-05`), dạng ma trận (`06-07`), chính sách luôn Chờ (`06-08`), rủi ro cứu hộ thấp hơn (`07-01`). Dữ kiện được nêu lại trên trang dùng lại. Không có bài thực hành riêng; lưới 5×5 là môi trường thứ hai, theo Tình huống 03.1 của ghi chú.
+
+## 3. Từng trang
+
+Cột "Quyết định" so với deck trước đợt sửa (50 trang). Cột "Mục tiêu" ghi số mục tiêu học tập (1–5) ở `01-01c`.
+
+### Mạch 1. Mở đầu
+
+| Mã | Tiêu đề | Vị trí và bước | Lý do tồn tại, nhu cầu | Trước → sau | Mục tiêu | Quyết định (lý do) | Phút |
+|---|---|---|---|---|---|---|---:|
+| `01-01` | Quá trình quyết định Markov | bìa, điểm vào mạch 1 | Luận đề một câu: giá trị là nghiệm duy nhất của hệ Bellman do mô hình Markov và chính sách sinh ra | — → tiên quyết | tất cả | sửa (luận đề theo RL nhẹ, câu chốt của điều phối viên) | 1 |
+| `01-01b` | Tiên quyết và quy ước | mở đầu, kết quả kế thừa | "Nhắc lại (Bài 02):" tác tử, phần thưởng, tính Markov, hàm động lực, chính sách dừng, lợi tức với truy hồi và cận, $v_\pi$; thuật ngữ gốc (agent), (reward), (stationary policy), (discount factor) | bìa → ký hiệu | tất cả | sửa (MACH F1, PB 1: điểm vào nêu kết quả Bài 02; RL thuật ngữ) | 2 |
+| `01-01d` | Tiên quyết và quy ước | mở đầu, ký hiệu | Công cụ xác suất, đại số; ký hiệu $t$, $\mathcal S$, $\mathcal S^+$, $\mathcal A(s)$, $\mathcal R$, $\Pr_\pi$, $\mathbb E_\pi$, $\mathrm H$, $\mathrm L$, $\mathrm{tim},\mathrm{cho},\mathrm{sac}$ | tiên quyết → mục tiêu | tất cả | thêm (tách từ `01-01b`: hai khối nhắc lại và ký hiệu vượt 60 âm tiết trên một trang; PB 3, SV 1) | 1 |
+| `01-01c` | Mục tiêu học tập | mở đầu | Năm mục tiêu kiểm tra được, khớp ghi chú; "mô hình (model)" lần đầu | ký hiệu → nội dung | tất cả | sửa (thêm "(model)") | 1,5 |
+| `01-02` | Nội dung | mở đầu | Bảy mạch đánh số khớp trang tiêu đề mạch; dòng đọc trước | mục tiêu → vấn đề trung tâm | tất cả | sửa (bỏ nhãn "Mục tiêu:", tên mạch mới) | 1 |
+| `01-02b` | Vấn đề trung tâm | mở đầu, vấn đề của cả bài | Bài toán một dòng và câu trả lời có điều kiện của mạch 2–6; dòng nào cũng ghi đủ giả thiết ($p$ dừng, $\pi$ Markov dừng) | nội dung → tiêu đề mạch 2 | tất cả | sửa (TOAN 2, PB 15, SV nhẹ 2; song song với `07-02b`) | 2,5 |
+
+### Mạch 2. Trạng thái Markov và mô hình môi trường
+
+| Mã | Tiêu đề | Vị trí và bước | Lý do tồn tại, nhu cầu | Trước → sau | Mục tiêu | Quyết định (lý do) | Phút |
+|---|---|---|---|---|---|---|---:|
+| `02-00` | 2. Trạng thái Markov và mô hình môi trường | điểm vào mạch 2 | Mô tả phản hồi một bước theo cặp trạng thái–hành động; ghi chú nêu phần kế thừa (Bài 02) và phần mới | vấn đề trung tâm → lựa chọn của robot | 1 | sửa (RL nhẹ: dòng dẫn; MACH F1: ghi chú) | 0,5 |
+| `01-03` | Lựa chọn của robot ở pin thấp | K1 vấn đề | "Nhắc lại (Bài 02):" tính Markov, $p$; "Nhu cầu:" điều kiện để bảng $p$ đủ, quy tắc sinh; dữ kiện ba lựa chọn | tiêu đề mạch → quỹ đạo | 1 | sửa (quyết định (ii) của điều phối viên; MACH F2 câu nối vào ghi chú) | 1,5 |
+| `01-04` | Quỹ đạo và lịch sử | K1 ví dụ dẫn nhập rồi định nghĩa | Dòng "Ví dụ." trước "Định nghĩa."; Định nghĩa 03.1 | lựa chọn → hai lịch sử | 1 | sửa (PB 2: tiêu đề và thứ tự) | 2 |
+| `01-05` | Hai lịch sử, cùng trạng thái hiện tại | K1 trực giác, ví dụ | Hai lịch sử khác nhau cho cùng phân phối phản hồi | một bước → định nghĩa | 1 | sửa ("Trực quan.", tách dòng 23 âm tiết) | 1,5 |
+| `01-06` | Tính Markov | K1 hình thức | Định nghĩa 03.2 với điều kiện xác suất dương; ghi chú nói định nghĩa trùng Bài 02 | hai lịch sử → phản ví dụ | 1 | sửa (ghi chú gọi tên hai lịch sử, PB 22; số hiệu không ngắt dòng) | 2 |
+| `01-06b` | Ví dụ: trạng thái thiếu phòng làm việc | K1 ứng dụng (phản ví dụ, cách sửa) | Ví dụ 03.4 với bước suy luận "$R_1=1$ nên robot sang phòng 2" | định nghĩa → bài tập | 1, 4 | sửa (SV 5) | 2 |
+| `01-07` | Bài tập: trạng thái của robot | K1 kiểm tra, đề; sinh viên tự làm 3 phút | Bài tập 03.1(b) | phản ví dụ → lời giải | 1 | sửa (lời giải chuyển sang `01-07b`) | 3 |
+| `01-07b` | Bài tập: trạng thái của robot | K1 kiểm tra, lời giải trên mặt trang | $\tfrac12\ne\tfrac14$; thêm vị trí vào trạng thái | đề → hai phản hồi | 1 | thêm (PB 4: K1 chưa có lời giải trên mặt trang) | 1,5 |
+| `02-02` | Ví dụ: hai phản hồi của hành động Tìm | K2 vấn đề và ví dụ dẫn nhập | Câu nối K1→K2 "Nhờ tính Markov, phản hồi được liệt kê theo cặp $(s,a)$"; cây phản hồi của Tìm | lời giải → bảng | 1 | sửa (MACH F2, PB 12) | 1,5 |
+| `02-03` | Ví dụ: bảng phản hồi của robot | K2 ví dụ | Bảy hàng $(s,a,s',r,\text{xác suất})$ | cây → hàm động lực | 1 | sửa (nhãn $\mathrm H$, $\mathrm{tim}$; bỏ `rowspan`, `style`) | 2 |
+| `02-04` | Hàm động lực | K2 trực giác, hình thức | Định nghĩa 03.4; ghi chú nêu định nghĩa đã có ở Bài 02 | bảng → xác suất chuyển | 1 | sửa (ghi chú kế thừa; công thức không ngắt dòng) | 2 |
+| `02-05` | Xác suất chuyển và thưởng kỳ vọng | K2 ví dụ, kết quả | Ví dụ rồi Mệnh đề 03.6, chứng minh một dòng | hàm động lực → bộ MDP | 1 | sửa (dòng "Lưu ý:" chuyển sang ghi chú, SV nhẹ 11) | 2 |
+| `02-06` | Quá trình quyết định Markov hữu hạn | K2 hình thức, ứng dụng | Định nghĩa 03.7 với quy tắc sinh; bộ của robot; "Mô hình của môi trường là $p$"; $\gamma$ ngoài $\mathcal M$ | xác suất chuyển → bài tập | 1 | sửa (RL nhẹ: mô hình là $p$) | 2 |
+| `02-07` | Bài tập: đọc hàm động lực của robot | K2 kiểm tra, đề | Bài tập 03.2 với dữ kiện năm cặp | MDP → lời giải | 1 | tách (từ `02-07` cũ 74 âm tiết, bỏ `font-size:32px`) | 1,5 |
+| `02-07b` | Bài tập: đọc hàm động lực của robot | K2 kiểm tra, lời giải trên mặt trang | Bảng $p(\mathrm H\mid s,a)$, $p(\mathrm L\mid s,a)$, $r(s,a)$ | đề → tiêu đề mạch 3 | 1 | thêm (tách) | 1,5 |
+
+### Mạch 3. Lợi tức chiết khấu
+
+| Mã | Tiêu đề | Vị trí và bước | Lý do tồn tại, nhu cầu | Trước → sau | Mục tiêu | Quyết định (lý do) | Phút |
+|---|---|---|---|---|---|---|---:|
+| `03-00` | 3. Lợi tức chiết khấu | điểm vào mạch 3 | Gộp chuỗi phần thưởng thành một số hữu hạn; ghi chú nêu Mệnh đề 02.13 đã có, phần mới là quy ước hấp thụ và cận của robot | bài tập MDP → lợi tức của robot | 2 | sửa (MACH F1: ghi chú) | 0,5 |
+| `03-01` | Lợi tức của robot | K3 nhắc lại, vấn đề, ví dụ | "Nhắc lại (Bài 02):" $G_t$; "Nhu cầu:" Chờ mãi cho $1+1+\cdots=\infty$, cần quy ước chung cho chuỗi hữu hạn và vô hạn và cận cho robot (MACH R1); hai dãy ba bước $3/2<7/4$ | tiêu đề → lượt | 2 | gộp (`03-01` và `03-03` cũ, quyết định (iii) của điều phối viên; bỏ hình trục thời gian vì tràn khung) | 2 |
+| `03-02` | Lượt và hai loại nhiệm vụ | K3 hình thức | Định nghĩa 03.8; ghi chú mở bằng câu nối từ tổng có trọng số sang độ dài chuỗi | lợi tức của robot → định nghĩa lợi tức | 2 | sửa (MACH F5, PB 27: ghi chú) | 1,5 |
+| `03-04` | Lợi tức chiết khấu | K3 hình thức | Định nghĩa 03.9, Nhận xét 03.10 (trạng thái hấp thụ) | lượt → cận | 2 | sửa ("Định nghĩa. Lợi tức (return) là…", bỏ "tổng thưởng") | 2 |
+| `03-05` | Cận của lợi tức | K3 kết quả, ứng dụng | Mệnh đề 03.11 (đã có ở Bài 02); cận 6 của robot | lợi tức → bài tập | 2 | sửa (PB 17: dòng "Trực quan." sang ghi chú; TOAN 10: lập luận cho $-6$) | 2 |
+| `03-06` | Bài tập: lợi tức và cận của robot | K3 kiểm tra, đề | Bài tập 03.3 (dãy $2,-3,1$) | cận → lời giải | 2 | tách (dữ kiện theo ghi chú đã commit thay dãy $(0,2,2)$ của kế hoạch) | 2 |
+| `03-06b` | Bài tập: lợi tức và cận của robot | K3 kiểm tra, lời giải trên mặt trang | (a) không; (b) $3/4$, $2$; (c) $[0,3/2]$ | đề → tiêu đề mạch 4 | 2 | thêm (tách) | 2 |
+
+### Mạch 4. Chính sách và hàm giá trị
+
+| Mã | Tiêu đề | Vị trí và bước | Lý do tồn tại, nhu cầu | Trước → sau | Mục tiêu | Quyết định (lý do) | Phút |
+|---|---|---|---|---|---|---|---:|
+| `04-00` | 4. Chính sách và hàm giá trị | điểm vào mạch 4; vấn đề của K4 | Cố định quy tắc chọn hành động để kỳ vọng có nghĩa | lời giải lợi tức → chính sách chia đều | 3 | thêm (A1) | 0,5 |
+| `04-02` | Ví dụ: chính sách chia đều tại pin thấp | K4 vấn đề và ví dụ dẫn nhập | "Nhắc lại (Bài 02):" $v_\pi$; "Nhu cầu:" quá trình xuất phát tại $s$, ấn định hành động đầu; bảng chính sách | tiêu đề → định nghĩa | 3 | sửa (quyết định (ii); mô tả bằng lời chuyển sang ghi chú để giữ 6 dòng) | 1,5 |
+| `04-03` | Chính sách Markov dừng | K4 trực giác, hình thức | Định nghĩa 03.13 với $\Pr(H_t=h_t)>0$ | ví dụ → xác suất đoạn quỹ đạo | 3 | sửa (TOAN 3; "(agent)" chuyển lên `01-01b`) | 2 |
+| `04-03b` | Xác suất của một đoạn quỹ đạo | K4 kết quả, ứng dụng | Mệnh đề 03.14 với điều kiện xác suất dương; xác suất $1/4$ | định nghĩa → kỳ vọng hai bước | 3 | sửa (TOAN 3; dòng "Ký hiệu:" chuyển lên `01-01d`) | 2 |
+| `04-04` | Ví dụ: kỳ vọng hai bước từ pin cao | K5 vấn đề và ví dụ | "Nhu cầu:"; cây hai bước (bản deck `robot-p04-two-step-tree-deck.svg`), $21/8$, kiểm theo tuyến tính | xác suất → giá trị trạng thái | 3 | sửa (PB 18, MACH F6, SV nhẹ 8) | 2 |
+| `04-05` | Giá trị trạng thái | K5 trực giác, hình thức, ứng dụng | Định nghĩa 03.15 trên quá trình xuất phát tại $s$; khoảng $[9/8,33/8]$ với $\gamma^2M/(1-\gamma)$ | kỳ vọng hai bước → ba thí nghiệm | 3 | sửa (SV 3; "phần thưởng bị chặn") | 2 |
+| `04-06` | Ví dụ: ba thí nghiệm từ pin thấp | K6 vấn đề, trực giác, ví dụ | "Nhu cầu:"; thưởng kỳ vọng bước sau; Tìm viết đủ $\tfrac12(2+\tfrac12\cdot\tfrac12)+\tfrac12(-3+\tfrac12\cdot2)=\tfrac18$ | $v_\pi$ → $q_\pi$ | 3 | sửa (PB 11, SV 2, PB 12) | 2 |
+| `04-07` | Giá trị hành động | K6 hình thức | Định nghĩa 03.16, Nhận xét 03.17 | ba thí nghiệm → bài tập | 3 | sửa (dòng 41 âm tiết tách; "(action-value function)") | 2 |
+| `04-08` | Bài tập: mô hình, chính sách và giá trị | K4–K6 kiểm tra, đề; khối 30 phút | Bài tập 03.5 (câu a) và 03.4 (câu b, c); ánh xạ ghi trong ghi chú diễn giả | $q_\pi$ → lời giải | 3 | sửa (PB 24; chuyển sang khối 30 phút, SV 6) | 0 (khối 30 phút) |
+| `04-08b` | Bài tập: mô hình, chính sách và giá trị | K4–K6 kiểm tra, lời giải trên mặt trang; khối 30 phút | $9/8$, kiểm tra bằng hai thí nghiệm | đề → tiêu đề mạch 5 | 3 | giữ (chuyển sang khối 30 phút) | 0 (khối 30 phút) |
+
+### Mạch 5. Phương trình Bellman kỳ vọng
+
+| Mã | Tiêu đề | Vị trí và bước | Lý do tồn tại, nhu cầu | Trước → sau | Mục tiêu | Quyết định (lý do) | Phút |
+|---|---|---|---|---|---|---|---:|
+| `05-00` | 5. Phương trình Bellman kỳ vọng | điểm vào mạch 5 | Tách bước đầu; từ khóa không KaTeX; ghi chú nêu hệ thức truy hồi đã có ở Bài 02 | lời giải → nhóm quỹ đạo | 4 | sửa (PB 13, SV 9, MACH F1) | 0,5 |
+| `05-01` | Nhóm quỹ đạo theo bước đầu | K7 vấn đề, trực giác | "Nhu cầu:" cận sai số $3/2$; nhóm theo bước đầu | tiêu đề → phương trình tại L | 4 | sửa (TOAN 9) | 1,5 |
+| `05-02` | Ví dụ: phương trình một bước tại pin thấp | K7 ví dụ | Phương trình (4.1) chưa chứng minh | nhóm → hệ thức đệ quy | 4 | sửa ("Ví dụ:", "Lưu ý:" về giả định chưa chứng minh) | 2 |
+| `05-03` | Hệ thức đệ quy của lợi tức | K7 hình thức (bổ đề) | Bổ đề 03.18; ghi chú: đã có ở Bài 02 (Mệnh đề 02.13) | ví dụ → hai tầng | 4 | sửa (MACH F1, "phần thưởng bị chặn") | 2 |
+| `05-04` | Hai tầng kỳ vọng | K7 hình thức (bổ đề) | Bổ đề 03.19 với $\Pr(H_t=h_t)>0$; dòng "Ký hiệu:" cho điều kiện viết tắt | hệ thức → tính Markov của tương lai | 4 | sửa (TOAN 3, SV 4) | 2,5 |
+| `05-06` | Tính Markov của phần tương lai | K7 trực giác, hình thức (bổ đề) | "Trực quan." trước Bổ đề 03.20; điều kiện xác suất dương; "theo $\pi$ từ $t+1$" cho đẳng thức thứ hai | hai tầng → định lý | 4 | sửa (PB 6, TOAN 3; ghi chú theo PB 8) | 3 |
+| `05-06b` | Phương trình Bellman kỳ vọng cho giá trị trạng thái | K7 hình thức (định lý) | Định lý 03.21; kết luận viết lại; phạm vi $\gamma=1$ trong ghi chú | bổ đề → $q$ theo $v$ | 4 | sửa (PB 16, RL trung bình) | 3 |
+| `05-07` | Giá trị hành động theo giá trị trạng thái | K8 vấn đề, ví dụ, hình thức | "Nhu cầu:"; ví dụ L–Tìm viết trên một dòng; mệnh đề "Giả thiết như Định lý 03.21"; dòng "Chứng minh." | định lý → $v$ theo $q$ | 4 | sửa (PB 5, PB 7, MACH F7, TOAN 4) | 2,5 |
+| `05-08` | Giá trị trạng thái theo giá trị hành động | K8 ví dụ, hình thức | Mệnh đề 03.23 với dòng giả thiết | $q$ theo $v$ → Bellman cho $q$ | 4 | sửa (TOAN 4) | 1,5 |
+| `05-09` | Phương trình Bellman kỳ vọng cho giá trị hành động | K8 hình thức (hệ quả) | Hệ quả 03.24 với dòng giả thiết và "Chứng minh." một dòng; "sơ đồ cập nhật (backup diagram)" trong ghi chú | $v$ theo $q$ → bài tập | 4 | sửa (PB 7, PB 20, TOAN 4) | 2 |
+| `05-10` | Bài tập: chỗ dùng tính Markov | K7–K8 kiểm tra; khối 30 phút | Bài tập 03.7; đề nêu chuỗi tính Markov của phần tương lai → $q$ theo $v$ → $v$ theo $q$ | hệ quả → bài tập tại pin cao | 4 | sửa (PB 7, SV nhẹ 1; chuyển sang khối 30 phút) | 0 (khối 30 phút) |
+| `05-10b` | Bài tập: phương trình Bellman tại pin cao | K7 kiểm tra, lời giải trên mặt trang (fragment) | Bài tập 03.6 | bài tập → tiêu đề mạch 6 | 4 | thêm (A3) | 2 |
+
+### Mạch 6. Đánh giá chính sách bằng hệ tuyến tính
+
+| Mã | Tiêu đề | Vị trí và bước | Lý do tồn tại, nhu cầu | Trước → sau | Mục tiêu | Quyết định (lý do) | Phút |
+|---|---|---|---|---|---|---|---:|
+| `06-00` | 6. Đánh giá chính sách bằng hệ tuyến tính | điểm vào mạch 6; vấn đề của K9 | Giải hệ Bellman để có giá trị bằng số | bài tập Bellman → bài toán đánh giá | 5 | thêm (A1) | 0,5 |
+| `06-01` | Bài toán đánh giá chính sách | K9 vấn đề | "tính $v_\pi$ của một $\pi$ cho trước"; Đầu vào "$p$ đã biết" | tiêu đề → hệ của robot | 5 | sửa (RL nhẹ) | 1,5 |
+| `06-02` | Ví dụ: hệ Bellman của robot | K9 ví dụ, ứng dụng của K7 | "Nhắc lại:" phương trình tại H; kiểm giả thiết; hệ (5.1) | bài toán → lời giải | 5 | sửa ("Ví dụ:", "Nhắc lại:") | 1,5 |
+| `06-03` | Ví dụ: hệ Bellman của robot, lời giải | K9 ví dụ (tính tay) | Khử thế; thay lại viết đủ $\tfrac14(\tfrac{13}4+\tfrac74)$ | hệ → kiểm tra bằng $q$ | 5 | sửa (SV nhẹ 4, MACH F11) | 2 |
+| `06-04` | Ví dụ: kiểm tra nghiệm bằng giá trị hành động | K8, K9 ứng dụng | Ví dụ 03.15: $3/4$, $15/8$, $13/8$; trung bình bằng $7/4$ | lời giải → gộp nhánh | 4, 5 | sửa (thêm $q_\pi(\mathrm L,\mathrm{tim})$, khung thành "Diễn giải:") | 2 |
+| `06-05` | Ví dụ: gộp các nhánh của robot | K10 vấn đề, trực giác, ví dụ | "Nhu cầu:" gộp $\pi$ với $p$; bảng gộp | kiểm tra → định nghĩa MRP | 5 | sửa (MACH F3; dòng trung bình sang ghi chú) | 1,5 |
+| `06-06` | Chuỗi Markov và quá trình phần thưởng Markov cảm sinh | K10 hình thức | Định nghĩa 03.26 với $s,s'\in\mathcal S$; "véc-tơ thưởng kỳ vọng" | gộp → dạng ma trận | 5 | sửa (TOAN 8, PB 19, PB 23) | 2 |
+| `06-07` | Phương trình Bellman dạng ma trận | K9 hình thức, ví dụ | Mệnh đề 03.27 với dòng giả thiết; hệ của robot | MRP → nghiệm duy nhất | 5 | sửa (TOAN 4) | 1,5 |
+| `06-07b` | Nghiệm duy nhất của hệ đánh giá chính sách | K9 hình thức (định lý) | Định lý 03.28: "MDP hữu hạn với $n$ trạng thái chưa kết thúc"; "Lưu ý:" $\gamma=1$ cần lượt chắc chắn kết thúc | dạng ma trận → thuật toán | 5 | sửa (TOAN 1, RL trung bình) | 2,5 |
+| `06-07c` | Đánh giá chính sách bằng giải hệ tuyến tính | K9 thuật toán (vấn đề, đầu vào, đầu ra) | "Nhu cầu:" hệ hàng chục ẩn; $\pi$ Markov dừng; tập hữu hạn; chi phí $n^3$ không nhắc bước chưa xuất hiện | định lý → giả mã | 5 | sửa (PB 10, MACH F13, SV nhẹ 3, RL nhẹ) | 1,5 |
+| `06-07d` | Đánh giá chính sách bằng giải hệ tuyến tính | K9 thuật toán (giả mã bảy bước) | Bước 1 kiểm $p(\cdot,\cdot\mid s,a)$ hoặc $p(\cdot\mid s,a)$ | đầu vào → lưới 5×5 | 5 | sửa (TOAN 5) | 2 |
+| `06-07e` | Ví dụ: lưới 5×5 | K9 ứng dụng; có thể bỏ khi thiếu giờ | Dữ kiện đủ (bước khác $0$), "Tính $v_\pi$", kiểm tại A với $-1{,}3452$; hình `gridworld-5x5-deck.svg` lớn hơn, không chú thích lặp; ghi chú thêm Tình huống 03.2 | giả mã → bài tập | 5 | sửa (PB 18, SV nhẹ 5, TOAN 6, RL trung bình) | 2 |
+| `06-08` | Bài tập: đánh giá chính sách luôn Chờ tại pin thấp | K9 kiểm tra, đề; sinh viên tự làm 3 phút | Bài tập 03.8 | lưới → lời giải | 5 | sửa (thời lượng theo SV 6) | 3 |
+| `06-08b` | Bài tập: đánh giá chính sách luôn Chờ tại pin thấp | K9 kiểm tra, lời giải trên mặt trang | $(10/3,\,2)$; một dòng kết "chưa chứng minh là tối ưu" | đề → tiêu đề mạch 7 | 5 | sửa (PB 25) | 2 |
+
+### Mạch 7. Tổng kết và chuyển tiếp
+
+| Mã | Tiêu đề | Vị trí và bước | Lý do tồn tại, nhu cầu | Trước → sau | Mục tiêu | Quyết định (lý do) | Phút |
+|---|---|---|---|---|---|---|---:|
+| `07-00` | 7. Tổng kết và chuyển tiếp | điểm vào mạch 7 | Áp dụng đúng phương trình Bellman, giữ đủ giả thiết; từ khóa là khái niệm | lời giải → tổng kết | tất cả | sửa (PB 14, MACH F8) | 0,5 |
+| `07-01a` | Tổng kết | kết luận | Bốn hàng: MDP, thưởng kỳ vọng, cận, giá trị $v_\pi$, $q_\pi$ | tiêu đề → tổng kết (tiếp) | 1–3 | sửa (MACH F4: thêm hàng mạch 4) | 1,5 |
+| `07-01b` | Tổng kết | kết luận | Bellman, quan hệ $v$–$q$, nghiệm duy nhất; giả thiết đủ ($p$ dừng, $\pi$ Markov dừng); công thức đủ đối số | tổng kết → bài tập tổng hợp | 4–5 | sửa (TOAN 2, TOAN 7, PB 28, SV nhẹ 6) | 1,5 |
+| `07-01` | Bài tập: robot với rủi ro cứu hộ thấp hơn | bài tập tổng hợp, đề | Bài tập 03.13: dùng $r(s,a)$, $P^\pi$, nghiệm duy nhất, quan hệ $q$ theo $v$ | tổng kết → lời giải | 1, 4, 5 | sửa (thay "ba hành động tại pin thấp" của A2 để không lặp `06-04`) | 1 |
+| `07-02` | Bài tập: robot với rủi ro cứu hộ thấp hơn | bài tập tổng hợp, lời giải trên mặt trang | $v_\pi$ không đổi; $29/16<30/16$ | đề → kết luận vấn đề | 1, 4, 5 | sửa | 1,5 |
+| `07-02b` | Kết luận về vấn đề trung tâm | kết luận | Năm dòng song song với `01-02b` (dòng 4 có $v_\pi$, $q_\pi$; dòng 6 "Cùng giả thiết, $\gamma<1$ làm $I-\gamma P^\pi$ khả nghịch"), mỗi dòng một điều kiện và một số liệu của robot; dòng giới hạn theo thứ tự outline; "Nguồn:" | lời giải → tự kiểm tra | tất cả | sửa (quyết định chung 11; RL trung bình; PB 26) | 2 |
+| `07-04` | Câu hỏi tự kiểm tra | kết luận | Bốn câu: $r(s,a)$ còn thiếu; $\gamma=0$; trạng thái không ghi vị trí; luôn Chờ có tối ưu không | kết luận → bài tập về nhà | tất cả | sửa (MACH F9, PB 8, PB 9) | 1,5 |
+| `07-03` | Bài tập về nhà và tài liệu đọc | kết luận | Bảng `Mạch \| Bài tập` (Bài tập 03.12 ở mạch 5); "Tệp bài tập: chưa có"; liên kết ghi chú; Bài 04 | tự kiểm tra → hết | tất cả | sửa (SV nhẹ 10, RL nhẹ, quyết định chung 4) | 1 |
+
+## 4. Thời lượng
+
+| Mạch | 1 | 2 | 3 | 4 | 5 | 6 | 7 | Tổng |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Phút | 9 | 26,5 | 12 | 14 | 22,5 | 25,5 | 10,5 | 120 |
+
+- **Sinh viên tự làm tại lớp (≥ 3 phút):** `01-07` (Bài tập 03.1, 3 phút, lời giải ở `01-07b`) và `06-08` (Bài tập 03.8, 3 phút, lời giải ở `06-08b`). Các trang bài tập khác có lời giải trên mặt trang được giảng như ví dụ mẫu.
+- **Khối 30 phút chữa bài (ngoài 120 phút):** `04-08`/`04-08b` (Bài tập 03.4, 03.5; 8 phút), `05-10` (Bài tập 03.7; 8 phút), Bài tập 03.11 (7 phút) và Bài tập 03.12 (7 phút) của ghi chú. Bài tập 03.8 không thuộc khối này vì đã giải trong deck; mỗi bài chỉ được đếm một lần. Không có trình diễn mã.
+- **Có thể bỏ khi thiếu giờ:** `06-07e` (lưới 5×5, 2 phút; Tình huống 03.1 có đủ trong ghi chú) và `03-06`/`03-06b` (Bài tập 03.3, 4 phút; chuyển sang khối 30 phút).
+- Thời lượng tăng ở mạch 2 (thêm `01-07b`, `01-07` thành 3 phút) và mạch 1 (thêm `01-01d`) được bù bằng gộp `03-01`/`03-03` và chuyển `04-08`/`04-08b`, `05-10` sang khối 30 phút.
+
+## 5. Mật độ mặt trang
+
+Số đo bằng `density.py` của điều phối viên (âm tiết là số từ tách theo khoảng trắng sau khi bỏ tiêu đề, KaTeX và ghi chú; dấu câu đứng riêng sau công thức cũng được đếm). Trước sửa: 50 trang, 22 trang bị đánh dấu vượt. Sau lần soạn đầu (trước vòng biên tập): 71 trang, 0 trang nội dung vượt trần 60 âm tiết, 6 dòng hoặc 20 âm tiết mỗi dòng ngoài các ngoại lệ dưới; trung bình 45 âm tiết; 45 trang trên mức đích 40, trong đó các trang nội dung thường cao nhất 59 (`05-10`, `05-10b`) và hai trang ngoại lệ 66 (`01-01c`, `07-03`). Các trang trên 40 chủ yếu là trang bài tập có dữ kiện nêu lại và trang kết quả có giả thiết đầy đủ; mọi trang đã kiểm vừa khung 16:9. Không dùng lớp hay thuộc tính thu chữ; `style` cục bộ của deck cũ (bảng `font-size:32px`, `margin`, `padding`) đã bỏ.
+
+### Trang vượt trần trước sửa
+
+| Mã cũ | Trước (âm tiết / dòng / dòng dài nhất) | Quyết định | Sau |
 |---|---|---|---|
-| 28 | Giữ | Phần 1, tiêu đề bài | Bảo toàn tên và chủ đề MDP. |
-| 29 | Sửa, tách | 01-04…07; 02-04 | Ví dụ hai lịch sử trước điều kiện Markov; thêm giả thiết đồng nhất thời gian riêng. |
-| 30 | Chuyển | 06-05…07 | Chuỗi Markov được nhận diện từ MDP sau khi cố định chính sách, thay vì là cửa vào của bài. |
-| 31–33 | Thay ví dụ | 02-02/03; 06-05…07 | Thay đồ thị sinh viên bảy trạng thái bằng robot hai trạng thái; giữ đọc đồ thị, chuẩn hóa và ma trận. Không dạy phân phối dừng. |
-| 34 | Chuyển, sửa | 06-05/06 | Định nghĩa MRP sau ví dụ phép gộp; thưởng trung bình được phân biệt với thưởng quan sát. |
-| 35 | Thay ví dụ | Phần 2–3 | Cùng robot có cả trạng thái, hành động và thưởng ngay từ đầu, không đổi đặc tả giữa MRP và MDP. |
-| 36–38 | Giữ ý, sửa cách giải thích | 03-02…06 | Ví dụ trọng số trước tổng; không đồng nhất gamma nhỏ với thuật toán tham lam hoặc tuyên bố tổng là lựa chọn duy nhất. |
-| 39 | Chuyển, sửa | 04-04/05 | Định nghĩa giá trị sau khi có chính sách và phép lấy kỳ vọng bằng số; không dùng ký hiệu $v$ trước đối tượng cần đánh giá. |
-| 40–43 | Thay, gộp | 03-03; 04-04; 06-03 | Thay hai quỹ đạo sinh viên và các bảng giá trị cho nhiều gamma bằng các tổng robot và một chính sách xuyên suốt. Giảm số dữ kiện phải ghi nhớ; giữ vai trò của chiết khấu. |
-| 44–46 | Tách, mở rộng | 05-02…06 | Tách rõ đại số, kỳ vọng toàn phần, tuyến tính và chỗ dùng Markov. Suy diễn trực tiếp Bellman MDP, không giảng cùng phép suy diễn hai lần cho hai mô hình khác nhau. |
-| 47–48 | Chuyển, mở rộng ví dụ giải | 06-02…07 | Giải hai phương trình bằng tay trước khi trình bày dạng ma trận, điều kiện nghiệm và giới hạn của giải trực tiếp. |
-| 49 | Chuyển lên | 02-04…06 | MDP xuất phát từ bài toán có lựa chọn, theo tuyến §3.1 của SB. |
-| 50 | Thay ví dụ | Phần 1–2, 4, 6 | Robot từ SB thay Student MDP; không cần phân biệt hai đồ thị sinh viên khác nhau. |
-| 51 | Thay ví dụ | 04-06/07; 06-04/08 | Các hành động của robot đủ để minh họa $q$ và đánh đổi thưởng/tương lai. Xe đua có thể dùng sau giờ học; không xuất hiện trong tuyến 120 phút. |
-| 52 | Giữ, chuyển | 04-02/03 | Quy tắc cụ thể trước định nghĩa chính sách. |
-| 53 | Tách | 04-04…08 | Phép trung bình trước $v$; thí nghiệm ấn định hành động trước $q$. |
-| 54–55 | Thay ví dụ | 06-02…04 | Các giá trị đều được tìm ra từ hệ robot ngay trên lớp, không đưa sẵn nghiệm xe đua rồi mới giải thích. |
-| 56–57 | Tách, mở rộng | 05-07…10 | Giải thích cả $q$ theo $v$, $v$ theo $q$ và phép thế cho Bellman $q$; nguồn từ SB §3.5 và bài tập 3.17–3.19. |
-| 58 | Giữ, cập nhật | 07-03 | Đối chiếu đúng bài tập hw02 và mục đọc SB; Bellman tối ưu nối sang Bài 04. |
+| `01-02` | 56 / 8 / 16 | sửa | 45 / 8 / 8 (ngoại lệ, dưới) |
+| `01-05` | 23 / 1 / 23 | sửa | 37 / 3 / 17 |
+| `01-06` | 34 / 2 / 22 | sửa | 41 / 3 / 16 |
+| `01-07` | 48 / 4 / 27 | sửa | 57 / 4 / 17 |
+| `02-02` | 22 / 1 / 22 | sửa (gộp `02-01`) | 38 / 2 / 19 |
+| `02-03` | 75 / 9 / 21 | sửa (ô bảng thành ký hiệu) | 21 / 2 / 11 |
+| `02-04` | 25 / 2 / 22 | sửa | 51 / 4 / 17 |
+| `02-07` | 74 / 8 / 20 | tách (`02-07`, `02-07b`) | 35 / 5 / 14 và 24 / 2 / 12 |
+| `03-05` | 24 / 2 / 21 | sửa | 50 / 4 / 15 |
+| `04-02` | 59 / 6 / 22 | sửa (gộp `04-01`) | 52 / 5 / 17 |
+| `04-05` | 34 / 2 / 22 | sửa | 53 / 4 / 16 |
+| `04-06` | 31 / 1 / 31 | sửa | 36 / 3 / 18 |
+| `04-07` | 53 / 2 / 41 | sửa | 52 / 4 / 16 |
+| `05-06` | 28 / 2 / 22 | tách (`05-06`, `05-06b`) | 56 / 4 / 18 và 42 / 3 / 15 |
+| `05-10` | 52 / 4 / 22 | tách (`05-10`, `05-10b`) | 59 / 4 / 20 và 59 / 4 / 16 |
+| `06-02` | 40 / 2 / 23 | sửa | 29 / 3 / 11 |
+| `06-04` | 27 / 1 / 27 | sửa | 37 / 3 / 20 |
+| `06-05` | 68 / 4 / 53 | sửa (đoạn dài sang ghi chú) | 49 / 4 / 14 |
+| `06-07` | 45 / 3 / 24 | tách (`06-07`, `06-07b`, `06-07c`, `06-07d`) | 25 / 3 / 11; 47 / 4 / 16; 56 / 5 / 13; 52 / 7 / 14 |
+| `06-08` | 78 / 4 / 37 | tách (`06-08`, `06-08b`) | 54 / 6 / 14 và 44 / 4 / 16 |
+| `07-03` | 81 / 5 / 20 | sửa | 66 / 10 / 16 (ngoại lệ, dưới) |
+| `07-04` | 52 / 4 / 23 | sửa | 56 / 5 / 16 |
 
-Bản HTML50slide đã thay thế deck47slide cũ. Đã cập nhật thẻ Bài03 trên index, đồng bộ outline/storyboard và xóa26SVG cũ không còn tham chiếu. Giữ nguồn và lịch sử thay đổi trong Git.
+### Sau vòng biên tập năm vai (2026-10-12)
 
-## 11. Hình và bố cục đã triển khai
+`density.py`: 72 trang, trung bình 46,7 âm tiết (trước vòng biên tập 45,0), 44 trang trên mức đích 40. Trang nội dung trên 60: không có, trừ ba ngoại lệ dưới (`01-01c`, `07-02b`, `07-03`). Các trang chạm sát trần 60: `01-01b` 59, `01-03` 59, `04-05` 59, `05-06` 60, `01-02b` 60; mỗi trang đã kiểm vừa khung 16:9. `03-01` (gộp) 57.
 
-Deck dùng chung `lecture-slide.css`, khung1280×720, RevealJS/KaTeX/Notes/Highlight cục bộ, bảy section ngoài. Có19SVG mới, mỗi SVG có role và mô tả thay thế; không có ảnh raster hoặc tài nguyên cốt lõi từ mạng. Công thức dựng bằng KaTeX, bảng bằng HTML. Màu đi cùng nhãn và hình dạng.
+Sau rà lại vòng 2: `01-01b` 60, `01-02b` 60, `03-01` 51, `04-02` 46, `04-05` 57, `04-06` 39, `05-04` 40, `05-07` 57, `05-08` 41, `05-09` 37 (3 dòng), `06-07` 33, `06-07b` 52, `07-02b` 73 (7 dòng, ngoại lệ), `07-04` 59. `density.py` đếm cả dấu câu đứng riêng sau công thức; ở `03-01` dấu chấm phẩy được đặt trong công thức để dòng "Nhu cầu:" (20 âm tiết) không bị đếm 21.
 
-| Tài sản thực tế | Slide sử dụng |
-|---|---|
-| [robot-p01-recycling-robot-low.svg](../../img/lec-03/robot-p01-recycling-robot-low.svg) | `L03R-01-03` |
-| [robot-p01-timestep-axis.svg](../../img/lec-03/robot-p01-timestep-axis.svg) | `L03R-01-04` |
-| [robot-p01-two-histories.svg](../../img/lec-03/robot-p01-two-histories.svg) | `L03R-01-05` |
-| [robot-p02-uncertain-feedback.svg](../../img/lec-03/robot-p02-uncertain-feedback.svg) | `L03R-02-01` |
-| [robot-p02-search-outcomes.svg](../../img/lec-03/robot-p02-search-outcomes.svg) | `L03R-02-02` |
-| [robot-p03-reward-timeline.svg](../../img/lec-03/robot-p03-reward-timeline.svg) | `L03R-03-01` |
-| [robot-p03-episodic-continuing.svg](../../img/lec-03/robot-p03-episodic-continuing.svg) | `L03R-03-02` |
-| [robot-p03-discounted-bands.svg](../../img/lec-03/robot-p03-discounted-bands.svg) | `L03R-03-03` |
-| [robot-p03-geometric-series.svg](../../img/lec-03/robot-p03-geometric-series.svg) | `L03R-03-05` |
-| [robot-p04-policy-choices.svg](../../img/lec-03/robot-p04-policy-choices.svg) | `L03R-04-01` |
-| [robot-p04-two-layers.svg](../../img/lec-03/robot-p04-two-layers.svg) | `L03R-04-03` |
-| [robot-p04-two-step-tree.svg](../../img/lec-03/robot-p04-two-step-tree.svg) | `L03R-04-04` |
-| [robot-p04-continuing-branches.svg](../../img/lec-03/robot-p04-continuing-branches.svg) | `L03R-04-05` |
-| [robot-p04-forced-first-action.svg](../../img/lec-03/robot-p04-forced-first-action.svg) | `L03R-04-06` |
-| [robot-p05-one-step-lookahead.svg](../../img/lec-03/robot-p05-one-step-lookahead.svg) | `L03R-05-01` |
-| [robot-p05-low-battery-branches.svg](../../img/lec-03/robot-p05-low-battery-branches.svg) | `L03R-05-02` |
-| [robot-p06-policy-evaluation-setup.svg](../../img/lec-03/robot-p06-policy-evaluation-setup.svg) | `L03R-06-01` |
-| [robot-p07-three-actions-values.svg](../../img/lec-03/robot-p07-three-actions-values.svg) | `L03R-07-01` |
-| [robot-p07-branch-wait.svg](../../img/lec-03/robot-p07-branch-wait.svg) | `L03R-07-02` |
+### Ngoại lệ được phép
 
-Các trang suy diễn Bellman dùng công thức toàn chiều rộng làm hình chính. Bỏ các cây lặp dự kiến ở05-04…09 để đủ chỗ cho điều kiện và phép biến đổi; cây số đã có05-01/02. 06-05 dùng diễn giải hai hàng rồi bảng số thay hình gộp nhiều tầng; bảng ấy là đầu vào cho định nghĩa MRP06-06. Những thay đổi này không bỏ bước toán hoặc đảo thứ tự khái niệm.
-
-03-04 đặt hai loại tổng ở hai cột, hiện lần lượt. 04-04 gộp hai trạng thái cuối cùng cho tổng3; nhãn1ở bước2 là xác suất chính sách chọnTìm, còn xác suất nhóm cuối là1/2. 06-03 đặt toàn bộ phép trừ/thế trong một khối căn dòng. 07-01 gắn ba giá trị vào hành động, không gắn vào trạng thái đích. Mọi nguồn và đáp án nằm trong notes; không đưa chỉ dẫn soạn lên mặt slide hoặc vào lời giảng.
-
-## 12. Ghi chú toán học để triển khai và chữa bài
-
-### Các kết quả số đã tính lại
-
-Với bảng robot, chính sách và $\gamma=1/2$ đã chốt:
-
-$$P^\pi=\begin{pmatrix}1/2&1/2\\1/2&1/2\end{pmatrix},\qquad
-r^\pi=\begin{pmatrix}2\\1/2\end{pmatrix},\qquad
-v=\begin{pmatrix}13/4\\7/4\end{pmatrix}.$$
-
-| Cặp trạng thái–hành động | $q_\pi$ | Phép kiểm bằng $r+\gamma v$ |
-|---|---:|---|
-| H–Tìm | $13/4$ | $2+(1/2)[(1/2)(13/4)+(1/2)(7/4)]$ |
-| H–Chờ | $21/8$ | $1+(1/2)(13/4)$ |
-| L–Tìm | $3/4$ | $(1/2)[2+(1/2)(7/4)]+(1/2)[-3+(1/2)(13/4)]$ |
-| L–Chờ | $15/8$ | $1+(1/2)(7/4)$ |
-| L–Sạc | $13/8$ | $(1/2)(13/4)$ |
-
-Các tổng ba bước có chiết khấu là $3/2$ và $7/4$. Trung bình của hai bước đầu từ H là $21/8$. Sự trùng số giữa một vài đại lượng là ngẫu nhiên trong bộ tham số đã chọn, không phải đẳng thức tổng quát giữa tổng thưởng ngắn hạn, giá trị trạng thái và giá trị hành động. Không đưa cả bảng năm $q$ lên slide nếu nó làm loãng nhiệm vụ đang xét.
-
-### Cơ sở cho nghiệm duy nhất khi có chiết khấu
-
-Ghi chú cho 06-07, không thêm slide chính. Gọi $d$ là nghiệm của hệ thuần nhất $(I-\gamma P^\pi)d=0$ và đặt $D=\max_i\lvert d_i\rvert$. Vì $P^\pi$ không âm, tổng mỗi hàng bằng 1:
-
-$$\lvert d_i\rvert
-=\left\lvert\gamma\sum_jP^\pi_{ij}d_j\right\rvert
-\le\gamma\sum_jP^\pi_{ij}\lvert d_j\rvert
-\le\gamma D.$$
-
-Lấy lớn nhất theo $i$ được $D\le\gamma D$. Với $0\le\gamma<1$, suy ra $D=0$, nên ma trận vuông $I-\gamma P^\pi$ khả nghịch. Đây là lập luận đại số bổ sung, không trích thành định lý được đánh số của SB. Với robot, định thức bằng $(3/4)^2-(1/4)^2=1/2$, kiểm tra trực tiếp được.
-
-Khi $\gamma=1$ và có trạng thái hấp thụ, ma trận đầy đủ $I-P^\pi$ có hàng 0, không dùng nghịch đảo đầy đủ. Đặt giá trị kết thúc bằng 0 và xét các trạng thái chưa kết thúc với điều kiện về thời gian kết thúc. Storyboard không tuyên bố cứ có trạng thái kết thúc thì mọi giá trị đều hữu hạn.
-
-### Các điều kiện trong phép biến đổi Bellman
-
-| Bước | Công cụ dùng | Điều chưa được suy ra ở bước đó |
+| Mã | Số đo | Lý do |
 |---|---|---|
-| Tách $G_t$ | Đại số trên tổng hội tụ hoặc tổng hữu hạn | Chưa cần Markov, chưa lấy kỳ vọng. |
-| Nhóm theo $A_t$ | Kỳ vọng toàn phần, chính sách xác định trọng số | Chưa bỏ tính ngẫu nhiên của môi trường. |
-| Nhóm theo $(S_{t+1},R_{t+1})$ | Kỳ vọng lặp, hạt nhân chung, tuyến tính | Chưa bỏ các điều kiện quá khứ trong kỳ vọng tương lai. |
-| Nhận diện $v_\pi(s')$ | Trạng thái Markov; chính sách Markov dừng; động lực và tiêu chuẩn không đổi theo thời gian | Không suy ra công thức tối ưu hoặc phép max. |
-| Ghép $v$ và $q$ | Định nghĩa hai thí nghiệm, kỳ vọng theo hành động đầu | Không lấy trung bình hành động đầu lần nữa trong $q(s,a)$. |
-| Dạng ma trận | Gom hệ số từ Bellman đã chứng minh | Khả nghịch cần điều kiện; không là giả thiết tự có với mọi gamma. |
+| `01-01` | 22 âm tiết ở dòng luận đề | Bìa: câu luận đề do điều phối viên chốt, một câu; `density.py` dùng trần chung 20 âm tiết mỗi dòng |
+| `01-01c` | 67 âm tiết / 5 dòng | Trang mục tiêu, trần 80 (`AGENTS.md` §"Mật độ chữ"); `density.py` dùng trần chung 60 |
+| `01-02` | 45 âm tiết / 8 dòng | Trang nội dung với 7 mạch cộng một dòng đọc trước; quyết định chung mục 5 cho phép 7 dòng khi bài có 7 mạch, dòng đọc trước là tùy chọn của `AGENTS.md` |
+| `02-00`, `03-00`, `05-00`, `06-00`, `07-00` | dòng dài nhất 21–25 | Trang tiêu đề mạch: dòng dẫn tối đa 25 âm tiết theo `AGENTS.md` §"Trang tiêu đề mạch" (đếm lại: 23, 21, 25, 22, 21); `density.py` dùng trần chung 20 |
+| `07-02b` | 73 âm tiết / 7 dòng (trước: 55 / 5) | Trang trả lời vấn đề trung tâm: năm dòng song song với `01-02b` theo quyết định chung mục 11, cộng dòng "Giới hạn:" (bốn giới hạn, RL trung bình) và dòng "Nguồn:" bắt buộc; bỏ khung để giữ 7 dòng; trần 80 như trang tổng kết |
+| `06-07d` | 53 âm tiết / 7 dòng | Giả mã bảy bước của Thuật toán 03.29 trên trang riêng (giả mã dưới 8 dòng được phép giữ một trang); giữ đủ bảy bước để khớp ghi chú |
+| `07-03` | 62 âm tiết / 10 dòng | Trang bài tập về nhà và tài liệu đọc của mạch kết luận (trần 80); bảng `Mạch | Bài tập` sáu hàng bắt buộc theo `AGENTS.md`, mỗi hàng được đếm là một dòng |
 
-## 13. Kiểm định bản triển khai
+Kiểm tra trình duyệt xác nhận mọi trang nằm trong khung 16:9 và không chồng lên chân trang (mục "Kiểm tra" trong `review-log.md`).
 
-Bản triển khai dùng quy trình đa tác tử OpenRouter: reader lập kế hoạch/ánh xạ và kiểm storyboard; writer từng phần; năm reviewer độc lập theo hai góiA20slide+B30slide; correction writer riêng sau khi đủ báo cáo. Điều phối viên kiểm tra và sửa các đầu ra sai, không coi lời tự xác nhận của worker là bằng chứng. Chi tiết runtime, lỗi, quyết định và phạm vi rà lại nằm trong [review-log.md](review-log.md).
+## 6. Sai khác so với nguồn và kế hoạch A
 
-Rà theo Quill về điểm vào–ra, thứ tự ký hiệu và sự liên tục của robot xuyên suốt; không tạo quill.json. Biên tập nội dung hiển thị và notes theo no-ai-slop và eval.md. Mỗi phần kết thúc bằng ba câu hỏi đánh số; không thêm code demo. Bảy phần lần lượt12/18/14/17/30/21/8phút, tổng120phút;30phút chữa hw02 tách riêng.
-
-Kiểm định RevealJS gồm HTML/ID/section, nguồn trong notes, công thức KaTeX, số học bằng phân số, đường dẫn, SVG và toàn bộ50slide ở1280×720/390×844. Bằng chứng cuối cùng và giới hạn Codex Slides được ghi trong nhật ký; không dùng kiểm định của deck cũ để chứng nhận bản robot.
-
-## Ánh xạ ghi chú tự học theo bộ slide hiện hành — 20/09/2026
-
-Ghi chú giữ bảy phần theo thứ tự của deck. Các slide tiêu đề được gộp vào đề mục; nội dung, ví dụ, công thức và lời giải được viết thành văn tự học. Bản cũ gồm 13 chủ đề Student/Racing Car được thay vì không còn khớp ví dụ và quan hệ tiên quyết của deck. Không thay 50 slide hay thời lượng 120 phút.
-
-| Trang nguồn | Nội dung trang | Phần ghi chú |
-|---|---|---|
-| L03R-01-01 | Quá trình quyết định Markov (MDP) | lec-03-part-01 |
-| L03R-01-02 | Nội dung bài học | lec-03-part-01 |
-| L03R-01-03 | Robot thu gom lon | lec-03-part-01 |
-| L03R-01-04 | Một bước tương tác | lec-03-part-01 |
-| L03R-01-05 | Hai lịch sử, cùng trạng thái hiện tại | lec-03-part-01 |
-| L03R-01-06 | Tính Markov | lec-03-part-01 |
-| L03R-01-07 | Câu hỏi kiểm tra | lec-03-part-01 |
-| L03R-02-01 | Mô hình xác suất của MDP | lec-03-part-02 |
-| L03R-02-02 | Hai phản hồi của hành động Tìm | lec-03-part-02 |
-| L03R-02-03 | Bảng phản hồi của robot | lec-03-part-02 |
-| L03R-02-04 | Xác suất chuyển trạng thái và phần thưởng | lec-03-part-02 |
-| L03R-02-05 | Xác suất chuyển và thưởng trung bình | lec-03-part-02 |
-| L03R-02-06 | Các thành phần của MDP | lec-03-part-02 |
-| L03R-02-07 | Câu hỏi kiểm tra | lec-03-part-02 |
-| L03R-03-01 | Phần thưởng và tổng thưởng | lec-03-part-03 |
-| L03R-03-02 | Nhiệm vụ có kết thúc và nhiệm vụ tiếp diễn | lec-03-part-03 |
-| L03R-03-03 | Điểm thưởng ở các thời điểm | lec-03-part-03 |
-| L03R-03-04 | Tổng thưởng từ thời điểm hiện tại | lec-03-part-03 |
-| L03R-03-05 | Điều kiện để tổng thưởng hữu hạn | lec-03-part-03 |
-| L03R-03-06 | Câu hỏi kiểm tra | lec-03-part-03 |
-| L03R-04-01 | Chính sách và hàm giá trị | lec-03-part-04 |
-| L03R-04-02 | Một cách điều khiển robot | lec-03-part-04 |
-| L03R-04-03 | Chính sách là phân phối trên hành động | lec-03-part-04 |
-| L03R-04-04 | Trung bình trên các nhánh quỹ đạo | lec-03-part-04 |
-| L03R-04-05 | Giá trị trạng thái | lec-03-part-04 |
-| L03R-04-06 | Ấn định hành động đầu tiên | lec-03-part-04 |
-| L03R-04-07 | Giá trị hành động | lec-03-part-04 |
-| L03R-04-08 | Câu hỏi kiểm tra | lec-03-part-04 |
-| L03R-05-01 | Phương trình Bellman | lec-03-part-05 |
-| L03R-05-02 | Một bước từ pin thấp | lec-03-part-05 |
-| L03R-05-03 | Tách phần thưởng tích lũy | lec-03-part-05 |
-| L03R-05-04 | Lấy trung bình theo hành động đầu | lec-03-part-05 |
-| L03R-05-05 | Lấy trung bình theo phản hồi môi trường | lec-03-part-05 |
-| L03R-05-06 | Từ trạng thái kế tiếp đến giá trị tương lai | lec-03-part-05 |
-| L03R-05-07 | Giá trị hành động từ phản hồi một bước | lec-03-part-05 |
-| L03R-05-08 | Giá trị trạng thái từ các giá trị hành động | lec-03-part-05 |
-| L03R-05-09 | Bellman kỳ vọng cho giá trị hành động | lec-03-part-05 |
-| L03R-05-10 | Câu hỏi kiểm tra | lec-03-part-05 |
-| L03R-06-01 | Đánh giá một chính sách từ mô hình | lec-03-part-06 |
-| L03R-06-02 | Hệ Bellman của robot | lec-03-part-06 |
-| L03R-06-03 | Giải hai phương trình giá trị | lec-03-part-06 |
-| L03R-06-04 | Kiểm tra giá trị bằng các hành động | lec-03-part-06 |
-| L03R-06-05 | Gộp các nhánh dưới chính sách | lec-03-part-06 |
-| L03R-06-06 | Chuỗi Markov và MRP dưới chính sách | lec-03-part-06 |
-| L03R-06-07 | Bellman dưới dạng ma trận | lec-03-part-06 |
-| L03R-06-08 | Câu hỏi kiểm tra | lec-03-part-06 |
-| L03R-07-01 | Tổng hợp và vận dụng | lec-03-part-07 |
-| L03R-07-02 | Đọc một quyết định bằng mô hình và giá trị | lec-03-part-07 |
-| L03R-07-03 | Bài tập và bước tiếp theo | lec-03-part-07 |
-| L03R-07-04 | Câu hỏi kiểm tra | lec-03-part-07 |
-
-Chu trình đọc: phần 1 lấy mẫu robot để dẫn vào Markov; phần 2 lấy cây phản hồi và bảng bảy hàng để định nghĩa mô hình; phần 3 lấy hai dãy thưởng để định nghĩa tổng và điều kiện hữu hạn; phần 4 lấy bảng chính sách và cây hai bước để định nghĩa giá trị; phần 5 lấy cây một bước từ L để suy diễn Bellman; phần 6 giải hệ robot trước khi gộp thành MRP và ma trận; phần 7 dùng kết quả hành động để vận dụng và giao bài tập. Mỗi phần kết thúc bằng ba câu hỏi kèm lời giải có thể mở khi tự học.
+- Ví dụ của Bài giảng gốc (Student MRP/MDP, trang 30–34, 49–54; xe đua, trang 51) được thay hoàn toàn bằng robot thu gom lon theo quyết định lập lại kế hoạch ngày 2026-09-20 (`storyboard-mdp-replanned.md`, mục "Viết lại deck theo robot — quyết định trước triển khai (20/09/2026)" trong `review-log.md`).
+- Bài 03 kế thừa tính Markov, hàm động lực, lợi tức với hệ thức truy hồi và cận, $v_\pi$ từ Bài 02 (quyết định của điều phối viên sau MACH F1): `01-01b` nhắc lại các kết quả này, trang vấn đề của mạch 2–4 mở bằng "Nhắc lại:" rồi "Nhu cầu:", `03-01` và `03-03` cũ gộp làm một trang; định nghĩa và mệnh đề vẫn giữ trên deck vì ghi chú đánh số chúng (03.2, 03.4, 03.9, 03.11, 03.15) và chứng minh ở mạch 5 dùng điều kiện xác suất dương.
+- Thứ tự nguồn (Bài giảng gốc: chuỗi Markov → MRP → MDP) được giữ như deck trước đợt sửa: MDP trước, chuỗi Markov và MRP được dựng lại ở mạch 6 bằng cách cố định chính sách (đã ghi từ đợt trước; ghi chú bài giảng theo cùng thứ tự).
+- Kế hoạch A3 đề xuất 67 trang; deck có 72 trang sau vòng biên tập (thêm `01-01d`, `01-07b`; gộp `03-03` vào `03-01`). Bản trước vòng biên tập có 71 trang. Thêm `01-06b` (bước ứng dụng của K1), `04-03b` (Mệnh đề 03.14, dùng cho cây và Bổ đề 03.20), `06-07e` (bước ứng dụng ngoài robot), `07-01b` (tách bảng tổng kết vì tràn khung). Bớt: gộp `02-01` vào `02-02`, `04-01` vào `04-02`, `05-05` vào `05-04`; gộp đề hai bài tập ở `04-08`. Thời lượng vẫn 120 phút.
+- Ví dụ trọng số (nay ở `03-01`) đặt trước `03-02` theo thứ tự Mục 2.1–2.2 của ghi chú (ví dụ trọng số trước định nghĩa lượt).
+- Hai hình bản deck: `robot-p04-two-step-tree-deck.svg` (nhãn cột $G_0^{[2]}$, "3; 1/2 (gộp H, L)") và `gridworld-5x5-deck.svg` (bỏ ba dòng chú thích lặp, cắt khung, chữ lớn hơn, nhãn "+10" có viền trắng). Hai hình gốc giữ nguyên vì ghi chú bài giảng dùng và trích nhãn của chúng.
+- Các trang kết quả `05-07`, `05-08`, `05-09`, `06-07` ghi giả thiết bằng lời ("Giả thiết như phương trình Bellman cho $v_\pi$") và giữ số hiệu riêng (03.22, 03.23, 03.24, 03.27) sau phát biểu; mỗi mặt trang có tối đa một số hiệu (MACH R3, vòng rà lại 2).
+- Tiếng Anh của thuật ngữ đặt ở lần dùng đầu, nay là `01-01b` (Markov property, dynamics function, return, discount factor, state-value function, agent, reward, stationary policy); các trang định nghĩa hình thức `01-06`, `02-04`, `03-04`, `04-05` và `01-01c` không lặp lại (MACH R7).
+- Bài tập tổng hợp `07-01`/`07-02` dùng Bài tập 03.13 (rủi ro cứu hộ thấp hơn) thay cho "ba hành động tại pin thấp" của A2, vì ba giá trị $q_\pi(\mathrm L,\cdot)$ đã là Ví dụ 03.15 ở `06-04` (rủi ro D của kế hoạch).
+- Bài tập `03-06` dùng dãy $(2,-3,1)$ của Bài tập 03.3 trong ghi chú đã commit, thay dãy $(0,2,2)$ trong A3.
+- Tiêu đề A3 "Bổ đề: tính Markov của phần tương lai" và "Định lý: nghiệm duy nhất khi $\gamma<1$" đổi thành cụm danh từ vì "Bổ đề:", "Định lý:" không thuộc tiền tố tiêu đề được phép.
+- Hình `robot-p06-policy-evaluation-setup.svg` dự kiến cho `01-02b` được dùng ở `06-01`; ở `01-02b` hình làm trang tràn khung.
+- Sơ đồ cập nhật (`backup-diagrams.svg`, hình mới của ghi chú) không đặt trên deck vì nhãn quá nhỏ ở cỡ trang; ghi chú diễn giả `05-09` dẫn tới hình trong ghi chú.
+- Cấu hình RevealJS thêm `scrollActivationWidth:null` (như deck Bài 01, Bài 02) để màn hẹp 390 px giữ chế độ trang chiếu.
