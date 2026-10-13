@@ -1971,3 +1971,128 @@ $T_{\pi_0}(10,11)=(1+9;\,2+9)=(10,11)$; $v_{\pi_0}=(10,11)$; $q_*(\mathrm s_0,\m
 
 - Kiểm độc lập: `note_check.py` sạch; viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 96 khối, 0 lỗi console, không tải ngoài; `git diff --check` sạch. Rà lại toán (Opus 5.5 high, chỉ đọc): 0 trung bình, 3 nhẹ đã sửa.
 - Quyết định: **chấp nhận**; commit `fix(materials-04)`.
+
+## Đợt sửa 2026-10-12 — Giai đoạn III: bài tập
+
+### Tác tử và phạm vi
+
+- Vai: tác tử soạn `exercises.md` Bài 04 (viết tệp), theo `scratchpad/brief_exercises_writer.md` (kể cả mục "Bổ sung 2026-10-14"). Loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` theo lời gọi của điều phối viên (điều phối viên đối chiếu với lời gọi công cụ). Không commit.
+- Tệp ghi: `2627-1/materials/lec-04/exercises.md` (tạo mới); mục này của `review-log.md`. Không tạo SVG mới. Không sửa ghi chú, deck, outline, storyboard, notebook, `index.html`.
+- Căn cứ: quyết định chung `planning/quyet-dinh-chuan-2026-10-12.md`; kế hoạch `revision-plan-2026-10-12.md` mục C, D; mẫu `materials/_templates/exercises.md`; sản phẩm mẫu `math-4-AI` Bài 07 (chỉ cách trình bày); ghi chú và deck bản HEAD; `hw3.pdf` (bài 6, 7, 9), `hw04.pdf` (bài 1, 10); output đã nhúng của notebook (mục 7.2–7.4, nhiệm vụ 5–7).
+
+### Danh sách bài
+
+Mười bốn bài: nhận biết 2, tính toán hoặc chứng minh 8, vận dụng 4. Bộ đếm dùng chung với ghi chú; 04.7–04.9 (Bài tập củng cố) không chép lại, nên `note_check.py` báo khoảng trống 7, 8, 9 đúng như dự kiến.
+
+| Số hiệu | Mức | Mạch | Nguồn | Mục tiêu | Trùng trang chiếu |
+|---|---|---|---|---|---|
+| 04.16 | nhận biết | 1 | Bài giảng gốc tr. 5, 17–18; Ví dụ 04.1 | 1 | A05 (`#/1/9`, lời giải fragment cùng trang); câu (c) mới |
+| 04.3 | nhận biết | 4 | ghi chú Bài tập 04.3 | 3 | D06/D06b (`#/4/9`, `#/4/10`) |
+| 04.1 | tính toán | 2 | ghi chú Bài tập 04.1 | 1 | B08/B08b (`#/2/12`, `#/2/13`) |
+| 04.10 | chứng minh, tính toán | 2 | hw3 bài 6; Hệ quả 04.6(c) | 1 | không |
+| 04.2 | tính toán | 3 | ghi chú Bài tập 04.2 | 2 | C07/C07b (`#/3/9`, `#/3/10`) |
+| 04.17 | tính toán | 3 | số liệu sư phạm chuyển từ giai đoạn I (Ví dụ 04.10 cũ, phần 2–3) | 2 | không |
+| 04.12 | tính toán | 4 | hw3 bài 9 | 3, 4 | không |
+| 04.4 | tính toán | 5 | ghi chú Bài tập 04.4 | 4 | E08/E08b (`#/5/15`, `#/5/16`) |
+| 04.11 | chứng minh | 5 | hw3 bài 7; Bổ đề 04.2 | 4 | không |
+| 04.5 | tính toán | 6 | ghi chú Bài tập 04.5 | 5 | F06/F06b (`#/6/9`, `#/6/10`) |
+| 04.13 | vận dụng | 5 | hw04 bài 10 | 4 | không; nối tiếp ví dụ E06c (`#/5/14`) |
+| 04.14 | vận dụng [Lập trình] | 6 | notebook mục 7.3–7.4, nhiệm vụ 5 | 4, 5 | không |
+| 04.15 | vận dụng [Lập trình] | 6 | notebook nhiệm vụ 7; Đọc thêm; Puterman §6.5 | 3, 5 | không |
+| 04.6 | vận dụng (tổng hợp) | 7 | ghi chú Bài tập 04.6 | 4, 5 | G04/G04b (`#/7/6`, `#/7/7`) |
+
+Lời giải của sáu bài trùng deck (04.1–04.6) cho cùng kết quả với ghi chú và trang lời giải; "Kiểm tra lại" bổ sung lỗi thường gặp, phần lớn lấy từ ghi chú diễn giả của trang lời giải. Mọi liên kết `#/h/v` được kiểm bằng Playwright (server tĩnh cổng 8799): mỗi liên kết mở đúng `data-slide-id` và tiêu đề; sáu trang tiêu đề mạch mở ở `#/2/1`…`#/7/1`.
+
+### Sai lệch so với kế hoạch C và lý do
+
+| vị trí | kế hoạch C | đã làm | lý do |
+|---|---|---|---|
+| 04.16 | không có | thêm bài nhận biết trùng A05 | Brief đòi mỗi mức ≥ 2 bài; kế hoạch C chỉ có 04.3 ở mức nhận biết. A05 là bài tập duy nhất của mạch 1 có lời giải trên mặt trang |
+| 04.17 | không có | thêm bài cải thiện từ $\pi_u$ | Mục "Chuyển cho `exercises.md`" của giai đoạn I; kiểm Định lý 04.13 với $\pi$ ngẫu nhiên, điều Bài tập 04.2 không kiểm |
+| 04.11 | mạch 3 | mạch 5 | Bài chứng minh tính đơn điệu của $T_*$; $T_*$ chỉ được định nghĩa ở mạch 5 (Định nghĩa 04.22). Tính đơn điệu của $T_\pi$ đã là Bổ đề 04.2, nên bài không lặp lại phần đó mà thêm hệ quả chặn hai phía $v_*$ |
+| 04.12 | đến $\pi_1=(\mathrm b,\mathrm a,\mathrm a)$ | thêm câu (e): đánh giá $\pi_1$, kiểm ổn định | Hoàn tất một lần lặp chính sách trên mô hình ngẫu nhiên; $v_*=(7220,7420,7600)/461$ |
+| 04.13 | trùng đề G03 (bài tự làm) | không trùng; G03 đã bỏ khỏi deck ở giai đoạn II | Phần đầu G03 thành ví dụ E06c; dòng Nguồn dẫn tới E06c. Thêm câu (d) kiểm $v_*$ (tính bằng chương trình) tại $\mathrm c_4$ |
+| 04.14 | đối chiếu số đo với chặn | thêm câu (d): $\Delta_*(V_k)\le\gamma^k\rho_k$ | Giải thích có chứng minh vì sao số đo không vượt chặn; không khẳng định tính chất của $\rho_k$ trên MDP ước lượng |
+| 04.15 | ký hiệu $m$ của notebook | ký hiệu $\ell$ | Ghi chú dùng $m$ cho số hành động và $\ell$ ở mục Đọc thêm. Thêm câu (a)–(c) tính tay và chạy trên mô hình hai trạng thái vì notebook chưa nhúng kết quả nhiệm vụ 7 |
+| bảng mạch | chỉ bài của tệp | thêm "ghi chú: 04.7, 04.8" (mạch 5), "ghi chú: 04.9" (mạch 6) | Khớp cách xếp của deck G05 |
+
+### Số liệu đã tính lại (script Python thuần trong `scratchpad/ex04/calc2.py`)
+
+- 04.16: $3{,}71$; $G_0=2+9=11$; lỗi chỉ số $3{,}339$.
+- 04.10: $\det(I-0{,}9P_{\pi_0})=0{,}1$, $v_{\pi_0}=(10,11)$; $\det(I-0{,}9P_{\pi_u})=0{,}1$, nghịch đảo $\bigl[\begin{smallmatrix}5{,}5&4{,}5\\4{,}5&5{,}5\end{smallmatrix}\bigr]$, $v_{\pi_u}=(14,16)$; $\gamma=1$: định thức $0$.
+- 04.17: $q_{\pi_u}=13{,}6;14{,}4;14{,}6;17{,}4$; $v_{(\mathrm b,\mathrm b)}=(27,30)$; bảng một lượt quét $(0{,}5;2{,}5)$ cho $1{,}45;2{,}25$.
+- 04.12: $V_1=(1,2,2)$, tham lam $(\mathrm b,\mathrm a,\mathrm a)$ (cũng tham lam theo $V_1$: $2{,}8$; $2{,}9$; $3{,}8$); $v_{\pi_0}=(10,11,9)$; $q_{\pi_0}$: $8{,}55/10$, $11/8{,}9$, $11{,}9/9$; $v_{\pi_1}=(7220,7420,7600)/461\approx(15{,}662;16{,}095;16{,}486)$; $q_{\pi_1}$: $14{,}466/15{,}662$, $16{,}095/13{,}486$, $16{,}486/14{,}095$; lặp giá trị 3 000 lượt cho cùng $v_*$.
+- 04.11: $T_*(30,30)=(28,30)$, $T_*(28,30)=(27,30)$; $T_*(0,0)=(1,3)$, $T_*(10,11)=(10;12{,}9)$.
+- 04.13: $V_1=(-1;-1;-1;7{,}8;0)$ (nhánh trái tại $\mathrm c_4$: $0{,}1$); $V_2=(-1{,}9;-1{,}9;4{,}436;8{,}412;0)$, nhánh trái tại $\mathrm c_3$: $-1{,}108$; $v_*\approx(2{,}6589;4{,}4171;6{,}6393;9{,}2281;0)$, trùng nghiệm hệ tuyến tính của chính sách luôn đi phải; $Q_{v_*}(\mathrm c_4,\cdot)\approx5{,}711/9{,}228$; Thuật toán 04.28 với $\theta=0{,}01$ dừng ở $k=12$, phần dư $0{,}0087$, sai số thật $0{,}018$.
+- 04.14: $\ln\theta/\ln\gamma=65{,}56;148{,}19;916{,}42;1975{,}74$ → $66;149;917;1976$, khớp notebook mục 7.4 (số đo $65;143;736;1315$ lấy nguyên từ output đã nhúng); xấp xỉ $69;152;921;1981$; $0{,}9^{65}\approx1{,}06\cdot10^{-3}$, $0{,}9^{66}\approx9{,}55\cdot10^{-4}$; lỗi $\theta=\kappa$: $459$.
+- 04.15: $\ell=1$ ba vòng $(1,2)$, $(1{,}9;4{,}8)$, $(4{,}32;7{,}32)$, phần dư $2{,}8$; $2{,}52$; $2{,}268$; dừng theo "chính sách không đổi" ở vòng 3, sai số $22{,}68$ = chặn; $\theta=0{,}01$: $\ell=1$: 55 vòng/110 phép, $\ell=5$: 12/72, $\ell=20$: 4/84.
+- 04.1–04.6: số liệu trùng ghi chú và deck ($2{,}71$; $3{,}71$; $0{,}81$; $8{,}1$; $10$; $27$; $3{,}122$; $4{,}58$; $6{,}2$; $8$; $10$; giới hạn $10$; phần dư toàn bảng tại $(10,0)$ là $11$; $17$; $170$).
+
+### Tự kiểm `no-ai-slop` (Edit)
+
+Phạm vi: toàn tệp (đoạn mở, hướng dẫn, đề, gợi ý, lời giải, tài liệu tham khảo). Đối chiếu `eval.md`: đạt. Đã sửa khi tự kiểm: một tương phản "…, không phải quy luật chung" (04.15(c)) viết lại thành câu khẳng định; chữ "tình cờ" (04.15(b)) thay bằng dẫn chứng Ví dụ 04.12; danh sách lỗi của 04.12 bỏ ví dụ "cực đại trong trung bình" không rõ nghĩa, thay bằng lỗi cụ thể có số. Không câu hỏi tu từ, không "hãy" ngoài đề bài, không "Đáp án", một dấu gạch dài duy nhất ở tiêu đề tệp theo mẫu. Hai câu "không phải…" còn lại chép từ ghi chú và deck (04.3, 04.1), giữ để lời giải trùng nguyên văn.
+
+### Kết quả kiểm
+
+- `note_check.py`: 9 692 từ; 14 `exercise`, 14 `hint`, 14 `solution`, không khối lạ hay lồng; bộ đếm Bài tập 04.1–04.6, 04.10–04.17, không trùng; khoảng trống 04.7–04.9 là các bài của ghi chú; 0 dấu `\(`/`\[`; mẫu "trang chiếu" khớp 8 dòng, đều là dòng "Trùng trang chiếu" hoặc câu mô tả quan hệ với bộ trang chiếu.
+- `check_note.py 04 lecture-04-giai-mdp-bang-quy-hoach-dong.html exercises` (viewer cổng 8766): 1600×900 và 390×844, 0 lỗi KaTeX, 42 khối, 28 khối gập, 0 lỗi console, 0 yêu cầu hỏng hoặc ra ngoài, không tràn ngang. Ảnh chụp đầu tệp và lời giải 04.15 ở 1600×900 đã xem: bảng và công thức hiển thị đúng.
+- `git diff --check` sạch.
+
+### Đề nghị sửa deck và ghi chú (không sửa trong đợt này)
+
+| đối tượng | đề nghị |
+|---|---|
+| Deck L04-G05 | Thay "Tệp bài tập: chưa có" bằng liên kết viewer `material-viewer.html?doc=materials/lec-04/exercises.md&deck=…`; bổ sung số hiệu 04.10–04.17 vào bảng `Mạch \| Bài tập` (mạch 1: 04.16; 2: 04.10; 3: 04.17; 4: 04.12; 5: 04.11, 04.13; 6: 04.14, 04.15), giữ trần 6 dòng |
+| `storyboard.md`, dòng "Khối 30 phút" | "dự kiến Bài tập 04.13" → "Bài tập 04.13"; thêm 04.14, 04.15 cho phần notebook |
+| Ghi chú, mục Đọc thêm (lặp chính sách cải biên) | Có thể dẫn Bài tập 04.15 cạnh câu về nhiệm vụ 7 |
+| Notebook, ô Markdown nhiệm vụ 7 | Đổi $m$ thành $\ell$ (trong ghi chú $m$ là số hành động), theo quyền sửa ô Markdown của giai đoạn III |
+
+### Rà soát ba vai và sửa (giai đoạn III)
+
+- Ba tác tử rà soát chỉ đọc, `general-purpose`, `claude-opus-5-5`, mức `high`: TOAN (`scratchpad/exrev-04-TOAN.md`; 1 trung bình, 6 nhẹ), SV (`scratchpad/exrev-04-SV.md`; 5 trung bình, 9 nhẹ), PB (`scratchpad/exrev-04-PB.md`; 4 trung bình, 12 nhẹ). Không có phát hiện chặn bàn giao hay nghiêm trọng.
+- Biên tập viên: chính tác tử soạn (Opus 5.5, `high`), theo quyết định của điều phối viên; `no-ai-slop` chế độ Edit. Không commit.
+
+| mã | mức độ | vị trí | xử lý | trạng thái |
+|---|---|---|---|---|
+| TOAN-1 | trung bình | 04.15 Kiểm tra lại | Lỗi "khởi động lại $V\leftarrow0$": bảng luôn là $T_\pi^\ell0$, sai số $\gamma^\ell\lVert v_\pi\rVert_\infty$ không giảm; phần dư đứng yên $2{,}7$ / $1{,}771$ / $0{,}365$ với $\ell=1,5,20$. Ngưỡng $\ell$ tính lại bằng `scratchpad/ex04/restart.py`: thuật toán dừng khi $\ell\ge55$ (báo cáo TOAN ước "khoảng 80"); tệp ghi $\ell\ge55$ | đã sửa |
+| TOAN-2 | nhẹ | 04.14 Kiểm tra lại; review-log | $0{,}9^{66}\approx9{,}55\cdot10^{-4}$ | đã sửa |
+| TOAN-3 | nhẹ | 04.11(c) | "Theo chứng minh (b), $W_0\ge W_1\ge W_2\ge\cdots\to v_*$, nên $v_*\le W_2$" | đã sửa |
+| TOAN-4 | nhẹ | 04.12(e) | Câu cuối tách tham lam theo $V_0$ và theo $V_1$, kèm ba so sánh $1{,}35<2{,}8$; $2{,}9>0{,}8$; $3{,}8>0{,}9$ | đã sửa |
+| TOAN-5 | nhẹ | 04.10 (câu $\gamma=1$, nay là (d)) | "từ $V_0=(0,0)$, … $V_k=(k,k+1)$ với $k\ge1$" | đã sửa |
+| TOAN-6 | nhẹ | 04.13 Nguồn | Ghi rõ quy ước biên $\mathrm c_1$ và thưởng trượt vào $\mathrm c_5$ lấy theo trang E06c; câu hỏi do bài đặt | đã sửa |
+| TOAN-7 = PB-3 | nhẹ / trung bình | 04.14 lời giải | Bỏ "lệch vài đơn vị", viết "có thể khác" | đã sửa |
+| SV-1, SV-2 | trung bình | đề 04.1, 04.3, 04.5, 04.6, 04.12, 04.17 | Thêm đoạn "Các kết quả dùng lại" vào mục Hướng dẫn: (2.2) và Định lý 04.13(a)(b), Hệ quả 04.8(a), Hệ quả 04.27, Định nghĩa 04.16, Định lý 04.32 (kèm cấu trúc đoạn phủ của chứng minh); đề giữ dẫn bằng tên | đã sửa |
+| SV-3 = PB-2 | trung bình | 04.14 | Đổi thứ tự: (c) chứng minh $\Delta_*(V_k)\le\gamma^k\rho_k$, (d) [Lập trình] sửa `value_iteration` để ghi $\Delta_*(V_k)/\gamma^k$ và $\rho_k$ (đệ quy $u_k=P_{\pi_k}u_{k-1}$), kiểm bất đẳng thức tại mọi $k$; đề bỏ bốn số đo; bảng (a) bỏ cột "Đo được"/"Tỉ số", chuyển sang lời giải (d); thêm số kiểm $\Delta_*(V_{736})/0{,}99^{736}\approx0{,}16$ từ output nhúng; Nguồn ghi mục 7.2–7.4 và ý "số lượt quét" của nhiệm vụ 5 | đã sửa |
+| SV-4 | trung bình | 04.10(a), 04.11(a), 04.12(a), 04.13(d) | 04.10(a) bỏ (gộp vào "Nhắc lại:"); 04.11(a) chú thích ra câu văn; 04.12(a) tách hai giá trị nhìn trước tại $\mathrm s_0$; 04.13(d) rút số hạng, chú thích ra câu văn. Đo lại ở 1600×900: 0 công thức hiển thị rộng hơn cột | đã sửa |
+| SV-5 = PB-1 | trung bình | 04.17 Nguồn | Bỏ nhãn quy trình | đã sửa |
+| PB-4 | trung bình | 04.10 | (a)–(b) cũ gộp thành dòng "Nhắc lại:" (Hệ quả 04.6(c), Định lý 03.28); giữ hai phép tính $\pi_0$, $\pi_u$ và trường hợp $\gamma=1$; thêm câu (c) chuỗi Neumann $(I-\gamma P_\pi)^{-1}=\sum_k\gamma^kP_\pi^k$, phần tử không âm, tổng hàng $\le1/(1-\gamma)$, ý nghĩa $(P_\pi^kr_\pi)(s)=\mathbb E_\pi[R_{k+1}\mid S_0=s]$, kiểm số $I+9P_{\pi_0}$, $I+9P_{\pi_u}$ (dùng $P^2=P$); đổi tiêu đề | đã sửa |
+| SV nhẹ | nhẹ | đoạn mở | Câu nói thứ tự trong mỗi mức theo mạch; 04.10, 04.11, 04.12 dài hơn | đã sửa |
+| SV nhẹ | nhẹ | 04.16(b) | Hỏi "thông tin của mô hình (bảng ở mục Hướng dẫn)" | đã sửa |
+| SV nhẹ | nhẹ | 04.3 đề, gợi ý | Đề cho $v_{(\mathrm a,\mathrm b)}=(10,30)$, $v_{(\mathrm b,\mathrm b)}=(27,30)$; gợi ý dùng hai bảng đó | đã sửa |
+| SV nhẹ | nhẹ | 04.13(b) | Thêm $Q_{V_1}(\mathrm c_4,\cdot)=8{,}412/0{,}082$ | đã sửa |
+| SV nhẹ | nhẹ | 04.13 Kiểm tra lại | Thay phép kiểm tổng xác suất bằng thế $v_*$ tại $\mathrm c_3$ ($\approx6{,}639$); lỗi thứ ba nói rõ $6{,}02$ là đại lượng khác | đã sửa |
+| SV nhẹ | nhẹ | 04.15(d) | "số vòng dự kiến"; gợi ý và lời giải nêu `bellman_pi`, `lookahead`, `greedy_keep_ties` | đã sửa |
+| SV nhẹ, PB nhẹ | nhẹ | 04.17 Kiểm tra lại | Bỏ lỗi thứ ba, còn hai lỗi | đã sửa |
+| SV nhẹ | nhẹ | dòng Mức độ | "Mục tiêu học tập N của ghi chú"; đoạn Hướng dẫn nói số thứ tự là của danh sách năm mục tiêu trong ghi chú | đã sửa |
+| SV nhẹ | nhẹ | tiêu đề 04.2 | "Cải thiện từ chính sách π₁" (ký tự Unicode, mục lục viewer giữ chỉ số) | đã sửa |
+| PB nhẹ | nhẹ | Hướng dẫn | "notebook viết $m$ cho $\ell$ ở nhiệm vụ 7"; "biến `theta` cho góc cột (ghi chú viết $\phi$)" thay cụm "chữ theta" | đã sửa |
+| PB nhẹ | nhẹ | 04.15(c) | Kết luận "nhỏ nhất ở $\ell=5$" gắn với cách đếm $\ell+1$; với $\ell=1$ có thể dùng lại $T_*V$ | đã sửa |
+| PB nhẹ | nhẹ | 04.15 Nguồn | Bỏ Định nghĩa 04.34; thêm Ví dụ 04.16 cho câu (e) | đã sửa |
+| PB nhẹ | nhẹ | 04.14(c)–(d) câu cuối | Bỏ tài liệu làm chủ ngữ; nối với bảng $\rho_k$ của câu (d) | đã sửa |
+| PB nhẹ | nhẹ | 04.14 dòng Mức độ | Ghi lý do mục tiêu 4, 5 và vị trí mạch 6 (MDP ước lượng của Mục 5.4) | đã sửa |
+| PB nhẹ | nhẹ | 04.1 Kiểm tra lại | "…, tức kết quả của cập nhật tại chỗ" | đã sửa |
+| PB nhẹ | nhẹ | phủ mục tiêu 5 | Thêm 04.15(e): hai lượt quét lặp giá trị tại chỗ trên mô hình hai trạng thái với hai thứ tự; $\mathrm s_0,\mathrm s_1$ cho $(1,3)$, $(2{,}7;5{,}7)$ như đồng bộ, $\mathrm s_1,\mathrm s_0$ cho $(2{,}7;3)$, $(5{,}13;5{,}7)$; lời giải dạng bảng | đã sửa |
+| PB nhẹ | nhẹ | 04.12(e) tính tay nặng | Gợi ý cho phép dùng máy tính bỏ túi ở (c), (e) | đã sửa |
+
+Không bác bỏ phát hiện nào. Số hiệu không đổi (Bài tập 04.1–04.6, 04.10–04.17).
+
+**Số liệu mới đã tính lại.** Chuỗi Neumann: $I+9P_{\pi_0}=\bigl[\begin{smallmatrix}10&0\\9&1\end{smallmatrix}\bigr]$, nhân $(1,2)$ cho $(10,11)$; $I+9P_{\pi_u}$ trùng nghịch đảo câu (b); lỗi bỏ $I$ cho $(9,9)$. 04.13: $Q_{V_1}(\mathrm c_4,\cdot)=0{,}082/8{,}412$; $Q_{v_*}(\mathrm c_3,\mathrm{phai})\approx6{,}6393$. 04.14: $0{,}99^{736}\approx6{,}13\cdot10^{-4}$, $9{,}88\cdot10^{-5}/6{,}13\cdot10^{-4}\approx0{,}16$. 04.15: khởi động lại từ $0$ cho phần dư đứng yên $2{,}7$; $1{,}7715$; $0{,}3647$, dừng khi $\ell\ge55$; lặp giá trị tại chỗ hai thứ tự như bảng trên.
+
+**`no-ai-slop` (Edit) trên phần sửa.** Đối chiếu `eval.md`: đạt. Bỏ một tương phản "chứ không phải" (04.1), từ nhấn mạnh "tăng mạnh" (04.15), câu tài liệu làm chủ ngữ (04.14); không thêm câu hỏi tu từ hay "hãy" ngoài đề. Hai câu "không phải" còn lại chép từ ghi chú (04.3 lời giải, 04.2 gợi ý).
+
+**Kiểm tra.** `note_check.py`: 11 199 từ; 14 `exercise`, 14 `hint`, 14 `solution`; bộ đếm 04.1–04.6, 04.10–04.17, khoảng trống 7–9 như dự kiến; 0 `\(`/`\[`. `check_note.py 04 lecture-04-giai-mdp-bang-quy-hoach-dong.html exercises` (cổng 8766): 1600×900 và 390×844, 0 lỗi KaTeX, 42 khối, 0 lỗi console, 0 yêu cầu ngoài hoặc hỏng, không tràn ngang; đo thêm ở 1600×900 với mọi khối mở: 0 công thức hiển thị rộng hơn cột. Cảnh báo KaTeX strict về chữ Việt trong `\text{}` (không phải lỗi) được chấp nhận như ở ghi chú. 21/21 liên kết `#/h/v` mở đúng `data-slide-id` (Playwright, cổng 8799). `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-14, giai đoạn III, bài tập)
+
+- Kiểm độc lập: `note_check.py` sạch (14 bài); viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 42 khối, 0 lỗi console, không tải ngoài; `git diff --check` sạch; chạy lại kịch bản khởi động lại $V\leftarrow0$ của Bài tập 04.15: dừng từ ℓ ≥ 55 (ℓ = 54 còn phần dư 0,0101), đúng như tệp ghi, thay cho ước lượng "khoảng 80" của vai rà toán. Ba vai rà soát chỉ đọc (Opus 5.5 high): 0 chặn, 0 nghiêm trọng; mọi mục trung bình đã sửa.
+- Quyết định: **chấp nhận**; commit `feat(materials-04)`. Trang G05 của deck và nhóm "Bài tập" trên `index.html` cập nhật ở đợt sau.
