@@ -1570,3 +1570,188 @@ Kiểm:
 
 - Kiểm độc lập: `note_check.py` sạch; viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console, không tải ngoài; `learning-route.svg` là XML hợp lệ, deck không dùng; `git diff --check` sạch. Rà lại toán (Opus 5.5 high, chỉ đọc): 1 trung bình, 6 nhẹ, đã sửa. "Đề nghị sửa deck (sau đợt sửa ghi chú)" (B12, D05, D12b, D06b) để đợt đồng bộ chéo.
 - Quyết định: **chấp nhận**; commit `fix(materials-05)`.
+
+## Đợt sửa 2026-10-12 — Giai đoạn III: bài tập
+
+### Tác tử
+
+| Vai trò | Loại | Mô hình | Effort | Ghi file |
+|---|---|---|---|---|
+| Tác tử soạn `exercises.md` Bài 05 (giai đoạn III) | general-purpose (theo brief `brief_exercises_writer.md`, kể cả mục "Bổ sung 2026-10-14") | claude-opus-5-5 | high | `2627-1/materials/lec-05/exercises.md` (tạo mới), mục này |
+
+Không commit, không push. Không sửa `lecture-note.md`, deck, `outline.md`, `storyboard.md`, `index.html`, viewer, mẫu, notebook hay tệp bài khác. Không tạo SVG mới. Ghi chú bài giảng và deck dùng bản HEAD (`df5b077`, `1103346`).
+
+### Phạm vi và kết quả
+
+`exercises.md` gồm 13 bài, Bài tập 05.16–05.28, tiếp nối Bài tập 05.1–05.15 của ghi chú; không lặp đề nào của ghi chú (kể cả 05.8 = L05-E06 và 05.12 = L05-D12). Ba mức: nhận biết 2 bài, tính toán hoặc chứng minh 8 bài, vận dụng 3 bài (2 bài [Lập trình]). Mạch 2: 3 bài; mạch 3: 4; mạch 4: 4; mạch 5: 2. Bảng `Mạch | Mở phần | Bài tập` trỏ `#/1/1`…`#/6/1`; chỉ số kiểm bằng `Reveal.getIndices()` trên cổng 8799: `L05-B00 #/2/1`, `L05-C00 #/3/1`, `L05-D00 #/4/1`, `L05-DT #/5/1`, `L05-E00 #/6/1`, `L05-B13 #/2/18`, `L05-B13b #/2/19`, `L05-C10 #/3/11`, `L05-C10b #/3/12`.
+
+| Số hiệu | Mức | Mạch | Mục tiêu học tập | Nguồn | Trùng trang chiếu |
+|---|---|---|---|---|---|
+| 05.16 Hai trục lựa chọn và giả thiết của Monte Carlo | nhận biết | 2 | 2, 3 | HW05 bài 5 (hiệu chỉnh tiền đề); Bài tập 05.6(b) cũ | — |
+| 05.17 Monte Carlo và TD(0): mục tiêu, thời điểm, lượt chưa kết thúc | nhận biết | 3 | 4 | HW05 bài 1, 3 | — |
+| 05.18 Chọn mẫu Monte Carlo tại S với γ = 0,9 | tính toán | 2 | 1, 2, 3 | L05-B13/B13b; HW05 bài 5, 7; C 05.24 (bốn cấu hình) | B13 `#/2/18`, B13b `#/2/19`, câu (a), (b) |
+| 05.19 Ô chờ: mọi lần ghé chệch ở một lượt | chứng minh | 2 | 2, 3 | Ví dụ 05.10 cũ và Bài tập 05.7(c) cũ, tổng quát hóa theo $q$ | — |
+| 05.20 Một bước TD(0) từ cùng bảng | tính toán | 3 | 4, 5 | L05-C10/C10b; Bài tập 05.9 cũ; HW05 bài 3, 7 | C10 `#/3/11`, C10b `#/3/12`, câu (a), (b) |
+| 05.21 Monte Carlo và TD(0) trên hai lượt với γ = 0,9 | tính toán | 3 | 1, 3, 4 | HW05 bài 7 đổi γ (C 05.25) | — |
+| 05.22 Độ lệch của bốn cấu hình Monte Carlo | tính toán | 4 | 3, 5 | Bài tập 05.11 cũ; HW05 bài 5, 7 | — |
+| 05.23 Dãy năm ô: giá trị chuẩn và độ chệch mục tiêu TD | tính toán | 4 | 5 | HW05 bài 6 (C 05.27) | — |
+| 05.24 Sai số bình phương trung bình của mục tiêu TD | chứng minh, tính toán | 4 | 5 | C 05.28 (đổi phản ví dụ thành họ tham số $x$); Nhận xét 05.29 | — |
+| 05.25 Hai nghiệm theo lô trên ba lượt | tính toán | 5 | 6 | C 05.30 | — |
+| 05.26 [Lập trình] Tự chuyển và lịch bước học của TD(0) | vận dụng | 3 | 4, 5 | Bài tập 05.22(b)(c) cũ; notebook phần 5, mục 7.1, 8.1, nhiệm vụ 4 (C 05.26) | — |
+| 05.27 Lượt dài, phần thưởng cuối và nhiễu trên Lunar Lander | vận dụng | 4 | 1, 5, 6 | HW05 bài 4 (C 05.29, biến thể có số liệu notebook) | — |
+| 05.28 [Lập trình] Cách chia ô và hai nghiệm theo lô | vận dụng | 5 | 6 | notebook mục 9.2, nhiệm vụ 1, 10 (C 05.31) | — |
+
+Mọi mục tiêu học tập của ghi chú có ít nhất hai bài: 1 (05.18, 05.21, 05.27), 2 (05.16, 05.18, 05.19), 3 (05.16, 05.18, 05.19, 05.21, 05.22), 4 (05.17, 05.20, 05.21, 05.26), 5 (05.20, 05.22–05.24, 05.26, 05.27), 6 (05.25, 05.27, 05.28).
+
+Bài trùng trang chiếu: 05.18 cho đúng $-0{,}0405$, $-0{,}04525$, $0{,}3645$, $-0{,}22275$ và khai triển $0{,}25\cdot0+0{,}25\cdot0{,}729+0{,}5\cdot(-0{,}81)$ như B13b; 05.20 cho đúng $0{,}5$; $0{,}25$; $0{,}375$ và $-1$; $-1{,}25$; $-0{,}375$ như C10b. Câu (c) của hai bài chỉ có trong tệp và được ghi rõ ở dòng "Trùng trang chiếu". Lệch tạm thời deck–ghi chú tại B13/B13b (ghi ở giai đoạn II) nay được phủ bởi Bài tập 05.18 của tệp bài tập.
+
+### Sai khác so với kế hoạch C và danh sách dự kiến
+
+- **Số hiệu.** Danh sách dự kiến (mạch 2 → 05.16–05.18; mạch 3 → 05.19–05.21; mạch 4 → 05.22–05.24; mạch 5 → 05.25–05.26) được thay: tệp đánh số theo thứ tự xuất hiện trong ba mức, và có 13 bài thay 11. Thêm hai bài nhận biết (05.16, 05.17) để mức nhận biết có ít nhất hai bài, vì các bài nhận biết của kế hoạch C (05.1) đã ở trong ghi chú. Ánh xạ mạch ở bảng đầu tệp.
+- **Kế hoạch C, mục 05.1, 05.4, 05.7 "giữ số".** Không còn áp dụng: ghi chú đã đánh số lại; các bài này nằm trong ghi chú và không lặp.
+- **C 05.23** (lượt mới $\mathrm S\to\mathrm X\to\mathrm S\to\mathrm X\to\mathrm S\to\mathrm L$, $\gamma=0{,}9$): bỏ, vì Bài tập 05.18 (trùng B13) đo cùng năng lực (lợi tức chiết khấu tính ngược, hai tập mẫu, hai trung bình) trên hai lượt dùng chung.
+- **C 05.24** (khai triển bước hằng, bốn cấu hình): theo "Sửa kế hoạch C", không chứng minh lại Mệnh đề 05.11; khai triển và bảng bốn cấu hình nằm ở 05.18(c) (với $\gamma=0{,}9$) và 05.22 (với $\gamma=1$).
+- **C 05.25** (HW05 bài 7): đặt với $\gamma=0{,}9$ theo "Sửa kế hoạch C", thêm câu độ lệch so với giá trị chuẩn $235/544$, $955/1088$.
+- **C 05.26** [Lập trình]: gộp với câu (b), (c) của bài tự chuyển cũ; phần lập trình là nhiệm vụ 4 của notebook (gộp tự chuyển) kèm chứng minh mục tiêu gộp không chệch khi trạng thái Markov.
+- **C 05.28**: phản ví dụ $V(\mathrm X)=10$ đã có ở Nhận xét 05.29, nên bài khảo sát cả họ $V(\mathrm X)=x$: $m(x)=0{,}8(x-11/21)^2+1024/2205$, tập $x$ có phương sai lớn hơn $G_t$ và tập $x$ có sai số bình phương trung bình nhỏ hơn $G_t$.
+- **C 05.29**: trùng hướng với Bài tập 05.15 của ghi chú; bài 05.27 khác ở chỗ dùng số liệu notebook (hệ số $0{,}99^{254}$, bảng $J$ sáu điểm đo, $42\,000$ chuyển của lượt bị cắt ngắn) và kiểm nhận định của HW05 bài 4 trên dữ liệu thật.
+- **Tùy chọn 05.32** (lượt $e_3$): bỏ, là Bài tập 05.8 của ghi chú (= L05-E06).
+- **Danh sách "Chuyển cho exercises.md".** Bài tập 05.5 cũ (tại $\mathrm X$, $\gamma=1$): thay bằng phiên bản B13 với $\gamma=0{,}9$ tại $\mathrm S$ theo quyết định giai đoạn II. 05.6(b) cũ → 05.16(b). 05.9 cũ → 05.20. 05.11 cũ → 05.22. Ô chờ cùng 05.7(c) cũ → 05.19, tổng quát theo $q$ để không lặp Nhận xét 05.18. Bài tự chuyển cũ, câu (b), (c) → 05.26(a), (c).
+- **Notebook.** 05.28 dùng hàng "thô hơn" (`CUTS_COARSE`: $3888$ ô, $991$ ô được ghé, tỉ lệ tự chuyển $0{,}83$, $J$ $1645$, $1859$, $2125$) đã có trong output của ô `prediction_pipeline`; hàng "mịn hơn" để người học chạy.
+
+### Số liệu đã tính lại
+
+Script `scratchpad/ex05/calc.py` (phân số chính xác khi có thể):
+
+- 05.18: lợi tức $e_1$ $(0{,}729;\ 0{,}81;\ 0{,}9;\ 1)$, $e_2$ $(-0{,}81;\ -0{,}9;\ -1)$; bốn cấu hình tại $\mathrm S$ sau $e_2$: $-0{,}0405$, $-0{,}04525$, $-0{,}22275$, $-0{,}5444375$; sau $e_1$ mọi lần ghé bước hằng $0{,}63225$.
+- 05.19: $v=q/(1-q)$, $\mathbb E[N]=1/(1-q)$, $\mathbb E[N(N-1)]=2q/(1-q)^2$, kỳ vọng trung bình mọi lần ghé $v/2$, giới hạn $v$; kiểm số với $q=1/2,2/3,9/10$ bằng tổng chuỗi.
+- 05.20: kỳ vọng $\delta$ tại $\mathrm S$ $=-0{,}05=(T_\pi V)(\mathrm S)-V(\mathrm S)$; sai số thật $23/84$; độ chệch $-34/105$; kỳ vọng giá trị mới $0{,}225$.
+- 05.21: Monte Carlo $(0{,}3645;\ 0{,}405)$, $(-0{,}22275;\ -0{,}2475)$; TD(0) $(0;\ 0{,}5)$, $(-0{,}3875;\ 0{,}35125)$; $v_\pi$ với $\gamma=0{,}9$: $235/544\approx0{,}4320$, $955/1088\approx0{,}8778$; độ lệch $(-0{,}655;\ -1{,}125)$ và $(-0{,}819;\ -0{,}527)$.
+- 05.22: độ lệch $-11/21$, $-19/21$; $-11/21$, $-4/7$; $-65/84$, $-97/84$; $-365/336$, $-173/168$; phương sai giới hạn $0{,}242$.
+- 05.23: nghiệm chính xác $v_i=62718970,\ 104190970,\ 156606970,\ 217670970$ chia $23587943$, tức $(2{,}659;\ 4{,}417;\ 6{,}639;\ 9{,}228)$, khớp số dự kiến của kế hoạch C; độ chệch tại $\mathrm c_3$: $-0{,}979$ (bảng $2,4,6,8$), $-7{,}639$ (bảng $0$).
+- 05.24: $m(x)=0{,}8x^2-\tfrac{88}{105}x+\tfrac{1508}{2205}$, cực tiểu $1024/2205$ tại $11/21$; $\operatorname{Var}(Y)>320/441$ khi $x>1{,}130$ hoặc $x<-3{,}130$; $m<320/441$ khi $-1/21<x<23/21$; kiểm lại $0{,}465$ ($x=0{,}5$) và $72{,}3$ ($x=10$) của Nhận xét 05.29.
+- 05.25: nghiệm $(1;\ 2/3)$ và $(5/3;\ 2/3)$; $V_2(\mathrm A)=5/9$, $7/9$; $V_3(\mathrm A)=19/27$, $29/27$; dừng ở lượt quét $k=11$ (thay đổi $0{,}0077$), trả $V_{12}(\mathrm A)\approx1{,}6513$, khoảng cách $0{,}0154$.
+- 05.26: $460$ ($\alpha=0{,}5$), khoảng $8{,}3\cdot10^4$ ($n^{-0{,}6}$, tích tính trực tiếp, $83\,126$), $10^{100}$ ($1/n$, xấp xỉ $n^{-0{,}01}$; tích đúng ở $n=10^4$ là $0{,}907$, xấp xỉ $0{,}912$).
+- 05.27: $0{,}99^{254}\approx0{,}0779$; $546\,869-504\,869=42\,000$.
+- Số notebook (một lần chạy, gymnasium 1.3.0) đọc trực tiếp từ output đã nhúng: bảng đường học mục 8.1, các dòng của ô so sánh cuối mục 8, mục 9.2 và ô `prediction_pipeline`.
+
+### Chỗ chưa chắc, đề nghị rà toán soi
+
+- 05.19(d): luật mạnh số lớn cho tỉ số; khả tích của $Z=N(N-1)/2$ suy từ $\mathbb E[N(N-1)]<\infty$.
+- 05.26(d): chứng minh mục tiêu gộp không chệch dùng thời điểm dừng $\tau$; đổi thứ tự tổng và kỳ vọng dựa trên Bổ đề 05.5 và phần thưởng bị chặn.
+- 05.26(a): xấp xỉ $\prod_k(1-c/k)\approx n^{-c}$ (sai khác một hằng số $1/\Gamma(1-c)\approx0{,}994$).
+- 05.23(b): hệ số trung gian làm tròn bốn chữ số; giá trị cuối khớp nghiệm chính xác tới ba chữ số.
+- 05.27(b), (e): các phát biểu định tính về tốc độ học dẫn Sutton và Barto (2018, §6.2) và số liệu notebook; không có kết luận vượt quá dữ liệu.
+
+### Đề nghị sửa deck
+
+| Trang | Mức | Nội dung |
+|---|---|---|
+| L05-E03 (mặt trang) | trung bình | Bảng hai cột Mạch, Bài tập hiện chỉ có bài của ghi chú. Thêm số của `exercises.md`: mạch 2 → 05.16, 05.18, 05.19; mạch 3 → 05.17, 05.20, 05.21, 05.26; mạch 4 → 05.22–05.24, 05.27; mạch 5 → 05.25, 05.28. Thay "Tệp bài tập: chưa có" bằng liên kết "Bài tập" tới `material-viewer.html?doc=materials/lec-05/exercises.md&deck=lecture-05-du-doan-phi-mo-hinh.html`, theo dạng "Ghi chú bài giảng · Bài tập" |
+| L05-E03 (ghi chú diễn giả) | nhẹ | Bỏ câu "Các bài tập trong bảng thuộc ghi chú bài giảng" hoặc nêu thêm tệp bài tập |
+| L05-B13, L05-C10 (dòng Nguồn trong ghi chú diễn giả) | nhẹ | Có thể thêm "tệp bài tập, Bài tập 05.18" và "Bài tập 05.20" để hai chiều liên kết đủ |
+
+### Đề nghị sửa ghi chú bài giảng
+
+- Mục "Bài tập củng cố", câu cuối đoạn mở: có thể thêm liên kết viewer tới `exercises.md` (nhẹ).
+- `index.html` (điều phối viên): thêm nhóm "Bài tập" cho Bài 05 sau khi tệp qua kiểm định.
+
+### Tự kiểm `no-ai-slop` (Edit)
+
+Soạn ở chế độ Edit, đối chiếu `eval.md` trên toàn tệp. Đã sửa: bốn cấu trúc "không phải … mà/chỉ là …" (05.16(a), 05.24(d), 05.26(d), 05.27(e)) thành câu khẳng định trực tiếp; một câu kết tổng kết ở 05.27(e) thay bằng điều kiện cụ thể; bỏ dòng "Câu hỏi:" thừa trong khối đề 05.27; một câu hỏi trong gợi ý 05.28 đổi thành câu nêu việc cần làm. Không câu hỏi tu từ, không "hãy", không "Đáp án", không "chúng ta"/"ta thấy"/"rõ ràng"; dấu gạch dài chỉ ở tiêu đề tệp theo mẫu. Thuật ngữ tiếng Anh đặt trong ngoặc ở lần đầu: MDP, agent, reward, episode, return, temporal difference, update target, step size, batch updating, bootstrap target, bias, first-visit, every-visit, almost surely, truncated episode, self-transition, trajectory, Markov reward process.
+
+### Kiểm tra
+
+- `note_check.py`: 12 317 từ; 13 khối `exercise`, 13 `hint`, 13 `solution`; Bài tập 05.16–05.28 liên tục, không trùng (khoảng trống 05.1–05.15 là phần của ghi chú); không khối lạ, không khối lồng; 0 `\(`/`\[`. Mẫu "trang chiếu" xuất hiện 3 lần, đều ở đoạn mở và hai dòng "Trùng trang chiếu" bắt buộc của tệp bài tập.
+- `check_note.py 05 lecture-05-du-doan-phi-mo-hinh.html exercises` (cổng 8766), 1600×900 và 390×844: 0 `.katex-error`, 39 khối, 0 lỗi console, 0 yêu cầu lỗi hoặc ra ngoài, `overflow` false. Ở 390×844, `documentElement.scrollWidth` là 481 do bảng rộng; bảng có `display:block; overflow-x:auto`, trang không cuộn ngang (`scrollX` giữ 0), giống `lecture-note.md` (510).
+- Mọi liên kết của tệp: `#/1/1`–`#/6/1`, `#/2/18`, `#/2/19`, `#/3/11`, `#/3/12` và liên kết viewer của ghi chú; đã xem ảnh chụp viewer ở 1600×900 (05.25–05.26).
+- Không có khoảng trắng cuối dòng; `git diff --check` sạch.
+
+### Bổ sung theo quyết định chung của điều phối viên (2026-10-14): bài ghi chú có trang deck
+
+Quyết định: `exercises.md` gồm các bài tập thân chương của ghi chú có trang "Bài tập: …" trên deck (giữ số hiệu, nêu lại tự chứa, "Trùng trang chiếu", kết quả giống deck), kể cả bài tổng hợp của deck, cộng các bài mới nối tiếp bộ đếm; các bài ghi chú khác chỉ được ghi "chỉ trong ghi chú" trong bảng. Lý do: người học có ở một tệp mọi bài đã giải trên lớp cùng bộ bài giao, mà không chép phần còn lại của ghi chú.
+
+Rà mọi trang "Bài tập: …" của deck bằng `Reveal.getIndices()` (cổng 8799): B13 `#/2/18`/B13b `#/2/19` (không có bài ghi chú; là 05.18 của tệp), C10 `#/3/11`/C10b `#/3/12` (không có bài ghi chú; là 05.20), D13 `#/4/13`/D13b `#/4/14` (câu (c) trùng Bài tập 05.11(e) của ghi chú; câu (a), (b) dùng Nhận xét 05.29, 05.19, không phải bài tập ghi chú), D12 `#/5/8`/D12b `#/5/9` (Bài tập 05.12 của ghi chú, cộng câu (b)), E06 `#/6/6`/E06b `#/6/7` (Bài tập 05.8 của ghi chú). Không còn trang "Bài tập: …" nào khác.
+
+Thay đổi trong `exercises.md`:
+- Thêm Bài tập 05.11 (mức nhận biết, mạch 4), 05.8 (mức tính toán, bài tổng hợp; mạch 4 trong ghi chú, mạch 6 trên deck) và 05.12 (mức tính toán, mạch 5). Đề, gợi ý, lời giải chép từ ghi chú; thêm dữ kiện $e_1$, $e_2$ và độ lệch sau $e_2$ vào đề 05.8, phần mô tả cập nhật theo lô và hai nghiệm vào đề 05.12, phát biểu điều kiện Robbins–Monro vào đề 05.11; thêm câu (b) của D12 vào 05.12 với lời giải theo D12b; mở rộng "Kiểm tra lại" với đối chiếu trang lời giải và lỗi thường gặp.
+- Giữ nguyên 05.16–05.28. Tệp còn 16 bài: nhận biết 3, tính toán hoặc chứng minh 10, vận dụng 3.
+- Đoạn mở và bảng `Mạch | Mở phần | Bài tập` cập nhật: mạch 1 chỉ trong ghi chú 05.1; mạch 2 thêm "chỉ trong ghi chú: 05.2–05.5"; mạch 3 "05.6, 05.7"; mạch 4 thêm 05.11 và "chỉ trong ghi chú: 05.9, 05.10, 05.14"; mạch 5 thêm 05.12; mạch 6 là 05.8 và "chỉ trong ghi chú: 05.13, 05.15" (theo ánh xạ mạch của L05-E03). Nhãn "chỉ trong ghi chú" liên kết tới viewer của ghi chú.
+
+Kết quả trùng deck: 05.8 cho $(0{,}375;\ 0{,}375)$, $(0;\ 0{,}6875)$, độ lệch $(-0{,}149;\ -0{,}530)$ và $(-0{,}524;\ -0{,}217)$ như E06b; 05.12 cho $45/256\approx0{,}176$ và cùng giải thích tiêu chuẩn như D12b; 05.11(e) cho "thỏa cả hai" như D13b(c).
+
+Đề nghị sửa deck (bổ sung):
+- L05-E06b (ghi chú diễn giả), nhẹ: lỗi thường gặp "dùng $V(\mathrm S)=-0{,}375$ cũ ở chuyển thứ hai" không ảnh hưởng kết quả, vì chuyển $\mathrm X\to\mathrm G$ không đọc $V(\mathrm S)$. Đề nghị thay bằng "đọc $V(\mathrm X)=0{,}5$ của bảng sau $e_1$ ở chuyển $\mathrm S\to\mathrm X$, cho $V(\mathrm S)=0{,}0625$".
+- L05-E03: bảng số hiệu đề nghị ở trên giữ nguyên phần bài mới; ba bài 05.8, 05.11, 05.12 đã có trong bảng hiện tại của E03.
+
+Kiểm tra lại:
+- `note_check.py`: 13 611 từ; 16 khối `exercise`/`hint`/`solution`; không trùng số; khoảng trống 05.1–05.7, 05.9, 05.10, 05.13–05.15 là các bài chỉ trong ghi chú; không khối lạ, 0 `\(`/`\[`. Mẫu "trang chiếu" 8 lần, đều ở đoạn mở, dòng "Mức độ" của 05.8 và các dòng "Trùng trang chiếu" hoặc "Kiểm tra lại" đối chiếu trang lời giải.
+- `check_note.py 05 lecture-05-du-doan-phi-mo-hinh.html exercises` (cổng 8766), 1600×900 và 390×844: 0 `.katex-error`, 48 khối, 0 lỗi console, 0 yêu cầu lỗi hoặc ra ngoài, `overflow` false.
+- 16 liên kết tới deck đều khớp chỉ số Reveal ở trên; `git diff --check` sạch; không khoảng trắng cuối dòng.
+- `no-ai-slop` (Edit) trên phần thêm: không câu hỏi tu từ, không "hãy", không cấu trúc "không phải … mà …", không câu kết tổng kết.
+
+### Rà soát ba vai và vòng sửa `exercises.md` (2026-10-14)
+
+Ba tác tử rà soát chỉ đọc, chạy song song trên cùng bản 16 bài: TOÁN (`exrev-05-TOAN.md`), SV (`exrev-05-SV.md`), PB kèm `no-ai-slop` Detect (`exrev-05-PB.md`); cả ba là general-purpose, claude-opus-5-5, effort high. Tác tử soạn (cùng tác tử, general-purpose, claude-opus-5-5, high) sửa theo quyết định của điều phối viên, `no-ai-slop` Edit; không commit. Bản trước vòng sửa lưu ở `scratchpad/ex05/exercises.before-rev.md`.
+
+| Mã | Mức | Vị trí | Xử lý | Trạng thái |
+|---|---|---|---|---|
+| TOAN-1 | trung bình | 05.23(b) | Hệ số trung gian in năm chữ số; thế ngược cho đúng $9{,}228$; $6{,}639$; $4{,}417$; $2{,}659$ | đã sửa |
+| TOAN-2 | trung bình | 05.27(e) | Tách hội tụ (Định lý 05.30, không cho tốc độ) khỏi tốc độ (Sutton và Barto §6.2: TD(0) bước hằng so với Monte Carlo bước hằng, chưa chứng minh) | đã sửa |
+| TOAN-3 | trung bình | 05.27 đề, (c) | Thêm hàng Monte Carlo mọi lần ghé $\alpha=0{,}02$ ($4253$…$1802$); ghi $\alpha=0{,}5$ là lịch TD(0) tốt nhất trong năm lịch đã chạy; kết luận giới hạn vào các cấu hình đã chạy | đã sửa |
+| SV-1 = PB-1 | trung bình | đoạn mở | Viết lại: ba bài giữ số hiệu xếp vào mức tương ứng; nêu lý do số hiệu không tăng liên tục | đã sửa |
+| PB-2 | trung bình | thứ tự | Nhận biết 05.16, 05.17, 05.11; tính toán 05.18–05.24, 05.12, 05.25, 05.8 | đã sửa |
+| PB-3 | trung bình | 05.21(c) | Gọi tên phương pháp với số: Monte Carlo $V(\mathrm S)=0{,}3645$ so với $0$ của TD(0) sau $e_1$ | đã sửa |
+| PB-4 | trung bình | deck E03 | Ngoài phạm vi; xem đề nghị sửa deck dưới | chuyển điều phối viên |
+| SV-2 | trung bình | 05.25 dữ kiện | Bảng ba hàng "thứ nhất, thứ hai, thứ ba" | đã sửa |
+| SV-3 | trung bình | 05.25(b), (d) | Cột bảng (b) đổi thành "Bảng" $V_1,V_2,V_3$; (d) nêu quy ước lượt quét $k=0,1,\ldots$ của Thuật toán 05.32, "lượt quét $k=11$, tức lượt quét thứ $12$" | đã sửa |
+| SV-4 = PB-8 | trung bình | 05.28 đề | $2101$ là thứ tự lượt gốc, $2085$ là trung bình năm thứ tự; Monte Carlo theo lô $1627$ với mọi thứ tự | đã sửa |
+| SV-5 | trung bình | 05.18(c) | Cập nhật theo thứ tự thời gian (bước 4 của Thuật toán 05.13) | đã sửa |
+| TOAN nhẹ | nhẹ | 05.26(a), gợi ý, Kiểm tra lại | Hằng số $\approx0{,}994$; "không thu hẹp đáng kể", giảm khoảng $9\%$ sau $10^4$ cập nhật; "bậc độ lớn"; tích chính xác $0{,}907$ | đã sửa |
+| TOAN nhẹ | nhẹ | 05.26(d) Bước 3 | Nhân với $\gamma^j$; $\{\tau=j\}$ phủ toàn bộ vì $\tau\le T-t<\infty$ hầu chắc chắn | đã sửa |
+| TOAN nhẹ | nhẹ | 05.19(d) | Mẫu số hội tụ về $1/(1-q)>0$ | đã sửa |
+| TOAN nhẹ | nhẹ | 05.16(c) | Lần ghé đầu tiên dùng công thức phương sai; mọi lần ghé dùng lập luận cuối Nhận xét 05.19 | đã sửa |
+| TOAN nhẹ = SV | nhẹ | 05.21 đề | "sang phải $0{,}8$, sang trái $0{,}2$" | đã sửa |
+| TOAN nhẹ | nhẹ | 05.24 | $m(x)$ đổi thành $\operatorname{MSE}(x)$ | đã sửa |
+| TOAN nhẹ | nhẹ | 05.27(b) | Độ chệch với bảng $\mathbf 0$ là $-\gamma\,\mathbb E_\pi[v_\pi(S_{t+1})\mid S_t=s]$, âm khi trạng thái kế tiếp có giá trị dương | đã sửa |
+| SV nhẹ = PB-17 | nhẹ | 05.8, 05.12, 05.11 | "- (a)", "- (b)" trong đề; "**Câu (a).**" trong lời giải | đã sửa |
+| SV nhẹ | nhẹ | 05.8 | Cặp giá trị dùng dấu chấm phẩy | đã sửa |
+| SV nhẹ | nhẹ | 05.20(c) | Nhắc định nghĩa $T_\pi$ trong đề | đã sửa |
+| SV nhẹ | nhẹ | 05.12 gợi ý | Bỏ công thức đóng; công thức đóng chuyển vào lời giải dạng "Cách khác" như D12b | đã sửa |
+| SV nhẹ | nhẹ | 05.26(a) gợi ý | Cách tính lịch $n^{-0{,}6}$ | đã sửa |
+| SV nhẹ | nhẹ | 05.28 đề | Giải thích $v_x$, $\varphi$, $\omega$ | đã sửa |
+| SV nhẹ | nhẹ | 05.24 Kiểm tra lại | $[0{,}8\,(10-19/21)]^2\approx52{,}94$ thay cho $7{,}276^2$ | đã sửa |
+| SV nhẹ | nhẹ | 05.27 đề | Dòng dữ kiện cuối thành đoạn văn, tách khỏi danh sách câu hỏi | đã sửa |
+| SV nhẹ | nhẹ | 05.26(b), 390 px | Tỉ số có trọng số thành công thức hiển thị; kiểm lại 0 đoạn tràn ở 390×844 | đã sửa |
+| PB-5 | nhẹ | 05.17, 05.16(a) | 05.17 đổi tình huống sang lượt $\mathrm S\to\mathrm X\to\mathrm S$ bị cắt ngắn ở bước $2$ với bảng $V(\mathrm S)=0{,}4$, $V(\mathrm X)=0{,}6$ (hai chuyển TD(0): $0{,}5$; $0{,}55$; coi điểm cắt là kết thúc cho $0{,}3$); 05.16(a) bỏ ý trùng 05.13(a), yêu cầu liệt kê bốn cấu hình | đã sửa |
+| PB-6 | nhẹ | 05.22(c) | $\alpha=0{,}2$: $320/3969\approx0{,}081$, độ lệch chuẩn $\approx0{,}28$ | đã sửa |
+| PB-7 | nhẹ | 05.11 Trùng trang chiếu | D13(a) là trường hợp $x=10$ của 05.24; D13(b) dùng Nhận xét 05.19, 05.22(c) làm với $\alpha=0{,}2$ | đã sửa |
+| PB-9 | nhẹ | 05.27 | "Trên toàn tập huấn luyện (nghiệm theo lô không phụ thuộc thứ tự lượt)"; (d) "trên cùng dữ liệu" | đã sửa |
+| PB-10 | nhẹ | 05.27(e) | "Kết luận thứ hai dựa trên $J$…" | đã sửa |
+| PB-11 | nhẹ | 05.27 đề | "Cần kiểm tra nhận định trên dữ liệu của bài thực hành…" | đã sửa |
+| PB-12 | nhẹ | Kiểm tra lại | Khuôn "coi X, trong khi Y": 0 lần còn lại (tách câu hoặc "dù") | đã sửa |
+| PB-13 | nhẹ | 05.16 | "phiếu" thay bằng "Bài tập tuần 5"; giới thiệu "Bài tập tuần 5 của học kỳ 2 năm học 2025–2026" | đã sửa |
+| PB-14 | nhẹ | 05.16(c) đề | "theo các định lý của Mục 2.6" | đã sửa |
+| PB-15 | nhẹ | 05.19 | "tàu" thay bằng "tác tử" | đã sửa |
+| PB-16 | nhẹ | 05.27(d) | "Xác định … hay không." | đã sửa |
+| PB-18 | nhẹ | Tài liệu tham khảo | Thêm bài 3 cho 05.20; Sutton và Barto §2.5 trang 33 (05.11), §6.3 và Ví dụ 6.4 (05.12) | đã sửa |
+| PB-19 | nhẹ | nhãn [Lập trình] | Quy ước liên bài, để điều phối viên | chuyển điều phối viên |
+
+Số liệu mới đã tính lại: 05.17 ($0{,}6$; $0{,}2$; $0{,}5$ rồi $0{,}5$; $-0{,}1$; $0{,}55$; lỗi $0{,}5$ và $0{,}3$); 05.22(c) $0{,}2\cdot(320/441)/1{,}8=320/3969\approx0{,}0806$, căn bậc hai $\approx0{,}284$; 05.23(b) hệ số năm chữ số theo đề xuất TOAN-1 (đã kiểm bằng phân số); 05.27 bảng J lấy từ ô 48 của notebook.
+
+Đề nghị sửa deck (cập nhật):
+
+| Trang | Mức | Nội dung |
+|---|---|---|
+| L05-E03 (mặt trang) | trung bình | Bảng hai cột Mạch, Bài tập ánh xạ `exercises.md`: mạch 2 → 05.16, 05.18, 05.19; mạch 3 → 05.17, 05.20, 05.21, 05.26; mạch 4 → 05.11, 05.22–05.24, 05.27; mạch 5 → 05.12, 05.25, 05.28; mạch 6 → 05.8. Thay "Tệp bài tập: chưa có" bằng liên kết "Bài tập" tới `material-viewer.html?doc=materials/lec-05/exercises.md&deck=lecture-05-du-doan-phi-mo-hinh.html`, theo dạng "Ghi chú bài giảng · Bài tập" |
+| L05-E06b (ghi chú diễn giả) | nhẹ | Lỗi thường gặp "dùng $V(\mathrm S)=-0{,}375$ cũ ở chuyển thứ hai" không đổi kết quả; thay bằng "đọc $V(\mathrm X)=0{,}5$ của bảng sau $e_1$ ở chuyển $\mathrm S\to\mathrm X$, cho $V(\mathrm S)=0{,}0625$" (TOAN đã kiểm) |
+
+Kiểm tra sau vòng sửa:
+- `note_check.py`: 14 337 từ; 16 khối exercise/hint/solution; không trùng số; khoảng trống là các bài chỉ trong ghi chú; không khối lạ; 0 `\(`/`\[`; 0 "trong khi".
+- `check_note.py 05 lecture-05-du-doan-phi-mo-hinh.html exercises` (cổng 8766), 1600×900 và 390×844: 0 `.katex-error`, 48 khối, 0 lỗi console, 0 tải ngoài, `overflow` false; 0 đoạn văn hoặc mục danh sách tràn ở 390×844 (ngoài bảng cuộn trong khung).
+- 16 liên kết tới deck không đổi, khớp chỉ số Reveal đã kiểm; `git diff --check` sạch; không khoảng trắng cuối dòng.
+
+### Quyết định của điều phối viên (2026-10-14, giai đoạn III, bài tập)
+
+- Kiểm độc lập: `note_check.py` sạch (16 bài); viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 48 khối, 0 lỗi console, không tải ngoài; tính lại các số mới của 05.17 (0,5; 0,55; 0,3) và 05.22(c) (≈0,081; ≈0,28) đúng; `git diff --check` sạch. Ba vai rà soát chỉ đọc (Opus 5.5 high): 0 chặn, 0 nghiêm trọng; mọi mục trung bình đã sửa.
+- Quyết định: **chấp nhận**; commit `feat(materials-05)`. Trang E03 của deck, ghi chú diễn giả E06b và nhóm "Bài tập" trên `index.html` cập nhật ở đợt sau.
