@@ -1901,3 +1901,38 @@ Kiểm tra sau sửa: `note_check.py` 19 `exercise`/`hint`/`solution`, số hi�
 
 - Kiểm độc lập: `note_check.py` sạch (19 bài); viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 57 khối, 0 lỗi console, không tải ngoài; tính lại 03.25 ($\tfrac34$, $\tfrac{29}{16}$, $\rho^*=\tfrac4{17}$) và 03.20(e) ($-1$; 0,1; 1,09) đúng; `git diff --check` sạch. Ba vai rà soát chỉ đọc (Opus 5.5 high): 0 chặn, 0 nghiêm trọng; mọi mục trung bình đã sửa. Quyết định về 03.13: không chép bài "Bài tập củng cố" vào tệp (AGENTS.md), bảng dẫn tới ghi chú và trang deck.
 - Quyết định: **chấp nhận**; commit `feat(materials-03)`. Trang 07-03 của deck và nhóm "Bài tập" trên `index.html` cập nhật ở đợt sau; đề nghị sửa ghi chú (03.1(b) "công thức xác suất toàn phần") để đợt đồng bộ chéo.
+
+## Đợt sửa 2026-10-14 — Đồng bộ trang bài tập về nhà
+
+### Tác tử và phạm vi
+
+- Vai: biên tập deck (viết tệp), theo `brief_deck_homework_sync.md` của điều phối viên. Loại `general-purpose`, Claude Opus 5.5 (`claude-opus-5-5`), mức `high` (theo brief; điều phối viên xác nhận bằng lệnh gọi tác tử). `no-ai-slop` chế độ Edit. Không commit, không push.
+- Tệp sửa: deck (trang `L03R-07-03`; ghi chú diễn giả `L03R-01-01c`), `storyboard.md` (hàng `07-03` của bảng trang, hàng `07-03` của bảng ngoại lệ), `outline.md` (đoạn sau danh sách mục tiêu, đoạn sau bảng mục 9), mục này. Không sửa ghi chú, `exercises.md`, CSS, `index.html`, SVG. Bản deck trước khi sửa: `scratchpad/lecture-03.before-hwsync.html`; script `scratchpad/hw03/edit.py`.
+- Đầu vào: `exercises.md` đã commit (bảng `Mạch | Mở phần | Bài tập`, dòng "Mức độ" của từng bài), các mục "Đề nghị sửa deck" của Giai đoạn III ở trên.
+
+### Đề nghị và trạng thái
+
+| Đề nghị | Nguồn | Xử lý | Trạng thái |
+|---|---|---|---|
+| `07-03`: bảng `Mạch \| Bài tập` theo số hiệu của `exercises.md` | Giai đoạn III, "Đề nghị sửa deck" và các bản cập nhật | Bảng ba cột `Mạch \| Bài tập \| Chỉ trong ghi chú`, sáu hàng (mạch 2–7), chép đúng bảng mạch của tệp: 2: 03.1, 03.2, 03.15, 03.22; 3: 03.3, 03.18 (ghi chú 03.10); 4: 03.4, 03.5, 03.16; 5: 03.6, 03.7, 03.17, 03.19 (ghi chú 03.11, 03.12); 6: 03.8, 03.20, 03.21, 03.23 (ghi chú 03.9, 03.14); 7: 03.24, 03.25 (ghi chú 03.13). Đề nghị cũ xếp 03.13 vào cột bài tập; theo quyết định 03.13 không có trong tệp nên nằm ở cột "Chỉ trong ghi chú" | đã sửa |
+| `07-03`: thay "Tệp bài tập: chưa có" bằng liên kết viewer | như trên | "Ghi chú bài giảng · Bài tập", liên kết thứ hai `material-viewer.html?doc=materials/lec-03/exercises.md&deck=lecture-03-qua-trinh-quyet-dinh-markov.html` | đã sửa |
+| Ghi chú diễn giả `07-03` | như trên | Viết lại câu đầu: tệp có mười chín bài ở ba mức, 03.1–03.8 trùng trang "Bài tập" và cho cùng kết quả, 03.15–03.25 chỉ có trong tệp; câu (a), (b) của 03.24 làm được sau mạch 2; 03.9–03.14 chỉ trong ghi chú, 03.13 là bài tổng hợp đã giải ở mạch 7, lý do xếp 03.12 ở mạch 5 giữ nguyên. Dòng Nguồn thêm tệp bài tập và Bài tập tuần 3 (2025–2026), bài 1 (nguồn của 03.16). 124 âm tiết | đã sửa |
+| Ghi chú diễn giả `01-01c`: số hiệu theo mục tiêu | như trên | Theo dòng "Mức độ" của tệp: mục tiêu 1: 03.1, 03.2, 03.15, 03.22, 03.24; 2: 03.3, 03.18, 03.20, 03.23 (03.10, 03.12); 3: 03.4, 03.5, 03.16, 03.17; 4: 03.6, 03.7, 03.17, 03.19, 03.24, 03.25 (03.11); 5: 03.8, 03.20, 03.21, 03.23, 03.24, 03.25 (03.9, 03.13, 03.14); số trong ngoặc là bài chỉ trong ghi chú. Bảng độ phủ của Giai đoạn III lập trước khi thêm 03.1–03.8 và 03.25 nên không dùng. 104 âm tiết; dòng Nguồn thêm dòng "Mức độ" của tệp | đã sửa |
+| Đồng bộ chéo đã hoãn ($P^\pi\to P_\pi$, $v_H\to v_{\mathrm H}$, ký hiệu $\delta$) | mục "Hoãn" của đợt sửa ghi chú | Không thuộc "Đề nghị sửa deck"; đổi ký hiệu kéo theo ghi chú và tệp bài tập, ngoài phạm vi tệp của đợt này | không làm (ngoài phạm vi) |
+| Ghi chú 03.1(b) "công thức xác suất toàn phần" (TOAN-8) | Rà soát ba vai bài tập | Sửa ghi chú, không phải deck; mặt trang và ghi chú diễn giả của deck không có cụm "kỳ vọng toàn phần theo vị trí" | không áp dụng cho deck |
+
+### Mật độ
+
+`density.py`: `07-03` 62 → 76 âm tiết, 10 dòng, dòng dài nhất 16 (trần 80 của trang kết luận); 33 trong 76 là số hiệu bài trong bảng, không tính chúng thì còn 43. Ngoại lệ 10 dòng giữ như cũ, cập nhật số đo trong `storyboard.md`. `01-01c` không đổi mặt trang (66).
+
+### Tự kiểm `no-ai-slop` (Edit) và kết quả kiểm tra
+
+- Phạm vi: mặt trang và hai ghi chú diễn giả `07-03`, ghi chú diễn giả `01-01c`, hai đoạn thêm của `outline.md`. Đối chiếu `eval.md`: không số liệu hay nguồn thiếu căn cứ (mọi số hiệu đối chiếu bảng mạch và dòng "Mức độ" của `exercises.md`); không câu hỏi, không "hãy", "ta thấy", "rõ ràng", "Đáp án"; ghi chú diễn giả không mở bằng "Trang này", không mô tả quy trình; tài liệu không làm chủ ngữ trong câu giảng giải.
+- `deck_check.py` (cổng 8799) ở 1600×900 và 390×844: 72 trang, 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, 0 tải hỏng, không cuộn ngang; `07-03` không tràn khung. Danh sách "tràn" và "chữ nhỏ" của script gồm các trang khác không bị sửa (cảnh báo heuristic đã có trước, so với `dk03.json`); `07-03` bị đánh dấu chữ nhỏ ở 1600 như mọi trang 1600 khác, không ở 390. Đã xem ảnh `scratchpad/hw03/shots/L03R-07-03-1600.png`, `L03R-07-03-390.png`: bảng sáu hàng và ba dòng dưới vừa khung, không chồng chân trang.
+- Liên kết: `scratchpad/hw03/link_check.py` mở deck ở cổng 8766, nhảy tới `07-03`, bấm "Bài tập": viewer tải `exercises.md` (tiêu đề "Bài tập Bài 03 — Quá trình quyết định Markov"), 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang ở 1600 và 390; lỗi console duy nhất là CSP chặn đoạn script nội tuyến do `reloadserver` chèn vào trang viewer (tệp `material-viewer.html` không có script nội tuyến). `check_note.py 03 … exercises`: 0 lỗi KaTeX, 57 khối, 0 lỗi console, 0 yêu cầu ngoài, không tràn. Đã xem `scratchpad/hw03/shots/viewer-ex-1600.png`.
+- `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-14, đồng bộ trang bài tập về nhà)
+
+- Tác tử biên tập deck (general-purpose, claude-opus-5-5, high). Kiểm độc lập: trang L03R-07-03 76 âm tiết (trần 80 của trang tổng kết, ngoại lệ ghi storyboard); Playwright 1600×900 và 390×844 toàn deck: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang; ảnh trang xem trực tiếp; `git diff --check` sạch.
+- Quyết định: **chấp nhận**; commit `fix(lecture-03)`.

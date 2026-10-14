@@ -145,7 +145,7 @@ Cột "Quyết định" so với deck trước đợt sửa (50 trang). Cột "M
 | `07-02` | Bài tập: robot với rủi ro cứu hộ thấp hơn | bài tập tổng hợp, lời giải trên mặt trang | $v_\pi$ không đổi; $29/16<30/16$ | đề → kết luận vấn đề | 1, 4, 5 | sửa | 1,5 |
 | `07-02b` | Kết luận về vấn đề trung tâm | kết luận | Năm dòng song song với `01-02b` (dòng 4 có $v_\pi$, $q_\pi$; dòng 6 "Cùng giả thiết, $\gamma<1$ làm $I-\gamma P^\pi$ khả nghịch"), mỗi dòng một điều kiện và một số liệu của robot; dòng giới hạn theo thứ tự outline; "Nguồn:" | lời giải → tự kiểm tra | tất cả | sửa (quyết định chung 11; RL trung bình; PB 26) | 2 |
 | `07-04` | Câu hỏi tự kiểm tra | kết luận | Bốn câu: $r(s,a)$ còn thiếu; $\gamma=0$; trạng thái không ghi vị trí; luôn Chờ có tối ưu không | kết luận → bài tập về nhà | tất cả | sửa (MACH F9, PB 8, PB 9) | 1,5 |
-| `07-03` | Bài tập về nhà và tài liệu đọc | kết luận | Bảng `Mạch \| Bài tập` (Bài tập 03.12 ở mạch 5); "Tệp bài tập: chưa có"; liên kết ghi chú; Bài 04 | tự kiểm tra → hết | tất cả | sửa (SV nhẹ 10, RL nhẹ, quyết định chung 4) | 1 |
+| `07-03` | Bài tập về nhà và tài liệu đọc | kết luận | Bảng `Mạch \| Bài tập \| Chỉ trong ghi chú` theo bảng mạch của `exercises.md` (03.1–03.8, 03.15–03.25; cột thứ ba 03.9–03.14, Bài tập 03.12 ở mạch 5, 03.13 ở mạch 7); liên kết viewer "Ghi chú bài giảng · Bài tập"; Bài 04 | tự kiểm tra → hết | tất cả | sửa (SV nhẹ 10, RL nhẹ, quyết định chung 4; đồng bộ `exercises.md` 2026-10-14) | 1 |
 
 ## 4. Thời lượng
 
@@ -205,7 +205,7 @@ Sau rà lại vòng 2: `01-01b` 60, `01-02b` 60, `03-01` 51, `04-02` 46, `04-05`
 | `02-00`, `03-00`, `05-00`, `06-00`, `07-00` | dòng dài nhất 21–25 | Trang tiêu đề mạch: dòng dẫn tối đa 25 âm tiết theo `AGENTS.md` §"Trang tiêu đề mạch" (đếm lại: 23, 21, 25, 22, 21); `density.py` dùng trần chung 20 |
 | `07-02b` | 73 âm tiết / 7 dòng (trước: 55 / 5) | Trang trả lời vấn đề trung tâm: năm dòng song song với `01-02b` theo quyết định chung mục 11, cộng dòng "Giới hạn:" (bốn giới hạn, RL trung bình) và dòng "Nguồn:" bắt buộc; bỏ khung để giữ 7 dòng; trần 80 như trang tổng kết |
 | `06-07d` | 53 âm tiết / 7 dòng | Giả mã bảy bước của Thuật toán 03.29 trên trang riêng (giả mã dưới 8 dòng được phép giữ một trang); giữ đủ bảy bước để khớp ghi chú |
-| `07-03` | 62 âm tiết / 10 dòng | Trang bài tập về nhà và tài liệu đọc của mạch kết luận (trần 80); bảng `Mạch | Bài tập` sáu hàng bắt buộc theo `AGENTS.md`, mỗi hàng được đếm là một dòng |
+| `07-03` | 76 âm tiết / 10 dòng (trước đợt đồng bộ 2026-10-14: 62 / 10) | Trang bài tập về nhà và tài liệu đọc của mạch kết luận (trần 80); bảng `Mạch | Bài tập | Chỉ trong ghi chú` sáu hàng bắt buộc theo `AGENTS.md`, mỗi hàng được đếm là một dòng; `density.py` đếm cả 33 số hiệu bài trong bảng, không tính chúng thì còn 43 âm tiết |
 
 Kiểm tra trình duyệt xác nhận mọi trang nằm trong khung 16:9 và không chồng lên chân trang (mục "Kiểm tra" trong `review-log.md`).
 

@@ -12,6 +12,8 @@ Sinh viên năm 3 đã học xác suất, kỳ vọng có điều kiện, đại
 4. Chứng minh phương trình Bellman kỳ vọng cho $v_\pi$, $q_\pi$; chỉ ra bước dùng tính Markov và tính dừng (Bài tập 03.6, 03.7, 03.11).
 5. Lập, giải, kiểm tra hệ $(I-\gamma P^\pi)v=r^\pi$ (Bài tập 03.8, 03.9, 03.13, 03.14).
 
+Số hiệu trong danh sách trên là của ghi chú. Bài của `materials/lec-03/exercises.md` theo mục tiêu (dòng "Mức độ" của từng bài; ghi chú diễn giả `01-01c`): mục tiêu 1: 03.1, 03.2, 03.15, 03.22, 03.24; mục tiêu 2: 03.3, 03.18, 03.20, 03.23; mục tiêu 3: 03.4, 03.5, 03.16, 03.17; mục tiêu 4: 03.6, 03.7, 03.17, 03.19, 03.24, 03.25; mục tiêu 5: 03.8, 03.20, 03.21, 03.23, 03.24, 03.25.
+
 ## 2. Khung lý thuyết chung
 
 - **Bài toán trung tâm.** Tính giá trị dài hạn của một chính sách khi phản hồi của môi trường là ngẫu nhiên (bài toán dự đoán, có mô hình).
@@ -161,5 +163,7 @@ Mọi mã đầy đủ có tiền tố `L03R-`.
 | 5 | Mục 4 | `lec-03-part-05` |
 | 6 | Mục 5; Tình huống 03.1 | `lec-03-part-06`, `lec-03-part-07` |
 | 7 | Tóm tắt chương, Bài tập củng cố, Hướng dẫn đọc thêm | `lec-03-part-08`, `lec-03-part-10` |
+
+Tệp bài tập `materials/lec-03/exercises.md` (mười chín bài: 03.1–03.8, 03.15–03.25) xếp bài theo mạch; trang `07-03` chép đúng bảng đó, thêm cột "Chỉ trong ghi chú" (03.9–03.14) và liên kết viewer của tệp.
 
 Không có bài thực hành riêng (quyết định chung, mục 8); Tình huống 03.2 về CartPole dẫn sang notebook của Bài 04 và chỉ được nhắc trong ghi chú diễn giả.
