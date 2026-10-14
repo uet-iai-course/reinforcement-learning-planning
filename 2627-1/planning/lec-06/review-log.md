@@ -1340,3 +1340,48 @@ Kiểm tra sau vòng sửa:
 
 - Tác tử biên tập deck (general-purpose, claude-opus-5-5, high). Kiểm độc lập: trang L06-G04 72 âm tiết (trần 80 của trang tổng kết, ngoại lệ ghi storyboard); Playwright 1600×900 và 390×844 toàn deck: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang; liên kết viewer bài tập mở được; `git diff --check` sạch.
 - Quyết định: **chấp nhận**; commit `fix(lecture-06)`.
+
+## Đợt sửa 2026-10-14 — Đồng bộ chéo ghi chú
+
+### Tác tử và phạm vi
+
+- Vai: biên tập ghi chú bài giảng Bài 06 (sửa nhỏ), viết tệp. Loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high`, theo `scratchpad/brief_note_crosssync.md`; điều phối viên đối chiếu với lời gọi công cụ. `no-ai-slop` Edit. Không commit, không push.
+- Đầu vào: `planning/quyet-dinh-chuan-2026-10-12.md`; các mục "Đề nghị sửa ghi chú" còn mở của nhật ký này (bảng "Đề nghị sửa ghi chú (bổ sung)" của giai đoạn III; mục alt hình bị từ chối ở đợt "Sửa ghi chú sau giai đoạn II" và chuyển sang đợt này); `materials/lec-06/exercises.md` đã commit; deck đã commit; notebook Bài 06, ô 36–40 (output đã nhúng).
+- Tệp đã ghi: `materials/lec-06/lecture-note.md`; mục này. Số hiệu kết quả, ví dụ, bài tập và `note-topic-id` giữ nguyên. Bản trước đợt sửa lưu ở `scratchpad/lecture-note-06.before-crosssync.md`.
+
+### Xử lý từng đề nghị
+
+| Đề nghị | Trạng thái | Vị trí mới và nội dung |
+|---|---|---|
+| "Trong thực hành" sau Nhận xét 06.10 (SV-1, PB-2, TOAN nhẹ của giai đoạn III) | đã sửa | Dòng 635: thay số liệu đánh giá của chính sách tham lam ($773$ bước, $44\%$, phần 8.2) bằng số liệu huấn luyện: $500$ lượt huấn luyện cuối của Sarsa, sinh bởi chính sách hành vi $\varepsilon_k$-tham lam, dài trung bình $655$ bước, $7\%$ bị cắt ngắn ở bước $1000$ (phần 8.1; output ô 37 của notebook, đếm từ $0$). Câu kết luận viết theo điều kiện: "nếu Thuật toán 06.9 học trên dữ liệu như vậy thì các lượt bị cắt ngắn không dùng được". Cùng số với Bài tập 06.17(a). Bảng đánh giá ở mục Tình huống (dòng 1350, $44\%$) giữ nguyên vì đúng ngữ cảnh đánh giá |
+| Bài tập 06.1–06.6, "Kiểm tra lại" (PB nhẹ, tùy chọn) | đã sửa một phần | Dòng 287, 493, 659, 846, 1053, 1219: thêm câu "Hai/Ba lỗi thường gặp: …" lấy từ `exercises.md`, đổi tham chiếu câu sang cách đánh số của ghi chú ("câu 4", "trường hợp a"); 06.2 thêm hai tổng xác suất, 06.3 thêm "Hai cách chỉ khác nhau ở cặp lặp $(\mathrm D,0)$", 06.4 thêm phép tính $0+0{,}8\cdot(-1{,}6)$ và nêu $Q_0(\mathrm C,0)=1$ của bảng khởi tạo nghiêng phải, 06.5 thêm "hai mục tiêu lệch nhau $799$". Không đổi cách đánh câu "1., 2." sang "(a), (b)": ghi chú dùng danh sách số cho mọi bài tập củng cố 06.7–06.12, đổi riêng sáu bài làm lệch kiểu trong cùng tệp |
+| Dòng mở mục "Bài tập củng cố" (brief, việc 3) | đã sửa | Dòng 1454: liên kết viewer tới `exercises.md`; một câu nêu thành phần: 06.1–06.6 của thân chương (cùng số hiệu và kết quả), 06.13–06.17 mới (Monte Carlo và Q-learning trên dãy sáu ô có chuyển ngẫu nhiên, một chứng minh về lớp $\varepsilon$-mềm, ba bài trên tàu đổ bộ); 06.7–06.12 không có trong bộ ấy |
+| Mục "Hướng dẫn đọc thêm và tài liệu tham khảo" (brief, việc 3) | đã sửa | Dòng 1631: mục mới "**Bài tập.**" với liên kết viewer, ba mức, hai nhóm số hiệu. Mục "Mục tiêu học tập" không thêm liên kết, vì danh sách mục tiêu chỉ nêu năng lực và brief cho chọn một trong hai chỗ |
+| Alt hình dòng 593, 711, 906 (tùy chọn, chuyển từ đợt trước) | từ chối | Thống nhất ký pháp "0; thưởng −1" với "0 · −1" vẫn đòi sửa `sarsa-target.svg` và `q-learning-target.svg`; đề nghị chỉ làm khi không phải sửa SVG. Alt hiện tại khớp nhãn trong SVG |
+
+### Đồng bộ ký hiệu theo `quyet-dinh-chuan-2026-10-12.md`
+
+Đã quét: $T_\pi$, $T_*$ chỉ số dưới (12 chỗ, không còn $T^\pi$); không có $P^\pi$, $r^\pi$; tên trạng thái chữ đứng $\mathrm B,\mathrm C,\mathrm D$ (các $S$, $A$ nghiêng còn lại là biến ngẫu nhiên, $B$ ở Mệnh đề 06.26 là độ rộng đoạn của Hoeffding); "hầu chắc chắn", "quá trình quyết định Markov", "tỉ số lấy mẫu quan trọng", "lần ghé đầu tiên (first-visit)", "tác tử" đã đúng; dấu phẩy thập phân trong KaTeX. Không cần sửa. Tham chiếu sang bài khác vẫn ở dạng "ghi chú Bài 0N, Mục k" kèm phát biểu lại (quyết định §4); brief đợt này chỉ yêu cầu ký hiệu, nên không đổi sang số hiệu `0N.k`.
+
+### Đề nghị sửa deck
+
+| Trang | Nội dung sửa | Lý do |
+|---|---|---|
+| L06-C10 (mạch 3, "Điều khiển Monte Carlo trên lượt bị cắt"), dòng thứ ba của mặt trang và ghi chú diễn giả | "Lượt của chính sách tham lam học được trong bài thực hành: trung bình $773$ bước, $44\%$ bị cắt." → "$500$ lượt huấn luyện cuối của Sarsa trong bài thực hành: trung bình $655$ bước, $7\%$ bị cắt."; ghi chú diễn giả đổi "chính sách tham lam theo bảng Sarsa" thành "các lượt huấn luyện của Sarsa (chính sách hành vi $\varepsilon_k$-tham lam)" và nguồn "phần 8.2" thành "phần 8.1" | Trang lập luận về dữ liệu mà điều khiển Monte Carlo sẽ học, nên cần số liệu huấn luyện; khớp Nhận xét 06.10 (dòng 635) và Bài tập 06.17(a). Số âm tiết của dòng gần như không đổi |
+
+### Biên tập `no-ai-slop` (Edit) và tự đối chiếu `eval.md`
+
+- Phạm vi: mọi câu mới hoặc sửa ở các dòng trên.
+- Đạt: không thêm nhận định không nguồn (số liệu đọc từ output đã nhúng, câu lỗi thường gặp lấy từ `exercises.md` đã qua ba vai rà soát); không câu hỏi tu từ, không "hãy", không gạch ngang dài mới; tài liệu không làm chủ ngữ (bản nháp đầu viết "tệp giữ số hiệu…", đã đổi thành "Bộ bài … gồm …"); dấu hai chấm chỉ dùng cho nhãn "Hai lỗi thường gặp:" và danh sách.
+- Số từ (`wc -w` qua `note_check.py`): 25 847 → 26 264 (+417), chủ yếu từ các câu lỗi thường gặp.
+
+### Kiểm tra đã chạy
+
+- `note_check.py 2627-1/materials/lec-06/lecture-note.md`: 27 kết quả, 15 ví dụ, 12 bài tập, không trống số, không trùng; 0 dấu `\(`/`\[`; khối `:::` đủ loại (82 khối).
+- `check_note.py 06 lecture-06-dieu-khien-phi-mo-hinh.html` (viewer cổng 8766, cwd server là kho): 1600×900 và 390×844 đều 0 `.katex-error`, 0 lỗi console, 0 yêu cầu ngoài hoặc hỏng, không cuộn ngang; 82 khối, 26 khối gập.
+- Playwright: hai liên kết mới trỏ tới `material-viewer.html?doc=materials/lec-06/exercises.md&deck=lecture-06-dieu-khien-phi-mo-hinh.html`; trang đích tải được ("Bài tập Bài 06 — Điều khiển phi mô hình", 33 khối, 0 `.katex-error`). Đã xem ảnh mục "Bài tập củng cố" ở 1600×900.
+- `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-14, đồng bộ chéo ghi chú)
+
+- Kiểm độc lập: `note_check.py` sạch; viewer 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(materials-06)`. Đề nghị sửa deck L06-C10 (655 bước, 7%, phần 8.1) gom vào lượt khép đợt.
