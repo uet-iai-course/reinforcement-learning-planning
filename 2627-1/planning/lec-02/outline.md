@@ -43,7 +43,7 @@ Tổng 120 phút.
 
 - **Mê cung $8\times8$** (bài giảng gốc, trang 25–26): 27 ô đi được, xuất phát $(0,2)$, đích $\mathrm G=(8,6)$ sau bước Đông từ $(7,6)$; tường hoặc biên giữ tác tử đứng yên; $-1$ mỗi bước kể cả bước vào $\mathrm G$; đường 16 bước. Dùng ở `L02-01-02`, `02-02`, `02-03`, `02-05`, `02-07`, `03-02`, `03-13`, `03-06`, `03-08`, `04-01`, `04-02`, `04-07`, `04-08`, `05-01`, `05-15`, `05-13`, `05-08`, `05-17`, `05-18`. Mỗi lần dùng trả lời một câu hỏi mới: một bước (mẫu chuyển), hai đường 16/18 bước (giả thuyết phần thưởng), mã bốn ô kề (biểu diễn, quan sát một phần), ba bước đầu (lịch sử), chính sách nguồn, xác suất dãy hành động, hai ô cùng mã (chính sách ngẫu nhiên), ba bước cuối (lợi tức), bảng giá trị nguồn ($-16$), hai hành động tại $(4,1)$ ($-11$ và $-13$, điều khiển), bước trượt (hàm động lực).
 - **Mê cung có chìa khóa** (biến thể sư phạm của mê cung $8\times8$): chìa khóa ở ngõ cụt $(4,2)$, cửa ở lối $(7,6)\to\mathrm G$. Dùng ở `L02-03-14`, `03-04`, `03-10`, `03-15`, `03-16`.
-- **Mê cung đích–hố** (ví dụ do người dùng duyệt, số liệu sư phạm tự xây dựng): $-c$ mỗi bước, $+10$ khi vào $\mathrm G$, phạt $c_{\mathrm H}$ khi vào $\mathrm H$ (ghi chú viết $h$); đường ngắn nhất 6 bước tới $\mathrm G$, 2 bước tới $\mathrm H$. Dùng ở mạch 6 và bài tập tổng hợp `L02-07-04`/`07-07` ($\gamma=0{,}9$).
+- **Mê cung đích–hố** (ví dụ do người dùng duyệt, số liệu sư phạm tự xây dựng): $-c$ mỗi bước, $+10$ khi vào $\mathrm G$, phạt $c_{\mathrm H}$ khi vào $\mathrm H$ (ghi chú bài giảng và `exercises.md` cùng ký hiệu); đường ngắn nhất 6 bước tới $\mathrm G$, 2 bước tới $\mathrm H$. Dùng ở mạch 6 và bài tập tổng hợp `L02-07-04`/`07-07` ($\gamma=0{,}9$).
 - **Ví dụ một lần:** robot (ranh giới), ván cờ (phản hồi trễ), hai chuỗi $(2,0)$, $(1,1)$ (ưu tiên dừng), môi trường hai nhánh (kỳ vọng), Gymnasium `env.step` (mẫu chuyển trong thực hành).
 - **Hành lang pin** (Tình huống 02.1 của ghi chú, robot giao hàng năm ô với mức pin): chỉ có trong ghi chú; deck không có trang riêng, vì mạch 5 đã đủ thời lượng. Ghi trong review-log.
 
@@ -110,7 +110,7 @@ Tổng 120 phút.
 | 24 | sửa | 5 | Dự đoán và điều khiển (`L02-05-17`). |
 | 25–26 | giữ | 1–5 | Mê cung, chính sách, bảng giá trị (`L02-05-13`). |
 | 27 | sửa | 3, 7 | Phân loại quan sát; câu hỏi tự kiểm tra. |
-| hw02 bài 1, 2, 5, 6, 10 | phân bổ | 2–6 | Theo bảng `Mạch | Bài tập` ở `L02-07-03`; bài 3, 4, 7, 8, 9 cho Bài 03. |
+| hw02 bài 1, 2, 5, 6, 10 | phân bổ | 2–7 | Bài 1 → Bài tập 02.14, bài 2 → 02.15, bài 5 → 02.10 (ghi chú), bài 6 → 02.19, bài 10 → 02.22 (`exercises.md`); bảng `Mạch | Bài tập` ở `L02-07-03` theo bảng của `exercises.md`; bài 3, 4, 7, 8, 9 cho Bài 03. |
 | (bổ sung) | thêm | 5 | Ưu tiên dừng và trọng số hình học: Russell và Norvig (2020), §17.1.1; chứng minh trong ghi chú. |
 | (bổ sung) | thêm | 6 | Mê cung đích–hố, ngưỡng $c^*$: ví dụ do người dùng duyệt. |
 

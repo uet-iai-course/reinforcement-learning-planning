@@ -42,7 +42,7 @@ Mỗi cụm lớn có một trang "Bài tập: …" với "Lời giải:" trên 
 | `L02-01-04` Nội dung | 45 → 39 | 7 | Bài có 7 mạch; trang "Nội dung" được phép 7 dòng (quyết định chung §5). |
 | `L02-07-06` Kết quả về lợi tức, giá trị và phần thưởng | — → 70 | 6 | Bảng tổng kết, trần 80. |
 | `L02-07-05` Trả lời vấn đề trung tâm | — → 77 | 6 | Trang tổng kết viết song song năm dòng với Vấn đề trung tâm, mỗi dòng có điều kiện và số liệu, cộng dòng "Nguồn:"; trần 80. |
-| `L02-07-03` Bài tập về nhà và tài liệu đọc | 62 → 70 | 6 | Trang tổng kết bắt buộc: bảng `Mạch \| Bài tập`, "Tài liệu đọc:", liên kết ghi chú, "Tệp bài tập: chưa có", dòng nối Bài 03 có thuật ngữ gốc; trần 80. |
+| `L02-07-03` Bài tập về nhà và tài liệu đọc | 62 → 70 → 80 | 6 | Trang tổng kết bắt buộc: bảng `Mạch \| Bài tập` (chuyển vị, hai hàng "Tệp bài tập" và "Chỉ trong ghi chú" cho mạch 2–7, theo bảng của `exercises.md`), "Tài liệu đọc:", liên kết "Ghi chú bài giảng · Bài tập", dòng nối Bài 03 có thuật ngữ gốc; trần 80 (đợt 2026-10-14: 70 → 80 theo `density.py`, đếm cả số hiệu bài trong bảng; mỗi dòng ≤ 20). |
 
 `L02-03-16` (lời giải bài kiểm tra tính Markov) có 66 âm tiết ở vòng biên tập trước theo `density.py` (khoảng 57 đếm tay, do dấu câu còn lại sau khi bỏ KaTeX); vòng rà lại 2 rút dòng (b), nay 58.
 
@@ -62,7 +62,7 @@ Mạch 1: 9 phút; mạch 2: 16; mạch 3: 27; mạch 4: 15; mạch 5: 27; mạc
 - **Thứ tự:** `L02-02-07` dời lên ngay sau `L02-02-08` (cụm mẫu chuyển kết bằng bài kiểm tra; cụm tín hiệu thưởng kết mạch 2); `L02-05-09` dời lên ngay sau `L02-05-16`.
 - **Ký hiệu:** mức phạt hố đổi $h\to c_{\mathrm H}$ trên deck (chữ $h$ dành cho lịch sử); tọa độ ghi "(cột, hàng)", trạng thái chìa khóa ghi (ô, $k$); tên hướng không đặt trong `\text{}` của KaTeX. Ghi chú bài giảng còn dùng $h$, $(x,y)$, $(x,y,k)$: lệch tạm thời, có đề nghị sửa ghi chú trong review-log.
 - **Nguồn trang 10, 20 (ba thành phần của tác tử):** mô hình $\hat p$ của tác tử trở lại mặt trang ở `L02-05-17`.
-- **Nguồn trang 27 (câu đố phân loại cờ vua, Dota hoặc CS:GO, robot hút bụi):** không đưa lên deck; để dành cho `exercises.md` (giai đoạn III).
+- **Nguồn trang 27 (câu đố phân loại cờ vua, Dota hoặc CS:GO, robot hút bụi):** không đưa lên deck; để dành cho `exercises.md` (giai đoạn III); nay là Bài tập 02.15.
 - **Hình riêng cho trang chiếu:** `aliasing-pair-deck.svg` (bỏ chú giải trong hình, chú giải viết trên mặt trang `L02-04-08`, cỡ nhãn lớn hơn); `aliasing-pair.svg` của ghi chú giữ nguyên chú giải.
 
 ## Mạch 1: Mở đầu — 9 phút
@@ -366,7 +366,7 @@ Chức năng: dùng lợi tức với $\gamma=1$ để dự báo hành vi tối 
 ### L02-06-06 — Bài tập: phạt hố bổ sung
 - Vị trí: mạch 6, bước `kiểm tra`. 3 phút. Nguồn: ghi chú Bài tập 02.8.
 - Loại: bài tập có lời giải mẫu (fragment). Mục tiêu: 5.
-- Quyết định: sửa (đề theo ghi chú: (a) $c=3$, (b) $c_{\mathrm H}=4$; ghi chú viết $h$). Âm tiết 42 → 55.
+- Quyết định: sửa (đề theo ghi chú: (a) $c=3$, (b) $c_{\mathrm H}=4$; ghi chú bài giảng và `exercises.md` cùng viết $c_{\mathrm H}$; ghi chú diễn giả sửa theo đợt 2026-10-14). Âm tiết 42 → 55.
 
 ### L02-06-07 — Khuyến khích và chế tài
 - Vị trí: cuối mạch 6, bước `ứng dụng`. 1 phút. Nguồn: ghi chú Nhận xét 02.19, 02.20.
@@ -388,7 +388,7 @@ Chức năng: đặt kết quả cạnh giả thiết không được bỏ, vậ
 - Quyết định: thêm. Âm tiết 70 (ngoại lệ bảng tổng kết).
 
 ### L02-07-04 — Bài tập: mê cung đích–hố có chiết khấu
-- Vị trí: mạch 7, bài tập tổng hợp. 2 phút. Nguồn: kế hoạch A2 (= Bài tập 02.17 dự kiến của `exercises.md`).
+- Vị trí: mạch 7, bài tập tổng hợp. 2 phút. Nguồn: kế hoạch A2; trùng Bài tập 02.21 của `exercises.md`, câu (a), (b) (ghi chú diễn giả dẫn số hiệu từ đợt 2026-10-14).
 - Lý do tồn tại: dùng lợi tức chiết khấu, tổng hình học và cách so sánh đường kết thúc khi bỏ giả thiết $\gamma=1$.
 - Loại: bài tập tổng hợp có lời giải mẫu ở trang kế. Quyết định: thêm. Âm tiết 53.
 
@@ -405,5 +405,5 @@ Chức năng: đặt kết quả cạnh giả thiết không được bỏ, vậ
 - Quyết định: sửa và đặt trước `L02-07-03` (gom câu tự kiểm tra từ các trang "Câu hỏi kiểm tra" cũ). Âm tiết 34 → 60.
 
 ### L02-07-03 — Bài tập về nhà và tài liệu đọc
-- Vị trí: cuối mạch 7. 1 phút. Bảng `Mạch | Bài tập` chỉ ghi Bài tập 02.1–02.13 của ghi chú; dòng "Tệp bài tập: chưa có"; "Tài liệu đọc:"; liên kết "Ghi chú bài giảng"; dòng nối Bài 03 (MDP, phương trình Bellman).
-- Quyết định: sửa (bỏ `h3` thay nhãn, thêm bảng và liên kết viewer, bỏ đường dẫn tệp nguồn khỏi ghi chú diễn giả). Âm tiết 62 → 70.
+- Vị trí: cuối mạch 7. 1 phút. Bảng `Mạch | Bài tập` chuyển vị theo bảng của `exercises.md`: hàng "Tệp bài tập" (02.1–02.5, 02.7, 02.8, 02.14–02.22 theo mạch 2–7), hàng "Chỉ trong ghi chú" (02.6, 02.9–02.13); "Tài liệu đọc:"; liên kết "Ghi chú bài giảng · Bài tập" tới hai trang viewer; dòng nối Bài 03 (MDP, phương trình Bellman).
+- Quyết định: sửa (bỏ `h3` thay nhãn, thêm bảng và liên kết viewer, bỏ đường dẫn tệp nguồn khỏi ghi chú diễn giả). Âm tiết 62 → 70. Đợt 2026-10-14: đồng bộ với `exercises.md` (bảng sáu mạch, liên kết viewer bài tập, ghi chú diễn giả nêu phân bố bài giữa tệp bài tập và ghi chú); âm tiết 70 → 80, trong trần trang tổng kết.

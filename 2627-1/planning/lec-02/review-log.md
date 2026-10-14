@@ -3228,3 +3228,48 @@ Phạm vi: toàn bộ văn bản của `exercises.md`. Đã sửa trong lượt 
 
 - Kiểm độc lập: `note_check.py` sạch (16 bài); viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 48 khối, 0 lỗi console, không tải ngoài; `git diff --check` sạch. Ba vai rà soát chỉ đọc (Opus 5.5 high): 0 chặn, 0 nghiêm trọng; mọi mục trung bình đã sửa (cảnh báo KaTeX chữ Việt trong `\text{}` còn 0).
 - Quyết định: **chấp nhận**; commit `feat(materials-02)`. Trang L02-07-03 của deck, ghi chú diễn giả L02-06-06 và nhóm "Bài tập" trên `index.html` cập nhật ở đợt sau; đề nghị sửa ghi chú (§2.4, dòng mở "Bài tập củng cố") để đợt đồng bộ chéo.
+
+## Đợt sửa 2026-10-14 — Đồng bộ trang bài tập về nhà
+
+### Tác tử và phạm vi
+
+- Vai trò: biên tập deck Bài 02 (sửa nhỏ, có kiểm), theo `brief_deck_homework_sync.md` của điều phối viên. Loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` theo brief; điều phối viên đối chiếu với lệnh gọi công cụ. `no-ai-slop` Edit. Không commit.
+- Tệp đã ghi: `2627-1/lecture-02-giao-dien-tac-tu-moi-truong.html` (`L02-07-03`; ghi chú diễn giả `L02-06-06`, `L02-07-04`, `L02-07-07`); `storyboard.md` (dòng ngoại lệ mật độ `L02-07-03`, mục `L02-06-06`, `L02-07-04`, `L02-07-03`, dòng nguồn trang 27); `outline.md` (dòng mê cung đích–hố, dòng phân bổ hw02); mục này. Không sửa ghi chú bài giảng, `exercises.md`, `lecture-slide.css`, `index.html`, SVG. Bản deck trước đợt sửa: `scratchpad/lec02-before-hwsync.html`, ngoài kho.
+
+### Thay đổi
+
+| Trang | Trước | Sau | Âm tiết (`density.py`) |
+|---|---|---|---|
+| `L02-07-03` | bảng ba cặp `Mạch \| Bài tập`, chỉ 02.1–02.13, mạch 2–6, "02.5–02.7" gộp cả 02.6; "Tệp bài tập: chưa có" | bảng chuyển vị như Bài 01: cột mạch 2–7, hàng "Tệp bài tập" và hàng "Chỉ trong ghi chú", khớp bảng `Mạch \| Mở phần \| Bài tập` của `exercises.md`; dòng "Ghi chú bài giảng · Bài tập" với hai liên kết viewer | 70 → 80 (trần trang tổng kết 80; 6 dòng; dòng dài nhất 20). Theo `CLAUDE.md`, số trong bảng không tính, nên số đếm tay thấp hơn nhiều. |
+| `L02-07-03`, ghi chú diễn giả | 02.1–02.8 trong các mục của ghi chú, 02.9–02.13 củng cố | tệp bài tập có 16 bài; 02.1–02.5, 02.7, 02.8 trùng bài đã giải trên lớp; 02.14–02.22 không có trong ghi chú, 02.21 là bài tổng hợp của mạch 7 cộng câu (c); 02.6, 02.9–02.13 chỉ trong ghi chú; giữ câu hw02 bài 3, 4, 7, 8, 9 và câu nối Bài 03 | 126 âm tiết |
+| `L02-06-06`, ghi chú diễn giả | "nơi mức phạt hố ký hiệu $h$" | "cùng ký hiệu $c_{\mathrm H}$" (ghi chú bài giảng đã dùng $c_{\mathrm H}$ ở Bài tập 02.8) | 81 |
+| `L02-07-04`, ghi chú diễn giả | "Bài tập tổng hợp dùng …" | "Bài tập tổng hợp, tức Bài tập 02.21 của tệp bài tập, dùng …" | 86 |
+| `L02-07-07`, ghi chú diễn giả | kết thúc ở "chỉ cần so sánh hai đường ngắn nhất" | thêm "câu (c) của Bài tập 02.21 xét thêm chính sách ngẫu nhiên" | 100 |
+
+### Đề nghị sửa deck trong nhật ký giai đoạn III
+
+| Đề nghị | Trạng thái | Xử lý |
+|---|---|---|
+| 1. `L02-07-03`: bảng thêm 02.14–02.22, liên kết viewer bài tập, ghi chú diễn giả, đếm mật độ | đã sửa | Như bảng trên. |
+| 2. `L02-06-06`: "$h$" → $c_{\mathrm H}$ (TOAN) | đã sửa | Như bảng trên; storyboard và outline bỏ chú thích "ghi chú viết $h$" đã lỗi thời. |
+| `L02-07-04`/`07-07` dẫn Bài tập 02.21 | đã sửa | Như bảng trên. |
+| 3. Ghi chú §2.4, dẫn trang 27 (PB-1) | không sửa trong đợt này | Ngoài phạm vi tệp (ghi chú bài giảng); để đợt đồng bộ chéo. |
+| 4. Ghi chú, câu mở "Bài tập củng cố" thêm liên kết `exercises.md` | không sửa trong đợt này | Ngoài phạm vi tệp; để đợt đồng bộ chéo. |
+
+Còn lại, không sửa: trang mục tiêu `L02-01-03` và mục tiêu trong `outline.md` (dòng 36–40) chỉ dẫn số bài của ghi chú (02.1–02.13); thêm 02.14–02.22 sẽ vượt trần 80 của trang (đang 79). Điều phối viên quyết định có đồng bộ hay không.
+
+### Kiểm tra
+
+- `density.py`: `L02-07-03` 80 âm tiết, 6 dòng, dòng dài nhất 20; `L02-06-06`, `L02-07-04`, `L02-07-07` không đổi mặt trang (55, 53, 41).
+- `deck_check.py lecture-02-giao-dien-tac-tu-moi-truong.html` (cổng 8799), 66 trang ở 1600×900 và 390×844: 0 lỗi console, 0 tải ngoài, 0 tài nguyên lỗi, 0 `.katex-error`, không cuộn ngang. Danh sách tràn heuristic (14 trang) trùng hệt lần chạy trước `dk02b.json`; `L02-07-03` không trong danh sách. Ảnh `L02-07-03` ở hai cỡ đã xem: bảng bảy cột vừa khung, không chồng chữ.
+- Liên kết viewer: mở deck trên cổng 8766, bấm liên kết "Bài tập" của `L02-07-03`, viewer tải `exercises.md` (tiêu đề "Bài tập Bài 02 — …", 0 `.katex-error`, 0 tải ngoài); lỗi CSP duy nhất là script nạp lại của `reloadserver`, cùng loại `check_note.py` đã lọc.
+- `git diff --check`: đạt.
+
+### Tự kiểm `no-ai-slop` (Edit)
+
+Phạm vi: ba câu mới trong ghi chú diễn giả `L02-07-03`, vế sửa ở `L02-06-06`, `L02-07-04`, `L02-07-07`, nhãn hàng bảng. Theo `eval.md`: không từ cấm, không câu hỏi tu từ, không "Trang này …", không mô tả quy trình, không dấu hai chấm kiểu tiết lộ; một câu ghi chú bản nháp có dấu hai chấm trước danh sách số và câu "02.14–02.22 chỉ có ở tệp này" mâu thuẫn với 02.21 có trên lớp, đã viết lại. Không dùng điểm bộ phát hiện AI.
+
+### Quyết định của điều phối viên (2026-10-14, đồng bộ trang bài tập về nhà)
+
+- Tác tử biên tập deck (general-purpose, claude-opus-5-5, high). Kiểm độc lập: trang L02-07-03 80 âm tiết (trần 80 của trang tổng kết, ngoại lệ ghi storyboard); Playwright 1600×900 và 390×844 toàn deck: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang; liên kết viewer bài tập mở được; `git diff --check` sạch.
+- Quyết định: **chấp nhận**; commit `fix(lecture-02)`.
