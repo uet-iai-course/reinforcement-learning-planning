@@ -275,9 +275,9 @@
 <h2>Điều khiển Monte Carlo trên lượt bị cắt</h2>
 <p><strong>Nhận xét.</strong> Chỉ khi lượt kết thúc, $G_t$ mới tính được.</p>
 <p><strong>Ví dụ.</strong> Tàu đổ bộ (LunarLander): lượt bị cắt ngắn (truncation) ở bước $1000$.</p>
-<p>Lượt của chính sách tham lam học được trong bài thực hành: trung bình $773$ bước, $44\%$ bị cắt.</p>
+<p>$500$ lượt huấn luyện cuối trong bài thực hành: trung bình $655$ bước, $7\%$ bị cắt.</p>
 <p>Suy ra Monte Carlo bỏ lượt bị cắt, chờ hàng trăm bước mỗi cập nhật.</p>
-<aside class="notes"><p>Kết thúc lượt là sự kiện của môi trường; hết ngân sách là điểm dừng của thuật toán; cắt ngắn là việc môi trường ngừng lượt sau một số bước cố định khi trạng thái chưa kết thúc. Một tiền tố bị cắt tại trạng thái chưa kết thúc không có lợi tức hoàn chỉnh. Số liệu tàu đổ bộ (môi trường LunarLander của Gymnasium) lấy từ một lần chạy đã nhúng trong notebook, với chính sách tham lam theo bảng Sarsa học ở bài thực hành; bài thực hành không cài đặt điều khiển Monte Carlo. Giới hạn "phải chờ lượt kết thúc" là nhu cầu của mục tiêu một bước ở phần sau. Các lợi tức trong cùng một ô đến từ những chính sách $\pi_k$ khác nhau, nên mỗi ô trộn đánh giá của nhiều chính sách.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng, Nhận xét 06.10; notebook thực hành Bài 06, phần 8.2.</p></aside>
+<aside class="notes"><p>Kết thúc lượt là sự kiện của môi trường; hết ngân sách là điểm dừng của thuật toán; cắt ngắn là việc môi trường ngừng lượt sau một số bước cố định khi trạng thái chưa kết thúc. Một tiền tố bị cắt tại trạng thái chưa kết thúc không có lợi tức hoàn chỉnh. Số liệu tàu đổ bộ (môi trường LunarLander của Gymnasium) lấy từ một lần chạy đã nhúng trong notebook: các lượt huấn luyện của Sarsa, sinh bởi chính sách hành vi $\varepsilon_k$-tham lam; bài thực hành không cài đặt điều khiển Monte Carlo, vốn cũng học trên lượt có thăm dò. Giới hạn "phải chờ lượt kết thúc" là nhu cầu của mục tiêu một bước ở phần sau. Các lợi tức trong cùng một ô đến từ những chính sách $\pi_k$ khác nhau, nên mỗi ô trộn đánh giá của nhiều chính sách.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng, Nhận xét 06.10; notebook thực hành Bài 06, phần 8.1.</p></aside>
 </section>
 <section data-slide-id="L06-C08" data-note-topic-id="lec-06-topic-03">
 <h2>Bài tập: lần ghé đầu tiên trên lượt có cặp lặp</h2>

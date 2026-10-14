@@ -1385,3 +1385,36 @@ Kiểm tra sau vòng sửa:
 ### Quyết định của điều phối viên (2026-10-14, đồng bộ chéo ghi chú)
 
 - Kiểm độc lập: `note_check.py` sạch; viewer 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(materials-06)`. Đề nghị sửa deck L06-C10 (655 bước, 7%, phần 8.1) gom vào lượt khép đợt.
+
+## Đợt sửa 2026-10-14 — Khép đợt: trang C10
+
+Vai: biên tập nhỏ deck (`general-purpose`, Claude Opus 5.5, effort `high`, theo brief của điều phối viên); `no-ai-slop` chế độ Edit; không commit. Phạm vi ghi: trang L06-C10 của `lecture-06-dieu-khien-phi-mo-hinh.html` và mục này. Thực hiện đề nghị sửa deck ở đợt đồng bộ chéo ghi chú cùng ngày.
+
+### Đối chiếu số liệu
+
+Output đã nhúng của ô 37 trong `materials/lec-06/thuc-hanh-lunarlander-dieu-khien-phi-mo-hinh.ipynb` (phần 8.1, "Đường học"): "Sarsa 500 lượt huấn luyện cuối: tổng thưởng 117.2, dài 655 bước | … cắt ngắn 1000 bước: 7%". Khớp Nhận xét 06.10 và đoạn "Trong thực hành" (dòng 635) của ghi chú.
+
+### Thay đổi
+
+| Vị trí | Trước | Sau | Lý do |
+|---|---|---|---|
+| L06-C10, dòng thứ ba mặt trang | "Lượt của chính sách tham lam học được trong bài thực hành: trung bình $773$ bước, $44\%$ bị cắt." | "$500$ lượt huấn luyện cuối trong bài thực hành: trung bình $655$ bước, $7\%$ bị cắt." | Trang lập luận về dữ liệu điều khiển Monte Carlo sẽ học (lượt có thăm dò), nên dùng số liệu huấn luyện của phần 8.1 thay số đánh giá chính sách tham lam ở phần 8.2. Không nhắc Sarsa trên mặt trang (giữ quyết định PB-1/MACH-T3/SV: Sarsa chưa xuất hiện trước mạch 4) |
+| L06-C10, ghi chú diễn giả | "…với chính sách tham lam theo bảng Sarsa học ở bài thực hành; bài thực hành không cài đặt điều khiển Monte Carlo." | "…: các lượt huấn luyện của Sarsa, sinh bởi chính sách hành vi $\varepsilon_k$-tham lam; bài thực hành không cài đặt điều khiển Monte Carlo, vốn cũng học trên lượt có thăm dò." | Nêu đúng nguồn dữ liệu và lý do số huấn luyện phù hợp với Monte Carlo; $\varepsilon_k$ đã định nghĩa ở C05 |
+| L06-C10, dòng Nguồn | "phần 8.2" | "phần 8.1" | Theo ô 37 |
+
+Bản nháp đầu giữ "(có thăm dò)" trên mặt trang; ở 1600×900 dòng tràn sang hai dòng với "bị cắt." mồ côi, nên cụm này chuyển vào ghi chú diễn giả.
+
+### Mật độ và `no-ai-slop`
+
+- `density.py`: L06-C10 56 → 52 âm tiết, 4 dòng, tối đa 15 âm tiết/dòng, 0 công thức hiển thị. Storyboard không ghi số âm tiết riêng của C10 nên không sửa; dòng 263 ("C10 không nhắc Sarsa trên mặt trang") vẫn đúng.
+- Ghi chú diễn giả 148 âm tiết, không tính dòng nguồn (giới hạn 150 của storyboard).
+- `no-ai-slop` Edit, tự đối chiếu `eval.md`: câu mới là câu khẳng định có số liệu từ output nhúng; không câu hỏi tu từ, không lời dẫn chuyển trang, không nhận định không nguồn.
+
+### Kiểm tra đã chạy
+
+- `deck_check.py lecture-06-dieu-khien-phi-mo-hinh.html … L06-C10` (server cổng 8799, cwd là kho): 75 trang ở 1600×900 và 390×844; 0 lỗi console, 0 yêu cầu ngoài, 0 tài nguyên hỏng, 0 `.katex-error`, không cuộn ngang; C10 không tràn khung. Cờ `small_font` của script gắn cho hầu hết các trang (heuristic, có từ trước, không riêng C10). Đã xem ảnh C10 ở cả hai cỡ: bốn dòng vừa khung, dòng số liệu nằm trên một dòng ở 1600×900.
+- `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-14, khép đợt Bài 06)
+
+- Kiểm độc lập: C10 52 âm tiết; Playwright hai cỡ 0 lỗi; số liệu khớp ô 37 của notebook và Nhận xét 06.10 đã commit; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(lecture-06)`.
