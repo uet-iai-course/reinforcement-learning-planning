@@ -3273,3 +3273,57 @@ Phạm vi: ba câu mới trong ghi chú diễn giả `L02-07-03`, vế sửa ở
 
 - Tác tử biên tập deck (general-purpose, claude-opus-5-5, high). Kiểm độc lập: trang L02-07-03 80 âm tiết (trần 80 của trang tổng kết, ngoại lệ ghi storyboard); Playwright 1600×900 và 390×844 toàn deck: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang; liên kết viewer bài tập mở được; `git diff --check` sạch.
 - Quyết định: **chấp nhận**; commit `fix(lecture-02)`.
+
+## Đợt sửa 2026-10-14 — Đồng bộ chéo ghi chú
+
+### Tác tử và phạm vi
+
+- Vai trò: biên tập ghi chú bài giảng Bài 02 (sửa nhỏ), theo `brief_note_crosssync.md` của điều phối viên. Loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` theo brief; điều phối viên đối chiếu với lệnh gọi công cụ. `no-ai-slop` Edit. Không commit.
+- Tệp đã ghi: `materials/lec-02/lecture-note.md`; mục này. Không sửa deck, `exercises.md`, outline, storyboard, notebook, SVG, `index.html`. Bản trước đợt sửa: `scratchpad/lec02-note-before-crosssync.md`, ngoài kho.
+- Việc: các đề nghị sửa ghi chú còn mở của giai đoạn III ("Đề nghị sửa deck và ghi chú (cập nhật 2026-10-14)", mục 3, 4) và của đợt đồng bộ trang bài tập về nhà (hai dòng "không sửa trong đợt này"); đồng bộ ký hiệu theo `quyet-dinh-chuan-2026-10-12.md`; dẫn tới `exercises.md` từ mục tiêu, "Bài tập củng cố" và tài liệu tham khảo. Các đề nghị của "Đề nghị sửa ghi chú (sau giai đoạn II)" và "(bổ sung)" đã xử lý ở "Đợt sửa 2026-10-14 — Sửa ghi chú sau giai đoạn II", không làm lại.
+- Số hiệu kết quả, ví dụ, bài tập và mọi `note-topic-id` giữ nguyên.
+
+### Bảng xử lý
+
+Số dòng theo tệp sau khi sửa.
+
+| Nguồn | Vị trí | Trạng thái | Xử lý |
+|---|---|---|---|
+| Giai đoạn III, mục 3 (PB-1) | §2.4, đoạn đọc hình dòng 346 | đã sửa | Bỏ "(bài giảng gốc, trang 27)" sau kết luận quan sát đầy đủ của mê cung. Thêm: "Bài giảng gốc (trang 27) nêu câu hỏi phân loại năm tình huống mà không kèm kết luận; Bài tập 02.15 của tệp bài tập phân loại các tình huống đó theo Nhận xét 02.4." Đã đối chiếu PPTX nguồn trang 27: tiêu đề "Quiz: Fully vs Partially Observable", năm câu hỏi "(F or PO)", không có lời giải. Câu kế tiếp đổi thành "Ở trang 18–19, bài giảng gốc gắn …" để hai câu liền không cùng khuôn mở. |
+| Giai đoạn III, mục 4; đồng bộ trang bài tập về nhà, dòng 4 | "Bài tập củng cố", câu mở dòng 1146 | đã sửa | Ghi rõ 02.1–02.8 và năm bài 02.9–02.13 là bài tập của ghi chú; thêm câu: bộ bài tập chính thức nằm trong tệp bài tập (liên kết viewer `material-viewer.html?doc=materials/lec-02/exercises.md&deck=lecture-02-giao-dien-tac-tu-moi-truong.html`), hai mươi hai bài đánh số chung; 02.1–02.5, 02.7, 02.8 phát biểu lại với đủ dữ kiện, 02.14–02.22 chỉ có ở tệp bài tập, 02.6 và 02.9–02.13 chỉ có ở ghi chú (khớp đoạn mở của `exercises.md`). |
+| Brief, việc (3) | Mục tiêu học tập, đoạn mới dòng 14 | đã sửa | Một câu sau danh sách mục tiêu, có liên kết viewer, phân 02.14–02.22 theo mục tiêu đúng dòng "Mức độ" của `exercises.md`: 1: 02.14, 02.22; 2: 02.15, 02.19, 02.22; 3: 02.16, 02.19; 4: 02.16–02.18, 02.20–02.22; 5: 02.18, 02.20, 02.21. Danh sách số bài trong ngoặc của năm mục tiêu không đổi. |
+| Brief, việc (3) | Hướng dẫn đọc thêm và tài liệu tham khảo, gạch mới dòng 1259 | đã sửa | Gạch "Bài tập Bài 02": liên kết viewer; câu đố trang 27 được giải ở Bài tập 02.15; Bài tập tuần 2, bài 1, 6, 10 là nguồn của Bài tập 02.14, 02.19, 02.22 (theo tài liệu tham khảo của `exercises.md`). Gạch "Bài tập tuần 2" cũ giữ nguyên. |
+| Quyết định chuẩn §1 (first-visit) | Lời giải Bài tập 02.13(a), dòng 1248 | đã sửa | "lần ghé đầu … lần ghé sau" → "lần ghé thứ nhất … lần ghé thứ hai", để cụm "lần ghé đầu" không lẫn với thuật ngữ lần ghé đầu tiên (first-visit) của Bài 05. Nghĩa không đổi: tác tử tới $(4,1)$ ở $t=5$, vào $(4,2)$, về $(4,1)$ ở $t=7$. |
+
+### Đồng bộ ký hiệu theo tệp quyết định
+
+Đã quét cả ghi chú; không cần sửa thêm:
+
+- $P_\pi$, $r_\pi$, $T_\pi$, $T_*$: ghi chú Bài 02 không dùng các đối tượng này; không có $P^\pi$, $r^\pi$, $T^\pi$. $V^\pi$ chỉ xuất hiện một lần ở dòng tương ứng ký hiệu của giáo trình *Học máy thống kê* ("$V^\pi$ là $v_\pi$"), giữ vì là ký hiệu của giáo trình được đối chiếu.
+- Tên nút và trạng thái chữ đứng: $\mathrm S$, $\mathrm H$, $\mathrm G$ ở mọi chỗ; chỉ số phạt hố $c_{\mathrm H}$. Không còn tên trạng thái chữ nghiêng.
+- "quá trình quyết định Markov (Markov decision process, MDP)" ở lần đầu (dòng 63), sau đó "MDP"; không có "quy trình quyết định Markov", "gần chắc chắn", "tác nhân", "tổng thưởng", "điểm thưởng", "quy tắc giữ hòa". "Hầu chắc chắn" không cần trong chương (phản ví dụ Nhận xét 02.15 dùng "với xác suất $1$").
+- Phản ví dụ hàm lợi ích dùng $W$; $H_t=(S_0,A_0,R_1,\dots,S_t)$ kèm câu "(2.2) là trường hợp $O_t=S_t$ của định nghĩa đó" (dòng 334); $\theta$, $\varepsilon$, $c$ đúng vai.
+- Tham chiếu sang bài khác đã kiểm với ghi chú đã commit: Định nghĩa 01.1, 01.2, 01.5, 01.7, 01.8, 01.11, 01.12, 01.14; Nhận xét 01.3, 01.6, 01.10, 01.15; Mệnh đề 01.9; Mệnh đề 03.6 (xác suất chuyển và thưởng kỳ vọng từ hàm động lực), Mệnh đề 03.11 (cận của lợi tức): đều tồn tại và đúng nội dung được dẫn.
+
+### Từ chối
+
+Không có.
+
+### Đề nghị sửa deck
+
+Không có đề nghị bắt buộc: deck không chứa ký hiệu hay thuật ngữ cũ ($P^\pi$, $T^\pi$, "gần chắc chắn", "quy trình quyết định") và không dẫn trang 27 như nguồn của kết luận. Ghi nhận để điều phối viên cân nhắc: trang `L02-01-03` xếp Bài tập 02.9 vào mục tiêu 4, ghi chú xếp vào mục tiêu 1 (bài ghép phát biểu với ranh giới, quan sát, chính sách, hàm giá trị, hàm động lực hợp cả hai); đợt này không đổi số trong ngoặc của mục tiêu nên giữ nguyên hai cách xếp. Việc thêm 02.14–02.22 lên `L02-01-03` đã được ghi ở đợt đồng bộ trang bài tập về nhà (trang đang 79/80 âm tiết).
+
+### Tự kiểm `no-ai-slop` (Edit) theo `eval.md`
+
+Phạm vi: năm câu mới hoặc viết lại trong bảng trên. Đã sửa trong lượt tự kiểm: "là Bài tập 02.15", "là Bài tập 02.14, 02.19, 02.22" (đồng nhất câu đố nguồn với bài tập) → "được giải ở", "là nguồn của"; hai câu liền mở bằng "Bài giảng gốc (trang …)" → câu thứ hai mở bằng "Ở trang 18–19". Câu mới lấy bộ bài tập hoặc bài giảng gốc làm chủ ngữ, không lấy ghi chú làm chủ ngữ. Không từ cấm, không "hãy", "ta thấy", "rõ ràng", câu hỏi tu từ, dấu gạch dài, "xem trang chiếu". Không dùng điểm bộ phát hiện AI.
+
+### Kiểm tra
+
+- `note_check.py materials/lec-02/lecture-note.md`: 80 khối hợp lệ; bộ đếm chung 20, Ví dụ 15, Bài tập 13, không khoảng trống, không trùng; 0 dấu `\(`/`\[`; $21\,789$ từ theo cách đếm khoảng trắng (trước đợt $21\,579$).
+- `check_note.py 02 lecture-02-giao-dien-tac-tu-moi-truong.html` (server `reloadserver` cổng 8766, cwd `/data/tqlong/rl-plan`): 1600×900 và 390×844 đều 0 `.katex-error`, 0 lỗi console, 0 yêu cầu lỗi hoặc ra ngoài, không tràn ngang, 80 khối.
+- Liên kết: viewer hiển thị ba liên kết tới `exercises.md`, cùng đích `material-viewer.html?doc=materials/lec-02/exercises.md&deck=lecture-02-giao-dien-tac-tu-moi-truong.html`; mở liên kết thứ nhất tải "Bài tập Bài 02 — Giao diện tác tử–môi trường", 0 `.katex-error`.
+- `git diff --check` trên `materials/lec-02`, `planning/lec-02`: đạt.
+
+### Quyết định của điều phối viên (2026-10-14, đồng bộ chéo ghi chú)
+
+- Kiểm độc lập: `note_check.py` sạch; viewer 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(materials-02)`. Trang L02-01-03 giữ nguyên (79/80 âm tiết; ghi chú đã liệt kê bài mới theo mục tiêu).

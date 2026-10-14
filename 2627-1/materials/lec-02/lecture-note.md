@@ -11,6 +11,8 @@ Sau chương này, người học có thể:
 4. Tính lợi tức (return) chiết khấu và giá trị $v_\pi(s)$ trên ví dụ nhỏ, đọc một hàm động lực (dynamics function) $p(s',r\mid s,a)$, và giải thích vì sao trọng số chiết khấu có dạng hình học (Bài tập 02.5, 02.6, 02.7, 02.10, 02.12).
 5. Tìm ngưỡng chi phí mỗi bước làm tác tử tối ưu đổi hành vi trong một bài toán thiết kế phần thưởng (reward), và chỉ ra giả thiết của kết quả khi phần thưởng mỗi bước đổi dấu (Bài tập 02.8, 02.10).
 
+Bộ bài tập chính thức của Bài 02 nằm trong [tệp bài tập](material-viewer.html?doc=materials/lec-02/exercises.md&deck=lecture-02-giao-dien-tac-tu-moi-truong.html), đánh số chung với ghi chú; chín bài 02.14–02.22 chỉ có ở đó và phân theo mục tiêu như sau: mục tiêu 1 có Bài tập 02.14, 02.22; mục tiêu 2 có 02.15, 02.19, 02.22; mục tiêu 3 có 02.16, 02.19; mục tiêu 4 có 02.16–02.18, 02.20–02.22; mục tiêu 5 có 02.18, 02.20, 02.21.
+
 ## Kiến thức tiên quyết
 
 Số hiệu `01.k` chỉ ghi chú Bài 01, `02.k` chỉ ghi chú này.
@@ -341,7 +343,7 @@ Môi trường được **quan sát đầy đủ** (full observability) khi có 
 
 ![Hai cột so sánh. Cột trái, quan sát tọa độ: vị trí (2,1) cho quan sát (2,1), vị trí (3,1) cho quan sát (3,1); hai vị trí cho hai quan sát khác nhau. Cột phải, cảm biến bốn ô kề: cả vị trí (2,1) và vị trí (3,1) cho cùng một quan sát, Bắc và Nam là tường, Đông và Tây trống. Ô tối là tường, ô trắng đi được.](img/lec-02/full-partial-observation.svg)
 
-Hai cột của hình dùng cùng hai vị trí; chỉ cảm biến khác nhau. Ở cột trái, hai vị trí cho hai quan sát, nên $g$ tồn tại; ở cột phải, hai mũi tên gặp nhau tại một quan sát. Theo cách phân loại này, mê cung với quan sát là tọa độ, hay là ảnh toàn bản đồ có vị trí tác tử, được quan sát đầy đủ (bài giảng gốc, trang 27). Bài giảng gốc (trang 18–19) gắn trường hợp quan sát đầy đủ với MDP của Bài 03, và trường hợp quan sát một phần với quá trình quyết định Markov quan sát một phần (partially observable Markov decision process, POMDP), trong đó tác tử tự xây dựng biểu diễn.
+Hai cột của hình dùng cùng hai vị trí; chỉ cảm biến khác nhau. Ở cột trái, hai vị trí cho hai quan sát, nên $g$ tồn tại; ở cột phải, hai mũi tên gặp nhau tại một quan sát. Theo cách phân loại này, mê cung với quan sát là tọa độ, hay là ảnh toàn bản đồ có vị trí tác tử, được quan sát đầy đủ. Bài giảng gốc (trang 27) nêu câu hỏi phân loại năm tình huống mà không kèm kết luận; Bài tập 02.15 của tệp bài tập phân loại các tình huống đó theo Nhận xét 02.4. Ở trang 18–19, bài giảng gốc gắn trường hợp quan sát đầy đủ với MDP của Bài 03, và trường hợp quan sát một phần với quá trình quyết định Markov quan sát một phần (partially observable Markov decision process, POMDP), trong đó tác tử tự xây dựng biểu diễn.
 
 Quan sát đầy đủ chỉ nói đọc lại được biến đã chọn làm trạng thái; nó chưa bảo đảm biến đó chứa đủ thông tin để dự báo, vì người mô hình có thể chọn một biến nhỏ hơn cấu hình mà luật chuyển dùng tới.
 
@@ -1141,7 +1143,7 @@ $$
 
 ## Bài tập củng cố
 
-Các bài tập trong các mục (Bài tập 02.1–02.8) và năm bài dưới đây là bộ bài tập của chương; mỗi mục tiêu học tập có ít nhất một bài dưới đây, như ghi ở phần Mục tiêu học tập.
+Các bài tập trong các mục (Bài tập 02.1–02.8) và năm bài 02.9–02.13 dưới đây là bài tập của ghi chú; mỗi mục tiêu học tập có ít nhất một bài dưới đây, như ghi ở phần Mục tiêu học tập. Bộ bài tập chính thức của Bài 02 nằm trong [tệp bài tập](material-viewer.html?doc=materials/lec-02/exercises.md&deck=lecture-02-giao-dien-tac-tu-moi-truong.html), gồm hai mươi hai bài đánh số chung với ghi chú: các bài 02.1–02.5, 02.7, 02.8 được phát biểu lại với đủ dữ kiện, chín bài 02.14–02.22 chỉ có ở tệp bài tập, còn 02.6 và 02.9–02.13 chỉ có ở ghi chú.
 
 ### Mức nhận biết
 
@@ -1243,7 +1245,7 @@ Xét hành động mà chính sách chọn tại $(4,1)$, lần thứ nhất và
 :::
 
 ::: solution
-**Câu (a).** Gọi $a$ là hành động của chính sách tại $(4,1)$. Nếu $a$ là Nam, tác tử vào $(4,2)$; tại đó chỉ có Bắc đưa tác tử đi, mọi hướng khác giữ nó đứng yên mãi; nếu chọn Bắc, tác tử về $(4,1)$ và lại đi Nam, lặp mãi. Nếu $a$ khác Nam, tác tử không bao giờ vào $(4,2)$, vì $(4,2)$ chỉ nối với $(4,1)$; nó không có chìa khóa nên không qua được cửa. Trong mọi trường hợp tác tử không tới $\mathrm G$: tại $(4,1)$, chính sách cần Nam ở lần ghé đầu và Đông ở lần ghé sau, điều mà tọa độ không phân biệt được.
+**Câu (a).** Gọi $a$ là hành động của chính sách tại $(4,1)$. Nếu $a$ là Nam, tác tử vào $(4,2)$; tại đó chỉ có Bắc đưa tác tử đi, mọi hướng khác giữ nó đứng yên mãi; nếu chọn Bắc, tác tử về $(4,1)$ và lại đi Nam, lặp mãi. Nếu $a$ khác Nam, tác tử không bao giờ vào $(4,2)$, vì $(4,2)$ chỉ nối với $(4,1)$; nó không có chìa khóa nên không qua được cửa. Trong mọi trường hợp tác tử không tới $\mathrm G$: tại $(4,1)$, chính sách cần Nam ở lần ghé thứ nhất và Đông ở lần ghé thứ hai, điều mà tọa độ không phân biệt được.
 
 **Câu (b).** Biểu diễn (ô, $k$) của Ví dụ 02.6: chọn Nam tại $((4,1),0)$, Bắc tại $((4,2),1)$, Đông tại $((4,1),1)$, và theo đường 16 bước ở các ô khác. Tác tử tới $\mathrm G$ sau $18$ bước, lợi tức $-18$ với $\gamma=1$.
 
@@ -1254,6 +1256,7 @@ Xét hành động mà chính sách chọn tại $(4,1)$, lần thứ nhất và
 
 - **Bài giảng gốc.** Tạ Việt Cường (2025–2026), *Lecture 2: Markov Decision Process*, trang 1–27; mê cung $8\times8$, chính sách và bảng giá trị ở trang 25–26.
 - **Bài tập tuần 2 (2025–2026).** Bài 2 (Mục 2), bài 5 (Bài tập 02.10), bài 6 (Tình huống 02.2), bài 10 (Tình huống 02.1); bài 3, 4, 7, 8, 9 cần MDP và phương trình Bellman của Bài 03.
+- **Bài tập Bài 02.** [Tệp bài tập](material-viewer.html?doc=materials/lec-02/exercises.md&deck=lecture-02-giao-dien-tac-tu-moi-truong.html), hai mươi hai bài ở ba mức, đánh số chung với ghi chú. Câu đố phân loại ở trang 27 của bài giảng gốc được giải ở Bài tập 02.15; Bài tập tuần 2, bài 1, 6, 10 là nguồn của Bài tập 02.14, 02.19, 02.22.
 - **Sutton, R. S. và Barto, A. G. (2018).** *Reinforcement Learning: An Introduction*, ấn bản 2: §3.1 (trang 47–50), §3.2 (trang 53–54), §3.3–3.4 (trang 54–58), §3.5 (trang 58–59), §13.1 (trang 323), §17.3–17.4 (trang 464–470).
 - **Russell, S. và Norvig, P. (2020).** *Artificial Intelligence: A Modern Approach*, ấn bản 4, §17.1.1 (trang 565–566), cho Mục 4.1 và Nhận xét 02.15.
 - **Puterman, M. L. (1994).** *Markov Decision Processes: Discrete Stochastic Dynamic Programming*, §2.1, cho Mục 3.
