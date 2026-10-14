@@ -3331,3 +3331,36 @@ Phạm vi: năm câu mới hoặc viết lại trong bảng trên. Đã sửa tr
 ### Quyết định của điều phối viên (2026-10-14, khép đợt Bài 02)
 
 - Trang mục tiêu `L02-01-03` giữ nguyên danh sách bài tập của ghi chú (02.1–02.13): trang đang 79/80 âm tiết, không thêm được 02.14–02.22 mà không vượt trần; bảng đầy đủ nằm ở trang bài tập về nhà `L02-07-03` và trong mục tiêu học tập của ghi chú. Quyết định: **đóng**, không sửa.
+
+## Đợt sửa 2026-10-14 — Khép đợt: trang mục tiêu
+
+### Tác tử và phạm vi
+
+- Vai trò: biên tập nhỏ deck Bài 02 theo brief của điều phối viên. Loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` theo brief; điều phối viên đối chiếu với lệnh gọi công cụ. `no-ai-slop` Edit. Không commit.
+- Tệp đã ghi: `2627-1/lecture-02-giao-dien-tac-tu-moi-truong.html` (chỉ `L02-01-03`, mặt trang và ghi chú diễn giả); `storyboard.md` (dòng `L02-01-03` của bảng ngoại lệ mật độ, mục `L02-01-03`); `outline.md` (mục tiêu học tập, dòng 36–40); mục này. Bản deck trước đợt sửa: `scratchpad/lec02-before-objsync.html`, ngoài kho.
+- Việc: khép mục còn mở của đợt "Đồng bộ trang bài tập về nhà" (trang mục tiêu chỉ dẫn 02.1–02.13). Phân bổ bài mới theo dòng "Mức độ:" của `exercises.md`: mục tiêu 1: 02.14, 02.22; mục tiêu 2: 02.15, 02.19, 02.22; mục tiêu 3: 02.16, 02.19; mục tiêu 4: 02.16–02.18, 02.20–02.22; mục tiêu 5: 02.18, 02.20, 02.21.
+
+### Thay đổi
+
+| Vị trí | Trước | Sau | Âm tiết (`density.py`) |
+|---|---|---|---|
+| `L02-01-03`, mặt trang | năm mục tiêu, mỗi mục "(Bài tập …)" chỉ với số bài của ghi chú | giữ một trang, năm mục tiêu; thêm số bài của `exercises.md`; chữ "Bài tập" chỉ ghi ở mục 1, các mục sau chỉ ghi số trong ngoặc; mục 1 "Ghi một mẫu chuyển với chỉ số thời gian đúng" → "Ghi mẫu chuyển đúng chỉ số thời gian"; mục 5 "Tìm ngưỡng chi phí làm đổi hành vi tối ưu" → "Tìm ngưỡng chi phí đổi hành vi tối ưu"; mục 2–4 giữ nguyên lời | 79 → 80 (trần trang mục tiêu 80; 5 dòng; dòng dài nhất 20). Không tính 24 số hiệu bài: 56. |
+| `L02-01-03`, ghi chú diễn giả | câu cuối "Số hiệu bài tập theo ghi chú bài giảng." | "Số trong ngoặc là số hiệu bài tập; 02.1–02.13 đánh số theo ghi chú bài giảng, 02.14–02.22 chỉ có trong tệp bài tập về nhà." | 128 âm tiết, không tính KaTeX (trong khoảng 40–150) |
+| `outline.md`, mục tiêu 1–5 | số bài của ghi chú | thêm số bài của `exercises.md` như phân bổ trên | — |
+| `storyboard.md` | ngoại lệ `L02-01-03` 40 → 79 | 40 → 79 → 80, lý do và số đếm tay | — |
+
+Không cần tách trang: phương án `L02-01-03b` không dùng, nên "Nội dung", số trang và `#/N` của các mạch không đổi.
+
+### Kiểm tra
+
+- `density.py`: `L02-01-03` 80 âm tiết, 5 dòng, dòng dài nhất 20, 0 công thức (cờ "VƯỢT" của script là trần 60 của trang nội dung; trang mục tiêu có trần 80, ngoại lệ ghi ở storyboard).
+- `deck_check.py lecture-02-giao-dien-tac-tu-moi-truong.html` (cổng 8799), 66 trang ở 1600×900 và 390×844: 0 lỗi console, 0 tải ngoài, 0 tài nguyên lỗi, 0 `.katex-error`, không cuộn ngang. Danh sách tràn heuristic (14 trang) và danh sách chữ nhỏ trùng hệt lần chạy trước `dk02b.json`; `L02-01-03` không trong danh sách tràn. Ảnh `L02-01-03` ở hai cỡ đã xem: năm mục vừa khung, mục 2 và 4 xuống hai dòng ở 1600×900, không chồng chữ.
+- `git diff --check`: đạt.
+
+### Tự kiểm `no-ai-slop` (Edit)
+
+Phạm vi: lời năm mục tiêu trên `L02-01-03`, câu cuối ghi chú diễn giả. Theo `eval.md`: không từ cấm, không câu hỏi tu từ, không "Trang này …", không mô tả quy trình, không dấu hai chấm kiểu tiết lộ (bản nháp câu ghi chú dùng dấu hai chấm trước danh sách số, đã đổi thành dấu chấm phẩy); hai chỗ rút gọn bỏ chữ thừa, không đổi nghĩa mục tiêu. Không dùng điểm bộ phát hiện AI.
+
+### Quyết định của điều phối viên (2026-10-14, khép đợt: trang mục tiêu)
+
+- Thay quyết định "đóng, không sửa" trước đó: trang `L02-01-03` nay liệt kê đủ 02.14–02.22 theo mục tiêu, 80 âm tiết (đúng trần 80 của trang mục tiêu, 56 nếu không tính số hiệu), 5 dòng ≤ 20 âm tiết; Playwright hai cỡ 0 lỗi, ảnh xem trực tiếp; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(lecture-02)`.

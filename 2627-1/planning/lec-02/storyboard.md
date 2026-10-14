@@ -38,7 +38,7 @@ Mỗi cụm lớn có một trang "Bài tập: …" với "Lời giải:" trên 
 
 | Trang | Âm tiết theo `density.py` (trước đợt → hiện tại) | Dòng | Lý do |
 |---|---|---|---|
-| `L02-01-03` Mục tiêu học tập | 40 → 79 | 5 | Trang mục tiêu, trần 80; năm mục tiêu kèm số hiệu bài tập đo từng mục tiêu. |
+| `L02-01-03` Mục tiêu học tập | 40 → 79 → 80 | 5 | Trang mục tiêu, trần 80; năm mục tiêu kèm số hiệu bài tập đo từng mục tiêu, cả 02.1–02.13 của ghi chú bài giảng lẫn 02.14–02.22 của `exercises.md` (đợt 2026-10-14: lời mục tiêu 1 và 5 rút ba âm tiết, chữ "Bài tập" chỉ ghi ở mục 1; `density.py` đếm cả số hiệu bài, đếm tay không tính 24 số hiệu là 56; dòng dài nhất 20). |
 | `L02-01-04` Nội dung | 45 → 39 | 7 | Bài có 7 mạch; trang "Nội dung" được phép 7 dòng (quyết định chung §5). |
 | `L02-07-06` Kết quả về lợi tức, giá trị và phần thưởng | — → 70 | 6 | Bảng tổng kết, trần 80. |
 | `L02-07-05` Trả lời vấn đề trung tâm | — → 77 | 6 | Trang tổng kết viết song song năm dòng với Vấn đề trung tâm, mỗi dòng có điều kiện và số liệu, cộng dòng "Nguồn:"; trần 80. |
@@ -83,8 +83,8 @@ Chức năng: phát biểu vấn đề trung tâm trên mê cung $8\times8$, nh�
 
 ### L02-01-03 — Mục tiêu học tập
 - Vị trí: mạch 1. 2 phút. Nguồn: ghi chú, Mục tiêu học tập.
-- Lý do tồn tại: năm mục tiêu, mỗi mục tiêu kèm bài tập đo nó; khớp ghi chú.
-- Quyết định: sửa (ba mục tiêu cũ không đo được → năm mục tiêu). Âm tiết 40 → 79 (ngoại lệ trang mục tiêu).
+- Lý do tồn tại: năm mục tiêu, mỗi mục tiêu kèm bài tập đo nó (02.1–02.13 của ghi chú, 02.14–02.22 của `exercises.md`, theo dòng "Mức độ:" của từng bài); khớp ghi chú.
+- Quyết định: sửa (ba mục tiêu cũ không đo được → năm mục tiêu; đợt 2026-10-14 thêm số hiệu bài của `exercises.md`). Âm tiết 40 → 79 → 80 (ngoại lệ trang mục tiêu).
 
 ### L02-01-04 — Nội dung
 - Vị trí: mạch 1. 1 phút. Nguồn: bản đồ bảy mạch.

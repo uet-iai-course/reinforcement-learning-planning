@@ -33,11 +33,11 @@ Tổng 120 phút.
 
 ## Mục tiêu học tập (khớp ghi chú)
 
-1. Ghi một mẫu chuyển $(O_t,A_t,R_{t+1},O_{t+1})$ với chỉ số thời gian đúng (Bài tập 02.1).
-2. Phân biệt $S_t$, $O_t$, $X_t$; kiểm tra và sửa tính Markov (Bài tập 02.2, 02.3, 02.11).
-3. Viết chính sách xác định và ngẫu nhiên trên một biểu diễn (Bài tập 02.4, 02.13).
-4. Tính lợi tức chiết khấu, $v_\pi(s)$; đọc hàm động lực $p$ (Bài tập 02.5–02.7, 02.9, 02.10(a), 02.12).
-5. Tìm ngưỡng chi phí làm tác tử tối ưu đổi hành vi (Bài tập 02.8, 02.10(b)).
+1. Ghi một mẫu chuyển $(O_t,A_t,R_{t+1},O_{t+1})$ với chỉ số thời gian đúng (Bài tập 02.1, 02.14, 02.22).
+2. Phân biệt $S_t$, $O_t$, $X_t$; kiểm tra và sửa tính Markov (Bài tập 02.2, 02.3, 02.11, 02.15, 02.19, 02.22).
+3. Viết chính sách xác định và ngẫu nhiên trên một biểu diễn (Bài tập 02.4, 02.13, 02.16, 02.19).
+4. Tính lợi tức chiết khấu, $v_\pi(s)$; đọc hàm động lực $p$ (Bài tập 02.5–02.7, 02.9, 02.10(a), 02.12, 02.16–02.18, 02.20–02.22).
+5. Tìm ngưỡng chi phí làm tác tử tối ưu đổi hành vi (Bài tập 02.8, 02.10(b), 02.18, 02.20, 02.21).
 
 ## Ví dụ xuyên suốt
 
