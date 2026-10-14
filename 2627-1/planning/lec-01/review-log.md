@@ -1583,3 +1583,54 @@ Kiểm tra sau sửa: `note_check.py` 13 `exercise`/13 `hint`/13 `solution`, b�
 
 - Tác tử biên tập deck (general-purpose, claude-opus-5-5, high). Kiểm độc lập: trang Z00 71 âm tiết (trần 80 của trang tổng kết, ngoại lệ ghi storyboard); Playwright 1600×900 và 390×844 toàn deck: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang; liên kết viewer bài tập mở được; `git diff --check` sạch.
 - Quyết định: **chấp nhận**; commit `fix(lecture-01)`.
+
+## Đợt sửa 2026-10-14 — Đồng bộ chéo ghi chú
+
+### Tác tử và phạm vi
+
+- Vai: biên tập ghi chú bài giảng Bài 01 (sửa nhỏ), theo `brief_note_crosssync.md` của điều phối viên; loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` theo brief. `no-ai-slop` Edit. Không commit.
+- Tệp sửa: `materials/lec-01/lecture-note.md` và mục này. Không sửa deck, `exercises.md`, outline, storyboard, notebook, CSS.
+- Đối chiếu: `planning/quyet-dinh-chuan-2026-10-12.md` (mục 1–2), `materials/lec-01/exercises.md` đã commit, deck đã commit (C06, D04, E04).
+- Số hiệu không đổi (bộ đếm chung 01.1–01.22, Ví dụ 01.1–01.10, Bài tập 01.1–01.11, Tình huống 01.1–01.2); mọi `note-topic-id` giữ nguyên.
+
+### Đề nghị còn mở và xử lý
+
+Số dòng là số dòng trong ghi chú sau đợt sửa.
+
+| Đề nghị (nguồn) | Trạng thái | Vị trí và nội dung |
+|---|---|---|
+| Bài tập 01.2(d) mở bằng dạng học và tín hiệu (giai đoạn III, đề nghị bổ sung (1)) | đã sửa | Dòng 367: "Học tăng cường. Tín hiệu là điểm tổng kết, một số đánh giá đến sau cả học kỳ. Tình huống này có ba trong bốn khác biệt … theo Nhận xét 01.6"; khớp `exercises.md` và ghi chú diễn giả C06 |
+| Bài tập 01.5: gợi ý không nêu kết luận (giai đoạn III, (2)) | đã sửa | Dòng 675: "Phần thưởng khác $0$ chỉ có thể đến ở một bước. Đếm các dãy bốn hành động đưa robot tới ô 4 rồi hút."; đúng chữ của `exercises.md` |
+| Bài tập 01.5(c): bỏ "như Định nghĩa 01.12 ghi rõ" (giai đoạn III, (2)) | đã sửa | Dòng 687: "giá trị là một hàm của chính sách (Định nghĩa 01.12)" |
+| Bài tập 01.3: va ghế không cản robot sang ô kế tiếp (giai đoạn III, (3); đồng bộ trang bài tập về nhà) | đã sửa ở ghi chú | Dòng 513: thêm vế "va ghế không cản robot sang ô kế tiếp". Kiểm: với $T=4$ và $R_4=1$, bốn hành động phải là $\text{phải},\text{phải},\text{phải},\text{hút}$, nên bước va ghế ($R_2$) là lần sang phải thứ hai và robot vẫn tới ô 3; nếu va ghế giữ robot đứng yên thì cần năm hành động. Kết quả $G_t$ không đổi. Deck D04 và `exercises.md` chưa có vế này (xem đề nghị dưới) |
+| Mục tiêu học tập dẫn 01.12–01.16 của `exercises.md` (giai đoạn III, "Đề nghị sửa ghi chú", nhẹ) | đã sửa | Dòng 9–13: thêm "trong tệp bài tập còn …" theo dòng "Mục tiêu học tập" của từng bài trong `exercises.md`: mục tiêu 1: 01.13, 01.15, 01.16; 2: 01.15; 3: 01.13, 01.14; 4: 01.12, 01.13, 01.15, 01.16; 5: 01.15; 6: không thêm. Dòng 16 (mới): bộ bài giao gồm tệp bài tập (liên kết viewer) và 01.9–01.11; 01.1–01.8 có ở cả hai nơi, 01.12–01.16 chỉ trong tệp |
+| Bài tập 01.6: thêm bảng số liệu như F03 (giai đoạn III, nhẹ, "không bắt buộc") | không sửa | Đề trong ghi chú nằm ngay sau Ví dụ 01.9 có cùng số liệu; `exercises.md` đã có bảng để tự chứa. Giữ ghi chú gọn |
+
+Brief mục (3): dòng mở "Bài tập củng cố" (dòng 1194) thêm một câu có liên kết `material-viewer.html?doc=materials/lec-01/exercises.md&deck=lecture-01-gioi-thieu-hoc-tang-cuong.html`, nêu 01.1–01.8 có cả trong tệp bài tập (phần "Kiểm tra lại" nêu thêm lỗi thường gặp), 01.12 (tính toán hoặc chứng minh) và 01.13–01.16 (vận dụng) chỉ có trong tệp, 01.9–01.11 chỉ có ở mục này. Đoạn "Đọc thêm: tác tử nhiều nhiệm vụ và mô hình thế giới" (dòng 1277): "Bài tập 01.16 của [tệp bài tập](…)". Ba liên kết đã mở bằng Playwright từ viewer (cổng 8766): HTTP 200, trang "Bài tập Bài 01 — Giới thiệu Học tăng cường", 0 `.katex-error`.
+
+### Đồng bộ ký hiệu theo `quyet-dinh-chuan-2026-10-12.md`
+
+Không cần sửa. Đã quét toàn ghi chú: giá trị viết $v_\pi$; $V^\pi$ chỉ còn ở hai câu nêu tương ứng với giáo trình *Học máy thống kê* (dòng 50, 1272), đúng mục 2 của tệp quyết định; không có $P^\pi$, $r^\pi$, $T^\pi$ (bài không dùng ma trận hay toán tử Bellman); tên hành động và quan sát viết chữ đứng bằng `\text{}`; quy ước chữ đứng cho quân O và chữ nghiêng cho $O_t$ đã nêu ở dòng 48; mọi số thập phân trong KaTeX dùng `{,}` (quét các khoảng `$…$` tìm `chữ số.chữ số`: chỉ còn số hiệu `\tag`); không có "gần chắc chắn", "quy trình quyết định Markov", "tác nhân", "điểm thưởng", "Đáp án".
+
+### Đề nghị sửa deck và `exercises.md`
+
+| Mức | Vị trí | Vấn đề | Đề xuất |
+|---|---|---|---|
+| nhẹ | Deck D04 | Đề không nói va ghế có cản robot hay không; với $T=4$, robot phải sang được ô kế tiếp ở bước va ghế. Ghi chú nay đã nêu | Thêm vào dòng "Câu hỏi:" vế "va ghế không cản robot sang ô kế tiếp" (kiểm mật độ D04), hoặc nêu trong ghi chú diễn giả nếu dòng vượt 20 âm tiết |
+| nhẹ | `exercises.md`, Bài tập 01.3 | Đề trong tệp còn theo chữ cũ của ghi chú; tệp ghi "giữ đề bài 01.1–01.8 của ghi chú" | Thêm cùng vế sau "va vào một chiếc ghế" ở đợt sửa `exercises.md` sau |
+| nhẹ | `outline.md`, dòng mục tiêu 6 | Outline ghi Bài tập 01.13 dưới mục tiêu 6; dòng "Mục tiêu học tập" của 01.13 trong `exercises.md` ghi mục tiêu 1, 3, 4 (cùng phân tích một bước của Mục 5.4). Ghi chú theo `exercises.md`, không thêm 01.13 vào mục tiêu 6 | Điều phối viên chọn một cách ghi và đồng bộ outline hoặc dòng mức độ của 01.13 |
+
+### Số từ
+
+- `wc -w`: trước 20 900, sau 21 059 (+159), do câu liên kết ở mục tiêu, ở "Bài tập củng cố", các số bài thêm vào mục tiêu và câu (d) của 01.2. Vẫn theo quyết định cũ, không cắt nội dung khác.
+
+### `no-ai-slop` (Edit) và kiểm tra
+
+- Phạm vi: mọi câu đã thêm hoặc sửa (dòng 9–13, 16, 367, 513, 675, 687, 1194, 1277). Đối chiếu `eval.md`: không câu hỏi tu từ, không "hãy", không lời quy trình; bản nháp đầu của dòng 1194 lấy tệp bài tập làm chủ ngữ ("Tệp bài tập … giữ … và thêm …"), đã viết lại với các bài tập làm chủ ngữ; không tương phản nhị phân, không câu kết khẩu hiệu; dấu hai chấm ở dòng 367 dẫn danh sách ba khác biệt. Đạt.
+- `note_check.py`: bộ đếm chung 22, ví dụ 10, bài tập 11, không khoảng trống, không trùng; 0 dấu `\(`/`\[`.
+- `check_note.py 01 lecture-01-gioi-thieu-hoc-tang-cuong.html` (viewer cổng 8766, server cwd `/data/tqlong/rl-plan`): 1600×900 và 390×844 đều 0 `.katex-error`, 69 khối, 0 lỗi console, 0 yêu cầu ngoài hay hỏng, không tràn ngang.
+- `git diff --check`: sạch.
+
+### Quyết định của điều phối viên (2026-10-14, đồng bộ chéo ghi chú)
+
+- Kiểm độc lập: `note_check.py` sạch; viewer 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(materials-01)`. Ba đề nghị nhẹ còn lại (deck D04, `exercises.md` 01.3, outline mục tiêu 6: theo cách ghi của `exercises.md`) gom vào lượt khép đợt.

@@ -6,12 +6,14 @@ Học tăng cường (reinforcement learning) nghiên cứu cách một tác t�
 
 Sau chương này, người học có thể:
 
-1. Mô tả một bài toán ra quyết định bằng tác tử, môi trường (environment), trạng thái (state), quan sát (observation), hành động (action) và phần thưởng (reward); chỉ ra một trường hợp trạng thái khác quan sát (Mục 1; Bài tập 01.1).
-2. Phân biệt phần thưởng với nhãn của học có giám sát (supervised learning) và nhận diện các dấu hiệu của một bài toán Học tăng cường (Mục 2; Bài tập 01.2).
-3. Tính lợi tức (return) $G_t$ của một lượt hữu hạn và dùng hệ thức $G_t=R_{t+1}+G_{t+1}$ để tính ngược (Mục 3; Bài tập 01.3, 01.4, 01.10).
-4. Phân biệt chính sách (policy), hàm giá trị (value function) và mô hình (model); tính giá trị $v_\pi$ của một lượt ngắn trực tiếp từ định nghĩa (Mục 4; Bài tập 01.5, 01.9, 01.11).
-5. Nhận diện thăm dò (exploration) và khai thác (exploitation) khi ước lượng còn dựa trên ít mẫu (Mục 4; Bài tập 01.6).
+1. Mô tả một bài toán ra quyết định bằng tác tử, môi trường (environment), trạng thái (state), quan sát (observation), hành động (action) và phần thưởng (reward); chỉ ra một trường hợp trạng thái khác quan sát (Mục 1; Bài tập 01.1; trong tệp bài tập còn 01.13, 01.15, 01.16).
+2. Phân biệt phần thưởng với nhãn của học có giám sát (supervised learning) và nhận diện các dấu hiệu của một bài toán Học tăng cường (Mục 2; Bài tập 01.2; trong tệp bài tập còn 01.15).
+3. Tính lợi tức (return) $G_t$ của một lượt hữu hạn và dùng hệ thức $G_t=R_{t+1}+G_{t+1}$ để tính ngược (Mục 3; Bài tập 01.3, 01.4, 01.10; trong tệp bài tập còn 01.13, 01.14).
+4. Phân biệt chính sách (policy), hàm giá trị (value function) và mô hình (model); tính giá trị $v_\pi$ của một lượt ngắn trực tiếp từ định nghĩa (Mục 4; Bài tập 01.5, 01.9, 01.11; trong tệp bài tập còn 01.12, 01.13, 01.15, 01.16).
+5. Nhận diện thăm dò (exploration) và khai thác (exploitation) khi ước lượng còn dựa trên ít mẫu (Mục 4; Bài tập 01.6; trong tệp bài tập còn 01.15).
 6. Mô hình hóa Tic-tac-toe thành bài toán Học tăng cường, xác định tập hành động hợp lệ và tính nước khai thác một bước (Mục 5; Bài tập 01.7, 01.8).
+
+Bộ bài giao của buổi học gồm [tệp bài tập](material-viewer.html?doc=materials/lec-01/exercises.md&deck=lecture-01-gioi-thieu-hoc-tang-cuong.html) và ba bài của mục "Bài tập củng cố" (01.9–01.11); Bài tập 01.1–01.8 có cả trong các mục của chương và trong tệp bài tập, còn Bài tập 01.12–01.16 chỉ có trong tệp bài tập.
 
 ## Kiến thức tiên quyết
 
@@ -362,7 +364,7 @@ Hỏi hai câu cho mỗi tình huống: dữ liệu có sẵn trước hay do ng
 
 **Câu (c).** Học tăng cường. Tín hiệu là dãy phần thưởng $0,0,0,0,1$, đến trễ, và dữ liệu do chính robot sinh ra.
 
-**Câu (d).** Tình huống này có ba dấu hiệu của Học tăng cường theo Nhận xét 01.6: chỉ có một số đánh giá thay cho đầu ra đúng; đánh giá đến sau cả chuỗi lựa chọn; cách học đã chọn ảnh hưởng tới những gì sinh viên trải qua về sau.
+**Câu (d).** Học tăng cường. Tín hiệu là điểm tổng kết, một số đánh giá đến sau cả học kỳ. Tình huống này có ba trong bốn khác biệt của Học tăng cường theo Nhận xét 01.6: chỉ có một số đánh giá thay cho đầu ra đúng; đánh giá đến sau cả chuỗi lựa chọn; cách học đã chọn ảnh hưởng tới những gì sinh viên trải qua về sau.
 
 **Kiểm tra lại.** Lượt (c) dùng năm hành động, đúng bằng giới hạn $L=5$, và kết thúc bằng phần thưởng $1$ ở bước cuối.
 :::
@@ -508,7 +510,7 @@ Giả thuyết phần thưởng (reward hypothesis) phát biểu rằng mọi m�
 Phần thưởng là một lựa chọn mô hình hóa, và tác tử chỉ tối ưu những gì lựa chọn đó ghi nhận. Bài 02, Mục 5 xét việc thiết kế phần thưởng và ngưỡng làm tác tử đổi hành vi.
 
 ::: exercise Bài tập 01.3 (Lợi tức trên dãy bốn ô có ghế)
-Robot dọn dãy bốn ô bắt đầu ở ô 1, chỉ ô 4 có rác. Cách đặt phần thưởng có thêm $-1$ cho bước robot va vào một chiếc ghế. Trong một lượt, robot nhận dãy phần thưởng $(R_1,R_2,R_3,R_4)=(0,-1,0,1)$ và lượt kết thúc ở $T=4$.
+Robot dọn dãy bốn ô bắt đầu ở ô 1, chỉ ô 4 có rác. Cách đặt phần thưởng có thêm $-1$ cho bước robot va vào một chiếc ghế; va ghế không cản robot sang ô kế tiếp. Trong một lượt, robot nhận dãy phần thưởng $(R_1,R_2,R_3,R_4)=(0,-1,0,1)$ và lượt kết thúc ở $T=4$.
 
 - (a) Tính $G_4,G_3,G_2,G_1,G_0$ theo chiều ngược bằng (3.2), rồi kiểm tra $G_0$ bằng (3.1).
 - (b) Trong các bước $t=0,1,2,3$, bước nào có lợi tức nhỏ hơn phần thưởng cuối $R_4$, và vì sao.
@@ -670,7 +672,7 @@ Robot dọn dãy bốn ô bắt đầu ở ô 1, chỉ ô 4 có rác. Hành đ�
 :::
 
 ::: hint
-$G_0=1$ khi và chỉ khi robot hút ở ô 4 trong bốn hành động. Đếm các dãy bốn hành động làm được điều đó.
+Phần thưởng khác $0$ chỉ có thể đến ở một bước. Đếm các dãy bốn hành động đưa robot tới ô 4 rồi hút.
 :::
 
 ::: solution
@@ -682,7 +684,7 @@ $$
 \Pr(G_0=1)=\Big(\frac12\Big)^4=\frac1{16},\qquad v_\pi(h_0)=1\cdot\frac1{16}+0\cdot\frac{15}{16}=\frac1{16}.
 $$
 
-**Câu (c).** Dưới $\pi_1$, robot thấy $\text{sạch}$ ở ô 1, 2, 3 nên sang phải ba lần, thấy $\text{bẩn}$ ở ô 4 nên hút. Lượt luôn là $\text{phải},\text{phải},\text{phải},\text{hút}$ với $G_0=1$, nên $v_{\pi_1}(h_0)=1$. Hai giá trị khác nhau vì cùng lịch sử ban đầu nhưng chính sách khác nhau; giá trị là một hàm của chính sách, như Định nghĩa 01.12 ghi rõ.
+**Câu (c).** Dưới $\pi_1$, robot thấy $\text{sạch}$ ở ô 1, 2, 3 nên sang phải ba lần, thấy $\text{bẩn}$ ở ô 4 nên hút. Lượt luôn là $\text{phải},\text{phải},\text{phải},\text{hút}$ với $G_0=1$, nên $v_{\pi_1}(h_0)=1$. Hai giá trị khác nhau vì cùng lịch sử ban đầu nhưng chính sách khác nhau; giá trị là một hàm của chính sách (Định nghĩa 01.12).
 
 **Kiểm tra lại.** $16$ dãy bốn hành động trên $\{\text{phải},\text{hút}\}$ có cùng xác suất $\frac1{16}$, và chỉ một dãy cho $G_0=1$.
 :::
@@ -1189,7 +1191,7 @@ $$
 
 ## Bài tập củng cố
 
-Các bài tập trong các mục và ba bài dưới đây là bộ bài tập của chương; mỗi mục tiêu học tập có ít nhất một bài, và ba bài dưới đây không lặp đề với các bài trong mục.
+Các bài tập trong các mục và ba bài dưới đây là bộ bài tập của chương; mỗi mục tiêu học tập có ít nhất một bài, và ba bài dưới đây không lặp đề với các bài trong mục. Bài tập 01.1–01.8 có mặt cả trong [tệp bài tập](material-viewer.html?doc=materials/lec-01/exercises.md&deck=lecture-01-gioi-thieu-hoc-tang-cuong.html) của bài, ở đó phần "Kiểm tra lại" nêu thêm lỗi thường gặp; Bài tập 01.12 (mức tính toán hoặc chứng minh) và Bài tập 01.13–01.16 (mức vận dụng) chỉ có trong tệp đó, còn ba bài dưới đây chỉ có ở mục này.
 
 ### Mức nhận biết
 
@@ -1272,4 +1274,4 @@ So bộ mô phỏng với môi trường thật theo Nhận xét 01.15.
 <!-- note-topic-id: lec-01-topic-11 -->
 ### Đọc thêm: tác tử nhiều nhiệm vụ và mô hình thế giới
 
-Bài giảng gốc (2025–2026, trang 14–15 và 43–44) nêu một quan điểm gắn Học tăng cường với trí tuệ nhân tạo tổng quát và với tác tử dùng chung cho nhiều nhiệm vụ, cùng câu hỏi trí tuệ nhân tạo tổng quát có cần một mô hình thế giới hay không; chúng ta không kiểm chứng quan điểm này. Hai điểm vào là chính sách (Định nghĩa 01.11), khi một chính sách phải dùng cho nhiều nhiệm vụ, và mô hình (Định nghĩa 01.14), khi một mô hình thế giới học được dùng để lập kế hoạch. Chủ đề này được giao dưới dạng bài tìm hiểu, Bài tập 01.16, trong bộ bài tập của bài.
+Bài giảng gốc (2025–2026, trang 14–15 và 43–44) nêu một quan điểm gắn Học tăng cường với trí tuệ nhân tạo tổng quát và với tác tử dùng chung cho nhiều nhiệm vụ, cùng câu hỏi trí tuệ nhân tạo tổng quát có cần một mô hình thế giới hay không; chúng ta không kiểm chứng quan điểm này. Hai điểm vào là chính sách (Định nghĩa 01.11), khi một chính sách phải dùng cho nhiều nhiệm vụ, và mô hình (Định nghĩa 01.14), khi một mô hình thế giới học được dùng để lập kế hoạch. Chủ đề này được giao dưới dạng bài tìm hiểu, Bài tập 01.16 của [tệp bài tập](material-viewer.html?doc=materials/lec-01/exercises.md&deck=lecture-01-gioi-thieu-hoc-tang-cuong.html).
