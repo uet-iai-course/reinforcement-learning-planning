@@ -1453,3 +1453,33 @@ Không còn "Đề nghị sửa deck" mức nhẹ nào mở trong tệp này: đ
 
 - Tác tử biên tập deck (general-purpose, claude-opus-5-5, high). Kiểm độc lập: trang L07-36f 70 âm tiết, 10 dòng (ngoại lệ có sẵn trong storyboard); Playwright 1600×900 và 390×844 toàn deck: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang; `git diff --check` sạch.
 - Quyết định: **chấp nhận**; commit `fix(lecture-07)`.
+
+## Đợt sửa 2026-10-14 — Đồng bộ chéo ghi chú
+
+- Vai: biên tập ghi chú Bài 07 (sửa nhỏ), tác tử `general-purpose`, `claude-opus-5-5`, mức `high`, theo brief `scratchpad/brief_note_crosssync.md` của điều phối viên (bằng chứng lời gọi công cụ do điều phối viên ghi). `no-ai-slop` Edit cho mọi câu thêm hoặc sửa. Không commit. Bản ghi chú trước đợt sửa lưu ở `scratchpad/lec07-note-before-crosssync.md`.
+- Căn cứ: `planning/quyet-dinh-chuan-2026-10-12.md` (mục 1–2), các đề nghị sửa ghi chú còn mở ở mục "Giai đoạn III: bài tập" (đã đổi số theo "Đánh số lại các bài mới"), HW-5 của "Đồng bộ trang bài tập về nhà", và `materials/lec-07/exercises.md` đã commit (`db4b750`). Các đề nghị đã làm ở "Sửa ghi chú sau giai đoạn II" không làm lại.
+
+| mã | đề nghị | trạng thái | vị trí (số dòng theo tệp mới) và nội dung |
+|---|---|---|---|
+| CS-1 | Mục tiêu học tập 1, 4, 5, 6 dẫn bài của tệp bài tập (Giai đoạn III, đổi số; HW-5) | đã sửa | dòng 9, 12–14: thêm "tệp bài tập: 07.20" (mục tiêu 1), "07.22, 07.24" (4), "07.23, 07.25" (5), "07.21, 07.23, 07.24, 07.25" (6), theo dòng "Mức độ:" của từng bài trong `exercises.md`. Dòng 16: một câu dẫn liên kết viewer `material-viewer.html?doc=materials/lec-07/exercises.md&deck=lecture-07-xap-xi-ham.html` và nêu 07.20–07.25 chỉ có trong tệp. `outline.md` ghi tập con (mục tiêu 4: 07.22; 5: 07.23; 6: 07.21, 07.24, 07.25); ghi chú theo `exercises.md`, không sửa outline (ngoài phạm vi) |
+| CS-2 | Dòng mở mục "Bài tập củng cố" dẫn tới `exercises.md` | đã sửa | dòng 1616: liên kết viewer; tệp giữ số hiệu và kết quả của tám bài thân chương 07.3, 07.5, 07.7, 07.8, 07.10, 07.11, 07.13, 07.14; thêm 07.20–07.25 kèm chủ đề từng bài theo tiêu đề trong tệp; không lặp 07.15–07.19. Bỏ cụm "có trang bài tập trên trang chiếu" ở bản nháp để ghi chú không dẫn người đọc sang deck (`note_check.py` gắn cờ mẫu "trang chiếu") |
+| CS-3 | Tài liệu tham khảo: phiếu Bài tập tuần 7 dẫn thêm bài của tệp (Giai đoạn III, đổi số: bài 1 → 07.20, bài 5 → 07.22) | đã sửa | dòng 1730: "bài 1 và bài 5 còn là Bài tập 07.20 và 07.22 của tệp bài tập". Dòng 1738: mục "**Bài tập.**" với liên kết viewer, thành phần bộ bài (tám bài trùng thân chương, 07.20–07.25 mới, 07.24 và 07.25 lập trình), bảng mạch đầu tệp |
+| CS-4 | Trích dẫn §11.2 còn thiếu trang | đã sửa | dòng 1442 (Nhận xét 07.39): "ví dụ của Baird ở Sutton và Barto, 2018, §11.2, tr. 261–262". Đối chiếu PDF (trang in = trang PDF − 22): phản ví dụ của Baird và Hình 11.1 ở tr. 261, Hình 11.2 ở tr. 262; câu về Q-learning ở tr. 263; ví dụ $w\to2w$ ở tr. 260. Các chỗ khác dẫn §11.2 đều đã có trang (dòng 1380, 1465, 1488, 1523, 1558, 1574); dòng tài liệu tham khảo dẫn mức mục, giữ |
+| CS-5 | Ví dụ 07.11 ghi $J_{d_\pi}$ nhất quán | đã đúng, không sửa | dòng Yêu cầu và dòng Tính đều dùng $J_{d_\pi}$ (đã sửa ở "Rà lại sau đợt sửa và sửa bổ sung") |
+| CS-6 | Ký hiệu theo tệp quyết định | đã đúng, không sửa | grep ghi chú: 0 lượt $P^\pi$, $r^\pi$, $T^\pi$, $V^\pi$ ngoài dòng tương ứng ký hiệu với *Học máy thống kê* (dòng 72, đúng chủ đích); $T_\pi$, $P_\pi$, $r_\pi$ chỉ số dưới; "hầu chắc chắn (almost surely)", "quá trình quyết định Markov (Markov decision process, MDP)", "quy tắc phá hòa (tie-breaking)"; tên trạng thái chuỗi $\mathrm A$–$\mathrm E$ chữ đứng; $s_1$, $s_2$ của ví dụ hai trạng thái là trạng thái đánh chỉ số, giữ như deck. Deck `lecture-07-xap-xi-ham.html`: 0 lượt dạng cũ, không có đề nghị sửa deck |
+
+Không đổi số hiệu kết quả, ví dụ, bài tập, `note-topic-id`; không sửa deck, `exercises.md`, outline, storyboard, notebook, SVG.
+
+Đề nghị sửa deck còn lại: không có.
+
+Tự kiểm `no-ai-slop` (Edit) theo `eval.md`, phạm vi các câu thêm ở dòng 9–16, 1442, 1616, 1730, 1738: không thêm nhận định không nguồn (thành phần bộ bài, chủ đề và mục tiêu từng bài lấy từ `exercises.md`; số trang đối chiếu bản PDF của Sutton và Barto); một tên cho một đối tượng ("bộ bài giao chính thức", "tệp bài tập" ở mọi chỗ); không câu hỏi tu từ, không "hãy", tài liệu không làm chủ ngữ của động từ nhận thức; không câu kết khẩu hiệu. Không dùng điểm của bộ phát hiện AI.
+
+Kiểm tra:
+- `note_check.py`: 41 kết quả, 16 ví dụ, 19 bài tập, số hiệu liên tục, không trùng; 0 dấu `\(`/`\[`; khoảng $20\,806$ từ (trước đợt $20\,598$; phần tăng là ba câu dẫn bộ bài tập).
+- `check_note.py 07 lecture-07-xap-xi-ham.html` (viewer cổng 8766, cwd gốc kho), 1600×900 và 390×844: 0 `.katex-error`, 132 khối `:::` nhận diện, 0 lỗi console, 0 yêu cầu ngoài hoặc lỗi, không cuộn ngang.
+- Playwright (cổng 8766): ghi chú hiển thị 3 liên kết tới `material-viewer.html?doc=materials/lec-07/exercises.md&deck=lecture-07-xap-xi-ham.html`; `materials/lec-07/exercises.md` trả 200.
+- `git diff --check` sạch; `git diff --stat` của Bài 07 chỉ gồm `lecture-note.md` và `review-log.md`.
+
+### Quyết định của điều phối viên (2026-10-14, đồng bộ chéo ghi chú)
+
+- Kiểm độc lập: `note_check.py` sạch; viewer 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(materials-07)`.

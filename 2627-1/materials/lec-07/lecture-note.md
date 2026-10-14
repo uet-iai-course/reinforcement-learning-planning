@@ -6,12 +6,14 @@ Trong chương này, chúng ta thay bảng giá trị của Bài 05–06 bằng 
 
 Sau chương này, người học có thể:
 
-1. Viết $\hat v(s,w)=x(s)^\top w$, $\hat q(s,a,w)=x(s,a)^\top w$ với miền và kích thước; tính mức lan của một cập nhật, nhận diện nhập nhằng đặc trưng (aliasing) (Bài tập 07.1, 07.2, 07.3, 07.12, 07.15, 07.16).
+1. Viết $\hat v(s,w)=x(s)^\top w$, $\hat q(s,a,w)=x(s,a)^\top w$ với miền và kích thước; tính mức lan của một cập nhật, nhận diện nhập nhằng đặc trưng (aliasing) (Bài tập 07.1, 07.2, 07.3, 07.12, 07.15, 07.16; tệp bài tập: 07.20).
 2. Thực hiện bằng tay một cập nhật Monte Carlo gradient, TD(0), Sarsa và Q-learning bán gradient (semi-gradient), ghi mục tiêu, sai lệch và tham số mới (Bài tập 07.7, 07.10, 07.11, 07.13).
 3. Phân biệt gradient đầy đủ với bán gradient theo việc mục tiêu có chứa tham số, và chỉ ra số hạng bị bỏ (Bài tập 07.4, 07.5, 07.7).
-4. Phát biểu điểm cố định Bellman chiếu, tính nghiệm TD(0) và Monte Carlo trên ví dụ nhỏ, nêu đủ giả thiết hội tụ của TD(0) tuyến tính (Bài tập 07.8, 07.9, 07.17).
-5. Phân biệt mục tiêu Sarsa với mục tiêu Q-learning và nhận diện bộ ba bất ổn (deadly triad) trong một quy tắc cập nhật (Bài tập 07.13, 07.14, 07.18).
-6. Đối chiếu kết quả thực hành với giả thiết của kết quả lý thuyết trước khi kết luận về hội tụ hay phân kỳ (Bài tập 07.6, 07.19).
+4. Phát biểu điểm cố định Bellman chiếu, tính nghiệm TD(0) và Monte Carlo trên ví dụ nhỏ, nêu đủ giả thiết hội tụ của TD(0) tuyến tính (Bài tập 07.8, 07.9, 07.17; tệp bài tập: 07.22, 07.24).
+5. Phân biệt mục tiêu Sarsa với mục tiêu Q-learning và nhận diện bộ ba bất ổn (deadly triad) trong một quy tắc cập nhật (Bài tập 07.13, 07.14, 07.18; tệp bài tập: 07.23, 07.25).
+6. Đối chiếu kết quả thực hành với giả thiết của kết quả lý thuyết trước khi kết luận về hội tụ hay phân kỳ (Bài tập 07.6, 07.19; tệp bài tập: 07.21, 07.23, 07.24, 07.25).
+
+Số hiệu sau "tệp bài tập:" chỉ bài trong [Bài tập Bài 07](material-viewer.html?doc=materials/lec-07/exercises.md&deck=lecture-07-xap-xi-ham.html), bộ bài giao chính thức của bài học; Bài tập 07.20–07.25 chỉ có trong tệp đó, các bài còn lại nằm trong chương này.
 
 <!-- note-topic-id: lec-07-topic-13 -->
 ## Kiến thức tiên quyết
@@ -1437,7 +1439,7 @@ Bỏ một yếu tố cho các trường hợp đã biết:
 Theo Sutton và Barto (2018, §11.3), nguy cơ xuất hiện ngay trong bài toán dự đoán, không cần điều khiển.
 
 ::: remark Nhận xét 07.39 (Đọc đúng khẳng định về bộ ba bất ổn)
-"Có thể phân kỳ" nói về một lớp phương pháp: không có bảo đảm hội tụ chung, và có ví dụ phân kỳ (Mệnh đề 07.37; ví dụ của Baird ở Sutton và Barto, 2018, §11.2). Nó không nói một lần chạy sẽ phân kỳ. Dấu hiệu của phân kỳ là $\lVert w\rVert$ hoặc dự đoán tăng không chặn; chính sách kém với $\lVert w\rVert$ bị chặn là hiện tượng khác.
+"Có thể phân kỳ" nói về một lớp phương pháp: không có bảo đảm hội tụ chung, và có ví dụ phân kỳ (Mệnh đề 07.37; ví dụ của Baird ở Sutton và Barto, 2018, §11.2, tr. 261–262). Nó không nói một lần chạy sẽ phân kỳ. Dấu hiệu của phân kỳ là $\lVert w\rVert$ hoặc dự đoán tăng không chặn; chính sách kém với $\lVert w\rVert$ bị chặn là hiện tượng khác.
 
 Các hướng khắc phục theo bài giảng gốc (trang 41) gồm đổi trọng số cập nhật, mạng mục tiêu (target network), điều chuẩn và cắt ngưỡng; Bài 08 dùng mạng mục tiêu. Theo trang 43, nhiều cách ổn định hóa cần giả thiết mạnh hoặc cho nghiệm chệch.
 :::
@@ -1611,6 +1613,8 @@ $$
 
 ## Bài tập củng cố
 
+Bộ bài giao chính thức của buổi học là [Bài tập Bài 07](material-viewer.html?doc=materials/lec-07/exercises.md&deck=lecture-07-xap-xi-ham.html). Tệp giữ số hiệu và kết quả của tám bài tập thân chương 07.3, 07.5, 07.7, 07.8, 07.10, 07.11, 07.13, 07.14, thêm Bài tập 07.20–07.25 (giới hạn của bảng tra, bốn dãy bước học, điểm dừng trung bình của TD(0), Q-learning trên một mảnh MDP hai trạng thái, hai bài lập trình trên hai notebook của bài) và không lặp các đề 07.15–07.19 dưới đây.
+
 ### Mức nhận biết
 
 ::: exercise Bài tập 07.15 (Số đại lượng cần học)
@@ -1723,7 +1727,7 @@ Nhận xét 07.23, chứng minh Định lý 07.17, Mệnh đề 07.26 và địn
 ## Hướng dẫn đọc thêm và tài liệu tham khảo
 
 - Tạ Việt Cường (2026). *Lecture 07: Hàm xấp xỉ trong Reinforcement Learning*, bài giảng gốc (2025–2026), trang 1–45: phạm vi và thứ tự; Mục 1 dựa trên trang 22–31, Mục 2 trên trang 27, 32–34, Mục 3 trên trang 35–37, Mục 4 trên trang 38–40, Mục 5 trên trang 38, 41, Mục 6 trên trang 41–45.
-- Tạ Việt Cường (2026). *Bài tập tuần 7 — Function Approximation* (2025–2026), bài 1–8: Bài tập 07.5, 07.6, 07.8–07.11, 07.14 và chuỗi năm trạng thái.
+- Tạ Việt Cường (2026). *Bài tập tuần 7 — Function Approximation* (2025–2026), bài 1–8: Bài tập 07.5, 07.6, 07.8–07.11, 07.14 và chuỗi năm trạng thái; bài 1 và bài 5 còn là Bài tập 07.20 và 07.22 của tệp bài tập.
 - Sutton, R. S. và Barto, A. G. (2018). *Reinforcement Learning: An Introduction*, ấn bản 2: §9.1–9.4 cho Mục 1–3; §9.5, 9.6, 9.8 cho đặc trưng, bước học, LSTD; §10.1 cho Mục 4; §6.7, 11.2–11.3 cho Mục 5.
 - Bertsekas, D. P. và Tsitsiklis, J. N. (1996). *Neuro-Dynamic Programming*: chương 4 cho Định lý 07.17; chương 6 cho Định lý 07.29.
 - Tsitsiklis, J. N. và Van Roy, B. (1997). An analysis of temporal-difference learning with function approximation. *IEEE Transactions on Automatic Control* 42(5): Định lý 07.29.
@@ -1731,3 +1735,4 @@ Nhận xét 07.23, chứng minh Định lý 07.17, Mệnh đề 07.26 và địn
 - Đọc thêm về MDP tuyến tính: Jin, Yang, Wang và Jordan (2020), *COLT*. Bài giảng gốc (trang 42) chỉ nêu bậc kết quả: trong MDP tuyến tính theo lượt với $d$ đặc trưng và chân trời $H$, một biến thể lạc quan của lặp giá trị bình phương tối thiểu (least-squares value iteration, LSVI) có độ hối tiếc (regret), tức tổng thiệt hại so với chính sách tối ưu, bậc $\tilde O(\sqrt{d^3H^3N})$ sau $N$ bước.
 - Giáo trình *Học máy thống kê*, chương 6: giọng kể, thuật ngữ, tương ứng ký hiệu.
 - Hai notebook thực hành Bài 07 (Lunar Lander, Flappy Bird): nguồn của mọi số liệu thực hành.
+- **Bài tập.** [Bài tập Bài 07](material-viewer.html?doc=materials/lec-07/exercises.md&deck=lecture-07-xap-xi-ham.html), bộ bài giao chính thức ở ba mức: tám bài trùng bài tập thân chương, Bài tập 07.20–07.25 là bài mới, trong đó 07.24 và 07.25 là bài lập trình trên hai notebook; bảng đầu tệp gắn từng bài với một mạch nội dung của bài học.
