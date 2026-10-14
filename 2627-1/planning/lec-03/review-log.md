@@ -1936,3 +1936,75 @@ Kiểm tra sau sửa: `note_check.py` 19 `exercise`/`hint`/`solution`, số hi�
 
 - Tác tử biên tập deck (general-purpose, claude-opus-5-5, high). Kiểm độc lập: trang L03R-07-03 76 âm tiết (trần 80 của trang tổng kết, ngoại lệ ghi storyboard); Playwright 1600×900 và 390×844 toàn deck: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang; ảnh trang xem trực tiếp; `git diff --check` sạch.
 - Quyết định: **chấp nhận**; commit `fix(lecture-03)`.
+
+## Đợt sửa 2026-10-14 — Đồng bộ chéo ghi chú
+
+### Tác tử và phạm vi
+
+- Vai: biên tập ghi chú (sửa nhỏ, viết tệp), theo `brief_note_crosssync.md` của điều phối viên. Loại `general-purpose`, Claude Opus 5.5 (`claude-opus-5-5`), mức `high` (theo brief; điều phối viên xác nhận bằng lệnh gọi tác tử). `no-ai-slop` chế độ Edit. Không commit, không push.
+- Tệp sửa: `materials/lec-03/lecture-note.md` và mục này. Không sửa deck, `exercises.md`, `outline.md`, `storyboard.md`, SVG, CSS. Bản trước khi sửa: `scratchpad/cs03/lecture-note.before.md`; script `scratchpad/cs03/sub.py`, `ins.py`.
+- Đầu vào: `planning/quyet-dinh-chuan-2026-10-12.md` (mục 1, 2); mục "Hoãn" của "Đợt sửa 2026-10-14 — Sửa ghi chú sau giai đoạn II"; mục "Đề nghị sửa ghi chú" và "Đề nghị sửa ghi chú (bổ sung)" của Giai đoạn III; mục "Đồng bộ trang bài tập về nhà"; `exercises.md` đã commit (dòng "Mức độ", "Nguồn", tài liệu tham khảo).
+
+### Đề nghị và trạng thái
+
+Số dòng là của tệp sau sửa.
+
+| Đề nghị | Nguồn | Xử lý | Trạng thái | Dòng mới |
+|---|---|---|---|---|
+| $P^\pi$, $r^\pi$ → $P_\pi$, $r_\pi$ | quyết định chung mục 1; mục "Hoãn" | Toàn ghi chú: 82 chỗ $P^\pi$, 44 chỗ $r^\pi$. Phần tử ma trận $P^\pi_{ss'}$, $P^\pi_{ij}$, $P^\pi_{\mathrm A\mathrm A'}$ viết thành $(P_\pi)_{ss'}$, $(P_\pi)_{ij}$, $(P_\pi)_{\mathrm A\mathrm A'}$ (11 chỗ) để hai chỉ số dưới không chồng nhau; lũy thừa giữ dạng $(P_\pi)^k$. Bảng ký hiệu, Định nghĩa 03.26, Mệnh đề 03.27, Định lý 03.28, Thuật toán 03.29, Ví dụ 03.14–03.17, Tình huống 03.1, Tóm tắt, Bài tập 03.9, 03.13, 03.14 và chuỗi `alt` của hình cấu trúc chương ("(I − γP_π) v = r_π"). Dòng tương ứng của giáo trình *Học máy thống kê* ($V^\pi$ ứng với $v_\pi$, dòng 60 và 1780) giữ nguyên vì đó là ký hiệu của giáo trình | đã sửa | 11, 50, 87, 1294–1301, 1331–1337, 1375–1377, 1438–1456, 1538 và các dòng khác |
+| $v_H$, $v_L$ → $v_{\mathrm H}$, $v_{\mathrm L}$ | quyết định chung mục 2; TOAN 11 (giai đoạn II) | 28 + 30 chỗ, trong Bài tập 03.6, 03.7, Ví dụ 03.14–03.16, tiểu mục 5.1, 5.3; câu định nghĩa tại chỗ "Viết $v_{\mathrm H}=v_\pi(\mathrm H)$" (dòng 1164, 1218) đổi theo | đã sửa | 1164–1200, 1218–1270 và các dòng khác |
+| Ký hiệu dung sai $\delta$ của Thuật toán 03.29 | mục "Hoãn"; RL nhẹ (giai đoạn II) | Đổi thành $\eta$ (5 chỗ, dòng 1449–1456; không còn $\delta$ nào trong ghi chú). Không dùng $\theta$: Tình huống 03.2 (dòng 1560–1562) và Bài tập 03.22 của `exercises.md` dùng $\theta$, $\dot\theta$ cho góc cột CartPole, theo notebook Bài 04 và Gymnasium, nên $\theta$ sẽ mang hai nghĩa trong cùng chương. Dung sai ở đây là dung sai làm tròn của một thuật toán trực tiếp, không phải ngưỡng dừng của phép lặp, nên quy ước "$\theta$ cho ngưỡng dừng" của quyết định chung mục 2 không ràng buộc; notebook CartPole của Bài 04 cũng viết $\eta$ cho ngưỡng dừng (ghi chú Bài 04, đoạn sau bảng ký hiệu). $\eta$ không xuất hiện ở ghi chú, bài tập hay deck Bài 03. Phương án khác (dung sai $\theta$, góc cột đổi sang $\phi$ như ghi chú Bài 04) kéo theo sửa Tình huống 03.2 và Bài tập 03.22; chờ điều phối viên nếu muốn chọn phương án đó | đã sửa ($\eta$) | 1449, 1451, 1453, 1456 |
+| Bài tập 03.1(b): "Theo kỳ vọng toàn phần theo vị trí" → "Theo công thức xác suất toàn phần theo vị trí" | TOAN-8 (rà soát bài tập) | Sửa đúng câu; hai bản ghi chú và `exercises.md` giờ trùng chữ | đã sửa | 231 |
+| Câu mở "Bài tập củng cố" dẫn `exercises.md` | Giai đoạn III, "Đề nghị sửa ghi chú"; brief đợt này | Theo mẫu đã duyệt của ghi chú Bài 02: năm bài 03.10–03.14 dưới đây là bài tập của ghi chú; bộ chính thức nằm trong tệp bài tập (liên kết viewer), mười chín bài đánh số chung: 03.1–03.8 phát biểu lại với đủ dữ kiện và cùng kết quả, mười một bài 03.15–03.25 chỉ ở tệp, 03.9–03.14 chỉ ở ghi chú. Bản đề nghị cũ ghi "03.15–03.24"; tệp đã commit có 03.25 nên dùng 03.15–03.25 | đã sửa | 1640 |
+| Mục tiêu học tập dẫn `exercises.md` | brief đợt này | Một đoạn sau danh sách mục tiêu: liên kết viewer và phân bổ mười một bài mới theo mục tiêu (1: 03.15, 03.22, 03.24; 2: 03.18, 03.20, 03.23; 3: 03.16, 03.17; 4: 03.17, 03.19, 03.24, 03.25; 5: 03.20, 03.21, 03.23–03.25). Phân bổ lấy từ dòng "Mức độ" của `exercises.md` và khớp ghi chú diễn giả `01-01c` của deck đã commit. Năm dòng mục tiêu giữ nguyên danh sách bài của ghi chú | đã sửa | 13 |
+| Hướng dẫn đọc thêm: dòng Bài tập tuần 2 và Bài tập tuần 3 | Giai đoạn III, "Đề nghị sửa ghi chú" | Bài tập tuần 2: bài 4 → Bài tập 03.21, bài 7, 8 → 03.7, 03.19 (theo dòng "Nguồn" và tài liệu tham khảo của `exercises.md`), bài 3 → 03.20, bài 10 → 03.24. Thêm dòng Bài tập tuần 3 (Tạ Việt Cường, 8/5/2026), bài 1 → 03.16; thêm dòng "Bài tập Bài 03" với liên kết viewer | đã sửa | 1774–1776 |
+| Đồng bộ chéo phía `exercises.md` ($v_{\mathrm H}$; $P^\pi$ khi ghi chú đổi) | Giai đoạn III, "Đề nghị sửa ghi chú", gạch 3 | Ghi chú đã đổi; phần của `exercises.md` chuyển thành "Đề nghị sửa bài tập" dưới đây | chuyển |
+
+Số hiệu kết quả, ví dụ, bài tập, tình huống và `note-topic-id` không đổi. Không có đề nghị nào khác còn mở cho ghi chú: các mục của "Đề nghị sửa ghi chú (sau giai đoạn II)", "(bổ sung)" và "Lệch tạm thời deck–ghi chú" đã làm ở đợt sửa ghi chú sau giai đoạn II; mục "Đồng bộ trang bài tập về nhà" không có đề nghị cho ghi chú ngoài 03.1(b).
+
+### Đề nghị sửa deck
+
+Deck `lecture-03-qua-trinh-quyet-dinh-markov.html` (đã commit) còn ký hiệu cũ. Đếm bằng script trên `data-slide-id`; "mặt" là mặt trang, "ghi chú" là ghi chú diễn giả. Phần tử ma trận `P^\pi_{…}` (5 chỗ trong deck) viết thành `(P_\pi)_{…}` như ghi chú.
+
+| Trang | $P^\pi$ → $P_\pi$ | $r^\pi$ → $r_\pi$ | $v_H$, $v_L$ → $v_{\mathrm H}$, $v_{\mathrm L}$ | $\delta$ → $\eta$ |
+|---|---|---|---|---|
+| `L03R-01-01c` | mặt 1 | mặt 1 | — | — |
+| `L03R-01-02b` | mặt 1 | — | — | — |
+| `L03R-05-10b` | — | — | mặt 6 + 4, ghi chú 1 + 1 | — |
+| `L03R-06-02` | — | — | mặt 7 + 6, ghi chú 1 + 2 | — |
+| `L03R-06-03` | — | — | mặt 3 + 7, ghi chú 1 + 1 | — |
+| `L03R-06-06` | mặt 3, ghi chú 3 | mặt 2, ghi chú 1 | — | — |
+| `L03R-06-07` | mặt 3, ghi chú 2 | mặt 3 | mặt 1 + 1, ghi chú 2 + 1 | — |
+| `L03R-06-07b` | mặt 5, ghi chú 4 | mặt 2, ghi chú 1 | — | — |
+| `L03R-06-07c` | ghi chú 3 | ghi chú 2 | — | mặt 1, ghi chú 1 |
+| `L03R-06-07d` | mặt 3, ghi chú 2 | mặt 4, ghi chú 1 | — | mặt 3 |
+| `L03R-06-07e` | — | ghi chú 1 | — | — |
+| `L03R-06-08` | mặt 2 | mặt 2 | ghi chú 0 + 1 | — |
+| `L03R-06-08b` | mặt 1 | mặt 1 | mặt 2 + 3 | — |
+| `L03R-07-01` | ghi chú 2 | ghi chú 2 | — | — |
+| `L03R-07-01b` | mặt 1 | mặt 1 | — | — |
+| `L03R-07-02` | mặt 1, ghi chú 1 | mặt 1, ghi chú 1 | — | — |
+| `L03R-07-02b` | mặt 1 | — | mặt 2 + 1 | — |
+| `L03R-07-04` | — | ghi chú 1 | — | — |
+
+- SVG: `img/lec-03/chapter-structure.svg` (chỉ ghi chú dùng, deck không tham chiếu) còn nhãn chỉ số trên `P<tspan baseline-shift="super">π</tspan>` và `r<tspan baseline-shift="super">π</tspan>` (dòng 28) và "(I − γP^π) v = r^π" trong `<desc>` (dòng 3); đề nghị đổi sang chỉ số dưới (`baseline-shift="sub"`) và "P_π", "r_π" để khớp `alt` đã sửa. Không SVG nào deck dùng mang $P^\pi$, $v_H$ hay $\delta$.
+- Tệp planning: `outline.md` (6 dòng) và `storyboard.md` (5 dòng) còn $P^\pi$, $r^\pi$, $v_H$ hoặc $\delta$; đồng bộ cùng lượt sửa deck.
+
+### Đề nghị sửa bài tập
+
+`materials/lec-03/exercises.md` (đã commit):
+
+- "Hướng dẫn và ký hiệu" (dòng 33): bỏ vế "ghi chú viết $v_H$, $v_L$" (ghi chú nay viết $v_{\mathrm H}$, $v_{\mathrm L}$); đoạn ký hiệu đổi 1 chỗ $P^\pi$, 1 chỗ $r^\pi$.
+- $P^\pi$ → $P_\pi$, $r^\pi$ → $r_\pi$ (8 chỗ phần tử `P^\pi_{…}` viết `(P_\pi)_{…}`): Bài tập 03.8 (3 + 3), 03.17 (2 + 2), 03.20 (1 + 1), 03.21 (17 + 7), 03.23 (17 + 7), 03.24 (5 + 3), 03.25 (1 + 1).
+- Bài tập 03.22 dùng $\theta$ cho góc cột (11 chỗ): giữ nguyên nếu điều phối viên chấp nhận $\eta$ cho dung sai; chỉ đổi sang $\phi$ nếu chọn phương án dung sai $\theta$.
+
+### Tự kiểm `no-ai-slop` (Edit) và kết quả kiểm tra
+
+- Phạm vi: ba đoạn thêm hoặc viết lại (dòng 13, 1640, 1774–1776), câu sửa ở dòng 231 và dòng "Tham số" của Thuật toán 03.29. Đối chiếu `eval.md`: không số liệu hay nguồn không có căn cứ (số hiệu bài, mức và mục tiêu đối chiếu dòng "Mức độ", "Nguồn" và mục tài liệu tham khảo của `exercises.md`); không câu hỏi, không "hãy", "ta thấy", "rõ ràng", "Đáp án"; tài liệu không làm chủ ngữ của câu giảng giải; câu theo mẫu đã duyệt của ghi chú Bài 02.
+- `note_check.py`: 31 môi trường bộ đếm chung, 17 ví dụ, 14 bài tập, liên tục, không trùng; 104 khối; 0 dấu `\(`, `\[`. Số từ `wc -w` 23 759 → 24 026 (+267: ba đoạn dẫn tệp bài tập và một token thêm cho mỗi `v_{\mathrm H}`, `v_{\mathrm L}`).
+- `check_note.py 03 lecture-03-qua-trinh-quyet-dinh-markov.html` (cổng 8766, server cwd `/data/tqlong/rl-plan`): 1600×900 và 390×844 đều 0 lỗi KaTeX, 104 khối, 0 lỗi console, 0 yêu cầu ra ngoài, không tràn (`scrollWidth` 482 ở 390 px như các đợt trước). Đã xem ảnh chụp 1600 px của mục tiêu học tập và Thuật toán 03.29 ($P_\pi$, $r_\pi$, $(P_\pi)_{ss'}$, $\eta$ hiển thị đúng).
+- `git diff --check` sạch trên `materials/lec-03/`, `planning/lec-03/`.
+
+### Quyết định của điều phối viên (2026-10-14, đồng bộ chéo ghi chú)
+
+- Kiểm độc lập: `note_check.py` sạch; viewer 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console; không còn $P^\pi$, $r^\pi$, $v_H$, $v_L$; `git diff --check` sạch. Chấp thuận dùng $\eta$ cho dung sai của Thuật toán 03.29 (tránh trùng $\theta$ là góc cột CartPole trong Tình huống 03.2 và Bài tập 03.22). Quyết định: **chấp nhận**; commit `fix(materials-03)`. Deck 03, `exercises.md`, `chapter-structure.svg`, outline và storyboard đổi ký hiệu theo ở lượt khép đợt.
