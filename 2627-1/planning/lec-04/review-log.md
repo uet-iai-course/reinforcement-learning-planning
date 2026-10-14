@@ -2137,3 +2137,46 @@ Phạm vi: mặt trang và ghi chú diễn giả của L04-G05. Đối chiếu `
 
 - Tác tử biên tập deck (general-purpose, claude-opus-5-5, high). Kiểm độc lập: trang L04-G05 63 âm tiết (trần 80 của trang tổng kết, ngoại lệ ghi storyboard); Playwright 1600×900 và 390×844 toàn deck: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang; liên kết viewer bài tập mở được; `git diff --check` sạch.
 - Quyết định: **chấp nhận**; commit `fix(lecture-04)`.
+
+## Đợt sửa 2026-10-14 — Đồng bộ chéo ghi chú
+
+### Tác tử và phạm vi
+
+- Vai: tác tử biên tập ghi chú bài giảng Bài 04 (sửa nhỏ, viết tệp), theo `scratchpad/brief_note_crosssync.md`. Loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` theo lời gọi của điều phối viên (điều phối viên đối chiếu với lời gọi công cụ). `no-ai-slop` chế độ Edit. Không commit.
+- Tệp ghi: `2627-1/materials/lec-04/lecture-note.md`; mục này của `review-log.md`. Không sửa deck, `exercises.md`, outline, storyboard, notebook, SVG, CSS.
+- Căn cứ: `planning/quyet-dinh-chuan-2026-10-12.md` (mục 1, 2, 4); các đề nghị còn mở cho ghi chú trong mục "Đề nghị sửa deck và ghi chú (không sửa trong đợt này)" của giai đoạn III và bảng "Đề nghị sửa deck và ghi chú của giai đoạn III" của đợt đồng bộ trang bài tập về nhà; `exercises.md` đã commit; ghi chú Bài 03 đã commit (`8aeeb31`) cho số hiệu 03.k; notebook (chỉ đọc) cho quy ước ký hiệu.
+- Không đổi số hiệu kết quả, ví dụ, bài tập, tình huống hay `note-topic-id` (`note_check.py`: bộ đếm chung 35, Ví dụ 18, Bài tập 9, không trống, không trùng).
+
+### Xử lý từng đề nghị và việc của brief
+
+| vị trí trong ghi chú (dòng mới) | đề nghị hoặc việc | xử lý | trạng thái |
+|---|---|---|---|
+| Đọc thêm, gạch "Lặp chính sách cải biên" (dòng 1794) | Dẫn Bài tập 04.15 cạnh câu về nhiệm vụ 7 (giai đoạn III; đồng bộ trang bài tập về nhà); nêu 04.10–04.17 | Thêm: notebook "viết $m$ cho $\ell$"; Bài tập 04.15 của tệp bài tập (liên kết viewer) tính tay ba vòng với $\ell=1$ trên mô hình hai trạng thái, đếm bằng chương trình số vòng và số phép áp dụng toán tử với $\ell\in\{1,5,20\}$, rồi chạy nhiệm vụ 7 trên CartPole rời rạc hóa; một câu nêu sáu bài còn lại 04.10–04.14, 04.16, 04.17 và chỗ liệt kê | đã sửa |
+| Bảng ký hiệu, đoạn quy ước sau bảng (dòng 68) | Notebook viết $m$ cho $\ell$ và `theta` cho $\phi$; chỉ ghi câu quy ước trong ghi chú, không sửa notebook | Câu tương ứng ký hiệu của bài thực hành đổi thành: chữ theta (biến `theta` trong mã, $\theta$ và $\dot\theta$ trong công thức) cho góc cột và vận tốc góc, $m$ cho số lần áp dụng $T_\pi$ mỗi vòng của lặp chính sách cải biên ở nhiệm vụ 7; chương dùng $\theta$, $\kappa$, $\phi$, $\dot\phi$, $\ell$ vì $m$ đã chỉ số hành động tối đa. Khớp mục "Hướng dẫn và ký hiệu" của `exercises.md` | đã sửa |
+| Mục 5.4, đoạn sau hình `dp04-cartpole-bins.svg` (dòng 1497) | Như trên (phần ở Mục 5.4) | Thêm một câu: bài thực hành viết góc cột là $\theta$ (biến `theta`), chỉ số khoảng $b_\theta$; chương viết $\phi$, $b_\phi$, còn $\theta$ là ngưỡng dừng. Đã kiểm notebook: ô Markdown dùng $\theta$, $\dot\theta$, $b_\theta$, $b_{\dot\theta}$ | đã sửa |
+| Mục tiêu học tập (dòng 7–11, 13) | Brief việc (3): mục tiêu dẫn tới `exercises.md` | Mỗi mục tiêu thêm "tệp bài tập: …" theo dòng "Mức độ" của `exercises.md` (1: 04.10, 04.16; 2: 04.17; 3: 04.12, 04.15; 4: 04.11–04.14; 5: 04.14, 04.15); thêm một câu có liên kết viewer: Bài tập 04.1–04.9 nằm trong chương, tệp bài tập chép lại 04.1–04.6 và thêm 04.10–04.17, cùng bộ đếm | đã sửa |
+| Bài tập củng cố, đoạn mở (dòng 1684) | Brief việc (3): dòng mở dẫn tới `exercises.md` và nêu số bài mới một câu | Liên kết viewer; câu liệt kê tám bài: 04.10 dạng ma trận và chuỗi Neumann, 04.11 tính đơn điệu của $T_*$, 04.12 MDP ba trạng thái, 04.13 dãy năm ô trơn trượt, 04.14 số lượt quét theo $\gamma$ trên CartPole rời rạc hóa, 04.15 lặp chính sách cải biên (cả hai có phần lập trình), 04.16 lợi tức của chính sách ban đầu, 04.17 cải thiện từ chính sách ngẫu nhiên đều | đã sửa |
+| Tóm tắt chương, dòng số hiệu (dòng 1648) | Kéo theo | "Bài tập 04.1–04.9 (tệp bài tập thêm 04.10–04.17)" | đã sửa |
+| Kiến thức tiên quyết và các chỗ dẫn Bài 03 (dòng 17, 19–24, 141, 451, 461, 670, 754, 1752) | Quyết định chung mục 4 và giới hạn ghi ở giai đoạn I: đợt đồng bộ thay "ghi chú Bài 03, Mục k" bằng số hiệu 03.k | Giữ cách dẫn theo mục, thêm số hiệu đã đối chiếu với tiêu đề khối trong ghi chú Bài 03: Định nghĩa 03.7; Định nghĩa 03.9, Mệnh đề 03.11, Bổ đề 03.18; Định nghĩa 03.13, 03.15, 03.16; Định lý 03.21, Mệnh đề 03.22, 03.23; Mệnh đề 03.27, Định lý 03.28 (dòng 141: 03.21, 03.28; Bước 1 của chứng minh Hệ quả 04.6: 03.11, 03.21; Bước 4: 03.28(a); dòng 670, 1752: 03.22; dòng 754: 03.23). Câu quy ước ở dòng 17 nói số hiệu 03.k là của ghi chú Bài 03. Cách dẫn này khớp `exercises.md` (Bài tập 04.10 dẫn Định lý 03.28) | đã sửa |
+| Ký hiệu theo quyết định chung | Brief việc (2): $P_\pi$, $r_\pi$, $T_\pi$, $T_*$ chỉ số dưới; tên trạng thái chữ đứng; "hầu chắc chắn"; "quá trình quyết định Markov" | Quét bằng regex: 0 lần $P^\pi$, $r^\pi$, $T^\pi$, $T^*$; 0 tên trạng thái $s_k$, $c_k$ nghiêng (mọi chỗ là $\mathrm s_k$, $\mathrm c_k$, $\mathrm{trai}$, $\mathrm{phai}$); 0 "gần chắc chắn", "quy trình quyết định", "tác nhân", "tổng thưởng", "giữ hòa". $V^\pi$, $Q^\pi$ chỉ xuất hiện ở câu tương ứng với giáo trình *Học máy thống kê*, đúng chủ đích. Chương không dùng "hầu chắc chắn" | không cần sửa (đã kiểm) |
+
+Không từ chối đề nghị nào. Đề nghị đổi $m$ thành $\ell$ trong ô Markdown nhiệm vụ 7 của notebook vẫn để lại cho điều phối viên (brief cấm sửa notebook); ghi chú và tệp bài tập đã nêu quy ước nên không phụ thuộc vào việc sửa đó.
+
+### Đề nghị sửa deck
+
+Không có. Deck đã commit dùng $T_\pi$, $T_*$, $P_\pi$, $r_\pi$ chỉ số dưới, $\phi$ cho góc cột, tên trạng thái chữ đứng; không có chỗ nào ghi $P^\pi$, $T^\pi$ hay chữ theta cho góc. Deck không nhắc lặp chính sách cải biên nên không cần quy ước $m$/$\ell$.
+
+### Tự kiểm `no-ai-slop` (Edit)
+
+Phạm vi: mọi câu thêm hoặc sửa trong bảng trên. Đối chiếu `eval.md`: đạt. Không câu hỏi tu từ, không "hãy", tài liệu không làm chủ ngữ, không dấu gạch dài mới, không tương phản "không phải … mà …". Đã sửa khi tự kiểm: câu Đọc thêm bản đầu nói Bài tập 04.15 "so số vòng với $\ell\in\{1,5,20\}$" mà không nói phần đó chạy bằng chương trình và phần (d) chạy trên CartPole, viết lại theo đúng đề 04.15; câu liệt kê bài ở mục Bài tập củng cố bản đầu gộp 04.14, 04.15 thành "trên CartPole rời rạc hóa", trong khi 04.15(a)–(c) chạy trên mô hình hai trạng thái, tách thành hai mục; câu Mục 5.4 bản đầu chỉ nói biến `theta` trong mã, bổ sung $\theta$, $b_\theta$ trong ô Markdown của notebook.
+
+### Kết quả kiểm
+
+- `note_check.py`: 25 666 từ; 96 khối; bộ đếm chung 35, Ví dụ 18, Bài tập 9, không trống, không trùng; 0 dấu `\(`/`\[`. Hai lần khớp mẫu "trang chiếu" là dòng bản đồ chủ đề có từ trước.
+- `check_note.py 04 lecture-04-giai-mdp-bang-quy-hoach-dong.html` (server `reloadserver` cổng 8766, cwd kho): 1600×900 và 390×844, 0 lỗi KaTeX, 96 khối, 0 lỗi console, 0 yêu cầu hỏng hoặc ra ngoài, không tràn ngang.
+- Playwright (cổng 8766): ghi chú có 3 liên kết tới `exercises.md`; mở liên kết đầu hiện tiêu đề "Bài tập Bài 04 — Giải MDP bằng quy hoạch động".
+- `git diff --check` trên hai tệp của đợt sạch.
+
+### Quyết định của điều phối viên (2026-10-14, đồng bộ chéo ghi chú)
+
+- Kiểm độc lập: `note_check.py` sạch; viewer 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(materials-04)`.
