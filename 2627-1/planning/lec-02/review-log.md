@@ -3327,3 +3327,7 @@ Phạm vi: năm câu mới hoặc viết lại trong bảng trên. Đã sửa tr
 ### Quyết định của điều phối viên (2026-10-14, đồng bộ chéo ghi chú)
 
 - Kiểm độc lập: `note_check.py` sạch; viewer 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(materials-02)`. Trang L02-01-03 giữ nguyên (79/80 âm tiết; ghi chú đã liệt kê bài mới theo mục tiêu).
+
+### Quyết định của điều phối viên (2026-10-14, khép đợt Bài 02)
+
+- Trang mục tiêu `L02-01-03` giữ nguyên danh sách bài tập của ghi chú (02.1–02.13): trang đang 79/80 âm tiết, không thêm được 02.14–02.22 mà không vượt trần; bảng đầy đủ nằm ở trang bài tập về nhà `L02-07-03` và trong mục tiêu học tập của ghi chú. Quyết định: **đóng**, không sửa.

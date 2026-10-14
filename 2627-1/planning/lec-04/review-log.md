@@ -2180,3 +2180,7 @@ Phạm vi: mọi câu thêm hoặc sửa trong bảng trên. Đối chiếu `eva
 ### Quyết định của điều phối viên (2026-10-14, đồng bộ chéo ghi chú)
 
 - Kiểm độc lập: `note_check.py` sạch; viewer 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(materials-04)`.
+
+### Quyết định của điều phối viên (2026-10-14, khép đợt Bài 04)
+
+- Notebook CartPole viết `m` cho ℓ và `theta` cho φ: notebook không thuộc phạm vi đợt sửa 2026-10-12 (deck, ghi chú, bài tập); ghi chú và `exercises.md` đã nêu quy ước đối chiếu. Quyết định: **để lại** cho đợt sửa notebook, không sửa trong đợt này.
