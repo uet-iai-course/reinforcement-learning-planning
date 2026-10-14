@@ -18,7 +18,7 @@ Tổng 78 trang, 120 phút. Bảy mạch theo kế hoạch A1 (không gộp cả
 
 **Ngoại lệ số trang.** Quyết định chung mục 5 chấp nhận 60–70 trang khi phân bổ đủ 120 phút. Deck có 78 trang, vượt 8 trang so với mức trên, vì: sáu trang tiêu đề mạch (khoảng 0,5 phút mỗi trang), sáu trang lời giải tách ("…b") đọc nhanh, các trang tách để giữ trần mật độ, và ba trang thêm theo năm báo cáo rà soát (A01c, E05c, E06c; bỏ G03). Thời lượng từng trang cộng đủ 120 phút. **Có thể bỏ khi thiếu giờ** (nội dung còn trong ghi chú bài giảng): L04-B06c (Hệ quả 04.6), L04-E05c (chứng minh Định lý 04.25), L04-F04 (GPI), L04-F05b (Tình huống 04.1–04.2).
 
-**Khối 30 phút ngoài phần trình chiếu:** chữa Bài tập 04.7–04.9 của ghi chú, phần còn lại của dãy năm ô trơn trượt ($V_2(\mathrm c_3)$, chọn $\theta$; dự kiến Bài tập 04.13 của tệp bài tập) và bài thực hành CartPole. Bảy cặp bài tập có lời giải trên mặt trang (A05, B08/B08b, C07/C07b, D06/D06b, E08/E08b, F06/F06b, G04/G04b) nằm trong 120 phút.
+**Khối 30 phút ngoài phần trình chiếu:** chữa Bài tập 04.7–04.9 của ghi chú, phần còn lại của dãy năm ô trơn trượt ($V_2(\mathrm c_3)$, chọn $\theta$; Bài tập 04.13 của tệp bài tập) và bài thực hành CartPole (Bài tập 04.14, 04.15 của tệp bài tập). Bảy cặp bài tập có lời giải trên mặt trang (A05, B08/B08b, C07/C07b, D06/D06b, E08/E08b, F06/F06b, G04/G04b) nằm trong 120 phút.
 
 ## Cụm khái niệm và sáu bước
 
@@ -54,7 +54,7 @@ Các khái niệm phụ đi chu trình rút gọn có lý do: GPI chỉ gọi t�
 
 ## Ngoại lệ mật độ
 
-Số âm tiết đo bằng thuật toán của `density.py` (đếm cả dấu câu đứng sau công thức như một token). Sau rà lại vòng 2, 67/78 trang không bị gắn cờ; 11 trang có ngoại lệ (F03 nay đúng 60, không còn ngoại lệ):
+Số âm tiết đo bằng thuật toán của `density.py` (đếm cả dấu câu đứng sau công thức như một token). Sau rà lại vòng 2, 67/78 trang không bị gắn cờ; 11 trang có ngoại lệ (F03 nay đúng 60, không còn ngoại lệ). Đợt đồng bộ trang bài tập về nhà (2026-10-14) thêm ngoại lệ G05:
 
 | Trang | Đo được | Trần áp dụng | Lý do |
 |---|---|---|---|
@@ -66,6 +66,7 @@ Số âm tiết đo bằng thuật toán của `density.py` (đếm cả dấu c
 | L04-G01, G01b Tổng kết | 74 và 80, ≤ 6 dòng | 80 (tổng kết) | Bảng ba cột kèm dòng giả thiết chung |
 | L04-G02b Hội tụ | 77, 6 dòng | 80 (bảng so sánh) | Bảng bốn hàng và dòng giả thiết chung |
 | L04-B00, E00, F00, G00 (trang tiêu đề mạch) | dòng dẫn 20–24 âm tiết | 25 (dòng dẫn trang tiêu đề mạch) | Script áp trần 20 cho mọi dòng; quy định riêng của trang tiêu đề mạch là ≤ 25 |
+| L04-G05 Bài tập về nhà và tài liệu đọc | 63, 6 dòng, dòng dài nhất 17 | 80 (trang tổng kết) | Bảng bảy mạch hai hàng theo `exercises.md` (tệp bài tập; chỉ trong ghi chú), dòng tài liệu đọc, liên kết "Ghi chú bài giảng · Bài tập", dòng nối Bài 05; trước đợt sửa 60 âm tiết |
 | L04-D05 Dừng hữu hạn | 67, 4 dòng | 60 | Hai câu chứng minh theo rà lại vòng 2 (TOAN): giá trị tăng nghiêm ngặt ở ít nhất một trạng thái nên dãy không lặp; số chính sách hữu hạn nên thuật toán dừng; giả thiết thêm $I_{\max}$ đủ lớn |
 
 61 trang trên mức đích 40 nhưng không vượt trần (ngoài các ngoại lệ trên).
@@ -90,7 +91,7 @@ Số "sau" là số đo hiện tại (sau rà lại vòng 2).
 | F06 | 74 | tách | F06 58; F06b 50 |
 | G01 | 72 | sửa | G01 74; G01b 80 (trần 80) |
 | G02 | 93 | tách | G02 45; G02b 77 (trần 80) |
-| G05 | 100 | sửa | G05 60 |
+| G05 | 100 | sửa | G05 63 (sau đồng bộ tệp bài tập 2026-10-14; ngoại lệ trần 80) |
 
 Các trang cũ vượt về số dòng, dòng dài hoặc số khung (A02, A04, B01–B03, B07, B08, C05, C06, D01, D02, D06, E02, E08, F02, F04, F05, G04) đều đã đưa về ≤ 6 dòng, ≤ 20 âm tiết mỗi dòng, ≤ 3 công thức hiển thị và ≤ 1 khung; không dùng CSS thu chữ.
 
@@ -209,6 +210,6 @@ Cột "Quyết định" so với deck trước đợt sửa (45 trang). Mã tran
 | L04-G04b | Bài tập: chứng nhận nghiệm tối ưu | Lời giải trên mặt trang | G04 → G06 | MT3–MT5 | thêm |
 | L04-G06 | Trả lời vấn đề trung tâm | Kết luận có điều kiện và dòng "Nguồn:" | G04b → G07 | toàn bài | thêm |
 | L04-G07 | Câu hỏi tự kiểm tra | Bốn câu, mỗi câu kiểm một giả thiết hoặc phân biệt | G06 → G05 | toàn bài | thêm |
-| L04-G05 | Bài tập về nhà và tài liệu đọc | Bảng `Mạch \| Bài tập` (chỉ bài tập của ghi chú), "Tệp bài tập: chưa có", tài liệu đọc, liên kết viewer, dòng nối Bài 05 | G07 → — | toàn bài | sửa |
+| L04-G05 | Bài tập về nhà và tài liệu đọc | Bảng `Mạch \| Bài tập` theo `exercises.md`: hàng "Tệp bài tập" (mạch 1: 04.16; 2: 04.1, 04.10; 3: 04.2, 04.17; 4: 04.3, 04.12; 5: 04.4, 04.11, 04.13; 6: 04.5, 04.14, 04.15; 7: 04.6) và hàng "Chỉ trong ghi chú" (mạch 5: 04.7, 04.8; 6: 04.9); tài liệu đọc; liên kết viewer "Ghi chú bài giảng · Bài tập"; dòng nối Bài 05; 63 âm tiết (trần 80) | G07 → — | toàn bài | sửa (2026-10-14: đồng bộ với `exercises.md`) |
 
-Bài tập có lời giải trên mặt trang: A05 (fragment), B08b, C07b, D06b, E08b, F06b, G04b. G03 (bài tự làm) đã bỏ khỏi deck trong vòng biên tập: phần đầu thành ví dụ E06c, phần còn lại để cho tệp bài tập (dự kiến 04.13).
+Bài tập có lời giải trên mặt trang: A05 (fragment), B08b, C07b, D06b, E08b, F06b, G04b. G03 (bài tự làm) đã bỏ khỏi deck trong vòng biên tập: phần đầu thành ví dụ E06c, phần còn lại thành Bài tập 04.13 của tệp bài tập.

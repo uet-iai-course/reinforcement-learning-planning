@@ -2096,3 +2096,44 @@ Không bác bỏ phát hiện nào. Số hiệu không đổi (Bài tập 04.1�
 
 - Kiểm độc lập: `note_check.py` sạch (14 bài); viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 42 khối, 0 lỗi console, không tải ngoài; `git diff --check` sạch; chạy lại kịch bản khởi động lại $V\leftarrow0$ của Bài tập 04.15: dừng từ ℓ ≥ 55 (ℓ = 54 còn phần dư 0,0101), đúng như tệp ghi, thay cho ước lượng "khoảng 80" của vai rà toán. Ba vai rà soát chỉ đọc (Opus 5.5 high): 0 chặn, 0 nghiêm trọng; mọi mục trung bình đã sửa.
 - Quyết định: **chấp nhận**; commit `feat(materials-04)`. Trang G05 của deck và nhóm "Bài tập" trên `index.html` cập nhật ở đợt sau.
+
+## Đợt sửa 2026-10-14 — Đồng bộ trang bài tập về nhà
+
+### Tác tử và phạm vi
+
+- Vai: biên tập viên deck Bài 04 (sửa nhỏ, có kiểm), theo `scratchpad/brief_deck_homework_sync.md`. Loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` theo lời gọi của điều phối viên. `no-ai-slop` chế độ Edit. Không commit.
+- Tệp ghi: `2627-1/lecture-04-giai-mdp-bang-quy-hoach-dong.html` (chỉ trang L04-G05); `storyboard.md` (dòng "Khối 30 phút", bảng ngoại lệ mật độ, bảng trang vượt trần, dòng L04-G05, câu về G03); `outline.md` (dòng "Dãy năm ô trơn trượt" của bảng ví dụ); mục này. Không sửa ghi chú, `exercises.md`, CSS, `index.html`, SVG, notebook.
+
+### Sửa trên L04-G05
+
+- Bảng `Mạch | Bài tập` chuyển sang dạng ngang: hàng tiêu đề "Mạch 1…7" (khớp `#/N`), hàng "Tệp bài tập" theo đúng bảng mạch của `exercises.md` (1: 04.16; 2: 04.1, 04.10; 3: 04.2, 04.17; 4: 04.3, 04.12; 5: 04.4, 04.11, 04.13; 6: 04.5, 04.14, 04.15; 7: 04.6), hàng "Chỉ trong ghi chú" (5: 04.7, 04.8; 6: 04.9). Bảng cũ hai hàng chỉ có 04.1–04.9.
+- Dòng "Ghi chú bài giảng · Tệp bài tập: chưa có" thay bằng hai liên kết viewer "Ghi chú bài giảng · Bài tập"; liên kết thứ hai là `material-viewer.html?doc=materials/lec-04/exercises.md&deck=lecture-04-giai-mdp-bang-quy-hoach-dong.html`.
+- Giữ dòng "Tài liệu đọc:" và dòng nối Bài 05.
+- Ghi chú diễn giả viết lại (133 âm tiết): 04.1–04.6 có lời giải trên trang chiếu, cùng đề và kết quả trong ghi chú và tệp bài tập; 04.16 lấy hai câu của bài tập lợi tức ở mạch mở đầu, thêm câu tính $G_0$; 04.10–04.17 chỉ trong tệp bài tập (04.13 tính tiếp dãy năm ô trơn trượt; 04.14, 04.15 có phần lập trình trên notebook CartPole rời rạc hóa); 04.7–04.9 là bài tập củng cố của ghi chú; giữ câu về Ví dụ 4.1 của Sutton và Barto.
+- Mật độ (`density.py`): 60 → 63 âm tiết, 6 → 6 dòng, dòng dài nhất 13 → 17, 0 công thức hiển thị. Script gắn cờ vì vượt 60; trang thuộc mạch tổng kết nên áp trần 80, ngoại lệ ghi trong `storyboard.md` mục "Ngoại lệ mật độ".
+
+### Đề nghị sửa deck và ghi chú của giai đoạn III
+
+| đối tượng | đề nghị | xử lý | trạng thái |
+|---|---|---|---|
+| Deck L04-G05 | Liên kết viewer bài tập; thêm 04.10–04.17 vào bảng theo mạch, giữ trần 6 dòng | Làm như trên; bảng ngang ba hàng giữ trang ở 6 dòng | đã sửa |
+| `storyboard.md`, dòng "Khối 30 phút" | Bỏ "dự kiến" trước Bài tập 04.13; thêm 04.14, 04.15 cho phần notebook | Đã sửa; câu cuối mục quyết định từng trang ("dự kiến 04.13") cũng sửa thành "Bài tập 04.13 của tệp bài tập"; `outline.md` dòng dãy năm ô trơn trượt dẫn Bài tập 04.13 | đã sửa |
+| Ghi chú, mục Đọc thêm | Dẫn Bài tập 04.15 cạnh câu về nhiệm vụ 7 | Ngoài phạm vi tệp của đợt này (brief cấm sửa `lecture-note.md`) | để lại cho điều phối viên |
+| Notebook, ô Markdown nhiệm vụ 7 | Đổi $m$ thành $\ell$ | Ngoài phạm vi tệp của đợt này | để lại cho điều phối viên |
+
+Không có đề nghị mức nhẹ nào khác cho deck (ghi chú diễn giả, dòng Nguồn, ký hiệu) trong mục giai đoạn III.
+
+### Tự kiểm `no-ai-slop` (Edit)
+
+Phạm vi: mặt trang và ghi chú diễn giả của L04-G05. Đối chiếu `eval.md`: đạt. Không câu hỏi tu từ, không mô tả quy trình hay nhãn vai trong ghi chú diễn giả, không tương phản "không phải … mà …", không gạch dài.
+
+### Kết quả kiểm
+
+- `deck_check.py lecture-04-giai-mdp-bang-quy-hoach-dong.html … L04-G05` (server tĩnh cổng 8799, cwd kho) ở 1600×900 và 390×844: 78 trang, 0 lỗi/cảnh báo console, 0 `.katex-error`, 0 yêu cầu ngoài, 0 yêu cầu lỗi, không cuộn ngang. Danh sách "overflow"/"small_font" của script là dương tính giả đã biết (phần tử phụ của KaTeX) và không chứa L04-G05 ở cột "overflow". Ảnh L04-G05 ở hai cỡ đã xem: bảng bảy cột vừa khung, ô dài xuống hai dòng, không chồng lấn; số trang `7.10` khớp `#/7/10`.
+- Playwright (cổng 8766): từ trang L04-G05 mở hai liên kết; "Ghi chú bài giảng" hiện tiêu đề "Bài 04 — Giải MDP bằng quy hoạch động", "Bài tập" hiện "Bài tập Bài 04 — Giải MDP bằng quy hoạch động". `check_note.py 04 … exercises`: 1600×900 và 390×844, 0 lỗi KaTeX, 42 khối, 0 lỗi console, 0 yêu cầu ngoài hoặc hỏng, không tràn ngang.
+- `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-14, đồng bộ trang bài tập về nhà)
+
+- Tác tử biên tập deck (general-purpose, claude-opus-5-5, high). Kiểm độc lập: trang L04-G05 63 âm tiết (trần 80 của trang tổng kết, ngoại lệ ghi storyboard); Playwright 1600×900 và 390×844 toàn deck: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang; liên kết viewer bài tập mở được; `git diff --check` sạch.
+- Quyết định: **chấp nhận**; commit `fix(lecture-04)`.

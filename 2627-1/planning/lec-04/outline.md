@@ -89,7 +89,7 @@ Không dùng: "tổng thưởng chiết khấu" (thay bằng lợi tức), "quy 
 |---|---|---|---|---|
 | Mô hình hai trạng thái | $\mathrm s_0\xrightarrow{\mathrm a}\mathrm s_0$ thưởng 1; $\mathrm s_0\xrightarrow{\mathrm b}\mathrm s_1$ thưởng 0; $\mathrm s_1\xrightarrow{\mathrm a}\mathrm s_0$ thưởng 2; $\mathrm s_1\xrightarrow{\mathrm b}\mathrm s_1$ thưởng 3; $\gamma=0{,}9$ | Bài giảng gốc tr. 17–18; Bài tập tuần 4, bài 1 | A04–A05, B02–B08b, C01–C07b, D02–D06b, E01–E07, F02, F06–F06b, G04–G04b | Lợi tức cắt ngắn; lượt quét; giá trị chính xác; phần dư; nhìn trước; cải thiện; ba vòng lặp chính sách; ổn định; lặp giá trị; tính co của $T_*$; chặn $30\cdot0{,}9^k$; cập nhật tại chỗ; lịch bỏ sót; chứng nhận tối ưu |
 | Dãy năm ô | $\mathrm c_1..\mathrm c_5$, $\mathrm c_5$ kết thúc, thưởng 10 khi vào $\mathrm c_5$, $-1$ khác, $\gamma=0{,}9$ | Bài giảng gốc tr. 25–28 | E06–E08b, F02, F03b (ghi chú) | Lan truyền giá trị; điểm bất động; thứ tự cập nhật ngược |
-| Dãy năm ô trơn trượt | như trên, đúng hướng 0,8, đứng yên 0,1, ngược hướng 0,1 | Bài tập tuần 4, bài 10 | E06c | Kỳ vọng theo $p$ với ba kết quả chuyển ($V_1(\mathrm c_4)=7{,}8$); phần $V_2(\mathrm c_3)$ và chọn $\theta$ để cho tệp bài tập |
+| Dãy năm ô trơn trượt | như trên, đúng hướng 0,8, đứng yên 0,1, ngược hướng 0,1 | Bài tập tuần 4, bài 10 | E06c | Kỳ vọng theo $p$ với ba kết quả chuyển ($V_1(\mathrm c_4)=7{,}8$); phần $V_2(\mathrm c_3)$ và chọn $\theta$ thuộc Bài tập 04.13 của tệp bài tập |
 | CartPole rời rạc hóa | 324 ô, $\hat p$ từ 200 mẫu, $\gamma=0{,}99$ | Bài giảng gốc tr. 35–37; notebook CartPole | F01, F05, F05b | Chi phí; hai lượt quét tại ô 71; khoảng cách giữa MDP ước lượng và môi trường; số ô $k^4$ (ghi chú) |
 
 ## Dàn bài theo mạch
