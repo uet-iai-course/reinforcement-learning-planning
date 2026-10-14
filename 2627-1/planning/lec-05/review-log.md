@@ -1845,3 +1845,32 @@ Phạm vi: các câu mới ở dòng 615, 1941, 2027; đối chiếu `eval.md`. 
 ### Quyết định của điều phối viên (2026-10-14, đồng bộ chéo ghi chú)
 
 - Kiểm độc lập: `note_check.py` sạch; viewer 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(materials-05)`.
+
+## Đợt sửa 2026-10-14 — Khép đợt: lớp ol.substeps
+
+Vai biên tập: `general-purpose`, Opus 5.5, effort high (do điều phối viên giao). Không commit.
+
+### Thay đổi
+
+`lecture-slide.css` (đã commit `ebc5cf3`) có lớp `ol.substeps` (thụt 2em, cỡ chữ 1em) và `ol.substeps.substeps-2` (thụt 4em). Deck Bài 05 bỏ lề nội tuyến trên các `ol` bước con của giả mã:
+
+| Trang | Trước | Sau |
+|---|---|---|
+| L05-B10 | `<ol start="2" style="margin-left:2em">` | `<ol start="2" class="substeps">` |
+| L05-B10b | `<ol start="4" style="margin-left:2em">`; `<ol start="5" style="margin-left:4em">` | `class="substeps"`; `class="substeps substeps-2"` |
+| L05-C05 | `<ol start="2" style="margin-left:2em">` | `<ol start="2" class="substeps">` |
+| L05-C05b | `<ol start="4" style="margin-left:2em">` | `<ol start="4" class="substeps">` |
+
+Không đổi chữ, công thức hay lời giảng. Sau sửa, deck không còn thuộc tính `style="margin-left` nào (đã kiểm cả biến thể khoảng trắng).
+
+### Kiểm tra
+
+- `deck_check.py lecture-05-du-doan-phi-mo-hinh.html … L05-B10,L05-B10b,L05-C05,L05-C05b` (cổng 8799, cwd `rl-plan`), 1600×900 và 390×844: 70 trang; 0 lỗi console, 0 `.katex-error`, 0 yêu cầu lỗi hoặc ra ngoài, không cuộn ngang; bốn trang sửa không nằm trong danh sách tràn khung (danh sách tràn 21 trang khác là heuristic có sẵn, không liên quan đợt này).
+- Đo trực tiếp ở 1600×900: `li` của các `ol.substeps` có cỡ chữ 33,6px, bằng đoạn văn của trang; lề trái 67,2px (2em) và 134,4px (4em) với `substeps-2`.
+- Ảnh 1600 bốn trang đã xem: ở L05-C05 dòng "1. Lặp khi $B>0$:" nằm riêng, các bước 2–3 thụt vào ở dòng dưới; bước con không bị thu nhỏ. Ảnh 390 của L05-B10b đọc được, không tràn.
+- `density.py`: kết quả trước (HEAD) và sau trùng khớp (B10 58, B10b 57, C05 56, C05b 60 âm tiết).
+- `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-14, khép đợt: lớp ol.substeps)
+
+- Kiểm độc lập: năm thẻ `ol` giữ `start`, không còn `style="margin-left"`; Playwright hai cỡ 0 lỗi; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(lecture-05)`.

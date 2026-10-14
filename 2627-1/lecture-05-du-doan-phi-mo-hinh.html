@@ -191,7 +191,7 @@
 <ol>
 <li>Lặp $m=1,\ldots,M$:</li>
 </ol>
-<ol start="2" style="margin-left:2em">
+<ol start="2" class="substeps">
 <li>Sinh một lượt theo $\pi$ tới $S_T$ kết thúc.</li>
 <li>Đặt $G_T=0$; với $t=T-1,\ldots,0$: $G_t=R_{t+1}+\gamma G_{t+1}$.</li>
 </ol>
@@ -200,10 +200,10 @@
 <section data-slide-id="L05-B10b" data-note-topic-id="lec-05-topic-03">
 <h2>Thuật toán dự đoán Monte Carlo</h2>
 <p>Trong vòng lặp của bước 1:</p>
-<ol start="4" style="margin-left:2em">
+<ol start="4" class="substeps">
 <li>Đặt $\mathcal H=\varnothing$; duyệt xuôi $t=0,\ldots,T-1$, đặt $s=S_t$:</li>
 </ol>
-<ol start="5" style="margin-left:4em">
+<ol start="5" class="substeps substeps-2">
 <li>Nếu dùng mọi lần ghé, hoặc $s\notin\mathcal H$: tăng $N(s)$ và đặt $n=N(s)$; $V(s)\leftarrow V(s)+\alpha_n(s)\bigl[G_t-V(s)\bigr]$; thêm $s$ vào $\mathcal H$.</li>
 </ol>
 <ol start="6">
@@ -308,7 +308,7 @@ V_{t+1}(S_t)&amp;=V_t(S_t)+\alpha_n(S_t)\,\delta_t.
 <ol>
 <li>Lặp khi $B&gt;0$:</li>
 </ol>
-<ol start="2" style="margin-left:2em">
+<ol start="2" class="substeps">
 <li>Chọn $A\sim\pi(\cdot\mid S)$, thực hiện, quan sát $R$ và $S'$.</li>
 <li>Tăng $N(S)$, đặt $n=N(S)$.</li>
 </ol>
@@ -317,7 +317,7 @@ V_{t+1}(S_t)&amp;=V_t(S_t)+\alpha_n(S_t)\,\delta_t.
 <section data-slide-id="L05-C05b" data-note-topic-id="lec-05-topic-08">
 <h2>Thuật toán TD(0) dạng bảng</h2>
 <p>Trong vòng lặp của bước 1:</p>
-<ol start="4" style="margin-left:2em">
+<ol start="4" class="substeps">
 <li>Đọc bảng: $Y=R+\gamma V(S')$, $\delta=Y-V(S)$; $V(S')=0$ nếu $S'$ kết thúc.</li>
 <li>Ghi $V(S)\leftarrow V(S)+\alpha_n(S)\,\delta$; giảm $B$ một đơn vị.</li>
 <li>Nếu $S'$ kết thúc, mở lượt mới, gán $S$ bằng trạng thái đầu; ngược lại $S\leftarrow S'$.</li>
