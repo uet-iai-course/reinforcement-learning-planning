@@ -150,7 +150,7 @@ Cột "Quyết định" so với deck trước đợt sửa (45 trang, 5 mạch)
 | L05-E06b | bài tập tổng hợp (lời giải) | Lời giải trên mặt trang | E06 → E01 | MT3, MT4, MT5 | thêm |
 | L05-E01 | trả lời vấn đề trung tâm | Năm kết luận có điều kiện song song với A03, dòng Nguồn, nối Bài 06 | E06b → E04 | MT6 | sửa (2026-10-14: năm dòng 2–6 có số liệu; dòng 4 thu hồi cả độ chệch, phương sai ($Y^*$ bỏ $20\%$) và Robbins–Monro; câu nối Bài 06 ở dòng 6) |
 | L05-E04 | tự kiểm tra | Bốn câu, mỗi câu một giả thiết hoặc phân biệt | E01 → E03 | MT1, MT3, MT5 | sửa (câu mở chuẩn; ba thẻ thành danh sách) |
-| L05-E03 | bài tập về nhà, tài liệu đọc | Bảng `Mạch \| Bài tập` theo ghi chú; tài liệu đọc; liên kết ghi chú; "Tệp bài tập: chưa có" | E04 → — | tất cả | sửa (gộp E05; 2026-10-14: bỏ cột số hiệu dự kiến, thêm mạch 1, tách 5 và 6) |
+| L05-E03 | bài tập về nhà, tài liệu đọc | Bảng `Mạch \| Bài tập` theo bảng mạch của `exercises.md` (số hiệu của tệp bài tập; bài chỉ trong ghi chú có nhãn "ghi chú:"); tài liệu đọc; liên kết "Ghi chú bài giảng · Bài tập" | E04 → — | tất cả | sửa (gộp E05; 2026-10-14: bỏ cột số hiệu dự kiến, thêm mạch 1, tách 5 và 6; 2026-10-14, đồng bộ bài tập về nhà: thêm 05.16–05.28 theo mạch, thay "Tệp bài tập: chưa có" bằng liên kết viewer `exercises.md`) |
 | (L05-E05) | — | Tài liệu đọc | — | — | gộp vào E03 |
 
 ## Ngoại lệ mật độ
@@ -195,11 +195,11 @@ Các trang vượt trần trước đợt sửa (số âm tiết, dòng, âm ti�
 | D12 | 98; dòng 25 | tách | D12 44; D12b 48; D13 60; D13b 51 |
 | E01 | 89; dòng 21 | sửa | 78 (ngoại lệ, trần 80) |
 | E02 | 122; 8 dòng; dòng 39 | tách | E02 59; E02b 66; E02c 38; E02d 76 |
-| E03 | 88; 11 dòng | sửa, gộp E05 | 54; 6 dòng |
+| E03 | 88; 11 dòng | sửa, gộp E05; đồng bộ `exercises.md` (2026-10-14) | 54; 6 dòng; sau đồng bộ 62; 6 dòng; dòng dài nhất 15 (ngoại lệ trang tổng kết, trần 80: bảng sáu mạch phải liệt kê đủ số hiệu của tệp bài tập và ghi chú, phần lớn là số hiệu) |
 | E04 | 65; 7 dòng | sửa | 49 |
 | E05 | 78 | gộp | — |
 
-Trước: 45 trang, 36 dòng vượt, 22 trang trên 60 âm tiết. Sau (đo 2026-10-14): 70 trang, 10 dòng vượt đều có ngoại lệ (A06, B00, C00, D00, E00, E02, E02b, E02d, E01), 5 trang trên 60 âm tiết (A06, E02, E02b, E02d, E01, đều trần 80).
+Trước: 45 trang, 36 dòng vượt, 22 trang trên 60 âm tiết. Sau (đo 2026-10-14): 70 trang, 10 dòng vượt đều có ngoại lệ (A06, B00, C00, D00, E00, E02, E02b, E02d, E01), 5 trang trên 60 âm tiết (A06, E02, E02b, E02d, E01, đều trần 80). Sau đồng bộ bài tập về nhà (2026-10-14): thêm E03 ($62$ âm tiết, trần 80 của trang tổng kết).
 
 ## Thời lượng
 

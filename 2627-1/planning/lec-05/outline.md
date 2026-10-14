@@ -136,7 +136,7 @@ Cột "Ghi chú" là số hiệu trong ghi chú bài giảng; cột "Nguồn" l�
 | L05-C08 | Ví dụ: TD(0) trên lượt thứ hai | Dòng dữ kiện rút gọn; bảng khuôn cố định trên $e_2$, cột Chuyển không ngắt dòng; Diễn giải | Ví dụ 05.10 | tr. 29 |
 | L05-C06 | Ví dụ: hai chuyển trên Lunar Lander | Nhu cầu (tự chuyển, self-transition); ô gộp $9216$; bảng khuôn TD cố định; Diễn giải | Ví dụ 05.11 | notebook mục 7.1 |
 | L05-C06c | Trường hợp biên của TD(0) | Nhận xét: trạng thái kết thúc, tự chuyển, lượt bị cắt ngắn | Nhận xét 05.22, Ví dụ 05.12 (ghi chú diễn giả) | tr. 19 |
-| L05-C10 | Bài tập: một bước TD(0) từ cùng bảng | Đề, bảng khuôn cố định để trống | Bài tập 05.9 cũ (chuyển sang `exercises.md`) | Bài tập tuần 5, bài 3, 7 |
+| L05-C10 | Bài tập: một bước TD(0) từ cùng bảng | Đề, bảng khuôn cố định để trống | Bài tập 05.20 của `exercises.md`, câu (a), (b) | Bài tập tuần 5, bài 3, 7 |
 | L05-C10b | Bài tập: một bước TD(0) từ cùng bảng | Lời giải trên bảng | Định nghĩa 05.20 | — |
 
 ### Mạch 4. Độ chệch, phương sai và hội tụ
@@ -185,16 +185,16 @@ Cột "Ghi chú" là số hiệu trong ghi chú bài giảng; cột "Nguồn" l�
 | L05-E06b | Bài tập: tàu đổ bộ thu nhỏ, lượt thứ ba | Lời giải (Monte Carlo, bảng TD(0) khuôn cố định, độ lệch) | Bài tập 05.8 | — |
 | L05-E01 | Trả lời vấn đề trung tâm | Năm dòng đánh số 2–6 song song với L05-A03, mỗi dòng một điều kiện và một kết luận có số (dòng 4: độ chệch $-0{,}324$, $Y^*$ bỏ $20\%$ phương sai, Robbins–Monro); dòng 6 nối sang Bài 06; dòng "Nguồn:" | Tình huống áp dụng | tr. 28, 32–33 |
 | L05-E04 | Câu hỏi tự kiểm tra | Bốn câu: lượt bị cắt ngắn, mục tiêu TD không chệch, bước hằng, hai lựa chọn của Monte Carlo | — | — |
-| L05-E03 | Bài tập về nhà và tài liệu đọc | Bảng `Mạch \| Bài tập` (sáu mạch, hai cặp cột) với số hiệu của ghi chú; Bài tập 05.8 xếp ở mạch 6 (bài tổng hợp E06); Tài liệu đọc; liên kết ghi chú bài giảng; "Tệp bài tập: chưa có" | Bài tập củng cố, các mục 1–5 | S&B |
+| L05-E03 | Bài tập về nhà và tài liệu đọc | Bảng `Mạch \| Bài tập` (sáu mạch, hai cặp cột) theo bảng mạch của `exercises.md`: số hiệu của tệp bài tập, bài chỉ trong ghi chú có nhãn "ghi chú:"; Bài tập 05.8 xếp ở mạch 6 (bài tổng hợp E06); Tài liệu đọc; liên kết "Ghi chú bài giảng · Bài tập" | Bài tập củng cố, các mục 1–5; `exercises.md` | S&B |
 
 ## Bài tập trên trang chiếu và tệp bài tập
 
 | Trang | Loại | Trùng |
 |---|---|---|
-| L05-B13/B13b | có lời giải trên mặt trang | dữ kiện mới tại $\mathrm S$ với $\gamma=0{,}9$ (đợt biên tập sau năm vai rà soát); không trùng bài nào của ghi chú; giai đoạn III có thể dùng làm bài trùng trang chiếu |
-| L05-C10/C10b | có lời giải trên mặt trang | Bài tập 05.9 cũ, chuyển sang `exercises.md` (dự kiến 05.19) |
+| L05-B13/B13b | có lời giải trên mặt trang | dữ kiện mới tại $\mathrm S$ với $\gamma=0{,}9$ (đợt biên tập sau năm vai rà soát); không trùng bài nào của ghi chú; câu (a), (b) của Bài tập 05.18 trong `exercises.md` |
+| L05-C10/C10b | có lời giải trên mặt trang | câu (a), (b) của Bài tập 05.20 trong `exercises.md` (Bài tập 05.9 cũ) |
 | L05-D13/D13b | có lời giải trên mặt trang | câu (c) trùng Bài tập 05.11(e) của ghi chú; (a), (b) dùng số liệu của Nhận xét 05.19, 05.29 |
 | L05-D12/D12b | có lời giải trên mặt trang | câu (a) trùng Bài tập 05.12 của ghi chú |
 | L05-E06/E06b | bài tập tổng hợp, lời giải trên mặt trang | trùng Bài tập 05.8 của ghi chú, cùng kết quả |
 
-Trang L05-E03 chỉ ghi số hiệu bài tập đã có trong ghi chú và dòng "Tệp bài tập: chưa có". Số hiệu dự kiến của `exercises.md` chỉ nằm trong `review-log.md`; giai đoạn III thay dòng đó bằng liên kết viewer.
+Trang L05-E03 ghi số hiệu theo bảng `Mạch | Mở phần | Bài tập` của `exercises.md`: mạch 1 → ghi chú 05.1; mạch 2 → 05.16, 05.18, 05.19, ghi chú 05.2–05.5; mạch 3 → 05.17, 05.20, 05.21, 05.26, ghi chú 05.6, 05.7; mạch 4 → 05.11, 05.22–05.24, 05.27, ghi chú 05.9, 05.10, 05.14; mạch 5 → 05.12, 05.25, 05.28; mạch 6 → 05.8, ghi chú 05.13, 05.15. Dòng liên kết cuối trang dẫn tới viewer của ghi chú bài giảng và của `exercises.md` (đồng bộ 2026-10-14).

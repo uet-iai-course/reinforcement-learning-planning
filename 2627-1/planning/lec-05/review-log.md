@@ -1755,3 +1755,51 @@ Kiểm tra sau vòng sửa:
 
 - Kiểm độc lập: `note_check.py` sạch (16 bài); viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 48 khối, 0 lỗi console, không tải ngoài; tính lại các số mới của 05.17 (0,5; 0,55; 0,3) và 05.22(c) (≈0,081; ≈0,28) đúng; `git diff --check` sạch. Ba vai rà soát chỉ đọc (Opus 5.5 high): 0 chặn, 0 nghiêm trọng; mọi mục trung bình đã sửa.
 - Quyết định: **chấp nhận**; commit `feat(materials-05)`. Trang E03 của deck, ghi chú diễn giả E06b và nhóm "Bài tập" trên `index.html` cập nhật ở đợt sau.
+
+## Đợt sửa 2026-10-14 — Đồng bộ trang bài tập về nhà
+
+### Tác tử
+
+| Vai trò | Loại | Mô hình | Effort | Ghi file |
+|---|---|---|---|---|
+| Biên tập deck Bài 05 (đồng bộ trang bài tập về nhà, theo brief `brief_deck_homework_sync.md`) | general-purpose | claude-opus-5-5 | high | `lecture-05-du-doan-phi-mo-hinh.html`, `outline.md`, `storyboard.md`, mục này |
+
+Không commit. Không sửa `lecture-note.md`, `exercises.md`, `lecture-slide.css`, `index.html`, SVG hay tệp bài khác.
+
+### Thay đổi trên deck
+
+| Trang | Vị trí | Thay đổi | Căn cứ |
+|---|---|---|---|
+| L05-E03 | mặt trang | Bảng hai cặp cột `Mạch \| Bài tập` theo bảng mạch của `exercises.md`: 1 → ghi chú: 05.1; 2 → 05.16, 05.18, 05.19, ghi chú: 05.2–05.5; 3 → 05.17, 05.20, 05.21, 05.26, ghi chú: 05.6, 05.7; 4 → 05.11, 05.22–05.24, 05.27, ghi chú: 05.9, 05.10, 05.14; 5 → 05.12, 05.25, 05.28; 6 → 05.8, ghi chú: 05.13, 05.15. "Tệp bài tập: chưa có" thay bằng liên kết "Bài tập" tới `material-viewer.html?doc=materials/lec-05/exercises.md&deck=lecture-05-du-doan-phi-mo-hinh.html`; giữ liên kết ghi chú. Mật độ 54 → 62 âm tiết, 6 dòng, dòng dài nhất 15 (ngoại lệ trang tổng kết, trần 80, ghi ở `storyboard.md`) | Đề nghị sửa deck (cập nhật) của giai đoạn III, mức trung bình |
+| L05-E03 | ghi chú diễn giả | Bỏ câu "Các bài tập trong bảng thuộc ghi chú bài giảng"; nêu quy ước nhãn "ghi chú", ba bài 05.8, 05.11, 05.12 có ở cả hai tệp, 05.18 và 05.20 lặp lại hai bài đã giải ở mạch 2 và 3 kèm câu (c), 05.26–05.28 dùng số liệu bài thực hành; Nguồn thêm "tệp bài tập Bài 05". 142 âm tiết | Đề nghị sửa deck, nhẹ |
+| L05-E06b | ghi chú diễn giả | Lỗi thường gặp: "đọc $V(\mathrm X)=0{,}5$ của bảng sau $e_1$ ở chuyển $\mathrm S\to\mathrm X$, cho $V(\mathrm S)=0{,}0625$" thay cho "dùng $V(\mathrm S)=-0{,}375$ cũ ở chuyển thứ hai" (không đổi kết quả). Tính lại: $\delta=0{,}5-(-0{,}375)=0{,}875$, $-0{,}375+0{,}5\cdot0{,}875=0{,}0625$ | Đề nghị sửa deck (bổ sung), nhẹ |
+| L05-B12 | ghi chú diễn giả | "$V_2(\mathrm S)-v_\pi(\mathrm S)\approx-0{,}524$; trị tuyệt đối $0{,}524$ nhỏ hơn một độ lệch chuẩn $0{,}602$" thay cho "sai số $-0{,}524$ nhỏ hơn một độ lệch chuẩn" | Đề nghị sửa deck (sau đợt sửa ghi chú), nhẹ |
+| L05-D05 | mặt trang | Dòng Diễn giải: "mục tiêu TD có độ chệch $-0{,}324$" thay cho "mục tiêu TD lệch $-0{,}324$"; 59 → 58 âm tiết, dòng dài nhất 18 | Đề nghị sửa deck (sau đợt sửa ghi chú), nhẹ |
+| L05-D12b | ghi chú diễn giả | "quá trình phần thưởng Markov thực nghiệm là quá trình thật" | như trên |
+| L05-D06b | dòng Nguồn | "ghi chú bài giảng, Nhận xét 05.29 và Mục 4.4" | như trên |
+| L05-B13 | dòng Nguồn | Thêm "tệp bài tập Bài 05, Bài tập 05.18, câu (a), (b)" | Đề nghị sửa deck của giai đoạn III, nhẹ |
+| L05-C10 | dòng Nguồn | Thêm "tệp bài tập Bài 05, Bài tập 05.20, câu (a), (b)" | như trên |
+
+Không từ chối đề nghị nào. Đề nghị PB-19 (quy ước nhãn [Lập trình]) và nhóm "Bài tập" trên `index.html` thuộc điều phối viên, ngoài phạm vi đợt này.
+
+### Planning
+
+- `storyboard.md`: dòng L05-E03 và dòng E03 trong bảng mật độ (62 âm tiết, ngoại lệ trang tổng kết); câu tổng kết mật độ thêm E03.
+- `outline.md`: dòng L05-C10 (Bài tập 05.20), dòng L05-E03, bảng "Bài tập trên trang chiếu và tệp bài tập" (B13/B13b → 05.18; C10/C10b → 05.20), đoạn mô tả E03 sau bảng.
+
+### Tự kiểm `no-ai-slop` (Edit)
+
+Phạm vi: mặt trang E03, D05 và các câu mới trong ghi chú diễn giả E03, E06b, B12, D12b; đối chiếu `eval.md`. Không câu hỏi tu từ, không "chúng ta"/"ta thấy"/"hãy", không mô tả quy trình hay mã trang trong ghi chú diễn giả, không câu kết khẩu hiệu.
+
+### Kiểm tra
+
+- `density.py`: E03 62 âm tiết, 6 dòng, dòng dài nhất 15 (trần 80 của trang tổng kết, có ngoại lệ); D05 58, 5 dòng, dòng dài nhất 18; không trang nào khác đổi trạng thái.
+- `deck_check.py lecture-05-du-doan-phi-mo-hinh.html` (cổng 8799), 70 trang ở 1600×900 và 390×844: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu lỗi hoặc ra ngoài, không cuộn ngang. Danh sách "overflow" của công cụ trùng danh sách trước đợt sửa (do phần tử KaTeX ẩn); kiểm riêng bỏ qua `.katex-mathml`: E03, D05, B13, C10, D06b, D12b, E06b không có phần tử vượt khung; B12 chỉ có đường SVG của dấu căn KaTeX (có sẵn, mặt trang không đổi). Cỡ chữ ô bảng E03 bằng $0{,}752$em.
+- Đã xem ảnh E03 và D05 ở 1600×900 và 390×844.
+- Liên kết viewer: hai `href` của E03 phân giải đúng trên cổng 8766; mở liên kết "Bài tập": tiêu đề "Bài tập Bài 05 — Dự đoán phi mô hình", 0 `.katex-error`, 0 tải ngoài. `check_note.py 05 … exercises` ở hai cỡ: 48 khối, 0 lỗi KaTeX, 0 lỗi console, `overflow` false. Một thông báo CSP về script nội tuyến do server tải lại chèn vào trang viewer, không phải của tệp trong kho.
+- `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-14, đồng bộ trang bài tập về nhà)
+
+- Tác tử biên tập deck (general-purpose, claude-opus-5-5, high). Kiểm độc lập: trang L05-E03 62 âm tiết (trần 80 của trang tổng kết, ngoại lệ ghi storyboard); Playwright 1600×900 và 390×844 toàn deck: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang; ảnh trang xem trực tiếp; `git diff --check` sạch.
+- Quyết định: **chấp nhận**; commit `fix(lecture-05)`.
