@@ -163,7 +163,7 @@ Cột "MT" là mục tiêu học tập; cột "Quyết định" ghi `giữ | s�
 | G07 | #/7/7 | Lời giải trên mặt trang | G03 → G02 | MT3–MT5 | thêm |
 | G02 | #/7/8 | Trả lời vấn đề trung tâm có điều kiện: nhắc lại bài toán tại D, bảng ba hàng D có cột khởi tạo (nghiêng trái/phải), dòng "Nguồn:" | G07 → G08 (câu nối ở cuối ghi chú G07 và đầu ghi chú G02) | tất cả | sửa |
 | G08 | #/7/9 | Câu hỏi tự kiểm tra (lời giải trong ghi chú diễn giả) | G02 → G04 | MT1, MT4, MT5 | thêm |
-| G04 | #/7/10 | Bài tập về nhà, tài liệu đọc, ghi chú bài giảng, nối sang Bài 07 | G08 → — | tất cả | sửa: bỏ liên kết tới PDF nguồn, bảng `Mạch | Bài tập` |
+| G04 | #/7/10 | Bài tập về nhà, tài liệu đọc, liên kết viewer ghi chú bài giảng và bài tập, nối sang Bài 07 | G08 → — | tất cả | sửa: bỏ liên kết tới PDF nguồn, bảng `Mạch | Bài tập`; 2026-10-14 đồng bộ với `exercises.md` |
 
 ## Bài tập trên trang chiếu
 
@@ -175,12 +175,12 @@ Cột "MT" là mục tiêu học tập; cột "Quyết định" ghi `giữ | s�
 | D08 / D11 | 06.4 | lời giải mẫu trên mặt trang | cập nhật Sarsa, thứ tự chọn $A'$, ba sự kiện |
 | E08 / E12 | 06.5 | lời giải mẫu trên mặt trang | so sánh hai mục tiêu |
 | F05 / F09 | 06.6 | lời giải mẫu trên mặt trang | kiểm giả thiết hội tụ |
-| G03 / G07 | Tình huống 06.1 của ghi chú (số hiệu trong `exercises.md` ghi ở `review-log.md`) | bài tập tổng hợp, lời giải trên mặt trang | chọn phương pháp, kiểm giả thiết trên bài toán thực |
+| G03 / G07 | Tình huống 06.1 của ghi chú; Bài tập 06.17 của `exercises.md` | bài tập tổng hợp, lời giải trên mặt trang | chọn phương pháp, kiểm giả thiết trên bài toán thực |
 | G08 | — | tự làm; lời giải trong ghi chú diễn giả | bốn giả thiết hoặc phân biệt |
 
 Khi `exercises.md` lặp các bài 06.1–06.6, lời giải phải trùng kết quả trên trang chiếu và dẫn tới cả trang đề và trang lời giải.
 
-Bảng `Mạch | Bài tập` trên G04 chỉ ghi bài tập đã có trong ghi chú: mạch 2: 06.1, 06.2, 06.8, 06.11; mạch 3: 06.3; mạch 4: 06.4; mạch 5: 06.5, 06.10; mạch 6: 06.6, 06.9, 06.12; mạch 7: 06.7 (phân loại ba thuật toán theo dữ liệu, hành vi và đích, khớp bảng G01). Dòng "Tệp bài tập: chưa có" thay cho các bài dự kiến của `exercises.md`.
+Bảng `Mạch | Bài tập` trên G04 (đồng bộ 2026-10-14) ghi số của `exercises.md` theo bảng mạch của tệp, rồi sau "ghi chú:" các bài chỉ có trong mục Bài tập củng cố của ghi chú: mạch 2: 06.1, 06.2, 06.14; ghi chú: 06.8, 06.11; mạch 3: 06.3, 06.13; mạch 4: 06.4, 06.15; mạch 5: 06.5, 06.13; ghi chú: 06.10; mạch 6: 06.6, 06.16; ghi chú: 06.9, 06.12; mạch 7: 06.17; ghi chú: 06.7 (06.7 phân loại ba thuật toán theo dữ liệu, hành vi và đích, khớp bảng G01). Bài tập 06.13 thuộc cả mạch 3 và mạch 5 vì so Monte Carlo với Q-learning trên cùng dãy sáu ô. Dòng "Tệp bài tập: chưa có" được thay bằng liên kết viewer `material-viewer.html?doc=materials/lec-06/exercises.md&deck=lecture-06-dieu-khien-phi-mo-hinh.html` cạnh liên kết ghi chú bài giảng.
 
 ## Mật độ: trang vượt trần trước khi sửa
 
@@ -238,7 +238,7 @@ Số đo trước lấy từ deck 29-09-2026 (bản sao `deck06-old.html` trong 
 | G01 | 67 | 6 | 3 | bảng so sánh ba phương pháp, trần 80 (thêm theo/khác chính sách) |
 | G06 | 74 | 5 | 2 | bảng hội tụ của mạch kết luận, trần 80 |
 | G02 | 77 | 8 | 5 | ngoại lệ: trang trả lời vấn đề trung tâm thuộc nhóm tổng kết có bảng so sánh, trần 80 (trước vòng biên tập 58; thêm dòng "Bài toán:" và cột "Khởi tạo" theo quyết định của điều phối viên) |
-| G04 | 61 | 10 | 4 | trang tổng kết bài tập về nhà, trần 80; bảng sáu hàng tính một khối |
+| G04 | 72 | 10 | 4 | trang tổng kết bài tập về nhà, trần 80; bảng sáu hàng tính một khối (61 trước đợt đồng bộ 2026-10-14; thêm số 06.13–06.17 và nhãn "ghi chú:") |
 
 Bảng trên là các trang `density.py` còn gắn cờ sau vòng biên tập và lý do được phép; không trang nội dung nào vượt 60, không trang nào vượt 80. `density.py` đếm cả dấu câu đứng riêng sau khi bỏ KaTeX (ví dụ ", ;"), nên số âm tiết thật thấp hơn vài đơn vị ở các trang nhiều công thức. Trung vị 52 âm tiết; 64/75 trang trên đích 40 (trước vòng biên tập 62/75, trung vị 50). Các trang định nghĩa, định lý và thuật toán giữ đủ giả thiết quyết định trên mặt trang theo `AGENTS.md` §"Trang phát biểu kết quả". Không dùng lớp hay thuộc tính thu nhỏ chữ; deck không còn khối `<style>` cục bộ (quy tắc KaTeX trong tiêu đề đã nằm trong `lecture-slide.css`).
 

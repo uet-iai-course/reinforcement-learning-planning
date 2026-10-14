@@ -160,7 +160,7 @@ Mỗi hàng là luận điểm trung tâm của trang; mã đầy đủ có ti�
 | #/7/7 | G07 | Bài tập: chọn phương pháp cho tàu đổ bộ | Lời giải; số liệu một lần chạy (trung bình ± sai số chuẩn); hiệu ghép cặp chứa 0, chưa xếp hạng được | 2 |
 | #/7/8 | G02 | Trả lời vấn đề trung tâm | Nhắc lại bài toán tại D; bảng ba hàng D có cột khởi tạo; kết luận có điều kiện; dòng "Nguồn:" | 2 |
 | #/7/9 | G08 | Câu hỏi tự kiểm tra | Bốn câu, mỗi câu kiểm một giả thiết | 2 |
-| #/7/10 | G04 | Bài tập về nhà và tài liệu đọc | Bảng Mạch–Bài tập chỉ gồm Bài tập 06.1–06.12 của ghi chú; "Tệp bài tập: chưa có"; tài liệu đọc; ghi chú; Bài 07 | 1,5 |
+| #/7/10 | G04 | Bài tập về nhà và tài liệu đọc | Bảng Mạch–Bài tập theo `exercises.md` (06.1–06.6, 06.13–06.17), bài chỉ trong ghi chú (06.7–06.12) sau nhãn "ghi chú:"; tài liệu đọc; liên kết ghi chú bài giảng · bài tập; Bài 07 | 1,5 |
 
 ## Ánh xạ 30 trang nguồn
 

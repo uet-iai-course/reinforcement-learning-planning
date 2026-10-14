@@ -1315,3 +1315,28 @@ Kiểm tra sau vòng sửa:
 
 - Kiểm độc lập: `note_check.py` sạch (11 bài); viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 33 khối, 0 lỗi console, không tải ngoài; `git diff --check` sạch. Ba vai rà soát chỉ đọc (Opus 5.5 high): 0 chặn, 0 nghiêm trọng; mọi mục trung bình đã sửa; các mục giữ nguyên có lý do.
 - Quyết định: **chấp nhận**; commit `feat(materials-06)`. Trang G04 của deck và nhóm "Bài tập" trên `index.html` cập nhật ở đợt sau; đề nghị sửa ghi chú (Nhận xét 06.10) để đợt đồng bộ chéo.
+
+## Đợt sửa 2026-10-14 — Đồng bộ trang bài tập về nhà
+
+- Vai: biên tập deck (sửa nhỏ, có kiểm), tác tử `general-purpose`, `claude-opus-5-5`, mức `high`, theo brief `scratchpad/brief_deck_homework_sync.md` của điều phối viên. `no-ai-slop` Edit cho bảng, dòng liên kết và ghi chú diễn giả của G04; tự kiểm theo `eval.md`: không câu dẫn rỗng, không mô tả quy trình, không câu hỏi tu từ. Không commit. Bản deck trước đợt sửa lưu ở `scratchpad/lecture-06.before-hwsync.html`.
+- Căn cứ: bảng `Mạch | Mở phần | Bài tập` và đoạn mở của `materials/lec-06/exercises.md` (đã commit); bảng "Đề nghị sửa deck và ghi chú" của Giai đoạn III ở trên.
+
+| Mã | Mức | Trang | Trạng thái | Xử lý |
+|---|---|---|---|---|
+| HW-1 | nhẹ | G04 (`#/7/10`), bảng `Mạch | Bài tập` | đã sửa | Mỗi hàng ghi số của `exercises.md` theo bảng mạch của tệp, rồi "ghi chú:" với bài chỉ có trong mục Bài tập củng cố: 2: 06.1, 06.2, 06.14; ghi chú: 06.8, 06.11. 3: 06.3, 06.13. 4: 06.4, 06.15. 5: 06.5, 06.13; ghi chú: 06.10. 6: 06.6, 06.16; ghi chú: 06.9, 06.12. 7: 06.17; ghi chú: 06.7 |
+| HW-2 | nhẹ | G04, dòng liên kết | đã sửa | "Tệp bài tập: chưa có." thay bằng liên kết viewer `material-viewer.html?doc=materials/lec-06/exercises.md&deck=lecture-06-dieu-khien-phi-mo-hinh.html`, nhãn "Ghi chú bài giảng · Bài tập"; giữ liên kết ghi chú |
+| HW-3 | nhẹ | G04, ghi chú diễn giả | đã sửa | Nêu thành phần bộ bài tập (06.1–06.6 trùng bài trên trang chiếu; 06.13 Monte Carlo và Q-learning trên dãy sáu ô có chuyển ngẫu nhiên; 06.15, 06.16 trên notebook tàu đổ bộ; 06.17 là bài tổng hợp G03/G07) và nghĩa của nhãn "ghi chú" (06.7–06.12, mục Bài tập củng cố). 140 âm tiết |
+| HW-4 | nhẹ | G03, câu hỏi (d) tùy chọn | từ chối, có lý do | Thêm (d) đưa trang lên 7 dòng nội dung, vượt trần 6 dòng; câu (d) còn cần số liệu đánh giá (Sarsa $26{,}2\pm14{,}0$, Q-learning $-6{,}6\pm17{,}2$, hiệu ghép cặp $32{,}8\pm46{,}2$) vốn chỉ có trên G07, nên phải thêm một dòng dữ kiện nữa. Hai dòng cuối G07 vẫn khớp Bài tập 06.17(d) của `exercises.md` |
+| HW-5 | — | `index.html`, nhóm "Bài tập" | ngoài phạm vi | Việc của điều phối viên |
+
+- Planning: `storyboard.md` (hàng G04 trong bảng trang; hàng G03/G07 của bảng bài tập trên trang chiếu ghi Bài tập 06.17; đoạn về bảng G04; hàng G04 của bảng ngoại lệ mật độ: 72 âm tiết, 10 dòng, trần 80 của trang tổng kết, bảng sáu hàng tính một khối như trước); `outline.md` (hàng `#/7/10`).
+- Kiểm:
+  - `density.py`: G04 61 → 72 âm tiết, 10 dòng (bảng sáu hàng tính một khối, ngoại lệ đã có trong storyboard), tối đa 16 âm tiết/dòng; trong trần 80 của trang tổng kết. Các trang khác không đổi.
+  - `deck_check.py` (cổng 8799), 1600×900 và 390×844: 75 trang, 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài hoặc hỏng, không cuộn ngang, 6 trang tiêu đề mạch. Năm cờ tràn heuristic (B05, B09, D04, D10, E03) nằm ở trang không sửa và đã có trước đợt này; `ed06/ovf2.py` (đo theo đơn vị trang, bỏ `.katex-mathml`): 0 trang tràn, trang cao nhất B09 699 px. Đã xem ảnh G04 ở 1600×900 (hàng mạch 2 xuống hai dòng, vừa khung) và 390×844.
+  - Playwright (cổng 8766): hai liên kết của G04 mở viewer; tệp bài tập hiển thị tiêu đề "Bài tập Bài 06 — Điều khiển phi mô hình", 0 `.katex-error`, 0 yêu cầu ngoài; ghi chú bài giảng hiển thị bình thường. Lỗi console duy nhất là CSP chặn script do `reloadserver` chèn, như các đợt trước.
+  - `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-14, đồng bộ trang bài tập về nhà)
+
+- Tác tử biên tập deck (general-purpose, claude-opus-5-5, high). Kiểm độc lập: trang L06-G04 72 âm tiết (trần 80 của trang tổng kết, ngoại lệ ghi storyboard); Playwright 1600×900 và 390×844 toàn deck: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang; liên kết viewer bài tập mở được; `git diff --check` sạch.
+- Quyết định: **chấp nhận**; commit `fix(lecture-06)`.
