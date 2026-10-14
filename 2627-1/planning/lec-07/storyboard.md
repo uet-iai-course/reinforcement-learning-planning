@@ -138,7 +138,7 @@ Cột "QĐ" là quyết định so với deck cũ: `giữ | sửa | gộp | tác
 | `L07-35b` | mạch 7, lời giải tổng hợp | Năm bước, $d=771$, không suy ra hội tụ | đề → trả lời vấn đề | M5, M6 | thêm | Bài tập 07.18 | 2 |
 | `L07-36d` | mạch 7 | Trả lời vấn đề trung tâm song song `L07-03c`, câu kết "Bảo đảm chỉ phủ dự đoán với chính sách cố định", dòng "Nguồn:" | bài tập → tự kiểm tra | M1–M5 | thêm; vòng biên tập 2026-10-14: câu kết phạm vi (MACH 8), ghi chú thêm giả thiết (TOAN) | tr. 22–45 | 1 |
 | `L07-36e` | mạch 7 | Bốn câu tự kiểm tra | trả lời → bài tập về nhà | M1, M3, M4 | thêm; gom câu hỏi của `L07-11`, `L07-24`, `L07-25` cũ | HW 1–3 | 1 |
-| `L07-36f` | mạch 7 | Bảng `Mạch \| Bài tập`, tài liệu đọc, liên kết ghi chú, "Tệp bài tập: chưa có", nối Bài 08 | tự kiểm tra → Bài 08 | M1–M6 | thêm; vòng biên tập 2026-10-14: quyết định chung mục 4 | ghi chú bài giảng, Bài tập củng cố | 0,5 |
+| `L07-36f` | mạch 7 | Bảng `Mạch \| Bài tập` theo `exercises.md` (số mạch; bài chỉ trong ghi chú ghi "ghi chú: 07.k"), tài liệu đọc, liên kết "Ghi chú bài giảng · Bài tập", nối Bài 08 | tự kiểm tra → Bài 08 | M1–M6 | thêm; vòng biên tập 2026-10-14: quyết định chung mục 4; đồng bộ bài tập về nhà 2026-10-14: bảng theo `exercises.md`, liên kết viewer bài tập | ghi chú bài giảng, Bài tập củng cố; `exercises.md` | 0,5 |
 
 Trang cũ bị bỏ: không có trang nào bị bỏ hẳn; `L07-13` cũ được gộp vào `L07-13` mới (giữ mã), `L07-21` cũ giữ mã.
 
@@ -155,7 +155,7 @@ Trang cũ bị bỏ: không có trang nào bị bỏ hẳn; `L07-13` cũ đượ
 | `L07-25` | 51, 7, 9 | bảng so sánh 80 | bảng sáu tiêu chí của Nhận xét 07.30 cộng hàng tiêu đề |
 | `L07-34` | 75, 5, 19 | bảng so sánh 80 | danh sách giả thiết TD(0) đủ năm mục theo quyết định điều phối viên |
 | `L07-36d` | 78, 7, 13 | tổng kết 80; 7 dòng | năm câu trả lời, câu kết phạm vi bảo đảm (MACH 8) và dòng "Nguồn:" bắt buộc |
-| `L07-36f` | 69, 10, 10 | tổng kết 80 | bảng `Mạch \| Bài tập` sáu hàng cùng ba dòng bắt buộc |
+| `L07-36f` | 70, 10, 10 | tổng kết 80 | bảng `Mạch \| Bài tập` sáu hàng (cột mạch chỉ ghi số, số hiệu theo `exercises.md`) cùng ba dòng bắt buộc; đồng bộ 2026-10-14: 70 → 70 âm tiết |
 | `L07-M3T`, `L07-M5T`, `L07-M6T`, `L07-M7T` | dòng dẫn 21, 22, 24, 22 | dòng dẫn ≤ 25 | script áp trần 20 âm tiết/dòng cho mọi trang |
 
 Vòng biên tập 2026-10-14 (trước → sau, `density2.py`): `L07-01b` 50 → 53 (6 dòng, tách phần ký hiệu sang `L07-01c` 50); `L07-11` 48 → 58; `L07-36` 62 và `L07-36b` 61 → 44 và 39 (hàng hội tụ chuyển sang `L07-34`); `L07-34` 69 → 70; `L07-36d` 68 → 78; `L07-32b` 29 → 42, `L07-32c` 30 (mới). Trang mới `L07-19b` 56, `L07-31d` 37. Vòng rà lại 2: `L07-01b` 56, `L07-12` 52, `L07-31d` 20, `L07-31e` 17, `L07-32b` 55 (4 dòng), `L07-32c` 39, `L07-33` 51, `L07-36b` 44.

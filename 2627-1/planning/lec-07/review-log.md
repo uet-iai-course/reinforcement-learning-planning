@@ -1425,3 +1425,31 @@ Phạm vi: mọi đoạn sửa và viết lại (07.20, 07.21(b)(c), 07.8(a), 07
 
 - Kiểm độc lập: `note_check.py` sạch (14 bài); viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 42 khối, 0 lỗi console, không tải ngoài; tính lại chuỗi mới của 07.22 ($d_\pi=(\tfrac23;\tfrac13)$, $A=\tfrac12$, $b=\tfrac23$, $w_{\mathrm{TD}}=\tfrac43$, $v_\pi=(\tfrac{200}{29};\tfrac{180}{29})$, $w_{\mathrm{MC}}=\tfrac{380}{87}$, $b-Aw_{\mathrm{MC}}=-\tfrac{44}{29}$) đúng; `git diff --check` sạch. Ba vai rà soát chỉ đọc (Opus 5.5 high): 0 chặn, 0 nghiêm trọng; mọi mục trung bình đã sửa.
 - Quyết định: **chấp nhận**; commit `feat(materials-07)`. Trang L07-36f của deck và nhóm "Bài tập" trên `index.html` cập nhật ở đợt sau.
+
+## Đợt sửa 2026-10-14 — Đồng bộ trang bài tập về nhà
+
+- Vai: biên tập deck (sửa nhỏ, có kiểm), tác tử `general-purpose`, `claude-opus-5-5`, mức `high`, theo brief `scratchpad/brief_deck_homework_sync.md` của điều phối viên. `no-ai-slop` Edit cho bảng, dòng liên kết và ghi chú diễn giả của `L07-36f`; tự kiểm theo `eval.md`: không câu dẫn rỗng, không mô tả quy trình, không câu hỏi tu từ, không câu kết khẩu hiệu, không thêm nhận định không có trong `exercises.md` hay ghi chú. Không commit. Bản deck trước đợt sửa lưu ở `scratchpad/lecture-07.before-hwsync.html`.
+- Căn cứ: bảng `Mạch | Mở phần | Bài tập` và đoạn mở của `materials/lec-07/exercises.md` (đã commit, `db4b750`); mục "Đề nghị sửa deck (thay đề nghị ở mục Giai đoạn III, theo số mới)" ở trên.
+
+| Mã | Mức | Trang | Trạng thái | Xử lý |
+|---|---|---|---|---|
+| HW-1 | tb (SV, PB T5) | `L07-36f` (`#/7/10`), bảng `Mạch \| Bài tập` | đã sửa | Mỗi hàng ghi số của `exercises.md` theo bảng mạch của tệp, rồi "ghi chú:" với bài thân chương không có trang deck: 2: 07.3, 07.20; ghi chú: 07.1, 07.2. 3: 07.5, 07.21, 07.24; ghi chú: 07.4, 07.6. 4: 07.7, 07.8, 07.22, 07.24; ghi chú: 07.9. 5: 07.10, 07.11, 07.25; ghi chú: 07.12. 6: 07.13, 07.14, 07.23, 07.25. 7: ghi chú: 07.18 (bài tổng hợp). Bỏ 07.15–07.17, 07.19 khỏi bảng vì `exercises.md` không dẫn các bài tập củng cố này; ghi chú diễn giả nêu chúng. Cột mạch chỉ ghi số (như `L06-G04`) để giữ trần 80 âm tiết; tên mạch có trên `L07-03b` |
+| HW-2 | tb | `L07-36f`, dòng liên kết | đã sửa | "Tệp bài tập: chưa có" thay bằng liên kết viewer `material-viewer.html?doc=materials/lec-07/exercises.md&deck=lecture-07-xap-xi-ham.html`, dòng "Ghi chú bài giảng · Bài tập"; giữ liên kết ghi chú |
+| HW-3 | nhẹ | `L07-36f`, ghi chú diễn giả | đã sửa | Đoạn 1 thay câu cũ (07.6, 07.19, 07.13, hai notebook): thành phần bộ bài tập (tám bài trùng trang bài tập đã giải, 07.20–07.23 mới, 07.24 và 07.25 lập trình trên hai notebook), nghĩa của nhãn "ghi chú", và 07.18 là bài tổng hợp thuộc Bài tập củng cố cùng 07.15–07.17, 07.19. Đoạn Bài 08 giữ nguyên. Dòng Nguồn thêm "tệp bài tập Bài 07". 88 + 60 âm tiết, không kể dòng Nguồn |
+| HW-4 | — | đề nghị Giai đoạn III bản số cũ (07.23, 07.20, 07.21, 07.22 …) | thay bằng HW-1 | đã được bản theo số mới thay; áp dụng bản số mới |
+| HW-5 | — | đề nghị sửa ghi chú (tài liệu tham khảo, mục tiêu học tập dẫn 07.20–07.25) | ngoài phạm vi | brief không cho sửa `lecture-note.md`; outline đã ghi số của tệp bài tập cạnh mục tiêu 1, 4, 5, 6 |
+| HW-6 | — | `index.html`, nhóm "Bài tập" | ngoài phạm vi | việc của điều phối viên |
+
+Không còn "Đề nghị sửa deck" mức nhẹ nào mở trong tệp này: đề nghị `two-state-features.svg` đã đóng ở mục "Sửa ghi chú sau giai đoạn II"; `chapter-map.svg` chỉ dùng trong ghi chú.
+
+- Planning: `storyboard.md` (hàng `L07-36f` trong bảng trang: nội dung và nguồn `exercises.md`; hàng `L07-36f` của bảng ngoại lệ mật độ: 70 âm tiết, 10 dòng, trần 80 của trang tổng kết); `outline.md` (dòng "Nguồn chuẩn" thêm bộ bài tập chính thức; mục tiêu 1, 4, 5, 6 thêm "tệp bài tập: 07.20 / 07.22 / 07.23 / 07.21, 07.24, 07.25"; hàng HW 1–3 và HW 5–6 của bảng ánh xạ nguồn ghi 07.20 và 07.22).
+- Kiểm:
+  - `density.py`: `L07-36f` 70 → 70 âm tiết, 10 → 10 dòng, tối đa 10 âm tiết/dòng; trong trần 80 của trang tổng kết, ngoại lệ 10 dòng đã có trong storyboard. Các trang khác không đổi (so `density.py` trước và sau: không khác).
+  - `deck_check.py` (cổng 8799), 1600×900 và 390×844: 75 trang, 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài hoặc hỏng, không cuộn ngang, 6 trang tiêu đề mạch. `L07-36f` không có cờ tràn; cờ tràn heuristic và cờ cỡ chữ nhỏ ở các trang khác là cờ có sẵn, không do đợt này. Đã xem ảnh `L07-36f` ở 1600×900 (bảng sáu hàng, ba dòng dưới, vừa khung, nhãn trang `7 . 10`) và 390×844 (thu nhỏ đều, không tràn).
+  - Playwright (cổng 8766): hai liên kết của `L07-36f` mở viewer; tệp bài tập hiển thị tiêu đề "Bài tập Bài 07 — Xấp xỉ hàm trong Học tăng cường", 1 227 phần tử KaTeX, 0 `.katex-error`, 0 yêu cầu ngoài hoặc hỏng; ghi chú bài giảng hiển thị bình thường (0 `.katex-error`). Lỗi console duy nhất là CSP chặn script do `reloadserver` chèn, như các đợt trước.
+  - `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-14, đồng bộ trang bài tập về nhà)
+
+- Tác tử biên tập deck (general-purpose, claude-opus-5-5, high). Kiểm độc lập: trang L07-36f 70 âm tiết, 10 dòng (ngoại lệ có sẵn trong storyboard); Playwright 1600×900 và 390×844 toàn deck: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang; `git diff --check` sạch.
+- Quyết định: **chấp nhận**; commit `fix(lecture-07)`.

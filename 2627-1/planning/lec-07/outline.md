@@ -6,7 +6,7 @@ Bản viết lại ngày 2026-10-12 (giai đoạn II của đợt sửa theo chu
 
 - Nguồn chính: bài giảng gốc (2025–2026), *Hàm xấp xỉ trong Reinforcement Learning*, 45 trang (tệp PDF không được theo dõi; trích dẫn dạng "bài giảng gốc (2025–2026), trang N").
 - Nguồn bài tập: Bài tập tuần 7 (2025–2026), 8 bài.
-- Nguồn chuẩn cho ký hiệu, số liệu, số hiệu kết quả: `2627-1/materials/lec-07/lecture-note.md` (bộ đếm chung 07.1–07.41, Ví dụ 07.1–07.16, Bài tập 07.1–07.19, Tình huống 07.1–07.2).
+- Nguồn chuẩn cho ký hiệu, số liệu, số hiệu kết quả: `2627-1/materials/lec-07/lecture-note.md` (bộ đếm chung 07.1–07.41, Ví dụ 07.1–07.16, Bài tập 07.1–07.19, Tình huống 07.1–07.2). Bộ bài tập chính thức `2627-1/materials/lec-07/exercises.md`: tám bài trùng ghi chú có trang trên deck (07.3, 07.5, 07.7, 07.8, 07.10, 07.11, 07.13, 07.14) và sáu bài mới 07.20–07.25.
 - Đối tượng: sinh viên đã học MDP, quy hoạch động, Monte Carlo, TD(0), Sarsa và Q-learning dạng bảng (Bài 03–06).
 - Thời lượng: phần trình chiếu chính 120 phút (7 mạch: 9 + 22,5 + 17 + 30 + 14 + 16 + 11,5). Khối 30 phút ngoài 120 phút: ba bài chữa trên trang (`X01`/`X01b` 6 phút, `X02`/`X02b` 7 phút, `X03`/`X03b` 9 phút, nằm trong mạch 3 và mạch 5) và 8 phút trình diễn notebook.
 - Không có code demo trong deck; hai notebook thực hành (Lunar Lander, Flappy Bird) chỉ được dẫn số liệu "một lần chạy đã nhúng trong notebook".
@@ -16,12 +16,12 @@ Bản viết lại ngày 2026-10-12 (giai đoạn II của đợt sửa theo chu
 
 Khớp mặt trang `L07-03` và mục "Mục tiêu học tập" của ghi chú bài giảng.
 
-1. Viết $\hat v(s,w)=x(s)^\top w$, $\hat q(s,a,w)=x(s,a)^\top w$; tính mức lan; nhận diện nhập nhằng (Bài tập 07.1–07.3, 07.12, 07.15, 07.16).
+1. Viết $\hat v(s,w)=x(s)^\top w$, $\hat q(s,a,w)=x(s,a)^\top w$; tính mức lan; nhận diện nhập nhằng (Bài tập 07.1–07.3, 07.12, 07.15, 07.16; tệp bài tập: 07.20).
 2. Tính tay một cập nhật Monte Carlo gradient, TD(0), Sarsa và Q-learning bán gradient (Bài tập 07.7, 07.10, 07.11, 07.13).
 3. Phân biệt gradient đầy đủ với bán gradient, chỉ ra số hạng bị bỏ (Bài tập 07.4, 07.5, 07.7).
-4. Tính điểm cố định Bellman chiếu, nghiệm Monte Carlo trên ví dụ nhỏ; nêu đủ giả thiết hội tụ của TD(0) tuyến tính (Bài tập 07.8, 07.9, 07.17).
-5. Phân biệt mục tiêu Sarsa với mục tiêu Q-learning; nhận diện bộ ba bất ổn (Bài tập 07.13, 07.14, 07.18).
-6. Đối chiếu kết quả chạy với giả thiết trước khi kết luận về hội tụ hay phân kỳ (Bài tập 07.6, 07.19).
+4. Tính điểm cố định Bellman chiếu, nghiệm Monte Carlo trên ví dụ nhỏ; nêu đủ giả thiết hội tụ của TD(0) tuyến tính (Bài tập 07.8, 07.9, 07.17; tệp bài tập: 07.22).
+5. Phân biệt mục tiêu Sarsa với mục tiêu Q-learning; nhận diện bộ ba bất ổn (Bài tập 07.13, 07.14, 07.18; tệp bài tập: 07.23).
+6. Đối chiếu kết quả chạy với giả thiết trước khi kết luận về hội tụ hay phân kỳ (Bài tập 07.6, 07.19; tệp bài tập: 07.21, 07.24, 07.25).
 
 ## Khung lý thuyết chung
 
@@ -65,9 +65,9 @@ Tổng kiểm tra: $9+22{,}5+17+30+14+16+11{,}5=120$; khối 30 phút: $6+7+9$ c
 | 38, 41 | giữ, mở rộng | `L07-31`–`L07-33b` | Mục tiêu Q-learning, thuật toán (bổ sung theo notebook), ví dụ phân kỳ (bổ sung, Sutton–Barto §11.2), bộ ba bất ổn. |
 | 42–43 | gộp | `L07-34` (ghi chú diễn giả) | MDP tuyến tính, vấn đề mở: chỉ ở ghi chú. |
 | 44–45 | giữ | `L07-36`–`L07-36f` | Tổng kết, phạm vi, tài liệu. |
-| HW 1–3 | tự ôn, trang | `L07-36e`, `L07-33`, `L07-33b` | Bài 3 thành bài tập trên trang (Bài tập 07.14). |
+| HW 1–3 | tự ôn, trang | `L07-36e`, `L07-33`, `L07-33b` | Bài 3 thành bài tập trên trang (Bài tập 07.14); bài 1 là Bài tập 07.20 của `exercises.md`. |
 | HW 4 | giữ | `X01`, `X01b` | Bài tập 07.5. |
-| HW 5–6 | trang, tự ôn | `L07-22`, `L07-23`, `L07-24c`; `L07-36f` | Bài tập 07.8, 07.6. |
+| HW 5–6 | trang, tự ôn | `L07-22`, `L07-23`, `L07-24c`; `L07-36f` | Bài tập 07.8, 07.6; bài 5 đầy đủ là Bài tập 07.22 của `exercises.md`. |
 | HW 7 | giữ | `X02`, `X02b` | Bài tập 07.10. |
 | HW 8 | giữ | `L07-30`, `X03`, `X03b`, `L07-31` | Bài tập 07.11; mẫu 2 dùng lại để so Sarsa với Q-learning. |
 
