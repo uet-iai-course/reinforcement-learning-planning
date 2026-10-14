@@ -1803,3 +1803,45 @@ Phạm vi: mặt trang E03, D05 và các câu mới trong ghi chú diễn giả 
 
 - Tác tử biên tập deck (general-purpose, claude-opus-5-5, high). Kiểm độc lập: trang L05-E03 62 âm tiết (trần 80 của trang tổng kết, ngoại lệ ghi storyboard); Playwright 1600×900 và 390×844 toàn deck: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang; ảnh trang xem trực tiếp; `git diff --check` sạch.
 - Quyết định: **chấp nhận**; commit `fix(lecture-05)`.
+
+## Đợt sửa 2026-10-14 — Đồng bộ chéo ghi chú
+
+### Tác tử
+
+| Vai trò | Loại | Mô hình | Effort | Ghi file |
+|---|---|---|---|---|
+| Biên tập ghi chú Bài 05, sửa nhỏ (theo brief `brief_note_crosssync.md` của điều phối viên) | general-purpose | claude-opus-5-5 | high | `materials/lec-05/lecture-note.md`, mục này |
+
+Không commit. Không sửa deck, `exercises.md`, `outline.md`, `storyboard.md`, notebook, CSS hay tệp bài khác. Số hiệu kết quả (35), Ví dụ (22), Bài tập (15) và mọi `note-topic-id` giữ nguyên.
+
+### Đề nghị sửa ghi chú còn mở và xử lý
+
+Đã rà mọi mục "Đề nghị sửa ghi chú" của review-log: giai đoạn II (dòng 1231, bảng sau giai đoạn II, bảng bổ sung của rà lại vòng 2), giai đoạn III và đồng bộ trang bài tập về nhà. Các đề nghị đã làm ở "Đợt sửa 2026-10-14 — Sửa ghi chú sau giai đoạn II" (alt và vẽ lại `learning-route.svg`, tốc độ học và độ nhạy khởi tạo theo Sutton và Barto §6.2 ở Mục 4.4, "ô gộp", quá trình phần thưởng Markov thực nghiệm, đoạn gradient, căn cứ dữ liệu cố định, sai số thật và độ lệch, giá trị chuẩn $11/21$) được bỏ qua. Đợt đồng bộ trang bài tập về nhà không có đề nghị cho ghi chú.
+
+| Đề nghị (nguồn) | Trạng thái | Vị trí và cách sửa |
+|---|---|---|
+| Liên kết viewer tới `exercises.md` ở câu cuối đoạn mở "Bài tập củng cố" (giai đoạn III, nhẹ) | Đã sửa | Dòng 1941: câu "Bộ bài giao chính thức … không lặp đề bài của mục này" sai sau khi `exercises.md` giữ lại 05.8, 05.11, 05.12; thay bằng ba câu: liên kết "Bài tập Bài 05"; tệp giữ số hiệu và kết quả của 05.8, 05.11, 05.12, không lặp 05.13–05.15; mười ba bài mới 05.16–05.28, trong đó 05.18 chạy bốn cấu hình tại $\mathrm S$ với $\gamma=0{,}9$ và 05.26–05.28 dùng số liệu notebook. Viết "số hiệu và kết quả" thay cho "đề", vì đề 05.8 và 05.12 trong tệp có thêm dữ kiện và câu (b) |
+| Bài $\gamma=0{,}9$ tại $\mathrm S$ của L05-B13/B13b (lệch tạm thời deck–ghi chú, giai đoạn II) | Đã phủ bởi Bài tập 05.18 của `exercises.md`; thêm dẫn chiếu | Dòng 615, cuối đoạn đọc `design-grid.svg`: Ví dụ 05.5 chạy bốn ô với $\gamma=1$; Bài tập 05.18 của tệp bài tập chạy lại bốn ô tại $\mathrm S$ với $\gamma=0{,}9$, khi các lợi tức của cùng một lượt không còn bằng nhau ($e_1$: $0{,}729;\ 0{,}81;\ 0{,}9;\ 1$). Ghi chú không có câu "lệch tạm thời" nào cần xóa (đã tìm `lệch tạm thời` trong ghi chú, tệp bài tập và deck) |
+| Mục đọc thêm dẫn tới tệp bài tập (brief) | Đã sửa | Dòng 2027: mục "**Bài tập.**" trong "Hướng dẫn đọc thêm và tài liệu tham khảo", liên kết viewer, 05.8, 05.11, 05.12 trùng thân chương, 05.16–05.28 là bài mới, bảng đầu tệp xếp bài theo mạch, mạch 2–5 ứng với Mục 2–5 (đã đối chiếu tên mạch trong bảng của `exercises.md`) |
+| `index.html`, nhãn [Lập trình] (PB-19) | Ngoài phạm vi | Điều phối viên |
+
+Không từ chối đề nghị nào. Mục tiêu học tập không thêm số bài của tệp bài tập: brief của điều phối viên cho Bài 05 giới hạn ở đoạn mở "Bài tập củng cố" và mục đọc thêm.
+
+### Ký hiệu theo `quyet-dinh-chuan-2026-10-12.md`
+
+Đã tìm trong ghi chú: $T^\pi$, $T^*$, $P^\pi$, $r^\pi$ (0 lần; ghi chú dùng $T_\pi$, $T_*$); "gần chắc chắn", "quy trình quyết định", "tác nhân", "tổng thưởng", "điểm thưởng", "phần thưởng tích lũy", "lần ghé đầu" thiếu "tiên", "giữ hòa", "bán gradient MC", "Đáp án" (0 lần); $V^\pi$ chỉ ở dòng 68, câu đối chiếu với ký hiệu của giáo trình *Học máy thống kê*, giữ. Tên trạng thái dùng chữ đứng ($\mathrm S,\mathrm X,\mathrm L,\mathrm G,\mathrm A,\mathrm B,\mathrm x_i$); $S$, $S'$ nghiêng trong Thuật toán TD(0) là biến. Dấu chấm thập phân trong KaTeX: 0 lần (sáu kết quả của bộ quét đều là số hiệu trong `\text{…}`). Không có thay đổi ký hiệu, nên không có đề nghị sửa deck; deck cũng 0 lần $T^\pi$, $P^\pi$, $r^\pi$, "gần chắc chắn", "quy trình quyết định", "tác nhân".
+
+### Tự kiểm `no-ai-slop` (Edit)
+
+Phạm vi: các câu mới ở dòng 615, 1941, 2027; đối chiếu `eval.md`. Không từ cấm, không câu hỏi tu từ, không "hãy", tài liệu không làm chủ ngữ, không "xem trang chiếu", không cấu trúc "không phải … mà …", mỗi câu tối đa một ngoặc đơn.
+
+### Kiểm tra
+
+- `note_check.py`: 26 353 từ; bộ đếm chung 35, Ví dụ 22, Bài tập 15, không khoảng trống, không trùng; 13 tiêu đề `##` đúng thứ tự; 0 `\(`/`\[`.
+- `check_note.py 05 lecture-05-du-doan-phi-mo-hinh.html` (cổng 8766, cwd `rl-plan`), 1600×900 và 390×844: 0 `.katex-error`, 116 khối, 0 lỗi console, 0 yêu cầu lỗi hoặc ra ngoài, `overflow` false.
+- Ba liên kết `exercises.md` trong viewer phân giải tới `material-viewer.html?doc=materials/lec-05/exercises.md&deck=lecture-05-du-doan-phi-mo-hinh.html`; trang mở với tiêu đề "Bài tập Bài 05 — Dự đoán phi mô hình", 0 `.katex-error`.
+- `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-14, đồng bộ chéo ghi chú)
+
+- Kiểm độc lập: `note_check.py` sạch; viewer 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(materials-05)`.

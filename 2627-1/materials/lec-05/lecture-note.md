@@ -612,7 +612,7 @@ Hai trục tạo bốn cấu hình. Báo cáo một kết quả Monte Carlo cầ
 
 ![Lưới hai nhân hai: trục ngang "Quy tắc bước học" gồm trung bình mẫu và alpha hằng số; trục dọc "Quy tắc lần ghé" gồm lần ghé đầu tiên và mọi lần ghé; bốn ô là bốn cấu hình; dòng chú thích "Hai lựa chọn độc lập, không phải ba thuật toán rời nhau".](img/lec-05/design-grid.svg)
 
-Trên hình, mỗi ô của lưới là một cấu hình, và đi theo một hàng chỉ đổi quy tắc bước học, đi theo một cột chỉ đổi quy tắc lần ghé. Bài tập tuần 5 (2025–2026, bài 5) liệt kê "lần ghé đầu tiên", "trung bình mẫu" và "bước hằng" như ba phương pháp ngang hàng; lưới cho thấy chúng thuộc hai trục khác nhau. Ví dụ 05.5 đã chạy cả bốn ô trên hai lượt.
+Trên hình, mỗi ô của lưới là một cấu hình, và đi theo một hàng chỉ đổi quy tắc bước học, đi theo một cột chỉ đổi quy tắc lần ghé. Bài tập tuần 5 (2025–2026, bài 5) liệt kê "lần ghé đầu tiên", "trung bình mẫu" và "bước hằng" như ba phương pháp ngang hàng; lưới cho thấy chúng thuộc hai trục khác nhau. Ví dụ 05.5 đã chạy cả bốn ô trên hai lượt với $\gamma=1$. Bài tập 05.18 của [tệp bài tập](material-viewer.html?doc=materials/lec-05/exercises.md&deck=lecture-05-du-doan-phi-mo-hinh.html) chạy lại bốn ô tại $\mathrm S$ với $\gamma=0{,}9$, khi các lợi tức của cùng một lượt không còn bằng nhau.
 
 <!-- note-topic-id: lec-05-topic-03 -->
 ### 2.5 Thuật toán dự đoán Monte Carlo
@@ -1938,7 +1938,7 @@ Chương còn hai giới hạn: chính sách chưa được cải thiện, việ
 
 ## Bài tập củng cố
 
-Các bài tập trong các mục và ba bài dưới đây là bộ bài tập của chương; mỗi mục tiêu học tập có ít nhất một bài: mục tiêu 1 với Bài tập 05.2; mục tiêu 2 với Bài tập 05.3; mục tiêu 3 với Bài tập 05.4, 05.5, 05.8; mục tiêu 4 với Bài tập 05.6, 05.7, 05.8; mục tiêu 5 với Bài tập 05.9, 05.10, 05.11, 05.14; mục tiêu 6 với Bài tập 05.12, 05.13, 05.15. Bộ bài giao chính thức của Bài 05 nằm trong tệp bài tập riêng của bài và không lặp đề bài của mục này.
+Các bài tập trong các mục và ba bài dưới đây là bộ bài tập của chương; mỗi mục tiêu học tập có ít nhất một bài: mục tiêu 1 với Bài tập 05.2; mục tiêu 2 với Bài tập 05.3; mục tiêu 3 với Bài tập 05.4, 05.5, 05.8; mục tiêu 4 với Bài tập 05.6, 05.7, 05.8; mục tiêu 5 với Bài tập 05.9, 05.10, 05.11, 05.14; mục tiêu 6 với Bài tập 05.12, 05.13, 05.15. Bộ bài giao chính thức của buổi học là [Bài tập Bài 05](material-viewer.html?doc=materials/lec-05/exercises.md&deck=lecture-05-du-doan-phi-mo-hinh.html). Tệp này giữ số hiệu và kết quả của Bài tập 05.8, 05.11, 05.12 trong thân chương và không lặp các đề 05.13–05.15 dưới đây. Mười ba bài mới 05.16–05.28 nối tiếp bộ đếm; Bài tập 05.18 chạy bốn cấu hình Monte Carlo tại $\mathrm S$ với $\gamma=0{,}9$, còn ba bài 05.26–05.28 dùng số liệu của notebook Lunar Lander.
 
 ### Mức nhận biết
 
@@ -2024,6 +2024,7 @@ Giới hạn: mục tiêu TD chệch theo độ lệch của bảng (Mệnh đ�
 - Bertsekas, D. P. và Tsitsiklis, J. N. (1996), *Neuro-Dynamic Programming*, Athena Scientific, chương 2 và 4–5: chính sách kết thúc hầu chắc chắn, xấp xỉ ngẫu nhiên, Monte Carlo và TD trên bảng tra; cho Bổ đề 05.5, Mệnh đề 05.34 với $\gamma=1$ và ý tưởng chứng minh của Định lý 05.30.
 - Bài giảng gốc (2025–2026), *Dự đoán phi mô hình*, trang 15–33: bài toán dự đoán (trang 15–16), Monte Carlo (trang 17–23), TD(0) (trang 24–25), độ chệch và phương sai (trang 26–28, 30–31), hai lượt trên dãy bốn ô (trang 29), chuyển tiếp (trang 32–33). Bài tập tuần 5 (2025–2026): bài 2 cho Bài tập 05.1, bài 4 cho Bài tập 05.15, bài 7 cho các Ví dụ 05.5, 05.9, 05.10; tiền đề tuyệt đối của bài 4 được thay bằng phát biểu có điều kiện.
 - Notebook thực hành Bài 05, *Dự đoán Monte Carlo và TD(0) trên Lunar Lander*, gymnasium 1.3.0: các đoạn "Trong thực hành", Ví dụ 05.11, 05.12, Tình huống 05.1. Ghi chú Bài 03 (Mục 1–4) và Bài 04 (Mục 1) là tiên quyết trực tiếp.
+- **Bài tập.** [Bài tập Bài 05](material-viewer.html?doc=materials/lec-05/exercises.md&deck=lecture-05-du-doan-phi-mo-hinh.html), bộ bài giao chính thức ở ba mức: Bài tập 05.8, 05.11, 05.12 trùng các bài trong thân chương, Bài tập 05.16–05.28 là bài mới; bảng đầu tệp xếp từng bài theo mạch của bài học, mạch 2–5 ứng với Mục 2–5.
 
 <!-- note-topic-id: lec-05-topic-23 -->
 Bài tập 05.14 cho thấy, khi bảng giữ cố định trong một lượt, sai số của mục tiêu Monte Carlo là tổng chiết khấu các sai số TD dọc lượt; TD(0) chỉ dùng sai số đầu tiên. Sutton và Barto (2018, §7.1, trang 142–145) xây dựng các mục tiêu trung gian dùng $n$ phần thưởng rồi bootstrap từ $V(S_{t+n})$; nhiệm vụ 5 của notebook thực hành cho một khung so sánh $n\in\{1,4,16,64\}$.
