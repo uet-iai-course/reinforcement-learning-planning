@@ -75,8 +75,11 @@
     color: #888;
 }
 
-/* Hide footer when the first slide is showing */
-.reveal section:first-of-type.present~.footer {
+/* Ẩn chân trang chỉ trên trang bìa (trang đầu của mạch đầu), không ẩn cả mạch mở đầu.
+   Mạch đầu xếp dọc: dùng :has() vì .footer không cùng cấp với trang con.
+   Mạch đầu chỉ có một trang (không phải .stack): giữ quy tắc anh em. */
+.reveal .slides:has(> section:first-of-type > section:first-of-type.present) > .footer,
+.reveal .slides > section:first-of-type:not(.stack).present ~ .footer {
     display: none;
 }
 
@@ -126,7 +129,8 @@
 }
 
 .reveal .slides section.strand-title .strand-title-body {
-    max-width: 26em;
+    /* Khối không giới hạn bề rộng để dòng từ khóa dài vừa một dòng;
+       h2 và câu dẫn giữ độ dài dòng 26em (theo cỡ chữ của khối) như trước. */
     margin: 0;
     padding: .2em 0 .2em .9em;
     border-left: .2em solid #B15A2B;
@@ -139,6 +143,7 @@
 
 .reveal .slides section.strand-title h2 {
     font-size: 1.9em;
+    max-width: calc(26em / 1.9);
     line-height: 1.15;
     margin: 0 0 .45em;
     padding: 0;
@@ -157,16 +162,18 @@
 
 .reveal .slides section.strand-title .strand-lead {
     font-size: 1.05em;
+    max-width: calc(26em / 1.05);
     line-height: 1.35;
     margin: 0 0 .5em;
     color: #263238;
 }
 
 .reveal .slides section.strand-title .strand-keys {
-    font-size: .9em;
+    font-size: .95em; /* .95 x .8em section = .76em, trên mức tối thiểu .75em */
     line-height: 1.35;
     color: #555;
     margin: 0;
+    text-wrap: pretty; /* tránh một âm tiết lẻ ở dòng cuối */
 }
 
 @media (max-width: 760px) {
@@ -178,6 +185,11 @@
 
     .reveal .slides section.strand-title h2 {
         font-size: 1.5em;
+    }
+
+    .reveal .slides section.strand-title h2,
+    .reveal .slides section.strand-title .strand-lead {
+        max-width: none;
     }
 }
 
@@ -475,6 +487,13 @@
 .reveal.lecture-deck table { font-size: .94em; } /* .94 x .8em section = .752em, trên mức tối thiểu .75em */
 .reveal.lecture-deck h2 .katex, .reveal.lecture-deck h3 .katex { text-transform: none; } /* chủ đề white viết hoa tiêu đề */
 .reveal.lecture-deck ol[type="a"] { list-style-type: lower-alpha; }
+/* Bước con của giả mã: thụt lề, giữ cỡ chữ thân (không thu .9em như danh sách lồng).
+   Dùng như danh sách anh em có start="k" hoặc lồng trong li; substeps-2 cho cấp hai.
+   display:block để không nằm cùng dòng với danh sách cha (ol của theme là inline-block). */
+.reveal ol.substeps { display: block; margin-left: 2em; font-size: 1em; }
+.reveal ol.substeps.substeps-2 { margin-left: 4em; }
+.reveal li > ol.substeps,
+.reveal li > ol.substeps.substeps-2 { margin-left: 1em; } /* lồng trong li: lề mặc định của theme */
 .reveal.lecture-deck th { background: #F7EFE6; }
 .reveal.lecture-deck li { margin: .2em 0; }
 .reveal.lecture-deck .note-source { font-size: .9em; }
