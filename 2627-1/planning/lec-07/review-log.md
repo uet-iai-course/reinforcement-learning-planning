@@ -1483,3 +1483,22 @@ Kiểm tra:
 ### Quyết định của điều phối viên (2026-10-14, đồng bộ chéo ghi chú)
 
 - Kiểm độc lập: `note_check.py` sạch; viewer 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(materials-07)`.
+
+## Đợt sửa 2026-10-14 — Khép đợt: outline mục tiêu
+
+Vai: biên tập nhỏ kế hoạch (Agent `general-purpose`, Opus 5.5, effort high). Phạm vi ghi: các dòng mục tiêu học tập của `outline.md` và mục này. Không commit.
+
+Đối chiếu dòng "Mức độ" của từng bài 07.20–07.25 trong `materials/lec-07/exercises.md` (dòng 33, 73, 432, 558, 647, 713) với danh sách "tệp bài tập:" ở mục tiêu học tập của `lecture-note.md` (dòng 9–14) và của `outline.md` (dòng 19–24):
+
+| Mục tiêu | `exercises.md` | Ghi chú | Outline trước | Sửa outline |
+|---|---|---|---|---|
+| 1 | 07.20 | 07.20 | 07.20 | giữ |
+| 2 | không có | không có | không có | giữ |
+| 3 | không có | không có | không có | giữ |
+| 4 | 07.22, 07.24 | 07.22, 07.24 | 07.22 | thêm 07.24 |
+| 5 | 07.23, 07.25 | 07.23, 07.25 | 07.23 | thêm 07.25 |
+| 6 | 07.21, 07.23, 07.24, 07.25 | 07.21, 07.23, 07.24, 07.25 | 07.21, 07.24, 07.25 | thêm 07.23 |
+
+Ghi chú khớp `exercises.md`, không cần sửa. Outline không có số sai, chỉ thiếu ba số; đã thêm. Không đổi số bài trong thân chương, không đổi câu chữ mục tiêu (outline giữ dạng rút gọn, "07.1–07.3" tương đương "07.1, 07.2, 07.3" của ghi chú).
+
+Kiểm tra: `git diff --check` sạch; `git diff --stat` chỉ gồm `outline.md` và `review-log.md`.

@@ -19,9 +19,9 @@ Khớp mặt trang `L07-03` và mục "Mục tiêu học tập" của ghi chú b
 1. Viết $\hat v(s,w)=x(s)^\top w$, $\hat q(s,a,w)=x(s,a)^\top w$; tính mức lan; nhận diện nhập nhằng (Bài tập 07.1–07.3, 07.12, 07.15, 07.16; tệp bài tập: 07.20).
 2. Tính tay một cập nhật Monte Carlo gradient, TD(0), Sarsa và Q-learning bán gradient (Bài tập 07.7, 07.10, 07.11, 07.13).
 3. Phân biệt gradient đầy đủ với bán gradient, chỉ ra số hạng bị bỏ (Bài tập 07.4, 07.5, 07.7).
-4. Tính điểm cố định Bellman chiếu, nghiệm Monte Carlo trên ví dụ nhỏ; nêu đủ giả thiết hội tụ của TD(0) tuyến tính (Bài tập 07.8, 07.9, 07.17; tệp bài tập: 07.22).
-5. Phân biệt mục tiêu Sarsa với mục tiêu Q-learning; nhận diện bộ ba bất ổn (Bài tập 07.13, 07.14, 07.18; tệp bài tập: 07.23).
-6. Đối chiếu kết quả chạy với giả thiết trước khi kết luận về hội tụ hay phân kỳ (Bài tập 07.6, 07.19; tệp bài tập: 07.21, 07.24, 07.25).
+4. Tính điểm cố định Bellman chiếu, nghiệm Monte Carlo trên ví dụ nhỏ; nêu đủ giả thiết hội tụ của TD(0) tuyến tính (Bài tập 07.8, 07.9, 07.17; tệp bài tập: 07.22, 07.24).
+5. Phân biệt mục tiêu Sarsa với mục tiêu Q-learning; nhận diện bộ ba bất ổn (Bài tập 07.13, 07.14, 07.18; tệp bài tập: 07.23, 07.25).
+6. Đối chiếu kết quả chạy với giả thiết trước khi kết luận về hội tụ hay phân kỳ (Bài tập 07.6, 07.19; tệp bài tập: 07.21, 07.23, 07.24, 07.25).
 
 ## Khung lý thuyết chung
 
