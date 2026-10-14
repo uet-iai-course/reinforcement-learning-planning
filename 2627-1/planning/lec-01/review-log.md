@@ -1634,3 +1634,29 @@ Không cần sửa. Đã quét toàn ghi chú: giá trị viết $v_\pi$; $V^\pi
 ### Quyết định của điều phối viên (2026-10-14, đồng bộ chéo ghi chú)
 
 - Kiểm độc lập: `note_check.py` sạch; viewer 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(materials-01)`. Ba đề nghị nhẹ còn lại (deck D04, `exercises.md` 01.3, outline mục tiêu 6: theo cách ghi của `exercises.md`) gom vào lượt khép đợt.
+
+## Đợt sửa 2026-10-14 — Khép đợt: đồng bộ D04 và Bài tập 01.3
+
+Biên tập viên: `general-purpose`, Claude Opus 5.5, effort `high`, `no-ai-slop` Edit; không commit. Đóng ba đề nghị nhẹ của đợt "Đồng bộ chéo ghi chú" (bảng "Đề nghị sửa deck và `exercises.md`").
+
+| Mức | Vị trí | Thay đổi | Trạng thái |
+|---|---|---|---|
+| nhẹ | Deck D04, dòng "Câu hỏi:" | "robot từ ô 1; va vào ghế cho phần thưởng $-1$ và không cản robot sang ô kế tiếp." Dòng 20 âm tiết (đúng trần), trang 46 → 53 âm tiết (≤ 60), 4 dòng, 0 công thức hiển thị; đưa được lên mặt trang nên không cần lý do ngoại lệ | đã sửa |
+| nhẹ | Deck D04, ghi chú diễn giả | Thêm: "Với $T=4$ và $R_4=1$, bốn hành động là phải, phải, phải, hút, nên bước va ghế là lần sang phải thứ hai; nếu va ghế giữ robot đứng yên thì lượt cần năm hành động." Khớp phần kiểm ở dòng 513 của ghi chú | đã sửa |
+| nhẹ | `exercises.md`, đề Bài tập 01.3 | Thêm "; va ghế không cản robot sang ô kế tiếp" sau "va vào một chiếc ghế", đúng chữ dòng 513 của ghi chú. Gợi ý, lời giải và kết quả $G_t$ không đổi | đã sửa |
+| nhẹ | `outline.md`, mục tiêu 6 | Bỏ 01.13 khỏi danh sách bài của mục tiêu 6; thêm câu: Z02–Z02b (Bài tập 01.13) xếp dưới mục tiêu 1, 3 và 4 theo dòng "Mức độ" của `exercises.md`. Mục tiêu 1, 3, 4 đã có "trong tệp bài tập còn 01.13" | đã sửa |
+| nhẹ | `storyboard.md`, dòng D04 | Cột "Vòng biên tập" ghi thay đổi; cột âm tiết "— → 46 → 53" | đã sửa |
+| nhẹ | `storyboard.md`, dòng Z02, Z02b | Cột "Mục tiêu" còn ghi "1, 3, 4, 6", lệch outline mới. Ngoài phạm vi ghi của lượt này | còn mở, chuyển điều phối viên |
+
+Kiểm tra:
+
+- `density.py`: D04 53 âm tiết, 4 dòng, tối đa 20 âm tiết mỗi dòng, 0 công thức hiển thị.
+- `deck_check.py lecture-01-gioi-thieu-hoc-tang-cuong.html <outdir> D04` (cổng 8799, server cwd gốc kho), 70 trang ở 1600×900 và 390×844: 0 lỗi console hay trang, 0 `.katex-error`, 0 yêu cầu ngoài, 0 yêu cầu hỏng, không cuộn ngang, đủ 6 trang tiêu đề mạch. Cờ `overflow` (P01a, D02, G03b, G03d) giống hệt các lần kiểm trước (báo động giả của `span` KaTeX ẩn). Đã xem ảnh D04 ở hai cỡ: dòng "Câu hỏi:" xuống hai dòng ở 1600×900, nội dung nằm gọn trong khung, không chồng lấn.
+- `note_check.py materials/lec-01/exercises.md`: 13 bài tập, 13 gợi ý, 13 lời giải; khoảng trống 9, 10, 11 là ba bài chỉ trong ghi chú; không trùng; 0 dấu `\(`/`\[`.
+- `check_note.py 01 lecture-01-gioi-thieu-hoc-tang-cuong.html exercises`: 1600×900 và 390×844 đều 0 `.katex-error`, 39 khối, 0 lỗi console, 0 yêu cầu ngoài hay hỏng, không tràn ngang.
+- `git diff --check`: sạch.
+- `no-ai-slop` (Edit), phạm vi: ba câu thêm (D04 mặt trang, D04 ghi chú, đề 01.3) và câu mới ở mục tiêu 6. Đối chiếu `eval.md`: không thêm khẳng định ngoài ghi chú, không câu hỏi tu từ, không lời quy trình, không câu kết khẩu hiệu. Đạt.
+
+### Quyết định của điều phối viên (2026-10-14, khép đợt Bài 01)
+
+- Kiểm độc lập: D04 53 âm tiết, dòng dài nhất 20; Playwright hai cỡ 0 lỗi; viewer bài tập 0 lỗi KaTeX; `git diff --check` sạch. Điều phối viên sửa cột "Mục tiêu" của Z02, Z02b trong storyboard thành "1, 3, 4" cho khớp outline. Quyết định: **chấp nhận**; commit `fix(lecture-01)`.

@@ -130,7 +130,7 @@ Thế cờ $u$: X ở ô 3, 4 và 9; O ở ô 1, 5 và 7; các ô 2, 6, 8 trốn
 **Trùng trang chiếu:** [Bài tập: lợi tức trên dãy bốn ô có ghế](lecture-01-gioi-thieu-hoc-tang-cuong.html#/4/7) và [trang lời giải](lecture-01-gioi-thieu-hoc-tang-cuong.html#/4/8).
 
 ::: exercise Bài tập 01.3 (Lợi tức trên dãy bốn ô có ghế)
-Robot dọn dãy bốn ô bắt đầu ở ô 1, chỉ ô 4 có rác. Cách đặt phần thưởng có thêm $-1$ cho bước robot va vào một chiếc ghế. Trong một lượt, robot nhận dãy phần thưởng $(R_1,R_2,R_3,R_4)=(0,-1,0,1)$ và lượt kết thúc ở $T=4$. Lợi tức là $G_t=\sum_{k=t+1}^{T}R_k$ (công thức (3.1)), và theo Mệnh đề 01.9, $G_t=R_{t+1}+G_{t+1}$ với $G_T=0$ (công thức (3.2)).
+Robot dọn dãy bốn ô bắt đầu ở ô 1, chỉ ô 4 có rác. Cách đặt phần thưởng có thêm $-1$ cho bước robot va vào một chiếc ghế; va ghế không cản robot sang ô kế tiếp. Trong một lượt, robot nhận dãy phần thưởng $(R_1,R_2,R_3,R_4)=(0,-1,0,1)$ và lượt kết thúc ở $T=4$. Lợi tức là $G_t=\sum_{k=t+1}^{T}R_k$ (công thức (3.1)), và theo Mệnh đề 01.9, $G_t=R_{t+1}+G_{t+1}$ với $G_T=0$ (công thức (3.2)).
 
 - (a) Tính $G_4,G_3,G_2,G_1,G_0$ theo chiều ngược bằng (3.2), rồi kiểm tra $G_0$ bằng (3.1).
 - (b) Trong các bước $t=0,1,2,3$, bước nào có lợi tức nhỏ hơn phần thưởng cuối $R_4$, và vì sao.

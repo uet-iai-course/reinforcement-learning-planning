@@ -13,7 +13,7 @@ Bản viết lại trong đợt sửa 2026-10-12 (giai đoạn II, bộ trang ch
   3. Tính lợi tức $G_t$ của lượt hữu hạn, kể cả tính ngược: Bài tập 01.3, 01.4, 01.10 (D04–D05); trong tệp bài tập còn 01.13, 01.14.
   4. Phân biệt chính sách, hàm giá trị, mô hình; tính $v_\pi$ từ định nghĩa: Bài tập 01.5, 01.9, 01.11 (E03–E04); trong tệp bài tập còn 01.12, 01.13, 01.15, 01.16.
   5. Nhận diện thăm dò và khai thác khi ước lượng còn ít mẫu: Bài tập 01.6 (F03–F04); trong tệp bài tập còn 01.15.
-  6. Mô hình hóa Tic-tac-toe; tính nước khai thác một bước: Bài tập 01.7, 01.8 (G04–G05), bài tổng hợp Z02–Z02b (Bài tập 01.13 của tệp bài tập).
+  6. Mô hình hóa Tic-tac-toe; tính nước khai thác một bước: Bài tập 01.7, 01.8 (G04–G05). Bài tổng hợp Z02–Z02b (Bài tập 01.13 của tệp bài tập) xếp dưới mục tiêu 1, 3 và 4, theo dòng "Mức độ" của bài trong `exercises.md`.
 - Trang Z00 lấy bảng mạch–bài tập từ `materials/lec-01/exercises.md` (bảng `Mạch | Mở phần | Bài tập`): mạch 2: 01.1; mạch 3: 01.2, 01.15; mạch 4: 01.3, 01.4, 01.14; mạch 5: 01.5, 01.6, 01.12, 01.15; mạch 6: 01.7, 01.8; mạch 7: 01.13, 01.16; 01.9–01.11 chỉ trong ghi chú (mạch 4: 01.10; mạch 5: 01.9, 01.11).
 
 ## Khung lý thuyết chung

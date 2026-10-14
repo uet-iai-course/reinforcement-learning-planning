@@ -89,7 +89,7 @@ Không có thuật toán: nguồn không có thuật toán, ghi chú cũng khôn
 | D02 | hình thức | Lợi tức (Định nghĩa 01.8) | D01 → D02b | 3 | sửa | — | 38 → 25 |
 | D02b | kết quả | Mệnh đề 01.9 | D02 → D02c | 3 | thêm | Ý nghĩa trước Chứng minh, Lưu ý vào ghi chú (PB 20); thêm TD (RL) | — → 44 |
 | D02c | ứng dụng | Ví dụ 01.4 với $L=4$ | D02b → D04 | 3 | thêm | đặt $L=4$, diễn giải so với hút trước (TOAN, RL, PB 4); lệch ghi chú tạm thời | — → 52 |
-| D04 | kiểm tra | Bài tập 01.3 | D02c → D05 | 3 | thêm | dời lên sau D02c (MACH 3.9); khối 30 phút | — → 46 |
+| D04 | kiểm tra | Bài tập 01.3 | D02c → D05 | 3 | thêm | dời lên sau D02c (MACH 3.9); khối 30 phút; 2026-10-14: thêm vế "không cản robot sang ô kế tiếp" vào dòng "Câu hỏi:" (20 âm tiết, đúng trần dòng) | — → 46 → 53 |
 | D05 | lời giải | Lời giải trên mặt trang | D04 → D03 | 3 | thêm | khối 30 phút | — → 35 |
 | D03 | cụm phụ | Giả thuyết phần thưởng (Nhận xét 01.10) | D05 → D03b | 3 | tách | "không phải định lý" (PB 29) | 76 → 59 |
 | D03b | ví dụ + kiểm tra | Bình hoa (Ví dụ 01.5) | D03 → ET | 3 | thêm | có thể bỏ khi thiếu giờ | — → 59 |
@@ -139,8 +139,8 @@ Không có thuật toán: nguồn không có thuật toán, ghi chú cũng khôn
 | ZT | điểm vào mạch 7 | Giữ đủ giả thiết | G03e → Z01 | tất cả | thêm | ghi chú viết lại | — → 37 |
 | Z01 | tổng kết (1/2) | Tương tác, tín hiệu học, lợi tức, giá trị | ZT → Z01b | 1–4 | thêm | thêm hàng ba dạng tín hiệu học; cột "Công thức hoặc thuật toán"; công thức không ngắt (MACH 3.8, SV, TOAN, RL) | — → 56 |
 | Z01b | tổng kết (2/2) | Thăm dò, phân tích một bước, nước khai thác | Z01 → Z02 | 5, 6 | thêm | giả thiết dạng lịch sử và dạng thế cờ tách rõ; dòng viết tắt (MACH 3.7, TOAN, SV) | — → 59 |
-| Z02 | bài tổng hợp | Robot từ ô 2, $L=3$, $\pi_u$ | Z01b → Z02b | 1, 3, 4, 6 | thêm | (d) ghi "theo $v_{\pi_u}$, dạng trên lịch sử" | — → 58 |
-| Z02b | lời giải | $\frac1{27}$; $0,\frac19,0$ | Z02 → Z03 | 1, 3, 4, 6 | thêm | — | — → 54 |
+| Z02 | bài tổng hợp | Robot từ ô 2, $L=3$, $\pi_u$ | Z01b → Z02b | 1, 3, 4 | thêm | (d) ghi "theo $v_{\pi_u}$, dạng trên lịch sử" | — → 58 |
+| Z02b | lời giải | $\frac1{27}$; $0,\frac19,0$ | Z02 → Z03 | 1, 3, 4 | thêm | — | — → 54 |
 | Z03 | trả lời vấn đề trung tâm | Năm dòng song song với P03, có số liệu; "Nguồn:" | Z02b → H04 | tất cả | thêm | viết lại (MACH 3.8, brief mục 11); giới hạn thứ tư trong ghi chú (MACH 3.6) | — → 59 |
 | H04 | câu hỏi tự kiểm tra | Bốn câu nối các mạch | Z03 → Z00 | 1, 3, 4, 6 | sửa | câu 1, 2, 3 đổi (SV, MACH 3.5, 3.14, PB 27) | 106 → 60 |
 | Z00 | bài tập về nhà | Bảng `Mạch \| Bài tập` theo bảng mạch của `exercises.md` (mạch 2–7; hàng "Chỉ trong ghi chú" cho 01.9–01.11); liên kết "Ghi chú bài giảng · Bài tập"; liên kết Bài 02 | H04 → — | tất cả | sửa | 2026-10-14: đồng bộ với `exercises.md` (thêm 01.12–01.16, cột mạch 7, liên kết tệp bài tập thay "Tệp bài tập: chưa có") | 82 → 57 → 71 (ngoại lệ trần 80) |
