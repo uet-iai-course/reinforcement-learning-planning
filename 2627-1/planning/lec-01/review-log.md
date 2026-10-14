@@ -1548,3 +1548,38 @@ Kiểm tra sau sửa: `note_check.py` 13 `exercise`/13 `hint`/13 `solution`, b�
 
 - Kiểm độc lập: `note_check.py` sạch (13 bài, mỗi bài có gợi ý và lời giải); viewer cổng 8766 ở 1600×900 và 390×844: 0 lỗi KaTeX, 39 khối, 0 lỗi console, không tải ngoài; `git diff --check` sạch. Ba vai rà soát chỉ đọc (Opus 5.5 high): 0 chặn, 0 nghiêm trọng; mọi mục trung bình đã sửa. Cảnh báo KaTeX chữ Việt trong `\text{}` chấp nhận như ghi chú.
 - Quyết định: **chấp nhận**; commit `feat(materials-01)`. Trang Z00 của deck và nhóm "Bài tập" trên `index.html` cập nhật ở đợt sau.
+
+## Đợt sửa 2026-10-14 — Đồng bộ trang bài tập về nhà
+
+### Tác tử và phạm vi
+
+- Vai: biên tập deck Bài 01 (sửa nhỏ, có kiểm), theo `brief_deck_homework_sync.md` của điều phối viên; loại `general-purpose`, mô hình Opus 5.5 (`claude-opus-5-5`), mức `high` theo brief. `no-ai-slop` Edit. Không commit.
+- Tệp sửa: `lecture-01-gioi-thieu-hoc-tang-cuong.html` (chỉ trang Z00), `storyboard.md` (dòng Z00, bảng ngoại lệ mật độ, câu trung bình mật độ), `outline.md` (sáu dòng mục tiêu học tập và một dòng ánh xạ Z00), mục này. Không sửa ghi chú, `exercises.md`, `lecture-slide.css`, `index.html`, SVG.
+- Đối chiếu: bảng `Mạch | Mở phần | Bài tập` của `materials/lec-01/exercises.md` (commit `e338bea`) và mục "Đề nghị sửa deck" của giai đoạn III.
+
+### Trang Z00
+
+| Thành phần | Trước | Sau |
+|---|---|---|
+| Bảng `Mạch \| Bài tập` | Cột mạch 2–6, chỉ 01.1–01.11 | Cột mạch 2–7. Hàng "Bài tập": 2: 01.1; 3: 01.2, 01.15; 4: 01.3, 01.4, 01.14; 5: 01.5, 01.6, 01.12, 01.15; 6: 01.7, 01.8; 7: 01.13, 01.16. Hàng "Chỉ trong ghi chú": 4: 01.10; 5: 01.9, 01.11; các mạch khác "—" |
+| Dòng tệp bài tập | "Tệp bài tập: chưa có." | Bỏ; dòng liên kết thành "Ghi chú bài giảng · Bài tập", "Bài tập" dẫn tới `material-viewer.html?doc=materials/lec-01/exercises.md&deck=lecture-01-gioi-thieu-hoc-tang-cuong.html` |
+| Dòng Bài 02 | "Bài 02: …" không có liên kết | "Bài 02" là liên kết tới `lecture-02-giao-dien-tac-tu-moi-truong.html` (CLAUDE.md, mạch kết luận: liên kết một dòng tới bài sau) |
+| Ghi chú diễn giả | Nói 01.1–01.8 trong các mục, 01.9–01.11 trong bài tập củng cố | Nêu 01.1–01.8 có ở cả ghi chú và tệp bài tập, 01.12–01.16 chỉ trong tệp, 01.9–01.11 chỉ trong ghi chú; 01.15 dùng mạch 3 và mạch 5; 01.13 là bài tổng hợp của mạch 7, 01.16 là bài tìm hiểu; giữ tài liệu đọc và câu nối Bài 02. 134 âm tiết |
+
+- Mật độ (`density.py`): 57 → 71 âm tiết, 6 dòng, tối đa 16 âm tiết mỗi dòng, 0 công thức hiển thị. Trên đích 60 nhưng trong trần 80 của nhóm trang tổng kết; ngoại lệ ghi ở bảng "Ngoại lệ mật độ" của `storyboard.md`. Giữ số dòng 6 bằng cách gộp hai liên kết vào một dòng.
+- Đề nghị trung bình "Z00" của giai đoạn III (bảng mục "Đề nghị sửa deck" và dòng "SV/PB Z00" của bảng rà soát bài tập): đã sửa đúng như đề xuất; không cần dạng gộp "01.12–01.16 (tệp bài tập)" vì bảng hai hàng vừa khung.
+- Đề nghị nhẹ còn lại liên quan deck: "SV 01.3 va ghế" (thêm "va ghế không cản robot sang ô kế tiếp" vào đề, sửa đồng bộ ghi chú, `exercises.md` và D04). Không sửa trong đợt này: đề nghị đòi sửa đồng thời ghi chú và `exercises.md`, nằm ngoài phạm vi ghi; sửa riêng D04 sẽ làm đề trên trang khác đề trong hai tệp học liệu. Chuyển cho đợt đồng bộ học liệu sau.
+- Ghi chú diễn giả P01 vẫn ánh xạ mục tiêu sang bài tập "trong ghi chú bài giảng", đúng với ghi chú; không sửa. `outline.md` ghi thêm các bài của tệp bài tập theo dòng "Mục tiêu học tập" của từng bài trong `exercises.md`.
+
+### `no-ai-slop` (Edit) và kiểm tra
+
+- Phạm vi: chữ mới trên mặt trang Z00 (nhãn hàng bảng, dòng liên kết) và ghi chú diễn giả Z00. Đối chiếu `eval.md`: không câu hỏi tu từ, không lời quy trình hay chỉ dẫn người dạy, không tài liệu làm chủ ngữ, không câu kết khẩu hiệu, không tương phản nhị phân; mỗi câu ghi chú nêu vị trí hoặc phạm vi của bài tập cụ thể. Đạt.
+- `deck_check.py lecture-01-gioi-thieu-hoc-tang-cuong.html` (server tĩnh cổng 8799, cwd gốc kho), 70 trang ở 1600×900 và 390×844: 0 lỗi console hay trang, 0 `.katex-error`, 0 yêu cầu ngoài, 0 yêu cầu hỏng, không cuộn ngang, đủ 6 trang tiêu đề mạch. Cờ `overflow` (P01a, D02, G03b, G03d) giống hệt lần kiểm trước đợt sửa (báo động giả của `span` KaTeX ẩn). Cờ `small_font` ở Z00 (1600) là ngưỡng làm tròn: đo trực tiếp, ô bảng 0,752 em, đoạn văn 0,800 em, không ô nào dưới 0,75 em.
+- Ảnh đã xem: `scratchpad/hw01/Z00-1600.png`, `scratchpad/hw01/Z00-390.png`: bảng bảy cột vừa khung, không chồng lấn; nhãn "Chỉ trong ghi chú" xuống hai dòng trong ô.
+- Liên kết của Z00 mở bằng Playwright từ deck (cổng 8766): ghi chú bài giảng (HTTP 200, 0 `.katex-error`), tệp bài tập (HTTP 200, tiêu đề "Bài tập Bài 01 — Giới thiệu Học tăng cường", 13 khối bài tập, 0 `.katex-error`; ảnh `scratchpad/hw01/viewer-exercises.png`), Bài 02 (HTTP 200); 0 lỗi trang, 0 tải ngoài, 0 yêu cầu hỏng.
+- `git diff --check`: sạch.
+
+### Quyết định của điều phối viên (2026-10-14, đồng bộ trang bài tập về nhà)
+
+- Tác tử biên tập deck (general-purpose, claude-opus-5-5, high). Kiểm độc lập: trang Z00 71 âm tiết (trần 80 của trang tổng kết, ngoại lệ ghi storyboard); Playwright 1600×900 và 390×844 toàn deck: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang; liên kết viewer bài tập mở được; `git diff --check` sạch.
+- Quyết định: **chấp nhận**; commit `fix(lecture-01)`.

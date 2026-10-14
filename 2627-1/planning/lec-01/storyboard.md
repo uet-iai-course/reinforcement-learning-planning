@@ -143,7 +143,7 @@ Không có thuật toán: nguồn không có thuật toán, ghi chú cũng khôn
 | Z02b | lời giải | $\frac1{27}$; $0,\frac19,0$ | Z02 → Z03 | 1, 3, 4, 6 | thêm | — | — → 54 |
 | Z03 | trả lời vấn đề trung tâm | Năm dòng song song với P03, có số liệu; "Nguồn:" | Z02b → H04 | tất cả | thêm | viết lại (MACH 3.8, brief mục 11); giới hạn thứ tư trong ghi chú (MACH 3.6) | — → 59 |
 | H04 | câu hỏi tự kiểm tra | Bốn câu nối các mạch | Z03 → Z00 | 1, 3, 4, 6 | sửa | câu 1, 2, 3 đổi (SV, MACH 3.5, 3.14, PB 27) | 106 → 60 |
-| Z00 | bài tập về nhà | Bảng `Mạch \| Bài tập` chỉ số thật; "Tệp bài tập: chưa có" | H04 → — | tất cả | sửa | theo brief mục 4 | 82 → 57 |
+| Z00 | bài tập về nhà | Bảng `Mạch \| Bài tập` theo bảng mạch của `exercises.md` (mạch 2–7; hàng "Chỉ trong ghi chú" cho 01.9–01.11); liên kết "Ghi chú bài giảng · Bài tập"; liên kết Bài 02 | H04 → — | tất cả | sửa | 2026-10-14: đồng bộ với `exercises.md` (thêm 01.12–01.16, cột mạch 7, liên kết tệp bài tập thay "Tệp bài tập: chưa có") | 82 → 57 → 71 (ngoại lệ trần 80) |
 
 ## Ngoại lệ mật độ
 
@@ -151,8 +151,9 @@ Không có thuật toán: nguồn không có thuật toán, ghi chú cũng khôn
 |---|---|---|---|
 | P01 | 77 âm tiết, 6 dòng | 80 (trang mục tiêu) | Sáu mục tiêu theo ghi chú bài giảng |
 | P02 | 44 âm tiết, 7 dòng | 7 dòng khi bài có 7 mạch (quyết định chung §5) | Mỗi mạch một dòng |
+| Z00 | 71 âm tiết, 6 dòng, tối đa 16 âm tiết mỗi dòng | 80 (bảng bài tập của mạch kết luận, nhóm trang tổng kết) | Bảng mạch–bài tập hai hàng cho mạch 2–7: mười ba bài của `exercises.md` và ba bài chỉ trong ghi chú; số hiệu và bốn dấu "—" tính là âm tiết. Trước 57, sau 71 |
 
-Mọi trang còn lại ≤ 60 âm tiết, ≤ 6 dòng, ≤ 20 âm tiết mỗi dòng, ≤ 3 công thức hiển thị. 57/70 trang trên đích 40 (trung bình 51,0); không trang nào dùng CSS thu chữ.
+Mọi trang còn lại ≤ 60 âm tiết, ≤ 6 dòng, ≤ 20 âm tiết mỗi dòng, ≤ 3 công thức hiển thị. 57/70 trang trên đích 40 (trung bình 51,3 sau đợt đồng bộ Z00 ngày 2026-10-14); không trang nào dùng CSS thu chữ.
 
 ## Quyết định thiết kế ghi lại (chuyển từ ghi chú diễn giả)
 

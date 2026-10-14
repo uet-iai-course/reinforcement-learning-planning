@@ -8,12 +8,13 @@ Bản viết lại trong đợt sửa 2026-10-12 (giai đoạn II, bộ trang ch
 - Thời lượng: 150 phút, trong đó deck 120 phút; 30 phút còn lại chữa bài tập (không có bài thực hành, không có code demo vì nguồn không có mã).
 - Phạm vi: lượt hữu hạn, không chiết khấu ($\gamma=1$), không giả thiết Markov; lịch sử $H_t$ ghi trên quan sát (quyết định chung §2). Bài 02 bổ sung tính Markov và hệ số chiết khấu.
 - Mục tiêu học tập (trang P01), mỗi mục tiêu một sản phẩm kiểm tra được:
-  1. Mô tả bài toán bằng tác tử, môi trường, trạng thái, quan sát, hành động, phần thưởng: Bài tập 01.1 (A05–A06).
-  2. Phân biệt phần thưởng với nhãn; nhận diện bài toán Học tăng cường: Bài tập 01.2 (C05–C06).
-  3. Tính lợi tức $G_t$ của lượt hữu hạn, kể cả tính ngược: Bài tập 01.3, 01.4, 01.10 (D04–D05).
-  4. Phân biệt chính sách, hàm giá trị, mô hình; tính $v_\pi$ từ định nghĩa: Bài tập 01.5, 01.9, 01.11 (E03–E04).
-  5. Nhận diện thăm dò và khai thác khi ước lượng còn ít mẫu: Bài tập 01.6 (F03–F04).
-  6. Mô hình hóa Tic-tac-toe; tính nước khai thác một bước: Bài tập 01.7, 01.8 (G04–G05), bài tổng hợp Z02–Z02b.
+  1. Mô tả bài toán bằng tác tử, môi trường, trạng thái, quan sát, hành động, phần thưởng: Bài tập 01.1 (A05–A06); trong tệp bài tập còn 01.13, 01.15, 01.16.
+  2. Phân biệt phần thưởng với nhãn; nhận diện bài toán Học tăng cường: Bài tập 01.2 (C05–C06); trong tệp bài tập còn 01.15.
+  3. Tính lợi tức $G_t$ của lượt hữu hạn, kể cả tính ngược: Bài tập 01.3, 01.4, 01.10 (D04–D05); trong tệp bài tập còn 01.13, 01.14.
+  4. Phân biệt chính sách, hàm giá trị, mô hình; tính $v_\pi$ từ định nghĩa: Bài tập 01.5, 01.9, 01.11 (E03–E04); trong tệp bài tập còn 01.12, 01.13, 01.15, 01.16.
+  5. Nhận diện thăm dò và khai thác khi ước lượng còn ít mẫu: Bài tập 01.6 (F03–F04); trong tệp bài tập còn 01.15.
+  6. Mô hình hóa Tic-tac-toe; tính nước khai thác một bước: Bài tập 01.7, 01.8 (G04–G05), bài tổng hợp Z02–Z02b (Bài tập 01.13 của tệp bài tập).
+- Trang Z00 lấy bảng mạch–bài tập từ `materials/lec-01/exercises.md` (bảng `Mạch | Mở phần | Bài tập`): mạch 2: 01.1; mạch 3: 01.2, 01.15; mạch 4: 01.3, 01.4, 01.14; mạch 5: 01.5, 01.6, 01.12, 01.15; mạch 6: 01.7, 01.8; mạch 7: 01.13, 01.16; 01.9–01.11 chỉ trong ghi chú (mạch 4: 01.10; mạch 5: 01.9, 01.11).
 
 ## Khung lý thuyết chung
 
