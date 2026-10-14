@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 450" role="img" aria-labelledby="cs-title cs-desc" font-family="Arial,sans-serif">
 <title id="cs-title">Cấu trúc chương Bài 03</title>
-<desc id="cs-desc">Sáu khối nối bằng mũi tên. Hàng trên: Mục 1, mô hình môi trường với trạng thái Markov và hàm động lực p(s', r | s, a); mũi tên "chuỗi thưởng" sang Mục 2, lợi tức G_t = R_{t+1} + γR_{t+2} + … với cận |G_t| ≤ M/(1 − γ); mũi tên "lấy kỳ vọng" sang Mục 3, chính sách π(a | s), giá trị v_π(s) và q_π(s, a). Mũi tên "tách bước đầu, dùng tính Markov" xuống hàng dưới: Mục 4, phương trình Bellman v_π(s) = Σ π Σ p [r + γ v_π(s')]; mũi tên "S hữu hạn, γ &lt; 1" sang Mục 5, hệ (I − γP^π) v = r^π có nghiệm duy nhất; mũi tên "giải hệ hai ẩn" sang khối viền đứt robot hai mức pin với v_π(H) = 13/4 và v_π(L) = 7/4.</desc>
+<desc id="cs-desc">Sáu khối nối bằng mũi tên. Hàng trên: Mục 1, mô hình môi trường với trạng thái Markov và hàm động lực p(s', r | s, a); mũi tên "chuỗi thưởng" sang Mục 2, lợi tức G_t = R_{t+1} + γR_{t+2} + … với cận |G_t| ≤ M/(1 − γ); mũi tên "lấy kỳ vọng" sang Mục 3, chính sách π(a | s), giá trị v_π(s) và q_π(s, a). Mũi tên "tách bước đầu, dùng tính Markov" xuống hàng dưới: Mục 4, phương trình Bellman v_π(s) = Σ π Σ p [r + γ v_π(s')]; mũi tên "S hữu hạn, γ &lt; 1" sang Mục 5, hệ (I − γP_π) v = r_π có nghiệm duy nhất; mũi tên "giải hệ hai ẩn" sang khối viền đứt robot hai mức pin với v_π(H) = 13/4 và v_π(L) = 7/4.</desc>
 <defs><marker id="cs-arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9Z" fill="#2F3E7A"/></marker></defs>
 <rect x="0" y="0" width="1160" height="450" fill="#ffffff"/>
 <g stroke="#2F3E7A" stroke-width="2" fill="#edf4ff">
@@ -25,7 +25,7 @@
 <text x="185" y="370" font-size="21">v<tspan baseline-shift="sub" font-size="15">π</tspan>(s) = Σ π Σ p [r + γ v<tspan baseline-shift="sub" font-size="15">π</tspan>(s′)]</text>
 <text x="185" y="408" font-size="20">mỗi trạng thái một phương trình</text>
 <text x="580" y="330" font-weight="bold">Mục 5. Hệ tuyến tính</text>
-<text x="580" y="370">(I − γP<tspan baseline-shift="super" font-size="17">π</tspan>) v = r<tspan baseline-shift="super" font-size="17">π</tspan></text>
+<text x="580" y="370">(I − γP<tspan baseline-shift="sub" font-size="17">π</tspan>) v = r<tspan baseline-shift="sub" font-size="17">π</tspan></text>
 <text x="580" y="408" font-size="20">nghiệm duy nhất khi γ &lt; 1</text>
 <text x="975" y="330" font-weight="bold">Robot hai mức pin</text>
 <text x="975" y="370">v<tspan baseline-shift="sub" font-size="17">π</tspan>(H) = 13/4</text>

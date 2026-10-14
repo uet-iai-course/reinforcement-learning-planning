@@ -50,7 +50,7 @@
     <li>Tính lợi tức chiết khấu và cận của lợi tức.</li>
     <li>Phân biệt mô hình (model), chính sách, $v_\pi$, $q_\pi$; tính kỳ vọng trên cây hai bước.</li>
     <li>Chứng minh phương trình Bellman kỳ vọng (Bellman expectation equation), chỉ ra bước dùng tính Markov.</li>
-    <li>Lập, giải và kiểm tra hệ $(I-\gamma P^\pi)v=r^\pi$ của một chính sách cho trước.</li>
+    <li>Lập, giải và kiểm tra hệ $(I-\gamma P_\pi)v=r_\pi$ của một chính sách cho trước.</li>
   </ol>
   <aside class="notes">
     <p>Mỗi mục tiêu có bài kiểm tra được trong tệp bài tập; số trong ngoặc là bài chỉ có trong ghi chú bài giảng. Mục tiêu 1 ứng với Bài tập 03.1, 03.2, 03.15, 03.22, 03.24; mục tiêu 2 với 03.3, 03.18, 03.20, 03.23 (03.10, 03.12); mục tiêu 3 với 03.4, 03.5, 03.16, 03.17; mục tiêu 4 với 03.6, 03.7, 03.17, 03.19, 03.24, 03.25 (03.11); mục tiêu 5 với 03.8, 03.20, 03.21, 03.23, 03.24, 03.25 (03.9, 03.13, 03.14). Bài toán của bài là bài toán dự đoán: chính sách cho trước, chỉ cần đánh giá; việc chọn chính sách tốt hơn thuộc Bài 04.</p>
@@ -84,7 +84,7 @@
     <li>Phần thưởng bị chặn, $\gamma<1$: lợi tức hữu hạn.</li>
     <li>Cố định $\pi$ Markov dừng: $v_\pi$, $q_\pi$ là kỳ vọng hữu hạn.</li>
     <li>MDP hữu hạn, $\pi$ Markov dừng: $v_\pi$ thỏa hệ Bellman.</li>
-    <li>Cùng giả thiết, $\gamma<1$ làm $I-\gamma P^\pi$ khả nghịch: $v_\pi$ là nghiệm duy nhất.</li>
+    <li>Cùng giả thiết, $\gamma<1$ làm $I-\gamma P_\pi$ khả nghịch: $v_\pi$ là nghiệm duy nhất.</li>
   </ol>
   <aside class="notes">
     <p>Ở pin thấp, Chờ cho ngay phần thưởng $1$, còn Sạc cho $0$ nhưng đưa robot về pin cao, nơi Tìm cho $2$. Muốn so sánh hai lựa chọn phải có một con số tổng hợp toàn bộ tương lai. Mỗi dòng đánh số nêu điều kiện của một mạch và kết quả mạch đó giao cho mạch sau; dòng cuối dẫn tới kết quả số của bài với robot dưới chính sách chia đều tại pin thấp: $v_\pi(\mathrm H)=13/4$, $v_\pi(\mathrm L)=7/4$.</p>
@@ -662,14 +662,14 @@
 <section data-slide-id="L03R-05-10b">
   <h2>Bài tập: phương trình Bellman tại pin cao</h2>
   <p><strong>Câu hỏi:</strong> ở $\mathrm H$ luôn Tìm: nhận $2$, về $\mathrm H$ hoặc $\mathrm L$ mỗi trạng thái $\tfrac12$; $\gamma=\tfrac12$.</p>
-  <p>Với $v_H=v_\pi(\mathrm H)$, $v_L=v_\pi(\mathrm L)$, chứng minh $v_H=2+\tfrac14v_H+\tfrac14v_L$; chỉ rõ hệ số từ $\pi$, $p$, $\gamma$.</p>
+  <p>Với $v_{\mathrm H}=v_\pi(\mathrm H)$, $v_{\mathrm L}=v_\pi(\mathrm L)$, chứng minh $v_{\mathrm H}=2+\tfrac14v_{\mathrm H}+\tfrac14v_{\mathrm L}$; chỉ rõ hệ số từ $\pi$, $p$, $\gamma$.</p>
   <div class="fragment">
     <p><strong>Lời giải:</strong> tại $\mathrm H$, tổng theo hành động chỉ còn Tìm với $\pi(\mathrm{tim}\mid\mathrm H)=1$.</p>
-    <div class="math-large">$$v_H=1\cdot\Bigl(\tfrac12\bigl[2+\tfrac12v_H\bigr]+\tfrac12\bigl[2+\tfrac12v_L\bigr]\Bigr)=2+\tfrac14v_H+\tfrac14v_L.$$</div>
+    <div class="math-large">$$v_{\mathrm H}=1\cdot\Bigl(\tfrac12\bigl[2+\tfrac12v_{\mathrm H}\bigr]+\tfrac12\bigl[2+\tfrac12v_{\mathrm L}\bigr]\Bigr)=2+\tfrac14v_{\mathrm H}+\tfrac14v_{\mathrm L}.$$</div>
     <p>Hai hệ số $\tfrac12$ ngoài ngoặc vuông là $p$; $\tfrac12$ trong ngoặc là $\gamma$; mỗi $\tfrac14$ là tích $p\cdot\gamma$.</p>
   </div>
   <aside class="notes">
-    <p>Bài tập kiểm tra việc đọc phương trình Bellman tổng quát tại một trạng thái cụ thể. Gợi ý: ở $\mathrm H$, tổng theo hành động còn một số hạng, tổng theo phản hồi có hai số hạng. Ký hiệu $v_H=v_\pi(\mathrm H)$, $v_L=v_\pi(\mathrm L)$. Hệ số $1$ ngoài cùng là $\pi(\mathrm{tim}\mid\mathrm H)$ vì $\pi(\mathrm{cho}\mid\mathrm H)=0$; hai hệ số $1/2$ ngoài ngoặc vuông là $p(\mathrm H,2\mid\mathrm H,\mathrm{tim})$ và $p(\mathrm L,2\mid\mathrm H,\mathrm{tim})$. Số hạng tự do $2$ là $r(\mathrm H,\mathrm{tim})$, đúng dạng thứ hai của quan hệ $q$ theo $v$.</p>
+    <p>Bài tập kiểm tra việc đọc phương trình Bellman tổng quát tại một trạng thái cụ thể. Gợi ý: ở $\mathrm H$, tổng theo hành động còn một số hạng, tổng theo phản hồi có hai số hạng. Ký hiệu $v_{\mathrm H}=v_\pi(\mathrm H)$, $v_{\mathrm L}=v_\pi(\mathrm L)$. Hệ số $1$ ngoài cùng là $\pi(\mathrm{tim}\mid\mathrm H)$ vì $\pi(\mathrm{cho}\mid\mathrm H)=0$; hai hệ số $1/2$ ngoài ngoặc vuông là $p(\mathrm H,2\mid\mathrm H,\mathrm{tim})$ và $p(\mathrm L,2\mid\mathrm H,\mathrm{tim})$. Số hạng tự do $2$ là $r(\mathrm H,\mathrm{tim})$, đúng dạng thứ hai của quan hệ $q$ theo $v$.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Bài tập 03.6.</p>
   </aside>
 </section>
@@ -703,26 +703,26 @@
 
 <section data-slide-id="L03R-06-02">
   <h2>Ví dụ: hệ Bellman của robot</h2>
-  <p><strong>Nhắc lại:</strong> tại $\mathrm H$, $v_H=2+\tfrac14v_H+\tfrac14v_L$; tại $\mathrm L$, phương trình một bước.</p>
+  <p><strong>Nhắc lại:</strong> tại $\mathrm H$, $v_{\mathrm H}=2+\tfrac14v_{\mathrm H}+\tfrac14v_{\mathrm L}$; tại $\mathrm L$, phương trình một bước.</p>
   <p>Giả thiết thỏa: mức pin Markov, $p$ dừng, $\pi$ Markov dừng, $\lvert R\rvert\le3$, $\gamma=\tfrac12<1$.</p>
-  <div class="math-large">$$\begin{aligned}v_H&=2+\tfrac14v_H+\tfrac14v_L,\\ v_L&=\tfrac12\bigl(1+\tfrac12v_L\bigr)+\tfrac12\bigl(0+\tfrac12v_H\bigr)=\tfrac12+\tfrac14v_H+\tfrac14v_L.\end{aligned}$$</div>
-  <p>Hai phương trình có cùng phần $\tfrac14v_H+\tfrac14v_L$.</p>
+  <div class="math-large">$$\begin{aligned}v_{\mathrm H}&=2+\tfrac14v_{\mathrm H}+\tfrac14v_{\mathrm L},\\ v_{\mathrm L}&=\tfrac12\bigl(1+\tfrac12v_{\mathrm L}\bigr)+\tfrac12\bigl(0+\tfrac12v_{\mathrm H}\bigr)=\tfrac12+\tfrac14v_{\mathrm H}+\tfrac14v_{\mathrm L}.\end{aligned}$$</div>
+  <p>Hai phương trình có cùng phần $\tfrac14v_{\mathrm H}+\tfrac14v_{\mathrm L}$.</p>
   <aside class="notes">
-    <p>Ký hiệu $v_H=v_\pi(\mathrm H)$, $v_L=v_\pi(\mathrm L)$. Phương trình tại $\mathrm H$ đọc từ cây Tìm: chính sách chọn Tìm với xác suất $1$, môi trường chia hai kết quả về $\mathrm H$ hoặc $\mathrm L$, mỗi nhánh $1/2$, phần thưởng $2$. Phương trình tại $\mathrm L$ đọc từ hai hành động Chờ và Sạc, mỗi hành động $1/2$, mỗi phản hồi chắc chắn. Lỗi thường gặp: thay $v_L$ bằng phần thưởng Chờ là $1$, hoặc quên nhân $\gamma$ vào phần tương lai.</p>
+    <p>Ký hiệu $v_{\mathrm H}=v_\pi(\mathrm H)$, $v_{\mathrm L}=v_\pi(\mathrm L)$. Phương trình tại $\mathrm H$ đọc từ cây Tìm: chính sách chọn Tìm với xác suất $1$, môi trường chia hai kết quả về $\mathrm H$ hoặc $\mathrm L$, mỗi nhánh $1/2$, phần thưởng $2$. Phương trình tại $\mathrm L$ đọc từ hai hành động Chờ và Sạc, mỗi hành động $1/2$, mỗi phản hồi chắc chắn. Lỗi thường gặp: thay $v_{\mathrm L}$ bằng phần thưởng Chờ là $1$, hoặc quên nhân $\gamma$ vào phần tương lai.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Ví dụ 03.14; Sutton và Barto (2018), (3.14), tr. 59.</p>
   </aside>
 </section>
 
 <section data-slide-id="L03R-06-03">
   <h2>Ví dụ: hệ Bellman của robot, lời giải</h2>
-  <p>Trừ hai phương trình: $v_H-v_L=2-\tfrac12=\tfrac32$.</p>
-  <p>Thế $v_H=v_L+\tfrac32$ vào phương trình của $\mathrm L$:</p>
-  <div class="math-large">$$v_L=\tfrac12+\tfrac14\bigl(v_L+\tfrac32\bigr)+\tfrac14v_L=\tfrac78+\tfrac12v_L.$$</div>
-  <p>Suy ra $v_L=\tfrac74$ và $v_H=\tfrac{13}4$.</p>
+  <p>Trừ hai phương trình: $v_{\mathrm H}-v_{\mathrm L}=2-\tfrac12=\tfrac32$.</p>
+  <p>Thế $v_{\mathrm H}=v_{\mathrm L}+\tfrac32$ vào phương trình của $\mathrm L$:</p>
+  <div class="math-large">$$v_{\mathrm L}=\tfrac12+\tfrac14\bigl(v_{\mathrm L}+\tfrac32\bigr)+\tfrac14v_{\mathrm L}=\tfrac78+\tfrac12v_{\mathrm L}.$$</div>
+  <p>Suy ra $v_{\mathrm L}=\tfrac74$ và $v_{\mathrm H}=\tfrac{13}4$.</p>
   <p>Thay lại: $2+\tfrac14\bigl(\tfrac{13}4+\tfrac74\bigr)=\tfrac{13}4$ và $\tfrac12+\tfrac14\bigl(\tfrac{13}4+\tfrac74\bigr)=\tfrac74$.</p>
   <p><strong>Diễn giải:</strong> kỳ vọng hai bước $\tfrac{21}8$, $\tfrac98$ nhỏ hơn $\tfrac{26}8$, $\tfrac{14}8$ vì phần đuôi có kỳ vọng dương.</p>
   <aside class="notes">
-    <p>Dưới chính sách chia đều tại pin thấp, robot ở pin cao có lợi tức kỳ vọng $13/4$, ở pin thấp $7/4$. Hiệu $v_H-v_L=3/2$ bằng hiệu thưởng kỳ vọng một bước dưới chính sách ở hai trạng thái, $2-\tfrac12$, vì từ cả hai trạng thái robot chuyển tới $\mathrm H$ và $\mathrm L$ với cùng xác suất. Giá trị $13/4$ nằm trong khoảng $[9/8,\,33/8]$ suy từ kỳ vọng hai bước. Lời giải này chỉ hợp lệ khi hệ có nghiệm duy nhất; định lý nghiệm duy nhất ở phần sau của mạch bảo đảm điều đó.</p>
+    <p>Dưới chính sách chia đều tại pin thấp, robot ở pin cao có lợi tức kỳ vọng $13/4$, ở pin thấp $7/4$. Hiệu $v_{\mathrm H}-v_{\mathrm L}=3/2$ bằng hiệu thưởng kỳ vọng một bước dưới chính sách ở hai trạng thái, $2-\tfrac12$, vì từ cả hai trạng thái robot chuyển tới $\mathrm H$ và $\mathrm L$ với cùng xác suất. Giá trị $13/4$ nằm trong khoảng $[9/8,\,33/8]$ suy từ kỳ vọng hai bước. Lời giải này chỉ hợp lệ khi hệ có nghiệm duy nhất; định lý nghiệm duy nhất ở phần sau của mạch bảo đảm điều đó.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Ví dụ 03.14.</p>
   </aside>
 </section>
@@ -760,11 +760,11 @@
 <section data-slide-id="L03R-06-06">
   <h2>Chuỗi Markov và quá trình phần thưởng Markov cảm sinh</h2>
   <p><strong>Định nghĩa.</strong> Với $\mathcal S=\{s_1,\dots,s_n\}$ và $\pi$ Markov dừng, ma trận chuyển và véc-tơ thưởng kỳ vọng dưới $\pi$ là</p>
-  <div class="math-large">$$\begin{aligned}P^\pi_{ss'}&=\sum\nolimits_{a\in\mathcal A(s)}\pi(a\mid s)\,p(s'\mid s,a),\quad s,s'\in\mathcal S,\\ r^\pi(s)&=\sum\nolimits_{a\in\mathcal A(s)}\pi(a\mid s)\,r(s,a).\end{aligned}$$</div>
-  <p>Chuỗi Markov (Markov chain) cảm sinh bởi $\pi$ là $(\mathcal S,P^\pi)$.</p>
-  <p>Quá trình phần thưởng Markov (Markov reward process, MRP) cảm sinh là $(\mathcal S,P^\pi,r^\pi,\gamma)$ (Định&nbsp;nghĩa&nbsp;03.26).</p>
+  <div class="math-large">$$\begin{aligned}(P_\pi)_{ss'}&=\sum\nolimits_{a\in\mathcal A(s)}\pi(a\mid s)\,p(s'\mid s,a),\quad s,s'\in\mathcal S,\\ r_\pi(s)&=\sum\nolimits_{a\in\mathcal A(s)}\pi(a\mid s)\,r(s,a).\end{aligned}$$</div>
+  <p>Chuỗi Markov (Markov chain) cảm sinh bởi $\pi$ là $(\mathcal S,P_\pi)$.</p>
+  <p>Quá trình phần thưởng Markov (Markov reward process, MRP) cảm sinh là $(\mathcal S,P_\pi,r_\pi,\gamma)$ (Định&nbsp;nghĩa&nbsp;03.26).</p>
   <aside class="notes">
-    <p>Hai công thức chỉ lấy trung bình theo chính sách những đại lượng của mạch mô hình. Kiểm tra bằng hàng $\mathrm L$ của bảng gộp: $P^\pi_{\mathrm L\mathrm H}=P^\pi_{\mathrm L\mathrm L}=1/2$ và $r^\pi(\mathrm L)=1/2$. Mỗi hàng của $P^\pi$ có tổng không quá $1$; phần thiếu là xác suất tới trạng thái kết thúc. Ở robot không có trạng thái kết thúc nên mỗi hàng có tổng đúng bằng $1$. Theo công thức xác suất đoạn quỹ đạo, dãy trạng thái dưới $\pi$ vẫn có tính Markov. Chuỗi Markov và MRP là trường hợp cố định chính sách của MDP. Bộ MRP ghi kèm $\gamma$ vì hệ của nó phụ thuộc $\gamma$; với MDP, $\gamma$ thuộc tiêu chuẩn đánh giá nên đứng ngoài $\mathcal M$.</p>
+    <p>Hai công thức chỉ lấy trung bình theo chính sách những đại lượng của mạch mô hình. Kiểm tra bằng hàng $\mathrm L$ của bảng gộp: $(P_\pi)_{\mathrm L\mathrm H}=(P_\pi)_{\mathrm L\mathrm L}=1/2$ và $r_\pi(\mathrm L)=1/2$. Mỗi hàng của $P_\pi$ có tổng không quá $1$; phần thiếu là xác suất tới trạng thái kết thúc. Ở robot không có trạng thái kết thúc nên mỗi hàng có tổng đúng bằng $1$. Theo công thức xác suất đoạn quỹ đạo, dãy trạng thái dưới $\pi$ vẫn có tính Markov. Chuỗi Markov và MRP là trường hợp cố định chính sách của MDP. Bộ MRP ghi kèm $\gamma$ vì hệ của nó phụ thuộc $\gamma$; với MDP, $\gamma$ thuộc tiêu chuẩn đánh giá nên đứng ngoài $\mathcal M$.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Định nghĩa 03.26; Bài giảng gốc (2025–2026), trang 30, 34, 49; Bài tập tuần 2 (2025–2026), bài 4.</p>
   </aside>
 </section>
@@ -772,12 +772,12 @@
 <section data-slide-id="L03R-06-07">
   <h2>Phương trình Bellman dạng ma trận</h2>
   <p><strong>Mệnh đề.</strong> Giả thiết như phương trình Bellman cho $v_\pi$; với $v\in\mathbb R^n$ và $v_i=v_\pi(s_i)$ (Mệnh&nbsp;đề&nbsp;03.27):</p>
-  <div class="math-large">$$v=r^\pi+\gamma P^\pi v\quad\Longleftrightarrow\quad(I-\gamma P^\pi)\,v=r^\pi.$$</div>
-  <p><strong>Chứng minh.</strong> Trong phương trình Bellman, gom $\sum_a\pi(a\mid s)\,p(s'\mid s,a)$ thành $P^\pi_{ss'}$ và $\sum_a\pi(a\mid s)\,r(s,a)$ thành $r^\pi(s)$.</p>
+  <div class="math-large">$$v=r_\pi+\gamma P_\pi v\quad\Longleftrightarrow\quad(I-\gamma P_\pi)\,v=r_\pi.$$</div>
+  <p><strong>Chứng minh.</strong> Trong phương trình Bellman, gom $\sum_a\pi(a\mid s)\,p(s'\mid s,a)$ thành $(P_\pi)_{ss'}$ và $\sum_a\pi(a\mid s)\,r(s,a)$ thành $r_\pi(s)$.</p>
   <p><strong>Ví dụ.</strong> Robot, thứ tự $\mathrm H$, $\mathrm L$:</p>
-  <div class="math-large">$$\begin{pmatrix}3/4&-1/4\\-1/4&3/4\end{pmatrix}\begin{pmatrix}v_H\\v_L\end{pmatrix}=\begin{pmatrix}2\\1/2\end{pmatrix}.$$</div>
+  <div class="math-large">$$\begin{pmatrix}3/4&-1/4\\-1/4&3/4\end{pmatrix}\begin{pmatrix}v_{\mathrm H}\\v_{\mathrm L}\end{pmatrix}=\begin{pmatrix}2\\1/2\end{pmatrix}.$$</div>
   <aside class="notes">
-    <p>Khai triển vế phải của phương trình Bellman bằng hai quan hệ $q$ theo $v$ và $v$ theo $q$, đổi thứ tự hai tổng hữu hạn và bỏ các trạng thái kết thúc, nơi $v_\pi=0$. Tổng $\sum_{s'}P^\pi_{ss'}v_\pi(s')$ là thành phần thứ $s$ của tích $P^\pi v$. Hàng đầu của ma trận hệ số, $3/4$ và $-1/4$, chính là phương trình tại $\mathrm H$ viết lại thành $v_H-\tfrac14v_H-\tfrac14v_L=2$. Mệnh đề nói $v_\pi$ là một nghiệm; tính duy nhất là định lý tiếp theo.</p>
+    <p>Khai triển vế phải của phương trình Bellman bằng hai quan hệ $q$ theo $v$ và $v$ theo $q$, đổi thứ tự hai tổng hữu hạn và bỏ các trạng thái kết thúc, nơi $v_\pi=0$. Tổng $\sum_{s'}(P_\pi)_{ss'}v_\pi(s')$ là thành phần thứ $s$ của tích $P_\pi v$. Hàng đầu của ma trận hệ số, $3/4$ và $-1/4$, chính là phương trình tại $\mathrm H$ viết lại thành $v_{\mathrm H}-\tfrac14v_{\mathrm H}-\tfrac14v_{\mathrm L}=2$. Mệnh đề nói $v_\pi$ là một nghiệm; tính duy nhất là định lý tiếp theo.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Mệnh đề 03.27; Bài giảng gốc (2025–2026), trang 47.</p>
   </aside>
 </section>
@@ -785,12 +785,12 @@
 <section data-slide-id="L03R-06-07b">
   <h2>Nghiệm duy nhất của hệ đánh giá chính sách</h2>
   <p><strong>Định lý.</strong> <strong>Giả thiết:</strong> MDP hữu hạn với $n$ trạng thái chưa kết thúc, $\pi$ Markov dừng, ${0\le\gamma<1}$.</p>
-  <p><strong>Kết luận:</strong> $I-\gamma P^\pi$ khả nghịch và (Định&nbsp;lý&nbsp;03.28)</p>
-  <div class="math-large">$$v_\pi=(I-\gamma P^\pi)^{-1}r^\pi=\sum_{k=0}^{\infty}\gamma^k(P^\pi)^kr^\pi.$$</div>
-  <p><strong>Chứng minh.</strong> $\lVert P^\pi x\rVert_\infty\le\lVert x\rVert_\infty$; nếu $x=\gamma P^\pi x$ thì $(1-\gamma)\lVert x\rVert_\infty\le0$, nên $x=0$.</p>
+  <p><strong>Kết luận:</strong> $I-\gamma P_\pi$ khả nghịch và (Định&nbsp;lý&nbsp;03.28)</p>
+  <div class="math-large">$$v_\pi=(I-\gamma P_\pi)^{-1}r_\pi=\sum_{k=0}^{\infty}\gamma^k(P_\pi)^kr_\pi.$$</div>
+  <p><strong>Chứng minh.</strong> $\lVert P_\pi x\rVert_\infty\le\lVert x\rVert_\infty$; nếu $x=\gamma P_\pi x$ thì $(1-\gamma)\lVert x\rVert_\infty\le0$, nên $x=0$.</p>
   <p><strong>Lưu ý:</strong> $\gamma=1$ làm hệ robot vô nghiệm ($0=\tfrac52$); với $\gamma=1$, định lý cần thêm: mọi lượt chắc chắn kết thúc.</p>
   <aside class="notes">
-    <p>Phép nhân $P^\pi$ không làm tăng chuẩn cực đại vì phần tử không âm và tổng mỗi hàng không quá $1$; hệ số $\gamma<1$ biến điều đó thành hạt nhân tầm thường, nên ma trận vuông khả nghịch. Khai triển chuỗi Neumann (Neumann series) có tổng riêng $K$ số hạng sai khác $v_\pi$ không quá $\gamma^K\lVert v_\pi\rVert_\infty$; thành phần thứ $s$ của $(P^\pi)^kr^\pi$ là $\mathbb E_\pi[R_{k+1}\mid S_0=s]$. Với robot, $\det(I-\gamma P^\pi)=1/2$ và nghịch đảo có hàng $(3/2,\,1/2)$, $(1/2,\,3/2)$, cho lại $(13/4,\,7/4)$. Với $\gamma=1$, $(I-P^\pi)\mathbf 1=0$. Với nhiệm vụ có kết thúc và $\gamma=1$, nghiệm tồn tại và duy nhất khi dưới $\pi$ mọi trạng thái chắc chắn đi tới kết thúc (Sutton và Barto, §4.1, tr. 74); bài không chứng minh trường hợp này. Bỏ tập hữu hạn thì cần lập luận toán tử co của Bài 04.</p>
+    <p>Phép nhân $P_\pi$ không làm tăng chuẩn cực đại vì phần tử không âm và tổng mỗi hàng không quá $1$; hệ số $\gamma<1$ biến điều đó thành hạt nhân tầm thường, nên ma trận vuông khả nghịch. Khai triển chuỗi Neumann (Neumann series) có tổng riêng $K$ số hạng sai khác $v_\pi$ không quá $\gamma^K\lVert v_\pi\rVert_\infty$; thành phần thứ $s$ của $(P_\pi)^kr_\pi$ là $\mathbb E_\pi[R_{k+1}\mid S_0=s]$. Với robot, $\det(I-\gamma P_\pi)=1/2$ và nghịch đảo có hàng $(3/2,\,1/2)$, $(1/2,\,3/2)$, cho lại $(13/4,\,7/4)$. Với $\gamma=1$, $(I-P_\pi)\mathbf 1=0$. Với nhiệm vụ có kết thúc và $\gamma=1$, nghiệm tồn tại và duy nhất khi dưới $\pi$ mọi trạng thái chắc chắn đi tới kết thúc (Sutton và Barto, §4.1, tr. 74); bài không chứng minh trường hợp này. Bỏ tập hữu hạn thì cần lập luận toán tử co của Bài 04.</p>
     <p class="note-source">Nguồn: Puterman (1994), §6.1; Sutton và Barto (2018), §4.1, tr. 74; ghi chú Bài 03, Định lý 03.28 và Ví dụ 03.17.</p>
   </aside>
 </section>
@@ -801,9 +801,9 @@
   <p><strong>Thuật toán.</strong> <strong>Đầu vào:</strong> $p$ hoặc $p(s'\mid s,a)$ cùng $r(s,a)$; $\pi$ Markov dừng; $\gamma$.</p>
   <p><strong>Đầu ra:</strong> ${v\in\mathbb R^n}$ với ${v_i=v_\pi(s_i)}$ trên $n$ trạng thái chưa kết thúc.</p>
   <p><strong>Giả thiết:</strong> tập hữu hạn, trạng thái Markov, $p$ dừng, phần thưởng bị chặn, ${0\le\gamma<1}$.</p>
-  <p>Tham số: dung sai $\delta>0$. Không lặp; giải hệ cỡ $n^3$ phép tính.</p>
+  <p>Tham số: dung sai $\eta>0$. Không lặp; giải hệ cỡ $n^3$ phép tính.</p>
   <aside class="notes">
-    <p>Ba ví dụ của robot đã làm bằng tay mọi bước: lập $P^\pi$ và $r^\pi$ từ $p$ và $\pi$, lập ma trận $I-\gamma P^\pi$, giải hệ, kiểm tra lại. Thuật toán viết các bước đó cho MDP hữu hạn bất kỳ (Thuật toán 03.29). Đây là bài toán dự đoán có mô hình. Khởi tạo $P^\pi$ và $r^\pi$ bằng $0$; dung sai chẳng hạn $\delta=10^{-9}$. Thuật toán trực tiếp dừng sau khi trả $v$, với số phép tính hữu hạn; bước kiểm tra phần dư là phép kiểm tra số học, không phải tiêu chuẩn hội tụ.</p>
+    <p>Ba ví dụ của robot đã làm bằng tay mọi bước: lập $P_\pi$ và $r_\pi$ từ $p$ và $\pi$, lập ma trận $I-\gamma P_\pi$, giải hệ, kiểm tra lại. Thuật toán viết các bước đó cho MDP hữu hạn bất kỳ (Thuật toán 03.29). Đây là bài toán dự đoán có mô hình. Khởi tạo $P_\pi$ và $r_\pi$ bằng $0$; dung sai chẳng hạn $\eta=10^{-9}$. Thuật toán trực tiếp dừng sau khi trả $v$, với số phép tính hữu hạn; bước kiểm tra phần dư là phép kiểm tra số học, không phải tiêu chuẩn hội tụ.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Thuật toán 03.29; Bài giảng gốc (2025–2026), trang 47–48.</p>
   </aside>
 </section>
@@ -811,16 +811,16 @@
 <section data-slide-id="L03R-06-07d">
   <h2>Đánh giá chính sách bằng giải hệ tuyến tính</h2>
   <ol>
-    <li>Kiểm tra $\pi(\cdot\mid s)$ và $p(\cdot,\cdot\mid s,a)$ hoặc $p(\cdot\mid s,a)$ không âm, tổng $1$ trong dung sai $\delta$; nếu không, báo lỗi.</li>
+    <li>Kiểm tra $\pi(\cdot\mid s)$ và $p(\cdot,\cdot\mid s,a)$ hoặc $p(\cdot\mid s,a)$ không âm, tổng $1$ trong dung sai $\eta$; nếu không, báo lỗi.</li>
     <li>Nếu chỉ có $p(s',r\mid s,a)$: tính $p(s'\mid s,a)$ và $r(s,a)$ cho mọi cặp hợp lệ.</li>
-    <li>$r^\pi(s)\leftarrow\sum_a\pi(a\mid s)\,r(s,a)$; $P^\pi_{ss'}\leftarrow\sum_a\pi(a\mid s)\,p(s'\mid s,a)$, $s'\in\mathcal S$; tổng hàng $\le1+\delta$.</li>
-    <li>$A\leftarrow I-\gamma P^\pi$.</li>
-    <li>Giải $Av=r^\pi$ bằng khử Gauss, không tính nghịch đảo tường minh.</li>
-    <li>$\rho\leftarrow\lVert v-r^\pi-\gamma P^\pi v\rVert_\infty$; nếu $\rho>\delta\max(1,\lVert r^\pi\rVert_\infty)$, báo sai số làm tròn.</li>
+    <li>$r_\pi(s)\leftarrow\sum_a\pi(a\mid s)\,r(s,a)$; $(P_\pi)_{ss'}\leftarrow\sum_a\pi(a\mid s)\,p(s'\mid s,a)$, $s'\in\mathcal S$; tổng hàng $\le1+\eta$.</li>
+    <li>$A\leftarrow I-\gamma P_\pi$.</li>
+    <li>Giải $Av=r_\pi$ bằng khử Gauss, không tính nghịch đảo tường minh.</li>
+    <li>$\rho\leftarrow\lVert v-r_\pi-\gamma P_\pi v\rVert_\infty$; nếu $\rho>\eta\max(1,\lVert r_\pi\rVert_\infty)$, báo sai số làm tròn.</li>
     <li>Trả $v$.</li>
   </ol>
   <aside class="notes">
-    <p>Với robot, bước 3 cho đúng $P^\pi$ và $r^\pi$ của bảng gộp nhánh, bước 4 cho ma trận có hàng $(3/4,\,-1/4)$ và $(-1/4,\,3/4)$, bước 5 cho $(13/4,\,7/4)$ như phép khử thế, và bước 6 cho phần dư $0$. Ví dụ tính tay, công thức nghịch đảo và thuật toán cho cùng một kết quả. Cột của trạng thái kết thúc không đưa vào $P^\pi$. Chi phí: bước 3 tỉ lệ $n^2\max_s\lvert\mathcal A(s)\rvert$, bước 5 cỡ $n^3$ phép tính và $n^2$ ô nhớ, bước 6 cỡ $n^2$.</p>
+    <p>Với robot, bước 3 cho đúng $P_\pi$ và $r_\pi$ của bảng gộp nhánh, bước 4 cho ma trận có hàng $(3/4,\,-1/4)$ và $(-1/4,\,3/4)$, bước 5 cho $(13/4,\,7/4)$ như phép khử thế, và bước 6 cho phần dư $0$. Ví dụ tính tay, công thức nghịch đảo và thuật toán cho cùng một kết quả. Cột của trạng thái kết thúc không đưa vào $P_\pi$. Chi phí: bước 3 tỉ lệ $n^2\max_s\lvert\mathcal A(s)\rvert$, bước 5 cỡ $n^3$ phép tính và $n^2$ ô nhớ, bước 6 cỡ $n^2$.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Thuật toán 03.29 và Nhận xét 03.30.</p>
   </aside>
 </section>
@@ -832,7 +832,7 @@
   <img src="img/lec-03/gridworld-5x5-deck.svg" class="figure" alt="Hai lưới 5 hàng 5 cột. Lưới trái: ô A ở hàng 1 cột 2 nhảy tới A' ở hàng 5 cột 2 với phần thưởng +10; ô B ở hàng 1 cột 4 nhảy tới B' ở hàng 3 cột 4 với phần thưởng +5. Lưới phải: giá trị v_π của chính sách chọn đều, γ = 0,9, theo hàng: 3,3 8,8 4,4 5,3 1,5; 1,5 3,0 2,3 1,9 0,5; 0,1 0,7 0,7 0,4 −0,4; −1,0 −0,4 −0,4 −0,6 −1,2; −1,9 −1,3 −1,2 −1,4 −2,0."/>
   <p>Tính $v_\pi$: hệ $25$ ẩn. Tại $\mathrm A$: $10+0{,}9\,v_\pi(\mathrm A')=10+0{,}9\cdot(-1{,}3452)\approx8{,}789$.</p>
   <aside class="notes">
-    <p>Mô hình hóa: $25$ trạng thái, bốn hành động tất định, $\mathcal R=\{-1,0,5,10\}$, nhiệm vụ tiếp diễn. Giả thiết của định lý nghiệm duy nhất thỏa: ô hiện tại và hành động xác định duy nhất phản hồi, quy luật không đổi, $M=10$, $\gamma=0{,}9$, nên $\lvert G_t\rvert\le100$. Bước 3 cho $r^\pi=0$ ở ô bên trong, $-1/4$ ở ô cạnh, $-1/2$ ở ô góc, $10$ ở $\mathrm A$, $5$ ở $\mathrm B$. $v_\pi(\mathrm A)<10$ vì $\mathrm A'$ ở cạnh dưới, nơi chính sách chọn đều thường đi ra ngoài. Ghi chú bài giảng còn áp dụng cùng thuật toán cho notebook CartPole của Bài 04, với $324$ ô: ô không bảo đảm tính Markov, và với một chính sách cố định trên ô, giá trị dự đoán trung bình $84{,}5$ thấp hơn lợi tức chiết khấu thực tế trung bình $95{,}4$ trên $100$ lượt. Bước có thể hỏng là bổ đề tính Markov của phần tương lai; định lý nghiệm duy nhất vẫn đúng cho MDP thay thế dựng từ các ô.</p>
+    <p>Mô hình hóa: $25$ trạng thái, bốn hành động tất định, $\mathcal R=\{-1,0,5,10\}$, nhiệm vụ tiếp diễn. Giả thiết của định lý nghiệm duy nhất thỏa: ô hiện tại và hành động xác định duy nhất phản hồi, quy luật không đổi, $M=10$, $\gamma=0{,}9$, nên $\lvert G_t\rvert\le100$. Bước 3 cho $r_\pi=0$ ở ô bên trong, $-1/4$ ở ô cạnh, $-1/2$ ở ô góc, $10$ ở $\mathrm A$, $5$ ở $\mathrm B$. $v_\pi(\mathrm A)<10$ vì $\mathrm A'$ ở cạnh dưới, nơi chính sách chọn đều thường đi ra ngoài. Ghi chú bài giảng còn áp dụng cùng thuật toán cho notebook CartPole của Bài 04, với $324$ ô: ô không bảo đảm tính Markov, và với một chính sách cố định trên ô, giá trị dự đoán trung bình $84{,}5$ thấp hơn lợi tức chiết khấu thực tế trung bình $95{,}4$ trên $100$ lượt. Bước có thể hỏng là bổ đề tính Markov của phần tương lai; định lý nghiệm duy nhất vẫn đúng cho MDP thay thế dựng từ các ô.</p>
     <p class="note-source">Nguồn: Sutton và Barto (2018), ví dụ 3.5 và hình 3.2, tr. 60; ghi chú Bài 03, Tình huống 03.1 và 03.2.</p>
   </aside>
 </section>
@@ -842,11 +842,11 @@
   <p><strong>Câu hỏi:</strong> chính sách luôn Chờ tại pin thấp, $\gamma=\tfrac12$.</p>
   <p>Ở $\mathrm H$ luôn Tìm: nhận $2$, về $\mathrm H$ hoặc $\mathrm L$ mỗi trạng thái $\tfrac12$.</p>
   <p>Ở $\mathrm L$ luôn Chờ: nhận $1$, ở lại $\mathrm L$.</p>
-  <p>(a) Lập $P^\pi$ và $r^\pi$ theo thứ tự $\mathrm H$, $\mathrm L$.</p>
-  <p>(b) Giải $(I-\gamma P^\pi)v=r^\pi$.</p>
+  <p>(a) Lập $P_\pi$ và $r_\pi$ theo thứ tự $\mathrm H$, $\mathrm L$.</p>
+  <p>(b) Giải $(I-\gamma P_\pi)v=r_\pi$.</p>
   <p>(c) So sánh với giá trị $\bigl(\tfrac{13}4,\tfrac74\bigr)$ của chính sách chia đều tại pin thấp.</p>
   <aside class="notes">
-    <p>Bài tập kiểm tra việc áp dụng toàn bộ thuật toán cho một chính sách mới trên cùng mô hình. Gợi ý: hàng $\mathrm H$ giữ nguyên như bảng gộp nhánh; phương trình của $\mathrm L$ chỉ chứa $v_L$, giải nó trước. Câu (c) chỉ so sánh hai chính sách cụ thể.</p>
+    <p>Bài tập kiểm tra việc áp dụng toàn bộ thuật toán cho một chính sách mới trên cùng mô hình. Gợi ý: hàng $\mathrm H$ giữ nguyên như bảng gộp nhánh; phương trình của $\mathrm L$ chỉ chứa $v_{\mathrm L}$, giải nó trước. Câu (c) chỉ so sánh hai chính sách cụ thể.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Bài tập 03.8.</p>
   </aside>
 </section>
@@ -854,8 +854,8 @@
 <section data-slide-id="L03R-06-08b">
   <h2>Bài tập: đánh giá chính sách luôn Chờ tại pin thấp</h2>
   <p><strong>Lời giải:</strong> (a) hàng $\mathrm L$ luôn về $\mathrm L$, nhận $1$:</p>
-  <div class="math-large">$$P^\pi=\begin{pmatrix}1/2&1/2\\0&1\end{pmatrix},\qquad r^\pi=\begin{pmatrix}2\\1\end{pmatrix}.$$</div>
-  <p>(b) $v_L=1+\tfrac12v_L$ nên $v_L=2$; $\tfrac34v_H=2+\tfrac14\cdot2$ nên $v_H=\tfrac{10}3$.</p>
+  <div class="math-large">$$P_\pi=\begin{pmatrix}1/2&1/2\\0&1\end{pmatrix},\qquad r_\pi=\begin{pmatrix}2\\1\end{pmatrix}.$$</div>
+  <p>(b) $v_{\mathrm L}=1+\tfrac12v_{\mathrm L}$ nên $v_{\mathrm L}=2$; $\tfrac34v_{\mathrm H}=2+\tfrac14\cdot2$ nên $v_{\mathrm H}=\tfrac{10}3$.</p>
   <p>(c) $\tfrac{10}3>\tfrac{13}4$, $2>\tfrac74$: luôn Chờ tốt hơn ở cả hai trạng thái; chưa chứng minh là tối ưu.</p>
   <aside class="notes">
     <p>Kiểm tra lại: $2+\tfrac14\bigl(\tfrac{10}3+2\bigr)=2+\tfrac43=\tfrac{10}3$ và $1+\tfrac12\cdot2=2$. So sánh $\tfrac{10}3=\tfrac{40}{12}>\tfrac{39}{12}=\tfrac{13}4$. Chính sách luôn Chờ dồn toàn bộ xác suất ở pin thấp vào hành động có giá trị hành động lớn hơn dưới chính sách chia đều; định lý nối hai việc này là định lý cải thiện chính sách của Bài 04.</p>
@@ -901,7 +901,7 @@
     <tbody>
       <tr><td>Bellman cho $v_\pi$</td><td>MDP hữu hạn (Markov, $p$ dừng); $\pi$ Markov dừng; $\gamma<1$</td><td>${v_\pi(s)=\sum_a\pi(a\mid s)}$ ${\sum_{s',r}p(s',r\mid s,a)[r+\gamma v_\pi(s')]}$</td></tr>
       <tr><td>Quan hệ giữa $v_\pi$, $q_\pi$</td><td>như trên</td><td>${q_\pi(s,a)=r(s,a)}$ ${+\gamma\sum_{s'}p(s'\mid s,a)\,v_\pi(s')}$; ${v_\pi(s)=\sum_a\pi(a\mid s)\,q_\pi(s,a)}$</td></tr>
-      <tr><td>Nghiệm duy nhất</td><td>MDP hữu hạn; $\pi$ Markov dừng; $\gamma<1$</td><td>${v_\pi=(I-\gamma P^\pi)^{-1}r^\pi}$; giải hệ cỡ $n^3$</td></tr>
+      <tr><td>Nghiệm duy nhất</td><td>MDP hữu hạn; $\pi$ Markov dừng; $\gamma<1$</td><td>${v_\pi=(I-\gamma P_\pi)^{-1}r_\pi}$; giải hệ cỡ $n^3$</td></tr>
     </tbody>
   </table>
   <aside class="notes">
@@ -919,20 +919,20 @@
   <p>(b) Tính $r(\mathrm L,\mathrm{tim})$ và $q_\pi(\mathrm L,\mathrm{tim})$.</p>
   <p>(c) So sánh $q_\pi(\mathrm L,\mathrm{tim})$ với $q_\pi(\mathrm L,\mathrm{cho})$.</p>
   <aside class="notes">
-    <p>Bài tập tổng hợp dùng bốn kết quả trên cùng robot: công thức thưởng kỳ vọng từ hàm động lực, phép gộp $P^\pi$, $r^\pi$, định lý nghiệm duy nhất và quan hệ $q$ theo $v$. Các phản hồi khác giữ nguyên: Chờ từ $\mathrm L$ cho $(\mathrm L,1)$, Sạc cho $(\mathrm H,0)$, Tìm từ $\mathrm H$ cho phần thưởng $2$ và về $\mathrm H$ hoặc $\mathrm L$ mỗi trạng thái $1/2$. Gợi ý: thay đổi chỉ chạm vào cặp $(\mathrm L,\mathrm{tim})$; xét cặp này có xuất hiện trong $P^\pi$, $r^\pi$ của chính sách chia đều hay không.</p>
+    <p>Bài tập tổng hợp dùng bốn kết quả trên cùng robot: công thức thưởng kỳ vọng từ hàm động lực, phép gộp $P_\pi$, $r_\pi$, định lý nghiệm duy nhất và quan hệ $q$ theo $v$. Các phản hồi khác giữ nguyên: Chờ từ $\mathrm L$ cho $(\mathrm L,1)$, Sạc cho $(\mathrm H,0)$, Tìm từ $\mathrm H$ cho phần thưởng $2$ và về $\mathrm H$ hoặc $\mathrm L$ mỗi trạng thái $1/2$. Gợi ý: thay đổi chỉ chạm vào cặp $(\mathrm L,\mathrm{tim})$; xét cặp này có xuất hiện trong $P_\pi$, $r_\pi$ của chính sách chia đều hay không.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Bài tập 03.13.</p>
   </aside>
 </section>
 
 <section data-slide-id="L03R-07-02">
   <h2>Bài tập: robot với rủi ro cứu hộ thấp hơn</h2>
-  <p><strong>Lời giải:</strong> (a) $\pi(\mathrm{tim}\mid\mathrm L)=0$ nên $P^\pi$, $r^\pi$ giữ nguyên; nghiệm duy nhất vẫn là ${v_\pi=\bigl(\tfrac{13}4,\tfrac74\bigr)}$.</p>
+  <p><strong>Lời giải:</strong> (a) $\pi(\mathrm{tim}\mid\mathrm L)=0$ nên $P_\pi$, $r_\pi$ giữ nguyên; nghiệm duy nhất vẫn là ${v_\pi=\bigl(\tfrac{13}4,\tfrac74\bigr)}$.</p>
   <p>(b) $r(\mathrm L,\mathrm{tim})=\tfrac34\cdot2+\tfrac14\cdot(-3)=\tfrac34$, và theo quan hệ $q$ theo $v$:</p>
   <div class="math-large">$$q_\pi(\mathrm L,\mathrm{tim})=\tfrac34+\tfrac12\bigl(\tfrac34\cdot\tfrac74+\tfrac14\cdot\tfrac{13}4\bigr)=\tfrac34+\tfrac12\cdot\tfrac{34}{16}=\tfrac{29}{16}.$$</div>
   <p>(c) $q_\pi(\mathrm L,\mathrm{cho})=1+\tfrac12\cdot\tfrac74=\tfrac{30}{16}$, nên Tìm vẫn kém Chờ $\tfrac1{16}$.</p>
   <p>Đổi phản hồi của hành động mà chính sách không dùng chỉ đổi giá trị của chính hành động đó.</p>
   <aside class="notes">
-    <p>Câu (a) dùng định nghĩa $P^\pi$, $r^\pi$: cặp $(\mathrm L,\mathrm{tim})$ có trọng số $\pi(\mathrm{tim}\mid\mathrm L)=0$; định lý nghiệm duy nhất cho cùng nghiệm. Câu (b) kiểm lại bằng dạng thứ nhất: $\tfrac34\cdot\tfrac{23}8-\tfrac14\cdot\tfrac{11}8=\tfrac{69}{32}-\tfrac{11}{32}=\tfrac{29}{16}$. So với robot gốc, $q_\pi(\mathrm L,\mathrm{tim})$ tăng từ $3/4$ lên $29/16$, còn $q_\pi(\mathrm L,\mathrm{cho})$ không đổi vì chỉ dùng $v_\pi(\mathrm L)$. Lỗi thường gặp là giải lại toàn bộ hệ hoặc cho rằng mọi giá trị đều đổi khi môi trường đổi.</p>
+    <p>Câu (a) dùng định nghĩa $P_\pi$, $r_\pi$: cặp $(\mathrm L,\mathrm{tim})$ có trọng số $\pi(\mathrm{tim}\mid\mathrm L)=0$; định lý nghiệm duy nhất cho cùng nghiệm. Câu (b) kiểm lại bằng dạng thứ nhất: $\tfrac34\cdot\tfrac{23}8-\tfrac14\cdot\tfrac{11}8=\tfrac{69}{32}-\tfrac{11}{32}=\tfrac{29}{16}$. So với robot gốc, $q_\pi(\mathrm L,\mathrm{tim})$ tăng từ $3/4$ lên $29/16$, còn $q_\pi(\mathrm L,\mathrm{cho})$ không đổi vì chỉ dùng $v_\pi(\mathrm L)$. Lỗi thường gặp là giải lại toàn bộ hệ hoặc cho rằng mọi giá trị đều đổi khi môi trường đổi.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, lời giải Bài tập 03.13.</p>
   </aside>
 </section>
@@ -943,8 +943,8 @@
     <li>Trạng thái Markov, $p$ dừng: bảy hàng $p(s',r\mid s,a)$ mô tả robot.</li>
     <li>Phần thưởng bị chặn, $\gamma<1$: robot có $\lvert G_t\rvert\le6$.</li>
     <li>Cố định $\pi$ Markov dừng: $v_\pi$, $q_\pi$ hữu hạn; ${v_\pi(\mathrm H)\in\bigl[\tfrac98,\tfrac{33}8\bigr]}$.</li>
-    <li>MDP hữu hạn, $\pi$ Markov dừng: tại $\mathrm H$, ${v_H=2+\tfrac14v_H+\tfrac14v_L}$.</li>
-    <li>Cùng giả thiết, $\gamma<1$ làm $I-\gamma P^\pi$ khả nghịch: nghiệm duy nhất ${v_\pi=\bigl(\tfrac{13}4,\tfrac74\bigr)}$.</li>
+    <li>MDP hữu hạn, $\pi$ Markov dừng: tại $\mathrm H$, ${v_{\mathrm H}=2+\tfrac14v_{\mathrm H}+\tfrac14v_{\mathrm L}}$.</li>
+    <li>Cùng giả thiết, $\gamma<1$ làm $I-\gamma P_\pi$ khả nghịch: nghiệm duy nhất ${v_\pi=\bigl(\tfrac{13}4,\tfrac74\bigr)}$.</li>
   </ol>
   <p>Giới hạn: cần biết $p$; chi phí cỡ $n^3$; chưa chọn được chính sách tốt hơn; trạng thái phải Markov.</p>
   <p class="caption">Nguồn: Sutton và Barto (2018), §3.1–3.5, §4.1; Puterman (1994), §6.1.</p>
@@ -964,7 +964,7 @@
     <li>$q_\pi(\mathrm L,\mathrm{cho})>q_\pi(\mathrm L,\mathrm{sac})$ có chứng minh luôn Chờ tại pin thấp là tối ưu không?</li>
   </ol>
   <aside class="notes">
-    <p>Lời giải. Câu 1: chưa; cần thêm thưởng kỳ vọng $r(s,a)$, có thể tính từ $p(s',r\mid s,a)$ theo công thức thưởng kỳ vọng; $p(s'\mid s,a)$ không chứa thông tin về phần thưởng. Câu 2: dưới chính sách chia đều, $\gamma=0$ cho $v_\pi=r^\pi=(2,\,1/2)$; giá trị chỉ còn thưởng kỳ vọng một bước. Câu 3, robot của Bài tập 03.1: hai bước hỏng. Tầng phản hồi của bổ đề hai tầng cần trọng số không phụ thuộc lịch sử, nhưng xác suất nhận $0$ sau Tìm là $1/2$ hoặc $1/4$ tùy lịch sử; bổ đề tính Markov của phần tương lai không còn thay kỳ vọng phần tương lai bằng một số $v_\pi(\mathrm H)$ chung. Câu 4: không; phép so sánh giữ phần tiếp diễn theo chính sách chia đều. Đánh giá lại cho thấy luôn Chờ có giá trị $(10/3,\,2)$, tốt hơn chia đều; muốn kết luận tối ưu phải so với mọi chính sách, nội dung của Bài 04.</p>
+    <p>Lời giải. Câu 1: chưa; cần thêm thưởng kỳ vọng $r(s,a)$, có thể tính từ $p(s',r\mid s,a)$ theo công thức thưởng kỳ vọng; $p(s'\mid s,a)$ không chứa thông tin về phần thưởng. Câu 2: dưới chính sách chia đều, $\gamma=0$ cho $v_\pi=r_\pi=(2,\,1/2)$; giá trị chỉ còn thưởng kỳ vọng một bước. Câu 3, robot của Bài tập 03.1: hai bước hỏng. Tầng phản hồi của bổ đề hai tầng cần trọng số không phụ thuộc lịch sử, nhưng xác suất nhận $0$ sau Tìm là $1/2$ hoặc $1/4$ tùy lịch sử; bổ đề tính Markov của phần tương lai không còn thay kỳ vọng phần tương lai bằng một số $v_\pi(\mathrm H)$ chung. Câu 4: không; phép so sánh giữ phần tiếp diễn theo chính sách chia đều. Đánh giá lại cho thấy luôn Chờ có giá trị $(10/3,\,2)$, tốt hơn chia đều; muốn kết luận tối ưu phải so với mọi chính sách, nội dung của Bài 04.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Tóm tắt chương và Nhận xét 03.31.</p>
   </aside>
 </section>

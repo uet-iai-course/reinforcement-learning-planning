@@ -14,7 +14,7 @@ Bộ bài tập chính thức của Bài 03 gồm mười chín bài, dùng chun
 
 ## Hướng dẫn và ký hiệu
 
-Ký hiệu, giả thiết và số hiệu theo ghi chú bài giảng Bài 03. Môi trường được mô tả bằng một quá trình quyết định Markov (Markov decision process, MDP) hữu hạn. Thời điểm quyết định là $t=0,1,2,\dots$; trạng thái, hành động và phần thưởng là các biến ngẫu nhiên $S_t$, $A_t$, $R_{t+1}$, trong đó phần thưởng (reward) $R_{t+1}$ và trạng thái $S_{t+1}$ đến cùng lúc, sau hành động $A_t$. Lịch sử tới thời điểm $t$ là $H_t=(S_0,A_0,R_1,S_1,\dots,R_t,S_t)$, viết nghiêng, khác tên trạng thái $\mathrm H$ viết đứng. Trạng thái có tính Markov (Markov property) khi phân phối của $(S_{t+1},R_{t+1})$ biết $H_t$ và $A_t$ chỉ phụ thuộc $S_t$ và $A_t$. Hàm động lực (dynamics function) là $p(s',r\mid s,a)$; xác suất chuyển $p(s'\mid s,a)$ và thưởng kỳ vọng một bước $r(s,a)$ suy ra từ $p$ theo (1.5), (1.6). Với hệ số chiết khấu (discount factor) $\gamma\in[0,1)$, trừ khi bài nêu khác, lợi tức (return) là $G_t=R_{t+1}+\gamma R_{t+2}+\gamma^2R_{t+3}+\cdots$, với $G_T=0$ khi lượt (episode) kết thúc tại $T$; nhiệm vụ không chia thành lượt là nhiệm vụ tiếp diễn (continuing task). Chính sách (policy) $\pi(a\mid s)$ là chính sách Markov dừng; $\mathbb E_\pi$ là kỳ vọng khi hành động theo $\pi$ và phản hồi theo $p$. Hàm giá trị (value function) gồm giá trị trạng thái $v_\pi(s)=\mathbb E_\pi[G_0\mid S_0=s]$, lấy trên quá trình xuất phát tại $s$, và giá trị hành động $q_\pi(s,a)$, lấy trên quá trình ấn định $S_0=s$, $A_0=a$ rồi theo $\pi$ từ thời điểm $1$. Giá trị tại trạng thái kết thúc bằng $0$. Ma trận chuyển và véc-tơ thưởng kỳ vọng dưới $\pi$ viết $P^\pi$, $r^\pi$ như ghi chú (5.2), với trạng thái xếp theo thứ tự nêu trong từng bài.
+Ký hiệu, giả thiết và số hiệu theo ghi chú bài giảng Bài 03. Môi trường được mô tả bằng một quá trình quyết định Markov (Markov decision process, MDP) hữu hạn. Thời điểm quyết định là $t=0,1,2,\dots$; trạng thái, hành động và phần thưởng là các biến ngẫu nhiên $S_t$, $A_t$, $R_{t+1}$, trong đó phần thưởng (reward) $R_{t+1}$ và trạng thái $S_{t+1}$ đến cùng lúc, sau hành động $A_t$. Lịch sử tới thời điểm $t$ là $H_t=(S_0,A_0,R_1,S_1,\dots,R_t,S_t)$, viết nghiêng, khác tên trạng thái $\mathrm H$ viết đứng. Trạng thái có tính Markov (Markov property) khi phân phối của $(S_{t+1},R_{t+1})$ biết $H_t$ và $A_t$ chỉ phụ thuộc $S_t$ và $A_t$. Hàm động lực (dynamics function) là $p(s',r\mid s,a)$; xác suất chuyển $p(s'\mid s,a)$ và thưởng kỳ vọng một bước $r(s,a)$ suy ra từ $p$ theo (1.5), (1.6). Với hệ số chiết khấu (discount factor) $\gamma\in[0,1)$, trừ khi bài nêu khác, lợi tức (return) là $G_t=R_{t+1}+\gamma R_{t+2}+\gamma^2R_{t+3}+\cdots$, với $G_T=0$ khi lượt (episode) kết thúc tại $T$; nhiệm vụ không chia thành lượt là nhiệm vụ tiếp diễn (continuing task). Chính sách (policy) $\pi(a\mid s)$ là chính sách Markov dừng; $\mathbb E_\pi$ là kỳ vọng khi hành động theo $\pi$ và phản hồi theo $p$. Hàm giá trị (value function) gồm giá trị trạng thái $v_\pi(s)=\mathbb E_\pi[G_0\mid S_0=s]$, lấy trên quá trình xuất phát tại $s$, và giá trị hành động $q_\pi(s,a)$, lấy trên quá trình ấn định $S_0=s$, $A_0=a$ rồi theo $\pi$ từ thời điểm $1$. Giá trị tại trạng thái kết thúc bằng $0$. Ma trận chuyển và véc-tơ thưởng kỳ vọng dưới $\pi$ viết $P_\pi$, $r_\pi$ như ghi chú (5.2), với trạng thái xếp theo thứ tự nêu trong từng bài.
 
 Tên trạng thái và tên hành động viết chữ đứng: $\mathrm H$ (pin cao), $\mathrm L$ (pin thấp), $\mathrm{tim}$ (Tìm), $\mathrm{cho}$ (Chờ), $\mathrm{sac}$ (Sạc). Số thập phân viết với dấu phẩy, như $0{,}9$; khi một véc-tơ có thành phần thập phân, các thành phần cách nhau bằng dấu chấm phẩy, như $(0{,}874;\,-1{,}154;\,0)$.
 
@@ -30,7 +30,7 @@ Tên trạng thái và tên hành động viết chữ đứng: $\mathrm H$ (pin
 | $\mathrm L$ | $\mathrm{cho}$ | $\mathrm L$ | $1$ | $1$ |
 | $\mathrm L$ | $\mathrm{sac}$ | $\mathrm H$ | $0$ | $1$ |
 
-**Chính sách chia đều tại pin thấp** (ghi chú Ví dụ 03.9): ở $\mathrm H$ luôn Tìm; ở $\mathrm L$ Chờ hoặc Sạc, mỗi hành động xác suất $1/2$, không bao giờ Tìm. Với $\gamma=1/2$, giá trị của chính sách này là $v_\pi(\mathrm H)=13/4$, $v_\pi(\mathrm L)=7/4$ (ghi chú, Ví dụ 03.14). Khi giải hệ, viết $v_{\mathrm H}=v_\pi(\mathrm H)$, $v_{\mathrm L}=v_\pi(\mathrm L)$; ghi chú viết $v_H$, $v_L$.
+**Chính sách chia đều tại pin thấp** (ghi chú Ví dụ 03.9): ở $\mathrm H$ luôn Tìm; ở $\mathrm L$ Chờ hoặc Sạc, mỗi hành động xác suất $1/2$, không bao giờ Tìm. Với $\gamma=1/2$, giá trị của chính sách này là $v_\pi(\mathrm H)=13/4$, $v_\pi(\mathrm L)=7/4$ (ghi chú, Ví dụ 03.14). Khi giải hệ, viết $v_{\mathrm H}=v_\pi(\mathrm H)$, $v_{\mathrm L}=v_\pi(\mathrm L)$.
 
 Mọi xác suất, mức thưởng và môi trường nhỏ trong tệp là số liệu sư phạm tự xây dựng, trừ khi dòng "Nguồn" ghi khác. Lời giải nêu kết quả của ghi chú được dùng ở từng bước.
 
@@ -186,13 +186,13 @@ Robot thu gom lon hai mức pin: Tìm từ $\mathrm H$ cho phần thưởng $2$ 
 :::
 
 ::: hint Gợi ý Bài tập 03.17
-Ở câu (b), xét cặp $(\mathrm H,\mathrm{cho})$ có góp vào $P^\pi$, $r^\pi$ và vào cây hai bước từ $\mathrm H$ hay không; $q_\pi(\mathrm H,\mathrm{cho})$ tính theo dạng thứ hai của (4.6).
+Ở câu (b), xét cặp $(\mathrm H,\mathrm{cho})$ có góp vào $P_\pi$, $r_\pi$ và vào cây hai bước từ $\mathrm H$ hay không; $q_\pi(\mathrm H,\mathrm{cho})$ tính theo dạng thứ hai của (4.6).
 :::
 
 ::: solution Lời giải Bài tập 03.17
 **Câu (a).** Kỳ vọng hai bước: hành động đầu do $\pi$ chọn, ở $\mathrm H$ là Tìm; chỉ hai số hạng $R_1+\gamma R_2$ được tính; từ thời điểm $1$ robot theo $\pi$. Giá trị $q_\pi(\mathrm H,\mathrm{cho})$: hành động đầu bị ấn định là Chờ; toàn bộ lợi tức $G_0$ được tính; từ thời điểm $1$ robot theo $\pi$. Hai con số khác nhau ở cả hành động đầu lẫn số số hạng.
 
-**Câu (b).** Chính sách có $\pi(\mathrm{cho}\mid\mathrm H)=0$, nên theo (5.2) cặp $(\mathrm H,\mathrm{cho})$ không góp vào $P^\pi$ và $r^\pi$. Hai đối tượng này giữ nguyên, và theo Định lý 03.28, $v_\pi=(\tfrac{13}4,\tfrac74)$ không đổi. Cây hai bước từ $\mathrm H$ chỉ dùng Tìm ở $\mathrm H$ và Chờ, Sạc ở $\mathrm L$, nên kỳ vọng hai bước vẫn là $\tfrac{21}8$. Theo (4.6), robot ở lại $\mathrm H$ sau Chờ, nên
+**Câu (b).** Chính sách có $\pi(\mathrm{cho}\mid\mathrm H)=0$, nên theo (5.2) cặp $(\mathrm H,\mathrm{cho})$ không góp vào $P_\pi$ và $r_\pi$. Hai đối tượng này giữ nguyên, và theo Định lý 03.28, $v_\pi=(\tfrac{13}4,\tfrac74)$ không đổi. Cây hai bước từ $\mathrm H$ chỉ dùng Tìm ở $\mathrm H$ và Chờ, Sạc ở $\mathrm L$, nên kỳ vọng hai bước vẫn là $\tfrac{21}8$. Theo (4.6), robot ở lại $\mathrm H$ sau Chờ, nên
 
 $$
 q_\pi(\mathrm H,\mathrm{cho})=\tfrac12+\tfrac12\cdot\tfrac{13}4=\tfrac{17}8 .
@@ -516,7 +516,7 @@ $$
 R=\begin{pmatrix}1\\-1\\0\end{pmatrix},\qquad\gamma=0{,}9 .
 $$
 
-Thành phần $R_i$ là thưởng kỳ vọng của bước rời trạng thái $\mathrm s_i$, đóng vai trò của $r^\pi$ trong ghi chú (5.2); $P$ đóng vai trò của $P^\pi$.
+Thành phần $R_i$ là thưởng kỳ vọng của bước rời trạng thái $\mathrm s_i$, đóng vai trò của $r_\pi$ trong ghi chú (5.2); $P$ đóng vai trò của $P_\pi$.
 
 - (a) Kiểm tra $P$ là ma trận chuyển hợp lệ và xác định trạng thái hấp thụ.
 - (b) Viết hệ phương trình Bellman cho véc-tơ giá trị $v=(v_1,v_2,v_3)$.
@@ -602,17 +602,17 @@ Cho MDP hữu hạn $\bigl(\mathcal S^+,\{\mathcal A(s)\},\mathcal R,p\bigr)$ v�
 
 $$
 \begin{aligned}
-P^\pi_{ss'}&=\sum_{a\in\mathcal A(s)}\pi(a\mid s)\,p(s'\mid s,a),\\
-r^\pi(s)&=\sum_{a\in\mathcal A(s)}\pi(a\mid s)\,r(s,a).
+(P_\pi)_{ss'}&=\sum_{a\in\mathcal A(s)}\pi(a\mid s)\,p(s'\mid s,a),\\
+r_\pi(s)&=\sum_{a\in\mathcal A(s)}\pi(a\mid s)\,r(s,a).
 \end{aligned}
 $$
 
 Chứng minh các khẳng định sau.
 
-- (a) $P^\pi_{ss'}\ge0$ và $\sum_{s'\in\mathcal S}P^\pi_{ss'}\le1$, với dấu bằng khi không có trạng thái kết thúc.
-- (b) Với mọi $t$ và mọi dãy trạng thái $s_0,\dots,s_t$ có $s_t\in\mathcal S$ và $\Pr_\pi(S_0=s_0,\dots,S_t=s_t)>0$, ta có $\Pr_\pi(S_{t+1}=s'\mid S_0=s_0,\dots,S_t=s_t)=P^\pi_{s_ts'}$ với mọi $s'\in\mathcal S$; tức dãy trạng thái dưới $\pi$ là một chuỗi Markov thuần nhất theo thời gian, với ma trận chuyển $P^\pi$.
-- (c) Với cùng điều kiện, $\mathbb E_\pi[R_{t+1}\mid S_0=s_0,\dots,S_t=s_t]=r^\pi(s_t)$.
-- (d) Robot thu gom lon hai mức pin với chính sách chia đều tại pin thấp ($\pi(\mathrm{tim}\mid\mathrm H)=1$; $\pi(\mathrm{cho}\mid\mathrm L)=\pi(\mathrm{sac}\mid\mathrm L)=\tfrac12$), $\gamma=\tfrac12$, có $q_\pi(\mathrm L,\mathrm{tim})=\tfrac34$ khi Tìm từ $\mathrm L$ cho $(\mathrm L,2)$ hoặc $(\mathrm H,-3)$ mỗi phản hồi $\tfrac12$, và $q_\pi(\mathrm L,\mathrm{tim})=\tfrac{29}{16}$ khi hai phản hồi đó có xác suất $\tfrac34$ và $\tfrac14$ (ghi chú Ví dụ 03.15 và Bài tập 03.13). Trong cả hai MDP, các phản hồi khác như nhau: Tìm từ $\mathrm H$ cho phần thưởng $2$ và về $\mathrm H$ hoặc $\mathrm L$ mỗi trạng thái $\tfrac12$; Chờ từ $\mathrm H$ cho $(\mathrm H,1)$; Chờ từ $\mathrm L$ cho $(\mathrm L,1)$; Sạc từ $\mathrm L$ cho $(\mathrm H,0)$. Giải thích vì sao hai MDP này cảm sinh cùng một MRP $(\mathcal S,P^\pi,r^\pi,\gamma)$, và rút ra thông tin nào của MDP bị mất khi chuyển sang MRP.
+- (a) $(P_\pi)_{ss'}\ge0$ và $\sum_{s'\in\mathcal S}(P_\pi)_{ss'}\le1$, với dấu bằng khi không có trạng thái kết thúc.
+- (b) Với mọi $t$ và mọi dãy trạng thái $s_0,\dots,s_t$ có $s_t\in\mathcal S$ và $\Pr_\pi(S_0=s_0,\dots,S_t=s_t)>0$, ta có $\Pr_\pi(S_{t+1}=s'\mid S_0=s_0,\dots,S_t=s_t)=(P_\pi)_{s_ts'}$ với mọi $s'\in\mathcal S$; tức dãy trạng thái dưới $\pi$ là một chuỗi Markov thuần nhất theo thời gian, với ma trận chuyển $P_\pi$.
+- (c) Với cùng điều kiện, $\mathbb E_\pi[R_{t+1}\mid S_0=s_0,\dots,S_t=s_t]=r_\pi(s_t)$.
+- (d) Robot thu gom lon hai mức pin với chính sách chia đều tại pin thấp ($\pi(\mathrm{tim}\mid\mathrm H)=1$; $\pi(\mathrm{cho}\mid\mathrm L)=\pi(\mathrm{sac}\mid\mathrm L)=\tfrac12$), $\gamma=\tfrac12$, có $q_\pi(\mathrm L,\mathrm{tim})=\tfrac34$ khi Tìm từ $\mathrm L$ cho $(\mathrm L,2)$ hoặc $(\mathrm H,-3)$ mỗi phản hồi $\tfrac12$, và $q_\pi(\mathrm L,\mathrm{tim})=\tfrac{29}{16}$ khi hai phản hồi đó có xác suất $\tfrac34$ và $\tfrac14$ (ghi chú Ví dụ 03.15 và Bài tập 03.13). Trong cả hai MDP, các phản hồi khác như nhau: Tìm từ $\mathrm H$ cho phần thưởng $2$ và về $\mathrm H$ hoặc $\mathrm L$ mỗi trạng thái $\tfrac12$; Chờ từ $\mathrm H$ cho $(\mathrm H,1)$; Chờ từ $\mathrm L$ cho $(\mathrm L,1)$; Sạc từ $\mathrm L$ cho $(\mathrm H,0)$. Giải thích vì sao hai MDP này cảm sinh cùng một MRP $(\mathcal S,P_\pi,r_\pi,\gamma)$, và rút ra thông tin nào của MDP bị mất khi chuyển sang MRP.
 :::
 
 ::: hint Gợi ý Bài tập 03.21
@@ -620,11 +620,11 @@ Chứng minh các khẳng định sau.
 :::
 
 ::: solution Lời giải Bài tập 03.21
-**Câu (a).** Mỗi số hạng $\pi(a\mid s)\,p(s'\mid s,a)$ không âm, nên $P^\pi_{ss'}\ge0$. Ta có
+**Câu (a).** Mỗi số hạng $\pi(a\mid s)\,p(s'\mid s,a)$ không âm, nên $(P_\pi)_{ss'}\ge0$. Ta có
 
 $$
 \begin{aligned}
-&\sum_{s'\in\mathcal S}P^\pi_{ss'}\\
+&\sum_{s'\in\mathcal S}(P_\pi)_{ss'}\\
 &\quad=\sum_a\pi(a\mid s)\sum_{s'\in\mathcal S}p(s'\mid s,a)\\
 &\quad\le\sum_a\pi(a\mid s)\sum_{s'\in\mathcal S^+}p(s'\mid s,a)\\
 &\quad=\sum_a\pi(a\mid s)=1 .
@@ -643,22 +643,22 @@ $$
 &\quad=\sum_a\pi(a\mid s_t)\\
 &\qquad\times\sum_rp(s',r\mid s_t,a)\\
 &\quad=\sum_a\pi(a\mid s_t)\,p(s'\mid s_t,a)\\
-&\quad=P^\pi_{s_ts'} .
+&\quad=(P_\pi)_{s_ts'} .
 \end{aligned}
 $$
 
-Đẳng thức đầu cộng các sự kiện rời nhau, đẳng thức thứ hai dùng (1.5), đẳng thức cuối là định nghĩa của $P^\pi$. Vế phải không phụ thuộc $h_t$. Theo công thức xác suất toàn phần trên các $h_t\in\mathcal H$, với trọng số $w(h_t)=\Pr_\pi(H_t=h_t\mid S_0=s_0,\dots,S_t=s_t)$ có tổng $1$,
+Đẳng thức đầu cộng các sự kiện rời nhau, đẳng thức thứ hai dùng (1.5), đẳng thức cuối là định nghĩa của $P_\pi$. Vế phải không phụ thuộc $h_t$. Theo công thức xác suất toàn phần trên các $h_t\in\mathcal H$, với trọng số $w(h_t)=\Pr_\pi(H_t=h_t\mid S_0=s_0,\dots,S_t=s_t)$ có tổng $1$,
 
 $$
 \begin{aligned}
 &\Pr_\pi(S_{t+1}=s'\mid S_0=s_0,\dots,\\
 &\qquad S_t=s_t)\\
-&\quad=\sum_{h_t\in\mathcal H}w(h_t)\,P^\pi_{s_ts'}\\
-&\quad=P^\pi_{s_ts'} .
+&\quad=\sum_{h_t\in\mathcal H}w(h_t)\,(P_\pi)_{s_ts'}\\
+&\quad=(P_\pi)_{s_ts'} .
 \end{aligned}
 $$
 
-Xác suất này chỉ phụ thuộc $s_t$ và không phụ thuộc $t$, vì $\pi$ và $p$ là cùng một hàm ở mọi thời điểm. Vậy dãy trạng thái là chuỗi Markov thuần nhất theo thời gian, với ma trận chuyển $P^\pi$.
+Xác suất này chỉ phụ thuộc $s_t$ và không phụ thuộc $t$, vì $\pi$ và $p$ là cùng một hàm ở mọi thời điểm. Vậy dãy trạng thái là chuỗi Markov thuần nhất theo thời gian, với ma trận chuyển $P_\pi$.
 
 **Câu (c).** Với mỗi $h_t\in\mathcal H$, cùng phép cộng nhưng nhân với $r$:
 
@@ -668,15 +668,15 @@ $$
 &\quad=\sum_a\pi(a\mid s_t)\\
 &\qquad\times\sum_{s',r}r\,p(s',r\mid s_t,a)\\
 &\quad=\sum_a\pi(a\mid s_t)\,r(s_t,a)\\
-&\quad=r^\pi(s_t),
+&\quad=r_\pi(s_t),
 \end{aligned}
 $$
 
-trong đó đẳng thức thứ hai dùng (1.6). Lấy trung bình theo $h_t$ với các trọng số $w(h_t)$ như ở câu (b) được $\mathbb E_\pi[R_{t+1}\mid S_0=s_0,\dots,S_t=s_t]=r^\pi(s_t)$.
+trong đó đẳng thức thứ hai dùng (1.6). Lấy trung bình theo $h_t$ với các trọng số $w(h_t)$ như ở câu (b) được $\mathbb E_\pi[R_{t+1}\mid S_0=s_0,\dots,S_t=s_t]=r_\pi(s_t)$.
 
-**Câu (d).** Hai MDP chỉ khác nhau ở cặp $(\mathrm L,\mathrm{tim})$, mà $\pi(\mathrm{tim}\mid\mathrm L)=0$; theo cùng lập luận như lời giải Bài tập 03.17(b), cặp này không góp vào $P^\pi$ và $r^\pi$. Vì vậy cả hai cho $P^\pi=\begin{pmatrix}1/2&1/2\\1/2&1/2\end{pmatrix}$, $r^\pi=(2;\,\tfrac12)$ và cùng $\gamma$, tức cùng một MRP, và cùng $v_\pi=(\tfrac{13}4,\tfrac74)$ theo Định lý 03.28. Hai giá trị $q_\pi(\mathrm L,\mathrm{tim})$ khác nhau, nên từ MRP không dựng lại được $q_\pi$. Phép gộp giữ lại các đại lượng trung bình theo $\pi$ và mất phản hồi của từng hành động, nhất là của hành động chính sách không chọn.
+**Câu (d).** Hai MDP chỉ khác nhau ở cặp $(\mathrm L,\mathrm{tim})$, mà $\pi(\mathrm{tim}\mid\mathrm L)=0$; theo cùng lập luận như lời giải Bài tập 03.17(b), cặp này không góp vào $P_\pi$ và $r_\pi$. Vì vậy cả hai cho $P_\pi=\begin{pmatrix}1/2&1/2\\1/2&1/2\end{pmatrix}$, $r_\pi=(2;\,\tfrac12)$ và cùng $\gamma$, tức cùng một MRP, và cùng $v_\pi=(\tfrac{13}4,\tfrac74)$ theo Định lý 03.28. Hai giá trị $q_\pi(\mathrm L,\mathrm{tim})$ khác nhau, nên từ MRP không dựng lại được $q_\pi$. Phép gộp giữ lại các đại lượng trung bình theo $\pi$ và mất phản hồi của từng hành động, nhất là của hành động chính sách không chọn.
 
-**Kiểm tra lại.** Với robot không có trạng thái kết thúc, mỗi hàng của $P^\pi$ có tổng $1$, đúng câu (a). Ba lỗi thường gặp: bỏ qua bước lấy trung bình theo lịch sử ở câu (b), nên chỉ chứng minh được đẳng thức khi biết $H_t=h_t$, chưa được khi chỉ biết dãy trạng thái; đưa cột của trạng thái kết thúc vào $P^\pi$, được ma trận cỡ $n\times(n+1)$ không dùng được trong (5.3); nghĩ rằng MRP cảm sinh còn đủ thông tin để so sánh các hành động, dẫn tới kết luận sai rằng hai MDP của câu (d) có cùng $q_\pi(\mathrm L,\mathrm{tim})$.
+**Kiểm tra lại.** Với robot không có trạng thái kết thúc, mỗi hàng của $P_\pi$ có tổng $1$, đúng câu (a). Ba lỗi thường gặp: bỏ qua bước lấy trung bình theo lịch sử ở câu (b), nên chỉ chứng minh được đẳng thức khi biết $H_t=h_t$, chưa được khi chỉ biết dãy trạng thái; đưa cột của trạng thái kết thúc vào $P_\pi$, được ma trận cỡ $n\times(n+1)$ không dùng được trong (5.3); nghĩ rằng MRP cảm sinh còn đủ thông tin để so sánh các hành động, dẫn tới kết luận sai rằng hai MDP của câu (d) có cùng $q_\pi(\mathrm L,\mathrm{tim})$.
 :::
 
 ## Mức vận dụng vào bài toán Học tăng cường
@@ -742,7 +742,7 @@ Hai khoảng rời nhau, nên với cùng $x_t=0{,}10$ và cùng hành động $
 ::: exercise Bài tập 03.8 (Đánh giá chính sách luôn Chờ tại pin thấp)
 **Dữ kiện.** Robot thu gom lon hai mức pin với chính sách luôn Chờ tại pin thấp: ở $\mathrm H$ luôn Tìm (phần thưởng $2$, về $\mathrm H$ hoặc $\mathrm L$ mỗi trạng thái $1/2$); ở $\mathrm L$ luôn Chờ (phần thưởng $1$, ở lại $\mathrm L$). $\gamma=1/2$.
 
-**Yêu cầu.** (a) Lập $P^\pi$ và $r^\pi$ theo thứ tự $\mathrm H$, $\mathrm L$. (b) Giải $(I-\gamma P^\pi)v=r^\pi$. (c) So sánh với giá trị $(13/4,\,7/4)$ của chính sách chia đều tại pin thấp.
+**Yêu cầu.** (a) Lập $P_\pi$ và $r_\pi$ theo thứ tự $\mathrm H$, $\mathrm L$. (b) Giải $(I-\gamma P_\pi)v=r_\pi$. (c) So sánh với giá trị $(13/4,\,7/4)$ của chính sách chia đều tại pin thấp.
 :::
 
 ::: hint Gợi ý Bài tập 03.8
@@ -754,8 +754,8 @@ Phương trình của $\mathrm L$ chỉ chứa $v_{\mathrm L}$; giải nó trư�
 
 $$
 \begin{aligned}
-P^\pi&=\begin{pmatrix}1/2&1/2\\0&1\end{pmatrix},\\
-r^\pi&=\begin{pmatrix}2\\1\end{pmatrix}.
+P_\pi&=\begin{pmatrix}1/2&1/2\\0&1\end{pmatrix},\\
+r_\pi&=\begin{pmatrix}2\\1\end{pmatrix}.
 \end{aligned}
 $$
 
@@ -777,25 +777,25 @@ Robot thu gom lon hai mức pin theo chính sách chia đều tại pin thấp (
 
 $$
 \begin{aligned}
-P^\pi&=\begin{pmatrix}1/2&1/2\\1/2&1/2\end{pmatrix},\\
-r^\pi&=\begin{pmatrix}2\\1/2\end{pmatrix}.
+P_\pi&=\begin{pmatrix}1/2&1/2\\1/2&1/2\end{pmatrix},\\
+r_\pi&=\begin{pmatrix}2\\1/2\end{pmatrix}.
 \end{aligned}
 $$
 
-Theo ghi chú (đoạn đọc chuỗi Neumann (5.5)), thành phần thứ $s$ của $(P^\pi)^kr^\pi$ là $\mathbb E_\pi[R_{k+1}\mid S_0=s]$.
+Theo ghi chú (đoạn đọc chuỗi Neumann (5.5)), thành phần thứ $s$ của $(P_\pi)^kr_\pi$ là $\mathbb E_\pi[R_{k+1}\mid S_0=s]$.
 
-- (a) Chứng minh $(P^\pi)^k=P^\pi$ với mọi $k\ge1$, rồi tính $\mathbb E_\pi[R_{k+1}\mid S_0=s]$ với mọi $k\ge0$ và $s\in\{\mathrm H,\mathrm L\}$.
+- (a) Chứng minh $(P_\pi)^k=P_\pi$ với mọi $k\ge1$, rồi tính $\mathbb E_\pi[R_{k+1}\mid S_0=s]$ với mọi $k\ge0$ và $s\in\{\mathrm H,\mathrm L\}$.
 - (b) Với $\gamma=1$, tính kỳ vọng tổng $K$ phần thưởng đầu $\mathbb E_\pi\bigl[\sum_{k=0}^{K-1}R_{k+1}\mid S_0=s\bigr]$; kết luận về $v_\pi$ và chỉ ra giả thiết bị vi phạm của Mệnh đề 03.11 và Định lý 03.28.
 - (c) Với $0\le\gamma<1$, tìm công thức của $v_\pi(\mathrm H)$, $v_\pi(\mathrm L)$ theo $\gamma$ và kiểm tra với $\gamma=\tfrac12$.
 - (d) Phần thưởng trung bình mỗi bước từ $s$ là $\bar r(s)=\lim_{K\to\infty}\tfrac1K\,\mathbb E_\pi\bigl[\sum_{k=0}^{K-1}R_{k+1}\mid S_0=s\bigr]$. Tính $\bar r(s)$ và chứng tỏ $(1-\gamma)\,v_\pi(s)\to\bar r(s)$ khi $\gamma\to1$.
 :::
 
 ::: hint Gợi ý Bài tập 03.23
-Mọi hàng của $P^\pi$ bằng $(\tfrac12,\tfrac12)$, nên $P^\pi x$ là véc-tơ có hai thành phần bằng trung bình cộng các thành phần của $x$. Ở câu (c), đặt $m=\tfrac12\bigl(v_\pi(\mathrm H)+v_\pi(\mathrm L)\bigr)$.
+Mọi hàng của $P_\pi$ bằng $(\tfrac12,\tfrac12)$, nên $P_\pi x$ là véc-tơ có hai thành phần bằng trung bình cộng các thành phần của $x$. Ở câu (c), đặt $m=\tfrac12\bigl(v_\pi(\mathrm H)+v_\pi(\mathrm L)\bigr)$.
 :::
 
 ::: solution Lời giải Bài tập 03.23
-**Câu (a).** Với $x=(x_1,x_2)$, $P^\pi x=\tfrac{x_1+x_2}2\,(1,1)$. Áp dụng công thức này cho từng cột của $P^\pi$, mỗi cột là $(\tfrac12,\tfrac12)$ với trung bình cộng $\tfrac12$, ta được $P^\pi P^\pi=P^\pi$; quy nạp cho $(P^\pi)^k=P^\pi$ với $k\ge1$. Với $k=0$: $\mathbb E_\pi[R_1\mid S_0=\mathrm H]=2$ và $\mathbb E_\pi[R_1\mid S_0=\mathrm L]=\tfrac12$. Với $k\ge1$: $(P^\pi)^kr^\pi=P^\pi r^\pi=\tfrac{2+1/2}2\,(1,1)=(\tfrac54,\tfrac54)$, nên $\mathbb E_\pi[R_{k+1}\mid S_0=s]=\tfrac54$ ở cả hai trạng thái.
+**Câu (a).** Với $x=(x_1,x_2)$, $P_\pi x=\tfrac{x_1+x_2}2\,(1,1)$. Áp dụng công thức này cho từng cột của $P_\pi$, mỗi cột là $(\tfrac12,\tfrac12)$ với trung bình cộng $\tfrac12$, ta được $P_\pi P_\pi=P_\pi$; quy nạp cho $(P_\pi)^k=P_\pi$ với $k\ge1$. Với $k=0$: $\mathbb E_\pi[R_1\mid S_0=\mathrm H]=2$ và $\mathbb E_\pi[R_1\mid S_0=\mathrm L]=\tfrac12$. Với $k\ge1$: $(P_\pi)^kr_\pi=P_\pi r_\pi=\tfrac{2+1/2}2\,(1,1)=(\tfrac54,\tfrac54)$, nên $\mathbb E_\pi[R_{k+1}\mid S_0=s]=\tfrac54$ ở cả hai trạng thái.
 
 **Câu (b).** Cộng các kỳ vọng của câu (a):
 
@@ -810,7 +810,7 @@ $$
 
 Cả hai tăng không bị chặn theo $K$. Dưới $\pi$, mọi phần thưởng thuộc $\{0,1,2\}$, không âm, nên tổng $\sum_{k\ge0}R_{k+1}$ có nghĩa trong $[0,+\infty]$ và kỳ vọng của nó là giới hạn của các tổng riêng trên, bằng $+\infty$. Vậy với $\gamma=1$, $v_\pi$ không phải véc-tơ số thực. Mệnh đề 03.11 và Định lý 03.28 đều cần $\gamma<1$; nhiệm vụ tiếp diễn không có trạng thái kết thúc để thay giả thiết đó.
 
-**Câu (c).** Đặt $m=\tfrac12\bigl(v_\pi(\mathrm H)+v_\pi(\mathrm L)\bigr)$. Theo (5.3) và câu (a), $v=r^\pi+\gamma P^\pi v=r^\pi+\gamma m\,(1,1)$. Lấy trung bình hai phương trình:
+**Câu (c).** Đặt $m=\tfrac12\bigl(v_\pi(\mathrm H)+v_\pi(\mathrm L)\bigr)$. Theo (5.3) và câu (a), $v=r_\pi+\gamma P_\pi v=r_\pi+\gamma m\,(1,1)$. Lấy trung bình hai phương trình:
 
 $$
 \begin{aligned}
@@ -843,7 +843,7 @@ $$
 
 Khi $\gamma$ gần $1$, $v_\pi(s)\approx\tfrac54\cdot\tfrac1{1-\gamma}$: giá trị lớn vì phần thưởng trung bình mỗi bước dương, và mức khởi đầu chỉ góp một hằng số.
 
-**Kiểm tra lại.** Phân phối $d=(\tfrac12,\tfrac12)$ thỏa $dP^\pi=d$, và $d\cdot r^\pi=\tfrac54$, đúng dạng (10.7)–(10.8) của Sutton và Barto. Với $\gamma=1$, hệ (5.3) vô nghiệm vì cộng hai phương trình được $0=\tfrac52=2\bar r$. Hai lỗi thường gặp: cho rằng phần thưởng $-3$ của cứu hộ có thể làm tổng hội tụ, dẫn tới kết luận sai rằng $v_\pi$ hữu hạn với $\gamma=1$, trong khi chính sách không bao giờ Tìm ở $\mathrm L$; dùng $\mathbb E_\pi[R_{k+1}]=\tfrac54$ cho cả $k=0$, được tổng $K$ bước bằng $\tfrac54K$ ở cả hai trạng thái và mất hiệu $\tfrac32$.
+**Kiểm tra lại.** Phân phối $d=(\tfrac12,\tfrac12)$ thỏa $dP_\pi=d$, và $d\cdot r_\pi=\tfrac54$, đúng dạng (10.7)–(10.8) của Sutton và Barto. Với $\gamma=1$, hệ (5.3) vô nghiệm vì cộng hai phương trình được $0=\tfrac52=2\bar r$. Hai lỗi thường gặp: cho rằng phần thưởng $-3$ của cứu hộ có thể làm tổng hội tụ, dẫn tới kết luận sai rằng $v_\pi$ hữu hạn với $\gamma=1$, trong khi chính sách không bao giờ Tìm ở $\mathrm L$; dùng $\mathbb E_\pi[R_{k+1}]=\tfrac54$ cho cả $k=0$, được tổng $K$ bước bằng $\tfrac54K$ ở cả hai trạng thái và mất hiệu $\tfrac32$.
 :::
 
 ### Bài tập 03.24. Mô hình hóa robot ba mức pin
@@ -863,7 +863,7 @@ Chính sách $\pi$: ở $\mathrm H$ và ở $\mathrm V$ luôn Tìm; ở $\mathrm
 
 - (a) Lập bộ MDP hữu hạn: $\mathcal S^+$, $\mathcal A(s)$ cho mỗi $s$, $\mathcal R$; xác định loại nhiệm vụ và lý do cần $\gamma<1$.
 - (b) Lập bảng $p(s',r\mid s,a)$ gồm mọi hàng có xác suất dương, kiểm tra điều kiện chuẩn hóa của từng cặp, và tính $r(\mathrm L,\mathrm{tim})$.
-- (c) Lập $P^\pi$, $r^\pi$ theo thứ tự $\mathrm H$, $\mathrm V$, $\mathrm L$; viết hệ $(I-\gamma P^\pi)v=r^\pi$, giải và kiểm tra lại.
+- (c) Lập $P_\pi$, $r_\pi$ theo thứ tự $\mathrm H$, $\mathrm V$, $\mathrm L$; viết hệ $(I-\gamma P_\pi)v=r_\pi$, giải và kiểm tra lại.
 - (d) Giải thích vì sao $v_\pi(\mathrm V)$, $v_\pi(\mathrm L)$ trùng giá trị $(\tfrac{13}4,\tfrac74)$ của robot hai mức pin dưới chính sách chia đều tại pin thấp.
 - (e) Giả sử xác suất cạn pin khi Tìm ở $\mathrm L$ tăng theo số lần Tìm liên tiếp ở $\mathrm L$ ngay trước đó, nhưng luôn nhỏ hơn $1$. Xét chính sách $\pi'$ trùng $\pi$ ở $\mathrm H$ và $\mathrm V$, còn ở $\mathrm L$ chọn Tìm, Chờ, Sạc, mỗi hành động xác suất $\tfrac13$. Với $\pi'$, xác định định nghĩa bị vi phạm khi trạng thái chỉ là mức pin, bước của chứng minh phương trình Bellman mất căn cứ, và cách sửa biểu diễn trạng thái.
 :::
@@ -897,8 +897,8 @@ Ba cặp Tìm có hai hàng, mỗi hàng $\tfrac12$, tổng $1$; năm cặp còn
 
 $$
 \begin{aligned}
-P^\pi&=\begin{pmatrix}1/2&1/2&0\\0&1/2&1/2\\0&1/2&1/2\end{pmatrix},\\
-r^\pi&=\begin{pmatrix}2\\2\\1/2\end{pmatrix}.
+P_\pi&=\begin{pmatrix}1/2&1/2&0\\0&1/2&1/2\\0&1/2&1/2\end{pmatrix},\\
+r_\pi&=\begin{pmatrix}2\\2\\1/2\end{pmatrix}.
 \end{aligned}
 $$
 
@@ -918,7 +918,7 @@ Trừ phương trình thứ ba khỏi phương trình thứ hai: $v_{\mathrm V}-
 
 **Câu (e).** Dưới $\pi'$, xét hai lịch sử cùng kết thúc ở $\mathrm L$ rồi chọn Tìm: một lịch sử vừa từ $\mathrm V$ xuống $\mathrm L$, chưa Tìm lần nào ở $\mathrm L$; lịch sử kia vừa Tìm hai lần liên tiếp ở $\mathrm L$ và vẫn ở $\mathrm L$. Cả hai có xác suất dương, vì $\pi'$ Tìm ở $\mathrm V$ với xác suất $1$, Tìm ở $\mathrm L$ với xác suất $\tfrac13$, và mỗi lần Tìm ở $\mathrm L$ pin còn đủ với xác suất dương. Hai lịch sử cho hai xác suất cạn pin khác nhau, tức hai phân phối phản hồi khác nhau. Đẳng thức (1.2) của Định nghĩa 03.2 sai, nên không có hàm động lực $p$ chỉ phụ thuộc $(s,a)$ theo Định nghĩa 03.4. Bước mất căn cứ là Bổ đề 03.20: kỳ vọng của phần tương lai sau một lịch sử kết thúc ở $\mathrm L$ không còn là một số $v_\pi(\mathrm L)$ chung, nên Định lý 03.21 không áp dụng. Cách sửa: thêm vào trạng thái số lần Tìm liên tiếp ở $\mathrm L$, chặn trên bởi một số $N$ nếu sau $N$ lần xác suất cạn pin không tăng nữa; trạng thái $(\mathrm L,k)$ với $k=0,\dots,N$ giữ cho tập trạng thái hữu hạn.
 
-**Kiểm tra lại.** Mỗi hàng của $P^\pi$ có tổng $1$. Hiệu $v_{\mathrm H}-v_{\mathrm V}=\tfrac12$ nhỏ hơn hiệu $v_{\mathrm V}-v_{\mathrm L}=\tfrac32$: $\mathrm H$ và $\mathrm V$ có cùng thưởng kỳ vọng $2$ dưới $\pi$, và trừ hai phương trình đầu theo (4.5) được $v_{\mathrm H}-v_{\mathrm V}=\tfrac14(v_{\mathrm H}-v_{\mathrm V})+\tfrac14(v_{\mathrm V}-v_{\mathrm L})$. Với chính sách $\pi$ của đề, robot không bao giờ Tìm ở $\mathrm L$, nên bộ đếm của câu (e) luôn bằng $0$ và các giá trị của câu (c) không đổi. Ba lỗi thường gặp: quên hàng $(\mathrm H,-3)$ của Tìm từ $\mathrm L$, khi đó nhóm $(\mathrm L,\mathrm{tim})$ có tổng $\tfrac12$ và vi phạm (1.3); dùng trọng số $\tfrac13$ cho cả ba hành động ở $\mathrm L$ khi lập $P^\pi$, tức đánh giá chính sách $\pi'$ thay vì $\pi$; cho Sạc từ $\mathrm L$ về $\mathrm H$ như ở robot hai mức, được $v=(\tfrac{49}{13};\,\tfrac{43}{13};\,\tfrac{25}{13})$ thay vì $(\tfrac{15}4;\,\tfrac{13}4;\,\tfrac74)$.
+**Kiểm tra lại.** Mỗi hàng của $P_\pi$ có tổng $1$. Hiệu $v_{\mathrm H}-v_{\mathrm V}=\tfrac12$ nhỏ hơn hiệu $v_{\mathrm V}-v_{\mathrm L}=\tfrac32$: $\mathrm H$ và $\mathrm V$ có cùng thưởng kỳ vọng $2$ dưới $\pi$, và trừ hai phương trình đầu theo (4.5) được $v_{\mathrm H}-v_{\mathrm V}=\tfrac14(v_{\mathrm H}-v_{\mathrm V})+\tfrac14(v_{\mathrm V}-v_{\mathrm L})$. Với chính sách $\pi$ của đề, robot không bao giờ Tìm ở $\mathrm L$, nên bộ đếm của câu (e) luôn bằng $0$ và các giá trị của câu (c) không đổi. Ba lỗi thường gặp: quên hàng $(\mathrm H,-3)$ của Tìm từ $\mathrm L$, khi đó nhóm $(\mathrm L,\mathrm{tim})$ có tổng $\tfrac12$ và vi phạm (1.3); dùng trọng số $\tfrac13$ cho cả ba hành động ở $\mathrm L$ khi lập $P_\pi$, tức đánh giá chính sách $\pi'$ thay vì $\pi$; cho Sạc từ $\mathrm L$ về $\mathrm H$ như ở robot hai mức, được $v=(\tfrac{49}{13};\,\tfrac{43}{13};\,\tfrac{25}{13})$ thay vì $(\tfrac{15}4;\,\tfrac{13}4;\,\tfrac74)$.
 :::
 
 ### Bài tập 03.25. Xác suất cứu hộ và lựa chọn tại pin thấp
@@ -941,7 +941,7 @@ Robot thu gom lon hai mức pin có các phản hồi: Tìm từ $\mathrm H$ cho
 :::
 
 ::: solution Lời giải Bài tập 03.25
-**Câu (a).** Tham số $\rho$ chỉ xuất hiện ở cặp $(\mathrm L,\mathrm{tim})$, mà $\pi(\mathrm{tim}\mid\mathrm L)=0$. Theo cùng lập luận như lời giải Bài tập 03.17(b), $P^\pi$ và $r^\pi$ không phụ thuộc $\rho$, nên theo Định lý 03.28, $v_\pi=(\tfrac{13}4,\tfrac74)$ với mọi $\rho\in[0,1]$.
+**Câu (a).** Tham số $\rho$ chỉ xuất hiện ở cặp $(\mathrm L,\mathrm{tim})$, mà $\pi(\mathrm{tim}\mid\mathrm L)=0$. Theo cùng lập luận như lời giải Bài tập 03.17(b), $P_\pi$ và $r_\pi$ không phụ thuộc $\rho$, nên theo Định lý 03.28, $v_\pi=(\tfrac{13}4,\tfrac74)$ với mọi $\rho\in[0,1]$.
 
 **Câu (b).** Theo (1.6), $r(\mathrm L,\mathrm{tim})=(1-\rho)\cdot2+\rho\cdot(-3)=2-5\rho$. Theo (4.6):
 

@@ -2008,3 +2008,39 @@ Deck `lecture-03-qua-trinh-quyet-dinh-markov.html` (đã commit) còn ký hiệu
 ### Quyết định của điều phối viên (2026-10-14, đồng bộ chéo ghi chú)
 
 - Kiểm độc lập: `note_check.py` sạch; viewer 1600×900 và 390×844: 0 lỗi KaTeX, 0 lỗi console; không còn $P^\pi$, $r^\pi$, $v_H$, $v_L$; `git diff --check` sạch. Chấp thuận dùng $\eta$ cho dung sai của Thuật toán 03.29 (tránh trùng $\theta$ là góc cột CartPole trong Tình huống 03.2 và Bài tập 03.22). Quyết định: **chấp nhận**; commit `fix(materials-03)`. Deck 03, `exercises.md`, `chapter-structure.svg`, outline và storyboard đổi ký hiệu theo ở lượt khép đợt.
+
+## Đợt sửa 2026-10-14 — Khép đợt: ký hiệu P_π, r_π, v_H, η
+
+### Tác tử và phạm vi
+
+- Vai: biên tập Bài 03 (viết tệp), theo brief của điều phối viên. Loại `general-purpose`, Claude Opus 5.5 (`claude-opus-5-5`), mức `high` (theo brief; điều phối viên xác nhận bằng lệnh gọi tác tử). `no-ai-slop` chế độ Edit: chỉ đổi ký hiệu và bỏ một vế câu, không viết câu mới. Không commit, không push.
+- Tệp sửa: deck `lecture-03-qua-trinh-quyet-dinh-markov.html`, `materials/lec-03/exercises.md`, `img/lec-03/chapter-structure.svg`, `planning/lec-03/outline.md`, `storyboard.md` và mục này. Không sửa `lecture-note.md` (đã commit với ký hiệu mới), CSS hay tệp bài khác. Bản trước khi sửa và script thay thế: `scratchpad/kd03/`.
+- Đầu vào: mục "Đề nghị sửa deck" và "Đề nghị sửa bài tập" của "Đợt sửa 2026-10-14 — Đồng bộ chéo ghi chú"; quyết định của điều phối viên chấp thuận $\eta$ cho dung sai.
+
+### Thay đổi
+
+Quy tắc thay theo thứ tự: `P^\pi_{…}` → `(P_\pi)_{…}`; `(P^\pi)^k` → `(P_\pi)^k`; `P^\pi` → `P_\pi`; `r^\pi` → `r_\pi`; `v_H`, `v_L` → `v_{\mathrm H}`, `v_{\mathrm L}`; trong deck và outline thêm `\delta` → `\eta`.
+
+| Tệp | Số chỗ | Ghi chú |
+|---|---|---|
+| Deck | 125 chỗ trên 47 dòng, đúng 18 trang của bảng đề nghị: $P_\pi$ 39 (6 phần tử ma trận viết $(P_\pi)_{…}$, 2 lũy thừa $(P_\pi)^k$), $r_\pi$ 27, $v_{\mathrm H}$ 26, $v_{\mathrm L}$ 28, $\eta$ 5 (`06-07c` mặt 1, ghi chú 1; `06-07d` mặt 3) | Số chỗ từng trang, phần mặt và ghi chú, khớp bảng đề nghị. Bảng đề nghị ghi 5 phần tử ma trận; đếm lại được 6 vì ghi chú `06-06` có hai phần tử $(P_\pi)_{\mathrm L\mathrm H}$, $(P_\pi)_{\mathrm L\mathrm L}$ trên cùng dòng |
+| `exercises.md` | 72 chỗ trên 38 dòng: $P_\pi$ 47 (9 phần tử ma trận, 4 lũy thừa), $r_\pi$ 25; dòng 33 bỏ vế "; ghi chú viết $v_H$, $v_L$" | Đề nghị ghi 8 phần tử ma trận; đếm lại được 9 trên 8 dòng (Bài tập 03.21 có $(P_\pi)_{ss'}$ hai lần trên dòng 612). Bài tập 03.22 giữ $\theta$, $\dot\theta$ cho góc cột |
+| `chapter-structure.svg` | 2 dòng | Dòng 28: hai `tspan` chỉ số trên đổi thành `baseline-shift="sub"`; `<desc>`: "(I − γP_π) v = r_π", khớp `alt` của ghi chú |
+| `outline.md` | 6 dòng | Mục tiêu 5, đối tượng và ký hiệu chung, chính sách chia đều, ba dòng bảng thuật ngữ ($v_{\mathrm H}$, $v_{\mathrm L}$; $P_\pi$, $r_\pi$; $\eta$, $\rho$) |
+| `storyboard.md` | 5 dòng | Hàng K7, K9, K10 của bảng cụm; mục `07-01`, `07-02b` |
+
+Không đổi chữ, số liệu, thứ tự hay mã trang nào khác.
+
+### Kết quả kiểm tra
+
+- `grep` sáu tệp (deck, `exercises.md`, SVG, outline, storyboard; review-log chỉ còn ký hiệu cũ trong các mục lịch sử): không còn `P^\pi`, `r^\pi`, `v_H`, `v_L`, `\delta`, "P^π", "r^π" hay `tspan` chỉ số trên cho $\pi$; không có chỉ số dưới chồng `P_\pi_`, `r_\pi_`.
+- `density.py`: kết quả trước và sau trùng từng dòng trên cả 72 trang (thay đổi chỉ nằm trong KaTeX). Các trang vượt ngưỡng của script giữ nguyên như trước đợt này.
+- `deck_check.py` (cổng 8799, server cwd `/data/tqlong/rl-plan`), 1600×900 và 390×844: 72 trang, 0 lỗi console, 0 yêu cầu ra ngoài, 0 yêu cầu lỗi, 0 `.katex-error`, không cuộn ngang, 6 trang tiêu đề mạch. Cờ tràn khung của script là báo giả do MathML ẩn (như các đợt trước); đo lại 18 trang đổi, bỏ qua `.katex-mathml` và ghi chú diễn giả: tràn 0 px ở cả hai cỡ; cỡ chữ thân nhỏ nhất 0,80em, trừ bảng `07-01b` 0,752em và dòng "Nguồn:" của `07-02b` 0,656em, cả hai như trước. Đã xem ảnh `06-07d` (1600 và 390 px) và `07-02b`, `06-06` (1600 px): $(P_\pi)_{ss'}$, $r_\pi$, $\eta$, $v_{\mathrm H}$, $v_{\mathrm L}$ hiển thị đúng, không chồng chữ.
+- `note_check.py exercises.md`: 19 bài tập, 57 khối (19 exercise, 19 hint, 19 solution), không trùng; khoảng trống 03.9–03.14 là các bài chỉ ở ghi chú; 0 dấu `\(`, `\[`.
+- `check_note.py 03 … exercises` (cổng 8766): 1600×900 và 390×844 đều 0 lỗi KaTeX, 57 khối, 0 lỗi console, 0 yêu cầu ra ngoài, không tràn.
+- SVG: XML hợp lệ (`xml.dom.minidom`); đã xem ảnh SVG ở cỡ gốc và trong viewer ghi chú (0 lỗi console): nhãn "(I − γP_π) v = r_π" với $\pi$ là chỉ số dưới, cùng cỡ chữ như $v_\pi$ ở các khối khác.
+- `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-14, khép đợt Bài 03)
+
+- Kiểm độc lập: deck và `exercises.md` không còn $P^\pi$, $r^\pi$, $v_H$, $v_L$; Playwright hai cỡ 0 lỗi; viewer bài tập 0 lỗi KaTeX; SVG hợp lệ; ảnh 06-07d xem trực tiếp; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(lecture-03)`.

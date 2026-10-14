@@ -10,14 +10,14 @@ Sinh viên năm 3 đã học xác suất, kỳ vọng có điều kiện, đại
 2. Tính lợi tức chiết khấu và cận $M/(1-\gamma)$ (Bài tập 03.3, 03.10, 03.12).
 3. Phân biệt mô hình, chính sách, $v_\pi$, $q_\pi$; tính kỳ vọng trên cây hai bước (Bài tập 03.4, 03.5).
 4. Chứng minh phương trình Bellman kỳ vọng cho $v_\pi$, $q_\pi$; chỉ ra bước dùng tính Markov và tính dừng (Bài tập 03.6, 03.7, 03.11).
-5. Lập, giải, kiểm tra hệ $(I-\gamma P^\pi)v=r^\pi$ (Bài tập 03.8, 03.9, 03.13, 03.14).
+5. Lập, giải, kiểm tra hệ $(I-\gamma P_\pi)v=r_\pi$ (Bài tập 03.8, 03.9, 03.13, 03.14).
 
 Số hiệu trong danh sách trên là của ghi chú. Bài của `materials/lec-03/exercises.md` theo mục tiêu (dòng "Mức độ" của từng bài; ghi chú diễn giả `01-01c`): mục tiêu 1: 03.1, 03.2, 03.15, 03.22, 03.24; mục tiêu 2: 03.3, 03.18, 03.20, 03.23; mục tiêu 3: 03.4, 03.5, 03.16, 03.17; mục tiêu 4: 03.6, 03.7, 03.17, 03.19, 03.24, 03.25; mục tiêu 5: 03.8, 03.20, 03.21, 03.23, 03.24, 03.25.
 
 ## 2. Khung lý thuyết chung
 
 - **Bài toán trung tâm.** Tính giá trị dài hạn của một chính sách khi phản hồi của môi trường là ngẫu nhiên (bài toán dự đoán, có mô hình).
-- **Đối tượng và ký hiệu chung.** MDP hữu hạn $\mathcal M=(\mathcal S^+,\{\mathcal A(s)\},\mathcal R,p)$; hệ số chiết khấu $\gamma$ đứng ngoài $\mathcal M$; lợi tức $G_t$; chính sách Markov dừng $\pi(a\mid s)$; $\Pr_\pi$, $\mathbb E_\pi$; $v_\pi$, $q_\pi$ (chữ thường, theo Sutton và Barto); $P^\pi$, $r^\pi$, véc-tơ $v$.
+- **Đối tượng và ký hiệu chung.** MDP hữu hạn $\mathcal M=(\mathcal S^+,\{\mathcal A(s)\},\mathcal R,p)$; hệ số chiết khấu $\gamma$ đứng ngoài $\mathcal M$; lợi tức $G_t$; chính sách Markov dừng $\pi(a\mid s)$; $\Pr_\pi$, $\mathbb E_\pi$; $v_\pi$, $q_\pi$ (chữ thường, theo Sutton và Barto); $P_\pi$, $r_\pi$, véc-tơ $v$.
 - **Giả thiết.** Trạng thái có tính Markov; $p$ và $\pi$ không đổi theo thời gian; các tập hữu hạn; phần thưởng bị chặn; $0\le\gamma<1$ (nhiệm vụ có kết thúc với $\gamma=1$ chỉ nêu ở phạm vi, không chứng minh).
 - **Chuỗi định nghĩa → kết quả → phương pháp.** Tính Markov (Định nghĩa 03.2) → hàm động lực (Định nghĩa 03.4), MDP hữu hạn (Định nghĩa 03.7) → lợi tức (Định nghĩa 03.9), cận (Mệnh đề 03.11) → chính sách (Định nghĩa 03.13), $v_\pi$, $q_\pi$ (Định nghĩa 03.15, 03.16) → hệ thức đệ quy, hai tầng kỳ vọng, tính Markov của phần tương lai (Bổ đề 03.18–03.20) → Bellman cho $v_\pi$ (Định lý 03.21), quan hệ $v$–$q$ (Mệnh đề 03.22, 03.23), Bellman cho $q_\pi$ (Hệ quả 03.24) → MRP cảm sinh (Định nghĩa 03.26), dạng ma trận (Mệnh đề 03.27), nghiệm duy nhất (Định lý 03.28) → Thuật toán 03.29.
 - **Giới hạn.** Cần biết $p$ (Bài 05–06 bỏ giả thiết này); chi phí giải trực tiếp cỡ $n^3$ (Bài 04 dùng phép lặp); đánh giá một chính sách chưa cho cách chọn chính sách tốt hơn (Bài 04); trạng thái phải có tính Markov (Tình huống 03.2, CartPole rời rạc hóa; Bài 07).
@@ -71,7 +71,7 @@ Các mức thưởng của robot và các chính sách cụ thể là số liệ
 | L | cho | L | 1 | 1 |
 | L | sac | H | 0 | 1 |
 
-- **Chính sách chia đều tại pin thấp:** ở H luôn Tìm; ở L Chờ hoặc Sạc, mỗi hành động 1/2; $\gamma=1/2$. Kết quả: kỳ vọng hai bước từ H là $21/8$, từ L là $9/8$; $v_\pi=(13/4,\,7/4)$; $q_\pi(\mathrm L,\cdot)=(3/4,\,15/8,\,13/8)$; $q_\pi(\mathrm H,\mathrm{tim})=13/4$, $q_\pi(\mathrm H,\mathrm{cho})=21/8$; $P^\pi$ có hai hàng $(1/2,\,1/2)$, $r^\pi=(2,\,1/2)$; $(I-\gamma P^\pi)^{-1}$ có hàng $(3/2,\,1/2)$, $(1/2,\,3/2)$.
+- **Chính sách chia đều tại pin thấp:** ở H luôn Tìm; ở L Chờ hoặc Sạc, mỗi hành động 1/2; $\gamma=1/2$. Kết quả: kỳ vọng hai bước từ H là $21/8$, từ L là $9/8$; $v_\pi=(13/4,\,7/4)$; $q_\pi(\mathrm L,\cdot)=(3/4,\,15/8,\,13/8)$; $q_\pi(\mathrm H,\mathrm{tim})=13/4$, $q_\pi(\mathrm H,\mathrm{cho})=21/8$; $P_\pi$ có hai hàng $(1/2,\,1/2)$, $r_\pi=(2,\,1/2)$; $(I-\gamma P_\pi)^{-1}$ có hàng $(3/2,\,1/2)$, $(1/2,\,3/2)$.
 - **Chính sách luôn Chờ tại pin thấp:** $v=(10/3,\,2)$.
 - **Robot với rủi ro cứu hộ thấp hơn** (Tìm từ L: $(\mathrm L,2)$ xác suất 3/4, $(\mathrm H,-3)$ xác suất 1/4): $v_\pi$ không đổi; $r(\mathrm L,\mathrm{tim})=3/4$; $q_\pi(\mathrm L,\mathrm{tim})=29/16$.
 - **Trạng thái thiếu phòng làm việc** (Ví dụ 03.4, phản ví dụ, số liệu sư phạm tự xây dựng).
@@ -97,10 +97,10 @@ Mọi số trên được tính lại bằng `fractions` của Python trong đ�
 | $G_0^{[2]}$ | `04-04` | Cây hai bước |
 | $v_\pi$ | `04-05` | Cây hai bước kéo dài |
 | $q_\pi$ | `04-07` | Ba thí nghiệm `04-06` |
-| $v_H$, $v_L$ | `05-10b` | Viết tắt của $v_\pi(\mathrm H)$, $v_\pi(\mathrm L)$ |
-| $P^\pi$, $r^\pi$, chuỗi Markov, MRP | `06-06` | Bảng gộp nhánh `06-05` |
+| $v_{\mathrm H}$, $v_{\mathrm L}$ | `05-10b` | Viết tắt của $v_\pi(\mathrm H)$, $v_\pi(\mathrm L)$ |
+| $P_\pi$, $r_\pi$, chuỗi Markov, MRP | `06-06` | Bảng gộp nhánh `06-05` |
 | $v\in\mathbb R^n$, $I$, $\lVert\cdot\rVert_\infty$ | `06-07`, `06-07b` | Hệ hai phương trình đã giải |
-| $\delta$, $\rho$ | `06-07c`, `06-07d` | Thuật toán |
+| $\eta$, $\rho$ | `06-07c`, `06-07d` | Thuật toán |
 
 ## 7. Bảng thuật ngữ Việt–Anh của bài
 
