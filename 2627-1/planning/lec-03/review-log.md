@@ -2044,3 +2044,15 @@ Không đổi chữ, số liệu, thứ tự hay mã trang nào khác.
 ### Quyết định của điều phối viên (2026-10-14, khép đợt Bài 03)
 
 - Kiểm độc lập: deck và `exercises.md` không còn $P^\pi$, $r^\pi$, $v_H$, $v_L$; Playwright hai cỡ 0 lỗi; viewer bài tập 0 lỗi KaTeX; SVG hợp lệ; ảnh 06-07d xem trực tiếp; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(lecture-03)`.
+
+## Đợt sửa 2026-10-14 — Khép đợt: từ khóa mạch 5
+
+- Vai: biên tập nhỏ deck (agent `general-purpose`, Opus 5.5, effort high; `no-ai-slop` Edit). Không commit.
+- Vấn đề: ở 1600×900, dòng `p.strand-keys` của `L03R-05-00` ngắt giữa cụm "Quan hệ giữa hai hàm | giá trị".
+- Sửa (chỉ `p.strand-keys` của `L03R-05-00`): rút "Quan hệ giữa hai hàm giá trị" thành "Quan hệ hai hàm giá trị"; nối các chữ trong mỗi cụm bằng `&nbsp;` và gắn dấu "·" vào cụm đứng trước (`&nbsp;· `), nên dòng chỉ ngắt sau "·" và dấu "·" không mở đầu dòng mới. Giữ 4 từ khóa, không KaTeX. Dòng dẫn, ghi chú diễn giả và các trang khác không đổi.
+- `storyboard.md`: không đổi (mục `05-00` không ghi nguyên văn dòng từ khóa).
+- Kiểm tra: `deck_check.py … L03R-05-00` (cổng 8799, cwd server `/data/tqlong/rl-plan`), 1600×900 và 390×844: 72 trang, 0 lỗi console, 0 yêu cầu ra ngoài, 0 yêu cầu lỗi, 0 `.katex-error`, không cuộn ngang; `L03R-05-00` không bị cờ tràn. Đã xem ảnh hai cỡ: dòng 1 "Hệ thức đệ quy · Hai tầng kỳ vọng · Tính Markov của phần tương lai ·", dòng 2 "Quan hệ hai hàm giá trị"; không chồng chữ. `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-14, khép đợt: từ khóa mạch 5)
+
+- Kiểm độc lập: Playwright hai cỡ 0 lỗi, trang L03R-05-00 không tràn; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(lecture-03)`.
