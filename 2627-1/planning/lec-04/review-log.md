@@ -2184,3 +2184,34 @@ Phạm vi: mọi câu thêm hoặc sửa trong bảng trên. Đối chiếu `eva
 ### Quyết định của điều phối viên (2026-10-14, khép đợt Bài 04)
 
 - Notebook CartPole viết `m` cho ℓ và `theta` cho φ: notebook không thuộc phạm vi đợt sửa 2026-10-12 (deck, ghi chú, bài tập); ghi chú và `exercises.md` đã nêu quy ước đối chiếu. Quyết định: **để lại** cho đợt sửa notebook, không sửa trong đợt này.
+
+## Đợt sửa 2026-10-14 — Khép đợt: ký hiệu trong notebook
+
+Vai: biên tập nhỏ notebook `materials/lec-04/thuc-hanh-cartpole-quy-hoach-dong.ipynb`, chỉ ô Markdown (agent `general-purpose` do điều phối viên tạo; mô hình và mức nỗ lực do điều phối viên ghi theo lời gọi công cụ). Không sửa ô mã, không xóa output, không chạy lại notebook. Sửa bằng script Python đọc/ghi JSON (`json.dumps(indent=1, ensure_ascii=False)`, đã kiểm ghi lại tệp gốc cho đúng từng byte trước khi sửa).
+
+| Vị trí | Vấn đề | Sửa | Trạng thái |
+| --- | --- | --- | --- |
+| 18 ô Markdown (chỉ số ô 4, 6, 13, 16, 18, 20, 22, 23, 25, 27, 40, 41, 68, 70, 80, 84, 90, 93) | Notebook viết $\theta$, $\dot\theta$, $b_\theta$, $b_{\dot\theta}$, $m_\theta$, $m_{\dot\theta}$ cho góc cột; ghi chú (Mục 5.4, Ví dụ 04.17), `exercises.md` và deck viết $\phi$, $\dot\phi$, $b_\phi$ | Thay mọi `\theta` trong ô Markdown bằng `\phi` (77 chỗ). Dùng `\phi` như ghi chú và deck, không dùng `\varphi`, để glyph khớp. Notebook không dùng $\theta$ cho ngưỡng dừng (ngưỡng là $\eta$), nên không có chỗ nào phải giữ | đã sửa |
+| Ô 93, nhiệm vụ 7 | "$m$ lần áp dụng $T_\pi$ … với $m\in\{1,5,20\}$"; ghi chú và `exercises.md` viết $\ell$ | Đổi hai chỗ thành $\ell$. Giữ $m$ ở nhiệm vụ 2 ("cho $m$ khoảng", đi cùng biểu thức mã `m + 1`) và $m_j$ ở mục 4 (số điểm cắt), vì hai chữ đó không phải số lần áp dụng $T_\pi$ | đã sửa |
+| Ô 0, sau bảng ký hiệu | Mã, output và nhãn đồ thị vẫn viết `theta`, `theta_dot`, $\theta$, $\dot\theta$ | Thêm một câu quy ước: "Trong mã, output và nhãn đồ thị, biến `theta` (cùng `theta_dot`, $\theta$, $\dot\theta$) là góc cột $\phi$ và vận tốc góc $\dot\phi$; nhiệm vụ 7 ở phần 10 viết $\ell$ cho số lần áp dụng $T_\pi$ mỗi vòng của lặp chính sách cải biên, không có tham số `m` trong mã." Câu brief đề nghị nói "tham số `m` của nhiệm vụ 7", nhưng mã không có tham số `m` cho nhiệm vụ 7 (nhiệm vụ này không có khung hàm), nên câu được sửa cho đúng | đã sửa |
+
+Kéo theo, ngoài phạm vi ghi của đợt này: ghi chú (dòng 68 và Mục 5.4, dòng 1497) và `exercises.md` (dòng 46) còn nói notebook viết $\theta$, $b_\theta$ cho góc cột và $m$ cho $\ell$. Sau đợt này, ô Markdown của notebook đã viết $\phi$ và $\ell$; chỉ mã và output còn `theta`. Để điều phối viên quyết định có sửa các câu đó không.
+
+Kiểm: `json.load` đọc được; script so sánh trước/sau: 42 ô mã giống hệt (cả `outputs`, `execution_count`, `metadata`, `id`), mọi ô Markdown chỉ khác trường `source`, metadata notebook không đổi; sau sửa không còn `\theta` trong ô Markdown ngoài câu quy ước; `git diff --check` sạch. Tự kiểm `no-ai-slop` (Edit) trên câu quy ước thêm mới: đạt `eval.md` (không câu hỏi tu từ, không "hãy", tài liệu không làm chủ ngữ).
+
+### Bổ sung: câu mô tả notebook trong ghi chú và tệp bài tập
+
+Điều phối viên chấp nhận `\phi` và câu quy ước, rồi mở rộng phạm vi ghi sang `lecture-note.md` và `exercises.md` để các câu mô tả notebook khớp hiện trạng. Không đổi số hiệu.
+
+| Vị trí | Trước | Sau | Trạng thái |
+| --- | --- | --- | --- |
+| Ghi chú, dòng 68 (câu tương ứng ký hiệu) | Notebook viết chữ theta cho góc cột và $m$ cho số lần áp dụng $T_\pi$; "chương này dùng $\theta$, $\kappa$, $\phi$, $\dot\phi$ và $\ell$, vì $m$ đã chỉ số hành động tối đa" | Notebook viết $\eta$, $\varepsilon$, chương này viết $\theta$, $\kappa$; ô Markdown của notebook viết $\phi$, $\dot\phi$, $b_\phi$ và $\ell$ như chương; chỉ mã, dòng in và nhãn đồ thị còn ghi `theta`, $\theta$; nhiệm vụ 7 không có tham số `m` trong mã | đã sửa |
+| Ghi chú, Mục 5.4 (dòng 1497) | "Bài thực hành viết góc cột là $\theta$ … $b_\theta$" | Bài thực hành cũng viết $\phi$, $b_\phi$; riêng mã, dòng in và nhãn đồ thị ghi `theta` hoặc $\theta$, còn ở chương này $\theta$ là ngưỡng dừng | đã sửa |
+| Ghi chú, Hướng dẫn đọc thêm, mục Lặp chính sách cải biên (dòng 1794) | "đề nghị thử $\ell\in\{1,5,20\}$ và viết $m$ cho $\ell$" | Bỏ vế "và viết $m$ cho $\ell$" vì notebook nay viết $\ell$. Dòng này không nằm trong danh sách của điều phối viên nhưng cũng là câu mô tả notebook, nếu giữ sẽ sai | đã sửa |
+| `exercises.md`, Hướng dẫn và ký hiệu (dòng 46) | Notebook viết biến `theta` cho góc cột và $m$ cho số lần áp dụng $T_\pi$; "tệp này viết $\theta$, $\kappa$ và $\ell$, vì trong ghi chú $m$ là số hành động tối đa" | Notebook viết $\eta$, $\varepsilon$, tệp này viết $\theta$, $\kappa$; ô Markdown của notebook viết $\phi$, $\dot\phi$, $b_\phi$ và $\ell$ như ghi chú; chỉ mã, dòng in và nhãn đồ thị còn ghi `theta`, $\theta$; nhiệm vụ 7 không có tham số `m` trong mã | đã sửa |
+
+Quét lại sau sửa: hai tệp không còn "chữ theta", $b_\theta$ hay "viết $m$ cho". Kiểm: `note_check.py` cho ghi chú (25 692 từ; bộ đếm chung 35, Ví dụ 18, Bài tập 9, không trống, không trùng; 0 dấu `\(`/`\[`) và cho tệp bài tập (14 bài; khoảng trống 04.7–04.9 có sẵn từ trước, vì ba bài này chỉ có trong ghi chú theo bộ đếm chung); `check_note.py 04 lecture-04-giai-mdp-bang-quy-hoach-dong.html` và bản `exercises` (server `reloadserver` cổng 8766, cwd kho), 1600×900 và 390×844: 0 lỗi KaTeX, 96 và 42 khối, 0 lỗi console, 0 yêu cầu hỏng hoặc ra ngoài, không tràn ngang; `git diff --check` sạch. Tự kiểm `no-ai-slop` (Edit) trên bốn câu sửa: đạt `eval.md` (không câu hỏi tu từ, không "hãy", tài liệu không làm chủ ngữ, không thêm khẳng định mới).
+
+### Quyết định của điều phối viên (2026-10-14, khép đợt: ký hiệu notebook)
+
+- Thay quyết định "để lại" trước đó: ô Markdown của notebook CartPole nay dùng $\phi$, $\dot\phi$, $b_\phi$, $\ell$; 42 ô mã và output giữ nguyên từng byte (điều phối viên so sánh với HEAD); ghi chú và `exercises.md` mô tả đúng hiện trạng; viewer 0 lỗi KaTeX; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(materials-04)`.
