@@ -231,7 +231,7 @@ Phương trình Bellman tối ưu của Bài 06 viết trên trạng thái của
 
 **Kiểm tra nhanh.** Với $\mathbf q_\theta(o)=(1;\ 4;\ 4;\ 0)$ và $\epsilon_{\mathrm{exp}}=0{,}2$, tập hành động tham lam là $\mathcal G_\theta(o)=\{a_2,a_3\}$; phá hòa chia đều cho $a_2$ xác suất $0{,}2/4+0{,}8/2=0{,}45$, và $a_1$, $a_4$ mỗi hành động $0{,}05$.
 
-Mạng giá trị hành động cho mọi giá trị cần dùng từ một lần tính. Chúng ta còn hai việc. Thứ nhất, kiểm tra chồng bốn khung của Ví dụ 08.2 có đủ Markov để Nhận xét 08.2 áp dụng hay không. Thứ hai, mục tiêu $R_{t+1}+\gamma\max_{a'}Q_\theta(O_{t+1},a')$ được tính bằng chính $\theta$ đang học, nên một bước cập nhật có thể đổi cả dự đoán lẫn mục tiêu; chúng ta xử lý điểm này ở mục "Đích di động và mạng mục tiêu".
+Mạng giá trị hành động cho mọi giá trị cần dùng từ một lần tính. Chúng ta còn hai việc. Thứ nhất, kiểm tra chồng bốn khung của Ví dụ 08.2 có đủ Markov để Nhận xét 08.2 áp dụng hay không. Thứ hai, mục tiêu $R_{t+1}+\gamma\max_{a'}Q_\theta(O_{t+1},a')$ được tính bằng chính $\theta$ đang học, nên một bước cập nhật có thể đổi cả dự đoán lẫn mục tiêu; chúng ta xử lý điểm này ở hai mục "Một tham số tạo cả dự đoán lẫn đích" và "Mạng mục tiêu".
 
 ### Bốn khung và tính Markov
 
@@ -257,7 +257,7 @@ Ví dụ 08.4 chỉ xét một vật chuyển động thẳng đều và luôn h
 
 Đến đây quan sát và giao diện của mạng đã cố định. Mục tiêu $R_{t+1}+\gamma\max_{a'}Q_\theta(O_{t+1},a')$ vẫn được tính bằng chính $\theta$ đang học; chúng ta xét hệ quả của điều này ở mục kế tiếp.
 
-### Đích di động và mạng mục tiêu
+### Một tham số tạo cả dự đoán lẫn đích
 
 Trong Q-learning dạng bảng, cập nhật ô $(S_t,A_t)$ không đổi ô ở $S_{t+1}$ khi $S_{t+1}\ne S_t$, nên mục tiêu của mẫu chuyển giữ nguyên sau bước cập nhật. Với mạng giá trị hành động, dự đoán $Q_\theta(O_t,A_t)$ và phần bootstrap $\max_{a'}Q_\theta(O_{t+1},a')$ dùng chung $\theta$, nên một bước theo $\theta$ đổi cả hai. Ví dụ sau đo sự thay đổi này trong trường hợp nhỏ nhất: một tham số duy nhất.
 
@@ -275,18 +275,43 @@ Hình vẽ hai giá trị của Ví dụ 08.5 trên một trục. Hình tròn l�
 
 Lặp lại cập nhật trên cùng mẫu chuyển cho $\theta_{n+1}=\theta_n+0{,}5\,(1+0{,}9\,\theta_n-\theta_n)=0{,}95\,\theta_n+0{,}5$. Dãy này hội tụ về nghiệm của $\theta=1+0{,}9\,\theta$, tức $\theta=10$, vì $\theta_{n+1}-10=0{,}95\,(\theta_n-10)$; mỗi bước chỉ rút khoảng cách tới $10$ đi $5\%$. Với đích giữ cố định ở một giá trị $c$, cùng bước học cho $\theta_{n+1}-c=0{,}5\,(\theta_n-c)$, tức mỗi bước rút một nửa khoảng cách. Trong ví dụ một tham số, đích di động chỉ làm chậm quá trình học. Khi nhiều trạng thái dùng chung tham số, hệ số tương ứng có thể lớn hơn $1$: Mệnh đề 07.37 cho một ví dụ tuyến tính hai trạng thái mà tham số tăng không chặn. Bài giảng gốc (trang 31) tóm tắt hiện tượng: khi mạng thay đổi, mục tiêu cũng thay đổi, và điều này có thể dẫn tới dao động hoặc phân kỳ. Chúng ta cần một cách giữ đích cố định trong một số bước cập nhật.
 
-**Trực giác.** Tách hai bản sao của cùng kiến trúc: mạng trực tuyến (online network) nhận gradient, mạng mục tiêu (target network) tạo mục tiêu và được giữ cố định giữa các lần đồng bộ.
+### Mạng mục tiêu
 
-**Ví dụ.** Khởi tạo $\theta$, rồi đặt $\theta^-\leftarrow\theta$. Mạng mục tiêu không được cập nhật bởi hàm mất mát; nó chỉ đổi khi được sao chép từ mạng trực tuyến.
+Trong Ví dụ 08.5, đích tính bằng chính $\theta$ đổi từ $1$ thành $1{,}45$ sau một bước, dù mẫu chuyển không đổi. Muốn mỗi bước cập nhật là một bước hồi quy về một nhãn đứng yên, chúng ta tách tham số tạo đích khỏi tham số được cập nhật: giữ một bản sao của mạng, tính đích bằng bản sao đó, và chỉ thỉnh thoảng làm mới bản sao.
 
-**Hình thức.**
+::: definition Định nghĩa 08.3 (Mạng mục tiêu và đồng bộ)
+Cho mạng giá trị hành động $\mathbf q_\theta$ (Định nghĩa 08.1), bộ đếm bước tối ưu $k_{\mathrm{opt}}\in\mathbb N_0$ và số nguyên dương $C$. Mạng mục tiêu (target network) là mạng $Q_{\theta^-}$ có cùng kiến trúc với $Q_\theta$ và vector tham số riêng $\theta^-\in\mathbb R^d$; mạng $Q_\theta$, được cập nhật bằng gradient, gọi là mạng trực tuyến (online network). Tham số $\theta^-$
 
-- $Q_\theta$: mạng trực tuyến, tham số $\theta$, nhận gradient.
-- $Q_{\theta^-}$: mạng mục tiêu, cùng kiến trúc, tham số $\theta^-$, tạo phần bootstrap, cố định giữa hai lần đồng bộ.
+1. được khởi tạo bằng $\theta^-\leftarrow\theta$;
+2. không đổi khi $\theta$ được cập nhật bằng gradient;
+3. sau mỗi bước tối ưu, khi $k_{\mathrm{opt}}$ vừa tăng thỏa $k_{\mathrm{opt}}\bmod C=0$, được gán $\theta^-\leftarrow\theta$.
 
-**Ứng dụng và giới hạn.** Mạng mục tiêu làm chậm sự thay đổi của mục tiêu nhưng không giữ nó cố định mãi; mục tiêu vẫn đổi tại các mốc đồng bộ.
+Phép gán ở mục 3 gọi là đồng bộ (sao chép cứng); $C$ là số bước tối ưu giữa hai lần đồng bộ. Phần bootstrap của đích được tính bằng $Q_{\theta^-}$ thay cho $Q_\theta$.
+:::
 
-**Kiểm tra nhanh.** Mạng mục tiêu có nhận gradient từ hàm mất mát hiện tại không? Không; nó chỉ cung cấp phần bootstrap và nằm trong vùng dừng gradient.
+Theo định nghĩa, giữa hai lần đồng bộ $\theta^-$ là một hằng số, nên đích của mỗi mẫu chuyển là một số cố định và mỗi bước cập nhật $\theta$ là một bước hồi quy về nhãn đó; chỉ $Q_\theta$ nhận gradient. Tại mỗi mốc đồng bộ, đích của mọi mẫu chuyển đổi cùng lúc, vì $\theta^-$ nhận giá trị mới. Mạng mục tiêu vì vậy làm đích đổi theo từng đợt thay vì sau mỗi bước, nhưng không giữ đích cố định mãi.
+
+Mỗi điều kiện có vai trò riêng. "Cùng kiến trúc" làm phép gán $\theta^-\leftarrow\theta$ có nghĩa: hai vector tham số có cùng số chiều và cùng cách đọc. Khởi tạo $\theta^-\leftarrow\theta$ làm các đích đầu tiên đến từ chính mạng đang học; bỏ điều kiện này, $C$ bước tối ưu đầu tiên hồi quy về các giá trị của một mạng khởi tạo khác, không liên quan tới $Q_\theta$. Chu kỳ $C$ quyết định nhịp thay đổi của đích. Với $C=1$, $\theta^-$ bằng $\theta$ ngay trước mỗi bước, và cập nhật trùng với cập nhật bán gradient của Ví dụ 08.5. Khi $C$ rất lớn, đích gần như không bao giờ được làm mới, nên $Q_\theta$ chỉ học được giá trị một bước tính từ mạng ban đầu.
+
+![Trục ngang là bộ đếm bước tối ưu k opt với các mốc 0, C, 2C, 3C. Hàng trên: tham số theta của mạng trực tuyến đổi sau mỗi bước tối ưu. Hàng dưới: tham số theta trừ của mạng mục tiêu là hàm bậc thang, nằm ngang giữa hai mốc và nhảy tại C và 2C, nơi mũi tên nét đứt ghi theta trừ gán bằng theta; dưới đoạn từ C tới 2C ghi giữ cố định C bước.](img/lec-08/target-network-timeline.svg)
+
+Hình đặt hai tham số trên cùng trục bộ đếm bước tối ưu $k_{\mathrm{opt}}$. Đường gấp khúc ở hàng trên là $\theta$, đổi sau mỗi bước tối ưu. Hàng dưới là $\theta^-$, nằm ngang trên mỗi đoạn dài $C$ bước và nhảy tại $C$ và $2C$, nơi mũi tên nét đứt ghi phép sao chép $\theta^-\leftarrow\theta$. Các giá trị trong hình chỉ minh họa hình dạng, không đến từ một lần chạy.
+
+::: example Ví dụ 08.6 (Một tham số với mạng mục tiêu, $C=3$)
+**Dữ kiện.** Như Ví dụ 08.5: $Q_\theta(o,a)=\theta$, một mẫu chuyển có $R_{t+1}=1$, $O_{t+1}$ chưa kết thúc, $\gamma=0{,}9$, $\alpha=0{,}5$, $\theta_0=0$. Đích tính bằng mạng mục tiêu: $y=1+0{,}9\,\theta^-$; khởi tạo $\theta^-=\theta_0=0$; $C=3$.
+
+**Tính.** Với $\theta^-=0$, đích $y=1$ trong ba bước: $\theta_1=0+0{,}5\,(1-0)=0{,}5$, $\theta_2=0{,}5+0{,}5\,(1-0{,}5)=0{,}75$, $\theta_3=0{,}75+0{,}5\,(1-0{,}75)=0{,}875$. Sau bước thứ ba, $k_{\mathrm{opt}}=3$ là bội của $C$, nên $\theta^-\leftarrow0{,}875$ và đích mới là $1+0{,}9\cdot0{,}875=1{,}7875$.
+
+**Diễn giải.** Trong ba bước, đích đứng yên và sai số $y-\theta_k$ giảm một nửa mỗi bước: $1$, $0{,}5$, $0{,}25$, $0{,}125$. Đích chỉ đổi tại mốc đồng bộ, một lần, từ $1$ lên $1{,}7875$.
+:::
+
+Mạng mục tiêu không làm ví dụ này hội tụ nhanh hơn. Gọi $r=0{,}5^C$. Một chu kỳ $C$ bước đưa $\theta^-$ thành $(1+0{,}9\,\theta^-)(1-r)+\theta^-r$, nên $\theta^-_{\text{mới}}-10=(0{,}9+0{,}1\,r)\,(\theta^--10)$. Với $C=3$, khoảng cách tới $10$ nhân với $0{,}9125$ sau mỗi ba bước, trong khi không có mạng mục tiêu, ba bước nhân khoảng cách với $0{,}95^3\approx0{,}857$. Giữa hai lần đồng bộ, mỗi bước là hồi quy về nhãn cố định, nên vòng phản hồi giữa dự đoán và đích chỉ khép lại tại các mốc đồng bộ; mạng mục tiêu tác động ở điểm này. Phần 6 xét một ví dụ hai trạng thái dùng chung tham số, trong đó mạng mục tiêu làm chậm nhưng không ngăn được phân kỳ. Bài giảng gốc (trang 33) nêu mạng mục tiêu như cách làm mục tiêu thay đổi chậm hơn để quá trình tối ưu ổn định hơn; đó là tác dụng thực nghiệm, không phải bảo đảm hội tụ.
+
+**Trong thực hành.** Hai mạng là hai bản của cùng một lớp mạng; đồng bộ là sao chép toàn bộ tham số của mạng trực tuyến sang mạng mục tiêu, và mạng mục tiêu chỉ chạy lan truyền xuôi, không tính gradient. Bộ nhớ tham số vì vậy gấp đôi. Mnih và cộng sự (2015, Extended Data Table 1) dùng $C=10\,000$ lần cập nhật. Một số thuật toán dùng cập nhật mềm $\theta^-\leftarrow\tau\theta+(1-\tau)\theta^-$ với $\tau$ nhỏ sau mỗi bước, chẳng hạn $\tau=0{,}001$ trong DDPG (Lillicrap và cộng sự, 2016, "Continuous control with deep reinforcement learning", ICLR); chúng ta chỉ dùng sao chép cứng như DQN gốc. Điều kiện đồng bộ đếm bước tối ưu $k_{\mathrm{opt}}$, không đếm bước môi trường $t$; phần 4 ghép hai bộ đếm này vào thuật toán.
+
+**Kiểm tra nhanh.** Với $C=1$, cập nhật dùng mạng mục tiêu trùng với cập nhật nào? Vì $\theta^-$ được gán bằng $\theta$ sau mỗi bước, trước bước kế tiếp hai tham số bằng nhau, nên cập nhật trùng với cập nhật bán gradient dùng chính $\theta$ trong đích, như Ví dụ 08.5.
+
+Phần 2 đã có mạng giá trị hành động và một bản sao giữ cố định để tính đích. Việc còn lại của phần này là viết đích thành nhãn hồi quy cho một mẫu chuyển, kể cả khi mẫu chuyển kết thúc lượt hoặc bị cắt ngắn.
 
 <!-- note-topic-id: lec-08-topic-03 -->
 ### Bootstrap trở thành bài toán hồi quy
