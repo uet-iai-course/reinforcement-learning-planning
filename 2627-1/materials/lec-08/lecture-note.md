@@ -308,7 +308,7 @@ Hình vẽ hai tham số trên cùng một trục giá trị, theo bộ đếm b
 **Diễn giải.** Trong ba bước, đích đứng yên và sai số $y-\theta_k$ giảm một nửa mỗi bước: $1$, $0{,}5$, $0{,}25$, $0{,}125$. Đích chỉ đổi tại mốc đồng bộ, một lần, từ $1$ lên $1{,}7875$.
 :::
 
-Trong ví dụ một tham số, mạng mục tiêu không đưa $\theta$ tới $10$ nhanh hơn. Gọi $r=0{,}5^C$. Một chu kỳ $C$ bước đưa $\theta^-$ thành $(1+0{,}9\,\theta^-)(1-r)+\theta^-r$, nên $\theta^-_{\text{mới}}-10=(0{,}9+0{,}1\,r)\,(\theta^--10)$. Với $C=3$, khoảng cách tới $10$ nhân với $0{,}9125$ sau mỗi ba bước, trong khi không có mạng mục tiêu, ba bước nhân khoảng cách với $0{,}95^3\approx0{,}857$. Giữa hai lần đồng bộ, mỗi bước là hồi quy về nhãn cố định, nên vòng phản hồi giữa dự đoán và đích chỉ khép lại tại các mốc đồng bộ; đó là tác dụng của mạng mục tiêu; lợi ích ổn định với mạng lớn là kết quả thực nghiệm. Ở phần 6, chúng ta xét một ví dụ hai trạng thái dùng chung tham số, trong đó mạng mục tiêu làm chậm nhưng không ngăn được phân kỳ. Bài giảng gốc (trang 33) nêu mạng mục tiêu như cách làm mục tiêu thay đổi chậm hơn để quá trình tối ưu ổn định hơn; đó là tác dụng thực nghiệm, không phải bảo đảm hội tụ.
+Trong ví dụ một tham số, mạng mục tiêu không đưa $\theta$ tới $10$ nhanh hơn. Gọi $r=0{,}5^C$. Một chu kỳ $C$ bước đưa $\theta^-$ thành $(1+0{,}9\,\theta^-)(1-r)+\theta^-r$, nên $\theta^-_{\text{mới}}-10=(0{,}9+0{,}1\,r)\,(\theta^--10)$. Với $C=3$, khoảng cách tới $10$ nhân với $0{,}9125$ sau mỗi ba bước, trong khi không có mạng mục tiêu, ba bước nhân khoảng cách với $0{,}95^3\approx0{,}857$. Giữa hai lần đồng bộ, mỗi bước là hồi quy về nhãn cố định, nên vòng phản hồi giữa dự đoán và đích chỉ khép lại tại các mốc đồng bộ; đó là tác dụng của mạng mục tiêu; lợi ích ổn định với mạng lớn là kết quả thực nghiệm. Ở phần 6 (Ví dụ 08.24), chúng ta xét một ví dụ hai trạng thái dùng chung tham số, trong đó mạng mục tiêu làm chậm nhưng không ngăn được phân kỳ. Bài giảng gốc (trang 33) nêu mạng mục tiêu như cách làm mục tiêu thay đổi chậm hơn để quá trình tối ưu ổn định hơn; đó là tác dụng thực nghiệm, không phải bảo đảm hội tụ.
 
 **Trong thực hành.** Hai mạng là hai bản của cùng một lớp mạng; đồng bộ là sao chép toàn bộ tham số của mạng trực tuyến sang mạng mục tiêu, và mạng mục tiêu chỉ chạy lan truyền xuôi, không tính gradient. Bộ nhớ tham số vì vậy gấp đôi. Mnih và cộng sự (2015, Extended Data Table 1) dùng $C=10\,000$ lần cập nhật. Một số thuật toán dùng cập nhật mềm $\theta^-\leftarrow\tau\theta+(1-\tau)\theta^-$ với $\tau$ nhỏ sau mỗi bước, chẳng hạn $\tau=0{,}001$ trong DDPG (Lillicrap và cộng sự, 2016, "Continuous control with deep reinforcement learning", ICLR); chúng ta chỉ dùng sao chép cứng như DQN gốc. Điều kiện đồng bộ đếm bước tối ưu $k_{\mathrm{opt}}$, không đếm bước môi trường $t$; ở phần 4, hai bộ đếm này được ghép vào thuật toán.
 
@@ -1095,6 +1095,51 @@ Một nhầm lẫn thường gặp là đọc "không có bảo đảm hội t�
 **Kiểm tra nhanh.** Bộ nhớ phát lại có bỏ yếu tố học khác chính sách không? Không; mẫu cũ trong $\mathcal D$ do các phiên bản $\theta$ trước sinh ra, nên bộ nhớ còn thêm một nguồn khác chính sách bên cạnh phép thăm dò $\epsilon_{\mathrm{exp}}$-tham lam.
 
 Như vậy, hai cơ chế của DQN giảm hai nguồn bất ổn, còn ba yếu tố của bộ ba bất ổn vẫn có mặt và DQN không có bảo đảm hội tụ tổng quát. Câu hỏi còn lại là mạng mục tiêu thay đổi gì trong chính phản ví dụ của Bài 07. Ở mục tiếp theo, chúng ta thêm mạng mục tiêu vào ví dụ hai trạng thái và tính hệ số tăng của tham số sau mỗi chu kỳ đồng bộ.
+
+### Ví dụ: hai trạng thái với mạng mục tiêu
+
+Nhận xét 08.21 nói rằng mạng mục tiêu không bỏ yếu tố nào của bộ ba bất ổn. Chúng ta kiểm khẳng định này trên chính phản ví dụ của Bài 07, bằng cách tính lại cập nhật khi mục tiêu dùng một tham số giữ cố định $C$ bước rồi đồng bộ, như mạng mục tiêu của DQN. Ví dụ là TD(0) dự đoán với hàm giá trị tuyến tính, không phải Q-learning; nó có đủ ba yếu tố và đủ nhỏ để tính tay.
+
+::: example Ví dụ 08.24 (Hai trạng thái dùng chung tham số, có và không có mạng mục tiêu)
+**Dữ kiện.** Hai trạng thái $s_1$, $s_2$ với đặc trưng $x(s_1)=1$, $x(s_2)=2$ và hàm giá trị tuyến tính một tham số $\hat v(s,w)=x(s)\,w$, nên $\hat v(s_1)=w$ và $\hat v(s_2)=2w$. Chỉ chuyển $s_1\to s_2$ với phần thưởng $R=0$ được cập nhật, bằng TD(0) bán gradient với $\gamma=0{,}9$, bước học $\alpha=0{,}1$:
+$$
+w\leftarrow w+\alpha\bigl[R+\gamma\,\hat v(s_2)-\hat v(s_1)\bigr]\,x(s_1).
+$$
+
+**Tính, không có mạng mục tiêu.** Mục tiêu dùng $w$ hiện hành: $w_{n+1}=w_n+0{,}1\,(0{,}9\cdot2w_n-w_n)=(1+0{,}1\cdot0{,}8)\,w_n=1{,}08\,w_n$, nên $w_n=1{,}08^n\,w_0$.
+
+**Tính, có mạng mục tiêu.** Mục tiêu dùng tham số $w^-$ giữ cố định trong $C$ bước, $\hat v(s_2)=2w^-$, và bắt đầu chu kỳ với $w_0=w^-$. Mục tiêu là hằng $1{,}8\,w^-$, nên
+$$
+\begin{aligned}
+w_{k+1}-1{,}8\,w^-&=w_k+0{,}1\,(1{,}8\,w^--w_k)-1{,}8\,w^-=0{,}9\,(w_k-1{,}8\,w^-),\\
+w_C&=1{,}8\,w^-+0{,}9^C\,(w^--1{,}8\,w^-)=(1{,}8-0{,}8\cdot0{,}9^C)\,w^-.
+\end{aligned}
+$$
+Sau chu kỳ, đồng bộ $w^-\leftarrow w_C$; mỗi chu kỳ nhân tham số với $1{,}8-0{,}8\cdot0{,}9^C$.
+
+| $C$ | hệ số mỗi chu kỳ $1{,}8-0{,}8\cdot0{,}9^C$ | không có mạng mục tiêu, $1{,}08^C$ | hệ số tương đương mỗi bước |
+|---|---|---|---|
+| $1$ | $1{,}080$ | $1{,}080$ | $1{,}080$ |
+| $5$ | $1{,}328$ | $1{,}469$ | $1{,}058$ |
+| $10$ | $1{,}521$ | $2{,}159$ | $1{,}043$ |
+| $100$ | $1{,}800$ | $\approx2{,}2\cdot10^{3}$ | $1{,}006$ |
+
+**Diễn giải.** Với $C=1$, hai cách tính trùng nhau ($1{,}8-0{,}72=1{,}08$), đúng như mạng mục tiêu đồng bộ sau mỗi bước. Hệ số mỗi chu kỳ tăng theo $C$ vì $0{,}9^C$ giảm, nên nhỏ nhất bằng $1{,}08$ và tiến tới $1{,}8$ khi $C\to\infty$. Vì hệ số luôn lớn hơn $1$, $\lvert w\rvert\to\infty$ khi $w_0\ne0$ với mọi $C\ge1$: mạng mục tiêu làm tham số tăng chậm hơn tính theo bước, nhưng không ngăn phân kỳ.
+:::
+
+![Hai trạng thái là hai vòng tròn, s 1 bên trái và s 2 bên phải, nối bằng mũi tên từ s 1 sang s 2 ghi phần thưởng R bằng 0. Bên trái s 1 ghi đặc trưng x của s 1 bằng 1 và giá trị xấp xỉ v mũ của s 1 bằng w. Bên phải s 2 ghi x của s 2 bằng 2 và v mũ của s 2 bằng 2w. Hai giá trị dùng chung một tham số w.](img/lec-08/two-state-shared.svg)
+
+Hình vẽ dữ kiện của Ví dụ 08.24: mũi tên $s_1\to s_2$ là chuyển duy nhất được cập nhật, và hai nhãn hai bên cho biết hai giá trị $w$, $2w$ cùng phụ thuộc một tham số. Mỗi cập nhật kéo $\hat v(s_1)$ về phía $0{,}9\cdot\hat v(s_2)$; vì $\hat v(s_2)=2\hat v(s_1)$, mục tiêu luôn bằng $1{,}8$ lần giá trị đang được cập nhật, nên kéo về mục tiêu cũng đẩy mục tiêu ra xa.
+
+Cơ chế phân kỳ nằm ở chỗ mục tiêu $1{,}8\,w^-$ có độ lớn gấp $1{,}8$ lần $w^-$. Mạng mục tiêu giữ mục tiêu đứng yên trong $C$ bước, nên trong mỗi chu kỳ $w$ hội tụ về $1{,}8\,w^-$ với hệ số $0{,}9$ mỗi bước; nhưng sau đồng bộ, mục tiêu mới là $1{,}8\,w_C$, lại gấp $1{,}8$ lần tham số hiện hành. Ba yếu tố vẫn có mặt: một tham số cho hai trạng thái, mục tiêu chứa ước lượng của chính mô hình, và phân phối cập nhật chỉ gồm một chuyển. Bỏ yếu tố khác chính sách, tức cập nhật mọi chuyển theo phân phối dừng của một chính sách, đưa bài toán về trường hợp của Định lý 07.29: TD(0) tuyến tính theo chính sách hội tụ khi các giả thiết của định lý thỏa.
+
+Một nhầm lẫn thường gặp là so hệ số mỗi chu kỳ $1{,}521$ với hệ số mỗi bước $1{,}08$ rồi kết luận mạng mục tiêu làm bất ổn nặng hơn. So đúng là so trên cùng số bước: sau $10$ bước, có mạng mục tiêu nhân $1{,}521$, không có nhân $2{,}159$; tính theo mỗi bước là $1{,}043$ so với $1{,}08$.
+
+**Trong thực hành.** Ví dụ giải thích vì sao mạng mục tiêu được mô tả là làm chậm sự thay đổi của đích chứ không bảo đảm ổn định: trong một bài toán có đủ ba yếu tố và có hướng phân kỳ, chu kỳ $C$ lớn hơn chỉ làm tốc độ tăng mỗi bước nhỏ đi. Đây là căn cứ cho phần phạm vi của Nhận xét 08.21: tác dụng ổn định của mạng mục tiêu trên các bài toán Atari là kết quả thực nghiệm, còn bảo đảm tổng quát không có.
+
+**Kiểm tra nhanh.** Với $C=2$, hệ số mỗi chu kỳ bằng bao nhiêu và có phân kỳ không? $1{,}8-0{,}8\cdot0{,}81=1{,}152>1$, nên vẫn phân kỳ; so với $1{,}08^2=1{,}1664$ khi không có mạng mục tiêu.
+
+Đến đây chúng ta có ba kết quả của phần 6. Hai cơ chế của DQN giảm hai nguồn bất ổn: bộ nhớ phát lại giảm tương quan, mạng mục tiêu giữ đích đứng yên giữa hai mốc đồng bộ, và tại mốc đích của mẫu 1 đổi $0{,}9$. DQN vẫn có đủ ba yếu tố của bộ ba bất ổn, nên không có bảo đảm hội tụ tổng quát. Trong phản ví dụ hai trạng thái, mạng mục tiêu hạ hệ số tăng mỗi bước từ $1{,}08$ xuống $1{,}043$ khi $C=10$, nhưng không ngăn phân kỳ. Tác dụng của từng cơ chế vì vậy phải đo bằng thí nghiệm; Bài tập 08.3 thiết kế một thí nghiệm loại bỏ như vậy, và phần 7 dùng các kết quả này để trả lời vấn đề trung tâm.
 
 ---
 

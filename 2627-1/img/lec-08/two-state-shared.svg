@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-45 12 1100 116" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Hai trạng thái dùng chung một tham số</title>
+<desc id="d">Hai trạng thái là hai vòng tròn, s 1 bên trái và s 2 bên phải, nối bằng mũi tên từ s 1 sang s 2 ghi phần thưởng R bằng 0. Bên trái s 1 ghi đặc trưng x của s 1 bằng 1 và giá trị xấp xỉ v mũ của s 1 bằng w. Bên phải s 2 ghi x của s 2 bằng 2 và v mũ của s 2 bằng 2w. Hai giá trị dùng chung một tham số w.</desc>
+<defs><marker id="arr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="16" refY="9" orient="auto"><path d="M0,0 L18,9 L0,18 Z" fill="#B15A2B"/></marker></defs>
+<circle cx="380" cy="70" r="44" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/>
+<text x="380" y="80" font-size="32" text-anchor="middle"><tspan font-style="italic">s</tspan><tspan font-size="20" dy="7">1</tspan><tspan dy="-7">​</tspan></text>
+<circle cx="620" cy="70" r="44" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/>
+<text x="620" y="80" font-size="32" text-anchor="middle"><tspan font-style="italic">s</tspan><tspan font-size="20" dy="7">2</tspan><tspan dy="-7">​</tspan></text>
+<line x1="428" y1="70" x2="572" y2="70" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
+<text x="500" y="54" font-size="27" text-anchor="middle"><tspan font-style="italic">R</tspan> = 0</text>
+<text x="315" y="60" font-size="28" text-anchor="end"><tspan font-style="italic">x</tspan>(<tspan font-style="italic">s</tspan><tspan font-size="20" dy="7">1</tspan><tspan dy="-7">​</tspan>) = 1</text>
+<text x="315" y="104" font-size="28" text-anchor="end"><tspan font-style="italic">v̂</tspan>(<tspan font-style="italic">s</tspan><tspan font-size="20" dy="7">1</tspan><tspan dy="-7">​</tspan>) = <tspan font-style="italic">w</tspan></text>
+<text x="685" y="60" font-size="28"><tspan font-style="italic">x</tspan>(<tspan font-style="italic">s</tspan><tspan font-size="20" dy="7">2</tspan><tspan dy="-7">​</tspan>) = 2</text>
+<text x="685" y="104" font-size="28"><tspan font-style="italic">v̂</tspan>(<tspan font-style="italic">s</tspan><tspan font-size="20" dy="7">2</tspan><tspan dy="-7">​</tspan>) = 2<tspan font-style="italic">w</tspan></text>
+</svg>
