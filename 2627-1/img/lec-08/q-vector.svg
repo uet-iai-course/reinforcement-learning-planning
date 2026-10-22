@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 174" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Vector giá trị hành động do mạng trả về</title>
+<desc id="d">Quan sát o đi vào mạng có tham số theta; một lần tính trả về vector q theta của o gồm bốn ô ứng với a1 đến a4, giá trị minh họa 0,8; 2,5; âm 0,3; 1,9. Ô a2 có viền kép và dấu tam giác bên dưới: giá trị lớn nhất 2,5, arg max bằng a2.</desc>
+<defs><marker id="arr" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" refX="20" refY="11" orient="auto"><path d="M0,0 L22,11 L0,22 Z" fill="#B15A2B"/></marker></defs>
+<rect x="16" y="40" width="90" height="80" rx="14" fill="#F7EFE6" stroke="#B15A2B" stroke-width="4"/>
+<text x="61" y="94" font-size="42" text-anchor="middle" font-style="italic">o</text>
+<text x="61" y="166" font-size="28" text-anchor="middle">quan sát</text>
+<line x1="108" y1="80" x2="166" y2="80" stroke="#B15A2B" stroke-width="5" marker-end="url(#arr)"/>
+<rect x="172" y="30" width="200" height="100" rx="18" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/>
+<text x="272" y="72" font-size="30" text-anchor="middle" font-weight="700" fill="#2F3E7A">mạng</text>
+<text x="272" y="112" font-size="30" text-anchor="middle">tham số <tspan font-style="italic">θ</tspan></text>
+<text x="272" y="166" font-size="28" text-anchor="middle">một lần tính</text>
+<line x1="374" y1="80" x2="438" y2="80" stroke="#B15A2B" stroke-width="5" marker-end="url(#arr)"/>
+<text x="525" y="28" font-size="30" text-anchor="middle"><tspan font-style="italic">a</tspan><tspan font-size="22" dy="6">1</tspan></text>
+<text x="675" y="28" font-size="30" text-anchor="middle"><tspan font-style="italic">a</tspan><tspan font-size="22" dy="6">2</tspan></text>
+<text x="825" y="28" font-size="30" text-anchor="middle"><tspan font-style="italic">a</tspan><tspan font-size="22" dy="6">3</tspan></text>
+<text x="975" y="28" font-size="30" text-anchor="middle"><tspan font-style="italic">a</tspan><tspan font-size="22" dy="6">4</tspan></text>
+<rect x="450" y="40" width="150" height="80" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="3"/>
+<rect x="600" y="40" width="150" height="80" fill="#F7EFE6" stroke="#2F3E7A" stroke-width="3"/>
+<rect x="750" y="40" width="150" height="80" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="3"/>
+<rect x="900" y="40" width="150" height="80" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="3"/>
+<rect x="603" y="43" width="144" height="74" fill="none" stroke="#B15A2B" stroke-width="5"/>
+<rect x="612" y="52" width="126" height="56" fill="none" stroke="#B15A2B" stroke-width="3"/>
+<text x="525" y="92" font-size="32" text-anchor="middle">0,8</text>
+<text x="675" y="92" font-size="32" text-anchor="middle" font-weight="700">2,5</text>
+<text x="825" y="92" font-size="32" text-anchor="middle">−0,3</text>
+<text x="975" y="92" font-size="32" text-anchor="middle">1,9</text>
+<path d="M675,123 L686,141 L664,141 Z" fill="#B15A2B"/>
+<text x="675" y="168" font-size="28" text-anchor="middle">max = 2,5; arg max = <tspan font-style="italic">a</tspan><tspan font-size="20" dy="6">2</tspan></text>
+<text x="1050" y="168" font-size="28" text-anchor="end"><tspan font-weight="700">q</tspan><tspan font-style="italic" font-size="20" dy="6">θ</tspan><tspan dy="-6">(</tspan><tspan font-style="italic">o</tspan>), |𝒜| = 4</text>
+</svg>

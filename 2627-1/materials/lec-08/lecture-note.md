@@ -79,7 +79,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 |---|---|---|---|---|
 | `lec-08-topic-01` | Giới hạn của bảng giá trị hành động | tr. 8–15 | Đặt vấn đề quy mô và khái quát hóa | Vào: topic-13 → Ra: nhu cầu $Q_\theta$ |
 | `lec-08-topic-16` | Đầu vào bốn khung Atari và tính Markov | tr. 17, 35 | Ví dụ cho giao diện mạng; giới hạn của bốn khung | Vào: topic-01 → Ra: quan sát $O_t$ cho topic-02 |
-| `lec-08-topic-02` | Giao diện DQN và hai mạng | tr. 14–17, 20, 31, 33 | Định nghĩa $Q_\theta$, $Q_{\theta^-}$ | Vào: topic-01 → Ra: hai bản sao mạng |
+| `lec-08-topic-02` | Mạng giá trị hành động, đích di động và mạng mục tiêu | tr. 14–17, 20, 31, 33, 35 | Định nghĩa $\mathbf q_\theta$, $Q_\theta$; giả thiết Markov khi viết mục tiêu; $Q_{\theta^-}$ | Vào: topic-01, topic-16 → Ra: $\mathbf q_\theta$ và hai bản sao mạng |
 | `lec-08-topic-03` | Bootstrap thành bài toán hồi quy | tr. 16, 20–22, 34 | Đích $y_t$ và sai số TD | Vào: topic-02 → Ra: nhãn hồi quy |
 | `lec-08-topic-04` | Kết thúc thật và mặt nạ $(1-Z)$ | tr. 21 | Phân biệt $Z$ và $U$ | Vào: topic-03 → Ra: đích đúng |
 | `lec-08-topic-05` | Chuyển tiếp và hai cờ, autoreset | tr. 21 | Hợp đồng dữ liệu | Vào: topic-04 → Ra: bộ sáu thành phần |
@@ -108,7 +108,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 Chúng ta đi qua bảy phần sau.
 
 1. Mở đầu: kiến thức tiên quyết, ký hiệu, mục tiêu và bài toán trung tâm (`lec-08-topic-13`, `lec-08-topic-17`).
-2. Mạng giá trị hành động và đích hồi quy: giới hạn của bảng, đầu vào bốn khung Atari, giao diện mạng, mạng mục tiêu, đích có mặt nạ kết thúc, kết thúc và cắt ngắn (`lec-08-topic-01`, `lec-08-topic-16`, `lec-08-topic-02` đến `lec-08-topic-05`).
+2. Mạng giá trị hành động và đích hồi quy: giới hạn của bảng, đầu vào bốn khung Atari, mạng giá trị hành động, mạng mục tiêu, đích có mặt nạ kết thúc, kết thúc và cắt ngắn (`lec-08-topic-01`, `lec-08-topic-16`, `lec-08-topic-02` đến `lec-08-topic-05`).
 3. Bộ nhớ phát lại: tương quan giữa các mẫu chuyển liên tiếp, cơ chế lưu và lấy mẫu đều, dữ liệu khác chính sách, giới hạn (`lec-08-topic-06`, `lec-08-topic-07`).
 4. Hàm mất mát và thuật toán DQN: hàm mất mát trên mini-batch, dừng gradient, vòng huấn luyện, kích thước tensor (`lec-08-topic-08` đến `lec-08-topic-11`).
 5. Bộ tối ưu theo gradient: SGD, RMSprop, Adam theo từng tọa độ (`lec-08-topic-14`).
@@ -187,36 +187,51 @@ Hình đọc từ trái sang phải. Tiền xử lý tác động lên từng kh
 Ví dụ 08.2 chỉ cố định giao diện vào và ra của mạng. Tái lập một kết quả Atari đã công bố còn cần số khung lặp lại cho mỗi hành động, cách bắt đầu lượt, kiến trúc cụ thể, siêu tham số và giao thức đánh giá; nguồn không cho các chi tiết này, nên chúng ta không nêu số liệu thành tích.
 
 <!-- note-topic-id: lec-08-topic-02 -->
-### Giao diện DQN và hai mạng
+### Mạng giá trị hành động
 
-**Vấn đề.** Nếu cùng một bộ tham số $\theta$ vừa tạo dự đoán vừa tạo đích
-bootstrap, một bước cập nhật có thể đổi cả dự đoán lẫn nhãn — vòng phản hồi di động.
+Ví dụ 08.1 cho thấy bảng giá trị hành động không có dữ liệu ở phần lớn ô, và Ví dụ 08.2 cho một mạng nhận chồng bốn khung ảnh rồi trả về $\lvert\mathcal A\rvert$ giá trị. Chúng ta cần một định nghĩa dùng được cho mọi tập quan sát và mọi tập hành động hữu hạn, để các mục sau viết mục tiêu, hàm mất mát và chính sách hành vi trên cùng một đối tượng.
 
-**Trực giác.** Tách hai bản sao của cùng kiến trúc: mạng trực tuyến nhận gradient,
-mạng mục tiêu tạo đích và được giữ cố định giữa các lần đồng bộ.
+Nhắc lại Định nghĩa 07.1: xấp xỉ tuyến tính $\hat q(s,a,w)=x(s,a)^\top w$ dùng vector đặc trưng $x(s,a)\in\mathbb R^d$ chọn trước, không đổi khi học. Mạng giá trị hành động đổi hai chỗ. Thứ nhất, đặc trưng không còn chọn tay: các tầng của mạng biến quan sát thô thành biểu diễn, và các tầng này cũng có tham số được học. Thứ hai, hành động không còn là đối số đầu vào: mạng trả về một giá trị cho mỗi hành động cùng lúc. Tham số $\theta$ đóng vai của $w$.
 
-**Ví dụ.** Khởi tạo $\theta$, rồi đặt $\theta^-\leftarrow\theta$. Mạng mục tiêu
-không được cập nhật bởi loss; nó chỉ đổi khi được sao chép từ mạng online.
+::: definition Định nghĩa 08.1 (Mạng giá trị hành động)
+Cho tập quan sát $\mathcal O$, tập hành động hữu hạn $\mathcal A=\{a_1,\dots,a_{\lvert\mathcal A\rvert}\}$ và số nguyên dương $d$. Mạng giá trị hành động là một ánh xạ $\mathbf q_\theta:\mathcal O\to\mathbb R^{\lvert\mathcal A\rvert}$ phụ thuộc tham số $\theta\in\mathbb R^d$. Giá trị hành động do mạng tính là thành phần của vector đầu ra ứng với hành động đó:
 
-**Hình thức.** Giao diện DQN cho hành động rời rạc:
+$$
+Q_\theta(o,a)=[\mathbf q_\theta(o)]_a,\qquad o\in\mathcal O,\ a\in\mathcal A.
+$$
 
-$$\mathbf q_\theta(o)\in\mathbb R^{|\mathcal A|},\qquad Q_\theta(o,a)=[\mathbf q_\theta(o)]_a.$$
+Giá trị lớn nhất và tập hành động tham lam tại $o$ là
 
-- $Q_\theta$: mạng trực tuyến (online), tham số $\theta$, nhận gradient.
-- $Q_{\theta^-}$: mạng mục tiêu (target), tham số $\theta^-$, tạo phần bootstrap,
-  cố định giữa hai lần đồng bộ.
+$$
+\max_{a\in\mathcal A}Q_\theta(o,a),\qquad \mathcal G_\theta(o)=\arg\max_{a\in\mathcal A}Q_\theta(o,a).
+$$
+:::
 
-Ký hiệu $o$ (quan sát) khi đầu vào chưa chắc đủ Markov; chỉ dùng $s$ khi biểu
-diễn đủ Markov.
+Theo định nghĩa, mạng nhận một quan sát và trả về một vector, mỗi hành động ứng với một tọa độ; $Q_\theta(o,a)$ chỉ là phép lấy thành phần. Mục tiêu Q-learning cần $\max_{a'}Q_\theta(O_{t+1},a')$, còn chính sách hành vi $\epsilon_{\mathrm{exp}}$-tham lam cần một hành động trong $\mathcal G_\theta(O_t)$; cả hai đọc trên vector đầu ra sau một lần tính xuôi. Mnih và cộng sự (2015, mục Methods) chọn kiến trúc này vì khi mạng nhận cặp quan sát–hành động làm đầu vào, mỗi hành động cần một lần tính riêng và chi phí tăng tuyến tính theo $\lvert\mathcal A\rvert$. Khi $\mathcal G_\theta(o)$ có nhiều phần tử, ta phá hòa chia đều như với chính sách tham lam của Bài 06.
 
-**Ứng dụng và giới hạn.** Mạng mục tiêu làm chậm vòng phản hồi nhưng không tạo
-mục tiêu bất biến vĩnh viễn; nó vẫn đổi tại các mốc đồng bộ. Các lựa chọn kiến
-trúc điển hình: MLP cho đặc trưng số chiều thấp, CNN cho đầu vào giống ảnh, hàm
-kích hoạt ReLU/tanh/sigmoid; số tầng, độ rộng và cách biểu diễn đầu vào ảnh hưởng
-trực tiếp đến năng lực xấp xỉ và độ ổn định.
+Giả thiết $\mathcal A$ hữu hạn có vai trò riêng. Bỏ giả thiết này, chẳng hạn khi hành động là một số thực trong một khoảng, vector đầu ra không xác định và $\max_aQ_\theta(o,a)$ trở thành một bài toán tối ưu theo $a$ phải giải ở mỗi bước. Sutton và Barto (2018, §13.7) trình bày cách tham số hóa chính sách cho hành động liên tục; DQN chỉ xét tập hành động hữu hạn.
 
-**Kiểm tra nhanh.** Mạng mục tiêu có nhận gradient từ loss hiện tại không? — Không;
-nó chỉ cung cấp phần bootstrap và nằm trong vùng dừng gradient.
+::: example Ví dụ 08.3 (Đọc vector giá trị hành động)
+**Dữ kiện.** $\mathcal A=\{a_1,a_2,a_3,a_4\}$. Tại quan sát $o$, mạng trả về $\mathbf q_\theta(o)=(0{,}8;\ 2{,}5;\ -0{,}3;\ 1{,}9)$ (số minh họa). Chính sách hành vi là $\epsilon_{\mathrm{exp}}$-tham lam với $\epsilon_{\mathrm{exp}}=0{,}1$.
+
+**Tính.** $Q_\theta(o,a_3)=[\mathbf q_\theta(o)]_{a_3}=-0{,}3$. Giá trị lớn nhất là $\max_aQ_\theta(o,a)=2{,}5$, đạt duy nhất tại $a_2$, nên $\mathcal G_\theta(o)=\{a_2\}$. Chính sách $\epsilon_{\mathrm{exp}}$-tham lam chọn $a_2$ với xác suất $1-0{,}1+0{,}1/4=0{,}925$ và mỗi hành động còn lại với xác suất $0{,}1/4=0{,}025$; kiểm tra: $0{,}925+3\cdot0{,}025=1$.
+
+**Diễn giải.** Ba đại lượng mà các mục sau dùng, gồm giá trị của hành động đã thực hiện, giá trị lớn nhất trong mục tiêu và hành động tham lam của chính sách hành vi, đều lấy từ cùng một vector sau một lần tính.
+:::
+
+![Quan sát o đi vào mạng có tham số theta; một lần tính trả về vector q theta của o gồm bốn ô ứng với a1 đến a4, giá trị minh họa 0,8; 2,5; âm 0,3; 1,9. Ô a2 có viền kép và dấu tam giác bên dưới: giá trị lớn nhất 2,5, arg max bằng a2.](img/lec-08/q-vector.svg)
+
+Hình vẽ dữ kiện của Ví dụ 08.3. Quan sát $o$ đi qua mạng có tham số $\theta$, và một lần tính cho cả bốn ô của $\mathbf q_\theta(o)$. Ô $a_2$ có viền kép và một dấu tam giác bên dưới, đánh dấu giá trị lớn nhất $2{,}5$ và $\arg\max$ bằng $a_2$.
+
+::: remark Nhận xét 08.2 (Giả thiết Markov khi viết mục tiêu theo quan sát)
+Phương trình Bellman tối ưu của Bài 06 viết trên trạng thái của một MDP. Khi viết mục tiêu $R_{t+1}+\gamma\max_{a'}Q_\theta(O_{t+1},a')$ theo quan sát, ta giả thiết $O_t$ đủ Markov: phân phối của $(R_{t+1},O_{t+1})$ khi biết $O_t$ và $A_t$ không phụ thuộc các quan sát và hành động trước đó. Khi đó $O_t$ thay được $S_t$, và $q_*(o,a)$ là nghiệm của phương trình Bellman tối ưu theo quan sát. Bỏ giả thiết này: một khung ảnh Atari cho vị trí của vật thể nhưng không cho hướng chuyển động (bài giảng gốc, trang 35), nên hai tình huống có cùng quan sát $o$ có thể cần hai giá trị khác nhau. Mục tiêu vẫn tính được, nhưng $q_*(o,a)$ không còn được xác định bởi một phương trình Bellman theo quan sát, và mục tiêu chỉ là xấp xỉ.
+:::
+
+**Trong thực hành.** $\mathbf q_\theta(o)$ là tensor đầu ra của mạng, kích thước $[\lvert\mathcal A\rvert]$ cho một quan sát và $[b,\lvert\mathcal A\rvert]$ cho $b$ quan sát của một mini-batch; giá trị $Q_\theta(O_i,A_i)$ của hành động đã lưu được lấy ra bằng phép chọn theo hành động (gather) ở phần 4. Bài giảng gốc (trang 17) nêu các lựa chọn kiến trúc điển hình: mạng nhiều tầng cho quan sát là vector số chiều thấp như CartPole hay Lunar Lander, mạng tích chập cho ảnh, hàm kích hoạt ReLU, tanh hoặc sigmoid; số tầng, độ rộng và cách biểu diễn đầu vào ảnh hưởng tới năng lực xấp xỉ và độ ổn định khi huấn luyện. Giả thiết Markov là giả thiết về quan sát, nên đổi kiến trúc không làm nó đúng; với ảnh, nó phụ thuộc số khung được xếp chồng. Mạng giá trị hành động cũng không đi kèm bảo đảm hội tụ nào: thay hàm tuyến tính bằng mạng vẫn giữ yếu tố xấp xỉ hàm của bộ ba bất ổn.
+
+**Kiểm tra nhanh.** Với $\mathbf q_\theta(o)=(1;\ 4;\ 4;\ 0)$ và $\epsilon_{\mathrm{exp}}=0{,}2$, tập hành động tham lam là $\mathcal G_\theta(o)=\{a_2,a_3\}$; phá hòa chia đều cho $a_2$ xác suất $0{,}2/4+0{,}8/2=0{,}45$, và $a_1$, $a_4$ mỗi hành động $0{,}05$.
+
+Mạng giá trị hành động cho mọi giá trị cần dùng từ một lần tính. Chúng ta còn hai việc. Thứ nhất, kiểm tra chồng bốn khung của Ví dụ 08.2 có đủ Markov để Nhận xét 08.2 áp dụng hay không. Thứ hai, mục tiêu $R_{t+1}+\gamma\max_{a'}Q_\theta(O_{t+1},a')$ được tính bằng chính $\theta$ đang học, nên một bước cập nhật có thể đổi cả dự đoán lẫn mục tiêu; chúng ta xử lý điểm này ở mục "Đích di động và mạng mục tiêu".
 
 ### Bốn khung và tính Markov
 
@@ -225,6 +240,23 @@ nó chỉ cung cấp phần bootstrap và nằm trong vùng dừng gradient.
 lịch sử dài hơn. Một đặc tả tái lập kết quả Atari còn cần tiền xử lý, lặp khung,
 khởi đầu episode, kiến trúc, siêu tham số và giao thức đánh giá — nguồn không
 cung cấp đầy đủ, nên ghi chú này không bịa các con số đó.
+
+### Đích di động và mạng mục tiêu
+
+**Vấn đề.** Nếu cùng một bộ tham số $\theta$ vừa tạo dự đoán vừa tạo mục tiêu bootstrap, một bước cập nhật có thể đổi cả dự đoán lẫn nhãn.
+
+**Trực giác.** Tách hai bản sao của cùng kiến trúc: mạng trực tuyến (online network) nhận gradient, mạng mục tiêu (target network) tạo mục tiêu và được giữ cố định giữa các lần đồng bộ.
+
+**Ví dụ.** Khởi tạo $\theta$, rồi đặt $\theta^-\leftarrow\theta$. Mạng mục tiêu không được cập nhật bởi hàm mất mát; nó chỉ đổi khi được sao chép từ mạng trực tuyến.
+
+**Hình thức.**
+
+- $Q_\theta$: mạng trực tuyến, tham số $\theta$, nhận gradient.
+- $Q_{\theta^-}$: mạng mục tiêu, cùng kiến trúc, tham số $\theta^-$, tạo phần bootstrap, cố định giữa hai lần đồng bộ.
+
+**Ứng dụng và giới hạn.** Mạng mục tiêu làm chậm sự thay đổi của mục tiêu nhưng không giữ nó cố định mãi; mục tiêu vẫn đổi tại các mốc đồng bộ.
+
+**Kiểm tra nhanh.** Mạng mục tiêu có nhận gradient từ hàm mất mát hiện tại không? Không; nó chỉ cung cấp phần bootstrap và nằm trong vùng dừng gradient.
 
 <!-- note-topic-id: lec-08-topic-03 -->
 ### Bootstrap trở thành bài toán hồi quy
