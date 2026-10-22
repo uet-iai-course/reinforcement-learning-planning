@@ -87,8 +87,8 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 | `lec-08-topic-06` | Bộ nhớ phát lại | tr. 18–20, 32 | Bộ đệm vòng dung lượng $N$, ghi đè mẫu cũ nhất, rút đều; quan sát cuối khi tự đặt lại | Vào: topic-18 → Ra: mini-batch |
 | `lec-08-topic-19` | Dữ liệu khác chính sách trong bộ nhớ | tr. 6–7, 19, 32 | Hai nguồn khác chính sách; đích một bước không cần tỉ số lấy mẫu quan trọng | Vào: topic-06 → Ra: phạm vi của đích trên dữ liệu cũ |
 | `lec-08-topic-07` | Giới hạn của bộ nhớ phát lại | tr. 19, 29–32 | Ba việc làm được, ba điều không bảo đảm; câu hỏi $N=6$, $b=2$ | Vào: topic-19 → Ra: phát biểu đúng phạm vi; nhu cầu hàm mất mát cho phần 4 |
-| `lec-08-topic-08` | Gather và dừng gradient | tr. 16, 22, 34 | Đồ thị tính toán | Vào: topic-03 → Ra: loss batch |
-| `lec-08-topic-09` | Mất mát và gradient batch | tr. 21–22, 34 | MSE và $\nabla_\theta L$ | Vào: topic-08 → Ra: gradient cho optimizer |
+| `lec-08-topic-08` | Gather và dừng gradient | tr. 16, 22, 34 | Đồ thị tính toán | Vào: topic-09 → Ra: gradient đúng trong cài đặt |
+| `lec-08-topic-09` | Hàm mất mát trên mini-batch | tr. 16, 20–22, 34 | MSE với đích là hằng, gradient, không lồi theo $\theta$ | Vào: topic-07 → Ra: hàm vô hướng và gradient cho topic-08 |
 | `lec-08-topic-10` | Vòng DQN: hai đồng hồ $t$ và $k_{\mathrm{opt}}$ | tr. 18–22 | Giả mã đầy đủ | Vào: topic-05–09 → Ra: thuật toán hoàn chỉnh |
 | `lec-08-topic-11` | Hợp đồng tensor của batch | tr. 14–22, 35 | Kích thước và kiểu tensor | Vào: topic-09 → Ra: kiểm tra cài đặt |
 | `lec-08-topic-12` | Mạng mục tiêu và các nguồn bất ổn | tr. 19, 21, 29–33 | Đồng bộ đích và giới hạn ổn định | Vào: topic-10 → Ra: phạm vi bảo đảm của DQN |
@@ -590,35 +590,50 @@ Ba điều này có ba nguồn khác nhau. Điều thứ nhất đến từ vi�
 ## 4. Hàm mất mát và thuật toán DQN
 
 <!-- note-topic-id: lec-08-topic-09 -->
-### Mất mát và gradient của batch
+### Hàm mất mát trên mini-batch
 
-**Vấn đề.** Cần viết loss và gradient với hệ số đúng để kiểm tra dấu cập nhật.
+Ở cuối phần 3, mỗi bước tối ưu có một mini-batch $b$ mẫu rút đều từ bộ nhớ phát lại, và mỗi mẫu có một dự đoán của mạng trực tuyến cùng một đích tính bằng mạng mục tiêu. Bộ tối ưu theo gradient cần một hàm vô hướng duy nhất của $\theta$ để lấy gradient. Chúng ta cần gộp $b$ cặp (dự đoán, đích) thành một hàm như vậy, sao cho cực tiểu của nó là lời giải của bài hồi quy dự đoán về đích.
 
-**Trực quan.** MSE trung bình trên batch; gradient theo từng $q_i$ tỉ lệ với sai
-số $q_i - y_i$.
+Khi đã rút, các mẫu của mini-batch không còn mang thứ tự thời gian: mẫu thứ $i$ có thể được ghi trước hay sau mẫu thứ $i+1$ bất kỳ bao nhiêu bước. Vì vậy ta viết mẫu thứ $i$ là $(O_i,A_i,R_i,O'_i,Z_i,U_i)$: $R_i$ và $O'_i$ thay cho $R_{t+1}$ và $O_{t+1}$ của mẫu chuyển $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$ được ghi tại bước $t$. Viết $R_{i+1}$ hay $O_{i+1}$ sẽ sai, vì mẫu $i+1$ của mini-batch không phải bước kế tiếp của mẫu $i$.
 
-**Ví dụ.** Với batch $B$:
+::: definition Định nghĩa 08.10 (Hàm mất mát trên mini-batch)
+Cho mini-batch $B=\{(O_i,A_i,R_i,O'_i,Z_i,U_i)\}_{i=1}^b$ rút từ bộ nhớ phát lại $\mathcal D$ (Định nghĩa 08.7), mạng trực tuyến $Q_\theta$ với $\theta\in\mathbb R^d$, mạng mục tiêu $Q_{\theta^-}$ với $\theta^-$ cố định (Định nghĩa 08.3) và $\gamma\in[0,1)$. Với mỗi $i$, dự đoán và đích của mẫu $i$ là
+$$
+q_i=Q_\theta(O_i,A_i),\qquad y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a').
+$$
+Hàm mất mát (loss) sai số bình phương trung bình (mean squared error, MSE) trên $B$ là
+$$
+L_B(\theta)=\frac1b\sum_{i=1}^b\bigl(y_i-q_i\bigr)^2,
+$$
+trong đó mỗi $y_i$ là một hằng số theo $\theta$. Cờ $U_i$ không vào $L_B$.
+:::
 
-$$L_B(\theta)=\frac{1}{b}\sum_{i=1}^{b}\bigl(y_i-Q_\theta(O_i,A_i)\bigr)^2,
-\qquad \theta\leftarrow\theta - \eta\nabla_\theta L_B(\theta).$$
+Ký hiệu $q_i$ chỉ dự đoán của mạng trên mẫu $i$; nó khác $q_*$, giá trị hành động tối ưu. Mỗi số hạng $y_i-q_i$ là sai số TD $\delta_i$ của mẫu $i$ theo Định nghĩa 08.4, nên $L_B$ là trung bình bình phương các sai số TD trên mini-batch. $L_B$ phụ thuộc $\theta$ chỉ qua các $q_i$. Lấy đạo hàm theo $\theta$, với $y_i$ là hằng:
+$$
+\begin{aligned}
+\nabla_\theta L_B(\theta)&=\frac1b\sum_{i=1}^b2\,(y_i-q_i)\,\nabla_\theta(y_i-q_i)\\
+&=\frac2b\sum_{i=1}^b(q_i-y_i)\,\nabla_\theta Q_\theta(O_i,A_i).
+\end{aligned}
+$$
+Dòng thứ nhất là quy tắc dây chuyền cho hàm bình phương; dòng thứ hai dùng $\nabla_\theta y_i=0$ và $\nabla_\theta q_i=\nabla_\theta Q_\theta(O_i,A_i)$. Theo $q_i$, đạo hàm riêng là $\partial L_B/\partial q_i=\tfrac2b(q_i-y_i)$: một bước hạ gradient nhỏ làm $q_i$ giảm khi $q_i>y_i$ và tăng khi $q_i<y_i$, nếu chỉ xét riêng $q_i$. Khi các $q_i$ dùng chung $\theta$, một bước cũng đổi các $q_j$ khác, và dấu thay đổi của từng $q_i$ còn phụ thuộc tích $\nabla_\theta q_i^\top\nabla_\theta q_j$.
 
-**Hình thức.** Với $q_i = Q_\theta(O_i,A_i)$ và $y_i$ như chủ đề 03, có mặt nạ
-theo chủ đề 04:
+Định nghĩa có ba lựa chọn, mỗi lựa chọn có vai trò riêng. Thứ nhất, đích được coi là hằng theo $\theta$. Với $\theta^-$ là một vector riêng, điều này đúng tự nhiên, vì $y_i$ chỉ phụ thuộc $\theta^-$ và dữ liệu. Bỏ điều kiện này, chẳng hạn khi đích tính bằng chính $\theta$ và gradient đi qua cả đích: trong ví dụ một tham số $Q_\theta=\theta$, $R=1$, $\gamma=0{,}9$, $\theta=0$ của Ví dụ 08.5, hàm $(1+0{,}9\,\theta-\theta)^2=(1-0{,}1\,\theta)^2$ có đạo hàm $-0{,}2$ tại $\theta=0$, còn khi coi đích $1$ là hằng, đạo hàm của $(1-\theta)^2$ là $-2$. Gradient đầy đủ qua đích cho một phương pháp khác, phương pháp gradient dư (residual gradient) của Sutton và Barto (2018, §11.5), với điểm dừng khác; DQN và Q-learning bán gradient của Bài 07 đều coi đích là hằng. Thứ hai, hệ số $1/b$ làm thang của $L_B$ không phụ thuộc cỡ mini-batch; nếu dùng tổng thay cho trung bình, gradient lớn lên theo $b$ và tốc độ học phải nhỏ đi tương ứng. Thứ ba, bình phương làm hàm hồi quy tốt nhất là kỳ vọng có điều kiện $\mathbb E[y_i\mid O_i,A_i]=(\mathcal TQ_{\theta^-})(O_i,A_i)$ (Nhận xét 08.5, Mệnh đề 08.8). Thay bình phương bằng giá trị tuyệt đối, hàm tốt nhất là trung vị có điều kiện của $y_i$, nói chung khác $(\mathcal TQ_{\theta^-})(O_i,A_i)$ khi phân phối của phần thưởng hoặc của quan sát kế tiếp không đối xứng.
 
-$$\nabla_\theta L_B=\frac{2}{b}\sum_{i=1}^b(q_i-y_i)\,\nabla_\theta q_i.$$
+::: remark Nhận xét 08.11 (Hàm mất mát không lồi theo tham số)
+Với $\theta^-$ và mini-batch $B$ cố định, $L_B$ là hàm lồi của vector $(q_1,\dots,q_b)$. Nếu $Q_\theta(o,a)=x(o,a)^\top\theta$ tuyến tính theo $\theta$, thì $L_B$ là một hàm bậc hai lồi theo $\theta$. Với $Q_\theta$ phi tuyến theo $\theta$, chẳng hạn một mạng nhiều tầng, $L_B$ nói chung không lồi theo $\theta$, và một phương pháp theo gradient không bảo đảm đạt cực tiểu toàn cục.
+:::
 
-Tương đương, $\partial L_B/\partial q_i=(2/b)(q_i-y_i)$; quy tắc dây chuyền
-nhân đại lượng này với $\nabla_\theta q_i$ rồi cộng theo lô.
+Một phản ví dụ nhỏ cho thấy điểm dừng của gradient có thể không phải cực tiểu. Xét một mẫu, $b=1$, đích $y_1=1$, và mạng tuyến tính hai tầng với một nơ-ron ẩn, $Q_\theta=\theta_1\theta_2$ với $\theta=(\theta_1,\theta_2)$. Khi đó $L(\theta)=(1-\theta_1\theta_2)^2$, có
+$$
+\nabla_\theta L=-2(1-\theta_1\theta_2)\begin{pmatrix}\theta_2\\ \theta_1\end{pmatrix},\qquad \nabla^2_\theta L(0,0)=\begin{pmatrix}0&-2\\-2&0\end{pmatrix}.
+$$
+Tại $\theta=(0,0)$, gradient bằng $0$ nhưng $L=1$, trong khi $L=0$ trên đường cong $\theta_1\theta_2=1$; ma trận Hessian có hai trị riêng $2$ và $-2$, nên $(0,0)$ là điểm yên ngựa và $L$ không lồi. Hạ gradient khởi tạo đúng tại $(0,0)$ đứng yên ở đó. Goodfellow, Bengio và Courville (2016, Chương 8) bàn về điểm yên ngựa và cực tiểu địa phương khi tối ưu mạng nơ-ron.
 
-Hệ số $\tfrac{2}{b}$ đến từ đạo hàm bình phương và phép lấy trung bình. Dấu của
-$(q_i - y_i)$ quyết định $q_i$ tăng hay giảm dưới một bước gradient descent nhỏ:
-sai số dương ($q_i > y_i$) làm $q_i$ giảm; sai số âm làm $q_i$ tăng.
+**Trong thực hành.** Dự đoán của cả mini-batch được tính bằng một lần tính xuôi của mạng trực tuyến trên $b$ quan sát, cho mảng kích thước $[b,\lvert\mathcal A\rvert]$, rồi lấy giá trị của hành động đã lưu ở mỗi hàng; đích được tính bằng mạng mục tiêu mà không lưu đồ thị gradient. Sai số bình phương trung bình là lựa chọn của chương để mọi phép tính minh bạch. Bình phương làm các mẫu có sai số lớn chiếm phần lớn gradient; hàm mất mát Huber, bậc hai khi $\lvert y_i-q_i\rvert\le1$ và tuyến tính ngoài khoảng đó, giới hạn ảnh hưởng này và là một lựa chọn khác trong thực hành. Mnih và cộng sự (2015, mục Methods) cắt số hạng sai số của cập nhật vào $[-1,1]$, tương đương dùng hàm mất mát giá trị tuyệt đối cho các sai số ngoài khoảng $(-1,1)$.
 
-**Ứng dụng và giới hạn.** Loss giảm trên batch không đồng nghĩa return đánh giá
-tăng. MSE nhạy với sai số lớn; Huber là lựa chọn thực hành khác.
+**Kiểm tra nhanh.** Lặp mỗi mẫu của một mini-batch hai lần để được mini-batch $2b$ mẫu. $L_B$ và $\nabla_\theta L_B$ đổi thế nào? Không đổi: tử số và mẫu số của trung bình cùng nhân đôi. Nếu dùng tổng thay cho trung bình, cả hai nhân đôi.
 
-**Kiểm tra nhanh.** Với một mẫu, $\partial L/\partial q_i$ bằng gì? —
-$\tfrac{2}{b}(q_i - y_i)$; với $b=2$, hệ số hiệu dụng là $(q_i-y_i)$.
+Định nghĩa 08.10 cho một hàm vô hướng của $\theta$ và gradient của nó, với giả thiết đích là hằng. Trong chương trình, dự đoán được lấy từ một vector $\lvert\mathcal A\rvert$ giá trị, và đích được tính từ một mạng có cùng kiến trúc; nếu không ghi rõ, thư viện vi phân tự động có thể truyền gradient qua đích. Ở mục tiếp theo, chúng ta viết phép chọn giá trị theo hành động đã lưu và phép dừng gradient, hai thao tác làm chương trình tính đúng gradient của Định nghĩa 08.10.
 
 <!-- note-topic-id: lec-08-topic-08 -->
 ### Gather và dừng gradient ở đích
