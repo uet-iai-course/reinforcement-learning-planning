@@ -726,13 +726,21 @@ Trước các bước lặp, chúng ta cố định đầu vào, đầu ra và t
 2. Thực hiện $A_t$; nhận $R_{t+1}$, hai cờ $Z_{t+1}$, $U_{t+1}$ và quan sát trả về.
 3. Lưu mẫu chuyển $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$ vào $\mathcal D$, trong đó $O_{t+1}$ là quan sát cuối của mẫu chuyển, lấy trước mọi lần đặt lại; khi $\lvert\mathcal D\rvert=N$, mẫu mới ghi đè mẫu cũ nhất.
 4. Nếu $Z_{t+1}\lor U_{t+1}=1$: đặt lại môi trường; quan sát hiện hành của bước kế là quan sát đầu lượt mới. Nếu không, quan sát hiện hành của bước kế là $O_{t+1}$. Tăng $t\leftarrow t+1$.
-5. Nếu $|\mathcal D|\ge N_{\mathrm{start}}$ và $t\bmod F=0$ (kiểm sau khi tăng $t$): lấy đều mini-batch từ $\mathcal D$; gather $q_i=Q_\theta(O_i,A_i)$; trong no-grad tính $y_i$; tính MSE; cập nhật $\theta$; $k_{\mathrm{opt}}\leftarrow k_{\mathrm{opt}}+1$.
-6. Sau cập nhật, nếu $k_{\mathrm{opt}}\bmod C=0$ thì $\theta^-\leftarrow\theta$.
+
+Nếu $\lvert\mathcal D\rvert\ge N_{\mathrm{start}}$ và $t\bmod F=0$, thực hiện bước 5–9; nếu không, quay lại bước 1.
+
+5. Rút đều $b$ mẫu $(O_i,A_i,R_i,O'_i,Z_i,U_i)$, $i=1,\dots,b$, từ $\mathcal D$.
+6. Tính $q_i=[\mathbf q_\theta(O_i)]_{A_i}$ bằng phép chọn theo hành động (Định nghĩa 08.12).
+7. Tính đích $y_i=\operatorname{sg}\bigl(R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a')\bigr)$.
+8. Bộ tối ưu cập nhật $\theta$ theo $\nabla_\theta L_B$, với $L_B=\tfrac1b\sum_{i=1}^b(y_i-q_i)^2$ (Định nghĩa 08.10); sau đó $k_{\mathrm{opt}}\leftarrow k_{\mathrm{opt}}+1$.
+9. Nếu $k_{\mathrm{opt}}\bmod C=0$, gán $\theta^-\leftarrow\theta$.
+
+Quay lại bước 1. Khi $t=T$, dừng và trả $\theta$ cùng chính sách tham lam theo $Q_\theta$.
 :::
 
 Thuật toán có hai nhóm đầu vào. Nhóm thứ nhất, gồm $\gamma$, $\epsilon_{\mathrm{exp}}$ và bộ tối ưu với $\eta$, quyết định từng phép tính: đích, hành vi và bước tham số; các quy tắc cập nhật cụ thể của bộ tối ưu được viết ở phần 5. Nhóm thứ hai, gồm năm số nguyên dương, quyết định nhịp: $N$ và $b$ là kích thước của bộ nhớ và của mini-batch, còn $N_{\mathrm{start}}$, $F$, $C$ quyết định khi nào vòng tối ưu chạy và khi nào mạng mục tiêu đổi. Ngân sách $T$ đếm theo $t$; trong thực hành có thể thay bằng một tiêu chuẩn dừng định trước trên lợi tức đánh giá.
 
-Mỗi điều kiện trên đầu vào có vai trò riêng. Điều kiện $\gamma<1$ cùng phần thưởng bị chặn, $\lvert R_{t+1}\rvert\le R_{\max}$, cho $\lvert G_t\rvert\le R_{\max}/(1-\gamma)$, nên mọi giá trị hành động hữu hạn cả khi lượt không kết thúc. Bỏ điều kiện này: với $\gamma=1$, một nhiệm vụ trả phần thưởng $+1$ mỗi bước và một chính sách không bao giờ làm lượt kết thúc có lợi tức vô hạn; mẫu bị cắt ngắn vẫn bootstrap ($Z=0$), nên giá trị $q$ của cặp mà chính sách đó chọn phải thỏa $q=1+q$, phương trình không có nghiệm hữu hạn. Điều kiện $N_{\mathrm{start}}\ge b$ bảo đảm lần rút đầu tiên có đủ $b$ mẫu khác nhau; với $N_{\mathrm{start}}=1$ và $b=32$, rút có hoàn lại cho một mini-batch gồm $32$ bản sao của cùng một mẫu chuyển. Điều kiện $N_{\mathrm{start}}\le N$ là cần, vì $\lvert\mathcal D\rvert$ không bao giờ vượt $N$; với $N_{\mathrm{start}}>N$, điều kiện ở bước 5 không bao giờ đúng và $\theta$ giữ giá trị khởi tạo. Cuối cùng, $C$ đếm theo $k_{\mathrm{opt}}$: với $C=1$, $\theta^-$ được gán bằng $\theta$ sau mọi bước tối ưu, nên đích ở bước kế tiếp tính bằng đúng giá trị tham số đang học, như trong Ví dụ 08.5.
+Mỗi điều kiện trên đầu vào có vai trò riêng. Điều kiện $\gamma<1$ cùng phần thưởng bị chặn, $\lvert R_{t+1}\rvert\le R_{\max}$, cho $\lvert G_t\rvert\le R_{\max}/(1-\gamma)$, nên mọi giá trị hành động hữu hạn cả khi lượt không kết thúc. Bỏ điều kiện này: với $\gamma=1$, một nhiệm vụ trả phần thưởng $+1$ mỗi bước và một chính sách không bao giờ làm lượt kết thúc có lợi tức vô hạn; mẫu bị cắt ngắn vẫn bootstrap ($Z=0$), nên giá trị $q$ của cặp mà chính sách đó chọn phải thỏa $q=1+q$, phương trình không có nghiệm hữu hạn. Điều kiện $N_{\mathrm{start}}\ge b$ bảo đảm lần rút đầu tiên có đủ $b$ mẫu khác nhau; với $N_{\mathrm{start}}=1$ và $b=32$, rút có hoàn lại cho một mini-batch gồm $32$ bản sao của cùng một mẫu chuyển. Điều kiện $N_{\mathrm{start}}\le N$ là cần, vì $\lvert\mathcal D\rvert$ không bao giờ vượt $N$; với $N_{\mathrm{start}}>N$, điều kiện tối ưu trước bước 5 không bao giờ đúng và $\theta$ giữ giá trị khởi tạo. Cuối cùng, $C$ đếm theo $k_{\mathrm{opt}}$: với $C=1$, $\theta^-$ được gán bằng $\theta$ sau mọi bước tối ưu, nên đích ở bước kế tiếp tính bằng đúng giá trị tham số đang học, như trong Ví dụ 08.5.
 
 Khởi tạo $\theta^-\leftarrow\theta$ làm đích của những bước tối ưu đầu tiên tính bằng cùng mạng ban đầu, thay cho một mạng mục tiêu ngẫu nhiên độc lập. Đầu ra là chính sách tham lam theo $Q_\theta$, khác hành vi $\epsilon_{\mathrm{exp}}$-tham lam dùng khi thu thập; khi đánh giá thuật toán, chúng ta chạy chính sách tham lam này trên các lượt riêng.
 
@@ -751,17 +759,34 @@ Bảng sau ghi giá trị đầu vào mà Mnih và cộng sự (2015, Extended D
 
 Với các giá trị này, khi vòng tối ưu đã chạy, $\theta^-$ đứng yên trong $F\cdot C=4\cdot10^4$ bước môi trường (Ví dụ 08.14). Lịch giảm dần của $\epsilon_{\mathrm{exp}}$ không làm hỏng Mệnh đề 08.8: xác suất thăm dò tại bước $t$ là một hàm của $t$, nên hành vi vẫn chỉ phụ thuộc lịch sử tới bước $t$.
 
-Bốn bước đầu của vòng lặp là vòng thu thập. Bước 1 dùng mạng trực tuyến hiện hành, nên hành vi đổi theo từng bước tối ưu. Bước 3 đòi $O_{t+1}$ là quan sát cuối của chính mẫu chuyển. Khi môi trường tự đặt lại sau bước cuối của một lượt, quan sát trả về có thể đã là quan sát đầu của lượt mới, còn quan sát cuối nằm trong thông tin phụ mà môi trường trả kèm; tên trường của thông tin này phụ thuộc thư viện và phiên bản. Lưu nhầm quan sát đầu lượt mới không gây sai ở mẫu kết thúc, vì $Z_{t+1}=1$ và mặt nạ xóa phần bootstrap. Ở mẫu bị cắt ngắn, $Z_{t+1}=0$ và $U_{t+1}=1$, đích $R_{t+1}+\gamma\max_{a'}Q_{\theta^-}(O_{t+1},a')$ khi đó bootstrap từ một quan sát không nối với $O_t$. Bước 4 đặt lại khi $Z_{t+1}\lor U_{t+1}=1$, trong khi đích chỉ dùng $1-Z$ (Pardo và cộng sự 2018). Ở ranh giới lượt, quan sát hiện hành của bước kế là quan sát đầu lượt mới, còn $O_{t+1}$ trong mẫu đã lưu ở bước 3 vẫn là quan sát cuối của lượt cũ; hai quan sát này khác nhau, nên chúng ta không gán lại ký hiệu $O_{t+1}$. Bộ đếm $t$ tăng sau khi lưu, nên khi bước 5 kiểm điều kiện tối ưu, $t$ là số bước môi trường đã hoàn tất và $\lvert\mathcal D\rvert=\min(t,N)$.
+Bốn bước đầu của vòng lặp là vòng thu thập. Bước 1 dùng mạng trực tuyến hiện hành, nên hành vi đổi theo từng bước tối ưu. Bước 3 đòi $O_{t+1}$ là quan sát cuối của chính mẫu chuyển. Khi môi trường tự đặt lại sau bước cuối của một lượt, quan sát trả về có thể đã là quan sát đầu của lượt mới, còn quan sát cuối nằm trong thông tin phụ mà môi trường trả kèm; tên trường của thông tin này phụ thuộc thư viện và phiên bản. Lưu nhầm quan sát đầu lượt mới không gây sai ở mẫu kết thúc, vì $Z_{t+1}=1$ và mặt nạ xóa phần bootstrap. Ở mẫu bị cắt ngắn, $Z_{t+1}=0$ và $U_{t+1}=1$, đích $R_{t+1}+\gamma\max_{a'}Q_{\theta^-}(O_{t+1},a')$ khi đó bootstrap từ một quan sát không nối với $O_t$. Bước 4 đặt lại khi $Z_{t+1}\lor U_{t+1}=1$, trong khi đích chỉ dùng $1-Z$ (Pardo và cộng sự 2018). Ở ranh giới lượt, quan sát hiện hành của bước kế là quan sát đầu lượt mới, còn $O_{t+1}$ trong mẫu đã lưu ở bước 3 vẫn là quan sát cuối của lượt cũ; hai quan sát này khác nhau, nên chúng ta không gán lại ký hiệu $O_{t+1}$. Bộ đếm $t$ tăng sau khi lưu, nên khi kiểm điều kiện tối ưu trước bước 5, $t$ là số bước môi trường đã hoàn tất và $\lvert\mathcal D\rvert=\min(t,N)$.
 
-**Kiểm tra nhanh.** Cho $N=6$, $b=2$, $N_{\mathrm{start}}=3$, $F=2$. Bước tối ưu đầu tiên chạy khi nào? Sau $k\le6$ bước môi trường, $t=k$ và $\lvert\mathcal D\rvert=k$. Điều kiện ở bước 5 cần $k\ge3$ và $k$ chẵn, nên bước tối ưu đầu tiên chạy khi $t=4$, với $\lvert\mathcal D\rvert=4$.
+**Kiểm tra nhanh.** Cho $N=6$, $b=2$, $N_{\mathrm{start}}=3$, $F=2$. Bước tối ưu đầu tiên chạy khi nào? Sau $k\le6$ bước môi trường, $t=k$ và $\lvert\mathcal D\rvert=k$. Điều kiện tối ưu trước bước 5 cần $k\ge3$ và $k$ chẵn, nên bước tối ưu đầu tiên chạy khi $t=4$, với $\lvert\mathcal D\rvert=4$.
 
-**Ứng dụng và giới hạn.** Bản đơn giản có thể chọn $F=1$, nhưng vẫn phải chờ đủ
-$N_{\mathrm{start}}$. Đánh giá dùng chính sách tham lam riêng, không trộn return
-khám phá với return đánh giá. Dùng $\gamma<1$ cho nhiệm vụ tiếp diễn.
+Bước 5–9 là vòng tối ưu của sơ đồ hai vòng. Điều kiện ở đầu được kiểm sau khi $t$ đã tăng ở bước 4, nên $t$ là số bước môi trường đã hoàn tất; nếu điều kiện sai, vòng lặp quay lại bước 1 mà không đổi $\theta$, $\theta^-$ hay $k_{\mathrm{opt}}$. Bước 6 và bước 7 là hai đường tính của Định nghĩa 08.12: phép chọn theo hành động lấy giá trị của hành động đã lưu, còn đích nằm trong $\operatorname{sg}$ và chỉ dùng $\theta^-$. Bước 8 và bước 9 có thứ tự cố định: cập nhật $\theta$, tăng $k_{\mathrm{opt}}$, rồi mới kiểm $C$. Với thứ tự này, lần đồng bộ thứ $m$ xảy ra ngay sau bước tối ưu thứ $mC$, và giữa hai lần đồng bộ có đúng $C$ bước tối ưu với cùng $\theta^-$. Kiểm $C$ trước khi tăng $k_{\mathrm{opt}}$ làm lần đồng bộ đầu xảy ra ngay sau bước tối ưu thứ nhất, vì khi đó $k_{\mathrm{opt}}=0$. Giữa hai mốc đồng bộ, đích $y_i$ của một mẫu đã lưu không đổi; nó chỉ đổi tại mốc đồng bộ, khi $\theta^-$ nhận giá trị mới.
 
-**Kiểm tra nhanh.** $t\bmod F=0$ và $k_{\mathrm{opt}}\bmod C=0$ đếm trên cùng một
-bộ đếm không? — Không; $t$ đếm bước môi trường, $k_{\mathrm{opt}}$ đếm bước tối
-ưu; $F$ và $C$ thuộc hai bộ đếm khác nhau.
+::: example Ví dụ 08.15 (Truy dấu hai bộ đếm)
+**Dữ kiện.** $N=6$, $b=2$, $N_{\mathrm{start}}=3$, $F=2$, $C=2$, $T=10$; khởi tạo $t=0$, $k_{\mathrm{opt}}=0$, $\mathcal D=\varnothing$.
+
+**Tính.** Sau mỗi lần qua bước 4, $\lvert\mathcal D\rvert=\min(t,6)$. Điều kiện tối ưu cần $\min(t,6)\ge3$ và $t$ chẵn, nên bước 5–9 chạy tại $t=4,6,8,10$.
+
+| $t$ | $\lvert\mathcal D\rvert$ | $k_{\mathrm{opt}}$ sau bước 8 | đồng bộ ở bước 9 |
+|---|---|---|---|
+| $4$ | $4$ | $1$ | không |
+| $6$ | $6$ | $2$ | có |
+| $8$ | $6$ | $3$ | không |
+| $10$ | $6$ | $4$ | có |
+
+Tại $t=10$, điều kiện $t<T$ sai và thuật toán dừng sau khi đồng bộ.
+
+**Diễn giải.** Mười bước môi trường cho bốn bước tối ưu (năm thời điểm chẵn $t\le10$, trừ $t=2$ vì khi đó $\lvert\mathcal D\rvert=2<N_{\mathrm{start}}$) và hai lần đồng bộ. Nếu kiểm $C$ trước khi tăng $k_{\mathrm{opt}}$, đồng bộ xảy ra tại $t=4$ và $t=8$, tức ngay sau bước tối ưu thứ nhất và thứ ba, nên $\theta^-$ đầu tiên chỉ giữ cố định trong một bước tối ưu.
+:::
+
+**Trong thực hành.** Chọn $F=1$ cho một bước tối ưu sau mỗi bước môi trường, nhưng vòng tối ưu vẫn chờ đủ $N_{\mathrm{start}}$ mẫu. Lợi tức của các lượt thu thập được sinh bởi hành vi $\epsilon_{\mathrm{exp}}$-tham lam và trộn nhiều phiên bản của $\theta$, nên không đo chất lượng của chính sách đầu ra. Đánh giá chạy chính sách tham lam theo $Q_\theta$, hoặc một chính sách $\epsilon$-tham lam với $\epsilon$ nhỏ cố định, trên các lượt riêng; Mnih và cộng sự (2015, mục Methods) đánh giá với $\epsilon=0{,}05$.
+
+**Kiểm tra nhanh.** Với $F=4$ và $C=10\,000$, trong $10^6$ bước môi trường sau khi $\mathcal D$ đã có đủ $N_{\mathrm{start}}$ mẫu, thuật toán thực hiện khoảng bao nhiêu bước tối ưu và bao nhiêu lần đồng bộ? Khoảng $10^6/4=250\,000$ bước tối ưu và $250\,000/10\,000=25$ lần đồng bộ.
+
+Thuật toán 08.13 viết mỗi phép tính cho một mẫu $i$. Trong chương trình, $b$ mẫu của mini-batch được xử lý cùng lúc dưới dạng mảng, và phần lớn lỗi cài đặt là lỗi kích thước hoặc kiểu của các mảng đó. Ở mục tiếp theo, chúng ta nêu kích thước và kiểu của từng mảng trong một mini-batch Atari.
 
 <!-- note-topic-id: lec-08-topic-11 -->
 ### Hợp đồng tensor của batch
