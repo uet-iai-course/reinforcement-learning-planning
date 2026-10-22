@@ -33,7 +33,7 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 1 | `L08-02b` | Nội dung | thêm | Bảy mục khớp trang tiêu đề mạch và `#/N`; dòng đọc trước: Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015) | 1.6 (S5) |
 | 1 | `L08-02c` | Vấn đề trung tâm | thêm (gộp ý quy mô của `L08-06`) | Một dòng bài toán, một dòng trả lời có điều kiện cho mỗi mạch 2–6 | 1.7 (S6) |
 | 1 | `L08-06` | (gộp vào `L08-02c` và `L08-03`) | gộp, bỏ trang riêng | Cảnh báo phủ định cận mẫu chưa từng nêu trên mặt trang | đã bỏ ở S6; ý "số ô tăng theo $\lvert\mathcal S\rvert\lvert\mathcal A\rvert$" sang bước `L08-03`, ý "xấp xỉ hàm cần giả thiết cấu trúc mới có bảo đảm" sang bước `L08-30` |
-| 2 | `L08-M2T` | 2. Mạng giá trị hành động và đích hồi quy | thêm | Trang tiêu đề mạch, điểm vào mạch 2 | chưa có |
+| 2 | `L08-M2T` | 2. Mạng giá trị hành động và đích hồi quy | thêm | Trang tiêu đề mạch, điểm vào mạch 2 | 2.0 (S7) |
 | 2 | `L08-03` | Giới hạn của bảng giá trị hành động | sửa | Nhu cầu; Lunar Lander rời rạc hóa $9\,216$ ô, $1\,896$ ô có mẫu sau $2\,000$ lượt (Bài 07, Ví dụ 07.1); sửa nhãn SVG | 2.1 |
 | 2 | `L08-31` | Ví dụ: đầu vào bốn khung Atari | sửa, chuyển lên | Ví dụ cho giao diện; bốn khung phải có trước $[b,4,h,w]$ ở `L08-20` | 2.2 |
 | 2 | `L08-07` | Mạng giá trị hành động | tách | Chỉ giữ giao diện; phản ví dụ sang `L08-07b`, mạng mục tiêu sang `L08-07c` | 2.3 |
@@ -159,6 +159,16 @@ Số trang sau đợt sửa dự kiến: 37 trang hiện có − 5 trang bỏ (`
 - **Liên kết:** trước là `L08-02b` (Nội dung); sau là `L08-03`, hiện là trang đầu mạch 2 (sẽ là `L08-M2T`).
 - **Mật độ và ngoại lệ:** `L08-06` trước sửa 58 âm tiết. `L08-02c` 70 âm tiết (hộp 13; dòng 14, 13, 9, 9, 12), 6 dòng, 0 công thức, 1 hộp chữ 1 câu, ghi chú 148 âm tiết. Ngoại lệ 70 > 60 (1,17 lần): trang Vấn đề trung tâm phải có dòng bài toán và một dòng trả lời cho mỗi phần 2–6 (`CLAUDE.md`, mạch mở đầu); rút thêm sẽ bỏ điều kiện của câu trả lời.
 - **Ghi chú bài giảng:** thêm mục "Bài toán trung tâm của chương" ở đầu Phần 2 (bài toán, bốn khó khăn của nguồn, năm câu trả lời có điều kiện khớp trang); đoạn "Về độ phức tạp mẫu" viết lại với chúng ta làm chủ ngữ, ghi hai cận của nguồn bằng $\varepsilon_{\mathrm{acc}}$ (theo `note-for-author.md`) và lý do không dùng, chuyển vào mục này.
+
+#### `L08-M2T` Trang tiêu đề mạch 2 (bước S7), điểm vào mạch 2
+
+- **Trang muốn nói gì:** mạch 2 "Mạng giá trị hành động và đích hồi quy" có nhiệm vụ biến mục tiêu bootstrap của Q-learning thành nhãn hồi quy giữ cố định khi cập nhật một mạng.
+- **Phục vụ mạch nào và thế nào:** điểm vào mạch 2; số "2." khớp mục 2 của `L08-02b` và `#/2` (đã thử: `#/2` và liên kết mục 2 cùng mở `L08-M2T`). Dòng dẫn nêu đúng nhu cầu chung của mạch, không trùng nhu cầu riêng của `L08-03`, nên trang ghi "ngoài hành trình khái niệm".
+- **Vấn đề còn lại trước sửa:** không mạch nào có trang tiêu đề (`review-structure.md` bảng phát hiện nghiêm trọng; `review-student.md`).
+- **Quyết định:** thêm. Tên mạch, dòng dẫn và từ khóa theo `review-structure.md` §1 mạch 2. Tên khác tiêu đề trang nội dung đầu tiên (`L08-03`, sẽ là "Giới hạn của bảng giá trị hành động"). Năm từ khóa đều là khái niệm của mạch: vector giá trị hành động (`L08-07`), mạng trực tuyến và mạng mục tiêu (`L08-07c`), đích hồi quy (`L08-08`), mặt nạ kết thúc (`L08-09`, `L08-12`). Không định nghĩa, công thức, hình hay "Đầu vào/Đầu ra" trên mặt trang. `data-note-topic-id` là `lec-08-topic-01`, chủ đề của trang nội dung đầu mạch.
+- **Liên kết:** kế thừa: Q-learning bán gradient tuyến tính của Bài 07 (`L08-01b2`) và bài toán trung tâm (`L08-02c`, dòng 2). Giao cho mạch 3: đích hồi quy có mặt nạ kết thúc và bộ sáu thành phần của mẫu chuyển.
+- **Mật độ:** dòng dẫn 17 âm tiết (trần 25), dòng từ khóa 18 âm tiết, 5 cụm; ghi chú diễn giả 88 âm tiết (khoảng 40–100).
+- **Ghi chú bài giảng:** "Phần 2 — …" tách thành `## 1. Mở đầu` (chỉ gồm "Bài toán trung tâm của chương") và `## 2. Mạng giá trị hành động và đích hồi quy`; số mục bằng số mạch. Các mục con của mục 2 xếp theo thứ tự trang: "Vì sao cần Deep Q-learning" (`L08-03`), "Ví dụ: đầu vào bốn khung Atari" (`L08-31`, tách từ mục Atari của topic-15 thành chủ đề mới `lec-08-topic-16`, vì trình xem ghi chú yêu cầu mỗi `note-topic-id` xuất hiện một lần; `L08-31`, `L08-32` đổi `data-note-topic-id` sang `lec-08-topic-16`; `outline.md` cập nhật bảng ánh xạ), "Giao diện DQN và hai mạng" (`L08-07`; phần mạng mục tiêu sẽ tách cho `L08-07c`), "Bốn khung và tính Markov" (`L08-32`), topic-03 (`L08-08`), topic-04 (`L08-09`), topic-05 (`L08-12`). Nội dung từng mục chưa sửa. Các mục còn lại tạm nằm dưới tiêu đề không đánh số "Bộ nhớ phát lại, hàm mất mát, vòng huấn luyện và bất ổn" và "Kiểm tra tổng hợp và đọc thêm" cho tới bước trang tiêu đề mạch 3, 4, 6, 7. Lý do đặt "Bài toán trung tâm" ở mục 1: trang `L08-02c` thuộc mạch 1, và giữ số mục ghi chú bằng số mạch; phần mở đầu chung (mục tiêu, tiên quyết, ký hiệu, bản đồ chủ đề) giữ không đánh số theo mẫu ghi chú.
 
 ### Bản trước đợt sửa 2026-10-22
 

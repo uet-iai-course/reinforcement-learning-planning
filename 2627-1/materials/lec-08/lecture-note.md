@@ -77,6 +77,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 | Mã | Chủ đề | Nguồn trang | Vai trò | Vào → Ra |
 |---|---|---|---|---|
 | `lec-08-topic-01` | Vì sao cần Deep Q-learning | tr. 8–15 | Đặt vấn đề quy mô và khái quát hóa | Vào: topic-13 → Ra: nhu cầu $Q_\theta$ |
+| `lec-08-topic-16` | Đầu vào bốn khung Atari và tính Markov | tr. 17, 35 | Ví dụ cho giao diện mạng; giới hạn của bốn khung | Vào: topic-01 → Ra: quan sát $O_t$ cho topic-02 |
 | `lec-08-topic-02` | Giao diện DQN và hai mạng | tr. 14–17, 20, 31, 33 | Định nghĩa $Q_\theta$, $Q_{\theta^-}$ | Vào: topic-01 → Ra: hai bản sao mạng |
 | `lec-08-topic-03` | Bootstrap thành bài toán hồi quy | tr. 16, 20–22, 34 | Đích $y_t$ và sai số TD | Vào: topic-02 → Ra: nhãn hồi quy |
 | `lec-08-topic-04` | Kết thúc thật và mặt nạ $(1-Z)$ | tr. 21 | Phân biệt $Z$ và $U$ | Vào: topic-03 → Ra: đích đúng |
@@ -99,14 +100,14 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 
 | Mã | Chủ đề | Nguồn trang | Vai trò | Vào → Ra |
 |---|---|---|---|---|
-| `lec-08-topic-15` | Atari, kiểm tra tổng hợp, ba bài thảo luận, đọc thêm | tr. 12–13, 29–36 | Ứng dụng và tổng kết | Vào: topic-12, 14 → Ra: kết luận cuối tệp |
+| `lec-08-topic-15` | Kiểm tra tổng hợp, ba bài thảo luận, đọc thêm | tr. 12–13, 29–36 | Ứng dụng và tổng kết | Vào: topic-12, 14 → Ra: kết luận cuối tệp |
 
 ### Bảy phần của chương
 
 Chương đi theo bảy phần, cùng thứ tự với bộ trang chiếu.
 
 1. Mở đầu: kiến thức tiên quyết, ký hiệu, mục tiêu và bài toán trung tâm (`lec-08-topic-13`, `lec-08-topic-01`).
-2. Mạng giá trị hành động và đích hồi quy: giới hạn của bảng, đầu vào bốn khung Atari, giao diện mạng, mạng mục tiêu, đích có mặt nạ kết thúc, kết thúc và cắt ngắn (`lec-08-topic-01`, `lec-08-topic-15`, `lec-08-topic-02` đến `lec-08-topic-05`).
+2. Mạng giá trị hành động và đích hồi quy: giới hạn của bảng, đầu vào bốn khung Atari, giao diện mạng, mạng mục tiêu, đích có mặt nạ kết thúc, kết thúc và cắt ngắn (`lec-08-topic-01`, `lec-08-topic-16`, `lec-08-topic-02` đến `lec-08-topic-05`).
 3. Bộ nhớ phát lại: tương quan giữa các mẫu chuyển liên tiếp, cơ chế lưu và lấy mẫu đều, dữ liệu khác chính sách, giới hạn (`lec-08-topic-06`, `lec-08-topic-07`).
 4. Hàm mất mát và thuật toán DQN: hàm mất mát trên mini-batch, dừng gradient, vòng huấn luyện, kích thước tensor (`lec-08-topic-08` đến `lec-08-topic-11`).
 5. Bộ tối ưu theo gradient: SGD, RMSprop, Adam theo từng tọa độ (`lec-08-topic-14`).
@@ -117,7 +118,7 @@ Chương đi theo bảy phần, cùng thứ tự với bộ trang chiếu.
 
 ---
 
-## Phần 2 — Giao diện DQN, dữ liệu, đích và vòng huấn luyện
+## 1. Mở đầu
 
 ### Bài toán trung tâm của chương
 
@@ -133,6 +134,8 @@ Mỗi phần sau của chương trả lời một phần của bài toán, và m
 
 Bài giảng gốc (trang 9 và 11) còn nêu hai cận độ phức tạp mẫu: $\tilde O\bigl(\lvert\mathcal S\rvert\lvert\mathcal A\rvert/((1-\gamma)^4\varepsilon_{\mathrm{acc}}^2)\bigr)$ mẫu để Q-learning dạng bảng đạt chính sách $\varepsilon_{\mathrm{acc}}$-tối ưu, và $\tilde O\bigl(d/((1-\gamma)^3\varepsilon_{\mathrm{acc}}^2)\bigr)$ cho xấp xỉ hàm với $d$ đặc trưng; ở đây $\varepsilon_{\mathrm{acc}}$ là sai số cho phép của chính sách, khác $\epsilon_{\mathrm{exp}}$. Chúng ta không dùng hai cận này như định lý vì nguồn không nêu mô hình lấy mẫu (mẫu từ một bộ sinh độc lập hay dọc một quỹ đạo), chuẩn đo sai số, xác suất thành công, điều kiện bao phủ và thuật toán cụ thể mà cận áp dụng. Hai ý vẫn dùng ở phần sau: số ô của bảng tăng theo $\lvert\mathcal S\rvert\lvert\mathcal A\rvert$, và xấp xỉ hàm chỉ có bảo đảm khi có thêm giả thiết cấu trúc, chẳng hạn $q_*$ nằm trong lớp hàm và dữ liệu bao phủ đủ (bài giảng gốc, trang 11).
 
+
+## 2. Mạng giá trị hành động và đích hồi quy
 
 <!-- note-topic-id: lec-08-topic-01 -->
 ### Vì sao cần Deep Q-learning
@@ -158,6 +161,18 @@ không có bảo đảm hội tụ toàn cục.
 
 **Kiểm tra nhanh.** Đổi chi phí gì khi chuyển bảng → mạng? — Đổi bộ nhớ tường minh
 lấy sai số xấp xỉ, giao thoa giữa dự đoán và mất bảo đảm hội tụ dạng bảng.
+
+<!-- note-topic-id: lec-08-topic-16 -->
+### Ví dụ: đầu vào bốn khung Atari
+
+**Giao diện tối thiểu cho Atari.** Một quy trình DQN kinh điển:
+
+- Đầu vào trạng thái: chồng bốn khung hình gần nhất đã tiền xử lý; một ảnh đơn
+  lẻ không biểu lộ vận tốc hay hướng chuyển động, nhiều khung cung cấp động học
+  ngắn hạn.
+- Bộ mã hóa CNN theo sau bởi các tầng kết nối đầy đủ; đầu ra là một giá trị Q cho
+  mỗi hành động khả dụng ($|\mathcal A|$ giá trị).
+- Phần thưởng: thay đổi điểm số tức thời.
 
 <!-- note-topic-id: lec-08-topic-02 -->
 ### Giao diện DQN và hai mạng
@@ -190,6 +205,14 @@ trực tiếp đến năng lực xấp xỉ và độ ổn định.
 
 **Kiểm tra nhanh.** Mạng mục tiêu có nhận gradient từ loss hiện tại không? — Không;
 nó chỉ cung cấp phần bootstrap và nằm trong vùng dừng gradient.
+
+### Bốn khung và tính Markov
+
+**Giới hạn.** Bốn khung là lựa chọn thiết kế kinh điển, **không phải định lý bảo
+đảm Markov**: nó bổ sung động học ngắn hạn nhưng có thể vẫn thiếu biến ẩn hoặc
+lịch sử dài hơn. Một đặc tả tái lập kết quả Atari còn cần tiền xử lý, lặp khung,
+khởi đầu episode, kiến trúc, siêu tham số và giao thức đánh giá — nguồn không
+cung cấp đầy đủ, nên ghi chú này không bịa các con số đó.
 
 <!-- note-topic-id: lec-08-topic-03 -->
 ### Bootstrap trở thành bài toán hồi quy
@@ -275,6 +298,8 @@ Bellman hay không; nhầm $U$ làm $Z$ làm mất giá trị tương lai một 
 **Kiểm tra nhanh.** $U_i=1$ có nghĩa là không bootstrap không? — Không; $U_i$ là
 cắt ngắn do cơ chế thu thập, nhiệm vụ tiếp diễn vẫn bootstrap; chỉ $Z_i=1$ mới
 triệt tiêu nhánh bootstrap.
+
+## Bộ nhớ phát lại, hàm mất mát, vòng huấn luyện và bất ổn
 
 <!-- note-topic-id: lec-08-topic-06 -->
 ### Bộ nhớ phát lại (experience replay)
@@ -576,25 +601,10 @@ nó chỉ chuẩn hóa gradient theo từng tọa độ, đích và dữ liệu 
 
 ---
 
-## Phần 4 — Bất ổn, Atari, thực hành
+## Kiểm tra tổng hợp và đọc thêm
 
 <!-- note-topic-id: lec-08-topic-15 -->
-### Atari, kiểm tra tổng hợp, thảo luận và đọc thêm
-
-**Giao diện tối thiểu cho Atari.** Một quy trình DQN kinh điển:
-
-- Đầu vào trạng thái: chồng bốn khung hình gần nhất đã tiền xử lý; một ảnh đơn
-  lẻ không biểu lộ vận tốc hay hướng chuyển động, nhiều khung cung cấp động học
-  ngắn hạn.
-- Bộ mã hóa CNN theo sau bởi các tầng kết nối đầy đủ; đầu ra là một giá trị Q cho
-  mỗi hành động khả dụng ($|\mathcal A|$ giá trị).
-- Phần thưởng: thay đổi điểm số tức thời.
-
-**Giới hạn.** Bốn khung là lựa chọn thiết kế kinh điển, **không phải định lý bảo
-đảm Markov**: nó bổ sung động học ngắn hạn nhưng có thể vẫn thiếu biến ẩn hoặc
-lịch sử dài hơn. Một đặc tả tái lập kết quả Atari còn cần tiền xử lý, lặp khung,
-khởi đầu episode, kiến trúc, siêu tham số và giao thức đánh giá — nguồn không
-cung cấp đầy đủ, nên ghi chú này không bịa các con số đó.
+### Kiểm tra tổng hợp, thảo luận và đọc thêm
 
 **Kiểm tra tổng hợp (bốn câu).**
 
