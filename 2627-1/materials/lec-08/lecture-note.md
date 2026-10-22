@@ -82,7 +82,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 | `lec-08-topic-02` | Mạng giá trị hành động, đích di động và mạng mục tiêu | tr. 14–17, 20, 31, 33, 35 | Định nghĩa $\mathbf q_\theta$, $Q_\theta$; giả thiết Markov khi viết mục tiêu; $Q_{\theta^-}$ | Vào: topic-01, topic-16 → Ra: $\mathbf q_\theta$ và hai bản sao mạng |
 | `lec-08-topic-03` | Đích hồi quy | tr. 16, 20–22, 34 | Đích $y_t$ và sai số TD | Vào: topic-02 → Ra: nhãn hồi quy |
 | `lec-08-topic-04` | Ví dụ: đích tại mẫu chuyển kết thúc | tr. 21 | Phân biệt $Z$ và $U$ | Vào: topic-03 → Ra: đích đúng |
-| `lec-08-topic-05` | Chuyển tiếp và hai cờ, autoreset | tr. 21 | Hợp đồng dữ liệu | Vào: topic-04 → Ra: bộ sáu thành phần |
+| `lec-08-topic-05` | Kết thúc và cắt ngắn | tr. 21 | Hai cờ $Z$, $U$; mặt nạ chỉ dùng $Z$ | Vào: topic-04 → Ra: bộ sáu thành phần |
 | `lec-08-topic-06` | Bộ nhớ phát lại | tr. 19–21, 32 | Cơ chế lưu và lấy mẫu | Vào: topic-05 → Ra: mini-batch |
 | `lec-08-topic-07` | Replay giảm tương quan, không tạo i.i.d. | tr. 19, 29–32 | Giới hạn của replay | Vào: topic-06 → Ra: phát biểu đúng phạm vi |
 | `lec-08-topic-08` | Gather và dừng gradient | tr. 16, 22, 34 | Đồ thị tính toán | Vào: topic-03 → Ra: loss batch |
@@ -363,7 +363,7 @@ Mặt nạ $(1-Z_{t+1})$ trong Định nghĩa 08.4 chỉ tác động khi lượ
 
 Giá trị $100$ là đầu ra của mạng mục tiêu tại quan sát cuối lượt (số minh họa).
 
-**Tính.** Với mặt nạ, $y_t=-2+0{,}9\cdot(1-1)\cdot100=-2$ và $\delta_t=y_t-q_t=-2-(-1{,}5)=-0{,}5$.
+**Tính.** Với mặt nạ, $y_t=-2+0{,}9\cdot(1-1)\cdot100=-2$ và $\delta_t=y_t-q_t=-2-(-1{,}5)=-0{,}5.$
 
 Nếu cài đặt bỏ mặt nạ, tức coi $Z_{t+1}=0$, thì $y_t=-2+0{,}9\cdot100=88$ và $\delta_t=88-(-1{,}5)=89{,}5$.
 
@@ -377,39 +377,50 @@ Lỗi bỏ mặt nạ không dừng ở một mẫu chuyển. Mẫu chuyển tr�
 **Trong thực hành.** Cờ $Z_{t+1}$ phải được lưu cùng mẫu chuyển ngay khi thu thập, vì sau khi lượt kết thúc, môi trường thường được đặt lại và quan sát kế tiếp thuộc lượt mới. Một cách kiểm tra cài đặt là tính đích của một mẫu kết thúc bằng tay như Ví dụ 08.7 và so với giá trị chương trình trả về.
 
 <!-- note-topic-id: lec-08-topic-05 -->
-### Một chuyển tiếp cần hai cờ: $Z$ và $U$
+### Kết thúc và cắt ngắn
 
-**Vấn đề.** Dữ liệu thu thập thực tế có hai sự kiện khác nhau bị gộp thành "done":
-kết thúc của nhiệm vụ và việc dừng thu thập do giới hạn bên ngoài.
+Khi thu thập dữ liệu, một lượt có thể dừng vì hai lý do khác nhau. MDP có thể đi tới trạng thái kết thúc, như tàu đổ bộ chạm đất hoặc rơi. Người thu thập cũng có thể dừng lượt vì một giới hạn đặt bên ngoài MDP, thường là số bước tối đa của một lượt. Hai lý do này cần hai cách xử lý khác nhau trong đích, nên mẫu chuyển ghi chúng bằng hai cờ.
 
-**Trực giác.** Chỉ kết thúc của MDP mới xóa tương lai; cắt ngắn chỉ dừng *việc thu
-thập*, nhiệm vụ tiếp diễn vẫn còn tương lai nên vẫn bootstrap.
+::: definition Định nghĩa 08.6 (Cờ cắt ngắn và mẫu chuyển sáu thành phần)
+Với mẫu chuyển của Định nghĩa 08.4, cờ cắt ngắn $U_{t+1}\in\{0,1\}$ bằng $1$ khi và chỉ khi việc thu thập dừng sau bước $t+1$ vì một giới hạn không thuộc động lực của MDP. Mẫu chuyển được lưu dưới dạng bộ sáu
+$$
+(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1}).
+$$
+Đích hồi quy chỉ dùng mặt nạ $(1-Z_{t+1})$ như trong Định nghĩa 08.4; môi trường được đặt lại để bắt đầu lượt mới khi $Z_{t+1}\lor U_{t+1}=1$.
+:::
 
-**Ví dụ.** Chuyển tiếp lưu trong replay:
+Hai cờ có hai vai. $Z_{t+1}$ quyết định đích: sau bước kết thúc không còn phần thưởng nào, nên phần bootstrap bằng $0$. $Z_{t+1}\lor U_{t+1}$ quyết định việc đặt lại môi trường. Khi $U_{t+1}=1$ và $Z_{t+1}=0$, tác tử dừng vì giới hạn bước, nhưng nếu đi tiếp từ $O_{t+1}$ thì vẫn nhận thêm phần thưởng; giá trị của phần còn lại khác $0$ và được ước lượng bằng $\gamma\max_{a'}Q_{\theta^-}(O_{t+1},a')$. Đây là cách xử lý cắt ngắn của Q-learning bán gradient trong Bài 07: tại bước cắt ngắn, mục tiêu vẫn chứa phép cực đại.
 
-$$(O_t, A_t, R_{t+1}, O_{t+1}, Z_{t+1}, U_{t+1}).$$
+![Quan sát O t, qua hành động A t và phần thưởng R t+1, tới quan sát O t+1. Nhánh trên, khung viền liền: Z t+1 bằng 1, MDP kết thúc, đích y t bằng R t+1. Nhánh dưới, khung viền nét đứt: U t+1 bằng 1 và Z t+1 bằng 0, hết giới hạn bước, đích y t bằng R t+1 cộng gamma nhân max của Q theta trừ tại O t+1.](img/lec-08/termination-truncation.svg)
 
-- $Z_{t+1}=1$: quy trình đang mô hình hóa kết thúc → không bootstrap.
-- $U_{t+1}=1$: bộ thu thập dừng (hết thời lượng, hết ngân sách bước); nhiệm vụ
-  tiếp diễn thường vẫn bootstrap.
+Hình vẽ một mẫu chuyển từ $O_t$ tới $O_{t+1}$ và hai cách lượt có thể dừng tại $O_{t+1}$. Nhánh trên (khung viền liền) là kết thúc của MDP, với đích $y_t=R_{t+1}$. Nhánh dưới (khung viền nét đứt) là cắt ngắn khi MDP chưa kết thúc, với đích vẫn chứa phần bootstrap. Trong cả hai nhánh, môi trường được đặt lại.
 
-**Hình thức — môi trường tự khởi động lại.** Khi API tự reset sau bước cuối,
-quan sát trả về thuộc *lượt mới*, không thuộc chuyển tiếp vừa xảy ra. Replay phải
-lưu *quan sát cuối của chuyển tiếp* (ví dụ trường `final_observation`), không thay
-bằng quan sát đầu của lượt mới. Mặt nạ trong loss phải theo $Z$ (kết thúc MDP),
-không theo một biến done đã gộp.
+::: example Ví dụ 08.8 (Đích tại mẫu chuyển bị cắt ngắn)
+**Dữ kiện.** $\gamma=0{,}9$. Một mẫu chuyển chạm giới hạn số bước của lượt khi MDP chưa kết thúc:
 
-**Ứng dụng và giới hạn.** Phân biệt đúng hai cờ quyết định đích có đúng nghĩa
-Bellman hay không; nhầm $U$ làm $Z$ làm mất giá trị tương lai một cách tùy tiện.
+| $R_{t+1}$ | $Z_{t+1}$ | $U_{t+1}$ | $\max_{a'}Q_{\theta^-}(O_{t+1},a')$ |
+|---|---|---|---|
+| $1$ | $0$ | $1$ | $4$ |
 
-**Kiểm tra nhanh.** $U_i=1$ có nghĩa là không bootstrap không? — Không; $U_i$ là
-cắt ngắn do cơ chế thu thập, nhiệm vụ tiếp diễn vẫn bootstrap; chỉ $Z_i=1$ mới
-triệt tiêu nhánh bootstrap.
+**Tính.** Mặt nạ đúng là $1-Z_{t+1}=1$, nên $y_t=1+0{,}9\cdot4=4{,}6$. Nếu cài đặt dùng mặt nạ $1-(Z_{t+1}\lor U_{t+1})=0$, đích thành $y_t=1$.
+
+**Diễn giải.** Gộp hai cờ hạ đích của mẫu chuyển này đi $3{,}6$, như thể lượt kết thúc thật ở bước giới hạn. Mọi mẫu chuyển chạm giới hạn bước đều bị hạ theo cách đó, nên mạng học rằng các quan sát gần cuối lượt có giá trị thấp, dù MDP không có lý do nào cho điều này.
+:::
+
+Cùng số liệu (trừ hai cờ) là mẫu thứ nhất của mini-batch hai mẫu chuyển dùng lại ở phần 4.
+
+Cách xử lý trên dựa trên một giả thiết: giới hạn số bước không thuộc nhiệm vụ. Nếu giới hạn là một phần của nhiệm vụ, chẳng hạn phải hạ cánh trong $200$ bước, và thời gian còn lại có trong quan sát, thì hết giờ là kết thúc thật của MDP và ta đặt $Z_{t+1}=1$. Nếu giới hạn thuộc nhiệm vụ nhưng thời gian còn lại không có trong quan sát, quan sát không đủ Markov theo Nhận xét 08.2 (Pardo và cộng sự, 2018, "Time Limits in Reinforcement Learning", ICML).
+
+**Trong thực hành.** Thư viện môi trường thường trả về hai cờ riêng cho kết thúc và cắt ngắn; $Z$ lấy từ cờ kết thúc, $U$ từ cờ cắt ngắn. Một biến "xong" tính bằng phép hoặc của hai cờ chỉ dùng để quyết định việc đặt lại môi trường, không dùng làm mặt nạ.
+
+Phần 2 đã cho ba kết quả. Mạng giá trị hành động trả về $\lvert\mathcal A\rvert$ giá trị sau một lần tính (Định nghĩa 08.1). Mạng mục tiêu giữ $\theta^-$ cố định trong $C$ bước tối ưu, nên mỗi mẫu chuyển có một nhãn đứng yên giữa hai lần đồng bộ (Định nghĩa 08.3). Đích hồi quy $y_t=R_{t+1}+\gamma(1-Z_{t+1})\max_{a'}Q_{\theta^-}(O_{t+1},a')$ chỉ dùng cờ kết thúc làm mặt nạ, còn cờ cắt ngắn chỉ quyết định việc đặt lại môi trường (Định nghĩa 08.4, 08.6). Các kết quả này nói cách tính nhãn cho một mẫu chuyển, nhưng chưa nói mẫu chuyển nào được dùng để cập nhật. Nếu cập nhật theo đúng thứ tự thu thập, các mẫu liền nhau gần giống nhau và cùng lệch về đoạn quỹ đạo gần nhất. Phần 3 lưu các mẫu chuyển sáu thành phần vào một bộ nhớ và lấy mẫu đều từ đó để giảm tương quan này.
 
 ## Bộ nhớ phát lại, hàm mất mát, vòng huấn luyện và bất ổn
 
 <!-- note-topic-id: lec-08-topic-06 -->
 ### Bộ nhớ phát lại (experience replay)
+
+**Môi trường tự đặt lại.** Khi môi trường tự đặt lại sau bước cuối của lượt, quan sát trả về thuộc lượt mới, không thuộc mẫu chuyển vừa xảy ra. Bộ nhớ phải lưu quan sát cuối của mẫu chuyển làm $O_{t+1}$, không thay bằng quan sát đầu của lượt mới; tên trường chứa quan sát cuối phụ thuộc phiên bản thư viện.
 
 **Vấn đề.** Học từ các chuyển tiếp liền nhau theo thứ tự thời gian khiến mini-batch
 chứa thông tin trùng lặp và lệch theo quỹ đạo gần nhất.
