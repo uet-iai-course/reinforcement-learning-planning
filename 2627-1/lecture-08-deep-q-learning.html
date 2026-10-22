@@ -252,7 +252,7 @@
 <section data-slide-id="L08-M4T" id="mach-4" class="strand-title" data-note-topic-id="lec-08-topic-09">
 <div class="strand-title-body">
 <h2><span class="strand-number">4.</span>Hàm mất mát và thuật toán DQN</h2>
-<p class="strand-lead">Muốn cập nhật $\theta$ từ mini&#8209;batch, phải lấy gradient chỉ qua dự đoán của mạng trực tuyến.</p>
+<p class="strand-lead">Muốn cập nhật tham số mạng từ mini&#8209;batch, phải lấy gradient chỉ qua dự đoán của mạng trực tuyến.</p>
 <p class="strand-keys">Phép chọn theo hành động · Dừng gradient · Sai số bình phương trung bình · Hai bộ đếm · Kích thước tensor</p>
 </div>
 <aside class="notes"><p>Đến đây mỗi mẫu chuyển đã có đích $y_i$, và mỗi bước tối ưu có một mini-batch $b$ mẫu rút đều từ bộ nhớ phát lại; còn thiếu bước cập nhật $\theta$. Hàm mất mát là sai số bình phương trung bình trên mini-batch, chỉ dùng giá trị của hành động đã lưu, và gradient không đi qua đích. Thu thập, lưu, tối ưu và đồng bộ được ghép thành thuật toán với hai bộ đếm $t$ và $k_{\mathrm{opt}}$. Ở phần 5, bộ tối ưu biến gradient của hàm mất mát thành bước tham số.</p></aside>
@@ -467,7 +467,7 @@ loss = ((y - q) ** 2).mean()
 <p class="strand-lead">Muốn xác định bảo đảm của DQN, phải tách tác dụng của bộ nhớ phát lại và mạng mục tiêu khỏi bộ ba bất ổn.</p>
 <p class="strand-keys">Tương quan ngắn hạn · Đích di động · Mốc đồng bộ · Bộ ba bất ổn · Thí nghiệm loại bỏ</p>
 </div>
-<aside class="notes"><p>Đến cuối phần 5, thuật toán DQN đã có bộ nhớ phát lại và mạng mục tiêu, còn lựa chọn bộ tối ưu không đổi công thức đích, cách thu thập dữ liệu hay lớp hàm. Ở phần 6, hai cơ chế được đặt cạnh hai nguồn bất ổn; độ thay đổi của đích tại mốc đồng bộ được tính, bộ ba bất ổn được kiểm trong DQN, và một thí nghiệm loại bỏ được thiết kế. Sản phẩm là kết luận có điều kiện cho phần 7: hai cơ chế giảm hai nguồn bất ổn, không tạo bảo đảm hội tụ.</p></aside>
+<aside class="notes"><p>Đến cuối phần 5, thuật toán DQN đã có bộ nhớ phát lại và mạng mục tiêu, còn bộ tối ưu không đổi đích, dữ liệu hay lớp hàm. Ở phần 6, hai cơ chế được đặt cạnh hai nguồn bất ổn; độ thay đổi của đích tại mốc đồng bộ được tính, bộ ba bất ổn được kiểm trong DQN, và một thí nghiệm loại bỏ được thiết kế. Sản phẩm là kết luận có điều kiện cho phần 7: hai cơ chế giảm hai nguồn bất ổn, không tạo bảo đảm hội tụ.</p></aside>
 </section>
   <section data-slide-id="L08-27" data-note-topic-id="lec-08-topic-12">
 <h2>Hai nguồn bất ổn và hai cơ chế giảm</h2>
@@ -600,10 +600,10 @@ loss = ((y - q) ** 2).mean()
 <div class="box">Học $q_*$ khi quan sát là vector liên tục hoặc ảnh, hành động hữu hạn, không có mô&nbsp;hình.</div>
 <ol start="2">
 <li>Với $\theta^-$ cố định giữa hai lần đồng bộ, nhãn hồi quy đứng yên.</li>
-<li>Với rút đều từ $\mathcal D$, tương quan ngắn hạn giảm; mẫu chưa độc lập.</li>
+<li>Với rút đều từ $\mathcal D$, tương quan giảm; mẫu chưa độc lập.</li>
 <li>Với $\operatorname{sg}(y_i)$ và chọn theo $A_i$, gradient chỉ đi qua $Q_\theta(O_i,A_i)$.</li>
 <li>Với mọi bộ tối ưu, nguồn bất ổn vẫn còn.</li>
-<li>Khi đủ bộ ba bất ổn, không bảo đảm hội tụ tổng quát; đánh giá qua nhiều lần chạy.</li>
+<li>Khi đủ bộ ba bất ổn, không bảo đảm hội tụ tổng quát.</li>
 </ol>
 <p><strong>Nguồn:</strong> bài giảng gốc, tr. 12–34; Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng&nbsp;sự&nbsp;(2015).</p>
 <aside class="notes"><p>Dòng số $N$ trả lời có điều kiện cho phần $N$. Đích $4{,}6$ của mẫu chuyển chưa kết thúc giữ nguyên tới mốc đồng bộ rồi đổi $0{,}9$. Bốn mẫu liền nhau với tương quan $0{,}9^k$ chỉ tương đương khoảng $1{,}1$ mẫu độc lập; rút đều làm cặp liền nhau hiếm, nhưng mọi mẫu vẫn do một tác tử thu thập. Trên mini-batch hai mẫu, gradient chỉ đi qua hai dự đoán, với đạo hàm $(-1{,}5;\,0{,}5)$. Bộ tối ưu chỉ đổi gradient thành bước tham số. Với hai trạng thái dùng chung tham số, hệ số tăng $1{,}08$ mỗi bước chỉ còn khoảng $1{,}043$ khi $C=10$. Vì không có định lý, hai cơ chế được đánh giá bằng thí nghiệm, như thí nghiệm loại bỏ của Mnih và cộng sự.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 12–34; Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015), Extended Data Table 3.</p></aside>

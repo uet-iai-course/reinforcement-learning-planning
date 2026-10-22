@@ -116,25 +116,25 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | `lec-08-topic-18` | `L08-M3T`, `L08-28` |
 | `lec-08-topic-19` | `L08-05r` |
 
-## Ánh xạ nguồn (bản cũ; cột "trang đích" được cập nhật khi sửa từng trang, các lệch thứ tự của đợt sửa 2026-10-22 ghi trong `storyboard.md`)
+## Ánh xạ nguồn (cột "trang đích" theo ID hiện hành sau đợt sửa 2026-10-22; các lệch thứ tự ghi trong `storyboard.md`)
 
 | trang nguồn | trang đích | quyết định | lý do |
 |---|---|---|---|
 | 1 | `L08-01` | giữ | Tiêu đề. |
 | 2 | `L08-02` | sửa | Đổi dàn ý thành kết quả học tập. |
-| 3 | `L08-04`–`L08-05` | tách | Tách loại thuật toán khỏi hành vi–đích. |
-| 4 | `L08-04`, `L08-08`–`L08-09` | sửa | Chuẩn hóa chỉ số và thêm mặt nạ kết thúc. |
-| 5 | `L08-04`, `L08-18`–`L08-19` | tách | Dùng cầu nối dạng bảng rồi xây giả mã DQN đầy đủ. |
-| 6 | `L08-05`, `L08-33` | gộp | Hoàn tất vai trò khám phá và kiểm tra. |
-| 7 | `L08-05` | sửa | Giới hạn kết luận hội tụ vào dạng bảng với giả thiết rõ. |
-| 8–9 | `L08-06` | gộp, lược | Bỏ cận mẫu thiếu mô hình định lý; giữ vấn đề quy mô. |
-| 10–11 | `L08-03`, `L08-06` | gộp, lược | Bỏ cận tuyến tính thiếu cấu trúc MDP và thuật toán cụ thể. |
+| 3 | `L08-01b`, `L08-05r` | tách | Tách loại thuật toán khỏi hành vi–đích. |
+| 4 | `L08-01b`, `L08-08`–`L08-09` | sửa | Chuẩn hóa chỉ số và thêm mặt nạ kết thúc. |
+| 5 | `L08-01b`, `L08-18a`–`L08-19` | tách | Dùng cầu nối dạng bảng rồi xây giả mã DQN đầy đủ. |
+| 6 | `L08-05r`, `L08-33` | gộp | Hoàn tất vai trò khám phá và kiểm tra. |
+| 7 | `L08-01b2` | sửa | Giới hạn kết luận hội tụ vào dạng bảng với giả thiết rõ. |
+| 8–9 | `L08-02c` | gộp, lược | Bỏ cận mẫu thiếu mô hình định lý; giữ vấn đề quy mô. |
+| 10–11 | `L08-03`, `L08-02c` | gộp, lược | Bỏ cận tuyến tính thiếu cấu trúc MDP và thuật toán cụ thể. |
 | 12–13 | `L08-27`, `L08-30` | gộp, sửa | Hai nguồn bất ổn; bộ ba bất ổn xét riêng ở `L08-30`. |
 | 14–15 | `L08-03`, `L08-07` | gộp | Giới hạn bảng và giao diện DQN. |
-| 16 | `L08-07`–`L08-10`, `L08-17` | tách, sửa | Đặt phản ví dụ mục tiêu di động trước hai mạng; thêm mặt nạ, batch và dừng gradient. |
+| 16 | `L08-07`, `L08-07b`, `L08-07c`, `L08-08`–`L08-10b`, `L08-17` | tách, sửa | Đặt phản ví dụ mục tiêu di động trước hai mạng; thêm mặt nạ, batch và dừng gradient. |
 | 17 | `L08-07`, `L08-31` | gộp | MLP cho vector, CNN cho ảnh. |
-| 18 | `L08-11`, `L08-18`–`L08-19` | tách, sửa | Vẽ lại vòng huấn luyện; bổ sung warmup, tần suất cập nhật và hai bộ đếm. |
-| 19 | `L08-13`–`L08-16` | tách, sửa | Replay và target network là hai cơ chế riêng. |
+| 18 | `L08-11`, `L08-18a`–`L08-19b` | tách, sửa | Vẽ lại vòng huấn luyện; bổ sung warmup, tần suất cập nhật và hai bộ đếm. |
+| 19 | `L08-13`, `L08-14`, `L08-07c` | tách, sửa | Replay và target network là hai cơ chế riêng. |
 | 20 | `L08-13`, `L08-17` | gộp, sửa | Chuẩn hóa $\theta,\theta^-$ và batch từ $\mathcal D$. |
 | 21 | `L08-12`, `L08-18`–`L08-19`, `X02` | tách, sửa | Chuẩn hóa hai cờ, final observation khi autoreset và mặt nạ theo MDP đang mô hình hóa. |
 | 22 | `L08-10`, `L08-22` | tách, sửa | Gradient chỉ qua giá trị đã gather từ mạng online; khai báo miền optimizer. |
@@ -143,14 +143,14 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | 25 | `L08-24` | giữ, sửa | Nêu phép toán theo tọa độ và quy ước $\epsilon_{\mathrm{opt}}$. |
 | 26 | `L08-25` | giữ, sửa | Sửa mẫu số Adam và bổ sung khởi tạo. |
 | 27–28 | `L08-26` | gộp, sửa | Không tuyên bố phương pháp thắng tuyệt đối hay hội tụ nhanh. |
-| 29 | `L08-07`, `L08-27` | tách, sắp xếp lại | Đặt phản ví dụ mục tiêu di động trước mạng mục tiêu. Hai nguồn bất ổn; bộ ba bất ổn xét riêng ở `L08-30`. |
+| 29 | `L08-07b`, `L08-27` | tách, sắp xếp lại | Đặt phản ví dụ mục tiêu di động trước mạng mục tiêu. Hai nguồn bất ổn; bộ ba bất ổn xét riêng ở `L08-30`. |
 | 30 | `L08-14`, `L08-28` | sửa | Replay giảm tương quan, không tạo i.i.d. |
 | 31 | `L08-29` | giữ, sửa | Mục tiêu đổi ở mốc đồng bộ. |
 | 32 | `L08-13`–`L08-14` | gộp, sửa | Cơ chế và giới hạn của replay. |
-| 33 | `L08-07`, `L08-15`–`L08-16` | tách, sắp xếp lại | Khai báo và khởi tạo hai mạng trước đích; sau đó nối đường gradient với đồng bộ cứng. |
+| 33 | `L08-07c`, `L08-10`, `L08-19` | tách, sắp xếp lại | Khai báo và khởi tạo hai mạng trước đích; sau đó nối đường gradient với đồng bộ cứng. |
 | 34 | `L08-17` | giữ, sửa | Mục tiêu tích hợp có mặt nạ và stop-gradient. |
 | 35 | `L08-31`–`L08-32` | tách, sửa | Bốn khung là lịch sử quan sát, không bảo đảm Markov. |
-| 36 | `L08-33` | sửa | Chuyển thành kiểm tra tổng hợp có phạm vi. |
+| 36 | `L08-33` | sửa | Ba hướng thảo luận của nguồn vào ghi chú diễn giả của "Câu hỏi tự kiểm tra". |
 
 ## Thuật ngữ và ký hiệu
 
