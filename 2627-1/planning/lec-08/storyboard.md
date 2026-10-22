@@ -28,7 +28,7 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 1 | `L08-01b`, `L08-01b2` | Tiên quyết và quy ước (hai trang cùng tiêu đề) | thêm (gộp `L08-04`, `L08-05`) | Dòng "Nhắc lại:" cho Q-learning bảng và giả thiết hội tụ (MDP hữu hạn, phần thưởng bị chặn, $\gamma<1$, mọi cặp cập nhật vô hạn lần, Robbins–Monro theo cặp), Q-learning bán gradient tuyến tính có đủ bộ ba bất ổn, mạng nhiều tầng và mạng tích chập học $\theta$ bằng lan truyền ngược | 1.2–1.3 (S2) |
 | 1 | `L08-04` | (gộp vào `L08-01b`) | gộp, bỏ trang riêng | Bài 06 đã dạy; $Z$ xuất hiện trước định nghĩa | đã bỏ ở S2 |
 | 1 | `L08-05` | (gộp vào `L08-01b`; ý khác chính sách sang `L08-05r`) | gộp, bỏ trang riêng | "replay" dùng trước khi giới thiệu; 82 âm tiết; lý do không cần tỉ số lấy mẫu quan trọng phải sửa | đã bỏ ở S2; ý dữ liệu khác chính sách trong bộ nhớ viết lại ở `L08-05r` |
-| 1 | `L08-01c` | Tiên quyết và quy ước (cùng tiêu đề) | thêm | Dòng "Ký hiệu:": $O_t$, $\mathcal A$ hữu hạn, $\theta$, $t$, $k_{\mathrm{opt}}$, $i$, $\epsilon_{\mathrm{exp}}$ và $\varepsilon$ của Bài 06, $q_i$ khác $q_*$ | chưa có |
+| 1 | `L08-01c` | Tiên quyết và quy ước (cùng tiêu đề) | thêm | Dòng "Ký hiệu:" và bảng: $O_t$, $S_t$, $\mathcal A$ hữu hạn, $R_{t+1}$, $\gamma$, $\theta$, $t$, $k_{\mathrm{opt}}$, $i$, $\epsilon_{\mathrm{exp}}$ ($\varepsilon$ của Bài 06), $\epsilon_{\mathrm{opt}}$; $q_i$ khai báo ở `L08-17` | 1.4 (S3) |
 | 1 | `L08-02` | Mục tiêu học tập | sửa | Sáu mục tiêu ứng mạch 2–7 (`outline.md`) | 1.4 |
 | 1 | `L08-02b` | Nội dung | thêm | Bảy mục khớp trang tiêu đề mạch và `#/N`; dòng đọc trước: Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015) | chưa có |
 | 1 | `L08-02c` | Vấn đề trung tâm | thêm (gộp ý quy mô của `L08-06`) | Một dòng bài toán, một dòng trả lời có điều kiện cho mỗi mạch 2–6 | chưa có |
@@ -119,6 +119,16 @@ Chưa có ngoại lệ. Số âm tiết trước sửa của các trang vượt 
 - **Liên kết:** trước là bìa `L08-01`; sau là trang "Ký hiệu" `L08-01c` (chưa có; hiện là `L08-02`). Mục tiêu hỗ trợ: mục tiêu 2 (học khác chính sách), mục tiêu 5 (giả thiết hội tụ còn thiếu).
 - **Mật độ:** trước sửa `L08-04` 2 âm tiết + 2 công thức hiển thị; `L08-05` 82 âm tiết (vượt trần). Sau sửa `L08-01b` 55 âm tiết, 4 dòng (dài nhất 18 âm tiết), 1 công thức hiển thị (cỡ chữ thân, không `.math-large`, để vừa khung), 0 hộp chữ, ghi chú 121 âm tiết; `L08-01b2` 59 âm tiết, 5 dòng (dài nhất 20 âm tiết), 0 công thức hiển thị, 0 hộp chữ, ghi chú 148 âm tiết.
 - **Ghi chú bài giảng:** "Phần 1 — Cầu nối từ Q-learning dạng bảng" thành mục "Kiến thức tiên quyết" (sáu nhóm in đậm có số hiệu và phát biểu lại); lý do không cần tỉ số lấy mẫu quan trọng và giả thiết hội tụ sửa theo Bài 06 (Nhận xét 06.17, Định lý 06.21); đoạn "Về độ phức tạp mẫu" chuyển tạm xuống cuối mục "Vì sao cần Deep Q-learning", sẽ viết lại ở bước `L08-02c`; câu lý do sai trong mục bộ nhớ phát lại cũng sửa ở bước này.
+
+#### `L08-01c` Tiên quyết và quy ước, phần Ký hiệu (bước S3)
+
+- **Trang muốn nói gì:** ký hiệu dùng ở nhiều mạch: $\gamma\in[0,1)$, $\theta\in\mathbb R^d$, $O_t\in\mathcal O$, $A_t\in\mathcal A$ hữu hạn, $R_{t+1}$ nhận sau $A_t$, $S_t$ chỉ khi $O_t$ đủ Markov, hai bộ đếm $t$ và $k_{\mathrm{opt}}$, chỉ số mẫu $i=1,\dots,b$, hai chữ epsilon.
+- **Phục vụ mạch nào và thế nào:** mạch 1; cố định cách đọc chỉ số cho mạch 2 (quan sát, $R_{t+1}$), mạch 3–4 (chỉ số $i$, hai bộ đếm), mạch 5 ($\epsilon_{\mathrm{opt}}$).
+- **Vấn đề còn lại trước sửa:** chưa có trang Ký hiệu (`review-structure.md` §2 `L08-01c`); $o$, $\mathcal O$ chưa định nghĩa trên mặt trang và giả thiết Markov chỉ ở ghi chú `L08-07` (`review-student.md`, `review-math.md`); $\epsilon_{\mathrm{exp}}$ chưa nối với $\varepsilon$ của Bài 06 (`review-math.md`, thuật ngữ); chỉ số thời gian và chỉ số mini-batch dễ trộn.
+- **Quyết định:** thêm. Dòng "Ký hiệu:" cho $\gamma$, $\theta$; bảng hai cột `Ký hiệu | Nghĩa` bốn hàng. Không đưa $Z$, $U$, $\mathcal D$, $N$, $C$, $F$, $N_{\mathrm{start}}$ (riêng một mạch, giới thiệu tại chỗ). Không đưa $Q_\theta$, $q_i$: $Q_\theta$ là khái niệm trung tâm của mạch 2, không mở bằng ký hiệu; $q_i$ khai báo bằng dòng "Ký hiệu:" ở `L08-17` (khác $q_*$). Kỳ vọng không xuất hiện trên trang chiếu nên quy ước kỳ vọng chỉ ghi trong ghi chú bài giảng.
+- **Liên kết:** trước là `L08-01b2` (Nhắc lại); sau là `L08-02` Mục tiêu học tập. Mục tiêu hỗ trợ: mục tiêu 1 và 3 (đọc đúng chỉ số trong đích và mất mát).
+- **Mật độ:** trang mới. 58 âm tiết (dòng Ký hiệu 10, tiêu đề cột 3, bốn hàng 13, 7, 10, 15), 5 dòng nội dung, 0 công thức hiển thị, 0 hộp chữ, ghi chú diễn giả 123 âm tiết. Cỡ chữ bảng 0,752 em theo `lecture-slide.css`.
+- **Ghi chú bài giảng:** thêm mục "Bảng ký hiệu" (22 hàng, ba cột), đoạn "Quy ước đọc", đoạn về các chữ trùng với bài trước ($\epsilon_{\mathrm{exp}}$, $q_i$, $m_j$, $v_j$, $\rho$, $m$) và tương ứng với giáo trình *Học máy thống kê*. `outline.md` thêm $\mathcal O$, $\lvert\mathcal A\rvert$, $q_*$, $\theta$, $Q_\theta$, $\mathbf q_\theta$, $\delta$, $L_B$, $g_j$; $\gamma$ đổi thành $[0,1)$.
 
 ### Bản trước đợt sửa 2026-10-22
 

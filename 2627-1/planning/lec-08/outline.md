@@ -148,11 +148,16 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 
 ## Thuật ngữ và ký hiệu
 
+Bảng này khớp trang `L08-01c` (ký hiệu dùng ở nhiều mạch) và mục "Bảng ký hiệu" của ghi chú bài giảng; ký hiệu riêng một mạch ($Z$, $U$, $\mathcal D$, $N$, $b$, $C$, $F$, $N_{\mathrm{start}}$, $q_i$, …) được giới thiệu tại trang dùng lần đầu.
+
 | ký hiệu | nghĩa |
 |---|---|
-| $O_t$ | quan sát hoặc biểu diễn trạng thái đưa vào mạng |
+| $\mathcal O$, $O_t$ | tập quan sát; quan sát hoặc biểu diễn trạng thái đưa vào mạng |
 | $S_t$ | trạng thái Markov khi giả thiết đủ quan sát được áp dụng |
-| $A_t\in\mathcal A$ | hành động; DQN cơ bản cần $\mathcal A$ rời rạc hữu hạn |
+| $A_t\in\mathcal A$, $\lvert\mathcal A\rvert$ | hành động; số hành động; DQN cơ bản cần $\mathcal A$ rời rạc hữu hạn (không dùng $m$ như Bài 06–07 vì $m_j$ dành cho Adam) |
+| $q_*$ | giá trị hành động tối ưu |
+| $\theta\in\mathbb R^d$ | tham số mạng trực tuyến, đóng vai $w$ của Bài 07 |
+| $Q_\theta(o,a)$, $\mathbf q_\theta(o)$ | giá trị hành động do mạng tính; vector theo mọi hành động |
 | $R_{t+1}$ | phần thưởng sau khi thực hiện $A_t$ trong chỉ số thời gian |
 | $Z_{t+1}$ | cờ kết thúc thật của MDP |
 | $U_{t+1}$ | cờ cắt ngắn do cơ chế thu thập |
@@ -164,13 +169,16 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | $b$ | số mẫu chuyển trong mini-batch |
 | $q_i$ | dự đoán của mạng trực tuyến trên mẫu $i$, $q_i=Q_\theta(O_i,A_i)$; khác giá trị thật $q_*$, cần dòng "Ký hiệu:" khi dùng lần đầu |
 | $y_i$ | đích hồi quy của mẫu $i$ |
+| $\delta_t$, $\delta_i$ | sai số TD theo thời gian; theo mẫu |
+| $L_B(\theta)$ | hàm mất mát trên mini-batch $B$ |
+| $g_j$ | gradient mini-batch ở bước tối ưu $j$ |
 | $t\in\mathbb N_0$ | bộ đếm bước môi trường |
 | $k_{\mathrm{opt}}\in\mathbb N_0$ | bộ đếm bước tối ưu; tăng sau khi cập nhật $\theta$ |
 | $N\in\mathbb N_+$ | dung lượng bộ nhớ phát lại |
 | $N_{\mathrm{start}}\in\mathbb N_+$ | số mẫu tối thiểu trước bước tối ưu đầu tiên, $b\le N_{\mathrm{start}}\le N$ |
 | $F\in\mathbb N_+$ | số bước môi trường giữa hai lần tối ưu |
 | $C\in\mathbb N_+$ | số bước tối ưu giữa hai lần đồng bộ cứng |
-| $\gamma\in[0,1]$ | hệ số chiết khấu; dùng $\gamma=1$ chỉ khi lượt kết thúc thích hợp và lợi tức hữu hạn |
+| $\gamma\in[0,1)$ | hệ số chiết khấu; bài dùng $\gamma<1$ như giả thiết của định lý hội tụ dạng bảng (`L08-01c`) |
 | $\alpha_t>0$ | bước học dạng bảng; nếu phát biểu hội tụ, dãy bước phải thỏa Robbins–Monro theo từng cặp trạng thái–hành động |
 | $\eta>0$ | tốc độ học của bộ tối ưu |
 | $j\in\mathbb N_+$ | chỉ số bước của bộ tối ưu, $j=k_{\mathrm{opt}}$ sau khi tăng |

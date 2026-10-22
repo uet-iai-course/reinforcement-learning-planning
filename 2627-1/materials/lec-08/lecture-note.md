@@ -20,6 +20,41 @@ Kết quả của bài trước được dẫn theo mục của ghi chú bài đ
 - **Bộ ba bất ổn** (ghi chú Bài 07, Mục 5, Mệnh đề 07.37, Định nghĩa 07.38). Một phương pháp học giá trị có bộ ba bất ổn (deadly triad) khi có đồng thời xấp xỉ hàm, bootstrap và học khác chính sách. Q-learning bán gradient có cả ba, nên không có bảo đảm hội tụ chung. Mệnh đề 07.37 cho một ví dụ phân kỳ của TD(0) khác chính sách cùng ba yếu tố: với $x(s_1)=1$, $x(s_2)=2$, chỉ cập nhật chuyển $s_1\to s_2$ có phần thưởng $0$, $\gamma\in(\tfrac12,1)$ và $\alpha>0$, tham số thỏa $w_n=\bigl(1+\alpha(2\gamma-1)\bigr)^nw_0$, nên $\lvert w_n\rvert\to\infty$ khi $w_0\ne0$.
 - **Mạng nơ-ron và lan truyền ngược** (kiến thức học máy tiên quyết, không thuộc ghi chú Bài 01–07; Goodfellow, Bengio và Courville, 2016, Chương 6 và 9). Mạng nhiều tầng (multilayer perceptron, MLP) là hợp của các ánh xạ affine và hàm kích hoạt phi tuyến; mạng tích chập (convolutional neural network, CNN) dùng các tầng tích chập có trọng số dùng chung trên mọi vị trí của ảnh. Cả hai là hàm khả vi theo vector tham số $\theta$, và lan truyền ngược (backpropagation) tính gradient của một hàm mất mát vô hướng theo $\theta$ bằng quy tắc dây chuyền. Chương này chỉ dùng mạng như một hàm khả vi theo $\theta$.
 
+## Bảng ký hiệu
+
+Bảng gồm ký hiệu dùng xuyên suốt chương; ký hiệu dùng một lần được giới thiệu tại chỗ. Mỗi chữ giữ một nghĩa trong cả chương.
+
+| Ký hiệu | Ý nghĩa | Miền hoặc kiểu |
+|---|---|---|
+| $\mathcal O$, $O_t$ | tập quan sát; quan sát đưa vào mạng ở bước $t$ | tập; phần tử của $\mathcal O$ (ảnh hoặc vector) |
+| $S_t$ | trạng thái của MDP; chỉ dùng thay $O_t$ khi $O_t$ đủ Markov | $\mathcal S$ |
+| $\mathcal A$, $\lvert\mathcal A\rvert$, $A_t$ | tập hành động; số hành động; hành động ở bước $t$ | tập hữu hạn |
+| $R_{t+1}$ | phần thưởng nhận sau $A_t$ | $\mathbb R$ |
+| $\gamma$ | hệ số chiết khấu | $[0,1)$ |
+| $Z_{t+1}$, $U_{t+1}$ | cờ kết thúc của MDP; cờ cắt ngắn ngoài mô hình | $\{0,1\}$ |
+| $q_*$ | giá trị hành động tối ưu | hàm thực trên $\mathcal S\times\mathcal A$ |
+| $\theta$, $\theta^-$, $d$ | tham số mạng trực tuyến; tham số mạng mục tiêu; số tham số | $\mathbb R^d$; $d\in\mathbb N_+$ |
+| $Q_\theta(o,a)$, $\mathbf q_\theta(o)$ | giá trị hành động do mạng tính; vector các giá trị đó theo mọi hành động | $\mathbb R$; $\mathbb R^{\lvert\mathcal A\rvert}$ |
+| $t$ | bộ đếm bước môi trường | $\mathbb N_0$ |
+| $k_{\mathrm{opt}}$, $j$ | bộ đếm bước tối ưu; chỉ số bước trong công thức của bộ tối ưu, $j=k_{\mathrm{opt}}$ sau khi tăng | $\mathbb N_0$; $\mathbb N_+$ |
+| $\mathcal D$, $N$ | bộ nhớ phát lại; dung lượng của nó | tập mẫu chuyển; $\mathbb N_+$ |
+| $b$, $i$ | cỡ mini-batch; chỉ số mẫu trong mini-batch | $\mathbb N_+$; $\{1,\dots,b\}$ |
+| $(O_i,A_i,R_i,O'_i,Z_i,U_i)$ | mẫu chuyển thứ $i$ của mini-batch | bộ sáu thành phần |
+| $q_i$, $y_i$, $\delta_i$ | dự đoán $Q_\theta(O_i,A_i)$; đích hồi quy; sai số TD $y_i-q_i$ (dạng theo thời gian: $q_t$, $y_t$, $\delta_t$) | $\mathbb R$ |
+| $L_B(\theta)$ | hàm mất mát trên mini-batch $B$ | $\mathbb R^d\to[0,\infty)$ |
+| $\operatorname{sg}$ | phép dừng gradient: giữ giá trị, đạo hàm bằng $0$ | ánh xạ |
+| $N_{\mathrm{start}}$, $F$, $C$ | số mẫu tối thiểu trước bước tối ưu đầu; số bước môi trường giữa hai lần tối ưu; số bước tối ưu giữa hai lần đồng bộ | $\mathbb N_+$, $b\le N_{\mathrm{start}}\le N$ |
+| $\epsilon_{\mathrm{exp}}$ | xác suất thăm dò của chính sách hành vi | $[0,1]$ |
+| $\eta$, $g_j$ | tốc độ học; gradient mini-batch ở bước tối ưu $j$ | $(0,\infty)$; $\mathbb R^d$ |
+| $\rho$, $\beta_1$, $\beta_2$, $m_j$, $v_j$ | hệ số suy giảm và trung bình trượt của RMSprop và Adam | $[0,1)$; $\mathbb R^d$ |
+| $\epsilon_{\mathrm{opt}}$ | hằng số ổn định trong mẫu số của bộ tối ưu | $(0,\infty)$ |
+
+Quy ước đọc. $R_{t+1}$ gắn với chuyển từ bước $t$ sang bước $t+1$. Khi tương tác với môi trường, mẫu chuyển viết theo thời gian $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$; sau khi lấy mini-batch, chỉ số $i$ không mang thứ tự thời gian nên mẫu viết $(O_i,A_i,R_i,O'_i,Z_i,U_i)$, không dùng $R_{i+1}$ hay $O_{i+1}$. Hai bộ đếm $t$ và $k_{\mathrm{opt}}$ tăng theo hai nhịp khác nhau: $t$ sau mỗi bước môi trường, $k_{\mathrm{opt}}$ sau mỗi lần cập nhật $\theta$. Kỳ vọng trên mini-batch lấy theo phép lấy mẫu đều từ $\mathcal D$ hiện tại.
+
+Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_{\mathrm{exp}}$ là $\varepsilon$ của Bài 06–07; chỉ số dưới tách nó khỏi $\epsilon_{\mathrm{opt}}$. $q_i$ là dự đoán của mạng trên mẫu $i$, khác giá trị thật $q_*$. $m_j$, $v_j$ là trung bình trượt của gradient, khác hàm giá trị $v_\pi$; $\rho$ là hệ số suy giảm của RMSprop, khác tỉ số lấy mẫu quan trọng $\rho_t$ của Bài 06–07. Bài 06–07 viết $m$ cho số hành động; chương này viết $\lvert\mathcal A\rvert$. Tham số $\theta$ đóng vai của $w$ ở Bài 07, và $Q_\theta(o,a)$ thay $\hat q(s,a,w)$.
+
+Ứng với giáo trình *Học máy thống kê*: $q_*$ là $Q^*$, và $q_\pi$ là $Q^\pi$.
+
 ---
 
 ## Bản đồ chủ đề (bốn nhóm)
