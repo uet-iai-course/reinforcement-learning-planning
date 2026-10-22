@@ -1054,6 +1054,48 @@ Một nhầm lẫn thường gặp là coi đích trong DQN là nhãn cố đị
 
 Như vậy, mạng mục tiêu biến sự thay đổi sau mỗi bước của đích thành các lần thay đổi rời rạc tại mốc đồng bộ, với độ lớn đo được bằng Nhận xét 08.20. Bộ nhớ phát lại và mạng mục tiêu đều không chạm tới ba thành phần xấp xỉ hàm, bootstrap và dữ liệu khác chính sách. Ở mục tiếp theo, chúng ta nhắc lại bộ ba bất ổn của Bài 07 và kiểm từng thành phần của nó trong DQN.
 
+### Bộ ba bất ổn trong DQN
+
+Bộ nhớ phát lại giảm tương quan giữa các mẫu, mạng mục tiêu làm đích đổi theo từng đợt. Cả hai giữ nguyên cách DQN biểu diễn giá trị, cách tính đích và nguồn của dữ liệu. Bài 07 đã chỉ ra rằng ba thành phần này, khi cùng có mặt, đủ để một phương pháp học giá trị mất bảo đảm hội tụ. Chúng ta nhắc lại định nghĩa đó và kiểm từng yếu tố trong DQN.
+
+::: definition Định nghĩa 07.38 (Bộ ba bất ổn, nhắc lại từ Bài 07)
+Một phương pháp học giá trị có bộ ba bất ổn (deadly triad) khi có đồng thời:
+
+- **xấp xỉ hàm:** tham số dùng chung, một cập nhật đổi nhiều dự đoán;
+- **bootstrap:** mục tiêu cập nhật chứa ước lượng hiện tại;
+- **học khác chính sách:** phân phối các mẫu chuyển dùng để cập nhật khác phân phối do chính sách đích sinh ra.
+:::
+
+Bài 07 dùng định nghĩa này cùng một phản ví dụ. Trong Mệnh đề 07.37, hàm giá trị tuyến tính $\hat v(s,w)=x(s)\,w$ có $x(s_1)=1$, $x(s_2)=2$; chỉ chuyển $s_1\to s_2$ với phần thưởng $0$ được cập nhật bằng TD(0), với $\gamma\in(\tfrac12,1)$ và $\alpha>0$. Khi đó $w_n=\bigl(1+\alpha(2\gamma-1)\bigr)^nw_0$, nên $\lvert w_n\rvert\to\infty$ khi $w_0\ne0$. Ví dụ có đủ ba yếu tố: một tham số cho hai trạng thái, mục tiêu chứa $\hat v(s_2,w)$, và phân phối cập nhật chỉ gồm một chuyển, khác phân phối theo chính sách.
+
+Ba yếu tố có mặt trong DQN như sau.
+
+| yếu tố | dạng trong DQN | cơ chế của DQN có bỏ yếu tố này không |
+|---|---|---|
+| xấp xỉ hàm | mạng $Q_\theta$: một vector $\theta\in\mathbb R^d$ cho mọi cặp $(o,a)$, với $d$ nhỏ hơn nhiều số cặp | không; mạng mục tiêu có cùng kiến trúc |
+| bootstrap | đích $y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a')$ chứa ước lượng của chính mạng | không; mạng mục tiêu chỉ làm tham số trong đích trễ đi |
+| học khác chính sách | chính sách đích tham lam theo giá trị của mạng; mẫu trong $\mathcal D$ do hành vi $\epsilon_{\mathrm{exp}}$-tham lam theo các phiên bản $\theta$ cũ sinh ra | không; bộ nhớ phát lại thêm nguồn khác chính sách thứ hai (Mệnh đề 08.8) |
+
+::: remark Nhận xét 08.21 (Phạm vi bảo đảm của DQN)
+**Giả thiết.** Thuật toán 08.13 với mạng giá trị hành động $Q_\theta$ có tham số dùng chung, đích $y_i$ tính bằng mạng mục tiêu $Q_{\theta^-}$, và mini-batch rút đều từ bộ nhớ phát lại $\mathcal D$ do hành vi $\epsilon_{\mathrm{exp}}$-tham lam ghi.
+
+**Kết luận.** Thuật toán có đủ ba yếu tố của Định nghĩa 07.38, nên không có bảo đảm hội tụ tổng quát: lớp phương pháp có đủ ba yếu tố có ví dụ phân kỳ (Mệnh đề 07.37 cho TD(0) tuyến tính; Sutton và Barto, 2018, §11.2 cho ví dụ của Baird).
+
+**Điều kiện áp dụng.** Kết luận nói về bảo đảm cho mọi bài toán, mọi kiến trúc và mọi siêu tham số; nó không nói một lần chạy cụ thể sẽ phân kỳ.
+
+**Phạm vi.** Bảo đảm hội tụ cho xấp xỉ hàm cần thêm giả thiết cấu trúc, chẳng hạn $q_*$ thuộc lớp hàm và dữ liệu bao phủ đủ các cặp trạng thái–hành động, hoặc bỏ hẳn một yếu tố. DQN tổng quát không có các giả thiết đó ở dạng kiểm chứng được.
+:::
+
+Bốn phần của nhận xét có vai trò khác nhau. Giả thiết liệt kê đúng ba thành phần của thuật toán ứng với ba yếu tố; bộ nhớ phát lại và mạng mục tiêu có trong giả thiết nhưng không xuất hiện trong kết luận, vì chúng không bỏ yếu tố nào. Bỏ một yếu tố cho các trường hợp Bài 07 đã biết: bỏ xấp xỉ hàm được Q-learning dạng bảng, hội tụ dưới các giả thiết của Bài 06; bỏ học khác chính sách được TD(0) tuyến tính theo chính sách, hội tụ theo Định lý 07.29; bỏ bootstrap được Monte Carlo, với dữ liệu khác chính sách phải dùng lấy mẫu quan trọng và chịu phương sai lớn. DQN không bỏ yếu tố nào trong ba. Phần phạm vi nối với bài giảng gốc (trang 13): không có bảo đảm độ phức tạp mẫu tổng quát cho Q-learning dùng mạng nhiều tầng, và thành công thực nghiệm của DQN dựa vào các kỹ thuật như bộ nhớ phát lại và mạng mục tiêu; khoảng cách giữa lý thuyết và thực hành vẫn là bài toán mở.
+
+Một nhầm lẫn thường gặp là đọc "không có bảo đảm hội tụ" thành "DQN phân kỳ". Nhận xét 07.39 của Bài 07 phân biệt hai điều: "có thể phân kỳ" nói về một lớp phương pháp, có ví dụ phân kỳ; nó không dự báo kết quả của một lần chạy. Nhầm lẫn ngược lại là coi bộ nhớ phát lại và mạng mục tiêu là lời giải của bộ ba bất ổn; chúng giảm hai nguồn bất ổn của Nhận xét 08.19, còn ba yếu tố vẫn nguyên.
+
+**Trong thực hành.** Dấu hiệu của phân kỳ là giá trị dự đoán $Q_\theta$ hoặc chuẩn $\lVert\theta\rVert$ tăng không chặn qua các lần đánh giá; một chính sách kém trong khi giá trị và tham số vẫn bị chặn là hiện tượng khác (Nhận xét 07.39). Trong thí nghiệm, chúng ta theo dõi cả lợi tức đánh giá lẫn độ lớn của giá trị dự đoán trên một tập quan sát cố định, và chạy nhiều hạt giống ngẫu nhiên, vì kết luận của Nhận xét 08.21 là về khả năng phân kỳ chứ không về một lần chạy.
+
+**Kiểm tra nhanh.** Bộ nhớ phát lại có bỏ yếu tố học khác chính sách không? Không; mẫu cũ trong $\mathcal D$ do các phiên bản $\theta$ trước sinh ra, nên bộ nhớ còn thêm một nguồn khác chính sách bên cạnh phép thăm dò $\epsilon_{\mathrm{exp}}$-tham lam.
+
+Như vậy, hai cơ chế của DQN giảm hai nguồn bất ổn, còn ba yếu tố của bộ ba bất ổn vẫn có mặt và DQN không có bảo đảm hội tụ tổng quát. Câu hỏi còn lại là mạng mục tiêu thay đổi gì trong chính phản ví dụ của Bài 07. Ở mục tiếp theo, chúng ta thêm mạng mục tiêu vào ví dụ hai trạng thái và tính hệ số tăng của tham số sau mỗi chu kỳ đồng bộ.
+
 ---
 
 ## Kiểm tra tổng hợp và đọc thêm
@@ -1069,7 +1111,7 @@ Như vậy, mạng mục tiêu biến sự thay đổi sau mỗi bước của �
    các lần đồng bộ; đích vẫn nhảy tại mốc $\theta^-\leftarrow\theta$.
 3. Khi nào cắt ngắn vẫn cần bootstrap? — Khi nhiệm vụ tiếp diễn và việc dừng chỉ
    do giới hạn thu thập ($U=1$, $Z=0$).
-4. Optimizer thích nghi có sửa bộ ba nguy hiểm không? — Không; nó chỉ chuẩn hóa
+4. Optimizer thích nghi có sửa bộ ba bất ổn không? — Không; nó chỉ chuẩn hóa
    bước cập nhật, không đụng vào xấp xỉ hàm, bootstrap hay dữ liệu khác chính sách.
 
 **Ba bài thảo luận (từ nguồn).**
@@ -1195,7 +1237,7 @@ batch. Tổng hợp: dùng cùng tập seed hoặc ghép cặp giữa các nhán
 sánh; báo thống kê trung tâm và độ phân tán (không chỉ trung bình). Kết luận mong
 đợi theo lý thuyết của bài: bỏ replay làm tăng tương quan ngắn hạn; bỏ mạng mục
 tiêu làm đích đổi sau mỗi bước tối ưu; cả hai nhánh không thay đổi việc bộ ba
-nguy hiểm vẫn tồn tại — không nhánh cho bảo đảm hội tụ.
+bất ổn vẫn tồn tại — không nhánh cho bảo đảm hội tụ.
 :::
 
 ---
@@ -1215,7 +1257,7 @@ Hợp đồng của một bản DQN đúng gồm sáu điểm kiểm tra:
 5. **Đồng bộ:** giữ $\theta^-$ cố định rồi sao chép $\theta^-\leftarrow\theta$ sau
    bước tối ưu theo chu kỳ $C$; hai bộ đếm $t$ và $k_{\mathrm{opt}}$ tách biệt.
 6. **Kết luận:** đánh giá thực nghiệm qua nhiều lần chạy độc lập; không suy ra hội
-   tụ tổng quát. Bộ ba nguy hiểm — xấp xỉ hàm, bootstrap, dữ liệu khác chính sách —
+   tụ tổng quát. Bộ ba bất ổn — xấp xỉ hàm, bootstrap, dữ liệu khác chính sách —
    vẫn còn trong DQN; replay và mạng mục tiêu giảm nhẹ hai biểu hiện trực tiếp
    (tương quan, mục tiêu di động) nhưng không loại bỏ nguyên nhân cấu trúc.
 
