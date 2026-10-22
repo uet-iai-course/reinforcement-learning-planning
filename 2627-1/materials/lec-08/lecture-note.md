@@ -235,11 +235,27 @@ Mạng giá trị hành động cho mọi giá trị cần dùng từ một lầ
 
 ### Bốn khung và tính Markov
 
-**Giới hạn.** Bốn khung là lựa chọn thiết kế kinh điển, **không phải định lý bảo
-đảm Markov**: nó bổ sung động học ngắn hạn nhưng có thể vẫn thiếu biến ẩn hoặc
-lịch sử dài hơn. Một đặc tả tái lập kết quả Atari còn cần tiền xử lý, lặp khung,
-khởi đầu episode, kiến trúc, siêu tham số và giao thức đánh giá — nguồn không
-cung cấp đầy đủ, nên ghi chú này không bịa các con số đó.
+Nhận xét 08.2 cần $O_t$ đủ Markov: phân phối của $(R_{t+1},O_{t+1})$ khi biết toàn bộ lịch sử quan sát và hành động chỉ phụ thuộc $O_t$ và $A_t$. Ví dụ 08.2 lấy $O_t$ là chồng bốn khung gần nhất. Chúng ta kiểm tra xem lựa chọn này cho được gì và còn thiếu gì, trên một vật thể đơn giản nhất của trò chơi Atari: một quả bóng chuyển động thẳng đều.
+
+::: example Ví dụ 08.4 (Quả bóng trên một khung và trên bốn khung)
+**Dữ kiện.** Tọa độ điểm ảnh của tâm quả bóng (cột, hàng; hàng tăng khi đi xuống) trong bốn khung $t-3$, $t-2$, $t-1$, $t$ là $(10,40)$, $(14,37)$, $(18,34)$, $(22,31)$ (số minh họa). Quả bóng không chạm biên trong khoảng này.
+
+**Tính.** Một khung $t$ chỉ cho vị trí $(22,31)$; mọi vận tốc đều khớp với khung này. Hiệu hai khung liên tiếp là $(14,37)-(10,40)=(4,-3)$, $(18,34)-(14,37)=(4,-3)$, $(22,31)-(18,34)=(4,-3)$: vận tốc $(4,-3)$ điểm ảnh mỗi khung, không đổi, nên gia tốc ước lượng từ ba khung cuối bằng $(0,0)$. Vị trí dự đoán ở khung $t+1$ là $(22,31)+(4,-3)=(26,28)$.
+
+**Diễn giải.** Một khung xác định vị trí nhưng không xác định hướng và tốc độ; hai khung cho vận tốc, ba khung cho gia tốc. Với vật chuyển động như vậy, chồng bốn khung chứa đủ thông tin để dự đoán vị trí kế tiếp.
+:::
+
+![Bên trái, một khung: một quả bóng tại vị trí hiện tại, hai mũi tên nét đứt ngược hướng kèm dấu hỏi, vì một khung không cho biết hướng và tốc độ. Bên phải, bốn khung xếp chồng: bốn vị trí của quả bóng tại t trừ 3 đến t, cách đều nhau trên một đường đi lên sang phải; ba vị trí cũ là vòng tròn rỗng nét đứt, vị trí hiện tại tô đặc; mũi tên liền chỉ hướng chuyển động tiếp theo.](img/lec-08/frame-stack-markov.svg)
+
+Hình đặt hai trường hợp cạnh nhau. Bên trái, quả bóng trong một khung có thể đang đi theo hai hướng ngược nhau, nên hai mũi tên nét đứt mang dấu hỏi. Bên phải, ba vị trí cũ (vòng tròn rỗng nét đứt) và vị trí hiện tại (tô đặc) cách đều nhau trên một đường thẳng, như dữ kiện của Ví dụ 08.4; mũi tên liền chỉ hướng chuyển động kế tiếp. Bài giảng gốc (trang 35) nêu đúng lý do này: một ảnh đơn lẻ có thể không cho biết vận tốc hay hướng chuyển động, nhiều khung cho động học ngắn hạn.
+
+Ví dụ 08.4 chỉ xét một vật chuyển động thẳng đều và luôn hiển thị. Chồng bốn khung không làm $O_t$ đủ Markov trong mọi trò chơi, vì ba loại thông tin vẫn có thể nằm ngoài nó: một vật bị vật khác che khuất trong cả bốn khung; một biến của trò chơi không hiển thị trên màn hình, chẳng hạn một bộ đếm thời gian ẩn; và một sự kiện xảy ra trước cửa sổ bốn khung nhưng còn ảnh hưởng tới phần thưởng về sau. Khi đó hai tình huống có cùng $O_t$ có thể có tương lai khác nhau, và theo Nhận xét 08.2, mục tiêu Q-learning tính theo $O_t$ chỉ là xấp xỉ. Số bốn là một lựa chọn thiết kế của Mnih và cộng sự (2015); không có định lý nào bảo đảm số khung đó là đủ.
+
+**Trong thực hành.** Chồng khung thường được cài như một lớp bọc môi trường giữ hàng đợi các khung gần nhất. Khi một lượt mới bắt đầu, hàng đợi chưa đủ bốn khung, nên cài đặt cần một quy ước cho đầu lượt, chẳng hạn lặp lại khung đầu; quy ước này phải giống nhau khi huấn luyện và khi đánh giá. Khi bốn khung không đủ, một hướng xử lý là thay một tầng kết nối đầy đủ bằng một tầng hồi quy để mạng tự tích lũy lịch sử dài hơn (Hausknecht và Stone, 2015, "Deep Recurrent Q-Learning for Partially Observable MDPs", AAAI Fall Symposium); hướng này nằm ngoài phạm vi chương.
+
+**Kiểm tra nhanh.** Chồng bốn khung có làm $O_t$ đủ Markov trong mọi trò chơi Atari không? Không; thông tin không hiển thị trên màn hình hoặc có trước bốn khung vẫn có thể thiếu, và khi đó cùng một $O_t$ ứng với nhiều tình huống có tương lai khác nhau.
+
+Đến đây quan sát và giao diện của mạng đã cố định. Mục tiêu $R_{t+1}+\gamma\max_{a'}Q_\theta(O_{t+1},a')$ vẫn được tính bằng chính $\theta$ đang học; chúng ta xét hệ quả của điều này ở mục kế tiếp.
 
 ### Đích di động và mạng mục tiêu
 

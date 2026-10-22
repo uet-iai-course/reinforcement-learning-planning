@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 260" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Quả bóng trên một khung và trên bốn khung xếp chồng</title>
+<desc id="d">Bên trái, một khung: chỉ có một quả bóng tại vị trí hiện tại, hai mũi tên nét đứt theo hai hướng ngược nhau kèm dấu hỏi, vì một khung không cho biết hướng và tốc độ. Bên phải, bốn khung xếp chồng: bốn vị trí của quả bóng tại t trừ 3, t trừ 2, t trừ 1 và t, cách đều nhau trên một đường đi lên sang phải; ba vị trí cũ là vòng tròn rỗng nét đứt, vị trí hiện tại tô đặc; mũi tên liền chỉ hướng chuyển động tiếp theo.</desc>
+<defs>
+<marker id="arr" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" refX="20" refY="11" orient="auto"><path d="M0,0 L22,11 L0,22 Z" fill="#B15A2B"/></marker>
+<marker id="arrg" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" refX="20" refY="11" orient="auto"><path d="M0,0 L22,11 L0,22 Z" fill="#59606B"/></marker>
+</defs>
+<text x="260" y="34" font-size="30" text-anchor="middle" font-weight="700" fill="#2F3E7A">Một khung: biết vị trí</text>
+<rect x="40" y="56" width="440" height="190" rx="10" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="3"/>
+<circle cx="260" cy="151" r="18" fill="#B15A2B"/>
+<line x1="238" y1="138" x2="150" y2="88" stroke="#59606B" stroke-width="4" stroke-dasharray="10 7" marker-end="url(#arrg)"/>
+<line x1="282" y1="164" x2="370" y2="214" stroke="#59606B" stroke-width="4" stroke-dasharray="10 7" marker-end="url(#arrg)"/>
+<text x="120" y="130" font-size="34" text-anchor="middle" font-weight="700" fill="#59606B">?</text>
+<text x="400" y="190" font-size="34" text-anchor="middle" font-weight="700" fill="#59606B">?</text>
+<text x="830" y="34" font-size="30" text-anchor="middle" font-weight="700" fill="#2F3E7A">Bốn khung: thêm hướng, tốc độ</text>
+<rect x="600" y="56" width="460" height="190" rx="10" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="3"/>
+<circle cx="660" cy="200" r="18" fill="#FFFFFF" stroke="#B15A2B" stroke-width="3" stroke-dasharray="6 5"/>
+<circle cx="740" cy="170" r="18" fill="#FFFFFF" stroke="#B15A2B" stroke-width="3" stroke-dasharray="6 5"/>
+<circle cx="820" cy="140" r="18" fill="#FFFFFF" stroke="#B15A2B" stroke-width="3" stroke-dasharray="6 5"/>
+<circle cx="900" cy="110" r="18" fill="#B15A2B"/>
+<line x1="921" y1="102" x2="1000" y2="72" stroke="#B15A2B" stroke-width="5" marker-end="url(#arr)"/>
+<text x="680" y="240" font-size="27" text-anchor="middle"><tspan font-style="italic">t</tspan>−3</text>
+<text x="760" y="210" font-size="27" text-anchor="middle"><tspan font-style="italic">t</tspan>−2</text>
+<text x="840" y="180" font-size="27" text-anchor="middle"><tspan font-style="italic">t</tspan>−1</text>
+<text x="918" y="150" font-size="27" text-anchor="middle"><tspan font-style="italic">t</tspan></text>
+</svg>
