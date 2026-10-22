@@ -97,7 +97,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 
 | Mã | Chủ đề | Nguồn trang | Vai trò | Vào → Ra |
 |---|---|---|---|---|
-| `lec-08-topic-14` | SGD, RMSprop, Adam theo từng tọa độ | tr. 22–28 | Ba quy tắc cập nhật và giới hạn | Vào: topic-09 → Ra: lựa chọn optimizer có căn cứ |
+| `lec-08-topic-14` | Vai trò của bộ tối ưu và ba quy tắc cập nhật | tr. 22–28 | Ba quy tắc cập nhật và giới hạn | Vào: topic-10 → Ra: lựa chọn bộ tối ưu có căn cứ |
 
 ### Nhóm đọc thêm/thực hành
 
@@ -846,20 +846,35 @@ Trung bình bình phương của bốn phần tử là $\tfrac14(2{,}25+26{,}01+
 ## 5. Bộ tối ưu theo gradient
 
 <!-- note-topic-id: lec-08-topic-14 -->
-### SGD, RMSprop và Adam theo từng tọa độ
+### Vai trò của bộ tối ưu và ba quy tắc cập nhật
 
-**Vấn đề.** Optimizer nhận gradient của loss và đổi nó thành bước tham số;
-lựa chọn bộ tối ưu không đổi công thức đích, cách thu thập dữ liệu hay lớp hàm. Ba quy tắc cập nhật phổ biến chuẩn hóa gradient
-theo những cách khác nhau.
+Ở bước 8 của Thuật toán 08.13, mỗi bước tối ưu có gradient $\nabla_\theta L_B$ của hàm mất mát trên một mini-batch, tính tại tham số hiện hành. Thuật toán chưa nói gradient này được đổi thành bước tham số theo quy tắc nào. Chúng ta cần một quy tắc như vậy, cùng các siêu tham số của nó, và cần biết quy tắc đó quyết định gì và không quyết định gì trong DQN.
 
-**Hình thức chung.** Với chỉ số cập nhật $j\in\mathbb N_+$ (trùng $k_{\mathrm{opt}}$)
-và tốc độ học $\eta>0$:
+::: definition Định nghĩa 08.15 (Bộ tối ưu theo gradient)
+Cho dãy mini-batch $B_1,B_2,\dots$ và tham số khởi tạo $\theta_0\in\mathbb R^d$. Một bộ tối ưu (optimizer) theo gradient với tốc độ học $\eta>0$ gồm một trạng thái phụ $s_j$ với giá trị đầu $s_0$ (có thể rỗng) và một quy tắc $\operatorname{Update}$, sao cho tại bước tối ưu thứ $j=1,2,\dots$
+$$
+g_j=\nabla_\theta L_{B_j}(\theta_{j-1}),\qquad(\theta_j,s_j)=\operatorname{Update}(\theta_{j-1},s_{j-1},g_j).
+$$
+Chỉ số $j$ trùng bộ đếm $k_{\mathrm{opt}}$ của Thuật toán 08.13.
+:::
 
-$$g_j=\nabla_\theta L_{B_j}(\theta_{j-1}),\qquad \theta_j=\operatorname{Update}(\theta_{j-1},g_j).$$
+Định nghĩa đọc như sau: gradient $g_j$ được tính tại tham số $\theta_{j-1}$ trước bước, trên mini-batch $B_j$ của bước đó, rồi quy tắc $\operatorname{Update}$ dùng $g_j$ và trạng thái phụ để trả tham số mới. Trên trang chiếu, trạng thái phụ được viết gộp vào $\operatorname{Update}$, nên công thức rút gọn thành $\theta_j=\operatorname{Update}(\theta_{j-1},g_j)$. Ba quy tắc của phần này khác nhau ở trạng thái phụ: hạ gradient ngẫu nhiên không có trạng thái phụ, RMSprop giữ một vector $v_j$, Adam giữ hai vector $m_j$, $v_j$, mỗi vector cùng kích thước với $\theta$. Hằng $\epsilon_{\mathrm{opt}}>0$ của RMSprop và Adam chỉ giữ mẫu số khác $0$; nó khác xác suất thăm dò $\epsilon_{\mathrm{exp}}$ của hành vi.
 
-Các hệ số $\rho,\beta_1,\beta_2\in[0,1)$; $\epsilon_{\mathrm{opt}}>0$ ổn định phép
-chia. **Lưu ý:** $\epsilon_{\mathrm{opt}}$ (số học của optimizer) khác hoàn toàn
-$\epsilon_{\mathrm{exp}}$ (xác suất khám phá của chính sách hành vi).
+![Chuỗi năm ô từ trái sang phải: mini-batch B j, hàm mất mát L B j, gradient g j, ô Update của bộ tối ưu, tham số theta j. Mũi tên tham số theta j trừ 1 đi từ trên xuống vào ô Update. Một mũi tên nét đứt quay lại từ theta j về ô mini-batch bên dưới chuỗi, ghi j tăng thêm 1, với j bằng k opt.](img/lec-08/optimizer-step.svg)
+
+Hình vẽ một bước tối ưu: mini-batch $B_j$ cho hàm mất mát $L_{B_j}$, lấy gradient tại $\theta_{j-1}$ được $g_j$, quy tắc $\operatorname{Update}$ trả $\theta_j$; mũi tên nét đứt đánh dấu bước kế tiếp với mini-batch mới. Hình không có mũi tên nào từ bộ tối ưu tới đích hay tới bộ nhớ phát lại.
+
+Điều đó cho giới hạn của bộ tối ưu trong DQN. Đích $y_i$ được tính bằng $Q_{\theta^-}$ theo công thức của bước 7, dữ liệu do vòng thu thập ghi vào $\mathcal D$, và lớp hàm $\{Q_\theta\}$ do kiến trúc mạng quyết định; cả ba không phụ thuộc lựa chọn bộ tối ưu. Bộ tối ưu vẫn đổi quỹ đạo $\theta_0,\theta_1,\dots$, nên gián tiếp đổi hành vi $\epsilon_{\mathrm{exp}}$-tham lam, dữ liệu được ghi về sau và giá trị $\theta^-$ tại các mốc đồng bộ. Nhưng vì công thức đích, cơ chế thu thập và lớp hàm giữ nguyên, không bộ tối ưu nào loại được các nguồn bất ổn nằm ở ba thành phần đó; phần 6 phân tích các nguồn này.
+
+::: example Ví dụ 08.18 (Một bước hạ gradient trên ví dụ một tham số)
+**Dữ kiện.** Như Ví dụ 08.5: $Q_\theta=\theta$, một mẫu chuyển với $R=1$, $\gamma=0{,}9$, $\theta_0=0$; mạng mục tiêu giữ $\theta^-=0$, nên đích $y=1+0{,}9\cdot0=1$ là hằng. Hàm mất mát $L(\theta)=(1-\theta)^2$; tốc độ học $\eta=0{,}25$.
+
+**Tính.** $g_1=\nabla_\theta L(\theta_0)=-2(1-0)=-2$, và một bước hạ gradient cho $\theta_1=\theta_0-\eta g_1=0+0{,}25\cdot2=0{,}5$.
+
+**Diễn giải.** Kết quả trùng bước bán gradient $\theta_1=\theta_0+\alpha(y-\theta_0)=0{,}5$ với $\alpha=0{,}5$ của Ví dụ 08.5: với hàm mất mát bình phương, $\nabla_\theta L=-2(y-q)\nabla_\theta q$, nên hạ gradient với tốc độ học $\eta$ là cập nhật bán gradient với bước $\alpha=2\eta$.
+:::
+
+**Trong thực hành.** Giá trị hàm mất mát trên mini-batch không phải thước đo chất lượng của chính sách. Đích tự đổi tại mỗi mốc đồng bộ và dữ liệu trong $\mathcal D$ đổi theo hành vi, nên $L_B$ có thể tăng khi chính sách tốt lên, và giảm khi chính sách không đổi; lợi tức đánh giá trên các lượt riêng mới đo chất lượng của chính sách.
 
 **SGD.**
 
@@ -900,13 +915,14 @@ So sánh cần đồng thời: return đánh giá, độ ổn định qua nhiề
 loss huấn luyện và chi phí tính toán. **Không có lựa chọn thắng tuyệt đối**; một
 lịch bước phù hợp có thể quan trọng hơn tên optimizer.
 
-**Giới hạn.** Một bộ tối ưu tốt hơn không tự giải quyết bất ổn cốt lõi của
-Q-learning với xấp xỉ hàm: nó không sửa cấu trúc bootstrap, tính khác chính sách
-hay xấp xỉ hàm. Replay memory và mạng mục tiêu vẫn là thiết yếu. Công thức Adam
+**Giới hạn.** Lựa chọn bộ tối ưu không đổi công thức đích (bootstrap), cách thu
+thập dữ liệu (khác chính sách) hay lớp hàm (xấp xỉ hàm), nên không loại được bộ
+ba bất ổn. Replay memory và mạng mục tiêu vẫn là thiết yếu. Công thức Adam
 không tạo bảo đảm hội tụ cho DQN.
 
-**Kiểm tra nhanh.** Optimizer thích nghi có sửa mục tiêu Bellman không? — Không;
-nó chỉ chuẩn hóa gradient theo từng tọa độ, đích và dữ liệu không đổi.
+**Kiểm tra nhanh.** Bộ tối ưu thích nghi có đổi công thức đích không? Không;
+công thức đích không phụ thuộc lựa chọn bộ tối ưu, bộ tối ưu chỉ quyết định cách
+đổi gradient thành bước tham số.
 
 ---
 
