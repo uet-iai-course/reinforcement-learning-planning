@@ -165,14 +165,24 @@ Hình đặt hai cách lưu cạnh nhau. Bên trái, bảng minh họa có kho�
 <!-- note-topic-id: lec-08-topic-16 -->
 ### Ví dụ: đầu vào bốn khung Atari
 
-**Giao diện tối thiểu cho Atari.** Một quy trình DQN kinh điển:
+Trước khi định nghĩa giao diện của mạng, chúng ta xét một trường hợp cụ thể mà bài giảng gốc (trang 35) dùng: DQN chơi trò chơi Atari, nơi quan sát là ảnh màn hình.
 
-- Đầu vào trạng thái: chồng bốn khung hình gần nhất đã tiền xử lý; một ảnh đơn
-  lẻ không biểu lộ vận tốc hay hướng chuyển động, nhiều khung cung cấp động học
-  ngắn hạn.
-- Bộ mã hóa CNN theo sau bởi các tầng kết nối đầy đủ; đầu ra là một giá trị Q cho
-  mỗi hành động khả dụng ($|\mathcal A|$ giá trị).
-- Phần thưởng: thay đổi điểm số tức thời.
+::: example Ví dụ 08.2 (Đầu vào bốn khung Atari)
+**Dữ kiện.** Mỗi bước môi trường trả về một khung ảnh màn hình và thay đổi điểm số.
+
+- Quan sát $O_t$: bốn khung gần nhất, mỗi khung đã tiền xử lý thành ảnh $H\times W$, xếp chồng thành mảng $4\times H\times W$. Mnih và cộng sự (2015) chuyển mỗi khung sang ảnh xám và thu về $84\times84$.
+- Hành động $A_t\in\mathcal A$: lệnh điều khiển rời rạc; số hành động hợp lệ từ $4$ đến $18$ tùy trò chơi (Mnih và cộng sự, 2015).
+- Phần thưởng $R_{t+1}$: thay đổi điểm số tức thời.
+- Mạng: các tầng tích chập rồi các tầng kết nối đầy đủ; đầu ra có $\lvert\mathcal A\rvert$ thành phần, mỗi thành phần ứng với một hành động.
+
+**Diễn giải.** Một lần tính xuôi cho giá trị của mọi hành động, nên phép cực đại $\max_aQ_\theta(O_t,a)$ và hành động tham lam được đọc trên một vector. Một khung đơn không cho biết vận tốc hay hướng chuyển động; bốn khung liên tiếp cho thông tin động học ngắn hạn (bài giảng gốc, trang 35).
+:::
+
+![Từ trái sang phải: bốn khung ảnh thô gần nhất; bước tiền xử lý; bốn khung đã xử lý xếp chồng thành O t có kích thước 4 nhân H nhân W; mạng tích chập rồi tầng kết nối đầy đủ; đầu ra là Q theta của O t với từng hành động a 1 tới a có chỉ số bằng số hành động.](img/lec-08/atari-pipeline.svg)
+
+Hình đọc từ trái sang phải. Tiền xử lý tác động lên từng khung thô, rồi bốn khung đã xử lý mới được xếp chồng thành $O_t$; mạng nhận $O_t$ và trả về một cột $\lvert\mathcal A\rvert$ giá trị. Bài giảng gốc gọi chồng bốn khung là "đầu vào trạng thái"; chương này gọi là quan sát, vì bốn khung chưa chắc chứa đủ thông tin để thay cho trạng thái Markov, điều được xét ngay sau giao diện của mạng.
+
+Ví dụ 08.2 chỉ cố định giao diện vào và ra của mạng. Tái lập một kết quả Atari đã công bố còn cần số khung lặp lại cho mỗi hành động, cách bắt đầu lượt, kiến trúc cụ thể, siêu tham số và giao thức đánh giá; nguồn không cho các chi tiết này, nên chúng ta không nêu số liệu thành tích.
 
 <!-- note-topic-id: lec-08-topic-02 -->
 ### Giao diện DQN và hai mạng

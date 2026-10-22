@@ -35,7 +35,7 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 1 | `L08-06` | (gộp vào `L08-02c` và `L08-03`) | gộp, bỏ trang riêng | Cảnh báo phủ định cận mẫu chưa từng nêu trên mặt trang | đã bỏ ở S6; ý "số ô tăng theo $\lvert\mathcal S\rvert\lvert\mathcal A\rvert$" sang bước `L08-03`, ý "xấp xỉ hàm cần giả thiết cấu trúc mới có bảo đảm" sang bước `L08-30` |
 | 2 | `L08-M2T` | 2. Mạng giá trị hành động và đích hồi quy | thêm | Trang tiêu đề mạch, điểm vào mạch 2 | 2.0 (S7) |
 | 2 | `L08-03` | Giới hạn của bảng giá trị hành động | sửa | Nhu cầu; Lunar Lander rời rạc hóa $9\,216$ ô, $1\,896$ ô có mẫu sau $2\,000$ lượt (Bài 07, Ví dụ 07.1); sửa nhãn SVG | 2.2 (S8) |
-| 2 | `L08-31` | Ví dụ: đầu vào bốn khung Atari | sửa, chuyển lên | Ví dụ cho giao diện; bốn khung phải có trước $[b,4,h,w]$ ở `L08-20` | 2.2 |
+| 2 | `L08-31` | Ví dụ: đầu vào bốn khung Atari | sửa, chuyển lên | Ví dụ cho giao diện; bốn khung phải có trước $[b,4,h,w]$ ở `L08-20` | 2.3 (S9) |
 | 2 | `L08-07` | Mạng giá trị hành động | tách | Chỉ giữ giao diện; phản ví dụ sang `L08-07b`, mạng mục tiêu sang `L08-07c` | 2.3 |
 | 2 | `L08-32` | Bốn khung và tính Markov | sửa, chuyển lên | Câu hỏi và Lời giải; rút còn ≤ 60 âm tiết | 2.4 |
 | 2 | `L08-07b` | Ví dụ: một tham số tạo cả dự đoán lẫn đích | thêm | $Q_\theta=\theta$, $R=1$, $\gamma=0{,}9$, $\theta_0=0$, $\alpha=0{,}5$: $y=1$, $\theta_1=0{,}5$, đích mới $1{,}45$ | chưa có |
@@ -180,6 +180,17 @@ Số trang sau đợt sửa dự kiến: 37 trang hiện có − 5 trang bỏ (`
 - **Liên kết:** trước là `L08-M2T`; sau là `L08-31` (ví dụ đầu vào Atari, quan sát là ảnh).
 - **Mật độ:** trước sửa 23 âm tiết, 1 dòng 23 âm tiết, 1 hộp chữ, ghi chú 46 âm tiết. Sau sửa 51 âm tiết, 4 dòng (11, 13, 8, 19), 0 công thức hiển thị, 0 hộp chữ, 1 hình, ghi chú 124 âm tiết.
 - **Ghi chú bài giảng:** mục "Vì sao cần Deep Q-learning" thành "Giới hạn của bảng giá trị hành động": vấn đề, Ví dụ 08.1 (khối `example`, đánh số đầu tiên của chương), đoạn về quan sát là ảnh, trực giác nối với mức lan của Bài 07, hình và đoạn đọc hình, lợi ích của dạng có tham số theo nguồn tr. 14–15, giới hạn, kiểm tra nhanh; "mạng neural" thành "mạng nơ-ron" (hai chỗ); hàng topic-01 của bản đồ chủ đề đổi tên.
+
+#### `L08-31` Ví dụ: đầu vào bốn khung Atari (bước S9)
+
+- **Trang muốn nói gì:** một trường hợp cụ thể của giao diện mạng: quan sát $O_t$ là bốn khung ảnh đã tiền xử lý xếp chồng ($4\times H\times W$), hành động là lệnh rời rạc, phần thưởng là thay đổi điểm số; mạng tích chập rồi tầng kết nối đầy đủ trả về $\lvert\mathcal A\rvert$ giá trị trong một lần tính.
+- **Phục vụ mạch nào và thế nào:** mạch 2, bước ví dụ của khái niệm "mạng giá trị hành động", đứng trước bước hình thức `L08-07`; đặt sẵn $4\times H\times W$ cho `L08-20` (mạch 4) và câu hỏi Markov cho `L08-32`.
+- **Vấn đề còn lại trước sửa:** trang ở cuối bài, sau khi `L08-20` đã dùng $[b,4,h,w]$; CNN, "tiền xử lý" chưa giải nghĩa; dòng "Đây là hợp đồng tối thiểu…, không phải đặc tả tái lập…" là tương phản nhị phân; SVG vẽ "4 khung → tiền xử lý" ngược thứ tự, đầu ra $Q(a_k)$ thiếu $\theta$, $O_t$, hai dòng chú thích đè nhau (`review-structure.md` §3 `L08-31`; `review-student.md`; `review-math.md` nhẹ).
+- **Quyết định:** sửa (đã chuyển lên mạch 2 ở C0). Tiêu đề "Ví dụ: đầu vào bốn khung Atari"; ba dòng theo nguồn tr. 35 (chồng bốn khung, một giá trị cho mỗi hành động, phần thưởng là thay đổi điểm số, CNN rồi tầng kết nối đầy đủ). Kích thước viết $H\times W$ (nguồn không cho số); số $84\times84$ và $4$–$18$ hành động của Mnih và cộng sự (2015) chỉ nằm trong ghi chú diễn giả và ghi chú bài giảng, có trích nguồn. Câu về đặc tả tái lập chuyển vào ghi chú diễn giả dưới dạng khẳng định. Dùng "một lần tính" thay "một lượt" để không trùng thuật ngữ "lượt" (episode).
+- **Hình:** `img/lec-08/atari-pipeline.svg` vẽ lại theo thứ tự khung thô → tiền xử lý → xếp chồng $O_t: 4\times H\times W$ → tích chập, kết nối đầy đủ → $Q_\theta(O_t,a_1),\dots,Q_\theta(O_t,a_{\lvert\mathcal A\rvert})$, "$\lvert\mathcal A\rvert$ giá trị"; bỏ dòng "không bảo đảm Markov" (thuộc `L08-32`). Phông sans-serif, nhãn 28–30 đơn vị trên khung 1160×300; trên trang hiển thị khoảng 28–30 px ở khung 1280, trên 0,75 em. Mũi tên không đè chữ, nhãn không chạm viền.
+- **Liên kết:** trước là `L08-03` (với ảnh, không lập được bảng); sau là `L08-07` (giao diện tổng quát $\mathbf q_\theta(o)$).
+- **Mật độ:** trước sửa 45 âm tiết, 3 dòng, ghi chú 46. Sau sửa 37 âm tiết, 3 dòng (12, 9, 16), 0 công thức hiển thị, 0 hộp chữ, 1 hình, ghi chú 131 âm tiết.
+- **Ghi chú bài giảng:** mục "Ví dụ: đầu vào bốn khung Atari": câu dẫn, Ví dụ 08.2 (khối `example`: dữ kiện bốn mục, diễn giải), hình và đoạn đọc hình (gọi bốn khung là quan sát thay cho "đầu vào trạng thái" của nguồn), đoạn phạm vi tái lập viết với "chúng ta" làm chủ ngữ. Trình xem ghi chú đặt `min-width: 900px` cho hình `img/lec-*` nên hình rộng có thanh cuộn ngang trong cột hẹp; đây là thiết kế chung của `material-viewer.css`.
 
 ### Bản trước đợt sửa 2026-10-22
 
