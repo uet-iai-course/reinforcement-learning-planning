@@ -43,6 +43,7 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 2 | `L08-08` | Đích hồi quy | sửa | Dòng "Ký hiệu:" định nghĩa $Z$ trước khi dùng; Định nghĩa đích hồi quy; $q_t$, $\delta_t$; hồi quy với $\theta^-$ cố định | 2.8 (S14) |
 | 2 | `L08-09` | Ví dụ: đích tại mẫu chuyển kết thúc | sửa | Mẫu 2 của ví dụ xuyên suốt "mini-batch hai mẫu chuyển", viết theo chỉ số $t$; Câu hỏi bỏ mặt nạ | 2.9 (S15) |
 | 2 | `L08-12` | Kết thúc và cắt ngắn | sửa | $U=1,Z=0$ vẫn bootstrap; đặt lại khi $Z\lor U$; mặt nạ chỉ $1-Z$; hình hai nhánh; ví dụ mẫu 1 bị cắt ngắn; dòng tự đặt lại sang `L08-13` | 2.10 (S16) |
+| 2 | `L08-12b` | Ví dụ: đích tại mẫu chuyển bị cắt ngắn | thêm (tách từ `L08-12` ở R2) | Mẫu 1 của ví dụ xuyên suốt bị cắt ngắn: $y_t=4{,}6$; Câu hỏi mặt nạ gộp: $y_t=1$ | 2.11 (R2) |
 | 3 | `L08-M3T` | 3. Bộ nhớ phát lại | thêm | Trang tiêu đề mạch, điểm vào mạch 3; topic-18 | 3.0 (S17) |
 | 3 | `L08-28` | Tương quan giữa các mẫu chuyển liên tiếp | sửa, chuyển lên | Vấn đề đứng trước cơ chế; hình dải quỹ đạo; ví dụ cỡ mẫu hiệu dụng; topic-18 | 3.1 (S18) |
 | 3 | `L08-13` | Bộ nhớ phát lại | sửa | Nhu cầu:, định nghĩa $\mathcal D$, ví dụ $N=6$; quan sát cuối khi tự đặt lại, không nêu tên trường API | 3.2 |
@@ -59,7 +60,7 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 4 | `L08-18` | Thuật toán DQN: tương tác và lưu | sửa | Bước 1–4; 87 âm tiết trước sửa | 4.7 |
 | 4 | `L08-19` | Thuật toán DQN: tối ưu và đồng bộ | sửa | Vòng lặp ngoài; thứ tự cập nhật → tăng $k_{\mathrm{opt}}$ → kiểm $C$ | 4.8 |
 | 4 | `L08-16` | (bỏ; hình sang `L08-07c`, thứ tự sang ghi chú `L08-19`) | bỏ | Trùng bước 9 của giả mã | 4.9 (tạm) |
-| 4 | `L08-20` | Kích thước tensor của mini-batch Atari | sửa | Nhắc lại bốn khung; định nghĩa $h,w$ | 4.10 |
+| 4 | `L08-20` | Kích thước tensor của mini-batch Atari | sửa | Nhắc lại bốn khung; dùng $[b,4,H,W]$ với $H=W=84$ như `L08-31` (ghi nhớ R2 nhẹ 4) | 4.10 |
 | 4 | `X02` | Bài tập: lỗi cài đặt đích DQN | sửa (có thể tách `X02b`) | Mã lỗi nhất quán theo batch; lỗi `.max()` không chiều; không gắn tên trường API cố định | 4.11 |
 | 5 | `L08-M5T` | 5. Bộ tối ưu theo gradient | thêm | Trang tiêu đề mạch, điểm vào mạch 5 | chưa có |
 | 5 | `L08-22` | Vai trò của bộ tối ưu | sửa | Hình chuỗi $B_j\to L_{B_j}\to g_j\to\theta_j$, $j=k_{\mathrm{opt}}$; bỏ dẫn chiếu "bước 8 giả mã" | 5.1 |
@@ -96,7 +97,7 @@ Số trang sau đợt sửa dự kiến: 37 trang hiện có − 5 trang bỏ (`
 
 ### Ngoại lệ mật độ
 
-`L08-01` (bìa): câu luận đề một câu 36 âm tiết trong hộp, ba dòng hiển thị, mỗi dòng ≤ 15 âm tiết; `CLAUDE.md` đòi luận đề một câu. `L08-02b` (Nội dung): 8 dòng > 6 vì phải liệt kê đủ bảy mạch và dòng đọc trước; 54 âm tiết. `L08-02c` (Vấn đề trung tâm), sau R1: 85 âm tiết > 60 (1,42 lần trần, dưới 1,5 lần), một dòng bài toán 17 âm tiết và năm dòng trả lời có điều kiện 15, 15, 10, 15, 13; quyết định R1 của điều phối viên mở rộng phạm vi bài toán (vector liên tục hoặc ảnh) và đổi các dòng "X: Y" thành câu điều kiện, nên số âm tiết tăng từ 70. `L08-09` (Ví dụ: đích tại mẫu chuyển kết thúc), duyệt ở S15: 6 dòng chữ (dữ liệu, hai dòng tính, câu hỏi, lời giải, diễn giải) cộng một bảng một hàng bốn cột; 41 âm tiết; bảng giữ khuôn chung của ví dụ xuyên suốt, tách ra thành trang khác sẽ cắt rời dữ liệu khỏi phép tính. Số âm tiết trước sửa của các trang vượt trần (đo ngày 2026-10-22): `L08-05` 82, `L08-18` 87, `L08-27` 70, `L08-28` 64, `L08-32` 68, `X03` 91; `L08-33` 73 (trần 80 của trang tự kiểm tra). Số sau sửa ghi vào mục của từng trang khi sửa.
+`L08-01` (bìa): câu luận đề một câu 36 âm tiết trong hộp, ba dòng hiển thị, mỗi dòng ≤ 15 âm tiết; `CLAUDE.md` đòi luận đề một câu. `L08-02b` (Nội dung): 8 dòng > 6 vì phải liệt kê đủ bảy mạch và dòng đọc trước; 54 âm tiết. `L08-02c` (Vấn đề trung tâm), sau R1: 85 âm tiết > 60 (1,42 lần trần, dưới 1,5 lần), một dòng bài toán 17 âm tiết và năm dòng trả lời có điều kiện 15, 15, 10, 15, 13; quyết định R1 của điều phối viên mở rộng phạm vi bài toán (vector liên tục hoặc ảnh) và đổi các dòng "X: Y" thành câu điều kiện, nên số âm tiết tăng từ 70. `L08-12b` (Ví dụ: đích tại mẫu chuyển bị cắt ngắn), R2: cùng khuôn `L08-09`, 5 dòng chữ cộng một bảng một hàng; 38 âm tiết. `L08-32`, R2: dòng "Giả thiết:" 24 âm tiết trên hai dòng hiển thị (câu do điều phối viên duyệt nguyên văn ở R2, mục TB2), mỗi dòng hiển thị dưới 20. `L08-09` (Ví dụ: đích tại mẫu chuyển kết thúc), duyệt ở S15: 6 dòng chữ (dữ liệu, hai dòng tính, câu hỏi, lời giải, diễn giải) cộng một bảng một hàng bốn cột; 41 âm tiết; bảng giữ khuôn chung của ví dụ xuyên suốt, tách ra thành trang khác sẽ cắt rời dữ liệu khỏi phép tính. Số âm tiết trước sửa của các trang vượt trần (đo ngày 2026-10-22): `L08-05` 82, `L08-18` 87, `L08-27` 70, `L08-28` 64, `L08-32` 68, `X03` 91; `L08-33` 73 (trần 80 của trang tự kiểm tra). Số sau sửa ghi vào mục của từng trang khi sửa.
 
 ### Mục từng trang (đợt sửa 2026-10-22)
 
@@ -304,6 +305,35 @@ Quyết định R1 mục 5 (khó khăn không lồi được hứa ở ghi chú 
 - **Liên kết:** trước là `L08-M3T`; sau là `L08-13` (bộ nhớ phát lại: lưu và lấy mẫu đều). Mục tiêu hỗ trợ: mục tiêu 2 (tác dụng và giới hạn của bộ nhớ phát lại).
 - **Mật độ:** trước sửa 64 âm tiết, 4 dòng, ghi chú 30 âm tiết. Sau sửa 44 âm tiết, 4 dòng (12, 14, 9, 9), 0 công thức hiển thị, 0 hộp chữ, 1 hình, ghi chú diễn giả 87 âm tiết. Đáy nội dung 656 px.
 - **Ghi chú bài giảng:** mục topic-18 viết lại: nhu cầu (mini-batch như SGD, giả thiết i.i.d. cho phương sai $1/b$); trực giác và ba ý của nguồn tr. 30; Ví dụ 08.9 (phép tính đầy đủ $\operatorname{Var}\bar g=\tfrac{14{,}098}{16}\sigma^2$, cỡ mẫu hiệu dụng $\approx1{,}1$); hình và đoạn đọc hình; đoạn "không nhất thiết chệch", "lấy rải vẫn không i.i.d."; "Trong thực hành."; đoạn nối sang bộ nhớ phát lại.
+
+#### Rà lại mạch 2 (bước R2)
+
+Áp dụng toàn bộ quyết định của điều phối viên sau lượt rà chỉ đọc mạch 2 (TB1–TB5, nhẹ 1–16; xem `review-log.md`, mục "Rà lại mạch 2"). Số đo dưới đây thay số "sau sửa" trong mục của từng trang. Âm tiết gồm cả chữ trong hộp `.check`; đáy đo ở 1280×720.
+
+| trang | âm tiết trước → sau | dòng sau | công thức hiển thị | ghi chú diễn giả trước → sau | đáy sau (px) | thay đổi chính |
+|---|---:|---:|---:|---:|---:|---|
+| `L08-M2T` | 35 → 35 | 2 | 0 | 88 → 92 | 557 | ghi chú bỏ "Phần này/Phần 3" làm chủ ngữ (nhẹ 16) |
+| `L08-03` | 55 → 58 | 4 | 0 | 124 → 131 | 661 | "Lunar Lander rời rạc hóa (Bài 07)", "Bảng $Q$, $4$ hành động", "Trực quan." (nhẹ 1, 2); bỏ "sau $2\,000$ lượt" trên mặt trang để không xuống dòng, đưa vào ghi chú cùng "chính sách cố định" (nhẹ 15) |
+| `L08-31` | 37 → 30 | 3 | 0 | 131 → 142 | 660 | $H=W=84$, $4\cdot84\cdot84=28\,224$ số; $4$ đến $18$ hành động; nguồn Mnih và cộng sự (2015) trong ghi chú; hình giữ $4\times H\times W$ (nhẹ 3) |
+| `L08-07` | 51 → 34 | 3 | 0 | 139 → 143 | 631 | bỏ dòng "Giả thiết:" (ý ở ghi chú và chuyển sang `L08-32`, TB2); ghi chú thêm xác suất $\epsilon_{\mathrm{exp}}$-tham lam $0{,}925$/$0{,}025$ (nhẹ 14) |
+| `L08-32` | 44 → 55 | 3 | 0 | 137 → 137 | 673 | dòng "Giả thiết:" đầy đủ (TB2, nhẹ 5); hình `frame-stack-markov.svg` dời nhãn $t-3$, $t-2$, $t-1$, $t$ lên trên vòng tròn (nhẹ 6) |
+| `L08-07b` | 27 → 38 | 6 | 1 | 103 → 116 | 698 | "đích $y$ (còn gọi là mục tiêu cập nhật)" ở lần dùng đầu (TB3); $\theta\leftarrow\theta+\alpha(y-q)$ vào công thức hiển thị; "Diễn giải:" trung tính (TB1); ghi chú kết bằng nhu cầu tách tham số tạo đích. Nhẹ 9 (gộp hai dòng tính) thử rồi bỏ: trong cột hẹp của `.grid2` dòng gộp bị ngắt giữa công thức, nên giữ hai dòng; đáy vẫn 698 |
+| `L08-07c` | 51 → 49 | 4 | 0 | 125 → 134 | 699 | "($C\in\mathbb N_+$)" trong dòng đồng bộ (nhẹ 8); ghi chú: mạng mục tiêu không đưa $\theta$ tới $10$ nhanh hơn ($0{,}9125$ so với $0{,}857$), $C=1$ trùng bán gradient (TB1, nhẹ 8); hình `target-network-timeline.svg` vẽ lại trên một trục giá trị: $\theta^-$ bằng $\theta$ tại các mốc $0$, $C$, $2C$ (nhẹ 7) |
+| `L08-08` | 53 → 53 | 5 | 1 | 137 → 146 | 633 | "Nhu cầu:" thay "Ký hiệu:" (TB5), tách thành hai dòng để mỗi dòng ≤ 20 âm tiết; bỏ "(còn gọi là …)" (TB3); dòng cuối rút gọn (TB5); ghi chú: "đích" khác "chính sách đích", $y_t$ là mẫu có kỳ vọng $(\mathcal TQ_{\theta^-})(O_t,A_t)$, $q_t$ khác $q_*$ (TB3, nhẹ 11) |
+| `L08-12` | 36 → 41 | 3 | 0 | 123 → 99 | 643 | "Nhu cầu:" (TB4, rút "cho phép", "khác nhau" để ≤ 20 âm tiết); bộ sáu gộp vào dòng "Ký hiệu:"; ví dụ chuyển sang `L08-12b` |
+| `L08-12b` | (mới) → 38 | 5 + bảng | 0 | — → 101 | 653 | trang mới (TB4) |
+| `L08-M3T` | 31 → 31 | 2 | 0 | 83 → 89 | 521 | ghi chú bỏ "Phần 2/Phần này/Phần 4" làm chủ ngữ (nhẹ 16) |
+
+Ghi nhớ cho mạch 4 (nhẹ 4): `L08-20` dùng $[b,4,H,W]$ với $H=W=84$, khớp `L08-31`.
+
+#### `L08-12b` Ví dụ: đích tại mẫu chuyển bị cắt ngắn (bước R2)
+
+- **Trang muốn nói gì:** mẫu chuyển chạm giới hạn số bước khi MDP chưa kết thúc ($R_{t+1}=1$, $Z_{t+1}=0$, $U_{t+1}=1$, $\max=4$, $\gamma=0{,}9$) vẫn bootstrap: $y_t=4{,}6$; mặt nạ gộp $1-(Z\lor U)$ cho $y_t=1$, hạ đích $3{,}6$ ở mọi mẫu chuyển chạm giới hạn.
+- **Phục vụ mạch nào và thế nào:** mạch 2, bước ví dụ và kiểm tra của trường hợp cắt ngắn (`L08-12` là bước hình thức), cùng khuôn với `L08-09` (bảng một hàng, một dòng tính, "Câu hỏi:", "Lời giải:", "Diễn giải:"). Đặt mẫu 1 của ví dụ xuyên suốt "mini-batch hai mẫu chuyển" (giả sử bị cắt ngắn) trước mạch 4.
+- **Vấn đề còn lại trước sửa:** `L08-12` sau S16 dồn định nghĩa, hình và ví dụ trên một trang, ví dụ nằm ở hai dòng cuối không có câu hỏi kiểm tra (rà lại mạch 2, TB4).
+- **Quyết định:** thêm (tách từ `L08-12`). Dữ liệu và câu chữ theo quyết định TB4 của điều phối viên; `data-note-topic-id` là `lec-08-topic-05`; ghi chú bài giảng giữ Ví dụ 08.8 (cùng số). Ghi chú diễn giả: phép tính mặt nạ gộp, hệ quả cho các quan sát gần cuối lượt, lỗi gộp cờ, nguồn Pardo và cộng sự (2018).
+- **Liên kết:** trước là `L08-12` (hai cờ, quy tắc mặt nạ); sau là `L08-M3T`. Mục tiêu hỗ trợ: mục tiêu 1 (phân biệt kết thúc với cắt ngắn).
+- **Mật độ:** 38 âm tiết (script 29 cộng 9 trong `.check`), 5 dòng chữ cộng bảng một hàng bốn cột (ngoại lệ ghi ở mục Ngoại lệ mật độ), 0 công thức hiển thị, 1 hộp câu hỏi, ghi chú diễn giả 101 âm tiết. Đáy nội dung 653 px.
 
 ### Bản trước đợt sửa 2026-10-22
 

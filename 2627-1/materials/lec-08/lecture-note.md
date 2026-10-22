@@ -58,7 +58,7 @@ Bảng gồm ký hiệu dùng xuyên suốt chương; ký hiệu dùng một l�
 
 Quy ước đọc. $R_{t+1}$ gắn với chuyển từ bước $t$ sang bước $t+1$. Khi tương tác với môi trường, mẫu chuyển viết theo thời gian $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$; sau khi lấy mini-batch, chỉ số $i$ không mang thứ tự thời gian nên mẫu viết $(O_i,A_i,R_i,O'_i,Z_i,U_i)$, không dùng $R_{i+1}$ hay $O_{i+1}$. Hai bộ đếm $t$ và $k_{\mathrm{opt}}$ tăng theo hai nhịp khác nhau: $t$ sau mỗi bước môi trường, $k_{\mathrm{opt}}$ sau mỗi lần cập nhật $\theta$. Kỳ vọng trên mini-batch lấy theo phép lấy mẫu đều từ $\mathcal D$ hiện tại.
 
-Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_{\mathrm{exp}}$ là $\varepsilon$ của Bài 06–07; chỉ số dưới tách nó khỏi $\epsilon_{\mathrm{opt}}$. $q_i$ là dự đoán của mạng trên mẫu $i$, khác giá trị thật $q_*$. $m_j$, $v_j$ là trung bình trượt của gradient, khác hàm giá trị $v_\pi$; $\rho$ là hệ số suy giảm của RMSprop, khác tỉ số lấy mẫu quan trọng $\rho_t$ của Bài 06–07. Bài 06–07 viết $m$ cho số hành động; ở đây ta viết $\lvert\mathcal A\rvert$. Tham số $\theta$ đóng vai của $w$ ở Bài 07, và $Q_\theta(o,a)$ thay $\hat q(s,a,w)$.
+Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_{\mathrm{exp}}$ là $\varepsilon$ của Bài 06–07; chỉ số dưới tách nó khỏi $\epsilon_{\mathrm{opt}}$. $q_i$ là dự đoán của mạng trên mẫu $i$, khác giá trị thật $q_*$. $m_j$, $v_j$ là trung bình trượt của gradient, khác hàm giá trị $v_\pi$; $\rho$ là hệ số suy giảm của RMSprop, khác tỉ số lấy mẫu quan trọng $\rho_t$ của Bài 06–07. Bài 06–07 viết $m$ cho số hành động; ở đây ta viết $\lvert\mathcal A\rvert$. Tham số $\theta$ đóng vai của $w$ ở Bài 07, và $Q_\theta(o,a)$ thay $\hat q(s,a,w)$. Ví dụ một tham số ở phần 2 dùng bước học $\alpha$ của Bài 07; từ phần 4, tốc độ học của bộ tối ưu viết $\eta$.
 
 Ứng với giáo trình *Học máy thống kê*: $q_*$ là $Q^*$, và $q_\pi$ là $Q^\pi$.
 
@@ -146,7 +146,7 @@ Bài giảng gốc (trang 9 và 11) còn nêu hai cận độ phức tạp mẫu
 **Vấn đề.** Q-learning dạng bảng giữ một ô cho mỗi cặp trạng thái–hành động, và một ô chỉ đổi khi chính cặp đó xuất hiện trong dữ liệu. Bảng có $\lvert\mathcal S\rvert\lvert\mathcal A\rvert$ ô, nên chỉ dùng được khi số trạng thái nhỏ và mỗi cặp được thăm đủ nhiều lần. Ví dụ sau đo hai điều kiện này trên một bài toán điều khiển đã gặp ở Bài 05–07.
 
 ::: example Ví dụ 08.1 (Lunar Lander rời rạc hóa thành bảng)
-**Dữ kiện.** Thực hành Bài 05 chia sáu biến liên tục của tàu đổ bộ thành $3\cdot4^5=3\,072$ ô và ghép với số chân đang chạm đất ($0$, $1$ hoặc $2$), được $9\,216$ ô trạng thái. Trên $2\,000$ lượt huấn luyện, $1\,896$ ô được ghé ít nhất một lần (notebook Lunar Lander của Bài 07, mục 5; ghi chú Bài 07, Ví dụ 07.1). Tàu có bốn hành động.
+**Dữ kiện.** Thực hành Bài 05 chia sáu biến liên tục của tàu đổ bộ thành $3\cdot4^5=3\,072$ ô và ghép với số chân đang chạm đất ($0$, $1$ hoặc $2$), được $9\,216$ ô trạng thái. Trên $2\,000$ lượt của một chính sách cố định, $1\,896$ ô được ghé ít nhất một lần (notebook Lunar Lander của Bài 07, mục 5; ghi chú Bài 07, Ví dụ 07.1). Tàu có bốn hành động.
 
 **Tính.** Tỉ lệ ô có mẫu là $1\,896/9\,216\approx0{,}206$; $9\,216-1\,896=7\,320$ ô chỉ giữ giá trị khởi tạo. Bảng giá trị hành động trên cùng lưới có $9\,216\cdot4=36\,864$ ô.
 
@@ -155,7 +155,7 @@ Bài giảng gốc (trang 9 và 11) còn nêu hai cận độ phức tạp mẫu
 
 Khi quan sát là ảnh, số quan sát khác nhau có thể gặp quá lớn để liệt kê, và gần như mọi quan sát mới là một ô chưa có mẫu. Bảng vì thế không dùng được, cả về bộ nhớ lẫn về dữ liệu.
 
-**Trực giác.** Thay bảng bằng một hàm có tham số dùng chung $\theta$, chẳng hạn một mạng nơ-ron $Q_\theta(o,a)$ nhận quan sát $o$. Hàm cho giá trị ở cả quan sát chưa gặp, và một cập nhật theo $\theta$ đổi giá trị ở nhiều quan sát cùng lúc. Đây là cơ chế tổng quát hóa của Bài 07 (mức lan của một cập nhật, Mệnh đề 07.2), với mạng thay cho hàm tuyến tính theo đặc trưng chọn trước.
+**Trực quan.** Thay bảng bằng một hàm có tham số dùng chung $\theta$, chẳng hạn một mạng nơ-ron $Q_\theta(o,a)$ nhận quan sát $o$. Hàm cho giá trị ở cả quan sát chưa gặp, và một cập nhật theo $\theta$ đổi giá trị ở nhiều quan sát cùng lúc. Đây là cơ chế tổng quát hóa của Bài 07 (mức lan của một cập nhật, Mệnh đề 07.2), với mạng thay cho hàm tuyến tính theo đặc trưng chọn trước.
 
 ![Bên trái: bảng minh họa 4 hàng, 5 cột, 4 trong 20 ô có mẫu (đánh dấu chấm), 16 ô chưa có mẫu; mỗi ô lưu độc lập. Bên phải: quan sát o vào mạng Q theta, mạng trả về Q theta của o với các hành động a1 đến a4; tham số theta dùng chung.](img/lec-08/table-vs-dqn.svg)
 
@@ -274,7 +274,7 @@ Trong Q-learning dạng bảng, cập nhật ô $(S_t,A_t)$ không đổi ô ở
 
 Hình vẽ hai giá trị của Ví dụ 08.5 trên một trục. Hình tròn là dự đoán $q$, hình vuông là đích $y$; cột trái trước bước cập nhật, cột phải sau bước. Hai mũi tên nét đứt cùng hướng lên: bước cập nhật kéo $q$ về phía $y$, đồng thời đẩy $y$ đi xa thêm.
 
-Lặp lại cập nhật trên cùng mẫu chuyển cho $\theta_{n+1}=\theta_n+0{,}5\,(1+0{,}9\,\theta_n-\theta_n)=0{,}95\,\theta_n+0{,}5$. Dãy này hội tụ về nghiệm của $\theta=1+0{,}9\,\theta$, tức $\theta=10$, vì $\theta_{n+1}-10=0{,}95\,(\theta_n-10)$; mỗi bước chỉ rút khoảng cách tới $10$ đi $5\%$. Với đích giữ cố định ở một giá trị $c$, cùng bước học cho $\theta_{n+1}-c=0{,}5\,(\theta_n-c)$, tức mỗi bước rút một nửa khoảng cách. Trong ví dụ một tham số, đích di động chỉ làm chậm quá trình học. Khi nhiều trạng thái dùng chung tham số, hệ số tương ứng có thể lớn hơn $1$: Mệnh đề 07.37 cho một ví dụ tuyến tính hai trạng thái mà tham số tăng không chặn. Bài giảng gốc (trang 31) tóm tắt hiện tượng: khi mạng thay đổi, mục tiêu cũng thay đổi, và điều này có thể dẫn tới dao động hoặc phân kỳ. Chúng ta cần một cách giữ đích cố định trong một số bước cập nhật.
+Lặp lại cập nhật trên cùng mẫu chuyển cho $\theta_{n+1}=\theta_n+0{,}5\,(1+0{,}9\,\theta_n-\theta_n)=0{,}95\,\theta_n+0{,}5$. Dãy này hội tụ về nghiệm của $\theta=1+0{,}9\,\theta$, tức $\theta=10$, vì $\theta_{n+1}-10=0{,}95\,(\theta_n-10)$; mỗi bước chỉ rút khoảng cách tới $10$ đi $5\%$. Với đích giữ cố định ở một giá trị $c$, cùng bước học cho $\theta_{n+1}-c=0{,}5\,(\theta_n-c)$: $\theta$ tiến về $c$, chưa phải về $10$. Trong ví dụ một tham số, đích di động không gây phân kỳ: dãy vẫn hội tụ về $10$. Khi nhiều trạng thái dùng chung tham số, hệ số tương ứng có thể lớn hơn $1$: Mệnh đề 07.37 cho một ví dụ tuyến tính hai trạng thái mà tham số tăng không chặn. Bài giảng gốc (trang 31) tóm tắt hiện tượng: khi mạng thay đổi, mục tiêu cũng thay đổi, và điều này có thể dẫn tới dao động hoặc phân kỳ. Muốn mỗi bước là hồi quy về một nhãn đứng yên, như học có giám sát, chúng ta cần tách tham số tạo đích khỏi tham số được cập nhật.
 
 ### Mạng mục tiêu
 
@@ -294,9 +294,9 @@ Theo định nghĩa, giữa hai lần đồng bộ $\theta^-$ là một hằng s
 
 Mỗi điều kiện có vai trò riêng. "Cùng kiến trúc" làm phép gán $\theta^-\leftarrow\theta$ có nghĩa: hai vector tham số có cùng số chiều và cùng cách đọc. Khởi tạo $\theta^-\leftarrow\theta$ làm các đích đầu tiên đến từ chính mạng đang học; bỏ điều kiện này, $C$ bước tối ưu đầu tiên hồi quy về các giá trị của một mạng khởi tạo khác, không liên quan tới $Q_\theta$. Chu kỳ $C$ quyết định nhịp thay đổi của đích. Với $C=1$, $\theta^-$ bằng $\theta$ ngay trước mỗi bước, và cập nhật trùng với cập nhật bán gradient của Ví dụ 08.5. Khi $C$ rất lớn, đích gần như không bao giờ được làm mới, nên $Q_\theta$ chỉ học được giá trị một bước tính từ mạng ban đầu.
 
-![Trục ngang là bộ đếm bước tối ưu k opt với các mốc 0, C, 2C, 3C. Hàng trên: tham số theta của mạng trực tuyến đổi sau mỗi bước tối ưu. Hàng dưới: tham số theta trừ của mạng mục tiêu là hàm bậc thang, nằm ngang giữa hai mốc và nhảy tại C và 2C, nơi mũi tên nét đứt ghi theta trừ gán bằng theta; dưới đoạn từ C tới 2C ghi giữ cố định C bước.](img/lec-08/target-network-timeline.svg)
+![Trục ngang là bộ đếm bước tối ưu k opt với các mốc 0, C, 2C, 3C. Đường gấp khúc có chấm nhỏ là tham số theta của mạng trực tuyến, đổi sau mỗi bước tối ưu. Đường bậc thang đậm là theta trừ của mạng mục tiêu: tại các mốc 0, C và 2C, đánh dấu bằng vòng tròn rỗng, nó nhận đúng giá trị của theta tại mốc đó rồi giữ nằm ngang trong C bước; chú giải ghi mốc đồng bộ, theta trừ gán bằng theta.](img/lec-08/target-network-timeline.svg)
 
-Hình đặt hai tham số trên cùng trục bộ đếm bước tối ưu $k_{\mathrm{opt}}$. Đường gấp khúc ở hàng trên là $\theta$, đổi sau mỗi bước tối ưu. Hàng dưới là $\theta^-$, nằm ngang trên mỗi đoạn dài $C$ bước và nhảy tại $C$ và $2C$, nơi mũi tên nét đứt ghi phép sao chép $\theta^-\leftarrow\theta$. Các giá trị trong hình chỉ minh họa hình dạng, không đến từ một lần chạy.
+Hình vẽ hai tham số trên cùng một trục giá trị, theo bộ đếm bước tối ưu $k_{\mathrm{opt}}$. Đường gấp khúc có chấm nhỏ là $\theta$, đổi sau mỗi bước tối ưu. Đường bậc thang đậm là $\theta^-$: tại các mốc $0$, $C$, $2C$ (vòng tròn rỗng), $\theta^-$ nhận đúng giá trị của $\theta$ tại mốc đó, rồi nằm ngang trong $C$ bước tiếp theo, trong khi $\theta$ tiếp tục đổi. Các giá trị trong hình chỉ minh họa hình dạng, không đến từ một lần chạy.
 
 ::: example Ví dụ 08.6 (Một tham số với mạng mục tiêu, $C=3$)
 **Dữ kiện.** Như Ví dụ 08.5: $Q_\theta(o,a)=\theta$, một mẫu chuyển có $R_{t+1}=1$, $O_{t+1}$ chưa kết thúc, $\gamma=0{,}9$, $\alpha=0{,}5$, $\theta_0=0$. Đích tính bằng mạng mục tiêu: $y=1+0{,}9\,\theta^-$; khởi tạo $\theta^-=\theta_0=0$; $C=3$.
@@ -306,13 +306,13 @@ Hình đặt hai tham số trên cùng trục bộ đếm bước tối ưu $k_{
 **Diễn giải.** Trong ba bước, đích đứng yên và sai số $y-\theta_k$ giảm một nửa mỗi bước: $1$, $0{,}5$, $0{,}25$, $0{,}125$. Đích chỉ đổi tại mốc đồng bộ, một lần, từ $1$ lên $1{,}7875$.
 :::
 
-Mạng mục tiêu không làm ví dụ này hội tụ nhanh hơn. Gọi $r=0{,}5^C$. Một chu kỳ $C$ bước đưa $\theta^-$ thành $(1+0{,}9\,\theta^-)(1-r)+\theta^-r$, nên $\theta^-_{\text{mới}}-10=(0{,}9+0{,}1\,r)\,(\theta^--10)$. Với $C=3$, khoảng cách tới $10$ nhân với $0{,}9125$ sau mỗi ba bước, trong khi không có mạng mục tiêu, ba bước nhân khoảng cách với $0{,}95^3\approx0{,}857$. Giữa hai lần đồng bộ, mỗi bước là hồi quy về nhãn cố định, nên vòng phản hồi giữa dự đoán và đích chỉ khép lại tại các mốc đồng bộ; mạng mục tiêu tác động ở điểm này. Phần 6 xét một ví dụ hai trạng thái dùng chung tham số, trong đó mạng mục tiêu làm chậm nhưng không ngăn được phân kỳ. Bài giảng gốc (trang 33) nêu mạng mục tiêu như cách làm mục tiêu thay đổi chậm hơn để quá trình tối ưu ổn định hơn; đó là tác dụng thực nghiệm, không phải bảo đảm hội tụ.
+Trong ví dụ một tham số, mạng mục tiêu không đưa $\theta$ tới $10$ nhanh hơn. Gọi $r=0{,}5^C$. Một chu kỳ $C$ bước đưa $\theta^-$ thành $(1+0{,}9\,\theta^-)(1-r)+\theta^-r$, nên $\theta^-_{\text{mới}}-10=(0{,}9+0{,}1\,r)\,(\theta^--10)$. Với $C=3$, khoảng cách tới $10$ nhân với $0{,}9125$ sau mỗi ba bước, trong khi không có mạng mục tiêu, ba bước nhân khoảng cách với $0{,}95^3\approx0{,}857$. Giữa hai lần đồng bộ, mỗi bước là hồi quy về nhãn cố định, nên vòng phản hồi giữa dự đoán và đích chỉ khép lại tại các mốc đồng bộ; đó là tác dụng của mạng mục tiêu; lợi ích ổn định với mạng lớn là kết quả thực nghiệm. Ở phần 6, chúng ta xét một ví dụ hai trạng thái dùng chung tham số, trong đó mạng mục tiêu làm chậm nhưng không ngăn được phân kỳ. Bài giảng gốc (trang 33) nêu mạng mục tiêu như cách làm mục tiêu thay đổi chậm hơn để quá trình tối ưu ổn định hơn; đó là tác dụng thực nghiệm, không phải bảo đảm hội tụ.
 
-**Trong thực hành.** Hai mạng là hai bản của cùng một lớp mạng; đồng bộ là sao chép toàn bộ tham số của mạng trực tuyến sang mạng mục tiêu, và mạng mục tiêu chỉ chạy lan truyền xuôi, không tính gradient. Bộ nhớ tham số vì vậy gấp đôi. Mnih và cộng sự (2015, Extended Data Table 1) dùng $C=10\,000$ lần cập nhật. Một số thuật toán dùng cập nhật mềm $\theta^-\leftarrow\tau\theta+(1-\tau)\theta^-$ với $\tau$ nhỏ sau mỗi bước, chẳng hạn $\tau=0{,}001$ trong DDPG (Lillicrap và cộng sự, 2016, "Continuous control with deep reinforcement learning", ICLR); chúng ta chỉ dùng sao chép cứng như DQN gốc. Điều kiện đồng bộ đếm bước tối ưu $k_{\mathrm{opt}}$, không đếm bước môi trường $t$; phần 4 ghép hai bộ đếm này vào thuật toán.
+**Trong thực hành.** Hai mạng là hai bản của cùng một lớp mạng; đồng bộ là sao chép toàn bộ tham số của mạng trực tuyến sang mạng mục tiêu, và mạng mục tiêu chỉ chạy lan truyền xuôi, không tính gradient. Bộ nhớ tham số vì vậy gấp đôi. Mnih và cộng sự (2015, Extended Data Table 1) dùng $C=10\,000$ lần cập nhật. Một số thuật toán dùng cập nhật mềm $\theta^-\leftarrow\tau\theta+(1-\tau)\theta^-$ với $\tau$ nhỏ sau mỗi bước, chẳng hạn $\tau=0{,}001$ trong DDPG (Lillicrap và cộng sự, 2016, "Continuous control with deep reinforcement learning", ICLR); chúng ta chỉ dùng sao chép cứng như DQN gốc. Điều kiện đồng bộ đếm bước tối ưu $k_{\mathrm{opt}}$, không đếm bước môi trường $t$; ở phần 4, hai bộ đếm này được ghép vào thuật toán.
 
 **Kiểm tra nhanh.** Với $C=1$, cập nhật dùng mạng mục tiêu trùng với cập nhật nào? Vì $\theta^-$ được gán bằng $\theta$ sau mỗi bước, trước bước kế tiếp hai tham số bằng nhau, nên cập nhật trùng với cập nhật bán gradient dùng chính $\theta$ trong đích, như Ví dụ 08.5.
 
-Phần 2 đã có mạng giá trị hành động và một bản sao giữ cố định để tính đích. Việc còn lại của phần này là viết đích thành nhãn hồi quy cho một mẫu chuyển, kể cả khi mẫu chuyển kết thúc lượt hoặc bị cắt ngắn.
+Đến đây chúng ta đã có mạng giá trị hành động và một bản sao giữ cố định để tính đích. Việc còn lại của phần này là viết đích thành nhãn hồi quy cho một mẫu chuyển, kể cả khi mẫu chuyển kết thúc lượt hoặc bị cắt ngắn.
 
 <!-- note-topic-id: lec-08-topic-03 -->
 ### Đích hồi quy
@@ -331,9 +331,9 @@ Dự đoán của mạng trực tuyến là $q_t=Q_\theta(O_t,A_t)$, và sai s�
 
 Đích gồm hai phần. $R_{t+1}$ là phần thưởng đã quan sát; $\gamma\max_{a'}Q_{\theta^-}(O_{t+1},a')$ là ước lượng của phần lợi tức còn lại, đọc trên vector $\mathbf q_{\theta^-}(O_{t+1})$ sau một lần tính của mạng mục tiêu. Mặt nạ $(1-Z_{t+1})$ bằng $0$ khi lượt kết thúc, nên khi đó $y_t=R_{t+1}$; đây đúng là quy ước $Q(s,\cdot)=0$ của dạng bảng, viết cho một hàm không có ô riêng cho trạng thái kết thúc. $q_t$ phụ thuộc $\theta$, còn $y_t$ chỉ phụ thuộc dữ liệu và $\theta^-$. Với $\theta^-$ cố định, $y_t$ là một số cố định gắn với mẫu chuyển, và $\delta_t>0$ nghĩa là dự đoán cần tăng.
 
-Các điều kiện trong định nghĩa có vai trò riêng. $Z_{t+1}$ chỉ ghi kết thúc của chính MDP; việc dừng thu thập vì một giới hạn bên ngoài được ghi bằng một cờ khác, xét ở cuối phần này. Bỏ mặt nạ, đích tại bước cuối lượt cộng thêm $\gamma\max_{a'}Q_{\theta^-}(O_{t+1},a')$, một giá trị không ứng với phần thưởng nào; mục kế tiếp tính sai lệch này bằng số. Điều kiện $\gamma<1$ giữ đích hữu hạn khi lượt không kết thúc. Dùng $Q_{\theta^-}$ thay cho $Q_\theta$ là điều làm $y_t$ đứng yên giữa hai lần đồng bộ (Định nghĩa 08.3). Cuối cùng, đích chỉ có nghĩa là mục tiêu Bellman khi $O_{t+1}$ đủ Markov (Nhận xét 08.2).
+Các điều kiện trong định nghĩa có vai trò riêng. $Z_{t+1}$ chỉ ghi kết thúc của chính MDP; việc dừng thu thập vì một giới hạn bên ngoài được ghi bằng một cờ khác, xét ở cuối phần này. Bỏ mặt nạ, đích tại bước cuối lượt cộng thêm $\gamma\max_{a'}Q_{\theta^-}(O_{t+1},a')$, một giá trị không ứng với phần thưởng nào; sai lệch này được tính bằng số ở mục kế tiếp. Điều kiện $\gamma<1$ cùng phần thưởng bị chặn giữ $q_*$ hữu hạn khi lượt không kết thúc. Dùng $Q_{\theta^-}$ thay cho $Q_\theta$ là điều làm $y_t$ đứng yên giữa hai lần đồng bộ (Định nghĩa 08.3). Cuối cùng, đích chỉ có nghĩa là mục tiêu Bellman khi $O_{t+1}$ đủ Markov (Nhận xét 08.2).
 
-Đích hồi quy nối DQN với hồi quy có giám sát. Với $\theta^-$ cố định và một tập mẫu chuyển $\{(O_i,A_i,R_i,O'_i,Z_i)\}_{i=1}^b$, bài toán cực tiểu $\tfrac12\sum_i\bigl(y_i-Q_\theta(O_i,A_i)\bigr)^2$ theo $\theta$ là hồi quy bình phương tối thiểu với đầu vào $(O_i,A_i)$ và nhãn $y_i$. Bài toán này khác hồi quy có giám sát ở ba điểm: nhãn là ước lượng tạo từ một bản sao của chính mô hình, không phải giá trị đo được; nhãn đổi tại mỗi mốc đồng bộ; và dữ liệu do chính sách hành vi sinh ra, nên phân phối của nó đổi theo $\theta$. Với Q-learning dạng bảng và $C=1$, $\tfrac12(y_t-Q(S_t,A_t))^2$ có đạo hàm theo ô $Q(S_t,A_t)$ bằng $-\delta_t$, nên quy tắc $Q\leftarrow Q+\alpha\delta_t$ là một bước hạ gradient trên chính ô đó.
+Đích hồi quy nối DQN với hồi quy có giám sát. Với $\theta^-$ cố định và một tập mẫu chuyển $\{(O_i,A_i,R_i,O'_i,Z_i)\}_{i=1}^b$, bài toán cực tiểu $\tfrac12\sum_i\bigl(y_i-Q_\theta(O_i,A_i)\bigr)^2$ theo $\theta$ là hồi quy bình phương tối thiểu với đầu vào $(O_i,A_i)$ và nhãn $y_i$. Bài toán này khác hồi quy có giám sát ở ba điểm: nhãn là ước lượng tạo từ một bản sao của chính mô hình, không phải giá trị đo được; nhãn đổi tại mỗi mốc đồng bộ; và dữ liệu do chính sách hành vi sinh ra, nên phân phối của nó đổi theo $\theta$. Với Q-learning dạng bảng và $C=1$, $\tfrac12(y_t-Q(S_t,A_t))^2$, khi coi $y_t$ là hằng, có đạo hàm theo ô $Q(S_t,A_t)$ bằng $-\delta_t$, nên quy tắc $Q\leftarrow Q+\alpha\delta_t$ là một bước hạ gradient trên chính ô đó.
 
 ::: remark Nhận xét 08.5 (Hàm hồi quy tốt nhất cho đích cố định)
 Giả sử $O_t$ đủ Markov, $\theta^-$ cố định, các cặp $(O_t,A_t)$ được lấy theo một phân phối cố định và $\mathbb E[y_t^2]<\infty$. Trong mọi hàm $f$ của $(o,a)$, hàm làm nhỏ nhất kỳ vọng $\mathbb E\bigl[(y_t-f(O_t,A_t))^2\bigr]$ là kỳ vọng có điều kiện
@@ -346,9 +346,9 @@ $$
 tức $(\mathcal TQ_{\theta^-})(o,a)$ với $\mathcal T$ là toán tử Bellman tối ưu viết theo quan sát; đẳng thức đúng hầu chắc chắn theo phân phối của $(O_t,A_t)$. Một lượt hồi quy giữa hai lần đồng bộ vì vậy xấp xỉ một bước lặp giá trị $Q_{\theta^-}\mapsto\mathcal T Q_{\theta^-}$, trong giới hạn của lớp hàm và của số bước tối ưu. Nhận xét không nói gì về hội tụ của chuỗi các bước như vậy: mỗi bước có sai số xấp xỉ và sai số tối ưu, và phân phối dữ liệu đổi theo $\theta$.
 :::
 
-**Trong thực hành.** Đích được tính cho cả mini-batch bằng một lần tính xuôi của mạng mục tiêu trên các quan sát kế tiếp, cho mảng kích thước $[b,\lvert\mathcal A\rvert]$, rồi lấy cực đại theo chiều hành động để được một giá trị cho mỗi mẫu. Cờ $Z_i$ được lưu cùng mẫu chuyển và đổi sang kiểu số khi tính $1-Z_i$. Đích không được truyền gradient về $\theta$; phần 4 viết điều này thành phép dừng gradient trong hàm mất mát.
+**Trong thực hành.** Đích được tính cho cả mini-batch bằng một lần tính xuôi của mạng mục tiêu trên các quan sát kế tiếp, cho mảng kích thước $[b,\lvert\mathcal A\rvert]$, rồi lấy cực đại theo chiều hành động để được một giá trị cho mỗi mẫu. Cờ $Z_i$ được lưu cùng mẫu chuyển và đổi sang kiểu số khi tính $1-Z_i$. Đích không được truyền gradient về $\theta$; ở phần 4, điều này được viết thành phép dừng gradient trong hàm mất mát.
 
-Chúng ta đã có nhãn cho mỗi mẫu chuyển. Ví dụ 08.7 dưới đây tính đích trên một mẫu chuyển kết thúc, có và không có mặt nạ $(1-Z)$.
+Chúng ta đã có nhãn cho mỗi mẫu chuyển. Ở mục kế tiếp, chúng ta tính đích trên một mẫu chuyển kết thúc, có và không có mặt nạ $(1-Z)$.
 
 <!-- note-topic-id: lec-08-topic-04 -->
 ### Ví dụ: đích tại mẫu chuyển kết thúc
@@ -373,7 +373,7 @@ Nếu cài đặt bỏ mặt nạ, tức coi $Z_{t+1}=0$, thì $y_t=-2+0{,}9\cdo
 
 Sau bước kết thúc không còn phần thưởng nào, nên giá trị đúng của phần lợi tức còn lại là $0$. Dạng bảng ghi điều này bằng quy ước $Q(s,\cdot)=0$ tại trạng thái kết thúc. Mạng không có ô riêng như vậy: $\max_{a'}Q_{\theta^-}(O_{t+1},a')$ tại quan sát cuối lượt là một số do tham số quyết định, có thể lớn tùy ý, và nó không ứng với phần thưởng nào. Mặt nạ $(1-Z_{t+1})$ thay cho quy ước của dạng bảng.
 
-Lỗi bỏ mặt nạ không dừng ở một mẫu chuyển. Mẫu chuyển trước đó trong lượt có đích chứa $\max_{a'}Q_{\theta^-}$ tại $O_t$, tức chứa chính dự đoán vừa bị kéo lên; qua các lần đồng bộ, giá trị tùy ý ở cuối lượt lan ngược về các mẫu chuyển trước. Một lỗi cùng loại là lấy mặt nạ từ một cờ gộp cả kết thúc lẫn dừng vì giới hạn bên ngoài; mục cuối của phần này tách hai trường hợp.
+Lỗi bỏ mặt nạ không dừng ở một mẫu chuyển. Mẫu chuyển trước đó trong lượt có đích chứa $\max_{a'}Q_{\theta^-}$ tại $O_t$, tức chứa chính dự đoán vừa bị kéo lên; qua các lần đồng bộ, giá trị tùy ý ở cuối lượt lan ngược về các mẫu chuyển trước. Một lỗi cùng loại là lấy mặt nạ từ một cờ gộp cả kết thúc lẫn dừng vì giới hạn bên ngoài; hai trường hợp được tách ở mục cuối của phần này.
 
 **Trong thực hành.** Cờ $Z_{t+1}$ phải được lưu cùng mẫu chuyển ngay khi thu thập, vì sau khi lượt kết thúc, môi trường thường được đặt lại và quan sát kế tiếp thuộc lượt mới. Một cách kiểm tra cài đặt là tính đích của một mẫu kết thúc bằng tay như Ví dụ 08.7 và so với giá trị chương trình trả về.
 
@@ -414,16 +414,16 @@ Cách xử lý trên dựa trên một giả thiết: giới hạn số bước 
 
 **Trong thực hành.** Thư viện môi trường thường trả về hai cờ riêng cho kết thúc và cắt ngắn; $Z$ lấy từ cờ kết thúc, $U$ từ cờ cắt ngắn. Một biến "xong" tính bằng phép hoặc của hai cờ chỉ dùng để quyết định việc đặt lại môi trường, không dùng làm mặt nạ.
 
-Phần 2 đã cho ba kết quả. Mạng giá trị hành động trả về $\lvert\mathcal A\rvert$ giá trị sau một lần tính (Định nghĩa 08.1). Mạng mục tiêu giữ $\theta^-$ cố định trong $C$ bước tối ưu, nên mỗi mẫu chuyển có một nhãn đứng yên giữa hai lần đồng bộ (Định nghĩa 08.3). Đích hồi quy $y_t=R_{t+1}+\gamma(1-Z_{t+1})\max_{a'}Q_{\theta^-}(O_{t+1},a')$ chỉ dùng cờ kết thúc làm mặt nạ, còn cờ cắt ngắn chỉ quyết định việc đặt lại môi trường (Định nghĩa 08.4, 08.6). Các kết quả này nói cách tính nhãn cho một mẫu chuyển, nhưng chưa nói mẫu chuyển nào được dùng để cập nhật. Nếu cập nhật theo đúng thứ tự thu thập, các mẫu liền nhau gần giống nhau và cùng lệch về đoạn quỹ đạo gần nhất. Phần 3 lưu các mẫu chuyển sáu thành phần vào một bộ nhớ và lấy mẫu đều từ đó để giảm tương quan này.
+Chúng ta đã có ba kết quả. Mạng giá trị hành động trả về $\lvert\mathcal A\rvert$ giá trị sau một lần tính (Định nghĩa 08.1). Mạng mục tiêu giữ $\theta^-$ cố định trong $C$ bước tối ưu, nên mỗi mẫu chuyển có một nhãn đứng yên giữa hai lần đồng bộ (Định nghĩa 08.3). Đích hồi quy $y_t=R_{t+1}+\gamma(1-Z_{t+1})\max_{a'}Q_{\theta^-}(O_{t+1},a')$ chỉ dùng cờ kết thúc làm mặt nạ, còn cờ cắt ngắn chỉ quyết định việc đặt lại môi trường (Định nghĩa 08.4, 08.6). Các kết quả này nói cách tính nhãn cho một mẫu chuyển, nhưng chưa nói mẫu chuyển nào được dùng để cập nhật. Nếu cập nhật theo đúng thứ tự thu thập, các mẫu liền nhau gần giống nhau và cùng lệch về đoạn quỹ đạo gần nhất. Ở phần 3, chúng ta lưu các mẫu chuyển sáu thành phần vào một bộ nhớ và lấy mẫu đều từ đó để giảm tương quan này.
 
 ## 3. Bộ nhớ phát lại
 
 <!-- note-topic-id: lec-08-topic-18 -->
 ### Tương quan giữa các mẫu chuyển liên tiếp
 
-Phần 2 cho mỗi mẫu chuyển một nhãn hồi quy. Bước cập nhật $\theta$ lấy trung bình gradient trên một mini-batch $b$ mẫu, như hạ gradient ngẫu nhiên (stochastic gradient descent, SGD) trong học có giám sát. Lập luận quen thuộc cho SGD dùng giả thiết các mẫu trong mini-batch độc lập và cùng phân phối (i.i.d.): khi đó trung bình của $b$ gradient mẫu có phương sai bằng $1/b$ phương sai của một gradient mẫu. Nếu tác tử cập nhật ngay trên các mẫu chuyển vừa thu thập theo thứ tự thời gian, giả thiết này không còn đúng.
+Đến đây mỗi mẫu chuyển đã có một nhãn hồi quy. Bước cập nhật $\theta$ lấy trung bình gradient trên một mini-batch $b$ mẫu, như hạ gradient ngẫu nhiên (stochastic gradient descent, SGD) trong học có giám sát. Lập luận quen thuộc cho SGD dùng giả thiết các mẫu trong mini-batch độc lập và cùng phân phối (i.i.d.): khi đó trung bình của $b$ gradient mẫu có phương sai bằng $1/b$ phương sai của một gradient mẫu. Nếu tác tử cập nhật ngay trên các mẫu chuyển vừa thu thập theo thứ tự thời gian, giả thiết này không còn đúng.
 
-**Trực giác.** Các mẫu chuyển liền nhau trên một quỹ đạo đi qua những quan sát gần nhau, và cùng do một phiên bản tham số $\theta$ chọn hành động. Gradient của chúng vì vậy gần giống nhau: bốn mẫu liền nhau mang ít thông tin mới hơn bốn mẫu ở bốn thời điểm xa nhau. Bài giảng gốc (trang 30) nêu ba ý: tối ưu mạng nơ-ron thường giả sử mini-batch gần i.i.d.; mẫu tương quan có thể làm lệch cập nhật và tăng phương sai; mạng có thể quá khớp quỹ đạo gần đây và quên các vùng trạng thái cũ hơn.
+**Trực quan.** Các mẫu chuyển liền nhau trên một quỹ đạo đi qua những quan sát gần nhau, và cùng do một phiên bản tham số $\theta$ chọn hành động. Gradient của chúng vì vậy gần giống nhau: bốn mẫu liền nhau mang ít thông tin mới hơn bốn mẫu ở bốn thời điểm xa nhau. Bài giảng gốc (trang 30) nêu ba ý: tối ưu mạng nơ-ron thường giả sử mini-batch gần i.i.d.; mẫu tương quan có thể làm lệch cập nhật và tăng phương sai; mạng có thể quá khớp quỹ đạo gần đây và quên các vùng trạng thái cũ hơn.
 
 ::: example Ví dụ 08.9 (Cỡ mẫu hiệu dụng của bốn mẫu liền nhau)
 **Dữ kiện.** Xét một tọa độ của gradient mẫu, gọi là $g_1,g_2,g_3,g_4$ cho bốn mẫu chuyển liền nhau. Giả sử mỗi $g_k$ có phương sai $\sigma^2$, và tương quan giữa hai mẫu cách nhau $k$ bước là $0{,}9^k$ (giả thiết minh họa).
@@ -449,7 +449,7 @@ Tương quan không nhất thiết làm gradient trung bình bị chệch. Với
 
 **Trong thực hành.** Cỡ mẫu hiệu dụng phụ thuộc mức tương quan, và mức này đổi theo môi trường và chính sách; Ví dụ 08.9 chỉ minh họa cơ chế. Một dấu hiệu dễ quan sát khi cập nhật trên mẫu liền nhau là giá trị hàm mất mát dao động theo từng đoạn của lượt.
 
-Chúng ta cần một cách chọn mẫu cho mini-batch không phụ thuộc thứ tự thu thập. Mục tiếp theo lưu các mẫu chuyển vào một bộ nhớ và lấy mẫu đều từ đó.
+Chúng ta cần một cách chọn mẫu cho mini-batch không phụ thuộc thứ tự thu thập. Ở mục tiếp theo, chúng ta lưu các mẫu chuyển vào một bộ nhớ và lấy mẫu đều từ đó.
 
 <!-- note-topic-id: lec-08-topic-06 -->
 ### Bộ nhớ phát lại (experience replay)
@@ -459,7 +459,7 @@ Chúng ta cần một cách chọn mẫu cho mini-batch không phụ thuộc th�
 **Vấn đề.** Học từ các chuyển tiếp liền nhau theo thứ tự thời gian khiến mini-batch
 chứa thông tin trùng lặp và lệch theo quỹ đạo gần nhất.
 
-**Trực giác.** Thay vì học từ chuỗi liên tiếp, DQN lưu nhiều chuyển tiếp vào bộ
+**Trực quan.** Thay vì học từ chuỗi liên tiếp, DQN lưu nhiều chuyển tiếp vào bộ
 đệm $\mathcal D$ và huấn luyện trên các bộ sáu thành phần được lấy ngẫu nhiên.
 
 **Ví dụ.** Bộ đệm vòng dung lượng $N\in\mathbb N_+$; mini-batch có $b\in\mathbb N_+$
@@ -511,7 +511,7 @@ giảm tương quan ngắn hạn và tăng tái sử dụng.
 **Vấn đề.** Trong batch, mạng xuất giá trị cho *mọi* hành động, nhưng loss chỉ cần
 giá trị của *hành động đã lưu*; đồng thời gradient không được chảy vào đường tạo đích.
 
-**Trực giác.** Hai đường tính tách bạch:
+**Trực quan.** Hai đường tính tách bạch:
 
 - *Đường dự đoán*: $q_i = Q_\theta(O_i,A_i)$, phụ thuộc $\theta$, nhận gradient.
 - *Đường tạo đích*: dùng $Q_{\theta^-}(O'_i,\cdot)$, $\theta^-$ cố định giữa hai
@@ -542,7 +542,7 @@ vòng phản hồi di động trở lại.
 
 **Vấn đề.** Cần viết loss và gradient với hệ số đúng để kiểm tra dấu cập nhật.
 
-**Trực giác.** MSE trung bình trên batch; gradient theo từng $q_i$ tỉ lệ với sai
+**Trực quan.** MSE trung bình trên batch; gradient theo từng $q_i$ tỉ lệ với sai
 số $q_i - y_i$.
 
 **Ví dụ.** Với batch $B$:
@@ -574,7 +574,7 @@ $\tfrac{2}{b}(q_i - y_i)$; với $b=2$, hệ số hiệu dụng là $(q_i-y_i)$.
 **Vấn đề.** Tương tác và tối ưu xen kẽ nhau với các nhịp khác nhau; cần tách rõ
 bước môi trường $t$ khỏi bước tối ưu $k_{\mathrm{opt}}$ để giả mã không mơ hồ.
 
-**Trực giác.** Tương tác tạo chuyển tiếp; tối ưu lấy chuyển tiếp đã lưu. Ba siêu
+**Trực quan.** Tương tác tạo chuyển tiếp; tối ưu lấy chuyển tiếp đã lưu. Ba siêu
 tham số nhịp: $N_{\mathrm{start}}$ (số mẫu làm nóng replay trước khi tối ưu),
 $F$ (số bước môi trường giữa hai lần tối ưu), $C$ (chu kỳ đồng bộ mạng mục tiêu,
 đếm theo bước tối ưu).
@@ -616,7 +616,7 @@ khám phá với return đánh giá. Dùng $\gamma<1$ cho nhiệm vụ tiếp di
 **Vấn đề.** Lỗi cài đặt DQN thường là lỗi kích thước và kiểu tensor, không phải lỗi
 toán.
 
-**Trực giác.** Mọi tensor trong loss phải khớp hợp đồng: batch quan sát đi qua hai
+**Trực quan.** Mọi tensor trong loss phải khớp hợp đồng: batch quan sát đi qua hai
 mạng, gather và max tạo hai vector cùng kích thước $[b]$.
 
 **Ví dụ — hợp đồng cho batch Atari:**
@@ -645,7 +645,7 @@ tensor, không phải đặc tả tái lập kết quả.
 **Vấn đề.** Nếu $\theta^-$ đổi mỗi bước, đích di động như khi chỉ có một mạng; nếu
 không bao giờ đổi, đích lỗi thời. Cần một nhịp đồng bộ rõ ràng.
 
-**Trực giác.** Giữ $\theta^-$ cố định trong $C$ bước tối ưu, rồi sao chép mạng
+**Trực quan.** Giữ $\theta^-$ cố định trong $C$ bước tối ưu, rồi sao chép mạng
 online sau bước tối ưu:
 
 $$k_{\mathrm{opt}}\leftarrow k_{\mathrm{opt}}+1,\qquad

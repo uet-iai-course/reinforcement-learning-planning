@@ -428,3 +428,39 @@ Kết quả rà: 0 chặn bàn giao, 0 nghiêm trọng, 5 trung bình, 9 nhẹ; 
 | S17 | `L08-M3T` | chấp nhận; chấp nhận mã chủ đề `lec-08-topic-18` và bổ sung ánh xạ `L08-07b`, `L08-07c` trong outline | diff; `check.py` |
 - Bước S18 (`L08-28`, biên tập viên): tiêu đề "Tương quan giữa các mẫu chuyển liên tiếp"; "Nhu cầu:" $b$ mẫu gần độc lập để gradient mini-batch giảm phương sai; hình mới `correlated-minibatch.svg` (bốn mẫu liên tiếp, hình vuông đặc, so với bốn mẫu rải, tam giác đặc); "Ví dụ." bốn gradient mẫu, phương sai $\sigma^2$, tương quan $0{,}9^k$ (giả thiết minh họa): $\operatorname{Var}\bar g\approx0{,}881\,\sigma^2$ so với $0{,}25\,\sigma^2$, cỡ mẫu hiệu dụng $\approx1{,}1$; dòng gradient dao động theo đoạn quỹ đạo gần nhất. 44 âm tiết (trước 64), 4 dòng, đáy 656 px. Ghi chú diễn giả: phép tính phương sai, giả thiết minh họa, tương quan không nhất thiết làm chệch, ý quá khớp/quên của nguồn tr. 30. Ghi chú bài giảng: mục topic-18 viết lại (nhu cầu nối SGD và giả thiết i.i.d., trực giác, Ví dụ 08.9, hình và đoạn đọc hình, không i.i.d. ngay cả khi lấy rải, "Trong thực hành.", đoạn nối sang bộ nhớ). `no-ai-slop` Edit, tự kiểm theo `eval.md`: đạt. Chờ điều phối viên duyệt.
 | S18 | `L08-28`, `correlated-minibatch.svg` (mới) | chấp nhận; mô hình tương quan $0{,}9^k$ là dữ liệu của ví dụ, ghi rõ là giả thiết minh họa trong ghi chú và note | diff; tính lại $14{,}098/16\approx0{,}881$; `check.py` |
+
+### Rà lại mạch 2 (bước R2)
+
+| vai | loại tác tử | mô hình | mức suy luận | ghi tệp |
+|---|---|---|---|---|
+| Rà lại mạch 2 (toán, mạch, mật độ, `no-ai-slop` Detect) | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Biên tập R2 | Agent `general-purpose` (biên tập viên của đợt sửa) | `claude-opus-5-5` | high | có |
+
+Kết quả rà: 0 chặn bàn giao, 0 nghiêm trọng, 5 trung bình, 16 nhẹ; điều phối viên chấp nhận toàn bộ (tệp `recheck/R2-decisions.md` trong scratchpad phiên). Bảng dưới ghi trạng thái sau bước R2.
+
+| mức độ | trang chiếu | vấn đề | đề xuất sửa | trạng thái | quyết định |
+|---|---|---|---|---|---|
+| trung bình (TB1) | `L08-07b`, ghi chú `L08-07c`, ghi chú bài giảng | Ví dụ một tham số ngụ ý đích đứng yên "tốt hơn"; thực tế mạng mục tiêu không đưa $\theta$ tới $10$ nhanh hơn | Nói trung thực tốc độ ($0{,}9125$ so với $0{,}95^3\approx0{,}857$); "Diễn giải:" trung tính; câu nhu cầu "tách tham số tạo đích khỏi tham số được cập nhật" | đã sửa ở R2 (cả câu "đích di động chỉ làm chậm" trong ghi chú bài giảng) | chấp nhận |
+| trung bình (TB2) | `L08-07`, `L08-32` | Dòng "Giả thiết:" Markov đặt ở `L08-07` trước khi có ví dụ; `L08-32` định nghĩa lại | Bỏ khỏi `L08-07`; `L08-32` dùng câu "Giả thiết:" đầy đủ | đã sửa ở R2 | chấp nhận |
+| trung bình (TB3) | `L08-07b`, `L08-07`, `L08-08` | "Đích" dùng ở `L08-07b` trước cụm "còn gọi là mục tiêu cập nhật" ở `L08-08`; dễ lẫn với "chính sách đích" | Cụm "còn gọi là" ở lần dùng đầu (`L08-07b`); bỏ ở `L08-08`; ghi chú `L08-08` phân biệt với chính sách đích | đã sửa ở R2 (bỏ "Bài 06" trong ngoặc trên mặt trang `L08-07b` để không xuống dòng) | chấp nhận |
+| trung bình (TB4) | `L08-12` | Một trang chứa định nghĩa, hình và ví dụ; ví dụ cắt ngắn không có câu hỏi kiểm tra | Tách `L08-12` (Nhu cầu, Ký hiệu, hình, quy tắc mặt nạ) và trang mới `L08-12b` (ví dụ, Câu hỏi, Lời giải, Diễn giải) | đã sửa ở R2 (dòng "Nhu cầu:" rút "cho phép", "khác nhau" để ≤ 20 âm tiết; bộ sáu gộp vào dòng "Ký hiệu:") | chấp nhận |
+| trung bình (TB5) | `L08-08` | Dòng "Ký hiệu:" $Z$ không nêu nhu cầu; dòng cuối dài | "Nhu cầu:" mạng không có ô $Q(s,\cdot)=0$; cờ $Z_{t+1}$; dòng cuối rút gọn | đã sửa ở R2 (tách thành hai dòng để mỗi dòng ≤ 20 âm tiết) | chấp nhận |
+| nhẹ (1) | `L08-03` và các trang khác | Nhãn "Trực giác." không có trong danh sách nhãn | "Trực quan." | đã sửa ở R2 (deck và ghi chú bài giảng) | chấp nhận |
+| nhẹ (2) | `L08-03` | Ví dụ thiếu nguồn bài và số hành động | "Lunar Lander rời rạc hóa (Bài 07)"; "Bảng $Q$ với $4$ hành động" | đã sửa ở R2 ("sau $2\,000$ lượt" chuyển vào ghi chú diễn giả để dòng không xuống dòng) | chấp nhận |
+| nhẹ (3) | `L08-31` | Ví dụ thiếu số cụ thể | $H=W=84$, $28\,224$ số; $4$ đến $18$ hành động; nguồn trong ghi chú | đã sửa ở R2 (hình giữ $4\times H\times W$) | chấp nhận |
+| nhẹ (4) | `L08-20` | Ký hiệu kích thước | Dùng $[b,4,H,W]$ | ghi nhớ trong storyboard (hàng `L08-20`); làm ở bước `L08-20` | chấp nhận |
+| nhẹ (5) | `L08-32` | Định nghĩa Markov không gắn nhãn "Giả thiết:" | Gộp vào TB2 | đã sửa ở R2 | chấp nhận |
+| nhẹ (6) | `frame-stack-markov.svg` | Nhãn $t-3$, $t-1$ chạm vòng tròn | Dời nhãn | đã sửa ở R2 (nhãn đặt phía trên vòng tròn) | chấp nhận |
+| nhẹ (7) | `target-network-timeline.svg` | Đoạn $\theta^-$ không bằng $\theta$ tại mốc đồng bộ | Vẽ $\theta^-$ bằng giá trị $\theta$ tại $0$, $C$, $2C$ | đã sửa ở R2 (vẽ lại trên một trục giá trị; chú giải vòng tròn rỗng; alt và đoạn đọc hình trong ghi chú bài giảng cập nhật; `L08-16` dùng cùng hình, vẫn hiển thị đúng) | chấp nhận |
+| nhẹ (8) | `L08-07c` | $C$ chưa có miền; thiếu câu về $C=1$ | "($C\in\mathbb N_+$)"; ghi chú thêm $C=1$ | đã sửa ở R2 | chấp nhận |
+| nhẹ (9) | `L08-07b`, bảng ký hiệu ghi chú bài giảng | Hai dòng tính có thể gộp; $\alpha$ và $\eta$ | Gộp dòng; câu $\alpha$/$\eta$ | câu $\alpha$/$\eta$ đã thêm; gộp dòng thử rồi bỏ vì cột hẹp làm ngắt giữa công thức (đáy vẫn 698 px) | chấp nhận một phần |
+| nhẹ (10) | `L08-12` | Ví dụ cắt ngắn | Xử lý trong TB4 | đã sửa ở R2 | chấp nhận |
+| nhẹ (11) | ghi chú `L08-08` | "$y_t$ là ước lượng của $q_*$" không chính xác | Mẫu có kỳ vọng $(\mathcal TQ_{\theta^-})(O_t,A_t)$; $q_t$ khác $q_*$ | đã sửa ở R2 | chấp nhận |
+| nhẹ (12) | ghi chú bài giảng, Định nghĩa 08.4 | Vai của $\gamma<1$ | "cùng phần thưởng bị chặn giữ $q_*$ hữu hạn" | đã sửa ở R2 | chấp nhận |
+| nhẹ (13) | ghi chú bài giảng, đoạn hồi quy | Đạo hàm chưa nêu $y_t$ coi là hằng | "khi coi $y_t$ là hằng" | đã sửa ở R2 | chấp nhận |
+| nhẹ (14) | ghi chú `L08-07` | Thiếu xác suất $\epsilon_{\mathrm{exp}}$-tham lam | $0{,}925$, $0{,}025$ | đã sửa ở R2 | chấp nhận |
+| nhẹ (15) | ghi chú bài giảng, Ví dụ 08.1 | "lượt huấn luyện" sai bản chất dữ liệu | "lượt của một chính sách cố định" | đã sửa ở R2 (cả ghi chú diễn giả `L08-03`) | chấp nhận |
+| nhẹ (16) | ghi chú bài giảng, ghi chú `L08-M2T`, `L08-M3T` | "Phần N" làm chủ ngữ | Viết lại với "chúng ta" hoặc bị động | đã sửa ở R2 (thêm "Mục tiếp theo …", "mục kế tiếp tính …", "Ví dụ 08.7 dưới đây tính …"); ghi chú `L08-02b` (mạch 1) còn "Phần 2 thay bảng…", ngoài phạm vi R2 | chấp nhận |
+
+- Bước R2 (biên tập viên): áp dụng TB1–TB5 và nhẹ 1–16; trang mới `L08-12b` (topic-05; `outline.md` cập nhật ánh xạ). Hai hình vẽ lại hoặc sửa: `target-network-timeline.svg` (một trục giá trị, $\theta^-$ bằng $\theta$ tại mốc đồng bộ), `frame-stack-markov.svg` (nhãn thời điểm). Nhẹ 9 chấp nhận một phần (lý do ở bảng). Số đo trước/sau trong `storyboard.md`, mục "Rà lại mạch 2 (bước R2)"; ngoại lệ `L08-12b` và dòng "Giả thiết:" của `L08-32` ghi ở mục "Ngoại lệ mật độ". `check.py` mạch 2 và `L08-M3T` ở 1600×900, 390×844: không tràn, không lỗi; viewer 826 KaTeX, 0 lỗi. `no-ai-slop` Edit, tự kiểm theo `eval.md`: đạt. Chờ điều phối viên duyệt.
+| R2 | mạch 2 (rà lại), `L08-12b` (mới) | chấp nhận; câu duyệt bị rút vài chữ để vừa dòng: chấp nhận; nút điều hướng trên đè tiêu đề dài là hành vi chung của Reveal, không sửa; ghi chú `L08-02b` ("Phần 2 …" làm chủ ngữ) sửa ở lượt rà cuối | diff; `check.py`; xem ảnh `L08-07c`, `L08-12b` |

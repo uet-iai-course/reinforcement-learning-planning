@@ -19,8 +19,8 @@
 <circle cx="820" cy="140" r="18" fill="#FFFFFF" stroke="#B15A2B" stroke-width="3" stroke-dasharray="6 5"/>
 <circle cx="900" cy="110" r="18" fill="#B15A2B"/>
 <line x1="921" y1="102" x2="1000" y2="72" stroke="#B15A2B" stroke-width="5" marker-end="url(#arr)"/>
-<text x="680" y="240" font-size="27" text-anchor="middle"><tspan font-style="italic">t</tspan>−3</text>
-<text x="760" y="210" font-size="27" text-anchor="middle"><tspan font-style="italic">t</tspan>−2</text>
-<text x="840" y="180" font-size="27" text-anchor="middle"><tspan font-style="italic">t</tspan>−1</text>
-<text x="918" y="150" font-size="27" text-anchor="middle"><tspan font-style="italic">t</tspan></text>
+<text x="652" y="172" font-size="27" text-anchor="middle"><tspan font-style="italic">t</tspan>−3</text>
+<text x="732" y="142" font-size="27" text-anchor="middle"><tspan font-style="italic">t</tspan>−2</text>
+<text x="812" y="112" font-size="27" text-anchor="middle"><tspan font-style="italic">t</tspan>−1</text>
+<text x="892" y="80" font-size="27" text-anchor="middle"><tspan font-style="italic">t</tspan></text>
 </svg>
