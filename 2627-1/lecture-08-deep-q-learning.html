@@ -257,23 +257,23 @@
 <p class="strand-lead">Muốn cập nhật $\theta$ từ mini&#8209;batch, phải lấy gradient chỉ qua dự đoán của mạng trực tuyến.</p>
 <p class="strand-keys">Phép chọn theo hành động · Dừng gradient · Sai số bình phương trung bình · Hai bộ đếm · Kích thước tensor</p>
 </div>
-<aside class="notes"><p>Đến đây mỗi mẫu chuyển đã có đích $y_i$, và mỗi bước tối ưu có một mini-batch $b$ mẫu rút đều từ bộ nhớ phát lại; còn thiếu bước cập nhật $\theta$. Hàm mất mát là sai số bình phương trung bình trên mini-batch, chỉ dùng giá trị của hành động đã lưu, với gradient bị chặn qua đích. Thu thập, lưu, tối ưu và đồng bộ được ghép thành thuật toán với hai bộ đếm $t$ và $k_{\mathrm{opt}}$. Ở phần 5, bộ tối ưu biến gradient của hàm mất mát thành bước tham số.</p></aside>
+<aside class="notes"><p>Đến đây mỗi mẫu chuyển đã có đích $y_i$, và mỗi bước tối ưu có một mini-batch $b$ mẫu rút đều từ bộ nhớ phát lại; còn thiếu bước cập nhật $\theta$. Hàm mất mát là sai số bình phương trung bình trên mini-batch, chỉ dùng giá trị của hành động đã lưu, và gradient không đi qua đích. Thu thập, lưu, tối ưu và đồng bộ được ghép thành thuật toán với hai bộ đếm $t$ và $k_{\mathrm{opt}}$. Ở phần 5, bộ tối ưu biến gradient của hàm mất mát thành bước tham số.</p></aside>
 </section>
   <section data-slide-id="L08-17" data-note-topic-id="lec-08-topic-09">
 <h2>Hàm mất mát trên mini&#8209;batch</h2>
 <p><strong>Nhu cầu:</strong> gộp $b$ cặp $(q_i,y_i)$ thành một hàm vô hướng của $\theta$.</p>
-<p><strong>Ký hiệu:</strong> mẫu $i$ là $(O_i,A_i,R_i,O'_i,Z_i,U_i)$, $i$ không theo thời gian; $q_i$ khác $q_*$.</p>
+<p><strong>Ký hiệu:</strong> $i$ đánh số mẫu $(O_i,A_i,R_i,O'_i,Z_i,U_i)$, không phải thời điểm; $q_i$ khác $q_*$.</p>
 <div>$$q_i=Q_\theta(O_i,A_i),\qquad y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a').$$</div>
 <p><strong>Định nghĩa.</strong> Với $y_i$ là hằng theo $\theta$,<br>hàm mất mát là sai số bình phương trung bình (MSE):</p>
 <div>$$L_B(\theta)=\tfrac1b\textstyle\sum_{i=1}^b\bigl(y_i-q_i\bigr)^2.$$</div>
-<p><strong>Lưu ý:</strong> dù $\theta^-$ cố định, $L_B$ không lồi theo $\theta$ vì $Q_\theta$ phi tuyến; bộ tối ưu không bảo đảm cực tiểu toàn cục.</p>
+<p><strong>Lưu ý:</strong> với $Q_\theta$ là mạng nhiều tầng, $L_B$ nói chung không lồi theo $\theta$; bộ tối ưu không bảo đảm cực tiểu toàn cục.</p>
 <aside class="notes"><p>$q_i$ là dự đoán của mạng trên mẫu $i$, không phải giá trị hành động tối ưu $q_*$. Mini-batch $B$ gồm $b$ mẫu rút đều từ bộ nhớ phát lại; khi đã rút, chỉ số $i$ chỉ đánh số mẫu, nên viết $R_i$, $O'_i$ thay cho $R_{t+1}$, $O_{t+1}$. $U_i$ không vào đích: cờ cắt ngắn chỉ quyết định việc đặt lại môi trường lúc thu thập. Đích $y_i$ chỉ phụ thuộc $\theta^-$ và dữ liệu, nên với $\theta^-$ cố định nó là một hằng số khi lấy gradient theo $\theta$, và cực tiểu $L_B$ là một bài hồi quy bình phương tối thiểu của $q_i$ về $y_i$. Sai số bình phương trung bình là lựa chọn của bài để phép tính minh bạch; hàm mất mát Huber, ít nhạy với sai số lớn, là một lựa chọn khác trong thực hành. Với $Q_\theta$ tuyến tính theo $\theta$, $L_B$ lồi; với mạng nhiều tầng, $L_B$ nói chung không lồi.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 16, 20–22, 34; Goodfellow, Bengio và Courville (2016), Chương 6 (hàm mất mát) và Chương 8 (tối ưu không lồi).</p></aside>
 </section>
   <section data-slide-id="L08-10" data-note-topic-id="lec-08-topic-08">
 <h2>Dừng gradient ở đích</h2>
 <p><strong>Nhắc lại:</strong> Q-learning bán gradient (Bài&nbsp;07) coi mục tiêu là hằng khi lấy đạo hàm theo $w$.</p>
-<p><strong>Định nghĩa.</strong> Dừng gradient (stop-gradient): $\operatorname{sg}(x)$ có giá trị $x$, đạo hàm bằng $0$; trong mã là <code>detach</code>, <code>no_grad</code>.</p>
-<p>Phép chọn theo hành động (gather): $q_i=[\mathbf q_\theta(O_i)]_{A_i}$, một phần tử mỗi hàng.</p>
+<p><strong>Định nghĩa.</strong> Dừng gradient (stop-gradient): $\operatorname{sg}(x)$ có giá trị $x$, đạo hàm bằng $0$; trong PyTorch: <code>detach</code>, <code>no_grad</code>.</p>
+<p>Phép chọn theo hành động (gather): $q_i=[\mathbf q_\theta(O_i)]_{A_i}$, giá trị của hành động đã lưu.</p>
 <img class="figure short" src="img/lec-08/dqn-computation-graph.svg" alt="Hai hàng. Hàng trên, đường tạo đích, không nhận gradient: O phẩy i vào mạng mục tiêu Q theta trừ, rồi lấy max theo a phẩy; cùng R i và Z i từ ô bên dưới tạo đích y i; y i đi qua ô sg viền nét đứt. Hàng dưới, đường dự đoán, nhận gradient: O i vào mạng trực tuyến Q theta, cho một vector giá trị; phép chọn theo hành động gather nhận A i từ ô bên trên và lấy một phần tử, được q i. Hai mũi tên từ sg của y i và từ q i cùng đi vào ô MSE bên phải."/>
 <aside class="notes"><p>Mạng trực tuyến trả về vector $\mathbf q_\theta(O_i)$ gồm $\lvert\mathcal A\rvert$ giá trị; hàm mất mát chỉ dùng giá trị của hành động $A_i$ đã lưu trong mẫu, nên phép chọn theo hành động lấy đúng một phần tử ở mỗi hàng của mảng $[b,\lvert\mathcal A\rvert]$. Hành động tham lam của mạng không tham gia vào $q_i$. Trên đường tạo đích, mạng mục tiêu nhận $O'_i$, phép cực đại chọn giá trị lớn nhất, rồi $R_i$ và $Z_i$ cho $y_i$; đường này nằm trong $\operatorname{sg}$, nên thư viện vi phân tự động không truyền gradient qua nó. Đường dự đoán đi qua $Q_\theta$ và nhận gradient. Mạng mục tiêu chỉ cung cấp phần bootstrap của đích.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 16, 20–22, 33–34; ghi chú bài giảng Bài 07, Định nghĩa 07.35 (bán gradient); hình vẽ lại.</p></aside>
 </section>
@@ -295,16 +295,16 @@
 </section>
   <section data-slide-id="L08-21" data-note-topic-id="lec-08-topic-09">
 <h2>Bài tập: một mini&#8209;batch</h2>
-<p><strong>Lời giải:</strong> $\gamma=0{,}9$, $b=2$; $(R_i,Z_i,\max,q_i)$ là $(1;0;4;3{,}1)$, $(-2;1;100;-1{,}5)$.</p>
+<p><strong>Lời giải:</strong> $\gamma=0{,}9$, $b=2$; với $m_i=\max_{a'}Q_{\theta^-}(O'_i,a')$, bộ $(R_i,Z_i,m_i,q_i)$ là $(1;0;4;3{,}1)$, $(-2;1;100;-1{,}5)$.</p>
 <table><thead><tr><th scope="col">bước</th><th scope="col">mẫu 1</th><th scope="col">mẫu 2</th></tr></thead><tbody>
 <tr><td>đích $y_i$, mặt nạ $1-Z_i$</td><td>$1+0{,}9\cdot1\cdot4=4{,}6$</td><td>$-2+0{,}9\cdot0\cdot100=-2$</td></tr>
 <tr><td>sai số $\delta_i=y_i-q_i$</td><td>$1{,}5$</td><td>$-0{,}5$</td></tr>
 <tr><td>$\partial L_B/\partial q_i=q_i-y_i$</td><td>$-1{,}5$</td><td>$0{,}5$</td></tr>
+<tr><td>hàm mất mát $L_B$</td><td colspan="2">$\tfrac12(1{,}5^2+0{,}5^2)=1{,}25$</td></tr>
 </tbody></table>
-<p>$L_B=\tfrac12(1{,}5^2+0{,}5^2)=1{,}25$.</p>
 <div class="check"><strong>Câu hỏi:</strong> xét $q_1,q_2$ như hai biến riêng, một bước hạ gradient nhỏ làm $q$ nào tăng?</div>
 <p class="fragment"><strong>Lời giải:</strong> mẫu 1: đạo hàm âm nên $q_1$ tăng; $q_2$ giảm.</p>
-<aside class="notes"><p>Bộ bốn $(R_i,Z_i,\max,q_i)$ ghi $R_i$, $Z_i$, $\max_{a'}Q_{\theta^-}(O'_i,a')$ và $q_i$ của mẫu $i$. Mặt nạ đặt trước sai số: mẫu 2 kết thúc lượt nên phần bootstrap bị xóa và $y_2=R_2=-2$; nếu quên mặt nạ, $y_2=88$ và dấu của $\delta_2$ đổi. Với $b=2$, hệ số $\tfrac2b$ bằng $1$, nên đạo hàm theo $q_i$ là $q_i-y_i$. Câu hỏi xét $q_1$, $q_2$ như hai biến riêng. Trong DQN, cả hai cùng phụ thuộc $\theta$: một bước $\Delta\theta=-\eta\nabla_\theta L_B$ cho $\Delta q_1\approx\eta\bigl(1{,}5\lVert\nabla q_1\rVert^2-0{,}5\,\nabla q_1^\top\nabla q_2\bigr)$, nên dấu của $\Delta q_1$ còn phụ thuộc mẫu kia; nếu $\nabla q_1^\top\nabla q_2>3\lVert\nabla q_1\rVert^2$, $q_1$ giảm. Tham số dùng chung là nguồn của cả khái quát hóa lẫn giao thoa giữa các mẫu.</p><p class="note-source"><strong>Nguồn:</strong> bài tập xây từ công thức của bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 21–22, 34; ví dụ số tự xây dựng.</p></aside>
+<aside class="notes"><p>Bộ bốn $(R_i,Z_i,m_i,q_i)$ ghi phần thưởng, cờ kết thúc, giá trị lớn nhất của mạng mục tiêu tại $O'_i$ và dự đoán của mẫu $i$. Mặt nạ đặt trước sai số: mẫu 2 kết thúc lượt nên phần bootstrap bị xóa và $y_2=R_2=-2$; nếu quên mặt nạ, $y_2=88$ và dấu của $\delta_2$ đổi. Với $b=2$, hệ số $\tfrac2b$ bằng $1$, nên đạo hàm theo $q_i$ là $q_i-y_i$. Câu hỏi xét $q_1$, $q_2$ như hai biến riêng. Trong DQN, cả hai cùng phụ thuộc $\theta$: một bước $\Delta\theta=-\eta\nabla_\theta L_B$ cho $\Delta q_1\approx\eta\bigl(1{,}5\lVert\nabla q_1\rVert^2-0{,}5\,\nabla q_1^\top\nabla q_2\bigr)$, nên dấu của $\Delta q_1$ còn phụ thuộc mẫu kia; nếu $\nabla q_1^\top\nabla q_2>3\lVert\nabla q_1\rVert^2$, $q_1$ giảm. Tham số dùng chung là nguồn của cả khái quát hóa lẫn giao thoa giữa các mẫu.</p><p class="note-source"><strong>Nguồn:</strong> bài tập xây từ công thức của bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 21–22, 34; ví dụ số tự xây dựng.</p></aside>
 </section>
   <section data-slide-id="L08-11" data-note-topic-id="lec-08-topic-10">
 <h2>Vòng huấn luyện DQN</h2>
@@ -325,13 +325,13 @@
 </tbody></table>
 <p><strong>Đầu ra:</strong> $\theta$; chính sách tham lam theo $Q_\theta$.</p>
 <p><strong>Khởi tạo:</strong> $\mathcal D\leftarrow\varnothing$; $\theta$ ngẫu nhiên; $\theta^-\leftarrow\theta$; $O_0$ từ đặt lại; $t\leftarrow0$; $k_{\mathrm{opt}}\leftarrow0$.</p>
-<aside class="notes"><p>Miền $\gamma&lt;1$ cùng phần thưởng bị chặn giữ lợi tức hữu hạn cả khi lượt không kết thúc. $\epsilon_{\mathrm{exp}}$ có thể giảm theo một lịch định trước. Bộ tối ưu nhận gradient của $L_B$ và trả bước tham số; phần 5 viết các quy tắc cụ thể. Ngân sách $T$ đếm theo $t$; có thể thay bằng một tiêu chuẩn dừng định trước. $N_{\mathrm{start}}\ge b$ để lần rút đầu có đủ $b$ mẫu khác nhau; $N_{\mathrm{start}}\le N$ vì $\lvert\mathcal D\rvert\le N$, nếu không bước tối ưu không bao giờ chạy. $F$ đếm theo $t$, $C$ đếm theo $k_{\mathrm{opt}}$; với $C=1$, đích tính bằng chính tham số đang học. Ví dụ: Mnih và cộng sự (2015) dùng $N=10^6$, $b=32$, $N_{\mathrm{start}}=5\cdot10^4$, $F=4$, $C=10^4$, nên khi đã tối ưu, $\theta^-$ đứng yên $F\cdot C=4\cdot10^4$ bước môi trường. Chính sách đầu ra tham lam, khác hành vi $\epsilon_{\mathrm{exp}}$-tham lam dùng khi thu thập.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 21 (khởi tạo bộ nhớ dung lượng $N$, hai mạng với $\theta^-=\theta$); Mnih và cộng sự (2015), Extended Data Table 1 (replay memory size, minibatch size, replay start size, update frequency, target network update frequency); bổ sung miền, ngân sách và hai bộ đếm.</p></aside>
+<aside class="notes"><p>Miền $\gamma&lt;1$ cùng phần thưởng bị chặn giữ lợi tức hữu hạn cả khi lượt không kết thúc. $\epsilon_{\mathrm{exp}}$ có thể giảm theo một lịch định trước. Bộ tối ưu nhận gradient của $L_B$ và trả bước tham số; quy tắc cập nhật cụ thể của bộ tối ưu nằm ở phần 5. Ngân sách $T$ đếm theo $t$; có thể thay bằng một tiêu chuẩn dừng định trước. $N_{\mathrm{start}}\ge b$ để lần rút đầu có thể gồm $b$ mẫu khác nhau (bắt buộc khi rút không hoàn lại); $N_{\mathrm{start}}\le N$ vì $\lvert\mathcal D\rvert\le N$, nếu không bước tối ưu không bao giờ chạy. $F$ đếm theo $t$, $C$ đếm theo $k_{\mathrm{opt}}$; với $C=1$, đích tính bằng chính tham số đang học. Ví dụ: Mnih và cộng sự (2015) dùng $N=10^6$, $b=32$, $N_{\mathrm{start}}=5\cdot10^4$, $F=4$, $C=10^4$, nên khi đã tối ưu, $\theta^-$ đứng yên $F\cdot C=4\cdot10^4$ bước môi trường. Chính sách đầu ra tham lam, khác hành vi $\epsilon_{\mathrm{exp}}$-tham lam dùng khi thu thập.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 21 (khởi tạo bộ nhớ dung lượng $N$, hai mạng với $\theta^-=\theta$); Mnih và cộng sự (2015), Extended Data Table 1 (replay memory size, minibatch size, replay start size, update frequency, target network update frequency); bổ sung miền, ngân sách và hai bộ đếm.</p></aside>
 </section>
   <section data-slide-id="L08-18" data-note-topic-id="lec-08-topic-10">
 <h2>Thuật toán DQN: tương tác và lưu</h2>
 <p><strong>Lặp</strong> khi $t&lt;T$:</p>
 <ol>
-<li>Chọn $A_t$ theo $\epsilon_{\mathrm{exp}}$-tham lam từ $Q_\theta(O_t,\cdot)$.</li>
+<li>Chọn $A_t$ theo $\epsilon_{\mathrm{exp}}$-tham lam từ $Q_\theta(O_t,\cdot)$, $O_t$ là quan sát hiện hành.</li>
 <li>Thực hiện $A_t$; nhận $R_{t+1}$, $Z_{t+1}$, $U_{t+1}$ và quan sát trả về.</li>
 <li>Lưu $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$ vào $\mathcal D$; $O_{t+1}$ là quan sát cuối của mẫu chuyển, lấy trước khi đặt lại.</li>
 <li>Nếu $Z_{t+1}\lor U_{t+1}$: đặt lại; bước kế bắt đầu từ quan sát đầu lượt mới.<br>Tăng ${t\leftarrow t+1}$.</li>
@@ -351,42 +351,55 @@
 <p>Quay lại bước 1, kể cả khi bỏ qua bước 5–9; khi $t=T$, dừng và trả $\theta$.</p>
 <aside class="notes"><p>$t$ đếm bước môi trường, $k_{\mathrm{opt}}$ đếm bước tối ưu; $F$ thuộc nhịp của $t$, $C$ thuộc nhịp của $k_{\mathrm{opt}}$. Điều kiện tối ưu được kiểm sau khi $t$ đã tăng ở bước 4. Thứ tự ở bước 8 và 9 là cập nhật $\theta$, tăng $k_{\mathrm{opt}}$, rồi mới kiểm $C$: lần đồng bộ đầu xảy ra sau đúng $C$ bước tối ưu. Nếu kiểm trước khi tăng, $k_{\mathrm{opt}}=0$ ở bước tối ưu đầu và $\theta^-$ bị gán bằng $\theta$ ngay sau một cập nhật. Giữa hai mốc đồng bộ, $\theta^-$ cố định, nên đích của mỗi mẫu đã lưu cố định; đích chỉ đổi tại mốc đồng bộ. $L_B$ là sai số bình phương trung bình của $q_i$ và $y_i$. Đánh giá dùng chính sách tham lam theo $Q_\theta$ trên các lượt riêng, không dùng lợi tức của các lượt thu thập với hành vi $\epsilon_{\mathrm{exp}}$-tham lam.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 21 (rút mini-batch, tính đích, một bước gradient, cập nhật mạng mục tiêu mỗi $C$ bước), 19 và 31, 33 (đồng bộ); Mnih và cộng sự (2015), Extended Data Table 1 ($C$ đếm theo số lần cập nhật tham số); bổ sung điều kiện tối ưu, thứ tự đồng bộ và điều kiện dừng.</p></aside>
 </section>
+  <section data-slide-id="L08-19b" data-note-topic-id="lec-08-topic-10">
+<h2>Ví dụ: truy dấu hai bộ đếm</h2>
+<p>$N=6$, $b=2$, $N_{\mathrm{start}}=3$, $F=2$, $C=2$, $T=10$. Tính các $t$ có bước tối ưu và các lần đồng bộ.</p>
+<table><thead><tr><th scope="col">$t$</th><th scope="col">$\lvert\mathcal D\rvert$</th><th scope="col">$k_{\mathrm{opt}}$ sau bước 8</th><th scope="col">đồng bộ ở bước 9</th></tr></thead><tbody>
+<tr><td>$4$</td><td>$4$</td><td>$1$</td><td>không</td></tr>
+<tr><td>$6$</td><td>$6$</td><td>$2$</td><td>có</td></tr>
+<tr><td>$8$</td><td>$6$</td><td>$3$</td><td>không</td></tr>
+<tr><td>$10$</td><td>$6$</td><td>$4$</td><td>có</td></tr>
+</tbody></table>
+<div class="check"><strong>Câu hỏi:</strong> kiểm $C$ trước khi tăng $k_{\mathrm{opt}}$ thì đồng bộ ở $t$ nào?</div>
+<p class="fragment"><strong>Lời giải:</strong> $t=4$ và $t=8$; $\theta^-$ đầu tiên chỉ giữ một bước tối ưu.</p>
+<aside class="notes"><p>Sau mỗi lần qua bước 4, $t$ tăng một đơn vị và $\lvert\mathcal D\rvert=\min(t,6)$. Điều kiện tối ưu cần $\lvert\mathcal D\rvert\ge3$ và $t$ chẵn: $t=2$ bị bỏ vì $\lvert\mathcal D\rvert=2&lt;3$, nên bước 5–9 chạy tại $t=4,6,8,10$. Theo thứ tự đúng, $k_{\mathrm{opt}}$ tăng trước khi kiểm $C$, nên đồng bộ xảy ra khi $k_{\mathrm{opt}}=2$ và $4$, tức tại $t=6$ và $t=10$. Tại $t=10$, điều kiện lặp $t&lt;T$ sai và thuật toán dừng sau khi đồng bộ. Nếu kiểm $C$ trước khi tăng, $k_{\mathrm{opt}}$ bằng $0$ ở bước tối ưu thứ nhất và bằng $2$ ở bước thứ ba, nên đồng bộ tại $t=4$ và $t=8$.</p><p class="note-source"><strong>Nguồn:</strong> ví dụ số tự xây dựng theo Thuật toán 08.13 (bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 21).</p></aside>
+</section>
   <section data-slide-id="L08-20" data-note-topic-id="lec-08-topic-11">
 <h2>Kích thước tensor của mini&#8209;batch Atari</h2>
 <p><strong>Nhắc lại:</strong> $O_i$ gồm bốn khung xám $H\times W$ xếp chồng, $H=W=84$.</p>
 <img class="figure" src="img/lec-08/tensor-contract.svg" alt="Hai hàng. Hàng trên: quan sát O kích thước b, 4, H, W vào mạng trực tuyến Q theta, ra mảng b nhân số hành động; phép chọn theo hành động nhận A kích thước b từ ô bên dưới, lấy một phần tử mỗi hàng và cho q kích thước b. Hàng dưới: quan sát kế tiếp O phẩy kích thước b, 4, H, W vào mạng mục tiêu Q theta trừ, ra mảng b nhân số hành động; phép cực đại theo chiều hành động cho mảng kích thước b; cùng R và Z kích thước b từ ô bên trên tạo đích y kích thước b. q và y cùng vào ô hàm mất mát L B, một số vô hướng. Ghi chú dưới cùng: U kích thước b không vào L B."/>
 <p>Kiểu: $O,O'$ <code>float32</code> (lưu <code>uint8</code>); $A$ <code>int64</code>; $R$ <code>float32</code>; $Z,U$ <code>bool</code>.</p>
 <p>Mọi mảng của $L_B$ ở cùng một thiết bị tính (CPU hoặc GPU).</p>
-<aside class="notes"><p>Mỗi mẫu chiếm một hàng; chiều đầu của mọi mảng là $b$. Hai mạng trả mảng $[b,\lvert\mathcal A\rvert]$, mỗi hàng là vector giá trị của một quan sát. Phép chọn theo hành động lấy ở hàng $i$ phần tử cột $A_i$, nên chỉ số hành động phải là số nguyên <code>int64</code>; phép cực đại lấy theo chiều hành động, tức chiều thứ hai, <code>max(1)</code>, cho $[b]$. Nếu $A$ hay kết quả chọn có dạng cột $[b,1]$ mà không bỏ chiều thừa (squeeze) về $[b]$, phép trừ với một mảng $[b]$ lan truyền thành ma trận $[b,b]$, và hàm mất mát trung bình trên $b^2$ cặp sai. Bộ nhớ lưu khung ở dạng <code>uint8</code> để tiết kiệm bộ nhớ, rồi chuyển sang <code>float32</code> khi tạo mini-batch; $Z$ chuyển sang kiểu số trước khi tính $1-Z$. Thiết bị tính là bộ xử lý thực hiện phép tính: CPU hoặc GPU.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 14–22, 35 (giao diện suy ra); Mnih và cộng sự (2015), mục Methods ($84\times84$, bốn khung); hình vẽ mới.</p></aside>
+<aside class="notes"><p>Mỗi mẫu chiếm một hàng; chiều đầu của mọi mảng là $b$. Hai mạng trả mảng $[b,\lvert\mathcal A\rvert]$, mỗi hàng là vector giá trị của một quan sát. Phép chọn theo hành động lấy ở hàng $i$ phần tử cột $A_i$, nên chỉ số hành động phải là số nguyên <code>int64</code>; phép cực đại lấy theo chiều hành động, tức chiều thứ hai, <code>max(1).values</code>, cho $[b]$. Nếu $A$ hay kết quả chọn có dạng cột $[b,1]$ mà không bỏ chiều thừa (squeeze) về $[b]$, phép trừ với một mảng $[b]$ lan truyền thành ma trận $[b,b]$, và hàm mất mát trung bình trên $b^2$ cặp sai. Bộ nhớ lưu khung ở dạng <code>uint8</code> để tiết kiệm bộ nhớ, rồi chuyển sang <code>float32</code> khi tạo mini-batch; $Z$ chuyển sang kiểu số trước khi tính $1-Z$. Thiết bị tính là bộ xử lý thực hiện phép tính: CPU hoặc GPU.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 14–22, 35 (giao diện suy ra); Mnih và cộng sự (2015), mục Methods ($84\times84$, bốn khung); hình vẽ mới.</p></aside>
 </section>
-  <section data-slide-id="X02" data-note-topic-id="lec-08-topic-05">
+  <section data-slide-id="X02" data-note-topic-id="lec-08-topic-10">
 <h2>Bài tập: lỗi cài đặt đích DQN</h2>
 <p><code>step</code> trả quan sát sau bước, $R$, $Z$, $U$ và <code>final_obs</code>: quan sát cuối nếu môi trường vừa tự đặt lại, ngược lại <code>None</code>.</p>
 <pre style="font-size:.94em;width:100%"><code class="language-python">obs_after_step, r, terminated, truncated, final_obs = step(a)
 D.add(o, a, r, obs_after_step, terminated, truncated)
 
-o, a, r, next_o, z, u = D.sample(b)
-done = z | u
-y = r + gamma * (1 - done) * q_target(next_o).max()
-loss = ((y - q_online(o)[a]) ** 2).mean()
+ob, ab, rb, ob2, zb, ub = D.sample(b)
+done = zb | ub
+y = rb + gamma * (1 - done) * q_target(ob2).max()
+loss = ((y - q_online(ob)[ab]) ** 2).mean()
 </code></pre>
 <div class="check"><strong>Câu hỏi:</strong> sửa năm lỗi: quan sát kế tiếp, mặt nạ, đường gradient, phép chọn theo hành động, chiều của <code>max</code>.</div>
-<aside class="notes"><p>Hai dòng đầu chạy ở mỗi bước môi trường; bốn dòng sau chạy trên mini-batch, mọi mảng có chiều đầu $b$, <code>z</code> và <code>u</code> là hai cờ $Z$, $U$. Bài tập kiểm tra việc chuyển Thuật toán 08.13 thành mã: mẫu chuyển lưu đúng, đích đúng công thức, gradient đúng đường. Gợi ý: so từng dòng với $y_i=\operatorname{sg}\bigl(R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a')\bigr)$ và $q_i=[\mathbf q_\theta(O_i)]_{A_i}$; với mỗi dòng, ghi kích thước của mảng nhận được khi $b=2$ và $\lvert\mathcal A\rvert=3$.</p><p class="note-source"><strong>Nguồn:</strong> bài tập xây từ giả mã của bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 21–22; bổ sung hai cờ và quan sát cuối khi tự đặt lại.</p></aside>
+<aside class="notes"><p>Hai dòng đầu chạy ở mỗi bước môi trường; bốn dòng sau chạy trên mini-batch, các biến có hậu tố <code>b</code> là mảng có chiều đầu $b$, <code>ob2</code> chứa $O'_i$, <code>zb</code> và <code>ub</code> là hai cờ $Z$, $U$. Năm lỗi nằm ở ba khâu khi chuyển Thuật toán 08.13 thành mã: lưu mẫu chuyển, công thức và đường gradient của đích, kích thước mảng. Gợi ý: so từng dòng với $y_i=\operatorname{sg}\bigl(R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a')\bigr)$ và $q_i=[\mathbf q_\theta(O_i)]_{A_i}$; với mỗi dòng, ghi kích thước của mảng nhận được khi $b=2$ và $\lvert\mathcal A\rvert=3$.</p><p class="note-source"><strong>Nguồn:</strong> bài tập xây từ giả mã của bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 21–22; bổ sung hai cờ và quan sát cuối khi tự đặt lại.</p></aside>
 </section>
-  <section data-slide-id="X02b" data-note-topic-id="lec-08-topic-05">
+  <section data-slide-id="X02b" data-note-topic-id="lec-08-topic-10">
 <h2>Bài tập: lỗi cài đặt đích DQN</h2>
-<p><strong>Lời giải:</strong> quan sát cuối; mặt nạ $1-Z$; đích trong <code>no_grad</code>; <code>gather</code>; <code>max(1)</code>.</p>
+<p><strong>Lời giải:</strong> quan sát cuối; mặt nạ $1-Z$; <code>no_grad</code>; <code>gather</code>; <code>max(1).values</code>.</p>
 <pre style="font-size:.94em;width:100%"><code class="language-python">next_o = obs_after_step if final_obs is None else final_obs
 D.add(o, a, r, next_o, terminated, truncated)
 
-o, a, r, next_o, z, u = D.sample(b)
+ob, ab, rb, ob2, zb, ub = D.sample(b)
 with torch.no_grad():
-    v = q_target(next_o).max(1).values
-    y = r + gamma * (1 - z.float()) * v
-q = q_online(o).gather(1, a.unsqueeze(1)).squeeze(1)
+    v = q_target(ob2).max(1).values
+    y = rb + gamma * (1 - zb.float()) * v
+q = q_online(ob).gather(1, ab.unsqueeze(1)).squeeze(1)
 loss = ((y - q) ** 2).mean()
 </code></pre>
-<aside class="notes"><p>Năm sửa đổi độc lập. Quan sát kế tiếp: khi môi trường tự đặt lại, quan sát sau bước đã thuộc lượt mới, nên mẫu chuyển phải mang quan sát cuối. Mặt nạ: <code>done</code> gộp cả cắt ngắn, làm mẫu bị cắt ngắn mất phần bootstrap; đích chỉ dùng $1-Z$, còn $Z\lor U$ chỉ quyết định việc đặt lại. Đường gradient: đích tính trong <code>no_grad</code>, tương đương $\operatorname{sg}$. Phép chọn: <code>q_online(o)[a]</code> lấy các hàng có chỉ số <code>a</code>, cho mảng $[b,\lvert\mathcal A\rvert]$; <code>gather</code> lấy ở hàng $i$ cột $A_i$, cho $[b]$. Chiều của phép cực đại: <code>max()</code> không chỉ chiều trả một số cho cả mini-batch; <code>max(1)</code> lấy theo chiều hành động. <code>z.float()</code> đổi cờ sang kiểu số trước phép trừ.</p><p class="note-source"><strong>Nguồn:</strong> bài tập xây từ giả mã của bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 21–22; tên trường chứa quan sát cuối phụ thuộc thư viện và phiên bản, ở đây đặt là <code>final_obs</code>.</p></aside>
+<aside class="notes"><p>Năm sửa đổi độc lập. Quan sát kế tiếp: khi môi trường tự đặt lại, quan sát sau bước đã thuộc lượt mới, nên mẫu chuyển phải mang quan sát cuối. Mặt nạ: <code>done</code> gộp cả cắt ngắn, làm mẫu bị cắt ngắn mất phần bootstrap; đích chỉ dùng $1-Z$, còn $Z\lor U$ chỉ quyết định việc đặt lại. Đường gradient: khi <code>q_target</code> có tham số riêng, thiếu <code>no_grad</code> không đổi gradient theo $\theta$, nhưng thư viện lưu đồ thị và tính gradient thừa cho $\theta^-$; khi <code>q_target</code> và <code>q_online</code> là cùng một đối tượng, gradient đi qua đích và cập nhật thành gradient dư. Tính đích trong <code>no_grad</code> là dạng cài đặt của $\operatorname{sg}$. Phép chọn: <code>q_online(ob)[ab]</code> lấy các hàng có chỉ số <code>ab</code>, cho mảng $[b,\lvert\mathcal A\rvert]$; <code>gather</code> lấy ở hàng $i$ cột $A_i$, cho $[b]$. Chiều của phép cực đại: <code>max()</code> không chỉ chiều trả một số cho cả mini-batch; <code>max(1).values</code> lấy theo chiều hành động. <code>zb.float()</code> đổi cờ sang kiểu số trước phép trừ.</p><p class="note-source"><strong>Nguồn:</strong> bài tập xây từ giả mã của bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 21–22; tên trường chứa quan sát cuối phụ thuộc thư viện và phiên bản, ở đây đặt là <code>final_obs</code>.</p></aside>
 </section>
 </section>
 

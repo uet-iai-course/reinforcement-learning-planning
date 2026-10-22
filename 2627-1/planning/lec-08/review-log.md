@@ -532,3 +532,38 @@ Kết quả rà: 0 chặn bàn giao, 0 nghiêm trọng, 5 trung bình, 13 nhẹ;
 | S34 | `L08-22`, `optimizer-step.svg` (mới) | chấp nhận; dòng "Nhu cầu:" dạng cụm danh từ giữ; "Update" là tên toán tử trong công thức | diff; tính lại Ví dụ 08.18 ($\theta_1=0{,}5$ với $\eta=0{,}25$); xem ảnh 1600 |
 - Bước S35 (`L08-23`, biên tập viên): tiêu đề "Hạ gradient ngẫu nhiên (SGD)"; "Nhu cầu:"; công thức $\theta_j=\theta_{j-1}-\eta g_j$; hai thẻ (không trạng thái phụ; mọi tọa độ cùng $\eta$); "Ví dụ." $\eta=0{,}1$, $g_j=(2;\,0{,}02)$, bước $(-0{,}2;\,-0{,}002)$. 38 âm tiết, đáy 600 px, ghi chú 109 âm tiết. Ghi chú bài giảng: tiểu mục SGD (Định nghĩa 08.16, Ví dụ 08.19, "Trong thực hành."). `no-ai-slop` Edit, tự kiểm theo `eval.md`: đạt. Chờ điều phối viên duyệt.
 | S35 | `L08-23` | chấp nhận | diff; tính lại $(-0{,}18;0{,}018)$, hệ số $-9$, $0{,}9$, ngưỡng $\eta<0{,}02$, $0{,}98^{100}\approx0{,}13$ |
+
+### Rà lại mạch 4 (bước R4)
+
+| vai | loại tác tử | mô hình | mức suy luận | ghi tệp |
+|---|---|---|---|---|
+| Rà lại mạch 4 (toán, mạch, mật độ, `no-ai-slop` Detect) | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Biên tập R4 | Agent `general-purpose` (biên tập viên của đợt sửa) | `claude-opus-5-5` | high | có |
+
+Kết quả rà: 0 chặn bàn giao, 0 nghiêm trọng, 6 trung bình, 14 nhẹ; điều phối viên chấp nhận toàn bộ 20 mục (tệp `recheck/R4-decisions.md` trong scratchpad phiên). Bảng dưới ghi trạng thái sau bước R4.
+
+| mức độ | trang chiếu | vấn đề | đề xuất sửa | trạng thái | quyết định |
+|---|---|---|---|---|---|
+| trung bình (1) | `L08-17` | "Lưu ý:" quy tính không lồi cho mọi $Q_\theta$ phi tuyến; phản ví dụ $Q_\theta=\theta^2$, $y<0$ cho hàm lồi | "với $Q_\theta$ là mạng nhiều tầng, $L_B$ nói chung không lồi theo $\theta$" | đã sửa ở R4; ghi chú bài giảng thêm phản ví dụ | chấp nhận |
+| trung bình (2) | ghi chú `X02b` | "Đường gradient" chỉ nói `no_grad` tương đương $\operatorname{sg}$, không phân biệt hai trường hợp tham số riêng và cùng đối tượng | Câu đề xuất của điều phối viên | đã sửa ở R4 | chấp nhận |
+| trung bình (3) | `X02`, `X02b`, ghi chú bài giảng Bài tập 08.2 | Biến mini-batch ghi đè biến bước môi trường (`o`, `a`, `r`) | Đổi thành `ob, ab, rb, ob2, zb, ub` | đã sửa ở R4; hai trang vẫn vừa khung (674, 608 px) | chấp nhận |
+| trung bình (4) | `storyboard.md` | Chưa có bảng hành trình cho mạch 4 | Hai bảng cụm "Hàm mất mát và dừng gradient", "Thuật toán DQN"; 30 phút; bảng cũ ghi "bản trước" | đã sửa ở R4 | chấp nhận |
+| trung bình (5) | mạch 4 | Cụm thuật toán chưa có ví dụ số trên trang chiếu | Trang mới `L08-19b` "Ví dụ: truy dấu hai bộ đếm" | đã sửa ở R4 (đáy 683 px, không tách) | chấp nhận |
+| trung bình (6) | ghi chú bài giảng §4 | Chưa có ví dụ dẫn nhập trước Định nghĩa 08.10 | Đoạn hai mẫu: sai số $1{,}5$, $-0{,}5$; tổng $1$ che sai lệch; trung bình bình phương $1{,}25$ | đã sửa ở R4 (Ví dụ 08.8 không có $q$, nên ghi "mẫu thứ nhất của ví dụ xuyên suốt, cùng số liệu với Ví dụ 08.8") | chấp nhận |
+| nhẹ (7) | ghi chú `L08-M4T` | "gradient bị chặn qua đích" | "gradient không đi qua đích" | đã sửa ở R4 | chấp nhận |
+| nhẹ (8) | `L08-10` | "một phần tử mỗi hàng" chưa nói phần tử nào | "giá trị của hành động đã lưu" | đã sửa ở R4 | chấp nhận |
+| nhẹ (9) | `L08-10` | "trong mã" không nêu thư viện | "trong PyTorch" | đã sửa ở R4 | chấp nhận |
+| nhẹ (10) | `L08-17` | "$i$ không theo thời gian" | "$i$ đánh số mẫu …, không phải thời điểm" | đã sửa ở R4 (câu sắp lại để giữ một dòng, đáy 683 px) | chấp nhận |
+| nhẹ (11) | `L08-21` | Ký hiệu "$\max$" trong bộ bốn chưa định nghĩa | $m_i=\max_{a'}Q_{\theta^-}(O'_i,a')$ | đã sửa ở R4; dòng $L_B$ thành hàng cuối của bảng để vừa khung | chấp nhận |
+| nhẹ (12) | `L08-18` | $O_t$ ở bước 1 chưa nói là quan sát hiện hành | "$O_t$ là quan sát hiện hành" | đã sửa ở R4 | chấp nhận |
+| nhẹ (13) | `X02b`, ghi chú `X02b`, ghi chú `L08-20` | `max(1)` thiếu `.values` | `max(1).values` | đã sửa ở R4 | chấp nhận |
+| nhẹ (14) | ghi chú `L08-18a`, ghi chú bài giảng | "có đủ $b$ mẫu khác nhau" không nói khi nào bắt buộc | "có thể gồm $b$ mẫu khác nhau (bắt buộc khi rút không hoàn lại)" | đã sửa ở R4 | chấp nhận |
+| nhẹ (15) | ghi chú `L08-18a` | "phần 5 viết các quy tắc cụ thể" (phần làm chủ ngữ) | "Quy tắc cập nhật cụ thể của bộ tối ưu nằm ở phần 5." | đã sửa ở R4 | chấp nhận |
+| nhẹ (16) | ghi chú `X02` | Câu năng lực chung chung | "Năm lỗi nằm ở ba khâu …" | đã sửa ở R4 | chấp nhận |
+| nhẹ (17) | ghi chú bài giảng, Bài tập 08.2 Câu (e) | "dòng mã không báo lỗi" chưa tách riêng `.max()` | "…; riêng phép `.max()` không báo lỗi" | đã sửa ở R4 | chấp nhận |
+| nhẹ (18) | ghi chú bài giảng, mục topic-08 | Câu dẫn Bài tập 08.2 chưa nêu hai lỗi | Câu đề xuất | đã sửa ở R4 | chấp nhận |
+| nhẹ (19) | ghi chú bài giảng §4 | Bốn câu mở cùng khuôn "… có vai trò riêng." | Bốn câu mở khác nhau | đã sửa ở R4 | chấp nhận |
+| nhẹ (20) | `dqn-training-loop.svg`, `X02`, `X02b`, `outline.md` | Glyph ε khác $\epsilon_{\mathrm{exp}}$; topic của hai trang bài tập | ϵ (U+03F5); topic-10 | đã sửa ở R4 | chấp nhận |
+
+- Bước R4 (biên tập viên): áp dụng 20 mục. Trang đổi: `L08-17`, `L08-10`, `L08-21`, `L08-18`, `X02`, `X02b` (mặt trang), ghi chú `L08-M4T`, `L08-18a`, `L08-20`, `X02`, `X02b`; trang mới `L08-19b`; hình `dqn-training-loop.svg`. Ghi chú bài giảng: đoạn hai mẫu trước Định nghĩa 08.10, phản ví dụ $Q_\theta=\theta^2$, bốn câu mở, Bài tập 08.2 đổi tên biến. `storyboard.md`: bảng hành trình mạch 4, mục `L08-19b`, bảng số đo "Rà lại mạch 4 (bước R4)". `check.py` mọi trang mạch 4 và `L08-M5T` ở 1600×900, 390×844: không tràn, không lỗi; viewer 0 lỗi KaTeX. `no-ai-slop` Edit, tự kiểm theo `eval.md`: đạt. Chờ điều phối viên duyệt.
+| R4 | mạch 4 (rà lại), `L08-19b` (mới) | chấp nhận; ngoại lệ dòng của `L08-19b` (dòng dữ liệu + bảng 4 hàng + câu hỏi + lời giải, ~45 âm tiết) chấp nhận, ghi vào storyboard ở bước kế | diff; truy dấu lại bảng $t=4,6,8,10$; đọc mã `X02b` với tên biến mới; xem ảnh `L08-19b`, `X02b` |

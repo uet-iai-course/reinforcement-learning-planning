@@ -60,10 +60,11 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 4 | `L08-18a` | Thuật toán DQN: đầu vào và khởi tạo | thêm (tách từ `L08-18`) | Đầu vào ($\gamma\in[0,1)$, bộ tối ưu, ngân sách $T$), bảng năm số nguyên dương mỗi số một dòng nghĩa, Đầu ra, Khởi tạo | 4.7 (S28) |
 | 4 | `L08-18` | Thuật toán DQN: tương tác và lưu | sửa | "Lặp khi $t<T$"; bước 1–4 mỗi bước một dòng (thăm dò, thực hiện, lưu với quan sát cuối, đặt lại khi $Z\lor U$ rồi tăng $t$); đầu vào và khởi tạo đã chuyển sang `L08-18a` (S28) | 4.8 (S29) |
 | 4 | `L08-19` | Thuật toán DQN: tối ưu và đồng bộ | sửa | Điều kiện tối ưu; bước 5–9 (rút đều, phép chọn theo hành động, đích trong $\operatorname{sg}$, cập nhật rồi tăng $k_{\mathrm{opt}}$, kiểm $C$); "Quay lại bước 1", dừng khi $t=T$ | 4.9 (S30) |
+| 4 | `L08-19b` | Ví dụ: truy dấu hai bộ đếm | thêm (R4) | Dữ kiện $N=6$, $b=2$, $N_{\mathrm{start}}=3$, $F=2$, $C=2$, $T=10$; bảng bốn hàng; Câu hỏi thứ tự kiểm $C$ | 4.10 (R4) |
 | 4 | `L08-16` | (bỏ; hình sang `L08-07c`, thứ tự sang ghi chú `L08-19`) | bỏ | Trùng bước 8–9 của giả mã; xóa ở S30 | — (S30) |
-| 4 | `L08-20` | Kích thước tensor của mini-batch Atari | sửa | "Nhắc lại:" bốn khung $H\times W$, $H=W=84$; hình vẽ lại với $[b,4,H,W]$; dòng kiểu; dòng thiết bị tính | 4.10 (S31) |
-| 4 | `X02` | Bài tập: lỗi cài đặt đích DQN | sửa | Đề: dòng giải nghĩa `step`, `final_obs`; mã lỗi hai phần (thu thập, mini-batch); Câu hỏi năm lỗi | 4.11 (S32) |
-| 4 | `X02b` | Bài tập: lỗi cài đặt đích DQN | thêm (tách lời giải) | "Lời giải:" một dòng tóm năm sửa; mã đã sửa | 4.12 (S32) |
+| 4 | `L08-20` | Kích thước tensor của mini-batch Atari | sửa | "Nhắc lại:" bốn khung $H\times W$, $H=W=84$; hình vẽ lại với $[b,4,H,W]$; dòng kiểu; dòng thiết bị tính | 4.11 (S31) |
+| 4 | `X02` | Bài tập: lỗi cài đặt đích DQN | sửa | Đề: dòng giải nghĩa `step`, `final_obs`; mã lỗi hai phần (thu thập, mini-batch); Câu hỏi năm lỗi | 4.12 (S32) |
+| 4 | `X02b` | Bài tập: lỗi cài đặt đích DQN | thêm (tách lời giải) | "Lời giải:" một dòng tóm năm sửa; mã đã sửa | 4.13 (S32) |
 | 5 | `L08-M5T` | 5. Bộ tối ưu theo gradient | thêm | Trang tiêu đề mạch, điểm vào mạch 5 | 5.0 (S33) |
 | 5 | `L08-22` | Vai trò của bộ tối ưu | sửa | "Nhu cầu:"; hình `optimizer-step.svg` (chuỗi $B_j\to L_{B_j}\to g_j\to$ Update $\to\theta_j$, $j=k_{\mathrm{opt}}$); công thức $g_j$, $\theta_j$; "Ký hiệu:"; câu R1-2; bỏ dẫn chiếu "bước 8 giả mã" | 5.1 (S34) |
 | 5 | `L08-23` | Hạ gradient ngẫu nhiên (SGD) | sửa | "Nhu cầu:"; công thức; hai thẻ (trạng thái phụ, bước theo tọa độ); ví dụ $g_j=(2;\,0{,}02)$, $\eta=0{,}1$ | 5.2 (S35) |
@@ -141,6 +142,29 @@ Dữ kiện truyền: hai mẫu của ví dụ xuyên suốt "mini-batch hai m�
 | Kiểm tra | `L08-14` | $N=6$, $\mathcal D$ chứa mẫu $3,\dots,8$, $b=2$ không hoàn lại | Xác suất $1/15$ cho cặp mẫu $4$, mẫu $5$; $1/3$ cho một cặp liền nhau; ba điều không bảo đảm | Không gộp. |
 
 Chuỗi truyền: Ví dụ 08.9 (cỡ mẫu hiệu dụng $\approx1{,}1$) → nhu cầu mẫu rải theo thời gian → Định nghĩa 08.7 → Mệnh đề 08.8 → Nhận xét 08.9, Ví dụ 08.12. Thời lượng: `L08-M3T` 0,5 phút, `L08-28` 3,5, `L08-13` 4, `L08-05r` 3,5, `L08-14` 3,5.
+
+##### Mạch 4, cụm "Hàm mất mát và dừng gradient" (khoảng 14 phút)
+
+| bước | mã trang | kiến thức hoặc dữ kiện đầu vào | sản phẩm học tập | gộp / không áp dụng |
+|---|---|---|---|---|
+| Vấn đề | `L08-17` ("Nhu cầu:") | $b$ cặp $(q_i,y_i)$ của mini-batch | Cần một hàm vô hướng của $\theta$ | Không gộp. |
+| Ví dụ dẫn nhập | (gộp) | Hai mẫu của ví dụ xuyên suốt đã có đích ở `L08-09`, `L08-12b`; số đầy đủ ở `X01` | Hai sai số trái dấu $1{,}5$ và $-0{,}5$ (ghi chú bài giảng, đoạn trước Định nghĩa 08.10) | Gộp: hình thức đứng trước ví dụ có số trên trang chiếu vì hai mẫu và đích của chúng đã quen từ mạch 2; ví dụ số đầy đủ là bài tập `X01`/`L08-21`. |
+| Trực quan | `L08-10` ("Nhắc lại:" bán gradient Bài 07), ghi chú `L08-17` (hồi quy về nhãn) | Q-learning bán gradient coi mục tiêu là hằng | Đích là nhãn, gradient chỉ qua dự đoán | Gộp vào hai trang. |
+| Hình thức | `L08-17`, `L08-10` | $q_i$, $y_i$, $\operatorname{sg}$, phép chọn theo hành động | Định nghĩa 08.10 (MSE), Định nghĩa 08.12 ($\operatorname{sg}$, phép chọn), hình hai đường tính | Không gộp. |
+| Ứng dụng | `L08-10b` | Ví dụ một tham số $Q_\theta=\theta$, $\theta=0$ | Dạng cài đặt $L_B$, gradient chỉ qua $q_i$; $-2$ so với $-0{,}2$ | Không gộp. |
+| Kiểm tra | `X01`, `L08-21` | Mini-batch hai mẫu chuyển, $\gamma=0{,}9$ | $y=(4{,}6;\,-2)$, $L_B=1{,}25$, $\partial L_B/\partial q=(-1{,}5;\,0{,}5)$ | Không gộp. |
+
+##### Mạch 4, cụm "Thuật toán DQN" (khoảng 16 phút)
+
+| bước | mã trang | kiến thức hoặc dữ kiện đầu vào | sản phẩm học tập | gộp / không áp dụng |
+|---|---|---|---|---|
+| Vấn đề + trực quan | `L08-11` | Mỗi bước môi trường sinh một mẫu chuyển, mỗi bước tối ưu cần một mini-batch | Sơ đồ hai vòng, hai bộ đếm $t$, $k_{\mathrm{opt}}$ | Gộp trên một trang bằng hình. |
+| Hình thức | `L08-18a`, `L08-18`, `L08-19` | Đầu vào, năm số nguyên dương, bước 1–9 | Thuật toán 08.13 | Không gộp. |
+| Ví dụ + kiểm tra | `L08-19b` | $N=6$, $b=2$, $N_{\mathrm{start}}=3$, $F=2$, $C=2$, $T=10$ | Tối ưu tại $t=4,6,8,10$, đồng bộ tại $t=6,10$; thứ tự sai cho $t=4,8$ | Ví dụ và câu hỏi chung một trang. |
+| Ứng dụng | `L08-20` | Quan sát Atari bốn khung $84\times84$ | Kích thước và kiểu của mọi mảng trong một mini-batch | Không gộp. |
+| Kiểm tra | `X02`, `X02b` | Đoạn mã có năm lỗi | Mã đã sửa và lý do từng sửa | Không gộp. |
+
+Chuỗi truyền: Định nghĩa 08.10 → Định nghĩa 08.12 → Bài tập 08.1 → Thuật toán 08.13 → Ví dụ 08.15 → Nhận xét 08.14 → Bài tập 08.2. Thời lượng mạch 4 tổng 30 phút: `L08-M4T` 0,5; `L08-17` 3; `L08-10` 3; `L08-10b` 2,5; `X01`, `L08-21` 5; `L08-11` 2,5; `L08-18a` 2; `L08-18` 2; `L08-19` 2,5; `L08-19b` 2; `L08-20` 2; `X02`, `X02b` 3.
 
 ### Mục từng trang (đợt sửa 2026-10-22)
 
@@ -525,6 +549,35 @@ Quyết định R1 mục 5 (khó khăn không lồi được hứa ở ghi chú 
 - **Mật độ:** trước sửa 17 âm tiết (hai thẻ), 1 công thức hiển thị hai vế, ghi chú diễn giả 32 âm tiết. Sau sửa 38 âm tiết, 6 khối chữ (12; thẻ 3 + 5 và 4 + 6; ví dụ 8), 1 công thức hiển thị, ghi chú diễn giả 109 âm tiết. Đáy nội dung 600 px.
 - **Ghi chú bài giảng:** phần SGD của topic-14 viết lại thành tiểu mục "Hạ gradient ngẫu nhiên (SGD)": câu nhu cầu; Định nghĩa 08.16 (trạng thái phụ rỗng; $\eta_j$ khi đổi theo bước); đoạn đọc (kỳ vọng của $g_j$ là gradient của hàm mất mát trung bình trên $\mathcal D$; chi phí bộ nhớ; hệ số chung); Ví dụ 08.19 ($\tfrac12(100\theta_1^2+\theta_2^2)$, $\theta_{j-1}=(0{,}02;\,0{,}02)$, $\eta=0{,}1$: $\theta_j=(-0{,}18;\,0{,}018)$, hệ số $-9$ và $0{,}9$; ngưỡng $\eta<0{,}02$, $0{,}98^{100}\approx13\%$); "Trong thực hành." (lịch giảm; điều kiện $\sum\eta_j=\infty$, $\sum\eta_j^2<\infty$ không áp dụng trực tiếp cho DQN; dẫn sang RMSprop). Số tiếp theo: Định nghĩa/Nhận xét/Thuật toán 08.17; Ví dụ 08.20.
 
+#### `L08-19b` Ví dụ: truy dấu hai bộ đếm (bước R4, trang mới)
+
+- **Trang muốn nói gì:** với $N=6$, $b=2$, $N_{\mathrm{start}}=3$, $F=2$, $C=2$, $T=10$, bước tối ưu chạy tại $t=4,6,8,10$ ($\lvert\mathcal D\rvert=4,6,6,6$; $k_{\mathrm{opt}}=1,2,3,4$) và đồng bộ tại $t=6$, $t=10$; kiểm $C$ trước khi tăng $k_{\mathrm{opt}}$ thì đồng bộ tại $t=4$, $t=8$ và $\theta^-$ đầu tiên chỉ giữ một bước tối ưu.
+- **Phục vụ mạch nào và thế nào:** mạch 4, bước ví dụ và kiểm tra của cụm "Thuật toán DQN" ngay sau giả mã `L08-18a`–`L08-19`; trùng số với Ví dụ 08.15 của ghi chú bài giảng.
+- **Vấn đề còn lại trước sửa:** cụm thuật toán chưa có ví dụ số trên trang chiếu (rà lại mạch 4, mục 5; bảng hành trình mạch 4, mục 4).
+- **Quyết định:** thêm theo quyết định R4 mục 5: dòng dữ kiện, bảng `t | |D| | k_opt sau bước 8 | đồng bộ ở bước 9`, "Câu hỏi:" về thứ tự kiểm $C$, "Lời giải:" trong `.fragment`. Đề và lời giải vừa một trang (đáy 683 px) nên không tách. Ghi chú diễn giả: $\lvert\mathcal D\rvert=\min(t,6)$; bỏ $t=2$ vì $\lvert\mathcal D\rvert=2<3$; dừng tại $t=10$; giá trị $k_{\mathrm{opt}}$ khi kiểm sai thứ tự.
+- **Liên kết:** trước là `L08-19` (bước 5–9, thứ tự cập nhật → tăng $k_{\mathrm{opt}}$ → kiểm $C$); sau là `L08-20` (kích thước mảng). Mục tiêu hỗ trợ: mục tiêu 3 (truy dấu một vòng DQN với hai bộ đếm).
+- **Mật độ:** khoảng 45 âm tiết (script 34 cộng 11 trong `.check`), dòng dữ kiện hai dòng hiển thị, bảng bốn hàng, hộp câu hỏi một dòng, một dòng lời giải; 0 công thức hiển thị; ghi chú diễn giả 80 âm tiết. Đáy nội dung 683 px.
+
+#### Rà lại mạch 4 (bước R4)
+
+Áp dụng toàn bộ 20 quyết định của điều phối viên sau lượt rà chỉ đọc mạch 4 (xem `review-log.md`, mục "Rà lại mạch 4"). Số đo dưới đây thay số "sau sửa" trong mục của từng trang. Âm tiết theo `dens.py` (chưa cộng chữ trong hộp `.check`); đáy đo ở 1280×720.
+
+| trang | âm tiết trước → sau | ghi chú diễn giả trước → sau | đáy trước → sau (px) | thay đổi chính |
+|---|---:|---:|---:|---|
+| `L08-M4T` | 35 → 35 | 90 → 90 | 582 → 582 | ghi chú: "gradient không đi qua đích" (mục 7) |
+| `L08-17` | 57 → 59 | 136 → 136 | 683 → 683 | "Lưu ý:" mạng nhiều tầng, nói chung không lồi (mục 1); "Ký hiệu:" $i$ đánh số mẫu, không phải thời điểm (mục 10, câu viết lại để giữ một dòng) |
+| `L08-10` | 43 → 44 | 102 → 102 | 664 → 664 | "giá trị của hành động đã lưu" (mục 8); "trong PyTorch" (mục 9) |
+| `L08-21` | 23 → 28 | 84 → 100 | 678 → 688 | $m_i=\max_{a'}Q_{\theta^-}(O'_i,a')$ trong dòng "Lời giải:" (mục 11); dòng $L_B$ chuyển thành hàng cuối của bảng để trang vừa khung |
+| `L08-11` | 31 → 31 | 128 → 128 | 684 → 684 | hình: glyph $\epsilon$ (U+03F5) (mục 20) |
+| `L08-18a` | 59 → 59 | 123 → 137 | 686 → 686 | ghi chú: "có thể gồm $b$ mẫu khác nhau (bắt buộc khi rút không hoàn lại)", "quy tắc cập nhật cụ thể … ở phần 5" (mục 14, 15) |
+| `L08-18` | 43 → 48 | 140 → 140 | 612 → 612 | bước 1: "$O_t$ là quan sát hiện hành" (mục 12) |
+| `L08-19b` | mới → 34 | mới → 80 | mới → 683 | trang mới (mục 5) |
+| `L08-20` | 27 → 27 | 134 → 134 | 678 → 678 | ghi chú: `max(1).values` (mục 13) |
+| `X02` | 21 → 21 | 67 → 79 | 674 → 674 | mã: biến mini-batch `ob, ab, rb, ob2, zb, ub` (mục 3); ghi chú: ba khâu, hậu tố `b` (mục 16); topic-10 (mục 20) |
+| `X02b` | 12 → 11 | 112 → 157 | 608 → 608 | mã đổi biến (mục 3); "Lời giải:" `max(1).values`, bỏ "đích trong" để giữ một dòng (mục 13); ghi chú đường gradient (mục 2); topic-10 |
+
+Bảng hành trình mạch 4 (mục 4) ở mục "Hành trình khái niệm (đợt sửa 2026-10-22)"; hai bảng cũ "2. Đích bootstrap và loss DQN", "4. Vòng DQN hoàn chỉnh" ghi "bản trước". Ghi chú bài giảng: đoạn hai mẫu trước Định nghĩa 08.10 (mục 6); câu "Tính phi tuyến … chưa đủ" với phản ví dụ $Q_\theta=\theta^2$, $y<0$ (mục 1); bốn câu mở "… có vai trò riêng." ở phần 4 viết lại (mục 19); $N_{\mathrm{start}}\ge b$ (mục 14); câu dẫn Bài tập 08.2 ở mục topic-08 (mục 18); Bài tập 08.2 đổi tên biến mini-batch, đề nêu nghĩa sáu mảng, Câu (b), (d), (e) và "Kiểm tra lại." theo tên mới (mục 3, 17). `outline.md`: `X02`, `X02b`, `L08-19b` vào topic-10.
+
 #### Rà lại mạch 3 (bước R3)
 
 Áp dụng toàn bộ 18 quyết định của điều phối viên sau lượt rà chỉ đọc mạch 3 (xem `review-log.md`, mục "Rà lại mạch 3"). Số đo dưới đây thay số "sau sửa" trong mục của từng trang. Âm tiết gồm cả chữ trong hộp `.check` và cộng 1 cho mỗi "mini&#8209;batch"; đáy đo ở 1280×720.
@@ -622,7 +675,7 @@ Tuyến chính có 110 phút, cộng 10 phút linh hoạt = 120 phút chính. Ba
 
 Dữ kiện truyền xuyên cụm: $o$, $\mathcal A$ và $\mathbf q_\theta(o)$ từ `L08-07` được giữ nguyên ở `L08-20`, `L08-31` và `L08-32`.
 
-##### 2. Đích bootstrap và loss DQN
+##### 2. Đích bootstrap và loss DQN (bản trước, thay bằng bảng mạch 4 của đợt sửa)
 
 | bước | mã trang | kiến thức hoặc dữ kiện đầu vào | sản phẩm học tập | gộp / không áp dụng |
 |---|---|---|---|---|
@@ -648,7 +701,7 @@ Dữ kiện truyền xuyên cụm: quy ước batch $(O_i,A_i,R_i,O'_i,Z_i,U_i)$
 
 Dữ kiện truyền xuyên cụm: chuyển tiếp theo thời gian ở `L08-12` được lưu tại `L08-13`, rồi sau khi lấy batch đổi tên chỉ số sang $(O_i,A_i,R_i,O'_i,Z_i,U_i)$ ở `L08-19`.
 
-##### 4. Vòng DQN hoàn chỉnh
+##### 4. Vòng DQN hoàn chỉnh (bản trước, thay bằng bảng mạch 4 của đợt sửa)
 
 | bước | mã trang | kiến thức hoặc dữ kiện đầu vào | sản phẩm học tập | gộp / không áp dụng |
 |---|---|---|---|---|
