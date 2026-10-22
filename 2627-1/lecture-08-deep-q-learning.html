@@ -13,30 +13,30 @@
 <body><div class="reveal lecture-deck"><div class="slides">
 
 <section>
-  <section data-slide-id="L08-01" data-note-topic-id="lec-08-topic-01">
+  <section data-slide-id="L08-01" data-note-topic-id="lec-08-topic-17">
 <h1>Deep Q-Learning</h1>
 <h3>Bài 08 · Học tăng cường</h3>
 <div class="box">Mạng nơ-ron thay bảng và hàm tuyến tính để biểu diễn giá trị hành động; mạng mục tiêu (target network) và bộ nhớ phát lại (experience replay) giảm bất ổn nhưng không bảo đảm hội tụ.</div>
 <p>Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội</p>
 <p>Năm học 2026–2027, học kỳ 1</p>
-<aside class="notes"><p>Bài 07 thay bảng bằng hàm tuyến tính $\hat q(s,a,w)=x(s,a)^\top w$ với đặc trưng chọn trước. Q-learning bán gradient trên hàm đó có đủ bộ ba bất ổn (xấp xỉ hàm, bootstrap, học khác chính sách) và có thể phân kỳ. Ở Bài 08, mạng nơ-ron $Q_\theta$ nhận quan sát và trả về một giá trị cho mỗi hành động trong tập hữu hạn; thuật toán Deep Q-Network (DQN) ghép đích hồi quy có mặt nạ kết thúc, bộ nhớ phát lại, hàm mất mát với dừng gradient và mạng mục tiêu. Bộ nhớ phát lại giảm tương quan giữa các mẫu, mạng mục tiêu làm chậm sự thay đổi của đích. Ba yếu tố của bộ ba bất ổn vẫn còn, nên DQN không có định lý hội tụ tổng quát và mọi kết luận về hiệu quả của nó dựa trên thí nghiệm.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 1, 12–13, 29–34; Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015).</p></aside>
+<aside class="notes"><p>Bài 07 thay bảng bằng hàm tuyến tính $\hat q(s,a,w)=x(s,a)^\top w$ với đặc trưng chọn trước. Q-learning bán gradient trên hàm đó có đủ bộ ba bất ổn (xấp xỉ hàm, bootstrap, học khác chính sách) và có thể phân kỳ. Ở Bài 08, mạng nơ-ron $Q_\theta$ nhận quan sát và trả về một giá trị cho mỗi hành động trong tập hữu hạn; thuật toán Deep Q-Network (DQN) ghép đích hồi quy có mặt nạ kết thúc, bộ nhớ phát lại, hàm mất mát với dừng gradient và mạng mục tiêu. Bộ nhớ phát lại giảm tương quan giữa các mẫu, mạng mục tiêu làm chậm sự thay đổi của đích. Ba yếu tố của bộ ba bất ổn vẫn còn, nên DQN không có định lý hội tụ tổng quát, và các kết luận về hiệu quả của DQN gốc chủ yếu dựa trên thí nghiệm.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 1, 12–13, 29–34; Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015).</p></aside>
 </section>
 <section data-slide-id="L08-01b" data-note-topic-id="lec-08-topic-13">
 <h2>Tiên quyết và quy ước</h2>
 <p><strong>Nhắc lại:</strong> Q-learning dạng bảng trên quá trình quyết định Markov (MDP) hữu hạn (Bài&nbsp;06):</p>
-<div>$$Q(S_t,A_t)\leftarrow Q(S_t,A_t)+\alpha_t\Bigl[R_{t+1}+\gamma\max_{a'}Q(S_{t+1},a')-Q(S_t,A_t)\Bigr],$$</div>
+<div>$$Q_{t+1}(S_t,A_t)=Q_t(S_t,A_t)+\alpha_t\bigl[R_{t+1}+\gamma\max_{a'}Q_t(S_{t+1},a')-Q_t(S_t,A_t)\bigr]$$</div>
 <p>với $Q(s,\cdot)=0$ tại trạng thái kết thúc $s$.</p>
-<p><strong>Nhắc lại:</strong> dữ liệu theo hành vi $\varepsilon$-tham lam, chính sách đích tham lam: học khác chính sách.</p>
-<p>Không cần tỉ số lấy mẫu quan trọng: $A_t$ đã cho; phần tại $S_{t+1}$ tính trọn bằng $\max_{a'}$.</p>
+<p><strong>Nhắc lại:</strong> hành vi $\varepsilon$-tham lam, chính sách đích tham lam: học khác chính sách (off&#8209;policy).</p>
+<p>Không cần tỉ số lấy mẫu quan trọng (importance sampling ratio): $A_t$ là đối số của ô cập nhật; tại $S_{t+1}$ dùng $\max_{a'}$.</p>
 <aside class="notes"><p>Mỗi bước cập nhật đúng một ô $(S_t,A_t)$ với bước học $\alpha_t$ của riêng cặp đó; các ô khác giữ nguyên. Chính sách hành vi $\varepsilon$-tham lam sinh dữ liệu, còn chính sách đích là chính sách tham lam theo $Q$, nên Q-learning học khác chính sách. Với chính sách đích tham lam, $\max_{a'}Q(S_{t+1},a')$ đúng bằng kỳ vọng của $Q(S_{t+1},\cdot)$ theo chính sách đích. Tỉ số lấy mẫu quan trọng không cần vì hai lẽ: $A_t$ là đối số điều kiện của ô $Q(S_t,A_t)$, ô đang ước lượng $q_*(S_t,A_t)$; hành động tại $S_{t+1}$ không được lấy mẫu từ hành vi mà được tính trọn bằng phép cực đại. Hành vi vẫn quyết định cặp nào được cập nhật: cặp không bao giờ được chọn giữ mãi giá trị khởi tạo.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 3–7; ghi chú bài giảng Bài 06, Định nghĩa 06.3, 06.14, 06.15, Nhận xét 06.17; Sutton và Barto (2018), §6.5, §6.6, §7.3.</p></aside>
 </section>
 <section data-slide-id="L08-01b2" data-note-topic-id="lec-08-topic-13">
 <h2>Tiên quyết và quy ước</h2>
 <p><strong>Nhắc lại:</strong> $Q_t\to q_*$ (Bài&nbsp;06) khi:</p>
-<ul><li>MDP hữu hạn, phần thưởng bị chặn, $\gamma&lt;1$;</li><li>mọi cặp cập nhật vô hạn lần, bước Robbins–Monro theo cặp.</li></ul>
+<ul><li>MDP hữu hạn, phần thưởng bị chặn, $\gamma&lt;1$, mẫu từ chính MDP;</li><li>mọi cặp cập nhật vô hạn lần, $\sum_n\alpha_n=\infty$, $\sum_n\alpha_n^2&lt;\infty$ theo cặp.</li></ul>
 <p><strong>Nhắc lại:</strong> với $\hat q(s,a,w)=x(s,a)^\top w$, Q-learning bán gradient (semi-gradient) có bộ ba bất ổn (deadly triad), có thể phân kỳ (Bài&nbsp;07).</p>
-<p><strong>Nhắc lại:</strong> mạng nhiều tầng (MLP), mạng tích chập (CNN) học $\theta$ bằng lan truyền ngược (backpropagation).</p>
-<aside class="notes"><p>Định lý hội tụ của Bài 06 cho $Q_t(s,a)\to q_*(s,a)$ hầu chắc chắn với mọi cặp. MDP hữu hạn cho phép xét từng ô; $\gamma&lt;1$ và phần thưởng bị chặn làm toán tử Bellman tối ưu co; cập nhật vô hạn lần với bước Robbins–Monro theo cặp khử nhiễu và xóa dần giá trị khởi tạo. Bài 07 thay bảng bằng hàm tuyến tính theo đặc trưng $x(s,a)$ và cập nhật bán gradient, tức coi mục tiêu là hằng khi lấy gradient. Khi có đồng thời xấp xỉ hàm, bootstrap và học khác chính sách, không còn bảo đảm hội tụ chung và có ví dụ tham số tăng không chặn. Mạng nhiều tầng (multilayer perceptron) và mạng tích chập (convolutional neural network) là các hàm khả vi theo $\theta$; lan truyền ngược tính gradient của một hàm mất mát vô hướng theo $\theta$. Bài 08 chỉ dùng mạng như một hàm khả vi.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 06, Định nghĩa 06.19, Định lý 06.21; Bài 07, Định nghĩa 07.35, Mệnh đề 07.37, Định nghĩa 07.38; Sutton và Barto (2018), §11.3; Goodfellow, Bengio và Courville (2016), Chương 6 và 9.</p></aside>
+<p><strong>Nhắc lại:</strong> mạng nhiều tầng, mạng tích chập (CNN) học $\theta$ bằng lan truyền ngược (backpropagation).</p>
+<aside class="notes"><p>Định lý hội tụ của Bài 06 cho $Q_t(s,a)\to q_*(s,a)$ hầu chắc chắn với mọi cặp. $\gamma&lt;1$ làm toán tử Bellman tối ưu co theo chuẩn cực đại; phần thưởng bị chặn giữ mọi giá trị hữu hạn; mẫu sinh từ chính MDP để mục tiêu có đúng kỳ vọng; cập nhật vô hạn lần với bước Robbins–Monro theo cặp khử nhiễu và xóa dần giá trị khởi tạo. Bài 07 thay bảng bằng hàm tuyến tính theo đặc trưng $x(s,a)$; cập nhật bán gradient coi mục tiêu là hằng khi lấy gradient. Khi có đủ xấp xỉ hàm, bootstrap và học khác chính sách, không còn bảo đảm chung và có ví dụ tham số tăng không chặn. Mạng nhiều tầng (multilayer perceptron, MLP) và mạng tích chập (convolutional neural network) khả vi theo $\theta$; lan truyền ngược tính gradient theo $\theta$; ở đây mạng chỉ đóng vai một hàm khả vi.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 06, Định nghĩa 06.19, Định lý 06.21; Bài 07, Định nghĩa 07.35, Mệnh đề 07.37, Định nghĩa 07.38; Sutton và Barto (2018), §11.3; Goodfellow, Bengio và Courville (2016), Chương 6 và 9.</p></aside>
 </section>
 <section data-slide-id="L08-01c" data-note-topic-id="lec-08-topic-13">
 <h2>Tiên quyết và quy ước</h2>
@@ -44,24 +44,24 @@
 <table><thead><tr><th>Ký hiệu</th><th>Nghĩa</th></tr></thead><tbody>
 <tr><td>$O_t\in\mathcal O$, $A_t\in\mathcal A$, $R_{t+1}$</td><td>quan sát và hành động ở bước $t$; phần thưởng nhận sau $A_t$; $\mathcal A$ hữu hạn</td></tr>
 <tr><td>$S_t$</td><td>trạng thái; dùng thay $O_t$ khi $O_t$ đủ Markov</td></tr>
-<tr><td>$t$, $k_{\mathrm{opt}}$, $i$</td><td>bước môi trường; bước tối ưu; mẫu $i=1,\dots,b$ trong mini&#8209;batch</td></tr>
+<tr><td>$t$, $k_{\mathrm{opt}}$, $i$</td><td>bước môi trường; bước tối ưu; mẫu $i=1,\dots,b$ trong mini&#8209;batch cỡ $b$</td></tr>
 <tr><td>$\epsilon_{\mathrm{exp}}$, $\epsilon_{\mathrm{opt}}$</td><td>xác suất thăm dò ($\varepsilon$ của Bài&nbsp;06); hằng số ổn định của bộ tối ưu (optimizer)</td></tr>
 </tbody></table>
-<aside class="notes"><p>Mạng nhận quan sát $O_t$, chẳng hạn vài khung ảnh gần nhất. Chỉ khi $O_t$ chứa đủ thông tin để dự đoán phần thưởng và quan sát tiếp theo mới viết $S_t$, và khi đó mục tiêu Bellman của Bài 06 áp dụng nguyên dạng. $R_{t+1}$ gắn với chuyển từ bước $t$ sang $t+1$. Bài dùng $\gamma&lt;1$ như giả thiết của định lý hội tụ dạng bảng. Hai bộ đếm tách nhau: $t$ tăng sau mỗi bước môi trường, $k_{\mathrm{opt}}$ chỉ tăng sau mỗi lần cập nhật $\theta$. Chỉ số $i$ không mang thứ tự thời gian, nên mẫu thứ $i$ viết $R_i$, $O'_i$ thay cho $R_{t+1}$, $O_{t+1}$. Hai chữ epsilon có hai vai: $\epsilon_{\mathrm{exp}}$ là xác suất chọn hành động ngẫu nhiên, $\epsilon_{\mathrm{opt}}$ là hằng số dương trong mẫu số của RMSprop và Adam. $\theta$ đóng vai của $w$ ở Bài 07.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 06, Định nghĩa 06.3, Định lý 06.21; Bài 07, Bảng ký hiệu; bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 14–22.</p></aside>
+<aside class="notes"><p>Mạng nhận quan sát $O_t$, chẳng hạn vài khung ảnh gần nhất. Chỉ khi $O_t$ chứa đủ thông tin để dự đoán phần thưởng và quan sát tiếp theo mới viết $S_t$, và khi đó mục tiêu Bellman của Bài 06 áp dụng nguyên dạng. $R_{t+1}$ gắn với chuyển từ bước $t$ sang $t+1$. Giả thiết $\gamma&lt;1$ lấy từ định lý hội tụ dạng bảng. Hai bộ đếm tách nhau: $t$ tăng sau mỗi bước môi trường, $k_{\mathrm{opt}}$ chỉ tăng sau mỗi lần cập nhật $\theta$. Chỉ số $i$ không mang thứ tự thời gian, nên mẫu thứ $i$ viết $R_i$, $O'_i$ thay cho $R_{t+1}$, $O_{t+1}$. Hai chữ epsilon có hai vai: $\epsilon_{\mathrm{exp}}$ là xác suất chọn hành động ngẫu nhiên, $\epsilon_{\mathrm{opt}}$ là hằng số dương trong mẫu số của RMSprop và Adam. $\theta$ đóng vai của $w$ ở Bài 07.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 06, Định nghĩa 06.3, Định lý 06.21; Bài 07, Bảng ký hiệu; bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 14–22.</p></aside>
 </section>
-<section data-slide-id="L08-02" data-note-topic-id="lec-08-topic-01">
+<section data-slide-id="L08-02" data-note-topic-id="lec-08-topic-17">
 <h2>Mục tiêu học tập</h2>
 <ol>
 <li>Đọc đầu ra của mạng; tính đích, phân biệt kết thúc với cắt ngắn.</li>
 <li>Nêu tác dụng, giới hạn của bộ nhớ phát lại.</li>
 <li>Tính hàm mất mát trên mini&#8209;batch; truy dấu một vòng DQN.</li>
 <li>Viết ba bộ tối ưu theo tọa độ; nêu điều chúng không sửa được.</li>
-<li>Tính độ nhảy của đích khi đồng bộ; nêu giả thiết hội tụ còn thiếu.</li>
+<li>Tính độ thay đổi của đích khi đồng bộ; nêu giả thiết hội tụ còn thiếu.</li>
 <li>Giải một bước DQN có kết thúc, cắt ngắn; nêu giả thiết đã dùng.</li>
 </ol>
-<aside class="notes"><p>Sáu mục tiêu theo thứ tự các mạch 2 đến 7; mỗi mục kết thúc bằng một sản phẩm. Mục 1: đọc vector giá trị hành động của mạng, tính đích của hai mẫu chuyển, một mẫu kết thúc. Mục 2: nêu bộ nhớ phát lại giảm gì, không bảo đảm gì; tính xác suất hai mẫu liền nhau cùng vào một mini-batch. Mục 3: bảng lời giải mini-batch hai mẫu và bản sửa lỗi cài đặt đích. Mục 4: viết hạ gradient ngẫu nhiên (SGD), RMSprop, Adam theo từng tọa độ và nêu rằng bộ tối ưu không đổi đích, dữ liệu hay lớp hàm. Mục 5: độ thay đổi của đích một mẫu khi đồng bộ, tức khi sao chép tham số sang mạng mục tiêu, và lý do DQN vẫn có bộ ba bất ổn. Mục 6 vận dụng năm mục trước vào một bài toán CartPole.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 2.</p></aside>
+<aside class="notes"><p>Sáu mục tiêu theo thứ tự các phần 2 đến 7; mỗi mục kết thúc bằng một sản phẩm. Mục 1: đọc vector giá trị hành động, tính đích của hai mẫu chuyển, một mẫu kết thúc. Mục 2: bộ nhớ phát lại giảm gì, không bảo đảm gì; tính xác suất hai mẫu liền nhau cùng vào một mini-batch. Mục 3: lời giải mini-batch hai mẫu và bản sửa lỗi cài đặt đích. Mục 4: viết hạ gradient ngẫu nhiên (SGD), RMSprop, Adam theo từng tọa độ và nêu rằng lựa chọn bộ tối ưu không đổi công thức đích, cách thu thập dữ liệu hay lớp hàm. Mục 5: độ thay đổi của đích một mẫu khi đồng bộ, tức khi sao chép tham số sang mạng mục tiêu, và lý do DQN vẫn có bộ ba bất ổn. Mục 6 vận dụng năm mục trước trên CartPole.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 2.</p></aside>
 </section>
-<section data-slide-id="L08-02b" data-note-topic-id="lec-08-topic-01">
+<section data-slide-id="L08-02b" data-note-topic-id="lec-08-topic-17">
 <h2>Nội dung</h2>
 <ol>
 <li><a href="#/1">Mở đầu</a></li>
@@ -75,17 +75,17 @@
 <p>Đọc trước: Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015).</p>
 <aside class="notes"><p>Phần 2 thay bảng bằng một mạng trả về giá trị của mọi hành động và biến mục tiêu Q-learning thành đích hồi quy có mặt nạ kết thúc. Phần 3 lưu các mẫu chuyển rồi lấy mẫu đều thành mini-batch. Phần 4 viết hàm mất mát trên mini-batch, chặn gradient qua đích và ghép thành thuật toán DQN. Phần 5 so sánh ba quy tắc đổi gradient thành bước tham số. Phần 6 đặt bộ nhớ phát lại và mạng mục tiêu cạnh các nguồn bất ổn và nêu phạm vi bảo đảm. Phần 7 đặt mỗi kết quả cạnh giả thiết không được bỏ. Trong Sutton và Barto, §11.3 bàn về bộ ba bất ổn, §16.5 về DQN trên trò chơi Atari; bài báo của Mnih và cộng sự mô tả thuật toán gốc.</p><p class="note-source"><strong>Nguồn:</strong> Sutton và Barto (2018), §11.3 "The Deadly Triad", §16.5 "Human-level Video Game Play"; Mnih và cộng sự (2015), Nature 518, 529–533.</p></aside>
 </section>
-<section data-slide-id="L08-02c" data-note-topic-id="lec-08-topic-01">
+<section data-slide-id="L08-02c" data-note-topic-id="lec-08-topic-17">
 <h2>Vấn đề trung tâm</h2>
-<div class="box">Học $q_*$ khi quan sát là ảnh, hành động hữu hạn, không có mô hình.</div>
+<div class="box">Học $q_*$ khi quan sát là vector liên tục hoặc ảnh, hành động hữu hạn, không có mô hình.</div>
 <ol start="2">
-<li>Mạng cho giá trị mọi hành động; đích từ bản sao mạng cố định.</li>
-<li>Lấy đều từ bộ nhớ phát lại: tương quan giảm, chưa độc lập.</li>
-<li>Dừng gradient ở đích: chỉ dự đoán nhận gradient.</li>
-<li>Bộ tối ưu không sửa đích hay dữ liệu.</li>
-<li>Đủ bộ ba bất ổn: không bảo đảm hội tụ tổng quát.</li>
+<li>Mạng cho giá trị mọi hành động; đích từ bản sao đồng bộ định kỳ.</li>
+<li>Khi lấy đều từ bộ nhớ phát lại, tương quan giảm, mẫu chưa độc lập.</li>
+<li>Khi dừng gradient ở đích, chỉ dự đoán nhận gradient.</li>
+<li>Bộ tối ưu không loại được nguồn bất ổn ở đích, dữ liệu, lớp hàm.</li>
+<li>Khi đủ bộ ba bất ổn, không bảo đảm hội tụ tổng quát.</li>
 </ol>
-<aside class="notes"><p>Dòng số $N$ là câu trả lời có điều kiện của phần $N$. Bài giảng gốc nêu bốn khó khăn khi thay bảng bằng mạng: hàm mất mát không lồi theo tham số, nên không có bảo đảm hội tụ toàn cục (phần 4–5); mục tiêu bootstrap phụ thuộc chính mạng đang học (phần 2 và 6); phân phối dữ liệu đổi theo chính sách hành vi (phần 3 và 6); và bộ ba bất ổn (phần 6). Hai cận độ phức tạp mẫu ở trang 9 và 11 của bài giảng gốc không nêu mô hình lấy mẫu, chuẩn đo sai số, xác suất thành công và điều kiện bao phủ, nên không dùng được như định lý. Hai ý vẫn dùng ở phần sau: số ô của bảng tăng theo số cặp trạng thái–hành động; xấp xỉ hàm cần thêm giả thiết cấu trúc mới có bảo đảm.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 8–13; Sutton và Barto (2018), §11.3.</p></aside>
+<aside class="notes"><p>Dòng số $N$ là câu trả lời có điều kiện của phần $N$. Bài giảng gốc nêu bốn khó khăn khi thay bảng bằng mạng: hàm mất mát không lồi theo tham số, nên không có bảo đảm hội tụ toàn cục (phần 4–5); mục tiêu bootstrap phụ thuộc chính mạng đang học (phần 2 và 6); phân phối dữ liệu đổi theo chính sách hành vi (phần 3 và 6); và bộ ba bất ổn (phần 6). Hai cận độ phức tạp mẫu ở trang 9 và 11 của bài giảng gốc không nêu mô hình lấy mẫu và xác suất thành công, chỉ nêu định tính điều kiện khám phá, nên không dùng được như định lý. Hai ý vẫn dùng ở phần sau: số ô của bảng tăng theo số cặp trạng thái–hành động; xấp xỉ hàm cần thêm giả thiết cấu trúc mới có bảo đảm.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 8–13; Sutton và Barto (2018), §11.3.</p></aside>
 </section>
 </section>
 
@@ -100,7 +100,7 @@
 </section>
   <section data-slide-id="L08-03" data-note-topic-id="lec-08-topic-01">
 <h2>Giới hạn của bảng giá trị hành động</h2>
-<p>Muốn dùng Q-learning khi quan sát là ảnh, phải thay bảng.</p>
+<p>Muốn dùng Q-learning khi quan sát là vector liên tục hoặc ảnh, phải thay bảng.</p>
 <p><strong>Ví dụ.</strong> Lunar Lander: $9\,216$ ô trạng thái; sau $2\,000$ lượt, chỉ $1\,896$ ô có mẫu.</p>
 <p>Bảng $Q$: $\lvert\mathcal S\rvert\lvert\mathcal A\rvert=9\,216\cdot4=36\,864$ ô; với ảnh, không lập được bảng.</p>
 <img class="figure short" src="img/lec-08/table-vs-dqn.svg" alt="Bên trái: bảng minh họa 4 hàng, 5 cột, 4 trong 20 ô có mẫu (đánh dấu chấm), 16 ô chưa có mẫu; mỗi ô lưu độc lập. Bên phải: quan sát o vào mạng Q theta, mạng trả về Q theta của o với a1 đến a4; tham số theta dùng chung."/>

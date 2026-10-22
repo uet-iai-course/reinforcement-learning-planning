@@ -4,7 +4,7 @@ Tệp này giữ các chỉ dẫn biên tập không đưa lên mặt trang chi�
 
 ## Các quyết định phải giữ
 
-- Không đưa hai cận độ phức tạp mẫu ở trang nguồn 9 và 11 trở lại phần chính. Chúng thiếu mô hình lấy mẫu, chuẩn sai số, xác suất thành công, điều kiện bao phủ và thuật toán cụ thể.
+- Không đưa hai cận độ phức tạp mẫu ở trang nguồn 9 và 11 trở lại phần chính. Chuẩn sai số có ở trang 8 ($V^\pi(s)\ge V^*(s)-\epsilon$ với mọi $s$), nhưng hai cận thiếu mô hình lấy mẫu và xác suất thành công, chỉ nêu định tính điều kiện khám phá và bao phủ; cận thứ hai không gắn với một thuật toán cụ thể.
 - Dùng $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$ cho dòng thời gian tương tác. Sau khi lấy batch, đổi sang đúng một quy ước $(O_i,A_i,R_i,O'_i,Z_i,U_i)$, $i=1,\ldots,b$; không dùng $R_{i+1}$ hoặc $O_{i+1}$ trong công thức batch.
 - $Z$ phải biểu diễn kết thúc của MDP đang mô hình hóa; $U$ là cắt ngắn ngoài mô hình. Với nhiệm vụ tiếp diễn bị giới hạn thu thập, reset khi $Z\lor U$ nhưng chỉ dùng $1-Z$ trong mục tiêu bootstrap.
 - Với API tự reset, lưu `final_observation` hoặc `terminal_observation` làm $O_{t+1}$ trước khi dùng quan sát đầu của episode mới. Bài `X02` giả sử `final_observation` đúng là quan sát cuối của chuyển tiếp.

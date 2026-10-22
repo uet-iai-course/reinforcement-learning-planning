@@ -380,3 +380,33 @@ Nguồn phát hiện: CT = rà cấu trúc–mạch, SV = rà sinh viên–mật
 | S8 | `L08-03`, `table-vs-dqn.svg` | chấp nhận; chấp nhận cách tách $9\,216$ ô trạng thái và $36\,864$ ô bảng $Q$ (bốn hành động) | diff; tính lại số; xem ảnh 1600 |
 - Bước S9 (`L08-31`, biên tập viên): tiêu đề "Ví dụ: đầu vào bốn khung Atari"; ba dòng theo nguồn tr. 35, $H\times W$ trên mặt trang, số của Mnih và cộng sự (2015) chỉ ở ghi chú có trích dẫn; `atari-pipeline.svg` vẽ lại đúng thứ tự tiền xử lý → xếp chồng, đầu ra $Q_\theta(O_t,a_k)$. 37 âm tiết. Ghi chú bài giảng: Ví dụ 08.2 và hình. Chờ điều phối viên duyệt.
 | S9 | `L08-31`, `atari-pipeline.svg` | chấp nhận | diff; đối chiếu nguồn tr. 35; xem ảnh 1600 |
+
+### Rà lại mạch 1 (bước R1)
+
+| vai | loại tác tử | mô hình | mức suy luận | ghi tệp |
+|---|---|---|---|---|
+| Rà lại mạch 1 (toán, mạch, mật độ, `no-ai-slop` Detect) | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Biên tập R1 | Agent `general-purpose` (biên tập viên của đợt sửa) | `claude-opus-5-5` | high | có |
+
+Kết quả rà: 0 chặn bàn giao, 0 nghiêm trọng, 5 trung bình, 9 nhẹ; điều phối viên chấp nhận toàn bộ và thêm mục 15 (dòng 2 của `L08-02c`), đã kiểm định nghĩa $\epsilon$-tối ưu ở nguồn tr. 8 bằng `pdftotext`. Bảng dưới ghi quyết định đã duyệt (tệp `recheck/R1-decisions.md` trong scratchpad phiên) và trạng thái sau bước R1.
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa | trạng thái | quyết định |
+|---|---|---|---|---|---|---|
+| trung bình | `L08-02c`, `L08-03`, ghi chú bài giảng §1 | "Quan sát là ảnh" quá hẹp: Lunar Lander, CartPole có quan sát là vector | Ví dụ 08.1; notebook Bài 04, 06 | "vector liên tục hoặc ảnh" ở hộp bài toán, dòng mở `L08-03` và §1 | đã sửa ở R1 | chấp nhận |
+| trung bình | `L08-02c` dòng 5, ghi chú `L08-02`, ghi chú bài giảng §1 mục 5 và mục tiêu 4 | "Bộ tối ưu không sửa đích hay dữ liệu" sai: bộ tối ưu đổi quỹ đạo $\theta$, do đó đổi dữ liệu và $\theta^-$ | Vòng DQN: hành vi và đồng bộ dùng $\theta$ | "Bộ tối ưu không loại được nguồn bất ổn ở đích, dữ liệu, lớp hàm"; công thức đích, cơ chế thu thập dữ liệu và lớp hàm không phụ thuộc lựa chọn bộ tối ưu | đã sửa ở R1; áp dụng tiếp cho `L08-22`, `L08-26` | chấp nhận |
+| trung bình | ghi chú `L08-02c`, ghi chú bài giảng §1, `note-for-author.md` | Lý do bác hai cận tr. 9, 11 sai một phần: nguồn có chuẩn sai số (tr. 8) và có thuật toán cho cận thứ nhất (tr. 9) | Nguồn tr. 8–11 | Lý do: thiếu mô hình lấy mẫu và xác suất thành công, chỉ nêu định tính điều kiện khám phá; cận thứ hai không gắn thuật toán cụ thể | đã sửa ở R1 (cả câu tương ứng trong `note-for-author.md`) | chấp nhận |
+| trung bình | `L08-01b2` | Thiếu giả thiết "mẫu sinh từ chính MDP" của Định lý 06.21 | Ghi chú Bài 06, Nhận xét 06.20, Định lý 06.21 | Thêm vào dòng giả thiết; viết Robbins–Monro bằng hai tổng | đã sửa ở R1 | chấp nhận |
+| trung bình | ghi chú `L08-02c` → `L08-17` | Ghi chú hứa phần 4–5 xử lý khó khăn không lồi nhưng chưa trang nào nói | Ghi chú `L08-02c` | Thêm dòng "Lưu ý: $L_B$ vẫn không lồi theo $\theta$…" ở `L08-17` | mở (ghi trong storyboard, làm ở bước `L08-17`) | chấp nhận |
+| nhẹ | ghi chú bài giảng, ghi chú `L08-01b2`, `L08-01c` | Tài liệu làm chủ ngữ ("Chương này…", "Bài dùng…", "Bài 08 chỉ dùng…") | Các câu đã trích trong quyết định | Viết lại với "chúng ta", "ta" hoặc chủ ngữ là đối tượng | đã sửa ở R1 (thêm "chương này gọi là quan sát" ở mục Atari) | chấp nhận |
+| nhẹ | `L08-01b` | Công thức dùng $\leftarrow$ trong khi mặt trang Bài 06 dùng chỉ số $Q_t$, $Q_{t+1}$ | Định nghĩa 06.15 | $Q_{t+1}(S_t,A_t)=Q_t(S_t,A_t)+\alpha_t[\dots]$ | đã sửa ở R1 (vừa khung 16:9) | chấp nhận |
+| nhẹ | `L08-01b` | Thiếu tên tiếng Anh "off-policy", "importance sampling ratio"; dòng lý do chưa nói "đối số của ô cập nhật" | Mặt trang | Câu đã duyệt | đã sửa ở R1 (bỏ "dữ liệu theo" ở dòng trên để giữ ≤ 60) | chấp nhận |
+| nhẹ | `L08-01b2` | Dòng mạng chưa nói "khả vi" | Mặt trang | "mạng nhiều tầng, mạng tích chập (CNN) khả vi theo $\theta$; lan truyền ngược tính gradient" nếu trang ≤ 60 | sửa một phần: câu đề xuất làm trang vượt 60 nên giữ câu cũ (bỏ "(MLP)"), ý khả vi nằm trong ghi chú diễn giả | chấp nhận |
+| nhẹ | ghi chú `L08-01b2` | Vai của $\gamma<1$ và phần thưởng bị chặn chưa tách | Ghi chú | "$\gamma<1$ làm toán tử Bellman tối ưu co theo chuẩn cực đại; phần thưởng bị chặn giữ mọi giá trị hữu hạn" | đã sửa ở R1 (thêm vai của "mẫu từ chính MDP") | chấp nhận |
+| nhẹ | ghi chú `L08-01`, ghi chú bài giảng §1 mục 6 | "Mọi kết luận… dựa trên thí nghiệm" quá tuyệt đối | — | "các kết luận về hiệu quả của DQN gốc chủ yếu dựa trên thí nghiệm" | đã sửa ở R1 | chấp nhận |
+| nhẹ | `L08-01c` | $b$ chưa được gọi tên | Mặt trang | "mini-batch cỡ $b$" | đã sửa ở R1 | chấp nhận |
+| nhẹ | `L08-02`, ghi chú `L08-02`, ghi chú bài giảng | "Độ nhảy" là từ khẩu ngữ; ghi chú dùng "mạch" (nhãn quy trình) | Mặt trang và ghi chú | "độ thay đổi"; "các phần 2 đến 7" | đã sửa ở R1; áp dụng cho `L08-29` | chấp nhận |
+| nhẹ | `L08-01`, `L08-02`, `L08-02b`, `L08-02c` | Bốn trang mở bài gắn `lec-08-topic-01` (chủ đề "Giới hạn của bảng") | `data-note-topic-id` | Chủ đề mới `lec-08-topic-17` cho phần mở đầu; topic-01 giữ cho `L08-M2T`, `L08-03` | đã sửa ở R1 (deck, ghi chú bài giảng, bản đồ chủ đề, `outline.md`) | chấp nhận |
+| nhẹ | `L08-02c` | Dòng 2 "bản sao mạng cố định" bỏ qua việc đồng bộ; các dòng "X: Y" chưa là câu điều kiện | Mặt trang | "đích từ bản sao đồng bộ định kỳ"; dòng 3, 4, 6 mở bằng "Khi …" | đã sửa ở R1 (ngoại lệ mật độ 85 âm tiết ghi trong storyboard) | chấp nhận (mục do điều phối viên thêm) |
+
+- Bước R1 (biên tập viên): áp dụng 15 mục; mục 5 chỉ ghi kế hoạch; mục 9 sửa một phần (lý do ở bảng). Số đo mật độ mới và ngoại lệ (`L08-01` hộp luận đề một câu; `L08-02b` 8 dòng; `L08-02c` 85 âm tiết) ghi trong `storyboard.md`, mục "Rà lại mạch 1 (bước R1)" và "Ngoại lệ mật độ". Chờ điều phối viên duyệt.
+| R1 | mạch 1 (rà lại) | chấp nhận; `L08-02c` 84–85 âm tiết (< 1,5 × trần) giữ với ngoại lệ ghi trong storyboard vì sáu dòng đều là câu trả lời có điều kiện | diff; `check.py` mạch 1; xem ảnh |

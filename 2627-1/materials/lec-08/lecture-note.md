@@ -9,8 +9,8 @@ Sau chương này, người học có thể:
 1. Đọc vector giá trị hành động $\mathbf q_\theta(o)\in\mathbb R^{\lvert\mathcal A\rvert}$ do mạng trả về, chọn giá trị $Q_\theta(o,a)$ của hành động đã thực hiện, và tính đích hồi quy của một mẫu chuyển; phân biệt mẫu kết thúc (đích không chứa phần bootstrap) với mẫu bị cắt ngắn (đích vẫn chứa phần bootstrap).
 2. Nêu tác dụng và giới hạn của bộ nhớ phát lại: giảm tương quan giữa các mẫu liền nhau nhưng không tạo dữ liệu độc lập cùng phân phối theo một phân phối cố định; chỉ ra hai nguồn dữ liệu khác chính sách và tính xác suất hai mẫu liền nhau cùng vào một mini-batch.
 3. Tính hàm mất mát và gradient của nó theo các dự đoán trên một mini-batch, chỉ ra phần nào không nhận gradient, và truy dấu một vòng của thuật toán DQN với hai bộ đếm $t$ và $k_{\mathrm{opt}}$.
-4. Viết hạ gradient ngẫu nhiên (SGD), RMSprop và Adam theo từng tọa độ; nêu điều bộ tối ưu không sửa được: đích bootstrap, phân phối dữ liệu và lớp hàm.
-5. Tính độ nhảy của đích một mẫu khi đồng bộ mạng mục tiêu; nêu giả thiết còn thiếu để có bảo đảm hội tụ khi DQN có đủ bộ ba bất ổn.
+4. Viết hạ gradient ngẫu nhiên (SGD), RMSprop và Adam theo từng tọa độ; nêu những gì lựa chọn bộ tối ưu không thay đổi: công thức đích, cách thu thập dữ liệu và lớp hàm.
+5. Tính độ thay đổi của đích một mẫu khi đồng bộ mạng mục tiêu; nêu giả thiết còn thiếu để có bảo đảm hội tụ khi DQN có đủ bộ ba bất ổn.
 6. Giải một bước DQN trên một mini-batch có cả mẫu kết thúc lẫn mẫu bị cắt ngắn, nêu kết quả và giả thiết đã dùng ở mỗi bước tính.
 
 <!-- note-topic-id: lec-08-topic-13 -->
@@ -25,7 +25,7 @@ Kết quả của bài trước được dẫn theo mục của ghi chú bài đ
 - **Hội tụ của Q-learning dạng bảng** (ghi chú Bài 06, Mục 5, Định nghĩa 06.19, Định lý 06.21). Giả sử MDP hữu hạn với động lực không đổi theo thời gian, phần thưởng bị chặn, $0\le\gamma<1$, mẫu sinh từ chính MDP, mọi cặp $(s,a)$ được cập nhật vô hạn lần, và với mỗi cặp, dãy bước học thỏa điều kiện Robbins–Monro $\sum_n\alpha_n(s,a)=\infty$, $\sum_n\alpha_n(s,a)^2<\infty$. Khi đó $Q_t(s,a)\to q_*(s,a)$ hầu chắc chắn với mọi cặp. Kết quả là tiệm cận và chỉ áp dụng cho biểu diễn bảng; chính sách hành vi tùy ý miễn là phủ mọi cặp.
 - **Xấp xỉ tuyến tính và Q-learning bán gradient** (ghi chú Bài 07, Mục 1 và Mục 5, Định nghĩa 07.35). Bảng được thay bằng $\hat q(s,a,w)=x(s,a)^\top w$, với $x(s,a)\in\mathbb R^d$ là vector đặc trưng chọn trước và $w\in\mathbb R^d$ dùng chung cho mọi cặp. Với mục tiêu $y_t=R_{t+1}+\gamma\max_{a'}\hat q(S_{t+1},a',w_n)$, hoặc $y_t=R_{t+1}$ khi $S_{t+1}$ kết thúc, cập nhật bán gradient (semi-gradient) là $w_{n+1}=w_n+\alpha_n\bigl(y_t-\hat q(S_t,A_t,w_n)\bigr)x(S_t,A_t)$: mục tiêu được coi là hằng khi lấy gradient, dù nó phụ thuộc $w_n$. Tại bước cắt ngắn, $S_{t+1}$ chưa kết thúc nên mục tiêu vẫn chứa phép cực đại.
 - **Bộ ba bất ổn** (ghi chú Bài 07, Mục 5, Mệnh đề 07.37, Định nghĩa 07.38). Một phương pháp học giá trị có bộ ba bất ổn (deadly triad) khi có đồng thời xấp xỉ hàm, bootstrap và học khác chính sách. Q-learning bán gradient có cả ba, nên không có bảo đảm hội tụ chung. Mệnh đề 07.37 cho một ví dụ phân kỳ của TD(0) khác chính sách cùng ba yếu tố: với $x(s_1)=1$, $x(s_2)=2$, chỉ cập nhật chuyển $s_1\to s_2$ có phần thưởng $0$, $\gamma\in(\tfrac12,1)$ và $\alpha>0$, tham số thỏa $w_n=\bigl(1+\alpha(2\gamma-1)\bigr)^nw_0$, nên $\lvert w_n\rvert\to\infty$ khi $w_0\ne0$.
-- **Mạng nơ-ron và lan truyền ngược** (kiến thức học máy tiên quyết, không thuộc ghi chú Bài 01–07; Goodfellow, Bengio và Courville, 2016, Chương 6 và 9). Mạng nhiều tầng (multilayer perceptron, MLP) là hợp của các ánh xạ affine và hàm kích hoạt phi tuyến; mạng tích chập (convolutional neural network, CNN) dùng các tầng tích chập có trọng số dùng chung trên mọi vị trí của ảnh. Cả hai là hàm khả vi theo vector tham số $\theta$, và lan truyền ngược (backpropagation) tính gradient của một hàm mất mát vô hướng theo $\theta$ bằng quy tắc dây chuyền. Chương này chỉ dùng mạng như một hàm khả vi theo $\theta$.
+- **Mạng nơ-ron và lan truyền ngược** (kiến thức học máy tiên quyết, không thuộc ghi chú Bài 01–07; Goodfellow, Bengio và Courville, 2016, Chương 6 và 9). Mạng nhiều tầng (multilayer perceptron, MLP) là hợp của các ánh xạ affine và hàm kích hoạt phi tuyến; mạng tích chập (convolutional neural network, CNN) dùng các tầng tích chập có trọng số dùng chung trên mọi vị trí của ảnh. Cả hai là hàm khả vi theo vector tham số $\theta$, và lan truyền ngược (backpropagation) tính gradient của một hàm mất mát vô hướng theo $\theta$ bằng quy tắc dây chuyền. Chúng ta chỉ dùng mạng như một hàm khả vi theo $\theta$.
 
 ## Bảng ký hiệu
 
@@ -58,7 +58,7 @@ Bảng gồm ký hiệu dùng xuyên suốt chương; ký hiệu dùng một l�
 
 Quy ước đọc. $R_{t+1}$ gắn với chuyển từ bước $t$ sang bước $t+1$. Khi tương tác với môi trường, mẫu chuyển viết theo thời gian $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$; sau khi lấy mini-batch, chỉ số $i$ không mang thứ tự thời gian nên mẫu viết $(O_i,A_i,R_i,O'_i,Z_i,U_i)$, không dùng $R_{i+1}$ hay $O_{i+1}$. Hai bộ đếm $t$ và $k_{\mathrm{opt}}$ tăng theo hai nhịp khác nhau: $t$ sau mỗi bước môi trường, $k_{\mathrm{opt}}$ sau mỗi lần cập nhật $\theta$. Kỳ vọng trên mini-batch lấy theo phép lấy mẫu đều từ $\mathcal D$ hiện tại.
 
-Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_{\mathrm{exp}}$ là $\varepsilon$ của Bài 06–07; chỉ số dưới tách nó khỏi $\epsilon_{\mathrm{opt}}$. $q_i$ là dự đoán của mạng trên mẫu $i$, khác giá trị thật $q_*$. $m_j$, $v_j$ là trung bình trượt của gradient, khác hàm giá trị $v_\pi$; $\rho$ là hệ số suy giảm của RMSprop, khác tỉ số lấy mẫu quan trọng $\rho_t$ của Bài 06–07. Bài 06–07 viết $m$ cho số hành động; chương này viết $\lvert\mathcal A\rvert$. Tham số $\theta$ đóng vai của $w$ ở Bài 07, và $Q_\theta(o,a)$ thay $\hat q(s,a,w)$.
+Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_{\mathrm{exp}}$ là $\varepsilon$ của Bài 06–07; chỉ số dưới tách nó khỏi $\epsilon_{\mathrm{opt}}$. $q_i$ là dự đoán của mạng trên mẫu $i$, khác giá trị thật $q_*$. $m_j$, $v_j$ là trung bình trượt của gradient, khác hàm giá trị $v_\pi$; $\rho$ là hệ số suy giảm của RMSprop, khác tỉ số lấy mẫu quan trọng $\rho_t$ của Bài 06–07. Bài 06–07 viết $m$ cho số hành động; ở đây ta viết $\lvert\mathcal A\rvert$. Tham số $\theta$ đóng vai của $w$ ở Bài 07, và $Q_\theta(o,a)$ thay $\hat q(s,a,w)$.
 
 Ứng với giáo trình *Học máy thống kê*: $q_*$ là $Q^*$, và $q_\pi$ là $Q^\pi$.
 
@@ -71,6 +71,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 | Mã | Chủ đề | Nguồn trang | Vai trò | Vào → Ra |
 |---|---|---|---|---|
 | `lec-08-topic-13` | Kiến thức tiên quyết: Q-learning dạng bảng (Bài 06), Q-learning bán gradient và bộ ba bất ổn (Bài 07) | tr. 3–7 | Nhắc quy tắc cập nhật, học khác chính sách, điều kiện hội tụ | Vào: Bài 06–07 → Ra: mục tiêu bootstrap và phạm vi bảo đảm |
+| `lec-08-topic-17` | Mở đầu: mục tiêu, nội dung và bài toán trung tâm | tr. 1–2, 8–13 | Nêu bài toán và câu trả lời có điều kiện của từng phần | Vào: Bài 06–07 → Ra: khung cho phần 2–6 |
 
 ### Nhóm cốt lõi
 
@@ -104,14 +105,14 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 
 ### Bảy phần của chương
 
-Chương đi theo bảy phần, cùng thứ tự với bộ trang chiếu.
+Chúng ta đi qua bảy phần sau.
 
-1. Mở đầu: kiến thức tiên quyết, ký hiệu, mục tiêu và bài toán trung tâm (`lec-08-topic-13`, `lec-08-topic-01`).
+1. Mở đầu: kiến thức tiên quyết, ký hiệu, mục tiêu và bài toán trung tâm (`lec-08-topic-13`, `lec-08-topic-17`).
 2. Mạng giá trị hành động và đích hồi quy: giới hạn của bảng, đầu vào bốn khung Atari, giao diện mạng, mạng mục tiêu, đích có mặt nạ kết thúc, kết thúc và cắt ngắn (`lec-08-topic-01`, `lec-08-topic-16`, `lec-08-topic-02` đến `lec-08-topic-05`).
 3. Bộ nhớ phát lại: tương quan giữa các mẫu chuyển liên tiếp, cơ chế lưu và lấy mẫu đều, dữ liệu khác chính sách, giới hạn (`lec-08-topic-06`, `lec-08-topic-07`).
 4. Hàm mất mát và thuật toán DQN: hàm mất mát trên mini-batch, dừng gradient, vòng huấn luyện, kích thước tensor (`lec-08-topic-08` đến `lec-08-topic-11`).
 5. Bộ tối ưu theo gradient: SGD, RMSprop, Adam theo từng tọa độ (`lec-08-topic-14`).
-6. Bất ổn và phạm vi bảo đảm của DQN: hai nguồn bất ổn, độ nhảy của đích khi đồng bộ, bộ ba bất ổn (`lec-08-topic-12`).
+6. Bất ổn và phạm vi bảo đảm của DQN: hai nguồn bất ổn, độ thay đổi của đích khi đồng bộ, bộ ba bất ổn (`lec-08-topic-12`).
 7. Tổng kết và chuyển tiếp: kết quả và giả thiết, bài tập tổng hợp, câu hỏi tự kiểm tra (`lec-08-topic-15`).
 
 Đọc trước: Sutton và Barto (2018), §11.3 (bộ ba bất ổn) và §16.5 (DQN trên trò chơi Atari); Mnih và cộng sự (2015).
@@ -120,19 +121,20 @@ Chương đi theo bảy phần, cùng thứ tự với bộ trang chiếu.
 
 ## 1. Mở đầu
 
+<!-- note-topic-id: lec-08-topic-17 -->
 ### Bài toán trung tâm của chương
 
-Bài 06 học $q_*$ bằng một bảng có một ô cho mỗi cặp trạng thái–hành động, và Bài 07 thay bảng bằng hàm tuyến tính theo đặc trưng chọn trước. Bài toán của chương này là học $q_*$ khi quan sát là ảnh, tập hành động hữu hạn và mô hình của môi trường không được cho. Với quan sát là ảnh, bảng không lưu được và cũng không có sẵn một bộ đặc trưng chọn tay. Chúng ta dùng một mạng nơ-ron trả về giá trị của mọi hành động và học tham số của mạng từ các mẫu chuyển. Bài giảng gốc (trang 12) nêu bốn khó khăn của bước thay này: hàm mất mát không lồi theo tham số, nên không có bảo đảm hội tụ toàn cục; mục tiêu bootstrap phụ thuộc chính mạng đang học; phân phối dữ liệu đổi theo chính sách hành vi; và phương pháp có đủ bộ ba bất ổn.
+Bài 06 học $q_*$ bằng một bảng có một ô cho mỗi cặp trạng thái–hành động, và Bài 07 thay bảng bằng hàm tuyến tính theo đặc trưng chọn trước. Bài toán của chương này là học $q_*$ khi quan sát là vector liên tục hoặc ảnh, tập hành động hữu hạn và mô hình của môi trường không được cho. Với quan sát như vậy, bảng hoặc quá lớn, hoặc phần lớn ô không có mẫu (Mục 2), và với ảnh cũng không có sẵn bộ đặc trưng chọn tay. Chúng ta dùng một mạng nơ-ron trả về giá trị của mọi hành động và học tham số của mạng từ các mẫu chuyển. Bài giảng gốc (trang 12) nêu bốn khó khăn của bước thay này: hàm mất mát không lồi theo tham số, nên không có bảo đảm hội tụ toàn cục; mục tiêu bootstrap phụ thuộc chính mạng đang học; phân phối dữ liệu đổi theo chính sách hành vi; và phương pháp có đủ bộ ba bất ổn.
 
-Mỗi phần sau của chương trả lời một phần của bài toán, và mỗi câu trả lời đúng dưới một điều kiện.
+Chúng ta trả lời bài toán theo từng phần; mỗi câu trả lời dưới đây đúng dưới một điều kiện.
 
 2. Mạng trả về vector giá trị của mọi hành động. Khi đích được tính bằng một bản sao của mạng giữ cố định giữa hai lần đồng bộ, mỗi mẫu chuyển có một nhãn hồi quy cố định.
 3. Khi mini-batch được lấy đều từ bộ nhớ phát lại, tương quan ngắn hạn giữa các mẫu giảm; dữ liệu vẫn chưa độc lập cùng phân phối theo một phân phối cố định.
 4. Khi gradient được chặn ở đích, chỉ giá trị dự đoán của hành động đã thực hiện nhận gradient.
-5. Bộ tối ưu đổi gradient thành bước tham số; đích bootstrap và phân phối dữ liệu giữ nguyên dù chọn bộ tối ưu nào.
-6. Khi có đủ xấp xỉ hàm, bootstrap và dữ liệu khác chính sách, DQN không có bảo đảm hội tụ tổng quát, và các kết luận về hiệu quả của nó dựa trên thí nghiệm.
+5. Bộ tối ưu chỉ quyết định cách đổi gradient thành bước tham số. Công thức đích, cơ chế thu thập dữ liệu và lớp hàm không phụ thuộc lựa chọn bộ tối ưu, nên không bộ tối ưu nào loại được các nguồn bất ổn của phần 6.
+6. Khi có đủ xấp xỉ hàm, bootstrap và dữ liệu khác chính sách, DQN không có bảo đảm hội tụ tổng quát, và các kết luận về hiệu quả của DQN gốc chủ yếu dựa trên thí nghiệm.
 
-Bài giảng gốc (trang 9 và 11) còn nêu hai cận độ phức tạp mẫu: $\tilde O\bigl(\lvert\mathcal S\rvert\lvert\mathcal A\rvert/((1-\gamma)^4\varepsilon_{\mathrm{acc}}^2)\bigr)$ mẫu để Q-learning dạng bảng đạt chính sách $\varepsilon_{\mathrm{acc}}$-tối ưu, và $\tilde O\bigl(d/((1-\gamma)^3\varepsilon_{\mathrm{acc}}^2)\bigr)$ cho xấp xỉ hàm với $d$ đặc trưng; ở đây $\varepsilon_{\mathrm{acc}}$ là sai số cho phép của chính sách, khác $\epsilon_{\mathrm{exp}}$. Chúng ta không dùng hai cận này như định lý vì nguồn không nêu mô hình lấy mẫu (mẫu từ một bộ sinh độc lập hay dọc một quỹ đạo), chuẩn đo sai số, xác suất thành công, điều kiện bao phủ và thuật toán cụ thể mà cận áp dụng. Hai ý vẫn dùng ở phần sau: số ô của bảng tăng theo $\lvert\mathcal S\rvert\lvert\mathcal A\rvert$, và xấp xỉ hàm chỉ có bảo đảm khi có thêm giả thiết cấu trúc, chẳng hạn $q_*$ nằm trong lớp hàm và dữ liệu bao phủ đủ (bài giảng gốc, trang 11).
+Bài giảng gốc (trang 9 và 11) còn nêu hai cận độ phức tạp mẫu: $\tilde O\bigl(\lvert\mathcal S\rvert\lvert\mathcal A\rvert/((1-\gamma)^4\varepsilon_{\mathrm{acc}}^2)\bigr)$ mẫu để Q-learning dạng bảng đạt chính sách $\varepsilon_{\mathrm{acc}}$-tối ưu, và $\tilde O\bigl(d/((1-\gamma)^3\varepsilon_{\mathrm{acc}}^2)\bigr)$ cho xấp xỉ hàm với $d$ đặc trưng; ở đây $\varepsilon_{\mathrm{acc}}$ là sai số cho phép của chính sách, khác $\epsilon_{\mathrm{exp}}$. Sai số đo bằng $v_\pi(s)\ge v_*(s)-\varepsilon_{\mathrm{acc}}$ với mọi $s$ (trang 8), nhưng nguồn không nêu mô hình lấy mẫu (bộ sinh độc lập hay dọc một quỹ đạo) và xác suất thành công, chỉ nêu định tính điều kiện khám phá và bao phủ; cận thứ hai không gắn với một thuật toán cụ thể. Vì vậy chúng ta không dùng hai cận như định lý. Hai ý vẫn dùng ở phần sau: số ô của bảng tăng theo $\lvert\mathcal S\rvert\lvert\mathcal A\rvert$, và xấp xỉ hàm chỉ có bảo đảm khi có thêm giả thiết cấu trúc, chẳng hạn $q_*$ nằm trong lớp hàm và dữ liệu bao phủ đủ (bài giảng gốc, trang 11).
 
 
 ## 2. Mạng giá trị hành động và đích hồi quy
@@ -180,7 +182,7 @@ Trước khi định nghĩa giao diện của mạng, chúng ta xét một trư�
 
 ![Từ trái sang phải: bốn khung ảnh thô gần nhất; bước tiền xử lý; bốn khung đã xử lý xếp chồng thành O t có kích thước 4 nhân H nhân W; mạng tích chập rồi tầng kết nối đầy đủ; đầu ra là Q theta của O t với từng hành động a 1 tới a có chỉ số bằng số hành động.](img/lec-08/atari-pipeline.svg)
 
-Hình đọc từ trái sang phải. Tiền xử lý tác động lên từng khung thô, rồi bốn khung đã xử lý mới được xếp chồng thành $O_t$; mạng nhận $O_t$ và trả về một cột $\lvert\mathcal A\rvert$ giá trị. Bài giảng gốc gọi chồng bốn khung là "đầu vào trạng thái"; chương này gọi là quan sát, vì bốn khung chưa chắc chứa đủ thông tin để thay cho trạng thái Markov, điều được xét ngay sau giao diện của mạng.
+Hình đọc từ trái sang phải. Tiền xử lý tác động lên từng khung thô, rồi bốn khung đã xử lý mới được xếp chồng thành $O_t$; mạng nhận $O_t$ và trả về một cột $\lvert\mathcal A\rvert$ giá trị. Bài giảng gốc gọi chồng bốn khung là "đầu vào trạng thái"; ở đây ta gọi là quan sát, vì bốn khung chưa chắc chứa đủ thông tin để thay cho trạng thái Markov, điều được xét ngay sau giao diện của mạng.
 
 Ví dụ 08.2 chỉ cố định giao diện vào và ra của mạng. Tái lập một kết quả Atari đã công bố còn cần số khung lặp lại cho mỗi hành động, cách bắt đầu lượt, kiến trúc cụ thể, siêu tham số và giao thức đánh giá; nguồn không cho các chi tiết này, nên chúng ta không nêu số liệu thành tích.
 

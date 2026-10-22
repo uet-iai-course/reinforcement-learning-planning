@@ -4,7 +4,7 @@
 
 Căn cứ: kế hoạch sửa đã duyệt ngày 2026-10-22 và ba báo cáo rà soát (cấu trúc–mạch, sinh viên–mật độ, RL–toán), xem `review-log.md`, mục "Đợt sửa 2026-10-22". Bản đồ này thay bản đồ cũ ở cuối tệp.
 
-**Vấn đề trung tâm.** Học $q_*$ với tập hành động hữu hạn khi quan sát là ảnh và không có mô hình môi trường. Ba thách thức của nguồn (tr. 12): tối ưu không lồi trên tham số mạng, đích bootstrap phụ thuộc chính tham số đang học, phân phối dữ liệu dịch chuyển theo chính sách hành vi.
+**Vấn đề trung tâm.** Học $q_*$ với tập hành động hữu hạn khi quan sát là vector liên tục hoặc ảnh và không có mô hình môi trường (sửa ở R1; trước đó "quan sát là ảnh"). Ba thách thức của nguồn (tr. 12): tối ưu không lồi trên tham số mạng, đích bootstrap phụ thuộc chính tham số đang học, phân phối dữ liệu dịch chuyển theo chính sách hành vi.
 
 | mạch | loại | chức năng | đầu vào | đầu ra | đóng góp cho vấn đề trung tâm | trang tiêu đề mạch | thời lượng |
 |---|---|---|---|---|---|---|---:|
@@ -12,8 +12,8 @@ Căn cứ: kế hoạch sửa đã duyệt ngày 2026-10-22 và ba báo cáo rà
 | 2. Mạng giá trị hành động và đích hồi quy | khái niệm | Định nghĩa giao diện $\mathbf q_\theta(o)$, chỉ ra đích di động khi một tham số vừa dự đoán vừa tạo đích, đưa mạng mục tiêu và đích có mặt nạ | Nhu cầu từ mạch 1; mục tiêu Q-learning (Nhắc lại) | Đích $y$ có mặt nạ $(1-Z)$ tính từ $Q_{\theta^-}$; bộ sáu thành phần $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$ | Với $\theta^-$ cố định giữa hai lần đồng bộ, mỗi mẫu chuyển có một nhãn hồi quy cố định | `L08-M2T`, `id="mach-2"` | 25 |
 | 3. Bộ nhớ phát lại | khái niệm | Nêu tương quan của mẫu liền nhau (vấn đề), cơ chế lưu và lấy mẫu đều, dữ liệu khác chính sách, giới hạn | Bộ sáu thành phần của mạch 2 | Mini-batch $\{(O_i,A_i,R_i,O'_i,Z_i,U_i)\}_{i=1}^b$ lấy đều từ $\mathcal D$ | Lấy đều từ bộ nhớ làm giảm tương quan ngắn hạn; dữ liệu vẫn không i.i.d. theo một phân phối cố định | `L08-M3T`, `id="mach-3"` | 15 |
 | 4. Hàm mất mát và thuật toán DQN | thuật toán | Viết hàm mất mát với dừng gradient, tính tay một mini-batch, ghép thu thập, tối ưu và đồng bộ thành thuật toán với hai bộ đếm, kiểm kích thước tensor và lỗi cài đặt | $y_i$ (mạch 2), mini-batch (mạch 3) | Gradient $\nabla_\theta L_B$ cho bộ tối ưu; thuật toán DQN đầy đủ | Gradient chỉ đi qua $Q_\theta(O_i,A_i)$; $\theta^-\leftarrow\theta$ sau mỗi $C$ bước tối ưu | `L08-M4T`, `id="mach-4"` | 30 |
-| 5. Bộ tối ưu theo gradient | thuật toán (phụ trợ) | Viết SGD, RMSprop, Adam theo tọa độ và so sánh trạng thái phụ, siêu tham số | $g_j=\nabla_\theta L_{B_j}$ từ mạch 4 | Quy tắc cập nhật $\theta$ cùng giới hạn: bộ tối ưu không sửa đích, dữ liệu hay xấp xỉ hàm | Bộ tối ưu đổi gradient thành bước tham số, không gỡ bất ổn của đích hay dữ liệu | `L08-M5T`, `id="mach-5"` | 10 |
-| 6. Bất ổn và phạm vi bảo đảm của DQN | kết quả, giới hạn | Đặt hai cơ chế cạnh hai nguồn bất ổn, lượng hóa độ nhảy của đích tại mốc đồng bộ, áp bộ ba bất ổn vào DQN, thiết kế thí nghiệm loại bỏ | Thuật toán (mạch 4), giới hạn bộ tối ưu (mạch 5), bộ ba bất ổn (Nhắc lại Bài 07) | Kết luận có điều kiện: hai cơ chế giảm hai nguồn bất ổn, không tạo bảo đảm hội tụ | Khi đủ xấp xỉ hàm, bootstrap và dữ liệu khác chính sách, không có bảo đảm hội tụ tổng quát | `L08-M6T`, `id="mach-6"` | 15 |
+| 5. Bộ tối ưu theo gradient | thuật toán (phụ trợ) | Viết SGD, RMSprop, Adam theo tọa độ và so sánh trạng thái phụ, siêu tham số | $g_j=\nabla_\theta L_{B_j}$ từ mạch 4 | Quy tắc cập nhật $\theta$ cùng giới hạn: lựa chọn bộ tối ưu không đổi công thức đích, cách thu thập dữ liệu hay lớp hàm, nên không loại được nguồn bất ổn (sửa ở R1) | Bộ tối ưu chỉ quyết định cách đổi gradient thành bước tham số; không bộ tối ưu nào loại được nguồn bất ổn ở đích, dữ liệu, lớp hàm | `L08-M5T`, `id="mach-5"` | 10 |
+| 6. Bất ổn và phạm vi bảo đảm của DQN | kết quả, giới hạn | Đặt hai cơ chế cạnh hai nguồn bất ổn, lượng hóa độ thay đổi của đích tại mốc đồng bộ, áp bộ ba bất ổn vào DQN, thiết kế thí nghiệm loại bỏ | Thuật toán (mạch 4), giới hạn bộ tối ưu (mạch 5), bộ ba bất ổn (Nhắc lại Bài 07) | Kết luận có điều kiện: hai cơ chế giảm hai nguồn bất ổn, không tạo bảo đảm hội tụ | Khi đủ xấp xỉ hàm, bootstrap và dữ liệu khác chính sách, không có bảo đảm hội tụ tổng quát | `L08-M6T`, `id="mach-6"` | 15 |
 | 7. Tổng kết và chuyển tiếp | kết bài | Bảng kết quả–giả thiết, bảng so sánh phương pháp, bài tổng hợp, trả lời vấn đề trung tâm, câu hỏi tự kiểm tra, bài tập về nhà và tài liệu đọc | Kết quả của mạch 2–6 | Câu trả lời có điều kiện cho vấn đề trung tâm; nối Bài 09 | Tổng hợp; không thêm khái niệm mới | `L08-M7T`, `id="mach-7"` | 15 |
 
 Tổng: $10+25+15+30+10+15+15=120$ phút trên lớp; 30 phút chữa bài ngoài 120 phút. Mã trang tiêu đề mạch dùng dạng `L08-MNT` vì mã trang của bài không có tiền tố mạch bằng chữ cái; quy ước `<tiền tố>T` của `AGENTS.md` áp dụng cho trường hợp này.
@@ -49,7 +49,7 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 3 | `L08-05r` | Dữ liệu khác chính sách trong bộ nhớ | thêm (từ `L08-05`) | Hai nguồn khác chính sách; lý do không cần tỉ số lấy mẫu quan trọng đã sửa (Sutton và Barto 2018, §6.6, §7.3) | chưa có |
 | 3 | `L08-14` | Giới hạn của bộ nhớ phát lại | sửa | Thêm Câu hỏi $N=6$, $b=2$ không hoàn lại: $1/\binom62=1/15$ | 3.3 |
 | 4 | `L08-M4T` | 4. Hàm mất mát và thuật toán DQN | thêm | Trang tiêu đề mạch, điểm vào mạch 4 | chưa có |
-| 4 | `L08-17` | Hàm mất mát trên mini-batch | sửa, chuyển lên đầu mạch | $q_i$, $y_i$, $L_B$ định nghĩa trước đồ thị tính | 4.1 |
+| 4 | `L08-17` | Hàm mất mát trên mini-batch | sửa, chuyển lên đầu mạch | $q_i$, $y_i$, $L_B$ định nghĩa trước đồ thị tính; thêm dòng "Lưu ý: với $\theta^-$ và mini-batch cố định, $L_B$ vẫn không lồi theo $\theta$ vì $Q_\theta$ phi tuyến; bộ tối ưu không bảo đảm cực tiểu toàn cục." (giữ lời hứa của ghi chú `L08-02c` về khó khăn không lồi, quyết định R1 mục 5) | 4.1 |
 | 4 | `L08-10` | Dừng gradient ở đích | sửa (gộp `L08-15`) | Định nghĩa $\operatorname{sg}$; nối bán gradient Bài 07; sửa tràn khung (chặn bàn giao); vẽ lại `dqn-computation-graph.svg` | 4.2 |
 | 4 | `L08-15` | (gộp vào `L08-10`) | gộp, bỏ trang riêng | Trùng hình và công thức của `L08-10` | 4.3 (tạm) |
 | 4 | `X01` | Bài tập: một mini-batch | sửa | Bảng dữ liệu cùng khuôn ví dụ xuyên suốt; Gợi ý trong ghi chú | 4.4 |
@@ -96,7 +96,7 @@ Số trang sau đợt sửa dự kiến: 37 trang hiện có − 5 trang bỏ (`
 
 ### Ngoại lệ mật độ
 
-`L08-02b` (Nội dung): 8 dòng > 6 vì phải liệt kê đủ bảy mạch và dòng đọc trước; 54 âm tiết (xem mục của trang). `L08-02c` (Vấn đề trung tâm): 70 âm tiết > 60, một dòng bài toán và năm dòng trả lời có điều kiện (xem mục của trang). Số âm tiết trước sửa của các trang vượt trần (đo ngày 2026-10-22): `L08-05` 82, `L08-18` 87, `L08-27` 70, `L08-28` 64, `L08-32` 68, `X03` 91; `L08-33` 73 (trần 80 của trang tự kiểm tra). Số sau sửa ghi vào mục của từng trang khi sửa.
+`L08-01` (bìa): câu luận đề một câu 36 âm tiết trong hộp, ba dòng hiển thị, mỗi dòng ≤ 15 âm tiết; `CLAUDE.md` đòi luận đề một câu. `L08-02b` (Nội dung): 8 dòng > 6 vì phải liệt kê đủ bảy mạch và dòng đọc trước; 54 âm tiết. `L08-02c` (Vấn đề trung tâm), sau R1: 85 âm tiết > 60 (1,42 lần trần, dưới 1,5 lần), một dòng bài toán 17 âm tiết và năm dòng trả lời có điều kiện 15, 15, 10, 15, 13; quyết định R1 của điều phối viên mở rộng phạm vi bài toán (vector liên tục hoặc ảnh) và đổi các dòng "X: Y" thành câu điều kiện, nên số âm tiết tăng từ 70. Số âm tiết trước sửa của các trang vượt trần (đo ngày 2026-10-22): `L08-05` 82, `L08-18` 87, `L08-27` 70, `L08-28` 64, `L08-32` 68, `X03` 91; `L08-33` 73 (trần 80 của trang tự kiểm tra). Số sau sửa ghi vào mục của từng trang khi sửa.
 
 ### Mục từng trang (đợt sửa 2026-10-22)
 
@@ -152,7 +152,7 @@ Số trang sau đợt sửa dự kiến: 37 trang hiện có − 5 trang bỏ (`
 
 #### `L08-02c` Vấn đề trung tâm (bước S6)
 
-- **Trang muốn nói gì:** bài toán của bài (học $q_*$ khi quan sát là ảnh, hành động hữu hạn, không có mô hình) và câu trả lời có điều kiện của mỗi phần 2–6.
+- **Trang muốn nói gì:** bài toán của bài (học $q_*$ khi quan sát là vector liên tục hoặc ảnh, hành động hữu hạn, không có mô hình; phạm vi mở rộng ở R1) và câu trả lời có điều kiện của mỗi phần 2–6.
 - **Phục vụ mạch nào và thế nào:** mạch 1; nêu trước kết luận của từng mạch, để trang tiêu đề mạch và trang trả lời vấn đề trung tâm `L08-K4` đối chiếu được.
 - **Vấn đề còn lại trước sửa:** không có trang Vấn đề trung tâm (`review-structure.md` §2 `L08-02c`); `L08-06` có tiêu đề mơ hồ, dòng cảnh báo phủ định một cận mẫu chưa từng nêu, ghi chú chứa lý do biên soạn và lời chuyển "Trang kế…" (`review-structure.md` §3 `L08-06`; `review-student.md`).
 - **Quyết định:** thêm `L08-02c`, xóa `L08-06`. Khuôn deck 07: hộp chứa dòng bài toán, danh sách đánh số từ 2 tới 6. Không dùng ký hiệu chưa giới thiệu: "bản sao mạng cố định" thay $\theta^-$, "dừng gradient" thay $\operatorname{sg}$. Ghi chú diễn giả: bốn khó khăn của nguồn tr. 12 (không lồi, bootstrap, dịch chuyển phân phối, bộ ba bất ổn) ứng với phần nào; lý do không trình bày hai cận độ phức tạp mẫu tr. 9, 11 (thiếu mô hình lấy mẫu, chuẩn sai số, xác suất thành công, điều kiện bao phủ). Ý "số ô tăng theo $\lvert\mathcal S\rvert\lvert\mathcal A\rvert$" của `L08-06` chuyển cho bước `L08-03`; ý "xấp xỉ hàm cần giả thiết cấu trúc mới có bảo đảm" chuyển cho bước `L08-30`.
@@ -191,6 +191,23 @@ Số trang sau đợt sửa dự kiến: 37 trang hiện có − 5 trang bỏ (`
 - **Liên kết:** trước là `L08-03` (với ảnh, không lập được bảng); sau là `L08-07` (giao diện tổng quát $\mathbf q_\theta(o)$).
 - **Mật độ:** trước sửa 45 âm tiết, 3 dòng, ghi chú 46. Sau sửa 37 âm tiết, 3 dòng (12, 9, 16), 0 công thức hiển thị, 0 hộp chữ, 1 hình, ghi chú 131 âm tiết.
 - **Ghi chú bài giảng:** mục "Ví dụ: đầu vào bốn khung Atari": câu dẫn, Ví dụ 08.2 (khối `example`: dữ kiện bốn mục, diễn giải), hình và đoạn đọc hình (gọi bốn khung là quan sát thay cho "đầu vào trạng thái" của nguồn), đoạn phạm vi tái lập viết với "chúng ta" làm chủ ngữ. Trình xem ghi chú đặt `min-width: 900px` cho hình `img/lec-*` nên hình rộng có thanh cuộn ngang trong cột hẹp; đây là thiết kế chung của `material-viewer.css`.
+
+#### Rà lại mạch 1 (bước R1)
+
+Áp dụng 15 quyết định của điều phối viên sau lượt rà chỉ đọc mạch 1 (xem `review-log.md`, mục "Rà lại mạch 1"). Số đo dưới đây thay số "sau sửa" trong mục của từng trang.
+
+| trang | âm tiết mặt trang | dòng | dài nhất | công thức hiển thị | hộp chữ | âm tiết ghi chú | thay đổi chính |
+|---|---:|---:|---:|---:|---|---:|---|
+| `L08-01` | 58 | 4 | 15 (dòng hiển thị) | 0 | 1 (1 câu) | 144 | ghi chú: "kết luận về hiệu quả của DQN gốc chủ yếu dựa trên thí nghiệm"; `data-note-topic-id` → topic-17 |
+| `L08-01b` | 58 | 4 | 20 | 1 | 0 | 121 | công thức $Q_{t+1}=Q_t+\alpha_t[\dots]$; "(off-policy)", "(importance sampling ratio)"; lý do: $A_t$ là đối số của ô cập nhật |
+| `L08-01b2` | 60 | 5 | 20 | 0 | 0 | 147 | thêm "mẫu từ chính MDP", Robbins–Monro viết bằng hai tổng; bỏ "(MLP)" trên mặt trang (giữ trong ghi chú); dòng mạng giữ câu cũ vì câu đề xuất làm trang vượt 60 |
+| `L08-01c` | 60 | 5 | 16 | 0 | 0 | 121 | "mini-batch cỡ $b$"; ghi chú: giả thiết $\gamma<1$ lấy từ định lý hội tụ dạng bảng |
+| `L08-02` | 80 (trần 80) | 6 | 16 | 0 | 0 | 150 | "độ thay đổi của đích"; ghi chú: "các phần 2 đến 7", lựa chọn bộ tối ưu không đổi công thức đích, cách thu thập dữ liệu, lớp hàm; topic-17 |
+| `L08-02b` | 54 | 8 | 13 | 0 | 0 | 136 | topic-17 |
+| `L08-02c` | 85 (ngoại lệ) | 6 | 17 | 0 | 1 (1 câu) | 148 | phạm vi "vector liên tục hoặc ảnh"; dòng 2, 3, 4, 6 thành câu điều kiện; dòng 5 về bộ tối ưu; lý do bác hai cận đúng với nguồn tr. 8–9; topic-17 |
+| `L08-03` | 55 | 4 | 19 | 0 | 0 | 124 | dòng mở "khi quan sát là vector liên tục hoặc ảnh" |
+
+Quyết định R1 mục 5 (khó khăn không lồi được hứa ở ghi chú `L08-02c`) ghi vào hàng `L08-17` của danh sách trang, làm ở bước `L08-17`. Quyết định mục 2 và 13 áp dụng tiếp cho `L08-22`, `L08-26` (bộ tối ưu) và `L08-29` ("độ thay đổi").
 
 ### Bản trước đợt sửa 2026-10-22
 

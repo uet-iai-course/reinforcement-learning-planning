@@ -14,8 +14,8 @@ Mỗi mục tiêu ứng với một mạch từ 2 đến 7 và một sản phẩ
 1. (Mạch 2) Viết $\mathbf q_\theta(o)\in\mathbb R^{|\mathcal A|}$, chọn $Q_\theta(O_i,A_i)$ theo hành động đã lưu và tính đích $y=R+\gamma(1-Z)\max_{a'}Q_{\theta^-}(O',a')$; phân biệt kết thúc ($Z$) với cắt ngắn ($U$). Sản phẩm: đích của hai mẫu chuyển, một mẫu có $Z=1$.
 2. (Mạch 3) Nêu tác dụng và giới hạn của bộ nhớ phát lại; chỉ ra hai nguồn dữ liệu khác chính sách và lý do Q-learning một bước không cần tỉ số lấy mẫu quan trọng. Sản phẩm: xác suất hai mẫu liền nhau cùng vào một mini-batch.
 3. (Mạch 4) Tính hàm mất mát và gradient theo $q$ trên một mini-batch; truy dấu một vòng DQN với hai bộ đếm $t$ và $k_{\mathrm{opt}}$. Sản phẩm: bảng lời giải mini-batch hai mẫu và bản sửa lỗi cài đặt đích.
-4. (Mạch 5) Viết SGD, RMSprop và Adam theo từng tọa độ; nêu điều bộ tối ưu không sửa được (đích, dữ liệu, xấp xỉ hàm). Sản phẩm: bảng so sánh trạng thái phụ và siêu tham số.
-5. (Mạch 6) Tính độ nhảy của đích tại mốc đồng bộ; nêu các giả thiết còn thiếu để có bảo đảm hội tụ khi đủ bộ ba bất ổn. Sản phẩm: $\Delta y$ của một mẫu chuyển và thiết kế thí nghiệm loại bỏ.
+4. (Mạch 5) Viết SGD, RMSprop và Adam theo từng tọa độ; nêu những gì lựa chọn bộ tối ưu không thay đổi (công thức đích, cách thu thập dữ liệu, lớp hàm), nên không loại được nguồn bất ổn. Sản phẩm: bảng so sánh trạng thái phụ và siêu tham số.
+5. (Mạch 6) Tính độ thay đổi của đích tại mốc đồng bộ; nêu các giả thiết còn thiếu để có bảo đảm hội tụ khi đủ bộ ba bất ổn. Sản phẩm: $\Delta y$ của một mẫu chuyển và thiết kế thí nghiệm loại bỏ.
 6. (Mạch 7) Giải một bước DQN trên mini-batch có cả kết thúc lẫn cắt ngắn, nêu kết quả và giả thiết đã dùng. Sản phẩm: lời giải bài tổng hợp CartPole.
 
 ## Bảy mạch (đợt sửa 2026-10-22)
@@ -94,7 +94,7 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 
 | `note-topic-id` | `data-slide-id` |
 |---|---|
-| `lec-08-topic-01` | `L08-01`, `L08-02`, `L08-02b`, `L08-02c`, `L08-M2T`, `L08-03` |
+| `lec-08-topic-01` | `L08-M2T`, `L08-03` |
 | `lec-08-topic-02` | `L08-07` |
 | `lec-08-topic-03` | `L08-08` |
 | `lec-08-topic-04` | `L08-09` |
@@ -110,6 +110,7 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | `lec-08-topic-14` | `L08-22`–`L08-26` |
 | `lec-08-topic-15` | `L08-33`, `L08-34`, `X03` |
 | `lec-08-topic-16` | `L08-31`, `L08-32` |
+| `lec-08-topic-17` | `L08-01`, `L08-02`, `L08-02b`, `L08-02c` |
 
 ## Ánh xạ nguồn (bản cũ; cột "trang đích" được cập nhật khi sửa từng trang, các lệch thứ tự của đợt sửa 2026-10-22 ghi trong `storyboard.md`)
 
