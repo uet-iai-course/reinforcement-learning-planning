@@ -931,6 +931,10 @@ Xét $q_1$, $q_2$ như hai biến riêng, cho biết $q_i$ nào tăng dưới m�
   $\partial L_B/\partial q_2 = 2\cdot\tfrac12\cdot(-1{,}5+2) = 0{,}5$.
 - Mẫu 1 có gradient theo $q_1$ âm, nên phép trừ gradient làm $q_1$ tăng; mẫu 2
   có gradient dương nên $q_2$ giảm.
+
+Kết luận đúng khi xét $q_1$, $q_2$ như hai biến riêng. Trong DQN, cả hai cùng phụ thuộc $\theta$: một bước $\Delta\theta=-\eta\nabla_\theta L_B=\eta(1{,}5\,\nabla_\theta q_1-0{,}5\,\nabla_\theta q_2)$ cho $\Delta q_1\approx\nabla_\theta q_1^\top\Delta\theta=\eta\bigl(1{,}5\lVert\nabla_\theta q_1\rVert^2-0{,}5\,\nabla_\theta q_1^\top\nabla_\theta q_2\bigr)$, nên $q_1$ giảm khi $\nabla_\theta q_1^\top\nabla_\theta q_2>3\lVert\nabla_\theta q_1\rVert^2$.
+
+**Kiểm tra lại.** Ba lỗi thường gặp: quên mặt nạ ở mẫu 2, cho $y_2=-2+0{,}9\cdot100=88$ và $\delta_2=89{,}5$; dùng giá trị lớn nhất của $\mathbf q_\theta(O_i)$ thay cho giá trị của hành động đã lưu $A_i$ (phép chọn theo hành động); quên hệ số $\tfrac2b$, hoặc dùng tổng thay cho trung bình, làm đạo hàm sai một hằng số nhân (với $b=2$, $\tfrac2b=1$ nên lỗi này chỉ lộ ra khi $b\ne2$).
 :::
 
 ::: exercise Bài tập 2 — Sửa bốn lỗi trong giả mã

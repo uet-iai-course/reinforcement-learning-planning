@@ -55,7 +55,7 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 4 | `L08-10b` | Dừng gradient ở đích (cùng tiêu đề) | thêm (tách từ `L08-10`) | Dạng cài đặt $L_B$ với $\operatorname{sg}$, gradient; $\nabla_\theta y_i=0$ khi $\theta^-$ riêng; Câu hỏi một tham số: $-2$ so với $-0{,}2$ | 4.3 (S24) |
 | 4 | `L08-15` | (gộp vào `L08-10`) | gộp, bỏ trang riêng | Trùng hình và công thức của `L08-10`; hai thẻ thành nhãn "đường tạo đích / đường dự đoán" trên hình; trang xóa ở S24 | đã bỏ (S24) |
 | 4 | `X01` | Bài tập: một mini-batch | sửa | Đề bài: bảng cùng khuôn ví dụ xuyên suốt; Câu hỏi $y_i,\delta_i,L_B,\partial L_B/\partial q_i$; lời giải chuyển sang `L08-21`; "Gợi ý:" trong ghi chú | 4.4 (S25) |
-| 4 | `L08-21` | Bài tập: một mini-batch (lời giải) | sửa | Lời giải từng bước; giả thiết bỏ qua giao thoa qua $\theta$ dùng chung cho câu hỏi dấu cập nhật | 4.5 |
+| 4 | `L08-21` | Bài tập: một mini-batch (lời giải) | sửa | Dữ liệu đặt lại trong dòng "Lời giải:"; bảng từng bước (đích có mặt nạ, sai số, đạo hàm theo $q_i$); $L_B=1{,}25$; Câu hỏi dấu cập nhật với giả thiết hai biến riêng | 4.5 (S26) |
 | 4 | `L08-11` | Vòng huấn luyện DQN | sửa | Nhu cầu:; sửa SVG ($O'$, $\epsilon_{\mathrm{exp}}$-tham lam, nhãn cạnh) | 4.6 |
 | 4 | `L08-18a` | Thuật toán DQN: đầu vào và khởi tạo | thêm (tách từ `L08-18`) | Mỗi siêu tham số một dòng nghĩa; ngân sách dừng | chưa có |
 | 4 | `L08-18` | Thuật toán DQN: tương tác và lưu | sửa | Bước 1–4; 87 âm tiết trước sửa | 4.7 |
@@ -420,6 +420,16 @@ Quyết định R1 mục 5 (khó khăn không lồi được hứa ở ghi chú 
 - **Liên kết:** trước là `L08-10b` (dạng cài đặt và gradient); sau là `L08-21` (lời giải). Mục tiêu hỗ trợ: mục tiêu 3 (tính hàm mất mát và gradient).
 - **Mật độ:** trước sửa 13 âm tiết (theo `dens.py`) cộng hộp câu hỏi và lời giải, ghi chú diễn giả 34 âm tiết. Sau sửa 12 âm tiết (script 6 cộng 1 cho "mini&#8209;batch" cộng 5 trong `.check`), 2 dòng chữ cộng bảng hai hàng, 0 công thức hiển thị, ghi chú diễn giả 53 âm tiết. Đáy nội dung 576 px.
 - **Ghi chú bài giảng:** mục bài tập cuối chương bỏ thời lượng khỏi tiêu đề ("## Ba bài tập"); "Bài tập 1 —" thành "Bài tập 08.1 (Đích, hàm mất mát và gradient trên một mini-batch)" (bộ đếm Bài tập riêng; chưa có Bài tập nào trước); đề bài dùng cột $q_i$ theo khuôn chung, $\partial L_B/\partial q_i$, và câu dấu cập nhật nêu giả thiết "xét $q_1$, $q_2$ như hai biến riêng"; gợi ý bỏ "mồi kiểm tra", "chuyển tiếp"; lời giải giữ số ($y=(4{,}6;-2)$, $\delta=(1{,}5;-0{,}5)$, $L_B=1{,}25$, gradient $(-1{,}5;0{,}5)$). Đoạn kết mục topic-08 dẫn "Bài tập 08.1". "Bài tập 2 —", "Bài tập 3 —" đổi số ở bước `X02`, `X03`.
+
+#### `L08-21` Bài tập: một mini-batch, lời giải (bước S26)
+
+- **Trang muốn nói gì:** lời giải của `X01` theo từng bước trên hai mẫu ($\gamma=0{,}9$, $b=2$): đích có mặt nạ $y=(4{,}6;-2)$, sai số $\delta=(1{,}5;-0{,}5)$, $L_B=\tfrac12(1{,}5^2+0{,}5^2)=1{,}25$, đạo hàm $\partial L_B/\partial q_i=q_i-y_i=(-1{,}5;0{,}5)$; khi xét $q_1$, $q_2$ như hai biến riêng, một bước hạ gradient nhỏ làm $q_1$ tăng, $q_2$ giảm.
+- **Phục vụ mạch nào và thế nào:** mạch 4, bước kiểm tra của cụm hàm mất mát và dừng gradient; trang lời giải có lời giải trên mặt trang theo yêu cầu "mỗi cụm lớn có một bài tập có lời giải trên mặt trang".
+- **Vấn đề còn lại trước sửa:** tiêu đề "Kiểm tra một mini-batch" khác `X01`; bảng không lặp dữ liệu đầu vào nên phải nhớ `X01` (`review-student.md`); "gradient descent" tiếng Anh; câu "mẫu 1 làm $q$ tăng" chỉ đúng khi bỏ qua giao thoa qua $\theta$ dùng chung (`review-math.md`, nghiêm trọng); ghi chú dưới 40 âm tiết.
+- **Quyết định:** sửa, tiêu đề trùng `X01` ("Bài tập: một mini-batch") vì là trang lời giải của cùng bài. Dữ liệu đặt trong dòng "Lời giải:" dưới dạng bộ $(R_i,Z_i,\max,q_i)$ (ghi chú diễn giả giải nghĩa "$\max$"); bảng ba hàng bước (đích với mặt nạ $1-Z_i$, sai số, đạo hàm); một dòng $L_B$; "Câu hỏi:" có giả thiết hai biến riêng; "Lời giải:" trong `.fragment` cũng là dòng kết luận ngắn ($q_1$ tăng, $q_2$ giảm). Hàng dữ liệu riêng trong bảng và dòng "Diễn giải:" thêm vào làm trang tràn (đáy 718 px), nên dữ liệu gộp vào dòng đầu và không thêm dòng kết luận riêng. Ghi chú diễn giả: giải nghĩa bộ bốn; quên mặt nạ cho $y_2=88$; hệ số $\tfrac2b=1$; giới hạn khi dùng chung $\theta$: $\Delta q_1\approx\eta(1{,}5\lVert\nabla q_1\rVert^2-0{,}5\nabla q_1^\top\nabla q_2)$, $q_1$ giảm khi $\nabla q_1^\top\nabla q_2>3\lVert\nabla q_1\rVert^2$.
+- **Liên kết:** trước là `X01` (đề bài); sau là `L08-11` (vòng huấn luyện DQN). Mục tiêu hỗ trợ: mục tiêu 3.
+- **Mật độ:** trước sửa 25 âm tiết, bảng bốn hàng không có dữ liệu, ghi chú diễn giả 23 âm tiết. Sau sửa 38 âm tiết (script 23 cộng 15 trong `.check`), 3 dòng chữ cộng bảng ba hàng, 0 công thức hiển thị, ghi chú diễn giả 84 âm tiết. Đáy nội dung 678 px.
+- **Ghi chú bài giảng:** lời giải Bài tập 08.1 thêm đoạn giới hạn khi $q_1$, $q_2$ dùng chung $\theta$ (công thức $\Delta q_1$ và điều kiện $q_1$ giảm) và "**Kiểm tra lại.**" ba lỗi thường gặp: quên mặt nạ ($y_2=88$, $\delta_2=89{,}5$), dùng giá trị lớn nhất thay phép chọn theo hành động, quên hệ số $\tfrac2b$ hoặc dùng tổng (chỉ lộ khi $b\ne2$).
 
 #### Rà lại mạch 3 (bước R3)
 
