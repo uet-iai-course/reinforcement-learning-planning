@@ -237,3 +237,123 @@ Codex Slides không thể đồng bộ bản hiện tại. Runtime đi kèm đan
   `python3 -m http.server 8765 --bind 127.0.0.1` chạy trên bản sao tối thiểu không
   chứa `.env`; mọi tài sản trả HTTP 200. Chromium duyệt đủ 37 trang ở 1280×720
   và 800×600: không lỗi console, lỗi tài nguyên hoặc tràn hình học.
+
+## Đợt sửa 2026-10-22 — rà từng trang, trang tiêu đề mạch, giảm chữ
+
+Phạm vi: deck `lecture-08-deep-q-learning.html`, tám SVG trong `img/lec-08/`, ghi chú bài giảng `materials/lec-08/lecture-note.md`, `outline.md`, `storyboard.md`, thẻ Bài 8 trong `index.html`. Quy trình: ba rà soát chỉ đọc trên bản đóng băng (37 trang, 7 section ngoài, không trang tiêu đề mạch) → kế hoạch sửa của điều phối viên → biên tập theo bước C0, C1…Cn (mỗi trang một bước) → rà lại sau mỗi mạch → rà toàn deck và kiểm định cuối.
+
+### Vai và mô hình
+
+| vai | loại tác tử | mô hình | mức suy luận | ghi tệp |
+|---|---|---|---|---|
+| Rà cấu trúc–mạch (kèm `no-ai-slop` Detect, `quill` làm danh sách kiểm) | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Rà sinh viên–mật độ (kèm kiểm trực quan Playwright) | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Rà RL–toán (kèm đối chiếu ghi chú bài giảng) | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Biên tập (tác tử duy nhất ghi tệp; `no-ai-slop` Edit) | Agent `general-purpose` | `claude-opus-5-5` | high | có |
+| Điều phối viên (lập kế hoạch, duyệt, commit) | phiên chính | `claude-opus-5-5` | — | commit |
+
+Điều phối viên chạy `claude-opus-5-5` theo quy định mới ngày 2026-10-22 (`AGENTS.md`, mục "Điều phối mô hình trong dự án"; commit `c3c98f8`). Mô hình và mức suy luận của các tác tử con ghi theo lời gọi công cụ của điều phối viên.
+
+### Kết luận của ba rà soát
+
+- Cấu trúc–mạch: thiếu toàn bộ trang tiêu đề mạch, trang Tiên quyết, Nội dung, Vấn đề trung tâm và mạch tổng kết chuẩn; mạch 5 cũ chỉ có một trang; trang vấn đề của bộ nhớ phát lại (`L08-28`) đứng sau cơ chế bốn mạch; Q-learning bảng và bộ ba bất ổn được dạy lại như nội dung mới; thuật ngữ lệch Bài 06–07. Đề xuất bảy mạch mới với nội dung trang tiêu đề mạch, trang mở bài và kết bài.
+- Sinh viên–mật độ: `L08-10` tràn khung (chặn bàn giao); sáu trang vượt trần 60 âm tiết, `X03` vượt 1,5 lần trần; nhiều ký hiệu (sg, phép chọn theo hành động, $\mathcal D$, $\odot$, $\oslash$, CNN) chỉ được định nghĩa trong ghi chú diễn giả; SVG có nhãn chồng nét; ghi chú diễn giả chứa chỉ dẫn giảng viên, mã trang và "Đáp án".
+- RL–toán: mọi ví dụ số đúng; bốn lỗi nghiêm trọng về lập luận: lý do không cần tỉ số lấy mẫu quan trọng, dấu cập nhật khi $\theta$ dùng chung, tương quan bị xếp vào bộ ba bất ổn, giả thiết hội tụ của Q-learning bảng; các lỗi trung bình về $Z$ trước định nghĩa, bán gradient, cài đặt `X02`, quan sát cuối khi tự đặt lại, vòng lặp ngoài của giả mã.
+
+Quyết định của điều phối viên: kế hoạch sửa ngày 2026-10-22 (bảy mạch 10/25/15/30/10/15/15 phút; thuật ngữ theo Bài 06–07; ví dụ xuyên suốt "mini-batch hai mẫu chuyển"; thứ tự commit C0, C1…Cn). Khi báo cáo và kế hoạch khác nhau, theo kế hoạch.
+
+### Bảng phát hiện gộp
+
+Nguồn phát hiện: CT = rà cấu trúc–mạch, SV = rà sinh viên–mật độ, TH = rà RL–toán. Mức độ lấy mức cao nhất trong các báo cáo. Trạng thái "đã sửa ở C0" còn chờ điều phối viên duyệt.
+
+| mức độ | trang chiếu | vấn đề | bằng chứng | đề xuất sửa | trạng thái | quyết định |
+|---|---|---|---|---|---|---|
+| chặn bàn giao | `L08-10` | Tràn khung 16:9: công thức gradient ra ngoài khung, $L_B$ đè chân trang (SV). Sau C0 đáy nội dung ở 972 px trong khung 720 vì hình theo `max-height` 390 px của hệ chung. | Ảnh `shots-before/13-L08-10-wide.png`; kiểm C0 ở 1280×720 | `L08-17` định nghĩa $q_i,y_i,L_B$ trước; `L08-10` giữ hình, định nghĩa $\operatorname{sg}$ và gradient; gộp `L08-15`; vẽ lại SVG | mở | chấp nhận (kế hoạch, mạch 4) |
+| nghiêm trọng | mạch 2–7 | Không mạch nào có trang tiêu đề mạch (CT, SV) | `grep strand-title` = 0 | Thêm `L08-M2T`…`L08-M7T`, `id="mach-N"` | mở | chấp nhận |
+| nghiêm trọng | mở bài | Thiếu Tiên quyết và quy ước, Nội dung, Vấn đề trung tâm; bìa không có câu luận đề, phụ đề "Từ…đến…" (CT, SV) | `L08-01`, `L08-02` | Thêm `L08-01b`, `L08-01c`, `L08-02b`, `L08-02c`; sửa `L08-01` | mở | chấp nhận |
+| nghiêm trọng | kết bài | Thiếu bảng tổng kết chuẩn, trả lời vấn đề trung tâm, bài tổng hợp có lời giải, bài tập về nhà và tài liệu đọc, dòng nối Bài 09 (CT, SV) | `L08-33`, `L08-34` | `L08-34` thành bảng; thêm `L08-K1`–`L08-K5` | mở | chấp nhận |
+| nghiêm trọng | `L08-26` (mạch 5 cũ) | Mạch chỉ có một trang, dựng để điều hướng (CT; SV nhẹ) | Bản đồ mạch cũ | Gộp mạch 4 và 5 cũ thành mạch 5 "Bộ tối ưu theo gradient" | đã sửa ở C0 | chấp nhận |
+| nghiêm trọng | `L08-28`, `L08-13` | Vấn đề tương quan đứng sau cơ chế bộ nhớ phát lại bốn mạch (CT) | Thứ tự cũ: `L08-13` ở mạch 2, `L08-28` ở mạch 6 | Chuyển `L08-28` lên đầu mạch 3 | vị trí đã sửa ở C0; nội dung trang mở | chấp nhận |
+| nghiêm trọng | `L08-03`–`L08-06`, `L08-30` | Dạy lại Q-learning bảng và bộ ba bất ổn như mới, không có "Nhắc lại:"; thiếu cầu nối từ Q-learning bán gradient tuyến tính của Bài 07 (CT, SV) | Bài 07 `L07-32`, `L07-36f` | Gộp `L08-04`, `L08-05` vào `L08-01b`; `L08-30` mở bằng "Nhắc lại:" | mở | chấp nhận |
+| nghiêm trọng | toàn deck | Thuật ngữ lệch Bài 06–07: "bộ ba nguy hiểm", khám phá, greedy, chuyển tiếp, episode, return, TD error; tiếng Anh trần optimizer, loss, replay, gather (CT, SV, TH) | Deck 06, deck 07, ghi chú Bài 07 | Bảng thuật ngữ trong `outline.md`; sửa khi sửa từng trang, cả SVG và ghi chú bài giảng | bảng thuật ngữ có ở C0; câu chữ mở | chấp nhận |
+| nghiêm trọng | (thiếu) | Không nhắc lại mạng nơ-ron, lan truyền ngược, mạng tích chập (SV) | `L08-07`, `L08-31` | Thêm trang "Nhắc lại: mạng nơ-ron" | mở | chấp nhận một phần: một dòng "Nhắc lại:" trong `L08-01b` và tên đầy đủ "mạng tích chập (CNN)" ở `L08-31`; không thêm trang riêng vì mạch 1 có 10 phút và nguồn (tr. 17) chỉ dùng mạng như công cụ |
+| nghiêm trọng | `X03` | 91 âm tiết, vượt 1,5 lần trần 60 (CT, SV) | Đo mặt trang | Tách `X03` (câu hỏi) và `X03b` (lời giải) | mở | chấp nhận |
+| nghiêm trọng | `L08-34` (ghi chú) | Mã trang "L08-02" trong ghi chú diễn giả (CT, SV) | Ghi chú `L08-34` | Xóa mã trang | mở | chấp nhận |
+| nghiêm trọng | `L08-33` | Lời chỉ đường trên mặt trang "Bài tập kế là một ablation…" (CT; SV trung bình) | Mặt trang | Xóa hộp | mở | chấp nhận |
+| nghiêm trọng | `L08-05`; ghi chú `L08-13`; ghi chú bài giảng dòng 106–112, 297–305 | Lý do không cần tỉ số lấy mẫu quan trọng nêu sai: với chính sách đích tham lam, $\max_{a'}Q$ chính là kỳ vọng theo chính sách đích (TH) | Sutton và Barto (2018), §6.6, §7.3 | Lý do đúng: $A_t$ là đối số điều kiện của $Q(S_t,A_t)$; hành động kế tiếp được tính trọn bằng phép cực đại, không lấy mẫu từ hành vi | mở | chấp nhận (sửa mọi chỗ) |
+| nghiêm trọng | `L08-21`; ghi chú bài giảng dòng 389–391, 655–656 | "Gradient theo $q_1$ âm nên $q_1$ tăng" chỉ đúng khi bỏ qua giao thoa qua $\theta$ dùng chung (TH) | $\Delta q_1\approx\eta(1{,}5\lVert\nabla q_1\rVert^2-0{,}5\nabla q_1^\top\nabla q_2)$ | Thêm giả thiết "xét $q_1,q_2$ như hai biến riêng" vào câu hỏi; ghi chú nêu công thức | mở | chấp nhận |
+| nghiêm trọng | `L08-27`; ghi chú bài giảng dòng 502–504 | Tương quan giữa các mẫu liền nhau bị xếp vào bộ ba bất ổn (TH) | Nguồn tr. 29; Sutton và Barto (2018), §11.3; Bài 07 | Bảng `Nguồn bất ổn \| Cơ chế giảm \| Điều còn lại`; tương quan nằm ngoài bộ ba | mở | chấp nhận |
+| nghiêm trọng | ghi chú `L08-04`; ghi chú bài giảng dòng 114–117 | Hội tụ của Q-learning bảng thiếu giả thiết: MDP hữu hạn, phần thưởng bị chặn, $\gamma<1$ (TH) | Ghi chú Bài 07 dòng 30 | Dòng "Nhắc lại:" đủ giả thiết ở `L08-01b` và ghi chú bài giảng; $Q^*$ thành $q_*$ | mở | chấp nhận |
+| trung bình | `L08-07` | Ba luận điểm trên một trang; phản ví dụ không có số; tiêu đề ẩn dụ; $o$, $\mathcal O$ chưa định nghĩa; giả thiết Markov chỉ ở ghi chú (CT, SV, TH) | Mặt trang và ghi chú | Tách `L08-07`, `L08-07b`, `L08-07c`; dòng "Giả thiết:" về Markov | mở | chấp nhận; ví dụ số theo kế hoạch ($\theta_0=0\to0{,}5$, đích $1\to1{,}45$), không dùng ví dụ "đích tăng 0,72" của SV |
+| trung bình | `L08-05` | "replay" dùng trước khi giới thiệu; 82 âm tiết; "sao lưu" là thuật ngữ mới (CT, SV) | Mặt trang | Phần khác chính sách sang `L08-05r` ở mạch 3; bỏ trang | mở | chấp nhận |
+| trung bình | `L08-20`, `L08-31` | $[b,4,h,w]$ dùng trước khi có bốn khung; $h,w$ chưa định nghĩa (CT, SV, TH) | Thứ tự cũ | `L08-31` lên mạch 2; dòng "Nhắc lại:" bốn khung và định nghĩa $h,w$ ở `L08-20` | vị trí đã sửa ở C0; dòng Nhắc lại mở | chấp nhận |
+| trung bình | `L08-10`, `L08-15`, `L08-17` | Ba trang lặp hàm mất mát và hai đường tính; $L_B$ ở `L08-10` dùng $q_i,y_i$ trước định nghĩa (CT, SV, TH) | Mặt trang | `L08-17` lên đầu mạch 4; gộp `L08-15` vào `L08-10` | vị trí đã sửa ở C0; gộp mở | chấp nhận |
+| trung bình | `L08-10` | $\operatorname{sg}$ và phép chọn theo hành động chưa định nghĩa trên mặt trang; chưa nối bán gradient Bài 07; ghi chú dẫn chiếu "đã giải thích ở phần trước" (CT, SV, TH) | Mặt trang và ghi chú | Dòng định nghĩa $\operatorname{sg}$; "Nhắc lại:" bán gradient | mở | chấp nhận |
+| trung bình | `L08-16` | Trùng bước 9 của giả mã; trục SVG không nhãn; $\theta^-$ không vẽ dạng bậc thang (CT, SV, TH) | Mặt trang, ảnh SVG | Bỏ trang; hình vẽ lại sang `L08-07c`; thứ tự đồng bộ vào ghi chú `L08-19` | mở | chấp nhận |
+| trung bình | `L08-12` | Tự đặt lại và quan sát cuối chỉ có trong ghi chú; "thường vẫn bootstrap" mơ hồ; không có ví dụ (CT, SV, TH) | Mặt trang | $U=1,Z=0$ vẫn bootstrap; đặt lại khi $Z\lor U$, mặt nạ chỉ $1-Z$; hình dòng thời gian; dòng tự đặt lại sang `L08-13` | mở | chấp nhận |
+| trung bình | `L08-18` | 87 âm tiết; dòng Đầu vào > 20 âm tiết; $N_{\mathrm{start}}$, $F$ chưa có nghĩa; "optimizer" trước mạch 5; $O_{t+1}$ hai nghĩa ở ranh giới lượt; văn xuôi trong phông Courier (CT, SV, TH) | Đo mặt trang; ảnh | Tách `L08-18a`; mỗi siêu tham số một dòng nghĩa; dòng "Lưu ý:" về quan sát cuối | phông Courier bỏ ở C0 (giả mã thành `ol`); phần còn lại mở | chấp nhận |
+| trung bình | `L08-19` | Thiếu vòng lặp ngoài và ngân sách dừng; bước 10 ngoài khối; "Gather", "no-grad", "MSE" dạng mã (CT, SV, TH) | Mặt trang | "quay lại bước 1"; $T_{\max}$; viết bằng lời | mở | chấp nhận |
+| trung bình | `L08-18`, `X02` | Quy tắc dự phòng `final_observation` sai với Gymnasium 1.x (trường `final_obs`); lưu nhầm quan sát sau đặt lại (TH) | TH ghi cần kiểm lại tên trường | Không gắn tên trường cố định trên mặt trang; ghi chú nói tên trường phụ thuộc phiên bản API; không lưu mẫu chuyển nối hai lượt | mở | chấp nhận |
+| trung bình | `X02` | Trộn mã thu thập với mã batch; lỗi thứ năm `.max()` không chiều; `terminated.float()` với bool Python; không ngữ cảnh API; dấu tiếng Việt lệch trong khối mã; thiếu nhãn Lời giải (CT, SV, TH) | Mã; ảnh `shots-before/23-X02-wide.png` | Mã nhất quán theo batch; bỏ chú thích tiếng Việt khỏi mã; tách `X02b` nếu cần | nhãn "Lời giải:" thêm ở C0; phần còn lại mở | chấp nhận |
+| trung bình | `L08-22` | Dẫn chiếu "bước 8 giả mã"; khai báo $\rho,\beta$ trước khi dùng; tiêu đề tiếng Anh; $L_{B_j}$ còn phụ thuộc $\theta^-$ (CT, SV, TH) | Mặt trang | Hình chuỗi $B_j\to L_{B_j}\to g_j\to\theta_j$; dời miền tham số sang `L08-24`, `L08-25` | mở | chấp nhận |
+| trung bình | `L08-29` | Không có số; ghi chú dẫn chiếu trang trước; $\theta$ và $\theta^-$ tại mốc đồng bộ dễ nhầm (CT, SV, TH) | Mặt trang | Mẫu 1: $4{,}6\to5{,}5$, $\Delta y=0{,}9$; ký hiệu $\theta^-$ cũ và mới; hình bậc thang | mở | chấp nhận |
+| trung bình | mật độ | Vượt trần 60 không có ngoại lệ: `L08-05` 82, `L08-18` 87, `L08-27` 70, `L08-28` 64, `L08-32` 68; `L08-33` 73 (CT, SV) | `measure.json` của SV | Tách hoặc chuyển sang ghi chú; ghi số trước và sau vào storyboard | mở | chấp nhận |
+| trung bình | toàn deck | Khối `<style>` cục bộ thu nhỏ mọi trang `.82em`, định nghĩa lại `.box`, `.card`, `.grid2`, …; `div.reveal` thiếu `lecture-deck` (CT, SV) | Dòng 12–22 bản cũ | Bỏ khối style; thêm `lecture-deck`; thay lớp riêng bằng cấu trúc chung | đã sửa ở C0 | chấp nhận |
+| trung bình | `L08-09`, `X01`, `L08-21`, `X02`, `L08-32`, `X03` | Lời giải không có nhãn "Lời giải:", không theo từng bước; ghi chú thiếu "Gợi ý:" (CT, SV) | Mặt trang | Nhãn "Lời giải:", mỗi bước một dòng; "Gợi ý:" trong ghi chú | nhãn thêm ở C0; từng bước và Gợi ý mở | chấp nhận |
+| trung bình | ghi chú diễn giả nhiều trang | Mở bằng "Trang này", lời chuyển "Trang kế…", chỉ dẫn giảng viên ("Nhấn mạnh:", "Mời người học", "Yêu cầu người học", "khi giảng"), siêu dữ liệu biên soạn, "Đáp án" (CT, SV) | `L08-03`, `L08-06`, `L08-11`, `L08-14`, `L08-15`, `L08-18`, `L08-26`, `L08-27`, `L08-30`, `L08-33`, `X01` | Viết lại thành giải thích học thuật; "Lời giải" | mở | chấp nhận |
+| trung bình | `L08-02` | Bốn thẻ lệch sáu mục tiêu; tên "Kết quả học tập"; thẻ "Mục tiêu" mơ hồ; ghi chú có siêu dữ liệu (CT, SV, TH) | Mặt trang; `outline.md` | "Mục tiêu học tập", sáu mục ứng mạch 2–7 | sáu mục tiêu ghi trong `outline.md` ở C0; trang mở | chấp nhận |
+| trung bình | `L08-06` | Cảnh báo phủ định một cận mẫu chưa từng nêu (CT, SV) | Mặt trang | Bỏ trang; ý quy mô vào `L08-02c` và `L08-03` | mở | chấp nhận |
+| trung bình | ví dụ | Không có ví dụ xuyên suốt; số của `L08-09` lặp ngầm ở `X01` (CT) | Mặt trang | "Mini-batch hai mẫu chuyển" với bảng cùng khuôn ở mỗi lần dùng | mở | chấp nhận |
+| trung bình | `L08-04`, `L08-08`, `L08-09` | $Z_{t+1}$ dùng trên mặt trang trước khi định nghĩa (TH, SV) | Mặt trang | Định nghĩa $Z$ ở `L08-08`; dòng Nhắc lại ở `L08-01b` không dùng $Z$ | mở | chấp nhận |
+| trung bình | `L08-08` | "Đồng bộ" dùng trước định nghĩa; câu mở kể tiến trình; ghi chú "đích không đổi ở mọi bước tối ưu" mâu thuẫn câu sau (CT, SV, TH) | Mặt trang và ghi chú | `L08-07c` định nghĩa đồng bộ trước `L08-08` | mở | chấp nhận |
+| trung bình | `L08-11` | Thiếu dòng Nhu cầu; SVG ghi $s'$, thiếu $\epsilon_{\mathrm{exp}}$-tham lam, cạnh không nhãn, chữ tràn hộp; ghi chú chỉ dẫn giảng viên (CT, SV, TH) | Ảnh SVG | "Nhu cầu:"; vẽ lại SVG | mở | chấp nhận |
+| trung bình | `L08-11` | Đề xuất đưa vòng huấn luyện lên đầu mạch 2 làm bản đồ (SV) | Thứ tự cũ | — | đóng | bác bỏ: hình dùng bộ nhớ phát lại, mini-batch và mạng mục tiêu, các khái niệm chỉ có sau mạch 2–3; kế hoạch giữ `L08-11` mở cụm thuật toán ở mạch 4 với dòng "Nhu cầu:" |
+| trung bình | `L08-14`, `L08-28` | Lặp nội dung tương quan; đề xuất gộp `L08-28` vào `L08-14` (SV) | Mặt trang | — | đóng | bác bỏ phần gộp: `L08-28` là trang vấn đề mở mạch 3, `L08-14` là trang giới hạn có Câu hỏi; phần lặp được cắt khi sửa từng trang |
+| trung bình | `L08-23`, `L08-24`, `L08-25` | SGD chưa viết đầy đủ; $\odot,\oslash$ chưa định nghĩa; Adam không có câu giải thích (CT, SV, TH) | Mặt trang | "Ký hiệu:", "Ý nghĩa:" | mở | chấp nhận |
+| trung bình | `L08-26` | Thiếu Ký hiệu $m_j,v_j$; câu giới hạn bộ tối ưu chỉ ở ghi chú; ghi chú có "Trang kế…", "Nhấn mạnh:" (CT, TH) | Mặt trang và ghi chú | Dòng Ký hiệu; câu kết bộ tối ưu không sửa đích, dữ liệu, xấp xỉ hàm | mở | chấp nhận |
+| trung bình | ký hiệu | $m_j,v_j,\rho$ trùng $v_\pi$, $m=\lvert\mathcal A\rvert$, $\rho_t$ của Bài 07; $q_t,q_i$ trùng $q_\pi,q_*$; đề xuất đổi tên hoặc thêm Ký hiệu (TH) | Ghi chú Bài 07 | — | mở | chấp nhận dòng "Ký hiệu:" ($q_i$ ở mở bài và `L08-17`; $m_j,v_j,\rho$ ở mạch 5); bác bỏ đổi tên: $m_j,v_j,\rho$ là tên chuẩn của RMSprop và Adam (nguồn tr. 25–26), $q_i$ giữ theo `note-for-author.md` |
+| trung bình | ghi chú bài giảng dòng 300 | "phá vỡ tương quan theo thời gian" mâu thuẫn dòng 324, 329 và `note-for-author.md` (TH, CT) | Ghi chú bài giảng | "giảm tương quan ngắn hạn" | mở | chấp nhận |
+| trung bình | ghi chú bài giảng dòng 586 | "Đầu vào trạng thái: chồng bốn khung" (TH) | Ghi chú bài giảng | "quan sát; xấp xỉ trạng thái" | mở | chấp nhận |
+| trung bình | ghi chú bài giảng, mục bảy mạch | Thứ tự chủ đề và thời lượng của bảy mạch trong ghi chú lệch deck (TH) | Ghi chú dòng 52–60 | Đồng bộ khi tới trang tiêu đề mạch tương ứng | mở | chấp nhận |
+| trung bình | SVG | Nhãn chồng nét, mũi tên che chữ, chữ tràn hộp; phông serif; cỡ nhãn khoảng 0,71 em ở bốn hình (SV, CT, TH) | Ảnh, `svgsize.py` | Vẽ lại theo mục A.8 của kế hoạch | mở | chấp nhận |
+| trung bình | `L08-32` | 68 âm tiết; thẻ chung chung (SV, CT) | Đo mặt trang | Rút mỗi thẻ ≤ 15 âm tiết; Lời giải | nhãn "Lời giải:" thêm ở C0; phần còn lại mở | chấp nhận |
+| trung bình | `L08-28` | 64 âm tiết; "cỡ mẫu hiệu dụng" chưa định nghĩa; không có ví dụ; "mini-batch liên tiếp" mơ hồ (SV, CT, TH) | Đo mặt trang | Dòng "Muốn…"; ví dụ bốn mẫu liền nhau; hình dải quỹ đạo | mở | chấp nhận |
+| trung bình | `L08-13` | Mở bằng ký hiệu; $\mathcal D$ chưa định nghĩa; $\tau_k$ chưa giải thích; không nêu ghi đè; không có ví dụ (CT, SV, TH) | Mặt trang, SVG | "Nhu cầu:"; ví dụ $N=6$ | mở | chấp nhận |
+| trung bình | `L08-03` | Không có Nhu cầu và ví dụ số; SVG ghi "o hoặc s", $Q(s,a)$; ghi chú "trang này chốt…" (CT, SV, TH) | Mặt trang, SVG | Lunar Lander $9\,216$/$1\,896$ ô; sửa nhãn SVG | mở | chấp nhận |
+| trung bình | `L08-17` | Hộp $Z/U$ lặp lần thứ ba; "$U_i$ điều khiển reset" sai trong batch (SV, CT, TH) | Mặt trang | Bỏ hộp; "Ký hiệu:" $q_i$ | mở | chấp nhận |
+| nhẹ | tiêu đề | Tiêu đề ẩn dụ hoặc dạng câu (CT) | Mục 3 báo cáo CT | Tiêu đề mới theo `storyboard.md` | mở | chấp nhận |
+| nhẹ | `no-ai-slop` | Tương phản nhị phân, colon reveal, siêu văn bản diễn giải, lời dẫn tiến trình, kết lặp lại (CT, SV) | `L08-05`, `L08-14`, `L08-31`, ghi chú `L08-07`, `L08-26`, `L08-27` | Viết thành mệnh đề khẳng định có điều kiện | mở | chấp nhận |
+| nhẹ | nhiều trang | Dòng > 20 âm tiết; trang > 6 dòng (SV) | Bảng mật độ SV | Tách câu, gộp mục | mở | chấp nhận |
+| nhẹ | 12 trang | Ghi chú diễn giả dưới 40 âm tiết (SV) | `notes.json` | Bổ sung giả thiết hoặc chỗ dễ nhầm | mở | chấp nhận |
+| nhẹ | `L08-14` | Mẫu lấy đều có hoàn lại là i.i.d. theo phân phối của bộ đệm hiện tại; cái thiếu là một phân phối cố định (TH) | — | Dòng "Lưu ý:" | mở | chấp nhận |
+| nhẹ | `L08-31` | SVG vẽ tiền xử lý sau bốn khung; đầu ra thiếu $\theta$, $o$; hai dòng chú thích đè nhau; CNN chưa viết đầy đủ; tương phản nhị phân (TH, SV, CT) | Ảnh SVG | Khung thô → tiền xử lý → xếp chồng bốn khung → mạng tích chập → $Q_\theta(O_t,a_k)$ | mở | chấp nhận |
+| nhẹ | `X03` | Nhánh loại bỏ chưa định nghĩa đủ để so sánh công bằng (TH) | — | Bỏ mạng mục tiêu: $C=1$, vẫn dừng gradient; bỏ bộ nhớ: $N=b$; giữ số bước | mở | chấp nhận |
+| nhẹ | `L08-30` | $\epsilon$ thiếu chỉ số exp; "lệch chính sách" và "khác chính sách" (TH, SV) | Mặt trang, SVG | Thống nhất $\epsilon_{\mathrm{exp}}$ và "khác chính sách" | mở | chấp nhận |
+| nhẹ | ghi chú bài giảng dòng 75–83, 376–379, 467–468, 554–555, 571 | Trực giác $q_*$ viết sai; $Q_k$ lệch $Q_t$; $L_B$ thiếu $\operatorname{sg}$; câu broadcast của phép chọn sai chỗ; khẳng định về Adam và hai cơ chế chưa ghi nguồn (TH) | Ghi chú bài giảng | Sửa khi tới mục tương ứng | mở | chấp nhận |
+| nhẹ | ghi chú `L08-10`, `L08-18`, `L08-19` | Có thể dẫn Mnih và cộng sự (2015), Extended Data Table 1 cho $N_{\mathrm{start}}$, $F$, $C$ đếm theo bước cập nhật (TH) | — | Ghi vào dòng "Nguồn:" của ghi chú diễn giả | mở | chấp nhận |
+| nhẹ (gợi ý) | `L08-08` hoặc `L08-17` | "Ý nghĩa:" của đích theo lặp Q có khớp (fitted Q-iteration), Riedmiller (2005) (TH) | — | Dòng "Ý nghĩa:" với giả thiết $O$ Markov và $\theta^-$ cố định | mở | chờ điều phối viên: kế hoạch không nêu; cần nguồn ngoài và giả thiết Markov |
+| nhẹ | ghi chú bài giảng | Khoảng 6 400 từ, dưới 8 000 từ của chuẩn giáo trình; chưa có bảng ký hiệu (CT, ngoài phạm vi) | Đếm từ | — | mở | chờ điều phối viên: ngoài phạm vi kế hoạch (mục A.7 chỉ đồng bộ ghi chú với trang) |
+| trung bình | `L08-20` | Phát hiện ở C0: sau khi bỏ CSS cục bộ, đáy nội dung ở 729 px trong khung 720 vì hình theo `max-height` 390 px của hệ chung (bản cũ 330 px) | Kiểm C0 ở 1280×720; ảnh `c0/shots/25-L08-20-1600.png` | Sửa ở bước `L08-20`; không thu nhỏ chữ | mở | chờ điều phối viên |
+| trung bình | `X02` | Phát hiện ở C0: đáy nội dung ở 755 px sau khi thêm dòng "Lời giải:"; khối `pre` mang `style` nội dòng `font-size:.94em;width:100%` vì `lecture-slide.css` không có quy tắc cho `pre` (theme đặt `.55em`) | Kiểm C0; ảnh `c0/shots/26-X02-1600.png` | Tách `X02b` ở bước `X02`; quyết định thêm quy tắc `pre` vào CSS chung hoặc giữ kiểu nội dòng | mở | chờ điều phối viên |
+| nhẹ | `L08-25` | Phát hiện ở C0: sau khi bỏ `.smallmath` (`.94em`), dòng công thức thứ hai rộng tới 1 285 px, vượt mép phải vùng nội dung (1 256 px) và chạm vùng nút điều hướng | Kiểm C0 ở 1280×720; ảnh `c0/shots/30-L08-25-1280.png` | Tách $\theta_j$ thành dòng riêng ở bước `L08-25` | mở | chờ điều phối viên |
+
+### Bước C0 — sắp lại bảy mạch, bỏ CSS cục bộ (biên tập viên)
+
+- Deck: bảy section ngoài theo `storyboard.md`, mục "Danh sách trang theo mạch", chỉ bằng di chuyển trang. Các trang sẽ gộp hoặc bỏ (`L08-04`, `L08-05`, `L08-06` ở mạch 1; `L08-15`, `L08-16` ở mạch 4) nằm tạm sát vị trí đích. Mạch 5 cũ (`L08-26`) gộp vào mạch bộ tối ưu; `L08-28` lên đầu mạch 3; `L08-31`, `L08-32` lên mạch 2; `X03` sang mạch 6; `L08-33` sang mạch 7.
+- CSS: bỏ khối `<style>`; `div.reveal` thêm lớp `lecture-deck`. Thay lớp riêng: `.codebox` thành `p` + `ol` (bước 1–4) và `ol.substeps` (bước 5–9) như deck 05; `.answer` thành đoạn `.fragment` mở bằng "**Lời giải:**"; `.warn` thành đoạn mở bằng "**Lưu ý:**"; bỏ `.smallmath`, `.compact`. Hai khối `pre` của `X02` mang `style` nội dòng (xem phát hiện cuối bảng).
+- Khai báo Reveal theo deck 06: bỏ `plugin/markdown/markdown.js` và `RevealMarkdown` (deck không dùng Markdown); thêm `scrollActivationWidth:null`; plugin `RevealHighlight`, `RevealNotes`, `RevealMath.KaTeX` cục bộ.
+- Nội dung từng trang giữ nguyên, trừ nhãn "Lời giải:" và "Lưu ý:" thay cho lớp `.answer` và `.warn`.
+- `outline.md`: phạm vi, sáu mục tiêu ứng mạch 2–7, danh sách bảy mạch, bảng thuật ngữ Việt–Anh, bảng ký hiệu và thời lượng mới; mục cũ đánh dấu "bản cũ".
+- `storyboard.md`: bản đồ bảy mạch, danh sách trang theo mạch (quyết định, lý do, vị trí sau C0), lệch khỏi trật tự nguồn, số âm tiết trước sửa; phần cũ chuyển xuống mục "Bản trước đợt sửa 2026-10-22".
+- `index.html`: thẻ Bài 8 (Bài giảng, Ghi chú bài giảng có liên kết viewer; Bài tập và Thực hành ở trạng thái "Chưa có").
+- `no-ai-slop` (Edit, tự kiểm theo `eval.md`): phạm vi là câu mới trong `outline.md`, `storyboard.md`, mục này của nhật ký và mô tả thẻ Bài 8; hai nhãn "Lời giải:", "Lưu ý:" trên mặt trang. Câu chữ cũ của từng trang chưa sửa ở C0.
+
+- Kiểm C0 (Playwright Chromium, `http://localhost:8799`): 37 `data-slide-id` duy nhất, 7 section ngoài, độ sâu `<section>` tối đa 2, mỗi trang có `aside.notes`, không còn `<style>` và không có URL mạng trong deck. Ở 1280×720, 1600×900 và 390×844: không lỗi console hoặc trang, không `.katex-error`, không yêu cầu ra ngoài máy chủ cục bộ, không cuộn ngang. `#/1`…`#/7` mở đúng trang đầu mỗi mạch; phím mũi tên đổi đúng chỉ số. Tràn đáy (> 702 px trong khung 720): `L08-10` 972 px (chặn bàn giao có từ trước), `L08-20` 729 px, `X02` 755 px; tràn phải: `L08-25` 1 285 px. Cỡ chữ thân nhỏ nhất 0,752 em (ô bảng, mã). Thẻ Bài 8 trong `index.html` và hai liên kết trả HTTP 200; viewer ghi chú Bài 08 hiển thị, 278 biểu thức KaTeX, không `.katex-error`, không khối `:::` sót. Ảnh trong thư mục `c0/` của scratchpad phiên.
+
+### Quyết định của điều phối viên về C0 (2026-10-22)
+
+- C0: **chấp nhận**. Đã đọc diff deck, `index.html`, planning; tự chạy Playwright (1600×900, 390×844, tắt hiệu ứng chuyển trang): 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài; tràn đáy `L08-10` (972 px, có từ trước), `L08-20` (729), `X02` (755); tràn phải `L08-25` (1 285). Bốn trang này sửa ở bước của chính trang đó.
+- Kiểu nội tuyến `pre` ở `X02`: **giữ** (nhu cầu một trang; `lecture-slide.css` không đổi), xét lại ở bước `X02`.
+- Liên kết ghi chú trên thẻ Bài 8 của `index.html`: **giữ** theo yêu cầu rõ của người dùng ("gắn chúng lên 2627-1/index.html"); ghi chú được sửa song song từng trang trong đợt này.
+- Dòng "Ý nghĩa:" lặp Q có khớp (Riedmiller 2005): **bác bỏ** — ngoài nguồn và ngoài phạm vi đợt; không thêm nguồn ngoài khi không cần sửa sai.
+- Độ dài ghi chú (~6 400 từ, dưới 8 000): **ngoài phạm vi đợt này**; ghi là giới hạn còn lại khi bàn giao.

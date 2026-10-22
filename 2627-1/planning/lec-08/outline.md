@@ -4,51 +4,89 @@
 
 - Nguồn chính: `RL-hk2-2025-2026/lecture8-dqn.pdf`, 36 trang.
 - Không có tài liệu bài tập hay code demo đi kèm.
-- Đối tượng: sinh viên đã học Q-learning dạng bảng, xấp xỉ hàm và bộ ba nguy hiểm.
-- Đầu ra: 34 trang chính + 3 trang bài tập dọc = 37 mã trang; 120 phút chính gồm 110 phút tuyến cốt lõi và 10 phút linh hoạt; 30 phút chữa bài qua ba bài tập dọc (ngoài 120 phút chính, không tính là vượt giờ).
+- Đối tượng: sinh viên đã học Q-learning dạng bảng (Bài 06), xấp xỉ hàm tuyến tính, Q-learning bán gradient và bộ ba bất ổn (Bài 07).
+- Đầu ra sau đợt sửa 2026-10-22: 7 mạch, 120 phút trên lớp (10 + 25 + 15 + 30 + 10 + 15 + 15) và 30 phút chữa bài. Danh sách trang theo mạch nằm trong `storyboard.md`, mục "Đợt sửa 2026-10-22: bản đồ bảy mạch".
 
-## Mục tiêu học tập
+## Mục tiêu học tập (đợt sửa 2026-10-22)
 
-1. Phân biệt chính sách hành vi $\epsilon_{\mathrm{exp}}$-greedy với chính sách đích tham lam của Q-learning.
-2. Mô tả giao diện DQN: quan sát hoặc biểu diễn trạng thái vào, vector $|\mathcal A|$ giá trị hành động ra.
-3. Tính đích $y=R+\gamma(1-Z)\max Q_{\theta^-}$, phân biệt kết thúc MDP với cắt ngắn ngoài mô hình và lưu đúng quan sát cuối khi môi trường tự reset.
-4. Truy dấu vòng thu thập, làm nóng replay, tần suất tối ưu, mini-batch, cập nhật mạng online và đồng bộ mạng mục tiêu sau bước tối ưu.
-5. Viết đúng SGD, RMSprop và Adam theo từng tọa độ, đồng thời giới hạn vai trò của optimizer.
-6. Giải thích replay và mạng mục tiêu giảm hai cơ chế bất ổn nhưng không tạo bảo đảm hội tụ.
+Mỗi mục tiêu ứng với một mạch từ 2 đến 7 và một sản phẩm kiểm được.
 
-## Bảy mạch ngoài (cấu trúc HTML)
+1. (Mạch 2) Viết $\mathbf q_\theta(o)\in\mathbb R^{|\mathcal A|}$, chọn $Q_\theta(O_i,A_i)$ theo hành động đã lưu và tính đích $y=R+\gamma(1-Z)\max_{a'}Q_{\theta^-}(O',a')$; phân biệt kết thúc ($Z$) với cắt ngắn ($U$). Sản phẩm: đích của hai mẫu chuyển, một mẫu có $Z=1$.
+2. (Mạch 3) Nêu tác dụng và giới hạn của bộ nhớ phát lại; chỉ ra hai nguồn dữ liệu khác chính sách và lý do Q-learning một bước không cần tỉ số lấy mẫu quan trọng. Sản phẩm: xác suất hai mẫu liền nhau cùng vào một mini-batch.
+3. (Mạch 4) Tính hàm mất mát và gradient theo $q$ trên một mini-batch; truy dấu một vòng DQN với hai bộ đếm $t$ và $k_{\mathrm{opt}}$. Sản phẩm: bảng lời giải mini-batch hai mẫu và bản sửa lỗi cài đặt đích.
+4. (Mạch 5) Viết SGD, RMSprop và Adam theo từng tọa độ; nêu điều bộ tối ưu không sửa được (đích, dữ liệu, xấp xỉ hàm). Sản phẩm: bảng so sánh trạng thái phụ và siêu tham số.
+5. (Mạch 6) Tính độ nhảy của đích tại mốc đồng bộ; nêu các giả thiết còn thiếu để có bảo đảm hội tụ khi đủ bộ ba bất ổn. Sản phẩm: $\Delta y$ của một mẫu chuyển và thiết kế thí nghiệm loại bỏ.
+6. (Mạch 7) Giải một bước DQN trên mini-batch có cả kết thúc lẫn cắt ngắn, nêu kết quả và giả thiết đã dùng. Sản phẩm: lời giải bài tổng hợp CartPole.
 
-HTML có đúng 7 section ngoài, độ sâu tối đa 2:
+## Bảy mạch (đợt sửa 2026-10-22)
 
-1. M1 — `L08-01`, `L08-02`, `L08-04`, `L08-05`, `L08-03`, `L08-06`: cầu nối từ bảng Q sang DQN; giữ mốc 7+13 phút bên trong M1 giữa `L08-03`/`L08-04`.
-2. M2 — `L08-07`–`L08-09`, `L08-12`–`L08-14`: giao diện mạng, đích bootstrap, hai cờ và replay.
-3. M3 — `L08-10`, `L08-15`, `L08-17`, `X01`, `L08-21`, `L08-11`, `L08-18`–`L08-20`, `L08-16`, `X02`: đồ thị tính, loss, kiểm tra, vòng DQN, tensor, đồng bộ và bài tập.
-4. M4 — `L08-22`–`L08-25`: gradient và ba bộ tối ưu (nhánh dọc linh hoạt).
-5. M5 — `L08-26`: bảng so sánh và phạm vi chọn optimizer.
-6. M6 — `L08-28`, `L08-27`, `L08-29`, `L08-30`: tương quan, replay, mạng mục tiêu và bộ ba nguy hiểm.
-7. M7 — `L08-31`–`L08-34` + `X03`: pipeline Atari, kiểm tra tổng hợp, ablation và hợp đồng DQN.
+HTML có đúng 7 section ngoài, độ sâu tối đa 2. Mạch $N$ mở tại `#/N`; từ mạch 2, trang đầu là trang tiêu đề mạch `L08-MNT`, `id="mach-N"`.
 
-`X01`–`X03` là 30 phút chữa bài ngoài 120 phút chính; không coi đây là lỗi thời lượng.
+1. Mở đầu (10 phút): bìa có câu luận đề; Tiên quyết và quy ước (Nhắc lại, Ký hiệu); Mục tiêu học tập; Nội dung; Vấn đề trung tâm.
+2. Mạng giá trị hành động và đích hồi quy (25 phút): giới hạn của bảng, đầu vào bốn khung Atari, giao diện $\mathbf q_\theta(o)$, tính Markov của bốn khung, ví dụ một tham số tạo cả dự đoán lẫn đích, mạng mục tiêu, đích hồi quy có mặt nạ, kết thúc và cắt ngắn.
+3. Bộ nhớ phát lại (15 phút): tương quan giữa các mẫu chuyển liên tiếp, bộ nhớ phát lại, dữ liệu khác chính sách trong bộ nhớ, giới hạn của bộ nhớ phát lại.
+4. Hàm mất mát và thuật toán DQN (30 phút): hàm mất mát trên mini-batch, dừng gradient ở đích, bài tập một mini-batch, vòng huấn luyện, thuật toán DQN (ba trang), kích thước tensor, bài tập lỗi cài đặt đích.
+5. Bộ tối ưu theo gradient (10 phút): vai trò của bộ tối ưu, SGD, RMSprop, Adam, so sánh ba bộ tối ưu.
+6. Bất ổn và phạm vi bảo đảm của DQN (15 phút): hai nguồn bất ổn và hai cơ chế giảm, ví dụ đích qua mốc đồng bộ, bộ ba bất ổn trong DQN, ví dụ hai trạng thái dùng chung tham số với mạng mục tiêu, bài tập thí nghiệm loại bỏ.
+7. Tổng kết và chuyển tiếp (15 phút): kết quả và giả thiết, so sánh Q-learning bảng, tuyến tính và DQN, bài tập tổng hợp CartPole và lời giải, trả lời vấn đề trung tâm, câu hỏi tự kiểm tra, bài tập về nhà và tài liệu đọc.
 
-## Truy nguyên các trang bổ sung
+Lời giải đầy đủ của các bài tập trên trang chiếu thuộc 30 phút chữa bài, ngoài 120 phút trên lớp.
+
+## Bảng thuật ngữ Việt–Anh
+
+Thuật ngữ theo Bài 06–07. Lần đầu xuất hiện trong mỗi tài liệu (trang chiếu, ghi chú bài giảng), viết tên tiếng Việt kèm tên tiếng Anh trong ngoặc; các lần sau chỉ dùng tên tiếng Việt.
+
+| Tiếng Việt | Tiếng Anh | Quy ước |
+|---|---|---|
+| thăm dò | exploration | không dùng "khám phá" |
+| tham lam | greedy | |
+| $\epsilon_{\mathrm{exp}}$-tham lam | $\epsilon$-greedy | dòng "Ký hiệu:" nối $\epsilon_{\mathrm{exp}}$ với $\varepsilon$ của Bài 06 |
+| mẫu chuyển | transition | không dùng "chuyển tiếp" |
+| lượt | episode | |
+| lợi tức | return | |
+| sai số TD | TD error | |
+| bootstrap, đích bootstrap | bootstrap, bootstrap target | giữ như Bài 07 |
+| bán gradient | semi-gradient | Bài 07 |
+| xấp xỉ hàm | function approximation | Bài 07 |
+| học khác chính sách | off-policy learning | |
+| tỉ số lấy mẫu quan trọng | importance sampling ratio | Bài 07 |
+| bộ ba bất ổn | deadly triad | không dùng "bộ ba nguy hiểm", kể cả trong SVG và ghi chú bài giảng |
+| mạng giá trị hành động | action-value network | DQN: Deep Q-Network, giữ tên riêng |
+| mạng trực tuyến | online network | $Q_\theta$ |
+| mạng mục tiêu | target network | $Q_{\theta^-}$ |
+| đồng bộ (sao chép cứng) | hard target update | $\theta^-\leftarrow\theta$ |
+| đích hồi quy | regression target | $y_i$ |
+| mặt nạ kết thúc | terminal mask | $(1-Z)$ |
+| kết thúc | termination | cờ $Z$ |
+| cắt ngắn | truncation | cờ $U$ |
+| đặt lại, tự đặt lại | reset, autoreset | |
+| bộ nhớ phát lại | experience replay; replay buffer | $\mathcal D$ |
+| làm nóng bộ nhớ | warm-up | $N_{\mathrm{start}}$ |
+| phép chọn theo hành động | gather | |
+| dừng gradient | stop-gradient | $\operatorname{sg}$ |
+| hàm mất mát | loss | $L_B$ |
+| sai số bình phương trung bình | mean squared error (MSE) | |
+| bộ tối ưu | optimizer | |
+| hạ gradient ngẫu nhiên | stochastic gradient descent (SGD) | |
+| hiệu chỉnh lệch | bias correction | Adam |
+| mạng tích chập | convolutional neural network (CNN) | |
+| lan truyền ngược | backpropagation | |
+| thí nghiệm loại bỏ | ablation | |
+
+## Mục cũ trước đợt sửa 2026-10-22
+
+Các mục dưới đây mô tả bản trước đợt sửa. Mục nào sai khác với cấu trúc mới sẽ được thay khi sửa trang tương ứng.
+
+### Truy nguyên các trang bổ sung (bản cũ)
 
 - `L08-20` (hợp đồng tensor Atari): truy nguyên từ công thức loss `L08-17` và giao diện mạng `L08-07`; biến công thức thành shape/dtype/device cụ thể trước khi kiểm tra.
 - `L08-21` (kiểm tra dấu gradient hai mẫu): truy nguyên từ ví dụ số `X01` và công thức loss; kiểm hướng cập nhật trước khi sửa giả mã.
 - `X01` (bài tính đích, TD error, MSE, gradient): truy nguyên trực tiếp từ công thức đích và loss của nguồn.
 - `X03` (bài ablation): truy nguyên từ hai cơ chế replay và mạng mục tiêu; dùng lại đúng hai cơ chế đã dạy và thu hồi bốn kết quả `L08-02`.
 
-## Câu hỏi khám phá nguồn tr.36
+### Câu hỏi khám phá nguồn tr.36 (bản cũ)
 
 Câu hỏi khám phá ở nguồn tr.36 không được đưa lên mặt trang vì đã có `L08-33` (kiểm tra tổng hợp bốn câu) và `X03` (ablation) phủ cùng mục tiêu kiểm; nội dung liên quan được đưa vào notes của `L08-33`. Không thêm câu hỏi mới lên mặt trang.
-
-## Mạch nội dung (cụm khái niệm nhỏ hơn)
-
-1. Cầu nối từ bảng Q sang DQN.
-2. Giao diện mạng, khởi tạo mạng online/mục tiêu và mục tiêu bootstrap.
-3. Bộ nhớ phát lại, mạng mục tiêu và giả mã hoàn chỉnh.
-4. Gradient và ba bộ tối ưu.
-5. Bất ổn, bộ ba nguy hiểm và phạm vi bảo đảm.
-6. Pipeline Atari và kiểm tra tổng hợp.
 
 ## Ánh xạ lecture note → deck
 
@@ -72,7 +110,7 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | `lec-08-topic-14` | `L08-22`–`L08-26` |
 | `lec-08-topic-15` | `L08-31`–`L08-34`, `X03` |
 
-## Ánh xạ nguồn
+## Ánh xạ nguồn (bản cũ; cột "trang đích" được cập nhật khi sửa từng trang, các lệch thứ tự của đợt sửa 2026-10-22 ghi trong `storyboard.md`)
 
 | trang nguồn | trang đích | quyết định | lý do |
 |---|---|---|---|
@@ -118,34 +156,36 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | $R_{t+1}$ | phần thưởng sau khi thực hiện $A_t$ trong chỉ số thời gian |
 | $Z_{t+1}$ | cờ kết thúc thật của MDP |
 | $U_{t+1}$ | cờ cắt ngắn do cơ chế thu thập |
-| $Q_\theta$ | mạng online, nhận gradient |
+| $Q_\theta$ | mạng trực tuyến, nhận gradient |
 | $Q_{\theta^-}$ | mạng mục tiêu, giữ cố định giữa các lần đồng bộ |
 | $\mathcal D$ | bộ nhớ phát lại |
 | $\operatorname{sg}$ | dừng gradient qua đối số |
-| $\epsilon_{\mathrm{exp}}$ | xác suất khám phá |
-| $\epsilon_{\mathrm{opt}}$ | hằng số ổn định số trong optimizer |
 | $(O_i,A_i,R_i,O'_i,Z_i,U_i)$ | mẫu thứ $i$ sau khi lấy mini-batch, $i=1,\ldots,b$ |
-| $b$ | số chuyển tiếp trong mini-batch |
+| $b$ | số mẫu chuyển trong mini-batch |
+| $q_i$ | dự đoán của mạng trực tuyến trên mẫu $i$, $q_i=Q_\theta(O_i,A_i)$; khác giá trị thật $q_*$, cần dòng "Ký hiệu:" khi dùng lần đầu |
+| $y_i$ | đích hồi quy của mẫu $i$ |
 | $t\in\mathbb N_0$ | bộ đếm bước môi trường |
 | $k_{\mathrm{opt}}\in\mathbb N_0$ | bộ đếm bước tối ưu; tăng sau khi cập nhật $\theta$ |
-| $N\in\mathbb N_+$ | dung lượng replay |
+| $N\in\mathbb N_+$ | dung lượng bộ nhớ phát lại |
 | $N_{\mathrm{start}}\in\mathbb N_+$ | số mẫu tối thiểu trước bước tối ưu đầu tiên, $b\le N_{\mathrm{start}}\le N$ |
 | $F\in\mathbb N_+$ | số bước môi trường giữa hai lần tối ưu |
 | $C\in\mathbb N_+$ | số bước tối ưu giữa hai lần đồng bộ cứng |
-| $\gamma\in[0,1]$ | hệ số chiết khấu; dùng $\gamma=1$ chỉ khi episode kết thúc thích hợp và return hữu hạn |
+| $\gamma\in[0,1]$ | hệ số chiết khấu; dùng $\gamma=1$ chỉ khi lượt kết thúc thích hợp và lợi tức hữu hạn |
 | $\alpha_t>0$ | bước học dạng bảng; nếu phát biểu hội tụ, dãy bước phải thỏa Robbins–Monro theo từng cặp trạng thái–hành động |
-| $\eta>0$ | tốc độ học của optimizer |
-| $\rho,\beta_1,\beta_2\in[0,1)$ | hệ số moment của RMSprop và Adam |
-| $\epsilon_{\mathrm{exp}}\in[0,1]$ | xác suất khám phá của chính sách hành vi |
-| $\epsilon_{\mathrm{opt}}>0$ | hằng số ổn định số trong mẫu số optimizer |
+| $\eta>0$ | tốc độ học của bộ tối ưu |
+| $j\in\mathbb N_+$ | chỉ số bước của bộ tối ưu, $j=k_{\mathrm{opt}}$ sau khi tăng |
+| $\rho,\beta_1,\beta_2\in[0,1)$ | hệ số suy giảm của RMSprop và Adam; $\rho$ ở đây khác tỉ số lấy mẫu quan trọng $\rho_t$ của Bài 07, khai báo bằng dòng "Ký hiệu:" ở mạch 5 |
+| $m_j,v_j$ | trung bình trượt của $g_j$ và của $g_j\odot g_j$; khác $v_\pi$, khai báo bằng dòng "Ký hiệu:" ở mạch 5 |
+| $\epsilon_{\mathrm{exp}}\in[0,1]$ | xác suất thăm dò của chính sách hành vi; là $\varepsilon$ của Bài 06 |
+| $\epsilon_{\mathrm{opt}}>0$ | hằng số ổn định số trong mẫu số của bộ tối ưu |
 
 Quy ước thời gian chỉ dùng khi tương tác với môi trường: $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$. Sau khi lấy mini-batch, dùng duy nhất $(O_i,A_i,R_i,O'_i,Z_i,U_i)$ với $i=1,\ldots,b$; không trộn $i+1$ vào chỉ số batch.
 
-## Phân bổ thời lượng
+## Phân bổ thời lượng (đợt sửa 2026-10-22)
 
-- 120 phút chính = 110 phút cốt lõi (cầu nối Q-learning, giao diện và hai mạng, đích/loss, replay, giả mã, bất ổn, Atari và tổng hợp) + 10 phút linh hoạt.
-- 10 phút linh hoạt: từ `L08-22` đi xuống `L08-23`–`L08-25` để xem SGD, RMSprop và Adam. Tuyến ngang đi từ `L08-22` sang bảng so sánh `L08-26`.
-- 30 phút chữa bài (ngoài 120 phút chính): `X01`, `X02`, `X03`, mỗi bài 10 phút.
+- 120 phút trên lớp: mạch 1 10 phút, mạch 2 25 phút, mạch 3 15 phút, mạch 4 30 phút, mạch 5 10 phút, mạch 6 15 phút, mạch 7 15 phút.
+- Trong mạch 5, ba trang SGD, RMSprop, Adam là phần co giãn; khi thiếu giờ, đi thẳng từ trang vai trò của bộ tối ưu sang bảng so sánh, nên bảng so sánh phải tự đọc được nhờ dòng "Ký hiệu:".
+- 30 phút chữa bài (ngoài 120 phút): lời giải đầy đủ của bài tập một mini-batch, lỗi cài đặt đích, thí nghiệm loại bỏ và bài tổng hợp CartPole.
 
 ## Tài sản SVG
 
