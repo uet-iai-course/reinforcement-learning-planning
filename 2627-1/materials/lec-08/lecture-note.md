@@ -101,17 +101,19 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 |---|---|---|---|---|
 | `lec-08-topic-15` | Atari, kiểm tra tổng hợp, ba bài thảo luận, đọc thêm | tr. 12–13, 29–36 | Ứng dụng và tổng kết | Vào: topic-12, 14 → Ra: kết luận cuối tệp |
 
-### Bảy mạch và thời lượng (120 phút)
+### Bảy phần của chương
 
-1. Mở và cầu nối Q-learning dạng bảng — 12 phút (topic-13, 01).
-2. Giao diện DQN và hai mạng — 20 phút (topic-02, 03).
-3. Mặt nạ kết thúc, chuyển tiếp, replay và làm nóng — 29 phút (topic-04, 05, 06).
-4. Gather, dừng gradient, mất mát, vòng DQN và tensor — 24 phút (topic-08, 09, 10, 11).
-5. Bộ tối ưu — 10 phút linh hoạt (topic-14).
-6. Tương quan, mục tiêu di động, bộ ba bất ổn và giới hạn — 17 phút (topic-07, 12).
-7. Atari, kiểm tra tổng hợp và kết luận — 8 phút (topic-15).
+Chương đi theo bảy phần, cùng thứ tự với bộ trang chiếu.
 
-Ba bài tập ở cuối dùng 30 phút sau phần chính.
+1. Mở đầu: kiến thức tiên quyết, ký hiệu, mục tiêu và bài toán trung tâm (`lec-08-topic-13`, `lec-08-topic-01`).
+2. Mạng giá trị hành động và đích hồi quy: giới hạn của bảng, đầu vào bốn khung Atari, giao diện mạng, mạng mục tiêu, đích có mặt nạ kết thúc, kết thúc và cắt ngắn (`lec-08-topic-01`, `lec-08-topic-15`, `lec-08-topic-02` đến `lec-08-topic-05`).
+3. Bộ nhớ phát lại: tương quan giữa các mẫu chuyển liên tiếp, cơ chế lưu và lấy mẫu đều, dữ liệu khác chính sách, giới hạn (`lec-08-topic-06`, `lec-08-topic-07`).
+4. Hàm mất mát và thuật toán DQN: hàm mất mát trên mini-batch, dừng gradient, vòng huấn luyện, kích thước tensor (`lec-08-topic-08` đến `lec-08-topic-11`).
+5. Bộ tối ưu theo gradient: SGD, RMSprop, Adam theo từng tọa độ (`lec-08-topic-14`).
+6. Bất ổn và phạm vi bảo đảm của DQN: hai nguồn bất ổn, độ nhảy của đích khi đồng bộ, bộ ba bất ổn (`lec-08-topic-12`).
+7. Tổng kết và chuyển tiếp: kết quả và giả thiết, bài tập tổng hợp, câu hỏi tự kiểm tra (`lec-08-topic-15`).
+
+Đọc trước: Sutton và Barto (2018), §11.3 (bộ ba bất ổn) và §16.5 (DQN trên trò chơi Atari); Mnih và cộng sự (2015).
 
 ---
 

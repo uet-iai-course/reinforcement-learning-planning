@@ -30,7 +30,7 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 1 | `L08-05` | (gộp vào `L08-01b`; ý khác chính sách sang `L08-05r`) | gộp, bỏ trang riêng | "replay" dùng trước khi giới thiệu; 82 âm tiết; lý do không cần tỉ số lấy mẫu quan trọng phải sửa | đã bỏ ở S2; ý dữ liệu khác chính sách trong bộ nhớ viết lại ở `L08-05r` |
 | 1 | `L08-01c` | Tiên quyết và quy ước (cùng tiêu đề) | thêm | Dòng "Ký hiệu:" và bảng: $O_t$, $S_t$, $\mathcal A$ hữu hạn, $R_{t+1}$, $\gamma$, $\theta$, $t$, $k_{\mathrm{opt}}$, $i$, $\epsilon_{\mathrm{exp}}$ ($\varepsilon$ của Bài 06), $\epsilon_{\mathrm{opt}}$; $q_i$ khai báo ở `L08-17` | 1.4 (S3) |
 | 1 | `L08-02` | Mục tiêu học tập | sửa | Sáu mục tiêu ứng mạch 2–7 (`outline.md`) | 1.5 (S4) |
-| 1 | `L08-02b` | Nội dung | thêm | Bảy mục khớp trang tiêu đề mạch và `#/N`; dòng đọc trước: Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015) | chưa có |
+| 1 | `L08-02b` | Nội dung | thêm | Bảy mục khớp trang tiêu đề mạch và `#/N`; dòng đọc trước: Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015) | 1.6 (S5) |
 | 1 | `L08-02c` | Vấn đề trung tâm | thêm (gộp ý quy mô của `L08-06`) | Một dòng bài toán, một dòng trả lời có điều kiện cho mỗi mạch 2–6 | chưa có |
 | 1 | `L08-06` | (gộp vào `L08-02c` và `L08-03`) | gộp, bỏ trang riêng | Cảnh báo phủ định cận mẫu chưa từng nêu trên mặt trang | 1.5 (tạm) |
 | 2 | `L08-M2T` | 2. Mạng giá trị hành động và đích hồi quy | thêm | Trang tiêu đề mạch, điểm vào mạch 2 | chưa có |
@@ -96,7 +96,7 @@ Số trang sau đợt sửa dự kiến: 37 trang hiện có − 5 trang bỏ (`
 
 ### Ngoại lệ mật độ
 
-Chưa có ngoại lệ. Số âm tiết trước sửa của các trang vượt trần (đo ngày 2026-10-22): `L08-05` 82, `L08-18` 87, `L08-27` 70, `L08-28` 64, `L08-32` 68, `X03` 91; `L08-33` 73 (trần 80 của trang tự kiểm tra). Số sau sửa ghi vào mục của từng trang khi sửa.
+`L08-02b` (Nội dung): 8 dòng > 6 vì phải liệt kê đủ bảy mạch và dòng đọc trước; 54 âm tiết (xem mục của trang). Số âm tiết trước sửa của các trang vượt trần (đo ngày 2026-10-22): `L08-05` 82, `L08-18` 87, `L08-27` 70, `L08-28` 64, `L08-32` 68, `X03` 91; `L08-33` 73 (trần 80 của trang tự kiểm tra). Số sau sửa ghi vào mục của từng trang khi sửa.
 
 ### Mục từng trang (đợt sửa 2026-10-22)
 
@@ -139,6 +139,16 @@ Chưa có ngoại lệ. Số âm tiết trước sửa của các trang vượt 
 - **Liên kết:** trước là `L08-01c` (Ký hiệu); sau là trang "Nội dung" `L08-02b` (chưa có; hiện là `L08-06`).
 - **Mật độ:** trước sửa 64 âm tiết, 8 dòng (bốn tiêu đề thẻ, bốn câu), ghi chú 59 âm tiết. Sau sửa 79 âm tiết (trần 80 của trang mục tiêu), 6 dòng (14, 10, 12, 14, 15, 14), 0 công thức, 0 hộp chữ, ghi chú 150 âm tiết. `L08-01c` sau khi thêm "(optimizer)": 59 âm tiết.
 - **Ghi chú bài giảng:** đoạn "Sau bài này…" thành mục `## Mục tiêu học tập`, sáu mục cùng thứ tự với trang, mỗi mục nêu sản phẩm.
+
+#### `L08-02b` Nội dung (bước S5)
+
+- **Trang muốn nói gì:** bảy phần của bài theo đúng thứ tự, mỗi tên trùng tên trang tiêu đề mạch và trỏ tới `#/N`; tài liệu đọc trước.
+- **Phục vụ mạch nào và thế nào:** mạch 1; cho người học bản đồ bài và số mạch để đối chiếu với `#/N` khi điều hướng.
+- **Vấn đề còn lại trước sửa:** không có trang Nội dung (`review-structure.md` §2 `L08-02b`, bảng phát hiện nghiêm trọng "mở bài"; `review-student.md`: "sinh viên không có bản đồ bài").
+- **Quyết định:** thêm. Danh sách đánh số 1–7; mỗi mục là liên kết nội bộ `#/N` (đã thử: bấm mục $N$ mở trang đầu của section ngoài thứ $N$); dòng "Đọc trước:" không in đậm như deck 07, chỉ ghi các mục kế hoạch đã xác minh (Sutton và Barto, 2018, §11.3, §16.5; Mnih và cộng sự, 2015). Ghi chú diễn giả: một câu về sản phẩm của mỗi phần 2–7, không thời lượng.
+- **Liên kết:** trước là `L08-02` (Mục tiêu học tập); sau là trang "Vấn đề trung tâm" `L08-02c` (chưa có; hiện là `L08-06`).
+- **Mật độ và ngoại lệ:** 54 âm tiết (trần 80 của trang nội dung), 8 dòng (bảy mục và dòng đọc trước; mục dài nhất 9 âm tiết, dòng đọc trước 13), 0 công thức, 0 hộp chữ, ghi chú 137 âm tiết. Ngoại lệ số dòng (8 > 6): trang Nội dung phải liệt kê đủ bảy mạch (`AGENTS.md`, mạch mở đầu), như deck 06–07.
+- **Ghi chú bài giảng:** mục "Bảy mạch và thời lượng (120 phút)" thành "Bảy phần của chương" theo cấu trúc mới, mỗi phần kèm `note-topic-id`; bỏ thời lượng (mẫu `materials/_templates/lecture-note.md` không có mục thời lượng); thêm dòng "Đọc trước:".
 
 ### Bản trước đợt sửa 2026-10-22
 

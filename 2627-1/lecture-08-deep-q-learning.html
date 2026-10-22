@@ -61,6 +61,20 @@
 </ol>
 <aside class="notes"><p>Sáu mục tiêu theo thứ tự các mạch 2 đến 7; mỗi mục kết thúc bằng một sản phẩm. Mục 1: đọc vector giá trị hành động của mạng, tính đích của hai mẫu chuyển, một mẫu kết thúc. Mục 2: nêu bộ nhớ phát lại giảm gì, không bảo đảm gì; tính xác suất hai mẫu liền nhau cùng vào một mini-batch. Mục 3: bảng lời giải mini-batch hai mẫu và bản sửa lỗi cài đặt đích. Mục 4: viết hạ gradient ngẫu nhiên (SGD), RMSprop, Adam theo từng tọa độ và nêu rằng bộ tối ưu không đổi đích, dữ liệu hay lớp hàm. Mục 5: độ thay đổi của đích một mẫu khi đồng bộ, tức khi sao chép tham số sang mạng mục tiêu, và lý do DQN vẫn có bộ ba bất ổn. Mục 6 vận dụng năm mục trước vào một bài toán CartPole.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 2.</p></aside>
 </section>
+<section data-slide-id="L08-02b" data-note-topic-id="lec-08-topic-01">
+<h2>Nội dung</h2>
+<ol>
+<li><a href="#/1">Mở đầu</a></li>
+<li><a href="#/2">Mạng giá trị hành động và đích hồi quy</a></li>
+<li><a href="#/3">Bộ nhớ phát lại</a></li>
+<li><a href="#/4">Hàm mất mát và thuật toán DQN</a></li>
+<li><a href="#/5">Bộ tối ưu theo gradient</a></li>
+<li><a href="#/6">Bất ổn và phạm vi bảo đảm của DQN</a></li>
+<li><a href="#/7">Tổng kết và chuyển tiếp</a></li>
+</ol>
+<p>Đọc trước: Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015).</p>
+<aside class="notes"><p>Phần 2 thay bảng bằng một mạng trả về giá trị của mọi hành động và biến mục tiêu Q-learning thành đích hồi quy có mặt nạ kết thúc. Phần 3 lưu các mẫu chuyển rồi lấy mẫu đều thành mini-batch. Phần 4 viết hàm mất mát trên mini-batch, chặn gradient qua đích và ghép thành thuật toán DQN. Phần 5 so sánh ba quy tắc đổi gradient thành bước tham số. Phần 6 đặt bộ nhớ phát lại và mạng mục tiêu cạnh các nguồn bất ổn và nêu phạm vi bảo đảm. Phần 7 đặt mỗi kết quả cạnh giả thiết không được bỏ. Trong Sutton và Barto, §11.3 bàn về bộ ba bất ổn, §16.5 về DQN trên trò chơi Atari; bài báo của Mnih và cộng sự mô tả thuật toán gốc.</p><p class="note-source"><strong>Nguồn:</strong> Sutton và Barto (2018), §11.3 "The Deadly Triad", §16.5 "Human-level Video Game Play"; Mnih và cộng sự (2015), Nature 518, 529–533.</p></aside>
+</section>
   <section data-slide-id="L08-06" data-note-topic-id="lec-08-topic-01"><h2>Quy mô làm thay đổi bài toán</h2><div class="grid2"><div class="card"><h3>Bảng</h3><p>Số ô tăng theo $|\mathcal S||\mathcal A|$ và không xử lý trực tiếp không gian trạng thái liên tục.</p></div><div class="card"><h3>Xấp xỉ hàm</h3><p>Chi phí gắn với số tham số và phép tính, nhưng cần giả thiết cấu trúc để có bảo đảm mẫu.</p></div></div><p><strong>Lưu ý:</strong> không có một cận mẫu chung chỉ từ việc thay bảng bằng đặc trưng hay mạng sâu.</p><aside class="notes">Nguồn nêu hai công thức độ phức tạp mẫu nhưng không xác định mô hình lấy mẫu, chuẩn sai số, xác suất thành công, điều kiện bao phủ và thuật toán tương ứng. Vì vậy bài chỉ giữ thông điệp về quy mô, không trình bày hai công thức như định lý. Trang kế chuyển từ quy mô sang giao diện cụ thể của mạng DQN.<p class="note-source"><strong>Nguồn:</strong> lecture8-dqn.pdf, tr. 8–13; lược hai cận thiếu thiết lập.</p></aside></section>
 </section>
 
