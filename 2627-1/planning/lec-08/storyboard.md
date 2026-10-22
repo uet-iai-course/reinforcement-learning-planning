@@ -66,7 +66,7 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 4 | `X02b` | Bài tập: lỗi cài đặt đích DQN | thêm (tách lời giải) | "Lời giải:" một dòng tóm năm sửa; mã đã sửa | 4.12 (S32) |
 | 5 | `L08-M5T` | 5. Bộ tối ưu theo gradient | thêm | Trang tiêu đề mạch, điểm vào mạch 5 | 5.0 (S33) |
 | 5 | `L08-22` | Vai trò của bộ tối ưu | sửa | "Nhu cầu:"; hình `optimizer-step.svg` (chuỗi $B_j\to L_{B_j}\to g_j\to$ Update $\to\theta_j$, $j=k_{\mathrm{opt}}$); công thức $g_j$, $\theta_j$; "Ký hiệu:"; câu R1-2; bỏ dẫn chiếu "bước 8 giả mã" | 5.1 (S34) |
-| 5 | `L08-23` | Hạ gradient ngẫu nhiên (SGD) | sửa | Viết đầy đủ tên | 5.2 |
+| 5 | `L08-23` | Hạ gradient ngẫu nhiên (SGD) | sửa | "Nhu cầu:"; công thức; hai thẻ (trạng thái phụ, bước theo tọa độ); ví dụ $g_j=(2;\,0{,}02)$, $\eta=0{,}1$ | 5.2 (S35) |
 | 5 | `L08-24` | RMSprop | sửa | Ký hiệu $\odot,\oslash$; Ý nghĩa: | 5.3 |
 | 5 | `L08-25` | Adam | sửa | Ý nghĩa: hiệu chỉnh lệch | 5.4 |
 | 5 | `L08-26` | So sánh ba bộ tối ưu | sửa, gộp mạch | Mạch 5 cũ chỉ có trang này; thêm Ký hiệu $m_j,v_j$ và câu giới hạn | 5.5 |
@@ -514,6 +514,16 @@ Quyết định R1 mục 5 (khó khăn không lồi được hứa ở ghi chú 
 - **Liên kết:** trước là `L08-M5T`; sau là `L08-23` (hạ gradient ngẫu nhiên). Mục tiêu hỗ trợ: mục tiêu 4 (viết ba bộ tối ưu theo tọa độ; nêu điều chúng không sửa được).
 - **Mật độ:** trước sửa 33 âm tiết (theo `review-student.md`), một hộp dẫn chiếu, ghi chú diễn giả 28 âm tiết. Sau sửa 39 âm tiết, 3 dòng (11, 10, 18), 1 công thức hiển thị, 1 hình, ghi chú diễn giả 131 âm tiết. Đáy nội dung 653 px.
 - **Ghi chú bài giảng:** mục topic-14 đổi tên "Vai trò của bộ tối ưu và ba quy tắc cập nhật" (bản đồ chủ đề đổi theo, "Vào: topic-10"); phần mở viết lại: đoạn nhu cầu (bước 8 của Thuật toán 08.13); Định nghĩa 08.15 (bộ tối ưu theo gradient với trạng thái phụ $s_j$); đoạn đọc (trạng thái phụ của ba quy tắc; $\epsilon_{\mathrm{opt}}$); hình và đoạn đọc hình; đoạn giới hạn theo R1-2 (đổi quỹ đạo, gián tiếp đổi hành vi, dữ liệu, $\theta^-$; không loại được nguồn bất ổn); Ví dụ 08.18 (một bước hạ gradient trên ví dụ một tham số: $g_1=-2$, $\eta=0{,}25$, $\theta_1=0{,}5$, trùng bán gradient với $\alpha=2\eta$); "Trong thực hành." (hàm mất mát không đo chất lượng chính sách). Bỏ đoạn "Vấn đề." và "Hình thức chung." cũ. Đoạn "Giới hạn." và "Kiểm tra nhanh." cuối mục sửa theo R1-2. Phần SGD, RMSprop, Adam, so sánh giữ cho các bước sau. Số tiếp theo: Định nghĩa/Nhận xét/Thuật toán 08.16; Ví dụ 08.19.
+
+#### `L08-23` Hạ gradient ngẫu nhiên (SGD) (bước S35)
+
+- **Trang muốn nói gì:** SGD là dạng đơn giản nhất của Update, $\theta_j=\theta_{j-1}-\eta\,g_j$; không có trạng thái phụ; mọi tọa độ cùng hệ số $\eta$, nên với $\eta=0{,}1$, $g_j=(2;\,0{,}02)$ bước theo hai tọa độ là $(-0{,}2;\,-0{,}002)$, chênh $100$ lần.
+- **Phục vụ mạch nào và thế nào:** mạch 5, quy tắc thứ nhất của cụm "bộ tối ưu" (hình thức và ví dụ); ví dụ số chuẩn bị so sánh với RMSprop ở `L08-24`, nơi bước theo từng tọa độ được chuẩn hóa.
+- **Vấn đề còn lại trước sửa:** tiêu đề viết tắt "SGD" chưa giải nghĩa; công thức $g_j$ lặp `L08-22`; không có ví dụ số; ghi chú dùng "optimizer" (`review-structure.md` §3 `L08-23`; `review-student.md`).
+- **Quyết định:** sửa. Tiêu đề viết đủ tên tiếng Việt và viết tắt trong ngoặc; "Nhu cầu:" một dòng; một công thức hiển thị; hai thẻ "Trạng thái phụ" và "Bước theo tọa độ"; dòng "Ví dụ." đặt dữ liệu ngay trên trang (rút "hai tọa độ" để không có dòng mồ côi). Ghi chú diễn giả: nghĩa của "ngẫu nhiên" (kỳ vọng của $g_j$ theo phép rút); hàm $\tfrac12(100\theta_1^2+\theta_2^2)$ tại $(0{,}02;\,0{,}02)$ cho đúng gradient $(2;\,0{,}02)$, ngưỡng $\eta<0{,}02$, tọa độ thứ hai giảm chưa tới $2\%$ mỗi bước; lịch giảm tốc độ học; không suy ra SGD luôn kém hơn phương pháp thích nghi (bỏ câu "có thể cho kết quả tương đương" vì thiếu căn cứ).
+- **Liên kết:** trước là `L08-22` (dạng chung $\theta_j=\operatorname{Update}(\theta_{j-1},g_j)$); sau là `L08-24` (RMSprop: hệ số bước riêng cho từng tọa độ). Mục tiêu hỗ trợ: mục tiêu 4.
+- **Mật độ:** trước sửa 17 âm tiết (hai thẻ), 1 công thức hiển thị hai vế, ghi chú diễn giả 32 âm tiết. Sau sửa 38 âm tiết, 6 khối chữ (12; thẻ 3 + 5 và 4 + 6; ví dụ 8), 1 công thức hiển thị, ghi chú diễn giả 109 âm tiết. Đáy nội dung 600 px.
+- **Ghi chú bài giảng:** phần SGD của topic-14 viết lại thành tiểu mục "Hạ gradient ngẫu nhiên (SGD)": câu nhu cầu; Định nghĩa 08.16 (trạng thái phụ rỗng; $\eta_j$ khi đổi theo bước); đoạn đọc (kỳ vọng của $g_j$ là gradient của hàm mất mát trung bình trên $\mathcal D$; chi phí bộ nhớ; hệ số chung); Ví dụ 08.19 ($\tfrac12(100\theta_1^2+\theta_2^2)$, $\theta_{j-1}=(0{,}02;\,0{,}02)$, $\eta=0{,}1$: $\theta_j=(-0{,}18;\,0{,}018)$, hệ số $-9$ và $0{,}9$; ngưỡng $\eta<0{,}02$, $0{,}98^{100}\approx13\%$); "Trong thực hành." (lịch giảm; điều kiện $\sum\eta_j=\infty$, $\sum\eta_j^2<\infty$ không áp dụng trực tiếp cho DQN; dẫn sang RMSprop). Số tiếp theo: Định nghĩa/Nhận xét/Thuật toán 08.17; Ví dụ 08.20.
 
 #### Rà lại mạch 3 (bước R3)
 

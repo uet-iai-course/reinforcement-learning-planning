@@ -876,13 +876,29 @@ Hình vẽ một bước tối ưu: mini-batch $B_j$ cho hàm mất mát $L_{B_j
 
 **Trong thực hành.** Giá trị hàm mất mát trên mini-batch không phải thước đo chất lượng của chính sách. Đích tự đổi tại mỗi mốc đồng bộ và dữ liệu trong $\mathcal D$ đổi theo hành vi, nên $L_B$ có thể tăng khi chính sách tốt lên, và giảm khi chính sách không đổi; lợi tức đánh giá trên các lượt riêng mới đo chất lượng của chính sách.
 
-**SGD.**
+#### Hạ gradient ngẫu nhiên (SGD)
 
-$$\theta_j=\theta_{j-1}-\eta g_j.$$
+Dạng đơn giản nhất của quy tắc $\operatorname{Update}$ không giữ trạng thái phụ và đi một bước ngược hướng gradient.
 
-Không cần trạng thái phụ theo từng tham số; mọi tọa độ dùng cùng hệ số bước $\eta$.
-Đơn giản, tiết kiệm bộ nhớ, dễ phân tích; nhưng nhạy với tốc độ học và có thể dao
-động trong bài toán điều kiện kém.
+::: definition Định nghĩa 08.16 (Hạ gradient ngẫu nhiên)
+Hạ gradient ngẫu nhiên (stochastic gradient descent, SGD) với tốc độ học $\eta>0$ là bộ tối ưu theo Định nghĩa 08.15 có trạng thái phụ rỗng và
+$$
+\theta_j=\theta_{j-1}-\eta\,g_j,\qquad g_j=\nabla_\theta L_{B_j}(\theta_{j-1}).
+$$
+Khi tốc độ học đổi theo bước, ta viết $\eta_j$ thay cho $\eta$.
+:::
+
+Chữ "ngẫu nhiên" chỉ nguồn của $g_j$: gradient được tính trên một mini-batch rút ngẫu nhiên, không trên toàn bộ dữ liệu. Với $\theta^-$ cố định và mỗi lần rút có phân phối đều trên $\mathcal D$, kỳ vọng của $g_j$ theo phép rút bằng gradient của hàm mất mát trung bình trên cả bộ nhớ, $\tfrac1{\lvert\mathcal D\rvert}\sum_{k\in\mathcal D}(y_k-q_k)^2$, tại $\theta_{j-1}$; $g_j$ là một ước lượng có nhiễu của gradient đó. SGD không giữ trạng thái phụ, nên chi phí bộ nhớ ngoài $\theta$ bằng $0$. Đổi lại, mọi tọa độ của $\theta$ dùng cùng hệ số $\eta$, và bước theo mỗi tọa độ tỉ lệ với độ lớn của gradient theo tọa độ đó.
+
+::: example Ví dụ 08.19 (Một hệ số bước cho hai tọa độ)
+**Dữ kiện.** Hàm mất mát $L(\theta)=\tfrac12(100\,\theta_1^2+\theta_2^2)$, tham số hiện hành $\theta_{j-1}=(0{,}02;\,0{,}02)$, tốc độ học $\eta=0{,}1$.
+
+**Tính.** $g_j=(100\cdot0{,}02;\,0{,}02)=(2;\,0{,}02)$, nên bước là $-\eta g_j=(-0{,}2;\,-0{,}002)$ và $\theta_j=(-0{,}18;\,0{,}018)$. Theo tọa độ thứ nhất, mỗi bước nhân $\theta_1$ với $1-100\eta=-9$; theo tọa độ thứ hai, với $1-\eta=0{,}9$.
+
+**Diễn giải.** Với $\eta=0{,}1$, tọa độ thứ nhất phân kỳ. Muốn nó không phân kỳ, cần $\lvert1-100\eta\rvert<1$, tức $\eta<0{,}02$; khi đó tọa độ thứ hai giảm chưa tới $2\%$ mỗi bước, và sau $100$ bước vẫn còn hơn $0{,}98^{100}\approx13\%$ giá trị ban đầu. Một hệ số chung không hợp cho cả hai tọa độ khi độ cong theo hai tọa độ chênh $100$ lần.
+:::
+
+**Trong thực hành.** SGD thường dùng với một lịch giảm tốc độ học $\eta_j$ định trước. Trong bài toán hồi quy với phân phối dữ liệu cố định, các điều kiện $\sum_j\eta_j=\infty$, $\sum_j\eta_j^2<\infty$ cùng giả thiết về hàm mất mát là cơ sở của các kết quả hội tụ cho SGD; trong DQN, đích đổi tại các mốc đồng bộ và dữ liệu đổi theo hành vi, nên các kết quả đó không áp dụng trực tiếp. Ví dụ 08.19 không cho phép suy ra SGD luôn kém hơn các phương pháp thích nghi; nó chỉ cho thấy SGD nhạy với tỉ lệ giữa các tọa độ, điều mà RMSprop dưới đây xử lý bằng một hệ số bước riêng cho từng tọa độ.
 
 **RMSprop** (theo từng tọa độ, $v_0=0$, $\rho\in[0,1)$; biến thể epsilon ngoài căn):
 
