@@ -794,3 +794,15 @@ Mũi tên lên của Reveal (`controlsLayout:"edges"`, giữa mép trên) đè t
 | 5 | `M5T`, `22`, `23`, `24`, `25`, `26` | đạt: mỗi quy tắc mở bằng giới hạn có số của quy tắc trước; trang so sánh tự đọc được |
 | 6 | `M6T`, `27`, `29`, `30`, `30b`, `X03`, `X03b` | đạt sau một sửa câu chữ ở `L08-30` (hai dấu hai chấm liên tiếp ở dòng "Nhắc lại:") |
 | 7 | `M7T`, `34`, `34b`, `K1`, `K1b`, `K2`, `K3`, `K4`, `33`, `K5` | đạt: đủ các trang kết bài theo CLAUDE.md; không khái niệm mới; lời giải trên mặt trang |
+
+## Rà ghi chú diễn giả của điều phối viên (2026-10-22)
+
+Phạm vi: đọc trực tiếp 60 ghi chú diễn giả (Opus 5.5, phiên chính, theo yêu cầu của người dùng sửa trực tiếp), tính lại mọi con số (ε-tham lam 0,925; phương sai 0,881σ² và cỡ mẫu hiệu dụng 1,1; xác suất cặp liền nhau 5/15 = 2/N; vòng đệm; dãy 0,95θ+0,5 và hệ số 0,9125; mini-batch y=(4,6; −2), δ=(1,5; −0,5); RMSprop −3,16η/+1,47η với v₂=0,46; Adam −η/−0,27η; hệ số 1,8−0,8·0,9^C; lịch t=4,6,8,10 và đồng bộ t=6,10; CartPole 10/1/−8). Không phát hiện sai số học. Đối chiếu số hiệu trong ghi chú `L08-33` (Nhận xét 08.9, 08.19–08.21; Định nghĩa 08.6, 08.15) và `L08-K5` (Bài tập 08.1–08.5) với `lecture-note.md`: khớp. Đối chiếu dòng chuyển tiếp sang Bài 09 với `lecture-09-double-dqn-va-gradient-chinh-sach.html`: khớp. `no-ai-slop` Detect trên ghi chú: không có mở đầu "Trang này", không lấy tài liệu làm chủ ngữ, không câu hỏi tu từ.
+
+| mức độ | trang chiếu | vấn đề | đề xuất sửa | trạng thái |
+|---|---|---|---|---|
+| trung bình | `L08-08` | "Nó cố định trong $C$ bước" đứng sau câu về $q_t$ nên đọc thành dự đoán cố định | gắn câu với $y_t$ và đặt trước câu về $q_t$ | đã sửa |
+| nhẹ | `L08-31` | hai câu liền nhau cùng nêu $84\times84$ và $4$ đến $18$ hành động | bỏ mệnh đề lặp, giữ câu có nguồn | đã sửa |
+| nhẹ | `L08-30b` | "hệ số tăng theo $C$, nhỏ nhất $1{,}08$" lẫn hệ số chu kỳ với hệ số mỗi bước | nêu hệ số chu kỳ $1{,}521$ và tương đương $1{,}043$ mỗi bước, so với $1{,}08$ | đã sửa |
+
+Ghi chú bài giảng (dòng 1151, 1209, 1229) đã viết đúng hai hệ số nên không đổi. Kiểm trình duyệt `check.py` trên ba trang ở 1600×900 và 390×844: không lỗi, không `.katex-error` trong ghi chú, nội dung trong khung; mặt trang không đổi.
