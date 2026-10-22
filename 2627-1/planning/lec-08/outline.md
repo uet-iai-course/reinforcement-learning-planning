@@ -15,7 +15,7 @@ Mỗi mục tiêu ứng với một mạch từ 2 đến 7 và một sản phẩ
 2. (Mạch 3) Nêu tác dụng và giới hạn của bộ nhớ phát lại; chỉ ra hai nguồn dữ liệu khác chính sách và lý do Q-learning một bước không cần tỉ số lấy mẫu quan trọng. Sản phẩm: xác suất hai mẫu liền nhau cùng vào một mini-batch.
 3. (Mạch 4) Tính hàm mất mát và gradient theo $q$ trên một mini-batch; truy dấu một vòng DQN với hai bộ đếm $t$ và $k_{\mathrm{opt}}$. Sản phẩm: bảng lời giải mini-batch hai mẫu và bản sửa lỗi cài đặt đích.
 4. (Mạch 5) Viết SGD, RMSprop và Adam theo từng tọa độ; nêu những gì lựa chọn bộ tối ưu không thay đổi (công thức đích, cách thu thập dữ liệu, lớp hàm), nên không loại được nguồn bất ổn. Sản phẩm: bảng so sánh trạng thái phụ và siêu tham số.
-5. (Mạch 6) Tính độ thay đổi của đích tại mốc đồng bộ; nêu các giả thiết còn thiếu để có bảo đảm hội tụ khi đủ bộ ba bất ổn. Sản phẩm: $\Delta y$ của một mẫu chuyển và thiết kế thí nghiệm loại bỏ.
+5. (Mạch 6) Tính độ thay đổi của đích tại mốc đồng bộ; nêu vì sao DQN không có bảo đảm hội tụ tổng quát. Sản phẩm: $\Delta y$ của một mẫu chuyển và thiết kế thí nghiệm loại bỏ.
 6. (Mạch 7) Giải một bước DQN trên mini-batch có cả kết thúc lẫn cắt ngắn, nêu kết quả và giả thiết đã dùng. Sản phẩm: lời giải bài tổng hợp CartPole.
 
 ## Bảy mạch (đợt sửa 2026-10-22)

@@ -54,12 +54,12 @@
 <ol>
 <li>Đọc đầu ra của mạng; tính đích, phân biệt kết thúc với cắt ngắn.</li>
 <li>Nêu tác dụng, giới hạn của bộ nhớ phát lại.</li>
-<li>Tính hàm mất mát trên mini&#8209;batch; truy dấu một vòng DQN.</li>
-<li>Viết ba bộ tối ưu theo tọa độ; nêu điều chúng không sửa được.</li>
-<li>Tính độ thay đổi của đích khi đồng bộ; nêu giả thiết hội tụ còn thiếu.</li>
-<li>Giải một bước DQN có kết thúc, cắt ngắn; nêu giả thiết đã dùng.</li>
+<li>Tính hàm mất mát mini&#8209;batch; truy dấu một vòng DQN.</li>
+<li>Viết ba bộ tối ưu theo tọa độ; nêu giới hạn chung.</li>
+<li>Tính độ thay đổi của đích khi đồng bộ; nêu vì sao DQN không có bảo đảm hội tụ tổng quát.</li>
+<li>Giải một bước DQN trên CartPole; nêu giả thiết đã dùng.</li>
 </ol>
-<aside class="notes"><p>Sáu mục tiêu theo thứ tự các phần 2 đến 7; mỗi mục kết thúc bằng một sản phẩm. Mục 1: đọc vector giá trị hành động, tính đích của hai mẫu chuyển, một mẫu kết thúc. Mục 2: bộ nhớ phát lại giảm gì, không bảo đảm gì; tính xác suất hai mẫu liền nhau cùng vào một mini-batch. Mục 3: lời giải mini-batch hai mẫu và bản sửa lỗi cài đặt đích. Mục 4: viết hạ gradient ngẫu nhiên (SGD), RMSprop, Adam theo từng tọa độ và nêu rằng lựa chọn bộ tối ưu không đổi công thức đích, cách thu thập dữ liệu hay lớp hàm. Mục 5: độ thay đổi của đích một mẫu khi đồng bộ, tức khi sao chép tham số sang mạng mục tiêu, và lý do DQN vẫn có bộ ba bất ổn. Mục 6 vận dụng năm mục trước trên CartPole.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 2.</p></aside>
+<aside class="notes"><p>Sáu mục tiêu ứng với các phần 2 đến 7. Mục 1: đọc vector giá trị hành động, tính đích của hai mẫu chuyển, một mẫu kết thúc. Mục 2: bộ nhớ phát lại giảm gì, không bảo đảm gì; tính xác suất hai mẫu liền nhau cùng vào một mini-batch. Mục 3: lời giải mini-batch hai mẫu và bản sửa lỗi cài đặt đích. Mục 4: viết hạ gradient ngẫu nhiên (SGD), RMSprop, Adam theo từng tọa độ và nêu rằng lựa chọn bộ tối ưu không đổi công thức đích, cách thu thập dữ liệu hay lớp hàm. Mục 5: độ thay đổi của đích một mẫu khi sao chép tham số sang mạng mục tiêu, và vì sao DQN, với đủ bộ ba bất ổn, không có bảo đảm hội tụ tổng quát. Mục 6 vận dụng năm mục trước trên CartPole.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 2.</p></aside>
 </section>
 <section data-slide-id="L08-02b" data-note-topic-id="lec-08-topic-17">
 <h2>Nội dung</h2>
@@ -530,15 +530,15 @@ loss = ((y - q) ** 2).mean()
 <div class="strand-title-body">
 <h2><span class="strand-number">7.</span>Tổng kết và chuyển tiếp</h2>
 <p class="strand-lead">Muốn dùng DQN đúng, phải kiểm đích, dữ liệu, đồng bộ và phạm vi của kết luận.</p>
-<p class="strand-keys">Kết quả và giả thiết · Thuật toán DQN · Phạm vi bảo đảm · Bài 09</p>
+<p class="strand-keys">Kết quả và giả thiết · So sánh ba phương pháp · Một bước DQN trên CartPole · Bài 09</p>
 </div>
 <aside class="notes"><p>Đến cuối phần 6, chúng ta đã có đích hồi quy có mặt nạ kết thúc, bộ nhớ phát lại, hàm mất mát với dừng gradient, quy tắc cập nhật của bộ tối ưu và phạm vi bảo đảm của DQN. Ở phần 7, chúng ta đặt mỗi kết quả cạnh giả thiết không được bỏ, so DQN với Q-learning bảng và tuyến tính, giải một bước DQN trên CartPole và trả lời vấn đề trung tâm có điều kiện. Ở Bài 09, chúng ta xét độ chệch của phép cực đại trong đích và Double DQN.</p></aside>
 </section>
   <section data-slide-id="L08-34" data-note-topic-id="lec-08-topic-15">
 <h2>Kết quả và giả thiết của bài</h2>
 <table><thead><tr><th scope="col">Kết quả</th><th scope="col">Giả thiết không được&nbsp;bỏ</th><th scope="col">Công thức hoặc thuật toán</th></tr></thead><tbody>
-<tr><td>Mạng giá trị hành động</td><td>$\mathcal A$ hữu hạn; quan sát (bốn khung) đủ Markov</td><td>$\mathbf q_\theta(o)\in\mathbb R^{\lvert\mathcal A\rvert}$</td></tr>
-<tr><td>Đích hồi quy</td><td>$Z_i$ là kết thúc của MDP; $\theta^-$ cố định giữa hai lần đồng bộ</td><td>${y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a')}$</td></tr>
+<tr><td>Mạng giá trị hành động</td><td>$\mathcal A$ hữu hạn; quan sát (Atari: bốn khung) đủ Markov</td><td>$\mathbf q_\theta(o)\in\mathbb R^{\lvert\mathcal A\rvert}$</td></tr>
+<tr><td>Đích hồi quy</td><td>$Z_i$ là kết thúc của MDP; $\theta^-$ cố định giữa hai lần đồng bộ</td><td>${y_i=R_i+\gamma(1-Z_i)}$ ${\max_{a'}Q_{\theta^-}(O'_i,a')}$</td></tr>
 <tr><td>Gradient của hàm mất mát</td><td>đích trong $\operatorname{sg}$; $q_i$ theo $A_i$ đã&nbsp;lưu</td><td>$\nabla_\theta L_B=\tfrac2b\sum_i(q_i-y_i)\nabla_\theta q_i$</td></tr>
 <tr><td>Bộ nhớ phát lại</td><td>rút đều; tối ưu khi ${\lvert\mathcal D\rvert\ge N_{\mathrm{start}}}$</td><td>giảm tương quan ngắn hạn; mẫu vẫn không độc lập</td></tr>
 </tbody></table>
@@ -547,32 +547,32 @@ loss = ((y - q) ** 2).mean()
   <section data-slide-id="L08-34b" data-note-topic-id="lec-08-topic-15">
 <h2>Kết quả và giả thiết của bài</h2>
 <table><thead><tr><th scope="col">Kết quả</th><th scope="col">Giả thiết không được&nbsp;bỏ</th><th scope="col">Công thức hoặc thuật toán</th></tr></thead><tbody>
+<tr><td>Đích không cần tỉ số lấy mẫu quan&nbsp;trọng</td><td>đích một bước; $O_i$ đủ Markov, động lực không đổi</td><td>hành vi chỉ quyết định tần&nbsp;suất $(O_i,A_i)$</td></tr>
 <tr><td>Bộ tối ưu</td><td>$j=k_{\mathrm{opt}}$ sau khi tăng; $g_j$ tính tại $\theta_{j-1}$ trên $B_j$</td><td>$\theta_j=\operatorname{Update}(\theta_{j-1},g_j)$</td></tr>
-<tr><td>Đồng bộ</td><td>sau bước tối ưu, khi $k_{\mathrm{opt}}\bmod C=0$</td><td>${\Delta y_i=\gamma(1-Z_i)\bigl[\max Q_\theta-\max Q_{\theta^-}\bigr](O'_i)}$</td></tr>
-<tr><td>Phạm vi bảo đảm</td><td>đủ xấp xỉ hàm, bootstrap, học khác chính sách</td><td>không có bảo đảm hội tụ tổng quát</td></tr>
+<tr><td>Đồng bộ</td><td>sau bước tối ưu, khi $k_{\mathrm{opt}}\bmod C=0$; $\theta^-$ trước mốc</td><td>$\Delta y_i=\gamma(1-Z_i)$ ${\bigl[\max Q_\theta-\max Q_{\theta^-}\bigr](O'_i)}$</td></tr>
+<tr><td>Phạm vi bảo đảm</td><td>đủ bộ ba bất ổn</td><td>không có bảo đảm hội tụ tổng quát</td></tr>
 </tbody></table>
-<p>Bộ nhớ phát lại và mạng mục tiêu giảm bất ổn, không bỏ yếu tố nào của bộ ba.</p>
-<aside class="notes"><p>Bộ tối ưu, như SGD, RMSprop hay Adam, chỉ quyết định cách đổi gradient thành bước tham số; lựa chọn của nó không đổi công thức đích, cách thu thập dữ liệu hay lớp hàm. Đồng bộ đặt sau bước cập nhật và sau khi tăng $k_{\mathrm{opt}}$; kiểm $C$ trước khi tăng làm lần đồng bộ đầu xảy ra sau bước tối ưu thứ nhất. Tại mốc, đích của mỗi mẫu chưa kết thúc đổi đúng $\gamma$ nhân hiệu hai giá trị cực đại tại $O'_i$. Hàng cuối không nói DQN phân kỳ: nó nói lớp phương pháp có đủ ba yếu tố không có định lý hội tụ chung, nên tác dụng của hai cơ chế được đánh giá bằng thí nghiệm qua nhiều lần chạy.</p><p class="note-source"><strong>Nguồn:</strong> tổng hợp bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 12–13, 21–34; ghi chú bài giảng Bài 07, Định nghĩa 07.38; Sutton và Barto (2018), §11.3.</p></aside>
+<aside class="notes"><p>Đích một bước không cần tỉ số lấy mẫu quan trọng vì $A_i$ là đối số điều kiện của $Q(O_i,A_i)$ và phần tiếp nối được tính bằng phép cực đại. Bộ tối ưu, như SGD hay Adam, không đổi công thức đích, cách thu thập dữ liệu hay lớp hàm. Đồng bộ đặt sau bước cập nhật và sau khi tăng $k_{\mathrm{opt}}$; kiểm $C$ trước khi tăng làm lần đồng bộ đầu xảy ra sau bước tối ưu thứ nhất. Tại mốc, đích của mỗi mẫu chưa kết thúc đổi đúng $\gamma$ nhân hiệu hai giá trị cực đại tại $O'_i$. Hàng cuối chỉ nói không có định lý hội tụ chung, chưa nói DQN phân kỳ. Bộ nhớ phát lại và mạng mục tiêu giảm bất ổn, không bỏ yếu tố nào của bộ ba.</p><p class="note-source"><strong>Nguồn:</strong> tổng hợp bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 12–13, 21–34; ghi chú bài giảng Bài 07, Định nghĩa 07.38; Sutton và Barto (2018), §11.3.</p></aside>
 </section>
   <section data-slide-id="L08-K1" data-note-topic-id="lec-08-topic-15">
 <h2>So sánh Q-learning bảng, tuyến tính và DQN</h2>
 <p><strong>Nhắc lại:</strong> ${y=R+\gamma(1-Z)\max_{a'}\hat Q(O',a')}$; $\hat Q$ lần lượt là $Q$, $x^\top w$, $Q_{\theta^-}$.</p>
 <table><thead><tr><th scope="col">Phương pháp</th><th scope="col">Quy tắc cập nhật</th><th scope="col">Dữ liệu dùng</th><th scope="col">Điều kiện dừng</th></tr></thead><tbody>
-<tr><td>Q-learning bảng</td><td>$Q(S,A)\leftarrow Q(S,A)+\alpha\bigl(y-Q(S,A)\bigr)$</td><td>mẫu vừa thu, dùng một&nbsp;lần</td><td>sau $H$ cập nhật</td></tr>
-<tr><td>Q-learning bán gradient tuyến tính</td><td>$w\leftarrow w+\alpha\bigl(y-x^\top w\bigr)\,x$, $x=x(S,A)$</td><td>mẫu vừa thu, dùng một&nbsp;lần</td><td>sau $K$ lượt</td></tr>
-<tr><td>DQN</td><td>$\theta\leftarrow\operatorname{Update}(\theta,\nabla_\theta L_B)$; $\theta^-\leftarrow\theta$ mỗi $C$ bước tối&nbsp;ưu</td><td>$b$ mẫu rút đều từ $\mathcal D$ mỗi $F$ bước</td><td>$t=T$ hoặc lợi tức đánh giá đạt ngưỡng</td></tr>
+<tr><td>Q-learning bảng</td><td>$Q(S,A)\leftarrow Q(S,A)+\alpha\bigl(y-Q(S,A)\bigr)$</td><td>mẫu vừa thu, dùng một&nbsp;lần</td><td>sau số cập nhật định trước</td></tr>
+<tr><td>Q-learning tuyến tính</td><td>$w\leftarrow w+\alpha\bigl(y-x^\top w\bigr)\,x$, $x=x(S,A)$</td><td>mẫu vừa thu, dùng một&nbsp;lần</td><td>sau số lượt định trước</td></tr>
+<tr><td>DQN</td><td>$\theta\leftarrow\operatorname{Update}(\theta,\nabla_\theta L_B)$; $\theta^-\leftarrow\theta$ mỗi $C$ bước tối&nbsp;ưu</td><td>$b$ mẫu rút đều từ $\mathcal D$ mỗi $F$ bước</td><td>$t=T$</td></tr>
 </tbody></table>
 <p>Hành vi $\epsilon_{\mathrm{exp}}$-tham lam ($\varepsilon$ của Bài&nbsp;06); không điều kiện dừng nào là tiêu chuẩn hội tụ.</p>
-<aside class="notes"><p>Ba phương pháp dùng cùng dạng đích và khác nhau ở chỗ đọc phép cực đại. Q-learning bảng đọc trên bảng chưa cập nhật và chỉ đổi ô $(S,A)$; Q-learning bán gradient đọc trên $x^\top w$ với $w$ hiện tại và đổi các thành phần của $w$ ứng với thành phần khác $0$ của $x(S,A)$; DQN đọc trên $Q_{\theta^-}$, giữ cố định giữa hai lần đồng bộ. Hai phương pháp đầu dùng mỗi mẫu chuyển một lần, ngay khi thu. DQN chỉ tối ưu khi $\lvert\mathcal D\rvert\ge N_{\mathrm{start}}$; với $b=32$, $F=4$ của Mnih và cộng sự, mỗi mẫu được rút khoảng $b/F=8$ lần. Với $N=b=F=C=1$, bộ tối ưu SGD và mạng tuyến tính, quy tắc cập nhật của DQN trùng Q-learning bán gradient với $\alpha=2\eta$. Lợi tức đánh giá đo bằng chính sách tham lam trên các lượt riêng; đạt ngưỡng chỉ cho biết chính sách hiện thời đạt tiêu chí đó.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 06, Thuật toán 06.16; Bài 07, Định nghĩa 07.35, Thuật toán 07.36; Thuật toán 08.13; Mnih và cộng sự (2015), Extended Data Table 1.</p></aside>
+<aside class="notes"><p>Ba phương pháp dùng cùng dạng đích và khác nhau ở chỗ đọc phép cực đại. Q-learning bảng đọc trên bảng chưa cập nhật và chỉ đổi ô $(S,A)$; Q-learning bán gradient đọc trên $x^\top w$ với $w$ hiện tại và đổi các thành phần của $w$ ứng với thành phần khác $0$ của $x(S,A)$; DQN đọc trên $Q_{\theta^-}$, giữ cố định giữa hai lần đồng bộ. Hai phương pháp đầu dùng mỗi mẫu chuyển một lần, ngay khi thu. DQN chỉ tối ưu khi $\lvert\mathcal D\rvert\ge N_{\mathrm{start}}$; với $b=32$, $F=4$ của Mnih và cộng sự, mỗi mẫu được rút khoảng $b/F=8$ lần. Với $N=b=F=C=1$, bộ tối ưu SGD và mạng tuyến tính, quy tắc cập nhật của DQN trùng Q-learning bán gradient với $\alpha=2\eta$. Trong thực hành có thể dừng sớm khi lợi tức đánh giá đạt ngưỡng chọn trước; Thuật toán 08.13 chỉ dừng khi $t=T$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 06, Thuật toán 06.16; Bài 07, Định nghĩa 07.35, Thuật toán 07.36; Thuật toán 08.13; Mnih và cộng sự (2015), Extended Data Table 1.</p></aside>
 </section>
   <section data-slide-id="L08-K1b" data-note-topic-id="lec-08-topic-15">
 <h2>So sánh Q-learning bảng, tuyến tính và DQN</h2>
 <table><thead><tr><th scope="col">Phương pháp</th><th scope="col">Giả thiết không được&nbsp;bỏ</th><th scope="col">Kết luận</th></tr></thead><tbody>
 <tr><td>Q-learning bảng</td><td>MDP hữu hạn, phần thưởng bị chặn, $\gamma&lt;1$, mẫu từ MDP; mọi cặp vô hạn lần; Robbins&#8288;–&#8288;Monro theo cặp</td><td>$Q_t\to q_*$ hầu&nbsp;chắc&nbsp;chắn</td></tr>
-<tr><td>Q-learning bán gradient tuyến tính</td><td>có cả xấp xỉ hàm, bootstrap, học khác chính&nbsp;sách</td><td>không bảo đảm chung; có&nbsp;thể&nbsp;phân&nbsp;kỳ</td></tr>
+<tr><td>Q-learning tuyến tính</td><td>có cả xấp xỉ hàm, bootstrap, học khác chính&nbsp;sách</td><td>không bảo đảm chung; có&nbsp;thể&nbsp;phân&nbsp;kỳ</td></tr>
 <tr><td>DQN</td><td>cùng ba yếu tố; bộ nhớ phát lại, mạng mục tiêu không bỏ yếu tố nào</td><td>không bảo đảm hội tụ tổng quát</td></tr>
 </tbody></table>
-<aside class="notes"><p>Hàng đầu là định lý hội tụ của Q-learning bảng; thiếu một giả thiết thì định lý không còn áp dụng, chẳng hạn một cặp không bao giờ được thử giữ mãi giá trị khởi tạo. Hai hàng sau khẳng định không có định lý hội tụ chung, chưa khẳng định thuật toán luôn phân kỳ. Phản ví dụ cho khả năng phân kỳ là TD(0) dự đoán khác chính sách trên hai trạng thái dùng chung $w$, với $x(s_1)=1$, $x(s_2)=2$, $R=0$, $\gamma=0{,}9$, $\alpha=0{,}1$, chỉ cập nhật $s_1\to s_2$: $w$ nhân $1{,}08$ mỗi bước. Giữ $w^-$ cố định $C=10$ bước chỉ hạ hệ số tương đương xuống khoảng $1{,}043$ mỗi bước, vẫn lớn hơn $1$, nên $\lvert w\rvert$ tăng không chặn khi $w_0\ne0$. Bộ nhớ phát lại giảm tương quan mẫu, mạng mục tiêu làm chậm sự thay đổi của đích, nhưng không cơ chế nào bỏ một yếu tố của bộ ba; tác dụng của chúng được đánh giá bằng thí nghiệm qua nhiều lần chạy.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 06, Định lý 06.21; Bài 07, Mệnh đề 07.37, Định nghĩa 07.38; Nhận xét 08.21; Sutton và Barto (2018), §11.2, §11.3.</p></aside>
+<aside class="notes"><p>Hàng đầu là định lý hội tụ của Q-learning bảng; thiếu một giả thiết thì định lý không còn áp dụng, chẳng hạn một cặp không bao giờ được thử giữ mãi giá trị khởi tạo. Hai hàng sau chỉ khẳng định không có định lý hội tụ chung. Phản ví dụ: TD(0) dự đoán khác chính sách trên hai trạng thái dùng chung $w$, $x(s_1)=1$, $x(s_2)=2$, $R=0$, $\gamma=0{,}9$, $\alpha=0{,}1$, chỉ cập nhật $s_1\to s_2$, cho $w$ nhân $1{,}08$ mỗi bước (Mệnh đề 07.37). Khi mỗi trạng thái chỉ có một hành động, phép cực đại trong đích chỉ chọn hành động duy nhất, nên Q-learning bán gradient trên dữ liệu chỉ gồm chuyển $s_1\to s_2$ cho đúng dãy này. Giữ $w^-$ cố định $C=10$ bước chỉ hạ hệ số tương đương xuống khoảng $1{,}043$. Hai cơ chế không bỏ yếu tố nào của bộ ba, nên tác dụng của chúng được đánh giá bằng thí nghiệm.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 06, Định lý 06.21; Bài 07, Mệnh đề 07.37, Định nghĩa 07.38; Nhận xét 08.21; Sutton và Barto (2018), §11.2, §11.3.</p></aside>
 </section>
   <section data-slide-id="L08-K2" data-note-topic-id="lec-08-topic-15">
 <h2>Bài tập: một bước DQN trên CartPole</h2>
@@ -601,38 +601,39 @@ loss = ((y - q) ** 2).mean()
 <h2>Trả lời vấn đề trung tâm</h2>
 <div class="box">Học $q_*$ khi quan sát là vector liên tục hoặc ảnh, hành động hữu hạn, không có mô&nbsp;hình.</div>
 <ol start="2">
-<li>Với $\theta^-$ cố định giữa hai lần đồng bộ, nhãn hồi quy cố định.</li>
+<li>Với $\mathbf q_\theta$ và $\theta^-$ cố định giữa hai lần đồng bộ, nhãn hồi quy đứng yên.</li>
 <li>Với rút đều từ $\mathcal D$, tương quan ngắn hạn giảm; mẫu chưa độc lập.</li>
 <li>Với $\operatorname{sg}(y_i)$ và chọn theo $A_i$, gradient chỉ đi qua $Q_\theta(O_i,A_i)$.</li>
-<li>Không bộ tối ưu nào loại được nguồn bất ổn.</li>
+<li>Với mọi bộ tối ưu, nguồn bất ổn vẫn còn.</li>
 <li>Khi đủ bộ ba bất ổn, không bảo đảm hội tụ tổng quát; đánh giá qua nhiều lần chạy.</li>
 </ol>
 <p><strong>Nguồn:</strong> bài giảng gốc, tr. 12–34; Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng&nbsp;sự&nbsp;(2015).</p>
-<aside class="notes"><p>Dòng số $N$ là câu trả lời có điều kiện của phần $N$. Đích $4{,}6$ của mẫu chuyển chưa kết thúc giữ nguyên tới mốc đồng bộ rồi đổi $0{,}9$. Bốn mẫu liền nhau với tương quan $0{,}9^k$ chỉ tương đương khoảng $1{,}1$ mẫu độc lập; rút đều làm cặp liền nhau hiếm, nhưng mọi mẫu vẫn do một tác tử thu thập. Với phép dừng gradient và phép chọn theo hành động, gradient theo $\theta$ chỉ đi qua hai dự đoán, với đạo hàm $(-1{,}5;\,0{,}5)$ trên mini-batch hai mẫu. Bộ tối ưu chỉ đổi gradient thành bước tham số. Với hai trạng thái dùng chung tham số, hệ số tăng $1{,}08$ mỗi bước chỉ giảm còn khoảng $1{,}043$ khi $C=10$. Vì không có định lý, tác dụng của bộ nhớ phát lại và mạng mục tiêu được đánh giá bằng thí nghiệm, như thí nghiệm loại bỏ của Mnih và cộng sự trên năm trò chơi Atari.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 12–34; Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015), Extended Data Table 3.</p></aside>
+<aside class="notes"><p>Dòng số $N$ trả lời có điều kiện cho phần $N$. Đích $4{,}6$ của mẫu chuyển chưa kết thúc giữ nguyên tới mốc đồng bộ rồi đổi $0{,}9$. Bốn mẫu liền nhau với tương quan $0{,}9^k$ chỉ tương đương khoảng $1{,}1$ mẫu độc lập; rút đều làm cặp liền nhau hiếm, nhưng mọi mẫu vẫn do một tác tử thu thập. Trên mini-batch hai mẫu, gradient chỉ đi qua hai dự đoán, với đạo hàm $(-1{,}5;\,0{,}5)$. Bộ tối ưu chỉ đổi gradient thành bước tham số. Với hai trạng thái dùng chung tham số, hệ số tăng $1{,}08$ mỗi bước chỉ còn khoảng $1{,}043$ khi $C=10$. Vì không có định lý, hai cơ chế được đánh giá bằng thí nghiệm, như thí nghiệm loại bỏ của Mnih và cộng sự.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 12–34; Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015), Extended Data Table 3.</p></aside>
 </section>
   <section data-slide-id="L08-33" data-note-topic-id="lec-08-topic-15">
 <h2>Câu hỏi tự kiểm tra</h2>
 <div class="check"><p><strong>Câu hỏi:</strong> trả lời và nêu kết quả đã dùng.</p>
 <ol>
-<li>Bộ nhớ phát lại giảm nguồn bất ổn nào, và để lại giới hạn nào?</li>
+<li>Bộ nhớ phát lại giảm nguồn bất ổn nào, để lại giới hạn nào?</li>
 <li>Mạng mục tiêu làm chậm đại lượng nào, và không loại yếu tố nào?</li>
 <li>Khi nào mẫu chuyển bị cắt ngắn vẫn giữ phần bootstrap?</li>
-<li>Bộ tối ưu thích nghi như Adam có loại được bộ ba bất ổn không?</li>
+<li>Adam có loại được bộ ba bất ổn không?</li>
 </ol></div>
-<aside class="notes"><p>Lời giải: (1) bộ nhớ phát lại giảm tương quan giữa các mẫu liền nhau, vì một cặp liền nhau chỉ cùng vào mini-batch với xác suất khoảng $2/N$; mẫu vẫn không độc lập cùng một phân phối cố định, phân phối đổi theo hành vi, và không có bảo đảm hội tụ (Nhận xét 08.19, 08.9). (2) Mạng mục tiêu làm chậm sự thay đổi của đích: đích đứng yên giữa hai lần đồng bộ và đổi $\Delta y_i$ tại mốc; nó không loại yếu tố nào của bộ ba bất ổn (Nhận xét 08.20, 08.21). (3) Khi $U=1$, $Z=0$: MDP chưa kết thúc, mặt nạ chỉ dùng $1-Z$ (Định nghĩa 08.6). (4) Không; bộ tối ưu chỉ đổi gradient thành bước tham số, không đổi đích, cách thu thập dữ liệu hay lớp hàm (Định nghĩa 08.15, Nhận xét 08.21). Bài giảng gốc nêu thêm ba hướng thảo luận: vì sao bộ nhớ phát lại làm cập nhật mini-batch đáng tin hơn; vì sao bộ tối ưu thích nghi vẫn giúp DQN dù không sửa đích; cách tăng thăm dò trong DQN.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 29–36; ghi chú bài giảng, Định nghĩa 08.6, 08.15, Nhận xét 08.9, 08.19–08.21.</p></aside>
+<aside class="notes"><p>Lời giải: (1) bộ nhớ phát lại giảm tương quan giữa các mẫu liền nhau, vì với mini-batch hai mẫu, xác suất hai mẫu rút được liền nhau chỉ khoảng $2/N$; mẫu vẫn không độc lập cùng một phân phối cố định, phân phối đổi theo hành vi, và không có bảo đảm hội tụ (Nhận xét 08.19, 08.9). (2) Mạng mục tiêu làm chậm sự thay đổi của đích: đích đứng yên giữa hai lần đồng bộ và đổi $\Delta y_i$ tại mốc; nó không loại yếu tố nào của bộ ba bất ổn (Nhận xét 08.20, 08.21). (3) Khi $U=1$, $Z=0$: MDP chưa kết thúc, mặt nạ chỉ dùng $1-Z$ (Định nghĩa 08.6). (4) Không; bộ tối ưu chỉ đổi gradient thành bước tham số, và lựa chọn của nó không đổi công thức đích, cách thu thập dữ liệu hay lớp hàm (Định nghĩa 08.15, Nhận xét 08.21). Bài giảng gốc nêu thêm ba hướng thảo luận: vì sao bộ nhớ phát lại làm cập nhật mini-batch đáng tin hơn; vì sao bộ tối ưu thích nghi vẫn giúp DQN dù không sửa đích; cách tăng thăm dò trong DQN.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 29–36; ghi chú bài giảng, Định nghĩa 08.6, 08.15, Nhận xét 08.9, 08.19–08.21.</p></aside>
 </section>
   <section data-slide-id="L08-K5" data-note-topic-id="lec-08-topic-15">
 <h2>Bài tập về nhà và tài liệu đọc</h2>
 <div class="grid2"><div><table><thead><tr><th scope="col">Mạch</th><th scope="col">Bài tập</th></tr></thead><tbody>
 <tr><td>4</td><td>08.1 (một mini&#8209;batch), 08.2 (lỗi cài đặt đích)</td></tr>
-<tr><td>6</td><td>08.3 (thí nghiệm loại bỏ)</td></tr>
+<tr><td>5</td><td>08.5 (hệ số bước của SGD)</td></tr>
+<tr><td>6</td><td>08.3 (thí nghiệm loại bỏ), 08.5 (độ thay đổi của đích)</td></tr>
 <tr><td>7</td><td>08.4 (một bước DQN trên CartPole)</td></tr>
 </tbody></table></div><div>
 <p><strong>Tài liệu đọc:</strong> Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015).</p>
 <p><a href="material-viewer.html?doc=materials/lec-08/lecture-note.md&amp;deck=lecture-08-deep-q-learning.html">Ghi chú bài giảng</a> · Bài tập: chưa có</p>
-<p><a href="lecture-09-double-dqn-va-gradient-chinh-sach.html">Bài 09</a> xét độ chệch của phép cực đại trong đích và Double DQN.</p>
+<p><a href="lecture-09-double-dqn-va-gradient-chinh-sach.html">Bài 09</a> xét độ chệch của phép cực đại (maximization bias) trong đích, Double DQN, rồi gradient chính sách.</p>
 </div></div>
-<aside class="notes"><p>Bốn bài tập nằm ở mục bài tập củng cố của ghi chú bài giảng, mỗi bài có gợi ý và lời giải, và cả bốn đã giải trên trang chiếu: Bài tập 08.1 tính đích, hàm mất mát và đạo hàm trên mini-batch hai mẫu; Bài tập 08.2 sửa năm lỗi trong đoạn mã tính đích; Bài tập 08.3 thiết kế thí nghiệm loại bỏ cho bộ nhớ phát lại và mạng mục tiêu; Bài tập 08.4 là bài tổng hợp trên CartPole. Tệp bài tập riêng của Bài 08 chưa có. Sutton và Barto (2018) bàn bộ ba bất ổn ở §11.3 và DQN trên Atari ở §16.5; Mnih và cộng sự (2015) cho thuật toán gốc, cấu hình siêu tham số và thí nghiệm loại bỏ trên năm trò chơi. Bài 09 xét độ chệch của phép cực đại trong đích của DQN và Double DQN.</p></aside>
+<aside class="notes"><p>Năm bài tập nằm ở mục bài tập củng cố của ghi chú bài giảng, mỗi bài có gợi ý và lời giải; bốn bài đầu đã giải trên trang chiếu: Bài tập 08.1 tính đích, hàm mất mát và đạo hàm trên mini-batch hai mẫu; Bài tập 08.2 sửa năm lỗi trong đoạn mã tính đích; Bài tập 08.3 thiết kế thí nghiệm loại bỏ; Bài tập 08.4 là bài tổng hợp trên CartPole; Bài tập 08.5 tính hệ số bước của SGD và độ thay đổi của đích tại mốc đồng bộ. Sutton và Barto (2018) bàn bộ ba bất ổn ở §11.3 và DQN trên Atari ở §16.5; Mnih và cộng sự (2015) cho thuật toán gốc và các thí nghiệm. Bài 09 xét độ chệch của phép cực đại trong đích của DQN, Double DQN, rồi gradient chính sách.</p></aside>
 </section>
 </section>
 <div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 08</div>

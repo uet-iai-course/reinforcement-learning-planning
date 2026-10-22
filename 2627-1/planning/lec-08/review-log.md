@@ -674,3 +674,42 @@ Kết quả rà: 0 chặn bàn giao, 1 nghiêm trọng, 5 trung bình, 12 nhẹ;
 | S51 | `L08-33` | chấp nhận (ghi chú lời giải 178 âm tiết, trần 250; note dạng câu hỏi có lời giải ngay; "Đọc thêm" hoàn thiện ở `L08-K5`) | diff; `check.py`; grep "nguy hiểm", "Đáp án" = 0 |
 - Bước S52 (`L08-K5` mới, trang cuối deck, biên tập viên): "Bài tập về nhà và tài liệu đọc" theo khuôn `L06-G04`: bảng `Mạch | Bài tập` (4: 08.1, 08.2; 6: 08.3; 7: 08.4); "Tài liệu đọc:" Sutton và Barto (2018) §11.3, §16.5, Mnih và cộng sự (2015); liên kết "Ghi chú bài giảng" tới viewer, "Bài tập: chưa có" (không liên kết giả tới `exercises.md`); dòng nối Bài 09 có liên kết (chỉ nêu tên độ chệch của phép cực đại trong đích và Double DQN). Hai liên kết trả 200 trên server tĩnh. 62 âm tiết (trần 80), đáy 556 px, ghi chú diễn giả 149 âm tiết. Ghi chú bài giảng: `### Bài tập về nhà và tài liệu đọc` thay "Đọc thêm" ở mục 7; "## Bốn bài tập" thành `## Bài tập củng cố` với ba mức (nhận biết trỏ tới câu hỏi tự kiểm tra; tính toán: 08.1; vận dụng: 08.2–08.4; không thêm bài); `## Tài liệu tham khảo` mới (danh sách kiểm bằng grep trong ghi chú và deck). `outline.md`: topic-15 thêm `L08-K5`. `no-ai-slop` Edit, tự kiểm theo `eval.md`: đạt. Chờ điều phối viên duyệt.
 | S52 | `L08-K5` (mới) | chấp nhận cả bốn điểm (mức nhận biết trỏ tới câu hỏi tự kiểm tra; 08.4 ở mức vận dụng; Gymnasium không cần URL); mọi trang đã qua một lượt sửa | diff; hai liên kết trả 200; `check.py` |
+
+### Rà lại mạch 7 (bước R7)
+
+| vai | loại tác tử | mô hình | mức suy luận | ghi tệp |
+|---|---|---|---|---|
+| Rà lại mạch 7 (toán, mạch, mật độ, `no-ai-slop` Detect) | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Biên tập R7 | Agent `general-purpose` (biên tập viên của đợt sửa) | `claude-opus-5-5` | high | có |
+
+Kết quả rà: 0 chặn bàn giao, 1 nghiêm trọng, 9 trung bình, 13 nhẹ; điều phối viên chấp nhận toàn bộ (tệp `recheck/R7-decisions.md` trong scratchpad phiên), mục 4 sửa chỉ dẫn S47. Bảng dưới ghi trạng thái sau bước R7.
+
+| mức độ | trang chiếu | vấn đề | đề xuất sửa | trạng thái | quyết định |
+|---|---|---|---|---|---|
+| nghiêm trọng (1) | note | Thiếu mục tình huống áp dụng; tóm tắt chương không là mục riêng | `## Tình huống áp dụng và ứng dụng` (Tình huống 08.1, 08.2, Ứng dụng); `## Tóm tắt chương` riêng; thứ tự theo note Bài 07 | đã sửa ở R7; khối `application` được viewer nhận (2 khối); Tình huống 08.1 không nêu số liệu chạy vì không có lần chạy đi kèm | chấp nhận |
+| trung bình (2) | ghi chú `L08-33` (4) | Câu (4) chưa nói lựa chọn bộ tối ưu không đổi đích, dữ liệu, lớp hàm | Câu đề xuất | đã sửa ở R7; note câu 4 đồng bộ | chấp nhận |
+| trung bình (3) | ghi chú `L08-33` (1), note §7 | $2/N$ thiếu điều kiện mini-batch hai mẫu | "với mini-batch hai mẫu, xác suất hai mẫu rút được liền nhau chỉ khoảng $2/N$" | đã sửa ở R7 (ba chỗ) | chấp nhận |
+| trung bình (4) | `L08-K1`, note bảng 1 | Hàng DQN có điều kiện dừng ngoài Thuật toán 08.13 | Chỉ "$t=T$"; dừng sớm ở ghi chú và note | đã sửa ở R7 | chấp nhận |
+| trung bình (5) | `L08-K1` | Ô phương pháp ba dòng, đáy sát | "Q-learning tuyến tính" | đã sửa ở R7; áp dụng cả `L08-K1b` để thống nhất; đáy `L08-K1` vẫn 699 px vì ô điều kiện dừng mới ba dòng | chấp nhận |
+| trung bình (6) | `L08-34b` | Thiếu hàng Mệnh đề 08.8; dòng kết trên mặt trang | Thêm hàng; dòng kết vào ghi chú | đã sửa ở R7; hàng phạm vi viết "đủ bộ ba bất ổn" và hai công thức chia khối để vừa đáy (664 px) | chấp nhận |
+| trung bình (7) | `L08-34b` hàng "Đồng bộ" | Thiếu "$\theta^-$ trước mốc"; công thức gọn | Ô giả thiết đề xuất; công thức đầy đủ nếu vừa | ô giả thiết đã sửa; công thức đầy đủ làm đáy 825–1284 px nên giữ dạng gọn $[\max Q_\theta-\max Q_{\theta^-}](O'_i)$ | chấp nhận |
+| trung bình (8) | note | Nguồn trong danh sách chưa được trích trong thân | Trích dẫn 08.16, 08.17, 08.18, §4.3, §6.5–6.6, §9.3; thêm 06.14 | đã sửa ở R7; đối chiếu hai chiều bằng script | chấp nhận |
+| trung bình (9) | note §7, ghi chú `L08-K1b` | Phản ví dụ TD(0) chưa nối với Q-learning | Câu đề xuất | đã sửa ở R7 | chấp nhận |
+| trung bình (10) | note "Bài tập củng cố", `L08-K5` | Mạch 5 không có bài tập; câu "Mỗi bài có gợi ý…" sai ở mức nhận biết | Bài tập 08.5 (a) SGD $\eta=0{,}03$, (b) $\Delta y_1=0{,}45$; sửa câu; bảng `L08-K5` | đã sửa ở R7; 08.5 đặt ở mức tính toán sau 08.1 (số bài không theo thứ tự xuất hiện) | chấp nhận |
+| nhẹ (11) | `L08-K1`, note | $H$, $K$ không định nghĩa | "sau số cập nhật định trước", "sau số lượt định trước" | đã sửa ở R7; note bỏ $H=\infty$ | chấp nhận |
+| nhẹ (12) | `L08-M7T` | Từ khóa không khớp trang | Câu đề xuất | đã sửa ở R7 | chấp nhận |
+| nhẹ (13) | `L08-K4` | Dòng 2, dòng 5 | Câu đề xuất | đã sửa ở R7 | chấp nhận |
+| nhẹ (14) | `L08-34` | "(bốn khung)" thiếu ngữ cảnh Atari | "(Atari: bốn khung)" | đã sửa ở R7 | chấp nhận |
+| nhẹ (15) | `L08-K5`, note §7 | Dòng nối Bài 09 | Câu đề xuất | đã sửa ở R7 | chấp nhận |
+| nhẹ (16) | note §7, ghi chú `L08-K5` | Câu tệp bài tập riêng chưa có | Bỏ | đã sửa ở R7; mặt trang giữ "Bài tập: chưa có" | chấp nhận |
+| nhẹ (17) | note §7 | Đoạn dài | Tách hai đoạn | đã sửa ở R7 | chấp nhận |
+| nhẹ (18) | note §7 | Đoạn kết chung chung | Câu đề xuất | đã sửa ở R7 | chấp nhận |
+| nhẹ (19) | note Tóm tắt chương | Câu 3 dùng dấu hai chấm | Câu đề xuất | đã sửa ở R7 | chấp nhận |
+| nhẹ (20) | `L08-33` | Câu 1, câu 4 dài | Rút | đã sửa ở R7 (58 âm tiết) | chấp nhận |
+| nhẹ (21) | ghi chú `L08-K1b`, `L08-K4` | Quá 150 âm tiết | Rút | đã sửa ở R7 (142, 120 theo `notes_count.py`) | chấp nhận |
+| nhẹ (22) | note Bài tập 08.4 | Dùng $x$ trùng ký hiệu | Câu đề xuất | đã sửa ở R7 (cũng dùng trong Tình huống 08.1) | chấp nhận |
+| nhẹ (23) | note tài liệu tham khảo | Trang phần 7; tên mục | "phần 7 trên trang 12–36"; "## Hướng dẫn đọc thêm và tài liệu tham khảo" | đã sửa ở R7 | chấp nhận |
+| nhẹ (24) | `L08-02`, note, `outline.md` | Mục tiêu 5 | Câu đề xuất | đã sửa ở R7; `L08-02` 79 âm tiết sau khi rút mục tiêu 3, 4, 6 | chấp nhận |
+
+- Bước R7 (biên tập viên): áp dụng 24 mục. Trang đổi: `L08-02`, `L08-M7T`, `L08-34`, `L08-34b`, `L08-K1`, `L08-K1b`, `L08-K4`, `L08-33`, `L08-K5` (mặt trang và ghi chú). Ghi chú bài giảng: mục tình huống mới, tóm tắt chương thành mục riêng, Bài tập 08.5, trích dẫn trong thân, tên mục tham khảo. `outline.md`: mục tiêu 5. `storyboard.md`: bảng hành trình mạch 7, bảng số đo "Rà lại mạch 7 (bước R7)". Kiểm: `check.py` 11 trang mạch 7 và `L08-02` ở 1600 và 390 px (không lỗi, không tràn); `viewer_check.py` (2 623 khối KaTeX, 0 lỗi; khối `application` được nhận); `git diff --check`. `no-ai-slop` Edit, tự kiểm theo `eval.md`: đạt. Chờ điều phối viên duyệt.
+| R7 | mạch 7 (rà lại), `L08-02` | chấp nhận; phát hiện nghiêm trọng (mục Tình huống áp dụng của note) đã đóng; chấp nhận cả bốn điểm của biên tập viên — dòng 2 `L08-K4` sửa thành "Với $\theta^-$ cố định giữa hai lần đồng bộ, nhãn hồi quy đứng yên." ở bước F | diff; tính lại Bài tập 08.5; `check.py` |
