@@ -29,7 +29,7 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 1 | `L08-04` | (gộp vào `L08-01b`) | gộp, bỏ trang riêng | Bài 06 đã dạy; $Z$ xuất hiện trước định nghĩa | đã bỏ ở S2 |
 | 1 | `L08-05` | (gộp vào `L08-01b`; ý khác chính sách sang `L08-05r`) | gộp, bỏ trang riêng | "replay" dùng trước khi giới thiệu; 82 âm tiết; lý do không cần tỉ số lấy mẫu quan trọng phải sửa | đã bỏ ở S2; ý dữ liệu khác chính sách trong bộ nhớ viết lại ở `L08-05r` |
 | 1 | `L08-01c` | Tiên quyết và quy ước (cùng tiêu đề) | thêm | Dòng "Ký hiệu:" và bảng: $O_t$, $S_t$, $\mathcal A$ hữu hạn, $R_{t+1}$, $\gamma$, $\theta$, $t$, $k_{\mathrm{opt}}$, $i$, $\epsilon_{\mathrm{exp}}$ ($\varepsilon$ của Bài 06), $\epsilon_{\mathrm{opt}}$; $q_i$ khai báo ở `L08-17` | 1.4 (S3) |
-| 1 | `L08-02` | Mục tiêu học tập | sửa | Sáu mục tiêu ứng mạch 2–7 (`outline.md`) | 1.4 |
+| 1 | `L08-02` | Mục tiêu học tập | sửa | Sáu mục tiêu ứng mạch 2–7 (`outline.md`) | 1.5 (S4) |
 | 1 | `L08-02b` | Nội dung | thêm | Bảy mục khớp trang tiêu đề mạch và `#/N`; dòng đọc trước: Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015) | chưa có |
 | 1 | `L08-02c` | Vấn đề trung tâm | thêm (gộp ý quy mô của `L08-06`) | Một dòng bài toán, một dòng trả lời có điều kiện cho mỗi mạch 2–6 | chưa có |
 | 1 | `L08-06` | (gộp vào `L08-02c` và `L08-03`) | gộp, bỏ trang riêng | Cảnh báo phủ định cận mẫu chưa từng nêu trên mặt trang | 1.5 (tạm) |
@@ -129,6 +129,16 @@ Chưa có ngoại lệ. Số âm tiết trước sửa của các trang vượt 
 - **Liên kết:** trước là `L08-01b2` (Nhắc lại); sau là `L08-02` Mục tiêu học tập. Mục tiêu hỗ trợ: mục tiêu 1 và 3 (đọc đúng chỉ số trong đích và mất mát).
 - **Mật độ:** trang mới. 58 âm tiết (dòng Ký hiệu 10, tiêu đề cột 3, bốn hàng 13, 7, 10, 15), 5 dòng nội dung, 0 công thức hiển thị, 0 hộp chữ, ghi chú diễn giả 123 âm tiết. Cỡ chữ bảng 0,752 em theo `lecture-slide.css`.
 - **Ghi chú bài giảng:** thêm mục "Bảng ký hiệu" (22 hàng, ba cột), đoạn "Quy ước đọc", đoạn về các chữ trùng với bài trước ($\epsilon_{\mathrm{exp}}$, $q_i$, $m_j$, $v_j$, $\rho$, $m$) và tương ứng với giáo trình *Học máy thống kê*. `outline.md` thêm $\mathcal O$, $\lvert\mathcal A\rvert$, $q_*$, $\theta$, $Q_\theta$, $\mathbf q_\theta$, $\delta$, $L_B$, $g_j$; $\gamma$ đổi thành $[0,1)$.
+
+#### `L08-02` Mục tiêu học tập (bước S4)
+
+- **Trang muốn nói gì:** sáu việc người học làm được sau bài, mỗi việc ứng một mạch từ 2 đến 7 và có một sản phẩm kiểm được.
+- **Phục vụ mạch nào và thế nào:** mạch 1; báo trước sản phẩm của từng mạch sau, để trang "Nội dung" và trang tiêu đề mỗi mạch đối chiếu được. Mục 6 là bài tổng hợp của mạch 7.
+- **Vấn đề còn lại trước sửa:** tiêu đề "Kết quả học tập" lệch deck 06–07; bốn thẻ lệch sáu mục tiêu của `outline.md` (thiếu bộ tối ưu, bộ nhớ phát lại); thẻ "Mục tiêu" dễ hiểu nhầm; "mạng online", "đường dừng gradient" chưa giải nghĩa; ghi chú diễn giả có siêu dữ liệu biên soạn (`review-structure.md` §3 `L08-02`; `review-student.md`; `review-math.md` mục C).
+- **Quyết định:** sửa. Danh sách đánh số sáu mục, mỗi mục một dòng ≤ 15 âm tiết, mở bằng động từ học tập (Đọc, Tính, Nêu, Viết, Giải); diễn đạt bằng ý, không dùng ký hiệu chưa giới thiệu ($\mathbf q_\theta$, $Z$, $U$, $\theta^-$). Mặt trang rút gọn sáu mục tiêu của `outline.md`; ghi chú bài giảng giữ bản đầy đủ có sản phẩm. Thêm "(optimizer)" vào lần dùng đầu "bộ tối ưu" ở `L08-01c`.
+- **Liên kết:** trước là `L08-01c` (Ký hiệu); sau là trang "Nội dung" `L08-02b` (chưa có; hiện là `L08-06`).
+- **Mật độ:** trước sửa 64 âm tiết, 8 dòng (bốn tiêu đề thẻ, bốn câu), ghi chú 59 âm tiết. Sau sửa 79 âm tiết (trần 80 của trang mục tiêu), 6 dòng (14, 10, 12, 14, 15, 14), 0 công thức, 0 hộp chữ, ghi chú 150 âm tiết. `L08-01c` sau khi thêm "(optimizer)": 59 âm tiết.
+- **Ghi chú bài giảng:** đoạn "Sau bài này…" thành mục `## Mục tiêu học tập`, sáu mục cùng thứ tự với trang, mỗi mục nêu sản phẩm.
 
 ### Bản trước đợt sửa 2026-10-22
 

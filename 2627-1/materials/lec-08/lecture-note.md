@@ -2,9 +2,16 @@
 
 Trong chương này, chúng ta thay hàm tuyến tính $\hat q(s,a,w)=x(s,a)^\top w$ của Bài 07 bằng một mạng nơ-ron nhận quan sát và trả về một giá trị cho mỗi hành động trong tập hữu hạn, rồi xây dựng thuật toán Deep Q-Network (DQN) từ bốn thành phần: đích hồi quy có mặt nạ kết thúc, bộ nhớ phát lại (experience replay), hàm mất mát với dừng gradient và mạng mục tiêu (target network). Bộ nhớ phát lại và mạng mục tiêu giảm bất ổn khi huấn luyện, nhưng DQN vẫn có đủ xấp xỉ hàm, bootstrap và dữ liệu khác chính sách, tức đủ ba yếu tố của bộ ba bất ổn (deadly triad) ở Bài 07, nên thuật toán không có bảo đảm hội tụ tổng quát.
 
-Sau bài này, người học có thể giải thích hai cơ chế ổn định của DQN; lập đúng
-đích có mặt nạ kết thúc; kiểm tra kích thước tensor và đường gradient; viết vòng
-huấn luyện với hai đồng hồ; và đánh giá đúng giới hạn hội tụ của thuật toán.
+## Mục tiêu học tập
+
+Sau chương này, người học có thể:
+
+1. Đọc vector giá trị hành động $\mathbf q_\theta(o)\in\mathbb R^{\lvert\mathcal A\rvert}$ do mạng trả về, chọn giá trị $Q_\theta(o,a)$ của hành động đã thực hiện, và tính đích hồi quy của một mẫu chuyển; phân biệt mẫu kết thúc (đích không chứa phần bootstrap) với mẫu bị cắt ngắn (đích vẫn chứa phần bootstrap).
+2. Nêu tác dụng và giới hạn của bộ nhớ phát lại: giảm tương quan giữa các mẫu liền nhau nhưng không tạo dữ liệu độc lập cùng phân phối theo một phân phối cố định; chỉ ra hai nguồn dữ liệu khác chính sách và tính xác suất hai mẫu liền nhau cùng vào một mini-batch.
+3. Tính hàm mất mát và gradient của nó theo các dự đoán trên một mini-batch, chỉ ra phần nào không nhận gradient, và truy dấu một vòng của thuật toán DQN với hai bộ đếm $t$ và $k_{\mathrm{opt}}$.
+4. Viết hạ gradient ngẫu nhiên (SGD), RMSprop và Adam theo từng tọa độ; nêu điều bộ tối ưu không sửa được: đích bootstrap, phân phối dữ liệu và lớp hàm.
+5. Tính độ nhảy của đích một mẫu khi đồng bộ mạng mục tiêu; nêu giả thiết còn thiếu để có bảo đảm hội tụ khi DQN có đủ bộ ba bất ổn.
+6. Giải một bước DQN trên một mini-batch có cả mẫu kết thúc lẫn mẫu bị cắt ngắn, nêu kết quả và giả thiết đã dùng ở mỗi bước tính.
 
 <!-- note-topic-id: lec-08-topic-13 -->
 ## Kiến thức tiên quyết
