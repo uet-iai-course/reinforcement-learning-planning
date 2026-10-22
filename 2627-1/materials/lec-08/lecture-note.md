@@ -981,10 +981,20 @@ Không có lựa chọn thắng trong mọi bài toán; lựa chọn được qu
 
 Phần 5 cho ba quy tắc đổi gradient $\nabla_\theta L_B$ thành bước tham số. Trên hàm $\tfrac12(100\,\theta_1^2+\theta_2^2)$, SGD không có hệ số bước chung hợp cho cả hai tọa độ, còn RMSprop và Adam đi bước đầu cùng cỡ ở cả hai tọa độ, $\eta\sqrt{10}$ và $\eta$. Các quy tắc này quyết định quỹ đạo của $\theta$, nhưng không đổi đích bootstrap, cơ chế thu thập dữ liệu khác chính sách hay lớp hàm phi tuyến. Ba yếu tố đó là bộ ba bất ổn của Bài 07. Ở phần 6, chúng ta đặt bộ nhớ phát lại và mạng mục tiêu cạnh các nguồn bất ổn này, tính độ thay đổi của đích tại một mốc đồng bộ, và nêu phạm vi bảo đảm của DQN.
 
-## Mạng mục tiêu và bất ổn
+## 6. Bất ổn và phạm vi bảo đảm của DQN
 
 <!-- note-topic-id: lec-08-topic-12 -->
-### Mạng mục tiêu và các nguồn bất ổn
+### Hai nguồn bất ổn và hai cơ chế giảm
+
+**Ba nguồn bất ổn cần theo dõi.** Chuyển tiếp liên tiếp có tương quan mạnh; đích
+bootstrap thay đổi theo mạng; và DQN đồng thời dùng xấp xỉ hàm, bootstrap cùng
+dữ liệu lệch chính sách. Sự kết hợp sau thường được gọi là *bộ ba nguy hiểm*.
+Nó có thể gây dao động hoặc phân kỳ trong một số thiết lập, không có nghĩa DQN
+luôn phân kỳ. Bộ nhớ phát lại giảm tương quan ngắn hạn, còn mạng mục tiêu làm
+chậm sự thay đổi của đích. Hai cơ chế này không tạo dữ liệu độc lập, phân phối
+đồng nhất và không cho bảo đảm hội tụ tổng quát.
+
+### Đích của một mẫu chuyển qua mốc đồng bộ
 
 **Vấn đề.** Nếu $\theta^-$ đổi mỗi bước, đích di động như khi chỉ có một mạng; nếu
 không bao giờ đổi, đích lỗi thời. Cần một nhịp đồng bộ rõ ràng.
@@ -1014,14 +1024,6 @@ phần bootstrap. $C$ lớn làm đích ổn định hơn nhưng lỗi thời h�
 
 **Kiểm tra nhanh.** Sau đồng bộ, đích của một chuyển tiếp cũ có đổi không? — Có;
 nó được tính lại bằng $\theta^-$ mới tại lần lấy mẫu kế tiếp, dù dữ liệu không đổi.
-
-**Ba nguồn bất ổn cần theo dõi.** Chuyển tiếp liên tiếp có tương quan mạnh; đích
-bootstrap thay đổi theo mạng; và DQN đồng thời dùng xấp xỉ hàm, bootstrap cùng
-dữ liệu lệch chính sách. Sự kết hợp sau thường được gọi là *bộ ba nguy hiểm*.
-Nó có thể gây dao động hoặc phân kỳ trong một số thiết lập, không có nghĩa DQN
-luôn phân kỳ. Bộ nhớ phát lại giảm tương quan ngắn hạn, còn mạng mục tiêu làm
-chậm sự thay đổi của đích. Hai cơ chế này không tạo dữ liệu độc lập, phân phối
-đồng nhất và không cho bảo đảm hội tụ tổng quát.
 
 ---
 
