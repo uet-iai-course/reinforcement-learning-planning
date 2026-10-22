@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 222" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Đích của một mẫu chuyển qua mốc đồng bộ</title>
+<desc id="d">Trục ngang là bộ đếm bước tối ưu k opt với các mốc 0, C và 2C; trục dọc là đích y 1 của mẫu chuyển thứ nhất. Từ 0 đến C, đường đậm nằm ngang ở 4,6, ghi max theo a phẩy của Q theta trừ tại O phẩy 1 bằng 4. Tại mốc C có vòng tròn rỗng ghi theta trừ gán bằng theta; đường đậm đi lên bằng nét đứt tới 5,5 rồi nằm ngang tới 2C, ghi max bằng 5. Ngoặc dọc tại mốc C ghi độ thay đổi delta y 1 bằng 0,9.</desc>
+<line x1="170" y1="68" x2="570" y2="68" stroke="#9AA0A8" stroke-width="2" stroke-dasharray="4 6"/>
+<path d="M170,148 H570" fill="none" stroke="#2F3E7A" stroke-width="6"/>
+<path d="M570,148 V68" fill="none" stroke="#2F3E7A" stroke-width="4" stroke-dasharray="9 7"/>
+<path d="M570,68 H970" fill="none" stroke="#2F3E7A" stroke-width="6"/>
+<circle cx="570" cy="68" r="10" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="154" y="157" font-size="28" text-anchor="end">4,6</text>
+<text x="154" y="77" font-size="28" text-anchor="end">5,5</text>
+<text x="30" y="118.0" font-size="30"><tspan font-style="italic">y</tspan><tspan font-size="19" dy="7">1</tspan><tspan dy="-7">​</tspan></text>
+<text x="370.0" y="132" font-size="25" text-anchor="middle">max<tspan font-size="19" dy="7" font-style="italic">a′</tspan><tspan dy="-7">​</tspan> <tspan font-style="italic">Q</tspan><tspan font-size="19" dy="7" font-style="italic">θ</tspan><tspan font-size="15" dy="-8">−</tspan><tspan dy="1">​</tspan>(<tspan font-style="italic">O′</tspan><tspan font-size="19" dy="7">1</tspan><tspan dy="-7">​</tspan>, <tspan font-style="italic">a′</tspan>) = 4</text>
+<text x="810.0" y="50" font-size="25" text-anchor="middle">max<tspan font-size="19" dy="7" font-style="italic">a′</tspan><tspan dy="-7">​</tspan> <tspan font-style="italic">Q</tspan><tspan font-size="19" dy="7" font-style="italic">θ</tspan><tspan font-size="15" dy="-8">−</tspan><tspan dy="1">​</tspan>(<tspan font-style="italic">O′</tspan><tspan font-size="19" dy="7">1</tspan><tspan dy="-7">​</tspan>, <tspan font-style="italic">a′</tspan>) = 5</text>
+<text x="570" y="44" font-size="25" text-anchor="middle"><tspan font-style="italic">θ</tspan><tspan font-size="20" dy="-11">−</tspan><tspan dy="11">​</tspan> ← <tspan font-style="italic">θ</tspan></text>
+<path d="M598,80 h10 V148 h-10" fill="none" stroke="#B15A2B" stroke-width="3"/>
+<text x="618" y="118.0" font-size="27" fill="#8A3F17">Δ<tspan font-style="italic">y</tspan><tspan font-size="19" dy="7">1</tspan><tspan dy="-7">​</tspan> = 0,9</text>
+<line x1="150" y1="184" x2="1000" y2="184" stroke="#333" stroke-width="2"/>
+<line x1="170" y1="178" x2="170" y2="190" stroke="#333" stroke-width="2"/><text x="170" y="214" font-size="26" text-anchor="middle" font-style="normal">0</text>
+<line x1="570" y1="178" x2="570" y2="190" stroke="#333" stroke-width="2"/><text x="570" y="214" font-size="26" text-anchor="middle" font-style="italic">C</text>
+<line x1="970" y1="178" x2="970" y2="190" stroke="#333" stroke-width="2"/><text x="970" y="214" font-size="26" text-anchor="middle" font-style="italic">2C</text>
+<text x="1010" y="192" font-size="28"><tspan font-style="italic">k</tspan><tspan font-size="20" dy="6">opt</tspan></text>
+</svg>

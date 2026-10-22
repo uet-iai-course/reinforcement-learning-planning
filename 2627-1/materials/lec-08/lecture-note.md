@@ -1022,34 +1022,37 @@ Như vậy, mỗi nguồn bất ổn có một cơ chế giảm và một phần
 
 ### Đích của một mẫu chuyển qua mốc đồng bộ
 
-**Vấn đề.** Nếu $\theta^-$ đổi mỗi bước, đích di động như khi chỉ có một mạng; nếu
-không bao giờ đổi, đích lỗi thời. Cần một nhịp đồng bộ rõ ràng.
+Nhận xét 08.19 để lại một phần của nguồn bất ổn thứ hai: tại mỗi mốc đồng bộ, đích của mọi mẫu chuyển đổi cùng lúc. Chúng ta đo độ thay đổi này. Nhắc lại hai định nghĩa của phần 2. Theo Định nghĩa 08.3, mạng mục tiêu $Q_{\theta^-}$ giữ $\theta^-$ cố định và nhận $\theta^-\leftarrow\theta$ sau mỗi bước tối ưu làm $k_{\mathrm{opt}}$ thành bội của $C$. Theo Định nghĩa 08.4, viết cho mẫu chuyển thứ $i$ của bộ nhớ, đích là $y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a')$. Giữa hai lần đồng bộ, $\theta^-$ là hằng, nên với mỗi mẫu chuyển đã lưu, $y_i$ là một số cố định dù $\theta$ đổi sau mỗi bước tối ưu.
 
-**Trực quan.** Giữ $\theta^-$ cố định trong $C$ bước tối ưu, rồi sao chép mạng
-online sau bước tối ưu:
+::: remark Nhận xét 08.20 (Độ thay đổi của đích tại mốc đồng bộ)
+Xét mẫu chuyển $(O_i,A_i,R_i,O'_i,Z_i,U_i)$ nằm trong bộ nhớ phát lại $\mathcal D$ và $\gamma\in[0,1)$. Tại một mốc đồng bộ, gọi $\theta^-$ là tham số của mạng mục tiêu ngay trước mốc và $\theta$ là tham số của mạng trực tuyến tại mốc. Ngay sau phép gán $\theta^-\leftarrow\theta$, đích của mẫu chuyển đổi một lượng
+$$
+\Delta y_i=\gamma(1-Z_i)\Bigl[\max_{a'\in\mathcal A}Q_{\theta}(O'_i,a')-\max_{a'\in\mathcal A}Q_{\theta^-}(O'_i,a')\Bigr].
+$$
+Giữa hai mốc đồng bộ liên tiếp, đích của mẫu chuyển không đổi.
+:::
 
-$$k_{\mathrm{opt}}\leftarrow k_{\mathrm{opt}}+1,\qquad
-k_{\mathrm{opt}}\bmod C=0:\ \theta^-\leftarrow\theta.$$
+Nhận xét suy ra trực tiếp từ Định nghĩa 08.4: $R_i$, $Z_i$ và $O'_i$ là các thành phần đã lưu nên không đổi, và chỉ tham số dùng trong phép cực đại đổi từ $\theta^-$ sang $\theta$; trừ hai biểu thức của đích, phần thưởng triệt tiêu. Ba điểm trong công thức cần đọc riêng. Mặt nạ $1-Z_i$ làm $\Delta y_i=0$ với mẫu chuyển kết thúc: đích của chúng bằng $R_i$ ở mọi thời điểm. Cờ cắt ngắn $U_i$ không xuất hiện, vì mẫu chuyển bị cắt ngắn vẫn bootstrap từ $O'_i$ và cũng đổi đích tại mốc. Độ lớn của $\Delta y_i$ là $\gamma$ nhân hiệu hai giá trị cực đại tại cùng quan sát $O'_i$, nên phụ thuộc quãng đường $\theta$ đi được trong $C$ bước tối ưu kể từ lần đồng bộ trước.
 
-Thứ tự đúng: cập nhật $\theta$, tăng bộ đếm tối ưu, rồi mới kiểm tra đồng bộ.
+::: example Ví dụ 08.23 (Mẫu 1 qua mốc đồng bộ)
+**Dữ kiện.** Mini-batch hai mẫu chuyển với $\gamma=0{,}9$. Mẫu 1: $R_1=1$, $Z_1=0$, và ngay trước mốc đồng bộ $\max_{a'}Q_{\theta^-}(O'_1,a')=4$. Mẫu 2: $R_2=-2$, $Z_2=1$, $\max_{a'}Q_{\theta^-}(O'_2,a')=100$. Giả sử tại mốc, mạng trực tuyến cho $\max_{a'}Q_\theta(O'_1,a')=5$.
 
-**Ví dụ — đích nhảy bao nhiêu khi đồng bộ?** Xét ngay sau $\theta^-\leftarrow\theta$:
+**Tính.** Trước mốc, $y_1=1+0{,}9\cdot4=4{,}6$ và $y_2=-2+0{,}9\cdot0\cdot100=-2$. Sau $\theta^-\leftarrow\theta$, $y_1=1+0{,}9\cdot5=5{,}5$. Theo Nhận xét 08.20, $\Delta y_1=0{,}9\,(1-0)(5-4)=0{,}9$ và $\Delta y_2=0{,}9\,(1-1)\,[\cdot]=0$, nên $y_2=-2$ dù $\max_{a'}Q_\theta(O'_2,a')$ nhận giá trị nào.
 
-$$y_i^{\mathrm{new}}-y_i^{\mathrm{old}}
-=\gamma(1-Z_i)\Bigl[\max_{a'}Q_{\theta}(O'_i,a')-\max_{a'}Q_{\theta^-}(O'_i,a')\Bigr].$$
+**Diễn giải.** Sáu thành phần đã lưu của mẫu 1 không đổi, nhưng nhãn hồi quy của nó tăng $0{,}9$ sau mốc. Mẫu kết thúc giữ nhãn cũ.
+:::
 
-Mẫu cũ trong replay có thể nhận đích mới dù bộ sáu thành phần
-$(O_i,A_i,R_i,O'_i,Z_i,U_i)$ không đổi.
+![Trục ngang là bộ đếm bước tối ưu k opt với các mốc 0, C và 2C; trục dọc là đích y 1 của mẫu chuyển thứ nhất. Từ 0 đến C, đường đậm nằm ngang ở 4,6, ghi max theo a phẩy của Q theta trừ tại O phẩy 1 bằng 4. Tại mốc C có vòng tròn rỗng ghi theta trừ gán bằng theta; đường đậm đi lên bằng nét đứt tới 5,5 rồi nằm ngang tới 2C, ghi max bằng 5. Ngoặc dọc tại mốc C ghi độ thay đổi delta y 1 bằng 0,9.](img/lec-08/target-sync-step.svg)
 
-**Hình thức.** Với một chuyển tiếp cố định và $\theta^-$ chưa đổi, $y_i$ cố định.
-Mạng mục tiêu làm chậm đích di động; $C$ là một đánh đổi thực nghiệm.
+Hình vẽ đích $y_1$ của Ví dụ 08.23 theo bộ đếm bước tối ưu $k_{\mathrm{opt}}$. Từ $0$ đến $C$, đường nằm ngang ở $4{,}6$: trong khoảng này mỗi bước tối ưu là hồi quy về một nhãn đứng yên. Tại mốc $C$ (vòng tròn rỗng), phép gán $\theta^-\leftarrow\theta$ đưa đích lên $5{,}5$; ngoặc dọc ghi độ thay đổi $0{,}9$. Từ $C$ đến $2C$, đích lại nằm ngang ở mức mới. Đường đích có dạng bậc thang, giống đường của $\theta^-$ trong hình ở mục mạng mục tiêu, vì đích chỉ phụ thuộc $\theta$ qua $\theta^-$.
 
-**Ứng dụng và giới hạn.** Mạng mục tiêu không tạo mục tiêu bất biến vĩnh viễn,
-không bảo đảm hội tụ, và không phải "mạng đánh giá chính sách" — nó chỉ cung cấp
-phần bootstrap. $C$ lớn làm đích ổn định hơn nhưng lỗi thời hơn.
+Một nhầm lẫn thường gặp là coi đích trong DQN là nhãn cố định như trong học có giám sát. Mạng mục tiêu giữ đích đứng yên trong từng khoảng $C$ bước, nhưng không giữ mãi: sau mỗi mốc, mọi mẫu chuyển chưa kết thúc nhận nhãn mới. Chu kỳ $C$ vì vậy là một đánh đổi. $C$ lớn cho các khoảng hồi quy dài với nhãn đứng yên, nhưng nhãn được tính từ một mạng cũ hơn và $\theta$ có nhiều bước để đi xa $\theta^-$, nên độ thay đổi tại mốc thường lớn hơn. $C$ nhỏ cho nhãn mới hơn nhưng đổi thường xuyên hơn; với $C=1$, đích tính lại sau mỗi bước, như Ví dụ 08.5. Không có giá trị $C$ nào được suy ra từ lý thuyết; Mnih và cộng sự (2015, Extended Data Table 1) dùng $C=10\,000$ bước tối ưu, chọn bằng thí nghiệm.
 
-**Kiểm tra nhanh.** Sau đồng bộ, đích của một chuyển tiếp cũ có đổi không? — Có;
-nó được tính lại bằng $\theta^-$ mới tại lần lấy mẫu kế tiếp, dù dữ liệu không đổi.
+**Trong thực hành.** Bộ nhớ phát lại chỉ lưu sáu thành phần của mẫu chuyển, không lưu đích; đích được tính lại bằng $\theta^-$ hiện hành mỗi khi mẫu chuyển được rút vào một mini-batch (Thuật toán 08.13, bước 7). Vì vậy một mẫu chuyển cũ nhận đích mới mà không cần ghi lại vào $\mathcal D$, và độ thay đổi của Nhận xét 08.20 xuất hiện ở lần rút đầu tiên sau mốc. Mạng mục tiêu làm đích đổi theo từng đợt thay vì sau mỗi bước, nhưng không làm đích cố định vĩnh viễn và không tạo bảo đảm hội tụ.
+
+**Kiểm tra nhanh.** Mẫu chuyển bị cắt ngắn, $U_i=1$, $Z_i=0$, có đổi đích tại mốc đồng bộ không? Có; mặt nạ chỉ chứa $Z_i$, nên mẫu này vẫn bootstrap từ $O'_i$ và $\Delta y_i$ tính như mẫu 1.
+
+Như vậy, mạng mục tiêu biến sự thay đổi sau mỗi bước của đích thành các lần thay đổi rời rạc tại mốc đồng bộ, với độ lớn đo được bằng Nhận xét 08.20. Bộ nhớ phát lại và mạng mục tiêu đều không chạm tới ba thành phần xấp xỉ hàm, bootstrap và dữ liệu khác chính sách. Ở mục tiếp theo, chúng ta nhắc lại bộ ba bất ổn của Bài 07 và kiểm từng thành phần của nó trong DQN.
 
 ---
 
