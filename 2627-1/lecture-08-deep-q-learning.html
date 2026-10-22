@@ -621,6 +621,19 @@ loss = ((y - q) ** 2).mean()
 </ol></div>
 <aside class="notes"><p>Lời giải: (1) bộ nhớ phát lại giảm tương quan giữa các mẫu liền nhau, vì một cặp liền nhau chỉ cùng vào mini-batch với xác suất khoảng $2/N$; mẫu vẫn không độc lập cùng một phân phối cố định, phân phối đổi theo hành vi, và không có bảo đảm hội tụ (Nhận xét 08.19, 08.9). (2) Mạng mục tiêu làm chậm sự thay đổi của đích: đích đứng yên giữa hai lần đồng bộ và đổi $\Delta y_i$ tại mốc; nó không loại yếu tố nào của bộ ba bất ổn (Nhận xét 08.20, 08.21). (3) Khi $U=1$, $Z=0$: MDP chưa kết thúc, mặt nạ chỉ dùng $1-Z$ (Định nghĩa 08.6). (4) Không; bộ tối ưu chỉ đổi gradient thành bước tham số, không đổi đích, cách thu thập dữ liệu hay lớp hàm (Định nghĩa 08.15, Nhận xét 08.21). Bài giảng gốc nêu thêm ba hướng thảo luận: vì sao bộ nhớ phát lại làm cập nhật mini-batch đáng tin hơn; vì sao bộ tối ưu thích nghi vẫn giúp DQN dù không sửa đích; cách tăng thăm dò trong DQN.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 29–36; ghi chú bài giảng, Định nghĩa 08.6, 08.15, Nhận xét 08.9, 08.19–08.21.</p></aside>
 </section>
+  <section data-slide-id="L08-K5" data-note-topic-id="lec-08-topic-15">
+<h2>Bài tập về nhà và tài liệu đọc</h2>
+<div class="grid2"><div><table><thead><tr><th scope="col">Mạch</th><th scope="col">Bài tập</th></tr></thead><tbody>
+<tr><td>4</td><td>08.1 (một mini&#8209;batch), 08.2 (lỗi cài đặt đích)</td></tr>
+<tr><td>6</td><td>08.3 (thí nghiệm loại bỏ)</td></tr>
+<tr><td>7</td><td>08.4 (một bước DQN trên CartPole)</td></tr>
+</tbody></table></div><div>
+<p><strong>Tài liệu đọc:</strong> Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015).</p>
+<p><a href="material-viewer.html?doc=materials/lec-08/lecture-note.md&amp;deck=lecture-08-deep-q-learning.html">Ghi chú bài giảng</a> · Bài tập: chưa có</p>
+<p><a href="lecture-09-double-dqn-va-gradient-chinh-sach.html">Bài 09</a> xét độ chệch của phép cực đại trong đích và Double DQN.</p>
+</div></div>
+<aside class="notes"><p>Bốn bài tập nằm ở mục bài tập củng cố của ghi chú bài giảng, mỗi bài có gợi ý và lời giải, và cả bốn đã giải trên trang chiếu: Bài tập 08.1 tính đích, hàm mất mát và đạo hàm trên mini-batch hai mẫu; Bài tập 08.2 sửa năm lỗi trong đoạn mã tính đích; Bài tập 08.3 thiết kế thí nghiệm loại bỏ cho bộ nhớ phát lại và mạng mục tiêu; Bài tập 08.4 là bài tổng hợp trên CartPole. Tệp bài tập riêng của Bài 08 chưa có. Sutton và Barto (2018) bàn bộ ba bất ổn ở §11.3 và DQN trên Atari ở §16.5; Mnih và cộng sự (2015) cho thuật toán gốc, cấu hình siêu tham số và thí nghiệm loại bỏ trên năm trò chơi. Bài 09 xét độ chệch của phép cực đại trong đích của DQN và Double DQN.</p></aside>
+</section>
 </section>
 <div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 08</div>
 </div></div>

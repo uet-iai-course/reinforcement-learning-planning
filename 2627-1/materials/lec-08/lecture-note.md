@@ -1228,9 +1228,15 @@ Mỗi câu dưới đây dùng một kết quả của chương; khi trả lời
 
 Bài giảng gốc (trang 36) nêu thêm ba hướng thảo luận: vì sao bộ nhớ phát lại làm cập nhật trên mini-batch đáng tin cậy hơn; vì sao các bộ tối ưu thích nghi vẫn có thể giúp DQN dù không sửa đích Bellman; và những cách tăng thăm dò trong DQN. Hai hướng đầu được trả lời một phần bởi câu 1 và câu 4; hướng thứ ba nằm ngoài chương này.
 
-### Đọc thêm
+### Bài tập về nhà và tài liệu đọc
+
+Bốn bài tập của chương nằm ở mục "Bài tập củng cố" cuối tệp, mỗi bài có gợi ý và lời giải; bài nào cũng đã được giải trên trang chiếu. Bài tập 08.1 (đích, hàm mất mát và gradient trên một mini-batch) và Bài tập 08.2 (lỗi cài đặt đích DQN) dùng kết quả của phần 4; Bài tập 08.3 (thiết kế thí nghiệm loại bỏ) dùng phần 6; Bài tập 08.4 (một bước DQN trên CartPole) dùng đồng thời phần 2, 4 và 6. Tệp bài tập riêng của Bài 08 chưa có.
+
+Tài liệu đọc gồm hai mục của Sutton và Barto (2018): §11.3 về bộ ba bất ổn và §16.5 về DQN trên các trò chơi Atari; và bài báo của Mnih và cộng sự (2015), với mục Methods cho thuật toán, Extended Data Table 1 cho cấu hình siêu tham số và Extended Data Table 3 cho thí nghiệm loại bỏ.
 
 Giả mã "Deep Q-learning with experience replay" của bài giảng gốc (trang 21) đã có bộ nhớ phát lại dung lượng $N$, hai mạng với $\theta^-=\theta$ lúc khởi tạo, đích bằng $r_j$ tại bước kết thúc và đồng bộ sau mỗi $C$ bước. Đối chiếu từng dòng với Thuật toán 08.13 cho thấy các chi tiết được thêm ở thuật toán đó: hai cờ $Z$ và $U$, số mẫu tối thiểu $N_{\mathrm{start}}$, nhịp tối ưu $F$, quan sát cuối của lượt khi môi trường tự đặt lại, phép dừng gradient, và việc đếm $C$ theo bước tối ưu. Với Atari, đầu vào của mạng là chồng bốn khung $84\times84$ và mạng tích chập trả về $\lvert\mathcal A\rvert$ giá trị hành động (Ví dụ 08.2).
+
+Bài 09 xét độ chệch của phép cực đại trong đích của DQN và Double DQN.
 
 ### Tóm tắt chương
 
@@ -1250,7 +1256,15 @@ $$
 
 ---
 
-## Bốn bài tập
+## Bài tập củng cố
+
+Các bài tập dưới đây xếp theo ba mức: nhận biết; tính toán hoặc chứng minh; vận dụng vào bài toán Học tăng cường. Mỗi bài có gợi ý và lời giải.
+
+### Mức nhận biết
+
+Bốn câu hỏi của mục "Câu hỏi tự kiểm tra" ở phần 7 là bài tập mức này; lời giải ngắn đặt ngay sau mỗi câu.
+
+### Mức tính toán hoặc chứng minh
 
 ::: exercise Bài tập 08.1 (Đích, hàm mất mát và gradient trên một mini-batch)
 
@@ -1283,6 +1297,8 @@ Kết luận đúng khi xét $q_1$, $q_2$ như hai biến riêng. Trong DQN, c�
 
 **Kiểm tra lại.** Ba lỗi thường gặp: quên mặt nạ ở mẫu 2, cho $y_2=-2+0{,}9\cdot100=88$ và $\delta_2=89{,}5$; dùng giá trị lớn nhất của $\mathbf q_\theta(O_i)$ thay cho giá trị của hành động đã lưu $A_i$ (phép chọn theo hành động); quên hệ số $\tfrac2b$, hoặc dùng tổng thay cho trung bình, làm đạo hàm sai một hằng số nhân (với $b=2$, $\tfrac2b=1$ nên lỗi này chỉ lộ ra khi $b\ne2$).
 :::
+
+### Mức vận dụng
 
 ::: exercise Bài tập 08.2 (Lỗi cài đặt đích DQN)
 Hàm `step(a)` trả quan sát sau bước `obs_after_step`, phần thưởng `r`, hai cờ `terminated` (cờ $Z$ của kết thúc MDP) và `truncated` (cờ $U$ của cắt ngắn), và `final_obs`: quan sát cuối của lượt nếu môi trường vừa tự đặt lại, ngược lại `None`. `D` là bộ nhớ phát lại; `D.sample(b)` trả sáu mảng `ob, ab, rb, ob2, zb, ub` của một mini-batch, chiều đầu $b$, lần lượt chứa $O_i$, $A_i$, $R_i$, $O'_i$, $Z_i$, $U_i$; `ab` có kiểu `int64`, `zb` và `ub` có kiểu `bool`. Hậu tố `b` giữ các mảng của mini-batch tách khỏi biến của bước môi trường. Hai mạng `q_online`, `q_target` nhận mảng $[b,4,H,W]$ và trả mảng $[b,\lvert\mathcal A\rvert]$.
@@ -1410,3 +1426,18 @@ Với $b=2$, $\partial L_B/\partial q_i=\tfrac2b(q_i-y_i)=q_i-y_i$, nên $\parti
 
 **Kiểm tra lại.** Bốn lỗi hay gặp. Dùng cờ gộp $Z\lor U$ làm mặt nạ cho $y_1=1$, $\delta_1=-8$. Quên mặt nạ ở mẫu 2 cho $y_2=1+0{,}9\cdot10=10$, $\delta_2=8$ và $L_B=\tfrac12(1^2+8^2)=32{,}5$. Dùng tổng thay cho trung bình cho $L_B=2$ và đạo hàm $(-2;\,2)$, sai một hằng số nhân. Kiểm $C$ trước khi tăng $k_{\mathrm{opt}}$, hoặc đếm $C$ theo bước môi trường $t$, làm lần đồng bộ lệch khỏi bước tối ưu thứ $1000$.
 :::
+
+## Tài liệu tham khảo
+
+- Tạ Việt Cường (2026). *Bài giảng 8: Deep Q-Learning* (`lecture8-dqn.pdf`), bài giảng gốc của học phần (2025–2026), 36 trang: phạm vi và thứ tự. Phần 1 dựa trên trang 1–13; phần 2 trên trang 14–17, 20–21, 31, 33, 35; phần 3 trên trang 6–7, 18–20, 30, 32; phần 4 trên trang 16, 18, 20–22, 34; phần 5 trên trang 22–28; phần 6 trên trang 12–13, 29–34; phần 7 trên trang 20–21, 36.
+- Sutton, R. S. và Barto, A. G. (2018). *Reinforcement Learning: An Introduction*, ấn bản 2, MIT Press: §2.5 (bước học hằng); §6.5, §6.6, §7.3 (Q-learning và đích khác chính sách); §9.3 (bán gradient); §11.2 (phản ví dụ phân kỳ, ví dụ của Baird); §11.3 (bộ ba bất ổn); §11.5 (gradient dư); §13.7 (hành động liên tục); §16.5 (DQN trên Atari).
+- Mnih, V. và cộng sự (2015). Human-level control through deep reinforcement learning. *Nature* 518, 529–533: mục Methods (thuật toán, tiền xử lý bốn khung); Extended Data Table 1 (siêu tham số $N$, $b$, $N_{\mathrm{start}}$, $F$, $C$, $\gamma$, tốc độ học, lịch $\epsilon_{\mathrm{exp}}$); Extended Data Table 3 (thí nghiệm loại bỏ trên năm trò chơi).
+- Kingma, D. P. và Ba, J. (2015). Adam: A Method for Stochastic Optimization. *ICLR*: Định nghĩa 08.18 và phép hiệu chỉnh lệch.
+- Goodfellow, I., Bengio, Y. và Courville, A. (2016). *Deep Learning*, MIT Press: Chương 6 và 9 (mạng nhiều tầng, mạng tích chập, lan truyền ngược); Chương 8, §8.3.1, §8.5.2, §8.5.3 (SGD, RMSprop, Adam, điểm yên ngựa); §4.3 (bài toán có điều kiện kém và giới hạn bước của hạ gradient).
+- Pardo, F., Tavakoli, A., Levdik, V. và Kormushev, P. (2018). Time Limits in Reinforcement Learning. *ICML*: cờ cắt ngắn $U$, mặt nạ chỉ dùng $Z$, Bài tập 08.4.
+- Hausknecht, M. và Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. *AAAI Fall Symposium*: mạng hồi quy khi quan sát không đủ Markov.
+- Lillicrap, T. P. và cộng sự (2016). Continuous control with deep reinforcement learning. *ICLR*: cập nhật mềm của mạng mục tiêu.
+- Farama Foundation. Tài liệu môi trường `CartPole-v1` của thư viện Gymnasium: phần thưởng, điều kiện kết thúc, giới hạn $500$ bước (Bài tập 08.4).
+- Ghi chú bài giảng Bài 06: Định nghĩa 06.3, 06.15, 06.19, Thuật toán 06.16, Nhận xét 06.17, Định lý 06.21. Ghi chú bài giảng Bài 07: Định nghĩa 07.1, 07.21, 07.35, 07.38, Mệnh đề 07.2, 07.37, Định lý 07.29, Thuật toán 07.36, Nhận xét 07.39, Ví dụ 07.1.
+- Notebook thực hành Bài 04 (`thuc-hanh-cartpole-quy-hoach-dong.ipynb`, phần 2): mô tả CartPole-v1 dùng ở Bài tập 08.4. Notebook Lunar Lander của Bài 07: số liệu của Ví dụ 08.1.
+- Giáo trình *Học máy thống kê*: giọng kể, thuật ngữ và tương ứng ký hiệu ($q_*$ là $Q^*$).
