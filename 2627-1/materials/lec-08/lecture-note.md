@@ -1141,11 +1141,32 @@ Một nhầm lẫn thường gặp là so hệ số mỗi chu kỳ $1{,}521$ v�
 
 Đến đây chúng ta có ba kết quả của phần 6. Hai cơ chế của DQN giảm hai nguồn bất ổn: bộ nhớ phát lại giảm tương quan, mạng mục tiêu giữ đích đứng yên giữa hai mốc đồng bộ, và tại mốc đích của mẫu 1 đổi $0{,}9$. DQN vẫn có đủ ba yếu tố của bộ ba bất ổn, nên không có bảo đảm hội tụ tổng quát. Trong phản ví dụ hai trạng thái, mạng mục tiêu hạ hệ số tăng mỗi bước từ $1{,}08$ xuống $1{,}043$ khi $C=10$, nhưng không ngăn phân kỳ. Tác dụng của từng cơ chế vì vậy phải đo bằng thí nghiệm; Bài tập 08.3 thiết kế một thí nghiệm loại bỏ như vậy, và phần 7 dùng các kết quả này để trả lời vấn đề trung tâm.
 
----
-
-## Kiểm tra tổng hợp và đọc thêm
+## 7. Tổng kết và chuyển tiếp
 
 <!-- note-topic-id: lec-08-topic-15 -->
+### Kết quả và giả thiết của bài
+
+Hợp đồng của một bản DQN đúng gồm sáu điểm kiểm tra:
+
+1. **Biểu diễn:** quan sát vào, vector giá trị Q cho tập hành động rời rạc ra;
+   $Q_\theta$ nhận gradient, $Q_{\theta^-}$ tạo đích.
+2. **Chuyển tiếp:** chỉ số nhất quán; phân biệt kết thúc MDP $Z$ với cắt ngắn
+   ngoài mô hình $U$; lưu quan sát cuối của chuyển tiếp khi môi trường tự reset.
+3. **Đích:** có mặt nạ $(1-Z)$, mạng mục tiêu và dừng gradient;
+   $y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a')$.
+4. **Dữ liệu:** replay giảm tương quan và tái sử dụng dữ liệu nhưng không tạo
+   i.i.d. và không bảo đảm hội tụ.
+5. **Đồng bộ:** giữ $\theta^-$ cố định rồi sao chép $\theta^-\leftarrow\theta$ sau
+   bước tối ưu theo chu kỳ $C$; hai bộ đếm $t$ và $k_{\mathrm{opt}}$ tách biệt.
+6. **Kết luận:** đánh giá thực nghiệm qua nhiều lần chạy độc lập; không suy ra hội
+   tụ tổng quát. Bộ ba bất ổn — xấp xỉ hàm, bootstrap, dữ liệu khác chính sách —
+   vẫn còn trong DQN; replay và mạng mục tiêu giảm nhẹ hai biểu hiện trực tiếp
+   (tương quan, mục tiêu di động) nhưng không loại bỏ nguyên nhân cấu trúc.
+
+Mỗi mục trên chặn một lỗi có thể làm thuật toán sai nghĩa hoặc làm kết luận vượt quá
+bằng chứng; dùng danh sách này như kiểm tra cuối trước khi đọc hoặc viết một cài
+đặt DQN.
+
 ### Kiểm tra tổng hợp, thảo luận và đọc thêm
 
 **Kiểm tra tổng hợp (bốn câu).**
@@ -1287,28 +1308,3 @@ Kết quả của thí nghiệm kiểm hai dự đoán rút từ phần 6: bỏ 
 
 **Kiểm tra lại.** Ba lỗi hay gặp: đổi hai thành phần trong cùng một nhánh, chẳng hạn bỏ mạng mục tiêu và đổi bộ tối ưu, nên không tách được tác dụng; dùng lợi tức của các lượt huấn luyện có thăm dò làm thước đo chất lượng của chính sách; kết luận từ một lần chạy, hoặc chỉ báo trung bình mà không báo độ phân tán.
 :::
-
----
-
-## Kết luận
-
-Hợp đồng của một bản DQN đúng gồm sáu điểm kiểm tra:
-
-1. **Biểu diễn:** quan sát vào, vector giá trị Q cho tập hành động rời rạc ra;
-   $Q_\theta$ nhận gradient, $Q_{\theta^-}$ tạo đích.
-2. **Chuyển tiếp:** chỉ số nhất quán; phân biệt kết thúc MDP $Z$ với cắt ngắn
-   ngoài mô hình $U$; lưu quan sát cuối của chuyển tiếp khi môi trường tự reset.
-3. **Đích:** có mặt nạ $(1-Z)$, mạng mục tiêu và dừng gradient;
-   $y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a')$.
-4. **Dữ liệu:** replay giảm tương quan và tái sử dụng dữ liệu nhưng không tạo
-   i.i.d. và không bảo đảm hội tụ.
-5. **Đồng bộ:** giữ $\theta^-$ cố định rồi sao chép $\theta^-\leftarrow\theta$ sau
-   bước tối ưu theo chu kỳ $C$; hai bộ đếm $t$ và $k_{\mathrm{opt}}$ tách biệt.
-6. **Kết luận:** đánh giá thực nghiệm qua nhiều lần chạy độc lập; không suy ra hội
-   tụ tổng quát. Bộ ba bất ổn — xấp xỉ hàm, bootstrap, dữ liệu khác chính sách —
-   vẫn còn trong DQN; replay và mạng mục tiêu giảm nhẹ hai biểu hiện trực tiếp
-   (tương quan, mục tiêu di động) nhưng không loại bỏ nguyên nhân cấu trúc.
-
-Mỗi mục trên chặn một lỗi có thể làm thuật toán sai nghĩa hoặc làm kết luận vượt quá
-bằng chứng; dùng danh sách này như kiểm tra cuối trước khi đọc hoặc viết một cài
-đặt DQN.

@@ -78,7 +78,7 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 6 | `L08-30b` | Ví dụ: hai trạng thái với mạng mục tiêu | thêm | Dữ kiện TD(0) dự đoán, chỉ cập nhật $s_1\to s_2$, $\gamma=0{,}9$, $\alpha=0{,}1$; hình `two-state-shared.svg` ($x(s_1)=1$, $x(s_2)=2$, $R=0$); $w_{n+1}=1{,}08\,w_n$; $w_C=(1{,}8-0{,}8\cdot0{,}9^C)\,w^-$; $C=10$: $1{,}521$ so với $2{,}159$; "Diễn giải:" hệ số $\ge1{,}08>1$ | 6.4 (S43) |
 | 6 | `X03` | Bài tập: thí nghiệm loại bỏ | sửa, chuyển từ mạch 7 cũ | Hai thẻ (bỏ bộ nhớ phát lại; bỏ mạng mục tiêu, $C=1$), mỗi thẻ ≤ 15 âm tiết; hộp "Câu hỏi:"; lời giải chuyển sang `X03b`; topic-12 | 6.5 (S44) |
 | 6 | `X03b` | Bài tập: thí nghiệm loại bỏ | thêm (tách từ `X03`) | "Lời giải:" sáu dòng: đổi một thành phần; giữ cố định; cùng tập hạt giống, ghép cặp; đo; báo trung bình hoặc trung vị và độ phân tán; dòng kết | 6.6 (S44) |
-| 7 | `L08-M7T` | 7. Tổng kết và chuyển tiếp | thêm | Trang tiêu đề mạch, điểm vào mạch 7 | chưa có |
+| 7 | `L08-M7T` | 7. Tổng kết và chuyển tiếp | thêm | Trang tiêu đề mạch, điểm vào mạch 7 | 7.0 (S45) |
 | 7 | `L08-34` | Kết quả và giả thiết của bài | sửa | Bảng `Kết quả \| Giả thiết không được bỏ \| Công thức hoặc thuật toán`; tách hai trang cùng tiêu đề nếu > 80 âm tiết | 7.1 |
 | 7 | `L08-K1` | So sánh Q-learning bảng, tuyến tính và DQN | thêm | Bảng `Phương pháp \| Quy tắc cập nhật \| Dữ liệu dùng \| Điều kiện dừng` và `Phương pháp \| Giả thiết không được bỏ \| Kết luận` | chưa có |
 | 7 | `L08-K2` | Bài tập: một bước DQN trên CartPole | thêm | Bài tổng hợp; CartPole-v1: $+1$ mỗi bước, cắt ngắn ở $500$ bước | chưa có |
@@ -680,6 +680,16 @@ Bảng hành trình mạch 4 (mục 4) ở mục "Hành trình khái niệm (đ�
 - **Liên kết:** trước là `L08-30b`; sau là `L08-M7T` (tạm thời `L08-34`). Mục tiêu hỗ trợ: mục tiêu 5 và mục tiêu 6 (đánh giá có kiểm soát).
 - **Mật độ:** trước sửa khoảng 91 âm tiết trên một trang. Sau sửa: `X03` 59 âm tiết (script 29, cộng 1 cho "mini&#8209;batch", cộng 29 trong `.check`), hai thẻ (5 + 10 và 4 + 11 âm tiết), đáy 576 px, ghi chú diễn giả 107 âm tiết; `X03b` 60 âm tiết, 6 dòng (12, 11, 9, 10, 9, 9), đáy 582 px, ghi chú diễn giả 195 âm tiết (trang lời giải, ≤ 250).
 - **Ghi chú bài giảng:** "Bài tập 3 —" thành "Bài tập 08.3 (Thiết kế thí nghiệm loại bỏ)": đề nêu hai nhánh và bốn câu (a)–(d); gợi ý dẫn Nhận xét 08.19, 08.20; lời giải "**Câu (a).**"…"**Câu (d).**" (Ví dụ 08.9: khoảng $1{,}1$ mẫu độc lập; Nhận xét 08.20; danh sách giữ cố định; đo lợi tức đánh giá trên lượt riêng; ghép cặp theo hạt giống; độ phân tán và số lần chạy phân kỳ), đoạn nối Nhận xét 08.21 và Mnih và cộng sự (2015, Extended Data Table 3), "**Kiểm tra lại.**" (ba lỗi). Bỏ "replay", "TD error", "return", "khám phá", "online". `outline.md`: `X03`, `X03b` sang topic-12. Số tiếp theo: Bài tập 08.4.
+
+#### `L08-M7T` Trang tiêu đề mạch 7 (bước S45), điểm vào mạch 7
+
+- **Trang muốn nói gì:** mạch 7 "Tổng kết và chuyển tiếp" kiểm lại các kết quả của bài (đích, dữ liệu, đồng bộ, phạm vi kết luận), đặt mỗi kết quả cạnh giả thiết không được bỏ, và nối sang Bài 09.
+- **Phục vụ mạch nào và thế nào:** điểm vào mạch 7; số "7." khớp mục 7 của `L08-02b` và `#/7` (đã thử: `#/7` mở `L08-M7T`, hash `#/mach-7`; bấm mục 7 của `L08-02b` mở `L08-M7T`, hash `#/mach-7`). Bốn từ khóa ứng với các trang dự kiến: kết quả và giả thiết (`L08-34`), thuật toán DQN (`L08-K1`, `L08-K2`/`K3`), phạm vi bảo đảm (`L08-K4`), Bài 09 (`L08-K5`).
+- **Vấn đề còn lại trước sửa:** mạch 7 chưa có trang tiêu đề; section ngoài thứ 7 mở thẳng bằng `L08-34` (`review-structure.md` §1 mạch 7; bàn giao §10).
+- **Quyết định:** thêm, theo `review-structure.md` §1 mạch 7. Dòng dẫn viết "Muốn dùng DQN đúng, phải kiểm đích, dữ liệu, đồng bộ và phạm vi của kết luận" (bỏ "đúng nghĩa" của bản rà soát). Ghi chú diễn giả: kế thừa của phần 2–6 viết với chủ ngữ "chúng ta", nhiệm vụ của phần 7, nối Bài 09 chỉ nêu tên "độ chệch của phép cực đại trong đích" và Double DQN, không giải thích đánh giá quá cao (theo `note-for-author.md` dòng 57). `data-note-topic-id` là `lec-08-topic-15`, chủ đề của trang nội dung đầu mạch `L08-34`.
+- **Liên kết:** trước là `X03b`; sau là `L08-34`. Kế thừa từ phần 6 kết luận có điều kiện (hai cơ chế giảm hai nguồn bất ổn, không bảo đảm hội tụ). Giao cho Bài 09 câu hỏi về độ chệch của phép cực đại trong đích.
+- **Mật độ:** dòng dẫn 17 âm tiết (trần 25), từ khóa 14 âm tiết, 4 cụm; ghi chú diễn giả 97 âm tiết (khoảng 40–100). Đáy nội dung 521 px.
+- **Ghi chú bài giảng:** mục `## 7. Tổng kết và chuyển tiếp` đặt ngay sau phần 6 (topic-15). Chỉ di chuyển, chưa sửa nội dung: "## Kết luận" cũ thành tiểu mục "### Kết quả và giả thiết của bài" (ứng với `L08-34`), "## Kiểm tra tổng hợp và đọc thêm" cũ thành tiểu mục "### Kiểm tra tổng hợp, thảo luận và đọc thêm" (ứng với `L08-33`, `L08-K5`), theo thứ tự trang dự kiến. Mục "## Ba bài tập" giữ riêng sau phần 7; bỏ hai đường kẻ ngang thừa. Tiểu mục cho `L08-K1`, `L08-K2`/`K3`, `L08-K4` thêm ở bước trang. `outline.md`: topic-15 thành `L08-M7T`, `L08-34`, `L08-33`.
 
 #### Rà lại mạch 5 (bước R5)
 
