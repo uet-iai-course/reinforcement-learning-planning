@@ -713,3 +713,35 @@ Kết quả rà: 0 chặn bàn giao, 1 nghiêm trọng, 9 trung bình, 13 nhẹ;
 
 - Bước R7 (biên tập viên): áp dụng 24 mục. Trang đổi: `L08-02`, `L08-M7T`, `L08-34`, `L08-34b`, `L08-K1`, `L08-K1b`, `L08-K4`, `L08-33`, `L08-K5` (mặt trang và ghi chú). Ghi chú bài giảng: mục tình huống mới, tóm tắt chương thành mục riêng, Bài tập 08.5, trích dẫn trong thân, tên mục tham khảo. `outline.md`: mục tiêu 5. `storyboard.md`: bảng hành trình mạch 7, bảng số đo "Rà lại mạch 7 (bước R7)". Kiểm: `check.py` 11 trang mạch 7 và `L08-02` ở 1600 và 390 px (không lỗi, không tràn); `viewer_check.py` (2 623 khối KaTeX, 0 lỗi; khối `application` được nhận); `git diff --check`. `no-ai-slop` Edit, tự kiểm theo `eval.md`: đạt. Chờ điều phối viên duyệt.
 | R7 | mạch 7 (rà lại), `L08-02` | chấp nhận; phát hiện nghiêm trọng (mục Tình huống áp dụng của note) đã đóng; chấp nhận cả bốn điểm của biên tập viên — dòng 2 `L08-K4` sửa thành "Với $\theta^-$ cố định giữa hai lần đồng bộ, nhãn hồi quy đứng yên." ở bước F | diff; tính lại Bài tập 08.5; `check.py` |
+
+### Rà cuối từ góc nhìn sinh viên (bước F)
+
+| vai | loại tác tử | mô hình | mức suy luận | ghi tệp |
+|---|---|---|---|---|
+| Rà cuối toàn deck từ góc nhìn sinh viên | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Biên tập F | Agent `general-purpose` (biên tập viên của đợt sửa) | `claude-opus-5-5` | high | có |
+
+Kết quả rà: 0 chặn bàn giao, 0 nghiêm trọng, 8 trung bình, 9 nhẹ; điều phối viên chấp nhận 16 mục, bác mục 17 (tệp `recheck/F-student-decisions.md` trong scratchpad phiên).
+
+| mức độ | trang chiếu | vấn đề | đề xuất sửa | trạng thái | quyết định |
+|---|---|---|---|---|---|
+| trung bình (1) | `L08-08` | Chưa gọi tên "mặt nạ" lần đầu | Câu đề xuất | đã sửa ở F; note đồng bộ | chấp nhận |
+| trung bình (2) | `L08-05r` | Chỉ số $i$ trước khi mini-batch được định nghĩa | Chỉ số thời gian $t$ | đã sửa ở F, cả ghi chú | chấp nhận |
+| trung bình (3) | `L08-07c` | "Nhu cầu:" dẫn chiếu ví dụ trước | Đặt lại dữ kiện | đã sửa ở F; "$C\in\mathbb N_+$" chuyển vào ghi chú để giữ đáy | chấp nhận |
+| trung bình (4) | `L08-27` | "Nhu cầu:" không nêu nhu cầu; ô Ví dụ thiếu dữ kiện | Phương án A | đã sửa ở F (71 âm tiết) | chấp nhận |
+| trung bình (5) | `L08-23` | Hệ số mỗi bước chưa ghi số | Câu đề xuất | đã sửa ở F | chấp nhận |
+| trung bình (6) | `L08-25` | "Nhu cầu:" nêu hai bước ngược chiều nhưng trang không có số của Adam | Thêm "Ví dụ.", rút "Ý nghĩa:" | đã sửa ở F (đáy 693 px) | chấp nhận |
+| trung bình (7) | `L08-30` | Câu phạm vi bảo đảm khó đọc | Câu đề xuất | đã sửa ở F; vế "hai cơ chế không loại yếu tố nào" của dòng kết chuyển vào ghi chú để giữ 60 | chấp nhận |
+| trung bình (8) | `L08-K1` | $H$, $K$ không định nghĩa | Câu đề xuất | đã làm ở R7; kiểm lại ở F | chấp nhận |
+| nhẹ (9) | `L08-29` | Dòng dữ kiện, "Diễn giải:" | Câu đề xuất | đã sửa ở F | chấp nhận |
+| nhẹ (10) | `L08-19b` | Tiêu đề cột dẫn số bước giả mã | Câu đề xuất | đã sửa ở F; note Ví dụ 08.15 đồng bộ | chấp nhận |
+| nhẹ (11) | `L08-13` | Dòng "Lưu ý:" chi tiết cài đặt | Chuyển vào ghi chú | đã sửa ở F | chấp nhận |
+| nhẹ (12) | `L08-01b`, `L08-05r` | Dòng tỉ số lấy mẫu quan trọng lặp lại | Chuyển vào ghi chú; thuật ngữ tiếng Anh ở `L08-05r` | đã sửa ở F; ghi chú `L08-01b` giữ thuật ngữ tiếng Anh ở lần dùng đầu của ghi chú | chấp nhận |
+| nhẹ (13) | `L08-10` | "mục tiêu" thay vì "đích" | Câu đề xuất | đã sửa ở F | chấp nhận |
+| nhẹ (14) | `L08-10b` | Lời giải thiếu bước $y-q$ | Câu đề xuất | đã sửa ở F; công thức cuối giữ liền | chấp nhận |
+| nhẹ (15) | `L08-26` | Hai dòng kết | Gộp | đã sửa ở F (60 âm tiết) | chấp nhận |
+| nhẹ (16) | ghi chú `L08-M5T`–`L08-M7T` | Giọng "chúng ta" khác M2T–M4T | Giọng khách quan | đã sửa ở F | chấp nhận |
+| nhẹ (17) | mọi trang dài | Mũi tên điều hướng đè tiêu đề dài | Sửa CSS chung | bác (hành vi chung của `lecture-slide.css`/Reveal; báo người dùng) | bác |
+
+- Bước F (biên tập viên): áp dụng mục 1–16 và ba việc thêm của điều phối viên: `L08-K4` dòng 2 "Với $\theta^-$ cố định giữa hai lần đồng bộ, nhãn hồi quy đứng yên."; ghi chú `L08-02b` bỏ "Phần N" làm chủ ngữ; note mục Kiến thức tiên quyết, công thức cập nhật Q-learning viết `aligned` bốn hàng với $\delta_t$ (vừa khung 277 px ở viewport 390). Kiểm: `check.py` toàn deck (60 trang, 1600×900 và 390×844): không lỗi console, không tài nguyên hỏng, không cờ tràn đáy; `viewer_check.py` (0 `katex-error`); grep mặt trang và ghi chú không còn "như ví dụ trước", "phần trước", "Trang này", "Đáp án", "bộ ba nguy hiểm", mã trang (một kết quả "ở trang 9 và 11 của bài giảng gốc" là trang nguồn, giữ); `git diff --check`. `no-ai-slop` Edit, tự kiểm theo `eval.md`: đạt. Chờ điều phối viên duyệt.
+| F | toàn deck (rà cuối từ góc nhìn sinh viên) | chấp nhận 16 mục + dòng 2 `L08-K4` + ghi chú `L08-02b` + công thức tiên quyết ở 390 px; mục 17 (mũi tên điều hướng) bác, báo người dùng; 21 công thức hiển thị khác cuộn ngang trong hộp ở 390 px (không bị cắt) — hạ tầng viewer, báo người dùng | điều phối viên chạy `check.py` toàn deck (60 trang, hai cỡ): 0 lỗi, 0 tràn; 60 mã trang, 6 trang tiêu đề mạch; xem ảnh `L08-25` |

@@ -792,6 +792,34 @@ Bảng hành trình mạch 4 (mục 4) ở mục "Hành trình khái niệm (đ�
 - **Mật độ:** trang mới, 62 âm tiết (trần 80 của trang tổng kết), bảng ba hàng cộng ba dòng ở cột phải, 0 công thức hiển thị, đáy 556 px, ghi chú diễn giả 149 âm tiết.
 - **Ghi chú bài giảng:** tiểu mục "Đọc thêm" của mục 7 thành `### Bài tập về nhà và tài liệu đọc` (đoạn ánh xạ bài tập với phần, tệp bài tập riêng chưa có; đoạn tài liệu đọc; đoạn đối chiếu giả mã nguồn trang 21 giữ nguyên; câu nối Bài 09). "## Bốn bài tập" thành `## Bài tập củng cố` theo khuôn ghi chú Bài 05–07, với ba tiểu mục mức: "Mức nhận biết" (một câu trỏ tới bốn câu hỏi tự kiểm tra ở phần 7, không thêm bài), "Mức tính toán hoặc chứng minh" (Bài tập 08.1), "Mức vận dụng" (Bài tập 08.2–08.4); số bài giữ nguyên thứ tự. Thêm `## Tài liệu tham khảo` cuối tệp, danh sách lấy bằng grep các nguồn đã trích trong ghi chú và deck: bài giảng gốc (trang theo từng phần), Sutton và Barto (2018) §2.5, §6.5, §6.6, §7.3, §9.3, §11.2, §11.3, §11.5, §13.7, §16.5, Mnih và cộng sự (2015), Kingma và Ba (2015), Goodfellow, Bengio và Courville (2016), Pardo và cộng sự (2018), Hausknecht và Stone (2015), Lillicrap và cộng sự (2016), tài liệu Gymnasium CartPole-v1, ghi chú Bài 06–07 (số hiệu đã dẫn), notebook Bài 04 và Bài 07, giáo trình *Học máy thống kê*.
 
+#### Rà cuối từ góc nhìn sinh viên (bước F)
+
+Áp dụng mục 1–16 của lượt rà cuối (tệp `recheck/F-student-decisions.md` trong scratchpad phiên; mục 8 đã làm ở R7, chỉ kiểm; mục 17 bác). Số đo trước/sau (âm tiết theo `dens2.py`, ghi chú diễn giả theo `notes_count.py`, đáy ở 1600×900 quy về khung 720):
+
+| trang | âm tiết | ghi chú diễn giả | đáy sau | thay đổi |
+|---|---|---|---|---|
+| `L08-01b` | 59 → 39 | 121 → 124 | 591 px | dòng tỉ số lấy mẫu quan trọng chuyển vào ghi chú, thuật ngữ tiếng Anh ở ghi chú (mục 12) |
+| `L08-02b` | 54 → 54 | 136 → 111 | 630 px | ghi chú: một câu liệt kê các phần 2–7 thay sáu câu lấy "Phần N" làm chủ ngữ (việc mở a) |
+| `L08-08` | 53 → 60 | 146 → 146 | 658 px | "thừa số $(1-Z_{t+1})$ là mặt nạ kết thúc" (mục 1) |
+| `L08-05r` | 57 → 60 | 143 → 143 | 688 px | chỉ số thời gian $t$; "(importance sampling ratio)" ở lần dùng đầu trên mặt trang; ghi chú đổi theo (mục 2, 12) |
+| `L08-07c` | 49 → 49 | 134 → 134 | 695 px | "Nhu cầu:" có đủ dữ kiện (mục 3); "$C\in\mathbb N_+$" chuyển vào ghi chú để giữ đáy (bản có cả hai làm đáy 740 px) |
+| `L08-13` | 60 → 46 | 150 → 140 | 662 px | dòng "Lưu ý:" về quan sát cuối lượt chuyển vào ghi chú (mục 11) |
+| `L08-10` | 45 → 44 | 102 → 102 | 664 px | "coi đích là hằng" (mục 13) |
+| `L08-10b` | 43 → 43 | 108 → 108 | 651 px | "Lời giải:" có $y-q$ và đạo hàm hai trường hợp (mục 14) |
+| `L08-19b` | 45 → 42 | 80 → 80 | 683 px | tiêu đề cột "$k_{\mathrm{opt}}$ sau cập nhật", "đồng bộ $\theta^-\leftarrow\theta$" (mục 10) |
+| `L08-23` | 39 → 43 | 141 → 141 | 626 px | hệ số $-9$, $0{,}9$ ghi bằng số (mục 5) |
+| `L08-25` | 42 → 47 | 97 → 97 | 693 px | "Ví dụ." hai bước Adam và RMSprop; "Ý nghĩa:" rút gọn (mục 6) |
+| `L08-26` | 73 → 60 | 137 → 137 | 637 px | gộp hai dòng kết (mục 15) |
+| `L08-27` | 79 → 71 | 147 → 147 | 640 px | "Nhu cầu:" và hai ô Ví dụ có đủ dữ kiện (mục 4) |
+| `L08-29` | 22 → 21 | 119 → 119 | 691 px | "Mẫu chuyển $i=1$ đã lưu"; "Diễn giải:" (mục 9) |
+| `L08-30` | 60 → 57 | 149 → 146 | 663 px | câu phạm vi bảo đảm (mục 7); "hai cơ chế không loại yếu tố nào" chuyển vào ghi chú để giữ trần 60 (bản có cả hai câu: 65) |
+| `L08-K4` | 99 → 98 | 120 → 120 | 669 px | dòng 2 "Với $\theta^-$ cố định giữa hai lần đồng bộ, nhãn hồi quy đứng yên." (chỉ dẫn F) |
+| `L08-M5T` | 31 → 31 | 86 → 84 | 521 px | ghi chú giọng khách quan (mục 16) |
+| `L08-M6T` | 43 → 43 | 99 → 102 | 557 px | ghi chú giọng khách quan (mục 16) |
+| `L08-M7T` | 34 → 34 | 97 → 94 | 521 px | ghi chú giọng khách quan (mục 16) |
+
+Ghi chú bài giảng: mục Kiến thức tiên quyết, cập nhật Q-learning viết `aligned` bốn hàng với $\delta_t$ (hai hàng vẫn rộng 381 px trong khung 277 px ở viewport 390); câu "mặt nạ kết thúc" ở đoạn sau Định nghĩa 08.4; tiêu đề cột của Ví dụ 08.15. Kiểm toàn deck: 60 trang, hai cỡ, không cờ tràn hay lỗi.
+
 #### Rà lại mạch 7 (bước R7)
 
 Áp dụng 24 mục của rà lại mạch 7 (điều phối viên duyệt; tệp `recheck/R7-decisions.md` trong scratchpad phiên). Số đo trước/sau trên các trang đổi (âm tiết theo `dens2.py`; ghi chú diễn giả theo `notes_count.py`; đáy ở 1600×900 quy về khung 720):

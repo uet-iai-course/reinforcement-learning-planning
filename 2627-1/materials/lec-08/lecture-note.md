@@ -19,8 +19,15 @@ Sau chương này, người học có thể:
 Kết quả của bài trước được dẫn theo mục của ghi chú bài đó, dạng "ghi chú Bài 06, Mục 4", và phát biểu lại dưới đây.
 
 - **Q-learning dạng bảng** (ghi chú Bài 06, Mục 4, Định nghĩa 06.15, Thuật toán 06.16). Trên một quá trình quyết định Markov (Markov decision process, MDP) hữu hạn, sau khi thực hiện $A_t$ tại $S_t$ và nhận phần thưởng $R_{t+1}$, trạng thái $S_{t+1}$, Q-learning cập nhật đúng một ô của bảng:
-  $$Q_{t+1}(S_t,A_t)=Q_t(S_t,A_t)+\alpha_t\Bigl[R_{t+1}+\gamma\max_{a'}Q_t(S_{t+1},a')-Q_t(S_t,A_t)\Bigr],$$
-  các ô khác giữ nguyên, và $Q(s,\cdot)=0$ khi $s$ là trạng thái kết thúc. Ở đây $\alpha_t\in(0,1]$ là bước học của cặp $(S_t,A_t)$ tại lần cập nhật này và $\gamma\in[0,1)$ là hệ số chiết khấu. Biểu thức trong ngoặc vuông, trừ số hạng $Q_t(S_t,A_t)$, là mục tiêu cập nhật; nó chứa ước lượng hiện tại $Q_t$ nên là mục tiêu bootstrap (bootstrap target).
+  $$
+  \begin{aligned}
+  &Q_{t+1}(S_t,A_t)=Q_t(S_t,A_t)\\
+  &\qquad\ +\alpha_t\,\delta_t,\\
+  &\delta_t=R_{t+1}+\gamma\max_{a'}Q_t(S_{t+1},a')\\
+  &\qquad\ -Q_t(S_t,A_t),
+  \end{aligned}
+  $$
+  các ô khác giữ nguyên, và $Q(s,\cdot)=0$ khi $s$ là trạng thái kết thúc. Ở đây $\alpha_t\in(0,1]$ là bước học của cặp $(S_t,A_t)$ tại lần cập nhật này và $\gamma\in[0,1)$ là hệ số chiết khấu. $\delta_t$ là sai số TD, và $R_{t+1}+\gamma\max_{a'}Q_t(S_{t+1},a')$ là mục tiêu cập nhật; mục tiêu này chứa ước lượng hiện tại $Q_t$ nên là mục tiêu bootstrap (bootstrap target).
 - **Chính sách hành vi, chính sách đích và học khác chính sách** (ghi chú Bài 06, Mục 1 và Mục 4, Định nghĩa 06.3, 06.14, Nhận xét 06.17). Chính sách $\varepsilon$-tham lam ($\varepsilon$-greedy) theo $Q$ với $m$ hành động chọn hành động tham lam với xác suất $1-\varepsilon+\varepsilon/m$ và mỗi hành động khác với xác suất $\varepsilon/m$. Trong Q-learning, chính sách hành vi $\varepsilon$-tham lam sinh dữ liệu, còn chính sách đích là chính sách tham lam theo $Q$; hai chính sách khác nhau nên Q-learning học khác chính sách (off-policy). Với chính sách đích tham lam $\pi$, $\max_{a'}Q(S_{t+1},a')=\sum_{a'}\pi(a'\mid S_{t+1})Q(S_{t+1},a')$, tức phép cực đại chính là kỳ vọng theo chính sách đích. Q-learning một bước không cần tỉ số lấy mẫu quan trọng (importance sampling ratio) vì hai lẽ: $A_t$ là đối số điều kiện của ô $Q(S_t,A_t)$, ô ước lượng $q_*(S_t,A_t)$, nên việc hành vi chọn $A_t$ không làm lệch mục tiêu; còn phần tiếp nối tại $S_{t+1}$ được tính trọn bằng phép cực đại trên bảng, không qua một hành động lấy mẫu từ hành vi. Hành vi vẫn quyết định cặp nào được cập nhật: một cặp không bao giờ được chọn giữ mãi giá trị khởi tạo.
 - **Hội tụ của Q-learning dạng bảng** (ghi chú Bài 06, Mục 5, Định nghĩa 06.19, Định lý 06.21). Giả sử MDP hữu hạn với động lực không đổi theo thời gian, phần thưởng bị chặn, $0\le\gamma<1$, mẫu sinh từ chính MDP, mọi cặp $(s,a)$ được cập nhật vô hạn lần, và với mỗi cặp, dãy bước học thỏa điều kiện Robbins–Monro $\sum_n\alpha_n(s,a)=\infty$, $\sum_n\alpha_n(s,a)^2<\infty$. Khi đó $Q_t(s,a)\to q_*(s,a)$ hầu chắc chắn với mọi cặp. Kết quả là tiệm cận và chỉ áp dụng cho biểu diễn bảng; chính sách hành vi tùy ý miễn là phủ mọi cặp.
 - **Xấp xỉ tuyến tính và Q-learning bán gradient** (ghi chú Bài 07, Mục 1 và Mục 5, Định nghĩa 07.35). Bảng được thay bằng $\hat q(s,a,w)=x(s,a)^\top w$, với $x(s,a)\in\mathbb R^d$ là vector đặc trưng chọn trước và $w\in\mathbb R^d$ dùng chung cho mọi cặp. Với mục tiêu $y_t=R_{t+1}+\gamma\max_{a'}\hat q(S_{t+1},a',w_n)$, hoặc $y_t=R_{t+1}$ khi $S_{t+1}$ kết thúc, cập nhật bán gradient (semi-gradient) là $w_{n+1}=w_n+\alpha_n\bigl(y_t-\hat q(S_t,A_t,w_n)\bigr)x(S_t,A_t)$: mục tiêu được coi là hằng khi lấy gradient, dù nó phụ thuộc $w_n$. Tại bước cắt ngắn, $S_{t+1}$ chưa kết thúc nên mục tiêu vẫn chứa phép cực đại.
@@ -331,7 +338,7 @@ $$
 Dự đoán của mạng trực tuyến là $q_t=Q_\theta(O_t,A_t)$, và sai số sai phân thời gian (sai số TD) là $\delta_t=y_t-q_t$.
 :::
 
-Đích gồm hai phần. $R_{t+1}$ là phần thưởng đã quan sát; $\gamma\max_{a'}Q_{\theta^-}(O_{t+1},a')$ là ước lượng của phần lợi tức còn lại, đọc trên vector $\mathbf q_{\theta^-}(O_{t+1})$ sau một lần tính của mạng mục tiêu. Mặt nạ $(1-Z_{t+1})$ bằng $0$ khi lượt kết thúc, nên khi đó $y_t=R_{t+1}$; đây đúng là quy ước $Q(s,\cdot)=0$ của dạng bảng, viết cho một hàm không có ô riêng cho trạng thái kết thúc. $q_t$ phụ thuộc $\theta$, còn $y_t$ chỉ phụ thuộc dữ liệu và $\theta^-$. Với $\theta^-$ cố định, $y_t$ là một số cố định gắn với mẫu chuyển, và $\delta_t>0$ nghĩa là dự đoán cần tăng.
+Đích gồm hai phần. $R_{t+1}$ là phần thưởng đã quan sát; $\gamma\max_{a'}Q_{\theta^-}(O_{t+1},a')$ là ước lượng của phần lợi tức còn lại, đọc trên vector $\mathbf q_{\theta^-}(O_{t+1})$ sau một lần tính của mạng mục tiêu. Thừa số $(1-Z_{t+1})$, gọi là mặt nạ kết thúc, bằng $0$ khi lượt kết thúc, nên khi đó $y_t=R_{t+1}$; đây đúng là quy ước $Q(s,\cdot)=0$ của dạng bảng, viết cho một hàm không có ô riêng cho trạng thái kết thúc. $q_t$ phụ thuộc $\theta$, còn $y_t$ chỉ phụ thuộc dữ liệu và $\theta^-$. Với $\theta^-$ cố định, $y_t$ là một số cố định gắn với mẫu chuyển, và $\delta_t>0$ nghĩa là dự đoán cần tăng.
 
 Các điều kiện trong định nghĩa có vai trò riêng. $Z_{t+1}$ chỉ ghi kết thúc của chính MDP; việc dừng thu thập vì một giới hạn bên ngoài được ghi bằng một cờ khác, xét ở cuối phần này. Bỏ mặt nạ, đích tại bước cuối lượt cộng thêm $\gamma\max_{a'}Q_{\theta^-}(O_{t+1},a')$, một giá trị không ứng với phần thưởng nào; sai lệch này được tính bằng số ở mục kế tiếp. Điều kiện $\gamma<1$ cùng phần thưởng bị chặn giữ $q_*$ hữu hạn khi lượt không kết thúc. Dùng $Q_{\theta^-}$ thay cho $Q_\theta$ là điều làm $y_t$ đứng yên giữa hai lần đồng bộ (Định nghĩa 08.3). Cuối cùng, đích chỉ có nghĩa là mục tiêu Bellman khi $O_{t+1}$ đủ Markov (Nhận xét 08.2).
 
@@ -773,7 +780,7 @@ Bước 5–9 là vòng tối ưu của sơ đồ hai vòng. Điều kiện ở 
 
 **Tính.** Sau mỗi lần qua bước 4, $\lvert\mathcal D\rvert=\min(t,6)$. Điều kiện tối ưu cần $\min(t,6)\ge3$ và $t$ chẵn, nên bước 5–9 chạy tại $t=4,6,8,10$.
 
-| $t$ | $\lvert\mathcal D\rvert$ | $k_{\mathrm{opt}}$ sau bước 8 | đồng bộ ở bước 9 |
+| $t$ | $\lvert\mathcal D\rvert$ | $k_{\mathrm{opt}}$ sau cập nhật (bước 8) | đồng bộ $\theta^-\leftarrow\theta$ (bước 9) |
 |---|---|---|---|
 | $4$ | $4$ | $1$ | không |
 | $6$ | $6$ | $2$ | có |
