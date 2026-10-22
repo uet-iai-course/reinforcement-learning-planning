@@ -156,12 +156,12 @@ Everything a student sees is formal, academic, native Vietnamese: titles, slide 
 
 `AGENTS.md` requires an orchestrator plus sub-agents; don't do the whole workflow in one role.
 
-This model assignment is a standing user instruction (2026-10-07, given for `../math-4-AI` and adopted here) and matches `AGENTS.md` §"Điều phối mô hình trong dự án".
+This model assignment is a standing user instruction (sub-agents: 2026-10-07, given for `../math-4-AI` and adopted here; master: 2026-10-22) and matches `AGENTS.md` §"Điều phối mô hình trong dự án".
 
-- **Master and quality controller:** this session runs Claude Fable 5.1 (`claude-fable-5-1`) at effort `medium`.
+- **Master and quality controller:** this session runs Claude Opus 5.5 (`claude-opus-5-5`) (user instruction 2026-10-22, replacing the earlier Fable 5.1 rule).
   - It splits the work, writes the briefs, merges results, and accepts or rejects every sub-agent output.
   - It does not take a sub-agent role itself. Drafting, reviewing and editing go to sub-agents.
-  - If the session runs another model or effort, say so before delegating, and ask the user to switch (`/model`, effort setting). Do not treat that session as a valid master.
+  - If the session runs another model, say so before delegating, and ask the user to switch (`/model`). Do not treat that session as a valid master.
 - **Sub-agents:** every workflow role, including agents spawned by sub-agents, runs Claude Opus 5.5 (`claude-opus-5-5`) at effort `high`.
 - **Quality control of every output:** no sub-agent output reaches the next stage, a repo file or the user until the master has reviewed it.
   - **Plans and reports:** check every finding and claim against the cited file or line. Re-derive the maths and constants.
