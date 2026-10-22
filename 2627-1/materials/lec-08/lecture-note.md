@@ -1245,7 +1245,7 @@ $|\mathcal A|$ giá trị hành động.
 
 ---
 
-## Ba bài tập
+## Bốn bài tập
 
 ::: exercise Bài tập 08.1 (Đích, hàm mất mát và gradient trên một mini-batch)
 
@@ -1355,4 +1355,29 @@ Dự đoán ở (a), (b) dùng Nhận xét 08.19 và Nhận xét 08.20. Công b�
 Kết quả của thí nghiệm kiểm hai dự đoán rút từ phần 6: bỏ bộ nhớ phát lại làm tăng tương quan ngắn hạn; bỏ mạng mục tiêu làm đích đổi sau mỗi bước tối ưu. Không nhánh nào bỏ được yếu tố nào của bộ ba bất ổn, nên không nhánh nào cho bảo đảm hội tụ (Nhận xét 08.21). Mnih và cộng sự (2015, Extended Data Table 3) báo một thí nghiệm cùng loại trên năm trò chơi Atari, trong đó tổ hợp dùng cả hai cơ chế cho điểm cao nhất.
 
 **Kiểm tra lại.** Ba lỗi hay gặp: đổi hai thành phần trong cùng một nhánh, chẳng hạn bỏ mạng mục tiêu và đổi bộ tối ưu, nên không tách được tác dụng; dùng lợi tức của các lượt huấn luyện có thăm dò làm thước đo chất lượng của chính sách; kết luận từ một lần chạy, hoặc chỉ báo trung bình mà không báo độ phân tán.
+:::
+
+::: exercise Bài tập 08.4 (Một bước DQN trên CartPole)
+Trong môi trường `CartPole-v1` của Gymnasium, tác tử nhận phần thưởng $+1$ ở mỗi bước, kể cả bước dẫn tới kết thúc. Lượt kết thúc ($Z=1$) khi góc của cột hoặc vị trí của xe vượt ngưỡng ($\lvert\phi\rvert>12^\circ$ hoặc $\lvert x\rvert>2{,}4$), và bị cắt ngắn ($U=1$) khi đạt giới hạn $500$ bước. Giới hạn này do cấu hình đăng ký môi trường quy định, không thuộc động lực của MDP (notebook thực hành Bài 04, phần 2).
+
+Một bản cài đặt DQN dùng $\gamma=0{,}9$, mini-batch $b=2$ và chu kỳ đồng bộ $C=1000$; ngay trước bước tối ưu đang xét, $k_{\mathrm{opt}}=999$. Mini-batch gồm hai mẫu chuyển, với $q_i=Q_\theta(O_i,A_i)$:
+
+| $i$ | $R_i$ | $Z_i$ | $U_i$ | $\max_{a'}Q_{\theta^-}(O'_i,a')$ | $q_i$ |
+|---|---|---|---|---|---|
+| 1 | 1 | 0 | 1 | 10 | 9 |
+| 2 | 1 | 1 | 0 | 10 | 2 |
+
+Mẫu 1 là bước thứ $500$ của một lượt mà cột chưa đổ; mẫu 2 là bước cột đổ.
+
+(a) Tính đích $y_1$, $y_2$ theo Định nghĩa 08.4 và Định nghĩa 08.6.
+
+(b) Tính hàm mất mát $L_B$ (Định nghĩa 08.10) và $\partial L_B/\partial q_i$ với $i=1,2$.
+
+(c) Một bản cài đặt dùng mặt nạ $1-(Z_i\lor U_i)$ thay cho $1-Z_i$. Tính lại $y_1$ và $\delta_1=y_1-q_1$, rồi cho biết lỗi này làm lệch giá trị học được ở các quan sát gần bước $500$ theo chiều nào.
+
+(d) Sau bước tối ưu này, Thuật toán 08.13 có gán $\theta^-\leftarrow\theta$ không? Trả lời lại khi một bản cài đặt kiểm $C$ trước khi tăng $k_{\mathrm{opt}}$.
+:::
+
+::: hint
+Xác định cờ nào xóa nhánh bootstrap trước khi tính sai số: chỉ $Z_i$ ghi việc MDP kết thúc. Với phần thưởng $+1$ mỗi bước và $\gamma=0{,}9$, mọi lợi tức chiết khấu không vượt $1/(1-\gamma)=10$. Với câu (d), theo bước 8 và bước 9 của Thuật toán 08.13, $k_{\mathrm{opt}}$ tăng sau cập nhật rồi mới được so với bội của $C$.
 :::
