@@ -711,28 +711,47 @@ Hình vẽ hai vòng. Các mũi tên của vòng thu thập (bên trái) mang $A
 
 Sơ đồ cho các việc của mỗi vòng nhưng chưa chốt thứ tự: kiểm điều kiện tối ưu trước hay sau khi tăng $t$, đồng bộ trước hay sau khi tăng $k_{\mathrm{opt}}$, đặt lại môi trường lúc nào. Chúng ta chốt các thứ tự đó bằng giả mã.
 
-**Hình thức — giả mã.**
+Trước các bước lặp, chúng ta cố định đầu vào, đầu ra và trạng thái ban đầu của thuật toán. Đầu vào gom mọi đại lượng đã gặp: hệ số chiết khấu và hai mạng của phần 2, bộ nhớ phát lại của phần 3, hàm mất mát và bộ tối ưu của phần 4, cùng ba số nhịp $N_{\mathrm{start}}$, $F$, $C$ vừa nêu.
 
-*Đầu vào:* $\gamma,\epsilon_{\mathrm{exp}}\in[0,1]$;
-$b,N_{\mathrm{start}},N,F,C\in\mathbb N_+$ với $b\le N_{\mathrm{start}}\le N$;
-optimizer với tốc độ học $\eta>0$. *Đầu ra:* $\theta$ và chính sách tham lam theo
-$Q_\theta$.
+::: algorithm Thuật toán 08.13 (DQN với bộ nhớ phát lại và mạng mục tiêu)
+**Đầu vào.** Hệ số chiết khấu $\gamma\in[0,1)$; xác suất thăm dò $\epsilon_{\mathrm{exp}}\in[0,1]$; một bộ tối ưu theo gradient với tốc độ học $\eta>0$; ngân sách $T\in\mathbb N_+$ bước môi trường; năm số nguyên dương $N$ (dung lượng của $\mathcal D$), $b$ (cỡ mini-batch), $N_{\mathrm{start}}$ (số mẫu tối thiểu trong $\mathcal D$ trước bước tối ưu đầu tiên), $F$ (số bước môi trường giữa hai bước tối ưu) và $C$ (số bước tối ưu giữa hai lần đồng bộ), với $b\le N_{\mathrm{start}}\le N$.
 
-1. Khởi tạo $\mathcal D$, $\theta$; đặt $\theta^-\leftarrow\theta$; $O_0$ từ
-   reset; $t\leftarrow 0$; $k_{\mathrm{opt}}\leftarrow 0$.
-2. Chọn $A_t$ theo $\epsilon_{\mathrm{exp}}$-greedy từ $Q_\theta(O_t,\cdot)$.
-3. Bước môi trường; nhận $R_{t+1}$, hai cờ $Z,U$, quan sát trả về và thông tin API.
-4. Xác định quan sát của chuyển tiếp: nếu giao diện tự đặt lại môi trường và cung
-   cấp `final_observation` trong thông tin trả về, dùng quan sát cuối đó; nếu
-   không, dùng quan sát do bước môi trường trả về; lưu vào $\mathcal D$.
-5. Nếu cần reset mà API chưa tự reset, gọi reset; gán quan sát bắt đầu vòng kế;
-   tăng $t\leftarrow t+1$.
-6. Nếu $|\mathcal D|\ge N_{\mathrm{start}}$ và $t\bmod F=0$ (kiểm sau khi tăng $t$):
-   lấy đều mini-batch từ $\mathcal D$; gather $q_i=Q_\theta(O_i,A_i)$; trong
-   no-grad tính $y_i$; tính MSE; cập nhật $\theta$;
-   $k_{\mathrm{opt}}\leftarrow k_{\mathrm{opt}}+1$.
-7. Sau cập nhật, nếu $k_{\mathrm{opt}}\bmod C=0$ thì $\theta^-\leftarrow\theta$.
-8. Ngoài điều kiện tối ưu: dừng theo ngân sách hoặc tiêu chuẩn đánh giá định trước.
+**Đầu ra.** Tham số $\theta$ khi dừng và chính sách tham lam $\pi(o)\in\arg\max_{a}Q_\theta(o,a)$.
+
+**Khởi tạo.** $\mathcal D\leftarrow\varnothing$, một bộ đệm vòng dung lượng $N$; $\theta$ ngẫu nhiên; $\theta^-\leftarrow\theta$; $O_0$ là quan sát đầu tiên sau khi đặt lại môi trường; $t\leftarrow0$; $k_{\mathrm{opt}}\leftarrow0$.
+
+**Lặp** khi $t<T$:
+
+1. Chọn $A_t$ theo quy tắc $\epsilon_{\mathrm{exp}}$-tham lam từ $Q_\theta(O_t,\cdot)$.
+2. Bước môi trường; nhận $R_{t+1}$, hai cờ $Z,U$, quan sát trả về và thông tin API.
+3. Xác định quan sát của chuyển tiếp: nếu giao diện tự đặt lại môi trường và cung cấp `final_observation` trong thông tin trả về, dùng quan sát cuối đó; nếu không, dùng quan sát do bước môi trường trả về; lưu vào $\mathcal D$.
+4. Nếu cần reset mà API chưa tự reset, gọi reset; gán quan sát bắt đầu vòng kế; tăng $t\leftarrow t+1$.
+5. Nếu $|\mathcal D|\ge N_{\mathrm{start}}$ và $t\bmod F=0$ (kiểm sau khi tăng $t$): lấy đều mini-batch từ $\mathcal D$; gather $q_i=Q_\theta(O_i,A_i)$; trong no-grad tính $y_i$; tính MSE; cập nhật $\theta$; $k_{\mathrm{opt}}\leftarrow k_{\mathrm{opt}}+1$.
+6. Sau cập nhật, nếu $k_{\mathrm{opt}}\bmod C=0$ thì $\theta^-\leftarrow\theta$.
+:::
+
+Thuật toán có hai nhóm đầu vào. Nhóm thứ nhất, gồm $\gamma$, $\epsilon_{\mathrm{exp}}$ và bộ tối ưu với $\eta$, quyết định từng phép tính: đích, hành vi và bước tham số; các quy tắc cập nhật cụ thể của bộ tối ưu được viết ở phần 5. Nhóm thứ hai, gồm năm số nguyên dương, quyết định nhịp: $N$ và $b$ là kích thước của bộ nhớ và của mini-batch, còn $N_{\mathrm{start}}$, $F$, $C$ quyết định khi nào vòng tối ưu chạy và khi nào mạng mục tiêu đổi. Ngân sách $T$ đếm theo $t$; trong thực hành có thể thay bằng một tiêu chuẩn dừng định trước trên lợi tức đánh giá.
+
+Mỗi điều kiện trên đầu vào có vai trò riêng. Điều kiện $\gamma<1$ cùng phần thưởng bị chặn, $\lvert R_{t+1}\rvert\le R_{\max}$, cho $\lvert G_t\rvert\le R_{\max}/(1-\gamma)$, nên mọi giá trị hành động hữu hạn cả khi lượt không kết thúc. Bỏ điều kiện này: với $\gamma=1$, một nhiệm vụ trả phần thưởng $+1$ mỗi bước và một chính sách không bao giờ làm lượt kết thúc có lợi tức vô hạn; mẫu bị cắt ngắn vẫn bootstrap ($Z=0$), nên giá trị $q$ của cặp mà chính sách đó chọn phải thỏa $q=1+q$, phương trình không có nghiệm hữu hạn. Điều kiện $N_{\mathrm{start}}\ge b$ bảo đảm lần rút đầu tiên có đủ $b$ mẫu khác nhau; với $N_{\mathrm{start}}=1$ và $b=32$, rút có hoàn lại cho một mini-batch gồm $32$ bản sao của cùng một mẫu chuyển. Điều kiện $N_{\mathrm{start}}\le N$ là cần, vì $\lvert\mathcal D\rvert$ không bao giờ vượt $N$; với $N_{\mathrm{start}}>N$, điều kiện ở bước 5 không bao giờ đúng và $\theta$ giữ giá trị khởi tạo. Cuối cùng, $C$ đếm theo $k_{\mathrm{opt}}$: với $C=1$, $\theta^-$ được gán bằng $\theta$ sau mọi bước tối ưu, nên đích ở bước kế tiếp tính bằng đúng giá trị tham số đang học, như trong Ví dụ 08.5.
+
+Khởi tạo $\theta^-\leftarrow\theta$ làm đích của những bước tối ưu đầu tiên tính bằng cùng mạng ban đầu, thay cho một mạng mục tiêu ngẫu nhiên độc lập. Đầu ra là chính sách tham lam theo $Q_\theta$, khác hành vi $\epsilon_{\mathrm{exp}}$-tham lam dùng khi thu thập; khi đánh giá thuật toán, chúng ta chạy chính sách tham lam này trên các lượt riêng.
+
+Bảng sau ghi giá trị đầu vào mà Mnih và cộng sự (2015, Extended Data Table 1) dùng cho các trò chơi Atari.
+
+| ký hiệu | nghĩa | giá trị của Mnih và cộng sự (2015) |
+|---|---|---|
+| $\gamma$ | hệ số chiết khấu | $0{,}99$ |
+| $\eta$ | tốc độ học của bộ tối ưu (RMSprop) | $0{,}00025$ |
+| $\epsilon_{\mathrm{exp}}$ | xác suất thăm dò | giảm tuyến tính từ $1$ xuống $0{,}1$, rồi giữ $0{,}1$ |
+| $N$ | dung lượng của $\mathcal D$ | $10^6$ |
+| $b$ | cỡ mini-batch | $32$ |
+| $N_{\mathrm{start}}$ | số mẫu trước bước tối ưu đầu | $5\cdot10^4$ |
+| $F$ | số bước môi trường giữa hai bước tối ưu | $4$ |
+| $C$ | số bước tối ưu giữa hai lần đồng bộ | $10^4$ |
+
+Với các giá trị này, khi vòng tối ưu đã chạy, $\theta^-$ đứng yên trong $F\cdot C=4\cdot10^4$ bước môi trường (Ví dụ 08.14). Lịch giảm dần của $\epsilon_{\mathrm{exp}}$ không làm hỏng Mệnh đề 08.8: xác suất thăm dò tại bước $t$ là một hàm của $t$, nên hành vi vẫn chỉ phụ thuộc lịch sử tới bước $t$.
+
+**Kiểm tra nhanh.** Cho $N=6$, $b=2$, $N_{\mathrm{start}}=3$, $F=2$. Bước tối ưu đầu tiên chạy khi nào? Sau $k\le6$ bước môi trường, $t=k$ và $\lvert\mathcal D\rvert=k$. Điều kiện ở bước 5 cần $k\ge3$ và $k$ chẵn, nên bước tối ưu đầu tiên chạy khi $t=4$, với $\lvert\mathcal D\rvert=4$.
 
 **Ứng dụng và giới hạn.** Bản đơn giản có thể chọn $F=1$, nhưng vẫn phải chờ đủ
 $N_{\mathrm{start}}$. Đánh giá dùng chính sách tham lam riêng, không trộn return
