@@ -422,7 +422,7 @@ Chúng ta đã có ba kết quả. Mạng giá trị hành động trả về $\
 <!-- note-topic-id: lec-08-topic-18 -->
 ### Tương quan giữa các mẫu chuyển liên tiếp
 
-Đến đây mỗi mẫu chuyển đã có một nhãn hồi quy. Bước cập nhật $\theta$ lấy trung bình gradient trên một mini-batch $b$ mẫu, như hạ gradient ngẫu nhiên (stochastic gradient descent, SGD) trong học có giám sát. Lập luận quen thuộc cho SGD dùng giả thiết các mẫu trong mini-batch độc lập và cùng phân phối (i.i.d.): khi đó trung bình của $b$ gradient mẫu có phương sai bằng $1/b$ phương sai của một gradient mẫu. Nếu tác tử cập nhật ngay trên các mẫu chuyển vừa thu thập theo thứ tự thời gian, giả thiết này không còn đúng.
+Đến đây mỗi mẫu chuyển đã có một đích hồi quy $y_t$. Bước cập nhật $\theta$ lấy trung bình gradient trên một mini-batch $b$ mẫu, như hạ gradient ngẫu nhiên (stochastic gradient descent, SGD) trong học có giám sát. Lập luận quen thuộc cho SGD dùng giả thiết các mẫu trong mini-batch độc lập và cùng phân phối (i.i.d.): khi đó trung bình của $b$ gradient mẫu có phương sai bằng $1/b$ phương sai của một gradient mẫu. Nếu tác tử cập nhật ngay trên các mẫu chuyển vừa thu thập theo thứ tự thời gian, giả thiết này không còn đúng.
 
 **Trực quan.** Các mẫu chuyển liền nhau trên một quỹ đạo đi qua những quan sát gần nhau, và cùng do một phiên bản tham số $\theta$ chọn hành động. Gradient của chúng vì vậy gần giống nhau: bốn mẫu liền nhau mang ít thông tin mới hơn bốn mẫu ở bốn thời điểm xa nhau. Bài giảng gốc (trang 30) nêu ba ý: tối ưu mạng nơ-ron thường giả sử mini-batch gần i.i.d.; mẫu tương quan có thể làm lệch cập nhật và tăng phương sai; mạng có thể quá khớp quỹ đạo gần đây và quên các vùng trạng thái cũ hơn.
 
@@ -437,7 +437,7 @@ $$
 &=\frac{14{,}098}{16}\,\sigma^2\approx0{,}881\,\sigma^2.
 \end{aligned}
 $$
-Nếu bốn mẫu độc lập, $\operatorname{Var}\bar g=\sigma^2/4=0{,}25\,\sigma^2$. Cỡ mẫu hiệu dụng, tức số mẫu độc lập cho cùng phương sai, là $\sigma^2/(0{,}881\,\sigma^2)\approx1{,}1$.
+Nếu bốn mẫu độc lập, $\operatorname{Var}\bar g=\sigma^2/4=0{,}25\,\sigma^2$. Cỡ mẫu hiệu dụng (effective sample size), tức số mẫu độc lập cho cùng phương sai, là $\sigma^2/\operatorname{Var}\bar g=\sigma^2/(0{,}881\,\sigma^2)\approx1{,}1$.
 
 **Diễn giải.** Với tương quan này, mini-batch bốn mẫu liền nhau giảm phương sai gần như không hơn một mẫu. Muốn trung bình gradient có phương sai nhỏ, các mẫu trong mini-batch phải đến từ những thời điểm xa nhau.
 :::
@@ -448,7 +448,7 @@ Hình so sánh hai cách chọn bốn mẫu từ hai mươi bước của cùng 
 
 Tương quan không nhất thiết làm gradient trung bình bị chệch. Với tương quan dương, hệ quả là phương sai lớn hơn, và hướng cập nhật đi theo vùng quan sát vừa thăm: qua nhiều bước liên tiếp, gradient dao động theo đoạn quỹ đạo gần nhất thay vì theo toàn bộ dữ liệu. Ngay cả khi lấy mẫu rải như hàng dưới, các mẫu vẫn không độc lập cùng phân phối: chúng cùng thuộc một quỹ đạo, và phân phối của dữ liệu đổi khi chính sách hành vi đổi theo $\theta$.
 
-**Trong thực hành.** Cỡ mẫu hiệu dụng phụ thuộc mức tương quan, và mức này đổi theo môi trường và chính sách; Ví dụ 08.9 chỉ minh họa cơ chế. Một dấu hiệu dễ quan sát khi cập nhật trên mẫu liền nhau là giá trị hàm mất mát dao động theo từng đoạn của lượt.
+**Trong thực hành.** Cỡ mẫu hiệu dụng phụ thuộc mức tương quan, và mức này đổi theo môi trường và chính sách; Ví dụ 08.9 chỉ minh họa cơ chế; mức tương quan thật cần đo trên dữ liệu của từng môi trường.
 
 Chúng ta cần một cách chọn mẫu cho mini-batch không phụ thuộc thứ tự thu thập. Ở mục tiếp theo, chúng ta lưu các mẫu chuyển vào một bộ nhớ và lấy mẫu đều từ đó.
 
@@ -458,7 +458,7 @@ Chúng ta cần một cách chọn mẫu cho mini-batch không phụ thuộc th�
 Theo Ví dụ 08.9, bốn mẫu chuyển liền nhau, với tương quan $0{,}9^k$ giữa hai mẫu cách nhau $k$ bước, giảm phương sai của gradient trung bình như khoảng $1{,}1$ mẫu độc lập. Muốn mini-batch gồm các mẫu ở những thời điểm xa nhau, chúng ta phải giữ lại các mẫu chuyển đã thu thập thay vì dùng mỗi mẫu một lần, và phải chọn mẫu cho mini-batch không theo thứ tự thu thập. Bộ nhớ của máy tính có hạn, nên còn phải quy định mẫu nào bị bỏ khi bộ nhớ đầy. Bài giảng gốc (trang 19, 32) nêu hai việc đầu: lưu kinh nghiệm của tác tử, rồi lấy ngẫu nhiên các mini-batch từ đó. Mnih và cộng sự (2015, mục Methods) giải quyết việc thứ ba: bộ nhớ chỉ giữ $N$ mẫu chuyển gần nhất, và mini-batch được lấy đều từ các mẫu đang lưu.
 
 ::: definition Định nghĩa 08.7 (Bộ nhớ phát lại)
-Cho số nguyên dương $N$, gọi là dung lượng, và cỡ mini-batch $b\in\mathbb N_+$. Bộ nhớ phát lại (experience replay) là một bộ đệm vòng $\mathcal D$ gồm $N$ vị trí đánh số $1,\dots,N$ và một con trỏ ghi; mỗi vị trí chứa nhiều nhất một mẫu chuyển sáu thành phần $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$ của Định nghĩa 08.6. Đánh số các mẫu chuyển $1,2,\dots$ theo thứ tự thu thập. Bộ nhớ hoạt động theo hai quy tắc.
+Cho số nguyên dương $N$, gọi là dung lượng, và cỡ mini-batch $b\in\mathbb N_+$. Bộ nhớ phát lại (experience replay) là một bộ đệm vòng (ring buffer) $\mathcal D$ gồm $N$ vị trí đánh số $1,\dots,N$ và một con trỏ ghi; mỗi vị trí chứa nhiều nhất một mẫu chuyển sáu thành phần $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$ của Định nghĩa 08.6. Đánh số các mẫu chuyển $1,2,\dots$ theo thứ tự thu thập. Bộ nhớ hoạt động theo hai quy tắc.
 
 1. Ghi: sau mỗi bước môi trường, mẫu chuyển vừa thu thập được ghi vào vị trí của con trỏ ghi, rồi con trỏ tiến một vị trí, từ vị trí $N$ quay về vị trí $1$. Mẫu chuyển thứ $k$ nằm ở vị trí $((k-1)\bmod N)+1$; khi bộ nhớ đã đầy, mẫu mới ghi đè mẫu cũ nhất.
 2. Rút: một mini-batch gồm $b$ lần rút đều từ $\lvert\mathcal D\rvert=\min(k,N)$ mẫu đang lưu sau $k$ lần ghi. Các lần rút độc lập (rút có hoàn lại), hoặc không lặp lại vị trí (rút không hoàn lại, cần $b\le\lvert\mathcal D\rvert$); trong cả hai cách, xét riêng từng lần rút, mỗi mẫu đang lưu có xác suất $1/\lvert\mathcal D\rvert$.
@@ -482,7 +482,7 @@ Hình vẽ trạng thái của bộ nhớ trong Ví dụ 08.10. Sáu ô là sáu
 
 **Môi trường tự đặt lại.** Quy tắc ghi đòi mỗi vị trí chứa đúng một mẫu chuyển, tức $O_{t+1}$ phải là quan sát mà tác tử nhận ngay sau $A_t$. Ở bước cuối của lượt, khi $Z_{t+1}\lor U_{t+1}=1$, một số thư viện môi trường tự đặt lại. Trong một cách cài đặt, lời gọi thực hiện bước trả về quan sát đầu của lượt mới, còn quan sát cuối của lượt cũ nằm trong một trường thông tin riêng, có tên phụ thuộc phiên bản thư viện. Bộ nhớ phải lưu quan sát cuối của lượt cũ làm $O_{t+1}$; quan sát đầu của lượt mới là quan sát xuất phát của mẫu chuyển kế tiếp. Trong một cách cài đặt khác, lời gọi kế tiếp chỉ đặt lại môi trường; khi đó không có mẫu chuyển nào đi từ quan sát cuối của lượt cũ sang quan sát đầu của lượt mới, và bộ nhớ không được lưu cặp quan sát đó. Trong cách thứ nhất, lưu nhầm quan sát đầu của lượt mới làm $O_{t+1}$ chỉ đổi đích của mẫu chuyển bị cắt ngắn: với $Z_{t+1}=1$, mặt nạ $(1-Z_{t+1})$ xóa phần bootstrap nên $O_{t+1}$ không vào đích; với $U_{t+1}=1$, $Z_{t+1}=0$, đích $R_{t+1}+\gamma\max_{a'}Q_{\theta^-}(O_{t+1},a')$ lấy giá trị từ một quan sát không nối với $O_t$.
 
-**Trong thực hành.** Bộ nhớ thường được cài bằng các mảng cấp phát sẵn $N$ hàng cho từng thành phần của mẫu chuyển, một con trỏ ghi và một bộ đếm $\lvert\mathcal D\rvert$; rút một mini-batch là sinh $b$ chỉ số đều trong $\{1,\dots,\lvert\mathcal D\rvert\}$. Với đầu vào Atari của Ví dụ 08.2, mỗi mẫu chứa hai chồng bốn khung $84\times84$, tức $2\cdot28\,224=56\,448$ số; nếu mỗi điểm ảnh là một byte, $N=10^6$ mẫu chiếm khoảng $56$ GB. Hai chồng của các mẫu liền nhau dùng chung ba khung, nên lưu mỗi khung một lần ($84\cdot84=7\,056$ byte) rồi ghép chồng khi rút giảm con số này khoảng tám lần. Bộ nhớ chỉ đổi cách chọn mẫu: đích của một mẫu được rút vẫn tính theo Định nghĩa 08.4 với $\theta^-$ tại lúc rút, không phải $\theta^-$ tại lúc mẫu được thu thập (bài giảng gốc, trang 20).
+**Trong thực hành.** Bộ nhớ thường được cài bằng các mảng cấp phát sẵn $N$ hàng cho từng thành phần của mẫu chuyển, một con trỏ ghi và một bộ đếm $\lvert\mathcal D\rvert$; rút một mini-batch là sinh $b$ chỉ số đều trong $\{1,\dots,\lvert\mathcal D\rvert\}$. Với đầu vào Atari của Ví dụ 08.2, mỗi mẫu chứa hai chồng bốn khung $84\times84$, tức $2\cdot28\,224=56\,448$ số; nếu mỗi điểm ảnh là một byte, $N=10^6$ mẫu chiếm khoảng $56$ GB. Hai chồng $O_t$, $O_{t+1}$ của một mẫu dùng chung ba khung, và $O_{t+1}$ của mẫu $k$ trùng $O_t$ của mẫu $k+1$, nên lưu mỗi khung một lần ($84\cdot84=7\,056$ byte) rồi ghép chồng khi rút giảm con số này khoảng tám lần. Bộ nhớ chỉ đổi cách chọn mẫu: đích của một mẫu được rút vẫn tính theo Định nghĩa 08.4 với $\theta^-$ tại lúc rút, không phải $\theta^-$ tại lúc mẫu được thu thập (bài giảng gốc, trang 20).
 
 **Kiểm tra nhanh.** Trong Ví dụ 08.10, sau $10$ bước, $\mathcal D$ chứa những mẫu nào và mẫu $11$ sẽ ghi vào vị trí nào? Mẫu $9$ và $10$ ghi đè mẫu $3$ và $4$ ở vị trí $3$ và $4$, nên $\mathcal D$ chứa mẫu $5,\dots,10$; mẫu $11$ vào vị trí $((11-1)\bmod6)+1=5$ và ghi đè mẫu $5$.
 
@@ -507,20 +507,16 @@ Hình vẽ nguồn thứ hai. Hai phiên bản hành vi, theo $\theta$ cũ (vòn
 Mệnh đề sau chuyển lý do của dạng bảng sang đích hồi quy của DQN.
 
 ::: proposition Mệnh đề 08.8 (Đích một bước không phụ thuộc hành vi đã sinh mẫu)
-**Giả thiết.** Quan sát $O_t$ đủ Markov (Nhận xét 08.2), và động lực của môi trường, tức phân phối của $(R_{t+1},O_{t+1},Z_{t+1})$ khi biết $(O_t,A_t)$, không đổi theo thời gian. Tham số $\theta^-$ cố định. Mẫu $(O_i,A_i,R_i,O'_i,Z_i,U_i)$ được rút đều từ $\mathcal D$ (Định nghĩa 08.7), trong đó mỗi mẫu được ghi bởi một hành vi chọn $A_t$ chỉ dựa trên lịch sử quan sát, hành động và một nguồn ngẫu nhiên riêng.
+**Giả thiết.** Quan sát $O_t$ đủ Markov (Nhận xét 08.2), và động lực của môi trường, tức phân phối của $(R_{t+1},O_{t+1},Z_{t+1})$ khi biết $(O_t,A_t)$, không đổi theo thời gian. Tham số $\theta^-$ cố định. Mẫu $(O_i,A_i,R_i,O'_i,Z_i,U_i)$ được rút đều từ $\mathcal D$ (Định nghĩa 08.7), trong đó mỗi mẫu được ghi bởi một hành vi chọn $A_t$ chỉ dựa trên lịch sử tới bước $t$ (quan sát, hành động, phần thưởng, cờ, kể cả tham số $\theta_t$ học từ lịch sử đó) và một nguồn ngẫu nhiên độc lập với môi trường.
 
-**Kết luận.** Với mọi cặp $(o,a)$ có xác suất dương trong $\mathcal D$,
+**Kết luận.** $\mathbb E[y_i\mid O_i,A_i]=(\mathcal TQ_{\theta^-})(O_i,A_i)$ hầu chắc chắn, dù mẫu do phiên bản hành vi nào sinh ra (với quan sát rời rạc: với mọi $(o,a)$ có xác suất dương), trong đó
 $$
-\begin{aligned}
-\mathbb E\bigl[y_i\mid O_i=o,A_i=a\bigr]&=\mathbb E\Bigl[R_{t+1}+\gamma(1-Z_{t+1})\max_{a'}Q_{\theta^-}(O_{t+1},a')\Bigm|O_t=o,A_t=a\Bigr]\\
-&=(\mathcal TQ_{\theta^-})(o,a),
-\end{aligned}
+(\mathcal TQ_{\theta^-})(o,a)=\mathbb E\Bigl[R_{t+1}+\gamma(1-Z_{t+1})\max_{a'}Q_{\theta^-}(O_{t+1},a')\Bigm|O_t=o,A_t=a\Bigr].
 $$
-dù mẫu do phiên bản hành vi nào sinh ra.
 
 **Điều kiện áp dụng.** Đích một bước với phép cực đại tính trọn tại $O'_i$.
 
-**Phạm vi.** Mệnh đề chỉ nói về kỳ vọng có điều kiện của đích khi biết cặp $(O_i,A_i)$. Phân phối của chính cặp $(O_i,A_i)$ trong $\mathcal D$ vẫn do các hành vi đã sinh dữ liệu quyết định.
+**Phạm vi.** Mệnh đề chỉ nói về kỳ vọng có điều kiện của đích khi biết cặp $(O_i,A_i)$. Phân phối của chính cặp $(O_i,A_i)$ trong $\mathcal D$ vẫn do các hành vi đã sinh dữ liệu quyết định. Đẳng thức coi $\theta^-$ là hằng cho trước; trong DQN, $\theta^-$ học từ chính dữ liệu của $\mathcal D$, nên với mẫu đã góp vào $\theta^-$ đẳng thức chỉ đúng gần đúng.
 :::
 
 ::: proof Chứng minh Mệnh đề 08.8
@@ -541,9 +537,9 @@ Không có hành động nào sau $A_i$ được lấy từ hành vi, nên khôn
 Mệnh đề dựa trên hai giả thiết có vai trò riêng. Giả thiết Markov làm phân phối của phần tiếp nối chỉ phụ thuộc $(O_i,A_i)$. Bỏ giả thiết này, chẳng hạn khi quan sát là một khung ảnh không cho biết hướng chuyển động của quả bóng (Ví dụ 08.4): cùng một quan sát $o$ ứng với nhiều trạng thái ẩn, và tỉ lệ các trạng thái ẩn này phụ thuộc hành vi đã đưa tác tử tới $o$, nên mẫu của hai phiên bản hành vi có kỳ vọng đích khác nhau. Giả thiết động lực không đổi làm mẫu cũ vẫn là mẫu đúng của môi trường hiện tại. Bỏ giả thiết này, chẳng hạn khi luật của môi trường đổi giữa chừng: các mẫu ghi trước thời điểm đổi mô tả một môi trường không còn tồn tại, và chúng ở lại trong bộ nhớ cho tới khi bị ghi đè.
 
 ::: example Ví dụ 08.11 (Tỉ số lấy mẫu quan trọng xóa mẫu của hành động thăm dò)
-**Dữ kiện.** $\lvert\mathcal A\rvert=4$, $\epsilon_{\mathrm{exp}}=0{,}1$, $\gamma=0{,}9$. Tại quan sát $o$, $\mathbf q_\theta(o)=(0{,}8;\,2{,}5;\,-0{,}3;\,1{,}9)$ như Ví dụ 08.3, nên hành động tham lam là $a_2$. Hành vi chọn $a_4$ và nhận mẫu chuyển có $R_i=1$, $Z_i=0$, $\max_{a'}Q_{\theta^-}(O'_i,a')=4$.
+**Dữ kiện.** $\lvert\mathcal A\rvert=4$, $\epsilon_{\mathrm{exp}}=0{,}1$, $\gamma=0{,}9$. Tại quan sát $o$, $\mathbf q_\theta(o)=(0{,}8;\,2{,}5;\,-0{,}3;\,1{,}9)$ như Ví dụ 08.3, nên hành động tham lam là $a_2$; giả sử $Q_{\theta^-}(o,\cdot)$ cũng đạt cực đại tại $a_2$. Hành vi chọn $a_4$ và nhận mẫu chuyển có $R_i=1$, $Z_i=0$, $\max_{a'}Q_{\theta^-}(O'_i,a')=4$.
 
-**Tính.** Đích $y_i=1+0{,}9\cdot4=4{,}6$, một mẫu có kỳ vọng $(\mathcal TQ_{\theta^-})(o,a_4)$ theo Mệnh đề 08.8. Xác suất hành vi chọn $a_4$ là $0{,}1/4=0{,}025$, xác suất chính sách tham lam chọn $a_4$ là $0$. Nếu nhân sai số của mẫu với tỉ số $\pi(a_4\mid o)/b(a_4\mid o)=0/0{,}025=0$, với $b$ ở đây là chính sách hành vi, mẫu bị xóa khỏi cập nhật.
+**Tính.** Đích $y_i=1+0{,}9\cdot4=4{,}6$, một mẫu có kỳ vọng $(\mathcal TQ_{\theta^-})(o,a_4)$ theo Mệnh đề 08.8. Xác suất hành vi chọn $a_4$ là $0{,}1/4=0{,}025$, xác suất chính sách tham lam chọn $a_4$ là $0$. Nếu nhân sai số của mẫu với tỉ số $\pi(a_4\mid o)/\mu(a_4\mid o)=0/0{,}025=0$, với $\mu$ là chính sách hành vi (ký hiệu $b$ của Bài 06), mẫu bị xóa khỏi cập nhật.
 
 **Diễn giải.** Hiệu chỉnh theo tỉ số tại $A_i$ làm mọi mẫu của hành động không tham lam có trọng số $0$, nên $Q_\theta(o,a_4)$ không bao giờ học từ dữ liệu, dù đích $4{,}6$ là mẫu đúng của giá trị cần ước lượng.
 :::
@@ -559,17 +555,17 @@ Chúng ta đã có hai kết quả về bộ nhớ phát lại: mini-batch rút 
 
 Bộ nhớ phát lại cho mini-batch rút đều từ $N$ mẫu gần nhất (Định nghĩa 08.7), và đích một bước của mỗi mẫu có kỳ vọng $(\mathcal TQ_{\theta^-})(O_i,A_i)$ bất kể phiên bản hành vi đã sinh mẫu (Mệnh đề 08.8). Trước khi dùng mini-batch này để cập nhật $\theta$, chúng ta cần phát biểu đúng phạm vi của cơ chế: nó làm được gì, đo bằng số, và không bảo đảm điều gì.
 
-Bộ nhớ phát lại làm được ba việc. Thứ nhất, nó giảm tương quan ngắn hạn: hai mẫu trong một mini-batch hiếm khi liền nhau, với xác suất $2/N$ khi rút không hoàn lại (Ví dụ 08.12 dưới đây). Thứ hai, nó tái sử dụng mẫu: với các giá trị của Mnih và cộng sự (2015, Extended Data Table 1), $N=10^6$, một bước tối ưu sau mỗi $4$ bước môi trường và $b=32$, một mẫu ở trong bộ nhớ trong $10^6$ bước môi trường, tức $2{,}5\cdot10^5$ bước tối ưu, mỗi bước rút $32$ lần, mỗi lần trúng mẫu đó với xác suất $10^{-6}$; số lần mẫu được dùng có kỳ vọng $2{,}5\cdot10^5\cdot32\cdot10^{-6}=8$. Thứ ba, mỗi mini-batch trộn nhiều đoạn quỹ đạo thay vì chỉ đoạn vừa thu thập, nên một bước cập nhật ít bị kéo theo vùng quan sát vừa thăm. Bài giảng gốc (trang 32) nêu các lợi ích tái sử dụng dữ liệu quá khứ và cải thiện hiệu quả mẫu, và viết rằng bộ nhớ "phá vỡ" tương quan theo thời gian; ở đây chúng ta viết "giảm", vì xác suất $2/N$ của một cặp liền nhau luôn dương.
+Bộ nhớ phát lại làm được ba việc. Thứ nhất, nó giảm tương quan ngắn hạn: hai mẫu trong một mini-batch hiếm khi liền nhau, với xác suất $2/N$ khi rút không hoàn lại (Ví dụ 08.12 dưới đây). Thứ hai, nó tái sử dụng mẫu: với các giá trị của Mnih và cộng sự (2015, Extended Data Table 1), $N=10^6$, một bước tối ưu sau mỗi $4$ bước môi trường và $b=32$, một mẫu ở trong bộ nhớ trong $10^6$ bước môi trường, tức $2{,}5\cdot10^5$ bước tối ưu, mỗi bước rút $32$ lần, mỗi lần trúng mẫu đó với xác suất $10^{-6}$; số lần mẫu được dùng có kỳ vọng $2{,}5\cdot10^5\cdot32\cdot10^{-6}=8$. Thứ ba, mỗi mini-batch trộn nhiều đoạn quỹ đạo thay vì chỉ đoạn vừa thu thập, nên một bước cập nhật ít bị kéo theo vùng quan sát vừa thăm. Bài giảng gốc (trang 32) nêu các lợi ích tái sử dụng dữ liệu quá khứ và cải thiện hiệu quả mẫu. Tương quan theo thời gian giảm nhưng vẫn còn, vì xác suất $2/N$ của một cặp liền nhau luôn dương.
 
 ::: remark Nhận xét 08.9 (Ba điều bộ nhớ phát lại không bảo đảm)
 Với bộ nhớ phát lại của Định nghĩa 08.7:
 
-1. các mẫu trong một mini-batch không độc lập và cùng phân phối (i.i.d.) theo một phân phối cố định: khi biết $\mathcal D$, các lần rút có hoàn lại là i.i.d. theo phân phối thực nghiệm của $\mathcal D$, nhưng nội dung của $\mathcal D$ là các đoạn của một số ít quỹ đạo, xác suất rút hai mẫu liền nhau là $2/N>0$, và hai mẫu liên tiếp $k$, $k+1$ của một lượt dùng chung một quan sát, vì $O'$ của mẫu $k$ là $O$ của mẫu $k+1$;
+1. các mẫu trong một mini-batch không độc lập và cùng phân phối (i.i.d.) theo một phân phối cố định: khi biết $\mathcal D$, các lần rút có hoàn lại là i.i.d. theo phân phối thực nghiệm của $\mathcal D$, nhưng nội dung của $\mathcal D$ là các đoạn liền của những quỹ đạo do chính tác tử thu thập, xác suất hai lần rút trúng hai mẫu liền nhau là $2(N-1)/N^2\approx2/N>0$, và hai mẫu liên tiếp $k$, $k+1$ của một lượt dùng chung một quan sát, vì $O'$ của mẫu $k$ là $O$ của mẫu $k+1$;
 2. phân phối của $\mathcal D$ không đứng yên: hành vi đổi cùng $\theta$ và bộ đệm thay mẫu cũ nhất bằng mẫu mới, nên phân phối của các cặp $(O_i,A_i)$ được rút trôi theo thời gian;
 3. thuật toán dùng bộ nhớ phát lại không có bảo đảm hội tụ: xấp xỉ hàm, bootstrap và học khác chính sách vẫn cùng có mặt, tức bộ ba bất ổn của Bài 07 vẫn đủ ba yếu tố.
 :::
 
-Ba điều này có ba nguồn khác nhau. Điều thứ nhất đến từ việc mọi mẫu đều do một tác tử thu thập dọc các quỹ đạo. Lấy mẫu đều làm các lần rút độc lập với nhau khi đã biết $\mathcal D$, nhưng không làm nội dung của $\mathcal D$ thành các mẫu độc lập của một phân phối cố định: nó chỉ làm hiếm các cặp liền nhau, không tạo ra các quỹ đạo độc lập. Như đã nêu ở mục tương quan, mẫu tương quan không nhất thiết làm gradient trung bình bị chệch; hệ quả chắc chắn hơn là phương sai lớn hơn so với cùng số mẫu độc lập. Điều thứ hai đến từ vòng lặp giữa dữ liệu và tham số: $\theta$ đổi thì hành vi đổi, hành vi đổi thì các mẫu mới ghi vào $\mathcal D$ đổi. Vì vậy lời giải hồi quy tốt nhất của Nhận xét 08.5, vốn giả sử các cặp $(O_t,A_t)$ lấy theo một phân phối cố định, chỉ áp dụng gần đúng khi phân phối của $\mathcal D$ đổi chậm so với số bước tối ưu giữa hai lần đồng bộ. Điều thứ ba đến từ chỗ bộ nhớ chỉ đổi cách chọn mẫu: nó không bỏ xấp xỉ hàm, không bỏ bootstrap, và theo Mệnh đề 08.8 nó còn thêm một nguồn dữ liệu khác chính sách. Mệnh đề 07.37 của Bài 07 cho một ví dụ tuyến tính hai trạng thái có đủ ba yếu tố mà tham số tăng không chặn; bộ nhớ phát lại không loại trừ ví dụ đó.
+Ba điều này có ba nguồn khác nhau. Điều thứ nhất đến từ việc mọi mẫu đều do một tác tử thu thập dọc các quỹ đạo. Lấy mẫu đều có hoàn lại làm các lần rút độc lập với nhau khi đã biết $\mathcal D$, nhưng không làm nội dung của $\mathcal D$ thành các mẫu độc lập của một phân phối cố định: nó chỉ làm hiếm các cặp liền nhau, không tạo ra các quỹ đạo độc lập. Như đã nêu ở mục tương quan, mẫu tương quan không nhất thiết làm gradient trung bình bị chệch; hệ quả chắc chắn hơn là phương sai lớn hơn so với cùng số mẫu độc lập. Điều thứ hai đến từ vòng lặp giữa dữ liệu và tham số: $\theta$ đổi thì hành vi đổi, hành vi đổi thì các mẫu mới ghi vào $\mathcal D$ đổi. Vì vậy lời giải hồi quy tốt nhất của Nhận xét 08.5, vốn giả sử các cặp $(O_t,A_t)$ lấy theo một phân phối cố định, chỉ áp dụng gần đúng khi phân phối của $\mathcal D$ đổi chậm so với số bước tối ưu giữa hai lần đồng bộ. Điều thứ ba đến từ chỗ bộ nhớ chỉ đổi cách chọn mẫu: nó không bỏ xấp xỉ hàm, không bỏ bootstrap, và theo Mệnh đề 08.8 nó còn thêm một nguồn dữ liệu khác chính sách. Mệnh đề 07.37 của Bài 07 cho một ví dụ tuyến tính hai trạng thái có đủ ba yếu tố mà tham số tăng không chặn; bộ nhớ phát lại không loại trừ ví dụ đó.
 
 ::: example Ví dụ 08.12 (Hai mẫu liền nhau trong một mini-batch)
 **Dữ kiện.** $N=6$, bộ nhớ chứa mẫu $3,\dots,8$ như Ví dụ 08.10: các vị trí $1,\dots,6$ chứa mẫu $7,8,3,4,5,6$. Mini-batch có $b=2$ mẫu, rút không hoàn lại.

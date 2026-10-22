@@ -474,3 +474,36 @@ Kết quả rà: 0 chặn bàn giao, 0 nghiêm trọng, 5 trung bình, 16 nhẹ;
 | S22 | `L08-M4T` | chấp nhận; bài tập trong note giữ ở mục bài tập cuối chương (đánh số 08.k ở bước `X01`/`X02`); mục topic-12 dời ở bước `L08-M6T` | diff; `#/4` mở đúng trang |
 - Bước S23 (`L08-17`, biên tập viên): tiêu đề "Hàm mất mát trên mini-batch"; "Nhu cầu:" gộp $b$ cặp $(q_i,y_i)$ thành một hàm vô hướng của $\theta$; "Ký hiệu:" mẫu $i$ không theo thời gian, $q_i$ khác $q_*$; công thức $q_i$, $y_i$; "Định nghĩa." $L_B$ là sai số bình phương trung bình (MSE) với $y_i$ là hằng theo $\theta$, không viết $\operatorname{sg}$ (giới thiệu ở `L08-10`); hộp $Z/U$ bỏ; "Lưu ý:" $L_B$ không lồi theo $\theta$ (lời hứa R1 mục 5). 57 âm tiết, đáy 683 px, ghi chú diễn giả 134 âm tiết (MSE là lựa chọn của bài, Huber là lựa chọn khác). Ghi chú bài giảng: mục topic-09 viết lại (Định nghĩa 08.10, đạo hàm, vai của ba lựa chọn, Nhận xét 08.11 với phản ví dụ điểm yên ngựa, "Trong thực hành.", kiểm tra nhanh, đoạn kết). `no-ai-slop` Edit, tự kiểm theo `eval.md`: đạt. Chờ điều phối viên duyệt.
 | S23 | `L08-17` | chấp nhận cả năm điểm; `L08-10` sẽ trình bày $\operatorname{sg}(y_i)$ như dạng mã cho cùng gradient; nguồn §11.5 và Mnih 2015 Methods vào tài liệu tham khảo | diff; tính lại $-0{,}2$/$-2$ và Hessian $\pm2$; xem ảnh 1600 |
+
+### Rà lại mạch 3 (bước R3)
+
+| vai | loại tác tử | mô hình | mức suy luận | ghi tệp |
+|---|---|---|---|---|
+| Rà lại mạch 3 (toán, mạch, mật độ, `no-ai-slop` Detect) | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Biên tập R3 | Agent `general-purpose` (biên tập viên của đợt sửa) | `claude-opus-5-5` | high | có |
+
+Kết quả rà: 0 chặn bàn giao, 0 nghiêm trọng, 5 trung bình, 13 nhẹ; điều phối viên chấp nhận toàn bộ 18 mục (tệp `recheck/R3-decisions.md` trong scratchpad phiên). Bảng dưới ghi trạng thái sau bước R3.
+
+| mức độ | trang chiếu | vấn đề | đề xuất sửa | trạng thái | quyết định |
+|---|---|---|---|---|---|
+| trung bình (TB1) | ghi chú bài giảng, Mệnh đề 08.8 | Giả thiết về hành vi chưa nêu hành vi được phép dùng cả tham số $\theta_t$ học từ lịch sử và nguồn ngẫu nhiên phải độc lập với môi trường | Câu giả thiết đầy đủ (lịch sử tới bước $t$, kể cả $\theta_t$; nguồn ngẫu nhiên độc lập với môi trường) | đã sửa ở R3 | chấp nhận |
+| trung bình (TB2) | `L08-05r` | Dòng kết không nêu giả thiết của lý do không cần tỉ số lấy mẫu quan trọng | Dòng dẫn "Hai nguồn khác chính sách đích:"; dòng "Giả thiết:" Markov, động lực không đổi, hành vi chỉ quyết định tần suất $(O_i,A_i)$ | đã sửa ở R3 | chấp nhận |
+| trung bình (TB3) | ghi chú bài giảng, Ví dụ 08.11 | Ký hiệu $b$ dùng cho chính sách hành vi trùng cỡ mini-batch | $\mu$ là chính sách hành vi (ký hiệu $b$ của Bài 06) | đã sửa ở R3 | chấp nhận |
+| trung bình (TB4) | `L08-28`, ghi chú diễn giả, ghi chú bài giảng | "Cỡ mẫu hiệu dụng" không có công thức trên mặt trang và thiếu tên tiếng Anh | $\sigma^2/\operatorname{Var}\bar g\approx1{,}1$; "cỡ mẫu hiệu dụng (effective sample size), tức số mẫu độc lập cho cùng phương sai" | đã sửa ở R3 (công thức $\sigma^2/\operatorname{Var}\bar g$ ở ghi chú diễn giả và ghi chú bài giảng; mặt trang giữ "cỡ mẫu hiệu dụng ${\approx1{,}1}$" trong dòng "Diễn giải:") | chấp nhận |
+| trung bình (TB5) | `storyboard.md` | Bảng hành trình khái niệm còn mô tả bản trước đợt sửa | Bảng hành trình mới cho cụm bộ nhớ phát lại và hai cụm của mạch 2 | đã sửa ở R3 (mục "Hành trình khái niệm (đợt sửa 2026-10-22)") | chấp nhận |
+| nhẹ (6) | ghi chú bài giảng, Mệnh đề 08.8 | Kết luận phát biểu "với mọi $(o,a)$ có xác suất dương" chỉ đúng cho quan sát rời rạc | "hầu chắc chắn"; trường hợp rời rạc trong ngoặc | đã sửa ở R3 (định nghĩa $(\mathcal TQ_{\theta^-})(o,a)$ giữ ở công thức hiển thị) | chấp nhận |
+| nhẹ (7) | ghi chú bài giảng, Mệnh đề 08.8 | Phạm vi không nêu $\theta^-$ học từ chính dữ liệu của $\mathcal D$ | Câu thêm vào "Phạm vi." | đã sửa ở R3 | chấp nhận |
+| nhẹ (8) | ghi chú bài giảng, Nhận xét 08.9 | Xác suất cặp liền nhau với rút có hoàn lại là $2(N-1)/N^2$; câu "lấy mẫu đều" chưa nêu "có hoàn lại" | $2(N-1)/N^2\approx2/N>0$; "Lấy mẫu đều có hoàn lại…" | đã sửa ở R3 | chấp nhận |
+| nhẹ (9) | ghi chú bài giảng, ghi chú `L08-14` | "một số ít quỹ đạo" không chính xác | "các đoạn liền của những quỹ đạo do chính tác tử thu thập" | đã sửa ở R3 | chấp nhận |
+| nhẹ (10) | ghi chú bài giảng, mục giới hạn | Câu bình luận về chữ "phá vỡ" của nguồn | Câu thay của điều phối viên | đã sửa ở R3 | chấp nhận |
+| nhẹ (11) | ghi chú bài giảng, mục tương quan | "Hàm mất mát dao động theo từng đoạn của lượt" chưa có căn cứ | "mức tương quan thật cần đo trên dữ liệu của từng môi trường" | đã sửa ở R3 | chấp nhận |
+| nhẹ (12) | ghi chú bài giảng, mục bộ nhớ phát lại | Lý do dùng chung khung chưa đúng (hai chồng trong một mẫu, và giữa hai mẫu liên tiếp) | Câu thay của điều phối viên | đã sửa ở R3 | chấp nhận |
+| nhẹ (13) | ghi chú bài giảng, Ví dụ 08.11 | Chưa nêu $Q_{\theta^-}(o,\cdot)$ cũng cực đại tại $a_2$ | Thêm giả sử vào Dữ kiện | đã sửa ở R3 | chấp nhận |
+| nhẹ (14) | ghi chú bài giảng, mục tương quan | "nhãn hồi quy" lệch thuật ngữ | "đích hồi quy $y_t$" | đã sửa ở R3 | chấp nhận |
+| nhẹ (15) | `L08-28` | Ví dụ chưa nói xét một tọa độ; dòng cuối không phải kết luận có số | "Một tọa độ của…"; "Diễn giải:" bốn mẫu liền nhau giảm phương sai gần bằng một mẫu độc lập | đã sửa ở R3; sau yêu cầu bớt chữ của điều phối viên, ví dụ rút thành ba dòng ngắn (dữ kiện, công thức $\operatorname{Var}\bar g$, "Diễn giải:" cỡ mẫu hiệu dụng ${\approx1{,}1}$), "một tọa độ" và định nghĩa $\sigma^2/\operatorname{Var}\bar g$ ở ghi chú diễn giả và ghi chú bài giảng; không còn ngoại lệ mật độ | chấp nhận |
+| nhẹ (16) | `L08-13`, ghi chú diễn giả, ghi chú bài giảng | "chứa $N$" không nói dung lượng; thiếu tên tiếng Anh của bộ đệm vòng | "dung lượng $N$ mẫu chuyển"; "bộ đệm vòng (ring buffer)" | đã sửa ở R3 ("Nhu cầu:" rút thành "mẫu rải theo thời gian" để giữ 60 âm tiết) | chấp nhận |
+| nhẹ (17) | `L08-05r` | Mục 1 chưa nói chính sách đích tham lam theo mạng nào | "khác chính sách đích tham lam theo $Q_{\theta^-}$" | đã sửa ở R3 | chấp nhận |
+| nhẹ (18) | `L08-14`, ghi chú `L08-M3T` | "Phân phối $\mathcal D$" thiếu "của"; hộp câu hỏi dính hai thẻ; ghi chú tiêu đề mạch chưa nêu giới hạn | "Phân phối của $\mathcal D$ đứng yên."; câu ghi chú `L08-M3T` | đã sửa ở R3; tách hộp câu hỏi không làm: `lecture-slide.css` không có lớp khoảng cách dùng được, không thêm CSS | chấp nhận |
+
+- Bước R3 (biên tập viên): áp dụng 18 mục. Trang đổi: `L08-28`, `L08-13`, `L08-05r`, `L08-14` (mặt trang và ghi chú diễn giả), ghi chú `L08-M3T`. Ghi chú bài giảng: Mệnh đề 08.8 (giả thiết, kết luận hầu chắc chắn, phạm vi), Ví dụ 08.11 ($\mu$, giả sử về $Q_{\theta^-}$), Nhận xét 08.9, các mục tương quan, bộ nhớ phát lại và giới hạn. `storyboard.md`: mục "Hành trình khái niệm (đợt sửa 2026-10-22)" (mạch 2 hai cụm, mạch 3) và bảng số đo "Rà lại mạch 3 (bước R3)". `check.py` `L08-M3T`, `L08-28`, `L08-13`, `L08-05r`, `L08-14`, `L08-M4T` ở 1600×900, 390×844: không tràn, không lỗi; viewer 1231 KaTeX, 0 lỗi, không công thức tràn. `no-ai-slop` Edit, tự kiểm theo `eval.md`: đạt. Chờ điều phối viên duyệt.
+| R3 | mạch 3 (rà lại) | yêu cầu sửa (khối ví dụ `L08-28` quá dày, công thức ngắt xấu), rồi chấp nhận; không tách hộp Câu hỏi `L08-14` (không thêm CSS) | diff; `check.py` mạch 3; xem ảnh |

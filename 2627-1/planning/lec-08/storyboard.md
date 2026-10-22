@@ -99,6 +99,47 @@ Số trang sau đợt sửa dự kiến: 37 trang hiện có − 5 trang bỏ (`
 
 `L08-01` (bìa): câu luận đề một câu 36 âm tiết trong hộp, ba dòng hiển thị, mỗi dòng ≤ 15 âm tiết; `CLAUDE.md` đòi luận đề một câu. `L08-02b` (Nội dung): 8 dòng > 6 vì phải liệt kê đủ bảy mạch và dòng đọc trước; 54 âm tiết. `L08-02c` (Vấn đề trung tâm), sau R1: 85 âm tiết > 60 (1,42 lần trần, dưới 1,5 lần), một dòng bài toán 17 âm tiết và năm dòng trả lời có điều kiện 15, 15, 10, 15, 13; quyết định R1 của điều phối viên mở rộng phạm vi bài toán (vector liên tục hoặc ảnh) và đổi các dòng "X: Y" thành câu điều kiện, nên số âm tiết tăng từ 70. `L08-12b` (Ví dụ: đích tại mẫu chuyển bị cắt ngắn), R2: cùng khuôn `L08-09`, 5 dòng chữ cộng một bảng một hàng; 38 âm tiết. `L08-32`, R2: dòng "Giả thiết:" 24 âm tiết trên hai dòng hiển thị (câu do điều phối viên duyệt nguyên văn ở R2, mục TB2), mỗi dòng hiển thị dưới 20. `L08-09` (Ví dụ: đích tại mẫu chuyển kết thúc), duyệt ở S15: 6 dòng chữ (dữ liệu, hai dòng tính, câu hỏi, lời giải, diễn giải) cộng một bảng một hàng bốn cột; 41 âm tiết; bảng giữ khuôn chung của ví dụ xuyên suốt, tách ra thành trang khác sẽ cắt rời dữ liệu khỏi phép tính. `L08-14` (Giới hạn của bộ nhớ phát lại), S21: 7 dòng hiển thị > 6 vì giữ bảng so sánh hai cột "Làm được / Không bảo đảm" (4 hàng, mỗi mục ≤ 7 âm tiết) cùng hộp câu hỏi hai dòng và một dòng lời giải; 59 âm tiết. Số âm tiết trước sửa của các trang vượt trần (đo ngày 2026-10-22): `L08-05` 82, `L08-18` 87, `L08-27` 70, `L08-28` 64, `L08-32` 68, `X03` 91; `L08-33` 73 (trần 80 của trang tự kiểm tra). Số sau sửa ghi vào mục của từng trang khi sửa.
 
+### Hành trình khái niệm (đợt sửa 2026-10-22)
+
+Bảng thay các bảng chu trình sáu bước của bản trước cho các mạch đã sửa (thêm ở bước R3; mạch 4–7 bổ sung khi sửa xong mạch tương ứng). Thời lượng tính trên 120 phút chính.
+
+##### Mạch 2, cụm "Mạng giá trị hành động" (khoảng 11 phút)
+
+| bước | mã trang | kiến thức hoặc dữ kiện đầu vào | sản phẩm học tập | gộp / không áp dụng |
+|---|---|---|---|---|
+| Vấn đề + ví dụ dẫn nhập | `L08-03` | Lunar Lander rời rạc hóa (Bài 07): $9\,216$ ô trạng thái, $1\,896$ ô có mẫu | Nêu được giới hạn của bảng: ô không có mẫu giữ giá trị khởi tạo | Ví dụ dẫn nhập đặt cùng vấn đề. |
+| Trực quan | `L08-03` | Tham số dùng chung | Một cập nhật đổi giá trị ở nhiều quan sát | Gộp với vấn đề ("Trực quan." trên cùng trang). |
+| Ví dụ | `L08-31` | Bốn khung xám $84\times84$, $4$ đến $18$ hành động | Đọc được giao diện vào/ra của mạng trên Atari | Không gộp. |
+| Hình thức | `L08-07` | $o\in\mathcal O$, $\mathcal A$ hữu hạn | Định nghĩa $\mathbf q_\theta(o)$, $Q_\theta(o,a)$; đọc vector $(0{,}8;2{,}5;-0{,}3;1{,}9)$ | Không gộp. |
+| Ứng dụng + kiểm tra | `L08-32` | Quả bóng trên một khung và bốn khung | Phân biệt quan sát đủ Markov với không đủ; Câu hỏi và Lời giải | Gộp ứng dụng với kiểm tra trên cùng ví dụ. |
+
+Dữ kiện truyền: $\mathbf q_\theta(o)$ của `L08-07` dùng lại ở Ví dụ 08.11 (ghi chú bài giảng); giả thiết Markov của `L08-32` dùng ở Mệnh đề 08.8.
+
+##### Mạch 2, cụm "Đích hồi quy và mạng mục tiêu" (khoảng 14 phút)
+
+| bước | mã trang | kiến thức hoặc dữ kiện đầu vào | sản phẩm học tập | gộp / không áp dụng |
+|---|---|---|---|---|
+| Vấn đề + ví dụ dẫn nhập | `L08-07b` | $Q_\theta=\theta$, $R=1$, $\gamma=0{,}9$, $\theta_0=0$, $\alpha=0{,}5$ | Thấy đích đổi $1\to1{,}45$ sau một bước, cùng mẫu chuyển | Ví dụ dẫn nhập là vấn đề. |
+| Trực quan + hình thức | `L08-07c` | "Nhu cầu:" tách tham số tạo đích | Định nghĩa mạng mục tiêu, khởi tạo $\theta^-\leftarrow\theta$, đồng bộ mỗi $C$ bước; hình dòng thời gian | Trực quan đọc từ hình trên cùng trang. |
+| Hình thức | `L08-08` | Cờ $Z_{t+1}$ | Định nghĩa đích $y_t$ có mặt nạ và sai số TD $\delta_t$ | Không gộp. |
+| Ví dụ + kiểm tra | `L08-09` | Mẫu 2: $R=-2$, $Z=1$, $\max=100$, $q=-1{,}5$ | $y_t=-2$, $\delta_t=-0{,}5$; bỏ mặt nạ: $88$, $89{,}5$ | Câu hỏi và Lời giải trên trang. |
+| Ứng dụng (hình thức mở rộng) | `L08-12` | Giới hạn số bước ngoài MDP | Cờ $U$; mặt nạ chỉ $1-Z$; đặt lại khi $Z\lor U$ | Không gộp. |
+| Ví dụ + kiểm tra | `L08-12b` | Mẫu 1: $R=1$, $Z=0$, $U=1$, $\max=4$ | $y_t=4{,}6$; mặt nạ gộp cho $1$ | Câu hỏi và Lời giải trên trang. |
+
+Dữ kiện truyền: hai mẫu của ví dụ xuyên suốt "mini-batch hai mẫu chuyển" (`L08-09`, `L08-12b`) dùng lại ở `X01`, `L08-21`, `L08-29`.
+
+##### Mạch 3, cụm "Bộ nhớ phát lại" (15 phút)
+
+| bước | mã trang | kiến thức hoặc dữ kiện đầu vào | sản phẩm học tập | gộp / không áp dụng |
+|---|---|---|---|---|
+| Vấn đề + ví dụ dẫn nhập | `L08-28` | Bốn gradient mẫu liền nhau, tương quan $0{,}9^k$ | $\operatorname{Var}\bar g\approx0{,}88\,\sigma^2$, cỡ mẫu hiệu dụng $\approx1{,}1$ | Ví dụ dẫn nhập đặt cùng vấn đề. |
+| Trực quan | `L08-28` (hàng "lấy rải" của hình), `L08-13` ("Nhu cầu:" mẫu rải theo thời gian) | Hình liên tiếp/lấy rải | Mẫu ở các thời điểm xa nhau mang thêm thông tin | Gộp vào hai trang trên. |
+| Hình thức + ví dụ | `L08-13` | Bộ đệm vòng dung lượng $N$, $b$ lần rút đều | Định nghĩa $\mathcal D$; $N=6$ sau $8$ bước: mẫu $3,\dots,8$, xác suất $1/6$ | Ví dụ $N=6$ đặt trong hình và một dòng. |
+| Ứng dụng | `L08-05r` | Hành vi $\epsilon_{\mathrm{exp}}$-tham lam, phiên bản $\theta$ cũ | Hai nguồn khác chính sách; đích một bước không cần tỉ số lấy mẫu quan trọng (giả thiết Markov, động lực không đổi) | Không gộp. |
+| Kiểm tra | `L08-14` | $N=6$, $\mathcal D$ chứa mẫu $3,\dots,8$, $b=2$ không hoàn lại | Xác suất $1/15$ cho cặp mẫu $4$, mẫu $5$; $1/3$ cho một cặp liền nhau; ba điều không bảo đảm | Không gộp. |
+
+Chuỗi truyền: Ví dụ 08.9 (cỡ mẫu hiệu dụng $\approx1{,}1$) → nhu cầu mẫu rải theo thời gian → Định nghĩa 08.7 → Mệnh đề 08.8 → Nhận xét 08.9, Ví dụ 08.12. Thời lượng: `L08-M3T` 0,5 phút, `L08-28` 3,5, `L08-13` 4, `L08-05r` 3,5, `L08-14` 3,5.
+
 ### Mục từng trang (đợt sửa 2026-10-22)
 
 #### `L08-01` Bìa: Deep Q-Learning (bước S1)
@@ -357,6 +398,19 @@ Quyết định R1 mục 5 (khó khăn không lồi được hứa ở ghi chú 
 - **Liên kết:** trước là `L08-M4T`; sau là `L08-10` (dừng gradient ở đích, phép chọn theo hành động, gradient). Mục tiêu hỗ trợ: mục tiêu 3 (tính hàm mất mát và gradient của nó).
 - **Mật độ:** trước sửa 40 âm tiết (theo `review-student.md`), 2 dòng, 2 công thức hiển thị, 1 hộp chữ hai câu, ghi chú diễn giả 30 âm tiết. Sau sửa 57 âm tiết, 4 khối chữ (10, 9, 17, 21; dòng "Định nghĩa." ngắt bằng `<br>` thành hai dòng hiển thị; dòng "Lưu ý:" 21 âm tiết trên hai dòng hiển thị, câu theo lời hứa R1), 2 công thức hiển thị, 0 hộp chữ, ghi chú diễn giả 134 âm tiết. Đáy nội dung 683 px.
 - **Ghi chú bài giảng:** mục topic-09 viết lại với tên "Hàm mất mát trên mini-batch" và đặt lên đầu phần 4: nhu cầu; đổi chỉ số $t\to i$ (không viết $R_{i+1}$, $O_{i+1}$); Định nghĩa 08.10 (đủ miền; $U_i$ không vào $L_B$); đoạn đọc ($L_B$ là trung bình bình phương sai số TD; đạo hàm hai dòng có lý do; dấu thay đổi của $q_i$ khi dùng chung $\theta$); vai của ba lựa chọn có phản ví dụ (đích không là hằng: ví dụ một tham số cho $-0{,}2$ so với $-2$, phương pháp gradient dư, Sutton và Barto 2018 §11.5; hệ số $1/b$; bình phương so với giá trị tuyệt đối, trung vị có điều kiện); Nhận xét 08.11 (không lồi theo $\theta$; lồi khi tuyến tính) với phản ví dụ $Q_\theta=\theta_1\theta_2$: gradient $0$, Hessian trị riêng $\pm2$ tại gốc, điểm yên ngựa (Goodfellow và cộng sự 2016, Chương 8); "Trong thực hành." (một lần tính xuôi cho mảng $[b,\lvert\mathcal A\rvert]$; Huber; Mnih và cộng sự 2015, Methods, cắt sai số vào $[-1,1]$); kiểm tra nhanh (lặp mini-batch, vai của $1/b$); đoạn kết dẫn sang phép chọn theo hành động và dừng gradient. Bản đồ chủ đề: hàng topic-09 đổi tên và vai trò, hàng topic-08 "Vào: topic-09". Số tiếp theo: Định nghĩa/Nhận xét 08.12, Ví dụ 08.13.
+
+#### Rà lại mạch 3 (bước R3)
+
+Áp dụng toàn bộ 18 quyết định của điều phối viên sau lượt rà chỉ đọc mạch 3 (xem `review-log.md`, mục "Rà lại mạch 3"). Số đo dưới đây thay số "sau sửa" trong mục của từng trang. Âm tiết gồm cả chữ trong hộp `.check` và cộng 1 cho mỗi "mini&#8209;batch"; đáy đo ở 1280×720.
+
+| trang | âm tiết trước → sau | khối chữ sau | ghi chú diễn giả trước → sau | đáy trước → sau (px) | thay đổi chính |
+|---|---:|---:|---:|---:|---|
+| `L08-M3T` | 31 → 31 | 2 | 89 → 100 | 521 → 521 | ghi chú: hai nguồn khác chính sách, không tạo mẫu i.i.d. theo phân phối cố định, không bảo đảm hội tụ (mục 18) |
+| `L08-28` | 45 → 47 | 4 (12, 13, 6, 15; mỗi khối một dòng hiển thị) | 90 → 115 | 656 → 659 | ví dụ ba dòng ngắn theo yêu cầu điều phối viên sau R3: dữ kiện ("Bốn gradient liền nhau"; "một tọa độ" chuyển vào ghi chú diễn giả vì dòng xuống hai dòng), công thức $\operatorname{Var}\bar g$ trên một dòng (thêm "Trung bình $\bar g$ có" để định nghĩa $\bar g$), "Diễn giải:" cỡ mẫu hiệu dụng ${\approx1{,}1}$; định nghĩa $\sigma^2/\operatorname{Var}\bar g$ chỉ ở ghi chú diễn giả và ghi chú bài giảng (mục 4, 15) |
+| `L08-13` | 60 → 60 | 5 | 141 → 150 | 699 → 699 | "dung lượng $N$ mẫu chuyển" (mục 16); "Nhu cầu:" rút thành "mẫu rải theo thời gian" để giữ trần; ghi chú: "bộ đệm vòng (ring buffer)" |
+| `L08-05r` | 59 → 57 | 5 | 143 → 143 | 686 → 688 | dòng dẫn "Hai nguồn khác chính sách đích:"; "Giả thiết:" thay dòng kết (mục 2); mục 1 "chính sách đích tham lam theo $Q_{\theta^-}$" (mục 17) |
+| `L08-14` | 59 → 60 | 7 dòng hiển thị (ngoại lệ đã ghi) | 143 → 148 | 653 → 653 | "Phân phối của $\mathcal D$ đứng yên." (mục 18); ghi chú "các đoạn liền của những quỹ đạo do chính tác tử thu thập" (mục 9) |
+
 
 #### Rà lại mạch 2 (bước R2)
 
