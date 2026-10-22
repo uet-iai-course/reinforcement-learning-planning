@@ -1177,6 +1177,44 @@ $$
 
 **Giả thiết hay bị quên.** Mặt nạ chỉ chứa $Z$, không chứa $U$. Quan sát lưu trong mẫu chuyển là quan sát cuối của lượt, không phải quan sát đầu của lượt mới sau khi môi trường tự đặt lại. Đích là hằng theo $\theta$ khi lấy gradient. Đồng bộ đếm bước tối ưu, không đếm bước môi trường. Bộ nhớ phát lại không tạo mẫu độc lập cùng phân phối cố định. Không có bảo đảm hội tụ tổng quát cho DQN, nên tác dụng của mỗi cơ chế được đánh giá bằng thí nghiệm qua nhiều lần chạy.
 
+### So sánh Q-learning bảng, tuyến tính và DQN
+
+Đến đây chúng ta có ba phương pháp học $q_*$ từ mẫu chuyển: Q-learning dạng bảng (Thuật toán 06.16), Q-learning bán gradient tuyến tính (Định nghĩa 07.35, Thuật toán 07.36) và DQN (Thuật toán 08.13). Cả ba dùng đích một bước có phép cực đại và thu dữ liệu bằng hành vi $\epsilon_{\mathrm{exp}}$-tham lam, tức hành vi $\varepsilon$-tham lam của Bài 06–07. Muốn biết DQN đổi những gì so với hai phương pháp trước, và vì sao các thay đổi đó không đem theo định lý hội tụ của dạng bảng, chúng ta đặt ba phương pháp cạnh nhau trên cùng các tiêu chí.
+
+Với mẫu chuyển $(O,A,R,O',Z)$, cả ba phương pháp dùng đích
+
+$$
+y=R+\gamma(1-Z)\max_{a'}\hat Q(O',a'),
+$$
+
+trong đó $\hat Q$ lần lượt là bảng $Q$ trước cập nhật, hàm tuyến tính $x(o,a)^\top w$ với $w$ hiện tại, và mạng mục tiêu $Q_{\theta^-}$. Với bảng và hàm tuyến tính, quan sát là trạng thái, $O=S$ và $O'=S'$. Mặt nạ $1-Z$ thay cho quy ước $Q(s,\cdot)=0$ tại trạng thái kết thúc, và ở cả ba phương pháp, mẫu bị cắt ngắn vẫn giữ phần bootstrap.
+
+| Phương pháp | Quy tắc cập nhật | Dữ liệu dùng | Điều kiện dừng |
+|---|---|---|---|
+| Q-learning dạng bảng (Thuật toán 06.16) | $Q(S,A)\leftarrow Q(S,A)+\alpha_n(S,A)\bigl(y-Q(S,A)\bigr)$; chỉ ô $(S,A)$ đổi | mẫu chuyển vừa thu, dùng cho đúng một cập nhật | sau $H$ cập nhật |
+| Q-learning bán gradient tuyến tính (Thuật toán 07.36) | $w\leftarrow w+\alpha_n\bigl(y-x(S,A)^\top w\bigr)\,x(S,A)$; đổi các thành phần của $w$ ứng với thành phần khác $0$ của $x(S,A)$ | mẫu chuyển vừa thu, dùng cho đúng một cập nhật | sau $K$ lượt |
+| DQN (Thuật toán 08.13) | $\theta\leftarrow\operatorname{Update}(\theta,\nabla_\theta L_B)$, $L_B=\tfrac1b\sum_i(y_i-q_i)^2$ với $y_i$ trong $\operatorname{sg}$; $\theta^-\leftarrow\theta$ khi $k_{\mathrm{opt}}\bmod C=0$ | khi $\lvert\mathcal D\rvert\ge N_{\mathrm{start}}$, mỗi $F$ bước môi trường rút đều $b$ mẫu từ $\mathcal D$, nơi giữ tối đa $N$ mẫu gần nhất | sau $T$ bước môi trường, hoặc khi lợi tức đánh giá đạt ngưỡng chọn trước |
+
+Trước hết, ba phương pháp khác nhau ở phạm vi của một cập nhật. Với bảng, một mẫu chỉ đổi ô của chính nó. Với hàm tuyến tính, một mẫu đổi $w$ dùng chung, nên đổi giá trị của mọi cặp có đặc trưng chung với $(S,A)$. Với DQN, gradient đi qua mọi tầng của mạng, nên một mini-batch nói chung đổi giá trị tại mọi quan sát. Phép cực đại trong đích cũng được đọc ở ba chỗ: bảng chưa cập nhật, $w$ hiện tại, và $\theta^-$ giữ cố định giữa hai lần đồng bộ. Chỉ DQN tách tham số tạo đích khỏi tham số được cập nhật.
+
+Chỗ khác thứ hai nằm ở cách dùng dữ liệu. Hai phương pháp đầu dùng mỗi mẫu chuyển một lần, ngay khi thu, nên hai cập nhật liền nhau dùng hai mẫu liền nhau của cùng một quỹ đạo. DQN lưu mẫu vào $\mathcal D$ rồi rút đều; khi $\mathcal D$ đã đầy, mỗi mẫu được rút trung bình $b/F$ lần, tức $8$ lần với $b=32$, $F=4$ của Mnih và cộng sự (2015) (Ví dụ 08.14). Đổi lại, dữ liệu của DQN khác chính sách theo hai nguồn: hành vi $\epsilon_{\mathrm{exp}}$-tham lam và các phiên bản $\theta$ cũ đã ghi mẫu (Mục 3).
+
+Cả ba điều kiện dừng đều là ngân sách hoặc số đo hữu hạn. Định lý 06.21 cần $H=\infty$, nên dừng sau $H$ cập nhật chỉ trả bảng tại thời điểm dừng. Lợi tức đánh giá đo bằng chính sách tham lam theo $Q_\theta$ trên các lượt riêng, không thăm dò; đạt ngưỡng cho biết chính sách hiện thời đạt tiêu chí đã chọn, không cho biết $Q_\theta$ gần $q_*$ đến đâu.
+
+| Phương pháp | Giả thiết không được bỏ | Kết luận |
+|---|---|---|
+| Q-learning dạng bảng (Định lý 06.21) | MDP hữu hạn với động lực dừng, phần thưởng bị chặn, $0\le\gamma<1$, $Q_0$ hữu hạn, mẫu sinh từ chính MDP; $H=\infty$; mọi cặp được cập nhật vô hạn lần, hầu chắc chắn; bước học thỏa điều kiện Robbins–Monro theo cặp (Định nghĩa 06.19) | $Q_t(s,a)\to q_*(s,a)$ hầu chắc chắn với mọi cặp; không cho tốc độ |
+| Q-learning bán gradient tuyến tính (Định nghĩa 07.38, Mệnh đề 07.37) | có đồng thời xấp xỉ hàm, bootstrap và học khác chính sách | không có bảo đảm hội tụ chung; có thể phân kỳ |
+| DQN (Nhận xét 08.21) | có cả ba yếu tố trên; bộ nhớ phát lại và mạng mục tiêu giảm hai nguồn bất ổn nhưng không bỏ yếu tố nào | không có bảo đảm hội tụ tổng quát; tác dụng của từng cơ chế được đánh giá bằng thí nghiệm qua nhiều lần chạy |
+
+Trong bảng thứ hai, giả thiết ở hàng đầu và ở hai hàng sau có vai trò khác nhau. Ở hàng đầu, đó là các điều kiện để định lý áp dụng, và mỗi điều kiện có vai trò riêng. Bỏ điều kiện mọi cặp được cập nhật vô hạn lần: một cặp không bao giờ được thử giữ mãi giá trị khởi tạo. Bỏ điều kiện $\sum_n\alpha_n^2<\infty$, chẳng hạn dùng bước học hằng: khi phần thưởng hoặc chuyển trạng thái ngẫu nhiên, mỗi cập nhật vẫn kéo ô theo nhiễu của mẫu mới nhất, nên ô không hội tụ hầu chắc chắn (Sutton và Barto, 2018, §2.5). Bỏ biểu diễn bảng thì sang hàng thứ hai.
+
+Ở hai hàng sau, đó là điều kiện làm mất bảo đảm. Kết luận "không có bảo đảm hội tụ chung" yếu hơn khẳng định thuật toán phân kỳ, và bằng chứng cho nó là một phản ví dụ. Xét TD(0) dự đoán khác chính sách trên hai trạng thái dùng chung tham số vô hướng $w$, với $x(s_1)=1$, $x(s_2)=2$, phần thưởng $R=0$, $\gamma=0{,}9$, $\alpha=0{,}1$, và chỉ chuyển $s_1\to s_2$ được cập nhật. Mỗi bước, $w\leftarrow w+0{,}1\,(0{,}9\cdot2w-w)=1{,}08\,w$, nên $\lvert w_n\rvert\to\infty$ khi $w_0\ne0$ (Mệnh đề 07.37). Giữ $w^-$ cố định $C=10$ bước rồi đồng bộ cho $w_{10}=(1{,}8-0{,}8\cdot0{,}9^{10})\,w^-\approx1{,}521\,w^-$ mỗi chu kỳ, tương đương nhân khoảng $1{,}043$ mỗi bước (Ví dụ 08.24): tham số tăng chậm hơn nhưng vẫn không chặn. Hàng DQN đọc cùng cách. Bộ nhớ phát lại giảm tương quan giữa các mẫu, mạng mục tiêu làm chậm sự thay đổi của đích, còn xấp xỉ hàm, bootstrap và dữ liệu khác chính sách vẫn giữ nguyên. Trong thí nghiệm loại bỏ của Mnih và cộng sự (2015, Extended Data Table 3) trên năm trò chơi Atari, tổ hợp có cả hai cơ chế cho điểm cao nhất; đó là bằng chứng thực nghiệm trên các trò chơi đã thử, chưa có định lý tương ứng.
+
+**Trong thực hành.** Hai trường hợp riêng nối ba hàng của bảng thứ nhất và cho một phép kiểm cài đặt. Với đặc trưng chỉ thị (one-hot), $x(s,a)$ là vector đơn vị của cặp $(s,a)$, nên $x(s,a)^\top w$ là một thành phần của $w$ và cập nhật tuyến tính trùng cập nhật bảng với cùng bước học. Với $N=b=F=C=1$ (khi đó $N_{\mathrm{start}}=1$), bộ tối ưu SGD có tốc độ học $\eta$ và mạng tuyến tính $Q_\theta(o,a)=x(o,a)^\top\theta$, mỗi bước tối ưu của DQN dùng đúng mẫu vừa thu, $\theta^-$ bằng $\theta$ hiện tại, và $\nabla_\theta(y-q)^2=-2(y-q)\,x(O,A)$ khi $y$ trong $\operatorname{sg}$; vậy quy tắc cập nhật của DQN trùng Q-learning bán gradient với bước hằng $\alpha=2\eta$. Ghép hai trường hợp, một bản cài đặt DQN với cấu hình đó và đặc trưng chỉ thị trên một MDP nhỏ phải cho đúng dãy bảng của Q-learning dạng bảng với $\alpha=2\eta$, nên có thể so từng cập nhật với phép tính tay.
+
+DQN giữ dạng đích và hành vi thu dữ liệu của Q-learning, thay lớp hàm và cách dùng dữ liệu; vì có đủ ba yếu tố của bộ ba bất ổn, nó không thừa hưởng Định lý 06.21. Do đó các quy tắc ở bảng thứ nhất được kiểm bằng phép tính trên từng mini-batch, còn kết luận về hội tụ chỉ được kiểm bằng thí nghiệm qua nhiều lần chạy độc lập.
+
 ### Kiểm tra tổng hợp, thảo luận và đọc thêm
 
 **Kiểm tra tổng hợp (bốn câu).**
