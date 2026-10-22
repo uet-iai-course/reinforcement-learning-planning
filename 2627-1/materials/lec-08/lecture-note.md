@@ -84,7 +84,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 | `lec-08-topic-04` | Ví dụ: đích tại mẫu chuyển kết thúc | tr. 21 | Phân biệt $Z$ và $U$ | Vào: topic-03 → Ra: đích đúng |
 | `lec-08-topic-05` | Kết thúc và cắt ngắn | tr. 21 | Hai cờ $Z$, $U$; mặt nạ chỉ dùng $Z$ | Vào: topic-04 → Ra: bộ sáu thành phần |
 | `lec-08-topic-18` | Tương quan giữa các mẫu chuyển liên tiếp | tr. 19, 30 | Vấn đề của mẫu liền nhau | Vào: topic-05 → Ra: nhu cầu bộ nhớ phát lại |
-| `lec-08-topic-06` | Bộ nhớ phát lại | tr. 19–21, 32 | Cơ chế lưu và lấy mẫu | Vào: topic-18 → Ra: mini-batch |
+| `lec-08-topic-06` | Bộ nhớ phát lại | tr. 18–20, 32 | Bộ đệm vòng dung lượng $N$, ghi đè mẫu cũ nhất, rút đều; quan sát cuối khi tự đặt lại | Vào: topic-18 → Ra: mini-batch |
 | `lec-08-topic-07` | Giới hạn của bộ nhớ phát lại | tr. 19, 29–32 | Giới hạn của replay | Vào: topic-06 → Ra: phát biểu đúng phạm vi |
 | `lec-08-topic-08` | Gather và dừng gradient | tr. 16, 22, 34 | Đồ thị tính toán | Vào: topic-03 → Ra: loss batch |
 | `lec-08-topic-09` | Mất mát và gradient batch | tr. 21–22, 34 | MSE và $\nabla_\theta L$ | Vào: topic-08 → Ra: gradient cho optimizer |
@@ -454,23 +454,38 @@ Chúng ta cần một cách chọn mẫu cho mini-batch không phụ thuộc th�
 <!-- note-topic-id: lec-08-topic-06 -->
 ### Bộ nhớ phát lại (experience replay)
 
-**Môi trường tự đặt lại.** Khi môi trường tự đặt lại sau bước cuối của lượt, quan sát trả về thuộc lượt mới, không thuộc mẫu chuyển vừa xảy ra. Bộ nhớ phải lưu quan sát cuối của mẫu chuyển làm $O_{t+1}$, không thay bằng quan sát đầu của lượt mới; tên trường chứa quan sát cuối phụ thuộc phiên bản thư viện.
+Theo Ví dụ 08.9, bốn mẫu chuyển liền nhau, với tương quan $0{,}9^k$ giữa hai mẫu cách nhau $k$ bước, giảm phương sai của gradient trung bình như khoảng $1{,}1$ mẫu độc lập. Muốn mini-batch gồm các mẫu ở những thời điểm xa nhau, chúng ta phải giữ lại các mẫu chuyển đã thu thập thay vì dùng mỗi mẫu một lần, và phải chọn mẫu cho mini-batch không theo thứ tự thu thập. Bộ nhớ của máy tính có hạn, nên còn phải quy định mẫu nào bị bỏ khi bộ nhớ đầy. Bài giảng gốc (trang 19, 32) nêu hai việc đầu: lưu kinh nghiệm của tác tử, rồi lấy ngẫu nhiên các mini-batch từ đó. Mnih và cộng sự (2015, mục Methods) giải quyết việc thứ ba: bộ nhớ chỉ giữ $N$ mẫu chuyển gần nhất, và mini-batch được lấy đều từ các mẫu đang lưu.
 
-**Vấn đề.** Học từ các chuyển tiếp liền nhau theo thứ tự thời gian khiến mini-batch
-chứa thông tin trùng lặp và lệch theo quỹ đạo gần nhất.
+::: definition Định nghĩa 08.7 (Bộ nhớ phát lại)
+Cho số nguyên dương $N$, gọi là dung lượng, và cỡ mini-batch $b\in\mathbb N_+$. Bộ nhớ phát lại (experience replay) là một bộ đệm vòng $\mathcal D$ gồm $N$ vị trí đánh số $1,\dots,N$ và một con trỏ ghi; mỗi vị trí chứa nhiều nhất một mẫu chuyển sáu thành phần $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$ của Định nghĩa 08.6. Đánh số các mẫu chuyển $1,2,\dots$ theo thứ tự thu thập. Bộ nhớ hoạt động theo hai quy tắc.
 
-**Trực quan.** Thay vì học từ chuỗi liên tiếp, DQN lưu nhiều chuyển tiếp vào bộ
-đệm $\mathcal D$ và huấn luyện trên các bộ sáu thành phần được lấy ngẫu nhiên.
+1. Ghi: sau mỗi bước môi trường, mẫu chuyển vừa thu thập được ghi vào vị trí của con trỏ ghi, rồi con trỏ tiến một vị trí, từ vị trí $N$ quay về vị trí $1$. Mẫu chuyển thứ $k$ nằm ở vị trí $((k-1)\bmod N)+1$; khi bộ nhớ đã đầy, mẫu mới ghi đè mẫu cũ nhất.
+2. Rút: một mini-batch gồm $b$ lần rút đều từ $\lvert\mathcal D\rvert=\min(k,N)$ mẫu đang lưu sau $k$ lần ghi. Các lần rút độc lập (rút có hoàn lại), hoặc không lặp lại vị trí (rút không hoàn lại, cần $b\le\lvert\mathcal D\rvert$); trong cả hai cách, xét riêng từng lần rút, mỗi mẫu đang lưu có xác suất $1/\lvert\mathcal D\rvert$.
+:::
 
-**Ví dụ.** Bộ đệm vòng dung lượng $N\in\mathbb N_+$; mini-batch có $b\in\mathbb N_+$
-mẫu với $b\le N$. Lấy đều các vị trí trong $\mathcal D$ và tái sử dụng chuyển tiếp.
+Hai quy tắc trả lời hai câu hỏi khác nhau. Quy tắc ghi quyết định bộ nhớ chứa gì: sau $k\ge N$ lần ghi, $\mathcal D$ chứa đúng $N$ mẫu chuyển gần nhất, từ mẫu $k-N+1$ đến mẫu $k$. Quy tắc rút quyết định mini-batch gồm gì: mọi mẫu đang lưu có cùng cơ hội được chọn, bất kể được ghi lúc nào. Với $N$ lớn, hai lần rút độc lập hiếm khi trúng hai mẫu liền nhau: xác suất đó bằng $2(N-1)/N^2\approx2/N$, tức khoảng $2\cdot10^{-6}$ với $N=10^6$, dung lượng Mnih và cộng sự (2015, Extended Data Table 1) dùng cho Atari cùng cỡ mini-batch $b=32$.
 
-**Hình thức.** Lưu
-$(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$ vào $\mathcal D$; lấy ngẫu nhiên
-mini-batch từ $\mathcal D$ để tính mất mát.
+Mỗi quy tắc có vai trò riêng. Dung lượng hữu hạn giữ bộ nhớ trong giới hạn của máy, nhưng $N$ phải lớn hơn nhiều so với $b$. Bỏ yêu cầu này, chẳng hạn $N=b=4$ và rút không hoàn lại: mỗi mini-batch là đúng bốn mẫu chuyển gần nhất, tức bốn mẫu liền nhau như trong Ví dụ 08.9, nên tương quan trong mini-batch không giảm. Ghi đè mẫu cũ nhất giữ $\mathcal D$ gần với hành vi hiện tại. Bỏ quy tắc này, chẳng hạn ngừng ghi khi bộ nhớ đầy: $\mathcal D$ giữ mãi $N$ mẫu đầu tiên, sinh ra khi $\theta$ còn gần giá trị khởi tạo, nên các quan sát mà chính sách về sau mới đi tới không bao giờ vào mini-batch. Rút đều làm mini-batch không phụ thuộc thứ tự thu thập. Bỏ quy tắc này, chẳng hạn luôn rút $b$ mẫu mới nhất: phép cập nhật trở lại thành cập nhật theo thứ tự thời gian của Ví dụ 08.9.
 
-**Ứng dụng và giới hạn.** Lợi ích: phá vỡ tương quan theo thời gian, tái sử dụng
-dữ liệu quá khứ, cải thiện hiệu quả mẫu. Giới hạn: xem topic-07.
+::: example Ví dụ 08.10 (Bộ đệm vòng dung lượng 6)
+**Dữ kiện.** $N=6$, $b=2$. Tác tử đã thu thập $8$ mẫu chuyển, đánh số $1,\dots,8$ theo thứ tự thu thập.
+
+**Tính.** Mẫu $1$ đến $6$ lần lượt vào vị trí $1$ đến $6$, và bộ nhớ đầy. Mẫu $7$ vào vị trí $((7-1)\bmod6)+1=1$, ghi đè mẫu $1$; mẫu $8$ vào vị trí $2$, ghi đè mẫu $2$. Sau $8$ bước, các vị trí $1,\dots,6$ chứa mẫu $7,8,3,4,5,6$, $\lvert\mathcal D\rvert=6$, và con trỏ ghi ở vị trí $3$, nơi chứa mẫu $3$, mẫu cũ nhất. Mỗi lần rút chọn mỗi mẫu $3,\dots,8$ với xác suất $1/6$; mẫu $1$ và $2$ có xác suất $0$.
+
+**Diễn giải.** Mini-batch trong hình gồm vị trí $2$ và $5$, tức mẫu $8$ và mẫu $5$, cách nhau ba bước trên dòng thời gian. Mẫu $9$ sẽ ghi đè mẫu $3$, và sau đó mẫu $3$ không còn được rút.
+:::
+
+![Sáu ô xếp thành một dải, nối thành vòng bằng một mũi tên đi từ ô thứ sáu vòng xuống dưới về ô thứ nhất. Sau 8 bước, các ô từ trái sang phải chứa mẫu 7, 8, 3, 4, 5, 6: mẫu 7 và 8, viền đậm và chữ đậm, đã ghi đè mẫu 1 và 2. Mũi tên con trỏ ghi chỉ vào ô chứa mẫu 3, mẫu cũ nhất, nơi mẫu 9 sẽ được ghi. Hai tam giác đặc dưới ô chứa mẫu 8 và ô chứa mẫu 5 đánh dấu một mini-batch b bằng 2 rút đều từ bộ đệm.](img/lec-08/replay-buffer.svg)
+
+Hình vẽ trạng thái của bộ nhớ trong Ví dụ 08.10. Sáu ô là sáu vị trí; mũi tên vòng từ ô cuối về ô đầu chỉ thứ tự ghi của bộ đệm vòng. Hai ô đầu, viền và chữ đậm, chứa mẫu $7$ và $8$, đã ghi đè mẫu $1$ và $2$. Mũi tên phía trên chỉ vị trí của con trỏ ghi, ô chứa mẫu cũ nhất. Hai tam giác đặc đánh dấu hai vị trí được rút vào một mini-batch cỡ $b=2$.
+
+**Môi trường tự đặt lại.** Quy tắc ghi đòi mỗi vị trí chứa đúng một mẫu chuyển, tức $O_{t+1}$ phải là quan sát mà tác tử nhận ngay sau $A_t$. Ở bước cuối của lượt, khi $Z_{t+1}\lor U_{t+1}=1$, một số thư viện môi trường tự đặt lại. Trong một cách cài đặt, lời gọi thực hiện bước trả về quan sát đầu của lượt mới, còn quan sát cuối của lượt cũ nằm trong một trường thông tin riêng, có tên phụ thuộc phiên bản thư viện. Bộ nhớ phải lưu quan sát cuối của lượt cũ làm $O_{t+1}$; quan sát đầu của lượt mới là quan sát xuất phát của mẫu chuyển kế tiếp. Trong một cách cài đặt khác, lời gọi kế tiếp chỉ đặt lại môi trường; khi đó không có mẫu chuyển nào đi từ quan sát cuối của lượt cũ sang quan sát đầu của lượt mới, và bộ nhớ không được lưu cặp quan sát đó. Trong cách thứ nhất, lưu nhầm quan sát đầu của lượt mới làm $O_{t+1}$ chỉ đổi đích của mẫu chuyển bị cắt ngắn: với $Z_{t+1}=1$, mặt nạ $(1-Z_{t+1})$ xóa phần bootstrap nên $O_{t+1}$ không vào đích; với $U_{t+1}=1$, $Z_{t+1}=0$, đích $R_{t+1}+\gamma\max_{a'}Q_{\theta^-}(O_{t+1},a')$ lấy giá trị từ một quan sát không nối với $O_t$.
+
+**Trong thực hành.** Bộ nhớ thường được cài bằng các mảng cấp phát sẵn $N$ hàng cho từng thành phần của mẫu chuyển, một con trỏ ghi và một bộ đếm $\lvert\mathcal D\rvert$; rút một mini-batch là sinh $b$ chỉ số đều trong $\{1,\dots,\lvert\mathcal D\rvert\}$. Với đầu vào Atari của Ví dụ 08.2, mỗi mẫu chứa hai chồng bốn khung $84\times84$, tức $2\cdot28\,224=56\,448$ số; nếu mỗi điểm ảnh là một byte, $N=10^6$ mẫu chiếm khoảng $56$ GB. Hai chồng của các mẫu liền nhau dùng chung ba khung, nên lưu mỗi khung một lần ($84\cdot84=7\,056$ byte) rồi ghép chồng khi rút giảm con số này khoảng tám lần. Bộ nhớ chỉ đổi cách chọn mẫu: đích của một mẫu được rút vẫn tính theo Định nghĩa 08.4 với $\theta^-$ tại lúc rút, không phải $\theta^-$ tại lúc mẫu được thu thập (bài giảng gốc, trang 20).
+
+**Kiểm tra nhanh.** Trong Ví dụ 08.10, sau $10$ bước, $\mathcal D$ chứa những mẫu nào và mẫu $11$ sẽ ghi vào vị trí nào? Mẫu $9$ và $10$ ghi đè mẫu $3$ và $4$ ở vị trí $3$ và $4$, nên $\mathcal D$ chứa mẫu $5,\dots,10$; mẫu $11$ vào vị trí $((11-1)\bmod6)+1=5$ và ghi đè mẫu $5$.
+
+Bộ nhớ phát lại cho mỗi bước tối ưu một mini-batch rút đều từ $N$ mẫu chuyển gần nhất. Mỗi mẫu trong $\mathcal D$ do phiên bản hành vi lúc thu thập sinh ra, nên $\mathcal D$ trộn dữ liệu của nhiều chính sách hành vi, và các chính sách này khác chính sách tham lam mà đích hồi quy đánh giá. Ở mục tiếp theo, chúng ta xét vì sao đích hồi quy vẫn dùng được trên dữ liệu như vậy mà không cần tỉ số lấy mẫu quan trọng.
 
 ### Dữ liệu khác chính sách trong bộ nhớ
 

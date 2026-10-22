@@ -1,1 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 350" role="img" aria-labelledby="t d"><title id="t">Bộ nhớ phát lại</title><desc id="d">Các chuyển tiếp liên tiếp được ghi vào bộ đệm vòng; một mini-batch lấy ngẫu nhiên các vị trí không liền nhau để giảm tương quan ngắn hạn.</desc><defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L10 3L0 6Z" fill="#B15A2B"/></marker></defs><text x="25" y="55" font-size="36" font-weight="700">dòng thời gian</text><g font-size="34" text-anchor="middle"><rect x="25" y="85" width="125" height="70" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="88" y="130">τ₁</text><rect x="150" y="85" width="125" height="70" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="213" y="130">τ₂</text><rect x="275" y="85" width="125" height="70" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="338" y="130">τ₃</text><text x="440" y="130">…</text><rect x="500" y="85" width="125" height="70" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="563" y="130">τₖ</text></g><line x1="650" y1="120" x2="755" y2="120" stroke="#B15A2B" stroke-width="6" marker-end="url(#a)"/><rect x="770" y="55" width="245" height="130" rx="16" fill="#F7EFE6" stroke="#B15A2B" stroke-width="5"/><text x="892" y="105" font-size="36" text-anchor="middle" font-weight="700">Bộ đệm vòng</text><text x="892" y="150" font-size="34" text-anchor="middle">dung lượng N</text><path d="M890 185C890 245 760 250 690 250" fill="none" stroke="#B15A2B" stroke-width="6" marker-end="url(#a)"/><g font-size="34" text-anchor="middle"><rect x="330" y="240" width="100" height="65" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="380" y="282">τ₃</text><rect x="455" y="240" width="100" height="65" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="505" y="282">τ₉</text><rect x="580" y="240" width="100" height="65" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="630" y="282">τ₂</text><text x="155" y="282" font-weight="700">mini-batch</text></g><text x="525" y="340" font-size="34" text-anchor="middle">giảm tương quan ngắn hạn, không tạo dữ liệu i.i.d.</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 0 1000 204" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Bộ đệm vòng dung lượng 6 sau 8 bước</title>
+<desc id="d">Sáu ô xếp thành một dải, nối thành vòng bằng một mũi tên đi từ ô thứ sáu vòng xuống dưới về ô thứ nhất. Sau 8 bước, các ô từ trái sang phải chứa mẫu 7, 8, 3, 4, 5, 6: mẫu 7 và 8, tô viền đậm khác màu, đã ghi đè mẫu 1 và 2. Mũi tên con trỏ ghi chỉ vào ô chứa mẫu 3, mẫu cũ nhất, nơi mẫu 9 sẽ được ghi. Hai tam giác đặc dưới ô chứa mẫu 8 và ô chứa mẫu 5 đánh dấu một mini-batch b bằng 2 rút đều từ bộ đệm.</desc>
+<defs><marker id="arr" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" refX="18" refY="10" orient="auto"><path d="M0,0 L20,10 L0,20 Z" fill="#B15A2B"/></marker></defs>
+<text x="940" y="28" font-size="28" font-weight="700" text-anchor="end"><tspan font-style="italic">N</tspan> = 6, sau 8 bước</text>
+<path d="M830,94 H872 V162 H80 V94 H107" fill="none" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
+
+<rect x="110" y="62" width="120" height="64" fill="#F7EFE6" stroke="#B15A2B" stroke-width="5"/>
+<text x="170" y="105" font-size="28" text-anchor="middle" font-weight="700">mẫu 7</text>
+<rect x="230" y="62" width="120" height="64" fill="#F7EFE6" stroke="#B15A2B" stroke-width="5"/>
+<text x="290" y="105" font-size="28" text-anchor="middle" font-weight="700">mẫu 8</text>
+<path d="M290,132 L303,154 L277,154 Z" fill="#2F3E7A"/>
+<rect x="350" y="62" width="120" height="64" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="410" y="105" font-size="28" text-anchor="middle">mẫu 3</text>
+<rect x="470" y="62" width="120" height="64" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="530" y="105" font-size="28" text-anchor="middle">mẫu 4</text>
+<rect x="590" y="62" width="120" height="64" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="650" y="105" font-size="28" text-anchor="middle">mẫu 5</text>
+<path d="M650,132 L663,154 L637,154 Z" fill="#2F3E7A"/>
+<rect x="710" y="62" width="120" height="64" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="770" y="105" font-size="28" text-anchor="middle">mẫu 6</text>
+<text x="410" y="28" font-size="26" text-anchor="middle">con trỏ ghi: mẫu 9 sẽ ghi đè mẫu 3</text>
+<line x1="410" y1="36" x2="410" y2="60" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
+<text x="110" y="198" font-size="26">mẫu 7, 8 đã ghi đè mẫu 1, 2</text>
+<path d="M540,176 L553,198 L527,198 Z" fill="#2F3E7A"/>
+<text x="562" y="198" font-size="26">vị trí được rút, <tspan font-style="italic">b</tspan> = 2</text>
+</svg>

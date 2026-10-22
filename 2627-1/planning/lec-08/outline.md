@@ -61,6 +61,8 @@ Thuật ngữ theo Bài 06–07. Lần đầu xuất hiện trong mỗi tài li�
 | cắt ngắn | truncation | cờ $U$ |
 | đặt lại, tự đặt lại | reset, autoreset | |
 | bộ nhớ phát lại | experience replay; replay buffer | $\mathcal D$ |
+| bộ đệm vòng; con trỏ ghi | ring buffer (circular buffer); write pointer | dung lượng $N$ |
+| rút đều (có hoặc không hoàn lại) | uniform sampling (with or without replacement) | $b$ lần rút |
 | làm nóng bộ nhớ | warm-up | $N_{\mathrm{start}}$ |
 | phép chọn theo hành động | gather | |
 | dừng gradient | stop-gradient | $\operatorname{sg}$ |
