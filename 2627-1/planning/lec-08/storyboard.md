@@ -25,9 +25,9 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | mạch | mã | tiêu đề dự kiến | quyết định | lý do | C0 |
 |---|---|---|---|---|---|
 | 1 | `L08-01` | Deep Q-Learning (bìa) | sửa | Bỏ phụ đề "Từ…đến…"; thêm câu luận đề, đơn vị, năm học | 1.1 |
-| 1 | `L08-01b` | Tiên quyết và quy ước | thêm (gộp `L08-04`, `L08-05`) | Dòng "Nhắc lại:" cho Q-learning bảng và giả thiết hội tụ (MDP hữu hạn, phần thưởng bị chặn, $\gamma<1$, mọi cặp cập nhật vô hạn lần, Robbins–Monro theo cặp), Q-learning bán gradient tuyến tính có đủ bộ ba bất ổn, mạng nhiều tầng và mạng tích chập học $\theta$ bằng lan truyền ngược | chưa có |
-| 1 | `L08-04` | (gộp vào `L08-01b`) | gộp, bỏ trang riêng | Bài 06 đã dạy; $Z$ xuất hiện trước định nghĩa | 1.2 (tạm) |
-| 1 | `L08-05` | (gộp vào `L08-01b`; ý khác chính sách sang `L08-05r`) | gộp, bỏ trang riêng | "replay" dùng trước khi giới thiệu; 82 âm tiết; lý do không cần tỉ số lấy mẫu quan trọng phải sửa | 1.3 (tạm) |
+| 1 | `L08-01b`, `L08-01b2` | Tiên quyết và quy ước (hai trang cùng tiêu đề) | thêm (gộp `L08-04`, `L08-05`) | Dòng "Nhắc lại:" cho Q-learning bảng và giả thiết hội tụ (MDP hữu hạn, phần thưởng bị chặn, $\gamma<1$, mọi cặp cập nhật vô hạn lần, Robbins–Monro theo cặp), Q-learning bán gradient tuyến tính có đủ bộ ba bất ổn, mạng nhiều tầng và mạng tích chập học $\theta$ bằng lan truyền ngược | 1.2–1.3 (S2) |
+| 1 | `L08-04` | (gộp vào `L08-01b`) | gộp, bỏ trang riêng | Bài 06 đã dạy; $Z$ xuất hiện trước định nghĩa | đã bỏ ở S2 |
+| 1 | `L08-05` | (gộp vào `L08-01b`; ý khác chính sách sang `L08-05r`) | gộp, bỏ trang riêng | "replay" dùng trước khi giới thiệu; 82 âm tiết; lý do không cần tỉ số lấy mẫu quan trọng phải sửa | đã bỏ ở S2; ý dữ liệu khác chính sách trong bộ nhớ viết lại ở `L08-05r` |
 | 1 | `L08-01c` | Tiên quyết và quy ước (cùng tiêu đề) | thêm | Dòng "Ký hiệu:": $O_t$, $\mathcal A$ hữu hạn, $\theta$, $t$, $k_{\mathrm{opt}}$, $i$, $\epsilon_{\mathrm{exp}}$ và $\varepsilon$ của Bài 06, $q_i$ khác $q_*$ | chưa có |
 | 1 | `L08-02` | Mục tiêu học tập | sửa | Sáu mục tiêu ứng mạch 2–7 (`outline.md`) | 1.4 |
 | 1 | `L08-02b` | Nội dung | thêm | Bảy mục khớp trang tiêu đề mạch và `#/N`; dòng đọc trước: Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015) | chưa có |
@@ -83,7 +83,7 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 7 | `L08-33` | Câu hỏi tự kiểm tra | sửa | Mở bằng "Câu hỏi: trả lời và nêu kết quả đã dùng."; bỏ hộp chỉ đường | 7.2 |
 | 7 | `L08-K5` | Bài tập về nhà và tài liệu đọc | thêm | Bảng `Mạch \| Bài tập` trỏ Bài tập 08.x của ghi chú; "Tài liệu đọc:"; liên kết ghi chú; dòng nối Bài 09 | chưa có |
 
-Số trang sau đợt sửa dự kiến: 37 trang hiện có − 5 trang bỏ (`L08-04`, `L08-05`, `L08-06`, `L08-15`, `L08-16`) + 21 trang thêm = 53 trang, chưa tính `X02b` và các trang cùng tiêu đề được tách khi vượt trần mật độ.
+Số trang sau đợt sửa dự kiến: 37 trang hiện có − 5 trang bỏ (`L08-04`, `L08-05`, `L08-06`, `L08-15`, `L08-16`) + 22 trang thêm (kể cả `L08-01b2`) = 54 trang, chưa tính `X02b` và các trang cùng tiêu đề được tách khi vượt trần mật độ.
 
 ### Lệch khỏi trật tự nguồn (đợt sửa 2026-10-22)
 
@@ -109,6 +109,16 @@ Chưa có ngoại lệ. Số âm tiết trước sửa của các trang vượt 
 - **Lý do tồn tại, nhu cầu, liên kết:** điểm vào bài và mạch 1; trang sau là "Tiên quyết và quy ước" (hiện tạm là `L08-04`). Ghi chú diễn giả nêu kết quả nhận từ Bài 07 (hàm tuyến tính, Q-learning bán gradient có đủ bộ ba bất ổn), các thành phần của DQN và phạm vi kết luận. Mục tiêu hỗ trợ: định hướng cho cả sáu mục tiêu.
 - **Mật độ:** trước sửa 19 âm tiết mặt trang, 2 dòng, ghi chú 37 âm tiết; sau sửa 58 âm tiết (không tính `h1`), 4 dòng nội dung, dòng hiển thị dài nhất dưới 20 âm tiết, 0 công thức hiển thị, 1 hộp chữ 1 câu, ghi chú 141 âm tiết.
 - **Ghi chú bài giảng:** đoạn mở đầu thay dòng giảng viên–học kỳ–thời lượng và đoạn mô tả tài liệu nguồn bằng một đoạn giới thiệu khớp câu luận đề.
+
+#### `L08-01b`, `L08-01b2` Tiên quyết và quy ước, phần Nhắc lại (bước S2)
+
+- **Trang muốn nói gì:** các kết quả của Bài 06–07 mà Bài 08 dùng: quy tắc Q-learning dạng bảng; học khác chính sách và lý do không cần tỉ số lấy mẫu quan trọng; giả thiết hội tụ tới $q_*$; Q-learning bán gradient tuyến tính có bộ ba bất ổn; mạng nhiều tầng và mạng tích chập học $\theta$ bằng lan truyền ngược.
+- **Phục vụ mạch nào và thế nào:** mạch 1. Cho mạch 2 mục tiêu Q-learning để biến thành đích hồi quy; cho mạch 3 khái niệm học khác chính sách; cho mạch 6 định nghĩa bộ ba bất ổn và giả thiết hội tụ dạng bảng để so sánh.
+- **Vấn đề còn lại trước sửa:** `L08-04` và `L08-05` dạy lại Bài 06 như nội dung mới, không có "Nhắc lại:" (`review-structure.md` §3, bảng phát hiện nghiêm trọng); $Z$ xuất hiện trước định nghĩa (`review-math.md`, `review-student.md`); lý do không cần tỉ số lấy mẫu quan trọng sai (`review-math.md`, nghiêm trọng 1); giả thiết hội tụ thiếu MDP hữu hạn, phần thưởng bị chặn, $\gamma<1$ (`review-math.md`, nghiêm trọng 4); `L08-05` dùng "replay" trước khi giới thiệu, 82 âm tiết; thiếu nhắc lại mạng nơ-ron (`review-student.md`, nghiêm trọng).
+- **Quyết định:** thêm hai trang cùng tiêu đề, gộp và bỏ `L08-04`, `L08-05`. Một trang không đủ chỗ (khoảng 95 âm tiết), nên trang đầu giữ quy tắc cập nhật và học khác chính sách (Bài 06), trang sau giữ hội tụ dạng bảng, Q-learning bán gradient và mạng nơ-ron (đi từ bảo đảm của bảng tới chỗ bảo đảm mất). Không dùng $Z$; quy ước $Q(s,\cdot)=0$ tại trạng thái kết thúc như Bài 06. Lý do không cần tỉ số lấy mẫu quan trọng rút còn một dòng trên mặt trang, lập luận đầy đủ trong ghi chú diễn giả. "Hầu chắc chắn" và vai trò của từng giả thiết nằm trong ghi chú diễn giả. Ý "bộ nhớ phát lại giữ mẫu của các chính sách cũ" của `L08-05` chuyển sang `L08-05r` ở mạch 3.
+- **Liên kết:** trước là bìa `L08-01`; sau là trang "Ký hiệu" `L08-01c` (chưa có; hiện là `L08-02`). Mục tiêu hỗ trợ: mục tiêu 2 (học khác chính sách), mục tiêu 5 (giả thiết hội tụ còn thiếu).
+- **Mật độ:** trước sửa `L08-04` 2 âm tiết + 2 công thức hiển thị; `L08-05` 82 âm tiết (vượt trần). Sau sửa `L08-01b` 55 âm tiết, 4 dòng (dài nhất 18 âm tiết), 1 công thức hiển thị (cỡ chữ thân, không `.math-large`, để vừa khung), 0 hộp chữ, ghi chú 121 âm tiết; `L08-01b2` 59 âm tiết, 5 dòng (dài nhất 20 âm tiết), 0 công thức hiển thị, 0 hộp chữ, ghi chú 148 âm tiết.
+- **Ghi chú bài giảng:** "Phần 1 — Cầu nối từ Q-learning dạng bảng" thành mục "Kiến thức tiên quyết" (sáu nhóm in đậm có số hiệu và phát biểu lại); lý do không cần tỉ số lấy mẫu quan trọng và giả thiết hội tụ sửa theo Bài 06 (Nhận xét 06.17, Định lý 06.21); đoạn "Về độ phức tạp mẫu" chuyển tạm xuống cuối mục "Vì sao cần Deep Q-learning", sẽ viết lại ở bước `L08-02c`; câu lý do sai trong mục bộ nhớ phát lại cũng sửa ở bước này.
 
 ### Bản trước đợt sửa 2026-10-22
 

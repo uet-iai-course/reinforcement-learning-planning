@@ -6,6 +6,20 @@ Sau bài này, người học có thể giải thích hai cơ chế ổn định
 đích có mặt nạ kết thúc; kiểm tra kích thước tensor và đường gradient; viết vòng
 huấn luyện với hai đồng hồ; và đánh giá đúng giới hạn hội tụ của thuật toán.
 
+<!-- note-topic-id: lec-08-topic-13 -->
+## Kiến thức tiên quyết
+
+Kết quả của bài trước được dẫn theo mục của ghi chú bài đó, dạng "ghi chú Bài 06, Mục 4", và phát biểu lại dưới đây.
+
+- **Q-learning dạng bảng** (ghi chú Bài 06, Mục 4, Định nghĩa 06.15, Thuật toán 06.16). Trên một quá trình quyết định Markov (Markov decision process, MDP) hữu hạn, sau khi thực hiện $A_t$ tại $S_t$ và nhận phần thưởng $R_{t+1}$, trạng thái $S_{t+1}$, Q-learning cập nhật đúng một ô của bảng:
+  $$Q_{t+1}(S_t,A_t)=Q_t(S_t,A_t)+\alpha_t\Bigl[R_{t+1}+\gamma\max_{a'}Q_t(S_{t+1},a')-Q_t(S_t,A_t)\Bigr],$$
+  các ô khác giữ nguyên, và $Q(s,\cdot)=0$ khi $s$ là trạng thái kết thúc. Ở đây $\alpha_t\in(0,1]$ là bước học của cặp $(S_t,A_t)$ tại lần cập nhật này và $\gamma\in[0,1)$ là hệ số chiết khấu. Biểu thức trong ngoặc vuông, trừ số hạng $Q_t(S_t,A_t)$, là mục tiêu cập nhật; nó chứa ước lượng hiện tại $Q_t$ nên là mục tiêu bootstrap (bootstrap target).
+- **Chính sách hành vi, chính sách đích và học khác chính sách** (ghi chú Bài 06, Mục 1 và Mục 4, Định nghĩa 06.3, 06.14, Nhận xét 06.17). Chính sách $\varepsilon$-tham lam ($\varepsilon$-greedy) theo $Q$ với $m$ hành động chọn hành động tham lam với xác suất $1-\varepsilon+\varepsilon/m$ và mỗi hành động khác với xác suất $\varepsilon/m$. Trong Q-learning, chính sách hành vi $\varepsilon$-tham lam sinh dữ liệu, còn chính sách đích là chính sách tham lam theo $Q$; hai chính sách khác nhau nên Q-learning học khác chính sách (off-policy). Với chính sách đích tham lam $\pi$, $\max_{a'}Q(S_{t+1},a')=\sum_{a'}\pi(a'\mid S_{t+1})Q(S_{t+1},a')$, tức phép cực đại chính là kỳ vọng theo chính sách đích. Q-learning một bước không cần tỉ số lấy mẫu quan trọng (importance sampling ratio) vì hai lẽ: $A_t$ là đối số điều kiện của ô $Q(S_t,A_t)$, ô ước lượng $q_*(S_t,A_t)$, nên việc hành vi chọn $A_t$ không làm lệch mục tiêu; còn phần tiếp nối tại $S_{t+1}$ được tính trọn bằng phép cực đại trên bảng, không qua một hành động lấy mẫu từ hành vi. Hành vi vẫn quyết định cặp nào được cập nhật: một cặp không bao giờ được chọn giữ mãi giá trị khởi tạo.
+- **Hội tụ của Q-learning dạng bảng** (ghi chú Bài 06, Mục 5, Định nghĩa 06.19, Định lý 06.21). Giả sử MDP hữu hạn với động lực không đổi theo thời gian, phần thưởng bị chặn, $0\le\gamma<1$, mẫu sinh từ chính MDP, mọi cặp $(s,a)$ được cập nhật vô hạn lần, và với mỗi cặp, dãy bước học thỏa điều kiện Robbins–Monro $\sum_n\alpha_n(s,a)=\infty$, $\sum_n\alpha_n(s,a)^2<\infty$. Khi đó $Q_t(s,a)\to q_*(s,a)$ hầu chắc chắn với mọi cặp. Kết quả là tiệm cận và chỉ áp dụng cho biểu diễn bảng; chính sách hành vi tùy ý miễn là phủ mọi cặp.
+- **Xấp xỉ tuyến tính và Q-learning bán gradient** (ghi chú Bài 07, Mục 1 và Mục 5, Định nghĩa 07.35). Bảng được thay bằng $\hat q(s,a,w)=x(s,a)^\top w$, với $x(s,a)\in\mathbb R^d$ là vector đặc trưng chọn trước và $w\in\mathbb R^d$ dùng chung cho mọi cặp. Với mục tiêu $y_t=R_{t+1}+\gamma\max_{a'}\hat q(S_{t+1},a',w_n)$, hoặc $y_t=R_{t+1}$ khi $S_{t+1}$ kết thúc, cập nhật bán gradient (semi-gradient) là $w_{n+1}=w_n+\alpha_n\bigl(y_t-\hat q(S_t,A_t,w_n)\bigr)x(S_t,A_t)$: mục tiêu được coi là hằng khi lấy gradient, dù nó phụ thuộc $w_n$. Tại bước cắt ngắn, $S_{t+1}$ chưa kết thúc nên mục tiêu vẫn chứa phép cực đại.
+- **Bộ ba bất ổn** (ghi chú Bài 07, Mục 5, Mệnh đề 07.37, Định nghĩa 07.38). Một phương pháp học giá trị có bộ ba bất ổn (deadly triad) khi có đồng thời xấp xỉ hàm, bootstrap và học khác chính sách. Q-learning bán gradient có cả ba, nên không có bảo đảm hội tụ chung. Mệnh đề 07.37 cho một ví dụ phân kỳ của TD(0) khác chính sách cùng ba yếu tố: với $x(s_1)=1$, $x(s_2)=2$, chỉ cập nhật chuyển $s_1\to s_2$ có phần thưởng $0$, $\gamma\in(\tfrac12,1)$ và $\alpha>0$, tham số thỏa $w_n=\bigl(1+\alpha(2\gamma-1)\bigr)^nw_0$, nên $\lvert w_n\rvert\to\infty$ khi $w_0\ne0$.
+- **Mạng nơ-ron và lan truyền ngược** (kiến thức học máy tiên quyết, không thuộc ghi chú Bài 01–07; Goodfellow, Bengio và Courville, 2016, Chương 6 và 9). Mạng nhiều tầng (multilayer perceptron, MLP) là hợp của các ánh xạ affine và hàm kích hoạt phi tuyến; mạng tích chập (convolutional neural network, CNN) dùng các tầng tích chập có trọng số dùng chung trên mọi vị trí của ảnh. Cả hai là hàm khả vi theo vector tham số $\theta$, và lan truyền ngược (backpropagation) tính gradient của một hàm mất mát vô hướng theo $\theta$ bằng quy tắc dây chuyền. Chương này chỉ dùng mạng như một hàm khả vi theo $\theta$.
+
 ---
 
 ## Bản đồ chủ đề (bốn nhóm)
@@ -14,7 +28,7 @@ huấn luyện với hai đồng hồ; và đánh giá đúng giới hạn hội
 
 | Mã | Chủ đề | Nguồn trang | Vai trò | Vào → Ra |
 |---|---|---|---|---|
-| `lec-08-topic-13` | Cầu nối từ Q-learning dạng bảng (Bài 07) | tr. 3–7 | Nhắc quy tắc cập nhật, off-policy, điều kiện hội tụ | Vào: Bài 07 → Ra: đích bootstrap dạng bảng |
+| `lec-08-topic-13` | Kiến thức tiên quyết: Q-learning dạng bảng (Bài 06), Q-learning bán gradient và bộ ba bất ổn (Bài 07) | tr. 3–7 | Nhắc quy tắc cập nhật, học khác chính sách, điều kiện hội tụ | Vào: Bài 06–07 → Ra: mục tiêu bootstrap và phạm vi bảo đảm |
 
 ### Nhóm cốt lõi
 
@@ -59,76 +73,6 @@ Ba bài tập ở cuối dùng 30 phút sau phần chính.
 
 ---
 
-## Phần 1 — Cầu nối từ Q-learning dạng bảng
-
-<!-- note-topic-id: lec-08-topic-13 -->
-### Q-learning dạng bảng và những gì cần nhớ lại
-
-**Vấn đề.** Trước khi thay bảng bằng mạng, cần chốt chính xác Q-learning học gì,
-cập nhật thế nào và hội tụ dưới điều kiện nào, vì mọi thành phần này sẽ được
-"tham số hóa" ở các chủ đề sau.
-
-**Trực giác.** Q-learning học hàm giá trị hành động $Q(s,a)$: với mỗi cặp
-trạng thái–hành động, ước lượng tổng phần thưởng chiết khấu dài hạn khi thực hiện
-$a$ tại $s$ rồi hành xử tham lam về sau. Tác tử tương tác bằng hành động tham lam
-hoặc $\epsilon$-tham lam theo ước lượng hiện tại.
-
-**Ví dụ.** Với một mẫu $(s,a,r,s')$, đích là
-$y = r + \gamma \max_{a'} Q_k(s',a')$ và cập nhật dạng bảng là
-
-$$Q_{k+1}(s,a) = Q_k(s,a) + \alpha\bigl(y - Q_k(s,a)\bigr).$$
-
-Ở đây $\alpha$ là tốc độ học, $\gamma$ là hệ số chiết khấu, và $\max_{a'}Q_k(s',a')$
-là giá trị bootstrap: dùng ước lượng hiện tại cho trạng thái kế tiếp thay vì chờ
-đợi return thật.
-
-**Hình thức.** Với $t\in\mathbb N_0$, $\gamma\in[0,1]$, $\alpha_t>0$,
-$S_t\in\mathcal S$, $A_t\in\mathcal A$, $R_{t+1}\in\mathbb R$ và
-$Z_{t+1}\in\{0,1\}$:
-
-$$y_t = R_{t+1} + \gamma(1-Z_{t+1})\max_{a'\in\mathcal A}Q_t(S_{t+1},a'),$$
-$$Q_{t+1}(S_t,A_t) = Q_t(S_t,A_t) + \alpha_t\bigl(y_t - Q_t(S_t,A_t)\bigr).$$
-
-Cờ $Z_{t+1}=1$ khi chuyển tiếp kết thúc quy trình quyết định Markov đang được mô
-hình hóa; khi đó nhánh bootstrap bị triệt tiêu. Dùng $\gamma<1$ cho nhiệm vụ
-tiếp diễn; $\gamma=1$ chỉ phù hợp khi episode kết thúc thích hợp và return hữu hạn.
-
-**Hai chính sách cần phân biệt ngay từ đầu.**
-
-- *Chính sách hành vi* tạo dữ liệu: quy tắc $\epsilon_{\mathrm{exp}}$-greedy với
-  $\epsilon_{\mathrm{exp}}\in[0,1]$ — với xác suất $\epsilon_{\mathrm{exp}}$ chọn
-  hành động ngẫu nhiên đều, ngược lại chọn
-  $a=\arg\max_{a'}Q(s,a')$.
-- *Phép sao lưu đích* là phép cực đại theo $a'$, thuộc toán tử tối ưu Bellman,
-  không phải trung bình theo xác suất của một chính sách đích ngẫu nhiên.
-
-Vì phép sao lưu lấy cực đại thay vì kỳ vọng dưới chính sách đích, Q-learning
-không cần trọng số lấy mẫu quan trọng. Nhưng thuật toán vẫn là *học lệch chính
-sách* (off-policy): dữ liệu lệch hành vi vì khám phá và — sau này — vì replay giữ
-chuyển tiếp từ các chính sách cũ.
-
-**Điều kiện hội tụ dạng bảng.** Q-learning hội tụ tới $Q^*$ khi: mọi cặp
-$(s,a)$ được thăm vô hạn lần; dãy bước học thỏa điều kiện Robbins–Monro theo từng
-cặp; môi trường có tính dừng; bảng được biểu diễn chính xác. Các điều kiện này
-gắn với biểu diễn bảng và **không tự chuyển sang mạng sâu**.
-
-**Ứng dụng và giới hạn.** Cập nhật từ điển (đổi một ô bảng) rẻ và có bảo đảm
-trong thiết lập tiêu chuẩn, nhưng số ô tăng theo $|\mathcal S||\mathcal A|$ và
-không xử lý trực tiếp không gian trạng thái liên tục.
-
-**Kiểm tra nhanh.** Nếu $\epsilon_{\mathrm{exp}}=0$ mãi mãi, điều kiện hội tụ nào
-bị vi phạm? — Điều kiện thăm đủ mọi cặp $(s,a)$; chính sách thuần tham lam có
-thể không bao giờ thử hành động chưa biết.
-
-**Về độ phức tạp mẫu.** Nguồn nêu cận cho một số thiết lập nhưng không xác định
-đủ mô hình lấy mẫu, chuẩn sai số, xác suất thành công, điều kiện bao phủ và thuật
-toán tương ứng. Vì vậy ghi chú không dùng các cận đó như kết quả áp dụng được.
-Thông điệp giữ lại: chi phí phụ thuộc quy mô biểu diễn, khả năng bao phủ, chiến
-lược khám phá và các giả thiết ổn định; không thể suy ra một cận mẫu chung chỉ
-từ việc thay bảng bằng đặc trưng hoặc mạng sâu.
-
----
-
 ## Phần 2 — Giao diện DQN, dữ liệu, đích và vòng huấn luyện
 
 <!-- note-topic-id: lec-08-topic-01 -->
@@ -155,6 +99,13 @@ không có bảo đảm hội tụ toàn cục.
 
 **Kiểm tra nhanh.** Đổi chi phí gì khi chuyển bảng → mạng? — Đổi bộ nhớ tường minh
 lấy sai số xấp xỉ, giao thoa giữa dự đoán và mất bảo đảm hội tụ dạng bảng.
+
+**Về độ phức tạp mẫu.** Nguồn nêu cận cho một số thiết lập nhưng không xác định
+đủ mô hình lấy mẫu, chuẩn sai số, xác suất thành công, điều kiện bao phủ và thuật
+toán tương ứng. Vì vậy ghi chú không dùng các cận đó như kết quả áp dụng được.
+Thông điệp giữ lại: chi phí phụ thuộc quy mô biểu diễn, khả năng bao phủ, chiến
+lược khám phá và các giả thiết ổn định; không thể suy ra một cận mẫu chung chỉ
+từ việc thay bảng bằng đặc trưng hoặc mạng sâu.
 
 <!-- note-topic-id: lec-08-topic-02 -->
 ### Giao diện DQN và hai mạng
@@ -290,15 +241,16 @@ phép cực đại Bellman).
 
 **Hình thức.** Lưu
 $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$ vào $\mathcal D$; lấy ngẫu nhiên
-mini-batch từ $\mathcal D$ để tính mất mát. Q-learning dùng phép sao lưu tối ưu nên mất mát DQN cơ
-bản không gắn tỷ trọng lấy mẫu quan trọng.
+mini-batch từ $\mathcal D$ để tính mất mát. Mất mát DQN cơ bản không gắn tỉ số lấy mẫu quan
+trọng vì cùng lý do như Q-learning dạng bảng: $A_i$ là đối số điều kiện của $Q_\theta(O_i,A_i)$,
+còn phần tiếp nối tại $O'_i$ được tính trọn bằng phép cực đại, không qua hành động lấy mẫu từ hành vi.
 
 **Ứng dụng và giới hạn.** Lợi ích: phá vỡ tương quan theo thời gian, tái sử dụng
 dữ liệu quá khứ, cải thiện hiệu quả mẫu. Giới hạn: xem topic-07.
 
-**Kiểm tra nhanh.** Vì sao loss DQN cơ bản không cần importance sampling? — Vì đích
-dùng phép cực đại Bellman, không phải kỳ vọng hành động dưới một chính sách đích
-ngẫu nhiên.
+**Kiểm tra nhanh.** Vì sao loss DQN cơ bản không cần tỉ số lấy mẫu quan trọng? — Vì
+$A_i$ đã được cố định trong điều kiện của $Q_\theta(O_i,A_i)$, và hành động tại $O'_i$ không được
+lấy mẫu từ hành vi mà được thay bằng phép cực đại, chính là kỳ vọng theo chính sách đích tham lam.
 
 <!-- note-topic-id: lec-08-topic-07 -->
 ### Replay giảm tương quan, không tạo i.i.d.
