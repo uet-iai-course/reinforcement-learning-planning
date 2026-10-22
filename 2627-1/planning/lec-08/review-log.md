@@ -780,3 +780,17 @@ Mũi tên lên của Reveal (`controlsLayout:"edges"`, giữa mép trên) đè t
 ### Ký duyệt cuối của điều phối viên (2026-10-22)
 
 Điều phối viên tự chạy kiểm toàn deck sau mọi commit: `check.py` 60/60 trang ở 1600×900 và 390×844 — 0 lỗi console/trang, 0 tài nguyên hỏng hay ngoài mạng, 0 `.katex-error`, 0 tràn; `navoverlap.py` 0 trang mũi tên đè tiêu đề; 60 `data-slide-id` duy nhất, 60 khối ghi chú, 6 trang tiêu đề mạch (`mach-2`…`mach-7`), không `<style>` cục bộ; 0 lần "Trang này", "Đáp án", "bộ ba nguy hiểm", "như ví dụ trước", "phần trước", "Nhấn mạnh", "Mời", 0 mã trang trong ghi chú; đã xem ảnh `L08-M4T`, `L08-K4`, `X03b`. HEAD = origin/main = `504532b` trước commit này. Kết luận: đợt sửa Bài 08 hoàn tất.
+
+### Rà từng trang của điều phối viên (2026-10-22, sau mọi commit)
+
+Điều phối viên tự đọc mặt trang của cả 60 trang (trích văn bản `faces.txt` trong scratchpad, kèm ảnh 1600 đã xem trong đợt) và đối chiếu với yêu cầu của người dùng: tiêu đề ngắn gọn, học thuật; trang phục vụ chủ đề mạch; khái niệm không đột ngột; chữ vừa phải; không dẫn chiếu ví dụ trang trước; văn phong học thuật.
+
+| mạch | trang | kết luận của điều phối viên |
+|---|---|---|
+| 1 | `L08-01`, `01b`, `01b2`, `01c`, `02`, `02b`, `02c` | đạt: bìa có luận đề một câu; tiên quyết dạng "Nhắc lại:"/"Ký hiệu:"; sáu mục tiêu theo mạch; nội dung 7 mục khớp `#/N`; vấn đề trung tâm có năm câu trả lời có điều kiện |
+| 2 | `M2T`, `03`, `31`, `07`, `32`, `07b`, `07c`, `08`, `09`, `12`, `12b` | đạt: đi đúng vấn đề → ví dụ → định nghĩa → kiểm tra; ví dụ một tham số và mẫu xuyên suốt có dữ kiện ngay trên trang; $Z$, "mặt nạ", $U$ định nghĩa trước khi dùng |
+| 3 | `M3T`, `28`, `13`, `05r`, `14` | đạt: tương quan là vấn đề đứng trước cơ chế; lý do không cần tỉ số lấy mẫu quan trọng đúng, có giả thiết trên mặt trang |
+| 4 | `M4T`, `17`, `10`, `10b`, `X01`, `21`, `11`, `18a`, `18`, `19`, `19b`, `20`, `X02`, `X02b` | đạt: hàm mất mát → dừng gradient → bài tập có lời giải → vòng hai nhịp → giả mã → truy dấu → tensor → bài tập mã; mã sửa đúng ngữ nghĩa |
+| 5 | `M5T`, `22`, `23`, `24`, `25`, `26` | đạt: mỗi quy tắc mở bằng giới hạn có số của quy tắc trước; trang so sánh tự đọc được |
+| 6 | `M6T`, `27`, `29`, `30`, `30b`, `X03`, `X03b` | đạt sau một sửa câu chữ ở `L08-30` (hai dấu hai chấm liên tiếp ở dòng "Nhắc lại:") |
+| 7 | `M7T`, `34`, `34b`, `K1`, `K1b`, `K2`, `K3`, `K4`, `33`, `K5` | đạt: đủ các trang kết bài theo CLAUDE.md; không khái niệm mới; lời giải trên mặt trang |

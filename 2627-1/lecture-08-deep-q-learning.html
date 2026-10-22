@@ -489,7 +489,7 @@ loss = ((y - q) ** 2).mean()
 </section>
   <section data-slide-id="L08-30" data-note-topic-id="lec-08-topic-12">
 <h2>Bộ ba bất ổn trong DQN</h2>
-<p><strong>Nhắc lại:</strong> bộ ba bất ổn: xấp xỉ hàm, bootstrap, học khác chính sách cùng có mặt.</p>
+<p><strong>Nhắc lại:</strong> bộ ba bất ổn gồm xấp xỉ hàm, bootstrap và học khác chính sách cùng có mặt.</p>
 <img class="figure" src="img/lec-08/deadly-triad.svg" alt="Ba hộp nằm ngang, mỗi hộp là một yếu tố của bộ ba bất ổn và dạng của nó trong DQN. Hộp trái: xấp xỉ hàm, mạng Q theta dùng chung theta. Hộp giữa: bootstrap, đích y i chứa Q theta trừ. Hộp phải: học khác chính sách, hành vi epsilon exp tham lam và mẫu cũ trong bộ nhớ D. Ba mũi tên từ ba hộp hội về một hộp bên dưới ghi: DQN có đủ ba yếu tố."/>
 <p>Bảo đảm cần bỏ một yếu tố hoặc thêm giả thiết mạnh; riêng $q_*$ thuộc lớp hàm và dữ liệu phủ mọi cặp thì chưa đủ.</p>
 <p><strong>Kết luận:</strong> đủ ba yếu tố nên không có bảo đảm hội tụ tổng quát.</p>
