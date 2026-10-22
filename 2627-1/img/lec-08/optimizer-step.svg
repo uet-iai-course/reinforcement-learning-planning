@@ -1,18 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1250 210" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1250 250" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
 <title id="t">Một bước của bộ tối ưu</title>
-<desc id="d">Chuỗi năm ô từ trái sang phải: mini-batch B j, hàm mất mát L B j, gradient g j, ô Update của bộ tối ưu, tham số theta j. Mũi tên tham số theta j trừ 1 đi từ trên xuống vào ô Update. Một mũi tên quay lại từ theta j về ô mini-batch bên dưới chuỗi, ghi j tăng thêm 1, với j bằng k opt.</desc>
+<desc id="d">Chuỗi năm ô từ trái sang phải: mini-batch B j, hàm mất mát L B j, gradient g j, ô Update của bộ tối ưu, tham số theta j. Nhãn theta j trừ 1 ở phía trên có hai mũi tên đi xuống: vào ô hàm mất mát, nơi gradient được tính, và vào ô Update. Một mũi tên nét đứt đi từ ô theta j lên trên rồi sang trái, kết thúc ở nhãn theta j trừ 1, ghi theta j thành theta j trừ 1 của bước sau; phía trên ghi j tăng thêm 1, với j bằng k opt sau khi tăng.</desc>
 <defs><marker id="arr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="16" refY="9" orient="auto"><path d="M0,0 L18,9 L0,18 Z" fill="#B15A2B"/></marker><marker id="arrb" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="16" refY="9" orient="auto"><path d="M0,0 L18,9 L0,18 Z" fill="#2F3E7A"/></marker></defs>
-<rect x="10" y="56" width="240" height="74" rx="10" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="130.0" y="103.0" font-size="29" text-anchor="middle">mini&#8209;batch <tspan font-style="italic">B</tspan><tspan font-size="21" dy="7" font-style="italic">j</tspan><tspan dy="-7">​</tspan></text>
-<rect x="310" y="56" width="150" height="74" rx="10" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="385.0" y="103.0" font-size="29" text-anchor="middle"><tspan font-style="italic">L</tspan><tspan font-size="21" dy="7" font-style="italic">B<tspan font-size="16" dy="5">j</tspan></tspan><tspan dy="-12">​</tspan></text>
-<rect x="530" y="56" width="150" height="74" rx="10" fill="#F7EFE6" stroke="#B15A2B" stroke-width="4"/><text x="605.0" y="103.0" font-size="29" text-anchor="middle"><tspan font-style="italic">g</tspan><tspan font-size="21" dy="7" font-style="italic">j</tspan><tspan dy="-7">​</tspan></text>
-<rect x="730" y="56" width="250" height="74" rx="10" fill="#F7EFE6" stroke="#B15A2B" stroke-width="4"/><text x="855.0" y="103.0" font-size="29" text-anchor="middle">Update</text>
-<rect x="1050" y="56" width="190" height="74" rx="10" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="1145.0" y="103.0" font-size="29" text-anchor="middle"><tspan font-style="italic">θ</tspan><tspan font-size="21" dy="7" font-style="italic">j</tspan><tspan dy="-7">​</tspan></text>
-<line x1="250" y1="93" x2="308" y2="93" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
-<line x1="460" y1="93" x2="528" y2="93" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
-<line x1="680" y1="93" x2="728" y2="93" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
-<line x1="980" y1="93" x2="1048" y2="93" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
-<text x="840" y="36" font-size="26" text-anchor="end"><tspan font-style="italic">θ</tspan><tspan font-size="21" dy="7" font-style="italic">j−1</tspan><tspan dy="-7">​</tspan></text>
-<line x1="855" y1="8" x2="855" y2="54" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
-<path d="M1145,130 V164 H125 V134" fill="none" stroke="#2F3E7A" stroke-width="4" stroke-dasharray="10 7" marker-end="url(#arrb)"/>
-<text x="635" y="198" font-size="26" text-anchor="middle" fill="#2F3E7A"><tspan font-style="italic">j</tspan> ← <tspan font-style="italic">j</tspan> + 1, với <tspan font-style="italic">j</tspan> = <tspan font-style="italic">k</tspan><tspan font-size="21" dy="7">opt</tspan><tspan dy="-7">​</tspan></text>
+<g transform="translate(0,8)">
+<rect x="10" y="150" width="240" height="74" rx="10" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="130.0" y="197.0" font-size="29" text-anchor="middle">mini&#8209;batch <tspan font-style="italic">B</tspan><tspan font-size="21" dy="7" font-style="italic">j</tspan><tspan dy="-7">​</tspan></text>
+<rect x="310" y="150" width="150" height="74" rx="10" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="385.0" y="197.0" font-size="29" text-anchor="middle"><tspan font-style="italic">L</tspan><tspan font-size="21" dy="7" font-style="italic">B<tspan font-size="16" dy="5">j</tspan></tspan><tspan dy="-12">​</tspan></text>
+<rect x="530" y="150" width="150" height="74" rx="10" fill="#F7EFE6" stroke="#B15A2B" stroke-width="4"/><text x="605.0" y="197.0" font-size="29" text-anchor="middle"><tspan font-style="italic">g</tspan><tspan font-size="21" dy="7" font-style="italic">j</tspan><tspan dy="-7">​</tspan></text>
+<rect x="730" y="150" width="250" height="74" rx="10" fill="#F7EFE6" stroke="#B15A2B" stroke-width="4"/><text x="855.0" y="197.0" font-size="29" text-anchor="middle">Update</text>
+<rect x="1050" y="150" width="190" height="74" rx="10" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/><text x="1145.0" y="197.0" font-size="29" text-anchor="middle"><tspan font-style="italic">θ</tspan><tspan font-size="21" dy="7" font-style="italic">j</tspan><tspan dy="-7">​</tspan></text>
+<line x1="250" y1="187" x2="308" y2="187" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
+<line x1="460" y1="187" x2="528" y2="187" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
+<line x1="680" y1="187" x2="728" y2="187" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
+<line x1="980" y1="187" x2="1048" y2="187" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
+<text x="620" y="96" font-size="29" text-anchor="middle"><tspan font-style="italic">θ</tspan><tspan font-size="21" dy="7" font-style="italic">j−1</tspan><tspan dy="-7">​</tspan></text>
+<path d="M620,108 V122 H385 V148" fill="none" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
+<path d="M620,122 H855 V148" fill="none" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
+<path d="M1145,148 V78 H672" fill="none" stroke="#2F3E7A" stroke-width="4" stroke-dasharray="10 7" marker-end="url(#arrb)"/>
+<text x="905" y="61" font-size="26" text-anchor="middle" fill="#2F3E7A"><tspan font-style="italic">θ</tspan><tspan font-size="21" dy="7" font-style="italic">j</tspan><tspan dy="-7">​</tspan> thành <tspan font-style="italic">θ</tspan><tspan font-size="21" dy="7" font-style="italic">j−1</tspan><tspan dy="-7">​</tspan> của bước sau</text>
+<text x="905" y="25" font-size="26" text-anchor="middle" fill="#2F3E7A"><tspan font-style="italic">j</tspan> ← <tspan font-style="italic">j</tspan> + 1, với <tspan font-style="italic">j</tspan> = <tspan font-style="italic">k</tspan><tspan font-size="21" dy="7">opt</tspan><tspan dy="-7">​</tspan> sau khi tăng</text>
+</g>
 </svg>

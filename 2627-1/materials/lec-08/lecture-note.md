@@ -54,6 +54,7 @@ Bảng gồm ký hiệu dùng xuyên suốt chương; ký hiệu dùng một l�
 | $\epsilon_{\mathrm{exp}}$ | xác suất thăm dò của chính sách hành vi | $[0,1]$ |
 | $\eta$, $g_j$ | tốc độ học; gradient mini-batch ở bước tối ưu $j$ | $(0,\infty)$; $\mathbb R^d$ |
 | $\rho$, $\beta_1$, $\beta_2$, $m_j$, $v_j$ | hệ số suy giảm và trung bình trượt của RMSprop và Adam | $[0,1)$; $\mathbb R^d$ |
+| $\odot$, $\oslash$ | nhân, chia theo từng tọa độ | phép toán trên $\mathbb R^d$ |
 | $\epsilon_{\mathrm{opt}}$ | hằng số ổn định trong mẫu số của bộ tối ưu | $(0,\infty)$ |
 
 Quy ước đọc. $R_{t+1}$ gắn với chuyển từ bước $t$ sang bước $t+1$. Khi tương tác với môi trường, mẫu chuyển viết theo thời gian $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$; sau khi lấy mini-batch, chỉ số $i$ không mang thứ tự thời gian nên mẫu viết $(O_i,A_i,R_i,O'_i,Z_i,U_i)$, không dùng $R_{i+1}$ hay $O_{i+1}$. Hai bộ đếm $t$ và $k_{\mathrm{opt}}$ tăng theo hai nhịp khác nhau: $t$ sau mỗi bước môi trường, $k_{\mathrm{opt}}$ sau mỗi lần cập nhật $\theta$. Kỳ vọng trên mini-batch lấy theo phép lấy mẫu đều từ $\mathcal D$ hiện tại.
@@ -853,28 +854,20 @@ Trung bình bình phương của bốn phần tử là $\tfrac14(2{,}25+26{,}01+
 Ở bước 8 của Thuật toán 08.13, mỗi bước tối ưu có gradient $\nabla_\theta L_B$ của hàm mất mát trên một mini-batch, tính tại tham số hiện hành. Thuật toán chưa nói gradient này được đổi thành bước tham số theo quy tắc nào. Chúng ta cần một quy tắc như vậy, cùng các siêu tham số của nó, và cần biết quy tắc đó quyết định gì và không quyết định gì trong DQN.
 
 ::: definition Định nghĩa 08.15 (Bộ tối ưu theo gradient)
-Cho dãy mini-batch $B_1,B_2,\dots$ và tham số khởi tạo $\theta_0\in\mathbb R^d$. Một bộ tối ưu (optimizer) theo gradient với tốc độ học $\eta>0$ gồm một trạng thái phụ $s_j$ với giá trị đầu $s_0$ (có thể rỗng) và một quy tắc $\operatorname{Update}$, sao cho tại bước tối ưu thứ $j=1,2,\dots$
+Cho dãy mini-batch $B_1,B_2,\dots$ và tham số khởi tạo $\theta_0\in\mathbb R^d$. Một bộ tối ưu (optimizer) theo gradient với tốc độ học $\eta>0$ gồm một trạng thái phụ $\psi_j$ với giá trị đầu $\psi_0$ (có thể rỗng) và một quy tắc $\operatorname{Update}$, sao cho tại bước tối ưu thứ $j=1,2,\dots$
 $$
-g_j=\nabla_\theta L_{B_j}(\theta_{j-1}),\qquad(\theta_j,s_j)=\operatorname{Update}(\theta_{j-1},s_{j-1},g_j).
+g_j=\nabla_\theta L_{B_j}(\theta_{j-1}),\qquad(\theta_j,\psi_j)=\operatorname{Update}(\theta_{j-1},\psi_{j-1},g_j);
 $$
-Chỉ số $j$ trùng bộ đếm $k_{\mathrm{opt}}$ của Thuật toán 08.13.
+quy tắc $\operatorname{Update}$ có thể phụ thuộc $j$, như phép hiệu chỉnh lệch của Adam. Chỉ số $j$ bằng giá trị của $k_{\mathrm{opt}}$ ngay sau khi tăng ở bước 8 của Thuật toán 08.13; trong lúc bộ tối ưu chạy, $k_{\mathrm{opt}}=j-1$. Vì $k_{\mathrm{opt}}$ bắt đầu từ $0$, $j$ bắt đầu từ $1$ và mẫu số $1-\beta^{\,j}$ của Adam khác $0$.
 :::
 
-Định nghĩa đọc như sau: gradient $g_j$ được tính tại tham số $\theta_{j-1}$ trước bước, trên mini-batch $B_j$ của bước đó, rồi quy tắc $\operatorname{Update}$ dùng $g_j$ và trạng thái phụ để trả tham số mới. Trên trang chiếu, trạng thái phụ được viết gộp vào $\operatorname{Update}$, nên công thức rút gọn thành $\theta_j=\operatorname{Update}(\theta_{j-1},g_j)$. Ba quy tắc của phần này khác nhau ở trạng thái phụ: hạ gradient ngẫu nhiên không có trạng thái phụ, RMSprop giữ một vector $v_j$, Adam giữ hai vector $m_j$, $v_j$, mỗi vector cùng kích thước với $\theta$. Hằng $\epsilon_{\mathrm{opt}}>0$ của RMSprop và Adam chỉ giữ mẫu số khác $0$; nó khác xác suất thăm dò $\epsilon_{\mathrm{exp}}$ của hành vi.
+Định nghĩa đọc như sau: gradient $g_j$ được tính tại tham số $\theta_{j-1}$ trước bước, trên mini-batch $B_j$ của bước đó, rồi quy tắc $\operatorname{Update}$ dùng $g_j$ và trạng thái phụ để trả tham số mới. Khi không cần nhắc tới trạng thái phụ, ta viết gọn $\theta_j=\operatorname{Update}(\theta_{j-1},g_j)$. Ba quy tắc của phần này khác nhau ở trạng thái phụ: hạ gradient ngẫu nhiên không có trạng thái phụ, RMSprop giữ một vector $v_j$, Adam giữ hai vector $m_j$, $v_j$, mỗi vector cùng kích thước với $\theta$. Hằng $\epsilon_{\mathrm{opt}}>0$ của RMSprop và Adam chỉ giữ mẫu số khác $0$; nó khác xác suất thăm dò $\epsilon_{\mathrm{exp}}$ của hành vi.
 
-![Chuỗi năm ô từ trái sang phải: mini-batch B j, hàm mất mát L B j, gradient g j, ô Update của bộ tối ưu, tham số theta j. Mũi tên tham số theta j trừ 1 đi từ trên xuống vào ô Update. Một mũi tên nét đứt quay lại từ theta j về ô mini-batch bên dưới chuỗi, ghi j tăng thêm 1, với j bằng k opt.](img/lec-08/optimizer-step.svg)
+![Chuỗi năm ô từ trái sang phải: mini-batch B j, hàm mất mát L B j, gradient g j, ô Update của bộ tối ưu, tham số theta j. Nhãn theta j trừ 1 phía trên có hai mũi tên đi xuống: vào ô hàm mất mát, nơi gradient được tính, và vào ô Update. Một mũi tên nét đứt đi từ ô theta j lên trên rồi sang trái, kết thúc ở nhãn theta j trừ 1, ghi theta j thành theta j trừ 1 của bước sau; phía trên ghi j tăng thêm 1, với j bằng k opt sau khi tăng.](img/lec-08/optimizer-step.svg)
 
-Hình vẽ một bước tối ưu: mini-batch $B_j$ cho hàm mất mát $L_{B_j}$, lấy gradient tại $\theta_{j-1}$ được $g_j$, quy tắc $\operatorname{Update}$ trả $\theta_j$; mũi tên nét đứt đánh dấu bước kế tiếp với mini-batch mới. Hình không có mũi tên nào từ bộ tối ưu tới đích hay tới bộ nhớ phát lại.
+Hình vẽ một bước tối ưu: mini-batch $B_j$ cho hàm mất mát $L_{B_j}$, lấy gradient tại $\theta_{j-1}$ được $g_j$, quy tắc $\operatorname{Update}$ trả $\theta_j$. Nhãn $\theta_{j-1}$ phía trên có hai nhánh: vào ô hàm mất mát, vì gradient được tính tại $\theta_{j-1}$, và vào ô $\operatorname{Update}$. Mũi tên nét đứt đưa $\theta_j$ về vị trí của $\theta_{j-1}$ ở bước sau, khi $j$ tăng thêm $1$. Hình không có mũi tên nào từ bộ tối ưu tới đích hay tới bộ nhớ phát lại.
 
-Điều đó cho giới hạn của bộ tối ưu trong DQN. Đích $y_i$ được tính bằng $Q_{\theta^-}$ theo công thức của bước 7, dữ liệu do vòng thu thập ghi vào $\mathcal D$, và lớp hàm $\{Q_\theta\}$ do kiến trúc mạng quyết định; cả ba không phụ thuộc lựa chọn bộ tối ưu. Bộ tối ưu vẫn đổi quỹ đạo $\theta_0,\theta_1,\dots$, nên gián tiếp đổi hành vi $\epsilon_{\mathrm{exp}}$-tham lam, dữ liệu được ghi về sau và giá trị $\theta^-$ tại các mốc đồng bộ. Nhưng vì công thức đích, cơ chế thu thập và lớp hàm giữ nguyên, không bộ tối ưu nào loại được các nguồn bất ổn nằm ở ba thành phần đó; phần 6 phân tích các nguồn này.
-
-::: example Ví dụ 08.18 (Một bước hạ gradient trên ví dụ một tham số)
-**Dữ kiện.** Như Ví dụ 08.5: $Q_\theta=\theta$, một mẫu chuyển với $R=1$, $\gamma=0{,}9$, $\theta_0=0$; mạng mục tiêu giữ $\theta^-=0$, nên đích $y=1+0{,}9\cdot0=1$ là hằng. Hàm mất mát $L(\theta)=(1-\theta)^2$; tốc độ học $\eta=0{,}25$.
-
-**Tính.** $g_1=\nabla_\theta L(\theta_0)=-2(1-0)=-2$, và một bước hạ gradient cho $\theta_1=\theta_0-\eta g_1=0+0{,}25\cdot2=0{,}5$.
-
-**Diễn giải.** Kết quả trùng bước bán gradient $\theta_1=\theta_0+\alpha(y-\theta_0)=0{,}5$ với $\alpha=0{,}5$ của Ví dụ 08.5: với hàm mất mát bình phương, $\nabla_\theta L=-2(y-q)\nabla_\theta q$, nên hạ gradient với tốc độ học $\eta$ là cập nhật bán gradient với bước $\alpha=2\eta$.
-:::
+Theo Định nghĩa 08.15, bộ tối ưu chỉ nhận $g_j$ và trạng thái phụ; từ đó suy ra giới hạn của nó trong DQN. Đích $y_i$ được tính bằng $Q_{\theta^-}$ theo công thức của bước 7, dữ liệu do vòng thu thập ghi vào $\mathcal D$, và lớp hàm $\{Q_\theta\}$ do kiến trúc mạng quyết định; cả ba không phụ thuộc lựa chọn bộ tối ưu. Bộ tối ưu vẫn đổi quỹ đạo $\theta_0,\theta_1,\dots$, nên gián tiếp đổi hành vi $\epsilon_{\mathrm{exp}}$-tham lam, dữ liệu được ghi về sau và giá trị $\theta^-$ tại các mốc đồng bộ. Nhưng vì công thức đích, cơ chế thu thập và lớp hàm giữ nguyên, không bộ tối ưu nào loại được các nguồn bất ổn nằm ở ba thành phần đó; phần 6 phân tích các nguồn này.
 
 **Trong thực hành.** Giá trị hàm mất mát trên mini-batch không phải thước đo chất lượng của chính sách. Đích tự đổi tại mỗi mốc đồng bộ và dữ liệu trong $\mathcal D$ đổi theo hành vi, nên $L_B$ có thể tăng khi chính sách tốt lên, và giảm khi chính sách không đổi; lợi tức đánh giá trên các lượt riêng mới đo chất lượng của chính sách.
 
@@ -890,14 +883,22 @@ $$
 Khi tốc độ học đổi theo bước, ta viết $\eta_j$ thay cho $\eta$.
 :::
 
-Chữ "ngẫu nhiên" chỉ nguồn của $g_j$: gradient được tính trên một mini-batch rút ngẫu nhiên, không trên toàn bộ dữ liệu. Với $\theta^-$ cố định và mỗi lần rút có phân phối đều trên $\mathcal D$, kỳ vọng của $g_j$ theo phép rút bằng gradient của hàm mất mát trung bình trên cả bộ nhớ, $\tfrac1{\lvert\mathcal D\rvert}\sum_{k\in\mathcal D}(y_k-q_k)^2$, tại $\theta_{j-1}$; $g_j$ là một ước lượng có nhiễu của gradient đó. SGD không giữ trạng thái phụ, nên chi phí bộ nhớ ngoài $\theta$ bằng $0$. Đổi lại, mọi tọa độ của $\theta$ dùng cùng hệ số $\eta$, và bước theo mỗi tọa độ tỉ lệ với độ lớn của gradient theo tọa độ đó.
+Chữ "ngẫu nhiên" chỉ nguồn của $g_j$: gradient được tính trên một mini-batch rút ngẫu nhiên, không trên toàn bộ dữ liệu. Với $\theta^-$ cố định và mỗi lần rút có phân phối đều trên $\mathcal D$, kỳ vọng của $g_j$ theo phép rút bằng gradient của hàm mất mát trung bình trên cả bộ nhớ, $\tfrac1{\lvert\mathcal D\rvert}\sum_{e\in\mathcal D}(y_e-q_e)^2$, với $e$ chạy trên các mẫu chuyển trong $\mathcal D$, tại $\theta_{j-1}$; $g_j$ là một ước lượng có nhiễu của gradient đó. SGD không giữ trạng thái phụ, nên chi phí bộ nhớ ngoài $\theta$ bằng $0$. Đổi lại, mọi tọa độ của $\theta$ dùng cùng hệ số $\eta$, và bước theo mỗi tọa độ tỉ lệ với độ lớn của gradient theo tọa độ đó.
+
+::: example Ví dụ 08.18 (Một bước hạ gradient trên ví dụ một tham số)
+**Dữ kiện.** Như Ví dụ 08.5: $Q_\theta=\theta$, một mẫu chuyển với $R=1$, $\gamma=0{,}9$, $\theta_0=0$; mạng mục tiêu giữ $\theta^-=0$, nên đích $y=1+0{,}9\cdot0=1$ là hằng. Hàm mất mát $L(\theta)=(1-\theta)^2$; tốc độ học $\eta=0{,}25$.
+
+**Tính.** $g_1=\nabla_\theta L(\theta_0)=-2(1-0)=-2$, và một bước hạ gradient cho $\theta_1=\theta_0-\eta g_1=0+0{,}25\cdot2=0{,}5$.
+
+**Diễn giải.** Kết quả trùng bước bán gradient $\theta_1=\theta_0+\alpha(y-\theta_0)=0{,}5$ với $\alpha=0{,}5$ của Ví dụ 08.5: với hàm mất mát bình phương trên một mẫu, $\nabla_\theta L=-2(y-q)\nabla_\theta q$, nên hạ gradient với tốc độ học $\eta$ là cập nhật bán gradient với bước $\alpha=2\eta$.
+:::
 
 ::: example Ví dụ 08.19 (Một hệ số bước cho hai tọa độ)
 **Dữ kiện.** Hàm mất mát $L(\theta)=\tfrac12(100\,\theta_1^2+\theta_2^2)$, tham số hiện hành $\theta_{j-1}=(0{,}02;\,0{,}02)$, tốc độ học $\eta=0{,}1$.
 
 **Tính.** $g_j=(100\cdot0{,}02;\,0{,}02)=(2;\,0{,}02)$, nên bước là $-\eta g_j=(-0{,}2;\,-0{,}002)$ và $\theta_j=(-0{,}18;\,0{,}018)$. Theo tọa độ thứ nhất, mỗi bước nhân $\theta_1$ với $1-100\eta=-9$; theo tọa độ thứ hai, với $1-\eta=0{,}9$.
 
-**Diễn giải.** Với $\eta=0{,}1$, tọa độ thứ nhất phân kỳ. Muốn nó không phân kỳ, cần $\lvert1-100\eta\rvert<1$, tức $\eta<0{,}02$; khi đó tọa độ thứ hai giảm chưa tới $2\%$ mỗi bước, và sau $100$ bước vẫn còn hơn $0{,}98^{100}\approx13\%$ giá trị ban đầu. Một hệ số chung không hợp cho cả hai tọa độ khi độ cong theo hai tọa độ chênh $100$ lần.
+**Diễn giải.** Với $\eta=0{,}1$, tọa độ thứ nhất phân kỳ. Muốn $\theta_1$ hội tụ về $0$, cần $\lvert1-100\eta\rvert<1$, tức $0<\eta<0{,}02$; khi đó tọa độ thứ hai giảm chưa tới $2\%$ mỗi bước, và sau $100$ bước vẫn còn hơn $0{,}98^{100}\approx13\%$ giá trị ban đầu. Một hệ số chung không hợp cho cả hai tọa độ khi độ cong theo hai tọa độ chênh $100$ lần.
 :::
 
 **Trong thực hành.** SGD thường dùng với một lịch giảm tốc độ học $\eta_j$ định trước. Trong bài toán hồi quy với phân phối dữ liệu cố định, các điều kiện $\sum_j\eta_j=\infty$, $\sum_j\eta_j^2<\infty$ cùng giả thiết về hàm mất mát là cơ sở của các kết quả hội tụ cho SGD; trong DQN, đích đổi tại các mốc đồng bộ và dữ liệu đổi theo hành vi, nên các kết quả đó không áp dụng trực tiếp. Ví dụ 08.19 không cho phép suy ra SGD luôn kém hơn các phương pháp thích nghi; nó chỉ cho thấy SGD nhạy với tỉ lệ giữa các tọa độ, điều mà RMSprop dưới đây xử lý bằng một hệ số bước riêng cho từng tọa độ.
@@ -914,12 +915,12 @@ v_j&=\rho\,v_{j-1}+(1-\rho)\,g_j\odot g_j,\\
 \theta_j&=\theta_{j-1}-\eta\,g_j\oslash\bigl(\sqrt{v_j}+\epsilon_{\mathrm{opt}}\bigr),
 \end{aligned}
 $$
-trong đó $\odot$, $\oslash$, căn bậc hai và phép cộng $\epsilon_{\mathrm{opt}}$ lấy theo từng tọa độ.
+trong đó $\odot$ và $\oslash$ là phép nhân và phép chia theo từng tọa độ; căn bậc hai và phép cộng $\epsilon_{\mathrm{opt}}$ cũng lấy theo từng tọa độ.
 :::
 
-Tọa độ $k$ của $v_j$ là trung bình trượt có trọng số mũ của $g_{1,k}^2,\dots,g_{j,k}^2$: $v_{j,k}=(1-\rho)\sum_{m=1}^{j}\rho^{\,j-m}g_{m,k}^2$. Vì vậy $\sqrt{v_{j,k}}$ là độ lớn điển hình của gradient theo tọa độ $k$ trong khoảng $1/(1-\rho)$ bước gần nhất, và bước theo tọa độ đó là $\eta\,g_{j,k}/(\sqrt{v_{j,k}}+\epsilon_{\mathrm{opt}})$: gradient được chia cho độ lớn điển hình của chính nó. Một tọa độ có gradient lớn kéo dài nhận bước hiệu dụng nhỏ, một tọa độ có gradient nhỏ kéo dài nhận bước hiệu dụng lớn. Trạng thái phụ là một vector cùng kích thước với $\theta$.
+Tọa độ $k$ của $v_j$ là trung bình trượt có trọng số mũ của $g_{1,k}^2,\dots,g_{j,k}^2$: $v_{j,k}=(1-\rho)\sum_{\ell=1}^{j}\rho^{\,j-\ell}g_{\ell,k}^2$. Vì vậy $\sqrt{v_{j,k}}$ là độ lớn điển hình của gradient theo tọa độ $k$ trong khoảng $1/(1-\rho)$ bước gần nhất, và bước theo tọa độ đó là $\eta\,g_{j,k}/(\sqrt{v_{j,k}}+\epsilon_{\mathrm{opt}})$: gradient được chia cho độ lớn điển hình của chính nó. Một tọa độ có gradient lớn kéo dài nhận bước hiệu dụng nhỏ, một tọa độ có gradient nhỏ kéo dài nhận bước hiệu dụng lớn. Trạng thái phụ là một vector cùng kích thước với $\theta$.
 
-Mỗi thành phần của định nghĩa có một việc. Hệ số $\rho$ quyết định độ dài của trí nhớ: với $\rho=0$, $v_j=g_j\odot g_j$ và bước theo mỗi tọa độ là $\eta\,\operatorname{sign}(g_{j,k})$ khi bỏ qua $\epsilon_{\mathrm{opt}}$, nên mọi thông tin về độ lớn của gradient bị bỏ. Hằng $\epsilon_{\mathrm{opt}}$ giữ mẫu số dương: tại một tọa độ có gradient bằng $0$ ở mọi bước, $v_{j,k}=0$ và phép chia $0/0$ không xác định nếu thiếu $\epsilon_{\mathrm{opt}}$. Ở đây $\epsilon_{\mathrm{opt}}$ đặt ngoài căn; một số thư viện đặt $\epsilon_{\mathrm{opt}}$ trong căn, $\sqrt{v_j+\epsilon_{\mathrm{opt}}}$, và hai quy ước cho bước khác nhau khi $v_j$ nhỏ.
+Hệ số $\rho$ quyết định độ dài của trí nhớ: với $\rho=0$, $v_j=g_j\odot g_j$ và bước theo mỗi tọa độ là $\eta\,\operatorname{sign}(g_{j,k})$ khi bỏ qua $\epsilon_{\mathrm{opt}}$, nên mọi thông tin về độ lớn của gradient bị bỏ. Hằng $\epsilon_{\mathrm{opt}}$ giữ mẫu số dương: tại một tọa độ có gradient bằng $0$ ở mọi bước, $v_{j,k}=0$ và phép chia $0/0$ không xác định nếu thiếu $\epsilon_{\mathrm{opt}}$. Ở đây $\epsilon_{\mathrm{opt}}$ đặt ngoài căn; một số thư viện đặt $\epsilon_{\mathrm{opt}}$ trong căn, $\sqrt{v_j+\epsilon_{\mathrm{opt}}}$, và hai quy ước cho bước khác nhau khi $v_j$ nhỏ.
 
 ::: example Ví dụ 08.20 (Một bước RMSprop trên hai tọa độ)
 **Dữ kiện.** Như Ví dụ 08.19: $L(\theta)=\tfrac12(100\,\theta_1^2+\theta_2^2)$, $\theta_0=(0{,}02;\,0{,}02)$, nên $g_1=(2;\,0{,}02)$. RMSprop với $\rho=0{,}9$, $v_0=0$, $\eta=0{,}005$; bỏ qua $\epsilon_{\mathrm{opt}}$.
@@ -929,11 +930,19 @@ Mỗi thành phần của định nghĩa có một việc. Hệ số $\rho$ quy�
 **Diễn giải.** Ở bước đầu, $v_1=(1-\rho)\,g_1\odot g_1$, nên mỗi tọa độ đi đúng $\eta/\sqrt{1-\rho}=\eta\sqrt{10}$ theo dấu gradient, dù hai gradient chênh $100$ lần. Với cùng $\eta=0{,}005$, SGD đưa tọa độ thứ hai đi $0{,}0001$, tức $0{,}5\%$ giá trị của nó, còn RMSprop đưa tọa độ đó đi khoảng $79\%$.
 :::
 
-**Trong thực hành.** Mnih và cộng sự (2015, mục Methods và Extended Data Table 1) huấn luyện DQN gốc bằng một biến thể của RMSprop với tốc độ học $0{,}00025$ và mini-batch $32$. Chọn RMSprop không đổi công thức đích, cách thu thập dữ liệu hay lớp hàm; nó đổi tỉ lệ bước giữa các tọa độ và không cho bảo đảm hội tụ cho DQN.
+**Trong thực hành.** Mnih và cộng sự (2015, mục Methods và Extended Data Table 1) huấn luyện DQN gốc bằng một biến thể của RMSprop với tốc độ học $0{,}00025$ và mini-batch $32$. RMSprop đổi tỉ lệ bước giữa các tọa độ và không cho bảo đảm hội tụ cho DQN.
 
 #### Adam
 
-RMSprop chuẩn hóa độ lớn của bước theo từng tọa độ, nhưng hướng bước vẫn là gradient tức thời $g_j$ của một mini-batch, nên dao động theo nhiễu của từng mini-batch. Adam lấy thêm trung bình trượt của chính gradient, và hiệu chỉnh độ lệch của hai trung bình trượt ở các bước đầu.
+RMSprop chuẩn hóa độ lớn của bước theo từng tọa độ, nhưng hướng bước vẫn là gradient tức thời $g_j$ của một mini-batch, nên dao động theo nhiễu của từng mini-batch, như Ví dụ 08.21 dưới đây. Adam lấy thêm trung bình trượt của chính gradient, và hiệu chỉnh độ lệch của hai trung bình trượt ở các bước đầu.
+
+::: example Ví dụ 08.21 (Hai bước ngược chiều của RMSprop và Adam)
+**Dữ kiện.** Xét một tọa độ của gradient trên hai mini-batch liên tiếp: $g_1=2$, $g_2=-1$. RMSprop với $\rho=0{,}9$, $v_0=0$; Adam với $\beta_1=0{,}9$, $\beta_2=0{,}999$, $m_0=v_0=0$; cùng tốc độ học $\eta$; bỏ qua $\epsilon_{\mathrm{opt}}$.
+
+**Tính.** RMSprop: $v_1=0{,}1\cdot4=0{,}4$, bước $-\eta\cdot2/\sqrt{0{,}4}\approx-3{,}16\,\eta$; $v_2=0{,}9\cdot0{,}4+0{,}1\cdot1=0{,}46$, bước $-\eta\cdot(-1)/\sqrt{0{,}46}\approx+1{,}47\,\eta$. Adam: $m_1=0{,}2$, $v_1=0{,}004$, $\hat m_1=2$, $\hat v_1=4$, bước $-\eta\cdot2/2=-\eta$; $m_2=0{,}9\cdot0{,}2+0{,}1\cdot(-1)=0{,}08$, $v_2=0{,}999\cdot0{,}004+0{,}001\cdot1=0{,}004996$, nên $\hat m_2=0{,}08/0{,}19\approx0{,}42$, $\hat v_2=0{,}004996/0{,}001999\approx2{,}50$, bước $-\eta\cdot0{,}42/\sqrt{2{,}50}\approx-0{,}27\,\eta$.
+
+**Diễn giải.** RMSprop đi theo dấu của gradient tức thời, nên bước thứ hai đổi chiều. Ở Adam, $\hat m_2$ còn dương vì trung bình trượt giữ phần lớn gradient đầu, nên bước thứ hai cùng chiều bước đầu và nhỏ hơn; hướng bước của Adam chỉ đổi khi $m_j$ đổi dấu.
+:::
 
 ::: definition Định nghĩa 08.18 (Adam)
 Cho tốc độ học $\eta>0$, hai hệ số suy giảm $\beta_1,\beta_2\in[0,1)$ và hằng $\epsilon_{\mathrm{opt}}>0$. Adam là bộ tối ưu theo Định nghĩa 08.15 với trạng thái phụ $(m_j,v_j)\in\mathbb R^d\times\mathbb R^d$, $m_0=v_0=0$, và tại bước $j=1,2,\dots$
@@ -947,11 +956,11 @@ $$
 với mọi phép toán trên vector lấy theo từng tọa độ.
 :::
 
-$m_j$ là trung bình trượt có trọng số mũ của các gradient, $v_j$ của bình phương gradient; $\beta^{\,j}$ là lũy thừa bậc $j$ của $\beta$. Vì $m_0=0$, $m_j=(1-\beta_1)\sum_{k=1}^{j}\beta_1^{\,j-k}g_k$ có tổng trọng số $1-\beta_1^{\,j}$ thay cho $1$; khi mọi gradient bằng nhau và bằng $g$, $m_j=(1-\beta_1^{\,j})\,g$, lệch về $0$ ở các bước đầu. Chia cho $1-\beta_1^{\,j}$ bù đúng độ lệch đó, và tương tự cho $v_j$. Khi $j$ lớn, $\beta^{\,j}\to0$ và phép hiệu chỉnh không còn tác dụng. Adam giữ hai vector trạng thái phụ cùng kích thước với $\theta$.
+$m_j$ là trung bình trượt có trọng số mũ của các gradient, $v_j$ của bình phương gradient; $\beta^{\,j}$ là lũy thừa bậc $j$ của $\beta$. Vì $m_0=0$, $m_j=(1-\beta_1)\sum_{\ell=1}^{j}\beta_1^{\,j-\ell}g_\ell$ có tổng trọng số $1-\beta_1^{\,j}$ thay cho $1$; khi mọi gradient bằng nhau và bằng $g$, $m_j=(1-\beta_1^{\,j})\,g$, lệch về $0$ ở các bước đầu. Chia cho $1-\beta_1^{\,j}$ bù đúng độ lệch đó, và tương tự cho $v_j$. Khi $j$ lớn, $\beta^{\,j}\to0$ và phép hiệu chỉnh không còn tác dụng. Adam giữ hai vector trạng thái phụ cùng kích thước với $\theta$.
 
-Mỗi thành phần có một việc. Bỏ trung bình trượt của gradient, tức $\beta_1=0$, thì $\hat m_j=g_j$ và Adam trở thành RMSprop có hiệu chỉnh lệch cho $v_j$. Bỏ hiệu chỉnh lệch thì bước đầu bị nhân với $(1-\beta_1)/\sqrt{1-\beta_2}$, như Ví dụ 08.21 dưới đây.
+Bỏ trung bình trượt của gradient, tức $\beta_1=0$, thì $\hat m_j=g_j$ và Adam trở thành RMSprop có hiệu chỉnh lệch cho $v_j$. Bỏ hiệu chỉnh lệch thì bước đầu bị nhân với $(1-\beta_1)/\sqrt{1-\beta_2}$, như Ví dụ 08.22 dưới đây.
 
-::: example Ví dụ 08.21 (Bước đầu của Adam có và không có hiệu chỉnh lệch)
+::: example Ví dụ 08.22 (Bước đầu của Adam có và không có hiệu chỉnh lệch)
 **Dữ kiện.** Như Ví dụ 08.19 và 08.20: $g_1=(2;\,0{,}02)$, $\theta_0=(0{,}02;\,0{,}02)$, $\eta=0{,}005$. Adam với $\beta_1=0{,}9$, $\beta_2=0{,}999$, $m_0=v_0=0$; bỏ qua $\epsilon_{\mathrm{opt}}$.
 
 **Tính.** $m_1=0{,}1\cdot g_1=(0{,}2;\,0{,}002)$ và $v_1=0{,}001\cdot(4;\,0{,}0004)=(0{,}004;\,0{,}0000004)$. Có hiệu chỉnh: $\hat m_1=m_1/0{,}1=g_1$, $\hat v_1=v_1/0{,}001=g_1\odot g_1$, nên $\hat m_1\oslash\sqrt{\hat v_1}=(1;\,1)$, bước là $-\eta\,(1;\,1)=(-0{,}005;\,-0{,}005)$ và $\theta_1=(0{,}015;\,0{,}015)$. Không hiệu chỉnh: $m_1\oslash\sqrt{v_1}=(0{,}2/0{,}0632;\,0{,}002/0{,}000632)\approx(3{,}16;\,3{,}16)$.
@@ -959,7 +968,7 @@ Mỗi thành phần có một việc. Bỏ trung bình trượt của gradient, 
 **Diễn giải.** Có hiệu chỉnh, bước đầu theo mỗi tọa độ là đúng $\eta$ theo dấu gradient. Không hiệu chỉnh, bước đầu lớn gấp $(1-\beta_1)/\sqrt{1-\beta_2}=0{,}1/\sqrt{0{,}001}\approx3{,}16$ lần, với cùng $\eta$.
 :::
 
-**Trong thực hành.** Adam được dùng rộng rãi trong các cài đặt học sâu, kể cả nhiều cài đặt DQN về sau; DQN gốc dùng RMSprop. Công thức của Adam không tạo bảo đảm hội tụ cho DQN: đích đổi tại các mốc đồng bộ và dữ liệu đổi theo hành vi, và lựa chọn bộ tối ưu không đổi các yếu tố đó.
+**Trong thực hành.** Adam được dùng rộng rãi trong thực hành hiện nay (bài giảng gốc, trang 28), kể cả nhiều cài đặt DQN về sau; DQN gốc dùng RMSprop. Công thức của Adam không tạo bảo đảm hội tụ cho DQN: đích đổi tại các mốc đồng bộ và dữ liệu đổi theo hành vi.
 
 #### So sánh ba bộ tối ưu
 
@@ -971,15 +980,15 @@ Ba quy tắc cùng nhận gradient $g_j$ và trả $\theta_j$; chúng khác nhau
 | RMSprop (Định nghĩa 08.17) | $v_j$ | $\eta$, $\rho$, $\epsilon_{\mathrm{opt}}$ | $\eta\,g_j\oslash(\sqrt{v_j}+\epsilon_{\mathrm{opt}})$ |
 | Adam (Định nghĩa 08.18) | $m_j$, $v_j$ | $\eta$, $\beta_1$, $\beta_2$, $\epsilon_{\mathrm{opt}}$ | $\eta\,\hat m_j\oslash(\sqrt{\hat v_j}+\epsilon_{\mathrm{opt}})$ |
 
-Bảng đọc theo cột cuối. SGD đi bước tỉ lệ với gradient, nên bước theo mỗi tọa độ mang thang của gradient tại tọa độ đó; RMSprop và Adam chia cho độ lớn điển hình của gradient, nên bước theo mỗi tọa độ có thang xấp xỉ $\eta$, như Ví dụ 08.20 và 08.21. Vì thang bước khác nhau, cùng một giá trị $\eta$ không so sánh được giữa SGD và hai phương pháp thích nghi; mỗi bộ tối ưu cần được chỉnh $\eta$ riêng. Mỗi trạng thái phụ là một vector cùng kích thước với $\theta$, nên RMSprop tốn thêm bộ nhớ bằng một bản $\theta$, Adam bằng hai bản.
+Bảng đọc theo cột cuối. SGD đi bước tỉ lệ với gradient, nên bước theo mỗi tọa độ mang thang của gradient tại tọa độ đó; RMSprop và Adam chia cho độ lớn điển hình của gradient, nên bước theo mỗi tọa độ có thang xấp xỉ $\eta$, như Ví dụ 08.20 và 08.22. Vì thang bước khác nhau, cùng một giá trị $\eta$ không so sánh được giữa SGD và hai phương pháp thích nghi; mỗi bộ tối ưu cần được chỉnh $\eta$ riêng. Mỗi trạng thái phụ là một vector cùng kích thước với $\theta$, nên RMSprop tốn thêm bộ nhớ bằng một bản $\theta$, Adam bằng hai bản.
 
 Không có lựa chọn thắng trong mọi bài toán; lựa chọn được quyết định bằng thí nghiệm có kiểm soát. Một thí nghiệm như vậy giữ cùng kiến trúc, ngân sách bước môi trường, lịch thăm dò và tập hạt giống ngẫu nhiên cho mọi bộ tối ưu, chỉnh siêu tham số của từng bộ tối ưu với cùng ngân sách, và báo lợi tức đánh giá cùng độ phân tán giữa nhiều lần chạy độc lập; giá trị hàm mất mát không phải tiêu chí, vì lý do đã nêu ở đầu mục. DQN gốc của Mnih và cộng sự (2015) dùng một biến thể của RMSprop.
 
 **Giới hạn.** Lựa chọn bộ tối ưu không đổi công thức đích (bootstrap), cách thu thập dữ liệu (khác chính sách) hay lớp hàm (xấp xỉ hàm), nên không loại được các nguồn bất ổn đó. Không công thức cập nhật nào ở trên tạo bảo đảm hội tụ cho DQN.
 
-**Kiểm tra nhanh.** Bộ tối ưu thích nghi có đổi công thức đích không? Không; công thức đích không phụ thuộc lựa chọn bộ tối ưu, bộ tối ưu chỉ quyết định cách đổi gradient thành bước tham số.
+**Kiểm tra nhanh.** Với $\beta_1=0$, Adam trùng quy tắc nào? RMSprop với $\rho=\beta_2$ có hiệu chỉnh lệch cho $v_j$.
 
-Phần 5 cho ba quy tắc đổi gradient $\nabla_\theta L_B$ thành bước tham số. Trên hàm $\tfrac12(100\,\theta_1^2+\theta_2^2)$, SGD không có hệ số bước chung hợp cho cả hai tọa độ, còn RMSprop và Adam đi bước đầu cùng cỡ ở cả hai tọa độ, $\eta\sqrt{10}$ và $\eta$. Các quy tắc này quyết định quỹ đạo của $\theta$, nhưng không đổi đích bootstrap, cơ chế thu thập dữ liệu khác chính sách hay lớp hàm phi tuyến. Ba yếu tố đó là bộ ba bất ổn của Bài 07. Ở phần 6, chúng ta đặt bộ nhớ phát lại và mạng mục tiêu cạnh các nguồn bất ổn này, tính độ thay đổi của đích tại một mốc đồng bộ, và nêu phạm vi bảo đảm của DQN.
+Chúng ta đã có ba quy tắc đổi gradient $\nabla_\theta L_B$ thành bước tham số. Trên hàm $\tfrac12(100\,\theta_1^2+\theta_2^2)$, SGD không có hệ số bước chung hợp cho cả hai tọa độ, còn RMSprop và Adam đi bước đầu cùng cỡ ở cả hai tọa độ, $\eta\sqrt{10}$ và $\eta$. Các quy tắc này quyết định quỹ đạo của $\theta$, nhưng không đổi đích bootstrap, cơ chế thu thập dữ liệu khác chính sách hay việc dùng xấp xỉ hàm. Ba yếu tố đó là bộ ba bất ổn của Bài 07. Ở phần 6, chúng ta đặt bộ nhớ phát lại và mạng mục tiêu cạnh các nguồn bất ổn này, tính độ thay đổi của đích tại một mốc đồng bộ, và nêu phạm vi bảo đảm của DQN.
 
 ## 6. Bất ổn và phạm vi bảo đảm của DQN
 

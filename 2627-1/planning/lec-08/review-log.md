@@ -577,3 +577,39 @@ Kết quả rà: 0 chặn bàn giao, 0 nghiêm trọng, 6 trung bình, 14 nhẹ;
 | S39 | `L08-M6T` | chấp nhận cả ba điểm (dòng dẫn gọi tên hai cơ chế; `&nbsp;` trong h2; tên topic-12 sửa ở bước `L08-27`) | diff; `#/6` mở đúng trang |
 - Bước S40 (`L08-27`, biên tập viên): "Hai nguồn bất ổn và hai cơ chế giảm"; "Nhu cầu:" (Q-learning bảng hội tụ dưới giả thiết chuẩn; với mạng nơ-ron có thể phân kỳ, tr. 29); bảng `Nguồn bất ổn | Ví dụ | Cơ chế giảm | Điều còn lại` hai hàng, cột ví dụ nhắc lại $\approx1{,}1$ mẫu độc lập và đích $1\to1{,}45$ ngay trên trang. Đóng phát hiện nghiêm trọng của `review-math.md` (tương quan không thuộc bộ ba bất ổn; "bộ ba bất ổn" không còn trên mặt trang) và phát hiện "Trang này" của trang này. Khoảng 73 âm tiết (ngoại lệ bảng so sánh, trần 80), đáy 593 px, ghi chú 148 âm tiết. Ghi chú bài giảng: Nhận xét 08.19, phản ví dụ Mệnh đề 07.37 tách tương quan khỏi bộ ba, Mnih và cộng sự (2015) Extended Data Table 3; dòng topic-12 của bản đồ chủ đề. `no-ai-slop` Edit, tự kiểm theo `eval.md`: đạt. Chờ điều phối viên duyệt.
 | S40 | `L08-27` | chấp nhận; lỗi nghiêm trọng "tương quan thuộc bộ ba" đã đóng; ngoại lệ ~73 âm tiết (bảng so sánh, trần 80); câu về Mnih và cộng sự (2015) Extended Data Table 3 (năm trò chơi, cả hai cơ chế cho điểm cao nhất) đối chiếu theo hiểu biết của điều phối viên: giữ | diff; tính lại $0{,}881$, $1{,}45$; `check.py` |
+
+### Rà lại mạch 5 (bước R5)
+
+| vai | loại tác tử | mô hình | mức suy luận | ghi tệp |
+|---|---|---|---|---|
+| Rà lại mạch 5 (toán, mạch, mật độ, `no-ai-slop` Detect) | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Biên tập R5 | Agent `general-purpose` (biên tập viên của đợt sửa) | `claude-opus-5-5` | high | có |
+
+Kết quả rà: 0 chặn bàn giao, 0 nghiêm trọng, 7 trung bình, 14 nhẹ; điều phối viên chấp nhận toàn bộ 21 mục và tính lại ví dụ hai bước Adam/RMSprop (tệp `recheck/R5-decisions.md` trong scratchpad phiên). Bảng dưới ghi trạng thái sau bước R5.
+
+| mức độ | trang chiếu | vấn đề | đề xuất sửa | trạng thái | quyết định |
+|---|---|---|---|---|---|
+| trung bình (1) | `L08-22`, ghi chú `L08-22`, `optimizer-step.svg`, Định nghĩa 08.15 | $j$ và $k_{\mathrm{opt}}$ lệch một bước | $j$ bằng $k_{\mathrm{opt}}$ sau khi tăng; $k_{\mathrm{opt}}=j-1$ khi bộ tối ưu chạy; $j\ge1$ | đã sửa ở R5 (dòng "Ký hiệu:", ghi chú, nhãn SVG, Định nghĩa 08.15) | chấp nhận |
+| trung bình (2) | `L08-23`, `L08-24` | Ví dụ SGD thiếu hàm và hệ số mỗi bước; "Nhu cầu:" của RMSprop chỉ nêu bước chênh $100$ lần | Dòng ví dụ có $L$, $\theta_{j-1}$; dòng hệ số $1-100\eta$, $1-\eta$, $\eta<0{,}02$; "Nhu cầu:" mới của `L08-24` | đã sửa ở R5; hai thẻ của `L08-23` gộp thành một dòng để giữ ≤ 6 dòng; `<br>` tránh dòng mồ côi | chấp nhận |
+| trung bình (3) | `L08-25`, ghi chú `L08-25`, ghi chú bài giảng | "Nhu cầu:" của Adam không có số | $g_1=2$, $g_2=-1$; RMSprop $-3{,}16\eta$, $+1{,}47\eta$; Adam $-\eta$, $-0{,}27\eta$ | đã sửa ở R5; Ví dụ 08.21 mới trước Định nghĩa 08.18, ví dụ Adam cũ đổi số thành 08.22 | chấp nhận |
+| trung bình (4) | `L08-26` | "Ký hiệu:" thiếu $\odot,\oslash$ và hệ số của trung bình trượt | Câu đề xuất | đã sửa ở R5; khoảng 73 âm tiết (trần 80), giữ "qua nhiều lần chạy độc lập" | chấp nhận |
+| trung bình (5) | `L08-24`, Định nghĩa 08.17, bảng ký hiệu | $\odot,\oslash$ chưa được gọi tên | Câu đề xuất; hàng bảng ký hiệu | đã sửa ở R5 | chấp nhận |
+| trung bình (6) | ghi chú bài giảng §5 | Chữ $m$, $k$, $s_j$ trùng nghĩa khác | Chỉ số tổng $\ell$; $e$ cho mẫu trong $\mathcal D$; $\psi_j$ | đã sửa ở R5 | chấp nhận |
+| trung bình (7) | ghi chú bài giảng, đoạn kết §5 | "lớp hàm phi tuyến" không phải yếu tố của bộ ba | "việc dùng xấp xỉ hàm" | đã sửa ở R5 | chấp nhận |
+| nhẹ (8) | ghi chú `L08-23`, Ví dụ 08.19 | "không phân kỳ" thay cho "hội tụ" | "chỉ hội tụ khi $\eta<0{,}02$"; "$0<\eta<0{,}02$" | đã sửa ở R5 | chấp nhận |
+| nhẹ (9) | dòng Nguồn `L08-23`, `L08-24`, `L08-25` | Câu ngụ ý nguồn sai mẫu số | "(đổi chỉ số $t$ của nguồn thành $j$ vì $t$ đếm bước môi trường)" | đã sửa ở R5 | chấp nhận |
+| nhẹ (10) | dòng Nguồn `L08-24` | Quy ước $\epsilon_{\mathrm{opt}}$ trong hay ngoài căn | Câu đề xuất | đã sửa ở R5 | chấp nhận |
+| nhẹ (11) | `L08-24` | "Ý nghĩa:" chưa có công thức hệ số bước | Câu đề xuất | đã sửa ở R5 | chấp nhận |
+| nhẹ (12) | ghi chú `L08-22` | Trạng thái phụ chưa giải nghĩa | Câu đề xuất | đã sửa ở R5 (ghi chú rút câu khác để giữ 150 âm tiết) | chấp nhận |
+| nhẹ (13) | ghi chú `L08-23` | Thiếu nối SGD với bán gradient Bài 07 | Câu đề xuất | đã sửa ở R5 | chấp nhận |
+| nhẹ (14) | Ví dụ 08.18 | Gradient nêu chưa nói "trên một mẫu"; vị trí trước khi định nghĩa SGD | "trên một mẫu"; dời xuống sau Định nghĩa 08.16 | đã sửa ở R5 (đã dời) | chấp nhận |
+| nhẹ (15) | Định nghĩa 08.15 | Update có thể phụ thuộc $j$ | Câu đề xuất | đã sửa ở R5 | chấp nhận |
+| nhẹ (16) | ghi chú bài giảng §5 | "Trên trang chiếu…"; câu nối giới hạn | Hai câu đề xuất | đã sửa ở R5 | chấp nhận |
+| nhẹ (17) | `optimizer-step.svg` | Mũi tên vòng về mini-batch; thiếu nhánh $\theta_{j-1}$ vào $L_{B_j}$ | Mũi tên vòng kết thúc ở nhãn $\theta_{j-1}$; nhánh vào $L_{B_j}$ | đã sửa ở R5 (script `gen/optchain.py`, viewBox $1250\times250$; alt ở deck và note) | chấp nhận |
+| nhẹ (18) | `L08-26` | "lịch giảm" chỉ ở hàng SGD | Ghi một lần trong ghi chú diễn giả | đã sửa ở R5 (ô SGD còn $\eta$) | chấp nhận |
+| nhẹ (19) | ghi chú bài giảng, "Kiểm tra nhanh." §5 | Câu hỏi trùng "Giới hạn." | Câu $\beta_1=0$ | đã sửa ở R5 | chấp nhận |
+| nhẹ (20) | ghi chú bài giảng §5 | Câu khuôn "Mỗi thành phần … có một việc."; câu R1-2 lặp | Bỏ khuôn; câu R1-2 chỉ ở đoạn sau hình, "Giới hạn", đoạn kết | đã sửa ở R5 (bỏ ở "Trong thực hành." RMSprop và Adam) | chấp nhận |
+| nhẹ (21) | ghi chú bài giảng §5 | Đoạn kết lấy "Phần 5" làm chủ ngữ; "được dùng rộng rãi" thiếu nguồn | "Chúng ta đã có…"; "(bài giảng gốc, trang 28)" | đã sửa ở R5 | chấp nhận |
+
+- Bước R5 (biên tập viên): áp dụng 21 mục. Trang đổi: `L08-22`, `L08-23`, `L08-24`, `L08-25`, `L08-26` (mặt trang và ghi chú); hình `optimizer-step.svg`. Ghi chú bài giảng: Định nghĩa 08.15 ($\psi_j$, $j$ sau khi tăng, Update phụ thuộc $j$), đọc hình mới, Ví dụ 08.18 dời sau Định nghĩa 08.16, Ví dụ 08.21 mới (hai bước ngược chiều), ví dụ Adam cũ thành 08.22, chỉ số $\ell$, $e$, "Kiểm tra nhanh." $\beta_1=0$, đoạn kết; bảng ký hiệu thêm $\odot$, $\oslash$. `storyboard.md`: bảng số đo "Rà lại mạch 5 (bước R5)", ngoại lệ `L08-26`, chuỗi Ví dụ mạch 5. `check.py` `L08-M5T`, `L08-22`…`L08-26`, `L08-M6T` ở 1600×900, 390×844: không tràn, không lỗi; viewer 0 lỗi KaTeX, không `.katex-display` tràn ở 1280. `no-ai-slop` Edit, tự kiểm theo `eval.md`: đạt. Chờ điều phối viên duyệt.
+| R5 | mạch 5 (rà lại) | chấp nhận; gộp hai thẻ `L08-23` thành một dòng, ba chỗ `<br>` chống dòng mồ côi; tràn ngang 390 px của công thức Q-learning trong mục tiên quyết của note để lượt rà cuối | diff; tính lại ví dụ hai bước RMSprop/Adam; xem ảnh `L08-22`, `L08-25` |
