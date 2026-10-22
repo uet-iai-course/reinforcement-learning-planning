@@ -259,7 +259,21 @@ Ví dụ 08.4 chỉ xét một vật chuyển động thẳng đều và luôn h
 
 ### Đích di động và mạng mục tiêu
 
-**Vấn đề.** Nếu cùng một bộ tham số $\theta$ vừa tạo dự đoán vừa tạo mục tiêu bootstrap, một bước cập nhật có thể đổi cả dự đoán lẫn nhãn.
+Trong Q-learning dạng bảng, cập nhật ô $(S_t,A_t)$ không đổi ô ở $S_{t+1}$ khi $S_{t+1}\ne S_t$, nên mục tiêu của mẫu chuyển giữ nguyên sau bước cập nhật. Với mạng giá trị hành động, dự đoán $Q_\theta(O_t,A_t)$ và phần bootstrap $\max_{a'}Q_\theta(O_{t+1},a')$ dùng chung $\theta$, nên một bước theo $\theta$ đổi cả hai. Ví dụ sau đo sự thay đổi này trong trường hợp nhỏ nhất: một tham số duy nhất.
+
+::: example Ví dụ 08.5 (Một tham số tạo cả dự đoán lẫn đích)
+**Dữ kiện.** Mạng có một tham số và cho cùng một giá trị ở mọi cặp: $Q_\theta(o,a)=\theta$ với mọi $o\in\mathcal O$, $a\in\mathcal A$. Một mẫu chuyển có $R_{t+1}=1$, $O_{t+1}$ chưa kết thúc; $\gamma=0{,}9$, $\theta_0=0$, bước học $\alpha=0{,}5$. Cập nhật bán gradient (Định nghĩa 07.21) với $q=Q_\theta(O_t,A_t)$ và $y=R_{t+1}+\gamma\max_{a'}Q_\theta(O_{t+1},a')$ là $\theta\leftarrow\theta+\alpha(y-q)\nabla_\theta Q_\theta(O_t,A_t)$, ở đây $\nabla_\theta Q_\theta(O_t,A_t)=1$.
+
+**Tính.** Tại $\theta_0=0$: $q=0$ và $y=1+0{,}9\cdot0=1$. Bước cập nhật cho $\theta_1=0+0{,}5\,(1-0)=0{,}5$. Tính lại trên cùng mẫu chuyển: $q=0{,}5$ và $y=1+0{,}9\cdot0{,}5=1{,}45$.
+
+**Diễn giải.** Sai số $y-q$ giảm từ $1$ xuống $1{,}45-0{,}5=0{,}95$. Nếu đích giữ nguyên ở $1$, sai số sau bước là $1-0{,}5=0{,}5$. Dự đoán tăng $0{,}5$, nhưng đích cũng tăng $0{,}9\cdot0{,}5=0{,}45$, vì cả hai cùng chứa $\theta$.
+:::
+
+![Trục giá trị thẳng đứng từ 0 đến 1,5. Trước bước cập nhật: dự đoán q bằng 0 (hình tròn), đích y bằng 1 (hình vuông). Sau một bước: q bằng 0,5, y bằng 1,45. Hai mũi tên nét đứt cho thấy cả dự đoán lẫn đích cùng tăng.](img/lec-08/moving-target-step.svg)
+
+Hình vẽ hai giá trị của Ví dụ 08.5 trên một trục. Hình tròn là dự đoán $q$, hình vuông là đích $y$; cột trái trước bước cập nhật, cột phải sau bước. Hai mũi tên nét đứt cùng hướng lên: bước cập nhật kéo $q$ về phía $y$, đồng thời đẩy $y$ đi xa thêm.
+
+Lặp lại cập nhật trên cùng mẫu chuyển cho $\theta_{n+1}=\theta_n+0{,}5\,(1+0{,}9\,\theta_n-\theta_n)=0{,}95\,\theta_n+0{,}5$. Dãy này hội tụ về nghiệm của $\theta=1+0{,}9\,\theta$, tức $\theta=10$, vì $\theta_{n+1}-10=0{,}95\,(\theta_n-10)$; mỗi bước chỉ rút khoảng cách tới $10$ đi $5\%$. Với đích giữ cố định ở một giá trị $c$, cùng bước học cho $\theta_{n+1}-c=0{,}5\,(\theta_n-c)$, tức mỗi bước rút một nửa khoảng cách. Trong ví dụ một tham số, đích di động chỉ làm chậm quá trình học. Khi nhiều trạng thái dùng chung tham số, hệ số tương ứng có thể lớn hơn $1$: Mệnh đề 07.37 cho một ví dụ tuyến tính hai trạng thái mà tham số tăng không chặn. Bài giảng gốc (trang 31) tóm tắt hiện tượng: khi mạng thay đổi, mục tiêu cũng thay đổi, và điều này có thể dẫn tới dao động hoặc phân kỳ. Chúng ta cần một cách giữ đích cố định trong một số bước cập nhật.
 
 **Trực giác.** Tách hai bản sao của cùng kiến trúc: mạng trực tuyến (online network) nhận gradient, mạng mục tiêu (target network) tạo mục tiêu và được giữ cố định giữa các lần đồng bộ.
 

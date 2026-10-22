@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 590 340" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Dự đoán và đích trước và sau một bước cập nhật</title>
+<desc id="d">Trục giá trị thẳng đứng từ 0 đến 1,5. Cột trước: dự đoán q bằng 0 (hình tròn), đích y bằng 1 (hình vuông). Cột sau một bước: q bằng 0,5, y bằng 1,45. Hai mũi tên nét đứt nối giá trị trước với giá trị sau; cả dự đoán lẫn đích cùng tăng.</desc>
+<defs><marker id="arr" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" refX="18" refY="10" orient="auto"><path d="M0,0 L20,10 L0,20 Z" fill="#59606B"/></marker></defs>
+<line x1="100" y1="276" x2="100" y2="28" stroke="#2F3E7A" stroke-width="3"/>
+<line x1="92" y1="270" x2="108" y2="270" stroke="#2F3E7A" stroke-width="3"/>
+<line x1="92" y1="190" x2="108" y2="190" stroke="#2F3E7A" stroke-width="3"/>
+<line x1="92" y1="110" x2="108" y2="110" stroke="#2F3E7A" stroke-width="3"/>
+<line x1="92" y1="30" x2="108" y2="30" stroke="#2F3E7A" stroke-width="3"/>
+<text x="84" y="281" font-size="32" text-anchor="end">0</text>
+<text x="84" y="201" font-size="32" text-anchor="end">0,5</text>
+<text x="84" y="121" font-size="32" text-anchor="end">1</text>
+<text x="84" y="41" font-size="32" text-anchor="end">1,5</text>
+<line x1="246" y1="262" x2="398" y2="198" stroke="#59606B" stroke-width="4" stroke-dasharray="10 7" marker-end="url(#arr)"/>
+<line x1="246" y1="102" x2="398" y2="44" stroke="#59606B" stroke-width="4" stroke-dasharray="10 7" marker-end="url(#arr)"/>
+<circle cx="230" cy="270" r="14" fill="#B15A2B"/>
+<rect x="216" y="96" width="28" height="28" fill="#2F3E7A"/>
+<circle cx="420" cy="190" r="14" fill="#B15A2B"/>
+<rect x="406" y="24" width="28" height="28" fill="#2F3E7A"/>
+<text x="204" y="282" font-size="34" text-anchor="end"><tspan font-style="italic">q</tspan> = 0</text>
+<text x="204" y="122" font-size="34" text-anchor="end"><tspan font-style="italic">y</tspan> = 1</text>
+<text x="444" y="202" font-size="34"><tspan font-style="italic">q</tspan> = 0,5</text>
+<text x="444" y="50" font-size="34"><tspan font-style="italic">y</tspan> = 1,45</text>
+<text x="230" y="328" font-size="32" text-anchor="middle" font-weight="700" fill="#2F3E7A">trước</text>
+<text x="430" y="328" font-size="32" text-anchor="middle" font-weight="700" fill="#2F3E7A">sau một bước</text>
+</svg>
