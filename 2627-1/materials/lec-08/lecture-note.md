@@ -686,7 +686,7 @@ $$
 
 **Kiểm tra nhanh.** Vì sao đường tạo đích dùng phép cực đại tại $O'_i$, còn đường dự đoán dùng phép chọn theo $A_i$? Tại $O_i$, hành động $A_i$ đã xảy ra và đích là mẫu của giá trị cặp $(O_i,A_i)$, nên dự đoán phải là giá trị của đúng cặp đó. Tại $O'_i$, đích đánh giá chính sách tham lam, nên dùng giá trị lớn nhất; hành động thực hiện tiếp theo tại $O'_i$ không được lưu trong mẫu và không cần.
 
-Đến đây chúng ta có hàm mất mát, gradient của nó và hai thao tác làm chương trình tính đúng gradient đó: phép chọn theo hành động và phép dừng gradient. Bài tập về mini-batch hai mẫu chuyển ở cuối chương tính tay đích, sai số, hàm mất mát và đạo hàm theo $q_i$ trên số liệu của Ví dụ 08.7 và 08.8. Ở mục tiếp theo, chúng ta ghép thu thập, lưu, rút mẫu, bước tối ưu này và đồng bộ thành một vòng lặp với hai bộ đếm.
+Đến đây chúng ta có hàm mất mát, gradient của nó và hai thao tác làm chương trình tính đúng gradient đó: phép chọn theo hành động và phép dừng gradient. Bài tập 08.1 ở cuối chương tính tay đích, sai số, hàm mất mát và đạo hàm theo $q_i$ trên số liệu của Ví dụ 08.7 và 08.8. Ở mục tiếp theo, chúng ta ghép thu thập, lưu, rút mẫu, bước tối ưu này và đồng bộ thành một vòng lặp với hai bộ đếm.
 
 <!-- note-topic-id: lec-08-topic-10 -->
 ### Vòng DQN: hai đồng hồ $t$ và $k_{\mathrm{opt}}$
@@ -903,25 +903,23 @@ $|\mathcal A|$ giá trị hành động.
 
 ---
 
-## Ba bài tập (30 phút, 10 phút mỗi bài)
+## Ba bài tập
 
-::: exercise Bài tập 1 — Tính đích, mất mát và gradient
+::: exercise Bài tập 08.1 (Đích, hàm mất mát và gradient trên một mini-batch)
 
-Cho $b=2$, $\gamma=0{,}9$:
+Cho $b=2$, $\gamma=0{,}9$ và mini-batch hai mẫu chuyển, với $q_i=Q_\theta(O_i,A_i)$:
 
-| $i$ | $R_i$ | $Z_i$ | $\max_{a'}Q_{\theta^-}(O'_i,a')$ | $q_i=Q_\theta(O_i,A_i)$ |
+| $i$ | $R_i$ | $Z_i$ | $\max_{a'}Q_{\theta^-}(O'_i,a')$ | $q_i$ |
 |---|---|---|---|---|
 | 1 | 1 | 0 | 4 | 3,1 |
 | 2 | −2 | 1 | 100 | −1,5 |
 
-Tính $y_i$, $\delta_i=y_i-q_i$, MSE $L_B$ và $\partial L/\partial(q_1,q_2)$.
-Cho biết mẫu nào làm tăng $q$ dưới một bước hạ gradient nhỏ.
+Tính $y_i$, $\delta_i=y_i-q_i$, hàm mất mát $L_B$ (Định nghĩa 08.10) và $\partial L_B/\partial q_i$ với $i=1,2$.
+Xét $q_1$, $q_2$ như hai biến riêng, cho biết $q_i$ nào tăng dưới một bước hạ gradient nhỏ.
 :::
 
 ::: hint
-Áp dụng mặt nạ $(1-Z_i)$ trước khi tính sai số. Số 100 ở mẫu 2 là mồi
-kiểm tra: chuyển tiếp đã kết thúc nên nó không đi vào đích. Với MSE trung bình
-trên hai mẫu, đạo hàm theo $q_i$ là $\tfrac{2}{b}(q_i-y_i)$.
+Áp mặt nạ $(1-Z_i)$ trước khi tính sai số. Mẫu 2 có $Z_2=1$, nên giá trị $100$ của mạng mục tiêu tại quan sát cuối lượt không vào đích. Với hàm mất mát trung bình trên hai mẫu, đạo hàm theo $q_i$ là $\tfrac{2}{b}(q_i-y_i)$.
 :::
 
 ::: solution
@@ -929,8 +927,8 @@ trên hai mẫu, đạo hàm theo $q_i$ là $\tfrac{2}{b}(q_i-y_i)$.
 - $y_1 = 1 + 0{,}9\cdot(1-0)\cdot 4 = 4{,}6$; $y_2 = -2 + 0{,}9\cdot(1-1)\cdot 100 = -2$.
 - $\delta_1 = 4{,}6-3{,}1 = 1{,}5$; $\delta_2 = -2-(-1{,}5) = -0{,}5$.
 - $L_B = \tfrac12(1{,}5^2 + 0{,}5^2) = \tfrac12(2{,}25+0{,}25) = 1{,}25$.
-- $\partial L/\partial q_1 = 2\cdot\tfrac12\cdot(3{,}1-4{,}6) = -1{,}5$;
-  $\partial L/\partial q_2 = 2\cdot\tfrac12\cdot(-1{,}5+2) = 0{,}5$.
+- $\partial L_B/\partial q_1 = 2\cdot\tfrac12\cdot(3{,}1-4{,}6) = -1{,}5$;
+  $\partial L_B/\partial q_2 = 2\cdot\tfrac12\cdot(-1{,}5+2) = 0{,}5$.
 - Mẫu 1 có gradient theo $q_1$ âm, nên phép trừ gradient làm $q_1$ tăng; mẫu 2
   có gradient dương nên $q_2$ giảm.
 :::
