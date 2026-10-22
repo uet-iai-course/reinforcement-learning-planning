@@ -768,3 +768,7 @@ Kết quả rà: 0 chặn bàn giao, 0 nghiêm trọng, 8 trung bình, 9 nhẹ; 
   - Mũi tên điều hướng của Reveal đè tiêu đề dài trên trang đầy: hành vi chung của `lecture-slide.css`/Reveal ở mọi bộ trang; không sửa trong đợt này.
   - Chưa có `materials/lec-08/exercises.md` và notebook thực hành cho Bài 08; thẻ Bài 8 trong `index.html` ghi "Chưa có" cho hai mục này.
 | F2 | `L08-K4`, `L08-M4T`, `L08-M6T`, note, outline | chấp nhận; `L08-K4` 90 âm tiết (= 1,5 × trần, có ngoại lệ), phát hiện trung bình của kiểm định cuối đã đóng; điều phối viên ký duyệt bàn giao đợt sửa 2026-10-22 | báo cáo kiểm định cuối (9/9 đạt); `check.py`; diff |
+
+### Sửa hạ tầng viewer sau bàn giao (2026-10-22)
+
+Lượt kiểm sau bàn giao phát hiện trang viewer ghi chú cuộn ngang toàn trang ở 390 px (Bài 08: 441 px). Nguyên nhân: `span.katex-mathml` định vị tuyệt đối trong bảng thoát khỏi vùng cuộn của bảng. Sửa một dòng `position: relative` cho `.markdown-body table` trong `material-viewer.css` (Agent `general-purpose`, `claude-opus-5-5`, high; điều phối viên duyệt). Đo 19 tệp ghi chú/bài tập Bài 01–12: trước có 6 tệp cuộn ngang (note 03, 05, 06, 08, 10; exercises 05), sau cả 19 tệp `scrollWidth` 375 ≤ 390; 1280 px không đổi; 0 `.katex-error`, 0 lỗi console. Hình `img/lec-*` và công thức hiển thị rộng vẫn cuộn trong khung riêng (thiết kế có chủ ý của viewer: hình giữ tối thiểu 900 px để nhãn đọc được), không bị cắt. Điều phối viên đã đo lại: 16/16 hình và 21/21 công thức rộng ở 390 px nằm trong vùng `overflow-x: auto`.

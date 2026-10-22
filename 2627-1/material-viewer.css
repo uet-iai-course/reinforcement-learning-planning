@@ -182,6 +182,7 @@
 }
 
 .markdown-body table {
+  position: relative;
   display: block;
   width: 100%;
   overflow-x: auto;
