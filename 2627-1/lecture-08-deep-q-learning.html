@@ -359,18 +359,35 @@
 <p>Mọi mảng của $L_B$ ở cùng một thiết bị tính (CPU hoặc GPU).</p>
 <aside class="notes"><p>Mỗi mẫu chiếm một hàng; chiều đầu của mọi mảng là $b$. Hai mạng trả mảng $[b,\lvert\mathcal A\rvert]$, mỗi hàng là vector giá trị của một quan sát. Phép chọn theo hành động lấy ở hàng $i$ phần tử cột $A_i$, nên chỉ số hành động phải là số nguyên <code>int64</code>; phép cực đại lấy theo chiều hành động, tức chiều thứ hai, <code>max(1)</code>, cho $[b]$. Nếu $A$ hay kết quả chọn có dạng cột $[b,1]$ mà không bỏ chiều thừa (squeeze) về $[b]$, phép trừ với một mảng $[b]$ lan truyền thành ma trận $[b,b]$, và hàm mất mát trung bình trên $b^2$ cặp sai. Bộ nhớ lưu khung ở dạng <code>uint8</code> để tiết kiệm bộ nhớ, rồi chuyển sang <code>float32</code> khi tạo mini-batch; $Z$ chuyển sang kiểu số trước khi tính $1-Z$. Thiết bị tính là bộ xử lý thực hiện phép tính: CPU hoặc GPU.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 14–22, 35 (giao diện suy ra); Mnih và cộng sự (2015), mục Methods ($84\times84$, bốn khung); hình vẽ mới.</p></aside>
 </section>
-  <section data-slide-id="X02" data-note-topic-id="lec-08-topic-05"><h2>Bài tập: sửa bốn lỗi cài đặt</h2><pre style="font-size:.94em;width:100%"><code class="language-python">done = terminated or truncated
-next_o = obs_after_step       # API có thể đã tự reset
+  <section data-slide-id="X02" data-note-topic-id="lec-08-topic-05">
+<h2>Bài tập: lỗi cài đặt đích DQN</h2>
+<p><code>step</code> trả quan sát sau bước, $R$, $Z$, $U$ và <code>final_obs</code>: quan sát cuối nếu môi trường vừa tự đặt lại, ngược lại <code>None</code>.</p>
+<pre style="font-size:.94em;width:100%"><code class="language-python">obs_after_step, r, terminated, truncated, final_obs = step(a)
+D.add(o, a, r, obs_after_step, terminated, truncated)
+
+o, a, r, next_o, z, u = D.sample(b)
+done = z | u
 y = r + gamma * (1 - done) * q_target(next_o).max()
 loss = ((y - q_online(o)[a]) ** 2).mean()
-</code></pre><div class="check"><strong>Câu hỏi:</strong> sửa quan sát kế tiếp, mặt nạ MDP, đường gradient và phép chọn hành động theo batch.</div><div class="fragment"><p><strong>Lời giải:</strong></p><pre style="font-size:.94em;width:100%"><code class="language-python">final_o = info.get("final_observation")
-next_o = obs_after_step if final_o is None else final_o
-z = terminated.float()  # giả sử đây là kết thúc MDP mô hình hóa
-with no_grad():
-    y = r + gamma * (1 - z) * q_target(next_o).max(1).values
-q = q_online(o).gather(1, a[:, None]).squeeze(1)
+</code></pre>
+<div class="check"><strong>Câu hỏi:</strong> sửa năm lỗi: quan sát kế tiếp, mặt nạ, đường gradient, phép chọn theo hành động, chiều của <code>max</code>.</div>
+<aside class="notes"><p>Hai dòng đầu chạy ở mỗi bước môi trường; bốn dòng sau chạy trên mini-batch, mọi mảng có chiều đầu $b$, <code>z</code> và <code>u</code> là hai cờ $Z$, $U$. Bài tập kiểm tra việc chuyển Thuật toán 08.13 thành mã: mẫu chuyển lưu đúng, đích đúng công thức, gradient đúng đường. Gợi ý: so từng dòng với $y_i=\operatorname{sg}\bigl(R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a')\bigr)$ và $q_i=[\mathbf q_\theta(O_i)]_{A_i}$; với mỗi dòng, ghi kích thước của mảng nhận được khi $b=2$ và $\lvert\mathcal A\rvert=3$.</p><p class="note-source"><strong>Nguồn:</strong> bài tập xây từ giả mã của bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 21–22; bổ sung hai cờ và quan sát cuối khi tự đặt lại.</p></aside>
+</section>
+  <section data-slide-id="X02b" data-note-topic-id="lec-08-topic-05">
+<h2>Bài tập: lỗi cài đặt đích DQN</h2>
+<p><strong>Lời giải:</strong> quan sát cuối; mặt nạ $1-Z$; đích trong <code>no_grad</code>; <code>gather</code>; <code>max(1)</code>.</p>
+<pre style="font-size:.94em;width:100%"><code class="language-python">next_o = obs_after_step if final_obs is None else final_obs
+D.add(o, a, r, next_o, terminated, truncated)
+
+o, a, r, next_o, z, u = D.sample(b)
+with torch.no_grad():
+    v = q_target(next_o).max(1).values
+    y = r + gamma * (1 - z.float()) * v
+q = q_online(o).gather(1, a.unsqueeze(1)).squeeze(1)
 loss = ((y - q) ** 2).mean()
-</code></pre></div><aside class="notes">Giả sử final_observation là quan sát cuối đúng của chuyển tiếp và cờ terminated của API trùng với kết thúc của MDP đang mô hình hóa; không dùng final_observation=None làm quan sát kế tiếp. Cắt ngắn ngoài mô hình vẫn bootstrap. Biến done gộp không được dùng trong loss. no_grad dừng gradient; gather chọn một hành động đã lưu trên mỗi hàng. Bài ở mức giả mã, không hứa tương thích mọi biến thể Gymnasium.<p class="note-source"><strong>Nguồn:</strong> bài tập sửa từ giả mã lecture8-dqn.pdf, tr. 21–22; bổ sung autoreset.</p></aside></section>
+</code></pre>
+<aside class="notes"><p>Năm sửa đổi độc lập. Quan sát kế tiếp: khi môi trường tự đặt lại, quan sát sau bước đã thuộc lượt mới, nên mẫu chuyển phải mang quan sát cuối. Mặt nạ: <code>done</code> gộp cả cắt ngắn, làm mẫu bị cắt ngắn mất phần bootstrap; đích chỉ dùng $1-Z$, còn $Z\lor U$ chỉ quyết định việc đặt lại. Đường gradient: đích tính trong <code>no_grad</code>, tương đương $\operatorname{sg}$. Phép chọn: <code>q_online(o)[a]</code> lấy các hàng có chỉ số <code>a</code>, cho mảng $[b,\lvert\mathcal A\rvert]$; <code>gather</code> lấy ở hàng $i$ cột $A_i$, cho $[b]$. Chiều của phép cực đại: <code>max()</code> không chỉ chiều trả một số cho cả mini-batch; <code>max(1)</code> lấy theo chiều hành động. <code>z.float()</code> đổi cờ sang kiểu số trước phép trừ.</p><p class="note-source"><strong>Nguồn:</strong> bài tập xây từ giả mã của bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 21–22; tên trường chứa quan sát cuối phụ thuộc thư viện và phiên bản, ở đây đặt là <code>final_obs</code>.</p></aside>
+</section>
 </section>
 
 <section>

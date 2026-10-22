@@ -682,7 +682,7 @@ $$
 **Diễn giải.** Ô $M_{2,3}=2{,}0$ là giá trị lớn nhất của hàng 2 nhưng nhận gradient $0$, vì hành động đã lưu là $a_1$. Hạ gradient tăng $M_{1,2}$ và giảm $M_{2,1}$, tức kéo mỗi $q_i$ về $y_i$.
 :::
 
-**Trong thực hành.** Trong PyTorch, phép chọn thường viết `q = net(obs).gather(1, act.unsqueeze(1)).squeeze(1)`, với `act` là tensor số nguyên kiểu `int64` kích thước $[b]$; đích được tính trong khối `with torch.no_grad():` từ mạng mục tiêu. Hai lỗi hay gặp là dùng phép cực đại của mạng trực tuyến thay cho phép chọn theo $A_i$, và tính đích bằng mạng trực tuyến mà không dừng gradient. Bài tập sửa lỗi cài đặt cuối chương kiểm tra cả hai lỗi này.
+**Trong thực hành.** Trong PyTorch, phép chọn thường viết `q = net(obs).gather(1, act.unsqueeze(1)).squeeze(1)`, với `act` là tensor số nguyên kiểu `int64` kích thước $[b]$; đích được tính trong khối `with torch.no_grad():` từ mạng mục tiêu. Hai lỗi hay gặp là dùng phép cực đại của mạng trực tuyến thay cho phép chọn theo $A_i$, và tính đích bằng mạng trực tuyến mà không dừng gradient. Bài tập 08.2 ở cuối chương kiểm tra cả hai lỗi này.
 
 **Kiểm tra nhanh.** Vì sao đường tạo đích dùng phép cực đại tại $O'_i$, còn đường dự đoán dùng phép chọn theo $A_i$? Tại $O_i$, hành động $A_i$ đã xảy ra và đích là mẫu của giá trị cặp $(O_i,A_i)$, nên dự đoán phải là giá trị của đúng cặp đó. Tại $O'_i$, đích đánh giá chính sách tham lam, nên dùng giá trị lớn nhất; hành động thực hiện tiếp theo tại $O'_i$ không được lưu trong mẫu và không cần.
 
@@ -841,7 +841,7 @@ Trung bình bình phương của bốn phần tử là $\tfrac14(2{,}25+26{,}01+
 
 **Kiểm tra nhanh.** Gọi phép cực đại trên mảng $\mathbf q_{\theta^-}(O')$ kích thước $[b,\lvert\mathcal A\rvert]$ mà không chỉ chiều thì được gì? Một số vô hướng, giá trị lớn nhất trên mọi mẫu và mọi hành động; mọi $y_i$ dùng chung giá trị đó, nên đích của mỗi mẫu không còn phụ thuộc $O'_i$ của chính nó. Lấy cực đại theo chiều thứ hai cho đúng mảng $[b]$.
 
-Đến đây Thuật toán 08.13 đã đầy đủ: đầu vào, hai vòng với hai bộ đếm, đích có mặt nạ và dừng gradient, và kích thước của mọi mảng trong một bước tối ưu. Bài tập sửa lỗi cài đặt ở cuối chương kiểm tra các điều kiện này trên một đoạn mã. Bước 8 của thuật toán giao việc biến $\nabla_\theta L_B$ thành bước tham số cho bộ tối ưu; ở phần tiếp theo, chúng ta viết các quy tắc cập nhật của bộ tối ưu.
+Đến đây Thuật toán 08.13 đã đầy đủ: đầu vào, hai vòng với hai bộ đếm, đích có mặt nạ và dừng gradient, và kích thước của mọi mảng trong một bước tối ưu. Bài tập 08.2 ở cuối chương kiểm tra các điều kiện này trên một đoạn mã. Bước 8 của thuật toán giao việc biến $\nabla_\theta L_B$ thành bước tham số cho bộ tối ưu; ở phần tiếp theo, chúng ta viết các quy tắc cập nhật của bộ tối ưu.
 
 ## Mạng mục tiêu và bất ổn
 
@@ -1021,46 +1021,52 @@ Kết luận đúng khi xét $q_1$, $q_2$ như hai biến riêng. Trong DQN, c�
 **Kiểm tra lại.** Ba lỗi thường gặp: quên mặt nạ ở mẫu 2, cho $y_2=-2+0{,}9\cdot100=88$ và $\delta_2=89{,}5$; dùng giá trị lớn nhất của $\mathbf q_\theta(O_i)$ thay cho giá trị của hành động đã lưu $A_i$ (phép chọn theo hành động); quên hệ số $\tfrac2b$, hoặc dùng tổng thay cho trung bình, làm đạo hàm sai một hằng số nhân (với $b=2$, $\tfrac2b=1$ nên lỗi này chỉ lộ ra khi $b\ne2$).
 :::
 
-::: exercise Bài tập 2 — Sửa bốn lỗi trong giả mã
+::: exercise Bài tập 08.2 (Lỗi cài đặt đích DQN)
+Hàm `step(a)` trả quan sát sau bước `obs_after_step`, phần thưởng `r`, hai cờ `terminated` (cờ $Z$ của kết thúc MDP) và `truncated` (cờ $U$ của cắt ngắn), và `final_obs`: quan sát cuối của lượt nếu môi trường vừa tự đặt lại, ngược lại `None`. `D` là bộ nhớ phát lại; `D.sample(b)` trả sáu mảng của một mini-batch, chiều đầu $b$, trong đó `a` có kiểu `int64`, `z` và `u` có kiểu `bool`. Hai mạng `q_online`, `q_target` nhận mảng $[b,4,H,W]$ và trả mảng $[b,\lvert\mathcal A\rvert]$.
 
-Đoạn giả mã sau chứa bốn lỗi:
+```python
+obs_after_step, r, terminated, truncated, final_obs = step(a)
+D.add(o, a, r, obs_after_step, terminated, truncated)
 
-```
-done = terminated or truncated
-next_o = obs_after_step        # API có thể đã tự reset
+o, a, r, next_o, z, u = D.sample(b)
+done = z | u
 y = r + gamma * (1 - done) * q_target(next_o).max()
 loss = ((y - q_online(o)[a]) ** 2).mean()
 ```
 
-Sửa: (i) quan sát kế tiếp, (ii) mặt nạ theo kết thúc MDP, (iii) đường gradient
-(dừng gradient ở đích), (iv) phép chọn hành động theo lô.
+Hai dòng đầu chạy ở mỗi bước môi trường; bốn dòng sau chạy trên một mini-batch. Hãy sửa năm lỗi: (a) quan sát kế tiếp được lưu vào `D`; (b) mặt nạ của đích; (c) đường gradient qua đích; (d) phép chọn theo hành động trên mini-batch; (e) chiều của phép cực đại. Với mỗi lỗi, nêu kích thước hoặc giá trị sai mà dòng mã tạo ra khi $b=2$ và $\lvert\mathcal A\rvert=3$, nếu có.
 :::
 
 ::: hint
-Quan sát sau bước có thể thuộc lượt mới nếu API tự đặt lại — cần quan sát
-cuối của chuyển tiếp. Biến done gộp không được dùng trong loss; cắt ngắn ngoài mô
-hình vẫn bootstrap. Đích phải tính trong no-grad. Chọn một hành động đã lưu trên
-mỗi hàng bằng gather, không lập chỉ mục vô hướng.
+So từng dòng với Thuật toán 08.13: bước 3 lưu quan sát cuối của mẫu chuyển; bước 7 tính $y_i=\operatorname{sg}\bigl(R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a')\bigr)$; bước 6 lấy $q_i=[\mathbf q_\theta(O_i)]_{A_i}$. Ghi kích thước của mảng sau mỗi phép toán theo Nhận xét 08.14.
 :::
 
 ::: solution
+Đoạn mã đã sửa:
 
-```
-final_o = info.get("final_observation")
-next_o = obs_after_step if final_o is None else final_o
-z = terminated.float()          # kết thúc của MDP đang mô hình hóa
-with no_grad():
-    y = r + gamma * (1 - z) * q_target(next_o).max(dim=1).values
-q = q_online(o).gather(1, a[:, None]).squeeze(1)
+```python
+next_o = obs_after_step if final_obs is None else final_obs
+D.add(o, a, r, next_o, terminated, truncated)
+
+o, a, r, next_o, z, u = D.sample(b)
+with torch.no_grad():
+    v = q_target(next_o).max(1).values
+    y = r + gamma * (1 - z.float()) * v
+q = q_online(o).gather(1, a.unsqueeze(1)).squeeze(1)
 loss = ((y - q) ** 2).mean()
 ```
 
-Giải thích: (i) dùng `final_observation` làm quan sát cuối của chuyển tiếp; (ii)
-mặt nạ chỉ theo `terminated`, biến done gộp không dùng trong loss; (iii) `no_grad`
-dừng gradient qua mạng mục tiêu; (iv) `gather` chọn một phần tử mỗi hàng rồi
-`squeeze` về $[b]$. Giả định `final_observation` là quan sát cuối đúng và cờ
-`terminated` của API trùng kết thúc MDP đang mô hình hóa; cắt ngắn ngoài mô hình
-vẫn bootstrap.
+**Câu (a).** Khi môi trường tự đặt lại sau bước cuối của một lượt, `obs_after_step` là quan sát đầu của lượt mới. Ở mẫu kết thúc, mặt nạ xóa phần bootstrap nên lỗi không lộ; ở mẫu bị cắt ngắn, $Z=0$ và đích bootstrap từ một quan sát không nối với $O_t$. Dòng sửa lưu `final_obs` khi có. Tên trường chứa quan sát cuối phụ thuộc thư viện và phiên bản; `final_obs` là tên giả định của bài.
+
+**Câu (b).** `done = z | u` gộp cắt ngắn vào mặt nạ, nên mọi mẫu bị cắt ngắn có $y_i=R_i$ thay cho $R_i+\gamma\max_{a'}Q_{\theta^-}(O'_i,a')$; với Ví dụ 08.8, đích $4{,}6$ bị hạ thành $1$. Mặt nạ đúng là $1-Z$; cờ $Z\lor U$ chỉ quyết định việc đặt lại môi trường ở bước 4. `z.float()` đổi cờ sang kiểu số trước phép trừ.
+
+**Câu (c).** Không có `no_grad`, thư viện lưu đồ thị của đường tạo đích. Khi `q_target` có tham số riêng, gradient theo $\theta$ không đổi nhưng thư viện tính thêm gradient cho $\theta^-$ mà bộ tối ưu không dùng; khi `q_target` và `q_online` là cùng một đối tượng, gradient đi qua đích và cập nhật thành phương pháp gradient dư (Mục "Phép chọn theo hành động và dừng gradient"). Tính đích trong `torch.no_grad()` là dạng cài đặt của $\operatorname{sg}$.
+
+**Câu (d).** `q_online(o)` có kích thước $[2,3]$. Chỉ số `[a]` với `a` kích thước $[2]$ lấy các hàng có số thứ tự $A_1$, $A_2$, cho mảng $[2,3]$, không phải hai giá trị $Q_\theta(O_i,A_i)$. Phép trừ `y - q_online(o)[a]` giữa $[2]$ và $[2,3]$ báo lỗi kích thước vì $2\ne3$; khi $\lvert\mathcal A\rvert=b$, phép trừ lan truyền thành ma trận $[b,b]$ không báo lỗi. `gather(1, a.unsqueeze(1))` lấy ở hàng $i$ cột $A_i$, cho $[2,1]$, và `squeeze(1)` đưa về $[2]$.
+
+**Câu (e).** `.max()` không chỉ chiều trả một số vô hướng, giá trị lớn nhất trên cả $2\cdot3=6$ phần tử, và cả hai mẫu dùng chung giá trị bootstrap đó; dòng mã không báo lỗi. `.max(1).values` lấy cực đại theo chiều hành động cho mảng $[2]$, mỗi mẫu một giá trị.
+
+**Kiểm tra lại.** Ba lỗi hay gặp khi sửa: viết `1 - z` với `z` kiểu `bool`, phép trừ bị một số thư viện từ chối; viết `.max(1)` mà quên `.values`, vì trong PyTorch phép này trả cả giá trị lẫn chỉ số; đặt cả dòng tính `q` vào khối `no_grad`, khi đó hàm mất mát không còn gradient theo $\theta$.
 :::
 
 ::: exercise Bài tập 3 — Thiết kế thí nghiệm loại bỏ
