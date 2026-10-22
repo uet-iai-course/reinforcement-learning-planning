@@ -80,7 +80,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 | `lec-08-topic-01` | Giới hạn của bảng giá trị hành động | tr. 8–15 | Đặt vấn đề quy mô và khái quát hóa | Vào: topic-13 → Ra: nhu cầu $Q_\theta$ |
 | `lec-08-topic-16` | Đầu vào bốn khung Atari và tính Markov | tr. 17, 35 | Ví dụ cho giao diện mạng; giới hạn của bốn khung | Vào: topic-01 → Ra: quan sát $O_t$ cho topic-02 |
 | `lec-08-topic-02` | Mạng giá trị hành động, đích di động và mạng mục tiêu | tr. 14–17, 20, 31, 33, 35 | Định nghĩa $\mathbf q_\theta$, $Q_\theta$; giả thiết Markov khi viết mục tiêu; $Q_{\theta^-}$ | Vào: topic-01, topic-16 → Ra: $\mathbf q_\theta$ và hai bản sao mạng |
-| `lec-08-topic-03` | Bootstrap thành bài toán hồi quy | tr. 16, 20–22, 34 | Đích $y_t$ và sai số TD | Vào: topic-02 → Ra: nhãn hồi quy |
+| `lec-08-topic-03` | Đích hồi quy | tr. 16, 20–22, 34 | Đích $y_t$ và sai số TD | Vào: topic-02 → Ra: nhãn hồi quy |
 | `lec-08-topic-04` | Kết thúc thật và mặt nạ $(1-Z)$ | tr. 21 | Phân biệt $Z$ và $U$ | Vào: topic-03 → Ra: đích đúng |
 | `lec-08-topic-05` | Chuyển tiếp và hai cờ, autoreset | tr. 21 | Hợp đồng dữ liệu | Vào: topic-04 → Ra: bộ sáu thành phần |
 | `lec-08-topic-06` | Bộ nhớ phát lại | tr. 19–21, 32 | Cơ chế lưu và lấy mẫu | Vào: topic-05 → Ra: mini-batch |
@@ -314,30 +314,37 @@ Mạng mục tiêu không làm ví dụ này hội tụ nhanh hơn. Gọi $r=0{,
 Phần 2 đã có mạng giá trị hành động và một bản sao giữ cố định để tính đích. Việc còn lại của phần này là viết đích thành nhãn hồi quy cho một mẫu chuyển, kể cả khi mẫu chuyển kết thúc lượt hoặc bị cắt ngắn.
 
 <!-- note-topic-id: lec-08-topic-03 -->
-### Bootstrap trở thành bài toán hồi quy
+### Đích hồi quy
 
-**Vấn đề.** Cập nhật từ điển của Q-learning không cho biết cách cập nhật một mạng;
-cần chuyển bootstrap thành một bài toán hồi quy có nhãn.
+Mạng mục tiêu cho một bộ tham số $\theta^-$ đứng yên giữa hai lần đồng bộ. Chúng ta dùng nó để viết mục tiêu Q-learning cho một mẫu chuyển. Q-learning dạng bảng dùng quy ước $Q(s,\cdot)=0$ tại trạng thái kết thúc. Mạng không có ô riêng cho trạng thái kết thúc: đầu ra của nó tại quan sát cuối lượt là một vector bất kỳ do tham số quyết định. Vì vậy mẫu chuyển phải mang theo một cờ cho biết bước này có kết thúc MDP hay không.
 
-**Trực giác.** Giữ $Q_{\theta^-}$ cố định, đích trở thành một "nhãn" tạm thời cố
-định; mạng online học để dự đoán gần nhãn đó.
+::: definition Định nghĩa 08.4 (Cờ kết thúc, đích hồi quy và sai số TD)
+Xét mẫu chuyển $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1})$ với $O_t,O_{t+1}\in\mathcal O$, $A_t\in\mathcal A$, $R_{t+1}\in\mathbb R$ và cờ kết thúc $Z_{t+1}\in\{0,1\}$; $Z_{t+1}=1$ khi và chỉ khi MDP đang mô hình hóa kết thúc tại bước $t+1$. Cho mạng trực tuyến $Q_\theta$, mạng mục tiêu $Q_{\theta^-}$ (Định nghĩa 08.3) và $\gamma\in[0,1)$. Đích hồi quy (còn gọi là mục tiêu cập nhật) của mẫu chuyển là
 
-**Ví dụ.** Mạng online dự đoán $q_t = Q_\theta(O_t,A_t)$; nhãn hồi quy là
+$$
+y_t=R_{t+1}+\gamma\,(1-Z_{t+1})\max_{a'\in\mathcal A}Q_{\theta^-}(O_{t+1},a').
+$$
 
-$$y_t = R_{t+1} + \gamma(1-Z_{t+1})\max_{a'}Q_{\theta^-}(O_{t+1},a').$$
+Dự đoán của mạng trực tuyến là $q_t=Q_\theta(O_t,A_t)$, và sai số sai phân thời gian (sai số TD) là $\delta_t=y_t-q_t$.
+:::
 
-Sai số sai phân thời gian: $\delta_t = y_t - q_t$.
+Đích gồm hai phần. $R_{t+1}$ là phần thưởng đã quan sát; $\gamma\max_{a'}Q_{\theta^-}(O_{t+1},a')$ là ước lượng của phần lợi tức còn lại, đọc trên vector $\mathbf q_{\theta^-}(O_{t+1})$ sau một lần tính của mạng mục tiêu. Mặt nạ $(1-Z_{t+1})$ bằng $0$ khi lượt kết thúc, nên khi đó $y_t=R_{t+1}$; đây đúng là quy ước $Q(s,\cdot)=0$ của dạng bảng, viết cho một hàm không có ô riêng cho trạng thái kết thúc. $q_t$ phụ thuộc $\theta$, còn $y_t$ chỉ phụ thuộc dữ liệu và $\theta^-$. Với $\theta^-$ cố định, $y_t$ là một số cố định gắn với mẫu chuyển, và $\delta_t>0$ nghĩa là dự đoán cần tăng.
 
-**Hình thức.** Đích gồm phần thưởng quan sát được $R_{t+1}$ và một ước lượng
-bootstrap từ mạng mục tiêu. Vì $\theta^-$ cố định giữa các lần đồng bộ, đích của
-một chuyển tiếp không đổi trong khoảng đó; nó chỉ đổi tại mốc đồng bộ.
+Các điều kiện trong định nghĩa có vai trò riêng. $Z_{t+1}$ chỉ ghi kết thúc của chính MDP; việc dừng thu thập vì một giới hạn bên ngoài được ghi bằng một cờ khác, xét ở cuối phần này. Bỏ mặt nạ, đích tại bước cuối lượt cộng thêm $\gamma\max_{a'}Q_{\theta^-}(O_{t+1},a')$, một giá trị không ứng với phần thưởng nào; mục kế tiếp tính sai lệch này bằng số. Điều kiện $\gamma<1$ giữ đích hữu hạn khi lượt không kết thúc. Dùng $Q_{\theta^-}$ thay cho $Q_\theta$ là điều làm $y_t$ đứng yên giữa hai lần đồng bộ (Định nghĩa 08.3). Cuối cùng, đích chỉ có nghĩa là mục tiêu Bellman khi $O_{t+1}$ đủ Markov (Nhận xét 08.2).
 
-**Ứng dụng và giới hạn.** Cách viết này cho phép dùng toàn bộ công cụ hồi quy
-(mini-batch, gradient, optimizer), nhưng nhãn vẫn phụ thuộc vào một bản sao gần
-đây của chính mạng đang học — nguồn gốc của mục tiêu di động.
+Đích hồi quy nối DQN với hồi quy có giám sát. Với $\theta^-$ cố định và một tập mẫu chuyển $\{(O_i,A_i,R_i,O'_i,Z_i)\}_{i=1}^b$, bài toán cực tiểu $\tfrac12\sum_i\bigl(y_i-Q_\theta(O_i,A_i)\bigr)^2$ theo $\theta$ là hồi quy bình phương tối thiểu với đầu vào $(O_i,A_i)$ và nhãn $y_i$. Bài toán này khác hồi quy có giám sát ở ba điểm: nhãn là ước lượng tạo từ một bản sao của chính mô hình, không phải giá trị đo được; nhãn đổi tại mỗi mốc đồng bộ; và dữ liệu do chính sách hành vi sinh ra, nên phân phối của nó đổi theo $\theta$. Với Q-learning dạng bảng và $C=1$, $\tfrac12(y_t-Q(S_t,A_t))^2$ có đạo hàm theo ô $Q(S_t,A_t)$ bằng $-\delta_t$, nên quy tắc $Q\leftarrow Q+\alpha\delta_t$ là một bước hạ gradient trên chính ô đó.
 
-**Kiểm tra nhanh.** Đích đổi khi nào? — Chỉ khi $\theta^-$ được đồng bộ; giữa hai
-lần đồng bộ, đích của một chuyển tiếp cố định.
+::: remark Nhận xét 08.5 (Hàm hồi quy tốt nhất cho đích cố định)
+Giả sử $O_t$ đủ Markov, $\theta^-$ cố định, các cặp $(O_t,A_t)$ được lấy theo một phân phối cố định và $\mathbb E[y_t^2]<\infty$. Trong mọi hàm $f$ của $(o,a)$, hàm làm nhỏ nhất kỳ vọng $\mathbb E\bigl[(y_t-f(O_t,A_t))^2\bigr]$ là kỳ vọng có điều kiện
+$$
+f^\star(o,a)=\mathbb E\bigl[y_t\mid O_t=o,A_t=a\bigr]=\mathbb E\Bigl[R_{t+1}+\gamma(1-Z_{t+1})\max_{a'}Q_{\theta^-}(O_{t+1},a')\Bigm| O_t=o,A_t=a\Bigr],
+$$
+tức $(\mathcal TQ_{\theta^-})(o,a)$ với $\mathcal T$ là toán tử Bellman tối ưu viết theo quan sát; đẳng thức đúng hầu chắc chắn theo phân phối của $(O_t,A_t)$. Một lượt hồi quy giữa hai lần đồng bộ vì vậy xấp xỉ một bước lặp giá trị $Q_{\theta^-}\mapsto\mathcal T Q_{\theta^-}$, trong giới hạn của lớp hàm và của số bước tối ưu. Nhận xét không nói gì về hội tụ của chuỗi các bước như vậy: mỗi bước có sai số xấp xỉ và sai số tối ưu, và phân phối dữ liệu đổi theo $\theta$.
+:::
+
+**Trong thực hành.** Đích được tính cho cả mini-batch bằng một lần tính xuôi của mạng mục tiêu trên các quan sát kế tiếp, cho mảng kích thước $[b,\lvert\mathcal A\rvert]$, rồi lấy cực đại theo chiều hành động để được một giá trị cho mỗi mẫu. Cờ $Z_i$ được lưu cùng mẫu chuyển và đổi sang kiểu số khi tính $1-Z_i$. Đích không được truyền gradient về $\theta$; phần 4 viết điều này thành phép dừng gradient trong hàm mất mát.
+
+Chúng ta đã có nhãn cho mỗi mẫu chuyển. Mục kế tiếp tính đích trên một mẫu chuyển kết thúc và cho thấy mặt nạ $(1-Z)$ thay đổi đích như thế nào.
 
 <!-- note-topic-id: lec-08-topic-04 -->
 ### Kết thúc thật làm mất nhánh bootstrap
