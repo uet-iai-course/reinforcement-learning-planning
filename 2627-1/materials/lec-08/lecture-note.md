@@ -86,7 +86,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 | `lec-08-topic-18` | Tương quan giữa các mẫu chuyển liên tiếp | tr. 19, 30 | Vấn đề của mẫu liền nhau | Vào: topic-05 → Ra: nhu cầu bộ nhớ phát lại |
 | `lec-08-topic-06` | Bộ nhớ phát lại | tr. 18–20, 32 | Bộ đệm vòng dung lượng $N$, ghi đè mẫu cũ nhất, rút đều; quan sát cuối khi tự đặt lại | Vào: topic-18 → Ra: mini-batch |
 | `lec-08-topic-19` | Dữ liệu khác chính sách trong bộ nhớ | tr. 6–7, 19, 32 | Hai nguồn khác chính sách; đích một bước không cần tỉ số lấy mẫu quan trọng | Vào: topic-06 → Ra: phạm vi của đích trên dữ liệu cũ |
-| `lec-08-topic-07` | Giới hạn của bộ nhớ phát lại | tr. 19, 29–32 | Giới hạn của replay | Vào: topic-19 → Ra: phát biểu đúng phạm vi |
+| `lec-08-topic-07` | Giới hạn của bộ nhớ phát lại | tr. 19, 29–32 | Ba việc làm được, ba điều không bảo đảm; câu hỏi $N=6$, $b=2$ | Vào: topic-19 → Ra: phát biểu đúng phạm vi; nhu cầu hàm mất mát cho phần 4 |
 | `lec-08-topic-08` | Gather và dừng gradient | tr. 16, 22, 34 | Đồ thị tính toán | Vào: topic-03 → Ra: loss batch |
 | `lec-08-topic-09` | Mất mát và gradient batch | tr. 21–22, 34 | MSE và $\nabla_\theta L$ | Vào: topic-08 → Ra: gradient cho optimizer |
 | `lec-08-topic-10` | Vòng DQN: hai đồng hồ $t$ và $k_{\mathrm{opt}}$ | tr. 18–22 | Giả mã đầy đủ | Vào: topic-05–09 → Ra: thuật toán hoàn chỉnh |
@@ -557,23 +557,35 @@ Chúng ta đã có hai kết quả về bộ nhớ phát lại: mini-batch rút 
 <!-- note-topic-id: lec-08-topic-07 -->
 ### Giới hạn của bộ nhớ phát lại
 
-**Ví dụ.** Lấy mẫu từ replay trộn các thời điểm, nhưng các mẫu vẫn có thể chồng
-lấn quan sát, đến từ các chính sách hành vi khác nhau, và bộ đệm hữu hạn loại dần
-dữ liệu cũ.
+Bộ nhớ phát lại cho mini-batch rút đều từ $N$ mẫu gần nhất (Định nghĩa 08.7), và đích một bước của mỗi mẫu có kỳ vọng $(\mathcal TQ_{\theta^-})(O_i,A_i)$ bất kể phiên bản hành vi đã sinh mẫu (Mệnh đề 08.8). Trước khi dùng mini-batch này để cập nhật $\theta$, chúng ta cần phát biểu đúng phạm vi của cơ chế: nó làm được gì, đo bằng số, và không bảo đảm điều gì.
 
-**Hình thức — phát biểu đúng phạm vi.**
+Bộ nhớ phát lại làm được ba việc. Thứ nhất, nó giảm tương quan ngắn hạn: hai mẫu trong một mini-batch hiếm khi liền nhau, với xác suất $2/N$ khi rút không hoàn lại (Ví dụ 08.12 dưới đây). Thứ hai, nó tái sử dụng mẫu: với các giá trị của Mnih và cộng sự (2015, Extended Data Table 1), $N=10^6$, một bước tối ưu sau mỗi $4$ bước môi trường và $b=32$, một mẫu ở trong bộ nhớ trong $10^6$ bước môi trường, tức $2{,}5\cdot10^5$ bước tối ưu, mỗi bước rút $32$ lần, mỗi lần trúng mẫu đó với xác suất $10^{-6}$; số lần mẫu được dùng có kỳ vọng $2{,}5\cdot10^5\cdot32\cdot10^{-6}=8$. Thứ ba, mỗi mini-batch trộn nhiều đoạn quỹ đạo thay vì chỉ đoạn vừa thu thập, nên một bước cập nhật ít bị kéo theo vùng quan sát vừa thăm. Bài giảng gốc (trang 32) nêu các lợi ích tái sử dụng dữ liệu quá khứ và cải thiện hiệu quả mẫu, và viết rằng bộ nhớ "phá vỡ" tương quan theo thời gian; ở đây chúng ta viết "giảm", vì xác suất $2/N$ của một cặp liền nhau luôn dương.
 
-- Replay *làm được*: giảm tương quan ngắn hạn của mẫu liền nhau; tăng tái sử dụng
-  dữ liệu; làm mini-batch đa dạng hơn quỹ đạo mới nhất.
-- Replay *không bảo đảm*: độc lập cùng phân phối (i.i.d.); phân phối bộ đệm đứng
-  yên; thuật toán hội tụ.
+::: remark Nhận xét 08.9 (Ba điều bộ nhớ phát lại không bảo đảm)
+Với bộ nhớ phát lại của Định nghĩa 08.7:
 
-**Ứng dụng và giới hạn.** Dùng từ "giảm", không dùng "loại bỏ" tương quan. Không
-nói tương quan luôn làm gradient bị chệch; hệ quả chắc chắn hơn là tự tương quan,
-độ đa dạng thấp và phương sai cập nhật phụ thuộc quỹ đạo.
+1. các mẫu trong một mini-batch không độc lập và cùng phân phối (i.i.d.) theo một phân phối cố định: khi biết $\mathcal D$, các lần rút có hoàn lại là i.i.d. theo phân phối thực nghiệm của $\mathcal D$, nhưng nội dung của $\mathcal D$ là các đoạn của một số ít quỹ đạo, xác suất rút hai mẫu liền nhau là $2/N>0$, và hai mẫu liên tiếp $k$, $k+1$ của một lượt dùng chung một quan sát, vì $O'$ của mẫu $k$ là $O$ của mẫu $k+1$;
+2. phân phối của $\mathcal D$ không đứng yên: hành vi đổi cùng $\theta$ và bộ đệm thay mẫu cũ nhất bằng mẫu mới, nên phân phối của các cặp $(O_i,A_i)$ được rút trôi theo thời gian;
+3. thuật toán dùng bộ nhớ phát lại không có bảo đảm hội tụ: xấp xỉ hàm, bootstrap và học khác chính sách vẫn cùng có mặt, tức bộ ba bất ổn của Bài 07 vẫn đủ ba yếu tố.
+:::
 
-**Kiểm tra nhanh.** Replay có biến dữ liệu thành i.i.d. không? — Không; nó chỉ
-giảm tương quan ngắn hạn và tăng tái sử dụng.
+Ba điều này có ba nguồn khác nhau. Điều thứ nhất đến từ việc mọi mẫu đều do một tác tử thu thập dọc các quỹ đạo. Lấy mẫu đều làm các lần rút độc lập với nhau khi đã biết $\mathcal D$, nhưng không làm nội dung của $\mathcal D$ thành các mẫu độc lập của một phân phối cố định: nó chỉ làm hiếm các cặp liền nhau, không tạo ra các quỹ đạo độc lập. Như đã nêu ở mục tương quan, mẫu tương quan không nhất thiết làm gradient trung bình bị chệch; hệ quả chắc chắn hơn là phương sai lớn hơn so với cùng số mẫu độc lập. Điều thứ hai đến từ vòng lặp giữa dữ liệu và tham số: $\theta$ đổi thì hành vi đổi, hành vi đổi thì các mẫu mới ghi vào $\mathcal D$ đổi. Vì vậy lời giải hồi quy tốt nhất của Nhận xét 08.5, vốn giả sử các cặp $(O_t,A_t)$ lấy theo một phân phối cố định, chỉ áp dụng gần đúng khi phân phối của $\mathcal D$ đổi chậm so với số bước tối ưu giữa hai lần đồng bộ. Điều thứ ba đến từ chỗ bộ nhớ chỉ đổi cách chọn mẫu: nó không bỏ xấp xỉ hàm, không bỏ bootstrap, và theo Mệnh đề 08.8 nó còn thêm một nguồn dữ liệu khác chính sách. Mệnh đề 07.37 của Bài 07 cho một ví dụ tuyến tính hai trạng thái có đủ ba yếu tố mà tham số tăng không chặn; bộ nhớ phát lại không loại trừ ví dụ đó.
+
+::: example Ví dụ 08.12 (Hai mẫu liền nhau trong một mini-batch)
+**Dữ kiện.** $N=6$, bộ nhớ chứa mẫu $3,\dots,8$ như Ví dụ 08.10: các vị trí $1,\dots,6$ chứa mẫu $7,8,3,4,5,6$. Mini-batch có $b=2$ mẫu, rút không hoàn lại.
+
+**Tính.** Rút không hoàn lại hai trong sáu mẫu cho $\binom62=15$ cặp, mỗi cặp có xác suất như nhau. Cặp mẫu $4$, mẫu $5$ có xác suất $1/15$. Hai mẫu liền nhau theo thứ tự thu thập là năm cặp $(3,4)$, $(4,5)$, $(5,6)$, $(6,7)$, $(7,8)$, nên xác suất rút được hai mẫu liền nhau là $5/15=1/3$. Cặp $(6,7)$ được tính dù mẫu $6$ ở vị trí $6$ và mẫu $7$ ở vị trí $1$: "liền nhau" xét theo thời gian, không theo vị trí trong bộ đệm.
+
+**Tổng quát.** Với $N$ mẫu liên tiếp trong bộ nhớ, có $N-1$ cặp liền nhau trong $\binom N2$ cặp, nên xác suất là $(N-1)/\binom N2=2/N$; với $N=10^6$, xác suất bằng $2\cdot10^{-6}$.
+
+**Diễn giải.** Dung lượng lớn làm hiếm cặp liền nhau, nhưng xác suất luôn dương, và các mẫu không liền nhau của cùng một lượt vẫn có thể tương quan.
+:::
+
+**Trong thực hành.** Dung lượng $N$ là một lựa chọn cân bằng. $N$ lớn làm hiếm cặp liền nhau và làm phân phối của $\mathcal D$ trôi chậm, nhưng giữ lâu các mẫu của những hành vi đã cũ. $N$ nhỏ giữ dữ liệu gần hành vi hiện tại, nhưng mini-batch gần với mini-batch liên tiếp hơn; ở cực $N=b$ của mục bộ nhớ phát lại, mọi mẫu trong mini-batch đều liền nhau. Mnih và cộng sự (2015, mục Methods) nêu thêm hai giới hạn của cách làm này: bộ đệm ghi đè theo thứ tự thời gian và lấy mẫu đều coi mọi mẫu chuyển quan trọng như nhau, không phân biệt mẫu mang nhiều thông tin. Hiệu quả của bộ nhớ phát lại trong DQN là kết quả thực nghiệm, không phải hệ quả của một định lý.
+
+**Kiểm tra nhanh.** Hai mẫu liên tiếp $k$ và $k+1$ trong cùng một lượt có thành phần nào trùng nhau? Quan sát kế tiếp $O_{t+1}$ của mẫu $k$ chính là quan sát $O_t$ của mẫu $k+1$; khi mẫu $k$ là bước cuối của lượt thì không, vì mẫu $k+1$ bắt đầu từ quan sát đầu của lượt mới.
+
+Ở phần 3, chúng ta đã có bốn kết quả. Mẫu chuyển liền nhau tương quan, nên mini-batch liên tiếp có cỡ mẫu hiệu dụng nhỏ: bốn mẫu với tương quan $0{,}9^k$ chỉ tương đương khoảng $1{,}1$ mẫu độc lập (Ví dụ 08.9). Bộ nhớ phát lại là bộ đệm vòng giữ $N$ mẫu gần nhất, mini-batch gồm $b$ lần rút đều (Định nghĩa 08.7), và mỗi mẫu được dùng lại trung bình khoảng $8$ lần với các giá trị của DQN gốc. Đích một bước của mỗi mẫu có kỳ vọng $(\mathcal TQ_{\theta^-})(O_i,A_i)$ dù mẫu do phiên bản hành vi nào sinh ra, nên không cần tỉ số lấy mẫu quan trọng (Mệnh đề 08.8). Cuối cùng, bộ nhớ không tạo mẫu độc lập cùng một phân phối cố định, không làm phân phối dữ liệu đứng yên, và không đem lại bảo đảm hội tụ (Nhận xét 08.9). Đến đây chúng ta có, cho mỗi bước tối ưu, một mini-batch $b$ mẫu với đích $y_i$ cố định giữa hai lần đồng bộ, nhưng chưa có cách biến mini-batch đó thành một bước cập nhật $\theta$. Ở phần 4, chúng ta viết hàm mất mát trên mini-batch, cho gradient chỉ đi qua dự đoán $Q_\theta(O_i,A_i)$ bằng phép dừng gradient, rồi ghép thu thập, lưu, rút mẫu, tối ưu và đồng bộ thành thuật toán DQN đầy đủ.
 
 ## Hàm mất mát, vòng huấn luyện và bất ổn
 
