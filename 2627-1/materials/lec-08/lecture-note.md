@@ -421,13 +421,35 @@ Phần 2 đã cho ba kết quả. Mạng giá trị hành động trả về $\l
 <!-- note-topic-id: lec-08-topic-18 -->
 ### Tương quan giữa các mẫu chuyển liên tiếp
 
-**Vấn đề.** Tối ưu mạng nơ-ron thường giả sử mini-batch gần i.i.d.; chuyển tiếp
-liên tiếp thu thập trực tuyến tương quan mạnh. Replay có giải quyết triệt để không?
+Phần 2 cho mỗi mẫu chuyển một nhãn hồi quy. Bước cập nhật $\theta$ lấy trung bình gradient trên một mini-batch $b$ mẫu, như hạ gradient ngẫu nhiên (stochastic gradient descent, SGD) trong học có giám sát. Lập luận quen thuộc cho SGD dùng giả thiết các mẫu trong mini-batch độc lập và cùng phân phối (i.i.d.): khi đó trung bình của $b$ gradient mẫu có phương sai bằng $1/b$ phương sai của một gradient mẫu. Nếu tác tử cập nhật ngay trên các mẫu chuyển vừa thu thập theo thứ tự thời gian, giả thiết này không còn đúng.
 
-**Trực giác.** Các chuyển tiếp liền nhau đi qua quan sát gần nhau và dùng cùng
-phiên bản chính sách; mini-batch liên tiếp có cỡ mẫu hiệu dụng nhỏ hơn số phần tử,
-gradient dao động theo đoạn quỹ đạo gần nhất, mạng có thể quá khớp vùng trạng thái
-mới và "quên" vùng cũ.
+**Trực giác.** Các mẫu chuyển liền nhau trên một quỹ đạo đi qua những quan sát gần nhau, và cùng do một phiên bản tham số $\theta$ chọn hành động. Gradient của chúng vì vậy gần giống nhau: bốn mẫu liền nhau mang ít thông tin mới hơn bốn mẫu ở bốn thời điểm xa nhau. Bài giảng gốc (trang 30) nêu ba ý: tối ưu mạng nơ-ron thường giả sử mini-batch gần i.i.d.; mẫu tương quan có thể làm lệch cập nhật và tăng phương sai; mạng có thể quá khớp quỹ đạo gần đây và quên các vùng trạng thái cũ hơn.
+
+::: example Ví dụ 08.9 (Cỡ mẫu hiệu dụng của bốn mẫu liền nhau)
+**Dữ kiện.** Xét một tọa độ của gradient mẫu, gọi là $g_1,g_2,g_3,g_4$ cho bốn mẫu chuyển liền nhau. Giả sử mỗi $g_k$ có phương sai $\sigma^2$, và tương quan giữa hai mẫu cách nhau $k$ bước là $0{,}9^k$ (giả thiết minh họa).
+
+**Tính.** Với $\bar g=\tfrac14\sum_{i=1}^4g_i$,
+$$
+\begin{aligned}
+\operatorname{Var}\bar g&=\frac{\sigma^2}{16}\sum_{i=1}^4\sum_{j=1}^40{,}9^{\lvert i-j\rvert}
+=\frac{\sigma^2}{16}\bigl(4+2(3\cdot0{,}9+2\cdot0{,}81+0{,}729)\bigr)\\
+&=\frac{14{,}098}{16}\,\sigma^2\approx0{,}881\,\sigma^2.
+\end{aligned}
+$$
+Nếu bốn mẫu độc lập, $\operatorname{Var}\bar g=\sigma^2/4=0{,}25\,\sigma^2$. Cỡ mẫu hiệu dụng, tức số mẫu độc lập cho cùng phương sai, là $\sigma^2/(0{,}881\,\sigma^2)\approx1{,}1$.
+
+**Diễn giải.** Với tương quan này, mini-batch bốn mẫu liền nhau giảm phương sai gần như không hơn một mẫu. Muốn trung bình gradient có phương sai nhỏ, các mẫu trong mini-batch phải đến từ những thời điểm xa nhau.
+:::
+
+![Hai hàng, mỗi hàng là 20 bước thời gian của cùng một quỹ đạo, vẽ bằng chấm tròn rỗng. Hàng trên, liên tiếp: bốn mẫu ở t bằng 17 đến 20 đánh dấu bằng hình vuông đặc, ngoặc chung ghi cùng đoạn quỹ đạo, cùng theta. Hàng dưới, lấy rải: bốn mẫu ở t bằng 3, 8, 12, 19 đánh dấu bằng tam giác đặc.](img/lec-08/correlated-minibatch.svg)
+
+Hình so sánh hai cách chọn bốn mẫu từ hai mươi bước của cùng một quỹ đạo. Hàng trên chọn bốn bước cuối $t=17,\dots,20$ (hình vuông đặc): chúng thuộc cùng một đoạn quỹ đạo và cùng một phiên bản $\theta$. Hàng dưới chọn bốn bước rải trên toàn quỹ đạo, $t=3,8,12,19$ (tam giác đặc): tương quan giữa các mẫu nhỏ hơn vì chúng cách nhau xa hơn.
+
+Tương quan không nhất thiết làm gradient trung bình bị chệch. Với tương quan dương, hệ quả là phương sai lớn hơn, và hướng cập nhật đi theo vùng quan sát vừa thăm: qua nhiều bước liên tiếp, gradient dao động theo đoạn quỹ đạo gần nhất thay vì theo toàn bộ dữ liệu. Ngay cả khi lấy mẫu rải như hàng dưới, các mẫu vẫn không độc lập cùng phân phối: chúng cùng thuộc một quỹ đạo, và phân phối của dữ liệu đổi khi chính sách hành vi đổi theo $\theta$.
+
+**Trong thực hành.** Cỡ mẫu hiệu dụng phụ thuộc mức tương quan, và mức này đổi theo môi trường và chính sách; Ví dụ 08.9 chỉ minh họa cơ chế. Một dấu hiệu dễ quan sát khi cập nhật trên mẫu liền nhau là giá trị hàm mất mát dao động theo từng đoạn của lượt.
+
+Chúng ta cần một cách chọn mẫu cho mini-batch không phụ thuộc thứ tự thu thập. Mục tiếp theo lưu các mẫu chuyển vào một bộ nhớ và lấy mẫu đều từ đó.
 
 <!-- note-topic-id: lec-08-topic-06 -->
 ### Bộ nhớ phát lại (experience replay)

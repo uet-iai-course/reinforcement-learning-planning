@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 214" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Mini-batch liên tiếp và mini-batch lấy rải trên một quỹ đạo</title>
+<desc id="d">Hai hàng, mỗi hàng là 20 bước thời gian t từ 1 đến 20 của cùng một quỹ đạo, vẽ bằng chấm tròn rỗng. Hàng trên, ghi liên tiếp: bốn mẫu chuyển ở t bằng 17, 18, 19, 20 được đánh dấu bằng hình vuông đặc và một ngoặc chung. Hàng dưới, ghi lấy rải: bốn mẫu chuyển ở t bằng 3, 8, 12, 19 được đánh dấu bằng tam giác đặc. Trục dưới cùng ghi các mốc t bằng 1, 5, 10, 15, 20.</desc>
+<text x="20" y="72" font-size="30" font-weight="700" fill="#2F3E7A">liên tiếp</text>
+<text x="20" y="152" font-size="30" font-weight="700" fill="#2F3E7A">lấy rải</text>
+<line x1="236" y1="62" x2="1024" y2="62" stroke="#9AA0A8" stroke-width="2"/>
+<line x1="236" y1="142" x2="1024" y2="142" stroke="#9AA0A8" stroke-width="2"/>
+
+<circle cx="250" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="250" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="290" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="290" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="330" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<path d="M330,127 L344,153 L316,153 Z" fill="#2F3E7A"/>
+<circle cx="370" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="370" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="410" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="410" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="450" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="450" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="490" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="490" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="530" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<path d="M530,127 L544,153 L516,153 Z" fill="#2F3E7A"/>
+<circle cx="570" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="570" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="610" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="610" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="650" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="650" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="690" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<path d="M690,127 L704,153 L676,153 Z" fill="#2F3E7A"/>
+<circle cx="730" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="730" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="770" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="770" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="810" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="810" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="850" cy="62" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<circle cx="850" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<rect x="878" y="50" width="24" height="24" fill="#B15A2B"/>
+<circle cx="890" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<rect x="918" y="50" width="24" height="24" fill="#B15A2B"/>
+<circle cx="930" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<rect x="958" y="50" width="24" height="24" fill="#B15A2B"/>
+<path d="M970,127 L984,153 L956,153 Z" fill="#2F3E7A"/>
+<rect x="998" y="50" width="24" height="24" fill="#B15A2B"/>
+<circle cx="1010" cy="142" r="7" fill="#FFFFFF" stroke="#59606B" stroke-width="2.5"/>
+<path d="M876,40 V32 H1024 V40" fill="none" stroke="#B15A2B" stroke-width="3"/>
+<text x="866" y="40" font-size="26" text-anchor="end">cùng đoạn quỹ đạo, cùng <tspan font-style="italic">θ</tspan></text>
+<line x1="236" y1="182" x2="1024" y2="182" stroke="#333" stroke-width="2"/>
+<line x1="250" y1="176" x2="250" y2="188" stroke="#333" stroke-width="2"/><text x="250" y="210" font-size="26" text-anchor="middle">1</text>
+<line x1="410" y1="176" x2="410" y2="188" stroke="#333" stroke-width="2"/><text x="410" y="210" font-size="26" text-anchor="middle">5</text>
+<line x1="610" y1="176" x2="610" y2="188" stroke="#333" stroke-width="2"/><text x="610" y="210" font-size="26" text-anchor="middle">10</text>
+<line x1="810" y1="176" x2="810" y2="188" stroke="#333" stroke-width="2"/><text x="810" y="210" font-size="26" text-anchor="middle">15</text>
+<line x1="1010" y1="176" x2="1010" y2="188" stroke="#333" stroke-width="2"/><text x="1010" y="210" font-size="26" text-anchor="middle">20</text>
+<text x="20" y="210" font-size="28" font-style="italic">t</text>
+</svg>
