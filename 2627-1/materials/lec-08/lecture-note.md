@@ -76,7 +76,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 
 | Mã | Chủ đề | Nguồn trang | Vai trò | Vào → Ra |
 |---|---|---|---|---|
-| `lec-08-topic-01` | Vì sao cần Deep Q-learning | tr. 8–15 | Đặt vấn đề quy mô và khái quát hóa | Vào: topic-13 → Ra: nhu cầu $Q_\theta$ |
+| `lec-08-topic-01` | Giới hạn của bảng giá trị hành động | tr. 8–15 | Đặt vấn đề quy mô và khái quát hóa | Vào: topic-13 → Ra: nhu cầu $Q_\theta$ |
 | `lec-08-topic-16` | Đầu vào bốn khung Atari và tính Markov | tr. 17, 35 | Ví dụ cho giao diện mạng; giới hạn của bốn khung | Vào: topic-01 → Ra: quan sát $O_t$ cho topic-02 |
 | `lec-08-topic-02` | Giao diện DQN và hai mạng | tr. 14–17, 20, 31, 33 | Định nghĩa $Q_\theta$, $Q_{\theta^-}$ | Vào: topic-01 → Ra: hai bản sao mạng |
 | `lec-08-topic-03` | Bootstrap thành bài toán hồi quy | tr. 16, 20–22, 34 | Đích $y_t$ và sai số TD | Vào: topic-02 → Ra: nhãn hồi quy |
@@ -138,29 +138,29 @@ Bài giảng gốc (trang 9 và 11) còn nêu hai cận độ phức tạp mẫu
 ## 2. Mạng giá trị hành động và đích hồi quy
 
 <!-- note-topic-id: lec-08-topic-01 -->
-### Vì sao cần Deep Q-learning
+### Giới hạn của bảng giá trị hành động
 
-**Vấn đề.** Bảng Q cần một ô cho mỗi cặp $(s,a)$; khi không gian trạng thái lớn
-hoặc liên tục, lưu tường minh là bất khả thi.
+**Vấn đề.** Q-learning dạng bảng giữ một ô cho mỗi cặp trạng thái–hành động, và một ô chỉ đổi khi chính cặp đó xuất hiện trong dữ liệu. Bảng có $\lvert\mathcal S\rvert\lvert\mathcal A\rvert$ ô, nên chỉ dùng được khi số trạng thái nhỏ và mỗi cặp được thăm đủ nhiều lần. Ví dụ sau đo hai điều kiện này trên một bài toán điều khiển đã gặp ở Bài 05–07.
 
-**Trực giác.** Thay vì lưu giá trị riêng cho từng cặp, xấp xỉ hàm giá trị bằng
-mạng neural $Q_\theta(s,a)$. Các trạng thái tương tự chia sẻ biểu diễn, nên một
-cập nhật có thể cải thiện nhiều dự đoán cùng lúc.
+::: example Ví dụ 08.1 (Lunar Lander rời rạc hóa thành bảng)
+**Dữ kiện.** Thực hành Bài 05 chia sáu biến liên tục của tàu đổ bộ thành $3\cdot4^5=3\,072$ ô và ghép với số chân đang chạm đất ($0$, $1$ hoặc $2$), được $9\,216$ ô trạng thái. Trên $2\,000$ lượt huấn luyện, $1\,896$ ô được ghé ít nhất một lần (notebook Lunar Lander của Bài 07, mục 5; ghi chú Bài 07, Ví dụ 07.1). Tàu có bốn hành động.
 
-**Ví dụ.** Đầu vào có cấu trúc — vector đặc trưng, ảnh, bàn cờ — được mạng xử lý
-thành vector giá trị hành động; bảng không có cơ chế chia sẻ thông tin giữa các ô.
+**Tính.** Tỉ lệ ô có mẫu là $1\,896/9\,216\approx0{,}206$; $9\,216-1\,896=7\,320$ ô chỉ giữ giá trị khởi tạo. Bảng giá trị hành động trên cùng lưới có $9\,216\cdot4=36\,864$ ô.
 
-**Hình thức.** Tham số hóa $Q_\theta(s,a)$ (tuyến tính hoặc MLP) đem lại: hiệu
-quả bộ nhớ (không lưu mọi cặp), khái quát hóa, trích xuất đặc trưng, và tính khả
-vi của hàm mục tiêu — có thể tối ưu bằng gradient.
+**Diễn giải.** Khoảng bốn phần năm số ô trạng thái không có dữ liệu sau $2\,000$ lượt, dù ô bên cạnh đã được ghé nhiều lần; với bảng giá trị hành động, mỗi ô trạng thái còn tách thành bốn ô.
+:::
 
-**Ứng dụng và giới hạn.** Mạng đổi chi phí lưu trữ lấy sai số xấp xỉ và *sự giao
-thoa*: một cập nhật đổi nhiều giá trị Q cùng lúc, có thể phá các giá trị đang đúng.
-Với xấp xỉ hàm, bảo đảm mẫu cần giả thiết cấu trúc; với MLP, tối ưu không lồi và
-không có bảo đảm hội tụ toàn cục.
+Khi quan sát là ảnh, số quan sát khác nhau có thể gặp quá lớn để liệt kê, và gần như mọi quan sát mới là một ô chưa có mẫu. Bảng vì thế không dùng được, cả về bộ nhớ lẫn về dữ liệu.
 
-**Kiểm tra nhanh.** Đổi chi phí gì khi chuyển bảng → mạng? — Đổi bộ nhớ tường minh
-lấy sai số xấp xỉ, giao thoa giữa dự đoán và mất bảo đảm hội tụ dạng bảng.
+**Trực giác.** Thay bảng bằng một hàm có tham số dùng chung $\theta$, chẳng hạn một mạng nơ-ron $Q_\theta(o,a)$ nhận quan sát $o$. Hàm cho giá trị ở cả quan sát chưa gặp, và một cập nhật theo $\theta$ đổi giá trị ở nhiều quan sát cùng lúc. Đây là cơ chế tổng quát hóa của Bài 07 (mức lan của một cập nhật, Mệnh đề 07.2), với mạng thay cho hàm tuyến tính theo đặc trưng chọn trước.
+
+![Bên trái: bảng minh họa 4 hàng, 5 cột, 4 trong 20 ô có mẫu (đánh dấu chấm), 16 ô chưa có mẫu; mỗi ô lưu độc lập. Bên phải: quan sát o vào mạng Q theta, mạng trả về Q theta của o với các hành động a1 đến a4; tham số theta dùng chung.](img/lec-08/table-vs-dqn.svg)
+
+Hình đặt hai cách lưu cạnh nhau. Bên trái, bảng minh họa có khoảng một phần năm số ô có mẫu, gần với tỉ lệ $20{,}6\%$ của Ví dụ 08.1; ô không có chấm giữ giá trị khởi tạo. Bên phải, một quan sát đi vào mạng và mạng trả về giá trị của mọi hành động; mọi giá trị dùng chung tham số $\theta$.
+
+**Ứng dụng và giới hạn.** Bài giảng gốc (trang 14–15) nêu bốn lợi ích của dạng có tham số: không lưu tường minh mọi cặp, tổng quát hóa giữa các trạng thái tương tự, trích xuất đặc trưng từ đầu vào có cấu trúc như ảnh, và khả vi nên cập nhật được bằng gradient. Cái giá là sai số xấp xỉ và giao thoa: một cập nhật cũng đổi các giá trị đang đúng. Với mạng nhiều tầng, hàm mất mát không lồi theo $\theta$ và các bảo đảm hội tụ dạng bảng không còn áp dụng.
+
+**Kiểm tra nhanh.** Trong Ví dụ 08.1, vì sao $7\,320$ ô trạng thái vẫn giữ giá trị khởi tạo dù các ô bên cạnh đã có mẫu? Với bảng, mỗi ô chỉ đổi khi chính nó được ghé; với một hàm có tham số dùng chung, cập nhật ở ô bên cạnh cũng đổi giá trị ở các ô này.
 
 <!-- note-topic-id: lec-08-topic-16 -->
 ### Ví dụ: đầu vào bốn khung Atari
@@ -332,7 +332,7 @@ lấy mẫu từ hành vi mà được thay bằng phép cực đại, chính l�
 <!-- note-topic-id: lec-08-topic-07 -->
 ### Replay giảm tương quan, không tạo i.i.d.
 
-**Vấn đề.** Tối ưu mạng neural thường giả sử mini-batch gần i.i.d.; chuyển tiếp
+**Vấn đề.** Tối ưu mạng nơ-ron thường giả sử mini-batch gần i.i.d.; chuyển tiếp
 liên tiếp thu thập trực tuyến tương quan mạnh. Replay có giải quyết triệt để không?
 
 **Trực giác.** Các chuyển tiếp liền nhau đi qua quan sát gần nhau và dùng cùng
