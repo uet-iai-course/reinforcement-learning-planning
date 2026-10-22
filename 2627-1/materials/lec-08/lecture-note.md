@@ -1258,31 +1258,34 @@ loss = ((y - q) ** 2).mean()
 **Kiểm tra lại.** Ba lỗi hay gặp khi sửa: viết `1 - zb` với `zb` kiểu `bool`, phép trừ bị một số thư viện từ chối; viết `.max(1)` mà quên `.values`, vì trong PyTorch phép này trả cả giá trị lẫn chỉ số; đặt cả dòng tính `q` vào khối `no_grad`, khi đó hàm mất mát không còn gradient theo $\theta$.
 :::
 
-::: exercise Bài tập 3 — Thiết kế thí nghiệm loại bỏ
+::: exercise Bài tập 08.3 (Thiết kế thí nghiệm loại bỏ)
+Một thí nghiệm loại bỏ (ablation) so DQN đầy đủ (Thuật toán 08.13) với hai nhánh, mỗi nhánh bỏ một cơ chế. Nhánh "bỏ bộ nhớ phát lại": mỗi bước tối ưu dùng $b$ mẫu chuyển vừa thu theo thứ tự thời gian. Nhánh "bỏ mạng mục tiêu": đặt $C=1$, nên đích được tính lại bằng tham số mới sau mỗi bước tối ưu. Không yêu cầu viết chương trình.
 
-Thiết kế thí nghiệm loại bỏ (ablation) công bằng để đo tác động của replay và của
-mạng mục tiêu: dự đoán trước tác động của từng nhánh lên tự tương quan của batch,
-độ đa dạng mẫu, tốc độ đổi của đích, TD error, dao động tham số và đường return.
-Nêu cách tổng hợp nhiều lần chạy độc lập. Không yêu cầu viết chương trình.
+(a) Dự đoán tác động của nhánh bỏ bộ nhớ phát lại lên tương quan giữa các mẫu trong mini-batch, độ đa dạng mẫu và đường lợi tức đánh giá.
+
+(b) Dự đoán tác động của nhánh $C=1$ lên tốc độ đổi của đích, sai số TD và dao động của tham số.
+
+(c) Thiết kế thí nghiệm sao cho so sánh công bằng: nêu những gì được giữ cố định và những gì được đo.
+
+(d) Nêu cách tổng hợp kết quả của nhiều lần chạy độc lập.
 :::
 
 ::: hint
-Công bằng nghĩa là mọi nhánh dùng cùng kiến trúc, ngân sách, bộ tối ưu,
-lịch khám phá và cùng tập seed (hoặc ghép cặp seed giữa các nhánh). Chọn chỉ số đo
-trước khi chạy; đừng chỉ nhìn một lần chạy.
+Dự đoán ở (a), (b) dùng Nhận xét 08.19 và Nhận xét 08.20. Công bằng nghĩa là hai nhánh chỉ khác nhánh đầy đủ ở đúng một thành phần. Chọn chỉ số đo và số lần chạy trước khi chạy; không kết luận từ một đường học.
 :::
 
 ::: solution
-Thiết kế: ba nhánh — đầy đủ, bỏ replay (học trên chuyển tiếp liên
-tiếp), bỏ mạng mục tiêu (bootstrap từ mạng online); định trước cùng số lần chạy
-cho mỗi nhánh và cùng ngân sách bước. Giữ nguyên mọi thành phần khác. Chỉ số đo:
-return đánh giá theo chính sách tham lam riêng, TD error, chuẩn gradient, độ phân
-tán giữa các lần chạy, và (cho replay) tự tương quan theo độ trễ của mẫu trong
-batch. Tổng hợp: dùng cùng tập seed hoặc ghép cặp giữa các nhánh để giảm nhiễu so
-sánh; báo thống kê trung tâm và độ phân tán (không chỉ trung bình). Kết luận mong
-đợi theo lý thuyết của bài: bỏ replay làm tăng tương quan ngắn hạn; bỏ mạng mục
-tiêu làm đích đổi sau mỗi bước tối ưu; cả hai nhánh không thay đổi việc bộ ba
-bất ổn vẫn tồn tại — không nhánh cho bảo đảm hội tụ.
+**Câu (a).** Mẫu trong mini-batch là các mẫu liền nhau của một đoạn quỹ đạo, nên tương quan giữa chúng tăng và cỡ mẫu hiệu dụng giảm; với tương quan $0{,}9^k$ của Ví dụ 08.9, bốn mẫu liền nhau chỉ bằng khoảng $1{,}1$ mẫu độc lập. Mỗi mẫu chỉ được dùng một lần, nên độ đa dạng của dữ liệu trong mỗi bước tối ưu giảm và số bước tối ưu trên mỗi mẫu cũng giảm. Dự đoán cho đường lợi tức: dao động lớn hơn giữa các đoạn huấn luyện và giữa các lần chạy; dự đoán này là giả thuyết cần đo.
+
+**Câu (b).** Với $C=1$, $\theta^-$ bằng $\theta$ trước mỗi bước, nên đích của mỗi mẫu đổi sau mỗi bước tối ưu thay vì theo từng đợt $C$ bước; Nhận xét 08.20 cho độ thay đổi tại mỗi mốc. Sai số TD không còn là sai số so với một nhãn đứng yên trong một khoảng, nên có thể giảm chậm hoặc dao động; tham số dao động theo vòng phản hồi giữa dự đoán và đích như Ví dụ 08.5. Đây cũng là dự đoán cần đo.
+
+**Câu (c).** Mỗi nhánh đổi đúng một thành phần so với nhánh đầy đủ. Giữ cố định kiến trúc mạng, ngân sách bước môi trường, bộ tối ưu và siêu tham số của nó, lịch thăm dò $\epsilon_{\mathrm{exp}}$, tần suất tối ưu $F$, cỡ mini-batch $b$, và tập hạt giống ngẫu nhiên (seed). Đo lợi tức đánh giá bằng chính sách tham lam theo $Q_\theta$ trên các lượt riêng, không dùng lợi tức của các lượt huấn luyện có thăm dò; đo thêm sai số TD trung bình, chuẩn gradient, và với nhánh bỏ bộ nhớ phát lại, tương quan giữa các mẫu trong mini-batch.
+
+**Câu (d).** Mọi nhánh dùng cùng tập hạt giống, nên với mỗi hạt giống có một bộ kết quả ghép cặp; so hiệu giữa hai nhánh trong từng cặp giảm nhiễu do khởi tạo và môi trường. Báo trung bình hoặc trung vị cùng độ phân tán giữa các lần chạy, chẳng hạn độ lệch chuẩn hoặc khoảng tứ phân vị, và số lần chạy phân kỳ nếu có. Số hạt giống phụ thuộc ngân sách tính toán, nên đề không ấn định.
+
+Kết quả của thí nghiệm kiểm hai dự đoán rút từ phần 6: bỏ bộ nhớ phát lại làm tăng tương quan ngắn hạn; bỏ mạng mục tiêu làm đích đổi sau mỗi bước tối ưu. Không nhánh nào bỏ được yếu tố nào của bộ ba bất ổn, nên không nhánh nào cho bảo đảm hội tụ (Nhận xét 08.21). Mnih và cộng sự (2015, Extended Data Table 3) báo một thí nghiệm cùng loại trên năm trò chơi Atari, trong đó tổ hợp dùng cả hai cơ chế cho điểm cao nhất.
+
+**Kiểm tra lại.** Ba lỗi hay gặp: đổi hai thành phần trong cùng một nhánh, chẳng hạn bỏ mạng mục tiêu và đổi bộ tối ưu, nên không tách được tác dụng; dùng lợi tức của các lượt huấn luyện có thăm dò làm thước đo chất lượng của chính sách; kết luận từ một lần chạy, hoặc chỉ báo trung bình mà không báo độ phân tán.
 :::
 
 ---
