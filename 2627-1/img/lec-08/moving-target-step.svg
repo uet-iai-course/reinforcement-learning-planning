@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 590 340" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
-<title id="t">Dự đoán và đích trước và sau một bước cập nhật</title>
-<desc id="d">Trục giá trị thẳng đứng từ 0 đến 1,5. Cột trước: dự đoán q bằng 0 (hình tròn), đích y bằng 1 (hình vuông). Cột sau một bước: q bằng 0,5, y bằng 1,45. Hai mũi tên nét đứt nối giá trị trước với giá trị sau; cả dự đoán lẫn đích cùng tăng.</desc>
+<title id="t">Dự đoán và mục tiêu trước và sau một bước cập nhật</title>
+<desc id="d">Trục giá trị thẳng đứng từ 0 đến 1,5. Cột trước: dự đoán q bằng 0 (hình tròn), mục tiêu y bằng 1 (hình vuông). Cột sau một bước: q bằng 0,5, y bằng 1,45. Hai mũi tên nét đứt nối giá trị trước với giá trị sau; cả dự đoán lẫn mục tiêu cùng tăng.</desc>
 <defs><marker id="arr" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" refX="18" refY="10" orient="auto"><path d="M0,0 L20,10 L0,20 Z" fill="#59606B"/></marker></defs>
 <line x1="100" y1="276" x2="100" y2="28" stroke="#2F3E7A" stroke-width="3"/>
 <line x1="92" y1="270" x2="108" y2="270" stroke="#2F3E7A" stroke-width="3"/>

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 258" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
 <title id="t">Bộ ba bất ổn trong DQN</title>
-<desc id="d">Ba hộp nằm ngang, mỗi hộp là một yếu tố của bộ ba bất ổn và dạng của nó trong DQN. Hộp trái: xấp xỉ hàm, mạng Q theta dùng chung theta. Hộp giữa: bootstrap, đích y i chứa Q theta trừ. Hộp phải: học khác chính sách, hành vi epsilon exp tham lam và mẫu cũ trong bộ nhớ D. Ba mũi tên từ ba hộp hội về một hộp bên dưới ghi: DQN có đủ ba yếu tố.</desc>
+<desc id="d">Ba hộp nằm ngang, mỗi hộp là một yếu tố của bộ ba bất ổn và dạng của nó trong DQN. Hộp trái: xấp xỉ hàm, mạng Q theta dùng chung theta. Hộp giữa: bootstrap, mục tiêu y i chứa Q theta trừ. Hộp phải: học khác chính sách, hành vi epsilon exp tham lam và mẫu cũ trong bộ nhớ D. Ba mũi tên từ ba hộp hội về một hộp bên dưới ghi: DQN có đủ ba yếu tố.</desc>
 <defs><marker id="arr" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#59606B"/></marker></defs>
 <rect x="20" y="6" width="340" height="132" rx="14" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="4"/>
 <text x="190.0" y="46" font-size="30" font-weight="700" text-anchor="middle" fill="#263238">Xấp xỉ hàm</text>
@@ -8,7 +8,7 @@
 <text x="190.0" y="126" font-size="28" text-anchor="middle">dùng chung <tspan font-style="italic">θ</tspan></text>
 <rect x="380" y="6" width="340" height="132" rx="14" fill="#F7EFE6" stroke="#B15A2B" stroke-width="4"/>
 <text x="550.0" y="46" font-size="30" font-weight="700" text-anchor="middle" fill="#263238">Bootstrap</text>
-<text x="550.0" y="88" font-size="28" text-anchor="middle">đích <tspan font-style="italic">y</tspan><tspan font-size="20" dy="7" font-style="italic">i</tspan><tspan dy="-7">​</tspan></text>
+<text x="550.0" y="88" font-size="28" text-anchor="middle">mục tiêu <tspan font-style="italic">y</tspan><tspan font-size="20" dy="7" font-style="italic">i</tspan><tspan dy="-7">​</tspan></text>
 <text x="550.0" y="126" font-size="28" text-anchor="middle">chứa <tspan font-style="italic">Q</tspan><tspan font-size="20" dy="7" font-style="italic">θ</tspan><tspan font-size="16" dy="-9">−</tspan><tspan dy="2">​</tspan></text>
 <rect x="740" y="6" width="340" height="132" rx="14" fill="#E8F5E9" stroke="#2E7D32" stroke-width="4"/>
 <text x="910.0" y="46" font-size="30" font-weight="700" text-anchor="middle" fill="#263238">Học khác chính sách</text>

@@ -12,7 +12,7 @@ Tệp này giữ các chỉ dẫn biên tập không đưa lên mặt trang chi�
 - DQN cơ bản nhận quan sát hoặc biểu diễn trạng thái và xuất vector cho tập hành động rời rạc hữu hạn.
 - Giới thiệu mạng online $Q_\theta$, mạng mục tiêu $Q_{\theta^-}$ và phép khởi tạo $\theta^-\leftarrow\theta$ trước khi dùng $\theta^-$ trong công thức bootstrap.
 - Replay giảm tương quan ngắn hạn; không tạo dữ liệu độc lập và cùng phân phối (i.i.d.) và không bảo đảm hội tụ.
-- Có hai nguồn lệch hành vi: hành vi $\epsilon_{\mathrm{exp}}$-tham lam khác chính sách tham lam của đích, và replay chứa dữ liệu từ các phiên bản hành vi cũ. DQN cơ bản không dùng importance sampling vì $A_i$ là đối số điều kiện của $Q_\theta(O_i,A_i)$, còn tại $O'_i$ phép cực đại được tính trọn, không lấy mẫu hành động từ hành vi (Sutton và Barto 2018, §6.6, §7.3); với chính sách đích tham lam, phép cực đại chính là kỳ vọng theo chính sách đích.
+- Có hai nguồn lệch hành vi: hành vi $\epsilon_{\mathrm{exp}}$-tham lam khác chính sách tham lam mà mục tiêu đánh giá, và replay chứa dữ liệu từ các phiên bản hành vi cũ. DQN cơ bản không dùng importance sampling vì $A_i$ là đối số điều kiện của $Q_\theta(O_i,A_i)$, còn tại $O'_i$ phép cực đại được tính trọn, không lấy mẫu hành động từ hành vi (Sutton và Barto 2018, §6.6, §7.3); với chính sách đích tham lam, phép cực đại chính là kỳ vọng theo chính sách đích.
 - Mạng mục tiêu giữ cố định trong $C$ bước tối ưu rồi sao chép cứng; cơ chế này không bảo đảm hội tụ.
 - Dùng sai số bình phương trung bình (MSE) như lựa chọn của bài để thống nhất phép tính. Nếu nhắc Huber, chỉ nói đây là lựa chọn thực hành khác; không gán lựa chọn MSE cho một đặc tả bắt buộc của DQN.
 - Với Atari, nói “bốn khung quan sát liên tiếp” hoặc “xấp xỉ trạng thái”; không khẳng định tính Markov.
@@ -32,10 +32,10 @@ Tệp này giữ các chỉ dẫn biên tập không đưa lên mặt trang chi�
 
 ## Nhịp giảng
 
-- Giữ ví dụ terminal ở trước stop-gradient. Người học phải hiểu đích trước khi lấy gradient.
+- Giữ ví dụ terminal ở trước stop-gradient. Người học phải hiểu mục tiêu trước khi lấy gradient.
 - Tách hai luồng của vòng DQN: thu thập chuyển tiếp và tối ưu từ replay.
 - Dạy schema chuyển tiếp trước replay và giả mã; không để cờ kết thúc xuất hiện lần đầu trong code.
-- Đặt phản ví dụ một mạng vừa đổi dự đoán vừa đổi đích trước khi giới thiệu online/target. Sau đó khởi tạo $\theta^-\leftarrow\theta$; sau replay, nhắc lại hai đường tính và đồng bộ trước loss hoàn chỉnh.
+- Đặt phản ví dụ một mạng vừa đổi dự đoán vừa đổi mục tiêu trước khi giới thiệu online/target. Sau đó khởi tạo $\theta^-\leftarrow\theta$; sau replay, nhắc lại hai đường tính và đồng bộ trước loss hoàn chỉnh.
 - Truy dấu giả mã qua đủ chọn hành động, lưu, lấy batch, target, update, sync và dừng.
 - Phần optimizer là khái niệm phụ. Không kéo dài thành so sánh bộ tối ưu trong học sâu nói chung.
 - Trang tổng quan optimizer và bảng so sánh nằm trên tuyến ngang. SGD, RMSprop và Adam nằm theo chiều dọc dưới trang tổng quan; không ép người giảng đi qua ba trang này khi thiếu thời gian.
@@ -45,7 +45,7 @@ Tệp này giữ các chỉ dẫn biên tập không đưa lên mặt trang chi�
 ## Bài tập và đáp số
 
 - Bài mini-batch: $y=(4{,}6,-2)$; $\delta=(1{,}5,-0{,}5)$; MSE $=1{,}25$; gradient theo $(q_1,q_2)$ là $(-1{,}5,0{,}5)$.
-- Bài sửa giả mã phải giữ bốn sửa đổi độc lập: lấy final observation trước autoreset, mask theo kết thúc của MDP đang mô hình hóa, `no_grad` hoặc `detach` cho đích, và gather một hành động lưu trên mỗi hàng.
+- Bài sửa giả mã phải giữ bốn sửa đổi độc lập: lấy final observation trước autoreset, mask theo kết thúc của MDP đang mô hình hóa, `no_grad` hoặc `detach` cho mục tiêu, và gather một hành động lưu trên mỗi hàng.
 - Bài ablation không yêu cầu viết code. Giữ kiến trúc, ngân sách, optimizer và lịch khám phá; đổi đúng một thành phần; đo return đánh giá, TD error, chuẩn gradient và độ phân tán qua nhiều lần chạy độc lập. Không ấn định một số seed cụ thể nếu chưa có ngân sách thí nghiệm.
 
 ## Code demo và nguồn ngoài

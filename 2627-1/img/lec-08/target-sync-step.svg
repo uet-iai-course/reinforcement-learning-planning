@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 222" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
-<title id="t">Đích của một mẫu chuyển qua mốc đồng bộ</title>
-<desc id="d">Trục ngang là bộ đếm bước tối ưu k opt với các mốc 0, C và 2C; trục dọc là đích y 1 của mẫu chuyển thứ nhất. Từ 0 đến C, đường đậm nằm ngang ở 4,6, ghi max theo a phẩy của Q theta trừ tại O phẩy 1 bằng 4. Tại mốc C có vòng tròn rỗng ghi theta trừ gán bằng theta; đường đậm đi lên bằng nét đứt tới 5,5 rồi nằm ngang tới 2C, ghi max theo a phẩy của Q theta tại O phẩy 1 bằng 5. Ngoặc dọc tại mốc C ghi độ thay đổi delta y 1 bằng 0,9.</desc>
+<title id="t">Mục tiêu của một mẫu chuyển qua mốc đồng bộ</title>
+<desc id="d">Trục ngang là bộ đếm bước tối ưu k opt với các mốc 0, C và 2C; trục dọc là mục tiêu y 1 của mẫu chuyển thứ nhất. Từ 0 đến C, đường đậm nằm ngang ở 4,6, ghi max theo a phẩy của Q theta trừ tại O phẩy 1 bằng 4. Tại mốc C có vòng tròn rỗng ghi theta trừ gán bằng theta; đường đậm đi lên bằng nét đứt tới 5,5 rồi nằm ngang tới 2C, ghi max theo a phẩy của Q theta tại O phẩy 1 bằng 5. Ngoặc dọc tại mốc C ghi độ thay đổi delta y 1 bằng 0,9.</desc>
 <line x1="170" y1="68" x2="570" y2="68" stroke="#9AA0A8" stroke-width="2" stroke-dasharray="4 6"/>
 <path d="M170,148 H570" fill="none" stroke="#2F3E7A" stroke-width="6"/>
 <path d="M570,148 V68" fill="none" stroke="#2F3E7A" stroke-width="4" stroke-dasharray="9 7"/>

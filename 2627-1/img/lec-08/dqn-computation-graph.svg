@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 300" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
 <title id="t">Đồ thị tính của hàm mất mát DQN trên mini-batch</title>
-<desc id="d">Hai hàng. Hàng trên, đường tạo đích, không nhận gradient: O phẩy i vào mạng mục tiêu Q theta trừ, rồi lấy max theo a phẩy; cùng R i và Z i từ ô bên dưới tạo đích y i; y i đi qua ô sg viền nét đứt. Hàng dưới, đường dự đoán, nhận gradient: O i vào mạng trực tuyến Q theta, cho một vector giá trị; phép chọn theo hành động gather nhận A i từ ô bên trên và lấy một phần tử, được q i. Hai mũi tên từ sg của y i và từ q i cùng đi vào ô MSE bên phải.</desc>
+<desc id="d">Hai hàng. Hàng trên, đường tạo mục tiêu, không nhận gradient: O phẩy i vào mạng mục tiêu Q theta trừ, rồi lấy max theo a phẩy; cùng R i và Z i từ ô bên dưới tạo mục tiêu y i; y i đi qua ô sg viền nét đứt. Hàng dưới, đường dự đoán, nhận gradient: O i vào mạng trực tuyến Q theta, cho một vector giá trị; phép chọn theo hành động gather nhận A i từ ô bên trên và lấy một phần tử, được q i. Hai mũi tên từ sg của y i và từ q i cùng đi vào ô MSE bên phải.</desc>
 <defs><marker id="arr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="16" refY="9" orient="auto"><path d="M0,0 L18,9 L0,18 Z" fill="#B15A2B"/></marker></defs>
-<text x="10" y="30" font-size="28" font-weight="700" fill="#2F3E7A">đường tạo đích</text>
+<text x="10" y="30" font-size="28" font-weight="700" fill="#2F3E7A">đường tạo mục tiêu</text>
 <text x="820" y="30" font-size="28" text-anchor="middle" fill="#7A2E12">không gradient</text>
 <text x="10" y="290" font-size="28" font-weight="700" fill="#2F3E7A">đường dự đoán</text>
 <text x="820" y="290" font-size="28" text-anchor="middle" fill="#7A2E12">nhận gradient</text>

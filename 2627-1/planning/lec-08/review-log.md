@@ -806,3 +806,14 @@ Phạm vi: đọc trực tiếp 60 ghi chú diễn giả (Opus 5.5, phiên chín
 | nhẹ | `L08-30b` | "hệ số tăng theo $C$, nhỏ nhất $1{,}08$" lẫn hệ số chu kỳ với hệ số mỗi bước | nêu hệ số chu kỳ $1{,}521$ và tương đương $1{,}043$ mỗi bước, so với $1{,}08$ | đã sửa |
 
 Ghi chú bài giảng (dòng 1151, 1209, 1229) đã viết đúng hai hệ số nên không đổi. Kiểm trình duyệt `check.py` trên ba trang ở 1600×900 và 390×844: không lỗi, không `.katex-error` trong ghi chú, nội dung trong khung; mặt trang không đổi.
+
+## Đổi thuật ngữ "đích" thành "mục tiêu" (2026-10-22)
+
+Yêu cầu người dùng: "từ đích dùng nhiều nhưng có vẻ là văn nói, có thể dùng 'mục tiêu' hoặc từ học thuật hơn". Quyết định của điều phối viên: target hồi quy/bootstrap ($y$, $y_i$, $y_t$) gọi là "mục tiêu" ("mục tiêu hồi quy", "mục tiêu bootstrap", "mục tiêu di động"), khớp "mục tiêu TD", "mục tiêu bootstrap" của Bài 05–07; giữ "chính sách đích" (target policy) vì đây là thuật ngữ đã dùng ở Bài 06–07; "mạng mục tiêu" giữ nguyên.
+
+- Tác tử biên tập: Agent `general-purpose`, `model: opus` (claude-opus-5-5), `effort: high`; `no-ai-slop` Edit cho câu viết lại. Phạm vi: deck 08 (mặt trang, ghi chú, alt), 7 SVG (`deadly-triad`, `tensor-contract`, `dqn-computation-graph`, `dqn-training-loop`, `moving-target-step`, `termination-truncation`, `target-sync-step`), `lecture-note.md`, `outline.md`, `storyboard.md`, `note-for-author.md`. Khoảng 148 thay thế trong deck, 303 trong ghi chú bài giảng; 12 câu deck viết lại cục bộ để giữ trần mật độ hoặc tránh trùng nghĩa với "mục tiêu học tập" (`L08-02`, `L08-02c`, `L08-07b`, `L08-07c`, `L08-08`, `L08-29`, `X03b`, `L08-K5`, `L08-22`).
+- Quyết định của điều phối viên: **chấp nhận**, kèm một yêu cầu sửa (gửi lại cùng tác tử): ghi chú `L08-33` lặp "mục tiêu: mục tiêu" → "$y_i$ đứng yên…"; tác tử sửa thêm bốn câu lặp tương tự trong ghi chú bài giảng (dòng 1018, 1022, 1060, 1238). Kiểm lại: **chấp nhận**.
+- Mật độ: không trang nào vượt trần mới. `L08-02c` (vấn đề trung tâm) 86 → 88 âm tiết, dưới 1,5× trần; điều phối viên duyệt ngoại lệ đã cập nhật trong `storyboard.md`.
+- Còn lại: 22 lần "đích" trong deck và ghi chú bài giảng, tất cả là "chính sách đích" (điều phối viên kiểm bằng grep).
+- Kiểm của điều phối viên: `check.py` 60 trang ở 1600×900 và 390×844, không lỗi, không `.katex-error`, mọi `bottom` ≤ 702; đã xem ảnh chụp `L08-07b`, `L08-10`, `L08-12`, `L08-29`, `L08-30`: nhãn SVG nằm trong khung. Trình xem ghi chú bài giảng: 0 `.katex-error`, 0 khối `:::` lạc, 64 khối nhận dạng, không cuộn ngang ở 390 px, không yêu cầu mạng ngoài (điều phối viên tự chạy).
+- Ngoài phạm vi: Bài 09 còn dùng "đích" (deck và ghi chú), chưa đổi.

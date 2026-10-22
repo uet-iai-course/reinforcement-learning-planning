@@ -9,13 +9,13 @@
 
 ## Mục tiêu học tập (đợt sửa 2026-10-22)
 
-Mỗi mục tiêu ứng với một mạch từ 2 đến 7 và một sản phẩm kiểm được.
+Mỗi mục tiêu học tập ứng với một mạch từ 2 đến 7 và một sản phẩm kiểm được.
 
-1. (Mạch 2) Viết $\mathbf q_\theta(o)\in\mathbb R^{|\mathcal A|}$, chọn $Q_\theta(O_i,A_i)$ theo hành động đã lưu và tính đích $y=R+\gamma(1-Z)\max_{a'}Q_{\theta^-}(O',a')$; phân biệt kết thúc ($Z$) với cắt ngắn ($U$). Sản phẩm: đích của hai mẫu chuyển, một mẫu có $Z=1$.
+1. (Mạch 2) Viết $\mathbf q_\theta(o)\in\mathbb R^{|\mathcal A|}$, chọn $Q_\theta(O_i,A_i)$ theo hành động đã lưu và tính mục tiêu hồi quy $y=R+\gamma(1-Z)\max_{a'}Q_{\theta^-}(O',a')$; phân biệt kết thúc ($Z$) với cắt ngắn ($U$). Sản phẩm: mục tiêu hồi quy của hai mẫu chuyển, một mẫu có $Z=1$.
 2. (Mạch 3) Nêu tác dụng và giới hạn của bộ nhớ phát lại; chỉ ra hai nguồn dữ liệu khác chính sách và lý do Q-learning một bước không cần tỉ số lấy mẫu quan trọng. Sản phẩm: xác suất hai mẫu liền nhau cùng vào một mini-batch.
-3. (Mạch 4) Tính hàm mất mát và gradient theo $q$ trên một mini-batch; truy dấu một vòng DQN với hai bộ đếm $t$ và $k_{\mathrm{opt}}$. Sản phẩm: bảng lời giải mini-batch hai mẫu và bản sửa lỗi cài đặt đích.
-4. (Mạch 5) Viết SGD, RMSprop và Adam theo từng tọa độ; nêu những gì lựa chọn bộ tối ưu không thay đổi (công thức đích, cách thu thập dữ liệu, lớp hàm), nên không loại được nguồn bất ổn. Sản phẩm: bảng so sánh trạng thái phụ và siêu tham số.
-5. (Mạch 6) Tính độ thay đổi của đích tại mốc đồng bộ; nêu vì sao DQN không có bảo đảm hội tụ tổng quát. Sản phẩm: $\Delta y$ của một mẫu chuyển và thiết kế thí nghiệm loại bỏ.
+3. (Mạch 4) Tính hàm mất mát và gradient theo $q$ trên một mini-batch; truy dấu một vòng DQN với hai bộ đếm $t$ và $k_{\mathrm{opt}}$. Sản phẩm: bảng lời giải mini-batch hai mẫu và bản sửa lỗi cài đặt mục tiêu.
+4. (Mạch 5) Viết SGD, RMSprop và Adam theo từng tọa độ; nêu những gì lựa chọn bộ tối ưu không thay đổi (công thức mục tiêu hồi quy, cách thu thập dữ liệu, lớp hàm), nên không loại được nguồn bất ổn. Sản phẩm: bảng so sánh trạng thái phụ và siêu tham số.
+5. (Mạch 6) Tính độ thay đổi của mục tiêu hồi quy tại mốc đồng bộ; nêu vì sao DQN không có bảo đảm hội tụ tổng quát. Sản phẩm: $\Delta y$ của một mẫu chuyển và thiết kế thí nghiệm loại bỏ.
 6. (Mạch 7) Giải một bước DQN trên mini-batch có cả kết thúc lẫn cắt ngắn, nêu kết quả và giả thiết đã dùng. Sản phẩm: lời giải bài tổng hợp CartPole.
 
 ## Bảy mạch (đợt sửa 2026-10-22)
@@ -23,11 +23,11 @@ Mỗi mục tiêu ứng với một mạch từ 2 đến 7 và một sản phẩ
 HTML có đúng 7 section ngoài, độ sâu tối đa 2. Mạch $N$ mở tại `#/N`; từ mạch 2, trang đầu là trang tiêu đề mạch `L08-MNT`, `id="mach-N"`.
 
 1. Mở đầu (10 phút): bìa có câu luận đề; Tiên quyết và quy ước (Nhắc lại, Ký hiệu); Mục tiêu học tập; Nội dung; Vấn đề trung tâm.
-2. Mạng giá trị hành động và đích hồi quy (25 phút): giới hạn của bảng, đầu vào bốn khung Atari, giao diện $\mathbf q_\theta(o)$, tính Markov của bốn khung, ví dụ một tham số tạo cả dự đoán lẫn đích, mạng mục tiêu, đích hồi quy có mặt nạ, kết thúc và cắt ngắn.
+2. Mạng giá trị hành động và mục tiêu hồi quy (25 phút): giới hạn của bảng, đầu vào bốn khung Atari, giao diện $\mathbf q_\theta(o)$, tính Markov của bốn khung, ví dụ một tham số tạo cả dự đoán lẫn mục tiêu, mạng mục tiêu, mục tiêu hồi quy có mặt nạ, kết thúc và cắt ngắn.
 3. Bộ nhớ phát lại (15 phút): tương quan giữa các mẫu chuyển liên tiếp, bộ nhớ phát lại, dữ liệu khác chính sách trong bộ nhớ, giới hạn của bộ nhớ phát lại.
-4. Hàm mất mát và thuật toán DQN (30 phút): hàm mất mát trên mini-batch, dừng gradient ở đích, bài tập một mini-batch, vòng huấn luyện, thuật toán DQN (ba trang), kích thước tensor, bài tập lỗi cài đặt đích.
+4. Hàm mất mát và thuật toán DQN (30 phút): hàm mất mát trên mini-batch, dừng gradient ở mục tiêu, bài tập một mini-batch, vòng huấn luyện, thuật toán DQN (ba trang), kích thước tensor, bài tập lỗi cài đặt mục tiêu.
 5. Bộ tối ưu theo gradient (10 phút): vai trò của bộ tối ưu, SGD, RMSprop, Adam, so sánh ba bộ tối ưu.
-6. Bất ổn và phạm vi bảo đảm của DQN (15 phút): hai nguồn bất ổn và hai cơ chế giảm, ví dụ đích qua mốc đồng bộ, bộ ba bất ổn trong DQN, ví dụ hai trạng thái dùng chung tham số với mạng mục tiêu, bài tập thí nghiệm loại bỏ.
+6. Bất ổn và phạm vi bảo đảm của DQN (15 phút): hai nguồn bất ổn và hai cơ chế giảm, ví dụ mục tiêu qua mốc đồng bộ, bộ ba bất ổn trong DQN, ví dụ hai trạng thái dùng chung tham số với mạng mục tiêu, bài tập thí nghiệm loại bỏ.
 7. Tổng kết và chuyển tiếp (15 phút): kết quả và giả thiết, so sánh Q-learning bảng, tuyến tính và DQN, bài tập tổng hợp CartPole và lời giải, trả lời vấn đề trung tâm, câu hỏi tự kiểm tra, bài tập về nhà và tài liệu đọc.
 
 Lời giải đầy đủ của các bài tập trên trang chiếu thuộc 30 phút chữa bài, ngoài 120 phút trên lớp.
@@ -45,7 +45,7 @@ Thuật ngữ theo Bài 06–07. Lần đầu xuất hiện trong mỗi tài li�
 | lượt | episode | |
 | lợi tức | return | |
 | sai số TD | TD error | |
-| bootstrap, đích bootstrap | bootstrap, bootstrap target | giữ như Bài 07 |
+| bootstrap, mục tiêu bootstrap | bootstrap, bootstrap target | giữ như Bài 07 |
 | bán gradient | semi-gradient | Bài 07 |
 | xấp xỉ hàm | function approximation | Bài 07 |
 | học khác chính sách | off-policy learning | |
@@ -55,7 +55,7 @@ Thuật ngữ theo Bài 06–07. Lần đầu xuất hiện trong mỗi tài li�
 | mạng trực tuyến | online network | $Q_\theta$ |
 | mạng mục tiêu | target network | $Q_{\theta^-}$ |
 | đồng bộ (sao chép cứng) | hard target update | $\theta^-\leftarrow\theta$ |
-| đích hồi quy | regression target | $y_i$ |
+| mục tiêu hồi quy | regression target | $y_i$ |
 | mặt nạ kết thúc | terminal mask | $(1-Z)$ |
 | kết thúc | termination | cờ $Z$ |
 | cắt ngắn | truncation | cờ $U$ |
@@ -83,7 +83,7 @@ Các mục dưới đây mô tả bản trước đợt sửa. Mục nào sai kh
 
 - `L08-20` (kích thước tensor của mini-batch Atari): truy nguyên từ công thức loss `L08-17` và giao diện mạng `L08-07`; biến công thức thành shape/dtype/device cụ thể trước khi kiểm tra.
 - `L08-21` (kiểm tra dấu gradient hai mẫu): truy nguyên từ ví dụ số `X01` và công thức loss; kiểm hướng cập nhật trước khi sửa giả mã.
-- `X01` (bài tính đích, TD error, MSE, gradient): truy nguyên trực tiếp từ công thức đích và loss của nguồn.
+- `X01` (bài tính mục tiêu, TD error, MSE, gradient): truy nguyên trực tiếp từ công thức mục tiêu và loss của nguồn.
 - `X03` (bài ablation): truy nguyên từ hai cơ chế replay và mạng mục tiêu; dùng lại đúng hai cơ chế đã dạy và thu hồi bốn kết quả `L08-02`.
 
 ### Câu hỏi khám phá nguồn tr.36 (bản cũ)
@@ -116,13 +116,13 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | `lec-08-topic-18` | `L08-M3T`, `L08-28` |
 | `lec-08-topic-19` | `L08-05r` |
 
-## Ánh xạ nguồn (cột "trang đích" theo ID hiện hành sau đợt sửa 2026-10-22; các lệch thứ tự ghi trong `storyboard.md`)
+## Ánh xạ nguồn (cột "trang mới" theo ID hiện hành sau đợt sửa 2026-10-22; các lệch thứ tự ghi trong `storyboard.md`)
 
-| trang nguồn | trang đích | quyết định | lý do |
+| trang nguồn | trang mới | quyết định | lý do |
 |---|---|---|---|
 | 1 | `L08-01` | giữ | Tiêu đề. |
 | 2 | `L08-02` | sửa | Đổi dàn ý thành kết quả học tập. |
-| 3 | `L08-01b`, `L08-05r` | tách | Tách loại thuật toán khỏi hành vi–đích. |
+| 3 | `L08-01b`, `L08-05r` | tách | Tách loại thuật toán khỏi cặp chính sách hành vi–chính sách đích. |
 | 4 | `L08-01b`, `L08-08`–`L08-09` | sửa | Chuẩn hóa chỉ số và thêm mặt nạ kết thúc. |
 | 5 | `L08-01b`, `L08-18a`–`L08-19` | tách | Dùng cầu nối dạng bảng rồi xây giả mã DQN đầy đủ. |
 | 6 | `L08-05r`, `L08-33` | gộp | Hoàn tất vai trò khám phá và kiểm tra. |
@@ -147,7 +147,7 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | 30 | `L08-14`, `L08-28` | sửa | Replay giảm tương quan, không tạo i.i.d. |
 | 31 | `L08-29` | giữ, sửa | Mục tiêu đổi ở mốc đồng bộ. |
 | 32 | `L08-13`–`L08-14` | gộp, sửa | Cơ chế và giới hạn của replay. |
-| 33 | `L08-07c`, `L08-10`, `L08-19` | tách, sắp xếp lại | Khai báo và khởi tạo hai mạng trước đích; sau đó nối đường gradient với đồng bộ cứng. |
+| 33 | `L08-07c`, `L08-10`, `L08-19` | tách, sắp xếp lại | Khai báo và khởi tạo hai mạng trước mục tiêu; sau đó nối đường gradient với đồng bộ cứng. |
 | 34 | `L08-17` | giữ, sửa | Mục tiêu tích hợp có mặt nạ và stop-gradient. |
 | 35 | `L08-31`–`L08-32` | tách, sửa | Bốn khung là lịch sử quan sát, không bảo đảm Markov. |
 | 36 | `L08-33` | sửa | Ba hướng thảo luận của nguồn vào ghi chú diễn giả của "Câu hỏi tự kiểm tra". |
@@ -174,7 +174,7 @@ Bảng này khớp trang `L08-01c` (ký hiệu dùng ở nhiều mạch) và m�
 | $(O_i,A_i,R_i,O'_i,Z_i,U_i)$ | mẫu thứ $i$ sau khi lấy mini-batch, $i=1,\ldots,b$ |
 | $b$ | số mẫu chuyển trong mini-batch |
 | $q_i$ | dự đoán của mạng trực tuyến trên mẫu $i$, $q_i=Q_\theta(O_i,A_i)$; khác giá trị thật $q_*$, cần dòng "Ký hiệu:" khi dùng lần đầu |
-| $y_i$ | đích hồi quy của mẫu $i$ |
+| $y_i$ | mục tiêu hồi quy của mẫu $i$ |
 | $\delta_t$, $\delta_i$ | sai số TD theo thời gian; theo mẫu |
 | $L_B(\theta)$ | hàm mất mát trên mini-batch $B$ |
 | $g_j$ | gradient mini-batch ở bước tối ưu $j$ |
@@ -199,7 +199,7 @@ Quy ước thời gian chỉ dùng khi tương tác với môi trường: $(O_t,
 
 - 120 phút trên lớp: mạch 1 10 phút, mạch 2 25 phút, mạch 3 15 phút, mạch 4 30 phút, mạch 5 10 phút, mạch 6 15 phút, mạch 7 15 phút.
 - Trong mạch 5, ba trang SGD, RMSprop, Adam là phần co giãn; khi thiếu giờ, đi thẳng từ trang vai trò của bộ tối ưu sang bảng so sánh, nên bảng so sánh phải tự đọc được nhờ dòng "Ký hiệu:".
-- 30 phút chữa bài (ngoài 120 phút): lời giải đầy đủ của bài tập một mini-batch, lỗi cài đặt đích, thí nghiệm loại bỏ và bài tổng hợp CartPole.
+- 30 phút chữa bài (ngoài 120 phút): lời giải đầy đủ của bài tập một mini-batch, lỗi cài đặt mục tiêu, thí nghiệm loại bỏ và bài tổng hợp CartPole.
 
 ## Tài sản SVG
 
