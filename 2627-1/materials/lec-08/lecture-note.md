@@ -89,7 +89,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 | `lec-08-topic-07` | Giới hạn của bộ nhớ phát lại | tr. 19, 29–32 | Ba việc làm được, ba điều không bảo đảm; câu hỏi $N=6$, $b=2$ | Vào: topic-19 → Ra: phát biểu đúng phạm vi; nhu cầu hàm mất mát cho phần 4 |
 | `lec-08-topic-08` | Phép chọn theo hành động và dừng gradient | tr. 16, 20–22, 33–34 | Đồ thị tính; $\operatorname{sg}$, gather; gradient chỉ qua đường dự đoán | Vào: topic-09 → Ra: gradient đúng trong cài đặt |
 | `lec-08-topic-09` | Hàm mất mát trên mini-batch | tr. 16, 20–22, 34 | MSE với đích là hằng, gradient, không lồi theo $\theta$ | Vào: topic-07 → Ra: hàm vô hướng và gradient cho topic-08 |
-| `lec-08-topic-10` | Vòng DQN: hai đồng hồ $t$ và $k_{\mathrm{opt}}$ | tr. 18–22 | Giả mã đầy đủ | Vào: topic-05–09 → Ra: thuật toán hoàn chỉnh |
+| `lec-08-topic-10` | Vòng huấn luyện DQN: hai bộ đếm $t$ và $k_{\mathrm{opt}}$ | tr. 18–22 | Giả mã đầy đủ | Vào: topic-05–09 → Ra: thuật toán hoàn chỉnh |
 | `lec-08-topic-11` | Hợp đồng tensor của batch | tr. 14–22, 35 | Kích thước và kiểu tensor | Vào: topic-09 → Ra: kiểm tra cài đặt |
 | `lec-08-topic-12` | Mạng mục tiêu và các nguồn bất ổn | tr. 19, 21, 29–33 | Đồng bộ đích và giới hạn ổn định | Vào: topic-10 → Ra: phạm vi bảo đảm của DQN |
 
@@ -689,15 +689,27 @@ $$
 Đến đây chúng ta có hàm mất mát, gradient của nó và hai thao tác làm chương trình tính đúng gradient đó: phép chọn theo hành động và phép dừng gradient. Bài tập 08.1 ở cuối chương tính tay đích, sai số, hàm mất mát và đạo hàm theo $q_i$ trên số liệu của Ví dụ 08.7 và 08.8. Ở mục tiếp theo, chúng ta ghép thu thập, lưu, rút mẫu, bước tối ưu này và đồng bộ thành một vòng lặp với hai bộ đếm.
 
 <!-- note-topic-id: lec-08-topic-10 -->
-### Vòng DQN: hai đồng hồ $t$ và $k_{\mathrm{opt}}$
+### Vòng huấn luyện DQN: hai bộ đếm $t$ và $k_{\mathrm{opt}}$
 
-**Vấn đề.** Tương tác và tối ưu xen kẽ nhau với các nhịp khác nhau; cần tách rõ
-bước môi trường $t$ khỏi bước tối ưu $k_{\mathrm{opt}}$ để giả mã không mơ hồ.
+Đến cuối mục trước, chúng ta có một bước tối ưu hoàn chỉnh: rút $b$ mẫu từ bộ nhớ phát lại $\mathcal D$, lấy $q_i$ bằng phép chọn theo hành động, tính $y_i$ bằng mạng mục tiêu dưới phép dừng gradient, rồi đi một bước theo $-\nabla_\theta L_B$. Bước này chỉ chạy được khi $\mathcal D$ có dữ liệu, và dữ liệu chỉ sinh ra khi tác tử tương tác với môi trường. Mỗi bước môi trường sinh đúng một mẫu chuyển, còn mỗi bước tối ưu dùng một mini-batch $b$ mẫu. Hai việc chạy xen kẽ với hai nhịp khác nhau, nên chúng ta cần hai bộ đếm riêng: $t\in\mathbb N_0$ đếm bước môi trường, $k_{\mathrm{opt}}\in\mathbb N_0$ đếm bước tối ưu.
 
-**Trực quan.** Tương tác tạo chuyển tiếp; tối ưu lấy chuyển tiếp đã lưu. Ba siêu
-tham số nhịp: $N_{\mathrm{start}}$ (số mẫu làm nóng replay trước khi tối ưu),
-$F$ (số bước môi trường giữa hai lần tối ưu), $C$ (chu kỳ đồng bộ mạng mục tiêu,
-đếm theo bước tối ưu).
+Vòng thu thập chạy theo $t$. Tại quan sát $O_t$, mạng trực tuyến chọn $A_t$ theo quy tắc $\epsilon_{\mathrm{exp}}$-tham lam từ $Q_\theta(O_t,\cdot)$; môi trường trả $R_{t+1}$, $O_{t+1}$ và hai cờ $Z_{t+1}$, $U_{t+1}$; mẫu chuyển $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$ được ghi vào $\mathcal D$, và $O_{t+1}$ thành quan sát của bước kế tiếp. Vòng tối ưu chạy theo $k_{\mathrm{opt}}$. Mỗi bước rút đều một mini-batch $B$ từ $\mathcal D$, tính đích $y_i$ bằng $Q_{\theta^-}$, rồi cập nhật $\theta$ theo gradient của $L_B$; sau mỗi $C$ bước tối ưu, tham số mạng mục tiêu được gán $\theta^-\leftarrow\theta$. Ba số nguyên dương điều khiển hai nhịp: $N_{\mathrm{start}}$ là số mẫu tối thiểu trong $\mathcal D$ trước bước tối ưu đầu tiên, $F$ là số bước môi trường giữa hai bước tối ưu, và $C$ là số bước tối ưu giữa hai lần đồng bộ.
+
+![Sơ đồ hai vòng. Vòng thu thập bên trái, mỗi bước tăng bộ đếm t: mạng trực tuyến Q theta chọn hành động A theo quy tắc epsilon exp tham lam và gửi cho môi trường; môi trường trả quan sát kế tiếp O phẩy về mạng trực tuyến và gửi mẫu chuyển O, A, R, O phẩy, Z, U vào bộ nhớ phát lại D. Vòng tối ưu bên phải, mỗi bước tăng bộ đếm k opt: rút đều b mẫu từ bộ nhớ thành mini-batch B; mạng mục tiêu Q theta trừ cấp đích y i cho mini-batch; gradient của hàm mất mát L B theo theta cập nhật mạng trực tuyến. Mũi tên nét đứt từ mạng trực tuyến sang mạng mục tiêu: mỗi C bước tối ưu gán theta trừ bằng theta.](img/lec-08/dqn-training-loop.svg)
+
+Hình vẽ hai vòng. Các mũi tên của vòng thu thập (bên trái) mang $A$, $O'$ và mẫu chuyển $(O,A,R,O',Z,U)$; các mũi tên của vòng tối ưu (bên phải) mang mini-batch, đích $y_i$ và gradient $\nabla_\theta L_B$. Mũi tên nét đứt là phép đồng bộ, đếm theo $k_{\mathrm{opt}}$. Hai vòng chạm nhau ở hai chỗ. Ở bộ nhớ $\mathcal D$, vòng thu thập ghi và vòng tối ưu đọc. Ở mạng trực tuyến, vòng thu thập dùng $Q_\theta$ để chọn hành động và vòng tối ưu cập nhật $\theta$. Chỗ chạm thứ hai tạo một vòng phản hồi: mỗi bước tối ưu đổi hành vi $\epsilon_{\mathrm{exp}}$-tham lam, hành vi mới đổi dữ liệu ghi vào $\mathcal D$, nên phân phối của $\mathcal D$ trôi theo thời gian. Mệnh đề 08.8 vẫn áp dụng, vì hành vi tại bước $t$ chỉ dùng $\theta_t$ học từ lịch sử tới bước $t$. Mạng mục tiêu không nằm trong vòng thu thập; nó chỉ đổi tại các mốc đồng bộ.
+
+::: example Ví dụ 08.14 (Hai nhịp với cấu hình Atari)
+**Dữ kiện.** Mnih và cộng sự (2015, Extended Data Table 1) tối ưu sau mỗi $F=4$ bước môi trường, đồng bộ sau mỗi $C=10\,000$ bước tối ưu, với mini-batch $b=32$. Xét giai đoạn sau khi $\mathcal D$ đã có đủ $N_{\mathrm{start}}$ mẫu.
+
+**Tính.** Giữa hai lần đồng bộ có $C=10\,000$ bước tối ưu, tức $F\cdot C=4\cdot10\,000=40\,000$ bước môi trường, trong đó $\theta^-$ đứng yên. Trong khoảng đó, vòng thu thập ghi $40\,000$ mẫu chuyển mới, còn vòng tối ưu rút $C\cdot b=320\,000$ mẫu, tức $b/F=8$ lần rút cho mỗi mẫu mới.
+
+**Diễn giải.** Nếu đếm chu kỳ đồng bộ theo $t$ thay cho $k_{\mathrm{opt}}$, cùng số $10\,000$ cho đồng bộ thường gấp $F=4$ lần, nên $\theta^-$ chỉ đứng yên trong $2\,500$ bước tối ưu. Khi $\mathcal D$ đã đầy với dung lượng $N$, mỗi mẫu ở lại $N$ bước môi trường, tức $N/F$ bước tối ưu, và mỗi lần rút chọn nó với xác suất $1/N$; kỳ vọng số lần nó được rút là $(N/F)\cdot b\cdot(1/N)=b/F=8$, không phụ thuộc $N$.
+:::
+
+**Trong thực hành.** Một chương trình DQN giữ $t$ và $k_{\mathrm{opt}}$ là hai biến riêng: $t$ tăng sau mỗi lần gọi bước môi trường, $k_{\mathrm{opt}}$ tăng sau mỗi lần cập nhật $\theta$. Hai cấu hình có $F$ khác nhau, ở cùng một $t$, đã thực hiện số bước tối ưu khác nhau; vì vậy khi so sánh hiệu quả mẫu, trục ngang phải là $t$, số tương tác với môi trường, còn lịch đồng bộ và lịch của bộ tối ưu tính theo $k_{\mathrm{opt}}$.
+
+Sơ đồ cho các việc của mỗi vòng nhưng chưa chốt thứ tự: kiểm điều kiện tối ưu trước hay sau khi tăng $t$, đồng bộ trước hay sau khi tăng $k_{\mathrm{opt}}$, đặt lại môi trường lúc nào. Chúng ta chốt các thứ tự đó bằng giả mã.
 
 **Hình thức — giả mã.**
 
@@ -727,8 +739,8 @@ $N_{\mathrm{start}}$. Đánh giá dùng chính sách tham lam riêng, không tr�
 khám phá với return đánh giá. Dùng $\gamma<1$ cho nhiệm vụ tiếp diễn.
 
 **Kiểm tra nhanh.** $t\bmod F=0$ và $k_{\mathrm{opt}}\bmod C=0$ đếm trên cùng một
-đồng hồ không? — Không; $t$ đếm bước môi trường, $k_{\mathrm{opt}}$ đếm bước tối
-ưu; $F$ và $C$ thuộc hai đồng hồ khác nhau.
+bộ đếm không? — Không; $t$ đếm bước môi trường, $k_{\mathrm{opt}}$ đếm bước tối
+ưu; $F$ và $C$ thuộc hai bộ đếm khác nhau.
 
 <!-- note-topic-id: lec-08-topic-11 -->
 ### Hợp đồng tensor của batch
@@ -1021,7 +1033,7 @@ Hợp đồng của một bản DQN đúng gồm sáu điểm kiểm tra:
 4. **Dữ liệu:** replay giảm tương quan và tái sử dụng dữ liệu nhưng không tạo
    i.i.d. và không bảo đảm hội tụ.
 5. **Đồng bộ:** giữ $\theta^-$ cố định rồi sao chép $\theta^-\leftarrow\theta$ sau
-   bước tối ưu theo chu kỳ $C$; hai đồng hồ $t$ và $k_{\mathrm{opt}}$ tách biệt.
+   bước tối ưu theo chu kỳ $C$; hai bộ đếm $t$ và $k_{\mathrm{opt}}$ tách biệt.
 6. **Kết luận:** đánh giá thực nghiệm qua nhiều lần chạy độc lập; không suy ra hội
    tụ tổng quát. Bộ ba nguy hiểm — xấp xỉ hàm, bootstrap, dữ liệu khác chính sách —
    vẫn còn trong DQN; replay và mạng mục tiêu giảm nhẹ hai biểu hiện trực tiếp
