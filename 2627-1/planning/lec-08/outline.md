@@ -81,7 +81,7 @@ Các mục dưới đây mô tả bản trước đợt sửa. Mục nào sai kh
 
 ### Truy nguyên các trang bổ sung (bản cũ)
 
-- `L08-20` (hợp đồng tensor Atari): truy nguyên từ công thức loss `L08-17` và giao diện mạng `L08-07`; biến công thức thành shape/dtype/device cụ thể trước khi kiểm tra.
+- `L08-20` (kích thước tensor của mini-batch Atari): truy nguyên từ công thức loss `L08-17` và giao diện mạng `L08-07`; biến công thức thành shape/dtype/device cụ thể trước khi kiểm tra.
 - `L08-21` (kiểm tra dấu gradient hai mẫu): truy nguyên từ ví dụ số `X01` và công thức loss; kiểm hướng cập nhật trước khi sửa giả mã.
 - `X01` (bài tính đích, TD error, MSE, gradient): truy nguyên trực tiếp từ công thức đích và loss của nguồn.
 - `X03` (bài ablation): truy nguyên từ hai cơ chế replay và mạng mục tiêu; dùng lại đúng hai cơ chế đã dạy và thu hồi bốn kết quả `L08-02`.

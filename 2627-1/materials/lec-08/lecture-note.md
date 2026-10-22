@@ -90,7 +90,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 | `lec-08-topic-08` | Phép chọn theo hành động và dừng gradient | tr. 16, 20–22, 33–34 | Đồ thị tính; $\operatorname{sg}$, gather; gradient chỉ qua đường dự đoán | Vào: topic-09 → Ra: gradient đúng trong cài đặt |
 | `lec-08-topic-09` | Hàm mất mát trên mini-batch | tr. 16, 20–22, 34 | MSE với đích là hằng, gradient, không lồi theo $\theta$ | Vào: topic-07 → Ra: hàm vô hướng và gradient cho topic-08 |
 | `lec-08-topic-10` | Vòng huấn luyện DQN: hai bộ đếm $t$ và $k_{\mathrm{opt}}$ | tr. 18–22 | Giả mã đầy đủ | Vào: topic-05–09 → Ra: thuật toán hoàn chỉnh |
-| `lec-08-topic-11` | Hợp đồng tensor của batch | tr. 14–22, 35 | Kích thước và kiểu tensor | Vào: topic-09 → Ra: kiểm tra cài đặt |
+| `lec-08-topic-11` | Kích thước tensor của mini-batch Atari | tr. 14–22, 35 | Kích thước và kiểu tensor | Vào: topic-10 → Ra: kiểm tra cài đặt |
 | `lec-08-topic-12` | Mạng mục tiêu và các nguồn bất ổn | tr. 19, 21, 29–33 | Đồng bộ đích và giới hạn ổn định | Vào: topic-10 → Ra: phạm vi bảo đảm của DQN |
 
 ### Nhóm bổ sung
@@ -789,33 +789,59 @@ Tại $t=10$, điều kiện $t<T$ sai và thuật toán dừng sau khi đồng 
 Thuật toán 08.13 viết mỗi phép tính cho một mẫu $i$. Trong chương trình, $b$ mẫu của mini-batch được xử lý cùng lúc dưới dạng mảng, và phần lớn lỗi cài đặt là lỗi kích thước hoặc kiểu của các mảng đó. Ở mục tiếp theo, chúng ta nêu kích thước và kiểu của từng mảng trong một mini-batch Atari.
 
 <!-- note-topic-id: lec-08-topic-11 -->
-### Hợp đồng tensor của batch
+### Kích thước tensor của mini-batch Atari
 
-**Vấn đề.** Lỗi cài đặt DQN thường là lỗi kích thước và kiểu tensor, không phải lỗi
-toán.
+Khi $b$ mẫu của một mini-batch được xử lý cùng lúc, mỗi đại lượng của Thuật toán 08.13 trở thành một mảng nhiều chiều (tensor) với một kích thước và một kiểu số. Một phép tính đúng trên từng mẫu vẫn cho kết quả sai khi kích thước của hai mảng không khớp, và thư viện thường không báo lỗi trong trường hợp này. Chúng ta cần ghi rõ kích thước và kiểu của mọi mảng đi vào hàm mất mát.
 
-**Trực quan.** Mọi tensor trong loss phải khớp hợp đồng: batch quan sát đi qua hai
-mạng, gather và max tạo hai vector cùng kích thước $[b]$.
+Nhắc lại cấu trúc của một quan sát Atari: $O_i$ gồm bốn khung xám kích thước $H\times W$ xếp chồng, với $H=W=84$ theo Mnih và cộng sự (2015), nên mỗi quan sát là một mảng $[4,H,W]$ gồm $4\cdot84\cdot84=28\,224$ số. Ký hiệu $[d_1,\dots,d_k]$ chỉ một mảng $k$ chiều với $d_j$ phần tử theo chiều thứ $j$; $[b]$ là một vector $b$ phần tử, và $[\,]$ là một số vô hướng.
 
-**Ví dụ — hợp đồng cho batch Atari:**
+::: remark Nhận xét 08.14 (Kích thước và kiểu của các mảng trong một mini-batch)
+Cho mini-batch $B=\{(O_i,A_i,R_i,O'_i,Z_i,U_i)\}_{i=1}^b$ của Thuật toán 08.13 với quan sát Atari. Chiều đầu của mọi mảng đánh số mẫu, và
 
-- $O, O'$: `float32`, dạng $[b,4,h,w]$.
-- $A$: `int64`, dạng $[b]$.
-- $R$: `float32`, dạng $[b]$.
-- $Z, U$: `bool`, dạng $[b]$.
-- Hai mạng tạo $[b,|\mathcal A|]$; gather chọn một hành động mỗi hàng; max tạo một
-  giá trị mỗi hàng; $q, y\in\mathbb R^b$; loss là vô hướng.
+| mảng | kích thước | kiểu | vai trò |
+|---|---|---|---|
+| $O$, $O'$ | $[b,4,H,W]$ | `float32` (lưu dạng `uint8`) | đầu vào của hai mạng |
+| $A$ | $[b]$ | `int64` | chỉ số cột của phép chọn theo hành động |
+| $R$ | $[b]$ | `float32` | phần thưởng trong đích |
+| $Z$, $U$ | $[b]$ | `bool` | $Z$ vào mặt nạ $1-Z$; $U$ không vào $L_B$ |
+| $\mathbf q_\theta(O)$, $\mathbf q_{\theta^-}(O')$ | $[b,\lvert\mathcal A\rvert]$ | `float32` | đầu ra của hai mạng |
+| $q$, $y$ | $[b]$ | `float32` | dự đoán và đích |
+| $L_B$ | $[\,]$ | `float32` | hàm mất mát |
 
-**Hình thức.** Nếu $A$ có dạng cột $[b,1]$, gather rồi squeeze về $[b]$; tránh
-broadcasting thành ma trận $[b,b]$. Chuyển $Z$ sang kiểu số khi tính $1-Z$. Replay
-có thể lưu quan sát `uint8` rồi chuyển `float32` khi tạo batch. Mọi tensor dùng
-trong loss phải ở cùng thiết bị.
+Phép chọn theo hành động lấy ở hàng $i$ của $\mathbf q_\theta(O)$ phần tử cột $A_i$; phép cực đại của đích lấy theo chiều hành động, chiều thứ hai, của $\mathbf q_{\theta^-}(O')$. Mọi mảng đi vào $L_B$ nằm trên cùng một thiết bị tính, tức bộ xử lý thực hiện phép tính (CPU hoặc GPU).
+:::
 
-**Ứng dụng và giới hạn.** Hợp đồng này là giao diện tối thiểu để đọc và kiểm tra
-tensor, không phải đặc tả tái lập kết quả.
+![Hai hàng. Hàng trên: quan sát O kích thước b, 4, H, W vào mạng trực tuyến Q theta, ra mảng b nhân số hành động; phép chọn theo hành động nhận A kích thước b từ ô bên dưới, lấy một phần tử mỗi hàng và cho q kích thước b. Hàng dưới: quan sát kế tiếp O phẩy kích thước b, 4, H, W vào mạng mục tiêu Q theta trừ, ra mảng b nhân số hành động; phép cực đại theo chiều hành động cho mảng kích thước b; cùng R và Z kích thước b từ ô bên trên tạo đích y kích thước b. q và y cùng vào ô hàm mất mát L B, một số vô hướng. Ghi chú dưới cùng: U kích thước b không vào L B.](img/lec-08/tensor-contract.svg)
 
-**Kiểm tra nhanh.** Nếu $A$ có dạng $[b,1]$ mà quên squeeze, gather có thể tạo gì?
-— Tensor $[b,b]$ do broadcasting; phải squeeze về $[b]$ trước khi tính sai số.
+Hình đọc theo hai hàng của đồ thị tính. Ở hàng trên, mạng trực tuyến biến $[b,4,H,W]$ thành $[b,\lvert\mathcal A\rvert]$, rồi phép chọn theo hành động dùng $A$ để giảm mỗi hàng còn một số, cho $q$ kích thước $[b]$. Ở hàng dưới, mạng mục tiêu cho $[b,\lvert\mathcal A\rvert]$, phép cực đại theo chiều hành động giảm mỗi hàng còn một số, rồi $R$ và $Z$ hoàn tất $y$ kích thước $[b]$. Hai vector cùng kích thước $[b]$ đi vào $L_B$, một số vô hướng. Cờ $U$ có trong mini-batch nhưng không đi vào $L_B$.
+
+Mỗi dòng của Nhận xét 08.14 có vai trò riêng. Kiểu số nguyên của $A$ là điều kiện để dùng $A_i$ làm chỉ số cột. Chiều đầu chung $b$ bảo đảm $y_i-q_i$ ghép đúng hai đại lượng của cùng một mẫu; bỏ điều kiện $q$ và $y$ cùng kích thước $[b]$ thì phép trừ lan truyền kích thước (broadcasting) ghép mọi cặp $(i,j)$, như Ví dụ 08.17 dưới đây. Phép cực đại phải lấy theo chiều hành động; lấy cực đại trên toàn mảng $[b,\lvert\mathcal A\rvert]$ cho một số duy nhất, và mọi mẫu nhận chung một giá trị bootstrap. Cùng thiết bị tính là điều kiện để thư viện thực hiện được phép tính; thư viện báo lỗi khi hai mảng của một phép toán nằm trên hai thiết bị khác nhau.
+
+::: example Ví dụ 08.16 (Kích thước với $b=32$)
+**Dữ kiện.** $b=32$, $H=W=84$, $\lvert\mathcal A\rvert=18$.
+
+**Tính.** $O$ có kích thước $[32,4,84,84]$, gồm $32\cdot28\,224=903\,168$ số: $903\,168$ byte ở dạng `uint8` (một byte mỗi số) và $3\,612\,672$ byte, khoảng $3{,}6$ MB, ở dạng `float32` (bốn byte mỗi số). $O'$ có cùng kích thước. Mỗi mạng trả $[32,18]$, tức $576$ số; $q$, $y$, $A$, $R$, $Z$, $U$ mỗi mảng có $32$ phần tử; $L_B$ là một số.
+
+**Diễn giải.** Gần như toàn bộ bộ nhớ của mini-batch nằm ở hai mảng quan sát; mọi mảng còn lại có chiều đầu $32$ và tối đa $18$ cột.
+:::
+
+::: example Ví dụ 08.17 (Lỗi lan truyền kích thước)
+**Dữ kiện.** Mini-batch hai mẫu có $q=(3{,}1;\,-1{,}5)$ và $y=(4{,}6;\,-2)$, với $L_B=\tfrac12(1{,}5^2+0{,}5^2)=1{,}25$. Giả sử $q$ được giữ ở dạng cột $[2,1]$ sau phép chọn, còn $y$ có dạng $[2]$.
+
+**Tính.** Phép trừ $y-q$ lan truyền thành ma trận $[2,2]$ có phần tử $(i,j)$ bằng $y_j-q_i$:
+$$
+\begin{pmatrix}4{,}6-3{,}1&-2-3{,}1\\4{,}6+1{,}5&-2+1{,}5\end{pmatrix}=\begin{pmatrix}1{,}5&-5{,}1\\6{,}1&-0{,}5\end{pmatrix}.
+$$
+Trung bình bình phương của bốn phần tử là $\tfrac14(2{,}25+26{,}01+37{,}21+0{,}25)=16{,}43$.
+
+**Diễn giải.** Hai phần tử ngoài đường chéo ghép dự đoán của một mẫu với đích của mẫu kia; giá trị $16{,}43$ thay cho $1{,}25$, và gradient kéo mỗi $q_i$ về trung bình của cả hai đích. Bỏ chiều thừa (squeeze) để $q$ có dạng $[2]$ trước phép trừ cho lại $L_B=1{,}25$.
+:::
+
+**Trong thực hành.** Bộ nhớ phát lại lưu khung ở dạng `uint8` và chỉ chuyển sang `float32` khi tạo mini-batch. Với $N=10^6$ mẫu chuyển, lưu riêng $O$ và $O'$ của mỗi mẫu ở dạng `uint8` cần $2\cdot10^6\cdot28\,224$ byte, khoảng $56$ GB; lưu mỗi khung $84\times84$ một lần cần khoảng $10^6\cdot7\,056$ byte, khoảng $7$ GB; dạng `float32` nhân mỗi con số với bốn. Cờ $Z$ được chuyển sang kiểu số trước khi tính $1-Z$, vì một số thư viện không cho phép phép trừ trên kiểu `bool`. Kích thước ở đây là giao diện tối thiểu để đọc và kiểm tra chương trình, không phải đặc tả để tái lập kết quả Atari.
+
+**Kiểm tra nhanh.** Gọi phép cực đại trên mảng $\mathbf q_{\theta^-}(O')$ kích thước $[b,\lvert\mathcal A\rvert]$ mà không chỉ chiều thì được gì? Một số vô hướng, giá trị lớn nhất trên mọi mẫu và mọi hành động; mọi $y_i$ dùng chung giá trị đó, nên đích của mỗi mẫu không còn phụ thuộc $O'_i$ của chính nó. Lấy cực đại theo chiều thứ hai cho đúng mảng $[b]$.
+
+Đến đây Thuật toán 08.13 đã đầy đủ: đầu vào, hai vòng với hai bộ đếm, đích có mặt nạ và dừng gradient, và kích thước của mọi mảng trong một bước tối ưu. Bài tập sửa lỗi cài đặt ở cuối chương kiểm tra các điều kiện này trên một đoạn mã. Bước 8 của thuật toán giao việc biến $\nabla_\theta L_B$ thành bước tham số cho bộ tối ưu; ở phần tiếp theo, chúng ta viết các quy tắc cập nhật của bộ tối ưu.
 
 ## Mạng mục tiêu và bất ổn
 
