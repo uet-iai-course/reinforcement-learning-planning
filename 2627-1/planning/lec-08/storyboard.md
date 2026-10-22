@@ -98,6 +98,18 @@ Số trang sau đợt sửa dự kiến: 37 trang hiện có − 5 trang bỏ (`
 
 Chưa có ngoại lệ. Số âm tiết trước sửa của các trang vượt trần (đo ngày 2026-10-22): `L08-05` 82, `L08-18` 87, `L08-27` 70, `L08-28` 64, `L08-32` 68, `X03` 91; `L08-33` 73 (trần 80 của trang tự kiểm tra). Số sau sửa ghi vào mục của từng trang khi sửa.
 
+### Mục từng trang (đợt sửa 2026-10-22)
+
+#### `L08-01` Bìa: Deep Q-Learning (bước S1)
+
+- **Trang muốn nói gì:** tên bài và câu luận đề: mạng nơ-ron thay bảng và hàm tuyến tính để biểu diễn giá trị hành động; mạng mục tiêu và bộ nhớ phát lại giảm bất ổn, không bảo đảm hội tụ.
+- **Phục vụ mạch nào và thế nào:** trang tiêu đề của mạch 1 (Mở đầu). Câu luận đề nêu trước kết luận của mạch 6 và câu trả lời ở `L08-K4`, để mọi mạch sau được đọc như một phần của kết luận có điều kiện này.
+- **Vấn đề còn lại trước sửa:** phụ đề "Từ bảng giá trị hành động đến mạng nơ-ron sâu" dùng mẫu "Từ … đến …" bị cấm; không có câu luận đề, đơn vị, năm học (`review-structure.md` §2 và §3 `L08-01`; `review-student.md` bảng 2 và phát hiện "trung bình | L08-01"); ghi chú diễn giả 37 âm tiết, dưới 40, và có "Bài này" làm chủ ngữ.
+- **Quyết định:** sửa. Khuôn bìa theo deck 06: `h1` tên bài, `h3` "Bài 08 · Học tăng cường", câu luận đề trong `.box`, đơn vị, năm học. Câu luận đề là một câu (36 âm tiết, hiển thị trên ba dòng trong `.box`, mỗi dòng dưới 20 âm tiết ở 1280×720) như bìa deck 06; tên tiếng Anh của mạng mục tiêu và bộ nhớ phát lại đặt ở lần dùng đầu là trang này.
+- **Lý do tồn tại, nhu cầu, liên kết:** điểm vào bài và mạch 1; trang sau là "Tiên quyết và quy ước" (hiện tạm là `L08-04`). Ghi chú diễn giả nêu kết quả nhận từ Bài 07 (hàm tuyến tính, Q-learning bán gradient có đủ bộ ba bất ổn), các thành phần của DQN và phạm vi kết luận. Mục tiêu hỗ trợ: định hướng cho cả sáu mục tiêu.
+- **Mật độ:** trước sửa 19 âm tiết mặt trang, 2 dòng, ghi chú 37 âm tiết; sau sửa 58 âm tiết (không tính `h1`), 4 dòng nội dung, dòng hiển thị dài nhất dưới 20 âm tiết, 0 công thức hiển thị, 1 hộp chữ 1 câu, ghi chú 141 âm tiết.
+- **Ghi chú bài giảng:** đoạn mở đầu thay dòng giảng viên–học kỳ–thời lượng và đoạn mô tả tài liệu nguồn bằng một đoạn giới thiệu khớp câu luận đề.
+
 ### Bản trước đợt sửa 2026-10-22
 
 Các mục dưới đây mô tả bản trước đợt sửa. Bản đồ bảy mạch cũ đã được thay ở bước C0; các bảng hành trình khái niệm, thời lượng và mục từng trang được thay khi sửa trang tương ứng.

@@ -1,10 +1,6 @@
 # Bài 08 — Deep Q-Learning
 
-**Giảng viên:** Tạ Việt Cường · **Học kỳ 1, 2026–2027** · **Thời lượng:** 120 phút chính + 30 phút bài tập.
-
-Ghi chú này dùng tài liệu nguồn `lecture8-dqn.pdf`. Phần chính kéo dài 120 phút;
-30 phút cuối dành cho ba bài tập tính tay và thảo luận. Nguồn không có chương
-trình minh hoạ, nên bài chỉ dùng công thức và giả mã.
+Trong chương này, chúng ta thay hàm tuyến tính $\hat q(s,a,w)=x(s,a)^\top w$ của Bài 07 bằng một mạng nơ-ron nhận quan sát và trả về một giá trị cho mỗi hành động trong tập hữu hạn, rồi xây dựng thuật toán Deep Q-Network (DQN) từ bốn thành phần: đích hồi quy có mặt nạ kết thúc, bộ nhớ phát lại (experience replay), hàm mất mát với dừng gradient và mạng mục tiêu (target network). Bộ nhớ phát lại và mạng mục tiêu giảm bất ổn khi huấn luyện, nhưng DQN vẫn có đủ xấp xỉ hàm, bootstrap và dữ liệu khác chính sách, tức đủ ba yếu tố của bộ ba bất ổn (deadly triad) ở Bài 07, nên thuật toán không có bảo đảm hội tụ tổng quát.
 
 Sau bài này, người học có thể giải thích hai cơ chế ổn định của DQN; lập đúng
 đích có mặt nạ kết thúc; kiểm tra kích thước tensor và đường gradient; viết vòng

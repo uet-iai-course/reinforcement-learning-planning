@@ -270,7 +270,7 @@ Nguồn phát hiện: CT = rà cấu trúc–mạch, SV = rà sinh viên–mật
 |---|---|---|---|---|---|---|
 | chặn bàn giao | `L08-10` | Tràn khung 16:9: công thức gradient ra ngoài khung, $L_B$ đè chân trang (SV). Sau C0 đáy nội dung ở 972 px trong khung 720 vì hình theo `max-height` 390 px của hệ chung. | Ảnh `shots-before/13-L08-10-wide.png`; kiểm C0 ở 1280×720 | `L08-17` định nghĩa $q_i,y_i,L_B$ trước; `L08-10` giữ hình, định nghĩa $\operatorname{sg}$ và gradient; gộp `L08-15`; vẽ lại SVG | mở | chấp nhận (kế hoạch, mạch 4) |
 | nghiêm trọng | mạch 2–7 | Không mạch nào có trang tiêu đề mạch (CT, SV) | `grep strand-title` = 0 | Thêm `L08-M2T`…`L08-M7T`, `id="mach-N"` | mở | chấp nhận |
-| nghiêm trọng | mở bài | Thiếu Tiên quyết và quy ước, Nội dung, Vấn đề trung tâm; bìa không có câu luận đề, phụ đề "Từ…đến…" (CT, SV) | `L08-01`, `L08-02` | Thêm `L08-01b`, `L08-01c`, `L08-02b`, `L08-02c`; sửa `L08-01` | mở | chấp nhận |
+| nghiêm trọng | mở bài | Thiếu Tiên quyết và quy ước, Nội dung, Vấn đề trung tâm; bìa không có câu luận đề, phụ đề "Từ…đến…" (CT, SV) | `L08-01`, `L08-02` | Thêm `L08-01b`, `L08-01c`, `L08-02b`, `L08-02c`; sửa `L08-01` | bìa `L08-01` đã sửa ở S1; phần còn lại mở | chấp nhận |
 | nghiêm trọng | kết bài | Thiếu bảng tổng kết chuẩn, trả lời vấn đề trung tâm, bài tổng hợp có lời giải, bài tập về nhà và tài liệu đọc, dòng nối Bài 09 (CT, SV) | `L08-33`, `L08-34` | `L08-34` thành bảng; thêm `L08-K1`–`L08-K5` | mở | chấp nhận |
 | nghiêm trọng | `L08-26` (mạch 5 cũ) | Mạch chỉ có một trang, dựng để điều hướng (CT; SV nhẹ) | Bản đồ mạch cũ | Gộp mạch 4 và 5 cũ thành mạch 5 "Bộ tối ưu theo gradient" | đã sửa ở C0 | chấp nhận |
 | nghiêm trọng | `L08-28`, `L08-13` | Vấn đề tương quan đứng sau cơ chế bộ nhớ phát lại bốn mạch (CT) | Thứ tự cũ: `L08-13` ở mạch 2, `L08-28` ở mạch 6 | Chuyển `L08-28` lên đầu mạch 3 | vị trí đã sửa ở C0; nội dung trang mở | chấp nhận |
@@ -357,3 +357,10 @@ Nguồn phát hiện: CT = rà cấu trúc–mạch, SV = rà sinh viên–mật
 - Liên kết ghi chú trên thẻ Bài 8 của `index.html`: **giữ** theo yêu cầu rõ của người dùng ("gắn chúng lên 2627-1/index.html"); ghi chú được sửa song song từng trang trong đợt này.
 - Dòng "Ý nghĩa:" lặp Q có khớp (Riedmiller 2005): **bác bỏ** — ngoài nguồn và ngoài phạm vi đợt; không thêm nguồn ngoài khi không cần sửa sai.
 - Độ dài ghi chú (~6 400 từ, dưới 8 000): **ngoài phạm vi đợt này**; ghi là giới hạn còn lại khi bàn giao.
+- Bước S1 (`L08-01`, biên tập viên): bìa theo khuôn deck 06 (tên bài, "Bài 08 · Học tăng cường", câu luận đề một câu trong hộp, đơn vị, năm học); bỏ phụ đề "Từ … đến …"; ghi chú diễn giả viết lại (Bài 07 → các thành phần của DQN → phạm vi kết luận), 141 âm tiết; đoạn mở đầu của ghi chú bài giảng khớp câu luận đề, bỏ dòng giảng viên–thời lượng và đoạn mô tả tài liệu nguồn. Mặt trang 58 âm tiết. Điều phối viên yêu cầu luận đề một câu; đã sửa. Chờ điều phối viên duyệt.
+
+### Quyết định của điều phối viên theo từng bước
+
+| bước | trang | quyết định | căn cứ kiểm |
+|---|---|---|---|
+| S1 | `L08-01` | yêu cầu sửa (luận đề hai câu → một câu), rồi chấp nhận | diff; `check.py` 1600×900, 390×844; xem ảnh |
