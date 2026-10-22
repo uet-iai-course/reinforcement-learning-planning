@@ -87,7 +87,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 | `lec-08-topic-06` | Bộ nhớ phát lại | tr. 18–20, 32 | Bộ đệm vòng dung lượng $N$, ghi đè mẫu cũ nhất, rút đều; quan sát cuối khi tự đặt lại | Vào: topic-18 → Ra: mini-batch |
 | `lec-08-topic-19` | Dữ liệu khác chính sách trong bộ nhớ | tr. 6–7, 19, 32 | Hai nguồn khác chính sách; đích một bước không cần tỉ số lấy mẫu quan trọng | Vào: topic-06 → Ra: phạm vi của đích trên dữ liệu cũ |
 | `lec-08-topic-07` | Giới hạn của bộ nhớ phát lại | tr. 19, 29–32 | Ba việc làm được, ba điều không bảo đảm; câu hỏi $N=6$, $b=2$ | Vào: topic-19 → Ra: phát biểu đúng phạm vi; nhu cầu hàm mất mát cho phần 4 |
-| `lec-08-topic-08` | Gather và dừng gradient | tr. 16, 22, 34 | Đồ thị tính toán | Vào: topic-09 → Ra: gradient đúng trong cài đặt |
+| `lec-08-topic-08` | Phép chọn theo hành động và dừng gradient | tr. 16, 20–22, 33–34 | Đồ thị tính; $\operatorname{sg}$, gather; gradient chỉ qua đường dự đoán | Vào: topic-09 → Ra: gradient đúng trong cài đặt |
 | `lec-08-topic-09` | Hàm mất mát trên mini-batch | tr. 16, 20–22, 34 | MSE với đích là hằng, gradient, không lồi theo $\theta$ | Vào: topic-07 → Ra: hàm vô hướng và gradient cho topic-08 |
 | `lec-08-topic-10` | Vòng DQN: hai đồng hồ $t$ và $k_{\mathrm{opt}}$ | tr. 18–22 | Giả mã đầy đủ | Vào: topic-05–09 → Ra: thuật toán hoàn chỉnh |
 | `lec-08-topic-11` | Hợp đồng tensor của batch | tr. 14–22, 35 | Kích thước và kiểu tensor | Vào: topic-09 → Ra: kiểm tra cài đặt |
@@ -632,36 +632,61 @@ Tại $\theta=(0,0)$, gradient bằng $0$ nhưng $L=1$, trong khi $L=0$ trên đ
 Định nghĩa 08.10 cho một hàm vô hướng của $\theta$ và gradient của nó, với giả thiết đích là hằng. Trong chương trình, dự đoán được lấy từ một vector $\lvert\mathcal A\rvert$ giá trị, và đích được tính từ một mạng có cùng kiến trúc; nếu không ghi rõ, thư viện vi phân tự động có thể truyền gradient qua đích. Ở mục tiếp theo, chúng ta viết phép chọn giá trị theo hành động đã lưu và phép dừng gradient, hai thao tác làm chương trình tính đúng gradient của Định nghĩa 08.10.
 
 <!-- note-topic-id: lec-08-topic-08 -->
-### Gather và dừng gradient ở đích
+### Phép chọn theo hành động và dừng gradient
 
-**Vấn đề.** Trong batch, mạng xuất giá trị cho *mọi* hành động, nhưng loss chỉ cần
-giá trị của *hành động đã lưu*; đồng thời gradient không được chảy vào đường tạo đích.
+Định nghĩa 08.10 cho hàm mất mát $L_B$ với đích $y_i$ là hằng theo $\theta$. Một chương trình tính $L_B$ phải làm thêm hai việc mà công thức không nói ra. Thứ nhất, mạng trực tuyến trả về cả vector $\mathbf q_\theta(O_i)$ gồm $\lvert\mathcal A\rvert$ giá trị, trong khi $L_B$ chỉ dùng giá trị của hành động $A_i$ đã lưu trong mẫu. Thứ hai, thư viện vi phân tự động lần ngược mọi phép tính dẫn tới $L_B$; nếu đích được tính từ một mạng dùng chung tham số với mạng trực tuyến, gradient sẽ đi qua cả đích.
 
-**Trực quan.** Hai đường tính tách bạch:
+Việc thứ hai có tiền lệ trong Bài 07. Ở đó, cập nhật bán gradient (semi-gradient) của Q-learning tuyến tính là $w_{n+1}=w_n+\alpha_n\bigl(y_t-\hat q(S_t,A_t,w_n)\bigr)x(S_t,A_t)$: mục tiêu $y_t=R_{t+1}+\gamma\max_{a'}\hat q(S_{t+1},a',w_n)$ chứa chính $w_n$, nhưng được coi là hằng khi lấy đạo hàm. Phép dừng gradient là cách viết quy ước đó vào đồ thị tính.
 
-- *Đường dự đoán*: $q_i = Q_\theta(O_i,A_i)$, phụ thuộc $\theta$, nhận gradient.
-- *Đường tạo đích*: dùng $Q_{\theta^-}(O'_i,\cdot)$, $\theta^-$ cố định giữa hai
-  lần đồng bộ, được đặt trong toán tử dừng gradient $\operatorname{sg}$.
+::: definition Định nghĩa 08.12 (Phép chọn theo hành động và dừng gradient)
+Cho mini-batch $B$ của Định nghĩa 08.10 và mảng $M\in\mathbb R^{b\times\lvert\mathcal A\rvert}$ có hàng thứ $i$ là $\mathbf q_\theta(O_i)$.
 
-**Ví dụ.** Gather là phép chọn theo chỉ số: từ tensor $[b,|\mathcal A|]$, lấy một
-phần tử mỗi hàng theo hành động đã lưu $A_i$, tạo vector $q\in\mathbb R^b$.
-Ký hiệu $\operatorname{sg}$ tương ứng detach/no-grad trong mã thực tế.
+1. Phép chọn theo hành động (gather) nhận $M$ và vector chỉ số $(A_1,\dots,A_b)$, trả về vector $(q_1,\dots,q_b)$ với $q_i=M_{i,A_i}=[\mathbf q_\theta(O_i)]_{A_i}=Q_\theta(O_i,A_i)$: một phần tử ở mỗi hàng.
+2. Dừng gradient (stop-gradient) là toán tử $\operatorname{sg}$ trong đồ thị tính: $\operatorname{sg}(u)$ có giá trị bằng $u$, và khi lan truyền ngược, đạo hàm của $\operatorname{sg}(u)$ theo mọi tham số được lấy bằng $0$.
 
-**Hình thức.** Với batch
-$\{(O_i,A_i,R_i,O'_i,Z_i,U_i)\}_{i=1}^b$:
+Dạng cài đặt của hàm mất mát là
+$$
+L_B(\theta)=\frac1b\sum_{i=1}^b\bigl(\operatorname{sg}(y_i)-q_i\bigr)^2.
+$$
+:::
 
-$$L_B(\theta)=\frac1b\sum_{i=1}^b\bigl(\operatorname{sg}(y_i)-q_i\bigr)^2.$$
+$\operatorname{sg}$ không phải một hàm số theo nghĩa thông thường: hàm đồng nhất có đạo hàm $1$, còn $\operatorname{sg}$ là một chỉ dẫn cho thủ tục lấy đạo hàm, tương đương với việc coi $y_i$ là hằng như trong Định nghĩa 08.10. Trong các thư viện, nó ứng với `detach()` hoặc khối `torch.no_grad()` của PyTorch, `tf.stop_gradient` của TensorFlow và `jax.lax.stop_gradient` của JAX. Khi $y_i$ được tính bằng $\theta^-$ là một vector tham số riêng, $y_i$ không phụ thuộc $\theta$, nên $\nabla_\theta y_i=0$ đã đúng về mặt toán học và $\operatorname{sg}$ không đổi kết quả; nó vẫn hữu ích vì thư viện không phải lưu đồ thị của đường tạo đích. $\operatorname{sg}$ trở nên cần thiết khi đích được tính bằng chính $\theta$, chẳng hạn khi không có mạng mục tiêu, hoặc khi mạng mục tiêu được cài bằng cùng một đối tượng với mạng trực tuyến.
 
-Gradient chỉ truyền qua mạng online $Q_\theta$, không qua mạng mục tiêu.
+Lấy gradient của dạng cài đặt:
+$$
+\begin{aligned}
+\nabla_\theta L_B(\theta)&=\frac1b\sum_{i=1}^b2\bigl(\operatorname{sg}(y_i)-q_i\bigr)\bigl(\nabla_\theta\operatorname{sg}(y_i)-\nabla_\theta q_i\bigr)\\
+&=\frac2b\sum_{i=1}^b(q_i-y_i)\,\nabla_\theta q_i.
+\end{aligned}
+$$
+Dòng thứ nhất là quy tắc dây chuyền cho hàm bình phương; dòng thứ hai dùng $\nabla_\theta\operatorname{sg}(y_i)=0$ theo Định nghĩa 08.12 và giá trị $\operatorname{sg}(y_i)=y_i$. Kết quả trùng gradient của Định nghĩa 08.10. Theo phép chọn theo hành động, $q_i=M_{i,A_i}$, nên $\partial q_i/\partial M_{i,a}$ bằng $1$ khi $a=A_i$ và bằng $0$ với $a\ne A_i$: lan truyền ngược đặt $\tfrac2b(q_i-y_i)$ vào ô $(i,A_i)$ của mảng $[b,\lvert\mathcal A\rvert]$ và $0$ vào mọi ô khác, rồi mạng trực tuyến lan tiếp các giá trị này về $\theta$.
 
-**Ứng dụng và giới hạn.** Bài dùng sai số bình phương trung bình (MSE) để giữ phép
-tính minh bạch; Huber là biến thể thực hành có thể thay MSE trong một cài đặt
-thực tế. Lỗi phổ biến: quên dừng gradient khiến gradient chảy vào mạng mục tiêu
-(nếu nó chia sẻ tham số) hoặc tính gradient trên cả đích.
+Hai thao tác có vai trò riêng. Phép chọn theo hành động bảo đảm hàm mất mát so sánh đích với giá trị của đúng hành động đã thực hiện. Bỏ nó và dùng $\max_aQ_\theta(O_i,a)$ thay cho $Q_\theta(O_i,A_i)$: với $\mathbf q_\theta(o)=(0{,}8;\,2{,}5;\,-0{,}3;\,1{,}9)$ của Ví dụ 08.3 và $A_i=a_4$, phép cực đại lấy $2{,}5$ của $a_2$ thay cho $1{,}9$ của $a_4$, và cập nhật kéo giá trị của $a_2$ về một đích sinh từ hành động $a_4$. Phép dừng gradient bảo đảm cập nhật là cập nhật bán gradient của Bài 07. Bỏ nó khi đích tính bằng chính $\theta$: với $Q_\theta=\theta$, $R=1$, $\gamma=0{,}9$, $\theta=0$ như Ví dụ 08.5, đạo hàm của $(1+0{,}9\,\theta-\theta)^2$ là $-0{,}2$, so với $-2$ khi coi đích là hằng; đó là phương pháp gradient dư (residual gradient) của Sutton và Barto (2018, §11.5), không phải DQN.
 
-**Kiểm tra nhanh.** Nếu bỏ $\operatorname{sg}$ quanh $y_i$ và hai mạng chia sẻ
-$\theta$, điều gì xảy ra? — Gradient đổi cả dự đoán lẫn nhãn trong cùng một bước;
-vòng phản hồi di động trở lại.
+![Hai hàng. Hàng trên, đường tạo đích, không nhận gradient: O phẩy i vào mạng mục tiêu Q theta trừ, rồi lấy max theo a phẩy; cùng R i và Z i từ ô bên dưới tạo đích y i; y i đi qua ô sg viền nét đứt. Hàng dưới, đường dự đoán, nhận gradient: O i vào mạng trực tuyến Q theta, cho một vector giá trị; phép chọn theo hành động gather nhận A i từ ô bên trên và lấy một phần tử, được q i. Hai mũi tên từ sg của y i và từ q i cùng đi vào ô MSE bên phải.](img/lec-08/dqn-computation-graph.svg)
+
+Hình vẽ đồ thị tính của $L_B$ cho một mẫu. Hàng trên là đường tạo đích: $O'_i$ đi qua mạng mục tiêu, phép cực đại theo $a'$ cho một số, rồi $R_i$ và $Z_i$ hoàn tất $y_i$; ô $\operatorname{sg}$ viền nét đứt đánh dấu nơi gradient dừng. Hàng dưới là đường dự đoán: $O_i$ đi qua mạng trực tuyến, phép chọn theo hành động nhận $A_i$ và lấy một phần tử, cho $q_i$. Chỉ hàng dưới nhận gradient của $L_B$.
+
+::: example Ví dụ 08.13 (Gradient đi qua phép chọn theo hành động)
+**Dữ kiện.** $b=2$, $\lvert\mathcal A\rvert=3$. Mạng trực tuyến trả về
+$$
+M=\begin{pmatrix}1{,}0&3{,}1&0{,}2\\-1{,}5&0{,}4&2{,}0\end{pmatrix},
+$$
+hành động đã lưu $A_1=a_2$, $A_2=a_1$, và đích $y_1=4{,}6$, $y_2=-2$.
+
+**Tính.** Phép chọn cho $q_1=M_{1,2}=3{,}1$ và $q_2=M_{2,1}=-1{,}5$. Với $b=2$, $\tfrac2b=1$, nên đạo hàm của $L_B$ theo $M$ là
+$$
+\frac{\partial L_B}{\partial M}=\begin{pmatrix}0&3{,}1-4{,}6&0\\-1{,}5-(-2)&0&0\end{pmatrix}=\begin{pmatrix}0&-1{,}5&0\\0{,}5&0&0\end{pmatrix}.
+$$
+
+**Diễn giải.** Ô $M_{2,3}=2{,}0$ là giá trị lớn nhất của hàng 2 nhưng nhận gradient $0$, vì hành động đã lưu là $a_1$. Hạ gradient tăng $M_{1,2}$ và giảm $M_{2,1}$, tức kéo mỗi $q_i$ về $y_i$.
+:::
+
+**Trong thực hành.** Trong PyTorch, phép chọn thường viết `q = net(obs).gather(1, act.unsqueeze(1)).squeeze(1)`, với `act` là tensor số nguyên kiểu `int64` kích thước $[b]$; đích được tính trong khối `with torch.no_grad():` từ mạng mục tiêu. Hai lỗi hay gặp là dùng phép cực đại của mạng trực tuyến thay cho phép chọn theo $A_i$, và tính đích bằng mạng trực tuyến mà không dừng gradient. Bài tập sửa lỗi cài đặt cuối chương kiểm tra cả hai lỗi này.
+
+**Kiểm tra nhanh.** Vì sao đường tạo đích dùng phép cực đại tại $O'_i$, còn đường dự đoán dùng phép chọn theo $A_i$? Tại $O_i$, hành động $A_i$ đã xảy ra và đích là mẫu của giá trị cặp $(O_i,A_i)$, nên dự đoán phải là giá trị của đúng cặp đó. Tại $O'_i$, đích đánh giá chính sách tham lam, nên dùng giá trị lớn nhất; hành động thực hiện tiếp theo tại $O'_i$ không được lưu trong mẫu và không cần.
+
+Đến đây chúng ta có hàm mất mát, gradient của nó và hai thao tác làm chương trình tính đúng gradient đó: phép chọn theo hành động và phép dừng gradient. Bài tập về mini-batch hai mẫu chuyển ở cuối chương tính tay đích, sai số, hàm mất mát và đạo hàm theo $q_i$ trên số liệu của Ví dụ 08.7 và 08.8. Ở mục tiếp theo, chúng ta ghép thu thập, lưu, rút mẫu, bước tối ưu này và đồng bộ thành một vòng lặp với hai bộ đếm.
 
 <!-- note-topic-id: lec-08-topic-10 -->
 ### Vòng DQN: hai đồng hồ $t$ và $k_{\mathrm{opt}}$
