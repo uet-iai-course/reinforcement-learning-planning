@@ -114,6 +114,7 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | `lec-08-topic-16` | `L08-31`, `L08-32` |
 | `lec-08-topic-17` | `L08-01`, `L08-02`, `L08-02b`, `L08-02c` |
 | `lec-08-topic-18` | `L08-M3T`, `L08-28` |
+| `lec-08-topic-19` | `L08-05r` |
 
 ## Ánh xạ nguồn (bản cũ; cột "trang đích" được cập nhật khi sửa từng trang, các lệch thứ tự của đợt sửa 2026-10-22 ghi trong `storyboard.md`)
 

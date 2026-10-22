@@ -85,7 +85,8 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 | `lec-08-topic-05` | Kết thúc và cắt ngắn | tr. 21 | Hai cờ $Z$, $U$; mặt nạ chỉ dùng $Z$ | Vào: topic-04 → Ra: bộ sáu thành phần |
 | `lec-08-topic-18` | Tương quan giữa các mẫu chuyển liên tiếp | tr. 19, 30 | Vấn đề của mẫu liền nhau | Vào: topic-05 → Ra: nhu cầu bộ nhớ phát lại |
 | `lec-08-topic-06` | Bộ nhớ phát lại | tr. 18–20, 32 | Bộ đệm vòng dung lượng $N$, ghi đè mẫu cũ nhất, rút đều; quan sát cuối khi tự đặt lại | Vào: topic-18 → Ra: mini-batch |
-| `lec-08-topic-07` | Giới hạn của bộ nhớ phát lại | tr. 19, 29–32 | Giới hạn của replay | Vào: topic-06 → Ra: phát biểu đúng phạm vi |
+| `lec-08-topic-19` | Dữ liệu khác chính sách trong bộ nhớ | tr. 6–7, 19, 32 | Hai nguồn khác chính sách; đích một bước không cần tỉ số lấy mẫu quan trọng | Vào: topic-06 → Ra: phạm vi của đích trên dữ liệu cũ |
+| `lec-08-topic-07` | Giới hạn của bộ nhớ phát lại | tr. 19, 29–32 | Giới hạn của replay | Vào: topic-19 → Ra: phát biểu đúng phạm vi |
 | `lec-08-topic-08` | Gather và dừng gradient | tr. 16, 22, 34 | Đồ thị tính toán | Vào: topic-03 → Ra: loss batch |
 | `lec-08-topic-09` | Mất mát và gradient batch | tr. 21–22, 34 | MSE và $\nabla_\theta L$ | Vào: topic-08 → Ra: gradient cho optimizer |
 | `lec-08-topic-10` | Vòng DQN: hai đồng hồ $t$ và $k_{\mathrm{opt}}$ | tr. 18–22 | Giả mã đầy đủ | Vào: topic-05–09 → Ra: thuật toán hoàn chỉnh |
@@ -110,7 +111,7 @@ Chúng ta đi qua bảy phần sau.
 
 1. Mở đầu: kiến thức tiên quyết, ký hiệu, mục tiêu và bài toán trung tâm (`lec-08-topic-13`, `lec-08-topic-17`).
 2. Mạng giá trị hành động và đích hồi quy: giới hạn của bảng, đầu vào bốn khung Atari, mạng giá trị hành động, mạng mục tiêu, đích có mặt nạ kết thúc, kết thúc và cắt ngắn (`lec-08-topic-01`, `lec-08-topic-16`, `lec-08-topic-02` đến `lec-08-topic-05`).
-3. Bộ nhớ phát lại: tương quan giữa các mẫu chuyển liên tiếp, cơ chế lưu và lấy mẫu đều, dữ liệu khác chính sách, giới hạn (`lec-08-topic-18`, `lec-08-topic-06`, `lec-08-topic-07`).
+3. Bộ nhớ phát lại: tương quan giữa các mẫu chuyển liên tiếp, cơ chế lưu và lấy mẫu đều, dữ liệu khác chính sách, giới hạn (`lec-08-topic-18`, `lec-08-topic-06`, `lec-08-topic-19`, `lec-08-topic-07`).
 4. Hàm mất mát và thuật toán DQN: hàm mất mát trên mini-batch, dừng gradient, vòng huấn luyện, kích thước tensor (`lec-08-topic-08` đến `lec-08-topic-11`).
 5. Bộ tối ưu theo gradient: SGD, RMSprop, Adam theo từng tọa độ (`lec-08-topic-14`).
 6. Bất ổn và phạm vi bảo đảm của DQN: hai nguồn bất ổn, độ thay đổi của đích khi đồng bộ, bộ ba bất ổn (`lec-08-topic-12`).
@@ -487,15 +488,71 @@ Hình vẽ trạng thái của bộ nhớ trong Ví dụ 08.10. Sáu ô là sáu
 
 Bộ nhớ phát lại cho mỗi bước tối ưu một mini-batch rút đều từ $N$ mẫu chuyển gần nhất. Mỗi mẫu trong $\mathcal D$ do phiên bản hành vi lúc thu thập sinh ra, nên $\mathcal D$ trộn dữ liệu của nhiều chính sách hành vi, và các chính sách này khác chính sách tham lam mà đích hồi quy đánh giá. Ở mục tiếp theo, chúng ta xét vì sao đích hồi quy vẫn dùng được trên dữ liệu như vậy mà không cần tỉ số lấy mẫu quan trọng.
 
+<!-- note-topic-id: lec-08-topic-19 -->
 ### Dữ liệu khác chính sách trong bộ nhớ
 
-Bộ nhớ phát lại trộn các mẫu chuyển do hành vi thăm dò hiện tại sinh ra với các mẫu do những phiên bản hành vi cũ sinh ra. Đây là nguồn khác chính sách thứ hai của DQN; nguồn thứ nhất là khoảng cách giữa hành vi $\epsilon_{\mathrm{exp}}$-tham lam và phép cực đại trong đích.
+Mỗi mẫu chuyển trong bộ nhớ phát lại do hành vi tại lúc thu thập sinh ra, còn đích hồi quy $y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a')$ đánh giá chính sách tham lam theo $Q_{\theta^-}$. Chúng ta cần biết dữ liệu khác chính sách đích ở những điểm nào, và đích có cần hiệu chỉnh vì sự khác biệt đó hay không.
 
-Mất mát DQN cơ bản không gắn tỉ số lấy mẫu quan trọng vì cùng lý do như Q-learning dạng bảng: $A_i$ là đối số điều kiện của $Q_\theta(O_i,A_i)$, còn phần tiếp nối tại $O'_i$ được tính trọn bằng phép cực đại, không qua hành động lấy mẫu từ hành vi.
+Nhắc lại từ Bài 06: trong Q-learning dạng bảng, chính sách hành vi $\varepsilon$-tham lam sinh dữ liệu, còn chính sách đích là chính sách tham lam theo $Q$; hai chính sách khác nhau nên Q-learning học khác chính sách (off-policy). Q-learning một bước không cần tỉ số lấy mẫu quan trọng vì hai lẽ. Thứ nhất, $A_t$ là đối số điều kiện của ô $Q(S_t,A_t)$, ô ước lượng $q_*(S_t,A_t)$, nên việc hành vi chọn $A_t$ với xác suất nào không làm lệch mục tiêu của ô đó. Thứ hai, phần tiếp nối tại $S_{t+1}$ được tính trọn bằng phép cực đại, và với chính sách đích tham lam $\pi$, $\max_{a'}Q(S_{t+1},a')=\sum_{a'}\pi(a'\mid S_{t+1})Q(S_{t+1},a')$, tức đúng bằng kỳ vọng theo chính sách đích; không có hành động nào sau $A_t$ được lấy mẫu từ hành vi.
 
-**Kiểm tra nhanh.** Vì sao loss DQN cơ bản không cần tỉ số lấy mẫu quan trọng? — Vì
-$A_i$ đã được cố định trong điều kiện của $Q_\theta(O_i,A_i)$, và hành động tại $O'_i$ không được
-lấy mẫu từ hành vi mà được thay bằng phép cực đại, chính là kỳ vọng theo chính sách đích tham lam.
+Trong DQN, dữ liệu khác chính sách đích theo hai nguồn.
+
+1. Hành vi $\epsilon_{\mathrm{exp}}$-tham lam theo $Q_\theta$ khác chính sách tham lam của đích, ngay cả với $\theta$ hiện tại. Với $\lvert\mathcal A\rvert=4$ và $\epsilon_{\mathrm{exp}}=0{,}1$, hành vi chọn hành động tham lam với xác suất $1-0{,}1+0{,}1/4=0{,}925$ và mỗi hành động khác với xác suất $0{,}025$, trong khi chính sách tham lam gán xác suất $1$ và $0$.
+2. Bộ nhớ giữ các mẫu do những phiên bản $\theta$ cũ sinh ra. Mnih và cộng sự (2015, Extended Data Table 1) dùng $N=10^6$ và cập nhật $\theta$ sau mỗi $4$ bước môi trường, nên khi bộ nhớ đầy, mẫu cũ nhất do một hành vi theo $\theta$ của khoảng $10^6/4=2{,}5\cdot10^5$ bước tối ưu trước sinh ra.
+
+![Bên trái hai khung: hành vi theo theta cũ, đánh dấu bằng vòng tròn rỗng, và hành vi theo theta hiện tại, đánh dấu bằng hình vuông đặc. Hai mũi tên từ hai khung cùng đổ vào bộ nhớ phát lại ở giữa, vẽ thành sáu ô: hai ô đầu chứa hình vuông, bốn ô sau chứa vòng tròn. Một mũi tên từ bộ nhớ sang khung mini-batch bên phải, chứa một vòng tròn và một hình vuông: mini-batch trộn mẫu của cả hai phiên bản hành vi.](img/lec-08/offpolicy-replay.svg)
+
+Hình vẽ nguồn thứ hai. Hai phiên bản hành vi, theo $\theta$ cũ (vòng tròn rỗng) và theo $\theta$ hiện tại (hình vuông đặc), cùng ghi vào bộ nhớ phát lại; hai ô đầu chứa mẫu mới vừa ghi đè hai mẫu cũ nhất, như bộ đệm vòng của Ví dụ 08.10. Mini-batch rút đều từ bộ nhớ nên trộn mẫu của cả hai phiên bản.
+
+Mệnh đề sau chuyển lý do của dạng bảng sang đích hồi quy của DQN.
+
+::: proposition Mệnh đề 08.8 (Đích một bước không phụ thuộc hành vi đã sinh mẫu)
+**Giả thiết.** Quan sát $O_t$ đủ Markov (Nhận xét 08.2), và động lực của môi trường, tức phân phối của $(R_{t+1},O_{t+1},Z_{t+1})$ khi biết $(O_t,A_t)$, không đổi theo thời gian. Tham số $\theta^-$ cố định. Mẫu $(O_i,A_i,R_i,O'_i,Z_i,U_i)$ được rút đều từ $\mathcal D$ (Định nghĩa 08.7), trong đó mỗi mẫu được ghi bởi một hành vi chọn $A_t$ chỉ dựa trên lịch sử quan sát, hành động và một nguồn ngẫu nhiên riêng.
+
+**Kết luận.** Với mọi cặp $(o,a)$ có xác suất dương trong $\mathcal D$,
+$$
+\begin{aligned}
+\mathbb E\bigl[y_i\mid O_i=o,A_i=a\bigr]&=\mathbb E\Bigl[R_{t+1}+\gamma(1-Z_{t+1})\max_{a'}Q_{\theta^-}(O_{t+1},a')\Bigm|O_t=o,A_t=a\Bigr]\\
+&=(\mathcal TQ_{\theta^-})(o,a),
+\end{aligned}
+$$
+dù mẫu do phiên bản hành vi nào sinh ra.
+
+**Điều kiện áp dụng.** Đích một bước với phép cực đại tính trọn tại $O'_i$.
+
+**Phạm vi.** Mệnh đề chỉ nói về kỳ vọng có điều kiện của đích khi biết cặp $(O_i,A_i)$. Phân phối của chính cặp $(O_i,A_i)$ trong $\mathcal D$ vẫn do các hành vi đã sinh dữ liệu quyết định.
+:::
+
+::: proof Chứng minh Mệnh đề 08.8
+**Bước 1 (một mẫu khi được ghi).** Xét mẫu được ghi tại bước $t$ bởi hành vi theo một tham số $\theta_t$ nào đó. Hành vi chọn $A_t$ từ lịch sử và nguồn ngẫu nhiên riêng, không dùng tới $(R_{t+1},O_{t+1},Z_{t+1})$ chưa xảy ra. Khi $O_t$ đủ Markov và động lực không đổi, phân phối của $(R_{t+1},O_{t+1},Z_{t+1})$ khi biết lịch sử và $A_t$ chỉ phụ thuộc $(O_t,A_t)$, nên khi biết $O_t=o$, $A_t=a$, nó là một phân phối $p(\cdot\mid o,a)$ chung cho mọi $\theta_t$.
+
+**Bước 2 (phép rút).** Phép rút đều chọn vị trí mà không nhìn vào nội dung mẫu. Vì vậy, khi biết mẫu được rút có $(O_i,A_i)=(o,a)$, bộ $(R_i,O'_i,Z_i)$ vẫn có phân phối $p(\cdot\mid o,a)$ của Bước 1, bất kể vị trí và phiên bản hành vi.
+
+**Bước 3 (kỳ vọng của đích).** Với $\theta^-$ cố định, $y_i$ là một hàm xác định của $(R_i,O'_i,Z_i)$. Lấy kỳ vọng theo $p(\cdot\mid o,a)$:
+$$
+\begin{aligned}
+\mathbb E\bigl[y_i\mid O_i=o,A_i=a\bigr]&=\mathbb E_{(R,O',Z)\sim p(\cdot\mid o,a)}\Bigl[R+\gamma(1-Z)\max_{a'}Q_{\theta^-}(O',a')\Bigr]\\
+&=(\mathcal TQ_{\theta^-})(o,a).
+\end{aligned}
+$$
+Không có hành động nào sau $A_i$ được lấy từ hành vi, nên không có tỉ số xác suất nào cần đưa vào. $\square$
+:::
+
+Mệnh đề dựa trên hai giả thiết có vai trò riêng. Giả thiết Markov làm phân phối của phần tiếp nối chỉ phụ thuộc $(O_i,A_i)$. Bỏ giả thiết này, chẳng hạn khi quan sát là một khung ảnh không cho biết hướng chuyển động của quả bóng (Ví dụ 08.4): cùng một quan sát $o$ ứng với nhiều trạng thái ẩn, và tỉ lệ các trạng thái ẩn này phụ thuộc hành vi đã đưa tác tử tới $o$, nên mẫu của hai phiên bản hành vi có kỳ vọng đích khác nhau. Giả thiết động lực không đổi làm mẫu cũ vẫn là mẫu đúng của môi trường hiện tại. Bỏ giả thiết này, chẳng hạn khi luật của môi trường đổi giữa chừng: các mẫu ghi trước thời điểm đổi mô tả một môi trường không còn tồn tại, và chúng ở lại trong bộ nhớ cho tới khi bị ghi đè.
+
+::: example Ví dụ 08.11 (Tỉ số lấy mẫu quan trọng xóa mẫu của hành động thăm dò)
+**Dữ kiện.** $\lvert\mathcal A\rvert=4$, $\epsilon_{\mathrm{exp}}=0{,}1$, $\gamma=0{,}9$. Tại quan sát $o$, $\mathbf q_\theta(o)=(0{,}8;\,2{,}5;\,-0{,}3;\,1{,}9)$ như Ví dụ 08.3, nên hành động tham lam là $a_2$. Hành vi chọn $a_4$ và nhận mẫu chuyển có $R_i=1$, $Z_i=0$, $\max_{a'}Q_{\theta^-}(O'_i,a')=4$.
+
+**Tính.** Đích $y_i=1+0{,}9\cdot4=4{,}6$, một mẫu có kỳ vọng $(\mathcal TQ_{\theta^-})(o,a_4)$ theo Mệnh đề 08.8. Xác suất hành vi chọn $a_4$ là $0{,}1/4=0{,}025$, xác suất chính sách tham lam chọn $a_4$ là $0$. Nếu nhân sai số của mẫu với tỉ số $\pi(a_4\mid o)/b(a_4\mid o)=0/0{,}025=0$, với $b$ ở đây là chính sách hành vi, mẫu bị xóa khỏi cập nhật.
+
+**Diễn giải.** Hiệu chỉnh theo tỉ số tại $A_i$ làm mọi mẫu của hành động không tham lam có trọng số $0$, nên $Q_\theta(o,a_4)$ không bao giờ học từ dữ liệu, dù đích $4{,}6$ là mẫu đúng của giá trị cần ước lượng.
+:::
+
+**Trong thực hành.** Hàm mất mát DQN cơ bản không chứa tỉ số lấy mẫu quan trọng, và Mệnh đề 08.8 giải thích vì sao điều này đúng với đích một bước. Khi đích dùng nhiều bước, như đích $n$ bước, các hành động $A_{t+1},\dots,A_{t+n-1}$ đều lấy từ hành vi đã ghi mẫu, và đích chỉ đánh giá chính sách đích khi được hiệu chỉnh bằng tích các tỉ số lấy mẫu quan trọng (Sutton và Barto, 2018, §7.3). Hành vi vẫn quyết định tần suất của từng cặp $(O_i,A_i)$ trong mini-batch, tức trọng số của từng cặp khi khớp $Q_\theta$. Với bảng, mỗi ô được khớp riêng nên trọng số này không đổi giá trị đích của ô; với xấp xỉ hàm, các cặp tranh nhau tham số dùng chung, và trọng số theo phân phối của $\mathcal D$ là thành phần học khác chính sách trong bộ ba bất ổn của Bài 07.
+
+**Kiểm tra nhanh.** Một mẫu trong $\mathcal D$ được ghi bởi hành vi theo $\theta$ của $2{,}5\cdot10^5$ bước tối ưu trước. Khi mẫu được rút, đích của nó tính bằng tham số nào, và có cần hiệu chỉnh cho phiên bản hành vi cũ không? Đích tính bằng $\theta^-$ tại lúc rút. Theo Mệnh đề 08.8, khi $O_i$ đủ Markov và động lực không đổi, phiên bản hành vi cũ chỉ quyết định cặp $(O_i,A_i)$ được ghi, không đổi kỳ vọng của đích, nên không cần hiệu chỉnh.
+
+Chúng ta đã có hai kết quả về bộ nhớ phát lại: mini-batch rút đều từ $N$ mẫu gần nhất, và đích một bước của mỗi mẫu có kỳ vọng $(\mathcal TQ_{\theta^-})(O_i,A_i)$ bất kể phiên bản hành vi đã sinh mẫu. Phân phối của các cặp $(O_i,A_i)$ trong mini-batch thì vẫn do các hành vi cũ và hiện tại quyết định, và các mẫu vẫn cùng thuộc một số quỹ đạo. Ở mục tiếp theo, chúng ta nêu những điều bộ nhớ phát lại không bảo đảm.
 
 <!-- note-topic-id: lec-08-topic-07 -->
 ### Giới hạn của bộ nhớ phát lại

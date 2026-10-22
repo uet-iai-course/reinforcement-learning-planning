@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1110 154" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Hai phiên bản hành vi cùng ghi vào bộ nhớ phát lại</title>
+<desc id="d">Bên trái hai khung: hành vi theo theta cũ, đánh dấu bằng vòng tròn rỗng, và hành vi theo theta hiện tại, đánh dấu bằng hình vuông đặc. Hai mũi tên từ hai khung cùng đổ vào bộ nhớ phát lại ở giữa, vẽ thành sáu ô hai ô đầu chứa hình vuông, bốn ô sau chứa vòng tròn, như bộ đệm vòng vừa ghi đè hai mẫu cũ nhất. Một mũi tên từ bộ nhớ sang khung mini-batch bên phải, chứa một vòng tròn và một hình vuông: mini-batch trộn mẫu của cả hai phiên bản hành vi.</desc>
+<defs><marker id="arr" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" refX="18" refY="10" orient="auto"><path d="M0,0 L20,10 L0,20 Z" fill="#B15A2B"/></marker></defs>
+<rect x="4" y="4" width="380" height="58" rx="12" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="3"/>
+<circle cx="36" cy="33" r="11" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="4"/><text x="60" y="43" font-size="28">hành vi theo <tspan font-style="italic" font-family="'Noto Serif','Times New Roman',serif">θ</tspan> cũ</text>
+<rect x="4" y="92" width="380" height="58" rx="12" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="3"/>
+<rect x="25" y="110" width="22" height="22" fill="#B15A2B"/><text x="60" y="131" font-size="28">hành vi theo <tspan font-style="italic" font-family="'Noto Serif','Times New Roman',serif">θ</tspan> hiện tại</text>
+<line x1="386" y1="33" x2="458" y2="68" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
+<line x1="386" y1="121" x2="458" y2="88" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
+<text x="640" y="34" font-size="28" text-anchor="middle" font-weight="700">bộ nhớ phát lại</text>
+
+<rect x="460" y="48" width="60" height="60" fill="#F7F7F7" stroke="#59606B" stroke-width="3"/>
+<rect x="479" y="67" width="22" height="22" fill="#B15A2B"/>
+<rect x="520" y="48" width="60" height="60" fill="#F7F7F7" stroke="#59606B" stroke-width="3"/>
+<rect x="539" y="67" width="22" height="22" fill="#B15A2B"/>
+<rect x="580" y="48" width="60" height="60" fill="#F7F7F7" stroke="#59606B" stroke-width="3"/>
+<circle cx="610" cy="78" r="11" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="4"/>
+<rect x="640" y="48" width="60" height="60" fill="#F7F7F7" stroke="#59606B" stroke-width="3"/>
+<circle cx="670" cy="78" r="11" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="4"/>
+<rect x="700" y="48" width="60" height="60" fill="#F7F7F7" stroke="#59606B" stroke-width="3"/>
+<circle cx="730" cy="78" r="11" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="4"/>
+<rect x="760" y="48" width="60" height="60" fill="#F7F7F7" stroke="#59606B" stroke-width="3"/>
+<circle cx="790" cy="78" r="11" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="4"/>
+<line x1="824" y1="78" x2="906" y2="78" stroke="#B15A2B" stroke-width="4" marker-end="url(#arr)"/>
+<text x="987" y="34" font-size="28" text-anchor="middle" font-weight="700">mini-batch</text>
+<rect x="912" y="48" width="150" height="60" rx="12" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="3"/>
+<circle cx="957" cy="78" r="11" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="4"/>
+<rect x="1006" y="67" width="22" height="22" fill="#B15A2B"/>
+</svg>

@@ -12,7 +12,7 @@ Tệp này giữ các chỉ dẫn biên tập không đưa lên mặt trang chi�
 - DQN cơ bản nhận quan sát hoặc biểu diễn trạng thái và xuất vector cho tập hành động rời rạc hữu hạn.
 - Giới thiệu mạng online $Q_\theta$, mạng mục tiêu $Q_{\theta^-}$ và phép khởi tạo $\theta^-\leftarrow\theta$ trước khi dùng $\theta^-$ trong công thức bootstrap.
 - Replay giảm tương quan ngắn hạn; không tạo dữ liệu độc lập và cùng phân phối (i.i.d.) và không bảo đảm hội tụ.
-- Có hai nguồn lệch hành vi: $\epsilon$-greedy khác phép cực đại Bellman, và replay chứa dữ liệu từ các phiên bản hành vi cũ. DQN cơ bản không dùng importance sampling vì đích là phép sao lưu tối ưu, không phải kỳ vọng hành động theo một chính sách đích ngẫu nhiên.
+- Có hai nguồn lệch hành vi: hành vi $\epsilon_{\mathrm{exp}}$-tham lam khác chính sách tham lam của đích, và replay chứa dữ liệu từ các phiên bản hành vi cũ. DQN cơ bản không dùng importance sampling vì $A_i$ là đối số điều kiện của $Q_\theta(O_i,A_i)$, còn tại $O'_i$ phép cực đại được tính trọn, không lấy mẫu hành động từ hành vi (Sutton và Barto 2018, §6.6, §7.3); với chính sách đích tham lam, phép cực đại chính là kỳ vọng theo chính sách đích.
 - Mạng mục tiêu giữ cố định trong $C$ bước tối ưu rồi sao chép cứng; cơ chế này không bảo đảm hội tụ.
 - Dùng sai số bình phương trung bình (MSE) như lựa chọn của bài để thống nhất phép tính. Nếu nhắc Huber, chỉ nói đây là lựa chọn thực hành khác; không gán lựa chọn MSE cho một đặc tả bắt buộc của DQN.
 - Với Atari, nói “bốn khung quan sát liên tiếp” hoặc “xấp xỉ trạng thái”; không khẳng định tính Markov.
