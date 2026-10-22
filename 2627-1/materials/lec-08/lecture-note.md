@@ -1381,3 +1381,27 @@ Mẫu 1 là bước thứ $500$ của một lượt mà cột chưa đổ; mẫu
 ::: hint
 Xác định cờ nào xóa nhánh bootstrap trước khi tính sai số: chỉ $Z_i$ ghi việc MDP kết thúc. Với phần thưởng $+1$ mỗi bước và $\gamma=0{,}9$, mọi lợi tức chiết khấu không vượt $1/(1-\gamma)=10$. Với câu (d), theo bước 8 và bước 9 của Thuật toán 08.13, $k_{\mathrm{opt}}$ tăng sau cập nhật rồi mới được so với bội của $C$.
 :::
+
+::: solution
+**Câu (a).** Mẫu 1 có $Z_1=0$: cột chưa đổ và xe chưa ra ngoài, nên MDP chưa kết thúc dù $U_1=1$. Đích giữ phần bootstrap:
+$$
+y_1=1+0{,}9\cdot(1-0)\cdot10=10.
+$$
+Mẫu 2 có $Z_2=1$, nên phần bootstrap bị xóa và giá trị $10$ của mạng mục tiêu tại quan sát cột đã đổ không vào đích:
+$$
+y_2=1+0{,}9\cdot(1-1)\cdot10=1.
+$$
+Cả hai đích không vượt cận $1/(1-\gamma)=10$ của lợi tức chiết khấu khi phần thưởng bằng $1$ mỗi bước.
+
+**Câu (b).** Sai số là $\delta_1=10-9=1$ và $\delta_2=1-2=-1$. Hàm mất mát là
+$$
+L_B=\tfrac12\bigl(1^2+(-1)^2\bigr)=1.
+$$
+Với $b=2$, $\partial L_B/\partial q_i=\tfrac2b(q_i-y_i)=q_i-y_i$, nên $\partial L_B/\partial q_1=-1$ và $\partial L_B/\partial q_2=1$. Xét $q_1$, $q_2$ như hai biến riêng, một bước hạ gradient nhỏ làm $q_1$ tăng về $10$ và $q_2$ giảm về $1$.
+
+**Câu (c).** Với mặt nạ gộp, $1-(Z_1\lor U_1)=1-(0\lor1)=0$, nên $y_1=1$ và $\delta_1=1-9=-8$; đích của mẫu 2 vẫn bằng $1$ vì $Z_2=1$. Đích của mẫu 1 bị hạ $0{,}9\cdot10=9$ và $\partial L_B/\partial q_1=q_1-y_1=8>0$, nên bước hạ gradient kéo $q_1$ xuống về $1$: giá trị bị đánh giá thấp. Quan sát của CartPole gồm vị trí, vận tốc xe, góc và vận tốc góc của cột, không có số bước, nên một quan sát ở bước $500$ có thể trùng hoặc gần các quan sát ở những bước khác; mạng dùng chung tham số kéo xuống cả giá trị của các quan sát gần nó, không chỉ ở bước $500$; mỗi lượt chạm giới hạn góp thêm một mẫu như vậy (Pardo và cộng sự, 2018). Mặt nạ gộp sai vì cắt ngắn là giới hạn của việc thu thập, không phải trạng thái kết thúc của MDP; cờ gộp $Z\lor U$ chỉ dùng để quyết định đặt lại môi trường.
+
+**Câu (d).** Theo Thuật toán 08.13, bước 8 cập nhật $\theta$ rồi tăng $k_{\mathrm{opt}}$ từ $999$ lên $1000$; bước 9 kiểm $1000\bmod1000=0$, nên gán $\theta^-\leftarrow\theta$, và $\theta^-$ mới chứa cả cập nhật vừa làm. Nếu một bản cài đặt kiểm $C$ trước khi tăng $k_{\mathrm{opt}}$, bước này so $999\bmod1000\ne0$ nên không đồng bộ; ở bước tối ưu kế tiếp, sau cập nhật thứ $1001$, phép kiểm thấy $1000\bmod1000=0$ và mới đồng bộ. Chu kỳ vẫn là $C$, nhưng mọi lần đồng bộ lùi một bước tối ưu, và lần đồng bộ đầu tiên xảy ra ngay sau bước tối ưu thứ nhất (Ví dụ 08.15).
+
+**Kiểm tra lại.** Bốn lỗi hay gặp. Dùng cờ gộp $Z\lor U$ làm mặt nạ cho $y_1=1$, $\delta_1=-8$. Quên mặt nạ ở mẫu 2 cho $y_2=1+0{,}9\cdot10=10$, $\delta_2=8$ và $L_B=\tfrac12(1^2+8^2)=32{,}5$. Dùng tổng thay cho trung bình cho $L_B=2$ và đạo hàm $(-2;\,2)$, sai một hằng số nhân. Kiểm $C$ trước khi tăng $k_{\mathrm{opt}}$, hoặc đếm $C$ theo bước môi trường $t$, làm lần đồng bộ lệch khỏi bước tối ưu thứ $1000$.
+:::
