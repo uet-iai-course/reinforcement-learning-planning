@@ -104,7 +104,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 
 | Mã | Chủ đề | Nguồn trang | Vai trò | Vào → Ra |
 |---|---|---|---|---|
-| `lec-08-topic-15` | Kiểm tra tổng hợp, ba bài thảo luận, đọc thêm | tr. 12–13, 29–36 | Ứng dụng và tổng kết | Vào: topic-12, 14 → Ra: kết luận cuối tệp |
+| `lec-08-topic-15` | Tổng kết và chuyển tiếp: kết quả và giả thiết, so sánh ba phương pháp, trả lời vấn đề trung tâm, câu hỏi tự kiểm tra, đọc thêm, tóm tắt chương | tr. 12–13, 20–21, 29–36 | Tổng kết | Vào: topic-01 đến topic-14 → Ra: câu trả lời có điều kiện cho vấn đề trung tâm; Bài 09 |
 
 ### Bảy phần của chương
 
@@ -1217,33 +1217,20 @@ DQN có đủ xấp xỉ hàm, bootstrap và học khác chính sách, nên khô
 
 Vì thế câu trả lời của chương là có điều kiện. DQN cho một quy trình học $q_*$ từ quan sát thô, trong đó nhãn hồi quy, dữ liệu và đường gradient đều được kiểm soát, nhưng chưa có định lý bảo đảm quy trình đó hội tụ tới $q_*$ (bài giảng gốc, trang 12–34; Sutton và Barto, 2018, §11.3, §16.5). Đích của DQN còn chứa phép cực đại trên ước lượng có nhiễu; Bài 09 xét độ chệch của phép cực đại này và Double DQN.
 
-### Kiểm tra tổng hợp, thảo luận và đọc thêm
+### Câu hỏi tự kiểm tra
 
-**Kiểm tra tổng hợp (bốn câu).**
+Mỗi câu dưới đây dùng một kết quả của chương; khi trả lời, chúng ta nêu cả kết quả đã dùng.
 
-1. Replay giảm cơ chế nào và để lại giới hạn nào? — Giảm tương quan ngắn hạn và
-   tăng tái sử dụng dữ liệu; không tạo i.i.d., không bảo đảm hội tụ.
-2. Mạng mục tiêu làm chậm đại lượng nào? — Sự thay đổi của đích bootstrap giữa
-   các lần đồng bộ; đích vẫn nhảy tại mốc $\theta^-\leftarrow\theta$.
-3. Khi nào cắt ngắn vẫn cần bootstrap? — Khi nhiệm vụ tiếp diễn và việc dừng chỉ
-   do giới hạn thu thập ($U=1$, $Z=0$).
-4. Optimizer thích nghi có sửa bộ ba bất ổn không? — Không; nó chỉ chuẩn hóa
-   bước cập nhật, không đụng vào xấp xỉ hàm, bootstrap hay dữ liệu khác chính sách.
+1. Bộ nhớ phát lại giảm nguồn bất ổn nào, và để lại giới hạn nào? Nó giảm tương quan giữa các mẫu liền nhau trong một mini-batch: khi rút đều từ $\mathcal D$ gồm $N$ mẫu, một cặp liền nhau chỉ cùng xuất hiện với xác suất khoảng $2/N$. Các mẫu vẫn không độc lập cùng một phân phối cố định, vì phân phối của $\mathcal D$ đổi theo hành vi, và cơ chế này không tạo bảo đảm hội tụ (Nhận xét 08.19, Nhận xét 08.9).
+2. Mạng mục tiêu làm chậm đại lượng nào, và không loại yếu tố nào? Nó làm chậm sự thay đổi của đích: giữa hai lần đồng bộ, đích của mỗi mẫu đứng yên, và tại mốc đồng bộ đích đổi $\Delta y_i=\gamma(1-Z_i)\bigl[\max_{a'}Q_\theta(O'_i,a')-\max_{a'}Q_{\theta^-}(O'_i,a')\bigr]$, như $0{,}9$ ở mẫu 1 của ví dụ xuyên suốt. Đích vẫn là đích bootstrap, nên mạng mục tiêu không loại yếu tố nào của bộ ba bất ổn (Nhận xét 08.20, Nhận xét 08.21).
+3. Khi nào mẫu chuyển bị cắt ngắn vẫn giữ phần bootstrap? Khi $U=1$ và $Z=0$, tức lượt dừng vì giới hạn số bước trong khi MDP chưa kết thúc. Mặt nạ chỉ dùng $1-Z$; cờ gộp $Z\lor U$ chỉ dùng để đặt lại môi trường (Định nghĩa 08.6, Bài tập 08.4).
+4. Bộ tối ưu thích nghi như Adam có loại được bộ ba bất ổn không? Không. Bộ tối ưu chỉ quyết định cách đổi gradient thành bước tham số; công thức đích, cơ chế thu thập dữ liệu và lớp hàm không phụ thuộc lựa chọn đó (Định nghĩa 08.15, Nhận xét 08.21).
 
-**Ba bài thảo luận (từ nguồn).**
+Bài giảng gốc (trang 36) nêu thêm ba hướng thảo luận: vì sao bộ nhớ phát lại làm cập nhật trên mini-batch đáng tin cậy hơn; vì sao các bộ tối ưu thích nghi vẫn có thể giúp DQN dù không sửa đích Bellman; và những cách tăng thăm dò trong DQN. Hai hướng đầu được trả lời một phần bởi câu 1 và câu 4; hướng thứ ba nằm ngoài chương này.
 
-1. Vì sao experience replay làm cho cập nhật mini-batch đáng tin cậy hơn?
-2. Vì sao các bộ tối ưu thích nghi có thể giúp DQN dù chúng không sửa trực tiếp
-   mục tiêu Bellman?
-3. Tìm các phương pháp để tăng tính khám phá trong DQN.
+### Đọc thêm
 
-**Đọc thêm / thực hành.** Đọc giả mã "Deep Q-learning with experience replay"
-trong nguồn (tr. 20–21) và đối chiếu từng dòng với vòng DQN ở topic-10: điểm nào
-giả mã nguồn đã có (replay dung lượng $N$, hai mạng $\theta,\theta^-$, đích có
-mặt nạ terminal, đồng bộ mỗi $C$ bước), điểm nào ghi chú này bổ sung (hai cờ
-$Z,U$, làm nóng $N_{\mathrm{start}}$, nhịp $F$, autoreset, dừng gradient). Khi
-thực hành trên Atari, chỉ cần giữ hợp đồng tối thiểu: bốn khung → CNN → vector
-$|\mathcal A|$ giá trị hành động.
+Giả mã "Deep Q-learning with experience replay" của bài giảng gốc (trang 21) đã có bộ nhớ phát lại dung lượng $N$, hai mạng với $\theta^-=\theta$ lúc khởi tạo, đích bằng $r_j$ tại bước kết thúc và đồng bộ sau mỗi $C$ bước. Đối chiếu từng dòng với Thuật toán 08.13 cho thấy các chi tiết được thêm ở thuật toán đó: hai cờ $Z$ và $U$, số mẫu tối thiểu $N_{\mathrm{start}}$, nhịp tối ưu $F$, quan sát cuối của lượt khi môi trường tự đặt lại, phép dừng gradient, và việc đếm $C$ theo bước tối ưu. Với Atari, đầu vào của mạng là chồng bốn khung $84\times84$ và mạng tích chập trả về $\lvert\mathcal A\rvert$ giá trị hành động (Ví dụ 08.2).
 
 ### Tóm tắt chương
 
