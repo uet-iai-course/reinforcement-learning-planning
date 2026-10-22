@@ -931,15 +931,35 @@ Mỗi thành phần của định nghĩa có một việc. Hệ số $\rho$ quy�
 
 **Trong thực hành.** Mnih và cộng sự (2015, mục Methods và Extended Data Table 1) huấn luyện DQN gốc bằng một biến thể của RMSprop với tốc độ học $0{,}00025$ và mini-batch $32$. Chọn RMSprop không đổi công thức đích, cách thu thập dữ liệu hay lớp hàm; nó đổi tỉ lệ bước giữa các tọa độ và không cho bảo đảm hội tụ cho DQN.
 
-**Adam** ($m_0=v_0=0$, $\beta_1,\beta_2\in[0,1)$):
+#### Adam
 
-$$m_j=\beta_1m_{j-1}+(1-\beta_1)g_j,\qquad v_j=\beta_2v_{j-1}+(1-\beta_2)g_j\odot g_j,$$
-$$\hat m_j=\frac{m_j}{1-\beta_1^j},\qquad \hat v_j=\frac{v_j}{1-\beta_2^j},\qquad
-\theta_j=\theta_{j-1}-\eta\,\hat m_j\oslash\bigl(\sqrt{\hat v_j}+\epsilon_{\mathrm{opt}}\bigr).$$
+RMSprop chuẩn hóa độ lớn của bước theo từng tọa độ, nhưng hướng bước vẫn là gradient tức thời $g_j$ của một mini-batch, nên dao động theo nhiễu của từng mini-batch. Adam lấy thêm trung bình trượt của chính gradient, và hiệu chỉnh độ lệch của hai trung bình trượt ở các bước đầu.
 
-Hiệu chỉnh lệch quan trọng ở các bước đầu vì hai moment khởi tạo bằng không. Adam
-kết hợp động lượng (làm trơn hướng tìm kiếm) với chuẩn hóa thích nghi kiểu RMS,
-thường giúp tăng tốc huấn luyện trong deep RL.
+::: definition Định nghĩa 08.18 (Adam)
+Cho tốc độ học $\eta>0$, hai hệ số suy giảm $\beta_1,\beta_2\in[0,1)$ và hằng $\epsilon_{\mathrm{opt}}>0$. Adam là bộ tối ưu theo Định nghĩa 08.15 với trạng thái phụ $(m_j,v_j)\in\mathbb R^d\times\mathbb R^d$, $m_0=v_0=0$, và tại bước $j=1,2,\dots$
+$$
+\begin{aligned}
+m_j&=\beta_1m_{j-1}+(1-\beta_1)\,g_j, & v_j&=\beta_2v_{j-1}+(1-\beta_2)\,g_j\odot g_j,\\
+\hat m_j&=\frac{m_j}{1-\beta_1^{\,j}}, & \hat v_j&=\frac{v_j}{1-\beta_2^{\,j}},\\
+\theta_j&=\theta_{j-1}-\eta\,\hat m_j\oslash\bigl(\sqrt{\hat v_j}+\epsilon_{\mathrm{opt}}\bigr),
+\end{aligned}
+$$
+với mọi phép toán trên vector lấy theo từng tọa độ.
+:::
+
+$m_j$ là trung bình trượt có trọng số mũ của các gradient, $v_j$ của bình phương gradient; $\beta^{\,j}$ là lũy thừa bậc $j$ của $\beta$. Vì $m_0=0$, $m_j=(1-\beta_1)\sum_{k=1}^{j}\beta_1^{\,j-k}g_k$ có tổng trọng số $1-\beta_1^{\,j}$ thay cho $1$; khi mọi gradient bằng nhau và bằng $g$, $m_j=(1-\beta_1^{\,j})\,g$, lệch về $0$ ở các bước đầu. Chia cho $1-\beta_1^{\,j}$ bù đúng độ lệch đó, và tương tự cho $v_j$. Khi $j$ lớn, $\beta^{\,j}\to0$ và phép hiệu chỉnh không còn tác dụng. Adam giữ hai vector trạng thái phụ cùng kích thước với $\theta$.
+
+Mỗi thành phần có một việc. Bỏ trung bình trượt của gradient, tức $\beta_1=0$, thì $\hat m_j=g_j$ và Adam trở thành RMSprop có hiệu chỉnh lệch cho $v_j$. Bỏ hiệu chỉnh lệch thì bước đầu bị nhân với $(1-\beta_1)/\sqrt{1-\beta_2}$, như Ví dụ 08.21 dưới đây.
+
+::: example Ví dụ 08.21 (Bước đầu của Adam có và không có hiệu chỉnh lệch)
+**Dữ kiện.** Như Ví dụ 08.19 và 08.20: $g_1=(2;\,0{,}02)$, $\theta_0=(0{,}02;\,0{,}02)$, $\eta=0{,}005$. Adam với $\beta_1=0{,}9$, $\beta_2=0{,}999$, $m_0=v_0=0$; bỏ qua $\epsilon_{\mathrm{opt}}$.
+
+**Tính.** $m_1=0{,}1\cdot g_1=(0{,}2;\,0{,}002)$ và $v_1=0{,}001\cdot(4;\,0{,}0004)=(0{,}004;\,0{,}0000004)$. Có hiệu chỉnh: $\hat m_1=m_1/0{,}1=g_1$, $\hat v_1=v_1/0{,}001=g_1\odot g_1$, nên $\hat m_1\oslash\sqrt{\hat v_1}=(1;\,1)$, bước là $-\eta\,(1;\,1)=(-0{,}005;\,-0{,}005)$ và $\theta_1=(0{,}015;\,0{,}015)$. Không hiệu chỉnh: $m_1\oslash\sqrt{v_1}=(0{,}2/0{,}0632;\,0{,}002/0{,}000632)\approx(3{,}16;\,3{,}16)$.
+
+**Diễn giải.** Có hiệu chỉnh, bước đầu theo mỗi tọa độ là đúng $\eta$ theo dấu gradient. Không hiệu chỉnh, bước đầu lớn gấp $(1-\beta_1)/\sqrt{1-\beta_2}=0{,}1/\sqrt{0{,}001}\approx3{,}16$ lần, với cùng $\eta$.
+:::
+
+**Trong thực hành.** Adam được dùng rộng rãi trong các cài đặt học sâu, kể cả nhiều cài đặt DQN về sau; DQN gốc dùng RMSprop. Công thức của Adam không tạo bảo đảm hội tụ cho DQN: đích đổi tại các mốc đồng bộ và dữ liệu đổi theo hành vi, và lựa chọn bộ tối ưu không đổi các yếu tố đó.
 
 **So sánh và lựa chọn.**
 
