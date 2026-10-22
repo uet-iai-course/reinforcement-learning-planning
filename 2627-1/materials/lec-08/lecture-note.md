@@ -1163,20 +1163,6 @@ Chúng ta gom các kết quả của phần 2 đến phần 6 vào một bảng.
 
 Bảng đọc theo hàng. Ba hàng đầu xác định nhãn hồi quy của mỗi mẫu chuyển; hai hàng kế xác định dữ liệu đưa vào bước tối ưu và lý do đích không cần trọng số; ba hàng tiếp theo xác định một bước cập nhật trong thuật toán; hai hàng cuối nói đích đổi bao nhiêu tại mốc đồng bộ và thuật toán được bảo đảm đến đâu. Các cột giả thiết là chỗ thường sai trong cài đặt: gộp $Z$ với $U$ vào mặt nạ, để gradient đi qua đích, lấy cực đại của $\mathbf q_\theta(O_i)$ thay cho giá trị của $A_i$, hoặc kiểm $C$ trước khi tăng $k_{\mathrm{opt}}$.
 
-**Tóm tắt chương.** Một bảng giá trị hành động không dùng được khi quan sát là vector liên tục hoặc ảnh: lưới thô cho Lunar Lander đã có $9\,216$ ô trạng thái, và sau $2\,000$ lượt chỉ $1\,896$ ô có mẫu. Chúng ta thay bảng bằng một mạng trả vector $\mathbf q_\theta(o)$, và với Atari, đầu vào là bốn khung $84\times84$ xếp chồng để quan sát gần Markov. Mạng mục tiêu tách tham số tạo đích khỏi tham số được cập nhật: với mini-batch hai mẫu chuyển, đích là $4{,}6$ cho mẫu chưa kết thúc và $-2$ cho mẫu kết thúc, hàm mất mát bằng $1{,}25$, và gradient theo hai dự đoán là $(-1{,}5;\,0{,}5)$. Bộ nhớ phát lại rút mini-batch đều từ $N$ mẫu gần nhất, vì bốn gradient liền nhau với tương quan $0{,}9^k$ chỉ bằng khoảng $1{,}1$ mẫu độc lập. Thuật toán DQN ghép thu thập, lưu, tối ưu và đồng bộ bằng hai bộ đếm; với cấu hình Atari $F=4$, $C=10^4$, mạng mục tiêu đứng yên trong $4\cdot10^4$ bước môi trường. Bộ tối ưu chỉ đổi gradient thành bước tham số: trên hàm $\tfrac12(100\theta_1^2+\theta_2^2)$, RMSprop và Adam đi bước đầu cùng cỡ ở hai tọa độ còn SGD thì không. Tại mỗi mốc đồng bộ, đích của mẫu chưa kết thúc đổi, như $0{,}9$ ở mẫu 1. DQN vẫn có đủ ba yếu tố của bộ ba bất ổn, và trong phản ví dụ hai trạng thái, mạng mục tiêu với $C=10$ chỉ hạ hệ số tăng mỗi bước từ $1{,}08$ xuống khoảng $1{,}043$, nên thuật toán không có bảo đảm hội tụ tổng quát.
-
-**Công thức cần nhớ.**
-
-$$
-\begin{aligned}
-y_i&=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a'),\\
-L_B(\theta)&=\frac1b\sum_{i=1}^b\bigl(\operatorname{sg}(y_i)-Q_\theta(O_i,A_i)\bigr)^2,\\
-\Delta y_i&=\gamma(1-Z_i)\Bigl[\max_{a'}Q_\theta(O'_i,a')-\max_{a'}Q_{\theta^-}(O'_i,a')\Bigr].
-\end{aligned}
-$$
-
-**Giả thiết hay bị quên.** Mặt nạ chỉ chứa $Z$, không chứa $U$. Quan sát lưu trong mẫu chuyển là quan sát cuối của lượt, không phải quan sát đầu của lượt mới sau khi môi trường tự đặt lại. Đích là hằng theo $\theta$ khi lấy gradient. Đồng bộ đếm bước tối ưu, không đếm bước môi trường. Bộ nhớ phát lại không tạo mẫu độc lập cùng phân phối cố định. Không có bảo đảm hội tụ tổng quát cho DQN, nên tác dụng của mỗi cơ chế được đánh giá bằng thí nghiệm qua nhiều lần chạy.
-
 ### So sánh Q-learning bảng, tuyến tính và DQN
 
 Đến đây chúng ta có ba phương pháp học $q_*$ từ mẫu chuyển: Q-learning dạng bảng (Thuật toán 06.16), Q-learning bán gradient tuyến tính (Định nghĩa 07.35, Thuật toán 07.36) và DQN (Thuật toán 08.13). Cả ba dùng đích một bước có phép cực đại và thu dữ liệu bằng hành vi $\epsilon_{\mathrm{exp}}$-tham lam, tức hành vi $\varepsilon$-tham lam của Bài 06–07. Muốn biết DQN đổi những gì so với hai phương pháp trước, và vì sao các thay đổi đó không đem theo định lý hội tụ của dạng bảng, chúng ta đặt ba phương pháp cạnh nhau trên cùng các tiêu chí.
@@ -1215,6 +1201,22 @@ Trong bảng thứ hai, giả thiết ở hàng đầu và ở hai hàng sau có
 
 DQN giữ dạng đích và hành vi thu dữ liệu của Q-learning, thay lớp hàm và cách dùng dữ liệu; vì có đủ ba yếu tố của bộ ba bất ổn, nó không thừa hưởng Định lý 06.21. Do đó các quy tắc ở bảng thứ nhất được kiểm bằng phép tính trên từng mini-batch, còn kết luận về hội tụ chỉ được kiểm bằng thí nghiệm qua nhiều lần chạy độc lập.
 
+### Trả lời vấn đề trung tâm
+
+Bài toán của chương là học $q_*$ khi quan sát là vector liên tục hoặc ảnh, tập hành động hữu hạn và mô hình của môi trường không được cho. Ở mục 1, chúng ta đã nêu trước một câu trả lời có điều kiện cho mỗi phần; đến đây mỗi câu có kết quả và số liệu đi kèm.
+
+Mạng $\mathbf q_\theta(o)$ cho giá trị của mọi hành động trong một lần tính (Định nghĩa 08.1). Khi $\theta^-$ giữ cố định giữa hai lần đồng bộ (Định nghĩa 08.3), đích $y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a')$ không phụ thuộc tham số đang cập nhật, nên trong khoảng đó mỗi mẫu chuyển có một nhãn hồi quy cố định. Mẫu 1 của ví dụ xuyên suốt, với $R_1=1$, $Z_1=0$, $\gamma=0{,}9$ và $\max_{a'}Q_{\theta^-}(O'_1,a')=4$, giữ đích $4{,}6$ tới mốc đồng bộ; tại mốc, giá trị cực đại thành $5$ và đích đổi $0{,}9$ thành $5{,}5$ (Ví dụ 08.23). Câu trả lời này cần mặt nạ chỉ chứa $Z$ và quan sát đủ Markov.
+
+Khi mini-batch được rút đều từ $\mathcal D$, một cặp mẫu liền nhau chỉ cùng xuất hiện với xác suất khoảng $2/N$ (Nhận xét 08.9), nên tương quan ngắn hạn giảm. Với tương quan $0{,}9^k$, bốn gradient liền nhau chỉ tương đương khoảng $1{,}1$ mẫu độc lập (Ví dụ 08.9). Dữ liệu vẫn do một tác tử thu thập theo hành vi thay đổi dần, nên các mẫu chưa độc lập cùng một phân phối cố định. Theo Mệnh đề 08.8, đích không cần tỉ số lấy mẫu quan trọng khi quan sát đủ Markov và động lực không đổi.
+
+Với đích trong $\operatorname{sg}$ và phép chọn theo hành động $q_i=[\mathbf q_\theta(O_i)]_{A_i}$ (Định nghĩa 08.12), gradient $\nabla_\theta L_B=\tfrac2b\sum_i(q_i-y_i)\nabla_\theta q_i$ chỉ đi qua giá trị của các hành động đã lưu. Trên mini-batch hai mẫu với đích $(4{,}6;\,-2)$ và dự đoán $(3{,}1;\,-1{,}5)$, đạo hàm theo hai dự đoán là $(-1{,}5;\,0{,}5)$. Gradient vẫn đổi mọi thành phần của $\theta$, nên giá trị ở các quan sát và hành động khác cũng thay đổi theo.
+
+Bộ tối ưu chỉ quyết định cách đổi gradient thành bước tham số (Định nghĩa 08.15). Công thức đích, cơ chế thu thập dữ liệu và lớp hàm không phụ thuộc lựa chọn đó, nên không bộ tối ưu nào loại được nguồn bất ổn. Trên hàm $\tfrac12(100\theta_1^2+\theta_2^2)$, RMSprop và Adam đi bước đầu cùng cỡ ở hai tọa độ còn SGD thì không, nhưng khác biệt này chỉ thuộc về tốc độ của bài toán tối ưu.
+
+DQN có đủ xấp xỉ hàm, bootstrap và học khác chính sách, nên không có bảo đảm hội tụ tổng quát (Nhận xét 08.21). Trên phản ví dụ hai trạng thái dùng chung tham số, mạng mục tiêu với $C=10$ chỉ hạ hệ số tăng mỗi bước từ $1{,}08$ xuống khoảng $1{,}043$ (Ví dụ 08.24). Vì vậy tác dụng của bộ nhớ phát lại và mạng mục tiêu được đánh giá bằng thí nghiệm qua nhiều lần chạy độc lập, như thí nghiệm loại bỏ của Mnih và cộng sự (2015, Extended Data Table 3) và thiết kế ở Bài tập 08.3.
+
+Vì thế câu trả lời của chương là có điều kiện. DQN cho một quy trình học $q_*$ từ quan sát thô, trong đó nhãn hồi quy, dữ liệu và đường gradient đều được kiểm soát, nhưng chưa có định lý bảo đảm quy trình đó hội tụ tới $q_*$ (bài giảng gốc, trang 12–34; Sutton và Barto, 2018, §11.3, §16.5). Đích của DQN còn chứa phép cực đại trên ước lượng có nhiễu; Bài 09 xét độ chệch của phép cực đại này và Double DQN.
+
 ### Kiểm tra tổng hợp, thảo luận và đọc thêm
 
 **Kiểm tra tổng hợp (bốn câu).**
@@ -1242,6 +1244,22 @@ mặt nạ terminal, đồng bộ mỗi $C$ bước), điểm nào ghi chú này
 $Z,U$, làm nóng $N_{\mathrm{start}}$, nhịp $F$, autoreset, dừng gradient). Khi
 thực hành trên Atari, chỉ cần giữ hợp đồng tối thiểu: bốn khung → CNN → vector
 $|\mathcal A|$ giá trị hành động.
+
+### Tóm tắt chương
+
+Một bảng giá trị hành động không dùng được khi quan sát là vector liên tục hoặc ảnh: lưới thô cho Lunar Lander đã có $9\,216$ ô trạng thái, và sau $2\,000$ lượt chỉ $1\,896$ ô có mẫu. Chúng ta thay bảng bằng một mạng trả vector $\mathbf q_\theta(o)$, và với Atari, đầu vào là bốn khung $84\times84$ xếp chồng để quan sát gần Markov. Mạng mục tiêu tách tham số tạo đích khỏi tham số được cập nhật: với mini-batch hai mẫu chuyển, đích là $4{,}6$ cho mẫu chưa kết thúc và $-2$ cho mẫu kết thúc, hàm mất mát bằng $1{,}25$, và gradient theo hai dự đoán là $(-1{,}5;\,0{,}5)$. Bộ nhớ phát lại rút mini-batch đều từ $N$ mẫu gần nhất, vì bốn gradient liền nhau với tương quan $0{,}9^k$ chỉ bằng khoảng $1{,}1$ mẫu độc lập. Thuật toán DQN ghép thu thập, lưu, tối ưu và đồng bộ bằng hai bộ đếm; với cấu hình Atari $F=4$, $C=10^4$, mạng mục tiêu đứng yên trong $4\cdot10^4$ bước môi trường. Bộ tối ưu chỉ đổi gradient thành bước tham số: trên hàm $\tfrac12(100\theta_1^2+\theta_2^2)$, RMSprop và Adam đi bước đầu cùng cỡ ở hai tọa độ còn SGD thì không. Tại mỗi mốc đồng bộ, đích của mẫu chưa kết thúc đổi, như $0{,}9$ ở mẫu 1. DQN vẫn có đủ ba yếu tố của bộ ba bất ổn, và trong phản ví dụ hai trạng thái, mạng mục tiêu với $C=10$ chỉ hạ hệ số tăng mỗi bước từ $1{,}08$ xuống khoảng $1{,}043$, nên thuật toán không có bảo đảm hội tụ tổng quát.
+
+**Công thức cần nhớ.**
+
+$$
+\begin{aligned}
+y_i&=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a'),\\
+L_B(\theta)&=\frac1b\sum_{i=1}^b\bigl(\operatorname{sg}(y_i)-Q_\theta(O_i,A_i)\bigr)^2,\\
+\Delta y_i&=\gamma(1-Z_i)\Bigl[\max_{a'}Q_\theta(O'_i,a')-\max_{a'}Q_{\theta^-}(O'_i,a')\Bigr].
+\end{aligned}
+$$
+
+**Giả thiết hay bị quên.** Mặt nạ chỉ chứa $Z$, không chứa $U$. Quan sát lưu trong mẫu chuyển là quan sát cuối của lượt, không phải quan sát đầu của lượt mới sau khi môi trường tự đặt lại. Đích là hằng theo $\theta$ khi lấy gradient. Đồng bộ đếm bước tối ưu, không đếm bước môi trường. Bộ nhớ phát lại không tạo mẫu độc lập cùng phân phối cố định. Không có bảo đảm hội tụ tổng quát cho DQN, nên tác dụng của mỗi cơ chế được đánh giá bằng thí nghiệm qua nhiều lần chạy.
 
 ---
 
