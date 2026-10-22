@@ -776,3 +776,7 @@ Lượt kiểm sau bàn giao phát hiện trang viewer ghi chú cuộn ngang to�
 ### Sửa CSS chung: mũi tên điều hướng lên (2026-10-22)
 
 Mũi tên lên của Reveal (`controlsLayout:"edges"`, giữa mép trên) đè tiêu đề trên 10 trang đầy của deck 08 (và 4–13 trang ở các deck khác). Thêm quy tắc trong `lecture-slide.css` (media ≥ 500 px, cùng điều kiện với `reveal.css`) chuyển mũi tên lên xuống mép dưới, cạnh mũi tên xuống; chức năng, hướng và mũi tên trái/phải giữ nguyên (Agent `general-purpose`, `claude-opus-5-5`, high; điều phối viên duyệt). Đo 12 deck và template: trang mũi tên lên đè tiêu đề về 0 ở mọi deck; tập trang có mũi tên chạm nội dung sau sửa là tập con của trước sửa; không lỗi console; nhấp chuột và phím mũi tên chuyển đúng hướng. Điều phối viên chạy lại `navoverlap.py` cho deck 08: 0 trang đè; xem ảnh `L08-K1`.
+
+### Ký duyệt cuối của điều phối viên (2026-10-22)
+
+Điều phối viên tự chạy kiểm toàn deck sau mọi commit: `check.py` 60/60 trang ở 1600×900 và 390×844 — 0 lỗi console/trang, 0 tài nguyên hỏng hay ngoài mạng, 0 `.katex-error`, 0 tràn; `navoverlap.py` 0 trang mũi tên đè tiêu đề; 60 `data-slide-id` duy nhất, 60 khối ghi chú, 6 trang tiêu đề mạch (`mach-2`…`mach-7`), không `<style>` cục bộ; 0 lần "Trang này", "Đáp án", "bộ ba nguy hiểm", "như ví dụ trước", "phần trước", "Nhấn mạnh", "Mời", 0 mã trang trong ghi chú; đã xem ảnh `L08-M4T`, `L08-K4`, `X03b`. HEAD = origin/main = `504532b` trước commit này. Kết luận: đợt sửa Bài 08 hoàn tất.
