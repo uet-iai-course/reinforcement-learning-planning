@@ -722,10 +722,10 @@ Trước các bước lặp, chúng ta cố định đầu vào, đầu ra và t
 
 **Lặp** khi $t<T$:
 
-1. Chọn $A_t$ theo quy tắc $\epsilon_{\mathrm{exp}}$-tham lam từ $Q_\theta(O_t,\cdot)$.
-2. Bước môi trường; nhận $R_{t+1}$, hai cờ $Z,U$, quan sát trả về và thông tin API.
-3. Xác định quan sát của chuyển tiếp: nếu giao diện tự đặt lại môi trường và cung cấp `final_observation` trong thông tin trả về, dùng quan sát cuối đó; nếu không, dùng quan sát do bước môi trường trả về; lưu vào $\mathcal D$.
-4. Nếu cần reset mà API chưa tự reset, gọi reset; gán quan sát bắt đầu vòng kế; tăng $t\leftarrow t+1$.
+1. Chọn $A_t$ theo quy tắc $\epsilon_{\mathrm{exp}}$-tham lam từ $Q_\theta(O_t,\cdot)$, trong đó $O_t$ là quan sát hiện hành: với xác suất $\epsilon_{\mathrm{exp}}$ chọn đều một hành động trong $\mathcal A$, ngược lại chọn một hành động trong $\arg\max_aQ_\theta(O_t,a)$.
+2. Thực hiện $A_t$; nhận $R_{t+1}$, hai cờ $Z_{t+1}$, $U_{t+1}$ và quan sát trả về.
+3. Lưu mẫu chuyển $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$ vào $\mathcal D$, trong đó $O_{t+1}$ là quan sát cuối của mẫu chuyển, lấy trước mọi lần đặt lại; khi $\lvert\mathcal D\rvert=N$, mẫu mới ghi đè mẫu cũ nhất.
+4. Nếu $Z_{t+1}\lor U_{t+1}=1$: đặt lại môi trường; quan sát hiện hành của bước kế là quan sát đầu lượt mới. Nếu không, quan sát hiện hành của bước kế là $O_{t+1}$. Tăng $t\leftarrow t+1$.
 5. Nếu $|\mathcal D|\ge N_{\mathrm{start}}$ và $t\bmod F=0$ (kiểm sau khi tăng $t$): lấy đều mini-batch từ $\mathcal D$; gather $q_i=Q_\theta(O_i,A_i)$; trong no-grad tính $y_i$; tính MSE; cập nhật $\theta$; $k_{\mathrm{opt}}\leftarrow k_{\mathrm{opt}}+1$.
 6. Sau cập nhật, nếu $k_{\mathrm{opt}}\bmod C=0$ thì $\theta^-\leftarrow\theta$.
 :::
@@ -750,6 +750,8 @@ Bảng sau ghi giá trị đầu vào mà Mnih và cộng sự (2015, Extended D
 | $C$ | số bước tối ưu giữa hai lần đồng bộ | $10^4$ |
 
 Với các giá trị này, khi vòng tối ưu đã chạy, $\theta^-$ đứng yên trong $F\cdot C=4\cdot10^4$ bước môi trường (Ví dụ 08.14). Lịch giảm dần của $\epsilon_{\mathrm{exp}}$ không làm hỏng Mệnh đề 08.8: xác suất thăm dò tại bước $t$ là một hàm của $t$, nên hành vi vẫn chỉ phụ thuộc lịch sử tới bước $t$.
+
+Bốn bước đầu của vòng lặp là vòng thu thập. Bước 1 dùng mạng trực tuyến hiện hành, nên hành vi đổi theo từng bước tối ưu. Bước 3 đòi $O_{t+1}$ là quan sát cuối của chính mẫu chuyển. Khi môi trường tự đặt lại sau bước cuối của một lượt, quan sát trả về có thể đã là quan sát đầu của lượt mới, còn quan sát cuối nằm trong thông tin phụ mà môi trường trả kèm; tên trường của thông tin này phụ thuộc thư viện và phiên bản. Lưu nhầm quan sát đầu lượt mới không gây sai ở mẫu kết thúc, vì $Z_{t+1}=1$ và mặt nạ xóa phần bootstrap. Ở mẫu bị cắt ngắn, $Z_{t+1}=0$ và $U_{t+1}=1$, đích $R_{t+1}+\gamma\max_{a'}Q_{\theta^-}(O_{t+1},a')$ khi đó bootstrap từ một quan sát không nối với $O_t$. Bước 4 đặt lại khi $Z_{t+1}\lor U_{t+1}=1$, trong khi đích chỉ dùng $1-Z$ (Pardo và cộng sự 2018). Ở ranh giới lượt, quan sát hiện hành của bước kế là quan sát đầu lượt mới, còn $O_{t+1}$ trong mẫu đã lưu ở bước 3 vẫn là quan sát cuối của lượt cũ; hai quan sát này khác nhau, nên chúng ta không gán lại ký hiệu $O_{t+1}$. Bộ đếm $t$ tăng sau khi lưu, nên khi bước 5 kiểm điều kiện tối ưu, $t$ là số bước môi trường đã hoàn tất và $\lvert\mathcal D\rvert=\min(t,N)$.
 
 **Kiểm tra nhanh.** Cho $N=6$, $b=2$, $N_{\mathrm{start}}=3$, $F=2$. Bước tối ưu đầu tiên chạy khi nào? Sau $k\le6$ bước môi trường, $t=k$ và $\lvert\mathcal D\rvert=k$. Điều kiện ở bước 5 cần $k\ge3$ và $k$ chẵn, nên bước tối ưu đầu tiên chạy khi $t=4$, với $\lvert\mathcal D\rvert=4$.
 
