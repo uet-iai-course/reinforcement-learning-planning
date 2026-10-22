@@ -6,6 +6,22 @@
     color: #B15A2B;
 }
 
+/* Bố cục controlsLayout:"edges" của Reveal đặt mũi tên lên ở giữa mép trên, đè chữ tiêu đề h2
+   trên các trang đầy. Chuyển mũi tên lên xuống mép dưới, đặt cạnh mũi tên xuống thành một cặp
+   ở giữa mép dưới (lên bên trái, xuống bên phải). Hướng mũi tên, chức năng và mũi tên trái/phải
+   giữ nguyên. Cùng điều kiện media với reveal.css: bố cục edges chỉ áp dụng từ 500px. */
+@media screen and (min-width: 500px) {
+    .reveal .controls[data-controls-layout="edges"] .navigate-up {
+        top: auto;
+        bottom: calc(var(--r-controls-spacing) + .3em);
+        margin-left: -3.8em;
+    }
+
+    .reveal .controls[data-controls-layout="edges"] .navigate-down {
+        margin-left: .2em;
+    }
+}
+
 .reveal .progress span {
     background: #B15A2B;
 }
