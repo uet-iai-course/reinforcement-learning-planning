@@ -112,7 +112,7 @@ Chúng ta đi qua bảy phần sau.
 1. Mở đầu: kiến thức tiên quyết, ký hiệu, mục tiêu và bài toán trung tâm (`lec-08-topic-13`, `lec-08-topic-17`).
 2. Mạng giá trị hành động và đích hồi quy: giới hạn của bảng, đầu vào bốn khung Atari, mạng giá trị hành động, mạng mục tiêu, đích có mặt nạ kết thúc, kết thúc và cắt ngắn (`lec-08-topic-01`, `lec-08-topic-16`, `lec-08-topic-02` đến `lec-08-topic-05`).
 3. Bộ nhớ phát lại: tương quan giữa các mẫu chuyển liên tiếp, cơ chế lưu và lấy mẫu đều, dữ liệu khác chính sách, giới hạn (`lec-08-topic-18`, `lec-08-topic-06`, `lec-08-topic-19`, `lec-08-topic-07`).
-4. Hàm mất mát và thuật toán DQN: hàm mất mát trên mini-batch, dừng gradient, vòng huấn luyện, kích thước tensor (`lec-08-topic-08` đến `lec-08-topic-11`).
+4. Hàm mất mát và thuật toán DQN: hàm mất mát trên mini-batch, dừng gradient, vòng huấn luyện, kích thước tensor (`lec-08-topic-09`, `lec-08-topic-08`, `lec-08-topic-10`, `lec-08-topic-11`).
 5. Bộ tối ưu theo gradient: SGD, RMSprop, Adam theo từng tọa độ (`lec-08-topic-14`).
 6. Bất ổn và phạm vi bảo đảm của DQN: hai nguồn bất ổn, độ thay đổi của đích khi đồng bộ, bộ ba bất ổn (`lec-08-topic-12`).
 7. Tổng kết và chuyển tiếp: kết quả và giả thiết, bài tập tổng hợp, câu hỏi tự kiểm tra (`lec-08-topic-15`).
@@ -587,7 +587,38 @@ Ba điều này có ba nguồn khác nhau. Điều thứ nhất đến từ vi�
 
 Ở phần 3, chúng ta đã có bốn kết quả. Mẫu chuyển liền nhau tương quan, nên mini-batch liên tiếp có cỡ mẫu hiệu dụng nhỏ: bốn mẫu với tương quan $0{,}9^k$ chỉ tương đương khoảng $1{,}1$ mẫu độc lập (Ví dụ 08.9). Bộ nhớ phát lại là bộ đệm vòng giữ $N$ mẫu gần nhất, mini-batch gồm $b$ lần rút đều (Định nghĩa 08.7), và mỗi mẫu được dùng lại trung bình khoảng $8$ lần với các giá trị của DQN gốc. Đích một bước của mỗi mẫu có kỳ vọng $(\mathcal TQ_{\theta^-})(O_i,A_i)$ dù mẫu do phiên bản hành vi nào sinh ra, nên không cần tỉ số lấy mẫu quan trọng (Mệnh đề 08.8). Cuối cùng, bộ nhớ không tạo mẫu độc lập cùng một phân phối cố định, không làm phân phối dữ liệu đứng yên, và không đem lại bảo đảm hội tụ (Nhận xét 08.9). Đến đây chúng ta có, cho mỗi bước tối ưu, một mini-batch $b$ mẫu với đích $y_i$ cố định giữa hai lần đồng bộ, nhưng chưa có cách biến mini-batch đó thành một bước cập nhật $\theta$. Ở phần 4, chúng ta viết hàm mất mát trên mini-batch, cho gradient chỉ đi qua dự đoán $Q_\theta(O_i,A_i)$ bằng phép dừng gradient, rồi ghép thu thập, lưu, rút mẫu, tối ưu và đồng bộ thành thuật toán DQN đầy đủ.
 
-## Hàm mất mát, vòng huấn luyện và bất ổn
+## 4. Hàm mất mát và thuật toán DQN
+
+<!-- note-topic-id: lec-08-topic-09 -->
+### Mất mát và gradient của batch
+
+**Vấn đề.** Cần viết loss và gradient với hệ số đúng để kiểm tra dấu cập nhật.
+
+**Trực quan.** MSE trung bình trên batch; gradient theo từng $q_i$ tỉ lệ với sai
+số $q_i - y_i$.
+
+**Ví dụ.** Với batch $B$:
+
+$$L_B(\theta)=\frac{1}{b}\sum_{i=1}^{b}\bigl(y_i-Q_\theta(O_i,A_i)\bigr)^2,
+\qquad \theta\leftarrow\theta - \eta\nabla_\theta L_B(\theta).$$
+
+**Hình thức.** Với $q_i = Q_\theta(O_i,A_i)$ và $y_i$ như chủ đề 03, có mặt nạ
+theo chủ đề 04:
+
+$$\nabla_\theta L_B=\frac{2}{b}\sum_{i=1}^b(q_i-y_i)\,\nabla_\theta q_i.$$
+
+Tương đương, $\partial L_B/\partial q_i=(2/b)(q_i-y_i)$; quy tắc dây chuyền
+nhân đại lượng này với $\nabla_\theta q_i$ rồi cộng theo lô.
+
+Hệ số $\tfrac{2}{b}$ đến từ đạo hàm bình phương và phép lấy trung bình. Dấu của
+$(q_i - y_i)$ quyết định $q_i$ tăng hay giảm dưới một bước gradient descent nhỏ:
+sai số dương ($q_i > y_i$) làm $q_i$ giảm; sai số âm làm $q_i$ tăng.
+
+**Ứng dụng và giới hạn.** Loss giảm trên batch không đồng nghĩa return đánh giá
+tăng. MSE nhạy với sai số lớn; Huber là lựa chọn thực hành khác.
+
+**Kiểm tra nhanh.** Với một mẫu, $\partial L/\partial q_i$ bằng gì? —
+$\tfrac{2}{b}(q_i - y_i)$; với $b=2$, hệ số hiệu dụng là $(q_i-y_i)$.
 
 <!-- note-topic-id: lec-08-topic-08 -->
 ### Gather và dừng gradient ở đích
@@ -620,37 +651,6 @@ thực tế. Lỗi phổ biến: quên dừng gradient khiến gradient chảy v
 **Kiểm tra nhanh.** Nếu bỏ $\operatorname{sg}$ quanh $y_i$ và hai mạng chia sẻ
 $\theta$, điều gì xảy ra? — Gradient đổi cả dự đoán lẫn nhãn trong cùng một bước;
 vòng phản hồi di động trở lại.
-
-<!-- note-topic-id: lec-08-topic-09 -->
-### Mất mát và gradient của batch
-
-**Vấn đề.** Cần viết loss và gradient với hệ số đúng để kiểm tra dấu cập nhật.
-
-**Trực quan.** MSE trung bình trên batch; gradient theo từng $q_i$ tỉ lệ với sai
-số $q_i - y_i$.
-
-**Ví dụ.** Với batch $B$:
-
-$$L_B(\theta)=\frac{1}{b}\sum_{i=1}^{b}\bigl(y_i-Q_\theta(O_i,A_i)\bigr)^2,
-\qquad \theta\leftarrow\theta - \eta\nabla_\theta L_B(\theta).$$
-
-**Hình thức.** Với $q_i = Q_\theta(O_i,A_i)$ và $y_i$ như chủ đề 03, có mặt nạ
-theo chủ đề 04:
-
-$$\nabla_\theta L_B=\frac{2}{b}\sum_{i=1}^b(q_i-y_i)\,\nabla_\theta q_i.$$
-
-Tương đương, $\partial L_B/\partial q_i=(2/b)(q_i-y_i)$; quy tắc dây chuyền
-nhân đại lượng này với $\nabla_\theta q_i$ rồi cộng theo lô.
-
-Hệ số $\tfrac{2}{b}$ đến từ đạo hàm bình phương và phép lấy trung bình. Dấu của
-$(q_i - y_i)$ quyết định $q_i$ tăng hay giảm dưới một bước gradient descent nhỏ:
-sai số dương ($q_i > y_i$) làm $q_i$ giảm; sai số âm làm $q_i$ tăng.
-
-**Ứng dụng và giới hạn.** Loss giảm trên batch không đồng nghĩa return đánh giá
-tăng. MSE nhạy với sai số lớn; Huber là lựa chọn thực hành khác.
-
-**Kiểm tra nhanh.** Với một mẫu, $\partial L/\partial q_i$ bằng gì? —
-$\tfrac{2}{b}(q_i - y_i)$; với $b=2$, hệ số hiệu dụng là $(q_i-y_i)$.
 
 <!-- note-topic-id: lec-08-topic-10 -->
 ### Vòng DQN: hai đồng hồ $t$ và $k_{\mathrm{opt}}$
@@ -722,6 +722,8 @@ tensor, không phải đặc tả tái lập kết quả.
 
 **Kiểm tra nhanh.** Nếu $A$ có dạng $[b,1]$ mà quên squeeze, gather có thể tạo gì?
 — Tensor $[b,b]$ do broadcasting; phải squeeze về $[b]$ trước khi tính sai số.
+
+## Mạng mục tiêu và bất ổn
 
 <!-- note-topic-id: lec-08-topic-12 -->
 ### Mạng mục tiêu và các nguồn bất ổn
