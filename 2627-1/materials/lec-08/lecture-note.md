@@ -1146,26 +1146,36 @@ Một nhầm lẫn thường gặp là so hệ số mỗi chu kỳ $1{,}521$ v�
 <!-- note-topic-id: lec-08-topic-15 -->
 ### Kết quả và giả thiết của bài
 
-Hợp đồng của một bản DQN đúng gồm sáu điểm kiểm tra:
+Chúng ta gom các kết quả của phần 2 đến phần 6 vào một bảng. Mỗi hàng đặt một kết quả cạnh giả thiết mà thiếu nó thì công thức sai nghĩa hoặc kết luận vượt quá bằng chứng.
 
-1. **Biểu diễn:** quan sát vào, vector giá trị Q cho tập hành động rời rạc ra;
-   $Q_\theta$ nhận gradient, $Q_{\theta^-}$ tạo đích.
-2. **Chuyển tiếp:** chỉ số nhất quán; phân biệt kết thúc MDP $Z$ với cắt ngắn
-   ngoài mô hình $U$; lưu quan sát cuối của chuyển tiếp khi môi trường tự reset.
-3. **Đích:** có mặt nạ $(1-Z)$, mạng mục tiêu và dừng gradient;
-   $y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a')$.
-4. **Dữ liệu:** replay giảm tương quan và tái sử dụng dữ liệu nhưng không tạo
-   i.i.d. và không bảo đảm hội tụ.
-5. **Đồng bộ:** giữ $\theta^-$ cố định rồi sao chép $\theta^-\leftarrow\theta$ sau
-   bước tối ưu theo chu kỳ $C$; hai bộ đếm $t$ và $k_{\mathrm{opt}}$ tách biệt.
-6. **Kết luận:** đánh giá thực nghiệm qua nhiều lần chạy độc lập; không suy ra hội
-   tụ tổng quát. Bộ ba bất ổn — xấp xỉ hàm, bootstrap, dữ liệu khác chính sách —
-   vẫn còn trong DQN; replay và mạng mục tiêu giảm nhẹ hai biểu hiện trực tiếp
-   (tương quan, mục tiêu di động) nhưng không loại bỏ nguyên nhân cấu trúc.
+| Kết quả | Giả thiết không được bỏ | Công thức hoặc thuật toán |
+|---|---|---|
+| Mạng giá trị hành động (Định nghĩa 08.1) | $\mathcal A$ hữu hạn; quan sát đủ Markov (với Atari: bốn khung xếp chồng, Nhận xét 08.2) | $\mathbf q_\theta(o)\in\mathbb R^{\lvert\mathcal A\rvert}$, $Q_\theta(o,a)=[\mathbf q_\theta(o)]_a$ |
+| Mạng mục tiêu và đồng bộ (Định nghĩa 08.3) | $\theta^-$ cùng kiến trúc, không nhận gradient; đồng bộ sau bước tối ưu, khi $k_{\mathrm{opt}}$ vừa tăng là bội của $C$ | $\theta^-\leftarrow\theta$ khi $k_{\mathrm{opt}}\bmod C=0$ |
+| Đích hồi quy (Định nghĩa 08.4, 08.6) | $Z_i$ chỉ ghi kết thúc của MDP; cắt ngắn $U_i=1$ vẫn bootstrap | $y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a')$ |
+| Bộ nhớ phát lại (Định nghĩa 08.7, Nhận xét 08.9) | rút đều; tối ưu chỉ khi $\lvert\mathcal D\rvert\ge N_{\mathrm{start}}$ | giảm tương quan ngắn hạn; mẫu không độc lập, phân phối của $\mathcal D$ đổi theo hành vi |
+| Đích không cần tỉ số lấy mẫu quan trọng (Mệnh đề 08.8) | đích một bước; quan sát đủ Markov, động lực không đổi theo thời gian; $\theta^-$ cố định | $\mathbb E[y_i\mid O_i,A_i]=(\mathcal TQ_{\theta^-})(O_i,A_i)$ với mọi hành vi đã sinh mẫu |
+| Hàm mất mát và gradient (Định nghĩa 08.10, 08.12) | đích trong $\operatorname{sg}$; $q_i$ là giá trị của hành động đã lưu $A_i$ | $L_B=\tfrac1b\sum_i(y_i-q_i)^2$, $\nabla_\theta L_B=\tfrac2b\sum_i(q_i-y_i)\nabla_\theta q_i$ |
+| Thuật toán DQN (Thuật toán 08.13) | hai bộ đếm $t$, $k_{\mathrm{opt}}$ tách biệt; cập nhật, tăng $k_{\mathrm{opt}}$, rồi mới kiểm $C$ | thu thập, lưu, rút mini-batch, cập nhật, đồng bộ |
+| Bộ tối ưu (Định nghĩa 08.15–08.18) | $g_j$ tính tại $\theta_{j-1}$ trên $B_j$; $j=k_{\mathrm{opt}}$ sau khi tăng | $\theta_j=\operatorname{Update}(\theta_{j-1},g_j)$: SGD, RMSprop, Adam |
+| Độ thay đổi của đích (Nhận xét 08.20) | ngay sau $\theta^-\leftarrow\theta$, với $\theta^-$ trước mốc | $\Delta y_i=\gamma(1-Z_i)\bigl[\max_{a'}Q_\theta(O'_i,a')-\max_{a'}Q_{\theta^-}(O'_i,a')\bigr]$ |
+| Phạm vi bảo đảm (Nhận xét 08.21) | đủ xấp xỉ hàm, bootstrap, học khác chính sách | không có bảo đảm hội tụ tổng quát; hai cơ chế không bỏ yếu tố nào |
 
-Mỗi mục trên chặn một lỗi có thể làm thuật toán sai nghĩa hoặc làm kết luận vượt quá
-bằng chứng; dùng danh sách này như kiểm tra cuối trước khi đọc hoặc viết một cài
-đặt DQN.
+Bảng đọc theo hàng. Ba hàng đầu xác định nhãn hồi quy của mỗi mẫu chuyển; hai hàng kế xác định dữ liệu đưa vào bước tối ưu và lý do đích không cần trọng số; ba hàng tiếp theo xác định một bước cập nhật trong thuật toán; hai hàng cuối nói đích đổi bao nhiêu tại mốc đồng bộ và thuật toán được bảo đảm đến đâu. Các cột giả thiết là chỗ thường sai trong cài đặt: gộp $Z$ với $U$ vào mặt nạ, để gradient đi qua đích, lấy cực đại của $\mathbf q_\theta(O_i)$ thay cho giá trị của $A_i$, hoặc kiểm $C$ trước khi tăng $k_{\mathrm{opt}}$.
+
+**Tóm tắt chương.** Một bảng giá trị hành động không dùng được khi quan sát là vector liên tục hoặc ảnh: lưới thô cho Lunar Lander đã có $9\,216$ ô trạng thái, và sau $2\,000$ lượt chỉ $1\,896$ ô có mẫu. Chúng ta thay bảng bằng một mạng trả vector $\mathbf q_\theta(o)$, và với Atari, đầu vào là bốn khung $84\times84$ xếp chồng để quan sát gần Markov. Mạng mục tiêu tách tham số tạo đích khỏi tham số được cập nhật: với mini-batch hai mẫu chuyển, đích là $4{,}6$ cho mẫu chưa kết thúc và $-2$ cho mẫu kết thúc, hàm mất mát bằng $1{,}25$, và gradient theo hai dự đoán là $(-1{,}5;\,0{,}5)$. Bộ nhớ phát lại rút mini-batch đều từ $N$ mẫu gần nhất, vì bốn gradient liền nhau với tương quan $0{,}9^k$ chỉ bằng khoảng $1{,}1$ mẫu độc lập. Thuật toán DQN ghép thu thập, lưu, tối ưu và đồng bộ bằng hai bộ đếm; với cấu hình Atari $F=4$, $C=10^4$, mạng mục tiêu đứng yên trong $4\cdot10^4$ bước môi trường. Bộ tối ưu chỉ đổi gradient thành bước tham số: trên hàm $\tfrac12(100\theta_1^2+\theta_2^2)$, RMSprop và Adam đi bước đầu cùng cỡ ở hai tọa độ còn SGD thì không. Tại mỗi mốc đồng bộ, đích của mẫu chưa kết thúc đổi, như $0{,}9$ ở mẫu 1. DQN vẫn có đủ ba yếu tố của bộ ba bất ổn, và trong phản ví dụ hai trạng thái, mạng mục tiêu với $C=10$ chỉ hạ hệ số tăng mỗi bước từ $1{,}08$ xuống khoảng $1{,}043$, nên thuật toán không có bảo đảm hội tụ tổng quát.
+
+**Công thức cần nhớ.**
+
+$$
+\begin{aligned}
+y_i&=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(O'_i,a'),\\
+L_B(\theta)&=\frac1b\sum_{i=1}^b\bigl(\operatorname{sg}(y_i)-Q_\theta(O_i,A_i)\bigr)^2,\\
+\Delta y_i&=\gamma(1-Z_i)\Bigl[\max_{a'}Q_\theta(O'_i,a')-\max_{a'}Q_{\theta^-}(O'_i,a')\Bigr].
+\end{aligned}
+$$
+
+**Giả thiết hay bị quên.** Mặt nạ chỉ chứa $Z$, không chứa $U$. Quan sát lưu trong mẫu chuyển là quan sát cuối của lượt, không phải quan sát đầu của lượt mới sau khi môi trường tự đặt lại. Đích là hằng theo $\theta$ khi lấy gradient. Đồng bộ đếm bước tối ưu, không đếm bước môi trường. Bộ nhớ phát lại không tạo mẫu độc lập cùng phân phối cố định. Không có bảo đảm hội tụ tổng quát cho DQN, nên tác dụng của mỗi cơ chế được đánh giá bằng thí nghiệm qua nhiều lần chạy.
 
 ### Kiểm tra tổng hợp, thảo luận và đọc thêm
 
