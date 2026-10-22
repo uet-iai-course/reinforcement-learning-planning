@@ -625,3 +625,36 @@ Kết quả rà: 0 chặn bàn giao, 0 nghiêm trọng, 7 trung bình, 14 nhẹ;
 | S45 | `L08-M7T` | chấp nhận (dòng dẫn rút gọn) | diff; `#/7` mở đúng trang |
 - Bước S46 (`L08-34`, `L08-34b` mới, biên tập viên): "Kết quả và giả thiết của bài", bảng `Kết quả | Giả thiết không được bỏ | Công thức hoặc thuật toán` tách hai trang cùng tiêu đề (bốn và ba hàng; thêm hàng mạng giá trị hành động và bộ tối ưu); dòng kết hai cơ chế không bỏ yếu tố nào. Ghi chú diễn giả bỏ mã trang "L08-02" (phát hiện nghiêm trọng đã đóng), "Trang kết dùng như…", "Hợp đồng". 69 và 68 âm tiết (trần 80), đáy 683 và 654 px. Ghi chú bài giảng: bảng mười hàng, tóm tắt chương tám câu có số, công thức cần nhớ, giả thiết hay bị quên. `no-ai-slop` Edit, tự kiểm theo `eval.md`: đạt. Chờ điều phối viên duyệt.
 | S46 | `L08-34`, `L08-34b` (mới) | chấp nhận (hai hàng thêm; dạng gọn của $\Delta y_i$; ngoại lệ dòng của bảng tổng kết); mã trang "L08-02" trong ghi chú đã bỏ | diff; xem ảnh 1600 `L08-34` |
+
+### Rà lại mạch 6 (bước R6)
+
+| vai | loại tác tử | mô hình | mức suy luận | ghi tệp |
+|---|---|---|---|---|
+| Rà lại mạch 6 (toán, mạch, mật độ, `no-ai-slop` Detect) | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Biên tập R6 | Agent `general-purpose` (biên tập viên của đợt sửa) | `claude-opus-5-5` | high | có |
+
+Kết quả rà: 0 chặn bàn giao, 1 nghiêm trọng, 5 trung bình, 12 nhẹ; điều phối viên chấp nhận toàn bộ 18 mục (tệp `recheck/R6-decisions.md` trong scratchpad phiên). Bảng dưới ghi trạng thái sau bước R6.
+
+| mức độ | trang chiếu | vấn đề | đề xuất sửa | trạng thái | quyết định |
+|---|---|---|---|---|---|
+| nghiêm trọng (1) | `L08-30`, ghi chú `L08-30`, note Nhận xét 08.21 (Phạm vi), note mục 1 (tr. 9–11), storyboard | "$q_*$ thuộc lớp hàm và dữ liệu bao phủ" được nêu như giả thiết đủ cho bảo đảm; ví dụ của Baird có cả hai mà vẫn phân kỳ | Câu đề xuất cho mặt trang, ghi chú, note | đã sửa ở R6; mặt trang "và" thành dấu phẩy để giữ 60 âm tiết; `L08-34b` và tóm tắt chương không có câu cùng lỗi | chấp nhận |
+| trung bình (2) | `L08-29`, `target-sync-step.svg` | Dữ kiện chưa nói $\theta^-$, $\theta$ là của thời điểm nào; nhãn phải ghi $Q_{\theta^-}$ | Dòng dữ kiện mới; nhãn $\max_{a'}Q_\theta(O'_1,a')=5$ | đã sửa ở R6 (`gen/sync.py`; `desc`, alt ở deck và note) | chấp nhận |
+| trung bình (3) | `L08-30` | "Kết luận:" có hai dấu hai chấm | Câu đề xuất | đã sửa ở R6 | chấp nhận |
+| trung bình (4) | `X03b` | Lời giải không nêu dự đoán của hai nhánh; dòng kết chung chung | Sáu dòng đề xuất | đã sửa ở R6, rút chữ để giữ 60 âm tiết | chấp nhận |
+| trung bình (5) | note §6, đoạn Mệnh đề 07.37 | Lập luận "không có tương quan" chưa nói cập nhật tất định và trùng cập nhật kỳ vọng | Câu đề xuất | đã sửa ở R6 | chấp nhận |
+| trung bình (6) | note Bài tập 08.3 Câu (b) | Dự đoán $C=1$ chỉ nêu dao động | Câu đề xuất (Ví dụ 08.5 hội tụ, Ví dụ 08.24 tăng $1{,}08$) | đã sửa ở R6 | chấp nhận |
+| nhẹ (7) | `L08-27` hàng 2, ghi chú | Nguồn thứ hai chưa gọi tên bootstrap | "Đích bootstrap theo tham số đang học"; câu ghi chú | đã sửa ở R6 | chấp nhận |
+| nhẹ (8) | `L08-27` "Nhu cầu:" | "Nhu cầu:" là một khẳng định, không nêu nhu cầu | Câu đề xuất | đã sửa ở R6 | chấp nhận |
+| nhẹ (9) | `L08-27` ô Ví dụ | "4 mẫu" chưa nói liền nhau | Câu đề xuất | đã sửa ở R6, bỏ "tương đương" để giữ trần 80 | chấp nhận |
+| nhẹ (10) | `L08-29` "Diễn giải:" | "sáu thành phần đã lưu" chưa ghi ký hiệu | Ghi bộ sáu thành phần | đã sửa ở R6 dạng $(O_1,\dots,U_1)$ đã lưu (dạng đầy đủ tràn đáy 725 px) | chấp nhận |
+| nhẹ (11) | `L08-30b` dòng 1 | Chưa nói khác chính sách | Câu đề xuất | đã sửa ở R6 | chấp nhận |
+| nhẹ (12) | `L08-30b` "Diễn giải:" | Thiếu điều kiện $w^-\ne0$ | Câu đề xuất | đã sửa ở R6 | chấp nhận |
+| nhẹ (13) | `deadly-triad.svg` | Hộp phải thiếu "hành vi" | "hành vi $\epsilon_{\mathrm{exp}}$-tham lam; mẫu cũ trong $\mathcal D$" | đã sửa ở R6 (vừa hộp) | chấp nhận |
+| nhẹ (14) | note Bài tập 08.3 Câu (a) | "Mỗi mẫu chỉ được dùng một lần" chưa chính xác | Câu đề xuất ($b/F$ bước tối ưu) | đã sửa ở R6 | chấp nhận |
+| nhẹ (15) | note §6 | Bốn đoạn cùng mở bằng "Một nhầm lẫn thường gặp là" | Đổi cách mở hai đoạn | đã sửa ở R6 (đoạn mốc đồng bộ và đoạn hai trạng thái) | chấp nhận |
+| nhẹ (16) | ghi chú `L08-30b` | Chưa nói mục đích của ví dụ | Câu mở đề xuất | đã sửa ở R6; bỏ câu "Phân phối cập nhật chỉ gồm một chuyển…" trùng dòng 1 | chấp nhận |
+| nhẹ (17) | `X03` "Câu hỏi:" | "các đại lượng trong thẻ" chỉ vào bố cục | "các đại lượng của mỗi nhánh" | đã sửa ở R6 | chấp nhận |
+| nhẹ (18) | `outline.md` tr. 12–13, tr. 29 | Còn "bộ ba nguy hiểm", "nối bất ổn với deadly triad" | "Hai nguồn bất ổn; bộ ba bất ổn xét riêng ở `L08-30`." | đã sửa ở R6 | chấp nhận |
+
+- Bước R6 (biên tập viên): áp dụng 18 mục. Trang đổi: `L08-27`, `L08-29`, `L08-30`, `L08-30b`, `X03`, `X03b` (mặt trang và ghi chú); hình `target-sync-step.svg`, `deadly-triad.svg`. Ghi chú bài giảng: Phạm vi của Nhận xét 08.21 và đoạn tr. 9–11 (lỗi nghiêm trọng đã đóng), đoạn Mệnh đề 07.37, Bài tập 08.3 Câu (a), (b), hai đoạn đổi cách mở, alt hình. `outline.md`: hai dòng ánh xạ nguồn. `storyboard.md`: bảng hành trình mạch 6, bảng số đo "Rà lại mạch 6 (bước R6)", sửa câu giả thiết cấu trúc ở mục `L08-30`. Kiểm: `L08-34b` và tóm tắt chương không có câu cùng lỗi. `check.py` mọi trang mạch 6 và `L08-34b` ở 1600×900, 390×844: không tràn, không lỗi; viewer 0 lỗi KaTeX. `no-ai-slop` Edit, tự kiểm theo `eval.md`: đạt. Chờ điều phối viên duyệt.
+| R6 | mạch 6 (rà lại) | chấp nhận; phát hiện nghiêm trọng về giả thiết cấu trúc (ví dụ của Baird) đã đóng; sáu chỗ rút chữ để giữ trần chấp nhận | diff; `check.py` mạch 6; xem ảnh `L08-30` |

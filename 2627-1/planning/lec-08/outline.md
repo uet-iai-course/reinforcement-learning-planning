@@ -129,7 +129,7 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | 7 | `L08-05` | sửa | Giới hạn kết luận hội tụ vào dạng bảng với giả thiết rõ. |
 | 8–9 | `L08-06` | gộp, lược | Bỏ cận mẫu thiếu mô hình định lý; giữ vấn đề quy mô. |
 | 10–11 | `L08-03`, `L08-06` | gộp, lược | Bỏ cận tuyến tính thiếu cấu trúc MDP và thuật toán cụ thể. |
-| 12–13 | `L08-27`, `L08-30` | gộp, sửa | Nối bất ổn với bộ ba nguy hiểm; bỏ cách gọi quảng bá. |
+| 12–13 | `L08-27`, `L08-30` | gộp, sửa | Hai nguồn bất ổn; bộ ba bất ổn xét riêng ở `L08-30`. |
 | 14–15 | `L08-03`, `L08-07` | gộp | Giới hạn bảng và giao diện DQN. |
 | 16 | `L08-07`–`L08-10`, `L08-17` | tách, sửa | Đặt phản ví dụ mục tiêu di động trước hai mạng; thêm mặt nạ, batch và dừng gradient. |
 | 17 | `L08-07`, `L08-31` | gộp | MLP cho vector, CNN cho ảnh. |
@@ -143,7 +143,7 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | 25 | `L08-24` | giữ, sửa | Nêu phép toán theo tọa độ và quy ước $\epsilon_{\mathrm{opt}}$. |
 | 26 | `L08-25` | giữ, sửa | Sửa mẫu số Adam và bổ sung khởi tạo. |
 | 27–28 | `L08-26` | gộp, sửa | Không tuyên bố phương pháp thắng tuyệt đối hay hội tụ nhanh. |
-| 29 | `L08-07`, `L08-27` | tách, sắp xếp lại | Đặt phản ví dụ mục tiêu di động trước mạng mục tiêu; nối bất ổn với deadly triad. |
+| 29 | `L08-07`, `L08-27` | tách, sắp xếp lại | Đặt phản ví dụ mục tiêu di động trước mạng mục tiêu. Hai nguồn bất ổn; bộ ba bất ổn xét riêng ở `L08-30`. |
 | 30 | `L08-14`, `L08-28` | sửa | Replay giảm tương quan, không tạo i.i.d. |
 | 31 | `L08-29` | giữ, sửa | Mục tiêu đổi ở mốc đồng bộ. |
 | 32 | `L08-13`–`L08-14` | gộp, sửa | Cơ chế và giới hạn của replay. |

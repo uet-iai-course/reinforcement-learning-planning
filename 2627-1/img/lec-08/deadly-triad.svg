@@ -12,7 +12,7 @@
 <text x="550.0" y="126" font-size="28" text-anchor="middle">chứa <tspan font-style="italic">Q</tspan><tspan font-size="20" dy="7" font-style="italic">θ</tspan><tspan font-size="16" dy="-9">−</tspan><tspan dy="2">​</tspan></text>
 <rect x="740" y="6" width="340" height="132" rx="14" fill="#E8F5E9" stroke="#2E7D32" stroke-width="4"/>
 <text x="910.0" y="46" font-size="30" font-weight="700" text-anchor="middle" fill="#263238">Học khác chính sách</text>
-<text x="910.0" y="88" font-size="28" text-anchor="middle"><tspan font-style="italic">ϵ</tspan><tspan font-size="20" dy="7">exp</tspan><tspan dy="-7">​</tspan>-tham lam;</text>
+<text x="910.0" y="88" font-size="28" text-anchor="middle">hành vi <tspan font-style="italic">ϵ</tspan><tspan font-size="20" dy="7">exp</tspan><tspan dy="-7">​</tspan>-tham lam;</text>
 <text x="910.0" y="126" font-size="28" text-anchor="middle">mẫu cũ trong <tspan font-family="'STIX Two Math','Cambria Math','Noto Sans Math',STIXGeneral,serif" font-size="31">𝒟</tspan></text>
 <rect x="350" y="188" width="400" height="64" rx="14" fill="#FFFFFF" stroke="#A33A1F" stroke-width="4"/>
 <text x="550.0" y="231" font-size="30" font-weight="700" text-anchor="middle" fill="#A33A1F">DQN có đủ ba yếu tố</text>
