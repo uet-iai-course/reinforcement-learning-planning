@@ -843,57 +843,13 @@ Trung bình bình phương của bốn phần tử là $\tfrac14(2{,}25+26{,}01+
 
 Đến đây Thuật toán 08.13 đã đầy đủ: đầu vào, hai vòng với hai bộ đếm, đích có mặt nạ và dừng gradient, và kích thước của mọi mảng trong một bước tối ưu. Bài tập 08.2 ở cuối chương kiểm tra các điều kiện này trên một đoạn mã. Bước 8 của thuật toán giao việc biến $\nabla_\theta L_B$ thành bước tham số cho bộ tối ưu; ở phần tiếp theo, chúng ta viết các quy tắc cập nhật của bộ tối ưu.
 
-## Mạng mục tiêu và bất ổn
-
-<!-- note-topic-id: lec-08-topic-12 -->
-### Mạng mục tiêu và các nguồn bất ổn
-
-**Vấn đề.** Nếu $\theta^-$ đổi mỗi bước, đích di động như khi chỉ có một mạng; nếu
-không bao giờ đổi, đích lỗi thời. Cần một nhịp đồng bộ rõ ràng.
-
-**Trực quan.** Giữ $\theta^-$ cố định trong $C$ bước tối ưu, rồi sao chép mạng
-online sau bước tối ưu:
-
-$$k_{\mathrm{opt}}\leftarrow k_{\mathrm{opt}}+1,\qquad
-k_{\mathrm{opt}}\bmod C=0:\ \theta^-\leftarrow\theta.$$
-
-Thứ tự đúng: cập nhật $\theta$, tăng bộ đếm tối ưu, rồi mới kiểm tra đồng bộ.
-
-**Ví dụ — đích nhảy bao nhiêu khi đồng bộ?** Xét ngay sau $\theta^-\leftarrow\theta$:
-
-$$y_i^{\mathrm{new}}-y_i^{\mathrm{old}}
-=\gamma(1-Z_i)\Bigl[\max_{a'}Q_{\theta}(O'_i,a')-\max_{a'}Q_{\theta^-}(O'_i,a')\Bigr].$$
-
-Mẫu cũ trong replay có thể nhận đích mới dù bộ sáu thành phần
-$(O_i,A_i,R_i,O'_i,Z_i,U_i)$ không đổi.
-
-**Hình thức.** Với một chuyển tiếp cố định và $\theta^-$ chưa đổi, $y_i$ cố định.
-Mạng mục tiêu làm chậm đích di động; $C$ là một đánh đổi thực nghiệm.
-
-**Ứng dụng và giới hạn.** Mạng mục tiêu không tạo mục tiêu bất biến vĩnh viễn,
-không bảo đảm hội tụ, và không phải "mạng đánh giá chính sách" — nó chỉ cung cấp
-phần bootstrap. $C$ lớn làm đích ổn định hơn nhưng lỗi thời hơn.
-
-**Kiểm tra nhanh.** Sau đồng bộ, đích của một chuyển tiếp cũ có đổi không? — Có;
-nó được tính lại bằng $\theta^-$ mới tại lần lấy mẫu kế tiếp, dù dữ liệu không đổi.
-
-**Ba nguồn bất ổn cần theo dõi.** Chuyển tiếp liên tiếp có tương quan mạnh; đích
-bootstrap thay đổi theo mạng; và DQN đồng thời dùng xấp xỉ hàm, bootstrap cùng
-dữ liệu lệch chính sách. Sự kết hợp sau thường được gọi là *bộ ba nguy hiểm*.
-Nó có thể gây dao động hoặc phân kỳ trong một số thiết lập, không có nghĩa DQN
-luôn phân kỳ. Bộ nhớ phát lại giảm tương quan ngắn hạn, còn mạng mục tiêu làm
-chậm sự thay đổi của đích. Hai cơ chế này không tạo dữ liệu độc lập, phân phối
-đồng nhất và không cho bảo đảm hội tụ tổng quát.
-
----
-
-## Phần 3 — Bộ tối ưu
+## 5. Bộ tối ưu theo gradient
 
 <!-- note-topic-id: lec-08-topic-14 -->
 ### SGD, RMSprop và Adam theo từng tọa độ
 
-**Vấn đề.** Optimizer nhận gradient của loss và đổi nó thành bước tham số; nó
-không sửa đích hay dữ liệu sai. Ba quy tắc cập nhật phổ biến chuẩn hóa gradient
+**Vấn đề.** Optimizer nhận gradient của loss và đổi nó thành bước tham số;
+lựa chọn bộ tối ưu không đổi công thức đích, cách thu thập dữ liệu hay lớp hàm. Ba quy tắc cập nhật phổ biến chuẩn hóa gradient
 theo những cách khác nhau.
 
 **Hình thức chung.** Với chỉ số cập nhật $j\in\mathbb N_+$ (trùng $k_{\mathrm{opt}}$)
@@ -951,6 +907,50 @@ không tạo bảo đảm hội tụ cho DQN.
 
 **Kiểm tra nhanh.** Optimizer thích nghi có sửa mục tiêu Bellman không? — Không;
 nó chỉ chuẩn hóa gradient theo từng tọa độ, đích và dữ liệu không đổi.
+
+---
+
+## Mạng mục tiêu và bất ổn
+
+<!-- note-topic-id: lec-08-topic-12 -->
+### Mạng mục tiêu và các nguồn bất ổn
+
+**Vấn đề.** Nếu $\theta^-$ đổi mỗi bước, đích di động như khi chỉ có một mạng; nếu
+không bao giờ đổi, đích lỗi thời. Cần một nhịp đồng bộ rõ ràng.
+
+**Trực quan.** Giữ $\theta^-$ cố định trong $C$ bước tối ưu, rồi sao chép mạng
+online sau bước tối ưu:
+
+$$k_{\mathrm{opt}}\leftarrow k_{\mathrm{opt}}+1,\qquad
+k_{\mathrm{opt}}\bmod C=0:\ \theta^-\leftarrow\theta.$$
+
+Thứ tự đúng: cập nhật $\theta$, tăng bộ đếm tối ưu, rồi mới kiểm tra đồng bộ.
+
+**Ví dụ — đích nhảy bao nhiêu khi đồng bộ?** Xét ngay sau $\theta^-\leftarrow\theta$:
+
+$$y_i^{\mathrm{new}}-y_i^{\mathrm{old}}
+=\gamma(1-Z_i)\Bigl[\max_{a'}Q_{\theta}(O'_i,a')-\max_{a'}Q_{\theta^-}(O'_i,a')\Bigr].$$
+
+Mẫu cũ trong replay có thể nhận đích mới dù bộ sáu thành phần
+$(O_i,A_i,R_i,O'_i,Z_i,U_i)$ không đổi.
+
+**Hình thức.** Với một chuyển tiếp cố định và $\theta^-$ chưa đổi, $y_i$ cố định.
+Mạng mục tiêu làm chậm đích di động; $C$ là một đánh đổi thực nghiệm.
+
+**Ứng dụng và giới hạn.** Mạng mục tiêu không tạo mục tiêu bất biến vĩnh viễn,
+không bảo đảm hội tụ, và không phải "mạng đánh giá chính sách" — nó chỉ cung cấp
+phần bootstrap. $C$ lớn làm đích ổn định hơn nhưng lỗi thời hơn.
+
+**Kiểm tra nhanh.** Sau đồng bộ, đích của một chuyển tiếp cũ có đổi không? — Có;
+nó được tính lại bằng $\theta^-$ mới tại lần lấy mẫu kế tiếp, dù dữ liệu không đổi.
+
+**Ba nguồn bất ổn cần theo dõi.** Chuyển tiếp liên tiếp có tương quan mạnh; đích
+bootstrap thay đổi theo mạng; và DQN đồng thời dùng xấp xỉ hàm, bootstrap cùng
+dữ liệu lệch chính sách. Sự kết hợp sau thường được gọi là *bộ ba nguy hiểm*.
+Nó có thể gây dao động hoặc phân kỳ trong một số thiết lập, không có nghĩa DQN
+luôn phân kỳ. Bộ nhớ phát lại giảm tương quan ngắn hạn, còn mạng mục tiêu làm
+chậm sự thay đổi của đích. Hai cơ chế này không tạo dữ liệu độc lập, phân phối
+đồng nhất và không cho bảo đảm hội tụ tổng quát.
 
 ---
 

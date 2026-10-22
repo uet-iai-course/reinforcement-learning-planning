@@ -64,7 +64,7 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 4 | `L08-20` | Kích thước tensor của mini-batch Atari | sửa | "Nhắc lại:" bốn khung $H\times W$, $H=W=84$; hình vẽ lại với $[b,4,H,W]$; dòng kiểu; dòng thiết bị tính | 4.10 (S31) |
 | 4 | `X02` | Bài tập: lỗi cài đặt đích DQN | sửa | Đề: dòng giải nghĩa `step`, `final_obs`; mã lỗi hai phần (thu thập, mini-batch); Câu hỏi năm lỗi | 4.11 (S32) |
 | 4 | `X02b` | Bài tập: lỗi cài đặt đích DQN | thêm (tách lời giải) | "Lời giải:" một dòng tóm năm sửa; mã đã sửa | 4.12 (S32) |
-| 5 | `L08-M5T` | 5. Bộ tối ưu theo gradient | thêm | Trang tiêu đề mạch, điểm vào mạch 5 | chưa có |
+| 5 | `L08-M5T` | 5. Bộ tối ưu theo gradient | thêm | Trang tiêu đề mạch, điểm vào mạch 5 | 5.0 (S33) |
 | 5 | `L08-22` | Vai trò của bộ tối ưu | sửa | Hình chuỗi $B_j\to L_{B_j}\to g_j\to\theta_j$, $j=k_{\mathrm{opt}}$; bỏ dẫn chiếu "bước 8 giả mã" | 5.1 |
 | 5 | `L08-23` | Hạ gradient ngẫu nhiên (SGD) | sửa | Viết đầy đủ tên | 5.2 |
 | 5 | `L08-24` | RMSprop | sửa | Ký hiệu $\odot,\oslash$; Ý nghĩa: | 5.3 |
@@ -493,6 +493,16 @@ Quyết định R1 mục 5 (khó khăn không lồi được hứa ở ghi chú 
 - **Liên kết:** trước là `L08-20` (kích thước mảng); sau là `L08-M5T` (bộ tối ưu theo gradient). Mục tiêu hỗ trợ: mục tiêu 3 (tính hàm mất mát trên mini-batch, truy dấu một vòng DQN) và mục tiêu 1 (phân biệt kết thúc với cắt ngắn).
 - **Mật độ:** trước sửa đề và lời giải chung một trang, đáy 755 px, ghi chú diễn giả 60 âm tiết. Sau sửa `X02`: 41 âm tiết ngoài khối mã (dòng ngữ cảnh 21, hộp câu hỏi 20), khối mã 7 dòng, đáy 674 px, ghi chú diễn giả 67 âm tiết; `X02b`: 13 âm tiết ngoài khối mã, khối mã 9 dòng, đáy 608 px, ghi chú diễn giả 112 âm tiết. Ngoại lệ khối mã và `style` của `pre` ghi ở "Ngoại lệ mật độ".
 - **Ghi chú bài giảng:** "Bài tập 2 —" thành "Bài tập 08.2 (Lỗi cài đặt đích DQN)": đề nêu nghĩa của `step`, `final_obs`, `D`, kiểu của `a`, `z`, `u`, kích thước đầu ra của hai mạng; mã lỗi như trang; năm câu (a)–(e), mỗi câu nêu thêm kích thước hoặc giá trị sai khi $b=2$, $\lvert\mathcal A\rvert=3$; gợi ý dẫn Thuật toán 08.13 và Nhận xét 08.14; lời giải với mã đã sửa và "**Câu (a).**"…"**Câu (e).**" (mẫu bị cắt ngắn bootstrap từ quan sát sai; Ví dụ 08.8 hạ đích $4{,}6$ thành $1$; gradient thừa cho $\theta^-$ hoặc gradient dư khi dùng chung đối tượng; $[2]-[2,3]$ báo lỗi, $[b,b]$ khi $\lvert\mathcal A\rvert=b$; `.max()` lấy trên $6$ phần tử); "**Kiểm tra lại.**" (`1 - z` với `bool`; `.max(1)` quên `.values`; đặt `q` trong `no_grad`). Hai câu dẫn "bài tập sửa lỗi cài đặt" ở mục topic-08 và topic-11 đổi thành "Bài tập 08.2". Số tiếp theo: Bài tập 08.3.
+
+#### `L08-M5T` Trang tiêu đề mạch 5 (bước S33), điểm vào mạch 5
+
+- **Trang muốn nói gì:** mạch 5 "Bộ tối ưu theo gradient" đổi gradient $\nabla_\theta L_B$ của mỗi mini-batch thành bước tham số bằng một quy tắc cập nhật và các siêu tham số của nó.
+- **Phục vụ mạch nào và thế nào:** điểm vào mạch 5; số "5." khớp mục 5 của `L08-02b` và `#/5` (đã thử: `#/5` mở `L08-M5T`, hash `#/mach-5`; bấm mục 5 của `L08-02b` mở `L08-M5T`, hash `#/mach-5`). Dòng dẫn nêu nhu cầu của khái niệm đầu tiên trong mạch (vai trò của bộ tối ưu, `L08-22`), nên trang này là bước vấn đề của cụm "bộ tối ưu".
+- **Vấn đề còn lại trước sửa:** mạch 5 chưa có trang tiêu đề; M4 và M5 cũ là hai section ngoài, M5 cũ chỉ một trang dựng để điều hướng (`review-structure.md` §1 mạch 5 và bảng phát hiện nghiêm trọng `L08-26`); đã gộp thành một section ngoài ở C0.
+- **Quyết định:** thêm, theo `review-structure.md` §1 mạch 5: tên mạch, dòng dẫn (thêm `&#8209;` cho "mini-batch"), năm từ khóa tiếng Việt và tên riêng. Ghi chú diễn giả viết lại theo nguyên tắc R1-2: thay "bộ tối ưu không sửa đích bootstrap hay dữ liệu" bằng "lựa chọn bộ tối ưu không đổi công thức đích, cách thu thập dữ liệu hay lớp hàm"; không lấy "Mạch này/Phần N" làm chủ ngữ. `data-note-topic-id` là `lec-08-topic-14`, chủ đề của trang nội dung đầu mạch `L08-22`.
+- **Liên kết:** kế thừa từ phần 4 gradient $\nabla_\theta L_B$ trên mỗi mini-batch (bước 8 của thuật toán). Giao cho phần 6 quy tắc cập nhật cùng giới hạn: các nguồn bất ổn nằm ở đích, dữ liệu và lớp hàm, không ở bộ tối ưu.
+- **Mật độ:** dòng dẫn 19 âm tiết (script 18 cộng 1 cho "mini&#8209;batch"; trần 25), từ khóa 12 âm tiết, 5 cụm; ghi chú diễn giả 86 âm tiết (khoảng 40–100). Đáy nội dung 521 px.
+- **Ghi chú bài giảng:** "## Phần 3 — Bộ tối ưu" đổi thành `## 5. Bộ tối ưu theo gradient` và đặt ngay sau phần 4; mục tạm "## Mạng mục tiêu và bất ổn" (topic-12) dời xuống sau phần 5, chờ bước `L08-M6T`. Câu "nó không sửa đích hay dữ liệu sai" ở đoạn mở mục topic-14 sửa theo R1-2; phần còn lại của mục topic-14 viết lại ở các bước `L08-22`…`L08-26`. `outline.md`: topic-14 thêm `L08-M5T`.
 
 #### Rà lại mạch 3 (bước R3)
 

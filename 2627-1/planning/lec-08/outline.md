@@ -109,7 +109,7 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | `lec-08-topic-11` | `L08-20` |
 | `lec-08-topic-12` | `L08-27`, `L08-29`, `L08-30` |
 | `lec-08-topic-13` | `L08-01b`, `L08-01b2`, `L08-01c` |
-| `lec-08-topic-14` | `L08-22`–`L08-26` |
+| `lec-08-topic-14` | `L08-M5T`, `L08-22`–`L08-26` |
 | `lec-08-topic-15` | `L08-33`, `L08-34`, `X03` |
 | `lec-08-topic-16` | `L08-31`, `L08-32` |
 | `lec-08-topic-17` | `L08-01`, `L08-02`, `L08-02b`, `L08-02c` |
