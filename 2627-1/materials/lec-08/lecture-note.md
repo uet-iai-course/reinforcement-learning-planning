@@ -119,6 +119,21 @@ Chương đi theo bảy phần, cùng thứ tự với bộ trang chiếu.
 
 ## Phần 2 — Giao diện DQN, dữ liệu, đích và vòng huấn luyện
 
+### Bài toán trung tâm của chương
+
+Bài 06 học $q_*$ bằng một bảng có một ô cho mỗi cặp trạng thái–hành động, và Bài 07 thay bảng bằng hàm tuyến tính theo đặc trưng chọn trước. Bài toán của chương này là học $q_*$ khi quan sát là ảnh, tập hành động hữu hạn và mô hình của môi trường không được cho. Với quan sát là ảnh, bảng không lưu được và cũng không có sẵn một bộ đặc trưng chọn tay. Chúng ta dùng một mạng nơ-ron trả về giá trị của mọi hành động và học tham số của mạng từ các mẫu chuyển. Bài giảng gốc (trang 12) nêu bốn khó khăn của bước thay này: hàm mất mát không lồi theo tham số, nên không có bảo đảm hội tụ toàn cục; mục tiêu bootstrap phụ thuộc chính mạng đang học; phân phối dữ liệu đổi theo chính sách hành vi; và phương pháp có đủ bộ ba bất ổn.
+
+Mỗi phần sau của chương trả lời một phần của bài toán, và mỗi câu trả lời đúng dưới một điều kiện.
+
+2. Mạng trả về vector giá trị của mọi hành động. Khi đích được tính bằng một bản sao của mạng giữ cố định giữa hai lần đồng bộ, mỗi mẫu chuyển có một nhãn hồi quy cố định.
+3. Khi mini-batch được lấy đều từ bộ nhớ phát lại, tương quan ngắn hạn giữa các mẫu giảm; dữ liệu vẫn chưa độc lập cùng phân phối theo một phân phối cố định.
+4. Khi gradient được chặn ở đích, chỉ giá trị dự đoán của hành động đã thực hiện nhận gradient.
+5. Bộ tối ưu đổi gradient thành bước tham số; đích bootstrap và phân phối dữ liệu giữ nguyên dù chọn bộ tối ưu nào.
+6. Khi có đủ xấp xỉ hàm, bootstrap và dữ liệu khác chính sách, DQN không có bảo đảm hội tụ tổng quát, và các kết luận về hiệu quả của nó dựa trên thí nghiệm.
+
+Bài giảng gốc (trang 9 và 11) còn nêu hai cận độ phức tạp mẫu: $\tilde O\bigl(\lvert\mathcal S\rvert\lvert\mathcal A\rvert/((1-\gamma)^4\varepsilon_{\mathrm{acc}}^2)\bigr)$ mẫu để Q-learning dạng bảng đạt chính sách $\varepsilon_{\mathrm{acc}}$-tối ưu, và $\tilde O\bigl(d/((1-\gamma)^3\varepsilon_{\mathrm{acc}}^2)\bigr)$ cho xấp xỉ hàm với $d$ đặc trưng; ở đây $\varepsilon_{\mathrm{acc}}$ là sai số cho phép của chính sách, khác $\epsilon_{\mathrm{exp}}$. Chúng ta không dùng hai cận này như định lý vì nguồn không nêu mô hình lấy mẫu (mẫu từ một bộ sinh độc lập hay dọc một quỹ đạo), chuẩn đo sai số, xác suất thành công, điều kiện bao phủ và thuật toán cụ thể mà cận áp dụng. Hai ý vẫn dùng ở phần sau: số ô của bảng tăng theo $\lvert\mathcal S\rvert\lvert\mathcal A\rvert$, và xấp xỉ hàm chỉ có bảo đảm khi có thêm giả thiết cấu trúc, chẳng hạn $q_*$ nằm trong lớp hàm và dữ liệu bao phủ đủ (bài giảng gốc, trang 11).
+
+
 <!-- note-topic-id: lec-08-topic-01 -->
 ### Vì sao cần Deep Q-learning
 
@@ -143,13 +158,6 @@ không có bảo đảm hội tụ toàn cục.
 
 **Kiểm tra nhanh.** Đổi chi phí gì khi chuyển bảng → mạng? — Đổi bộ nhớ tường minh
 lấy sai số xấp xỉ, giao thoa giữa dự đoán và mất bảo đảm hội tụ dạng bảng.
-
-**Về độ phức tạp mẫu.** Nguồn nêu cận cho một số thiết lập nhưng không xác định
-đủ mô hình lấy mẫu, chuẩn sai số, xác suất thành công, điều kiện bao phủ và thuật
-toán tương ứng. Vì vậy ghi chú không dùng các cận đó như kết quả áp dụng được.
-Thông điệp giữ lại: chi phí phụ thuộc quy mô biểu diễn, khả năng bao phủ, chiến
-lược khám phá và các giả thiết ổn định; không thể suy ra một cận mẫu chung chỉ
-từ việc thay bảng bằng đặc trưng hoặc mạng sâu.
 
 <!-- note-topic-id: lec-08-topic-02 -->
 ### Giao diện DQN và hai mạng

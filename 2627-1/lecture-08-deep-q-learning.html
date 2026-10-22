@@ -75,7 +75,18 @@
 <p>Đọc trước: Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015).</p>
 <aside class="notes"><p>Phần 2 thay bảng bằng một mạng trả về giá trị của mọi hành động và biến mục tiêu Q-learning thành đích hồi quy có mặt nạ kết thúc. Phần 3 lưu các mẫu chuyển rồi lấy mẫu đều thành mini-batch. Phần 4 viết hàm mất mát trên mini-batch, chặn gradient qua đích và ghép thành thuật toán DQN. Phần 5 so sánh ba quy tắc đổi gradient thành bước tham số. Phần 6 đặt bộ nhớ phát lại và mạng mục tiêu cạnh các nguồn bất ổn và nêu phạm vi bảo đảm. Phần 7 đặt mỗi kết quả cạnh giả thiết không được bỏ. Trong Sutton và Barto, §11.3 bàn về bộ ba bất ổn, §16.5 về DQN trên trò chơi Atari; bài báo của Mnih và cộng sự mô tả thuật toán gốc.</p><p class="note-source"><strong>Nguồn:</strong> Sutton và Barto (2018), §11.3 "The Deadly Triad", §16.5 "Human-level Video Game Play"; Mnih và cộng sự (2015), Nature 518, 529–533.</p></aside>
 </section>
-  <section data-slide-id="L08-06" data-note-topic-id="lec-08-topic-01"><h2>Quy mô làm thay đổi bài toán</h2><div class="grid2"><div class="card"><h3>Bảng</h3><p>Số ô tăng theo $|\mathcal S||\mathcal A|$ và không xử lý trực tiếp không gian trạng thái liên tục.</p></div><div class="card"><h3>Xấp xỉ hàm</h3><p>Chi phí gắn với số tham số và phép tính, nhưng cần giả thiết cấu trúc để có bảo đảm mẫu.</p></div></div><p><strong>Lưu ý:</strong> không có một cận mẫu chung chỉ từ việc thay bảng bằng đặc trưng hay mạng sâu.</p><aside class="notes">Nguồn nêu hai công thức độ phức tạp mẫu nhưng không xác định mô hình lấy mẫu, chuẩn sai số, xác suất thành công, điều kiện bao phủ và thuật toán tương ứng. Vì vậy bài chỉ giữ thông điệp về quy mô, không trình bày hai công thức như định lý. Trang kế chuyển từ quy mô sang giao diện cụ thể của mạng DQN.<p class="note-source"><strong>Nguồn:</strong> lecture8-dqn.pdf, tr. 8–13; lược hai cận thiếu thiết lập.</p></aside></section>
+<section data-slide-id="L08-02c" data-note-topic-id="lec-08-topic-01">
+<h2>Vấn đề trung tâm</h2>
+<div class="box">Học $q_*$ khi quan sát là ảnh, hành động hữu hạn, không có mô hình.</div>
+<ol start="2">
+<li>Mạng cho giá trị mọi hành động; đích từ bản sao mạng cố định.</li>
+<li>Lấy đều từ bộ nhớ phát lại: tương quan giảm, chưa độc lập.</li>
+<li>Dừng gradient ở đích: chỉ dự đoán nhận gradient.</li>
+<li>Bộ tối ưu không sửa đích hay dữ liệu.</li>
+<li>Đủ bộ ba bất ổn: không bảo đảm hội tụ tổng quát.</li>
+</ol>
+<aside class="notes"><p>Dòng số $N$ là câu trả lời có điều kiện của phần $N$. Bài giảng gốc nêu bốn khó khăn khi thay bảng bằng mạng: hàm mất mát không lồi theo tham số, nên không có bảo đảm hội tụ toàn cục (phần 4–5); mục tiêu bootstrap phụ thuộc chính mạng đang học (phần 2 và 6); phân phối dữ liệu đổi theo chính sách hành vi (phần 3 và 6); và bộ ba bất ổn (phần 6). Hai cận độ phức tạp mẫu ở trang 9 và 11 của bài giảng gốc không nêu mô hình lấy mẫu, chuẩn đo sai số, xác suất thành công và điều kiện bao phủ, nên không dùng được như định lý. Hai ý vẫn dùng ở phần sau: số ô của bảng tăng theo số cặp trạng thái–hành động; xấp xỉ hàm cần thêm giả thiết cấu trúc mới có bảo đảm.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture8-dqn.pdf (2025–2026), trang 8–13; Sutton và Barto (2018), §11.3.</p></aside>
+</section>
 </section>
 
 <section>

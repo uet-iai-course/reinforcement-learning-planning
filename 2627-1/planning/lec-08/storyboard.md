@@ -31,8 +31,8 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 1 | `L08-01c` | Tiên quyết và quy ước (cùng tiêu đề) | thêm | Dòng "Ký hiệu:" và bảng: $O_t$, $S_t$, $\mathcal A$ hữu hạn, $R_{t+1}$, $\gamma$, $\theta$, $t$, $k_{\mathrm{opt}}$, $i$, $\epsilon_{\mathrm{exp}}$ ($\varepsilon$ của Bài 06), $\epsilon_{\mathrm{opt}}$; $q_i$ khai báo ở `L08-17` | 1.4 (S3) |
 | 1 | `L08-02` | Mục tiêu học tập | sửa | Sáu mục tiêu ứng mạch 2–7 (`outline.md`) | 1.5 (S4) |
 | 1 | `L08-02b` | Nội dung | thêm | Bảy mục khớp trang tiêu đề mạch và `#/N`; dòng đọc trước: Sutton và Barto (2018), §11.3, §16.5; Mnih và cộng sự (2015) | 1.6 (S5) |
-| 1 | `L08-02c` | Vấn đề trung tâm | thêm (gộp ý quy mô của `L08-06`) | Một dòng bài toán, một dòng trả lời có điều kiện cho mỗi mạch 2–6 | chưa có |
-| 1 | `L08-06` | (gộp vào `L08-02c` và `L08-03`) | gộp, bỏ trang riêng | Cảnh báo phủ định cận mẫu chưa từng nêu trên mặt trang | 1.5 (tạm) |
+| 1 | `L08-02c` | Vấn đề trung tâm | thêm (gộp ý quy mô của `L08-06`) | Một dòng bài toán, một dòng trả lời có điều kiện cho mỗi mạch 2–6 | 1.7 (S6) |
+| 1 | `L08-06` | (gộp vào `L08-02c` và `L08-03`) | gộp, bỏ trang riêng | Cảnh báo phủ định cận mẫu chưa từng nêu trên mặt trang | đã bỏ ở S6; ý "số ô tăng theo $\lvert\mathcal S\rvert\lvert\mathcal A\rvert$" sang bước `L08-03`, ý "xấp xỉ hàm cần giả thiết cấu trúc mới có bảo đảm" sang bước `L08-30` |
 | 2 | `L08-M2T` | 2. Mạng giá trị hành động và đích hồi quy | thêm | Trang tiêu đề mạch, điểm vào mạch 2 | chưa có |
 | 2 | `L08-03` | Giới hạn của bảng giá trị hành động | sửa | Nhu cầu; Lunar Lander rời rạc hóa $9\,216$ ô, $1\,896$ ô có mẫu sau $2\,000$ lượt (Bài 07, Ví dụ 07.1); sửa nhãn SVG | 2.1 |
 | 2 | `L08-31` | Ví dụ: đầu vào bốn khung Atari | sửa, chuyển lên | Ví dụ cho giao diện; bốn khung phải có trước $[b,4,h,w]$ ở `L08-20` | 2.2 |
@@ -96,7 +96,7 @@ Số trang sau đợt sửa dự kiến: 37 trang hiện có − 5 trang bỏ (`
 
 ### Ngoại lệ mật độ
 
-`L08-02b` (Nội dung): 8 dòng > 6 vì phải liệt kê đủ bảy mạch và dòng đọc trước; 54 âm tiết (xem mục của trang). Số âm tiết trước sửa của các trang vượt trần (đo ngày 2026-10-22): `L08-05` 82, `L08-18` 87, `L08-27` 70, `L08-28` 64, `L08-32` 68, `X03` 91; `L08-33` 73 (trần 80 của trang tự kiểm tra). Số sau sửa ghi vào mục của từng trang khi sửa.
+`L08-02b` (Nội dung): 8 dòng > 6 vì phải liệt kê đủ bảy mạch và dòng đọc trước; 54 âm tiết (xem mục của trang). `L08-02c` (Vấn đề trung tâm): 70 âm tiết > 60, một dòng bài toán và năm dòng trả lời có điều kiện (xem mục của trang). Số âm tiết trước sửa của các trang vượt trần (đo ngày 2026-10-22): `L08-05` 82, `L08-18` 87, `L08-27` 70, `L08-28` 64, `L08-32` 68, `X03` 91; `L08-33` 73 (trần 80 của trang tự kiểm tra). Số sau sửa ghi vào mục của từng trang khi sửa.
 
 ### Mục từng trang (đợt sửa 2026-10-22)
 
@@ -149,6 +149,16 @@ Số trang sau đợt sửa dự kiến: 37 trang hiện có − 5 trang bỏ (`
 - **Liên kết:** trước là `L08-02` (Mục tiêu học tập); sau là trang "Vấn đề trung tâm" `L08-02c` (chưa có; hiện là `L08-06`).
 - **Mật độ và ngoại lệ:** 54 âm tiết (trần 80 của trang nội dung), 8 dòng (bảy mục và dòng đọc trước; mục dài nhất 9 âm tiết, dòng đọc trước 13), 0 công thức, 0 hộp chữ, ghi chú 137 âm tiết. Ngoại lệ số dòng (8 > 6): trang Nội dung phải liệt kê đủ bảy mạch (`AGENTS.md`, mạch mở đầu), như deck 06–07.
 - **Ghi chú bài giảng:** mục "Bảy mạch và thời lượng (120 phút)" thành "Bảy phần của chương" theo cấu trúc mới, mỗi phần kèm `note-topic-id`; bỏ thời lượng (mẫu `materials/_templates/lecture-note.md` không có mục thời lượng); thêm dòng "Đọc trước:".
+
+#### `L08-02c` Vấn đề trung tâm (bước S6)
+
+- **Trang muốn nói gì:** bài toán của bài (học $q_*$ khi quan sát là ảnh, hành động hữu hạn, không có mô hình) và câu trả lời có điều kiện của mỗi phần 2–6.
+- **Phục vụ mạch nào và thế nào:** mạch 1; nêu trước kết luận của từng mạch, để trang tiêu đề mạch và trang trả lời vấn đề trung tâm `L08-K4` đối chiếu được.
+- **Vấn đề còn lại trước sửa:** không có trang Vấn đề trung tâm (`review-structure.md` §2 `L08-02c`); `L08-06` có tiêu đề mơ hồ, dòng cảnh báo phủ định một cận mẫu chưa từng nêu, ghi chú chứa lý do biên soạn và lời chuyển "Trang kế…" (`review-structure.md` §3 `L08-06`; `review-student.md`).
+- **Quyết định:** thêm `L08-02c`, xóa `L08-06`. Khuôn deck 07: hộp chứa dòng bài toán, danh sách đánh số từ 2 tới 6. Không dùng ký hiệu chưa giới thiệu: "bản sao mạng cố định" thay $\theta^-$, "dừng gradient" thay $\operatorname{sg}$. Ghi chú diễn giả: bốn khó khăn của nguồn tr. 12 (không lồi, bootstrap, dịch chuyển phân phối, bộ ba bất ổn) ứng với phần nào; lý do không trình bày hai cận độ phức tạp mẫu tr. 9, 11 (thiếu mô hình lấy mẫu, chuẩn sai số, xác suất thành công, điều kiện bao phủ). Ý "số ô tăng theo $\lvert\mathcal S\rvert\lvert\mathcal A\rvert$" của `L08-06` chuyển cho bước `L08-03`; ý "xấp xỉ hàm cần giả thiết cấu trúc mới có bảo đảm" chuyển cho bước `L08-30`.
+- **Liên kết:** trước là `L08-02b` (Nội dung); sau là `L08-03`, hiện là trang đầu mạch 2 (sẽ là `L08-M2T`).
+- **Mật độ và ngoại lệ:** `L08-06` trước sửa 58 âm tiết. `L08-02c` 70 âm tiết (hộp 13; dòng 14, 13, 9, 9, 12), 6 dòng, 0 công thức, 1 hộp chữ 1 câu, ghi chú 148 âm tiết. Ngoại lệ 70 > 60 (1,17 lần): trang Vấn đề trung tâm phải có dòng bài toán và một dòng trả lời cho mỗi phần 2–6 (`CLAUDE.md`, mạch mở đầu); rút thêm sẽ bỏ điều kiện của câu trả lời.
+- **Ghi chú bài giảng:** thêm mục "Bài toán trung tâm của chương" ở đầu Phần 2 (bài toán, bốn khó khăn của nguồn, năm câu trả lời có điều kiện khớp trang); đoạn "Về độ phức tạp mẫu" viết lại với chúng ta làm chủ ngữ, ghi hai cận của nguồn bằng $\varepsilon_{\mathrm{acc}}$ (theo `note-for-author.md`) và lý do không dùng, chuyển vào mục này.
 
 ### Bản trước đợt sửa 2026-10-22
 
