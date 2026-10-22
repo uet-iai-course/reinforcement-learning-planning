@@ -902,14 +902,34 @@ Chữ "ngẫu nhiên" chỉ nguồn của $g_j$: gradient được tính trên m
 
 **Trong thực hành.** SGD thường dùng với một lịch giảm tốc độ học $\eta_j$ định trước. Trong bài toán hồi quy với phân phối dữ liệu cố định, các điều kiện $\sum_j\eta_j=\infty$, $\sum_j\eta_j^2<\infty$ cùng giả thiết về hàm mất mát là cơ sở của các kết quả hội tụ cho SGD; trong DQN, đích đổi tại các mốc đồng bộ và dữ liệu đổi theo hành vi, nên các kết quả đó không áp dụng trực tiếp. Ví dụ 08.19 không cho phép suy ra SGD luôn kém hơn các phương pháp thích nghi; nó chỉ cho thấy SGD nhạy với tỉ lệ giữa các tọa độ, điều mà RMSprop dưới đây xử lý bằng một hệ số bước riêng cho từng tọa độ.
 
-**RMSprop** (theo từng tọa độ, $v_0=0$, $\rho\in[0,1)$; biến thể epsilon ngoài căn):
+#### RMSprop
 
-$$v_j=\rho v_{j-1}+(1-\rho)\,g_j\odot g_j,\qquad
-\theta_j=\theta_{j-1}-\eta\, g_j\oslash\bigl(\sqrt{v_j}+\epsilon_{\mathrm{opt}}\bigr).$$
+Ví dụ 08.19 cho thấy giới hạn của một hệ số bước chung: với gradient $g_j=(2;\,0{,}02)$, SGD đi hai bước chênh $100$ lần, và không có $\eta$ nào hợp cho cả hai tọa độ. Chúng ta cần một hệ số bước riêng cho từng tọa độ, tự điều chỉnh theo độ lớn điển hình của gradient tại tọa độ đó.
 
-Gradient lớn kéo dài ở một tọa độ làm giảm bước hiệu dụng tại tọa độ đó; gradient
-nhỏ nhận bước tương đối lớn hơn. Hữu ích trong DQN vì mục tiêu TD nhiễu và không
-dừng; RMSprop xuất hiện trong các cài đặt DQN ban đầu.
+::: definition Định nghĩa 08.17 (RMSprop)
+Cho tốc độ học $\eta>0$, hệ số suy giảm $\rho\in[0,1)$ và hằng $\epsilon_{\mathrm{opt}}>0$. RMSprop là bộ tối ưu theo Định nghĩa 08.15 với trạng thái phụ $v_j\in\mathbb R^d$, $v_0=0$, và tại bước $j=1,2,\dots$
+$$
+\begin{aligned}
+v_j&=\rho\,v_{j-1}+(1-\rho)\,g_j\odot g_j,\\
+\theta_j&=\theta_{j-1}-\eta\,g_j\oslash\bigl(\sqrt{v_j}+\epsilon_{\mathrm{opt}}\bigr),
+\end{aligned}
+$$
+trong đó $\odot$, $\oslash$, căn bậc hai và phép cộng $\epsilon_{\mathrm{opt}}$ lấy theo từng tọa độ.
+:::
+
+Tọa độ $k$ của $v_j$ là trung bình trượt có trọng số mũ của $g_{1,k}^2,\dots,g_{j,k}^2$: $v_{j,k}=(1-\rho)\sum_{m=1}^{j}\rho^{\,j-m}g_{m,k}^2$. Vì vậy $\sqrt{v_{j,k}}$ là độ lớn điển hình của gradient theo tọa độ $k$ trong khoảng $1/(1-\rho)$ bước gần nhất, và bước theo tọa độ đó là $\eta\,g_{j,k}/(\sqrt{v_{j,k}}+\epsilon_{\mathrm{opt}})$: gradient được chia cho độ lớn điển hình của chính nó. Một tọa độ có gradient lớn kéo dài nhận bước hiệu dụng nhỏ, một tọa độ có gradient nhỏ kéo dài nhận bước hiệu dụng lớn. Trạng thái phụ là một vector cùng kích thước với $\theta$.
+
+Mỗi thành phần của định nghĩa có một việc. Hệ số $\rho$ quyết định độ dài của trí nhớ: với $\rho=0$, $v_j=g_j\odot g_j$ và bước theo mỗi tọa độ là $\eta\,\operatorname{sign}(g_{j,k})$ khi bỏ qua $\epsilon_{\mathrm{opt}}$, nên mọi thông tin về độ lớn của gradient bị bỏ. Hằng $\epsilon_{\mathrm{opt}}$ giữ mẫu số dương: tại một tọa độ có gradient bằng $0$ ở mọi bước, $v_{j,k}=0$ và phép chia $0/0$ không xác định nếu thiếu $\epsilon_{\mathrm{opt}}$. Ở đây $\epsilon_{\mathrm{opt}}$ đặt ngoài căn; một số thư viện đặt $\epsilon_{\mathrm{opt}}$ trong căn, $\sqrt{v_j+\epsilon_{\mathrm{opt}}}$, và hai quy ước cho bước khác nhau khi $v_j$ nhỏ.
+
+::: example Ví dụ 08.20 (Một bước RMSprop trên hai tọa độ)
+**Dữ kiện.** Như Ví dụ 08.19: $L(\theta)=\tfrac12(100\,\theta_1^2+\theta_2^2)$, $\theta_0=(0{,}02;\,0{,}02)$, nên $g_1=(2;\,0{,}02)$. RMSprop với $\rho=0{,}9$, $v_0=0$, $\eta=0{,}005$; bỏ qua $\epsilon_{\mathrm{opt}}$.
+
+**Tính.** $v_1=0{,}1\cdot(2^2;\,0{,}02^2)=(0{,}4;\,0{,}00004)$, $\sqrt{v_1}\approx(0{,}6325;\,0{,}006325)$, và $g_1\oslash\sqrt{v_1}=(\sqrt{10};\,\sqrt{10})\approx(3{,}162;\,3{,}162)$. Bước là $-\eta\,(3{,}162;\,3{,}162)\approx(-0{,}0158;\,-0{,}0158)$, nên $\theta_1\approx(0{,}0042;\,0{,}0042)$.
+
+**Diễn giải.** Ở bước đầu, $v_1=(1-\rho)\,g_1\odot g_1$, nên mỗi tọa độ đi đúng $\eta/\sqrt{1-\rho}=\eta\sqrt{10}$ theo dấu gradient, dù hai gradient chênh $100$ lần. Với cùng $\eta=0{,}005$, SGD đưa tọa độ thứ hai đi $0{,}0001$, tức $0{,}5\%$ giá trị của nó, còn RMSprop đưa tọa độ đó đi khoảng $79\%$.
+:::
+
+**Trong thực hành.** Mnih và cộng sự (2015, mục Methods và Extended Data Table 1) huấn luyện DQN gốc bằng một biến thể của RMSprop với tốc độ học $0{,}00025$ và mini-batch $32$. Chọn RMSprop không đổi công thức đích, cách thu thập dữ liệu hay lớp hàm; nó đổi tỉ lệ bước giữa các tọa độ và không cho bảo đảm hội tụ cho DQN.
 
 **Adam** ($m_0=v_0=0$, $\beta_1,\beta_2\in[0,1)$):
 
