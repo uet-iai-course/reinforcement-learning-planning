@@ -961,28 +961,25 @@ Mỗi thành phần có một việc. Bỏ trung bình trượt của gradient, 
 
 **Trong thực hành.** Adam được dùng rộng rãi trong các cài đặt học sâu, kể cả nhiều cài đặt DQN về sau; DQN gốc dùng RMSprop. Công thức của Adam không tạo bảo đảm hội tụ cho DQN: đích đổi tại các mốc đồng bộ và dữ liệu đổi theo hành vi, và lựa chọn bộ tối ưu không đổi các yếu tố đó.
 
-**So sánh và lựa chọn.**
+#### So sánh ba bộ tối ưu
 
-| Phương pháp | Trạng thái phụ | Điều cần tinh chỉnh |
-|---|---|---|
-| SGD | không | tốc độ học và lịch giảm |
-| RMSprop | $v_j$ | $\eta,\rho,\epsilon_{\mathrm{opt}}$ |
-| Adam | $m_j,v_j$ | $\eta,\beta_1,\beta_2,\epsilon_{\mathrm{opt}}$ |
+Ba quy tắc cùng nhận gradient $g_j$ và trả $\theta_j$; chúng khác nhau ở trạng thái phụ, ở siêu tham số và ở lượng trừ khỏi $\theta_{j-1}$ theo mỗi tọa độ. Ký hiệu $m_j$, $v_j$ chỉ trung bình trượt của $g_j$ và của $g_j\odot g_j$; $\hat m_j$, $\hat v_j$ là hai trung bình đó sau hiệu chỉnh lệch.
 
-So sánh cần đồng thời: return đánh giá, độ ổn định qua nhiều lần chạy độc lập,
-loss huấn luyện và chi phí tính toán. **Không có lựa chọn thắng tuyệt đối**; một
-lịch bước phù hợp có thể quan trọng hơn tên optimizer.
+| phương pháp | trạng thái phụ | siêu tham số cần chỉnh | lượng trừ khỏi $\theta_{j-1}$ |
+|---|---|---|---|
+| SGD (Định nghĩa 08.16) | không | $\eta$, lịch giảm | $\eta\,g_j$ |
+| RMSprop (Định nghĩa 08.17) | $v_j$ | $\eta$, $\rho$, $\epsilon_{\mathrm{opt}}$ | $\eta\,g_j\oslash(\sqrt{v_j}+\epsilon_{\mathrm{opt}})$ |
+| Adam (Định nghĩa 08.18) | $m_j$, $v_j$ | $\eta$, $\beta_1$, $\beta_2$, $\epsilon_{\mathrm{opt}}$ | $\eta\,\hat m_j\oslash(\sqrt{\hat v_j}+\epsilon_{\mathrm{opt}})$ |
 
-**Giới hạn.** Lựa chọn bộ tối ưu không đổi công thức đích (bootstrap), cách thu
-thập dữ liệu (khác chính sách) hay lớp hàm (xấp xỉ hàm), nên không loại được bộ
-ba bất ổn. Replay memory và mạng mục tiêu vẫn là thiết yếu. Công thức Adam
-không tạo bảo đảm hội tụ cho DQN.
+Bảng đọc theo cột cuối. SGD đi bước tỉ lệ với gradient, nên bước theo mỗi tọa độ mang thang của gradient tại tọa độ đó; RMSprop và Adam chia cho độ lớn điển hình của gradient, nên bước theo mỗi tọa độ có thang xấp xỉ $\eta$, như Ví dụ 08.20 và 08.21. Vì thang bước khác nhau, cùng một giá trị $\eta$ không so sánh được giữa SGD và hai phương pháp thích nghi; mỗi bộ tối ưu cần được chỉnh $\eta$ riêng. Mỗi trạng thái phụ là một vector cùng kích thước với $\theta$, nên RMSprop tốn thêm bộ nhớ bằng một bản $\theta$, Adam bằng hai bản.
 
-**Kiểm tra nhanh.** Bộ tối ưu thích nghi có đổi công thức đích không? Không;
-công thức đích không phụ thuộc lựa chọn bộ tối ưu, bộ tối ưu chỉ quyết định cách
-đổi gradient thành bước tham số.
+Không có lựa chọn thắng trong mọi bài toán; lựa chọn được quyết định bằng thí nghiệm có kiểm soát. Một thí nghiệm như vậy giữ cùng kiến trúc, ngân sách bước môi trường, lịch thăm dò và tập hạt giống ngẫu nhiên cho mọi bộ tối ưu, chỉnh siêu tham số của từng bộ tối ưu với cùng ngân sách, và báo lợi tức đánh giá cùng độ phân tán giữa nhiều lần chạy độc lập; giá trị hàm mất mát không phải tiêu chí, vì lý do đã nêu ở đầu mục. DQN gốc của Mnih và cộng sự (2015) dùng một biến thể của RMSprop.
 
----
+**Giới hạn.** Lựa chọn bộ tối ưu không đổi công thức đích (bootstrap), cách thu thập dữ liệu (khác chính sách) hay lớp hàm (xấp xỉ hàm), nên không loại được các nguồn bất ổn đó. Không công thức cập nhật nào ở trên tạo bảo đảm hội tụ cho DQN.
+
+**Kiểm tra nhanh.** Bộ tối ưu thích nghi có đổi công thức đích không? Không; công thức đích không phụ thuộc lựa chọn bộ tối ưu, bộ tối ưu chỉ quyết định cách đổi gradient thành bước tham số.
+
+Phần 5 cho ba quy tắc đổi gradient $\nabla_\theta L_B$ thành bước tham số. Trên hàm $\tfrac12(100\,\theta_1^2+\theta_2^2)$, SGD không có hệ số bước chung hợp cho cả hai tọa độ, còn RMSprop và Adam đi bước đầu cùng cỡ ở cả hai tọa độ, $\eta\sqrt{10}$ và $\eta$. Các quy tắc này quyết định quỹ đạo của $\theta$, nhưng không đổi đích bootstrap, cơ chế thu thập dữ liệu khác chính sách hay lớp hàm phi tuyến. Ba yếu tố đó là bộ ba bất ổn của Bài 07. Ở phần 6, chúng ta đặt bộ nhớ phát lại và mạng mục tiêu cạnh các nguồn bất ổn này, tính độ thay đổi của đích tại một mốc đồng bộ, và nêu phạm vi bảo đảm của DQN.
 
 ## Mạng mục tiêu và bất ổn
 
