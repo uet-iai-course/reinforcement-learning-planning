@@ -91,7 +91,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 | `lec-08-topic-09` | Hàm mất mát trên mini-batch | tr. 16, 20–22, 34 | MSE với đích là hằng, gradient, không lồi theo $\theta$ | Vào: topic-07 → Ra: hàm vô hướng và gradient cho topic-08 |
 | `lec-08-topic-10` | Vòng huấn luyện DQN: hai bộ đếm $t$ và $k_{\mathrm{opt}}$ | tr. 18–22 | Giả mã đầy đủ | Vào: topic-05–09 → Ra: thuật toán hoàn chỉnh |
 | `lec-08-topic-11` | Kích thước tensor của mini-batch Atari | tr. 14–22, 35 | Kích thước và kiểu tensor | Vào: topic-10 → Ra: kiểm tra cài đặt |
-| `lec-08-topic-12` | Mạng mục tiêu và các nguồn bất ổn | tr. 19, 21, 29–33 | Đồng bộ đích và giới hạn ổn định | Vào: topic-10 → Ra: phạm vi bảo đảm của DQN |
+| `lec-08-topic-12` | Bất ổn và phạm vi bảo đảm của DQN | tr. 12–13, 29–34 | Hai nguồn bất ổn và hai cơ chế giảm; độ thay đổi của đích tại mốc đồng bộ; bộ ba bất ổn trong DQN | Vào: topic-10, topic-14 → Ra: kết luận có điều kiện cho phần 7 |
 
 ### Nhóm bổ sung
 
@@ -986,13 +986,30 @@ Phần 5 cho ba quy tắc đổi gradient $\nabla_\theta L_B$ thành bước tha
 <!-- note-topic-id: lec-08-topic-12 -->
 ### Hai nguồn bất ổn và hai cơ chế giảm
 
-**Ba nguồn bất ổn cần theo dõi.** Chuyển tiếp liên tiếp có tương quan mạnh; đích
-bootstrap thay đổi theo mạng; và DQN đồng thời dùng xấp xỉ hàm, bootstrap cùng
-dữ liệu lệch chính sách. Sự kết hợp sau thường được gọi là *bộ ba nguy hiểm*.
-Nó có thể gây dao động hoặc phân kỳ trong một số thiết lập, không có nghĩa DQN
-luôn phân kỳ. Bộ nhớ phát lại giảm tương quan ngắn hạn, còn mạng mục tiêu làm
-chậm sự thay đổi của đích. Hai cơ chế này không tạo dữ liệu độc lập, phân phối
-đồng nhất và không cho bảo đảm hội tụ tổng quát.
+Q-learning dạng bảng hội tụ tới $q_*$ với xác suất một khi MDP hữu hạn, phần thưởng bị chặn, $\gamma<1$, mọi cặp trạng thái–hành động được cập nhật vô hạn lần và bước học của từng cặp thỏa điều kiện Robbins–Monro (Bài 06). Khi bảng được thay bằng mạng nơ-ron, không còn định lý nào như vậy: bài giảng gốc (trang 29) ghi rằng huấn luyện có thể phân kỳ, và trong phần mở đầu, Mnih và cộng sự (2015) nhận xét rằng học tăng cường với một hàm xấp xỉ phi tuyến như mạng nơ-ron có thể mất ổn định, thậm chí phân kỳ. Bài giảng gốc nêu hai nguyên nhân chính: tương quan giữa các mẫu và mục tiêu không dừng. Ở phần 2 và phần 3, chúng ta đã dựng hai cơ chế, mạng mục tiêu và bộ nhớ phát lại, mỗi cơ chế nhắm vào một nguyên nhân. Chúng ta đặt hai nguyên nhân, hai cơ chế và điều mỗi cơ chế còn để lại vào cùng một bảng.
+
+::: remark Nhận xét 08.19 (Hai nguồn bất ổn và hai cơ chế giảm)
+Xét Q-learning với mạng giá trị hành động $Q_\theta$, học từ các mẫu chuyển do chính tác tử thu thập. Hai nguồn bất ổn sau có cơ chế giảm riêng, và mỗi cơ chế để lại một phần của nguồn:
+
+| Nguồn bất ổn | Ví dụ có số | Cơ chế giảm | Điều còn lại |
+|---|---|---|---|
+| Tương quan giữa các mẫu liền nhau | Bốn gradient mẫu liền nhau, phương sai $\sigma^2$, tương quan $0{,}9^k$ khi cách $k$ bước: trung bình có phương sai $\approx0{,}881\,\sigma^2$, bằng trung bình của khoảng $1{,}1$ mẫu độc lập | Bộ nhớ phát lại: lưu $N$ mẫu chuyển gần nhất, rút đều mini-batch $b$ mẫu | Mẫu trong bộ nhớ không độc lập; phân phối của bộ nhớ đổi theo hành vi, vốn đổi theo $\theta$ |
+| Đích phụ thuộc tham số đang học (bootstrap) | $Q_\theta=\theta$, $R=1$, $\gamma=0{,}9$, $\theta_0=0$, $\alpha=0{,}5$: một bước đưa $\theta$ lên $0{,}5$ và đích từ $1$ lên $1{,}45$ | Mạng mục tiêu: tính phần bootstrap bằng $\theta^-$, đồng bộ $\theta^-\leftarrow\theta$ sau mỗi $C$ bước tối ưu | Đích của mọi mẫu chuyển đổi cùng lúc tại mốc đồng bộ |
+:::
+
+Hai nguồn nằm ở hai chỗ khác nhau của bước cập nhật. Nguồn thứ nhất nằm ở dữ liệu đưa vào hàm mất mát: hạ gradient ngẫu nhiên giảm phương sai theo cỡ mini-batch chỉ khi các gradient mẫu gần độc lập, và bốn mẫu liền nhau trong ví dụ của bảng giảm phương sai gần như không hơn một mẫu. Vấn đề này có cả khi đích là nhãn cố định, như hồi quy có giám sát trên một chuỗi thời gian. Nguồn thứ hai nằm ở chính nhãn: đích $y=R+\gamma\max_{a'}Q_\theta(O',a')$ chứa tham số đang cập nhật, nên mỗi bước kéo dự đoán về phía đích cũng dời đích; trong ví dụ một tham số, dự đoán tăng $0{,}5$ còn đích tăng $0{,}45$. Bài giảng gốc (trang 31) ghi rằng việc đuổi theo một đích đang di chuyển có thể dẫn tới dao động hoặc phân kỳ.
+
+Tương quan giữa các mẫu không phải một yếu tố của bộ ba bất ổn (Định nghĩa 07.38). Bộ ba bất ổn gồm xấp xỉ hàm, bootstrap và học khác chính sách; nó nói về khả năng phân kỳ của chính quy tắc cập nhật TD, kể cả khi không có nhiễu lấy mẫu. Mệnh đề 07.37 là một phản ví dụ: với $x(s_1)=1$, $x(s_2)=2$, chỉ cập nhật chuyển $s_1\to s_2$ có phần thưởng $0$, $\gamma\in(\tfrac12,1)$ và $\alpha>0$, tham số thỏa $w_n=\bigl(1+\alpha(2\gamma-1)\bigr)^nw_0$ và tăng không chặn khi $w_0\ne0$. Mỗi bước dùng cùng một mẫu chuyển, nên không có tương quan nào giữa các mẫu khác nhau để bộ nhớ phát lại giảm, vậy mà tham số vẫn phân kỳ. Ngược lại, tương quan làm tăng phương sai ngay cả trong hồi quy có giám sát, nơi không có bootstrap và không có chính sách nào. Nguồn thứ hai thì gắn với yếu tố bootstrap của bộ ba: đích di động là cách bootstrap biểu hiện khi đích và dự đoán dùng chung tham số.
+
+Mỗi cơ chế chỉ tác động lên nguồn của nó. Mạng mục tiêu không đổi cách chọn mẫu, nên không giảm tương quan trong mini-batch. Bộ nhớ phát lại không đổi công thức đích, nên không làm đích đứng yên. Bỏ bộ nhớ phát lại, mỗi bước tối ưu dùng các mẫu vừa thu theo thứ tự thời gian, đúng tình huống của dòng thứ nhất trong bảng. Bỏ mạng mục tiêu, tức đặt $C=1$, đích được tính lại bằng $\theta$ mới sau mỗi bước, đúng tình huống của dòng thứ hai. Cả hai cơ chế đều giữ nguyên ba yếu tố xấp xỉ hàm, bootstrap và dữ liệu khác chính sách: mạng mục tiêu vẫn bootstrap, chỉ bằng một bản sao trễ của mạng, và bộ nhớ phát lại còn thêm một nguồn dữ liệu khác chính sách (Mệnh đề 08.8).
+
+Một nhầm lẫn thường gặp là nói mạng mục tiêu tạo ra đích di động. Đích di động có sẵn khi đích tính bằng $\theta$; mạng mục tiêu giữ tham số tạo đích cố định giữa hai lần đồng bộ, nên trong khoảng đó đích của mỗi mẫu chuyển là một hằng số.
+
+**Trong thực hành.** Hai cơ chế ứng với các siêu tham số của Thuật toán 08.13: dung lượng $N$, cỡ mini-batch $b$ và ngưỡng $N_{\mathrm{start}}$ của bộ nhớ phát lại; chu kỳ $C$ của mạng mục tiêu. Mnih và cộng sự (2015, Extended Data Table 3) so sánh bốn tổ hợp có hoặc không có bộ nhớ phát lại và mạng mục tiêu trên năm trò chơi Atari; tổ hợp dùng cả hai cho điểm cao nhất ở cả năm trò chơi. Đó là bằng chứng thực nghiệm về tác dụng của hai cơ chế trên các trò chơi đã thử, không phải bảo đảm hội tụ. Với dữ liệu khác chính sách lấy từ bộ nhớ lớn và mạng có hàng triệu tham số, cả ba yếu tố của bộ ba bất ổn vẫn có mặt.
+
+**Kiểm tra nhanh.** Mạng mục tiêu có giảm tương quan giữa các mẫu trong một mini-batch không? Không; mini-batch do cách lấy mẫu từ bộ nhớ quyết định, còn mạng mục tiêu chỉ đổi tham số dùng để tính đích.
+
+Như vậy, mỗi nguồn bất ổn có một cơ chế giảm và một phần còn lại. Phần còn lại của nguồn thứ hai có thể đo được: tại mỗi mốc đồng bộ, đích của mọi mẫu chuyển đổi cùng lúc. Ở mục tiếp theo, chúng ta tính độ thay đổi đó cho một mẫu chuyển cụ thể.
 
 ### Đích của một mẫu chuyển qua mốc đồng bộ
 
