@@ -83,8 +83,9 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 | `lec-08-topic-03` | Đích hồi quy | tr. 16, 20–22, 34 | Đích $y_t$ và sai số TD | Vào: topic-02 → Ra: nhãn hồi quy |
 | `lec-08-topic-04` | Ví dụ: đích tại mẫu chuyển kết thúc | tr. 21 | Phân biệt $Z$ và $U$ | Vào: topic-03 → Ra: đích đúng |
 | `lec-08-topic-05` | Kết thúc và cắt ngắn | tr. 21 | Hai cờ $Z$, $U$; mặt nạ chỉ dùng $Z$ | Vào: topic-04 → Ra: bộ sáu thành phần |
-| `lec-08-topic-06` | Bộ nhớ phát lại | tr. 19–21, 32 | Cơ chế lưu và lấy mẫu | Vào: topic-05 → Ra: mini-batch |
-| `lec-08-topic-07` | Replay giảm tương quan, không tạo i.i.d. | tr. 19, 29–32 | Giới hạn của replay | Vào: topic-06 → Ra: phát biểu đúng phạm vi |
+| `lec-08-topic-18` | Tương quan giữa các mẫu chuyển liên tiếp | tr. 19, 30 | Vấn đề của mẫu liền nhau | Vào: topic-05 → Ra: nhu cầu bộ nhớ phát lại |
+| `lec-08-topic-06` | Bộ nhớ phát lại | tr. 19–21, 32 | Cơ chế lưu và lấy mẫu | Vào: topic-18 → Ra: mini-batch |
+| `lec-08-topic-07` | Giới hạn của bộ nhớ phát lại | tr. 19, 29–32 | Giới hạn của replay | Vào: topic-06 → Ra: phát biểu đúng phạm vi |
 | `lec-08-topic-08` | Gather và dừng gradient | tr. 16, 22, 34 | Đồ thị tính toán | Vào: topic-03 → Ra: loss batch |
 | `lec-08-topic-09` | Mất mát và gradient batch | tr. 21–22, 34 | MSE và $\nabla_\theta L$ | Vào: topic-08 → Ra: gradient cho optimizer |
 | `lec-08-topic-10` | Vòng DQN: hai đồng hồ $t$ và $k_{\mathrm{opt}}$ | tr. 18–22 | Giả mã đầy đủ | Vào: topic-05–09 → Ra: thuật toán hoàn chỉnh |
@@ -109,7 +110,7 @@ Chúng ta đi qua bảy phần sau.
 
 1. Mở đầu: kiến thức tiên quyết, ký hiệu, mục tiêu và bài toán trung tâm (`lec-08-topic-13`, `lec-08-topic-17`).
 2. Mạng giá trị hành động và đích hồi quy: giới hạn của bảng, đầu vào bốn khung Atari, mạng giá trị hành động, mạng mục tiêu, đích có mặt nạ kết thúc, kết thúc và cắt ngắn (`lec-08-topic-01`, `lec-08-topic-16`, `lec-08-topic-02` đến `lec-08-topic-05`).
-3. Bộ nhớ phát lại: tương quan giữa các mẫu chuyển liên tiếp, cơ chế lưu và lấy mẫu đều, dữ liệu khác chính sách, giới hạn (`lec-08-topic-06`, `lec-08-topic-07`).
+3. Bộ nhớ phát lại: tương quan giữa các mẫu chuyển liên tiếp, cơ chế lưu và lấy mẫu đều, dữ liệu khác chính sách, giới hạn (`lec-08-topic-18`, `lec-08-topic-06`, `lec-08-topic-07`).
 4. Hàm mất mát và thuật toán DQN: hàm mất mát trên mini-batch, dừng gradient, vòng huấn luyện, kích thước tensor (`lec-08-topic-08` đến `lec-08-topic-11`).
 5. Bộ tối ưu theo gradient: SGD, RMSprop, Adam theo từng tọa độ (`lec-08-topic-14`).
 6. Bất ổn và phạm vi bảo đảm của DQN: hai nguồn bất ổn, độ thay đổi của đích khi đồng bộ, bộ ba bất ổn (`lec-08-topic-12`).
@@ -415,7 +416,18 @@ Cách xử lý trên dựa trên một giả thiết: giới hạn số bước 
 
 Phần 2 đã cho ba kết quả. Mạng giá trị hành động trả về $\lvert\mathcal A\rvert$ giá trị sau một lần tính (Định nghĩa 08.1). Mạng mục tiêu giữ $\theta^-$ cố định trong $C$ bước tối ưu, nên mỗi mẫu chuyển có một nhãn đứng yên giữa hai lần đồng bộ (Định nghĩa 08.3). Đích hồi quy $y_t=R_{t+1}+\gamma(1-Z_{t+1})\max_{a'}Q_{\theta^-}(O_{t+1},a')$ chỉ dùng cờ kết thúc làm mặt nạ, còn cờ cắt ngắn chỉ quyết định việc đặt lại môi trường (Định nghĩa 08.4, 08.6). Các kết quả này nói cách tính nhãn cho một mẫu chuyển, nhưng chưa nói mẫu chuyển nào được dùng để cập nhật. Nếu cập nhật theo đúng thứ tự thu thập, các mẫu liền nhau gần giống nhau và cùng lệch về đoạn quỹ đạo gần nhất. Phần 3 lưu các mẫu chuyển sáu thành phần vào một bộ nhớ và lấy mẫu đều từ đó để giảm tương quan này.
 
-## Bộ nhớ phát lại, hàm mất mát, vòng huấn luyện và bất ổn
+## 3. Bộ nhớ phát lại
+
+<!-- note-topic-id: lec-08-topic-18 -->
+### Tương quan giữa các mẫu chuyển liên tiếp
+
+**Vấn đề.** Tối ưu mạng nơ-ron thường giả sử mini-batch gần i.i.d.; chuyển tiếp
+liên tiếp thu thập trực tuyến tương quan mạnh. Replay có giải quyết triệt để không?
+
+**Trực giác.** Các chuyển tiếp liền nhau đi qua quan sát gần nhau và dùng cùng
+phiên bản chính sách; mini-batch liên tiếp có cỡ mẫu hiệu dụng nhỏ hơn số phần tử,
+gradient dao động theo đoạn quỹ đạo gần nhất, mạng có thể quá khớp vùng trạng thái
+mới và "quên" vùng cũ.
 
 <!-- note-topic-id: lec-08-topic-06 -->
 ### Bộ nhớ phát lại (experience replay)
@@ -430,33 +442,26 @@ chứa thông tin trùng lặp và lệch theo quỹ đạo gần nhất.
 
 **Ví dụ.** Bộ đệm vòng dung lượng $N\in\mathbb N_+$; mini-batch có $b\in\mathbb N_+$
 mẫu với $b\le N$. Lấy đều các vị trí trong $\mathcal D$ và tái sử dụng chuyển tiếp.
-Replay trộn cả hành vi khám phá hiện tại lẫn các phiên bản hành vi cũ — đây là
-nguồn lệch chính sách thứ hai của DQN (nguồn thứ nhất là $\epsilon$-greedy so với
-phép cực đại Bellman).
 
 **Hình thức.** Lưu
 $(O_t,A_t,R_{t+1},O_{t+1},Z_{t+1},U_{t+1})$ vào $\mathcal D$; lấy ngẫu nhiên
-mini-batch từ $\mathcal D$ để tính mất mát. Mất mát DQN cơ bản không gắn tỉ số lấy mẫu quan
-trọng vì cùng lý do như Q-learning dạng bảng: $A_i$ là đối số điều kiện của $Q_\theta(O_i,A_i)$,
-còn phần tiếp nối tại $O'_i$ được tính trọn bằng phép cực đại, không qua hành động lấy mẫu từ hành vi.
+mini-batch từ $\mathcal D$ để tính mất mát.
 
 **Ứng dụng và giới hạn.** Lợi ích: phá vỡ tương quan theo thời gian, tái sử dụng
 dữ liệu quá khứ, cải thiện hiệu quả mẫu. Giới hạn: xem topic-07.
+
+### Dữ liệu khác chính sách trong bộ nhớ
+
+Bộ nhớ phát lại trộn các mẫu chuyển do hành vi thăm dò hiện tại sinh ra với các mẫu do những phiên bản hành vi cũ sinh ra. Đây là nguồn khác chính sách thứ hai của DQN; nguồn thứ nhất là khoảng cách giữa hành vi $\epsilon_{\mathrm{exp}}$-tham lam và phép cực đại trong đích.
+
+Mất mát DQN cơ bản không gắn tỉ số lấy mẫu quan trọng vì cùng lý do như Q-learning dạng bảng: $A_i$ là đối số điều kiện của $Q_\theta(O_i,A_i)$, còn phần tiếp nối tại $O'_i$ được tính trọn bằng phép cực đại, không qua hành động lấy mẫu từ hành vi.
 
 **Kiểm tra nhanh.** Vì sao loss DQN cơ bản không cần tỉ số lấy mẫu quan trọng? — Vì
 $A_i$ đã được cố định trong điều kiện của $Q_\theta(O_i,A_i)$, và hành động tại $O'_i$ không được
 lấy mẫu từ hành vi mà được thay bằng phép cực đại, chính là kỳ vọng theo chính sách đích tham lam.
 
 <!-- note-topic-id: lec-08-topic-07 -->
-### Replay giảm tương quan, không tạo i.i.d.
-
-**Vấn đề.** Tối ưu mạng nơ-ron thường giả sử mini-batch gần i.i.d.; chuyển tiếp
-liên tiếp thu thập trực tuyến tương quan mạnh. Replay có giải quyết triệt để không?
-
-**Trực giác.** Các chuyển tiếp liền nhau đi qua quan sát gần nhau và dùng cùng
-phiên bản chính sách; mini-batch liên tiếp có cỡ mẫu hiệu dụng nhỏ hơn số phần tử,
-gradient dao động theo đoạn quỹ đạo gần nhất, mạng có thể quá khớp vùng trạng thái
-mới và "quên" vùng cũ.
+### Giới hạn của bộ nhớ phát lại
 
 **Ví dụ.** Lấy mẫu từ replay trộn các thời điểm, nhưng các mẫu vẫn có thể chồng
 lấn quan sát, đến từ các chính sách hành vi khác nhau, và bộ đệm hữu hạn loại dần
@@ -475,6 +480,8 @@ nói tương quan luôn làm gradient bị chệch; hệ quả chắc chắn hơ
 
 **Kiểm tra nhanh.** Replay có biến dữ liệu thành i.i.d. không? — Không; nó chỉ
 giảm tương quan ngắn hạn và tăng tái sử dụng.
+
+## Hàm mất mát, vòng huấn luyện và bất ổn
 
 <!-- note-topic-id: lec-08-topic-08 -->
 ### Gather và dừng gradient ở đích

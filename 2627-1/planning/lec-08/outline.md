@@ -95,12 +95,12 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | `note-topic-id` | `data-slide-id` |
 |---|---|
 | `lec-08-topic-01` | `L08-M2T`, `L08-03` |
-| `lec-08-topic-02` | `L08-07` |
+| `lec-08-topic-02` | `L08-07`, `L08-07b`, `L08-07c` |
 | `lec-08-topic-03` | `L08-08` |
 | `lec-08-topic-04` | `L08-09` |
 | `lec-08-topic-05` | `L08-12`, `X02` |
 | `lec-08-topic-06` | `L08-13` |
-| `lec-08-topic-07` | `L08-14`, `L08-28` |
+| `lec-08-topic-07` | `L08-14` |
 | `lec-08-topic-08` | `L08-10`, `L08-15` |
 | `lec-08-topic-09` | `X01`, `L08-17`, `L08-21` |
 | `lec-08-topic-10` | `L08-11`, `L08-18`, `L08-19` |
@@ -111,6 +111,7 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | `lec-08-topic-15` | `L08-33`, `L08-34`, `X03` |
 | `lec-08-topic-16` | `L08-31`, `L08-32` |
 | `lec-08-topic-17` | `L08-01`, `L08-02`, `L08-02b`, `L08-02c` |
+| `lec-08-topic-18` | `L08-M3T`, `L08-28` |
 
 ## Ánh xạ nguồn (bản cũ; cột "trang đích" được cập nhật khi sửa từng trang, các lệch thứ tự của đợt sửa 2026-10-22 ghi trong `storyboard.md`)
 

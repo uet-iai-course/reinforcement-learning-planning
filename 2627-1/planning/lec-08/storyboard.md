@@ -43,7 +43,7 @@ Ký hiệu cột "C0": vị trí sau bước C0 (chỉ di chuyển trang, bỏ C
 | 2 | `L08-08` | Đích hồi quy | sửa | Dòng "Ký hiệu:" định nghĩa $Z$ trước khi dùng; Định nghĩa đích hồi quy; $q_t$, $\delta_t$; hồi quy với $\theta^-$ cố định | 2.8 (S14) |
 | 2 | `L08-09` | Ví dụ: đích tại mẫu chuyển kết thúc | sửa | Mẫu 2 của ví dụ xuyên suốt "mini-batch hai mẫu chuyển", viết theo chỉ số $t$; Câu hỏi bỏ mặt nạ | 2.9 (S15) |
 | 2 | `L08-12` | Kết thúc và cắt ngắn | sửa | $U=1,Z=0$ vẫn bootstrap; đặt lại khi $Z\lor U$; mặt nạ chỉ $1-Z$; hình hai nhánh; ví dụ mẫu 1 bị cắt ngắn; dòng tự đặt lại sang `L08-13` | 2.10 (S16) |
-| 3 | `L08-M3T` | 3. Bộ nhớ phát lại | thêm | Trang tiêu đề mạch, điểm vào mạch 3 | chưa có |
+| 3 | `L08-M3T` | 3. Bộ nhớ phát lại | thêm | Trang tiêu đề mạch, điểm vào mạch 3; topic-18 | 3.0 (S17) |
 | 3 | `L08-28` | Tương quan giữa các mẫu chuyển liên tiếp | sửa, chuyển lên | Vấn đề đứng trước cơ chế; hình dải quỹ đạo | 3.1 |
 | 3 | `L08-13` | Bộ nhớ phát lại | sửa | Nhu cầu:, định nghĩa $\mathcal D$, ví dụ $N=6$; quan sát cuối khi tự đặt lại, không nêu tên trường API | 3.2 |
 | 3 | `L08-05r` | Dữ liệu khác chính sách trong bộ nhớ | thêm (từ `L08-05`) | Hai nguồn khác chính sách; lý do không cần tỉ số lấy mẫu quan trọng đã sửa (Sutton và Barto 2018, §6.6, §7.3) | chưa có |
@@ -283,6 +283,16 @@ Quyết định R1 mục 5 (khó khăn không lồi được hứa ở ghi chú 
 - **Liên kết:** trước là `L08-09` (đích tại mẫu chuyển kết thúc, $y_t=-2$); sau là `L08-M3T` (chưa có; hiện là `L08-28`, tương quan giữa các mẫu chuyển liên tiếp). Mục tiêu hỗ trợ: mục tiêu 1 (phân biệt kết thúc với cắt ngắn), mục tiêu 6 (bài tổng hợp có cả hai cờ).
 - **Mật độ:** trước sửa 31 âm tiết, 4 dòng, 1 công thức hiển thị, 2 thẻ, ghi chú 48 âm tiết. Sau sửa 36 âm tiết, 5 dòng (16, 5, 9, 2, 4), 0 công thức hiển thị, 0 hộp chữ, 1 hình, ghi chú diễn giả 123 âm tiết. Đáy nội dung 693 px.
 - **Ghi chú bài giảng:** mục topic-05 viết lại thành "Kết thúc và cắt ngắn": đoạn nhu cầu (hai lý do dừng lượt); Định nghĩa 08.6 (cờ cắt ngắn, bộ sáu, quy tắc mặt nạ và đặt lại); đoạn vai của hai cờ, nối cách xử lý cắt ngắn của Bài 07; hình và đoạn đọc hình; Ví dụ 08.8 (bảng một hàng, $y_t=4{,}6$, mặt nạ gộp cho $1$, diễn giải); giả thiết "giới hạn không thuộc nhiệm vụ" và hai trường hợp ngược lại (Pardo và cộng sự, 2018); "Trong thực hành."; đoạn kết phần 2 bằng văn xuôi (ba kết quả, điều còn thiếu: mẫu chuyển nào được dùng để cập nhật; phần 3 giải). Đoạn tự đặt lại chuyển lên đầu mục bộ nhớ phát lại (topic-06), bỏ tên trường API, sẽ viết lại ở bước `L08-13`. Bản đồ chủ đề: hàng topic-05 đổi tên.
+
+#### `L08-M3T` Trang tiêu đề mạch 3 (bước S17), điểm vào mạch 3
+
+- **Trang muốn nói gì:** mạch 3 "Bộ nhớ phát lại" có nhiệm vụ cung cấp mini-batch ít tương quan: lưu mẫu chuyển sáu thành phần rồi lấy mẫu đều từ bộ nhớ.
+- **Phục vụ mạch nào và thế nào:** điểm vào mạch 3; số "3." khớp mục 3 của `L08-02b` và `#/3` (đã thử: `#/3` mở `L08-M3T`; bấm mục 3 của `L08-02b` mở `L08-M3T`, hash `#/mach-3`). Ngoài hành trình khái niệm: dòng dẫn nêu nhu cầu chung của mạch, vấn đề cụ thể (tương quan) nằm ở `L08-28`.
+- **Vấn đề còn lại trước sửa:** không mạch nào có trang tiêu đề (`review-structure.md` bảng phát hiện nghiêm trọng; `review-student.md`); mạch 3 cũ mở thẳng bằng cơ chế.
+- **Quyết định:** thêm, theo `review-structure.md` §1 mạch 3. Tên "Bộ nhớ phát lại" khác tiêu đề trang nội dung đầu `L08-28` (hiện "Tương quan làm giảm thông tin mới", sẽ là "Tương quan giữa các mẫu chuyển liên tiếp"); trùng tên `L08-13` (trang thứ hai của mạch), không trái quy tắc. Bốn từ khóa là khái niệm của mạch: tương quan ngắn hạn (`L08-28`), bộ đệm vòng và lấy mẫu đều (`L08-13`), dữ liệu khác chính sách (`L08-05r`). "mẫu chuyển" thay "chuyển tiếp" theo kế hoạch A.2. `data-note-topic-id` là `lec-08-topic-18`, chủ đề mới của trang nội dung đầu mạch.
+- **Liên kết:** kế thừa từ phần 2: bộ sáu thành phần và đích hồi quy tính từ mạng mục tiêu (`L08-12`, `L08-08`). Giao cho phần 4: mini-batch lấy đều từ bộ nhớ.
+- **Mật độ:** dòng dẫn 17 âm tiết (trần 25), từ khóa 15 âm tiết, 4 cụm; ghi chú diễn giả 83 âm tiết (khoảng 40–100). Đáy nội dung 521 px.
+- **Ghi chú bài giảng:** tiêu đề tạm "## Bộ nhớ phát lại, hàm mất mát, vòng huấn luyện và bất ổn" tách thành `## 3. Bộ nhớ phát lại` và tiêu đề tạm "## Hàm mất mát, vòng huấn luyện và bất ổn" (topic-08…12, cho mạch 4 và 6). Các mục con của phần 3 xếp theo thứ tự trang: "Tương quan giữa các mẫu chuyển liên tiếp" (topic-18 mới, tách từ đoạn Vấn đề/Trực giác của topic-07; `L08-28` đổi `data-note-topic-id` sang topic-18 vì viewer không cho một mã xuất hiện hai lần và topic-07 còn phục vụ `L08-14` ở cuối mạch), "Bộ nhớ phát lại" (topic-06, `L08-13`), "Dữ liệu khác chính sách trong bộ nhớ" (tách từ topic-06, `L08-05r`), "Giới hạn của bộ nhớ phát lại" (topic-07 đổi tên, `L08-14`). Nội dung từng mục chưa viết lại. Bản đồ chủ đề thêm hàng topic-18, đổi tên topic-07; "Bảy phần" mục 3 thêm topic-18; `outline.md` cập nhật bảng ánh xạ (topic-18; topic-02 gồm `L08-07`, `L08-07b`, `L08-07c`; topic-07 chỉ còn `L08-14`).
 
 ### Bản trước đợt sửa 2026-10-22
 
