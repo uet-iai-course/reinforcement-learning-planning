@@ -81,7 +81,7 @@ Một số chữ trùng với bài trước nhưng mang nghĩa khác. $\epsilon_
 | `lec-08-topic-16` | Đầu vào bốn khung Atari và tính Markov | tr. 17, 35 | Ví dụ cho giao diện mạng; giới hạn của bốn khung | Vào: topic-01 → Ra: quan sát $O_t$ cho topic-02 |
 | `lec-08-topic-02` | Mạng giá trị hành động, đích di động và mạng mục tiêu | tr. 14–17, 20, 31, 33, 35 | Định nghĩa $\mathbf q_\theta$, $Q_\theta$; giả thiết Markov khi viết mục tiêu; $Q_{\theta^-}$ | Vào: topic-01, topic-16 → Ra: $\mathbf q_\theta$ và hai bản sao mạng |
 | `lec-08-topic-03` | Đích hồi quy | tr. 16, 20–22, 34 | Đích $y_t$ và sai số TD | Vào: topic-02 → Ra: nhãn hồi quy |
-| `lec-08-topic-04` | Kết thúc thật và mặt nạ $(1-Z)$ | tr. 21 | Phân biệt $Z$ và $U$ | Vào: topic-03 → Ra: đích đúng |
+| `lec-08-topic-04` | Ví dụ: đích tại mẫu chuyển kết thúc | tr. 21 | Phân biệt $Z$ và $U$ | Vào: topic-03 → Ra: đích đúng |
 | `lec-08-topic-05` | Chuyển tiếp và hai cờ, autoreset | tr. 21 | Hợp đồng dữ liệu | Vào: topic-04 → Ra: bộ sáu thành phần |
 | `lec-08-topic-06` | Bộ nhớ phát lại | tr. 19–21, 32 | Cơ chế lưu và lấy mẫu | Vào: topic-05 → Ra: mini-batch |
 | `lec-08-topic-07` | Replay giảm tương quan, không tạo i.i.d. | tr. 19, 29–32 | Giới hạn của replay | Vào: topic-06 → Ra: phát biểu đúng phạm vi |
@@ -337,43 +337,44 @@ Các điều kiện trong định nghĩa có vai trò riêng. $Z_{t+1}$ chỉ gh
 ::: remark Nhận xét 08.5 (Hàm hồi quy tốt nhất cho đích cố định)
 Giả sử $O_t$ đủ Markov, $\theta^-$ cố định, các cặp $(O_t,A_t)$ được lấy theo một phân phối cố định và $\mathbb E[y_t^2]<\infty$. Trong mọi hàm $f$ của $(o,a)$, hàm làm nhỏ nhất kỳ vọng $\mathbb E\bigl[(y_t-f(O_t,A_t))^2\bigr]$ là kỳ vọng có điều kiện
 $$
-f^\star(o,a)=\mathbb E\bigl[y_t\mid O_t=o,A_t=a\bigr]=\mathbb E\Bigl[R_{t+1}+\gamma(1-Z_{t+1})\max_{a'}Q_{\theta^-}(O_{t+1},a')\Bigm| O_t=o,A_t=a\Bigr],
+\begin{aligned}
+f^\star(o,a)&=\mathbb E\bigl[y_t\mid O_t=o,A_t=a\bigr]\\
+&=\mathbb E\Bigl[R_{t+1}+\gamma(1-Z_{t+1})\max_{a'}Q_{\theta^-}(O_{t+1},a')\Bigm| O_t=o,A_t=a\Bigr],
+\end{aligned}
 $$
 tức $(\mathcal TQ_{\theta^-})(o,a)$ với $\mathcal T$ là toán tử Bellman tối ưu viết theo quan sát; đẳng thức đúng hầu chắc chắn theo phân phối của $(O_t,A_t)$. Một lượt hồi quy giữa hai lần đồng bộ vì vậy xấp xỉ một bước lặp giá trị $Q_{\theta^-}\mapsto\mathcal T Q_{\theta^-}$, trong giới hạn của lớp hàm và của số bước tối ưu. Nhận xét không nói gì về hội tụ của chuỗi các bước như vậy: mỗi bước có sai số xấp xỉ và sai số tối ưu, và phân phối dữ liệu đổi theo $\theta$.
 :::
 
 **Trong thực hành.** Đích được tính cho cả mini-batch bằng một lần tính xuôi của mạng mục tiêu trên các quan sát kế tiếp, cho mảng kích thước $[b,\lvert\mathcal A\rvert]$, rồi lấy cực đại theo chiều hành động để được một giá trị cho mỗi mẫu. Cờ $Z_i$ được lưu cùng mẫu chuyển và đổi sang kiểu số khi tính $1-Z_i$. Đích không được truyền gradient về $\theta$; phần 4 viết điều này thành phép dừng gradient trong hàm mất mát.
 
-Chúng ta đã có nhãn cho mỗi mẫu chuyển. Mục kế tiếp tính đích trên một mẫu chuyển kết thúc và cho thấy mặt nạ $(1-Z)$ thay đổi đích như thế nào.
+Chúng ta đã có nhãn cho mỗi mẫu chuyển. Ví dụ 08.7 dưới đây tính đích trên một mẫu chuyển kết thúc, có và không có mặt nạ $(1-Z)$.
 
 <!-- note-topic-id: lec-08-topic-04 -->
-### Kết thúc thật làm mất nhánh bootstrap
+### Ví dụ: đích tại mẫu chuyển kết thúc
 
-Quay lại đích hồi quy ở chủ đề trước, bước này xử lý riêng trường hợp chuyển tiếp
-kết thúc.
+Mặt nạ $(1-Z_{t+1})$ trong Định nghĩa 08.4 chỉ tác động khi lượt kết thúc. Ví dụ sau đo tác động đó trên một mẫu chuyển có giá trị lớn ở quan sát cuối lượt. Cùng số liệu này là mẫu thứ hai của mini-batch hai mẫu chuyển dùng lại ở phần 4, khi chỉ số thời gian $t$ được thay bằng chỉ số mẫu $i$.
 
-**Vấn đề.** Nếu chỉ viết $y = r + \gamma\max_{a'}Q_{\theta^-}(s',a')$ mà không xử
-lý kết thúc, đích tại chuyển tiếp kết thúc sẽ chứa một ước lượng vô nghĩa về
-"trạng thái sau khi kết thúc".
+::: example Ví dụ 08.7 (Đích tại mẫu chuyển kết thúc)
+**Dữ kiện.** $\gamma=0{,}9$. Một mẫu chuyển kết thúc lượt có
 
-**Trực giác.** Mặt nạ $(1-Z)$ triệt tiêu nhánh bootstrap đúng khi quy trình đang
-mô hình hóa đã kết thúc.
+| $R_{t+1}$ | $Z_{t+1}$ | $\max_{a'}Q_{\theta^-}(O_{t+1},a')$ | $q_t$ |
+|---|---|---|---|
+| $-2$ | $1$ | $100$ | $-1{,}5$ |
 
-**Ví dụ.** Cho $\gamma=0{,}9$, $R_{t+1}=-2$,
-$\max_{a'}Q_{\theta^-}(O_{t+1},a')=100$:
+Giá trị $100$ là đầu ra của mạng mục tiêu tại quan sát cuối lượt (số minh họa).
 
-- Chưa kết thúc ($Z_{t+1}=0$): $y_t = -2 + 0{,}9\cdot 100 = 88$.
-- Đã kết thúc ($Z_{t+1}=1$): $y_t = -2$. Giá trị $100$ **không** ảnh hưởng đến đích.
+**Tính.** Với mặt nạ, $y_t=-2+0{,}9\cdot(1-1)\cdot100=-2$ và $\delta_t=y_t-q_t=-2-(-1{,}5)=-0{,}5$.
 
-**Hình thức.** $Z_{t+1}=1$ là kết thúc thật của MDP đang mô hình hóa. Mặt nạ nhân
-nhánh bootstrap với không, không phải một hiệu chỉnh nhỏ.
+Nếu cài đặt bỏ mặt nạ, tức coi $Z_{t+1}=0$, thì $y_t=-2+0{,}9\cdot100=88$ và $\delta_t=88-(-1{,}5)=89{,}5$.
 
-**Ứng dụng và giới hạn.** Lỗi phổ biến: dùng một biến `done` đã gộp máy móc
-(terminated OR truncated) làm mặt nạ. Cắt ngắn ngoài mô hình ($U=1$) **không** tự
-động đặt bootstrap bằng 0 — xem topic-05.
+**Diễn giải.** Với mặt nạ, đích bằng đúng phần thưởng cuối cùng, và $\delta_t<0$ kéo dự đoán $-1{,}5$ xuống về $-2$. Bỏ mặt nạ, đích lệch $90$ đơn vị và $\delta_t$ đổi dấu, nên dự đoán bị kéo lên về $88$.
+:::
 
-**Kiểm tra nhanh.** Tại chuyển tiếp kết thúc, đích bằng gì? — Đúng bằng phần
-thưởng $R_{t+1}$; nhánh bootstrap bị nhân với $0$.
+Sau bước kết thúc không còn phần thưởng nào, nên giá trị đúng của phần lợi tức còn lại là $0$. Dạng bảng ghi điều này bằng quy ước $Q(s,\cdot)=0$ tại trạng thái kết thúc. Mạng không có ô riêng như vậy: $\max_{a'}Q_{\theta^-}(O_{t+1},a')$ tại quan sát cuối lượt là một số do tham số quyết định, có thể lớn tùy ý, và nó không ứng với phần thưởng nào. Mặt nạ $(1-Z_{t+1})$ thay cho quy ước của dạng bảng.
+
+Lỗi bỏ mặt nạ không dừng ở một mẫu chuyển. Mẫu chuyển trước đó trong lượt có đích chứa $\max_{a'}Q_{\theta^-}$ tại $O_t$, tức chứa chính dự đoán vừa bị kéo lên; qua các lần đồng bộ, giá trị tùy ý ở cuối lượt lan ngược về các mẫu chuyển trước. Một lỗi cùng loại là lấy mặt nạ từ một cờ gộp cả kết thúc lẫn dừng vì giới hạn bên ngoài; mục cuối của phần này tách hai trường hợp.
+
+**Trong thực hành.** Cờ $Z_{t+1}$ phải được lưu cùng mẫu chuyển ngay khi thu thập, vì sau khi lượt kết thúc, môi trường thường được đặt lại và quan sát kế tiếp thuộc lượt mới. Một cách kiểm tra cài đặt là tính đích của một mẫu kết thúc bằng tay như Ví dụ 08.7 và so với giá trị chương trình trả về.
 
 <!-- note-topic-id: lec-08-topic-05 -->
 ### Một chuyển tiếp cần hai cờ: $Z$ và $U$
