@@ -817,3 +817,20 @@ Yêu cầu người dùng: "từ đích dùng nhiều nhưng có vẻ là văn n
 - Còn lại: 22 lần "đích" trong deck và ghi chú bài giảng, tất cả là "chính sách đích" (điều phối viên kiểm bằng grep).
 - Kiểm của điều phối viên: `check.py` 60 trang ở 1600×900 và 390×844, không lỗi, không `.katex-error`, mọi `bottom` ≤ 702; đã xem ảnh chụp `L08-07b`, `L08-10`, `L08-12`, `L08-29`, `L08-30`: nhãn SVG nằm trong khung. Trình xem ghi chú bài giảng: 0 `.katex-error`, 0 khối `:::` lạc, 64 khối nhận dạng, không cuộn ngang ở 390 px, không yêu cầu mạng ngoài (điều phối viên tự chạy).
 - Ngoài phạm vi: Bài 09 còn dùng "đích" (deck và ghi chú), chưa đổi.
+
+## Giai đoạn III: bài tập `exercises.md` (2026-10-22 → 2026-10-23)
+
+Yêu cầu người dùng (/goal): "làm phần bài tập và phần thực hành (dùng deep q learning cho Cartpole, Lunar Lander, Flappy bird trong cùng một notebook, có visualize hiệu quả và visualize video, giống các notebook trước)".
+
+| vai trò | loại tác tử | mô hình | effort | đầu ra | quyết định của điều phối viên |
+|---|---|---|---|---|---|
+| soạn bài tập (ghi tệp) | `general-purpose` | opus (claude-opus-5-5) | high | `materials/lec-08/exercises.md`, Bài tập 08.6–08.19 (3 nhận biết, 6 tính toán hoặc chứng minh, 5 vận dụng); `no-ai-slop` Edit + `eval.md` | yêu cầu sửa (16 mục), rồi yêu cầu sửa (4 mục), rồi chấp nhận |
+| rà soát RL và toán (chỉ đọc) | `general-purpose` | opus | high | tính lại mọi số bằng script riêng; đối chiếu số hiệu ghi chú, trang nguồn 21, 28, 32, 36, liên kết `#/h/v` | chấp nhận báo cáo: 0 chặn, 0 nghiêm trọng, 1 trung bình (08.18 khoảng lợi tức $[1,100]$), 7 nhẹ |
+| rà soát sinh viên + sư phạm + `no-ai-slop` Detect (chỉ đọc) | `general-purpose` | opus | high | trình xem ở 1600×900 và 390×844, ảnh chụp | chấp nhận báo cáo: 0 chặn, 0 nghiêm trọng, 7 trung bình ($\rho$ hai nghĩa; 08.9(c) chỉ đúng với SGD; tên PyTorch chưa nêu ở 08.15; $r_0$ trùng cột phần thưởng; gợi ý 08.18(d) lộ lời giải; công thức hai cột bị cắt), 11 nhẹ |
+| kiểm lại phần đã sửa (chỉ đọc) | cùng tác tử rà soát RL và toán | opus | high | 1 trung bình (đoạn PyTorch dính vào mục (b) của danh sách), 3 nhẹ | chấp nhận; cả 4 mục đã sửa |
+
+Nguồn: không có bài tập tuần 8 trong `RL-hk2-2025-2026/resources/`; bài tập dựa trên ghi chú bài giảng, bài giảng gốc `lecture8-dqn.pdf` và tài liệu ngoài được trích cụ thể; số liệu tự xây dựng được ghi rõ. Không lặp Bài tập 08.1–08.5 của ghi chú; bảng `Mạch | Mở phần | Bài tập` trỏ tới chúng và các trang bài tập trên deck.
+
+Kiểm của điều phối viên: tự tính lại $c(C)$, xác suất cặp liền nhau, khoảng tin cậy 08.19 và giá trị $22{,}2$ ở 08.18; trình xem ở 1600×900 và 390×844 với mọi khối mở: 0 `.katex-error`, 14/14/14 khối, 0 `:::` lạc, không cuộn ngang toàn trang, không lỗi console, không yêu cầu mạng ngoài; cấu trúc khối 08.15 sau sửa là P, UL(a–b), P, PRE, P, UL(c–d); 0 "đích", "hãy", "Đáp án". Ở 390 px còn 25 phần tử cuộn trong khung riêng (bảng nhiều cột, vài công thức dài), không cuộn toàn trang.
+
+Ngoài phạm vi, để xử lý sau: phần "Bài tập củng cố" của ghi chú bài giảng xếp Bài tập 08.5 trước 08.2 và mục "Mức nhận biết" rỗng; phông chữ đơn cách của trình xem đặt sai dấu tiếng Việt trong khối mã (vấn đề chung của `material-viewer.css`).
