@@ -840,3 +840,22 @@ Ngoài phạm vi, để xử lý sau: phần "Bài tập củng cố" của ghi 
 Tác tử biên tập (Agent `general-purpose`, opus, high; `no-ai-slop` Edit): `L08-K5` có bảng `Mạch | Bài tập` cho phần 2–7 (Bài tập 08.6–08.19 và "ghi chú: 08.1–08.5"), dòng "Tài liệu đọc:", cặp liên kết "Ghi chú bài giảng · Bài tập", dòng chuyển sang Bài 09; ghi chú diễn giả viết lại (148 âm tiết). Mật độ 48 âm tiết; cột bảng 9 dòng hiển thị vượt trần 6 dòng, ngoại lệ kiểu bảng tổng kết ghi trong `storyboard.md` (bản một cột bị loại vì chạm chân trang). `index.html` thẻ Bài 8: liên kết "Mở bài tập"; mô tả "đích hồi quy" → "mục tiêu hồi quy". Ghi chú bài giảng, mục "Bài tập về nhà và tài liệu đọc": thêm một đoạn trỏ tới `exercises.md` với ánh xạ theo phần khớp bảng `L08-K5`.
 
 Quyết định của điều phối viên: **chấp nhận**. Điều phối viên đã xem ảnh chụp `L08-K5` ở 1600×900 (bảng và cột phải trong khung, đáy 639 px) và thẻ Bài 8 ở 1600 px; đối chiếu bảng `L08-K5` với bảng mở đầu của `exercises.md`.
+
+## Thực hành: `thuc-hanh-dqn-cartpole-lunarlander-flappybird.ipynb` (2026-10-23)
+
+Yêu cầu người dùng: DQN cho CartPole, Lunar Lander, Flappy Bird trong cùng một notebook, có trực quan hóa hiệu quả và "video", giống các notebook trước (yêu cầu thường trực trong bộ nhớ: standalone, `%pip` ở ô đầu, Markdown trước mỗi ô chính, trình phát `<canvas>` từ mảng trạng thái, dải ảnh, bước tính tay có `assert`, công bố mọi thử nghiệm sơ bộ).
+
+| vai trò | loại tác tử | mô hình | effort | đầu ra | quyết định của điều phối viên |
+|---|---|---|---|---|---|
+| soạn notebook, giai đoạn 1 (thử nghiệm, chỉ ghi scratchpad) | `general-purpose` | opus (claude-opus-5-5) | high | dữ kiện môi trường, chính sách tham chiếu, 36 cấu hình / 153 lần chạy, thí nghiệm loại bỏ; chạy lại toàn bộ sau khi máy khởi động lại xóa `/tmp` | chấp nhận; điều phối viên kiểm `score_limit` của Flappy Bird trả cờ `truncated`, `dqn.py` chỉ dùng $1-Z$, vết Ví dụ 08.15 |
+| soạn notebook, giai đoạn 2 (ghi tệp) | cùng tác tử | opus | high | notebook 61 ô, chạy trong venv sạch 11 min 54 s, 0 lỗi | chuyển rà soát |
+| rà soát RL và toán (chỉ đọc) | `general-purpose` | opus | high | 0 chặn, 0 nghiêm trọng, 6 trung bình (dừng sớm và mốc tốt nhất; bảng loại bỏ mâu thuẫn, chưa ghép cặp; luật tay Flappy chưa công bố phép quét ngưỡng; giả thiết của Mệnh đề 08.8; khác biệt với RL Zoo; kết luận §10 vượt dữ liệu), 10 nhẹ | chấp nhận |
+| rà soát sinh viên + kiểm thử standalone (chỉ đọc) | `general-purpose` | opus | high | venv rỗng mới, 791 s, 0 lỗi, đầu ra trùng khớp; 5 trung bình (trình phát Lunar cắt thân tàu ở các bước đầu; trình phát Flappy giới hạn 1000 khung che va chạm; lời đọc §11 trái với số chạy trực tiếp; mốc tốt nhất trùng mốc cuối; thiếu đồ thị giá trị ước lượng so với lợi tức), 7 nhẹ | chấp nhận; điều phối viên xem ảnh `wide-5-t0.png` xác nhận lỗi cắt |
+| rà soát sư phạm + `no-ai-slop` Detect (chỉ đọc) | `general-purpose` | opus | high | 6 trung bình (trích sai Ví dụ 08.7–08.8; hai khẳng định vượt dữ liệu; mâu thuẫn trong ô 54; số in ra trái lời đọc; ký hiệu $N$, $T$, $A$/$B$ đa nghĩa), 14 nhẹ | chấp nhận |
+| sửa (30 mục gộp) | tác tử soạn | opus | high | 70 ô, chạy lại trong venv sạch 10 min 44 s, 0 lỗi; xác minh SB3 2.9.0 dùng Huber và `max_grad_norm=10` trong mã nguồn | chuyển kiểm lại |
+| kiểm lại phần đã sửa (chỉ đọc) | tác tử rà soát RL và toán | opus | high | 1 trung bình (Lunar Lander không Markov: trọng số trung bình trên trạng thái ẩn phụ thuộc hành vi), 5 nhẹ | chấp nhận; điều phối viên tự tính phần cắt ngắn $\approx 2{,}95$; tác tử soạn sửa cả 6 mục (chỉ Markdown) |
+| đồng bộ `index.html` và Tình huống 08.1 | `general-purpose` (tác tử biên tập trước) | opus | high | nút "Mở trên Colab" và "Tải notebook (.ipynb)"; Tình huống 08.1 trích bảng nhiều hạt giống của notebook, ghi rõ số một hạt giống và hiệu chỉnh Bonferroni | chấp nhận |
+
+Kiểm cuối của điều phối viên: 70 ô, 30 ô mã đều đã chạy, 0 đầu ra lỗi, 0 stderr; ô mã đầu là `%pip install`; không tham chiếu tệp trong repo; 0 "đích", 0 "hãy"; 1,94 MB; tệp thuộc danh sách cho phép của `.gitignore`. Đã xem ảnh trình phát CartPole, Lunar Lander (bước 0, thấy đủ tàu), Flappy Bird (bước cuối 1755, va chạm) và đồ thị quỹ đạo Lunar Lander. Không có `assert` trên số thực phụ thuộc phiên bản gói.
+
+Giới hạn còn lại: thời gian chạy trên Colab chưa đo (ước lượng 10 phút tính toán trên CPU hai luồng); Flappy Bird nhạy với hạt giống (chính sách cuối 4,3–46,6 ống), notebook diễn giải theo bảng nhiều hạt giống; cấu hình chọn trên `TEST_SEED` nên số liệu DQN lạc quan (đã ghi trong notebook).
