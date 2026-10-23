@@ -834,3 +834,9 @@ Nguồn: không có bài tập tuần 8 trong `RL-hk2-2025-2026/resources/`; bà
 Kiểm của điều phối viên: tự tính lại $c(C)$, xác suất cặp liền nhau, khoảng tin cậy 08.19 và giá trị $22{,}2$ ở 08.18; trình xem ở 1600×900 và 390×844 với mọi khối mở: 0 `.katex-error`, 14/14/14 khối, 0 `:::` lạc, không cuộn ngang toàn trang, không lỗi console, không yêu cầu mạng ngoài; cấu trúc khối 08.15 sau sửa là P, UL(a–b), P, PRE, P, UL(c–d); 0 "đích", "hãy", "Đáp án". Ở 390 px còn 25 phần tử cuộn trong khung riêng (bảng nhiều cột, vài công thức dài), không cuộn toàn trang.
 
 Ngoài phạm vi, để xử lý sau: phần "Bài tập củng cố" của ghi chú bài giảng xếp Bài tập 08.5 trước 08.2 và mục "Mức nhận biết" rỗng; phông chữ đơn cách của trình xem đặt sai dấu tiếng Việt trong khối mã (vấn đề chung của `material-viewer.css`).
+
+### Đồng bộ sau bài tập: `L08-K5`, `index.html`, ghi chú bài giảng (2026-10-23)
+
+Tác tử biên tập (Agent `general-purpose`, opus, high; `no-ai-slop` Edit): `L08-K5` có bảng `Mạch | Bài tập` cho phần 2–7 (Bài tập 08.6–08.19 và "ghi chú: 08.1–08.5"), dòng "Tài liệu đọc:", cặp liên kết "Ghi chú bài giảng · Bài tập", dòng chuyển sang Bài 09; ghi chú diễn giả viết lại (148 âm tiết). Mật độ 48 âm tiết; cột bảng 9 dòng hiển thị vượt trần 6 dòng, ngoại lệ kiểu bảng tổng kết ghi trong `storyboard.md` (bản một cột bị loại vì chạm chân trang). `index.html` thẻ Bài 8: liên kết "Mở bài tập"; mô tả "đích hồi quy" → "mục tiêu hồi quy". Ghi chú bài giảng, mục "Bài tập về nhà và tài liệu đọc": thêm một đoạn trỏ tới `exercises.md` với ánh xạ theo phần khớp bảng `L08-K5`.
+
+Quyết định của điều phối viên: **chấp nhận**. Điều phối viên đã xem ảnh chụp `L08-K5` ở 1600×900 (bảng và cột phải trong khung, đáy 639 px) và thẻ Bài 8 ở 1600 px; đối chiếu bảng `L08-K5` với bảng mở đầu của `exercises.md`.
