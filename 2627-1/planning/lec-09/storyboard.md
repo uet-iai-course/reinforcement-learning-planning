@@ -350,7 +350,7 @@ Lệch khỏi nguồn (mạch 5): nguồn tr. 30–32 (hàm mục tiêu, tối �
 
 #### Mạch 6 "Gradient chính sách và REINFORCE" (bước S41–S51)
 
-Thứ tự sau bước: `L09-M6T`, `L09-28`, `L09-28A`, `L09-29`, `L09-29b`, `L09-22`, `L09-30`, `L09-32`, `L09-31`, `X03`, `X03b`. `L09-22` đặt ngay trước định lý (kế hoạch D1 cho phép đặt trước hoặc gộp); đặt sau `L09-28A`, `L09-29` vì giả thiết gom các điều kiện mà ba trang đó dùng.
+Thứ tự sau bước (cập nhật 2026-10-28: thêm `L09-29a`, `L09-29c`, `L09-29d`): `L09-M6T`, `L09-28`, `L09-28A`, `L09-29`, `L09-29a`, `L09-29b`, `L09-29c`, `L09-29d`, `L09-22`, `L09-30`, `L09-32`, `L09-31`, `X03`, `X03b`. `L09-22` đặt ngay trước định lý (kế hoạch D1 cho phép đặt trước hoặc gộp); đặt sau `L09-28A`, `L09-29` vì giả thiết gom các điều kiện mà ba trang đó dùng.
 
 | bước | trang | tiêu đề trước → sau | quyết định và lý do | âm tiết trước → sau | dòng, đáy | ghi chú diễn giả |
 |---|---|---|---|---|---|---|
@@ -390,7 +390,7 @@ Ngoại lệ mật độ mạch 6: `L09-31` 7 dòng (một dòng mở, bốn bư
 | Ứng dụng | `X03` (b) | Lượt hai bước hai hành động | $\widehat g=(-0{,}267;\,0{,}267)$ | Gộp với kiểm tra |
 | Kiểm tra | `X03`, `X03b` | Thẻ dữ kiện; phần thưởng $-3$ | $0{,}621$; phương sai $\tfrac49$ | Không gộp |
 
-Thời lượng mạch 6: `L09-M6T` 1, `L09-28` 3, `L09-28A` 2, `L09-29` 2, `L09-29b` 2, `L09-22` 1, `L09-30` 3, `L09-32` 2, `L09-31` 2, `X03` 1, `X03b` 1 phút; tổng 20. Dữ kiện truyền: thẻ dữ kiện bài toán một bước ở `L09-28`, `L09-32`, `X03`; lượt hai bước ($R_1=1$, $R_2=2$, $\gamma=0{,}9$) của `L09-29b` và `X03`; dòng "Lưu ý:" cuối `X03b` (không chệch, phương sai $\tfrac49\to\tfrac{16}9$ khi cộng hằng) là đầu vào của mạch 7 và dòng nối Bài 10.
+Thời lượng mạch 6 (cập nhật 2026-10-28): `L09-M6T` 1, `L09-28` 2, `L09-28A` 1,5, `L09-29` 1,5, `L09-29a` 1,5, `L09-29b` 2, `L09-29c` 2, `L09-29d` 1,5, `L09-22` 1, `L09-30` 2, `L09-32` 1,5, `L09-31` 1, `X03` 1, `X03b` 0,5 phút; tổng 20 (bản trước: `L09-28` 3, `L09-28A` 2, `L09-29` 2, `L09-30` 3, `L09-32` 2, `L09-31` 2, `X03b` 1). Dữ kiện truyền: thẻ dữ kiện bài toán một bước ở `L09-28`, `L09-32`, `X03`; lượt hai bước ($R_1=1$, $R_2=2$, $\gamma=0{,}9$) của `L09-29b` và `X03`; dòng "Lưu ý:" cuối `X03b` (không chệch, phương sai $\tfrac49\to\tfrac{16}9$ khi cộng hằng) là đầu vào của mạch 7 và dòng nối Bài 10.
 
 Lệch khỏi nguồn (mạch 6): nguồn tr. 39 (định lý gradient chính sách) tách thành `L09-28`, `L09-28A`, `L09-29`, `L09-22`, `L09-30`, giữ thứ tự nguồn định lý trước REINFORCE (tr. 40); thêm `L09-29b`, `X03b`; nguồn tr. 40 viết REINFORCE không có $\gamma^t$ và cập nhật theo từng bước: bài giữ $\gamma^t$ (nhất quán với $J=\mathbb E[G_0]$, Nota và Thomas 2020) và cập nhật một lần mỗi lượt (sai khác có chủ ý, ghi trong ghi chú diễn giả `L09-31`). Hình `reinforce-trajectory.svg` vẽ lại (bỏ "return", "episode"; phông chữ theo deck) và chuyển sang ghi chú bài giảng.
 
@@ -510,6 +510,20 @@ Phản hồi: trang "Hàm điểm" không cho thấy từ $J=\mathbb E[G_0]$ là
 Sau rà lại: `L09-23` thêm "Ví dụ." có số trên bài toán một bước ($\nabla_\theta\log\pi_\theta(1\mid s)=(\tfrac13;-\tfrac13)$, vế phải $(\tfrac23;-\tfrac23)$), dòng chữ nêu lý do hai bước, $s$ cố định và $A=A_0$; 35 âm tiết, khối `aligned` ba dòng, đáy 659 px. `L09-23b` thêm "Ý nghĩa:"; 37 âm tiết, đáy 578 px. `L09-28` thay ví dụ một bước bằng dòng "Nhắc lại:" $\nabla_\theta J=\mathbb E[r(A)\psi_\theta(s,A)]=(\tfrac23;-\tfrac23)$; 37 âm tiết, đáy 688 px.
 
 Hành trình khái niệm cụm "Hàm điểm" sau sửa: Vấn đề `L09-30A`; Trực quan và Ví dụ gộp ở `L09-23` (dẫn xuất trên bài toán một bước, có số); Hình thức `L09-23b` (Định nghĩa), `L09-24`, `L09-25b`, `L09-26`; Ứng dụng `L09-25`, `L09-27`; Kiểm tra `L09-27`, `X02`. Thời lượng mạch 5 giữ 22 phút: `L09-23` 2, `L09-23b` 1 (thay 3 phút của `L09-23` cũ).
+
+#### Sửa theo phản hồi người dùng (2026-10-28): `L09-29`
+
+Phản hồi: "chứng minh quá tắt". Trang cũ dồn tách lợi tức, $\mathbb E[\psi_t\mid H_t]=0$, tính chất tháp và phép cộng theo $t$ vào hai dòng, không có bước trực quan.
+
+| trang | tiêu đề | lý do tồn tại; nối trước → sau | âm tiết | dòng, đáy | ghi chú diễn giả |
+|---|---|---|---|---|---|
+| `L09-29` | "Phần thưởng quá khứ và hàm điểm" | sửa: "Nhu cầu:" nhắc lại $\nabla_\theta J=\mathbb E[G_0\sum_t\psi_t]$ của `L09-28`, `L09-28A` (mỗi $\psi_t$ nhân cả phần thưởng trước $A_t$); "Trực quan." $A_t$ chọn sau $R_1,\dots,R_t$; hình `past-reward-timeline.svg` (ngoặc $H_t$, $G_{<t}$ nét đứt, $\gamma^tG_t$ nét liền đậm, $A_t$ hình thoi); dòng tách $G_0=G_{<t}+\gamma^tG_t$ → `L09-29a` | 32 | 4 và hình; 570 px | khoảng 83 |
+| `L09-29a` (mới) | "Phần thưởng quá khứ và hàm điểm" | thêm: "Nhắc lại:" mệnh đề kỳ vọng hàm điểm (`L09-25b`); "Bổ đề." giả thiết nêu bằng lời (chính sách Markov khi biết $H_t$, khả vi, miền hỗ trợ cố định, $G_0$ bị chặn, $\psi_t$ khả tích), kết luận $\mathbb E[G_{<t}\psi_t]=0$ và đẳng thức hai dạng; "Ý nghĩa:" → `L09-29b` minh họa | 50 | 5 và một công thức; 610 px | khoảng 93 |
+| `L09-29b` | "Ví dụ: lượt hai bước" | giữ nguyên số; nay đứng sau phát biểu, trước chứng minh: (i) − (ii) $=R_1\psi_1$ là hạng $G_{<1}\psi_1$ của bổ đề → `L09-29c` | 38 | 609 px | không đổi |
+| `L09-29c` (mới) | "Chứng minh: phần thưởng quá khứ và hàm điểm" | thêm: Bước 1 tách lợi tức; Bước 2 $\mathbb E[\psi_t\mid H_t]=0$, `aligned` bốn dòng, dòng chữ nêu lý do từng dòng → `L09-29d` | 36 | 4 và một công thức; 629 px | khoảng 103 |
+| `L09-29d` (mới) | "Chứng minh: phần thưởng quá khứ và hàm điểm" | thêm: Bước 3 tính chất tháp, `aligned` ba dòng; Bước 4 cộng theo $t$, kết thúc $\square$ → `L09-22` (giả thiết của định lý gom các điều kiện vừa dùng) | 28 | 3 và hai công thức; 691 px | khoảng 91 |
+
+Hành trình khái niệm "bỏ phần thưởng quá khứ": Vấn đề `L09-29` ("Nhu cầu:"); Trực quan `L09-29` (hình dòng thời gian); Hình thức `L09-29a` (Bổ đề); Ví dụ `L09-29b` (đặt sau phát biểu để minh họa đúng hạng mà bổ đề loại, trước chứng minh); Chứng minh `L09-29c`, `L09-29d`; Ứng dụng `L09-30` (Bước 5 của định lý), `L09-32`; Kiểm tra `X03`. Lệch quy tắc hành trình có chủ ý (ghi sau rà lại R-L0929): ví dụ `L09-29b` đặt sau phát biểu `L09-29a`, trước chứng minh `L09-29c`, `L09-29d`, thay vì trước hình thức. Lý do: phép kiểm "(i) − (ii) $=R_1\psi_1$ có kỳ vọng $0$" dùng kết luận của bổ đề với $t=1$, nên ví dụ minh họa đúng hạng mà bổ đề loại trước khi chứng minh giải thích vì sao; bước ví dụ dẫn nhập của cụm là ví dụ một bước ở `L09-28` (thẻ dữ kiện), và trực quan `L09-29` vẫn đi trước hình thức. Ghi chú bài giảng đặt Ví dụ 09.18 sau chứng minh của Bổ đề 09.22; khác thứ tự này được chấp nhận vì ghi chú đọc liền một mạch, còn trên trang chiếu chứng minh chiếm hai trang. Sau rà lại: `L09-29a` giả thiết thay "$G_0$ bị chặn" bằng $|R_{t+1}|\le R_{\max}$, $T\le T_{\max}$, thêm quy ước $\psi_t=0$ khi $t\ge T$ và "(tích phân nếu hành động liên tục)", 57 âm tiết, đáy 653 px; `L09-29d` dòng lý do của Bước 3 chuyển lên câu mở, Bước 4 nêu lý do hai dòng, 32 âm tiết, đáy 655 px. Ghi chú bài giảng: Bổ đề 09.22 mới (các kết quả sau đánh số lại 09.23–09.27).
 
 ## Bản trước đợt sửa 2026-10-28
 

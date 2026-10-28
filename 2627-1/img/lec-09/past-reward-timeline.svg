@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 236" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Phần thưởng trước và sau hành động A t trên một lượt</title>
+<desc id="d">Dòng thời gian của một lượt từ trái sang phải: S 0, A 0, R 1, dấu ba chấm, R t, S t, rồi hành động A t trong một hình thoi viền đậm, rồi R t cộng 1, S t cộng 1, dấu ba chấm, R T, S T. Ngoặc nét liền phía trên bao S 0 đến S t, ghi: lịch sử H t, đã biết khi chọn A t. Ngoặc nét đứt phía dưới bao R 1 đến R t, ghi: G nhỏ hơn t bằng R 1 cộng ba chấm cộng gamma mũ t trừ 1 nhân R t, xác định bởi H t. Ngoặc nét liền đậm phía dưới bao R t cộng 1 đến S T, ghi: gamma mũ t nhân G t bằng gamma mũ t nhân R t cộng 1 cộng ba chấm, phụ thuộc A t. Dưới hình thoi ghi: A t lấy mẫu từ pi theta tại S t.</desc>
+<defs><marker id="a" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#2F3E7A"/></marker></defs>
+<path d="M20 120H978" stroke="#2F3E7A" stroke-width="3" marker-end="url(#a)"/>
+<g fill="#ffffff" stroke="#2F3E7A" stroke-width="2.5">
+<rect x="24" y="100" width="56" height="40" rx="8"/><rect x="94" y="100" width="56" height="40" rx="8"/><rect x="164" y="100" width="56" height="40" rx="8"/>
+<rect x="290" y="100" width="56" height="40" rx="8"/><rect x="362" y="100" width="56" height="40" rx="8"/>
+<rect x="576" y="100" width="76" height="40" rx="8"/><rect x="666" y="100" width="76" height="40" rx="8"/>
+<rect x="822" y="100" width="56" height="40" rx="8"/><rect x="892" y="100" width="56" height="40" rx="8"/>
+</g>
+<path d="M500 80L548 120L500 160L452 120Z" fill="#fff4ec" stroke="#B15A2B" stroke-width="4.5"/>
+<g font-size="23" text-anchor="middle">
+<text x="52" y="128"><tspan font-style="italic">S</tspan><tspan font-size="15" dy="5">0</tspan></text>
+<text x="122" y="128"><tspan font-style="italic">A</tspan><tspan font-size="15" dy="5">0</tspan></text>
+<text x="192" y="128"><tspan font-style="italic">R</tspan><tspan font-size="15" dy="5">1</tspan></text>
+<text x="255" y="128">…</text>
+<text x="318" y="128"><tspan font-style="italic">R</tspan><tspan font-size="15" dy="5" font-style="italic">t</tspan></text>
+<text x="390" y="128"><tspan font-style="italic">S</tspan><tspan font-size="15" dy="5" font-style="italic">t</tspan></text>
+<text x="500" y="128" font-weight="bold"><tspan font-style="italic">A</tspan><tspan font-size="15" dy="5" font-style="italic">t</tspan></text>
+<text x="614" y="128"><tspan font-style="italic">R</tspan><tspan font-size="15" dy="5" font-style="italic">t</tspan><tspan font-size="15">+1</tspan></text>
+<text x="704" y="128"><tspan font-style="italic">S</tspan><tspan font-size="15" dy="5" font-style="italic">t</tspan><tspan font-size="15">+1</tspan></text>
+<text x="782" y="128">…</text>
+<text x="850" y="128"><tspan font-style="italic">R</tspan><tspan font-size="15" dy="5" font-style="italic">T</tspan></text>
+<text x="920" y="128"><tspan font-style="italic">S</tspan><tspan font-size="15" dy="5" font-style="italic">T</tspan></text>
+</g>
+<path d="M24 92V74H418V92" fill="none" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="221" y="58" text-anchor="middle" font-size="21" fill="#2F3E7A">lịch sử <tspan font-style="italic">H</tspan><tspan font-size="14" dy="5" font-style="italic">t</tspan><tspan dy="-5">, đã biết khi chọn </tspan><tspan font-style="italic">A</tspan><tspan font-size="14" dy="5" font-style="italic">t</tspan></text>
+<path d="M164 148V166H346V148" fill="none" stroke="#424954" stroke-width="2.5" stroke-dasharray="7 5"/>
+<text x="255" y="194" text-anchor="middle" font-size="20" fill="#424954"><tspan font-style="italic">G</tspan><tspan font-size="14" dy="5">&lt;</tspan><tspan font-size="14" font-style="italic">t</tspan><tspan dy="-5"> = </tspan><tspan font-style="italic">R</tspan><tspan font-size="14" dy="5">1</tspan><tspan dy="-5"> + … + </tspan><tspan font-family="'STIX Two Math','Cambria Math','Times New Roman',serif" font-style="italic">γ</tspan><tspan font-size="14" dy="-9" font-style="italic">t</tspan><tspan font-size="14">−1</tspan><tspan dy="9" font-style="italic">R</tspan><tspan font-size="14" dy="5" font-style="italic">t</tspan></text>
+<text x="255" y="222" text-anchor="middle" font-size="19" fill="#424954">nét đứt: xác định bởi <tspan font-style="italic">H</tspan><tspan font-size="13" dy="5" font-style="italic">t</tspan></text>
+<path d="M576 148V166H948V148" fill="none" stroke="#B15A2B" stroke-width="4.5"/>
+<text x="762" y="194" text-anchor="middle" font-size="20" fill="#7a3a17"><tspan font-family="'STIX Two Math','Cambria Math','Times New Roman',serif" font-style="italic">γ</tspan><tspan font-size="14" dy="-9" font-style="italic">t</tspan><tspan dy="9" font-style="italic">G</tspan><tspan font-size="14" dy="5" font-style="italic">t</tspan><tspan dy="-5"> = </tspan><tspan font-family="'STIX Two Math','Cambria Math','Times New Roman',serif" font-style="italic">γ</tspan><tspan font-size="14" dy="-9" font-style="italic">t</tspan><tspan dy="9" font-style="italic">R</tspan><tspan font-size="14" dy="5" font-style="italic">t</tspan><tspan font-size="14">+1</tspan><tspan dy="-5"> + …</tspan></text>
+<text x="762" y="222" text-anchor="middle" font-size="19" fill="#7a3a17">nét liền đậm: phụ thuộc <tspan font-style="italic">A</tspan><tspan font-size="13" dy="5" font-style="italic">t</tspan></text>
+<text x="500" y="194" text-anchor="middle" font-size="20" fill="#7a3a17"><tspan font-style="italic">A</tspan><tspan font-size="14" dy="5" font-style="italic">t</tspan><tspan dy="-5"> ∼ </tspan><tspan font-family="'STIX Two Math','Cambria Math','Times New Roman',serif" font-style="italic">π</tspan><tspan font-size="14" dy="5" font-style="italic">θ</tspan><tspan dy="-5">(· | </tspan><tspan font-style="italic">S</tspan><tspan font-size="14" dy="5" font-style="italic">t</tspan><tspan dy="-5">)</tspan></text>
+</svg>

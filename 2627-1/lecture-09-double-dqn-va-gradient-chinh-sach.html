@@ -468,12 +468,20 @@
 </section>
 <section data-slide-id="L09-29" data-note-topic-id="lec-09-topic-10">
 <h2>Phần thưởng quá khứ và hàm điểm</h2>
-<p>Lịch sử $H_t=(S_0,A_0,R_1,\dots,R_t,S_t)$; tách lợi tức tại bước $t$:</p>
-<div class="math-large">$$G_0=G_{&lt;t}+\gamma^tG_t,\qquad G_{&lt;t}=\sum_{k=0}^{t-1}\gamma^kR_{k+1}.$$</div>
-<p>$G_{&lt;t}$ xác định khi biết $H_t$; khi biết $H_t$, $A_t\sim\pi_\theta(\cdot\mid S_t)$, nên hàm điểm có kỳ vọng $0$:</p>
-<div class="math-large">$$\mathbb E[G_{&lt;t}\psi_t]=\mathbb E\bigl[G_{&lt;t}\,\mathbb E[\psi_t\mid H_t]\bigr]=0.$$</div>
-<p>Suy ra ${\mathbb E\bigl[G_0\sum_t\psi_t\bigr]=\mathbb E\bigl[\sum_t\gamma^tG_t\psi_t\bigr]}$.</p>
-<aside class="notes"><p>Khi biết $H_t$, hành động $A_t$ lấy từ $\pi_\theta(\cdot\mid S_t)$, nên kỳ vọng có điều kiện của $\psi_t$ là kỳ vọng của hàm điểm tại $S_t$, bằng $0$. Phần thưởng nhận trước $A_t$ là hằng số khi biết $H_t$, nên tích của nó với $\psi_t$ có kỳ vọng $0$ theo tính chất tháp. Lập luận dùng thứ tự thời gian, không giả sử phần thưởng độc lập với hành động. Kết quả: mỗi hàm điểm chỉ nhân với phần lợi tức đến sau nó, có trọng số $\gamma^t$.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 39–40; Sutton và Barto (2018), §13.3.</p></aside>
+<p><strong>Nhu cầu:</strong> trong ${\nabla_\theta J=\mathbb E\bigl[G_0\sum_t\psi_t\bigr]}$, mỗi $\psi_t$ nhân cả phần thưởng nhận trước $A_t$.</p>
+<p><strong>Trực quan.</strong> $A_t$ được chọn sau $R_1,\dots,R_t$, nên không làm đổi các phần thưởng này.</p>
+<img class="figure short" src="img/lec-09/past-reward-timeline.svg" alt="Dòng thời gian một lượt: S 0, A 0, R 1, …, R t, S t, rồi hành động A t trong hình thoi viền đậm, rồi R t cộng 1, S t cộng 1, …, R T, S T. Ngoặc nét liền phía trên bao S 0 đến S t, ghi lịch sử H t, đã biết khi chọn A t. Ngoặc nét đứt phía dưới bao R 1 đến R t, ghi G nhỏ hơn t bằng R 1 cộng … cộng gamma mũ t trừ 1 nhân R t, xác định bởi H t. Ngoặc nét liền đậm bao R t cộng 1 đến S T, ghi gamma mũ t nhân G t, phụ thuộc A t. Dưới hình thoi: A t lấy mẫu từ pi theta tại S t."/>
+<p>Tách tại bước $t$: ${G_0=G_{&lt;t}+\gamma^tG_t}$, với $G_{&lt;t}$ là hàm của lịch sử $H_t$.</p>
+<aside class="notes"><p>Tỉ số xác suất cho $\nabla_\theta J=\mathbb E[G_0\sum_t\psi_t]$: mỗi hàm điểm nhân với lợi tức của cả lượt, kể cả phần thưởng đã nhận trước khi chọn hành động. Hình tách lượt tại $A_t$. Lịch sử $H_t=(S_0,A_0,R_1,\dots,R_t,S_t)$ là mọi thứ đã quan sát khi chọn $A_t$; $G_{&lt;t}$, phần lợi tức trước $A_t$, tính được từ $H_t$. Phần $\gamma^tG_t$ đến sau $A_t$ và phụ thuộc $A_t$. Trực quan này chưa là chứng minh: phần thưởng quá khứ vẫn có thể tương quan với $A_t$ qua $S_t$.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 39–40; Sutton và Barto (2018), §13.3.</p></aside>
+</section>
+<section data-slide-id="L09-29a" data-note-topic-id="lec-09-topic-10">
+<h2>Phần thưởng quá khứ và hàm điểm</h2>
+<p><strong>Nhắc lại:</strong> $\pi_\theta$ khả vi, miền hỗ trợ không đổi: ${\mathbb E_{A\sim\pi_\theta(\cdot\mid s)}[\psi_\theta(s,A)]=0}$ (tích phân nếu hành động liên tục).</p>
+<p><strong>Bổ đề.</strong> Giả sử khi biết lịch sử $H_t$, $A_t\sim\pi_\theta(\cdot\mid S_t)$; $\pi_\theta$ khả vi theo $\theta$, miền hỗ trợ không đổi theo $\theta$; $|R_{t+1}|\le R_{\max}$, $T\le T_{\max}$; $\psi_t$ khả tích.</p>
+<p>Khi đó, quy ước $\psi_t=0$ khi $t\ge T$: ${\mathbb E[G_{&lt;t}\psi_t]=0}$ với mọi $t$, nên</p>
+<div class="math-large">$$\mathbb E\Bigl[G_0\sum_{t=0}^{T-1}\psi_t\Bigr]=\mathbb E\Bigl[\sum_{t=0}^{T-1}\gamma^tG_t\,\psi_t\Bigr].$$</div>
+<p><strong>Ý nghĩa:</strong> mỗi $\psi_t$ chỉ cần nhân phần lợi tức đến sau $A_t$, có trọng số $\gamma^t$.</p>
+<aside class="notes"><p>Giả thiết thứ nhất là chính sách Markov: khi chọn $A_t$, chính sách chỉ nhìn $S_t$, không nhìn phần còn lại của lịch sử. Giả thiết thứ hai cho phép dùng mệnh đề kỳ vọng của hàm điểm tại $S_t$. Giả thiết thứ ba làm $G_{&lt;t}$ và $G_t$ bị chặn bởi $T_{\max}R_{\max}$ và tổng theo $t$ hữu hạn; $\psi_t$ khả tích khi chính sách là softmax hoặc Gaussian với đặc trưng bị chặn. Với hành động liên tục, cần thêm đổi được gradient với tích phân theo $a$. Quy ước $\psi_t=0$ khi $t\ge T$ cho phép viết tổng tới $T_{\max}$ dù $T$ ngẫu nhiên. Bổ đề không giả sử phần thưởng độc lập với hành động; nó chỉ dùng thứ tự thời gian.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 39–40; Sutton và Barto (2018), §13.3.</p></aside>
 </section>
 <section data-slide-id="L09-29b" data-note-topic-id="lec-09-topic-10">
 <h2>Ví dụ: lượt hai bước</h2>
@@ -484,6 +492,22 @@
 <p>(iii) − (ii) $=(1-\gamma)G_1\psi_1$: nói chung có kỳ vọng khác $0$.</p>
 <p><strong>Diễn giải:</strong> (i), (ii) cùng kỳ vọng $\nabla_\theta J$; (iii) lệch khỏi $\nabla_\theta J$ khi $\gamma&lt;1$.</p>
 <aside class="notes"><p>Ba ước lượng khác nhau trên cùng một lượt: $5{,}6\psi\approx(1{,}867;\,-1{,}867)$, $4{,}6\psi\approx(1{,}533;\,-1{,}533)$ và $4{,}8\psi=(1{,}6;\,-1{,}6)$. Hai ước lượng đầu khác nhau trong mẫu này nhưng bằng nhau về kỳ vọng, vì phần chênh là phần thưởng quá khứ nhân hàm điểm. Ước lượng thứ ba nhắm một đại lượng khác: phần chênh $(1-\gamma)G_1\psi_1$ tương quan với hành động $A_1$. Nhiều cài đặt bỏ $\gamma^t$; khi đó hướng cập nhật nói chung không là gradient của $J$, và cũng không là gradient của hàm mục tiêu nào khác (Nota và Thomas, 2020). Hai cách trùng nhau khi $\gamma=1$.</p><p class="note-source"><strong>Nguồn:</strong> ví dụ bổ sung; Nota và Thomas (2020), <em>Is the Policy Gradient a Gradient?</em>, AAMAS.</p></aside>
+</section>
+<section data-slide-id="L09-29c" data-note-topic-id="lec-09-topic-10">
+<h2>Chứng minh: phần thưởng quá khứ và hàm điểm</h2>
+<p><strong>Bước 1.</strong> Tách lợi tức tại bước $t$: ${G_0=G_{&lt;t}+\gamma^tG_t}$, với ${G_{&lt;t}=\textstyle\sum_{k=0}^{t-1}\gamma^kR_{k+1}}$.</p>
+<p><strong>Bước 2.</strong> Hàm điểm có kỳ vọng có điều kiện bằng $0$:</p>
+<div>$$\begin{aligned}\mathbb E[\psi_t\mid H_t]&amp;=\textstyle\sum_a\pi_\theta(a\mid S_t)\,\nabla_\theta\log\pi_\theta(a\mid S_t)\\&amp;=\textstyle\sum_a\nabla_\theta\pi_\theta(a\mid S_t)\\&amp;=\nabla_\theta\textstyle\sum_a\pi_\theta(a\mid S_t)\\&amp;=\nabla_\theta1=0.\end{aligned}$$</div>
+<p>Dòng một: khi biết $H_t$, $A_t\sim\pi_\theta(\cdot\mid S_t)$; dòng hai: $\pi_\theta\nabla_\theta\log\pi_\theta=\nabla_\theta\pi_\theta$; dòng ba: miền hỗ trợ không đổi; dòng bốn: tổng xác suất bằng $1$.</p>
+<aside class="notes"><p>Bước 1 chỉ là định nghĩa lợi tức chia tại bước $t$: các phần thưởng $R_1,\dots,R_t$ thuộc $G_{&lt;t}$, các phần thưởng từ $R_{t+1}$ thuộc $\gamma^tG_t$. Bước 2 là mệnh đề kỳ vọng của hàm điểm, áp dụng tại trạng thái ngẫu nhiên $S_t$: điều kiện theo $H_t$ cố định $S_t$, và chính sách Markov làm phân phối của $A_t$ chỉ phụ thuộc $S_t$. Với hành động liên tục, tổng theo $a$ thay bằng tích phân theo mật độ; dòng ba khi đó cần đổi được gradient với tích phân. Nếu chính sách nhìn cả lịch sử, $\pi_\theta(\cdot\mid H_t)$ thay cho $\pi_\theta(\cdot\mid S_t)$ và kết luận vẫn đúng.</p><p class="note-source"><strong>Nguồn:</strong> Sutton và Barto (2018), §13.3; bổ sung chứng minh cho bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 39–40.</p></aside>
+</section>
+<section data-slide-id="L09-29d" data-note-topic-id="lec-09-topic-10">
+<h2>Chứng minh: phần thưởng quá khứ và hàm điểm</h2>
+<p><strong>Bước 3.</strong> Dòng một: tính chất tháp; dòng hai: $G_{&lt;t}$ là hàm của $H_t$, nên là hằng khi biết $H_t$; dòng ba: Bước 2.</p>
+<div>$$\begin{aligned}\mathbb E[G_{&lt;t}\psi_t]&amp;=\mathbb E\bigl[\mathbb E[G_{&lt;t}\psi_t\mid H_t]\bigr]\\&amp;=\mathbb E\bigl[G_{&lt;t}\,\mathbb E[\psi_t\mid H_t]\bigr]\\&amp;=0.\end{aligned}$$</div>
+<p><strong>Bước 4.</strong> Cộng theo $t$; dòng một: Bước 1; dòng hai: hạng đầu bằng $0$ theo Bước 3.</p>
+<div>$$\begin{aligned}\mathbb E\bigl[G_0\textstyle\sum_t\psi_t\bigr]&amp;=\textstyle\sum_t\bigl(\mathbb E[G_{&lt;t}\psi_t]+\gamma^t\,\mathbb E[G_t\psi_t]\bigr)\\&amp;=\textstyle\sum_t\gamma^t\,\mathbb E[G_t\psi_t].\qquad\square\end{aligned}$$</div>
+<aside class="notes"><p>Bước 3 dùng tính chất tháp $\mathbb E[X]=\mathbb E[\mathbb E[X\mid H_t]]$ và việc một hàm của $H_t$ là hằng số khi biết $H_t$. Lập luận không giả sử phần thưởng độc lập với hành động: $G_{&lt;t}$ có thể tương quan với $S_t$ và qua đó với $A_t$; điều được dùng là $G_{&lt;t}$ đã xác định trước khi chọn $A_t$. Bước 4 dùng tính tuyến tính của kỳ vọng trên tổng hữu hạn $t&lt;T_{\max}$. Quy ước $\psi_t=0$ khi $t\ge T$ là nhân $\psi_t$ với chỉ thị $\mathbf 1\{t&lt;T\}$; chỉ thị này là hàm của $H_t$, nên Bước 2 và Bước 3 vẫn đúng.</p><p class="note-source"><strong>Nguồn:</strong> Sutton và Barto (2018), §13.3; bổ sung chứng minh cho bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 39–40.</p></aside>
 </section>
 <section data-slide-id="L09-22" data-note-topic-id="lec-09-topic-11">
 <h2>Giả thiết cho gradient của $J$</h2>
@@ -642,7 +666,7 @@
 <li>Trong MDP quan sát đầy đủ, khi nào vẫn cần chính sách ngẫu nhiên?</li>
 <li>REINFORCE cần giả thiết nào về $\rho_0$, $P$ và về dữ liệu?</li>
 </ol></div>
-<aside class="notes"><p>Lời giải: (1) không nói chung; kỳ vọng của cực đại không nhỏ hơn giá trị đúng lớn nhất, bằng nhau khi hành động tốt nhất luôn thắng (Mệnh đề 09.2). (2) Không; mạng mục tiêu là bản sao trễ của mạng trực tuyến, nên giả thiết độc lập của ước lượng kép không thỏa; Double DQN không bảo đảm hết chệch lên, mức giảm phải đo bằng thí nghiệm. (3) Khi chính sách bị ràng buộc theo đặc trưng gộp các trạng thái cần hành động khác nhau; nếu chính sách được phụ thuộc trạng thái đầy đủ thì có chính sách tối ưu tất định (Định lý 04.25). (4) $\rho_0$, $P$ không phụ thuộc $\theta$ và lượt sinh bởi $\pi_{\theta_{\mathrm{old}}}$ (Định lý 09.22).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 09, Mục 2–6; ghi chú bài giảng Bài 04, Định lý 04.25.</p></aside>
+<aside class="notes"><p>Lời giải: (1) không nói chung; kỳ vọng của cực đại không nhỏ hơn giá trị đúng lớn nhất, bằng nhau khi hành động tốt nhất luôn thắng (Mệnh đề 09.2). (2) Không; mạng mục tiêu là bản sao trễ của mạng trực tuyến, nên giả thiết độc lập của ước lượng kép không thỏa; Double DQN không bảo đảm hết chệch lên, mức giảm phải đo bằng thí nghiệm. (3) Khi chính sách bị ràng buộc theo đặc trưng gộp các trạng thái cần hành động khác nhau; nếu chính sách được phụ thuộc trạng thái đầy đủ thì có chính sách tối ưu tất định (Định lý 04.25). (4) $\rho_0$, $P$ không phụ thuộc $\theta$ và lượt sinh bởi $\pi_{\theta_{\mathrm{old}}}$ (Định lý 09.23).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 09, Mục 2–6; ghi chú bài giảng Bài 04, Định lý 04.25.</p></aside>
 </section>
 <section data-slide-id="L09-K7" data-note-topic-id="lec-09-topic-13">
 <h2>Bài tập về nhà và tài liệu đọc</h2>
