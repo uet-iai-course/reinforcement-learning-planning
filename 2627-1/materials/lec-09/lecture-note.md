@@ -717,24 +717,27 @@ Chi phí tăng theo số tham số. Mỗi ước lượng gradient cần chạy 
 <!-- note-topic-id: lec-09-topic-08 -->
 ### Hàm điểm
 
-Trở lại bài toán một bước. Với $J(\theta)=\sum_ar(a)\pi_\theta(a\mid s)$, gradient là $\sum_ar(a)\nabla_\theta\pi_\theta(a\mid s)$: một tổng trên mọi hành động, cần phần thưởng của từng hành động. Một lượt chỉ cho phần thưởng của hành động đã lấy mẫu. Một cách trực quan, ta muốn viết tổng này thành một kỳ vọng theo $A\sim\pi_\theta(\cdot\mid s)$, vì kỳ vọng thì ước lượng được bằng mẫu. Muốn vậy, mỗi số hạng phải có thừa số $\pi_\theta(a\mid s)$. Quy tắc đạo hàm của logarit cho đúng thừa số đó: khi $\pi_\theta(a\mid s)>0$,
+Trở lại bài toán một bước. Lượt có một phần thưởng, nên $G_0=r(A_0)$, và $J(\theta)=\mathbb E_{\pi_\theta}[G_0]$ là tổng có trọng số xác suất: $J(\theta)=\sum_a\pi_\theta(a\mid s)\,r(a)$. Phần thưởng $r(a)$ là của môi trường, không phụ thuộc $\theta$, nên gradient chỉ rơi vào xác suất: $\nabla_\theta J=\sum_ar(a)\nabla_\theta\pi_\theta(a\mid s)$. Tổng này trải trên mọi hành động, cần phần thưởng của từng hành động, và không có trọng số $\pi_\theta$, nên chưa là một kỳ vọng; một lượt chỉ cho phần thưởng của hành động đã lấy mẫu. Một cách trực quan, ta muốn mỗi số hạng có thừa số $\pi_\theta(a\mid s)$, vì khi đó tổng là kỳ vọng theo $A\sim\pi_\theta(\cdot\mid s)$ và ước lượng được bằng mẫu. Nhân và chia mỗi số hạng cho $\pi_\theta(a\mid s)>0$ cho đúng thừa số đó, vì theo quy tắc đạo hàm của logarit, $\nabla_\theta\pi_\theta/\pi_\theta=\nabla_\theta\log\pi_\theta$:
 $$
-\nabla_\theta\log\pi_\theta(a\mid s)=\frac{\nabla_\theta\pi_\theta(a\mid s)}{\pi_\theta(a\mid s)}\quad\Longrightarrow\quad\nabla_\theta\pi_\theta(a\mid s)=\pi_\theta(a\mid s)\,\nabla_\theta\log\pi_\theta(a\mid s).
+\begin{aligned}
+J(\theta)&=\sum_a\pi_\theta(a\mid s)\,r(a),\\
+\nabla_\theta J(\theta)&=\sum_ar(a)\,\nabla_\theta\pi_\theta(a\mid s)\\
+&=\sum_a\pi_\theta(a\mid s)\,r(a)\,\nabla_\theta\log\pi_\theta(a\mid s)\\
+&=\mathbb E_{A\sim\pi_\theta(\cdot\mid s)}\bigl[r(A)\,\nabla_\theta\log\pi_\theta(A\mid s)\bigr].
+\end{aligned}
 $$
-Thế vào, với mọi hàm $f$ của hành động không phụ thuộc $\theta$,
-$$
-\sum_af(a)\,\nabla_\theta\pi_\theta(a\mid s)=\mathbb E_{A\sim\pi_\theta(\cdot\mid s)}\bigl[f(A)\,\nabla_\theta\log\pi_\theta(A\mid s)\bigr].
-$$
-Vế phải chỉ cần $f$ tại hành động đã lấy mẫu. Bài giảng gốc (trang 34) gọi phép biến đổi này là dùng tỉ số xác suất (likelihood ratio); Mục 6 áp dụng nó cho $J$ trên cả lượt.
+Dòng hai dùng $\nabla_\theta r(a)=0$; dòng ba nhân, chia cho $\pi_\theta(a\mid s)$; dòng bốn là định nghĩa kỳ vọng. Vế phải chỉ cần phần thưởng tại hành động đã lấy mẫu: một hành động $A\sim\pi_\theta(\cdot\mid s)$ cho một mẫu $r(A)\nabla_\theta\log\pi_\theta(A\mid s)$ của gradient, không cần biết $r$ của các hành động khác và không phải chạy thêm $d$ chính sách như sai phân hữu hạn. Cùng phép nhân, chia áp dụng cho mọi hàm $f$ của hành động không phụ thuộc $\theta$: $\sum_af(a)\nabla_\theta\pi_\theta(a\mid s)=\mathbb E_{A\sim\pi_\theta(\cdot\mid s)}\bigl[f(A)\nabla_\theta\log\pi_\theta(A\mid s)\bigr]$. Bài giảng gốc (trang 34) gọi phép biến đổi này là dùng tỉ số xác suất (likelihood ratio); Mục 6 áp dụng nó cho $J$ trên cả lượt.
 
 ::: example Ví dụ 09.14 (Đạo hàm log xác suất trên bài toán một bước)
-**Dữ kiện.** Bài toán một bước, $\theta=(\log2;\,0)$, $\pi_\theta(\cdot\mid s)=\bigl(\tfrac23;\,\tfrac13\bigr)$.
+**Dữ kiện.** Bài toán một bước, chính sách softmax với đặc trưng đơn vị, $\theta=(\log2;\,0)$, $\pi_\theta(\cdot\mid s)=\bigl(\tfrac23;\,\tfrac13\bigr)$, $r(1)=3$, $r(2)=0$.
 
 **Log xác suất.** $\log\pi_\theta(1\mid s)=\theta_1-\log\bigl(e^{\theta_1}+e^{\theta_2}\bigr)$.
 
 **Gradient.** $\partial/\partial\theta_1$: $1-\dfrac{e^{\theta_1}}{e^{\theta_1}+e^{\theta_2}}=1-\pi_\theta(1\mid s)=\tfrac13$; $\partial/\partial\theta_2$: $-\pi_\theta(2\mid s)=-\tfrac13$. Vậy $\nabla_\theta\log\pi_\theta(1\mid s)=\bigl(\tfrac13;\,-\tfrac13\bigr)$.
 
-**Kiểm tra lại.** $\pi_\theta(1\mid s)\cdot\bigl(\tfrac13;\,-\tfrac13\bigr)=\bigl(\tfrac29;\,-\tfrac29\bigr)$, trùng với $\nabla_\theta\pi_\theta(1\mid s)=\pi_\theta(1\mid s)\pi_\theta(2\mid s)(1;\,-1)$ tính ở trên.
+**Vế phải của dẫn xuất.** Chỉ hành động 1 có phần thưởng khác $0$, nên $\mathbb E_{A\sim\pi_\theta}\bigl[r(A)\nabla_\theta\log\pi_\theta(A\mid s)\bigr]=\tfrac23\cdot3\bigl(\tfrac13;\,-\tfrac13\bigr)=\bigl(\tfrac23;\,-\tfrac23\bigr)$.
+
+**Kiểm tra lại.** Trùng gradient tính trực tiếp $3\pi_\theta(1\mid s)\pi_\theta(2\mid s)(1;\,-1)=\bigl(\tfrac23;\,-\tfrac23\bigr)$ ở đầu mục; và $\pi_\theta(1\mid s)\bigl(\tfrac13;\,-\tfrac13\bigr)=\bigl(\tfrac29;\,-\tfrac29\bigr)=\nabla_\theta\pi_\theta(1\mid s)$.
 :::
 
 ::: definition Định nghĩa 09.15 (Hàm điểm)
@@ -910,7 +913,7 @@ Trên bài toán một bước, $J(\theta)=\sum_ar(a)\pi_\theta(a\mid s)$. Dùng
 
 **Tính.** $\nabla_\theta J=\sum_ar(a)\pi_\theta(a\mid s)\psi_\theta(s,a)=\tfrac23\cdot3\bigl(\tfrac13;\,-\tfrac13\bigr)+\tfrac13\cdot0\cdot\bigl(-\tfrac23;\,\tfrac23\bigr)=\bigl(\tfrac23;\,-\tfrac23\bigr)$.
 
-**Kiểm tra lại.** Trùng gradient tính trực tiếp từ $J(\theta)=3\pi_\theta(1\mid s)$ ở Mục 5, và gần thương sai phân $0{,}655$ của Ví dụ 09.13.
+**Kiểm tra lại.** Trùng vế phải của Ví dụ 09.14 và gradient tính trực tiếp ở Mục 5, và gần thương sai phân $0{,}655$ của Ví dụ 09.13; hạng của hành động 2 bằng $0$ vì $r(2)=0$.
 :::
 
 Với nhiều bước, đối tượng được lấy mẫu là cả lượt.
