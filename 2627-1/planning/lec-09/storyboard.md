@@ -37,7 +37,7 @@ Cột "C0": vị trí `h.v` (đánh số từ 1) sau bước C0, khi chỉ di ch
 | 2 | `L09-05` | Ví dụ: hai hành động có nhiễu ±1 | sửa | Tiêu đề dạng "Ví dụ: …"; đặt hình; "Diễn giải:" | 2.3 | 2.3 |
 | 2 | `L09-06` | Độ chệch của phép cực đại không âm | sửa | "Mệnh đề." với giả thiết khả tích; "Chứng minh." một dòng; dòng nối nguyên nhân | 2.4 | 2.4 |
 | 3 | `L09-M3T` | 3. Tách chọn và đánh giá | thêm | Trang tiêu đề mạch, điểm vào mạch 3 | chưa có | chưa có |
-| 3 | `L09-06b` | Ví dụ: hai bản ước lượng độc lập | thêm | Bước trực giác–ví dụ còn thiếu cho việc tách (nguồn tr. 14) | chưa có | chưa có |
+| 3 | `L09-06b` | Ví dụ: hai bản ước lượng độc lập | thêm | Bước trực giác–ví dụ còn thiếu cho việc tách (nguồn tr. 14) | chưa có | 3.2 (S13) |
 | 3 | `L09-07` | Mục tiêu Double DQN | sửa | Dòng giới hạn của DQN; dạng mặt nạ như Bài 08 | 3.1 | 3.1 |
 | 3 | `L09-08` | Ví dụ: một mẫu chuyển, hai mục tiêu | sửa | Đặt hình có số; "Diễn giải:"; giữ bộ số đã kiểm bằng `assert` ở bài thực hành Bài 08 | 3.2 | 3.2 |
 | 3 | `L09-09` | Thuật toán. Double DQN | sửa, chuyển lên trước `X01` | Bước hình thức của thuật toán đứng trước bài tập | 3.3 | 3.3 |
@@ -195,6 +195,64 @@ Mạch 1 không mở khái niệm cốt lõi nào: các trang nhắc lại kết
 | Kiểm tra | `L09-06` (Câu hỏi, Lời giải) | $\widehat Q_1>\widehat Q_2$ hầu chắc chắn | Độ chệch $0$ | Gộp với bước hình thức |
 
 Thời lượng: `L09-M2T` 1, `L09-03` 4, `L09-04` 3, `L09-05` 3, `L09-06` 4 phút. Dữ kiện truyền: hình bốn cặp của `L09-05` dùng lại ở `X01` (mạch 3); nguyên nhân "cùng ước lượng chọn và đánh giá" là đầu vào của `L09-M3T`.
+
+#### Mạch 3 "Tách chọn và đánh giá" (bước S12–S23)
+
+| bước | trang | tiêu đề trước → sau | quyết định và lý do | âm tiết trước → sau | dòng, đáy | ghi chú diễn giả |
+|---|---|---|---|---|---|---|
+| S12 | `L09-M3T` | — → "3. Tách chọn và đánh giá" | thêm; điểm vào mạch 3, `id="mach-3"`; dòng dẫn nêu nhu cầu chung của mạch; `data-note-topic-id` `lec-09-topic-17` | — → dẫn 23, khóa 18 | 2; 364 px | khoảng 106 |
+| S13 | `L09-06b` | — → "Ví dụ: hai bản ước lượng độc lập" | thêm; bước trực quan và ví dụ còn thiếu cho việc tách (nguồn tr. 14); hình mới `double-estimator.svg` | — → 37 | 4 + hình; 685 px | khoảng 105 |
+| S14 | `L09-07` | "Double DQN tách chọn và đánh giá" → "Mục tiêu Double DQN" | sửa; mở bằng "Nhu cầu:" (giới hạn của mục tiêu DQN), không bằng tên; dạng mặt nạ $(1-Z_i)$ với $\operatorname{sg}$; "Lưu ý:" dạng từng trường hợp cho cùng giá trị; `dqn-vs-ddqn.svg` vẽ lại (hai hàng, "mạng trực tuyến", "mạng mục tiêu", không tràn); bỏ kiểu nội dòng `max-height` | 16 → 27 | 3 + hình; 750 → 608 px | khoảng 91 |
+| S15 | `L09-08` | "Hai đích có thể khác nhau" → "Ví dụ: một mẫu chuyển, hai mục tiêu" | sửa; bảng chữ thay bằng hình có số `ddqn-example.svg` (hàng chọn, hàng đánh giá); hai dòng tính; "Diễn giải:" $y^{\mathrm{DDQN}}\le y^{\mathrm{DQN}}$ | 12 + bảng → 24 | 4 + hình; 640 px | khoảng 88 |
+| S16 | `L09-09` | "Miền, kích thước và đường gradient" → "Thuật toán Double DQN" | sửa, đứng trước `X01`; "Thuật toán." như Thuật toán 08.13 với năm bước, chỉ bước 3 khác; kích thước mảng | 16 → 44 | 7 (giả mã, ngoại lệ); 606 px | khoảng 91 |
+| S17 | `X01` | "Bài tập: sai lệch và hai đích" → "Bài tập: mục tiêu DQN và Double DQN" | sửa; "Câu hỏi:" tự đủ dữ kiện $(2;7)/(4;1)$, $\gamma=0{,}8$, (a) $Z=0$, (b) $Z=1$; bỏ câu bốn cặp; "Lời giải:" từng bước trong fragment | 23 → 29 | 4; 412 px | khoảng 63 |
+| S18 | `L09-10` | "Hai mạng vẫn có tương quan" → "Phạm vi của Double DQN" | sửa; bỏ hộp câu chung; bốn dòng có điều kiện, thêm ví dụ chệch âm $-0{,}125$; số đo Lunar Lander trong ghi chú diễn giả | 58 → 60 | 4; 344 px | khoảng 94 |
+| S19 | `L09-11` | "Double Q-learning dùng hai bảng riêng" → "Double Q-learning dạng bảng" | sửa; mở bằng "Nhu cầu:"; `double-q-cross-update.svg` vẽ lại (nhãn "chọn ngẫu nhiên, mỗi nhánh 1/2", mũi tên đủ đầu, không tràn) | 27 → 36 | 3 + hình; 560 px | khoảng 82 |
+| S20 | `L09-13` | "Áp dụng cập nhật chéo" → "Ví dụ: một cập nhật Double Q-learning" | sửa, chuyển trước `L09-12`; số của ví dụ A $(3;6)/(5;4)$, $Q_1(S,A)=4$ → $4{,}06$; hình `double-q-example.svg`; so với Double DQN trên cùng số | 3 + công thức → 25 | 4 + hình; 694 px | khoảng 73 |
+| S21 | `L09-12` | "Cập nhật chéo theo trạng thái kết thúc" → "Thuật toán Double Q-learning" | sửa; đầu vào, khởi tạo, hành vi $Q_1+Q_2$, đồng xu $1/2$, cập nhật có mặt nạ, dừng lượt; ghi chú: độc lập chỉ lý tưởng | 16 → 34 | 7 hiển thị (giả mã, một công thức hiển thị, ngoại lệ); 613 px | khoảng 99 |
+| S22 | `L09-14` | "Hai cách tách không đồng nhất" → "So sánh DQN, Double DQN và Double Q-learning" | sửa; ba phương pháp, năm tiêu chí, thêm "quan hệ hai ước lượng" và "chệch lên" | 26 → 55 (trần 80) | bảng 5 hàng; 559 px | khoảng 94 |
+| S23 | `L09-15` | "Kiểm tra phần học giá trị" → "Bài tập: Double DQN và Double Q-learning" | sửa; "Câu hỏi:" bốn câu, "Lời giải:" fragment, bỏ "Đáp án"; dòng "Giới hạn chung:" là đầu ra cho mạch 4 | 38 → 57 | 4; 440 px | khoảng 72 |
+
+Ngoại lệ mật độ mạch 3: `L09-09` 7 dòng (một dòng mở, năm bước giả mã, một dòng kích thước) và `L09-12` 7 dòng hiển thị (giả mã có một công thức hiển thị): `CLAUDE.md` cho phép giả mã tới tám dòng trên một trang; tách sẽ cắt rời thứ tự bước. `L09-14` 55 âm tiết theo trần 80 của bảng so sánh.
+
+##### Hành trình khái niệm, mạch 3, cụm "Ước lượng kép và Double DQN" (khoảng 17 phút)
+
+| bước | mã trang | dữ kiện đầu vào | sản phẩm học tập | gộp / không áp dụng |
+|---|---|---|---|---|
+| Vấn đề | `L09-M3T`, `L09-06b` ("Nhu cầu:"), `L09-07` ("Nhu cầu:") | Nguyên nhân độ chệch (mạch 2) | Biết cần tách chọn khỏi đánh giá | Dòng dẫn của trang tiêu đề là vấn đề chung |
+| Trực quan + ví dụ | `L09-06b` | $q=(0;\,0)$, hai bản nhiễu $\pm1$ | Giá trị báo cáo kỳ vọng $0$ | Trực quan nằm trong ghi chú diễn giả và ghi chú bài giảng |
+| Hình thức | `L09-06c` (mệnh đề, thêm ở R3), `L09-07` (mục tiêu), `L09-09` (thuật toán) | Thuật toán 08.13 | Mệnh đề ước lượng kép; mục tiêu dạng mặt nạ; năm bước, chỉ bước 3 khác | Mệnh đề 09.4 của ghi chú bài giảng ánh xạ `L09-06c` |
+| Ứng dụng | `L09-08` | $(5;4)/(3;6)$ | $5{,}5$ và $4{,}6$ | Ví dụ số đặt sau trang mục tiêu, trước trang thuật toán |
+| Kiểm tra | `X01`, `L09-10` | $(2;7)/(4;1)$; ví dụ $(0{,}5;0)$ | $6{,}6$ và $2{,}6$; chệch âm $-0{,}125$ | Phạm vi gộp vào kiểm tra |
+
+##### Hành trình khái niệm, mạch 3, cụm "Double Q-learning" (khoảng 13 phút)
+
+| bước | mã trang | dữ kiện đầu vào | sản phẩm học tập | gộp / không áp dụng |
+|---|---|---|---|---|
+| Vấn đề | `L09-11` ("Nhu cầu:") | Mạng mục tiêu là bản sao trễ | Cần hai ước lượng học trên mẫu khác nhau | Không gộp |
+| Trực quan | `L09-11` (hình cập nhật chéo) | Hai bảng, đồng xu | Mỗi mẫu một bảng | Gộp với vấn đề |
+| Ví dụ | `L09-13` | $(3;6)/(5;4)$, $Q_1(S,A)=4$ | $a^*=2$, $y_1=4{,}6$, $4{,}06$ | Đặt trước thuật toán |
+| Hình thức | `L09-12` | Q-learning (Bài 06) | Thuật toán đầy đủ | Không gộp |
+| Ứng dụng | `L09-14` | Ba phương pháp | So sánh theo năm tiêu chí | Không gộp |
+| Kiểm tra | `L09-15` | Bốn phân biệt | Lời giải; giới hạn chung cho mạch 4 | Không gộp |
+
+Thời lượng mạch 3: `L09-M3T` 1, `L09-06b` 3, `L09-07` 3, `L09-08` 3, `L09-09` 3, `X01` 2, `L09-10` 2, `L09-11` 2, `L09-13` 3, `L09-12` 3, `L09-14` 2, `L09-15` 3 phút; tổng 30. Dữ kiện truyền: số của ví dụ A dùng lại ở `L09-13` với vai đổi tên ($Q_1$ vai $Q_\theta$, $Q_2$ vai $Q_{\theta^-}$); dòng "Giới hạn chung:" của `L09-15` là đầu vào của `L09-M4T`.
+
+
+##### Rà lại mạch 3 (bước R3): thay đổi trang và mật độ
+
+| trang | thay đổi ở R3 | âm tiết sau R3 | đáy |
+|---|---|---|---|
+| `L09-M3T` | ghi chú diễn giả rút còn khoảng 91 (trần 100 của trang tiêu đề mạch) | dẫn 23, khóa 18 | 364 px |
+| `L09-06b` | dữ kiện một dòng (xác suất $1/2$); "Diễn giải:" nêu hai giả thiết; nhãn hình là kỳ vọng có điều kiện; hình thấp hơn | 40 | 654 px |
+| `L09-06c` (mới) | "Ước lượng kép không chệch lên": "Mệnh đề." (giả thiết độc lập, bản đánh giá không chệch, $a^*$ là hàm của bản A), "Chứng minh." một dòng, "Ý nghĩa:" chệch âm với $q=(0{,}5;\,0)$; ánh xạ Mệnh đề 09.4 của ghi chú bài giảng. Lý do thêm: kết quả chính của mạch (dòng 3 của `L09-02c`) chưa có trang kết quả | 45 | 447 px |
+| `L09-09` | ngân sách $t_{\mathrm{end}}$ ($T$ dành cho bước kết thúc lượt); gọi tên $\mathcal D$, $\epsilon_{\mathrm{exp}}$, $N_{\mathrm{start}}$, $F$ tại chỗ | 58 | 614 px |
+| `L09-10` | bỏ dòng chệch âm (đã ở `L09-06c`); "việc thiếu bảo đảm hội tụ" | 52 | 316 px |
+| `L09-13` | nhãn hàng trên của hình "bảng chọn" | 25 | 694 px |
+| `L09-14` | hàng "độ chệch của mục tiêu": $\ge0$ (Mệnh đề 09.2) / không bảo đảm hết chệch lên; phải đo / $\le0$ nếu bản đánh giá không chệch, độc lập (chỉ lý tưởng) | 73 (trần 80) | 654 px |
+| `L09-15` | "Giới hạn chung:" phân biệt xác suất hành động được học với $\epsilon_{\mathrm{exp}}$-tham lam (ghi chú diễn giả); Lời giải (4) "một ô của một bảng" | 58 | 446 px |
+
+Hành trình khái niệm cụm "Ước lượng kép và Double DQN", sau R3: bước "Hình thức" gồm `L09-06c` (mệnh đề ước lượng kép), `L09-07` (mục tiêu), `L09-09` (thuật toán); bước "Kiểm tra" gồm `X01` và `L09-10`; dòng "Ý nghĩa:" của `L09-06c` thay dòng chệch âm cũ ở `L09-10`. Thời lượng mạch 3 sau R3: `L09-06c` 2 phút; `L09-10` 1 và `L09-11` 1 (mỗi trang bớt 1 phút); tổng vẫn 30.
 
 ## Bản trước đợt sửa 2026-10-28
 

@@ -497,3 +497,62 @@ Báo cáo: `review/R2-recheck.md` trong scratchpad phiên. Kết quả rà: 0 ch
 Hình: `img/lec-09/dqn-stability.svg` **xóa vì không còn dùng** (quyết định của điều phối viên; xóa bằng `rm`, không dùng git; `grep` trên deck và ghi chú bài giảng không còn tham chiếu); `outline.md` mục Tài sản SVG và `storyboard.md` mục `L09-03` ghi theo.
 
 Kiểm sau R2 (Playwright Chromium, `http://127.0.0.1:8799`, 1600×900 và 390×844): mạch 2 0 lỗi console hoặc trang, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang; đáy `L09-M2T` 364, `L09-03` 650, `L09-04` 457, `L09-05` 691, `L09-06` 585 px; đã xem ảnh 1600×900 của `L09-03`, `L09-05`, `L09-06`. Âm tiết mặt trang: 37 (dẫn và khóa), 48, 46, 34, 50; ghi chú diễn giả 91, 142, 83, 102, 131. `#/2` mở `L09-M2T`. Viewer: 26/26 khối, 742 biểu thức KaTeX, 0 `.katex-error`. Ghi chú bài giảng 10 143 từ. `git diff --check` sạch. `no-ai-slop` (Edit) trên câu mới của R2: đạt. Trạng thái: chờ điều phối viên duyệt.
+
+### Bước mạch 3 (S12–S23, biên tập viên)
+
+Căn cứ: kế hoạch D1 mạch 3, D2, D3; phát hiện CT P07–P16, G12; SV (mục 2 và bảng phát hiện về `L09-07`–`L09-15`); TH (đích, argmax tại trạng thái kết thúc, $y^{\mathrm{DDQN}}\le y^{\mathrm{DQN}}$, "bảng thứ nhất", "$Z=0$" ở `L09-12`, chệch âm); R2 (mục hoãn về `L09-07`, `L09-08`). Mạch 2 đã commit (`2cc2fbf`, `f77212f`).
+
+| bước | trang | thay đổi | âm tiết trước → sau | `no-ai-slop` (Edit, tự kiểm theo `eval.md`) | trạng thái |
+|---|---|---|---|---|---|
+| S12 | `L09-M3T` (mới) | Trang tiêu đề mạch 3, `id="mach-3"`, dòng dẫn theo CT §2.2, bốn từ khóa | — → dẫn 23, khóa 18 | ghi chú không lấy tài liệu làm chủ ngữ; đạt | chờ điều phối viên duyệt |
+| S13 | `L09-06b` (mới) | "Ví dụ: hai bản ước lượng độc lập": "Nhu cầu:", dữ kiện, phép chọn và báo, hình `double-estimator.svg`, "Diễn giải:" | — → 37 | đạt | chờ điều phối viên duyệt |
+| S14 | `L09-07` | "Double DQN tách chọn và đánh giá" → "Mục tiêu Double DQN"; mở bằng giới hạn của DQN; dạng mặt nạ với $\operatorname{sg}$; "Lưu ý:" dạng từng trường hợp; hình vẽ lại; hết tràn (750 → 608 px) | 16 → 27 | bỏ "online" trần, "vô nghĩa"; đạt | chờ điều phối viên duyệt |
+| S15 | `L09-08` | "Hai đích có thể khác nhau" → "Ví dụ: một mẫu chuyển, hai mục tiêu"; hình có số; "Diễn giải:" | 12 + bảng → 24 | bỏ "đích", "target:", "online:"; đạt | chờ điều phối viên duyệt |
+| S16 | `L09-09` | "Miền, kích thước và đường gradient" → "Thuật toán Double DQN"; năm bước; kích thước mảng | 16 → 44 | bỏ backtick `sg` trong ghi chú; đạt | chờ điều phối viên duyệt |
+| S17 | `X01` | "Bài tập: sai lệch và hai đích" → "Bài tập: mục tiêu DQN và Double DQN"; "Câu hỏi:" tự đủ, (a) $Z=0$, (b) $Z=1$; "Lời giải:" từng bước | 23 → 29 | bỏ câu phân tuyến trong ghi chú; đạt | chờ điều phối viên duyệt |
+| S18 | `L09-10` | "Hai mạng vẫn có tương quan" → "Phạm vi của Double DQN"; bỏ hộp lời khuyên chung; ví dụ chệch âm | 58 → 60 | bỏ "Replay" trần, câu chỉ dẫn "Dùng lại bài tập…"; đạt | chờ điều phối viên duyệt |
+| S19 | `L09-11` | "Double Q-learning dùng hai bảng riêng" → "Double Q-learning dạng bảng"; "Nhu cầu:"; hình vẽ lại; "bảng kia đánh giá" thay "bảng thứ nhất" | 27 → 36 | đạt | chờ điều phối viên duyệt |
+| S20 | `L09-13` | "Áp dụng cập nhật chéo" → "Ví dụ: một cập nhật Double Q-learning"; số ví dụ A; hình `double-q-example.svg`; chuyển trước `L09-12` | 3 → 25 | bỏ nhãn quy trình "chu trình rút gọn"; đạt | chờ điều phối viên duyệt |
+| S21 | `L09-12` | "Cập nhật chéo theo trạng thái kết thúc" → "Thuật toán Double Q-learning"; thuật toán đầy đủ; bỏ "$Z=0$" như phép gán | 16 → 34 | đạt | chờ điều phối viên duyệt |
+| S22 | `L09-14` | "Hai cách tách không đồng nhất" → "So sánh DQN, Double DQN và Double Q-learning"; ba cột, năm tiêu chí | 26 → 55 | dùng "mạng trực tuyến", "bộ nhớ phát lại"; đạt | chờ điều phối viên duyệt |
+| S23 | `L09-15` | "Kiểm tra phần học giá trị" → "Bài tập: Double DQN và Double Q-learning"; "Lời giải:" fragment; dòng "Giới hạn chung:" | 38 → 57 | bỏ "Đáp án", câu "Sau đó chuyển sang…"; đạt | chờ điều phối viên duyệt |
+
+Số liệu đã tính lại: $1+0{,}9\cdot5=5{,}5$; $1+0{,}9\cdot4=4{,}6$; $1+0{,}8\cdot7=6{,}6$; $1+0{,}8\cdot2=2{,}6$; $4+0{,}1\cdot0{,}6=4{,}06$; nhánh kia $1+0{,}9\cdot3=3{,}7$, $3+0{,}1\cdot0{,}7=3{,}07$; ước lượng kép với $q=(0;0)$ cho $0$; với $q=(0{,}5;0)$, $\Pr(a^*=1)=\tfrac34$, $\tfrac34\cdot0{,}5=0{,}375$, độ chệch $-0{,}125$.
+
+SVG: mới `double-estimator.svg`, `ddqn-example.svg`, `double-q-example.svg`; vẽ lại `dqn-vs-ddqn.svg` (hai hàng, phông không chân, nhãn tiếng Việt, không tràn), `double-q-cross-update.svg` (nhãn chọn ngẫu nhiên $1/2$, mũi tên đủ đầu, nhánh dưới viền nét đứt). Tín hiệu không chỉ dựa vào màu: khung vuông, viền ellip nét đứt, hình thoi, viền liền và viền đứt.
+
+Ghi chú bài giảng, `## 3. Tách chọn và đánh giá` viết lại, thay ba mục cũ "Đích Double DQN", "Phạm vi tác dụng của Double DQN", "Double Q-learning dạng bảng": đoạn mở (kế thừa Mệnh đề 09.2, nhu cầu tách); "Ước lượng kép" (`lec-09-topic-17`, mới; trực quan, Ví dụ 09.4 có hình, Mệnh đề 09.4 bốn phần với chứng minh ba bước, ba phản ví dụ khi bỏ giả thiết, Ví dụ 09.5 chệch âm $-0{,}125$, câu hỏi thảo luận nguồn tr. 21 về 4-DQN/8-DQN); "Mục tiêu và thuật toán Double DQN" (Ví dụ 09.6 có hình, $y^{\mathrm{DDQN}}\le y^{\mathrm{DQN}}$, Thuật toán 09.5 đủ đầu vào, đầu ra, khởi tạo, năm bước, kích thước, chi phí; dạng từng trường hợp cho cùng giá trị; "Trong thực hành." nối bài thực hành Bài 08 mục 14–15); "Phạm vi của Double DQN" (Nhận xét 09.6; "Trong thực hành." với số Lunar Lander mục 15.4); "Double Q-learning dạng bảng" (Ví dụ 09.7 có hình, Thuật toán 09.7, bảng so sánh, Nhận xét 09.8 bốn nhầm lẫn, Bài tập 09.2 có gợi ý và lời giải, đoạn kết nối sang Mục 4). Bảng ký hiệu thêm $\widehat Q^A_a$, $\widehat Q^B_a$, $\epsilon_{\mathrm{exp}}$; bản đồ chủ đề và "Bảy phần" thêm `lec-09-topic-17`. Giáo trình tham khảo: Sutton và Barto (2018), §6.7 (học kép, Double Q-learning); van Hasselt (2010); van Hasselt, Guez và Silver (2016). Độ dài 12 748 từ theo `wc -w`. `no-ai-slop`: sửa một câu không có căn cứ về chi phí của mạng thứ hai và một dòng kiểm tra lời giải mơ hồ; không câu hỏi tu từ, không chủ ngữ là tài liệu; đạt.
+
+Phát hiện ngoài phạm vi ghi tệp: notebook Bài 08 (mục 15.2) dẫn tên mục cũ của ghi chú Bài 09 ("Sai lệch cực đại và ví dụ Rademacher", "Đích Double DQN"); các mục này nay là "Độ chệch của phép cực đại và bất đẳng thức kỳ vọng" và "Mục tiêu và thuật toán Double DQN". Chờ điều phối viên quyết sửa notebook (thuộc `materials/lec-08`).
+
+Kiểm sau bước mạch 3 (Playwright Chromium, `http://127.0.0.1:8799`, 1600×900 và 390×844): mười hai trang mạch 3 và hai trang kề, 0 lỗi console hoặc trang, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, không trang nào tràn; đáy `L09-M3T` 364, `L09-06b` 685, `L09-07` 608, `L09-08` 640, `L09-09` 606, `X01` 412, `L09-10` 344, `L09-11` 560, `L09-13` 694, `L09-12` 613, `L09-14` 559, `L09-15` 440 px. Đã xem ảnh 1600×900 của mười hai trang. 46 `data-slide-id` duy nhất; `#/3` và mục 3 của `L09-02b` mở `L09-M3T`. Viewer: 37/37 khối, 949 biểu thức KaTeX, 0 `.katex-error`, mã chủ đề không trùng. `git diff --check` sạch. Trạng thái: chờ điều phối viên duyệt.
+
+### Rà lại mạch 3 (bước R3)
+
+| vai | loại tác tử | mô hình | mức suy luận | ghi tệp |
+|---|---|---|---|---|
+| Rà lại mạch 3 (toán–RL, mạch, sinh viên–mật độ, `no-ai-slop` Detect) | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Biên tập R3 | Agent `general-purpose` (biên tập viên của đợt sửa) | `claude-opus-5-5` | high | có |
+
+Báo cáo: `review/R3-recheck.md` trong scratchpad phiên. Kết quả rà: 0 chặn bàn giao, 0 nghiêm trọng, 8 trung bình, 8 nhẹ; điều phối viên duyệt mạch 3 (`check.py`, ảnh `L09-06b`, `L09-09`, `L09-13`, `L09-14`; đối chiếu notebook ô 80) và chấp nhận toàn bộ, kèm các chốt ở cột "quyết định".
+
+| mức độ | trang chiếu | vấn đề | đề xuất sửa | trạng thái | quyết định |
+|---|---|---|---|---|---|
+| trung bình | `L09-09`; Thuật toán 09.5 | $T$ dùng cho ngân sách bước, trùng $T$ bước kết thúc lượt; $\mathcal D$, $N_{\mathrm{start}}$, $F$, $\epsilon_{\mathrm{exp}}$ không được gọi tên | $t_{\mathrm{end}}$; gọi tên tại chỗ | đã sửa ở R3 (mặt trang, ghi chú diễn giả, Thuật toán 09.5 và câu giải thích $t_{\mathrm{end}}$ trong ghi chú bài giảng); 58 âm tiết, không cần tách trang | chấp nhận ($t_{\mathrm{end}}$) |
+| trung bình | `L09-14`; bảng trong ghi chú bài giảng | Hàng "chệch lên" mạnh hơn kết quả, thiếu giả thiết | Hàng "độ chệch của mục tiêu" theo đề xuất | đã sửa ở R3 ở cả hai nơi | chấp nhận |
+| trung bình | `L09-06b`, `double-estimator.svg` | Nhãn là kỳ vọng có điều kiện; "Diễn giải:" thiếu hai giả thiết, không tự đủ; thiếu xác suất $1/2$; đáy 685 px | Nhãn "𝔼[Q̂ᴮ_a* \| cặp A] = 0"; dữ kiện; "Diễn giải:" mới | đã sửa ở R3 (SVG, `desc`, `alt`, chú thích ảnh và câu đọc hình ghi chú bài giảng); hình thấp hơn; đáy 654 px | chấp nhận |
+| trung bình | mạch 3, bước hình thức | Mệnh đề ước lượng kép không có trang kết quả | Thêm `L09-06c` | đã sửa ở R3: `L09-06c` "Ước lượng kép không chệch lên" sau `L09-06b`; dòng chệch âm chuyển từ `L09-10` sang "Ý nghĩa:" của `L09-06c`; tên tiếng Anh "double estimator" đặt ở đây; storyboard, outline, bảng hành trình cập nhật | chấp nhận (thêm `L09-06c`, tránh lặp với `L09-10`) |
+| trung bình | `L09-15`, ghi chú diễn giả, đoạn kết Mục 3, ghi chú `L09-M3T` | "Tất định / không biểu diễn được chính sách ngẫu nhiên" không đúng nguyên văn khi có $\epsilon$-tham lam | Phân biệt xác suất được học với ngẫu nhiên cố định | đã sửa ở R3 (mặt trang "chọn bằng $\arg\max_aQ$ thì không học xác suất hành động; mỗi bước cần $\max$ trên $\mathcal A$"; ghi chú diễn giả, ghi chú `L09-M3T`, đoạn kết Mục 3 nêu $\epsilon_{\mathrm{exp}}$-tham lam chỉ thêm ngẫu nhiên cố định) | chấp nhận |
+| trung bình | ghi chú bài giảng | "Mục này xét…", "Mục con sau…" | Chủ ngữ "chúng ta" | đã sửa ở R3; `grep` toàn ghi chú không còn "Mục này", "Mục con", "Phần này", "Chương này" | chấp nhận |
+| trung bình | notebook Bài 08, mục 15.2 (ô 71, 73) | Dẫn tên mục cũ của ghi chú Bài 09, dùng "đích" | Commit `fix(materials-08)` riêng | mở; không sửa ở R3 | chấp nhận (điều phối viên giao riêng sau mạch 3) |
+| trung bình | `L09-16`, `L09-17` | Tràn, thông điệp gộp trạng thái sai, "return", "kernel" | Sửa ở bước mạch 4 | mở (bước mạch 4) | chấp nhận (chuyển bước mạch 4) |
+| nhẹ | ghi chú diễn giả `L09-M3T` | 107 âm tiết > 100 | Rút | đã sửa ở R3 (khoảng 91) | chấp nhận |
+| nhẹ | `L09-10` dòng 4 | "hội tụ vẫn như DQN" mơ hồ | "việc thiếu bảo đảm hội tụ" | đã sửa ở R3 | chấp nhận |
+| nhẹ | `L09-10` | "Bộ ước lượng kép" thiếu tên tiếng Anh | Thêm ở lần dùng đầu | đã sửa ở R3 (ở `L09-06c`) | chấp nhận |
+| nhẹ | `double-q-example.svg` | "(cập nhật)" gợi ý ô tại $S'$ bị cập nhật | "bảng chọn" | đã sửa ở R3 | chấp nhận |
+| nhẹ | `L09-15` Lời giải | (3) thiếu nối với giả thiết; (4) thiếu "một ô" | Sửa | đã sửa ở R3 ((4) "một ô của một bảng"; nối giả thiết của (3) đặt trong ghi chú diễn giả để giữ 58 âm tiết) | chấp nhận |
+| nhẹ | ghi chú bài giảng Ví dụ 09.4 | $\mathbb E[\varepsilon^B_{a^*}]$ dễ lẫn | $\mathbb E[\varepsilon^B_b]\big|_{b=a^*}$ | đã sửa ở R3 | chấp nhận |
+| nhẹ | ghi chú bài giảng sau phản ví dụ của Mệnh đề 09.4 | Bước 1 cũng dùng khả tích | Sửa câu | đã sửa ở R3 | chấp nhận |
+| nhẹ | ghi chú bài giảng sau Ví dụ 09.5; đầu "Ước lượng kép" | Bước nhảy lập luận; câu siêu văn bản | Viết lại; xóa | đã sửa ở R3 | chấp nhận |
+
+Kiểm sau R3 (Playwright Chromium, `http://127.0.0.1:8799`, 1600×900 và 390×844): mười ba trang mạch 3, 0 lỗi console hoặc trang, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, không trang nào tràn; đáy `L09-06b` 654, `L09-06c` 447, `L09-09` 614, `L09-10` 316, `L09-14` 654, `L09-15` 446 px; đã xem ảnh 1600×900 của `L09-06b`, `L09-06c`, `L09-09`, `L09-14`, `L09-15`. 47 `data-slide-id` duy nhất; `#/3` mở `L09-M3T`. Viewer: 37/37 khối, 954 biểu thức KaTeX, 0 `.katex-error`. Ghi chú bài giảng 12 803 từ. `git diff --check` sạch. `no-ai-slop` (Edit) trên câu mới của R3: đạt. Trạng thái: chờ điều phối viên duyệt.

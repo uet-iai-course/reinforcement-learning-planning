@@ -1,1 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 310" role="img" aria-labelledby="t d"><title id="t">Cập nhật chéo Double Q-learning</title><desc id="d">Một bảng chọn hành động tham lam, bảng kia đánh giá; đồng xu quyết định bảng được cập nhật.</desc><defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L10 3L0 6Z" fill="#2f3e7a"/></marker></defs><circle cx="120" cy="150" r="55" fill="#fff" stroke="#b15a2b" stroke-width="5"/><text x="120" y="160" text-anchor="middle" font-size="30">1/2</text><rect x="265" y="40" width="250" height="95" rx="15" fill="#edf4ff" stroke="#2f3e7a" stroke-width="4"/><text x="390" y="80" text-anchor="middle" font-size="30">Q₁ chọn</text><text x="390" y="114" text-anchor="middle" font-size="30">Q₂ đánh giá</text><rect x="265" y="180" width="250" height="95" rx="15" fill="#f7efe6" stroke="#b15a2b" stroke-width="4"/><text x="390" y="220" text-anchor="middle" font-size="30">Q₂ chọn</text><text x="390" y="254" text-anchor="middle" font-size="30">Q₁ đánh giá</text><rect x="660" y="95" width="235" height="115" rx="15" fill="#eef8ef" stroke="#2e7d32" stroke-width="4"/><text x="778" y="140" text-anchor="middle" font-size="30">cập nhật một bảng</text><text x="778" y="177" text-anchor="middle" font-size="30">bảng kia giữ nguyên</text><path d="M175 135L255 90M175 165L255 225M515 88L650 135M515 228L650 170" stroke="#2f3e7a" stroke-width="5" marker-end="url(#a)"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 230" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Cập nhật chéo của Double Q-learning</title>
+<desc id="d">Bên trái: khung "chọn ngẫu nhiên, mỗi nhánh xác suất 1/2". Hai mũi tên tới hai nhánh. Nhánh trên: Q 1 chọn a sao, Q 2 đánh giá, cập nhật Q 1, Q 2 giữ nguyên. Nhánh dưới, viền nét đứt: Q 2 chọn a sao, Q 1 đánh giá, cập nhật Q 2, Q 1 giữ nguyên.</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker></defs>
+<rect x="20" y="75" width="230" height="80" rx="12" fill="#FFFFFF" stroke="#424954" stroke-width="3"/>
+<text x="135" y="108" font-size="22" text-anchor="middle">chọn ngẫu nhiên</text>
+<text x="135" y="136" font-size="22" text-anchor="middle">mỗi nhánh 1/2</text>
+<line x1="252" y1="100" x2="338" y2="58" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ar)"/>
+<line x1="252" y1="130" x2="338" y2="172" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ar)"/>
+<rect x="340" y="15" width="600" height="85" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="640" y="50" font-size="23" text-anchor="middle">Q₁ chọn a*, Q₂ đánh giá</text>
+<text x="640" y="82" font-size="21" text-anchor="middle" fill="#424954">cập nhật Q₁(S, A); Q₂ giữ nguyên</text>
+<rect x="340" y="130" width="600" height="85" rx="12" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3" stroke-dasharray="10 6"/>
+<text x="640" y="165" font-size="23" text-anchor="middle">Q₂ chọn a*, Q₁ đánh giá</text>
+<text x="640" y="197" font-size="21" text-anchor="middle" fill="#424954">cập nhật Q₂(S, A); Q₁ giữ nguyên</text>
+</svg>

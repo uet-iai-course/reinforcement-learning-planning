@@ -136,16 +136,128 @@
 </section>
 
 <section>
-<section data-slide-id="L09-07" data-note-topic-id="lec-09-topic-03"><h2>Double DQN tách chọn và đánh giá</h2><img class="figure" style="max-height:230px" src="img/lec-09/dqn-vs-ddqn.svg" alt="DQN dùng mạng mục tiêu cho cả chọn và đánh giá còn Double DQN dùng mạng online chọn và mạng mục tiêu đánh giá"/><div class="math-large">$$a_i^*=\arg\max_{a\in\mathcal A}Q_\theta(S'_i,a),$$ $$y_i=\begin{cases}R_i,&amp;Z_i=1,\\R_i+\gamma\operatorname{sg}\!\left(Q_{\theta^-}(S'_i,a_i^*)\right),&amp;Z_i=0.\end{cases}$$</div><p>$Z_i\in\{0,1\}$ là cờ kết thúc: chỉ tính $a_i^*$ khi $Z_i=0$. Hàm $\operatorname{sg}(u)=u$ ở lượt thuận và có đạo hàm bằng $0$.</p><aside class="notes">Giả sử tập hành động hữu hạn. Mạng online chọn theo thứ hạng hiện tại; mạng mục tiêu đánh giá. Công thức từng trường hợp tránh tính argmax vô nghĩa tại trạng thái kết thúc. Nếu có hòa, cài đặt phải ghi quy tắc phá hòa.<p class="note-source"><strong>Nguồn:</strong> tr. 14–16; thêm mặt nạ kết thúc và dừng gradient.</p></aside></section>
-<section data-slide-id="L09-08" data-note-topic-id="lec-09-topic-03"><h2>Hai đích có thể khác nhau</h2><p>Cho $r=1$, $\gamma=0{,}9$, $Z=0$, $Q_{\theta^-}(s',\cdot)=(5,4)$ và $Q_\theta(s',\cdot)=(3,6)$.</p><table><thead><tr><th>thuật toán</th><th>chọn</th><th>đánh giá</th><th>đích</th></tr></thead><tbody><tr><td>DQN</td><td>target: hành động 1</td><td>$5$</td><td>$5{,}5$</td></tr><tr><td>Double DQN</td><td>online: hành động 2</td><td>$4$</td><td>$4{,}6$</td></tr></tbody></table><aside class="notes">Chênh lệch không chứng minh Double DQN luôn gần giá trị thật hơn trong từng mẫu. Cơ chế nhằm giảm liên hệ giữa nhiễu tạo thứ hạng và nhiễu tạo giá trị đánh giá.<p class="note-source"><strong>Nguồn:</strong> tr. 15–17; ví dụ số bổ sung.</p></aside></section>
-<section data-slide-id="L09-09" data-note-topic-id="lec-09-topic-04"><h2>Miền, kích thước và đường gradient</h2><p>$Q_\theta:\mathcal S\times\mathcal A\to\mathbb R$, $|\mathcal A|=m$; với lô $b$ mẫu, $Q_\theta(S_i,\cdot)\in\mathbb R^m$, $(R,y)\in\mathbb R^b$ và $Z\in\{0,1\}^b$.</p><div class="math-large">$$L_B(\theta)=\frac1b\sum_{i=1}^{b}\left[\operatorname{sg}(y_i)-Q_\theta(S_i,A_i)\right]^2.$$</div><div class="box">Gradient chỉ đi qua $Q_\theta(S_i,A_i)$; đích và mạng mục tiêu không nhận gradient.</div><aside class="notes">Z là cờ Boolean, không phải đại lượng thực tùy ý. A_i là chỉ số hành động trong tập có m phần tử; phép gather lấy một giá trị trên mỗi hàng. Double DQN chỉ thay công thức bootstrap, không thay hướng gradient của loss. `sg` là bảo vệ cài đặt: chặn gradient đi vào đích và mạng mục tiêu. Ví dụ toán đánh số hành động từ 1; chỉ số tensor trong mã có thể bắt đầu từ 0, cần đối chiếu khi chuyển từ công thức sang cài đặt.<p class="note-source"><strong>Nguồn:</strong> tr. 15–19; bổ sung miền, kích thước và đường gradient.</p></aside></section>
-<section data-slide-id="X01" data-note-topic-id="lec-09-topic-03"><h2>Bài tập: sai lệch và hai đích</h2><ol><li>Liệt kê bốn cặp Rademacher và kiểm kết quả $1/2$.</li><li>Với $r=1$, $\gamma=0{,}8$, $Z=0$, $Q_{\theta^-}(s',\cdot)=(2,7)$ và $Q_\theta(s',\cdot)=(4,1)$, tính đích DQN và Double DQN.</li></ol><p class="fragment"><strong>Lời giải:</strong> $y^{\mathrm{DQN}}=1+0{,}8\cdot7=6{,}6$; online chọn hành động 1 nên $y^{\mathrm{DDQN}}=1+0{,}8\cdot2=2{,}6$.</p><aside class="notes">DQN lấy 7 từ mạng mục tiêu. Double DQN dùng mạng online chọn hành động một rồi lấy 2 từ mạng mục tiêu. Đây là bộ số mới để kiểm cá nhân, khác ví dụ trên trang chiếu. Sau bài tập, giữ nguyên nguyên tắc tách chọn–đánh giá nhưng chuyển sang hai bảng riêng.<p class="note-source"><strong>Nguồn:</strong> bài tập xây từ tr. 12–16.</p></aside></section>
-<section data-slide-id="L09-10" data-note-topic-id="lec-09-topic-04"><h2>Hai mạng vẫn có tương quan</h2><ul><li>$\theta^-$ là bản sao trễ của $\theta$, nên hai sai số đánh giá không độc lập.</li><li>Tách chọn–đánh giá thường giảm sai lệch cực đại; không buộc sai lệch bằng 0.</li><li>Replay, mạng mục tiêu và Double DQN xử lý các cơ chế khác nhau.</li></ul><div class="box">Kết luận cần dựa trên nhiều lần chạy và thước đo đánh giá, không chỉ loss huấn luyện.</div><aside class="notes">Không dùng lập luận độc lập như trong Double Q-learning lý tưởng để mô tả hai mạng sâu. Dùng lại bài tập vừa thực hiện để kiểm cơ chế bằng số trước khi chuyển sang Double Q-learning dạng bảng.<p class="note-source"><strong>Nguồn:</strong> tr. 17–19; thu hẹp kết luận.</p></aside></section>
-<section data-slide-id="L09-11" data-note-topic-id="lec-09-topic-05"><h2>Double Q-learning dùng hai bảng riêng</h2><img class="figure" src="img/lec-09/double-q-cross-update.svg" alt="Double Q-learning cập nhật chéo giữa hai bảng Q"/><p>Chính sách hành vi có thể dựa trên $Q_1+Q_2$. Mỗi bước chỉ cập nhật một bảng; bảng còn lại đánh giá hành động do bảng thứ nhất chọn.</p><aside class="notes">Double Q-learning dạng bảng và Double DQN có cùng ý tưởng tách chọn–đánh giá nhưng không phải cùng thuật toán. Double DQN tái dùng online và target; Double Q-learning duy trì hai ước lượng.<p class="note-source"><strong>Nguồn:</strong> tr. 20–21; làm rõ sự khác nhau.</p></aside></section>
-<section data-slide-id="L09-13" data-note-topic-id="lec-09-topic-05"><h2>Áp dụng cập nhật chéo</h2><p>Cho $Q_1(S,A)=4$, $\alpha=0{,}1$, $R=1$, $\gamma=0{,}9$, $Z=0$. Tại $S'$, $Q_1=(2,1)$ và $Q_2=(1,4)$.</p><div class="math-large">$$a^*=1,\qquad y_1=1+0{,}9(1)=1{,}9,$$ $$Q_1^{\mathrm{new}}(S,A)=4+0{,}1(1{,}9-4)=3{,}79.$$</div><aside class="notes">Đây là bước ứng dụng của chu trình rút gọn cho Double Q-learning. Bảng Q1 chọn hành động một; bảng Q2 đánh giá chính hành động đó bằng 1. Lấy max của Q2 sẽ phá cơ chế tách.<p class="note-source"><strong>Nguồn:</strong> ví dụ xây từ thuật toán tr. 20.</p></aside></section>
-<section data-slide-id="L09-12" data-note-topic-id="lec-09-topic-05"><h2>Cập nhật chéo theo trạng thái kết thúc</h2><p>Với xác suất $1/2$, cập nhật bảng thứ nhất:</p><div class="math-large">$$a^*=\arg\max_{a\in\mathcal A}Q_1(S',a),\qquad Z=0,$$ $$y_1=\begin{cases}R,&amp;Z=1,\\R+\gamma Q_2(S',a^*),&amp;Z=0,\end{cases}$$ $$Q_1(S,A)\leftarrow Q_1(S,A)+\alpha[y_1-Q_1(S,A)].$$</div><p>Chỉ tính $a^*$ khi $Z=0$. Nhánh còn lại hoán đổi $Q_1,Q_2$.</p><aside class="notes">Đầu vào gồm hai bảng, alpha dương, gamma trong [0,1), chính sách hành vi và chuyển tiếp. Dạng từng trường hợp tránh lấy argmax trên trạng thái kết thúc.<p class="note-source"><strong>Nguồn:</strong> tr. 20–21; thêm xử lý kết thúc và giao diện thuật toán.</p></aside></section>
-<section data-slide-id="L09-14" data-note-topic-id="lec-09-topic-05"><h2>Hai cách tách không đồng nhất</h2><table><thead><tr><th></th><th>Double Q-learning</th><th>Double DQN</th></tr></thead><tbody><tr><td>biểu diễn</td><td>hai bảng $Q_1,Q_2$</td><td>online $Q_\theta$, target $Q_{\theta^-}$</td></tr><tr><td>cập nhật</td><td>chọn ngẫu nhiên một bảng</td><td>luôn cập nhật online</td></tr><tr><td>đánh giá</td><td>bảng còn lại</td><td>bản sao trễ</td></tr><tr><td>dữ liệu</td><td>thường trực tuyến</td><td>thường từ replay</td></tr></tbody></table><aside class="notes">Tên Double mô tả nguyên tắc chung, không cho phép suy ra tùy ý bốn hay tám mạng sẽ tốt hơn. Thêm bộ ước lượng làm đổi thuật toán, chi phí và quan hệ tương quan.<p class="note-source"><strong>Nguồn:</strong> tr. 14–21; đối chiếu.</p></aside></section>
-<section data-slide-id="L09-15" data-note-topic-id="lec-09-topic-05"><h2>Kiểm tra phần học giá trị</h2><ol><li><strong>Câu hỏi:</strong> biến nào chọn hành động trong Double DQN?</li><li><strong>Câu hỏi:</strong> điều gì xảy ra với bootstrap khi $Z=1$?</li><li><strong>Câu hỏi:</strong> vì sao hai mạng DQN không độc lập?</li><li><strong>Câu hỏi:</strong> Double Q-learning cập nhật mấy bảng trong một bước?</li></ol><aside class="notes">Đáp án: online chọn; bootstrap bằng không; target là bản sao trễ và dùng dữ liệu liên quan; chỉ một bảng được cập nhật. Sau đó chuyển sang hạn chế khác của học giá trị: argmax chỉ trả một hành động.<p class="note-source"><strong>Nguồn:</strong> tổng hợp tr. 11–21.</p></aside></section>
+<section data-slide-id="L09-M3T" id="mach-3" class="strand-title" data-note-topic-id="lec-09-topic-17">
+<div class="strand-title-body">
+<h2><span class="strand-number">3.</span>Tách chọn và đánh giá</h2>
+<p class="strand-lead">Muốn giảm độ chệch của phép cực đại, phải chọn hành động bằng một ước lượng và đánh giá bằng ước lượng khác.</p>
+<p class="strand-keys">Hai bản ước lượng độc lập · Mục tiêu Double DQN · Double Q-learning · Tương quan của mạng mục tiêu</p>
+</div>
+<aside class="notes"><p>Phần 2 kết luận rằng phép cực đại trên các ước lượng không chệch có nhiễu có độ chệch không âm, vì cùng một ước lượng vừa chọn hành động vừa báo giá trị. Nhiệm vụ ở đây là tách hai vai đó: một ví dụ và một mệnh đề cho hai bản ước lượng độc lập, Double DQN cho mạng, Double Q-learning cho bảng. Kết quả giao cho phần 4: chính sách suy ra từ $\arg\max_aQ$, xác suất hành động không được học, và mỗi bước cần phép cực đại trên $\mathcal A$.</p></aside>
+</section>
+<section data-slide-id="L09-06b" data-note-topic-id="lec-09-topic-17">
+<h2>Ví dụ: hai bản ước lượng độc lập</h2>
+<p><strong>Nhu cầu:</strong> đánh giá bằng ước lượng không tham gia phép chọn.</p>
+<p>Cho $q_1=q_2=0$; $\widehat Q^A_a$, $\widehat Q^B_a$ bằng $q_a$ cộng nhiễu; bốn nhiễu độc lập, $\pm1$ xác suất $1/2$.</p>
+<p>Chọn $a^*=\arg\max_a\widehat Q^A_a$; báo $\widehat Q^B_{a^*}$.</p>
+<img class="figure short" src="img/lec-09/double-estimator.svg" alt="Bốn cặp ước lượng bản A, mỗi cặp xác suất một phần tư, hòa thì chọn hành động 1: âm một âm một chọn a sao bằng 1; âm một cộng một chọn 2; cộng một âm một chọn 1; cộng một cộng một chọn 1; ở mọi cặp, kỳ vọng của bản B tại a sao, khi biết cặp bản A, bằng 0."/>
+<p><strong>Diễn giải:</strong> B độc lập với A, không chệch, nên ${\mathbb E[\widehat Q^B_{a^*}]=0=\max_aq_a}$; một bản cho cả hai việc: $\tfrac12$.</p>
+<aside class="notes"><p>Bản A quyết định hành động; bản B độc lập với bản A, nên khi biết $a^*$, nhiễu $\varepsilon^B_{a^*}$ vẫn có kỳ vọng $0$. Lấy kỳ vọng theo bốn cặp của bản A cho giá trị báo cáo trung bình $0$, đúng bằng giá trị đúng lớn nhất. Quy tắc phá hòa không đổi kết quả. Một bản ước lượng dùng cho cả hai việc cho $\tfrac12$, như ví dụ hai hành động có nhiễu $\pm1$. Hai điều kiện được dùng: bản B không chệch và độc lập với bản A. Khi giá trị đúng khác nhau, bộ ước lượng kép có thể chệch âm.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 14; Sutton và Barto (2018), §6.7; van Hasselt (2010).</p></aside>
+</section>
+<section data-slide-id="L09-06c" data-note-topic-id="lec-09-topic-17">
+<h2>Ước lượng kép không chệch lên</h2>
+<p><strong>Mệnh đề.</strong> $\mathcal A$ hữu hạn; $\widehat Q^A$, $\widehat Q^B$ độc lập; $\mathbb E[\widehat Q^B_a]=q_a$; $a^*$ là hàm của $\widehat Q^A$. Khi đó</p>
+<div>$$\mathbb E\bigl[\widehat Q^B_{a^*}\bigr]=\mathbb E[q_{a^*}]\le\max_aq_a.$$</div>
+<p><strong>Chứng minh.</strong> Khi biết $\widehat Q^A$, $\widehat Q^B_{a^*}$ có kỳ vọng $q_{a^*}$; lấy kỳ vọng, dùng $q_{a^*}\le\max_aq_a$.</p>
+<p><strong>Ý nghĩa:</strong> bộ ước lượng kép (double estimator) không chệch lên, nhưng chệch âm khi chọn sai với xác suất dương: $q=(0{,}5;\,0)$, nhiễu $\pm1$ cho $-0{,}125$.</p>
+<aside class="notes"><p>Ba giả thiết có vai trò riêng: độc lập để nhiễu của bản B không phụ thuộc hành động đã thắng, không chệch để kỳ vọng của bản B tại mỗi hành động bằng giá trị đúng, và $a^*$ là hàm của bản A để phép chọn không nhìn bản B. Bỏ độc lập, chẳng hạn lấy bản B trùng bản A, ta trở lại phép cực đại với độ chệch $\tfrac12$. Với $q=(0{,}5;\,0)$, bản A chọn hành động 1 ở ba trong bốn cặp, nên kỳ vọng là $\tfrac34\cdot0{,}5=0{,}375$, thấp hơn $0{,}5$ một lượng $0{,}125$; một bản cho $0{,}875$. Dấu bằng khi và chỉ khi $a^*$ là hành động tốt nhất hầu chắc chắn.</p><p class="note-source"><strong>Nguồn:</strong> van Hasselt (2010); Sutton và Barto (2018), §6.7; ghi chú bài giảng, Mệnh đề 09.4.</p></aside>
+</section>
+<section data-slide-id="L09-07" data-note-topic-id="lec-09-topic-03">
+<h2>Mục tiêu Double DQN</h2>
+<p><strong>Nhu cầu:</strong> mục tiêu DQN dùng $Q_{\theta^-}$ cả để chọn lẫn để đánh giá hành động tại $S'_i$.</p>
+<img class="figure short" src="img/lec-09/dqn-vs-ddqn.svg" alt="Hai hàng. DQN: mạng mục tiêu chọn a sao bằng arg max theo Q theta trừ, rồi mạng mục tiêu đánh giá Q theta trừ tại S phẩy, a sao. Double DQN: mạng trực tuyến chọn a sao bằng arg max theo Q theta, rồi mạng mục tiêu đánh giá Q theta trừ tại S phẩy, a sao."/>
+<div>$$a_i^*=\arg\max_{a}Q_\theta(S'_i,a),\qquad y_i=R_i+\gamma(1-Z_i)\operatorname{sg}\bigl(Q_{\theta^-}(S'_i,a_i^*)\bigr).$$</div>
+<p><strong>Lưu ý:</strong> khi $Z_i=1$, $y_i=R_i$; dạng từng trường hợp cho cùng giá trị.</p>
+<aside class="notes"><p>Chỉ dòng mục tiêu đổi so với DQN: mạng trực tuyến chọn theo thứ hạng hiện tại, mạng mục tiêu đánh giá hành động được chọn. Phép arg max là hằng từng khúc theo $\theta$, nên không có gradient đi qua $a_i^*$; $\operatorname{sg}$ chặn gradient vào mục tiêu như ở Bài 08. Cài đặt theo mini-batch có thể tính $a_i^*$ cho mọi mẫu rồi nhân mặt nạ $(1-Z_i)$; khi $Z_i=1$, giá trị tại $S'_i$ không vào mục tiêu. Khi hòa, cần ghi quy tắc phá hòa, chẳng hạn chỉ số nhỏ nhất.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 14–16; van Hasselt, Guez và Silver (2016); ghi chú bài giảng Bài 08, Định nghĩa 08.4, 08.12.</p></aside>
+</section>
+<section data-slide-id="L09-08" data-note-topic-id="lec-09-topic-03">
+<h2>Ví dụ: một mẫu chuyển, hai mục tiêu</h2>
+<p>Cho $R=1$, $\gamma=0{,}9$, $Z=0$ và hai mạng tại $S'$ như hình. Tính hai mục tiêu.</p>
+<img class="figure short" src="img/lec-09/ddqn-example.svg" alt="Bảng hai hàng: mạng mục tiêu 5 và 4, mạng trực tuyến 3 và 6. DQN lấy cực đại 5 của hàng mạng mục tiêu. Double DQN chọn hành động 2 theo số 6 của mạng trực tuyến, rồi đánh giá bằng số 4 của mạng mục tiêu."/>
+<p>DQN: $\max_aQ_{\theta^-}(S',a)=5$, nên $y=1+0{,}9\cdot5=5{,}5$.</p>
+<p>Double DQN: $a^*=2$; $Q_{\theta^-}(S',2)=4$, nên $y=1+0{,}9\cdot4=4{,}6$.</p>
+<p><strong>Diễn giải:</strong> mục tiêu giảm $0{,}9$; với $Z=0$, luôn có $y^{\mathrm{DDQN}}\le y^{\mathrm{DQN}}$.</p>
+<aside class="notes"><p>Hai mạng xếp hạng hai hành động ngược nhau: mạng mục tiêu ưu tiên hành động 1, mạng trực tuyến ưu tiên hành động 2. Mục tiêu Double DQN giảm $0{,}9$. Bất đẳng thức trong dòng diễn giải đúng trên từng mẫu vì $Q_{\theta^-}(S',a^*)\le\max_aQ_{\theta^-}(S',a)$, dấu bằng khi hai mạng chọn cùng hành động; nó không nói mục tiêu nào gần giá trị đúng hơn trong một mẫu cụ thể. Bộ số này được bài thực hành của Bài 08 kiểm bằng phép kiểm tự động trước khi huấn luyện Double DQN.</p><p class="note-source"><strong>Nguồn:</strong> ví dụ sư phạm theo bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 15–16; bài thực hành Bài 08, mục 15.2.</p></aside>
+</section>
+<section data-slide-id="L09-09" data-note-topic-id="lec-09-topic-03">
+<h2>Thuật toán Double DQN</h2>
+<p><strong>Thuật toán.</strong> Như DQN (Thuật toán 08.13): $\theta^-\leftarrow\theta$, bộ nhớ phát lại $\mathcal D\leftarrow\varnothing$; lặp tới $t_{\mathrm{end}}$ bước môi trường:</p>
+<ol>
+<li>Chọn $A_t$ $\epsilon_{\mathrm{exp}}$-tham lam theo $Q_\theta$ ($\epsilon_{\mathrm{exp}}$: xác suất thăm dò); lưu mẫu chuyển vào $\mathcal D$.</li>
+<li>Khi $\mathcal D$ có ít nhất $N_{\mathrm{start}}$ mẫu, sau mỗi $F$ bước môi trường: rút đều $b$ mẫu.</li>
+<li>$a_i^*=\arg\max_aQ_\theta(S'_i,a)$; $y_i=R_i+\gamma(1-Z_i)Q_{\theta^-}(S'_i,a_i^*)$.</li>
+<li>Một bước tối ưu trên $L_B(\theta)$ với $\operatorname{sg}(y_i)$.</li>
+<li>Sau mỗi $C$ bước tối ưu: $\theta^-\leftarrow\theta$.</li>
+</ol>
+<p>Chỉ bước 3 khác DQN; mảng $Q_\theta(S'_i,\cdot)$, $Q_{\theta^-}(S'_i,\cdot)$ cỡ $b\times m$; $a^*$, $y$ dài $b$.</p>
+<aside class="notes"><p>Đầu vào giống DQN: $\gamma\in[0,1)$, xác suất thăm dò $\epsilon_{\mathrm{exp}}$, bộ tối ưu, dung lượng $N$ của bộ nhớ phát lại, cỡ mini-batch $b$, $N_{\mathrm{start}}$ là số mẫu tối thiểu trong bộ nhớ trước bước tối ưu đầu, $F$ là số bước môi trường giữa hai bước tối ưu, $C$ và ngân sách $t_{\mathrm{end}}$; Bài 08 viết ngân sách là $T$, ở đây $T$ dành cho bước kết thúc lượt. Bước 3 cần thêm một lần tính của mạng trực tuyến trên $S'_i$; mọi đại lượng của bước 3 tính trong chế độ không lấy gradient. Hành vi là $\epsilon_{\mathrm{exp}}$-tham lam theo mạng trực tuyến, nên dữ liệu trong bộ nhớ là dữ liệu khác chính sách như ở DQN. Đầu ra là $\theta$ và chính sách tham lam theo $Q_\theta$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 08, Thuật toán 08.13; van Hasselt, Guez và Silver (2016); bài thực hành Bài 08, mục 14 và 15.2.</p></aside>
+</section>
+<section data-slide-id="X01" data-note-topic-id="lec-09-topic-03">
+<h2>Bài tập: mục tiêu DQN và Double DQN</h2>
+<p><strong>Câu hỏi:</strong> cho $R=1$, $\gamma=0{,}8$; tại $S'$: $Q_{\theta^-}(S',\cdot)=(2;\,7)$, $Q_\theta(S',\cdot)=(4;\,1)$. Tính mục tiêu DQN và Double DQN khi (a) $Z=0$; (b) $Z=1$.</p>
+<div class="fragment">
+<p><strong>Lời giải:</strong> (a) DQN: $\max_aQ_{\theta^-}(S',a)=7$, $y=1+0{,}8\cdot7=6{,}6$.</p>
+<p>Double DQN: $a^*=1$ theo $Q_\theta$; $Q_{\theta^-}(S',1)=2$, $y=1+0{,}8\cdot2=2{,}6$.</p>
+<p>(b) Cả hai bằng $R=1$. Kết luận: $2{,}6\le6{,}6$, đúng chiều $y^{\mathrm{DDQN}}\le y^{\mathrm{DQN}}$.</p>
+</div>
+<aside class="notes"><p>Bài tập kiểm việc đọc đúng vai của hai mạng và mặt nạ kết thúc. Gợi ý: xác định trước hàng nào chọn, hàng nào đánh giá. Ở đây hai mạng xếp hạng ngược nhau và khoảng cách lớn, nên hai mục tiêu cách nhau $4$. Câu (b) kiểm rằng khi lượt kết thúc, hành động được chọn không ảnh hưởng mục tiêu.</p><p class="note-source"><strong>Nguồn:</strong> bài tập theo bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 15–16.</p></aside>
+</section>
+<section data-slide-id="L09-10" data-note-topic-id="lec-09-topic-04">
+<h2>Phạm vi của Double DQN</h2>
+<p>$\theta^-$ là bản sao trễ của $\theta$ và cùng học trên một bộ nhớ, nên hai mạng tương quan.</p>
+<p>Điều kiện độc lập không thỏa: không bảo đảm hết chệch lên; mức giảm phải đo.</p>
+<p>Double DQN chỉ đổi mục tiêu; tương quan mẫu và việc thiếu bảo đảm hội tụ vẫn như DQN.</p>
+<aside class="notes"><p>Mệnh đề ước lượng kép cần bản đánh giá độc lập với bản chọn; ở Double DQN, mạng mục tiêu là bản sao của mạng trực tuyến tại mốc đồng bộ, nên mệnh đề không áp dụng. Bài giảng gốc liệt kê những điều Double DQN không sửa: tương quan mẫu, tính không dừng của mục tiêu, bảo đảm hội tụ với mạng tùy ý. Trong bài thực hành Bài 08 trên Lunar Lander, năm hạt giống, $10^5$ bước, Double DQN đạt $200{,}0$ và cấu hình gốc $205{,}4$ trên cùng hạt giống; hiệu $-5{,}4$ chưa phân biệt được ($t=-0{,}38$).</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 17–19; van Hasselt (2010); bài thực hành Bài 08, mục 15.4.</p></aside>
+</section>
+<section data-slide-id="L09-11" data-note-topic-id="lec-09-topic-05">
+<h2>Double Q-learning dạng bảng</h2>
+<p><strong>Nhu cầu:</strong> hai ước lượng học trên các mẫu khác nhau, thay cho một bản sao trễ.</p>
+<img class="figure short" src="img/lec-09/double-q-cross-update.svg" alt="Khung chọn ngẫu nhiên, mỗi nhánh xác suất một phần hai. Nhánh trên: Q 1 chọn a sao, Q 2 đánh giá, cập nhật Q 1 tại S, A, Q 2 giữ nguyên. Nhánh dưới: Q 2 chọn, Q 1 đánh giá, cập nhật Q 2, Q 1 giữ nguyên."/>
+<p>Hai bảng $Q_1$, $Q_2$; mỗi mẫu chuyển chỉ cập nhật một bảng, bảng kia đánh giá.</p>
+<p>Hành vi: $\epsilon_{\mathrm{exp}}$-tham lam theo $Q_1+Q_2$.</p>
+<aside class="notes"><p>Mỗi mẫu chuyển chỉ đi vào một bảng, nên hai bảng ước lượng từ hai tập mẫu khác nhau. Bảng được cập nhật chọn hành động tại $S'$ bằng phép cực đại của chính nó, bảng kia báo giá trị của hành động đó. Hai bảng không độc lập hoàn toàn: mỗi bảng bootstrap từ bảng kia và hành vi dùng tổng hai bảng. Bài thực hành Flappy Bird của Bài 07 đã cài một phiên bản với hàm giá trị tuyến tính.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 20–21; van Hasselt (2010); Sutton và Barto (2018), §6.7.</p></aside>
+</section>
+<section data-slide-id="L09-13" data-note-topic-id="lec-09-topic-05">
+<h2>Ví dụ: một cập nhật Double Q-learning</h2>
+<p>Cho $R=1$, $\gamma=0{,}9$, $Z=0$, $\alpha=0{,}1$, $Q_1(S,A)=4$, hai bảng tại $S'$ như hình; cập nhật $Q_1$.</p>
+<img class="figure short" src="img/lec-09/double-q-example.svg" alt="Bảng hai hàng: Q 1 tại S phẩy bằng 3 và 6, Q 2 tại S phẩy bằng 5 và 4. Q 1 chọn hành động 2; Q 2 đánh giá hành động 2 bằng 4."/>
+<p>$a^*=\arg\max_aQ_1(S',a)=2$; mục tiêu $y_1=1+0{,}9\cdot Q_2(S',2)=4{,}6$.</p>
+<p>Sai số $4{,}6-4=0{,}6$; $Q_1(S,A)\leftarrow4+0{,}1\cdot0{,}6=4{,}06$.</p>
+<p><strong>Diễn giải:</strong> cùng mục tiêu $4{,}6$ với Double DQN trên cùng số ($Q_1$ vai $Q_\theta$, $Q_2$ vai $Q_{\theta^-}$).</p>
+<aside class="notes"><p>Nếu đồng xu chọn cập nhật $Q_2$, vai đổi: $Q_2$ chọn hành động 1 vì $5&gt;4$, $Q_1$ đánh giá bằng $3$, mục tiêu $1+0{,}9\cdot3=3{,}7$. Giống Double DQN, mục tiêu dùng giá trị của bảng kia tại hành động do bảng cập nhật chọn; khác Double DQN, chỉ một ô của một bảng đổi, và bảng kia không là bản sao trễ. Lấy cực đại của $Q_2$ thay vì $Q_2(S',a^*)$ sẽ mất cơ chế tách.</p><p class="note-source"><strong>Nguồn:</strong> ví dụ sư phạm theo thuật toán ở bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 20.</p></aside>
+</section>
+<section data-slide-id="L09-12" data-note-topic-id="lec-09-topic-05">
+<h2>Thuật toán Double Q-learning</h2>
+<p><strong>Thuật toán.</strong> Đầu vào $\alpha\in(0,1]$, $\gamma\in[0,1)$, $\epsilon_{\mathrm{exp}}$; khởi tạo $Q_1$, $Q_2$ tùy ý, bằng $0$ tại trạng thái kết thúc. Mỗi lượt, từ $S$:</p>
+<ol>
+<li>Chọn $A$ $\epsilon_{\mathrm{exp}}$-tham lam theo $Q_1+Q_2$; nhận $R$, $S'$, $Z$.</li>
+<li>Với xác suất $1/2$: $a^*=\arg\max_aQ_1(S',a)$ và</li>
+</ol>
+<div>$$Q_1(S,A)\leftarrow Q_1(S,A)+\alpha\bigl[R+\gamma(1-Z)\,Q_2(S',a^*)-Q_1(S,A)\bigr].$$</div>
+<ol start="3">
+<li>Ngược lại: đổi vai $Q_1$ và $Q_2$.</li>
+<li>$S\leftarrow S'$; dừng lượt khi $Z=1$.</li>
+</ol>
+<aside class="notes"><p>Thứ tự trong một bước: chọn hành động theo tổng hai bảng, quan sát mẫu chuyển, tung đồng xu, cập nhật đúng một ô của một bảng. Khi $Z=1$, mặt nạ bỏ phần bootstrap và giá trị tại trạng thái kết thúc không cần tính. Lập luận không chệch lên của ví dụ hai bản cần bản đánh giá độc lập với bản chọn; ở đây mỗi bảng bootstrap từ bảng kia, nên điều kiện chỉ thỏa ở dạng lý tưởng. Mỗi bảng chỉ nhận khoảng một nửa số mẫu, nên mỗi bảng học chậm hơn Q-learning một bảng.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 20–21; van Hasselt (2010); Sutton và Barto (2018), §6.7.</p></aside>
+</section>
+<section data-slide-id="L09-14" data-note-topic-id="lec-09-topic-05">
+<h2>So sánh DQN, Double DQN và Double Q-learning</h2>
+<table><thead><tr><th></th><th>DQN</th><th>Double DQN</th><th>Double Q-learning</th></tr></thead><tbody>
+<tr><td>chọn $a^*$ tại $S'$</td><td>$Q_{\theta^-}$</td><td>$Q_\theta$</td><td>bảng được cập nhật</td></tr>
+<tr><td>đánh giá $a^*$</td><td>$Q_{\theta^-}$</td><td>$Q_{\theta^-}$</td><td>bảng còn lại</td></tr>
+<tr><td>quan hệ hai ước lượng</td><td>cùng một ước lượng</td><td>bản sao trễ, tương quan</td><td>mẫu khác nhau, bootstrap từ nhau</td></tr>
+<tr><td>dữ liệu cập nhật</td><td>mini&#8209;batch từ bộ nhớ phát lại</td><td>mini&#8209;batch từ bộ nhớ phát lại</td><td>từng mẫu chuyển</td></tr>
+<tr><td>độ chệch của mục tiêu</td><td>$\ge0$ (Mệnh đề 09.2)</td><td>không bảo đảm hết chệch lên; phải đo</td><td>$\le0$ nếu bản đánh giá không chệch, độc lập (chỉ lý tưởng)</td></tr>
+</tbody></table>
+<aside class="notes"><p>Ba phương pháp khác nhau ở cặp ước lượng chọn và đánh giá. Hàng cuối đọc theo hai mệnh đề: một ước lượng cho cả hai việc thì độ chệch không âm; hai ước lượng độc lập, bản đánh giá không chệch, thì không chệch lên nhưng có thể chệch âm. Tên "Double" chỉ nguyên tắc dùng hai ước lượng; dùng bốn hay tám ước lượng là một thuật toán khác, với quan hệ tương quan và chi phí khác, và không suy ra được từ tên.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 14–21.</p></aside>
+</section>
+<section data-slide-id="L09-15" data-note-topic-id="lec-09-topic-05">
+<h2>Bài tập: Double DQN và Double Q-learning</h2>
+<p><strong>Câu hỏi:</strong> (1) Double DQN: mạng nào chọn, mạng nào đánh giá? (2) $Z_i=1$: $y_i$ bằng gì?</p>
+<p>(3) Vì sao Double DQN vẫn có thể chệch lên? (4) Double Q-learning cập nhật mấy ô?</p>
+<p class="fragment"><strong>Lời giải:</strong> (1) $Q_\theta$ chọn, $Q_{\theta^-}$ đánh giá; (2) $R_i$; (3) hai mạng tương quan; (4) một ô của một bảng.</p>
+<p><strong>Giới hạn chung:</strong> chọn bằng $\arg\max_aQ$ thì không học xác suất hành động; mỗi bước cần $\max$ trên $\mathcal A$.</p>
+<aside class="notes"><p>Câu (3): vì hai mạng tương quan, giả thiết độc lập của mệnh đề ước lượng kép không thỏa. Bốn câu kiểm bốn phân biệt của phần: vai của hai mạng, mặt nạ kết thúc, điều kiện độc lập, và số bảng được cập nhật. Dòng cuối là đầu ra cho phần 4: cả ba phương pháp chọn hành động bằng $\arg\max_aQ(s,a)$, nên xác suất chọn hành động không được học: chính sách tham lam là tất định, và $\epsilon_{\mathrm{exp}}$-tham lam chỉ thêm một mức ngẫu nhiên cố định; mỗi bước cần giải một bài toán cực đại trên $\mathcal A$, điều khó làm khi hành động là một số thực.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 14–22.</p></aside>
+</section>
 </section>
 
 <section>

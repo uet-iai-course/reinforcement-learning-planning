@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 222" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Một cập nhật Double Q-learning</title>
+<desc id="d">Bảng hai hàng, hai cột hành động. Hàng trên: Q 1 tại S phẩy bằng 3 và 6, bảng chọn; Q 1 là bảng được cập nhật tại ô S, A. Hàng dưới: Q 2 tại S phẩy bằng 5 và 4. Khung vuông quanh số 6: Q 1 chọn hành động 2. Mũi tên ghi đánh giá đi từ số 6 tới số 4, có viền ellip nét đứt: Q 2 đánh giá hành động 2 bằng 4.</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker></defs>
+<text x="415" y="24" font-size="21" text-anchor="middle" fill="#424954">a = 1</text>
+<text x="585" y="24" font-size="21" text-anchor="middle" fill="#424954">a = 2</text>
+<text x="314" y="75" font-size="24" text-anchor="end"><tspan font-style="italic">Q</tspan><tspan font-size="16" dy="6">1</tspan><tspan dy="-6">(</tspan><tspan font-style="italic">S′</tspan>, ·), bảng chọn</text>
+<rect x="330" y="34" width="170" height="64" fill="#FFFFFF" stroke="#424954" stroke-width="2"/>
+<text x="415" y="76" font-size="30" text-anchor="middle">3</text>
+<rect x="500" y="34" width="170" height="64" fill="#FFFFFF" stroke="#424954" stroke-width="2"/>
+<text x="585" y="76" font-size="30" text-anchor="middle">6</text>
+<text x="314" y="139" font-size="24" text-anchor="end"><tspan font-style="italic">Q</tspan><tspan font-size="16" dy="6">2</tspan><tspan dy="-6">(</tspan><tspan font-style="italic">S′</tspan>, ·)</text>
+<rect x="330" y="98" width="170" height="64" fill="#FFFFFF" stroke="#424954" stroke-width="2"/>
+<text x="415" y="140" font-size="30" text-anchor="middle">5</text>
+<rect x="500" y="98" width="170" height="64" fill="#FFFFFF" stroke="#424954" stroke-width="2"/>
+<text x="585" y="140" font-size="30" text-anchor="middle">4</text>
+<rect x="508" y="41" width="154" height="50" fill="none" stroke="#2F3E7A" stroke-width="5"/>
+<ellipse cx="585" cy="130" rx="71" ry="25" fill="none" stroke="#2F3E7A" stroke-width="5" stroke-dasharray="10 6"/>
+<path d="M676,66 C746,66 750,130 680,130" fill="none" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ar)"/>
+<text x="756" y="106" font-size="21" fill="#2F3E7A">đánh giá</text>
+<rect x="180" y="188" width="30" height="22" fill="none" stroke="#2F3E7A" stroke-width="4"/>
+<text x="220" y="206" font-size="21">Q₁ chọn a* = 2</text>
+<ellipse cx="535" cy="199" rx="16" ry="11" fill="none" stroke="#2F3E7A" stroke-width="4" stroke-dasharray="6 4"/>
+<text x="560" y="206" font-size="21">Q₂ đánh giá a* = 2</text>
+</svg>

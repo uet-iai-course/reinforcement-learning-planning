@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 172" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Chọn bằng bản A, đánh giá bằng bản B</title>
+<desc id="d">Dòng trên ghi: cặp ước lượng bản A, mỗi cặp xác suất một phần tư; khi hòa chọn hành động 1. Bốn khung. Khung 1: bản A âm một và âm một, chọn a sao bằng 1, kỳ vọng của bản B tại a sao, khi biết cặp bản A, bằng 0. Khung 2: âm một và cộng một, chọn a sao bằng 2, kỳ vọng bản B tại a sao, khi biết cặp bản A, bằng 0. Khung 3: cộng một và âm một, chọn a sao bằng 1, kỳ vọng bản B tại a sao, khi biết cặp bản A, bằng 0. Khung 4: cộng một và cộng một, chọn a sao bằng 1, kỳ vọng bản B tại a sao, khi biết cặp bản A, bằng 0.</desc>
+<text x="480" y="30" font-size="23" text-anchor="middle" fill="#424954">cặp bản A (Q̂ᴬ₁; Q̂ᴬ₂), mỗi cặp xác suất 1/4; hòa thì chọn hành động 1</text>
+<g font-size="23" text-anchor="middle">
+<g transform="translate(20 48)"><rect width="215" height="122" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/><text x="107" y="36">(−1; −1)</text><text x="107" y="72">a* = 1</text><text x="107" y="108" font-size="20">𝔼[Q̂ᴮ<tspan font-size="15" dy="5">a*</tspan><tspan dy="-5"> | cặp A] = 0</tspan></text></g>
+<g transform="translate(255 48)"><rect width="215" height="122" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/><text x="107" y="36">(−1; +1)</text><text x="107" y="72">a* = 2</text><text x="107" y="108" font-size="20">𝔼[Q̂ᴮ<tspan font-size="15" dy="5">a*</tspan><tspan dy="-5"> | cặp A] = 0</tspan></text></g>
+<g transform="translate(490 48)"><rect width="215" height="122" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/><text x="107" y="36">(+1; −1)</text><text x="107" y="72">a* = 1</text><text x="107" y="108" font-size="20">𝔼[Q̂ᴮ<tspan font-size="15" dy="5">a*</tspan><tspan dy="-5"> | cặp A] = 0</tspan></text></g>
+<g transform="translate(725 48)"><rect width="215" height="122" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/><text x="107" y="36">(+1; +1)</text><text x="107" y="72">a* = 1</text><text x="107" y="108" font-size="20">𝔼[Q̂ᴮ<tspan font-size="15" dy="5">a*</tspan><tspan dy="-5"> | cặp A] = 0</tspan></text></g>
+</g>
+</svg>

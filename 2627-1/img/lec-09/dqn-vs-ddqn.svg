@@ -1,1 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 330" role="img" aria-labelledby="t d"><title id="t">So sánh DQN và Double DQN</title><desc id="d">DQN dùng mạng mục tiêu để chọn và đánh giá; Double DQN dùng mạng online để chọn rồi mạng mục tiêu để đánh giá.</desc><defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L10 3L0 6Z" fill="#2f3e7a"/></marker></defs><text x="205" y="45" text-anchor="middle" font-size="31" font-weight="700">DQN</text><rect x="70" y="75" width="270" height="70" rx="12" fill="#f7efe6" stroke="#b15a2b" stroke-width="4"/><text x="205" y="119" text-anchor="middle" font-size="30">mạng mục tiêu: chọn</text><rect x="70" y="210" width="270" height="70" rx="12" fill="#f7efe6" stroke="#b15a2b" stroke-width="4"/><text x="205" y="254" text-anchor="middle" font-size="30">mạng mục tiêu: đánh giá</text><path d="M205 145V200" stroke="#2f3e7a" stroke-width="5" marker-end="url(#a)"/><text x="700" y="45" text-anchor="middle" font-size="31" font-weight="700">Double DQN</text><rect x="565" y="75" width="270" height="70" rx="12" fill="#edf4ff" stroke="#2f3e7a" stroke-width="4"/><text x="700" y="119" text-anchor="middle" font-size="30">mạng online: chọn</text><rect x="565" y="210" width="270" height="70" rx="12" fill="#f7efe6" stroke="#b15a2b" stroke-width="4"/><text x="700" y="254" text-anchor="middle" font-size="30">mạng mục tiêu: đánh giá</text><path d="M700 145V200" stroke="#2f3e7a" stroke-width="5" marker-end="url(#a)"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 200" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Chọn và đánh giá trong DQN và Double DQN</title>
+<desc id="d">Hai hàng. Hàng DQN: khung "Q theta trừ chọn a sao" mũi tên tới khung "Q theta trừ đánh giá a sao", cả hai là mạng mục tiêu. Hàng Double DQN: khung "Q theta chọn a sao, mạng trực tuyến", viền nét đứt, mũi tên tới khung "Q theta trừ đánh giá a sao, mạng mục tiêu".</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker></defs>
+<text x="20" y="62" font-size="25" font-weight="700" fill="#2F3E7A">DQN</text>
+<rect x="210" y="20" width="300" height="70" rx="12" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/>
+<text x="360" y="54" font-size="23" text-anchor="middle">mạng mục tiêu chọn a*</text>
+<text x="360" y="80" font-size="19" text-anchor="middle" fill="#424954">arg max theo Q<tspan font-size="14" dy="4">θ</tspan><tspan font-size="12" dy="-8">−</tspan></text>
+<line x1="512" y1="55" x2="598" y2="55" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ar)"/>
+<rect x="600" y="20" width="320" height="70" rx="12" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/>
+<text x="760" y="54" font-size="23" text-anchor="middle">mạng mục tiêu đánh giá a*</text>
+<text x="760" y="80" font-size="19" text-anchor="middle" fill="#424954">Q<tspan font-size="14" dy="4">θ</tspan><tspan font-size="12" dy="-8">−</tspan><tspan dy="4">(S′, a*)</tspan></text>
+<text x="20" y="157" font-size="25" font-weight="700" fill="#2F3E7A">Double DQN</text>
+<rect x="210" y="115" width="300" height="70" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3" stroke-dasharray="10 6"/>
+<text x="360" y="149" font-size="23" text-anchor="middle">mạng trực tuyến chọn a*</text>
+<text x="360" y="175" font-size="19" text-anchor="middle" fill="#424954">arg max theo Q<tspan font-size="14" dy="4">θ</tspan></text>
+<line x1="512" y1="150" x2="598" y2="150" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ar)"/>
+<rect x="600" y="115" width="320" height="70" rx="12" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/>
+<text x="760" y="149" font-size="23" text-anchor="middle">mạng mục tiêu đánh giá a*</text>
+<text x="760" y="175" font-size="19" text-anchor="middle" fill="#424954">Q<tspan font-size="14" dy="4">θ</tspan><tspan font-size="12" dy="-8">−</tspan><tspan dy="4">(S′, a*)</tspan></text>
+</svg>
