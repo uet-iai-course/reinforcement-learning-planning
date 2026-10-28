@@ -159,7 +159,7 @@ $8+15+30+15+22+20+10=120$ phút trên lớp; 30 phút chữa bài ngoài 120 ph�
 
 ## Tài sản SVG
 
-Kiểm kê sau bước mạch 7, cập nhật 2026-10-28: mười sáu tệp trong `img/lec-09/`, mọi tệp có `role="img"`, `title`, `desc`; không ảnh raster.
+Kiểm kê sau bước mạch 7, cập nhật 2026-10-28: mười bảy tệp trong `img/lec-09/`, mọi tệp có `role="img"`, `title`, `desc`; không ảnh raster.
 
 | tệp | dùng ở | trạng thái |
 |---|---|---|
@@ -179,6 +179,7 @@ Kiểm kê sau bước mạch 7, cập nhật 2026-10-28: mười sáu tệp tro
 | `score-exercise-card.svg` | `X02` | mới ở bước mạch 5 |
 | `reinforce-trajectory.svg` | ghi chú bài giảng Mục 6 (Thuật toán 09.25) | vẽ lại ở bước mạch 6 |
 | `past-reward-timeline.svg` | `L09-29`; ghi chú bài giảng Mục 6 (trước Bổ đề 09.22) | mới khi sửa theo phản hồi người dùng 2026-10-28 |
+| `short-corridor.svg` | `materials/lec-09/exercises.md` ("Hướng dẫn và ký hiệu", Bài tập 09.12, 09.14, 09.19, 09.20) | mới ở giai đoạn III (2026-10-28) |
 
 `dqn-stability.svg` đã xóa ở bước R2 vì không còn trang nào dùng.
 

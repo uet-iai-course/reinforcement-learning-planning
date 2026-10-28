@@ -525,6 +525,12 @@ Phản hồi: "chứng minh quá tắt". Trang cũ dồn tách lợi tức, $\ma
 
 Hành trình khái niệm "bỏ phần thưởng quá khứ": Vấn đề `L09-29` ("Nhu cầu:"); Trực quan `L09-29` (hình dòng thời gian); Hình thức `L09-29a` (Bổ đề); Ví dụ `L09-29b` (đặt sau phát biểu để minh họa đúng hạng mà bổ đề loại, trước chứng minh); Chứng minh `L09-29c`, `L09-29d`; Ứng dụng `L09-30` (Bước 5 của định lý), `L09-32`; Kiểm tra `X03`. Lệch quy tắc hành trình có chủ ý (ghi sau rà lại R-L0929): ví dụ `L09-29b` đặt sau phát biểu `L09-29a`, trước chứng minh `L09-29c`, `L09-29d`, thay vì trước hình thức. Lý do: phép kiểm "(i) − (ii) $=R_1\psi_1$ có kỳ vọng $0$" dùng kết luận của bổ đề với $t=1$, nên ví dụ minh họa đúng hạng mà bổ đề loại trước khi chứng minh giải thích vì sao; bước ví dụ dẫn nhập của cụm là ví dụ một bước ở `L09-28` (thẻ dữ kiện), và trực quan `L09-29` vẫn đi trước hình thức. Ghi chú bài giảng đặt Ví dụ 09.18 sau chứng minh của Bổ đề 09.22; khác thứ tự này được chấp nhận vì ghi chú đọc liền một mạch, còn trên trang chiếu chứng minh chiếm hai trang. Sau rà lại: `L09-29a` giả thiết thay "$G_0$ bị chặn" bằng $|R_{t+1}|\le R_{\max}$, $T\le T_{\max}$, thêm quy ước $\psi_t=0$ khi $t\ge T$ và "(tích phân nếu hành động liên tục)", 57 âm tiết, đáy 653 px; `L09-29d` dòng lý do của Bước 3 chuyển lên câu mở, Bước 4 nêu lý do hai dòng, 32 âm tiết, đáy 655 px. Ghi chú bài giảng: Bổ đề 09.22 mới (các kết quả sau đánh số lại 09.23–09.27).
 
+#### Giai đoạn III: bài tập `exercises.md` (2026-10-28): `L09-K7`
+
+| trang | thay đổi | âm tiết | đáy |
+|---|---|---|---|
+| `L09-K7` | bảng `Mạch \| Bài tập` thêm Bài tập 09.11–09.20 của `materials/lec-09/exercises.md` theo mạch (2: 09.11, 09.18; 3: 09.11, 09.13, 09.18; 4: 09.12, 09.14, 09.16; 5: 09.15, 09.16, 09.20; 6: 09.16, 09.17, 09.19, 09.20); dòng "Bài tập 09.1–09.10: … ; 09.11–09.20: tệp bài tập, theo Sutton và Barto (2018)." thay dòng chỉ dẫn tới mục củng cố; liên kết viewer "Ghi chú bài giảng · Bài tập"; ghi chú diễn giả bỏ ý "chưa có tệp bài tập riêng", nêu nội dung tệp bài tập | 53 → 61 (trần 80 của trang bảng tổng kết) | 630 → 674 px |
+
 ## Bản trước đợt sửa 2026-10-28
 
 Các mục dưới đây mô tả bản trước đợt sửa (sáu section ngoài, 38 trang).

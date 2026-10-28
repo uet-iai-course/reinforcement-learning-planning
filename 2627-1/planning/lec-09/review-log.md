@@ -908,3 +908,61 @@ Rà lại R-L0929 (tác tử rà lại chỉ đọc; điều phối viên chấp
 | nhẹ | `L09-29d` | đáy 691 px; thiếu lý do dòng hai của Bước 3 và Bước 4 | đã sửa: lý do Bước 3 chuyển lên câu mở (gồm "$G_{<t}$ là hàm của $H_t$, nên là hằng khi biết $H_t$"); Bước 4 "dòng một: Bước 1; dòng hai: hạng đầu bằng $0$ theo Bước 3"; đáy 655 px | chấp nhận |
 
 Kiểm sau rà lại: `check.py` `L09-29`, `L09-29a`, `L09-29b`, `L09-29c`, `L09-29d` (1600×900, 390×844): đáy 570, 653, 609, 629, 655 px, 0 lỗi; âm tiết 32, 57, 38, 36, 32; ghi chú diễn giả 83, 122, 94, 103, 92; ảnh đã xem. Trình xem: 0 lỗi KaTeX, không khối thô, không yêu cầu ngoài, không tràn ngang. 67 `data-slide-id`, 7 section ngoài. `git diff --check` sạch. no-ai-slop Edit trên câu mới, tự kiểm `eval.md`: đạt.
+
+### Giai đoạn III: bài tập `exercises.md` (2026-10-28)
+
+Yêu cầu người dùng: "bổ sung bài tập … ý là bài tập từ Barto Sutton". Người soạn: tác tử biên tập (general-purpose, Opus 5.5, effort high), theo yêu cầu của điều phối viên; chưa qua ba vai rà soát của giai đoạn III.
+
+Nguồn: Sutton và Barto (2018), PDF tác giả `/data/tqlong/qa/sources/sutton-barto-rl2020/original.pdf` và văn bản trích; dấu trừ bị mất khi trích đã đối chiếu bằng ảnh trang (PDF tr. 156: phần thưởng $\mathcal N(-0{,}1;\,1)$ ở Ví dụ 6.7; tr. 345: phần thưởng $-1$, giá trị $-44$, $-82$, $-11{,}6$ ở Ví dụ 13.1). Đề bài phát biểu lại bằng ký hiệu ghi chú Bài 09, không dịch nguyên văn; lời giải tự viết.
+
+| bài | tên | nguồn Sutton và Barto (2018) | mức | mạch |
+|---|---|---|---|---|
+| 09.11 | MDP độ chệch cực đại | Ví dụ 6.7 | nhận biết | 2, 3 |
+| 09.12 | Hành lang ngắn và chính sách tất định | Ví dụ 13.1 | nhận biết | 4 |
+| 09.13 | Double Expected Sarsa | Bài tập 6.13 | tính toán | 3 |
+| 09.14 | Xác suất tối ưu trên hành lang ngắn | Bài tập 13.1 | tính toán | 4 |
+| 09.15 | Hàm điểm softmax với mức ưu tiên tổng quát | Bài tập 13.3, mở rộng (mức ưu tiên phi tuyến, ba hành động có số) | chứng minh, tính toán | 5 |
+| 09.16 | Đơn vị Bernoulli–logistic | Bài tập 13.5 | tính toán | 4, 5, 6 |
+| 09.17 | Định lý gradient chính sách có chiết khấu theo phương trình Bellman | Bài tập 13.2 | chứng minh | 6 |
+| 09.18 | Q-learning và Double Q-learning trên MDP độ chệch cực đại | Ví dụ 6.7, Hình 6.5 | vận dụng (lập trình) | 2, 3 |
+| 09.19 | REINFORCE trên hành lang ngắn | Ví dụ 13.1, Hình 13.1 | vận dụng (lập trình) | 6 |
+| 09.20 | Gradient đúng và một mẫu REINFORCE trên hành lang ngắn | Ví dụ 13.1 | vận dụng | 5, 6 |
+
+Bỏ: Bài tập 13.4 (hàm điểm Gaussian hai phần) vì trùng góc hỏi với Bài tập củng cố 09.5(b) (hàm điểm theo trung bình) và 09.7 (học $\sigma=e^\omega$); chỉ khác ở vector đặc trưng của $\sigma$, không đổi được góc hỏi rõ rệt. Bài tập 13.3 chỉ giữ ở dạng mở rộng (09.15), vì dạng tuyến tính là Mệnh đề 09.16 của ghi chú. Bài tập 13.2 giữ vì đường chứng minh (phương trình Bellman của $\nabla v_\pi$) khác chứng minh của Định lý 09.23 (xác suất quỹ đạo).
+
+Tính lại bằng chương trình (thư viện chuẩn Python, scratchpad `ex09/`): $J(p)=-2(2-p)/\bigl(p(1-p)\bigr)$ khớp lặp giá trị tại $p=\tfrac12$ ($v=(-12;\,-10;\,-6)$); $p^*=2-\sqrt2$, $J(p^*)=-(6+4\sqrt2)\approx-11{,}657$, $J(0{,}95)\approx-44{,}21$, $J(0{,}05)\approx-82{,}11$; $\nabla_\theta J(0;\,0)=(2;\,-2)$; lượt $1,1,1,2,1$ cho $\widehat g=(-5{,}5;\,5{,}5)$, $p$ mới $\approx0{,}2497$, $J\approx-18{,}68$; mô phỏng $400\,000$ lượt (hạt giống 1): trung bình $1{,}964$, độ lệch chuẩn $26{,}98$, sai số chuẩn $0{,}043$. Bernoulli–logistic: $P=0{,}3775$, $\theta$ mới $(0{,}6245;\,0{,}2510)$, $P$ mới $0{,}5306$. Softmax ba hành động: $\pi$ sau bước $\approx(0{,}319;\,0{,}291;\,0{,}390)$. Mô phỏng MDP độ chệch cực đại ($1000$ lần chạy, hạt giống 2026, 2027) và REINFORCE trên hành lang ($100$ lần chạy, hạt giống $100+k$, $212$) ghi trong lời giải 09.18, 09.19, nêu rõ là một lần chạy của người soạn.
+
+Cập nhật kèm: `L09-K7` (bảng `Mạch | Bài tập`, dòng nguồn, liên kết "Ghi chú bài giảng · Bài tập", ghi chú diễn giả); ghi chú bài giảng mục "Bài tập về nhà và tài liệu đọc" trỏ tới tệp bài tập; `index.html` thẻ Bài 9, nhóm Bài tập là liên kết viewer (Thực hành vẫn "Chưa có"); `storyboard.md` mục `L09-K7`.
+
+Kiểm: trình xem `exercises.md` ở 1400 và 390 px: 30 khối `:::` nhận diện (10 `exercise`, 10 `hint`, 10 `solution`), 0 lỗi KaTeX, 0 khối thô, không yêu cầu ngoài, không tràn ngang; bảy liên kết `#/N/1` mở đúng `L09-01`, `L09-M2T`…`L09-M7T` (Playwright). `check.py` `L09-K7` (1600×900, 390×844): đáy 674 px, 0 lỗi; 61 âm tiết (trần 80), ghi chú diễn giả 124; ảnh đã xem. Tệp mới không bị `.gitignore` chặn (quy tắc `!2627-1/materials/**`). `git diff --check` sạch. no-ai-slop Edit trên toàn tệp, tự kiểm `eval.md`: đạt. Chưa có: ba vai rà soát chỉ đọc của giai đoạn III.
+
+Rà soát giai đoạn III (hai vai chỉ đọc: EX-math toán–RL, 1 trung bình, 5 nhẹ; EX-student sinh viên–sư phạm và no-ai-slop Detect, 5 trung bình, các mục nhẹ). Điều phối viên tự tính lại hành lang ngắn và chấp nhận toàn bộ, trừ hai mục ghi dưới. Người sửa: tác tử biên tập (general-purpose, Opus 5.5, effort high).
+
+| mức độ | nguồn | vị trí | vấn đề | trạng thái | quyết định |
+|---|---|---|---|---|---|
+| trung bình | EX-math, EX-student | "Hướng dẫn và ký hiệu" | $\gamma=1$ và độ dài lượt không bị chặn, trong khi ghi chú phát biểu Định lý 09.23, Hệ quả 09.26 với $\gamma<1$, $T\le T_{\max}$ | đã sửa: đoạn "Quy ước chiết khấu" nêu $T\le2$ ở MDP độ chệch cực đại; trên hành lang ngắn, $0<p<1$ cho $\Pr(T>3n)\le(1-p^2(1-p))^n$, mọi mô men của $T$ hữu hạn; kết luận chứng minh theo đường Bài tập 09.17 với chuỗi, $\mathbb E[\sum_t\lvert G_t\rvert\lVert\psi_t\rVert]\le\sqrt2\,\mathbb E[T^2]$; Định lý 09.23 ở đoạn đầu kèm "dưới (G1)–(G4)" | chấp nhận |
+| trung bình | EX-student; nhẹ EX-math | 09.17 | $p(s',r\mid s,a)$ khác ký hiệu $P$ của ghi chú; dẫn số công thức của sách | đã sửa: $P(s',r\mid s,a)$, ghi một lần "Sutton và Barto viết $p$"; dạng không chiết khấu viết ra tại chỗ; bỏ "(13.9) của nguồn" ở 09.15 | chấp nhận |
+| trung bình | EX-student | 09.18, 09.19 | `assert` không có hàm để gọi | đã sửa: khung có `update_left` (hai `assert` cho bước Q-learning $0{,}035$ và Double Q-learning $-0{,}030$), `grad_estimate` và `assert` cho `step`, `grad_estimate([1,1,1,2,1], 0.5) == (-5.5, 5.5)`; cài đặt tham chiếu chạy qua cả bốn `assert` | chấp nhận |
+| trung bình | EX-student; nhẹ EX-math | 09.18 "Kiểm tra lại." | ngưỡng cứng $5\%$ sai với dao động lấy mẫu | đã sửa: sai số chuẩn $\approx0{,}7$ điểm phần trăm trên $1000$ lần chạy; dấu hiệu lỗi khi dưới khoảng $3{,}6\%$ qua nhiều lượt | chấp nhận |
+| trung bình | EX-student | gợi ý 09.14 | lộ $v_1=v_2-1/p$ và $f(p)$ | đã sửa: chỉ hướng bước đầu (biểu diễn theo $v_2$, viết $J=-cf$ rồi lấy đạo hàm của $\log f$) | chấp nhận |
+| nhẹ | EX-student | gợi ý 09.20 | đưa sẵn $J'(p)$ | đã sửa: gợi ý quy tắc thương và $\mathrm dp/\mathrm d(\theta_1-\theta_2)=p(1-p)$; lời giải (a) dẫn $J'(p)$ từng bước | chấp nhận |
+| nhẹ | EX-math, EX-student | 09.19 (b) | thiếu sai số chuẩn; câu "lên gần $-12$" mâu thuẫn với $-15{,}1$ | đã sửa: $-11{,}87$ ($0{,}11$), $-12{,}50$ ($0{,}11$), $-15{,}10$ ($0{,}14$); $p$ cuối $0{,}550$ ($0{,}004$), $0{,}470$ ($0{,}003$), $0{,}343$ ($0{,}002$), chạy lại `reinforce_se.py`; câu định tính "về phía $-12$, $\alpha=2^{-14}$ mới tới khoảng $-15$" | chấp nhận |
+| nhẹ | EX-math | 09.19 (c) | "bước nhỏ" chưa nói so với gì | đã sửa: độ trôi trong lượt cỡ $\alpha T^2$; nhỏ so với $1$; với $T=1000$, $\alpha=2^{-12}$ cỡ $240$ | chấp nhận |
+| nhẹ | EX-math | 09.20 (d) | số mô phỏng thiếu hạt giống | đã sửa: "một lần chạy của người soạn, hạt giống `random.Random(1)`" | chấp nhận |
+| nhẹ | EX-student | hành lang ngắn | chỉ có mô tả bằng lời | đã sửa: `img/lec-09/short-corridor.svg` mới (`role="img"`, `title`, `desc`; ô đảo phân biệt bằng viền nét đứt và nhãn chữ), chèn ở "Hướng dẫn và ký hiệu" kèm đoạn đọc hình và trong đề 09.12, 09.14, 09.19, 09.20 | chấp nhận |
+| nhẹ | EX-student | khối mã 09.18, 09.19 | chú thích tiếng Việt trong phông đơn cách hiển thị lỗi dấu; dòng dài | đã sửa: bỏ chú thích trong mã, giải thích biến bằng đoạn văn trước khối mã; tách dòng `assert` dài; ở 1400 px không còn khối nào cuộn ngang | chấp nhận |
+| nhẹ | EX-student | công thức dài | cuộn ngang trong khung | đã sửa: tách `aligned` ở 09.13 (a), 09.14 (b), (c), 09.15 (a), (c), 09.16 (a), 09.17 (a)–(c), 09.20 (b); ở 1400 px 0 khối tràn; ở 390 px (khung nội dung 271 px) còn 11 công thức rộng 274–355 px cuộn trong khung, không cuộn trang | chấp nhận |
+| nhẹ | EX-student | 09.16 | $\sigma$ trùng độ lệch chuẩn | đã sửa: $\operatorname{sig}$, ghi lý do một lần | chấp nhận |
+| nhẹ | EX-student | 09.12 (b) | $J=-\infty$ bỏ qua giả thiết lượt kết thúc | đã sửa: nêu giả thiết của Định nghĩa 09.14 không thỏa, $J=-\infty$ theo nghĩa giới hạn | chấp nhận |
+| nhẹ | EX-student | 09.11 (a), 09.14, 09.18 (b) | dẫn hình của sách | đã sửa: nêu số tại chỗ ($5\%$; $0{,}59$, $-11{,}6$, $-44$, $-82$); 09.18 (b) mô tả dạng đường cong của Hình 6.5 (đối chiếu ảnh trang PDF 157) | chấp nhận |
+| nhẹ | EX-student | 09.11 (c) | câu đề khó hiểu | đã sửa theo đề xuất | chấp nhận |
+| nhẹ | EX-student | 09.16 (a) | "như" thay cho "vì" | đã sửa | chấp nhận |
+| nhẹ | EX-student | bảng `Mạch \| Mở phần \| Bài tập` | thiếu liên kết trang bài tập trên trang chiếu | đã sửa: `X01` `#/3/7`, `X02` `#/5/12`, `X03` `#/6/13` và `#/6/14`, `L09-K3` `#/7/6` và `#/7/7` (kiểm bằng Playwright) | chấp nhận |
+| nhẹ | EX-student | đoạn mở đầu | đoạn dài; câu về người soạn | đã sửa: tách hai đoạn; "mọi số trong lời giải đã được tính lại" | chấp nhận |
+| nhẹ | EX-student | `L09-K7` | "actor–critic" | đã sửa: "phương pháp actor–critic" (tên thuật toán, giữ tiếng Anh); 63 âm tiết, đáy 674 px | chấp nhận |
+| nhẹ | EX-student | ghi chú `L09-K6` | "Định lý 09.22" | không sửa: deck đã ghi "Định lý 09.23" (điều phối viên kiểm bằng grep) | bác bỏ |
+| nhẹ | EX-student | `index.html` | liên kết "Mở bài tập" bật khi tệp còn đang duyệt | giữ liên kết: tệp qua duyệt của điều phối viên trước khi commit | giữ (quyết định của điều phối viên) |
+
+Kiểm sau sửa: trình xem `exercises.md` ở 1400 và 390 px: 30 khối nhận diện, 0 lỗi KaTeX, không khối thô, không yêu cầu ngoài, không cuộn trang ngang, hình `short-corridor.svg` tải ở năm chỗ; ảnh đã xem. Liên kết `#/1/1`…`#/7/1` và sáu liên kết trang bài tập mở đúng trang. `check.py` `L09-K7` (hai cỡ): 0 lỗi. Chạy lại `reinforce_se.py` (sai số chuẩn 09.19) và kiểm `update_left`. `git diff --check` sạch.
+
+Rà lại EX-recheck (3 nhẹ, điều phối viên chấp nhận): 09.16(a) sửa "độ lệch chuẩn $\operatorname{sig}$" (thay hàng loạt nhầm) thành $\sigma$, quét toàn tệp không còn chỗ nhầm khác; `assert` của `grad_estimate` ở 09.19 so từng phần tử bằng `math.isclose`, không phụ thuộc kiểu trả về; 09.19(c) nêu cận trên $\sqrt2\,\alpha T^2$ (khoảng $345$ với $T=1000$, $\alpha=2^{-12}$). Trình xem 0 lỗi KaTeX; `git diff --check` sạch. Chấp nhận.
