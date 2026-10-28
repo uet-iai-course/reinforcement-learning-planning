@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 236" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Hành lang ngắn đảo hành động</title>
+<desc id="d">Bốn ô trên một hàng, từ trái sang phải: s 1 là ô xuất phát, s 2, s 3 và s 4 là ô đích. Trong mỗi ô ghi ô kế tiếp của hai hành động. Ô s 1: hành động 1 tới s 2, hành động 2 đứng yên ở s 1. Ô s 2, viền nét đứt đậm và ghi chữ đảo hành động: hành động 1 về s 1, hành động 2 tới s 3. Ô s 3: hành động 1 tới s 4, hành động 2 về s 2. Ô s 4 tô xám, ghi đích, kết thúc lượt. Dòng dưới: mỗi bước nhận phần thưởng âm 1; mọi ô có cùng đặc trưng, nên chính sách chọn hành động 1 với cùng xác suất p ở mọi ô.</desc>
+<g fill="#ffffff" stroke="#2F3E7A" stroke-width="3">
+<rect x="10" y="44" width="160" height="130" rx="10"/>
+<rect x="360" y="44" width="160" height="130" rx="10"/>
+</g>
+<rect x="185" y="44" width="160" height="130" rx="10" fill="#fff4ec" stroke="#B15A2B" stroke-width="4.5" stroke-dasharray="10 6"/>
+<rect x="535" y="44" width="155" height="130" rx="10" fill="#e3e6ec" stroke="#2F3E7A" stroke-width="3"/>
+<g font-size="24" text-anchor="middle" fill="#1d2433">
+<text x="90" y="78"><tspan font-style="italic">s</tspan><tspan font-size="16" dy="5">1</tspan></text>
+<text x="265" y="78"><tspan font-style="italic">s</tspan><tspan font-size="16" dy="5">2</tspan></text>
+<text x="440" y="78"><tspan font-style="italic">s</tspan><tspan font-size="16" dy="5">3</tspan></text>
+<text x="612" y="78"><tspan font-style="italic">s</tspan><tspan font-size="16" dy="5">4</tspan></text>
+</g>
+<g font-size="19" text-anchor="middle" fill="#1d2433">
+<text x="90" y="110">1 → <tspan font-style="italic">s</tspan><tspan font-size="13" dy="4">2</tspan></text>
+<text x="90" y="138">2 → <tspan font-style="italic">s</tspan><tspan font-size="13" dy="4">1</tspan></text>
+<text x="90" y="162" font-size="16" fill="#424954">(đứng yên)</text>
+<text x="265" y="110">1 → <tspan font-style="italic">s</tspan><tspan font-size="13" dy="4">1</tspan></text>
+<text x="265" y="138">2 → <tspan font-style="italic">s</tspan><tspan font-size="13" dy="4">3</tspan></text>
+<text x="440" y="110">1 → <tspan font-style="italic">s</tspan><tspan font-size="13" dy="4">4</tspan></text>
+<text x="440" y="138">2 → <tspan font-style="italic">s</tspan><tspan font-size="13" dy="4">2</tspan></text>
+<text x="612" y="112">đích,</text>
+<text x="612" y="138">kết thúc lượt</text>
+</g>
+<g font-size="18" text-anchor="middle">
+<text x="90" y="30" fill="#2F3E7A">xuất phát</text>
+<text x="265" y="30" fill="#7a3a17" font-weight="bold">đảo hành động</text>
+</g>
+<text x="350" y="204" text-anchor="middle" font-size="18" fill="#424954">1: sang phải · 2: sang trái · phần thưởng −1 mỗi bước</text>
+<text x="350" y="228" text-anchor="middle" font-size="18" fill="#424954">mọi ô cùng đặc trưng: hành động 1 có cùng xác suất <tspan font-style="italic">p</tspan></text>
+</svg>
