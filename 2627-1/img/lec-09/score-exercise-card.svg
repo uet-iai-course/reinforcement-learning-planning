@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 150" width="760" height="150" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Dữ kiện bài tập hàm điểm</title>
+<desc id="d">Hai thẻ dữ kiện. Thẻ trái, chính sách softmax hai hành động: phi của s, 1 bằng (1; 0); phi của s, 2 bằng (0; 1); theta bằng (0; log 3). Thẻ phải, chính sách Gaussian với sigma bình phương bằng 1: phi của s bằng (1; 2); theta bằng (0; 0); hành động lấy mẫu a bằng âm 1.</desc>
+<rect x="2" y="2" width="400" height="146" rx="10" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2"/>
+<text x="20" y="32" font-size="22" font-weight="700" fill="#2F3E7A">(a) Softmax, hai hành động</text>
+<text x="20" y="72" font-size="22"><tspan font-style="italic">ϕ</tspan>(<tspan font-style="italic">s</tspan>, 1) = (1; 0),   <tspan font-style="italic">ϕ</tspan>(<tspan font-style="italic">s</tspan>, 2) = (0; 1)</text>
+<text x="20" y="112" font-size="22"><tspan font-style="italic">θ</tspan> = (0; log 3)</text>
+<rect x="420" y="2" width="338" height="146" rx="10" fill="#FFFFFF" stroke="#B15A2B" stroke-width="2"/>
+<text x="438" y="32" font-size="22" font-weight="700" fill="#B15A2B">(b) Gaussian, <tspan font-style="italic">σ</tspan><tspan font-size="15" dy="-9">2</tspan><tspan dy="9"> = 1</tspan></text>
+<text x="438" y="72" font-size="22"><tspan font-style="italic">ϕ</tspan>(<tspan font-style="italic">s</tspan>) = (1; 2),   <tspan font-style="italic">θ</tspan> = (0; 0)</text>
+<text x="438" y="112" font-size="22">hành động lấy mẫu <tspan font-style="italic">a</tspan> = −1</text>
+</svg>

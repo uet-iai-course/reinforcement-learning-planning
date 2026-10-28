@@ -56,6 +56,7 @@ Cột "C0": vị trí `h.v` (đánh số từ 1) sau bước C0, khi chỉ di ch
 | 5 | `L09-20`, `L09-21` | Hàm mục tiêu của một chính sách; bước tăng gradient | sửa | Vấn đề và ví dụ trước định nghĩa; $\tau$, $p_\theta$ định nghĩa trước khi dùng | 5.1–5.2 | 5.1–5.2 |
 | 5 | `L09-30A` | Ước lượng gradient bằng sai phân hữu hạn | sửa, chuyển về | Trang vấn đề của hàm điểm theo nguồn tr. 33 | 5.3 | 5.3 |
 | 5 | `L09-23`–`L09-27`, `X02` | Hàm điểm; softmax; ví dụ; Gaussian; ví dụ; bài tập | sửa; `X02` chuyển xuống sau `L09-27` | Bài tập không dùng công thức chưa dạy | 5.4–5.9 | 5.4–5.9 |
+| 5 | `L09-25b` | Kỳ vọng của hàm điểm | thêm (bước mạch 5) | Mệnh đề $\mathbb E_{A\sim\pi_\theta}[\psi_\theta]=0$ có giả thiết, sau ví dụ softmax | chưa có | 5.8 (S37) |
 | 6 | `L09-M6T` | 6. Gradient chính sách và REINFORCE | thêm | Trang tiêu đề mạch, điểm vào mạch 6 | chưa có | chưa có |
 | 6 | `L09-28`, `L09-22`, `L09-28A`, `L09-29` | Gradient của $J$ theo tỉ số xác suất; giả thiết; xác suất quỹ đạo; lợi tức từ thời điểm $t$ | sửa; `L09-22` chuyển về cạnh `L09-28` | Giả thiết đặt cạnh chỗ dùng | 6.1–6.4 | 6.1–6.4 |
 | 6 | `L09-29b` | Ví dụ: lượt hai bước | thêm | Ví dụ cho bước bỏ phần thưởng quá khứ | chưa có | chưa có |
@@ -291,6 +292,59 @@ Lệch khỏi nguồn (mạch 4): nguồn tr. 22 (học tăng cường dựa tr�
 | `L09-19` | dòng cuối dùng nhãn "Lưu ý:" | 51 | 598 px |
 
 Sai khác có chủ ý so với nguồn (mạch 4): nguồn tr. 23 viết $x(s,a)=1$ ở ô xám, $0$ nơi khác; đặc trưng đó gộp cả ba ô trắng nên lớp chính sách tất định theo đặc trưng còn hẹp hơn, và chính sách ô trắng dùng trong ví dụ không thuộc lớp. Bài dùng đặc trưng chỉ gộp hai ô xám để giữ đúng kết luận tr. 24–25. Mô hình chuyển (đi một ô, tường đứng yên, X là ô kẹt) và mọi số bước, giá trị là phần bổ sung; nguồn chỉ cho xác suất $0{,}5$.
+
+#### Mạch 5 "Hàm mục tiêu và hàm điểm" (bước S30–S40)
+
+| bước | trang | tiêu đề trước → sau | quyết định và lý do | âm tiết trước → sau | dòng, đáy | ghi chú diễn giả |
+|---|---|---|---|---|---|---|
+| S30 | `L09-M5T` | — → "5. Hàm mục tiêu và hàm điểm" | thêm; `id="mach-5"`; dòng dẫn theo `outline.md` nhận đầu ra của `L09-19` ($J(\theta)$ còn thiếu); khóa kết thúc bằng "Hàm điểm Gaussian" (khoảng trắng không ngắt); `data-note-topic-id` `lec-09-topic-07` | — → dẫn 19, khóa 16 | 2; 371 px | khoảng 95 |
+| S31 | `L09-20` | "Mục tiêu episodic và chỉ số quỹ đạo" → "Hàm mục tiêu của chính sách" | sửa; mở bằng "Nhu cầu:" nối từ `L09-19`; ví dụ dẫn nhập trên hình thẻ dữ kiện mới `one-step-card.svg` ($J=2$) trước "Định nghĩa."; bỏ $\tau$, $p_\theta$ (định nghĩa ở mạch 6), viết $\mathbb E_{\pi_\theta}$; "hầu chắc chắn" thay "gần như chắc chắn"; quy ước hấp thụ thành "Giả thiết:"; bỏ câu chỉ đường "$\gamma^t$ sẽ trở lại"; tên tiếng Anh "objective function" | 31 → 42 | 4 + hình; 598 → 649 px | khoảng 74 |
+| S32 | `L09-21` | "Tối ưu trực tiếp tham số chính sách" → "Bước tăng gradient" | sửa; "Nhắc lại:" hạ gradient của DQN (dấu trừ) đối chiếu dấu cộng; bỏ hai thẻ (thẻ "Ước lượng" nêu lời giải trước vấn đề); ví dụ $\nabla_\theta J=(\tfrac23;\,-\tfrac23)$ khi biết $r$; "Lưu ý:" chỉ đo được $J$ qua lượt mẫu (dẫn vào `L09-30A`); ghi chú bỏ câu quy trình "Sai phân hữu hạn không còn trong tuyến bài", thêm câu hỏi nguồn tr. 30 và cách không dùng gradient tr. 31 | 24 → 40 | 6; 564 → 597 px | khoảng 112 |
+| S33 | `L09-30A` | "Đọc thêm: sai phân hữu hạn" → "Ước lượng gradient bằng sai phân hữu hạn" | sửa, đã chuyển về ở C0; trang vấn đề của hàm điểm theo nguồn tr. 33; định nghĩa $u_k$ trên mặt trang; thẻ dữ kiện cạnh công thức; ví dụ $0{,}655$ so với $\tfrac23$; "Lưu ý:" $d+1$ giá trị $J$, mỗi giá trị từ nhiều lượt; bỏ hai thẻ và câu phân tuyến trong ghi chú | 19 → 42 | 5 + hình; 587 → 608 px | khoảng 116 |
+| S34 | `L09-23` | "Hàm điểm (score function) cần xác suất dương trên mẫu" → "Hàm điểm" | sửa; thứ tự trực quan → ví dụ → định nghĩa (trước đây mở bằng định nghĩa); ví dụ tính tay $\nabla_\theta\log\pi_\theta(1\mid s)=(\tfrac13;\,-\tfrac13)$ nêu lại dữ kiện tại chỗ; "Lưu ý:" miền hỗ trợ cố định; ghi chú: $\log$ là logarit tự nhiên, phản ví dụ miền hỗ trợ đổi theo $\theta$ | 26 → 50 | 5; 545 → 622 px | khoảng 97 |
+| S35 | `L09-24` | giữ "Hàm điểm của chính sách softmax" | sửa; "Mệnh đề." + "Chứng minh." một dòng; `softmax-score.svg` vẽ lại thành hình học (ba đặc trưng, trọng tâm theo $\pi_\theta$, ba mũi tên $\psi_\theta$, xác suất $0{,}5$; $0{,}3$; $0{,}2$), bỏ câu sai "Tổng kỳ vọng…"; hết tràn | 12 → 24 | 3 + hình; 787 → 655 px, tràn phải 1310 → 1256 | khoảng 86 |
+| S36 | `L09-25` | "Ví dụ softmax hai hành động" → "Ví dụ: hàm điểm softmax hai hành động" | sửa; thẻ dữ kiện thay câu dữ kiện; tính cả $\psi_\theta(s,2)$; trung bình $(0;\,0)$ thay "$0\in\mathbb R^d$"; "Diễn giải:"; bỏ câu hỏi trùng `X02` | 20 → 21 | 5 + hình; 561 → 666 px | khoảng 81 |
+| S37 | `L09-25b` (mới) | — → "Kỳ vọng của hàm điểm" | thêm; "Mệnh đề." với ba giả thiết (khả vi, miền hỗ trợ cố định, đổi $\nabla$ với tổng hoặc tích phân); "Chứng minh." hai dòng; "Ý nghĩa:" hệ số không phụ thuộc $A$; trước đây kết quả chỉ nằm trong ghi chú diễn giả `L09-24` và câu hình | — → 34 | 3 + 2 công thức; 617 px | khoảng 121 |
+| S38 | `L09-26` | "Hàm điểm Gaussian, phương sai cố định" → "Hàm điểm của chính sách Gaussian" | sửa; "Nhắc lại:" chính sách Gaussian (cách tám trang); "Mệnh đề." + "Chứng minh." một dòng; "Ý nghĩa:" hướng dời $\mu$ và vai trò $\sigma$; ghi chú trả lời câu hỏi nguồn tr. 38 | 24 → 25 | 5; 589 → 573 px | khoảng 99 |
+| S39 | `L09-27` | "Ví dụ hàm điểm Gaussian" → "Ví dụ: hàm điểm Gaussian tại $a=1{,}5$" | sửa; $(1{,}5;\,3)$ dấu chấm phẩy; câu hỏi dùng hệ số $c$ thay "hệ số return"; "Lời giải:" hai dòng với số: $\Delta\mu=-0{,}75$, ra xa $a$ (kế hoạch D4) | 33 → 18 | 5; 572 → 449 px | khoảng 78 |
+| S40 | `X02` | "Bài tập: hai hàm điểm" → "Bài tập: hàm điểm softmax và Gaussian" | sửa, đã chuyển xuống sau `L09-27` ở C0; dữ kiện tự đủ bằng hình `score-exercise-card.svg`; bộ số softmax mới $\theta=(0;\,\log3)$, $\pi=(\tfrac14;\,\tfrac34)$ (không trùng `L09-25`); "Lời giải:" ba dòng; dòng cuối "Lưu ý:" là đầu ra cho mạch 6; `data-note-topic-id` đổi sang `lec-09-topic-09` | 20 → 45 | 5 + hình; 492 → 655 px | khoảng 106 |
+
+Ngoại lệ mật độ mạch 5: không có; trang nhiều nhất `L09-23` 50 âm tiết, 5 dòng, 1 công thức hiển thị.
+
+##### Hành trình khái niệm, mạch 5, cụm "Hàm mục tiêu" (5 phút)
+
+| bước | mã trang | dữ kiện đầu vào | sản phẩm học tập | gộp / không áp dụng |
+|---|---|---|---|---|
+| Vấn đề | `L09-M5T`, `L09-20` ("Nhu cầu:") | Dòng "Lưu ý:" cuối `L09-19` | Cần một số đo của $\pi_\theta$ | Không gộp |
+| Trực quan | ghi chú diễn giả `L09-20`; ghi chú bài giảng | Lợi tức kỳ vọng từ trạng thái đầu (nguồn tr. 30) | — | Gộp với vấn đề |
+| Ví dụ | `L09-20` | Thẻ dữ kiện | $J=2$ | Không gộp |
+| Hình thức | `L09-20` ("Định nghĩa.", "Giả thiết:") | $G_0$, $\rho_0$, $\mathbb E_{\pi_\theta}$ | $J(\theta)=\mathbb E_{\pi_\theta}[G_0]$ | Không gộp |
+| Ứng dụng | `L09-21` | Hạ gradient của Bài 08 | $\theta\leftarrow\theta+\alpha\nabla_\theta J$; $\nabla_\theta J=(\tfrac23;\,-\tfrac23)$ | Không gộp |
+| Kiểm tra | `L09-21` ("Lưu ý:"), Bài tập 09.5 của ghi chú | — | $J$ chỉ đo được qua lượt | Kiểm tra trên lớp gộp với trang vấn đề của hàm điểm `L09-30A` |
+
+##### Hành trình khái niệm, mạch 5, cụm "Hàm điểm" (17 phút)
+
+| bước | mã trang | dữ kiện đầu vào | sản phẩm học tập | gộp / không áp dụng |
+|---|---|---|---|---|
+| Vấn đề | `L09-30A` | Thẻ dữ kiện; $J$ chỉ đo qua lượt | Sai phân $0{,}655$ so với $\tfrac23$; cần $d+1$ giá trị $J$ có nhiễu | Không gộp (trang vấn đề theo nguồn tr. 33) |
+| Trực quan | `L09-23` ("Trực quan.") | $\nabla\pi=\pi\nabla\log\pi$ | Tổng có trọng số $\pi$ thành kỳ vọng ước lượng được bằng mẫu | Cùng trang với ví dụ và định nghĩa |
+| Ví dụ | `L09-23` ("Ví dụ.") | Hai hành động, $\theta=(\log2;\,0)$ nêu lại tại chỗ | $\nabla_\theta\log\pi_\theta(1\mid s)=(\tfrac13;\,-\tfrac13)$ | Đặt trước định nghĩa trên cùng trang |
+| Hình thức | `L09-23` ("Định nghĩa."), `L09-24` (Mệnh đề softmax), `L09-25b` (Mệnh đề kỳ vọng), `L09-26` (Mệnh đề Gaussian) | $\pi_\theta>0$, miền hỗ trợ cố định | $\psi_\theta$; hai công thức đóng; $\mathbb E[\psi_\theta]=0$ | Không gộp |
+| Ứng dụng | `L09-25`, `L09-27` | Thẻ dữ kiện; Gaussian $\phi(s)=(1;\,2)$, $a=1{,}5$ | $\psi_\theta(s,1)=(\tfrac13;\,-\tfrac13)$, $\psi_\theta(s,2)=(-\tfrac23;\,\tfrac23)$, trung bình $(0;\,0)$; $(1{,}5;\,3)$, $\Delta\mu=-0{,}75$ | Ví dụ softmax đứng trước mệnh đề kỳ vọng mà nó minh họa |
+| Kiểm tra | `L09-27` ("Câu hỏi:"/"Lời giải:"), `X02` | Hình `score-exercise-card.svg` | $(\tfrac34;\,-\tfrac34)$, $(-\tfrac14;\,\tfrac14)$, $(-1;\,-2)$ | Không gộp |
+
+Thời lượng mạch 5: `L09-M5T` 1, `L09-20` 2, `L09-21` 2, `L09-30A` 2, `L09-23` 3, `L09-24` 2, `L09-25` 2, `L09-25b` 2, `L09-26` 2, `L09-27` 2, `X02` 2 phút; tổng 22. Dữ kiện truyền: thẻ dữ kiện bài toán một bước (`one-step-card.svg`) ở `L09-20`, `L09-30A`, `L09-25`, dùng lại ở mạch 6 (`L09-28`, `L09-32`, `X03`); $\nabla_\theta J=(\tfrac23;\,-\tfrac23)$ của `L09-21` là số để mạch 6 kiểm $\sum_ar(a)\pi_\theta(a\mid s)\psi_\theta(s,a)$; hệ quả của `L09-25b` ($\mathbb E[c\,\psi_\theta]=0$) là bước bỏ phần thưởng quá khứ ở `L09-29`; dòng "Lưu ý:" cuối `X02` (hàm điểm của một bước, còn thiếu gradient theo cả lượt) là đầu vào của `L09-M6T`.
+
+Lệch khỏi nguồn (mạch 5): nguồn tr. 30–32 (hàm mục tiêu, tối ưu chính sách, gradient chính sách) gộp vào `L09-20`, `L09-21`; nguồn viết $J=V^{\pi}(s_1)$ với trạng thái đầu cố định, bài dùng $S_0\sim\rho_0$ (trường hợp riêng ghi trong ghi chú diễn giả); câu hỏi tr. 30 và cách không dùng gradient tr. 31 (leo đồi, giải thuật di truyền) đưa vào ghi chú diễn giả `L09-21` và ghi chú bài giảng; tr. 33 giữ vị trí nguồn trước hàm điểm (C0 đã chuyển về); tr. 35 và 37 là hai câu hỏi "Quiz" về hàm điểm, trả lời bằng "Mệnh đề." ở `L09-24`, `L09-26`; tr. 38 câu hỏi về vấn đề của Gaussian trả lời trong ghi chú diễn giả `L09-26`. Thêm so với nguồn: `L09-25b` (mệnh đề kỳ vọng của hàm điểm, có trong Sutton và Barto 2018, §13.4, dùng ở mạch 6), các ví dụ số trên bài toán một bước, phần phương sai của sai phân hữu hạn trong ghi chú bài giảng. Ký hiệu: $\log$ là logarit tự nhiên; $\theta=(\log2;\,0)$ (ghi chú bài giảng đổi các chỗ $\ln$ cũ).
+
+##### Rà lại mạch 5 (bước R5): thay đổi trang và mật độ
+
+| trang | thay đổi ở R5 | âm tiết sau R5 | đáy |
+|---|---|---|---|
+| `L09-21` | "Ví dụ." nêu softmax, $\phi$ đơn vị, $r=(3;\,0)$ đã biết và đạo hàm $\nabla_\theta\pi_\theta(1\mid s)$; dòng sau "Tính trực tiếp" cho $(\tfrac23;\,-\tfrac23)$; ghi chú diễn giả có đạo hàm softmax. Thẻ dữ kiện không đặt vì không đủ chỗ (dữ kiện nêu tại chỗ) | 49 | 597 px |
+| `L09-20`, `L09-30A`, `L09-25` | thẻ `one-step-card.svg` ghi "chính sách softmax"; `alt` theo | 42; 42; 21 | 649; 608; 666 px |
+| `X02` | (b) viết "Với $a=-1$: $\psi_\theta(s,a)$", "bước nhỏ" | 49 | 655 px |
+| `L09-30A`, `L09-26`, `L09-25b` | chỉ ghi chú diễn giả: $0{,}011$; câu Gaussian bị chặn khớp Mục 4 (cắt: hàm điểm của mẫu trước khi cắt; $\tanh$: mật độ sau đổi biến); điều kiện đổi đạo hàm–tích phân chặn $\lVert\nabla_\theta\pi_{\theta'}\rVert$ đều trong lân cận | — | — |
 
 ## Bản trước đợt sửa 2026-10-28
 

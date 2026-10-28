@@ -1,1 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 310" role="img" aria-labelledby="t d"><title id="t">Hàm điểm của chính sách softmax</title><desc id="d">Đặc trưng của hành động đã chọn trừ trung bình đặc trưng dưới chính sách.</desc><defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L10 3L0 6Z" fill="#2f3e7a"/></marker></defs><rect x="45" y="85" width="245" height="120" rx="16" fill="#edf4ff" stroke="#2f3e7a" stroke-width="4"/><text x="168" y="137" text-anchor="middle" font-size="30">đặc trưng</text><text x="168" y="176" text-anchor="middle" font-size="30">đã chọn ϕ(s,a)</text><text x="340" y="155" text-anchor="middle" font-size="46">−</text><rect x="395" y="85" width="245" height="120" rx="16" fill="#f7efe6" stroke="#b15a2b" stroke-width="4"/><text x="518" y="137" text-anchor="middle" font-size="30">trung bình</text><text x="518" y="176" text-anchor="middle" font-size="30">Σ π(b|s)ϕ(s,b)</text><path d="M650 145H720" stroke="#2f3e7a" stroke-width="5" marker-end="url(#a)"/><rect x="730" y="85" width="190" height="120" rx="16" fill="#eef8ef" stroke="#2e7d32" stroke-width="4"/><text x="825" y="137" text-anchor="middle" font-size="30">hướng tăng</text><text x="825" y="176" text-anchor="middle" font-size="30">log xác suất</text><text x="480" y="270" text-anchor="middle" font-size="30">Tổng kỳ vọng của hàm điểm bằng 0</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" width="640" height="240" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Hàm điểm của chính sách softmax</title>
+<desc id="d">Ba chấm tròn là đặc trưng phi của s, 1; phi của s, 2; phi của s, 3, với xác suất pi theta lần lượt 0,5; 0,3; 0,2 ghi trong hộp bên phải. Hình thoi rỗng là trung bình đặc trưng theo pi theta. Ba mũi tên đi từ hình thoi tới ba chấm, ghi psi theta của s, 1; s, 2; s, 3. Hình thoi nằm tại trọng tâm có trọng số, nên tổng có trọng số pi theta của ba mũi tên bằng 0.</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="13" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#B15A2B"/></marker></defs>
+<path d="M214,95 L97,62" stroke="#B15A2B" stroke-width="3.5" marker-end="url(#ar)"/>
+<path d="M214,95 L422,81" stroke="#B15A2B" stroke-width="3.5" marker-end="url(#ar)"/>
+<path d="M214,95 L201,197" stroke="#B15A2B" stroke-width="3.5" marker-end="url(#ar)"/>
+<circle cx="90" cy="60" r="8" fill="#2F3E7A"/>
+<circle cx="430" cy="80" r="8" fill="#2F3E7A"/>
+<circle cx="200" cy="205" r="8" fill="#2F3E7A"/>
+<path d="M214,83 L226,95 L214,107 L202,95 Z" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="90" y="36" font-size="22" text-anchor="middle"><tspan font-style="italic">ϕ</tspan>(<tspan font-style="italic">s</tspan>, 1)</text>
+<text x="430" y="56" font-size="22" text-anchor="middle"><tspan font-style="italic">ϕ</tspan>(<tspan font-style="italic">s</tspan>, 2)</text>
+<text x="218" y="222" font-size="22"><tspan font-style="italic">ϕ</tspan>(<tspan font-style="italic">s</tspan>, 3)</text>
+<text x="138" y="114" font-size="22" text-anchor="middle" fill="#B15A2B"><tspan font-style="italic">ψ</tspan><tspan font-size="15" dy="5" font-style="italic">θ</tspan><tspan dy="-5">(</tspan><tspan font-style="italic">s</tspan>, 1)</text>
+<text x="322" y="72" font-size="22" text-anchor="middle" fill="#B15A2B"><tspan font-style="italic">ψ</tspan><tspan font-size="15" dy="5" font-style="italic">θ</tspan><tspan dy="-5">(</tspan><tspan font-style="italic">s</tspan>, 2)</text>
+<text x="196" y="160" font-size="22" text-anchor="end" fill="#B15A2B"><tspan font-style="italic">ψ</tspan><tspan font-size="15" dy="5" font-style="italic">θ</tspan><tspan dy="-5">(</tspan><tspan font-style="italic">s</tspan>, 3)</text>
+<text x="234" y="132" font-size="22" fill="#2F3E7A">trung bình</text>
+<text x="234" y="158" font-size="22" fill="#2F3E7A">theo <tspan font-style="italic">π</tspan><tspan font-size="15" dy="5" font-style="italic">θ</tspan></text>
+<rect x="476" y="108" width="158" height="126" rx="8" fill="#F7EFE6"/>
+<text x="555" y="136" font-size="22" text-anchor="middle"><tspan font-style="italic">π</tspan><tspan font-size="15" dy="5" font-style="italic">θ</tspan><tspan dy="-5">(</tspan><tspan font-style="italic">a</tspan> | <tspan font-style="italic">s</tspan>)</text>
+<text x="555" y="166" font-size="22" text-anchor="middle"><tspan font-style="italic">a</tspan> = 1: 0,5</text>
+<text x="555" y="194" font-size="22" text-anchor="middle"><tspan font-style="italic">a</tspan> = 2: 0,3</text>
+<text x="555" y="222" font-size="22" text-anchor="middle"><tspan font-style="italic">a</tspan> = 3: 0,2</text>
+</svg>

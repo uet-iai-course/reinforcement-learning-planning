@@ -15,6 +15,7 @@
 - Với định lý gradient chính sách, giữ đồng thời occupancy chuẩn hóa và hệ số $1/(1-\gamma)$. Episode được nối bằng trạng thái hấp thụ có phần thưởng và $Q$ bằng không.
 - Giữ quy ước $R_{t+1}$ nhận sau $A_t$, $G_t=\sum_{k=t}^{T-1}\gamma^{k-t}R_{k+1}$ và estimator có $\gamma^tG_t$.
 - Giữ miền $0\le\gamma&lt;1$ từ mục tiêu đến phân bố chiếm dụng. Trong các công thức softmax và Gaussian của bài, $\phi$ là đặc trưng cố định khi lấy đạo hàm theo $\theta$.
+- Ở mạch 5 viết $J(\theta)=\mathbb E_{\pi_\theta}[G_0]$, chưa dùng $\tau$, $p_\theta(\tau)$; quỹ đạo và xác suất quỹ đạo định nghĩa ở mạch 6. Hàm mục tiêu $J$ khác mục tiêu hồi quy $y_i$ của DQN. Sai phân hữu hạn (nguồn tr. 33) là trang vấn đề của hàm điểm, đặt trước hàm điểm như nguồn. Bài toán một bước hai hành động nhắc lại bằng hình thẻ dữ kiện, không viết "như ví dụ trước". $\log$ là logarit tự nhiên.
 - Khi chứng minh kỳ vọng hàm điểm bằng không, dùng kỳ vọng theo $A_t\mid H_t$: tổng với hành động rời rạc, tích phân với hành động liên tục.
 - Định nghĩa $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$ (ký hiệu Bài 03–08). Với chân trời cưỡng bức, ghép $t$ vào trạng thái; với trạng thái kết thúc, nối trạng thái hấp thụ có giá trị $0$.
 - Dùng lại ví dụ softmax ở trang ứng dụng cuối. Sau cập nhật return dương, phải kiểm được xác suất hành động 1 tăng từ $2/3$ lên khoảng $0,710$.
