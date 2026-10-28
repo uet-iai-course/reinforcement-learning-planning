@@ -247,12 +247,12 @@ Khái niệm này khác độ chệch của từng ước lượng. "Mỗi $\wid
 **Bước 1 (kết luận a).** Hàm $f:\mathbb R^m\to\mathbb R$, $f(x)=\max_ax_a$, là cực đại của các hàm tuyến tính $x\mapsto x_a$, nên lồi. Vector $X=(\widehat Q_a)_{a\in\mathcal A}$ khả tích vì từng thành phần khả tích. Bất đẳng thức Jensen (Kiến thức tiên quyết) cho
 $$
 \begin{aligned}
-\max_a\mathbb E[\widehat Q_a]&=f(\mathbb E[X])&&\text{(định nghĩa của }f\text{)}\\
-&\le\mathbb E[f(X)]&&\text{(Jensen)}\\
+\max_a\mathbb E[\widehat Q_a]&=f(\mathbb E[X])\\
+&\le\mathbb E[f(X)]\\
 &=\mathbb E\bigl[\max_a\widehat Q_a\bigr].
 \end{aligned}
 $$
-Cách khác, không dùng Jensen: với mọi $b$, $\max_a\widehat Q_a\ge\widehat Q_b$; lấy kỳ vọng được $\mathbb E[\max_a\widehat Q_a]\ge\mathbb E[\widehat Q_b]$, rồi lấy cực đại theo $b$.
+Dòng đầu là định nghĩa của $f$, dòng thứ hai là bất đẳng thức Jensen. Cách khác, không dùng Jensen: với mọi $b$, $\max_a\widehat Q_a\ge\widehat Q_b$; lấy kỳ vọng được $\mathbb E[\max_a\widehat Q_a]\ge\mathbb E[\widehat Q_b]$, rồi lấy cực đại theo $b$.
 
 **Bước 2 (kết luận b).** Khi $\mathbb E[\widehat Q_a]=q_a$ với mọi $a$, vế phải của (a) bằng $\max_aq_a$; trừ hai vế cho $\max_aq_a$ được $\beta\ge0$.
 
@@ -336,11 +336,12 @@ Hình liệt kê bốn hiện thực của bản A trong Ví dụ 09.4. Hành đ
 **Bước 2 (lấy kỳ vọng).** Theo tính chất tháp của kỳ vọng có điều kiện (Kiến thức tiên quyết),
 $$
 \begin{aligned}
-\mathbb E[\widehat Q^B_{a^*}]&=\mathbb E\bigl[\mathbb E[\widehat Q^B_{a^*}\mid\widehat Q^A]\bigr]&&\text{(tính chất tháp)}\\
-&=\mathbb E[q_{a^*}]&&\text{(Bước 1)}\\
-&\le\max_aq_a&&\text{(}q_{a^*}\le\max_aq_a\text{ ở mọi hiện thực)}.
+\mathbb E[\widehat Q^B_{a^*}]&=\mathbb E\bigl[\mathbb E[\widehat Q^B_{a^*}\mid\widehat Q^A]\bigr]\\
+&=\mathbb E[q_{a^*}]\\
+&\le\max_aq_a.
 \end{aligned}
 $$
+Dòng đầu là tính chất tháp, dòng thứ hai là Bước 1, dòng cuối dùng $q_{a^*}\le\max_aq_a$ ở mọi hiện thực.
 
 **Bước 3 (dấu bằng).** $\max_aq_a-q_{a^*}\ge0$ có kỳ vọng $0$ khi và chỉ khi nó bằng $0$ hầu chắc chắn, tức $a^*\in\arg\max_aq_a$ hầu chắc chắn. $\square$
 :::
@@ -445,9 +446,9 @@ Double DQN dùng một bản sao trễ làm bản đánh giá. Với biểu di�
 **Kiểm tra lại.** $4{,}06$ nằm giữa giá trị cũ $4$ và mục tiêu $4{,}6$.
 :::
 
-![Bảng hai hàng: Q 1 tại S phẩy bằng 3 và 6, bảng được cập nhật; Q 2 tại S phẩy bằng 5 và 4. Khung vuông quanh số 6: Q 1 chọn hành động 2. Mũi tên ghi đánh giá tới số 4 có viền ellip nét đứt: Q 2 đánh giá hành động 2 bằng 4.](img/lec-09/double-q-example.svg)
+![Bảng hai hàng: hàng trên Q 2 tại S phẩy bằng 5 và 4, bảng đánh giá; hàng dưới Q 1 tại S phẩy bằng 3 và 6, bảng chọn và được cập nhật. Khung vuông quanh số 6: Q 1 chọn hành động 2. Mũi tên ghi đánh giá đi lên số 4 có viền ellip nét đứt: Q 2 đánh giá hành động 2 bằng 4.](img/lec-09/double-q-example.svg)
 
-Hình dùng cùng bố cục với hình của Ví dụ 09.6: hàng chọn và hàng đánh giá. Ở đây hàng chọn là bảng được cập nhật, và mũi tên đi từ hàng trên xuống hàng dưới.
+Hình dùng cùng bố cục với hình của Ví dụ 09.6: hàng trên đánh giá, hàng dưới chọn, mũi tên đi từ hàng dưới lên hàng trên. Ở đây hàng chọn là bảng được cập nhật, ở vị trí của mạng trực tuyến trong Ví dụ 09.6.
 
 ::: algorithm Thuật toán 09.7 (Double Q-learning)
 **Đầu vào.** MDP hữu hạn với $\mathcal A$ hữu hạn; bước học $\alpha\in(0,1]$; $\gamma\in[0,1)$; xác suất thăm dò $\epsilon_{\mathrm{exp}}$; số lượt.
@@ -518,14 +519,14 @@ Hai điểm của mô hình này là giả thiết thêm vào nguồn, ghi là s
 
 Một cách trực quan, khi hai ô không phân biệt được cần hai hướng ngược nhau, chọn ngẫu nhiên giữa hai hướng ở cả hai ô cho mỗi ô một xác suất dương đi đúng hướng. Chính sách ngẫu nhiên không biết mình đang ở ô nào; nó chỉ tránh việc kẹt vĩnh viễn ở một ô.
 
-![Cùng lưới năm ô, ô kẹt X dưới ô 1 và ô 5, ô đích dưới ô 3. Ở ô 2 và ô 4 có hai mũi tên Đông và Tây, mỗi mũi tên xác suất một phần hai; ô 1 sang Đông, ô 3 xuống ô đích, ô 5 sang Tây; ghi chú h 2 bằng h 4 bằng 4.](img/lec-09/aliased-grid-stochastic.svg)
+![Cùng lưới năm ô, ô kẹt X dưới ô 1 và ô 5, ô đích dưới ô 3. Ở ô 2 và ô 4 có hai mũi tên Đông và Tây, mỗi mũi tên xác suất một phần hai; ô 1 sang Đông, ô 3 xuống ô đích, ô 5 sang Tây. Hàng dưới lưới ghi h i, số bước kỳ vọng tới đích từ từng ô: 5, 4, 1, 4, 5.](img/lec-09/aliased-grid-stochastic.svg)
 
 ::: example Ví dụ 09.9 (Lưới gộp trạng thái, chính sách ngẫu nhiên)
 **Dữ kiện.** Lưới như Ví dụ 09.8. Ở hai ô xám, chính sách đi Đông với xác suất $p$ và Tây với xác suất $1-p$; ô 1 đi Đông, ô 3 đi Nam, ô 5 đi Tây (bài giảng gốc, trang 25, xét $p=\tfrac12$).
 
 **Phương trình từ ô 2.** Với xác suất $p$, đi Đông tới ô 3 rồi xuống đích: hai bước. Với xác suất $1-p$, đi Tây tới ô 1 rồi Đông trở lại ô 2: hai bước, rồi còn $h_2$ bước. Vậy
 $$
-h_2=p\cdot2+(1-p)(2+h_2),\qquad\text{nên}\qquad h_2=\frac2p.
+h_2=p\cdot2+(1-p)(2+h_2)\quad\Longrightarrow\quad h_2=\frac2p.
 $$
 
 **Từ ô 4.** Đối xứng, đi Đông là hướng sai: $h_4=\dfrac{2}{1-p}$.
@@ -718,7 +719,7 @@ Chi phí tăng theo số tham số. Mỗi ước lượng gradient cần chạy 
 
 Trở lại bài toán một bước. Với $J(\theta)=\sum_ar(a)\pi_\theta(a\mid s)$, gradient là $\sum_ar(a)\nabla_\theta\pi_\theta(a\mid s)$: một tổng trên mọi hành động, cần phần thưởng của từng hành động. Một lượt chỉ cho phần thưởng của hành động đã lấy mẫu. Một cách trực quan, ta muốn viết tổng này thành một kỳ vọng theo $A\sim\pi_\theta(\cdot\mid s)$, vì kỳ vọng thì ước lượng được bằng mẫu. Muốn vậy, mỗi số hạng phải có thừa số $\pi_\theta(a\mid s)$. Quy tắc đạo hàm của logarit cho đúng thừa số đó: khi $\pi_\theta(a\mid s)>0$,
 $$
-\nabla_\theta\log\pi_\theta(a\mid s)=\frac{\nabla_\theta\pi_\theta(a\mid s)}{\pi_\theta(a\mid s)},\qquad\text{nên}\qquad\nabla_\theta\pi_\theta(a\mid s)=\pi_\theta(a\mid s)\,\nabla_\theta\log\pi_\theta(a\mid s).
+\nabla_\theta\log\pi_\theta(a\mid s)=\frac{\nabla_\theta\pi_\theta(a\mid s)}{\pi_\theta(a\mid s)}\quad\Longrightarrow\quad\nabla_\theta\pi_\theta(a\mid s)=\pi_\theta(a\mid s)\,\nabla_\theta\log\pi_\theta(a\mid s).
 $$
 Thế vào, với mọi hàm $f$ của hành động không phụ thuộc $\theta$,
 $$
@@ -954,9 +955,9 @@ Lập luận chỉ dùng thứ tự thời gian và tính Markov của chính s�
 
 **Lợi tức.** $G_1=2$, $G_0=1+0{,}9\cdot2=2{,}8$ (Ví dụ 09.12).
 
-**Hai ước lượng.** $G_0(\psi_0+\psi_1)=5{,}6\,\psi\approx(1{,}867;\,-1{,}867)$. Theo lợi tức từ bước $t$: $G_0\psi_0+\gamma G_1\psi_1=(2{,}8+1{,}8)\psi=4{,}6\,\psi\approx(1{,}533;\,-1{,}533)$.
+**Ba ước lượng.** (i) Lợi tức của cả lượt: $G_0(\psi_0+\psi_1)=5{,}6\,\psi\approx(1{,}867;\,-1{,}867)$. (ii) Lợi tức từ bước $t$: $G_0\psi_0+\gamma G_1\psi_1=(2{,}8+1{,}8)\psi=4{,}6\,\psi\approx(1{,}533;\,-1{,}533)$. (iii) Bỏ $\gamma^t$: $G_0\psi_0+G_1\psi_1=4{,}8\,\psi$, xét ở Ví dụ 09.21.
 
-**Phần chênh.** $5{,}6\,\psi-4{,}6\,\psi=R_1\psi_1$: phần thưởng nhận trước $A_1$ nhân hàm điểm của $A_1$, kỳ vọng $0$. Hai ước lượng khác nhau trên lượt này nhưng có cùng kỳ vọng.
+**Phần chênh.** (i) − (ii) $=R_1\psi_1$: phần thưởng nhận trước $A_1$ nhân hàm điểm của $A_1$, kỳ vọng $0$. Hai ước lượng (i), (ii) khác nhau trên lượt này nhưng có cùng kỳ vọng.
 :::
 
 <!-- note-topic-id: lec-09-topic-11 -->
@@ -1024,7 +1025,7 @@ $$
 **Bước 3.** $\sum_t\gamma^t\Pr(S_t=s)=\nu^\pi_\gamma(s)/(1-\gamma)$. $\square$
 :::
 
-Thừa số $1-\gamma$ trong $\nu^\pi_\gamma$ làm các trọng số $(1-\gamma)\gamma^t$ cộng lại bằng $1$, nên $\nu^\pi_\gamma$ là một phân phối; thừa số $1/(1-\gamma)$ ở trước bù lại. Nhiều tài liệu bỏ chuẩn hóa và viết $\nabla J\propto\sum_s\mu(s)\sum_a q_\pi\nabla\pi$; hai cách khác nhau một hằng số dương.
+Đọc bằng lời, $\nu^\pi_\gamma(s)$ là tần suất thăm $s$ trên các lượt, mỗi lần thăm ở bước $t$ được tính với trọng số tỉ lệ $\gamma^t$, nên lần thăm ở bước muộn tính nhẹ hơn. Thừa số $1-\gamma$ trong $\nu^\pi_\gamma$ làm các trọng số $(1-\gamma)\gamma^t$ cộng lại bằng $1$, nên $\nu^\pi_\gamma$ là một phân phối; thừa số $1/(1-\gamma)$ ở trước bù lại. Nhiều tài liệu bỏ chuẩn hóa và viết $\nabla J\propto\sum_s\eta(s)\sum_aq_\pi(s,a)\nabla_\theta\pi_\theta(a\mid s)$, với $\eta(s)=\sum_t\gamma^t\Pr(S_t=s)$ không chuẩn hóa; hai cách khác nhau một hằng số dương.
 
 <!-- note-topic-id: lec-09-topic-12 -->
 ### Thuật toán REINFORCE
