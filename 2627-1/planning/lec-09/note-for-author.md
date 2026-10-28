@@ -12,13 +12,13 @@
 - Động cơ dùng chính sách trực tiếp trong bài là phân phối khả vi, lấy mẫu và hành động liên tục không cần giải argmax bên trong.
 - Đặt trực giác chính sách trước định nghĩa. Trên mặt trang chỉ cần xác suất hoặc mật độ hành động.
 - Trước định lý gradient chính sách, viết đủ $\nabla J=\int G\nabla p=\mathbb E[G\nabla\log p]$. Bước nhân quả dùng $\mathbb E[\psi_t\mid H_t]=0$, không giả sử phần thưởng và hành động độc lập.
-- Với định lý gradient chính sách, giữ đồng thời occupancy chuẩn hóa và hệ số $1/(1-\gamma)$. Episode được nối bằng trạng thái hấp thụ có phần thưởng và $Q$ bằng không.
-- Giữ quy ước $R_{t+1}$ nhận sau $A_t$, $G_t=\sum_{k=t}^{T-1}\gamma^{k-t}R_{k+1}$ và estimator có $\gamma^tG_t$.
+- Với định lý gradient chính sách, giữ đồng thời phân bố chiếm dụng chuẩn hóa $\nu^\pi_\gamma$ và hệ số $1/(1-\gamma)$. Lượt được nối bằng trạng thái hấp thụ có phần thưởng và $q_\pi$ bằng không. Định lý có giả thiết (G1)–(G4) trên mặt trang; không nói về hội tụ.
+- Giữ quy ước $R_{t+1}$ nhận sau $A_t$, $G_t=\sum_{k=t}^{T-1}\gamma^{k-t}R_{k+1}$ và ước lượng có $\gamma^tG_t$. Bỏ $\gamma^t$ cho hướng lệch khỏi $\nabla J$ khi $\gamma<1$ (Nota và Thomas, 2020), không phải "dùng mục tiêu khác".
 - Giữ miền $0\le\gamma&lt;1$ từ mục tiêu đến phân bố chiếm dụng. Trong các công thức softmax và Gaussian của bài, $\phi$ là đặc trưng cố định khi lấy đạo hàm theo $\theta$.
 - Ở mạch 5 viết $J(\theta)=\mathbb E_{\pi_\theta}[G_0]$, chưa dùng $\tau$, $p_\theta(\tau)$; quỹ đạo và xác suất quỹ đạo định nghĩa ở mạch 6. Hàm mục tiêu $J$ khác mục tiêu hồi quy $y_i$ của DQN. Sai phân hữu hạn (nguồn tr. 33) là trang vấn đề của hàm điểm, đặt trước hàm điểm như nguồn. Bài toán một bước hai hành động nhắc lại bằng hình thẻ dữ kiện, không viết "như ví dụ trước". $\log$ là logarit tự nhiên.
 - Khi chứng minh kỳ vọng hàm điểm bằng không, dùng kỳ vọng theo $A_t\mid H_t$: tổng với hành động rời rạc, tích phân với hành động liên tục.
 - Định nghĩa $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$ (ký hiệu Bài 03–08). Với chân trời cưỡng bức, ghép $t$ vào trạng thái; với trạng thái kết thúc, nối trạng thái hấp thụ có giá trị $0$.
-- Dùng lại ví dụ softmax ở trang ứng dụng cuối. Sau cập nhật return dương, phải kiểm được xác suất hành động 1 tăng từ $2/3$ lên khoảng $0,710$.
-- Trong REINFORCE episodic, thu cả episode dưới $\theta_{old}$, cộng đóng góp rồi cập nhật một lần. Nếu muốn cập nhật online, cần một thuật toán và suy diễn khác.
+- Ví dụ một cập nhật REINFORCE đặt trước thuật toán, nhắc dữ kiện bằng thẻ dữ kiện (không viết "dùng lại"). Sau cập nhật với lợi tức dương, xác suất hành động 1 tăng từ $2/3$ lên khoảng $0{,}710$; kỳ vọng của $\widehat g$ bằng $\nabla J=(2/3;\,-2/3)$.
+- Trong REINFORCE, thu cả lượt dưới $\theta_{\mathrm{old}}$, cộng đóng góp rồi cập nhật một lần. Cập nhật trong khi đang thu lượt cần một thuật toán và suy diễn khác. REINFORCE học theo chính sách: không dùng lại lượt trong bộ nhớ phát lại nếu không hiệu chỉnh bằng tỉ số xác suất.
 - Baseline, advantage và actor–critic thuộc bài kế tiếp. Chỉ dùng câu nối ở trang cuối.
 - Không đưa thời lượng, mã trang hoặc chỉ dẫn phân tuyến lên mặt trang chiếu hay ghi chú diễn giả.

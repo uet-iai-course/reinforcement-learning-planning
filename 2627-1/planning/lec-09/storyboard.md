@@ -60,6 +60,7 @@ Cột "C0": vị trí `h.v` (đánh số từ 1) sau bước C0, khi chỉ di ch
 | 6 | `L09-M6T` | 6. Gradient chính sách và REINFORCE | thêm | Trang tiêu đề mạch, điểm vào mạch 6 | chưa có | chưa có |
 | 6 | `L09-28`, `L09-22`, `L09-28A`, `L09-29` | Gradient của $J$ theo tỉ số xác suất; giả thiết; xác suất quỹ đạo; lợi tức từ thời điểm $t$ | sửa; `L09-22` chuyển về cạnh `L09-28` | Giả thiết đặt cạnh chỗ dùng | 6.1–6.4 | 6.1–6.4 |
 | 6 | `L09-29b` | Ví dụ: lượt hai bước | thêm | Ví dụ cho bước bỏ phần thưởng quá khứ | chưa có | chưa có |
+| 6 | `X03b` | Bài tập: cập nhật REINFORCE (lời giải) | thêm (bước mạch 6) | Lời giải từng bước trên trang sau vì câu hỏi có thẻ dữ kiện | chưa có | 6.11 (S51) |
 | 6 | `L09-30` | Định lý gradient chính sách | sửa, chuyển lên trước REINFORCE | Kết quả chính của nguồn tr. 39 | 6.5 | 6.5 |
 | 6 | `L09-32`, `L09-31`, `X03` | Ví dụ: một cập nhật REINFORCE; Thuật toán. REINFORCE; bài tập | sửa; `L09-32` trước `L09-31` | Ví dụ tính tay trước thuật toán | 6.6–6.8 | 6.6–6.8 |
 | 7 | `L09-M7T`, `L09-K1`–`L09-K7` | Tổng kết và chuyển tiếp | thêm | Bảng kết quả, bảng phương pháp, bài tổng hợp, trả lời vấn đề trung tâm, câu hỏi tự kiểm tra, bài tập về nhà, dòng nối Bài 10 | chưa có | chưa có |
@@ -345,6 +346,65 @@ Lệch khỏi nguồn (mạch 5): nguồn tr. 30–32 (hàm mục tiêu, tối �
 | `L09-20`, `L09-30A`, `L09-25` | thẻ `one-step-card.svg` ghi "chính sách softmax"; `alt` theo | 42; 42; 21 | 649; 608; 666 px |
 | `X02` | (b) viết "Với $a=-1$: $\psi_\theta(s,a)$", "bước nhỏ" | 49 | 655 px |
 | `L09-30A`, `L09-26`, `L09-25b` | chỉ ghi chú diễn giả: $0{,}011$; câu Gaussian bị chặn khớp Mục 4 (cắt: hàm điểm của mẫu trước khi cắt; $\tanh$: mật độ sau đổi biến); điều kiện đổi đạo hàm–tích phân chặn $\lVert\nabla_\theta\pi_{\theta'}\rVert$ đều trong lân cận | — | — |
+
+#### Mạch 6 "Gradient chính sách và REINFORCE" (bước S41–S51)
+
+Thứ tự sau bước: `L09-M6T`, `L09-28`, `L09-28A`, `L09-29`, `L09-29b`, `L09-22`, `L09-30`, `L09-32`, `L09-31`, `X03`, `X03b`. `L09-22` đặt ngay trước định lý (kế hoạch D1 cho phép đặt trước hoặc gộp); đặt sau `L09-28A`, `L09-29` vì giả thiết gom các điều kiện mà ba trang đó dùng.
+
+| bước | trang | tiêu đề trước → sau | quyết định và lý do | âm tiết trước → sau | dòng, đáy | ghi chú diễn giả |
+|---|---|---|---|---|---|---|
+| S41 | `L09-M6T` | — → "6. Gradient chính sách và REINFORCE" | thêm; `id="mach-6"`; dòng dẫn theo `outline.md` nhận đầu ra của `X02`; `data-note-topic-id` `lec-09-topic-10` | — → dẫn 19, khóa 18 | 2; 450 px | khoảng 94 |
+| S42 | `L09-28` | "Tỷ số xác suất biến return thành gradient (likelihood ratio)" → "Gradient của $J$ theo tỉ số xác suất" | sửa; "Nhu cầu:" nối `X02`; ví dụ một bước với thẻ dữ kiện: $\sum_ar(a)\pi\psi=(\tfrac23;\,-\tfrac23)$ khớp tính trực tiếp; "Ký hiệu:" định nghĩa $\tau$, $p_\theta(\tau)$ trước khi dùng; "tỉ", "lợi tức"; ghi chú: $G_0(\tau)$ không phụ thuộc $\theta$, khớp sai phân $0{,}655$ | 0 → 27 | 4 + hình + 1 công thức; 563 → 670 px | khoảng 82 |
+| S43 | `L09-28A` | "Phân tích xác suất quỹ đạo" → "Xác suất của quỹ đạo" | sửa; tích $p_\theta(\tau)$ với chữ hoa; "$\rho_0$, $P$ không phụ thuộc $\theta$"; định nghĩa $\psi_t$ tại chỗ; "Ý nghĩa:" không cần $P$; bỏ câu "luận điểm trung tâm", "Trang sau dùng…" | 8 → 29 | 3 + 2 công thức; 572 → 681 px | khoảng 80 |
+| S44 | `L09-29` | "Điều kiện theo lịch sử loại phần thưởng quá khứ" → "Phần thưởng quá khứ và hàm điểm" | sửa; thứ tự lập luận: tách $G_0=G_{<t}+\gamma^tG_t$ → $\mathbb E[G_{<t}\psi_t]=0$ (Mệnh đề 09.17) → kết luận; $\psi_t$ đã định nghĩa ở `L09-28A` | 20 → 16 | 3 + 2 công thức; 683 → 606 px | khoảng 87 |
+| S45 | `L09-29b` (mới) | — → "Ví dụ: lượt hai bước" | thêm; $G_0=2{,}8$, $G_1=2$; $5{,}6\psi$ và $4{,}6\psi$ chênh $R_1\psi_1$ (kỳ vọng $0$); bỏ $\gamma^t$: $4{,}8\psi$, lệch; ghi chú dẫn Nota và Thomas (2020) | — → 31 | 6; 557 px | khoảng 94 |
+| S46 | `L09-22` | "Hợp đồng cho đạo hàm theo chính sách" → "Giả thiết cho gradient của $J$" | sửa, chuyển xuống ngay trước định lý; bốn giả thiết đánh số (G1)–(G4), điều kiện đủ cụ thể ($|R|\le R_{\max}$, $T\le T_{\max}$, đặc trưng bị chặn) bao softmax và Gaussian; "Ý nghĩa:"; bỏ "hợp đồng", câu "sai phân hữu hạn đã bị lược", câu phóng đại; `data-note-topic-id` sang `lec-09-topic-11` | 47 → 51 | 6; 510 → 507 px | khoảng 114 |
+| S47 | `L09-30` | "Mở rộng: phân bố chiếm dụng (occupancy measure)" → "Định lý gradient chính sách" | sửa, chuyển lên trước REINFORCE (cốt lõi, nguồn tr. 39); "Định lý." dạng quỹ đạo dưới (G1)–(G4); "Chứng minh." một dòng; "Dạng khác:" $\tfrac1{1-\gamma}\mathbb E_{\nu^\pi_\gamma}[q_\pi\psi]$ với $\nu^\pi_\gamma$ chuẩn hóa; "Ý nghĩa:" một lượt cho mẫu không chệch; $q_\pi$ thay $Q^\pi$; bỏ "Trực giác:", gạch ngang dài, câu "có thể lược"; hết tràn phải (1282 → 1256) | 32 → 26 | 4 + 1 công thức; 638 → 607 px | khoảng 102 |
+| S48 | `L09-32` | "Áp dụng REINFORCE cho softmax" → "Ví dụ: một cập nhật REINFORCE" | sửa, đứng trước thuật toán; thẻ dữ kiện thay "Dùng lại…"; $(1;\,-1)$, $0{,}710$; "Kiểm tra lại:" $\mathbb E[\widehat g]=\nabla J$; dấu chấm phẩy trong vector | 13 → 5 | 5 + hình; 551 → 557 px | khoảng 90 |
+| S49 | `L09-31` | "REINFORCE: thu rồi cập nhật" → "Thuật toán REINFORCE" | sửa; "Thuật toán." đủ đầu vào, khởi tạo, bốn bước, dừng; $\mathbb E[\widehat g]=\nabla J(\theta_{\mathrm{old}})$ dưới (G1)–(G4); "Lưu ý:" theo chính sách, bộ nhớ phát lại phải hiệu chỉnh; bỏ hình (chuyển sang ghi chú bài giảng, vẽ lại); ghi chú sửa lý do bỏ $\gamma^t$, biến thể cập nhật theo từng $t$, lượt bị cắt ngắn; hết tràn (748 → 565 px) | 11 → 37 | 7 (giả mã, ngoại lệ); 565 px | khoảng 115 |
+| S50 | `X03` | "Bài tập: kiểm cập nhật chính sách" → "Bài tập: cập nhật REINFORCE" | sửa; thẻ dữ kiện; (a) "phần thưởng của hành động 1 đổi thành $-3$"; (b) lượt hai bước mới $A_0=1$, $A_1=2$ (không lặp `L09-29b`); câu hỏi tham số cố định chuyển vào ghi chú | 36 → 28 | 3 + hình; 566 → 626 px | khoảng 68 |
+| S51 | `X03b` (mới) | — → "Bài tập: cập nhật REINFORCE" (lời giải) | thêm; "Lời giải:" từng bước; "Lưu ý:" phương sai $\tfrac49$, cộng $1$ vào mọi phần thưởng thành $\tfrac{16}9$, là đầu ra cho mạch 7 | — → 31 | 6; 545 px | khoảng 97 |
+
+Ngoại lệ mật độ mạch 6: `L09-31` 7 dòng (một dòng mở, bốn bước giả mã, một dòng dừng và kết luận không chệch, một dòng "Lưu ý:"), cùng lý do với `L09-09`, `L09-12`: giả mã một thuật toán trên một trang, dưới tám dòng; 37 âm tiết. Các trang khác ≤ 6 dòng, ≤ 51 âm tiết.
+
+##### Hành trình khái niệm, mạch 6, cụm "Định lý gradient chính sách" (13 phút)
+
+| bước | mã trang | dữ kiện đầu vào | sản phẩm học tập | gộp / không áp dụng |
+|---|---|---|---|---|
+| Vấn đề | `L09-M6T`, `L09-28` ("Nhu cầu:") | Dòng "Lưu ý:" cuối `X02` | Hàm điểm của một bước chưa đủ cho cả lượt | Không gộp |
+| Trực quan | `L09-28` (ví dụ một bước, $\nabla\pi=\pi\psi$), ghi chú diễn giả `L09-29` | Thẻ dữ kiện | Thay một hành động bằng cả quỹ đạo; phần thưởng trước $A_t$ không do $A_t$ gây ra | Gộp với ví dụ |
+| Ví dụ | `L09-28`, `L09-29b` | Thẻ dữ kiện; lượt hai bước | $(\tfrac23;\,-\tfrac23)$; $5{,}6\psi$ và $4{,}6\psi$ cùng kỳ vọng | Ví dụ hai bước đặt sau phép suy diễn mà nó minh họa, trước định lý |
+| Hình thức | `L09-28` (tỉ số xác suất), `L09-28A`, `L09-29`, `L09-22`, `L09-30` | $\tau$, $p_\theta$, $H_t$ | Định lý dạng quỹ đạo và dạng phân bố chiếm dụng | Ba bước suy diễn trước định lý |
+| Ứng dụng | `L09-32` | Thẻ dữ kiện | Một mẫu $\widehat g=(1;\,-1)$, kỳ vọng bằng $\nabla J$ | Gộp với ví dụ của REINFORCE |
+| Kiểm tra | `L09-30` ("Ý nghĩa:"), `X03`, `X03b` | — | Mẫu không chệch; cập nhật kiểm được | Không gộp |
+
+##### Hành trình khái niệm, mạch 6, cụm "REINFORCE" (7 phút)
+
+| bước | mã trang | dữ kiện đầu vào | sản phẩm học tập | gộp / không áp dụng |
+|---|---|---|---|---|
+| Vấn đề | `L09-30` ("Ý nghĩa:") | Định lý | Lấy mẫu kỳ vọng bằng một lượt | Gộp với kết quả định lý |
+| Trực quan | ghi chú diễn giả `L09-32` | Lợi tức dương tăng xác suất hành động đã chọn | — | Gộp với ví dụ |
+| Ví dụ | `L09-32` | Thẻ dữ kiện, $G_0=3$, $\alpha=0{,}1$ | $\pi(1\mid s)$: $\tfrac23\to0{,}710$; $\mathbb E[\widehat g]=\nabla J$ | Ví dụ tính tay trước thuật toán |
+| Hình thức | `L09-31` | Định lý | Thuật toán đủ đầu vào, khởi tạo, thứ tự, dừng; không chệch | Không gộp |
+| Ứng dụng | `X03` (b) | Lượt hai bước hai hành động | $\widehat g=(-0{,}267;\,0{,}267)$ | Gộp với kiểm tra |
+| Kiểm tra | `X03`, `X03b` | Thẻ dữ kiện; phần thưởng $-3$ | $0{,}621$; phương sai $\tfrac49$ | Không gộp |
+
+Thời lượng mạch 6: `L09-M6T` 1, `L09-28` 3, `L09-28A` 2, `L09-29` 2, `L09-29b` 2, `L09-22` 1, `L09-30` 3, `L09-32` 2, `L09-31` 2, `X03` 1, `X03b` 1 phút; tổng 20. Dữ kiện truyền: thẻ dữ kiện bài toán một bước ở `L09-28`, `L09-32`, `X03`; lượt hai bước ($R_1=1$, $R_2=2$, $\gamma=0{,}9$) của `L09-29b` và `X03`; dòng "Lưu ý:" cuối `X03b` (không chệch, phương sai $\tfrac49\to\tfrac{16}9$ khi cộng hằng) là đầu vào của mạch 7 và dòng nối Bài 10.
+
+Lệch khỏi nguồn (mạch 6): nguồn tr. 39 (định lý gradient chính sách) tách thành `L09-28`, `L09-28A`, `L09-29`, `L09-22`, `L09-30`, giữ thứ tự nguồn định lý trước REINFORCE (tr. 40); thêm `L09-29b`, `X03b`; nguồn tr. 40 viết REINFORCE không có $\gamma^t$ và cập nhật theo từng bước: bài giữ $\gamma^t$ (nhất quán với $J=\mathbb E[G_0]$, Nota và Thomas 2020) và cập nhật một lần mỗi lượt (sai khác có chủ ý, ghi trong ghi chú diễn giả `L09-31`). Hình `reinforce-trajectory.svg` vẽ lại (bỏ "return", "episode"; phông chữ theo deck) và chuyển sang ghi chú bài giảng.
+
+##### Rà lại mạch 6 (bước R6): thay đổi trang và mật độ
+
+| trang | thay đổi ở R6 | âm tiết sau R6 | đáy |
+|---|---|---|---|
+| `L09-30` | "Định lý." nêu bốn giả thiết tại chỗ (G1)–(G4); "Dạng khác" thêm điều kiện lượt kết thúc do MDP, viết $q_{\pi_\theta}$; dòng "Chứng minh." chuyển vào ghi chú diễn giả (ba bước đã làm ở `L09-28`, `L09-28A`, `L09-29`) để giữ đáy | 44 | 639 px |
+| `L09-28` | "Ký hiệu:" thêm "đổi $\nabla$ với $\int$ cần giả thiết (G1)–(G4)"; bỏ "khớp tính trực tiếp" khỏi mặt trang (còn trong ghi chú diễn giả) | 28 | 670 px |
+| `L09-28A` | bỏ dòng mở "Quỹ đạo sinh bởi…" (tiêu đề và công thức đã nêu) | 24 | 681 → 596 px |
+| `L09-29` | số hiệu mệnh đề theo sau phát biểu bằng lời; nêu "$A_t\sim\pi_\theta(\cdot\mid S_t)$ khi biết $H_t$" | 23 | 649 px |
+| `L09-29b` | "nói chung có kỳ vọng khác $0$" | 31 | 557 px |
+| `L09-22` | (G4) viết "$\pi_\theta$ là softmax, hoặc Gaussian với $\sigma$ cố định; đặc trưng bị chặn"; ghi chú diễn giả bỏ câu $\mathbb E[T]$ hữu hạn | 52 | 507 px |
+| `L09-31` | "Lưu ý:" nêu trọng số $p_{\theta_{\mathrm{old}}}(\tau)/p_{\theta'}(\tau)$ | 37 | 626 px |
+| `X03`, `X03b` | (b) "Bỏ điều kiện dừng sau $A_0$"; lý do nghiêng về hành động 2 so đóng góp $1{,}2$ với $0{,}933$ | 33; 31 | 626; 545 px |
 
 ## Bản trước đợt sửa 2026-10-28
 

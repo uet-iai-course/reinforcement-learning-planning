@@ -99,6 +99,7 @@ Bảng ký hiệu đầy đủ (27 hàng, ba cột) nằm trong ghi chú bài gi
 - $\theta$ có hai vai: tham số mạng trực tuyến ở mạch 2–3, tham số chính sách ở mạch 4–7; hai vai không xuất hiện trong cùng một công thức. Ghi trong ghi chú bài giảng sau bảng ký hiệu.
 - Tọa độ vector có dấu phẩy thập phân ngăn bằng dấu chấm phẩy, ví dụ $(1{,}5;\,3)$ (kế hoạch D4).
 - $\log$ là logarit tự nhiên, dùng cả cho số ($\theta=(\log2;\,0)$ của bài toán một bước) lẫn cho $\log\pi_\theta$; ghi chú bài giảng đổi các chỗ $\ln$ cũ ở bước mạch 5 và nêu quy ước một lần trong "Quy ước đọc".
+- Giả thiết của định lý gradient chính sách đánh số (G1)–(G4) ở `L09-22` và ghi chú bài giảng Mục 6: (G1) $\rho_0$, $P$ không phụ thuộc $\theta$, Markov; (G2) khả vi, miền hỗ trợ cố định; (G3) $|R|\le R_{\max}$, $T\le T_{\max}$; (G4) đặc trưng bị chặn (softmax; Gaussian với $\sigma$ cố định).
 - Bài toán một bước hai hành động (mạch 5–6): $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$, $\theta=(\log2;\,0)$, $\pi=(\tfrac23;\,\tfrac13)$, $r(1)=3$, $r(2)=0$, $J=2$, $\nabla_\theta J=(\tfrac23;\,-\tfrac23)$; nhắc lại tại chỗ bằng hình thẻ dữ kiện `img/lec-09/one-step-card.svg` (`L09-20`, `L09-30A`, `L09-25`; mạch 6 dùng lại).
 - Phân bố chiếm dụng: $\nu^\pi_\gamma$, viết gọn $\nu^\pi$ (quyết định của điều phối viên ở R1); không dùng $d$ (số chiều của $\theta$) hay $\mu$ (trung bình Gaussian). Đã ghi vào bảng ký hiệu của ghi chú bài giảng; áp dụng ở mạch 6.
 - Bài 03 viết $\mu$ cho phân phối đầu và $p$ cho hàm động lực; bài này viết $\rho_0$, $P$. Tương ứng nêu một lần sau bảng ký hiệu của ghi chú bài giảng và trong ghi chú diễn giả `L09-01b`.
@@ -131,16 +132,16 @@ Bảng ký hiệu đầy đủ (27 hàng, ba cột) nằm trong ghi chú bài gi
 | `lec-09-topic-04` | `L09-10` |
 | `lec-09-topic-05` | `L09-11`–`L09-15` |
 | `lec-09-topic-06` | `L09-M4T`, `L09-16`, `L09-16b`, `L09-17`–`L09-19` |
-| `lec-09-topic-07` | `L09-M5T`, `L09-20`, `L09-21`; `L09-22` (mạch 6, giữ mã cũ tới bước mạch 6) |
+| `lec-09-topic-07` | `L09-M5T`, `L09-20`, `L09-21` |
 | `lec-09-topic-14` | `L09-30A` |
 | `lec-09-topic-08` | `L09-23`, `L09-24`, `L09-25`, `L09-25b` |
 | `lec-09-topic-09` | `L09-26`, `L09-27`, `X02` |
-| `lec-09-topic-10` | `L09-28`, `L09-28A`, `L09-29` |
-| `lec-09-topic-11` | `L09-30` |
-| `lec-09-topic-12` | `L09-31`, `L09-32`, `X03` |
+| `lec-09-topic-10` | `L09-M6T`, `L09-28`, `L09-28A`, `L09-29`, `L09-29b` |
+| `lec-09-topic-11` | `L09-22`, `L09-30` |
+| `lec-09-topic-12` | `L09-32`, `L09-31`, `X03`, `X03b` |
 | `lec-09-topic-13` | `L09-33` |
 
-Mạch 2–7 giữ `data-note-topic-id` cũ cho tới bước của mạch đó. Hai mã mới cho mạch 1 theo cách deck 08 làm (`lec-08-topic-13` cho tiên quyết, `lec-08-topic-17` cho mở đầu), vì trình xem từ chối mã chủ đề lặp và `lec-09-topic-01` thuộc về trang `L09-03` ở mạch 2. Tổng sau bước mạch 1: 43 `data-slide-id` duy nhất, 16 chủ đề; sau bước mạch 2: 44 (thêm `L09-M2T`); sau bước mạch 3: 46 (thêm `L09-M3T`, `L09-06b`); sau R3: 47 (thêm `L09-06c`); sau bước mạch 4: 49 (thêm `L09-M4T`, `L09-16b`), 17 chủ đề (thêm `lec-09-topic-17` Ước lượng kép; `L09-09` chuyển từ topic-04 sang topic-03 vì thành trang thuật toán). Sau bước mạch 5: 51 (thêm `L09-M5T`, `L09-25b`), 17 chủ đề; `X02` chuyển từ topic-08 sang topic-09 vì đặt sau trang Gaussian.
+Mạch 2–7 giữ `data-note-topic-id` cũ cho tới bước của mạch đó. Hai mã mới cho mạch 1 theo cách deck 08 làm (`lec-08-topic-13` cho tiên quyết, `lec-08-topic-17` cho mở đầu), vì trình xem từ chối mã chủ đề lặp và `lec-09-topic-01` thuộc về trang `L09-03` ở mạch 2. Tổng sau bước mạch 1: 43 `data-slide-id` duy nhất, 16 chủ đề; sau bước mạch 2: 44 (thêm `L09-M2T`); sau bước mạch 3: 46 (thêm `L09-M3T`, `L09-06b`); sau R3: 47 (thêm `L09-06c`); sau bước mạch 4: 49 (thêm `L09-M4T`, `L09-16b`), 17 chủ đề (thêm `lec-09-topic-17` Ước lượng kép; `L09-09` chuyển từ topic-04 sang topic-03 vì thành trang thuật toán). Sau bước mạch 5: 51 (thêm `L09-M5T`, `L09-25b`), 17 chủ đề; `X02` chuyển từ topic-08 sang topic-09 vì đặt sau trang Gaussian. Sau bước mạch 6: 54 (thêm `L09-M6T`, `L09-29b`, `X03b`); `L09-22` chuyển từ topic-07 sang topic-11 (giả thiết của định lý).
 
 ## Phân bổ thời lượng (đợt sửa 2026-10-28)
 
