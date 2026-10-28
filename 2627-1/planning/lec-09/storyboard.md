@@ -50,8 +50,8 @@ Cột "C0": vị trí `h.v` (đánh số từ 1) sau bước C0, khi chỉ di ch
 | 3 | `L09-15` | Bài tập: Double DQN và Double Q-learning | sửa | "Lời giải" thay "Đáp án" | 3.10 | 3.10 |
 | 4 | `L09-M4T` | 4. Chính sách tham số hóa | thêm | Trang tiêu đề mạch, điểm vào mạch 4 | chưa có | chưa có |
 | 4 | `L09-16` | Giới hạn của chính sách tham lam theo $Q$ | tách, sửa | Lưới gộp trạng thái theo nguồn tr. 23–25; hai mệnh đề có điều kiện; hết tràn | 4.1 | 4.1 |
-| 4 | `L09-16b` | Hành động liên tục | thêm (hoặc gộp) | Tách từ `L09-16` | chưa có | chưa có |
-| 4 | `L09-17`, `L09-18`, `L09-19` | Chính sách cho xác suất hành động; Ví dụ: chính sách trên bốn hành động; Chính sách softmax và chính sách Gaussian | sửa | Số liệu nguồn tr. 28; hết tràn `L09-19` | 4.2–4.4 | 4.2–4.4 |
+| 4 | `L09-16b` | Ví dụ: lưới gộp trạng thái, chính sách ngẫu nhiên | thêm | Tách từ `L09-16`; $h_2=h_4=4$ | chưa có | 4.3 (S26) |
+| 4 | `L09-17`, `L09-18`, `L09-19` | Phân phối hành động có tham số; Ví dụ: phân phối hành động; Chính sách softmax và chính sách Gaussian | sửa | Số liệu nguồn tr. 27–28; hết tràn `L09-19` | 4.2–4.4 | 4.4–4.6 |
 | 5 | `L09-M5T` | 5. Hàm mục tiêu và hàm điểm | thêm | Trang tiêu đề mạch, điểm vào mạch 5 | chưa có | chưa có |
 | 5 | `L09-20`, `L09-21` | Hàm mục tiêu của một chính sách; bước tăng gradient | sửa | Vấn đề và ví dụ trước định nghĩa; $\tau$, $p_\theta$ định nghĩa trước khi dùng | 5.1–5.2 | 5.1–5.2 |
 | 5 | `L09-30A` | Ước lượng gradient bằng sai phân hữu hạn | sửa, chuyển về | Trang vấn đề của hàm điểm theo nguồn tr. 33 | 5.3 | 5.3 |
@@ -253,6 +253,44 @@ Thời lượng mạch 3: `L09-M3T` 1, `L09-06b` 3, `L09-07` 3, `L09-08` 3, `L09
 | `L09-15` | "Giới hạn chung:" phân biệt xác suất hành động được học với $\epsilon_{\mathrm{exp}}$-tham lam (ghi chú diễn giả); Lời giải (4) "một ô của một bảng" | 58 | 446 px |
 
 Hành trình khái niệm cụm "Ước lượng kép và Double DQN", sau R3: bước "Hình thức" gồm `L09-06c` (mệnh đề ước lượng kép), `L09-07` (mục tiêu), `L09-09` (thuật toán); bước "Kiểm tra" gồm `X01` và `L09-10`; dòng "Ý nghĩa:" của `L09-06c` thay dòng chệch âm cũ ở `L09-10`. Thời lượng mạch 3 sau R3: `L09-06c` 2 phút; `L09-10` 1 và `L09-11` 1 (mỗi trang bớt 1 phút); tổng vẫn 30.
+
+#### Mạch 4 "Chính sách tham số hóa" (bước S24–S29)
+
+| bước | trang | tiêu đề trước → sau | quyết định và lý do | âm tiết trước → sau | dòng, đáy | ghi chú diễn giả |
+|---|---|---|---|---|---|---|
+| S24 | `L09-M4T` | — → "4. Chính sách tham số hóa" | thêm; `id="mach-4"`; dòng dẫn nhận giới hạn chung của mạch 3 (xác suất hành động không được học, cần $\max$ trên $\mathcal A$); `data-note-topic-id` `lec-09-topic-06` | — → dẫn 18, khóa 13 | 2; 328 px | khoảng 94 |
+| S25 | `L09-16` | "Chính sách trực tiếp là một lựa chọn biểu diễn" → "Giới hạn của chính sách tham lam theo $Q$" | tách, sửa; mở bằng "Nhắc lại:" giới hạn vừa nêu ở `L09-15`; ví dụ lưới gộp trạng thái vẽ lại đúng nguồn tr. 23 (`aliased-grid-policy.svg`: năm ô, hai ô xám $x=1$, X, \$, chính sách Đông ở hai ô xám, kẹt ô 4 ↔ ô 5); bỏ kết luận ngược nguồn và hai thẻ; hết tràn | 75 → 47 | 3 + hình; 846 → 634 px | khoảng 103 |
+| S26 | `L09-16b` (mới) | — → "Ví dụ: lưới gộp trạng thái, chính sách ngẫu nhiên" | thêm (tách từ `L09-16`); nguồn tr. 25: Đông/Tây xác suất $\tfrac12$; $h_2=\tfrac12\cdot2+\tfrac12(2+h_2)=4$; "Diễn giải:" so với chính sách tất định (kẹt) và chính sách theo ô ($h_2=2$); "Lưu ý:" Định lý 04.25 có điều kiện; hình mới `aliased-grid-stochastic.svg` | — → 56 | 4 + hình; 680 px | khoảng 102 |
+| S27 | `L09-17` | "Chính sách cho xác suất hành động" → "Chính sách tham số hóa" | sửa; "Nhu cầu:" nêu hai lý do (học xác suất; hành động thực như góc lái); "Định nghĩa." có tên tiếng Anh (lần dùng đầu trên mặt trang mạch 4); điều khiển, học; "lợi tức" thay "return"; bỏ "kernel", "sigma-đại số" trong ghi chú | 40 → 51 | 4; 410 px | khoảng 87 |
+| S28 | `L09-18` | "Hai họ phân phối theo miền hành động" → "Ví dụ: phân phối hành động" | sửa; số liệu nguồn tr. 27–28 (đều $\tfrac14$; phân loại $(0{,}1;0{,}2;0{,}2;0{,}5)$); `policy-distributions.svg` vẽ lại (cột có số, Gaussian có $a_{\min}$, $a_{\max}$ và đuôi ngoài miền); bỏ hai thẻ | 25 → 27 | 2 + hình; 546 px | khoảng 88 |
+| S29 | `L09-19` | "Hai giao diện chính sách" → "Chính sách softmax và chính sách Gaussian" | sửa; bảng ba hàng (miền, công thức $\pi_\theta$, chuẩn hóa); "Câu hỏi:"/"Lời giải:" có lý do; dòng cuối là đầu ra cho mạch 5 ($J(\theta)$); bỏ "Đáp án"; hết tràn | 30 → 49 | bảng 3 hàng + 3 dòng; 792 → 596 px | khoảng 85 |
+
+##### Hành trình khái niệm, mạch 4, cụm "Chính sách tham số hóa" (15 phút)
+
+| bước | mã trang | dữ kiện đầu vào | sản phẩm học tập | gộp / không áp dụng |
+|---|---|---|---|---|
+| Vấn đề | `L09-M4T`, `L09-16` | Giới hạn chung của mạch 3; lưới năm ô | Mọi chính sách tất định theo đặc trưng có ô kẹt | Ví dụ dẫn nhập đặt cùng vấn đề |
+| Trực quan | `L09-16b` (ghi chú diễn giả), ghi chú bài giảng | Ngẫu nhiên tránh kẹt, không biết ô | — | Gộp với ví dụ |
+| Ví dụ | `L09-16b` | Đông/Tây $\tfrac12$ | $h_2=h_4=4$; theo ô $h_2=2$ | Không gộp |
+| Hình thức | `L09-17` (Định nghĩa), `L09-19` (hai họ) | Chính sách Markov dừng (Bài 03) | $\pi_\theta$ khả vi; softmax, Gaussian | Không gộp |
+| Ứng dụng | `L09-18` | Bốn hành động; góc lái | Phân phối phân loại, Gaussian, miền bị chặn | Ví dụ số của nguồn đặt trước bảng hình thức của hai họ |
+| Kiểm tra | `L09-19` (Câu hỏi, Lời giải) | Góc lái trong một khoảng | Chọn Gaussian, cắt hoặc biến đổi | Gộp với hình thức |
+
+Thời lượng mạch 4: `L09-M4T` 1, `L09-16` 3, `L09-16b` 3, `L09-17` 3, `L09-18` 2, `L09-19` 3 phút; tổng 15. Dữ kiện truyền: dòng cuối `L09-19` ("Còn thiếu: $J(\theta)$") là đầu vào của `L09-M5T`; ví dụ softmax hai hành động $\theta=(\ln2;0)$ của ghi chú bài giảng là bài toán một bước dùng ở mạch 5–6.
+
+Lệch khỏi nguồn (mạch 4): nguồn tr. 22 (học tăng cường dựa trên giá trị, tham số hóa tuyến tính, $\epsilon$-tham lam) gộp vào "Nhắc lại:" của `L09-16`; tr. 24 (câu hỏi "chuyện gì xảy ra nếu có hai hành động tốt gần nhau?") chuyển thành phép tính tất định của `L09-16`; tr. 29 (softmax theo khoảng cách tới vật cản) chỉ nêu trong ghi chú bài giảng; tr. 31 (leo đồi, giải thuật di truyền) để cho mạch 5.
+
+
+##### Rà lại mạch 4 (bước R4): thay đổi trang và mật độ
+
+| trang | thay đổi ở R4 | âm tiết sau R4 | đáy |
+|---|---|---|---|
+| `L09-16` | đặc trưng $x(s)$ phân biệt ô 1, 3, 5, gộp ô 2 và ô 4 ($x=\mathrm g$); mô hình chuyển trong chú thích hình (đi một ô, tường đứng yên, X là ô kẹt); ghi chú diễn giả: hai trong năm ô, Bắc/Nam, sai khác có chủ ý | 47 | 678 px |
+| `L09-16b` | dữ kiện nêu ô 1 Đông, ô 3 Nam, ô 5 Tây; "Diễn giải:" tiêu chí trung bình trên năm ô ($3{,}8$ bước); "Lưu ý:" đủ điều kiện (chính sách theo ô); nguồn ghi phép tính bổ sung | 51 | 637 px |
+| `L09-17` | tiêu đề "Phân phối hành động có tham số" (khác tên mạch) | 51 | 410 px |
+| `L09-19` | dòng cuối dùng nhãn "Lưu ý:" | 51 | 598 px |
+
+Sai khác có chủ ý so với nguồn (mạch 4): nguồn tr. 23 viết $x(s,a)=1$ ở ô xám, $0$ nơi khác; đặc trưng đó gộp cả ba ô trắng nên lớp chính sách tất định theo đặc trưng còn hẹp hơn, và chính sách ô trắng dùng trong ví dụ không thuộc lớp. Bài dùng đặc trưng chỉ gộp hai ô xám để giữ đúng kết luận tr. 24–25. Mô hình chuyển (đi một ô, tường đứng yên, X là ô kẹt) và mọi số bước, giá trị là phần bổ sung; nguồn chỉ cho xác suất $0{,}5$.
 
 ## Bản trước đợt sửa 2026-10-28
 

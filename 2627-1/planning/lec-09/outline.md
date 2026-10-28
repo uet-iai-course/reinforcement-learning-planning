@@ -128,7 +128,7 @@ Bảng ký hiệu đầy đủ (27 hàng, ba cột) nằm trong ghi chú bài gi
 | `lec-09-topic-03` | `L09-07`, `L09-08`, `L09-09`, `X01` |
 | `lec-09-topic-04` | `L09-10` |
 | `lec-09-topic-05` | `L09-11`–`L09-15` |
-| `lec-09-topic-06` | `L09-16`–`L09-19` |
+| `lec-09-topic-06` | `L09-M4T`, `L09-16`, `L09-16b`, `L09-17`–`L09-19` |
 | `lec-09-topic-07` | `L09-20`–`L09-22` |
 | `lec-09-topic-08` | `L09-23`–`L09-25`, `X02` |
 | `lec-09-topic-09` | `L09-26`, `L09-27` |
@@ -138,7 +138,7 @@ Bảng ký hiệu đầy đủ (27 hàng, ba cột) nằm trong ghi chú bài gi
 | `lec-09-topic-13` | `L09-33` |
 | `lec-09-topic-14` | `L09-30A` |
 
-Mạch 2–7 giữ `data-note-topic-id` cũ cho tới bước của mạch đó. Hai mã mới cho mạch 1 theo cách deck 08 làm (`lec-08-topic-13` cho tiên quyết, `lec-08-topic-17` cho mở đầu), vì trình xem từ chối mã chủ đề lặp và `lec-09-topic-01` thuộc về trang `L09-03` ở mạch 2. Tổng sau bước mạch 1: 43 `data-slide-id` duy nhất, 16 chủ đề; sau bước mạch 2: 44 (thêm `L09-M2T`); sau bước mạch 3: 46 (thêm `L09-M3T`, `L09-06b`); sau R3: 47 (thêm `L09-06c`), 17 chủ đề (thêm `lec-09-topic-17` Ước lượng kép; `L09-09` chuyển từ topic-04 sang topic-03 vì thành trang thuật toán).
+Mạch 2–7 giữ `data-note-topic-id` cũ cho tới bước của mạch đó. Hai mã mới cho mạch 1 theo cách deck 08 làm (`lec-08-topic-13` cho tiên quyết, `lec-08-topic-17` cho mở đầu), vì trình xem từ chối mã chủ đề lặp và `lec-09-topic-01` thuộc về trang `L09-03` ở mạch 2. Tổng sau bước mạch 1: 43 `data-slide-id` duy nhất, 16 chủ đề; sau bước mạch 2: 44 (thêm `L09-M2T`); sau bước mạch 3: 46 (thêm `L09-M3T`, `L09-06b`); sau R3: 47 (thêm `L09-06c`); sau bước mạch 4: 49 (thêm `L09-M4T`, `L09-16b`), 17 chủ đề (thêm `lec-09-topic-17` Ước lượng kép; `L09-09` chuyển từ topic-04 sang topic-03 vì thành trang thuật toán).
 
 ## Phân bổ thời lượng (đợt sửa 2026-10-28)
 
@@ -146,7 +146,7 @@ $8+15+30+15+22+20+10=120$ phút trên lớp; 30 phút chữa bài ngoài 120 ph�
 
 ## Tài sản SVG
 
-`central-problem.svg` (mới ở bước mạch 1, dùng trong ghi chú bài giảng, Mục 1); `cartpole-overestimate.svg` (mới ở bước mạch 2, `L09-03` và Ví dụ 09.1); `maximization-bias.svg` vẽ lại ở bước mạch 2 (`L09-05`, Ví dụ 09.2); `dqn-stability.svg` đã xóa ở bước R2 vì không còn trang nào dùng; mạch 3: `double-estimator.svg`, `ddqn-example.svg`, `double-q-example.svg` (mới), `dqn-vs-ddqn.svg`, `double-q-cross-update.svg` (vẽ lại); `dqn-vs-ddqn.svg`, `double-q-cross-update.svg`, `aliased-grid-policy.svg`, `policy-distributions.svg`, `softmax-score.svg`, `reinforce-trajectory.svg` (bản trước, sửa ở bước của trang dùng).
+`central-problem.svg` (mới ở bước mạch 1, dùng trong ghi chú bài giảng, Mục 1); `cartpole-overestimate.svg` (mới ở bước mạch 2, `L09-03` và Ví dụ 09.1); `maximization-bias.svg` vẽ lại ở bước mạch 2 (`L09-05`, Ví dụ 09.2); `dqn-stability.svg` đã xóa ở bước R2 vì không còn trang nào dùng; mạch 4: `aliased-grid-stochastic.svg` (mới), `aliased-grid-policy.svg`, `policy-distributions.svg` (vẽ lại theo nguồn tr. 23–28); mạch 3: `double-estimator.svg`, `ddqn-example.svg`, `double-q-example.svg` (mới), `dqn-vs-ddqn.svg`, `double-q-cross-update.svg` (vẽ lại); `dqn-vs-ddqn.svg`, `double-q-cross-update.svg`, `aliased-grid-policy.svg`, `policy-distributions.svg`, `softmax-score.svg`, `reinforce-trajectory.svg` (bản trước, sửa ở bước của trang dùng).
 
 ## Bản trước đợt sửa 2026-10-28
 

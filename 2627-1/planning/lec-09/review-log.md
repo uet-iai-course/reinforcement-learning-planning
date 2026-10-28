@@ -556,3 +556,58 @@ Báo cáo: `review/R3-recheck.md` trong scratchpad phiên. Kết quả rà: 0 ch
 | nhẹ | ghi chú bài giảng sau Ví dụ 09.5; đầu "Ước lượng kép" | Bước nhảy lập luận; câu siêu văn bản | Viết lại; xóa | đã sửa ở R3 | chấp nhận |
 
 Kiểm sau R3 (Playwright Chromium, `http://127.0.0.1:8799`, 1600×900 và 390×844): mười ba trang mạch 3, 0 lỗi console hoặc trang, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, không trang nào tràn; đáy `L09-06b` 654, `L09-06c` 447, `L09-09` 614, `L09-10` 316, `L09-14` 654, `L09-15` 446 px; đã xem ảnh 1600×900 của `L09-06b`, `L09-06c`, `L09-09`, `L09-14`, `L09-15`. 47 `data-slide-id` duy nhất; `#/3` mở `L09-M3T`. Viewer: 37/37 khối, 954 biểu thức KaTeX, 0 `.katex-error`. Ghi chú bài giảng 12 803 từ. `git diff --check` sạch. `no-ai-slop` (Edit) trên câu mới của R3: đạt. Trạng thái: chờ điều phối viên duyệt.
+
+### Sửa tham chiếu trong bài thực hành Bài 08 (mục 7 của R3)
+
+`materials/lec-08/thuc-hanh-dqn-cartpole-lunarlander-flappybird.ipynb`: ba dòng `source` của ba ô Markdown (mục 15.2, ô 71 và 73; mục tài liệu tham khảo, ô 96) đổi tên mục cũ của ghi chú Bài 09 ("Sai lệch cực đại và ví dụ Rademacher", "Đích Double DQN", ví dụ "Đối chiếu hai đích") sang tên và số hiện hành (Mục 2, Định nghĩa 09.1, Mệnh đề 09.2; Mục 3, Thuật toán 09.5; Ví dụ 09.6 "Một mẫu chuyển, hai mục tiêu"), bỏ "đích". Ghi bằng `json` (`indent=1`, `ensure_ascii=False`, kết thúc bằng xuống dòng; ghi lại không đổi gì cho đúng từng byte tệp gốc trước khi sửa); `git diff --stat` cho 3 dòng thêm, 3 dòng bớt, không ô mã hay output nào đổi. Trạng thái: chờ điều phối viên duyệt; commit riêng `fix(materials-08)`.
+
+### Bước mạch 4 (S24–S29, biên tập viên)
+
+Căn cứ: kế hoạch D1 mạch 4, D4 (sửa `L09-16`, `aliased-grid-policy.svg`, ghi chú bài giảng, `note-for-author.md`); CT P17–P20; SV (`L09-16` chặn bàn giao, `L09-19` tràn, nhãn SVG); TH (nghiêm trọng về gộp trạng thái); R3 mục 8. Nguồn tr. 22–29 đã xem bằng `pdftoppm` (ảnh trong scratchpad, không nhúng). Mạch 3 đã commit (`b30cc10`, `39fd5c1`).
+
+| bước | trang | thay đổi | âm tiết trước → sau | `no-ai-slop` (Edit, tự kiểm theo `eval.md`) | trạng thái |
+|---|---|---|---|---|---|
+| S24 | `L09-M4T` (mới) | Trang tiêu đề mạch 4 | — → dẫn 18, khóa 13 | đạt | chờ điều phối viên duyệt |
+| S25 | `L09-16` | Tách; trang vấn đề với lưới nguồn, chính sách tất định kẹt; hết tràn (846 → 634 px) | 75 → 47 | bỏ câu khẩu hiệu SVG "Trộn hành động không khôi phục…", câu phủ định "không phải hệ quả của Double DQN"; đạt | chờ điều phối viên duyệt |
+| S26 | `L09-16b` (mới) | Ví dụ chính sách ngẫu nhiên $\tfrac12$, $h_2=4$; "Lưu ý:" Định lý 04.25 có điều kiện | — → 56 | đạt | chờ điều phối viên duyệt |
+| S27 | `L09-17` | "Chính sách tham số hóa": Nhu cầu hai lý do, Định nghĩa | 40 → 51 | bỏ "kernel", "Không cần đưa sigma-đại số lên mặt trang" (chỉ dẫn), "return"; đạt | chờ điều phối viên duyệt |
+| S28 | `L09-18` | "Ví dụ: phân phối hành động" với số liệu nguồn; hình vẽ lại | 25 → 27 | đạt | chờ điều phối viên duyệt |
+| S29 | `L09-19` | Bảng softmax/Gaussian; "Câu hỏi:", "Lời giải:"; dòng đầu ra cho mạch 5; hết tràn (792 → 596 px) | 30 → 49 | bỏ "giao diện", "Đáp án"; đạt | chờ điều phối viên duyệt |
+
+Số liệu đã tính lại: lưới năm ô, chính sách tất định Đông ở hai ô xám: $h_3=1$, $h_2=2$, $h_1=3$, $h_4=h_5=\infty$; Tây: đối xứng. Chính sách ngẫu nhiên với xác suất Đông $p$: $h_2=p\cdot2+(1-p)(2+h_2)\Rightarrow h_2=2/p$, $h_4=2/(1-p)$; trung bình $1/(p(1-p))$ nhỏ nhất tại $p=\tfrac12$: $h_2=h_4=4$, $h_1=h_5=5$; theo ô $h_2=h_4=2$. Bài tập 09.3: $p=0{,}8$ cho $2{,}5$, $10$, trung bình $6{,}25$. Softmax hai hành động $\theta=(\ln2;0)$: $(\tfrac23;\tfrac13)$; phân loại $(0{,}1;0{,}2;0{,}2;0{,}5)$ với $\theta=\ln$ các xác suất. Bộ số chọn theo nguồn: số bước kỳ vọng (phần thưởng không được nguồn cho); bộ số của TH (hành lang ba ô, $\gamma=0{,}9$) là một môi trường khác nguồn nên không dùng.
+
+SVG: `aliased-grid-policy.svg` vẽ lại theo nguồn tr. 23 (lưới hai hàng năm cột, hai ô xám ghi $x=1$, X dưới ô 1 và ô 5, \$ dưới ô 3; chính sách tất định Đông ở hai ô xám, vòng kẹt nét đứt); `aliased-grid-stochastic.svg` mới (Đông/Tây $\tfrac12$ ở ô xám, $h_2=h_4=4$); `policy-distributions.svg` vẽ lại (cột $0{,}1;0{,}2;0{,}2;0{,}5$ có số; Gaussian với $\mu$, $a_{\min}$, $a_{\max}$, đuôi ngoài miền tô màu và ghi chữ). Phông không chân; tín hiệu không chỉ dựa vào màu (nét đứt, chữ ghi).
+
+Ghi chú bài giảng, `## 4. Chính sách tham số hóa` viết lại: đoạn mở (giới hạn của Mục 3, câu hỏi nghiên cứu trả lời ngay trong mục); "Giới hạn của chính sách tham lam theo $Q$" (mô tả lưới nguồn đầy đủ, hình, Ví dụ 09.8 tất định với cả hai hướng, trực quan, hình, Ví dụ 09.9 với $p$ tổng quát và $p=\tfrac12$ tối ưu, Nhận xét 09.9 đối chiếu Định lý 04.25 có điều kiện, hành động liên tục); "Chính sách tham số hóa" (Định nghĩa 09.10, hai vai điều khiển và học, $\theta$ đổi vai, mật độ; Ví dụ 09.10 bốn hành động với $\theta$ cho phân phối phân loại; hình; Định nghĩa 09.11 softmax kèm ví dụ $\theta=(\ln2;0)$; Định nghĩa 09.12 Gaussian, miền bị chặn; bảng so sánh; Nhận xét 09.13 bốn nhầm lẫn, gồm "chính sách ngẫu nhiên không khôi phục thông tin trạng thái"; "Trong thực hành."; Bài tập 09.3 có gợi ý và lời giải; đoạn kết nối sang Mục 5). Kiến thức tiên quyết thêm nhóm "Chính sách tối ưu tất định (Định lý 04.25)". Giáo trình tham khảo: Sutton và Barto (2018), §13.1 (Ví dụ 13.1 hành lang có hành động đảo, cùng kết luận: chính sách gần đúng tốt nhất có thể ngẫu nhiên), §13.7. Độ dài 15 210 từ. `no-ai-slop`: đạt (một câu hỏi mở mục được trả lời ngay trong đoạn, theo quy định cho ghi chú bài giảng).
+
+`note-for-author.md`: dòng ghi ngược kết luận nguồn ("Không dùng ví dụ gộp trạng thái để tuyên bố ngẫu nhiên hóa tăng return…") thay bằng kết luận đúng nguồn kèm đối chiếu có điều kiện với Định lý 04.25; bỏ "kernel".
+
+Kiểm sau bước mạch 4 (Playwright Chromium, `http://127.0.0.1:8799`, 1600×900 và 390×844): `L09-15`, sáu trang mạch 4, `L09-20`: 0 lỗi console hoặc trang, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, không trang nào tràn; đáy `L09-M4T` 328, `L09-16` 634, `L09-16b` 680, `L09-17` 410, `L09-18` 546, `L09-19` 596 px; đã xem ảnh 1600×900 của sáu trang và ba SVG. 49 `data-slide-id` duy nhất; `#/4` và mục 4 của `L09-02b` mở `L09-M4T`. Viewer: 48/48 khối, 1 093 biểu thức KaTeX, 0 `.katex-error`. `git diff --check` sạch. Tràn còn lại (mạch 5–6, có từ C0): `L09-24` 787 px và tràn phải 1 310 px, `L09-30` tràn phải 1 282 px, `L09-31` 748 px. Trạng thái: chờ điều phối viên duyệt.
+
+### Rà lại mạch 4 (bước R4)
+
+| vai | loại tác tử | mô hình | mức suy luận | ghi tệp |
+|---|---|---|---|---|
+| Rà lại mạch 4 (toán–RL, mạch, sinh viên–mật độ, `no-ai-slop` Detect) | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Biên tập R4 | Agent `general-purpose` (biên tập viên của đợt sửa) | `claude-opus-5-5` | high | có |
+
+Báo cáo: `review/R4-recheck.md` trong scratchpad phiên. Kết quả rà: 0 chặn bàn giao, 1 nghiêm trọng, 3 trung bình, 8 nhẹ; điều phối viên duyệt mạch 4 (`check.py` hai cỡ, ảnh `L09-16`, `L09-16b`, đối chiếu nguồn tr. 23, tự tính $h_2=4$, $h_2=2$) và chấp nhận toàn bộ, kèm các chốt ở cột "quyết định".
+
+| mức độ | trang chiếu | vấn đề | đề xuất sửa | trạng thái | quyết định |
+|---|---|---|---|---|---|
+| nghiêm trọng | `L09-16`, ghi chú diễn giả; ghi chú bài giảng Ví dụ 09.8 | Lớp chính sách "theo $x$" không xác định đúng: với $x\in\{0,1\}$, ba ô trắng cũng bị gộp, nên chính sách ô trắng của Ví dụ 09.9 không thuộc lớp | Đặc trưng phân biệt ô 1, 3, 5, chỉ gộp ô 2 và ô 4 | đã sửa ở R4: mặt trang "$x(s)$ phân biệt ô 1, 3, 5, gộp ô 2 và ô 4 ($x=\mathrm g$)"; hai SVG ghi "x = g", chú thích hình `L09-16` ghi ba ô trắng có đặc trưng riêng; ghi chú bài giảng định nghĩa đặc trưng bốn giá trị và đoạn "sai khác có chủ ý" | chấp nhận (cùng một định nghĩa ở mặt trang, hình, ghi chú bài giảng) |
+| trung bình | `L09-16b`; ghi chú bài giảng Ví dụ 09.9, Nhận xét 09.9, đoạn kết mục; `note-for-author.md` | (a) Tiêu chí "tốt hơn" không nêu; (b) mô hình phần thưởng của Nhận xét 09.9 không nhất quán với X kết thúc lượt | Trung bình trên ô xuất phát; X là ô kẹt; công thức giá trị | đã sửa ở R4: "Diễn giải:" xuất phát đều trên năm ô, $3{,}8$ bước; ghi chú bài giảng nói rõ từ riêng ô 2 chính sách tất định Đông chỉ cần 2 bước; đoạn "Theo lợi tức chiết khấu" với $V_2=-(1+\gamma)/(1-(1-p)\gamma^2)$, $V_4=-(1+\gamma)/(1-p\gamma^2)$, cực đại tổng tại $p=\tfrac12$, $\gamma=0{,}9$: $-3{,}19$ so với $-10$; Nhận xét 09.9 dùng X là ô kẹt, chính sách theo ô cho $V_2=V_4=-(1+\gamma)$ | chấp nhận |
+| trung bình | `L09-16`, `L09-16b` | Mô hình chuyển không có trên mặt trang | Nêu ngắn gọn | đã sửa ở R4: chú thích hình `L09-16` (đi một ô, gặp tường đứng yên, X là ô kẹt, hàng dưới chỉ vào được từ ô 1, 3, 5); dữ kiện `L09-16b` nêu ô 1 Đông, ô 3 Nam, ô 5 Tây; ghi chú diễn giả `L09-16` nêu tập hành động; `alt` sửa theo | chấp nhận (mô hình chuyển ở chú thích hình để giữ trần) |
+| trung bình | `L09-20`, `L09-21` | Chưa có `L09-M5T`; "episodic", "gần như chắc chắn", $\tau$ trước định nghĩa, "return", ghi chú trái D1 | Sửa ở bước mạch 5 | mở (bước mạch 5) | chấp nhận (chuyển bước mạch 5) |
+| nhẹ | `L09-16b` "Lưu ý:" | Thiếu điều kiện; "xác định" (Bài 04) và "tất định" chưa nối | "chính sách theo ô"; ghi tương ứng | đã sửa ở R4: "MDP hữu hạn, $\gamma<1$, chính sách theo ô: có tối ưu tất định (Định lý 04.25)"; chọn "tất định", ghi "Bài 04 gọi là chính sách xác định" ở nhóm tiên quyết của ghi chú bài giảng (lần dùng đầu) và ghi chú diễn giả `L09-16b` | chấp nhận ("tất định") |
+| nhẹ | `L09-16` ghi chú diễn giả | "một nửa số ô" sai; bỏ qua Bắc/Nam | "hai trong năm ô" | đã sửa ở R4 | chấp nhận |
+| nhẹ | ghi chú bài giảng sau Định nghĩa 09.12 | Câu về phép cắt quá chặt | Cắt: coi là một phần môi trường; $\tanh$: thừa số $1/(1-a^2)$ | đã sửa ở R4 | chấp nhận |
+| nhẹ | `L09-19` | Nhãn "Còn thiếu:" không được phép | "Lưu ý:" | đã sửa ở R4 | chấp nhận |
+| nhẹ | `L09-17` | Tiêu đề trùng tên mạch | "Phân phối hành động có tham số" | đã sửa ở R4 | chấp nhận |
+| nhẹ | nguồn ghi chú diễn giả `L09-16b`; Ví dụ 09.9 | Phép tính số bước là bổ sung | Ghi rõ | đã sửa ở R4 (dòng "Nguồn:" và đoạn sai khác có chủ ý trong ghi chú bài giảng) | chấp nhận |
+| nhẹ | `storyboard.md` hàng `L09-16b` | Hàng còn ghi kế hoạch cũ | Sửa hàng | đã sửa ở R4 | chấp nhận |
+| nhẹ | `note-for-author.md` | Mục cũ trái quyết định hiện hành ("online", "target", "đích", argmax tại trạng thái kết thúc, $Q^\pi$) | Dọn | đã sửa ở R4 (dòng Double DQN, $\operatorname{sg}$ và mặt nạ, Double Q-learning, mạng trực tuyến/mục tiêu, gộp trạng thái, $q_\pi$); dòng "cập nhật online" của REINFORCE sửa ở bước mạch 6 | chấp nhận |
+
+Sai khác có chủ ý so với nguồn: nguồn tr. 23 viết đặc trưng $x(s,a)=1$ nếu $s$ là ô xám, $0$ nơi khác; đặc trưng đó gộp cả ba ô trắng nên lớp chính sách tất định theo đặc trưng còn hẹp hơn. Bài dùng đặc trưng chỉ gộp hai ô xám để giữ đúng kết luận tr. 24–25; mô hình chuyển, ô kẹt X, số bước và giá trị chiết khấu là phần bổ sung (nguồn chỉ cho xác suất $0{,}5$).
+
+Kiểm sau R4 (Playwright Chromium, `http://127.0.0.1:8799`, 1600×900 và 390×844): sáu trang mạch 4, 0 lỗi console hoặc trang, 0 `.katex-error`, không cuộn ngang, không trang nào tràn; đáy `L09-M4T` 328, `L09-16` 678, `L09-16b` 637, `L09-17` 410, `L09-18` 546, `L09-19` 598 px; `L09-16b` 51 âm tiết; đã xem ảnh 1600×900 của `L09-16`, `L09-16b`. Viewer: 1 114 biểu thức KaTeX, 0 `.katex-error`. Ghi chú bài giảng 15 608 từ. `git diff --check` sạch. `no-ai-slop` (Edit) trên câu mới của R4: đạt. Trạng thái: chờ điều phối viên duyệt.

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 200" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Lưới gộp trạng thái, chính sách ngẫu nhiên</title>
+<desc id="d">Cùng lưới hai hàng năm cột. Ở ô 2 và ô 4 màu xám, hai mũi tên Đông và Tây, mỗi mũi tên xác suất một phần hai. Ô 1 sang Đông, ô 3 xuống ô đích, ô 5 sang Tây. Ghi chú bên phải: số bước kỳ vọng từ ô 2 và từ ô 4 tới ô đích bằng 4.</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#2F3E7A"/></marker><marker id="ar2" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#B15A2B"/></marker></defs>
+<rect x="205" y="30" width="110" height="80" fill="#FFFFFF" stroke="#333" stroke-width="2"/>
+<text x="213" y="50" font-size="16" fill="#424954">ô 1</text>
+<rect x="205" y="110" width="110" height="80" fill="#FFFFFF" stroke="#333" stroke-width="2"/>
+<rect x="315" y="30" width="110" height="80" fill="#D0D0D0" stroke="#333" stroke-width="2"/>
+<text x="323" y="50" font-size="16" fill="#424954">ô 2</text>
+<rect x="315" y="110" width="110" height="80" fill="#FFFFFF" stroke="#333" stroke-width="2"/>
+<rect x="425" y="30" width="110" height="80" fill="#FFFFFF" stroke="#333" stroke-width="2"/>
+<text x="433" y="50" font-size="16" fill="#424954">ô 3</text>
+<rect x="425" y="110" width="110" height="80" fill="#FFFFFF" stroke="#333" stroke-width="2"/>
+<rect x="535" y="30" width="110" height="80" fill="#D0D0D0" stroke="#333" stroke-width="2"/>
+<text x="543" y="50" font-size="16" fill="#424954">ô 4</text>
+<rect x="535" y="110" width="110" height="80" fill="#FFFFFF" stroke="#333" stroke-width="2"/>
+<rect x="645" y="30" width="110" height="80" fill="#FFFFFF" stroke="#333" stroke-width="2"/>
+<text x="653" y="50" font-size="16" fill="#424954">ô 5</text>
+<rect x="645" y="110" width="110" height="80" fill="#FFFFFF" stroke="#333" stroke-width="2"/>
+<text x="260.0" y="162" font-size="30" font-weight="700" text-anchor="middle">X</text>
+<text x="480.0" y="162" font-size="30" font-weight="700" text-anchor="middle">$</text>
+<text x="700.0" y="162" font-size="30" font-weight="700" text-anchor="middle">X</text>
+<line x1="235" y1="78.0" x2="297" y2="78.0" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ar)"/>
+<line x1="480.0" y1="60" x2="480.0" y2="124" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ar)"/>
+<line x1="725" y1="78.0" x2="663" y2="78.0" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ar)"/>
+<text x="415" y="50" font-size="15" text-anchor="end" fill="#424954">x = g</text>
+<text x="635" y="50" font-size="15" text-anchor="end" fill="#424954">x = g</text>
+<line x1="345" y1="66.0" x2="407" y2="66.0" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ar)"/>
+<line x1="395" y1="92.0" x2="333" y2="92.0" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ar)"/>
+
+<line x1="565" y1="66.0" x2="627" y2="66.0" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ar)"/>
+<line x1="615" y1="92.0" x2="553" y2="92.0" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ar)"/>
+
+<text x="191" y="78.0" font-size="21" text-anchor="end">Đông, Tây</text><text x="191" y="104.0" font-size="21" text-anchor="end">mỗi hướng ½</text>
+<text x="769" y="78.0" font-size="21">h₂ = h₄ = 4</text>
+
+<text x="327" y="84" font-size="16">½</text><text x="413" y="110" font-size="16" text-anchor="end">½</text><text x="547" y="84" font-size="16">½</text><text x="633" y="110" font-size="16" text-anchor="end">½</text>
+</svg>
