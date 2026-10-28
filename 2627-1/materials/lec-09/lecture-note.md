@@ -25,6 +25,7 @@ Số hiệu `08.k` chỉ ghi chú Bài 08 và `03.k` chỉ ghi chú Bài 03; m�
 - **Phạm vi bảo đảm của DQN** (Nhận xét 08.19, 08.21). Bộ nhớ phát lại giảm tương quan giữa các mẫu liền nhau, và mạng mục tiêu làm chậm sự thay đổi của mục tiêu. DQN vẫn có đủ xấp xỉ hàm, bootstrap và dữ liệu khác chính sách, nên không có bảo đảm hội tụ tổng quát.
 - **Hạ gradient** (Định nghĩa 08.16). Hạ gradient ngẫu nhiên cập nhật $\theta\leftarrow\theta-\eta\,g$ với $g$ là gradient của hàm mất mát trên một mini-batch và $\eta>0$. Khi cần cực đại hóa một hàm, ta đi theo chiều ngược lại, $\theta\leftarrow\theta+\alpha\,\widehat g$; dạng này xuất hiện ở Mục 5.
 - **Chính sách, lợi tức và giá trị hành động** (Định nghĩa 03.8, 03.9, 03.13, 03.16). Chính sách $\pi$ gán cho mỗi trạng thái $s$ một phân phối $\pi(\cdot\mid s)$ trên $\mathcal A$; chính sách tất định là trường hợp dồn toàn bộ xác suất vào một hành động. Trong nhiệm vụ có kết thúc, lượt (episode) dừng tại bước ngẫu nhiên $T$, và lợi tức (return) từ bước $t$ là $G_t=\sum_{k=t}^{T-1}\gamma^{\,k-t}R_{k+1}$ với quy ước $G_T=0$; Bài 03 viết cùng tổng dưới dạng $\sum_{k=t+1}^{T}\gamma^{\,k-t-1}R_k$. Giá trị hành động $q_\pi(s,a)=\mathbb E_\pi[G_0\mid S_0=s,A_0=a]$ là lợi tức kỳ vọng khi thực hiện $a$ tại $s$ rồi theo $\pi$. Giá trị hành động tối ưu là $q_*(s,a)=\max_\pi q_\pi(s,a)$ (Định nghĩa 04.19); mục tiêu DQN là ước lượng mẫu của vế phải phương trình Bellman tối ưu cho $q_*$. Với chính sách Markov dừng, $\mathbb E_\pi[G_t\mid S_t=s,A_t=a]=q_\pi(s,a)$ ở mọi bước $t$ mà sự kiện $\{S_t=s,A_t=a\}$ có xác suất dương (Bổ đề 03.20(d)).
+- **Chính sách tối ưu tất định** (Định lý 04.25). Trên một MDP hữu hạn có tính Markov, phần thưởng bị chặn và $0\le\gamma<1$, có một chính sách Markov dừng, tất định, tối ưu trên mọi chính sách (Bài 04 gọi là chính sách xác định); chính sách tham lam theo $q_*$ là một chính sách như vậy. Mục 4 dùng kết quả này để đối chiếu với trường hợp chính sách chỉ được phụ thuộc vào đặc trưng.
 - **Bất đẳng thức Jensen** (kiến thức xác suất tiên quyết; ghi chú Bài 07 dùng dạng $(\sum_ip_iy_i)^2\le\sum_ip_iy_i^2$). Nếu $f:\mathbb R^m\to\mathbb R$ lồi và vector ngẫu nhiên $X$ có $\mathbb E\lVert X\rVert<\infty$, thì $f(\mathbb E[X])\le\mathbb E[f(X)]$. Ở Mục 2, bất đẳng thức này được áp dụng cho hàm lồi $f(x)=\max_ax_a$.
 - **Kỳ vọng có điều kiện** (kiến thức xác suất tiên quyết; ghi chú Bài 07 nhắc tính chất tháp). $\mathbb E\bigl[\mathbb E[X\mid Y]\bigr]=\mathbb E[X]$, và nếu $W$ là một hàm của $Y$ thì $\mathbb E[WX\mid Y]=W\,\mathbb E[X\mid Y]$ khi các kỳ vọng tồn tại. Hai tính chất này được dùng ở Mục 6, với $Y$ là lịch sử của một lượt.
 
@@ -530,23 +531,144 @@ Như vậy, Mệnh đề 09.4 chứng minh rằng chọn bằng một bản và 
 
 ## 4. Chính sách tham số hóa
 
+Mục 3 kết thúc ở một giới hạn chung của DQN, Double DQN và Double Q-learning: hành động được chọn bằng $\arg\max_aQ(s,a)$, nên xác suất chọn hành động không được học, và mỗi bước cần một phép cực đại trên $\mathcal A$. Chính sách tham lam là tất định; hành vi $\epsilon_{\mathrm{exp}}$-tham lam chỉ thêm một mức ngẫu nhiên cố định. Giới hạn này có hại không, khi Định lý 04.25 đã bảo đảm một chính sách tối ưu tất định? Chúng ta trả lời bằng hai tình huống: một lưới mà đặc trưng gộp hai trạng thái cần hai hành động khác nhau, và hành động là một số thực. Cả hai dẫn tới việc học trực tiếp một phân phối hành động có tham số.
+
 <!-- note-topic-id: lec-09-topic-06 -->
-### Chính sách trực tiếp là phân phối hành động
+### Giới hạn của chính sách tham lam theo $Q$
 
-**Vấn đề của học giá trị.** $Q_\theta$ kết hợp với argmax quá tất định: argmax chỉ trả một hành động, khó dùng trực tiếp cho hành động liên tục, và trong biểu diễn đặc trưng kém (ví dụ ô xám che hai hướng E và W đều tối ưu), hàm Q buộc chọn một trong hai và đều lệch với phương án tối ưu (tr. 22–25).
+Bài giảng gốc (trang 23–25) dùng một lưới nhỏ. Hàng trên có năm ô, đánh số 1 đến 5 từ trái sang phải; hàng dưới có ô X dưới ô 1 và ô 5, ô đích \$ dưới ô 3. Tác tử ở hàng trên chọn Đông, Tây hoặc Nam; mỗi bước đi một ô, gặp tường thì đứng yên. Đi Nam từ ô 3 vào ô đích và kết thúc lượt; đi Nam từ ô 1 hoặc ô 5 vào ô X, một ô kẹt mà từ đó không bao giờ tới đích; đi Nam từ ô 2, ô 4 thì đứng yên. Tác tử quan sát đặc trưng $x(s)$ có bốn giá trị: ô 1, ô 3, ô 5 mỗi ô một giá trị riêng, còn hai ô xám 2 và 4 cùng một giá trị, ký hiệu $x=\mathrm g$. Từ ô 2, hướng tốt là Đông; từ ô 4, hướng tốt là Tây.
 
-**Trực giác.** Thay vì học giá trị rồi trích chính sách bằng argmax, tham số hóa **trực tiếp** một phân phối hành động $\pi_\theta:s\mapsto\mathcal P(\cdot\mid s)$ để lấy mẫu (tr. 25–29).
+Hai điểm của mô hình này là giả thiết thêm vào nguồn, ghi là sai khác có chủ ý. Nguồn (trang 23) viết đặc trưng $x(s,a)=1$ nếu $s$ là ô xám và $0$ ở nơi khác; đặc trưng đó gộp luôn ba ô trắng, nên lớp chính sách tất định theo đặc trưng còn hẹp hơn, và chính sách "ô 1 Đông, ô 3 Nam, ô 5 Tây" dùng dưới đây không thuộc lớp đó. Chúng ta dùng đặc trưng chỉ gộp hai ô xám, để giữ đúng kết luận của nguồn (trang 24–25) mà không thêm chỗ gộp khác. Nguồn cũng không nói hai ô trống dưới ô xám là tường hay ô đi vào được, và không cho phần thưởng; mô hình chuyển, ô kẹt X và các số bước dưới đây là phần bổ sung.
 
-**Hai giới hạn cần nói đúng:**
+![Lưới hai hàng năm cột. Hàng trên ô 1 đến ô 5, ô 2 và ô 4 màu xám có cùng đặc trưng x bằng g, ba ô trắng có đặc trưng riêng; mỗi bước đi một ô, gặp tường thì đứng yên. Hàng dưới: ô kẹt X dưới ô 1 và ô 5, ô đích dưới ô 3. Mũi tên: ô 1 sang Đông, ô 3 xuống ô đích, ô 5 sang Tây, và chính sách tất định đi Đông ở cả hai ô xám; ô 4 và ô 5 nối bằng đường nét đứt ghi kẹt.](img/lec-09/aliased-grid-policy.svg)
 
-- Trong MDP quan sát đầy đủ, một chính sách **tất định** tối ưu có thể tồn tại; không cần ngẫu nhiên hóa để đạt tối ưu. Lợi ích của tham số hóa trực tiếp là giao diện lấy mẫu khả vi và miền hành động liên tục, không phải "ngẫu nhiên tốt hơn".
-- **Không nói chính sách ngẫu nhiên tự khôi phục thông tin trạng thái đã mất:** nếu hai trạng thái cho cùng biểu diễn, cùng tham số chính sách tạo cùng phân phối hành động. Muốn quyết định khác nhau, cần biểu diễn hoặc bộ nhớ đủ thông tin.
+::: example Ví dụ 09.8 (Lưới gộp trạng thái, chính sách tất định)
+**Dữ kiện.** Lưới năm ô như trên; mọi chính sách theo đặc trưng chọn cùng một phân phối hành động ở ô 2 và ô 4, và có thể chọn khác nhau ở ô 1, 3, 5. Đại lượng cần tính là số bước $h_i$ từ ô $i$ tới ô đích; $h_i=\infty$ nếu không bao giờ tới.
 
-**Điều khiển và học.** Tại $s$: lấy $A\sim\pi_\theta(\cdot\mid s)$ rồi gửi cho môi trường; học bằng cách điều chỉnh $\theta$ để tăng xác suất của hành động gắn với return cao.
+**Tất định, Đông ở hai ô xám.** Ô 3 đi Nam: $h_3=1$. Ô 2 đi Đông tới ô 3: $h_2=2$; ô 1 đi Đông: $h_1=3$. Từ ô 4, Đông đưa tới ô 5; ô 5 hoặc đi Tây trở lại ô 4, lặp mãi, hoặc đi Nam vào X, hoặc đứng yên. Trong cả ba trường hợp $h_4=h_5=\infty$. Chọn Nam ở hai ô xám thì đứng yên ở đó, còn tệ hơn.
 
-**Kiểm tra.** Chính sách trực tiếp có phải hệ quả của Double DQN không? — Không; nó là một lựa chọn biểu diễn độc lập.
+**Tất định, Tây ở hai ô xám.** Đối xứng: $h_4=2$, $h_5=3$, còn $h_1=h_2=\infty$.
 
-*Nguồn: tr. 22–29.*
+**Diễn giải.** Mọi chính sách tất định theo đặc trưng có hai ô xuất phát không bao giờ tới đích. Một hàm giá trị hành động $Q_\theta(s,a)$ chỉ phụ thuộc $s$ qua $x(s)$ cho cùng thứ hạng hành động ở hai ô xám, nên phép tham lam theo nó rơi vào một trong hai trường hợp trên (bài giảng gốc, trang 24).
+
+**Kiểm tra lại.** Với chính sách phân biệt được ô (Đông ở ô 2, Tây ở ô 4), $h_2=h_4=2$ và $h_1=h_5=3$: lưới là một MDP hữu hạn quan sát đầy đủ, và có chính sách tất định tốt.
+:::
+
+Một cách trực quan, khi hai ô không phân biệt được cần hai hướng ngược nhau, chọn ngẫu nhiên giữa hai hướng ở cả hai ô cho mỗi ô một xác suất dương đi đúng hướng. Chính sách ngẫu nhiên không biết mình đang ở ô nào; nó chỉ tránh việc kẹt vĩnh viễn ở một ô.
+
+![Cùng lưới năm ô, ô kẹt X dưới ô 1 và ô 5, ô đích dưới ô 3. Ở ô 2 và ô 4 có hai mũi tên Đông và Tây, mỗi mũi tên xác suất một phần hai; ô 1 sang Đông, ô 3 xuống ô đích, ô 5 sang Tây; ghi chú h 2 bằng h 4 bằng 4.](img/lec-09/aliased-grid-stochastic.svg)
+
+::: example Ví dụ 09.9 (Lưới gộp trạng thái, chính sách ngẫu nhiên)
+**Dữ kiện.** Lưới như Ví dụ 09.8. Ở hai ô xám, chính sách đi Đông với xác suất $p$ và Tây với xác suất $1-p$; ô 1 đi Đông, ô 3 đi Nam, ô 5 đi Tây (bài giảng gốc, trang 25, xét $p=\tfrac12$).
+
+**Phương trình từ ô 2.** Với xác suất $p$, đi Đông tới ô 3 rồi xuống đích: hai bước. Với xác suất $1-p$, đi Tây tới ô 1 rồi Đông trở lại ô 2: hai bước, rồi còn $h_2$ bước. Vậy
+$$
+h_2=p\cdot2+(1-p)(2+h_2),\qquad\text{nên}\qquad h_2=\frac2p.
+$$
+
+**Từ ô 4.** Đối xứng, đi Đông là hướng sai: $h_4=\dfrac{2}{1-p}$.
+
+**Chọn $p$.** Trung bình của hai ô xám là $\tfrac12\bigl(\tfrac2p+\tfrac2{1-p}\bigr)=\dfrac{1}{p(1-p)}$, nhỏ nhất khi $p(1-p)$ lớn nhất, tức $p=\tfrac12$. Khi đó $h_2=h_4=4$, $h_1=h_5=5$.
+
+**Diễn giải.** Tiêu chí so sánh là trung bình trên ô xuất phát. Với ô xuất phát đều trên năm ô, chính sách ngẫu nhiên cho trung bình $(5+4+1+4+5)/5=3{,}8$ bước, trong khi mọi chính sách tất định theo đặc trưng có hai ô không bao giờ tới (Ví dụ 09.8). Từ riêng ô 2, chính sách tất định Đông chỉ cần $2$ bước, nên chính sách ngẫu nhiên không tốt hơn ở mọi ô. So với chính sách phân biệt được ô ($h_2=h_4=2$), chính sách ngẫu nhiên vẫn tốn gấp đôi số bước từ ô xám.
+
+**Theo lợi tức chiết khấu.** Gán phần thưởng $-1$ cho mỗi bước chưa tới đích (kể cả bước đi vào đích) và giữ tác tử ở ô X mãi với phần thưởng $-1$ mỗi bước. Với $V_3=-1$ và $V_1=-1+\gamma V_2$, ta có $V_2=-1+\gamma\bigl[pV_3+(1-p)V_1\bigr]$, nên
+$$
+V_2=-\frac{1+\gamma}{1-(1-p)\gamma^2},\qquad V_4=-\frac{1+\gamma}{1-p\gamma^2}.
+$$
+Mỗi số hạng $1/(1-c)$ lồi theo $p$, và tổng đối xứng qua $p=\tfrac12$, nên $V_2+V_4$ lớn nhất tại $p=\tfrac12$; với $\gamma=0{,}9$, $V_2=V_4=-1{,}9/0{,}595\approx-3{,}19$, còn chính sách tất định Đông cho $V_4=-1/(1-\gamma)=-10$. Kết luận trùng với kết luận theo số bước.
+
+**Kiểm tra lại.** Với $p=\tfrac12$: $h_2=\tfrac12\cdot2+\tfrac12(2+4)=1+3=4$.
+:::
+
+Hai ví dụ cần được đặt cạnh kết quả của Bài 04.
+
+::: remark Nhận xét 09.9 (Chính sách tối ưu tất định và lớp chính sách bị gộp)
+Định lý 04.25 nói: trên một MDP hữu hạn có tính Markov, phần thưởng bị chặn và $0\le\gamma<1$, có một chính sách Markov dừng, tất định, tối ưu trên mọi chính sách. Lưới của Ví dụ 09.8, với phần thưởng $-1$ ở mỗi bước chưa tới đích, ô X là ô kẹt (ở lại mãi với phần thưởng $-1$ mỗi bước) và $\gamma<1$, thỏa các giả thiết này khi chính sách được phép phụ thuộc vào ô; khi đó lợi tức giảm theo số bước, và chính sách "Đông ở ô 2, Tây ở ô 4" (cùng ô 1 Đông, ô 3 Nam, ô 5 Tây) là tối ưu, với $V_2=V_4=-(1+\gamma)$. Khi chính sách chỉ được phụ thuộc $x(s)$, lớp chính sách cho phép nhỏ hơn: định lý không nói gì về cực đại trên lớp này, và Ví dụ 09.9 cho thấy cực đại đó có thể đạt tại một chính sách ngẫu nhiên. Hai kết luận không mâu thuẫn: một nói về toàn bộ chính sách Markov, một nói về chính sách bị ràng buộc bởi đặc trưng.
+:::
+
+Lý do thứ hai không cần gộp trạng thái. Khi hành động là một số thực, chẳng hạn góc lái của một xe trong một khoảng, chính sách tham lam $\arg\max_aQ(s,a)$ đòi giải một bài toán tối ưu liên tục ở mỗi bước; nếu $Q$ là một mạng nơ-ron, bài toán đó nói chung không lồi. Rời rạc hóa góc lái thành vài giá trị đưa bài toán về trường hợp hữu hạn, đổi lại độ phân giải của hành động.
+
+### Chính sách tham số hóa
+
+Cả hai tình huống dẫn tới cùng một cách làm: thay vì học $Q$ rồi suy ra chính sách bằng phép cực đại, chúng ta tham số hóa trực tiếp phân phối hành động và học tham số của nó (bài giảng gốc, trang 26).
+
+::: definition Định nghĩa 09.10 (Chính sách tham số hóa)
+Cho $\theta\in\mathbb R^d$. Một chính sách tham số hóa (parameterized policy) là một họ $\{\pi_\theta\}$, trong đó với mỗi $s\in\mathcal S$, $\pi_\theta(\cdot\mid s)$ là một phân phối trên $\mathcal A$: hàm xác suất khi $\mathcal A$ hữu hạn, hàm mật độ khi $\mathcal A\subseteq\mathbb R$; và với mỗi $s$, $a$, ánh xạ $\theta\mapsto\pi_\theta(a\mid s)$ khả vi.
+:::
+
+Định nghĩa có hai vai. Để điều khiển, tác tử lấy mẫu $A_t\sim\pi_\theta(\cdot\mid S_t)$ rồi gửi $A_t$ cho môi trường. Để học, chúng ta chỉnh $\theta$ sao cho hành động dẫn tới lợi tức cao có xác suất lớn hơn; cách chỉnh là nội dung của Mục 5 và Mục 6. Chính sách tham số hóa là một chính sách Markov dừng theo nghĩa của Định nghĩa 03.13, với thêm một tham số khả vi. Chính sách tất định là trường hợp giới hạn khi phân phối dồn về một hành động; định nghĩa không loại nó, nhưng khi đó $\pi_\theta$ thường không khả vi theo $\theta$ nữa.
+
+Từ mục này, $\theta$ là tham số của chính sách. Ở Mục 2 và 3, cùng chữ đó là tham số của mạng giá trị hành động; hai vai không xuất hiện trong cùng một công thức. Với hành động liên tục, $\pi_\theta(a\mid s)$ là mật độ, có thể lớn hơn $1$; chỉ tích phân của nó trên một khoảng mới là xác suất.
+
+::: example Ví dụ 09.10 (Phân phối trên bốn hành động)
+**Dữ kiện.** Bốn hành động $1,2,3,4$ tại một trạng thái $s$ (bài giảng gốc, trang 27–28).
+
+**Phân phối đều.** $\pi(a\mid s)=\tfrac14$ với mọi $a$. Phân phối này không phụ thuộc trạng thái và không có tham số, nên không có gì để học.
+
+**Phân phối phân loại.** $\pi(\cdot\mid s)=(0{,}1;\,0{,}2;\,0{,}2;\,0{,}5)$: hành động 4 được chọn một nửa số lần. Phân phối này đạt được bằng chính sách softmax, định nghĩa ngay sau đây (Định nghĩa 09.11), với đặc trưng $\phi(s,a)$ là vector đơn vị thứ $a$ trong $\mathbb R^4$ và $\theta=(\ln0{,}1;\,\ln0{,}2;\,\ln0{,}2;\,\ln0{,}5)$, vì khi đó $e^{\phi(s,a)^\top\theta}=\pi(a\mid s)$ và tổng mẫu số bằng $1$.
+
+**Kiểm tra lại.** $0{,}1+0{,}2+0{,}2+0{,}5=1$.
+:::
+
+![Bên trái: cột xác suất 0,1; 0,2; 0,2; 0,5 cho bốn hành động. Bên phải: mật độ Gaussian theo hành động thực a quanh trung bình mu, hai đường a min và a max đánh dấu miền bị chặn, hai đuôi ngoài miền tô màu.](img/lec-09/policy-distributions.svg)
+
+Hình đặt hai họ phân phối cạnh nhau. Bên trái, mỗi hành động có một cột xác suất, tổng các cột bằng $1$. Bên phải, mật độ Gaussian dương trên toàn trục số thực; phần tô màu là khối xác suất rơi ngoài miền hành động hợp lệ.
+
+::: definition Định nghĩa 09.11 (Chính sách softmax)
+Cho $\mathcal A$ hữu hạn, đặc trưng $\phi(s,a)\in\mathbb R^d$ giữ cố định và $\theta\in\mathbb R^d$. Chính sách softmax là
+$$
+\pi_\theta(a\mid s)=\frac{\exp\bigl(\phi(s,a)^\top\theta\bigr)}{\sum_{b\in\mathcal A}\exp\bigl(\phi(s,b)^\top\theta\bigr)}.
+$$
+:::
+
+Số $\phi(s,a)^\top\theta$ là mức ưu tiên của hành động $a$ tại $s$; chính sách softmax đổi các mức ưu tiên thành xác suất bằng hàm mũ rồi chuẩn hóa. Mọi hành động có xác suất dương, và cộng cùng một hằng vào mọi mức ưu tiên không đổi chính sách. Với hai hành động, $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$ và $\theta=(\ln2;\,0)$, ta được $\pi_\theta(1\mid s)=\tfrac{2}{2+1}=\tfrac23$ và $\pi_\theta(2\mid s)=\tfrac13$; bộ số này là bài toán một bước hai hành động dùng ở Mục 5 và 6. Bài giảng gốc (trang 29) dùng đặc trưng là khoảng cách tới vật cản. So với phép tham lam theo $Q$, softmax biểu diễn được các xác suất dương bất kỳ khi đặc trưng đủ phong phú; nếu ở ô xám chỉ xét hai hướng Đông và Tây với cùng mức ưu tiên, nó cho đúng xác suất $\tfrac12$ của Ví dụ 09.9.
+
+::: definition Định nghĩa 09.12 (Chính sách Gaussian với phương sai cố định)
+Cho $\mathcal A=\mathbb R$, đặc trưng trạng thái $\phi(s)\in\mathbb R^d$ giữ cố định, $\theta\in\mathbb R^d$ và $\sigma^2>0$ cố định. Chính sách Gaussian có mật độ
+$$
+\pi_\theta(a\mid s)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\Bigl(-\frac{\bigl(a-\mu_\theta(s)\bigr)^2}{2\sigma^2}\Bigr),\qquad\mu_\theta(s)=\phi(s)^\top\theta.
+$$
+:::
+
+Trung bình $\mu_\theta(s)$ là hành động "trung tâm" tại $s$, và $\sigma$ đo độ trải của các hành động được lấy mẫu quanh nó. Mật độ dương trên toàn trục số thực, nên khi hành động hợp lệ nằm trong một khoảng $[a_{\min},a_{\max}]$, một phần khối xác suất rơi ra ngoài. Cài đặt thường cắt mẫu về khoảng, hoặc đưa mẫu qua một hàm đơn điệu như $\tanh$. Với phép cắt, ta có thể coi việc cắt là một phần của môi trường và tiếp tục dùng mật độ Gaussian của mẫu trước khi cắt; với $a=\tanh(u)$, mật độ của $a$ có thêm thừa số $1/(1-a^2)$ từ phép đổi biến, và hàm điểm ở Mục 5 phải tính theo mật độ đó. Bài giảng gốc (trang 38) đặt câu hỏi về vấn đề của chính sách Gaussian; miền bị chặn là một câu trả lời, độ trải $\sigma$ cố định không học là một câu trả lời khác.
+
+| | Softmax | Gaussian, $\sigma^2$ cố định |
+|---|---|---|
+| miền $\mathcal A$ | hữu hạn | $\mathbb R$ (miền bị chặn cần cắt hoặc biến đổi) |
+| đặc trưng | $\phi(s,a)$ theo cặp trạng thái–hành động | $\phi(s)$ theo trạng thái |
+| tham số quyết định | mức ưu tiên $\phi(s,a)^\top\theta$ | trung bình $\phi(s)^\top\theta$ |
+| chuẩn hóa | $\sum_a\pi_\theta(a\mid s)=1$ | $\int\pi_\theta(a\mid s)\,\mathrm da=1$ |
+| lấy mẫu | phân phối phân loại $\operatorname{Cat}\bigl(\pi_\theta(\cdot\mid s)\bigr)$ | $\mathcal N\bigl(\mu_\theta(s),\sigma^2\bigr)$ |
+
+::: remark Nhận xét 09.13 (Nhầm lẫn thường gặp về chính sách ngẫu nhiên)
+1. "Chính sách ngẫu nhiên khôi phục thông tin trạng thái bị gộp." Sai: ở Ví dụ 09.9, chính sách vẫn không biết mình ở ô 2 hay ô 4 và đi sai hướng với xác suất $\tfrac12$; nó chỉ tránh kẹt. Muốn đạt $h_2=h_4=2$, cần đặc trưng hoặc bộ nhớ phân biệt hai ô.
+2. "Trong MDP quan sát đầy đủ cũng cần chính sách ngẫu nhiên để tối ưu." Sai theo Định lý 04.25; lợi ích của chính sách ngẫu nhiên ở đây đến từ ràng buộc trên lớp chính sách.
+3. "$\epsilon_{\mathrm{exp}}$-tham lam là chính sách ngẫu nhiên được học." Sai: xác suất $\epsilon_{\mathrm{exp}}$ cố định, không tối ưu theo bài toán; chính sách tham số hóa học chính các xác suất.
+4. "$\pi_\theta(a\mid s)$ của Gaussian là xác suất của $a$." Sai: đó là mật độ; xác suất một giá trị thực cụ thể bằng $0$.
+:::
+
+**Trong thực hành.** Trong một cài đặt, chính sách tham số hóa là một hàm, tuyến tính theo đặc trưng hoặc một mạng nơ-ron, trả về các mức ưu tiên (softmax) hoặc trung bình (Gaussian), và tác tử lấy mẫu từ phân phối đó ở mỗi bước. Định lý 04.25 giả sử chính sách được phép phụ thuộc vào trạng thái đầy đủ; với xấp xỉ hàm, đặc trưng thường gộp nhiều trạng thái, và với quan sát không Markov, quan sát gộp các trạng thái khác nhau, nên tình huống của Ví dụ 09.9 không hiếm. Với góc lái của xe hay mô-men của khớp robot, chính sách Gaussian tránh việc giải $\max_a$ ở mỗi bước.
+
+::: exercise Bài tập 09.3 (Xác suất khác $\tfrac12$ ở ô xám)
+Lưới của Ví dụ 09.9, với xác suất đi Đông ở hai ô xám là $p=0{,}8$. Tính $h_2$, $h_4$ và trung bình của chúng; so với $p=\tfrac12$.
+:::
+
+::: hint
+Dùng $h_2=2/p$ và $h_4=2/(1-p)$ từ Ví dụ 09.9.
+:::
+
+::: solution
+**Tính.** $h_2=2/0{,}8=2{,}5$; $h_4=2/0{,}2=10$.
+
+**Trung bình.** $\tfrac12(2{,}5+10)=6{,}25$, so với $4$ khi $p=\tfrac12$.
+
+**Kiểm tra lại.** Công thức $\tfrac1{p(1-p)}=\tfrac1{0{,}16}=6{,}25$.
+:::
+
+Như vậy, Ví dụ 09.8 và 09.9 cho thấy khi đặc trưng gộp hai trạng thái cần hai hành động khác nhau, mọi chính sách tất định theo đặc trưng có ô không bao giờ tới đích, còn chính sách ngẫu nhiên $\tfrac12$ đưa mọi ô tới đích, trung bình $3{,}8$ bước khi ô xuất phát đều trên năm ô; Nhận xét 09.9 giải thích vì sao điều này không mâu thuẫn với Định lý 04.25. Định nghĩa 09.10–09.12 cho hai họ chính sách học được xác suất hoặc mật độ, softmax cho tập hữu hạn và Gaussian cho hành động thực. Họ $\pi_\theta$ chưa cho biết nên chỉnh $\theta$ theo hướng nào. Trong Mục 5, chúng ta định nghĩa hàm mục tiêu $J(\theta)$, lợi tức kỳ vọng của $\pi_\theta$, và tìm cách ước lượng gradient của nó.
+
+*Nguồn: bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 22–29, 36–38; Sutton và Barto (2018), §13.1, Ví dụ 13.1, §13.7; ghi chú bài giảng Bài 04, Định lý 04.25.*
 
 ---
 
