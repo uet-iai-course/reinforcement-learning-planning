@@ -275,7 +275,7 @@
 <p><strong>Ví dụ.</strong> Lưới năm ô: $x(s)$ phân biệt ô 1, 3, 5, gộp ô 2 và ô 4 ($x=\mathrm g$); ô 2 cần Đông, ô 4 cần Tây.</p>
 <img class="figure short" src="img/lec-09/aliased-grid-policy.svg" alt="Lưới hai hàng năm cột: ô 2 và ô 4 màu xám cùng đặc trưng x bằng g, ba ô trắng có đặc trưng riêng; ô kẹt X dưới ô 1 và ô 5, ô đích dưới ô 3; mỗi bước đi một ô, gặp tường thì đứng yên. Chính sách tất định đi Đông ở cả hai ô xám; từ ô 4 sang ô 5 rồi quay lại ô 4, lặp mãi."/>
 <p>Theo $x$, chính sách tất định đi cùng hướng ở hai ô xám: nếu Đông, từ ô 4 lặp ${4\to5\to4}$ mãi.</p>
-<aside class="notes"><p>Lưới theo bài giảng gốc: hàng trên năm ô, ô kẹt X dưới ô 1 và ô 5, ô đích dưới ô 3; đặc trưng chỉ gộp hai ô xám là sai khác có chủ ý so với nguồn, vốn gộp cả ba ô trắng. Hành động: Đông, Tây, Nam; đi Nam từ ô 2, ô 4 hoặc đi ra ngoài lưới thì đứng yên; vào X là không bao giờ tới đích. Đặc trưng $x(s)$ phân biệt ba ô trắng và chỉ gộp hai ô xám, nên mọi hàm của đặc trưng, gồm $Q_\theta$ và phép tham lam theo nó, cho cùng hành động ở ô 2 và ô 4. Chọn Tây ở cả hai thì kẹt đối xứng giữa ô 1 và ô 2; chọn Nam thì đứng yên. Như vậy mọi chính sách tất định theo $x$ để hai trong năm ô xuất phát không bao giờ tới đích. Ngẫu nhiên kiểu $\epsilon_{\mathrm{exp}}$-tham lam chỉ thoát kẹt nhờ một xác suất cố định, không học được.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 22–24; Sutton và Barto (2018), §13.1.</p></aside>
+<aside class="notes"><p>Lưới theo bài giảng gốc: hàng trên năm ô, ô kẹt X dưới ô 1 và ô 5, ô đích dưới ô 3; đặc trưng chỉ gộp hai ô xám là sai khác có chủ ý so với nguồn, vốn gộp cả ba ô trắng. Hành động: Đông, Tây, Nam; đi Nam từ ô 2, ô 4 hoặc đi ra ngoài lưới thì đứng yên; vào X là không bao giờ tới đích. Đặc trưng $x(s)$ phân biệt ba ô trắng và chỉ gộp hai ô xám, nên mọi hàm của đặc trưng, gồm $Q_\theta$ và phép tham lam theo nó, cho cùng hành động ở ô 2 và ô 4. Chọn Tây ở cả hai thì kẹt đối xứng giữa ô 1 và ô 2; chọn Nam thì đứng yên. Như vậy mọi chính sách tất định theo $x$ để hai trong năm ô xuất phát không bao giờ tới đích.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 22–24; Sutton và Barto (2018), §13.1.</p></aside>
 </section>
 <section data-slide-id="L09-16b" data-note-topic-id="lec-09-topic-06">
 <h2>Ví dụ: lưới gộp trạng thái, chính sách ngẫu nhiên</h2>
@@ -541,7 +541,116 @@
 </section>
 
 <section>
-<section data-slide-id="L09-33" data-note-topic-id="lec-09-topic-13"><h2>Bốn hợp đồng cần giữ</h2><div class="grid2"><div class="card"><h3>Sai lệch cực đại</h3><p>Thu hồi bất đẳng thức Jensen; kết luận là về kỳ vọng, không về từng lần lấy max.</p></div><div class="card"><h3>Double DQN</h3><p>Online chọn; target đánh giá; kết thúc che bootstrap; đích dừng gradient.</p></div><div class="card"><h3>Chính sách</h3><p>Phân phối đúng miền hành động; hàm điểm chỉ dùng nơi mật độ dương.</p></div><div class="card"><h3>REINFORCE</h3><p>Chỉ số return nhất quán; thu dưới tham số cũ; cộng rồi cập nhật một lần.</p></div></div><div class="box">Double DQN giảm liên hệ giữa nhiễu chọn và nhiễu đánh giá của phép max. Bài kế tiếp dùng baseline và actor–critic để giảm phương sai và bootstrap giá trị.</div><aside class="notes">Kết thúc bằng bốn hợp đồng cần giữ khi đọc công thức hoặc mã. Baseline và actor–critic chỉ là cầu nối sang bài sau, chưa thuộc thuật toán của bài này.<p class="note-source"><strong>Nguồn:</strong> tổng hợp tr. 11–40.</p></aside></section>
+<section data-slide-id="L09-M7T" id="mach-7" class="strand-title" data-note-topic-id="lec-09-topic-13">
+<div class="strand-title-body">
+<h2><span class="strand-number">7.</span>Tổng kết và chuyển tiếp</h2>
+<p class="strand-lead">Muốn dùng đúng hai nhóm phương pháp, phải giữ các giả thiết của từng kết quả.</p>
+<p class="strand-keys">Kết quả và giả thiết · So sánh bốn phương pháp · Bài tập tổng hợp · Bài&nbsp;10</p>
+</div>
+<aside class="notes"><p>Phần 2 và 3 cho độ chệch của phép cực đại và hai cách tách chọn khỏi đánh giá; phần 4 đến 6 cho chính sách tham số hóa, hàm điểm, định lý gradient chính sách và REINFORCE. Ở phần này, mỗi kết quả được đặt cạnh giả thiết không được bỏ, bốn phương pháp được so trên cùng tiêu chí, một bài tập trên bài toán một bước nối hai nhóm, và vấn đề trung tâm được trả lời có điều kiện. Bài 10 nhận giới hạn còn lại: phương sai của REINFORCE.</p></aside>
+</section>
+<section data-slide-id="L09-K1" data-note-topic-id="lec-09-topic-13">
+<h2>Kết quả và giả thiết của bài</h2>
+<table><thead><tr><th scope="col">Kết quả</th><th scope="col">Giả thiết không được&nbsp;bỏ</th><th scope="col">Công thức hoặc thuật toán</th></tr></thead><tbody>
+<tr><td>Độ chệch của phép cực đại</td><td>mỗi $\widehat Q_a$ không chệch, khả tích</td><td>$\mathbb E[\max_a\widehat Q_a]\ge\max_aq_a$</td></tr>
+<tr><td>Ước lượng kép</td><td>bản đánh giá không chệch, độc lập với bản chọn</td><td>$\mathbb E[\widehat Q^B_{a^*}]\le\max_aq_a$</td></tr>
+<tr><td>Chính sách ngẫu nhiên khi gộp trạng thái</td><td>chính sách chỉ theo đặc trưng gộp; ô xuất phát đều</td><td>$\tfrac12$ ở ô xám: $3{,}8$ bước; tất định: có ô&nbsp;kẹt</td></tr>
+<tr><td>Mục tiêu Double DQN</td><td>$Z$ là kết thúc của MDP; $\theta^-$ cố định giữa hai lần đồng&nbsp;bộ</td><td>${y=R+\gamma(1-Z)\,Q_{\theta^-}(S',a^*)}$,<br>$a^*=\arg\max_aQ_\theta(S',a)$</td></tr>
+</tbody></table>
+<aside class="notes"><p>Mỗi hàng đặt một kết quả cạnh giả thiết mà thiếu nó thì kết luận sai. Bất đẳng thức của phép cực đại đúng với mọi phân phối nhiễu, nhưng chỉ nói về kỳ vọng. Ước lượng kép cần bản đánh giá độc lập với bản chọn; dùng cùng một bản cho cả hai việc thì trở lại phép cực đại. Trong mục tiêu Double DQN, mạng trực tuyến chọn, mạng mục tiêu đánh giá, và mặt nạ chỉ dùng cờ kết thúc.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 11–21; van Hasselt (2010); van Hasselt, Guez và Silver (2016).</p></aside>
+</section>
+<section data-slide-id="L09-K1b" data-note-topic-id="lec-09-topic-13">
+<h2>Kết quả và giả thiết của bài</h2>
+<table><thead><tr><th scope="col">Kết quả</th><th scope="col">Giả thiết không được&nbsp;bỏ</th><th scope="col">Công thức hoặc thuật toán</th></tr></thead><tbody>
+<tr><td>Double Q&#8209;learning</td><td>mỗi bước một bảng; bảng kia đánh&nbsp;giá</td><td>mục tiêu ${R+\gamma(1-Z)Q_2(S',a^*)}$,<br>$a^*=\arg\max_aQ_1(S',a)$</td></tr>
+<tr><td>Hàm điểm</td><td>$\pi_\theta&gt;0$; $\phi$, $\sigma$ cố định; miền hỗ trợ cố định</td><td>$\phi(s,a)-\sum_b\pi_\theta(b\mid s)\phi(s,b)$; $\tfrac{a-\mu}{\sigma^2}\phi(s)$; $\mathbb E[\psi_\theta]=0$</td></tr>
+<tr><td>Định lý gradient chính sách</td><td>(G1)–(G4): $\rho_0$, $P$ không phụ thuộc $\theta$; $\pi_\theta$ khả vi, miền hỗ trợ cố định; $R$, $T$, $\phi$ bị chặn</td><td>$\nabla_\theta J=\mathbb E\bigl[\sum_t\gamma^tG_t\psi_t\bigr]$</td></tr>
+<tr><td>REINFORCE</td><td>lượt sinh bởi $\pi_{\theta_{\mathrm{old}}}$; giữ $\gamma^t$</td><td>$\mathbb E[\widehat g]=\nabla_\theta J(\theta_{\mathrm{old}})$</td></tr>
+</tbody></table>
+<aside class="notes"><p>Trong Double Q-learning, công thức là cập nhật $Q_1$; khi đồng xu chọn $Q_2$, vai hai bảng đổi. Hàng hàm điểm gồm hai công thức đóng và kỳ vọng bằng $0$; kỳ vọng dùng ở bước bỏ phần thưởng quá khứ: khi biết lịch sử, hành động lấy từ chính sách hiện tại nên hàm điểm có kỳ vọng $0$. Hàng định lý tóm tắt bốn giả thiết (G1)–(G4), thêm $\pi_\theta$ khả vi với miền hỗ trợ cố định; phần (G3), (G4) là điều kiện đủ để đổi đạo hàm với kỳ vọng. REINFORCE cần dữ liệu theo chính sách: lượt trong bộ nhớ phát lại do tham số khác sinh ra phải nhân tỉ số xác suất. Bỏ $\gamma^t$ cho hướng lệch khỏi $\nabla J$ khi $\gamma&lt;1$. Không hàng nào nói về hội tụ.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 34–40; Sutton và Barto (2018), §13.2–13.3; Williams (1992); Nota và Thomas (2020).</p></aside>
+</section>
+<section data-slide-id="L09-K2" data-note-topic-id="lec-09-topic-13">
+<h2>So sánh bốn phương pháp</h2>
+<table><thead><tr><th scope="col">Phương pháp</th><th scope="col">Quy tắc cập nhật</th><th scope="col">Dữ liệu dùng</th><th scope="col">Điều kiện dừng</th></tr></thead><tbody>
+<tr><td>DQN</td><td>bước tối ưu trên $L_B$, mục tiêu $\max_{a'}Q_{\theta^-}(S',a')$</td><td>mini-batch từ bộ nhớ phát&nbsp;lại</td><td>$t_{\mathrm{end}}$ bước</td></tr>
+<tr><td>Double DQN</td><td>như DQN; mục tiêu $Q_{\theta^-}(S',a^*)$</td><td>như DQN</td><td>$t_{\mathrm{end}}$ bước</td></tr>
+<tr><td>Double Q&#8209;learning</td><td>một bảng theo đồng xu; bảng kia đánh giá</td><td>mẫu vừa thu, một&nbsp;lần</td><td>số lượt định trước</td></tr>
+<tr><td>REINFORCE</td><td>$\theta\leftarrow\theta_{\mathrm{old}}+\alpha\sum_t\gamma^tG_t\psi_t$</td><td>một lượt theo $\pi_{\theta_{\mathrm{old}}}$, dùng một&nbsp;lần</td><td>$N$ lượt</td></tr>
+</tbody></table>
+<p>Không điều kiện dừng nào là tiêu chuẩn hội tụ.</p>
+<aside class="notes"><p>Ba phương pháp đầu học giá trị hành động và suy chính sách bằng phép cực đại; REINFORCE học trực tiếp chính sách. DQN và Double DQN khác nhau đúng ở một dòng mục tiêu, cùng dữ liệu khác chính sách từ bộ nhớ phát lại. Double Q-learning là thuật toán bảng, mỗi bước đổi đúng một ô của một bảng, hành vi theo $Q_1+Q_2$. REINFORCE dùng mỗi lượt cho đúng một cập nhật vì dữ liệu phải theo chính sách hiện tại. Các điều kiện dừng là ngân sách, không phải dấu hiệu đã tới nghiệm.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 08, Thuật toán 08.13; bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 14–21, 40.</p></aside>
+</section>
+<section data-slide-id="L09-K2b" data-note-topic-id="lec-09-topic-13">
+<h2>So sánh bốn phương pháp</h2>
+<table><thead><tr><th scope="col">Phương pháp</th><th scope="col">Giả thiết không được&nbsp;bỏ</th><th scope="col">Kết luận</th></tr></thead><tbody>
+<tr><td>Mục tiêu DQN</td><td>cùng ước lượng chọn và đánh giá; mỗi ước lượng không chệch</td><td>phần bootstrap chệch lên hoặc bằng</td></tr>
+<tr><td>Double Q&#8209;learning</td><td>hai bảng xem như độc lập; bảng đánh giá không chệch</td><td>không chệch lên; có thể chệch âm</td></tr>
+<tr><td>Double DQN</td><td>$\theta^-$ là bản sao trễ của $\theta$, không độc lập</td><td>không bảo đảm hết chệch lên; mức giảm phải đo</td></tr>
+<tr><td>REINFORCE</td><td>(G1)–(G4); lượt theo $\pi_{\theta_{\mathrm{old}}}$</td><td>$\widehat g$ không chệch; phương sai lớn</td></tr>
+</tbody></table>
+<aside class="notes"><p>Các kết luận của bài là về độ chệch, không về hội tụ. Với mục tiêu DQN, độ chệch lên bằng $0$ chỉ khi hành động tốt nhất luôn thắng phép cực đại. Với Double Q-learning, hai bảng chỉ độc lập ở dạng lý tưởng vì mỗi bảng bootstrap từ bảng kia; trên hai hành động có giá trị đúng $(0{,}5;\,0)$ và nhiễu $\pm1$, ước lượng kép chệch $-0{,}125$. Với Double DQN, mạng mục tiêu là bản sao trễ, nên tác dụng phải đo bằng thí nghiệm. Với REINFORCE, không chệch đi kèm phương sai $\tfrac49$ trên bài toán một bước.</p><p class="note-source"><strong>Nguồn:</strong> Sutton và Barto (2018), §6.7, §13.3; van Hasselt (2010); van Hasselt, Guez và Silver (2016).</p></aside>
+</section>
+<section data-slide-id="L09-K3" data-note-topic-id="lec-09-topic-13">
+<h2>Bài tập: tổng hợp trên bài toán một bước</h2>
+<div class="grid2"><div>
+<p><strong>Câu hỏi:</strong> với dữ kiện trong hình,</p>
+<p>(a) tính $J$ và $\nabla_\theta J$;</p>
+<p>(b) tính ${\widehat g=r(A)\psi_\theta(s,A)}$ cho từng hành động; kiểm ${\mathbb E[\widehat g]=\nabla_\theta J}$.</p>
+</div>
+<img class="figure" src="img/lec-09/one-step-card.svg" alt="Thẻ dữ kiện bài toán một bước, chính sách softmax, hai hành động: đặc trưng phi của s, 1 bằng (1; 0) và phi của s, 2 bằng (0; 1); pi theta bằng 2/3 và 1/3; phần thưởng r bằng 3 và 0; theta bằng (log 2; 0); lượt dừng sau A 0."/></div>
+<p>(c) Phần thưởng đo có nhiễu: ${\widehat r_a=r(a)+\varepsilon_a}$, $\varepsilon_a=\pm1$ độc lập, xác suất $\tfrac12$. Tính ${\mathbb E[\max_a\widehat r_a]}$; lặp lại với $r(2)=2{,}5$.</p>
+<aside class="notes"><p>Bài tập nối hai nhóm phương pháp trên cùng một bài toán. Câu (a), (b) dùng hàm điểm và định lý gradient chính sách ở dạng một bước. Câu (c) dùng phép cực đại trên ước lượng có nhiễu, giống phần bootstrap của mục tiêu DQN. Gợi ý: ở (c), liệt kê bốn cặp nhiễu đồng xác suất; so khoảng cách giữa hai phần thưởng đúng với độ lớn của nhiễu.</p><p class="note-source"><strong>Nguồn:</strong> bài tập tổng hợp theo bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 12–13, 35–40.</p></aside>
+</section>
+<section data-slide-id="L09-K4" data-note-topic-id="lec-09-topic-13">
+<h2>Bài tập: tổng hợp trên bài toán một bước</h2>
+<p><strong>Lời giải:</strong> (a) $J=3\cdot\tfrac23=2$; ${\nabla_\theta J=\tfrac23\cdot3\,(\tfrac13;\,-\tfrac13)=(\tfrac23;\,-\tfrac23)}$.</p>
+<p>(b) $A=1$: $\widehat g=(1;\,-1)$; $A=2$: $\widehat g=(0;\,0)$; ${\mathbb E[\widehat g]=\tfrac23(1;\,-1)=(\tfrac23;\,-\tfrac23)}$.</p>
+<p>(c) $\widehat r_1\in\{2;\,4\}$, $\widehat r_2\in\{-1;\,1\}$: hành động 1 luôn thắng, ${\mathbb E[\max_a\widehat r_a]=3}$, không chệch.</p>
+<p>Với $r(2)=2{,}5$: ${\mathbb E[\max_a\widehat r_a]=\tfrac14(2+3{,}5+4+4)=3{,}375}$, chệch $+0{,}375$.</p>
+<p><strong>Kết luận:</strong> $\widehat g$ không chệch; phép cực đại chệch lên khi giá trị đúng gần nhau so với nhiễu.</p>
+<aside class="notes"><p>Câu (a): $\nabla_\theta J=\sum_ar(a)\pi_\theta(a\mid s)\psi_\theta(s,a)$, chỉ hành động 1 có phần thưởng khác $0$. Câu (b): mỗi lượt cho một trong hai giá trị, trung bình đúng bằng gradient, tổng phương sai $\tfrac49$. Câu (c): với $r=(3;\,0)$, ước lượng nhỏ nhất của hành động 1 là $2$, lớn hơn ước lượng lớn nhất $1$ của hành động 2, nên phép cực đại luôn chọn đúng và dấu bằng của bất đẳng thức xảy ra. Với $r(2)=2{,}5$, cặp $(2;\,3{,}5)$ chọn sai và báo $3{,}5$, nên kỳ vọng vượt giá trị đúng $3$. Nhầm lẫn thường gặp: cho rằng phép cực đại luôn chệch dương nghiêm ngặt.</p><p class="note-source"><strong>Nguồn:</strong> bài tập tổng hợp theo bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 12–13, 35–40.</p></aside>
+</section>
+<section data-slide-id="L09-K5" data-note-topic-id="lec-09-topic-13">
+<h2>Trả lời vấn đề trung tâm</h2>
+<div class="box">Xác định khi nào ước lượng từ mẫu không chệch: giá trị hành động trong mục tiêu bootstrap; gradient của $J(\theta)=\mathbb E_{\pi_\theta}[G_0]$.</div>
+<ol start="2">
+<li>$\widehat Q_a$ không chệch, có nhiễu: chệch lên hoặc bằng ($\tfrac12$: hai $q_a$ bằng nhau, nhiễu&nbsp;$\pm1$).</li>
+<li>Bản đánh giá không chệch, độc lập: không chệch lên; Double&nbsp;DQN chỉ gần thỏa.</li>
+<li>$\mathcal A$ liên tục hoặc đặc trưng gộp: học $\pi_\theta$ ($3{,}8$ bước, ô đầu đều).</li>
+<li>$\pi_\theta&gt;0$, khả vi: $\nabla\pi=\pi\psi$, $\mathbb E[\psi]=0$.</li>
+<li>Dưới (G1)–(G4): REINFORCE không chệch ($\tfrac23\to0{,}710$).</li>
+</ol>
+<p><strong>Nguồn:</strong> bài giảng gốc, tr. 11–40; Sutton và Barto (2018); van Hasselt (2010); Williams (1992).</p>
+<aside class="notes"><p>Dòng số $N$ trả lời có điều kiện cho phần $N$, khớp trang vấn đề trung tâm ở phần mở đầu. Số $\tfrac12$ là độ chệch khi hai hành động có giá trị đúng bằng nhau và nhiễu $\pm1$; ước lượng kép có thể chệch âm, $-0{,}125$ khi giá trị đúng là $(0{,}5;\,0)$; mạng mục tiêu là bản sao trễ nên Double DQN chỉ gần thỏa điều kiện độc lập. $3{,}8$ là số bước trung bình của chính sách ngẫu nhiên $\tfrac12$ khi ô xuất phát đều trên năm ô của lưới gộp trạng thái, trong khi mọi chính sách tất định theo đặc trưng có ô không bao giờ tới đích. Định lý gradient chính sách cho ước lượng không chệch của gradient, không cho hội tụ; trên bài toán một bước, một cập nhật với lợi tức $3$ tăng xác suất của hành động 1.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 11–40; Sutton và Barto (2018); van Hasselt (2010); van Hasselt, Guez và Silver (2016); Williams (1992); Nota và Thomas (2020).</p></aside>
+</section>
+<section data-slide-id="L09-K6" data-note-topic-id="lec-09-topic-13">
+<h2>Câu hỏi tự kiểm tra</h2>
+<div class="check"><p><strong>Câu hỏi:</strong> trả lời và nêu kết quả đã dùng.</p>
+<ol>
+<li>Mỗi $\widehat Q_a$ không chệch thì $\max_a\widehat Q_a$ có không chệch không?</li>
+<li>Double DQN có làm hai ước lượng độc lập không?</li>
+<li>Trong MDP quan sát đầy đủ, khi nào vẫn cần chính sách ngẫu nhiên?</li>
+<li>REINFORCE cần giả thiết nào về $\rho_0$, $P$ và về dữ liệu?</li>
+</ol></div>
+<aside class="notes"><p>Lời giải: (1) không nói chung; kỳ vọng của cực đại không nhỏ hơn giá trị đúng lớn nhất, bằng nhau khi hành động tốt nhất luôn thắng (Mệnh đề 09.2). (2) Không; mạng mục tiêu là bản sao trễ của mạng trực tuyến, nên giả thiết độc lập của ước lượng kép không thỏa; Double DQN không bảo đảm hết chệch lên, mức giảm phải đo bằng thí nghiệm. (3) Khi chính sách bị ràng buộc theo đặc trưng gộp các trạng thái cần hành động khác nhau; nếu chính sách được phụ thuộc trạng thái đầy đủ thì có chính sách tối ưu tất định (Định lý 04.25). (4) $\rho_0$, $P$ không phụ thuộc $\theta$ và lượt sinh bởi $\pi_{\theta_{\mathrm{old}}}$ (Định lý 09.22).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 09, Mục 2–6; ghi chú bài giảng Bài 04, Định lý 04.25.</p></aside>
+</section>
+<section data-slide-id="L09-K7" data-note-topic-id="lec-09-topic-13">
+<h2>Bài tập về nhà và tài liệu đọc</h2>
+<div class="grid2"><div><table><thead><tr><th scope="col">Mạch</th><th scope="col">Bài tập</th></tr></thead><tbody>
+<tr><td>2</td><td>09.1, 09.2</td></tr>
+<tr><td>3</td><td>09.3</td></tr>
+<tr><td>4</td><td>09.4</td></tr>
+<tr><td>5</td><td>09.5, 09.6, 09.7</td></tr>
+<tr><td>6</td><td>09.8, 09.9</td></tr>
+<tr><td>7</td><td>09.10 (tổng hợp)</td></tr>
+</tbody></table></div><div>
+<p>Bài tập ở mục "Bài tập củng cố" của ghi chú bài giảng; chưa có tệp bài tập riêng.</p>
+<p><strong>Tài liệu đọc:</strong> Sutton và Barto (2018), §6.7, §13.1–13.3, §13.7; van Hasselt và cộng sự (2016).</p>
+<p><a href="material-viewer.html?doc=materials/lec-09/lecture-note.md&amp;deck=lecture-09-double-dqn-va-gradient-chinh-sach.html">Ghi chú bài giảng</a></p>
+<p><a href="lecture-10-trpo-va-ppo.html">Bài 10</a> (TRPO và PPO): đường cơ sở và actor–critic giảm phương sai của REINFORCE, rồi giới hạn độ lớn bước cập nhật.</p>
+</div></div>
+<aside class="notes"><p>Mười bài tập của chương nằm trong ghi chú bài giảng, xếp theo ba mức, mỗi bài có gợi ý và lời giải; Bài tập 09.1 ở mức nhận biết, Bài tập 09.10 là bài tổng hợp vừa giải trên trang chiếu. Học phần chưa có tệp bài tập riêng cho Bài 09. Trên bài toán một bước, tổng phương sai của ước lượng REINFORCE là $\tfrac49$, và cộng $1$ vào mọi phần thưởng làm nó thành $\tfrac{16}9$ trong khi gradient không đổi; Bài 10 dùng tính chất này để trừ một đường cơ sở, rồi thay lợi tức Monte Carlo bằng một hàm giá trị học được trong actor–critic.</p><p class="note-source"><strong>Nguồn:</strong> Sutton và Barto (2018), §6.7, §13.1–13.4, §13.7; van Hasselt, Guez và Silver (2016).</p></aside>
+</section>
 </section>
 
 <div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 09</div>

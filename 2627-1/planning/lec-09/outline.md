@@ -139,17 +139,47 @@ Bảng ký hiệu đầy đủ (27 hàng, ba cột) nằm trong ghi chú bài gi
 | `lec-09-topic-10` | `L09-M6T`, `L09-28`, `L09-28A`, `L09-29`, `L09-29b` |
 | `lec-09-topic-11` | `L09-22`, `L09-30` |
 | `lec-09-topic-12` | `L09-32`, `L09-31`, `X03`, `X03b` |
-| `lec-09-topic-13` | `L09-33` |
+| `lec-09-topic-13` | `L09-M7T`, `L09-K1`, `L09-K1b`, `L09-K2`, `L09-K2b`, `L09-K3`–`L09-K7` |
 
-Mạch 2–7 giữ `data-note-topic-id` cũ cho tới bước của mạch đó. Hai mã mới cho mạch 1 theo cách deck 08 làm (`lec-08-topic-13` cho tiên quyết, `lec-08-topic-17` cho mở đầu), vì trình xem từ chối mã chủ đề lặp và `lec-09-topic-01` thuộc về trang `L09-03` ở mạch 2. Tổng sau bước mạch 1: 43 `data-slide-id` duy nhất, 16 chủ đề; sau bước mạch 2: 44 (thêm `L09-M2T`); sau bước mạch 3: 46 (thêm `L09-M3T`, `L09-06b`); sau R3: 47 (thêm `L09-06c`); sau bước mạch 4: 49 (thêm `L09-M4T`, `L09-16b`), 17 chủ đề (thêm `lec-09-topic-17` Ước lượng kép; `L09-09` chuyển từ topic-04 sang topic-03 vì thành trang thuật toán). Sau bước mạch 5: 51 (thêm `L09-M5T`, `L09-25b`), 17 chủ đề; `X02` chuyển từ topic-08 sang topic-09 vì đặt sau trang Gaussian. Sau bước mạch 6: 54 (thêm `L09-M6T`, `L09-29b`, `X03b`); `L09-22` chuyển từ topic-07 sang topic-11 (giả thiết của định lý).
+Mạch 2–7 giữ `data-note-topic-id` cũ cho tới bước của mạch đó. Hai mã mới cho mạch 1 theo cách deck 08 làm (`lec-08-topic-13` cho tiên quyết, `lec-08-topic-17` cho mở đầu), vì trình xem từ chối mã chủ đề lặp và `lec-09-topic-01` thuộc về trang `L09-03` ở mạch 2. Tổng sau bước mạch 1: 43 `data-slide-id` duy nhất, 16 chủ đề; sau bước mạch 2: 44 (thêm `L09-M2T`); sau bước mạch 3: 46 (thêm `L09-M3T`, `L09-06b`); sau R3: 47 (thêm `L09-06c`); sau bước mạch 4: 49 (thêm `L09-M4T`, `L09-16b`), 17 chủ đề (thêm `lec-09-topic-17` Ước lượng kép; `L09-09` chuyển từ topic-04 sang topic-03 vì thành trang thuật toán). Sau bước mạch 5: 51 (thêm `L09-M5T`, `L09-25b`), 17 chủ đề; `X02` chuyển từ topic-08 sang topic-09 vì đặt sau trang Gaussian. Sau bước mạch 6: 54 (thêm `L09-M6T`, `L09-29b`, `X03b`); `L09-22` chuyển từ topic-07 sang topic-11 (giả thiết của định lý). Sau bước mạch 7: 63 (thêm `L09-M7T`, `L09-K1`, `L09-K1b`, `L09-K2`, `L09-K2b`, `L09-K3`–`L09-K7`; bỏ `L09-33`), 17 chủ đề.
 
 ## Phân bổ thời lượng (đợt sửa 2026-10-28)
 
-$8+15+30+15+22+20+10=120$ phút trên lớp; 30 phút chữa bài ngoài 120 phút. Phân bổ trong mạch 1: bìa 1, ba trang Tiên quyết và quy ước 3, Mục tiêu học tập 1, Nội dung 1, Vấn đề trung tâm 2.
+$8+15+30+15+22+20+10=120$ phút trên lớp; 30 phút chữa bài ngoài 120 phút. Phân bổ từng trang nằm trong `storyboard.md` (mục của từng mạch); tóm tắt:
+
+| mạch | trang | phút |
+|---|---|---:|
+| 1 | bìa 1; ba trang Tiên quyết và quy ước 3; Mục tiêu học tập 1; Nội dung 1; Vấn đề trung tâm 2 | 8 |
+| 2 | `L09-M2T`, `L09-03`–`L09-06` | 15 |
+| 3 | `L09-M3T`, `L09-06b`, `L09-06c`, `L09-07`–`L09-09`, `X01`, `L09-10`, `L09-11`, `L09-13`, `L09-12`, `L09-14`, `L09-15` | 30 |
+| 4 | `L09-M4T`, `L09-16`, `L09-16b`, `L09-17`–`L09-19` | 15 |
+| 5 | `L09-M5T`, `L09-20`, `L09-21`, `L09-30A`, `L09-23`–`L09-25`, `L09-25b`, `L09-26`, `L09-27`, `X02` | 22 |
+| 6 | `L09-M6T`, `L09-28`, `L09-28A`, `L09-29`, `L09-29b`, `L09-22`, `L09-30`, `L09-32`, `L09-31`, `X03`, `X03b` | 20 |
+| 7 | `L09-M7T` 1; `L09-K1`, `L09-K1b` 2; `L09-K2`, `L09-K2b` 2; `L09-K3`, `L09-K4` 2,5; `L09-K5` 1; `L09-K6` 1; `L09-K7` 0,5 | 10 |
 
 ## Tài sản SVG
 
-`central-problem.svg` (mới ở bước mạch 1, dùng trong ghi chú bài giảng, Mục 1); `cartpole-overestimate.svg` (mới ở bước mạch 2, `L09-03` và Ví dụ 09.1); `maximization-bias.svg` vẽ lại ở bước mạch 2 (`L09-05`, Ví dụ 09.2); `dqn-stability.svg` đã xóa ở bước R2 vì không còn trang nào dùng; mạch 4: `aliased-grid-stochastic.svg` (mới), `aliased-grid-policy.svg`, `policy-distributions.svg` (vẽ lại theo nguồn tr. 23–28); mạch 3: `double-estimator.svg`, `ddqn-example.svg`, `double-q-example.svg` (mới), `dqn-vs-ddqn.svg`, `double-q-cross-update.svg` (vẽ lại); `dqn-vs-ddqn.svg`, `double-q-cross-update.svg`, `aliased-grid-policy.svg`, `policy-distributions.svg`, `softmax-score.svg`, `reinforce-trajectory.svg` (bản trước, sửa ở bước của trang dùng).
+Kiểm kê sau bước mạch 7: mười lăm tệp trong `img/lec-09/`, mọi tệp có `role="img"`, `title`, `desc`; không ảnh raster.
+
+| tệp | dùng ở | trạng thái |
+|---|---|---|
+| `central-problem.svg` | ghi chú bài giảng, Mục 1 | mới ở bước mạch 1 |
+| `cartpole-overestimate.svg` | `L09-03`; Ví dụ 09.1 | mới ở bước mạch 2 |
+| `maximization-bias.svg` | `L09-05`; Ví dụ 09.2 | vẽ lại ở bước mạch 2 |
+| `double-estimator.svg` | `L09-06b`; Ví dụ 09.4 | mới ở bước mạch 3 |
+| `ddqn-example.svg` | `L09-08`; Ví dụ 09.6 | mới ở bước mạch 3 |
+| `dqn-vs-ddqn.svg` | `L09-07` | vẽ lại ở bước mạch 3 |
+| `double-q-example.svg` | `L09-13`; Ví dụ 09.7 | mới ở bước mạch 3 |
+| `double-q-cross-update.svg` | `L09-11` | vẽ lại ở bước mạch 3 |
+| `aliased-grid-policy.svg` | `L09-16`; Ví dụ 09.8 | vẽ lại ở bước mạch 4, sửa ở R4 |
+| `aliased-grid-stochastic.svg` | `L09-16b`; Ví dụ 09.9 | mới ở bước mạch 4 |
+| `policy-distributions.svg` | `L09-18`; Ví dụ 09.10 | vẽ lại ở bước mạch 4 |
+| `one-step-card.svg` | `L09-20`, `L09-30A`, `L09-25`, `L09-28`, `L09-32`, `X03`, `L09-K3`; ghi chú bài giảng Mục 5 | mới ở bước mạch 5 (thẻ dữ kiện dùng lại) |
+| `softmax-score.svg` | `L09-24`; ghi chú bài giảng Mục 5 | vẽ lại ở bước mạch 5 |
+| `score-exercise-card.svg` | `X02` | mới ở bước mạch 5 |
+| `reinforce-trajectory.svg` | ghi chú bài giảng Mục 6 (Thuật toán 09.24) | vẽ lại ở bước mạch 6 |
+
+`dqn-stability.svg` đã xóa ở bước R2 vì không còn trang nào dùng.
 
 ## Bản trước đợt sửa 2026-10-28
 

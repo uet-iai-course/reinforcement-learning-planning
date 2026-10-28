@@ -730,3 +730,57 @@ Báo cáo: `review/R6-recheck.md` trong scratchpad phiên. Kết quả rà: 0 ch
 Độ dài ghi chú bài giảng sau R6 (thước đo theo quy ước ở R5: số từ thân văn, bỏ công thức, bảng, khối mã, dòng ảnh, dòng `:::`, chú thích HTML; vì công thức và bảng không phải văn bản người đọc phải đọc như câu chữ, và `wc -w` đếm mỗi mảnh LaTeX tách bởi khoảng trắng là một từ): thân văn 15 981 (trước R6 16 018); `wc -w` 22 290 (trước R6 22 364).
 
 Kiểm sau R6 (Playwright Chromium, `http://127.0.0.1:8799`, 1600×900 và 390×844): mười một trang mạch 6, 0 lỗi console hoặc trang, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, không trang nào tràn (`L09-28` lần đầu 713–767 px khi thêm câu giả thiết, sửa còn 670; `L09-30` lần đầu 711 px, sửa còn 639); đáy `L09-28` 670, `L09-28A` 596, `L09-29` 649, `L09-29b` 557, `L09-22` 507, `L09-30` 639, `L09-31` 626, `X03` 626, `X03b` 545 px; đã xem ảnh 1600×900 của `L09-28`, `L09-30`, `L09-31`, `X03`. Trình xem: 0 `.katex-error`, mọi khối `:::` nhận diện, 0 yêu cầu ngoài, không cuộn ngang trang; đã xem ảnh Ví dụ 09.21 và Nhận xét 09.26. `git diff --check` sạch. `no-ai-slop` (Edit) trên câu mới của R6: đạt. Trạng thái: chờ điều phối viên duyệt.
+
+### Bước mạch 7 (S52–S61, biên tập viên)
+
+Căn cứ: kế hoạch D1 mạch 7, D6 (tình huống áp dụng, tóm tắt chương, Bài tập 09.k ba mức thay X01–X03, tài liệu tham khảo), D7; CT §3.2 (mạch tổng kết) và P38, G11, G13; SV (`L09-33` vượt trần, "Thu hồi Jensen", "hợp đồng"); mục chuyển từ R6 (`L09-M7T`, `L09-33` bản cũ, nơi nhận dòng "Lưu ý:" của `X03b`). Khuôn: mạch 7 của deck 08 và `## 7.`, các mục cấp chương của ghi chú bài giảng Bài 08. Mạch 6 đã commit (`fcfcf5a`, `88646cd`).
+
+| bước | trang | thay đổi | âm tiết | `no-ai-slop` (Edit, tự kiểm theo `eval.md`) | trạng thái |
+|---|---|---|---|---|---|
+| S52 | `L09-M7T` (mới) | Trang tiêu đề mạch 7, `id="mach-7"` | dẫn 17, khóa 14 | đạt | chờ điều phối viên duyệt |
+| S53–S54 | `L09-K1`, `L09-K1b` (mới) | Bảng kết quả–giả thiết–công thức, bảy hàng tách 3 + 4 | 48; 46 | đạt | chờ điều phối viên duyệt |
+| S55–S56 | `L09-K2`, `L09-K2b` (mới) | Hai bảng so sánh bốn phương pháp; kết luận về độ chệch, không viết "hội tụ" | 63; 70 | đạt | chờ điều phối viên duyệt |
+| S57–S58 | `L09-K3`, `L09-K4` (mới) | Bài tập tổng hợp trên thẻ dữ kiện, lời giải trên mặt trang | 31; 31 | đạt | chờ điều phối viên duyệt |
+| S59 | `L09-K5` (mới) | Trả lời vấn đề trung tâm, năm dòng có điều kiện, "Nguồn:" | 72 | đạt | chờ điều phối viên duyệt |
+| S60 | `L09-K6` (mới) | Câu hỏi tự kiểm tra, bốn câu | 52 | đạt | chờ điều phối viên duyệt |
+| S61 | `L09-K7` (mới) | Bài tập về nhà (bảng trỏ Bài tập 09.1–09.9 trong ghi chú; không liên kết giả), tài liệu đọc, liên kết ghi chú, dòng nối Bài 10 | 52 | đạt | chờ điều phối viên duyệt |
+| — | `L09-33` | Bỏ; nội dung vào `L09-K1`, `L09-K1b`, `L09-K2b` | 91 → — | bỏ "hợp đồng", "Thu hồi", "Online chọn; target đánh giá" | chờ điều phối viên duyệt |
+
+Số liệu đã tính lại: bài tổng hợp (c): $r=(3;\,0)$, nhiễu $\pm1$: $\widehat r_1\in\{2;4\}>\widehat r_2\in\{-1;1\}$, $\mathbb E\max=3$, không chệch (trường hợp dấu bằng của Mệnh đề 09.2); $r(2)=2{,}5$: cực đại $2$; $3{,}5$; $4$; $4$, $\mathbb E\max=3{,}375$, chệch $+0{,}375$. Ghi chú: kế hoạch (CT §3.2) ghi "ước lượng tham lam chệch lên" cho bộ số của thẻ dữ kiện; tính lại cho thấy với khoảng cách $3$ và nhiễu $\pm1$ độ chệch bằng $0$, nên bài thêm biến thể $r(2)=2{,}5$ để có chệch lên. Tình huống 09.2: trung bình $\widehat g$ trên lượt của $\theta'=(0;0)$ là $(\tfrac12;-\tfrac12)$; với trọng số $\tfrac43$ khi $A=1$ thành $(\tfrac23;-\tfrac23)$. Số của notebook Bài 08 (ô 78, 81, 88): Lunar Lander, Double DQN $200{,}0$ trên năm hạt giống (từ $201{,}17$; $162{,}46$; $225{,}76$; $218{,}27$; $192{,}3$), cấu hình gốc $205{,}4$ trên cùng hạt giống, hiệu $-5{,}4$, $t=-0{,}38$; Flappy Bird, Double DQN $39{,}8$ trên ba hạt giống, cấu hình gốc $31{,}5$ trên cùng hạt giống, $t=0{,}76$.
+
+Ghi chú bài giảng: `## 7. Tổng kết và chuyển tiếp` viết lại theo khuôn Bài 08 (Kết quả và giả thiết của bài, So sánh bốn phương pháp, Trả lời vấn đề trung tâm, Câu hỏi tự kiểm tra có lời giải, Bài tập về nhà và tài liệu đọc với chuyển tiếp Bài 10); thêm "## Tình huống áp dụng và ứng dụng" (Tình huống 09.1 Double DQN trên Lunar Lander và Flappy Bird với số đã kiểm và giới hạn; Tình huống 09.2 REINFORCE trên dữ liệu bộ nhớ phát lại, giả thiết không thỏa, có số và cách hiệu chỉnh; mục Ứng dụng: Bài 10, Rainbow), "## Tóm tắt chương" (đoạn bảy câu có số, kết quả theo mục, công thức cần nhớ, giả thiết hay bị quên), "## Bài tập củng cố" ba mức (nhận biết: bốn câu hỏi tự kiểm tra; tính toán hoặc chứng minh: Bài tập 09.1–09.6; vận dụng: 09.7, 09.8 và Bài tập 09.9 mới = bài tổng hợp của `L09-K3`/`L09-K4`), "## Hướng dẫn đọc thêm và tài liệu tham khảo" (chín tài liệu, mỗi tài liệu nói rõ phần dùng). Các khối Bài tập 09.1–09.8 chuyển từ cuối Mục 2–6 về mục bài tập củng cố, giữ số; 09.3, 09.5, 09.6, 09.8 bổ sung dữ kiện để tự đủ. Bỏ "Cầu nối: baseline và actor–critic", "Bốn hợp đồng cần giữ", "Bài tập củng cố" X01–X03 cũ.
+
+Độ dài ghi chú bài giảng (quy ước của R5): thân văn 18 494 từ (≤ 20 000); `wc -w` 25 629.
+
+Rà toàn deck của biên tập viên: `L09-02b` bảy tên khớp tên trang tiêu đề mạch và liên kết `#/1`…`#/7` mở `L09-01`, `L09-M2T`…`L09-M7T` (`hashcheck.py`: bấm cả bảy, phím mũi tên tới `L09-M7T`); năm mục tiêu `L09-02` ứng mạch 2–6; năm dòng `L09-K5` ứng năm dòng `L09-02c`; 17 `data-note-topic-id` của deck đều có trong ghi chú bài giảng và ngược lại; 63 `data-slide-id` duy nhất, 7 section ngoài, mọi trang có ghi chú. Mật độ: trang nội dung ≤ 60 âm tiết trừ `L09-01` (65, ngoại lệ đã ghi), `L09-02` (71), `L09-02c` (79), `L09-14` (73), `L09-K2` (63), `L09-K2b` (70), `L09-K5` (72), đều thuộc loại có trần 80. Ghi chú diễn giả 40–150 âm tiết trừ `L09-16` (161, đo với mỗi công thức là một token; mức `nhẹ`, để lại). `outline.md`: bảng note-topic-id (topic-13), số mã sau bước mạch 7 (63), bảng thời lượng bảy mạch, kiểm kê mười lăm SVG. `storyboard.md`: mục mạch 7 (S52–S61), danh sách trang theo mạch, rà toàn deck.
+
+Kiểm sau bước mạch 7 (Playwright Chromium, `http://127.0.0.1:8799`, `check.py --all --narrow`, 1600×900 và 390×844): 63 trang, 0 lỗi console hoặc trang, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, không trang nào tràn; đáy mạch 7: `L09-M7T` 321, `L09-K1` 501, `L09-K1b` 584, `L09-K2` 666, `L09-K2b` 540, `L09-K3` 500, `L09-K4` 475, `L09-K5` 647, `L09-K6` 462, `L09-K7` 586 px (lần đầu `L09-K1` 894 px, `L09-K2` 712 px: tách bảng, rút chữ, nhóm công thức); đã xem ảnh 1600×900 của `L09-K1`, `L09-K1b`, `L09-K2`, `L09-K3`, `L09-K4`, `L09-K5`, `L09-K7`. Trình xem toàn ghi chú: 0 `.katex-error`, mọi khối `:::` nhận diện (gồm `application`), 0 yêu cầu ngoài, không cuộn ngang trang ở 1400 và 390 px; đã xem ảnh Tình huống 09.1 và Bài tập 09.9. `git diff --check` sạch.
+
+### Rà lại mạch 7 (bước R7)
+
+| vai | loại tác tử | mô hình | mức suy luận | ghi tệp |
+|---|---|---|---|---|
+| Rà lại mạch 7 và phần cuối ghi chú bài giảng (toán–RL, mạch, sinh viên–mật độ, `no-ai-slop` Detect) | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Biên tập R7 | Agent `general-purpose` (biên tập viên của đợt sửa) | `claude-opus-5-5` | high | có |
+
+Báo cáo: `review/R7-recheck.md` trong scratchpad phiên. Kết quả rà: 0 chặn bàn giao, 0 nghiêm trọng, 5 trung bình, 8 nhẹ. Điều phối viên duyệt mạch 7 (`check.py --all --narrow`, ảnh `L09-K1b`, `L09-K7`; tự tính $3{,}375$, $(\tfrac12;-\tfrac12)$, trọng số $\tfrac43$; xác nhận Bài 10 mở bằng đường cơ sở và actor–critic) và chấp nhận toàn bộ, kèm các chốt ở cột "quyết định".
+
+| mức độ | vị trí | vấn đề | đề xuất | trạng thái | quyết định |
+|---|---|---|---|---|---|
+| trung bình | `L09-K5` | Lệch `L09-02c`: "chệch lên" thay "≥"; thiếu điều kiện của $\tfrac12$; dòng 3 thiếu "không chệch", dùng $5{,}5\to4{,}6$ làm bằng chứng; dòng 4 thiếu hành động liên tục và tiêu chí của $3{,}8$ | Khớp từng dòng | đã sửa ở R7: "chệch lên hoặc bằng ($\tfrac12$: hai $q_a$ bằng nhau, nhiễu $\pm1$)"; "Bản đánh giá không chệch, độc lập: không chệch lên; Double DQN chỉ gần thỏa"; "$\mathcal A$ liên tục hoặc đặc trưng gộp: học $\pi_\theta$ ($3{,}8$ bước, ô đầu đều)"; 76 âm tiết, đáy 644 px; bỏ câu siêu dữ liệu nguồn trong ghi chú diễn giả | chấp nhận |
+| trung bình | `L09-K2b`; ghi chú diễn giả `L09-K6`; ghi chú bài giảng (bảng thứ hai Mục 7, Trả lời vấn đề trung tâm, Câu hỏi tự kiểm tra 2, Tình huống 09.1) | "Double DQN chỉ giảm độ chệch" không điều kiện | Câu có điều kiện | đã sửa ở R7: "gần thỏa điều kiện tách; không bảo đảm hết chệch lên, mức giảm phải đo bằng thí nghiệm" ở mọi chỗ | chấp nhận |
+| trung bình | `L09-K1`, `L09-K1b` | Thiếu kết quả của mục tiêu 3, 4 | Thêm hàng; `L09-K1c` nếu vượt trần | đã sửa ở R7: hàng "Chính sách ngẫu nhiên khi gộp trạng thái" ở `L09-K1` (75 âm tiết, 635 px), hàng "Hàm điểm" thay hàng kỳ vọng ở `L09-K1b` (50 âm tiết, 633 px); không cần `L09-K1c` | chấp nhận |
+| trung bình | ghi chú bài giảng, tài liệu tham khảo 1 | Sai học kỳ của nguồn | "học kỳ 2, 2025–2026" | đã sửa ở R7; đã tìm "Học kỳ 1, 2026–2027" trong ghi chú bài giảng và planning: không còn chỗ nào gắn với nguồn (dòng chân trang deck và tiêu đề ghi chú là học kỳ của học phần, đúng) | chấp nhận |
+| trung bình | ghi chú bài giảng, độ dài; Mục 7 lặp số | Ba chỗ kể lại cùng bộ số | Giữ một chỗ | đã sửa ở R7: "Trả lời vấn đề trung tâm" còn năm câu điều kiện không kèm số và đoạn kết (số ở Tóm tắt chương); "Bài tập về nhà" bỏ câu phương sai; hai đoạn diễn bảng còn mỗi đoạn một câu | chấp nhận (thước đo: từ thân văn, quy ước R5) |
+| nhẹ | `L09-K2` | Dấu chấm phẩy đứng riêng; "Double Q-" ngắt | Bỏ `<br>`; gạch nối không ngắt | đã sửa ở R7 (cả `L09-K1b`, `L09-K2b`) | chấp nhận |
+| nhẹ | `L09-K1b` hàng định lý | Thiếu (G2) | Nêu đủ | đã sửa ở R7 | chấp nhận |
+| nhẹ | `L09-K7` | Dòng Bài 10 thiếu TRPO, PPO | Câu thay thế | đã sửa ở R7 | chấp nhận |
+| nhẹ | Tình huống 09.1 | Cấu hình tốt nhất gộp năm yếu tố | Kể đủ | đã sửa ở R7 | chấp nhận |
+| nhẹ | Trả lời vấn đề trung tâm, đoạn kết | Câu kết không điều kiện | "chệch lên hoặc bằng" | đã sửa ở R7 | chấp nhận |
+| nhẹ | ghi chú diễn giả `L09-K5` | Câu siêu dữ liệu nguồn | Xóa | đã sửa ở R7 | chấp nhận |
+| nhẹ | Bài tập củng cố, mức nhận biết | Không có bài đánh số | Thêm bài | đã sửa ở R7: Bài tập 09.1 mới (phép cực đại trên ước lượng không chệch) có gợi ý, lời giải; các bài cũ dời số thành 09.2–09.10, mọi tham chiếu trong ghi chú cập nhật; bảng `Mạch \| Bài tập` của `L09-K7` và ghi chú diễn giả theo số mới | chấp nhận |
+| nhẹ | ghi chú diễn giả `L09-16` | 166 âm tiết | Bỏ câu về $\epsilon$-tham lam | đã sửa ở R7: 143 | chấp nhận |
+
+Độ dài ghi chú bài giảng sau R7: thân văn 18 373 (trước 18 494); `wc -w` 25 536.
+
+Kiểm sau R7 (Playwright Chromium, `http://127.0.0.1:8799`, `check.py --all --narrow`, 1600×900 và 390×844): 63 trang, 0 trang tràn, 0 `.katex-error`, 0 lỗi console hoặc trang, 0 yêu cầu ngoài, không cuộn ngang; đáy mạch 7: `L09-K1` 635, `L09-K1b` 633, `L09-K2` 625, `L09-K2b` 502, `L09-K5` 644 (lần đầu 741 px, 88 âm tiết: rút ba dòng và dòng nguồn), `L09-K7` 630 px; đã xem ảnh 1600×900 của `L09-K1`, `L09-K1b`, `L09-K2`, `L09-K5`. Trình xem toàn ghi chú: 0 `.katex-error`, mọi khối `:::` nhận diện, 0 yêu cầu ngoài, không cuộn ngang trang ở 1400 và 390 px; đã xem ảnh mức nhận biết với Bài tập 09.1. `git diff --check` sạch. Trạng thái: chờ điều phối viên duyệt.

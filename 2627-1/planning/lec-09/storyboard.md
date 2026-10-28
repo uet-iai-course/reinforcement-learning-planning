@@ -64,7 +64,8 @@ Cột "C0": vị trí `h.v` (đánh số từ 1) sau bước C0, khi chỉ di ch
 | 6 | `L09-30` | Định lý gradient chính sách | sửa, chuyển lên trước REINFORCE | Kết quả chính của nguồn tr. 39 | 6.5 | 6.5 |
 | 6 | `L09-32`, `L09-31`, `X03` | Ví dụ: một cập nhật REINFORCE; Thuật toán. REINFORCE; bài tập | sửa; `L09-32` trước `L09-31` | Ví dụ tính tay trước thuật toán | 6.6–6.8 | 6.6–6.8 |
 | 7 | `L09-M7T`, `L09-K1`–`L09-K7` | Tổng kết và chuyển tiếp | thêm | Bảng kết quả, bảng phương pháp, bài tổng hợp, trả lời vấn đề trung tâm, câu hỏi tự kiểm tra, bài tập về nhà, dòng nối Bài 10 | chưa có | chưa có |
-| 7 | `L09-33` | (nội dung vào `L09-K1`) | bỏ | Tổng kết dạng thẻ "hợp đồng", vượt trần 80 | 7.1 (tạm) | 7.1 (tạm) |
+| 7 | `L09-33` | (nội dung vào `L09-K1`) | bỏ (đã bỏ ở bước mạch 7) | Tổng kết dạng thẻ "hợp đồng", vượt trần 80 | 7.1 (tạm) | 7.1 (tạm) |
+| 7 | `L09-K1b`, `L09-K2b` | Kết quả và giả thiết của bài (tiếp); So sánh bốn phương pháp (tiếp) | thêm (bước mạch 7) | Tách bảng như `L08-34`/`L08-34b`, `L08-K1`/`L08-K1b` để giữ trần 80 và đáy dưới 702 px | chưa có | 7.3, 7.5 (S54, S56) |
 
 ### Lệch khỏi trật tự nguồn (đợt sửa 2026-10-28)
 
@@ -405,6 +406,46 @@ Lệch khỏi nguồn (mạch 6): nguồn tr. 39 (định lý gradient chính s�
 | `L09-22` | (G4) viết "$\pi_\theta$ là softmax, hoặc Gaussian với $\sigma$ cố định; đặc trưng bị chặn"; ghi chú diễn giả bỏ câu $\mathbb E[T]$ hữu hạn | 52 | 507 px |
 | `L09-31` | "Lưu ý:" nêu trọng số $p_{\theta_{\mathrm{old}}}(\tau)/p_{\theta'}(\tau)$ | 37 | 626 px |
 | `X03`, `X03b` | (b) "Bỏ điều kiện dừng sau $A_0$"; lý do nghiêng về hành động 2 so đóng góp $1{,}2$ với $0{,}933$ | 33; 31 | 626; 545 px |
+
+#### Mạch 7 "Tổng kết và chuyển tiếp" (bước S52–S61)
+
+Khuôn theo mạch tổng kết của deck 08 (`L08-M7T`, `L08-34`/`L08-34b`, `L08-K1`/`L08-K1b`, `L08-K2`–`L08-K5`, `L08-33`). Không khái niệm mới; hành trình sáu bước `không áp dụng` cho mạch này (mọi khái niệm đã có hành trình ở mạch 2–6). `L09-33` bỏ, nội dung vào `L09-K1`, `L09-K1b`, `L09-K2b`.
+
+| bước | trang | tiêu đề | lý do tồn tại; nối trước → sau | âm tiết | dòng, đáy | ghi chú diễn giả |
+|---|---|---|---|---|---|---|
+| S52 | `L09-M7T` | 7. Tổng kết và chuyển tiếp | điểm vào mạch 7; nhận dòng "Lưu ý:" cuối `X03b` (không chệch, phương sai) → `L09-K1` | dẫn 17, khóa 14 | 2; 321 px | khoảng 89 |
+| S53 | `L09-K1` | Kết quả và giả thiết của bài | bảng `Kết quả \| Giả thiết không được bỏ \| Công thức hoặc thuật toán`, ba hàng của mạch 2–3 (phép cực đại, ước lượng kép, mục tiêu Double DQN) → `L09-K1b` | 48 | bảng 3 hàng; 501 px | khoảng 83 |
+| S54 | `L09-K1b` | Kết quả và giả thiết của bài | bốn hàng: Double Q-learning, kỳ vọng hàm điểm, định lý gradient chính sách, REINFORCE → `L09-K2` | 46 | bảng 4 hàng; 584 px | khoảng 125 |
+| S55 | `L09-K2` | So sánh bốn phương pháp | bảng `Phương pháp \| Quy tắc cập nhật \| Dữ liệu dùng \| Điều kiện dừng` cho DQN, Double DQN, Double Q-learning, REINFORCE; dòng "không điều kiện dừng nào là tiêu chuẩn hội tụ" → `L09-K2b` | 63 | bảng 4 hàng + 1 dòng; 666 px | khoảng 97 |
+| S56 | `L09-K2b` | So sánh bốn phương pháp | bảng `Phương pháp \| Giả thiết không được bỏ \| Kết luận` cho kết luận về độ chệch (không viết "hội tụ") → `L09-K3` | 70 | bảng 4 hàng; 540 px | khoảng 101 |
+| S57 | `L09-K3` | Bài tập: tổng hợp trên bài toán một bước | một bài nối hai nhóm trên thẻ dữ kiện: (a) $J$, $\nabla J$; (b) $\widehat g$ từng hành động, $\mathbb E[\widehat g]=\nabla J$; (c) $\mathbb E[\max_a\widehat r_a]$ với nhiễu $\pm1$, rồi với $r(2)=2{,}5$ → `L09-K4` | 31 | 4 + hình; 500 px | khoảng 71 |
+| S58 | `L09-K4` | Bài tập: tổng hợp trên bài toán một bước | "Lời giải:" từng câu, "Kết luận:" ($J=2$; $(\tfrac23;-\tfrac23)$; $3$ không chệch; $3{,}375$ chệch $+0{,}375$) → `L09-K5` | 31 | 5; 475 px | khoảng 100 |
+| S59 | `L09-K5` | Trả lời vấn đề trung tâm | hộp bài toán giống `L09-02c`; năm dòng có điều kiện cho mạch 2–6 kèm số; dòng "Nguồn:" → `L09-K6` | 72 | hộp + 5 dòng + nguồn; 647 px | khoảng 130 |
+| S60 | `L09-K6` | Câu hỏi tự kiểm tra | "Câu hỏi: trả lời và nêu kết quả đã dùng." và bốn câu (CT §3.2); lời giải trong ghi chú diễn giả → `L09-K7` | 52 | 5; 462 px | khoảng 100 |
+| S61 | `L09-K7` | Bài tập về nhà và tài liệu đọc | bảng `Mạch \| Bài tập` trỏ Bài tập 09.1–09.10 của ghi chú bài giảng (số sau R7) (chưa có `exercises.md`, không liên kết "Bài tập"); "Tài liệu đọc:"; liên kết "Ghi chú bài giảng"; dòng nối Bài 10 có liên kết `lecture-10-trpo-va-ppo.html` | 52 | bảng 6 hàng + 4 dòng; 586 px | khoảng 100 |
+
+Ngoại lệ mật độ mạch 7: không có; `L09-K2`, `L09-K2b`, `L09-K5` là trang so sánh, tổng kết (trần 80 âm tiết).
+
+Thời lượng mạch 7: `L09-M7T` 1, `L09-K1` 1, `L09-K1b` 1, `L09-K2` 1, `L09-K2b` 1, `L09-K3` 1, `L09-K4` 1,5, `L09-K5` 1, `L09-K6` 1, `L09-K7` 0,5 phút; tổng 10. Tổng toàn bài: $8+15+30+15+22+20+10=120$ phút.
+
+Lệch khỏi nguồn (mạch 7): nguồn không có mạch tổng kết; trang tổng kết cũ `L09-33` bỏ. Câu hỏi thảo luận của nguồn tr. 11 và 21 không đưa lên mặt trang; ghi chú bài giảng nhắc lại ở mục Câu hỏi tự kiểm tra.
+
+Rà toàn deck ở bước mạch 7: `L09-02b` liệt kê bảy tên khớp bảy tên trang tiêu đề mạch (mạch 1 là bìa); liên kết `#/1`…`#/7` mở `L09-01`, `L09-M2T`, …, `L09-M7T` (đã bấm thử); năm mục tiêu của `L09-02` ứng mạch 2–6; năm dòng của `L09-K5` ứng năm dòng của `L09-02c`; mọi `data-note-topic-id` có trong ghi chú bài giảng và ngược lại (17 mã).
+
+##### Rà lại mạch 7 (bước R7): thay đổi trang và mật độ
+
+| trang | thay đổi ở R7 | âm tiết sau R7 | đáy |
+|---|---|---|---|
+| `L09-K1` | thêm hàng "Chính sách ngẫu nhiên khi gộp trạng thái" (mục tiêu 3 của `L09-02`); bốn hàng | 75 | 635 px |
+| `L09-K1b` | hàng "Kỳ vọng của hàm điểm" thay bằng hàng "Hàm điểm" (công thức softmax, Gaussian, kỳ vọng $0$; mục tiêu 4); hàng định lý nêu đủ (G2); "Double Q&#8209;learning" không ngắt | 50 | 633 px |
+| `L09-K2` | ô dữ liệu REINFORCE bỏ `<br>`; "Double Q&#8209;learning" không ngắt | 64 | 625 px |
+| `L09-K2b` | ô Double DQN: "không bảo đảm hết chệch lên; mức giảm phải đo" | 71 | 502 px |
+| `L09-K5` | năm dòng khớp `L09-02c`: "chệch lên hoặc bằng" với điều kiện của số $\tfrac12$; "bản đánh giá không chệch, độc lập", "Double DQN chỉ gần thỏa" (bỏ $5{,}5\to4{,}6$); hành động liên tục và tiêu chí của $3{,}8$; dòng nguồn rút gọn | 76 | 644 px |
+| `L09-K6` | ghi chú diễn giả (2) có điều kiện | 52 | 462 px |
+| `L09-K7` | bảng `Mạch \| Bài tập` theo số mới (09.1–09.10; 09.1 mức nhận biết); dòng Bài 10 nêu "TRPO và PPO" | 60 | 630 px |
+| `L09-16` | ghi chú diễn giả bỏ câu về $\epsilon_{\mathrm{exp}}$-tham lam (đã có ở `L09-M4T`): 166 → 143 | 47 | 678 px |
+
+Không thêm `L09-K1c`: hai trang bảng kết quả đều dưới trần 80 âm tiết và đáy 702 px. Thời lượng mạch 7 giữ 10 phút.
 
 ## Bản trước đợt sửa 2026-10-28
 
