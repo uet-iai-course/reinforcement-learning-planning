@@ -10,7 +10,7 @@
 <line x1="900" y1="132" x2="900" y2="148" stroke="#424954" stroke-width="3"/><text x="900" y="174">110</text>
 </g>
 <line x1="500" y1="20" x2="500" y2="140" stroke="#2F3E7A" stroke-width="3" stroke-dasharray="9 6"/>
-<text x="490" y="36" font-size="21" text-anchor="end" fill="#2F3E7A">cận 1/(1 − γ) = 100</text>
+<text x="490" y="36" font-size="21" text-anchor="end" fill="#2F3E7A">cận 1/(1 − <tspan font-family="'STIX Two Math','Cambria Math','Times New Roman',serif" font-style="italic">γ</tspan>) = 100</text>
 <circle cx="472" cy="140" r="11" fill="#2F3E7A"/>
 <text x="460" y="112" font-size="21" text-anchor="end" fill="#2F3E7A">lợi tức <tspan font-style="italic">G</tspan><tspan font-size="15" dy="5">0</tspan><tspan dy="-5"> = 99,3 (cắt ở bước 500)</tspan></text>
 <path d="M840,127 L853,140 L840,153 L827,140 Z" fill="#B15A2B"/>

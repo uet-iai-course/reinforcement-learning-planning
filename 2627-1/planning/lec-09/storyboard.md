@@ -447,6 +447,57 @@ Rà toàn deck ở bước mạch 7: `L09-02b` liệt kê bảy tên khớp bả
 
 Không thêm `L09-K1c`: hai trang bảng kết quả đều dưới trần 80 âm tiết và đáy 702 px. Thời lượng mạch 7 giữ 10 phút.
 
+#### Rà cuối từ góc nhìn sinh viên (bước F): thay đổi trang và mật độ
+
+| trang | thay đổi ở F | âm tiết sau F | đáy |
+|---|---|---|---|
+| `L09-01` | luận đề: "tách việc chọn hành động khỏi việc đánh giá nó" | 70 (ngoại lệ bìa, xem mục ngoại lệ) | 499 px |
+| `L09-02c` | dòng 2–6 viết bằng lời cho người đọc lần đầu (công thức để lại cho `L09-K5`); bỏ chữ "Khi" ở đầu dòng | 79 → 94 (ngoại lệ: thay ba công thức bằng lời, mỗi dòng ≤ 2 dòng hiển thị) | 673 px |
+| `L09-03` | nguồn của $108{,}5$ (một lần chạy DQN, thực hành Bài 08) trên mặt trang; γ trong `cartpole-overestimate.svg` đặt phông có chân | 56 | 650 px |
+| `L09-06b` | "Diễn giải:" nêu lại $\mathbb E[\max_a\widehat Q^A_a]=\tfrac12$ thay cụm "một bản cho cả hai việc" | 39 | 654 px |
+| `L09-06c` | phép tính $\tfrac34\cdot0{,}5=0{,}375$, chệch $-0{,}125$ | 45 | 497 px |
+| `L09-07` | "Lưu ý:" mặt nạ cho $y_i=R_i$, $a_i^*$ không ảnh hưởng | 27 | 612 px |
+| `L09-13` | `double-q-example.svg` đảo hàng cho khớp `L09-08` (hàng trên đánh giá, mũi tên đi lên); "Diễn giải:" nêu vai tại chỗ | 21 | 694 px |
+| `L09-14` | bỏ số hiệu ghi chú trong ô bảng | 76 | 654 px |
+| `L09-15` | "Giới hạn chung:" đổi thành "Lưu ý:" | 57 | 446 px |
+| `L09-16` | "đặc trưng $x(s)$"; "tất định (Bài 04: xác định)" ở lần dùng đầu; ghi chú bỏ câu quy trình về nguồn | 52 | 678 px |
+| `L09-16b` | định nghĩa $h_i$ trên mặt trang; `aliased-grid-stochastic.svg` thêm hàng $h_i=5,4,1,4,5$; "Diễn giải:" $(5+4+1+4+5)/5=3{,}8$; ghi chú rút còn 108 | 48 | 638 px |
+| `L09-17` | "(từ đây $\theta$ là tham số của chính sách)" | 59 | 410 px |
+| `L09-19` | "Ký hiệu:" $\phi(s,a)$, $\phi(s)$ là vector đặc trưng cố định | 58 | 669 px |
+| `L09-20` | "Định nghĩa." nêu hàm mục tiêu khác mục tiêu $y_i$ của DQN | 47 | 649 px |
+| `L09-21` | "Ví dụ." nêu $\phi(s,1)$, $\phi(s,2)$ tại chỗ; ghi chú bỏ "Nguồn hỏi…" | 44 | 597 px |
+| `L09-22` | danh sách không đánh số kép | 52 | 507 px |
+| `L09-23` | "Trực quan." nêu tổng $\sum_ar(a)\nabla\pi_\theta$ thiếu trọng số $\pi_\theta$ | 43 | 630 px |
+| `L09-26` | "Chứng minh." đưa "hằng số" ra ngoài KaTeX; ghi chú bỏ "Nguồn hỏi…" | 32 | 625 px |
+| `L09-27` | nghĩa của hệ số $c$ | 25 | 501 px |
+| `L09-28` | thay "(G1)–(G4)" bằng giả thiết tại chỗ: đổi được $\nabla_\theta$ với tích phân, điều kiện đủ nêu cùng định lý | 36 | 676 px |
+| `L09-29` | bỏ số hiệu ghi chú | 21 | 606 px |
+| `L09-29b` | nhãn (i), (ii), (iii) cho ba ước lượng; hai hiệu (i) − (ii), (iii) − (ii) | 38 | 609 px |
+| `L09-30` | "Dạng khác" nêu tên và nghĩa của $\nu^\pi_\gamma$ (tần suất thăm, lượt muộn tính nhẹ hơn) | 56 | 647 px |
+| `L09-30A` | "thương sai phân" | 44 | 608 px |
+| `L09-K1` | hàng gộp trạng thái phát biểu đủ ($3{,}8$ bước, tất định có ô không tới đích); rút cột giả thiết | 72 | 676 px |
+| `L09-K1b` | giả thiết Double Q-learning là độc lập và không chệch | 53 | 633 px |
+| `L09-K2b` | thứ tự hàng DQN, Double DQN, Double Q-learning, REINFORCE như `L09-K2`; tên "DQN" | 69 | 502 px |
+| `L09-K5` | dòng 4, 6 phát biểu lại dữ kiện; ghi chú bỏ câu mở siêu văn bản | 80 | 645 px |
+| `L09-K7` | "Bài tập: mục Bài tập củng cố của ghi chú bài giảng." | 53 | 630 px |
+
+Ngoại lệ mật độ ở F: `L09-01` (bìa) 70 âm tiết; `L09-02c` 94 âm tiết, gỡ ở F2 (xem dưới).
+
+#### Bước F2: thay đổi trang và mật độ
+
+| trang | thay đổi ở F2 | âm tiết sau F2 | đáy |
+|---|---|---|---|
+| `L09-01` | luận đề có điều kiện: "đánh giá bằng một ước lượng không chệch, độc lập với ước lượng chọn bỏ được phần chệch lên này" (vẫn một câu) | 75 (ngoại lệ bìa: luận đề một câu, như `L08-01`; trước đợt sửa 58, sau R1 65) | 499 px |
+| `L09-02c` | hộp rút gọn; dòng 3 "Ước lượng đánh giá không chệch, độc lập với ước lượng chọn: …"; dòng 4 "Hành động thực, …"; dòng 6 đủ giả thiết "$R$, $T$, $\phi$ bị chặn"; mỗi dòng ≤ 19 âm tiết | 94 → 78 (gỡ ngoại lệ) | 673 px |
+| `L09-K5` | hộp và dòng 3 cùng câu với `L09-02c`; dòng "Nguồn:" rút gọn (nguồn đầy đủ trong ghi chú diễn giả) | 78 | 649 px |
+| `L09-14` | ô dữ liệu của Double DQN: "như DQN" | 72 | 654 px |
+| `L09-16b` | dòng đầu nêu chính sách ở hai ô xám bằng chữ; `alt` có hàng $h_i$ | 55 | 690 px |
+| `L09-23` | "Trực quan." mở bằng "Bài toán một bước:" | 47 | 630 px |
+| `L09-28` | câu giả thiết tách sang dòng "Giả thiết:" | 36 | 696 px |
+| `L09-30` | $\nu^\pi_\gamma$: "lần thăm ở bước muộn tính nhẹ hơn" | 59 | 647 px |
+
+Sau F2, mọi trang so sánh, tổng kết ≤ 80 âm tiết; mọi trang nội dung khác ≤ 60, trừ ngoại lệ bìa `L09-01`.
+
 ## Bản trước đợt sửa 2026-10-28
 
 Các mục dưới đây mô tả bản trước đợt sửa (sáu section ngoài, 38 trang).

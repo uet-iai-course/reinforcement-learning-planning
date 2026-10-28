@@ -784,3 +784,78 @@ Báo cáo: `review/R7-recheck.md` trong scratchpad phiên. Kết quả rà: 0 ch
 Độ dài ghi chú bài giảng sau R7: thân văn 18 373 (trước 18 494); `wc -w` 25 536.
 
 Kiểm sau R7 (Playwright Chromium, `http://127.0.0.1:8799`, `check.py --all --narrow`, 1600×900 và 390×844): 63 trang, 0 trang tràn, 0 `.katex-error`, 0 lỗi console hoặc trang, 0 yêu cầu ngoài, không cuộn ngang; đáy mạch 7: `L09-K1` 635, `L09-K1b` 633, `L09-K2` 625, `L09-K2b` 502, `L09-K5` 644 (lần đầu 741 px, 88 âm tiết: rút ba dòng và dòng nguồn), `L09-K7` 630 px; đã xem ảnh 1600×900 của `L09-K1`, `L09-K1b`, `L09-K2`, `L09-K5`. Trình xem toàn ghi chú: 0 `.katex-error`, mọi khối `:::` nhận diện, 0 yêu cầu ngoài, không cuộn ngang trang ở 1400 và 390 px; đã xem ảnh mức nhận biết với Bài tập 09.1. `git diff --check` sạch. Trạng thái: chờ điều phối viên duyệt.
+
+### Rà cuối từ góc nhìn sinh viên (bước F)
+
+| vai | loại tác tử | mô hình | mức suy luận | ghi tệp |
+|---|---|---|---|---|
+| Rà cuối toàn deck từ góc nhìn sinh viên (63 trang, ảnh 1600×900, `no-ai-slop` Detect) | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Biên tập F | Agent `general-purpose` (biên tập viên của đợt sửa) | `claude-opus-5-5` | high | có |
+
+Báo cáo: `review/F-student.md` trong scratchpad phiên (văn bản trích kèm số âm tiết: `shots-F/dump.txt`). Kết quả: 0 chặn bàn giao, 2 nghiêm trọng, 7 trung bình, 16 nhẹ. Điều phối viên kiểm hai phát hiện nghiêm trọng trên deck và chấp nhận toàn bộ, kèm các chốt ở cột "quyết định". Mạch 7 đã commit (`9417fc3`, `d373d27`).
+
+| mức độ | trang | vấn đề | trạng thái | quyết định |
+|---|---|---|---|---|
+| nghiêm trọng | `L09-28` | (G1)–(G4) dùng trước khi phát biểu | đã sửa ở F: "Giả sử đổi được $\nabla_\theta$ với tích phân; điều kiện đủ nêu cùng định lý."; không đảo `L09-22` | chấp nhận (giữ trang vấn đề trước) |
+| nghiêm trọng | `L09-16b` | $h_i$ không định nghĩa; $3{,}8$ không kiểm được | đã sửa ở F: "tính $h_i$, số bước kỳ vọng tới đích từ ô $i$"; hình thêm hàng $h_i$: $5,4,1,4,5$; "Diễn giải:" $(5+4+1+4+5)/5=3{,}8$; 48 âm tiết, đáy 638 px | chấp nhận |
+| trung bình | `L09-13` | nhắc ví dụ trước bằng lời; thứ tự hàng bảng ngược `L09-08` | đã sửa ở F: `double-q-example.svg` hàng trên $Q_2$ (đánh giá), hàng dưới $Q_1$ (chọn), mũi tên đi lên như `ddqn-example.svg`; "Diễn giải:" nêu vai tại chỗ; ghi chú bài giảng sửa `alt` và câu đọc hình | chấp nhận |
+| trung bình | `L09-06b` | cụm "một bản cho cả hai việc" | đã sửa ở F | chấp nhận |
+| trung bình | `L09-K1`, `L09-K5` | cụm rút gọn khó giải mã | đã sửa ở F | chấp nhận |
+| trung bình | `L09-02c` | dòng 3, 4, 6 dùng khái niệm chưa học | đã sửa ở F (viết bằng lời; công thức ở `L09-K5`); ngoại lệ mật độ 94 âm tiết ghi trong storyboard | chấp nhận |
+| trung bình | `L09-23` | trực quan không nói tổng nào cần thành kỳ vọng | đã sửa ở F | chấp nhận |
+| trung bình | `L09-30` | $\nu^\pi_\gamma$ xuất hiện đột ngột | đã sửa ở F: "Dạng khác" giữ trên mặt trang với cụm định nghĩa ngắn "phân bố chiếm dụng chiết khấu … tần suất thăm $s$, lượt muộn tính nhẹ hơn"; ghi chú bài giảng thêm câu đọc $\nu^\pi_\gamma$ bằng lời | chấp nhận (theo chốt: cụm định nghĩa ngắn) |
+| trung bình | `L09-17`, `L09-19` | $\theta$ đổi vai; $\phi$ chưa nhắc | đã sửa ở F; `L09-16` ghi "đặc trưng $x(s)$" | chấp nhận |
+| trung bình | `L09-29b` | ba ước lượng không có nhãn | đã sửa ở F: (i), (ii), (iii) và hai hiệu; ghi chú bài giảng Ví dụ 09.18 cùng nhãn | chấp nhận |
+| nhẹ | `L09-07` | "dạng từng trường hợp" | đã sửa ở F | chấp nhận |
+| nhẹ | `L09-06c` | $-0{,}125$ không có phép tính | đã sửa ở F | chấp nhận |
+| nhẹ | `L09-03` | nguồn của $108{,}5$; γ trong SVG giống "y" | đã sửa ở F: dòng "Ví dụ." nêu thực hành Bài 08; γ trong `cartpole-overestimate.svg`, `reinforce-trajectory.svg` dùng phông có chân, nghiêng | chấp nhận |
+| nhẹ | `L09-27` | nghĩa của $c$ | đã sửa ở F | chấp nhận |
+| nhẹ | `L09-15` | nhãn "Giới hạn chung:" | đã sửa ở F ("Lưu ý:") | chấp nhận |
+| nhẹ | `L09-02`, `L09-20` | "mục tiêu" ba nghĩa | đã sửa ở F: `L09-20` nêu hàm mục tiêu khác mục tiêu $y_i$; kiểm deck: mọi chỗ nói $J$ viết "hàm mục tiêu" | chấp nhận |
+| nhẹ | `L09-16`, `L09-16b` | "tất định" và "xác định" của Bài 04 | đã sửa ở F: "tất định (Bài 04: xác định)" ở lần dùng đầu trên mặt trang `L09-16` | chấp nhận |
+| nhẹ | `L09-21` | "$\phi$ đơn vị" | đã sửa ở F: nêu $\phi(s,1)$, $\phi(s,2)$; đạo hàm softmax đã có trong ghi chú diễn giả; không thêm thẻ (không đủ chỗ) | chấp nhận |
+| nhẹ | `L09-30A` | "thương" | đã sửa ở F | chấp nhận |
+| nhẹ | `L09-26` | `\text{hằng số}` lệch dấu thanh | đã sửa ở F; ghi chú bài giảng: bỏ mọi `\text{}` chữ Việt (năm chỗ: hai khối `aligned` có chú thích, hai chỗ "nên"), chú thích chuyển ra văn xuôi | chấp nhận |
+| nhẹ | `L09-14`, `L09-29` | số hiệu ghi chú không đối chiếu được | đã sửa ở F: thay bằng điều kiện hoặc bỏ | chấp nhận |
+| nhẹ | `L09-22` | đánh số kép | đã sửa ở F | chấp nhận |
+| nhẹ | `L09-K2`, `L09-K2b` | thứ tự, tên hàng khác nhau | đã sửa ở F | chấp nhận |
+| nhẹ | `L09-K1b` | giả thiết Double Q-learning là cơ chế | đã sửa ở F | chấp nhận |
+| nhẹ | `L09-K7` | dòng trạng thái; "actor–critic" | đã sửa ở F: "Bài tập: mục Bài tập củng cố của ghi chú bài giảng."; "actor–critic" giữ nguyên là tên phương pháp theo bảng thuật ngữ của `outline.md` | chấp nhận một phần (tên phương pháp giữ) |
+| nhẹ | `L09-01` | "tách chọn khỏi đánh giá" chưa rõ | đã sửa ở F | chấp nhận |
+| nhẹ | ghi chú diễn giả `L09-16`, `L09-21`, `L09-26`, `L09-25`, `L09-06b`, `L09-02c`, `L09-K5`, `L09-03`, `L09-16b` | thông tin quy trình, "Nguồn hỏi…", nhắc trang khác bằng lời, câu mở siêu văn bản; bốn ghi chú dài | đã sửa ở F: bỏ "sai khác có chủ ý so với nguồn" (giữ trong review-log, storyboard), viết lại "Nguồn hỏi" thành câu khẳng định, thay "ở trang định nghĩa" bằng số liệu, bỏ "Dòng số N…"; mọi ghi chú ≤ 150 âm tiết theo cách đếm của `dens.py` (`L09-16b` 108, `L09-K5` 114, `L09-03` 111, `L09-16` 117) | chấp nhận |
+
+Ghi chú bài giảng đổi theo trang: `alt` của `aliased-grid-stochastic.svg` (hàng $h_i$), `alt` và câu đọc hình của `double-q-example.svg`, Ví dụ 09.18 nhãn (i), (ii), (iii), câu đọc $\nu^\pi_\gamma$ bằng lời sau Hệ quả 09.23, bỏ `\text{}` chữ Việt. Độ dài: thân văn 18 460 từ; `wc -w` 25 646.
+
+Kiểm sau F (Playwright Chromium, `http://127.0.0.1:8799`, `check.py --all --narrow`, 1600×900 và 390×844): 63 trang, 0 trang tràn, 0 `.katex-error`, 0 lỗi console hoặc trang, 0 yêu cầu ngoài, không cuộn ngang (lần đầu `L09-13` 736, `L09-16b` 736, `L09-K1` 725 px, `L09-03` 702 px: rút chữ, rút cột bảng); đã xem ảnh 1600×900 của `L09-02c`, `L09-03`, `L09-06b`, `L09-13`, `L09-16b`, `L09-19`, `L09-20`, `L09-22`, `L09-23`, `L09-26`, `L09-27`, `L09-28`, `L09-29b`, `L09-30`, `L09-K1`, `L09-K1b`, `L09-K2b`, `L09-K5`, `L09-K7`. Trình xem toàn ghi chú: 0 `.katex-error`, mọi khối `:::` nhận diện, 0 yêu cầu ngoài, không cuộn ngang trang. `git diff --check` sạch. Trạng thái: chờ điều phối viên duyệt.
+
+### Bước F2 (sửa theo rà lại bước F)
+
+| vai | loại tác tử | mô hình | mức suy luận | ghi tệp |
+|---|---|---|---|---|
+| Rà lại bước F (chỉ đọc, `no-ai-slop` Detect) | Agent `general-purpose` | `claude-opus-5-5` | high | không |
+| Biên tập F2 | Agent `general-purpose` (biên tập viên của đợt sửa) | `claude-opus-5-5` | high | có |
+
+Báo cáo: `review/RF-recheck.md` trong scratchpad phiên. Kết quả: 0 chặn bàn giao, 0 nghiêm trọng, 2 trung bình, 7 nhẹ. Điều phối viên duyệt bước F (`check.py --all --narrow`, ảnh `L09-02c`, `L09-16b`) và chấp nhận toàn bộ.
+
+| mức độ | vị trí | vấn đề | trạng thái | quyết định |
+|---|---|---|---|---|
+| trung bình | `L09-02c`, `L09-K5` | dòng 3 lặp từ, 22 âm tiết; dòng 6 thiếu đặc trưng bị chặn; tổng 94 | đã sửa ở F2: bộ câu thay của báo cáo; 78 âm tiết, mỗi dòng ≤ 19; `L09-K5` cùng câu dòng 3 và hộp; gỡ ngoại lệ 94 trong storyboard | chấp nhận |
+| trung bình | `L09-30` | $\nu^\pi_\gamma$ "lượt muộn" sai nghĩa | đã sửa ở F2: "lần thăm ở bước muộn tính nhẹ hơn"; ghi chú bài giảng cùng chữ | chấp nhận |
+| nhẹ | `L09-01` | luận đề "tách … làm giảm" không điều kiện | đã sửa ở F2: "đánh giá bằng một ước lượng không chệch, độc lập với ước lượng chọn bỏ được phần chệch lên này" (một câu; 75 âm tiết, ngoại lệ bìa ghi trong storyboard) | chấp nhận |
+| nhẹ | `L09-16b` | `alt` cũ; chính sách ở ô xám chỉ có trong hình | đã sửa ở F2 (55 âm tiết, 690 px) | chấp nhận |
+| nhẹ | `L09-23` | công thức một bước đọc như công thức chung | đã sửa ở F2 ("Bài toán một bước:") | chấp nhận |
+| nhẹ | `L09-28` | câu giả thiết dưới nhãn "Ký hiệu:" | đã sửa ở F2 (dòng "Giả thiết:" riêng; 696 px) | chấp nhận |
+| nhẹ | `L09-14`, `L09-K5` | vượt trần 80 | đã sửa ở F2: 72 và 78 | chấp nhận |
+| nhẹ | ghi chú bài giảng, sau Hệ quả 09.23 | $\mu$ dùng cho phân bố trạng thái | đã sửa ở F2: $\eta(s)=\sum_t\gamma^t\Pr(S_t=s)$ không chuẩn hóa | chấp nhận |
+| nhẹ | ghi chú bài giảng, đầu mục Hàm điểm | dấu phẩy thừa trước $\Longrightarrow$ | đã sửa ở F2 | chấp nhận |
+
+Kiểm sau F2 (Playwright Chromium, `http://127.0.0.1:8799`, `check.py --all --narrow`, 1600×900 và 390×844): 63 trang, 0 trang tràn, 0 `.katex-error`, 0 lỗi console hoặc trang, 0 yêu cầu ngoài, không cuộn ngang; đã xem ảnh 1600×900 của `L09-01`, `L09-02c`, `L09-16b`, `L09-28`. Trình xem toàn ghi chú: 0 `.katex-error`, mọi khối `:::` nhận diện, không cuộn ngang trang. Ghi chú bài giảng: thân văn 18 466 từ, `wc -w` 25 653. `git diff --check` sạch.
+
+**Trạng thái bàn giao:** đợt sửa 2026-10-28 của Bài 09 (C0, mạch 1–7, R1–R7, F, F2) đã xong phần biên tập; chờ điều phối viên ký duyệt.
+
+### Ký duyệt của điều phối viên (2026-10-28)
+
+- Bước F (rà cuối từ góc nhìn sinh viên, tác tử độc lập Agent `general-purpose`, `claude-opus-5-5`, high, chỉ đọc), rà lại bước F (tác tử rà lại của đợt, cùng mô hình) và bước F2 (biên tập viên): **chấp nhận**.
+- Căn cứ: điều phối viên tự chạy Playwright (`check.py --all --narrow`, 63 trang, 1600×900 và 390×844): 0 lỗi console hoặc trang, 0 `.katex-error`, 0 yêu cầu ra ngoài máy chủ cục bộ, không tràn khung, không cuộn ngang; xem ảnh `L09-01`, `L09-02c`, `L09-16b`, `L09-28`; tự tính lại $h_i=5,4,1,4,5$ và trung bình $3{,}8$.
+- Mọi phát hiện chặn bàn giao và nghiêm trọng của ba rà soát đầu, bảy lượt rà lại theo mạch và lượt rà cuối đã xử lý và ghi ở các mục trên.
+- Giới hạn còn lại: chưa có `exercises.md` và notebook thực hành cho Bài 09 (thẻ index ghi "Chưa có"); ghi chú bài giảng dài 18 466 từ thân văn (25 646 theo `wc -w`); bìa `L09-01` giữ ngoại lệ mật độ (luận đề một câu có điều kiện).

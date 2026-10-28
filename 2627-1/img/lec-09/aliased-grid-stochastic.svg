@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 200" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 232" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
 <title id="t">Lưới gộp trạng thái, chính sách ngẫu nhiên</title>
-<desc id="d">Cùng lưới hai hàng năm cột. Ở ô 2 và ô 4 màu xám, hai mũi tên Đông và Tây, mỗi mũi tên xác suất một phần hai. Ô 1 sang Đông, ô 3 xuống ô đích, ô 5 sang Tây. Ghi chú bên phải: số bước kỳ vọng từ ô 2 và từ ô 4 tới ô đích bằng 4.</desc>
+<desc id="d">Cùng lưới hai hàng năm cột. Ở ô 2 và ô 4 màu xám, hai mũi tên Đông và Tây, mỗi mũi tên xác suất một phần hai. Ô 1 sang Đông, ô 3 xuống ô đích, ô 5 sang Tây. Hàng dưới lưới ghi h, số bước kỳ vọng tới ô đích khi xuất phát ở từng ô: ô 1 bằng 5, ô 2 bằng 4, ô 3 bằng 1, ô 4 bằng 4, ô 5 bằng 5.</desc>
 <defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#2F3E7A"/></marker><marker id="ar2" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#B15A2B"/></marker></defs>
 <rect x="205" y="30" width="110" height="80" fill="#FFFFFF" stroke="#333" stroke-width="2"/>
 <text x="213" y="50" font-size="16" fill="#424954">ô 1</text>
@@ -32,7 +32,12 @@
 <line x1="615" y1="92.0" x2="553" y2="92.0" stroke="#2F3E7A" stroke-width="4" marker-end="url(#ar)"/>
 
 <text x="191" y="78.0" font-size="21" text-anchor="end">Đông, Tây</text><text x="191" y="104.0" font-size="21" text-anchor="end">mỗi hướng ½</text>
-<text x="769" y="78.0" font-size="21">h₂ = h₄ = 4</text>
+<text x="191" y="222" font-size="21" text-anchor="end"><tspan font-style="italic">h</tspan><tspan font-size="15" dy="5" font-style="italic">i</tspan><tspan dy="-5"> (số bước tới $)</tspan></text>
+<text x="260" y="222" font-size="22" font-weight="700" text-anchor="middle" fill="#2F3E7A">5</text>
+<text x="370" y="222" font-size="22" font-weight="700" text-anchor="middle" fill="#2F3E7A">4</text>
+<text x="480" y="222" font-size="22" font-weight="700" text-anchor="middle" fill="#2F3E7A">1</text>
+<text x="590" y="222" font-size="22" font-weight="700" text-anchor="middle" fill="#2F3E7A">4</text>
+<text x="700" y="222" font-size="22" font-weight="700" text-anchor="middle" fill="#2F3E7A">5</text>
 
 <text x="327" y="84" font-size="16">½</text><text x="413" y="110" font-size="16" text-anchor="end">½</text><text x="547" y="84" font-size="16">½</text><text x="633" y="110" font-size="16" text-anchor="end">½</text>
 </svg>
