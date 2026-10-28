@@ -68,7 +68,7 @@ Bảng gồm ký hiệu dùng xuyên suốt chương; ký hiệu chỉ dùng tro
 | $\widehat g$ | ước lượng REINFORCE của $\nabla_\theta J$ | $\mathbb R^d$ |
 | $\nu^\pi_\gamma$ (viết gọn $\nu^\pi$) | phân bố chiếm dụng chiết khấu của trạng thái dưới $\pi$ | phân phối trên $\mathcal S$ |
 
-Quy ước đọc. $R_{t+1}$ gắn với chuyển từ bước $t$ sang bước $t+1$. Sau bước kết thúc $T$, ta coi lượt đi vào một trạng thái hấp thụ có phần thưởng $0$, nên $G_T=0$ và mọi giá trị tại trạng thái kết thúc bằng $0$. Kỳ vọng $\mathbb E_\pi$ lấy theo $S_0\sim\rho_0$, $A_t\sim\pi(\cdot\mid S_t)$ và $(S_{t+1},R_{t+1})\sim P(\cdot\mid S_t,A_t)$. Trong mini-batch, chỉ số $i$ không mang thứ tự thời gian, nên mẫu viết $R_i$, $S'_i$ thay cho $R_{t+1}$, $S_{t+1}$. Chữ hoa $Q$ chỉ các ước lượng (mạng, bảng, $\widehat Q_a$), chữ thường $q_\pi$ chỉ giá trị đúng. Khi tọa độ của vector có dấu phẩy thập phân, các tọa độ được ngăn bằng dấu chấm phẩy, như $(1{,}5;\,3)$; ta dùng cùng cách viết cho mọi vector của chương.
+Quy ước đọc. $R_{t+1}$ gắn với chuyển từ bước $t$ sang bước $t+1$. Sau bước kết thúc $T$, ta coi lượt đi vào một trạng thái hấp thụ có phần thưởng $0$, nên $G_T=0$ và mọi giá trị tại trạng thái kết thúc bằng $0$. Kỳ vọng $\mathbb E_\pi$ lấy theo $S_0\sim\rho_0$, $A_t\sim\pi(\cdot\mid S_t)$ và $(S_{t+1},R_{t+1})\sim P(\cdot\mid S_t,A_t)$. Trong mini-batch, chỉ số $i$ không mang thứ tự thời gian, nên mẫu viết $R_i$, $S'_i$ thay cho $R_{t+1}$, $S_{t+1}$. Chữ hoa $Q$ chỉ các ước lượng (mạng, bảng, $\widehat Q_a$), chữ thường $q_\pi$ chỉ giá trị đúng. Ký hiệu $\log$ chỉ logarit tự nhiên. Khi tọa độ của vector có dấu phẩy thập phân, các tọa độ được ngăn bằng dấu chấm phẩy, như $(1{,}5;\,3)$; ta dùng cùng cách viết cho mọi vector của chương.
 
 Chữ $\theta$ có hai vai. Ở Mục 2–3, $\theta$ là tham số của mạng giá trị hành động như trong Bài 08; từ Mục 4, $\theta$ là tham số của chính sách như trong bài giảng gốc và trong Sutton và Barto (2018, Chương 13). Hai vai không xuất hiện trong cùng một công thức. Số liệu trong các ví dụ là số liệu sư phạm tự xây dựng, trừ các số đo lấy từ bài thực hành của Bài 08, có ghi rõ nguồn tại chỗ dùng.
 
@@ -82,10 +82,10 @@ Chữ $\theta$ có hai vai. Ở Mục 2–3, $\theta$ là tham số của mạng
 
 | Mã | Chủ đề | Nguồn trang | Vai trò | Vào → Ra | Mục |
 |---|---|---|---|---|---|
-| `lec-09-topic-15` | Kiến thức tiên quyết và ký hiệu | tr. 3–10 | Nhắc mục tiêu DQN, dừng gradient, chính sách, lợi tức, bất đẳng thức Jensen | Vào: Bài 03, Bài 08 → Ra: ký hiệu chung của chương | phần mở đầu |
-| `lec-09-topic-16` | Mở đầu: mục tiêu, nội dung và bài toán trung tâm | tr. 1–2, 11, 22–25 | Nêu hai đại lượng ước lượng từ mẫu và câu trả lời có điều kiện của từng mục | Vào: topic-15 → Ra: khung cho Mục 2–6 | 1 |
-| `lec-09-topic-01` | Phép cực đại trong mục tiêu DQN | tr. 3–11 | Chỉ ra phép cực đại vừa chọn vừa đánh giá; số đo đánh giá cao trên CartPole | Vào: topic-16 → Ra: nhu cầu đo độ chệch của phép cực đại | 2 |
-| `lec-09-topic-14` | Ước lượng gradient bằng sai phân hữu hạn | tr. 33 | Bước vấn đề của hàm điểm: sai phân cần $d+1$ giá trị $J$, mỗi giá trị từ nhiều lượt | Vào: topic-07 → Ra: nhu cầu một ước lượng gradient từ lượt mẫu | 5 |
+| `lec-09-topic-15` | Kiến thức tiên quyết và ký hiệu | tr. 3–10 | Nhắc lại Bài 03, Bài 08, bất đẳng thức Jensen | Vào: Bài 03, Bài 08 → Ra: ký hiệu chung của chương | phần mở đầu |
+| `lec-09-topic-16` | Mở đầu: mục tiêu, nội dung và bài toán trung tâm | tr. 1–2, 11, 22–25 | Bài toán trung tâm của chương | Vào: topic-15 → Ra: khung cho Mục 2–6 | 1 |
+| `lec-09-topic-01` | Phép cực đại trong mục tiêu DQN | tr. 3–11 | Số đo đánh giá cao trên CartPole | Vào: topic-16 → Ra: nhu cầu đo độ chệch của phép cực đại | 2 |
+| `lec-09-topic-14` | Ước lượng gradient bằng sai phân hữu hạn | tr. 33 | Bước vấn đề của hàm điểm | Vào: topic-07 → Ra: nhu cầu một ước lượng gradient từ lượt mẫu | 5 |
 
 ### Nhóm cốt lõi
 
@@ -96,8 +96,8 @@ Chữ $\theta$ có hai vai. Ở Mục 2–3, $\theta$ là tham số của mạng
 | `lec-09-topic-03` | Mục tiêu Double DQN | tr. 14–16 | Chọn bằng mạng trực tuyến, đánh giá bằng mạng mục tiêu; thuật toán Double DQN | Vào: topic-17 → Ra: mục tiêu và thuật toán | 3 |
 | `lec-09-topic-05` | Double Q-learning dạng bảng | tr. 20–21 | Hai bảng, cập nhật chéo; so sánh với Double DQN trên cùng số liệu | Vào: topic-03, topic-04 → Ra: hai cách tách và giới hạn chung của học giá trị | 3 |
 | `lec-09-topic-06` | Chính sách tham số hóa | tr. 22–29 | Lưới gộp trạng thái; phân phối phân loại, softmax, Gaussian | Vào: topic-05 → Ra: $\pi_\theta(\cdot\mid s)$ rời rạc hoặc liên tục | 4 |
-| `lec-09-topic-07` | Hàm mục tiêu và giả thiết | tr. 30–32 | $J(\theta)$, bước tăng gradient, giả thiết đổi đạo hàm và kỳ vọng | Vào: topic-06 → Ra: bài toán tối ưu theo $\theta$ | 5 |
-| `lec-09-topic-08` | Hàm điểm của chính sách softmax | tr. 34–36 | Định nghĩa hàm điểm; $\psi=\phi-\mathbb E_\pi\phi$ | Vào: topic-14 → Ra: hàm điểm rời rạc | 5 |
+| `lec-09-topic-07` | Hàm mục tiêu và bước tăng gradient | tr. 30–32 | $J(\theta)$ và bước tăng gradient | Vào: topic-06 → Ra: bài toán tối ưu theo $\theta$ | 5 |
+| `lec-09-topic-08` | Hàm điểm và hàm điểm của chính sách softmax | tr. 34–36 | Hàm điểm; công thức softmax; kỳ vọng bằng $0$ | Vào: topic-14 → Ra: hàm điểm rời rạc, $\mathbb E_{A\sim\pi}[\psi]=0$ | 5 |
 | `lec-09-topic-09` | Hàm điểm của chính sách Gaussian | tr. 37–38 | $\psi=(a-\mu)\phi/\sigma^2$ với phương sai cố định | Vào: topic-08 → Ra: hàm điểm liên tục | 5 |
 | `lec-09-topic-10` | Gradient của $J$ theo tỉ số xác suất | tr. 39 | Xác suất quỹ đạo, bỏ phần thưởng quá khứ | Vào: topic-08, topic-09 → Ra: $\nabla J$ dạng kỳ vọng theo quỹ đạo | 6 |
 | `lec-09-topic-11` | Định lý gradient chính sách | tr. 39 | Dạng quỹ đạo và dạng phân bố chiếm dụng | Vào: topic-10 → Ra: kết quả mà REINFORCE lấy mẫu | 6 |
@@ -184,7 +184,7 @@ Phép cực đại này đã có trong Q-learning dạng bảng của Bài 06. D
 
 **So sánh.** $108{,}5-100=8{,}5>0$: giá trị mạng báo vượt cận trên của mọi lợi tức, nên không là giá trị đúng của bất kỳ chính sách nào.
 
-**Kiểm tra lại.** $0{,}99^{500}=e^{500\ln0{,}99}\approx e^{-5{,}025}\approx0{,}0066$, nên $(1-0{,}0066)/0{,}01\approx99{,}34$.
+**Kiểm tra lại.** $0{,}99^{500}=e^{500\log0{,}99}\approx e^{-5{,}025}\approx0{,}0066$, nên $(1-0{,}0066)/0{,}01\approx99{,}34$.
 :::
 
 ![Trục số từ 90 đến 110. Đường nét đứt tại 100 ghi cận 1 chia 1 trừ gamma bằng 100, cận của mọi lợi tức và mọi giá trị đúng. Hình tròn tại 99,3 ghi lợi tức G 0 của một lượt cắt ở bước 500. Hình thoi tại 108,5 ghi max theo a của Q theta tại S 0. Ngoặc từ 100 đến 108,5 ghi vượt cận 8,5.](img/lec-09/cartpole-overestimate.svg)
@@ -460,7 +460,7 @@ Double DQN dùng một bản sao trễ làm bản đánh giá. Với biểu di�
 
 **Diễn giải.** Đây là số liệu của Ví dụ 09.6 với $Q_1$ ở vai $Q_\theta$ và $Q_2$ ở vai $Q_{\theta^-}$; mục tiêu bằng mục tiêu Double DQN $4{,}6$. Hai thuật toán khác nhau ở bước sau: Double Q-learning đổi đúng một ô của một bảng, còn Double DQN đổi tham số dùng chung của mạng trực tuyến.
 
-**Kiểm tra lại.** Nếu đồng xu chọn cập nhật $Q_2$, vai đổi: $Q_2$ chọn hành động 1 vì $5>4$, $Q_1$ đánh giá $3$, mục tiêu $1+0{,}9\cdot3=3{,}7$.
+**Kiểm tra lại.** $4{,}06$ nằm giữa giá trị cũ $4$ và mục tiêu $4{,}6$.
 :::
 
 ![Bảng hai hàng: Q 1 tại S phẩy bằng 3 và 6, bảng được cập nhật; Q 2 tại S phẩy bằng 5 và 4. Khung vuông quanh số 6: Q 1 chọn hành động 2. Mũi tên ghi đánh giá tới số 4 có viền ellip nét đứt: Q 2 đánh giá hành động 2 bằng 4.](img/lec-09/double-q-example.svg)
@@ -536,7 +536,7 @@ Mục 3 kết thúc ở một giới hạn chung của DQN, Double DQN và Doubl
 <!-- note-topic-id: lec-09-topic-06 -->
 ### Giới hạn của chính sách tham lam theo $Q$
 
-Bài giảng gốc (trang 23–25) dùng một lưới nhỏ. Hàng trên có năm ô, đánh số 1 đến 5 từ trái sang phải; hàng dưới có ô X dưới ô 1 và ô 5, ô đích \$ dưới ô 3. Tác tử ở hàng trên chọn Đông, Tây hoặc Nam; mỗi bước đi một ô, gặp tường thì đứng yên. Đi Nam từ ô 3 vào ô đích và kết thúc lượt; đi Nam từ ô 1 hoặc ô 5 vào ô X, một ô kẹt mà từ đó không bao giờ tới đích; đi Nam từ ô 2, ô 4 thì đứng yên. Tác tử quan sát đặc trưng $x(s)$ có bốn giá trị: ô 1, ô 3, ô 5 mỗi ô một giá trị riêng, còn hai ô xám 2 và 4 cùng một giá trị, ký hiệu $x=\mathrm g$. Từ ô 2, hướng tốt là Đông; từ ô 4, hướng tốt là Tây.
+Bài giảng gốc (trang 23–25) dùng một lưới nhỏ. Hàng trên có năm ô, đánh số 1 đến 5 từ trái sang phải; hàng dưới có ô X dưới ô 1 và ô 5, ô đích dưới ô 3. Tác tử ở hàng trên chọn Đông, Tây hoặc Nam; mỗi bước đi một ô, gặp tường thì đứng yên. Đi Nam từ ô 3 vào ô đích và kết thúc lượt; đi Nam từ ô 1 hoặc ô 5 vào ô X, một ô kẹt mà từ đó không bao giờ tới đích; đi Nam từ ô 2, ô 4 thì đứng yên. Tác tử quan sát đặc trưng $x(s)$ có bốn giá trị: ô 1, ô 3, ô 5 mỗi ô một giá trị riêng, còn hai ô xám 2 và 4 cùng một giá trị, ký hiệu $x=\mathrm g$. Từ ô 2, hướng tốt là Đông; từ ô 4, hướng tốt là Tây.
 
 Hai điểm của mô hình này là giả thiết thêm vào nguồn, ghi là sai khác có chủ ý. Nguồn (trang 23) viết đặc trưng $x(s,a)=1$ nếu $s$ là ô xám và $0$ ở nơi khác; đặc trưng đó gộp luôn ba ô trắng, nên lớp chính sách tất định theo đặc trưng còn hẹp hơn, và chính sách "ô 1 Đông, ô 3 Nam, ô 5 Tây" dùng dưới đây không thuộc lớp đó. Chúng ta dùng đặc trưng chỉ gộp hai ô xám, để giữ đúng kết luận của nguồn (trang 24–25) mà không thêm chỗ gộp khác. Nguồn cũng không nói hai ô trống dưới ô xám là tường hay ô đi vào được, và không cho phần thưởng; mô hình chuyển, ô kẹt X và các số bước dưới đây là phần bổ sung.
 
@@ -606,7 +606,7 @@ Từ mục này, $\theta$ là tham số của chính sách. Ở Mục 2 và 3, c
 
 **Phân phối đều.** $\pi(a\mid s)=\tfrac14$ với mọi $a$. Phân phối này không phụ thuộc trạng thái và không có tham số, nên không có gì để học.
 
-**Phân phối phân loại.** $\pi(\cdot\mid s)=(0{,}1;\,0{,}2;\,0{,}2;\,0{,}5)$: hành động 4 được chọn một nửa số lần. Phân phối này đạt được bằng chính sách softmax, định nghĩa ngay sau đây (Định nghĩa 09.11), với đặc trưng $\phi(s,a)$ là vector đơn vị thứ $a$ trong $\mathbb R^4$ và $\theta=(\ln0{,}1;\,\ln0{,}2;\,\ln0{,}2;\,\ln0{,}5)$, vì khi đó $e^{\phi(s,a)^\top\theta}=\pi(a\mid s)$ và tổng mẫu số bằng $1$.
+**Phân phối phân loại.** $\pi(\cdot\mid s)=(0{,}1;\,0{,}2;\,0{,}2;\,0{,}5)$: hành động 4 được chọn một nửa số lần. Phân phối này đạt được bằng chính sách softmax, định nghĩa ngay sau đây (Định nghĩa 09.11), với đặc trưng $\phi(s,a)$ là vector đơn vị thứ $a$ trong $\mathbb R^4$ và $\theta=(\log0{,}1;\,\log0{,}2;\,\log0{,}2;\,\log0{,}5)$, vì khi đó $e^{\phi(s,a)^\top\theta}=\pi(a\mid s)$ và tổng mẫu số bằng $1$.
 
 **Kiểm tra lại.** $0{,}1+0{,}2+0{,}2+0{,}5=1$.
 :::
@@ -622,7 +622,7 @@ $$
 $$
 :::
 
-Số $\phi(s,a)^\top\theta$ là mức ưu tiên của hành động $a$ tại $s$; chính sách softmax đổi các mức ưu tiên thành xác suất bằng hàm mũ rồi chuẩn hóa. Mọi hành động có xác suất dương, và cộng cùng một hằng vào mọi mức ưu tiên không đổi chính sách. Với hai hành động, $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$ và $\theta=(\ln2;\,0)$, ta được $\pi_\theta(1\mid s)=\tfrac{2}{2+1}=\tfrac23$ và $\pi_\theta(2\mid s)=\tfrac13$; bộ số này là bài toán một bước hai hành động dùng ở Mục 5 và 6. Bài giảng gốc (trang 29) dùng đặc trưng là khoảng cách tới vật cản. So với phép tham lam theo $Q$, softmax biểu diễn được các xác suất dương bất kỳ khi đặc trưng đủ phong phú; nếu ở ô xám chỉ xét hai hướng Đông và Tây với cùng mức ưu tiên, nó cho đúng xác suất $\tfrac12$ của Ví dụ 09.9.
+Số $\phi(s,a)^\top\theta$ là mức ưu tiên của hành động $a$ tại $s$; chính sách softmax đổi các mức ưu tiên thành xác suất bằng hàm mũ rồi chuẩn hóa. Mọi hành động có xác suất dương, và cộng cùng một hằng vào mọi mức ưu tiên không đổi chính sách. Với hai hành động, $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$ và $\theta=(\log2;\,0)$, ta được $\pi_\theta(1\mid s)=\tfrac{2}{2+1}=\tfrac23$ và $\pi_\theta(2\mid s)=\tfrac13$; bộ số này là bài toán một bước hai hành động dùng ở Mục 5 và 6. Bài giảng gốc (trang 29) dùng đặc trưng là khoảng cách tới vật cản. So với phép tham lam theo $Q$, softmax biểu diễn được các xác suất dương bất kỳ khi đặc trưng đủ phong phú; nếu ở ô xám chỉ xét hai hướng Đông và Tây với cùng mức ưu tiên, nó cho đúng xác suất $\tfrac12$ của Ví dụ 09.9.
 
 ::: definition Định nghĩa 09.12 (Chính sách Gaussian với phương sai cố định)
 Cho $\mathcal A=\mathbb R$, đặc trưng trạng thái $\phi(s)\in\mathbb R^d$ giữ cố định, $\theta\in\mathbb R^d$ và $\sigma^2>0$ cố định. Chính sách Gaussian có mật độ
@@ -674,80 +674,332 @@ Như vậy, Ví dụ 09.8 và 09.9 cho thấy khi đặc trưng gộp hai trạn
 
 ## 5. Hàm mục tiêu và hàm điểm
 
+Mục 4 cho một họ chính sách $\pi_\theta$ khả vi theo $\theta$: chính sách softmax trên tập hành động hữu hạn và chính sách Gaussian trên hành động thực. Họ đó chưa cho biết nên chỉnh $\theta$ theo hướng nào. Muốn chỉnh, chúng ta cần một số đo chất lượng của $\pi_\theta$ và một cách tìm hướng làm số đo đó tăng. Số đo là lợi tức kỳ vọng $J(\theta)$; hướng là gradient $\nabla_\theta J(\theta)$. Trong học tăng cường, $J$ không có công thức, vì phần thưởng và động lực của môi trường chưa biết; ta chỉ quan sát được lợi tức của các lượt. Chúng ta xét cách ước lượng gradient đơn giản nhất, sai phân hữu hạn, và chỉ ra chi phí của nó; rồi định nghĩa hàm điểm, đại lượng cho phép ước lượng gradient từ chính các lượt của $\pi_\theta$, và tính nó cho hai họ của Mục 4. Mọi ví dụ của mục dùng chung một bài toán nhỏ, được vẽ thành thẻ dữ kiện dưới đây.
+
+![Thẻ dữ kiện bài toán một bước, chính sách softmax, hai hành động: bảng hai cột cho a bằng 1 và a bằng 2, đặc trưng phi của s, a bằng (1; 0) và (0; 1); xác suất pi theta bằng 2/3 và 1/3; phần thưởng r bằng 3 và 0. Dòng dưới: theta bằng (log 2; 0), lượt dừng sau A 0.](img/lec-09/one-step-card.svg)
+
+Chính sách là softmax của Định nghĩa 09.11, nên $\pi_\theta(1\mid s)=\tfrac{e^{\log2}}{e^{\log2}+e^0}=\tfrac23$.
+
 <!-- note-topic-id: lec-09-topic-07 -->
-### Mục tiêu episodic và giả thiết
+### Hàm mục tiêu và bước tăng gradient
 
-**Quy ước.** $S_0\sim\rho_0$, $A_t\sim\pi_\theta(\cdot\mid S_t)$, $R_{t+1}$ nhận sau $A_t$, $0\le\gamma<1$, $T<\infty$ hầu chắc chắn:
+Muốn so sánh hai giá trị của $\theta$, chúng ta cần gán cho mỗi chính sách một số. Bài giảng gốc (trang 30) chọn giá trị của chính sách tại trạng thái đầu, tức lợi tức kỳ vọng khi xuất phát từ đó rồi đi theo $\pi_\theta$. Một chính sách tốt hơn là một chính sách có số này lớn hơn.
 
-$$G_t=\sum_{k=t}^{T-1}\gamma^{k-t}R_{k+1},\qquad J(\theta)=\mathbb E_{\tau\sim p_\theta}[G_0].$$
+::: example Ví dụ 09.11 (Hàm mục tiêu của bài toán một bước)
+**Dữ kiện.** Bài toán một bước, hai hành động: $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$, chính sách softmax, $r(1)=3$, $r(2)=0$; lượt dừng sau $A_0$.
 
-Sau $T$, nối một trạng thái hấp thụ có phần thưởng và giá trị bằng $0$ — quy ước này cho phép dùng tổng vô hạn mà không đổi mục tiêu episodic (tr. 30–32, 39–40).
+**Lợi tức.** Lượt có một phần thưởng, nên $G_0=R_1=r(A_0)$: bằng $3$ nếu chọn hành động 1, bằng $0$ nếu chọn hành động 2.
 
-**Bài toán tối ưu.** Cực đại hóa $J(\theta)$; cập nhật $\theta\leftarrow\theta+\alpha\,\widehat g$ với $\widehat g\approx\nabla_\theta J(\theta)$, $\alpha>0$. Dấu cộng vì mục tiêu được cực đại hóa (tr. 30–33).
+**Kỳ vọng.** Với $\theta=(\log2;\,0)$,
+$$
+J(\theta)=\mathbb E_{\pi_\theta}[G_0]=3\cdot\tfrac23+0\cdot\tfrac13=2.
+$$
+Với $\theta'=(0;\,0)$, hai hành động có xác suất $\tfrac12$, nên $J(\theta')=1{,}5$. Dạng tổng quát: $J(\theta)=3\pi_\theta(1\mid s)=\dfrac{3e^{\theta_1}}{e^{\theta_1}+e^{\theta_2}}$.
 
-**Giả thiết** (tr. 33–40) — chi phối toàn bộ suy diễn sau này:
+**Diễn giải.** $\theta$ tốt hơn $\theta'$ vì đặt xác suất lớn hơn lên hành động có phần thưởng lớn hơn. $J$ tăng khi $\theta_1-\theta_2$ tăng và bị chặn trên bởi $3$, giá trị của chính sách tất định chọn hành động 1.
+:::
 
-1. $\rho_0$ và động lực $P$ **không phụ thuộc** $\theta$.
-2. $\pi_\theta$ khả vi, có **miền hỗ trợ cố định** và dương tại hành động được lấy mẫu.
-3. $G_0\nabla_\theta\log p_\theta(\tau)$ khả tích; có điều kiện (ví dụ một chặn trội phù hợp) cho phép đổi đạo hàm với tích phân.
-4. $S_t$ là trạng thái Markov; sau kết thúc dùng tiếp diễn hấp thụ.
+::: definition Định nghĩa 09.14 (Hàm mục tiêu)
+Cho một MDP có kết thúc với phân phối trạng thái đầu $\rho_0$, hàm động lực $P$, phần thưởng bị chặn $|R_{t+1}|\le R_{\max}$ và $0\le\gamma<1$. Với chính sách tham số hóa $\pi_\theta$, giả sử bước kết thúc $T$ hữu hạn hầu chắc chắn; sau $T$, lượt đi vào một trạng thái hấp thụ có phần thưởng $0$. Hàm mục tiêu (objective function) của $\pi_\theta$ là
+$$
+J(\theta)=\mathbb E_{\pi_\theta}[G_0],\qquad G_0=\sum_{t=0}^{T-1}\gamma^tR_{t+1},
+$$
+trong đó kỳ vọng lấy theo $S_0\sim\rho_0$, $A_t\sim\pi_\theta(\cdot\mid S_t)$ và $(S_{t+1},R_{t+1})\sim P(\cdot\mid S_t,A_t)$.
+:::
 
-Miền hỗ trợ thay đổi theo $\theta$ có thể sinh thêm hạng biên.
+Định nghĩa đọc như sau: chạy chính sách $\pi_\theta$ từ một trạng thái đầu ngẫu nhiên tới khi lượt dừng, cộng các phần thưởng có chiết khấu, rồi lấy trung bình trên mọi lượt có thể. Bài giảng gốc viết $J(\theta)=V^{\pi}(s_1)$ với một trạng thái đầu cố định $s_1$; đó là trường hợp $\rho_0$ dồn hết xác suất vào $s_1$. Với $\rho_0$ tổng quát, $J(\theta)=\sum_s\rho_0(s)v_{\pi_\theta}(s)$, với $v_{\pi_\theta}$ là hàm giá trị trạng thái của Bài 03. Trong ba thành phần sinh ra lượt, chỉ chính sách phụ thuộc $\theta$; $\rho_0$ và $P$ là của môi trường. Điều này quyết định cách lấy đạo hàm ở Mục 6.
 
-**Kiểm tra.** Vì sao dấu cập nhật là cộng? — Vì ta cực đại hóa $J$, không cực tiểu hóa loss.
+Các giả thiết có vai trò riêng. Phần thưởng bị chặn và $\gamma<1$ cho $|G_0|\le R_{\max}/(1-\gamma)$ trên mọi lượt, nên kỳ vọng tồn tại. Bỏ phần thưởng bị chặn: một phân phối phần thưởng không khả tích, chẳng hạn phân phối Cauchy, làm $\mathbb E[G_0]$ không xác định. Giả thiết $T<\infty$ hầu chắc chắn cho phép viết $G_0$ là một tổng hữu hạn; quy ước trạng thái hấp thụ cho phép viết cùng đại lượng là tổng vô hạn $\sum_{t\ge0}\gamma^tR_{t+1}$ với mọi phần thưởng sau $T$ bằng $0$, như quy ước đọc ở đầu chương.
 
-*Nguồn: mục tiêu ở tr. 30–34; các điều kiện support và khả tích được làm rõ để dùng cho suy diễn ở tr. 39.*
+::: example Ví dụ 09.12 (Lợi tức của một lượt hai bước)
+**Dữ kiện.** Một lượt dừng tại $T=2$ với $R_1=1$, $R_2=2$; $\gamma=0{,}9$.
+
+**Tính.** $G_1=R_2=2$; $G_0=R_1+\gamma R_2=1+0{,}9\cdot2=2{,}8$; $G_2=0$ theo quy ước.
+
+**Kiểm tra lại.** $G_0=R_1+\gamma G_1=1+0{,}9\cdot2=2{,}8$, đúng hệ thức đệ quy của lợi tức.
+:::
+
+Hàm mục tiêu $J$ khác mục tiêu $y_i$ của DQN ở Mục 2 và 3, dù hai từ giống nhau. $y_i$ là một số gắn với một mẫu chuyển, dùng làm giá trị hồi quy cho $Q_\theta(S_i,A_i)$; $J$ là một hàm của tham số chính sách, cần cực đại hóa.
+
+Khi đã có $J$, bài toán học trở thành bài toán tối ưu: tìm $\theta$ làm $J(\theta)$ lớn nhất. Bài giảng gốc (trang 31) nêu hai nhóm cách giải. Nhóm không dùng gradient, như leo đồi (hill climbing) và giải thuật di truyền, chỉ cần so sánh giá trị $J$ của các tham số thử. Nhóm dùng gradient đi theo hướng tăng nhanh nhất của $J$ tại tham số hiện tại. Chúng ta theo nhóm thứ hai, vì nó dùng được cấu trúc khả vi của $\pi_\theta$ và mở rộng được tới mạng nơ-ron với nhiều tham số.
+
+Nhắc lại từ Bài 08: hạ gradient cập nhật $\theta\leftarrow\theta-\eta\,\nabla_\theta L_B(\theta)$ để cực tiểu hóa hàm mất mát. Muốn cực đại hóa $J$, ta đi theo chiều ngược lại:
+$$
+\theta\leftarrow\theta+\alpha\,\nabla_\theta J(\theta),\qquad\alpha>0.
+$$
+Dấu cộng có lý do bậc một. Theo khai triển Taylor, $J(\theta+\alpha g)=J(\theta)+\alpha\,\nabla_\theta J(\theta)^\top g+o(\alpha)$; với $g=\nabla_\theta J(\theta)$, số hạng bậc một bằng $\alpha\lVert\nabla_\theta J(\theta)\rVert^2\ge0$, nên với $\alpha$ đủ nhỏ và gradient khác $0$, $J$ tăng. Bài giảng gốc (trang 32) gọi $\nabla_\theta J(\theta)=\bigl(\partial J/\partial\theta_1;\,\dots;\,\partial J/\partial\theta_d\bigr)$ là gradient chính sách (policy gradient). Khi gradient không tính được chính xác, ta thay nó bằng một ước lượng $\widehat g$; phần còn lại của chương là việc xây dựng $\widehat g$.
+
+Trên bài toán một bước, $J$ có dạng đóng, nên gradient tính được trực tiếp. Đạo hàm của softmax hai hành động là $\partial\pi_\theta(1\mid s)/\partial\theta_1=\pi_\theta(1\mid s)\pi_\theta(2\mid s)$ và $\partial\pi_\theta(1\mid s)/\partial\theta_2=-\pi_\theta(1\mid s)\pi_\theta(2\mid s)$. Vậy
+$$
+\nabla_\theta J(\theta)=3\,\pi_\theta(1\mid s)\,\pi_\theta(2\mid s)\,(1;\,-1)=3\cdot\tfrac23\cdot\tfrac13\,(1;\,-1)=\bigl(\tfrac23;\,-\tfrac23\bigr)
+$$
+tại $\theta=(\log2;\,0)$. Một bước với $\alpha=0{,}1$ cho $\theta=(\log2+0{,}0667;\,-0{,}0667)$, $\pi_\theta(1\mid s)\approx0{,}696$ và $J\approx2{,}087>2$.
+
+Câu hỏi thảo luận của bài giảng gốc (trang 30), tìm một chính sách tốt khác gì tìm một hàm giá trị tốt, có câu trả lời ở hai dòng cập nhật trên. Học giá trị (Bài 06–08) cực tiểu hóa sai số dự đoán của $Q_\theta$ so với một mục tiêu, rồi suy ra chính sách bằng $\arg\max$; một hàm giá trị tốt theo nghĩa sai số nhỏ chưa chắc cho chính sách tốt nhất trong một lớp bị ràng buộc, như Ví dụ 09.8 cho thấy. Học chính sách tối ưu trực tiếp đại lượng cần cực đại.
+
+**Trong thực hành.** Trong một cài đặt, $J(\theta)$ không bao giờ được tính: ta chỉ có lợi tức của các lượt đã chạy, và trung bình của chúng là một ước lượng có nhiễu của $J$. Các thư viện tối ưu thường được viết để cực tiểu hóa, nên cài đặt cực tiểu hóa $-J$, hoặc một hàm mất mát thay thế có gradient bằng $-\widehat g$; dấu trừ này là nguồn lỗi thường gặp khi chuyển từ mã DQN sang mã gradient chính sách.
+
+<!-- note-topic-id: lec-09-topic-14 -->
+### Ước lượng gradient bằng sai phân hữu hạn
+
+Phép tính gradient ở trên dùng $r(1)=3$, $r(2)=0$ và công thức của $J$. Khi phần thưởng và động lực chưa biết, $J(\theta)$ chỉ đo được qua lợi tức của các lượt chạy bằng $\pi_\theta$. Cách đơn giản nhất để có gradient từ các phép đo giá trị là quay về định nghĩa đạo hàm (bài giảng gốc, trang 33): $f'(x)=\lim_{h\to0}\bigl(f(x+h)-f(x)\bigr)/h$. Thay giới hạn bằng một bước nhỏ $\epsilon>0$ theo từng tọa độ, với $u_k$ là vector đơn vị thứ $k$ của $\mathbb R^d$,
+$$
+\frac{\partial J(\theta)}{\partial\theta_k}\approx\frac{J(\theta+\epsilon u_k)-J(\theta)}{\epsilon},\qquad k=1,\dots,d.
+$$
+
+::: example Ví dụ 09.13 (Sai phân hữu hạn trên bài toán một bước)
+**Dữ kiện.** Bài toán một bước với $\theta=(\log2;\,0)$, $J(\theta)=2$; $\epsilon=0{,}1$.
+
+**Tọa độ 1.** $\theta+\epsilon u_1=(\log2+0{,}1;\,0)$, nên hành động 1 có xác suất $\dfrac{2e^{0{,}1}}{2e^{0{,}1}+1}\approx0{,}6885$ và $J\approx2{,}0655$. Thương sai phân: $(2{,}0655-2)/0{,}1\approx0{,}655$.
+
+**Tọa độ 2.** $\theta+\epsilon u_2=(\log2;\,0{,}1)$, nên $J=\dfrac{6}{2+e^{0{,}1}}\approx1{,}9323$. Thương sai phân: $\approx-0{,}677$.
+
+**So sánh.** Giá trị đúng là $\bigl(\tfrac23;\,-\tfrac23\bigr)\approx(0{,}667;\,-0{,}667)$. Sai lệch khoảng $0{,}01$ ở mỗi tọa độ đến từ $\epsilon$ hữu hạn; với $\epsilon=0{,}01$, thương ở tọa độ 1 là $0{,}6656$.
+
+**Chi phí.** Ba giá trị $J(\theta)$, $J(\theta+\epsilon u_1)$, $J(\theta+\epsilon u_2)$, tức $d+1$ với $d=2$.
+:::
+
+Ví dụ dùng giá trị đúng của $J$. Trong học tăng cường, mỗi giá trị $J$ được thay bằng trung bình lợi tức $\widehat J$ trên $n$ lượt, và hai nguồn sai số cộng lại. Sai số do $\epsilon$ (sai số cắt cụt) giảm khi $\epsilon$ nhỏ. Sai số do nhiễu thì tăng: nếu hai trung bình dùng các lượt độc lập và lợi tức có phương sai $\sigma_G^2$ ở cả hai tham số, thương sai phân có phương sai
+$$
+\operatorname{Var}\Bigl[\frac{\widehat J(\theta+\epsilon u_k)-\widehat J(\theta)}{\epsilon}\Bigr]\approx\frac{2\sigma_G^2}{n\epsilon^2}.
+$$
+Trên bài toán một bước, $G_0\in\{3;\,0\}$ nên $\sigma_G^2=9\pi(1\mid s)\pi(2\mid s)=2$ tại $\theta$ và $\approx1{,}93$ tại $\theta+\epsilon u_1$. Với $n=100$ lượt cho mỗi giá trị và $\epsilon=0{,}1$, độ lệch chuẩn của thương khoảng $2$, gấp ba lần giá trị cần ước lượng $\tfrac23$; muốn độ lệch chuẩn $0{,}1$ cần khoảng $39\,000$ lượt cho mỗi giá trị. Giảm $\epsilon$ để bớt sai số cắt cụt làm phương sai tăng theo $1/\epsilon^2$.
+
+Chi phí tăng theo số tham số. Mỗi ước lượng gradient cần chạy $d+1$ chính sách khác nhau, mỗi chính sách nhiều lượt; với một mạng nơ-ron có $10^5$ tham số, một bước cập nhật cần $10^5+1$ nhóm lượt. Bài giảng gốc tóm tắt: đơn giản, nhiễu lớn, kém hiệu quả, nhưng đôi khi vẫn hữu ích, và áp dụng được cho chính sách bất kỳ, kể cả chính sách không khả vi. Sai phân hữu hạn chỉ cần đo $J$, nên dùng được cho chính sách tất định theo ngưỡng hay chính sách là một chương trình. Với chính sách khả vi như softmax và Gaussian, chúng ta muốn một ước lượng gradient lấy từ chính các lượt của $\pi_\theta$, không phải chạy thêm $d$ chính sách nhiễu.
 
 <!-- note-topic-id: lec-09-topic-08 -->
-### Hàm điểm softmax
+### Hàm điểm
 
-**Hàm điểm.** Với hành động đã lấy mẫu và $\pi_\theta(a\mid s)>0$:
+Trở lại bài toán một bước. Với $J(\theta)=\sum_ar(a)\pi_\theta(a\mid s)$, gradient là $\sum_ar(a)\nabla_\theta\pi_\theta(a\mid s)$: một tổng trên mọi hành động, cần phần thưởng của từng hành động. Một lượt chỉ cho phần thưởng của hành động đã lấy mẫu. Một cách trực quan, ta muốn viết tổng này thành một kỳ vọng theo $A\sim\pi_\theta(\cdot\mid s)$, vì kỳ vọng thì ước lượng được bằng mẫu. Muốn vậy, mỗi số hạng phải có thừa số $\pi_\theta(a\mid s)$. Quy tắc đạo hàm của logarit cho đúng thừa số đó: khi $\pi_\theta(a\mid s)>0$,
+$$
+\nabla_\theta\log\pi_\theta(a\mid s)=\frac{\nabla_\theta\pi_\theta(a\mid s)}{\pi_\theta(a\mid s)},\qquad\text{nên}\qquad\nabla_\theta\pi_\theta(a\mid s)=\pi_\theta(a\mid s)\,\nabla_\theta\log\pi_\theta(a\mid s).
+$$
+Thế vào, với mọi hàm $f$ của hành động không phụ thuộc $\theta$,
+$$
+\sum_af(a)\,\nabla_\theta\pi_\theta(a\mid s)=\mathbb E_{A\sim\pi_\theta(\cdot\mid s)}\bigl[f(A)\,\nabla_\theta\log\pi_\theta(A\mid s)\bigr].
+$$
+Vế phải chỉ cần $f$ tại hành động đã lấy mẫu. Bài giảng gốc (trang 34) gọi phép biến đổi này là dùng tỉ số xác suất (likelihood ratio); Mục 6 áp dụng nó cho $J$ trên cả lượt.
 
-$$\psi_\theta(s,a)=\nabla_\theta\log\pi_\theta(a\mid s),\qquad \nabla_\theta\pi_\theta(a\mid s)=\pi_\theta(a\mid s)\,\psi_\theta(s,a).$$
+::: example Ví dụ 09.14 (Đạo hàm log xác suất trên bài toán một bước)
+**Dữ kiện.** Bài toán một bước, $\theta=(\log2;\,0)$, $\pi_\theta(\cdot\mid s)=\bigl(\tfrac23;\,\tfrac13\bigr)$.
 
-Đồng nhất thức đạo hàm log chỉ hợp lệ tại nơi xác suất hoặc mật độ dương (tr. 34).
+**Log xác suất.** $\log\pi_\theta(1\mid s)=\theta_1-\log\bigl(e^{\theta_1}+e^{\theta_2}\bigr)$.
 
-**Softmax cho hành động rời rạc.** Cho đặc trưng $\phi(s,a)\in\mathbb R^d$ cố định khi lấy đạo hàm theo $\theta$, logit $z_a(s)=\phi(s,a)^\top\theta$:
+**Gradient.** $\partial/\partial\theta_1$: $1-\dfrac{e^{\theta_1}}{e^{\theta_1}+e^{\theta_2}}=1-\pi_\theta(1\mid s)=\tfrac13$; $\partial/\partial\theta_2$: $-\pi_\theta(2\mid s)=-\tfrac13$. Vậy $\nabla_\theta\log\pi_\theta(1\mid s)=\bigl(\tfrac13;\,-\tfrac13\bigr)$.
 
-$$\pi_\theta(a\mid s)=\frac{e^{\phi(s,a)^\top\theta}}{\sum_b e^{\phi(s,b)^\top\theta}},\qquad \psi_\theta(s,a)=\phi(s,a)-\sum_b\pi_\theta(b\mid s)\,\phi(s,b).$$
-
-Hàm điểm là đặc trưng của hành động chọn trừ trung bình đặc trưng theo chính sách; do đó $\mathbb E_{A\sim\pi_\theta}[\psi_\theta(s,A)]=0\in\mathbb R^d$. Nếu $\phi$ cũng có tham số học, công thức phải dùng quy tắc dây chuyền đầy đủ (tr. 35–36).
-
-::: example
-**Ví dụ hai hành động.** $\pi_\theta(1\mid s)=2/3$, $\pi_\theta(2\mid s)=1/3$, $\phi(s,1)=(1,0)$, $\phi(s,2)=(0,1)$:
-
-$$\psi_\theta(s,1)=(1,0)-\big(\tfrac23,\tfrac13\big)=\big(\tfrac13,-\tfrac13\big),\qquad \psi_\theta(s,2)=\big(-\tfrac23,\tfrac23\big).$$
-
-Tổng có trọng số: $\tfrac23(\tfrac13,-\tfrac13)+\tfrac13(-\tfrac23,\tfrac23)=(0,0)$.
+**Kiểm tra lại.** $\pi_\theta(1\mid s)\cdot\bigl(\tfrac13;\,-\tfrac13\bigr)=\bigl(\tfrac29;\,-\tfrac29\bigr)$, trùng với $\nabla_\theta\pi_\theta(1\mid s)=\pi_\theta(1\mid s)\pi_\theta(2\mid s)(1;\,-1)$ tính ở trên.
 :::
 
-**Kiểm tra.** Kỳ vọng có điều kiện của hàm điểm dưới chính sách bằng gì? — $0\in\mathbb R^d$.
+::: definition Định nghĩa 09.15 (Hàm điểm)
+Cho chính sách tham số hóa $\pi_\theta$, trạng thái $s$ và hành động $a$ với $\pi_\theta(a\mid s)>0$. Hàm điểm (score function) của $\pi_\theta$ tại $(s,a)$ là
+$$
+\psi_\theta(s,a)=\nabla_\theta\log\pi_\theta(a\mid s)\in\mathbb R^d.
+$$
+Khi $\mathcal A$ liên tục, $\pi_\theta(a\mid s)$ là mật độ và định nghĩa giữ nguyên.
+:::
 
-*Nguồn: tr. 35–36.*
+Hàm điểm là một vector cùng số chiều với $\theta$. Tọa độ thứ $k$ của nó cho biết log xác suất của hành động $a$ thay đổi bao nhiêu khi tăng $\theta_k$; vì $\nabla\log\pi=\nabla\pi/\pi$, đó là thay đổi tương đối của xác suất. Đi một bước nhỏ theo $\psi_\theta(s,a)$ làm tăng $\pi_\theta(a\mid s)$; đi ngược chiều làm giảm. Tên gọi lấy từ thống kê, nơi gradient của log hàm hợp lý theo tham số được gọi là hàm điểm. Trong Ví dụ 09.14, $\psi_\theta(s,1)=\bigl(\tfrac13;\,-\tfrac13\bigr)$: tăng $\theta_1$ hoặc giảm $\theta_2$ đều làm hành động 1 dễ được chọn hơn.
+
+Định nghĩa cần $\pi_\theta(a\mid s)>0$. Nếu một hành động có xác suất $0$, logarit của nó không xác định, và hành động đó cũng không bao giờ xuất hiện trong mẫu. Chính sách tất định vi phạm điều kiện này ở mọi hành động không được chọn, và thường không khả vi theo $\theta$; phép tham lam theo $Q$ và hành vi $\epsilon_{\mathrm{exp}}$-tham lam cũng không khả vi theo tham số của $Q$ vì phép $\arg\max$. Softmax cho mọi hành động xác suất dương, Gaussian cho mọi số thực mật độ dương, nên hai họ của Mục 4 thỏa điều kiện ở mọi $(s,a)$. Khi dùng hàm điểm để lấy kỳ vọng, như ở mệnh đề dưới đây, cần thêm một điều: tập $\{a:\pi_\theta(a\mid s)>0\}$, gọi là miền hỗ trợ, không đổi theo $\theta$.
+
+### Hàm điểm của chính sách softmax
+
+Áp dụng định nghĩa cho chính sách softmax của Định nghĩa 09.11 cho một công thức đóng.
+
+::: proposition Mệnh đề 09.16 (Hàm điểm của chính sách softmax)
+**Giả thiết.** $\mathcal A$ hữu hạn; đặc trưng $\phi(s,a)\in\mathbb R^d$ không phụ thuộc $\theta$; $\pi_\theta(a\mid s)=\exp\bigl(\phi(s,a)^\top\theta\bigr)/\sum_{b\in\mathcal A}\exp\bigl(\phi(s,b)^\top\theta\bigr)$.
+
+**Kết luận.** Với mọi $s$ và mọi $a\in\mathcal A$,
+$$
+\psi_\theta(s,a)=\phi(s,a)-\sum_{b\in\mathcal A}\pi_\theta(b\mid s)\,\phi(s,b).
+$$
+:::
+
+::: proof
+**Bước 1 (log xác suất).** Lấy logarit của định nghĩa:
+$$
+\log\pi_\theta(a\mid s)=\phi(s,a)^\top\theta-\log\sum_{b\in\mathcal A}e^{\phi(s,b)^\top\theta}.
+$$
+
+**Bước 2 (hạng thứ nhất).** $\nabla_\theta\bigl(\phi(s,a)^\top\theta\bigr)=\phi(s,a)$, vì $\phi(s,a)$ không phụ thuộc $\theta$.
+
+**Bước 3 (hạng thứ hai).** Theo quy tắc dây chuyền,
+$$
+\begin{aligned}
+\nabla_\theta\log\sum_be^{\phi(s,b)^\top\theta}
+&=\frac{\sum_be^{\phi(s,b)^\top\theta}\,\phi(s,b)}{\sum_ce^{\phi(s,c)^\top\theta}}\\
+&=\sum_b\pi_\theta(b\mid s)\,\phi(s,b).
+\end{aligned}
+$$
+
+**Bước 4.** Trừ hai hạng được kết luận. $\square$
+:::
+
+Mệnh đề đọc như sau: hàm điểm của hành động $a$ là đặc trưng của $a$ trừ đặc trưng trung bình theo chính sách hiện tại. Giả thiết đặc trưng cố định được dùng ở Bước 2 và 3; nếu $\phi$ là đầu ra của một mạng có tham số được học cùng $\theta$, gradient phải đi tiếp qua mạng đó, và công thức trên chỉ là phần gradient theo lớp cuối.
+
+![Ba chấm tròn là đặc trưng phi của s, 1; s, 2; s, 3 với xác suất 0,5; 0,3; 0,2 ghi trong hộp bên phải. Hình thoi rỗng là trung bình đặc trưng theo pi theta. Ba mũi tên đi từ hình thoi tới ba chấm, ghi psi theta của s, 1; s, 2; s, 3.](img/lec-09/softmax-score.svg)
+
+Hình vẽ ba hành động trong mặt phẳng đặc trưng với xác suất $0{,}5$; $0{,}3$; $0{,}2$. Hình thoi là đặc trưng trung bình, tức trọng tâm của ba điểm với trọng số xác suất; mỗi mũi tên là một hàm điểm. Vì hình thoi là trọng tâm có trọng số, $0{,}5$ lần mũi tên thứ nhất cộng $0{,}3$ lần mũi tên thứ hai cộng $0{,}2$ lần mũi tên thứ ba bằng vector $0$. Hành động có xác suất nhỏ thường nằm xa trọng tâm hơn, nên hàm điểm của nó dài hơn.
+
+::: example Ví dụ 09.15 (Hàm điểm softmax hai hành động)
+**Dữ kiện.** Bài toán một bước: $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$, $\theta=(\log2;\,0)$, $\pi_\theta(\cdot\mid s)=\bigl(\tfrac23;\,\tfrac13\bigr)$.
+
+**Đặc trưng trung bình.** $\tfrac23(1;\,0)+\tfrac13(0;\,1)=\bigl(\tfrac23;\,\tfrac13\bigr)$.
+
+**Hàm điểm.** $\psi_\theta(s,1)=(1;\,0)-\bigl(\tfrac23;\,\tfrac13\bigr)=\bigl(\tfrac13;\,-\tfrac13\bigr)$; $\psi_\theta(s,2)=(0;\,1)-\bigl(\tfrac23;\,\tfrac13\bigr)=\bigl(-\tfrac23;\,\tfrac23\bigr)$.
+
+**Trung bình theo chính sách.** $\tfrac23\bigl(\tfrac13;\,-\tfrac13\bigr)+\tfrac13\bigl(-\tfrac23;\,\tfrac23\bigr)=\bigl(\tfrac29-\tfrac29;\,-\tfrac29+\tfrac29\bigr)=(0;\,0)$.
+
+**Diễn giải.** Bước theo $\psi_\theta(s,1)$ tăng $\theta_1$ và giảm $\theta_2$, nên tăng $\pi_\theta(1\mid s)$; bước theo $\psi_\theta(s,2)$ làm ngược lại. $\psi_\theta(s,2)$ dài gấp đôi $\psi_\theta(s,1)$ vì hành động 2 ít được chọn hơn.
+
+**Kiểm tra lại.** $\psi_\theta(s,1)$ trùng kết quả tính trực tiếp của Ví dụ 09.14.
+:::
+
+Kết quả $(0;\,0)$ của ví dụ đúng cho mọi chính sách thỏa ba giả thiết sau.
+
+::: proposition Mệnh đề 09.17 (Kỳ vọng của hàm điểm)
+**Giả thiết.** Với trạng thái $s$ cố định: (i) $\pi_\theta(a\mid s)$ khả vi theo $\theta$ tại mọi $a$ trong miền hỗ trợ; (ii) miền hỗ trợ $\{a:\pi_\theta(a\mid s)>0\}$ không phụ thuộc $\theta$; (iii) khi $\mathcal A$ liên tục, có một hàm khả tích $h(a)$ với $\lVert\nabla_\theta\pi_{\theta'}(a\mid s)\rVert\le h(a)$ cho mọi $\theta'$ trong một lân cận của $\theta$.
+
+**Kết luận.** $\mathbb E_{A\sim\pi_\theta(\cdot\mid s)}\bigl[\psi_\theta(s,A)\bigr]=0\in\mathbb R^d$. Hệ quả: với mọi $c$ không phụ thuộc $A$ (khi đã biết $s$), $\mathbb E_{A\sim\pi_\theta(\cdot\mid s)}\bigl[c\,\psi_\theta(s,A)\bigr]=0$.
+:::
+
+::: proof
+**Bước 1 (đổi hàm điểm thành gradient của xác suất).** Trên miền hỗ trợ, $\pi_\theta(a\mid s)\psi_\theta(s,a)=\nabla_\theta\pi_\theta(a\mid s)$. Ngoài miền hỗ trợ, số hạng có trọng số $0$ và không đóng góp. Với $\mathcal A$ hữu hạn,
+$$
+\begin{aligned}
+\mathbb E_{A\sim\pi_\theta(\cdot\mid s)}\bigl[\psi_\theta(s,A)\bigr]
+&=\sum_{a:\,\pi_\theta(a\mid s)>0}\pi_\theta(a\mid s)\,\psi_\theta(s,a)\\
+&=\sum_{a:\,\pi_\theta(a\mid s)>0}\nabla_\theta\pi_\theta(a\mid s).
+\end{aligned}
+$$
+
+**Bước 2 (đổi đạo hàm và tổng).** Theo (ii), tập lấy tổng không đổi khi $\theta$ thay đổi, nên đạo hàm của tổng bằng tổng các đạo hàm:
+$$
+\sum_{a:\,\pi_\theta(a\mid s)>0}\nabla_\theta\pi_\theta(a\mid s)=\nabla_\theta\sum_{a:\,\pi_\theta(a\mid s)>0}\pi_\theta(a\mid s)=\nabla_\theta1=0.
+$$
+
+**Bước 3 (trường hợp liên tục).** Thay tổng bằng tích phân trên miền hỗ trợ. Giả thiết (iii) cho phép đổi $\nabla_\theta$ với tích phân theo định lý hội tụ bị chặn, và $\int\pi_\theta(a\mid s)\,\mathrm da=1$ với mọi $\theta$.
+
+**Bước 4 (hệ quả).** $c$ là hằng số đối với phép lấy kỳ vọng theo $A$, nên $\mathbb E[c\,\psi_\theta(s,A)]=c\,\mathbb E[\psi_\theta(s,A)]=0$. $\square$
+:::
+
+Ba giả thiết có vai trò riêng. Khả vi cho hàm điểm tồn tại. Miền hỗ trợ cố định được dùng ở Bước 2: bỏ nó, kết luận sai. Phản ví dụ: $A\sim$ phân phối đều trên $[0,\theta]$ với $\theta>0$; mật độ là $1/\theta$ trên $[0,\theta]$, nên $\psi_\theta(a)=\tfrac{\mathrm d}{\mathrm d\theta}\log(1/\theta)=-1/\theta$ với mọi $a$ trong miền hỗ trợ, và $\mathbb E[\psi_\theta(A)]=-1/\theta\ne0$. Đạo hàm của $\int_0^\theta\tfrac1\theta\,\mathrm da=1$ vẫn bằng $0$, nhưng phần $+1/\theta$ đến từ cận trên di động của tích phân và hàm điểm không nhìn thấy nó. Giả thiết (iii) chỉ cần cho hành động liên tục; với tập hành động hữu hạn, tổng hữu hạn và phép đổi luôn đúng. Softmax thỏa cả ba; Gaussian với $\sigma$ cố định thỏa cả ba, với miền hỗ trợ là $\mathbb R$.
+
+Hệ quả của mệnh đề sẽ được dùng hai lần. Ở Mục 6, các phần thưởng nhận trước khi lấy mẫu $A_t$ đóng vai $c$, và mệnh đề cho phép bỏ chúng khỏi ước lượng gradient. Ở Bài 10, một đường cơ sở (baseline) phụ thuộc trạng thái đóng vai $c$. Mệnh đề cũng cho biết hàm điểm một mình không chứa thông tin về hướng tốt: trung bình của nó bằng $0$ dưới mọi chính sách. Chỉ khi nhân với một đại lượng phụ thuộc hành động, như phần thưởng của hành động đó, kỳ vọng mới khác $0$.
 
 <!-- note-topic-id: lec-09-topic-09 -->
-### Hàm điểm Gaussian phương sai cố định
+### Hàm điểm của chính sách Gaussian
 
-**Hành động liên tục.** Lấy mẫu $A\mid S=s\sim\mathcal N(\mu_\theta(s),\sigma^2)$ với $\mu_\theta(s)=\phi(s)^\top\theta$; giữ $\phi(s)\in\mathbb R^d$ và $\sigma^2>0$ cố định (tr. 37–38):
+Với hành động thực, chẳng hạn góc lái, Định nghĩa 09.12 dùng chính sách Gaussian $A\mid S=s\sim\mathcal N\bigl(\mu_\theta(s),\sigma^2\bigr)$ với $\mu_\theta(s)=\phi(s)^\top\theta$, đặc trưng trạng thái $\phi(s)\in\mathbb R^d$ và $\sigma^2>0$ giữ cố định. Bài giảng gốc (trang 37) hỏi hàm điểm của chính sách này; định nghĩa cho câu trả lời trực tiếp.
 
-$$\psi_\theta(s,a)=\frac{a-\mu_\theta(s)}{\sigma^2}\,\phi(s)\in\mathbb R^d.$$
+::: proposition Mệnh đề 09.18 (Hàm điểm của chính sách Gaussian)
+**Giả thiết.** $\mathcal A=\mathbb R$; $\phi(s)\in\mathbb R^d$ và $\sigma^2>0$ không phụ thuộc $\theta$; $\pi_\theta(\cdot\mid s)$ là mật độ của $\mathcal N\bigl(\phi(s)^\top\theta,\sigma^2\bigr)$.
 
-- Hành động lớn hơn trung bình cho phần dư dương → tăng log mật độ của hành động đó.
-- Phương sai nhỏ khuếch đại độ lớn hàm điểm.
-- Công thức chỉ là gradient theo tham số trung bình; nếu $\phi$ hoặc $\sigma$ phụ thuộc $\theta$, cần đạo hàm thêm theo quy tắc dây chuyền.
-- Với hành động bị chặn, Gaussian không biến đổi có thể sinh hành động ngoài miền; có thể cần biến đổi.
-
-::: example
-**Tính tay.** $\phi(s)=(1,2)$, $\theta=(0,0)$ nên $\mu=0$, $\sigma^2=1$, $a=1{,}5$:
-
-$$\psi_\theta(s,a)=\frac{1{,}5-0}{1}\,(1,2)=(1{,}5,\,3).$$
-
-Nếu hệ số return âm, hướng hàm điểm bị đảo và bước cập nhật làm giảm log mật độ của hành động vừa lấy mẫu; một mẫu đơn lẻ không bảo đảm cải thiện chính sách.
+**Kết luận.** Với mọi $s$ và mọi $a\in\mathbb R$,
+$$
+\psi_\theta(s,a)=\frac{a-\mu_\theta(s)}{\sigma^2}\,\phi(s).
+$$
 :::
 
-**Kiểm tra.** Góc lái liên tục phù hợp với họ phân phối nào? — Gaussian.
+::: proof
+**Bước 1 (log mật độ).** Từ Định nghĩa 09.12,
+$$
+\log\pi_\theta(a\mid s)=-\frac{\bigl(a-\mu_\theta(s)\bigr)^2}{2\sigma^2}-\tfrac12\log\bigl(2\pi\sigma^2\bigr),
+$$
+trong đó $\pi$ ở hạng cuối là hằng số $3{,}14\ldots$; hạng này không phụ thuộc $\theta$ vì $\sigma$ cố định.
 
-*Nguồn: tr. 37–38.*
+**Bước 2 (quy tắc dây chuyền).** $\nabla_\theta\mu_\theta(s)=\phi(s)$, nên
+$$
+\begin{aligned}
+\nabla_\theta\log\pi_\theta(a\mid s)
+&=-\frac{2\bigl(a-\mu_\theta(s)\bigr)}{2\sigma^2}\cdot\bigl(-\nabla_\theta\mu_\theta(s)\bigr)\\
+&=\frac{a-\mu_\theta(s)}{\sigma^2}\,\phi(s).\qquad\square
+\end{aligned}
+$$
+:::
+
+Hàm điểm Gaussian là đặc trưng trạng thái nhân với phần dư chuẩn hóa $\bigl(a-\mu_\theta(s)\bigr)/\sigma^2$. Hai hệ quả đọc được ngay. Thứ nhất, hướng: bước $\Delta\theta=\alpha\,\psi_\theta(s,a)$ đổi trung bình tại $s$ một lượng $\phi(s)^\top\Delta\theta=\alpha\,\tfrac{a-\mu_\theta(s)}{\sigma^2}\lVert\phi(s)\rVert^2$, cùng dấu với $a-\mu_\theta(s)$: trung bình dời về phía hành động đã lấy mẫu. Thứ hai, độ lớn: hàm điểm tỉ lệ với $1/\sigma^2$, nên chính sách ít ngẫu nhiên cho hàm điểm lớn và ước lượng gradient có phương sai lớn. Mệnh đề 09.17 kiểm lại được trực tiếp: $\mathbb E[A-\mu_\theta(s)]=0$, nên $\mathbb E[\psi_\theta(s,A)]=0$.
+
+::: example Ví dụ 09.16 (Hàm điểm Gaussian tại $a=1{,}5$)
+**Dữ kiện.** $\phi(s)=(1;\,2)$, $\theta=(0;\,0)$ nên $\mu_\theta(s)=0$; $\sigma^2=1$; hành động lấy mẫu $a=1{,}5$.
+
+**Hàm điểm.** $\psi_\theta(s,a)=\dfrac{1{,}5-0}{1}(1;\,2)=(1{,}5;\,3)$.
+
+**Một bước với hệ số.** Xét bước $\Delta\theta=\alpha c\,\psi_\theta(s,a)$ với $\alpha=0{,}1$. Độ dời trung bình là $\phi(s)^\top\Delta\theta=0{,}1\cdot c\cdot(1\cdot1{,}5+2\cdot3)=0{,}75\,c$. Với $c=1$: $\mu_\theta(s)$ tăng lên $0{,}75$, về phía $a$. Với $c=-1$: $\mu_\theta(s)$ giảm xuống $-0{,}75$, ra xa $a$.
+
+**Kiểm tra lại.** Theo công thức tổng quát, độ dời là $\alpha c\,(a-\mu)\lVert\phi(s)\rVert^2/\sigma^2=0{,}1\cdot c\cdot1{,}5\cdot5=0{,}75\,c$.
+:::
+
+Ở Mục 6, hệ số $c$ là lợi tức của lượt: lợi tức dương kéo trung bình về phía hành động vừa thử, lợi tức âm đẩy trung bình ra xa.
+
+Bài giảng gốc (trang 38) hỏi vấn đề của chính sách Gaussian. Có hai câu trả lời có cơ sở. Mật độ dương trên cả trục số, nên với miền hành động bị chặn, mẫu phải được cắt hoặc biến đổi (Mục 4 nêu cách tính hàm điểm cho từng cách). Phương sai $\sigma^2$ cố định không học được mức thăm dò; học $\sigma$ được xét ở Bài tập 09.6.
+
+::: remark Nhận xét 09.19 (Nhầm lẫn thường gặp về hàm điểm)
+1. "Hàm điểm là gradient của $J$." Sai: $\psi_\theta(s,a)$ là gradient của log xác suất của một hành động; gradient của $J$ cần thêm trọng số là phần thưởng hay lợi tức, và lấy kỳ vọng.
+2. "Hàm điểm có kỳ vọng $0$ nên vô ích." Sai: kỳ vọng của $f(A)\psi_\theta(s,A)$ khác $0$ khi $f$ phụ thuộc hành động; trên bài toán một bước, $\mathbb E[r(A)\psi_\theta(s,A)]=\tfrac23\cdot3\bigl(\tfrac13;\,-\tfrac13\bigr)=\bigl(\tfrac23;\,-\tfrac23\bigr)$, đúng gradient tính ở trên.
+3. "Hàm điểm softmax là $\phi(s,a)$." Sai: thiếu hạng trừ đặc trưng trung bình; khi đó trung bình theo chính sách khác $0$, và bước cập nhật luôn đẩy về hướng đặc trưng trung bình.
+4. "Mệnh đề 09.17 đúng với mọi dữ liệu." Sai: kỳ vọng lấy theo $A\sim\pi_\theta(\cdot\mid s)$; hành động sinh từ một chính sách khác không cho trung bình $0$.
+:::
+
+**Trong thực hành.** Trong một cài đặt, hàm điểm hiếm khi được viết ra thành công thức. Mạng chính sách trả về các logit $\phi(s,a)^\top\theta$ (hoặc đầu ra của mạng) hay trung bình $\mu_\theta(s)$; thư viện tính $\log\pi_\theta(a\mid s)$ của hành động đã lấy mẫu, và phép vi phân tự động lan truyền ngược qua mạng cho $\psi_\theta(s,a)$. Khi đặc trưng là các lớp ẩn được học, đó chính là quy tắc dây chuyền mà Mệnh đề 09.16 bỏ qua. Log xác suất softmax nên tính bằng hàm log-softmax, dựa trên phép trừ cực đại trong $\log\sum e^{z}$, để tránh tràn số. Gán logit $-\infty$ cho các hành động không hợp lệ ở một trạng thái giữ miền hỗ trợ cố định theo $\theta$, nên Mệnh đề 09.17 vẫn áp dụng. Với xấp xỉ hàm hay quan sát không Markov, hàm điểm vẫn xác định, vì nó chỉ phụ thuộc chính sách; giả thiết dễ bị vi phạm nhất là dữ liệu: hành động lấy từ bộ nhớ phát lại do các chính sách cũ sinh ra không có phân phối $\pi_\theta(\cdot\mid s)$, nên Mệnh đề 09.17 và các ước lượng ở Mục 6 không còn đúng nếu không hiệu chỉnh.
+
+::: exercise Bài tập 09.4 (Hàm điểm softmax và Gaussian)
+(a) Chính sách softmax hai hành động với $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$ và $\theta=(0;\,\log3)$. Tính $\pi_\theta(\cdot\mid s)$, $\psi_\theta(s,1)$, $\psi_\theta(s,2)$, và kiểm $\mathbb E_{A\sim\pi_\theta}[\psi_\theta(s,A)]=0$.
+
+(b) Chính sách Gaussian với $\phi(s)=(1;\,2)$, $\theta=(0;\,0)$, $\sigma^2=1$ và hành động lấy mẫu $a=-1$. Tính $\psi_\theta(s,a)$ và nêu bước theo hàm điểm dời $\mu_\theta(s)$ về phía nào.
+:::
+
+::: hint
+(a) Mẫu số softmax là $e^0+e^{\log3}$; với đặc trưng là vector đơn vị, đặc trưng trung bình trùng vector xác suất. (b) Dùng Mệnh đề 09.18 rồi tính $\phi(s)^\top\psi_\theta(s,a)$.
+:::
+
+::: solution
+**Câu (a).** $\pi_\theta(\cdot\mid s)=\bigl(\tfrac{1}{1+3};\,\tfrac{3}{1+3}\bigr)=\bigl(\tfrac14;\,\tfrac34\bigr)$, cũng là đặc trưng trung bình. $\psi_\theta(s,1)=(1;\,0)-\bigl(\tfrac14;\,\tfrac34\bigr)=\bigl(\tfrac34;\,-\tfrac34\bigr)$; $\psi_\theta(s,2)=(0;\,1)-\bigl(\tfrac14;\,\tfrac34\bigr)=\bigl(-\tfrac14;\,\tfrac14\bigr)$. Kỳ vọng: $\tfrac14\bigl(\tfrac34;\,-\tfrac34\bigr)+\tfrac34\bigl(-\tfrac14;\,\tfrac14\bigr)=\bigl(\tfrac3{16}-\tfrac3{16};\,-\tfrac3{16}+\tfrac3{16}\bigr)=(0;\,0)$.
+
+**Câu (b).** Với $a=-1$: $\psi_\theta(s,a)=\dfrac{-1-0}{1}(1;\,2)=(-1;\,-2)$. Bước $\Delta\theta=\alpha\psi_\theta(s,a)$ dời trung bình $\alpha\,\phi(s)^\top(-1;\,-2)=-5\alpha<0$: với bước nhỏ ($\alpha<0{,}2$), trung bình giảm về phía $a=-1$ mà không vượt qua nó.
+
+**Kiểm tra lại.** Ở (a), hành động 1 ít được chọn hơn nên hàm điểm của nó dài hơn, ngược với Ví dụ 09.15. Nhầm lẫn thường gặp: quên trừ đặc trưng trung bình, được $\psi_\theta(s,1)=(1;\,0)$, và kỳ vọng $\bigl(\tfrac14;\,\tfrac34\bigr)\ne0$.
+:::
+
+::: exercise Bài tập 09.5 (Sai phân trung tâm)
+Trên bài toán một bước với $\theta=(\log2;\,0)$, tính sai phân trung tâm $\bigl(J(\theta+\epsilon u_1)-J(\theta-\epsilon u_1)\bigr)/(2\epsilon)$ với $\epsilon=0{,}1$; so với sai phân một phía $0{,}655$ của Ví dụ 09.13 và giá trị đúng $\tfrac23$. Một ước lượng gradient đầy đủ bằng sai phân trung tâm cần bao nhiêu giá trị $J$?
+:::
+
+::: hint
+$J(\theta)=3\pi_\theta(1\mid s)$; với $\theta-\epsilon u_1=(\log2-0{,}1;\,0)$, $\pi_\theta(1\mid s)=2e^{-0{,}1}/(2e^{-0{,}1}+1)$.
+:::
+
+::: solution
+**Tính.** $J(\theta+\epsilon u_1)\approx2{,}0655$ (Ví dụ 09.13); $J(\theta-\epsilon u_1)=3\cdot\dfrac{2e^{-0{,}1}}{2e^{-0{,}1}+1}\approx1{,}9323$. Sai phân trung tâm: $(2{,}0655-1{,}9323)/0{,}2\approx0{,}666$.
+
+**So sánh.** Sai lệch so với $\tfrac23$ khoảng $0{,}0004$, nhỏ hơn nhiều so với $0{,}011$ của sai phân một phía: sai số cắt cụt của sai phân trung tâm tỉ lệ với $\epsilon^2$ thay vì $\epsilon$.
+
+**Chi phí.** Mỗi tọa độ cần hai giá trị $J$ mới, nên cả gradient cần $2d$ giá trị thay vì $d+1$. Phương sai do nhiễu vẫn tỉ lệ với $1/(n\epsilon^2)$.
+
+**Kiểm tra lại.** Nhầm lẫn thường gặp: chia cho $\epsilon$ thay vì $2\epsilon$, được $1{,}33$.
+:::
+
+::: exercise Bài tập 09.6 (Học độ lệch chuẩn Gaussian)
+Chính sách Gaussian với $\mu_\theta(s)$ như Mệnh đề 09.18 và độ lệch chuẩn $\sigma=e^\omega$, $\omega$ là một tham số học được. (a) Chứng minh $\partial\log\pi/\partial\omega=\bigl(a-\mu_\theta(s)\bigr)^2/\sigma^2-1$. (b) Kiểm kỳ vọng của đại lượng này theo $A\sim\pi$ bằng $0$. (c) Tính giá trị tại $a=1{,}5$, $\mu_\theta(s)=0$, $\sigma=1$, và nêu một bước theo nó làm $\sigma$ tăng hay giảm.
+:::
+
+::: hint
+Viết $\log\pi=-\tfrac12(a-\mu)^2e^{-2\omega}-\omega-\tfrac12\log(2\pi)$.
+:::
+
+::: solution
+**Câu (a).** Đạo hàm theo $\omega$: $-\tfrac12(a-\mu)^2\cdot(-2)e^{-2\omega}-1=(a-\mu)^2/\sigma^2-1$.
+
+**Câu (b).** $\mathbb E\bigl[(A-\mu)^2\bigr]=\sigma^2$, nên kỳ vọng bằng $\sigma^2/\sigma^2-1=0$, đúng Mệnh đề 09.17.
+
+**Câu (c).** $1{,}5^2/1-1=1{,}25>0$: bước theo hàm điểm tăng $\omega$, tức tăng $\sigma$, làm mẫu xa trung bình như $a=1{,}5$ dễ xảy ra hơn.
+
+**Kiểm tra lại.** Mẫu có $|a-\mu|<\sigma$ cho giá trị âm: bước theo nó thu hẹp phân phối.
+:::
+
+Như vậy, Định nghĩa 09.14 biến việc học chính sách thành bài toán cực đại hóa $J(\theta)$, lợi tức kỳ vọng từ trạng thái đầu, và bước tăng gradient $\theta\leftarrow\theta+\alpha\nabla_\theta J$ làm $J$ tăng khi bước đủ nhỏ; trên bài toán một bước, $J=2$ và $\nabla_\theta J=\bigl(\tfrac23;\,-\tfrac23\bigr)$. Sai phân hữu hạn chỉ cần đo $J$ nhưng tốn $d+1$ nhóm lượt cho mỗi gradient và có phương sai tỉ lệ với $1/(n\epsilon^2)$; với $n=100$ lượt và $\epsilon=0{,}1$, độ lệch chuẩn khoảng $2$ so với giá trị $\tfrac23$. Hàm điểm (Định nghĩa 09.15) viết $\nabla_\theta\pi=\pi\,\psi_\theta$, nên một tổng theo hành động thành kỳ vọng theo hành động lấy mẫu; Mệnh đề 09.16 và 09.18 cho công thức đóng với softmax và Gaussian, và Mệnh đề 09.17 cho trung bình của hàm điểm bằng $0$ khi miền hỗ trợ cố định. Còn thiếu hai điều. Hàm điểm là của một bước, còn một lượt có nhiều bước, và trạng thái ở bước sau phụ thuộc hành động ở bước trước. Phép đổi đạo hàm với kỳ vọng trên cả lượt cũng cần giả thiết về môi trường. Mục 6 viết xác suất của cả lượt, lấy gradient của nó bằng tổng các hàm điểm, và nêu các giả thiết để đổi đạo hàm với kỳ vọng.
+
+*Nguồn: bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 30–38; Sutton và Barto (2018), §13.1–13.3, §13.7; ghi chú bài giảng Bài 08, Định nghĩa 08.16.*
 
 ---
 
@@ -837,17 +1089,6 @@ vì kỳ vọng có điều kiện thay $G_t$ bằng $Q^\pi$. Đây là **cách 
 ---
 
 ## 7. Tổng kết và chuyển tiếp
-
-<!-- note-topic-id: lec-09-topic-14 -->
-### Đọc thêm: sai phân hữu hạn
-
-Đọc thêm, ngoài tuyến chính. Từ định nghĩa đạo hàm, xấp xỉ từng thành phần:
-
-$$\frac{\partial J(\theta)}{\partial\theta_k}\approx\frac{J(\theta+\epsilon u_k)-J(\theta)}{\epsilon},$$
-
-với $u_k$ là véc-tơ đơn vị hướng $k$ (tr. 33). Đơn giản, áp dụng được cho chính sách bất kỳ kể cả không khả vi, nhưng nhiễu lớn, kém hiệu quả khi số tham số lớn — vì vậy tuyến chính của bài dùng hàm điểm thay vì sai phân.
-
-*Nguồn: tr. 33.*
 
 <!-- note-topic-id: lec-09-topic-13 -->
 ### Cầu nối: baseline và actor–critic
