@@ -90,10 +90,49 @@
 </section>
 
 <section>
-<section data-slide-id="L09-03" data-note-topic-id="lec-09-topic-01"><h2>DQN ổn định hơn nhưng vẫn có sai lệch</h2><img class="figure" src="img/lec-09/dqn-stability.svg" alt="Replay và mạng mục tiêu giảm hai nguồn bất ổn nhưng phép cực đại vẫn chọn nhiễu cao"/><div class="box">Replay giảm tương quan ngắn hạn; mạng mục tiêu làm chậm đích. Cả hai không tách việc chọn hành động khỏi đánh giá hành động.</div><p>Bài này giả sử quan sát đầy đủ: $O=S$. Nếu $O=h(S)$ làm mất thông tin, cần trạng thái thông tin hoặc bộ nhớ.</p><aside class="notes">Quy ước O bằng S giúp công thức DQN và gradient chính sách dùng cùng đầu vào Markov. Khi quan sát chỉ là h của S, thay S bằng O trong mạng không làm O tự có tính Markov. Mạng mục tiêu làm đích cố định theo từng đoạn giữa hai lần đồng bộ, không tạo bảo đảm hội tụ tổng quát.<p class="note-source"><strong>Nguồn:</strong> tr. 3–10; rút gọn vì đã học ở Bài 08 và chuẩn hóa ký hiệu.</p></aside></section>
-<section data-slide-id="L09-04" data-note-topic-id="lec-09-topic-02"><h2>Phép cực đại chọn cả giá trị lẫn nhiễu (maximization bias)</h2><img class="figure" src="img/lec-09/maximization-bias.svg" alt="Bốn cặp nhiễu Rademacher cho cực đại âm một một lần và dương một ba lần"/><p>Viết $\widehat Q_a=Q_a+\varepsilon_a$ với $\mathbb E[\varepsilon_a]=0$. Không chệch theo từng hành động chưa bảo đảm $\max_a\widehat Q_a$ không chệch.</p><aside class="notes">Sai lệch xuất hiện vì cùng một mẫu nhiễu quyết định hành động thắng và giá trị được báo cáo. Không nói mọi lần lấy max đều đánh giá quá cao; kết luận là về kỳ vọng và phụ thuộc phân phối nhiễu.<p class="note-source"><strong>Nguồn:</strong> tr. 11–13; sửa phạm vi kết luận.</p></aside></section>
-<section data-slide-id="L09-05" data-note-topic-id="lec-09-topic-02"><h2>Ví dụ Rademacher</h2><p>Hai hành động có giá trị thật bằng 0. Nhiễu $\varepsilon_1,\varepsilon_2$ độc lập và nhận $-1$ hoặc $1$ với xác suất $1/2$.</p><div class="grid2"><div class="card"><h3>Từng ước lượng</h3><div class="math-large">$$\mathbb E[\widehat Q_1]=\mathbb E[\widehat Q_2]=0.$$</div></div><div class="card"><h3>Sau phép cực đại</h3><div class="math-large">$$\mathbb E[\max_a\widehat Q_a]=\tfrac12.$$</div></div></div><aside class="notes">Trong bốn cặp đồng xác suất, cực đại bằng âm một chỉ ở cặp âm–âm; ba cặp còn lại cho một. Trung bình là một nửa. Ví dụ này chứng minh sai lệch dương dù từng ước lượng không chệch.<p class="note-source"><strong>Nguồn:</strong> ví dụ bổ sung để làm rõ tr. 12–13.</p></aside></section>
-<section data-slide-id="L09-06" data-note-topic-id="lec-09-topic-02"><h2>Bất đẳng thức kỳ vọng</h2><div class="math-large">$$\mathbb E\!\left[\max_a \widehat Q_a\right]\ge \max_a\mathbb E[\widehat Q_a].$$</div><ul><li>Đây là Jensen vì hàm cực đại theo véc-tơ là hàm lồi.</li><li>Dấu nghiêm phụ thuộc phân phối và quan hệ giữa các ước lượng.</li><li>Nếu một hành động luôn thắng, hai vế có thể bằng nhau.</li></ul><aside class="notes">Không phát biểu dấu lớn nghiêm như một định lý chung. Jensen chỉ cho dấu lớn hơn hoặc bằng. Sai lệch dương nghiêm cần điều kiện bổ sung.<p class="note-source"><strong>Nguồn:</strong> tr. 12–13; bổ sung điều kiện của Jensen.</p></aside></section>
+<section data-slide-id="L09-M2T" id="mach-2" class="strand-title" data-note-topic-id="lec-09-topic-01">
+<div class="strand-title-body">
+<h2><span class="strand-number">2.</span>Độ chệch của phép cực đại</h2>
+<p class="strand-lead">Muốn dùng phép cực đại trong mục tiêu bootstrap, phải biết nó chệch bao nhiêu khi ước lượng có nhiễu.</p>
+<p class="strand-keys">Mục tiêu DQN · Ước lượng không chệch có nhiễu · Hai hành động nhiễu ±1 · Bất đẳng thức Jensen</p>
+</div>
+<aside class="notes"><p>Phần mở đầu nhắc lại mục tiêu DQN, trong đó $\max_{a'}Q_{\theta^-}(S'_i,a')$ vừa chọn hành động ở trạng thái kế vừa báo giá trị của hành động đó, cùng bất đẳng thức Jensen. Nhiệm vụ ở đây là đo độ lệch của phép cực đại khi mỗi ước lượng không chệch nhưng có nhiễu: một số đo trên CartPole, một phép tính tay trên hai hành động, rồi một mệnh đề tổng quát. Kết quả giao cho phần 3 là nguyên nhân của độ lệch: cùng một ước lượng chọn và đánh giá.</p></aside>
+</section>
+<section data-slide-id="L09-03" data-note-topic-id="lec-09-topic-01">
+<h2>Phép cực đại trong mục tiêu DQN</h2>
+<p><strong>Nhu cầu:</strong> biết phép cực đại trong mục tiêu ${y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(S'_i,a')}$ có làm $y_i$ chệch lên hay không.</p>
+<p><strong>Ví dụ.</strong> CartPole: phần thưởng $1$ mỗi bước, $\gamma=0{,}99$, nên mọi lợi tức và mọi giá trị đúng không vượt ${\sum_{k\ge0}\gamma^k=100}$.</p>
+<img class="figure short" src="img/lec-09/cartpole-overestimate.svg" alt="Trục số từ 90 đến 110: cận 1 chia 1 trừ gamma bằng 100 tại 100, lợi tức G 0 của một lượt cắt ở bước 500 bằng 99,3, giá trị ước lượng max theo a của Q theta tại S 0 bằng 108,5, vượt cận 8,5."/>
+<p><strong>Lưu ý:</strong> $108{,}5$ gộp phần do phép cực đại với các sai số xấp xỉ khác.</p>
+<aside class="notes"><p>Số đo lấy từ một lần chạy DQN trong bài thực hành của Bài 08 trên CartPole, sau huấn luyện, tại trạng thái đầu của một lượt; ở đó quan sát trùng trạng thái. Lượt bị cắt ở bước 500 nên lợi tức thực tế là $(1-0{,}99^{500})/0{,}01\approx99{,}3$. Mục tiêu bootstrap qua bước cắt ngắn, nên $Q_\theta$ ước lượng giá trị của bài toán không giới hạn bước; giá trị đó không vượt $100$. Vì vậy $108{,}5$ không là giá trị đúng của chính sách nào. Mạng mục tiêu và bộ nhớ phát lại không thay phép cực đại trong $y_i$: phép cực đại vẫn vừa chọn hành động ở $S'_i$ vừa báo giá trị của nó. Con số chỉ là một lần chạy và chưa tách được các nguồn sai số; ví dụ tính tay sau đó tách riêng phần do phép cực đại.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 3–12; bài thực hành Bài 08, mục 7 (DQN trên CartPole); ghi chú bài giảng Bài 08, Định nghĩa 08.4.</p></aside>
+</section>
+<section data-slide-id="L09-04" data-note-topic-id="lec-09-topic-02">
+<h2>Nhiễu của hành động được chọn</h2>
+<p>Tại trạng thái kế: $\widehat Q_a=q_a+\varepsilon_a$, $\mathbb E[\varepsilon_a]=0$, với $q_a$ là giá trị đúng.</p>
+<p><strong>Trực quan.</strong> Phép cực đại chọn $\widehat Q_a$ lớn nhất, thường là chỗ nhiễu dương lớn.</p>
+<p>Cùng $\widehat Q$ chọn $a^*$ và báo $\widehat Q_{a^*}=q_{a^*}+\varepsilon_{a^*}$, nên nhiễu được chọn đi vào giá trị báo cáo.</p>
+<p><strong>Định nghĩa.</strong> Độ chệch của phép cực đại là</p>
+<div>$$\mathbb E\bigl[\max_a\widehat Q_a\bigr]-\max_a q_a.$$</div>
+<aside class="notes"><p>Ở mục tiêu DQN, $\widehat Q_a$ đóng vai $Q_{\theta^-}(S'_i,a)$ và $q_a$ là giá trị đúng của hành động $a$ tại $S'_i$; chữ thường dành cho giá trị đúng, chữ hoa cho ước lượng. Không chệch là tính chất của từng hành động riêng lẻ. Hành động $a^*$ là một biến ngẫu nhiên phụ thuộc chính các nhiễu, nên $\mathbb E[\varepsilon_{a^*}]$ nói chung khác $0$. Kết luận nói về kỳ vọng: một hiện thực cụ thể có thể cho cực đại nhỏ hơn giá trị đúng.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 12–13; Sutton và Barto (2018), §6.7.</p></aside>
+</section>
+<section data-slide-id="L09-05" data-note-topic-id="lec-09-topic-02">
+<h2>Ví dụ: hai hành động có nhiễu ±1</h2>
+<p>Cho $q_1=q_2=0$; $\varepsilon_1$, $\varepsilon_2$ độc lập, mỗi biến bằng $-1$ hoặc $+1$ với xác suất $1/2$. Tính độ chệch.</p>
+<img class="figure short" src="img/lec-09/maximization-bias.svg" alt="Bốn cặp giá trị ước lượng của hành động 1 và 2, mỗi cặp xác suất một phần tư: âm một và âm một cho cực đại âm một; âm một và cộng một, cộng một và âm một, cộng một và cộng một đều cho cực đại cộng một."/>
+<p>$\mathbb E[\widehat Q_a]=\tfrac12(-1)+\tfrac12(+1)=0$; $\;\mathbb E[\max_a\widehat Q_a]=\tfrac14(-1+1+1+1)=\tfrac12$.</p>
+<p><strong>Diễn giải:</strong> từng ước lượng không chệch, nhưng độ chệch của phép cực đại là ${\tfrac12-0=\tfrac12}$.</p>
+<p>Với $q=(0{,}5;\,0)$, độ chệch $0{,}375$; với $q=(3;\,0)$, độ chệch $0$.</p>
+<aside class="notes"><p>Vì $q_1=q_2=0$, mỗi ước lượng bằng đúng nhiễu của nó, và bốn cặp $(\widehat Q_1;\widehat Q_2)$ đồng xác suất. Chỉ cặp $(-1;-1)$ cho cực đại $-1$, nhỏ hơn giá trị đúng; ba cặp còn lại cho $+1$. Độ chệch dương đến từ ba cặp có ít nhất một nhiễu dương: phép cực đại luôn chọn nhiễu dương khi có. Với $q=(0{,}5;\,0)$, bốn cặp cho cực đại $-0{,}5$; $1$; $1{,}5$; $1{,}5$, trung bình $0{,}875$, độ chệch $0{,}375$. Khi hai giá trị đúng cách nhau ít nhất $2$, gấp đôi biên độ nhiễu, hành động tốt hơn thắng ở mọi cặp và độ chệch bằng $0$.</p><p class="note-source"><strong>Nguồn:</strong> ví dụ sư phạm minh họa bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 12–13.</p></aside>
+</section>
+<section data-slide-id="L09-06" data-note-topic-id="lec-09-topic-02">
+<h2>Độ chệch của phép cực đại không âm</h2>
+<p><strong>Mệnh đề.</strong> Với $\mathcal A$ hữu hạn và mọi $\widehat Q_a$ khả tích: $\mathbb E\bigl[\max_a\widehat Q_a\bigr]\ge\max_a\mathbb E[\widehat Q_a]$. Khi ${\mathbb E[\widehat Q_a]=q_a}$, độ chệch ${\ge0}$.</p>
+<p><strong>Chứng minh.</strong> $f(x)=\max_ax_a$ lồi; Jensen cho $f(\mathbb E[X])\le\mathbb E[f(X)]$ với ${X=(\widehat Q_a)_{a\in\mathcal A}}$.</p>
+<p><strong>Ý nghĩa:</strong> bằng nhau khi và chỉ khi có $b^*\in\arg\max_aq_a$ với ${\widehat Q_{b^*}=\max_a\widehat Q_a}$ hầu chắc chắn.</p>
+<p><strong>Câu hỏi:</strong> nếu $\widehat Q_1&gt;\widehat Q_2$ hầu chắc chắn, cả hai không chệch, độ chệch bằng bao nhiêu?</p>
+<p class="fragment"><strong>Lời giải:</strong> $0$, vì $\max_a\widehat Q_a=\widehat Q_1$ và $q_1=\mathbb E[\widehat Q_1]\ge\mathbb E[\widehat Q_2]=q_2$.</p>
+<aside class="notes"><p>Giả thiết khả tích để hai vế có nghĩa; giả thiết không chệch để vế phải bằng giá trị đúng $\max_aq_a$. Không cần nhiễu độc lập giữa các hành động. Điều kiện dấu bằng: với $b^*$ là một hành động có giá trị đúng lớn nhất, $\max_a\widehat Q_a-\widehat Q_{b^*}\ge0$ có kỳ vọng $0$ khi và chỉ khi nó bằng $0$ hầu chắc chắn; khi có nhiều hành động như vậy, chọn hành động nào cũng được, và hòa vẫn tính là đạt cực đại. Trong $y_i$, $\widehat Q_a$ là $Q_{\theta^-}(S'_i,a)$; độ chệch lớn nhất khi các hành động tại $S'_i$ có giá trị đúng gần nhau so với sai số của mạng. Nguyên nhân của độ chệch là cùng một ước lượng chọn hành động và báo giá trị; phần 3 tách hai vai này.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 12–13; Sutton và Barto (2018), §6.7.</p></aside>
+</section>
 </section>
 
 <section>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif">
+<title id="t">Giá trị ước lượng và lợi tức trên CartPole</title>
+<desc id="d">Trục số từ 90 đến 110 có vạch tại 90, 95, 100, 105, 110. Đường nét đứt thẳng đứng tại 100 ghi "cận 1 chia 1 trừ gamma bằng 100", cận của mọi lợi tức và mọi giá trị đúng. Hình tròn tại 99,3 ghi "lợi tức G 0 bằng 99,3, cắt ở bước 500". Hình thoi tại 108,5 ghi "max theo a của Q theta tại S 0 bằng 108,5". Một ngoặc từ 100 đến 108,5 ghi "vượt cận 8,5".</desc>
+<line x1="80" y1="140" x2="920" y2="140" stroke="#424954" stroke-width="3"/>
+<g font-size="20" text-anchor="middle" fill="#424954">
+<line x1="100" y1="132" x2="100" y2="148" stroke="#424954" stroke-width="3"/><text x="100" y="174">90</text>
+<line x1="300" y1="132" x2="300" y2="148" stroke="#424954" stroke-width="3"/><text x="300" y="174">95</text>
+<line x1="500" y1="132" x2="500" y2="148" stroke="#424954" stroke-width="3"/><text x="500" y="174">100</text>
+<line x1="700" y1="132" x2="700" y2="148" stroke="#424954" stroke-width="3"/><text x="700" y="174">105</text>
+<line x1="900" y1="132" x2="900" y2="148" stroke="#424954" stroke-width="3"/><text x="900" y="174">110</text>
+</g>
+<line x1="500" y1="20" x2="500" y2="140" stroke="#2F3E7A" stroke-width="3" stroke-dasharray="9 6"/>
+<text x="490" y="36" font-size="21" text-anchor="end" fill="#2F3E7A">cận 1/(1 − γ) = 100</text>
+<circle cx="472" cy="140" r="11" fill="#2F3E7A"/>
+<text x="460" y="112" font-size="21" text-anchor="end" fill="#2F3E7A">lợi tức <tspan font-style="italic">G</tspan><tspan font-size="15" dy="5">0</tspan><tspan dy="-5"> = 99,3 (cắt ở bước 500)</tspan></text>
+<path d="M840,127 L853,140 L840,153 L827,140 Z" fill="#B15A2B"/>
+<text x="840" y="112" font-size="21" text-anchor="middle" fill="#B15A2B">max<tspan font-size="15" dy="5" font-style="italic">a</tspan><tspan dy="-5"> </tspan><tspan font-style="italic">Q</tspan><tspan font-size="15" dy="5" font-style="italic">θ</tspan><tspan dy="-5">(</tspan><tspan font-style="italic">S</tspan><tspan font-size="15" dy="5">0</tspan><tspan dy="-5">, </tspan><tspan font-style="italic">a</tspan>) = 108,5</text>
+<path d="M500,66 L500,58 L840,58 L840,66" fill="none" stroke="#B15A2B" stroke-width="3"/>
+<text x="670" y="50" font-size="21" text-anchor="middle" fill="#B15A2B">vượt cận 8,5</text>
+</svg>

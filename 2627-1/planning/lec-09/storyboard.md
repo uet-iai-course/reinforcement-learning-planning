@@ -32,7 +32,7 @@ Cột "C0": vị trí `h.v` (đánh số từ 1) sau bước C0, khi chỉ di ch
 | 1 | `L09-02b` | Nội dung | thêm | Bảy mục khớp tên trang tiêu đề mạch và `#/N`; dòng đọc trước | chưa có | 1.6 (S5) |
 | 1 | `L09-02c` | Vấn đề trung tâm | thêm | Hộp bài toán và năm câu trả lời có điều kiện | chưa có | 1.7 (S6) |
 | 2 | `L09-M2T` | 2. Độ chệch của phép cực đại | thêm | Trang tiêu đề mạch, điểm vào mạch 2 | chưa có | chưa có |
-| 2 | `L09-03` | Phép cực đại trong mục tiêu DQN | sửa | Trang vấn đề "Muốn …"; ví dụ dẫn nhập CartPole ($108{,}5>100$); quy ước $O=S$ đã sang `L09-01b` | 2.1 | 2.1 |
+| 2 | `L09-03` | Phép cực đại trong mục tiêu DQN | sửa | Trang vấn đề "Nhu cầu:"; ví dụ dẫn nhập CartPole ($108{,}5>100$) với hình trục số; quy ước $O=S$ đã sang `L09-01b` | 2.1 | 2.2 (S8) |
 | 2 | `L09-04` | Độ chệch của phép cực đại (trực quan) | sửa | Hình hai hành động nhiễu chuyển xuống `L09-05`; đọc $q_a$ và $\widehat Q_a$ thành lời | 2.2 | 2.2 |
 | 2 | `L09-05` | Ví dụ: hai hành động có nhiễu ±1 | sửa | Tiêu đề dạng "Ví dụ: …"; đặt hình; "Diễn giải:" | 2.3 | 2.3 |
 | 2 | `L09-06` | Độ chệch của phép cực đại không âm | sửa | "Mệnh đề." với giả thiết khả tích; "Chứng minh." một dòng; dòng nối nguyên nhân | 2.4 | 2.4 |
@@ -139,6 +139,62 @@ Mạch 1 không mở khái niệm cốt lõi nào: các trang nhắc lại kết
 - **Liên kết:** trước là `L09-02b`; sau là `L09-03` (từ bước mạch 2 là `L09-M2T`).
 - **Mật độ và ngoại lệ:** sau R1 83 âm tiết (ngoại lệ, xem mục Ngoại lệ mật độ), 6 dòng, 0 công thức hiển thị, 1 hộp chữ 1 câu, ghi chú khoảng 133 âm tiết (bỏ câu số trang nguồn; thêm lý do không đòi hàm điểm bị chặn và việc $\theta$ đổi vai).
 - **Ghi chú bài giảng:** `## 1. Mở đầu` với "Bài toán trung tâm của chương": kết quả kế thừa (Thuật toán 08.13, Nhận xét 08.19), bài toán có số liệu (CartPole: cận $100$, $\max_aQ_\theta(O_0,a)=108{,}5$, $G_0=99{,}3$, bài thực hành Bài 08 mục 7), giới hạn dẫn tới nửa sau (hành động liên tục, lưới gộp trạng thái nguồn tr. 23–25), hình `central-problem.svg` có đoạn đọc hình, năm câu trả lời có điều kiện, đoạn kết nối sang Mục 2.
+
+#### `L09-M2T` Trang tiêu đề mạch 2 (bước S7), điểm vào mạch 2
+
+- **Trang muốn nói gì:** mạch 2 "Độ chệch của phép cực đại" đo độ lệch của phép cực đại trong mục tiêu bootstrap khi ước lượng có nhiễu.
+- **Phục vụ mạch nào và thế nào:** điểm vào mạch 2; số "2." khớp mục 2 của `L09-02b` và `#/2` (đã thử: `#/2` và liên kết mục 2 cùng mở `L09-M2T`). Dòng dẫn nêu nhu cầu chung của mạch, trùng nhu cầu của `L09-03`, nên trang là bước `vấn đề` chung của cụm (ghi trong bảng hành trình).
+- **Vấn đề còn lại trước sửa:** không có trang tiêu đề mạch (CT G01; SV).
+- **Quyết định:** thêm theo khuôn `L08-M2T`; `id="mach-2"`; tên khác tiêu đề `L09-03`; bốn từ khóa là khái niệm của mạch; `data-note-topic-id` là `lec-09-topic-01` (chủ đề của trang nội dung đầu mạch).
+- **Liên kết:** kế thừa mục tiêu DQN (`L09-01c`) và Jensen (`L09-01d`); giao cho mạch 3 nguyên nhân của độ chệch.
+- **Mật độ:** dòng dẫn 20 âm tiết (trần 25), từ khóa 17 âm tiết, 4 cụm; ghi chú diễn giả khoảng 91 âm tiết.
+
+#### `L09-03` Phép cực đại trong mục tiêu DQN (bước S8)
+
+- **Trang muốn nói gì:** phép cực đại trong $y_i$ có thể làm mục tiêu lệch lên; số đo CartPole cho giá trị ước lượng vượt cận trên của mọi lợi tức.
+- **Phục vụ mạch nào và thế nào:** bước vấn đề và ví dụ dẫn nhập của cụm độ chệch; công thức $y_i$ nhắc lại tại chỗ.
+- **Vấn đề còn lại trước sửa:** tiêu đề là câu đối lập; hai luận điểm khác loại; "Bài này giả sử…", quy ước $O=S$ lặp; "Replay", "đích"; không "Muốn…/Nhu cầu:", không ví dụ số; SVG `dqn-stability.svg` có câu khẩu hiệu và nhãn tràn (CT P03; SV; R1).
+- **Quyết định:** sửa. "Nhu cầu:" với công thức $y_i$ trong dòng; "Ví dụ." CartPole với cận $1/(1-\gamma)=100$; hình mới `cartpole-overestimate.svg` (trục số 90–110: cận 100, $G_0=99{,}3$, $\max_aQ_\theta(S_0,a)=108{,}5$, vượt cận $8{,}5$) thay `dqn-stability.svg`; "Lưu ý:" con số gộp nhiều nguồn sai số. Bỏ quy ước $O=S$ (đã ở `L09-01b`). `dqn-stability.svg` không còn dùng trong deck; tệp đã xóa ở R2.
+- **Liên kết:** trước `L09-M2T`; sau `L09-04`. Mục tiêu hỗ trợ: 1.
+- **Mật độ:** trước 45 âm tiết, 4 dòng, ghi chú 62; sau S8 43; sau R2 48 âm tiết (cận 100 cho cả lợi tức và giá trị đúng; "chệch" thay "lệch"), 4 dòng chữ và 1 hình, 0 công thức hiển thị, 0 hộp chữ, đáy 650 px, ghi chú khoảng 142.
+
+#### `L09-04` Nhiễu của hành động được chọn (bước S9; tiêu đề đổi ở R2)
+
+- **Trang muốn nói gì:** với $\widehat Q_a=q_a+\varepsilon_a$ không chệch, phép cực đại chọn nhiễu dương lớn và báo nó; đại lượng cần đo là $\mathbb E[\max_a\widehat Q_a]-\max_aq_a$.
+- **Phục vụ:** bước trực quan; đặt tên đại lượng cho ví dụ ở trang sau.
+- **Vấn đề còn lại trước sửa:** tiêu đề câu kèm tiếng Anh; hình đứng trước khi ví dụ được đặt; $Q_a$ cho giá trị đúng; "sai lệch" (CT P04; SV; TH; R1).
+- **Quyết định:** sửa. Chuyển hình xuống `L09-05`; dùng $q_a$ cho giá trị đúng; nhãn "Trực quan."; tên tiếng Anh đã ở `L09-02`.
+- **Liên kết:** trước `L09-03`; sau `L09-05`.
+- **Mật độ:** trước 13 âm tiết, 2 dòng, 1 hình; sau S9 43; sau R2 46 âm tiết (tiêu đề "Nhiễu của hành động được chọn", nhãn "Định nghĩa."), 5 dòng (một công thức hiển thị), đáy 457 px, ghi chú khoảng 83.
+
+#### `L09-05` Ví dụ: hai hành động có nhiễu ±1 (bước S10)
+
+- **Trang muốn nói gì:** $q_1=q_2=0$, nhiễu $\pm1$ độc lập: từng ước lượng không chệch, $\mathbb E[\max]=\tfrac12$, độ chệch $\tfrac12$.
+- **Phục vụ:** bước ví dụ, tính tay.
+- **Vấn đề còn lại trước sửa:** tiêu đề không theo dạng "Ví dụ: …"; hai thẻ; thiếu "Diễn giải:" (CT P05; SV).
+- **Quyết định:** sửa theo khuôn trang ví dụ: dữ kiện, yêu cầu "Tính", hình bốn cặp (`maximization-bias.svg` vẽ lại: dấu trừ chuẩn, phông không chân, bỏ chấm màu không chú giải và câu khẩu hiệu, ba cặp có cực đại dương viền đậm), một dòng tính, "Diễn giải:". Hình này dùng lại ở `X01` khi sửa mạch 3.
+- **Mật độ:** trước 24 âm tiết, 4 dòng (6 tính tiêu đề thẻ); sau S10 28; sau R2 34 âm tiết (thêm dòng ứng dụng $q=(0{,}5;\,0)$ và $q=(3;\,0)$; hình có nhãn cặp $(\widehat Q_1;\widehat Q_2)$, bỏ dòng xác suất lặp trong từng khung), 5 dòng chữ và 1 hình, đáy 691 px, ghi chú khoảng 102.
+
+#### `L09-06` Độ chệch của phép cực đại không âm (bước S11)
+
+- **Trang muốn nói gì:** Mệnh đề (Mệnh đề 09.2 của ghi chú): $\mathbb E[\max_a\widehat Q_a]\ge\max_a\mathbb E[\widehat Q_a]$ với $\mathcal A$ hữu hạn, $\widehat Q_a$ khả tích; không chệch thì độ chệch $\ge0$; điều kiện dấu bằng.
+- **Phục vụ:** bước hình thức; Câu hỏi và Lời giải là bước kiểm tra của cụm.
+- **Vấn đề còn lại trước sửa:** không nhãn, không giả thiết; "Đây là Jensen vì…"; "có thể bằng nhau"; ghi chú có chỉ dẫn giảng viên (CT P06; SV; TH).
+- **Quyết định:** sửa. "Mệnh đề." với giả thiết; "Chứng minh." một dòng, phát biểu lại Jensen tại chỗ; "Ý nghĩa:" điều kiện dấu bằng khi và chỉ khi; "Câu hỏi:" và "Lời giải:" (fragment) kiểm điều kiện dấu bằng. Câu nối nguyên nhân sang mạch 3 đặt trong ghi chú diễn giả (trang đã đủ sáu dòng).
+- **Mật độ:** trước 35 âm tiết, 4 dòng, ghi chú 28; sau S11 57; sau R2 50 âm tiết ("Ý nghĩa:" viết bằng $b^*\in\arg\max_aq_a$), 5 khối (7 dòng hiển thị), 0 công thức hiển thị, đáy 585 px, ghi chú khoảng 131 (thêm câu ứng dụng vào DQN).
+
+#### Hành trình khái niệm, mạch 2, cụm "Độ chệch của phép cực đại" (15 phút)
+
+| bước | mã trang | dữ kiện đầu vào | sản phẩm học tập | gộp / không áp dụng |
+|---|---|---|---|---|
+| Vấn đề | `L09-M2T`, `L09-03` | Mục tiêu DQN (`L09-01c`); CartPole: cận 100, $108{,}5$ | Thấy giá trị ước lượng vượt cận; biết con số gộp nhiều nguồn | Ví dụ dẫn nhập đặt cùng vấn đề |
+| Trực giác | `L09-04` | $\widehat Q_a=q_a+\varepsilon_a$ | Phép cực đại chọn nhiễu dương; đại lượng cần đo | Không gộp |
+| Ví dụ | `L09-05` | $q=(0;\,0)$, nhiễu $\pm1$ | Độ chệch $\tfrac12$ | Không gộp |
+| Hình thức | `L09-06` | Jensen (`L09-01d`) | Mệnh đề có giả thiết, điều kiện dấu bằng | Không gộp |
+| Ứng dụng | `L09-05` (dòng cuối, R2), ghi chú diễn giả `L09-06`; ghi chú bài giảng Ví dụ 09.3 | Khoảng cách giá trị đúng $0{,}5$ và $3$; $\widehat Q_a=Q_{\theta^-}(S'_i,a)$ | Độ chệch $0{,}375$ và $0$; độ chệch lớn khi giá trị đúng gần nhau | Gộp với ví dụ trên cùng trang (trang `L09-06` đã đủ dòng) |
+| Kiểm tra | `L09-06` (Câu hỏi, Lời giải) | $\widehat Q_1>\widehat Q_2$ hầu chắc chắn | Độ chệch $0$ | Gộp với bước hình thức |
+
+Thời lượng: `L09-M2T` 1, `L09-03` 4, `L09-04` 3, `L09-05` 3, `L09-06` 4 phút. Dữ kiện truyền: hình bốn cặp của `L09-05` dùng lại ở `X01` (mạch 3); nguyên nhân "cùng ước lượng chọn và đánh giá" là đầu vào của `L09-M3T`.
 
 ## Bản trước đợt sửa 2026-10-28
 

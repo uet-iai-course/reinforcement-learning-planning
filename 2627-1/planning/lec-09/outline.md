@@ -122,7 +122,7 @@ Bảng ký hiệu đầy đủ (27 hàng, ba cột) nằm trong ghi chú bài gi
 |---|---|
 | `lec-09-topic-16` | `L09-01`, `L09-02`, `L09-02b`, `L09-02c` |
 | `lec-09-topic-15` | `L09-01b`, `L09-01c`, `L09-01d` |
-| `lec-09-topic-01` | `L09-03` |
+| `lec-09-topic-01` | `L09-M2T`, `L09-03` |
 | `lec-09-topic-02` | `L09-04`, `L09-05`, `L09-06` |
 | `lec-09-topic-03` | `L09-07`, `L09-08`, `X01` |
 | `lec-09-topic-04` | `L09-09`, `L09-10` |
@@ -137,7 +137,7 @@ Bảng ký hiệu đầy đủ (27 hàng, ba cột) nằm trong ghi chú bài gi
 | `lec-09-topic-13` | `L09-33` |
 | `lec-09-topic-14` | `L09-30A` |
 
-Mạch 2–7 giữ `data-note-topic-id` cũ cho tới bước của mạch đó. Hai mã mới cho mạch 1 theo cách deck 08 làm (`lec-08-topic-13` cho tiên quyết, `lec-08-topic-17` cho mở đầu), vì trình xem từ chối mã chủ đề lặp và `lec-09-topic-01` thuộc về trang `L09-03` ở mạch 2. Tổng sau bước mạch 1: 43 `data-slide-id` duy nhất, 16 chủ đề.
+Mạch 2–7 giữ `data-note-topic-id` cũ cho tới bước của mạch đó. Hai mã mới cho mạch 1 theo cách deck 08 làm (`lec-08-topic-13` cho tiên quyết, `lec-08-topic-17` cho mở đầu), vì trình xem từ chối mã chủ đề lặp và `lec-09-topic-01` thuộc về trang `L09-03` ở mạch 2. Tổng sau bước mạch 1: 43 `data-slide-id` duy nhất, 16 chủ đề; sau bước mạch 2: 44 (thêm `L09-M2T`).
 
 ## Phân bổ thời lượng (đợt sửa 2026-10-28)
 
@@ -145,7 +145,7 @@ $8+15+30+15+22+20+10=120$ phút trên lớp; 30 phút chữa bài ngoài 120 ph�
 
 ## Tài sản SVG
 
-`central-problem.svg` (mới ở bước mạch 1, dùng trong ghi chú bài giảng, Mục 1); `dqn-stability.svg`, `maximization-bias.svg`, `dqn-vs-ddqn.svg`, `double-q-cross-update.svg`, `aliased-grid-policy.svg`, `policy-distributions.svg`, `softmax-score.svg`, `reinforce-trajectory.svg` (bản trước, sửa ở bước của trang dùng).
+`central-problem.svg` (mới ở bước mạch 1, dùng trong ghi chú bài giảng, Mục 1); `cartpole-overestimate.svg` (mới ở bước mạch 2, `L09-03` và Ví dụ 09.1); `maximization-bias.svg` vẽ lại ở bước mạch 2 (`L09-05`, Ví dụ 09.2); `dqn-stability.svg` đã xóa ở bước R2 vì không còn trang nào dùng; `dqn-vs-ddqn.svg`, `double-q-cross-update.svg`, `aliased-grid-policy.svg`, `policy-distributions.svg`, `softmax-score.svg`, `reinforce-trajectory.svg` (bản trước, sửa ở bước của trang dùng).
 
 ## Bản trước đợt sửa 2026-10-28
 
