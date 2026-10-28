@@ -941,17 +941,64 @@ trong đó đẳng thức thứ hai dùng $\nabla_\theta p_\theta=p_\theta\nabla
 Lấy logarit của Định nghĩa 09.20: $\log p_\theta(\tau)=\log\rho_0(S_0)+\sum_{t=0}^{T-1}\bigl[\log\pi_\theta(A_t\mid S_t)+\log P(S_{t+1},R_{t+1}\mid S_t,A_t)\bigr]$. Hạng đầu và các hạng $\log P$ không phụ thuộc $\theta$ nên có gradient $0$; mỗi hạng còn lại có gradient $\psi_t$. $\square$
 :::
 
-Bổ đề là lý do gradient chính sách học được mà không cần mô hình: $P$ có mặt trong $p_\theta(\tau)$ nhưng biến mất khỏi $\nabla_\theta\log p_\theta(\tau)$, nên mỗi số hạng chỉ cần trạng thái, hành động đã quan sát và công thức của chính sách. Ghép với tỉ số xác suất, $\nabla_\theta J=\mathbb E\bigl[G_0\sum_t\psi_t\bigr]$: mỗi hàm điểm được nhân với lợi tức của cả lượt. Phần thưởng đã nhận trước khi chọn $A_t$ không thể do $A_t$ gây ra, nên hạng tương ứng phải có kỳ vọng $0$.
+Bổ đề là lý do gradient chính sách học được mà không cần mô hình: $P$ có mặt trong $p_\theta(\tau)$ nhưng biến mất khỏi $\nabla_\theta\log p_\theta(\tau)$, nên mỗi số hạng chỉ cần trạng thái, hành động đã quan sát và công thức của chính sách. Ghép với tỉ số xác suất, $\nabla_\theta J=\mathbb E\bigl[G_0\sum_t\psi_t\bigr]$: mỗi hàm điểm được nhân với lợi tức của cả lượt, kể cả các phần thưởng đã nhận trước khi chọn hành động tương ứng.
 
-Đặt lịch sử $H_t=(S_0,A_0,R_1,\dots,A_{t-1},R_t,S_t)$ và tách lợi tức tại bước $t$:
+Hành động $A_t$ được chọn sau khi các phần thưởng $R_1,\dots,R_t$ đã xảy ra, nên nó không làm thay đổi các phần thưởng này. Hình dưới tách một lượt tại $A_t$. Đặt lịch sử $H_t=(S_0,A_0,R_1,\dots,A_{t-1},R_t,S_t)$, gồm mọi thứ đã quan sát khi chọn $A_t$, và tách lợi tức tại bước $t$:
 $$
 G_0=G_{<t}+\gamma^tG_t,\qquad G_{<t}=\sum_{k=0}^{t-1}\gamma^kR_{k+1}.
 $$
-$G_{<t}$ xác định khi biết $H_t$. Khi biết $H_t$, hành động $A_t$ lấy từ $\pi_\theta(\cdot\mid S_t)$, nên theo Mệnh đề 09.17, $\mathbb E[\psi_t\mid H_t]=0$, và theo tính chất tháp của kỳ vọng có điều kiện,
+
+![Dòng thời gian một lượt: S 0, A 0, R 1, …, R t, S t, rồi hành động A t trong hình thoi viền đậm, rồi R t cộng 1, S t cộng 1, …, R T, S T. Ngoặc nét liền phía trên bao S 0 đến S t, ghi lịch sử H t, đã biết khi chọn A t. Ngoặc nét đứt phía dưới bao R 1 đến R t, ghi G nhỏ hơn t bằng R 1 cộng … cộng gamma mũ t trừ 1 nhân R t, xác định bởi H t. Ngoặc nét liền đậm bao R t cộng 1 đến S T, ghi gamma mũ t nhân G t, phụ thuộc A t. Dưới hình thoi: A t lấy mẫu từ pi theta tại S t.](img/lec-09/past-reward-timeline.svg)
+
+Hình đọc từ trái sang phải theo thời gian. Ngoặc nét liền phía trên bao lịch sử $H_t$; ngoặc nét đứt bao các phần thưởng của $G_{<t}$, đều nằm trong $H_t$, nên $G_{<t}$ là một hàm của $H_t$. Hình thoi là hành động $A_t$, lấy mẫu từ $\pi_\theta(\cdot\mid S_t)$. Ngoặc nét liền đậm bao các phần thưởng của $\gamma^tG_t$, đến sau $A_t$ và nói chung phụ thuộc $A_t$. Trực quan này chưa đủ làm chứng minh: $G_{<t}$ có thể tương quan với $S_t$, và qua $S_t$ tương quan với $A_t$. Bổ đề sau cho thấy tương quan đó không làm hạng $G_{<t}\psi_t$ có kỳ vọng khác $0$.
+
+::: lemma Bổ đề 09.22 (Phần thưởng quá khứ và hàm điểm)
+**Giả thiết.** Khi biết $H_t$, hành động $A_t$ có phân phối $\pi_\theta(\cdot\mid S_t)$ (chính sách Markov); với mọi $s$, $\pi_\theta(\cdot\mid s)$ khả vi theo $\theta$ và có miền hỗ trợ không đổi theo $\theta$; khi tập hành động liên tục, $\pi_\theta(\cdot\mid s)$ là mật độ và đổi được $\nabla_\theta$ với tích phân theo $a$ như trong Mệnh đề 09.17; $|R_{t+1}|\le R_{\max}$ và $T\le T_{\max}$ hầu chắc chắn; mỗi $\psi_t$ khả tích.
+
+**Kết luận.** Quy ước $\psi_t=0$ khi $t\ge T$, tức thay $\psi_t$ bằng $\mathbf 1\{t<T\}\psi_t$. Với mọi $t<T_{\max}$, $\mathbb E\bigl[G_{<t}\,\psi_t\bigr]=0$. Do đó
 $$
-\mathbb E\bigl[G_{<t}\,\psi_t\bigr]=\mathbb E\bigl[G_{<t}\,\mathbb E[\psi_t\mid H_t]\bigr]=0.
+\mathbb E\Bigl[G_0\sum_{t=0}^{T-1}\psi_t\Bigr]=\mathbb E\Bigl[\sum_{t=0}^{T-1}\gamma^tG_t\,\psi_t\Bigr].
 $$
-Lập luận chỉ dùng thứ tự thời gian và tính Markov của chính sách; nó không giả sử phần thưởng độc lập với hành động.
+:::
+
+::: proof
+**Bước 1 (tách lợi tức).** Theo định nghĩa lợi tức, $G_0=\sum_{k=0}^{T-1}\gamma^kR_{k+1}$; các hạng với $k<t$ tạo thành $G_{<t}$, các hạng với $k\ge t$ tạo thành $\gamma^t\sum_{k\ge t}\gamma^{k-t}R_{k+1}=\gamma^tG_t$.
+
+**Bước 2 (kỳ vọng có điều kiện của hàm điểm).** Sự kiện $\{t<T\}$ ($S_t$ chưa kết thúc) xác định khi biết $H_t$; trên sự kiện ngược lại, $\psi_t=0$ theo quy ước. Trên $\{t<T\}$, khi biết $H_t$, trạng thái $S_t$ cố định và $A_t\sim\pi_\theta(\cdot\mid S_t)$, nên
+$$
+\begin{aligned}
+\mathbb E[\psi_t\mid H_t]
+&=\sum_a\pi_\theta(a\mid S_t)\,\nabla_\theta\log\pi_\theta(a\mid S_t)\\
+&=\sum_a\nabla_\theta\pi_\theta(a\mid S_t)\\
+&=\nabla_\theta\sum_a\pi_\theta(a\mid S_t)\\
+&=\nabla_\theta1=0.
+\end{aligned}
+$$
+Dòng một dùng phân phối có điều kiện của $A_t$; dòng hai dùng $\pi_\theta\nabla_\theta\log\pi_\theta=\nabla_\theta\pi_\theta$ trên tập $\pi_\theta>0$; dòng ba đổi gradient với tổng, hợp lệ vì miền hỗ trợ không đổi theo $\theta$; dòng bốn dùng tổng xác suất bằng $1$. Đây là Mệnh đề 09.17 áp dụng tại trạng thái ngẫu nhiên $S_t$. Với hành động liên tục, tổng thay bằng tích phân theo mật độ, và dòng ba cần đổi được gradient với tích phân.
+
+**Bước 3 (đưa $G_{<t}$ ra ngoài).** $G_{<t}$ là hàm của $H_t$, nên là hằng số khi biết $H_t$. Theo tính chất tháp của kỳ vọng có điều kiện,
+$$
+\begin{aligned}
+\mathbb E[G_{<t}\,\psi_t]
+&=\mathbb E\bigl[\mathbb E[G_{<t}\,\psi_t\mid H_t]\bigr]\\
+&=\mathbb E\bigl[G_{<t}\,\mathbb E[\psi_t\mid H_t]\bigr]\\
+&=0,
+\end{aligned}
+$$
+trong đó dòng cuối dùng Bước 2. Tính khả tích của $G_{<t}\psi_t$, cần cho tính chất tháp, có từ $|G_{<t}|\le T_{\max}R_{\max}$ và $\psi_t$ khả tích.
+
+**Bước 4 (cộng theo $t$).** Theo quy ước, $\sum_{t=0}^{T-1}\psi_t=\sum_{t=0}^{T_{\max}-1}\psi_t$, một tổng có đúng $T_{\max}$ số hạng, không phụ thuộc $T$; mỗi $G_0\psi_t$ khả tích vì $|G_0|\le T_{\max}R_{\max}$. Theo Bước 1 và tính tuyến tính của kỳ vọng,
+$$
+\begin{aligned}
+\mathbb E\Bigl[G_0\sum_{t=0}^{T_{\max}-1}\psi_t\Bigr]
+&=\sum_{t=0}^{T_{\max}-1}\Bigl(\mathbb E\bigl[G_{<t}\psi_t\bigr]+\gamma^t\,\mathbb E\bigl[G_t\psi_t\bigr]\Bigr)\\
+&=\sum_{t=0}^{T_{\max}-1}\gamma^t\,\mathbb E\bigl[G_t\psi_t\bigr],
+\end{aligned}
+$$
+trong đó dòng một dùng Bước 1 và dòng hai dùng Bước 3 cho hạng đầu. Đưa tổng trở lại trong kỳ vọng và bỏ các hạng bằng $0$ với $t\ge T$ được kết luận. $\square$
+:::
+
+Các giả thiết có vai trò riêng. Chính sách Markov được dùng ở dòng một của Bước 2: nếu chính sách nhìn cả lịch sử, chỉ cần thay $\pi_\theta(\cdot\mid S_t)$ bằng $\pi_\theta(\cdot\mid H_t)$ và kết luận vẫn đúng; điều không được bỏ là $A_t$ được chọn chỉ từ thông tin có trong $H_t$. Miền hỗ trợ cố định được dùng ở dòng ba của Bước 2; bỏ nó, phản ví dụ phân phối đều trên $[0,\theta]$ của Mục 5 cho $\mathbb E[\psi_t\mid H_t]\ne0$; với hành động liên tục, dòng ba còn cần đổi được gradient với tích phân theo $a$. Chặn $|R_{t+1}|\le R_{\max}$, $T\le T_{\max}$ và tính khả tích của $\psi_t$ được dùng ở Bước 3 và Bước 4: chỉ giả sử $G_0$ bị chặn thì không đủ, vì tổng riêng $G_{<t}$ có thể không bị chặn khi các phần thưởng triệt tiêu nhau, và tổng theo $t$ có thể vô hạn. Lập luận chỉ dùng thứ tự thời gian; nó không giả sử phần thưởng độc lập với hành động. Phần thưởng $R_t$ có thể phụ thuộc $A_{t-1}$, và $G_{<t}$ có thể tương quan với $A_t$ qua $S_t$; điều được dùng là $G_{<t}$ đã xác định trước khi lấy mẫu $A_t$.
 
 ::: example Ví dụ 09.18 (Lượt hai bước)
 **Dữ kiện.** Lượt dừng tại $T=2$, cùng trạng thái $s$ ở hai bước, chính sách softmax với $\theta=(\log2;\,0)$; $A_0=A_1=1$ nên $\psi_0=\psi_1=\psi=\bigl(\tfrac13;\,-\tfrac13\bigr)$; $R_1=1$, $R_2=2$, $\gamma=0{,}9$.
@@ -960,20 +1007,20 @@ Lập luận chỉ dùng thứ tự thời gian và tính Markov của chính s�
 
 **Ba ước lượng.** (i) Lợi tức của cả lượt: $G_0(\psi_0+\psi_1)=5{,}6\,\psi\approx(1{,}867;\,-1{,}867)$. (ii) Lợi tức từ bước $t$: $G_0\psi_0+\gamma G_1\psi_1=(2{,}8+1{,}8)\psi=4{,}6\,\psi\approx(1{,}533;\,-1{,}533)$. (iii) Bỏ $\gamma^t$: $G_0\psi_0+G_1\psi_1=4{,}8\,\psi$, xét ở Ví dụ 09.21.
 
-**Phần chênh.** (i) − (ii) $=R_1\psi_1$: phần thưởng nhận trước $A_1$ nhân hàm điểm của $A_1$, kỳ vọng $0$. Hai ước lượng (i), (ii) khác nhau trên lượt này nhưng có cùng kỳ vọng.
+**Phần chênh.** (i) − (ii) $=R_1\psi_1$: phần thưởng nhận trước $A_1$ nhân hàm điểm của $A_1$, kỳ vọng $0$ theo Bổ đề 09.22 với $t=1$. Hai ước lượng (i), (ii) khác nhau trên lượt này nhưng có cùng kỳ vọng.
 :::
 
 <!-- note-topic-id: lec-09-topic-11 -->
 ### Định lý gradient chính sách
 
-Ba bước trên, tỉ số xác suất, Bổ đề 09.21 và việc bỏ phần thưởng quá khứ, cần các giả thiết sau. Chúng ta nêu một điều kiện đủ đơn giản, bao được hai họ chính sách của Mục 4.
+Ba bước trên, tỉ số xác suất, Bổ đề 09.21 và Bổ đề 09.22, cần các giả thiết sau. Chúng ta nêu một điều kiện đủ đơn giản, bao được hai họ chính sách của Mục 4.
 
 - **(G1)** $\rho_0$ và $P$ không phụ thuộc $\theta$; trạng thái $S_t$ có tính Markov.
 - **(G2)** Với mọi $s$, $\pi_\theta(\cdot\mid s)$ khả vi theo $\theta$ và có miền hỗ trợ không đổi theo $\theta$.
 - **(G3)** $|R_{t+1}|\le R_{\max}$ và $T\le T_{\max}$ hầu chắc chắn.
 - **(G4)** $\pi_\theta$ là chính sách softmax, hoặc chính sách Gaussian với $\sigma$ cố định, với đặc trưng bị chặn $\lVert\phi\rVert\le\Phi$.
 
-::: theorem Định lý 09.22 (Gradient chính sách, dạng quỹ đạo)
+::: theorem Định lý 09.23 (Gradient chính sách, dạng quỹ đạo)
 **Giả thiết.** (G1)–(G4).
 
 **Kết luận.**
@@ -995,23 +1042,14 @@ $$
 
 **Bước 4 (Bổ đề 09.21).** Theo (G1), (G2): $\nabla_\theta J=\mathbb E\bigl[G_0\sum_{t=0}^{T-1}\psi_t\bigr]$.
 
-**Bước 5 (bỏ phần thưởng quá khứ).** Viết tổng đến $T_{\max}$ với chỉ thị $\mathbf 1\{t<T\}$; chỉ thị này xác định khi biết $H_t$ (trạng thái $S_t$ chưa kết thúc). Với mỗi $t$,
-$$
-\begin{aligned}
-\mathbb E\bigl[\mathbf 1\{t<T\}\,G_0\,\psi_t\bigr]
-&=\mathbb E\bigl[\mathbf 1\{t<T\}\,G_{<t}\,\psi_t\bigr]+\mathbb E\bigl[\mathbf 1\{t<T\}\,\gamma^tG_t\,\psi_t\bigr]\\
-&=\mathbb E\bigl[\mathbf 1\{t<T\}\,G_{<t}\,\mathbb E[\psi_t\mid H_t]\bigr]+\mathbb E\bigl[\mathbf 1\{t<T\}\,\gamma^tG_t\,\psi_t\bigr]\\
-&=\mathbb E\bigl[\mathbf 1\{t<T\}\,\gamma^tG_t\,\psi_t\bigr],
-\end{aligned}
-$$
-vì $\mathbb E[\psi_t\mid H_t]=0$ theo Mệnh đề 09.17 áp dụng tại $S_t$. Cộng theo $t$ được kết luận. $\square$
+**Bước 5 (bỏ phần thưởng quá khứ).** Các giả thiết của Bổ đề 09.22 được bảo đảm: chính sách có dạng $\pi_\theta(\cdot\mid S_t)$ và trạng thái Markov theo (G1), miền hỗ trợ cố định theo (G2), $|R_{t+1}|\le R_{\max}$ và $T\le T_{\max}$ theo (G3), và $\psi_t$ khả tích theo (G4) (bị chặn với softmax, có mọi mô men với Gaussian). Theo Bổ đề 09.22, $\nabla_\theta J=\mathbb E\bigl[G_0\sum_t\psi_t\bigr]=\mathbb E\bigl[\sum_t\gamma^tG_t\psi_t\bigr]$. $\square$
 :::
 
-Định lý đọc như sau: hướng tăng của lợi tức kỳ vọng là trung bình, trên các lượt của chính sách hiện tại, của các hàm điểm, mỗi hàm điểm nhân với phần lợi tức đến sau nó và với trọng số $\gamma^t$. Mỗi giả thiết có vai trò riêng. (G1) được dùng ở Bước 4; nếu môi trường phụ thuộc $\theta$, chẳng hạn khi tham số cũng điều khiển phân phối trạng thái đầu, $\nabla\log p_\theta$ có thêm hạng của môi trường và kết luận sai. (G2) được dùng ở Bước 5 qua Mệnh đề 09.17; bỏ miền hỗ trợ cố định, phản ví dụ phân phối đều trên $[0,\theta]$ của Mục 5 cho $\mathbb E[\psi_t\mid H_t]\ne0$. (G3), (G4) chỉ được dùng ở Bước 2. Với $\gamma<1$, có thể bỏ $T\le T_{\max}$ khi $\lVert\psi_{\theta'}\rVert\le C$ đều trong một lân cận của $\theta$ (đúng với softmax). Viết $J=\sum_{t\ge0}\gamma^t\,\mathbb E\bigl[R_{t+1}\mathbf 1\{t<T\}\bigr]$; số hạng thứ $t$ là kỳ vọng trên $t+1$ bước đầu của lượt, nên khả vi theo Bước 2–4 với gradient có chuẩn không quá $(t+1)CR_{\max}$. Chuỗi các gradient bị chặn bởi $\sum_t\gamma^t(t+1)CR_{\max}<\infty$, nên hội tụ đều và được lấy đạo hàm từng số hạng (Sutton và cộng sự, 2000). Chặn $p_{\theta'}(\tau)$ trực tiếp trên cả lượt thì không đủ, vì tỉ số $p_{\theta'}(\tau)/p_\theta(\tau)$ có thể tăng theo hàm mũ của $T$. Trọng số $\gamma^t$ đến từ chính định nghĩa $J=\mathbb E[G_0]$: phần thưởng ở bước $k$ được chiết khấu $\gamma^k=\gamma^t\gamma^{k-t}$.
+Định lý đọc như sau: hướng tăng của lợi tức kỳ vọng là trung bình, trên các lượt của chính sách hiện tại, của các hàm điểm, mỗi hàm điểm nhân với phần lợi tức đến sau nó và với trọng số $\gamma^t$. Mỗi giả thiết có vai trò riêng. (G1) được dùng ở Bước 4; nếu môi trường phụ thuộc $\theta$, chẳng hạn khi tham số cũng điều khiển phân phối trạng thái đầu, $\nabla\log p_\theta$ có thêm hạng của môi trường và kết luận sai. (G2) được dùng ở Bước 5 qua Bổ đề 09.22 và Mệnh đề 09.17; bỏ miền hỗ trợ cố định, phản ví dụ phân phối đều trên $[0,\theta]$ của Mục 5 cho $\mathbb E[\psi_t\mid H_t]\ne0$. (G3), (G4) chỉ được dùng ở Bước 2. Với $\gamma<1$, có thể bỏ $T\le T_{\max}$ khi $\lVert\psi_{\theta'}\rVert\le C$ đều trong một lân cận của $\theta$ (đúng với softmax). Viết $J=\sum_{t\ge0}\gamma^t\,\mathbb E\bigl[R_{t+1}\mathbf 1\{t<T\}\bigr]$; số hạng thứ $t$ là kỳ vọng trên $t+1$ bước đầu của lượt, nên khả vi theo Bước 2–4 với gradient có chuẩn không quá $(t+1)CR_{\max}$. Chuỗi các gradient bị chặn bởi $\sum_t\gamma^t(t+1)CR_{\max}<\infty$, nên hội tụ đều và được lấy đạo hàm từng số hạng (Sutton và cộng sự, 2000). Chặn $p_{\theta'}(\tau)$ trực tiếp trên cả lượt thì không đủ, vì tỉ số $p_{\theta'}(\tau)/p_\theta(\tau)$ có thể tăng theo hàm mũ của $T$. Trọng số $\gamma^t$ đến từ chính định nghĩa $J=\mathbb E[G_0]$: phần thưởng ở bước $k$ được chiết khấu $\gamma^k=\gamma^t\gamma^{k-t}$.
 
 Thay $G_t$ bằng kỳ vọng có điều kiện của nó cho dạng thứ hai, dạng mà bài giảng gốc (trang 39) và Sutton và Barto (2018, §13.2) phát biểu.
 
-::: corollary Hệ quả 09.23 (Gradient chính sách, dạng phân bố chiếm dụng)
+::: corollary Hệ quả 09.24 (Gradient chính sách, dạng phân bố chiếm dụng)
 **Giả thiết.** (G1)–(G4); chính sách Markov dừng; lượt kết thúc do MDP đi vào trạng thái hấp thụ, nơi $q_\pi=0$.
 
 **Kết luận.** Với phân bố chiếm dụng chiết khấu $\nu^\pi_\gamma(s)=(1-\gamma)\sum_{t\ge0}\gamma^t\Pr_{\pi_\theta}(S_t=s)$,
@@ -1033,7 +1071,7 @@ $$
 <!-- note-topic-id: lec-09-topic-12 -->
 ### Thuật toán REINFORCE
 
-Định lý 09.22 viết gradient thành một kỳ vọng theo lượt, nên một lượt chạy bằng $\pi_\theta$ cho một mẫu của nó. Bài giảng gốc (trang 40) gọi thuật toán lấy mẫu này là REINFORCE (Williams, 1992).
+Định lý 09.23 viết gradient thành một kỳ vọng theo lượt, nên một lượt chạy bằng $\pi_\theta$ cho một mẫu của nó. Bài giảng gốc (trang 40) gọi thuật toán lấy mẫu này là REINFORCE (Williams, 1992).
 
 ::: example Ví dụ 09.19 (Một cập nhật REINFORCE)
 **Dữ kiện.** Bài toán một bước, chính sách softmax, $\theta=(\log2;\,0)$, $r(1)=3$, $r(2)=0$, $\alpha=0{,}1$. Lượt chọn $A_0=1$, nên $G_0=3$.
@@ -1045,7 +1083,7 @@ $$
 **Kiểm tra lại.** Nếu lượt chọn $A_0=2$, $G_0=0$ và $\widehat g=0$. Kỳ vọng: $\tfrac23(1;\,-1)+\tfrac13\cdot0=\bigl(\tfrac23;\,-\tfrac23\bigr)=\nabla_\theta J$.
 :::
 
-::: algorithm Thuật toán 09.24 (REINFORCE)
+::: algorithm Thuật toán 09.25 (REINFORCE)
 **Đầu vào.** Chính sách tham số hóa $\pi_\theta$ khả vi; bước học $\alpha>0$; $\gamma\in[0,1)$; số lượt $N$.
 
 **Khởi tạo.** $\theta$ tùy ý.
@@ -1063,13 +1101,13 @@ $$
 
 Hình vẽ thứ tự tính của một lượt: thu cả lượt với tham số cố định, tính lợi tức lùi từ cuối lượt, cộng các đóng góp rồi cập nhật một lần. Lợi tức phải tính lùi vì $G_t$ cần mọi phần thưởng sau bước $t$; do đó REINFORCE chỉ cập nhật khi lượt đã kết thúc. Sutton và Barto (2018, §13.3) cập nhật $\theta$ ngay theo từng $t$ sau khi lượt kết thúc; hai biến thể khác nhau ở bậc $\alpha^2$.
 
-::: corollary Hệ quả 09.25 (REINFORCE là ước lượng không chệch)
-**Giả thiết.** (G1)–(G4); lượt ở bước 1 của Thuật toán 09.24 sinh bởi $\pi_{\theta_{\mathrm{old}}}$.
+::: corollary Hệ quả 09.26 (REINFORCE là ước lượng không chệch)
+**Giả thiết.** (G1)–(G4); lượt ở bước 1 của Thuật toán 09.25 sinh bởi $\pi_{\theta_{\mathrm{old}}}$.
 
 **Kết luận.** $\mathbb E\bigl[\widehat g\mid\theta_{\mathrm{old}}\bigr]=\nabla_\theta J(\theta_{\mathrm{old}})$.
 :::
 
-Hệ quả là Định lý 09.22 tại $\theta_{\mathrm{old}}$, vì $\widehat g$ là đúng biểu thức trong kỳ vọng, tính trên một lượt. Nó cần hai điều mà thuật toán phải giữ. Thứ nhất, mọi hàm điểm tính tại tham số đã sinh ra lượt; cập nhật $\theta$ giữa chừng làm các bước sau của lượt đến từ chính sách khác. Thứ hai, lượt phải do $\pi_{\theta_{\mathrm{old}}}$ sinh ra: REINFORCE là học theo chính sách (on-policy). Các lượt cũ trong một bộ nhớ phát lại do tham số khác sinh ra, nên trung bình của $\widehat g$ trên chúng không còn là $\nabla J(\theta_{\mathrm{old}})$ nếu không nhân với tỉ số $p_{\theta_{\mathrm{old}}}(\tau)/p_{\theta'}(\tau)$. Đây là khác biệt cơ bản với DQN và Double DQN, vốn học khác chính sách từ bộ nhớ phát lại.
+Hệ quả là Định lý 09.23 tại $\theta_{\mathrm{old}}$, vì $\widehat g$ là đúng biểu thức trong kỳ vọng, tính trên một lượt. Nó cần hai điều mà thuật toán phải giữ. Thứ nhất, mọi hàm điểm tính tại tham số đã sinh ra lượt; cập nhật $\theta$ giữa chừng làm các bước sau của lượt đến từ chính sách khác. Thứ hai, lượt phải do $\pi_{\theta_{\mathrm{old}}}$ sinh ra: REINFORCE là học theo chính sách (on-policy). Các lượt cũ trong một bộ nhớ phát lại do tham số khác sinh ra, nên trung bình của $\widehat g$ trên chúng không còn là $\nabla J(\theta_{\mathrm{old}})$ nếu không nhân với tỉ số $p_{\theta_{\mathrm{old}}}(\tau)/p_{\theta'}(\tau)$. Đây là khác biệt cơ bản với DQN và Double DQN, vốn học khác chính sách từ bộ nhớ phát lại.
 
 Không chệch không có nghĩa là chính xác. Ước lượng dùng lợi tức Monte Carlo của cả lượt, nên phương sai của nó có thể lớn.
 
@@ -1094,12 +1132,12 @@ Ví dụ sau cho thấy hướng lệch trên một bài toán nhỏ.
 
 **Gradient đúng.** $J=\mathbb E[R_1]+\gamma\,\mathbb E[R_2]$; $R_1$ chỉ phụ thuộc $\theta^A$, $R_2$ chỉ phụ thuộc $\theta^B$. Vậy $\nabla J=(g;\,\gamma g)=(0{,}667;\,-0{,}667;\,0{,}6;\,-0{,}6)$.
 
-**Định lý 09.22.** $\mathbb E[G_0\psi_0]=\mathbb E[R_1\psi_0]+\gamma\,\mathbb E[R_2\psi_0]=g+0$ (vì $A_1$ độc lập với $A_0$), $\mathbb E[\gamma G_1\psi_1]=\gamma g$: đúng $(g;\,\gamma g)$.
+**Định lý 09.23.** $\mathbb E[G_0\psi_0]=\mathbb E[R_1\psi_0]+\gamma\,\mathbb E[R_2\psi_0]=g+0$ (vì $A_1$ độc lập với $A_0$), $\mathbb E[\gamma G_1\psi_1]=\gamma g$: đúng $(g;\,\gamma g)$.
 
 **Bỏ $\gamma^t$.** $\mathbb E[G_0\psi_0+G_1\psi_1]=(g;\,g)$. Góc giữa $(g;\,g)$ và $(g;\,\gamma g)$ có $\cos=\dfrac{1+\gamma}{\sqrt2\sqrt{1+\gamma^2}}\approx0{,}9986$, tức khoảng $3^\circ$: hướng lệch, trạng thái muộn được tính nặng hơn mức $J$ yêu cầu.
 :::
 
-::: remark Nhận xét 09.26 (Nhầm lẫn thường gặp về gradient chính sách)
+::: remark Nhận xét 09.27 (Nhầm lẫn thường gặp về gradient chính sách)
 1. "Định lý gradient chính sách cần biết $P$." Sai: $P$ biến mất khỏi $\nabla\log p_\theta$ (Bổ đề 09.21); nó chỉ cần các lượt sinh bởi $P$.
 2. "Bỏ được phần thưởng quá khứ vì phần thưởng độc lập với hành động." Sai: lý do là thứ tự thời gian, $\mathbb E[\psi_t\mid H_t]=0$; phần thưởng sau $A_t$ phụ thuộc $A_t$ và không bỏ được.
 3. "Không chệch nên mỗi cập nhật làm $J$ tăng." Sai: trong Ví dụ 09.19, một lượt chọn hành động 2 cho $\widehat g=0$; với lợi tức âm do nhiễu, một cập nhật có thể làm $J$ giảm.
@@ -1109,9 +1147,9 @@ Ví dụ sau cho thấy hướng lệch trên một bài toán nhỏ.
 $$
 L(\theta)=-\sum_{t=0}^{T-1}\gamma^tG_t\,\log\pi_\theta(A_t\mid S_t),
 $$
-có $-\nabla_\theta L=\widehat g$; dấu trừ đổi bước hạ gradient của thư viện thành bước tăng $J$. Hàm này không phải hàm mục tiêu: giá trị của nó không đo chất lượng chính sách, chỉ gradient của nó có nghĩa. Lấy trung bình $\widehat g$ trên vài lượt trước mỗi cập nhật làm giảm phương sai mà không làm mất tính không chệch. Với xấp xỉ hàm bằng mạng nơ-ron, (G4) được thay bằng điều kiện gradient của logit hoặc của trung bình theo $\theta$ bị chặn trên miền trạng thái; khi đó hàm điểm vẫn bị chặn (softmax) hoặc có đuôi Gaussian; với quan sát không Markov, chính sách theo quan sát vẫn có Định lý 09.22 theo lượt, nhưng Hệ quả 09.23 với $q_\pi(s,a)$ không còn áp dụng. Với CartPole, lượt bị cắt ở bước $500$ (Bài 08) cho $G_t$ cụt: ước lượng khi đó nhắm bài toán có chân trời hữu hạn.
+có $-\nabla_\theta L=\widehat g$; dấu trừ đổi bước hạ gradient của thư viện thành bước tăng $J$. Hàm này không phải hàm mục tiêu: giá trị của nó không đo chất lượng chính sách, chỉ gradient của nó có nghĩa. Lấy trung bình $\widehat g$ trên vài lượt trước mỗi cập nhật làm giảm phương sai mà không làm mất tính không chệch. Với xấp xỉ hàm bằng mạng nơ-ron, (G4) được thay bằng điều kiện gradient của logit hoặc của trung bình theo $\theta$ bị chặn trên miền trạng thái; khi đó hàm điểm vẫn bị chặn (softmax) hoặc có đuôi Gaussian; với quan sát không Markov, chính sách theo quan sát vẫn có Định lý 09.23 theo lượt, nhưng Hệ quả 09.24 với $q_\pi(s,a)$ không còn áp dụng. Với CartPole, lượt bị cắt ở bước $500$ (Bài 08) cho $G_t$ cụt: ước lượng khi đó nhắm bài toán có chân trời hữu hạn.
 
-Như vậy, Định lý 09.22 viết gradient của $J$ thành kỳ vọng trên các lượt của $\pi_\theta$, trong đó mỗi hàm điểm nhân với lợi tức đến sau nó, và REINFORCE (Thuật toán 09.24) lấy mẫu kỳ vọng đó mà không cần $P$, không chệch dưới (G1)–(G4). Còn hai giới hạn: phương sai của ước lượng lớn và tăng khi cộng một hằng vào phần thưởng ($\tfrac49$ thành $\tfrac{16}9$ trên bài toán một bước), còn dữ liệu phải theo chính sách nên mỗi lượt chỉ dùng cho một cập nhật. Bài 10 giảm phương sai bằng đường cơ sở và bằng phương pháp actor–critic, trong đó một hàm giá trị học được thay cho lợi tức Monte Carlo.
+Như vậy, Định lý 09.23 viết gradient của $J$ thành kỳ vọng trên các lượt của $\pi_\theta$, trong đó mỗi hàm điểm nhân với lợi tức đến sau nó, và REINFORCE (Thuật toán 09.25) lấy mẫu kỳ vọng đó mà không cần $P$, không chệch dưới (G1)–(G4). Còn hai giới hạn: phương sai của ước lượng lớn và tăng khi cộng một hằng vào phần thưởng ($\tfrac49$ thành $\tfrac{16}9$ trên bài toán một bước), còn dữ liệu phải theo chính sách nên mỗi lượt chỉ dùng cho một cập nhật. Bài 10 giảm phương sai bằng đường cơ sở và bằng phương pháp actor–critic, trong đó một hàm giá trị học được thay cho lợi tức Monte Carlo.
 
 *Nguồn: bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 39–40; Williams (1992); Sutton và cộng sự (2000); Sutton và Barto (2018), §13.2–13.3; Nota và Thomas (2020).*
 
@@ -1132,8 +1170,8 @@ Chúng ta gom các kết quả của Mục 2 đến Mục 6 vào một bảng. M
 | Double Q-learning (Thuật toán 09.7) | mỗi bước cập nhật một bảng; bảng kia đánh giá; hành vi theo $Q_1+Q_2$ | $Q_1(S,A)\leftarrow Q_1(S,A)+\alpha\bigl[R+\gamma(1-Z)Q_2(S',a^*)-Q_1(S,A)\bigr]$ |
 | Chính sách tham số hóa (Định nghĩa 09.10–09.12) | $\pi_\theta$ khả vi; xác suất khi $\mathcal A$ hữu hạn, mật độ khi $\mathcal A=\mathbb R$ | softmax $\propto e^{\phi(s,a)^\top\theta}$; Gaussian $\mathcal N(\phi(s)^\top\theta,\sigma^2)$ |
 | Hàm điểm (Định nghĩa 09.15, Mệnh đề 09.16–09.18) | $\pi_\theta(a\mid s)>0$; $\phi$, $\sigma$ cố định; miền hỗ trợ cố định cho kỳ vọng | $\psi_\theta=\phi(s,a)-\sum_b\pi_\theta(b\mid s)\phi(s,b)$; $\psi_\theta=\tfrac{a-\mu_\theta(s)}{\sigma^2}\phi(s)$; $\mathbb E[\psi_\theta(s,A)]=0$ |
-| Định lý gradient chính sách (Định lý 09.22, Hệ quả 09.23) | (G1)–(G4); dạng phân bố chiếm dụng cần thêm lượt kết thúc do MDP | $\nabla_\theta J=\mathbb E\bigl[\sum_t\gamma^tG_t\psi_t\bigr]=\tfrac1{1-\gamma}\mathbb E_{\nu^\pi_\gamma,\pi_\theta}[q_{\pi_\theta}\psi_\theta]$ |
-| REINFORCE (Thuật toán 09.24, Hệ quả 09.25) | lượt sinh bởi $\pi_{\theta_{\mathrm{old}}}$; giữ $\theta_{\mathrm{old}}$ cố định cả lượt; giữ $\gamma^t$ | $\widehat g=\sum_t\gamma^tG_t\psi_{\theta_{\mathrm{old}}}(S_t,A_t)$, $\mathbb E[\widehat g]=\nabla_\theta J(\theta_{\mathrm{old}})$ |
+| Định lý gradient chính sách (Định lý 09.23, Hệ quả 09.24) | (G1)–(G4); dạng phân bố chiếm dụng cần thêm lượt kết thúc do MDP | $\nabla_\theta J=\mathbb E\bigl[\sum_t\gamma^tG_t\psi_t\bigr]=\tfrac1{1-\gamma}\mathbb E_{\nu^\pi_\gamma,\pi_\theta}[q_{\pi_\theta}\psi_\theta]$ |
+| REINFORCE (Thuật toán 09.25, Hệ quả 09.26) | lượt sinh bởi $\pi_{\theta_{\mathrm{old}}}$; giữ $\theta_{\mathrm{old}}$ cố định cả lượt; giữ $\gamma^t$ | $\widehat g=\sum_t\gamma^tG_t\psi_{\theta_{\mathrm{old}}}(S_t,A_t)$, $\mathbb E[\widehat g]=\nabla_\theta J(\theta_{\mathrm{old}})$ |
 
 Bảng đọc theo hai nửa: bốn hàng đầu nói về giá trị của hành động được chọn trong mục tiêu bootstrap, bốn hàng sau nói về gradient của lợi tức kỳ vọng theo tham số chính sách.
 
@@ -1146,7 +1184,7 @@ Bài có bốn phương pháp học từ mẫu: DQN của Bài 08 (Thuật toán
 | DQN (Thuật toán 08.13) | bước tối ưu trên $L_B$ với mục tiêu $R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(S'_i,a')$; đồng bộ $\theta^-\leftarrow\theta$ sau mỗi $C$ bước tối ưu | mini-batch rút đều từ bộ nhớ phát lại; dữ liệu khác chính sách | sau $t_{\mathrm{end}}$ bước môi trường |
 | Double DQN (Thuật toán 09.5) | như DQN, mục tiêu $R_i+\gamma(1-Z_i)Q_{\theta^-}(S'_i,a_i^*)$ | như DQN | như DQN |
 | Double Q-learning (Thuật toán 09.7) | đồng xu chọn bảng được cập nhật; bảng đó chọn $a^*$, bảng kia đánh giá; đổi một ô | mẫu chuyển vừa thu, dùng một lần; hành vi theo $Q_1+Q_2$ | sau số lượt định trước |
-| REINFORCE (Thuật toán 09.24) | $\theta\leftarrow\theta_{\mathrm{old}}+\alpha\sum_t\gamma^tG_t\psi_{\theta_{\mathrm{old}}}(S_t,A_t)$, một lần mỗi lượt | một lượt sinh bởi $\pi_{\theta_{\mathrm{old}}}$, dùng cho đúng một cập nhật | sau $N$ lượt |
+| REINFORCE (Thuật toán 09.25) | $\theta\leftarrow\theta_{\mathrm{old}}+\alpha\sum_t\gamma^tG_t\psi_{\theta_{\mathrm{old}}}(S_t,A_t)$, một lần mỗi lượt | một lượt sinh bởi $\pi_{\theta_{\mathrm{old}}}$, dùng cho đúng một cập nhật | sau $N$ lượt |
 
 DQN và Double DQN khác nhau đúng ở một dòng mục tiêu; không điều kiện dừng nào ở bảng là tiêu chuẩn hội tụ, cả bốn là ngân sách.
 
@@ -1167,7 +1205,7 @@ Bài toán của chương là xác định khi nào một ước lượng từ m
 2. Khi bản đánh giá không chệch và độc lập với bản chọn, giá trị báo cáo không chệch lên và có thể chệch âm (Mệnh đề 09.4); Double DQN chỉ gần thỏa điều kiện này, nên không bảo đảm hết chệch lên và mức giảm phải đo bằng thí nghiệm.
 3. Khi tập hành động liên tục, hoặc khi đặc trưng gộp các trạng thái cần hành động khác nhau, cần học trực tiếp $\pi_\theta$; với ô xuất phát đều trên lưới gộp trạng thái, chính sách ngẫu nhiên tốt hơn mọi chính sách tất định theo đặc trưng (Ví dụ 09.9).
 4. Khi $\pi_\theta(a\mid s)>0$ và khả vi, $\nabla_\theta\pi_\theta=\pi_\theta\psi_\theta$, và với miền hỗ trợ cố định, hàm điểm có kỳ vọng $0$ (Mệnh đề 09.17).
-5. Dưới (G1)–(G4), $\nabla_\theta J=\mathbb E\bigl[\sum_t\gamma^tG_t\psi_t\bigr]$ và REINFORCE cho ước lượng không chệch từ mỗi lượt sinh bởi chính sách hiện tại (Định lý 09.22, Hệ quả 09.25).
+5. Dưới (G1)–(G4), $\nabla_\theta J=\mathbb E\bigl[\sum_t\gamma^tG_t\psi_t\bigr]$ và REINFORCE cho ước lượng không chệch từ mỗi lượt sinh bởi chính sách hiện tại (Định lý 09.23, Hệ quả 09.26).
 
 Vì thế câu trả lời của chương là có điều kiện. Phép cực đại trên các ước lượng không chệch có nhiễu chệch lên hoặc bằng, và tách chọn khỏi đánh giá chỉ bỏ được độ chệch lên khi bản đánh giá độc lập. Gradient của lợi tức kỳ vọng có ước lượng không chệch từ mẫu khi môi trường không phụ thuộc tham số và dữ liệu theo đúng chính sách hiện tại (bài giảng gốc, trang 11–40; Sutton và Barto, 2018, §6.7, §13.1–13.3; van Hasselt, 2010; van Hasselt, Guez và Silver, 2016; Williams, 1992). Ước lượng không chệch đó có phương sai lớn, và đây là điểm xuất phát của Bài 10.
 
@@ -1178,7 +1216,7 @@ Mỗi câu dưới đây dùng một kết quả của chương; khi trả lời
 1. Mỗi $\widehat Q_a$ không chệch thì $\max_a\widehat Q_a$ có không chệch cho $\max_aq_a$ không? Nói chung không: kỳ vọng của cực đại lớn hơn hoặc bằng giá trị đúng lớn nhất, và bằng nhau khi và chỉ khi một hành động tốt nhất luôn thắng phép cực đại (Mệnh đề 09.2). Với hai giá trị đúng bằng nhau và nhiễu $\pm1$, độ chệch là $\tfrac12$.
 2. Double DQN có làm hai ước lượng độc lập không? Không. Mạng mục tiêu là bản sao trễ của mạng trực tuyến và hai mạng học trên cùng dữ liệu, nên giả thiết độc lập của Mệnh đề 09.4 chỉ thỏa gần đúng; Double DQN không bảo đảm hết chệch lên, và mức giảm phải đo bằng thí nghiệm (Nhận xét 09.6).
 3. Trong MDP quan sát đầy đủ, khi nào vẫn cần chính sách ngẫu nhiên? Khi chính sách bị ràng buộc theo một đặc trưng gộp các trạng thái cần hành động khác nhau, như hai ô xám của Ví dụ 09.8. Nếu chính sách được phép phụ thuộc vào trạng thái đầy đủ, có một chính sách tối ưu tất định (Định lý 04.25, Nhận xét 09.9).
-4. REINFORCE cần giả thiết nào về $\rho_0$, $P$ và về dữ liệu? $\rho_0$ và $P$ không phụ thuộc $\theta$, để $\nabla_\theta\log p_\theta(\tau)$ chỉ còn tổng các hàm điểm (Bổ đề 09.21); lượt phải sinh bởi chính $\pi_{\theta_{\mathrm{old}}}$ với tham số giữ cố định (Hệ quả 09.25).
+4. REINFORCE cần giả thiết nào về $\rho_0$, $P$ và về dữ liệu? $\rho_0$ và $P$ không phụ thuộc $\theta$, để $\nabla_\theta\log p_\theta(\tau)$ chỉ còn tổng các hàm điểm (Bổ đề 09.21); lượt phải sinh bởi chính $\pi_{\theta_{\mathrm{old}}}$ với tham số giữ cố định (Hệ quả 09.26).
 
 Bài giảng gốc (trang 11 và 21) nêu thêm câu hỏi thảo luận về các vấn đề của DQN và về việc dùng bốn hay tám ước lượng. Câu thứ hai được trả lời một phần sau Ví dụ 09.5: độ chệch của mỗi cách tách phụ thuộc cách chọn, quan hệ giữa các bản và số mẫu mỗi bản nhận.
 
@@ -1211,7 +1249,7 @@ Bài 10 nhận giới hạn còn lại của REINFORCE, phương sai lớn: nó 
 ::: application Tình huống 09.2 (REINFORCE trên dữ liệu của bộ nhớ phát lại: giả thiết không thỏa)
 **Bài toán.** Một bản cài đặt muốn tiết kiệm lượt chạy bằng cách lưu các lượt cũ vào một bộ nhớ phát lại và tính $\widehat g$ của REINFORCE trên chúng, như DQN làm với mẫu chuyển.
 
-**Kiểm giả thiết.** Hệ quả 09.25 cần lượt sinh bởi chính $\pi_{\theta_{\mathrm{old}}}$. Xét bài toán một bước với $r(1)=3$, $r(2)=0$, tham số hiện tại $\theta=(\log2;\,0)$, $\pi_\theta=\bigl(\tfrac23;\,\tfrac13\bigr)$, và các lượt trong bộ nhớ sinh bởi tham số cũ $\theta'=(0;\,0)$, $\pi_{\theta'}=\bigl(\tfrac12;\,\tfrac12\bigr)$. Trung bình của $\widehat g=r(A)\psi_\theta(s,A)$ trên các lượt cũ là $\tfrac12\cdot3\bigl(\tfrac13;\,-\tfrac13\bigr)=\bigl(\tfrac12;\,-\tfrac12\bigr)$, khác gradient đúng $\bigl(\tfrac23;\,-\tfrac23\bigr)$ tại $\theta$: hướng giữ nguyên trong ví dụ hai hành động này, nhưng độ lớn lệch $25\%$, và với nhiều hành động hay nhiều bước, hướng cũng lệch.
+**Kiểm giả thiết.** Hệ quả 09.26 cần lượt sinh bởi chính $\pi_{\theta_{\mathrm{old}}}$. Xét bài toán một bước với $r(1)=3$, $r(2)=0$, tham số hiện tại $\theta=(\log2;\,0)$, $\pi_\theta=\bigl(\tfrac23;\,\tfrac13\bigr)$, và các lượt trong bộ nhớ sinh bởi tham số cũ $\theta'=(0;\,0)$, $\pi_{\theta'}=\bigl(\tfrac12;\,\tfrac12\bigr)$. Trung bình của $\widehat g=r(A)\psi_\theta(s,A)$ trên các lượt cũ là $\tfrac12\cdot3\bigl(\tfrac13;\,-\tfrac13\bigr)=\bigl(\tfrac12;\,-\tfrac12\bigr)$, khác gradient đúng $\bigl(\tfrac23;\,-\tfrac23\bigr)$ tại $\theta$: hướng giữ nguyên trong ví dụ hai hành động này, nhưng độ lớn lệch $25\%$, và với nhiều hành động hay nhiều bước, hướng cũng lệch.
 
 **Khắc phục.** Nhân mỗi lượt với tỉ số xác suất $p_\theta(\tau)/p_{\theta'}(\tau)$, ở đây $\pi_\theta(A\mid s)/\pi_{\theta'}(A\mid s)$, bằng $\tfrac43$ khi $A=1$: trung bình thành $\tfrac12\cdot\tfrac43\cdot3\bigl(\tfrac13;\,-\tfrac13\bigr)=\bigl(\tfrac23;\,-\tfrac23\bigr)$, đúng gradient. Trên lượt nhiều bước, tỉ số là tích theo các bước nên phương sai có thể tăng theo hàm mũ của độ dài lượt; Bài 10 dùng một tỉ số một bước có giới hạn trong PPO.
 :::
@@ -1231,7 +1269,7 @@ Mục tiêu bootstrap của DQN chứa một phép cực đại trên các ướ
 - Mục 3: Mệnh đề 09.4 (ước lượng kép không chệch lên), Thuật toán 09.5 (Double DQN), Thuật toán 09.7 (Double Q-learning), Nhận xét 09.6 (phạm vi của Double DQN).
 - Mục 4: Định nghĩa 09.10–09.12 (chính sách tham số hóa, softmax, Gaussian), Nhận xét 09.9 (chính sách tối ưu tất định và lớp chính sách bị gộp).
 - Mục 5: Định nghĩa 09.14 (hàm mục tiêu), Định nghĩa 09.15 (hàm điểm), Mệnh đề 09.16–09.18 (hàm điểm softmax, kỳ vọng bằng $0$, hàm điểm Gaussian).
-- Mục 6: Bổ đề 09.21, Định lý 09.22 (gradient chính sách), Hệ quả 09.23 (dạng phân bố chiếm dụng), Thuật toán 09.24 (REINFORCE), Hệ quả 09.25 (không chệch).
+- Mục 6: Bổ đề 09.21 (gradient của log xác suất quỹ đạo), Bổ đề 09.22 (phần thưởng quá khứ và hàm điểm), Định lý 09.23 (gradient chính sách), Hệ quả 09.24 (dạng phân bố chiếm dụng), Thuật toán 09.25 (REINFORCE), Hệ quả 09.26 (không chệch).
 
 **Công thức cần nhớ.**
 
@@ -1436,7 +1474,7 @@ Bài toán một bước, chính sách softmax với $\phi(s,1)=(1;\,0)$, $\phi(
 ::: solution
 **Câu (a).** $J=3\cdot\tfrac23+0\cdot\tfrac13=2$; $\nabla_\theta J=\sum_ar(a)\pi_\theta(a\mid s)\psi_\theta(s,a)=\tfrac23\cdot3\bigl(\tfrac13;\,-\tfrac13\bigr)=\bigl(\tfrac23;\,-\tfrac23\bigr)$.
 
-**Câu (b).** $A=1$: $\widehat g=3\bigl(\tfrac13;\,-\tfrac13\bigr)=(1;\,-1)$, xác suất $\tfrac23$. $A=2$: $\widehat g=0\cdot\psi_\theta(s,2)=(0;\,0)$, xác suất $\tfrac13$. $\mathbb E[\widehat g]=\tfrac23(1;\,-1)=\bigl(\tfrac23;\,-\tfrac23\bigr)$, đúng $\nabla_\theta J$ (Hệ quả 09.25).
+**Câu (b).** $A=1$: $\widehat g=3\bigl(\tfrac13;\,-\tfrac13\bigr)=(1;\,-1)$, xác suất $\tfrac23$. $A=2$: $\widehat g=0\cdot\psi_\theta(s,2)=(0;\,0)$, xác suất $\tfrac13$. $\mathbb E[\widehat g]=\tfrac23(1;\,-1)=\bigl(\tfrac23;\,-\tfrac23\bigr)$, đúng $\nabla_\theta J$ (Hệ quả 09.26).
 
 **Câu (c).** $\widehat r_1\in\{2;\,4\}$ và $\widehat r_2\in\{-1;\,1\}$, nên $\widehat r_1>\widehat r_2$ ở cả bốn cặp: hành động 1 luôn thắng, $\mathbb E[\max_a\widehat r_a]=\mathbb E[\widehat r_1]=3=\max_ar(a)$, không chệch; đây là trường hợp dấu bằng của Mệnh đề 09.2. Với $r(2)=2{,}5$: $\widehat r_2\in\{1{,}5;\,3{,}5\}$; bốn cặp cho cực đại $2$; $3{,}5$; $4$; $4$, nên $\mathbb E[\max_a\widehat r_a]=\tfrac14(2+3{,}5+4+4)=3{,}375$, chệch $+0{,}375$.
 
