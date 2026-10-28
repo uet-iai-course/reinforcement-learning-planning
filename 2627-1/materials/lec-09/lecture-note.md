@@ -55,6 +55,8 @@ Bảng gồm ký hiệu dùng xuyên suốt chương; ký hiệu chỉ dùng tro
 | $\widehat Q_a$ | ước lượng có nhiễu của giá trị hành động $a$ tại một trạng thái cố định | biến ngẫu nhiên thực |
 | $q_a$, $\beta$ | giá trị đúng của hành động $a$ tại trạng thái đó; độ chệch của phép cực đại | $\mathbb R$ |
 | $Q_1$, $Q_2$ | hai bảng của Double Q-learning | hàm thực trên $\mathcal S\times\mathcal A$ |
+| $\widehat Q^A_a$, $\widehat Q^B_a$ | hai bản ước lượng của $q_a$: bản chọn, bản đánh giá | biến ngẫu nhiên thực |
+| $\epsilon_{\mathrm{exp}}$ | xác suất thăm dò của hành vi $\epsilon_{\mathrm{exp}}$-tham lam | $[0,1]$ |
 | $\alpha$ | bước học của Double Q-learning và của bước tăng gradient, cùng vai với tốc độ học $\eta$ của Bài 08 | $(0,\infty)$ |
 | $\phi(s,a)$, $\phi(s)$ | đặc trưng của cặp trạng thái–hành động; đặc trưng của trạng thái | $\mathbb R^d$ |
 | $\mu$, $\sigma^2$ | trung bình và phương sai của chính sách Gaussian | $\mathbb R$; $(0,\infty)$ |
@@ -89,7 +91,8 @@ Chữ $\theta$ có hai vai. Ở Mục 2–3, $\theta$ là tham số của mạng
 | Mã | Chủ đề | Nguồn trang | Vai trò | Vào → Ra | Mục |
 |---|---|---|---|---|---|
 | `lec-09-topic-02` | Độ chệch của phép cực đại | tr. 12–13 | Ví dụ hai hành động có nhiễu $\pm1$; bất đẳng thức $\mathbb E[\max]\ge\max\mathbb E$ | Vào: topic-01 → Ra: nguyên nhân là cùng ước lượng chọn và đánh giá | 2 |
-| `lec-09-topic-03` | Mục tiêu Double DQN | tr. 14–16 | Chọn bằng mạng trực tuyến, đánh giá bằng mạng mục tiêu; thuật toán Double DQN | Vào: topic-02 → Ra: mục tiêu và thuật toán | 3 |
+| `lec-09-topic-17` | Ước lượng kép | tr. 13–14, 21 | Ví dụ hai bản độc lập; mệnh đề ước lượng kép không chệch lên; chệch âm | Vào: topic-02 → Ra: nguyên tắc tách chọn và đánh giá | 3 |
+| `lec-09-topic-03` | Mục tiêu Double DQN | tr. 14–16 | Chọn bằng mạng trực tuyến, đánh giá bằng mạng mục tiêu; thuật toán Double DQN | Vào: topic-17 → Ra: mục tiêu và thuật toán | 3 |
 | `lec-09-topic-05` | Double Q-learning dạng bảng | tr. 20–21 | Hai bảng, cập nhật chéo; so sánh với Double DQN trên cùng số liệu | Vào: topic-03, topic-04 → Ra: hai cách tách và giới hạn chung của học giá trị | 3 |
 | `lec-09-topic-06` | Chính sách tham số hóa | tr. 22–29 | Lưới gộp trạng thái; phân phối phân loại, softmax, Gaussian | Vào: topic-05 → Ra: $\pi_\theta(\cdot\mid s)$ rời rạc hoặc liên tục | 4 |
 | `lec-09-topic-07` | Hàm mục tiêu và giả thiết | tr. 30–32 | $J(\theta)$, bước tăng gradient, giả thiết đổi đạo hàm và kỳ vọng | Vào: topic-06 → Ra: bài toán tối ưu theo $\theta$ | 5 |
@@ -117,7 +120,7 @@ Chúng ta đi qua bảy phần sau.
 
 1. Mở đầu: kiến thức tiên quyết, ký hiệu, mục tiêu và bài toán trung tâm (`lec-09-topic-15`, `lec-09-topic-16`).
 2. Độ chệch của phép cực đại: phép cực đại trong mục tiêu DQN, ví dụ hai hành động có nhiễu, bất đẳng thức kỳ vọng (`lec-09-topic-01`, `lec-09-topic-02`).
-3. Tách chọn và đánh giá: hai bản ước lượng độc lập, mục tiêu và thuật toán Double DQN, phạm vi của Double DQN, Double Q-learning dạng bảng (`lec-09-topic-03`, `lec-09-topic-04`, `lec-09-topic-05`).
+3. Tách chọn và đánh giá: hai bản ước lượng độc lập, mục tiêu và thuật toán Double DQN, phạm vi của Double DQN, Double Q-learning dạng bảng (`lec-09-topic-17`, `lec-09-topic-03`, `lec-09-topic-04`, `lec-09-topic-05`).
 4. Chính sách tham số hóa: giới hạn của chính sách tham lam theo $Q$, phân phối phân loại, softmax và Gaussian (`lec-09-topic-06`).
 5. Hàm mục tiêu và hàm điểm: hàm mục tiêu $J(\theta)$, sai phân hữu hạn, hàm điểm của softmax và Gaussian (`lec-09-topic-07`, `lec-09-topic-14`, `lec-09-topic-08`, `lec-09-topic-09`).
 6. Gradient chính sách và REINFORCE: tỉ số xác suất, lợi tức từ thời điểm $t$, định lý gradient chính sách, thuật toán REINFORCE (`lec-09-topic-10`, `lec-09-topic-11`, `lec-09-topic-12`).
@@ -311,98 +314,217 @@ Như vậy, Định nghĩa 09.1 đặt tên cho đại lượng mà Ví dụ 09.
 
 ## 3. Tách chọn và đánh giá
 
-<!-- note-topic-id: lec-09-topic-03 -->
-### Đích Double DQN
+Mệnh đề 09.2 cho biết phép cực đại trên các ước lượng không chệch có độ chệch không âm, và chứng minh của nó chỉ ra nguyên nhân: cùng một vector ước lượng vừa quyết định hành động thắng vừa cho giá trị báo cáo. Trong Ví dụ 09.2, nguyên nhân đó làm giá trị báo cáo trung bình cao hơn giá trị đúng $\tfrac12$ đơn vị. Để bỏ được độ chệch lên, chúng ta cần tách hai vai: chọn hành động bằng một ước lượng, đánh giá hành động đó bằng một ước lượng khác. Chúng ta xét khi nào cách tách đó loại được độ chệch lên, rồi xây hai thuật toán dùng nó: Double DQN cho mạng và Double Q-learning cho bảng.
 
-**Trực giác.** Tách hai vai trò của phép max: mạng online **chọn** hành động kế tiếp tốt nhất theo thứ hạng hiện tại, mạng mục tiêu **đánh giá** hành động đã chọn (tr. 14–16).
+<!-- note-topic-id: lec-09-topic-17 -->
+### Ước lượng kép
 
-**Hình thức.** Với tập hành động hữu hạn $\mathcal A$, đặt
+Một cách trực quan, nếu hành động thắng được chọn bằng một bản ước lượng, thì nhiễu của bản đó quyết định hành động nào thắng nhưng không đi vào giá trị báo cáo. Nếu giá trị được đọc từ một bản thứ hai có nhiễu độc lập với bản thứ nhất, thì nhiễu của bản thứ hai không "biết" hành động nào đã thắng, nên trung bình của nó bằng $0$.
 
-$$a_i^*=\arg\max_{a\in\mathcal A}Q_\theta(S'_i,a)\quad\text{if }Z_i=0,$$
+::: example Ví dụ 09.4 (Hai bản ước lượng độc lập)
+**Dữ kiện.** Hai hành động có giá trị đúng $q_1=q_2=0$. Hai bản ước lượng $\widehat Q^A_a=q_a+\varepsilon^A_a$ và $\widehat Q^B_a=q_a+\varepsilon^B_a$, $a=1,2$; bốn nhiễu $\varepsilon^A_1$, $\varepsilon^A_2$, $\varepsilon^B_1$, $\varepsilon^B_2$ độc lập, mỗi nhiễu bằng $-1$ hoặc $+1$ với xác suất $1/2$. Hành động được chọn là $a^*=\arg\max_a\widehat Q^A_a$, hòa thì chọn hành động 1; giá trị báo cáo là $\widehat Q^B_{a^*}$.
 
-và đích từng trường hợp:
+**Chọn.** Bốn cặp $(\widehat Q^A_1;\widehat Q^A_2)$ đồng xác suất $1/4$: $(-1;-1)\to a^*=1$; $(-1;+1)\to a^*=2$; $(+1;-1)\to a^*=1$; $(+1;+1)\to a^*=1$.
 
-$$y_i=\begin{cases}R_i,&Z_i=1,\\ R_i+\gamma\,\operatorname{sg}\!\big(Q_{\theta^-}(S'_i,a_i^*)\big),&Z_i=0.\end{cases}$$
+**Đánh giá.** Trong mỗi cặp, $a^*$ đã xác định và bản B độc lập với bản A, nên $\mathbb E[\widehat Q^B_{a^*}\mid\widehat Q^A]=q_{a^*}+\mathbb E[\varepsilon^B_b]\big|_{b=a^*}=0$. Lấy trung bình theo bốn cặp: $\mathbb E[\widehat Q^B_{a^*}]=0$.
 
-Ba điểm bắt buộc:
+**Diễn giải.** $\max_aq_a=0$, nên giá trị báo cáo không chệch. Dùng một bản cho cả hai việc, Ví dụ 09.2 cho $\tfrac12$.
 
-- **Không gọi argmax ở nhánh terminal:** khi $Z_i=1$, đích là $R_i$; tính $a_i^*$ tại trạng thái kết thúc là vô nghĩa.
-- **$\operatorname{sg}$ chặn gradient:** đích và mạng mục tiêu không nhận gradient; chỉ $Q_\theta(S_i,A_i)$ đi qua loss.
-- **Hòa argmax:** cài đặt phải ghi quy tắc phá hòa.
-
-::: example
-**Đối chiếu hai đích.** Cho $r=1$, $\gamma=0{,}9$, $Z=0$, $Q_{\theta^-}(s',\cdot)=(5,4)$, $Q_\theta(s',\cdot)=(3,6)$.
-
-- **DQN:** mạng mục tiêu vừa chọn vừa đánh giá — chọn hành động 1 (giá trị $5$), đích $y^{\mathrm{DQN}}=1+0{,}9\cdot 5=5{,}5$.
-- **Double DQN:** mạng online chọn hành động 2 (giá trị $6$), mạng mục tiêu đánh giá $4$, đích $y^{\mathrm{DDQN}}=1+0{,}9\cdot 4=4{,}6$.
-
-Chênh lệch không chứng minh Double DQN luôn gần giá trị thật hơn trong từng mẫu; cơ chế nhằm giảm liên hệ giữa nhiễu tạo thứ hạng và nhiễu tạo giá trị đánh giá.
+**Kiểm tra lại.** Quy tắc phá hòa không đổi kết quả: với mỗi hành động $b$, $\mathbb E[\varepsilon^B_b]=0$.
 :::
 
-**Ứng dụng và giới hạn.** Double DQN chỉ thay công thức bootstrap, không thay hướng gradient của loss. Nó giảm sai lệch đánh giá quá cao, làm giá trị Q ổn định hơn và thứ hạng hành động đáng tin cậy hơn (tr. 17).
+![Dòng trên ghi cặp bản A, mỗi cặp xác suất một phần tư, hòa thì chọn hành động 1. Bốn khung: âm một âm một chọn a sao bằng 1; âm một cộng một chọn 2; cộng một âm một chọn 1; cộng một cộng một chọn 1; ở mọi khung, kỳ vọng của bản B tại a sao khi biết cặp bản A bằng 0.](img/lec-09/double-estimator.svg)
 
-**Kiểm tra.** Trong ví dụ trên, nếu hoán đổi hai bộ giá trị thì hai đích đổi thành bao nhiêu? — Khi hoán đổi, mạng mục tiêu mới là $(3,6)$ và mạng online mới là $(5,4)$. DQN có mạng mục tiêu vừa chọn vừa đánh giá: max của $(3,6)$ là $6$, nên đích $1+0{,}9\cdot 6=6{,}4$. Double DQN dùng mạng online $(5,4)$ chọn hành động 1, rồi mạng mục tiêu $(3,6)$ đánh giá hành động 1 bằng $3$, nên đích $1+0{,}9\cdot 3=3{,}7$.
+Hình liệt kê bốn hiện thực của bản A trong Ví dụ 09.4. Hành động được chọn thay đổi giữa các khung, như trong Ví dụ 09.2, nhưng ở mọi khung, kỳ vọng có điều kiện của giá trị báo cáo khi biết cặp bản A bằng $0$, vì giá trị đó được đọc từ bản B. Ví dụ dùng hai điều: bản B không chệch, và bản B độc lập với bản A. Mệnh đề sau cho thấy hai điều đó đủ cho mọi phân phối nhiễu.
 
-*Nguồn: tr. 14–16.*
+::: proposition Mệnh đề 09.4 (Ước lượng kép không chệch lên)
+**Giả thiết.** $\mathcal A$ hữu hạn; $\widehat Q^A=(\widehat Q^A_a)_{a\in\mathcal A}$ và $\widehat Q^B=(\widehat Q^B_a)_{a\in\mathcal A}$ là hai vector ngẫu nhiên độc lập; mỗi $\widehat Q^B_a$ khả tích và không chệch, $\mathbb E[\widehat Q^B_a]=q_a$. Hành động $a^*$ là một hàm của $\widehat Q^A$, chẳng hạn $a^*\in\arg\max_a\widehat Q^A_a$ với một quy tắc phá hòa cố định.
+
+**Kết luận.** $\mathbb E[\widehat Q^B_{a^*}]=\mathbb E[q_{a^*}]\le\max_aq_a$. Ước lượng kép $\widehat Q^B_{a^*}$ không chệch cho giá trị đúng của hành động được chọn, và độ chệch so với $\max_aq_a$ không dương.
+
+**Điều kiện áp dụng.** Không cần $\widehat Q^A$ không chệch; không cần các thành phần của mỗi vector độc lập với nhau.
+
+**Phạm vi.** Dấu bằng chỉ xảy ra khi $a^*\in\arg\max_aq_a$ hầu chắc chắn; khi bản A chọn sai với xác suất dương, ước lượng kép chệch âm. Mệnh đề không nói về phương sai của ước lượng.
+:::
+
+::: proof
+**Bước 1 (điều kiện theo bản A).** Vì $a^*$ là hàm của $\widehat Q^A$ và $\widehat Q^B$ độc lập với $\widehat Q^A$, với mỗi giá trị $b$ của $a^*$ ta có $\mathbb E[\widehat Q^B_{a^*}\mid\widehat Q^A]=\mathbb E[\widehat Q^B_b]\big|_{b=a^*}=q_{a^*}$.
+
+**Bước 2 (lấy kỳ vọng).** Theo tính chất tháp của kỳ vọng có điều kiện (Kiến thức tiên quyết),
+$$
+\begin{aligned}
+\mathbb E[\widehat Q^B_{a^*}]&=\mathbb E\bigl[\mathbb E[\widehat Q^B_{a^*}\mid\widehat Q^A]\bigr]&&\text{(tính chất tháp)}\\
+&=\mathbb E[q_{a^*}]&&\text{(Bước 1)}\\
+&\le\max_aq_a&&\text{(}q_{a^*}\le\max_aq_a\text{ ở mọi hiện thực)}.
+\end{aligned}
+$$
+
+**Bước 3 (dấu bằng).** $\max_aq_a-q_{a^*}\ge0$ có kỳ vọng $0$ khi và chỉ khi nó bằng $0$ hầu chắc chắn, tức $a^*\in\arg\max_aq_a$ hầu chắc chắn. $\square$
+:::
+
+Mệnh đề 09.4 đổi chiều kết luận của Mệnh đề 09.2: một bản ước lượng cho cả hai việc thì chệch lên hoặc bằng, hai bản độc lập thì chệch xuống hoặc bằng. Ba giả thiết có vai trò riêng, và mỗi giả thiết bị bỏ đều có phản ví dụ.
+
+- Bỏ độc lập: lấy $\widehat Q^B=\widehat Q^A$. Khi đó ước lượng kép trở về phép cực đại của Ví dụ 09.2, với độ chệch $\tfrac12>0$.
+- Bỏ không chệch của bản B: nếu $\widehat Q^B_a=q_a+1$ tất định, giá trị báo cáo bằng $q_{a^*}+1$, có thể vượt $\max_aq_a$.
+- Bỏ "$a^*$ là hàm của $\widehat Q^A$": nếu $a^*=\arg\max_a\widehat Q^B_a$, ta lại có phép cực đại trên bản B.
+
+Bước 1 dùng độc lập, không chệch và khả tích của bản B; Bước 2 dùng tính chất tháp.
+
+::: example Ví dụ 09.5 (Ước lượng kép có thể chệch âm)
+**Dữ kiện.** Như Ví dụ 09.4 nhưng giá trị đúng $q=(0{,}5;\,0)$: $\widehat Q^A_1\in\{-0{,}5;\,1{,}5\}$, $\widehat Q^A_2\in\{-1;\,1\}$, bốn nhiễu $\pm1$ độc lập, xác suất $1/2$.
+
+**Chọn.** Bốn cặp của bản A: $(-0{,}5;-1)\to1$; $(-0{,}5;1)\to2$; $(1{,}5;-1)\to1$; $(1{,}5;1)\to1$. Vậy $\Pr(a^*=1)=\tfrac34$.
+
+**Đánh giá.** Theo Mệnh đề 09.4, $\mathbb E[\widehat Q^B_{a^*}]=\tfrac34\cdot0{,}5+\tfrac14\cdot0=0{,}375$.
+
+**So sánh.** $\max_aq_a=0{,}5$: ước lượng kép chệch $-0{,}125$. Một bản ước lượng (Ví dụ 09.3(i)) cho $0{,}875$, chệch $+0{,}375$.
+
+**Kiểm tra lại.** $0{,}375-0{,}5=-0{,}125$; độ lớn của độ chệch âm nhỏ hơn độ chệch dương của một bản trong ví dụ này, nhưng Mệnh đề 09.4 không khẳng định điều đó trong mọi trường hợp.
+:::
+
+Câu hỏi thảo luận của bài giảng gốc (trang 21) về bốn hay tám ước lượng không trả lời được bằng tên gọi: như Ví dụ 09.5 cho thấy, độ chệch của mỗi cách tách phụ thuộc cách chọn, quan hệ giữa các bản và số mẫu mỗi bản nhận, nên phải được phân tích riêng.
+
+<!-- note-topic-id: lec-09-topic-03 -->
+### Mục tiêu và thuật toán Double DQN
+
+Mục tiêu DQN $y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(S'_i,a')$ dùng mạng mục tiêu $Q_{\theta^-}$ cả để chọn lẫn để đánh giá hành động tại $S'_i$: đúng tình huống "một bản" của Mệnh đề 09.2. Thay vì huấn luyện thêm một mạng, van Hasselt, Guez và Silver (2016) dùng lại hai mạng mà DQN đã có. Mạng trực tuyến $Q_\theta$ đóng vai bản A, mạng mục tiêu $Q_{\theta^-}$ đóng vai bản B.
+
+::: example Ví dụ 09.6 (Một mẫu chuyển, hai mục tiêu)
+**Dữ kiện.** $R=1$, $\gamma=0{,}9$, $Z=0$; tại trạng thái kế $S'$ có hai hành động, $Q_{\theta^-}(S',\cdot)=(5;\,4)$ và $Q_\theta(S',\cdot)=(3;\,6)$.
+
+**Mục tiêu DQN.** $\max_aQ_{\theta^-}(S',a)=5$, nên $y=1+0{,}9\cdot5=5{,}5$.
+
+**Mục tiêu Double DQN.** Mạng trực tuyến chọn $a^*=\arg\max_aQ_\theta(S',a)=2$; mạng mục tiêu đánh giá $Q_{\theta^-}(S',2)=4$; $y=1+0{,}9\cdot4=4{,}6$.
+
+**Diễn giải.** Hai mạng xếp hạng hai hành động ngược nhau, và mục tiêu giảm $0{,}9$.
+
+**Kiểm tra lại.** Bài thực hành của Bài 08 (mục 15.2) kiểm hai số $5{,}5$ và $4{,}6$ bằng phép kiểm tự động, và kiểm rằng với $Z=1$ mục tiêu Double DQN bằng $R=1$.
+:::
+
+![Bảng hai hàng, hai cột hành động. Hàng trên, mạng mục tiêu: 5 và 4. Hàng dưới, mạng trực tuyến: 3 và 6. Hình thoi cạnh số 5: DQN lấy cực đại của hàng trên. Khung vuông quanh số 6: Double DQN chọn hành động 2. Mũi tên ghi đánh giá đi từ số 6 tới số 4 có viền ellip nét đứt.](img/lec-09/ddqn-example.svg)
+
+Hình đặt hai mạng trên cùng một bảng. DQN chỉ đọc hàng trên; Double DQN chọn cột ở hàng dưới rồi đọc giá trị của cột đó ở hàng trên. Vì giá trị ở hàng trên tại một cột bất kỳ không vượt cực đại của hàng đó, $Q_{\theta^-}(S',a^*)\le\max_aQ_{\theta^-}(S',a)$ ở mọi mẫu, nên với $Z=0$ luôn có $y^{\mathrm{DDQN}}\le y^{\mathrm{DQN}}$, dấu bằng khi hai mạng chọn cùng hành động. Bất đẳng thức này nói về hai mục tiêu, không nói mục tiêu nào gần giá trị đúng hơn trong một mẫu cụ thể.
+
+::: algorithm Thuật toán 09.5 (Double DQN)
+**Đầu vào.** Như Thuật toán 08.13: $\gamma\in[0,1)$; xác suất thăm dò $\epsilon_{\mathrm{exp}}\in[0,1]$; một bộ tối ưu theo gradient; ngân sách $t_{\mathrm{end}}$ bước môi trường; dung lượng $N$ của bộ nhớ phát lại $\mathcal D$, cỡ mini-batch $b$, số mẫu tối thiểu $N_{\mathrm{start}}$, số bước môi trường $F$ giữa hai bước tối ưu, số bước tối ưu $C$ giữa hai lần đồng bộ, với $b\le N_{\mathrm{start}}\le N$.
+
+**Đầu ra.** Tham số $\theta$ và chính sách tham lam theo $Q_\theta$.
+
+**Khởi tạo.** $\theta$ ngẫu nhiên; $\theta^-\leftarrow\theta$; $\mathcal D\leftarrow\varnothing$; $t\leftarrow0$; $k_{\mathrm{opt}}\leftarrow0$.
+
+**Lặp** khi $t<t_{\mathrm{end}}$:
+
+1. Chọn $A_t$ theo quy tắc $\epsilon_{\mathrm{exp}}$-tham lam từ $Q_\theta(S_t,\cdot)$; thực hiện, nhận $R_{t+1}$, $S_{t+1}$, $Z_{t+1}$, $U_{t+1}$; lưu mẫu chuyển vào $\mathcal D$; đặt lại môi trường khi $Z_{t+1}\lor U_{t+1}=1$; $t\leftarrow t+1$.
+2. Nếu $\lvert\mathcal D\rvert\ge N_{\mathrm{start}}$ và $t\bmod F=0$: rút đều mini-batch $\{(S_i,A_i,R_i,S'_i,Z_i,U_i)\}_{i=1}^b$ từ $\mathcal D$ và làm bước 3–5.
+3. Không lấy gradient: $a_i^*=\arg\max_aQ_\theta(S'_i,a)$ và $y_i=R_i+\gamma(1-Z_i)\,Q_{\theta^-}(S'_i,a_i^*)$.
+4. Một bước của bộ tối ưu trên $L_B(\theta)=\frac1b\sum_{i=1}^b\bigl(\operatorname{sg}(y_i)-Q_\theta(S_i,A_i)\bigr)^2$; $k_{\mathrm{opt}}\leftarrow k_{\mathrm{opt}}+1$.
+5. Nếu $k_{\mathrm{opt}}\bmod C=0$: $\theta^-\leftarrow\theta$.
+
+**Kích thước.** Ở bước 3, $Q_\theta(S'_\cdot,\cdot)$ và $Q_{\theta^-}(S'_\cdot,\cdot)$ là các mảng $b\times m$; $a^*\in\mathcal A^b$, $y\in\mathbb R^b$, $Z\in\{0,1\}^b$.
+
+**Chi phí mỗi bước tối ưu.** Ba lần tính của mạng trên mini-batch (mạng trực tuyến trên $S_i$ và $S'_i$, mạng mục tiêu trên $S'_i$), so với hai lần của DQN.
+:::
+
+Thuật toán 09.5 khác Thuật toán 08.13 đúng ở bước 3. Thuật toán 08.13 viết ngân sách là $T$; ở đây viết $t_{\mathrm{end}}$ vì $T$ đã dành cho bước kết thúc lượt. Phép arg max là hàm hằng từng khúc theo $\theta$, nên không có gradient đi qua $a_i^*$, và $\operatorname{sg}$ giữ $y_i$ là hằng như trong DQN. Khi $Z_i=1$, giá trị tại $S'_i$ không vào mục tiêu; dạng từng trường hợp "$y_i=R_i$ khi $Z_i=1$, $y_i=R_i+\gamma Q_{\theta^-}(S'_i,a_i^*)$ khi $Z_i=0$" cho cùng giá trị, và cài đặt theo mini-batch có thể tính $a_i^*$ cho mọi mẫu rồi nhân mặt nạ. Mẫu bị cắt ngắn ($U_i=1$, $Z_i=0$) vẫn giữ phần bootstrap.
+
+**Trong thực hành.** Trong bài thực hành của Bài 08, hàm `dqn_loss_double` (mục 14) và tùy chọn `double` (mục 15) cài đúng bước 3: tính `argmax` của mạng trực tuyến trên $S'_i$, rồi lấy giá trị của mạng mục tiêu tại chỉ số đó, cả hai trong khối không lấy gradient. Mạng trực tuyến chỉ là bản A gần đúng của Mệnh đề 09.4: nó không độc lập với mạng mục tiêu. Chúng ta xét hệ quả của điều này dưới đây.
 
 <!-- note-topic-id: lec-09-topic-04 -->
-### Phạm vi tác dụng của Double DQN
+### Phạm vi của Double DQN
 
-**Phát biểu giới hạn đúng** (tr. 17–19):
+Mệnh đề 09.4 cần bản đánh giá độc lập với bản chọn. Trong Double DQN, $\theta^-$ là bản sao của $\theta$ tại mốc đồng bộ gần nhất, và cả hai được huấn luyện trên cùng một bộ nhớ phát lại; sai số của hai mạng vì vậy tương quan. Giả thiết độc lập không thỏa, nên Mệnh đề 09.4 không áp dụng, và không có bảo đảm rằng Double DQN hết chệch lên.
 
-- Double DQN **không** tự loại bỏ tương quan mẫu — đó là việc của replay.
-- Double DQN **không** tự loại bỏ tính không dừng của mục tiêu — đó là việc của target network.
-- Double DQN **không** bảo đảm hội tụ với mọi kiến trúc mạng neural tùy ý.
-- Có thể gây học chậm trong một số hoàn cảnh.
+::: remark Nhận xét 09.6 (Điều Double DQN thay đổi và không thay đổi)
+1. Double DQN chỉ đổi công thức mục tiêu. Tương quan giữa các mẫu, sự thay đổi của mục tiêu tại mốc đồng bộ và việc thiếu bảo đảm hội tụ tổng quát (Nhận xét 08.21) vẫn như DQN; bài giảng gốc (trang 18) liệt kê các điều này.
+2. Ngay sau mốc đồng bộ, $\theta^-=\theta$ và mục tiêu Double DQN trùng mục tiêu DQN. Hai mạng khác nhau nhiều hơn khi số bước tối ưu từ mốc đồng bộ tăng.
+3. Bài giảng gốc (trang 17) nêu các tác động mong đợi: giảm đánh giá cao, giá trị ổn định hơn, thứ hạng hành động đáng tin hơn. Đây là các quan sát thực nghiệm của van Hasselt, Guez và Silver (2016) trên trò chơi Atari, không phải hệ quả của một định lý.
+4. Bộ ước lượng kép có thể chệch âm (Ví dụ 09.5), nên giảm đánh giá cao không đồng nghĩa với ước lượng đúng.
+:::
 
-**Vì sao hai mạng không độc lập.** $\theta^-$ là bản sao trễ của $\theta$, nên hai sai số đánh giá có quan hệ; không được dùng lập luận độc lập như trong Double Q-learning lý tưởng để mô tả hai mạng sâu. Tách chọn–đánh giá **thường giảm** sai lệch cực đại, không buộc sai lệch bằng $0$.
-
-**Vị trí của bộ tối ưu.** RMSprop/Adam/SGD ảnh hưởng đến cách tham số được tối ưu; Double DQN ảnh hưởng đến mục tiêu mà bộ tối ưu phải khớp. Hai cải tiến xử lý hai vấn đề khác nhau.
-
-**Kiểm tra.** Kết luận về chất lượng cần dựa trên gì? — Nhiều lần chạy và thước đo đánh giá, không chỉ loss huấn luyện.
-
-*Nguồn: tr. 17–19.*
+**Trong thực hành.** Mức giảm độ chệch và tác động lên chính sách phải đo bằng thực nghiệm. Bài thực hành của Bài 08 (mục 15.4) so Double DQN với cấu hình gốc trên Lunar Lander, năm hạt giống, $10^5$ bước môi trường: Double DQN đạt trung bình $200{,}0$, cấu hình gốc đạt $205{,}4$ trên cùng năm hạt giống, hiệu ghép cặp $-5{,}4$ với $t=-0{,}38$, chưa phân biệt được ở mức $5\%$. Số liệu này không cho thấy Double DQN tốt hơn trên bài toán đó với ngân sách đó; nó cũng không mâu thuẫn với Mệnh đề 09.2, vì tổng thưởng của chính sách cuối là một đại lượng khác độ chệch của mục tiêu.
 
 <!-- note-topic-id: lec-09-topic-05 -->
 ### Double Q-learning dạng bảng
 
-**Nguyên tắc double.** Duy trì hai bảng $Q_1,Q_2$; mỗi bước cập nhật **một** bảng, bảng còn lại đánh giá hành động do bảng đang cập nhật chọn (tr. 20–21).
+Double DQN dùng một bản sao trễ làm bản đánh giá. Với biểu diễn bảng, ta có thể giữ hai bảng $Q_1$, $Q_2$ học trên hai tập mẫu khác nhau, gần hơn với tình huống của Mệnh đề 09.4. Đây là Double Q-learning (van Hasselt, 2010); bài thực hành Flappy Bird của Bài 07 (mục 13) đã cài một phiên bản với hàm giá trị tuyến tính.
 
-**Hình thức.** Khởi tạo $Q_1,Q_2$ tùy ý, $Q_1(\text{terminal},\cdot)=Q_2(\text{terminal},\cdot)=0$. Chính sách hành vi (ví dụ $\varepsilon$-greedy trên $Q_1+Q_2$) chọn $A$; sau khi quan sát $(R,S',Z)$, với xác suất $1/2$ cập nhật bảng thứ nhất:
+::: example Ví dụ 09.7 (Một cập nhật Double Q-learning)
+**Dữ kiện.** $R=1$, $\gamma=0{,}9$, $Z=0$, bước học $\alpha=0{,}1$; ô cần cập nhật có $Q_1(S,A)=4$; tại $S'$, $Q_1(S',\cdot)=(3;\,6)$ và $Q_2(S',\cdot)=(5;\,4)$; đồng xu chọn cập nhật $Q_1$.
 
-$$a^*=\arg\max_{a\in\mathcal A}Q_1(S',a),\qquad Z=0,$$
+**Chọn.** $a^*=\arg\max_aQ_1(S',a)=2$.
 
-$$y_1=\begin{cases}R,&Z=1,\\ R+\gamma Q_2(S',a^*),&Z=0,\end{cases}$$
+**Mục tiêu.** $y_1=R+\gamma Q_2(S',a^*)=1+0{,}9\cdot4=4{,}6$.
 
-$$Q_1(S,A)\leftarrow Q_1(S,A)+\alpha\,[y_1-Q_1(S,A)].$$
+**Sai số và giá trị mới.** $y_1-Q_1(S,A)=4{,}6-4=0{,}6$; $Q_1(S,A)\leftarrow4+0{,}1\cdot0{,}6=4{,}06$. Bảng $Q_2$ không đổi.
 
-Nhánh còn lại hoán đổi $Q_1\leftrightarrow Q_2$. Hai điểm bắt buộc:
+**Diễn giải.** Đây là số liệu của Ví dụ 09.6 với $Q_1$ ở vai $Q_\theta$ và $Q_2$ ở vai $Q_{\theta^-}$; mục tiêu bằng mục tiêu Double DQN $4{,}6$. Hai thuật toán khác nhau ở bước sau: Double Q-learning đổi đúng một ô của một bảng, còn Double DQN đổi tham số dùng chung của mạng trực tuyến.
 
-- **Che bootstrap khi terminal:** khi $Z=1$, đích là $R$, không tính argmax trên trạng thái kết thúc.
-- **Chọn bằng bảng đang cập nhật, đánh giá bằng bảng kia:** $Q_1$ chọn, $Q_2$ đánh giá. Lấy $\max$ của $Q_2$ sẽ phá cơ chế tách.
-
-::: example
-**Tính tay.** Cho $Q_1(S,A)=4$, $\alpha=0{,}1$, $R=1$, $\gamma=0{,}9$, $Z=0$. Tại $S'$: $Q_1=(2,1)$, $Q_2=(1,4)$.
-
-- $Q_1$ chọn $a^*=1$ (giá trị $2$); $Q_2$ đánh giá hành động 1 bằng $1$.
-- $y_1=1+0{,}9\cdot 1=1{,}9$.
-- $Q_1^{\mathrm{new}}(S,A)=4+0{,}1\,(1{,}9-4)=3{,}79$.
+**Kiểm tra lại.** Nếu đồng xu chọn cập nhật $Q_2$, vai đổi: $Q_2$ chọn hành động 1 vì $5>4$, $Q_1$ đánh giá $3$, mục tiêu $1+0{,}9\cdot3=3{,}7$.
 :::
 
-**So sánh hai cách tách** (tr. 14–21):
+![Bảng hai hàng: Q 1 tại S phẩy bằng 3 và 6, bảng được cập nhật; Q 2 tại S phẩy bằng 5 và 4. Khung vuông quanh số 6: Q 1 chọn hành động 2. Mũi tên ghi đánh giá tới số 4 có viền ellip nét đứt: Q 2 đánh giá hành động 2 bằng 4.](img/lec-09/double-q-example.svg)
 
-| | Double Q-learning | Double DQN |
-|---|---|---|
-| biểu diễn | hai bảng $Q_1,Q_2$ | online $Q_\theta$, target $Q_{\theta^-}$ |
-| cập nhật | chọn ngẫu nhiên một bảng | luôn cập nhật online |
-| đánh giá | bảng còn lại | bản sao trễ |
-| dữ liệu | thường trực tuyến | thường từ replay |
+Hình dùng cùng bố cục với hình của Ví dụ 09.6: hàng chọn và hàng đánh giá. Ở đây hàng chọn là bảng được cập nhật, và mũi tên đi từ hàng trên xuống hàng dưới.
 
-Cùng nguyên tắc tách chọn–đánh giá, nhưng **không phải cùng thuật toán**. Tên "Double" không cho phép suy ra tùy ý rằng bốn hay tám bộ ước lượng sẽ tốt hơn: thêm bộ ước lượng làm đổi thuật toán, chi phí và quan hệ tương quan.
+::: algorithm Thuật toán 09.7 (Double Q-learning)
+**Đầu vào.** MDP hữu hạn với $\mathcal A$ hữu hạn; bước học $\alpha\in(0,1]$; $\gamma\in[0,1)$; xác suất thăm dò $\epsilon_{\mathrm{exp}}$; số lượt.
 
-**Kiểm tra.** Double Q-learning cập nhật mấy bảng trong một bước? — Một bảng; bảng kia chỉ đánh giá.
+**Đầu ra.** Hai bảng $Q_1$, $Q_2$ và chính sách tham lam theo $Q_1+Q_2$.
 
-*Nguồn: tr. 20–21.*
+**Khởi tạo.** $Q_1(s,a)$, $Q_2(s,a)$ tùy ý với mọi $s$, $a$; $Q_1(s,\cdot)=Q_2(s,\cdot)=0$ tại trạng thái kết thúc.
+
+**Lặp** cho mỗi lượt: khởi tạo $S$; lặp cho mỗi bước của lượt:
+
+1. Chọn $A$ theo quy tắc $\epsilon_{\mathrm{exp}}$-tham lam từ $Q_1(S,\cdot)+Q_2(S,\cdot)$; thực hiện $A$, nhận $R$, $S'$ và cờ kết thúc $Z$.
+2. Với xác suất $1/2$: $a^*=\arg\max_aQ_1(S',a)$ và $Q_1(S,A)\leftarrow Q_1(S,A)+\alpha\bigl[R+\gamma(1-Z)\,Q_2(S',a^*)-Q_1(S,A)\bigr]$.
+3. Ngược lại: $a^*=\arg\max_aQ_2(S',a)$ và $Q_2(S,A)\leftarrow Q_2(S,A)+\alpha\bigl[R+\gamma(1-Z)\,Q_1(S',a^*)-Q_2(S,A)\bigr]$.
+4. $S\leftarrow S'$; kết thúc lượt khi $Z=1$.
+
+**Chi phí mỗi bước.** Hai phép cực đại trên $\mathcal A$ (một cho hành vi, một cho mục tiêu) và một cập nhật một ô; bộ nhớ gấp đôi Q-learning.
+:::
+
+Thuật toán 09.7 khác Q-learning (Bài 06) ở bước 2–3: mục tiêu đọc giá trị của bảng kia tại hành động do bảng được cập nhật chọn. Mỗi mẫu chuyển chỉ đi vào một bảng, nên hai bảng ước lượng từ hai tập mẫu khác nhau. Hai bảng vẫn không độc lập hoàn toàn: mỗi bảng bootstrap từ bảng kia, và hành vi dùng tổng hai bảng. Giả thiết của Mệnh đề 09.4 vì vậy chỉ thỏa ở dạng lý tưởng. Van Hasselt (2010) chứng minh Double Q-learning hội tụ tới $q_*$ dưới các giả thiết tương tự Định lý 06.21; chúng ta không trình bày chứng minh đó.
+
+| | DQN | Double DQN | Double Q-learning |
+|---|---|---|---|
+| chọn $a^*$ tại $S'$ | $Q_{\theta^-}$ | $Q_\theta$ | bảng được cập nhật |
+| đánh giá $a^*$ | $Q_{\theta^-}$ | $Q_{\theta^-}$ | bảng còn lại |
+| quan hệ hai ước lượng | cùng một ước lượng | bản sao trễ, tương quan | mẫu khác nhau, bootstrap từ nhau |
+| dữ liệu cập nhật | mini-batch từ bộ nhớ phát lại | mini-batch từ bộ nhớ phát lại | từng mẫu chuyển |
+| độ chệch của mục tiêu | $\ge0$ (Mệnh đề 09.2) | không bảo đảm hết chệch lên; phải đo | $\le0$ nếu bản đánh giá không chệch, độc lập (Mệnh đề 09.4); độc lập chỉ thỏa lý tưởng |
+
+Bảng đặt ba phương pháp cạnh nhau theo cùng tiêu chí. Hai hàng đầu cho thấy chỉ cặp ước lượng chọn và đánh giá thay đổi; hàng thứ ba quyết định hàng cuối qua Mệnh đề 09.2 và 09.4.
+
+::: remark Nhận xét 09.8 (Nhầm lẫn thường gặp về tách chọn và đánh giá)
+1. "Double DQN không chệch." Sai: mạng mục tiêu tương quan với mạng trực tuyến, nên Mệnh đề 09.4 không áp dụng.
+2. "Ước lượng kép luôn tốt hơn một bản." Không có bảo đảm như vậy: Ví dụ 09.5 cho độ chệch $-0{,}125$, và mỗi bảng của Double Q-learning chỉ nhận khoảng một nửa số mẫu.
+3. "Double Q-learning lấy cực đại của bảng kia." Sai: bảng kia chỉ đánh giá hành động do bảng được cập nhật chọn; lấy $\max_aQ_2(S',a)$ trả lại phép cực đại của một bản.
+4. "Mỗi bước Double Q-learning cập nhật cả hai bảng." Sai: đúng một ô của một bảng đổi.
+:::
+
+::: exercise Bài tập 09.2 (Nhánh còn lại của Double Q-learning)
+Dữ kiện như Ví dụ 09.7: $R=1$, $\gamma=0{,}9$, $Z=0$, $\alpha=0{,}1$, $Q_1(S',\cdot)=(3;\,6)$, $Q_2(S',\cdot)=(5;\,4)$; thêm $Q_2(S,A)=3$. Đồng xu chọn cập nhật $Q_2$. Tính $a^*$, mục tiêu, sai số và $Q_2(S,A)$ mới. So mục tiêu này với mục tiêu Q-learning một bảng nếu dùng $Q_2$ cho cả chọn lẫn đánh giá.
+:::
+
+::: hint
+Bảng được cập nhật là $Q_2$, nên $Q_2$ chọn hành động và $Q_1$ đánh giá.
+:::
+
+::: solution
+**Chọn.** $a^*=\arg\max_aQ_2(S',a)=1$ vì $5>4$.
+
+**Mục tiêu.** $y_2=1+0{,}9\cdot Q_1(S',1)=1+0{,}9\cdot3=3{,}7$.
+
+**Sai số và giá trị mới.** $3{,}7-3=0{,}7$; $Q_2(S,A)\leftarrow3+0{,}1\cdot0{,}7=3{,}07$.
+
+**So sánh.** Dùng $Q_2$ cho cả hai việc: $1+0{,}9\cdot5=5{,}5$. Mục tiêu kép thấp hơn $1{,}8$.
+
+**Kiểm tra lại.** $3{,}07$ nằm giữa giá trị cũ $3$ và mục tiêu $3{,}7$, đúng với một bước $\alpha=0{,}1$ đi về phía mục tiêu.
+:::
+
+Như vậy, Mệnh đề 09.4 chứng minh rằng chọn bằng một bản và đánh giá bằng một bản độc lập, không chệch thì không còn chệch lên, với cái giá có thể chệch âm (Ví dụ 09.5). Thuật toán 09.5 áp nguyên tắc này vào DQN bằng cách thay một dòng mục tiêu, và Thuật toán 09.7 áp nó vào bảng bằng hai bảng cập nhật chéo; trên cùng số liệu, hai thuật toán cho cùng mục tiêu $4{,}6$ (Ví dụ 09.6, 09.7). Cả hai chỉ thỏa giả thiết độc lập gần đúng, nên tác dụng của chúng phải đo. Cả ba phương pháp của mục này, DQN, Double DQN và Double Q-learning, còn chung một giới hạn: chính sách được suy ra bằng $\arg\max_aQ(s,a)$, nên xác suất chọn hành động không được học. Chính sách tham lam là tất định, và hành vi $\epsilon_{\mathrm{exp}}$-tham lam chỉ thêm một mức ngẫu nhiên cố định; mỗi bước còn cần một phép cực đại trên tập hành động hữu hạn. Trong Mục 4, chúng ta xét hai tình huống mà giới hạn này trở thành trở ngại, hành động liên tục và đặc trưng gộp trạng thái, rồi học trực tiếp một phân phối hành động.
+
+*Nguồn: bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 13–21; van Hasselt (2010); van Hasselt, Guez và Silver (2016); Sutton và Barto (2018), §6.7; bài thực hành Bài 08, mục 14–15.*
 
 ---
 
