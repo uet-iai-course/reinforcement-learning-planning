@@ -24,7 +24,7 @@ Số hiệu `08.k` chỉ ghi chú Bài 08 và `03.k` chỉ ghi chú Bài 03; m�
 - **Kết thúc và cắt ngắn** (Định nghĩa 08.6). Cờ cắt ngắn $U_i\in\{0,1\}$ bằng $1$ khi việc thu thập dừng vì một giới hạn nằm ngoài MDP, chẳng hạn giới hạn $500$ bước của CartPole. Mục tiêu chỉ dùng mặt nạ $(1-Z_i)$, nên một mẫu có $U_i=1$ và $Z_i=0$ vẫn giữ phần bootstrap.
 - **Phạm vi bảo đảm của DQN** (Nhận xét 08.19, 08.21). Bộ nhớ phát lại giảm tương quan giữa các mẫu liền nhau, và mạng mục tiêu làm chậm sự thay đổi của mục tiêu. DQN vẫn có đủ xấp xỉ hàm, bootstrap và dữ liệu khác chính sách, nên không có bảo đảm hội tụ tổng quát.
 - **Hạ gradient** (Định nghĩa 08.16). Hạ gradient ngẫu nhiên cập nhật $\theta\leftarrow\theta-\eta\,g$ với $g$ là gradient của hàm mất mát trên một mini-batch và $\eta>0$. Khi cần cực đại hóa một hàm, ta đi theo chiều ngược lại, $\theta\leftarrow\theta+\alpha\,\widehat g$; dạng này xuất hiện ở Mục 5.
-- **Chính sách, lợi tức và giá trị hành động** (Định nghĩa 03.8, 03.9, 03.13, 03.16). Chính sách $\pi$ gán cho mỗi trạng thái $s$ một phân phối $\pi(\cdot\mid s)$ trên $\mathcal A$; chính sách tất định là trường hợp dồn toàn bộ xác suất vào một hành động. Trong nhiệm vụ có kết thúc, lượt (episode) dừng tại bước ngẫu nhiên $T$, và lợi tức (return) từ bước $t$ là $G_t=\sum_{k=t}^{T-1}\gamma^{\,k-t}R_{k+1}$ với quy ước $G_T=0$; Bài 03 viết cùng tổng dưới dạng $\sum_{k=t+1}^{T}\gamma^{\,k-t-1}R_k$. Giá trị hành động $q_\pi(s,a)=\mathbb E_\pi[G_0\mid S_0=s,A_0=a]$ là lợi tức kỳ vọng khi thực hiện $a$ tại $s$ rồi theo $\pi$. Với chính sách Markov dừng, $\mathbb E_\pi[G_t\mid S_t=s,A_t=a]=q_\pi(s,a)$ ở mọi bước $t$ mà sự kiện $\{S_t=s,A_t=a\}$ có xác suất dương (Bổ đề 03.20(d)).
+- **Chính sách, lợi tức và giá trị hành động** (Định nghĩa 03.8, 03.9, 03.13, 03.16). Chính sách $\pi$ gán cho mỗi trạng thái $s$ một phân phối $\pi(\cdot\mid s)$ trên $\mathcal A$; chính sách tất định là trường hợp dồn toàn bộ xác suất vào một hành động. Trong nhiệm vụ có kết thúc, lượt (episode) dừng tại bước ngẫu nhiên $T$, và lợi tức (return) từ bước $t$ là $G_t=\sum_{k=t}^{T-1}\gamma^{\,k-t}R_{k+1}$ với quy ước $G_T=0$; Bài 03 viết cùng tổng dưới dạng $\sum_{k=t+1}^{T}\gamma^{\,k-t-1}R_k$. Giá trị hành động $q_\pi(s,a)=\mathbb E_\pi[G_0\mid S_0=s,A_0=a]$ là lợi tức kỳ vọng khi thực hiện $a$ tại $s$ rồi theo $\pi$. Giá trị hành động tối ưu là $q_*(s,a)=\max_\pi q_\pi(s,a)$ (Định nghĩa 04.19); mục tiêu DQN là ước lượng mẫu của vế phải phương trình Bellman tối ưu cho $q_*$. Với chính sách Markov dừng, $\mathbb E_\pi[G_t\mid S_t=s,A_t=a]=q_\pi(s,a)$ ở mọi bước $t$ mà sự kiện $\{S_t=s,A_t=a\}$ có xác suất dương (Bổ đề 03.20(d)).
 - **Bất đẳng thức Jensen** (kiến thức xác suất tiên quyết; ghi chú Bài 07 dùng dạng $(\sum_ip_iy_i)^2\le\sum_ip_iy_i^2$). Nếu $f:\mathbb R^m\to\mathbb R$ lồi và vector ngẫu nhiên $X$ có $\mathbb E\lVert X\rVert<\infty$, thì $f(\mathbb E[X])\le\mathbb E[f(X)]$. Ở Mục 2, bất đẳng thức này được áp dụng cho hàm lồi $f(x)=\max_ax_a$.
 - **Kỳ vọng có điều kiện** (kiến thức xác suất tiên quyết; ghi chú Bài 07 nhắc tính chất tháp). $\mathbb E\bigl[\mathbb E[X\mid Y]\bigr]=\mathbb E[X]$, và nếu $W$ là một hàm của $Y$ thì $\mathbb E[WX\mid Y]=W\,\mathbb E[X\mid Y]$ khi các kỳ vọng tồn tại. Hai tính chất này được dùng ở Mục 6, với $Y$ là lịch sử của một lượt.
 
@@ -44,6 +44,7 @@ Bảng gồm ký hiệu dùng xuyên suốt chương; ký hiệu chỉ dùng tro
 | $\pi(a\mid s)$, $\pi_\theta(a\mid s)$ | chính sách; chính sách có tham số $\theta$ | xác suất khi $\mathcal A$ hữu hạn, mật độ khi $\mathcal A=\mathbb R$ |
 | $\mathbb E_\pi$ | kỳ vọng trên quỹ đạo sinh bởi $\rho_0$, $\pi$ và $P$ | toán tử |
 | $q_\pi(s,a)$ | giá trị hành động đúng của $\pi$ | $\mathbb R$ |
+| $q_*(s,a)$ | giá trị hành động tối ưu | $\mathbb R$ |
 | $Z_i$, $U_i$ | cờ kết thúc của MDP; cờ cắt ngắn | $\{0,1\}$ |
 | $(S_i,A_i,R_i,S'_i,Z_i,U_i)$, $b$ | mẫu chuyển thứ $i$ của mini-batch; cỡ mini-batch | bộ sáu thành phần; $\mathbb N_+$ |
 | $\theta$, $d$ | tham số mạng trực tuyến (Mục 2–3) hoặc tham số chính sách (Mục 4–7); số chiều của $\theta$ | $\mathbb R^d$; $d\in\mathbb N_+$ |
@@ -52,6 +53,7 @@ Bảng gồm ký hiệu dùng xuyên suốt chương; ký hiệu chỉ dùng tro
 | $y_i$, $a_i^*$ | mục tiêu của mẫu $i$; hành động mạng trực tuyến chọn tại $S'_i$ | $\mathbb R$; $\mathcal A$ |
 | $\operatorname{sg}$ | dừng gradient | toán tử trong đồ thị tính |
 | $\widehat Q_a$ | ước lượng có nhiễu của giá trị hành động $a$ tại một trạng thái cố định | biến ngẫu nhiên thực |
+| $q_a$, $\beta$ | giá trị đúng của hành động $a$ tại trạng thái đó; độ chệch của phép cực đại | $\mathbb R$ |
 | $Q_1$, $Q_2$ | hai bảng của Double Q-learning | hàm thực trên $\mathcal S\times\mathcal A$ |
 | $\alpha$ | bước học của Double Q-learning và của bước tăng gradient, cùng vai với tốc độ học $\eta$ của Bài 08 | $(0,\infty)$ |
 | $\phi(s,a)$, $\phi(s)$ | đặc trưng của cặp trạng thái–hành động; đặc trưng của trạng thái | $\mathbb R^d$ |
@@ -162,62 +164,148 @@ Như vậy, chúng ta có một khung chung cho cả chương: ước lượng t
 
 ## 2. Độ chệch của phép cực đại
 
+Mục tiêu hồi quy của DQN (Định nghĩa 08.4) là $y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(S'_i,a')$. Ở Mục 1, ta đã thấy rằng trên CartPole, mạng đã huấn luyện của bài thực hành Bài 08 báo một giá trị vượt cận trên của mọi lợi tức. Để biết phần nào của độ vượt đó do chính phép cực đại gây ra, chúng ta cần một ví dụ trong đó mọi nguồn sai số khác bị loại bỏ, và một phát biểu tổng quát về kỳ vọng của phép cực đại trên các ước lượng có nhiễu. Chúng ta xây dựng cả hai dưới đây.
+
 <!-- note-topic-id: lec-09-topic-01 -->
-### DQN còn ghép chọn với đánh giá
+### Phép cực đại trong mục tiêu DQN
 
-**Vấn đề.** Với dạng bảng chính xác, Q-learning hội tụ dưới các giả thiết tiêu chuẩn. Với mạng neural, huấn luyện có thể phân kỳ vì hai nguyên nhân: tương quan giữa các mẫu và mục tiêu không dừng (tr. 3–4).
+Phép cực đại trong $y_i$ làm hai việc cùng lúc. Nó chọn hành động $a'$ có giá trị ước lượng lớn nhất tại trạng thái kế $S'_i$, và nó báo chính giá trị ước lượng đó làm phần bootstrap của mục tiêu. Cả hai việc dùng cùng một mạng $Q_{\theta^-}$. Bộ nhớ phát lại (Định nghĩa 08.7) thay đổi cách chọn mẫu chuyển vào mini-batch, còn mạng mục tiêu (Định nghĩa 08.3) thay đổi tham số dùng để tính phần bootstrap; phép cực đại trong $y_i$ giữ nguyên ở cả hai cơ chế.
 
-**Trực giác.** Mục tiêu DQN chứa $\max_{a'}Q_{\theta^-}(s',a')$: khi mạng thay đổi, mục tiêu thay đổi theo — mô hình đuổi theo một mục tiêu đang di chuyển (tr. 4).
+Phép cực đại này đã có trong Q-learning dạng bảng của Bài 06. Dưới các giả thiết của Định lý 06.21 (MDP hữu hạn, phần thưởng bị chặn, $\gamma<1$, mọi cặp được cập nhật vô hạn lần, bước học thỏa điều kiện Robbins–Monro theo cặp), $Q_t\to q_*$ hầu chắc chắn, nên sai số của các ước lượng, và cùng với nó độ chệch của phép cực đại, mất dần khi số bước tăng. Với số mẫu hữu hạn, các ước lượng còn sai số, và Sutton và Barto (2018, §6.7, Ví dụ 6.7) cho một MDP nhỏ trong đó Q-learning dạng bảng chọn sai hành động trong nhiều lượt đầu vì lý do này. Với mạng nơ-ron, không có định lý hội tụ tương ứng (Nhận xét 08.21), nên không có lý do để chờ sai số tự mất.
 
-**Hai công cụ đã học ở Bài 08** (tr. 5–10):
+::: example Ví dụ 09.1 (Giá trị ước lượng trên CartPole)
+**Dữ kiện.** CartPole: mỗi bước giữ được cột cho phần thưởng $1$; hệ số chiết khấu $\gamma=0{,}99$; lượt bị cắt ngắn ở bước $500$. Quan sát của môi trường được coi là trạng thái. Bài thực hành của Bài 08 (mục 7) huấn luyện DQN rồi in, cho lượt đầu của một hạt giống kiểm tra, giá trị $\max_aQ_\theta(S_0,a)=108{,}5$ và lợi tức thực tế $G_0=99{,}3$ ở lần chạy khi soạn.
 
-- **Bộ nhớ phát lại (experience replay):** lưu $(s,a,r,s')$ vào bộ đệm, lấy mini-batch ngẫu nhiên — phá tương quan theo thời gian, tái sử dụng dữ liệu.
-- **Target network:** duy trì $Q_{\theta^-}$ để tính đích, sao chép $\theta^-\leftarrow\theta$ theo chu kỳ $C$ bước — làm đích thay đổi chậm.
+**Cận trên của lợi tức.** Mọi phần thưởng bằng $1$, nên lợi tức của một lượt dài $n$ bước là $\sum_{k=0}^{n-1}0{,}99^k=(1-0{,}99^n)/0{,}01<100$. Không có giới hạn bước, giá trị của mọi chính sách vẫn không vượt $\sum_{k\ge0}0{,}99^k=100$. Với $n=500$, lợi tức là $(1-0{,}99^{500})/0{,}01\approx99{,}3$, khớp số in ra.
 
-Hàm mất mát trên lô $b$ mẫu:
+**So sánh.** $108{,}5-100=8{,}5>0$: giá trị mạng báo vượt cận trên của mọi lợi tức, nên không là giá trị đúng của bất kỳ chính sách nào.
 
-$$L_B(\theta)=\frac1b\sum_{i=1}^{b}\big[\operatorname{sg}(y_i)-Q_\theta(S_i,A_i)\big]^2,$$
-
-với đích DQN từng trường hợp:
-
-$$y_i=\begin{cases}R_i,&Z_i=1,\\ R_i+\gamma\max_{a'}Q_{\theta^-}(S'_i,a'),&Z_i=0.\end{cases}$$
-
-Gradient chỉ đi qua $Q_\theta(S_i,A_i)$; đích và mạng mục tiêu không nhận gradient.
-
-**Giới hạn còn lại.** Replay và mạng mục tiêu xử lý hai cơ chế khác nhau, nhưng **không tách việc chọn hành động khỏi việc đánh giá hành động**: trong $\max_{a'}Q_{\theta^-}(s',a')$, cùng một bộ ước lượng vừa chọn vừa đánh giá. Đây là chủ đề của topic-02.
-
-**Kiểm tra.** Trong đích DQN, biến nào chọn hành động ở $s'$? — Chính $Q_{\theta^-}$, qua phép max.
-
-*Nguồn: tr. 3–10.*
-
-<!-- note-topic-id: lec-09-topic-02 -->
-### Sai lệch cực đại và ví dụ Rademacher
-
-**Vấn đề.** Viết $\widehat Q_a=Q^*_a+\varepsilon_a$ với $\mathbb E[\varepsilon_a]=0$. Từng ước lượng không chệch, nhưng
-
-$$\max_a\widehat Q_a=\max_a\big(Q^*_a+\varepsilon_a\big)$$
-
-nhiều khả năng lớn hơn $\max_a Q^*_a$, vì phép max có xu hướng chọn hành động có hiện thực nhiễu thuận lợi (tr. 12–13). Cùng một mẫu nhiễu quyết định cả hành động thắng lẫn giá trị được báo cáo.
-
-::: example
-**Ví dụ Rademacher.** Hai hành động có giá trị thật bằng $0$. Nhiễu $\varepsilon_1,\varepsilon_2$ độc lập, nhận $-1$ hoặc $1$ với xác suất $1/2$. Từng ước lượng: $\mathbb E[\widehat Q_1]=\mathbb E[\widehat Q_2]=0$. Bốn cặp $(\varepsilon_1,\varepsilon_2)$ đồng xác suất: $(-1,-1)$ cho $\max=-1$; ba cặp còn lại cho $\max=1$. Do đó
-
-$$\mathbb E\big[\max_a\widehat Q_a\big]=\tfrac14(-1)+\tfrac34(1)=\tfrac12\neq 0=\max_a\mathbb E[\widehat Q_a].$$
-
-Sai lệch dương xuất hiện dù từng ước lượng không chệch.
+**Kiểm tra lại.** $0{,}99^{500}=e^{500\ln0{,}99}\approx e^{-5{,}025}\approx0{,}0066$, nên $(1-0{,}0066)/0{,}01\approx99{,}34$.
 :::
 
-**Hình thức.** Hàm cực đại theo véc-tơ là hàm lồi, nên Jensen cho
+![Trục số từ 90 đến 110. Đường nét đứt tại 100 ghi cận 1 chia 1 trừ gamma bằng 100, cận của mọi lợi tức và mọi giá trị đúng. Hình tròn tại 99,3 ghi lợi tức G 0 của một lượt cắt ở bước 500. Hình thoi tại 108,5 ghi max theo a của Q theta tại S 0. Ngoặc từ 100 đến 108,5 ghi vượt cận 8,5.](img/lec-09/cartpole-overestimate.svg)
 
-$$\mathbb E\Big[\max_a\widehat Q_a\Big]\ \ge\ \max_a\mathbb E[\widehat Q_a].$$
+Hình đặt ba số của Ví dụ 09.1 trên cùng một trục. Lợi tức thực tế nằm ngay dưới cận $100$, như một chính sách giữ cột đủ $500$ bước phải có; giá trị mạng báo nằm bên phải cận. Khoảng $8{,}5$ là phần đánh giá cao chắc chắn có, không phụ thuộc vào việc chính sách tốt đến đâu.
 
-Phạm vi phát biểu: đây là **bất đẳng thức không nghiêm** nói chung. Dấu bằng có thể xảy ra (ví dụ một hành động luôn thắng); dấu nghiêm cần điều kiện bổ sung về phân phối nhiễu và quan hệ giữa các ước lượng. Không phát biểu "mọi lần lấy max đều đánh giá quá cao" — kết luận là về kỳ vọng.
+Ví dụ 09.1 chưa cho biết bao nhiêu trong $8{,}5$ do phép cực đại. Mạng còn sai số xấp xỉ, dữ liệu huấn luyện đổi theo chính sách hành vi, và số liệu chỉ đến từ một lần chạy. Một nhầm lẫn thường gặp là gán toàn bộ độ vượt cho phép cực đại; muốn tách phần đó, ta cần một tình huống trong đó các ước lượng không chệch và nguồn sai số duy nhất là nhiễu.
 
-**Nhu cầu.** Vì sai lệch này lặp lại qua bootstrap và có thể dẫn đến mất ổn định hoặc phân kỳ, cần tách **chọn** và **đánh giá** hành động bằng hai bộ ước lượng khác nhau.
+<!-- note-topic-id: lec-09-topic-02 -->
+### Độ chệch của phép cực đại và bất đẳng thức kỳ vọng
 
-**Kiểm tra.** Trong ví dụ Rademacher, vì sao $\max_a\mathbb E[\widehat Q_a]=0$? — Vì $\mathbb E[\widehat Q_a]=0$ với cả hai hành động.
+Xét một trạng thái kế cố định với tập hành động hữu hạn $\mathcal A$. Gọi $q_a$ là giá trị đúng của hành động $a$ tại trạng thái này và $\widehat Q_a$ là ước lượng của nó, viết $\widehat Q_a=q_a+\varepsilon_a$ với nhiễu $\varepsilon_a$ có $\mathbb E[\varepsilon_a]=0$. Trong mục tiêu DQN, $\widehat Q_a$ đóng vai $Q_{\theta^-}(S'_i,a)$; nhiễu đến từ số mẫu hữu hạn và từ quá trình huấn luyện.
 
-*Nguồn: tr. 11–13.*
+Một cách trực quan, phép cực đại chọn hành động có $\widehat Q_a$ lớn nhất, và ước lượng lớn nhất thường là ước lượng có nhiễu dương lớn. Vì cùng các $\widehat Q_a$ vừa quyết định hành động thắng $a^*$ vừa cho giá trị báo cáo $\widehat Q_{a^*}=q_{a^*}+\varepsilon_{a^*}$, nhiễu được chọn đi thẳng vào giá trị báo cáo. Hành động $a^*$ là biến ngẫu nhiên phụ thuộc chính các nhiễu, nên $\mathbb E[\varepsilon_{a^*}]$ nói chung khác $0$ dù mỗi $\mathbb E[\varepsilon_a]$ bằng $0$.
+
+::: example Ví dụ 09.2 (Hai hành động có nhiễu ±1)
+**Dữ kiện.** Hai hành động có giá trị đúng $q_1=q_2=0$. Nhiễu $\varepsilon_1$, $\varepsilon_2$ độc lập, mỗi biến bằng $-1$ hoặc $+1$ với xác suất $1/2$; vì giá trị đúng bằng $0$, $\widehat Q_a=\varepsilon_a$.
+
+**Tính từng ước lượng.** $\mathbb E[\widehat Q_a]=\tfrac12(-1)+\tfrac12(+1)=0=q_a$ với $a=1,2$: cả hai ước lượng không chệch.
+
+**Tính cực đại.** Bốn cặp $(\widehat Q_1;\widehat Q_2)$ đồng xác suất $1/4$:
+
+| $(\widehat Q_1;\widehat Q_2)$ | $(-1;-1)$ | $(-1;+1)$ | $(+1;-1)$ | $(+1;+1)$ |
+|---|---|---|---|---|
+| $\max_a\widehat Q_a$ | $-1$ | $+1$ | $+1$ | $+1$ |
+
+$$\mathbb E\bigl[\max_a\widehat Q_a\bigr]=\tfrac14(-1+1+1+1)=\tfrac12.$$
+
+**Diễn giải.** $\max_aq_a=0$, nên phép cực đại báo trung bình cao hơn giá trị đúng lớn nhất $\tfrac12$ đơn vị.
+
+**Kiểm tra lại.** Chỉ cặp $(-1;-1)$ cho cực đại nhỏ hơn giá trị đúng; ba cặp còn lại có ít nhất một nhiễu dương, và phép cực đại chọn đúng nhiễu đó.
+:::
+
+![Bốn khung, mỗi khung một cặp giá trị ước lượng của hành động 1 và 2 với xác suất một phần tư: âm một và âm một cho cực đại âm một, ba cặp còn lại cho cực đại cộng một; ba khung có cực đại dương viền đậm.](img/lec-09/maximization-bias.svg)
+
+Hình liệt kê bốn hiện thực của Ví dụ 09.2. Ba khung viền đậm là ba hiện thực mà phép cực đại báo $+1$; khung còn lại cho thấy một hiện thực cụ thể vẫn có thể cho cực đại nhỏ hơn giá trị đúng. Kết luận của ví dụ là về kỳ vọng.
+
+::: definition Định nghĩa 09.1 (Độ chệch của phép cực đại)
+Cho tập hữu hạn $\mathcal A$, các số thực $q_a$ và các biến ngẫu nhiên khả tích $\widehat Q_a$, $a\in\mathcal A$. Ước lượng $\widehat Q_a$ không chệch nếu $\mathbb E[\widehat Q_a]=q_a$. Độ chệch của phép cực đại (maximization bias) là
+$$
+\beta=\mathbb E\Bigl[\max_{a\in\mathcal A}\widehat Q_a\Bigr]-\max_{a\in\mathcal A}q_a.
+$$
+:::
+
+Định nghĩa so kỳ vọng của giá trị mà phép cực đại báo với giá trị đúng lớn nhất, tức đúng đại lượng phần bootstrap của mục tiêu DQN muốn ước lượng tại một trạng thái kế. Trong Ví dụ 09.2, $\beta=\tfrac12$. Độ chệch được định nghĩa cho một trạng thái cố định; trong mục tiêu DQN, trạng thái kế $S'_i$ thay đổi theo mẫu, và $\beta$ là độ chệch có điều kiện khi biết $S'_i$.
+
+Khái niệm này khác độ chệch của từng ước lượng. "Mỗi $\widehat Q_a$ không chệch" là điều kiện trên từng hành động riêng lẻ; $\beta$ đo một hàm phi tuyến của cả vector ước lượng. Ví dụ 09.2 cho thấy điều kiện thứ nhất không kéo theo $\beta=0$. Mệnh đề sau cho biết chiều của $\beta$ trong mọi trường hợp.
+
+::: proposition Mệnh đề 09.2 (Độ chệch của phép cực đại không âm)
+**Giả thiết.** $\mathcal A$ hữu hạn; các $\widehat Q_a$, $a\in\mathcal A$, là biến ngẫu nhiên khả tích trên cùng một không gian xác suất.
+
+**Kết luận.** (a) $\mathbb E[\max_a\widehat Q_a]\ge\max_a\mathbb E[\widehat Q_a]$. (b) Nếu mọi $\widehat Q_a$ không chệch cho $q_a$ thì $\beta\ge0$. (c) Gọi $b^*$ là một hành động có $\mathbb E[\widehat Q_{b^*}]=\max_a\mathbb E[\widehat Q_a]$; dấu bằng ở (a) xảy ra khi và chỉ khi $\max_a\widehat Q_a=\widehat Q_{b^*}$ hầu chắc chắn. Khi các ước lượng không chệch, $b^*$ là một phần tử bất kỳ của $\arg\max_aq_a$. Khi có nhiều hành động đạt $\max_a\mathbb E[\widehat Q_a]$, điều kiện không phụ thuộc cách chọn $b^*$, và $\widehat Q_{b^*}$ bằng cực đại kể cả khi hòa.
+
+**Điều kiện áp dụng.** Không cần các nhiễu độc lập hay cùng phân phối, và không cần phân phối cụ thể của nhiễu.
+
+**Phạm vi.** Kết luận nói về kỳ vọng tại một trạng thái kế cố định. Mệnh đề không cho độ lớn của $\beta$, không nói từng hiện thực của cực đại đều lớn hơn $\max_aq_a$, và không mô tả độ chệch tích lũy thế nào qua các bước bootstrap.
+:::
+
+::: proof
+**Bước 1 (kết luận a).** Hàm $f:\mathbb R^m\to\mathbb R$, $f(x)=\max_ax_a$, là cực đại của các hàm tuyến tính $x\mapsto x_a$, nên lồi. Vector $X=(\widehat Q_a)_{a\in\mathcal A}$ khả tích vì từng thành phần khả tích. Bất đẳng thức Jensen (Kiến thức tiên quyết) cho
+$$
+\begin{aligned}
+\max_a\mathbb E[\widehat Q_a]&=f(\mathbb E[X])&&\text{(định nghĩa của }f\text{)}\\
+&\le\mathbb E[f(X)]&&\text{(Jensen)}\\
+&=\mathbb E\bigl[\max_a\widehat Q_a\bigr].
+\end{aligned}
+$$
+Cách khác, không dùng Jensen: với mọi $b$, $\max_a\widehat Q_a\ge\widehat Q_b$; lấy kỳ vọng được $\mathbb E[\max_a\widehat Q_a]\ge\mathbb E[\widehat Q_b]$, rồi lấy cực đại theo $b$.
+
+**Bước 2 (kết luận b).** Khi $\mathbb E[\widehat Q_a]=q_a$ với mọi $a$, vế phải của (a) bằng $\max_aq_a$; trừ hai vế cho $\max_aq_a$ được $\beta\ge0$.
+
+**Bước 3 (kết luận c).** Đặt $D=\max_a\widehat Q_a-\widehat Q_{b^*}$. Ta có $D\ge0$ và $\mathbb E[D]=\mathbb E[\max_a\widehat Q_a]-\max_a\mathbb E[\widehat Q_a]$. Một biến ngẫu nhiên không âm có kỳ vọng $0$ khi và chỉ khi nó bằng $0$ hầu chắc chắn, nên dấu bằng ở (a) xảy ra khi và chỉ khi $D=0$ hầu chắc chắn. $\square$
+:::
+
+Mệnh đề 09.2 nói rằng phép cực đại trên các ước lượng không chệch không bao giờ đánh giá thấp theo kỳ vọng, và đánh giá cao nghiêm ngặt khi và chỉ khi không có $b^*\in\arg\max_aq_a$ nào thỏa $\widehat Q_{b^*}=\max_a\widehat Q_a$ hầu chắc chắn. Hai giả thiết có vai trò riêng, và mỗi giả thiết bị bỏ đều có phản ví dụ.
+
+- Bỏ khả tích: nếu $\widehat Q_1$ có phân phối Cauchy chuẩn, $\mathbb E[\widehat Q_1]$ không tồn tại, nên vế phải của (a) không xác định.
+- Bỏ không chệch ở (b): nếu $\widehat Q_a=q_a-1$ tất định với mọi $a$, thì $\beta=-1<0$. Kết luận (a) vẫn đúng, nhưng vế phải không còn là giá trị đúng lớn nhất.
+
+Giả thiết khả tích được dùng ở Bước 1 để Jensen áp dụng được; giả thiết không chệch chỉ được dùng ở Bước 2. Điều kiện ở (c) giải thích Ví dụ 09.2: cả hai hành động thuộc $\arg\max_aq_a$, nhưng ở cặp $(-1;+1)$ hành động 1 không đạt cực đại và ở cặp $(+1;-1)$ hành động 2 không đạt cực đại, nên $\beta>0$.
+
+::: example Ví dụ 09.3 (Khoảng cách giữa các giá trị đúng)
+**Dữ kiện.** Như Ví dụ 09.2: hai hành động, nhiễu $\varepsilon_1$, $\varepsilon_2$ độc lập, mỗi biến bằng $\pm1$ với xác suất $1/2$, $\widehat Q_a=q_a+\varepsilon_a$. Xét hai trường hợp giá trị đúng: (i) $q=(0{,}5;\,0)$; (ii) $q=(3;\,0)$.
+
+**Trường hợp (i).** $\widehat Q_1\in\{-0{,}5;\,1{,}5\}$, $\widehat Q_2\in\{-1;\,1\}$. Bốn cặp cho cực đại $-0{,}5$; $1$; $1{,}5$; $1{,}5$, nên $\mathbb E[\max_a\widehat Q_a]=\tfrac14(-0{,}5+1+1{,}5+1{,}5)=0{,}875$ và $\beta=0{,}875-0{,}5=0{,}375$.
+
+**Trường hợp (ii).** $\widehat Q_1\in\{2;\,4\}$ luôn lớn hơn $\widehat Q_2\in\{-1;\,1\}$, nên $\max_a\widehat Q_a=\widehat Q_1$ ở mọi cặp, $\mathbb E[\max_a\widehat Q_a]=3$ và $\beta=0$.
+
+**Diễn giải.** Khi khoảng cách giữa hai giá trị đúng tăng từ $0$ lên $0{,}5$ rồi $3$, độ chệch giảm từ $0{,}5$ xuống $0{,}375$ rồi $0$. Trường hợp (ii) thỏa điều kiện dấu bằng của Mệnh đề 09.2(c) với $b^*=1\in\arg\max_aq_a$: $\widehat Q_1=\max_a\widehat Q_a$ ở mọi hiện thực.
+
+**Kiểm tra lại.** Trường hợp (i): $\tfrac14\cdot3{,}5=0{,}875$.
+:::
+
+Ví dụ 09.3 cho thấy độ chệch lớn nhất khi các hành động có giá trị đúng gần nhau so với độ lớn của nhiễu.
+
+::: remark Nhận xét 09.3 (Nhầm lẫn thường gặp về độ chệch của phép cực đại)
+1. "Mỗi lần lấy cực đại đều đánh giá cao." Sai: trong Ví dụ 09.2, cặp $(-1;-1)$ cho cực đại $-1<0$. Mệnh đề 09.2 nói về kỳ vọng.
+2. "Ước lượng không chệch cho từng hành động thì cực đại cũng không chệch." Sai: Ví dụ 09.2 có $\beta=\tfrac12$.
+3. "Độ chệch luôn dương nghiêm ngặt." Sai: Ví dụ 09.3(ii) có $\beta=0$; dấu lớn hơn nghiêm ngặt xảy ra khi và chỉ khi không có $b^*\in\arg\max_aq_a$ nào thỏa $\widehat Q_{b^*}=\max_a\widehat Q_a$ hầu chắc chắn.
+4. "Bộ nhớ phát lại hoặc mạng mục tiêu loại bỏ độ chệch này." Sai: cả hai cơ chế giữ nguyên phép cực đại trên cùng một mạng trong $y_i$.
+:::
+
+**Trong thực hành.** Trong DQN, $\widehat Q_a$ là $Q_{\theta^-}(S'_i,a)$, các giá trị đúng là $q_*(S'_i,a)$, và nhiễu là sai số của mạng mục tiêu sau một số bước huấn luyện hữu hạn. Giả thiết không chệch thường không thỏa, và các sai số của các hành động không độc lập vì dùng chung tham số; kết luận (a) của Mệnh đề 09.2 vẫn đúng vì không cần hai điều này, nhưng so sánh với $\max_aq_*(S'_i,a)$ cần thêm giả thiết. Bài giảng gốc (trang 12) nêu rằng độ chệch này lặp lại qua các bước bootstrap; chúng ta không chứng minh mức tích lũy. Số đo của Ví dụ 09.1 phù hợp với kết luận này nhưng không chứng minh nó, vì chỉ có một lần chạy và nhiều nguồn sai số. Phần gợi mở của bài thực hành Bài 08 đo lại cùng đại lượng với mục tiêu của Double DQN.
+
+::: exercise Bài tập 09.1 (Độ chệch khi một hành động tốt hơn)
+Hai hành động có giá trị đúng $q_1=1$, $q_2=0$; nhiễu $\varepsilon_1$, $\varepsilon_2$ độc lập, mỗi biến bằng $-1$ hoặc $+1$ với xác suất $1/2$; $\widehat Q_a=q_a+\varepsilon_a$. Tính $\mathbb E[\max_a\widehat Q_a]$ và độ chệch $\beta$. Điều kiện dấu bằng của Mệnh đề 09.2(c) có thỏa không?
+:::
+
+::: hint
+Liệt kê bốn cặp $(\widehat Q_1;\widehat Q_2)$ với $\widehat Q_1\in\{0;\,2\}$, $\widehat Q_2\in\{-1;\,1\}$, rồi lấy trung bình của cực đại.
+:::
+
+::: solution
+**Liệt kê.** Bốn cặp đồng xác suất: $(0;-1)\to0$; $(0;1)\to1$; $(2;-1)\to2$; $(2;1)\to2$.
+
+**Tính.** $\mathbb E[\max_a\widehat Q_a]=\tfrac14(0+1+2+2)=1{,}25$; $\max_aq_a=1$; $\beta=0{,}25$.
+
+**Điều kiện dấu bằng.** Hành động có kỳ vọng lớn nhất là hành động 1, nhưng ở cặp $(0;1)$ hành động 2 thắng; điều kiện không thỏa, nên $\beta>0$, khớp với số tính được.
+
+**Kiểm tra lại.** $\beta$ nằm giữa $0{,}375$ ở khoảng cách $0{,}5$ và $0$ ở khoảng cách $3$ của Ví dụ 09.3, đúng chiều giảm theo khoảng cách.
+:::
+
+Như vậy, Định nghĩa 09.1 đặt tên cho đại lượng mà Ví dụ 09.1 gợi ra, và Mệnh đề 09.2 chứng minh rằng với các ước lượng không chệch, đại lượng đó không âm, và dương nghiêm ngặt khi và chỉ khi không có $b^*\in\arg\max_aq_a$ nào thỏa $\widehat Q_{b^*}=\max_a\widehat Q_a$ hầu chắc chắn; Ví dụ 09.2 và 09.3 cho các giá trị $\tfrac12$, $0{,}375$ và $0$. Trong chứng minh, cùng một vector $X$ xác định cả hành động thắng lẫn giá trị $\max_aX_a$; khi số mẫu hữu hạn và nhiễu khác $0$, độ chệch nói chung còn dương. Trong Mục 3, chúng ta giữ phép chọn nhưng đánh giá hành động được chọn bằng một ước lượng khác, rồi xét khi nào cách này bỏ được độ chệch lên.
+
+*Nguồn: bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 3–13; Sutton và Barto (2018), §6.7; bài thực hành Bài 08, mục 7.*
 
 ---
 
