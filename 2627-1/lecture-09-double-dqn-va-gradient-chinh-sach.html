@@ -355,13 +355,22 @@
 <aside class="notes"><p>Vector $u_k$ có thành phần thứ $k$ bằng $1$, các thành phần khác bằng $0$. Trên thẻ dữ kiện, $J$ có dạng đóng: tăng $\theta_1$ lên $\log2+0{,}1$ cho $J=6e^{0{,}1}/(2e^{0{,}1}+1)\approx2{,}0655$, và thương sai phân $0{,}655$ lệch giá trị đúng khoảng $0{,}011$ vì $\epsilon$ hữu hạn. Khi $r$ chưa biết, mỗi giá trị $J$ là trung bình lợi tức trên $n$ lượt; sai số của hai trung bình bị chia cho $\epsilon$, nên phương sai của thương tỉ lệ với $1/(n\epsilon^2)$. Với $d$ tham số, cần chạy $d+1$ chính sách khác nhau. Ưu điểm theo nguồn: dùng được cả khi chính sách không khả vi. Nhu cầu còn lại: ước lượng gradient từ chính các lượt của $\pi_\theta$.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 33; số liệu ví dụ tính bổ sung.</p></aside>
 </section>
 <section data-slide-id="L09-23" data-note-topic-id="lec-09-topic-08">
+<h2>Gradient của $J$ trên bài toán một bước</h2>
+<p><strong>Trực quan.</strong> $s$ cố định, $A=A_0\sim\pi_\theta(\cdot\mid s)$, $G_0=r(A)$: ${J=\textstyle\sum_a\pi_\theta(a\mid s)r(a)}$.</p>
+<div>$$\begin{aligned}\nabla_\theta J&amp;=\textstyle\sum_ar(a)\,\nabla_\theta\pi_\theta(a\mid s)\\&amp;=\textstyle\sum_a\pi_\theta(a\mid s)\,r(a)\,\nabla_\theta\log\pi_\theta(a\mid s)\\&amp;=\mathbb E_{A\sim\pi_\theta(\cdot\mid s)}\bigl[r(A)\,\nabla_\theta\log\pi_\theta(A\mid s)\bigr].\end{aligned}$$</div>
+<p>Dòng một: $\nabla_\theta r=0$; dòng hai: nhân và chia cho $\pi_\theta&gt;0$.</p>
+<p><strong>Ví dụ.</strong> Softmax, $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$, $\theta=(\log2;\,0)$, $r=(3;\,0)$: ${\pi_\theta=(\tfrac23;\,\tfrac13)}$, ${\nabla_\theta\log\pi_\theta(1\mid s)=(\tfrac13;\,-\tfrac13)}$, vế phải ${\tfrac23\cdot3\,(\tfrac13;\,-\tfrac13)=(\tfrac23;\,-\tfrac23)}$.</p>
+<p><strong>Ý nghĩa:</strong> một hành động lấy mẫu cho một mẫu của $\nabla_\theta J$; không cần $r$ của mọi $a$.</p>
+<aside class="notes"><p>$J$ là kỳ vọng trên hai hành động. Dòng một: $r$ là của môi trường, không phụ thuộc $\theta$, nên gradient chỉ rơi vào xác suất; tổng này cần $r$ của mọi hành động và không có trọng số $\pi_\theta$, nên chưa là kỳ vọng. Dòng hai nhân và chia cho $\pi_\theta(a\mid s)&gt;0$: $\nabla\pi=\pi\cdot\nabla\pi/\pi=\pi\,\nabla\log\pi$, quy tắc đạo hàm của logarit đọc ngược. Khi trọng số $\pi_\theta$ xuất hiện, tổng thành kỳ vọng theo hành động lấy mẫu, nên một lượt cho một mẫu mà không phải chạy thêm $d$ chính sách như sai phân hữu hạn. Trong ví dụ, $\nabla_\theta\log\pi_\theta(1\mid s)=(1-\pi_1;\,-\pi_2)$; giá trị tính trực tiếp là $3\pi_1\pi_2(1;\,-1)$. $\log$ là logarit tự nhiên.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 33–34; Sutton và Barto (2018), §13.3.</p></aside>
+</section>
+<section data-slide-id="L09-23b" data-note-topic-id="lec-09-topic-08">
 <h2>Hàm điểm</h2>
-<p><strong>Trực quan.</strong> Bài toán một bước: ${\nabla_\theta J=\sum_ar(a)\nabla_\theta\pi_\theta(a\mid s)}$ thiếu trọng số $\pi_\theta$ nên chưa lấy mẫu được; nhân, chia cho $\pi_\theta$:</p>
-<div class="math-large">$$\nabla_\theta\pi_\theta(a\mid s)=\pi_\theta(a\mid s)\,\nabla_\theta\log\pi_\theta(a\mid s)\qquad\bigl(\pi_\theta(a\mid s)&gt;0\bigr).$$</div>
-<p><strong>Ví dụ.</strong> Hai hành động, $\phi(s,a)$ là vector đơn vị: ${\log\pi_\theta(1\mid s)=\theta_1-\log(e^{\theta_1}+e^{\theta_2})}$, gradient tại $\theta=(\log2;\,0)$ là $(\tfrac13;\,-\tfrac13)$.</p>
 <p><strong>Định nghĩa.</strong> Hàm điểm (score function): $\psi_\theta(s,a)=\nabla_\theta\log\pi_\theta(a\mid s)\in\mathbb R^d$, khi $\pi_\theta(a\mid s)&gt;0$.</p>
+<div class="math-large">$$\nabla_\theta\pi_\theta(a\mid s)=\pi_\theta(a\mid s)\,\psi_\theta(s,a).$$</div>
+<p>Trên bài toán một bước: ${\nabla_\theta J=\mathbb E_{A\sim\pi_\theta}\bigl[r(A)\,\psi_\theta(s,A)\bigr]}$.</p>
+<p><strong>Ý nghĩa:</strong> $\psi_\theta(s,a)$ là thay đổi tương đối của $\pi_\theta(a\mid s)$ theo $\theta$; bước nhỏ theo nó tăng $\pi_\theta(a\mid s)$.</p>
 <p><strong>Lưu ý:</strong> miền hỗ trợ $\{a:\pi_\theta(a\mid s)&gt;0\}$ không đổi theo $\theta$; softmax, Gaussian thỏa.</p>
-<aside class="notes"><p>Ở đây $\log$ là logarit tự nhiên. Đẳng thức trên là quy tắc đạo hàm của $\log$, đọc ngược: $\nabla\log\pi=\nabla\pi/\pi$ là thay đổi tương đối của xác suất hành động $a$. Nhân lại với $\pi$, mọi tổng $\sum_af(a)\nabla_\theta\pi_\theta(a\mid s)$ thành kỳ vọng $\mathbb E_{A\sim\pi_\theta}[f(A)\psi_\theta(s,A)]$, ước lượng được bằng một hành động lấy mẫu mà không cần $f$ của các hành động khác. Trong ví dụ, đạo hàm theo $\theta_1$ là $1-\pi_\theta(1\mid s)=\tfrac13$, theo $\theta_2$ là $-\pi_\theta(2\mid s)=-\tfrac13$. Nếu miền hỗ trợ đổi theo $\theta$, như phân phối đều trên $[0,\theta]$, phép đổi đạo hàm với tích phân sinh thêm hạng biên.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 34; Sutton và Barto (2018), §13.3.</p></aside>
+<aside class="notes"><p>Hàm điểm là vector cùng số chiều với $\theta$; tọa độ thứ $k$ cho biết log xác suất của hành động $a$ đổi bao nhiêu khi tăng $\theta_k$, tức thay đổi tương đối của xác suất. Đi một bước nhỏ theo $\psi_\theta(s,a)$ làm tăng $\pi_\theta(a\mid s)$. Điều kiện $\pi_\theta&gt;0$ cần để logarit xác định; chính sách tất định vi phạm nó. Nếu miền hỗ trợ đổi theo $\theta$, như phân phối đều trên $[0,\theta]$, phép đổi đạo hàm với tích phân sinh thêm hạng biên. Với softmax và Gaussian, hàm điểm có công thức đóng.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 34; Sutton và Barto (2018), §13.3.</p></aside>
 </section>
 <section data-slide-id="L09-24" data-note-topic-id="lec-09-topic-08">
 <h2>Hàm điểm của chính sách softmax</h2>
@@ -382,7 +391,7 @@
 <p>$\psi_\theta(s,1)=(\tfrac13;\,-\tfrac13)$, $\psi_\theta(s,2)=(-\tfrac23;\,\tfrac23)$.</p>
 <p>Trung bình: $\tfrac23(\tfrac13;\,-\tfrac13)+\tfrac13(-\tfrac23;\,\tfrac23)=(0;\,0)$.</p>
 <p><strong>Diễn giải:</strong> bước theo $\psi_\theta(s,1)$ tăng $\theta_1$, giảm $\theta_2$, nên tăng $\pi_\theta(1\mid s)$.</p>
-<aside class="notes"><p>Hàm điểm của hành động 1, $(\tfrac13;\,-\tfrac13)$, trùng phép tính trực tiếp gradient của $\theta_1-\log(e^{\theta_1}+e^{\theta_2})$ tại $\theta=(\log2;\,0)$. Hành động ít được chọn có hàm điểm dài hơn: $\psi_\theta(s,2)$ gấp đôi $\psi_\theta(s,1)$ về độ lớn, vì $\phi(s,2)$ xa đặc trưng trung bình hơn. Trung bình theo $\pi_\theta$ bằng $(0;\,0)$: không có hướng nào được ưu tiên khi chưa nhân với một đại lượng phụ thuộc hành động. Kết quả này đúng cho mọi chính sách thỏa giả thiết, như mệnh đề tiếp theo.</p><p class="note-source"><strong>Nguồn:</strong> ví dụ tính từ bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 35–36.</p></aside>
+<aside class="notes"><p>Hàm điểm của hành động 1, $(\tfrac13;\,-\tfrac13)$, trùng giá trị đã dùng trong dẫn xuất gradient một bước. Hành động ít được chọn có hàm điểm dài hơn: $\psi_\theta(s,2)$ gấp đôi $\psi_\theta(s,1)$ về độ lớn, vì $\phi(s,2)$ xa đặc trưng trung bình hơn. Trung bình theo $\pi_\theta$ bằng $(0;\,0)$: không có hướng nào được ưu tiên khi chưa nhân với một đại lượng phụ thuộc hành động. Kết quả này đúng cho mọi chính sách thỏa giả thiết, như mệnh đề tiếp theo.</p><p class="note-source"><strong>Nguồn:</strong> ví dụ tính từ bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 35–36.</p></aside>
 </section>
 <section data-slide-id="L09-25b" data-note-topic-id="lec-09-topic-08">
 <h2>Kỳ vọng của hàm điểm</h2>
@@ -440,15 +449,14 @@
 <h2>Gradient của $J$ theo tỉ số xác suất</h2>
 <p><strong>Nhu cầu:</strong> $\psi_\theta$ là của một bước; cần $\nabla_\theta J$ cho cả lượt.</p>
 <div class="grid2"><div>
-<p><strong>Ví dụ.</strong> Một bước, dùng $\nabla\pi=\pi\psi$:</p>
-<p>${\nabla_\theta J=\sum_ar(a)\pi_\theta(a\mid s)\psi_\theta(s,a)}$</p>
-<p>${=\tfrac23\cdot3\,(\tfrac13;\,-\tfrac13)=(\tfrac23;\,-\tfrac23)}$.</p>
+<p><strong>Nhắc lại:</strong> bài toán một bước:</p>
+<p>${\nabla_\theta J=\mathbb E_{A\sim\pi_\theta}\bigl[r(A)\,\psi_\theta(s,A)\bigr]}$ ${=(\tfrac23;\,-\tfrac23)}$.</p>
 </div>
 <img class="figure" src="img/lec-09/one-step-card.svg" alt="Thẻ dữ kiện bài toán một bước, chính sách softmax, hai hành động: đặc trưng phi của s, 1 bằng (1; 0) và phi của s, 2 bằng (0; 1); pi theta bằng 2/3 và 1/3; phần thưởng r bằng 3 và 0; theta bằng (log 2; 0); lượt dừng sau A 0."/></div>
 <p><strong>Ký hiệu:</strong> quỹ đạo $\tau=(S_0,A_0,R_1,\dots,S_T)$, xác suất $p_\theta(\tau)$ dưới $\pi_\theta$.</p>
 <p><strong>Giả thiết:</strong> đổi được $\nabla_\theta$ với tích phân; điều kiện đủ nêu cùng định lý.</p>
 <div class="math-large">$$\nabla_\theta J=\nabla_\theta\!\int G_0(\tau)\,p_\theta(\tau)\,\mathrm d\tau=\mathbb E_{\tau\sim p_\theta}\bigl[G_0(\tau)\,\nabla_\theta\log p_\theta(\tau)\bigr].$$</div>
-<aside class="notes"><p>Với $\tau$ cố định, $G_0(\tau)$ không phụ thuộc $\theta$; chỉ xác suất của quỹ đạo phụ thuộc. Đẳng thức dùng $\nabla p_\theta=p_\theta\nabla\log p_\theta$, cùng phép biến đổi với hàm điểm của một bước, và tên tỉ số xác suất (likelihood ratio) đến từ thương $\nabla p_\theta/p_\theta$. Với hành động rời rạc, tích phân là tổng. Bước đổi $\nabla$ với tích phân cần giả thiết, nêu ngay trước định lý. Ví dụ một bước khớp phép tính trực tiếp $(\tfrac23;\,-\tfrac23)$ và sai phân hữu hạn $0{,}655$.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 34, 39; Sutton và Barto (2018), §13.2–13.3.</p></aside>
+<aside class="notes"><p>Với $\tau$ cố định, $G_0(\tau)$ không phụ thuộc $\theta$; chỉ xác suất của quỹ đạo phụ thuộc. Đẳng thức dùng $\nabla p_\theta=p_\theta\nabla\log p_\theta$, cùng phép biến đổi với hàm điểm của một bước, và tên tỉ số xác suất (likelihood ratio) đến từ thương $\nabla p_\theta/p_\theta$. Với hành động rời rạc, tích phân là tổng. Bước đổi $\nabla$ với tích phân cần giả thiết, nêu ngay trước định lý. Trên bài toán một bước, giá trị $(\tfrac23;\,-\tfrac23)$ khớp phép tính trực tiếp và sai phân hữu hạn $0{,}655$; lượt nhiều bước cần cùng phép biến đổi cho xác suất của cả quỹ đạo.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 34, 39; Sutton và Barto (2018), §13.2–13.3.</p></aside>
 </section>
 <section data-slide-id="L09-28A" data-note-topic-id="lec-09-topic-10">
 <h2>Xác suất của quỹ đạo</h2>

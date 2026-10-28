@@ -498,6 +498,19 @@ Ngoại lệ mật độ ở F: `L09-01` (bìa) 70 âm tiết; `L09-02c` 94 âm 
 
 Sau F2, mọi trang so sánh, tổng kết ≤ 80 âm tiết; mọi trang nội dung khác ≤ 60, trừ ngoại lệ bìa `L09-01`.
 
+#### Sửa theo phản hồi người dùng (2026-10-28): `L09-23`
+
+Phản hồi: trang "Hàm điểm" không cho thấy từ $J=\mathbb E[G_0]$ làm sao có $\nabla J=\dots$.
+
+| trang | tiêu đề | lý do tồn tại; nối trước → sau | âm tiết | dòng, đáy | ghi chú diễn giả |
+|---|---|---|---|---|---|
+| `L09-23` | "Hàm điểm" → "Gradient của $J$ trên bài toán một bước" | dẫn xuất từng bước: $G_0=r(A_0)$, $J=\sum_a\pi_\theta r$; $\nabla_\theta r=0$; nhân, chia $\pi_\theta>0$; thành kỳ vọng theo hành động lấy mẫu; "Ý nghĩa:" một hành động cho một mẫu, không cần $r$ của mọi hành động, không cần sai phân (nhận nhu cầu của `L09-30A`) → `L09-23b`. Bỏ dòng ví dụ số trùng `L09-25` | 32 | 3 + 1 công thức `aligned` bốn dòng; 609 px | khoảng 107 |
+| `L09-23b` (mới) | "Hàm điểm" | "Định nghĩa." hàm điểm, $\nabla\pi=\pi\psi$, dạng $\nabla J=\mathbb E[r(A)\psi_\theta(s,A)]$ trên bài toán một bước, "Lưu ý:" miền hỗ trợ cố định → `L09-24` (công thức softmax), `L09-25` (số trên thẻ dữ kiện), `L09-25b` (kỳ vọng bằng $0$) | 23 | 4; 455 px | khoảng 94 |
+
+Sau rà lại: `L09-23` thêm "Ví dụ." có số trên bài toán một bước ($\nabla_\theta\log\pi_\theta(1\mid s)=(\tfrac13;-\tfrac13)$, vế phải $(\tfrac23;-\tfrac23)$), dòng chữ nêu lý do hai bước, $s$ cố định và $A=A_0$; 35 âm tiết, khối `aligned` ba dòng, đáy 659 px. `L09-23b` thêm "Ý nghĩa:"; 37 âm tiết, đáy 578 px. `L09-28` thay ví dụ một bước bằng dòng "Nhắc lại:" $\nabla_\theta J=\mathbb E[r(A)\psi_\theta(s,A)]=(\tfrac23;-\tfrac23)$; 37 âm tiết, đáy 688 px.
+
+Hành trình khái niệm cụm "Hàm điểm" sau sửa: Vấn đề `L09-30A`; Trực quan và Ví dụ gộp ở `L09-23` (dẫn xuất trên bài toán một bước, có số); Hình thức `L09-23b` (Định nghĩa), `L09-24`, `L09-25b`, `L09-26`; Ứng dụng `L09-25`, `L09-27`; Kiểm tra `L09-27`, `X02`. Thời lượng mạch 5 giữ 22 phút: `L09-23` 2, `L09-23b` 1 (thay 3 phút của `L09-23` cũ).
+
 ## Bản trước đợt sửa 2026-10-28
 
 Các mục dưới đây mô tả bản trước đợt sửa (sáu section ngoài, 38 trang).

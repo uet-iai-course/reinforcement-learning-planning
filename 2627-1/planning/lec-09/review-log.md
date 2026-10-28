@@ -859,3 +859,30 @@ Kiểm sau F2 (Playwright Chromium, `http://127.0.0.1:8799`, `check.py --all --n
 - Căn cứ: điều phối viên tự chạy Playwright (`check.py --all --narrow`, 63 trang, 1600×900 và 390×844): 0 lỗi console hoặc trang, 0 `.katex-error`, 0 yêu cầu ra ngoài máy chủ cục bộ, không tràn khung, không cuộn ngang; xem ảnh `L09-01`, `L09-02c`, `L09-16b`, `L09-28`; tự tính lại $h_i=5,4,1,4,5$ và trung bình $3{,}8$.
 - Mọi phát hiện chặn bàn giao và nghiêm trọng của ba rà soát đầu, bảy lượt rà lại theo mạch và lượt rà cuối đã xử lý và ghi ở các mục trên.
 - Giới hạn còn lại: chưa có `exercises.md` và notebook thực hành cho Bài 09 (thẻ index ghi "Chưa có"); ghi chú bài giảng dài 18 466 từ thân văn (25 646 theo `wc -w`); bìa `L09-01` giữ ngoại lệ mật độ (luận đề một câu có điều kiện).
+
+### Sửa theo phản hồi người dùng (2026-10-28): L09-23
+
+Phản hồi của người dùng: "slide HÀM ĐIỂM không rõ đang từ J=E[G_0] sao có thể có ∇J = … được". Chẩn đoán của điều phối viên: thiếu hai bước, $J=\sum_a\pi_\theta(a\mid s)r(a)$ (vì $G_0=r(A_0)$) và $\nabla_\theta r=0$, trước bước nhân, chia cho $\pi_\theta$. Biên tập: Agent `general-purpose` (biên tập viên của đợt sửa), `claude-opus-5-5`, high; `no-ai-slop` Edit, tự kiểm theo `eval.md`: đạt.
+
+| vị trí | thay đổi | trạng thái | quyết định |
+|---|---|---|---|
+| `L09-23` | tách thành hai trang. `L09-23` "Gradient của $J$ trên bài toán một bước": khối `aligned` bốn dòng $J=\sum_a\pi_\theta r$ → $\sum_ar\nabla\pi_\theta$ ($\nabla_\theta r=0$) → $\sum_a\pi_\theta r\nabla\log\pi_\theta$ (nhân, chia $\pi_\theta>0$) → $\mathbb E_{A\sim\pi_\theta}[r(A)\nabla\log\pi_\theta(A\mid s)]$; "Ý nghĩa:" một hành động cho một mẫu, không cần $r$ của mọi hành động, không cần sai phân; bỏ dòng ví dụ trùng `L09-25`; ghi chú diễn giả giải thích bước nhân, chia (107 âm tiết) | đã sửa | chờ điều phối viên duyệt |
+| `L09-23b` (mới) | "Hàm điểm": Định nghĩa, $\nabla\pi=\pi\psi$, $\nabla J=\mathbb E[r(A)\psi_\theta(s,A)]$ trên bài toán một bước, Lưu ý miền hỗ trợ cố định | đã sửa | chờ điều phối viên duyệt |
+| `L09-25`, `L09-25b` | kiểm nối: `L09-25` tính $\psi_\theta(s,1)$, $\psi_\theta(s,2)$ bằng công thức softmax của `L09-24` (không lặp dẫn xuất); `L09-25b` dùng $\nabla\pi=\pi\psi$ của `L09-23b`; không đổi | đã kiểm | chờ điều phối viên duyệt |
+| ghi chú bài giảng, Mục 5 "Hàm điểm" | đoạn mở viết cùng chuỗi suy ra với lý do từng bước (khối `aligned` bốn dòng, câu chú thích từng dòng) và nêu vì sao dạng kỳ vọng có ích | đã sửa | chờ điều phối viên duyệt |
+| `outline.md`, `storyboard.md` | topic-08 thêm `L09-23b`; 64 mã; bảng thời lượng mạch 5; mục sửa với hành trình sáu bước của cụm hàm điểm | đã sửa | chờ điều phối viên duyệt |
+
+Kiểm: `check.py` `L09-30A`, `L09-23`, `L09-23b`, `L09-24`, `L09-25`, `L09-25b` (1600×900, 390×844): không tràn (lần đầu `L09-23` tràn phải 1338 px, rút chú thích dòng ba còn $(\times\tfrac{\pi_\theta}{\pi_\theta},\ \pi_\theta>0)$; đáy 609 và 455 px), 0 lỗi, 0 `.katex-error`; đã xem ảnh 1600×900 của `L09-23`, `L09-23b`. `hashcheck.py`: 64 `data-slide-id` duy nhất, 7 section ngoài, mọi trang có ghi chú. Trình xem: 0 `.katex-error`, không cuộn ngang trang. Ghi chú bài giảng: thân văn 18 556 từ. `git diff --check` sạch.
+
+Rà lại sửa `L09-23` (Agent `general-purpose`, `claude-opus-5-5`, high, chỉ đọc; báo cáo `review/R-L0923.md`): 0 chặn bàn giao, 0 nghiêm trọng, 1 trung bình, 3 nhẹ. Điều phối viên chấp nhận toàn bộ.
+
+| mức độ | vị trí | vấn đề | trạng thái | quyết định |
+|---|---|---|---|---|
+| trung bình | `L09-23` → `L09-23b`; `L09-25` ghi chú; `L09-28` | mất bước ví dụ có số trước định nghĩa; ghi chú `L09-25` dẫn tới phép tính không còn; `L09-28` lặp phép tính | đã sửa: `L09-23` thêm "Ví dụ." $\theta=(\log2;0)$, $r=(3;0)$: $\nabla_\theta\log\pi_\theta(1\mid s)=(\tfrac13;-\tfrac13)$, vế phải $\tfrac23\cdot3(\tfrac13;-\tfrac13)=(\tfrac23;-\tfrac23)$, khớp tính trực tiếp; `L09-28` thay ví dụ bằng "Nhắc lại:" $\nabla_\theta J=\mathbb E[r(A)\psi_\theta(s,A)]=(\tfrac23;-\tfrac23)$; ghi chú `L09-25` trỏ tới giá trị trong dẫn xuất gradient một bước; ghi chú bài giảng Ví dụ 09.14 thêm vế phải của dẫn xuất, Ví dụ 09.17 kiểm lại theo Ví dụ 09.14 | chấp nhận |
+| nhẹ | `L09-23` "Trực quan." | $s$ cố định; $A_0$ và $A$ | đã sửa: "$s$ cố định, $A=A_0\sim\pi_\theta(\cdot\mid s)$, $G_0=r(A)$" | chấp nhận |
+| nhẹ | `L09-23` nhãn lý do | "$\times\tfrac{\pi_\theta}{\pi_\theta}$" khó đọc | đã sửa: bỏ nhãn trong khối công thức (tránh chữ Việt trong KaTeX), thêm dòng chữ "Dòng một: $\nabla_\theta r=0$; dòng hai: nhân và chia cho $\pi_\theta>0$." | chấp nhận |
+| nhẹ | `L09-23b` | thiếu "Ý nghĩa:" | đã sửa: "$\psi_\theta(s,a)$ là thay đổi tương đối của $\pi_\theta(a\mid s)$ theo $\theta$; bước nhỏ theo nó tăng $\pi_\theta(a\mid s)$." | chấp nhận |
+
+Kiểm sau rà lại: `check.py` `L09-21`, `L09-30A`, `L09-23`, `L09-23b`, `L09-24`, `L09-25`, `L09-25b`, `L09-28` (1600×900, 390×844): không tràn (lần đầu `L09-23` 851 px, rồi 753 px: rút khối công thức còn ba dòng, đưa $J=\sum_a\pi_\theta r$ lên dòng "Trực quan.", rút "Ý nghĩa:"; sau sửa 659 px), 0 lỗi, 0 `.katex-error`; đáy `L09-23b` 578, `L09-28` 688 px; âm tiết `L09-23` 35, `L09-23b` 37, `L09-28` 37; đã xem ảnh 1600×900 của `L09-23`, `L09-23b`, `L09-28`. Trình xem: 0 `.katex-error`, không cuộn ngang trang. `git diff --check` sạch. Trạng thái: chờ điều phối viên duyệt.
+
+Sửa thêm (yêu cầu điều phối viên, 2026-10-28): dòng "Ví dụ." của `L09-23` nêu đủ dữ kiện để kiểm $(\tfrac13;-\tfrac13)$ tại chỗ — softmax, $\phi(s,1)=(1;0)$, $\phi(s,2)=(0;1)$, $\theta=(\log2;0)$, $r=(3;0)$, $\pi_\theta=(\tfrac23;\tfrac13)$, vế phải $(\tfrac23;-\tfrac23)$. Phát hiện và hoàn tác một thay thế nhầm vào dòng "Ví dụ." của `L09-21` (trả về bản HEAD). `check.py` `L09-21`, `L09-23` (1600×900, 390×844): đáy 597 px và 660 px, 0 lỗi KaTeX/console; `L09-23` 32 âm tiết, ghi chú 111; ảnh đã xem; `git diff --check` sạch. Chấp nhận.

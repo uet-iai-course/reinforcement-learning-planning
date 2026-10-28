@@ -134,14 +134,14 @@ Bảng ký hiệu đầy đủ (27 hàng, ba cột) nằm trong ghi chú bài gi
 | `lec-09-topic-06` | `L09-M4T`, `L09-16`, `L09-16b`, `L09-17`–`L09-19` |
 | `lec-09-topic-07` | `L09-M5T`, `L09-20`, `L09-21` |
 | `lec-09-topic-14` | `L09-30A` |
-| `lec-09-topic-08` | `L09-23`, `L09-24`, `L09-25`, `L09-25b` |
+| `lec-09-topic-08` | `L09-23`, `L09-23b`, `L09-24`, `L09-25`, `L09-25b` |
 | `lec-09-topic-09` | `L09-26`, `L09-27`, `X02` |
 | `lec-09-topic-10` | `L09-M6T`, `L09-28`, `L09-28A`, `L09-29`, `L09-29b` |
 | `lec-09-topic-11` | `L09-22`, `L09-30` |
 | `lec-09-topic-12` | `L09-32`, `L09-31`, `X03`, `X03b` |
 | `lec-09-topic-13` | `L09-M7T`, `L09-K1`, `L09-K1b`, `L09-K2`, `L09-K2b`, `L09-K3`–`L09-K7` |
 
-Mạch 2–7 giữ `data-note-topic-id` cũ cho tới bước của mạch đó. Hai mã mới cho mạch 1 theo cách deck 08 làm (`lec-08-topic-13` cho tiên quyết, `lec-08-topic-17` cho mở đầu), vì trình xem từ chối mã chủ đề lặp và `lec-09-topic-01` thuộc về trang `L09-03` ở mạch 2. Tổng sau bước mạch 1: 43 `data-slide-id` duy nhất, 16 chủ đề; sau bước mạch 2: 44 (thêm `L09-M2T`); sau bước mạch 3: 46 (thêm `L09-M3T`, `L09-06b`); sau R3: 47 (thêm `L09-06c`); sau bước mạch 4: 49 (thêm `L09-M4T`, `L09-16b`), 17 chủ đề (thêm `lec-09-topic-17` Ước lượng kép; `L09-09` chuyển từ topic-04 sang topic-03 vì thành trang thuật toán). Sau bước mạch 5: 51 (thêm `L09-M5T`, `L09-25b`), 17 chủ đề; `X02` chuyển từ topic-08 sang topic-09 vì đặt sau trang Gaussian. Sau bước mạch 6: 54 (thêm `L09-M6T`, `L09-29b`, `X03b`); `L09-22` chuyển từ topic-07 sang topic-11 (giả thiết của định lý). Sau bước mạch 7: 63 (thêm `L09-M7T`, `L09-K1`, `L09-K1b`, `L09-K2`, `L09-K2b`, `L09-K3`–`L09-K7`; bỏ `L09-33`), 17 chủ đề.
+Mạch 2–7 giữ `data-note-topic-id` cũ cho tới bước của mạch đó. Hai mã mới cho mạch 1 theo cách deck 08 làm (`lec-08-topic-13` cho tiên quyết, `lec-08-topic-17` cho mở đầu), vì trình xem từ chối mã chủ đề lặp và `lec-09-topic-01` thuộc về trang `L09-03` ở mạch 2. Tổng sau bước mạch 1: 43 `data-slide-id` duy nhất, 16 chủ đề; sau bước mạch 2: 44 (thêm `L09-M2T`); sau bước mạch 3: 46 (thêm `L09-M3T`, `L09-06b`); sau R3: 47 (thêm `L09-06c`); sau bước mạch 4: 49 (thêm `L09-M4T`, `L09-16b`), 17 chủ đề (thêm `lec-09-topic-17` Ước lượng kép; `L09-09` chuyển từ topic-04 sang topic-03 vì thành trang thuật toán). Sau bước mạch 5: 51 (thêm `L09-M5T`, `L09-25b`), 17 chủ đề; `X02` chuyển từ topic-08 sang topic-09 vì đặt sau trang Gaussian. Sau bước mạch 6: 54 (thêm `L09-M6T`, `L09-29b`, `X03b`); `L09-22` chuyển từ topic-07 sang topic-11 (giả thiết của định lý). Sau bước mạch 7: 63 (thêm `L09-M7T`, `L09-K1`, `L09-K1b`, `L09-K2`, `L09-K2b`, `L09-K3`–`L09-K7`; bỏ `L09-33`), 17 chủ đề. Sau sửa theo phản hồi người dùng (2026-10-28): 64 (tách `L09-23` thành `L09-23` dẫn xuất và `L09-23b` định nghĩa).
 
 ## Phân bổ thời lượng (đợt sửa 2026-10-28)
 
@@ -153,7 +153,7 @@ $8+15+30+15+22+20+10=120$ phút trên lớp; 30 phút chữa bài ngoài 120 ph�
 | 2 | `L09-M2T`, `L09-03`–`L09-06` | 15 |
 | 3 | `L09-M3T`, `L09-06b`, `L09-06c`, `L09-07`–`L09-09`, `X01`, `L09-10`, `L09-11`, `L09-13`, `L09-12`, `L09-14`, `L09-15` | 30 |
 | 4 | `L09-M4T`, `L09-16`, `L09-16b`, `L09-17`–`L09-19` | 15 |
-| 5 | `L09-M5T`, `L09-20`, `L09-21`, `L09-30A`, `L09-23`–`L09-25`, `L09-25b`, `L09-26`, `L09-27`, `X02` | 22 |
+| 5 | `L09-M5T`, `L09-20`, `L09-21`, `L09-30A`, `L09-23`, `L09-23b`, `L09-24`, `L09-25`, `L09-25b`, `L09-26`, `L09-27`, `X02` | 22 |
 | 6 | `L09-M6T`, `L09-28`, `L09-28A`, `L09-29`, `L09-29b`, `L09-22`, `L09-30`, `L09-32`, `L09-31`, `X03`, `X03b` | 20 |
 | 7 | `L09-M7T` 1; `L09-K1`, `L09-K1b` 2; `L09-K2`, `L09-K2b` 2; `L09-K3`, `L09-K4` 2,5; `L09-K5` 1; `L09-K6` 1; `L09-K7` 0,5 | 10 |
 
