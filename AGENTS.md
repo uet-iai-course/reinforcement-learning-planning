@@ -46,7 +46,7 @@ Khi có xung đột, tuân theo thứ tự sau:
 2. Bộ trang chiếu được người dùng chọn trong `RL-hk2-2025-2026/`.
 3. Tài liệu bổ sung và tài sản liên quan do người dùng cung cấp.
 4. Mẫu văn phong, dẫn dắt và cách đặt vấn đề của tác giả: các trang chiếu MAT1101 tại `../MAT1101/` cho mặt trang chiếu, chương Học tăng cường và các chương khác của giáo trình *Học máy thống kê* tại `../SML-textbook-main.zip` cho ghi chú bài giảng. Hai nguồn này chỉ làm mẫu cách trình bày; không lấy nội dung, số liệu hay thứ tự chủ đề từ chúng thay cho nguồn ở mục 2.
-5. `2627-1/lecture-template.html` và `2627-1/lecture-slide.css` về giao diện và nền kỹ thuật.
+5. `2627-1/lecture-template.html`, `2627-1/lecture-style.css` và `2627-1/lecture-course.css` về giao diện và nền kỹ thuật.
 6. Các quy ước trong tệp này.
 
 Giữ mạch, thứ tự và ý chính của nguồn. Chỉ gộp, tách, thêm, lược hoặc sắp xếp cục bộ khi cần sửa lỗi, giảm quá tải, khôi phục tiên quyết, hoàn thiện mạch học tập hoặc bảo đảm khả năng đọc. Mọi sai khác phải có lý do trong storyboard và nhật ký rà soát.
@@ -58,7 +58,7 @@ Sau khi người dùng chọn tệp nguồn, điều phối viên phải:
 - đọc tệp nguồn và kiểm tra các tài liệu liên quan trong `RL-hk2-2025-2026/resources/`;
 - bỏ qua `.DS_Store`, tệp có tiền tố `._` và tệp tạm có tiền tố `~$`;
 - xác định số bài, tên bài, mục tiêu, kiến thức tiên quyết, phạm vi, số trang và các tài sản được dùng;
-- đọc `2627-1/lecture-template.html`, `lecture-slide.css` và `index.html` trước khi lập kế hoạch;
+- đọc `2627-1/lecture-template.html`, `lecture-style.css`, `lecture-course.css` và `index.html` trước khi lập kế hoạch;
 - kiểm kê các hình, biểu đồ, sơ đồ, bảng, công thức và đoạn code phải chuyển;
 - xác định phần nào của nguồn là nội dung, bố cục, ghi chú, tài liệu tham khảo hoặc tài sản trực quan;
 - chỉ hỏi người dùng về thông tin không thể suy ra từ kho và có thể làm thay đổi đáng kể kết quả.
@@ -97,9 +97,9 @@ Mỗi bài dùng cấu trúc sau:
 ## Mẫu RevealJS bắt buộc
 
 - Dùng `2627-1/lecture-template.html` làm nền. Chỉ kế thừa cấu trúc, giao diện và cấu hình kỹ thuật; không sao chép chủ đề, nội dung hoặc siêu dữ liệu (metadata) của bài mẫu.
-- Mọi bộ trang chiếu RevealJS trong `2627-1/`, kể cả `lecture-template.html`, phải dùng chung tệp `2627-1/lecture-slide.css` và liên kết bằng đường dẫn tương đối `href="lecture-slide.css"`. Đây là tệp CSS dùng chung cho giao diện bài giảng; không sao chép CSS thành tệp riêng cho từng bài hoặc tạo hệ giao diện mới. Kế thừa màu, phông chữ, khoảng cách, thẻ, lưới và chân trang từ tệp này.
-- Các quy tắc giao diện có thể tái sử dụng phải đặt trong `lecture-slide.css`. Chỉ dùng CSS cục bộ trong HTML cho nhu cầu riêng của một trang mà CSS chung chưa đáp ứng; không ghi đè hệ giao diện chung. Các tệp CSS của RevealJS và tiện ích vẫn dùng theo mẫu kỹ thuật.
-- Tham khảo cách tổ chức bố cục trong kho [uet-iai-course/machine-learning](https://github.com/uet-iai-course/machine-learning), ưu tiên `SLIDE_STYLE_GUIDE.md` và các tệp `2526-2/lecture-*.html`. Áp dụng các nguyên tắc một luận điểm trung tâm, hình hoặc công thức đủ lớn, chú thích nêu kết luận và nhịp mở phần–trực giác–cơ chế–ví dụ–kiểm tra. Không sao chép nội dung, tài sản hoặc CSS từ kho tham khảo; `lecture-template.html`, `lecture-slide.css` và các quy ước cục bộ vẫn có ưu tiên cao hơn.
+- Mọi bộ trang chiếu RevealJS trong `2627-1/`, kể cả `lecture-template.html`, phải liên kết, theo thứ tự, `href="lecture-style.css"` (chung mọi học phần, đồng bộ từ `../shared/css/`, không sửa tại chỗ) rồi `href="lecture-course.css"` (CSS riêng của học phần); không sao chép CSS thành tệp riêng cho từng bài hoặc tạo hệ giao diện mới. Kế thừa màu, phông chữ, khoảng cách, thẻ, lưới và chân trang từ tệp này.
+- Các quy tắc giao diện có thể tái sử dụng của học phần phải đặt trong `lecture-course.css`. Chỉ dùng CSS cục bộ trong HTML cho nhu cầu riêng của một trang mà CSS chung chưa đáp ứng; không ghi đè hệ giao diện chung. Các tệp CSS của RevealJS và tiện ích vẫn dùng theo mẫu kỹ thuật.
+- Tham khảo cách tổ chức bố cục trong kho [uet-iai-course/machine-learning](https://github.com/uet-iai-course/machine-learning), ưu tiên `SLIDE_STYLE_GUIDE.md` và các tệp `2526-2/lecture-*.html`. Áp dụng các nguyên tắc một luận điểm trung tâm, hình hoặc công thức đủ lớn, chú thích nêu kết luận và nhịp mở phần–trực giác–cơ chế–ví dụ–kiểm tra. Không sao chép nội dung, tài sản hoặc CSS từ kho tham khảo; `lecture-template.html`, `lecture-course.css` và các quy ước cục bộ vẫn có ưu tiên cao hơn.
 - Giữ `lang="vi"`, khung `1280 × 720`, `controlsLayout: "edges"`, `slideNumber: true`, `hashOneBasedIndex: true` và `hash: true`.
 - Dùng các thư viện cục bộ trong `2627-1/`: RevealJS, `RevealMath.KaTeX`, `RevealNotes` và `RevealHighlight`.
 - Dùng `<section>` ngoài cho từng phần và `<section>` trong cho từng trang chiếu.
@@ -121,7 +121,7 @@ Mỗi mạch, trừ mạch mở đầu, bắt đầu bằng một trang tiêu đ
 - một dòng dẫn, tối đa 25 âm tiết, nêu nhu cầu hoặc nhiệm vụ mà mạch giải quyết, mở bằng "Muốn …" hoặc nhãn "Nhu cầu:", là câu trần thuật, không kết thúc bằng dấu hỏi; dạng thường dùng là "Muốn <đích của mạch>, (trước hết) phải <việc mạch làm>" ("Muốn tìm tập ứng viên hữu hạn, phải mô tả toàn bộ miền khả thi và tính được các đỉnh bằng đại số"; trong Học tăng cường: "Muốn đánh giá một chính sách khi không có mô hình, phải ước lượng giá trị từ các lượt đã quan sát");
 - tùy chọn một dòng từ khóa, tối đa năm cụm danh từ ngăn bằng " · ".
 
-Cấu trúc HTML: khối `div.strand-title-body` chứa `<h2>` với số thứ tự trong `span.strand-number` đứng trước tên mạch, rồi `p.strand-lead` cho dòng dẫn và `p.strand-keys` cho dòng từ khóa. Kiểu của các lớp này nằm trong `lecture-slide.css`, không viết lại theo bài.
+Cấu trúc HTML: khối `div.strand-title-body` chứa `<h2>` với số thứ tự trong `span.strand-number` đứng trước tên mạch, rồi `p.strand-lead` cho dòng dẫn và `p.strand-keys` cho dòng từ khóa. Kiểu của các lớp này nằm trong `lecture-course.css`, không viết lại theo bài.
 
 Không đặt định nghĩa, công thức trung tâm, hình hay bài tập trên trang tiêu đề mạch; không ghi "Mạch", "Đầu vào", "Đầu ra" hay mã trang trên mặt trang. Ghi chú diễn giả của trang này dài khoảng 40–100 âm tiết và nêu: kết quả hoặc ký hiệu kế thừa từ mạch trước, nhiệm vụ của mạch, và kết quả mạch giao cho mạch sau. Trang tiêu đề mạch không tính là một mạch và không đổi số mạch của bài. Nếu dòng dẫn nêu đúng nhu cầu của khái niệm đầu tiên trong mạch, storyboard có thể ghi trang này là bước `vấn đề` của khái niệm đó; nếu không, ghi "ngoài hành trình khái niệm". Nhãn phần bằng chữ cái `A`, `B`, `C` vẫn được dùng trong storyboard, dàn ý, học liệu và mã trang, nhưng không đặt trên mặt trang tiêu đề mạch.
 
@@ -513,7 +513,7 @@ Giao một tác tử soạn:
 - giữ thứ tự nguồn trừ các thay đổi đã được phê duyệt;
 - thêm ghi chú diễn giả và nguồn;
 - không sửa RevealJS, tiện ích (plugin) hoặc CSS dùng chung nếu có thể giải quyết trong tệp bài giảng;
-- nếu cần sửa `lecture-slide.css`, phải kiểm tra mẫu và tất cả các bài hiện có sử dụng tệp này không bị hỏng bố cục hoặc khả năng đọc.
+- nếu cần sửa `lecture-course.css` (hoặc CSS chung trong `../shared/css/`), phải kiểm tra mẫu và tất cả các bài hiện có sử dụng tệp này không bị hỏng bố cục hoặc khả năng đọc.
 
 ### 4. Kiểm định storyboard
 
@@ -567,7 +567,7 @@ Các tác tử sửa tệp không được chạy song song. Sau mỗi lần s�
 
 - đối chiếu số trang nguồn, bảng ánh xạ, `data-slide-id` và mục tương ứng trong storyboard;
 - kiểm tra HTML, cấu trúc `<section>`, KaTeX, tiện ích, ghi chú diễn giả, đường dẫn, SVG và liên kết;
-- kiểm tra mọi bộ trang chiếu và mẫu liên kết đúng tới CSS dùng chung `lecture-slide.css`; không có bản sao CSS giao diện riêng cho từng bài hoặc liên kết tới tên CSS cũ;
+- kiểm tra mọi bộ trang chiếu và mẫu liên kết đúng tới `lecture-style.css` rồi `lecture-course.css`; không có bản sao CSS giao diện riêng cho từng bài hoặc liên kết tới tên CSS cũ;
 - kiểm tra bài có từ 5 đến 7 `<section>` ngoài, gồm mạch mở đầu và mạch kết luận, hoặc có ngoại lệ hợp lệ đã được ghi trong storyboard và nhật ký;
 - đối chiếu loại phần, chức năng, đầu vào, đầu ra và đóng góp cho vấn đề trung tâm giữa storyboard và HTML; kiểm tra mở đầu thiết lập nhu cầu, các phần kiến thức tạo bước tiến và kết luận thu hồi mục tiêu đã nêu;
 - tìm mọi tham chiếu ảnh raster; chỉ chấp nhận mục có ngoại lệ đã được người dùng duyệt và ghi trong nhật ký;
@@ -575,7 +575,7 @@ Các tác tử sửa tệp không được chạy song song. Sau mỗi lần s�
 - kiểm tra mọi trang tiêu đề mạch hiển thị đúng ở 1600×900 và 390×844, số mạch khớp `#/N` và trang "Nội dung";
 - khi bài có ghi chú, bài tập hoặc bài thực hành, kiểm tra ký hiệu, giả thiết, ví dụ và thứ tự khái niệm nhất quán với bộ trang chiếu, và viewer mở được cả `lecture-note.md` lẫn `exercises.md` không lỗi KaTeX;
 - kiểm tra không có tài nguyên hỏng hoặc phụ thuộc mạng cốt lõi;
-- chạy `python3 -m reloadserver 8765` tại thư mục gốc; cổng là đối số vị trí, không dùng `--port`;
+- chạy `../.venv/bin/python -m reloadserver 8765` tại thư mục gốc; cổng là đối số vị trí, không dùng `--port`;
 - mở `http://localhost:8765/2627-1/lecture-NN-<ten-bai>.html` và duyệt mọi trang ngang, trang dọc;
 - kiểm tra tràn chữ, chữ nhỏ, chồng lấn, công thức, hình, tương phản và bàn phím ở khung 16:9 và một màn hình hẹp;
 - rà soát trực quan sau cùng bằng trình duyệt (Chromium không giao diện qua Playwright), lưu ảnh chụp ở khung 16:9 và màn hình hẹp làm bằng chứng cho các trang bị ảnh hưởng, và xác minh thay đổi đã lưu trong tệp của kho hiển thị đúng;
@@ -616,7 +616,7 @@ Khi bàn giao, nêu ngắn gọn: tệp trang chiếu, URL cục bộ, tệp ngu
 - Phiên Claude Code chính giữ vai trò điều phối viên và kiểm soát chất lượng, chạy **Claude Opus 5.5** (`claude-opus-5-5`) (yêu cầu người dùng 2026-10-22, thay quy định dùng Claude Fable 5.1 trước đó): phân rã công việc, viết giao việc, hợp nhất kết quả và chấp nhận hoặc bác bỏ mọi đầu ra của tác tử con. Điều phối viên không tự đảm nhận vai soạn, rà soát hay chỉnh sửa trong quy trình. Nếu phiên đang chạy mô hình khác, báo rõ trước khi giao việc và đề nghị người dùng chuyển mô hình; không tự coi phiên đó là điều phối viên hợp lệ.
 - Mọi tác tử con, kể cả tác tử do tác tử con tạo tiếp, phải dùng **Claude Opus 5.5** (`claude-opus-5-5`) với mức suy luận `high` qua cơ chế tác tử gốc của Claude Code. Tạo tác tử bằng công cụ `Agent` với `model: "opus"` và `effort: "high"`, loại `general-purpose` hoặc loại có định nghĩa trong `.claude/agents/` khai báo mô hình `claude-opus-5-5` và mức suy luận `high`. Không dùng loại `fork`, vì tác tử `fork` kế thừa mô hình của điều phối viên và bỏ qua tham số mô hình. Không giao vai trong quy trình cho loại tác tử cố định mô hình hoặc mức suy luận khác. Tiếp tục nhiệm vụ của tác tử đã tạo bằng `SendMessage`; lời gọi `Agent` mới tạo một tác tử mới.
 - Mọi đầu ra của tác tử con phải được điều phối viên rà trước khi chuyển sang giai đoạn sau, ghi vào tệp của kho hoặc gửi người dùng. Với kế hoạch và báo cáo: đối chiếu từng phát hiện với tệp và dòng được dẫn, tự kiểm lại phép tính và hằng số. Với tệp đã ghi: đọc diff và chạy các bước kiểm tra kỹ thuật, trực quan và đồng bộ học liệu. Ghi quyết định `chấp nhận | yêu cầu sửa | bác bỏ` kèm lý do trong `review-log.md`; yêu cầu sửa được gửi lại đúng tác tử bằng `SendMessage` và kết quả sửa được rà lại. Việc một tác tử con rà kết quả của tác tử con khác không thay thế bước duyệt của điều phối viên.
-- Không dùng OpenRouter, cầu nối trong `openrouter-mcp/`, các script OpenRouter, `codex-orchestrator` hoặc lời gọi mô hình qua API/CLI để thay cơ chế tác tử gốc của Claude Code. Các ủy quyền OpenRouter, GPT-6-Astra và cấu hình trong hồ sơ lịch sử (kể cả `.codex/`) không áp dụng cho quy trình hiện hành.
+- Không dùng OpenRouter, cầu nối trong `../tools/openrouter-mcp/`, các script OpenRouter, `../tools/codex-orchestrator` hoặc lời gọi mô hình qua API/CLI để thay cơ chế tác tử gốc của Claude Code. Các ủy quyền OpenRouter, GPT-6-Astra và cấu hình trong hồ sơ lịch sử (kể cả `.codex/`) không áp dụng cho quy trình hiện hành.
 - Không đọc, nạp hoặc gửi `.env`, `.env.*` ở bất kỳ thư mục nào; không dùng khóa API hay bí mật để tạo hoặc xác thực tác tử. Không đưa bí mật, kể cả trong tệp có tên thông thường, vào lời nhắc, tệp đính kèm, kết quả công cụ hoặc nhật ký.
 - Mỗi nhiệm vụ phải có vai trò, đầu vào, đầu ra, phạm vi tệp và điều kiện hoàn thành cụ thể. Tác tử chỉ đọc có thể chạy song song trong giới hạn khả dụng; chỉ một tác tử được ghi tệp tại một thời điểm. Điều phối viên phải chấp nhận hoặc bác bỏ kết quả trước giai đoạn phụ thuộc.
 - Ghi tên tác tử, vai trò, loại tác tử, mô hình và mức suy luận đã chỉ định từ lời gọi công cụ hoặc định nghĩa tác tử trong nhật ký, cùng quyết định rà của điều phối viên cho từng đầu ra. Chỉ ghi mô hình thực chạy hoặc tuyến xác thực khi công cụ cung cấp bằng chứng; không coi lời tự khai của tác tử là bằng chứng thực thi.

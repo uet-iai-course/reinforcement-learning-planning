@@ -1,0 +1,135 @@
+/* rl-plan: course-specific rules, loaded after the shared lecture-style.css. */
+
+/* Bố cục controlsLayout:"edges" của Reveal đặt mũi tên lên ở giữa mép trên, đè chữ tiêu đề h2
+   trên các trang đầy. Chuyển mũi tên lên xuống mép dưới, đặt cạnh mũi tên xuống thành một cặp
+   ở giữa mép dưới (lên bên trái, xuống bên phải). Hướng mũi tên, chức năng và mũi tên trái/phải
+   giữ nguyên. Cùng điều kiện media với reveal.css: bố cục edges chỉ áp dụng từ 500px. */
+@media screen and (min-width: 500px) {
+    .reveal .controls[data-controls-layout="edges"] .navigate-up {
+        top: auto;
+        bottom: calc(var(--r-controls-spacing) + .3em);
+        margin-left: -3.8em;
+    }
+
+    .reveal .controls[data-controls-layout="edges"] .navigate-down {
+        margin-left: .2em;
+    }
+}
+
+/* Tệp dùng chung ẩn chân trang suốt cả mạch đầu; học phần này chỉ ẩn trên trang bìa
+   (quy tắc ngay dưới), nên trước hết hủy quy tắc dùng chung. */
+.reveal section:first-of-type.present ~ .footer {
+    display: block;
+}
+
+/* Ẩn chân trang chỉ trên trang bìa (trang đầu của mạch đầu), không ẩn cả mạch mở đầu.
+   Mạch đầu xếp dọc: dùng :has() vì .footer không cùng cấp với trang con.
+   Mạch đầu chỉ có một trang (không phải .stack): giữ quy tắc anh em. */
+.reveal .slides:has(> section:first-of-type > section:first-of-type.present) > .footer,
+.reveal .slides > section:first-of-type:not(.stack).present ~ .footer {
+    display: none;
+}
+
+/* Trang tiêu đề mạch: section.strand-title > div.strand-title-body
+   (h2 > span.strand-number + tên mạch, p.strand-lead, p.strand-keys). */
+.reveal .slides section.strand-title {
+    text-align: left;
+}
+
+.reveal .slides section.strand-title .strand-title-body {
+    /* Khối không giới hạn bề rộng để dòng từ khóa dài vừa một dòng;
+       h2 và câu dẫn giữ độ dài dòng 26em (theo cỡ chữ của khối) như trước. */
+    margin: 0;
+    padding: .2em 0 .2em .9em;
+    border-left: .2em solid #B15A2B;
+}
+
+/* Deck đặt center:false: đẩy khối xuống gần giữa khung. */
+.reveal:not(.center) .slides section.strand-title .strand-title-body {
+    margin-top: 4.5em;
+}
+
+.reveal .slides section.strand-title h2 {
+    font-size: 1.9em;
+    max-width: calc(26em / 1.9);
+    line-height: 1.15;
+    margin: 0 0 .45em;
+    padding: 0;
+    border: 0;
+    color: #2F3E7A;
+    text-transform: none;
+}
+
+.reveal .slides section.strand-title .strand-number {
+    display: block;
+    font-size: .6em;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: .15em;
+}
+
+.reveal .slides section.strand-title .strand-lead {
+    font-size: 1.05em;
+    max-width: calc(26em / 1.05);
+    line-height: 1.35;
+    margin: 0 0 .5em;
+    color: #263238;
+}
+
+.reveal .slides section.strand-title .strand-keys {
+    font-size: .95em; /* .95 x .8em section = .76em, trên mức tối thiểu .75em */
+    line-height: 1.35;
+    color: #555;
+    margin: 0;
+    text-wrap: pretty; /* tránh một âm tiết lẻ ở dòng cuối */
+}
+
+@media (max-width: 760px) {
+    .reveal .slides section.strand-title .strand-title-body,
+    .reveal:not(.center) .slides section.strand-title .strand-title-body {
+        max-width: none;
+        margin-top: 1.2em;
+    }
+
+    .reveal .slides section.strand-title h2 {
+        font-size: 1.5em;
+    }
+
+    .reveal .slides section.strand-title h2,
+    .reveal .slides section.strand-title .strand-lead {
+        max-width: none;
+    }
+}
+
+/* Bố cục bài giảng dùng chung; bật bằng class lecture-deck. */
+.reveal.lecture-deck .slides section[data-slide-id] { font-size: .8em; }
+.reveal.lecture-deck h1, .reveal.lecture-deck h2 { color: #2F3E7A; }
+.reveal.lecture-deck h1 { font-size: 2em; }
+.reveal.lecture-deck h2 { font-size: 1.5em; margin-bottom: .65em; }
+.reveal.lecture-deck h3 { font-size: 1.05em; color: #2F3E7A; }
+.reveal.lecture-deck .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: .8em; align-items: center; }
+.reveal.lecture-deck .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: .65em; }
+.reveal.lecture-deck .card { border: 1px solid #c9cdd4; border-radius: 8px; padding: .5em .65em; }
+.reveal.lecture-deck .box { border-left: 5px solid #B15A2B; background: #F7EFE6; padding: .5em .7em; border-radius: 8px; }
+.reveal.lecture-deck .check { background: #edf4ff; border-left: 5px solid #2F3E7A; padding: .5em .7em; }
+.reveal.lecture-deck .figure { display: block; width: auto; max-width: 100%; max-height: 390px; margin: .2em auto; }
+.reveal.lecture-deck .grid2 .figure { max-height: 410px; }
+.reveal.lecture-deck .math-large { font-size: 1.12em; text-align: center; margin: .55em 0; }
+.reveal.lecture-deck .caption { font-size: .82em; color: #424954; margin: .35em 0; font-style: normal; }
+.reveal.lecture-deck table { font-size: .94em; } /* .94 x .8em section = .752em, trên mức tối thiểu .75em */
+.reveal.lecture-deck h2 .katex, .reveal.lecture-deck h3 .katex { text-transform: none; } /* chủ đề white viết hoa tiêu đề */
+.reveal.lecture-deck ol[type="a"] { list-style-type: lower-alpha; }
+/* Bước con của giả mã: thụt lề, giữ cỡ chữ thân (không thu .9em như danh sách lồng).
+   Dùng như danh sách anh em có start="k" hoặc lồng trong li; substeps-2 cho cấp hai.
+   display:block để không nằm cùng dòng với danh sách cha (ol của theme là inline-block). */
+.reveal ol.substeps { display: block; margin-left: 2em; font-size: 1em; }
+.reveal ol.substeps.substeps-2 { margin-left: 4em; }
+.reveal li > ol.substeps,
+.reveal li > ol.substeps.substeps-2 { margin-left: 1em; } /* lồng trong li: lề mặc định của theme */
+.reveal.lecture-deck th { background: #F7EFE6; }
+.reveal.lecture-deck li { margin: .2em 0; }
+.reveal.lecture-deck .note-source { font-size: .9em; }
+
+.reveal.lecture-deck .figure.short { max-height: 260px; }
+
+.reveal.lecture-deck .slides section[data-slide-id] { padding: 0 24px; box-sizing: border-box; }

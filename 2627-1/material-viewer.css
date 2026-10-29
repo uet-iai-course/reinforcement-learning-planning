@@ -1,3 +1,7 @@
+/* Common stylesheet, byte-identical in every course. Do not edit this copy: change
+   shared/css/material-viewer.css in the parent lectures workspace and run tools/css/sync_shared_css.py.
+   Course-specific rules go in material-viewer-course.css, which pages load right after this file. */
+
 .skip-link {
   position: fixed;
   z-index: 20;
@@ -128,7 +132,6 @@
 .material-toc a {
   color: var(--text);
   line-height: 1.4;
-  text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
 
@@ -182,7 +185,6 @@
 }
 
 .markdown-body table {
-  position: relative;
   display: block;
   width: 100%;
   overflow-x: auto;
@@ -233,17 +235,6 @@
   max-width: 100%;
   height: auto;
   margin: 20px auto;
-}
-
-.markdown-body p:has(> img[src^="img/lec-"]) {
-  overflow-x: auto;
-  padding-bottom: 8px;
-}
-
-.markdown-body img[src^="img/lec-"] {
-  width: 100%;
-  min-width: 900px;
-  max-width: none;
 }
 
 .katex-display {
@@ -439,11 +430,6 @@
 
   .markdown-body {
     padding: 0;
-  }
-
-  .markdown-body img[src^="img/lec-"] {
-    min-width: 0;
-    max-width: 100%;
   }
 
   .material-block,

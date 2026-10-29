@@ -11,11 +11,14 @@ API/CLI. Các cấu hình và ủy quyền OpenRouter trước đây hết hiệ
 Khởi chạy phiên Codex đã xác thực bằng gói thuê bao:
 
 ```bash
-./codex-orchestrator
+../tools/codex-orchestrator
 ```
 
-Lệnh này gọi Codex tại gốc kho và chuyển tiếp các đối số. Nó không cấu hình
-nhà cung cấp, đổi mô hình chính hoặc nạp khóa. Không đọc hay nạp `.env`,
+Launcher dùng chung của workspace (`../tools/codex-orchestrator`) gọi Codex tại
+gốc kho git của thư mục hiện tại và chuyển tiếp các đối số. Nó không cấu hình
+nhà cung cấp, đổi mô hình chính hoặc nạp khóa; nó chỉ đưa `../.venv/bin` lên
+đầu `PATH` và đặt biến đường dẫn `OPENROUTER_ENV_FILE` cho cầu nối cũ, không đọc
+nội dung tệp. Không đọc hay nạp `.env`,
 `.env.*` hoặc bí mật để xác thực tác tử.
 
 ## Phân công và kiểm định
@@ -52,6 +55,12 @@ khi chuyển sang tác tử gốc. Các lệnh, mô hình, ngân sách, quyền 
 và chỉ dẫn nạp khóa bên dưới không áp dụng cho công việc hiện hành.
 
 ### Cấu hình cũ cho ghi chú bài giảng và bộ trang chiếu
+
+Ghi chú 2026-10-29: cầu nối nay là gói dùng chung `../tools/openrouter-mcp/`
+(lệnh trong `../.venv/bin/`); bản gốc của kho này được lưu tại
+`../tools/_archive/openrouter-mcp-rl-plan/`. Lệnh tương đương hiện nay là
+`../.venv/bin/<worker> --repo-root . ...` chạy từ gốc kho. Đoạn dưới đây giữ
+nguyên lệnh cũ để truy nguyên.
 
 Chạy trong `openrouter-mcp/` và đặt cache của `uv` tại thư mục tạm để không
 phụ thuộc quyền ghi vào cache người dùng:
@@ -193,7 +202,8 @@ thử lại. Runtime trả `requested_model = observed_model =
 z-ai/glm-5.3-flash`, provider `OpenRouter`. Với `--repo-root` hẹp không chứa
 `.env`, cầu nối không tự tìm thấy khóa. Cách đã kiểm chứng là tạo liên kết
 `.env` tạm trong repo-root của writer trỏ về `.env` ở gốc kho, xác minh MCP
-vẫn chặn đọc `.env`, rồi gỡ liên kết ngay sau lượt chạy.
+vẫn chặn đọc `.env`, rồi gỡ liên kết ngay sau lượt chạy. (Gói dùng chung có
+`--api-key-root` và `OPENROUTER_ENV_FILE` nên không cần liên kết tạm này.)
 
 Lượt chỉnh sửa deck Bài 01 có nhiều điểm dùng cùng model/profile với
 `--max-rounds 20 --timeout 300 --max-tokens 32000` và hoàn tất ở vòng 17;

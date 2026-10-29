@@ -8,14 +8,7 @@
 !favicon.png
 !AGENTS.md
 !CLAUDE.md
-!codex-orchestrator
 !prompt_lecture_note_deck.md
-
-!openrouter-mcp/
-!openrouter-mcp/**
-openrouter-mcp/.venv/
-openrouter-mcp/**/__pycache__/
-openrouter-mcp/tmp/
 
 !.codex/
 .codex/*
@@ -31,7 +24,10 @@ openrouter-mcp/tmp/
 !2627-1/index.html
 !2627-1/lecture-*.html
 2627-1/lecture-template.html
-!2627-1/lecture-slide.css
+!2627-1/lecture-style.css
+!2627-1/lecture-course.css
+!2627-1/material-index-course.css
+!2627-1/material-viewer-course.css
 !2627-1/material-viewer.html
 !2627-1/material-viewer.css
 !2627-1/material-viewer.js

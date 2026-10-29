@@ -1,0 +1,55 @@
+/* rl-plan: course-specific rules, loaded after the shared material-index.css. */
+
+.skip-link {
+  position: fixed;
+  z-index: 20;
+  top: 12px;
+  left: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #18222d;
+  color: #fff;
+  transform: translateY(-180%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@media (width > 900px) {
+  .term-card {
+    grid-template-columns: minmax(0, 0.8fr) minmax(500px, 1.2fr);
+  }
+}
+
+@media print {
+  .skip-link,
+  .hero-actions {
+    display: none !important;
+  }
+
+  .term-card,
+  .resource-item {
+    border-color: #bbb;
+    background: #fff;
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
+
+.resource-links {
+  display: grid;
+  gap: 6px;
+}
+
+.resource-alt {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 650;
+  text-align: center;
+  text-underline-offset: 2px;
+}
+
+.resource-alt:hover {
+  color: var(--accent-dark);
+}

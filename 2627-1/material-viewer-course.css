@@ -1,0 +1,27 @@
+/* rl-plan: course-specific rules, loaded after the shared material-viewer.css. */
+
+.material-toc a {
+  text-decoration-thickness: 1px;
+}
+
+.markdown-body table {
+  position: relative;
+}
+
+.markdown-body p:has(> img[src^="img/lec-"]) {
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.markdown-body img[src^="img/lec-"] {
+  width: 100%;
+  min-width: 900px;
+  max-width: none;
+}
+
+@media print {
+  .markdown-body img[src^="img/lec-"] {
+    min-width: 0;
+    max-width: 100%;
+  }
+}
