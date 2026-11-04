@@ -293,7 +293,7 @@ trong đó số hạng thiếu ở phương trình thứ ba là đích, có giá
 
 **Ước lượng.** Tọa độ thứ nhất của $\widehat g_b$ là $\tfrac12(7+6+9+5)-\tfrac12\cdot8=13{,}5-4=9{,}5$, nên $\widehat g_b=(9{,}5;\,-9{,}5)$, cùng chiều $\nabla_\theta J=(2;\,-2)$.
 
-**Diễn giải.** Lượt kết thúc sau $5$ bước, ít hơn mức trung bình $-J(\tfrac12)=12$ bước, nên mọi chênh lệch đều dương và mọi hành động đã chọn được tăng xác suất; bốn lần tăng cho hành động 1 thắng một lần tăng cho hành động 2. Kết quả thuộc về lượt này; một lượt dài hơn $12$ bước cho chênh lệch âm ở bước đầu.
+**Diễn giải.** Với $\gamma=1$ và phần thưởng $-1$ mỗi bước, $-G_t$ là số bước còn lại của lượt từ bước $t$, còn $-v_\pi(S_t)$ là số bước còn lại kỳ vọng từ trạng thái $S_t$. Do đó chênh lệch $G_t-v_\pi(S_t)$ dương đúng khi lượt về đích sớm hơn kỳ vọng từ $S_t$. Trên lượt này, các cặp (số bước còn lại; số bước kỳ vọng) là $(5;12)$, $(4;10)$, $(3;12)$, $(2;10)$, $(1;6)$, nên cả năm chênh lệch $7,6,9,8,5$ đều dương và mọi hành động đã chọn được tăng xác suất; bốn lần tăng cho hành động 1 thắng một lần tăng cho hành động 2. Kết quả thuộc về lượt này; một lượt dài hơn $12$ bước cho chênh lệch âm ở bước đầu.
 
 **Kiểm tra lại.** $v_\pi(s_1)=-12=J(\tfrac12)$, đúng với $J(p)=-2(2-p)/\bigl(p(1-p)\bigr)$ của Ví dụ 10.2. Thay $v_\pi$ vào phương trình thứ hai: $-1+\tfrac12(-12)+\tfrac12(-6)=-10$.
 :::
@@ -1342,7 +1342,7 @@ $$\begin{aligned}&J(\pi_{k+1})-J(\pi_k)\\&\quad\ge0-\frac{2\gamma\chi_{\pi_{k+1}
 vì $2\sqrt{\kappa/2}=\sqrt{2\kappa}$. $\square$
 :::
 
-Hệ quả 10.31 là Mệnh đề 1 của Achiam và cộng sự (2017, (9)), viết cho chiều KL của TRPO. Nó cho thấy bán kính $\kappa$ điều khiển trực tiếp mức giảm tối đa của $J$, với điều kiện bài toán được giải chính xác. Trên Ví dụ 10.12, nếu $\kappa=0{,}004234$, đúng bằng KL trung bình của bước của Ví dụ 10.11, và $\chi=0{,}4$, cận là $-\sqrt{0{,}008468}\cdot0{,}9\cdot0{,}4/0{,}01=-3{,}31$, trùng phạt của Hệ quả 10.27 trên cùng bước.
+Hệ quả 10.31 là Mệnh đề 1 của Achiam và cộng sự (2017, (9)), viết cho chiều KL của TRPO. Nó cho thấy bán kính $\kappa$ điều khiển trực tiếp mức giảm tối đa của $J$, với điều kiện bài toán được giải chính xác. Trên Ví dụ 10.12, lấy $\kappa=0{,}004234$, đúng bằng KL trung bình của bước của Ví dụ 10.11. Nghiệm chính xác của bài toán là $p_A\approx0{,}571$, $p_B\approx0{,}824$, với $\chi_{\pi_{k+1}}=\max_s\lvert A_{\pi_k}(s,\pi_{k+1})\rvert\approx\max(0{,}057;\,0{,}472)=0{,}472$, nên cận là $-\sqrt{0{,}008468}\cdot0{,}9\cdot0{,}472/0{,}01\approx-3{,}91$; mức tăng thật là $\Delta J\approx0{,}299$. Hằng $\chi$ của cận thuộc về nghiệm và khác $\chi_{\pi'}=0{,}4$ của bước $\pi'$, nên mức giảm tối đa $3{,}91$ khác phạt $3{,}31$ mà Hệ quả 10.27 cho bước $\pi'$.
 
 Giả thiết "nghiệm chính xác" có vai trò quyết định. Bỏ giả thiết này, Bước 1 không còn cho $\mathcal L_{\pi_k}(\pi_{k+1})\ge J(\pi_k)$, và cận không còn áp dụng. Một nhầm lẫn thường gặp là áp hệ quả cho TRPO như được cài đặt: TRPO thực hành lấy trung bình đều trên mẫu thay cho $\nu^{\pi_k}$, dùng lợi thế ước lượng, xấp xỉ KL bậc hai và giải gần đúng, nên giả thiết này không thỏa.
 

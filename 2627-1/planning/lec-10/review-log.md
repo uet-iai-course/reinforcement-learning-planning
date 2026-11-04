@@ -427,3 +427,48 @@ Bước A (outline, storyboard): chấp nhận có điều kiện. 90 trang duy 
 ### Bỏ mục "Bản đồ chủ đề (bốn nhóm)" khỏi ghi chú (yêu cầu người dùng 04-11-2026)
 
 Yêu cầu: "lecture note bỏ phần 'Bản đồ chủ đề (bốn nhóm)', quá nhiều không cần thiết". Yêu cầu người dùng đứng trên `AGENTS.md` và `prompt_lecture_note_deck.md` (quy định bản đồ chủ đề trong ghi chú). Điều phối viên xóa cơ học toàn bộ mục (63 dòng: bốn bảng nhóm, tiểu mục "Bảy phần của chương" và dòng "Đọc trước"), không viết lại câu nào, nên không giao tác tử biên tập; nội dung "Bảy phần" đã có ở Mục 1.1 (hình cấu trúc chương và câu trả lời có điều kiện cho từng mục). Giữ 24 chú thích `note-topic-id` trong thân chương để ánh xạ với `data-slide-id`; bảng phân nhóm bốn nhóm vẫn nằm trong `planning/lec-10/outline.md`. Không còn câu nào trong ghi chú trỏ tới bản đồ chủ đề (grep). Viewer 1600 px: mục lục bắt đầu "Mục tiêu học tập, Kiến thức tiên quyết, Bảng ký hiệu, 1. Hai giới hạn của REINFORCE…", 0 lỗi KaTeX; `git diff --check` sạch.
+
+Cổng storyboard lần 1: CHƯA ĐẠT (2 nghiêm trọng, 7 trung bình, 6 nhẹ; báo cáo `scratchpad/review/deck-gate.md`). Hai nghiêm trọng là hai ngoại lệ điều phối viên đã bác (`L10-101`, `L10-109`) chưa được sửa vì quyết định bác ghi sau khi writer xong bước A. Đạt: 120 phút trên 90 trang, 7 mạch, trang tiêu đề mạch đúng quy định, 24/24 `note-topic-id`, ≈ 40 số tính lại độc lập 0 lệch, bài tập có lời giải trên mặt trang mỗi cụm, bảng bài về nhà trùng §7.5 ghi chú. Quyết định: phụ đề `h2` trên bìa là tiêu đề (không đếm), luận đề ≤ 30 âm tiết không tên tiếng Anh; `L10-109` tách hình sang trang khung riêng; quy ước bảng như Bài 09 (mỗi hàng một dòng; > 6 dòng chỉ ở trang so sánh/tổng kết, có ghi ngoại lệ); mọi trung bình phải sửa. Gửi lại writer (cùng tác tử) sửa storyboard, sau đó cổng kiểm lại.
+
+Cổng storyboard lần 2: CHƯA ĐẠT, còn 3 trung bình (`L10-307`, `L10-509` 7 dòng; `L10-104` mất "chặn cải thiện" ở mục tiêu 3) và 7 nhẹ; cả 2 nghiêm trọng và 5/7 trung bình lần 1 đã xử lý; 94 trang, 120 phút, 24/24 chủ đề. Quyết định: writer sửa nốt theo đề xuất cụ thể của cổng; điều phối viên tự kiểm diff thay cho lần cổng thứ ba (thay đổi cục bộ, đề xuất đã xác định). Bước B (HTML) giao một writer mới vì ngữ cảnh writer bước A đã lớn; hai writer chạy tuần tự.
+
+Sửa sau cổng lần 2: chấp nhận sau khi điều phối viên đọc diff storyboard. `L10-509` tách đề/lời giải thành `L10-509`, `L10-510` (mạch 5 vẫn 13,5 phút); `L10-307` 5 dòng (dòng "Nhắc lại:" chuyển vào ghi chú diễn giả); `L10-104` dòng 3 có "và chặn cải thiện" (20 âm tiết, trang 80); 7 điểm nhẹ đã sửa. Tính lại bài tập gradient liên hợp ($F=\begin{pmatrix}2&1\\1&2\end{pmatrix}$, $g=(1;0)$): $\omega_0=\tfrac12$, $x_1=(0{,}5;0)$, $\tilde g_1=(0;0{,}5)$, $\xi_1=0{,}25$, $p_1=(0{,}25;-0{,}5)$, $\omega_1=\tfrac23$, $x_2=(\tfrac23;-\tfrac13)=F^{-1}g$ — khớp. **Cổng storyboard: đạt.** 95 trang, 120 phút, 24/24 chủ đề; ngoại lệ được duyệt: `L10-105` (8 dòng), `L10-109` (80 âm tiết, trần trang tổng hợp), `L10-702` (bảng 9 hàng).
+
+### Giai đoạn II.2 — Soạn, bước B: HTML bộ trang chiếu
+
+| vai | loại tác tử | mô hình (từ lời gọi công cụ) | effort | phạm vi ghi |
+|---|---|---|---|---|
+| soạn HTML deck (writer mới, tuần tự sau writer bước A) | general-purpose | opus | high | `2627-1/lecture-10-trpo-va-ppo.html`; xóa `img/lec-10/gae-bias-variance.svg`, `ppo-diagnostics.svg` |
+
+Kết quả bước B (HTML): chấp nhận để đưa vào rà soát. 97 trang (95 theo storyboard + `L10-212b` tách hình actor–critic vì đáy 767 px; `L10-702b` tách bảng tổng kết 9 hàng thành 5 + 4, phương án dự phòng của storyboard); bỏ hình nhỏ ở `L10-402`, `L10-610` để ≤ 6 dòng; số hiệu kết quả tối đa một lần mỗi trang (phần dư chuyển vào ghi chú diễn giả). Writer phát hiện lỗi trong storyboard mục `L10-309` ("$Z_2=1$ cho $\delta_1=-0{,}1$"): theo ghi chú, $Z_2=1$ cho $\delta_1=-1$, còn $-0{,}1$ là lỗi bootstrap bằng $\hat v(S_2)$ của lượt mới — ghi chú diễn giả đã theo ghi chú bài giảng; storyboard sửa ở bước biên tập. Writer đo trên Playwright cả 97 trang ở 1600×900 và 390×844: 0 lỗi console/page (ngoài CSP của reloadserver), 0 yêu cầu lỗi, 0 `.katex-error`, đáy lớn nhất 680 px (`L10-703`), chữ nhỏ nhất 0,752em; xóa `gae-bias-variance.svg`, `ppo-diagnostics.svg`. Điều phối viên xem ảnh `L10-101`, `L10-400`, `L10-602`: đúng; tắt ba server xem trước của chính mình còn sót (8784–8786, cwd repo).
+
+| vai | loại tác tử | mô hình (từ lời gọi công cụ) | effort |
+|---|---|---|---|
+| soạn HTML deck | general-purpose | opus | high |
+
+### Giai đoạn II.4 — Năm vai rà soát độc lập bộ trang chiếu, vòng D1
+
+Bản cố định: bản sao deck 97 trang, sha1 `41d2a97504c8…`. Năm tác tử mới (không dùng lại các reviewer ghi chú vì ngữ cảnh đã lớn), chỉ đọc, song song, mỗi vai một dải cổng server riêng.
+
+| vai | loại tác tử | mô hình (từ lời gọi công cụ) | effort |
+|---|---|---|---|
+| góc nhìn sinh viên + đo mật độ | general-purpose | opus | high |
+| chuyên gia Học tăng cường | general-purpose | opus | high |
+| độ chính xác toán học–thuật toán | general-purpose | opus | high |
+| phản biện học thuật–giảng dạy + `no-ai-slop` Detect | general-purpose | opus | high |
+| kết nối và mạch (`quill` checklist) | general-purpose | opus | high |
+
+Kết quả D1 (bốn vai đã về):
+
+| vai | kết luận | chặn | nghiêm trọng | trung bình | nhẹ |
+|---|---|---|---|---|---|
+| kết nối và mạch | ĐẠT | 0 | 0 | 4 | 9 |
+| chuyên gia Học tăng cường | ĐẠT | 0 | 0 | 4 | 10 |
+| phản biện học thuật–giảng dạy + `no-ai-slop` Detect | CHƯA ĐẠT | 0 | 0 | 13 | 26 |
+| độ chính xác toán học–thuật toán | CHƯA ĐẠT | 0 | 0 | 6 | 7 |
+
+Phát hiện lan sang ghi chú (đã duyệt, commit `1c9ef05`): vai toán chỉ ra đoạn sau Hệ quả 10.31 dùng $\chi=0{,}4$ của bước $\pi'$ thay cho $\chi_{\pi_{k+1}}$ của nghiệm miền tin cậy. Điều phối viên tính lại độc lập bằng quét lưới: nghiệm với $\kappa=0{,}004234$ là $p_A\approx0{,}571$, $p_B\approx0{,}824$, $\chi\approx0{,}472$, cận $\approx-3{,}91$ (không phải $-3{,}31$). Thêm: lập luận "5 < 12 nên mọi chênh lệch dương" ở Ví dụ 10.4 chưa đủ (nhẹ). Theo quy tắc "mâu thuẫn thì sửa ghi chú trước", giao một tác tử biên tập ghi chú (general-purpose, opus, high) sửa hai chỗ, chạy song song với việc chờ vai sinh viên; tệp deck không bị đụng.
+
+Lỗi hiển thị có từ trước, ngoài phạm vi: ở 390×844, dòng dẫn trang tiêu đề mạch bị cắt mép phải do quy tắc `@media (max-width: 760px) { … .strand-lead { max-width: none } }` trong `lecture-course.css` (vai mạch thấy cùng lỗi ở Bài 09); sửa cần kiểm cả 12 deck — báo người dùng.
+
+Sửa ghi chú theo phát hiện D1 của vai toán: chấp nhận. Đoạn sau Hệ quả 10.31 nay dùng nghiệm chính xác ($p_A\approx0{,}571$, $p_B\approx0{,}824$, $\chi_{\pi_{k+1}}\approx0{,}472$, cận $\approx-3{,}91$, $\Delta J\approx0{,}299$; tính lại bằng KKT, ràng buộc chặt) và nêu vì sao khác phạt $3{,}31$ của Hệ quả 10.27; Ví dụ 10.4 so số bước còn lại thật $-G_t$ với kỳ vọng $-v_\pi(S_t)$: $(5;12),(4;10),(3;12),(2;10),(1;6)$. Vai toán rà lại: ĐẠT. Viewer 0 lỗi KaTeX ở 1600 và 390 px; `git diff --check` sạch. Trang `L10-412` của deck sửa theo trong vòng biên tập deck.
