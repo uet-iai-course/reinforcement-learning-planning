@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1245 350" width="1245" height="350" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Hai nửa của bài toán trung tâm trong Bài 10</title>
+<desc id="d">Hai hàng khung nối bằng mũi tên. Hàng trên, viền liền, nhãn phương sai của ước lượng gradient: khung đường cơ sở và critic, với G t trừ v mũ của S t và sai số TD delta t (Mục 2), dẫn tới khung GAE, A mũ t bằng tổng theo k của (gamma lambda) mũ k nhân delta t cộng k (Mục 3). Hàng dưới, viền nét đứt, nhãn độ lớn bước cập nhật: khung hàm thay thế và chặn cải thiện (Mục 4), dẫn tới khung TRPO, KL trung bình không vượt kappa (Mục 5), rồi khung PPO, cắt tỉ số rho t vào đoạn từ 1 trừ epsilon đến 1 cộng epsilon (Mục 6). Hai hàng gặp nhau ở khung cuối, viền đậm: Thuật toán 10.49, PPO kiểu actor–critic, GAE cho lợi thế và mục tiêu cắt cho chính sách.</desc>
+<defs>
+<marker id="ao" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="16" refY="9" orient="auto"><path d="M0,0 L18,9 L0,18 Z" fill="#B15A2B"/></marker>
+<marker id="an" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="16" refY="9" orient="auto"><path d="M0,0 L18,9 L0,18 Z" fill="#2F3E7A"/></marker>
+</defs>
+<text x="92" y="70" font-size="21" text-anchor="middle" font-weight="700" fill="#B15A2B">phương sai của</text>
+<text x="92" y="96" font-size="21" text-anchor="middle" font-weight="700" fill="#B15A2B">ước lượng</text>
+<text x="92" y="122" font-size="21" text-anchor="middle" font-weight="700" fill="#B15A2B">gradient</text>
+<text x="92" y="238" font-size="21" text-anchor="middle" font-weight="700" fill="#2F3E7A">độ lớn</text>
+<text x="92" y="264" font-size="21" text-anchor="middle" font-weight="700" fill="#2F3E7A">bước cập nhật</text>
+<rect x="190" y="40" width="320" height="104" rx="12" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/>
+<text x="350" y="72" font-size="21" text-anchor="middle">đường cơ sở và critic</text>
+<text x="350" y="104" font-size="21" text-anchor="middle"><tspan font-style="italic">G</tspan><tspan dy="6.3" font-size="14.7" font-style="italic">t</tspan><tspan dy="-6.3"> − </tspan><tspan font-style="italic">v̂</tspan>(<tspan font-style="italic">S</tspan><tspan dy="6.3" font-size="14.7" font-style="italic">t</tspan><tspan dy="-6.3">, </tspan><tspan font-style="italic">w</tspan>)</text>
+<text x="350" y="133" font-size="21" text-anchor="middle">sai số TD <tspan font-style="italic">δ</tspan><tspan dy="6.3" font-size="14.7" font-style="italic">t</tspan></text>
+<line x1="512" y1="92" x2="566" y2="92" stroke="#B15A2B" stroke-width="3" marker-end="url(#ao)"/>
+<rect x="570" y="40" width="330" height="104" rx="12" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/>
+<text x="735" y="78" font-size="21" text-anchor="middle" font-weight="700">GAE</text>
+<text x="735" y="118" font-size="21" text-anchor="middle"><tspan font-style="italic">Â</tspan><tspan dy="6.3" font-size="14.7" font-style="italic">t</tspan><tspan dy="-6.3"> = Σ</tspan><tspan dy="6.3" font-size="14.7" font-style="italic">k</tspan><tspan dy="-6.3"> (</tspan><tspan font-style="italic" font-family="'Noto Serif','Times New Roman',serif">γ</tspan><tspan font-style="italic">λ</tspan>)<tspan dy="-8.4" font-size="14.7" font-style="italic">k</tspan><tspan dy="8.4"> </tspan><tspan font-style="italic">δ</tspan><tspan dy="6.3" font-size="14.7" font-style="italic">t</tspan><tspan font-size="14.7">+</tspan><tspan font-size="14.7" font-style="italic">k</tspan></text>
+<text x="350" y="168" font-size="19" text-anchor="middle" fill="#424954">Mục 2</text>
+<text x="735" y="168" font-size="19" text-anchor="middle" fill="#424954">Mục 3</text>
+<rect x="190" y="196" width="220" height="104" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3" stroke-dasharray="10 6"/>
+<text x="300" y="240" font-size="21" text-anchor="middle">hàm thay thế và</text>
+<text x="300" y="268" font-size="21" text-anchor="middle">chặn cải thiện</text>
+<line x1="412" y1="248" x2="446" y2="248" stroke="#2F3E7A" stroke-width="3" marker-end="url(#an)"/>
+<rect x="450" y="196" width="200" height="104" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3" stroke-dasharray="10 6"/>
+<text x="550" y="236" font-size="21" text-anchor="middle" font-weight="700">TRPO</text>
+<text x="550" y="272" font-size="21" text-anchor="middle">KL trung bình ≤ <tspan font-style="italic">κ</tspan></text>
+<line x1="652" y1="248" x2="686" y2="248" stroke="#2F3E7A" stroke-width="3" marker-end="url(#an)"/>
+<rect x="690" y="196" width="210" height="104" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3" stroke-dasharray="10 6"/>
+<text x="795" y="228" font-size="21" text-anchor="middle" font-weight="700">PPO</text>
+<text x="795" y="257" font-size="21" text-anchor="middle">cắt <tspan font-style="italic">ρ</tspan><tspan dy="6.3" font-size="14.7" font-style="italic">t</tspan><tspan dy="-6.3"> vào</tspan></text>
+<text x="795" y="285" font-size="21" text-anchor="middle">[1 − <tspan font-style="italic">ϵ</tspan>, 1 + <tspan font-style="italic">ϵ</tspan>]</text>
+<text x="300" y="322" font-size="19" text-anchor="middle" fill="#424954">Mục 4</text>
+<text x="550" y="322" font-size="19" text-anchor="middle" fill="#424954">Mục 5</text>
+<text x="795" y="322" font-size="19" text-anchor="middle" fill="#424954">Mục 6</text>
+<rect x="950" y="108" width="285" height="144" rx="12" fill="#FFFFFF" stroke="#1d2433" stroke-width="5"/>
+<text x="1092.5" y="142" font-size="21" text-anchor="middle" font-weight="700">Thuật toán 10.49</text>
+<text x="1092.5" y="172" font-size="21" text-anchor="middle">PPO kiểu actor–critic</text>
+<text x="1092.5" y="204" font-size="20" text-anchor="middle">GAE cho lợi thế,</text>
+<text x="1092.5" y="232" font-size="20" text-anchor="middle">mục tiêu cắt cho chính sách</text>
+<line x1="902" y1="100" x2="944" y2="140" stroke="#B15A2B" stroke-width="3" marker-end="url(#ao)"/>
+<line x1="902" y1="244" x2="944" y2="214" stroke="#2F3E7A" stroke-width="3" marker-end="url(#an)"/>
+</svg>

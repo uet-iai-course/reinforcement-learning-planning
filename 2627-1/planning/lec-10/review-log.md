@@ -247,3 +247,147 @@ Kiểm định cuối của vòng đồng bộ:
 - Kiểm tra văn bản đã render phát hiện 12 thẻ `<section ...>` bị material-viewer escape và hiển thị nguyên mã. Đã đổi chúng thành 12 comment `<!-- note-topic-id: lec-10-topic-NN -->` theo đúng giao diện của viewer và bỏ 12 thẻ đóng; không đổi nội dung, công thức, bài tập hoặc thứ tự.
 - Recheck GLM dùng `recheck/5/300/4000`, reasoning `minimal`, hoàn tất ở vòng 3 và PASS: đủ 12 mã duy nhất, không còn thẻ section, bốn nhóm và toàn bộ khối nội dung còn nguyên. Runtime trả `requested_model=observed_model=z-ai/glm-5.3-flash`, provider `OpenRouter`.
 - Chromium dựng lại ghi chú ở 1280×720 và 390×844: 414 phần tử KaTeX, 17 mục lục, không lỗi tải, bàn phím hoặc cuộn ngang thân tài liệu. Kiểm tra `innerText` xác nhận không còn chuỗi thẻ section hiển thị; bảng rộng vẫn cuộn trong vùng riêng.
+
+## Viết lại ghi chú bài giảng theo chuẩn giáo trình — 04-11-2026
+
+Yêu cầu người dùng (goal 04-11-2026): rà soát ghi chú bài giảng Bài 10 theo các nguyên tắc về nội dung, văn phong, bố cục và cách diễn giải của từng khối trong `../CLAUDE.md`, `CLAUDE.md`, `AGENTS.md`; trình bày chi tiết, đặc biệt các chứng minh quan trọng; dùng Sutton và Barto (2018); sau khi ghi chú hoàn thiện mới làm lại bộ trang chiếu dựa trên ghi chú mới.
+
+Hiện trạng: ghi chú cũ 5 954 từ (dưới ngưỡng 6 000), viết trước chuẩn giáo trình, không có mục đánh số, môi trường có số hiệu hay chứng minh theo bước; các vai cũ chạy qua OpenRouter, nay hết hiệu lực theo `prompt_lecture_note_deck.md`. Quyết định: viết lại toàn bộ theo quy trình đầy đủ của Giai đoạn I (năm vai rà soát), không dùng quy trình rút gọn.
+
+Điều phối viên: phiên Claude Code chính, Claude Opus 5.5 (`claude-opus-5-5`).
+
+### Giai đoạn I.1 — Lập kế hoạch
+
+| vai | loại tác tử | mô hình (từ lời gọi công cụ) | effort | quyết định |
+|---|---|---|---|---|
+| lập kế hoạch (chỉ đọc) | general-purpose | opus | high | chấp nhận |
+
+Lý do chấp nhận: đủ chín phần (mục tiêu, tiên quyết, khung lý thuyết, dàn ý bảy mục, ví dụ xuyên suốt, tình huống áp dụng, bản đồ chủ đề, ánh xạ nguồn, rủi ro và chia việc). Điều phối viên kiểm lại:
+- số hiệu kế thừa bằng grep: Định lý 09.23, Hệ quả 09.24, Thuật toán 09.25, Hệ quả 09.26, Nhận xét 09.27, Bổ đề 09.21, 09.22; Định lý 04.13; Định nghĩa 05.20, Mệnh đề 05.27; Định nghĩa 06.24; Định nghĩa 07.19, 07.21; Định nghĩa 08.4, 08.6, 08.12, 08.16, 08.18; Bổ đề 03.20, Định lý 03.21, 03.28, Mệnh đề 03.22, 03.23, 03.27 — khớp (brief ban đầu của điều phối viên lệch một đơn vị ở nhóm 09.22–09.26; kế hoạch đã sửa);
+- tính lại: chuỗi hai trạng thái $v(s_B)=2$, $q(s_A,1)=1{,}8$, $J=1{,}4$; đổi sang $\pi'=(0{,}6;0{,}8)$ cho $J'=1{,}696$, $\Delta J=0{,}296$ (hiệu hiệu năng $0{,}296$, hàm thay thế $0{,}26$); bốn số PPO-Clip $2{,}4$; $-1{,}6$; $1{,}4$; $-2{,}6$.
+
+Quyết định ký hiệu duyệt theo kế hoạch: tỉ số chính sách $\rho_t(\theta)$ (đúng Định nghĩa 06.24 với chính sách hành vi $\pi_{\theta_{\mathrm{old}}}$), phân phối trạng thái đầu $\mu_0$ (ghi tương ứng với $\rho_0$ của Bài 09), bán kính miền tin cậy $\kappa$ (vì $\delta_t$ là sai số TD), lợi thế $A_\pi$, $\widehat A_t$ với ngoại lệ chữ $A$ ghi sau bảng ký hiệu, độ dài đoạn thu $h$ (theo $G^\lambda_{t:h}$ của Sutton và Barto §12.3), critic $\hat v(s,w)$. Định nghĩa actor–critic theo Sutton và Barto §13.5 (REINFORCE có đường cơ sở không là actor–critic); cách gọi rộng của nguồn tr. 12 ghi trong một nhận xét.
+
+### Giai đoạn I.1 — Phân tích nguồn
+
+| vai | loại tác tử | mô hình (từ lời gọi công cụ) | effort | quyết định |
+|---|---|---|---|---|
+| phân tích nguồn (chỉ đọc) | general-purpose | opus | high | chấp nhận |
+
+Sản phẩm: ánh xạ 43 trang nguồn, đối chiếu Sutton và Barto (2018) §7.1, §12.1–12.3, §13.3–13.5 (số trang sách = trang PDF − 22), kiểm trích dẫn trên văn bản gốc: Kakade và Langford (2002) Bổ đề 6.1; Schulman và cộng sự (2015) Định lý 1, (1), (3), (12), (14), Phụ lục A–C; Schulman và cộng sự (2016) Định nghĩa 1, Mệnh đề 1, (11)–(18); Schulman và cộng sự (2017) (5)–(9), §4, Thuật toán 1; Achiam và cộng sự (2017) Hệ quả 1, 3, Mệnh đề 1, Bổ đề 3 phụ lục; Jin, Li và Wang (2024) Định lý 3.1–3.3, Giả thiết 3.1–3.4; Greensmith, Bartlett và Baxter (2004) §5, Định lý 13, Hệ quả 15, Định lý 16; Nocedal và Wright (2006) Thuật toán 5.2 (tr. 112), Định lý 5.1, 5.4; Huang và cộng sự (2022); Engstrom và cộng sự (2020). Cover và Thomas (2006) Bổ đề 11.6.1 chỉ kiểm qua nguồn thứ cấp.
+
+Phát hiện được điều phối viên kiểm lại và chấp nhận:
+- F1 (nghiêm trọng): ghi chú 01–09 chưa định nghĩa phân kỳ KL, biến phân toàn phần, entropy (grep "Kullback", "mathrm{KL}" trên lec-01…09: 0 kết quả) → thêm định nghĩa và chủ đề `cầu nối`.
+- F2 (nghiêm trọng): GAE không chệch cho gradient (γ-just), không cho $A_\pi$; tính lại trên chuỗi hai trạng thái với $\hat v=(1;1{,}5)$: $\mathbb E[\widehat A_0\mid s_A,a_1]=0{,}35;\,0{,}71;\,0{,}8$ với $\lambda=0;\,0{,}8;\,1$ và tọa độ gradient $0{,}0875;\,0{,}1775;\,0{,}2$ (đúng $0{,}2$) — khớp.
+- F3–F12 chấp nhận theo đề xuất (quy ước $\nu^\pi$, véc-tơ hàng, phạm vi Hệ quả 10.18, mô hình đơn giản hóa của Jin và cộng sự, chuẩn hóa lợi thế theo mini-batch, cắt mất mát giá trị là biến thể, bỏ tr. 27 không nguồn).
+
+### Giai đoạn I.2 — Hợp nhất bản đồ chủ đề và đặc tả soạn
+
+| vai | loại tác tử | mô hình (từ lời gọi công cụ) | effort | quyết định |
+|---|---|---|---|---|
+| hợp nhất bản đồ chủ đề (chỉ đọc) | general-purpose | opus | high | chấp nhận, kèm quyết định Q1–Q14 |
+
+Bản đồ hợp nhất: 24 chủ đề `lec-10-topic-01`…`24` — cốt lõi 16; cầu nối 5 (tiên quyết và ký hiệu; hai giới hạn của REINFORCE; lợi tức $n$ bước và λ-return; KL và biến phân toàn phần; tổng kết); bổ sung 1 (đường cơ sở có phương sai nhỏ nhất, Greensmith và cộng sự 2004); đọc thêm 2 (hội tụ điểm dừng PPO-Clip, Jin và cộng sự 2024; Phần II của nguồn → Bài 11). Chi tiết cài đặt (nguồn tr. 29–34, 36) xếp `cốt lõi` rút gọn, định tính: tr. 2 của nguồn đặt "đọc PPO như công thức cài đặt" thành mục tiêu và nguồn dành 8/43 trang. Đặc tả: 49 khối bộ đếm chung (10.1–10.49), 21 ví dụ, 3 tình huống, 12 bài tập; đích 17 000–19 500 từ thân văn.
+
+Quyết định của điều phối viên về Q1–Q14: chấp nhận Q1–Q12 và Q14. Q10 (mọi bài tập ở "Bài tập củng cố" cuối tệp) khớp ghi chú Bài 09 đã duyệt (Bài tập 09.1–09.10 đều ở dòng 1300–1464, sau `## Bài tập củng cố`). Q13: giữ quy ước dấu của Nocedal và Wright (2006, Thuật toán 5.2) nhưng viết phần dư là $\tilde g_k=Fx_k-g$ (gradient của mô hình bậc hai tại $x_k$) thay cho $r_k$, để chữ $r$ chỉ giữ nghĩa phần thưởng. SVG: writer ghi chú vẽ các hình mới và hình vẽ lại ở giai đoạn cuối, sau khi văn bản ổn định và trước năm vai rà soát. Đồng bộ ký hiệu với Bài 11 ($\rho_t$, $\kappa$, $M$, $\chi$) để lại cho lần viết lại Bài 11.
+
+### Giai đoạn I.3 — Soạn ghi chú (writer duy nhất, theo giai đoạn)
+
+| vai | loại tác tử | mô hình (từ lời gọi công cụ) | effort | phạm vi ghi |
+|---|---|---|---|---|
+| soạn ghi chú | general-purpose | opus | high | chỉ `2627-1/materials/lec-10/lecture-note.md` |
+
+S1–S4 (phần đầu, Mục 1, Mục 2): điều phối viên đọc phần đầu tới hết Ví dụ 10.4, danh mục khối; chấp nhận. Khối: Định nghĩa 10.1, Mệnh đề 10.2, 10.3, Định nghĩa 10.4, Mệnh đề 10.5, Thuật toán 10.6, Mệnh đề 10.7, Thuật toán 10.8, Nhận xét 10.9; Ví dụ 10.1–10.7. Điều phối viên tính lại: $\operatorname{Var}=\tfrac49(b-1)^2$; Ví dụ 10.2 $\widehat g=(-5{,}5;5{,}5)$, $p=\sigma(-1{,}1)=0{,}2497$, $J=-18{,}68$; Ví dụ 10.4 $v_\pi=(-12;-10;-6)$, $\widehat g_b=(9{,}5;-9{,}5)$ — khớp. Yêu cầu sửa nhỏ: dẫn Hệ quả 09.26 ở Bước 1 chứng minh Mệnh đề 10.2; nêu căn cứ hội tụ trội ở Ví dụ 10.4. Writer tự kiểm `no-ai-slop` (Edit + `eval.md`): sửa một câu đối lập nhị phân và một câu hai chấm kịch tính.
+
+Quyết định độ dài: S1–S4 đã có 7 766 từ thân văn (đích đặc tả 4 600). Vì yêu cầu người dùng đặt độ chi tiết của chứng minh lên trước, điều phối viên nâng trần thân văn lên 25 000 từ (vượt mức "thường 8 000–20 000" của `AGENTS.md`; tiền lệ: ghi chú Bài 08 có 37 649 từ `wc -w`), kèm yêu cầu cắt phần lặp.
+
+S5–S8 (Mục 3; Mục 4.1–4.5): điều phối viên đọc Định nghĩa 10.17 → Định lý 10.25 và chứng minh; chấp nhận. Kiểm lại: $\nu^{\pi}=(0{,}1;0{,}045)$, khối $0{,}145=1-(0{,}45+0{,}405)$; $\nu^{\pi'}=(0{,}1;0{,}054)$; hiệu hiệu năng $\tfrac1{0{,}1}(0{,}008+0{,}0216)=0{,}296$; Bổ đề 10.24 $\nu'^\top-\nu^\top=\gamma\nu^\top\Delta_P\bar\Gamma$, $\lVert x^\top M\rVert_1\le\lVert x\rVert_1\lVert M\rVert_\infty$ (chuẩn tổng hàng), $\lVert\bar\Gamma\rVert_\infty\le1/(1-\gamma)$; ví dụ $0{,}009\le18\cdot0{,}016=0{,}288$; Pinsker tại $s_B$: $0{,}1333\le0{,}1561$. Khối mới: Định nghĩa 10.10 → Hệ quả 10.30; Ví dụ 10.8–10.12. Thân văn tích lũy 14 519 từ. Writer tự kiểm `no-ai-slop`: sửa một "thường dùng" không nguồn và hai câu kết kiểu châm ngôn. Giáo trình tham khảo cho Mục 3: Sutton và Barto (2018) §7.1, §12.1–12.3 ((12.2), (12.3), (12.9), Bài tập 12.1, 12.3); Schulman và cộng sự (2016) §3, Định nghĩa 1, Mệnh đề 1. Mục 4: Kakade và Langford (2002) Bổ đề 6.1; Achiam và cộng sự (2017) Bổ đề 3, Hệ quả 1, 3, Mệnh đề 1; Schulman và cộng sự (2015) §2–4; Cover và Thomas (2006) Bổ đề 11.6.1. Mục 2: Sutton và Barto (2018) §13.4, §13.5.
+
+S9–S11 (Mục 5; Mục 6.1–6.6): điều phối viên đọc Mệnh đề 10.39, 10.40 và chứng minh, Ví dụ 10.18; chấp nhận. Kiểm lại bốn mẫu PPO-Clip $2{,}4$; $-1{,}6$; $1{,}4$; $-2{,}6$ và điều kiện dấu bằng của chặn dưới. Khối mới: Định nghĩa 10.31 → Nhận xét 10.49; Ví dụ 10.13–10.21. Thân văn tích lũy 21 056 từ (`wc -w` 31 128). Quyết định độ dài: nới trần thân văn lên 28 000 từ để giữ đủ bài tập củng cố có lời giải cho mọi mục tiêu học tập. Giáo trình và nguồn cho Mục 5–6: Schulman và cộng sự (2015) §5–6, Phụ lục C; Nocedal và Wright (2006) Thuật toán 5.2; Schulman và cộng sự (2017) §3–5, Hình 1, Thuật toán 1; Engstrom và cộng sự (2020); Huang và cộng sự (2022); Jin, Li và Wang (2024) Giả thiết 3.1–3.4, Định lý 3.1–3.3. SVG: giao một vai vẽ riêng sau S12–S13 (ngữ cảnh writer đã lớn), tuần tự, không chạy cùng writer.
+
+S12–S13 (Mục 7, tình huống áp dụng, tóm tắt, Bài tập củng cố 10.1–10.12, tài liệu tham khảo) và lượt tự rà toàn chương của writer: chấp nhận để đưa vào rà soát. Điều phối viên kiểm: 3 khối `application`, 12 `exercise`, 12 `hint`, 12 `solution`; không còn "xem trang chiếu", "hãy", "Mục này", "chưa phải định nghĩa", "mild", "almost always". Thân văn 25 029 từ, `wc -w` 37 202. Bản nháp hoàn chỉnh của writer: chấp nhận (vào rà soát).
+
+### Giai đoạn I.3b — Vẽ hình SVG
+
+| vai | loại tác tử | mô hình (từ lời gọi công cụ) | effort | phạm vi ghi |
+|---|---|---|---|---|
+| vẽ SVG | general-purpose | opus | high | 9 tệp trong `2627-1/img/lec-10/` (4 mới, 5 vẽ lại) |
+
+### Giai đoạn I.4 — Năm vai rà soát độc lập, vòng R1
+
+Bản cố định: bản sao `lecture-note.md` (2 291 dòng, sha1 `2e71eb1a17c9…`). Năm vai chạy song song, chỉ đọc; hình đang được vẽ lại song song nên vai rà chỉ xét `alt` và đoạn đọc hình.
+
+| vai | loại tác tử | mô hình (từ lời gọi công cụ) | effort |
+|---|---|---|---|
+| góc nhìn sinh viên | general-purpose | opus | high |
+| chuyên gia Học tăng cường | general-purpose | opus | high |
+| độ chính xác toán học–thuật toán | general-purpose | opus | high |
+| phản biện học thuật–giảng dạy + `no-ai-slop` Detect | general-purpose | opus | high |
+| kết nối và mạch viết (`quill` checklist, không `quill.json`) | general-purpose | opus | high |
+
+Kết quả vẽ SVG: chấp nhận. 9 tệp (`central-problem`, `two-state-chain`, `gae-weights`, `ppo-one-step-plateau` mới; `actor-critic-advantage`, `policy-update-feedback`, `trpo-trust-region`, `ppo-clipping-signs`, `ppo-data-pipeline` vẽ lại), tọa độ đồ thị sinh bằng script có assert. Điều phối viên xem ảnh chụp `central-problem`, `ppo-clipping-signs`, `trpo-trust-region`, `gae-weights`, `ppo-one-step-plateau`, `two-state-chain` và kiểm số: trọng số $(\gamma\lambda)^k=1;\,0{,}72;\,0{,}518;\,0{,}373;\,0{,}269$, $\lambda^6=0{,}262$; $\mathcal L^{\mathrm{CLIP}}=0{,}267$ ở đoạn phẳng; elip bán trục $0{,}0707$, $0{,}1414$, bước $(0{,}05;0{,}1)$ trên biên. Alt của `gae-weights` ghi $0{,}194$ sai ($0{,}72^5=0{,}1935$) — chuyển editor (D20). `gae-bias-variance.svg`, `ppo-diagnostics.svg` giữ cho bộ trang chiếu cũ, xử lý ở Giai đoạn II.
+
+Giới hạn hiển thị có từ trước (không thuộc phạm vi goal, báo người dùng): quy tắc `.markdown-body img[src^="img/lec-"] { min-width: 900px }` trong `material-viewer-course.css` làm mọi hình ghi chú bị cắt 92 px và phải cuộn ngang trong cột 808 px ở 1280–1600 px (đo bằng Playwright trên ghi chú Bài 09 và Bài 10: ảnh 900 px trong khung 808 px); đã ghi ở nhật ký Bài 05 và Bài 08 là hạ tầng dùng chung chờ quyết định.
+
+### Giai đoạn I.4 — Kết quả vòng R1
+
+| vai | kết luận | chặn | nghiêm trọng | trung bình | nhẹ | quyết định của điều phối viên |
+|---|---|---|---|---|---|---|
+| góc nhìn sinh viên | CHƯA ĐẠT | 0 | 1 | 6 | 23 | chấp nhận báo cáo; nghiêm trọng đã tính lại ($\alpha=0{,}1$: $p=0{,}5987$, $J=-11{,}66$; $\alpha=0{,}5$: $p=0{,}8808$, $J=-21{,}32$) |
+| chuyên gia Học tăng cường | CHƯA ĐẠT | 0 | 1 | 6 | 11 | chấp nhận; tr. 27 đưa vào có dẫn nguồn (bài giảng gốc là nguồn được giao) thay vì bỏ như kế hoạch |
+| độ chính xác toán học–thuật toán | ĐẠT | 0 | 0 | 3 | 14 | chấp nhận; mọi số khớp, Bổ đề 10.18, 10.24, Định lý 10.25, Hệ quả 10.26 kiểm thêm trên 2 000 MDP ngẫu nhiên |
+| phản biện học thuật–giảng dạy + `no-ai-slop` Detect | CHƯA ĐẠT | 0 | 3 | 17 | 20 | chấp nhận; thêm khối định nghĩa actor–critic và đánh lại số; PPO-Penalty giữ cốt lõi, bổ sung hành trình |
+| kết nối và mạch viết | ĐẠT | 0 | 0 | 8 | 16 | chấp nhận; điều phối viên xác nhận Bài 11 dùng $w_t$ cho tỉ số PPO (`lec-11/lecture-note.md` dòng 36, 52) |
+
+Quyết định hợp nhất D1–D21: `scratchpad/review/r1-decisions.md` (tóm tắt: D1 bằng chứng bước lớn; D2 định nghĩa actor–critic + đánh lại số; D3 PPO-Penalty; D4 câu tự nói về văn bản; D5 approxKL cần $\theta$ độc lập mẫu; D6 phát biểu đúng Jin và cộng sự Định lý 3.1/3.2; D7 chuyển tiếp Bài 11; D8 tr. 27; D9 đánh đổi theo $\lambda$ định tính có nguồn; D10 TRPO 2015 dùng Monte Carlo; D11 $\rho_t$ không hiệu chỉnh phân bố trạng thái; D12 "Trong thực hành."; D13 cắt lặp; D14 câu nối một phía, văn bản không làm chủ ngữ; D15 ký hiệu trùng; D16–D21 các điểm trung bình và nhẹ).
+
+### Giai đoạn I.5 — Biên tập sau R1
+
+| vai | loại tác tử | mô hình (từ lời gọi công cụ) | effort | phạm vi ghi |
+|---|---|---|---|---|
+| biên tập (editor duy nhất) | general-purpose | opus | high | chỉ `lecture-note.md` |
+
+Kết quả biên tập R1: chấp nhận. 5/5 nghiêm trọng đã sửa (D1–D5); khoảng 40 trung bình đã sửa trừ các mục bác có lý do (không đưa giả mã lên trước ví dụ tính tay vì chuẩn yêu cầu ví dụ trước — thay bằng nêu tại chỗ $I=\gamma^t$ và ba công thức gradient liên hợp; giữ ví dụ approxKL trước định nghĩa theo mẫu tám bước; giữ cả hai bảng ánh xạ bài tập vì một bảng theo mục, một bảng theo mục tiêu). Khối mới: Định nghĩa 10.7 (actor–critic), Ví dụ 10.19 (một lần điều chỉnh $\beta$ của PPO-Penalty), Nhận xét 10.44, Bài tập 10.12(d). Đánh lại số bằng script: bộ đếm chung 10.1–10.51, Ví dụ 10.1–10.22; 0 tham chiếu gãy; `note-topic-id` 01–24 đúng thứ tự. Viewer 1600 px và 390 px, cả print: 0 lỗi KaTeX, 0 yêu cầu lỗi; `scrollWidth` 375 ≤ 390 (đã hết tràn 17 px của thuật toán PPO). Thân văn 27 847 từ (trần 28 000), `wc -w` 40 734: phần bổ sung bắt buộc (D2, D3, D5, D8–D10, D12, D19) lớn hơn phần cắt lặp (D13). Bảng xử lý từng phát hiện: `scratchpad/editor/r1-disposition.md`.
+
+Điều phối viên đo thêm ở 390×844: 72/82 công thức hiển thị cuộn trong hộp riêng (Bài 09 đã duyệt: 28/37); trang không tràn. Quyết định: chuỗi `aligned` có cột căn cứ được cuộn như Bài 09; công thức khác phải ngắt. Quy tắc in nghiêng thuật ngữ mới ở lần đầu ("The author's voice", workspace `CLAUDE.md`) chưa được áp dụng → giao editor. Số hiệu trên `central-problem.svg` (10.47 → 10.49) → giao tác tử vẽ hình (tệp khác, chạy song song với editor).
+
+Bổ sung sau R1, chấp nhận: in nghiêng 38 thuật ngữ ở lần dùng đầu trong văn xuôi; công thức hiển thị cuộn ở 390 px giảm 72 → 8 (còn lại đều là chuỗi `aligned` có cột căn cứ, như Bài 09); mười câu "Dòng hai/ba…" đổi thành "Đẳng thức thứ…" cho khớp sau ngắt. `central-problem.svg` ghi "Thuật toán 10.49" (điều phối viên grep: 2 lần, không còn 10.47); `<desc>` của `central-problem.svg`, `gae-weights.svg` trùng alt. Thân văn 27 880 từ.
+
+### Giai đoạn I.6 — Rà lại vòng R2
+
+Bản cố định R2: 2 627 dòng, sha1 `3455222f4970…`. Năm vai R1 được tiếp tục bằng SendMessage (cùng tác tử, giữ ngữ cảnh): mỗi vai kiểm việc xử lý phát hiện của mình và phần đã đổi trong phạm vi vai; vai mạch viết rà toàn bộ vì mở chương, kết chương và ranh giới mục đã đổi; vai toán tính lại mọi số mới và kiểm mọi chứng minh bị sửa.
+
+Kết quả R2:
+
+| vai | kết luận | chặn | nghiêm trọng | trung bình | nhẹ | phát hiện R1 của vai |
+|---|---|---|---|---|---|---|
+| góc nhìn sinh viên | ĐẠT có điều kiện | 0 | 0 | 2 | 9 | mọi nghiêm trọng/trung bình đã xử lý đúng; tự giải lại Ví dụ 10.19, Bài tập 10.12(d), 10.6(b) |
+| chuyên gia Học tăng cường | CHƯA ĐẠT (gần đạt) | 0 | 0 | 2 | 5 | 18/18 xử lý đúng |
+| độ chính xác toán học–thuật toán | ĐẠT | 0 | 0 | 1 | 2 | 17/17 xử lý đúng; tính lại mọi số mới, 0 lệch; 0 tham chiếu gãy |
+| phản biện học thuật–giảng dạy + `no-ai-slop` Detect | CHƯA ĐẠT | 0 | 0 | 4 | 15 | 3/3 nghiêm trọng, 17/17 trung bình đúng; đồng ý mọi mục bác; mật độ mẫu slop ≈ 0,4/1 000 từ |
+| kết nối và mạch viết (toàn bộ) | ĐẠT | 0 | 0 | 4 | 6 | 22/24 đúng, 2 sửa một phần |
+
+Điều phối viên hợp nhất các điểm trung bình trùng nhau thành E1–E8 (giao editor): $g\in\operatorname{range}F$ chỉ khi cùng trạng thái; giả thiết (G1) trên Breakout (notebook Bài 09 mục 9) và mâu thuẫn dòng 218; tham chiếu trước tới xấp xỉ $p(1-p)$; 8 chuỗi `aligned` tràn ở 390 px; in nghiêng; hai đoạn nhiều ý; câu nói về nội dung chương và câu mảnh; phát biểu tóm tắt về Jin và cộng sự. Quyết định thay đổi: (i) chuỗi `aligned` có cột căn cứ phải vừa khung 390 px bằng cách chuyển căn cứ ra câu ngay sau công thức (`AGENTS.md` cho phép), thay quyết định trước đó cho cuộn; (ii) in nghiêng cả ở mục tiêu và tại câu định nghĩa trong thân văn, theo cách tác giả làm ở ghi chú SLT Bài 01 (dòng 7 và 72 cùng in nghiêng "rủi ro kì vọng").
+
+Biên tập sau R2: chấp nhận. E1–E8 đã sửa; tám chuỗi chứng minh chuyển cột căn cứ ra câu ngay sau công thức, công thức cuộn ở 390 px 8 → 0; in nghiêng ở mục tiêu và tại câu định nghĩa trong thân văn; $q_k\to\tau_k$ trong thuật toán gradient liên hợp; hai mục bác có lý do (không đặt $y_t$ cho mục tiêu bootstrap vì trùng Định nghĩa 10.47; ngoặc ở dòng 259–266 không cần ngắt vì đã vừa khung). Bảng xử lý: `scratchpad/editor/r2-disposition.md`. Thân văn 27 985 từ.
+
+### Giai đoạn I.6b — Rà lại cục bộ vòng R3
+
+Bản cố định R3: 2 659 dòng, sha1 `0b5cd89d679f…`.
+
+| vai | phạm vi | kết luận | phát hiện |
+|---|---|---|---|
+| toán học–thuật toán (cùng tác tử) | tám chuỗi chứng minh đổi trình bày, E1, E8, $\tau_k$, mọi số trong diff R2→R3, tham chiếu | ĐẠT | 0 |
+| kết nối và mạch viết (cùng tác tử) | vùng đổi ±2 tiểu mục, in nghiêng, chứng minh đã chuyển căn cứ | ĐẠT | 5 nhẹ (R3-1…R3-5), giao editor sửa |
+
+Kiểm tra cổng của điều phối viên (Playwright, `reloadserver` tại thư mục gốc repo): viewer 1600×900 và 390×844 — 3 887 biểu thức KaTeX, 0 `.katex-error`, 0 công thức hiển thị cuộn, 0 ảnh lỗi, 0 yêu cầu thất bại, 0 yêu cầu ra ngoài localhost, 0 chuỗi `:::`/`note-topic-id` thô trên trang, `scrollWidth` 375 ở 390 px; chế độ in 0 lỗi KaTeX. Lỗi console duy nhất là CSP chặn script nội tuyến do `reloadserver` chèn (viewer không có script nội tuyến; đã ghi ở các bài trước). `note-topic-id` 24, duy nhất. Không còn "xem trang chiếu", "hãy", "Đáp án", "chưa phải định nghĩa", "mild", "almost always"; các câu có dấu hỏi chỉ là "**Câu hỏi.**" được trả lời ngay và câu hỏi tự kiểm tra. Điều phối viên tự xem ảnh chụp đầu trang (1600, 390), cuối trang (390) và chứng minh Định lý 10.26 ở 390 px: đọc rõ, căn cứ ở câu sau công thức, có $\square$.
+
+Biên tập sau R3: chấp nhận. R3-1…R3-5 đã sửa (hai câu về tích Fisher–vector trên khoảng 10% dữ liệu chuyển xuống sau Thuật toán 10.36 và nối với giả thiết $g\in\operatorname{range}F$; bỏ câu lặp; in nghiêng "lợi tức $n$ bước", "liên hợp" — định nghĩa trước khi dùng, "tìm kiếm lùi"; bỏ câu lặp trong Tình huống 10.3; $\Delta_\pi$ dùng nhất quán trong Bổ đề 10.25); $\tau_k$ thêm vào câu liệt kê ký hiệu riêng. Điều phối viên đọc diff R3 → bản cuối và tính lại $\tau_2=\tfrac5{17}\cdot5+0{,}85\cdot\tfrac{180}{289}=2$. Thân văn 27 938 từ (`wc -w` ≈ 40 900): vượt mức "thường 8 000–20 000" của `AGENTS.md`, lý do đã ghi (yêu cầu chi tiết chứng minh của người dùng; trần 28 000 do điều phối viên đặt).
+
+### Cổng kiểm soát Giai đoạn I — đạt
+
+- Năm vai rà soát độc lập (R1), rà lại năm vai (R2), rà lại cục bộ toán và mạch (R3): không còn phát hiện chặn bàn giao, nghiêm trọng hay trung bình chưa xử lý; mọi phát hiện đã sửa hoặc bác có lý do trong `scratchpad/editor/r1-disposition.md`, `r2-disposition.md`.
+- Bảng kiểm `AGENTS.md` §"Kiểm định ghi chú bài giảng": vai sư phạm lập ở R1 và kiểm lại ở R2 (mọi mục chưa đạt ở R1 đã sửa); mỗi mục tiêu học tập có kết quả, ví dụ và bài tập; mỗi định lý bốn phần và có chứng minh hoặc nguồn có số mục/trang; mọi số đã được vai toán tính lại độc lập (R1, R2, R3: 0 lệch).
+- Bản đồ chủ đề đủ bốn nhóm, 24 `note-topic-id` duy nhất; viewer 0 lỗi KaTeX ở 1600 và 390 px; `no-ai-slop`: writer và editor tự kiểm chế độ Edit, vai sư phạm Detect hai vòng (mật độ mẫu ≈ 0,4/1 000 từ ở R2, các mẫu còn lại đã sửa).
+- Giáo trình đã tham khảo theo mục: Mục 2 — Sutton và Barto (2018) §13.3–13.5; Mục 3 — §7.1, §12.1–12.3; Mục 4 — Kakade và Langford (2002), Achiam và cộng sự (2017), Schulman và cộng sự (2015), Cover và Thomas (2006); Mục 5 — Schulman và cộng sự (2015), Nocedal và Wright (2006); Mục 6 — Schulman và cộng sự (2017), Engstrom và cộng sự (2020), Huang và cộng sự (2022), Andrychowicz và cộng sự (2021), Jin, Li và Wang (2024); Mục 1, 7 — ghi chú Bài 09, Bài 11.
+- Bộ trang chiếu cũ `lecture-10-trpo-va-ppo.html` chưa đồng bộ với ghi chú mới (ký hiệu $w_t$, số hiệu cũ); Giai đoạn II làm lại bộ trang chiếu từ ghi chú này. `index.html` đã có liên kết ghi chú Bài 10 từ trước, không đổi.

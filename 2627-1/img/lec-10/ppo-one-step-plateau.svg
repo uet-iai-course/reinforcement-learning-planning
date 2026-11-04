@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 395" width="1000" height="395" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Mục tiêu không cắt và mục tiêu cắt trên bài toán một bước</title>
+<desc id="d">Đồ thị theo p từ 0,5 đến 0,9. Đường thẳng nét đứt: L CPI bằng 3p trừ 2. Đường gấp khúc nét liền: L CLIP, trùng 3p trừ 2 tới p bằng 0,733, sau đó bằng p trừ 0,533 tới p bằng 0,8, rồi nằm ngang ở 0,267. Hai đường thẳng đứng mảnh đánh dấu p bằng 0,733 (mẫu hành động 2 chạm rho bằng 0,8) và p bằng 0,8 (mẫu hành động 1 chạm rho bằng 1,2). Điểm p bằng 2/3 ghi chính sách cũ, nơi hai đường trùng nhau.</desc>
+<defs>
+</defs>
+<line x1="110" y1="350" x2="110" y2="356" stroke="#1d2433" stroke-width="2"/>
+<text x="110" y="376" font-size="18" text-anchor="middle">0,5</text>
+<line x1="290" y1="350" x2="290" y2="30" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="290" y1="350" x2="290" y2="356" stroke="#1d2433" stroke-width="2"/>
+<text x="290" y="376" font-size="18" text-anchor="middle">0,6</text>
+<line x1="470" y1="350" x2="470" y2="30" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="470" y1="350" x2="470" y2="356" stroke="#1d2433" stroke-width="2"/>
+<text x="470" y="376" font-size="18" text-anchor="middle">0,7</text>
+<line x1="650" y1="350" x2="650" y2="30" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="650" y1="350" x2="650" y2="356" stroke="#1d2433" stroke-width="2"/>
+<text x="650" y="376" font-size="18" text-anchor="middle">0,8</text>
+<line x1="830" y1="350" x2="830" y2="30" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="830" y1="350" x2="830" y2="356" stroke="#1d2433" stroke-width="2"/>
+<text x="830" y="376" font-size="18" text-anchor="middle">0,9</text>
+<line x1="110" y1="323.3" x2="830" y2="323.3" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="104" y1="323.3" x2="110" y2="323.3" stroke="#1d2433" stroke-width="2"/>
+<text x="100" y="329.3" font-size="18" text-anchor="end">−0,4</text>
+<line x1="110" y1="270" x2="830" y2="270" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="104" y1="270" x2="110" y2="270" stroke="#1d2433" stroke-width="2"/>
+<text x="100" y="276" font-size="18" text-anchor="end">−0,2</text>
+<line x1="110" y1="216.7" x2="830" y2="216.7" stroke="#9aa1ad" stroke-width="1.6"/>
+<line x1="104" y1="216.7" x2="110" y2="216.7" stroke="#1d2433" stroke-width="2"/>
+<text x="100" y="222.7" font-size="18" text-anchor="end">0</text>
+<line x1="110" y1="163.3" x2="830" y2="163.3" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="104" y1="163.3" x2="110" y2="163.3" stroke="#1d2433" stroke-width="2"/>
+<text x="100" y="169.3" font-size="18" text-anchor="end">0,2</text>
+<line x1="110" y1="110" x2="830" y2="110" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="104" y1="110" x2="110" y2="110" stroke="#1d2433" stroke-width="2"/>
+<text x="100" y="116" font-size="18" text-anchor="end">0,4</text>
+<line x1="110" y1="56.7" x2="830" y2="56.7" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="104" y1="56.7" x2="110" y2="56.7" stroke="#1d2433" stroke-width="2"/>
+<text x="100" y="62.7" font-size="18" text-anchor="end">0,6</text>
+<line x1="110" y1="350" x2="830" y2="350" stroke="#1d2433" stroke-width="2"/>
+<line x1="110" y1="350" x2="110" y2="30" stroke="#1d2433" stroke-width="2"/>
+<text x="844" y="356" font-size="21"><tspan font-style="italic">p</tspan></text>
+<line x1="530" y1="350" x2="530" y2="30" stroke="#424954" stroke-width="1.6"/>
+<line x1="650" y1="350" x2="650" y2="30" stroke="#424954" stroke-width="1.6"/>
+<polyline points="110.0,350.0 530.0,163.3 650.0,145.6 830.0,145.6" fill="none" stroke="#2F3E7A" stroke-width="6" stroke-linejoin="round"/>
+<line x1="110" y1="350" x2="830" y2="30" stroke="#B15A2B" stroke-width="3" stroke-dasharray="12 8"/>
+<circle cx="410.0" cy="216.7" r="7" fill="#FFFFFF" stroke="#1d2433" stroke-width="3"/>
+<text x="396" y="204.7" font-size="19" text-anchor="end">chính sách cũ <tspan font-style="italic">p</tspan> = 2/3</text>
+<text x="522" y="270" font-size="18" text-anchor="end" font-weight="700"><tspan font-style="italic">p</tspan> = 0,733:</text>
+<text x="522" y="294" font-size="18" text-anchor="end">mẫu hành động 2</text>
+<text x="522" y="318" font-size="18" text-anchor="end">chạm <tspan font-style="italic">ρ</tspan> = 0,8</text>
+<text x="658" y="270" font-size="18" font-weight="700"><tspan font-style="italic">p</tspan> = 0,8:</text>
+<text x="658" y="294" font-size="18">mẫu hành động 1</text>
+<text x="658" y="318" font-size="18">chạm <tspan font-style="italic">ρ</tspan> = 1,2</text>
+<text x="776" y="175.6" font-size="19" text-anchor="middle" font-weight="700" fill="#2F3E7A">0,267</text>
+<rect x="128" y="36" width="300" height="84" rx="6" fill="#FFFFFF" stroke="#d5d9e0" stroke-width="1.5"/>
+<line x1="140" y1="56" x2="190" y2="56" stroke="#B15A2B" stroke-width="3" stroke-dasharray="12 8"/>
+<text x="202" y="62" font-size="20">ℒ<tspan dy="-8" font-size="14">CPI</tspan><tspan dy="8">(</tspan><tspan font-style="italic">p</tspan>) = 3<tspan font-style="italic">p</tspan> − 2</text>
+<line x1="140" y1="92" x2="190" y2="92" stroke="#2F3E7A" stroke-width="6"/>
+<text x="202" y="98" font-size="20">ℒ<tspan dy="-8" font-size="14">CLIP</tspan><tspan dy="8">(</tspan><tspan font-style="italic">p</tspan>)</text>
+</svg>

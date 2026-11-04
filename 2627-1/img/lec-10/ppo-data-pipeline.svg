@@ -1,1 +1,58 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 360" role="img" aria-labelledby="title desc"><title id="title">Đường ống dữ liệu PPO</title><desc id="desc">N môi trường sinh rollout H bước, giữ quan sát cuối trước reset để bootstrap, tính lợi thế và target, rồi giữ chúng cố định trong khi tính lại tỷ số.</desc><defs><marker id="f" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#2f3e7a"/></marker></defs><g font-family="Arial,sans-serif" font-size="30" text-anchor="middle"><rect x="25" y="110" width="180" height="95" rx="14" fill="#edf4ff" stroke="#2f3e7a" stroke-width="4"/><text x="115" y="150">N môi trường</text><text x="115" y="184">H bước</text><rect x="250" y="110" width="180" height="95" rx="14" fill="#f7efe6" stroke="#b15a2b" stroke-width="4"/><text x="340" y="144">Buffer [H,N,…]</text><text x="340" y="180">final obs trước reset</text><rect x="475" y="110" width="180" height="95" rx="14" fill="#edf4ff" stroke="#2f3e7a" stroke-width="4"/><text x="565" y="150">A_raw, A_actor</text><text x="565" y="184">target đóng băng</text><rect x="700" y="110" width="180" height="95" rx="14" fill="#f7efe6" stroke="#b15a2b" stroke-width="4"/><text x="790" y="150">K epoch</text><text x="790" y="184">tính lại w</text><rect x="925" y="110" width="150" height="95" rx="14" fill="#edf4ff" stroke="#2f3e7a" stroke-width="4"/><text x="1000" y="150">Đồng bộ</text><text x="1000" y="184">π_old</text><path d="M205 158H240M430 158H465M655 158H690M880 158H915" stroke="#2f3e7a" stroke-width="6" marker-end="url(#f)"/><text x="550" y="300">Giữ old data và target; tính lại log π_θ, V_φ và w ở mỗi minibatch</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1295 345" width="1295" height="345" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Dữ liệu của một vòng PPO</title>
+<desc id="d">Sơ đồ dữ liệu của một vòng PPO. Bên trái, N môi trường xếp chồng, mỗi môi trường chạy h bước bằng pi old, tạo lưới h nhân N mẫu. Mũi tên sang bộ đệm D gồm hN mẫu, mỗi mẫu lưu S t, A t, R t+1, Z t+1, U t+1, log pi old, v mũ old. Mũi tên sang khung GAE tính A mũ raw và V targ. Mũi tên sang vòng lặp K epoch: xáo D, chia mini-batch cỡ M, mỗi mini-batch một bước Adam trên L. Mũi tên cong quay về bên trái ghi theta old gán bằng theta.</desc>
+<defs>
+<marker id="an" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="16" refY="9" orient="auto"><path d="M0,0 L18,9 L0,18 Z" fill="#2F3E7A"/></marker>
+<marker id="ao" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="16" refY="9" orient="auto"><path d="M0,0 L18,9 L0,18 Z" fill="#B15A2B"/></marker>
+</defs>
+<text x="150" y="26" font-size="20" font-weight="700" fill="#B15A2B"><tspan font-style="italic">N</tspan> môi trường, mỗi môi trường</text>
+<text x="150" y="50" font-size="20" font-weight="700" fill="#B15A2B">chạy <tspan font-style="italic">h</tspan> bước bằng <tspan font-style="italic">π</tspan><tspan dy="6" font-size="14">old</tspan></text>
+<line x1="150" y1="76" x2="328" y2="76" stroke="#424954" stroke-width="2" marker-end="url(#an)"/>
+<text x="338" y="82" font-size="20" fill="#424954"><tspan font-style="italic">h</tspan></text>
+<text x="140" y="116" font-size="20" text-anchor="end">môi trường 1</text>
+<rect x="154" y="96" width="180" height="34" rx="4" fill="#e3e6ec" stroke="none" stroke-width="0"/>
+<rect x="150" y="92" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<rect x="180" y="92" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<rect x="210" y="92" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<rect x="240" y="92" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<rect x="270" y="92" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<rect x="300" y="92" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<text x="140" y="156" font-size="20" text-anchor="end">môi trường 2</text>
+<rect x="154" y="136" width="180" height="34" rx="4" fill="#e3e6ec" stroke="none" stroke-width="0"/>
+<rect x="150" y="132" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<rect x="180" y="132" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<rect x="210" y="132" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<rect x="240" y="132" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<rect x="270" y="132" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<rect x="300" y="132" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<text x="140" y="196" font-size="20" text-anchor="end">⋮</text>
+<text x="140" y="236" font-size="20" text-anchor="end">môi trường <tspan font-style="italic">N</tspan></text>
+<rect x="154" y="216" width="180" height="34" rx="4" fill="#e3e6ec" stroke="none" stroke-width="0"/>
+<rect x="150" y="212" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<rect x="180" y="212" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<rect x="210" y="212" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<rect x="240" y="212" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<rect x="270" y="212" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<rect x="300" y="212" width="30" height="34" rx="0" fill="#F7EFE6" stroke="#B15A2B" stroke-width="1.5"/>
+<text x="240" y="274" font-size="20" text-anchor="middle" fill="#424954">lưới <tspan font-style="italic">h</tspan> × <tspan font-style="italic">N</tspan> mẫu</text>
+<line x1="340" y1="165" x2="386" y2="165" stroke="#2F3E7A" stroke-width="3" marker-end="url(#an)"/>
+<rect x="390" y="70" width="320" height="190" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="550" y="102" font-size="21" text-anchor="middle" font-weight="700">bộ đệm 𝒟: <tspan font-style="italic">hN</tspan> mẫu</text>
+<text x="550" y="134" font-size="20" text-anchor="middle" fill="#424954">mỗi mẫu lưu</text>
+<text x="550" y="168" font-size="20" text-anchor="middle"><tspan font-style="italic">S</tspan><tspan dy="6" font-size="14" font-style="italic">t</tspan><tspan dy="-6">, </tspan><tspan font-style="italic">A</tspan><tspan dy="6" font-size="14" font-style="italic">t</tspan><tspan dy="-6">, </tspan><tspan font-style="italic">R</tspan><tspan dy="6" font-size="14" font-style="italic">t</tspan><tspan font-size="14">+1</tspan><tspan dy="-6">, </tspan><tspan font-style="italic">Z</tspan><tspan dy="6" font-size="14" font-style="italic">t</tspan><tspan font-size="14">+1</tspan><tspan dy="-6">, </tspan><tspan font-style="italic">U</tspan><tspan dy="6" font-size="14" font-style="italic">t</tspan><tspan font-size="14">+1</tspan><tspan dy="-6">,</tspan></text>
+<text x="550" y="204" font-size="20" text-anchor="middle">log <tspan font-style="italic">π</tspan><tspan dy="6" font-size="14">old</tspan><tspan dy="-6">(</tspan><tspan font-style="italic">A</tspan><tspan dy="6" font-size="14" font-style="italic">t</tspan><tspan dy="-6"> | </tspan><tspan font-style="italic">S</tspan><tspan dy="6" font-size="14" font-style="italic">t</tspan><tspan dy="-6">),</tspan></text>
+<text x="550" y="238" font-size="20" text-anchor="middle"><tspan font-style="italic">v̂</tspan><tspan dy="6" font-size="14">old</tspan><tspan dy="-6">(</tspan><tspan font-style="italic">S</tspan><tspan dy="6" font-size="14" font-style="italic">t</tspan><tspan dy="-6">)</tspan></text>
+<line x1="712" y1="165" x2="756" y2="165" stroke="#2F3E7A" stroke-width="3" marker-end="url(#an)"/>
+<rect x="760" y="105" width="170" height="120" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="845" y="142" font-size="21" text-anchor="middle" font-weight="700">GAE</text>
+<text x="845" y="176" font-size="21" text-anchor="middle"><tspan font-style="italic">Â</tspan><tspan dy="-8.4" font-size="14.7">raw</tspan><tspan dx="-25.6" dy="14.7" font-size="14.7" font-style="italic">t</tspan><tspan dx="20.7" dy="-6.3">,</tspan></text>
+<text x="845" y="206" font-size="21" text-anchor="middle"><tspan font-style="italic">V</tspan><tspan dy="-8.4" font-size="14.7">targ</tspan><tspan dx="-28.5" dy="14.7" font-size="14.7" font-style="italic">t</tspan></text>
+<line x1="932" y1="165" x2="976" y2="165" stroke="#2F3E7A" stroke-width="3" marker-end="url(#an)"/>
+<rect x="980" y="70" width="300" height="190" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3"/>
+<text x="1130" y="102" font-size="21" text-anchor="middle" font-weight="700"><tspan font-style="italic">K</tspan> epoch, mỗi epoch:</text>
+<text x="1130" y="140" font-size="20" text-anchor="middle">xáo 𝒟, chia mini-batch cỡ <tspan font-style="italic">M</tspan>;</text>
+<text x="1130" y="176" font-size="20" text-anchor="middle">mỗi mini-batch:</text>
+<text x="1130" y="210" font-size="20" text-anchor="middle">một bước Adam trên <tspan font-style="italic">L</tspan></text>
+<path d="M1130,262 V318 Q1130,330 1118,330 H222 Q210,330 210,318 V284" fill="none" stroke="#B15A2B" stroke-width="3" marker-end="url(#ao)"/>
+<text x="670" y="320" font-size="21" text-anchor="middle" font-weight="700" fill="#7a3a17">sau <tspan font-style="italic">K</tspan> epoch: <tspan font-style="italic">θ</tspan><tspan dy="6.3" font-size="14.7">old</tspan><tspan dy="-6.3"> ← </tspan><tspan font-style="italic">θ</tspan></text>
+</svg>

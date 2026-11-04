@@ -1,1 +1,99 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 360" role="img" aria-labelledby="title desc"><title id="title">PPO clipping phụ thuộc dấu lợi thế</title><desc id="desc">Với lợi thế dương, trần nằm ở một cộng epsilon; với lợi thế âm, sàn tỷ số nằm ở một trừ epsilon. Phía bất lợi không bị cắt.</desc><g font-family="Arial,sans-serif" font-size="30"><line x1="90" y1="280" x2="880" y2="280" stroke="#222" stroke-width="4"/><line x1="190" y1="320" x2="190" y2="50" stroke="#222" stroke-width="4"/><text x="880" y="320">w</text><text x="125" y="60">ℓ</text><path d="M90 250 L555 80 L870 80" fill="none" stroke="#2e7d32" stroke-width="8"/><text x="650" y="65" fill="#236128">Â &gt; 0: trần tại 1+ε</text><path d="M90 210 L330 210 L870 330" fill="none" stroke="#b15a2b" stroke-width="8"/><text x="340" y="195" fill="#8b351f">Â &lt; 0: sàn tỷ số tại 1−ε</text><line x1="330" y1="45" x2="330" y2="300" stroke="#888" stroke-width="3" stroke-dasharray="10 8"/><line x1="555" y1="45" x2="555" y2="300" stroke="#888" stroke-width="3" stroke-dasharray="10 8"/><text x="330" y="340" text-anchor="middle">1−ε</text><text x="555" y="340" text-anchor="middle">1+ε</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1110 470" width="1110" height="470" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Mục tiêu cắt theo dấu của lợi thế</title>
+<desc id="d">Hai khung cạnh nhau, trục hoành rho, epsilon bằng 0,2. Khung trái, A mũ dương: l CLIP bằng A mũ nhân min(rho; 1,2), đường tăng tuyến tính tới rho bằng 1,2 rồi nằm ngang; vùng nằm ngang tô sọc ghi gradient bằng 0. Điểm tròn tại rho bằng 1,3 trên đoạn ngang, giá trị 2,4; điểm vuông tại rho bằng 0,7 trên đoạn dốc, giá trị 1,4. Khung phải, A mũ âm: l CLIP bằng A mũ nhân max(rho; 0,8), đường nằm ngang tới rho bằng 0,8 rồi giảm tuyến tính; vùng nằm ngang tô sọc ghi gradient bằng 0. Điểm tròn tại rho bằng 0,7 trên đoạn ngang, giá trị âm 1,6; điểm vuông tại rho bằng 1,3 trên đoạn dốc, giá trị âm 2,6. Đường nét đứt mảnh ở cả hai khung là A mũ nhân rho.</desc>
+<defs>
+<pattern id="hz" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#F4F5F7"/><line x1="0" y1="0" x2="0" y2="10" stroke="#9aa1ad" stroke-width="2"/></pattern>
+</defs>
+<text x="50" y="36" font-size="22" font-weight="700" fill="#2F3E7A"><tspan font-style="italic">Â</tspan> &gt; 0 (ở đây <tspan font-style="italic">Â</tspan> = 2)</text>
+<text x="50" y="70" font-size="21">ℓ<tspan dy="-8.4" font-size="14.7">CLIP</tspan><tspan dy="8.4"> = </tspan><tspan font-style="italic">Â</tspan> · min(<tspan font-style="italic">ρ</tspan>; 1,2)</text>
+<rect x="342.0" y="120" width="168.0" height="260" fill="url(#hz)"/>
+<line x1="90" y1="380" x2="510" y2="380" stroke="#9aa1ad" stroke-width="1.6"/>
+<line x1="84" y1="380" x2="90" y2="380" stroke="#1d2433" stroke-width="2"/>
+<text x="80" y="386" font-size="18" text-anchor="end">0</text>
+<line x1="90" y1="320.9" x2="510" y2="320.9" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="84" y1="320.9" x2="90" y2="320.9" stroke="#1d2433" stroke-width="2"/>
+<text x="80" y="326.9" font-size="18" text-anchor="end">1</text>
+<line x1="90" y1="261.8" x2="510" y2="261.8" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="84" y1="261.8" x2="90" y2="261.8" stroke="#1d2433" stroke-width="2"/>
+<text x="80" y="267.8" font-size="18" text-anchor="end">2</text>
+<line x1="90" y1="202.7" x2="510" y2="202.7" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="84" y1="202.7" x2="90" y2="202.7" stroke="#1d2433" stroke-width="2"/>
+<text x="80" y="208.7" font-size="18" text-anchor="end">3</text>
+<line x1="90" y1="143.6" x2="510" y2="143.6" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="84" y1="143.6" x2="90" y2="143.6" stroke="#1d2433" stroke-width="2"/>
+<text x="80" y="149.6" font-size="18" text-anchor="end">4</text>
+<line x1="90" y1="380" x2="90" y2="386" stroke="#1d2433" stroke-width="2"/>
+<text x="90" y="406" font-size="18" text-anchor="middle">0</text>
+<line x1="174" y1="380" x2="174" y2="386" stroke="#1d2433" stroke-width="2"/>
+<text x="174" y="406" font-size="18" text-anchor="middle">0,4</text>
+<line x1="258" y1="380" x2="258" y2="386" stroke="#1d2433" stroke-width="2"/>
+<text x="258" y="406" font-size="18" text-anchor="middle">0,8</text>
+<line x1="342" y1="380" x2="342" y2="386" stroke="#1d2433" stroke-width="2"/>
+<text x="342" y="406" font-size="18" text-anchor="middle">1,2</text>
+<line x1="426" y1="380" x2="426" y2="386" stroke="#1d2433" stroke-width="2"/>
+<text x="426" y="406" font-size="18" text-anchor="middle">1,6</text>
+<line x1="510" y1="380" x2="510" y2="386" stroke="#1d2433" stroke-width="2"/>
+<text x="510" y="406" font-size="18" text-anchor="middle">2</text>
+<line x1="90" y1="380" x2="510" y2="380" stroke="#1d2433" stroke-width="2"/>
+<line x1="90" y1="120" x2="90" y2="380" stroke="#1d2433" stroke-width="2"/>
+<text x="522" y="386" font-size="21"><tspan font-style="italic">ρ</tspan></text>
+<rect x="354" y="324" width="144" height="32" rx="6" fill="#FFFFFF" stroke="#9aa1ad" stroke-width="1.5"/>
+<text x="426" y="346" font-size="19" text-anchor="middle" font-weight="700">gradient = 0</text>
+<polyline points="90.0,380.0 342.0,238.2 510.0,238.2" fill="none" stroke="#2F3E7A" stroke-width="5" stroke-linejoin="round"/>
+<line x1="90" y1="380" x2="510" y2="143.6" stroke="#1d2433" stroke-width="2" stroke-dasharray="8 6"/>
+<circle cx="363.0" cy="238.2" r="8" fill="#FFFFFF" stroke="#1d2433" stroke-width="3"/>
+<text x="363" y="272.2" font-size="19" text-anchor="middle" font-weight="700" paint-order="stroke" stroke="#FFFFFF" stroke-width="6" stroke-linejoin="round">(1,3; 2,4)</text>
+<rect x="229.0" y="289.3" width="16" height="16" fill="#1d2433"/>
+<text x="251" y="327.3" font-size="19" font-weight="700" paint-order="stroke" stroke="#FFFFFF" stroke-width="6" stroke-linejoin="round">(0,7; 1,4)</text>
+<text x="610" y="36" font-size="22" font-weight="700" fill="#B15A2B"><tspan font-style="italic">Â</tspan> &lt; 0 (ở đây <tspan font-style="italic">Â</tspan> = −2)</text>
+<text x="610" y="70" font-size="21">ℓ<tspan dy="-8.4" font-size="14.7">CLIP</tspan><tspan dy="8.4"> = </tspan><tspan font-style="italic">Â</tspan> · max(<tspan font-style="italic">ρ</tspan>; 0,8)</text>
+<rect x="650.0" y="120" width="168.0" height="260" fill="url(#hz)"/>
+<line x1="650" y1="120" x2="1070" y2="120" stroke="#9aa1ad" stroke-width="1.6"/>
+<line x1="644" y1="120" x2="650" y2="120" stroke="#1d2433" stroke-width="2"/>
+<text x="640" y="126" font-size="18" text-anchor="end">0</text>
+<line x1="650" y1="179.1" x2="1070" y2="179.1" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="644" y1="179.1" x2="650" y2="179.1" stroke="#1d2433" stroke-width="2"/>
+<text x="640" y="185.1" font-size="18" text-anchor="end">−1</text>
+<line x1="650" y1="238.2" x2="1070" y2="238.2" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="644" y1="238.2" x2="650" y2="238.2" stroke="#1d2433" stroke-width="2"/>
+<text x="640" y="244.2" font-size="18" text-anchor="end">−2</text>
+<line x1="650" y1="297.3" x2="1070" y2="297.3" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="644" y1="297.3" x2="650" y2="297.3" stroke="#1d2433" stroke-width="2"/>
+<text x="640" y="303.3" font-size="18" text-anchor="end">−3</text>
+<line x1="650" y1="356.4" x2="1070" y2="356.4" stroke="#d5d9e0" stroke-width="1.2"/>
+<line x1="644" y1="356.4" x2="650" y2="356.4" stroke="#1d2433" stroke-width="2"/>
+<text x="640" y="362.4" font-size="18" text-anchor="end">−4</text>
+<line x1="650" y1="380" x2="650" y2="386" stroke="#1d2433" stroke-width="2"/>
+<text x="650" y="406" font-size="18" text-anchor="middle">0</text>
+<line x1="734" y1="380" x2="734" y2="386" stroke="#1d2433" stroke-width="2"/>
+<text x="734" y="406" font-size="18" text-anchor="middle">0,4</text>
+<line x1="818" y1="380" x2="818" y2="386" stroke="#1d2433" stroke-width="2"/>
+<text x="818" y="406" font-size="18" text-anchor="middle">0,8</text>
+<line x1="902" y1="380" x2="902" y2="386" stroke="#1d2433" stroke-width="2"/>
+<text x="902" y="406" font-size="18" text-anchor="middle">1,2</text>
+<line x1="986" y1="380" x2="986" y2="386" stroke="#1d2433" stroke-width="2"/>
+<text x="986" y="406" font-size="18" text-anchor="middle">1,6</text>
+<line x1="1070" y1="380" x2="1070" y2="386" stroke="#1d2433" stroke-width="2"/>
+<text x="1070" y="406" font-size="18" text-anchor="middle">2</text>
+<line x1="650" y1="380" x2="1070" y2="380" stroke="#1d2433" stroke-width="2"/>
+<line x1="650" y1="120" x2="650" y2="380" stroke="#1d2433" stroke-width="2"/>
+<text x="1082" y="386" font-size="21"><tspan font-style="italic">ρ</tspan></text>
+<rect x="662" y="324" width="144" height="32" rx="6" fill="#FFFFFF" stroke="#9aa1ad" stroke-width="1.5"/>
+<text x="734" y="346" font-size="19" text-anchor="middle" font-weight="700">gradient = 0</text>
+<polyline points="650.0,214.5 818.0,214.5 1070.0,356.4" fill="none" stroke="#B15A2B" stroke-width="5" stroke-linejoin="round"/>
+<line x1="650" y1="120" x2="1070" y2="356.4" stroke="#1d2433" stroke-width="2" stroke-dasharray="8 6"/>
+<circle cx="797.0" cy="214.5" r="8" fill="#FFFFFF" stroke="#1d2433" stroke-width="3"/>
+<text x="785" y="250.5" font-size="19" text-anchor="end" font-weight="700" paint-order="stroke" stroke="#FFFFFF" stroke-width="6" stroke-linejoin="round">(0,7; −1,6)</text>
+<rect x="915.0" y="265.6" width="16" height="16" fill="#1d2433"/>
+<text x="909" y="305.6" font-size="19" text-anchor="end" font-weight="700" paint-order="stroke" stroke="#FFFFFF" stroke-width="6" stroke-linejoin="round">(1,3; −2,6)</text>
+<line x1="90" y1="446" x2="140" y2="446" stroke="#1d2433" stroke-width="5"/>
+<text x="150" y="452" font-size="19">ℓ<tspan dy="-7.6" font-size="13.3">CLIP</tspan></text>
+<line x1="240" y1="446" x2="290" y2="446" stroke="#1d2433" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="300" y="452" font-size="19"><tspan font-style="italic">Â</tspan> <tspan font-style="italic">ρ</tspan></text>
+<circle cx="390" cy="446" r="8" fill="#FFFFFF" stroke="#1d2433" stroke-width="3"/>
+<text x="405" y="452" font-size="19">trên đoạn phẳng</text>
+<rect x="562" y="438" width="16" height="16" fill="#1d2433"/>
+<text x="588" y="452" font-size="19">trên đoạn dốc</text>
+<rect x="725" y="434" width="34" height="24" fill="url(#hz)" stroke="#9aa1ad" stroke-width="1.5"/>
+<text x="770" y="452" font-size="19">gradient = 0; <tspan font-style="italic">ϵ</tspan> = 0,2</text>
+</svg>
