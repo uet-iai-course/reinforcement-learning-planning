@@ -391,3 +391,27 @@ Biên tập sau R3: chấp nhận. R3-1…R3-5 đã sửa (hai câu về tích F
 - Bản đồ chủ đề đủ bốn nhóm, 24 `note-topic-id` duy nhất; viewer 0 lỗi KaTeX ở 1600 và 390 px; `no-ai-slop`: writer và editor tự kiểm chế độ Edit, vai sư phạm Detect hai vòng (mật độ mẫu ≈ 0,4/1 000 từ ở R2, các mẫu còn lại đã sửa).
 - Giáo trình đã tham khảo theo mục: Mục 2 — Sutton và Barto (2018) §13.3–13.5; Mục 3 — §7.1, §12.1–12.3; Mục 4 — Kakade và Langford (2002), Achiam và cộng sự (2017), Schulman và cộng sự (2015), Cover và Thomas (2006); Mục 5 — Schulman và cộng sự (2015), Nocedal và Wright (2006); Mục 6 — Schulman và cộng sự (2017), Engstrom và cộng sự (2020), Huang và cộng sự (2022), Andrychowicz và cộng sự (2021), Jin, Li và Wang (2024); Mục 1, 7 — ghi chú Bài 09, Bài 11.
 - Bộ trang chiếu cũ `lecture-10-trpo-va-ppo.html` chưa đồng bộ với ghi chú mới (ký hiệu $w_t$, số hiệu cũ); Giai đoạn II làm lại bộ trang chiếu từ ghi chú này. `index.html` đã có liên kết ghi chú Bài 10 từ trước, không đổi.
+
+Commit Giai đoạn I: `1c9ef05` `fix(materials-10): revise TRPO PPO lecture note`, đã push `origin/main` (`git branch -r --contains HEAD` → `origin/main`). Lần push này đẩy kèm commit cục bộ `adb055e` (chore: move tooling to shared workspace, split common/course CSS) đã nằm trên `main` từ trước.
+
+## Giai đoạn II — Làm lại bộ trang chiếu từ ghi chú mới — 04-11-2026
+
+Đầu vào cố định: ghi chú tại commit `1c9ef05`. Bộ trang chiếu cũ (43 trang, ký hiệu $w_t$, mạch cũ) được thay toàn bộ.
+
+### Giai đoạn II.1 — Kế hoạch bộ trang chiếu
+
+| vai | loại tác tử | mô hình (từ lời gọi công cụ) | effort | quyết định |
+|---|---|---|---|---|
+| lập kế hoạch deck (chỉ đọc) | general-purpose | opus | high | chấp nhận, kèm quyết định |
+
+Kế hoạch: 7 mạch (mạch N = Mục N của ghi chú với N = 2…7; Mục 1 gộp vào mạch mở đầu làm ví dụ dẫn nhập trước "Vấn đề trung tâm", vì tách thành mạch riêng cho 8 mạch, vượt trần 5–7); mã `L10-NXX`, trang tiêu đề mạch `L10-N00`, `id="mach-N"`; phút 12 + 23 + 14,5 + 22,5 + 13,5 + 25,5 + 9 = 120. Quyết định của điều phối viên: (i) dùng phương án gộp 11 cặp trang của kế hoạch, khoảng 90 trang (Bài 09: 67), giữ phút mỗi mạch; (ii) chấp nhận đặt Ví dụ 10.9 trước Mệnh đề 10.15 trên trang chiếu (ví dụ cụ thể trước phát biểu là quy tắc của bộ trang chiếu), ghi lệch thứ tự trong storyboard; (iii) chưa có `exercises.md`, trang "Bài tập về nhà và tài liệu đọc" ánh xạ Bài tập củng cố 10.1–10.12 của ghi chú theo bảng §7.5; (iv) không vẽ hình mới; `gae-bias-variance.svg`, `ppo-diagnostics.svg` không còn tham chiếu → xóa trong commit Giai đoạn II; (v) hình `termination-truncation.svg` của Bài 08 dùng kèm chú thích ở ghi chú diễn giả.
+
+### Giai đoạn II.2 — Soạn (writer duy nhất), bước A: outline và storyboard
+
+| vai | loại tác tử | mô hình (từ lời gọi công cụ) | effort | phạm vi ghi |
+|---|---|---|---|---|
+| soạn bộ trang chiếu | general-purpose | opus | high | `planning/lec-10/outline.md`, `storyboard.md`; sau cổng storyboard: deck HTML |
+
+### Đính chính và cập nhật `index.html` (yêu cầu người dùng: "chưa thấy lecture note 10 trong 2627-1/index.html")
+
+Đính chính: mục cổng Giai đoạn I ghi "`index.html` đã có liên kết ghi chú Bài 10 từ trước" là SAI — điều phối viên dựa vào nhật ký cũ mà không kiểm. Thẻ Bài 10 đã bị gỡ ở commit `5261d04` (giới hạn index vào các bài đã hoàn thiện). Điều phối viên thêm thẻ Bài 10 theo yêu cầu trực tiếp của người dùng: nhóm **Ghi chú bài giảng** liên kết `material-viewer.html?doc=materials/lec-10/lecture-note.md&deck=lecture-10-trpo-va-ppo.html` (ghi chú đã qua cổng Giai đoạn I); **Bài giảng**, **Bài tập**, **Thực hành** ghi `Chưa có` (bộ trang chiếu đang được làm lại ở Giai đoạn II; chưa có `exercises.md` và notebook). Không liên kết tệp quy trình. Kiểm Playwright 1600×900 và 390×844: 10 thẻ, 0 yêu cầu lỗi, `scrollWidth` 375 ở 390 px; bấm "Mở ghi chú" mở đúng "Bài 10 — TRPO và PPO", 0 lỗi KaTeX; điều phối viên xem ảnh chụp thẻ.
