@@ -415,3 +415,15 @@ Kế hoạch: 7 mạch (mạch N = Mục N của ghi chú với N = 2…7; Mục
 ### Đính chính và cập nhật `index.html` (yêu cầu người dùng: "chưa thấy lecture note 10 trong 2627-1/index.html")
 
 Đính chính: mục cổng Giai đoạn I ghi "`index.html` đã có liên kết ghi chú Bài 10 từ trước" là SAI — điều phối viên dựa vào nhật ký cũ mà không kiểm. Thẻ Bài 10 đã bị gỡ ở commit `5261d04` (giới hạn index vào các bài đã hoàn thiện). Điều phối viên thêm thẻ Bài 10 theo yêu cầu trực tiếp của người dùng: nhóm **Ghi chú bài giảng** liên kết `material-viewer.html?doc=materials/lec-10/lecture-note.md&deck=lecture-10-trpo-va-ppo.html` (ghi chú đã qua cổng Giai đoạn I); **Bài giảng**, **Bài tập**, **Thực hành** ghi `Chưa có` (bộ trang chiếu đang được làm lại ở Giai đoạn II; chưa có `exercises.md` và notebook). Không liên kết tệp quy trình. Kiểm Playwright 1600×900 và 390×844: 10 thẻ, 0 yêu cầu lỗi, `scrollWidth` 375 ở 390 px; bấm "Mở ghi chú" mở đúng "Bài 10 — TRPO và PPO", 0 lỗi KaTeX; điều phối viên xem ảnh chụp thẻ.
+
+Bước A (outline, storyboard): chấp nhận có điều kiện. 90 trang duy nhất, 120 phút (12 + 23 + 14,5 + 22,5 + 13,5 + 25,5 + 9), trang tiêu đề mạch `L10-200`…`L10-700`. Quyết định: chấp nhận phụ đề `h2` trên bìa và luận đề bỏ cụm "critic và GAE đổi phương sai lấy độ chệch" (vượt điều ghi chú khẳng định); tên tiếng Anh dồn sang trang mục tiêu `L10-104`; được tách lại trang gộp nếu đáy trang vượt khung; `topic-04` (bổ sung) và `topic-24` (đọc thêm) mỗi chủ đề một dòng; lệch thứ tự Ví dụ 10.9 trước Mệnh đề 10.15 đã ghi ở II.1. Ngoại lệ mật độ: chấp nhận `L10-105` (Nội dung 8 dòng: bảy mạch + dòng đọc trước, như `L09-02b`), `L10-702` (bảng tổng kết 9 hàng), giả mã 7–10 dòng trên trang riêng (`L10-209`, `215`, `308`, `506`, `507`, `612`; quy tắc: giả mã > 8 dòng có trang riêng); BÁC `L10-101` (bìa 82 âm tiết) và `L10-109` (≈ 85 âm tiết, vượt trần 80 của trang tổng hợp) — phải rút về ≤ 60 và ≤ 80 hoặc tách.
+
+### Giai đoạn II.3 — Cổng storyboard
+
+| vai | loại tác tử | mô hình (từ lời gọi công cụ) | effort |
+|---|---|---|---|
+| kiểm cổng storyboard (chỉ đọc) | general-purpose | opus | high |
+
+### Bỏ mục "Bản đồ chủ đề (bốn nhóm)" khỏi ghi chú (yêu cầu người dùng 04-11-2026)
+
+Yêu cầu: "lecture note bỏ phần 'Bản đồ chủ đề (bốn nhóm)', quá nhiều không cần thiết". Yêu cầu người dùng đứng trên `AGENTS.md` và `prompt_lecture_note_deck.md` (quy định bản đồ chủ đề trong ghi chú). Điều phối viên xóa cơ học toàn bộ mục (63 dòng: bốn bảng nhóm, tiểu mục "Bảy phần của chương" và dòng "Đọc trước"), không viết lại câu nào, nên không giao tác tử biên tập; nội dung "Bảy phần" đã có ở Mục 1.1 (hình cấu trúc chương và câu trả lời có điều kiện cho từng mục). Giữ 24 chú thích `note-topic-id` trong thân chương để ánh xạ với `data-slide-id`; bảng phân nhóm bốn nhóm vẫn nằm trong `planning/lec-10/outline.md`. Không còn câu nào trong ghi chú trỏ tới bản đồ chủ đề (grep). Viewer 1600 px: mục lục bắt đầu "Mục tiêu học tập, Kiến thức tiên quyết, Bảng ký hiệu, 1. Hai giới hạn của REINFORCE…", 0 lỗi KaTeX; `git diff --check` sạch.
