@@ -472,3 +472,20 @@ Phát hiện lan sang ghi chú (đã duyệt, commit `1c9ef05`): vai toán chỉ
 Lỗi hiển thị có từ trước, ngoài phạm vi: ở 390×844, dòng dẫn trang tiêu đề mạch bị cắt mép phải do quy tắc `@media (max-width: 760px) { … .strand-lead { max-width: none } }` trong `lecture-course.css` (vai mạch thấy cùng lỗi ở Bài 09); sửa cần kiểm cả 12 deck — báo người dùng.
 
 Sửa ghi chú theo phát hiện D1 của vai toán: chấp nhận. Đoạn sau Hệ quả 10.31 nay dùng nghiệm chính xác ($p_A\approx0{,}571$, $p_B\approx0{,}824$, $\chi_{\pi_{k+1}}\approx0{,}472$, cận $\approx-3{,}91$, $\Delta J\approx0{,}299$; tính lại bằng KKT, ràng buộc chặt) và nêu vì sao khác phạt $3{,}31$ của Hệ quả 10.27; Ví dụ 10.4 so số bước còn lại thật $-G_t$ với kỳ vọng $-v_\pi(S_t)$: $(5;12),(4;10),(3;12),(2;10),(1;6)$. Vai toán rà lại: ĐẠT. Viewer 0 lỗi KaTeX ở 1600 và 390 px; `git diff --check` sạch. Trang `L10-412` của deck sửa theo trong vòng biên tập deck.
+
+| góc nhìn sinh viên + đo mật độ (D1) | ĐẠT | 0 | 0 | 14 | 18 |
+|---|---|---|---|---|---|
+
+(Bảng bổ sung vai thứ năm của D1.) Vai sinh viên giải lại mọi ví dụ và mọi bài có "Lời giải:" (khớp); đáy lớn nhất 680 px; 0 tràn ngang, 0 `.katex-error`, 0 lỗi trang/yêu cầu; chữ nhỏ nhất 0,75em; bàn phím đúng. Vượt mật độ: `L10-617` (66), `L10-613` (61), `L10-609` (dòng 21 âm tiết) — đều dưới 1,5× trần.
+
+Quyết định hợp nhất D1 (E1–E11, `scratchpad/deckreview/d1-decisions.md`): E1 `L10-412` theo ghi chú đã sửa ($-3{,}91$); E2 số hiệu một lần trên mọi trang kết quả; E3 ký hiệu nêu tại chỗ; E4 Jin và cộng sự đúng dạng $\liminf$ với giả thiết quyết định; E5 bỏ hình Bài 08 ở `L10-307`, dữ kiện chuỗi hai trạng thái thành chữ; E6 mật độ (hàng tiêu đề bảng không tính là dòng); E7 hành trình khái niệm, dòng "Tính …" cho 11 trang ví dụ; E8 "Đầu ra:" và điều kiện dừng cho giả mã TRPO, PPO; E9 các điều kiện thiếu; E10 câu nối và đối chiếu `L10-109`/`L10-707`, nối Bài 11 có SPO và SAM+PPO; E11 ghi chú diễn giả theo `no-ai-slop`. Lỗi CSS dòng dẫn ở 390 px để ngoài phạm vi.
+
+### Giai đoạn II.5 — Biên tập bộ trang chiếu sau D1
+
+| vai | loại tác tử | mô hình (từ lời gọi công cụ) | effort | phạm vi ghi |
+|---|---|---|---|---|
+| biên tập deck (editor duy nhất) | general-purpose | opus | high | deck HTML, rồi `storyboard.md`, `outline.md` |
+
+### Video minh họa PPO trên `index.html` (yêu cầu người dùng 04-11-2026)
+
+Yêu cầu: "Thêm video này vào website 2627-1/index.html (lecture 10 để minh hoạ PPO)", tệp do người dùng tải lên. Ghi nhận phê duyệt của người dùng cho tài nguyên không phải SVG (video), theo `../CLAUDE.md` §"Maths and figures". Tệp: `2627-1/materials/lec-10/minh-hoa-ppo-mario.mp4` (205 KB, H.264 256×240, 60 khung/giây, 17,6 giây, không tiếng; nội dung kiểm bằng lưới khung trích bằng ffmpeg của `imageio_ffmpeg`: tác tử chơi màn 1-1 của Super Mario Bros trên NES). Thẻ Bài 10 thêm mục "Minh họa PPO" trải hết bề ngang nhóm tài nguyên: `<video controls muted loop playsinline preload="metadata">` có liên kết dự phòng, chú thích "Tác tử chơi màn 1-1 của Super Mario Bros (NES) theo chính sách học bằng PPO; video không tiếng, dài 17,6 giây." (chỉ nêu điều người dùng cung cấp, không thêm số liệu huấn luyện) và liên kết tải. Đây là nhóm thứ năm ngoài bốn nhóm quy định của thẻ, theo yêu cầu người dùng. CSS mới trong `material-index-course.css` (chỉ `index.html` nạp tệp này): `.resource-item--wide`, `.resource-video` (rộng tối đa 384 px, `image-rendering: pixelated`). Kiểm Playwright Chromium 1600×900 và 390×844: video `readyState` 4, thời lượng 17,58 s, rộng 384 px và 271 px, 0 yêu cầu lỗi, `scrollWidth` 375 ở 390 px; điều phối viên xem ảnh chụp thẻ. Giới hạn: Chromium của Playwright không giải mã H.264 khi tua, WebKit/Firefox của Playwright chưa cài, nên chưa phát thử toàn bộ video trong trình duyệt tự động; trình duyệt phổ thông hỗ trợ H.264 trong MP4.

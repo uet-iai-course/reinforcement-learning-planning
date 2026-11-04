@@ -53,3 +53,32 @@
 .resource-alt:hover {
   color: var(--accent-dark);
 }
+
+/* Mục minh họa bằng video, trải hết bề ngang nhóm tài nguyên. */
+.resource-item--wide {
+  grid-column: 1 / -1;
+}
+
+.resource-video {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.resource-video video {
+  display: block;
+  width: 100%;
+  max-width: 384px;
+  height: auto;
+  border-radius: 10px;
+  background: #000;
+  image-rendering: pixelated;
+}
+
+.resource-video figcaption {
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  text-align: center;
+}
