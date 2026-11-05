@@ -528,3 +528,43 @@ Sửa sau kiểm định cuối: chấp nhận. Ghi chú diễn giả `L10-400` 
 ### Video minh họa PPO thứ hai trên `index.html` (yêu cầu người dùng 05-11-2026)
 
 Yêu cầu: "Thêm video này vào 2627-1/index.html", tệp người dùng tải lên `step_008003584.mp4`; ghi nhận phê duyệt của người dùng cho tài nguyên video. Tệp: `2627-1/materials/lec-10/minh-hoa-ppo-mario-2-4.mp4` (114 KB, H.264 256×240, 60 khung/giây, 12,75 giây, không tiếng; lưới khung trích bằng ffmpeg: màn 2-4 lâu đài của Super Mario Bros, dung nham, thanh lửa, kết thúc ở cầu cuối màn). Mục "Minh họa PPO" của thẻ Bài 10 nay xếp hai video trong lưới `.resource-video-grid` (hai cột ở màn rộng, một cột ở màn hẹp), mỗi video có chú thích ghi màn chơi và liên kết tải riêng; chú thích video thứ hai ghi "tên tệp gốc ghi mốc 8 003 584 bước" (chỉ dẫn tên tệp, không suy thêm). Kiểm Playwright 1600×900 và 390×844: hai video `readyState` 4 (17,58 s và 12,75 s), rộng 267/271 px, 0 yêu cầu lỗi, `scrollWidth` 375 ở 390 px; điều phối viên xem ảnh chụp thẻ.
+
+## Giai đoạn III — Bài tập `exercises.md` (yêu cầu người dùng 05-11-2026)
+
+Yêu cầu: "tiếp tục làm bài tập cho lecture 10"; "lấy nguồn bài tập Sutton & Barto". Theo `prompt_lecture_note_deck.md` Giai đoạn III: một writer → ba vai rà soát song song (toán–thuật toán, sinh viên, sư phạm + `no-ai-slop` Detect) → sửa → rà lại → cổng → thêm nhóm **Bài tập** vào thẻ index → commit, push. Số hiệu dùng chung bộ đếm với ghi chú: ghi chú có Bài tập 10.1–10.12, nên `exercises.md` bắt đầu từ Bài tập 10.13; không lặp đề Bài tập củng cố.
+
+Nguồn ứng viên (Sutton và Barto, 2018), loại trừ các bài Bài 09 đã dùng (6.13, 13.1, 13.2, 13.3, 13.5): mạch 2 — Bài tập 6.1, 7.6, 13.4; mạch 3 — 7.1, 12.1, 12.2, 12.3, 12.7, 12.8; mạch 4 — 5.5, 5.6, 5.13, 7.4–7.6. Sách không có bài tập về TRPO, gradient tự nhiên, PPO; các mạch đó trỏ Bài tập củng cố của ghi chú hoặc dùng mở rộng có căn cứ của một bài trong sách.
+
+| vai | loại tác tử | mô hình (từ lời gọi công cụ) | effort | phạm vi ghi |
+|---|---|---|---|---|
+| soạn `exercises.md` | general-purpose | opus | high | `2627-1/materials/lec-10/exercises.md` |
+
+Bản nháp `exercises.md`: chấp nhận để đưa vào rà soát. 9 bài, Bài tập 10.13–10.21, nguồn Sutton và Barto (2018): 10.13 Bài tập 12.2 tr. 290 (mở rộng sang GAE); 10.14 Bài tập 3.15–3.16 tr. 61; 10.15 Bài tập 6.1 tr. 121; 10.16 Bài tập 7.6 tr. 150–151 (mở rộng: dịch lợi thế trong PPO); 10.17 Bài tập 5.13 tr. 114–115 (mở rộng: hàm thay thế); 10.18 Bài tập 12.8 tr. 309; 10.19 Bài tập 13.4 tr. 335–336 (mở rộng: Fisher, gradient tự nhiên, tỉ số PPO cho chính sách Gaussian); 10.20 Hình 13.2 tr. 330–331 (lập trình); 10.21 Bài tập 3.15–3.16 (mở rộng: PPO trên CartPole). Không bài nào trùng bài tập trên trang chiếu. Writer kiểm viewer 1600 và 390 px: 0 `.katex-error`, 27 khối, 18 liên kết `#/h/v` mở đúng trang; tự kiểm `no-ai-slop` Edit. Bản cố định E1: sha1 `869139e19f3a…`.
+
+| vai rà soát E1 | loại tác tử | mô hình (từ lời gọi công cụ) | effort |
+|---|---|---|---|
+| độ chính xác toán học–thuật toán (tính lại mọi lời giải) | general-purpose | opus | high |
+| góc nhìn sinh viên | general-purpose | opus | high |
+| phản biện sư phạm + `no-ai-slop` Detect | general-purpose | opus | high |
+
+Kết quả E1:
+
+| vai | kết luận | chặn | nghiêm trọng | trung bình | nhẹ |
+|---|---|---|---|---|---|
+| toán học–thuật toán | CHƯA ĐẠT | 0 | 1 | 2 | 5 |
+| góc nhìn sinh viên | ĐẠT | 0 | 0 | 3 | 10 |
+| sư phạm + `no-ai-slop` Detect | CHƯA ĐẠT | 0 | 1 | 2 | 13 |
+
+Nghiêm trọng: (1) 10.13 dịch "half-life" thành "nửa chu kỳ" → "chu kỳ bán rã (half-life)"; (2) 10.20(c) "16/100 lần tràn số trong 21 lượt đầu" không tái lập được vì đề không định nghĩa tràn số (vai toán: theo tiêu chí `OverflowError`/không hữu hạn vẫn 16 lần nhưng ở lượt 8–272, các lần còn lại $-11{,}92$ chứ không $-12{,}04$). Trung bình: 10.18 "Kiểm tra lại" lệch biểu thức (2,2862); 10.15(c) điều kiện hiệu chỉnh; 10.20(c) với $\alpha_w=2^{-9}$ ≈ 1% lần chạy kẹt ở $p\to1$; liên kết Bài tập củng cố chưa có neo; 10.16(a) dẫn (7.13) không viết ra; đoạn mở đếm sai số bài mở rộng; 10.14(a) lặp Ví dụ 10.1. Đạt: mọi số khác khớp (vai toán viết lại 10.20 độc lập, ba cấu hình seed 2026, 2027, 2029 trùng từng chữ số); số bài, số trang Sutton và Barto và dấu đúng so với PDF; 33 số hiệu ghi chú đúng; không bài nào lặp Bài tập củng cố 10.1–10.12; viewer 0 `.katex-error`, 18 liên kết deck đúng. Quyết định: mọi số thực nghiệm phải tái lập được từ mã và seed ghi trong tệp; liên kết ghi chú dùng neo `#bai-tap-cung-co`. Giao writer (cùng tác tử) sửa.
+
+Sửa sau E1: chấp nhận. Mọi phát hiện nghiêm trọng, trung bình và nhẹ đã sửa, không bác (bảng `scratchpad/ex10/e1-disposition.md`). 10.13 dùng "chu kỳ bán rã (half-life)"; $h=2048$, $h=128$ dẫn Schulman và cộng sự (2017) Bảng 3/5. 10.20(c) nêu tiêu chí tràn số và cách chạy, có mã tham chiếu đầy đủ; writer chạy lại: $\alpha_w=2^{-6}$ (seed 2028) 16 lần tràn ở lượt 7–272, 84 lần còn lại đạt $-11{,}92$ (0,12) ở lượt 901–1000; $\alpha_w=2^{-9}$ không tràn, seed 1–10 có 6/1000 lần kẹt (4 gần $p\approx0$, 2 gần $p\approx1$) — ghi 6/1000 theo kết quả tái lập, không ghi 1%. 10.14(a) thay bằng $c=-1$ (phương sai $0$), $c=2$ (phương sai $4$) — điều phối viên kiểm: $\tfrac49(c+1)^2$. Viewer 1600 và 390 px: 0 `.katex-error`, không tràn (chỉ hai khối mã cuộn trong khung), 18 liên kết deck và neo `#bai-tap-cung-co` đúng. Bản cố định E2 gửi lại vai toán và vai sư phạm (hai vai có phát hiện nghiêm trọng) rà phần đã đổi.
+
+Kết quả E2: toán ĐẠT (8/8 phát hiện E1 đúng; trích nguyên mã tham chiếu 10.20 và chạy lại: seed 2026–2029 khớp từng chữ số, $\alpha_w=2^{-6}$ 16 lần tràn ở lượt 7–272, 84 lần $-11{,}92$ (0,12), seed 1–10 6/1000 lần kẹt; mọi số mới khớp; 2 nhẹ); sư phạm + `no-ai-slop` ĐẠT (16/16 phát hiện E1 đúng; 2 nhẹ). **Cổng nội dung bài tập: đạt** sau khi sửa các điểm nhẹ. Việc kèm theo, chạy song song trên tệp khác nhau: writer bài tập sửa điểm nhẹ và thêm ánh xạ Bài tập 10.13–10.21 vào Mục 7.5 của ghi chú (theo tiền lệ Bài 09); editor deck cập nhật `L10-709` (bảng `Mạch | Bài tập` theo `exercises.md`, liên kết "Ghi chú bài giảng · Bài tập") và storyboard.
+
+Sửa nhẹ sau E2 và cập nhật ghi chú: chấp nhận. `exercises.md`: N1, N2, dấu ở 10.15(d), câu về lần chạy thoát chậm ở hạt giống 8 trong 10.20(c). Điều phối viên chạy lại độc lập đúng mã tham chiếu trong tệp (cách thứ hai, $\alpha_\theta=\alpha_w=2^{-9}$, hạt giống 8): lần chạy 35 có 40/100 lượt cuối bị cắt, $p=0{,}246$; trung bình lượt 901–1000 $-16{,}18$ (sai số chuẩn $4{,}16$) — khớp. Ghi chú: dòng quy ước số hiệu nêu Bài tập 10.13–10.21 thuộc tệp bài tập; Mục 7.5 thêm cột "Tệp bài tập" và liên kết viewer `exercises.md`; không câu nào khác đổi. Viewer hai tệp ở 1600 và 390 px: 0 `.katex-error`, không tràn ngang.
+
+Cập nhật deck theo `exercises.md`: `L10-709` bảng `Mạch | Bài tập | Bài tập củng cố (ghi chú)` (mạch 1 gộp mạch 2), `L10-710` thêm "Ghi chú bài giảng · Bài tập" tới hai URL viewer; storyboard đồng bộ. Rà lại `L10-707`–`L10-710` (vai mạch, cùng tác tử D1/D2): ĐẠT có điều kiện — 1 trung bình (Mục 7.5 ghi chú lệch: 10.3 và thiếu 10.14, 10.21) và 1 nhẹ (ghi chú `L10-707` lặp số hiệu); cả hai đã sửa (writer bài tập sửa Mục 7.5; editor deck sửa `L10-707`). Điều phối viên đối chiếu bằng script ba bảng (đầu `exercises.md`, Mục 7.5 ghi chú, `L10-709`): khớp từng bài — mạch 1: 10.14; 2: 10.14–10.16, 10.20, 10.21 | 10.1, 10.4, 10.5, 10.10; 3: 10.13, 10.15, 10.18 | 10.6, 10.7; 4: 10.16–10.18 | 10.11; 5: 10.19 | 10.8, 10.9; 6: 10.16, 10.19, 10.21 | 10.2, 10.12; 7: 10.21 | 10.3.
+
+Kiểm cổng Giai đoạn III (điều phối viên, Playwright): viewer `exercises.md` 1600×900 và 390×844 — 0 `.katex-error`, 0 công thức cuộn, 0 `:::` thô, 0 yêu cầu lỗi, 0 yêu cầu ra ngoài, `scrollWidth` 375 ở 390 px; 18 liên kết deck `#/h/v` mở đúng `L10-101`, `200`, `210`, `216`, `300`, `309`, `400`, `413`, `414`, `500`, `509`, `510`, `600`, `619`, `620`, `700`, `705`, `706`; `index.html` "Mở bài tập" mở đúng "Bài tập Bài 10 — TRPO và PPO", 0 lỗi KaTeX; `git diff --check` sạch. Giới hạn: viewer không cuộn tới neo `#bai-tap-cung-co` khi mở trang mới (nội dung dựng bất đồng bộ, `material-viewer.js` không xử lý hash sau khi dựng; sửa viewer đụng tệp đang có thay đổi chưa commit của người khác) — liên kết vẫn mở đúng ghi chú, chữ liên kết ghi "(mục Bài tập củng cố, cuối ghi chú)".
+
+**Cổng Giai đoạn III: đạt.** `index.html`: nhóm **Bài tập** của thẻ Bài 10 liên kết `material-viewer.html?doc=materials/lec-10/exercises.md&deck=lecture-10-trpo-va-ppo.html`.

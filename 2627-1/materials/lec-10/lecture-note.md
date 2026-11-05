@@ -15,7 +15,7 @@ Sau chương này, người học có thể:
 <!-- note-topic-id: lec-10-topic-01 -->
 ## Kiến thức tiên quyết
 
-Số hiệu `09.k` chỉ ghi chú Bài 09, trừ Bài tập 09.11–09.20 thuộc tệp bài tập `exercises.md` của Bài 09; tương tự, `03.k`, …, `08.k` chỉ ghi chú Bài 03–08. Mỗi kết quả dưới đây được phát biểu lại ở dạng dùng được ngay.
+Số hiệu `09.k` chỉ ghi chú Bài 09, trừ Bài tập 09.11–09.20 thuộc tệp bài tập `exercises.md` của Bài 09; tương tự, `03.k`, …, `08.k` chỉ ghi chú Bài 03–08. Bài tập 10.13–10.21 thuộc tệp bài tập `exercises.md` của Bài 10. Mỗi kết quả dưới đây được phát biểu lại ở dạng dùng được ngay.
 
 - **Tính Markov, giá trị hành động theo giá trị trạng thái** (Bổ đề 03.20, Mệnh đề 03.22, 03.23). Với chính sách Markov dừng $\pi$, khi biết lịch sử tới $S_t=s$ và $A_t=a$, phần tương lai của lượt chỉ phụ thuộc $(s,a)$, và lợi tức $G_t$ có kỳ vọng $q_\pi(s,a)$. Giá trị hành động và giá trị trạng thái liên hệ bởi
   $$\begin{aligned}&q_\pi(s,a)=r(s,a)\\&\quad+\gamma\sum_{s'}P(s'\mid s,a)\,v_\pi(s'),\\&v_\pi(s)=\sum_a\pi(a\mid s)\,q_\pi(s,a),\end{aligned}$$
@@ -2134,16 +2134,17 @@ Lời giải ngắn.
 
 ### 7.5 Bài tập theo mục
 
-Mười hai bài tập củng cố của chương nằm ở mục "Bài tập củng cố" cuối tệp, theo ba mức, mỗi bài có gợi ý và lời giải.
+Mười hai bài tập củng cố của chương nằm ở mục "Bài tập củng cố" cuối tệp, theo ba mức, mỗi bài có gợi ý và lời giải. Bộ bài tập chính thức của bài, Bài tập 10.13–10.21, nằm ở [tệp bài tập Bài 10](material-viewer.html?doc=materials/lec-10/exercises.md&deck=lecture-10-trpo-va-ppo.html); các bài này phát biểu lại hoặc mở rộng bài tập và ví dụ của Sutton và Barto (2018), §3.5, §5.9, §6.1, §7.4, §12.1, §12.9, §13.4 và §13.7, có gợi ý và lời giải. Cột thứ ba của bảng ghi các bài của tệp bài tập theo mục.
 
-| Mục | Bài tập |
-|---|---|
-| 2. Đường cơ sở, lợi thế, actor–critic | 10.1, 10.4, 10.5, 10.10 |
-| 3. GAE | 10.6, 10.7 |
-| 4. Hàm thay thế và chặn cải thiện | 10.11 |
-| 5. TRPO và gradient tự nhiên | 10.8, 10.9 |
-| 6. PPO | 10.2, 10.12 |
-| Mục 4–6, các kết quả có bảo đảm | 10.3 |
+| Mục | Bài tập | Tệp bài tập |
+|---|---|---|
+| 1. Hai giới hạn của REINFORCE | — | 10.14 |
+| 2. Đường cơ sở, lợi thế, actor–critic | 10.1, 10.4, 10.5, 10.10 | 10.14, 10.15, 10.16, 10.20, 10.21 |
+| 3. GAE | 10.6, 10.7 | 10.13, 10.15, 10.18 |
+| 4. Hàm thay thế và chặn cải thiện | 10.11 | 10.16, 10.17, 10.18 |
+| 5. TRPO và gradient tự nhiên | 10.8, 10.9 | 10.19 |
+| 6. PPO | 10.2, 10.12 | 10.16, 10.19, 10.21 |
+| 7. Tổng kết và chuyển tiếp | 10.3 | 10.21 |
 
 <!-- note-topic-id: lec-10-topic-24 -->
 ### 7.6 Chuyển tiếp: Phần II và các biến thể mới
