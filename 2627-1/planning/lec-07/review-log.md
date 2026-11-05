@@ -1502,3 +1502,94 @@ Vai: biên tập nhỏ kế hoạch (Agent `general-purpose`, Opus 5.5, effort h
 Ghi chú khớp `exercises.md`, không cần sửa. Outline không có số sai, chỉ thiếu ba số; đã thêm. Không đổi số bài trong thân chương, không đổi câu chữ mục tiêu (outline giữ dạng rút gọn, "07.1–07.3" tương đương "07.1, 07.2, 07.3" của ghi chú).
 
 Kiểm tra: `git diff --check` sạch; `git diff --stat` chỉ gồm `outline.md` và `review-log.md`.
+
+## Đợt sửa 2026-10-16 — Chủ đề mạch và gắn kết trang
+
+Phạm vi: dòng dẫn và từ khóa của trang tiêu đề mạch, câu nối giữa các trang và nhãn, theo danh sách sửa S1–S15 do điều phối viên duyệt sau hai rà soát chỉ đọc. Không đổi vị trí trang, `data-slide-id`, số mạch, tên mạch (`h2` của trang tiêu đề mạch), tiêu đề `X02`/`X02b`; không sửa `lecture-note.md`, `exercises.md`, CSS, SVG, `index.html`. Không commit. Bản trước đợt sửa lưu trong scratchpad của phiên (`lecture-07.before.html`, `storyboard.before.md`).
+
+| Vai | Loại tác tử | Mô hình | Mức | Ghi chú |
+|---|---|---|---|---|
+| Rà soát mạch lập luận (chỉ đọc) | Agent `general-purpose` | `claude-opus-5-5` | high | báo cáo cho điều phối viên |
+| Rà soát sư phạm–sinh viên (chỉ đọc) | Agent `general-purpose` | `claude-opus-5-5` | high | báo cáo cho điều phối viên |
+| Biên tập deck (tác tử duy nhất ghi tệp) | Agent `general-purpose` | `claude-opus-5-5` | high | đợt này |
+| Điều phối viên | phiên chính | `claude-opus-5-5` | — | ngoại lệ: dùng Opus 5.5 thay Fable 5.1 theo yêu cầu rõ của người dùng ngày 2026-10-16 |
+
+Kết luận rà soát: cả 7 mạch có chủ đề chính, không trang nào lạc hẳn; 0 chặn bàn giao, 0 nghiêm trọng. Trung bình: `X02`/`X02b` (vai trò trong mạch Sarsa chưa nói trên trang), `L07-10`/`L07-10b` (nhu cầu lấy từ mạch 5 chưa dạy), dòng dẫn `L07-M2T` (chưa nêu đủ chủ đề mạch), `L07-12` (dùng $w'$ chỉ tính ở `L07-14`). Các mục còn lại nhẹ.
+
+| mã | trang | mức | trạng thái | xử lý |
+|---|---|---|---|---|
+| S1 | `L07-M2T` | trung bình | đã sửa | Dòng dẫn "Muốn ước lượng giá trị trên không gian trạng thái lớn, phải dùng tham số chung, chọn đặc trưng và tiêu chí sai số." (24 âm tiết; câu gợi ý của brief 26 âm tiết, vượt trần 25). Từ khóa "Tham số dùng chung · Mức lan · Sai số giá trị · Đặc trưng bốn khối · Nhập nhằng". Ghi chú 96 âm tiết, nêu đặc trưng bốn khối dùng lại ở mạch Sarsa và Q-learning |
+| S2 | `L07-03c` | nhẹ | đã sửa | Dòng mạch 2 thêm "sai số xấp xỉ do đặc trưng quyết định", song song `L07-36d`; dòng 19 âm tiết, trang 75 (trần 80) |
+| S3 | `L07-10`, ghi chú `L07-26` | trung bình | đã sửa | "Nhu cầu: Sarsa, Q-learning (Bài 06) cần $\hat q(s,a,w)=x(s,a)^\top w$; đặc trưng ${x(s,a)=(\phi(s);\mathbf 1_a)}$ cho cùng thứ tự hành động ở mọi trạng thái." Ghi chú `L07-26` thêm câu: đặc trưng của cặp lấy từ mạch 2, khối Kronecker cho phép thứ tự hành động đổi theo trạng thái; bỏ hai chú thích nguồn trong câu (đã ở dòng Nguồn) để giữ 144 âm tiết |
+| S4 | `X02` | trung bình | đã sửa | "Câu hỏi: mục tiêu Monte Carlo làm đối chứng cho mục tiêu Sarsa trên cùng chuyển đầu $(\mathrm D,0,-1,\mathrm C)$." Dữ kiện sang dòng riêng; (a), (b) gộp một dòng; 6 dòng, 34 âm tiết. Dữ kiện, câu hỏi (a)–(d), lời giải `X02b` và "Diễn giải:" của `X03b` giữ nguyên |
+| S5 | `L07-M4T` | nhẹ | đã sửa | "… và xác định điểm mà cập nhật hướng tới." Từ khóa "Sai số TD · Bán gradient · Điểm cố định Bellman chiếu · Tsitsiklis–Van Roy · So sánh với Monte Carlo"; bỏ "Phân phối dừng" (tiên quyết) |
+| S6 | `L07-M6T` | nhẹ | đã sửa | "Muốn học giá trị tối ưu từ dữ liệu thăm dò, phải học khác chính sách bằng mục tiêu cực đại." (21 âm tiết). Ghi chú 98 âm tiết: ví dụ phân kỳ là TD(0) khác chính sách; ví dụ có xấp xỉ hàm, mục tiêu bootstrap, dữ liệu khác chính sách, đúng ba yếu tố Q-learning cũng có |
+| S7 | `L07-M7T` | nhẹ | đã sửa | Từ khóa "Kết quả và giả thiết · Khung cập nhật · Phạm vi hội tụ · Bài tập tổng hợp · Mạng nơ-ron (Bài 08)". Ghi chú: "hai định lý hội tụ cho dự đoán, hai quy tắc điều khiển không có bảo đảm chung và một ví dụ phân kỳ" (khớp `L07-34`: Monte Carlo, TD(0) hội tụ; Sarsa, Q-learning không bảo đảm chung); câu siêu ngôn ngữ thay bằng "Bảo đảm chỉ phủ bài toán dự đoán với chính sách cố định." |
+| S8 | `L07-12`, ghi chú `L07-14` | trung bình | đã sửa | Bỏ $w'$ và $y^{\mathrm{TD}}(w')=2{,}62$ khỏi mặt trang; giữ $y^{\mathrm{TD}}(w)=1{,}9$. "Nhu cầu: tính $J_\mu$ cần $v_\pi$; $504\,869$ chuyển thuộc lượt kết thúc của Lunar Lander chỉ cho $G_t$." "Diễn giải: mục tiêu TD (còn gọi là mục tiêu một bước) đổi theo $w$; lợi tức thì không." Tính lại: $w_{n+1}=(1;-1)+0{,}1\cdot4\cdot(2;1)=(1{,}8;-0{,}6)$; $1+0{,}9\cdot(1\cdot1{,}8+0\cdot(-0{,}6))=2{,}62$; $x(S_{t+1})^\top w=1$ nên $y^{\mathrm{TD}}(w)=1{,}9$. Ý "sau cập nhật mục tiêu TD thành $2{,}62$, $G_t$ vẫn bằng $5$" đặt ở ghi chú `L07-14`; ghi chú `L07-12` sửa theo |
+| S9 | `L07-32c`, `L07-34` | nhẹ | đã sửa | `L07-32c` còn một dòng kết; dòng nguồn §11.2 bỏ khỏi mặt trang (ghi chú đã có nguồn). Ghi chú thêm: Q-learning không dùng $\rho$ nhưng cũng cập nhật theo phân phối của chính sách hành vi. `L07-34`: bỏ "(§11.2)" ở hàng Q-learning; ghi chú đã dẫn Sutton và Barto (2018, §11.2) |
+| S10 | `L07-32` | nhẹ | đã sửa, một phần | Câu chốt "Khi đủ ba yếu tố, không có bảo đảm hội tụ chung." Vế "tham số có thể phân kỳ" của câu gợi ý không đặt lên mặt trang: trang lên 67 âm tiết, vượt trần 60; mọi cách rút khác đều phải sửa định nghĩa theo ghi chú (Định nghĩa 07.38). Hình tam giác đã ghi "có thể phân kỳ"; ghi chú nêu dấu hiệu phân kỳ. Trang 60 âm tiết |
+| S11 | `L07-36c` | nhẹ | đã sửa | "Chung:" → "**Nhắc lại:**" |
+| S12 | `L07-36`, `L07-36b` | nhẹ | đã sửa | "Kết quả và giả thiết: biểu diễn và Monte Carlo" (mức lan, nhập nhằng, Monte Carlo là SGD) và "Kết quả và giả thiết: TD(0) và phân kỳ" (hướng trung bình TD(0), Bellman chiếu, phân kỳ trong ví dụ hai trạng thái) |
+| S13 | `L07-35` | nhẹ | đã sửa, một phần | "Câu hỏi: Q-learning, bốn khối, Fourier đầy đủ bậc 3 trên $4$ đại lượng (${k=4^4=256,\ m=2}$), bước hằng; áp năm bước:". Đối chiếu: ghi chú dòng 1687 ($k=256$), notebook Flappy Bird ô họ đặc trưng (`four3`, $c\in\{0,1,2,3\}^4$, "Cơ sở Fourier đầy đủ bậc 3 trên 4 biến có $4^4=256$ thành phần", bốn đại lượng dẫn xuất $(\Delta x,\Delta y,v_y,\Delta y_2)$); $156$ của Lunar Lander là họ rút gọn (`L07-09`). Bỏ "bán gradient" ở đề để giữ trần 60 (bước 2 của lời giải nêu lại). Không thêm cụm "năm bước dùng lại các phân biệt đã học": dòng đầu 18 âm tiết, trang đúng 60; ghi chú diễn giả đã có ý này |
+| S14 | `L07-29` | nhẹ | đã sửa | Thêm "Flappy Bird, một lần chạy: Sarsa qua $38{,}04\pm1{,}61$ ống, luật tay $34{,}30\pm1{,}30$." Số khớp ghi chú diễn giả `L07-29` và ghi chú bài giảng dòng 1201 (100 lượt kiểm tra, ± là sai số chuẩn, một lần chạy). 46 → 56 âm tiết; số dòng đính chính ở bảng Rà lại (6 → 7, vì bước 4 toàn công thức không được script đếm) |
+| S15 | `storyboard.md` | nhẹ | đã sửa | K1 kiểm tra: "trên trang: không áp dụng", kiểm bằng Bài tập 07.1 (ghi chú) và 07.20 (c) (`exercises.md`). K3 thêm `X03b` câu (b), `L07-35b` bước 1. K4: vấn đề theo "Nhu cầu:" mới, `L07-17` chuyển sang cột hình thức, ứng dụng ghi đúng là ghi chú `L07-16` kèm ngoại lệ; lý do giữ `L07-13` trước `L07-14` (thứ tự ghi chú §2.1–2.2, công thức đã có ở `L07-02`). K8: ứng dụng có dòng `L07-29`. K10: nguồn §11.2 ở ghi chú. Bản đồ mạch 2 nêu chủ đề; mục từng trang của 18 trang đã sửa; bảng ngoại lệ mật độ cập nhật. `outline.md` không có dòng dẫn mạch hay câu trả lời từng mạch tương ứng, không sửa |
+| B1 | `L07-10`, `L07-10b` | — | bác | Chuyển sang mạch 5 hoặc đổi thứ tự trong mạch 2: lệch nguồn tr. 31 và ghi chú §1.4, gãy liên kết `exercises.md` |
+| B2 | `X02`, `X03`, `X03b` | — | bác | Đổi thứ tự `X02`/`X03` hoặc chuyển "Diễn giải:" của `X03b`: lời giải 07.11 trong `exercises.md` (dòng 388) và ghi chú dùng đúng thứ tự và câu diễn giải này |
+| B3 | `L07-11b` | — | bác | Thêm câu (d): lệch Bài tập 07.3 mà `exercises.md` liên kết tới `#/2/12` |
+| B4 | mạch 4, mạch 6 | — | bác | Tách mạch: vượt 5–7 mạch; mỗi mạch đã có một chủ đề chung |
+| B5 | `L07-13`, `L07-14` | — | bác | Đổi chỗ: thứ tự hiện tại theo ghi chú §2.1–2.2; lý do ghi trong storyboard (ghi chú về bước, K4) |
+
+`no-ai-slop` (Edit) cho mọi câu viết mới hoặc sửa: dòng dẫn và từ khóa `L07-M2T`, `L07-M4T`, `L07-M6T`, `L07-M7T`; ghi chú diễn giả `L07-M2T`, `L07-M6T`, `L07-M7T`, `L07-12`, `L07-14`, `L07-26`, `L07-32c`; mặt trang `L07-03c`, `L07-10`, `L07-12`, `X02`, `L07-29`, `L07-32`, `L07-32c`, `L07-34`, `L07-35`, `L07-36`, `L07-36b`, `L07-36c`; các mục storyboard. Tự kiểm theo `eval.md`: không thêm nhận định không nguồn (số Flappy Bird, $k=4^4$, $2{,}62$ đều kiểm với ghi chú, notebook hoặc tính lại); thay câu siêu ngôn ngữ ở ghi chú `L07-M7T`; một tên cho một đối tượng ("ví dụ hai mục tiêu", "ví dụ một cập nhật Monte Carlo", "bộ ba bất ổn"); không câu hỏi tu từ, không "ta thấy"/"chúng ta" trên mặt trang, không câu kết khẩu hiệu; câu ghi chú `L07-26` dạng "X: giải thích" đổi dấu hai chấm thành chấm phẩy. Không dùng điểm của bộ phát hiện AI.
+
+Kiểm tra:
+- Mật độ (`scratchpad/density.py` của phiên, cùng quy tắc `density2.py`; trước → sau trong storyboard, mục "Ngoại lệ mật độ"): mọi trang sửa ≤ 6 dòng trừ `L07-29` (7 dòng, ngoại lệ ghi ở bảng Rà lại), ≤ 20 âm tiết/dòng (dòng dẫn ≤ 25), ≤ 60 âm tiết (`L07-03c` 75 và `L07-34` 74 thuộc trần 80 đã có ngoại lệ). Ghi chú diễn giả: trang tiêu đề mạch 88–98 âm tiết; trang nội dung 103–144, riêng `L07-35` 154 (không đổi, ghi chú lời giải). So toàn deck trước và sau: chỉ các trang trong danh sách đổi số đo.
+- Playwright Chromium, server tĩnh cổng 8799 (gốc kho), 1600×900 và 390×844, duyệt cả 75 trang: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài hoặc hỏng, không cuộn ngang, phím mũi tên chuyển trang; đáy nội dung mọi trang ≤ 702 px trong khung 720 (`L07-12` 661, `L07-36c` 697, `L07-32` 677); sáu trang tiêu đề mạch mang số 2.–7. trùng chỉ số ngang `#/2`–`#/7` (nhãn trang `2 . 1` … `7 . 1`). Cờ rộng ở `L07-22`, `L07-23` là cờ heuristic có sẵn, trang không sửa. Đã xem ảnh 1600×900 của các trang sửa và ảnh 390×844 của `L07-M2T`, `L07-29`.
+- `git diff --check` sạch; `git diff --stat`: deck, `storyboard.md`, `review-log.md`.
+
+### Rà lại và vòng sửa 2 (2026-10-16)
+
+Hai vòng rà lại chỉ đọc (toán–RL; mạch lập luận) không có phát hiện mức trung bình trở lên. Điều phối viên duyệt sáu mục nhẹ R1–R6 và bác hai mục. Biên tập viên vẫn là tác tử ở trên (Agent `general-purpose`, `claude-opus-5-5`, high), `no-ai-slop` Edit cho mọi câu sửa, tự kiểm theo `eval.md`. Không commit.
+
+| nguồn | mã | trang | mức | trạng thái | trước → sau |
+|---|---|---|---|---|---|
+| toán–RL | — | `L07-29` | nhẹ | đã sửa (R4) | "Flappy Bird, một lần chạy: Sarsa qua … ống, luật tay …" → "Flappy Bird, một lần chạy, $100$ lượt (trung bình $\pm$ sai số chuẩn): Sarsa $38{,}04\pm1{,}61$ ống, luật tay $34{,}30\pm1{,}30$." Căn cứ: ghi chú bài giảng dòng 1197, 1201 (dấu ± là sai số chuẩn trên $100$ lượt kiểm tra; tên "luật tay" đúng như ghi chú và notebook) và notebook Flappy Bird ô 38 ("100 lượt mỗi chính sách, cùng tập hạt giống TEST_SEED; trung bình ± SE"). Viết "sai số chuẩn" thay "SE" vì trang không có chỗ giới thiệu chữ viết tắt. Để giữ 60 âm tiết: bước 3 "chọn $A'$ theo $\pi_w$ bằng $w$ hiện tại" → "chọn $A'$ theo $\pi_w$ hiện tại" (cùng nghĩa; ghi chú diễn giả nêu $A'$ chọn bằng $w$ trước cập nhật). Số đo: 1 dòng đầu vào + 5 bước giả mã + 1 dòng ứng dụng = 7 dòng, 60 âm tiết, tối đa 15/dòng. Đính chính S14: trước đợt 6 dòng (không phải 5), sau 7 dòng (không phải 6); ngoại lệ 7 dòng ghi trong storyboard (giả mã đủ 5 bước, dưới ngưỡng 8 dòng phải tách trang) |
+| toán–RL | — | `L07-12` | nhẹ | bác | Giữ $x(S_t)=(2;1)$: cùng mẫu được `L07-14` dùng lại (ví dụ chạy suốt "trạng thái hai đặc trưng"); không thêm câu |
+| toán–RL | — | `L07-32` | nhẹ | đã sửa (R6) | Đếm theo quy tắc CLAUDE.md (token cách trắng, bỏ token chỉ gồm dấu câu, trừ tiêu đề, KaTeX, nhãn hình, ghi chú): 16 + 7 + 8 + 17 + 12 = 60, đúng trần; con số 62 của người rà đến từ bộ đếm khác. Rút câu không thuộc định nghĩa: "Khi đủ ba yếu tố, không có bảo đảm hội tụ chung." → "Khi đủ ba yếu tố, không bảo đảm hội tụ chung." (cách nói như hàng Sarsa, Q-learning của `L07-34`); 59 âm tiết. Định nghĩa giữ khớp Định nghĩa 07.38 |
+| toán–RL | — | `X02` | nhẹ | đã sửa (R2) | xem R2 |
+| mạch | R1 | `L07-10` | nhẹ | đã sửa | "Nhu cầu: Sarsa, Q-learning (Bài 06) cần $\hat q(s,a,w)=x(s,a)^\top w$; đặc trưng … cho cùng thứ tự hành động ở mọi trạng thái." → hai dòng: "Nhu cầu: thay bảng $Q(s,a)$ của Sarsa, Q-learning (Bài 06) bằng ${\hat q(s,a,w)=x(s,a)^\top w}$." và "Với ${x(s,a)=(\phi(s);\mathbf 1_a)}$, thứ tự hành động như nhau ở mọi trạng thái." Câu gợi ý một dòng dài 22 âm tiết, vượt trần 20, nên tách. 51, 4, 19 → 53, 5, 18 |
+| mạch | R2 | `X02` | nhẹ | đã sửa | "Câu hỏi: mục tiêu Monte Carlo làm đối chứng cho mục tiêu Sarsa trên cùng chuyển đầu …" → "Câu hỏi: tính mục tiêu Monte Carlo trên lượt chứa chuyển đầu $(\mathrm D,0,-1,\mathrm C)$ của ví dụ một cập nhật Sarsa." (19 âm tiết). Không thêm "để đối chiếu với mục tiêu Sarsa": dòng sẽ 24 âm tiết; vai trò đối chứng còn ở cụm "của ví dụ một cập nhật Sarsa" và ghi chú diễn giả. Dữ kiện, (a)–(d), lời giải không đổi. 34, 6, 17 → 36, 6, 19 |
+| mạch | R3 | ghi chú `L07-M2T`, storyboard | nhẹ | đã sửa | Ghi chú: "… dùng lại ở mạch Sarsa và Q-learning." → "… dùng lại ở mạch Sarsa và bài tập tổng hợp." (99 âm tiết). Storyboard: mục `L07-M2T` nêu `L07-27` và `L07-35`, khớp bản đồ mạch ("dùng lại ở mạch 5 và 7", không đổi). Mục S1 ở trên ghi theo bản trước vòng sửa 2 |
+| mạch | R4 | `L07-29` | nhẹ | đã sửa | xem dòng toán–RL `L07-29` |
+| mạch | R5 | `L07-M4T` | nhẹ | đã sửa | Từ khóa "Điểm cố định Bellman chiếu" (lặp tên mạch) → "Toán tử Bellman chiếu"; dòng từ khóa 17 → 16 âm tiết |
+| mạch | R6 | `L07-32` | nhẹ | đã sửa | xem dòng toán–RL `L07-32` |
+| — | C8 | ghi chú bài giảng, Ví dụ 07.7 | nhẹ | bác | Không sửa ghi chú: deck là tóm tắt của ghi chú; việc `L07-12` bỏ $w'$ không tạo mâu thuẫn với Ví dụ 07.7 |
+
+Bảng trạng thái C1–C12 (phát hiện vòng đầu của rà soát mạch lập luận), do điều phối viên điền theo báo cáo rà lại mạch:
+
+| mã | trạng thái |
+|---|---|
+| C1 | đã xử lý theo phương án A (S1, S3, R1); phương án B, C bác (B1) |
+| C2 | đã xử lý (S4, R2); đổi thứ tự X02/X03 bác (B2) |
+| C3 | đã xử lý (S1, S2) |
+| C4 | đã xử lý (S6) |
+| C5 | đã xử lý (S5, R5) |
+| C6 | xử lý một phần, chấp nhận: từ khóa M7T sửa (S7); câu nối năm bước không đưa lên L07-35 vì trang đúng trần 60, ý đã có trong ghi chú L07-35 và M7T |
+| C7 | đã xử lý (S7) |
+| C8 | trên deck đã xử lý (S8); không sửa Ví dụ 07.7 của ghi chú bài giảng (bác, xem bảng trên) |
+| C9 | đã xử lý (S15) |
+| C10 | bác, lý do ở storyboard (công thức đã có ở L07-02; thứ tự theo ghi chú §2.1–2.2) |
+| C11 | đã xử lý (S9, S10, R6) |
+| C12 | đã xử lý (S11) |
+
+Kiểm sau vòng sửa 2:
+- Mật độ (`scratchpad/density.py`): `L07-10` 53, 5, 18; `X02` 36, 6, 19; `L07-M2T` 40, dòng dẫn 24, ghi chú 99; `L07-M4T` 36; `L07-29` 60, 7 dòng (1 + 5 bước + 1), 15/dòng; `L07-32` 59, 5, 17.
+- Playwright Chromium, cổng 8799, 1600×900 và 390×844, đủ 75 trang, đợi 1,2 s sau `Reveal.slide` trước khi chụp: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài hoặc hỏng, không cuộn ngang; đáy nội dung `L07-10` 647, `L07-29` 651, `X02` 595, `L07-32` 677 (khung 720); sáu trang tiêu đề mạch số 2.–7. trùng `#/2`–`#/7`. Đã xem ảnh 1600×900 của `L07-10`, `X02`, `L07-29`, `L07-M4T`, `L07-32` và 390×844 của `L07-29`.
+- `git diff --check` sạch.
+
+### Quyết định của điều phối viên (2026-10-16, chủ đề mạch và gắn kết trang)
+
+- Tác tử (bằng chứng: lời gọi công cụ `Agent` của phiên chính, `subagent_type: general-purpose`, `model: opus`, `effort: high`): rà soát mạch lập luận và rà soát sư phạm–sinh viên (chỉ đọc, chạy song song; mỗi tác tử được nối lại bằng `SendMessage` cho vòng rà lại, rà mạch giữ vai mạch, rà sư phạm nhận vai toán–RL trên các trang đổi); biên tập viên (ghi tệp, hai vòng). Điều phối viên: phiên chính claude-opus-5-5, không phải Fable 5.1 medium như `CLAUDE.md` quy định; người dùng yêu cầu rõ ngày 2026-10-16 "cứ dùng Opus 5.5 làm điều phối", ghi là ngoại lệ.
+- Duyệt của điều phối viên: đối chiếu các dòng deck mà hai báo cáo trích (26, 34, 42, 78, 81, 85, 92, 93) với tệp, khớp; đọc `git diff --word-diff` của deck sau vòng 1 và vòng 2; tính lại $1+0{,}9\cdot1{,}8=2{,}62$ và $k=4^4=256$ trùng báo cáo toán–RL. Kiểm Playwright độc lập (cổng 8799, đợi 1,2 s sau `Reveal.slide`): vòng 1 trên 16 trang đổi, vòng 2 trên `L07-10`, `X02`, `L07-29`, `L07-32`, `L07-M4T`, `L07-M2T`, cả 1600×900 và 390×844: 0 lỗi console, 0 `.katex-error`, 0 yêu cầu ngoài, không cuộn ngang, đáy nội dung ≤ 709/720 (`L07-36c`, có từ trước). Ảnh đã xem: `L07-M2T` (hai cỡ), `L07-10`, `L07-12`, `X02`, `L07-29`, `L07-32`, `L07-36c` ở 1600×900.
+- Trả lời câu hỏi người dùng: cả 7 mạch có chủ đề chính; không trang nào lạc hẳn mạch; bốn trang phục vụ yếu (`L07-10`, `L07-10b`, `X02`, `X02b`) đã được nối rõ vào mạch bằng sửa chữ, không chuyển trang; trang tiêu đề mạch 2, 4, 6, 7 nêu lại chủ đề cho đúng.
+- Ngoại lệ chấp nhận: `L07-29` 7 dòng (1 + 5 bước giả mã + 1 dòng ứng dụng), 60 âm tiết, ghi trong storyboard.
+- Quyết định: **chấp nhận** cả hai vòng biên tập; vị trí trang, `data-slide-id`, liên kết `#/N/k` trong `exercises.md` không đổi; ghi chú bài giảng và bài tập không cần đồng bộ (không đổi ký hiệu, giả thiết, ví dụ hay thứ tự khái niệm). Chưa commit: chờ người dùng đồng ý (ngoài quy trình `prompt_lecture_note_deck.md`).
