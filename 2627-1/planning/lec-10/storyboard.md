@@ -124,7 +124,7 @@ Mã trang tiêu đề mạch theo quy ước `<tiền tố mạch>00`: mã trang
 | 7 | `L10-706` | Bài tập: GAE ở bước cắt ngắn trên CartPole | lời giải | Tình huống 10.1, 10.2 | — | 1 |
 | 7 | `L10-707` | Trả lời vấn đề trung tâm | trả lời có điều kiện | §7.3 | — | 1 |
 | 7 | `L10-708` | Câu hỏi tự kiểm tra | câu hỏi | §7.4 | — | 0,5 |
-| 7 | `L10-709` | Bài tập về nhà và tài liệu đọc | bài về nhà | §7.5 | — | 0,5 |
+| 7 | `L10-709` | Bài tập về nhà và tài liệu đọc | bài về nhà | §7.5; `exercises.md` (bảng mạch) | — | 0,5 |
 | 7 | `L10-710` | Bài tập về nhà và tài liệu đọc | tài liệu đọc, nối Bài 11 | §7.5, §7.6 | — | 0,5 |
 
 Kiểm tổng phút theo mạch. Mạch 1: $0{,}5+1{,}5+1{,}5+1+0{,}5+2+2+1+1{,}5+0{,}5=12$. Mạch 2: $0{,}5+1+2+1+1{,}5+1{,}5+1{,}5+1+1{,}5+1+1+2+1{,}5+1{,}5+2+1+1{,}5=23$. Mạch 3: $0{,}5+1{,}5+1+1{,}5+2{,}5+1{,}5+1{,}5+1{,}5+1+2=14{,}5$. Mạch 4: $0{,}5+1+2+2{,}5+1{,}5+1{,}5+1+1{,}5+2{,}5+1{,}5+2+1+1{,}5+1{,}5+1=22{,}5$. Mạch 5: $0{,}5+1+1{,}5+1{,}5+1{,}5+2+1+1{,}5+1+1+1=13{,}5$. Mạch 6: $0{,}5+1+2+1+1{,}5+1+1{,}5+1+1+1+1{,}5+2{,}5+1+1{,}5+1+1+1+1{,}5+1+1+1=25{,}5$. Mạch 7: $0{,}5+1+1+1+0{,}5+1{,}5+1+1+0{,}5+0{,}5+0{,}5=9$. Tổng $120$ phút, 95 trang; lời giải đầy đủ của bài tập thuộc 30 phút chữa bài. Đợt sửa sau cổng thêm năm trang (`L10-110`, `L10-412`, `L10-510`, `L10-608`, `L10-710`) mà không đổi phút của mạch: phút của trang mới lấy từ trang được tách, riêng `L10-710` lấy 0,5 phút từ `L10-708`. Bản viết và đợt sửa D1 thêm sáu trang tách, cũng không đổi phút của mạch: `L10-212` 1 + `L10-212b` 0,5 (từ 1,5); `L10-412` 0,5 + `L10-412b` 1 (từ 1,5); `L10-502` 0,5 + `L10-502b` 1 (từ 1,5); `L10-611` 1,5 + `L10-611b` 1 (từ 2,5); `L10-617` 1 + `L10-617b` 0,5 (từ 1,5); `L10-702` 0,5 + `L10-702b` 0,5 (từ 1). Tổng $120$ phút, 101 trang.
@@ -1217,20 +1217,20 @@ Phút mạch 6: $0{,}5$ + PPO-Clip ($1+2+1+1{,}5+1+1{,}5$) + PPO-Penalty $2$ + t
 
 #### `L10-709` Bài tập về nhà và tài liệu đọc
 - **Vị trí, loại:** mạch 7; bài về nhà (trang thứ nhất của hai trang cùng tiêu đề).
-- **Lý do tồn tại, nhu cầu:** ánh xạ Bài tập củng cố 10.1–10.12 của ghi chú tới mạch (chưa có `exercises.md`).
-- **Liên kết:** trước: `L10-708`; sau: `L10-710`. **Mục tiêu:** 1–5. **Ghi chú:** §7.5 (`topic-23`).
-- **Mặt trang:** bảng `Mạch | Bài tập`, sáu hàng như §7.5 của ghi chú: 2: 10.1, 10.4, 10.5, 10.10; 3: 10.6, 10.7; 4: 10.11; 5: 10.8, 10.9; 6: 10.2, 10.12; 4–6: 10.3.
-- **Mật độ:** khoảng 10 âm tiết, 6 dòng (6 hàng bảng).
+- **Lý do tồn tại, nhu cầu:** ánh xạ Bài tập 10.13–10.21 của `materials/lec-10/exercises.md` và Bài tập củng cố 10.1–10.12 của ghi chú tới các mạch.
+- **Liên kết:** trước: `L10-708`; sau: `L10-710`. **Mục tiêu:** 1–5. **Ghi chú:** §7.5 (`topic-23`); `exercises.md`, bảng `Mạch | Mở phần | Bài tập`.
+- **Mặt trang (cập nhật 2026-11-05):** bảng `Mạch | Bài tập | Bài tập củng cố (ghi chú)`, sáu hàng theo bảng mạch của `exercises.md`: 1–2: 10.14–10.16, 10.20, 10.21 | 10.1, 10.4, 10.5, 10.10; 3: 10.13, 10.15, 10.18 | 10.6, 10.7; 4: 10.16–10.18 | 10.11; 5: 10.19 | 10.8, 10.9; 6: 10.16, 10.19, 10.21 | 10.2, 10.12; 7: 10.21 | 10.3. Mạch 1 gộp với mạch 2 (Bài tập 10.14 thuộc cả hai) để giữ sáu hàng.
+- **Mật độ:** 37 âm tiết (tính cả hàng tiêu đề; ô chỉ chứa số không tính), 6 dòng (6 hàng bảng), đáy 557 px.
 - **Hình, phút:** —; 0,5.
-- **Quyết định:** thêm: bộ cũ không có trang bài về nhà; bảng §7.5 của ghi chú. Đợt sửa sau cổng: tách khỏi trang tài liệu đọc (`L10-710`) vì bản gộp có khoảng 10 dòng; bảng giữ đủ sáu hàng như §7.5 (cổng lần 2); dòng "Bài tập 10.1–10.12: mục Bài tập củng cố của ghi chú bài giảng." chuyển vào ghi chú diễn giả. Liên kết "Bài tập" của viewer chưa đặt vì chưa có `exercises.md`; khi Giai đoạn III tạo tệp đó, bảng được cập nhật. Mặt trang không ghi tên giai đoạn.
-- **Ghi chú diễn giả:** Bài tập 10.1–10.12 là mục Bài tập củng cố của ghi chú bài giảng; Bài tập 10.3 kiểm các kết quả có bảo đảm của mạch 4–6; mười hai bài có gợi ý và lời giải trong ghi chú; bài 10.12(d) đã làm ở `L10-608`.
+- **Quyết định:** thêm: bộ cũ không có trang bài về nhà. Đợt sửa sau cổng: tách khỏi trang tài liệu đọc (`L10-710`). Cập nhật 2026-11-05: có `exercises.md`, nên bảng chuyển sang ánh xạ của tệp đó (bỏ hàng "4–6. Các kết quả có bảo đảm"; Bài tập 10.3 ở mạch 7 như `exercises.md`), thêm cột Bài tập củng cố; liên kết viewer "Bài tập" đặt ở `L10-710`.
+- **Ghi chú diễn giả:** Bài tập 10.13–10.21 trong tệp bài tập, xây dựng từ bài tập và ví dụ của Sutton và Barto (2018), ba mức (10.13–10.14; 10.15–10.19; 10.20–10.21); lý do gộp mạch 1–2; Bài tập củng cố 10.1–10.12 có lời giải trong ghi chú, các bài đã có trên trang chiếu, 10.12(d) ở `L10-608`; Bài tập 10.3 kiểm các kết quả có bảo đảm.
 
 #### `L10-710` Bài tập về nhà và tài liệu đọc
 - **Vị trí, loại:** mạch 7; tài liệu đọc, liên kết viewer, dòng nối Bài 11 (trang thứ hai cùng tiêu đề; trang cuối bài).
 - **Lý do tồn tại, nhu cầu:** tài liệu đọc có mục cụ thể và nối sang bài kế tiếp.
 - **Liên kết:** trước: `L10-709`; sau: — (cuối bài). **Mục tiêu:** 1–5. **Ghi chú:** §7.5, §7.6 (`topic-23`; dòng Bài 11 là `topic-24`); nguồn tr. 43.
-- **Mặt trang:** "Tài liệu đọc: Sutton và Barto (2018), §13.4–13.5, §7.1, §12.1–12.3." (8); "Schulman và cộng sự (2015, 2016, 2017); Engstrom và cộng sự (2020)." (8); liên kết "Ghi chú bài giảng" tới `material-viewer.html?doc=materials/lec-10/lecture-note.md&deck=lecture-10-trpo-va-ppo.html`; "Bài 11: bộ nhớ phát lại và tỉ số với chính sách hành vi thay dữ liệu của $\pi_{\mathrm{old}}$." (16), liên kết `lecture-11-cac-phuong-phap-gradient-chinh-sach-nang-cao.html`.
-- **Mật độ:** khoảng 37 âm tiết, 4 dòng.
+- **Mặt trang:** "Tài liệu đọc: Sutton và Barto (2018), §13.4–13.5, §7.1, §12.1–12.3." (8); "Schulman và cộng sự (2015, 2016, 2017); Engstrom và cộng sự (2020)." (8); dòng liên kết "Ghi chú bài giảng · Bài tập" tới `material-viewer.html?doc=materials/lec-10/lecture-note.md&deck=lecture-10-trpo-va-ppo.html` và `material-viewer.html?doc=materials/lec-10/exercises.md&deck=lecture-10-trpo-va-ppo.html` (cập nhật 2026-11-05); "Bài 11: biến thể SPO, SAM+PPO đổi mục tiêu tỉ số, bước tối ưu." và "Bài 11 dùng bộ nhớ phát lại, tỉ số theo chính sách hành vi." (D2), liên kết `lecture-11-cac-phuong-phap-gradient-chinh-sach-nang-cao.html`. Ghi chú: dòng Schulman và cộng sự có mục (D1).
+- **Mật độ:** 60 âm tiết, 5 dòng, đáy 435 px.
 - **Hình, phút:** —; 0,5.
 - **Quyết định:** tách (từ trang `L10-709` của bản trước, theo quy ước đếm hàng bảng của cổng storyboard).
 - **Ghi chú diễn giả:** Bài 11 viết tỉ số $\rho_t(\theta)$ của bài này là $w_t$ và dùng $\rho_t$ cho tỉ số với chính sách hành vi; Phần II của nguồn (A3C, DDPG, SAC, …) thuộc Bài 11.
@@ -1503,7 +1503,7 @@ Ghi chú diễn giả sửa theo E9, E10, E11 ở các trang: `L10-101`, `102`, 
 | `L10-706` | 37 | 5 | 18 | 0 | 476 | 163 |
 | `L10-707` | 80 | 6 | 18 | 0 | 567 | 105 |
 | `L10-708` | 57 | 5 | 14 | 0 | 522 | 122 |
-| `L10-709` | 34 | 6 | 8 | 0 | 475 | 86 |
-| `L10-710` | 59 | 5 | 16 | 0 | 443 | 135 |
+| `L10-709` | 37 | 6 | 9 | 0 | 557 | 133 |
+| `L10-710` | 60 | 5 | 16 | 0 | 435 | 135 |
 
 Cờ còn lại: `L10-101` (trang bìa, dòng phụ đề 28 token, không tính như Bài 09); `L10-105` (8 dòng, ngoại lệ đã duyệt). Trang tiêu đề mạch: dòng dẫn tính theo trần 25.
