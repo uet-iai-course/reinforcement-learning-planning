@@ -2215,3 +2215,133 @@ Quét lại sau sửa: hai tệp không còn "chữ theta", $b_\theta$ hay "vi�
 ### Quyết định của điều phối viên (2026-10-14, khép đợt: ký hiệu notebook)
 
 - Thay quyết định "để lại" trước đó: ô Markdown của notebook CartPole nay dùng $\phi$, $\dot\phi$, $b_\phi$, $\ell$; 42 ô mã và output giữ nguyên từng byte (điều phối viên so sánh với HEAD); ghi chú và `exercises.md` mô tả đúng hiện trạng; viewer 0 lỗi KaTeX; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(materials-04)`.
+
+## Siết ghi chú theo chuẩn 2026-11 (2026-11-08)
+
+Quy trình: `prompt_tighten_lecture_notes.md`. Chuẩn: `AGENTS.md`, `CLAUDE.md` học phần, `../CLAUDE.md` mục "The author's voice", `no-ai-slop` (Edit cho biên tập, Detect cho rà soát). Phạm vi ghi: `materials/lec-04/lecture-note.md`, `planning/lec-04/outline.md`, tệp này.
+
+**Quyết định của người dùng ghi nhận ở đợt này:**
+
+- Bỏ mục "Bản đồ chủ đề" khỏi ghi chú (2026-11-04). Phân loại bốn nhóm chuyển sang `outline.md`, mục "Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)", 13 hàng. Quyết định này thay yêu cầu bản đồ chủ đề trong `AGENTS.md` và `prompt_lecture_note_deck.md`.
+- Trần độ dài nới từ 20 000 lên 30 000 từ (2026-11-08), thay mốc của `AGENTS.md`.
+
+### Tác tử (theo lời gọi công cụ)
+
+| Vai trò | Loại | Mô hình | Effort | Ghi tệp |
+|---|---|---|---|---|
+| Rà văn phong và giọng tác giả (`no-ai-slop` Detect) | general-purpose | opus (Opus 5.5) | high | không |
+| Rà chuẩn giáo trình | general-purpose | opus | high | không |
+| Rà độ chính xác toán học và Học tăng cường | general-purpose | opus | high | không |
+| Biên tập viên duy nhất (`no-ai-slop` Edit), hai vòng | general-purpose | opus | high | ghi chú, outline |
+| Kiểm tra lại độ chính xác | general-purpose | opus | high | không |
+| Kiểm tra lại mạch viết và kết nối | general-purpose | opus | high | không |
+
+Điều phối viên (phiên chính, Opus 5.5) không soạn, không rà, không biên tập.
+
+### Phát hiện và quyết định
+
+**Rà toán:** 0 chặn bàn giao, 0 nghiêm trọng, 1 trung bình, 8 nhẹ.
+
+Không lỗi số. Đã tính lại bằng phân số: Ví dụ 04.1–04.18, Bài tập 04.1–04.9, hai tình huống (đối chiếu đầu ra notebook), Bài tập 04.11–04.13 và 04.15–04.17 của `exercises.md`. Các chứng minh đều đúng: tính co, cận phần dư, cải thiện chính sách kể cả hòa, lặp chính sách dừng hữu hạn, tồn tại chính sách tối ưu, lịch bất đồng bộ.
+
+Tất cả **chấp nhận**:
+
+- **M4** (trung bình): kết Mục 3 dùng $v_*$, $\pi_*$ cho $(27,30)$ trước Định lý 04.25. Đã viết lại không dùng ký hiệu đó.
+- **M1:** điều kiện dừng thiếu mắt xích $\Delta(V_k)\le\gamma^k\Delta(V_0)$.
+- **M2:** "giá trị cuối" dễ đọc sai.
+- **M3:** dẫn phản ví dụ sai chỗ.
+- **M5:** câu cho mọi chính sách nhưng lý do chỉ cho chính sách xác định.
+- **M6:** bộ nhớ $O(n)$ thành $O(nm)$ cho mảng $Q$.
+- **M7:** Thuật toán 04.31 cần $K\ge1$.
+- **M8:** Ví dụ 04.18 thiếu điều kiện hai hành động dùng chung mẫu của ô.
+- **M9:** lời giải Bài tập 04.5(c) dẫn "Bước 2", phải là "Bước 3".
+
+**Rà văn phong:** 59 phát hiện; 0 chặn bàn giao, 6 nghiêm trọng, 11 trung bình, 42 nhẹ.
+
+- Nghiêm trọng: sáu câu về vị thế đoạn văn ở 194, 641, 836, 935, 1040, 1476.
+- Mẫu khác:
+  - 13 chỗ dẫn "ghi chú Bài 03, Mục k";
+  - năm kết mục "Như vậy …";
+  - đoạn đọc hình kể theo số mục;
+  - "(đoạn sau Ví dụ 04.5)" lặp năm lần;
+  - số trang nguồn trong thân bài;
+  - tình huống chưa tự chứa.
+
+Tất cả **chấp nhận**. Quyết định riêng:
+
+- Số trang nguồn: bỏ trang Sutton & Barto, xóa đoạn trùng tài liệu tham khảo; giữ trang 17–18 và 25–28 của bài giảng gốc vì đó là nguồn của ví dụ chạy suốt.
+- Danh sách Bài tập 04.10–04.17 chỉ giữ một chỗ, ngay sau mục tiêu.
+- Thêm "(policy-stable)".
+
+**Rà chuẩn giáo trình:** 29 phát hiện; 0 chặn bàn giao, 0 nghiêm trọng, 16 trung bình, 13 nhẹ. Các điểm chính:
+
+- tiên quyết dẫn Bài 03 bằng "Mục k" và viết $v_\pi$ theo $G_t$, lệch Định nghĩa 03.15;
+- mở Mục 1 bỏ giới hạn $n^3$ mà Bài 03 chuyển sang;
+- thiếu "Trong thực hành" cho Định lý 04.25;
+- sau Mệnh đề 04.18 chưa giải thích giả thiết đánh giá chính xác;
+- tóm tắt theo mục chỉ ghi tên;
+- thuật ngữ "chuẩn vô cùng" lệch "chuẩn cực đại" của Bài 03, 05, 06;
+- câu nối ở hai phía năm ranh giới;
+- Tình huống 04.1 chưa nêu số liệu tại chỗ.
+
+Tất cả **chấp nhận**, kể cả các phần thêm G3, G11, G17, G19, G24; vòng kiểm tra lại độ chính xác đã xác nhận các phần này. Quyết định riêng:
+
+- **G21: bác bỏ.** Không chuyển phép suy dẫn ra khỏi Thuật toán 04.31, vì đó là nội dung khối thuật toán.
+- **G28:** không đổi đề Bài tập 04.8, chỉ thêm một dòng vào gợi ý.
+- **Ký hiệu $M$ (số mẫu):** không đổi tên.
+
+**Kiểm tra lại, mạch viết:** 0 chặn, 0 nghiêm trọng, 1 trung bình, 6 nhẹ, tất cả **chấp nhận** và đã sửa:
+
+- **F1:** Tình huống 04.1 nay nêu tại chỗ quy tắc theo dấu góc và cấu trúc $3\cdot3\cdot6\cdot6=324$ ô.
+- Câu lặp.
+- Dẫn tiến (Nhận xét 04.29) đổi thành (Ví dụ 04.12).
+- "44 lượt" thêm ngưỡng $0{,}1$.
+- Đoạn cụt.
+- Thêm tên "đánh giá chính sách lặp (iterative policy evaluation)" mà Bài 03 đã hứa.
+
+**Kiểm tra lại, độ chính xác:** 0 chặn, 0 nghiêm trọng, 2 trung bình, 7 nhẹ, tất cả **chấp nhận** và đã sửa:
+
+- **A1:** câu mới nói hai điều kiện của Mệnh đề 04.18 chỉ dùng ở Bước 1, trong khi đánh giá chính xác dùng cả ở Bước 3.
+- **A2:** dẫn Hệ quả 04.27 như chứng nhận tối ưu cho chính sách, trái mục Phạm vi của nó.
+- **A3, A4:** gán số hiệu trong đoạn đọc hình và trong câu về sự tồn tại.
+- **A5, A6:** $(k\ge1)$ bị bỏ khỏi Ví dụ 04.5 và khỏi $V_k=(k,k+1)$.
+- **A7:** liệt kê đủ mục notebook làm nguồn.
+- **A8:** "chi phí cỡ $n^3$".
+- **A9:** ghi chú $j$ là chỉ số tổng cục bộ trong bảng ký hiệu.
+
+Không còn phát hiện chặn bàn giao hay nghiêm trọng nào mở.
+
+**Câu nguồn chuyển từ thân bài vào đây:**
+
+- "Sutton và Barto (2018, §4.5, tr. 85) phát biểu kết quả của Định lý 04.32; phần ghi chú lịch sử của chương (tr. 90) dẫn Bertsekas và Tsitsiklis (1989) cho các thuật toán bất đồng bộ."
+- "Bài giảng gốc (2025–2026), trang 35–37, dùng CartPole làm ví dụ."
+- Bài giảng gốc (2025–2026), trang 8, cho đoạn sau Định lý 04.25.
+- Số trang Sutton & Barto đã bỏ: tr. 82 (§4.3, Bài tập 4.4), tr. 87 (§4.7), tr. 76–77 (Ví dụ 4.1).
+
+### Số liệu và đối chiếu
+
+- Số từ (`count_note_words.py 04`, cột prose): **20 757 → 20 455** (raw 25 692 → 25 367). Số từ giảm ít vì các phần thêm bắt buộc: "Trong thực hành" cho Định lý 04.25, tóm tắt theo mục có phát biểu, câu đọc giả thiết, tình huống tự chứa.
+- Khối có số hiệu: 78 dòng tiêu đề trùng khít trước và sau. 13 chú thích `note-topic-id` giữ nguyên. Số hiệu mục `## 1.`–`## 5.` không đổi; tác tử mạch viết đã kiểm các dẫn chiếu từ Bài 05, 06, 07, 09, 10.
+- Grep "chưa phải", "đây mới là", "Bản đồ chủ đề": còn 3 phát biểu toán (tổng cắt ngắn "chưa phải lợi tức $G_0$"; "chưa phải điểm bất động"; đề Bài tập 04.1(c)), giữ. `git diff --check`: sạch.
+
+### Lệch cần đồng bộ (không sửa trong đợt này)
+
+- **`exercises.md`**, dòng 510 (lời giải Bài tập 04.5(c)): còn dẫn "Bước 2", phải là "Bước 3" (M9).
+- **Ký hiệu $M$:** ghi chú, deck (ghi chú diễn giả dòng 586) và notebook dùng $M=200$ cho số mẫu, trong khi Bài 03 dùng $M$ cho cận phần thưởng và $N_{\text{mẫu}}$ cho số mẫu.
+- **Ghi chú Bài 05, 06:** dẫn Bài 04 bằng "Mục k", không kèm số hiệu.
+- **Ghi chú Bài 06**, dòng 242: nói $q_*=\max_\pi q_\pi$ là "từ Bài 04", nhưng Bài 04 không phát biểu đẳng thức này.
+- **Ghi chú Bài 09**, dòng 27: ghi "$q_*(s,a)=\max_\pi q_\pi(s,a)$ (Định nghĩa 04.19)", trong khi Định nghĩa 04.19 định nghĩa $q_*$ qua $v_*$.
+- Deck: rà toán không thấy lỗi nào của ghi chú lặp lại trong deck.
+
+### Kiểm tra trình duyệt (điều phối viên)
+
+Máy chủ tĩnh cổng 8782, Playwright, viewer `material-viewer.html?doc=materials/lec-04/lecture-note.md&deck=lecture-04-giai-mdp-bang-quy-hoach-dong.html`:
+
+- 1600×900, 390×844 và chế độ in: 0 lỗi console hoặc trang, 0 request lỗi hoặc ra ngoài, 0 `.katex-error`, không tràn ngang trang, không còn `:::` sót.
+- Ở 390 px, 25 công thức hiển thị cuộn ngang trong khung (trước sửa: 39). Đó là quan hệ đơn chứa tổng dài, dòng của chứng minh có vế phải đơn dài, và dãy liệt kê.
+- Nhãn `\tag` đè lên công thức rộng ở 390 px, ví dụ (4.1). Đây là lỗi CSS có sẵn của viewer, đã ghi ở Bài 03.
+- Điều phối viên đã xem ảnh chụp.
+
+`no-ai-slop`: biên tập viên tự kiểm `eval.md` (Edit) trên mọi câu sửa; tác tử mạch viết kiểm Detect trên câu mới.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-04)`.

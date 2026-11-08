@@ -38,6 +38,28 @@ Bài tập tổng hợp 04.6 (L04-G04, L04-G04b) kiểm đồng thời MT3, MT4 
 | 6 | Lịch cập nhật và giới hạn của mô hình bảng | L04-F00, `mach-6` | 10 trang | Chi phí, tại chỗ, bất đồng bộ, GPI, CartPole | $T_*$, chi phí một lượt quét | Điều kiện lịch, điều kiện mô hình | 14 |
 | 7 | Tổng kết và chuyển tiếp | L04-G00, `mach-7` | 10 trang | Bảng tổng kết, bài tập tổng hợp, trả lời vấn đề trung tâm | Kết quả mạch 2–6 | Giả thiết không được bỏ; nhu cầu của Bài 05 | 11,5 |
 
+## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)
+
+Ngày 2026-11-04, người dùng quyết định bỏ mục "Bản đồ chủ đề" khỏi ghi chú bài giảng và giữ phân loại bốn nhóm trong `outline.md`; các chú thích `note-topic-id` vẫn nằm trong thân ghi chú. Mỗi hàng dưới đây chép từ mục "Bản đồ chủ đề" của ghi chú bản HEAD (`276b82f`) trước đợt siết 2026-11-08. Cột "Mạch" ghi số mạch theo bản đồ; với các chủ đề bản đồ chỉ ghi mục, số mạch suy từ mục theo quy tắc `## k.` ↔ mạch $k+1$. Nguồn rút gọn: "tr." là trang của Bài giảng gốc (2025–2026), "§" là mục của Sutton và Barto (2018). Cột "Kết nối vào → ra" của `lec-04-part-09` đã bỏ ký hiệu $v_*$ (rà toán M4 đợt 2026-11-08), vì giá trị $(27,30)$ chỉ được nối với $v_*$ ở Định lý 04.25.
+
+| `note-topic-id` | Chủ đề | Nhóm | Mạch | Vai trò trong mạch | Kết nối vào → ra | Nguồn |
+|---|---|---|---|---|---|---|
+| `lec-04-part-03` | Đánh giá chính sách lặp | `cốt lõi` | 2 (`## 1.`) | tính $v_\pi$ bằng lượt quét | Bellman kỳ vọng (Bài 03) → giá trị tiếp nối cho cải thiện | tr. 5–6, 10, 14, 17–18; §4.1 |
+| `lec-04-part-08` | Phần dư Bellman và điều kiện dừng | `cốt lõi` | 2, 5 (`## 1.`, `## 4.`) | đại lượng dừng có chặn sai số | tính co → Thuật toán 04.9, 04.28 | tr. 14, 31–34 |
+| `lec-04-part-04` | Cải thiện chính sách | `cốt lõi` | 3 (`## 2.`) | đổi hành động mà giá trị không giảm | $v_\pi$ chính xác → chính sách mới cần đánh giá lại | tr. 19–21; §4.2 |
+| `lec-04-part-09` | Lặp chính sách và phương trình Bellman tối ưu | `cốt lõi` | 4 (`## 3.`) | tới chính sách ổn định, tối ưu | định lý cải thiện → chính sách ổn định $(\mathrm b,\mathrm b)$ với giá trị $(27,30)$, chi phí đánh giá đầy đủ | tr. 7–9, 13, 20, 33–34; §4.3 |
+| `lec-04-part-05` | Lặp giá trị | `cốt lõi` | 5 (`## 4.`) | toán tử $T_*$, hội tụ, điều kiện dừng | lặp chính sách → $T_*$ cho lịch bất đồng bộ | tr. 23–28, 31–34; §4.4 |
+| `lec-04-part-01` | Mô hình hai trạng thái và lợi tức | `cầu nối` | 2 (`### 1.1`; suy từ mục) | ví dụ xuyên suốt | MDP, lợi tức (Bài 03) → dữ kiện cho mọi mục | tr. 4–5, 17–18; Bài tập tuần 4 (2025–2026), bài 1 |
+| `lec-04-part-02` | Giá trị hành động và giá trị nhìn trước | `cầu nối` | 3 (`### 2.1`; suy từ mục) | mở rộng $q_\pi$ thành $Q_V$ | Bellman cho $q_\pi$ (Bài 03) → cải thiện và $T_*$ | tr. 5–6, 19; công thức (4.6) của Sutton và Barto |
+| `lec-04-part-06` | Chuẩn vô cùng, tính co và điểm bất động | `cầu nối` | 2, 5 (`### 1.3`, `### 4.2`; suy từ mục) | công cụ chứng minh hội tụ | giải tích trên $\mathbb R$ → Mệnh đề 04.4, 04.24, Định lý 04.5 | tr. 31–32; Bài tập tuần 3 (2025–2026), bài 6–7 |
+| `lec-04-part-11` | Tồn tại chính sách tối ưu | `bổ sung` | 5 (`### 4.3`; suy từ mục) | cận trên trên mọi chính sách đạt được | tính co của $T_*$ → $v_*$ là điểm bất động của $T_*$ | Bài tập tuần 3 (2025–2026), bài 3; Puterman (1994), §6.2 |
+| `lec-04-part-10` | Lịch cập nhật và quy hoạch động bất đồng bộ | `bổ sung` | 6 (`### 5.1`, `### 5.2`; suy từ mục) | cập nhật rẻ hơn, điều kiện bao phủ | $T_*$ → Tình huống 04.1 | tr. 15, 29; §4.5, §4.7 |
+| `lec-04-part-07` | Lặp chính sách tổng quát | `bổ sung` | 6 (`### 5.3`; suy từ mục) | khung chung của ba thuật toán | Mục 3–5 → Bài 05–06 | tr. 13, 23, 29; §4.6 |
+| `lec-04-part-12` | CartPole rời rạc hóa | `bổ sung` | 6 (`### 5.4`; suy từ mục) | mô hình bảng của môi trường liên tục | Mục 1–4 → Tình huống 04.1–04.2 | tr. 35–37; bài thực hành CartPole |
+| `lec-04-part-13` | Đọc thêm | `đọc thêm` | — (`## Hướng dẫn đọc thêm và tài liệu tham khảo`) | nội dung: lặp chính sách cải biên, tổn thất của chính sách tham lam, trường hợp không chiết khấu | — (bản đồ không ghi) | Puterman (1994), §6.5; Singh và Yee (1994); Sutton và Barto (2018), Ví dụ 4.1 |
+
+Vị trí chú thích trong thân ghi chú lệch nhẹ với cột "Mạch": `lec-04-part-08` chỉ đặt ở `### 1.4`, `lec-04-part-06` chỉ ở `### 1.3`; `lec-04-part-09` đặt ngay trên `## 3.`, `lec-04-part-05` ngay trên `## 4.`. Các mục "Tình huống áp dụng và ứng dụng", "Tóm tắt chương", "Bài tập củng cố" không có `note-topic-id`.
+
 ## Bảng thuật ngữ Việt–Anh
 
 | Tiếng Việt | Tiếng Anh | Lần đầu trên deck |
