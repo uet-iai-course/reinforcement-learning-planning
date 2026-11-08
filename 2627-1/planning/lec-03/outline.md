@@ -152,6 +152,23 @@ Thuật ngữ thống nhất với `planning/quyet-dinh-chuan-2026-10-12.md` m�
 
 Mọi mã đầy đủ có tiền tố `L03R-`.
 
+## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)
+
+Ngày 2026-11-04, người dùng quyết định bỏ mục "Bản đồ chủ đề" khỏi ghi chú bài giảng và giữ phân loại bốn nhóm trong `outline.md`; các chú thích `note-topic-id` vẫn nằm trong thân ghi chú. Mỗi hàng dưới đây chép từ mục "Bản đồ chủ đề" của ghi chú bản HEAD (`3a49914`) trước đợt siết 2026-11-08; cột "Mạch" của ba hàng `lec-03-part-09`, `lec-03-part-07`, `lec-03-part-10` lấy theo §9, vì bản đồ không ghi mạch cho chúng.
+
+| `note-topic-id` | Chủ đề | Nhóm | Mạch | Vai trò trong mạch | Kết nối vào → ra | Nguồn |
+|---|---|---|---|---|---|---|
+| `lec-03-part-01` | Một bước và tính Markov | `cốt lõi` | §1.1–1.2 (mạch 2) | mô tả robot bằng dữ liệu; giả thiết trạng thái đủ thông tin | vòng tương tác (Bài 02) → điều kiện để bảng một bước đủ mô tả môi trường | Bài giảng gốc tr. 29; Sutton và Barto §3.1, tr. 48–50 |
+| `lec-03-part-02` | Hàm động lực và MDP hữu hạn | `cốt lõi` | §1.3–1.5 (mạch 2) | đóng gói môi trường thành $(\mathcal S^+,\{\mathcal A(s)\},\mathcal R,p)$ | Định nghĩa 03.2 → $p(s'\mid s,a)$, $r(s,a)$ | Bài giảng gốc tr. 49; Sutton và Barto (3.2)–(3.5), ví dụ 3.3, tr. 48–53 |
+| `lec-03-part-03` | Lợi tức chiết khấu | `cốt lõi` | Mục 2 (mạch 3) | gộp chuỗi phần thưởng thành một số hữu hạn | $R_{t+1}$ → $G_t$ và cận $M/(1-\gamma)$ | Bài giảng gốc tr. 36–38; Sutton và Barto §3.3–3.4, tr. 54–57 |
+| `lec-03-part-04` | Chính sách, $v_\pi$, $q_\pi$ | `cốt lõi` | Mục 3 (mạch 4) | cố định cách chọn hành động để kỳ vọng có nghĩa | $p$, $G_t$ → ẩn số của phương trình Bellman | Bài giảng gốc tr. 39, 52–53; Sutton và Barto §3.5, tr. 58 |
+| `lec-03-part-05` | Phương trình Bellman kỳ vọng | `cốt lõi` | Mục 4 (mạch 5) | thay kỳ vọng trên vô hạn quỹ đạo bằng một phương trình mỗi trạng thái | $G_t=R_{t+1}+\gamma G_{t+1}$, tính Markov → hệ tuyến tính của Mục 5 | Bài giảng gốc tr. 44–46, 56–57; Sutton và Barto (3.14), bài tập 3.12–3.19, tr. 58–62 |
+| `lec-03-part-06` | Đánh giá chính sách bằng hệ tuyến tính | `cốt lõi` | Mục 5 (mạch 6) | tính giá trị bằng số của một chính sách cho trước | Định lý 03.21 → $v_\pi=(I-\gamma P_\pi)^{-1}r_\pi$, nền cho Bài 04 | Bài giảng gốc tr. 30, 34, 47–48; Bài tập tuần 2, bài 3–4; Sutton và Barto tr. 60 |
+| `lec-03-part-08` | Tổng kết chương | `cốt lõi` | Tóm tắt, Bài tập củng cố (mạch 7) | đối chiếu với vấn đề mở đầu; giả thiết không được bỏ | Mục 1–5 → Bài 04, Bài 05–06 | Bài giảng gốc tr. 58 |
+| `lec-03-part-09` | Xác suất có điều kiện và kỳ vọng toàn phần | `cầu nối` | Kiến thức tiên quyết; dùng ở §3.1, §4.3 (mạch 1) | công cụ của Mệnh đề 03.14 và Bổ đề 03.19; khoảng trống: phép tách kỳ vọng cần căn cứ | xác suất ở học phần trước → phép tách hai tầng kỳ vọng | Bài giảng gốc tr. 58 (dẫn tài liệu đọc về xác suất: D. P. Bertsekas và J. N. Tsitsiklis, *Introduction to Probability*, chương 7, và ghi chú xác suất CS229) |
+| `lec-03-part-07` | Tình huống lưới 5×5 và CartPole rời rạc hóa | `bổ sung` | Tình huống áp dụng (mạch 6) | áp dụng Thuật toán 03.29; khoảng trống: robot chỉ có hai trạng thái và thỏa mọi giả thiết | Định lý 03.28, Thuật toán 03.29 → notebook CartPole của Bài 04 | Sutton và Barto ví dụ 3.5, tr. 60; notebook `thuc-hanh-cartpole-quy-hoach-dong.ipynb` |
+| `lec-03-part-10` | Tài liệu đọc thêm | `đọc thêm` | Hướng dẫn đọc thêm (mạch 7) | nguồn cho chứng minh và mở rộng ngoài chương | Định lý 03.21, 03.28 → giá trị tối ưu (Sutton và Barto §3.6); dựng trạng thái Markov (chương 17) | Sutton và Barto (2018); Puterman (1994) §6.1; Bertsekas (2019) |
+
 ## 9. Liên kết với ghi chú bài giảng
 
 | Mạch | Mục ghi chú | `note-topic-id` |

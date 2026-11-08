@@ -2056,3 +2056,129 @@ Không đổi chữ, số liệu, thứ tự hay mã trang nào khác.
 ### Quyết định của điều phối viên (2026-10-14, khép đợt: từ khóa mạch 5)
 
 - Kiểm độc lập: Playwright hai cỡ 0 lỗi, trang L03R-05-00 không tràn; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(lecture-03)`.
+
+## Siết ghi chú theo chuẩn 2026-11 (2026-11-08)
+
+Quy trình: `prompt_tighten_lecture_notes.md`. Chuẩn: `AGENTS.md`, `CLAUDE.md` học phần, `../CLAUDE.md` mục "The author's voice", `no-ai-slop` (Edit cho biên tập, Detect cho rà soát). Phạm vi ghi: `materials/lec-03/lecture-note.md`, `planning/lec-03/outline.md`, tệp này.
+
+**Quyết định của người dùng ghi nhận ở đợt này:**
+
+- Bỏ mục "Bản đồ chủ đề" khỏi ghi chú (2026-11-04). Phân loại bốn nhóm chuyển sang `outline.md`, mục "Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)", 10 hàng. Quyết định này thay yêu cầu bản đồ chủ đề trong `AGENTS.md` và `prompt_lecture_note_deck.md`.
+- Trần độ dài nới từ 20 000 lên 30 000 từ (2026-11-08), thay mốc của `AGENTS.md`.
+
+### Tác tử (theo lời gọi công cụ)
+
+| Vai trò | Loại | Mô hình | Effort | Ghi tệp |
+|---|---|---|---|---|
+| Rà văn phong và giọng tác giả (`no-ai-slop` Detect) | general-purpose | opus (Opus 5.5) | high | không |
+| Rà chuẩn giáo trình | general-purpose | opus | high | không |
+| Rà độ chính xác toán học và Học tăng cường | general-purpose | opus | high | không |
+| Biên tập viên duy nhất (`no-ai-slop` Edit), hai vòng | general-purpose | opus | high | ghi chú, outline |
+| Kiểm tra lại độ chính xác | general-purpose | opus | high | không |
+| Kiểm tra lại mạch viết và kết nối | general-purpose | opus | high | không |
+
+Điều phối viên (phiên chính, Opus 5.5) không soạn, không rà, không biên tập.
+
+### Phát hiện và quyết định
+
+**Rà toán:** 0 chặn bàn giao, 0 nghiêm trọng, 2 trung bình, 8 nhẹ. Không lỗi số. Đã giải lại chính xác bằng phân số: hệ robot ($\det(I-\gamma P_\pi)=1/2$, $v_\pi=(13/4,7/4)$), năm $q_\pi$, lưới $5\times5$ (25 ô), các bài tập và tình huống; trường hợp $\gamma=1$ vô nghiệm. Tất cả **chấp nhận**:
+
+- **M2** (trung bình): Định nghĩa 03.2 không nói xác suất tính dưới chính sách nào, nên $p$ của Định nghĩa 03.4 không xác định rõ. Đã thêm "với mọi cách chọn hành động của tác tử chỉ dựa trên lịch sử (có thể ngẫu nhiên)", khớp Định nghĩa 02.5.
+- **M5** (trung bình): gạch "bỏ tập trạng thái hữu hạn" thiếu phản ví dụ. Đã thêm phản ví dụ $s\to s+1$, phần thưởng $0$, $\gamma=\tfrac12$: mọi $v(s)=c\,2^s$ đều là nghiệm, trong khi $v_\pi=0$. Điều phối viên đã kiểm.
+- **Tám mục nhẹ:**
+  - tách bước đầu là phép đại số, không cần tính Markov;
+  - "hai phần thưởng gần nhất" thành "phần thưởng gần nhất";
+  - mục tiêu TD(0) giữ $V$ cố định;
+  - danh sách bước dùng $\gamma<1$ thiếu Bước 3;
+  - Thuật toán 03.29 bước 1 kiểm $\gamma$;
+  - "phần dư 0" chỉ đúng với phân số;
+  - lặp Neumann chỉ khi bắt đầu từ $v=0$;
+  - lời giải Bài tập 03.10(b) viết $\gamma<1$ là "cần", thực ra là đủ.
+
+**Rà văn phong:** 87 phát hiện; 0 chặn bàn giao, 9 nghiêm trọng, 18 trung bình, 60 nhẹ.
+
+- Nghiêm trọng: câu về vị thế đoạn văn ở 161, 413, 684, 713, 808; năm kết mục "Như vậy …" kèm "Trong Mục N+1".
+- Mẫu khác:
+  - Bài 02 được dẫn bằng "Mục k" thay vì số hiệu;
+  - $\gamma$ ngoài bộ MDP được giải thích ba lần;
+  - "số liệu sư phạm tự xây dựng" lặp năm lần;
+  - ánh xạ mục tiêu → bài tập lặp ba lần.
+
+Tất cả **chấp nhận**. Các quyết định riêng:
+
+- Giữ một câu quy ước số liệu, đặt sau bảng ký hiệu.
+- Dẫn Bài 02 bằng số hiệu.
+- Giữ hai đoạn "Trong thực hành" về TD(0) và Sarsa, vì chúng giải thích đối tượng cài đặt.
+- Câu "Bài 04 xử lý …" chỉ giữ ở tóm tắt.
+
+**Rà chuẩn giáo trình:** 43 phát hiện; 0 chặn bàn giao, 0 nghiêm trọng, 21 trung bình, 22 nhẹ. Các điểm chính:
+
+- G19: câu nói Bài 02 định nghĩa $v_\pi=\mathbb E_\pi[G_t\mid S_t=s]$ sai, vì Định nghĩa 02.14 dùng $G_0\mid S_0$. Đã sửa.
+- G7: Định nghĩa 03.1 (quỹ đạo vô hạn) cần nối với Định nghĩa 02.3. Đã thêm câu nối.
+- Câu nối ở hai phía ranh giới mục.
+- Tóm tắt 9 câu (vượt 5–8), kết quả theo mục chỉ ghi tên.
+- Ánh xạ nguồn theo mục chỉ có trong bản đồ chủ đề; đã chép sang tài liệu tham khảo.
+
+Tất cả **chấp nhận**, kể cả các phần thêm G7, G10(a)(b), G11, G17, G25, G36, G43; vòng kiểm tra lại độ chính xác đã xác nhận các phần này. Quyết định riêng:
+
+- **G24:** giữ câu "tạm chấp nhận" ở 808, vì câu nói về một giả thiết toán học và AGENTS yêu cầu nêu điều được tạm chấp nhận.
+- **G38, G39:** **bác bỏ** việc thêm năm, ấn bản *Introduction to Probability*, ghi chú CS229, chương và trang của Bertsekas (2019), vì trong kho không có căn cứ. Khoảng trống còn mở.
+- **$M$ và $R_{\max}$:** ghi tương ứng một lần, không đổi tên.
+
+**Kiểm tra lại, mạch viết:** 0 chặn, 0 nghiêm trọng, 1 trung bình, 7 nhẹ, tất cả **chấp nhận** và đã sửa:
+
+- câu giới hạn trong tóm tắt khó đọc;
+- "Bài giảng gốc" thiếu năm ở lần đầu;
+- sót câu Puterman;
+- câu "vì" lồng nhau;
+- trật tự từ;
+- tham chiếu tiến về Tình huống 03.2;
+- câu nối Định nghĩa 03.2 ↔ 02.5 đặt cách xa định nghĩa.
+
+**Kiểm tra lại, độ chính xác:** 0 chặn, 0 nghiêm trọng, 1 trung bình, 4 nhẹ, tất cả **chấp nhận** và đã sửa:
+
+- **A1:** câu mới nói định lý cải thiện chính sách "giải bài toán điều khiển", trái Định lý 04.13. Đã sửa thành "lặp chính sách dựa trên định lý này giải bài toán điều khiển khi biết mô hình".
+- **A2:** "chỉ bằng $v_\pi(s)$ khi $V=v_\pi$" sai theo nghĩa "chỉ khi".
+- **A3:** "phần còn lại của chương giữ cố định quy tắc này" nói rộng hơn nội dung.
+- **A4:** hàm động lực sinh chuỗi phần thưởng "cùng cách chọn hành động".
+- **A5:** Định nghĩa 03.2 giới hạn cách chọn hành động vào những cách chỉ dựa trên lịch sử.
+
+Không còn phát hiện chặn bàn giao hay nghiêm trọng nào mở.
+
+**Độ lệch và ánh xạ nguồn, chuyển từ thân bài vào đây:**
+
+- Sutton và Barto (2018, (3.2)) viết hàm động lực với chỉ số $t-1$ và $t$; ghi chú dịch sang $t$ và $t+1$ cho khớp quy ước $R_{t+1}$.
+- Bài giảng gốc (2025–2026, trang 30, 34, 49) dựng MDP như MRP có thêm quyết định. Ghi chú đi theo chiều ngược lại: cố định chính sách để từ MDP thu về MRP, đúng nội dung bài 4 của Bài tập tuần 2 (2025–2026).
+- Bài giảng gốc (trang 48) nêu hạn chế chi phí $n^3$ và chuyển sang phương pháp lặp. Trang 52 là nguồn của đoạn mở Mục 3.
+- Các trang 29, 30, 34, 36–39, 44–58 đã được chép vào mục tài liệu tham khảo.
+
+### Số liệu và đối chiếu
+
+- Số từ (`count_note_words.py 03`, cột prose): **19 950 → 19 022** (raw 24 026 → 23 280).
+- Khối có số hiệu: 76 dòng tiêu đề trùng khít trước và sau. 10 chú thích `note-topic-id` giữ nguyên. Số hiệu mục `## 1.`–`## 5.` không đổi, vì Bài 04 dẫn "Bài 03, Mục 1–5"; tác tử mạch viết đã kiểm mọi dẫn chiếu của Bài 04 vào Bài 03.
+- Grep "chưa phải", "đây mới là", "Bản đồ chủ đề": còn một chỗ, Bài tập 03.4(c) "chưa phải $v_\pi(\mathrm L)$", mang nghĩa toán học nên giữ. `git diff --check`: sạch.
+
+### Lệch cần đồng bộ (không sửa trong đợt này)
+
+- **Deck**, trang L03R-01-06 (dòng 148–150 của `lecture-03-qua-trinh-quyet-dinh-markov.html`): định nghĩa tính Markov thiếu "với mọi cách chọn hành động dựa trên lịch sử" (M2, A5).
+- **Deck**, trang L03R-07-02b, ghi chú diễn giả (dòng 952): nói tính Markov cho phép tách bước đầu. Phép tách là đại số (M1).
+- **Deck**, trang L03R-06-07d, ghi chú diễn giả (dòng 823): "phần dư 0" chỉ đúng với phân số; dấu phẩy động cho khoảng $2{,}2\cdot10^{-16}$ (M8).
+- **`exercises.md`:**
+  - dòng 48, 50, 81 (Bài tập 03.1) còn viết "bản ghi"; ghi chú nay dùng "mẫu chuyển";
+  - dòng 133 (Kiểm tra lại của Bài tập 03.5) còn dẫn "các phương trình của Mục 4";
+  - kết quả không đổi.
+- **`outline.md`**, dòng 7: lặp lỗi G19 ($v_\pi=\mathbb E_\pi[G_t\mid S_t=s]$ cho Bài 02). §9 của outline chưa ghi part-07 phủ cả Tình huống 03.2.
+- **`img/lec-03/chapter-structure.svg`** và văn bản thay thế của nó ghi nhãn "Mục 1"–"Mục 5".
+
+### Kiểm tra trình duyệt (điều phối viên)
+
+Máy chủ tĩnh cổng 8782, Playwright, viewer `material-viewer.html?doc=materials/lec-03/lecture-note.md&deck=lecture-03-qua-trinh-quyet-dinh-markov.html`:
+
+- 1600×900, 390×844 và chế độ in: 0 lỗi console hoặc trang, 0 request lỗi hoặc ra ngoài, 0 `.katex-error`, không tràn ngang trang, không còn `:::` sót.
+- Ở 390 px, 46 công thức hiển thị cuộn ngang trong khung (trước sửa: 60). Đó là quan hệ đơn, dòng của khối `aligned` không còn chỗ ngắt ở cấp ngoài cùng, hoặc tràn ≤ 5 %.
+- **Lỗi có sẵn của viewer:** ở 390 px, nhãn `\tag` của các phương trình đánh số rộng đè lên công thức; 20 công thức bị như vậy, ví dụ (1.3). Điều phối viên đã đối chiếu với viewer ở HEAD (bản xuất bằng `git archive`, cổng 8783): cũng 20 công thức. Lỗi do CSS viewer, không do ghi chú hay các thay đổi chưa commit của `material-viewer.*`; nằm ngoài phạm vi đợt này.
+- Điều phối viên đã xem ảnh chụp.
+
+`no-ai-slop`: biên tập viên tự kiểm `eval.md` (Edit) trên mọi câu sửa; tác tử mạch viết kiểm Detect trên câu mới.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-03)`.
