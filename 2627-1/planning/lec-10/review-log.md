@@ -572,3 +572,61 @@ Cập nhật deck theo `exercises.md`: `L10-709` bảng `Mạch | Bài tập | B
 Kiểm cổng Giai đoạn III (điều phối viên, Playwright): viewer `exercises.md` 1600×900 và 390×844 — 0 `.katex-error`, 0 công thức cuộn, 0 `:::` thô, 0 yêu cầu lỗi, 0 yêu cầu ra ngoài, `scrollWidth` 375 ở 390 px; 18 liên kết deck `#/h/v` mở đúng `L10-101`, `200`, `210`, `216`, `300`, `309`, `400`, `413`, `414`, `500`, `509`, `510`, `600`, `619`, `620`, `700`, `705`, `706`; `index.html` "Mở bài tập" mở đúng "Bài tập Bài 10 — TRPO và PPO", 0 lỗi KaTeX; `git diff --check` sạch. Giới hạn: viewer không cuộn tới neo `#bai-tap-cung-co` khi mở trang mới (nội dung dựng bất đồng bộ, `material-viewer.js` không xử lý hash sau khi dựng; sửa viewer đụng tệp đang có thay đổi chưa commit của người khác) — liên kết vẫn mở đúng ghi chú, chữ liên kết ghi "(mục Bài tập củng cố, cuối ghi chú)".
 
 **Cổng Giai đoạn III: đạt.** `index.html`: nhóm **Bài tập** của thẻ Bài 10 liên kết `material-viewer.html?doc=materials/lec-10/exercises.md&deck=lecture-10-trpo-va-ppo.html`.
+
+## Siết và rà soát ghi chú theo chuẩn 2026-11 (2026-11-08)
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai đều là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Ba rà soát chỉ đọc, song song: văn phong (`no-ai-slop` Detect); chuẩn giáo trình; toán/RL.
+- Một biên tập viên (`no-ai-slop` Edit, tự kiểm theo `eval.md`).
+- Hai kiểm tra lại chỉ đọc: độ chính xác; mạch viết và kết nối.
+
+Goal của người dùng: "rà soát ghi chú các bài của rl-plan 01–10 về nội dung, bố cục, văn phong theo các nguyên tắc đã thiết lập". Người dùng chọn đi đủ vòng, commit và push từng bài. Trần độ dài của học phần là 30 000 từ prose (người dùng nới 2026-11-08, thay mốc 8 000–20 000 của `AGENTS.md`).
+
+Đây là vòng siết đầu tiên của Bài 10 kể từ khi deck được dựng lại từ ghi chú (`108b9e5`).
+
+**Rà soát:**
+
+| Vai | Chặn | Nghiêm trọng | Trung bình | Nhẹ |
+|---|---:|---:|---:|---:|
+| Văn phong | 0 | 1 | 14 | 83 |
+| Chuẩn giáo trình | 1 | 0 | 4 | 53 |
+| Toán/RL | 0 | 0 | 2 | 3 |
+
+**Quyết định của điều phối viên:**
+- **G58 (chặn) và S0 (nghiêm trọng), chấp nhận:** prose 32 654 vượt trần 30 000. Mục tiêu đặt ra là ≤ 29 500.
+- **S11 và G8, phương án A:** cắt danh sách trả lời ở §1, vì nó trùng §7.3 và phát biểu kết quả trước khi chứng minh. Đoạn đọc hình giữ vai "điều chương xây dựng".
+- **Sáu kết mục "Như vậy, …"** và khoảng 25 câu bên lề "Bài giảng gốc (tr. …)": rút gọn. Mỗi kết quả phát biểu không chứng minh vẫn giữ một dòng nguồn có số trang (G21).
+- **Ba câu "nằm ngoài phạm vi học phần"** (Mệnh đề 10.24, Nhận xét 10.28, 10.51): giữ, vì chúng đi kèm chứng minh bị bỏ qua (`AGENTS.md`, bước 5).
+- **Hai câu "số liệu sư phạm":** cắt.
+- **Bổ sung theo G:**
+  - G32: đoạn "Trong thực hành" sau Mệnh đề 10.34.
+  - G41: vấn đề và trực giác của §6.4.
+  - Câu mở §7.
+- **M1, chấp nhận:** câu "hệ số $-\hat v(S_t)$ chỉ phản ánh sai số của critic" sai. Với $\hat v=v_\pi$, hệ số vẫn là $-v_\pi(S_t)\ne0$.
+- **M2:** chữ $e$ mang hai nghĩa. Giữ ký hiệu vì deck dùng cả $e_A$ lẫn $e(s)$; đưa vào danh sách ngoại lệ sau bảng ký hiệu.
+- **G57, bác bỏ:** "outline thiếu Phân loại chủ đề". Bảng phân loại bốn nhóm đã có trong mục "Ánh xạ hai chiều" của `outline.md`.
+- **Bước 8, bác bỏ:** theo quyết định của người dùng 2026-11-08, như Bài 08.
+
+**Kiểm tra lại:**
+- Độ chính xác: 0 chặn, 0 nghiêm trọng, 3 trung bình, 7 nhẹ.
+  - A1: bước 7 của Thuật toán 10.37 so với Schulman và cộng sự (2016).
+  - A3: khôi phục điều kiện dấu ở L2031.
+  - A2: deck L1014 lệch; chỉ ghi lại.
+- Mạch viết: 0 chặn, 1 nghiêm trọng, 2 trung bình, 8 nhẹ.
+  - F5 (nghiêm trọng): "phép xấp xỉ này" mất tiền ngữ sau khi cắt. Đã sửa thành "phép xấp xỉ giữ phân bố trạng thái cũ (Ví dụ 10.11)"; điều phối viên đã kiểm.
+- Tất cả được chấp nhận và đã sửa.
+- Đồng bộ thêm: Bài 09 nay phát biểu Hệ quả 09.24 cho MDP hữu hạn, nên Kiến thức tiên quyết và Mệnh đề 10.5(b) đã được sửa cho khớp.
+
+**Số liệu:**
+- Prose 32 654 → 29 425.
+- 132 dòng tiêu đề khối và mục trùng khít trước và sau.
+- 266 dòng `:::` và 24 `note-topic-id` giữ nguyên. `git diff --check`: sạch.
+
+**Lệch cần đồng bộ:** deck L652 và L1014 (A1, A2); dòng nguồn của deck trỏ tới câu đã cắt (A10).
+
+**Kiểm tra trình duyệt (điều phối viên):** máy chủ tĩnh cổng 8783, Playwright, viewer của ghi chú, 1600×900, 390×844 (cuộn đến cuối) và chế độ in.
+- 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang.
+- Console có một lỗi CSP chặn script nội tuyến. Lỗi này cũng xuất hiện ở ghi chú Bài 11, vốn không bị sửa, nên đến từ môi trường kiểm tra, không đến từ ghi chú.
+- Điều phối viên đã xem ảnh chụp. Ở 390 px không có công thức hiển thị nào tràn khung.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-10)`.
