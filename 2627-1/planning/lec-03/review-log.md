@@ -2182,3 +2182,51 @@ Máy chủ tĩnh cổng 8782, Playwright, viewer `material-viewer.html?doc=mater
 `no-ai-slop`: biên tập viên tự kiểm `eval.md` (Edit) trên mọi câu sửa; tác tử mạch viết kiểm Detect trên câu mới.
 
 Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-03)`.
+
+## Rà soát ghi chú vòng hai (2026-11-08)
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai đều là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Ba rà soát chỉ đọc, song song: văn phong (`no-ai-slop` Detect); chuẩn giáo trình; toán/RL.
+- Một biên tập viên (`no-ai-slop` Edit, tự kiểm theo `eval.md`).
+- Hai kiểm tra lại chỉ đọc: độ chính xác; mạch viết và kết nối.
+
+Goal của người dùng: "rà soát ghi chú các bài của rl-plan 01–10 về nội dung, bố cục, văn phong theo các nguyên tắc đã thiết lập". Người dùng chọn đi đủ vòng, commit và push từng bài. Trần độ dài của học phần là 30 000 từ prose (người dùng nới 2026-11-08, thay mốc 8 000–20 000 của `AGENTS.md`).
+
+**Rà soát:**
+
+| Vai | Chặn | Nghiêm trọng | Trung bình | Nhẹ |
+|---|---:|---:|---:|---:|
+| Văn phong | 0 | 0 | 9 | 38 |
+| Chuẩn giáo trình | 0 | 0 | 2 | 24 |
+| Toán/RL | 0 | 0 | 0 | 4 |
+
+**Quyết định của điều phối viên:**
+- **Chấp nhận mặc định** mọi phát hiện, trừ các mục dưới đây.
+- **S30, chấp nhận:** L840 viết "Hai bước còn thiếu" trong khi các mục 4.2–4.4 có ba bước; đã đổi thành danh sách ba bước.
+- **G22, theo `AGENTS.md`:** kết mục viết bằng văn xuôi. `AGENTS.md` xếp trên quy tắc "ba ý song song thành danh sách" của mục "The author's voice". Năm kết mục nay đều 1–3 câu và dẫn số hiệu (G11).
+- **G25, bác bỏ:** "Bài tập củng cố không phủ mục tiêu 1, 3". Sửa sẽ phải thêm khối có số hiệu mới.
+- **Lặp ý:** "γ đứng ngoài MDP" và "nghiệm đúng cho MDP thay thế" chỉ giữ một lần. Câu hỏi về nghiệm duy nhất còn ba chỗ có chức năng: kết Mục 4, câu mở Mục 5, câu nhu cầu trước Định lý 03.28. Điều phối viên chấp nhận.
+- **M4, chỉ ghi lệch:** $\rho$ dùng cho phần dư trùng với Bài tập 03.25 trong `exercises.md`; giữ ký hiệu vì deck dòng 819 cũng dùng $\rho$ cho phần dư.
+
+**Kiểm tra lại:**
+- Độ chính xác: 0 chặn, 0 nghiêm trọng, 0 trung bình, 2 nhẹ.
+  - A1: câu "Mọi kết quả của các mục sau…" nói quá rộng.
+  - A2: $K$ mất nghĩa sau khi cắt câu.
+- Mạch viết: 0 chặn, 0 nghiêm trọng, 2 trung bình, 8 nhẹ.
+  - F6: câu nhu cầu mở Mục 5.
+  - F3: câu đọc (2.2) nêu hệ quả.
+- Tất cả được chấp nhận và đã sửa, trừ F10: ghi chú 07 L25 lệch nhẹ với Định nghĩa 03.26; chỉ ghi lại, không sửa Bài 07 trong vòng này.
+
+**Số liệu:**
+- Prose 19 022 → 18 896.
+- 111 dòng tiêu đề khối và mục trùng khít trước và sau.
+- 10 `note-topic-id` giữ nguyên. `git diff --check`: sạch.
+
+**Lệch cần đồng bộ:** ba lệch deck từ vòng trước vẫn mở (dòng 145–150, 823, 952), cộng M4.
+
+**Kiểm tra trình duyệt (điều phối viên):** máy chủ tĩnh cổng 8783, Playwright, viewer của ghi chú, 1600×900, 390×844 (cuộn đến cuối) và chế độ in.
+- 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang.
+- Console có một lỗi CSP chặn script nội tuyến. Lỗi này cũng xuất hiện ở ghi chú Bài 11, vốn không bị sửa, nên đến từ môi trường kiểm tra, không đến từ ghi chú.
+- Điều phối viên đã xem ảnh chụp. Ở 390 px, 46 công thức hiển thị cuộn trong khung.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-03)`.
