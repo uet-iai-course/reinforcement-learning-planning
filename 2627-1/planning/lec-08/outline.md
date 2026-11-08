@@ -90,6 +90,34 @@ Các mục dưới đây mô tả bản trước đợt sửa. Mục nào sai kh
 
 Câu hỏi khám phá ở nguồn tr.36 không được đưa lên mặt trang vì đã có `L08-33` (kiểm tra tổng hợp bốn câu) và `X03` (ablation) phủ cùng mục tiêu kiểm; nội dung liên quan được đưa vào notes của `L08-33`. Không thêm câu hỏi mới lên mặt trang.
 
+## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)
+
+Ngày 2026-11-04, người dùng quyết định bỏ mục "Bản đồ chủ đề" khỏi ghi chú bài giảng và giữ phân loại bốn nhóm trong `outline.md`; các chú thích `note-topic-id` vẫn nằm trong thân ghi chú. Mỗi hàng dưới đây chép từ mục "Bản đồ chủ đề (bốn nhóm)" của ghi chú bản HEAD (`f86f4a0`) trước khi bỏ ngày 2026-11-08, theo thứ tự của bản đồ. Cột "Nhóm" lấy từ tiêu đề nhóm của bản đồ ("Nhóm đọc thêm/thực hành" giữ nguyên tên); cột "Mạch" lấy số phần từ danh sách "Bảy phần của chương" của bản đồ, kèm tiêu đề mục ghi chú chứa chú thích `note-topic-id`; cột "Nguồn" là cột "Nguồn trang" của bản đồ; ba cột còn lại chép nguyên văn.
+
+| `note-topic-id` | Chủ đề | Nhóm | Mạch | Vai trò trong mạch | Kết nối vào → ra | Nguồn |
+|---|---|---|---|---|---|---|
+| `lec-08-topic-13` | Kiến thức tiên quyết: Q-learning dạng bảng (Bài 06), Q-learning bán gradient và bộ ba bất ổn (Bài 07) | cầu nối | 1 (`## Kiến thức tiên quyết`) | Nhắc quy tắc cập nhật, học khác chính sách, điều kiện hội tụ | Vào: Bài 06–07 → Ra: mục tiêu bootstrap và phạm vi bảo đảm | tr. 3–7 |
+| `lec-08-topic-17` | Mở đầu: mục tiêu, nội dung và bài toán trung tâm | cầu nối | 1 (`## 1.`) | Nêu bài toán và câu trả lời có điều kiện của từng phần | Vào: Bài 06–07 → Ra: khung cho phần 2–6 | tr. 1–2, 8–13 |
+| `lec-08-topic-01` | Giới hạn của bảng giá trị hành động | cốt lõi | 2 (`## 2.`) | Đặt vấn đề quy mô và khái quát hóa | Vào: topic-13 → Ra: nhu cầu $Q_\theta$ | tr. 8–15 |
+| `lec-08-topic-16` | Đầu vào bốn khung Atari và tính Markov | cốt lõi | 2 (`## 2.`) | Ví dụ cho giao diện mạng; giới hạn của bốn khung | Vào: topic-01 → Ra: quan sát $O_t$ cho topic-02 | tr. 17, 35 |
+| `lec-08-topic-02` | Mạng giá trị hành động, mục tiêu di động và mạng mục tiêu | cốt lõi | 2 (`## 2.`) | Định nghĩa $\mathbf q_\theta$, $Q_\theta$; giả thiết Markov khi viết mục tiêu; $Q_{\theta^-}$ | Vào: topic-01, topic-16 → Ra: $\mathbf q_\theta$ và hai bản sao mạng | tr. 14–17, 20, 31, 33, 35 |
+| `lec-08-topic-03` | Mục tiêu hồi quy | cốt lõi | 2 (`## 2.`) | Mục tiêu $y_t$ và sai số TD | Vào: topic-02 → Ra: nhãn hồi quy | tr. 16, 20–22, 34 |
+| `lec-08-topic-04` | Ví dụ: mục tiêu tại mẫu chuyển kết thúc | cốt lõi | 2 (`## 2.`) | Phân biệt $Z$ và $U$ | Vào: topic-03 → Ra: mục tiêu đúng | tr. 21 |
+| `lec-08-topic-05` | Kết thúc và cắt ngắn | cốt lõi | 2 (`## 2.`) | Hai cờ $Z$, $U$; mặt nạ chỉ dùng $Z$ | Vào: topic-04 → Ra: bộ sáu thành phần | tr. 21 |
+| `lec-08-topic-18` | Tương quan giữa các mẫu chuyển liên tiếp | cốt lõi | 3 (`## 3.`) | Vấn đề của mẫu liền nhau | Vào: topic-05 → Ra: nhu cầu bộ nhớ phát lại | tr. 19, 30 |
+| `lec-08-topic-06` | Bộ nhớ phát lại | cốt lõi | 3 (`## 3.`) | Bộ đệm vòng dung lượng $N$, ghi đè mẫu cũ nhất, rút đều; quan sát cuối khi tự đặt lại | Vào: topic-18 → Ra: mini-batch | tr. 18–20, 32 |
+| `lec-08-topic-19` | Dữ liệu khác chính sách trong bộ nhớ | cốt lõi | 3 (`## 3.`) | Hai nguồn khác chính sách; mục tiêu một bước không cần tỉ số lấy mẫu quan trọng | Vào: topic-06 → Ra: phạm vi của mục tiêu trên dữ liệu cũ | tr. 6–7, 19, 32 |
+| `lec-08-topic-07` | Giới hạn của bộ nhớ phát lại | cốt lõi | 3 (`## 3.`) | Ba việc làm được, ba điều không bảo đảm; câu hỏi $N=6$, $b=2$ | Vào: topic-19 → Ra: phát biểu đúng phạm vi; nhu cầu hàm mất mát cho phần 4 | tr. 19, 29–32 |
+| `lec-08-topic-08` | Phép chọn theo hành động và dừng gradient | cốt lõi | 4 (`## 4.`) | Đồ thị tính; $\operatorname{sg}$, gather; gradient chỉ qua đường dự đoán | Vào: topic-09 → Ra: gradient đúng trong cài đặt | tr. 16, 20–22, 33–34 |
+| `lec-08-topic-09` | Hàm mất mát trên mini-batch | cốt lõi | 4 (`## 4.`) | MSE với mục tiêu là hằng, gradient, không lồi theo $\theta$ | Vào: topic-07 → Ra: hàm vô hướng và gradient cho topic-08 | tr. 16, 20–22, 34 |
+| `lec-08-topic-10` | Vòng huấn luyện DQN: hai bộ đếm $t$ và $k_{\mathrm{opt}}$ | cốt lõi | 4 (`## 4.`) | Giả mã đầy đủ | Vào: topic-05–09 → Ra: thuật toán hoàn chỉnh | tr. 18–22 |
+| `lec-08-topic-11` | Kích thước tensor của mini-batch Atari | cốt lõi | 4 (`## 4.`) | Kích thước và kiểu tensor | Vào: topic-10 → Ra: kiểm tra cài đặt | tr. 14–22, 35 |
+| `lec-08-topic-12` | Bất ổn và phạm vi bảo đảm của DQN | cốt lõi | 6 (`## 6.`) | Hai nguồn bất ổn và hai cơ chế giảm; độ thay đổi của mục tiêu tại mốc đồng bộ; bộ ba bất ổn trong DQN | Vào: topic-10, topic-14 → Ra: kết luận có điều kiện cho phần 7 | tr. 12–13, 29–34 |
+| `lec-08-topic-14` | Vai trò của bộ tối ưu và ba quy tắc cập nhật | bổ sung | 5 (`## 5.`) | Ba quy tắc cập nhật và giới hạn | Vào: topic-10 → Ra: lựa chọn bộ tối ưu có căn cứ | tr. 22–28 |
+| `lec-08-topic-15` | Tổng kết và chuyển tiếp: kết quả và giả thiết, so sánh ba phương pháp, trả lời vấn đề trung tâm, câu hỏi tự kiểm tra, đọc thêm, tóm tắt chương | đọc thêm/thực hành | 7 (`## 7.`) | Tổng kết | Vào: topic-01 đến topic-14 → Ra: câu trả lời có điều kiện cho vấn đề trung tâm; Bài 09 | tr. 12–13, 20–21, 29–36 |
+
+Dòng cuối của bản đồ: "Đọc trước: Sutton và Barto (2018), §11.3 (bộ ba bất ổn) và §16.5 (DQN trên trò chơi Atari); Mnih và cộng sự (2015)."
+
 ## Ánh xạ lecture note → deck
 
 Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể trải trên nhiều trang.

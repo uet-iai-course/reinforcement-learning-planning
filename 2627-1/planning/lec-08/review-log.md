@@ -882,3 +882,13 @@ Bác bỏ (ghi nhận, không sửa): vị trí chú giải trong `plot_learning
 Kiểm cuối của điều phối viên: 97 ô, 42/42 ô mã đã chạy, 0 đầu ra lỗi, 0 stderr; JSON hợp lệ; ô 0–68 trùng HEAD trừ ô 2; "đích" chỉ còn trong trích dẫn nguyên văn tên mục của ghi chú Bài 09 (ô 71, 73, 96); 0 "hãy", 0 "chúng ta" ở mục 15; 2,40 MB; `git diff --check` sạch; tệp thuộc danh sách cho phép của `.gitignore`. Thời gian chạy mặc định thêm khoảng 3,5 phút (huấn luyện Flappy Bird một hạt giống); Lunar Lander $3\cdot10^5$ bước chỉ chạy khi `RUN_LUNAR_LONG = True`. `no-ai-slop`: tác tử soạn dùng Edit + `eval.md` ở mỗi vòng; rà soát sư phạm và kiểm lại dùng Detect.
 
 Giới hạn còn lại: kết luận trên tối đa tám hạt giống; Flappy Bird chưa có hiệu phân biệt được ($t=1{,}53$) và chưa vượt luật tay ngưỡng 0,04; lần chạy trực tiếp minh họa chính sách cuối sụt (14,3 ống) trong khi mốc tốt nhất đạt 47,6 ống. Ghi chú Bài 09 vẫn dùng "đích"; đồng bộ thuật ngữ là việc riêng.
+
+## Bỏ mục "Bản đồ chủ đề" khỏi ghi chú (2026-11-08)
+
+Yêu cầu của người dùng (2026-11-08): bỏ mục "Bản đồ chủ đề" khỏi mọi ghi chú và ghi vào nguyên tắc. Quy tắc đã ghi ở `AGENTS.md` §"Cấu trúc bắt buộc của một chương" điểm 6, `CLAUDE.md`, `prompt_lecture_note_deck.md` và mẫu ghi chú (commit `87b8295`).
+
+- **Tác tử:** một tác tử ghi tệp, `general-purpose`, opus (Opus 5.5), effort `high`, ghi ghi chú và outline của Bài 08, 09, 11, 12. Điều phối viên kiểm diff, viewer và ghi nhật ký.
+- **Ghi chú:** xóa đúng mục "## Bản đồ chủ đề" (57 dòng; diff chỉ có dòng xóa). Không sửa câu nào khác; không câu nào trong thân bài dẫn tới mục này. Giữ 19 chú thích `note-topic-id`. Danh sách tiêu đề khối có số hiệu không đổi. Số từ prose: 33 477 → 32 471.
+- **Outline:** thêm mục "## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)", 19 hàng chép từ bản đồ ở HEAD `f86f4a0` (script đối chiếu: 0 sai lệch). Số trang nguồn và các phần chỉ có trong bản đồ (danh sách phần, thời lượng nếu có) nằm ở đó.
+- **Kiểm tra trình duyệt (điều phối viên):** viewer tại máy chủ tĩnh cổng 8782, 1600×900 và 390×844: 0 `.katex-error`, 0 lỗi console, 0 request lỗi hoặc ra ngoài, không tràn ngang trang, không còn `:::` sót. `git diff --check`: sạch.
+- Đợt này không siết câu chữ của ghi chú; việc đó nằm ngoài goal 01–07.
