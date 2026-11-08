@@ -1993,3 +1993,55 @@ Máy chủ tĩnh cổng 8782, Playwright, viewer `material-viewer.html?doc=mater
 `no-ai-slop`: biên tập viên tự kiểm `eval.md` (Edit) trên mọi câu sửa; tác tử mạch viết kiểm Detect trên câu mới.
 
 Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-05)`.
+
+## Rà soát ghi chú vòng hai (2026-11-08)
+
+Goal của người dùng: "rà soát ghi chú các bài của rl-plan 01–10 về nội dung, bố cục, văn phong theo các nguyên tắc đã thiết lập". Người dùng chọn đi đủ vòng, commit và push từng bài. Trần độ dài của học phần là 30 000 từ prose (người dùng nới 2026-11-08).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai đều là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Ba rà soát chỉ đọc, song song: văn phong (`no-ai-slop` Detect); chuẩn giáo trình; toán/RL.
+- Một biên tập viên (`no-ai-slop` Edit).
+- Hai kiểm tra lại chỉ đọc.
+
+**Rà soát:**
+
+| Vai | Chặn | Nghiêm trọng | Trung bình | Nhẹ |
+|---|---:|---:|---:|---:|
+| Văn phong | 0 | 0 | 8 | 39 |
+| Chuẩn giáo trình | 0 | 0 | 3 | 12 |
+| Toán/RL | 0 | 0 | 1 | 6 |
+
+**Quyết định của điều phối viên:**
+- **Chấp nhận mặc định** mọi phát hiện, trừ các mục dưới đây.
+- **M1, chấp nhận:** Mệnh đề 05.34 cho dùng lượt bị cắt ngắn khi $\gamma<1$ nhưng thiếu điều kiện đóng.
+  - Phản ví dụ, điều phối viên đã kiểm: một lượt A→B bị cắt tại B. Khi đó $V(B)$ không bao giờ được cập nhật, và $V(A)=r+0{,}9\,V_0(B)$ phụ thuộc giá trị khởi tạo.
+  - Đã thêm giả thiết: mọi trạng thái là đích của một chuyển trong dữ liệu đều có chuyển rời nó, hoặc là trạng thái kết thúc. Giả thiết này được dùng ở Bước 2 của chứng minh.
+  - Notebook in "0 chuyển tới ô không có mẫu", nên số liệu không đổi.
+- **S10, S13:** sửa hai lập luận lệch nhau.
+- **Lặp ý:** "lượt bị cắt ngắn" (khoảng 15 lần), phân tích $J$ (hai lần), dữ liệu tám lượt (ba lần). Mỗi ý giữ một lần đầy đủ; các lần nhắc nằm trong khối có số hiệu, kết mục hay tình huống được giữ (S9).
+- **Thuật ngữ:** Bài 04, 05, 06 dùng "điểm bất động", còn Bài 07 dùng "điểm cố định". Cụm sau có trong tiêu đề mục 3 của Bài 07, nên giữ nguyên trong vòng này và nêu trong báo cáo cho người dùng.
+- **Bác bỏ:**
+  - Bước 8 ở 2.3, 2.4: sửa sẽ phải thêm khối có số hiệu.
+  - Thêm số trang cho Bổ đề 05.5: chưa xác minh được.
+
+**Kiểm tra lại:**
+- Độ chính xác: 0 chặn, 0 nghiêm trọng, 1 trung bình, 4 nhẹ.
+  - A1: câu "mẫu mới nhận trọng số nhỏ dần" đổi nghĩa so với HEAD; đã trả lại "cùng trọng số $1/n$".
+- Mạch viết: 0 chặn, 0 nghiêm trọng, 3 trung bình, 13 nhẹ.
+  - F5: tiền ngữ của "hai cách cập nhật này".
+  - F10 và A5: Mệnh đề 05.33 thêm giả thiết "mọi lượt của $\mathcal D$ kết thúc"; đầu vào của Thuật toán 05.32 tách rõ Monte Carlo và TD.
+  - F15: tài liệu tham khảo.
+- Tất cả được chấp nhận và đã sửa, trừ F14 (G15 đã xử lý) và F16 (giữ "điểm bất động").
+
+**Số liệu:**
+- Prose 21 084 → 20 975.
+- 120 dòng tiêu đề khối và mục trùng khít trước và sau.
+- 23 `note-topic-id` giữ nguyên. `git diff --check`: sạch.
+
+**Lệch cần đồng bộ:** deck dòng 356, 449, 526, 559; `exercises.md` dòng 18, 547, 625. Chi tiết trong báo cáo biên tập của phiên.
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in.
+- 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang.
+- Lỗi CSP script nội tuyến đến từ môi trường kiểm tra (cũng có ở Bài 11, vốn không bị sửa). Ở 390 px, 42 công thức hiển thị cuộn trong khung.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-05)`.
