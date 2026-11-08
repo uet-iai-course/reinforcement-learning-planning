@@ -1037,3 +1037,67 @@ Yêu cầu của người dùng (2026-11-08): bỏ mục "Bản đồ chủ đ�
 - **Outline:** thêm mục "## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)", 17 hàng chép từ bản đồ ở HEAD `f86f4a0` (script đối chiếu: 0 sai lệch). Số trang nguồn và các phần chỉ có trong bản đồ (danh sách phần, thời lượng nếu có) nằm ở đó.
 - **Kiểm tra trình duyệt (điều phối viên):** viewer tại máy chủ tĩnh cổng 8782, 1600×900 và 390×844: 0 `.katex-error`, 0 lỗi console, 0 request lỗi hoặc ra ngoài, không tràn ngang trang, không còn `:::` sót. `git diff --check`: sạch.
 - Đợt này không siết câu chữ của ghi chú; việc đó nằm ngoài goal 01–07.
+
+## Siết và rà soát ghi chú theo chuẩn 2026-11 (2026-11-08)
+
+Goal của người dùng: "rà soát ghi chú các bài của rl-plan 01–10 về nội dung, bố cục, văn phong theo các nguyên tắc đã thiết lập". Người dùng chọn đi đủ vòng, commit và push từng bài. Quy trình theo `prompt_tighten_lecture_notes.md`. Đây là vòng siết đầu tiên của Bài 09. Trần độ dài của học phần là 30 000 từ prose (người dùng nới 2026-11-08, thay mốc 8 000–20 000 của `AGENTS.md`). Bản đồ chủ đề đã được bỏ khỏi ghi chú từ trước (commit `e0b10c0`); bảng phân loại nằm ở `outline.md`.
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai đều là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Ba rà soát chỉ đọc, song song:
+  - văn phong (`no-ai-slop` Detect);
+  - chuẩn giáo trình;
+  - toán/RL.
+- Một biên tập viên (`no-ai-slop` Edit).
+- Hai kiểm tra lại chỉ đọc.
+
+**Rà soát:**
+
+| Vai | Chặn | Nghiêm trọng | Trung bình | Nhẹ |
+|---|---:|---:|---:|---:|
+| Văn phong | 0 | 2 | 24 | 56 |
+| Chuẩn giáo trình | 0 | 1 | 23 | 19 |
+| Toán/RL | 0 | 1 | 3 | 7 |
+
+**Quyết định của điều phối viên:**
+- **M9 (nghiêm trọng), chấp nhận.** Câu "phương sai … tăng khi cộng một hằng vào phần thưởng" sai. Điều phối viên đã tự tính lại trên bài toán một bước: $\pi=(\tfrac23,\tfrac13)$, phần thưởng $(3+c,\,c)$, tổng phương sai bằng $4(c+1)^2/9$. Do đó $c=0$ cho $\tfrac49$, $c=1$ cho $\tfrac{16}9$, $c=-1$ cho $0$. Đã sửa thành "phụ thuộc vào cách dịch phần thưởng".
+- **M4, M6, M8, chấp nhận.**
+  - M4: hàm điểm với phép $\tanh$.
+  - M6: vai trò của (G1)–(G4) trong các bước của chứng minh.
+  - M8: Hệ quả 09.24 nay giả thiết MDP hữu hạn, như Bổ đề 03.20.
+- **M10, chấp nhận:** "42–66" thành "41,6–65,6".
+- **S33 (nghiêm trọng), chấp nhận:** cắt ghi chú quy trình "ghi là sai khác có chủ ý" khỏi văn bản cho sinh viên.
+- **S60 (nghiêm trọng), chấp nhận:** câu "Trực quan này chưa đủ làm chứng minh" vi phạm quy tắc 2026-11-04; đã viết lại.
+- **G34 (nghiêm trọng), chấp nhận.** Ghi chú dẫn sang deck để xem lời giải. Đã đưa dữ kiện và lời giải bài luyện tập của Mục 3 (trang X01) vào §7, với khối `solution` không số.
+- **Sáu kết mục khuôn "Như vậy, …" và chuyển tiếp kép:** rút còn 1–3 câu, giữ một phía. Bài 10 được nhắc chín lần; nay chỉ còn ở đoạn nối cuối chương và ở chỗ một giới hạn được nêu lần đầu.
+- **G41, bác bỏ:** bước 8, bài tập ngay sau mục. Người dùng quyết định 2026-11-08: giữ "Bài tập củng cố" ở cuối chương cho Bài 08–10, ghi ngoại lệ, không thêm bài tập và không đổi số hiệu.
+- **G43 và G16, bác bỏ:** không thêm số trang chưa xác minh (tác tử tự nói đã viết theo trí nhớ).
+- **Bảng ký hiệu:** các chữ $\eta$, $C$, $N$, $n$, $p$ mang hai nghĩa; đưa vào danh sách ngoại lệ, không đổi tên ký hiệu.
+
+**Kiểm tra lại:**
+- Độ chính xác: 0 chặn, 0 nghiêm trọng, 1 trung bình, 12 nhẹ.
+  - A10: Hệ quả 09.24 còn "hoặc đếm được" và còn câu mở rộng sang $\mathcal A=\mathbb R$. Điều phối viên quyết: chỉ giữ MDP hữu hạn.
+- Mạch viết: 0 chặn, 0 nghiêm trọng, 5 trung bình, 11 nhẹ.
+  - F1: câu viết lại nói "không phương pháp nào có định lý hội tụ", mâu thuẫn với kết quả dạng bảng của Double Q-learning (van Hasselt, 2010). Đã sửa nhất quán ở L1215 và L1343.
+  - F3: câu nối sang Bài 10.
+  - F4: "Câu hỏi." chưa được trả lời.
+  - F5: khôi phục dòng tài liệu đọc.
+- Tất cả được chấp nhận và đã sửa, trừ F16: giữ bài luyện tập ở §7 theo quyết định G34.
+
+**Số liệu:**
+- Prose 22 542 → 21 250.
+- 99 dòng tiêu đề khối và mục trùng khít trước và sau.
+- 17 `note-topic-id` giữ nguyên.
+- Grep "chưa phải", "đây mới là", "trang chiếu", "sai khác có chủ ý": 0. `git diff --check`: sạch.
+
+**Lệch cần đồng bộ (không sửa trong đợt này):**
+- Notebook Breakout vẫn ghi "42–66".
+- Deck có thể còn câu cũ ở các chỗ M2–M9 và M11 đã sửa.
+- Ghi chú Bài 10, phần tiên quyết nhắc Hệ quả 09.24, cần khớp giả thiết MDP hữu hạn. Việc này được sửa trong vòng của Bài 10.
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in.
+- 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang.
+- Ở 390 px, 28 công thức hiển thị cuộn trong khung.
+- Lỗi CSP script nội tuyến đến từ môi trường kiểm tra, như ở Bài 01.
+- Điều phối viên đã xem ảnh chụp.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-09)`.
