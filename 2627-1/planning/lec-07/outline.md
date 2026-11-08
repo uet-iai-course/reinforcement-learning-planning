@@ -169,6 +169,31 @@ Mỗi trang mang đúng một `data-note-topic-id`; trang tiêu đề mạch man
 | `lec-07-topic-12` | 6.2 | `L07-35`, `L07-35b`, `L07-36d`, `L07-36e`, `L07-36f` |
 | `lec-07-topic-18` | Hướng dẫn đọc thêm (MDP tuyến tính) | không có trang riêng; nhắc trong ghi chú diễn giả `L07-34` |
 
+## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)
+
+Ngày 2026-11-04, người dùng quyết định bỏ mục "Bản đồ chủ đề" khỏi ghi chú bài giảng và giữ phân loại bốn nhóm trong `outline.md`; các chú thích `note-topic-id` vẫn nằm trong thân ghi chú. Mỗi hàng dưới đây chép từ mục "Bản đồ chủ đề" của ghi chú bản HEAD (`bc1e0a0`) trước đợt siết 2026-11-08. Câu mở của bản đồ: "Mười tám chủ đề thuộc bốn nhóm; "trang N" là trang của bài giảng gốc (2025–2026)." Bản đồ có năm cột `Chủ đề (mã) | Nhóm | Mục | Vai trò; dẫn tới | Nguồn`. Cột "Chủ đề", "Nhóm" và "Nguồn" chép nguyên văn; trong cột "Nguồn", "bài 2", "bài 3", "bài 5" là bài của Bài tập tuần 7 (2025–2026). Cột "Vai trò trong mạch" là phần trước dấu ";" của cột "Vai trò; dẫn tới", cột "Kết nối vào → ra" là phần sau dấu ";" (khi bản đồ chỉ ghi "→ X", vế vào ghi "—"). Cột "Mạch" suy từ "Dàn ý bảy mạch và thời lượng" ở trên (`## k.` của ghi chú ứng với mạch $k+1$; Kiến thức tiên quyết ứng với mạch 1), đánh dấu "(suy)", kèm cột "Mục" của bản đồ trong ngoặc. Thứ tự hàng theo bản đồ.
+
+| `note-topic-id` | Chủ đề | Nhóm | Mạch | Vai trò trong mạch | Kết nối vào → ra | Nguồn |
+|---|---|---|---|---|---|---|
+| `lec-07-topic-01` | Giới hạn của bảng tra | cốt lõi | 2 (suy) (1.1) | bài toán trung tâm | Bài 06 → nhu cầu tham số chung | trang 22–23 |
+| `lec-07-topic-02` | Hàm có tham số dùng chung | cốt lõi | 2 (suy) (1.2) | mức lan | bảng tra → mọi cập nhật | trang 23–26 |
+| `lec-07-topic-03` | Bài toán dự đoán và sai số giá trị | cốt lõi | 2 (suy) (1.3) | tiêu chí $J_\mu$ | — → Mục 2–3 | trang 23, 27, 34 |
+| `lec-07-topic-04` | Đặc trưng và nhập nhằng | cốt lõi | 2 (suy) (1.4) | bốn khối, nhập nhằng | — → Mục 4 | trang 28–31 |
+| `lec-07-topic-05` | Mục tiêu cập nhật | cốt lõi | 3 (suy) (2.1) | gradient đầy đủ, bán gradient | $J_\mu$ → Mục 2–3 | trang 27, 32 |
+| `lec-07-topic-06` | Monte Carlo gradient | cốt lõi | 3 (suy) (2.2) | hạ gradient ngẫu nhiên trên $J_\mu$ | — → Mục 2.3 | trang 33–34 |
+| `lec-07-topic-15` | Hội tụ của Monte Carlo tuyến tính | cốt lõi | 3 (suy) (2.3) | đích là hình chiếu của $v_\pi$ | — → Mục 3 | trang 34; Bài tập tuần 7, bài 4, 6 |
+| `lec-07-topic-07` | TD(0) bán gradient | cốt lõi | 4 (suy) (3.1) | cập nhật sau mỗi chuyển | — → Mục 3.2 | trang 35–36 |
+| `lec-07-topic-08` | Điểm cố định Bellman chiếu | cốt lõi | 4 (suy) (3.2) | đích và hội tụ của TD | — → Mục 4 | trang 43–45; bài 5 |
+| `lec-07-topic-09` | Hai mục tiêu dự đoán | cốt lõi | 4 (suy) (3.3) | so sánh | — → Mục 4 | trang 37; bài 2 |
+| `lec-07-topic-10` | Sarsa bán gradient | cốt lõi | 5 (suy) (4.1–4.2) | điều khiển theo chính sách | — → Mục 5 | trang 38–40 |
+| `lec-07-topic-11` | Q-learning bán gradient | cốt lõi | 6 (suy) (5.1) | điều khiển khác chính sách | — → Mục 5.2 | trang 38, 41 |
+| `lec-07-topic-17` | Bộ ba bất ổn | cốt lõi | 6 (suy) (5.2) | giới hạn bảo đảm | — → Mục 6 | trang 41, 43; bài 3 |
+| `lec-07-topic-14` | Phạm vi các kết quả hội tụ | cốt lõi | 7 (suy) (6.1) | bảng giả thiết | — → Bài 08 | trang 34, 41–44 |
+| `lec-07-topic-12` | Phân tích một quy tắc cập nhật | cốt lõi | 7 (suy) (6.2) | năm bước | — → tình huống | trang 22–44 |
+| `lec-07-topic-13` | Kiến thức tiên quyết | cầu nối | 1 (suy) (Kiến thức tiên quyết) | bảo đảm dạng bảng cần một ô mỗi cặp | — → Mục 1 | trang 3, 5–20 |
+| `lec-07-topic-16` | Bài tập trên chuỗi năm trạng thái | bổ sung | 5 (suy) (4.3) | tính tay trọn lượt | — → Mục 5 | Bài tập tuần 7, bài 7, 8; trang 40 |
+| `lec-07-topic-18` | MDP tuyến tính | đọc thêm | không có mạch (Hướng dẫn đọc thêm) | giả thiết cấu trúc | — → hướng nghiên cứu | trang 42 |
+
 ## Tài sản trực quan
 
 Mười một SVG trong `2627-1/img/lec-07/` được deck dùng; không có raster. Vòng biên tập 2026-10-14: thêm `two-state-offpolicy.svg`; sửa nhãn `projected-bellman.svg` và `two-state-features.svg`.

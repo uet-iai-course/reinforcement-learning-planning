@@ -1593,3 +1593,125 @@ Kiểm sau vòng sửa 2:
 - Trả lời câu hỏi người dùng: cả 7 mạch có chủ đề chính; không trang nào lạc hẳn mạch; bốn trang phục vụ yếu (`L07-10`, `L07-10b`, `X02`, `X02b`) đã được nối rõ vào mạch bằng sửa chữ, không chuyển trang; trang tiêu đề mạch 2, 4, 6, 7 nêu lại chủ đề cho đúng.
 - Ngoại lệ chấp nhận: `L07-29` 7 dòng (1 + 5 bước giả mã + 1 dòng ứng dụng), 60 âm tiết, ghi trong storyboard.
 - Quyết định: **chấp nhận** cả hai vòng biên tập; vị trí trang, `data-slide-id`, liên kết `#/N/k` trong `exercises.md` không đổi; ghi chú bài giảng và bài tập không cần đồng bộ (không đổi ký hiệu, giả thiết, ví dụ hay thứ tự khái niệm). Chưa commit: chờ người dùng đồng ý (ngoài quy trình `prompt_lecture_note_deck.md`).
+
+## Siết ghi chú theo chuẩn 2026-11 (2026-11-08)
+
+Quy trình: `prompt_tighten_lecture_notes.md`. Chuẩn: `AGENTS.md`, `CLAUDE.md` học phần, `../CLAUDE.md` mục "The author's voice", `no-ai-slop` (Edit cho biên tập, Detect cho rà soát). Phạm vi ghi: `materials/lec-07/lecture-note.md`, `planning/lec-07/outline.md`, tệp này.
+
+**Quyết định của người dùng ghi nhận ở đợt này:**
+
+- Bỏ mục "Bản đồ chủ đề" khỏi ghi chú (2026-11-04; mở rộng cho mọi ghi chú và ghi vào nguyên tắc 2026-11-08, commit `87b8295`). Phân loại bốn nhóm chuyển sang `outline.md`, mục "Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)", 18 hàng.
+- Trần độ dài nới từ 20 000 lên 30 000 từ (2026-11-08), thay mốc của `AGENTS.md`.
+
+### Tác tử (theo lời gọi công cụ)
+
+| Vai trò | Loại | Mô hình | Effort | Ghi tệp |
+|---|---|---|---|---|
+| Rà văn phong và giọng tác giả (`no-ai-slop` Detect) | general-purpose | opus (Opus 5.5) | high | không |
+| Rà chuẩn giáo trình | general-purpose | opus | high | không |
+| Rà độ chính xác toán học và Học tăng cường | general-purpose | opus | high | không |
+| Biên tập viên duy nhất (`no-ai-slop` Edit), hai vòng | general-purpose | opus | high | ghi chú, outline |
+| Kiểm tra lại độ chính xác | general-purpose | opus | high | không |
+| Kiểm tra lại mạch viết và kết nối | general-purpose | opus | high | không |
+
+Điều phối viên (phiên chính, Opus 5.5) không soạn, không rà, không biên tập.
+
+### Phát hiện và quyết định
+
+**Rà toán:** 0 chặn bàn giao, **2 nghiêm trọng**, 3 trung bình, 8 nhẹ.
+
+Đã tính lại mọi $A$, $b$, $w_{TD}$, kiểm tra điểm cố định, chặn sai số ($3{,}02\le5{,}26\le10$ ở Ví dụ 07.11), Bổ đề 07.27, Mệnh đề 07.28, ví dụ phân kỳ kiểu Baird, mọi cập nhật tính tay và mọi số liệu notebook.
+
+Tất cả **chấp nhận**:
+
+- **M4 (nghiêm trọng): "1 896 ô được ghé".** Hai notebook đều đúng nhưng đếm trên dữ liệu khác nhau:
+  - notebook Bài 07 (ô 23 lọc `e["terminated"]`) đếm $1\,896$ ô trên $1\,958$ lượt kết thúc thật;
+  - notebook Bài 05 đếm $1\,935$ ô trên cả $2\,000$ lượt.
+
+  Ghi chú sai ở chỗ ghép $1\,896$ với "2 000 lượt, 546 869 chuyển". Điều phối viên đã kiểm hai notebook và chọn **phương án B**: giữ $1\,896$ và $7\,320$, sửa phần mô tả dữ liệu (lượt kết thúc thật; "số ô không có lợi tức đầy đủ nào"), thêm một câu về con số $1\,935$ của Bài 05.
+- **M2 (nghiêm trọng): quy tắc phá hòa của ε-tham lam.** Ghi chú dùng "quy tắc phá hòa cố định", trong khi Định nghĩa 06.3 và cả hai notebook chia đều $1-\varepsilon$ cho các hành động đồng hạng. Đã sửa nhất quán ở tiên quyết, Mệnh đề 07.8(b) (nay nói *tập* hành động tham lam như nhau ở mọi trạng thái), Định nghĩa 07.31, Mệnh đề 07.32, Thuật toán 07.33 và 07.36. Tiêu đề khối giữ nguyên.
+- **M8 (trung bình):** lý do "bán gradient không phải gradient" sai cho Ví dụ 07.11 ($d=1$). Tiêu chí đúng: trường $w\mapsto b-Aw$ là gradient khi và chỉ khi $A$ đối xứng. Phản ví dụ chu trình ba trạng thái: $A_{12}=-0{,}3\ne0=A_{21}$. Đã sửa.
+- **M1 (trung bình):** dẫn $q_*=\max_\pi q_\pi$ bằng Định nghĩa 04.19, Định lý 04.25(b), Mệnh đề 03.22, kèm điều kiện.
+- **M3:** giữ $\pi_b$ (vì $b=\Phi^\top D r_\pi$ trong chương này) và ghi tương ứng với $b$ của Bài 06.
+- **M10:** trọng số $d_\pi$, dữ liệu theo chính sách. Phần chứng minh tùy chọn **bị bác bỏ**.
+- **Các mục nhẹ:** M5–M7, M9, M11–M13.
+
+**Rà văn phong:** 90 phát hiện; 0 chặn bàn giao, 9 nghiêm trọng (câu "chưa phải định nghĩa" ở 132, 139, 264, 335, 473, 746, 858, 1093, 1292), 16 trung bình, 65 nhẹ.
+
+- Các mẫu chính:
+  - năm kết mục cùng khuôn "Như vậy … Tuy nhiên … Trong Mục N+1";
+  - 23 dẫn chiếu "Mục k";
+  - danh sách bài tập lặp ba lần;
+  - "một lần chạy đã nhúng" lặp 13 lần;
+  - nhãn quy trình "Bảng thử nghiệm khi soạn" hiện trên trang của sinh viên;
+  - khẳng định Baird lặp bảy lần.
+- Tất cả **chấp nhận**. Quyết định riêng:
+  - Giữ tiêu đề "Tình huống áp dụng và ứng dụng" (AGENTS), chỉ đổi nhãn khối liên hệ.
+  - Nhãn quy trình đổi thành "bảng thử nghiệm sơ bộ chọn cấu hình".
+
+**Rà chuẩn giáo trình:** 52 phát hiện; 0 chặn bàn giao, 0 nghiêm trọng, 17 trung bình, 35 nhẹ. Tất cả **chấp nhận**.
+
+- Các điểm chính:
+  - dòng 27 và 686 dẫn sai "Bài 05, Mục 2" cho Robbins–Monro;
+  - Ví dụ 07.13, 07.14 và Bài tập 07.11 chưa tự chứa dữ kiện;
+  - Tình huống 07.1, 07.2 thiếu dữ kiện cấu hình ($J_{\mathrm{kt}}$, $c$, lịch $\varepsilon$, $\gamma$, $K$, $w_0$) và thiếu dòng kiểm tra lại;
+  - tóm tắt theo mục chỉ ghi tên;
+  - $y$, $z$, $K$ mang hai nghĩa, nay liệt kê ngoại lệ sau bảng ký hiệu.
+- Số trang nguồn: giữ một chỗ cho mỗi kết quả phát biểu không chứng minh (AGENTS), bỏ các lần lặp.
+
+**Kiểm tra lại, độ chính xác:** 0 chặn, **1 nghiêm trọng**, 1 trung bình, 9 nhẹ. Tất cả **chấp nhận** và đã sửa:
+
+- **A1:** câu mới ở Tình huống 07.2 gán cấu hình của lần chạy `four3` ($K=4\,000$, $\varepsilon$ giảm trong $1\,200$ lượt) cho cả `poly2`. Các số của `poly2` thật ra lấy từ bảng thử nghiệm sơ bộ ($K=8\,000$, ba hạt giống). Đã tách hai cấu hình; điều phối viên đã kiểm ô 27 của notebook.
+- **A2:** "số ô không có mẫu" thành "số ô không có lợi tức đầy đủ".
+- **A4:** $J_{\mathrm{kt}}$ chỉ tính trên $493$ trong $500$ lượt kiểm tra kết thúc thật.
+- **A3, A5–A11:** sửa nhẹ.
+
+**Kiểm tra lại, mạch viết:** 0 chặn, 0 nghiêm trọng, 2 trung bình, 10 nhẹ. Tất cả **chấp nhận** và đã sửa, trừ **F12 bác bỏ** (tùy chọn, nội dung bảng của Nhận xét 07.40):
+
+- **F1:** câu nối còn ở hai phía ranh giới Mục 1–2.
+- **F2:** gạch Bài 08 nói các cơ chế của DQN "giảm bất ổn của bộ ba", trái với Bài 08: replay và mạng mục tiêu giữ nguyên cả ba yếu tố. Đã sửa.
+- **F3–F11:** sửa nhẹ.
+
+Không còn phát hiện chặn bàn giao hay nghiêm trọng nào mở.
+
+**Độ lệch và nguồn, chuyển từ thân bài vào đây:**
+
+- "Bài giảng gốc (trang 31) có một đặc trưng điều hướng cùng kiểu."
+- "Định lý sau là phát biểu của bài giảng gốc (trang 34) với đủ giả thiết; nó cần Mệnh đề 07.14 cho hướng trung bình và Bổ đề 07.16 cho điểm đích."
+- "Bài giảng gốc (trang 34) nêu ba điều kiện: iid, đặc trưng bị chặn, Robbins–Monro."
+- "Phiếu bài tập gọi ba mẫu là liên tiếp; nhưng mẫu 1 có hành động kế tiếp $0$ tại $\mathrm C$, còn mẫu 2 thực hiện hành động $1$ tại $\mathrm C$, nên ở đây coi ba mẫu là độc lập."
+- "Thuật toán sau được bổ sung theo quy trình của hai notebook; bài giảng gốc (trang 38) chỉ nêu mục tiêu."
+- "Mục tiêu (5.1) không khẳng định $\hat q$ hội tụ tới $q_*$ (bài giảng gốc, trang 41)."
+- "**Kiểm tra lại.** Chỉ (c) đủ ba yếu tố, phù hợp với bài giảng gốc (trang 37, 41)."
+- "Với bài toán theo lượt có một kết quả tương tự với chặn khác (Sutton và Barto, 2018, §9.4, tr. 208; Bertsekas và Tsitsiklis, 1996)."
+- Các ghi "Bài tập tuần 7" trong đề bài tập đã chuyển vào mục tài liệu tham khảo.
+
+### Số liệu và đối chiếu
+
+- Số từ (`count_note_words.py 07`, cột prose): **17 058 → 16 841** (raw 20 806 → 20 708).
+- Khối có số hiệu: 94 dòng tiêu đề trùng khít trước và sau. 18 chú thích `note-topic-id` giữ nguyên. Số hiệu mục `## 1.`–`## 6.` không đổi. Tác tử mạch viết đã kiểm các dẫn chiếu từ Bài 08 ("Bài 07, Mục 1", "Mục 5"; 07.1, 07.2, 07.21, 07.29, 07.35–07.39) và Bài 09 (gạch "Xác suất").
+- Grep "chưa phải", "đây mới là", "Bản đồ chủ đề": 0. `git diff --check`: sạch.
+
+### Lệch cần đồng bộ (không sửa trong đợt này)
+
+- **Mô tả dữ liệu của "1 896 ô"** (M4): con số giữ nguyên, chỉ phần mô tả dữ liệu cần sửa.
+  - Deck, trang L07-04: mặt trang và ghi chú diễn giả.
+  - `exercises.md`, dòng 38 và 53.
+  - Ghi chú Bài 08, Ví dụ 08.1: ghi "Trên 2 000 lượt … 1 896 ô". Cần ghi là trên $1\,958$ lượt kết thúc thật, hoặc đổi sang $1\,935$ ô trên toàn bộ $2\,000$ lượt.
+- **Deck, quy tắc phá hòa:** trang L07-26 (ghi chú diễn giả) và L07-10 vẫn mô tả "quy tắc phá hòa cố định" (M2).
+- **Deck, bán gradient:** ba chỗ nói bán gradient "không giảm một mất mát cố định" mà thiếu "nói chung" (M8).
+- **`outline.md`:** thuật ngữ "phá hòa" trong outline lệch với Định nghĩa 07.31 mới.
+- **Tên tiếng Anh của bộ nhớ phát lại:** nay thống nhất "(replay memory, experience replay)" ở Bài 06 và 07; Bài 08 chỉ ghi "experience replay".
+
+### Kiểm tra trình duyệt (điều phối viên)
+
+Máy chủ tĩnh cổng 8782, Playwright, viewer `material-viewer.html?doc=materials/lec-07/lecture-note.md&deck=lecture-07-xap-xi-ham.html`:
+
+- 1600×900, 390×844 và chế độ in: 0 lỗi console hoặc trang, 0 request lỗi hoặc ra ngoài, 0 `.katex-error`, không tràn ngang trang, không còn `:::` sót.
+- Ở 390 px, 22 công thức hiển thị cuộn ngang trong khung (trước sửa: 26). Đó là quan hệ đơn, và phép tính có nhãn chữ.
+- Nhãn `\tag` đè lên công thức rộng ở 390 px. Đây là lỗi CSS có sẵn của viewer, đã ghi ở Bài 03.
+- Điều phối viên đã xem ảnh chụp.
+
+`no-ai-slop`: biên tập viên tự kiểm `eval.md` (Edit) trên mọi câu sửa; tác tử mạch viết kiểm Detect trên câu mới.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-07)`.
