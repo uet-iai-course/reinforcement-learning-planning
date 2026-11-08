@@ -2345,3 +2345,61 @@ Máy chủ tĩnh cổng 8782, Playwright, viewer `material-viewer.html?doc=mater
 `no-ai-slop`: biên tập viên tự kiểm `eval.md` (Edit) trên mọi câu sửa; tác tử mạch viết kiểm Detect trên câu mới.
 
 Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-04)`.
+
+## Rà soát ghi chú vòng hai (2026-11-08)
+
+Goal của người dùng: "rà soát ghi chú các bài của rl-plan 01–10 về nội dung, bố cục, văn phong theo các nguyên tắc đã thiết lập". Người dùng chọn đi đủ vòng, commit và push từng bài. Trần độ dài của học phần là 30 000 từ prose (người dùng nới 2026-11-08).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai đều là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Ba rà soát chỉ đọc, song song: văn phong (`no-ai-slop` Detect); chuẩn giáo trình; toán/RL.
+- Một biên tập viên (`no-ai-slop` Edit).
+- Hai kiểm tra lại chỉ đọc.
+
+**Rà soát:**
+
+| Vai | Chặn | Nghiêm trọng | Trung bình | Nhẹ |
+|---|---:|---:|---:|---:|
+| Văn phong | 0 | 0 | 10 | 37 |
+| Chuẩn giáo trình | 0 | 0 | 4 | 16 |
+| Toán/RL | 0 | 0 | 0 | 3 |
+
+**Quyết định của điều phối viên:**
+- **Chấp nhận mặc định** mọi phát hiện, trừ các mục dưới đây.
+- **S5, cắt:** câu rào đón "số liệu sư phạm tự xây dựng" ở L69, như Bài 02.
+- **Lặp ý:**
+  - S19: "chứng nhận chỉ thuộc về MDP ước lượng" trước xuất hiện hơn mười lần. Nay giữ đầy đủ ở lần đầu, ở lý do Markov, ở Tình huống 04.2 và ở Tóm tắt.
+  - S20: "lần chạy đã nhúng trong notebook" trước xuất hiện 12 lần, nay nêu một lần.
+- **Bố cục:** G4 và S9 (năm ý ở L86 đổi thành danh sách); G19 và S44 (bỏ danh sách treo sau phủ định).
+- **Bổ sung:**
+  - G5: gọi tên $\mathcal S^+$, $s_{\mathrm{term}}$, $\mathcal R$, $\mathcal A(s)$ tại chỗ trong Định nghĩa 04.1.
+  - G9: thêm bước trực giác trước Định lý 04.13.
+- **Lặp chính sách tổng quát:** chỉ thêm câu nêu vấn đề, không thêm ví dụ số mới (ràng buộc số hiệu và nguồn).
+- **G14, không áp dụng:** trùng S33; áp dụng thêm sẽ xóa căn cứ "(Ví dụ 04.12)".
+
+**Kiểm tra lại:**
+- Độ chính xác: 0 chặn, 0 nghiêm trọng, 1 trung bình, 3 nhẹ.
+  - A1: khi cắt câu, Nhận xét 04.21 mất vế "tổn thất của chính sách cần chặn riêng", nên câu ngụ ý Hệ quả 04.27 chứng nhận chính sách tối ưu. Đã khôi phục; điều phối viên đã kiểm L978.
+- Mạch viết: 0 chặn, 0 nghiêm trọng, 3 trung bình, 8 nhẹ.
+  - F1: gạch 3 của Nhận xét 04.10 bị cắt.
+  - F2: câu dẫn ở L973 nay khớp với hai điều kiện có phản ví dụ.
+  - F3: khôi phục lý do của phản ví dụ $(a,b)$.
+- Tất cả được chấp nhận và đã sửa.
+- Đợt sửa đầu (dòng 1–135) được biên tập viên chạy bằng thay chuỗi tự động thay vì công cụ Edit. Tác tử kiểm tra lại độ chính xác đã rà kỹ đoạn này: không mất nội dung.
+
+**Số liệu:**
+- Prose 20 455 → 20 197.
+- 113 dòng tiêu đề khối và mục trùng khít trước và sau.
+- 13 `note-topic-id` giữ nguyên. `git diff --check`: sạch.
+
+**Lệch cần đồng bộ (không sửa):**
+- `exercises.md` L510: "Bước 2" phải là "Bước 3".
+- `exercises.md` L271: "04.10(d)" phải là "04.10(b)".
+- `exercises.md` L48, L169, L268 còn câu "số liệu sư phạm tự xây dựng", câu mà ghi chú đã cắt.
+- Dấu vết nguồn: các bộ số của ví dụ không lấy từ bài giảng gốc hay notebook do người soạn xây dựng để tính tay.
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in.
+- 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang.
+- Ở 390 px, 27 công thức hiển thị cuộn trong khung.
+- Lỗi CSP script nội tuyến đến từ môi trường kiểm tra.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-04)`.
