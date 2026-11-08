@@ -26,17 +26,6 @@ Số hiệu `03.k` chỉ ghi chú Bài 03.
 
 Khoảng 20 dòng; chỉ ký hiệu dùng xuyên suốt chương, mỗi chữ giữ một nghĩa trong cả chương. Ký hiệu chỉ dùng trong một ví dụ hay chứng minh được giới thiệu tại chỗ. Sau bảng, một đoạn nêu quy ước đọc: chỉ số thời gian của phần thưởng ($R_{t+1}$ là phần thưởng của chuyển từ $t$ sang $t+1$), kỳ vọng lấy theo chính sách và động lực môi trường, số liệu sư phạm tự xây dựng. Khi ký hiệu khác giáo trình *Học máy thống kê* ($v_\pi$ so với $V^\pi$), nêu tương ứng một lần.
 
-## Bản đồ chủ đề
-
-### Tên chủ đề
-
-- Nhóm: `cốt lõi` | `cầu nối` | `bổ sung` | `đọc thêm`.
-- Vai trò trong mạch: bước tiến của chủ đề đối với bài toán trung tâm.
-- Kết nối vào: kiến thức đầu vào.
-- Kết nối ra: sản phẩm học tập dùng cho phần sau.
-- Mục: `## 1.` (mạch tương ứng của bộ trang chiếu).
-- Nguồn: trang hoặc trang chiếu nguồn.
-
 ## 1. Tên mục (một mạch của bộ trang chiếu)
 
 Mở mục bằng bài toán cụ thể, có dữ kiện và số liệu khi được, mà công cụ hiện có chưa giải được, viết như câu hỏi mà người đọc cùng tác giả đặt ra ("Để trả lời câu hỏi này, chúng ta cần…"). Không mở mục bằng định nghĩa, công thức hay danh sách.

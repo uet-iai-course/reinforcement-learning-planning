@@ -12,7 +12,7 @@
   - Lecture note của mỗi bài nằm tại `2627-1/materials/lec-NN/lecture-note.md`.
   - Lecture note Markdown là bản nội dung đã kiểm định dùng để đồng bộ slide deck. Không sao chép nguyên văn note lên trang chiếu; giữ chung thuật ngữ, ký hiệu, giả thiết, ví dụ và thứ tự khái niệm.
   - Mỗi thẻ trong `2627-1/index.html` có bốn nhóm: **Bài giảng** (link slide deck), **Ghi chú bài giảng** và **Bài tập** (link material-viewer) và **Thực hành** (link Colab và tải notebook). Link viewer chỉ được thêm khi lecture note hoặc exercises đã đạt kiểm định; nhóm chưa có ghi `Chưa có`.
-  - Bản đồ chủ đề của mỗi bài gồm bốn nhóm: **cốt lõi**, **cầu nối**, **bổ sung**, **đọc thêm**. Đề xuất mục cầu nối hoặc bổ sung chỉ khi có khoảng trống cụ thể đã chỉ ra và có nguồn cụ thể; không thêm cho đủ.
+  - Phân loại chủ đề của mỗi bài gồm bốn nhóm: **cốt lõi**, **cầu nối**, **bổ sung**, **đọc thêm**. Phân loại này nằm trong `planning/lec-NN/outline.md`, mục "Phân loại chủ đề"; ghi chú bài giảng không có mục "Bản đồ chủ đề" (quyết định của người dùng 2026-11-04, áp dụng cho mọi ghi chú từ 2026-11-08). Đề xuất mục cầu nối hoặc bổ sung chỉ khi có khoảng trống cụ thể đã chỉ ra và có nguồn cụ thể; không thêm cho đủ.
   - Dùng `note-topic-id` trong lecture note và `data-slide-id` trong slide deck để ánh xạ hai chiều giữa note và trang chiếu.
 - Ngôn ngữ, biên tập, `no-ai-slop`, `quill`, cấu trúc học tập, tiêu chuẩn toán học và RevealJS theo đúng `AGENTS.md`. Lecture note tuân theo `AGENTS.md` §"Tiêu chuẩn giáo trình cho ghi chú bài giảng" (giọng kể "chúng ta/ta", môi trường có số hiệu, mười bốn loại khối, đoạn móc nối, tình huống áp dụng, kiểm định ghi chú). Slide deck tuân theo §"Văn phong và mật độ mặt trang chiếu" và §"Trang tiêu đề mạch". Bài tập tuân theo §"Ghi chú bài giảng, bài tập và bài thực hành".
 
@@ -30,7 +30,7 @@
 ## Giai đoạn I — Lecture note
 
 1. **Kiểm kê và lập kế hoạch:** giao một tác tử lập kế hoạch chỉ đọc; điều phối viên chấp nhận kế hoạch trước khi giao tác tử chỉ đọc khác phân tích nguồn chi tiết. Tác tử lập kế hoạch và tác tử phân tích nguồn đề xuất bản đồ chủ đề độc lập. Đầu ra bất biến của đợt này gồm mục tiêu, tiên quyết, bảng ánh xạ nguồn, kiểm kê công thức–ví dụ–hình–mã, rủi ro và hai bản đề xuất chủ đề.
-2. **Hợp nhất bản đồ chủ đề (reader/reviewer):** một tác tử riêng đối chiếu hai đề xuất và phân loại `cốt lõi`, `cầu nối`, `bổ sung`, `đọc thêm`. Mỗi mục ghi nguồn, vai trò trong mạch, kiến thức đầu vào, sản phẩm học tập, vị trí, kết nối trước–sau và tác động phạm vi. Chỉ giữ mục cầu nối hoặc bổ sung khi nó sửa một khoảng trống cụ thể và có nguồn phù hợp. Điều phối viên duyệt phạm vi trước khi writer chạy.
+2. **Hợp nhất bản đồ chủ đề (reader/reviewer):** một tác tử riêng đối chiếu hai đề xuất và phân loại `cốt lõi`, `cầu nối`, `bổ sung`, `đọc thêm`. Mỗi mục ghi nguồn, vai trò trong mạch, kiến thức đầu vào, sản phẩm học tập, vị trí, kết nối trước–sau và tác động phạm vi. Chỉ giữ mục cầu nối hoặc bổ sung khi nó sửa một khoảng trống cụ thể và có nguồn phù hợp. Kết quả ghi vào `planning/lec-NN/outline.md`, mục "Phân loại chủ đề", không vào ghi chú. Điều phối viên duyệt phạm vi trước khi writer chạy.
 3. **Soạn note (một tác tử, tuần tự):** giao tác tử soạn phạm vi tệp cụ thể để tạo `2627-1/materials/lec-NN/lecture-note.md` từ `materials/_templates/lecture-note.md`. Mỗi chủ đề có `note-topic-id`; công thức dùng `$...$`/`$$...$$`; mỗi khái niệm trọng tâm đi theo vấn đề → trực giác → ví dụ tính tay → hình thức/thuật toán → ứng dụng và giới hạn → kiểm tra, trình bày theo tám bước của `AGENTS.md` §"Mẫu trình bày một khái niệm" với môi trường có số hiệu, đoạn móc nối, đoạn "Trong thực hành", kết mục bằng văn xuôi, tình huống áp dụng, tóm tắt chương và bài tập củng cố ba mức. Tác tử soạn đối chiếu cách diễn giải của giáo trình chuẩn và ghi mục đã tham khảo vào nhật ký. Chỉ gộp bước khi vẫn giữ một luận điểm trung tâm và ghi lý do trong dàn ý cùng nhật ký rà soát. Ghi nguồn theo trang hoặc trang chiếu nguồn. Biên tập theo `no-ai-slop`; rà dàn ý và tính liên tục bằng `quill` mà không tạo `quill.json`.
 4. **Năm tác tử rà soát độc lập:** giao năm vai góc nhìn sinh viên, chuyên gia Học tăng cường, độ chính xác toán học–thuật toán, phản biện học thuật–giảng dạy và kết nối–mạch viết. Tất cả dùng Claude Opus 5.5 (mức suy luận `high`) và chỉ đọc cùng một bản đã cố định; chạy song song trong giới hạn khả dụng, chia lượt khi cần. Mỗi báo cáo có `mức độ`, `vị trí`, `vấn đề`, `bằng chứng`, `đề xuất sửa`. Vai phản biện học thuật–giảng dạy rà cả văn phong bằng `no-ai-slop`.
 5. **Sửa tuần tự:** một writer hợp nhất báo cáo và sửa note tuần tự; ghi quyết định với đề xuất không áp dụng vào nhật ký rà soát.
@@ -48,7 +48,7 @@
 5. **Cổng kiểm soát giai đoạn II:**
    - Kiểm định viewer/RevealJS: chạy `../.venv/bin/python -m reloadserver 8765` tại thư mục gốc (cổng là đối số vị trí, không dùng `--port`); mở `http://localhost:8765/2627-1/lecture-NN-<ten-bai>.html` và duyệt mọi trang ngang, dọc; kiểm tra tràn chữ, công thức KaTeX, SVG, đường dẫn, bàn phím, tương phản ở khung 16:9 và màn hình hẹp.
    - Kiểm định index: `2627-1/index.html` có thẻ bài với nhóm **Bài giảng** (link deck) và nhóm **Ghi chú bài giảng** (link material-viewer tĩnh, chỉ khi note đã đạt kiểm định); không link tới tệp quy trình.
-   - Kiểm định material-viewer tĩnh: viewer hiển thị đúng nội dung Markdown, `note-topic-id` khớp bản đồ chủ đề, không phụ thuộc mạng.
+   - Kiểm định material-viewer tĩnh: viewer hiển thị đúng nội dung Markdown, `note-topic-id` khớp bảng "Phân loại chủ đề" trong `outline.md`, không phụ thuộc mạng.
    - Rà trực quan sau cùng bằng Chromium không giao diện qua Playwright, chụp ở 1600×900 và 390×844; nếu không mở được trình duyệt, báo rõ giới hạn và không tuyên bố đã kiểm tra trực quan.
 6. **Commit và push** khi cổng đạt (đã được phép, không hỏi lại). Kiểm tra `git status --short` và diff. Dùng `feat(lecture-NN): add <ten-bai> slide deck` cho deck mới hoặc `fix(lecture-NN): revise <ten-bai> slide deck` cho lần sửa đáng kể, rồi `git push origin main`. Bàn giao tệp deck, URL cục bộ cổng 8765, tệp note, hình đã vẽ lại, kiểm tra, sai khác có chủ ý, ngoại lệ và giới hạn.
 
@@ -70,7 +70,7 @@
 
 ## Checklist đầu ra
 
-- [ ] `2627-1/materials/lec-NN/lecture-note.md` đạt kiểm định, có `note-topic-id` và bản đồ chủ đề bốn nhóm.
+- [ ] `2627-1/materials/lec-NN/lecture-note.md` đạt kiểm định, có `note-topic-id`, không có mục "Bản đồ chủ đề"; phân loại bốn nhóm nằm trong `outline.md`.
 - [ ] `2627-1/lecture-NN-<ten-bai>.html` đạt kiểm định RevealJS, ánh xạ `data-slide-id` ↔ `note-topic-id` đầy đủ.
 - [ ] SVG trong `2627-1/img/lec-NN/`, không ảnh raster trái phép.
 - [ ] `2627-1/planning/lec-NN/` đủ `outline.md`, `storyboard.md`, `review-log.md`.
