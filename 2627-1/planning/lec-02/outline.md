@@ -114,6 +114,27 @@ Tổng 120 phút.
 | (bổ sung) | thêm | 5 | Ưu tiên dừng và trọng số hình học: Russell và Norvig (2020), §17.1.1; chứng minh trong ghi chú. |
 | (bổ sung) | thêm | 6 | Mê cung đích–hố, ngưỡng $c^*$: ví dụ do người dùng duyệt. |
 
+## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)
+
+Ngày 2026-11-04, người dùng quyết định bỏ mục "Bản đồ chủ đề" khỏi ghi chú bài giảng và giữ phân loại bốn nhóm trong `outline.md`; các chú thích `note-topic-id` vẫn nằm trong thân ghi chú. Mỗi hàng dưới đây chép từ khối tương ứng của mục "Bản đồ chủ đề" trong ghi chú bản HEAD trước đợt siết 2026-11-08.
+
+| `note-topic-id` | Chủ đề | Nhóm | Mạch | Vai trò trong mạch | Kết nối vào → ra | Nguồn |
+|---|---|---|---|---|---|---|
+| `lec-02-topic-01` | Mẫu chuyển và chỉ số thời gian | `cốt lõi` | `## 1.` (mạch 2) | cố định thứ tự quan sát, hành động, phần thưởng của một bước | vòng tương tác (Định nghĩa 01.1) → lịch sử ở Mục 2, lợi tức ở Mục 4 | bài giảng gốc, trang 4, 7–11, 14–15; Sutton và Barto (2018), §3.1 |
+| `lec-02-topic-03` | Trạng thái, quan sát và biểu diễn | `cốt lõi` | `## 2.` (mạch 3) | tách điều môi trường ở, điều tác tử nhận và điều tác tử dùng để quyết định | Định nghĩa 01.2 → đầu vào của chính sách ở Mục 3 | bài giảng gốc, trang 16, 18–19, 25–27; Bài tập tuần 2 (2025–2026), bài 2 |
+| `lec-02-topic-05` | Tính Markov, lịch sử trạng thái và mở rộng trạng thái | `cốt lõi` | `## 2.` (mạch 3) | điều kiện để trạng thái hiện tại đủ cho dự báo một bước, và cách khôi phục điều kiện đó | lịch sử của Bài 01; hai ô cùng quan sát → giả thiết của hàm giá trị, hàm động lực và MDP ở Bài 03 | bài giảng gốc, trang 15, 17; Sutton và Barto (2018), §3.1 (trang 49), §17.3 |
+| `lec-02-topic-06` | Chính sách trên biểu diễn | `cốt lõi` | `## 3.` (mạch 4) | viết cách chọn hướng thành đối tượng toán học trên dữ liệu tác tử thật sự có | Định nghĩa 01.11; biểu diễn $X_t$ → kỳ vọng $\mathbb E_\pi$ ở Mục 4 | bài giảng gốc, trang 20–21, 26; Sutton và Barto (2018), §3.5; Bài tập tuần 2, bài 6 |
+| `lec-02-topic-07` | Ưu tiên dừng và trọng số hình học | `bổ sung` | `## 4.` (mạch 5) | chứng minh dạng $\gamma^k$ của trọng số chiết khấu từ ưu tiên dừng, khi lợi ích có dạng cộng | lợi tức của Bài 01 → Định nghĩa 02.12 | Russell và Norvig (2020), §17.1.1, trang 565–566 (phát biểu không kèm chứng minh) |
+| `lec-02-topic-08` | Lợi tức chiết khấu | `cốt lõi` | `## 4.` (mạch 5) | đo cả chuỗi phần thưởng sau một hành động bằng một số, kể cả khi tương tác không kết thúc | Định nghĩa 01.8, Định lý 02.11 → hàm giá trị; phương trình Bellman ở Bài 03 | bài giảng gốc, trang 7–9, 22; Sutton và Barto (2018), §3.3–3.4; Bài tập tuần 2, bài 5 |
+| `lec-02-topic-09` | Từ lợi tức của một lượt đến kỳ vọng | `cầu nối` | `## 4.` (mạch 5) | khoảng trống giữa lợi tức của một lượt và một con số đại diện cho trạng thái khi có yếu tố ngẫu nhiên | Định nghĩa 02.12 → Định nghĩa 02.14 | bài giảng gốc, trang 22 (câu hỏi vì sao cần kỳ vọng) |
+| `lec-02-topic-10` | Hàm giá trị trạng thái | `cốt lõi` | `## 4.` (mạch 5) | đánh giá mỗi trạng thái dưới một chính sách cố định | Định nghĩa 01.12, tính Markov → dự đoán, điều khiển; Bài 03 | bài giảng gốc, trang 22, 24, 26; Sutton và Barto (2018), §3.5 |
+| `lec-02-topic-11` | Hàm động lực | `cốt lõi` | `## 4.` (mạch 5) | dự báo một bước của môi trường, tách khỏi đánh giá dài hạn | Định nghĩa 01.14, tính Markov → MDP (Bài 03), quy hoạch động (dynamic programming) ở Bài 04 | bài giảng gốc, trang 10, 13, 23; Sutton và Barto (2018), §3.1 |
+| `lec-02-topic-12` | Thiết kế phần thưởng và ngưỡng đổi hành vi | `cốt lõi` | `## 5.` (mạch 6) | dự báo hành vi của tác tử tối ưu khi người thiết kế đổi phần thưởng; liên hệ với khuyến khích và chế tài | lợi tức với $\gamma=1$ → phần thưởng của các bài thực hành Bài 04–07 | ví dụ mê cung đích–hố do người dùng duyệt; Sutton và Barto (2018), §3.2, §17.4 |
+| `lec-02-topic-14` | Quan sát một phần và chính sách ngẫu nhiên | `bổ sung` | `## Tình huống áp dụng và ứng dụng` | hậu quả khi biểu diễn gộp hai trạng thái cần hai hành động khác nhau | Nhận xét 02.4, Định nghĩa 02.8 → chính sách ngẫu nhiên và biểu diễn có bộ nhớ ở các bài sau | Sutton và Barto (2018), §13.1, Ví dụ 13.1; Bài tập tuần 2, bài 6 |
+| `lec-02-topic-15` | Trạng thái Markov từ lịch sử quan sát; thiết kế tín hiệu thưởng | `đọc thêm` | `## Hướng dẫn đọc thêm và tài liệu tham khảo` | mở rộng Mệnh đề 02.6 sang lịch sử của tác tử và Mục 5 sang thiết kế phần thưởng thực tế | Mệnh đề 02.6, Mệnh đề 02.18 → quan sát một phần trong Học tăng cường sâu | Sutton và Barto (2018), §17.3 (trang 464–468), §17.4 (trang 469–470) |
+
+Ghi chú không có `lec-02-topic-02`, `topic-04`, `topic-13`; các id `lec-02-part-01` … `part-07` gắn với khối mở đầu, năm mục nội dung và Tóm tắt, không có hàng trong bảng trên.
+
 ## Bản đồ chủ đề (`note-topic-id`) ↔ trang
 
 | `note-topic-id` | Chủ đề | Trang |

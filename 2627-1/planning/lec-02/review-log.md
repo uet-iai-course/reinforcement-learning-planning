@@ -3364,3 +3364,128 @@ Phạm vi: lời năm mục tiêu trên `L02-01-03`, câu cuối ghi chú diễn
 ### Quyết định của điều phối viên (2026-10-14, khép đợt: trang mục tiêu)
 
 - Thay quyết định "đóng, không sửa" trước đó: trang `L02-01-03` nay liệt kê đủ 02.14–02.22 theo mục tiêu, 80 âm tiết (đúng trần 80 của trang mục tiêu, 56 nếu không tính số hiệu), 5 dòng ≤ 20 âm tiết; Playwright hai cỡ 0 lỗi, ảnh xem trực tiếp; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(lecture-02)`.
+
+## Siết ghi chú theo chuẩn 2026-11 (2026-11-08)
+
+Quy trình: `prompt_tighten_lecture_notes.md`. Chuẩn: `AGENTS.md`, `CLAUDE.md` học phần, `../CLAUDE.md` mục "The author's voice", `no-ai-slop` (Edit cho biên tập, Detect cho rà soát). Phạm vi ghi: `materials/lec-02/lecture-note.md`, `planning/lec-02/outline.md`, tệp này.
+
+**Quyết định của người dùng ghi nhận ở đợt này:**
+
+- Bỏ mục "Bản đồ chủ đề" khỏi ghi chú (2026-11-04); phân loại bốn nhóm chuyển sang `outline.md`, mục "Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)", 12 hàng. Quyết định này thay yêu cầu bản đồ chủ đề trong `AGENTS.md` và `prompt_lecture_note_deck.md`.
+- Trần độ dài nới từ 20 000 lên 30 000 từ (2026-11-08), thay mốc của `AGENTS.md`.
+
+### Tác tử (theo lời gọi công cụ)
+
+| Vai trò | Loại | Mô hình | Effort | Ghi tệp |
+|---|---|---|---|---|
+| Rà văn phong và giọng tác giả (`no-ai-slop` Detect) | general-purpose | opus (Opus 5.5) | high | không |
+| Rà chuẩn giáo trình | general-purpose | opus | high | không |
+| Rà độ chính xác toán học và Học tăng cường | general-purpose | opus | high | không |
+| Biên tập viên duy nhất (`no-ai-slop` Edit), hai vòng | general-purpose | opus | high | ghi chú, outline |
+| Kiểm tra lại độ chính xác | general-purpose | opus | high | không |
+| Kiểm tra lại mạch viết và kết nối | general-purpose | opus | high | không |
+
+Điều phối viên (phiên chính, Opus 5.5) không soạn, không rà, không biên tập.
+
+### Phát hiện và quyết định
+
+**Rà toán:** 0 chặn bàn giao, 0 nghiêm trọng, 1 trung bình, 8 nhẹ. Không lỗi số; mọi ví dụ, bài tập và tình huống được tính lại bằng script, mê cung đọc từ SVG. Tất cả **chấp nhận**:
+
+| mức độ | vị trí (HEAD) | vấn đề | quyết định |
+|---|---|---|---|
+| trung bình | 763, Trong thực hành | "Vì vậy" sai quan hệ nhân quả: lượt bị cắt bị loại khỏi ước lượng Monte Carlo vì phần lợi tức thiếu không quan sát được (trọng số gần 1 khi $t$ gần điểm cắt), không phải vì phần đó nhỏ | chấp nhận; viết lại câu, thêm việc sai phân thời gian vẫn dùng các chuyển của lượt bị cắt (khớp notebook Bài 05) |
+| nhẹ | 31, 61 | $k$, $x$, $\varepsilon$, $E$ mang hai nghĩa, trái câu "mỗi chữ một nghĩa" | chấp nhận: liệt kê ngoại lệ sau bảng, không đổi chữ. **Bác bỏ** phương án đổi tên (deck và các bài sau dùng (4.5)) |
+| nhẹ | 506 | "chính sách tất định của Định nghĩa 01.11"; Bài 01 gọi là "chính sách xác định" | chấp nhận |
+| nhẹ | 670 | phản ví dụ hàm lập phương chưa chỉ ra thứ tự không biểu diễn được bằng lợi ích cộng | chấp nhận: thêm cặp $(0,y)$, $(y^3,0)$ |
+| nhẹ | 695, 709 | Định nghĩa 02.12 cho $\gamma=0$, Định lý 02.11 chỉ cho $\gamma\in(0,1]$ | chấp nhận |
+| nhẹ | 848 | phản ví dụ bit $z$ thiếu $\Pr(z=1)=0{,}5$ và tính độc lập mỗi bước | chấp nhận |
+| nhẹ | 853 | "đổi mũi tên" trong khi chính sách đã chọn Đông tại $(4,1)$ | chấp nhận |
+| nhẹ | 1019 | phần thưởng Flappy Bird thiếu $-0{,}5$ khi vượt mép trên; $+1$ thay cho $+0{,}1$ | chấp nhận (khớp notebook Bài 07, ô 4) |
+| nhẹ | 1091, Tình huống 02.2 | trường hợp $a^*=$ Đông ngầm giả sử tới được B | chấp nhận; **lệch deck**, xem dưới |
+
+**Rà văn phong:** 86 phát hiện; 0 chặn bàn giao, 10 nghiêm trọng, 33 trung bình, 43 nhẹ.
+
+- Nghiêm trọng: năm câu về vị thế đoạn văn ("đây chưa phải định nghĩa", "Đây chưa phải phát biểu chính xác") ở 261, 352, 572, 785, 921; năm kết mục "Như vậy, chúng ta đã …" kèm câu điều hướng ở 251, 461, 562, 911, 1046.
+- Mẫu lặp: đoạn đọc hình nhắc lại alt; tham chiếu tiến rải rác; ý song song viết liền; ghi chú làm chủ ngữ; câu rào đón "Đây là môi trường giả định …".
+
+Tất cả **chấp nhận**. Quyết định riêng:
+
+- Giữ hình cấu trúc chương, chỉ viết lại đoạn đọc hình theo nội dung.
+- Tham chiếu tới bài sau gom về khối "**Liên hệ với các bài sau.**" (nhãn "**Bài 0N.**" như Bài 01).
+- Đoạn Puterman rút còn một câu.
+- Giữ vế nối "với mọi chính sách" ở 378, bỏ "ở Mục 4.5".
+- Mục tiêu học tập giữ số bài tập trong ngoặc.
+
+**Rà chuẩn giáo trình:** 45 phát hiện; 0 chặn bàn giao, 5 nghiêm trọng (trùng năm câu vị thế đoạn văn), 18 trung bình, 22 nhẹ.
+
+Các phát hiện chính:
+
+- tóm tắt theo mục chỉ liệt kê tên;
+- Định nghĩa 02.14 thiếu phần "Bỏ <giả thiết>: <phản ví dụ>";
+- thiếu móc nối với Nhận xét 01.19;
+- thiếu câu nối về cắt lượt so với Định nghĩa 01.7;
+- $\hat p$ dùng trước $p$;
+- đoạn quá một ý;
+- mục tham khảo chưa ánh xạ nguồn theo mục.
+
+Tất cả **chấp nhận**, trừ:
+
+- **G1** (vế mục tiêu 4 "giải thích vì sao trọng số có dạng hình học" không có bài tập kiểm tra trực tiếp): không đổi mục tiêu, không thêm bài tập (giữ bộ đếm). Ghi ở đây là khoảng trống còn mở.
+- Nhận xét 02.4 và 02.17 chứa định nghĩa, và tính chất ở dòng 798 không nằm trong khối có số hiệu: không đổi loại hay tiêu đề khối, chỉ ghi nhận ở đây.
+
+**Kiểm tra lại, mạch viết:** 0 chặn, 0 nghiêm trọng, 1 trung bình, 11 nhẹ. Các điểm:
+
+- F1: đoạn về cắt lượt chuyển lên sau Định nghĩa 02.1;
+- F3: danh sách việc của chương thêm hai gạch cho khớp bốn câu hỏi;
+- F7: câu kết Mục 4 khái quát sai thành "$-1$ mỗi bước";
+- F9: kết Mục 5 lặp gạch "Bỏ chuyển tất định";
+- F10: "chính sách tối ưu" dùng trước khi chứng minh;
+- F12: nhãn khối liên hệ.
+
+Tất cả **chấp nhận** và đã sửa.
+
+**Kiểm tra lại, độ chính xác:** 0 chặn, 0 nghiêm trọng, 1 trung bình, 9 nhẹ. Các điểm:
+
+- A1: gạch "Bỏ tính dừng" phải nói đẳng thức $\mathbb E_\pi[G_t\mid S_t=s]=v_\pi(s)$ hỏng vì vế trái phụ thuộc $t$;
+- A2, A3: hai gạch "Bỏ tính Markov" và "Bỏ $X_t=S_t$" nói thiếu hoặc ngược chiều;
+- A4: $\gamma$ đứng ngoài bộ MDP theo Định nghĩa 03.7;
+- A5: $-11$, $-13$ tính với $\gamma=1$, không gọi thẳng là giá trị hành động của Định nghĩa 03.16;
+- A6: khôi phục câu phạm vi của bảng ký hiệu;
+- A7: tóm tắt thiếu giả thiết của Định lý 02.11 và chặn $R_{\max}/(1-\gamma)$;
+- A9: "mọi môi trường" cần tập đếm được;
+- A10: câu "trùng quỹ đạo của Định nghĩa 01.7".
+
+Tất cả **chấp nhận** và đã sửa.
+
+Không còn phát hiện chặn bàn giao hay nghiêm trọng nào mở.
+
+**Độ lệch nguồn, chuyển từ thân bài vào đây:**
+
+- Bài giảng gốc (2025–2026, trang 15) viết lịch sử với $R_0$, lệch một chỉ số so với quy ước $R_{t+1}$ của học phần.
+- Bài giảng gốc (trang 27) nêu câu hỏi phân loại năm tình huống mà không kèm kết luận; Bài tập 02.15 của tệp bài tập phân loại các tình huống đó theo Nhận xét 02.4.
+
+### Số liệu và đối chiếu
+
+- Số từ (`count_note_words.py 02`, cột prose): **18 524 → 17 299** (raw 21 789 → 20 485).
+- Khối có số hiệu: 54 dòng tiêu đề trùng khít trước và sau. 19 chú thích `note-topic-id` giữ nguyên.
+- Grep "chưa phải", "đây mới là", "Bản đồ chủ đề": 0. `git diff --check`: sạch.
+
+### Lệch cần đồng bộ (không sửa trong đợt này)
+
+- **Deck**, trang L02-04-08, ghi chú diễn giả (dòng 316 của `lecture-02-giao-dien-tac-tu-moi-truong.html`): trường hợp $a^*=$ Đông ngầm giả sử tác tử tới được B. Ghi chú nay nói rõ điều đó: mọi đường tới G đều qua B.
+- `img/lec-02/chapter-structure.svg` và văn bản thay thế của nó ghi nhãn "Mục 1"–"Mục 5" (điều hướng nằm trong hình). Lời văn quanh hình đã bỏ phần điều hướng; SVG nằm ngoài phạm vi ghi.
+- `outline.md` §"Mục tiêu học tập (khớp ghi chú)" xếp bài tập theo mục tiêu khác ghi chú (ví dụ 02.9 dưới mục tiêu 4 ở outline, dưới mục tiêu 1 ở ghi chú). Lệch này có từ HEAD.
+- `exercises.md`: cùng kết quả với ghi chú ở các bài phát biểu lại (02.1–02.5, 02.7, 02.8).
+
+### Kiểm tra trình duyệt (điều phối viên)
+
+Máy chủ tĩnh cổng 8782, Playwright, viewer `material-viewer.html?doc=materials/lec-02/lecture-note.md&deck=lecture-02-giao-dien-tac-tu-moi-truong.html`:
+
+- 1600×900, 390×844 và chế độ in: 0 lỗi console hoặc trang, 0 request lỗi hoặc ra ngoài, 0 `.katex-error`, không tràn ngang trang, không còn `:::` sót.
+- Ở 390 px, 9 công thức hiển thị cuộn ngang trong khung (trước sửa: 24). Đó là dãy liệt kê ($H_3$, $X_3/X_4$, (2.2)), quan hệ đơn ((2.3), Mệnh đề 02.6, (4.9), Ví dụ 02.8 có vế trái rộng hơn khung), (3.2) tràn 2 %, và dòng $p$ của "Công thức cần nhớ".
+- Ba khối Nhận xét 02.9, 02.15, 02.19 mở bằng danh sách vẫn hiển thị đúng.
+- Điều phối viên đã xem ảnh chụp.
+
+`no-ai-slop`: biên tập viên tự kiểm `eval.md` (Edit) trên mọi câu sửa; tác tử mạch viết kiểm Detect trên câu mới.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-02)`.
