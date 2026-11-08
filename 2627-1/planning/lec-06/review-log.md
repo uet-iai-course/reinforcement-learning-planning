@@ -1548,3 +1548,63 @@ Máy chủ tĩnh cổng 8782, Playwright, viewer `material-viewer.html?doc=mater
 `no-ai-slop`: biên tập viên tự kiểm `eval.md` (Edit) trên mọi câu sửa; tác tử mạch viết kiểm Detect trên câu mới.
 
 Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-06)`.
+
+## Rà soát ghi chú vòng hai (2026-11-08)
+
+Goal của người dùng: "rà soát ghi chú các bài của rl-plan 01–10 về nội dung, bố cục, văn phong theo các nguyên tắc đã thiết lập". Người dùng chọn đi đủ vòng, commit và push từng bài. Trần độ dài của học phần là 30 000 từ prose (người dùng nới 2026-11-08).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai đều là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Ba rà soát chỉ đọc, song song: văn phong (`no-ai-slop` Detect); chuẩn giáo trình; toán/RL.
+- Một biên tập viên (`no-ai-slop` Edit).
+- Hai kiểm tra lại chỉ đọc.
+
+**Rà soát:**
+
+| Vai | Chặn | Nghiêm trọng | Trung bình | Nhẹ |
+|---|---:|---:|---:|---:|
+| Văn phong | 0 | 1 | 19 | 46 |
+| Chuẩn giáo trình | 0 | 0 | 5 | 24 |
+| Toán/RL | 0 | 0 | 0 | 3 |
+
+**Quyết định của điều phối viên:**
+- **Chấp nhận mặc định** mọi phát hiện, trừ các mục dưới đây.
+- **S49 (nghiêm trọng), chấp nhận:** câu nói ví dụ "không cô lập" là câu bình luận về chính văn bản; đã viết lại.
+- **S41, chấp nhận:** biên tập viên đã kiểm notebook. Câu "khác biệt duy nhất so với mã Sarsa" sai, vì hai hàm còn khác nhau ở mục tiêu; đã sửa.
+- **"Bài giảng gốc" làm chủ ngữ** (7 chỗ): viết lại.
+- **Câu "số liệu sư phạm" và "chỉ để người đọc kiểm":** cắt, kể cả câu ở quy ước L73.
+  - Dấu vết nguồn ghi tại đây: mọi bộ số của dãy năm ô lấy từ bài giảng gốc (2025–2026), trang 15–21.
+  - Số liệu LunarLander lấy từ notebook của bài.
+  - Các bộ số khác do người soạn xây dựng để tính tay.
+- **Bổ sung:**
+  - G20: công thức dạng Q của toán tử Bellman tối ưu.
+  - Giải nghĩa on-policy ở lần dùng đầu, không đổi thứ tự khối.
+  - Bảng ký hiệu thêm $\pi_L$, $\pi_I$.
+- **Mục 1 dài 5 655 từ:** chỉ rút bằng cắt lặp, không tách mục.
+
+**Kiểm tra lại:**
+- Độ chính xác: 0 chặn, **2 nghiêm trọng**, 2 nhẹ.
+  - A1: câu "Trong thực hành" mới (G10) nói lịch $\varepsilon_k$ giảm làm Mệnh đề 06.6 không áp dụng.
+  - A2: cùng lỗi ở L413 và L1413, có từ trước đợt này.
+  - Điều phối viên đã kiểm: chính sách $\varepsilon_k$-tham lam là $\varepsilon_{k+1}$-mềm khi $\varepsilon_{k+1}\le\varepsilon_k$, nên mệnh đề áp dụng với $\varepsilon=\varepsilon_{k+1}$. Giả thiết thật sự bị vi phạm là "$q_\pi$ được biết chính xác"; ngoài ra chính sách hành vi đổi ngay trong lượt.
+  - Đã viết lại cả ba chỗ. Cùng tác tử kiểm tra lại sau sửa: **đạt**, không có phát hiện mới.
+- Mạch viết: 0 chặn, 0 nghiêm trọng, 6 trung bình, 12 nhẹ.
+  - F13: tham chiếu treo "định nghĩa GLIE gốc".
+  - F14: chuyển tiếp kép ở đầu 5.4.
+- Tất cả được chấp nhận và đã sửa.
+
+**Số liệu:**
+- Prose 21 564 → 21 102.
+- 91 dòng tiêu đề khối và mục trùng khít trước và sau.
+- 9 `note-topic-id` giữ nguyên. `git diff --check`: sạch.
+
+**Lệch cần đồng bộ:**
+- Ghi chú diễn giả của deck, dòng 471.
+- Deck dòng 596 lệch với Định lý 06.22 sau M2 (chỉ số của $\pi_t$).
+- `exercises.md` dòng 88.
+- Tiêu đề của `greedy-chain.svg`.
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in.
+- 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang.
+- Lỗi CSP script nội tuyến đến từ môi trường kiểm tra (cũng có ở Bài 11, vốn không bị sửa). Ở 390 px, 28 công thức hiển thị cuộn trong khung.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-06)`.
