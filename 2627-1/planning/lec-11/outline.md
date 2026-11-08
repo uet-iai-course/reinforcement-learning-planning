@@ -86,6 +86,30 @@ Tên viết tắt dùng nhất quán: Simple Policy Optimization (SPO, tối ưu
 
 `L11-01`, `L11-02`, `L11-03`, `L11-04`, `L11-05`, `L11-06`, `L11-07`, `L11-08`, `L11-09`, `L11-10`, `L11-11`, `L11-12`, `X01`, `L11-16`, `L11-17`, `L11-18`, `L11-19`, `L11-13`, `L11-14`, `L11-15`, `L11-20`, `L11-21`, `L11-22`, `L11-23`, `L11-24`, `L11-25`, `L11-26`, `L11-27`, `L11-28`, `X02`, `L11-29`, `L11-30`, `L11-31`, `L11-32`, `L11-33`, `L11-34`, `L11-35`, `L11-36`, `L11-37`, `L11-38`, `L11-39`, `L11-40`, `L11-41`, `L11-42`, `X03`, `L11-43`.
 
+## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)
+
+Ngày 2026-11-04, người dùng quyết định bỏ mục "Bản đồ chủ đề" khỏi ghi chú bài giảng và giữ phân loại bốn nhóm trong `outline.md`; các chú thích `note-topic-id` vẫn nằm trong thân ghi chú. Mỗi hàng dưới đây chép từ mục "Bản đồ chủ đề" của ghi chú bản HEAD (`f86f4a0`) trước khi bỏ ngày 2026-11-08, theo thứ tự của bản đồ. Bản đồ chỉ có các cột `note-topic-id`, chủ đề, nhóm, trang nguồn, thời lượng: cột "Chủ đề" và "Nhóm" chép nguyên văn, cột "Nguồn" là cột "trang nguồn"; cột "Mạch" ghi tiêu đề mục ghi chú đứng ngay sau chú thích `note-topic-id`; hai cột "Vai trò trong mạch" và "Kết nối vào → ra" để "—" vì bản đồ không có.
+
+| `note-topic-id` | Chủ đề | Nhóm | Mạch | Vai trò trong mạch | Kết nối vào → ra | Nguồn |
+|---|---|---|---|---|---|---|
+| `lec-11-topic-01` | Cầu nối từ PPO và hai tầng kết quả | cầu nối | `## Cầu nối từ PPO và hai tầng kết quả học tập` | — | — | tr. 1–3, 4–43 |
+| `lec-11-topic-02` | Tối ưu chính sách đơn giản (SPO) | cốt lõi | `## Tối ưu chính sách đơn giản (SPO)` | — | — | tr. 44–47 |
+| `lec-11-topic-03` | SAM+PPO và kiểm tra SPO/SAM | cốt lõi | `## SAM+PPO và kiểm tra SPO/SAM` | — | — | tr. 48–51 |
+| `lec-11-topic-04` | Actor–critic, A3C, A2C | cốt lõi | `## Actor–critic, A3C và A2C` | — | — | tr. 53–54, 57–58 |
+| `lec-11-topic-05` | Gradient chính sách khác chính sách | cốt lõi | `## Gradient chính sách khác chính sách` | — | — | tr. 52, 55–56 |
+| `lec-11-topic-06` | Định lý gradient chính sách tất định | cốt lõi | `## Định lý gradient chính sách tất định (DPG)` | — | — | tr. 59 |
+| `lec-11-topic-07` | DDPG và hợp đồng replay/target | cốt lõi | `## DDPG và hợp đồng replay/target` | — | — | tr. 60–61 |
+| `lec-11-topic-08` | D4PG, MADDPG và bài kiểm tra | cốt lõi + bổ sung | `## D4PG, MADDPG và bài kiểm tra khác chính sách` | — | — | tr. 62–64 |
+| `lec-11-topic-09` | ACER và ACKTR | bổ sung | `## ACER và ACKTR` | — | — | tr. 65–67 |
+| `lec-11-topic-10` | SAC và TD3 | cốt lõi | `## SAC và TD3` | — | — | tr. 68–71 |
+| `lec-11-topic-11` | SVPG, IMPALA, PPG | bổ sung | `## SVPG, IMPALA và PPG` | — | — | tr. 72–74 |
+| `lec-11-topic-12` | Bản đồ lựa chọn và bài tập tích hợp | cốt lõi | `## Bản đồ lựa chọn và bài tập tích hợp` | — | — | tr. 75–77 |
+| `lec-11-topic-13` | Năm phép kiểm và tuyến đọc tiếp | đọc thêm | `## Năm phép kiểm và tuyến đọc tiếp` | — | — | tr. 75–78 |
+
+Cột "thời lượng" của bản đồ: `lec-11-topic-01` 7 phút; `lec-11-topic-02` 12 phút; `lec-11-topic-03` 12 phút + 4 phút linh hoạt + 8 phút X01; `lec-11-topic-04` 10 phút; `lec-11-topic-05` 8 phút; `lec-11-topic-06` 7 phút; `lec-11-topic-07` 8 phút; `lec-11-topic-08` 10 + 12 (X02) phút; `lec-11-topic-09` 6 phút; `lec-11-topic-10` 18 phút; `lec-11-topic-11` 8 (+6 linh hoạt) phút; `lec-11-topic-12` 4 + 10 (X03) phút; `lec-11-topic-13` —.
+
+Câu cuối của bản đồ: "Tổng nội dung giảng 110 phút (96 phút cốt lõi và 14 phút bổ sung), linh hoạt 10 phút, bài tập 30 phút (8 + 12 + 10); toàn buổi 150 phút."
+
 ## Ánh xạ note-topic-id → data-slide-id
 
 | note-topic-id | data-slide-id |

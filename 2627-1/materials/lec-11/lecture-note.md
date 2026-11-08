@@ -11,26 +11,6 @@
 
 Tiên quyết từ Bài 10 (trang 4–43 của nguồn, không giảng lại): định lý gradient chính sách, REINFORCE, baseline, GAE, surrogate TRPO, PPO-Clip và các chi tiết triển khai PPO.
 
-## Bản đồ chủ đề
-
-| note-topic-id | chủ đề | nhóm | trang nguồn | thời lượng |
-|---|---|---|---|---|
-| `lec-11-topic-01` | Cầu nối từ PPO và hai tầng kết quả | cầu nối | 1–3, 4–43 | 7 phút |
-| `lec-11-topic-02` | Tối ưu chính sách đơn giản (SPO) | cốt lõi | 44–47 | 12 phút |
-| `lec-11-topic-03` | SAM+PPO và kiểm tra SPO/SAM | cốt lõi | 48–51 | 12 phút + 4 phút linh hoạt + 8 phút X01 |
-| `lec-11-topic-04` | Actor–critic, A3C, A2C | cốt lõi | 53–54, 57–58 | 10 phút |
-| `lec-11-topic-05` | Gradient chính sách khác chính sách | cốt lõi | 52, 55–56 | 8 phút |
-| `lec-11-topic-06` | Định lý gradient chính sách tất định | cốt lõi | 59 | 7 phút |
-| `lec-11-topic-07` | DDPG và hợp đồng replay/target | cốt lõi | 60–61 | 8 phút |
-| `lec-11-topic-08` | D4PG, MADDPG và bài kiểm tra | cốt lõi + bổ sung | 62–64 | 10 + 12 (X02) phút |
-| `lec-11-topic-09` | ACER và ACKTR | bổ sung | 65–67 | 6 phút |
-| `lec-11-topic-10` | SAC và TD3 | cốt lõi | 68–71 | 18 phút |
-| `lec-11-topic-11` | SVPG, IMPALA, PPG | bổ sung | 72–74 | 8 (+6 linh hoạt) phút |
-| `lec-11-topic-12` | Bản đồ lựa chọn và bài tập tích hợp | cốt lõi | 75–77 | 4 + 10 (X03) phút |
-| `lec-11-topic-13` | Năm phép kiểm và tuyến đọc tiếp | đọc thêm | 75–78 | — |
-
-Tổng nội dung giảng 110 phút (96 phút cốt lõi và 14 phút bổ sung), linh hoạt 10 phút, bài tập 30 phút (8 + 12 + 10); toàn buổi 150 phút.
-
 ## Ký hiệu và quy ước
 
 - $w_t = \pi_\theta(A_t\mid S_t)/\pi_{\mathrm{old}}(A_t\mid S_t)$: tỷ số policy mới/cũ trong SPO; $\epsilon$: tham số tỷ số SPO.

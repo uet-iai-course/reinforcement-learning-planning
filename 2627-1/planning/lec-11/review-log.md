@@ -172,3 +172,13 @@ Kiểm định material viewer phát hiện bản nháp từng dùng thẻ HTML 
 Tái kiểm toán học bằng DeepSeek và tái kiểm mạch bằng GLM đều kết luận `PASS`. Kiểm định tĩnh: 46 slide/46 ID duy nhất, 13 topic, 5 section ngoài, 46 ghi chú, 155 biểu thức KaTeX dựng nghiêm ngặt, 0 ảnh raster, mọi tài sản cục bộ tồn tại. Chromium duyệt đủ 46 slide ở 1280 × 720 và 800 × 600, 0 lỗi console/request; bàn phím lên/xuống/phải đạt; toàn bộ fragment của X01/X02/X03 hiển thị đủ và không bị cắt. Phép đo tự động báo một số hộp KaTeX vượt biên do scale; rà ảnh xác định hai lỗi thật ở `L11-25` và `L11-29`, đã giảm riêng chiều cao SVG xuống 190 px và rà ảnh lại, công thức cùng chân trang đều hiển thị đầy đủ. Codex Slides vẫn không khả dụng trong phiên này.
 
 Hồ sơ worker được cập nhật sau vòng này: `review=8.000` token, `recheck=4.000`, `patch=6.000` với 10 lượt; DeepSeek V4 Flash mặc định `none`, GLM 5.3 Flash mặc định `minimal`. README ghi thêm quy tắc không gộp HTML nén lớn với sửa planning trong cùng writer. Bộ kiểm thử bridge đạt 22/22.
+
+## Bỏ mục "Bản đồ chủ đề" khỏi ghi chú (2026-11-08)
+
+Yêu cầu của người dùng (2026-11-08): bỏ mục "Bản đồ chủ đề" khỏi mọi ghi chú và ghi vào nguyên tắc. Quy tắc đã ghi ở `AGENTS.md` §"Cấu trúc bắt buộc của một chương" điểm 6, `CLAUDE.md`, `prompt_lecture_note_deck.md` và mẫu ghi chú (commit `87b8295`).
+
+- **Tác tử:** một tác tử ghi tệp, `general-purpose`, opus (Opus 5.5), effort `high`, ghi ghi chú và outline của Bài 08, 09, 11, 12. Điều phối viên kiểm diff, viewer và ghi nhật ký.
+- **Ghi chú:** xóa đúng mục "## Bản đồ chủ đề" (20 dòng; diff chỉ có dòng xóa). Không sửa câu nào khác; không câu nào trong thân bài dẫn tới mục này. Giữ 13 chú thích `note-topic-id`. Danh sách tiêu đề khối có số hiệu không đổi. Số từ prose: 4 003 → 3 756.
+- **Outline:** thêm mục "## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)", 13 hàng chép từ bản đồ ở HEAD `f86f4a0` (script đối chiếu: 0 sai lệch). Số trang nguồn và các phần chỉ có trong bản đồ (danh sách phần, thời lượng nếu có) nằm ở đó.
+- **Kiểm tra trình duyệt (điều phối viên):** viewer tại máy chủ tĩnh cổng 8782, 1600×900 và 390×844: 0 `.katex-error`, 0 lỗi console, 0 request lỗi hoặc ra ngoài, không tràn ngang trang, không còn `:::` sót. `git diff --check`: sạch.
+- Đợt này không siết câu chữ của ghi chú; việc đó nằm ngoài goal 01–07.
