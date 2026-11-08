@@ -131,6 +131,23 @@ Tên hành động và quan sát (phải, trái, hút, sạch, bẩn) viết b�
 | 43–44 | Thảo luận | — | Bài tập 01.16 [Tìm hiểu] |
 | 45 | Cảm ơn | Z00 | thay bằng bài tập về nhà và tài liệu đọc |
 
+## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)
+
+Ngày 2026-11-04, người dùng quyết định bỏ mục "Bản đồ chủ đề" khỏi ghi chú bài giảng và giữ phân loại bốn nhóm trong `outline.md`; các chú thích `note-topic-id` vẫn nằm trong thân ghi chú. Mỗi hàng dưới đây chép từ khối tương ứng của mục "Bản đồ chủ đề" trong ghi chú bản HEAD trước đợt siết 2026-11-08.
+
+| `note-topic-id` | Chủ đề | Nhóm | Mạch | Vai trò trong mạch | Kết nối vào → ra | Nguồn |
+|---|---|---|---|---|---|---|
+| `lec-01-topic-01` | Tác tử học từ tương tác | `cốt lõi` | `## 1.` (mạch 2 của bài trình chiếu) | đặt bài toán trung tâm và vòng tương tác | học có giám sát, dữ liệu có sẵn và có nhãn → $S_t$, $O_t$, $A_t$, $R_{t+1}$, $H_t$ cho mọi mục sau | Bài giảng gốc (2025–2026), trang 4–9; Sutton và Barto (2018), §1.1, §3.1 |
+| `lec-01-topic-02` | Tín hiệu học và dữ liệu tương tác | `cốt lõi` | `## 2.` (mạch 3) | phân biệt phần thưởng với nhãn | vòng tương tác của Mục 1 → tiêu chí nhận dạng; nhu cầu đo hậu quả dài hạn | Bài giảng gốc (2025–2026), trang 17–21 |
+| `lec-01-topic-03` | Phần thưởng và lợi tức | `cốt lõi` | `## 3.` (mạch 4) | đo hậu quả dài hạn bằng $G_t$ | phản hồi trễ của Mục 2 → hệ thức $G_t=R_{t+1}+G_{t+1}$ | Bài giảng gốc (2025–2026), trang 23–25; Sutton và Barto (2018), §3.2–3.3 |
+| `lec-01-topic-04` | Chính sách, hàm giá trị và mô hình | `cốt lõi` | `## 4.` (mạch 5) | tách chọn hành động khỏi đánh giá và dự báo | lợi tức của Mục 3 → $\pi$ và $v_\pi$ cho Mục 5 | Bài giảng gốc (2025–2026), trang 26; Sutton và Barto (2018), §1.3, §3.5 |
+| `lec-01-topic-05` | Thăm dò và khai thác | `cốt lõi` | `## 4.`, Mục 4.4 (mạch 5) | xung đột khi ước lượng dựa trên ít mẫu | chính sách và ước lượng của Mục 4 → hành động tham lam, dùng lại ở Mục 5 | Bài giảng gốc (2025–2026), trang 27; Sutton và Barto (2018), §2.1–2.2 |
+| `lec-01-topic-06` | Tic-tac-toe như một bài toán Học tăng cường | `cốt lõi` | `## 5.` (mạch 6) | ghép mọi khái niệm, chọn nước bằng giá trị | chính sách, giá trị, khai thác của Mục 4 → phân tích một bước, tiền thân của phương trình Bellman | Bài giảng gốc (2025–2026), trang 28–30; Sutton và Barto (2018), §1.5 |
+| `lec-01-topic-07` | Lịch sử và thế cờ trong Tic-tac-toe | `cầu nối` | `## 5.`, Mục 5.2 | điều kiện để viết giá trị trên thế cờ | giá trị trên lịch sử (Định nghĩa 01.12) → $v_\pi(s)$ trong Mục 5 | Bài giảng gốc (2025–2026), trang 26, 29–30 |
+| `lec-01-topic-08` | Bổ sung: giới hạn của điều khiển với mô hình cố định | `bổ sung` | `## 1.`, Mục 1.4 | nhu cầu học từ tương tác | — | Bài giảng gốc (2025–2026), trang 6–9 |
+| `lec-01-topic-10` | Bổ sung: giả thuyết phần thưởng | `bổ sung` | `## 3.`, Mục 3.4 | phạm vi của việc mã hóa mục tiêu bằng phần thưởng | — | Bài giảng gốc (2025–2026), trang 24–25; Sutton và Barto (2018), §3.2 |
+| `lec-01-topic-11` | Đọc thêm: tác tử nhiều nhiệm vụ và mô hình thế giới | `đọc thêm` | "Hướng dẫn đọc thêm và tài liệu tham khảo" | hướng mở rộng, không thuộc phần đánh giá | — | Bài giảng gốc (2025–2026), trang 14–15, 43–44 |
+
 ## Ánh xạ ghi chú bài giảng sang deck
 
 | `note-topic-id` | Chủ đề | Mục ghi chú | `data-slide-id` |

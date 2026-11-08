@@ -1660,3 +1660,102 @@ Kiểm tra:
 ### Quyết định của điều phối viên (2026-10-14, khép đợt Bài 01)
 
 - Kiểm độc lập: D04 53 âm tiết, dòng dài nhất 20; Playwright hai cỡ 0 lỗi; viewer bài tập 0 lỗi KaTeX; `git diff --check` sạch. Điều phối viên sửa cột "Mục tiêu" của Z02, Z02b trong storyboard thành "1, 3, 4" cho khớp outline. Quyết định: **chấp nhận**; commit `fix(lecture-01)`.
+
+## Siết ghi chú theo chuẩn 2026-11 (2026-11-08)
+
+Quy trình: `prompt_tighten_lecture_notes.md`. Chuẩn: `AGENTS.md`, `CLAUDE.md` học phần, `../CLAUDE.md` mục "The author's voice", `no-ai-slop` (Edit cho biên tập, Detect cho rà soát). Phạm vi ghi: `materials/lec-01/lecture-note.md`, `planning/lec-01/outline.md`, tệp này.
+
+**Quyết định của người dùng ghi nhận ở đợt này:**
+
+- Bỏ mục "Bản đồ chủ đề" khỏi ghi chú (quyết định 2026-11-04 với Bài 10); phân loại bốn nhóm chuyển sang `outline.md`, mục "Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)". Quyết định này thay yêu cầu bản đồ chủ đề trong `AGENTS.md` và `prompt_lecture_note_deck.md`.
+- Trần độ dài ghi chú của học phần nới từ 20 000 lên 30 000 từ (2026-11-08), thay mốc 8 000–20 000 của `AGENTS.md`.
+
+### Tác tử (theo lời gọi công cụ)
+
+| Vai trò | Loại | Mô hình | Effort | Ghi tệp |
+|---|---|---|---|---|
+| Rà văn phong và giọng tác giả (`no-ai-slop` Detect) | general-purpose | opus (Opus 5.5) | high | không |
+| Rà chuẩn giáo trình | general-purpose | opus | high | không |
+| Rà độ chính xác toán học và Học tăng cường | general-purpose | opus | high | không |
+| Biên tập viên duy nhất (`no-ai-slop` Edit), hai vòng | general-purpose | opus | high | ghi chú, outline |
+| Kiểm tra lại độ chính xác | general-purpose | opus | high | không |
+| Kiểm tra lại mạch viết và kết nối | general-purpose | opus | high | không |
+
+Điều phối viên: phiên chính Opus 5.5, chỉ kiểm kê, lập hàng đợi, duyệt, kiểm diff, kiểm trình duyệt và ghi nhật ký.
+
+### Phát hiện và quyết định
+
+Rà toán: không lỗi số (vét cạn cây Tic-tac-toe và bảng $w(k,m)$ bằng phân số chính xác). Chín phát hiện, đều **chấp nhận**:
+
+| mức độ | vị trí (HEAD) | vấn đề | quyết định |
+|---|---|---|---|
+| trung bình | 602; bảng ký hiệu | $\pi_1$ dùng trước khi định nghĩa; bảng gán cả ba chính sách cho Ví dụ 01.6 | chấp nhận: định nghĩa tại Mục 4.1, sửa bảng |
+| nhẹ | Mục tiêu 4 | "giá trị của một lượt" lẫn với lợi tức | chấp nhận: "giá trị $v_\pi(h)$ của một lịch sử" |
+| nhẹ | Ví dụ 01.7, Kiểm tra lại | cột 3–6–9 của X thiếu cả ô 6 và ô 9, không chỉ ô 9 | chấp nhận; **lệch deck**, xem dưới |
+| nhẹ | 652 | biến chạy $s'$ trùng thế cờ $s'$; dạng $0/0$ khi tích bằng $0$ | chấp nhận: biến chạy $z$, thêm vế cho tích bằng $0$ |
+| nhẹ | 992 | bỏ điều kiện thì (c) không xác định, không phải "sai" | chấp nhận |
+| nhẹ | Tình huống 01.1 | truy hồi dùng 01.20(a) và (b); "bốn ô" mơ hồ | chấp nhận |
+| nhẹ | Giả thiết hay bị bỏ quên | thiếu điều kiện chính sách chỉ dùng thế cờ | chấp nhận |
+| nhẹ | Bài tập 01.11 | trạng thái, quan sát liên tục ngoài giả thiết hữu hạn | chấp nhận: thêm một câu vào đề |
+| nhẹ | 24, 327, 602 | "mô hình $f$" mang hai nghĩa | chấp nhận: "hàm dự đoán $f$" |
+
+Rà văn phong và rà chuẩn giáo trình: 8 phát hiện **nghiêm trọng** (câu "Mô tả này chưa phải định nghĩa" ở 182, 210, 296, 381, 569, 694, 735, 817), khoảng 25 câu điều hướng hoặc tham chiếu tiến, năm kết mục nhắc lại cả mục và câu nối đặt ở cả hai phía ranh giới, ý song song viết thành đoạn, thiếu tên tiếng Anh ở lần đầu, chú thích nơi dùng trong mục tiêu và tiên quyết, thiếu "Trong thực hành" sau Mệnh đề 01.20, tóm tắt theo mục chỉ liệt kê tên. Hợp nhất thành một hàng đợi 64 mục; tất cả **chấp nhận**, trừ các mục ghi dưới đây. Quyết định khi hai báo cáo mâu thuẫn:
+
+- Kết mục: bỏ câu nhắc lại và câu "Trong Mục N+1, chúng ta …"; giữ "kết quả đã có + điều còn thiếu" (AGENTS); đầu mục sau mang nhu cầu. Câu nối chỉ ở một phía.
+- Tham chiếu tới bài sau gom về khối "**Liên hệ với các bài sau.**" (đổi nhãn từ "Ứng dụng").
+- Mục tiêu học tập: giữ số bài tập (AGENTS cần ánh xạ mục tiêu → bài tập), bỏ "Mục k" và "trong tệp bài tập còn". **Bác bỏ** đề xuất xóa hết ngoặc.
+- **Bác bỏ** đề xuất xóa câu "số liệu sư phạm tự xây dựng" (AGENTS §Cấu trúc mục 5 đứng trên "The author's voice" theo thứ tự ưu tiên của goal).
+- **Bác bỏ** đề xuất cắt hoặc chuyển đoạn Bayes sau Định nghĩa 01.12 vào khối riêng: đó là căn cứ toán của định nghĩa; chỉ sửa theo M4.
+- **Bác bỏ** đề xuất xóa câu $G_4=0$ ở lời giải Bài tập 01.3(b) (con số của lời giải).
+- Không thêm bài tập sau Mục 4.1 và 4.3 (sẽ đổi bộ đếm).
+- Xóa câu "bài giảng gốc ghi hành động là số 1–9; định nghĩa thu hẹp về các ô trống" (nhận xét bên lề). Độ lệch nguồn lưu ở đây: Định nghĩa 01.18 thu hẹp tập hành động về các ô trống so với trang 29–30 của bài giảng gốc.
+
+Kiểm tra lại, độ chính xác: 1 trung bình, 5 nhẹ; tất cả **chấp nhận** và đã sửa ở vòng hai:
+
+- Câu mới "Đích của cập nhật này là dạng mẫu của vế phải (5.1) …" sai so với Sutton & Barto §1.5: đích là $V(s')$, không có số hạng phần thưởng. Đã xóa câu.
+- Khôi phục công thức mục tiêu $\max_\pi\mathbb E_\pi[G_0]$, vốn bị cắt cùng một tham chiếu tiến; đặt sau Định nghĩa 01.12.
+- Sửa câu dẫn "Giả thiết $T$ hữu hạn và đẳng thức $G_T=0$".
+- Giữ nội dung đầy đủ của câu "không có chứng minh rằng mọi mục tiêu …".
+- Câu tóm tắt về giả thuyết phần thưởng viết đúng như gốc.
+- Bước 2: "Do đó" đổi thành "Ta có".
+
+Kiểm tra lại, mạch viết: 3 trung bình, 11 nhẹ; tất cả **chấp nhận** và đã sửa ở vòng hai:
+
+- Kết Mục 5 thiếu câu kết quả.
+- "ba đối tượng này" mơ hồ.
+- Câu M5 mơ hồ.
+- Mục 42 của hàng đợi (danh sách đầu Mục 4) bị sót.
+- Ba câu kết mục được viết lại.
+- "chính sách" dùng trước khi định nghĩa trong Nhận xét 01.4, đổi thành "quy tắc chọn hành động".
+- Hai câu lặp "đọc thế cờ".
+- Ghép một bước đánh giá với một bước khai thác chưa thành lặp chính sách: sửa thành "lặp lại xen kẽ".
+- Hai tham chiếu Bài 02 và Bài 05 lặp lại.
+- Thêm cột "Chủ đề" vào bảng phân loại trong outline.
+
+Không còn phát hiện chặn bàn giao hay nghiêm trọng nào mở.
+
+### Số liệu và đối chiếu
+
+- Số từ (`count_note_words.py 01`, cột prose): **18 623 → 17 667** (raw 21 059 → 20 036), trong khoảng 8 000–30 000.
+- Khối có số hiệu: 47 dòng tiêu đề (Định nghĩa/Mệnh đề/Nhận xét 01.1–01.22, Ví dụ 01.1–01.10, Bài tập 01.1–01.11, Tình huống 01.1–01.2) trùng khít trước và sau (diff rỗng). 10 chú thích `note-topic-id` giữ nguyên.
+- Tiêu đề mục không số hiệu đổi một chỗ: "5.2 Từ lịch sử đến thế cờ" → "5.2 Rút gọn lịch sử thành thế cờ" (quy tắc tiêu đề "Từ … đến …").
+- Grep "chưa phải", "đây mới là", "Bản đồ chủ đề": 0. `git diff --check`: sạch.
+
+### Lệch cần đồng bộ (không sửa trong đợt này)
+
+- **Deck**, trang E00b (dòng 349 của `lecture-01-gioi-thieu-hoc-tang-cuong.html`), cả mặt trang ("cột 3–6–9 còn trống ô 9") lẫn ghi chú diễn giả ("cột 3–6–9 của X còn thiếu ô 9"): sai. Cột 3–6–9 thiếu ô 6 và ô 9.
+- Deck và `exercises.md`: không có lệch số liệu nào khác (rà toán đã đối chiếu chọn lọc).
+
+### Kiểm tra trình duyệt (điều phối viên)
+
+Máy chủ tĩnh `python -m http.server 8782` ở gốc kho. `reloadserver` (cổng 8781) chèn một script live-reload nội tuyến, và CSP của viewer chặn script đó: một lỗi console có từ trước, không do ghi chú gây ra.
+
+Viewer `material-viewer.html?doc=materials/lec-01/lecture-note.md&deck=lecture-01-gioi-thieu-hoc-tang-cuong.html` bằng Playwright:
+
+- 1600×900, 390×844 và chế độ in: 0 lỗi console hoặc trang, 0 request lỗi, 0 request ra ngoài, 0 `.katex-error`, không tràn ngang trang, không còn dòng `:::` sót.
+- Ở 390 px, 15 công thức hiển thị cuộn ngang trong khung (trước sửa: 21). Các công thức này là một quan hệ đơn, một dãy liệt kê, hoặc đã được tách theo quan hệ mà vẫn rộng hơn vùng chữ khoảng 270 px; danh sách ở báo cáo biên tập.
+- Điều phối viên đã xem ảnh chụp ở cả ba chế độ.
+
+`no-ai-slop`: biên tập viên tự kiểm theo `eval.md` (Edit) trên mọi câu sửa hoặc thêm; tác tử mạch viết kiểm Detect trên câu mới, không còn mẫu nào.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-01)`.
