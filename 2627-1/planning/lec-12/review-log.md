@@ -325,3 +325,13 @@ Mọi báo cáo hợp lệ đều có `requested_model=observed_model`; hai vai 
 - Chromium dựng lại đủ 50 trang ở 1280×720 và 800×600: không lỗi KaTeX, console, tài nguyên, bàn phím hoặc phần tử vượt khung trang hiện tại.
 - Lượt kiểm toàn khóa chạy 48 ca trình duyệt: 12 deck và 12 lecture note, mỗi loại ở hai kích thước. Cả 487 trang chiếu và 24 lượt dựng note đạt; không có lỗi runtime, tài nguyên hỏng, tràn thân tài liệu hoặc marker HTML hiển thị. Kiểm định tĩnh đồng thời xác nhận 12 thẻ index, 12 cặp liên kết, 36 tệp planning, 94 SVG hợp lệ XML và không có `quill.json`.
 - Bốn Design Files HTML, outline, storyboard và review-log đã được ghi lại vào dự án Codex Slides rồi đọc lại khớp từng byte. Codex in-editor Browser vẫn không có trong phiên, nên không tuyên bố đã rà trực quan bằng giao diện đó.
+
+## Bỏ mục "Bản đồ chủ đề" khỏi ghi chú (2026-11-08)
+
+Yêu cầu của người dùng (2026-11-08): bỏ mục "Bản đồ chủ đề" khỏi mọi ghi chú và ghi vào nguyên tắc. Quy tắc đã ghi ở `AGENTS.md` §"Cấu trúc bắt buộc của một chương" điểm 6, `CLAUDE.md`, `prompt_lecture_note_deck.md` và mẫu ghi chú (commit `87b8295`).
+
+- **Tác tử:** một tác tử ghi tệp, `general-purpose`, opus (Opus 5.5), effort `high`, ghi ghi chú và outline của Bài 08, 09, 11, 12. Điều phối viên kiểm diff, viewer và ghi nhật ký.
+- **Ghi chú:** xóa đúng mục "## Bản đồ chủ đề" (22 dòng; diff chỉ có dòng xóa). Không sửa câu nào khác; không câu nào trong thân bài dẫn tới mục này. Giữ 15 chú thích `note-topic-id`. Danh sách tiêu đề khối có số hiệu không đổi. Số từ prose: 4 978 → 4 688.
+- **Outline:** thêm mục "## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)", 15 hàng chép từ bản đồ ở HEAD `f86f4a0` (script đối chiếu: 0 sai lệch). Số trang nguồn và các phần chỉ có trong bản đồ (danh sách phần, thời lượng nếu có) nằm ở đó.
+- **Kiểm tra trình duyệt (điều phối viên):** viewer tại máy chủ tĩnh cổng 8782, 1600×900 và 390×844: 0 `.katex-error`, 0 lỗi console, 0 request lỗi hoặc ra ngoài, không tràn ngang trang, không còn `:::` sót. `git diff --check`: sạch.
+- Đợt này không siết câu chữ của ghi chú; việc đó nằm ngoài goal 01–07.

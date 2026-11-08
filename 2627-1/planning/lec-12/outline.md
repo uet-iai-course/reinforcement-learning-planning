@@ -91,6 +91,30 @@ Ba bài tập `X01`–`X03` nằm ngoài 120 phút trình chiếu và dùng 30 p
 | 53 | giữ, sửa | `L12-43` | Hiện đường phụ thuộc actor/critic và execution availability. |
 | 54 | giữ, sửa | `L12-44` | Sửa chiều privacy và yêu cầu threat model. |
 
+## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)
+
+Ngày 2026-11-04, người dùng quyết định bỏ mục "Bản đồ chủ đề" khỏi ghi chú bài giảng và giữ phân loại bốn nhóm trong `outline.md`; các chú thích `note-topic-id` vẫn nằm trong thân ghi chú. Mỗi hàng dưới đây chép từ mục "Bản đồ chủ đề" của ghi chú bản HEAD (`f86f4a0`) trước khi bỏ ngày 2026-11-08, theo thứ tự của bản đồ. Bản đồ chỉ có các cột `note-topic-id`, chủ đề, nhóm, trang nguồn: cột "Chủ đề" và "Nhóm" chép nguyên văn, cột "Nguồn" là cột "trang nguồn"; cột "Mạch" ghi tiêu đề mục ghi chú đứng ngay sau chú thích `note-topic-id`; hai cột "Vai trò trong mạch" và "Kết nối vào → ra" để "—" vì bản đồ không có.
+
+| `note-topic-id` | Chủ đề | Nhóm | Mạch | Vai trò trong mạch | Kết nối vào → ra | Nguồn |
+|---|---|---|---|---|---|---|
+| `lec-12-topic-01` | Hai cách mở rộng MARL và MDP cảm sinh | cốt lõi | `## Hai cách mở rộng MARL từ một tác tử` | — | — | tr. 4–5 |
+| `lec-12-topic-02` | Hợp đồng trò chơi Markov, reward regime, Nash | cốt lõi | `## Hợp đồng trò chơi Markov, reward regime và Nash` | — | — | tr. 6–9 |
+| `lec-12-topic-03` | CTDE và phân biệt với giao tiếp khi chạy | cốt lõi | `## CTDE và phân biệt với giao tiếp khi chạy` | — | — | tr. 8, 10 |
+| `lec-12-topic-04` | COMA: gradient đa tác tử và baseline phản thực | cốt lõi | `## COMA: gradient đa tác tử và baseline phản thực` | — | — | tr. 12 |
+| `lec-12-topic-05` | VDN và QMIX: phân rã giá trị, IGM, bước TD | cốt lõi | `## VDN và QMIX: phân rã giá trị, IGM và một bước TD` | — | — | tr. 14 |
+| `lec-12-topic-06` | MADDPG: chain rule tất định, critic tập trung, target | cốt lõi | `## MADDPG: chain rule tất định, critic tập trung, target` | — | — | tr. 13 |
+| `lec-12-topic-07` | MAPPO/IPPO: tỷ số theo tác tử | cốt lõi | `## MAPPO/IPPO: tỷ số theo tác tử` | — | — | tr. 15–16 |
+| `lec-12-topic-08` | HAPPO/HATRPO: cập nhật tuần tự, multiplier | cốt lõi | `## HAPPO/HATRPO: cập nhật tuần tự và multiplier` | — | — | tr. 17–18 |
+| `lec-12-topic-09` | Benchmark MARL | cốt lõi | `## Benchmark MARL` | — | — | tr. 19–38 |
+| `lec-12-topic-10` | Giao tiếp trong MARL | cốt lõi | `## Giao tiếp trong MARL` | — | — | tr. 47–54 |
+| `lec-12-topic-11` | Ôn policy gradient và actor–critic đơn tác tử | cầu nối | `## Cầu nối: policy gradient và actor–critic đơn tác tử` | — | — | tr. 12–13 |
+| `lec-12-topic-12` | Ôn PPO đơn tác tử | cầu nối | `## Cầu nối: PPO đơn tác tử` | — | — | tr. 15–17 |
+| `lec-12-topic-13` | Framework MARL: PyMARL/EPyMARL, MARLlib, HARL | bổ sung | `## Bổ sung: framework MARL` | — | — | tr. 39–46 |
+| `lec-12-topic-14` | AutoGen, Neural MMO, OpenAI Five | đọc thêm | `## Đọc thêm: AutoGen, Neural MMO, OpenAI Five` | — | — | tr. 34–38 |
+| `lec-12-topic-15` | Danh mục tài liệu tham khảo | đọc thêm | `## Tài liệu tham khảo` | — | — | tr. 12–54 |
+
+Đoạn cuối của bản đồ: "Ngân sách thời gian. Tuyến chính 110 phút: mở bài và kết bài 8 phút; T1–T3 25 phút; T4 15 phút; T5 15 phút; T6–T8 18 phút; T9 19 phút; T10 10 phút. Phần linh hoạt 10 phút: topic-13 (B1, framework) 6 phút; phần tích hợp và mô hình đe dọa trong T10 4 phút. Bài tập X01–X03 dùng 30 phút ngoài phần trình chiếu. C1 và C2 được gộp vào cụm liên quan."
+
 ## Ánh xạ chủ đề bài đọc sang trang chiếu
 
 | note-topic-id | vai trò | data-slide-id |

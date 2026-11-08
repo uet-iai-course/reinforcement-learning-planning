@@ -10,28 +10,6 @@
 
 Tiên quyết từ Bài 11 (không giảng lại): định lý gradient chính sách, actor–critic, DDPG, PPO-Clip. Nguồn là bản trích PPTX 54 trang, không có ghi chú và không có code demo; note không sinh code.
 
-## Bản đồ chủ đề
-
-| note-topic-id | chủ đề | nhóm | trang nguồn |
-|---|---|---|---|
-| `lec-12-topic-01` | Hai cách mở rộng MARL và MDP cảm sinh | cốt lõi | 4–5 |
-| `lec-12-topic-02` | Hợp đồng trò chơi Markov, reward regime, Nash | cốt lõi | 6–9 |
-| `lec-12-topic-03` | CTDE và phân biệt với giao tiếp khi chạy | cốt lõi | 8, 10 |
-| `lec-12-topic-04` | COMA: gradient đa tác tử và baseline phản thực | cốt lõi | 12 |
-| `lec-12-topic-05` | VDN và QMIX: phân rã giá trị, IGM, bước TD | cốt lõi | 14 |
-| `lec-12-topic-06` | MADDPG: chain rule tất định, critic tập trung, target | cốt lõi | 13 |
-| `lec-12-topic-07` | MAPPO/IPPO: tỷ số theo tác tử | cốt lõi | 15–16 |
-| `lec-12-topic-08` | HAPPO/HATRPO: cập nhật tuần tự, multiplier | cốt lõi | 17–18 |
-| `lec-12-topic-09` | Benchmark MARL | cốt lõi | 19–38 |
-| `lec-12-topic-10` | Giao tiếp trong MARL | cốt lõi | 47–54 |
-| `lec-12-topic-11` | Ôn policy gradient và actor–critic đơn tác tử | cầu nối | 12–13 |
-| `lec-12-topic-12` | Ôn PPO đơn tác tử | cầu nối | 15–17 |
-| `lec-12-topic-13` | Framework MARL: PyMARL/EPyMARL, MARLlib, HARL | bổ sung | 39–46 |
-| `lec-12-topic-14` | AutoGen, Neural MMO, OpenAI Five | đọc thêm | 34–38 |
-| `lec-12-topic-15` | Danh mục tài liệu tham khảo | đọc thêm | 12–54 |
-
-Ngân sách thời gian. Tuyến chính 110 phút: mở bài và kết bài 8 phút; T1–T3 25 phút; T4 15 phút; T5 15 phút; T6–T8 18 phút; T9 19 phút; T10 10 phút. Phần linh hoạt 10 phút: topic-13 (B1, framework) 6 phút; phần tích hợp và mô hình đe dọa trong T10 4 phút. Bài tập X01–X03 dùng 30 phút ngoài phần trình chiếu. C1 và C2 được gộp vào cụm liên quan.
-
 ## Ký hiệu và quy ước
 
 - $\mathcal N=\{1,\ldots,N\}$: tập tác tử; $\Delta(\mathcal X)$: tập phân phối trên $\mathcal X$.
