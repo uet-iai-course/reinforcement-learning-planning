@@ -72,6 +72,36 @@ Tên tiếng Anh đặt ở lần dùng đầu trên mặt trang; khi trang dùn
 
 Tổng 70 trang, 120 phút.
 
+## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)
+
+Ngày 2026-11-04, người dùng quyết định bỏ mục "Bản đồ chủ đề" khỏi ghi chú bài giảng và giữ phân loại bốn nhóm trong `outline.md`; các chú thích `note-topic-id` vẫn nằm trong thân ghi chú. Mỗi hàng dưới đây chép từ mục "Bản đồ chủ đề" của ghi chú bản HEAD (`25c9cdd`) trước đợt siết 2026-11-08. Tiêu chí nhóm của bản đồ: nhóm **cốt lõi** tạo mạch chính; **cầu nối** phát biểu lại tiên quyết; **bổ sung** lấp hai khoảng trống cụ thể; **đọc thêm** nối hai mục tiêu cập nhật. Cột "Chủ đề", "Nhóm", "Vai trò trong mạch" và vế "ra" của cột "Kết nối vào → ra" chép nguyên văn; bản đồ không có cột nguồn và không ghi vế "vào", nên hai phần này suy từ thứ tự mục và mục tài liệu tham khảo của ghi chú, đánh dấu "(suy)". Cột "Mạch" theo "Bản đồ mạch" ở trên: mục `## k.` ↔ mạch $k$ ($k=1,\dots,5$), tình huống và tóm tắt ↔ mạch 6. Nguồn rút gọn: "§" là mục của Sutton và Barto (2018) và "tr." đi sau nó là trang của sách; "bài giảng gốc tr." là trang của Bài giảng gốc (2025–2026).
+
+| `note-topic-id` | Chủ đề | Nhóm | Mạch | Vai trò trong mạch | Kết nối vào → ra | Nguồn |
+|---|---|---|---|---|---|---|
+| `lec-05-topic-20` | Tiên quyết | cầu nối | 1 (`## Kiến thức tiên quyết`) | Bellman kỳ vọng, $T_\pi$, công cụ xác suất | Bài 03–04 (suy) → các chứng minh của Mục 2–5 | ghi chú Bài 03, 04; học phần Xác suất thống kê (suy) |
+| `lec-05-topic-01` | Bài toán dự đoán, mẫu chuyển (transition sample) | cốt lõi | 1 (`### 1.1`) | Bài toán trung tâm, ví dụ xuyên suốt | đánh giá chính sách có mô hình, Bài 04 (suy) → dữ liệu của mọi phương pháp | bài giảng gốc tr. 15–16; Bài tập tuần 5, bài 2 (suy) |
+| `lec-05-topic-17` | Khung cập nhật chung | cốt lõi | 1 (`### 1.2`) | Ước lượng cũ cộng bước nhân sai lệch | bài toán dự đoán (suy) → Định nghĩa 05.10 | §2.4–2.5, tr. 30–33 (suy) |
+| `lec-05-topic-02` | Lượt và lợi tức | cốt lõi | 2 (`### 2.1`) | Đại lượng được lấy mẫu | lợi tức chiết khấu, Bài 03 (suy) → mẫu theo lần ghé | §3.3–3.4, tr. 54–57; bài giảng gốc tr. 17–23; Bertsekas và Tsitsiklis (1996), ch. 2 cho Bổ đề 05.5 (suy) |
+| `lec-05-topic-06` | Lần ghé | cốt lõi | 2 (`### 2.2`) | Kỳ vọng $v_\pi(s)$ của mỗi mẫu | lợi tức (suy) → ước lượng, hội tụ | §5.1, tr. 92–93; bài giảng gốc tr. 17–23 (suy) |
+| `lec-05-topic-04` | Ước lượng Monte Carlo | cốt lõi | 2 (`### 2.3`) | Trung bình mẫu | lần ghé (suy) → trung bình gia tăng | §5.1; bài giảng gốc tr. 18 (suy) |
+| `lec-05-topic-18` | Trung bình gia tăng, bước hằng | cốt lõi | 2 (`### 2.3`–`### 2.4`) | Mục tiêu cập nhật, hai trục lựa chọn | ước lượng Monte Carlo (suy) → Thuật toán 05.13 | §2.4–2.5, tr. 30–33; bài giảng gốc tr. 18, 21; Bài tập tuần 5, bài 5, 7 (suy) |
+| `lec-05-topic-03` | Thuật toán Monte Carlo | cốt lõi | 2 (`### 2.5`) | Quy trình đầy đủ | lợi tức, lần ghé, bước học (suy) → Tình huống 05.1 | §5.1; bài giảng gốc tr. 17–23; notebook phần 6 (suy) |
+| `lec-05-topic-19` | Không chệch (unbiased) và hội tụ Monte Carlo | cốt lõi | 2 (`### 2.6`) | Điều kiện hội tụ | Mệnh đề 05.7, luật mạnh số lớn (suy) → so sánh với TD(0) | §5.1, tr. 93; Singh và Sutton (1996) (suy) |
+| `lec-05-topic-21` | Chệch của mọi lần ghé | bổ sung | 2 (`### 2.6`, Nhận xét 05.18) | Phạm vi của Định lý 05.17 | Định lý 05.17 (suy) → — (bản đồ không ghi) | số liệu sư phạm tự xây dựng; Singh và Sutton (1996) (suy) |
+| `lec-05-topic-07` | Mục tiêu một bước, sai số TD | cốt lõi | 3 (`### 3.1`) | Mục tiêu khi lượt chưa kết thúc | Mệnh đề 05.4 (suy) → TD(0) | §6.1, tr. 119–121; bài giảng gốc tr. 24–25 (suy) |
+| `lec-05-topic-08` | Thuật toán TD(0) | cốt lõi | 3 (`### 3.2`) | Quy trình, trường hợp biên, chi phí | Định nghĩa 05.20 (suy) → Mục 4 | §6.1; bài giảng gốc tr. 24–25; Bài tập tuần 5, bài 7; notebook phần 7 (suy) |
+| `lec-05-topic-22` | Ô tự chuyển | bổ sung | 3 (`### 3.2`) | Tốc độ lan truyền trên số liệu thật | Nhận xét 05.22 (suy) → Tình huống 05.1 | notebook phần 4–5, mục 7.1 (suy) |
+| `lec-05-topic-09` | Hai bảng trên cùng dữ liệu | cốt lõi | 4 (`### 4.1`) | Hai cơ chế lan truyền | Ví dụ 05.5, 05.9, 05.10 (suy) → nhu cầu giá trị chuẩn | bài giảng gốc tr. 29; Bài tập tuần 5, bài 7 (suy) |
+| `lec-05-topic-05` | Giá trị chuẩn, độ lệch | cốt lõi | 4 (`### 4.1`) | Đo sai số | hai bảng (suy) → tách nguồn sai số | bài giảng gốc tr. 26–28 (suy) |
+| `lec-05-topic-10` | Độ chệch của mục tiêu TD | cốt lõi | 4 (`### 4.2`) | Kỳ vọng mục tiêu | giá trị chuẩn (suy) → phần dư Bellman | bài giảng gốc tr. 26–28; §6.1 (suy) |
+| `lec-05-topic-12` | Dãy bảy ô | cốt lõi | 4 (`### 4.3`) | Lượt dài | dãy bốn ô (suy) → bảng phương sai | bài giảng gốc tr. 30–31 |
+| `lec-05-topic-13` | Phương sai của mục tiêu | cốt lõi | 4 (`### 4.3`) | Định lý 05.28 | dãy bảy ô, luật phương sai toàn phần (suy) → lựa chọn phương pháp | bài giảng gốc tr. 30–31 (suy) |
+| `lec-05-topic-11` | Hội tụ của TD(0) | cốt lõi | 4 (`### 4.4`) | Robbins–Monro theo trạng thái | Mệnh đề 05.27 (suy) → Mục 5 | §6.2, tr. 124–125; §2.5, tr. 33; Dayan (1992); Jaakkola, Jordan và Singh (1994); Tsitsiklis (1994); bài giảng gốc tr. 28 (suy) |
+| `lec-05-topic-16` | Dữ liệu cố định, cập nhật theo lô | cốt lõi | 5 (`## 5.`; id đặt ở `### 5.1`) | Hai nghiệm theo lô | các định lý hội tụ cần lượt mới (suy) → Tình huống 05.1, Bài 07 | §6.3, tr. 126–128 (Ví dụ 6.4); notebook phần 9 (suy) |
+| `lec-05-topic-14` | Lựa chọn phương pháp | cốt lõi | 6 (`## Tình huống áp dụng và ứng dụng`) | Ba kết luận có điều kiện | Mục 1–5 (suy) → Bài 06 | bài giảng gốc tr. 32–33; Bài tập tuần 5, bài 4; notebook (suy) |
+| `lec-05-topic-15` | Tóm tắt chương | cốt lõi | 6 (`## Tóm tắt chương`) | Chuỗi kết quả | Mục 1–5 (suy) → Bài 06, 07 | — |
+| `lec-05-topic-23` | Sai số Monte Carlo là tổng sai số TD | đọc thêm | — (`### Đọc thêm` trong `## Hướng dẫn đọc thêm và tài liệu tham khảo`) | Nối hai mục tiêu | Bài tập 05.14 (suy) → TD $n$ bước | §7.1, tr. 142–145; notebook phần 12, nhiệm vụ 5 |
+
 ## Mục tiêu học tập
 
 | Mã | Mục tiêu (mặt trang L05-A06) | Kiểm tra trên deck | Bài tập ghi chú |

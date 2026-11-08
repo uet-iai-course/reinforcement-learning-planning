@@ -1874,3 +1874,122 @@ Không đổi chữ, công thức hay lời giảng. Sau sửa, deck không còn
 ### Quyết định của điều phối viên (2026-10-14, khép đợt: lớp ol.substeps)
 
 - Kiểm độc lập: năm thẻ `ol` giữ `start`, không còn `style="margin-left"`; Playwright hai cỡ 0 lỗi; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(lecture-05)`.
+
+## Siết ghi chú theo chuẩn 2026-11 (2026-11-08)
+
+Quy trình: `prompt_tighten_lecture_notes.md`. Chuẩn: `AGENTS.md`, `CLAUDE.md` học phần, `../CLAUDE.md` mục "The author's voice", `no-ai-slop` (Edit cho biên tập, Detect cho rà soát). Phạm vi ghi: `materials/lec-05/lecture-note.md`, `planning/lec-05/outline.md`, tệp này.
+
+**Quyết định của người dùng ghi nhận ở đợt này:**
+
+- Bỏ mục "Bản đồ chủ đề" khỏi ghi chú (2026-11-04). Phân loại bốn nhóm chuyển sang `outline.md`, mục "Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)", 23 hàng. Quyết định này thay yêu cầu bản đồ chủ đề trong `AGENTS.md` và `prompt_lecture_note_deck.md`.
+- Trần độ dài nới từ 20 000 lên 30 000 từ (2026-11-08), thay mốc của `AGENTS.md`.
+
+### Tác tử (theo lời gọi công cụ)
+
+| Vai trò | Loại | Mô hình | Effort | Ghi tệp |
+|---|---|---|---|---|
+| Rà văn phong và giọng tác giả (`no-ai-slop` Detect) | general-purpose | opus (Opus 5.5) | high | không |
+| Rà chuẩn giáo trình | general-purpose | opus | high | không |
+| Rà độ chính xác toán học và Học tăng cường | general-purpose | opus | high | không |
+| Biên tập viên duy nhất (`no-ai-slop` Edit), ba lượt | general-purpose | opus | high | ghi chú, outline |
+| Kiểm tra lại độ chính xác | general-purpose | opus | high | không |
+| Kiểm tra lại mạch viết và kết nối | general-purpose | opus | high | không |
+
+Điều phối viên (phiên chính, Opus 5.5) không soạn, không rà, không biên tập.
+
+### Phát hiện và quyết định
+
+**Rà toán:** 0 chặn bàn giao, **1 nghiêm trọng**, 1 trung bình, 8 nhẹ. Đã tính lại bằng script mọi con số: giá trị chuẩn $11/21$ và $19/21$, dãy bảy ô, bốn cấu hình Monte Carlo, các bảng TD(0) theo thứ tự đọc rồi ghi, độ chệch, phương sai, MSE, lượt quét theo lô, số liệu notebook. Các chứng minh đều đủ. Tất cả **chấp nhận**:
+
+- **M6 (nghiêm trọng, Nhận xét 05.35):** câu "Nghiệm Monte Carlo có sai số bằng $0$ trên dữ liệu huấn luyện" **sai**. Nghiệm Monte Carlo theo lô chỉ cực tiểu tổng bình phương (Mệnh đề 05.33). Tại B của Ví dụ 05.20, tổng đó là $6(1/4)^2+2(3/4)^2=1{,}5\ne0$; điều phối viên đã kiểm. Đã thay câu; Bài tập 05.25(c) của tệp bài tập vốn tính đúng.
+- **M3 và M10 (trung bình):** "cùng cần bước $1/N(s)$". Thật ra $1/N(s)$ là lịch bước mà định lý chứng minh cho, không phải điều kiện cần.
+- **Các mục nhẹ:**
+  - M1: $\sigma^2>0$.
+  - M2: với $\gamma<1$ lợi tức vẫn xác định, cái mất đi là $T$.
+  - M4: điều kiện khả tích.
+  - M5: hệ số $7=c/(1-c)$, dẫn Hệ quả 04.8(b).
+  - M7: ước lượng hợp lý cực đại.
+  - M8: tách hai lần chạy TD theo lô (598 và 578 lượt quét).
+  - M9: điều kiện của $\mu$.
+
+**Rà văn phong:** 101 phát hiện; 0 chặn bàn giao, 12 nghiêm trọng (câu về vị thế đoạn văn ở 117, 197, 214, 345, 464, 538, 695, 860, 1184, 1374, 1502, 1592), 20 trung bình, 69 nhẹ. Tất cả **chấp nhận**. Quyết định riêng:
+
+- Giữ hình lộ trình, vì AGENTS yêu cầu Mục 1 có hình; viết lại đoạn đọc hình theo nội dung.
+- Giữ đoạn mở chương đã rút gọn.
+- Giữ ở dạng rút gọn nhận xét về gradient.
+- Giữ nguồn của $\alpha=0{,}5$.
+
+**Rà chuẩn giáo trình:** 26 phát hiện; 0 chặn bàn giao, 0 nghiêm trọng, 12 trung bình, 14 nhẹ. Các điểm chính:
+
+- Tiên quyết dẫn "Bài 03, Mục 3" cho một kết quả nằm ở Bổ đề 03.20(b), Mục 4. Đã sửa.
+- Dẫn Bài 03 và Bài 04 bằng số hiệu thay cho "Mục k".
+- Gán "phần dư Bellman tại $s$" cho Bài 04, trong khi Định nghĩa 04.7 chỉ định nghĩa chuẩn.
+- Tình huống 05.1 thiếu cách tạo $9216$ ô và cỡ tập ($546\,869$ chuyển). Đã bổ sung; điều phối viên đã kiểm hai số này với đầu ra notebook.
+- Mệnh đề 05.4 trùng Bổ đề 03.18 mà ghi chú không nêu.
+- Tóm tắt theo mục chỉ ghi tên.
+- Câu nối ở hai phía năm ranh giới.
+
+Tất cả **chấp nhận**, kể cả các phần thêm G5 ($\gamma=1$, dựa trên mục Phạm vi của Bổ đề 03.20 và Định lý 03.21), G10, G18, G20, G21, G24; vòng kiểm tra lại độ chính xác đã xác nhận các phần này. Quyết định riêng:
+
+- **G1: bác bỏ** (giữ đoạn mở chương).
+- **G15:** giữ số trang ở chứng minh Định lý 05.30, vì AGENTS yêu cầu nguồn có trang cho chứng minh nằm ngoài phạm vi học phần. Đây là ngoại lệ có lý do của quy tắc bỏ số trang.
+- **G3** không áp dụng: Bài tập 05.1 vẫn không gắn mục tiêu nào. AGENTS chỉ yêu cầu mỗi mục tiêu có ít nhất một bài.
+
+**Kiểm tra lại, độ chính xác:** 0 chặn, 0 nghiêm trọng, 1 trung bình, 7 nhẹ. Tất cả **chấp nhận** và đã sửa:
+
+- **A1:** câu mới cuối tóm tắt nói "các bảo đảm này cần trạng thái Markov", quá phạm vi. Đã sửa thành "các bảo đảm hội tụ về $v_\pi$".
+- A2: nguồn $\alpha=0{,}5$.
+- A3: phần dư tại $S_t$.
+- A4: dòng kiểm tra lại bỏ sót hàng TD(0), $\alpha=0{,}5$, cho $52{,}33$.
+- A5: "phần thưởng bị chặn" viết có điều kiện, như notebook.
+- A6: Định lý 04.32 phát biểu cho $T_*$.
+- A7: thuật ngữ khớp Định nghĩa 04.1 và 04.3.
+- A8: chữ $e$.
+- Đã khôi phục câu kiểm tra $43{,}85$ trong Ví dụ 05.11.
+
+**Kiểm tra lại, mạch viết:** 0 chặn, 0 nghiêm trọng, 3 trung bình, 9 nhẹ. Tất cả **chấp nhận** và đã sửa:
+
+- kết Mục 2 và Mục 4 còn nhắc lại cả mục, nay viết ở dạng hai câu như Bài 04;
+- câu hỏi con (a)/(b)/(c) của tám bài tập dính thành một đoạn trên viewer (lỗi có từ HEAD), nay đã thêm dòng trống;
+- dữ kiện mở Mục 5;
+- "(control)" ở lần đầu;
+- vị trí câu đối chiếu số liệu trong Tình huống 05.1.
+
+Điều phối viên yêu cầu thêm tên "(shaping potential)" cho "thế năng định hình phần thưởng".
+
+Không còn phát hiện chặn bàn giao hay nghiêm trọng nào mở.
+
+**Độ lệch và nguồn, chuyển từ thân bài vào đây:**
+
+- "Bài giảng gốc (2025–2026, trang 18) lưu bộ đếm $N(s)$ và tổng các mẫu của từng trạng thái rồi lấy thương; cách lưu đó cho cùng $V_n(s)$."
+- "Bài giảng gốc (2025–2026, trang 21) thay $1/n$ bằng hằng số $\alpha$ để theo kịp môi trường thay đổi theo thời gian, trường hợp nằm ngoài giả thiết môi trường dừng của chương; bài giảng gốc và Bài tập tuần 5 (bài 7) dùng $\alpha=0{,}5$."
+- **Độ lệch:** "Bài tập tuần 5 (2025–2026, bài 5) liệt kê "lần ghé đầu tiên", "trung bình mẫu" và "bước hằng" như ba phương pháp ngang hàng; lưới cho thấy chúng thuộc hai trục khác nhau."
+- **Độ lệch:** "Bài giảng gốc ghi hai số mũ $4$ và $2$; theo Định nghĩa 05.3, hai số mũ đúng là $3$ và $1$."
+- Số trang đã bỏ khỏi thân bài: bài giảng gốc trang 28, 29; Sutton và Barto trang 93, 120, 124, 125, 128, 201–202. Các nguồn này vẫn có trong mục tài liệu tham khảo.
+
+### Số liệu và đối chiếu
+
+- Số từ (`count_note_words.py 05`, cột prose): **21 377 → 21 084** (raw 26 353 → 26 071). Số từ giảm ít vì các phần thêm bắt buộc: Tình huống 05.1 tự chứa, tóm tắt theo mục có phát biểu, câu nối với Bài 03.
+- Khối có số hiệu: 86 dòng tiêu đề trùng khít trước và sau. 23 chú thích `note-topic-id` giữ nguyên. Số hiệu mục `## 1.`–`## 5.` không đổi. Tác tử mạch viết đã kiểm các dẫn chiếu từ Bài 06, 07 ("Bài 05, Mục 1–4") và Bài 10 (Định nghĩa 05.20, Mệnh đề 05.27, Bài tập 05.14).
+- Grep "chưa phải", "đây mới là", "Bản đồ chủ đề": 0. `git diff --check`: sạch.
+
+### Lệch cần đồng bộ (không sửa trong đợt này)
+
+- **Deck**, trang L05-D12b, ghi chú diễn giả (dòng 580 của `lecture-05-du-doan-phi-mo-hinh.html`): còn câu sai "nghiệm Monte Carlo có sai số bằng 0 trên dữ liệu huấn luyện" (M6).
+- **Ghi chú Bài 07 và Bài 08:** ghi "1 896 ô được ghé", trong khi đầu ra notebook Bài 05 phần 5 in "số ô được ghé: 1935/9216". Cần vai toán của Bài 07 kiểm.
+- **`outline.md`:** bảng mục tiêu MT1–MT6 chỉ ghi bài tập trong ghi chú, nên lệch nhẹ với ngoặc mục tiêu mới của ghi chú, vốn có cả bài trong tệp bài tập.
+- **Hình lộ trình chương:** SVG và văn bản thay thế ghi nhãn "(Mục 1…)".
+- Bổ đề 05.5 chưa có số trang nguồn; kho không có căn cứ để bổ sung.
+
+### Kiểm tra trình duyệt (điều phối viên)
+
+Máy chủ tĩnh cổng 8782, Playwright, viewer `material-viewer.html?doc=materials/lec-05/lecture-note.md&deck=lecture-05-du-doan-phi-mo-hinh.html`:
+
+- 1600×900, 390×844 và chế độ in: 0 lỗi console hoặc trang, 0 request lỗi hoặc ra ngoài, 0 `.katex-error`, không tràn ngang trang, không còn `:::` sót.
+- Ở 390 px, 42 công thức hiển thị cuộn ngang trong khung (trước sửa: 49; rộng nhất 791 px, nay 556 px). Đó là dãy liệt kê, dãy phép tính số, và quan hệ đơn.
+- Nhãn `\tag` đè lên công thức rộng ở 390 px. Đây là lỗi CSS có sẵn của viewer, đã ghi ở Bài 03.
+- Điều phối viên đã xem ảnh chụp.
+
+`no-ai-slop`: biên tập viên tự kiểm `eval.md` (Edit) trên mọi câu sửa; tác tử mạch viết kiểm Detect trên câu mới.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-05)`.
