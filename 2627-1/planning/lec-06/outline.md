@@ -80,6 +80,22 @@ Học phần Học tăng cường, năm học 2026–2027, học kỳ 1; sinh vi
 | 7 | Tổng kết và chuyển tiếp | G00 (`mach-7`) | Tổng kết, áp dụng LunarLander, trả lời vấn đề trung tâm | toàn bài → bảng giả thiết, bài tập, Bài 07 | 10 | 16 |
 | | **Tổng** | | | | **75** | **120** |
 
+## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)
+
+Ngày 2026-11-04, người dùng quyết định bỏ mục "Bản đồ chủ đề" khỏi ghi chú bài giảng và giữ phân loại bốn nhóm trong `outline.md`; các chú thích `note-topic-id` vẫn nằm trong thân ghi chú. Mỗi hàng dưới đây chép từ mục "Bản đồ chủ đề" của ghi chú bản HEAD (`cbaa3ea`) trước đợt siết 2026-11-08. Câu mở của bản đồ: "Chín chủ đề chia bốn nhóm: **cốt lõi** (`lec-06-topic-02` đến `07`), **cầu nối** (`lec-06-topic-01`), **bổ sung** (`lec-06-topic-09`) và **đọc thêm** (`lec-06-topic-08`)." Bản đồ không ghi `note-topic-id` trong từng mục; cột này suy từ câu mở và từ vị trí chú thích `note-topic-id` trong thân ghi chú, hai nguồn khớp nhau. Cột "Chủ đề", "Nhóm", "Vai trò trong mạch", "Kết nối vào → ra" và "Nguồn" chép nguyên văn; cột "Mạch" chép dòng "Mục:" của bản đồ, riêng tình huống áp dụng không ghi mạch nên suy theo "Bản đồ bảy mạch" ở trên, đánh dấu "(suy)".
+
+| `note-topic-id` | Chủ đề | Nhóm | Mạch | Vai trò trong mạch | Kết nối vào → ra | Nguồn |
+|---|---|---|---|---|---|---|
+| `lec-06-topic-01` | Bài toán chọn hành động khi thiếu mô hình | cầu nối | 1 (phần mở đầu của `## 1.`) | chuyển từ dự đoán sang điều khiển; bài toán chọn hành động tại ô D | $q_\pi$ (Bài 03), cải thiện chính sách (Bài 04), Monte Carlo và TD(0) (Bài 05) → nhu cầu ước lượng từng cặp trạng thái–hành động | bài giảng gốc, trang 3–7, 15 |
+| `lec-06-topic-02` | Giá trị hành động và thăm dò | cốt lõi | 2 (`## 1.`) | bảng $Q$, chính sách $\varepsilon$-tham lam và $\varepsilon$-mềm, cải thiện trong lớp $\varepsilon$-mềm | dãy năm ô, $q_\pi$, $T_\pi$ → quy tắc chọn hành động có thăm dò cho ba thuật toán | bài giảng gốc, trang 6–8, 11, 15–16, 24 |
+| `lec-06-topic-03` | Điều khiển Monte Carlo | cốt lõi | 3 (`## 2.`) | trung bình lợi tức theo lần ghé đầu tiên của cặp; thuật toán điều khiển đầu tiên | Mệnh đề 06.6, Monte Carlo dự đoán (Bài 05) → giới hạn "phải chờ lượt kết thúc" | bài giảng gốc, trang 9–11, 16–17 |
+| `lec-06-topic-04` | Sarsa và mục tiêu một bước | cốt lõi | 4 (`## 3.`) | mục tiêu bootstrap dùng hành động kế tiếp đã chọn; học theo chính sách | TD(0) (Bài 05), chính sách $\varepsilon$-tham lam → mục tiêu phụ thuộc hành động thăm dò | bài giảng gốc, trang 12–14, 18 |
+| `lec-06-topic-05` | Q-learning và học khác chính sách | cốt lõi | 5 (`## 4.`) | mục tiêu cực đại; chính sách hành vi và chính sách đích | Sarsa, năm mẫu chuyển chung → câu hỏi khi nào bảng hội tụ tới $q_*$ | bài giảng gốc, trang 8, 19–21 |
+| `lec-06-topic-06` | Điều kiện hội tụ | cốt lõi | 6 (`## 5.`) | GLIE, Robbins–Monro theo cặp, hai định lý hội tụ | hội tụ của TD(0) (Bài 05), Sarsa và Q-learning → kiểm giả thiết trong tình huống áp dụng | bài giảng gốc, trang 11, 25–28 |
+| `lec-06-topic-08` | Đọc thêm: dự đoán khác chính sách và sai số đánh giá | đọc thêm | không có mạch riêng (`## 6.`) | tỉ số lấy mẫu quan trọng; chặn sai số khi đánh giá một chính sách cố định | Định nghĩa 06.14, Nhận xét 06.17 → cách đánh giá chính sách trong Tình huống 06.1 | bài giảng gốc, trang 19, 29 |
+| `lec-06-topic-09` | Tình huống áp dụng trên LunarLander và vòng B–C | bổ sung; khoảng trống: nguồn chưa có bài toán thực hành cho ba thuật toán | 7 (suy) (`## Tình huống áp dụng và ứng dụng`) | áp dụng Thuật toán 06.12, 06.16 và kiểm giả thiết của Định lý 06.21–06.22; một trường hợp giả thiết không thỏa | Mục 1–5 → Bài 07 | notebook thực hành Bài 06, phần 4–11; bài giảng gốc, trang 15–16 |
+| `lec-06-topic-07` | Tổng kết ba phương pháp | cốt lõi | 7 (`## Tóm tắt chương`, `## Bài tập củng cố`) | trả lời bài toán tại ô D; so sánh dữ liệu, mục tiêu và giả thiết | Mục 1–5 → bài tập củng cố, Bài 07 | bài giảng gốc, trang 22, 30 |
+
 ## Dàn từng trang
 
 Mỗi hàng là luận điểm trung tâm của trang; mã đầy đủ có tiền tố `L06-`. Phút cộng theo mạch ở bản đồ trên.

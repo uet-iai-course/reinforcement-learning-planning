@@ -1418,3 +1418,133 @@ Bản nháp đầu giữ "(có thăm dò)" trên mặt trang; ở 1600×900 dòn
 ### Quyết định của điều phối viên (2026-10-14, khép đợt Bài 06)
 
 - Kiểm độc lập: C10 52 âm tiết; Playwright hai cỡ 0 lỗi; số liệu khớp ô 37 của notebook và Nhận xét 06.10 đã commit; `git diff --check` sạch. Quyết định: **chấp nhận**; commit `fix(lecture-06)`.
+
+## Siết ghi chú theo chuẩn 2026-11 (2026-11-08)
+
+Quy trình: `prompt_tighten_lecture_notes.md`. Chuẩn: `AGENTS.md`, `CLAUDE.md` học phần, `../CLAUDE.md` mục "The author's voice", `no-ai-slop` (Edit cho biên tập, Detect cho rà soát). Phạm vi ghi: `materials/lec-06/lecture-note.md`, `planning/lec-06/outline.md`, tệp này.
+
+**Quyết định của người dùng ghi nhận ở đợt này:**
+
+- Bỏ mục "Bản đồ chủ đề" khỏi ghi chú (2026-11-04). Phân loại bốn nhóm chuyển sang `outline.md`, mục "Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)", 9 hàng. Quyết định này thay yêu cầu bản đồ chủ đề trong `AGENTS.md` và `prompt_lecture_note_deck.md`.
+- Trần độ dài nới từ 20 000 lên 30 000 từ (2026-11-08), thay mốc của `AGENTS.md`.
+
+### Tác tử (theo lời gọi công cụ)
+
+| Vai trò | Loại | Mô hình | Effort | Ghi tệp |
+|---|---|---|---|---|
+| Rà văn phong và giọng tác giả (`no-ai-slop` Detect) | general-purpose | opus (Opus 5.5) | high | không |
+| Rà chuẩn giáo trình | general-purpose | opus | high | không |
+| Rà độ chính xác toán học và Học tăng cường | general-purpose | opus | high | không |
+| Biên tập viên duy nhất (`no-ai-slop` Edit), ba lượt | general-purpose | opus | high | ghi chú, outline |
+| Kiểm tra lại độ chính xác | general-purpose | opus | high | không |
+| Kiểm tra lại mạch viết và kết nối | general-purpose | opus | high | không |
+
+Điều phối viên (phiên chính, Opus 5.5) không soạn, không rà, không biên tập.
+
+### Phát hiện và quyết định
+
+**Rà toán:** 0 chặn bàn giao, 0 nghiêm trọng, 2 trung bình, 10 nhẹ.
+
+Đã tính lại mọi cập nhật Sarsa và Q-learning (năm mẫu, tàu đổ bộ, Tình huống 06.2), xác suất ε-tham lam, Ví dụ 06.5, chứng minh Mệnh đề 06.6, Borel–Cantelli, GLIE, Robbins–Monro, Hoeffding ($n=185$) và số liệu LunarLander; tất cả khớp. Câu $q_*=\max_\pi q_\pi$ ở dòng 242 **đúng** (Định lý 04.25(b)); lỗi nằm ở deck.
+
+Tất cả **chấp nhận**:
+
+- **M6 (trung bình):** câu "Hai khẳng định này thành định lý dưới các giả thiết của Mục 5" sai cho Sarsa. Với $\varepsilon$ cố định, chương không có định lý; dưới GLIE, Sarsa hội tụ tới $q_*$. Đã sửa.
+- **M11 (trung bình):** lời giải Bài tập 06.8 câu 5 dùng phản ví dụ lệch đối tượng. Đã sửa với $q_\pi(\mathrm D,0)=3471/7\approx495{,}9$ cho chính sách 1/4-tham lam. Vòng kiểm tra lại độ chính xác đã tính lại bằng phân số: $v_\pi(\mathrm B)=4471/8$, $v_\pi(\mathrm C)=3478/7$, $v_\pi(\mathrm D)=3961/56$.
+- **Các mục nhẹ:**
+  - M2: chính sách $\pi_0$ ngẫu nhiên khi có đồng hạng.
+  - M3: $\varepsilon_1$ khớp lịch.
+  - M4: giả thiết theo cặp.
+  - M5: chỉ kỳ vọng của mục tiêu là chứng minh được.
+  - M7: chín giá trị.
+  - M8: $|x|\ge1$.
+  - M9: thiết lập tinh chỉnh.
+  - M10: Tình huống 06.2 vi phạm $\varepsilon_k>0$.
+
+**Rà văn phong:** 122 phát hiện; 0 chặn bàn giao, 6 nghiêm trọng (câu về vị thế đoạn văn ở 298, 359, 507, 671, 858, 1069), 23 trung bình, 93 nhẹ. Tất cả **chấp nhận**, trừ S89 và S105: giữ số trang cho các chứng minh nằm ngoài phạm vi học phần (Watkins–Dayan, Singh và cộng sự, Hoeffding), theo AGENTS và tiền lệ Bài 05. Quyết định riêng:
+
+- Mở rộng đoạn mở chương theo mẫu Bài 05.
+- Nhận xét 06.23 chuyển thành phát biểu toán không nguồn.
+- Rút gọn gạch "Bỏ $\gamma<1$".
+- Thống nhất tên "quá trình phần thưởng Markov" theo Định nghĩa 03.26.
+- "Điều kiện hỗ trợ (coverage)" tách khỏi "độ phủ" của Định nghĩa 06.18.
+
+**Rà chuẩn giáo trình:** 34 phát hiện; 0 chặn bàn giao, 0 nghiêm trọng, 15 trung bình, 18 nhẹ.
+
+- 29 dẫn chiếu "ghi chú Bài 0N, Mục k" đã thay bằng số hiệu kiểm với Bài 03–05.
+- Tóm tắt theo mục nay có phát biểu.
+- Hai tình huống có dòng kiểm tra lại.
+- Mục tiêu có số bài tập.
+
+Tất cả **chấp nhận**, trừ:
+
+- **G24, G25 bác bỏ:** đó là các phản ví dụ tùy chọn cho Mệnh đề 06.25, 06.26 trong Mục 6 (Đọc thêm), và đợt này ưu tiên cắt.
+- **Mục 6 không có bài tập trong thân bài:** không thêm, vì phải giữ bộ đếm. Đây là ngoại lệ cho mục đọc thêm.
+
+**Kiểm tra lại, mạch viết:** 0 chặn, 0 nghiêm trọng, 3 trung bình, 12 nhẹ.
+
+- Sáu kết mục cùng khuôn "Như vậy … Tuy nhiên …"; nay chỉ Mục 1 và 4 giữ khuôn này.
+- Câu nối ở hai phía ranh giới Mục 1–2.
+- Kết Mục 5 viết "các định lý cần GLIE", trong khi Định lý 06.21 không cần.
+- Tình huống 06.1 thiếu số biến liên tục.
+- Ghi đủ "(replay memory, experience replay)".
+
+Tất cả **chấp nhận**, trừ **F7 bác bỏ** (giữ số trang trong trường Phạm vi, lý do như trên) và F15 (giữ, vì thuật ngữ đã được giải nghĩa tại chỗ).
+
+**Kiểm tra lại, độ chính xác:** 0 chặn, 0 nghiêm trọng, 1 trung bình, 11 nhẹ. Tất cả **chấp nhận** và đã sửa:
+
+- **A1:** kết Mục 5 thiếu giả thiết nền (Nhận xét 06.20).
+- A2: "dưới các giả thiết".
+- A3: Mệnh đề 06.6 không "chứa" Định lý 04.13 khi có đồng hạng.
+- A4: $\pi_0$ so với Định nghĩa 04.12.
+- A5: quá trình trên cặp "có dạng" của Định nghĩa 03.26.
+- A6: giả thiết trong tóm tắt.
+- A7: khôi phục câu ngắn về dãy năm ô, để câu về bài toán đường đi ngắn nhất ngẫu nhiên kiểm được tại chỗ.
+- A8: Bổ đề 03.20(d).
+- A9: "chuẩn vô cùng (còn gọi là chuẩn cực đại)", sau đó dùng "chuẩn vô cùng" ở mọi chỗ (3 chỗ).
+- A10: "trong chương".
+- A12: Bertsekas và Tsitsiklis §5.6.
+
+Không còn phát hiện chặn bàn giao hay nghiêm trọng nào mở.
+
+**Độ lệch và nguồn, chuyển từ thân bài vào đây:**
+
+- "Bài giảng gốc (trang 21) đặt bài Q-learning trên bảng khởi tạo nghiêng trái; chúng ta dùng bảng khởi tạo nghiêng phải cho cả hai thuật toán để mọi khác biệt trong Ví dụ 06.12 đến từ mục tiêu, không đến từ khởi tạo."
+- "Bài giảng gốc (trang 25) viết yêu cầu thứ hai cho trường hợp cực đại duy nhất."
+- "Bài giảng gốc (trang 26) phát biểu rằng điều khiển Monte Carlo với dãy chính sách GLIE hội tụ tới $q_*$; chúng ta không đưa phát biểu này thành định lý." (Nhận xét 06.23 nay là phát biểu toán không nguồn.)
+- "Công thức ở bài giảng gốc (trang 29) dùng $R_{\max}/(1-\gamma)$, nên ứng với giả thiết phần thưởng không âm."
+- "Bài giảng gốc (trang 16) yêu cầu vẽ quá trình Markov có phần thưởng của chính sách tham lam theo bảng này."
+- "Bài giảng gốc (trang 15) ghi các lượt minh họa dài tối đa ba bước."
+- Gạch "Bỏ $\gamma<1$" đã rút gọn: bỏ hai giả thiết của bài toán đường đi ngắn nhất ngẫu nhiên và điều kiện "mọi chính sách kết thúc hoặc $Q_t$ bị chặn" (Bertsekas và Tsitsiklis 1996, §5.6; Tsitsiklis 1994). Mục Tsitsiklis (1994) đã xóa khỏi tài liệu tham khảo vì thân bài không còn dẫn; văn bản đầy đủ còn ở commit `cbaa3ea`. Vòng kiểm tra lại độ chính xác xác nhận không còn kết luận nào thiếu giả thiết.
+
+### Số liệu và đối chiếu
+
+- Số từ (`count_note_words.py 06`, cột prose): **22 517 → 21 564** (raw 26 264 → 25 345).
+- Khối có số hiệu: 58 dòng tiêu đề trùng khít trước và sau. 9 chú thích `note-topic-id` giữ nguyên. Số hiệu mục `## 1.`–`## 6.` không đổi. Tác tử mạch viết đã kiểm các dẫn chiếu từ Bài 07, 08, 09 (Mục 1, 3–6; 06.3, 06.14–06.17, 06.19, 06.21, 06.24).
+- Grep "chưa phải", "đây mới là", "Bản đồ chủ đề": 0. `git diff --check`: sạch.
+
+### Lệch cần đồng bộ (không sửa trong đợt này)
+
+- **Deck**, trang L06-B02 (dòng 121 của `lecture-06-dieu-khien-phi-mo-hinh.html`): $q_*=\max_\pi q_\pi$ thiếu giới hạn "trên các chính sách dừng" và giả thiết MDP hữu hạn, phần thưởng bị chặn (M1).
+- **Deck**, trang L06-E10, ghi chú diễn giả (dòng 471): cùng ý sai của M6 về Sarsa với $\varepsilon$ cố định.
+- **Notebook** `thuc-hanh-lunarlander-dieu-khien-phi-mo-hinh.ipynb`:
+  - phần 8.2 có cùng ý sai của M6;
+  - nhiều chỗ dẫn ghi chú bằng số mục cũ (2.1, 2.5, 3.6, 4.4, 5.3, 6.2, 6.4, …); bảng đối chiếu sang mục hiện tại có trong báo cáo rà chuẩn của đợt;
+  - ô 54 viết "gần chắc chắn" thay cho "hầu chắc chắn".
+- **Ghi chú Bài 07**, dòng 28: viết ε-tham lam "theo một quy tắc phá hòa cố định" và ký hiệu $\pi_b$, trong khi Định nghĩa 06.3 chia đều phần khai thác cho các hành động đồng hạng và Bài 06 viết $b$.
+- **`outline.md`:** bảng MT1–MT5 lệch nhẹ với ngoặc mục tiêu mới (GLIE viết đầy đủ; Bài tập 06.7–06.12 được gán theo nội dung).
+- **`img/lec-06/chapter-structure.svg`:** nhãn "Mục 1"–"Mục 5" trong hình và trong văn bản thay thế.
+- **`exercises.md`:** không có Bài tập 06.8, nên không có lời giải cũ cần đồng bộ.
+
+### Kiểm tra trình duyệt (điều phối viên)
+
+Máy chủ tĩnh cổng 8782, Playwright, viewer `material-viewer.html?doc=materials/lec-06/lecture-note.md&deck=lecture-06-dieu-khien-phi-mo-hinh.html`:
+
+- 1600×900, 390×844 và chế độ in: 0 lỗi console hoặc trang, 0 request lỗi hoặc ra ngoài, 0 `.katex-error`, không tràn ngang trang, không còn `:::` sót.
+- Ở 390 px, 25 công thức hiển thị cuộn ngang trong khung (trước sửa: 29). Đó là quan hệ đơn, và khối `aligned` đã ở dạng một quan hệ mỗi dòng.
+- Nhãn `\tag` đè lên công thức rộng ở 390 px. Đây là lỗi CSS có sẵn của viewer, đã ghi ở Bài 03.
+- Điều phối viên đã xem ảnh chụp.
+
+`no-ai-slop`: biên tập viên tự kiểm `eval.md` (Edit) trên mọi câu sửa; tác tử mạch viết kiểm Detect trên câu mới.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-06)`.
