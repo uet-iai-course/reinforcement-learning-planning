@@ -119,6 +119,32 @@ Bảng ký hiệu đầy đủ (27 hàng, ba cột) nằm trong ghi chú bài gi
 | $J(\theta)$, $\pi_\theta$ | `L09-02` (tên trong mục tiêu) | `L09-02c` (hộp bài toán, dòng 4) | $G_0$, $\mathbb E_\pi$ |
 | $\widehat Q_a$, $q_a$ | `L09-02c` dòng 2 | tại chỗ ("mỗi $\widehat Q_a$ không chệch cho $q_a$"); ghi chú diễn giả và ghi chú bài giảng gọi $q_a$ là giá trị đúng | — |
 
+## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)
+
+Ngày 2026-11-04, người dùng quyết định bỏ mục "Bản đồ chủ đề" khỏi ghi chú bài giảng và giữ phân loại bốn nhóm trong `outline.md`; các chú thích `note-topic-id` vẫn nằm trong thân ghi chú. Mỗi hàng dưới đây chép từ mục "Bản đồ chủ đề (bốn nhóm)" của ghi chú bản HEAD (`f86f4a0`) trước khi bỏ ngày 2026-11-08, theo thứ tự của bản đồ. Cột "Nhóm" lấy từ tiêu đề nhóm của bản đồ ("Nhóm đọc thêm/thực hành" giữ nguyên tên); cột "Mạch" lấy số phần từ cột "Mục" của bản đồ, kèm tiêu đề mục ghi chú chứa chú thích `note-topic-id`; cột "Nguồn" là cột "Nguồn trang" của bản đồ; ba cột còn lại chép nguyên văn.
+
+| `note-topic-id` | Chủ đề | Nhóm | Mạch | Vai trò trong mạch | Kết nối vào → ra | Nguồn |
+|---|---|---|---|---|---|---|
+| `lec-09-topic-15` | Kiến thức tiên quyết và ký hiệu | cầu nối | phần mở đầu (`## Kiến thức tiên quyết`) | Nhắc lại Bài 03, Bài 08, bất đẳng thức Jensen | Vào: Bài 03, Bài 08 → Ra: ký hiệu chung của chương | tr. 3–10 |
+| `lec-09-topic-16` | Mở đầu: mục tiêu, nội dung và bài toán trung tâm | cầu nối | 1 (`## 1.`) | Bài toán trung tâm của chương | Vào: topic-15 → Ra: khung cho Mục 2–6 | tr. 1–2, 11, 22–25 |
+| `lec-09-topic-01` | Phép cực đại trong mục tiêu DQN | cầu nối | 2 (`## 2.`) | Số đo đánh giá cao trên CartPole | Vào: topic-16 → Ra: nhu cầu đo độ chệch của phép cực đại | tr. 3–11 |
+| `lec-09-topic-14` | Ước lượng gradient bằng sai phân hữu hạn | cầu nối | 5 (`## 5.`) | Bước vấn đề của hàm điểm | Vào: topic-07 → Ra: nhu cầu một ước lượng gradient từ lượt mẫu | tr. 33 |
+| `lec-09-topic-02` | Độ chệch của phép cực đại | cốt lõi | 2 (`## 2.`) | Ví dụ hai hành động có nhiễu $\pm1$; bất đẳng thức $\mathbb E[\max]\ge\max\mathbb E$ | Vào: topic-01 → Ra: nguyên nhân là cùng ước lượng chọn và đánh giá | tr. 12–13 |
+| `lec-09-topic-17` | Ước lượng kép | cốt lõi | 3 (`## 3.`) | Ví dụ hai bản độc lập; mệnh đề ước lượng kép không chệch lên; chệch âm | Vào: topic-02 → Ra: nguyên tắc tách chọn và đánh giá | tr. 13–14, 21 |
+| `lec-09-topic-03` | Mục tiêu Double DQN | cốt lõi | 3 (`## 3.`) | Chọn bằng mạng trực tuyến, đánh giá bằng mạng mục tiêu; thuật toán Double DQN | Vào: topic-17 → Ra: mục tiêu và thuật toán | tr. 14–16 |
+| `lec-09-topic-05` | Double Q-learning dạng bảng | cốt lõi | 3 (`## 3.`) | Hai bảng, cập nhật chéo; so sánh với Double DQN trên cùng số liệu | Vào: topic-03, topic-04 → Ra: hai cách tách và giới hạn chung của học giá trị | tr. 20–21 |
+| `lec-09-topic-06` | Chính sách tham số hóa | cốt lõi | 4 (`## 4.`) | Lưới gộp trạng thái; phân phối phân loại, softmax, Gaussian | Vào: topic-05 → Ra: $\pi_\theta(\cdot\mid s)$ rời rạc hoặc liên tục | tr. 22–29 |
+| `lec-09-topic-07` | Hàm mục tiêu và bước tăng gradient | cốt lõi | 5 (`## 5.`) | $J(\theta)$ và bước tăng gradient | Vào: topic-06 → Ra: bài toán tối ưu theo $\theta$ | tr. 30–32 |
+| `lec-09-topic-08` | Hàm điểm và hàm điểm của chính sách softmax | cốt lõi | 5 (`## 5.`) | Hàm điểm; công thức softmax; kỳ vọng bằng $0$ | Vào: topic-14 → Ra: hàm điểm rời rạc, $\mathbb E_{A\sim\pi}[\psi]=0$ | tr. 34–36 |
+| `lec-09-topic-09` | Hàm điểm của chính sách Gaussian | cốt lõi | 5 (`## 5.`) | $\psi=(a-\mu)\phi/\sigma^2$ với phương sai cố định | Vào: topic-08 → Ra: hàm điểm liên tục | tr. 37–38 |
+| `lec-09-topic-10` | Gradient của $J$ theo tỉ số xác suất | cốt lõi | 6 (`## 6.`) | Xác suất quỹ đạo, bỏ phần thưởng quá khứ | Vào: topic-08, topic-09 → Ra: $\nabla J$ dạng kỳ vọng theo quỹ đạo | tr. 39 |
+| `lec-09-topic-11` | Định lý gradient chính sách | cốt lõi | 6 (`## 6.`) | Dạng quỹ đạo và dạng phân bố chiếm dụng | Vào: topic-10 → Ra: kết quả mà REINFORCE lấy mẫu | tr. 39 |
+| `lec-09-topic-12` | REINFORCE | cốt lõi | 6 (`## 6.`) | Ví dụ một cập nhật, thuật toán đầy đủ | Vào: topic-11 → Ra: ước lượng không chệch của $\nabla J$ | tr. 40 |
+| `lec-09-topic-04` | Phạm vi của Double DQN | bổ sung | 3 (`## 3.`) | Hai mạng tương quan; những điều Double DQN không sửa | Vào: topic-03 → Ra: kết luận có điều kiện về tác dụng của Double DQN | tr. 17–19 |
+| `lec-09-topic-13` | Tổng kết và chuyển tiếp: kết quả và giả thiết, so sánh phương pháp, tình huống áp dụng, câu hỏi tự kiểm tra, tóm tắt chương, bài tập | đọc thêm/thực hành | 7 (`## 7.`) | Tổng kết; tình huống áp dụng gắn bài thực hành Bài 08 | Vào: topic-01 đến topic-12 → Ra: câu trả lời có điều kiện cho bài toán trung tâm; Bài 10 | tr. 11–40 |
+
+Dòng cuối của bản đồ: "Đọc trước: Sutton và Barto (2018), §6.7 (độ chệch của phép cực đại và học kép), §13.1–13.3 (chính sách tham số hóa, định lý gradient chính sách, REINFORCE) và §13.7 (chính sách cho hành động liên tục)."
+
 ## Bảng note-topic-id → data-slide-id (cập nhật ở bước mạch 1)
 
 | note-topic-id | data-slide-id |

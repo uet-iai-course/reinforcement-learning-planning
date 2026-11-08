@@ -1027,3 +1027,13 @@ Tệp: `materials/lec-09/thuc-hanh-double-dqn-reinforce-breakout.ipynb`. Noteboo
 - Ghi chú bài giảng, Tình huống 09.1: đoạn "Breakout" với số từ ô 31–32 của notebook (kiểm lại với đầu ra): $Q_0-G_0$ tham lam DQN $0{,}91$; $1{,}76$; $1{,}42$, Double DQN $0{,}47$; $0{,}10$; $0{,}30$; $t=-3{,}04$, $\mathrm{df}=2$, dưới ngưỡng $4{,}30$; Double DQN hạt giống $2$ không học được. Mục 7, đoạn nối Bài 10: một câu về REINFORCE trên Breakout (ô 37–39: suy biến luôn sang phải, $2{,}43$ điểm, bằng chính sách hằng; DQN và Double DQN $42$–$66$ điểm ở bốn trong sáu lần chạy). Tình huống 09.2 nói về dữ liệu của bộ nhớ phát lại, không hợp với kết quả này; không sửa.
 - Kiểm: xem dòng kiểm ngay dưới.
 - Kiểm tích hợp: `index.html` mở ở 1400 và 390 px, 0 lỗi trang, không cuộn ngang, ảnh thẻ đã xem; hai liên kết tải trả 200 (862 025 và 2 293 000 byte) trên `http://127.0.0.1:8799`; trình xem ghi chú 0 lỗi KaTeX, không khối thô; `git diff --check` sạch.
+
+## Bỏ mục "Bản đồ chủ đề" khỏi ghi chú (2026-11-08)
+
+Yêu cầu của người dùng (2026-11-08): bỏ mục "Bản đồ chủ đề" khỏi mọi ghi chú và ghi vào nguyên tắc. Quy tắc đã ghi ở `AGENTS.md` §"Cấu trúc bắt buộc của một chương" điểm 6, `CLAUDE.md`, `prompt_lecture_note_deck.md` và mẫu ghi chú (commit `87b8295`).
+
+- **Tác tử:** một tác tử ghi tệp, `general-purpose`, opus (Opus 5.5), effort `high`, ghi ghi chú và outline của Bài 08, 09, 11, 12. Điều phối viên kiểm diff, viewer và ghi nhật ký.
+- **Ghi chú:** xóa đúng mục "## Bản đồ chủ đề" (55 dòng; diff chỉ có dòng xóa). Không sửa câu nào khác; không câu nào trong thân bài dẫn tới mục này. Giữ 17 chú thích `note-topic-id`. Danh sách tiêu đề khối có số hiệu không đổi. Số từ prose: 23 454 → 22 542.
+- **Outline:** thêm mục "## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)", 17 hàng chép từ bản đồ ở HEAD `f86f4a0` (script đối chiếu: 0 sai lệch). Số trang nguồn và các phần chỉ có trong bản đồ (danh sách phần, thời lượng nếu có) nằm ở đó.
+- **Kiểm tra trình duyệt (điều phối viên):** viewer tại máy chủ tĩnh cổng 8782, 1600×900 và 390×844: 0 `.katex-error`, 0 lỗi console, 0 request lỗi hoặc ra ngoài, không tràn ngang trang, không còn `:::` sót. `git diff --check`: sạch.
+- Đợt này không siết câu chữ của ghi chú; việc đó nằm ngoài goal 01–07.
