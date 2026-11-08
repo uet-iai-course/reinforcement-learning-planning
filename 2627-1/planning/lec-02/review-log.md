@@ -3489,3 +3489,55 @@ Máy chủ tĩnh cổng 8782, Playwright, viewer `material-viewer.html?doc=mater
 `no-ai-slop`: biên tập viên tự kiểm `eval.md` (Edit) trên mọi câu sửa; tác tử mạch viết kiểm Detect trên câu mới.
 
 Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-02)`.
+
+## Rà soát ghi chú vòng hai (2026-11-08)
+
+Goal của người dùng: "rà soát ghi chú các bài của rl-plan 01–10 về nội dung, bố cục, văn phong theo các nguyên tắc đã thiết lập". Người dùng chọn đi đủ vòng, commit và push từng bài. Trần độ dài của học phần là 30 000 từ prose (người dùng nới 2026-11-08).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai đều là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Ba rà soát chỉ đọc, song song: văn phong (`no-ai-slop` Detect); chuẩn giáo trình; toán/RL.
+- Một biên tập viên (`no-ai-slop` Edit).
+- Hai kiểm tra lại chỉ đọc.
+
+**Rà soát:**
+
+| Vai | Chặn | Nghiêm trọng | Trung bình | Nhẹ |
+|---|---:|---:|---:|---:|
+| Văn phong | 0 | 0 | 4 | 31 |
+| Chuẩn giáo trình | 0 | 0 | 6 | 25 |
+| Toán/RL | 0 | 0 | 0 | 4 |
+
+**Quyết định của điều phối viên:**
+- **Chấp nhận mặc định** mọi phát hiện, trừ các mục dưới đây.
+- **S4, chấp nhận cắt:** câu rào đón "các bộ số khác là số liệu sư phạm tự xây dựng" ở L68.
+  - Dấu vết nguồn ghi tại đây: mê cung $8\times8$ lấy từ bài giảng gốc, trang 25–26.
+  - Các bộ số khác (robot giao hàng, xổ số, …) do người soạn xây dựng để tính tay, không lấy từ nguồn ngoài.
+- **S5, chấp nhận:** hai danh sách định hướng liền nhau ở Mục 1 được gộp. Quyết định F3 của vòng trước là phát hiện về deck, không liên quan.
+- **S19, chấp nhận:** đặt nhãn "chính sách mũi tên" một lần, thay bảy lần dùng cụm "chính sách (của hình) ở Mục 3".
+- **G14, bác bỏ:** Nhận xét 02.15 đứng trước Ví dụ 02.12 ở §4.4, nhưng đổi thứ tự khối có số hiệu vi phạm ràng buộc cứng.
+- **G21, G30, áp dụng một phần:** không thêm năm xuất bản hay số trang chưa xác minh.
+- **Bảng ký hiệu:** thêm $g$, $c^*$, $\hat p$.
+- **G19:** kết Mục 4 dẫn đủ Định lý 02.11, Mệnh đề 02.13 và Nhận xét 02.17.
+
+**Kiểm tra lại:**
+- Độ chính xác: 0 chặn, 0 nghiêm trọng, 1 trung bình, 5 nhẹ.
+  - A1 (trùng F1): câu mới theo M1 viết "lợi tức nhận hữu hạn giá trị". Câu này sai, vì Tình huống 02.2 và Nhận xét 02.15 cho đếm được vô hạn giá trị. Đã sửa thành "đếm được".
+  - Phản ví dụ mới theo G12 và khối `cases` đã được tính lại bằng script và đều đúng ($v_\pi((0,5))=2{,}8402$).
+- Mạch viết: 0 chặn, 0 nghiêm trọng, 2 trung bình, 7 nhẹ.
+  - F2: đặt lại câu xổ số. Dùng "lợi ích" vì "lợi tức" đến Mục 4.2 mới được định nghĩa; điều phối viên chấp nhận lý do này.
+- Tất cả được chấp nhận và đã sửa, trừ F9: gộp danh sách thành một câu trái quy tắc danh sách của giọng tác giả; điều phối viên đồng ý bỏ.
+
+**Số liệu:**
+- Prose 17 299 → 17 452. Phần tăng đến từ câu đọc công thức, kết mục dẫn số hiệu và phản ví dụ.
+- 87 dòng tiêu đề khối và mục trùng khít trước và sau.
+- 19 `note-topic-id` giữ nguyên. `git diff --check`: sạch.
+
+**Lệch cần đồng bộ:** ghi chú diễn giả của deck dòng 316 (trường hợp $a^*=$ Đông), từ vòng trước, vẫn mở.
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in.
+- 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang.
+- Ở 390 px, 11 công thức hiển thị cuộn trong khung; khối `cases` của hàm động lực Tiến là một trong số đó, người đọc phải cuộn mới thấy cột điều kiện (nhẹ).
+- Lỗi CSP script nội tuyến đến từ môi trường kiểm tra, như ở các bài khác.
+- Điều phối viên đã xem ảnh chụp.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-02)`.

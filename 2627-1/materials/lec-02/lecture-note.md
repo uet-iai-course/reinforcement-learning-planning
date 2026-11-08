@@ -17,12 +17,12 @@ Bài tập 02.1–02.13 nằm trong ghi chú; [tệp bài tập](material-viewer
 
 Số hiệu `01.k` chỉ ghi chú Bài 01, `02.k` chỉ ghi chú này.
 
-- **Xác suất có điều kiện và kỳ vọng.** Với $\Pr(F)>0$, $\Pr(E\mid F)=\Pr(E\cap F)/\Pr(F)$. Biến ngẫu nhiên rời rạc $Y$ có kỳ vọng hữu hạn khi $\sum_y\lvert y\rvert\Pr(Y=y)<\infty$, và khi đó $\mathbb E[Y]=\sum_y y\Pr(Y=y)$.
+- **Xác suất có điều kiện và kỳ vọng.** Với $\Pr(F)>0$, $\Pr(E\mid F)=\Pr(E\cap F)/\Pr(F)$. Biến ngẫu nhiên rời rạc $Y$ có kỳ vọng hữu hạn khi $\sum_y\lvert y\rvert\Pr(Y=y)<\infty$, và khi đó $\mathbb E[Y]=\sum_y y\Pr(Y=y)$. Với biến ngẫu nhiên không rời rạc, như lợi tức của nhiệm vụ tiếp diễn, kỳ vọng hiểu theo nghĩa tích phân; trong mọi ví dụ của chương, lợi tức nhận đếm được giá trị, nên kỳ vọng tính bằng tổng ở trên.
 - **Tổng hình học.** Với $\gamma\ne1$, $\sum_{k=0}^{n-1}\gamma^k=(1-\gamma^n)/(1-\gamma)$; với $0\le\gamma<1$, $\sum_{k=0}^{\infty}\gamma^k=1/(1-\gamma)$.
 - **Tác tử, môi trường, vòng tương tác** (Định nghĩa 01.1). Tác tử (agent) nhận quan sát $O_t$ và chọn hành động $A_t$; môi trường (environment) gồm mọi thứ ngoài tác tử, trả phần thưởng (reward) $R_{t+1}$ và quan sát $O_{t+1}$. Ranh giới đặt ở giới hạn điều khiển của tác tử: cảm biến và luật phần thưởng thuộc môi trường.
 - **Trạng thái, quan sát, lịch sử** (Định nghĩa 01.2, Nhận xét 01.3). Trạng thái (state) $S_t$ là cấu hình mà luật của môi trường dùng tới; quan sát (observation) $O_t$ là phần thông tin tác tử nhận; lịch sử $H_t=(O_0,A_0,R_1,\dots,O_t)$; tập hành động hợp lệ tại $s$ là $\mathcal A(s)$; khi $O_t=S_t$ ở mọi bước, tác tử quan sát đầy đủ. Hai trạng thái có thể cho cùng quan sát.
 - **Tín hiệu học** (Định nghĩa 01.5, Nhận xét 01.6). Phần thưởng là một số đánh giá chuyển vừa xảy ra, không cho biết hành động đúng; phản hồi có thể trễ nhiều bước; dữ liệu tương tác không độc lập cùng phân phối, và hành động thay đổi dữ liệu về sau.
-- **Lượt, lợi tức không chiết khấu, giả thuyết phần thưởng** (Định nghĩa 01.7, 01.8, Mệnh đề 01.9, Nhận xét 01.10). Một lượt (episode) kết thúc tại $T$; $G_t=R_{t+1}+\cdots+R_T$ thỏa $G_t=R_{t+1}+G_{t+1}$, $G_T=0$. Giả thuyết phần thưởng (reward hypothesis) phát biểu rằng mọi mục tiêu mô tả được bằng việc làm lớn nhất kỳ vọng của tổng phần thưởng; đây là giả thuyết mô hình hóa, không phải định lý.
+- **Lượt, lợi tức không chiết khấu, giả thuyết phần thưởng** (Định nghĩa 01.7, 01.8, Mệnh đề 01.9, Nhận xét 01.10). Một lượt (episode) kết thúc tại $T$; $G_t=R_{t+1}+\cdots+R_T$ thỏa $G_t=R_{t+1}+G_{t+1}$, $G_T=0$. Giả thuyết phần thưởng (reward hypothesis) phát biểu rằng mọi mục tiêu mô tả được bằng việc làm lớn nhất kỳ vọng của tổng phần thưởng; đây là một giả thuyết mô hình hóa.
 - **Chính sách và hàm giá trị trên lịch sử** (Định nghĩa 01.11, 01.12, Nhận xét 01.19). Chính sách (policy) gán cho mỗi lịch sử $h$ một phân phối $\pi(\cdot\mid h)$ trên các hành động hợp lệ; giá trị của $h$ dưới $\pi$ là $v_\pi(h)=\mathbb E_\pi[G_t\mid H_t=h]$; dưới ba điều kiện của Nhận xét 01.19, giá trị trong Tic-tac-toe chỉ phụ thuộc thế cờ cuối.
 - **Mô hình** (Định nghĩa 01.14, Nhận xét 01.15). Mô hình (model) là một mô tả do người thiết kế cung cấp hoặc tác tử học được, cho dự báo $(\widehat S_{t+1},\widehat R_{t+1})$ của phản hồi; dự báo có thể sai. Phương pháp có mô hình dùng nó để lập kế hoạch; phương pháp phi mô hình thì không.
 
@@ -33,9 +33,9 @@ Mỗi chữ trong bảng giữ một nghĩa trong cả chương, trừ các ngo�
 | Ký hiệu | Ý nghĩa | Miền hoặc kiểu |
 |---|---|---|
 | $t$, $T$ | chỉ số bước; thời điểm kết thúc lượt | $t\in\{0,1,2,\dots\}$; $T$ nguyên dương ngẫu nhiên, hoặc $T=\infty$ |
-| $\mathcal S$, $\mathcal S^+$ | tập trạng thái chưa kết thúc; thêm các trạng thái kết thúc | tập đếm được; hữu hạn trong ví dụ |
+| $\mathcal S$, $\mathcal S^+$ | tập trạng thái chưa kết thúc; thêm các trạng thái kết thúc (terminal state) | tập đếm được; hữu hạn trong ví dụ |
 | $S_t$, $s$, $s'$ | trạng thái tại $t$; một giá trị; trạng thái kế tiếp | phần tử của $\mathcal S^+$ |
-| $\mathcal O$, $O_t$ | tập quan sát; quan sát tại $t$ | tập tùy ý |
+| $\mathcal O$, $O_t$, $g$ | tập quan sát; quan sát tại $t$; hàm đọc lại trạng thái khi quan sát đầy đủ | tập tùy ý; $g:\mathcal O\to\mathcal S^+$ |
 | $\mathcal X$, $X_t$, $x$ | tập biểu diễn; biểu diễn tại $t$; một giá trị | tập tùy ý |
 | $f_t$ | hàm biểu diễn | $\mathcal O^{t+1}\times\mathcal A^{t}\times\mathbb R^{t}\to\mathcal X$ |
 | $\mathcal A$, $\mathcal A(s)$, $\mathcal A(x)$, $A_t$, $a$ | tập hành động; hành động hợp lệ tại $s$, tại biểu diễn $x$; hành động tại $t$; một giá trị | tập hữu hạn |
@@ -47,40 +47,30 @@ Mỗi chữ trong bảng giữ một nghĩa trong cả chương, trừ các ngo�
 | $\gamma$ | hệ số chiết khấu (discount factor) | $[0,1]$; $\gamma<1$ khi $T=\infty$ |
 | $G_t$, $R_{\max}$ | lợi tức từ $t$; chặn của $\lvert R_{t+1}\rvert$ | biến ngẫu nhiên; $R_{\max}\ge0$ |
 | $v_\pi(s)$, $\mathbb E_\pi$ | giá trị trạng thái dưới $\pi$; kỳ vọng theo $\pi$ và động lực môi trường | $\mathbb R$ |
-| $p(s',r\mid s,a)$ | hàm động lực của môi trường | $[0,1]$ |
+| $p(s',r\mid s,a)$, $\hat p$ | hàm động lực của môi trường; mô hình xấp xỉ $p$ | $[0,1]$ |
 | $p(s'\mid s,a)$, $r(s,a)$ | xác suất chuyển; thưởng kỳ vọng một bước | $[0,1]$; $\mathbb R$ |
-| $c$, $c_{\mathrm H}$ | chi phí mỗi bước; phạt bổ sung khi vào hố | $c\ge0$, $c_{\mathrm H}\ge0$ |
+| $c$, $c_{\mathrm H}$, $c^*$ | chi phí mỗi bước; phạt bổ sung khi vào hố; ngưỡng đổi hành vi | $c\ge0$, $c_{\mathrm H}\ge0$ |
 | $\mathrm S$, $\mathrm H$, $\mathrm G$ | nút xuất phát, hố, đích ($\mathrm G$ cũng là đích của mê cung $8\times8$) | nhãn, không phải biến |
 
-Hành động trong mê cung là Bắc, Đông, Nam, Tây. $R_{t+1}$ là phần thưởng của chuyển từ $t$ sang $t+1$, nhận sau $A_t$ (Sutton và Barto, 2018, §3.1).
-
-Lợi tức tại thời điểm kết thúc bằng $0$, nên giá trị của trạng thái kết thúc bằng $0$.
+Hành động trong mê cung là Bắc, Đông, Nam, Tây. Tác tử nhận $R_{t+1}$ sau khi chọn $A_t$ (Sutton và Barto, 2018, §3.1).
 
 Chữ "dừng" có ba nghĩa phân biệt bằng danh từ đi kèm: chính sách dừng (stationary policy) không đổi theo $t$; môi trường dừng (stationary environment) có xác suất chuyển không đổi theo $t$; ưu tiên dừng là tính chất của cách so sánh chuỗi phần thưởng (Định nghĩa 02.10). Lượt thì "kết thúc", không "dừng".
 
 Đứng riêng, $r$ là một giá trị phần thưởng; với hai đối số, $r(s,a)$ là thưởng kỳ vọng một bước, theo cách viết của Sutton và Barto. Bốn chữ khác cũng mang hai nghĩa, phân biệt theo chỗ dùng:
 
-- $k$ là bit chìa khóa trong mê cung có chìa khóa, bằng $1$ khi tác tử đã có chìa khóa, và là chỉ số chạy trong các tổng như $\sum_{k\ge0}\gamma^kR_{t+k+1}$;
+- $k$ là bit chìa khóa trong mê cung có chìa khóa, bằng $1$ khi tác tử đã có chìa khóa, và là chỉ số chạy hoặc số bước trong các tổng như $\sum_{k\ge0}\gamma^kR_{t+k+1}$ và trong Nhận xét 02.15;
 - $x$ là giá trị của biểu diễn, trừ vị trí xe trong quan sát $(x,\dot x,\theta,\dot\theta)$ của CartPole;
 - $\varepsilon$ là xác suất thăm dò, trừ xác suất kết thúc nhỏ nhất trong Nhận xét 02.15;
 - $E$ là một biến cố trong phần kiến thức tiên quyết và là số bước kỳ vọng trong Tình huống 02.2.
 
-Tọa độ ô ghi theo thứ tự (cột, hàng) và luôn nằm trong ký hiệu toán, chẳng hạn $(4,2)$ là cột $4$, hàng $2$. Trong mê cung có chìa khóa, trạng thái là cặp (ô, $k$), chẳng hạn $((7,6),1)$. Số thập phân viết bằng dấu phẩy, chẳng hạn $0{,}5$. Mê cung $8\times8$ lấy từ bài giảng gốc (trang 25–26); các bộ số khác là số liệu sư phạm tự xây dựng.
+Tọa độ ô ghi theo thứ tự (cột, hàng) và luôn nằm trong ký hiệu toán, chẳng hạn $(4,2)$ là cột $4$, hàng $2$. Trong mê cung có chìa khóa, trạng thái là cặp (ô, $k$), chẳng hạn $((7,6),1)$. Số thập phân viết bằng dấu phẩy, chẳng hạn $0{,}5$.
 
 Giáo trình *Học máy thống kê* mô tả quá trình quyết định Markov (Markov decision process, MDP) bằng bộ $\langle S,A,T,R,\gamma\rangle$: $T(s,a,s')$ ứng với $p(s'\mid s,a)$, $R(s,a,s')$ là thưởng kỳ vọng khi biết cả $s'$, giá trị quỹ đạo $U(\tau)$ là $G_0$, và $V^\pi$ là $v_\pi$. Theo Sutton và Barto, $\gamma$ đặt ngoài $p$, vì nó thuộc cách đánh giá chuỗi phần thưởng.
 
 <!-- note-topic-id: lec-02-part-02 -->
 ## 1. Vòng tương tác và tín hiệu thưởng
 
-Ở Bài 01, chính sách được định nghĩa trên lịch sử quan sát (Định nghĩa 01.11) và giá trị là kỳ vọng của lợi tức không chiết khấu khi biết lịch sử, $v_\pi(h)=\mathbb E_\pi[G_t\mid H_t=h]$ (Định nghĩa 01.12). Hai định nghĩa đó đúng cho mọi môi trường, nhưng đối số của chúng dài thêm sau mỗi bước, và tổng không chiết khấu chỉ dùng được khi lượt chắc chắn kết thúc. Trong chương này, chúng ta:
-
-- tìm điều kiện để thay lịch sử bằng một trạng thái gọn;
-- viết quy tắc chọn hành động trên dữ liệu mà tác tử có;
-- xác định cách cộng phần thưởng có trọng số theo thời gian;
-- tách dự báo một bước khỏi đánh giá dài hạn;
-- tìm mức phần thưởng làm hành vi tối ưu đổi.
-
-Bài toán xuyên suốt là một mê cung lấy từ bài giảng gốc (trang 25–26).
+Ở Bài 01, chính sách được định nghĩa trên lịch sử quan sát (Định nghĩa 01.11) và giá trị là kỳ vọng của lợi tức không chiết khấu khi biết lịch sử, $v_\pi(h)=\mathbb E_\pi[G_t\mid H_t=h]$ (Định nghĩa 01.12). Hai định nghĩa đó đúng cho mọi môi trường, nhưng đối số của chúng dài thêm sau mỗi bước, và tổng không chiết khấu chỉ dùng được khi lượt chắc chắn kết thúc. Bài toán xuyên suốt của chương là một mê cung lấy từ bài giảng gốc (trang 25–26).
 
 ::: example Ví dụ 02.1 (Mê cung $8\times8$)
 **Dữ kiện.** Lưới $8\times8$ có 27 ô đi được và 37 ô tường. Ô ghi bằng tọa độ (cột, hàng), cả hai đánh số từ $0$, hàng tăng xuống dưới. Tác tử xuất phát tại $(0,2)$. Đích $\mathrm G$ nằm ngoài lưới, bên phải ô $(7,6)$, ghi là $(8,6)$.
@@ -98,11 +88,13 @@ Bài toán xuyên suốt là một mê cung lấy từ bài giảng gốc (trang
 
 Nhiều ô trắng là ngõ cụt, chẳng hạn $(4,2)$ chỉ nối với $(4,1)$; vì vậy một bước hợp lệ có thể làm đường còn lại dài thêm, và giá trị của một bước phụ thuộc những bước sau nó.
 
-Trên mê cung này có bốn câu hỏi:
+Trên mê cung này, chúng ta cần trả lời sáu câu hỏi:
 
 - Với cảm biến chỉ báo bốn ô kề là tường hay trống, ô $(2,1)$ và $(3,1)$ cho cùng dữ liệu; cần biết khi nào dữ liệu hiện tại đủ để chọn hướng và dự báo bước kế tiếp.
 - Hai tác tử ở cùng ô $(1,2)$ có thể chọn hai hướng khác nhau; cần một đối tượng ghi được cách chọn trên dữ liệu mà tác tử có.
+- Nếu tương tác không kết thúc, tổng các phần thưởng $-1$ tiến về $-\infty$ với mọi cách đi; cần một cách cộng phần thưởng có trọng số theo thời gian.
 - Khi có yếu tố ngẫu nhiên, lợi tức của một lượt là biến ngẫu nhiên; cần một con số đại diện cho từng ô.
+- Dự báo "từ $(4,1)$, chọn Nam thì bước kế tiếp ra sao" khác đánh giá kết quả dài hạn của cả đường; cần tách hai việc này.
 - Khi người thiết kế đổi phần thưởng, chẳng hạn thêm một hố kết thúc lượt, hành vi tối ưu có thể đổi theo; cần biết mức phần thưởng nào làm hành vi đổi.
 
 ![Sơ đồ cấu trúc của chương. Khối Tác tử chứa biểu diễn X t tính từ dữ liệu đến thời điểm t (Mục 2) và chính sách pi của a cho x (Mục 3). Khối Môi trường chứa trạng thái S t và tính Markov (Mục 2), hàm động lực p của s phẩy, r cho s, a (Mục 4). Mũi tên trên từ tác tử sang môi trường ghi hành động A t (Mục 1); mũi tên dưới từ môi trường về tác tử ghi R t+1 và O t+1 (Mục 1). Một mũi tên đứt đưa chuỗi phần thưởng xuống khối dưới: lợi tức G t bằng tổng gamma mũ k nhân R t+k+1 và hàm giá trị v pi của s (Mục 4); thiết kế phần thưởng (c, c H) quyết định hành vi tối ưu (Mục 5).](img/lec-02/chapter-structure.svg)
@@ -111,7 +103,7 @@ Trên sơ đồ, tác tử gửi $A_t$ và nhận $R_{t+1}$, $O_{t+1}$. Bên tro
 
 ### 1.1 Ranh giới tác tử–môi trường trên mê cung
 
-Nhắc lại: theo Định nghĩa 01.1, tác tử chỉ quyết định $A_t$, còn môi trường quyết định $R_{t+1}$ và $O_{t+1}$; mọi thứ tác tử không thay đổi được tùy ý thuộc môi trường, kể cả cơ chế tính phần thưởng. Sutton và Barto (2018, §3.1, trang 50) mô tả ranh giới này là giới hạn của quyền điều khiển tuyệt đối của tác tử. Trên mê cung, tác tử là phần chọn hướng; bản đồ, luật đứng yên khi gặp tường và quy tắc trừ $1$ mỗi bước thuộc môi trường, dù tác tử có thể biết rõ các luật đó. Với một robot thật, động cơ và cảm biến cũng thuộc môi trường, vì bộ điều khiển chỉ chọn được tín hiệu điều khiển.
+Nhắc lại: theo Định nghĩa 01.1, tác tử chỉ quyết định $A_t$, còn môi trường quyết định $R_{t+1}$ và $O_{t+1}$; mọi thứ tác tử không thay đổi được tùy ý thuộc môi trường, kể cả cơ chế tính phần thưởng. Trên mê cung, tác tử là phần chọn hướng; bản đồ, luật đứng yên khi gặp tường và quy tắc trừ $1$ mỗi bước thuộc môi trường, dù tác tử có thể biết rõ các luật đó. Với một robot thật, động cơ và cảm biến cũng thuộc môi trường, vì bộ điều khiển chỉ chọn được tín hiệu điều khiển.
 
 <!-- note-topic-id: lec-02-topic-01 -->
 ### 1.2 Mẫu chuyển
@@ -130,15 +122,15 @@ Một cách trực quan, một bước gồm thông tin tác tử có trước k
 Cho tập quan sát $\mathcal O$ và tập hành động $\mathcal A$. Tại thời điểm $t$ trước khi lượt kết thúc, tác tử có quan sát $O_t\in\mathcal O$ và chọn hành động (action) $A_t\in\mathcal A$; môi trường trả phần thưởng $R_{t+1}\in\mathbb R$ và quan sát mới $O_{t+1}\in\mathcal O$. Bộ bốn $(O_t,A_t,R_{t+1},O_{t+1})$ là một **mẫu chuyển** (transition). Nếu sau bước này môi trường ở trạng thái kết thúc thì lượt kết thúc tại $T=t+1$ và không còn hành động nào sau $T$.
 :::
 
-Định nghĩa mở rộng vòng tương tác của Định nghĩa 01.1 bằng cách cắt dãy $O_0,A_0,R_1,O_1,\dots$ thành các bộ bốn chồng nhau. Chỉ số $t+1$ của phần thưởng nói rằng $R_{t+1}$ được sinh cùng lúc với $O_{t+1}$, sau khi $A_t$ đã được chọn, nên tác tử chưa biết $R_{t+1}$ khi chọn $A_t$. Viết $R_t$ cho phần thưởng của $A_t$ là lỗi thường gặp; nó làm lệch mọi tổng về sau một bước.
+Định nghĩa mở rộng vòng tương tác của Định nghĩa 01.1 bằng cách cắt dãy $O_0,A_0,R_1,O_1,\dots$ thành các bộ bốn chồng nhau. Chỉ số $t+1$ của phần thưởng nói rằng môi trường sinh $R_{t+1}$ cùng lúc với $O_{t+1}$, sau khi tác tử đã chọn $A_t$, nên tác tử chưa biết $R_{t+1}$ khi chọn $A_t$. Viết $R_t$ cho phần thưởng của $A_t$ là lỗi thường gặp; nó làm lệch mọi tổng về sau một bước.
 
 Mẫu chuyển của Ví dụ 02.2 là $(O_0,A_0,R_1,O_1)=((0,2),\text{Đông},-1,(1,2))$.
-
-Định nghĩa 01.7 gộp cắt lượt sau $L$ hành động vào kết thúc lượt. Từ chương này, lượt kết thúc khi môi trường vào trạng thái kết thúc, còn cắt lượt sau một số bước cố định là giới hạn của chương trình; muốn coi hạn chót là một phần của bài toán thì đưa thời gian còn lại vào trạng thái (Nhận xét 02.15).
 
 ![Vòng tương tác: khối Tác tử gửi hành động A t sang khối Môi trường; khối Môi trường trả về phần thưởng R t+1 và quan sát O t+1 cho khối Tác tử.](img/lec-02/agent-environment-loop.svg)
 
 Trên hình, vòng khép lại khi $O_{t+1}$ trở thành thông tin của bước $t+1$.
+
+Định nghĩa 01.7 gộp cắt lượt sau $L$ hành động vào kết thúc lượt. Từ chương này, lượt kết thúc khi môi trường vào trạng thái kết thúc, còn cắt lượt sau một số bước cố định là giới hạn của chương trình; muốn coi hạn chót là một phần của bài toán thì đưa thời gian còn lại vào trạng thái.
 
 **Trong thực hành.** Thư viện Gymnasium, dùng trong các bài thực hành từ Bài 04, cài đặt Định nghĩa 02.1 bằng `env.step(a)`: hàm nhận $A_t$, trả $O_{t+1}$, $R_{t+1}$ và hai cờ. Cờ `terminated` báo môi trường vào trạng thái kết thúc; cờ `truncated` báo lượt bị cắt vì giới hạn của chương trình, như ở bước $1\,000$ của Lunar Lander (Bài 05–06) hay khi chim qua $50$ ống trong Flappy Bird (Bài 07). Lượt bị cắt chưa tới trạng thái kết thúc, nên lợi tức của nó chưa được quan sát trọn.
 
@@ -187,12 +179,14 @@ Mẫu chuyển (Định nghĩa 02.1) cố định thứ tự tín hiệu trong m
 <!-- note-topic-id: lec-02-part-03 -->
 ## 2. Thông tin khả dụng và tính Markov
 
-Giả sử tác tử của mê cung $8\times8$ chỉ có một cảm biến báo bốn ô kề là tường hay trống. Tại $(2,1)$, cảm biến báo Bắc và Nam là tường, Đông và Tây trống; tại $(3,1)$, cảm biến báo đúng như vậy. Chúng ta cần trả lời hai câu hỏi: tác tử dùng thông tin gì để quyết định, và khi nào thông tin hiện tại đủ để dự báo bước kế tiếp.
+Giả sử tác tử của mê cung $8\times8$ chỉ có một cảm biến báo bốn ô kề là tường hay trống. Khi đó ô $(2,1)$ và ô $(3,1)$ cho cùng dữ liệu. Chúng ta cần trả lời hai câu hỏi: tác tử dùng thông tin gì để quyết định, và khi nào thông tin hiện tại đủ để dự báo bước kế tiếp.
 
 <!-- note-topic-id: lec-02-topic-03 -->
 ### 2.1 Trạng thái, quan sát và biểu diễn
 
-Nhắc lại (Định nghĩa 01.2): trạng thái $S_t$ là cấu hình của môi trường mà luật chuyển dùng tới, còn quan sát $O_t$ là phần thông tin tác tử nhận. Từ chương này, trạng thái là biến do người mô hình chọn để mô tả môi trường: có thể lấy toàn bộ cấu hình, hoặc một biến nhỏ hơn như tọa độ ô, và lựa chọn đó quyết định trạng thái có tính Markov hay không. Một cách trực quan, còn một đối tượng thứ ba: dữ liệu tác tử tự tính ra từ những gì đã nhận để đưa vào quy tắc chọn hành động. Ba đối tượng trùng nhau khi quan sát là tọa độ, nhưng nói chung khác nhau. Để làm rõ ba đối tượng này, xem ví dụ sau.
+Nhắc lại (Định nghĩa 01.2): trạng thái $S_t$ là cấu hình của môi trường mà luật chuyển dùng tới, còn quan sát $O_t$ là phần thông tin tác tử nhận. Từ chương này, trạng thái là biến do người mô hình chọn để mô tả môi trường: có thể lấy toàn bộ cấu hình, hoặc một biến nhỏ hơn như tọa độ ô, và lựa chọn đó quyết định trạng thái có tính Markov hay không.
+
+Một cách trực quan, còn một đối tượng thứ ba: dữ liệu tác tử tự tính ra từ những gì đã nhận để đưa vào quy tắc chọn hành động. Ba đối tượng trùng nhau khi quan sát là tọa độ, nhưng nói chung khác nhau. Để làm rõ ba đối tượng này, xem ví dụ sau.
 
 ::: example Ví dụ 02.4 (Ô $(2,1)$ và cảm biến bốn ô kề)
 **Dữ kiện.** Mê cung $8\times8$ của Ví dụ 02.1; tác tử ở $(2,1)$. Cảm biến xét bốn hướng theo thứ tự Bắc, Đông, Nam, Tây và trả một bộ mã $O_t\in\{0,1\}^4$: chữ số của một hướng là $1$ nếu bước theo hướng đó giữ tác tử đứng yên (tường hoặc ngoài lưới), là $0$ nếu bước đó đưa tác tử sang ô khác, kể cả bước Đông từ $(7,6)$ vào $\mathrm G$.
@@ -206,11 +200,11 @@ Nhắc lại (Định nghĩa 01.2): trạng thái $S_t$ là cấu hình của m�
 
 ![Sơ đồ ba khối. Trạng thái: mê cung cố định với vị trí tác tử (2,1). Bốn ô kề: vùng cảm biến thấy, Bắc và Nam là tường, Đông và Tây trống. Quan sát O t: bộ mã (1,0,1,0) theo thứ tự Bắc, Đông, Nam, Tây, với 1 là bước giữ tác tử đứng yên và 0 là bước sang ô khác. Mũi tên từ quan sát xuống biểu diễn X t do tác tử tính. Mã này không xác định được tọa độ thật của tác tử.](img/lec-02/state-observation-representation.svg)
 
-Trên hình, thông tin mất ở mũi tên đầu: từ bốn ô kề không dựng lại được bản đồ, nên từ mã $(1,0,1,0)$ không biết tác tử ở cột $2$ hay cột $3$. Mũi tên xuống là việc của tác tử: tính biểu diễn $X_t$ từ các mã đã nhận.
+Trên hình, thông tin mất ở mũi tên đầu: từ bốn ô kề, tác tử không xác định được vị trí của mình. Mũi tên xuống là việc của tác tử: tính biểu diễn $X_t$ từ các mã đã nhận.
 
 ### 2.2 Biểu diễn từ thông tin khả dụng
 
-Biểu diễn chỉ được dùng những gì tác tử có trước khi chọn hành động. Định nghĩa sau viết điều đó thành một hàm.
+Biểu diễn chỉ được dùng những gì tác tử có trước khi chọn hành động. Ta viết điều kiện này thành một hàm.
 
 ::: definition Định nghĩa 02.2 (Biểu diễn và hàm biểu diễn)
 Tại thời điểm $t$, dữ liệu khả dụng của tác tử là ba dãy $O_{0:t}=(O_0,\dots,O_t)$, $A_{0:t-1}=(A_0,\dots,A_{t-1})$ và $R_{1:t}=(R_1,\dots,R_t)$, với hai dãy sau rỗng khi $t=0$. Một **hàm biểu diễn** là ánh xạ tất định $f_t:\mathcal O^{t+1}\times\mathcal A^{t}\times\mathbb R^{t}\to\mathcal X$ do người thiết kế tác tử chọn, với $\mathcal X$ là tập biểu diễn, và **biểu diễn** (representation) tại $t$ là
@@ -247,7 +241,7 @@ $$
 
 **Khi cảm biến chỉ thấy bốn ô kề.** Tác tử nhận các quan sát $O_0=(1,0,1,1)$, $O_1=(0,1,0,0)$, $O_2=(1,0,0,1)$, $O_3=(1,0,1,0)$, không nhận các ô $(0,2)$, $(1,2)$, $(1,1)$, $(2,1)$.
 
-**Cửa sổ hai quan sát.** Bước tiếp theo của đường 16 bước là Đông, từ $(2,1)$ tới $(3,1)$, nên $O_4=(1,0,1,0)$, trùng $O_3$. Với biểu diễn $X_t=(O_t,A_{t-1},O_{t-1})$ của Mục 2.2,
+**Cửa sổ hai quan sát.** Bước tiếp theo của đường 16 bước là Đông, từ $(2,1)$ tới $(3,1)$, nên $O_4=(1,0,1,0)$, trùng $O_3$. Với cửa sổ hai quan sát $X_t=(O_t,A_{t-1},O_{t-1})$,
 $$
 \begin{aligned}
 X_3&=\bigl((1,0,1,0),\ \text{Đông},\ (1,0,0,1)\bigr),\\
@@ -275,7 +269,7 @@ Lịch sử quan sát $H_t=(O_0,A_0,R_1,\dots,O_t)$ của Định nghĩa 01.2 tr
 
 ### 2.4 Quan sát đầy đủ và quan sát một phần
 
-Nhắc lại: tác tử quan sát đầy đủ khi $O_t=S_t$ (Định nghĩa 01.2). Về mặt ý tưởng, chỉ cần đọc lại được trạng thái từ quan sát, dù quan sát viết dưới dạng khác.
+Nhắc lại: tác tử quan sát đầy đủ khi $O_t=S_t$ (Định nghĩa 01.2). Về mặt ý tưởng, tác tử chỉ cần đọc lại được trạng thái từ quan sát, dù quan sát viết dưới dạng khác.
 
 ::: remark Nhận xét 02.4 (Quan sát đầy đủ theo nghĩa tổng quát)
 Môi trường được **quan sát đầy đủ** (full observability) khi có hàm $g:\mathcal O\to\mathcal S^+$ với $S_t=g(O_t)$ ở mọi $t$; trường hợp $g$ là hàm đồng nhất là định nghĩa của Bài 01. Ngược lại, môi trường được **quan sát một phần** (partial observability): có một quan sát ứng với hai trạng thái khác nhau có thể xảy ra. Với cảm biến bốn ô kề, mã $(1,0,1,0)$ ứng với đúng năm ô $(2,1)$, $(3,1)$, $(5,1)$, $(2,6)$, $(7,6)$, nên mê cung được quan sát một phần. Phân loại này tương đối với biến đã chọn làm trạng thái: cùng một cảm biến có thể cho quan sát đầy đủ với một lựa chọn và quan sát một phần với lựa chọn lớn hơn.
@@ -283,13 +277,11 @@ Môi trường được **quan sát đầy đủ** (full observability) khi có 
 
 ![Hai cột so sánh. Cột trái, quan sát tọa độ: vị trí (2,1) cho quan sát (2,1), vị trí (3,1) cho quan sát (3,1); hai vị trí cho hai quan sát khác nhau. Cột phải, cảm biến bốn ô kề: cả vị trí (2,1) và vị trí (3,1) cho cùng một quan sát, Bắc và Nam là tường, Đông và Tây trống. Ô tối là tường, ô trắng đi được.](img/lec-02/full-partial-observation.svg)
 
-Trên hình, $g$ tồn tại ở cột trái; ở cột phải, hai vị trí cho cùng một quan sát nên không có $g$. Theo cách phân loại này, mê cung với quan sát là tọa độ, hay là ảnh toàn bản đồ có vị trí tác tử, được quan sát đầy đủ.
-
-Trường hợp quan sát một phần được mô hình hóa bằng quá trình quyết định Markov quan sát một phần (partially observable Markov decision process, POMDP), trong đó tác tử tự xây dựng biểu diễn (bài giảng gốc, trang 18–19).
+Trên hình, $g$ tồn tại ở cột trái; ở cột phải, hai vị trí cho cùng một quan sát nên không có $g$. Theo cách phân loại này, mê cung với quan sát là tọa độ, hay là ảnh toàn bản đồ có vị trí tác tử, được quan sát đầy đủ. Mô hình cho trường hợp quan sát một phần là quá trình quyết định Markov quan sát một phần (partially observable Markov decision process, POMDP), trong đó tác tử tự xây dựng biểu diễn (bài giảng gốc, trang 18–19).
 
 ### 2.5 Tính Markov
 
-Trong mê cung $8\times8$, biết tác tử ở $(4,1)$ và chọn Nam thì biết chắc nó tới $(4,2)$ và nhận $-1$, bất kể nó đã đi đường nào. Về mặt ý tưởng, trạng thái hiện tại đã tóm tắt đủ quá khứ cho dự báo bước kế tiếp. Tính chất này phụ thuộc cách chọn trạng thái; để thấy điều đó, xem ví dụ sau.
+Trong mê cung $8\times8$, nếu tác tử ở $(4,1)$ và chọn Nam thì nó chắc chắn tới $(4,2)$ và nhận $-1$, bất kể nó đã đi đường nào. Về mặt ý tưởng, trạng thái hiện tại đã tóm tắt đủ quá khứ cho dự báo bước kế tiếp. Tính chất này phụ thuộc cách chọn trạng thái; để thấy điều đó, xem ví dụ sau.
 
 ::: example Ví dụ 02.6 (Mê cung có chìa khóa)
 **Dữ kiện.** Mê cung $8\times8$ của Ví dụ 02.1, với:
@@ -321,7 +313,7 @@ $$
 Định nghĩa áp dụng cho mọi dãy biến được chọn làm trạng thái, chẳng hạn biểu diễn $X_t$, bằng cách thay $S$ bằng dãy đó trong lịch sử và trong (2.3).
 :::
 
-Vế trái của (2.3) dự báo cặp (trạng thái kế tiếp, phần thưởng) khi biết toàn bộ quá khứ; vế phải chỉ dùng trạng thái cuối và hành động hiện tại. Hai vế có thể phụ thuộc $t$; tính dừng của môi trường là một giả thiết riêng. Đẳng thức được đòi với mọi chính sách, không chỉ với chính sách đang dùng; nhờ điều kiện này, với chính sách chỉ dùng trạng thái, hàm động lực không phụ thuộc chính sách. Bài giảng gốc (trang 17) phát biểu giả thuyết Markov dưới dạng "tương lai độc lập với quá khứ khi biết hiện tại".
+Vế trái của (2.3) dự báo cặp (trạng thái kế tiếp, phần thưởng) khi biết toàn bộ quá khứ; vế phải chỉ dùng trạng thái cuối và hành động hiện tại. Nói gọn, tương lai độc lập với quá khứ khi biết hiện tại (bài giảng gốc, trang 17). Hai vế có thể phụ thuộc $t$; tính dừng của môi trường là một giả thiết riêng. Đẳng thức được đòi với mọi chính sách, không chỉ với chính sách đang dùng; nhờ điều kiện này, với chính sách chỉ dùng trạng thái, hàm động lực không phụ thuộc chính sách.
 
 Với trạng thái là tọa độ trong Ví dụ 02.6, lấy $t=17$, $s=(7,6)$, $a=\text{Đông}$, $s'=\mathrm G$, $r=-1$: vế trái bằng $0$ với $h$ và $1$ với $h'$, nên không thể cùng bằng vế phải. Với trạng thái (ô, $k$), vế trái chỉ phụ thuộc ô cuối và $k$, đúng như vế phải.
 
@@ -332,7 +324,7 @@ Sutton và Barto (2018, §3.1, trang 49) viết rằng tính Markov là ràng bu
 - **Đọc lại được tọa độ không kéo theo tính Markov.** Trong Ví dụ 02.6, tác tử nhận tọa độ, nên với trạng thái là tọa độ, mê cung được quan sát đầy đủ theo Nhận xét 02.4; nhưng tọa độ thiếu bit $k$ nên không có tính Markov. Nếu chọn trạng thái là cấu hình (ô, $k$), vốn có tính Markov, thì cùng tác tử đó chỉ quan sát một phần, vì quan sát $(7,6)$ ứng với cả $((7,6),0)$ và $((7,6),1)$.
 - **Tính Markov không chỉ ra hành động tốt.** Đẳng thức (2.3) chỉ nói về dự báo bước kế tiếp.
 
-**Câu hỏi.** Đòi hỏi trạng thái có tính Markov có hạn chế các bài toán mô hình hóa được không? Mệnh đề sau trả lời: nếu cho phép trạng thái lớn dần theo thời gian, mọi môi trường với tập trạng thái và tập phần thưởng đếm được có một trạng thái Markov.
+**Câu hỏi.** Đòi hỏi trạng thái có tính Markov có hạn chế các bài toán mô hình hóa được không? Mệnh đề sau trả lời câu hỏi này khi tập trạng thái và tập phần thưởng đếm được.
 
 ::: proposition Mệnh đề 02.6 (Lịch sử là trạng thái Markov)
 **Giả thiết.** $\mathcal S^+$ và $\mathcal R$ đếm được; $H_t$ theo (2.2). Đặt $\tilde S_t=H_t$ và gọi $\tilde H_t=(\tilde S_0,A_0,R_1,\tilde S_1,\dots,A_{t-1},R_t,\tilde S_t)$ là lịch sử của dãy mới.
@@ -363,9 +355,7 @@ trong đó đẳng thức thứ hai là định nghĩa $\tilde S_t=H_t$.
 **Bước 3 (kết luận).** Hai vế của đẳng thức cần chứng minh là xác suất của cùng biến cố $\{\tilde S_{t+1}=\tilde s',R_{t+1}=r\}$ có điều kiện trên cùng một biến cố có xác suất dương (Bước 2), nên bằng nhau; xác suất có điều kiện là tỉ số vì các tập đếm được. $\square$
 :::
 
-Đọc bằng lời: nếu trạng thái ghi lại toàn bộ quá khứ, quá khứ không thể mang thêm thông tin, nên tính Markov luôn đạt được. Trong Ví dụ 02.6, $H_t$ cho biết lịch sử có qua $(4,2)$ hay không; cách sửa (ô, $k$) gọn hơn, vì thay cho dãy dài $3t+1$ ta chỉ thêm một bit.
-
-Cái giá của tính Markov ở đây là một trạng thái dài thêm sau mỗi bước: tập giá trị của $\tilde S_t$ đổi theo $t$, nên các phương pháp dạng bảng, vốn cần một tập trạng thái cố định, không dùng trực tiếp được trạng thái này.
+Đọc bằng lời: nếu trạng thái ghi lại toàn bộ quá khứ, quá khứ không thể mang thêm thông tin, nên tính Markov luôn đạt được. Trong Ví dụ 02.6, $H_t$ cho biết lịch sử có qua $(4,2)$ hay không; cách sửa (ô, $k$) gọn hơn, vì thay cho dãy dài $3t+1$ ta chỉ thêm một bit. Các phương pháp dạng bảng cần một tập trạng thái cố định, nên không dùng trực tiếp được trạng thái $\tilde S_t$.
 
 ::: remark Nhận xét 02.7 (Cửa sổ hữu hạn)
 Giữ $m$ quan sát gần nhất cùng các hành động xen giữa cho biểu diễn có kích thước cố định; Sutton và Barto (2018, §17.3, trang 468) gọi đây là cách tiếp cận lịch sử bậc $k$ ($k$-th order history approach), với $k$ là độ dài cửa sổ; ở đây độ dài đó ký hiệu là $m$, vì $k$ đã là bit chìa khóa của Ví dụ 02.6. Cửa sổ hữu hạn không bảo đảm tính Markov. Trong Ví dụ 02.6, sau khi vào $(4,2)$, lịch sử $h'$ đi qua mười ô $(4,1)$, $(5,1)$, $(6,1)$, $(6,2)$, $(6,3)$, $(5,3)$, $(5,4)$, $(5,5)$, $(6,5)$, $(6,6)$ rồi tới $(7,6)$, nên trong $h'$, ô $(4,2)$ đứng trước $(7,6)$ đúng mười một bước. Cửa sổ $m$ quan sát tọa độ kết thúc tại $(7,6)$ chứa $(4,2)$ khi và chỉ khi $m-1\ge11$; với $m\le11$, cửa sổ của $h$ và $h'$ trùng nhau. Với các lịch sử dài hơn, chẳng hạn đâm tường nhiều lần sau khi nhặt chìa khóa, khoảng cách lớn tùy ý, nên không có $m$ hữu hạn nào đủ cho ví dụ này.
@@ -375,7 +365,7 @@ Giữ $m$ quan sát gần nhất cùng các hành động xen giữa cho biểu 
 
 - **CartPole (Bài 04).** Quan sát là $(x,\dot x,\theta,\dot\theta)$, gồm vị trí và vận tốc của xe, góc và vận tốc góc của cột; nếu chỉ giữ vị trí xe và góc cột, hai lần ghé cùng vị trí, cùng góc nhưng khác vận tốc sẽ chuyển khác nhau sau cùng hành động, đúng kiểu vi phạm (2.3). Trong notebook Bài 04, quan sát được chia thành $3\cdot3\cdot6\cdot6=324$ ô; một ô gộp nhiều trạng thái liên tục nên nói chung không có tính Markov, và một nhiệm vụ của notebook ước lượng tần suất ô kế tiếp khi biết ô hiện tại và hành động, rồi khi biết thêm ô trước đó, và so hai ước lượng để kiểm tra trực tiếp.
 - **Lunar Lander có gió (Bài 05, phần gợi mở).** Lực gió phụ thuộc một chỉ số nội bộ không có trong quan sát, nên quan sát không có tính Markov ngay cả trước khi chia ô.
-- **Flappy Bird (Bài 07).** Quan sát 12 chiều chứa vận tốc dọc của chim, nên đặc trưng tính từ quan sát hiện tại vẫn mang thông tin vận tốc.
+- **Flappy Bird (Bài 07).** Quan sát 12 chiều chứa vận tốc dọc của chim, nên đặc trưng (feature) tính từ quan sát hiện tại vẫn mang thông tin vận tốc.
 
 ::: exercise Bài tập 02.2 (Mã bốn ô kề)
 Mê cung $8\times8$ của Ví dụ 02.1; quan sát là mã bốn ô kề của Ví dụ 02.4 (Bắc, Đông, Nam, Tây; $1$ khi bước theo hướng đó giữ tác tử đứng yên, $0$ khi bước đưa tác tử sang ô khác).
@@ -415,7 +405,7 @@ Xét giá trị của $k$ ngay khi tác tử vào $(4,2)$.
 **Kiểm tra lại.** Đường 18 bước này là đường $h'$ của Ví dụ 02.6 thêm bước Đông cuối từ $(7,6)$: $17+1=18$.
 :::
 
-Tính Markov (Định nghĩa 02.5) là tính chất của biến được chọn làm trạng thái; lịch sử luôn là trạng thái Markov nhưng lớn dần (Mệnh đề 02.6), còn cửa sổ hữu hạn không bảo đảm tính chất này (Nhận xét 02.7). Tác tử chỉ có biểu diễn $X_t$ (Định nghĩa 02.2), và chưa có cách viết việc nó dùng $X_t$ để chọn hướng.
+Tính Markov (Định nghĩa 02.5) là tính chất của biến được chọn làm trạng thái; lịch sử luôn là trạng thái Markov nhưng lớn dần (Mệnh đề 02.6), còn cửa sổ hữu hạn không bảo đảm tính chất này (Nhận xét 02.7). Tác tử chỉ có biểu diễn $X_t$ (Định nghĩa 02.2), và chúng ta chưa có cách viết việc tác tử dùng $X_t$ để chọn hướng.
 
 <!-- note-topic-id: lec-02-part-04 -->
 ## 3. Quy tắc chọn hành động
@@ -424,7 +414,7 @@ Xét hai tác tử trên mê cung $8\times8$, cùng dùng tọa độ làm biể
 
 ![Mê cung tám hàng tám cột với một mũi tên trong mỗi ô đi được, chỉ hướng mà chính sách chọn tại ô đó. Từ ô bắt đầu (0,2) mũi tên chỉ Đông; tại (1,2) chỉ Bắc; dọc hàng 1 từ (1,1) tới (5,1) chỉ Đông; tại (6,1), (6,2) chỉ Nam; tại (6,3) chỉ Tây; tại (5,3), (5,4) chỉ Nam; tại (5,5) chỉ Đông; tại (6,5) chỉ Nam; tại (6,6), (7,6) chỉ Đông, ra đích G tại (8,6). Các ô ngoài đường chính cũng có mũi tên dẫn về đường chính, chẳng hạn (4,2) chỉ Bắc. Theo các mũi tên từ ô bắt đầu cần 16 bước, thưởng âm một mỗi bước.](img/lec-02/source-policy.svg)
 
-Hình lấy từ bài giảng gốc (trang 26) gán cho mỗi ô đi được đúng một hướng. Theo mũi tên từ $(0,2)$, ta đi lại đường 16 bước của Ví dụ 02.1; các ô ngoài đường chính, như ngõ cụt $(4,2)$ hay nhánh dưới từ $(1,3)$ tới $(4,6)$, cũng có mũi tên. Một bảng gán hướng cho mọi ô như vậy là một chính sách xác định trên tọa độ.
+Hình lấy từ bài giảng gốc (trang 26) gán cho mỗi ô đi được đúng một hướng. Theo mũi tên từ $(0,2)$, ta đi lại đường 16 bước của Ví dụ 02.1; các ô ngoài đường chính, như ngõ cụt $(4,2)$ hay nhánh dưới từ $(1,3)$ tới $(4,6)$, cũng có mũi tên. Một bảng gán hướng cho mọi ô như vậy là một chính sách xác định trên tọa độ; ta gọi bảng của hình là *chính sách mũi tên*.
 
 <!-- note-topic-id: lec-02-topic-06 -->
 ### 3.1 Phân phối hành động trên biểu diễn
@@ -476,7 +466,7 @@ Với $X_t=S_t$ khi quan sát đầy đủ, ta viết $\pi(a\mid s)$. Quy tắc 
 - Chính sách là quy tắc đang dùng; thuật toán học là cách tạo ra hoặc thay đổi quy tắc từ dữ liệu. Trong khi học, chính sách đổi theo thời gian; định nghĩa trên mô tả quy tắc cố định trong suốt một phép đánh giá.
 :::
 
-Theo hai trục phân loại của Puterman (1994, §2.1), xác định hay ngẫu nhiên và phụ thuộc trạng thái hay lịch sử, Định nghĩa 02.8 phủ cả bốn loại, vì biểu diễn có thể là trạng thái hoặc lịch sử.
+Theo hai trục phân loại của Puterman (1994, §2.1), xác định hay ngẫu nhiên và phụ thuộc trạng thái hay lịch sử, Định nghĩa 02.8 phủ cả bốn loại, vì biểu diễn có thể là lịch sử, trạng thái, hoặc cặp $(t,S_t)$ khi quy tắc theo trạng thái đổi theo thời gian.
 
 ### 3.2 Xác suất của một dãy hành động
 
@@ -501,7 +491,7 @@ và tác tử tới $(2,1)$.
 
 Thừa số thứ hai trong mỗi tích là xác suất của chính sách tại ô mà môi trường đưa tác tử tới sau bước đầu, nên xác suất của một dãy hành động phụ thuộc cả chính sách lẫn luật chuyển. Do đó, kỳ vọng trên các quỹ đạo lấy theo cả hai.
 
-**Trong thực hành.** Trong bài thực hành Bài 05, chính sách được đánh giá trên Lunar Lander làm theo hành động $\mu(o)$ của bộ điều khiển heuristic của Gymnasium với xác suất $0{,}9$, và với xác suất $\varepsilon=0{,}1$ chọn đều một trong bốn hành động. Theo Định nghĩa 02.8, $\pi(\mu(o)\mid o)=0{,}9+0{,}1\cdot\tfrac14=0{,}925$ và mỗi hành động còn lại có xác suất $0{,}025$.
+**Trong thực hành.** Trong bài thực hành Bài 05, chính sách được đánh giá trên Lunar Lander làm theo hành động $\mu(o)$ của bộ điều khiển dựng sẵn theo kinh nghiệm (heuristic controller) của Gymnasium với xác suất $0{,}9$, và với xác suất $\varepsilon=0{,}1$ chọn đều một trong bốn hành động. Theo Định nghĩa 02.8, $\pi(\mu(o)\mid o)=0{,}9+0{,}1\cdot\tfrac14=0{,}925$ và mỗi hành động còn lại có xác suất $0{,}025$.
 
 ::: exercise Bài tập 02.4 (Chính sách ngẫu nhiên tại một ô)
 Mê cung $8\times8$, biểu diễn là tọa độ, $x=(1,2)$; ô Đông $(2,2)$ là tường, các ô $(1,1)$, $(1,3)$, $(0,2)$ trống. Một chính sách cho $\pi(\text{Bắc}\mid x)=0{,}2$, $\pi(\text{Đông}\mid x)=0{,}5$, $\pi(\text{Tây}\mid x)=0$; tại $(1,1)$ nó chọn Đông với xác suất $0{,}9$ và Nam với xác suất $0{,}1$; tại $(1,3)$ nó luôn chọn Bắc.
@@ -528,12 +518,12 @@ Tổng là $0{,}25+0{,}02+0{,}3=0{,}57$.
 **Kiểm tra lại.** Mọi dãy khác rời $x$: Đông rồi Bắc hoặc Nam, Bắc rồi Đông; tổng xác suất của chúng là $0{,}5\cdot0{,}5+0{,}2\cdot0{,}9=0{,}43=1-0{,}57$.
 :::
 
-Chính sách là một phân phối trên biểu diễn (Định nghĩa 02.8), và xác suất của một dãy hành động phụ thuộc cả chính sách lẫn luật chuyển (Ví dụ 02.8). Tuy nhiên, phần thưởng tức thời không phân biệt được hai chính sách trên mê cung, nên chưa có cách nói chính sách nào tốt hơn.
+Chính sách là một phân phối trên biểu diễn (Định nghĩa 02.8), và xác suất của một dãy hành động phụ thuộc cả chính sách lẫn luật chuyển (Ví dụ 02.8). Tuy nhiên, phần thưởng tức thời không phân biệt được hai chính sách trên mê cung, nên chúng ta chưa có tiêu chí để nói chính sách nào tốt hơn.
 
 <!-- note-topic-id: lec-02-part-05 -->
 ## 4. Lợi tức, hàm giá trị và hàm động lực
 
-Trên mê cung $8\times8$, tại $(4,1)$, bước Đông và bước Nam đều nhận $-1$. Nếu sau đó tác tử theo chính sách của hình ở Mục 3, bước Đông dẫn tới $\mathrm G$ sau thêm 10 bước, còn bước Nam vào ngõ cụt $(4,2)$, quay về $(4,1)$ rồi mới đi tiếp, tốn thêm hai bước. Để biến nhận xét này thành phép so sánh, chúng ta cần:
+Trên mê cung $8\times8$, tại $(4,1)$, bước Đông và bước Nam đều nhận $-1$. Nếu sau đó tác tử theo chính sách mũi tên, bước Đông dẫn tới $\mathrm G$ sau thêm 10 bước, còn bước Nam vào ngõ cụt $(4,2)$, quay về $(4,1)$ rồi mới đi tiếp, tốn thêm hai bước. Để biến nhận xét này thành phép so sánh, chúng ta cần:
 
 - quy một chuỗi phần thưởng về một số, kèm lý do chọn trọng số theo thời gian;
 - lấy trung bình số đó khi có yếu tố ngẫu nhiên;
@@ -572,7 +562,7 @@ Chuỗi đầu vẫn được ưu tiên với mọi $r$.
 Bộ trọng số thứ ba dương và không tăng, nhưng tỉ số giữa hai trọng số liên tiếp không cố định ($0{,}5$ rồi $1$), và điều đó làm thứ tự đổi khi chuỗi bị đẩy lùi một bước.
 
 ::: definition Định nghĩa 02.10 (Lợi ích cộng và ưu tiên dừng)
-Cho dãy trọng số $(w_i)_{i\ge1}$ dùng chung cho mọi độ dài chuỗi. Với chuỗi phần thưởng hữu hạn $\sigma=(\sigma_1,\dots,\sigma_n)\in\mathbb R^n$, $n\ge1$, **lợi ích cộng** là
+Cho dãy trọng số $(w_i)_{i\ge1}$ dùng chung cho mọi độ dài chuỗi. Với chuỗi phần thưởng hữu hạn $\sigma=(\sigma_1,\dots,\sigma_n)\in\mathbb R^n$, $n\ge1$, **lợi ích cộng** (additive utility) là
 $$
 U(\sigma)=\sum_{i=1}^{n}w_i\sigma_i ,
 \tag{4.1}
@@ -650,9 +640,9 @@ Các giả thiết của định lý có vai trò khác nhau.
 - **Không tăng chỉ dùng để có $\gamma\le1$.** Trọng số $w_i=2^{i-1}$ thỏa (4.2) theo đúng Bước 3; bỏ giả thiết này, kết luận còn $\gamma>0$.
 - **Tính dương có thể bỏ.** Không có nó, Bước 1–2 vẫn cho $w_i=\gamma^{i-1}$ với $\gamma=w_2$; từ $w_3\le w_2$ có $\gamma^2\le\gamma$, tức $0\le\gamma\le1$. Trường hợp $\gamma=0$, trọng số $(1,0,0,\dots)$, không cho ưu tiên dừng: $(2,0)\succ(1,1)$ nhưng sau khi thêm $r$ cả hai có lợi ích $r$. Vậy vẫn có $\gamma>0$.
 
-Tổng không chiết khấu của Bài 01 là trường hợp $\gamma=1$ của cùng họ trọng số.
+Với chuỗi ngẫu nhiên, so sánh bằng kỳ vọng của lợi ích là một lựa chọn mô hình. Ví dụ: lựa chọn thứ nhất cho chắc chắn chuỗi $(2)$, kỳ vọng lợi ích $2$; lựa chọn thứ hai cho chuỗi $(0)$ hoặc $(3)$, mỗi chuỗi với xác suất $0{,}5$, kỳ vọng lợi ích $1{,}5$; nếu so sánh bằng kỳ vọng của lập phương lợi ích thì thứ tự đảo ngược, $8$ so với $13{,}5$.
 
-**Trong thực hành.** Các bài thực hành CartPole (Bài 04), Lunar Lander (Bài 05–06) và Flappy Bird (Bài 07) đều dùng một hệ số $\gamma=0{,}99$ cho mọi bước, tức trọng số hình học của (4.3). Trọng số giảm theo cấp số nhân: $0{,}99^{100}\approx0{,}37$, và với bước dài $0{,}02$ giây của Lunar Lander, phần thưởng nhận sau $2$ giây mô phỏng chỉ còn trọng số khoảng $0{,}37$.
+**Trong thực hành.** Các bài thực hành CartPole (Bài 04), Lunar Lander (Bài 05–06) và Flappy Bird (Bài 07) đều dùng một hệ số $\gamma=0{,}99$ cho mọi bước, tức trọng số hình học của (4.3). Trọng số giảm theo cấp số nhân: với bước dài $0{,}02$ giây của Lunar Lander, phần thưởng nhận sau $2$ giây mô phỏng, tức $100$ bước, có trọng số $0{,}99^{100}\approx0{,}37$.
 
 <!-- note-topic-id: lec-02-topic-08 -->
 ### 4.2 Lợi tức chiết khấu
@@ -685,18 +675,20 @@ G_t=\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}.
 $$
 :::
 
-Số hạng đầu của (4.5) là $R_{t+1}$, phần thưởng của $A_t$; trọng số của phần thưởng thứ $k+1$ sau $t$ là $\gamma^k$, đúng dạng (4.3). Ví dụ 02.10 là (4.5) với $t=13$, $T=16$. Quy ước $G_T=0$ nói rằng sau khi kết thúc không còn phần thưởng; $R_T$ đã nằm trong $G_{T-1}$. Sutton và Barto (2018, §3.4, trang 57) hợp nhất hai trường hợp bằng cách coi trạng thái kết thúc (terminal state) là trạng thái hấp thụ (absorbing state), chỉ chuyển về chính nó với phần thưởng $0$.
+Số hạng đầu của (4.5) là $R_{t+1}$, phần thưởng của $A_t$; trọng số của phần thưởng thứ $k+1$ sau $t$ là $\gamma^k$, đúng dạng (4.3). Ví dụ 02.10 là (4.5) với $t=13$, $T=16$. Quy ước $G_T=0$ nói rằng sau khi kết thúc không còn phần thưởng; $R_T$ đã nằm trong $G_{T-1}$. Sutton và Barto (2018, §3.4, trang 57) hợp nhất hai trường hợp bằng cách coi trạng thái kết thúc là trạng thái hấp thụ (absorbing state), chỉ chuyển về chính nó với phần thưởng $0$.
 
 Ý nghĩa của $\gamma$:
 
 - $\gamma=1$: (4.5) là lợi tức của Định nghĩa 01.8;
-- $\gamma=0$: $G_t=R_{t+1}$, tác tử được gọi là cận thị (myopic) (Sutton và Barto, 2018, §3.3, trang 55); trường hợp này nằm ngoài kết luận của Định lý 02.11: với $\gamma=0$, hai chuỗi có cùng phần thưởng đầu luôn ngang nhau, nên ưu tiên không dừng;
+- $\gamma=0$: $G_t=R_{t+1}$, tác tử được gọi là cận thị (myopic; Sutton và Barto, 2018, §3.3, trang 55); ưu tiên khi đó không dừng, nên trường hợp này nằm ngoài kết luận của Định lý 02.11;
 - $\gamma$ gần $1$: phần thưởng xa được tính gần ngang phần thưởng gần;
 - $\gamma<1$: tổng mọi trọng số là $\sum_{k\ge0}\gamma^k=1/(1-\gamma)$, bằng tổng trọng số của $1/(1-\gamma)$ bước không chiết khấu; số này gọi là chân trời hiệu dụng (effective horizon), bằng $100$ bước khi $\gamma=0{,}99$.
 
 Khi $\gamma=1$ và một quỹ đạo không kết thúc, ta quy ước lợi tức của nó là giới hạn của tổng riêng khi giới hạn tồn tại, có thể bằng $\pm\infty$.
 
 Nhầm lẫn thường gặp là coi $G_t$ là một con số gắn với trạng thái $S_t$; $G_t$ là biến ngẫu nhiên phụ thuộc toàn bộ phần còn lại của lượt.
+
+Phần kiểm tra lại của Ví dụ 02.10 tính lợi tức ngược từ $G_{16}=0$, mỗi bước theo $G_t=R_{t+1}+0{,}5\,G_{t+1}$. Mệnh đề sau phát biểu hệ thức đó cho mọi $t$, cùng chặn của lợi tức khi phần thưởng bị chặn.
 
 ::: proposition Mệnh đề 02.13 (Hệ thức truy hồi và chặn của lợi tức)
 **Giả thiết.** $G_t$ theo Định nghĩa 02.12.
@@ -741,7 +733,7 @@ Bất đẳng thức đầu là bất đẳng thức tam giác, bất đẳng th
 **Bước 3 (truy hồi khi tiếp diễn).** Khi (4.6) hội tụ tuyệt đối, được tách số hạng đầu và đặt $\gamma$ ra ngoài phần còn lại như ở Bước 1. $\square$
 :::
 
-Phần (a) mở rộng Mệnh đề 01.9 sang $\gamma<1$; phần (b) là lý do Định nghĩa 02.12 đòi $\gamma<1$ và phần thưởng bị chặn cho nhiệm vụ tiếp diễn.
+Phần (a) mở rộng Mệnh đề 01.9 sang $\gamma<1$; phần (b) là lý do Định nghĩa 02.12 đòi $\gamma<1$ và phần thưởng bị chặn cho nhiệm vụ tiếp diễn. Bỏ chặn phần thưởng thì (4.6) có thể phân kỳ dù $\gamma<1$: với $\gamma=0{,}5$ và $R_{j}=2^{j}$ với mọi $j\ge1$, mọi số hạng $\gamma^kR_{t+k+1}=0{,}5^k\,2^{t+k+1}$ bằng $2^{t+1}$, không tiến về $0$, nên (4.6) phân kỳ.
 
 **Trong thực hành.** CartPole (Bài 04) trả $+1$ mỗi bước và dùng $\gamma=0{,}99$, nên theo (4.7) mọi lợi tức không vượt $1/(1-0{,}99)=100$. Lunar Lander (Bài 05–06) cắt lượt ở bước $1\,000$; phần lợi tức bị bỏ sau điểm cắt là $\gamma^{1000-t}G_{1000}$. Phần này không quan sát được; nó chỉ nhỏ khi $t$ còn xa điểm cắt, và với $t$ gần điểm cắt thì có trọng số gần $1$. Coi phần thiếu bằng $0$ làm lợi tức quan sát được lệch khỏi $G_t$, nên ước lượng Monte Carlo trong notebook Bài 05 bỏ các lượt bị cắt, còn sai phân thời gian (temporal difference, TD) vẫn dùng các mẫu chuyển của chúng.
 
@@ -750,7 +742,7 @@ Phần (a) mở rộng Mệnh đề 01.9 sang $\gamma<1$; phần (b) là lý do 
 
 Khi chính sách ngẫu nhiên (Ví dụ 02.8) hoặc môi trường ngẫu nhiên, cùng một ô xuất phát cho nhiều quỹ đạo, và $G_t$ là biến ngẫu nhiên.
 
-**Câu hỏi.** Tại sao giá trị của một trạng thái phải định nghĩa bằng kỳ vọng của lợi tức? Ví dụ sau trả lời trên một môi trường nhỏ (bài giảng gốc, trang 22).
+**Câu hỏi.** Khi lợi tức là biến ngẫu nhiên, con số nào đại diện cho một trạng thái? Ví dụ sau xét câu hỏi này trên một môi trường nhỏ (bài giảng gốc, trang 22).
 
 ::: example Ví dụ 02.11 (Môi trường hai nhánh)
 **Dữ kiện.** Từ trạng thái $s$, dưới một chính sách cố định, môi trường chọn ngẫu nhiên một trong hai nhánh, mỗi nhánh với xác suất $0{,}5$: nhánh ngắn kết thúc sau $3$ bước, nhánh dài sau $5$ bước. Mỗi bước nhận $-1$; $\gamma=1$.
@@ -762,7 +754,7 @@ Khi chính sách ngẫu nhiên (Ví dụ 02.8) hoặc môi trường ngẫu nhi�
 **Kiểm tra lại.** $-4$ nằm giữa $-5$ và $-3$, bằng trung bình cộng của chúng vì hai xác suất bằng nhau.
 :::
 
-Tác tử không chọn được nhánh: sự ngẫu nhiên nằm ở môi trường, nên số đo của trạng thái phải lấy trung bình trên những gì môi trường có thể làm, đúng như giả thuyết phần thưởng.
+Tác tử không chọn được nhánh: sự ngẫu nhiên nằm ở môi trường, nên số đo của trạng thái phải lấy trung bình trên những gì môi trường có thể làm, đúng mục tiêu mà giả thuyết phần thưởng (Nhận xét 01.10) đặt ra: làm lớn nhất kỳ vọng của tổng phần thưởng.
 
 <!-- note-topic-id: lec-02-topic-10 -->
 ### 4.4 Hàm giá trị trạng thái
@@ -797,27 +789,32 @@ Mỗi giả thiết có vai trò riêng.
 - **Bỏ tính dừng.** Với hạn chót cố định và trạng thái là ô, lợi tức kỳ vọng từ cùng một ô dưới cùng một chính sách phụ thuộc thời gian còn lại, nên $\mathbb E_\pi[G_t\mid S_t=s]$ phụ thuộc $t$; hành động tốt ở ô đó cũng có thể đổi theo thời gian còn lại (Nhận xét 02.15).
 - **Bỏ kỳ vọng hữu hạn.** Nhận xét 02.15 cho một môi trường kết thúc với xác suất $1$ mà $\mathbb E[T]=\infty$.
 
-Với $\gamma=1$, Định nghĩa 01.12 cho giá trị trên lịch sử $v_\pi(h)$; với $\gamma<1$, thay lợi tức trong định nghĩa đó bằng lợi tức chiết khấu. Dưới tính Markov và tính dừng, với chính sách trên trạng thái, $v_\pi(h)$ của mọi lịch sử khả hữu $h$ chỉ phụ thuộc trạng thái cuối $s$ của $h$ và bằng $v_\pi(s)$. Đây là dạng tổng quát của Nhận xét 01.19, nơi quan sát đầy đủ, đối thủ chỉ phụ thuộc thế cờ và chính sách chỉ phụ thuộc thế cờ cho $v_\pi(h)=v_\pi(s)$ trong Tic-tac-toe; ba điều kiện đó ứng với ba giả thiết đầu của Định nghĩa 02.14. Khác $v_\pi(h)$, $v_\pi(s)$ xác định cả ở trạng thái mà không lịch sử khả hữu nào đi tới. Tóm lại, lợi tức thuộc một lượt, còn giá trị thuộc một trạng thái và một chính sách.
+Với $\gamma=1$, Định nghĩa 01.12 cho giá trị trên lịch sử $v_\pi(h)$; với $\gamma<1$, thay lợi tức trong định nghĩa đó bằng lợi tức chiết khấu. Dưới tính Markov và tính dừng, với chính sách trên trạng thái, $v_\pi(h)$ của mọi lịch sử khả hữu $h$ chỉ phụ thuộc trạng thái cuối $s$ của $h$ và bằng $v_\pi(s)$.
+
+Đây là dạng tổng quát của Nhận xét 01.19, nơi quan sát đầy đủ, đối thủ chỉ phụ thuộc thế cờ và chính sách chỉ phụ thuộc thế cờ cho $v_\pi(h)=v_\pi(s)$ trong Tic-tac-toe; ba điều kiện đó ứng với ba giả thiết đầu của Định nghĩa 02.14.
+
+Tóm lại, lợi tức thuộc một lượt, còn giá trị thuộc một trạng thái và một chính sách.
 
 ::: remark Nhận xét 02.15 (Kỳ vọng hữu hạn và hạn chót)
 - Với $\gamma<1$ và phần thưởng bị chặn, kỳ vọng hữu hạn theo (4.7).
-- Với $\gamma=1$, phần thưởng bị chặn và $\mathbb E_\pi[T\mid S_0=s]<\infty$ đủ để kỳ vọng hữu hạn, theo Mệnh đề 02.13(c). Kết thúc với xác suất $1$ chưa đủ: nếu trạng thái $n$ bằng số bước đã đi cộng $1$, xuất phát tại $n=1$, và từ $n$ lượt kết thúc với xác suất $1/(n+1)$, mỗi bước nhận $-1$, thì $\Pr(T>k\mid S_0=1)=\prod_{n=1}^{k}\frac{n}{n+1}=\frac1{k+1}\to0$ nhưng $\mathbb E[T\mid S_0=1]=\sum_{k\ge0}\frac1{k+1}=\infty$. Phản ví dụ cần vô hạn trạng thái: với hữu hạn trạng thái, môi trường Markov và dừng, chính sách dừng, nếu từ mọi trạng thái đạt được lượt kết thúc với xác suất $1$, thì mỗi trạng thái $s$ có $N_s$ bước với xác suất kết thúc dương; lấy $N=\max_sN_s$ và $\varepsilon$ là nhỏ nhất của các xác suất đó, ta có $N$ và $\varepsilon>0$ để từ mọi trạng thái lượt kết thúc trong $N$ bước với xác suất ít nhất $\varepsilon$, nên $\Pr(T-t>kN)\le(1-\varepsilon)^k$.
+- Với $\gamma=1$, phần thưởng bị chặn và $\mathbb E_\pi[T\mid S_0=s]<\infty$ đủ để kỳ vọng hữu hạn, theo Mệnh đề 02.13(c). Kết thúc với xác suất $1$ chưa đủ: nếu trạng thái $n$ bằng số bước đã đi cộng $1$, xuất phát tại $n=1$, và từ $n$ lượt kết thúc với xác suất $1/(n+1)$, mỗi bước nhận $-1$, thì $\Pr(T>k\mid S_0=1)=\prod_{n=1}^{k}\frac{n}{n+1}=\frac1{k+1}\to0$ nhưng $\mathbb E[T\mid S_0=1]=\sum_{k\ge0}\frac1{k+1}=\infty$.
+- Phản ví dụ cần vô hạn trạng thái: với hữu hạn trạng thái, môi trường Markov và dừng, chính sách dừng, nếu từ mọi trạng thái đạt được lượt kết thúc với xác suất $1$, thì mỗi trạng thái $s$ có $N_s$ bước với xác suất kết thúc dương; lấy $N=\max_sN_s$ và $\varepsilon$ là nhỏ nhất của các xác suất đó, ta có $N$ và $\varepsilon>0$ để từ mọi trạng thái lượt kết thúc trong $N$ bước với xác suất ít nhất $\varepsilon$, nên $\Pr(T-t>kN)\le(1-\varepsilon)^k$.
 - Nếu lượt bị cắt ở một hạn chót cố định, hành động tốt ở cùng một ô có thể phụ thuộc thời gian còn lại; Russell và Norvig (2020, §17.1.1, trang 565) gọi chính sách khi đó là không dừng. Muốn dùng (4.8), cần đưa thời gian còn lại vào trạng thái.
 :::
 
 ::: example Ví dụ 02.12 (Giá trị của chính sách trên mê cung $8\times8$)
-**Dữ kiện.** Mê cung $8\times8$, chính sách xác định của hình ở Mục 3, luật chuyển tất định, $-1$ mỗi bước kể cả bước vào $\mathrm G$, $\gamma=1$, $v_\pi(\mathrm G)=0$.
+**Dữ kiện.** Mê cung $8\times8$, chính sách mũi tên, luật chuyển tất định, $-1$ mỗi bước kể cả bước vào $\mathrm G$, $\gamma=1$, $v_\pi(\mathrm G)=0$.
 
 **Tính.** Theo Định nghĩa 02.14, $v_\pi(s)$ tính trên lượt xuất phát tại $s$. Chính sách và môi trường đều tất định, nên từ mỗi ô xuất phát có đúng một quỹ đạo và $v_\pi(s)$ bằng âm số bước tới $\mathrm G$ theo mũi tên: $v_\pi((0,2))=-16$, $v_\pi((7,6))=-1$. Từ ngõ cụt $(4,2)$, mũi tên Bắc về $(4,1)$ rồi 11 bước nữa, nên $v_\pi((4,2))=-12$. Từ $(1,5)$, mũi tên dẫn qua $(1,6)$, $(2,6)$, $(3,6)$, $(3,5)$, $(3,4)$, $(2,4)$, $(2,3)$, $(1,3)$ về $(1,2)$ rồi theo đường chính, nên $v_\pi((1,5))=-24$. Lượt xuất phát tại $(0,2)$ không ghé $(4,2)$ hay $(1,5)$; hai giá trị này có nghĩa nhờ quy ước xuất phát tại $s$.
 
 **Kiểm tra lại.** Mỗi ô $s\ne\mathrm G$ thỏa $v_\pi(s)=-1+v_\pi(s')$ với $s'$ là ô mũi tên chỉ tới, chẳng hạn $-1+(-11)=-12$ tại $(4,2)$; đây là Mệnh đề 02.13(a) với $\gamma=1$.
 :::
 
-![Mê cung tám hàng tám cột, mỗi ô đi được ghi giá trị của chính sách ở Mục 3, với gamma bằng 1 và thưởng âm một mỗi bước. Dọc đường chính: (0,2) là −16, (1,2) là −15, (1,1) là −14, hàng 1 từ (2,1) tới (6,1) lần lượt −13, −12, −11, −10, −9; (6,2) là −8, (6,3) là −7, (5,3) là −6, (5,4) là −5, (5,5) là −4, (6,5) là −3, (6,6) là −2, (7,6) là −1. Ngoài đường chính: (4,2) là −12; (1,3) là −16, (2,3) là −17, (2,4) là −18, (3,4) là −19, (3,5) là −20, (3,6) là −21, (2,6) là −22, (4,6) là −22, (1,6) là −23, (1,5) là −24.](img/lec-02/source-values.svg)
+![Mê cung tám hàng tám cột, mỗi ô đi được ghi giá trị của chính sách mũi tên, với gamma bằng 1 và thưởng âm một mỗi bước. Dọc đường chính: (0,2) là −16, (1,2) là −15, (1,1) là −14, hàng 1 từ (2,1) tới (6,1) lần lượt −13, −12, −11, −10, −9; (6,2) là −8, (6,3) là −7, (5,3) là −6, (5,4) là −5, (5,5) là −4, (6,5) là −3, (6,6) là −2, (7,6) là −1. Ngoài đường chính: (4,2) là −12; (1,3) là −16, (2,3) là −17, (2,4) là −18, (3,4) là −19, (3,5) là −20, (3,6) là −21, (2,6) là −22, (4,6) là −22, (1,6) là −23, (1,5) là −24.](img/lec-02/source-values.svg)
 
 Bảng giá trị của bài giảng gốc (trang 26) là Ví dụ 02.12 cho mọi ô: dọc đường chính, giá trị tăng $1$ sau mỗi bước, từ $-16$ tới $-1$; ở nhánh dưới, các ô từ $(2,3)$ trở đi có giá trị nhỏ hơn $-16$, vì phải vòng qua cả nhánh để về đường chính. Tại $(4,1)$, bước Đông cho $-1+v_\pi((5,1))=-11$, bước Nam cho $-1+v_\pi((4,2))=-13$.
 
-**Trong thực hành.** Bài thực hành Bài 05 ước lượng $v_\pi$ trên Lunar Lander bằng một bảng $V(s)$ theo ô của quan sát đã chia, cập nhật từ các lợi tức quan sát được. Giả thiết Markov của Định nghĩa 02.14 không thỏa trên ô gộp; trong notebook, Monte Carlo và sai phân thời gian theo lô cho hai nghiệm khác nhau trên cùng dữ liệu, và ô gộp không Markov là một nguyên nhân có thể của khác biệt đó.
+**Trong thực hành.** Bài thực hành Bài 05 ước lượng $v_\pi$ trên Lunar Lander bằng một bảng $V(s)$ theo ô của quan sát đã chia, cập nhật từ các lợi tức quan sát được. Giả thiết Markov của Định nghĩa 02.14 không thỏa trên ô gộp; trong notebook, Monte Carlo và sai phân thời gian theo lô (batch TD) cho hai nghiệm khác nhau trên cùng dữ liệu, và ô gộp không Markov là một nguyên nhân có thể của khác biệt đó.
 
 <!-- note-topic-id: lec-02-topic-11 -->
 ### 4.5 Hàm động lực
@@ -843,21 +840,28 @@ $$
 xác định với $s\in\mathcal S$ chưa kết thúc, $a\in\mathcal A(s)$, $s'\in\mathcal S^+$, $r\in\mathcal R$, và thỏa $p(s',r\mid s,a)\ge0$, $\sum_{s'}\sum_{r}p(s',r\mid s,a)=1$ với mọi $s,a$.
 :::
 
-Vế phải của (4.9) không chứa $t$ và lịch sử nhờ tính dừng và tính Markov; với trạng thái là tọa độ trong Ví dụ 02.6, vế phải không xác định được từ $s$ và $a$. Tổng bằng $1$ lấy trên cặp $(s',r)$, không riêng trên $s'$. Từ $p$ suy ra xác suất chuyển $p(s'\mid s,a)=\sum_rp(s',r\mid s,a)$ và thưởng kỳ vọng một bước $r(s,a)=\sum_{s'}\sum_rr\,p(s',r\mid s,a)$.
+Vế phải của (4.9) không chứa $t$ và lịch sử nhờ tính dừng và tính Markov; với trạng thái là tọa độ trong Ví dụ 02.6, vế phải không xác định được từ $s$ và $a$. Tổng bằng $1$ lấy trên cặp $(s',r)$, không riêng trên $s'$. Từ $p$ suy ra xác suất chuyển (transition probability) và thưởng kỳ vọng một bước (expected reward):
+$$
+\begin{aligned}
+p(s'\mid s,a)&=\sum_rp(s',r\mid s,a),\\
+r(s,a)&=\sum_{s'}\sum_rr\,p(s',r\mid s,a).
+\end{aligned}
+$$
+Công thức thứ nhất cộng xác suất của mọi cặp có cùng trạng thái kế tiếp $s'$; công thức thứ hai lấy trung bình phần thưởng, với trọng số là xác suất của từng cặp $(s',r)$. Trong Ví dụ 02.13, $p((1,2),-1\mid(0,2),\text{Đông})=1$, nên $p((1,2)\mid(0,2),\text{Đông})=1$ và $r((0,2),\text{Đông})=-1$.
 
-**Hàm động lực và mô hình.** Hàm động lực là mô hình đúng của môi trường. Mô hình theo nghĩa của Định nghĩa 01.14, thứ tác tử mang theo để lập kế hoạch, nói chung là một xấp xỉ $\hat p$ của $p$ (trùng $p$ khi người thiết kế cung cấp đúng), và có thể sai. Hàm động lực khác hàm giá trị ở chỗ nó dự báo một bước.
+**Hàm động lực và mô hình.** Hàm động lực là mô hình đúng của môi trường. Mô hình theo nghĩa của Định nghĩa 01.14, thứ tác tử mang theo để lập kế hoạch, nói chung là một xấp xỉ $\hat p$ của $p$ (trùng $p$ khi người thiết kế cung cấp đúng), và có thể sai.
 
 **Hàm động lực không phụ thuộc chính sách.** Với chính sách chỉ dùng trạng thái, tức $X_t=S_t$, $p$ không phụ thuộc chính sách; lập luận có hai bước:
 
 - **Bước 1.** Trong tỉ số $\Pr(H_t=h,A_t=a,S_{t+1}=s',R_{t+1}=r)/\Pr(H_t=h,A_t=a)$, các thừa số $\pi(a_k\mid s_k)$, $k\le t$, chỉ phụ thuộc $h$ và $a$ nên triệt tiêu, do đó vế trái của (2.3) do môi trường quyết định.
 - **Bước 2.** Chính sách chọn đều các hành động hợp lệ đặt xác suất dương lên mọi lịch sử khả hữu; áp (2.3) cho chính sách này, vế trái nhận cùng một giá trị trên mọi $h$ kết thúc tại $s$, nên $p$ như nhau với mọi chính sách trên trạng thái.
 
-Nếu chính sách dùng thêm thông tin ngoài trạng thái, kết luận có thể sai. Xét cấu hình $(s,z)$, trong đó $z$ là một bit nhận $0$ hoặc $1$ với xác suất $0{,}5$, rút độc lập ở mỗi bước; tác tử quan sát được $z$, chọn $a\in\{0,1\}$ và nhận phần thưởng $z\cdot a$. Khi chọn $a=1$, xác suất nhận thưởng $1$ bằng $0{,}5$ dưới chính sách chọn đều, nhưng bằng $1$ dưới chính sách chọn $1$ đúng khi $z=1$.
+Nếu chính sách dùng thêm thông tin ngoài trạng thái, kết luận có thể sai. Xét cấu hình $(s,z)$, trong đó $z$ là một bit nhận $0$ hoặc $1$ với xác suất $0{,}5$, rút độc lập ở mỗi bước; tác tử quan sát được $z$, chọn $a\in\{0,1\}$ và nhận phần thưởng $z\cdot a$. Trạng thái được chọn là $s$, không chứa $z$. Khi chọn $a=1$, xác suất nhận thưởng $1$ bằng $0{,}5$ dưới chính sách chọn đều, nhưng bằng $1$ dưới chính sách chọn $1$ đúng khi $z=1$.
 
-**Trong thực hành.** Quy hoạch động (dynamic programming) ở Bài 04 cần $p$. Trên CartPole, phép chia ô không cung cấp $p$, nên trong notebook Bài 04, $\hat p(s'\mid s,a)$ và $\hat r(s,a)$ được ước lượng bằng cách đặt bộ mô phỏng vào nhiều trạng thái liên tục trong mỗi ô; kết quả chịu cả sai số ước lượng lẫn sai số do gộp ô.
+**Trong thực hành.** Quy hoạch động (dynamic programming) ở Bài 04 cần $p$. Trên CartPole, phép chia ô không cung cấp $p$, nên notebook Bài 04 ước lượng $\hat p(s'\mid s,a)$ và $\hat r(s,a)$ bằng cách đặt bộ mô phỏng vào nhiều trạng thái liên tục trong mỗi ô; kết quả chịu cả sai số ước lượng lẫn sai số do gộp ô.
 
 ::: remark Nhận xét 02.17 (Dự đoán và điều khiển)
-Bài giảng gốc (trang 24) phân biệt hai bài toán. **Dự đoán** (prediction) là đánh giá một chính sách cố định, tức tính hoặc ước lượng $v_\pi$, như Ví dụ 02.12. **Điều khiển** (control) là tìm hoặc cải thiện chính sách; so sánh $-11$ với $-13$ tại $(4,1)$ rồi đặt mũi tên tại ô đó theo hành động tốt hơn (ở đây giữ Đông) là một bước điều khiển. Biết $p$ chưa đồng nghĩa với biết chính sách tốt nhất; vẫn phải giải bài toán chọn trên $p$.
+Có hai bài toán cần phân biệt (bài giảng gốc, trang 24). **Dự đoán** (prediction) là đánh giá một chính sách cố định, tức tính hoặc ước lượng $v_\pi$, như Ví dụ 02.12. **Điều khiển** (control) là tìm hoặc cải thiện chính sách; so sánh $-11$ với $-13$ tại $(4,1)$ rồi đặt mũi tên tại ô đó theo hành động tốt hơn (ở đây giữ Đông) là một bước điều khiển. Biết $p$ chưa đồng nghĩa với biết chính sách tốt nhất; tác tử vẫn phải giải bài toán chọn hành động trên $p$.
 :::
 
 ::: exercise Bài tập 02.5 (Lợi tức chiết khấu và hệ thức truy hồi)
@@ -915,7 +919,7 @@ $p((1,2),-1\mid(0,2),\text{Đông})=0{,}8$ và $p((0,2),-1\mid(0,2),\text{Đông
 **Kiểm tra lại.** $0{,}8+0{,}2=1$, đúng điều kiện tổng của Định nghĩa 02.16.
 :::
 
-Lợi tức chiết khấu (Định nghĩa 02.12), hàm giá trị (Định nghĩa 02.14) và hàm động lực (Định nghĩa 02.16) đều nhận phần thưởng như một dữ kiện cho trước, chẳng hạn $-1$ mỗi bước trên mê cung. Tuy nhiên, chưa có kết quả nào cho biết tác tử tối ưu làm gì khi người thiết kế đổi phần thưởng.
+Ưu tiên dừng buộc trọng số hình học (Định lý 02.11), nên lợi tức là tổng chiết khấu (Định nghĩa 02.12) với hệ thức truy hồi và chặn (Mệnh đề 02.13); kỳ vọng của lợi tức dưới một chính sách cố định là hàm giá trị (Định nghĩa 02.14), hàm động lực (Định nghĩa 02.16) dự báo một bước, và Nhận xét 02.17 tách dự đoán khỏi điều khiển. Mọi đối tượng này nhận phần thưởng như một dữ kiện cho trước, chẳng hạn $-1$ mỗi bước trên mê cung. Tuy nhiên, chưa có kết quả nào cho biết tác tử tối ưu làm gì khi người thiết kế đổi phần thưởng.
 
 <!-- note-topic-id: lec-02-part-06 -->
 ## 5. Thiết kế phần thưởng
@@ -927,7 +931,7 @@ Trên mê cung $8\times8$, phần thưởng $-1$ mỗi bước làm cực đại
 <!-- note-topic-id: lec-02-topic-12 -->
 ### 5.1 Mê cung đích–hố
 
-Về mặt ý tưởng, mỗi điểm kết thúc là một "gói" gồm phần thưởng khi tới đó và tổng chi phí của đường đi tới đó; tác tử tối ưu chọn gói có lợi tức lớn nhất, nên thay đổi chi phí có thể đổi gói được chọn. Hai ví dụ sau tính các "gói" đó trên một hành lang nhỏ.
+Về mặt ý tưởng, mỗi điểm kết thúc đi kèm phần thưởng khi tới đó và tổng chi phí của đường tới đó; tác tử tối ưu chọn điểm kết thúc có lợi tức lớn nhất, nên thay đổi chi phí có thể đổi lựa chọn. Để làm rõ, xem hai ví dụ sau trên một hành lang nhỏ.
 
 ::: example Ví dụ 02.14 (Mê cung đích–hố)
 **Dữ kiện.** Một hành lang khép kín gồm mười nút. Hàng trên có năm nút từ trái sang phải: xuất phát $\mathrm S$, một nút trống, hố $\mathrm H$, một nút trống, đích $\mathrm G$. Hàng dưới có năm nút trống; nút đầu trái nối với $\mathrm S$, nút đầu phải nối với $\mathrm G$. Mỗi đoạn nối hai nút kề nhau là một bước. Tại mỗi nút chưa kết thúc, tác tử đi sang một nút kề, có thể quay lại; chuyển là tất định. $\mathrm H$ và $\mathrm G$ là trạng thái kết thúc.
@@ -941,7 +945,7 @@ Về mặt ý tưởng, mỗi điểm kết thúc là một "gói" gồm phần 
 
 ![Hành lang khép kín hình chữ nhật. Hàng trên từ trái sang phải: S, một nút trống, hố H đánh dấu chéo, một nút trống, đích G ghi Đích +10. Hàng dưới có năm nút trống, nối với S ở đầu trái và với G ở đầu phải. Đoạn từ S tới H được tô nét đứt, ghi 2 bước tới H; vòng dưới ghi 6 bước tới G. Chú thích: mỗi đoạn nối hai nút là một bước; đến H hoặc G thì kết thúc.](img/lec-02/incentive-maze.svg)
 
-Trên hình, mỗi đoạn nối giữa hai nút là một bước, bất kể độ dài nét vẽ.
+Trên hình, đoạn nét đứt là đường $2$ bước từ $\mathrm S$ vào $\mathrm H$, vòng dưới là đường $6$ bước tới $\mathrm G$; số bước đếm theo đoạn nối, không theo độ dài nét vẽ.
 
 ::: example Ví dụ 02.15 (Lợi tức của hai đường)
 **Dữ kiện.** Mê cung đích–hố: đường ngắn nhất tới $\mathrm G$ dài $6$ bước, tới $\mathrm H$ dài $2$ bước; $-c$ mỗi bước, thêm $+10$ khi vào $\mathrm G$; $\gamma=1$.
@@ -980,7 +984,7 @@ $$
 c^*=\frac{10+c_{\mathrm H}}{4},
 \tag{5.1}
 $$
-khi $c<c^*$ mọi chính sách tối ưu kết thúc tại $\mathrm G$ với xác suất $1$; khi $c>c^*$ mọi chính sách tối ưu kết thúc tại $\mathrm H$ với xác suất $1$; khi $c=c^*$ hai đường ngắn nhất cho cùng lợi tức.
+khi $c<c^*$ mọi chính sách tối ưu (optimal policy) kết thúc tại $\mathrm G$ với xác suất $1$; khi $c>c^*$ mọi chính sách tối ưu kết thúc tại $\mathrm H$ với xác suất $1$; khi $c=c^*$ hai đường ngắn nhất cho cùng lợi tức.
 
 **Điều kiện áp dụng.** Chi phí mỗi bước không âm, $\gamma=1$, chuyển tất định, tác tử tìm được chính sách tối ưu.
 
@@ -988,7 +992,7 @@ khi $c<c^*$ mọi chính sách tối ưu kết thúc tại $\mathrm G$ với xá
 :::
 
 ::: proof Chứng minh Mệnh đề 02.18
-**Bước 1 (quỹ đạo kết thúc).** Quỹ đạo vào $\mathrm G$ sau $k$ bước có lợi tức $-ck+10$; theo Ví dụ 02.14, $k\ge6$, nên với $c\ge0$ lợi tức không vượt $10-6c$, dấu bằng tại đường $6$ bước. Quỹ đạo vào $\mathrm H$ sau $k\ge2$ bước có lợi tức $-ck-c_{\mathrm H}\le-2c-c_{\mathrm H}$, dấu bằng tại đường $2$ bước.
+**Bước 1 (quỹ đạo kết thúc).** Quỹ đạo vào $\mathrm G$ sau $n$ bước có lợi tức $-cn+10$; theo Ví dụ 02.14, $n\ge6$, nên với $c\ge0$ lợi tức không vượt $10-6c$, dấu bằng tại đường $6$ bước. Quỹ đạo vào $\mathrm H$ sau $n\ge2$ bước có lợi tức $-cn-c_{\mathrm H}\le-2c-c_{\mathrm H}$, dấu bằng tại đường $2$ bước.
 
 **Bước 2 (quỹ đạo không kết thúc).** Tổng riêng sau $n$ bước là $-cn$. Khi $c>0$, giới hạn là $-\infty$; khi $c=0$, giới hạn là $0<10=\max\{10,-c_{\mathrm H}\}$. Trong cả hai trường hợp, lợi tức nhỏ hơn $M$.
 
@@ -1049,11 +1053,15 @@ Dùng (5.1), hoặc so sánh trực tiếp $10-6c$ với $-2c-c_{\mathrm H}$.
 
 ### 5.3 Khuyến khích và chế tài
 
+Ngưỡng (5.1) phụ thuộc hai tham số do người thiết kế đặt: phần thưởng $+10$ ở đích và mức phạt $c_{\mathrm H}$ khi vào hố.
+
 ::: remark Nhận xét 02.20 (Khuyến khích, chế tài và giới hạn của phép so sánh)
-Trong mê cung đích–hố, phần thưởng $+10$ ở đích đóng vai trò khuyến khích, mức phạt $c_{\mathrm H}$ khi vào hố đóng vai trò chế tài. Mệnh đề 02.18 cho thấy tác dụng của chế tài phụ thuộc tương quan với các chi phí khác: với chi phí mỗi bước đủ lớn, hành vi không mong muốn vẫn có lợi tức lớn hơn. Chính sách xã hội và pháp luật cũng dùng lợi ích để làm hành vi phù hợp hấp dẫn hơn và chế tài để làm hành vi vi phạm kém hấp dẫn hơn. Phép so sánh này có giới hạn: mô hình giả định tác tử cực đại một con số duy nhất, còn con người hành động vì cả nghĩa vụ, niềm tin và quan hệ xã hội, và pháp luật còn xét quyền, nghĩa vụ, công bằng.
+Trong mê cung đích–hố, phần thưởng $+10$ ở đích đóng vai trò khuyến khích, mức phạt $c_{\mathrm H}$ khi vào hố đóng vai trò chế tài. Mệnh đề 02.18 cho thấy tác dụng của chế tài phụ thuộc tương quan với các chi phí khác: với chi phí mỗi bước đủ lớn, hành vi không mong muốn vẫn có lợi tức lớn hơn. Chính sách xã hội và pháp luật cũng dùng lợi ích để làm hành vi phù hợp hấp dẫn hơn và chế tài để làm hành vi vi phạm kém hấp dẫn hơn.
+
+Phép so sánh này có giới hạn: mô hình giả định tác tử cực đại một con số duy nhất, còn con người hành động vì cả nghĩa vụ, niềm tin và quan hệ xã hội, và pháp luật còn xét quyền, nghĩa vụ, công bằng.
 :::
 
-Tác tử tối ưu đổi từ đích sang hố tại ngưỡng $c^*=(10+c_{\mathrm H})/4$ (Mệnh đề 02.18), dưới các giả thiết chi phí không âm, $\gamma=1$ và chuyển tất định; khi chuyển ngẫu nhiên, phép so sánh dùng lợi tức kỳ vọng, tức hàm giá trị của Định nghĩa 02.14.
+Dưới các giả thiết $c\ge0$, $\gamma=1$ và chuyển tất định, tác tử tối ưu đổi từ đích sang hố tại ngưỡng $c^*=(10+c_{\mathrm H})/4$ (Mệnh đề 02.18). Tác tử đang học có thể lệch khỏi dự báo này (Nhận xét 02.19), và mức phạt hố có tác dụng tùy tương quan với chi phí mỗi bước (Nhận xét 02.20). Khi chuyển ngẫu nhiên, phép so sánh cần hàm giá trị của Định nghĩa 02.14 thay cho lợi tức của từng đường.
 
 ## Tình huống áp dụng và ứng dụng
 
@@ -1069,9 +1077,25 @@ Tác tử tối ưu đổi từ đích sang hố tại ngưỡng $c^*=(10+c_{\ma
 - $\gamma=0{,}9$;
 - robot nhận mức pin và ô hiện tại.
 
-**Mô hình hóa.** Tác tử là bộ điều khiển; bánh xe, sàn, pin và cơ chế tính phần thưởng thuộc môi trường. Trạng thái $s=(\ell,b)$ với $\ell\in\{0,\dots,3\}$, $b\in\{1,\dots,5\}$, cho $20$ trạng thái chưa kết thúc, cùng hai trạng thái kết thúc. Hàm động lực của Tiến (Định nghĩa 02.16): với $\ell\le2$, $p((\ell+1,b-1),-1\mid(\ell,b),\text{Tiến})=0{,}9$ và $p((\ell,b-1),-1\mid(\ell,b),\text{Tiến})=0{,}1$; với $\ell=3$, $p(\text{đã giao},9\mid(3,b),\text{Tiến})=0{,}9$ và $p((3,b-1),-1\mid(3,b),\text{Tiến})=0{,}1$. Ở mọi $\ell$, trạng thái có $b-1=0$ mà chưa giao là "hết pin". Chính sách $\pi$ luôn chọn Tiến.
+**Mô hình hóa.** Tác tử là bộ điều khiển; bánh xe, sàn, pin và cơ chế tính phần thưởng thuộc môi trường. Trạng thái $s=(\ell,b)$ với $\ell\in\{0,\dots,3\}$, $b\in\{1,\dots,5\}$, cho $20$ trạng thái chưa kết thúc, cùng hai trạng thái kết thúc. Hàm động lực của Tiến (Định nghĩa 02.16) là
+$$
+p(s',r\mid(\ell,b),\text{Tiến})=
+\begin{cases}
+0{,}9 & \ell\le2,\ (s',r)=((\ell+1,b-1),-1),\\
+0{,}1 & \ell\le2,\ (s',r)=((\ell,b-1),-1),\\
+0{,}9 & \ell=3,\ (s',r)=(\text{đã giao},9),\\
+0{,}1 & \ell=3,\ (s',r)=((3,b-1),-1),\\
+0 & \text{với mọi cặp }(s',r)\text{ khác}.
+\end{cases}
+$$
+Ở mọi $\ell$, trạng thái có $b-1=0$ mà chưa giao là "hết pin". Chính sách $\pi$ luôn chọn Tiến.
 
-**Kiểm tra giả thiết.** Nếu trạng thái chỉ là $\ell$, xác suất hết pin phụ thuộc số bước Tiến đã đi: ở ô $2$, sau hai bước thành công còn $3$ đơn vị pin, sau hai lần trượt rồi hai bước thành công chỉ còn $1$. Đưa $b$ vào trạng thái làm mọi xác suất chuyển chỉ phụ thuộc $(\ell,b)$ và hành động, nên tính Markov (Định nghĩa 02.5) thỏa; xác suất trượt được giả định không đổi, nên môi trường dừng. Robot nhận cả $\ell$ và $b$, nên $X_t=S_t$. Phần thưởng bị chặn bởi $R_{\max}=9$ và $\gamma<1$, nên theo (4.7) mọi lợi tức không vượt $90$ về trị tuyệt đối. Bốn giả thiết của Định nghĩa 02.14 thỏa.
+**Kiểm tra giả thiết.** Nếu trạng thái chỉ là $\ell$, xác suất hết pin phụ thuộc số bước Tiến đã đi: ở ô $2$, sau hai bước thành công còn $3$ đơn vị pin, sau hai lần trượt rồi hai bước thành công chỉ còn $1$. Các giả thiết của Định nghĩa 02.14 đều thỏa:
+
+- **$X_t=S_t$.** Robot nhận cả $\ell$ và $b$.
+- **Tính Markov và môi trường dừng.** Đưa $b$ vào trạng thái làm mọi xác suất chuyển chỉ phụ thuộc $(\ell,b)$ và hành động (Định nghĩa 02.5); xác suất trượt được giả định không đổi.
+- **Chính sách dừng.** $\pi$ luôn chọn Tiến, không phụ thuộc $t$.
+- **Kỳ vọng hữu hạn.** Phần thưởng bị chặn bởi $R_{\max}=9$ và $\gamma<1$, nên theo (4.7) mọi lợi tức không vượt $90$ về trị tuyệt đối.
 
 **Áp dụng.** Cần $4$ bước thành công, pin cho tối đa $5$ bước, nên có ba kết cục:
 
@@ -1094,20 +1118,28 @@ $$
 
 **Giới hạn.** Mô hình giả định xác suất trượt không đổi và độc lập giữa các bước, mức tiêu hao pin cố định và chỉ một robot trên hành lang; nới mỗi giả định cần thêm biến vào trạng thái để giữ tính Markov.
 
-**Dẫn ngược lý thuyết.** Định nghĩa 01.1 (ranh giới); Định nghĩa 02.5 (lý do đưa $b$ vào trạng thái); Nhận xét 02.4 (quan sát đầy đủ, và trường hợp chỉ có pin); Định nghĩa 02.8 (chính sách); Định nghĩa 02.12, Mệnh đề 02.13 (lợi tức, chặn); Định nghĩa 02.14 (giá trị); Định nghĩa 02.16 (hàm động lực).
+**Dẫn ngược lý thuyết.**
+
+- Định nghĩa 01.1: ranh giới.
+- Định nghĩa 02.5: lý do đưa $b$ vào trạng thái.
+- Nhận xét 02.4: quan sát đầy đủ, và trường hợp chỉ có pin.
+- Định nghĩa 02.8: chính sách.
+- Định nghĩa 02.12, Mệnh đề 02.13: lợi tức, chặn.
+- Định nghĩa 02.14: giá trị.
+- Định nghĩa 02.16: hàm động lực.
 
 **Kiểm tra lại.** Ba xác suất cộng lại bằng $1$. Kết cục thứ nhất theo hệ thức truy hồi: $G_3=9$, $G_2=-1+0{,}9\cdot9=7{,}1$, $G_1=-1+0{,}9\cdot7{,}1=5{,}39$, $G_0=-1+0{,}9\cdot5{,}39=3{,}851$.
 :::
 
 <!-- note-topic-id: lec-02-topic-14 -->
 ::: application Tình huống 02.2 (Biểu diễn bốn ô kề trên mê cung $8\times8$: giả thiết quan sát đầy đủ không thỏa)
-**Bài toán.** Mê cung $8\times8$ của Ví dụ 02.1: xuất phát $(0,2)$, đích $\mathrm G$ sau bước Đông từ $(7,6)$, đứng yên khi gặp tường hoặc biên, $-1$ mỗi bước, $\gamma=1$. Tác tử chỉ có cảm biến bốn ô kề và dùng luôn quan sát làm biểu diễn, $X_t=O_t$, tức mã bốn ô kề của Ví dụ 02.4. Với tọa độ làm biểu diễn, chính sách ở Mục 3 tới $\mathrm G$ sau $16$ bước, lợi tức $-16$.
+**Bài toán.** Mê cung $8\times8$ của Ví dụ 02.1: xuất phát $(0,2)$, đích $\mathrm G$ sau bước Đông từ $(7,6)$, đứng yên khi gặp tường hoặc biên, $-1$ mỗi bước, $\gamma=1$. Tác tử chỉ có cảm biến bốn ô kề và dùng luôn quan sát làm biểu diễn, $X_t=O_t$, tức mã bốn ô kề của Ví dụ 02.4. Với tọa độ làm biểu diễn, chính sách mũi tên tới $\mathrm G$ sau $16$ bước, lợi tức $-16$.
 
 **Giả thiết bị vi phạm.** Mã bốn ô kề cho quan sát một phần (Nhận xét 02.4), nên giả thiết $X_t=S_t$ của Định nghĩa 02.14 không thỏa. Hai ô $\mathrm A=(1,1)$ và $\mathrm B=(5,3)$ có cùng mã $(1,0,0,1)$: tại $\mathrm A$, Bắc $(1,0)$ và Tây $(0,1)$ là tường, Đông $(2,1)$ và Nam $(1,2)$ trống; tại $\mathrm B$, Bắc $(5,2)$ và Tây $(4,3)$ là tường, Đông $(6,3)$ và Nam $(5,4)$ trống.
 
 ![Mê cung tám hàng tám cột. Hai ô A bằng (1,1) và B bằng (5,3) được gạch chéo; cả hai có mã bốn ô kề (1,0,0,1) theo thứ tự Bắc, Đông, Nam, Tây, với 1 là bước giữ tác tử đứng yên và 0 là bước đưa tác tử sang ô khác. Mũi tên liền tại A chỉ Đông, tại B chỉ Nam: đó là hướng cần chọn để tới đích. Mũi tên đứt hai chiều giữa A và ô (1,2), và giữa B và ô (6,3), chỉ vòng lặp nếu chọn hướng kia.](img/lec-02/aliasing-pair.svg)
 
-Trên hình, mũi tên liền là hướng cần chọn để tới $\mathrm G$, mũi tên đứt là vòng lặp khi chọn hướng kia.
+Trên hình, hai ô cùng mã nhưng cần hai hướng khác nhau: Đông tại $\mathrm A$, Nam tại $\mathrm B$.
 
 **Mọi chính sách xác định trên mã đều không tới $\mathrm G$.** Mã $(0,1,0,0)$ chỉ có ở $(1,2)$, mã $(0,1,1,0)$ chỉ có ở $(6,3)$.
 
@@ -1117,13 +1149,29 @@ Trên hình, mũi tên liền là hướng cần chọn để tới $\mathrm G$,
 
 Theo quy ước giới hạn tổng riêng của Mục 4.2, lợi tức khi đó là $-\infty$.
 
-**Khắc phục bằng chính sách ngẫu nhiên.** Đặt $\pi(\text{Đông}\mid(1,0,0,1))=\pi(\text{Nam}\mid(1,0,0,1))=0{,}5$; tại các mã khác trên đường 16 bước, chọn hướng của chính sách ở Mục 3. Các mã đó không mâu thuẫn dọc đường đi: $(1,0,1,0)$ luôn Đông, $(1,1,0,0)$ luôn Nam tại $(6,1)$ và $(6,5)$, $(0,1,0,1)$ luôn Nam tại $(6,2)$ và $(5,4)$, $(0,0,1,1)$ luôn Đông tại $(5,5)$ và $(6,6)$. Tại $\mathrm A$, mỗi lần chọn Nam tốn thêm $2$ bước, và số lần chọn Nam trước lần Đông đầu tiên có kỳ vọng $1$; tại $\mathrm B$ tương tự với hai hướng đổi vai. Số bước kỳ vọng từ $(0,2)$ tới $\mathrm G$ là $16+2+2=20$, lợi tức kỳ vọng $-20$.
+**Khắc phục bằng chính sách ngẫu nhiên.** Đặt $\pi(\text{Đông}\mid(1,0,0,1))=\pi(\text{Nam}\mid(1,0,0,1))=0{,}5$; tại các mã khác trên đường 16 bước, chọn hướng của chính sách mũi tên. Các mã đó không mâu thuẫn dọc đường đi:
 
-**Khắc phục bằng bộ nhớ.** Dùng cửa sổ hai quan sát $X_t=(O_t,A_{t-1},O_{t-1})$, với quy ước $X_0=(O_0,\varnothing,\varnothing)$. Tại $\mathrm A$, quan sát trước là mã $(0,1,0,0)$ của $(1,2)$; tại $\mathrm B$, là mã $(0,1,1,0)$ của $(6,3)$. Dọc đường 16 bước, mười sáu biểu diễn khác nhau, nên một chính sách xác định trên biểu diễn mới đi lại được đường 16 bước, lợi tức $-16$.
+- $(1,0,1,0)$ luôn Đông;
+- $(1,1,0,0)$ luôn Nam, tại $(6,1)$ và $(6,5)$;
+- $(0,1,0,1)$ luôn Nam, tại $(6,2)$ và $(5,4)$;
+- $(0,0,1,1)$ luôn Đông, tại $(5,5)$ và $(6,6)$.
 
-**Diễn giải và giới hạn.** Khi biểu diễn gộp hai trạng thái cần hai hành động khác nhau, mọi chính sách xác định trên biểu diễn đó có thể không bao giờ tới đích, còn chính sách ngẫu nhiên tới đích với xác suất $1$ nhưng chậm hơn: $-20$ so với $-16$. Bộ nhớ hai bước đủ cho bản đồ này, nhưng theo Nhận xét 02.7, không có cửa sổ hữu hạn nào đủ cho mọi bài toán. Phần chính sách ngẫu nhiên giữ nguyên các mã khác theo chính sách ở Mục 3; kết luận "mọi chính sách xác định thất bại" chỉ dùng cấu trúc của hai ô $\mathrm A$, $\mathrm B$.
+Tại $\mathrm A$, mỗi lần chọn Nam tốn thêm $2$ bước, và số lần chọn Nam trước lần Đông đầu tiên có kỳ vọng $1$; tại $\mathrm B$ tương tự với hai hướng đổi vai. Số bước kỳ vọng từ $(0,2)$ tới $\mathrm G$ là $16+2+2=20$, lợi tức kỳ vọng $-20$.
 
-**Dẫn ngược lý thuyết.** Tình huống 01.2 (cùng hiện tượng: ghi theo quan sát gộp các tình huống cần xử lý khác nhau); Định nghĩa 02.2 (mã bốn ô kề là một biểu diễn); Nhận xét 02.4 (quan sát một phần); Định nghĩa 02.8 (chính sách trên $X$); Định nghĩa 02.14 (giả thiết $X_t=S_t$ bị vi phạm, nên ta chỉ tính lợi tức kỳ vọng từ ô xuất phát); Nhận xét 02.7; Bài tập tuần 2 (2025–2026), bài 6; Sutton và Barto (2018, §13.1, Ví dụ 13.1, trang 323), nơi một hành lang mà mọi ô trông như nhau cần chính sách ngẫu nhiên.
+**Khắc phục bằng bộ nhớ.** Dùng cửa sổ hai quan sát $X_t=(O_t,A_{t-1},O_{t-1})$, với quy ước $X_0=(O_0,\varnothing,\varnothing)$. Tại $\mathrm A$, quan sát trước là mã $(0,1,0,0)$ của $(1,2)$; tại $\mathrm B$, là mã $(0,1,1,0)$ của $(6,3)$. Dọc đường 16 bước, cửa sổ này cho mười sáu biểu diễn khác nhau (Ví dụ 02.5), nên một chính sách xác định trên biểu diễn mới đi lại được đường 16 bước, lợi tức $-16$.
+
+**Diễn giải và giới hạn.** Khi biểu diễn gộp hai trạng thái cần hai hành động khác nhau, mọi chính sách xác định trên biểu diễn đó có thể không bao giờ tới đích, còn chính sách ngẫu nhiên tới đích với xác suất $1$ nhưng chậm hơn: $-20$ so với $-16$. Bộ nhớ hai bước đủ cho bản đồ này, nhưng theo Nhận xét 02.7, không có cửa sổ hữu hạn nào đủ cho mọi bài toán.
+
+**Dẫn ngược lý thuyết.**
+
+- Tình huống 01.2: cùng hiện tượng, ghi theo quan sát gộp các tình huống cần xử lý khác nhau.
+- Định nghĩa 02.2: mã bốn ô kề là một biểu diễn.
+- Nhận xét 02.4: quan sát một phần.
+- Định nghĩa 02.8: chính sách trên $X$.
+- Định nghĩa 02.14: giả thiết $X_t=S_t$ bị vi phạm, nên ta chỉ tính lợi tức kỳ vọng từ ô xuất phát.
+- Nhận xét 02.7: cửa sổ hữu hạn.
+
+Nguồn: Bài tập tuần 2 (2025–2026), bài 6; Sutton và Barto (2018, §13.1, Ví dụ 13.1, trang 323), nơi một hành lang mà mọi ô trông như nhau cần chính sách ngẫu nhiên.
 
 **Kiểm tra lại.** Tại $\mathrm A$, gọi $E$ là số bước kỳ vọng từ $\mathrm A$ tới $(2,1)$: $E=0{,}5\cdot1+0{,}5\cdot(2+E)$, nên $E=3$, nhiều hơn trường hợp có tọa độ đúng $2$ bước.
 :::
@@ -1139,7 +1187,7 @@ Theo quy ước giới hạn tổng riêng của Mục 4.2, lợi tức khi đó
 <!-- note-topic-id: lec-02-part-07 -->
 ## Tóm tắt chương
 
-Chúng ta bắt đầu từ một mê cung $8\times8$ với phần thưởng $-1$ mỗi bước và bốn câu hỏi mà chính sách, giá trị trên lịch sử và lợi tức không chiết khấu của Bài 01 chưa trả lời gọn. Mẫu chuyển (Định nghĩa 02.1) cố định thứ tự tín hiệu của một bước. Biểu diễn (Định nghĩa 02.2) tách dữ liệu tác tử dùng khỏi trạng thái và quan sát, và tính Markov (Định nghĩa 02.5) nêu khi nào trạng thái đủ cho dự báo; Mệnh đề 02.6 cho thấy lịch sử luôn là trạng thái Markov nhưng lớn dần. Chính sách được viết trên biểu diễn (Định nghĩa 02.8), với chính sách trên lịch sử của Bài 01 là một trường hợp riêng. Định lý 02.11 chứng minh rằng ưu tiên dừng buộc trọng số hình học, dẫn tới lợi tức chiết khấu (Định nghĩa 02.12) với hệ thức truy hồi và chặn (Mệnh đề 02.13); kỳ vọng của lợi tức dưới một chính sách cố định là hàm giá trị trạng thái (Định nghĩa 02.14), tách khỏi hàm động lực dự báo một bước (Định nghĩa 02.16). Mệnh đề 02.18 cho ngưỡng $c^*=(10+c_{\mathrm H})/4$ làm tác tử tối ưu đổi từ đích sang hố. Giới hạn còn lại là giá trị mới tính được khi liệt kê được các quỹ đạo; ở Bài 03, Mệnh đề 02.13(a) và tính Markov cho phép viết giá trị thành nghiệm của một hệ phương trình.
+Chúng ta bắt đầu từ một mê cung $8\times8$ với phần thưởng $-1$ mỗi bước và sáu câu hỏi mà chính sách, giá trị trên lịch sử và lợi tức không chiết khấu của Bài 01 chưa trả lời gọn. Mẫu chuyển (Định nghĩa 02.1) cố định thứ tự tín hiệu của một bước. Biểu diễn (Định nghĩa 02.2) tách dữ liệu tác tử dùng khỏi trạng thái và quan sát, và tính Markov (Định nghĩa 02.5) nêu khi nào trạng thái đủ cho dự báo; Mệnh đề 02.6 cho thấy lịch sử luôn là trạng thái Markov nhưng lớn dần. Chính sách được viết trên biểu diễn (Định nghĩa 02.8), với chính sách trên lịch sử của Bài 01 là một trường hợp riêng. Định lý 02.11 chứng minh rằng ưu tiên dừng buộc trọng số hình học, dẫn tới lợi tức chiết khấu (Định nghĩa 02.12) với hệ thức truy hồi và chặn (Mệnh đề 02.13); kỳ vọng của lợi tức dưới một chính sách cố định là hàm giá trị trạng thái (Định nghĩa 02.14), tách khỏi hàm động lực dự báo một bước (Định nghĩa 02.16). Mệnh đề 02.18 cho ngưỡng $c^*=(10+c_{\mathrm H})/4$ làm tác tử tối ưu đổi từ đích sang hố. Giới hạn còn lại là giá trị mới tính được khi liệt kê được các quỹ đạo; ở Bài 03, Mệnh đề 02.13(a) và tính Markov cho phép viết giá trị thành nghiệm của một hệ phương trình.
 
 **Định nghĩa và kết quả theo mục.**
 
@@ -1150,13 +1198,16 @@ Chúng ta bắt đầu từ một mê cung $8\times8$ với phần thưởng $-1
 - Mục 5: trên mê cung đích–hố, tác tử tối ưu tới đích khi $c<c^*=(10+c_{\mathrm H})/4$ và vào hố khi $c>c^*$ (Mệnh đề 02.18); tác tử đang học có thể rơi vào hố ngay cả khi $c<c^*$ (Nhận xét 02.19); tác dụng của chế tài phụ thuộc tương quan với các chi phí khác (Nhận xét 02.20).
 
 **Công thức cần nhớ.**
+
+Lợi tức:
 $$
 \begin{aligned}
 G_t&=\sum_{k=0}^{T-t-1}\gamma^kR_{t+k+1}\\
 &=R_{t+1}+\gamma G_{t+1},\\
-\lvert G_t\rvert&\le\frac{R_{\max}}{1-\gamma}\quad(\gamma<1),
+\lvert G_t\rvert&\le\frac{R_{\max}}{1-\gamma}\quad(\gamma<1).
 \end{aligned}
 $$
+Chính sách, giá trị và hàm động lực:
 $$
 \begin{aligned}
 \pi(a\mid x)&=\Pr(A_t=a\mid X_t=x),\\
@@ -1176,12 +1227,10 @@ $$
 
 ## Bài tập củng cố
 
-Năm bài 02.9–02.13 dưới đây chỉ có ở ghi chú, xếp theo ba mức.
-
 ### Mức nhận biết
 
 ::: exercise Bài tập 02.9 (Ghép phát biểu với thành phần)
-Mê cung $8\times8$ của Ví dụ 02.1 với chính sách xác định của Mục 3, tại đó $(4,1)$ chọn Đông và $(4,2)$ chọn Bắc; $-1$ mỗi bước, chuyển tất định. Mỗi phát biểu mô tả thành phần nào: ranh giới tác tử–môi trường, quan sát, chính sách, hàm giá trị, hay hàm động lực. Nêu định nghĩa tương ứng.
+Mê cung $8\times8$ của Ví dụ 02.1 với chính sách mũi tên, tại đó $(4,1)$ chọn Đông và $(4,2)$ chọn Bắc; $-1$ mỗi bước, chuyển tất định. Mỗi phát biểu mô tả thành phần nào: ranh giới tác tử–môi trường, quan sát, chính sách, hàm giá trị, hay hàm động lực. Nêu định nghĩa tương ứng.
 
 1. Tại $(4,1)$, tác tử chọn Đông với xác suất $1$.
 2. Từ $(4,1)$, với $\gamma=1$, lợi tức kỳ vọng khi theo chính sách là $-11$.
@@ -1191,7 +1240,7 @@ Mê cung $8\times8$ của Ví dụ 02.1 với chính sách xác định của M�
 :::
 
 ::: hint
-Phát biểu nào phụ thuộc chính sách, phát biểu nào chỉ nói về một bước, phát biểu nào nói về cả chuỗi phần thưởng.
+Xác định phát biểu nào phụ thuộc chính sách, phát biểu nào chỉ nói về một bước, và phát biểu nào nói về cả chuỗi phần thưởng.
 :::
 
 ::: solution
@@ -1205,8 +1254,6 @@ Phát biểu nào phụ thuộc chính sách, phát biểu nào chỉ nói về 
 :::
 
 ::: exercise Bài tập 02.10 (Hệ số chiết khấu và dấu của phần thưởng mỗi bước)
-Theo Bài tập tuần 2 (2025–2026), bài 5.
-
 - (a) So sánh $\sigma=(0,0,10)$ và $\sigma'=(1,0,0)$ bằng lợi ích cộng với $\gamma=0$, $0{,}5$, $0{,}99$; tìm $\gamma\in(0,1)$ để hai chuỗi ngang nhau, và mô tả hành vi của tác tử khi $\gamma=0$ và khi $\gamma$ gần $1$.
 - (b) Trong mê cung đích–hố của Ví dụ 02.14 (đường ngắn nhất tới $\mathrm G$ dài $6$ bước, tới $\mathrm H$ dài $2$ bước, tác tử có thể đi vòng), phần thưởng $-c$ mỗi bước được thay bằng $+0{,}1$ mỗi bước, giữ $+10$ khi vào $\mathrm G$ và không thêm gì khi vào $\mathrm H$. Giải thích vì sao với $\gamma=1$ tiêu chí lợi tức không cho giá trị tối ưu hữu hạn. Với $\gamma=0{,}9$, tính lợi tức của đường thẳng tới $\mathrm G$ và của một quỹ đạo không bao giờ kết thúc.
 :::
@@ -1218,7 +1265,15 @@ Theo Bài tập tuần 2 (2025–2026), bài 5.
 ::: solution
 **Câu (a).** $U(\sigma)=10\gamma^2$, $U(\sigma')=1$: với $\gamma=0$ chọn $\sigma'$ ($0<1$); với $\gamma=0{,}5$ chọn $\sigma$ ($2{,}5>1$); với $\gamma=0{,}99$ chọn $\sigma$ ($9{,}801>1$). Ngang nhau khi $\gamma=1/\sqrt{10}\approx0{,}316$. Với $\gamma=0$, tác tử chỉ xét phần thưởng kế tiếp; với $\gamma$ gần $1$, tác tử chịu chờ để nhận phần thưởng lớn.
 
-**Câu (b).** Với $\gamma=1$, quỹ đạo đi vòng mãi có tổng riêng $0{,}1n\to+\infty$; mọi quỹ đạo kết thúc bị vượt bởi một quỹ đạo đi vòng đủ lâu, nên không có giá trị tối ưu hữu hạn. Đây là trường hợp $c=-0{,}1<0$. Với $\gamma=0{,}9$: đường thẳng tới $\mathrm G$ cho $0{,}1\cdot\frac{1-0{,}9^6}{0{,}1}+10\cdot0{,}9^5=0{,}468559+5{,}9049\approx6{,}373$; quỹ đạo không kết thúc cho $0{,}1/(1-0{,}9)=1$.
+**Câu (b).** Với $\gamma=1$, quỹ đạo đi vòng mãi có tổng riêng $0{,}1n\to+\infty$; mọi quỹ đạo kết thúc bị vượt bởi một quỹ đạo đi vòng đủ lâu, nên không có giá trị tối ưu hữu hạn. Đây là trường hợp $c=-0{,}1<0$. Với $\gamma=0{,}9$, đường thẳng tới $\mathrm G$ cho
+$$
+\begin{aligned}
+G_0&=0{,}1\cdot\frac{1-0{,}9^6}{0{,}1}+10\cdot0{,}9^5\\
+&=0{,}468559+5{,}9049\\
+&\approx6{,}373;
+\end{aligned}
+$$
+quỹ đạo không kết thúc cho $0{,}1/(1-0{,}9)=1$.
 
 **Kiểm tra lại.** $0{,}9^5=0{,}59049$, $(1-0{,}9^6)/0{,}1=4{,}68559$.
 :::
@@ -1257,9 +1312,25 @@ Lợi tức của $T$ bước $+1$ là $(1-\gamma^T)/(1-\gamma)$.
 ::: solution
 **Câu (a).** $1/(1-0{,}9)=10$, đạt bởi chuỗi $+1$ ở mọi bước, không kết thúc.
 
-**Câu (b).** $G_0=(1-0{,}9^{20})/0{,}1=10(1-0{,}12158)\approx8{,}784$, đúng chặn của Mệnh đề 02.13(c).
+**Câu (b).**
+$$
+\begin{aligned}
+G_0&=(1-0{,}9^{20})/0{,}1\\
+&=10(1-0{,}12158)\\
+&\approx8{,}784,
+\end{aligned}
+$$
+đúng chặn của Mệnh đề 02.13(c).
 
-**Câu (c).** $10(1-0{,}9^T)\ge9\iff0{,}9^T\le0{,}1\iff T\ge\ln0{,}1/\ln0{,}9\approx21{,}85$, nên $T=22$.
+**Câu (c).**
+$$
+\begin{aligned}
+&10(1-0{,}9^T)\ge9\\
+\iff{}&0{,}9^T\le0{,}1\\
+\iff{}&T\ge\ln0{,}1/\ln0{,}9\approx21{,}85,
+\end{aligned}
+$$
+nên $T=22$.
 
 **Kiểm tra lại.** $0{,}9^{21}\approx0{,}1094$ cho $G_0\approx8{,}906<9$; $0{,}9^{22}\approx0{,}0985$ cho $G_0\approx9{,}015$.
 :::
@@ -1287,13 +1358,13 @@ Xét hành động mà chính sách chọn tại $(4,1)$, lần thứ nhất và
 
 ## Hướng dẫn đọc thêm và tài liệu tham khảo
 
-- **Bài giảng gốc.** Tạ Việt Cường (2025–2026), *Lecture 2: Markov Decision Process*, trang 1–27; mê cung $8\times8$, chính sách và bảng giá trị ở trang 25–26 (Mục 1, 3, 4.4).
+- **Bài giảng gốc.** Tạ Việt Cường (2025–2026), *Lecture 2: Markov Decision Process*, trang 1–27; mê cung $8\times8$, chính sách và bảng giá trị ở trang 25–26 (Mục 1, 3, 4.4); môi trường hai nhánh ở trang 22 (Mục 4.3).
 - **Bài tập tuần 2 (2025–2026).** Bài 2 (Mục 2), bài 5 (Bài tập 02.10), bài 6 (Tình huống 02.2), bài 10 (Tình huống 02.1).
 - **Bài tập Bài 02.** [Tệp bài tập](material-viewer.html?doc=materials/lec-02/exercises.md&deck=lecture-02-giao-dien-tac-tu-moi-truong.html). Câu đố phân loại ở trang 27 của bài giảng gốc được giải ở Bài tập 02.15; Bài tập tuần 2, bài 1, 6, 10 là nguồn của Bài tập 02.14, 02.19, 02.22.
 - **Sutton, R. S. và Barto, A. G. (2018).** *Reinforcement Learning: An Introduction*, ấn bản 2: §3.1 (trang 47–50) cho Mục 1, 2.5 và 4.5; §3.2 (trang 53–54) cho Mục 5; §3.3–3.4 (trang 54–58) cho Mục 4.2; §3.5 (trang 58–59) cho Mục 3 và 4.4; §13.1 (trang 323) cho Tình huống 02.2; §17.3–17.4 (trang 464–470) cho Mục 2.5, Mục 5 và phần Đọc thêm.
 - **Russell, S. và Norvig, P. (2020).** *Artificial Intelligence: A Modern Approach*, ấn bản 4, §17.1.1 (trang 565–566), cho Mục 4.1 và Nhận xét 02.15.
 - **Puterman, M. L. (1994).** *Markov Decision Processes: Discrete Stochastic Dynamic Programming*, §2.1, cho Mục 3.
-- **Giáo trình *Học máy thống kê*,** chương Học tăng cường, mục "Giới thiệu về quá trình quyết định Markov", cho tương ứng ký hiệu và thuật ngữ.
+- **Trần Quốc Long (chủ biên), Tạ Việt Cường.** Giáo trình *Học máy thống kê*, chương Học tăng cường, mục "Giới thiệu về quá trình quyết định Markov", cho tương ứng ký hiệu và thuật ngữ.
 
 <!-- note-topic-id: lec-02-topic-15 -->
-**Đọc thêm.** Sutton và Barto (2018, §17.3, trang 464–468) mở rộng Mệnh đề 02.6 sang lịch sử hành động và quan sát của chính tác tử: một trạng thái là hàm của lịch sử đó, và là trạng thái Markov khi nó dự báo tương lai tốt như toàn bộ lịch sử; cùng mục bàn cửa sổ hữu hạn của Nhận xét 02.7. Mục §17.4 (trang 469–470) bàn phần thưởng thưa (sparse reward), phần thưởng phụ và kỹ thuật định hình phần thưởng (reward shaping), tiếp nối Mục 5. Với chuỗi ngẫu nhiên, việc so sánh bằng kỳ vọng của lợi tức là một lựa chọn mô hình: chẳng hạn, lựa chọn cho chuỗi $(2)$ chắc chắn có kỳ vọng lợi ích $2$, lớn hơn $1{,}5$ của lựa chọn cho $(0)$ hoặc $(3)$ với xác suất bằng nhau, nhưng kỳ vọng của lập phương lợi ích cho thứ tự ngược lại, $8$ so với $13{,}5$.
+**Đọc thêm.** Sutton và Barto (2018, §17.3, trang 464–468) mở rộng Mệnh đề 02.6 sang lịch sử hành động và quan sát của chính tác tử: một trạng thái là hàm của lịch sử đó, và là trạng thái Markov khi nó dự báo tương lai tốt như toàn bộ lịch sử; cùng mục bàn cửa sổ hữu hạn của Nhận xét 02.7. Mục §17.4 (trang 469–470) bàn phần thưởng thưa (sparse reward), phần thưởng phụ và kỹ thuật định hình phần thưởng (reward shaping), tiếp nối Mục 5.
