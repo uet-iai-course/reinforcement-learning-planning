@@ -1715,3 +1715,60 @@ Máy chủ tĩnh cổng 8782, Playwright, viewer `material-viewer.html?doc=mater
 `no-ai-slop`: biên tập viên tự kiểm `eval.md` (Edit) trên mọi câu sửa; tác tử mạch viết kiểm Detect trên câu mới.
 
 Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-07)`.
+
+## Rà soát ghi chú vòng hai (2026-11-08)
+
+Goal của người dùng: "rà soát ghi chú các bài của rl-plan 01–10 về nội dung, bố cục, văn phong theo các nguyên tắc đã thiết lập". Người dùng chọn đi đủ vòng, commit và push từng bài. Trần độ dài của học phần là 30 000 từ prose (người dùng nới 2026-11-08).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai đều là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Ba rà soát chỉ đọc, song song: văn phong (`no-ai-slop` Detect); chuẩn giáo trình; toán/RL.
+- Một biên tập viên (`no-ai-slop` Edit).
+- Hai kiểm tra lại chỉ đọc.
+
+**Rà soát:**
+
+| Vai | Chặn | Nghiêm trọng | Trung bình | Nhẹ |
+|---|---:|---:|---:|---:|
+| Văn phong | 0 | 0 | 7 | 41 |
+| Chuẩn giáo trình | 0 | 0 | 9 | 19 |
+| Toán/RL | 0 | 0 | 1 | 4 |
+
+**Quyết định của điều phối viên:**
+- **Chấp nhận mặc định** mọi phát hiện, trừ các mục dưới đây.
+- **G14, chấp nhận:** viết $\hat A=\sum_t x(S_t)\big(x(S_t)-\gamma x(S_{t+1})\big)^\top$ và $\hat b=\sum_t R_{t+1}x(S_t)$ của LSTD tại chỗ được gọi tên. Điều phối viên đã đối chiếu dạng chuẩn; quy ước trạng thái kết thúc khớp notebook (kiểm tra lại đã xác nhận).
+- **G20, chấp nhận:** Sarsa với chính sách cố định hội tụ như TD(0), dưới các giả thiết của Định lý 07.29 áp cho chuỗi cặp trạng thái–hành động.
+- **Sửa câu "Bài 09–11 dùng TD":** câu này sai, vì Bài 09 không dùng TD.
+- **Bổ sung:**
+  - Lời giải Bài tập 07.9 trả lời đủ ba tiêu chí.
+  - Chứng minh của Mệnh đề 07.26 và 07.28 chia thành bước có nhãn.
+  - Công thức Sarsa bán gradient (4.1).
+  - Câu đọc (1.4).
+- **Lặp ý:** "Q-learning có phản ví dụ phân kỳ" (6 lần), "(3.2) không là hạ gradient" (3 lần), "sai số không giảm khi thêm dữ liệu" (3 lần). Mỗi ý giữ một lần đầy đủ.
+- **"Bài tập tuần 7"** ở Ví dụ 07.12: đã chuyển vào tài liệu tham khảo.
+- **S7, không áp dụng:** biên tập viên đã thử gộp, đo ở 390 px thấy tràn khung nên hoàn lại.
+- **M4, M5:** chỉ ghi lệch.
+
+**Kiểm tra lại:**
+- Độ chính xác: 0 chặn, 0 nghiêm trọng, 2 trung bình, 3 nhẹ.
+  - A3: hiệu $2\,190{,}1-1\,481{,}0$ "đến từ sai số ước lượng", không phải chính sai số ước lượng.
+  - A4 (trùng F1): bỏ "(Thuật toán 07.15)" khỏi vế hội tụ khi mẫu độc lập.
+- Mạch viết: 0 chặn, 0 nghiêm trọng, 1 trung bình, 6 nhẹ.
+- Tất cả được chấp nhận và đã sửa.
+- Các dẫn chiếu từ Bài 08–11 tới Bài 07 vẫn trỏ đúng.
+
+**Số liệu:**
+- Prose 16 841 → 16 923. Phần tăng đến từ lời giải 07.9, $\hat A$/$\hat b$, công thức (4.1) và các kết mục.
+- 127 dòng tiêu đề khối và mục trùng khít trước và sau.
+- 18 `note-topic-id` giữ nguyên. `git diff --check`: sạch.
+
+**Lệch cần đồng bộ (không sửa):**
+- Hai notebook Bài 07 dẫn số mục cũ của ghi chú ở 21 chỗ ("mục 12.5", "mục 10.4", …), trong khi ghi chú hiện chỉ có Mục 1–6 (M4).
+- `exercises.md` dùng 1 612,8, ghi chú dùng 1 622,2; đây là hai cách tính LSTD khác nhau (M5).
+- `exercises.md` Bài tập 07.11 còn ghi "Dùng (3.2)", ghi chú nay ghi "Dùng (4.1)".
+- Ghi chú 07 L25 lệch nhẹ với Định nghĩa 03.26 sau sửa M2 của Bài 03.
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in.
+- 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang.
+- Lỗi CSP script nội tuyến đến từ môi trường kiểm tra (cũng có ở Bài 11, vốn không bị sửa). Ở 390 px, 22 công thức hiển thị cuộn trong khung.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-07)`.
