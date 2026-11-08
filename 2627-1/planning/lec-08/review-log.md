@@ -892,3 +892,69 @@ Yêu cầu của người dùng (2026-11-08): bỏ mục "Bản đồ chủ đ�
 - **Outline:** thêm mục "## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)", 19 hàng chép từ bản đồ ở HEAD `f86f4a0` (script đối chiếu: 0 sai lệch). Số trang nguồn và các phần chỉ có trong bản đồ (danh sách phần, thời lượng nếu có) nằm ở đó.
 - **Kiểm tra trình duyệt (điều phối viên):** viewer tại máy chủ tĩnh cổng 8782, 1600×900 và 390×844: 0 `.katex-error`, 0 lỗi console, 0 request lỗi hoặc ra ngoài, không tràn ngang trang, không còn `:::` sót. `git diff --check`: sạch.
 - Đợt này không siết câu chữ của ghi chú; việc đó nằm ngoài goal 01–07.
+
+## Siết và rà soát ghi chú theo chuẩn 2026-11 (2026-11-08)
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai đều là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Ba rà soát chỉ đọc, song song: văn phong (`no-ai-slop` Detect); chuẩn giáo trình; toán/RL.
+- Một biên tập viên (`no-ai-slop` Edit, tự kiểm theo `eval.md`).
+- Hai kiểm tra lại chỉ đọc: độ chính xác; mạch viết và kết nối.
+
+Goal của người dùng: "rà soát ghi chú các bài của rl-plan 01–10 về nội dung, bố cục, văn phong theo các nguyên tắc đã thiết lập". Người dùng chọn đi đủ vòng, commit và push từng bài. Trần độ dài của học phần là 30 000 từ prose (người dùng nới 2026-11-08, thay mốc 8 000–20 000 của `AGENTS.md`).
+
+Đây là vòng siết đầu tiên của Bài 08. Bản đồ chủ đề đã được bỏ khỏi ghi chú từ trước (commit `7544774`).
+
+**Rà soát:**
+
+| Vai | Chặn | Nghiêm trọng | Trung bình | Nhẹ |
+|---|---:|---:|---:|---:|
+| Văn phong | 0 | 0 | 48 | 79 |
+| Chuẩn giáo trình | 0 | 1 | 27 | 32 |
+| Toán/RL | 0 | 1 | 1 | 7 |
+
+**Quyết định của điều phối viên:**
+- **G0 (nghiêm trọng), chấp nhận:** prose 32 471 vượt trần 30 000. Mục tiêu đặt ra là ≤ 29 500, đạt bằng cách cắt câu lặp, không cắt kết quả.
+- **M1 (nghiêm trọng), chấp nhận:** Ví dụ 08.1 ghi "1 896 ô trên 2 000 lượt". Con số 1 896 chỉ tính trên 1 958 lượt kết thúc thật; trên đủ 2 000 lượt là 1 935 ô (0,210), còn 7 281 ô chưa được ghé. Chỗ lệch này đã ghi từ nhật ký Bài 07; đã sửa ở cả bốn chỗ.
+- **M2, chấp nhận:** "$2/N$" chỉ đúng cho một cặp cho trước. Số cặp liền nhau có kỳ vọng $b(b-1)/N\approx10^{-3}$.
+- **M4–M8, chấp nhận:** điều kiện Markov cho $(R_{t+1},O_{t+1},Z_{t+1})$; $F=1$; lỗi `bool` trong PyTorch.
+- **M9, chấp nhận:** chữ $k$ mang bốn nghĩa. Đổi cục bộ trong Ví dụ 08.9 và 08.24 thành $h_i$, $\ell$, $(i,i')$, $w_n$; thêm $\epsilon_{\mathrm{eval}}$. Các bài sau không dùng ký hiệu cũ (tác tử mạch viết đã kiểm).
+- **Lặp ý, chấp nhận cắt:**
+  - Mệnh đề 07.37 trước được phát biểu lại năm lần; nay phát biểu đầy đủ một lần ở Kiến thức tiên quyết, các chỗ khác dẫn số hiệu.
+  - Trường hợp $C=1$, phép tính 56 GB, gradient dư, đoạn tự đặt lại môi trường: mỗi thứ còn một lần.
+  - Bảy đoạn "Kiểm tra nhanh" và mười lăm đoạn đọc hình lặp lại alt.
+  - Chuyển tiếp kép ở 13 ranh giới.
+- **Bước 8 (bài tập ngay sau mục), bác bỏ:** người dùng quyết định 2026-11-08 giữ "Bài tập củng cố" ở cuối chương cho Bài 08–10, ghi ngoại lệ.
+- **Chỉ ghi lệch chuẩn:**
+  - G8: không có hình cấu trúc chương.
+  - G47: giữ `####` ở phần 5.
+  - G53, G56, G58, G59.
+
+**Kiểm tra lại:**
+- Độ chính xác: 0 chặn, 0 nghiêm trọng, 1 trung bình, 6 nhẹ.
+  - A5: $\hat v$ dùng trước khi được định nghĩa, vì câu định nghĩa bị cắt.
+  - A3: nguồn của số 1 935 là phần 5 của notebook.
+- Mạch viết: 0 chặn, 0 nghiêm trọng, 1 trung bình, 8 nhẹ.
+  - F4: trùng A5.
+  - Câu hứa ở L19.
+  - Câu mồ côi.
+  - Kết phần 5–6 dài.
+  - Hai lần báo trước Bài 09.
+- Tất cả 16 phát hiện được chấp nhận và đã sửa.
+- Các số hiệu Bài 08 mà ghi chú 09–12 dẫn tới vẫn trỏ đúng.
+
+**Số liệu:**
+- Prose 32 471 → 27 256.
+- 99 dòng tiêu đề khối và mục trùng khít trước và sau.
+- 19 `note-topic-id` giữ nguyên. `git diff --check`: sạch.
+
+**Lệch cần đồng bộ (không sửa trong đợt này):**
+- Deck: 1 896 / 0,206 / 7 320; $\bar g$ và $0{,}9^k$; kỳ vọng $b(b-1)/N$ chưa có.
+- `exercises.md` còn dùng $w_k$.
+- Chi tiết: báo cáo biên tập trong scratchpad của phiên.
+
+**Kiểm tra trình duyệt (điều phối viên):** máy chủ tĩnh cổng 8783, Playwright, viewer của ghi chú, 1600×900, 390×844 (cuộn đến cuối) và chế độ in.
+- 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang.
+- Console có một lỗi CSP chặn script nội tuyến. Lỗi này cũng xuất hiện ở ghi chú Bài 11, vốn không bị sửa, nên đến từ môi trường kiểm tra, không đến từ ghi chú.
+- Điều phối viên đã xem ảnh chụp. Ở 390 px, 21 công thức hiển thị cuộn trong khung.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-08)`.
