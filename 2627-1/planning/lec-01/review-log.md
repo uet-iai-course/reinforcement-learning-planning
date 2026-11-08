@@ -1759,3 +1759,62 @@ Viewer `material-viewer.html?doc=materials/lec-01/lecture-note.md&deck=lecture-0
 `no-ai-slop`: biên tập viên tự kiểm theo `eval.md` (Edit) trên mọi câu sửa hoặc thêm; tác tử mạch viết kiểm Detect trên câu mới, không còn mẫu nào.
 
 Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-01)`.
+
+## Rà soát ghi chú vòng hai (2026-11-08)
+
+Goal của người dùng: "rà soát ghi chú các bài của rl-plan 01–10 về nội dung, bố cục, văn phong theo các nguyên tắc đã thiết lập". Người dùng chọn cả mười bài đi đủ vòng, commit và push từng bài. Quy trình theo `prompt_tighten_lecture_notes.md`, phạm vi 01–10. Trần độ dài của học phần là 30 000 từ prose (người dùng nới 2026-11-08, thay mốc 8 000–20 000 của `AGENTS.md`).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai đều là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Ba rà soát chỉ đọc, song song:
+  - văn phong và giọng tác giả (`no-ai-slop` Detect);
+  - chuẩn giáo trình, nội dung và bố cục;
+  - độ chính xác toán học và Học tăng cường.
+- Một biên tập viên (`no-ai-slop` Edit, tự kiểm theo `eval.md`).
+- Hai kiểm tra lại chỉ đọc: độ chính xác; mạch viết và kết nối.
+- Điều phối viên: Claude Opus 5.5, phiên chính.
+
+**Rà soát:**
+
+| Vai | Chặn | Nghiêm trọng | Trung bình | Nhẹ |
+|---|---:|---:|---:|---:|
+| Văn phong | 0 | 0 | 7 | 34 |
+| Chuẩn giáo trình | 0 | 0 | 5 | 14 |
+| Toán/RL | 0 | 0 | 1 | 6 |
+
+**Quyết định của điều phối viên:**
+- **Chấp nhận mặc định** mọi phát hiện, trừ các mục dưới đây.
+- **M6, chấp nhận:** Nhận xét 01.22 nói Bài 04 chứng minh cải thiện và lặp chính sách "với $\gamma<1$ hoặc khi mọi lượt kết thúc". Điều phối viên đã đối chiếu: Định lý 04.13 chỉ giả thiết $0\le\gamma<1$. Đã bỏ vế thứ hai.
+- **Câu nói về vị thế của văn bản, chấp nhận** (quy tắc 2026-11-04): L144, L232, L356, L811 ("mới được gọi là", "chưa được định nghĩa", "chưa được dùng"). Đã viết lại thành thiếu hụt của khái niệm.
+- **G14, chấp nhận:** chứng minh của Nhận xét 01.19 tách thành khối `proof` không số, có bước cơ sở.
+- **G15, chấp nhận:** thêm bước tính $\tfrac34$.
+- **Bảng ký hiệu:** thêm $N(a)$, $\bar r(a)$.
+- **G17, bác bỏ:** "Bài tập củng cố không phủ mục tiêu 2, 5, 6". Sửa sẽ phải thêm khối có số hiệu mới, trái ràng buộc giữ số hiệu.
+- **G18, áp dụng một phần:** không thêm tác giả hay nguồn chưa xác minh.
+- **G19 và D1, D2:** chỉ ghi lệch với deck.
+
+**Kiểm tra lại:**
+- Độ chính xác: 0 chặn, 0 nghiêm trọng, 1 trung bình (A4: câu "đúng cho mọi chính sách và mọi lịch sử" nói quá rộng), 5 nhẹ.
+- Mạch viết: 0 chặn, 0 nghiêm trọng, 3 trung bình, 10 nhẹ.
+  - F3: chuyển tiếp kép ở ranh giới Mục 1–2.
+  - F5: câu mới lặp lại thiếu hụt.
+  - F10: phản ví dụ vi phạm cả điều kiện 1.
+- Cả 19 phát hiện được chấp nhận và đã sửa (cùng biên tập viên).
+- Dẫn chiếu từ ghi chú 02–07 tới Bài 01 vẫn trỏ đúng.
+
+**Số liệu:**
+- Prose 17 667 → 17 539.
+- Khối có số hiệu và tiêu đề mục trùng khít trước và sau; chỉ thêm `::: proof Chứng minh Nhận xét 01.19`.
+- 10 `note-topic-id` giữ nguyên. `git diff --check`: sạch.
+
+**Lệch cần đồng bộ (không sửa trong đợt này):**
+- Deck dòng 349: "3–6–9 còn thiếu ô 9", đã ghi từ vòng trước.
+- Deck dòng 560: cùng khẳng định như M6 ("hoặc khi mọi lượt kết thúc").
+
+**Kiểm tra trình duyệt (điều phối viên):** máy chủ tĩnh cổng 8783, Playwright, viewer `material-viewer.html?doc=materials/lec-01/lecture-note.md&deck=lecture-01-…html`.
+- Kích thước: 1600×900, 390×844 (cuộn đến cuối) và chế độ in.
+- 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang.
+- Ở 390 px, 16 công thức hiển thị cuộn trong khung.
+- Console có một lỗi CSP chặn script nội tuyến. Lỗi này cũng xuất hiện ở ghi chú Bài 11, vốn không bị sửa, nên đến từ môi trường kiểm tra (script do máy chủ xem trước chèn vào), không đến từ ghi chú.
+- Điều phối viên đã xem ảnh chụp.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-01)`.
