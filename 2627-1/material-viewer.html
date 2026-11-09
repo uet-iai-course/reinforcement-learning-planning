@@ -10,8 +10,8 @@
   <title>Tài liệu học tập · Học tăng cường</title>
   <link rel="stylesheet" href="../index-pages.css"/>
   <link rel="stylesheet" href="vendor/katex/dist/katex.min.css" integrity="sha256-GQlRJzV+1tKf4KY6awAMkTqJ9/GWO3Zd03Fel8mFLnU="/>
-  <link rel="stylesheet" href="material-viewer.css"/>
-  <link rel="stylesheet" href="material-viewer-course.css"/>
+  <link rel="stylesheet" href="material-viewer.css?v=20261109-toc"/>
+  <link rel="stylesheet" href="material-viewer-course.css?v=20261109-toc"/>
 </head>
 <body>
   <a class="skip-link" href="#material-content">Bỏ qua phần điều hướng</a>
@@ -35,7 +35,12 @@
 
     <div class="material-layout" id="material-layout" hidden>
       <aside class="material-toc" aria-labelledby="toc-title">
-        <h2 id="toc-title">Mục lục</h2>
+        <div class="material-toc__head">
+          <h2 id="toc-title">Mục lục</h2>
+          <button type="button" class="material-toc__toggle" id="toc-toggle" aria-controls="toc-list" aria-expanded="true" aria-label="Ẩn mục lục" title="Ẩn mục lục">
+            <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
         <nav id="toc-list" aria-label="Mục lục trong tài liệu"></nav>
       </aside>
       <article class="markdown-body" id="material-content" tabindex="-1"></article>
@@ -46,6 +51,6 @@
   <script defer src="vendor/dompurify/3.4.7/purify.min.js" integrity="sha256-+E5SKHamz63suJwXM1ZAms7Dn1gMaQGFWcmlDpYpmww="></script>
   <script defer src="vendor/katex/dist/katex.min.js" integrity="sha256-6NiFUFlJ86X0q91d0NU2lr0Tca0m/79PMQ3Nd8jNrok="></script>
   <script defer src="vendor/katex/dist/contrib/auto-render.min.js" integrity="sha256-u1PrlTOUUxquNv3VNwZcQkTrhUKQGjzpFGAdkyZ1uKw="></script>
-  <script defer src="material-viewer.js"></script>
+  <script defer src="material-viewer.js?v=20261109-toc"></script>
 </body>
 </html>

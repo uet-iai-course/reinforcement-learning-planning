@@ -283,6 +283,37 @@
     }
   }
 
+  function setupTocToggle() {
+    const toggle = document.getElementById("toc-toggle");
+    const storageKey = "material-toc-collapsed";
+    let collapsed = false;
+    try {
+      collapsed = window.localStorage.getItem(storageKey) === "1";
+    } catch (error) {
+      collapsed = false;
+    }
+
+    function apply() {
+      const label = collapsed ? "Hiện mục lục" : "Ẩn mục lục";
+      layoutElement.classList.toggle("material-layout--toc-collapsed", collapsed);
+      tocList.hidden = collapsed;
+      toggle.setAttribute("aria-expanded", String(!collapsed));
+      toggle.setAttribute("aria-label", label);
+      toggle.title = label;
+    }
+
+    apply();
+    toggle.addEventListener("click", () => {
+      collapsed = !collapsed;
+      apply();
+      try {
+        window.localStorage.setItem(storageKey, collapsed ? "1" : "0");
+      } catch (error) {
+        // Without storage the toggle still works for this page view.
+      }
+    });
+  }
+
   function hardenLinks() {
     let removedLinks = 0;
     const allowedProtocols = new Set(["http:", "https:", "mailto:"]);
@@ -393,6 +424,7 @@
         console.error(mathError);
       }
       buildTableOfContents();
+      setupTocToggle();
       preparePrinting();
 
       if (warnings.length === 0) {
