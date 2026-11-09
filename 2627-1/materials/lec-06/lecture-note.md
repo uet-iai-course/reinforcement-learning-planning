@@ -97,7 +97,7 @@ Bài toán sau làm rõ chỗ thiếu. Trên một dãy năm ô A–B–C–D–
 
 ![Sơ đồ ba tầng. Trên: Mục 1, bảng Q theo cặp, chính sách ε-tham lam, Mệnh đề 06.6. Giữa: khung Q(S,A) ← Q(S,A) + α[Y − Q(S,A)] và ba ô Mục 2 Monte Carlo (Y = G), Mục 3 Sarsa (Y = R + γQ(S′,A′)), Mục 4 Q-learning (Y = R + γ max Q(S′,·)). Dưới: Mục 5, GLIE và Robbins–Monro theo cặp cho Q → q*, Định lý 06.21, 06.22; mũi tên từ Monte Carlo là nét đứt vì chương không có định lý hội tụ cho nó](img/lec-06/chapter-structure.svg)
 
-Hình trên đọc từ trên xuống. Ô trên cùng là đối tượng chung của ba thuật toán: bảng $Q$ theo cặp và chính sách $\varepsilon$-tham lam. Ba ô hàng giữa dùng chung khung cập nhật ở dải giữa và chỉ khác nhau ở mục tiêu cập nhật (update target) $Y$, tức ở dữ liệu cần có trước khi cập nhật. Mũi tên nét đứt từ Monte Carlo chỉ rằng điều khiển Monte Carlo không có định lý hội tụ tới $q_*$ trong học phần này.
+Hình trên đọc từ trên xuống. Ô trên cùng là đối tượng chung của ba thuật toán: bảng $Q$ theo cặp và chính sách $\varepsilon$-tham lam. Ba ô hàng giữa dùng chung khung cập nhật ở dải giữa và chỉ khác nhau ở mục tiêu cập nhật (update target) $Y$, nên cần dữ liệu khác nhau trước khi cập nhật. Mũi tên nét đứt từ Monte Carlo chỉ rằng điều khiển Monte Carlo không có định lý hội tụ tới $q_*$ trong học phần này.
 
 <!-- note-topic-id: lec-06-topic-02 -->
 ### 1.1 Giá trị của từng hành động tại một trạng thái
@@ -159,7 +159,7 @@ Nhắc lại từ Bài 03: giá trị của hành động $a$ tại trạng thá
 
 **Diễn giải.** Hai số cùng dùng chính sách tiếp nối $\pi_L$ và chỉ khác hành động đầu; vì chuyển tất định, trung bình bằng chính lợi tức.
 
-**Kiểm tra lại.** Vì $\pi_L$ chọn $0$ tại D với xác suất $1$, lợi tức trung bình khi bắt đầu tại D theo $\pi_L$ phải bằng giá trị của hành động $0$: $1\cdot998+0\cdot10=998$.
+**Kiểm tra lại.** Vì $\pi_L$ chọn $0$ tại D với xác suất $1$, $v_{\pi_L}(\mathrm D)=\sum_a\pi_L(a\mid\mathrm D)\,q_{\pi_L}(\mathrm D,a)=1\cdot998+0\cdot10=998$.
 :::
 
 Ở dạng ký hiệu, với chính sách dừng $\pi$,
@@ -180,9 +180,9 @@ Chúng ta giữ riêng ba đối tượng:
 
 - $q_\pi$: một hàm xác định bởi chính sách $\pi$ và môi trường, không phụ thuộc dữ liệu;
 - $q_*$: giá trị tốt nhất của mỗi cặp;
-- $Q$ (Định nghĩa 06.1): một bảng số do thuật toán giữ, ước lượng của $q_\pi$ hoặc $q_*$ tùy thuật toán, có thể sai bao nhiêu cũng được trước khi có dữ liệu.
+- $Q$ (Định nghĩa 06.1): một bảng số do thuật toán giữ, ước lượng của $q_\pi$ hoặc $q_*$ tùy thuật toán, có thể sai tùy ý trước khi có dữ liệu.
 
-Ví dụ 06.2 cho một phản ví dụ cụ thể của việc đồng nhất $Q$ với $q_\pi$. Hành động $1$ tại D luôn kết thúc lượt với phần thưởng $10$, nên $q_\pi(\mathrm D,1)=10$ với mọi chính sách $\pi$. Bảng khởi tạo lại ghi $Q_0(\mathrm D,1)=1$, sai lệch $9$ so với giá trị thật của mọi chính sách.
+Bảng của Ví dụ 06.2 là phản ví dụ cho việc đồng nhất $Q$ với $q_\pi$. Hành động $1$ tại D luôn kết thúc lượt với phần thưởng $10$, nên $q_\pi(\mathrm D,1)=10$ với mọi chính sách $\pi$. Bảng khởi tạo lại ghi $Q_0(\mathrm D,1)=1$, thấp hơn $9$ đơn vị so với giá trị thật của mọi chính sách.
 
 Bảng $Q$ mở rộng bảng $V$ của Bài 05 từ trạng thái sang cặp trạng thái–hành động: thay vì $|\mathcal S|$ ô, bảng có $M=\sum_sm(s)$ ô, với $m(s)$ là số hành động hợp lệ tại $s$. Phép mở rộng này là cái giá để bỏ mô hình: đổi lại, việc chọn hành động theo $Q$ chỉ cần so các số trong một hàng, không cần $p$ và $r$.
 
@@ -282,7 +282,7 @@ Hai trường hợp riêng:
 - Với $\varepsilon=0$, $\pi_0$ chia đều xác suất cho các hành động cực đại; khi mỗi hàng có một cực đại, $\pi_0$ là chính sách tham lam (Định nghĩa 04.12), còn khi có đồng hạng, $\pi_0$ thay quy tắc phá hòa (tie-breaking) của định nghĩa ấy bằng phép chia đều.
 - Với $\varepsilon=1$, $\pi_1$ là chính sách đều (uniform policy).
 
-Ví dụ: với một hàng bốn hành động từ bài thực hành (notebook, phần 5), $Q(s,\cdot)=(1;\,3;\,3;\,0)$ và $\varepsilon=0{,}2$ cho $\mathcal G_Q(s)=\{1,2\}$, mỗi hành động nhận $0{,}2/4=0{,}05$ từ phần chọn đều, hai hành động đồng hạng nhận thêm $0{,}8/2=0{,}4$, nên phân phối là $(0{,}05;\,0{,}45;\,0{,}45;\,0{,}05)$.
+Ví dụ: trong bài thực hành (notebook, phần 5), hàng $Q(s,\cdot)=(1;\,3;\,3;\,0)$ với $\varepsilon=0{,}2$ có $\mathcal G_Q(s)=\{1,2\}$. Mỗi hành động nhận $0{,}2/4=0{,}05$ từ phần chọn đều, hai hành động đồng hạng nhận thêm $0{,}8/2=0{,}4$, nên phân phối là $(0{,}05;\,0{,}45;\,0{,}45;\,0{,}05)$.
 
 Nhầm lẫn thường gặp là coi $\varepsilon$ là xác suất chọn hành động "khác hành động tốt nhất". Với $m(s)$ hành động và một cực đại duy nhất, xác suất ấy là $\varepsilon(m(s)-1)/m(s)$, và khối xác suất trên hành động cực đại là $1-\varepsilon+\varepsilon/m(s)$. Tính chất cần giữ là mỗi hành động có xác suất ít nhất $\varepsilon/m(s)$.
 
@@ -294,7 +294,7 @@ $$
 $$
 :::
 
-Lớp chính sách $\varepsilon$-mềm rộng hơn tập chính sách $\varepsilon$-tham lam. Mọi chính sách $\varepsilon$-tham lam đều $\varepsilon$-mềm, vì số hạng thứ hai của Định nghĩa 06.3 không âm. Chiều ngược lại sai: với hai hành động và $\varepsilon=1/4$, chính sách $(0{,}3;\,0{,}7)$ thỏa cận dưới $1/8$ nhưng không là chính sách $1/4$-tham lam theo bảng nào, vì với hai hành động, các phân phối $1/4$-tham lam chỉ là $(1/8;\,7/8)$, $(7/8;\,1/8)$ và $(1/2;\,1/2)$. Còn $(0{,}1;\,0{,}9)$ không $1/4$-mềm, vì $0{,}1<0{,}125$.
+Lớp chính sách $\varepsilon$-mềm rộng hơn tập chính sách $\varepsilon$-tham lam. Mọi chính sách $\varepsilon$-tham lam đều $\varepsilon$-mềm, vì số hạng thứ hai của Định nghĩa 06.3 không âm. Chiều ngược lại sai: với hai hành động và $\varepsilon=1/4$, các phân phối $1/4$-tham lam chỉ là $(1/8;\,7/8)$, $(7/8;\,1/8)$ và $(1/2;\,1/2)$, nên chính sách $(0{,}3;\,0{,}7)$ thỏa cận dưới $1/8$ nhưng không là chính sách $1/4$-tham lam theo bảng nào. Còn $(0{,}1;\,0{,}9)$ không $1/4$-mềm, vì $0{,}1<0{,}125$.
 
 Tính chất $\varepsilon$-mềm với $\varepsilon>0$ bảo đảm mỗi hành động có xác suất dương tại một trạng thái đã được ghé. Nó không bảo đảm mọi trạng thái đều được ghé; khả năng đạt tới một trạng thái còn phụ thuộc động lực và trạng thái đầu.
 
@@ -309,7 +309,7 @@ Về mặt ý tưởng, chính sách $\varepsilon$-mềm $\pi$ và chính sách 
 
 **Giá trị hành động.** Sau mỗi hành động lượt kết thúc, nên $q_\pi(s,\cdot)=(3;\,3;\,-1)$, không phụ thuộc $\pi$.
 
-**Kiểm tra $\varepsilon$-mềm.** Cận dưới là $\varepsilon/m(s)=0{,}3/3=0{,}1$; ba xác suất $0{,}1$, $0{,}1$, $0{,}8$ đều không nhỏ hơn $0{,}1$.
+**Kiểm tra $\varepsilon$-mềm.** Cận dưới là $\varepsilon/m(s)=0{,}3/3=0{,}1$; ba xác suất $0{,}1$, $0{,}1$, $0{,}8$ đều $\ge0{,}1$.
 
 **Giá trị của $\pi$.** $v_\pi(s)=0{,}1\cdot3+0{,}1\cdot3+0{,}8\cdot(-1)=-0{,}2$.
 
@@ -356,7 +356,7 @@ $$
 
 **Điều kiện áp dụng.** Bảng dùng để tạo $\pi'$ phải là $q_\pi$ của chính chính sách $\pi$ hiện tại, không phải một ước lượng từ mẫu; hai chính sách dùng cùng một $\varepsilon$.
 
-**Phạm vi.** Mệnh đề so sánh $\pi'$ với $\pi$ trong lớp $\varepsilon$-mềm; nó không khẳng định $\pi'$ tốt hơn mọi chính sách, không khẳng định bất đẳng thức chặt; với $\varepsilon=0$, khi mỗi hàng $q_\pi(s,\cdot)$ có cực đại duy nhất, mệnh đề trùng với trường hợp tham lam của Định lý 04.13.
+**Phạm vi.** Mệnh đề chỉ so sánh $\pi'$ với $\pi$ trong lớp $\varepsilon$-mềm, và bất đẳng thức có thể không chặt; với $\varepsilon=0$, khi mỗi hàng $q_\pi(s,\cdot)$ có cực đại duy nhất, mệnh đề trùng với trường hợp tham lam của Định lý 04.13.
 :::
 
 ::: proof Chứng minh Mệnh đề 06.6
@@ -407,15 +407,15 @@ Ba giả thiết của mệnh đề có vai trò riêng, và mỗi giả thiết
 - Bỏ "$\pi$ là $\varepsilon$-mềm": cũng trong Ví dụ 06.5, chính sách tất định chọn hành động $0$ có giá trị $3$, còn chính sách $0{,}3$-tham lam theo $q_\pi$ có giá trị $2{,}6<3$. Ở Bước 2, trọng số $w(1\mid s)=(0-0{,}1)/0{,}7$ âm, nên lập luận "trung bình không vượt cực đại" không còn dùng được.
 - Bỏ "$\gamma<1$": Bước 4 dùng tính co để đồng nhất giới hạn của $u_j$ với $v_{\pi'}$. Trên dãy năm ô với $\gamma=1$, một chính sách tất định có thể đi vòng mãi giữa B và C và có lợi tức không hữu hạn (Nhận xét 06.2), nên $v_{\pi'}$ có thể không xác định. Kết quả khi $\gamma=1$ cần thêm giả thiết mọi chính sách được xét kết thúc hầu chắc chắn.
 
-Mệnh đề 06.6 mở rộng trường hợp tham lam của Định lý 04.13 sang chính sách $\varepsilon$-tham lam với $\varepsilon>0$, và với $\varepsilon=0$ sang trường hợp có đồng hạng, khi $\pi_0$ chia đều nên là chính sách ngẫu nhiên mà Định lý 04.13 không xét. Cái giá của việc giữ $\varepsilon>0$ là kết luận chỉ so sánh trong lớp $\varepsilon$-mềm; lặp lại bước này dẫn tới chính sách tốt nhất trong lớp đó, có thể kém hơn chính sách tối ưu (Sutton và Barto, 2018, §5.4). Trong Ví dụ 06.5, chính sách tốt nhất trong lớp $0{,}3$-mềm có giá trị $2{,}6$, còn chính sách tất định chọn hành động $0$ đạt $3$.
+Mệnh đề 06.6 mở rộng trường hợp tham lam của Định lý 04.13 sang chính sách $\varepsilon$-tham lam với $\varepsilon>0$ và sang trường hợp $\varepsilon=0$ có đồng hạng, khi $\pi_0$ chia đều xác suất nên là chính sách ngẫu nhiên, ngoài phạm vi Định lý 04.13. Cái giá của việc giữ $\varepsilon>0$ là kết luận chỉ so sánh trong lớp $\varepsilon$-mềm; lặp lại bước này dẫn tới chính sách tốt nhất trong lớp đó, có thể kém hơn chính sách tối ưu (Sutton và Barto, 2018, §5.4). Trong Ví dụ 06.5, chính sách tốt nhất trong lớp $0{,}3$-mềm có giá trị $2{,}6$, còn chính sách tất định chọn hành động $0$ đạt $3$.
 
 ::: remark Nhận xét 06.7 (Giới hạn của Mệnh đề 06.6 khi học từ mẫu)
 Trong ba thuật toán của chương, tác tử không có $q_\pi$ mà chỉ có bảng $Q$ cập nhật từ một số hữu hạn mẫu, nên giả thiết "$q_\pi$ được biết chính xác" không thỏa, và bước $\varepsilon$-tham lam có thể làm giá trị giảm, như phản ví dụ $2{,}6\to-0{,}2$ sau Mệnh đề 06.6.
 
-Khi $\varepsilon_k$ giảm dần giữa các lượt, như trong Thuật toán 06.9, chính sách $\varepsilon_k$-tham lam cũng là $\varepsilon_{k+1}$-mềm vì $\varepsilon_k/m(s)\ge\varepsilon_{k+1}/m(s)$, nên giả thiết mềm vẫn thỏa với $\varepsilon=\varepsilon_{k+1}$, và giả thiết bị vi phạm chỉ là "$q_\pi$ được biết chính xác". Khi $\varepsilon$ tăng giữa hai lượt, giả thiết mềm có thể không thỏa.
+Khi $\varepsilon_k$ giảm dần giữa các lượt, như trong Thuật toán 06.9, chính sách $\varepsilon_k$-tham lam cũng là $\varepsilon_{k+1}$-mềm vì $\varepsilon_k/m(s)\ge\varepsilon_{k+1}/m(s)$, nên giả thiết mềm vẫn thỏa với $\varepsilon=\varepsilon_{k+1}$. Giả thiết duy nhất bị vi phạm là "$q_\pi$ được biết chính xác". Khi $\varepsilon$ tăng giữa hai lượt, giả thiết mềm có thể không thỏa.
 :::
 
-**Trong thực hành.** Trong bài thực hành LunarLander của chương, bảng $Q$ có $2187\times4$ ô, khởi tạo bằng $0$, và chính sách hành vi là chính sách $\varepsilon_k$-tham lam theo bảng hiện tại, với $\varepsilon_k$ giảm tuyến tính từ $1$ về $\varepsilon_{\min}=0{,}05$ trong $1500$ lượt đầu rồi giữ nguyên (notebook, phần 5). Phần sàn $\varepsilon/m(s)$ giữ cho mỗi hành động tại một ô đã ghé còn được thử: với $\varepsilon_{\min}=0{,}05$ và bốn hành động, mỗi hành động không cực đại có xác suất $0{,}0125$ ở mỗi lần ghé. Giả thiết "$q_\pi$ được biết chính xác" của Mệnh đề 06.6 không thỏa trong notebook: bảng là ước lượng từ mẫu và được cập nhật sau mỗi bước, nên chính sách hành vi đổi ngay trong lượt; vì vậy mệnh đề không bảo đảm giá trị của chính sách hành vi tăng dần theo lượt (Nhận xét 06.7).
+**Trong thực hành.** Trong bài thực hành LunarLander của chương, bảng $Q$ có $2187\times4$ ô, khởi tạo bằng $0$, và chính sách hành vi là chính sách $\varepsilon_k$-tham lam theo bảng hiện tại, với $\varepsilon_k$ giảm tuyến tính từ $1$ về $\varepsilon_{\min}=0{,}05$ trong $1500$ lượt đầu rồi giữ nguyên (notebook, phần 5). Phần sàn $\varepsilon/m(s)$ giữ cho mỗi hành động tại một ô đã ghé còn được thử: với $\varepsilon_{\min}=0{,}05$ và bốn hành động, mỗi hành động không cực đại có xác suất $0{,}0125$ ở mỗi lần ghé. Trong notebook, bảng là ước lượng từ mẫu và được cập nhật sau mỗi bước, nên giả thiết "$q_\pi$ được biết chính xác" của Mệnh đề 06.6 không thỏa và chính sách hành vi đổi ngay trong lượt. Do đó mệnh đề không bảo đảm giá trị của chính sách hành vi tăng dần theo lượt (Nhận xét 06.7).
 
 ::: exercise Bài tập 06.2 (Chính sách $\varepsilon$-tham lam và điều kiện của Mệnh đề 06.6)
 Các câu 1, 3, 4 xét dãy năm ô của Ví dụ 06.1 ($\gamma=1$, hai hành động $0$ trái và $1$ phải tại mỗi ô không kết thúc); câu 2 xét một trạng thái ngoài dãy năm ô.
@@ -463,7 +463,7 @@ Một cách trực quan, điều khiển Monte Carlo lặp lại ba việc:
 - gán lợi tức của mỗi thời điểm cho cặp đã xảy ra ở thời điểm đó rồi cập nhật trung bình của cặp;
 - lập chính sách mới cho lượt sau.
 
-Chính sách không đổi trong lượt, nên các lợi tức của lượt đánh giá đúng chính sách đã sinh ra nó. Phương pháp mà chính sách được đánh giá cũng là chính sách sinh dữ liệu gọi là phương pháp theo chính sách (on-policy).
+Chính sách không đổi trong lượt, nên các lợi tức của lượt đánh giá đúng chính sách đã sinh ra nó. Phương pháp có chính sách được đánh giá trùng với chính sách sinh dữ liệu gọi là phương pháp theo chính sách (on-policy).
 
 ::: example Ví dụ 06.6 (Một lượt tham lam D→E)
 **Dữ kiện.** Dãy năm ô, $\gamma=1$. Bảng khởi tạo nghiêng phải: B $(0,1)$, C $(1,0)$, D $(0,1)$, mỗi cặp ghi theo thứ tự hành động $(0,1)$. Mọi bộ đếm $N(s,a)$, số lợi tức đã dùng cho cặp $(s,a)$, bằng $0$. Chính sách của lượt là chính sách tham lam theo bảng ($\varepsilon=0$).
@@ -504,7 +504,7 @@ Việc cập nhật dùng lại trung bình gia tăng (Mệnh đề 05.9): nếu
 
 ### 2.2 Một lượt có thăm dò
 
-Ví dụ 06.6 dùng chính sách tham lam, nên chỉ cập nhật được $(\mathrm D,1)$. Với $\varepsilon=1/4$, bảng nghiêng phải cho $(\mathrm D,0)$ xác suất $1/8$ ở đầu mỗi lượt (Ví dụ 06.4); ví dụ sau minh họa thăm dò tại một ô khác. Ví dụ này dùng bảng khởi tạo nghiêng trái, chỉ khác bảng nghiêng phải ở hàng D; dưới bảng này $(\mathrm D,0)$ đã là hành động tham lam, nên bước thăm dò của lượt xảy ra tại B. Một dãy số tất định thay cho nguồn ngẫu nhiên, để mọi người học tái tạo được cùng một lượt.
+Ví dụ 06.6 dùng chính sách tham lam, nên chỉ cập nhật được $(\mathrm D,1)$. Với $\varepsilon=1/4$, bảng nghiêng phải cho $(\mathrm D,0)$ xác suất $1/8$ ở đầu mỗi lượt (Ví dụ 06.4). Ví dụ sau dùng bảng khởi tạo nghiêng trái, chỉ khác bảng nghiêng phải ở hàng D; dưới bảng này $(\mathrm D,0)$ là hành động tham lam, nên bước thăm dò của lượt xảy ra tại B. Một dãy số tất định thay cho nguồn ngẫu nhiên, để mọi người học tái tạo được cùng một lượt.
 
 ::: example Ví dụ 06.7 (Lượt thăm dò sinh bằng dãy số cho trước)
 **Dữ kiện.** Dãy năm ô, $\varepsilon=1/4$. Bảng khởi tạo nghiêng trái giữ hàng B, C của bảng nghiêng phải và đổi hàng D:
@@ -515,7 +515,7 @@ Ví dụ 06.6 dùng chính sách tham lam, nên chỉ cập nhật được $(\m
 | C | $1$ | $0$ |
 | D | $1$ | $0$ |
 
-Dãy số: $x_0=1$, $x_j=(2x_{j-1}+1)\bmod 5$ và $u_j=(x_j+1)/5$ với $j=1,2,\dots$; chỉ số $j$ đếm số đã dùng, khác thời điểm $t$ của lượt. Quy tắc dùng số: mỗi lần chọn hành động đọc một số $u$; nếu $u>1/4$ thì chọn hành động cực đại; nếu $u\le1/4$ thì đọc thêm một số, chọn trái khi số này không vượt $1/2$ và chọn phải trong trường hợp còn lại. Mọi hàng dùng ở đây có cực đại duy nhất.
+Dãy số: $x_0=1$, $x_j=(2x_{j-1}+1)\bmod 5$ và $u_j=(x_j+1)/5$ với $j=1,2,\dots$; chỉ số $j$ đếm số đã dùng, khác thời điểm $t$ của lượt. Quy tắc dùng số: mỗi lần chọn hành động đọc một số $u$; nếu $u>1/4$ thì chọn hành động cực đại; nếu $u\le1/4$ thì đọc thêm một số, chọn trái khi số này $\le1/2$, chọn phải khi số này $>1/2$. Mọi hàng dùng ở đây có cực đại duy nhất.
 
 **Dãy số.** $x_1=(2\cdot1+1)\bmod5=3$, $x_2=(2\cdot3+1)\bmod5=2$, $x_3=(2\cdot2+1)\bmod5=0$, $x_4=(2\cdot0+1)\bmod5=1$; do đó $u_1=4/5$, $u_2=3/5$, $u_3=1/5$, $u_4=2/5$.
 
@@ -596,7 +596,7 @@ Lượt kết thúc là sự kiện của môi trường; chỉ khi đó lợi t
 Các lợi tức của những lượt khác nhau được sinh bởi những chính sách khác nhau, nên trung bình trong mỗi ô trộn đánh giá của nhiều chính sách.
 :::
 
-**Trong thực hành.** Bài thực hành LunarLander không cài đặt Thuật toán 06.9 mà nêu nó như một nhiệm vụ mở (phần 13, nhiệm vụ 9). Trong một lần chạy đã nhúng trong notebook, $500$ lượt huấn luyện cuối của Sarsa (Thuật toán 06.12), sinh bởi chính sách hành vi $\varepsilon_k$-tham lam, dài trung bình $655$ bước và $7\%$ số lượt bị cắt ngắn ở bước $1000$ (phần 8.1); theo Nhận xét 06.10, nếu Thuật toán 06.9 học trên dữ liệu như vậy thì các lượt bị cắt ngắn không dùng được, và mỗi cập nhật phải chờ hàng trăm bước.
+**Trong thực hành.** Bài thực hành LunarLander không cài đặt Thuật toán 06.9 mà nêu nó như một nhiệm vụ mở (phần 13, nhiệm vụ 9). Trong một lần chạy đã nhúng trong notebook, $500$ lượt huấn luyện cuối của Sarsa (Thuật toán 06.12), sinh bởi chính sách hành vi $\varepsilon_k$-tham lam, dài trung bình $655$ bước và $7\%$ số lượt bị cắt ngắn ở bước $1000$ (phần 8.1). Nếu Thuật toán 06.9 học trên dữ liệu như vậy, các lượt bị cắt ngắn không dùng được (Nhận xét 06.10) và mỗi cập nhật phải chờ hàng trăm bước.
 
 ::: exercise Bài tập 06.3 (Lần ghé đầu tiên trên lượt có cặp lặp)
 Trên dãy năm ô ($\gamma=1$), cho lượt D→C→D→C→B→A với dãy hành động $0,1,0,0,0$ và dãy phần thưởng $-1,-1,-1,-1,1000$. Bộ đếm ban đầu $N(\mathrm D,0)=0$.
@@ -632,7 +632,7 @@ Sau chuyển D→C của một lượt mới, tác tử đã nhận phần thư�
 
 ### 3.1 Mục tiêu một bước cho giá trị hành động
 
-Về mặt ý tưởng, phần lợi tức sau C là lợi tức khi tác tử tiếp tục từ C theo chính sách đang dùng, bắt đầu bằng một hành động $A'$ tại C. Nếu tác tử chọn luôn $A'$ và cam kết thực hiện nó, thì ô $Q(\mathrm C,A')$ là ước lượng hiện có của đúng phần tiếp nối đó, và mục tiêu cho $(\mathrm D,0)$ là phần thưởng vừa nhận cộng $\gamma Q(\mathrm C,A')$. Để làm rõ bảng nào được đọc, $A'$ được chọn lúc nào và trạng thái kết thúc được xử lý ra sao, xem ví dụ sau.
+Về mặt ý tưởng, phần lợi tức sau C là lợi tức khi tác tử tiếp tục từ C theo chính sách đang dùng, bắt đầu bằng một hành động $A'$ tại C. Nếu tác tử chọn luôn $A'$ và cam kết thực hiện nó, thì ô $Q(\mathrm C,A')$ là ước lượng hiện có của đúng phần tiếp nối đó, và mục tiêu cho $(\mathrm D,0)$ là $-1+\gamma Q(\mathrm C,A')$. Để làm rõ bảng nào được đọc, $A'$ được chọn lúc nào và trạng thái kết thúc được xử lý ra sao, xem ví dụ sau.
 
 ::: example Ví dụ 06.9 (Năm mẫu chuyển, hai cập nhật Sarsa đầu)
 **Dữ kiện.** Dãy năm ô, $\gamma=1$, bước học hằng $\alpha=0{,}8$. Bảng khởi tạo nghiêng phải, ghi theo thứ tự hành động $(0,1)$: B $(0,1)$, C $(1,0)$, D $(0,1)$. Năm mẫu, với $S,A,R,S',A'$ là trạng thái, hành động, phần thưởng, trạng thái kế tiếp và hành động kế tiếp đã chọn:
@@ -645,7 +645,7 @@ Về mặt ý tưởng, phần lợi tức sau C là lợi tức khi tác tử t
 | 4 | D | 1 | $10$ | E | không có |
 | 5 | D | 0 | $-1$ | C | 0 |
 
-Ba mẫu đầu thuộc lượt D→C→B→A; mẫu 4 thuộc lượt D→E; mẫu 5 thuộc lượt thứ ba, mà dữ liệu dừng ở C, một trạng thái chưa kết thúc. Các hành động $A$ và $A'$ trong bảng là dữ kiện cho trước; mỗi hành động đều có xác suất dương dưới chính sách $\varepsilon$-tham lam với $\varepsilon>0$. Năm mẫu này dùng chung cho Sarsa và Q-learning.
+Ba mẫu đầu thuộc lượt D→C→B→A; mẫu 4 thuộc lượt D→E; mẫu 5 thuộc lượt thứ ba, có dữ liệu dừng ở C, một trạng thái chưa kết thúc. Các hành động $A$ và $A'$ trong bảng là dữ kiện cho trước; mỗi hành động đều có xác suất dương dưới chính sách $\varepsilon$-tham lam với $\varepsilon>0$. Năm mẫu này dùng chung cho Sarsa và Q-learning.
 
 **Mẫu 1.** Hành động kế tiếp tại C là $0$, có $Q(\mathrm C,0)=1$.
 
@@ -778,7 +778,7 @@ Với mục tiêu Sarsa, ba sự kiện sau có hậu quả khác nhau.
 Thuật toán 06.12 và Thuật toán 06.9 khác nhau ở mục tiêu, và khác biệt này có ba hệ quả:
 
 - **Dữ liệu và thời điểm cập nhật.** Monte Carlo dùng lợi tức hoàn chỉnh $G_t$, cần lượt kết thúc và cập nhật sau lượt; Sarsa dùng $R_{t+1}+\gamma Q_t(S_{t+1},A_{t+1})$, chỉ cần bộ năm và cập nhật sau mỗi chuyển.
-- **Sai lệch do ước lượng.** Mục tiêu Sarsa chứa ước lượng $Q_t$, nên khi $Q_t$ còn sai thì mục tiêu cũng mang sai lệch đó; Ví dụ 06.9 cho thấy sai lệch ấy ở mẫu 1, nơi mục tiêu $0$ được tính từ giá trị khởi tạo $Q(\mathrm C,0)=1$ chưa từng được quan sát.
+- **Sai số do ước lượng.** Mục tiêu Sarsa chứa ước lượng $Q_t$, nên khi $Q_t$ còn sai thì mục tiêu cũng sai theo; ở mẫu 1 của Ví dụ 06.9, mục tiêu $0$ được tính từ giá trị khởi tạo $Q(\mathrm C,0)=1$ chưa từng được quan sát.
 - **Bộ nhớ.** Monte Carlo lưu cả quỹ đạo, Sarsa chỉ lưu bảng.
 
 **Trong thực hành.** Bài thực hành cài đặt Thuật toán 06.12 trên LunarLander với ngân sách tính theo $K=3000$ lượt thay cho $H$ cập nhật; tổng số cập nhật $h$ vẫn được đếm (notebook, phần 6 và 8). Bảng có $2187$ ô của một lưới rời rạc hóa (discretization) quan sát liên tục và bốn hành động; bước học theo cặp là $\alpha_n=\max(0{,}05,\ n^{-0{,}6})$. Ở bước cắt ngắn $1000$, mục tiêu vẫn chứa $\gamma Q(S',A')$ đúng như Nhận xét 06.13; khi tàu vào trạng thái kết thúc với phần thưởng $\pm100$, mục tiêu chỉ là phần thưởng đó.
@@ -825,7 +825,7 @@ Sarsa (Định nghĩa 06.11, Thuật toán 06.12) cập nhật sau mỗi chuyể
 
 ### 4.1 Chính sách hành vi và chính sách đích
 
-Một cách trực quan, có hai câu hỏi khác nhau đằng sau mỗi mẫu. Câu thứ nhất là "hành động nào đã được thực hiện", do cơ chế sinh dữ liệu quyết định và xác định ô nào của bảng được cập nhật. Câu thứ hai là "phần tiếp nối được đánh giá theo cách chọn nào", do mục tiêu quyết định và xác định bảng xấp xỉ giá trị của chính sách nào. Trong Sarsa, hai câu có cùng câu trả lời; trong Q-learning, chúng có câu trả lời khác nhau.
+Một cách trực quan, có hai câu hỏi khác nhau đằng sau mỗi mẫu. Câu thứ nhất là "hành động nào đã được thực hiện"; cơ chế sinh dữ liệu trả lời nó và qua đó xác định ô được cập nhật. Câu thứ hai là "phần tiếp nối được đánh giá theo cách chọn nào"; mục tiêu trả lời nó và qua đó xác định bảng xấp xỉ giá trị của chính sách nào. Trong Sarsa, hai câu có cùng câu trả lời; trong Q-learning, chúng có câu trả lời khác nhau.
 
 ![Sơ đồ: ô "Hành vi b" chọn "Hành động" tác động lên "Môi trường", môi trường tạo "Mẫu chuyển" (các mũi tên nét liền, đường sinh dữ liệu). Mẫu chuyển cùng "Bảng Q" đi vào ô "Mục tiêu" ghi "cực đại" và "đích tham lam", mục tiêu cập nhật bảng Q (các mũi tên nét đứt). Một mũi tên từ bảng Q về hành vi ghi "hành vi có thể dùng Q".](img/lec-06/behavior-target.svg)
 
@@ -894,7 +894,7 @@ Sai lệch và cập nhật như Định nghĩa 06.11: $\delta_t=Y_t-Q_t(S_t,A_t
 
 Mục tiêu Q-learning chỉ cần bộ bốn $(S_t,A_t,R_{t+1},S_{t+1})$, và cả phép cực đại lẫn giá trị cũ đều đọc từ cùng bảng $Q_t$. Khi $S_{t+1}$ kết thúc, hai mục tiêu Sarsa và Q-learning cùng bằng $R_{t+1}$; khi $S_{t+1}$ chưa kết thúc và $\gamma>0$, chúng trùng nhau khi và chỉ khi hành động kế tiếp của Sarsa thuộc tập cực đại $\mathcal G_{Q_t}(S_{t+1})$.
 
-Một nhầm lẫn thường gặp là cho rằng vì mục tiêu dùng cực đại nên hành vi không ảnh hưởng tới kết quả học, nhưng $b$ quyết định cặp nào được cập nhật, và một cặp mà $b$ không thực hiện giữ mãi giá trị khởi tạo. Nhầm lẫn thứ hai là đọc $\max_aQ_t(S_{t+1},a)$ như giá trị tối ưu thật; nó chỉ là cực đại của các ước lượng hiện có.
+Một nhầm lẫn thường gặp là cho rằng hành vi không ảnh hưởng tới kết quả học vì mục tiêu dùng cực đại. Thực ra $b$ quyết định cặp nào được cập nhật, và cặp mà $b$ không thực hiện giữ mãi giá trị khởi tạo. Nhầm lẫn thứ hai là đọc $\max_aQ_t(S_{t+1},a)$ như giá trị tối ưu thật; nó chỉ là cực đại của các ước lượng hiện có.
 
 ### 4.3 Thuật toán Q-learning
 
@@ -956,7 +956,7 @@ Lần chạy Q-learning bắt đầu lại từ bảng khởi tạo nghiêng ph�
 | Sarsa (Ví dụ 06.10) | $(-0{,}6;\,0)$ | $(0;\,8{,}2)$ | $(-1{,}28;\,8{,}2)$ |
 | Q-learning | $(0{,}2;\,0)$ | $(0;\,8{,}2)$ | $(-0{,}64;\,8{,}2)$ |
 
-**Diễn giải.** Hai lần chạy dùng cùng bảng khởi tạo, nên mọi khác biệt đến từ mục tiêu. Khác biệt xuất hiện ở mẫu 2 (hai ô khác nhau của hàng B) rồi truyền từ C về D ở mẫu 5. Mẫu 1 cho cùng cập nhật vì $A'=0$ thuộc tập cực đại của hàng C; mẫu 3 và 4 vì đi vào trạng thái kết thúc.
+**Diễn giải.** Hai lần chạy dùng cùng bảng khởi tạo, nên mọi khác biệt đến từ mục tiêu. Khác biệt xuất hiện ở mẫu 2, nơi Sarsa đọc $Q(\mathrm B,0)$ còn Q-learning đọc $Q(\mathrm B,1)$, rồi truyền từ C về D ở mẫu 5. Mẫu 1 cho cùng cập nhật vì $A'=0$ thuộc tập cực đại của hàng C; mẫu 3 và 4 vì đi vào trạng thái kết thúc.
 
 **Kiểm tra lại.** $-0{,}64=-16/25=\tfrac45\cdot(-\tfrac45)$.
 :::
@@ -964,7 +964,7 @@ Lần chạy Q-learning bắt đầu lại từ bảng khởi tạo nghiêng ph�
 Trong Ví dụ 06.12, hai thuật toán dùng chung dữ liệu; nếu mỗi thuật toán tự sinh dữ liệu bằng chính sách của nó, hai quá trình có phân phối quỹ đạo khác nhau.
 
 ::: remark Nhận xét 06.17 (Q-learning một bước và dữ liệu hành vi)
-Muốn ước lượng một kỳ vọng theo chính sách đích $\pi$ bằng hành động do $b$ lấy mẫu, ta nhân với tỉ số lấy mẫu quan trọng (importance sampling ratio) $\pi(a\mid s)/b(a\mid s)$. Q-learning một bước không cần tỉ số này. Hành động $A_t$ đã được cố định trong điều kiện của ô $Q(S_t,A_t)$ được cập nhật, tức của $q_*(S_t,A_t)$ mà ô này ước lượng; phần tiếp nối tại $S_{t+1}$ được tính bằng cực đại trên bảng, không qua một hành động lấy mẫu từ $b$.
+Muốn ước lượng một kỳ vọng theo chính sách đích $\pi$ bằng hành động do $b$ lấy mẫu, ta nhân với tỉ số lấy mẫu quan trọng (importance sampling ratio) $\pi(a\mid s)/b(a\mid s)$. Q-learning một bước không cần tỉ số này. Ô được cập nhật $Q(S_t,A_t)$ ước lượng $q_*(S_t,A_t)$, đại lượng đã lấy $A_t$ làm điều kiện; phần tiếp nối tại $S_{t+1}$ là cực đại trên bảng, không dùng hành động lấy mẫu từ $b$.
 
 Dữ liệu cho Q-learning vẫn phải thỏa hai điều kiện: mẫu $(R_{t+1},S_{t+1})$ được sinh bởi động lực của chính môi trường, và hành vi $b$ tiếp tục thăm mọi cặp cần học. Phát lại vô hạn lần một tập mẫu hữu hạn không khôi phục được phân phối chuyển và không tự thỏa giả thiết lấy mẫu của Định lý 06.21.
 :::
@@ -1044,7 +1044,7 @@ $$
 
 đúng là vế phải của phương trình Bellman tối ưu (Bellman optimality equation) cho $q_*$ (Định lý 04.25(c)).
 
-Ánh xạ biến bảng $Q$ thành bảng có ô $(s,a)$ bằng biểu thức trên, với $Q$ thay cho $Q_t$, là dạng $Q$ của toán tử Bellman tối ưu; toán tử $T_*$ trong bảng ký hiệu tác động trên bảng $\mathcal S\to\mathbb R$. Nhắc lại Mệnh đề 04.24: khi $\gamma<1$, $T_*$ là ánh xạ co hệ số $\gamma$ theo chuẩn vô cùng, vì $|\max_ax_a-\max_ay_a|\le\max_a|x_a-y_a|$ (Bổ đề 04.23).
+Dạng $Q$ của toán tử Bellman tối ưu biến bảng $Q$ thành bảng có ô $(s,a)$ bằng biểu thức trên, với $Q$ thay cho $Q_t$; toán tử $T_*$ trong bảng ký hiệu tác động trên bảng $\mathcal S\to\mathbb R$. Nhắc lại Mệnh đề 04.24: khi $\gamma<1$, $T_*$ là ánh xạ co hệ số $\gamma$ theo chuẩn vô cùng, vì $|\max_ax_a-\max_ay_a|\le\max_a|x_a-y_a|$ (Bổ đề 04.23).
 
 Cùng lập luận áp dụng cho dạng $Q$. Với hai bảng $Q$, $Q'$ bằng $0$ tại trạng thái kết thúc, số hạng $r(s,a)$ triệt tiêu trong hiệu của hai ảnh tại $(s,a)$. Theo Bổ đề 04.23 và $\sum_{s'}p(s'\mid s,a)=1$, hiệu ấy có trị tuyệt đối không vượt
 
@@ -1064,7 +1064,7 @@ Với Sarsa, kỳ vọng của mục tiêu phụ thuộc chính sách chọn $A_
 
 ### 5.2 Tham lam trong giới hạn với thăm dò vô hạn
 
-Mục tiêu Sarsa dùng hành động kế tiếp do chính sách hành vi chọn. Nếu hành vi giữ $\varepsilon$ cố định, kỳ vọng của mục tiêu Sarsa lấy theo một chính sách còn thăm dò; nếu bảng ổn định tại một giới hạn, giới hạn đó là giá trị của chính sách $\varepsilon$-tham lam theo chính bảng ấy, nói chung khác $q_*$. Nếu hành vi bỏ thăm dò quá sớm, một số cặp không còn được cập nhật, như ô $(\mathrm D,0)$ trong thí nghiệm ở đầu mục. Lịch thăm dò phải giải quyết cả hai nhu cầu. Ví dụ sau tính hai đại lượng tương ứng cho chính sách $\varepsilon_k$-tham lam tại ô bắt đầu D.
+Mục tiêu Sarsa dùng hành động kế tiếp do chính sách hành vi chọn. Nếu hành vi giữ $\varepsilon$ cố định, kỳ vọng của mục tiêu Sarsa lấy theo một chính sách còn thăm dò; nếu bảng ổn định tại một giới hạn, giới hạn đó là giá trị của chính sách $\varepsilon$-tham lam theo chính bảng ấy, nói chung khác $q_*$. Nếu hành vi bỏ thăm dò quá sớm, một số cặp không còn được cập nhật, như ô $(\mathrm D,0)$ trong thí nghiệm ở đầu mục. Lịch thăm dò phải tránh cả hai tình huống trên. Ví dụ sau tính hai đại lượng tương ứng cho chính sách $\varepsilon_k$-tham lam tại ô bắt đầu D.
 
 ::: example Ví dụ 06.14 (Khối xác suất tham lam và số lần thử cặp $(\mathrm D,0)$ khi $\varepsilon$ giảm)
 **Dữ kiện.** Tại ô D có hai hành động. Giả sử ở mọi lượt, hàng D của bảng có cùng một cực đại duy nhất là hành động $1$. Lượt $k$ dùng chính sách $\varepsilon_k$-tham lam (Định nghĩa 06.3); mỗi lượt bắt đầu tại D, nên D được ghé ít nhất một lần mỗi lượt.
@@ -1097,7 +1097,7 @@ Nhầm lẫn thường gặp là coi "$\varepsilon_k\to0$" là đủ cho GLIE; V
 
 Nếu $t$ trong lịch $\varepsilon=1/t$ là chỉ số bước toàn cục, thăm dò vô hạn vẫn phải được kiểm theo từng cặp. Giả sử một trạng thái có hai hành động chỉ được ghé tại các bước toàn cục $t_n=2^n$, $n=1,2,\dots$, và hàng của nó giữ cùng một cực đại duy nhất. Tổng xác suất chọn hành động không cực đại tại các lần ghé là $\sum_{n\ge1}2^{-n}/2=1/2<\infty$, nên theo vế thứ nhất của bổ đề Borel–Cantelli, hành động ấy chỉ được thử hữu hạn lần, hầu chắc chắn.
 
-Singh và cộng sự (2000) dùng lịch theo trạng thái $\varepsilon_t(s)=c/C_t(s)$ với $0<c<1$, trong đó $C_t(s)=\sum_aC_t(s,a)$ là số lần ghé $s$ trong các bước $0,\dots,t$ (bộ đếm của Định nghĩa 06.18). Khi đó tại mỗi trạng thái được ghé vô hạn lần, với $m(s)$ hành động, tổng các xác suất chọn một hành động cố định ở các lần ghé là ít nhất $\tfrac{c}{m(s)}\big(1+\tfrac12+\tfrac13+\cdots\big)=\infty$. Các lần chọn không độc lập, nên kết luận "thử vô hạn lần" cần dạng có điều kiện của bổ đề Borel–Cantelli; Singh và cộng sự chứng minh lịch này thỏa định nghĩa GLIE của họ, vốn chỉ đòi điều kiện tại các trạng thái được ghé vô hạn lần (phần Phạm vi của Định lý 06.22).
+Singh và cộng sự (2000) dùng lịch theo trạng thái $\varepsilon_t(s)=c/C_t(s)$ với $0<c<1$, trong đó $C_t(s)=\sum_aC_t(s,a)$ là số lần ghé $s$ trong các bước $0,\dots,t$ (bộ đếm của Định nghĩa 06.18). Khi đó tại mỗi trạng thái được ghé vô hạn lần, với $m(s)$ hành động, tổng các xác suất chọn một hành động cố định ở các lần ghé là ít nhất $\tfrac{c}{m(s)}\big(1+\tfrac12+\tfrac13+\cdots\big)=\infty$. Các lần chọn không độc lập, nên kết luận "thử vô hạn lần" cần dạng có điều kiện của bổ đề Borel–Cantelli. Singh và cộng sự chứng minh lịch này thỏa định nghĩa GLIE của họ, vốn chỉ đòi điều kiện tại các trạng thái được ghé vô hạn lần (phần Phạm vi của Định lý 06.22).
 
 ### 5.3 Điều kiện Robbins–Monro theo cặp
 
@@ -1148,7 +1148,7 @@ Hai định lý dưới đây đặt chung các giả thiết nền sau:
 - mẫu $(R_{t+1},S_{t+1})$, có điều kiện theo toàn bộ lịch sử và cặp hiện tại $(S_t,A_t)=(s,a)$, có phân phối $p(\cdot,\cdot\mid s,a)$;
 - bước học của mỗi cập nhật được chọn từ thông tin có trước mẫu dùng cho cập nhật đó.
 
-Dãy năm ô dùng $\gamma=1$ và bước học hằng $0{,}8$ để tính tay, nên nằm ngoài các định lý.
+Dãy năm ô dùng $\gamma=1$, trái với giả thiết $0\le\gamma<1$, và bước học hằng $0{,}8$, có $\sum_n0{,}8^2=\infty$ nên không thỏa Định nghĩa 06.19; do đó dãy năm ô nằm ngoài các định lý.
 :::
 
 ::: theorem Định lý 06.21 (Hội tụ của Q-learning dạng bảng)
@@ -1158,7 +1158,7 @@ Dãy năm ô dùng $\gamma=1$ và bước học hằng $0{,}8$ để tính tay, 
 
 **Điều kiện áp dụng.** Chính sách hành vi $b$ tùy ý, kể cả thay đổi theo bảng, miễn là nó giữ độ phủ; không cần GLIE và không cần tỉ số lấy mẫu quan trọng.
 
-**Phạm vi.** Kết quả là tiệm cận: không cho tốc độ, không cho biết bảng tại một ngân sách hữu hạn gần $q_*$ đến đâu, và chỉ áp dụng cho biểu diễn bảng. Chứng minh nằm ngoài phạm vi học phần; xem Watkins và Dayan (1992, tr. 282 và phần chứng minh sau đó) và Bertsekas và Tsitsiklis (1996, §5.6). Watkins và Dayan phát biểu với $0\le\alpha_n<1$; vì tổng bình phương hữu hạn nên chỉ có hữu hạn lần $\alpha_n=1$, và với lịch tất định theo số lần cập nhật, định lý áp dụng từ sau lần cuối ấy, nên lịch $\alpha_n=1/n$ (có $\alpha_1=1$) vẫn nằm trong phạm vi.
+**Phạm vi.** Kết quả là tiệm cận: không cho tốc độ, không cho biết bảng tại một ngân sách hữu hạn gần $q_*$ đến đâu, và chỉ áp dụng cho biểu diễn bảng. Chứng minh nằm ngoài phạm vi học phần; xem Watkins và Dayan (1992, tr. 282 và phần chứng minh sau đó) và Bertsekas và Tsitsiklis (1996, §5.6). Watkins và Dayan phát biểu với $0\le\alpha_n<1$. Vì tổng bình phương hữu hạn, chỉ có hữu hạn lần $\alpha_n=1$; với lịch tất định theo số lần cập nhật, định lý áp dụng từ sau lần cuối ấy. Do đó lịch $\alpha_n=1/n$ (có $\alpha_1=1$) vẫn nằm trong phạm vi.
 :::
 
 ::: theorem Định lý 06.22 (Hội tụ của Sarsa dạng bảng với GLIE)
@@ -1171,14 +1171,14 @@ Dãy năm ô dùng $\gamma=1$ và bước học hằng $0{,}8$ để tính tay, 
 **Phạm vi.** Kết quả là tiệm cận và chỉ cho biểu diễn bảng. Chứng minh nằm ngoài phạm vi học phần; xem Singh, Jaakkola, Littman và Szepesvári (2000, định nghĩa GLIE tr. 291–292, Định lý 1 tr. 294–295). Định nghĩa GLIE gốc chỉ đòi điều kiện tại các trạng thái được ghé vô hạn lần và đi kèm giả thiết MDP liên thông; Định nghĩa 06.18 đòi mọi cặp được thăm vô hạn lần, nên mạnh hơn và thay cho giả thiết liên thông.
 :::
 
-Hai định lý nói rằng, khi mọi cặp được cập nhật mãi và bước học theo từng cặp giảm đúng nhịp, bảng Q-learning tiến tới $q_*$ bất kể hành vi thăm dò ra sao, còn bảng Sarsa tiến tới cùng giới hạn nếu thăm dò tắt dần theo GLIE. Vì tập hành động hữu hạn, sau một thời điểm ngẫu nhiên đủ lớn mọi hành động cực đại của $Q_t$ đều tối ưu, nên chính sách tham lam theo $Q_t$ là tối ưu; thời điểm ấy không biết trước. Q-learning có điều kiện về hành vi yếu hơn; không định lý nào cho biết thuật toán nào nhanh hơn trên một bài toán cụ thể.
+Hai định lý nói rằng, khi mọi cặp được cập nhật mãi và bước học thỏa Robbins–Monro theo cặp, bảng Q-learning tiến tới $q_*$ bất kể hành vi thăm dò ra sao, còn bảng Sarsa tiến tới cùng giới hạn nếu thăm dò tắt dần theo GLIE. Vì tập hành động hữu hạn, sau một thời điểm ngẫu nhiên đủ lớn mọi hành động cực đại của $Q_t$ đều tối ưu, nên chính sách tham lam theo $Q_t$ là tối ưu; thời điểm ấy không biết trước. Q-learning có điều kiện về hành vi yếu hơn; không định lý nào cho biết thuật toán nào nhanh hơn trên một bài toán cụ thể.
 
 Các giả thiết có vai trò riêng; bỏ từng giả thiết dẫn tới hệ quả sau.
 
 - Bỏ độ phủ: trong thí nghiệm ở đầu mục ($\gamma=0{,}9$, hành vi tham lam theo bảng khởi tạo nghiêng phải), ô $(\mathrm D,0)$ giữ mãi $0$ trong khi $q_*(\mathrm D,0)=808{,}1$.
 - Bỏ Robbins–Monro: xét một cặp có mục tiêu là các biến độc lập nhận $\pm1$ với xác suất bằng nhau, giá trị cần học là $0$. Với bước hằng $0{,}8$, $Q_n=0{,}2\,Q_{n-1}+0{,}8\,Y_n$ nên $\operatorname{Var}Q_n=0{,}04\operatorname{Var}Q_{n-1}+0{,}64$, tiến tới $0{,}64/0{,}96=2/3$; bảng dao động mãi quanh $0$.
-- Bỏ GLIE (chỉ với Sarsa): với $\varepsilon$ cố định, mục tiêu Sarsa đánh giá chính sách $\varepsilon$-tham lam. Trong ví dụ đi men vách đá của Sutton và Barto (2018, Ví dụ 6.6), Sarsa với $\varepsilon=0{,}1$ học con đường an toàn xa vách, còn Q-learning học con đường tối ưu sát vách. Bài toán ấy không chiết khấu ($\gamma=1$), nên nằm ngoài giả thiết $\gamma<1$ của Định lý 06.22, và cho thấy hệ quả của $\varepsilon$ cố định lên con đường được học.
-- Bỏ $\gamma<1$: với $\gamma=1$, toán tử Bellman tối ưu không còn là ánh xạ co theo chuẩn vô cùng, nên định lý không áp dụng và cần giả thiết thay thế. Vòng B–C không cho phản ví dụ, vì giá trị tối ưu của dãy năm ô vẫn hữu hạn (Nhận xét 06.2). Dãy thuộc lớp bài toán đường đi ngắn nhất ngẫu nhiên (stochastic shortest path), mà Bertsekas và Tsitsiklis (1996, §2.2, §5.6) xét với $\gamma=1$ dưới các giả thiết thay cho $\gamma<1$. Ở đây, $\pi_L$ kết thúc từ mọi trạng thái và mọi chính sách dừng không kết thúc có lợi tức $-\infty$, vì mỗi bước không kết thúc nhận $-1$.
+- Bỏ GLIE (chỉ với Sarsa): với $\varepsilon$ cố định, mục tiêu Sarsa đánh giá chính sách $\varepsilon$-tham lam. Trong ví dụ đi men vách đá của Sutton và Barto (2018, Ví dụ 6.6), Sarsa với $\varepsilon=0{,}1$ học con đường an toàn xa vách, còn Q-learning học con đường tối ưu sát vách. Ví dụ này cho thấy hệ quả của $\varepsilon$ cố định lên con đường được học; vì không chiết khấu ($\gamma=1$), nó nằm ngoài giả thiết $\gamma<1$ của Định lý 06.22.
+- Bỏ $\gamma<1$: với $\gamma=1$, toán tử Bellman tối ưu không còn là ánh xạ co theo chuẩn vô cùng, nên định lý không áp dụng và cần giả thiết thay thế. Vòng B–C không cho phản ví dụ, vì giá trị tối ưu của dãy năm ô vẫn hữu hạn (Nhận xét 06.2). Dãy thuộc lớp bài toán đường đi ngắn nhất ngẫu nhiên (stochastic shortest path), mà Bertsekas và Tsitsiklis (1996, §2.2, §5.6) xét với $\gamma=1$ dưới các giả thiết thay cho $\gamma<1$. Ở đây, $\pi_L$ kết thúc từ mọi trạng thái và mọi chính sách dừng có lượt vô hạn đều có lợi tức $-\infty$, vì mỗi bước không kết thúc nhận $-1$.
 - Bỏ tính Markov của mẫu: trên LunarLander với các ô gộp nhiều quan sát, phân phối của ô kế tiếp phụ thuộc vị trí thật bên trong ô, nên không tồn tại một $p(\cdot\mid s,a)$ chung cho cả ô (Tình huống 06.1).
 
 ::: remark Nhận xét 06.23 (Điều khiển Monte Carlo không có định lý trong chương)
@@ -1187,7 +1187,7 @@ Các lợi tức trong cùng một ô của Thuật toán 06.9 đến từ nhữ
 Sutton và Barto (2018, §5.3) ghi rằng hội tụ của biến thể Monte Carlo với điểm bắt đầu thăm dò (exploring starts) chưa được chứng minh tổng quát và dẫn Tsitsiklis (2002) cho một lời giải từng phần.
 :::
 
-**Trong thực hành.** Trong bài thực hành LunarLander, bảng là bảng trên các ô gộp quan sát liên tục, hành vi giữ $\varepsilon_{\min}=0{,}05$ và bước học có sàn $0{,}05$; ba giả thiết Markov, GLIE và Robbins–Monro theo cặp vì thế không thỏa, nên Định lý 06.21–06.22 không bảo đảm gì cho hai bảng của notebook, và thiếu giả thiết cũng không chứng minh chúng phân kỳ. Do đó, chất lượng của hai bảng chỉ đánh giá được bằng thực nghiệm (Tình huống 06.1).
+**Trong thực hành.** Trong bài thực hành LunarLander, bảng là bảng trên các ô gộp quan sát liên tục, hành vi giữ $\varepsilon_{\min}=0{,}05$ và bước học có sàn $0{,}05$; vì thế ba giả thiết Markov, GLIE và Robbins–Monro theo cặp không thỏa. Định lý 06.21–06.22 không áp dụng cho hai bảng của notebook, nhưng việc thiếu giả thiết cũng không chứng minh chúng phân kỳ. Do đó, chất lượng của hai bảng chỉ đánh giá được bằng thực nghiệm (Tình huống 06.1).
 
 ::: exercise Bài tập 06.6 (Kiểm giả thiết hội tụ)
 Giả sử MDP hữu hạn với động lực dừng, phần thưởng bị chặn, $\gamma=0{,}9$, $Q_0$ hữu hạn, mẫu sinh từ chính MDP, mọi cặp được cập nhật vô hạn lần, và mọi trạng thái có hai hành động. Với mỗi trường hợp, xác định Định lý 06.21 hoặc 06.22 có áp dụng không; nếu không, nêu giả thiết còn thiếu.
@@ -1277,7 +1277,7 @@ Căn cứ của từng dòng: (1) luật kỳ vọng lặp theo $A_t$; (2) đi�
 **Bước 2 (trừ giá trị cũ).** Vì $V_t(s)$ đã biết khi điều kiện hóa theo $\mathcal F_t$, trừ nó khỏi Bước 1 cho kết luận. Theo cùng lập luận, $\mathbb E_b[\rho_t\mid\mathcal F_t]=\sum_{a:\,b(a\mid s)>0}\pi(a\mid s)=1$, nên dạng nhân tỉ số vào toàn bộ sai lệch có cùng kỳ vọng. $\square$
 :::
 
-Kỳ vọng vừa tính là phần dư Bellman (Bellman residual) của bảng hiện tại, không phải sai số so với $v_\pi$: khi $V_t\ne v_\pi$, mục tiêu một bước không phải ước lượng không chệch của $v_\pi(s)$.
+Kỳ vọng vừa tính là phần dư Bellman (Bellman residual) của bảng hiện tại, không phải sai số so với $v_\pi$: khi $V_t\ne v_\pi$, mục tiêu một bước nói chung là ước lượng chệch của $v_\pi(s)$.
 
 ### 6.2 Sai số khi đánh giá một chính sách cố định
 
@@ -1312,10 +1312,10 @@ Với $0\le\gamma<1$, độ rộng $B$ suy từ chặn phần thưởng qua chu�
 
 Ví dụ: phần thưởng trong $[0,1]$ và $\gamma=0{,}9$ cho $B=10$. Muốn bán kính không vượt $\eta=1$ với $\beta=0{,}05$, cần $n\ge\tfrac{B^2}{2\eta^2}\ln\tfrac2\beta=50\ln40\approx184{,}4$, tức $n\ge185$ lượt.
 
-Với $\gamma=1$, công thức chia cho $1-\gamma$ không dùng được. Nếu mọi lượt dài không quá $H_0$ bước và $|R|\le R_{\max}$, có thể dùng $G\in[-H_0R_{\max},H_0R_{\max}]$; chỉ biết lượt kết thúc với xác suất $1$ thì chưa có độ rộng hữu hạn. Vì thế chặn trên không áp dụng cho dãy năm ô với $\gamma=1$ mà không thêm giả thiết.
+Với $\gamma=1$, công thức chia cho $1-\gamma$ không dùng được. Nếu mọi lượt dài không quá $H_0$ bước và $|R|\le R_{\max}$, có thể dùng $G\in[-H_0R_{\max},H_0R_{\max}]$; nếu chỉ biết lượt kết thúc với xác suất $1$ thì chưa có độ rộng hữu hạn. Vì thế chặn Hoeffding không áp dụng cho dãy năm ô với $\gamma=1$ mà không thêm giả thiết.
 :::
 
-**Trong thực hành.** Notebook không dùng Mệnh đề 06.26 mà báo trung bình kèm sai số chuẩn (standard error) $\mathrm{sd}/\sqrt n$ với $n=100$ lượt và khoảng $\pm1{,}96$ sai số chuẩn cho hiệu ghép cặp (paired difference), tức một xấp xỉ chuẩn (normal approximation) (notebook, phần 3). Chặn Hoeffding đúng với mọi $n$ nhưng cần biết trước độ rộng $B$; notebook không nêu một khoảng biết trước cho tổng thưởng của một lượt LunarLander, nên chặn không có $B$ để dùng, còn xấp xỉ chuẩn không cần $B$ nhưng chỉ gần đúng.
+**Trong thực hành.** Notebook không dùng Mệnh đề 06.26 mà báo trung bình kèm sai số chuẩn (standard error) $\mathrm{sd}/\sqrt n$ với $n=100$ lượt và khoảng $\pm1{,}96$ sai số chuẩn cho hiệu ghép cặp (paired difference), tức một xấp xỉ chuẩn (normal approximation) (notebook, phần 3). Chặn Hoeffding đúng với mọi $n$ nhưng cần biết trước độ rộng $B$, mà notebook không nêu khoảng biết trước nào cho tổng thưởng của một lượt LunarLander. Xấp xỉ chuẩn không cần $B$ nhưng chỉ gần đúng.
 
 Tỉ số lấy mẫu quan trọng (Định nghĩa 06.24) cho gia số TD(0) khác chính sách đúng kỳ vọng $(T_\pi V_t)(s)-V_t(s)$ (Mệnh đề 06.25), và chặn Hoeffding (Mệnh đề 06.26) cho số lượt cần khi đánh giá một chính sách cố định.
 
@@ -1352,11 +1352,11 @@ Vì mọi chính sách dùng cùng dãy hạt giống, lượt thứ $i$ của h
 - heuristic trừ Q-learning: $243{,}5\pm38{,}8$;
 - Sarsa trừ Q-learning: $32{,}8\pm46{,}2$.
 
-**Diễn giải.** Bốn khoảng đầu không chứa $0$: cả hai bảng đã học được hành vi tốt hơn chọn ngẫu nhiên, và cả hai còn kém bộ điều khiển viết tay. Khoảng của hiệu Sarsa trừ Q-learning là $[-13{,}4;\ 79{,}0]$, chứa $0$, nên $100$ lượt chưa đủ để xếp hạng hai thuật toán; chênh lệch về mục tiêu cập nhật (Định nghĩa 06.11, 06.15) không xác định trước thứ tự thành tích trên môi trường có ô gộp. Ba cột cuối cho thấy hai kiểu thất bại: Sarsa có nhiều lượt bị cắt ngắn, Q-learning có nhiều lượt rơi.
+**Diễn giải.** Bốn khoảng đầu không chứa $0$: cả hai bảng đã học được hành vi tốt hơn chọn ngẫu nhiên, và cả hai còn kém bộ điều khiển viết tay. Khoảng của hiệu Sarsa trừ Q-learning là $[-13{,}4;\ 79{,}0]$, chứa $0$, nên $100$ lượt chưa đủ để xếp hạng hai thuật toán; khác biệt giữa hai mục tiêu (Định nghĩa 06.11, 06.15) không cho biết trước thuật toán nào tốt hơn trên môi trường có ô gộp. Ba cột cuối cho thấy hai kiểu thất bại: Sarsa có nhiều lượt bị cắt ngắn, Q-learning có nhiều lượt rơi.
 
-Notebook cũng so giá trị mà bảng gán cho trạng thái đầu, trung bình của $\max_aQ(S_0,a)$, với trung bình lợi tức chiết khấu $G_0$ thật sự nhận được trên $100$ lượt: hiệu là $21{,}5\pm7{,}2$ với Q-learning và $-13{,}0\pm2{,}1$ với Sarsa (phần 9.2). Khoảng $\pm1{,}96$ sai số chuẩn của cả hai hiệu đều không chứa $0$, nên không bảng nào cho ước lượng đúng lợi tức của chính sách tham lam đang chạy; với Q-learning, phép cực đại trên các ước lượng có nhiễu là một nguồn đã biết của đánh giá cao (overestimation) (Sutton và Barto, 2018, §6.7).
+Notebook cũng so giá trị mà bảng gán cho trạng thái đầu, trung bình của $\max_aQ(S_0,a)$, với trung bình lợi tức chiết khấu $G_0$ thật sự nhận được trên $100$ lượt: hiệu là $21{,}5\pm7{,}2$ với Q-learning và $-13{,}0\pm2{,}1$ với Sarsa (phần 9.2). Khoảng $\pm1{,}96$ sai số chuẩn của cả hai hiệu đều không chứa $0$, nên bảng Q-learning đánh giá cao còn bảng Sarsa đánh giá thấp lợi tức của chính sách tham lam đang chạy; với Q-learning, phép cực đại trên các ước lượng có nhiễu là một nguồn đã biết của đánh giá cao (overestimation) (Sutton và Barto, 2018, §6.7).
 
-**Giới hạn.** Mỗi thiết lập chỉ được huấn luyện một lần; năm lần huấn luyện sơ bộ, với hạt giống huấn luyện và hạt giống đánh giá khác, cho Sarsa trung bình $109{,}6$ (từ $66{,}1$ đến $136{,}1$); kết quả $26{,}2$ ở trên thấp hơn mọi lần sơ bộ (phần 8.2).
+**Giới hạn.** Mỗi thiết lập chỉ được huấn luyện một lần. Năm lần huấn luyện sơ bộ, với hạt giống huấn luyện và hạt giống đánh giá khác, cho Sarsa trung bình $109{,}6$ (từ $66{,}1$ đến $136{,}1$), và kết quả $26{,}2$ ở trên thấp hơn mọi lần sơ bộ (phần 8.2).
 
 Notebook còn thử một cách chia ô khác, dựng từ các đại lượng mà bộ điều khiển heuristic tính từ quan sát, cùng lịch thăm dò giảm về $\varepsilon_{\min}=0{,}01$ trong $2000$ lượt; trên cùng tập kiểm tra, Sarsa đạt $202{,}8\pm2{,}3$ và Q-learning đạt $235{,}5\pm4{,}3$, nhưng cả ba giả thiết vẫn bị vi phạm (phần 11).
 
@@ -1375,9 +1375,9 @@ Notebook còn thử một cách chia ô khác, dựng từ các đại lượng 
 - Thuật toán 06.9 cần $\varepsilon_k>0$ và mọi lượt kết thúc hầu chắc chắn: cả hai không thỏa, vì hành vi dùng $\varepsilon=0$ và dưới $\pi_I$ lượt bắt đầu bằng D→C không kết thúc.
 - Định lý 06.21 và 06.22 cần $\gamma<1$, độ phủ, Robbins–Monro: cả ba không thỏa ($\gamma=1$; $\varepsilon=0$ nên nhiều cặp không được thử; bước học hằng).
 
-**Áp dụng Thuật toán 06.9.** Bảng không đổi trong lượt, nên lượt D→C→B→C→B→… không kết thúc và không có lợi tức hoàn chỉnh nào; Monte Carlo không cập nhật được ô nào. Nếu chỉ ghi ba bước đầu của lượt, lượt bị cắt sau D→C→B→C tại C, một trạng thái chưa kết thúc, nên Monte Carlo vẫn không cập nhật được ô nào.
+**Áp dụng Thuật toán 06.9.** Bảng không đổi trong lượt, nên lượt D→C→B→C→B→… không kết thúc và không có lợi tức hoàn chỉnh nào. Nếu chỉ ghi ba bước đầu, lượt bị cắt tại C sau D→C→B→C, một trạng thái chưa kết thúc. Trong cả hai trường hợp, Monte Carlo không cập nhật được ô nào.
 
-**Áp dụng Thuật toán 06.12.** Sarsa cập nhật sau mỗi chuyển. Theo bước 2 của thuật toán, $A'$ được chọn tham lam từ bảng sau các cập nhật trước đó, trước cập nhật hiện tại:
+**Áp dụng Thuật toán 06.12.** Sarsa cập nhật sau mỗi chuyển. Theo bước 2 của thuật toán, $A'$ được chọn tham lam từ bảng ngay trước cập nhật hiện tại:
 
 | Bước | Chuyển $(S,A,R,S')$ | $A'$ tham lam | $Y$ | Giá trị mới |
 |---:|---|---|---:|---|
@@ -1387,7 +1387,7 @@ Notebook còn thử một cách chia ô khác, dựng từ các đại lượng 
 | 3 | $(\mathrm C,0,-1,\mathrm B)$ | $0$, vì hàng B là $(0;-0{,}44)$ | $-1+0=-1$ | $Q(\mathrm C,0)=0{,}2+0{,}8(-1{,}2)=-0{,}76$ |
 | 4 | $(\mathrm B,0,1000,\mathrm A)$ | không có, A kết thúc | $1000$ | $Q(\mathrm B,0)=0+0{,}8\cdot1000=800$ |
 
-Ở bước 2, phần thưởng âm của vòng làm $Q(\mathrm B,1)$ giảm xuống dưới $Q(\mathrm B,0)$, nên ở bước 3 hành vi tham lam tại B đổi sang trái, và lượt kết thúc tại A sau năm bước. Với giới hạn ba bước, Sarsa vẫn thực hiện được ba cập nhật đầu. Q-learning cho đúng các cập nhật trên: ở mỗi chuyển $S'\ne S$, nên cập nhật hiện tại không đổi hàng $S'$, và $A'$ tham lam là hành động cực đại của chính hàng mà Q-learning dùng.
+Ở bước 2, phần thưởng âm của vòng làm $Q(\mathrm B,1)$ giảm xuống dưới $Q(\mathrm B,0)$, nên ở bước 3 hành vi tham lam tại B đổi sang trái, và lượt kết thúc tại A sau năm bước. Với giới hạn ba bước, Sarsa vẫn thực hiện được ba cập nhật đầu. Q-learning cho đúng các cập nhật trên: vì $S'\ne S$ ở mọi chuyển, cập nhật hiện tại không đổi hàng $S'$, nên $A'$ tham lam là cực đại của đúng hàng mà Q-learning dùng.
 
 **Diễn giải.** Monte Carlo không học được gì từ một lượt không kết thúc, còn các phương pháp một bước học ngay trong lượt và trong trường hợp này phá được vòng: hàng B đổi cực đại sau cập nhật thứ ba và lượt kết thúc ở chuyển thứ năm.
 
@@ -1402,7 +1402,7 @@ Notebook còn thử một cách chia ô khác, dựng từ các đại lượng 
 
 - **Bài 07.** Bảng $Q$ được thay bằng một hàm có tham số dùng chung giữa các trạng thái, vì bảng không tổng quát hóa giữa các ô gần nhau; hai bài thực hành của Bài 07 (LunarLander, Flappy Bird) dùng lại mục tiêu Sarsa và Q-learning với xấp xỉ tuyến tính.
 - **Bài 08.** Deep Q-learning giữ mục tiêu cực đại của Định nghĩa 06.15 nhưng thay bảng bằng mạng nơ-ron, thêm bộ nhớ phát lại (replay memory, experience replay) và mạng mục tiêu (target network).
-- **Bài 09.** Double DQN xử lý hiện tượng đánh giá cao do phép cực đại trên các ước lượng có nhiễu trong mục tiêu của Định nghĩa 06.15; hiện tượng này có thể góp phần vào hiệu $21{,}5\pm7{,}2$ ở Tình huống 06.1.
+- **Bài 09.** Double DQN xử lý hiện tượng đánh giá cao do phép cực đại trên các ước lượng có nhiễu trong mục tiêu của Định nghĩa 06.15.
 
 <!-- note-topic-id: lec-06-topic-07 -->
 ## Tóm tắt chương
@@ -1450,7 +1450,7 @@ $$
 **Giả thiết hay bị bỏ quên.**
 
 - Mệnh đề 06.6 cần $q_\pi$ chính xác và cùng $\varepsilon$ cho hai chính sách; một bảng ước lượng từ mẫu không đủ.
-- Các định lý hội tụ cần $\gamma<1$; dãy năm ô với $\gamma=1$ và bước học $0{,}8$ chỉ dùng để tính tay.
+- Các định lý hội tụ cần $\gamma<1$ và bước học Robbins–Monro theo cặp; dãy năm ô với $\gamma=1$ và bước học hằng $0{,}8$ vi phạm cả hai (Nhận xét 06.20).
 - Robbins–Monro phải đúng theo từng cặp, không chỉ theo thời gian toàn cục (Ví dụ 06.15).
 - GLIE chỉ cần cho Sarsa; $\varepsilon_k\to0$ chưa đủ cho GLIE nếu thăm dò tắt quá nhanh (Ví dụ 06.14).
 - Kết thúc lượt, cắt ngắn và hết ngân sách là ba sự kiện khác nhau; chỉ kết thúc lượt mới đặt $Y=R$.

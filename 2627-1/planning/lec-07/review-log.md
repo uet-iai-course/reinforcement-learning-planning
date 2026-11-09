@@ -1772,3 +1772,28 @@ Goal của người dùng: "rà soát ghi chú các bài của rl-plan 01–10 v
 - Lỗi CSP script nội tuyến đến từ môi trường kiểm tra (cũng có ở Bài 11, vốn không bị sửa). Ở 390 px, 22 công thức hiển thị cuộn trong khung.
 
 Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-07)`.
+
+
+## Rà câu rào đón và diễn giải (2026-11-09)
+
+Yêu cầu của người dùng: "Duyệt xem còn câu rào đón nào không trong các ghi chú", "Hãy sửa", rồi "Đọc lại các phần diễn giải, ví dụ, xem có những giải thích lòng vòng, dài dòng, câu phủ định kép, … thì sửa luôn"; "Commit và push 1 lần thôi" (một commit chung cho mười bài, thay quy tắc mỗi bài một commit). Các nguyên tắc rà soát được ghi vào `../CLAUDE.md` mục "The author's voice" (2026-11-09); `AGENTS.md` dòng 410 sửa theo: đoạn quy ước đọc không ghi câu miễn trừ về nguồn số liệu.
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Rà rào đón chỉ đọc (`no-ai-slop` Detect), một tác tử cho hai bài.
+- Rà diễn giải chỉ đọc (Detect), một tác tử cho mỗi bài.
+- Biên tập viên (Edit): một tác tử cho câu rào đón của mọi bài, một tác tử cho diễn giải của mỗi bài.
+- Kiểm tra lại chỉ đọc (độ chính xác, mạch, KaTeX), một tác tử cho mỗi bài.
+
+**Câu rào đón đã sửa:** 2 (L86 câu "số liệu sư phạm tự xây dựng"; L1082 "xu hướng thường gặp").
+
+**Diễn giải và ví dụ** (lòng vòng, dài dòng, phủ định kép, cấu trúc khó theo, lời thay công thức): 38 (10 trung bình, 28 nhẹ); C07-30 đã kiểm với notebook Flappy Bird (hàng `four3`: Q-learning 36,3 ± 1,4; Sarsa 35,0 ± 3,6). Điều phối viên chấp nhận mặc định câu thay; biên tập viên được điều chỉnh khi câu thay làm mất con số, điều kiện hay dẫn chiếu, hoặc thêm khẳng định.
+
+**Kiểm tra lại:** 0 chặn bàn giao, 0 nghiêm trọng; 4 (1 trung bình về L86 bị bác, quyết định của người dùng; 3 nhẹ đã sửa).
+
+**Nguồn số liệu tự xây dựng** (chuyển từ thân bài vào đây theo quy tắc mới): các bộ số của ví dụ không lấy từ bài giảng gốc hay notebook là do người soạn xây dựng để tính tay.
+
+**Số liệu:** prose 16 923 → 16 840. Khối có số hiệu và tiêu đề mục trùng khít HEAD; `note-topic-id` giữ nguyên; `git diff --check` sạch.
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in: 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang; lỗi CSP script nội tuyến đến từ máy chủ xem trước.
+
+Quyết định của điều phối viên: **chấp nhận**; commit chung `fix(materials): …`.

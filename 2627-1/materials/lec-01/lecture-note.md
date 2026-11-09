@@ -56,7 +56,7 @@ Mỗi chữ giữ một nghĩa trong cả chương.
 
 Chỉ số thời gian của phần thưởng đi theo chuyển: tác tử chọn $A_t$ ở bước $t$, rồi môi trường trả $R_{t+1}$ cùng quan sát $O_{t+1}$, nên $R_{t+1}$ là hậu quả của bước $t$, theo quy ước của Sutton và Barto (2018, §3.1). Lượt kết thúc tại $T$; lợi tức tại thời điểm kết thúc bằng $0$, nên giá trị của một lịch sử đã kết thúc cũng bằng $0$. Tên hành động và tên quan sát viết chữ đứng ($\text{phải}$, $\text{sạch}$); chữ nghiêng dành cho biến. Trong Tic-tac-toe, chữ O đứng chỉ quân cờ của đối thủ, còn $O_t$ nghiêng chỉ quan sát.
 
-Ký hiệu của học phần theo Sutton và Barto (2018). Giáo trình *Học máy thống kê* viết giá trị là $V^\pi$ và mô tả quá trình quyết định Markov (Markov decision process, MDP) bằng bộ $\langle S,A,T,R,\gamma\rangle$; trong học phần này, $v_\pi$ ứng với $V^\pi$, và chữ $T$ chỉ thời điểm kết thúc lượt, không chỉ hàm chuyển. Mọi bộ số của robot dọn dãy bốn ô và của các thế cờ là số liệu sư phạm tự xây dựng.
+Ký hiệu của học phần theo Sutton và Barto (2018). Giáo trình *Học máy thống kê* viết giá trị là $V^\pi$ và mô tả quá trình quyết định Markov (Markov decision process, MDP) bằng bộ $\langle S,A,T,R,\gamma\rangle$; trong học phần này, $v_\pi$ ứng với $V^\pi$, và chữ $T$ chỉ thời điểm kết thúc lượt, không chỉ hàm chuyển.
 
 <!-- note-topic-id: lec-01-topic-01 -->
 ## 1. Tác tử học từ tương tác
@@ -81,13 +81,13 @@ Qua năm mục, chúng ta dựng ngôn ngữ đó, rồi dùng nó để chọn 
 
 ![Sơ đồ năm khối nối bằng mũi tên từ trái sang phải. Mục 1, tương tác, với các đại lượng S t, O t, A t, H t. Mục 2, tín hiệu học, ghi phần thưởng R t+1 không là nhãn. Mục 3, lợi tức, ghi G t bằng R t+1 cộng G t+1. Mục 4 ghi chính sách pi, giá trị v pi, mô hình, thăm dò và khai thác. Mục 5, Tic-tac-toe, ghi nước khai thác một bước a sao. Dòng trên cùng ghi bài toán trung tâm: chọn hành động khi đánh giá chỉ đến sau cả chuỗi hành động. Dòng dưới cùng ghi Bài 02 thêm tính Markov và hệ số chiết khấu gamma.](img/lec-01/chapter-map.svg)
 
-Sơ đồ trên đọc từ trái sang phải; mỗi khối ghi các đại lượng mới của khối đó, và các khối sau dùng lại chúng. Lịch sử $H_t$ là đầu vào của chính sách $\pi$, phần thưởng $R_{t+1}$ được cộng thành lợi tức $G_t$, và khối cuối là phép chọn nước $a^*$, nơi các đại lượng trước được dùng cùng lúc.
+Sơ đồ trên đọc từ trái sang phải; mỗi khối ghi các đại lượng mới của khối đó, và các khối sau dùng lại chúng. Lịch sử $H_t$ là đầu vào của chính sách $\pi$, phần thưởng $R_{t+1}$ được cộng thành lợi tức $G_t$, và khối cuối, phép chọn nước $a^*$, dùng cùng lúc mọi đại lượng trước.
 
 ### 1.1 Một lượt của robot dọn dãy bốn ô
 
 ![Bốn ô sàn xếp thành một hàng, đánh số 1 đến 4 từ trái sang phải. Robot đứng ở ô 1, chỉ ô 4 có rác. Phía trên ghi luật hành động: phải là sang ô bên phải, ở ô 4 thì đứng yên; trái là sang ô bên trái, ở ô 1 thì đứng yên; hút là hút tại ô đang đứng. Phía dưới ghi: hút ở ô 4 khi còn rác cho phần thưởng cộng 1 và kết thúc lượt, các bước khác cho 0, cảm biến báo sạch hoặc bẩn.](img/lec-01/robot-four-cells.svg)
 
-Trên hình, robot cần đi qua hai ô ở giữa rồi mới hút được rác; dòng chữ phía dưới ghi luật phần thưởng và cảm biến, hai thứ robot không điều khiển được.
+Trên hình, robot cần đi qua hai ô ở giữa rồi mới hút được rác. Dòng chữ phía dưới ghi luật phần thưởng và cảm biến, hai thứ robot không điều khiển được.
 
 ::: example Ví dụ 01.1 (Một lượt của robot dọn dãy bốn ô)
 **Dữ kiện.**
@@ -125,7 +125,7 @@ Một cách trực quan, bài toán của Ví dụ 01.1 có hai bên. Một bên
 
 ![Hai khối chữ nhật. Khối trái ghi tác tử, khối phải ghi môi trường. Mũi tên trên đi từ tác tử sang môi trường, ghi hành động. Mũi tên dưới đi từ môi trường về tác tử, ghi quan sát, phần thưởng.](img/lec-01/agent-environment.svg)
 
-Hình trên vẽ hai chiều trao đổi. Mũi tên trên mang hành động $A_t$; mũi tên dưới mang phần thưởng $R_{t+1}$ và quan sát $O_{t+1}$ của bước kế tiếp, có chỉ số lớn hơn một đơn vị vì chúng đến sau hành động.
+Hình trên vẽ hai chiều trao đổi. Mũi tên trên mang hành động $A_t$; mũi tên dưới mang phần thưởng $R_{t+1}$ và quan sát $O_{t+1}$, có chỉ số $t+1$ vì chúng đến sau $A_t$.
 
 ::: definition Định nghĩa 01.1 (Tác tử, môi trường, vòng tương tác)
 Thời gian được chia thành các bước rời rạc $t=0,1,2,\dots$.
@@ -143,13 +143,13 @@ $$
 sinh ra khi hai thao tác trên được lặp lại. Dãy dừng khi lượt kết thúc, tại thời điểm ký hiệu là $T$.
 :::
 
-Tác tử chỉ quyết định $A_t$; môi trường quyết định $R_{t+1}$ và $O_{t+1}$, có thể một cách ngẫu nhiên. Ranh giới giữa hai bên đặt ở giới hạn điều khiển của tác tử: trong Ví dụ 01.1, tác tử là bộ chọn hành động của robot, còn dãy ô, rác, cảm biến và luật phần thưởng thuộc môi trường. Nhầm lẫn thường gặp là coi cả robot, kể cả cảm biến, là tác tử; cảm biến thuộc môi trường vì tác tử không điều khiển được điều cảm biến báo.
+Tác tử chỉ quyết định $A_t$; môi trường quyết định $R_{t+1}$ và $O_{t+1}$, có thể một cách ngẫu nhiên. Mọi thứ tác tử không điều khiển được thuộc môi trường: trong Ví dụ 01.1, tác tử là bộ chọn hành động của robot; dãy ô, rác, cảm biến và luật phần thưởng là môi trường. Nhầm lẫn thường gặp là coi cả robot, kể cả cảm biến, là tác tử; cảm biến thuộc môi trường vì tác tử không điều khiển được điều cảm biến báo.
 
 So với học có giám sát, đầu ra $A_t$ làm thay đổi đầu vào $O_{t+1}$ của bước sau.
 
 ### 1.3 Trạng thái, quan sát và lịch sử
 
-Trong bảng của Ví dụ 01.1, robot ở ô 1, ô 2 và ô 3 đều nhận cùng quan sát $\text{sạch}$. Một cách trực quan, môi trường ở ba tình huống khác nhau, nhưng tác tử thấy cùng một dữ liệu; điều tác tử có để phân biệt chúng là những gì nó đã làm và đã thấy từ đầu lượt.
+Trong bảng của Ví dụ 01.1, robot ở ô 1, ô 2 và ô 3 đều nhận cùng quan sát $\text{sạch}$. Một cách trực quan, môi trường ở ba tình huống khác nhau, nhưng tác tử thấy cùng một dữ liệu; tác tử chỉ phân biệt được chúng qua những gì nó đã làm và đã thấy từ đầu lượt.
 
 ::: definition Định nghĩa 01.2 (Trạng thái, quan sát, lịch sử)
 **Luật của môi trường** (environment dynamics) là quy tắc, có thể ngẫu nhiên, cho biết phần thưởng và cấu hình kế tiếp của môi trường khi biết cấu hình hiện tại và hành động.
@@ -183,7 +183,7 @@ Tác tử có thể không bao giờ thấy trạng thái; lịch sử là toàn
 ::: remark Nhận xét 01.3 (Trạng thái khác quan sát)
 Hai trạng thái khác nhau có thể cho cùng một quan sát: $(1,\text{còn rác})$, $(2,\text{còn rác})$ và $(3,\text{còn rác})$ đều cho $O_t=\text{sạch}$. Quy tắc "ở ô 3 thì sang phải" vì thế không thực hiện được, còn quy tắc "thấy $\text{sạch}$ thì sang phải, thấy $\text{bẩn}$ thì hút" thì thực hiện được.
 
-Nhầm lẫn thường gặp là đồng nhất quan sát với trạng thái: robot ở ô 3 và robot ở ô 1 cùng thấy $\text{sạch}$, nhưng cần một và ba lần $\text{phải}$ để tới rác. Lịch sử phân biệt được hai tình huống này: sau hai lần $\text{phải}$ từ ô 1, lịch sử chứa hai hành động $\text{phải}$. Khi tác tử quan sát đầy đủ, như người chơi Tic-tac-toe nhìn thấy toàn bộ bàn cờ, nhầm lẫn này không xảy ra.
+Nhầm lẫn thường gặp là đồng nhất quan sát với trạng thái: robot ở ô 3 và robot ở ô 1 cùng thấy $\text{sạch}$, nhưng cần một và ba lần $\text{phải}$ để tới rác. Lịch sử phân biệt được hai tình huống này: ở ô 1 đầu lượt, $H_0=(\text{sạch})$; ở ô 3 sau hai lần $\text{phải}$ từ ô 1, lịch sử chứa hai hành động $\text{phải}$. Khi tác tử quan sát đầy đủ, như người chơi Tic-tac-toe nhìn thấy toàn bộ bàn cờ, nhầm lẫn này không xảy ra.
 :::
 
 <!-- note-topic-id: lec-01-topic-08 -->
@@ -200,7 +200,7 @@ Cách thiết kế điều khiển truyền thống mô hình hóa môi trườn
 
 - **Môi trường đổi.** Đồ đạc di chuyển hoặc có vật thể chuyển động làm mô hình viết sẵn sai. Chương trình "sang phải ba lần rồi hút" cho phần thưởng $0$ ở mọi lượt nếu rác chuyển sang ô 2, và không tự sửa vì không dùng phản hồi.
 - **Không gian tìm kiếm quá lớn.** Với ba hành động và lượt dài $L$ bước có $3^L$ chuỗi hành động: $3^5=243$ chuỗi khi $L=5$, nhưng $3^{50}\approx7{,}2\cdot10^{23}$ chuỗi khi $L=50$.
-- **Lập kế hoạch dưới bất định.** Khi kết quả của hành động là ngẫu nhiên, như với xe tự hành hoặc khi đăng ký môn học, một kế hoạch vòng hở (open-loop plan), tức dãy hành động định sẵn, không phản ứng được với kết quả thực. Nếu luật ngẫu nhiên đã biết, một quy tắc chọn hành động theo kết quả thực, tính bằng quy hoạch động (dynamic programming), xử lý được mà không cần học; việc học cần khi luật chưa biết hoặc thay đổi.
+- **Lập kế hoạch dưới bất định.** Khi kết quả của hành động là ngẫu nhiên, như với xe tự hành hoặc khi đăng ký môn học, một kế hoạch vòng hở (open-loop plan), tức dãy hành động định sẵn, không phản ứng được với kết quả thực. Nếu luật ngẫu nhiên đã biết, quy hoạch động (dynamic programming) tính được một quy tắc chọn hành động theo kết quả thực mà không cần học; việc học cần khi luật chưa biết hoặc thay đổi.
 
 Học tăng cường dùng phản hồi của môi trường để cập nhật quyết định, và có thể học hoặc cập nhật mô hình từ tương tác.
 :::
@@ -255,12 +255,12 @@ Robot bắt đầu ở ô 1; chỉ ô 4 có rác; cảm biến báo tình trạn
 
 **So với dữ liệu có nhãn.** Với ba cặp $(x_1,y_1)$, $(x_2,y_2)$, $(x_3,y_3)$, mất mát trung bình $\frac13\big[\ell(f(x_1),y_1)+\ell(f(x_2),y_2)+\ell(f(x_3),y_3)\big]$ không đổi khi đổi thứ tự ba số hạng, vì phép cộng giao hoán.
 
-**Đổi chính sách.** Nếu robot luôn chọn $\text{trái}$, nó ở mãi ô 1 và mọi quan sát đều là $\text{sạch}$. Trong dữ liệu đó không có mẫu nào chứa quan sát $\text{bẩn}$, nên robot không có thông tin gì về hậu quả của việc hút ở ô bẩn.
+**Đổi chính sách.** Nếu robot luôn chọn $\text{trái}$, nó ở mãi ô 1 và mọi quan sát đều là $\text{sạch}$, nên robot không biết gì về hậu quả của việc hút ở ô bẩn.
 
 **Kiểm tra lại.** Trong dãy gốc, quan sát $\text{bẩn}$ xuất hiện đúng một lần, ở bước $3$, ngay sau ba lần $\text{phải}$ đưa robot từ ô 1 tới ô 4.
 :::
 
-Dữ liệu tương tác vì vậy có thứ tự cố định, và phân phối của nó phụ thuộc cách tác tử chọn hành động, điều không có trong học có giám sát.
+Vì vậy, khác với dữ liệu có nhãn, dữ liệu tương tác có thứ tự cố định và có phân phối phụ thuộc cách tác tử chọn hành động.
 
 ### 2.2 Ba dạng tín hiệu học
 
@@ -282,7 +282,7 @@ Trên hình, ba khối khác nhau ở nguồn và thời điểm của tín hi�
 **Học tăng cường** là bài toán học từ dãy tương tác $O_0,A_0,R_1,O_1,A_1,R_2,\dots$ (Định nghĩa 01.1), trong đó các hành động do chính tác tử chọn và tín hiệu là phần thưởng $R_{t+1}\in\mathbb R$. Phần thưởng là một số đánh giá chuyển vừa xảy ra, không cho biết hành động đúng. Mục tiêu là chọn hành động để làm lớn kỳ vọng của tổng phần thưởng từ thời điểm chọn trở đi.
 :::
 
-Trong Học tăng cường, phần thưởng đánh giá hành động đã chọn và có thể đến trễ; tác tử không biết hành động khác có tốt hơn không nếu chưa thử.
+Trong Học tăng cường, phần thưởng đánh giá hành động đã chọn và có thể đến trễ; tác tử chỉ biết hành động khác có tốt hơn hay không sau khi thử nó.
 
 Theo bài giảng gốc (2025–2026, trang 17) và Sutton và Barto (2018, §1.1), hai đặc trưng phân biệt Học tăng cường là thử và sai (trial-and-error) và phản hồi trễ (delayed reward).
 
@@ -335,7 +335,7 @@ Trong Ví dụ 01.1, hậu quả của hành động ở bước $0$ chỉ lộ 
 
 ### 3.1 Phần thưởng trễ trên một lượt
 
-Một cách trực quan, hậu quả của hành động $A_t$ gồm phần thưởng ngay sau nó và mọi phần thưởng về sau mà nó góp phần tạo ra, vì $A_t$ quyết định tình huống mà các hành động sau bắt đầu từ đó. Cộng các phần thưởng ấy lại cho một con số đo hậu quả dài hạn. Trước hết, ta tính con số đó trên lượt của Ví dụ 01.1.
+Một cách trực quan, hậu quả của hành động $A_t$ gồm phần thưởng ngay sau nó và mọi phần thưởng về sau mà nó góp phần tạo ra, vì $A_t$ quyết định tình huống xuất phát của các hành động sau. Cộng các phần thưởng ấy lại cho một con số đo hậu quả dài hạn. Trước hết, ta tính con số đó trên lượt của Ví dụ 01.1.
 
 ![Năm vòng tròn S0, S1, S2, S3, S4 nối bằng bốn mũi tên từ trái sang phải. Trên mũi tên ghi hành động A0, A1, A2, A3; dưới mũi tên ghi phần thưởng R1 bằng 0, R2 bằng 0, R3 bằng 0, R4 bằng cộng 1.](img/lec-01/delayed-reward.svg)
 
@@ -354,7 +354,7 @@ Hình trên vẽ lượt của Ví dụ 01.1 dưới dạng một quỹ đạo. 
 
 **Diễn giải.** Ba hành động $\text{phải}$ có phần thưởng một bước bằng $0$ nhưng tổng phần thưởng còn lại bằng $1$.
 
-**Kiểm tra lại.** Mỗi tổng bằng phần thưởng của bước kế tiếp cộng tổng của bước sau đó: $1=0+1$, $1=0+1$, $1=0+1$, $1=1+0$.
+**Kiểm tra lại.** Tổng từ bước $t$ bằng $R_{t+1}$ cộng tổng từ bước $t+1$: $1=0+1$, $1=0+1$, $1=0+1$, $1=1+0$.
 :::
 
 ### 3.2 Lượt, phần thưởng một bước và lợi tức
@@ -390,9 +390,9 @@ $$
 Tại $t=T$, tổng không có số hạng nào, nên $G_T=0$.
 :::
 
-Công thức (3.1) cộng các phần thưởng từ $R_{t+1}$, phần thưởng đầu tiên chịu ảnh hưởng của $A_t$, đến $R_T$. $G_t$ là biến ngẫu nhiên vì cả các phần thưởng lẫn $T$ phụ thuộc diễn biến của lượt. Trên lượt của Ví dụ 01.3, $G_0=G_1=G_2=G_3=1$ và $G_4=0$, đúng năm tổng đã tính. Mọi phần thưởng có trọng số $1$, dù đến sớm hay muộn.
+Công thức (3.1) cộng mọi phần thưởng chịu ảnh hưởng của $A_t$, từ $R_{t+1}$ đến $R_T$. $G_t$ là biến ngẫu nhiên vì cả các phần thưởng lẫn $T$ phụ thuộc diễn biến của lượt. Trên lượt của Ví dụ 01.3, $G_0=G_1=G_2=G_3=1$ và $G_4=0$, đúng năm tổng đã tính. Mọi phần thưởng có trọng số $1$, dù đến sớm hay muộn.
 
-**Câu hỏi.** Tại sao không so sánh các hành động bằng phần thưởng một bước $R_{t+1}$? Trong Ví dụ 01.3, $R_1=0$ trong khi $G_0=1$, nên đại lượng dùng để so sánh hành động là $G_t$. Nhầm lẫn thường gặp là gọi $R_{t+1}$ là "phần thưởng của trạng thái $S_{t+1}$" rồi coi đó là đánh giá dài hạn của $S_{t+1}$.
+**Câu hỏi.** Tại sao không so sánh các hành động bằng phần thưởng một bước $R_{t+1}$? Trong Ví dụ 01.3, $R_1=0$, còn $G_0=1$ tính cả phần thưởng $+1$ đến sau, nên ta so sánh hành động bằng $G_t$. Nhầm lẫn thường gặp là gọi $R_{t+1}$ là "phần thưởng của trạng thái $S_{t+1}$" rồi coi đó là đánh giá dài hạn của $S_{t+1}$.
 
 ### 3.3 Hệ thức đệ quy của lợi tức
 
@@ -454,7 +454,7 @@ và hút được rác thì lượt kết thúc. Robot chọn $\text{phải},\te
 - $G_1=R_2+G_2=-0{,}1+0{,}9=0{,}8$;
 - $G_0=R_1+G_1=-0{,}1+0{,}8=0{,}7$.
 
-**Diễn giải.** Với cách đặt này, $G_t$ giảm $0{,}1$ cho mỗi lần di chuyển còn phải làm, nên $G_t$ phân biệt các bước ở gần và xa rác; với cách đặt của Ví dụ 01.3, mọi $G_t$ với $t<T$ bằng $1$. Ở bước đầu, $\text{hút}$ tại ô 1 sạch cho phần thưởng $0$, cao hơn $-0{,}1$ của $\text{phải}$, nhưng ba hành động còn lại không đủ để tới ô 4 rồi hút và mỗi lần di chuyển chỉ thêm $-0{,}1$, nên lợi tức lớn nhất khi hút trước là $0<0{,}7$. Chịu phần thưởng tức thời thấp hơn để được lợi tức cao hơn là hiện tượng bài giảng gốc (2025–2026, trang 25) gọi là hy sinh phần thưởng tức thời. Với $L=5$, hút ở ô 1 rồi đi $\text{phải},\text{phải},\text{phải},\text{hút}$ cũng cho $0+3\cdot(-0{,}1)+1=0{,}7$, nên so sánh trên cần $L=4$.
+**Diễn giải.** Với cách đặt này, $G_t$ giảm $0{,}1$ cho mỗi lần di chuyển còn phải làm, nên $G_t$ phân biệt các bước ở gần và xa rác; với cách đặt của Ví dụ 01.3, mọi $G_t$ với $t<T$ bằng $1$. Ở bước đầu, $\text{hút}$ tại ô 1 sạch cho phần thưởng $0$, cao hơn $-0{,}1$ của $\text{phải}$. Tuy nhiên, sau đó ba hành động còn lại không đủ để tới ô 4 rồi hút, và mỗi lần di chuyển chỉ thêm $-0{,}1$, nên lợi tức lớn nhất khi hút trước là $0<0{,}7$. Chịu phần thưởng tức thời thấp hơn để được lợi tức cao hơn là hiện tượng bài giảng gốc (2025–2026, trang 25) gọi là hy sinh phần thưởng tức thời. Với $L=5$, hút ở ô 1 rồi đi $\text{phải},\text{phải},\text{phải},\text{hút}$ cũng cho $0+3\cdot(-0{,}1)+1=0{,}7$, nên so sánh trên cần $L=4$.
 
 **Kiểm tra lại.** Cộng trực tiếp theo (3.1): $G_0=3\cdot(-0{,}1)+1=0{,}7$.
 :::
@@ -477,7 +477,7 @@ Giả thuyết phần thưởng là một giả thiết mô hình hóa: không c
 
 **Tính.** Lượt A có $T=4$, $(R_1,\dots,R_4)=(0,0,0,1)$ và $G_0=1$. Lượt B có $T=5$, $(R_1,\dots,R_5)=(0,0,0,0,1)$ và $G_0=1$.
 
-**Diễn giải.** Hai lượt có cùng lợi tức dù lượt B làm đổ bình hoa, nên một tác tử làm lớn kỳ vọng của $G_0$ không có lý do nào để tránh lượt B. Mục tiêu "không làm đổ đồ" bị bỏ sót vì nó không có mặt trong phần thưởng.
+**Diễn giải.** Hai lượt có cùng lợi tức dù lượt B làm đổ bình hoa, nên với một tác tử làm lớn kỳ vọng của $G_0$, lượt B tốt ngang lượt A. Phần thưởng không ghi nhận mục tiêu "không làm đổ đồ".
 
 **Sửa phần thưởng.** Thêm phần thưởng $-1$ cho bước làm đổ bình hoa. Lượt B khi đó có $(R_1,\dots,R_5)=(0,-1,0,0,1)$ và $G_0=0$, còn lượt A vẫn có $G_0=1$.
 
@@ -561,7 +561,7 @@ Một cách trực quan, việc chọn nước là một quy tắc: nhận nhữ
 - quy tắc $\pi_w$: nếu có nước làm X thắng ngay thì đánh nước đó, nếu có nhiều nước như vậy thì chọn đều trong số đó, nếu không có thì chọn đều trên các ô trống;
 - quy tắc $\pi_u$: luôn chọn đều trên các ô trống.
 
-Ở thế cờ $s$, nước 9 tạo đường chéo 1–5–9 cho X. Không ô trống nào khác cho X ba quân thẳng hàng: mỗi đường đi qua ô 3, 6 hoặc 7 hoặc chứa một quân O, hoặc còn một ô trống khác. Quy tắc $\pi_w$ chọn ô 9 với xác suất $1$; quy tắc $\pi_u$ chọn ô 9 với xác suất $\frac14$.
+Ở thế cờ $s$, nước 9 tạo đường chéo 1–5–9 cho X. Không ô trống nào khác cho X ba quân thẳng hàng: mỗi đường qua ô 3, 6 hoặc 7 đều chứa một quân O hoặc còn một ô trống khác. Quy tắc $\pi_w$ chọn ô 9 với xác suất $1$; quy tắc $\pi_u$ chọn ô 9 với xác suất $\frac14$.
 
 **Việc thứ hai: đánh giá thế cờ.** Dưới $\pi_w$, X thắng ngay, nên mọi diễn biến từ $s$ cho lợi tức $+1$. Dưới $\pi_u$, với xác suất $\frac14$ X thắng ngay; với xác suất $\frac34$ ván tiếp tục và kết quả phụ thuộc nước trả lời của O cùng các nước sau của X.
 
@@ -617,7 +617,7 @@ $$
 
 **Tính dưới $\pi_w$.** Ô 9 là nước thắng ngay, nên $\pi_w$ chọn ô 9 với xác suất $1$ và kỳ vọng của lợi tức là $1$.
 
-**Kiểm tra lại.** Không ai đã thắng trước nước này: đường 1–5–9 của X còn thiếu ô 9, cột 3–6–9 còn thiếu ô 6 và ô 9; hàng 7–8–9 của O còn thiếu ô 9. Thế cờ có ba quân X và bốn quân O, phù hợp với việc O đi trước.
+**Kiểm tra lại.** Chưa ai thắng trước nước này: đường 1–5–9 của X còn thiếu ô 9, cột 3–6–9 còn thiếu ô 6 và ô 9; hàng 7–8–9 của O còn thiếu ô 9. Thế cờ có ba quân X và bốn quân O, phù hợp với việc O đi trước.
 :::
 
 Cùng thế cờ có hai đánh giá khác nhau, $0$ và $1$, theo hai chính sách. Đánh giá vì vậy là một hàm của cả tình huống lẫn chính sách, nên ký hiệu của giá trị ghi cả hai đối số.
@@ -646,7 +646,7 @@ Công thức (4.1) có ba thành phần:
 
 Vì phần thưởng bị chặn, tức $\lvert R_{t+1}\rvert\le R_{\max}$ với một hằng số $R_{\max}$, và $T\le L$, nên $\lvert G_t\rvert\le LR_{\max}$ và kỳ vọng (4.1) luôn tồn tại. Theo giả thuyết phần thưởng (Nhận xét 01.10), mục tiêu của Học tăng cường là tìm chính sách đạt $\max_\pi\mathbb E_\pi[G_0]$.
 
-Trong Ví dụ 01.7, giá trị được ghi theo thế cờ $s'$, không theo lịch sử dẫn tới $s'$. Cách ghi đó đúng ở đây vì $\pi_u$ và $\pi_w$ chỉ dùng thế cờ hiện tại, không nhớ các nước trước, và nước cuối của O bị buộc.
+Trong Ví dụ 01.7, ta ghi giá trị theo thế cờ $s'$ thay vì theo lịch sử dẫn tới $s'$. Cách ghi đó đúng ở đây vì $\pi_u$ và $\pi_w$ chỉ dùng thế cờ hiện tại và nước cuối của O bị buộc.
 
 Giả thiết luật cố định vẫn thỏa khi môi trường có trạng thái ẩn (hidden state) như Định nghĩa 01.2, với phân phối trạng thái đầu cố định. Theo công thức Bayes, với $h$ chứa các hành động $a_0,\dots,a_{t-1}$,
 
@@ -733,10 +733,10 @@ Hình trên đặt ba thành phần cạnh nhau; nhãn "tùy chọn" dưới kh�
 
 ::: remark Nhận xét 01.15 (Mô hình khác môi trường)
 - **Dự báo có thể sai.** Môi trường sinh dữ liệu thật; mô hình chỉ dự báo, và dự báo có thể sai như M2 của Ví dụ 01.8. Nhầm lẫn thường gặp là coi kết quả lập kế hoạch trên mô hình là kết quả trên môi trường.
-- **Tính giá trị trong Tic-tac-toe là lập kế hoạch.** Khi tính giá trị trong Tic-tac-toe, chúng ta cần biết đối thủ O chọn nước thế nào (ở Ví dụ 01.7, O buộc đánh ô trống cuối cùng); quy tắc đó là một mô hình của đối thủ. Trong thực tế, cách chơi của đối thủ không được biết trước và phải được ước lượng từ kinh nghiệm (Sutton và Barto 2018, §1.5).
+- **Tính giá trị trong Tic-tac-toe là lập kế hoạch.** Khi tính giá trị trong Tic-tac-toe, chúng ta cần biết đối thủ O chọn nước thế nào (ở Ví dụ 01.7, O buộc đánh ô trống cuối cùng); quy tắc đó là một mô hình của đối thủ. Trong thực tế, tác tử không biết trước cách chơi của đối thủ và phải ước lượng nó từ kinh nghiệm (Sutton và Barto 2018, §1.5).
 :::
 
-**Trong thực hành.** Mô hình thường là một bộ mô phỏng, như luật trò chơi hay bộ mô phỏng vật lý, hoặc một mô hình học được từ các bộ $(S_t,A_t,R_{t+1},S_{t+1})$ đã ghi; khi lập kế hoạch qua nhiều bước, sai số dự báo của bước trước làm đầu vào của bước sau sai theo, nên sai số tích lũy.
+**Trong thực hành.** Mô hình thường là một bộ mô phỏng, như luật trò chơi hay bộ mô phỏng vật lý, hoặc một mô hình học được từ các bộ $(S_t,A_t,R_{t+1},S_{t+1})$ đã ghi. Khi lập kế hoạch qua nhiều bước, dự báo sai ở một bước làm sai đầu vào của bước sau, nên sai số tích lũy.
 
 <!-- note-topic-id: lec-01-topic-05 -->
 ### 4.4 Thăm dò và khai thác
@@ -863,7 +863,7 @@ Nhầm lẫn thường gặp là coi nước của O là một bước riêng c�
 <!-- note-topic-id: lec-01-topic-07 -->
 ### 5.2 Rút gọn lịch sử thành thế cờ
 
-Hai lịch sử khác nhau có thể dẫn tới cùng thế cờ, chẳng hạn khi các quân O ở ô 2, 4, 8 được đặt theo hai thứ tự khác nhau. Để viết $v_\pi(s)$ như người chơi vẫn làm, chúng ta cần biết khi nào giá trị chỉ phụ thuộc thế cờ cuối của lịch sử. Về mặt ý tưởng, giá trị chỉ phụ thuộc thế cờ khi mọi thứ quyết định diễn biến về sau, gồm luật chơi, nước của đối thủ và nước của chính X, chỉ dựa vào thế cờ hiện tại, không dựa vào cách đi tới thế cờ đó.
+Hai lịch sử khác nhau có thể dẫn tới cùng thế cờ, chẳng hạn khi các quân O ở ô 2, 4, 8 được đặt theo hai thứ tự khác nhau. Để viết $v_\pi(s)$ như người chơi vẫn làm, chúng ta cần biết khi nào giá trị chỉ phụ thuộc thế cờ cuối của lịch sử. Về mặt ý tưởng, giá trị chỉ phụ thuộc thế cờ khi luật chơi, nước của đối thủ và nước của chính X, tức mọi thứ quyết định diễn biến về sau, chỉ dựa vào thế cờ hiện tại.
 
 ::: remark Nhận xét 01.19 (Rút gọn lịch sử thành thế cờ)
 Giả sử ba điều kiện sau thỏa:
@@ -888,19 +888,19 @@ Cả $\pi_u$ và $\pi_w$ đều thỏa điều kiện 3. Thời điểm $t$ khô
 Mỗi điều kiện có một trường hợp vi phạm cụ thể.
 
 - **Bỏ điều kiện 1.** Nếu X chỉ thấy một phần bàn cờ, cùng một quan sát ứng với nhiều thế cờ, như robot thấy $\text{sạch}$ ở ba ô khác nhau; giá trị theo quan sát không xác định duy nhất.
-- **Bỏ điều kiện 2.** Giả sử O chọn đều trên các ô trống, trừ khi nước trước của O là ô 4 thì O đánh ô trống có số nhỏ nhất. Khi đó luật một bước của Định nghĩa 01.18 không còn chỉ phụ thuộc thế cờ: nước của O còn phụ thuộc nước trước của O, một thông tin không có trên bàn cờ dù X thấy toàn bộ bàn cờ. Viết O4 cho "O đánh ô 4" và tương tự. Hai lịch sử O4, X1, O2, X5, O8 và O2, X1, O8, X5, O4 cùng dẫn tới thế cờ $s$ với xác suất dương khi X chọn đều. Sau nước tiếp theo của X, ở lịch sử thứ nhất O chọn đều, ở lịch sử thứ hai O đánh ô nhỏ nhất. Dưới $\pi_u$, ở lịch sử thứ nhất giá trị là $\frac12$; Ví dụ 01.10 ở Mục 5.3 tính con số này. Ở lịch sử thứ hai, O đánh ô trống nhỏ nhất: sau nước 3 của X, O đánh 6 và giá trị của thế cờ còn lại là $1$; sau nước 6 hoặc 7, O đánh 3 và giá trị là $\frac12$; nước 9 thắng ngay. Do đó giá trị là $\frac14\big(1+\frac12+\frac12+1\big)=\frac34\ne\frac12$, nên giá trị phụ thuộc lịch sử.
+- **Bỏ điều kiện 2.** Giả sử O chọn đều trên các ô trống, trừ khi nước trước của O là ô 4 thì O đánh ô trống có số nhỏ nhất. Khi đó luật một bước của Định nghĩa 01.18 không còn chỉ phụ thuộc thế cờ: nước của O còn phụ thuộc nước trước của O, một thông tin không có trên bàn cờ dù X thấy toàn bộ bàn cờ. Viết O4 cho "O đánh ô 4" và tương tự. Hai lịch sử O4, X1, O2, X5, O8 và O2, X1, O8, X5, O4 cùng dẫn tới thế cờ $s$ với xác suất dương khi X chọn đều. Sau nước tiếp theo của X, ở lịch sử thứ nhất O chọn đều, ở lịch sử thứ hai O đánh ô nhỏ nhất. Dưới $\pi_u$, ở lịch sử thứ nhất giá trị là $\frac12$; Ví dụ 01.10 ở Mục 5.3 tính con số này. Ở lịch sử thứ hai, sau nước 3 của X, O đánh 6 và giá trị của thế cờ còn lại là $1$; sau nước 6 hoặc 7, O đánh 3 và giá trị là $\frac12$; nước 9 thắng ngay. Do đó giá trị là $\frac14\big(1+\frac12+\frac12+1\big)=\frac34\ne\frac12$, nên giá trị phụ thuộc lịch sử.
 - **Bỏ điều kiện 3.** Nếu X chọn nước theo một quy tắc nhớ nước trước của chính mình, hai lịch sử cùng thế cờ có thể dẫn tới hai nước khác nhau của X.
 
 ### 5.3 Chọn nước bằng giá trị: một ví dụ tính tay
 
-Với thế cờ $s$, chúng ta tính cho từng nước $a$ của X kỳ vọng của lợi tức khi X đánh $a$ rồi tiếp tục theo $\pi_u$. Mỗi nước $a\ne9$ dẫn tới một nước trả lời ngẫu nhiên của O, rồi tới một thế cờ chỉ còn hai ô trống, nơi giá trị tính được như Ví dụ 01.7.
+Với thế cờ $s$ và mỗi nước $a$ của X, chúng ta tính kỳ vọng của lợi tức khi X đánh $a$ rồi tiếp tục theo $\pi_u$. Mỗi nước $a\ne9$ dẫn tới một nước trả lời ngẫu nhiên của O, rồi tới một thế cờ chỉ còn hai ô trống, nơi giá trị tính được như Ví dụ 01.7.
 
 ::: example Ví dụ 01.10 (Chọn nước trên thế cờ bốn ô trống)
 **Dữ kiện.** Thế cờ $s$: X ở ô 1 và 5; O ở ô 2, 4 và 8; ô 3, 6, 7, 9 trống; đến phiên X, tại bước $t=2$. Luật một bước theo Định nghĩa 01.18; O chọn đều trên các ô trống. Sau nước $A_t=a$, X tiếp tục theo $\pi_u$, chọn đều trên các ô trống. Phần thưởng: $+1$ khi X thắng, $-1$ khi O thắng, $0$ khi hòa và ở bước chưa kết thúc; giá trị sau khi lượt kết thúc bằng $0$.
 
 **Nước $a=9$.** X có đường chéo 1–5–9 và thắng: $R_{t+1}=+1$, giá trị phần sau bằng $0$, kỳ vọng của lợi tức là $1$.
 
-**Ba nước còn lại.** Sau $a=3$, $6$ hoặc $7$, X chưa thắng và O không thắng được bằng một nước, vì đường duy nhất O còn có thể hoàn thành là 7–8–9, cần cả ô 7 và ô 9 (với $a=7$, đường này đã bị chặn); phần thưởng của bước là $0$. O trả lời mỗi ô trống với xác suất $\frac13$, để lại hai ô trống; X chọn đều một trong hai ô, và nếu ván chưa kết thúc, O đánh ô cuối. Bảng ghi kết quả của hai lựa chọn của X và giá trị của thế cờ hai ô trống:
+**Ba nước còn lại.** Sau $a=3$, $6$ hoặc $7$, X chưa thắng, và O không thắng được bằng một nước vì đường duy nhất O còn có thể hoàn thành, 7–8–9, cần cả ô 7 lẫn ô 9 (với $a=7$, đường này đã bị chặn). Do đó phần thưởng của bước là $0$. O trả lời mỗi ô trống với xác suất $\frac13$, để lại hai ô trống; X chọn đều một trong hai ô, và nếu ván chưa kết thúc, O đánh ô cuối. Bảng ghi kết quả của hai lựa chọn của X và giá trị của thế cờ hai ô trống:
 
 | $a$ | O đánh | Hai ô còn trống | X đánh ô thứ nhất | X đánh ô thứ hai | Giá trị |
 |---|---|---|---|---|---:|
@@ -940,7 +940,7 @@ Hình trên tóm tắt Ví dụ 01.10: mỗi nhánh vẽ thế cờ ngay sau nư
 
 ### 5.4 Phân tích một bước và nước khai thác một bước
 
-Trong Ví dụ 01.10, với mỗi nước $a$, chúng ta tách kỳ vọng của lợi tức thành hai phần thay vì cộng lợi tức trên toàn bộ cây trò chơi: phần thưởng của bước hiện tại và giá trị của thế cờ kế tiếp theo $\pi_u$. Khi luật của môi trường cố định và lượt hữu hạn, cách tách này đúng cho mọi chính sách trên lịch sử của một lượt chưa kết thúc; viết theo thế cờ, nó cần thêm ba điều kiện của Nhận xét 01.19.
+Trong Ví dụ 01.10, thay vì cộng lợi tức trên toàn bộ cây trò chơi, với mỗi nước $a$, chúng ta tách kỳ vọng của lợi tức khi X đánh $a$ thành hai phần: phần thưởng của bước hiện tại và giá trị của thế cờ kế tiếp theo $\pi_u$. Khi luật của môi trường cố định và lượt hữu hạn, cách tách này đúng cho mọi chính sách trên lịch sử của một lượt chưa kết thúc; viết theo thế cờ, nó cần thêm ba điều kiện của Nhận xét 01.19.
 
 ::: proposition Mệnh đề 01.20 (Phân tích một bước)
 **Giả thiết.** Môi trường có luật cố định như trong Định nghĩa 01.12 và mọi lượt kết thúc sau nhiều nhất $L$ bước. Cho chính sách $\pi$, một lịch sử $h$ đến bước $t$ của một lượt chưa kết thúc, và một hành động hợp lệ $a$. Ký hiệu $\mathbb E_\pi[\,\cdot\mid H_t=h,A_t=a]$ là kỳ vọng khi tác tử chọn $a$ ở bước $t$ rồi theo $\pi$ từ bước $t+1$. Quy ước $v_\pi(H_{t+1})=0$ nếu lượt kết thúc ở bước $t+1$.
@@ -1009,9 +1009,9 @@ tức là (5.2). Dưới phân phối của diễn biến bắt đầu từ $h$ 
 
 Trong (5.1), vế trái mang chỉ số $\pi$ vì $G_t$ phụ thuộc mọi hành động sau bước $t$. Vế phải chỉ có $\mathbb E$, vì khi biết $h$ và $a$, phân phối của $R_{t+1}$ và $H_{t+1}$ chỉ do luật của môi trường quyết định; chính sách $\pi$ đã nằm trong hàm $v_\pi$.
 
-Mệnh đề 01.20 nói rằng để đánh giá một hành động, ta không cần nhìn tới cuối lượt: chỉ cần phần thưởng của bước kế tiếp và giá trị của tình huống kế tiếp, cả hai lấy kỳ vọng. Ví dụ 01.10 là phần (c) với $\pi=\pi_u$, và phép tính $v_{\pi_u}(s)=\frac12$ là phần (b). Mỗi giả thiết có vai trò riêng.
+Theo Mệnh đề 01.20, để đánh giá một hành động, ta chỉ cần kỳ vọng của $R_{t+1}+v_\pi(H_{t+1})$ thay vì nhìn tới cuối lượt. Ví dụ 01.10 là phần (c) với $\pi=\pi_u$, và phép tính $v_{\pi_u}(s)=\frac12$ là phần (b). Mỗi giả thiết có vai trò riêng.
 
-- **Bỏ lượt hữu hạn.** Bước 1 dựa vào Mệnh đề 01.9, mà hệ thức của nó không xác định khi lượt không dừng.
+- **Bỏ lượt hữu hạn.** Bước 1 dựa vào hệ thức (3.2) của Mệnh đề 01.9, vốn không xác định khi lượt không dừng.
 - **Bỏ luật cố định.** Nếu cách O chọn nước thay đổi theo số ván đã chơi, kỳ vọng của $G_{t+1}$ dưới cùng lịch sử $h^+$ không còn là một số cố định $v_\pi(h^+)$, và Bước 2 không còn đúng.
 - **Bỏ một điều kiện của Nhận xét 01.19.** Phần (a) vẫn đúng trên lịch sử, nhưng Bước 4 không dùng được và phần (c) không xác định, như ở trường hợp bỏ điều kiện 2 của Nhận xét 01.19, khi đối thủ nhớ nước trước của mình.
 
@@ -1025,15 +1025,15 @@ $$
 với $v_\pi(S_{t+1})=0$ khi lượt đã kết thúc. Khi tập $\arg\max$ có nhiều phần tử, một **quy tắc phá hòa** (tie-breaking) cố định, chẳng hạn chọn ô có số nhỏ nhất, xác định nước được chọn. Trên lịch sử, định nghĩa tương tự dùng vế phải của (5.1).
 :::
 
-Định nghĩa 01.21 đưa khai thác của Định nghĩa 01.16 vào bài toán nhiều bước: ước lượng $\bar r(a)$ được thay bằng đại lượng ở (5.3), theo Mệnh đề 01.20 bằng kỳ vọng của lợi tức khi chọn $a$ rồi tiếp tục theo $\pi$. Trên thế cờ $s$ với $\pi=\pi_u$, (5.3) cho $a^*=9$.
+Định nghĩa 01.21 đưa khai thác của Định nghĩa 01.16 vào bài toán nhiều bước: ước lượng $\bar r(a)$ được thay bằng đại lượng ở (5.3), mà theo Mệnh đề 01.20 bằng kỳ vọng của lợi tức khi chọn $a$ rồi tiếp tục theo $\pi$. Trên thế cờ $s$ với $\pi=\pi_u$, (5.3) cho $a^*=9$.
 
 ::: remark Nhận xét 01.22 (Giới hạn của nước khai thác một bước)
 - **Nước khai thác một bước phụ thuộc $\pi$.** Đại lượng trong (5.3) đánh giá việc tiếp tục theo $\pi$, không đánh giá việc tiếp tục chơi tốt nhất; đổi chính sách tiếp tục thì tập $\arg\max$ có thể đổi (Bài tập 01.8).
-- **Không bảo đảm tối ưu.** Chọn $a^*$ ở mỗi bước theo $v_\pi$ của một chính sách $\pi$ kém không bảo đảm cho chính sách tốt nhất. Bài 04 chứng minh, cho quá trình quyết định Markov hữu hạn với $0\le\gamma<1$, rằng chính sách chọn $a^*$ ở mọi trạng thái không kém $\pi$, và lặp lại xen kẽ đánh giá và khai thác dẫn tới chính sách tối ưu.
-- **Cần mô hình.** Tính (5.3) cần biết phân phối của $(R_{t+1},S_{t+1})$, tức là cần luật cờ và chính sách $\sigma$ của đối thủ: đó là lập kế hoạch với một mô hình đã biết (Định nghĩa 01.14). Khi không biết $\sigma$, các đại lượng trong (5.3) phải được ước lượng từ các ván đã chơi, và luôn chọn $a^*$ khi đó là khai thác thuần túy, không thăm dò.
+- **Không bảo đảm tối ưu.** Chọn $a^*$ ở mỗi bước theo $v_\pi$ của một chính sách $\pi$ kém không bảo đảm cho ra chính sách tốt nhất. Bài 04 chứng minh rằng trong quá trình quyết định Markov hữu hạn với $0\le\gamma<1$, chính sách chọn $a^*$ ở mọi trạng thái tốt ít nhất bằng $\pi$, và lặp lại xen kẽ đánh giá và khai thác dẫn tới chính sách tối ưu.
+- **Cần mô hình.** Tính (5.3) cần biết phân phối của $(R_{t+1},S_{t+1})$, tức là cần luật cờ và chính sách $\sigma$ của đối thủ: đó là lập kế hoạch với một mô hình đã biết (Định nghĩa 01.14). Khi không biết $\sigma$, tác tử phải ước lượng các đại lượng trong (5.3) từ các ván đã chơi; khi đó, luôn chọn $a^*$ là khai thác thuần túy, không thăm dò.
 :::
 
-**Trong thực hành.** Sutton và Barto (2018, §1.5) giải Tic-tac-toe bằng một bảng ước lượng giá trị cho từng thế cờ: phần lớn thời gian người chơi khai thác theo bảng, thỉnh thoảng thăm dò, và sau mỗi nước khai thác dịch ước lượng của thế cờ trước về phía ước lượng của thế cờ sau, tức một cập nhật sai phân thời gian (temporal-difference learning, TD). Đại lượng trong (5.3) chỉ phụ thuộc thế cờ ngay sau nước của X, gọi là trạng thái sau nước đi (afterstate; Sutton và Barto 2018, §6.8), nên chỉ cần lưu giá trị cho các trạng thái này, như hình của Ví dụ 01.10.
+**Trong thực hành.** Sutton và Barto (2018, §1.5) giải Tic-tac-toe bằng một bảng ước lượng giá trị cho từng thế cờ. Người chơi phần lớn thời gian khai thác theo bảng, thỉnh thoảng thăm dò; sau mỗi nước khai thác, người chơi dịch ước lượng của thế cờ trước về phía ước lượng của thế cờ sau, tức một cập nhật sai phân thời gian (temporal-difference learning, TD). Đại lượng trong (5.3) chỉ phụ thuộc thế cờ ngay sau nước của X, gọi là trạng thái sau nước đi (afterstate; Sutton và Barto 2018, §6.8), nên chỉ cần lưu giá trị cho các trạng thái này, như hình của Ví dụ 01.10.
 
 ::: exercise Bài tập 01.7 (Biểu diễn một thế cờ có ô 2, 6, 8 trống)
 Thế cờ $u$: X ở ô 3, 4 và 9; O ở ô 1, 5 và 7; các ô 2, 6, 8 trống. Ô đánh số 1 đến 9 theo hàng, từ trái sang phải, từ trên xuống dưới. Phần thưởng của X theo Định nghĩa 01.18: $+1$ khi X thắng, $-1$ khi O thắng, $0$ khi hòa và ở bước chưa kết thúc.
@@ -1116,7 +1116,7 @@ Hai tình huống sau quay lại robot dọn dãy bốn ô.
 3. Giá trị chỉ phụ thuộc vị trí $k$ và số hành động còn lại $m=4-t$, vì ba lý do:
    - vị trí ban đầu đã biết và luật dịch chuyển tất định, nên $k$ là một hàm của lịch sử;
    - chính sách $\pi_u$ không dùng lịch sử, nên không cần điều kiện quan sát đầy đủ của Nhận xét 01.19;
-   - luật của môi trường chỉ phụ thuộc vị trí, tình trạng ô 4, vốn luôn là "còn rác" khi lượt chưa kết thúc, và số hành động còn lại.
+   - luật của môi trường chỉ phụ thuộc vị trí, số hành động còn lại và tình trạng ô 4, vốn luôn là "còn rác" khi lượt chưa kết thúc.
 
    Ta viết giá trị đó là $w(k,m)$, với $w(k,0)=0$ vì lượt bị cắt.
 
@@ -1174,7 +1174,7 @@ Nước khai thác một bước là $\text{phải}$, trùng hành động đầ
 
 **Tính giá trị theo Định nghĩa 01.12.** Từ $h_a$, $\pi_1$ chọn $\text{phải}$ tới ô 4, thấy $\text{bẩn}$ rồi hút: $R_3=0$, $R_4=1$, $T=4$, nên $v_{\pi_1}(h_a)=1$. Từ $h_b$, $\pi_1$ chọn $\text{phải}$ ba lần, robot tới ô 4 đúng lúc lượt bị cắt ở $T=5$, nên $v_{\pi_1}(h_b)=0$.
 
-**Diễn giải và giới hạn.** Một số $V(\text{sạch})$ duy nhất không thể bằng cả $1$ lẫn $0$, nên mọi lựa chọn của nó đánh giá sai ít nhất một trong hai lịch sử. Mệnh đề 01.20(a) vẫn đúng trên lịch sử, nhưng phần (c) không dùng được với quan sát thay cho trạng thái. Một biểu diễn đủ thông tin phải tính được từ lịch sử, chẳng hạn vị trí $k$ suy ra bằng cách áp luật dịch chuyển từ ô 1 cùng số hành động còn lại.
+**Diễn giải và giới hạn.** Số $V(\text{sạch})$ không thể bằng cả $1$ lẫn $0$, nên dù chọn giá trị nào, số này cũng đánh giá sai ít nhất một trong hai lịch sử. Mệnh đề 01.20(a) vẫn đúng trên lịch sử, nhưng phần (c) không dùng được với quan sát thay cho trạng thái. Một biểu diễn đủ thông tin phải tính được từ lịch sử, chẳng hạn cặp $(k,m)$ gồm vị trí $k$, suy ra từ ô 1 theo luật dịch chuyển, và số hành động còn lại $m$.
 
 **Dẫn ngược lý thuyết.** Định nghĩa 01.2, Nhận xét 01.3; Định nghĩa 01.12; Nhận xét 01.19, điều kiện 1 là giả thiết bị vi phạm; Mệnh đề 01.20(a) và (c).
 
@@ -1289,7 +1289,7 @@ Dùng $G_T=0$ và $G_t=R_{t+1}+G_{t+1}$, tính từ cuối về đầu; đổi d
 ### Mức vận dụng
 
 ::: exercise Bài tập 01.11 (Bàn tay robot xoay khối: có mô hình hay phi mô hình)
-Một bàn tay robot ba ngón, như trong bài giảng gốc (2025–2026, trang 13), phải xoay một khối lập phương để mặt có đánh dấu hướng lên trên. Mỗi bước, bộ điều khiển gửi một lệnh cho các khớp; camera và cảm biến khớp cho ảnh của khối và góc các khớp. Phần thưởng là $+1$ ở bước cuối nếu mặt đánh dấu hướng lên, $0$ ở mọi bước khác; lượt bị cắt sau $50$ bước. Ở bài này, trạng thái và quan sát nhận giá trị liên tục, khác với giả thiết tập hữu hạn của Định nghĩa 01.2; bài chỉ yêu cầu nhận diện các thành phần. Có hai phương án.
+Một bàn tay robot ba ngón, như trong bài giảng gốc (2025–2026, trang 13), phải xoay một khối lập phương để mặt có đánh dấu hướng lên trên. Mỗi bước, bộ điều khiển gửi một lệnh cho các khớp; camera và cảm biến khớp cho ảnh của khối và góc các khớp. Phần thưởng là $+1$ ở bước cuối nếu mặt đánh dấu hướng lên, $0$ ở mọi bước khác; lượt bị cắt sau $50$ bước. Ở bài này, trạng thái và quan sát nhận giá trị liên tục, khác với giả thiết tập hữu hạn của Định nghĩa 01.2. Có hai phương án.
 
 **P1.** Dùng một bộ mô phỏng vật lý của bàn tay và khối để thử trước các chuỗi lệnh, rồi thực hiện chuỗi tốt nhất trên robot thật.
 

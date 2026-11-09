@@ -182,7 +182,7 @@ Giả thiết $\mathcal A$ hữu hạn có vai trò riêng. Bỏ giả thiết n
 
 **Tính.** $Q_\theta(o,a_3)=[\mathbf q_\theta(o)]_{a_3}=-0{,}3$. Giá trị lớn nhất là $\max_aQ_\theta(o,a)=2{,}5$, đạt duy nhất tại $a_2$, nên $\mathcal G_\theta(o)=\{a_2\}$. Chính sách $\epsilon_{\mathrm{exp}}$-tham lam chọn $a_2$ với xác suất $1-0{,}1+0{,}1/4=0{,}925$ và mỗi hành động còn lại với xác suất $0{,}1/4=0{,}025$; kiểm tra: $0{,}925+3\cdot0{,}025=1$.
 
-**Diễn giải.** Ba đại lượng mà các mục sau dùng, gồm giá trị của hành động đã thực hiện, giá trị lớn nhất trong mục tiêu và hành động tham lam của chính sách hành vi, đều lấy từ cùng một vector sau một lần tính.
+**Diễn giải.** Giá trị của hành động đã thực hiện, giá trị lớn nhất trong mục tiêu và hành động tham lam của chính sách hành vi đều lấy từ cùng một vector sau một lần tính.
 :::
 
 ![Quan sát o đi vào mạng có tham số theta; một lần tính trả về vector q theta của o gồm bốn ô ứng với a1 đến a4, giá trị minh họa 0,8; 2,5; âm 0,3; 1,9. Ô a2 có viền kép và dấu tam giác bên dưới: giá trị lớn nhất 2,5, arg max bằng a2.](img/lec-08/q-vector.svg)
@@ -199,7 +199,7 @@ Phương trình Bellman tối ưu của Bài 06 viết trên trạng thái của
 - mạng tích chập cho ảnh;
 - hàm kích hoạt ReLU, tanh hoặc sigmoid.
 
-Số tầng, độ rộng và cách biểu diễn đầu vào ảnh hưởng tới năng lực xấp xỉ và độ ổn định khi huấn luyện. Giả thiết Markov là giả thiết về quan sát, nên đổi kiến trúc không làm nó đúng; với ảnh, nó phụ thuộc số khung được xếp chồng.
+Số tầng, độ rộng và cách biểu diễn đầu vào ảnh hưởng tới năng lực xấp xỉ và độ ổn định khi huấn luyện. Giả thiết Markov nói về quan sát, nên đổi kiến trúc không làm giả thiết này đúng; với ảnh, giả thiết đó phụ thuộc số khung xếp chồng.
 
 **Kiểm tra nhanh.** Với $\mathbf q_\theta(o)=(1;\ 4;\ 4;\ 0)$ và $\epsilon_{\mathrm{exp}}=0{,}2$, tập hành động tham lam là $\mathcal G_\theta(o)=\{a_2,a_3\}$; phá hòa chia đều cho $a_2$ xác suất $0{,}2/4+0{,}8/2=0{,}45$, và $a_1$, $a_4$ mỗi hành động $0{,}05$.
 
@@ -219,7 +219,7 @@ Nhận xét 08.2 cần $O_t$ đủ Markov: phân phối của $(R_{t+1},O_{t+1},
 
 Với một khung, quả bóng có thể đang đi theo hai hướng ngược nhau; với bốn khung, các vị trí cách đều nhau trên một đường thẳng và xác định hướng chuyển động kế tiếp.
 
-Ví dụ 08.4 chỉ xét một vật chuyển động thẳng đều và luôn hiển thị. Chồng bốn khung không làm $O_t$ đủ Markov trong mọi trò chơi, vì ba loại thông tin vẫn có thể nằm ngoài nó:
+Ví dụ 08.4 chỉ xét một vật chuyển động thẳng đều và luôn hiển thị. Ba loại thông tin vẫn có thể nằm ngoài chồng bốn khung và làm $O_t$ mất tính Markov:
 
 - một vật bị vật khác che khuất trong cả bốn khung;
 - một biến của trò chơi không hiển thị trên màn hình, chẳng hạn một bộ đếm thời gian ẩn;
@@ -238,7 +238,7 @@ Trong Q-learning dạng bảng, cập nhật ô $(S_t,A_t)$ không đổi ô ở
 
 **Tính.** Tại $\theta_0=0$: $q=0$ và $y=1+0{,}9\cdot0=1$. Bước cập nhật cho $\theta_1=0+0{,}5\,(1-0)=0{,}5$. Tính lại trên cùng mẫu chuyển: $q=0{,}5$ và $y=1+0{,}9\cdot0{,}5=1{,}45$.
 
-**Diễn giải.** Sai số $y-q$ giảm từ $1$ xuống $1{,}45-0{,}5=0{,}95$. Nếu mục tiêu giữ nguyên ở $1$, sai số sau bước là $1-0{,}5=0{,}5$. Dự đoán tăng $0{,}5$, nhưng mục tiêu cũng tăng $0{,}9\cdot0{,}5=0{,}45$, vì cả hai cùng chứa $\theta$.
+**Diễn giải.** Dự đoán tăng $0{,}5$, nhưng mục tiêu cũng tăng $0{,}9\cdot0{,}5=0{,}45$, vì cả hai cùng chứa $\theta$; do đó sai số $y-q$ chỉ giảm từ $1$ xuống $1{,}45-0{,}5=0{,}95$, thay vì xuống $1-0{,}5=0{,}5$ như khi mục tiêu giữ nguyên ở $1$.
 :::
 
 ![Trục giá trị thẳng đứng từ 0 đến 1,5. Trước bước cập nhật: dự đoán q bằng 0 (hình tròn), mục tiêu y bằng 1 (hình vuông). Sau một bước: q bằng 0,5, y bằng 1,45. Hai mũi tên nét đứt cho thấy cả dự đoán lẫn mục tiêu cùng tăng.](img/lec-08/moving-target-step.svg)
@@ -261,7 +261,7 @@ Cho mạng giá trị hành động $\mathbf q_\theta$ (Định nghĩa 08.1), b�
 Phép gán ở mục 3 gọi là đồng bộ (sao chép cứng, hard update); $C$ là số bước tối ưu giữa hai lần đồng bộ. Phần bootstrap của mục tiêu được tính bằng $Q_{\theta^-}$ thay cho $Q_\theta$.
 :::
 
-Theo định nghĩa, giữa hai lần đồng bộ $\theta^-$ là một hằng số, nên mục tiêu của mỗi mẫu chuyển là một số cố định và mỗi bước cập nhật $\theta$ là một bước hồi quy về nhãn đó; chỉ $Q_\theta$ nhận gradient. Tại mỗi mốc đồng bộ, mục tiêu của mọi mẫu chuyển đổi cùng lúc, vì $\theta^-$ nhận giá trị mới. Mạng mục tiêu vì vậy làm mục tiêu đổi theo từng đợt thay vì sau mỗi bước, nhưng không giữ mục tiêu cố định mãi.
+Theo định nghĩa, giữa hai lần đồng bộ $\theta^-$ là một hằng số, nên mục tiêu của mỗi mẫu chuyển là một số cố định và mỗi bước cập nhật $\theta$ là một bước hồi quy về nhãn đó; chỉ $Q_\theta$ nhận gradient. Tại mỗi mốc đồng bộ, mục tiêu của mọi mẫu chuyển đổi cùng lúc, vì $\theta^-$ nhận giá trị mới. Mạng mục tiêu vì vậy làm mục tiêu đổi theo từng đợt thay vì sau mỗi bước.
 
 Mỗi điều kiện có vai trò riêng:
 
@@ -281,7 +281,7 @@ Mỗi điều kiện có vai trò riêng:
 **Diễn giải.** Trong ba bước, mục tiêu đứng yên và sai số $y-\theta_k$ giảm một nửa mỗi bước: $1$, $0{,}5$, $0{,}25$, $0{,}125$. Mục tiêu chỉ đổi tại mốc đồng bộ, một lần, từ $1$ lên $1{,}7875$.
 :::
 
-Trong ví dụ một tham số, mạng mục tiêu không đưa $\theta$ tới $10$ nhanh hơn. Gọi $r=0{,}5^C$. Một chu kỳ $C$ bước đưa $\theta^-$ thành $(1+0{,}9\,\theta^-)(1-r)+\theta^-r$, nên $\theta^-_{\mathrm{new}}-10=(0{,}9+0{,}1\,r)\,(\theta^--10)$, với $\theta^-_{\mathrm{new}}$ là tham số mạng mục tiêu sau chu kỳ. Với $C=3$, khoảng cách tới $10$ nhân với $0{,}9125$ sau mỗi ba bước, trong khi không có mạng mục tiêu, ba bước nhân khoảng cách với $0{,}95^3\approx0{,}857$. Giữa hai lần đồng bộ, mỗi bước là hồi quy về nhãn cố định, nên vòng phản hồi giữa dự đoán và mục tiêu chỉ khép lại tại các mốc đồng bộ. Bài giảng gốc (trang 33) nêu mạng mục tiêu như cách làm mục tiêu thay đổi chậm hơn để quá trình tối ưu ổn định hơn; lợi ích ổn định với mạng lớn là kết quả thực nghiệm.
+Trong ví dụ một tham số, với $C\ge2$, mạng mục tiêu làm $\theta$ tiến về $10$ chậm hơn. Gọi $r=0{,}5^C$ và gọi $\theta^-_{\mathrm{new}}$ là tham số mạng mục tiêu sau một chu kỳ $C$ bước; khi đó $\theta^-_{\mathrm{new}}=(1+0{,}9\,\theta^-)(1-r)+\theta^-r$, nên $\theta^-_{\mathrm{new}}-10=(0{,}9+0{,}1\,r)\,(\theta^--10)$. Với $C=3$, khoảng cách tới $10$ nhân với $0{,}9125$ sau mỗi ba bước, trong khi không có mạng mục tiêu, ba bước nhân khoảng cách với $0{,}95^3\approx0{,}857$. Nguyên nhân là vòng phản hồi giữa dự đoán và mục tiêu chỉ khép lại tại các mốc đồng bộ. Bài giảng gốc (trang 33) nêu mạng mục tiêu như cách làm mục tiêu thay đổi chậm hơn để quá trình tối ưu ổn định hơn; lợi ích ổn định với mạng lớn là kết quả thực nghiệm.
 
 **Trong thực hành.** Hai mạng là hai bản của cùng một lớp mạng; đồng bộ là sao chép toàn bộ tham số của mạng trực tuyến sang mạng mục tiêu, và mạng mục tiêu chỉ chạy lan truyền xuôi, không tính gradient. Bộ nhớ tham số vì vậy gấp đôi. Mnih và cộng sự (2015, Extended Data Table 1) dùng $C=10\,000$ lần cập nhật. Điều kiện đồng bộ đếm bước tối ưu $k_{\mathrm{opt}}$, không đếm bước môi trường $t$.
 
@@ -310,7 +310,7 @@ Mục tiêu hồi quy nối DQN với hồi quy có giám sát. Với $\theta^-$
 - nhãn đổi tại mỗi mốc đồng bộ;
 - dữ liệu do chính sách hành vi sinh ra, nên phân phối của nó đổi theo $\theta$.
 
-Với Q-learning dạng bảng và $C=1$, $\tfrac12(y_t-Q(S_t,A_t))^2$, khi coi $y_t$ là hằng, có đạo hàm theo ô $Q(S_t,A_t)$ bằng $-\delta_t$, nên quy tắc $Q\leftarrow Q+\alpha\delta_t$ là một bước hạ gradient trên chính ô đó.
+Với Q-learning dạng bảng và $C=1$, coi $y_t$ là hằng, đạo hàm của $\tfrac12(y_t-Q(S_t,A_t))^2$ theo ô $Q(S_t,A_t)$ bằng $-\delta_t$, nên quy tắc $Q\leftarrow Q+\alpha\delta_t$ là một bước hạ gradient trên chính ô đó.
 
 ::: remark Nhận xét 08.5 (Hàm hồi quy tốt nhất cho mục tiêu cố định)
 Giả sử $O_t$ đủ Markov, động lực của môi trường không đổi theo thời gian, $\theta^-$ cố định, các cặp $(O_t,A_t)$ được lấy theo một phân phối cố định và $\mathbb E[y_t^2]<\infty$. Trong mọi hàm $f$ của $(o,a)$, hàm làm nhỏ nhất kỳ vọng $\mathbb E\bigl[(y_t-f(O_t,A_t))^2\bigr]$ là kỳ vọng có điều kiện
@@ -385,7 +385,7 @@ Cách xử lý trên dựa trên một giả thiết: giới hạn số bước 
 
 **Trong thực hành.** Thư viện môi trường thường trả về hai cờ riêng cho kết thúc và cắt ngắn; $Z$ lấy từ cờ kết thúc, $U$ từ cờ cắt ngắn. Một biến "xong" tính bằng phép hoặc của hai cờ chỉ dùng để quyết định việc đặt lại môi trường, không dùng làm mặt nạ.
 
-Đến đây mỗi mẫu chuyển có một nhãn $y_t$ đứng yên giữa hai lần đồng bộ, chỉ dùng cờ kết thúc làm mặt nạ (Định nghĩa 08.3, 08.4, 08.6). Các kết quả này chưa nói mẫu chuyển nào được dùng để cập nhật: theo đúng thứ tự thu thập, các mẫu liền nhau gần giống nhau và cùng lệch về đoạn quỹ đạo gần nhất. Ở phần 3, chúng ta lưu các mẫu vào một bộ nhớ và lấy mẫu đều để giảm tương quan này.
+Đến đây mỗi mẫu chuyển có một nhãn $y_t$ đứng yên giữa hai lần đồng bộ, chỉ dùng cờ kết thúc làm mặt nạ (Định nghĩa 08.3, 08.4, 08.6). Còn thiếu quy tắc chọn mẫu chuyển để cập nhật: nếu dùng đúng thứ tự thu thập, các mẫu liền nhau gần giống nhau và cùng lệch về đoạn quỹ đạo gần nhất. Ở phần 3, chúng ta lưu các mẫu vào một bộ nhớ và lấy mẫu đều để giảm tương quan này.
 
 ## 3. Bộ nhớ phát lại
 
@@ -413,7 +413,7 @@ $$
 $$
 Nếu bốn mẫu độc lập, $\operatorname{Var}\bar h=\sigma^2/4=0{,}25\,\sigma^2$. Cỡ mẫu hiệu dụng (effective sample size), tức số mẫu độc lập cho cùng phương sai, là $\sigma^2/\operatorname{Var}\bar h=\sigma^2/(0{,}881\,\sigma^2)\approx1{,}1$.
 
-**Diễn giải.** Với tương quan này, mini-batch bốn mẫu liền nhau giảm phương sai gần như không hơn một mẫu. Muốn trung bình gradient có phương sai nhỏ, các mẫu trong mini-batch phải đến từ những thời điểm xa nhau.
+**Diễn giải.** Với tương quan này, trung bình của bốn mẫu liền nhau có phương sai gần bằng phương sai $\sigma^2$ của một mẫu. Muốn trung bình gradient có phương sai nhỏ, các mẫu trong mini-batch phải đến từ những thời điểm xa nhau.
 :::
 
 ![Hai hàng, mỗi hàng là 20 bước thời gian của cùng một quỹ đạo, vẽ bằng chấm tròn rỗng. Hàng trên, liên tiếp: bốn mẫu ở t bằng 17 đến 20 đánh dấu bằng hình vuông đặc, ngoặc chung ghi cùng đoạn quỹ đạo, cùng theta. Hàng dưới, lấy rải: bốn mẫu ở t bằng 3, 8, 12, 19 đánh dấu bằng tam giác đặc.](img/lec-08/correlated-minibatch.svg)
@@ -440,7 +440,7 @@ Cho số nguyên dương $N$, gọi là dung lượng, và cỡ mini-batch $b\in
 2. Rút: một mini-batch gồm $b$ lần rút đều từ $\lvert\mathcal D\rvert=\min(k,N)$ mẫu đang lưu sau $k$ lần ghi. Các lần rút độc lập (rút có hoàn lại), hoặc không lặp lại vị trí (rút không hoàn lại, cần $b\le\lvert\mathcal D\rvert$); trong cả hai cách, xét riêng từng lần rút, mỗi mẫu đang lưu có xác suất $1/\lvert\mathcal D\rvert$.
 :::
 
-Hai quy tắc trả lời hai câu hỏi khác nhau. Quy tắc ghi quyết định bộ nhớ chứa gì: sau $k\ge N$ lần ghi, $\mathcal D$ chứa đúng $N$ mẫu chuyển gần nhất, từ mẫu $k-N+1$ đến mẫu $k$. Quy tắc rút quyết định mini-batch gồm gì: mọi mẫu đang lưu có cùng cơ hội được chọn, bất kể được ghi lúc nào. Với $N$ lớn, hai lần rút độc lập hiếm khi trúng hai mẫu liền nhau: xác suất đó bằng $2(N-1)/N^2\approx2/N$, tức khoảng $2\cdot10^{-6}$ với $N=10^6$, dung lượng Mnih và cộng sự (2015, Extended Data Table 1) dùng cho Atari cùng cỡ mini-batch $b=32$.
+Hai quy tắc trả lời hai câu hỏi khác nhau. Quy tắc ghi quyết định bộ nhớ chứa gì: sau $k\ge N$ lần ghi, $\mathcal D$ chứa đúng $N$ mẫu chuyển gần nhất, từ mẫu $k-N+1$ đến mẫu $k$. Quy tắc rút quyết định mini-batch gồm gì: mọi mẫu đang lưu có cùng cơ hội được chọn, bất kể được ghi lúc nào. Với $N$ lớn, hai lần rút độc lập hiếm khi trúng hai mẫu liền nhau: xác suất đó bằng $2(N-1)/N^2\approx2/N$, tức khoảng $2\cdot10^{-6}$ với $N=10^6$. Mnih và cộng sự (2015, Extended Data Table 1) dùng $N=10^6$ và $b=32$ cho Atari.
 
 Mỗi quy tắc có vai trò riêng:
 
@@ -478,13 +478,13 @@ Mỗi mẫu chuyển trong bộ nhớ phát lại do hành vi tại lúc thu th�
 
 Q-learning dạng bảng một bước không cần tỉ số lấy mẫu quan trọng vì hai lẽ:
 
-1. $A_t$ là đối số điều kiện của ô $Q(S_t,A_t)$, ô ước lượng $q_*(S_t,A_t)$, nên việc hành vi chọn $A_t$ với xác suất nào không làm lệch mục tiêu của ô đó.
+1. Ô $Q(S_t,A_t)$ ước lượng $q_*(S_t,A_t)$, trong đó $A_t$ là đối số điều kiện, nên mục tiêu của ô đó không phụ thuộc xác suất hành vi chọn $A_t$.
 2. Phần tiếp nối tại $S_{t+1}$ được tính trọn bằng phép cực đại, và với chính sách đích tham lam $\pi$, $\max_{a'}Q(S_{t+1},a')=\sum_{a'}\pi(a'\mid S_{t+1})Q(S_{t+1},a')$, tức đúng bằng kỳ vọng theo chính sách đích; không có hành động nào sau $A_t$ được lấy mẫu từ hành vi.
 
 Trong DQN, dữ liệu khác chính sách đích theo hai nguồn.
 
 1. Hành vi $\epsilon_{\mathrm{exp}}$-tham lam theo $Q_\theta$ khác chính sách tham lam mà mục tiêu đánh giá, ngay cả với $\theta$ hiện tại. Với $\lvert\mathcal A\rvert=4$ và $\epsilon_{\mathrm{exp}}=0{,}1$, như Ví dụ 08.3, hành vi chọn hành động tham lam với xác suất $0{,}925$ và mỗi hành động khác với xác suất $0{,}025$, trong khi chính sách tham lam gán xác suất $1$ và $0$.
-2. Bộ nhớ giữ các mẫu do những phiên bản $\theta$ cũ sinh ra. Mnih và cộng sự (2015, Extended Data Table 1) dùng $N=10^6$ và cập nhật $\theta$ sau mỗi $4$ bước môi trường, nên khi bộ nhớ đầy, mẫu cũ nhất do một hành vi theo $\theta$ của khoảng $10^6/4=2{,}5\cdot10^5$ bước tối ưu trước sinh ra.
+2. Bộ nhớ giữ các mẫu do những phiên bản $\theta$ cũ sinh ra. Mnih và cộng sự (2015, Extended Data Table 1) dùng $N=10^6$ và cập nhật $\theta$ sau mỗi $4$ bước môi trường, nên khi bộ nhớ đầy, hành vi sinh ra mẫu cũ nhất dùng $\theta$ của khoảng $10^6/4=2{,}5\cdot10^5$ bước tối ưu trước.
 
 ![Bên trái hai khung: hành vi theo theta cũ, đánh dấu bằng vòng tròn rỗng, và hành vi theo theta hiện tại, đánh dấu bằng hình vuông đặc. Hai mũi tên từ hai khung cùng đổ vào bộ nhớ phát lại ở giữa, vẽ thành sáu ô: hai ô đầu chứa hình vuông, bốn ô sau chứa vòng tròn. Một mũi tên từ bộ nhớ sang khung mini-batch bên phải, chứa một vòng tròn và một hình vuông: mini-batch trộn mẫu của cả hai phiên bản hành vi.](img/lec-08/offpolicy-replay.svg)
 
@@ -525,7 +525,7 @@ Mệnh đề dựa trên hai giả thiết có vai trò riêng. Giả thiết Ma
 ::: example Ví dụ 08.11 (Tỉ số lấy mẫu quan trọng xóa mẫu của hành động thăm dò)
 **Dữ kiện.** $\lvert\mathcal A\rvert=4$, $\epsilon_{\mathrm{exp}}=0{,}1$, $\gamma=0{,}9$. Tại quan sát $o$, $\mathbf q_\theta(o)=(0{,}8;\,2{,}5;\,-0{,}3;\,1{,}9)$ như Ví dụ 08.3, nên hành động tham lam là $a_2$; giả sử $Q_{\theta^-}(o,\cdot)$ cũng đạt cực đại tại $a_2$. Hành vi chọn $a_4$ và nhận mẫu chuyển có $R_i=1$, $Z_i=0$, $\max_{a'}Q_{\theta^-}(O'_i,a')=4$.
 
-**Tính.** Mục tiêu $y_i=1+0{,}9\cdot4=4{,}6$, một mẫu có kỳ vọng $(\mathcal TQ_{\theta^-})(o,a_4)$ theo Mệnh đề 08.8. Xác suất hành vi chọn $a_4$ là $0{,}1/4=0{,}025$, xác suất chính sách tham lam chọn $a_4$ là $0$. Nếu nhân sai số của mẫu với tỉ số $\pi(a_4\mid o)/\mu(a_4\mid o)=0/0{,}025=0$, với $\mu$ là chính sách hành vi (ký hiệu $b$ của Bài 06), mẫu bị xóa khỏi cập nhật.
+**Tính.** Mục tiêu $y_i=1+0{,}9\cdot4=4{,}6$, một mẫu có kỳ vọng $(\mathcal TQ_{\theta^-})(o,a_4)$ theo Mệnh đề 08.8. Xác suất hành vi chọn $a_4$ là $0{,}1/4=0{,}025$, xác suất chính sách tham lam chọn $a_4$ là $0$. Gọi $\mu$ là chính sách hành vi (ký hiệu $b$ của Bài 06). Nhân sai số của mẫu với tỉ số $\pi(a_4\mid o)/\mu(a_4\mid o)=0/0{,}025=0$ thì mẫu bị xóa khỏi cập nhật.
 
 **Diễn giải.** Hiệu chỉnh theo tỉ số tại $A_i$ làm mọi mẫu của hành động không tham lam có trọng số $0$, nên $Q_\theta(o,a_4)$ không bao giờ học từ dữ liệu, dù mục tiêu $4{,}6$ là mẫu đúng của giá trị cần ước lượng.
 :::
@@ -541,19 +541,19 @@ Trước khi dùng mini-batch rút từ bộ nhớ phát lại để cập nhậ
 
 Bộ nhớ phát lại làm được ba việc:
 
-- Nó giảm tương quan ngắn hạn: một cặp mẫu cho trước trong mini-batch liền nhau với xác suất $2/N$ khi rút không hoàn lại (Ví dụ 08.12); với $b=32$ và $N=10^6$, số cặp liền nhau trong một mini-batch có kỳ vọng $b(b-1)/N\approx10^{-3}$.
-- Nó tái sử dụng mẫu: với các giá trị của Mnih và cộng sự (2015, Extended Data Table 1), $N=10^6$, một bước tối ưu sau mỗi $4$ bước môi trường và $b=32$, một mẫu ở trong bộ nhớ trong $10^6$ bước môi trường, tức $2{,}5\cdot10^5$ bước tối ưu, mỗi bước rút $32$ lần, mỗi lần trúng mẫu đó với xác suất $10^{-6}$; số lần mẫu được dùng có kỳ vọng $2{,}5\cdot10^5\cdot32\cdot10^{-6}=8$.
+- Nó giảm tương quan ngắn hạn: khi rút không hoàn lại, hai mẫu cho trước của mini-batch liền nhau theo thời gian với xác suất $2/N$ (Ví dụ 08.12); với $b=32$ và $N=10^6$, số cặp liền nhau trong một mini-batch có kỳ vọng $b(b-1)/N\approx10^{-3}$.
+- Nó tái sử dụng mẫu: với $N=10^6$, $b=32$ và một bước tối ưu sau mỗi $4$ bước môi trường (Mnih và cộng sự, 2015, Extended Data Table 1), một mẫu ở trong bộ nhớ $10^6$ bước môi trường, tức $2{,}5\cdot10^5$ bước tối ưu; mỗi bước có $32$ lần rút, mỗi lần trúng mẫu đó với xác suất $10^{-6}$, nên số lần mẫu được dùng có kỳ vọng $2{,}5\cdot10^5\cdot32\cdot10^{-6}=8$.
 - Mỗi mini-batch trộn nhiều đoạn quỹ đạo thay vì chỉ đoạn vừa thu thập, nên một bước cập nhật ít bị kéo theo vùng quan sát vừa thăm.
 
 ::: remark Nhận xét 08.9 (Ba điều bộ nhớ phát lại không bảo đảm)
 Với bộ nhớ phát lại của Định nghĩa 08.7:
 
-1. các mẫu trong một mini-batch không độc lập và cùng phân phối (i.i.d.) theo một phân phối cố định: khi biết $\mathcal D$, các lần rút có hoàn lại là i.i.d. theo phân phối thực nghiệm của $\mathcal D$, nhưng nội dung của $\mathcal D$ là các đoạn liền của những quỹ đạo do chính tác tử thu thập, xác suất hai lần rút trúng hai mẫu liền nhau là $2(N-1)/N^2\approx2/N>0$, và hai mẫu liên tiếp $k$, $k+1$ của một lượt dùng chung một quan sát, vì $O'$ của mẫu $k$ là $O$ của mẫu $k+1$;
+1. các mẫu trong một mini-batch không độc lập và cùng phân phối (i.i.d.) theo một phân phối cố định: khi biết $\mathcal D$, các lần rút có hoàn lại là i.i.d. theo phân phối thực nghiệm của $\mathcal D$; nhưng $\mathcal D$ gồm các đoạn liền của quỹ đạo do chính tác tử thu thập, hai lần rút trúng hai mẫu liền nhau với xác suất $2(N-1)/N^2\approx2/N>0$, và mẫu $k$, $k+1$ của một lượt dùng chung một quan sát ($O'$ của mẫu $k$ là $O$ của mẫu $k+1$);
 2. phân phối của $\mathcal D$ không đứng yên: hành vi đổi cùng $\theta$ và bộ đệm thay mẫu cũ nhất bằng mẫu mới, nên phân phối của các cặp $(O_i,A_i)$ được rút trôi theo thời gian;
 3. thuật toán dùng bộ nhớ phát lại không có bảo đảm hội tụ: xấp xỉ hàm, bootstrap và học khác chính sách vẫn cùng có mặt, tức bộ ba bất ổn của Bài 07 vẫn đủ ba yếu tố.
 :::
 
-Ba điều này có ba nguồn khác nhau. Điều thứ nhất đến từ việc mọi mẫu đều do một tác tử thu thập dọc các quỹ đạo. Lấy mẫu đều có hoàn lại làm các lần rút độc lập với nhau khi đã biết $\mathcal D$, nhưng không làm nội dung của $\mathcal D$ thành các mẫu độc lập của một phân phối cố định: nó chỉ làm hiếm các cặp liền nhau, không tạo ra các quỹ đạo độc lập. Điều thứ hai đến từ vòng lặp giữa dữ liệu và tham số: $\theta$ đổi thì hành vi đổi, hành vi đổi thì các mẫu mới ghi vào $\mathcal D$ đổi. Vì vậy lời giải hồi quy tốt nhất của Nhận xét 08.5, vốn giả sử các cặp $(O_t,A_t)$ lấy theo một phân phối cố định, chỉ áp dụng gần đúng khi phân phối của $\mathcal D$ đổi chậm so với số bước tối ưu giữa hai lần đồng bộ. Điều thứ ba đến từ chỗ bộ nhớ chỉ đổi cách chọn mẫu: nó không bỏ xấp xỉ hàm, không bỏ bootstrap, và theo Mệnh đề 08.8 nó còn thêm một nguồn dữ liệu khác chính sách.
+Ba điều này có ba nguồn khác nhau. Điều thứ nhất đến từ việc mọi mẫu đều do một tác tử thu thập dọc các quỹ đạo. Lấy mẫu đều có hoàn lại làm được hai việc: các lần rút độc lập khi đã biết $\mathcal D$, và các cặp liền nhau trở nên hiếm; nội dung của $\mathcal D$ vẫn là các đoạn quỹ đạo của cùng một tác tử. Điều thứ hai đến từ vòng lặp giữa dữ liệu và tham số: $\theta$ đổi thì hành vi đổi, hành vi đổi thì các mẫu mới ghi vào $\mathcal D$ đổi. Vì vậy lời giải hồi quy tốt nhất của Nhận xét 08.5, vốn giả sử các cặp $(O_t,A_t)$ lấy theo một phân phối cố định, chỉ áp dụng gần đúng khi phân phối của $\mathcal D$ đổi chậm so với số bước tối ưu giữa hai lần đồng bộ. Điều thứ ba đến từ chỗ bộ nhớ chỉ đổi cách chọn mẫu: nó không bỏ xấp xỉ hàm, không bỏ bootstrap, và theo Mệnh đề 08.8 nó còn thêm một nguồn dữ liệu khác chính sách.
 
 ::: example Ví dụ 08.12 (Hai mẫu liền nhau trong một mini-batch)
 **Dữ kiện.** $N=6$, bộ nhớ chứa mẫu $3,\dots,8$ như Ví dụ 08.10: các vị trí $1,\dots,6$ chứa mẫu $7,8,3,4,5,6$. Mini-batch có $b=2$ mẫu, rút không hoàn lại.
@@ -565,7 +565,7 @@ Ba điều này có ba nguồn khác nhau. Điều thứ nhất đến từ vi�
 **Diễn giải.** Dung lượng lớn làm hiếm cặp liền nhau, nhưng xác suất luôn dương, và các mẫu không liền nhau của cùng một lượt vẫn có thể tương quan.
 :::
 
-**Trong thực hành.** Dung lượng $N$ là một lựa chọn cân bằng. $N$ lớn làm hiếm cặp liền nhau và làm phân phối của $\mathcal D$ trôi chậm, nhưng giữ lâu các mẫu của những hành vi đã cũ. $N$ nhỏ giữ dữ liệu gần hành vi hiện tại, nhưng mini-batch gần với mini-batch liên tiếp hơn; khi $N=b$ và rút không hoàn lại, mọi mẫu trong mini-batch đều liền nhau.
+**Trong thực hành.** Dung lượng $N$ là một lựa chọn cân bằng. $N$ lớn làm hiếm cặp liền nhau và làm phân phối của $\mathcal D$ trôi chậm, nhưng giữ lâu các mẫu của những hành vi đã cũ. $N$ nhỏ giữ dữ liệu gần hành vi hiện tại, nhưng mini-batch chứa nhiều cặp mẫu liền nhau hơn; khi $N=b$ và rút không hoàn lại, mọi mẫu trong mini-batch đều liền nhau.
 
 Đến đây mỗi bước tối ưu có một mini-batch $b$ mẫu rút đều từ $N$ mẫu gần nhất (Định nghĩa 08.7), với mục tiêu $y_i$ cố định giữa hai lần đồng bộ và có kỳ vọng $(\mathcal TQ_{\theta^-})(O_i,A_i)$ bất kể hành vi đã sinh mẫu (Mệnh đề 08.8); các mẫu vẫn không độc lập và không có bảo đảm hội tụ (Nhận xét 08.9). Còn thiếu cách biến mini-batch thành một bước cập nhật $\theta$. Ở phần 4, chúng ta viết hàm mất mát, cho gradient chỉ đi qua $Q_\theta(O_i,A_i)$ bằng phép dừng gradient, rồi ghép mọi bước thành thuật toán DQN.
 
@@ -599,7 +599,7 @@ $$
 &=\frac2b\sum_{i=1}^b(q_i-y_i)\,\nabla_\theta Q_\theta(O_i,A_i).
 \end{aligned}
 $$
-Dòng thứ nhất là quy tắc dây chuyền cho hàm bình phương; dòng thứ hai dùng $\nabla_\theta y_i=0$ và $\nabla_\theta q_i=\nabla_\theta Q_\theta(O_i,A_i)$. Theo $q_i$, đạo hàm riêng là $\partial L_B/\partial q_i=\tfrac2b(q_i-y_i)$: một bước hạ gradient nhỏ làm $q_i$ giảm khi $q_i>y_i$ và tăng khi $q_i<y_i$, nếu chỉ xét riêng $q_i$. Khi các $q_i$ dùng chung $\theta$, một bước cũng đổi các $q_j$ khác, và dấu thay đổi của từng $q_i$ còn phụ thuộc tích $\nabla_\theta q_i^\top\nabla_\theta q_j$.
+Dòng thứ nhất là quy tắc dây chuyền cho hàm bình phương; dòng thứ hai dùng $\nabla_\theta y_i=0$ và $\nabla_\theta q_i=\nabla_\theta Q_\theta(O_i,A_i)$. Nếu chỉ xét riêng $q_i$, đạo hàm riêng là $\partial L_B/\partial q_i=\tfrac2b(q_i-y_i)$, nên một bước hạ gradient nhỏ làm $q_i$ giảm khi $q_i>y_i$ và tăng khi $q_i<y_i$. Khi các $q_i$ dùng chung $\theta$, một bước cũng đổi các $q_j$ khác, và dấu thay đổi của từng $q_i$ còn phụ thuộc tích $\nabla_\theta q_i^\top\nabla_\theta q_j$.
 
 Định nghĩa dựa trên ba lựa chọn, và bỏ lựa chọn nào cũng đổi kết quả:
 
@@ -617,7 +617,7 @@ $$
 $$
 Tại $\theta=(0,0)$, gradient bằng $0$ nhưng $L=1$, trong khi $L=0$ trên đường cong $\theta_1\theta_2=1$; ma trận Hessian có hai trị riêng $2$ và $-2$, nên $(0,0)$ là điểm yên ngựa (saddle point) và $L$ không lồi. Hạ gradient khởi tạo đúng tại $(0,0)$ đứng yên ở đó. Goodfellow, Bengio và Courville (2016, Chương 8) bàn về điểm yên ngựa và cực tiểu địa phương khi tối ưu mạng nơ-ron.
 
-**Trong thực hành.** Dự đoán của cả mini-batch được tính bằng một lần tính xuôi của mạng trực tuyến trên $b$ quan sát, cho mảng kích thước $[b,\lvert\mathcal A\rvert]$, rồi lấy giá trị của hành động đã lưu ở mỗi hàng; mục tiêu được tính bằng mạng mục tiêu mà không lưu đồ thị gradient. Bình phương làm các mẫu có sai số lớn chiếm phần lớn gradient; hàm mất mát Huber, bậc hai khi $\lvert y_i-q_i\rvert\le1$ và tuyến tính ngoài khoảng đó, giới hạn ảnh hưởng này và là một lựa chọn khác trong thực hành. Mnih và cộng sự (2015, mục Methods) cắt số hạng sai số của cập nhật vào $[-1,1]$, tương đương dùng hàm mất mát giá trị tuyệt đối cho các sai số ngoài khoảng $(-1,1)$.
+**Trong thực hành.** Dự đoán của cả mini-batch được tính bằng một lần tính xuôi của mạng trực tuyến trên $b$ quan sát, cho mảng kích thước $[b,\lvert\mathcal A\rvert]$, rồi lấy giá trị của hành động đã lưu ở mỗi hàng; mục tiêu được tính bằng mạng mục tiêu mà không lưu đồ thị gradient. Bình phương làm các mẫu có sai số lớn chiếm phần lớn gradient; hàm mất mát Huber giới hạn ảnh hưởng này: hàm này bậc hai khi $\lvert y_i-q_i\rvert\le1$ và tuyến tính ngoài khoảng đó. Mnih và cộng sự (2015, mục Methods) cắt số hạng sai số của cập nhật vào $[-1,1]$, tương đương dùng hàm mất mát giá trị tuyệt đối cho các sai số ngoài khoảng $(-1,1)$.
 
 **Kiểm tra nhanh.** Lặp mỗi mẫu của một mini-batch hai lần để được mini-batch $2b$ mẫu. $L_B$ và $\nabla_\theta L_B$ đổi thế nào? Không đổi: tử số và mẫu số của trung bình cùng nhân đôi. Nếu dùng tổng thay cho trung bình, cả hai nhân đôi.
 
@@ -651,7 +651,7 @@ $$
 $$
 Dòng thứ nhất là quy tắc dây chuyền cho hàm bình phương; dòng thứ hai dùng $\nabla_\theta\operatorname{sg}(y_i)=0$ theo Định nghĩa 08.12 và giá trị $\operatorname{sg}(y_i)=y_i$. Kết quả trùng gradient của Định nghĩa 08.10. Theo phép chọn theo hành động, $q_i=M_{i,A_i}$, nên $\partial q_i/\partial M_{i,a}$ bằng $1$ khi $a=A_i$ và bằng $0$ với $a\ne A_i$: lan truyền ngược đặt $\tfrac2b(q_i-y_i)$ vào ô $(i,A_i)$ của mảng $[b,\lvert\mathcal A\rvert]$ và $0$ vào mọi ô khác, rồi mạng trực tuyến lan tiếp các giá trị này về $\theta$.
 
-Phép chọn theo hành động và phép dừng gradient giữ hai điều khác nhau. Phép chọn theo hành động bảo đảm hàm mất mát so sánh mục tiêu với giá trị của đúng hành động đã thực hiện. Bỏ nó và dùng $\max_aQ_\theta(O_i,a)$ thay cho $Q_\theta(O_i,A_i)$: với $\mathbf q_\theta(o)=(0{,}8;\,2{,}5;\,-0{,}3;\,1{,}9)$ của Ví dụ 08.3 và $A_i=a_4$, phép cực đại lấy $2{,}5$ của $a_2$ thay cho $1{,}9$ của $a_4$, và cập nhật kéo giá trị của $a_2$ về một mục tiêu sinh từ hành động $a_4$. Phép dừng gradient bảo đảm cập nhật là cập nhật bán gradient của Bài 07; bỏ nó khi mục tiêu tính bằng chính $\theta$ cho phương pháp gradient dư đã tính sau Định nghĩa 08.10, không phải DQN.
+Phép chọn theo hành động và phép dừng gradient giữ hai điều khác nhau. Phép chọn theo hành động bảo đảm hàm mất mát so sánh mục tiêu với giá trị của đúng hành động đã thực hiện. Bỏ nó và dùng $\max_aQ_\theta(O_i,a)$ thay cho $Q_\theta(O_i,A_i)$: với $\mathbf q_\theta(o)=(0{,}8;\,2{,}5;\,-0{,}3;\,1{,}9)$ của Ví dụ 08.3 và $A_i=a_4$, phép cực đại lấy $2{,}5$ của $a_2$ thay cho $1{,}9$ của $a_4$, và cập nhật kéo giá trị của $a_2$ về một mục tiêu sinh từ hành động $a_4$. Phép dừng gradient bảo đảm cập nhật là cập nhật bán gradient của Bài 07; khi mục tiêu tính bằng chính $\theta$, bỏ $\operatorname{sg}$ sẽ cho phương pháp gradient dư đã tính sau Định nghĩa 08.10, không phải DQN.
 
 ![Hai hàng. Hàng trên, đường tạo mục tiêu, không nhận gradient: O phẩy i vào mạng mục tiêu Q theta trừ, rồi lấy max theo a phẩy; cùng R i và Z i từ ô bên dưới tạo mục tiêu y i; y i đi qua ô sg viền nét đứt. Hàng dưới, đường dự đoán, nhận gradient: O i vào mạng trực tuyến Q theta, cho một vector giá trị; phép chọn theo hành động gather nhận A i từ ô bên trên và lấy một phần tử, được q i. Hai mũi tên từ sg của y i và từ q i cùng đi vào ô MSE bên phải.](img/lec-08/dqn-computation-graph.svg)
 
@@ -692,10 +692,10 @@ Hai vòng chạm nhau ở hai chỗ. Ở bộ nhớ $\mathcal D$, vòng thu th�
 
 **Tính.** Giữa hai lần đồng bộ có $C=10\,000$ bước tối ưu, tức $F\cdot C=4\cdot10\,000=40\,000$ bước môi trường, trong đó $\theta^-$ đứng yên. Trong khoảng đó, vòng thu thập ghi $40\,000$ mẫu chuyển mới, còn vòng tối ưu rút $C\cdot b=320\,000$ mẫu, tức $b/F=8$ lần rút cho mỗi mẫu mới.
 
-**Diễn giải.** Nếu đếm chu kỳ đồng bộ theo $t$ thay cho $k_{\mathrm{opt}}$, cùng số $10\,000$ cho đồng bộ thường gấp $F=4$ lần, nên $\theta^-$ chỉ đứng yên trong $2\,500$ bước tối ưu. Khi $\mathcal D$ đã đầy với dung lượng $N$, mỗi mẫu ở lại $N$ bước môi trường, tức $N/F$ bước tối ưu, và mỗi lần rút chọn nó với xác suất $1/N$; kỳ vọng số lần nó được rút là $(N/F)\cdot b\cdot(1/N)=b/F=8$, không phụ thuộc $N$.
+**Diễn giải.** Nếu đếm chu kỳ đồng bộ theo $t$ thay cho $k_{\mathrm{opt}}$, cùng số $10\,000$ cho đồng bộ thường gấp $F=4$ lần, nên $\theta^-$ chỉ đứng yên trong $2\,500$ bước tối ưu. Khi $\mathcal D$ đã đầy, một mẫu ở lại $N/F$ bước tối ưu và mỗi lần rút chọn nó với xác suất $1/N$, nên kỳ vọng số lần nó được rút là $(N/F)\cdot b\cdot(1/N)=b/F=8$, không phụ thuộc $N$.
 :::
 
-**Trong thực hành.** Một chương trình DQN giữ $t$ và $k_{\mathrm{opt}}$ là hai biến riêng: $t$ tăng sau mỗi lần gọi bước môi trường, $k_{\mathrm{opt}}$ tăng sau mỗi lần cập nhật $\theta$. Hai cấu hình có $F$ khác nhau, ở cùng một $t$, đã thực hiện số bước tối ưu khác nhau; vì vậy khi so sánh hiệu quả mẫu, trục ngang phải là $t$, số tương tác với môi trường, còn lịch đồng bộ và lịch của bộ tối ưu tính theo $k_{\mathrm{opt}}$.
+**Trong thực hành.** Một chương trình DQN giữ $t$ và $k_{\mathrm{opt}}$ là hai biến riêng: $t$ tăng sau mỗi lần gọi bước môi trường, $k_{\mathrm{opt}}$ tăng sau mỗi lần cập nhật $\theta$. Ở cùng một $t$, hai cấu hình có $F$ khác nhau đã thực hiện số bước tối ưu khác nhau; vì vậy khi so sánh hiệu quả mẫu, trục ngang phải là $t$, số tương tác với môi trường, còn lịch đồng bộ và lịch của bộ tối ưu tính theo $k_{\mathrm{opt}}$.
 
 Sơ đồ cho các việc của mỗi vòng nhưng chưa chốt thứ tự: kiểm điều kiện tối ưu trước hay sau khi tăng $t$, đồng bộ trước hay sau khi tăng $k_{\mathrm{opt}}$, đặt lại môi trường lúc nào. Chúng ta chốt các thứ tự đó bằng giả mã.
 
@@ -730,7 +730,7 @@ Ba số $N_{\mathrm{start}}$, $F$, $C$ quyết định khi nào vòng tối ưu 
 
 Mỗi điều kiện trên đầu vào ngăn một sự cố cụ thể:
 
-- Điều kiện $\gamma<1$ cùng phần thưởng bị chặn, $\lvert R_{t+1}\rvert\le R_{\max}$, cho lợi tức $G_t$ thỏa $\lvert G_t\rvert\le R_{\max}/(1-\gamma)$, nên mọi giá trị hành động hữu hạn cả khi lượt không kết thúc. Bỏ điều kiện này: với $\gamma=1$, một nhiệm vụ trả phần thưởng $+1$ mỗi bước và một chính sách không bao giờ làm lượt kết thúc có lợi tức vô hạn; mẫu bị cắt ngắn vẫn bootstrap ($Z=0$), nên chẳng hạn khi chính sách đó giữ môi trường ở một quan sát tự chuyển về chính nó, giá trị $q$ của cặp nó chọn phải thỏa $q=1+q$, phương trình không có nghiệm hữu hạn.
+- Điều kiện $\gamma<1$ cùng phần thưởng bị chặn, $\lvert R_{t+1}\rvert\le R_{\max}$, cho lợi tức $G_t$ thỏa $\lvert G_t\rvert\le R_{\max}/(1-\gamma)$, nên mọi giá trị hành động hữu hạn cả khi lượt không kết thúc. Bỏ điều kiện này: với $\gamma=1$, một nhiệm vụ trả phần thưởng $+1$ mỗi bước và một chính sách không bao giờ làm lượt kết thúc có lợi tức vô hạn. Mẫu bị cắt ngắn vẫn bootstrap ($Z=0$); nếu chính sách đó giữ môi trường ở một quan sát tự chuyển về chính nó, giá trị $q$ của cặp được chọn phải thỏa $q=1+q$, phương trình không có nghiệm hữu hạn.
 - Điều kiện $N_{\mathrm{start}}\ge b$ để lần rút đầu tiên có thể gồm $b$ mẫu khác nhau (bắt buộc khi rút không hoàn lại); với $N_{\mathrm{start}}=1$, $F=1$ và $b=32$, rút có hoàn lại cho một mini-batch gồm $32$ bản sao của cùng một mẫu chuyển.
 - Điều kiện $N_{\mathrm{start}}\le N$ là cần, vì $\lvert\mathcal D\rvert$ không bao giờ vượt $N$; với $N_{\mathrm{start}}>N$, điều kiện tối ưu trước bước 5 không bao giờ đúng và $\theta$ giữ giá trị khởi tạo.
 
@@ -827,7 +827,7 @@ Trung bình bình phương của bốn phần tử là $\tfrac14(2{,}25+26{,}01+
 **Diễn giải.** Hai phần tử ngoài đường chéo ghép dự đoán của một mẫu với mục tiêu của mẫu kia; giá trị $16{,}43$ thay cho $1{,}25$, và gradient kéo mỗi $q_i$ về trung bình của cả hai mục tiêu. Bỏ chiều thừa (squeeze) để $q$ có dạng $[2]$ trước phép trừ cho lại $L_B=1{,}25$.
 :::
 
-**Trong thực hành.** Bộ nhớ phát lại lưu khung ở dạng `uint8` và chỉ chuyển sang `float32` khi tạo mini-batch. Với $N=10^6$ mẫu chuyển, lưu riêng $O$ và $O'$ của mỗi mẫu ở dạng `uint8` cần $2\cdot10^6\cdot28\,224$ byte, khoảng $56$ GB; vì $O_{t+1}$ của mẫu $k$ trùng $O_t$ của mẫu $k+1$ và hai chồng của một mẫu dùng chung ba khung, lưu mỗi khung $84\times84$ một lần rồi ghép chồng khi rút cần khoảng $10^6\cdot7\,056$ byte, khoảng $7$ GB; dạng `float32` nhân mỗi con số với bốn. Cờ $Z$ được chuyển sang kiểu số trước khi tính $1-Z$, vì một số thư viện không cho phép phép trừ trên kiểu `bool`.
+**Trong thực hành.** Bộ nhớ phát lại lưu khung ở dạng `uint8` và chỉ chuyển sang `float32` khi tạo mini-batch. Với $N=10^6$ mẫu chuyển, lưu riêng $O$ và $O'$ của mỗi mẫu ở dạng `uint8` cần $2\cdot10^6\cdot28\,224$ byte, khoảng $56$ GB. Vì $O_{t+1}$ của mẫu $k$ trùng $O_t$ của mẫu $k+1$ và hai chồng của một mẫu dùng chung ba khung, lưu mỗi khung $84\times84$ một lần rồi ghép chồng khi rút chỉ cần khoảng $10^6\cdot7\,056$ byte, khoảng $7$ GB. Dạng `float32` nhân mỗi con số với bốn. Cờ $Z$ được chuyển sang kiểu số trước khi tính $1-Z$, vì một số thư viện không cho phép phép trừ trên kiểu `bool`.
 
 **Kiểm tra nhanh.** Gọi phép cực đại trên mảng $\mathbf q_{\theta^-}(O')$ kích thước $[b,\lvert\mathcal A\rvert]$ mà không chỉ chiều thì được gì? Một số vô hướng, giá trị lớn nhất trên mọi mẫu và mọi hành động; mọi $y_i$ dùng chung giá trị đó, nên mục tiêu của mỗi mẫu không còn phụ thuộc $O'_i$ của chính nó. Lấy cực đại theo chiều thứ hai cho đúng mảng $[b]$.
 
@@ -854,7 +854,7 @@ quy tắc $\operatorname{Update}$ có thể phụ thuộc $j$, như phép hiệu
 
 Hình vẽ một bước tối ưu: gradient $g_j$ tính tại $\theta_{j-1}$ trên $B_j$, rồi $\operatorname{Update}$ trả $\theta_j$, thành $\theta_{j-1}$ của bước sau. Hình không có mũi tên nào từ bộ tối ưu tới mục tiêu hay tới bộ nhớ phát lại.
 
-Theo Định nghĩa 08.15, bộ tối ưu chỉ nhận $g_j$ và trạng thái phụ; từ đó suy ra giới hạn của nó trong DQN. Mục tiêu $y_i$ được tính bằng $Q_{\theta^-}$ theo công thức của bước 7, dữ liệu do vòng thu thập ghi vào $\mathcal D$, và lớp hàm $\{Q_\theta\}$ do kiến trúc mạng quyết định; cả ba không phụ thuộc lựa chọn bộ tối ưu. Bộ tối ưu vẫn đổi quỹ đạo $\theta_0,\theta_1,\dots$, nên gián tiếp đổi hành vi $\epsilon_{\mathrm{exp}}$-tham lam, dữ liệu được ghi về sau và giá trị $\theta^-$ tại các mốc đồng bộ. Nhưng vì công thức mục tiêu, cơ chế thu thập và lớp hàm giữ nguyên, không bộ tối ưu nào loại được các nguồn bất ổn nằm ở ba thành phần đó.
+Theo Định nghĩa 08.15, bộ tối ưu chỉ nhận $g_j$ và trạng thái phụ; từ đó suy ra giới hạn của nó trong DQN. Mục tiêu $y_i$ được tính bằng $Q_{\theta^-}$ theo công thức của bước 7, dữ liệu do vòng thu thập ghi vào $\mathcal D$, và lớp hàm $\{Q_\theta\}$ do kiến trúc mạng quyết định; cả ba không phụ thuộc lựa chọn bộ tối ưu. Bộ tối ưu vẫn đổi quỹ đạo $\theta_0,\theta_1,\dots$, nên gián tiếp đổi hành vi $\epsilon_{\mathrm{exp}}$-tham lam, dữ liệu được ghi về sau và giá trị $\theta^-$ tại các mốc đồng bộ. Nhưng các nguồn bất ổn nằm ở ba thành phần đó giữ nguyên với mọi bộ tối ưu.
 
 **Trong thực hành.** Chất lượng của chính sách được đo bằng lợi tức đánh giá trên các lượt riêng. Giá trị $L_B$ có thể tăng khi chính sách tốt lên, và giảm khi chính sách không đổi, vì mục tiêu tự đổi tại mỗi mốc đồng bộ và dữ liệu trong $\mathcal D$ đổi theo hành vi.
 
@@ -870,7 +870,7 @@ $$
 Khi tốc độ học đổi theo bước, ta viết $\eta_j$ thay cho $\eta$.
 :::
 
-Chữ "ngẫu nhiên" chỉ nguồn của $g_j$: gradient được tính trên một mini-batch rút ngẫu nhiên, không trên toàn bộ dữ liệu. Với $\theta^-$ cố định và mỗi lần rút có phân phối đều trên $\mathcal D$, kỳ vọng của $g_j$ theo phép rút bằng gradient của hàm mất mát trung bình trên cả bộ nhớ, $\tfrac1{\lvert\mathcal D\rvert}\sum_{e\in\mathcal D}(y_e-q_e)^2$, với $e$ chạy trên các mẫu chuyển trong $\mathcal D$, tại $\theta_{j-1}$; $g_j$ là một ước lượng có nhiễu của gradient đó. SGD không giữ trạng thái phụ, nên chi phí bộ nhớ ngoài $\theta$ bằng $0$. Đổi lại, mọi tọa độ của $\theta$ dùng cùng hệ số $\eta$, và bước theo mỗi tọa độ tỉ lệ với độ lớn của gradient theo tọa độ đó.
+Chữ "ngẫu nhiên" chỉ nguồn của $g_j$: gradient được tính trên một mini-batch rút ngẫu nhiên, không trên toàn bộ dữ liệu. Với $\theta^-$ cố định và mỗi lần rút có phân phối đều trên $\mathcal D$, kỳ vọng của $g_j$ theo phép rút bằng gradient tại $\theta_{j-1}$ của hàm mất mát trung bình trên cả bộ nhớ, $\tfrac1{\lvert\mathcal D\rvert}\sum_{e\in\mathcal D}(y_e-q_e)^2$; $g_j$ là một ước lượng có nhiễu của gradient đó. SGD không giữ trạng thái phụ, nên chi phí bộ nhớ ngoài $\theta$ bằng $0$. Đổi lại, mọi tọa độ của $\theta$ dùng cùng hệ số $\eta$, và bước theo mỗi tọa độ tỉ lệ với độ lớn của gradient theo tọa độ đó.
 
 ::: example Ví dụ 08.18 (Một bước hạ gradient trên ví dụ một tham số)
 **Dữ kiện.** Như Ví dụ 08.5: $Q_\theta=\theta$, một mẫu chuyển với $R=1$, $\gamma=0{,}9$, $\theta_0=0$; mạng mục tiêu giữ $\theta^-=0$, nên mục tiêu $y=1+0{,}9\cdot0=1$ là hằng. Hàm mất mát $L(\theta)=(1-\theta)^2$; tốc độ học $\eta=0{,}25$.
@@ -888,7 +888,7 @@ Chữ "ngẫu nhiên" chỉ nguồn của $g_j$: gradient được tính trên m
 **Diễn giải.** Với $\eta=0{,}1$, tọa độ thứ nhất phân kỳ. Muốn $\theta_1$ hội tụ về $0$, cần $\lvert1-100\eta\rvert<1$, tức $0<\eta<0{,}02$; khi đó tọa độ thứ hai giảm chưa tới $2\%$ mỗi bước, và sau $100$ bước vẫn còn hơn $0{,}98^{100}\approx13\%$ giá trị ban đầu. Một hệ số chung không hợp cho cả hai tọa độ khi độ cong theo hai tọa độ chênh $100$ lần; đây là bài toán có điều kiện kém (ill-conditioned; Goodfellow, Bengio và Courville, 2016, §4.3).
 :::
 
-**Trong thực hành.** SGD thường dùng với một lịch giảm tốc độ học $\eta_j$ định trước. Trong bài toán hồi quy với phân phối dữ liệu cố định, các điều kiện $\sum_j\eta_j=\infty$, $\sum_j\eta_j^2<\infty$ cùng giả thiết về hàm mất mát là cơ sở của các kết quả hội tụ cho SGD; trong DQN, mục tiêu đổi tại các mốc đồng bộ và dữ liệu đổi theo hành vi, nên các kết quả đó không áp dụng trực tiếp. Ví dụ 08.19 cho thấy SGD nhạy với tỉ lệ độ cong giữa các tọa độ.
+**Trong thực hành.** SGD thường dùng với một lịch giảm tốc độ học $\eta_j$ định trước. Trong bài toán hồi quy với phân phối dữ liệu cố định, các điều kiện $\sum_j\eta_j=\infty$, $\sum_j\eta_j^2<\infty$ cùng giả thiết về hàm mất mát là cơ sở của các kết quả hội tụ cho SGD; trong DQN, mục tiêu đổi tại các mốc đồng bộ và dữ liệu đổi theo hành vi, nên các kết quả đó không áp dụng trực tiếp.
 
 #### RMSprop
 
@@ -905,7 +905,7 @@ $$
 trong đó $\odot$ và $\oslash$ là phép nhân và phép chia theo từng tọa độ; căn bậc hai và phép cộng $\epsilon_{\mathrm{opt}}$ cũng lấy theo từng tọa độ.
 :::
 
-Tọa độ $k$ của $v_j$ là trung bình trượt có trọng số mũ (exponential moving average) của $g_{1,k}^2,\dots,g_{j,k}^2$: $v_{j,k}=(1-\rho)\sum_{\ell=1}^{j}\rho^{\,j-\ell}g_{\ell,k}^2$. Vì vậy $\sqrt{v_{j,k}}$ là độ lớn điển hình của gradient theo tọa độ $k$ trong khoảng $1/(1-\rho)$ bước gần nhất, và bước theo tọa độ đó là $\eta\,g_{j,k}/(\sqrt{v_{j,k}}+\epsilon_{\mathrm{opt}})$: gradient được chia cho độ lớn điển hình của chính nó. Một tọa độ có gradient lớn kéo dài nhận bước hiệu dụng nhỏ, một tọa độ có gradient nhỏ kéo dài nhận bước hiệu dụng lớn.
+Tọa độ $k$ của $v_j$ là trung bình trượt có trọng số mũ (exponential moving average) của $g_{1,k}^2,\dots,g_{j,k}^2$: $v_{j,k}=(1-\rho)\sum_{\ell=1}^{j}\rho^{\,j-\ell}g_{\ell,k}^2$. Vì vậy $\sqrt{v_{j,k}}$ là độ lớn điển hình của gradient theo tọa độ $k$ trong khoảng $1/(1-\rho)$ bước gần nhất, và bước theo tọa độ đó là $\eta\,g_{j,k}/(\sqrt{v_{j,k}}+\epsilon_{\mathrm{opt}})$: gradient được chia cho độ lớn điển hình của chính nó. Tọa độ có gradient thường xuyên lớn nhận bước hiệu dụng nhỏ, tọa độ có gradient thường xuyên nhỏ nhận bước hiệu dụng lớn.
 
 Hệ số $\rho$ quyết định độ dài của trí nhớ: với $\rho=0$, $v_j=g_j\odot g_j$ và bước theo mỗi tọa độ là $\eta\,\operatorname{sign}(g_{j,k})$ khi bỏ qua $\epsilon_{\mathrm{opt}}$, nên mọi thông tin về độ lớn của gradient bị bỏ. Hằng $\epsilon_{\mathrm{opt}}$ giữ mẫu số dương: tại một tọa độ có gradient bằng $0$ ở mọi bước, $v_{j,k}=0$ và phép chia $0/0$ không xác định nếu thiếu $\epsilon_{\mathrm{opt}}$. Ở đây $\epsilon_{\mathrm{opt}}$ đặt ngoài căn; một số thư viện đặt $\epsilon_{\mathrm{opt}}$ trong căn, $\sqrt{v_j+\epsilon_{\mathrm{opt}}}$, và hai quy ước cho bước khác nhau khi $v_j$ nhỏ.
 
@@ -969,7 +969,7 @@ Ba quy tắc cùng nhận gradient $g_j$ và trả $\theta_j$; chúng khác nhau
 
 SGD đi bước tỉ lệ với gradient, nên bước theo mỗi tọa độ mang thang của gradient tại tọa độ đó; RMSprop và Adam chia cho độ lớn điển hình của gradient, nên bước theo mỗi tọa độ có thang xấp xỉ $\eta$, như Ví dụ 08.20 và 08.22. Vì thang bước khác nhau, cùng một giá trị $\eta$ không so sánh được giữa SGD và hai phương pháp thích nghi; mỗi bộ tối ưu cần được chỉnh $\eta$ riêng. Mỗi trạng thái phụ là một vector cùng kích thước với $\theta$, nên RMSprop tốn thêm bộ nhớ bằng một bản $\theta$, Adam bằng hai bản.
 
-Không có lựa chọn thắng trong mọi bài toán; lựa chọn được quyết định bằng thí nghiệm có kiểm soát trên lợi tức đánh giá. Một thí nghiệm như vậy giữ cùng kiến trúc, ngân sách bước môi trường, lịch thăm dò và tập hạt giống ngẫu nhiên (random seed) cho mọi bộ tối ưu, chỉnh siêu tham số của từng bộ tối ưu với cùng ngân sách, và báo lợi tức đánh giá cùng độ phân tán giữa nhiều lần chạy độc lập; giá trị hàm mất mát không dùng làm tiêu chí, vì $L_B$ đổi theo mục tiêu và dữ liệu.
+Lựa chọn bộ tối ưu phụ thuộc bài toán và được quyết định bằng thí nghiệm có kiểm soát trên lợi tức đánh giá. Một thí nghiệm như vậy giữ cùng kiến trúc, ngân sách bước môi trường, lịch thăm dò và tập hạt giống ngẫu nhiên (random seed) cho mọi bộ tối ưu, chỉnh siêu tham số của từng bộ tối ưu với cùng ngân sách, và báo lợi tức đánh giá cùng độ phân tán giữa nhiều lần chạy độc lập; giá trị hàm mất mát không dùng làm tiêu chí, vì $L_B$ đổi theo mục tiêu và dữ liệu.
 
 Đến đây chúng ta có ba quy tắc đổi gradient $\nabla_\theta L_B$ thành bước tham số (Định nghĩa 08.15–08.18); trên hàm $\tfrac12(100\,\theta_1^2+\theta_2^2)$, RMSprop và Adam đi bước đầu cùng cỡ ở hai tọa độ, $\eta\sqrt{10}$ và $\eta$, còn SGD không có hệ số bước chung hợp cho cả hai. Các quy tắc này quyết định quỹ đạo của $\theta$ nhưng không đổi mục tiêu bootstrap, cơ chế thu thập dữ liệu khác chính sách hay việc dùng xấp xỉ hàm, tức ba yếu tố của bộ ba bất ổn. Ở phần 6, chúng ta đặt bộ nhớ phát lại và mạng mục tiêu cạnh các nguồn bất ổn này, tính độ thay đổi của mục tiêu tại một mốc đồng bộ, và nêu phạm vi bảo đảm của DQN.
 
@@ -991,7 +991,7 @@ Xét Q-learning với mạng giá trị hành động $Q_\theta$, học từ cá
 
 Hai nguồn nằm ở hai chỗ khác nhau của bước cập nhật. Nguồn thứ nhất nằm ở dữ liệu đưa vào hàm mất mát: hạ gradient ngẫu nhiên giảm phương sai theo cỡ mini-batch chỉ khi các gradient mẫu gần độc lập. Vấn đề này có cả khi mục tiêu là nhãn cố định, như hồi quy có giám sát trên một chuỗi thời gian. Nguồn thứ hai nằm ở chính nhãn: mục tiêu $y=R+\gamma\max_{a'}Q_\theta(O',a')$ chứa tham số đang cập nhật, nên mỗi bước kéo dự đoán về phía $y$ cũng dời chính $y$.
 
-Tương quan giữa các mẫu không phải một yếu tố của bộ ba bất ổn (Định nghĩa 07.38). Bộ ba bất ổn gồm xấp xỉ hàm, bootstrap và học khác chính sách; nó nói về khả năng phân kỳ của chính quy tắc cập nhật TD, kể cả khi không có nhiễu lấy mẫu. Mệnh đề 07.37 là một phản ví dụ: mỗi bước dùng cùng một mẫu chuyển, nên cập nhật là tất định và trùng với cập nhật kỳ vọng theo phân phối cập nhật; không có nhiễu lấy mẫu để bộ nhớ phát lại giảm, và bộ nhớ chỉ chứa mẫu chuyển này cũng cho đúng dãy đó, vậy mà tham số vẫn phân kỳ. Ngược lại, tương quan làm tăng phương sai ngay cả trong hồi quy có giám sát, nơi không có bootstrap và không có chính sách nào. Nguồn thứ hai thì gắn với yếu tố bootstrap của bộ ba: mục tiêu di động là cách bootstrap biểu hiện khi mục tiêu và dự đoán dùng chung tham số.
+Tương quan giữa các mẫu không phải một yếu tố của bộ ba bất ổn (Định nghĩa 07.38). Bộ ba bất ổn gồm xấp xỉ hàm, bootstrap và học khác chính sách; nó nói về khả năng phân kỳ của chính quy tắc cập nhật TD, kể cả khi không có nhiễu lấy mẫu. Mệnh đề 07.37 là một phản ví dụ: mỗi bước dùng cùng một mẫu chuyển, nên cập nhật tất định và trùng cập nhật kỳ vọng theo phân phối cập nhật. Không có nhiễu lấy mẫu để bộ nhớ phát lại giảm; một bộ nhớ chỉ chứa mẫu chuyển này cho đúng dãy đó, và tham số vẫn phân kỳ. Ngược lại, tương quan làm tăng phương sai ngay cả trong hồi quy có giám sát, nơi không có bootstrap và không có chính sách nào. Nguồn thứ hai thì gắn với yếu tố bootstrap của bộ ba: mục tiêu di động là cách bootstrap biểu hiện khi mục tiêu và dự đoán dùng chung tham số.
 
 Mỗi cơ chế chỉ tác động lên nguồn của nó. Mạng mục tiêu không đổi cách chọn mẫu, nên không giảm tương quan trong mini-batch. Bộ nhớ phát lại không đổi công thức mục tiêu, nên không làm $y$ đứng yên. Bỏ bộ nhớ phát lại, mỗi bước tối ưu dùng các mẫu vừa thu theo thứ tự thời gian, đúng tình huống của dòng thứ nhất trong bảng. Bỏ mạng mục tiêu, tức đặt $C=1$, mục tiêu được tính lại bằng $\theta$ mới sau mỗi bước, đúng tình huống của dòng thứ hai. Cả hai cơ chế đều giữ nguyên ba yếu tố xấp xỉ hàm, bootstrap và dữ liệu khác chính sách: mạng mục tiêu vẫn bootstrap, chỉ bằng một bản sao trễ của mạng, và bộ nhớ phát lại còn thêm một nguồn dữ liệu khác chính sách (Mệnh đề 08.8).
 
@@ -1029,7 +1029,7 @@ Nhận xét suy ra trực tiếp từ Định nghĩa 08.4: $R_i$, $Z_i$ và $O'_
 
 Mục tiêu $y_1$ nằm ngang ở $4{,}6$ từ $0$ đến $C$, lên $5{,}5$ tại mốc $C$ rồi nằm ngang tới $2C$. Đường mục tiêu có dạng bậc thang, giống đường của $\theta^-$ trong hình ở mục mạng mục tiêu, vì mục tiêu chỉ phụ thuộc $\theta$ qua $\theta^-$.
 
-Mục tiêu trong DQN dễ bị coi là nhãn cố định như trong học có giám sát. Mạng mục tiêu giữ mục tiêu đứng yên trong từng khoảng $C$ bước, nhưng không giữ mãi: sau mỗi mốc, mọi mẫu chuyển chưa kết thúc nhận nhãn mới. Chu kỳ $C$ vì vậy là một đánh đổi. $C$ lớn cho các khoảng hồi quy dài với nhãn đứng yên, nhưng nhãn được tính từ một mạng cũ hơn và $\theta$ có nhiều bước để đi xa $\theta^-$, nên độ thay đổi tại mốc thường lớn hơn. $C$ nhỏ cho nhãn mới hơn nhưng đổi thường xuyên hơn. Không có giá trị $C$ nào được suy ra từ lý thuyết; Mnih và cộng sự (2015, Extended Data Table 1) dùng $C=10\,000$ bước tối ưu, chọn bằng thí nghiệm.
+Mục tiêu trong DQN dễ bị coi là nhãn cố định như trong học có giám sát, nhưng nhãn chỉ đứng yên trong từng khoảng $C$ bước: sau mỗi mốc, mọi mẫu chuyển chưa kết thúc nhận nhãn mới. Chu kỳ $C$ vì vậy là một đánh đổi. $C$ lớn cho các khoảng hồi quy dài với nhãn đứng yên, nhưng nhãn được tính từ một mạng cũ hơn và $\theta$ có nhiều bước để đi xa $\theta^-$, nên độ thay đổi tại mốc thường lớn hơn. $C$ nhỏ cho nhãn mới hơn nhưng đổi thường xuyên hơn. Không có giá trị $C$ nào được suy ra từ lý thuyết; Mnih và cộng sự (2015, Extended Data Table 1) dùng $C=10\,000$ bước tối ưu, chọn bằng thí nghiệm.
 
 **Trong thực hành.** Bộ nhớ phát lại chỉ lưu sáu thành phần của mẫu chuyển, không lưu mục tiêu; vì $y_i$ được tính lại bằng $\theta^-$ hiện hành mỗi lần mẫu được rút (Thuật toán 08.13, bước 7), độ thay đổi của Nhận xét 08.20 xuất hiện ở lần rút đầu tiên sau mốc.
 
@@ -1083,7 +1083,7 @@ Một nhầm lẫn thường gặp là đọc "không có bảo đảm hội t�
 
 ### Ví dụ: hai trạng thái với mạng mục tiêu
 
-Chúng ta kiểm trên chính phản ví dụ của Bài 07 rằng mạng mục tiêu không bỏ yếu tố nào của bộ ba bất ổn, bằng cách tính lại cập nhật khi mục tiêu dùng một tham số giữ cố định $C$ bước rồi đồng bộ, như mạng mục tiêu của DQN. Ví dụ là TD(0) dự đoán với hàm giá trị tuyến tính, không phải Q-learning; nó có đủ ba yếu tố và đủ nhỏ để tính tay.
+Trên chính phản ví dụ của Bài 07, chúng ta tính lại cập nhật khi mục tiêu dùng một tham số giữ cố định $C$ bước rồi đồng bộ, như mạng mục tiêu của DQN, để kiểm rằng mạng mục tiêu không bỏ yếu tố nào của bộ ba bất ổn. Ví dụ là TD(0) dự đoán với hàm giá trị tuyến tính, không phải Q-learning; nó có đủ ba yếu tố và đủ nhỏ để tính tay.
 
 ::: example Ví dụ 08.24 (Hai trạng thái dùng chung tham số, có và không có mạng mục tiêu)
 **Dữ kiện.** Hai trạng thái $s_1$, $s_2$ với đặc trưng $x(s_1)=1$, $x(s_2)=2$ và hàm giá trị tuyến tính một tham số $\hat v(s,w)=x(s)\,w$, nên $\hat v(s_1)=w$ và $\hat v(s_2)=2w$. Chỉ chuyển $s_1\to s_2$ với phần thưởng $R=0$ được cập nhật, bằng TD(0) bán gradient với $\gamma=0{,}9$, bước học $\alpha=0{,}1$:
@@ -1118,9 +1118,9 @@ Hình vẽ dữ kiện của Ví dụ 08.24: mũi tên $s_1\to s_2$ là chuyển
 
 Cơ chế phân kỳ nằm ở chỗ mục tiêu $1{,}8\,w^-$ có độ lớn gấp $1{,}8$ lần $w^-$. Mạng mục tiêu giữ mục tiêu đứng yên trong $C$ bước, nên trong mỗi chu kỳ $w$ hội tụ về $1{,}8\,w^-$ với hệ số $0{,}9$ mỗi bước; nhưng sau đồng bộ, mục tiêu mới là $1{,}8\,w_C$, lại gấp $1{,}8$ lần tham số hiện hành. Bỏ yếu tố khác chính sách, tức cập nhật mọi chuyển theo phân phối dừng của một chính sách, đưa bài toán về trường hợp của Định lý 07.29: TD(0) tuyến tính theo chính sách hội tụ khi các giả thiết của định lý thỏa.
 
-Đặt hệ số mỗi chu kỳ $1{,}521$ cạnh hệ số mỗi bước $1{,}08$ có thể dẫn tới kết luận sai rằng mạng mục tiêu làm bất ổn nặng hơn. So đúng là so trên cùng số bước: sau $10$ bước, có mạng mục tiêu nhân $1{,}521$, không có nhân $2{,}159$; tính theo mỗi bước là $1{,}043$ so với $1{,}08$.
+So hệ số mỗi chu kỳ $1{,}521$ với hệ số mỗi bước $1{,}08$ có thể dẫn tới kết luận sai rằng mạng mục tiêu làm bất ổn nặng hơn. Hai hệ số phải được so trên cùng số bước: sau $10$ bước, có mạng mục tiêu nhân $1{,}521$, không có nhân $2{,}159$; tính theo mỗi bước là $1{,}043$ so với $1{,}08$.
 
-**Trong thực hành.** Ví dụ giải thích vì sao mạng mục tiêu được mô tả là làm chậm sự thay đổi của mục tiêu chứ không bảo đảm ổn định: trong một bài toán có đủ ba yếu tố và có hướng phân kỳ, chu kỳ $C$ lớn hơn chỉ làm tốc độ tăng mỗi bước nhỏ đi.
+**Trong thực hành.** Ví dụ cho thấy mạng mục tiêu làm chậm sự thay đổi của mục tiêu nhưng không bảo đảm ổn định: trong một bài toán có đủ ba yếu tố và có hướng phân kỳ, chu kỳ $C$ lớn hơn chỉ làm tốc độ tăng mỗi bước nhỏ đi.
 
 **Kiểm tra nhanh.** Với $C=2$, hệ số mỗi chu kỳ bằng bao nhiêu và có phân kỳ không? $1{,}8-0{,}8\cdot0{,}81=1{,}152>1$, nên vẫn phân kỳ; so với $1{,}08^2=1{,}1664$ khi không có mạng mục tiêu.
 
@@ -1177,7 +1177,7 @@ Phép cực đại trong mục tiêu cũng được đọc ở ba chỗ: bảng 
 
 Chỗ khác thứ hai nằm ở cách dùng dữ liệu. Hai phương pháp đầu dùng mỗi mẫu chuyển một lần, ngay khi thu, nên hai cập nhật liền nhau dùng hai mẫu liền nhau của cùng một quỹ đạo. DQN lưu mẫu vào $\mathcal D$ rồi rút đều; khi $\mathcal D$ đã đầy, mỗi mẫu được rút trung bình $b/F$ lần, tức $8$ lần với $b=32$, $F=4$ của Mnih và cộng sự (2015) (Ví dụ 08.14). Đổi lại, dữ liệu của DQN khác chính sách theo hai nguồn: hành vi $\epsilon_{\mathrm{exp}}$-tham lam và các phiên bản $\theta$ cũ đã ghi mẫu (phần 3).
 
-Cả ba điều kiện dừng đều là ngân sách hoặc số đo hữu hạn. Định lý 06.21 cần số cập nhật không giới hạn, nên dừng sau một số cập nhật định trước chỉ trả bảng tại thời điểm dừng. Lợi tức đánh giá đo bằng chính sách tham lam theo $Q_\theta$ trên các lượt riêng, không thăm dò; đạt ngưỡng cho biết chính sách hiện thời đạt tiêu chí đã chọn, không cho biết $Q_\theta$ gần $q_*$ đến đâu.
+Cả ba điều kiện dừng đều là ngân sách hoặc số đo hữu hạn. Định lý 06.21 giả thiết số cập nhật không giới hạn; bảng trả về sau một số cập nhật định trước nằm ngoài kết luận của định lý. Lợi tức đánh giá đo bằng chính sách tham lam theo $Q_\theta$ trên các lượt riêng, không thăm dò; đạt ngưỡng cho biết chính sách hiện thời đạt tiêu chí đã chọn, không cho biết $Q_\theta$ gần $q_*$ đến đâu.
 
 | Phương pháp | Giả thiết không được bỏ | Kết luận |
 |---|---|---|
@@ -1187,7 +1187,7 @@ Cả ba điều kiện dừng đều là ngân sách hoặc số đo hữu hạn
 
 Trong bảng thứ hai, giả thiết ở hàng đầu và ở hai hàng sau có vai trò khác nhau. Ở hàng đầu, đó là các điều kiện để định lý áp dụng, và mỗi điều kiện có vai trò riêng. Bỏ điều kiện mọi cặp được cập nhật vô hạn lần: một cặp không bao giờ được thử giữ mãi giá trị khởi tạo. Bỏ điều kiện $\sum_n\alpha_n^2<\infty$, chẳng hạn dùng bước học hằng: khi phần thưởng hoặc chuyển trạng thái ngẫu nhiên, mỗi cập nhật vẫn kéo ô theo nhiễu của mẫu mới nhất, nên ô không hội tụ hầu chắc chắn (Sutton và Barto, 2018, §2.5). Bỏ biểu diễn bảng thì sang hàng thứ hai.
 
-Ở hai hàng sau, đó là điều kiện làm mất bảo đảm. Kết luận "không có bảo đảm hội tụ chung" yếu hơn khẳng định thuật toán phân kỳ, và bằng chứng cho nó là một phản ví dụ. Ví dụ 08.24, trường hợp riêng của Mệnh đề 07.37 với $\gamma=0{,}9$, $\alpha=0{,}1$, cho thấy điều đó: với $w_0\ne0$, không có mạng mục tiêu $w$ nhân $1{,}08$ mỗi bước; với $C=10$, hệ số tương đương là $1{,}043$ mỗi bước, và $\lvert w\rvert$ vẫn không bị chặn. Khi mỗi trạng thái chỉ có một hành động, phép cực đại trong mục tiêu chỉ chọn hành động duy nhất, nên Q-learning bán gradient trên dữ liệu chỉ gồm chuyển $s_1\to s_2$ cho đúng dãy này.
+Ở hai hàng sau, đó là điều kiện làm mất bảo đảm. Kết luận "không có bảo đảm hội tụ chung" yếu hơn khẳng định thuật toán phân kỳ, và bằng chứng cho nó là một phản ví dụ. Ví dụ 08.24, trường hợp riêng của Mệnh đề 07.37 với $\gamma=0{,}9$, $\alpha=0{,}1$, là một phản ví dụ như vậy: với $w_0\ne0$, không có mạng mục tiêu $w$ nhân $1{,}08$ mỗi bước; với $C=10$, hệ số tương đương là $1{,}043$ mỗi bước, và $\lvert w\rvert$ vẫn không bị chặn. Khi mỗi trạng thái chỉ có một hành động, phép cực đại trong mục tiêu chỉ chọn hành động duy nhất, nên Q-learning bán gradient trên dữ liệu chỉ gồm chuyển $s_1\to s_2$ cho đúng dãy này.
 
 Hàng DQN đọc cùng cách. Bộ nhớ phát lại giảm tương quan giữa các mẫu, mạng mục tiêu làm chậm sự thay đổi của mục tiêu, còn xấp xỉ hàm, bootstrap và dữ liệu khác chính sách vẫn giữ nguyên.
 
@@ -1205,7 +1205,8 @@ Bài toán của chương là học $q_*$ khi quan sát là vector liên tục h
 - Bộ tối ưu chỉ quyết định cách đổi gradient thành bước tham số; công thức mục tiêu, cơ chế thu thập dữ liệu và lớp hàm không phụ thuộc lựa chọn đó (Định nghĩa 08.15–08.18).
 - DQN có đủ ba yếu tố của bộ ba bất ổn, nên không có bảo đảm hội tụ tổng quát; trên phản ví dụ hai trạng thái, mạng mục tiêu với $C=10$ chỉ hạ hệ số tăng mỗi bước từ $1{,}08$ xuống khoảng $1{,}043$, và tác dụng của hai cơ chế được đánh giá bằng thí nghiệm loại bỏ (ablation) qua nhiều lần chạy độc lập (Nhận xét 08.21, Ví dụ 08.24, Bài tập 08.3).
 
-Vì thế câu trả lời của chương là có điều kiện. DQN cho một quy trình học $q_*$ từ quan sát thô, trong đó nhãn hồi quy đứng yên giữa hai mốc đồng bộ, mini-batch được rút đều từ $\mathcal D$ và gradient chỉ đi qua $q_i$, nhưng chưa có định lý bảo đảm quy trình đó hội tụ tới $q_*$ (bài giảng gốc, trang 12–34; Sutton và Barto, 2018, §11.3, §16.5).
+DQN cho một quy trình học $q_*$ từ quan sát thô, trong đó nhãn hồi quy đứng yên giữa hai mốc đồng bộ, mini-batch được rút đều từ $\mathcal D$ và gradient chỉ đi qua $q_i$, nhưng chưa có định lý bảo đảm quy trình đó hội tụ tới $q_*$ (bài giảng gốc, trang 12–34; Sutton và Barto, 2018, §11.3, §16.5).
+
 ### Câu hỏi tự kiểm tra
 
 **Câu hỏi:** trả lời và nêu kết quả đã dùng.
@@ -1252,7 +1253,7 @@ Bài 09 xét độ chệch của phép cực đại (maximization bias) trong m�
 - Bỏ mạng mục tiêu ($C=1$) đẩy giá trị lớn nhất đó lên $421{,}6$–$2\,796{,}1$, vượt xa cận $100$, trong khi tổng thưởng của chính sách cuối không khác cấu hình đầy đủ một cách phân biệt được (hiệu trung bình $33{,}1$, thống kê Student $1{,}03$).
 - Bỏ bộ nhớ phát lại hạ tổng thưởng: hiệu trung bình $188{,}7$, SE $59{,}9$, thống kê Student $3{,}15$, lớn hơn phân vị $0{,}975$ của phân phối Student với bốn bậc tự do ($2{,}776$).
 
-**Giới hạn.** Số hạt giống nhỏ, và cấu hình được chọn bằng chính các lượt kiểm tra đó, nên các con số của DQN là ước lượng lạc quan; với hiệu chỉnh Bonferroni cho năm phép so sánh (ngưỡng là phân vị $0{,}995$, bằng $4{,}604$ với bốn bậc tự do), kết luận về bộ nhớ phát lại trên CartPole không còn đứng. Lần chạy trực tiếp trong notebook chỉ dùng một hạt giống (tổng thưởng trung bình của chính sách cuối: $500$ với cấu hình đầy đủ, $289{,}2$ khi bỏ mạng mục tiêu, $192{,}6$ khi bỏ bộ nhớ phát lại) và có thể đổi theo máy và phiên bản gói, nên không dùng để kết luận. Luật phản hồi theo góc và vận tốc góc của cột cũng giữ cột đủ $500$ bước (notebook Bài 08, mục 3), nên CartPole kiểm được cài đặt và cận của giá trị, nhưng không phân biệt được DQN với một luật viết tay.
+**Giới hạn.** Số hạt giống nhỏ, và cấu hình được chọn bằng chính các lượt kiểm tra đó, nên các con số của DQN là ước lượng lạc quan; với hiệu chỉnh Bonferroni cho năm phép so sánh (ngưỡng là phân vị $0{,}995$, bằng $4{,}604$ với bốn bậc tự do), kết luận về bộ nhớ phát lại trên CartPole không còn đứng. Lần chạy trực tiếp trong notebook dùng một hạt giống (tổng thưởng trung bình của chính sách cuối: $500$ với cấu hình đầy đủ, $289{,}2$ khi bỏ mạng mục tiêu, $192{,}6$ khi bỏ bộ nhớ phát lại), và các số này có thể đổi theo máy và phiên bản gói; các phép so sánh ở trên dựa trên năm hạt giống ghép cặp. Luật phản hồi theo góc và vận tốc góc của cột cũng giữ cột đủ $500$ bước (notebook Bài 08, mục 3), nên CartPole kiểm được cài đặt và cận của giá trị, nhưng không phân biệt được DQN với một luật viết tay.
 :::
 
 ::: application Tình huống 08.2 (Atari với một khung: giả thiết Markov không thỏa)
@@ -1398,7 +1399,7 @@ q = q_online(ob).gather(1, ab.unsqueeze(1)).squeeze(1)
 loss = ((y - q) ** 2).mean()
 ```
 
-**Câu (a).** Khi môi trường tự đặt lại sau bước cuối của một lượt, `obs_after_step` là quan sát đầu của lượt mới. Ở mẫu kết thúc, mặt nạ xóa phần bootstrap nên lỗi không lộ; ở mẫu bị cắt ngắn, $Z=0$ và mục tiêu bootstrap từ một quan sát không nối với $O_t$. Dòng sửa lưu `final_obs` khi có. Tên trường chứa quan sát cuối phụ thuộc thư viện và phiên bản; `final_obs` là tên giả định của bài.
+**Câu (a).** Khi môi trường tự đặt lại sau bước cuối của một lượt, `obs_after_step` là quan sát đầu của lượt mới. Ở mẫu kết thúc, mặt nạ xóa phần bootstrap nên lỗi không lộ; ở mẫu bị cắt ngắn, $Z=0$ và mục tiêu bootstrap từ một quan sát không nối với $O_t$. Dòng sửa lưu `final_obs` khi có. Tên trường chứa quan sát cuối phụ thuộc thư viện và phiên bản; bài đặt tên trường đó là `final_obs`.
 
 **Câu (b).** Trong PyTorch, `1 - done` với `done` kiểu `bool` báo lỗi ngay. Khi cờ đã đổi sang kiểu số, `done = zb | ub` vẫn gộp cắt ngắn vào mặt nạ, nên mọi mẫu bị cắt ngắn có $y_i=R_i$ thay cho $R_i+\gamma\max_{a'}Q_{\theta^-}(O'_i,a')$; với Ví dụ 08.8, mục tiêu $4{,}6$ bị hạ thành $1$. Mặt nạ đúng là $1-Z$; cờ $Z\lor U$ chỉ quyết định việc đặt lại môi trường ở bước 4. `zb.float()` đổi cờ sang kiểu số trước phép trừ.
 
@@ -1428,13 +1429,13 @@ Dự đoán ở (a), (b) dùng Nhận xét 08.19 và Nhận xét 08.20. Công b�
 :::
 
 ::: solution
-**Câu (a).** Mẫu trong mini-batch là các mẫu liền nhau của một đoạn quỹ đạo, nên tương quan giữa chúng tăng và cỡ mẫu hiệu dụng giảm; với tương quan $0{,}9^\ell$ ở độ trễ $\ell$ của Ví dụ 08.9, bốn mẫu liền nhau chỉ bằng khoảng $1{,}1$ mẫu độc lập. Mỗi mẫu chỉ có mặt trong các mini-batch ngay sau khi thu (khoảng $b/F$ bước tối ưu) rồi không được dùng lại, nên độ đa dạng của dữ liệu trong mỗi bước tối ưu giảm và số bước tối ưu trên mỗi mẫu cũng giảm. Dự đoán cho đường lợi tức: dao động lớn hơn giữa các đoạn huấn luyện và giữa các lần chạy; dự đoán này là giả thuyết cần đo.
+**Câu (a).** Mẫu trong mini-batch là các mẫu liền nhau của một đoạn quỹ đạo, nên tương quan giữa chúng tăng và cỡ mẫu hiệu dụng giảm; với tương quan $0{,}9^\ell$ ở độ trễ $\ell$ của Ví dụ 08.9, bốn mẫu liền nhau chỉ bằng khoảng $1{,}1$ mẫu độc lập. Mỗi mẫu chỉ có mặt trong các mini-batch ngay sau khi thu (khoảng $b/F$ bước tối ưu) rồi không được dùng lại, nên độ đa dạng của dữ liệu trong mỗi bước tối ưu giảm và số bước tối ưu trên mỗi mẫu cũng giảm. Dự đoán cho đường lợi tức: dao động lớn hơn giữa các đoạn huấn luyện và giữa các lần chạy.
 
 **Câu (b).** Với $C=1$, $\theta^-$ bằng $\theta$ trước mỗi bước, nên mục tiêu của mỗi mẫu đổi sau mỗi bước tối ưu thay vì theo từng đợt $C$ bước; Nhận xét 08.20 cho độ thay đổi tại mỗi mốc. Sai số TD không còn là sai số so với một nhãn đứng yên trong một khoảng, nên có thể giảm chậm hoặc dao động. Ví dụ 08.5 cho thấy mục tiêu đổi sau mỗi bước vẫn có thể hội tụ; Ví dụ 08.24 với $C=1$ cho thấy tham số có thể tăng theo hệ số $1{,}08$ mỗi bước. Hướng nào xảy ra trong DQN phải đo.
 
 **Câu (c).** Mỗi nhánh đổi đúng một thành phần so với nhánh đầy đủ. Giữ cố định kiến trúc mạng, ngân sách bước môi trường, bộ tối ưu và siêu tham số của nó, lịch thăm dò $\epsilon_{\mathrm{exp}}$, tần suất tối ưu $F$, cỡ mini-batch $b$, và tập hạt giống ngẫu nhiên. Đo lợi tức đánh giá bằng chính sách tham lam theo $Q_\theta$ trên các lượt riêng, không dùng lợi tức của các lượt huấn luyện có thăm dò; đo thêm sai số TD trung bình, chuẩn gradient, và với nhánh bỏ bộ nhớ phát lại, tương quan giữa các mẫu trong mini-batch.
 
-**Câu (d).** Mọi nhánh dùng cùng tập hạt giống, nên với mỗi hạt giống có một bộ kết quả ghép cặp; so hiệu giữa hai nhánh trong từng cặp giảm nhiễu do khởi tạo và môi trường. Báo trung bình hoặc trung vị cùng độ phân tán giữa các lần chạy, chẳng hạn độ lệch chuẩn hoặc khoảng tứ phân vị, và số lần chạy phân kỳ nếu có. Số hạt giống phụ thuộc ngân sách tính toán, nên đề không ấn định.
+**Câu (d).** Mọi nhánh dùng cùng tập hạt giống, nên với mỗi hạt giống có một bộ kết quả ghép cặp; so hiệu giữa hai nhánh trong từng cặp giảm nhiễu do khởi tạo và môi trường. Báo trung bình hoặc trung vị cùng độ phân tán giữa các lần chạy, chẳng hạn độ lệch chuẩn hoặc khoảng tứ phân vị, và số lần chạy phân kỳ nếu có. Số hạt giống chọn theo ngân sách tính toán; thí nghiệm loại bỏ của Tình huống 08.1 dùng năm hạt giống.
 
 Kết quả của thí nghiệm kiểm hai dự đoán rút từ phần 6: bỏ bộ nhớ phát lại làm tăng tương quan ngắn hạn; bỏ mạng mục tiêu làm mục tiêu đổi sau mỗi bước tối ưu. Mnih và cộng sự (2015, Extended Data Table 3) báo một thí nghiệm cùng loại trên năm trò chơi Atari, trong đó tổ hợp dùng cả hai cơ chế cho điểm cao nhất.
 
@@ -1483,7 +1484,7 @@ L_B=\tfrac12\bigl(1^2+(-1)^2\bigr)=1.
 $$
 Với $b=2$, $\partial L_B/\partial q_i=\tfrac2b(q_i-y_i)=q_i-y_i$, nên $\partial L_B/\partial q_1=-1$ và $\partial L_B/\partial q_2=1$. Xét $q_1$, $q_2$ như hai biến riêng, một bước hạ gradient nhỏ làm $q_1$ tăng về $10$ và $q_2$ giảm về $1$.
 
-**Câu (c).** Với mặt nạ gộp, $1-(Z_1\lor U_1)=1-(0\lor1)=0$, nên $y_1=1$ và $\delta_1=1-9=-8$; mục tiêu của mẫu 2 vẫn bằng $1$ vì $Z_2=1$. Mục tiêu của mẫu 1 bị hạ $0{,}9\cdot10=9$ và $\partial L_B/\partial q_1=q_1-y_1=8>0$, nên bước hạ gradient kéo $q_1$ xuống về $1$: giá trị bị đánh giá thấp. Quan sát của CartPole gồm vị trí, vận tốc xe, góc và vận tốc góc của cột, không có số bước, nên một quan sát ở bước $500$ có thể trùng hoặc gần các quan sát ở những bước khác; mạng dùng chung tham số kéo xuống cả giá trị của các quan sát gần nó, không chỉ ở bước $500$; mỗi lượt chạm giới hạn góp thêm một mẫu như vậy (Pardo và cộng sự, 2018). Mặt nạ gộp sai vì cắt ngắn là giới hạn của việc thu thập, không phải trạng thái kết thúc của MDP; cờ gộp $Z\lor U$ chỉ dùng để quyết định đặt lại môi trường.
+**Câu (c).** Với mặt nạ gộp, $1-(Z_1\lor U_1)=1-(0\lor1)=0$, nên $y_1=1$ và $\delta_1=1-9=-8$; mục tiêu của mẫu 2 vẫn bằng $1$ vì $Z_2=1$. Mục tiêu của mẫu 1 bị hạ $0{,}9\cdot10=9$ và $\partial L_B/\partial q_1=q_1-y_1=8>0$, nên bước hạ gradient kéo $q_1$ xuống về $1$: giá trị bị đánh giá thấp. Quan sát của CartPole gồm vị trí, vận tốc xe, góc và vận tốc góc của cột, không có số bước, nên một quan sát ở bước $500$ có thể trùng hoặc gần các quan sát ở những bước khác. Mạng dùng chung tham số nên kéo xuống cả giá trị của các quan sát gần đó, và mỗi lượt chạm giới hạn góp thêm một mẫu như vậy (Pardo và cộng sự, 2018). Mặt nạ gộp sai vì cắt ngắn là giới hạn của việc thu thập, không phải trạng thái kết thúc của MDP; cờ gộp $Z\lor U$ chỉ dùng để quyết định đặt lại môi trường.
 
 **Câu (d).** Theo Thuật toán 08.13, bước 8 cập nhật $\theta$ rồi tăng $k_{\mathrm{opt}}$ từ $999$ lên $1000$; bước 9 kiểm $1000\bmod1000=0$, nên gán $\theta^-\leftarrow\theta$, và $\theta^-$ mới chứa cả cập nhật vừa làm. Nếu một bản cài đặt kiểm $C$ trước khi tăng $k_{\mathrm{opt}}$, bước này so $999\bmod1000\ne0$ nên không đồng bộ; ở bước tối ưu kế tiếp, sau cập nhật thứ $1001$, phép kiểm thấy $1000\bmod1000=0$ và mới đồng bộ. Chu kỳ vẫn là $C$, nhưng mọi lần đồng bộ lùi một bước tối ưu, và lần đồng bộ đầu tiên xảy ra ngay sau bước tối ưu thứ nhất (Ví dụ 08.15).
 
