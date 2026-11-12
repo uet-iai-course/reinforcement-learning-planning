@@ -87,7 +87,7 @@ Chữ $\theta$ có hai vai. Ở Mục 2–3, $\theta$ là tham số của mạng
 
 Bài 08 kết thúc với thuật toán DQN (Thuật toán 08.13). Mạng $Q_\theta$ được hồi quy về mục tiêu $y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(S'_i,a')$, tính bằng một mạng mục tiêu giữ cố định giữa hai lần đồng bộ. Bộ nhớ phát lại và mạng mục tiêu xử lý hai nguồn bất ổn: tương quan giữa các mẫu và sự thay đổi của mục tiêu (Nhận xét 08.19). Phép cực đại $\max_{a'}Q_{\theta^-}(S'_i,a')$ chưa được xét: nó dùng cùng một ước lượng để chọn hành động tốt nhất tại $S'_i$ và để báo giá trị của hành động đó.
 
-Hậu quả của việc này đo được trong bài thực hành của Bài 08 (mục 7, DQN trên CartPole). Trong CartPole, mỗi bước giữ được cột cho phần thưởng $1$ và hệ số chiết khấu là $\gamma=0{,}99$. Lợi tức chiết khấu của mọi lượt vì vậy nhỏ hơn $\sum_{k\ge0}0{,}99^k=1/(1-0{,}99)=100$; với giới hạn $500$ bước, lợi tức lớn nhất là $(1-0{,}99^{500})/0{,}01\approx99{,}3$. Ở lần chạy khi soạn bài thực hành, mạng đã huấn luyện cho $\max_aQ_\theta(O_0,a)=108{,}5$ tại quan sát đầu của một lượt có lợi tức thực tế $G_0=99{,}3$. Giá trị $108{,}5$ vượt cận $100$, nên không là giá trị đúng của bất kỳ chính sách nào.
+Hậu quả của việc này đo được trong bài thực hành của Bài 08 (mục 7, DQN trên CartPole). Trong CartPole, mỗi bước giữ được cột cho phần thưởng $1$ và hệ số chiết khấu là $\gamma=0{,}99$. Lợi tức chiết khấu của mọi lượt vì vậy nhỏ hơn $\sum_{k\ge0}0{,}99^k=1/(1-0{,}99)=100$; với giới hạn $500$ bước, lợi tức lớn nhất là $(1-0{,}99^{500})/0{,}01\approx99{,}3$. Ở một lần chạy của bài thực hành, mạng đã huấn luyện cho $\max_aQ_\theta(O_0,a)=108{,}5$ tại quan sát đầu của một lượt có lợi tức thực tế $G_0=99{,}3$. Giá trị $108{,}5$ vượt cận $100$, nên không là giá trị đúng của bất kỳ chính sách nào.
 
 Một giới hạn khác của cách học này dẫn tới nửa sau của chương. DQN chọn hành động bằng $\arg\max_aQ_\theta(s,a)$ trên một tập hữu hạn, nên chính sách thu được là tất định và mỗi bước cần một phép cực đại trên $\mathcal A$. Khi hành động là một số thực, chẳng hạn một góc lái, phép cực đại không còn là phép so sánh trên vài giá trị. Khi đặc trưng không phân biệt được hai trạng thái cần hai hành động khác nhau, bài giảng gốc (trang 23–25) đưa ra một lưới ô mà mọi chính sách tất định theo đặc trưng đó đều kém chính sách chọn ngẫu nhiên hai hướng, mỗi hướng với xác suất $1/2$. Cả hai trường hợp dẫn tới việc học trực tiếp một chính sách $\pi_\theta(a\mid s)$ có tham số $\theta$, và tăng hàm mục tiêu $J(\theta)=\mathbb E_{\pi_\theta}[G_0]$ bằng các bước gradient. Hàm $J$ chỉ quan sát được qua các lượt mẫu, nên gradient của nó cũng phải được ước lượng từ mẫu.
 
@@ -99,13 +99,13 @@ Hàng trên của hình đi theo mục tiêu bootstrap của DQN. Phép cực đ
 
 Câu trả lời của từng mục, mỗi câu kèm điều kiện của nó, bao gồm:
 
-2. Nếu mỗi ước lượng $\widehat Q_a$ của giá trị đúng $q_a$ của hành động $a$ tại một trạng thái không chệch nhưng có nhiễu, thì $\mathbb E[\max_a\widehat Q_a]\ge\max_aq_a$, nên mục tiêu DQN có xu hướng đánh giá cao. Hai vế bằng nhau, chẳng hạn, khi một hành động luôn cho ước lượng lớn nhất.
+2. Nếu mỗi ước lượng $\widehat Q_a$ của giá trị đúng $q_a$ của hành động $a$ tại một trạng thái không chệch nhưng có nhiễu, thì $\mathbb E[\max_a\widehat Q_a]\ge\max_aq_a$, nên phần bootstrap của mục tiêu DQN có độ chệch không âm. Hai vế bằng nhau, chẳng hạn, khi một hành động luôn cho ước lượng lớn nhất.
 3. Nếu hành động được chọn bằng một ước lượng và được đánh giá bằng một ước lượng không chệch, độc lập với ước lượng chọn, thì kỳ vọng của giá trị báo cáo không vượt giá trị đúng lớn nhất. Double Q-learning cập nhật hai bảng trên các mẫu khác nhau; vì mỗi bảng bootstrap từ bảng kia, tính độc lập chỉ đúng ở dạng lý tưởng. Double DQN chọn bằng mạng trực tuyến và đánh giá bằng mạng mục tiêu; vì $\theta^-$ là bản sao trễ của $\theta$, hai mạng tương quan, nên điều kiện chỉ thỏa gần đúng, và mức giảm độ chệch phải đo bằng thực nghiệm.
 4. Nếu tập hành động liên tục, hoặc đặc trưng gộp những trạng thái cần hành động khác nhau, thì cần học trực tiếp chính sách $\pi_\theta(a\mid s)$. Softmax cho tập hành động hữu hạn và Gaussian cho hành động thực là hai họ phân phối của chương.
 5. Nếu $\pi_\theta(a\mid s)>0$ và khả vi theo $\theta$, thì $\nabla_\theta\pi_\theta(a\mid s)=\pi_\theta(a\mid s)\,\psi_\theta(s,a)$ với hàm điểm $\psi_\theta(s,a)=\nabla_\theta\log\pi_\theta(a\mid s)$. Đẳng thức này biến một tổng theo hành động thành một trung bình theo hành động được lấy mẫu.
 6. Nếu thêm $\rho_0$ và $P$ không phụ thuộc $\theta$, phần thưởng và độ dài lượt bị chặn, và được phép đổi thứ tự đạo hàm theo $\theta$ với tích phân theo quỹ đạo, thì
    $$\nabla_\theta J(\theta)=\mathbb E_{\pi_\theta}\Bigl[\sum_{t=0}^{T-1}\gamma^t\,G_t\,\psi_\theta(S_t,A_t)\Bigr].$$
-   REINFORCE lấy một lượt làm mẫu của kỳ vọng này, nên ước lượng của nó không chệch; phương sai của ước lượng này lớn, và Bài 10 giảm phương sai bằng đường cơ sở (baseline) và ước lượng lợi thế.
+   REINFORCE lấy một lượt làm mẫu của kỳ vọng này, nên ước lượng của nó không chệch.
 
 Để thấy vì sao phép cực đại chệch lên và chệch bao nhiêu, trong Mục 2 chúng ta xét một ví dụ hai hành động tính tay được, rồi phát biểu bất đẳng thức tổng quát.
 
@@ -123,7 +123,7 @@ Phép cực đại trong $y_i$ làm hai việc cùng lúc. Nó chọn hành đ�
 Phép cực đại này đã có trong Q-learning dạng bảng của Bài 06. Dưới các giả thiết của Định lý 06.21, $Q_t\to q_*$ hầu chắc chắn, nên sai số của các ước lượng, và cùng với nó độ chệch của phép cực đại, mất dần khi số bước tăng. Với số mẫu hữu hạn, các ước lượng còn sai số, và Sutton và Barto (2018, §6.7, Ví dụ 6.7) cho một MDP nhỏ trong đó Q-learning dạng bảng chọn sai hành động trong nhiều lượt đầu vì lý do này. Với mạng nơ-ron, không có định lý hội tụ tương ứng (Nhận xét 08.21), nên không có lý do để chờ sai số tự mất.
 
 ::: example Ví dụ 09.1 (Giá trị ước lượng trên CartPole)
-**Dữ kiện.** CartPole: mỗi bước giữ được cột cho phần thưởng $1$; hệ số chiết khấu $\gamma=0{,}99$; lượt bị cắt ngắn ở bước $500$. Quan sát của môi trường được coi là trạng thái. Bài thực hành của Bài 08 (mục 7) huấn luyện DQN rồi in, cho lượt đầu của một hạt giống kiểm tra, giá trị $\max_aQ_\theta(S_0,a)=108{,}5$ và lợi tức thực tế $G_0=99{,}3$ ở lần chạy khi soạn.
+**Dữ kiện.** CartPole: mỗi bước giữ được cột cho phần thưởng $1$; hệ số chiết khấu $\gamma=0{,}99$; lượt bị cắt ngắn ở bước $500$. Quan sát của môi trường được coi là trạng thái. Bài thực hành của Bài 08 (mục 7) huấn luyện DQN rồi in, cho lượt đầu của một hạt giống kiểm tra, giá trị $\max_aQ_\theta(S_0,a)=108{,}5$ và lợi tức thực tế $G_0=99{,}3$ ở một lần chạy.
 
 **Cận trên của lợi tức.** Mọi phần thưởng bằng $1$, nên lợi tức của một lượt dài $n$ bước là $\sum_{k=0}^{n-1}0{,}99^k=(1-0{,}99^n)/0{,}01<100$. Không có giới hạn bước, giá trị của mọi chính sách vẫn không vượt $\sum_{k\ge0}0{,}99^k=100$. Với $n=500$, lợi tức là $(1-0{,}99^{500})/0{,}01\approx99{,}3$, khớp số in ra.
 
@@ -136,14 +136,14 @@ Phép cực đại này đã có trong Q-learning dạng bảng của Bài 06. D
 
 Hình đặt ba số của Ví dụ 09.1 trên cùng một trục. Lợi tức thực tế nằm ngay dưới cận $100$, như một chính sách giữ cột đủ $500$ bước phải có; giá trị mạng báo nằm bên phải cận. Khoảng $8{,}5$ là phần đánh giá cao chắc chắn có, không phụ thuộc vào việc chính sách tốt đến đâu.
 
-Độ vượt $8{,}5$ còn có nguồn khác ngoài phép cực đại: sai số xấp xỉ của mạng và dữ liệu huấn luyện đổi theo chính sách hành vi, nên gán toàn bộ độ vượt cho phép cực đại là một nhầm lẫn thường gặp. Số liệu chỉ đến từ một lần chạy.
+Độ vượt $8{,}5$ còn có nguồn khác ngoài phép cực đại: sai số xấp xỉ của mạng và dữ liệu huấn luyện đổi theo chính sách hành vi, nên gán toàn bộ độ vượt cho phép cực đại là một nhầm lẫn thường gặp.
 
 <!-- note-topic-id: lec-09-topic-02 -->
 ### Độ chệch của phép cực đại và bất đẳng thức kỳ vọng
 
 Xét một trạng thái kế cố định với tập hành động hữu hạn $\mathcal A$. Gọi $q_a$ là giá trị đúng của hành động $a$ tại trạng thái này và $\widehat Q_a$ là ước lượng của nó, viết $\widehat Q_a=q_a+\varepsilon_a$ với nhiễu $\varepsilon_a$ có $\mathbb E[\varepsilon_a]=0$. Trong mục tiêu DQN, $\widehat Q_a$ đóng vai $Q_{\theta^-}(S'_i,a)$; nhiễu đến từ số mẫu hữu hạn và từ quá trình huấn luyện.
 
-Một cách trực quan, phép cực đại chọn hành động có $\widehat Q_a$ lớn nhất, và ước lượng lớn nhất thường là ước lượng có nhiễu dương lớn. Vì cùng các $\widehat Q_a$ vừa quyết định hành động thắng $a^*$ vừa cho giá trị báo cáo $\widehat Q_{a^*}=q_{a^*}+\varepsilon_{a^*}$, nhiễu được chọn đi thẳng vào giá trị báo cáo. Hành động $a^*$ là biến ngẫu nhiên phụ thuộc chính các nhiễu, nên $\mathbb E[\varepsilon_{a^*}]$ nói chung khác $0$ dù mỗi $\mathbb E[\varepsilon_a]$ bằng $0$.
+Một cách trực quan, phép cực đại chọn hành động có $\widehat Q_a$ lớn nhất, nên nó ưu tiên hành động có nhiễu dương lớn. Vì cùng các $\widehat Q_a$ vừa quyết định hành động thắng $a^*$ vừa cho giá trị báo cáo $\widehat Q_{a^*}=q_{a^*}+\varepsilon_{a^*}$, nhiễu được chọn đi thẳng vào giá trị báo cáo. Hành động $a^*$ là biến ngẫu nhiên phụ thuộc chính các nhiễu, nên $\mathbb E[\varepsilon_{a^*}]$ nói chung khác $0$ dù mỗi $\mathbb E[\varepsilon_a]$ bằng $0$.
 
 ::: example Ví dụ 09.2 (Hai hành động có nhiễu ±1)
 **Dữ kiện.** Hai hành động có giá trị đúng $q_1=q_2=0$. Nhiễu $\varepsilon_1$, $\varepsilon_2$ độc lập, mỗi biến bằng $-1$ hoặc $+1$ với xác suất $1/2$; vì giá trị đúng bằng $0$, $\widehat Q_a=\varepsilon_a$.
@@ -232,9 +232,9 @@ Ví dụ 09.3 cho thấy độ chệch lớn nhất khi các hành động có g
 4. "Bộ nhớ phát lại hoặc mạng mục tiêu loại bỏ độ chệch này." Sai: cả hai cơ chế giữ nguyên phép cực đại trên cùng một mạng trong $y_i$.
 :::
 
-**Trong thực hành.** Trong DQN, $\widehat Q_a$ là $Q_{\theta^-}(S'_i,a)$, các giá trị đúng là $q_*(S'_i,a)$, và nhiễu là sai số của mạng mục tiêu sau một số bước huấn luyện hữu hạn. Các sai số thường chệch, và sai số của các hành động phụ thuộc nhau vì dùng chung tham số. Kết luận (a) của Mệnh đề 09.2 đúng cả khi đó; so sánh với $\max_aq_*(S'_i,a)$ thì cần thêm giả thiết. Bài giảng gốc (trang 12) nêu rằng độ chệch này lặp lại qua các bước bootstrap.
+**Trong thực hành.** Trong DQN, $\widehat Q_a$ là $Q_{\theta^-}(S'_i,a)$, các giá trị đúng là $q_*(S'_i,a)$, và nhiễu là sai số của mạng mục tiêu sau một số bước huấn luyện hữu hạn. Giả thiết không chệch của Mệnh đề 09.2(b) không còn được bảo đảm, và sai số của các hành động phụ thuộc nhau vì dùng chung tham số. Kết luận (a) của Mệnh đề 09.2 đúng cả khi đó; so sánh với $\max_aq_*(S'_i,a)$ thì cần thêm giả thiết. Bài giảng gốc (trang 12) nêu rằng độ chệch này lặp lại qua các bước bootstrap.
 
-Trong chứng minh của Mệnh đề 09.2, cùng một vector $X$ xác định cả hành động thắng lẫn giá trị $\max_aX_a$; khi số mẫu hữu hạn và nhiễu khác $0$, độ chệch nói chung còn dương. Trong Mục 3, chúng ta tách hai vai chọn và đánh giá.
+Trong chứng minh của Mệnh đề 09.2, cùng một vector $X$ xác định cả hành động thắng lẫn giá trị $\max_aX_a$, nên với các ước lượng không chệch, $\beta>0$ trừ khi điều kiện (c) thỏa. Trong Mục 3, chúng ta tách hai vai chọn và đánh giá.
 
 *Nguồn: bài giảng gốc lecture09-ddqn-and-policy-gradient-part1.pdf (2025–2026), trang 3–13; Sutton và Barto (2018), §6.7; bài thực hành Bài 08, mục 7.*
 
@@ -332,7 +332,7 @@ Mục tiêu DQN $y_i=R_i+\gamma(1-Z_i)\max_{a'}Q_{\theta^-}(S'_i,a')$ dùng mạ
 
 ![Bảng hai hàng, hai cột hành động. Hàng trên, mạng mục tiêu: 5 và 4. Hàng dưới, mạng trực tuyến: 3 và 6. Hình thoi cạnh số 5: DQN lấy cực đại của hàng trên. Khung vuông quanh số 6: Double DQN chọn hành động 2. Mũi tên ghi đánh giá đi từ số 6 tới số 4 có viền ellip nét đứt.](img/lec-09/ddqn-example.svg)
 
-Hình đặt hai mạng trên cùng một bảng. DQN chỉ đọc hàng trên; Double DQN chọn cột ở hàng dưới rồi đọc giá trị của cột đó ở hàng trên. Vì $Q_{\theta^-}(S',a^*)\le\max_aQ_{\theta^-}(S',a)$ ở mọi mẫu, với $Z=0$ luôn có $y^{\mathrm{DDQN}}\le y^{\mathrm{DQN}}$, dấu bằng khi hai mạng chọn cùng hành động. Bất đẳng thức này nói về hai mục tiêu, không nói mục tiêu nào gần giá trị đúng hơn trong một mẫu cụ thể.
+Hình đặt hai mạng trên cùng một bảng. DQN chỉ đọc hàng trên; Double DQN chọn cột ở hàng dưới rồi đọc giá trị của cột đó ở hàng trên. Vì $Q_{\theta^-}(S',a^*)\le\max_aQ_{\theta^-}(S',a)$ ở mọi mẫu, với $Z=0$ luôn có $y^{\mathrm{DDQN}}\le y^{\mathrm{DQN}}$, dấu bằng khi hai mạng chọn cùng hành động. Bất đẳng thức so sánh hai mục tiêu với nhau; khoảng cách của mỗi mục tiêu tới giá trị đúng ở một mẫu phụ thuộc sai số của hai mạng.
 
 ::: algorithm Thuật toán 09.5 (Double DQN)
 **Đầu vào.** Như Thuật toán 08.13: $\gamma\in[0,1)$; xác suất thăm dò $\epsilon_{\mathrm{exp}}\in[0,1]$; một bộ tối ưu theo gradient; ngân sách $t_{\mathrm{end}}$ bước môi trường (Thuật toán 08.13 viết $T$); dung lượng $N$ của bộ nhớ phát lại $\mathcal D$, cỡ mini-batch $b$, số mẫu tối thiểu $N_{\mathrm{start}}$, số bước môi trường $F$ giữa hai bước tối ưu, số bước tối ưu $C$ giữa hai lần đồng bộ, với $b\le N_{\mathrm{start}}\le N$.
@@ -366,7 +366,7 @@ Mệnh đề 09.4 cần bản đánh giá độc lập với bản chọn. Trong
 ::: remark Nhận xét 09.6 (Điều Double DQN thay đổi và không thay đổi)
 1. Double DQN chỉ đổi công thức mục tiêu. Tương quan giữa các mẫu, sự thay đổi của mục tiêu tại mốc đồng bộ và việc thiếu bảo đảm hội tụ tổng quát (Nhận xét 08.21) vẫn như DQN.
 2. Ngay sau mốc đồng bộ, $\theta^-=\theta$ và mục tiêu Double DQN trùng mục tiêu DQN. Hai mạng khác nhau nhiều hơn khi số bước tối ưu từ mốc đồng bộ tăng.
-3. Bài giảng gốc (trang 17) nêu các tác động mong đợi: giảm đánh giá cao, giá trị ổn định hơn, thứ hạng hành động đáng tin hơn. Đây là các quan sát thực nghiệm của van Hasselt, Guez và Silver (2016) trên trò chơi Atari, không phải hệ quả của một định lý.
+3. Bài giảng gốc (trang 17) nêu các tác động mong đợi: giảm đánh giá cao, giá trị ổn định hơn, thứ hạng hành động đáng tin hơn. Đây là các quan sát thực nghiệm của van Hasselt, Guez và Silver (2016) trên trò chơi Atari.
 4. Bộ ước lượng kép có thể chệch âm (Ví dụ 09.5), nên giảm đánh giá cao không đồng nghĩa với ước lượng đúng.
 :::
 
@@ -414,7 +414,7 @@ Hình dùng cùng bố cục với hình của Ví dụ 09.6: hàng trên đánh
 
 Thuật toán 09.7 khác Q-learning (Bài 06) ở bước 2–3: mục tiêu đọc giá trị của bảng kia tại hành động do bảng được cập nhật chọn. Mỗi mẫu chuyển chỉ đi vào một bảng, nên hai bảng ước lượng từ hai tập mẫu khác nhau. Hai bảng vẫn không độc lập hoàn toàn: mỗi bảng bootstrap từ bảng kia, và hành vi dùng tổng hai bảng. Giả thiết của Mệnh đề 09.4 vì vậy chỉ thỏa ở dạng lý tưởng. Van Hasselt (2010) chứng minh Double Q-learning hội tụ tới $q_*$ dưới các giả thiết tương tự Định lý 06.21: MDP hữu hạn, $\gamma<1$, mỗi bảng cập nhật mọi cặp vô hạn lần, bước học thỏa điều kiện Robbins–Monro.
 
-**Trong thực hành.** Hai bảng làm bộ nhớ gấp đôi Q-learning, và mỗi bảng chỉ nhận khoảng một nửa số mẫu chuyển. Bài thực hành Flappy Bird của Bài 07 (mục 13) cài một phiên bản với hàm giá trị tuyến tính thay cho bảng; khi đó định lý hội tụ dạng bảng không còn áp dụng.
+**Trong thực hành.** Mỗi mẫu chuyển đi vào $Q_1$ hoặc $Q_2$ với xác suất $\tfrac12$, nên mỗi bảng nhận trung bình một nửa số mẫu chuyển. Bài thực hành Flappy Bird của Bài 07 (mục 13) cài một phiên bản với hàm giá trị tuyến tính thay cho bảng; khi đó định lý hội tụ dạng bảng không còn áp dụng.
 
 | | DQN | Double DQN | Double Q-learning |
 |---|---|---|---|
@@ -463,7 +463,7 @@ Tác tử quan sát đặc trưng $x(s)$ có bốn giá trị: ô 1, ô 3, ô 5 
 
 **Tất định, Tây ở hai ô xám.** Đối xứng: $h_4=2$, $h_5=3$, còn $h_1=h_2=\infty$.
 
-**Diễn giải.** Mọi chính sách tất định theo đặc trưng có ít nhất hai ô xuất phát không bao giờ tới đích. Nếu $Q_\theta(s,a)$ chỉ phụ thuộc $s$ qua $x(s)$, hai ô xám có cùng thứ hạng hành động, nên chính sách tham lam theo $Q_\theta$ chọn cùng một hướng (Đông, Tây hoặc Nam) ở cả hai ô; bài giảng gốc (trang 24) xét hai trường hợp Đông và Tây.
+**Diễn giải.** Mọi chính sách tất định theo đặc trưng có ít nhất hai ô xuất phát không bao giờ tới đích. Nếu $Q_\theta(s,a)$ chỉ phụ thuộc $s$ qua $x(s)$, hai ô xám có cùng thứ hạng hành động, nên chính sách tham lam theo $Q_\theta$ chọn cùng một hướng (Đông, Tây hoặc Nam) ở cả hai ô.
 
 **Kiểm tra lại.** Với chính sách phân biệt được ô (Đông ở ô 2, Tây ở ô 4), $h_2=h_4=2$ và $h_1=h_5=3$: lưới là một MDP hữu hạn quan sát đầy đủ, và có chính sách tất định tốt.
 :::
@@ -534,7 +534,7 @@ $$
 $$
 :::
 
-Số $\phi(s,a)^\top\theta$ là mức ưu tiên (action preference) của hành động $a$ tại $s$; chính sách softmax đổi các mức ưu tiên thành xác suất bằng hàm mũ rồi chuẩn hóa. Mọi hành động có xác suất dương, và cộng cùng một hằng vào mọi mức ưu tiên không đổi chính sách. Với hai hành động, $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$ và $\theta=(\log2;\,0)$, ta được $\pi_\theta(1\mid s)=\tfrac{2}{2+1}=\tfrac23$ và $\pi_\theta(2\mid s)=\tfrac13$; bộ số này là *bài toán một bước hai hành động* của chương. So với phép tham lam theo $Q$, softmax biểu diễn được các xác suất dương bất kỳ khi đặc trưng đủ phong phú. Ở ô xám có ba hướng, nên softmax luôn gán xác suất dương cho hướng Nam; chính sách $\tfrac12$ Đông, $\tfrac12$ Tây của Ví dụ 09.9 là giới hạn của chính sách softmax có cùng mức ưu tiên cho Đông và Tây khi mức ưu tiên của hướng Nam giảm về $-\infty$.
+Số $\phi(s,a)^\top\theta$ là mức ưu tiên (action preference) của hành động $a$ tại $s$; chính sách softmax đổi các mức ưu tiên thành xác suất bằng hàm mũ rồi chuẩn hóa. Mọi hành động có xác suất dương, và cộng cùng một hằng vào mọi mức ưu tiên không đổi chính sách. Với hai hành động, $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$ và $\theta=(\log2;\,0)$, ta được $\pi_\theta(1\mid s)=\tfrac{2}{2+1}=\tfrac23$ và $\pi_\theta(2\mid s)=\tfrac13$; bộ số này là *bài toán một bước hai hành động* của chương. Tại một trạng thái $s$, khi các vector $\phi(s,a)$, $a\in\mathcal A$, độc lập tuyến tính, softmax biểu diễn được mọi phân phối có xác suất dương trên $\mathcal A$. Ở ô xám có ba hướng, nên softmax luôn gán xác suất dương cho hướng Nam; chính sách $\tfrac12$ Đông, $\tfrac12$ Tây của Ví dụ 09.9 là giới hạn của chính sách softmax có cùng mức ưu tiên cho Đông và Tây khi mức ưu tiên của hướng Nam giảm về $-\infty$.
 
 ::: definition Định nghĩa 09.12 (Chính sách Gaussian với phương sai cố định)
 Cho $\mathcal A=\mathbb R$, đặc trưng trạng thái $\phi(s)\in\mathbb R^d$ giữ cố định, $\theta\in\mathbb R^d$ và $\sigma^2>0$ cố định. Chính sách Gaussian có mật độ
@@ -543,7 +543,7 @@ $$
 $$
 :::
 
-Trung bình $\mu_\theta(s)$ là hành động "trung tâm" tại $s$, và $\sigma$ đo độ trải của các hành động được lấy mẫu quanh nó. Mật độ dương trên toàn trục số thực, nên khi hành động hợp lệ nằm trong một khoảng $[a_{\min},a_{\max}]$, một phần khối xác suất rơi ra ngoài. Cài đặt thường cắt mẫu về khoảng, hoặc đưa mẫu qua một hàm đơn điệu như $\tanh$. Với phép cắt, ta có thể coi việc cắt là một phần của môi trường và dùng mật độ Gaussian của mẫu trước khi cắt. Với $a=\tanh(u)$, phép đổi biến thêm thừa số $1/(1-a^2)$ vào mật độ của $a$. Thừa số này và phép đổi tỉ lệ affine về $[a_{\min},a_{\max}]$ không phụ thuộc $\theta$, nên hàm điểm bằng hàm điểm Gaussian của Mục 5 tại $u=\operatorname{artanh}a$.
+Trung bình $\mu_\theta(s)$ là hành động "trung tâm" tại $s$, và $\sigma$ đo độ trải của các hành động được lấy mẫu quanh nó. Mật độ dương trên toàn trục số thực, nên khi hành động hợp lệ nằm trong một khoảng $[a_{\min},a_{\max}]$, một phần khối xác suất rơi ra ngoài. Để đưa mẫu về khoảng, cài đặt cắt mẫu hoặc đưa mẫu qua một hàm đơn điệu như $\tanh$. Với phép cắt, ta có thể coi việc cắt là một phần của môi trường và dùng mật độ Gaussian của mẫu trước khi cắt. Với $a=\tanh(u)$, phép đổi biến thêm thừa số $1/(1-a^2)$ vào mật độ của $a$. Thừa số này và phép đổi tỉ lệ affine về $[a_{\min},a_{\max}]$ không phụ thuộc $\theta$, nên hàm điểm bằng hàm điểm Gaussian của Mục 5 tại $u=\operatorname{artanh}a$.
 
 | | Softmax | Gaussian, $\sigma^2$ cố định |
 |---|---|---|
@@ -560,7 +560,7 @@ Trung bình $\mu_\theta(s)$ là hành động "trung tâm" tại $s$, và $\sigm
 4. "$\pi_\theta(a\mid s)$ của Gaussian là xác suất của $a$." Sai: đó là mật độ; xác suất một giá trị thực cụ thể bằng $0$.
 :::
 
-**Trong thực hành.** Trong một cài đặt, chính sách tham số hóa là một hàm, tuyến tính theo đặc trưng hoặc một mạng nơ-ron, trả về các mức ưu tiên (softmax) hoặc trung bình (Gaussian), và tác tử lấy mẫu từ phân phối đó ở mỗi bước. Định lý 04.25 giả sử chính sách được phép phụ thuộc vào trạng thái đầy đủ. Với xấp xỉ hàm, đặc trưng thường gộp nhiều trạng thái, và với quan sát không Markov, quan sát gộp các trạng thái khác nhau. Vì vậy tình huống của Ví dụ 09.9 khá thường gặp. Với góc lái của xe hay mô-men của khớp robot, chính sách Gaussian tránh việc giải $\max_a$ ở mỗi bước.
+**Trong thực hành.** Trong một cài đặt, chính sách tham số hóa là một hàm, tuyến tính theo đặc trưng hoặc một mạng nơ-ron, trả về các mức ưu tiên (softmax) hoặc trung bình (Gaussian), và tác tử lấy mẫu từ phân phối đó ở mỗi bước. Định lý 04.25 giả sử chính sách được phép phụ thuộc vào trạng thái đầy đủ. Với xấp xỉ hàm, các trạng thái có cùng đặc trưng bị gộp; với quan sát không Markov, các trạng thái cho cùng quan sát bị gộp. Khi hai trạng thái bị gộp cần hai hành động khác nhau, ta gặp lại tình huống của Ví dụ 09.9. Với góc lái của xe hay mô-men của khớp robot, chính sách Gaussian tránh việc giải $\max_a$ ở mỗi bước.
 
 Họ $\pi_\theta$ chưa cho biết nên chỉnh $\theta$ theo hướng nào. Trong Mục 5, chúng ta định nghĩa số đo chất lượng $J(\theta)$ và xét cách ước lượng gradient của nó.
 
@@ -633,7 +633,7 @@ tại $\theta=(\log2;\,0)$. Một bước với $\alpha=0{,}1$ cho $\theta=(\log
 
 **Câu hỏi.** Tìm một chính sách tốt khác gì tìm một hàm giá trị tốt (bài giảng gốc, trang 30)? Học giá trị (Bài 06–08) cực tiểu hóa sai số dự đoán của $Q_\theta$ so với một mục tiêu, rồi suy ra chính sách bằng $\arg\max$; một hàm giá trị tốt theo nghĩa sai số nhỏ chưa chắc cho chính sách tốt nhất trong một lớp bị ràng buộc, như Ví dụ 09.8 cho thấy. Học chính sách tối ưu trực tiếp đại lượng cần cực đại.
 
-**Trong thực hành.** Trong một cài đặt, $J(\theta)$ không bao giờ được tính: ta chỉ có lợi tức của các lượt đã chạy, và trung bình của chúng là một ước lượng có nhiễu của $J$. Các thư viện tối ưu thường được viết để cực tiểu hóa, nên cài đặt cực tiểu hóa $-J$, hoặc một hàm mất mát thay thế có gradient bằng $-\widehat g$; dấu trừ này là nguồn lỗi thường gặp khi chuyển từ mã DQN sang mã gradient chính sách.
+**Trong thực hành.** Trong một cài đặt, $J(\theta)$ không bao giờ được tính: ta chỉ có lợi tức của các lượt đã chạy, và trung bình của chúng là một ước lượng có nhiễu của $J$. Bộ tối ưu theo gradient của thư viện mặc định cực tiểu hóa hàm mất mát, nên cài đặt cực tiểu hóa $-J$, hoặc một hàm mất mát thay thế có gradient bằng $-\widehat g$; thiếu dấu trừ này, bước cập nhật làm $J$ giảm.
 
 <!-- note-topic-id: lec-09-topic-14 -->
 ### Ước lượng gradient bằng sai phân hữu hạn
@@ -700,7 +700,7 @@ Khi $\mathcal A$ liên tục, $\pi_\theta(a\mid s)$ là mật độ và định 
 
 Hàm điểm là một vector cùng số chiều với $\theta$. Tọa độ thứ $k$ của nó cho biết log xác suất của hành động $a$ thay đổi bao nhiêu khi tăng $\theta_k$; vì $\nabla\log\pi=\nabla\pi/\pi$, đó là thay đổi tương đối của xác suất. Đi một bước nhỏ theo $\psi_\theta(s,a)$ làm tăng $\pi_\theta(a\mid s)$; đi ngược chiều làm giảm. Tên gọi lấy từ thống kê, nơi gradient của log hàm hợp lý theo tham số được gọi là hàm điểm. Trong Ví dụ 09.14, $\psi_\theta(s,1)=\bigl(\tfrac13;\,-\tfrac13\bigr)$: tăng $\theta_1$ hoặc giảm $\theta_2$ đều làm hành động 1 dễ được chọn hơn.
 
-Định nghĩa cần $\pi_\theta(a\mid s)>0$. Nếu một hành động có xác suất $0$, logarit của nó không xác định, và hành động đó cũng không bao giờ xuất hiện trong mẫu. Chính sách tất định vi phạm điều kiện này ở mọi hành động không được chọn, và thường không khả vi theo $\theta$; phép tham lam theo $Q$ và hành vi $\epsilon_{\mathrm{exp}}$-tham lam cũng không khả vi theo tham số của $Q$ vì phép $\arg\max$. Softmax cho mọi hành động xác suất dương, Gaussian cho mọi số thực mật độ dương, nên hai họ của Mục 4 thỏa điều kiện ở mọi $(s,a)$. Khi dùng hàm điểm để lấy kỳ vọng, như ở Mệnh đề 09.17, cần thêm một điều: tập $\{a:\pi_\theta(a\mid s)>0\}$, gọi là miền hỗ trợ (support), không đổi theo $\theta$.
+Định nghĩa cần $\pi_\theta(a\mid s)>0$. Nếu một hành động có xác suất $0$, logarit của nó không xác định, và hành động đó cũng không bao giờ xuất hiện trong mẫu. Chính sách tất định vi phạm điều kiện này ở mọi hành động không được chọn; phép tham lam theo $Q$ và hành vi $\epsilon_{\mathrm{exp}}$-tham lam cũng không khả vi theo tham số của $Q$ vì phép $\arg\max$. Softmax cho mọi hành động xác suất dương, Gaussian cho mọi số thực mật độ dương, nên hai họ của Mục 4 thỏa điều kiện ở mọi $(s,a)$. Khi dùng hàm điểm để lấy kỳ vọng, như ở Mệnh đề 09.17, cần thêm một điều: tập $\{a:\pi_\theta(a\mid s)>0\}$, gọi là miền hỗ trợ (support), không đổi theo $\theta$.
 
 ### Hàm điểm của chính sách softmax
 
@@ -743,7 +743,7 @@ Mệnh đề đọc như sau: hàm điểm của hành động $a$ là đặc tr
 
 ![Ba chấm tròn là đặc trưng phi của s, 1; s, 2; s, 3 với xác suất 0,5; 0,3; 0,2 ghi trong hộp bên phải. Hình thoi rỗng là trung bình đặc trưng theo pi theta. Ba mũi tên đi từ hình thoi tới ba chấm, ghi psi theta của s, 1; s, 2; s, 3.](img/lec-09/softmax-score.svg)
 
-Hình vẽ ba hành động trong mặt phẳng đặc trưng với xác suất $0{,}5$; $0{,}3$; $0{,}2$. Hình thoi là đặc trưng trung bình, tức trọng tâm của ba điểm với trọng số xác suất; mỗi mũi tên là một hàm điểm. Vì hình thoi là trọng tâm có trọng số, $0{,}5\,\psi_\theta(s,1)+0{,}3\,\psi_\theta(s,2)+0{,}2\,\psi_\theta(s,3)=0$. Hành động có xác suất nhỏ thường nằm xa trọng tâm hơn, nên hàm điểm của nó dài hơn.
+Hình vẽ ba hành động trong mặt phẳng đặc trưng với xác suất $0{,}5$; $0{,}3$; $0{,}2$. Hình thoi là đặc trưng trung bình, tức trọng tâm của ba điểm với trọng số xác suất; mỗi mũi tên là một hàm điểm. Vì hình thoi là trọng tâm có trọng số, $0{,}5\,\psi_\theta(s,1)+0{,}3\,\psi_\theta(s,2)+0{,}2\,\psi_\theta(s,3)=0$. Độ dài của $\psi_\theta(s,a)$ là khoảng cách từ $\phi(s,a)$ tới trọng tâm; trong hình, $\psi_\theta(s,2)$ dài nhất dù hành động 2 có xác suất $0{,}3$, lớn hơn xác suất $0{,}2$ của hành động 3.
 
 ::: example Ví dụ 09.15 (Hàm điểm softmax hai hành động)
 **Dữ kiện.** Bài toán một bước: $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$, $\theta=(\log2;\,0)$, $\pi_\theta(\cdot\mid s)=\bigl(\tfrac23;\,\tfrac13\bigr)$.
@@ -850,7 +850,7 @@ Hàm điểm Gaussian là đặc trưng trạng thái nhân với phần dư chu
 
 Ở Mục 6, hệ số $c$ là lợi tức của lượt: lợi tức dương kéo trung bình về phía hành động vừa thử, lợi tức âm đẩy trung bình ra xa.
 
-Bài giảng gốc (trang 38) hỏi vấn đề của chính sách Gaussian. Với $\sigma$ cố định, chính sách này có hai hạn chế, bao gồm:
+Với $\sigma$ cố định, chính sách Gaussian có hai hạn chế, bao gồm:
 
 - mật độ dương trên cả trục số, nên với miền hành động bị chặn, mẫu phải được cắt hoặc biến đổi;
 - phương sai $\sigma^2$ cố định không học được mức thăm dò; học $\sigma$ được xét ở Bài tập 09.7.
@@ -862,9 +862,9 @@ Bài giảng gốc (trang 38) hỏi vấn đề của chính sách Gaussian. V�
 4. "Mệnh đề 09.17 đúng với mọi dữ liệu." Sai: kỳ vọng lấy theo $A\sim\pi_\theta(\cdot\mid s)$; hành động sinh từ một chính sách khác không cho trung bình $0$.
 :::
 
-**Trong thực hành.** Trong một cài đặt, hàm điểm hiếm khi được viết ra thành công thức. Mạng chính sách trả về các logit $\phi(s,a)^\top\theta$ (hoặc đầu ra của mạng) hay trung bình $\mu_\theta(s)$; thư viện tính $\log\pi_\theta(a\mid s)$ của hành động đã lấy mẫu, và phép vi phân tự động lan truyền ngược qua mạng cho $\psi_\theta(s,a)$. Log xác suất softmax nên tính bằng hàm log-softmax, dựa trên phép trừ cực đại trong $\log\sum e^{z}$, để tránh tràn số.
+**Trong thực hành.** Trong một cài đặt, hàm điểm không cần viết ra thành công thức. Mạng chính sách trả về các logit $\phi(s,a)^\top\theta$ (hoặc đầu ra của mạng) hay trung bình $\mu_\theta(s)$; thư viện tính $\log\pi_\theta(a\mid s)$ của hành động đã lấy mẫu, và phép vi phân tự động lan truyền ngược qua mạng cho $\psi_\theta(s,a)$. Log xác suất softmax nên tính bằng hàm log-softmax, dựa trên phép trừ cực đại trong $\log\sum e^{z}$, để tránh tràn số.
 
-Khi các hành động không hợp lệ ở một trạng thái được gán logit $-\infty$, miền hỗ trợ không đổi theo $\theta$, nên Mệnh đề 09.17 vẫn áp dụng. Với xấp xỉ hàm hay quan sát không Markov, hàm điểm vẫn xác định, vì nó chỉ phụ thuộc chính sách; giả thiết dễ bị vi phạm nhất là về dữ liệu: hành động trong bộ nhớ phát lại do các chính sách cũ sinh ra, không theo phân phối $\pi_\theta(\cdot\mid s)$, nên Mệnh đề 09.17 và các ước lượng ở Mục 6 chỉ đúng sau khi hiệu chỉnh.
+Khi các hành động không hợp lệ ở một trạng thái được gán logit $-\infty$, miền hỗ trợ không đổi theo $\theta$, nên Mệnh đề 09.17 vẫn áp dụng. Với xấp xỉ hàm hay quan sát không Markov, hàm điểm vẫn xác định, vì nó chỉ phụ thuộc chính sách. Giả thiết về dữ liệu thì bị vi phạm khi dùng bộ nhớ phát lại: hành động trong bộ nhớ do các chính sách cũ sinh ra, không theo phân phối $\pi_\theta(\cdot\mid s)$, nên Mệnh đề 09.17 và các ước lượng ở Mục 6 chỉ đúng sau khi hiệu chỉnh.
 
 Còn thiếu hai điều: gradient trên một lượt nhiều bước, và các giả thiết về môi trường để đổi đạo hàm với kỳ vọng trên cả lượt. Trong Mục 6, chúng ta xây dựng cả hai.
 
@@ -984,8 +984,6 @@ Các giả thiết có vai trò riêng, bao gồm:
 - Chính sách Markov: dùng ở dòng một của Bước 2. Nếu chính sách nhìn cả lịch sử, chỉ cần thay $\pi_\theta(\cdot\mid S_t)$ bằng $\pi_\theta(\cdot\mid H_t)$ và kết luận vẫn đúng; điều không được bỏ là $A_t$ được chọn chỉ từ thông tin có trong $H_t$.
 - Miền hỗ trợ cố định: dùng ở dòng ba của Bước 2; bỏ nó, phản ví dụ phân phối đều trên $[0,\theta]$ của Mục 5 cho $\mathbb E[\psi_t\mid H_t]\ne0$. Với hành động liên tục, dòng ba còn cần đổi được gradient với tích phân theo $a$.
 - Chặn $|R_{t+1}|\le R_{\max}$, $T\le T_{\max}$ và tính khả tích của $\psi_t$: dùng ở Bước 3 và Bước 4. Chỉ giả sử $G_0$ bị chặn thì không đủ, vì tổng riêng $G_{<t}$ có thể không bị chặn khi các phần thưởng triệt tiêu nhau, và tổng theo $t$ có thể vô hạn.
-
-Lập luận chỉ dùng việc $G_{<t}$ đã xác định trước khi lấy mẫu $A_t$.
 
 ::: example Ví dụ 09.18 (Lượt hai bước)
 **Dữ kiện.** Lượt dừng tại $T=2$, cùng trạng thái $s$ ở hai bước, chính sách softmax với $\theta=(\log2;\,0)$; $A_0=A_1=1$ nên $\psi_0=\psi_1=\psi=\bigl(\tfrac13;\,-\tfrac13\bigr)$; $R_1=1$, $R_2=2$, $\gamma=0{,}9$.
@@ -1120,7 +1118,7 @@ $\widehat g$ là đúng biểu thức trong kỳ vọng của Định lý 09.23,
 
 Hệ quả cần hai điều mà thuật toán phải giữ. Thứ nhất, mọi hàm điểm tính tại tham số đã sinh ra lượt; cập nhật $\theta$ giữa chừng làm các bước sau của lượt đến từ chính sách khác. Thứ hai, lượt phải do $\pi_{\theta_{\mathrm{old}}}$ sinh ra: REINFORCE là học theo chính sách (on-policy). Các lượt cũ trong một bộ nhớ phát lại do tham số khác $\theta'$ sinh ra, nên trung bình của $\widehat g$ trên chúng chỉ bằng $\nabla J(\theta_{\mathrm{old}})$ sau khi nhân với tỉ số $p_{\theta_{\mathrm{old}}}(\tau)/p_{\theta'}(\tau)$. Đây là khác biệt cơ bản với DQN và Double DQN, vốn học khác chính sách từ bộ nhớ phát lại.
 
-Ước lượng này dùng lợi tức Monte Carlo của cả lượt, nên dù không chệch, phương sai của nó có thể lớn.
+Ước lượng này dùng lợi tức Monte Carlo của cả lượt; ví dụ sau tính phương sai của nó trên bài toán một bước.
 
 ::: example Ví dụ 09.20 (Phương sai của REINFORCE trên bài toán một bước)
 **Dữ kiện.** Bài toán một bước, chính sách softmax, $\theta=(\log2;\,0)$, $\pi_\theta(\cdot\mid s)=\bigl(\tfrac23;\,\tfrac13\bigr)$, $r(1)=3$, $r(2)=0$; $\widehat g=r(A)\,\psi_\theta(s,A)$ với $\psi_\theta(s,1)=\bigl(\tfrac13;\,-\tfrac13\bigr)$, $\psi_\theta(s,2)=\bigl(-\tfrac23;\,\tfrac23\bigr)$ (Ví dụ 09.15, 09.19).
@@ -1129,7 +1127,7 @@ Hệ quả cần hai điều mà thuật toán phải giữ. Thứ nhất, mọi
 
 **Phương sai.** Mỗi tọa độ: $\tfrac23\cdot1-\tfrac49=\tfrac29$. Tổng phương sai $\tfrac49$, trong khi $\lVert\nabla_\theta J\rVert^2=\tfrac89$.
 
-**Diễn giải.** Một lượt cho độ lệch chuẩn khoảng $0{,}67$ so với độ dài gradient khoảng $0{,}94$; muốn sai số nhỏ, cần trung bình trên nhiều lượt.
+**Diễn giải.** Một lượt cho độ lệch chuẩn khoảng $0{,}67$ so với độ dài gradient khoảng $0{,}94$; trung bình trên $n$ lượt độc lập chia tổng phương sai $\tfrac49$ cho $n$.
 
 **Kiểm tra lại.** $\tfrac29+\tfrac29=\tfrac49$; $\sqrt{4/9}\approx0{,}67$ và $\sqrt{8/9}\approx0{,}94$.
 :::
@@ -1162,7 +1160,7 @@ Ví dụ sau cho thấy hướng lệch trên một bài toán nhỏ.
 $$
 L(\theta)=-\sum_{t=0}^{T-1}\gamma^tG_t\,\log\pi_\theta(A_t\mid S_t),
 $$
-có $-\nabla_\theta L=\widehat g$; dấu trừ đổi bước hạ gradient của thư viện thành bước tăng $J$. Hàm này không phải hàm mục tiêu: giá trị của nó không đo chất lượng chính sách, chỉ gradient của nó có nghĩa. Lấy trung bình $\widehat g$ trên vài lượt trước mỗi cập nhật làm giảm phương sai mà không làm mất tính không chệch. Với xấp xỉ hàm bằng mạng nơ-ron, (G4) được thay bằng điều kiện gradient của logit hoặc của trung bình theo $\theta$ bị chặn trên miền trạng thái; khi đó hàm điểm vẫn bị chặn (softmax) hoặc có đuôi Gaussian. Với quan sát không Markov, Định lý 09.23 vẫn đúng theo lượt cho chính sách theo quan sát, còn Hệ quả 09.24 với $q_\pi(s,a)$ không áp dụng. Với CartPole, lượt bị cắt ở bước $500$ (Bài 08) cho $G_t$ cụt: ước lượng khi đó nhắm bài toán có chân trời hữu hạn.
+có $-\nabla_\theta L=\widehat g$; dấu trừ đổi bước hạ gradient của thư viện thành bước tăng $J$. Hàm này không phải hàm mục tiêu: giá trị của nó không đo chất lượng chính sách, chỉ gradient của nó có nghĩa. Lấy trung bình $\widehat g$ trên $n$ lượt độc lập trước mỗi cập nhật chia phương sai cho $n$ và giữ tính không chệch. Với xấp xỉ hàm bằng mạng nơ-ron, (G4) được thay bằng điều kiện gradient của logit hoặc của trung bình theo $\theta$ bị chặn trên miền trạng thái; khi đó hàm điểm vẫn bị chặn (softmax) hoặc có đuôi Gaussian. Với quan sát không Markov, Định lý 09.23 vẫn đúng theo lượt cho chính sách theo quan sát, còn Hệ quả 09.24 với $q_\pi(s,a)$ không áp dụng. Với CartPole, lượt bị cắt ở bước $500$ (Bài 08) cho $G_t$ cụt: ước lượng khi đó nhắm bài toán có chân trời hữu hạn.
 
 Notebook thực hành thứ hai của Bài 09 (`thuc-hanh-double-dqn-reinforce-breakout.ipynb`, mục 8) cho thấy giới hạn của REINFORCE trên Breakout, nơi phần thưởng thưa và nhiều lượt có $\widehat g=0$. Sau $10^6$ bước, REINFORCE thuần và REINFORCE với lợi tức chuẩn hóa trong từng lượt đều suy biến thành chính sách tham lam luôn sang phải, đạt $2{,}43$ điểm, bằng chính sách hằng "luôn sang phải". Với cùng ngân sách, DQN và Double DQN đạt $41{,}6$–$65{,}6$ điểm (đánh giá với xác suất thăm dò $0{,}05$) ở bốn trong sáu lần chạy.
 
@@ -1237,10 +1235,10 @@ Mỗi câu dưới đây dùng một kết quả của chương; khi trả lời
 
 ### Bài tập về nhà và tài liệu đọc
 
-Mười bài tập củng cố của chương nằm ở mục "Bài tập củng cố" cuối tệp, xếp theo ba mức, mỗi bài có gợi ý và lời giải. Bộ bài tập chính thức của bài, Bài tập 09.11–09.20, nằm ở [tệp bài tập Bài 09](material-viewer.html?doc=materials/lec-09/exercises.md&deck=lecture-09-double-dqn-va-gradient-chinh-sach.html); các bài này phát biểu lại bài tập và ví dụ của Sutton và Barto (2018), §6.7 và §13.1–13.3, có gợi ý và lời giải. Bài tập củng cố theo mục, bao gồm:
+Mười một bài tập củng cố của chương nằm ở mục "Bài tập củng cố" cuối tệp, xếp theo ba mức, mỗi bài có gợi ý và lời giải. Bộ bài tập chính thức của bài, Bài tập 09.12–09.17, nằm ở [tệp bài tập Bài 09](material-viewer.html?doc=materials/lec-09/exercises.md&deck=lecture-09-double-dqn-va-gradient-chinh-sach.html); các bài này lấy từ Bài tập 6.13, 13.1, 13.2, 13.3 và 13.5 của Sutton và Barto (2018), có gợi ý và lời giải. Bài tập củng cố theo mục, bao gồm:
 
-- Mục 2: Bài tập 09.1 (mức nhận biết), 09.2;
-- Mục 3: Bài tập 09.3;
+- Mục 2: Bài tập 09.1, 09.2;
+- Mục 3: Bài tập 09.3, 09.11;
 - Mục 4: Bài tập 09.4;
 - Mục 5: Bài tập 09.5–09.7;
 - Mục 6: Bài tập 09.8, 09.9;
@@ -1248,17 +1246,7 @@ Mười bài tập củng cố của chương nằm ở mục "Bài tập củng
 
 Tài liệu đọc gồm bốn mục của Sutton và Barto (2018): §6.7 về độ chệch của phép cực đại và học kép, §13.1 về chính sách tham số hóa, §13.2–13.3 về định lý gradient chính sách và REINFORCE, §13.7 về chính sách cho hành động liên tục; và bài báo của van Hasselt, Guez và Silver (2016) về Double DQN.
 
-**Luyện tập cho Mục 3.** Cho $R=1$, $\gamma=0{,}8$; tại $S'$, $Q_{\theta^-}(S',\cdot)=(2;\,7)$ và $Q_\theta(S',\cdot)=(4;\,1)$. Tính mục tiêu DQN và mục tiêu Double DQN khi (a) $Z=0$; (b) $Z=1$.
-
-::: solution
-**Câu (a).** DQN: $\max_aQ_{\theta^-}(S',a)=7$, nên $y=1+0{,}8\cdot7=6{,}6$. Double DQN: mạng trực tuyến chọn $a^*=\arg\max_aQ_\theta(S',a)=1$, mạng mục tiêu đánh giá $Q_{\theta^-}(S',1)=2$, nên $y=1+0{,}8\cdot2=2{,}6$.
-
-**Câu (b).** Mặt nạ $1-Z=0$, nên cả hai mục tiêu bằng $R=1$.
-
-**Kiểm tra lại.** $2{,}6\le6{,}6$, đúng chiều $y^{\mathrm{DDQN}}\le y^{\mathrm{DQN}}$ khi $Z=0$.
-:::
-
-Bài 10 nhận hai giới hạn của REINFORCE. Để giảm phương sai, chúng ta trừ một đường cơ sở (baseline) phụ thuộc trạng thái và thay lợi tức Monte Carlo bằng một hàm giá trị học được trong phương pháp actor–critic. TRPO và PPO giới hạn mức thay đổi của chính sách ở mỗi bước cập nhật, nhờ đó dùng được bước lớn hơn và mỗi lượt đem lại nhiều tiến bộ hơn.
+Bài 10 nhận hai giới hạn của REINFORCE. Để giảm phương sai, chúng ta trừ một đường cơ sở (baseline) phụ thuộc trạng thái và thay lợi tức Monte Carlo bằng một hàm giá trị học được trong phương pháp actor–critic. TRPO và PPO giới hạn mức thay đổi của chính sách ở mỗi bước cập nhật; PPO nhờ đó dùng mỗi lô lượt cho nhiều bước cập nhật.
 
 ## Tình huống áp dụng và ứng dụng
 
@@ -1279,15 +1267,15 @@ Bài 10 nhận hai giới hạn của REINFORCE. Để giảm phương sai, chú
 
 Ở cả ba môi trường, Double DQN cho hai đại lượng thấp hơn DQN: trung bình $Q_0-G_0$ ở đầu lượt, và đỉnh của trung bình dự đoán $Q_\theta(O_i,A_i)$ trên mini-batch trong huấn luyện (Bài 08 ký hiệu $q_i$); chẳng hạn $Q_0-G_0$ là $34{,}5$ so với $47{,}5$ trên Lunar Lander và $11{,}2$ so với $15{,}8$ trên CartPole.
 
-Trong sáu hiệu ghép cặp (hai đại lượng, ba môi trường), chỉ hai hiệu vượt ngưỡng $2{,}365$ của từng phép so riêng ở mức $5\%$ với $7$ bậc tự do: đỉnh của trung bình dự đoán trên CartPole ($t\approx-3{,}0$) và trên Flappy Bird ($t\approx-2{,}6$). Sau hiệu chỉnh Bonferroni cho sáu phép so, ngưỡng là $3{,}64$ và không hiệu nào vượt. Độ lệch tính trung bình theo bước trên Lunar Lander còn đi ngược chiều ($+5{,}5$, $t\approx0{,}7$). Số liệu phù hợp với một mức giảm đánh giá cao, nhưng tám hạt giống chưa đủ để khẳng định mức giảm đó cho cả nhóm phép so.
+Trong sáu hiệu ghép cặp (hai đại lượng, ba môi trường), chỉ hai hiệu vượt ngưỡng $2{,}365$ của từng phép so riêng ở mức $5\%$ với $7$ bậc tự do: đỉnh của trung bình dự đoán trên CartPole ($t\approx-3{,}0$) và trên Flappy Bird ($t\approx-2{,}6$). Sau hiệu chỉnh Bonferroni cho sáu phép so, ngưỡng là $3{,}64$ và không hiệu nào vượt. Độ lệch tính trung bình theo bước trên Lunar Lander còn đi ngược chiều ($+5{,}5$, $t\approx0{,}7$). Số liệu phù hợp với một mức giảm đánh giá cao.
 
 Trên CartPole, $Q_0$ của Double DQN vẫn khoảng $109{,}5$, trên cận $100$ của mọi lợi tức: đánh giá cao vẫn còn, đúng với kết luận rằng Double DQN không bảo đảm hết chệch lên.
 
-Điểm của chính sách không phân biệt được ở cả ba môi trường. Trên Lunar Lander, năm hạt giống đầu cho lại trung bình $200{,}0$ của đoạn "Áp dụng"; ba hạt giống thêm cho $-23{,}3$; $-25{,}5$; $45{,}6$, nên trung bình tám hạt giống là $124{,}6$, so với $184{,}3$ của DQN trên cùng tám hạt giống ($t\approx-1{,}7$). Con số trên năm hạt giống vì thế không ổn định.
+Điểm của chính sách không phân biệt được ở cả ba môi trường. Trên Lunar Lander, năm hạt giống đầu cho lại trung bình $200{,}0$ của đoạn "Áp dụng"; ba hạt giống thêm cho $-23{,}3$; $-25{,}5$; $45{,}6$, nên trung bình tám hạt giống là $124{,}6$, so với $184{,}3$ của DQN trên cùng tám hạt giống ($t\approx-1{,}7$).
 
-**Breakout.** Notebook thực hành thứ hai của Bài 09 (`thuc-hanh-double-dqn-reinforce-breakout.ipynb`, mục 7–8) lặp phép đo trên Atari Breakout với quan sát là ảnh, $10^6$ bước tác tử và ba hạt giống cho mỗi thuật toán. Với chính sách tham lam, $Q_0-G_0$ của DQN là $0{,}91$; $1{,}76$; $1{,}42$, của Double DQN là $0{,}47$; $0{,}10$; $0{,}30$; hiệu ghép cặp có $t\approx-3{,}0$ với $2$ bậc tự do, chưa vượt ngưỡng $4{,}30$. Lần chạy Double DQN với hạt giống $2$ không học được (điểm ngang chính sách chọn đều, giá trị và lợi tức đều gần $0$), nên hiệu ở hạt giống đó không đo cùng một tình huống; chiều của các hiệu phù hợp với van Hasselt, Guez và Silver (2016), nhưng ba hạt giống chưa đủ để kết luận.
+**Breakout.** Notebook thực hành thứ hai của Bài 09 (`thuc-hanh-double-dqn-reinforce-breakout.ipynb`, mục 7–8) lặp phép đo trên Atari Breakout với quan sát là ảnh, $10^6$ bước tác tử và ba hạt giống cho mỗi thuật toán. Với chính sách tham lam, $Q_0-G_0$ của DQN là $0{,}91$; $1{,}76$; $1{,}42$, của Double DQN là $0{,}47$; $0{,}10$; $0{,}30$; hiệu ghép cặp có $t\approx-3{,}0$ với $2$ bậc tự do, chưa vượt ngưỡng $4{,}30$. Lần chạy Double DQN với hạt giống $2$ không học được: điểm ngang chính sách chọn đều, giá trị và lợi tức đều gần $0$. Hiệu ở hạt giống đó vì vậy không đo cùng một tình huống. Chiều của các hiệu phù hợp với van Hasselt, Guez và Silver (2016).
 
-**Diễn giải.** Với ngân sách và số hạt giống của các notebook, mọi hiệu điểm của chính sách đều dưới ngưỡng ở mức $5\%$, nên câu hỏi "Double DQN có làm chính sách tốt hơn không" chưa có câu trả lời trên ba môi trường này. Mức đánh giá cao giảm ở cả ba môi trường, với hai hiệu riêng vượt ngưỡng.
+**Diễn giải.** Với ngân sách và số hạt giống của các notebook, mọi hiệu điểm của chính sách đều dưới ngưỡng ở mức $5\%$, nên các notebook không phân biệt được điểm của Double DQN với cấu hình gốc trên ba môi trường này. Mức đánh giá cao giảm ở cả ba môi trường, với hai hiệu riêng vượt ngưỡng.
 
 **Giới hạn.** Ba tới năm hạt giống không đủ để phân biệt các hiệu cỡ vài phần trăm; tổng thưởng của chính sách cuối không đo trực tiếp độ chệch của giá trị. Cấu hình tốt nhất trên Lunar Lander ($261{,}1$ trên tám hạt giống) gộp năm yếu tố: ngân sách gấp ba, lịch thăm dò dài gấp ba, tốc độ học giảm dần, lợi tức ba bước và Double DQN, nên không tách được đóng góp của Double DQN.
 :::
@@ -1299,11 +1287,11 @@ Trên CartPole, $Q_0$ của Double DQN vẫn khoảng $109{,}5$, trên cận $10
 
 **Kiểm giả thiết.** Hệ quả 09.26 cần lượt sinh bởi chính $\pi_{\theta_{\mathrm{old}}}$: không thỏa.
 
-**Áp dụng.** Trung bình của $\widehat g=r(A)\psi_\theta(s,A)$ trên các lượt cũ là $\tfrac12\cdot3\bigl(\tfrac13;\,-\tfrac13\bigr)=\bigl(\tfrac12;\,-\tfrac12\bigr)$, khác gradient đúng $\bigl(\tfrac23;\,-\tfrac23\bigr)$ tại $\theta$: hướng giữ nguyên trong ví dụ hai hành động này, nhưng độ lớn lệch $25\%$, và với nhiều hành động hay nhiều bước, hướng cũng lệch.
+**Áp dụng.** Trung bình của $\widehat g=r(A)\psi_\theta(s,A)$ trên các lượt cũ là $\tfrac12\cdot3\bigl(\tfrac13;\,-\tfrac13\bigr)=\bigl(\tfrac12;\,-\tfrac12\bigr)$, khác gradient đúng $\bigl(\tfrac23;\,-\tfrac23\bigr)$ tại $\theta$: hướng giữ nguyên trong ví dụ hai hành động này, nhưng độ lớn lệch $25\%$.
 
 **Khắc phục.** Nhân mỗi lượt với tỉ số xác suất $p_\theta(\tau)/p_{\theta'}(\tau)$, ở đây $\pi_\theta(A\mid s)/\pi_{\theta'}(A\mid s)$, bằng $\tfrac43$ khi $A=1$: trung bình thành $\tfrac12\cdot\tfrac43\cdot3\bigl(\tfrac13;\,-\tfrac13\bigr)=\bigl(\tfrac23;\,-\tfrac23\bigr)$, đúng gradient.
 
-**Giới hạn.** Trên lượt nhiều bước, tỉ số là tích theo các bước nên phương sai có thể tăng theo hàm mũ của độ dài lượt; Bài 10 dùng một tỉ số một bước có giới hạn trong PPO.
+**Giới hạn.** Trên lượt nhiều bước, tỉ số là tích theo các bước nên phương sai có thể tăng theo hàm mũ của độ dài lượt.
 :::
 
 **Ứng dụng.** Mục tiêu Double DQN là một trong sáu thành phần của Rainbow, cùng với mạng dueling, lợi tức nhiều bước (multi-step return) và phát lại ưu tiên (prioritized experience replay) (Hessel và cộng sự, 2018); notebook Bài 08 thử từng thành phần riêng ở mục 15.
@@ -1451,7 +1439,7 @@ $J(\theta)=3\pi_\theta(1\mid s)$; với $\theta-\epsilon u_1=(\log2-0{,}1;\,0)$,
 ::: solution
 **Tính.** $J(\theta+\epsilon u_1)\approx2{,}0655$ (Ví dụ 09.13); $J(\theta-\epsilon u_1)=3\cdot\dfrac{2e^{-0{,}1}}{2e^{-0{,}1}+1}\approx1{,}9323$. Sai phân trung tâm: $(2{,}0655-1{,}9323)/0{,}2\approx0{,}666$.
 
-**So sánh.** Sai lệch so với $\tfrac23$ khoảng $0{,}0004$, nhỏ hơn nhiều so với $0{,}011$ của sai phân một phía: sai số cắt cụt của sai phân trung tâm tỉ lệ với $\epsilon^2$ thay vì $\epsilon$.
+**So sánh.** Sai lệch so với $\tfrac23$ khoảng $0{,}0004$, nhỏ hơn khoảng $30$ lần so với $0{,}011$ của sai phân một phía: sai số cắt cụt của sai phân trung tâm tỉ lệ với $\epsilon^2$ thay vì $\epsilon$.
 
 **Chi phí.** Mỗi tọa độ cần hai giá trị $J$ mới, nên cả gradient cần $2d$ giá trị thay vì $d+1$. Phương sai do nhiễu vẫn tỉ lệ với $1/(n\epsilon^2)$.
 
@@ -1536,6 +1524,22 @@ Bài toán một bước, chính sách softmax với $\phi(s,1)=(1;\,0)$, $\phi(
 **Câu (c).** $\widehat r_1\in\{2;\,4\}$ và $\widehat r_2\in\{-1;\,1\}$, nên $\widehat r_1>\widehat r_2$ ở cả bốn cặp: hành động 1 luôn thắng, $\mathbb E[\max_a\widehat r_a]=\mathbb E[\widehat r_1]=3=\max_ar(a)$, không chệch; đây là trường hợp dấu bằng của Mệnh đề 09.2. Với $r(2)=2{,}5$: $\widehat r_2\in\{1{,}5;\,3{,}5\}$; bốn cặp cho cực đại $2$; $3{,}5$; $4$; $4$, nên $\mathbb E[\max_a\widehat r_a]=\tfrac14(2+3{,}5+4+4)=3{,}375$, chệch $+0{,}375$.
 
 **Kiểm tra lại.** Độ chệch $0{,}375$ ở khoảng cách $0{,}5$ trùng Ví dụ 09.3(i), vì chỉ khoảng cách giữa hai giá trị đúng và phân phối nhiễu quyết định độ chệch. Nhầm lẫn thường gặp: cho rằng phép cực đại luôn chệch dương nghiêm ngặt, hoặc cho rằng $\widehat g$ không chệch thì mỗi lượt cho đúng gradient.
+:::
+
+::: exercise Bài tập 09.11 (Mục tiêu DQN và Double DQN với cờ kết thúc)
+Một mẫu chuyển có $R=1$, $\gamma=0{,}8$; tại trạng thái kế $S'$ có hai hành động, $Q_{\theta^-}(S',\cdot)=(2;\,7)$ và $Q_\theta(S',\cdot)=(4;\,1)$. Tính mục tiêu DQN và mục tiêu Double DQN khi (a) $Z=0$; (b) $Z=1$.
+:::
+
+::: hint
+Mục tiêu DQN lấy cực đại của hàng $Q_{\theta^-}(S',\cdot)$; Double DQN chọn $a^*=\arg\max_aQ_\theta(S',a)$ rồi đọc $Q_{\theta^-}(S',a^*)$ (Thuật toán 09.5). Cả hai nhân phần bootstrap với mặt nạ $1-Z$.
+:::
+
+::: solution
+**Câu (a).** DQN: $\max_aQ_{\theta^-}(S',a)=7$, nên $y=1+0{,}8\cdot7=6{,}6$. Double DQN: mạng trực tuyến chọn $a^*=\arg\max_aQ_\theta(S',a)=1$, mạng mục tiêu đánh giá $Q_{\theta^-}(S',1)=2$, nên $y=1+0{,}8\cdot2=2{,}6$.
+
+**Câu (b).** Mặt nạ $1-Z=0$, nên cả hai mục tiêu bằng $R=1$.
+
+**Kiểm tra lại.** $2{,}6\le6{,}6$, đúng chiều $y^{\mathrm{DDQN}}\le y^{\mathrm{DQN}}$ khi $Z=0$. Nhầm lẫn thường gặp: ở Double DQN lấy $Q_\theta(S',1)=4$ làm giá trị, tức để mạng trực tuyến vừa chọn vừa đánh giá, được $1+0{,}8\cdot4=4{,}2$.
 :::
 
 ## Hướng dẫn đọc thêm và tài liệu tham khảo

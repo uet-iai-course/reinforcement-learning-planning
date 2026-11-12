@@ -1126,3 +1126,50 @@ Yêu cầu của người dùng: "Duyệt xem còn câu rào đón nào không t
 **Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in: 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang; lỗi CSP script nội tuyến đến từ máy chủ xem trước.
 
 Quyết định của điều phối viên: **chấp nhận**; commit chung `fix(materials): …`.
+
+
+## Rà nhẹ theo quy tắc 2026-11-09 và làm lại tệp bài tập từ giáo trình (2026-11-12)
+
+Yêu cầu của người dùng: "rà math-4-AI 10–14 và rl-plan 01–10: chỉ cần một lượt nhẹ, gồm rà theo quy tắc 09/11 và làm lại exercises.md từ giáo trình", rồi "chỉ làm lecture note và exercise" (không sửa deck).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Người rà chỉ đọc (`no-ai-slop` Detect), sau đó cũng tác tử đó làm biên tập viên (`no-ai-slop` Edit), tiếp tục bằng `SendMessage` để giữ ngữ cảnh.
+- Người kiểm tra độc lập chỉ đọc (tác tử mới): đối chiếu đề với PDF, giải lại mọi bài trước khi đọc lời giải, rà các hunk đã đổi của ghi chú; sau đó kiểm lại phần đã sửa.
+
+**Rà ghi chú:** 35 phát hiện (0 chặn bàn giao, 2 nghiêm trọng, 4 trung bình, 29 nhẹ). Nghiêm trọng: L746 "hành động có xác suất nhỏ thường nằm xa trọng tâm hơn" trái với hình `softmax-score.svg` ($\psi(s,2)$ với $p=0{,}3$ dài nhất); L1240 dẫn 09.11–09.20 sẽ sai. Trung bình: rào đón L139, L563; bài "Luyện tập cho Mục 3" không số hiệu, chỉ có lời giải (L1251); nhồi ý L1288. Điều phối viên chấp nhận: cả 35; phương án B: "Luyện tập cho Mục 3" thành Bài tập 09.11 trong ghi chú, đủ `exercise`/`hint`/`solution`, đặt cuối "Mức vận dụng" theo thứ tự đọc.
+
+**Nguồn bài tập:** Sutton và Barto (2018), ấn bản 2 (PDF, SHA-256 2dd0d71d…), các số −44, −82, −11,6 đối chiếu PDF tr. 323, 336. Sáu bài 09.12–09.17: SB 6.13, 13.1 (phần 1), 13.3, 13.2, 13.1 (phần 2), 13.5 (đổi thứ tự (b), (c)). SB 13.1 dành cho bài này theo phân bổ chung; SB 13.4 không dùng (trùng Bài tập 09.5(b), 09.7 và thuộc Bài 10). Bài cũ 09.11, 09.18–09.20 (dựa trên ví dụ của sách, không phải bài tập) bị bỏ.
+
+**Kiểm tra độc lập:** 0 chặn bàn giao, 0 nghiêm trọng, 3 trung bình (L237 thiếu giả thiết không chệch; L108 dùng "bài toán một bước" trước khi định nghĩa; deck lệch số), 8 nhẹ; không lời giải sai (giải lại 7/7 bằng numpy/scipy); trọng tâm $(214,95)$ và độ dài $128{,}8$; $216{,}5$; $110{,}9$ xác nhận câu L746 mới. Điều phối viên chấp nhận mọi phát hiện; biên tập viên sửa; kiểm lại: đạt; L108 còn tham chiếu tiến tới Ví dụ 09.20 (Mục 6), đã bỏ số hiệu và hai con số, chỉ giữ "…nên ước lượng của nó không chệch".
+
+**Mục tiêu chỉ có bài trong ghi chú:** mục tiêu 1 (độ chệch của phép cực đại; Bài tập 09.1, 09.2) và phần mục tiêu DQN/Double DQN của mục tiêu 2 (Bài tập 09.11).
+
+Ghi chú `materials/lec-09/lecture-note.md`: Bài tập 09.1–09.10 giữ số; bài "Luyện tập cho Mục 3" (không số, mục "Bài tập về nhà và tài liệu đọc") thành **Bài tập 09.11**, đặt sau Bài tập 09.10, cuối "Mức vận dụng" của "Bài tập củng cố", để số hiệu theo đúng thứ tự đọc. Danh sách "Bài tập củng cố theo mục" của ghi chú ghi "Mục 3: Bài tập 09.3, 09.11"; đoạn "Bài tập về nhà" dẫn "Bài tập 09.12–09.17". Tệp `materials/lec-09/exercises.md` bắt đầu từ 09.12.
+
+| cũ | mới | nội dung mới |
+|---|---|---|
+| 09.1–09.10 (ghi chú) | 09.1–09.10 (không đổi) | |
+| "Luyện tập cho Mục 3" (ghi chú, không số) | 09.11 (ghi chú) | mục tiêu DQN và Double DQN, $Z=0$ và $Z=1$ |
+| 09.11 (MDP độ chệch cực đại) | bỏ | |
+| 09.12 (hành lang ngắn, chính sách tất định) | 09.13 | SB Bài tập 13.1, phần 1 |
+| 09.13 (Double Expected Sarsa) | 09.12 | SB Bài tập 6.13 |
+| 09.14 (xác suất tối ưu trên hành lang ngắn) | 09.16 | SB Bài tập 13.1, phần 2 ($J(p)$, $p^*$; $J(\tfrac12)=-12$, tức $\mathbb E[T]=12$ khi $p=\tfrac12$) |
+| 09.15 (hàm điểm softmax) | 09.14 | SB Bài tập 13.3 |
+| 09.16 (Bernoulli–logistic) | 09.17 | SB Bài tập 13.5 |
+| 09.17 (định lý gradient chính sách có chiết khấu) | 09.15 | SB Bài tập 13.2 |
+| 09.18 (lập trình, MDP độ chệch cực đại) | bỏ | |
+| 09.19 (lập trình, REINFORCE trên hành lang ngắn) | bỏ | |
+| 09.20 (gradient đúng và một mẫu REINFORCE) | bỏ | |
+
+Dẫn chiếu ngoài phạm vi còn dùng số cũ (không sửa, ghi nhật ký):
+- Deck `2627-1/lecture-09-double-dqn-va-gradient-chinh-sach.html` L675–L679 (bảng `Mạch | Bài tập`), L682 ("09.11–09.20: tệp bài tập"), L687 (ghi chú diễn giả). Bảng mới theo mạch: 2 → 09.1, 09.2; 3 → 09.3, 09.11; 09.12; 4 → 09.4; 09.13, 09.16; 5 → 09.5–09.7; 09.14, 09.16; 6 → 09.8, 09.9; 09.15, 09.17; 7 → 09.10.
+- `planning/lec-09/outline.md` L208 (`short-corridor.svg` dùng ở 09.12, 09.14, 09.19, 09.20 → mới: 09.13, 09.16).
+- `planning/lec-09/storyboard.md` L532 (`L09-K7`).
+- `planning/lec-09/review-log.md` L922–L966 (nhật ký cũ, giữ nguyên).
+- Học phần khác: không tệp nào trong `rl-plan` ngoài lec-09 dẫn Bài tập 09.k (grep 2026-11-12).
+
+**Số liệu:** ghi chú 24798 âm tiết (`wc -w`); `git diff --check` sạch; mỗi `exercise` có đúng một `hint` và một `solution`.
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8812, 1600×900 và 390×844, mở mọi khối khi đo: 0 `.katex-error`, 0 `:::` sót, 0 lỗi console (trừ CSP của reloadserver), 0 request lỗi, không tràn ngang trang. Tệp bài tập: 0/29 công thức tràn khung ở 390 px. Ghi chú: 28 công thức có sẵn từ trước tràn khung (ngoài lượt nhẹ).
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-09): rà theo quy tắc 2026-11-09, làm lại bài tập từ Sutton–Barto`.
