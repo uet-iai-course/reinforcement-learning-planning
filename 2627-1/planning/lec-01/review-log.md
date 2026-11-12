@@ -1843,3 +1843,65 @@ Yêu cầu của người dùng: "Duyệt xem còn câu rào đón nào không t
 **Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in: 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang; lỗi CSP script nội tuyến đến từ máy chủ xem trước.
 
 Quyết định của điều phối viên: **chấp nhận**; commit chung `fix(materials): …`.
+
+
+## Rà nhẹ theo quy tắc 2026-11-09 và làm lại tệp bài tập từ giáo trình (2026-11-12)
+
+Yêu cầu của người dùng: "rà math-4-AI 10–14 và rl-plan 01–10: chỉ cần một lượt nhẹ, gồm rà theo quy tắc 09/11 và làm lại exercises.md từ giáo trình", rồi "chỉ làm lecture note và exercise" (không sửa deck).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Người rà chỉ đọc (`no-ai-slop` Detect), sau đó cũng tác tử đó làm biên tập viên (`no-ai-slop` Edit), tiếp tục bằng `SendMessage` để giữ ngữ cảnh.
+- Người kiểm tra độc lập chỉ đọc (tác tử mới): đối chiếu đề với PDF, giải lại mọi bài trước khi đọc lời giải, rà các hunk đã đổi của ghi chú; sau đó kiểm lại phần đã sửa.
+
+**Rà ghi chú:** 19 phát hiện (0 chặn bàn giao, 0 nghiêm trọng, 4 trung bình, 15 nhẹ): danh sách số bài tập ở mục tiêu (dòng 9–14) và câu chỉ đường dòng 16 theo cấu trúc tệp cũ; Diễn giải của Ví dụ 01.4 nhồi năm ý (dòng 457); câu dẫn tới Bài tập 01.16 sẽ bị bỏ (dòng 1329). Điều phối viên chấp nhận: cả 19. SB 3.3 và 3.7 thuộc Bài 02 theo phân bổ chung; bài tùy chọn không đưa vào.
+
+**Nguồn bài tập:** Sutton và Barto (2018), ấn bản 2 (PDF, SHA-256 2dd0d71d…); bản text mất dấu trừ, dữ kiện SB 2.2 ($R_1=-1$, $R_3=-2$) chép từ PDF. Năm bài 01.12–01.16: SB 2.1, 2.2, 1.1, 1.2, 1.3. Năm bài tự dựng cũ 01.12–01.16 và các bản lặp 01.1–01.8 bị bỏ khỏi tệp; ghi chú giữ 01.1–01.11. Bài giới thiệu nên không đòi đủ ba mức.
+
+**Kiểm tra độc lập:** 0 chặn bàn giao, 1 nghiêm trọng (01.15: hai thế cờ của phản ví dụ không xảy ra dưới đối thủ "luôn đánh ô nhỏ nhất"; đổi đối thủ thành chọn đều trên ô trống, trừ khi còn đúng ba ô trống thì đánh ô nhỏ nhất, vét cạn lại cho $V(w)=1$, $V(w')=0$), 6 trung bình (01.14 dịch sai "random opponent", câu (a) thêm vào, suy luận về $\alpha$ không căn cứ; 01.16 nói quá và so sánh theo từng ván; ghi chú L462 nêu sẵn đáp số Bài tập 01.4(b)), 12 nhẹ; không lời giải sai về kết quả. Điều phối viên chấp nhận mọi phát hiện; biên tập viên sửa; kiểm lại: đạt, không phát hiện mới. Sau đó ngắt 2 công thức tràn khung của tệp bài tập theo quy tắc D3.
+
+**Mục tiêu chỉ có bài trong ghi chú:** 1, 2, 3 (trạng thái khác quan sát, phần thưởng khác nhãn, tính ngược lợi tức).
+
+### Cũ → mới
+
+| Số cũ | Vị trí cũ | Xử lý | Số mới | Vị trí mới |
+|---|---|---|---|---|
+| 01.1–01.11 | ghi chú | giữ | 01.1–01.11 | ghi chú, không đổi |
+| 01.1–01.8 (bản chép) | `exercises.md` | bỏ bản chép (không lặp đề bài của ghi chú) | — | bài gốc ở ghi chú giữ số |
+| 01.12 (giá trị khi môi trường tất định, chính sách xác định) | `exercises.md` | bỏ (tự dựng) | — | — |
+| 01.13 (robot dãy bốn ô, tổng hợp; trùng trang chiếu #/7/4–7/5) | `exercises.md` | bỏ (tự dựng) | — | — |
+| 01.14 (hai thiết kế phần thưởng) | `exercises.md` | bỏ (tự dựng) | — | — |
+| 01.15 (đăng ký môn học hai đợt) | `exercises.md` | bỏ (tự dựng) | — | — |
+| 01.16 [Tìm hiểu] (tác tử nhiều nhiệm vụ, mô hình thế giới) | `exercises.md` | bỏ (tự dựng) | — | — |
+| — | — | mới, SB Bài tập 2.1 (§2.2, tr. 28) | 01.12 | `exercises.md`, mức nhận biết |
+| — | — | mới, SB Bài tập 2.2 (§2.3, tr. 30) | 01.13 | `exercises.md`, mức tính toán |
+| — | — | mới, SB Bài tập 1.1 (§1.5, tr. 12) | 01.14 | `exercises.md`, mức vận dụng |
+| — | — | mới, SB Bài tập 1.2 (§1.5, tr. 12) | 01.15 | `exercises.md`, mức vận dụng |
+| — | — | mới, SB Bài tập 1.3 (§1.5, tr. 12–13) | 01.16 | `exercises.md`, mức vận dụng |
+
+Không bài tự dựng nào được chuyển về ghi chú. Số 01.12–01.16 được dùng lại cho nội dung khác, nên mọi dẫn chiếu cũ tới các số này trỏ sai.
+
+### Dẫn chiếu trong phạm vi đã cập nhật
+
+- Ghi chú `lecture-note.md`:
+  - dòng 9–14: danh sách bài tập của sáu mục tiêu, theo số mới (01.14 ở mục tiêu 1 và 6; 01.15 ở mục tiêu 4 và 6; 01.12, 01.13, 01.16 ở mục tiêu 5; 01.16 cả ở mục tiêu 6);
+  - dòng 16: câu liên kết tới tệp bài tập ("gồm Bài tập 01.12–01.16, lấy từ Sutton và Barto (2018)");
+  - dòng 462: bỏ "(Bài tập 01.4 đếm số phép cộng)"; câu mới không nêu đáp số của Bài tập 01.4(b);
+  - dòng 1329: bỏ câu dẫn tới Bài tập 01.16 cũ.
+- Các dẫn chiếu 01.8 (dòng 1031) và 01.9, 01.11 (dòng 1319, 1322) không đổi.
+
+### Dẫn chiếu ngoài phạm vi còn dùng số cũ (không sửa, ghi nhật ký)
+
+- `2627-1/lecture-01-gioi-thieu-hoc-tang-cuong.html`:
+  - Dòng 642, bảng `Mạch | Bài tập` của trang "Bài tập về nhà và tài liệu đọc". Nội dung hiện tại: "01.1 | 01.2, 01.15 | 01.3, 01.4, 01.14 | 01.5, 01.6, 01.12, 01.15 | 01.7, 01.8 | 01.13, 01.16". Theo tệp mới: mạch 5: 01.12, 01.13, 01.16; mạch 6: 01.14, 01.15, 01.16. Các bài ghi chú giữ số.
+  - Dòng 647, ghi chú diễn giả của trang đó. Câu "Bài tập 01.1–01.8 có trong cả ghi chú bài giảng lẫn tệp bài tập; 01.12–01.16 chỉ có trong tệp bài tập; … Bài tập 01.15 dùng phản hồi trễ …; Bài tập 01.13 là bài tổng hợp về robot của mạch 7; 01.16 là bài tìm hiểu …" sai toàn bộ.
+  - Dòng 35, ghi chú diễn giả trang mục tiêu ("mục tiêu 1 với Bài tập 01.1, mục tiêu 2 với 01.2, …"): cần đối chiếu với dòng 9–14 mới của ghi chú.
+  - Trang #/7/4–#/7/5 "Bài tập: robot dọn dãy bốn ô, tổng hợp" (bài 01.13 cũ) vẫn có trên deck, nhưng không còn bản trong `exercises.md`. Mặt trang không ghi số hiệu.
+  - Dòng 121, 156, 219, 286, 367, 439, 502 dẫn 01.1, 01.9, 01.2, 01.3, 01.5, 01.6, 01.7: vẫn đúng.
+- `planning/lec-01/` chưa rà. Các tệp này có thể còn ghi bộ bài 01.12–01.16 cũ.
+- Bài giảng khác (`lec-02`…`lec-10`, notebook): không có dẫn chiếu tới `Bài tập 01.k`.
+
+**Số liệu:** ghi chú 19 874 âm tiết (`wc -w`); `git diff --check` sạch; mỗi `exercise` có đúng một `hint` và một `solution` (ghi chú 11, tệp 5).
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8812, 1600×900 và 390×844, mở mọi khối khi đo: 0 `.katex-error`, 0 `:::` sót, 0 lỗi console (trừ CSP của reloadserver), 0 request lỗi, không tràn ngang trang. Tệp bài tập: 0 công thức tràn khung ở 390 px. Ghi chú: 16 công thức có sẵn từ trước tràn khung (ngoài lượt nhẹ, quy tắc D3).
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-01): rà theo quy tắc 2026-11-09, làm lại bài tập từ Sutton–Barto`.

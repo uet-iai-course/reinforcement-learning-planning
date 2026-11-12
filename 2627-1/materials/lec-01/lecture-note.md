@@ -6,14 +6,14 @@ Học tăng cường (reinforcement learning) nghiên cứu cách một tác t�
 
 Sau chương này, người học có thể:
 
-1. Mô tả một bài toán ra quyết định bằng tác tử, môi trường (environment), trạng thái (state), quan sát (observation), hành động (action) và phần thưởng (reward); chỉ ra một trường hợp trạng thái khác quan sát (Bài tập 01.1, 01.11, 01.13, 01.15, 01.16).
-2. Phân biệt phần thưởng với nhãn của học có giám sát (supervised learning) và nhận diện các dấu hiệu của một bài toán Học tăng cường (Bài tập 01.2, 01.15).
-3. Tính lợi tức (return) $G_t$ của một lượt hữu hạn và dùng hệ thức $G_t=R_{t+1}+G_{t+1}$ để tính ngược (Bài tập 01.3, 01.4, 01.10, 01.13, 01.14).
-4. Phân biệt chính sách (policy), hàm giá trị (value function) và mô hình (model); tính giá trị $v_\pi(h)$ của một lịch sử trong bài toán có lượt ngắn trực tiếp từ định nghĩa (Bài tập 01.5, 01.9, 01.11, 01.12, 01.13, 01.15, 01.16).
-5. Nhận diện thăm dò (exploration) và khai thác (exploitation) khi ước lượng còn dựa trên ít mẫu (Bài tập 01.6, 01.15).
-6. Mô hình hóa Tic-tac-toe thành bài toán Học tăng cường, xác định tập hành động hợp lệ và tính nước khai thác một bước (Bài tập 01.7, 01.8).
+1. Mô tả một bài toán ra quyết định bằng tác tử, môi trường (environment), trạng thái (state), quan sát (observation), hành động (action) và phần thưởng (reward); chỉ ra một trường hợp trạng thái khác quan sát (Bài tập 01.1, 01.11, 01.14).
+2. Phân biệt phần thưởng với nhãn của học có giám sát (supervised learning) và nhận diện các dấu hiệu của một bài toán Học tăng cường (Bài tập 01.2).
+3. Tính lợi tức (return) $G_t$ của một lượt hữu hạn và dùng hệ thức $G_t=R_{t+1}+G_{t+1}$ để tính ngược (Bài tập 01.3, 01.4, 01.10).
+4. Phân biệt chính sách (policy), hàm giá trị (value function) và mô hình (model); tính giá trị $v_\pi(h)$ của một lịch sử trong bài toán có lượt ngắn trực tiếp từ định nghĩa (Bài tập 01.5, 01.9, 01.11, 01.15).
+5. Nhận diện thăm dò (exploration) và khai thác (exploitation) khi ước lượng còn dựa trên ít mẫu (Bài tập 01.6, 01.12, 01.13, 01.16).
+6. Mô hình hóa Tic-tac-toe thành bài toán Học tăng cường, xác định tập hành động hợp lệ và tính nước khai thác một bước (Bài tập 01.7, 01.8, 01.14, 01.15, 01.16).
 
-Bài tập 01.1–01.11 nằm trong ghi chú; Bài tập 01.1–01.8 có lại trong [tệp bài tập](material-viewer.html?doc=materials/lec-01/exercises.md&deck=lecture-01-gioi-thieu-hoc-tang-cuong.html), cùng với Bài tập 01.12–01.16.
+Bài tập 01.1–01.11 nằm trong ghi chú; [tệp bài tập](material-viewer.html?doc=materials/lec-01/exercises.md&deck=lecture-01-gioi-thieu-hoc-tang-cuong.html) gồm Bài tập 01.12–01.16, lấy từ Sutton và Barto (2018).
 
 ## Kiến thức tiên quyết
 
@@ -143,7 +143,7 @@ $$
 sinh ra khi hai thao tác trên được lặp lại. Dãy dừng khi lượt kết thúc, tại thời điểm ký hiệu là $T$.
 :::
 
-Tác tử chỉ quyết định $A_t$; môi trường quyết định $R_{t+1}$ và $O_{t+1}$, có thể một cách ngẫu nhiên. Mọi thứ tác tử không điều khiển được thuộc môi trường: trong Ví dụ 01.1, tác tử là bộ chọn hành động của robot; dãy ô, rác, cảm biến và luật phần thưởng là môi trường. Nhầm lẫn thường gặp là coi cả robot, kể cả cảm biến, là tác tử; cảm biến thuộc môi trường vì tác tử không điều khiển được điều cảm biến báo.
+Tác tử chỉ quyết định $A_t$; môi trường quyết định $R_{t+1}$ và $O_{t+1}$, có thể một cách ngẫu nhiên. Mọi thứ tác tử không điều khiển được thuộc môi trường: trong Ví dụ 01.1, tác tử là bộ chọn hành động của robot; dãy ô, rác, cảm biến và luật phần thưởng là môi trường. Nhầm lẫn thường gặp là coi cả robot, kể cả cảm biến, là tác tử. Cảm biến thuộc môi trường, vì tác tử không điều khiển được điều cảm biến báo.
 
 So với học có giám sát, đầu ra $A_t$ làm thay đổi đầu vào $O_{t+1}$ của bước sau.
 
@@ -178,7 +178,7 @@ $$
 H_3=(\text{sạch},\text{phải},0,\text{sạch},\text{phải},0,\text{sạch},\text{phải},0,\text{bẩn}).
 $$
 
-Tác tử có thể không bao giờ thấy trạng thái; lịch sử là toàn bộ dữ liệu nó có trước khi chọn $A_t$. Độ dài của lịch sử cho biết $t$, tức số hành động đã dùng, và với $L=5$ thông tin này quyết định robot còn đủ bước để tới ô 4 hay không.
+Khi tác tử không quan sát đầy đủ, như robot ở đây, tác tử không thấy trạng thái. Dữ liệu tác tử có trước khi chọn $A_t$ là lịch sử $H_t$. Độ dài của lịch sử cho biết $t$, tức số hành động đã dùng, và với $L=5$ thông tin này quyết định robot còn đủ bước để tới ô 4 hay không.
 
 ::: remark Nhận xét 01.3 (Trạng thái khác quan sát)
 Hai trạng thái khác nhau có thể cho cùng một quan sát: $(1,\text{còn rác})$, $(2,\text{còn rác})$ và $(3,\text{còn rác})$ đều cho $O_t=\text{sạch}$. Quy tắc "ở ô 3 thì sang phải" vì thế không thực hiện được, còn quy tắc "thấy $\text{sạch}$ thì sang phải, thấy $\text{bẩn}$ thì hút" thì thực hiện được.
@@ -272,7 +272,7 @@ Trên hình, ba khối khác nhau ở nguồn và thời điểm của tín hi�
 
 - ở khối có giám sát, mỗi mẫu đi kèm đầu ra đúng ngay từ đầu;
 - ở khối không giám sát, không có đầu ra đúng nào;
-- ở khối tăng cường, tín hiệu là phần thưởng đến sau hành động, có khi sau nhiều hành động.
+- ở khối tăng cường, tín hiệu là phần thưởng đến sau hành động, như phần thưởng $+1$ của Ví dụ 01.1 đến sau bốn hành động.
 
 ::: definition Định nghĩa 01.5 (Ba dạng tín hiệu học)
 **Học có giám sát** là bài toán học từ tập dữ liệu $\{(x_i,y_i)\}_{i=1}^n$ cho trước, trong đó nhãn $y_i$ là đầu ra đúng cho đầu vào $x_i$; hàm dự đoán được chọn để làm nhỏ mất mát giữa đầu ra của hàm dự đoán và nhãn.
@@ -282,7 +282,7 @@ Trên hình, ba khối khác nhau ở nguồn và thời điểm của tín hi�
 **Học tăng cường** là bài toán học từ dãy tương tác $O_0,A_0,R_1,O_1,A_1,R_2,\dots$ (Định nghĩa 01.1), trong đó các hành động do chính tác tử chọn và tín hiệu là phần thưởng $R_{t+1}\in\mathbb R$. Phần thưởng là một số đánh giá chuyển vừa xảy ra, không cho biết hành động đúng. Mục tiêu là chọn hành động để làm lớn kỳ vọng của tổng phần thưởng từ thời điểm chọn trở đi.
 :::
 
-Trong Học tăng cường, phần thưởng đánh giá hành động đã chọn và có thể đến trễ; tác tử chỉ biết hành động khác có tốt hơn hay không sau khi thử nó.
+Vì phần thưởng chỉ đánh giá hành động đã chọn, tác tử chỉ biết một hành động khác có tốt hơn hay không sau khi thử hành động đó.
 
 Theo bài giảng gốc (2025–2026, trang 17) và Sutton và Barto (2018, §1.1), hai đặc trưng phân biệt Học tăng cường là thử và sai (trial-and-error) và phản hồi trễ (delayed reward).
 
@@ -335,7 +335,7 @@ Trong Ví dụ 01.1, hậu quả của hành động ở bước $0$ chỉ lộ 
 
 ### 3.1 Phần thưởng trễ trên một lượt
 
-Một cách trực quan, hậu quả của hành động $A_t$ gồm phần thưởng ngay sau nó và mọi phần thưởng về sau mà nó góp phần tạo ra, vì $A_t$ quyết định tình huống xuất phát của các hành động sau. Cộng các phần thưởng ấy lại cho một con số đo hậu quả dài hạn. Trước hết, ta tính con số đó trên lượt của Ví dụ 01.1.
+Một cách trực quan, hậu quả của hành động $A_t$ gồm phần thưởng $R_{t+1}$ và mọi phần thưởng về sau chịu ảnh hưởng của $A_t$, vì $A_t$ quyết định tình huống xuất phát của các hành động sau. Cộng các phần thưởng ấy lại cho một con số đo hậu quả dài hạn. Trước hết, ta tính con số đó trên lượt của Ví dụ 01.1.
 
 ![Năm vòng tròn S0, S1, S2, S3, S4 nối bằng bốn mũi tên từ trái sang phải. Trên mũi tên ghi hành động A0, A1, A2, A3; dưới mũi tên ghi phần thưởng R1 bằng 0, R2 bằng 0, R3 bằng 0, R4 bằng cộng 1.](img/lec-01/delayed-reward.svg)
 
@@ -454,12 +454,12 @@ và hút được rác thì lượt kết thúc. Robot chọn $\text{phải},\te
 - $G_1=R_2+G_2=-0{,}1+0{,}9=0{,}8$;
 - $G_0=R_1+G_1=-0{,}1+0{,}8=0{,}7$.
 
-**Diễn giải.** Với cách đặt này, $G_t$ giảm $0{,}1$ cho mỗi lần di chuyển còn phải làm, nên $G_t$ phân biệt các bước ở gần và xa rác; với cách đặt của Ví dụ 01.3, mọi $G_t$ với $t<T$ bằng $1$. Ở bước đầu, $\text{hút}$ tại ô 1 sạch cho phần thưởng $0$, cao hơn $-0{,}1$ của $\text{phải}$. Tuy nhiên, sau đó ba hành động còn lại không đủ để tới ô 4 rồi hút, và mỗi lần di chuyển chỉ thêm $-0{,}1$, nên lợi tức lớn nhất khi hút trước là $0<0{,}7$. Chịu phần thưởng tức thời thấp hơn để được lợi tức cao hơn là hiện tượng bài giảng gốc (2025–2026, trang 25) gọi là hy sinh phần thưởng tức thời. Với $L=5$, hút ở ô 1 rồi đi $\text{phải},\text{phải},\text{phải},\text{hút}$ cũng cho $0+3\cdot(-0{,}1)+1=0{,}7$, nên so sánh trên cần $L=4$.
+**Diễn giải.** Với cách đặt này, $G_t$ giảm $0{,}1$ cho mỗi lần di chuyển còn phải làm, nên $G_t$ phân biệt các bước ở gần và xa rác. Với cách đặt của Ví dụ 01.3, mọi $G_t$ với $t<T$ bằng $1$. Ở bước đầu, $\text{hút}$ tại ô 1 sạch cho phần thưởng $0$, cao hơn $-0{,}1$ của $\text{phải}$; nhưng sau đó ba hành động còn lại không đủ để tới ô 4 rồi hút, và mỗi lần di chuyển chỉ thêm $-0{,}1$, nên lợi tức lớn nhất khi hút trước là $0<0{,}7$. Chọn $\text{phải}$ là *hy sinh phần thưởng tức thời* (bài giảng gốc 2025–2026, trang 25): chịu phần thưởng tức thời thấp hơn để được lợi tức cao hơn. So sánh này cần $L=4$, vì với $L=5$, hút ở ô 1 rồi đi $\text{phải},\text{phải},\text{phải},\text{hút}$ cũng cho $0+3\cdot(-0{,}1)+1=0{,}7$.
 
 **Kiểm tra lại.** Cộng trực tiếp theo (3.1): $G_0=3\cdot(-0{,}1)+1=0{,}7$.
 :::
 
-**Trong thực hành.** Mệnh đề 01.9 là cách tính mọi $G_t$ của một lượt đã ghi lại: đi ngược từ $G_T=0$, mỗi bước một phép cộng, thay vì cộng lại từ đầu cho từng $t$ (Bài tập 01.4 đếm số phép cộng). Phép tính ngược cần lượt đã kết thúc để có $G_T=0$.
+**Trong thực hành.** Mệnh đề 01.9 là cách tính mọi $G_t$ của một lượt đã ghi lại: đi ngược từ $G_T=0$, mỗi $G_t$ chỉ cần cộng $R_{t+1}$ vào $G_{t+1}$ đã có, thay vì cộng lại $T-t$ số hạng cho từng $t$. Phép tính ngược cần lượt đã kết thúc để có $G_T=0$.
 
 <!-- note-topic-id: lec-01-topic-10 -->
 ### 3.4 Giả thuyết phần thưởng
@@ -725,7 +725,7 @@ $$
 **Phương pháp có mô hình** (model-based) dùng một mô hình để lập kế hoạch. **Phương pháp phi mô hình** (model-free) học chính sách hoặc hàm giá trị trực tiếp từ dữ liệu tương tác, không dùng mô hình.
 :::
 
-Trong Ví dụ 01.8, M1 và M2 là hai mô hình, và việc thử $81$ dãy trong đầu là lập kế hoạch. Mô hình là thành phần thứ ba của tác tử, sau chính sách và hàm giá trị; theo bài giảng gốc (2025–2026, trang 26), nó mô tả thế giới thay đổi thế nào từ góc nhìn của tác tử.
+Trong Ví dụ 01.8, M1 và M2 là hai mô hình, và việc thử $81$ dãy trong đầu là lập kế hoạch. Theo bài giảng gốc (2025–2026, trang 26), mô hình là thành phần thứ ba của tác tử, sau chính sách và hàm giá trị, và mô tả thế giới thay đổi thế nào từ góc nhìn của tác tử.
 
 ![Ba khối xếp cạnh nhau. Khối chính sách ghi chọn hành động. Khối hàm giá trị ghi đánh giá tương lai. Khối mô hình ghi tùy chọn.](img/lec-01/rl-components.svg)
 
@@ -736,14 +736,14 @@ Hình trên đặt ba thành phần cạnh nhau; nhãn "tùy chọn" dưới kh�
 - **Tính giá trị trong Tic-tac-toe là lập kế hoạch.** Khi tính giá trị trong Tic-tac-toe, chúng ta cần biết đối thủ O chọn nước thế nào (ở Ví dụ 01.7, O buộc đánh ô trống cuối cùng); quy tắc đó là một mô hình của đối thủ. Trong thực tế, tác tử không biết trước cách chơi của đối thủ và phải ước lượng nó từ kinh nghiệm (Sutton và Barto 2018, §1.5).
 :::
 
-**Trong thực hành.** Mô hình thường là một bộ mô phỏng, như luật trò chơi hay bộ mô phỏng vật lý, hoặc một mô hình học được từ các bộ $(S_t,A_t,R_{t+1},S_{t+1})$ đã ghi. Khi lập kế hoạch qua nhiều bước, dự báo sai ở một bước làm sai đầu vào của bước sau, nên sai số tích lũy.
+**Trong thực hành.** Mô hình là một bộ mô phỏng, như luật trò chơi hay bộ mô phỏng vật lý, hoặc một mô hình học được từ các bộ $(S_t,A_t,R_{t+1},S_{t+1})$ đã ghi. Khi lập kế hoạch qua nhiều bước, dự báo sai ở một bước làm sai đầu vào của bước sau, nên sai số tích lũy.
 
 <!-- note-topic-id: lec-01-topic-05 -->
 ### 4.4 Thăm dò và khai thác
 
 Các giá trị và phép lập kế hoạch ở trên dùng luật đã biết của môi trường. Tác tử phi mô hình chỉ có các mẫu đã thu, và khi mẫu còn ít, việc ước lượng giá trị từ mẫu tạo ra một xung đột mới. Để tách riêng khó khăn này, chúng ta xét bài toán chọn lặp lại một bước (multi-armed bandit): mỗi lượt chỉ gồm một hành động, nên lợi tức bằng phần thưởng một bước, và giá trị của hành động $a$ là kỳ vọng phần thưởng khi chọn $a$. Ví dụ: robot dọn dãy bốn ô có hai chế độ hút, một chế độ đã dùng nhiều lần, chế độ kia mới dùng hai lần, và robot phải chọn chế độ cho lần hút tới.
 
-Một cách trực quan, hành động có ước lượng cao nhất là lựa chọn tốt nhất theo dữ liệu đã có, nhưng ước lượng từ ít mẫu có thể sai nhiều. Thử thêm hành động ít dữ liệu có thể làm mất phần thưởng ở lần thử đó, nhưng làm ước lượng chính xác hơn cho các lần sau. Ta đo độ bất định đó bằng số trên hai chế độ hút.
+Một cách trực quan, hành động có ước lượng cao nhất là lựa chọn tốt nhất theo dữ liệu đã có, nhưng ước lượng từ hai mẫu đổi nhiều khi có thêm một mẫu, còn ước lượng từ hai mươi mẫu đổi ít. Thử thêm hành động ít dữ liệu có thể làm mất phần thưởng ở lần thử đó, nhưng làm ước lượng chính xác hơn cho các lần sau. Để đo mức thay đổi đó, xem ví dụ sau trên hai chế độ hút.
 
 ::: example Ví dụ 01.9 (Hai chế độ hút)
 **Dữ kiện.** Hai chế độ hút A và B. Phần thưởng của mỗi lần hút là tỉ lệ bụi được hút sạch, trong $[0,1]$. Số liệu đã có:
@@ -793,7 +793,7 @@ Trung bình mẫu $\bar r(a)$ là ước lượng giá trị hành động (acti
 
 Hình trên nối hai việc: thăm dò sinh dữ liệu, dữ liệu làm ước lượng chính xác hơn, và khai thác dùng ước lượng đó (bài giảng gốc 2025–2026, trang 27).
 
-**Trong thực hành.** Tác tử thường dùng chính sách $\varepsilon$-tham lam ($\varepsilon$-greedy): với xác suất $1-\varepsilon$ chọn hành động tham lam theo ước lượng, với xác suất $\varepsilon$ chọn đều trên mọi hành động, nên mọi hành động luôn có xác suất được thử dương.
+**Trong thực hành.** Một chính sách có thăm dò đơn giản là chính sách $\varepsilon$-tham lam ($\varepsilon$-greedy): với xác suất $1-\varepsilon$ chọn hành động tham lam theo ước lượng, với xác suất $\varepsilon$ chọn đều trên mọi hành động, nên mọi hành động luôn có xác suất được thử dương.
 
 ::: exercise Bài tập 01.6 (Chọn chế độ hút)
 Robot có hai chế độ hút A và B; phần thưởng của mỗi lần hút là tỉ lệ bụi được hút sạch, trong $[0,1]$. Chế độ A đã dùng $N(\mathrm A)=20$ lần với trung bình $\bar r(\mathrm A)=0{,}60$. Chế độ B đã dùng $N(\mathrm B)=2$ lần với các phần thưởng $0{,}50$ và $0{,}60$.
@@ -1029,7 +1029,7 @@ với $v_\pi(S_{t+1})=0$ khi lượt đã kết thúc. Khi tập $\arg\max$ có 
 
 ::: remark Nhận xét 01.22 (Giới hạn của nước khai thác một bước)
 - **Nước khai thác một bước phụ thuộc $\pi$.** Đại lượng trong (5.3) đánh giá việc tiếp tục theo $\pi$, không đánh giá việc tiếp tục chơi tốt nhất; đổi chính sách tiếp tục thì tập $\arg\max$ có thể đổi (Bài tập 01.8).
-- **Không bảo đảm tối ưu.** Chọn $a^*$ ở mỗi bước theo $v_\pi$ của một chính sách $\pi$ kém không bảo đảm cho ra chính sách tốt nhất. Bài 04 chứng minh rằng trong quá trình quyết định Markov hữu hạn với $0\le\gamma<1$, chính sách chọn $a^*$ ở mọi trạng thái tốt ít nhất bằng $\pi$, và lặp lại xen kẽ đánh giá và khai thác dẫn tới chính sách tối ưu.
+- **Không bảo đảm tối ưu.** Chọn $a^*$ ở mỗi bước theo $v_\pi$ của một chính sách $\pi$ kém không bảo đảm cho ra chính sách tốt nhất. Trong quá trình quyết định Markov hữu hạn với $0\le\gamma<1$, chính sách chọn $a^*$ ở mọi trạng thái tốt ít nhất bằng $\pi$, và lặp lại xen kẽ đánh giá và khai thác dẫn tới chính sách tối ưu (Sutton và Barto 2018, §4.2–4.3).
 - **Cần mô hình.** Tính (5.3) cần biết phân phối của $(R_{t+1},S_{t+1})$, tức là cần luật cờ và chính sách $\sigma$ của đối thủ: đó là lập kế hoạch với một mô hình đã biết (Định nghĩa 01.14). Khi không biết $\sigma$, tác tử phải ước lượng các đại lượng trong (5.3) từ các ván đã chơi; khi đó, luôn chọn $a^*$ là khai thác thuần túy, không thăm dò.
 :::
 
@@ -1151,7 +1151,7 @@ $$
 
 Nước khai thác một bước là $\text{phải}$, trùng hành động đầu của $\pi_1$.
 
-**Diễn giải.** Chính sách chọn đều chỉ hút được rác khi gặp đúng dãy $\text{phải},\text{phải},\text{phải},\text{hút}$, xác suất khoảng $1{,}2\%$. Phép so sánh một bước theo $v_{\pi_u}$ vẫn chỉ ra hành động đầu đúng, dù $\pi_u$ là một chính sách kém.
+**Diễn giải.** Dù $v_{\pi_u}(h_0)=\frac1{81}$ nhỏ hơn nhiều so với $v_{\pi_1}(h_0)=1$, phép so sánh một bước theo $v_{\pi_u}$ vẫn chọn hành động đầu $\text{phải}$ của $\pi_1$.
 
 **Giới hạn.** Phép tính dùng luật đã biết của môi trường, nên đây là lập kế hoạch với mô hình (Định nghĩa 01.14). Bảng $w(k,m)$ cần vị trí $k$, mà robot chỉ biết khi tự suy ra từ lịch sử; cảm biến không báo vị trí.
 
@@ -1193,7 +1193,11 @@ Nước khai thác một bước là $\text{phải}$, trùng hành động đầ
 
 ## Tóm tắt chương
 
-Xuất phát từ một robot phải chọn hành động khi đánh giá chỉ đến sau cả chuỗi hành động, chúng ta đặt tên cho vòng tương tác (Định nghĩa 01.1), trạng thái, quan sát và lịch sử (Định nghĩa 01.2), rồi phân biệt phần thưởng với nhãn (Định nghĩa 01.5). Hậu quả dài hạn được đo bằng lợi tức (Định nghĩa 01.8) với hệ thức $G_t=R_{t+1}+G_{t+1}$ (Mệnh đề 01.9). Chính sách, hàm giá trị và mô hình (Định nghĩa 01.11, 01.12, 01.14) tách việc chọn, đánh giá và dự báo; khi ước lượng còn bất định, khai thác xung đột với thăm dò (Định nghĩa 01.16). Kết quả chính của chương là Mệnh đề 01.20: kỳ vọng của lợi tức sau một hành động bằng phần thưởng kỳ vọng cộng giá trị kỳ vọng của tình huống kế tiếp, viết được trên thế cờ dưới ba điều kiện của Nhận xét 01.19. Nước khai thác một bước (Định nghĩa 01.21) chọn $a^*=9$ ở thế cờ bốn ô trống, với $v_{\pi_u}(s)=\frac12$. Giá trị trên lịch sử khó lưu trữ, giá trị theo quan sát có thể sai (Tình huống 01.2), và nước khai thác một bước chưa chắc tối ưu; Bài 02 đến Bài 04 xử lý các giới hạn này.
+Xuất phát từ một robot phải chọn hành động khi đánh giá chỉ đến sau cả chuỗi hành động, chúng ta đặt tên cho vòng tương tác (Định nghĩa 01.1), trạng thái, quan sát và lịch sử (Định nghĩa 01.2), rồi phân biệt phần thưởng với nhãn (Định nghĩa 01.5). Hậu quả dài hạn được đo bằng lợi tức (Định nghĩa 01.8) với hệ thức $G_t=R_{t+1}+G_{t+1}$ (Mệnh đề 01.9). Chính sách, hàm giá trị và mô hình (Định nghĩa 01.11, 01.12, 01.14) tách việc chọn, đánh giá và dự báo; khi ước lượng còn bất định, khai thác xung đột với thăm dò (Định nghĩa 01.16). Kết quả chính của chương là Mệnh đề 01.20: kỳ vọng của lợi tức sau một hành động bằng phần thưởng kỳ vọng cộng giá trị kỳ vọng của tình huống kế tiếp, viết được trên thế cờ dưới ba điều kiện của Nhận xét 01.19. Nước khai thác một bước (Định nghĩa 01.21) chọn $a^*=9$ ở thế cờ bốn ô trống, với $v_{\pi_u}(s)=\frac12$. Bài 02 đến Bài 04 xử lý ba giới hạn sau:
+
+- giá trị trên lịch sử cần một số cho mỗi lịch sử, tới $3^t$ dãy hành động sau $t$ bước của robot;
+- giá trị theo quan sát đánh giá sai ít nhất một trong hai lịch sử của Tình huống 01.2;
+- nước khai thác một bước không bảo đảm tối ưu (Nhận xét 01.22).
 
 **Định nghĩa và kết quả theo mục.**
 
@@ -1262,7 +1266,7 @@ Chính sách cho phân phối trên hành động; hàm giá trị cho một s�
 
 **Câu (b).** Có. Phép tìm kiếm cây dùng luật cờ để xét các nước đi tương lai trước khi đánh, đúng định nghĩa lập kế hoạch; AlphaGo là phương pháp có mô hình.
 
-**Kiểm tra lại.** Câu (a) gán đủ ba bộ phận cho ba thành phần, không trùng thành phần nào.
+**Kiểm tra lại.** Chỉ bộ phận thứ ba dùng luật cờ vây để dự báo điều xảy ra sau một nước, đúng tiêu chí của mô hình trong Định nghĩa 01.14.
 :::
 
 ### Mức tính toán hoặc chứng minh
@@ -1279,7 +1283,7 @@ Dùng $G_T=0$ và $G_t=R_{t+1}+G_{t+1}$, tính từ cuối về đầu; đổi d
 :::
 
 ::: solution
-**Câu (a).** $G_4=0$; $G_3=R_4+G_4=-1$; $G_2=R_3+G_3=-1$; $G_1=R_2+G_2=-1$; $G_0=R_1+G_1=-1$. Phần thưởng cuối $-1$ cho biết O thắng. $G_4=0$ không mâu thuẫn với $R_4=-1$: $R_4$ thuộc chuyển cuối, đã được tính trong $G_3,\dots,G_0$.
+**Câu (a).** $G_4=0$; $G_3=R_4+G_4=-1$; $G_2=R_3+G_3=-1$; $G_1=R_2+G_2=-1$; $G_0=R_1+G_1=-1$. Phần thưởng cuối $-1$ cho biết O thắng. Phần thưởng $R_4=-1$ thuộc chuyển cuối, nên nằm trong $G_3,\dots,G_0$, còn $G_4=0$.
 
 **Câu (b).** Phần thưởng của O là $(0,0,0,+1)$, nên $G_0=0+0+0+1=1$, đối của $G_0$ của X.
 
@@ -1326,4 +1330,4 @@ So bộ mô phỏng với môi trường thật theo Nhận xét 01.15.
 <!-- note-topic-id: lec-01-topic-11 -->
 ### Đọc thêm: tác tử nhiều nhiệm vụ và mô hình thế giới
 
-Bài giảng gốc (2025–2026, trang 14–15 và 43–44) nêu một quan điểm gắn Học tăng cường với trí tuệ nhân tạo tổng quát (artificial general intelligence) và với tác tử dùng chung cho nhiều nhiệm vụ, cùng câu hỏi trí tuệ nhân tạo tổng quát có cần một mô hình thế giới (world model) hay không. Hai điểm vào là chính sách (Định nghĩa 01.11), khi một chính sách phải dùng cho nhiều nhiệm vụ, và mô hình (Định nghĩa 01.14), khi một mô hình thế giới học được dùng để lập kế hoạch. Chủ đề này được giao dưới dạng bài tìm hiểu, Bài tập 01.16 của [tệp bài tập](material-viewer.html?doc=materials/lec-01/exercises.md&deck=lecture-01-gioi-thieu-hoc-tang-cuong.html).
+Bài giảng gốc (2025–2026, trang 14–15 và 43–44) nêu một quan điểm gắn Học tăng cường với trí tuệ nhân tạo tổng quát (artificial general intelligence) và với tác tử dùng chung cho nhiều nhiệm vụ, cùng câu hỏi trí tuệ nhân tạo tổng quát có cần một mô hình thế giới (world model) hay không. Hai điểm vào là chính sách (Định nghĩa 01.11), khi một chính sách phải dùng cho nhiều nhiệm vụ, và mô hình (Định nghĩa 01.14), khi một mô hình thế giới học được dùng để lập kế hoạch.
