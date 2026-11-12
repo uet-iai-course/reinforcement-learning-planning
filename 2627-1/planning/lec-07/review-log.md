@@ -1797,3 +1797,76 @@ Yêu cầu của người dùng: "Duyệt xem còn câu rào đón nào không t
 **Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in: 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang; lỗi CSP script nội tuyến đến từ máy chủ xem trước.
 
 Quyết định của điều phối viên: **chấp nhận**; commit chung `fix(materials): …`.
+
+
+## Rà nhẹ theo quy tắc 2026-11-09 và làm lại tệp bài tập từ giáo trình (2026-11-12)
+
+Yêu cầu của người dùng: "rà math-4-AI 10–14 và rl-plan 01–10: chỉ cần một lượt nhẹ, gồm rà theo quy tắc 09/11 và làm lại exercises.md từ giáo trình", rồi "chỉ làm lecture note và exercise" (không sửa deck).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Người rà chỉ đọc (`no-ai-slop` Detect), sau đó cũng tác tử đó làm biên tập viên (`no-ai-slop` Edit), tiếp tục bằng `SendMessage` để giữ ngữ cảnh.
+- Người kiểm tra độc lập chỉ đọc (tác tử mới): đối chiếu đề với PDF, giải lại mọi bài trước khi đọc lời giải, rà các hunk đã đổi của ghi chú; sau đó kiểm lại phần đã sửa.
+
+**Rà ghi chú:** 23 phát hiện (0 chặn bàn giao, 3 nghiêm trọng, 2 trung bình, 18 nhẹ). Nghiêm trọng: mục tiêu (dòng 9–14, 16) còn dẫn 07.20–07.25 của tệp cũ và nói tệp lặp bài của ghi chú; dòng 1782 dẫn phiếu tuần tới 07.20, 07.22 sẽ đổi nghĩa. Trung bình: dòng 284 "chỉ khi" trong khi tính Markov chỉ là điều kiện đủ (mâu thuẫn dòng 1771); bảng dòng 1078 rào đón "thường". Điều phối viên chấp nhận: cả 23; dòng 284 viết thành điều kiện đủ.
+
+**Nguồn bài tập:** Sutton và Barto (2018), ấn bản 2 (PDF, SHA-256 2dd0d71d…), đề đối chiếu PDF. Chín bài 07.20–07.28: SB 9.1, 9.2, 9.3, 9.5, 9.6, 9.7, 11.4, 10.1, 10.2; 11.4 dẫn Bổ đề 07.16 ở bước trùng. SB 11.3 bị bỏ (sách không cho đặc trưng hành động của phản ví dụ Baird); 6.11, 6.12 thuộc Bài 06. Mọi bài cũ (8 bản lặp, 6 bài tự dựng) bị bỏ; không bài nào chuyển về ghi chú.
+
+**Kiểm tra độc lập:** 0 chặn bàn giao, 0 nghiêm trọng, 2 trung bình (07.27(c): "một hành động hằng không thực hiện được hai giai đoạn" vượt mô tả sách, viết lại thành lập luận có điều kiện, đề chép thêm phương trình chuyển động SB tr. 245, kết luận ba hành động hằng không tới đích xác nhận bằng mô phỏng; ghi chú dòng 282/1764 thiếu "không bỏ lượt nào", 493/500 lượt), 9 nhẹ (07.23 thiếu số hạng $0{,}9^k\hat v_0$); không lời giải sai. Điều phối viên chấp nhận mọi phát hiện; biên tập viên sửa; kiểm lại: đạt sau hai lượt; lượt hai sửa $x$ hai nghĩa ở 07.27 (vị trí đổi thành $p_t$), khoảng $[-0{,}6,-0{,}4)$ như sách, và câu Kiểm tra lại.
+
+**Mục tiêu chỉ có bài trong ghi chú:** mục tiêu 3 (gradient đầy đủ và bán gradient). **Ngoài phạm vi, chỉ ghi nhật ký:** `lec-08/exercises.md` cũ dẫn "Bài tập 07.20" (tệp đó được viết lại cùng lượt); deck trang `L07-36f` còn bộ 14 bài cũ, trang `L07-25` còn "Phương sai thường…".
+
+Bản trước khi sửa: bản cũ trong lịch sử git, `scratchpad của phiên, rl-07-ex-before.md`.
+
+### Số hiệu cũ → mới
+
+| Cũ | Vị trí cũ | Mới |
+|---|---|---|
+| 07.1–07.19 | ghi chú | giữ nguyên số, vị trí, đề và lời giải |
+| 07.3, 07.5, 07.7, 07.8, 07.10, 07.11, 07.13, 07.14 | bản chép lại trong `exercises.md` | bỏ khỏi `exercises.md`; bài gốc trong ghi chú giữ số |
+| 07.20 Giới hạn của bảng tra và hai lợi ích của xấp xỉ hàm | `exercises.md` | bỏ (số 07.20 dùng lại) |
+| 07.21 Bốn dãy bước học và tổng bước hữu hạn | `exercises.md` | bỏ (số dùng lại) |
+| 07.22 Điểm dừng trung bình của TD(0) tuyến tính | `exercises.md` | bỏ (số dùng lại) |
+| 07.23 Q-learning bán gradient trên mảnh MDP hai trạng thái | `exercises.md` | bỏ (số dùng lại) |
+| 07.24 Bước học Robbins–Monro trên Lunar Lander [Lập trình] | `exercises.md` | bỏ (số dùng lại) |
+| 07.25 Phân biệt phân kỳ với chính sách kém trên Flappy Bird [Lập trình] | `exercises.md` | bỏ (số dùng lại) |
+
+Không bài nào chuyển về ghi chú.
+
+### Tệp bài tập mới (Sutton và Barto, 2018)
+
+| Số | Bài sách | Mục, trang | Mức | Mục tiêu |
+|---|---|---|---|---|
+| 07.20 | 9.1 | §9.4, tr. 209 | nhận biết | 1 |
+| 07.21 | 9.2 | §9.5.1, tr. 211 | nhận biết | 1 |
+| 07.22 | 9.3 | §9.5.1, tr. 211 | nhận biết | 1 |
+| 07.23 | 9.5 | §9.6, tr. 223 (lưới ô §9.5.4, tr. 217) | tính toán | 1, 2 |
+| 07.24 | 9.6 | §9.6, tr. 223 ((9.7) tr. 202) | chứng minh | 1, 2 |
+| 07.25 | 9.7 | §9.12, tr. 237 (đơn vị logistic §9.7, tr. 224) | tính toán | 2 |
+| 07.26 | 11.4 | §11.6, tr. 275 | chứng minh | 4 |
+| 07.27 | 10.1 | §10.2, tr. 248 (Ví dụ 10.1, tr. 244–246) | vận dụng | 2, 6 |
+| 07.28 | 10.2 | §10.2, tr. 248 ((6.9) §6.6, tr. 133) | vận dụng | 2, 5 |
+
+Mục tiêu 3 không có bài sách trong tệp; dựa vào Bài tập 07.4, 07.5, 07.7 của ghi chú.
+
+### Dẫn chiếu đã cập nhật trong phạm vi
+
+- `lec-07/lecture-note.md` dòng 9–14 (danh sách "tệp bài tập:" của mục tiêu), dòng 16 (mô tả tệp bài tập), mục "Bài tập củng cố" (bỏ câu "Năm bài 07.15–07.19 …"), tài liệu tham khảo "Bài tập tuần 7" (bài 1 → Mục 1.1–1.2; bỏ "và 07.22").
+
+### Dẫn chiếu ngoài phạm vi còn dùng số cũ (không sửa)
+
+| Tệp | Dòng | Nội dung | Ghi chú |
+|---|---|---|---|
+| `2627-1/materials/lec-08/exercises.md` | 38, 39, 593, 910 | "Bài tập 07.20" (quan sát Lunar Lander, Flappy Bird) | Theo quyết định: không sửa, tệp đang được người khác viết lại. Nội dung tương ứng nay ở ghi chú Bài 07, Mục 1 (dòng 90) và Ví dụ 07.1, 07.4. Số 07.20 nay là SB 9.1. |
+| `2627-1/lecture-07-xap-xi-ham.html` | 109 | Trang "Bài tập về nhà và tài liệu đọc": bảng `Mạch \| Bài tập` ("07.3, 07.20; …", "07.5, 07.21, 07.24; …", "07.7, 07.8, 07.22, 07.24; …", "07.10, 07.11, 07.25; …", "07.13, 07.14, 07.23, 07.25") và ghi chú diễn giả ("Bộ bài tập gồm mười bốn bài … 07.20–07.23 là bài mới; 07.24 và 07.25 là bài lập trình …") | Deck ngoài phạm vi; lệch với tệp mới. Bảng đúng theo tệp mới: mạch 2: 07.20–07.22; 3: 07.23–07.26; 5: 07.27, 07.28; 6: 07.28. |
+| `2627-1/lecture-07-xap-xi-ham.html` | 20 | Ghi chú diễn giả mục tiêu: "Mục tiêu 4: Bài tập 07.8, 07.9, 07.17", "Mục tiêu 6: Bài tập 07.6, 07.19" | Lệch có sẵn với ghi chú (MT4 có 07.6; MT6 là 07.18, 07.19); không liên quan tới số mới. |
+| `2627-1/planning/lec-07/outline.md` | 9, 19, 22, 23, 24, 68, 70 | mô tả "sáu bài mới 07.20–07.25"; "tệp bài tập: 07.20" …; "bài 1 là Bài tập 07.20", "bài 5 đầy đủ là Bài tập 07.22 của `exercises.md`" | planning, ngoài phạm vi. |
+| `2627-1/planning/lec-07/storyboard.md` | 27 | "Bài tập 07.20 (c) của `exercises.md`" | planning, ngoài phạm vi. |
+| `2627-1/planning/lec-07/review-log.md`, `revision-plan-2026-10-12.md` | nhiều dòng | nhật ký lịch sử dùng số cũ | không sửa (lịch sử). |
+
+Các số hiệu khối khác trùng dạng 07.2x (Mệnh đề 07.20, 07.25; Định nghĩa 07.21, 07.24; Thuật toán 07.22; Nhận xét 07.23) dùng bộ đếm riêng, không đổi; lec-08, lec-10 dẫn chúng đúng.
+
+**Số liệu:** ghi chú 20753 âm tiết (`wc -w`); `git diff --check` sạch; mỗi `exercise` có đúng một `hint` và một `solution`.
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8812, 1600×900 và 390×844, mở mọi khối khi đo: 0 `.katex-error`, 0 `:::` sót, 0 lỗi console (trừ CSP của reloadserver), 0 request lỗi, không tràn ngang trang. Tệp bài tập: 0/24 công thức tràn khung ở 390 px.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-07): rà theo quy tắc 2026-11-09, làm lại bài tập từ Sutton–Barto`.

@@ -6,14 +6,14 @@ Trong chương này, chúng ta thay bảng giá trị của Bài 05–06 bằng 
 
 Sau chương này, người học có thể:
 
-1. Viết $\hat v(s,w)=x(s)^\top w$, $\hat q(s,a,w)=x(s,a)^\top w$ với miền và kích thước; tính mức lan của một cập nhật, nhận diện nhập nhằng đặc trưng (aliasing) (Bài tập 07.1, 07.2, 07.3, 07.12, 07.15, 07.16; tệp bài tập: 07.20).
-2. Thực hiện bằng tay một cập nhật Monte Carlo gradient, TD(0), Sarsa và Q-learning bán gradient (semi-gradient), ghi mục tiêu, sai lệch và tham số mới (Bài tập 07.7, 07.10, 07.11, 07.13).
+1. Viết $\hat v(s,w)=x(s)^\top w$, $\hat q(s,a,w)=x(s,a)^\top w$ với miền và kích thước; tính mức lan của một cập nhật, nhận diện nhập nhằng đặc trưng (aliasing) (Bài tập 07.1, 07.2, 07.3, 07.12, 07.15, 07.16; tệp bài tập: 07.20–07.24).
+2. Thực hiện bằng tay một cập nhật Monte Carlo gradient, TD(0), Sarsa và Q-learning bán gradient (semi-gradient), ghi mục tiêu, sai lệch và tham số mới (Bài tập 07.7, 07.10, 07.11, 07.13; tệp bài tập: 07.23–07.25, 07.27, 07.28).
 3. Phân biệt gradient đầy đủ với bán gradient theo việc mục tiêu có chứa tham số, và chỉ ra số hạng bị bỏ (Bài tập 07.4, 07.5, 07.7).
-4. Phát biểu điểm cố định Bellman chiếu, tính nghiệm TD(0) và Monte Carlo trên ví dụ nhỏ, nêu đủ giả thiết hội tụ của TD(0) tuyến tính (Bài tập 07.6, 07.8, 07.9, 07.17; tệp bài tập: 07.22, 07.24).
-5. Phân biệt mục tiêu Sarsa với mục tiêu Q-learning và nhận diện bộ ba bất ổn (deadly triad) trong một quy tắc cập nhật (Bài tập 07.13, 07.14, 07.18; tệp bài tập: 07.23, 07.25).
-6. Đối chiếu kết quả thực hành với giả thiết của kết quả lý thuyết trước khi kết luận về hội tụ hay phân kỳ (Bài tập 07.18, 07.19; tệp bài tập: 07.21, 07.23, 07.24, 07.25).
+4. Phát biểu điểm cố định Bellman chiếu, tính nghiệm TD(0) và Monte Carlo trên ví dụ nhỏ, nêu đủ giả thiết hội tụ của TD(0) tuyến tính (Bài tập 07.6, 07.8, 07.9, 07.17; tệp bài tập: 07.26).
+5. Phân biệt mục tiêu Sarsa với mục tiêu Q-learning và nhận diện bộ ba bất ổn (deadly triad) trong một quy tắc cập nhật (Bài tập 07.13, 07.14, 07.18; tệp bài tập: 07.28).
+6. Đối chiếu kết quả thực hành với giả thiết của kết quả lý thuyết trước khi kết luận về hội tụ hay phân kỳ (Bài tập 07.18, 07.19; tệp bài tập: 07.27).
 
-Bài tập 07.1–07.19 nằm trong ghi chú; [tệp bài tập](material-viewer.html?doc=materials/lec-07/exercises.md&deck=lecture-07-xap-xi-ham.html), bộ bài giao chính thức của bài học, chứa lại Bài tập 07.3, 07.5, 07.7, 07.8, 07.10, 07.11, 07.13, 07.14 và thêm Bài tập 07.20–07.25. Số hiệu sau "tệp bài tập:" trong các mục tiêu chỉ các bài chỉ có trong tệp đó.
+Bài tập 07.1–07.19 nằm trong ghi chú; [tệp bài tập](material-viewer.html?doc=materials/lec-07/exercises.md&deck=lecture-07-xap-xi-ham.html), bộ bài giao chính thức của bài học, gồm Bài tập 07.20–07.28 lấy từ bài tập của Sutton và Barto (2018). Số hiệu sau "tệp bài tập:" trong các mục tiêu chỉ các bài trong tệp đó.
 
 <!-- note-topic-id: lec-07-topic-13 -->
 ## Kiến thức tiên quyết
@@ -101,7 +101,7 @@ Hình trên sắp bốn quy tắc theo hai câu hỏi. Hàng cho biết mục ti
 Bảng lưu $V(s)\approx v_\pi(s)$ hoặc $Q(s,a)\approx q_\pi(s,a)$ riêng cho từng trạng thái hoặc cặp; ví dụ sau đo giới hạn của cách lưu này.
 
 ::: example Ví dụ 07.1 (Lunar Lander rời rạc hóa thành bảng)
-**Dữ kiện.** Thực hành Bài 05 chia sáu biến liên tục của tàu thành $3\cdot4^5=3\,072$ ô và ghép với số chân đang chạm đất ($0$, $1$ hoặc $2$, tức $3$ mức), được $9\,216=3\cdot4^5\cdot3$ ô; giá trị của một chính sách cố định được dự đoán bằng trung bình lợi tức trong từng ô. Tập huấn luyện có $2\,000$ lượt, $546\,869$ chuyển, trong đó $42$ lượt bị cắt ngắn ở giới hạn $1\,000$ bước trước khi gặp trạng thái kết thúc. Trung bình lợi tức chỉ tính được trên $1\,958$ lượt kết thúc thật, và các lượt này ghé $1\,896$ ô ít nhất một lần (notebook Lunar Lander của Bài 07, mục 5). Tính trên toàn bộ $2\,000$ lượt, notebook Bài 05 đếm được $1\,935$ ô.
+**Dữ kiện.** Thực hành Bài 05 chia sáu biến liên tục của tàu thành $3\cdot4^5=3\,072$ ô và ghép với số chân đang chạm đất ($0$, $1$ hoặc $2$, tức $3$ mức), được $9\,216=3\cdot4^5\cdot3$ ô; giá trị của một chính sách cố định được dự đoán bằng trung bình lợi tức trong từng ô. Tập huấn luyện có $2\,000$ lượt, $546\,869$ chuyển, trong đó $42$ lượt bị cắt ngắn ở giới hạn $1\,000$ bước trước khi gặp trạng thái kết thúc. Trung bình lợi tức chỉ tính được trên $1\,958$ lượt kết thúc thật, và các lượt này ghé $1\,896$ ô ít nhất một lần (notebook Lunar Lander của Bài 07, mục 5).
 
 **Yêu cầu.** Tính tỉ lệ ô có lợi tức đầy đủ và số ô không có ước lượng.
 
@@ -153,8 +153,6 @@ $$
 :::
 
 ![Một mẫu tại s với sai lệch e = 2 tạo Δw = αe x(s). Vì w dùng chung, dự đoán tại s tăng 0,4 và dự đoán tại s′ tăng 0,3.](img/lec-07/shared-parameter-effect.svg)
-
-Hình trên vẽ lại Ví dụ 07.2.
 
 ::: definition Định nghĩa 07.1 (Hàm giá trị có tham số và xấp xỉ tuyến tính)
 Cho tập trạng thái $\mathcal S$, tập hành động hữu hạn $\mathcal A$ và số nguyên dương $d$.
@@ -239,7 +237,7 @@ Dùng (1.2): mức lan bằng $\alpha e$ nhân tích vô hướng với $x(s)$.
 <!-- note-topic-id: lec-07-topic-03 -->
 ### 1.3 Bài toán dự đoán và sai số giá trị
 
-Với tham số dùng chung, làm đúng hơn ở một trạng thái thường làm sai hơn ở trạng thái khác (Mệnh đề 07.2; Sutton và Barto, 2018, §9.2). Để chọn $w$, chúng ta cần nói trạng thái nào được ưu tiên; ví dụ sau cho thấy lựa chọn đó quyết định nghiệm.
+Khi số trạng thái lớn hơn số tham số, làm đúng hơn ở một trạng thái kéo theo làm sai hơn ở trạng thái khác (Mệnh đề 07.2; Sutton và Barto, 2018, §9.2). Để chọn $w$, chúng ta cần nói trạng thái nào được ưu tiên; ví dụ sau cho thấy lựa chọn đó quyết định nghiệm.
 
 ::: example Ví dụ 07.3 (Hai trạng thái cùng vector đặc trưng, đổi trọng số)
 **Dữ kiện.** $x(s_1)=x(s_2)=1$, nên $\hat v(s_1,w)=\hat v(s_2,w)=w=:c$; $v_\pi(s_1)=0$, $v_\pi(s_2)=2$; trọng số $\mu_1+\mu_2=1$.
@@ -281,7 +279,7 @@ Cho $\mathcal S$ hữu hạn, đánh số các trạng thái. Ma trận đặc t
 
 Lớp biểu diễn là không gian cột của $\Phi$ (Bài tập 07.2), và $J_\mu(w)$ là một nửa bình phương khoảng cách có trọng số từ $v_\pi$ tới một điểm của lớp.
 
-**Trong thực hành.** Trong notebook Lunar Lander (mục 5), thước đo là $J_{\mathrm{kt}}$, trung bình của $(G_t-\hat v(S_t,w))^2$ trên các bước của các lượt kiểm tra kết thúc thật ($493$ trong $500$ lượt). Theo hệ thức phương sai, $J_{\mathrm{kt}}$ xấp xỉ bằng một hằng số cộng trung bình của $(\bar g(S_t)-\hat v(S_t,w))^2$, với $\bar g(s)=\mathbb E[G_t\mid S_t=s]$ là lợi tức trung bình từ $s$ theo phân phối ghé của dữ liệu. $\bar g$ trùng $v_\pi$ chỉ khi quan sát có tính Markov, điều không được bảo đảm vì quan sát thiếu địa hình. Hai mốc là $5\,797{,}1$ cho $\hat v\equiv0$ và $3\,021{,}2$ cho hằng số tốt nhất.
+**Trong thực hành.** Trong notebook Lunar Lander (mục 5), thước đo là $J_{\mathrm{kt}}$, trung bình của $(G_t-\hat v(S_t,w))^2$ trên các bước của các lượt kiểm tra kết thúc thật ($493$ trong $500$ lượt). Theo hệ thức phương sai, $J_{\mathrm{kt}}$ xấp xỉ bằng một hằng số cộng trung bình của $(\bar g(S_t)-\hat v(S_t,w))^2$, với $\bar g(s)=\mathbb E[G_t\mid S_t=s]$ là lợi tức trung bình từ $s$ theo phân phối ghé của dữ liệu. $\bar g=v_\pi$ khi quan sát có tính Markov và không bỏ lượt nào; ở đây quan sát thiếu địa hình nên tính Markov không được bảo đảm, và $7$ lượt cắt ngắn bị bỏ. Hai mốc là $5\,797{,}1$ cho $\hat v\equiv0$ và $3\,021{,}2$ cho hằng số tốt nhất.
 
 ::: exercise Bài tập 07.2 (Lớp biểu diễn là một không gian con)
 Với $\mathcal S$ hữu hạn và $\Phi$ của Định nghĩa 07.6:
@@ -469,7 +467,7 @@ Trên Lunar Lander, tập huấn luyện có $546\,869$ chuyển, trong đó $50
 <!-- note-topic-id: lec-07-topic-05 -->
 ### 2.1 Mục tiêu cập nhật
 
-Một cách trực quan, mỗi mẫu cho một "nhãn" thay cho giá trị thật, như trong học có giám sát (supervised learning), nhưng nhãn do chính sách sinh dữ liệu quyết định, và có khi do cả tham số đang học.
+Một cách trực quan, mỗi mẫu cho một "nhãn" thay cho giá trị thật, như trong học có giám sát (supervised learning), nhưng nhãn do chính sách sinh dữ liệu quyết định, và với mục tiêu bootstrap, do cả tham số đang học.
 
 ::: example Ví dụ 07.7 (Hai mục tiêu cho cùng một mẫu)
 **Dữ kiện.** $x(S_t)=(2;1)$, $w=(1;-1)$; lượt chứa $S_t$ có lợi tức $G_t=5$; chuyển sau $S_t$ cho $R_{t+1}=1$ và $x(S_{t+1})=(1;0)$; $\gamma=0{,}9$. Tham số thứ hai là $w'=(1{,}8;-0{,}6)$.
@@ -683,7 +681,7 @@ Với Ví dụ 07.3 ($d=1$, $x\equiv1$), $\Sigma_\mu=1$ và $w_{\mathrm{MC}}=\mu
 Với tham số dùng chung, nhiễu $\xi_n\in\mathbb R^d$ tác động lên dự đoán ở mọi trạng thái và có phương sai có thể tăng theo $\lVert w_n\rVert^2$; vì vậy, ngoài bước Robbins–Monro, lập luận còn cần cận $C(1+\lVert w_n\rVert^2)$ như ở Bước 3 của chứng minh Định lý 07.17.
 :::
 
-**Trong thực hành.** Trong notebook Lunar Lander (mục 8), Monte Carlo theo lô giải phương trình chuẩn (normal equations) $\big(\sum_tx_tx_t^\top\big)w=\sum_tx_tG_t$, với $x_t=x(S_t)$ và tổng lấy trên mọi bước của các lượt kết thúc thật. Với Fourier bậc 3, nghiệm cho $J_{\mathrm{kt}}=1\,481{,}0$, thấp hơn $1\,626{,}8$ của bảng $9\,216$ ô và $2\,190{,}1$ của một lượt với bước hằng. Hai nghiệm dùng cùng đặc trưng, nên có cùng sai số xấp xỉ; khoảng cách $2\,190{,}1-1\,481{,}0$ là phần sai số ước lượng (Định nghĩa 07.11) mà một lượt với bước hằng nhỏ, không thỏa Robbins–Monro, có thêm.
+**Trong thực hành.** Trong notebook Lunar Lander (mục 8), Monte Carlo theo lô giải phương trình chuẩn (normal equations) $\big(\sum_tx_tx_t^\top\big)w=\sum_tx_tG_t$, với $x_t=x(S_t)$ và tổng lấy trên mọi bước của các lượt kết thúc thật. Với Fourier bậc 3, nghiệm cho $J_{\mathrm{kt}}=1\,481{,}0$, thấp hơn $1\,626{,}8$ của bảng $9\,216$ ô và $2\,190{,}1$ của một lượt với bước hằng. Hai nghiệm dùng cùng đặc trưng, nên có cùng sai số xấp xỉ; vì vậy chênh lệch $2\,190{,}1-1\,481{,}0$ xấp xỉ phần sai số ước lượng (Định nghĩa 07.11) mà một lượt với bước hằng nhỏ (không thỏa Robbins–Monro) có thêm.
 
 ::: exercise Bài tập 07.5 (Đạo hàm cập nhật Monte Carlo)
 Cho $\hat v(s,w)=x(s)^\top w$ và $\ell_t(w)=\tfrac12\big(G_t-x(S_t)^\top w\big)^2$.
@@ -790,7 +788,7 @@ Mục tiêu (3.1) là mục tiêu bootstrap; với đặc trưng chỉ thị (H�
 Phương trình Bellman kỳ vọng (Định lý 03.21) cho $v_\pi(s)=\mathbb E_\pi[R_{t+1}+\gamma v_\pi(S_{t+1})\mid S_t=s]$. Trừ đẳng thức này khỏi kỳ vọng của (3.1), số hạng $R_{t+1}$ triệt tiêu. $\square$
 :::
 
-Mệnh đề 07.20 là Mệnh đề 05.25 với bảng $V$ thay bằng $\hat v(\cdot,w)$; với đặc trưng chỉ thị (Hệ quả 07.3), hai mệnh đề trùng nhau. Đổi lại độ chệch, mục tiêu TD cho cập nhật ngay sau chuyển và chỉ phụ thuộc một chuyển ngẫu nhiên $(R_{t+1},S_{t+1})$, không phụ thuộc phần còn lại của lượt, nên thường có phương sai nhỏ hơn lợi tức.
+Mệnh đề 07.20 là Mệnh đề 05.25 với bảng $V$ thay bằng $\hat v(\cdot,w)$; với đặc trưng chỉ thị (Hệ quả 07.3), hai mệnh đề trùng nhau. Đổi lại độ chệch, mục tiêu TD cho cập nhật ngay sau chuyển và chỉ phụ thuộc một chuyển ngẫu nhiên $(R_{t+1},S_{t+1})$, nên không mang nhiễu của các phần thưởng $R_{t+2},\dots,R_T$ mà lợi tức mang.
 
 ::: definition Định nghĩa 07.21 (Cập nhật bán gradient)
 Khi $y_t$ phụ thuộc $w$ qua ước lượng hiện tại, cập nhật (2.1) với $y_t$ tính bằng $w_n$ và giữ cố định khi lấy đạo hàm gọi là cập nhật bán gradient. Với TD(0) tuyến tính,
@@ -856,7 +854,7 @@ $\delta_t=-0{,}6$ (Ví dụ 07.9).
 <!-- note-topic-id: lec-07-topic-08 -->
 ### 3.2 Điểm cố định Bellman chiếu
 
-Để tìm điểm dừng của (3.2), chúng ta xét bước cập nhật trung bình. Với $\mathcal S$ hữu hạn, trung bình của mục tiêu TD tại $s$ là $r_\pi(s)+\gamma\sum_{s'}P_\pi(s,s')x(s')^\top w$, tức thành phần thứ $s$ của $T_\pi(\Phi w)$. Một cách trực quan, TD kéo $\Phi w$ về phía $T_\pi(\Phi w)$; vector này thường nằm ngoài lớp biểu diễn, nên điểm đạt được là điểm gần nó nhất trong lớp.
+Để tìm điểm dừng của (3.2), chúng ta xét bước cập nhật trung bình. Với $\mathcal S$ hữu hạn, trung bình của mục tiêu TD tại $s$ là $r_\pi(s)+\gamma\sum_{s'}P_\pi(s,s')x(s')^\top w$, tức thành phần thứ $s$ của $T_\pi(\Phi w)$. Một cách trực quan, TD kéo $\Phi w$ về phía $T_\pi(\Phi w)$; khi vector này nằm ngoài lớp biểu diễn, điểm đạt được là điểm gần nó nhất trong lớp.
 
 ::: example Ví dụ 07.10 (Hình chiếu lên một đường thẳng)
 **Dữ kiện.** Lớp biểu diễn gồm các vector $\lambda f$ với $f=(1;1)$ và $\lambda\in\mathbb R$; vector $h=(2;0)$ nằm ngoài lớp.
@@ -1075,7 +1073,7 @@ Monte Carlo và TD(0) với hàm tuyến tính khác nhau theo sáu tiêu chí s
 | Mục tiêu | $G_t$ | $R_{t+1}+\gamma\,\hat v(S_{t+1},w)$ |
 | Thời điểm cập nhật | cuối lượt | sau mỗi chuyển |
 | Kỳ vọng của mục tiêu | $v_\pi(S_t)$ (Mệnh đề 07.13) | nói chung chệch (Mệnh đề 07.20) |
-| Phương sai | thường lớn hơn | thường nhỏ hơn |
+| Nguồn nhiễu của mục tiêu | mọi $R_{t+1},\dots,R_T$ | một chuyển $(R_{t+1},S_{t+1})$ |
 | Loại cập nhật | gradient đầy đủ | bán gradient |
 | Điểm đích | $\Pi_Dv_\pi$ khi $\mu=d_\pi$ | điểm cố định Bellman chiếu |
 
@@ -1092,7 +1090,7 @@ Dùng Nhận xét 07.30; so giả thiết của Định lý 07.17 với Định 
 
 ::: solution
 - **Dạng mục tiêu.** Monte Carlo dùng $G_t$, không chứa $w$; TD(0) dùng $R_{t+1}+\gamma\hat v(S_{t+1},w)$, chứa $w$ (Định nghĩa 07.12, 07.19).
-- **Độ chệch và phương sai.** $G_t$ không chệch (Mệnh đề 07.13); mục tiêu TD nói chung chệch (Mệnh đề 07.20) nhưng chỉ phụ thuộc một chuyển, nên thường có phương sai nhỏ hơn.
+- **Độ chệch và phương sai.** $G_t$ không chệch (Mệnh đề 07.13); mục tiêu TD nói chung chệch (Mệnh đề 07.20) nhưng chỉ phụ thuộc một chuyển, nên không mang nhiễu của $R_{t+2},\dots,R_T$.
 - **Cập nhật trực tuyến.** TD(0) cập nhật sau mỗi chuyển và dùng được lượt bị cắt ngắn (Nhận xét 07.23); Monte Carlo chờ hết lượt.
 - **Phân tích Monte Carlo.** Cập nhật là SGD trên $J_\mu$ (Mệnh đề 07.14) và hội tụ tới hình chiếu của $v_\pi$ (Định lý 07.17).
 - **Phân tích TD.** Cập nhật nói chung không là hạ gradient của một mất mát cố định; cần hệ trung bình $b-Aw$, tính xác định dương của $A$ và toán tử Bellman chiếu, với giả thiết theo chính sách và bài toán không kết thúc (Định lý 07.29).
@@ -1139,7 +1137,7 @@ với $d_{\text{trái}}$ là khoảng cách tới tường trái và $u(a)$ là 
 
 ![Chuỗi A–B–C–D–E. D là trạng thái đầu; A và E có viền kép, là trạng thái kết thúc. Hành động 0 đi trái, 1 đi phải. Nhãn cạnh ghi hành động rồi phần thưởng: vào A thưởng 1000, vào E thưởng 10, các chuyển khác thưởng −1. Khoảng cách tới tường trái bằng 1, 2, 3 tại B, C, D.](img/lec-07/five-state-features.svg)
 
-Hình trên ghi mỗi cạnh bằng hành động và phần thưởng, cùng $d_{\text{trái}}$ dưới ba trạng thái không kết thúc. Đặc trưng thiết kế trực tiếp cho cặp $(s,a)$, không có khối Kronecker.
+Đặc trưng của Ví dụ 07.12 được thiết kế trực tiếp cho cặp $(s,a)$, không có khối Kronecker.
 
 ::: definition Định nghĩa 07.31 (Chính sách ε-tham lam theo giá trị hành động tuyến tính)
 Cho $\hat q(s,a,w)=x(s,a)^\top w$ với $m$ hành động và $\varepsilon\in[0,1]$. Chính sách $\pi_w$ là chính sách $\varepsilon$-tham lam của Định nghĩa 06.3 với bảng $Q$ thay bằng $\hat q(\cdot,\cdot,w)$: mỗi hành động nhận $\varepsilon/m$, phần $1-\varepsilon$ chia đều cho các hành động đạt cực đại của $\hat q(s,\cdot,w)$; $\varepsilon=0$ cho chính sách tham lam.
@@ -1271,7 +1269,7 @@ Với $\gamma=1$, $G_t$ là tổng phần thưởng tới hết lượt; mỗi l
 :::
 
 ::: exercise Bài tập 07.11 (Ba cập nhật Sarsa trên chuỗi)
-Trên chuỗi năm trạng thái $\mathrm A,\dots,\mathrm E$ ($\mathrm A$, $\mathrm E$ kết thúc; hành động $0$ đi trái, $1$ đi phải; vào $\mathrm A$ nhận $1\,000$, vào $\mathrm E$ nhận $10$, chuyển khác nhận $-1$) với $x(s,a)=(d_{\text{trái}}(s);u(a);1)$, $d_{\text{trái}}(\mathrm B,\mathrm C,\mathrm D)=(1,2,3)$, $u(0)=1$, $u(1)=-1$; $w_0=(1;1;-1)$, $\alpha=0{,}2$, $\varepsilon=0{,}25$, $\gamma=1$. Ba mẫu: $(\mathrm D,0,-1,\mathrm C,0)$, $(\mathrm C,1,-1,\mathrm D,1)$, $(\mathrm D,1,10,\mathrm E,\text{kết thúc})$. Ba mẫu được coi là độc lập, vì mẫu 1 có hành động kế tiếp $0$ tại $\mathrm C$ còn mẫu 2 thực hiện hành động $1$ tại $\mathrm C$. Dùng (4.1), với $\hat q(\mathrm E,\cdot,w)=0$.
+Trên chuỗi năm trạng thái $\mathrm A,\dots,\mathrm E$ ($\mathrm A$, $\mathrm E$ kết thúc; hành động $0$ đi trái, $1$ đi phải; vào $\mathrm A$ nhận $1\,000$, vào $\mathrm E$ nhận $10$, chuyển khác nhận $-1$) với $x(s,a)=(d_{\text{trái}}(s);u(a);1)$, $d_{\text{trái}}(\mathrm B,\mathrm C,\mathrm D)=(1,2,3)$, $u(0)=1$, $u(1)=-1$; $w_0=(1;1;-1)$, $\alpha=0{,}2$, $\varepsilon=0{,}25$, $\gamma=1$. Ba mẫu: $(\mathrm D,0,-1,\mathrm C,0)$, $(\mathrm C,1,-1,\mathrm D,1)$, $(\mathrm D,1,10,\mathrm E,\text{kết thúc})$. Mẫu 1 có hành động kế tiếp $0$ tại $\mathrm C$, còn mẫu 2 thực hiện hành động $1$ tại $\mathrm C$, nên hai mẫu không nối tiếp nhau; ba mẫu được coi là độc lập. Dùng (4.1), với $\hat q(\mathrm E,\cdot,w)=0$.
 
 - (a) Tính $\delta$ và tham số mới sau mỗi mẫu.
 - (b) Tính $\hat q(\mathrm D,0,w_3)$, $\hat q(\mathrm C,1,w_3)$, $\hat q(\mathrm D,1,w_3)$ và kiểm tra $\hat q(\mathrm D,1,w_3)-\hat q(\mathrm D,0,w_3)=-2[w_3]_2$.
@@ -1387,7 +1385,7 @@ Bước 3 và 4 với Ví dụ 07.14 cho $w_2=w_1=(-0{,}2;0{,}6;-1{,}4)$. So v�
 
 **Trong thực hành.** Hai notebook dùng Thuật toán 07.36 với cùng đặc trưng và cách chọn bước học như Sarsa. Trên Lunar Lander, Q-learning đạt tổng phần thưởng $205{,}3\pm8{,}4$; bảng tinh chỉnh của Bài 06 cho $235{,}5$; hai bên khác cả biểu diễn lẫn bước học. Trên Flappy Bird, Q-learning qua $28{,}86\pm1{,}98$ ống, thấp hơn Sarsa với hiệu ghép cặp $-9{,}18\pm4{,}50$. Với cùng cấu hình, bảng thử nghiệm sơ bộ trong notebook cho Q-learning $36{,}3\pm1{,}4$ và Sarsa $35{,}0\pm3{,}6$ ống (độ lệch chuẩn qua ba hạt giống), nên một lần chạy chưa đủ để xếp thứ tự.
 
-Trên Lunar Lander (notebook, mục 13.2), hiệu trung bình $\max_a\hat q(S_0,a,w)-G_0$ bằng $12{,}4\pm2{,}2$ với Q-learning và $-7{,}9\pm3{,}2$ với Sarsa (hiệu ghép cặp trên cùng $100$ lượt, nửa khoảng tin cậy $95\%$); chiều của Q-learning phù hợp với hiện tượng đánh giá cao (overestimation) khi lấy cực đại trên ước lượng có nhiễu, dù sai số xấp xỉ cũng góp vào. Double Q-learning (Sutton và Barto, 2018, §6.7) tách việc chọn và đánh giá hành động cho hai vector tham số; trên Flappy Bird (notebook, mục 13), với $8\,000$ lượt, nó qua $38{,}24\pm1{,}79$ ống.
+Trên Lunar Lander (notebook, mục 13.2), hiệu trung bình $\max_a\hat q(S_0,a,w)-G_0$ bằng $12{,}4\pm2{,}2$ với Q-learning và $-7{,}9\pm3{,}2$ với Sarsa (hiệu ghép cặp trên cùng $100$ lượt, nửa khoảng tin cậy $95\%$). Hiệu dương của Q-learning cùng chiều với hiện tượng đánh giá cao (overestimation) khi lấy cực đại trên ước lượng có nhiễu, và còn chứa cả sai số xấp xỉ. Double Q-learning (Sutton và Barto, 2018, §6.7) tách việc chọn và đánh giá hành động cho hai vector tham số; trên Flappy Bird (notebook, mục 13), với $8\,000$ lượt, nó qua $38{,}24\pm1{,}79$ ống.
 
 ::: exercise Bài tập 07.13 (Ba cập nhật Q-learning trên chuỗi)
 Trên chuỗi năm trạng thái với $x(s,a)=(d_{\text{trái}}(s);u(a);1)$, $d_{\text{trái}}(\mathrm B,\mathrm C,\mathrm D)=(1,2,3)$, $u(0)=1$, $u(1)=-1$, $\gamma=1$; $w_0=(1;1;-1)$, $\alpha=0{,}2$; ba mẫu độc lập $(\mathrm D,0,-1,\mathrm C)$, $(\mathrm C,1,-1,\mathrm D)$, $(\mathrm D,1,10,\mathrm E,\text{kết thúc})$. Thực hiện ba cập nhật Q-learning theo Định nghĩa 07.35; tính $w_3$, $\hat q(\mathrm D,0,w_3)$, $\hat q(\mathrm D,1,w_3)$ và so với kết quả Sarsa $w_3=(8{,}032;-2{,}064;1{,}264)$ của Bài tập 07.11.
@@ -1410,7 +1408,7 @@ Hai mẫu đầu ở Ví dụ 07.14; mẫu cuối vào trạng thái kết thúc
 <!-- note-topic-id: lec-07-topic-17 -->
 ### 5.2 Bộ ba bất ổn
 
-Định lý 07.29 cần dữ liệu theo chính sách, vì trọng số $d_\pi$ trong Mệnh đề 07.25 và Bổ đề 07.27 đến từ dữ liệu sinh theo $\pi$, còn Q-learning cập nhật theo phân phối của chính sách hành vi. Ví dụ sau (Sutton và Barto, 2018, §11.2) dùng TD(0) dự đoán khác chính sách và cho thấy hậu quả có thể có khi bỏ giả thiết theo chính sách. Q-learning có cùng ba yếu tố của ví dụ (xấp xỉ hàm, mục tiêu bootstrap, dữ liệu khác chính sách), và theo Sutton và Barto (2018, §11.2, tr. 263), Q-learning có phản ví dụ phân kỳ tương tự phản ví dụ bảy trạng thái của Baird.
+Định lý 07.29 cần dữ liệu theo chính sách, vì trọng số $d_\pi$ trong Mệnh đề 07.25 và Bổ đề 07.27 đến từ dữ liệu sinh theo $\pi$, còn Q-learning cập nhật theo phân phối của chính sách hành vi. Ví dụ sau (Sutton và Barto, 2018, §11.2) dùng TD(0) dự đoán khác chính sách để chỉ ra rằng, khi bỏ giả thiết theo chính sách, tham số có thể tăng không chặn. Q-learning có cùng ba yếu tố của ví dụ (xấp xỉ hàm, mục tiêu bootstrap, dữ liệu khác chính sách), và theo Sutton và Barto (2018, §11.2, tr. 263), Q-learning có phản ví dụ phân kỳ tương tự phản ví dụ bảy trạng thái của Baird.
 
 ::: example Ví dụ 07.15 (TD(0) khác chính sách trên hai trạng thái, tham số tăng không chặn)
 **Dữ kiện.** Một mảnh MDP gồm hai trạng thái với $x(s_1)=1$, $x(s_2)=2$, nên $\hat v=(w;2w)$; chỉ hai vector đặc trưng là chung với Ví dụ 07.11. Ở $s_1$ chỉ có một hành động, chuyển tất định sang $s_2$ với phần thưởng $0$, nên tỉ số lấy mẫu quan trọng $\rho_t$ trên chuyển này bằng $1$. Ở $s_2$, chính sách hành vi có thể chọn những hành động mà chính sách đích không bao giờ chọn; trên các chuyển đó $\rho_t=0$ và không có cập nhật. Giả sử dãy cập nhật chỉ gồm chuyển $s_1\to s_2$, lặp lại nhiều lần, với TD(0) bán gradient, $\gamma=0{,}9$, $\alpha=0{,}1$, $w_0=1$.
@@ -1461,7 +1459,7 @@ Yếu tố thứ ba là học khác chính sách của Định nghĩa 06.14, và
 
 ![Tam giác có ba đỉnh: xấp xỉ hàm ở trên, bootstrap ở dưới bên trái, học khác chính sách ở dưới bên phải; ở giữa tam giác ghi "có thể phân kỳ", nghĩa là khi cả ba cùng có mặt, cập nhật TD có thể phân kỳ.](img/lec-07/deadly-triad.svg)
 
-Hình đặt ba yếu tố ở ba đỉnh tam giác, nhãn "có thể phân kỳ" ở giữa. Khi đủ ba yếu tố, TD và Q-learning có thể phân kỳ; khi chỉ có hai, có thể tránh được bất ổn (Sutton và Barto, 2018, §11.3, tr. 264).
+Khi đủ ba yếu tố, TD và Q-learning có thể phân kỳ; khi chỉ có hai, có thể tránh được bất ổn (Sutton và Barto, 2018, §11.3, tr. 264).
 
 Bỏ một yếu tố cho các trường hợp đã biết:
 
@@ -1478,8 +1476,6 @@ Các hướng khắc phục gồm:
 - mạng mục tiêu (target network);
 - điều chuẩn (regularization);
 - cắt ngưỡng (clipping).
-
-Nhiều cách ổn định hóa cần giả thiết mạnh hoặc cho nghiệm chệch.
 :::
 
 **Trong thực hành.** Trong bảng thử nghiệm sơ bộ chọn cấu hình của notebook Flappy Bird (mục 6), với họ đa thức bậc 2 `poly2` (ba hạt giống), $\lVert w\rVert$ lớn nhất là $1\,895{,}1$ với Q-learning và $15{,}1$ với Sarsa; cả hai qua $0$ ống. Trên Lunar Lander (mục 13.3), $\lVert w\rVert$ của Q-learning tăng từ $42{,}3$ ở lượt $500$ lên $52{,}2$ ở lượt $3\,000$, không có bước nhảy.
@@ -1600,7 +1596,7 @@ Bảo đảm hội tụ của chương chỉ phủ dự đoán với chính sác
 
 **Số liệu** (notebook Flappy Bird). Bảng thử nghiệm sơ bộ chọn cấu hình: với `poly2` ($k=15$), $\lVert w\rVert$ lớn nhất $1\,895{,}1$ với Q-learning và $15{,}1$ với Sarsa, cả hai $0$ ống. Với `four3`, lần chạy đã nhúng trong notebook cho $\lVert w\rVert$ cuối $6{,}86$ với Q-learning và $5{,}08$ với Sarsa sau $4\,000$ lượt.
 
-**Diễn giải và giới hạn.** Theo Nhận xét 07.39, $\lVert w\rVert$ lớn trên `poly2` phù hợp với bộ ba bất ổn trên một lớp hàm kém nhưng không đủ làm bằng chứng phân kỳ; $\lVert w\rVert$ cuối $6{,}86$ và $5{,}08$ trên `four3` cũng không chứng minh hội tụ. Muốn kết luận phải đo $\lVert w\rVert$ theo lượt trên nhiều hạt giống.
+**Diễn giải và giới hạn.** Theo Nhận xét 07.39, muốn kết luận phân kỳ hay hội tụ phải đo $\lVert w\rVert$ theo lượt trên nhiều hạt giống: $1\,895{,}1$ của Q-learning trên `poly2` là giá trị lớn nhất qua ba hạt giống, còn $6{,}86$ và $5{,}08$ trên `four3` là giá trị cuối của một lần chạy.
 
 **Kiểm tra lại.** $d=3\cdot15+3=48$ với `poly2`; $d=3\cdot256+3=771$ với `four3`, khớp lời giải Bài tập 07.18 và số $d=771$ notebook in ra.
 :::
@@ -1608,7 +1604,7 @@ Bảo đảm hội tụ của chương chỉ phủ dự đoán với chính sác
 **Liên hệ với các bài sau.**
 
 - **Bài 08.** Deep Q-Network (DQN) giữ mục tiêu (5.1), thay $x(s,a)^\top w$ bằng mạng nơ-ron, thêm bộ nhớ phát lại (replay memory, experience replay) để giảm tương quan giữa các mẫu và thêm mạng mục tiêu để mục tiêu chỉ đổi theo từng đợt; xấp xỉ hàm, bootstrap và học khác chính sách vẫn cùng có mặt, nên DQN không có bảo đảm hội tụ chung.
-- **Bài 09.** Double DQN xử lý độ chệch do phép cực đại, phù hợp với chênh lệch $+12{,}4\pm2{,}2$ (nửa khoảng tin cậy $95\%$) giữa $\max_a\hat q(S_0,a,w)$ và $G_0$ của Q-learning tuyến tính trên Lunar Lander.
+- **Bài 09.** Double DQN tách việc chọn và đánh giá hành động để giảm độ chệch do phép cực đại, loại độ chệch cùng chiều với hiệu $\max_a\hat q(S_0,a,w)-G_0=+12{,}4\pm2{,}2$ (nửa khoảng tin cậy $95\%$) của Q-learning tuyến tính trên Lunar Lander.
 - **Bài 10–11.** Các phương pháp actor–critic dùng một hàm giá trị học bằng TD với xấp xỉ hàm để đánh giá chính sách; khi chính sách được giữ cố định, Định lý 07.29 nêu giả thiết của bảo đảm.
 
 ## Tóm tắt chương
@@ -1664,8 +1660,6 @@ $$
 - Định lý 07.17 cần mẫu độc lập; các mẫu trong một lượt của Thuật toán 07.15 phụ thuộc nhau.
 
 ## Bài tập củng cố
-
-Năm bài 07.15–07.19 dưới đây chỉ có ở ghi chú.
 
 ### Mức nhận biết
 
@@ -1768,9 +1762,9 @@ Nhận xét 07.23, chứng minh Định lý 07.17, Mệnh đề 07.26 và địn
 ::: solution
 **(a)** Monte Carlo bỏ các lượt này vì lợi tức chưa đầy đủ; TD bootstrap tại bước cắt ngắn và dùng mọi chuyển (Nhận xét 07.23).
 
-**(b)** Monte Carlo theo lô cho hình chiếu theo $\lVert\cdot\rVert_\mu$ của $\bar g$ lên lớp biểu diễn, với $\mu$ là phân phối ghé trên các lượt kết thúc thật và $\bar g$ lấy theo phân phối đó (Bước 1 và Bước 4 của chứng minh Định lý 07.17, áp cho phân phối thực nghiệm). $\bar g$ trùng $v_\pi$ khi trạng thái có tính Markov và không bỏ lượt nào; bỏ các lượt cắt ngắn có thể làm lệch phân phối ghé và $\bar g$. LSTD cho điểm cố định Bellman chiếu thực nghiệm (Mệnh đề 07.26).
+**(b)** Monte Carlo theo lô cho hình chiếu theo $\lVert\cdot\rVert_\mu$ của $\bar g$ lên lớp biểu diễn, với $\mu$ là phân phối ghé trên các lượt kết thúc thật và $\bar g$ lấy theo phân phối đó (Bước 1 và Bước 4 của chứng minh Định lý 07.17, áp cho phân phối thực nghiệm). $\bar g$ trùng $v_\pi$ khi quan sát có tính Markov và không bỏ lượt nào; bỏ các lượt cắt ngắn có thể làm lệch phân phối ghé và $\bar g$. LSTD cho điểm cố định Bellman chiếu thực nghiệm (Mệnh đề 07.26).
 
-**(c)** $J_{\mathrm{kt}}$ đo khoảng cách tới lợi tức, đúng đích của Monte Carlo. TD cập nhật trực tuyến, dùng được lượt cắt ngắn và có mục tiêu phương sai thường nhỏ hơn (Nhận xét 07.30); $J_{\mathrm{kt}}$ không đo các lợi ích này.
+**(c)** $J_{\mathrm{kt}}$ đo khoảng cách tới lợi tức, đúng đích của Monte Carlo. TD cập nhật trực tuyến, dùng được lượt cắt ngắn và có mục tiêu chỉ phụ thuộc một chuyển (Nhận xét 07.30); $J_{\mathrm{kt}}$ không đo các lợi ích này.
 
 **Kiểm tra lại.** $1\,622{,}2$ đo trên đúng các lượt kết thúc thật, nên chênh lệch không đến từ lượt cắt ngắn.
 :::
@@ -1779,7 +1773,7 @@ Nhận xét 07.23, chứng minh Định lý 07.17, Mệnh đề 07.26 và địn
 ## Hướng dẫn đọc thêm và tài liệu tham khảo
 
 - Tạ Việt Cường (2026). *Lecture 07: Hàm xấp xỉ trong Reinforcement Learning*, bài giảng gốc (2025–2026), trang 1–45: phạm vi và thứ tự; Mục 1 dựa trên trang 22–31, Mục 2 trên trang 27, 32–34, Mục 3 trên trang 35–37, Mục 4 trên trang 38–40, Mục 5 trên trang 38, 41, Mục 6 trên trang 41–45.
-- Tạ Việt Cường (2026). *Bài tập tuần 7 — Function Approximation* (2025–2026), bài 1–8: bài 1 cho Bài tập 07.20; bài 2 cho Bài tập 07.9; bài 3 cho Bài tập 07.14; bài 4 cho Bài tập 07.5; bài 5 cho Mệnh đề 07.26, Bài tập 07.8 và 07.22; bài 6 cho Bài tập 07.6; bài 7 và 8 cho chuỗi năm trạng thái và Bài tập 07.10, 07.11. Phiếu viết $\phi(s)$ cho $x(s)$.
+- Tạ Việt Cường (2026). *Bài tập tuần 7 — Function Approximation* (2025–2026), bài 1–8: bài 1 cho Mục 1.1–1.2; bài 2 cho Bài tập 07.9; bài 3 cho Bài tập 07.14; bài 4 cho Bài tập 07.5; bài 5 cho Mệnh đề 07.26 và Bài tập 07.8; bài 6 cho Bài tập 07.6; bài 7 và 8 cho chuỗi năm trạng thái và Bài tập 07.10, 07.11. Phiếu viết $\phi(s)$ cho $x(s)$.
 - Sutton, R. S. và Barto, A. G. (2018). *Reinforcement Learning: An Introduction*, ấn bản 2: §9.1–9.4 cho Mục 1–3; §9.5, 9.6, 9.8 cho đặc trưng, bước học, LSTD; §10.1 cho Mục 4; §6.7, 11.2–11.3 cho Mục 5.
 - Bertsekas, D. P. và Tsitsiklis, J. N. (1996). *Neuro-Dynamic Programming*: chương 4 cho Định lý 07.17; chương 6 cho Định lý 07.29.
 - Tsitsiklis, J. N. và Van Roy, B. (1997). An analysis of temporal-difference learning with function approximation. *IEEE Transactions on Automatic Control* 42(5): Định lý 07.29.
