@@ -655,3 +655,76 @@ Yêu cầu của người dùng: "Duyệt xem còn câu rào đón nào không t
 **Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in: 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang; lỗi CSP script nội tuyến đến từ máy chủ xem trước.
 
 Quyết định của điều phối viên: **chấp nhận**; commit chung `fix(materials): …`.
+
+
+## Rà nhẹ theo quy tắc 2026-11-09 và làm lại tệp bài tập từ giáo trình (2026-11-12)
+
+Yêu cầu của người dùng: "rà math-4-AI 10–14 và rl-plan 01–10: chỉ cần một lượt nhẹ, gồm rà theo quy tắc 09/11 và làm lại exercises.md từ giáo trình", rồi "chỉ làm lecture note và exercise" (không sửa deck).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Người rà chỉ đọc (`no-ai-slop` Detect), sau đó cũng tác tử đó làm biên tập viên (`no-ai-slop` Edit), tiếp tục bằng `SendMessage` để giữ ngữ cảnh.
+- Người kiểm tra độc lập chỉ đọc (tác tử mới): đối chiếu đề với PDF, giải lại mọi bài trước khi đọc lời giải, rà các hunk đã đổi của ghi chú; sau đó kiểm lại phần đã sửa.
+
+**Rà ghi chú:** 15 phát hiện (0 chặn bàn giao, 0 nghiêm trọng, 5 trung bình, 10 nhẹ): "thường", "đôi khi" không nguồn (849, 1771); "rất nhỏ" (1201), "đáng kể" (1404) dù câu đã có số; dòng 290 lấy $\mathbb E[T]=12$ từ tệp bài tập Bài 09 (sẽ viết lại); dẫn 09.11–09.20 ở dòng 18, 121, 144. Điều phối viên chấp nhận: cả 15. Dòng 144 thay bằng $p^*$ là nghiệm của $p^2-4p+2=0$; dòng 290 thay bằng lập luận tại chỗ $\Pr(T>3k)\le(7/8)^k$ và $\mathbb E[T]=-J(\tfrac12)=12$ (Ví dụ 10.2), không còn dẫn tệp bài tập Bài 09.
+
+**Nguồn bài tập:** Sutton và Barto (2018), ấn bản 2 (PDF, SHA-256 2dd0d71d…), đề đối chiếu PDF tr. 114–115, 150–151, 290–295, 335–336. Năm bài 10.13–10.17: SB 12.2, 7.6, 12.3, 5.13, 13.4 (thêm câu tính ma trận Fisher). SB 3.18+3.19 thuộc Bài 03, 6.1 thuộc Bài 05; 12.8 (tùy chọn) bỏ. Chín bài cũ (bộ số tự dựng) bị bỏ; không bài nào chuyển về ghi chú.
+
+**Kiểm tra độc lập:** 0 chặn bàn giao, 0 nghiêm trọng, 1 trung bình (deck, chỉ ghi nhật ký), 12 nhẹ; không lời giải sai. Quy ước trạng thái hấp thụ ở 10.14 khớp §3.4 của sách; giả thiết $T\le T_{\max}$ ở 10.16 là (G3) của ghi chú; ma trận Fisher của 10.17 giải lại đúng. Sửa: 10.14 thêm $\lvert R_{t+1}\rvert\le R_{\max}$; 10.17(a) và 10.15 dẫn số hiệu ở bước trùng; 10.17(b) lập luận trực tiếp bằng KL giữa hai phân phối chuẩn; Nhận xét 10.17 bỏ tham chiếu tiến. Điều phối viên chấp nhận mọi phát hiện; biên tập viên sửa; kiểm lại: đạt; một lỗi nhẹ mới (câu nói về chính bài ở dòng 170) đã sửa.
+
+**Mục tiêu chỉ có bài trong ghi chú:** 2, 6, 7 (Bài tập 10.5, 10.10, 10.2, 10.12). Tệp bài tập không có bài mức vận dụng. **Ngoài phạm vi:** deck dòng ~1030–1050 còn bộ số cũ 10.13–10.21.
+
+Bài tập trong ghi chú (10.1–10.12) giữ nguyên số và nội dung. Không bài tự dựng nào được chuyển về ghi chú.
+
+### Tệp bài tập: cũ → mới
+
+| Cũ | Nội dung cũ | Mới |
+|---|---|---|
+| 10.13 | SB 12.2 mở rộng (γλ, biên đoạn, $h=2048$, $128$) | bỏ; số 10.13 dùng cho SB 12.2 (chỉ đề sách) |
+| 10.14 | SB 3.15/3.16 mở rộng | bỏ (SB 3.15, 3.16 thuộc Bài 02) |
+| 10.15 | SB 6.1 mở rộng | bỏ (SB 6.1 thuộc Bài 05) |
+| 10.16 | SB 7.6 mở rộng sang $\mathcal L^{\mathrm{CPI}}$, $\mathcal L^{\mathrm{CLIP}}$ | bỏ; lõi sách thành 10.14 mới |
+| 10.17 | SB 5.13 mở rộng sang Bổ đề 10.19 | bỏ; lõi sách thành 10.16 mới |
+| 10.18 | SB 12.8 với bộ số tự dựng | bỏ (D2) |
+| 10.19 | SB 13.4 mở rộng (gradient tự nhiên, tỉ số PPO, số tự dựng) | bỏ; lõi sách cùng câu Fisher thành 10.17 mới |
+| 10.20 | Lập trình REINFORCE có đường cơ sở trên hành lang | bỏ |
+| 10.21 | CartPole: thiết kế, dịch, đổi thang phần thưởng PPO | bỏ |
+
+Tệp mới:
+
+| Số | Nguồn | Mức | Mục tiêu | Mạch |
+|---|---|---|---|---|
+| 10.13 | SB Bài tập 12.2, §12.1, tr. 290 | nhận biết | 3 | 3 |
+| 10.14 | SB Bài tập 7.6, §7.4, tr. 151 ((7.13) tr. 150, (7.14) tr. 151) | chứng minh | 1, 7 | 2, 6 |
+| 10.15 | SB Bài tập 12.3, §12.2, tr. 295 ((12.4) tr. 290, (12.6) tr. 293, (6.6) tr. 121) | chứng minh | 3 | 3 |
+| 10.16 | SB Bài tập 5.13, §5.9, tr. 115 ((5.11)–(5.14) tr. 114) | chứng minh | 4 | 4 |
+| 10.17 | SB Bài tập 13.4, §13.7, tr. 336 ((13.19) tr. 335, (13.20) tr. 336), thêm câu (b) ma trận Fisher | tính toán | 5 | 5 |
+
+### Dẫn chiếu đã cập nhật trong ghi chú Bài 10
+
+- Dòng 18: "Bài tập 10.13–10.21" → "Bài tập 10.13–10.17". Bỏ mệnh đề "trừ Bài tập 09.11–09.20 thuộc tệp bài tập … Bài 09"; ghi chú Bài 10 không còn dẫn bài nào trong tệp bài tập Bài 09.
+- Dòng 121: bỏ hai lần "Bài tập 09.20"; phép tính gradient đã nằm tại chỗ.
+- Dòng 144: "(Bài tập 09.14)" → "nghiệm trong $(0,1)$ của $J'(p)=0$, tức của $p^2-4p+2=0$".
+- Dòng 290: "(đoạn quy ước chiết khấu trước Bài tập 09.11)" → lập luận ngắn tại chỗ, gồm $\Pr(T>3k)\le(7/8)^k$ và $\mathbb E[T]=-J(\tfrac12)=12$ (Ví dụ 10.2).
+- Lượt sửa sau kiểm tra: không đổi số hiệu nào.
+- §7.5 (dòng ~2109–2119): dải "10.13–10.17", và bảng cột "Tệp bài tập" như sau:
+  - mục 1: —
+  - mục 2: 10.14
+  - mục 3: 10.13, 10.15
+  - mục 4: 10.16
+  - mục 5: 10.17
+  - mục 6: 10.14
+  - mục 7: —
+
+### Dẫn chiếu ngoài phạm vi còn dùng số cũ (không sửa)
+
+- Deck `2627-1/lecture-10-trpo-va-ppo.html`:
+  - dòng 1043–1048: bảng `Mạch | Bài tập | Bài tập củng cố` với các ô "10.14–10.16, 10.20, 10.21", "10.13, 10.15, 10.18", "10.16–10.18", "10.19", "10.16, 10.19, 10.21", "10.21";
+  - dòng 1050: ghi chú diễn giả "Bài tập 10.13–10.21 … ba mức: nhận biết (10.13, 10.14), tính toán hoặc chứng minh (10.15…".
+- `2627-1/planning/lec-10/storyboard.md` dòng 1222, 1226 và `review-log.md` dòng 546, 566, 568: mô tả bộ 10.13–10.21 cũ.
+- Các tệp `materials/lec-*` khác không dẫn Bài tập 10.13–10.21.
+
+**Số liệu:** ghi chú 36020 âm tiết (`wc -w`); `git diff --check` sạch; mỗi `exercise` có đúng một `hint` và một `solution`.
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8812, 1600×900 và 390×844, mở mọi khối khi đo: 0 `.katex-error`, 0 `:::` sót, 0 lỗi console (trừ CSP của reloadserver), 0 request lỗi, không tràn ngang trang. Tệp bài tập: 0/31 công thức tràn khung ở 390 px; ghi chú 0/82.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-10): rà theo quy tắc 2026-11-09, làm lại bài tập từ Sutton–Barto`.
