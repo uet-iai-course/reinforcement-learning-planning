@@ -1633,3 +1633,79 @@ Yêu cầu của người dùng: "Duyệt xem còn câu rào đón nào không t
 **Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in: 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang; lỗi CSP script nội tuyến đến từ máy chủ xem trước.
 
 Quyết định của điều phối viên: **chấp nhận**; commit chung `fix(materials): …`.
+
+
+## Rà nhẹ theo quy tắc 2026-11-09 và làm lại tệp bài tập từ giáo trình (2026-11-12)
+
+Yêu cầu của người dùng: "rà math-4-AI 10–14 và rl-plan 01–10: chỉ cần một lượt nhẹ, gồm rà theo quy tắc 09/11 và làm lại exercises.md từ giáo trình", rồi "chỉ làm lecture note và exercise" (không sửa deck).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Người rà chỉ đọc (`no-ai-slop` Detect), sau đó cũng tác tử đó làm biên tập viên (`no-ai-slop` Edit), tiếp tục bằng `SendMessage` để giữ ngữ cảnh.
+- Người kiểm tra độc lập chỉ đọc (tác tử mới): đối chiếu đề với PDF, giải lại mọi bài trước khi đọc lời giải, rà các hunk đã đổi của ghi chú; sau đó kiểm lại phần đã sửa.
+
+**Rà ghi chú:** 23 phát hiện (0 chặn bàn giao, 1 nghiêm trọng, 7 trung bình, 15 nhẹ). Nghiêm trọng: tiêu đề Nhận xét 06.23 "(Điều khiển Monte Carlo không có định lý trong chương)" vi phạm quy tắc 2026-11-04. Trung bình: dòng 98, 100, 1410, 1418, phủ định kép dòng 1190, dẫn chiếu bài tập ở dòng 9–13 và 15. Điều phối viên chấp nhận: cả 23; dòng 1280 áp khác đề xuất vì điều kiện trong câu đề xuất chưa chặt.
+
+**Nguồn bài tập:** Sutton và Barto (2018), ấn bản 2 (PDF, SHA-256 2dd0d71d…), đề đối chiếu PDF. Sáu bài 06.14–06.19: SB 5.3, 6.11, 5.4, 6.8, 6.12, 6.9. SB 5.6–5.11 không dùng vì ghi chú không có Monte Carlo khác chính sách tương ứng. Theo phân bổ chung, SB 3.27–3.28 thuộc Bài 04, 2.1, 2.2 thuộc Bài 01, 2.4 thuộc Bài 05; 2.5 (lập trình) và 6.7 (tùy chọn) bị bỏ. Bài 06.17 cũ (lượt bị cắt ngắn) chuyển về ghi chú thành 06.13; các bài cũ khác bị bỏ.
+
+**Kiểm tra độc lập:** 0 chặn bàn giao, 0 nghiêm trọng, 3 trung bình (06.17(b) sai trong trường hợp tổng quát, hai số hạng chỉ lệch khi $(S_{t+1},A_{t+1})=(S_t,A_t)$; 06.19 là bài lập trình nên bỏ câu (b) phụ thuộc lần chạy và nhãn [Lập trình], giữ (a), (c) tất định 15, 7, 7 với quy ước biên viết "Giả sử …"; dòng 100 và 1410 có quan hệ nhân quả sai), 8 nhẹ (dòng 1396: điều kiện $Q_0(\mathrm B,1)$ theo ngưỡng $32/21$, đã mô phỏng). Điều phối viên chấp nhận mọi phát hiện; biên tập viên sửa; kiểm lại: đạt sau hai lượt (thêm $\gamma>0$, $\alpha_t$ ở 06.17(b); bỏ $\alpha$, $Q_0$ thừa ở 06.19; ngắt 7 công thức tràn khung theo quy tắc D3; chứng minh 06.17(a) đặt $e_t$ trước vẫn đúng).
+
+**Mục tiêu chỉ có bài trong ghi chú:** MT2 (điều kiện của mệnh đề cải thiện chính sách) và MT5 (GLIE, độ phủ, phân biệt bảo đảm lý thuyết với dừng theo ngân sách). **Ngoài phạm vi:** hình `chapter-structure.svg` và bảng G04 trên deck (dòng 727–738) còn lỗi tiêu đề và số hiệu cũ.
+
+### Ánh xạ cũ → mới
+
+| Số cũ | Vị trí cũ | Số mới | Vị trí mới | Nguồn |
+|---|---|---|---|---|
+| 06.1–06.12 | ghi chú | 06.1–06.12 | ghi chú, không đổi | ghi chú |
+| 06.1–06.6 (bản chép) | `exercises.md` | bỏ | số hiệu vẫn trỏ về ghi chú | — |
+| 06.13 (dãy sáu ô, bài tuần 3) | `exercises.md` | bỏ | — | bộ bài tập học phần |
+| 06.14 (lớp $\varepsilon$-mềm) | `exercises.md` | bỏ | — | tự dựng |
+| 06.15 (cắt ngắn, LunarLander) | `exercises.md` | bỏ | — | tự dựng |
+| 06.16 (lịch GLIE/Robbins–Monro) | `exercises.md` | bỏ | — | tự dựng |
+| 06.17 (chọn phương pháp cho tàu đổ bộ) | `exercises.md` | 06.13 | ghi chú, Bài tập củng cố, Mức vận dụng (sau 06.12) | tự dựng, trùng bài tổng hợp G03/G07 của deck |
+| — | — | 06.14 | `exercises.md`, nhận biết | SB Bài tập 5.3, §5.2, tr. 97 |
+| — | — | 06.15 | `exercises.md`, nhận biết | SB Bài tập 6.11, §6.5, tr. 132 |
+| — | — | 06.16 | `exercises.md`, tính toán | SB Bài tập 5.4, §5.3, tr. 99 |
+| — | — | 06.17 | `exercises.md`, chứng minh | SB Bài tập 6.8, §6.4, tr. 129 |
+| — | — | 06.18 | `exercises.md`, chứng minh | SB Bài tập 6.12, §6.5, tr. 132 |
+| — | — | 06.19 | `exercises.md`, vận dụng [Lập trình] | SB Bài tập 6.9, §6.4, tr. 131 (dữ kiện Ví dụ 6.5, tr. 130) |
+
+Cảnh báo: 06.14–06.17 được dùng lại với nghĩa mới; 06.13 nay là bài chọn phương pháp (trước là dãy sáu ô).
+
+Không thêm bài nào trong SB 5.6–5.11: các bài này thuộc Monte Carlo khác chính sách có lấy mẫu quan trọng có trọng số (5.6, 5.7, 5.8, 5.10, 5.11) hoặc dự đoán Monte Carlo của Bài 05 (5.9); ghi chú Bài 06 không có nội dung tương ứng (Mục 6 chỉ có TD(0) khác chính sách).
+
+### Dẫn chiếu trong phạm vi đã cập nhật
+
+- Ghi chú dòng 9–13 (mục tiêu): MT1 06.1, 06.2, 06.8, 06.14; MT2 06.2, 06.11, 06.12; MT3 06.3, 06.10, 06.14, 06.16; MT4 06.4, 06.5, 06.7, 06.10, 06.13, 06.15, 06.17, 06.18, 06.19; MT5 06.6, 06.9, 06.12, 06.13.
+- Ghi chú dòng 15: "Bài tập 06.1–06.13 nằm trong ghi chú; tệp bài tập chứa Bài tập 06.14–06.19, lấy từ bài tập của Sutton và Barto (2018)."
+- Ghi chú, gạch "Bài thực hành" trong tài liệu tham khảo: thêm "Bài tập 06.13 (phần 4–8 và 10)".
+- `exercises.md` viết lại toàn bộ; không còn dẫn chiếu tới số cũ.
+- Không ghi chú hay tệp bài tập của bài khác dẫn tới Bài tập 06.k (đã grep `2627-1/`).
+
+### Dẫn chiếu ngoài phạm vi còn dùng số cũ (không sửa, ghi nhật ký)
+
+- Deck `2627-1/lecture-06-dieu-khien-phi-mo-hinh.html`:
+  - dòng 727–732, bảng `Mạch | Bài tập` của G04: "06.1, 06.2, 06.14; ghi chú: 06.8, 06.11" / "06.3, 06.13" / "06.4, 06.15" / "06.5, 06.13; ghi chú: 06.10" / "06.6, 06.16; ghi chú: 06.9, 06.12" / "06.17; ghi chú: 06.7". Theo số mới: mạch 2 → ghi chú 06.1, 06.2, 06.8, 06.11; mạch 3 → 06.14, 06.16, ghi chú 06.3; mạch 4 → 06.17, 06.19, ghi chú 06.4; mạch 5 → 06.15, 06.18, ghi chú 06.5, 06.10; mạch 6 → ghi chú 06.6, 06.9, 06.12; mạch 7 → ghi chú 06.7, 06.13.
+  - dòng 738, ghi chú diễn giả: "Bộ bài tập gồm Bài tập 06.1–06.6, … và 06.13–06.17: 06.13 xét Monte Carlo và Q-learning trên dãy sáu ô …, 06.15 và 06.16 chạy trên notebook …, 06.17 là bài tập tổng hợp vừa giải."
+  - trang G03/G07 (#/7/6, #/7/7): bài tổng hợp nay là Bài tập 06.13 của ghi chú.
+- `img/lec-06/chapter-structure.svg`: chữ "Nét đứt: Monte Carlo điều khiển không có định lý hội tụ trong chương (Nhận xét 06.23)." trái quy tắc 2026-11-04; tiêu đề Nhận xét 06.23 trong ghi chú đã đổi thành "(Hội tụ của điều khiển Monte Carlo)".
+- `planning/lec-06/storyboard.md` dòng 178 (G03/G07 "Bài tập 06.17 của `exercises.md`"), dòng 183 (bảng G04 với 06.13–06.17), dòng 269 (G06 "bài không nêu định lý tới $q_*$"); `planning/lec-06/review-log.md` dòng 850, 1205–1237, 1332 (lịch sử, giữ nguyên).
+
+### Ghi chú cho người kiểm
+
+- Bài tập 06.19: sách không nêu luật ở biên lưới; tệp dùng quy ước "vị trí vượt biên được đưa về biên gần nhất" (phù hợp đường đi tối ưu $15$ bước mà sách nêu). Tìm kiếm theo chiều rộng của người biên tập cho $15$ / $7$ / $7$ bước với $4$ / $8$ / $9$ hành động; gió lấy theo cột hiện tại (khớp ví dụ "ô bên phải G, đi trái tới ô trên G"). Vị trí S (hàng 4, cột 1) và G (hàng 4, cột 8) đọc từ hình trang 130. Lời giải không nêu số liệu chạy Sarsa; chạy thử của người biên tập (5 hạt giống, 8000 bước) cho độ dài trung bình và độ dài tham lam dao động lớn, nên chỉ dẫn số "khoảng 17" của sách cho bản bốn hành động.
+- Bài tập 06.18: ví dụ phản chứng ($Q(s,0)=1$, $Q(s,1)=0$, vòng tự thân thưởng $-2$, $\alpha=\gamma=1$) do người biên tập dựng trong lời giải, không phải dữ kiện của đề.
+- Bài tập 06.17: quy ước $Q(S_T,A_T)=0$ được nêu trong đề.
+
+### Vòng sửa theo `check/rl-06.md` (2026-11-12)
+
+- 06.19: bỏ câu (b) lập trình và nhãn [Lập trình]; câu (c) cũ thành (b); quy ước biên ghi "Giả sử …". Số hiệu bài không đổi.
+- 06.17(b) nêu đúng điều kiện $(S_{t+1},A_{t+1})=(S_t,A_t)$; đề dùng $\delta^V$ cho (6.6). 06.18, 06.16(c): sửa theo báo cáo. 06.15 trùng một phần 06.7 câu 1 của ghi chú: giữ, ghi nhật ký.
+- Ghi chú: dòng 100, 1410 khớp Nhận xét 06.23; dòng ~1280 có công thức độ chệch; dòng 1396 dùng ngưỡng $32/21$ (biên tập viên mô phỏng lại: $Q_0(\mathrm B,1)=1{,}5$ cho 5 chuyển, $1{,}53$ cho 7, $10$ cho 17); dòng 160 thêm "$\pi_L$".
+- D3: `overflow.py 8812` cho 0 công thức tràn ở cả `exercises.md` và `lecture-note.md`.
+- D3 (đo lại bằng overflow.py đã sửa): `exercises.md` 0/8 tràn sau khi ngắt bằng `aligned`; ở 06.17(a), chứng minh viết theo $e_t$ (đặt trước khối), ba dấu bằng được giải thích lại trong văn bản. Ghi chú: công thức của Bài tập 06.13 và công thức độ chệch mới (dòng ~1280) không tràn; còn 28/39 công thức có sẵn tràn ở 390 px (ngoài lượt nhẹ, chỉ ghi nhật ký).
+
+**Số liệu:** ghi chú 25685 âm tiết (`wc -w`); `git diff --check` sạch; mỗi `exercise` có đúng một `hint` và một `solution` (ghi chú 13, tệp 6).
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8812, 1600×900 và 390×844, mở mọi khối khi đo: 0 `.katex-error`, 0 `:::` sót, 0 lỗi console (trừ CSP của reloadserver), 0 request lỗi, không tràn ngang trang. Tệp bài tập: 0/8 công thức tràn khung ở 390 px. Ghi chú: 28 công thức có sẵn từ trước tràn khung (ngoài lượt nhẹ).
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-06): rà theo quy tắc 2026-11-09, làm lại bài tập từ Sutton–Barto`.
