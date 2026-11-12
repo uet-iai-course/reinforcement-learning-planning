@@ -158,7 +158,7 @@ For a new deck visit every horizontal and vertical slide; check every strand tit
 
 ## Git (course settings)
 
-- **Standing permission:** within the `prompt_lecture_note_deck.md` workflow, the user allows commit **and push** after each stage gate passes, without asking again. Outside that workflow, ask before committing.
+- **Standing permission:** the user allows commit **and push** after each substantial, checked milestone without asking again (user, 2026-11-12). This covers decks, lecture notes, exercises, infrastructure and `AGENTS.md`/`CLAUDE.md`; within the `prompt_lecture_note_deck.md` workflow, a milestone is a passed stage gate.
 - **Commit scope:** for a deck: the deck HTML, `img/lec-NN/`, `planning/lec-NN/`, the related `index.html` entry, and shared files that truly had to change. Never mix two lectures in one commit.
 - **Commit messages:** `feat(materials-NN)` / `fix(materials-NN)` for lecture notes, exercises and notebooks; `feat(lecture-NN)` / `fix(lecture-NN)` for decks; `docs:` for `AGENTS.md`, `CLAUDE.md`, workflow files, templates and viewer infrastructure.
 
