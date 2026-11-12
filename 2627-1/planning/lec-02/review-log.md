@@ -3566,3 +3566,75 @@ Yêu cầu của người dùng: "Duyệt xem còn câu rào đón nào không t
 **Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in: 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang; lỗi CSP script nội tuyến đến từ máy chủ xem trước.
 
 Quyết định của điều phối viên: **chấp nhận**; commit chung `fix(materials): …`.
+
+
+## Rà nhẹ theo quy tắc 2026-11-09 và làm lại tệp bài tập từ giáo trình (2026-11-12)
+
+Yêu cầu của người dùng: "rà math-4-AI 10–14 và rl-plan 01–10: chỉ cần một lượt nhẹ, gồm rà theo quy tắc 09/11 và làm lại exercises.md từ giáo trình", rồi "chỉ làm lecture note và exercise" (không sửa deck).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Người rà chỉ đọc (`no-ai-slop` Detect), sau đó cũng tác tử đó làm biên tập viên (`no-ai-slop` Edit), tiếp tục bằng `SendMessage` để giữ ngữ cảnh.
+- Người kiểm tra độc lập chỉ đọc (tác tử mới): đối chiếu đề với PDF, giải lại mọi bài trước khi đọc lời giải, rà các hunk đã đổi của ghi chú; sau đó kiểm lại phần đã sửa.
+
+**Rà ghi chú:** 17 phát hiện (0 chặn bàn giao, 0 nghiêm trọng, 2 trung bình, 15 nhẹ): dẫn chiếu số bài tập ở mục tiêu và dòng 14, 1370; "có thể góp phần", "nói chung", câu nói định nghĩa "chưa nói", câu nhồi ý, câu không chủ ngữ; dòng 801 dừng trước kết luận. Điều phối viên chấp nhận: cả 17. Bài tùy chọn SB 3.2 bị bác (bài mở, dễ sinh khẳng định không nguồn). SB 13.1 chuyển sang Bài 09 theo phân bổ chung (mỗi bài sách chỉ dùng ở một bài giảng).
+
+**Nguồn bài tập:** Sutton và Barto (2018), *Reinforcement Learning: An Introduction*, ấn bản 2 (PDF của tác giả, SHA-256 2dd0d71d…); mọi số, dấu, ký hiệu của đề đã đối chiếu với trang PDF vì bản text mất dấu trừ và chữ Hy Lạp. Mười một bài 02.14–02.24; mọi bài tự dựng và bản lặp của ghi chú bị bỏ khỏi tệp.
+
+**Kiểm tra độc lập:** 0 chặn bàn giao, 0 nghiêm trọng, 3 trung bình (dòng 189 mâu thuẫn $X_t=O_t$; $K$ hai nghĩa ở 02.22(b); deck lệch số), 10 nhẹ; không lời giải sai (giải lại 11/11). Ở 02.16, 02.20, giả định phần thưởng tất định và $\alpha,\beta\in(0,1)$ được tách thành "Giả sử thêm" vì Ví dụ 3.3 chỉ cho số lon kỳ vọng. Điều phối viên chấp nhận mọi phát hiện; biên tập viên sửa; kiểm lại: đạt, không phát hiện mới; Nhận xét 02.9 dời vị trí, số khối vẫn tăng theo thứ tự đọc.
+
+Bản `exercises.md` cũ nằm trong lịch sử git (commit trước commit này).
+
+### Bảng ánh xạ cũ → mới
+
+| Số cũ | Vị trí cũ | Nội dung cũ | Số mới | Ghi chú |
+|---|---|---|---|---|
+| 02.1–02.13 | ghi chú | bài tập thân bài và Bài tập củng cố | 02.1–02.13 | không đổi, vẫn ở ghi chú |
+| 02.1, 02.2, 02.3, 02.4, 02.5, 02.7, 02.8 | bản lặp trong `exercises.md` | đề và lời giải chép lại từ ghi chú | (xóa khỏi tệp) | số hiệu vẫn trỏ tới ghi chú |
+| 02.14 | `exercises.md` | Nhận diện tín hiệu học (tự dựng, Bài tập tuần 2 bài 1; câu (c) theo SB 3.7) | bỏ | nội dung câu (c) nay là 02.23 (SB 3.7) |
+| 02.15 | `exercises.md` | Quan sát đầy đủ và một phần (câu đố trang chiếu trang 27, Bài tập tuần 2 bài 2) | bỏ | mục tiêu 2 dựa vào 02.2, 02.3, 02.11 của ghi chú |
+| 02.16 | `exercises.md` | Bước trượt có phạt (tự dựng; câu (d) theo SB 3.11) | bỏ | câu (d) nay là 02.20 (SB 3.11) |
+| 02.17 | `exercises.md` | Lợi tức nhiệm vụ tiếp diễn (SB 3.9, 3.10; câu (d) tự thêm) | bỏ | thay bằng 02.18 (SB 3.10) và 02.19 (SB 3.9) |
+| 02.18 | `exercises.md` | Cộng hằng số vào phần thưởng (SB 3.15, 3.16) | bỏ | thay bằng 02.21 (SB 3.15) và 02.24 (SB 3.16) |
+| 02.19 | `exercises.md` | Hành lang ba ô với hành động đảo chiều (SB Ví dụ 13.1, Bài tập 13.1) | bỏ | SB 13.1 thuộc Bài 09 (decisions.md, phân bổ) |
+| 02.20 | `exercises.md` | Hai cách thưởng cho bài toán giữ cột (SB Ví dụ 3.4, Bài tập 3.6, thêm số liệu) | bỏ | thay bằng 02.22 (SB 3.6, không số liệu thêm) |
+| 02.21 | `exercises.md` | Mê cung đích–hố có chiết khấu (tự dựng; bài tổng hợp trên trang `L02-07-04`/`L02-07-05`) | bỏ | deck vẫn dẫn, xem dưới |
+| 02.22 | `exercises.md` | Đèn giao thông (tự dựng, Bài tập tuần 2 bài 10) | bỏ | — |
+| — | — | — | 02.14 | SB 3.3, §3.1, tr. 51: ranh giới tác tử–môi trường khi lái xe |
+| — | — | — | 02.15 | SB 3.5, §3.3, tr. 55: điều kiện tổng của $p$ cho nhiệm vụ có lượt |
+| — | — | — | 02.16 | SB 3.4, §3.1, tr. 53 (Ví dụ 3.3, tr. 52): bảng $p(s',r\mid s,a)$ của robot thu gom lon |
+| — | — | — | 02.17 | SB 3.8, §3.3, tr. 56: lợi tức tính ngược |
+| — | — | — | 02.18 | SB 3.10, §3.3, tr. 56: lợi tức của phần thưởng hằng |
+| — | — | — | 02.19 | SB 3.9, §3.3, tr. 56: lợi tức của một chuỗi vô hạn |
+| — | — | — | 02.20 | SB 3.11, §3.5, tr. 58: $\mathbb E_\pi[R_{t+1}\mid S_t=s]$ theo $\pi$ và $p$ |
+| — | — | — | 02.21 | SB 3.15, §3.5, tr. 61 (Ví dụ 3.5, tr. 60): cộng hằng số, nhiệm vụ tiếp diễn |
+| — | — | — | 02.22 | SB 3.6, §3.3, tr. 56 (Ví dụ 3.4): giữ cột, lượt có chiết khấu và dạng tiếp diễn |
+| — | — | — | 02.23 | SB 3.7, §3.3, tr. 56: robot thoát mê cung không cải thiện |
+| — | — | — | 02.24 | SB 3.16, §3.5, tr. 61: cộng hằng số, nhiệm vụ có lượt |
+
+Cảnh báo: số 02.14–02.22 được dùng lại cho bài khác nội dung; mọi dẫn chiếu cũ tới các số này phải được rà, không chỉ thay số.
+
+Dẫn chiếu đã cập nhật trong ghi chú: dòng 8–12 (mục tiêu), dòng 14, dòng 1370. Ngoài Bài 02, không tệp nào trong `materials/` dẫn `Bài tập 02.k`.
+
+### Chỗ deck lệch (`2627-1/lecture-02-giao-dien-tac-tu-moi-truong.html`, không sửa)
+
+- Dòng 35–39, trang `L02-01-03` (Mục tiêu học tập): liệt kê 02.14, 02.15, 02.16–02.18, 02.19, 02.20–02.22 theo nghĩa cũ. Danh sách mới theo ghi chú: (1) 02.1, 02.9, 02.14; (2) 02.2, 02.3, 02.11; (3) 02.4, 02.13, 02.20; (4) 02.5–02.7, 02.10, 02.12, 02.15–02.22; (5) 02.8, 02.10, 02.21–02.24.
+- Dòng 569, ghi chú diễn giả trang `L02-07-04`: "Bài tập tổng hợp, tức Bài tập 02.21 của tệp bài tập" — bài này đã bỏ; bài tổng hợp và lời giải vẫn đứng trên trang `L02-07-04`/`L02-07-05`.
+- Dòng 606–607, trang `L02-07-03` (bảng `Mạch | Bài tập`): hàng "Tệp bài tập" và "Chỉ trong ghi chú" theo phân bổ cũ. Phân bổ mới: mạch 2: 02.14 (ghi chú 02.1); mạch 3: — (ghi chú 02.2, 02.3, 02.11); mạch 4: 02.20 (ghi chú 02.4, 02.13); mạch 5: 02.15–02.19, 02.21, 02.22 (ghi chú 02.5–02.7, 02.9, 02.10(a), 02.12); mạch 6: 02.23, 02.24 (ghi chú 02.8, 02.10(b)); mạch 7: —.
+- Dòng 612, ghi chú diễn giả trang `L02-07-03`: "Tệp bài tập có mười sáu bài … 02.1–02.5, 02.7, 02.8 trùng … 02.14–02.22 … 02.21 là bài tập tổng hợp …" — nay tệp có mười một bài 02.14–02.24, không bài nào trùng trang chiếu.
+- Dòng 122, 212, 244, 326, 408, 463, 520 (ghi chú diễn giả các trang bài tập): dẫn 02.1, 02.2, 02.3, 02.4, 02.5, 02.7, 02.8 "của ghi chú" — vẫn đúng.
+
+Tệp lập kế hoạch dẫn số cũ (ngoài phạm vi): `planning/lec-02/outline.md` dòng 36–40, 46, 113; `planning/lec-02/storyboard.md` (02.15, 02.21, "02.1–02.13").
+
+### Mục tiêu không có bài giáo trình (ghi nhật ký)
+
+- Mục tiêu 1, phần ghi mẫu chuyển đúng chỉ số: dựa vào 02.1, 02.9 của ghi chú.
+- Mục tiêu 2 (phân biệt $S_t$/$O_t$/$X_t$, kiểm tra và sửa tính Markov): không bài SB nào trong tệp; dựa vào 02.2, 02.3, 02.11 của ghi chú.
+- Mục tiêu 3, phần phân phối hợp lệ, xác suất dãy hành động, biểu diễn không đủ cho chính sách xác định: dựa vào 02.4, 02.13 của ghi chú.
+- Mục tiêu 4, phần trọng số hình học (Định lý 02.11): dựa vào 02.5(b), 02.10(a) của ghi chú.
+- Mục tiêu 5, phần ngưỡng $c^*$: dựa vào 02.8, 02.10(b) của ghi chú.
+
+**Số liệu:** ghi chú 20 663 âm tiết (`wc -w`); `git diff --check` sạch; mỗi `exercise` có đúng một `hint` và một `solution` (ghi chú 13, tệp 11).
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8812, 1600×900 và 390×844: 0 `.katex-error`, 0 `:::` sót, 0 lỗi console (trừ CSP của reloadserver), 0 request lỗi, không tràn ngang trang. Tệp bài tập: 0 công thức hiển thị tràn khung ở 390 px. Ghi chú: 11 công thức có sẵn từ trước tràn khung ở 390 px (ngoài lượt nhẹ, quy tắc D3). Điều phối viên đã xem ảnh chụp.
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-02): rà theo quy tắc 2026-11-09, làm lại bài tập từ Sutton–Barto`.
