@@ -2428,3 +2428,80 @@ Yêu cầu của người dùng: "Duyệt xem còn câu rào đón nào không t
 **Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in: 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang; lỗi CSP script nội tuyến đến từ máy chủ xem trước.
 
 Quyết định của điều phối viên: **chấp nhận**; commit chung `fix(materials): …`.
+
+
+## Rà nhẹ theo quy tắc 2026-11-09 và làm lại tệp bài tập từ giáo trình (2026-11-12)
+
+Yêu cầu của người dùng: "rà math-4-AI 10–14 và rl-plan 01–10: chỉ cần một lượt nhẹ, gồm rà theo quy tắc 09/11 và làm lại exercises.md từ giáo trình", rồi "chỉ làm lecture note và exercise" (không sửa deck).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Người rà chỉ đọc (`no-ai-slop` Detect), sau đó cũng tác tử đó làm biên tập viên (`no-ai-slop` Edit), tiếp tục bằng `SendMessage` để giữ ngữ cảnh.
+- Người kiểm tra độc lập chỉ đọc (tác tử mới): đối chiếu đề với PDF, giải lại mọi bài trước khi đọc lời giải, rà các hunk đã đổi của ghi chú; sau đó kiểm lại phần đã sửa.
+
+**Rà ghi chú:** 23 phát hiện (0 chặn bàn giao, 0 nghiêm trọng, 8 trung bình, 15 nhẹ): dẫn chiếu số bài tập ở mục tiêu (dòng 7–11), dòng 13 và 1819; câu nguồn gốc (465, 1703, 1708/1734/1785); "bài yêu cầu…" nói về vị thế của bài (1744); dòng 1699 mâu thuẫn chặn Singh–Yee ở dòng 1820. Điều phối viên chấp nhận: cả 23; dòng 1699 sửa theo chặn Singh–Yee (thêm thừa số $2\gamma/(1-\gamma)$); dòng 240 đổi giả thiết thành "không giảm" cho khớp $U\le V$.
+
+**Nguồn bài tập:** Sutton và Barto (2018), ấn bản 2 (PDF, SHA-256 2dd0d71d…), đề đối chiếu PDF tr. 60, 65–67, 74, 76–77, 80, 82–84. Mười một bài 04.11–04.21: SB 4.1, 4.3, 3.25–3.28, 4.10, 4.2, 3.22, 3.24 (thêm câu $k=53$, $\theta=0{,}01$), 4.4, 4.5, 4.8, 4.9. Các bài về $v_*$, $q_*$ (3.22–3.28) thuộc bài này vì Bài 04 định nghĩa giá trị tối ưu. SB 4.7 (lập trình) bị bỏ. Bài 04.15(e) cũ (cập nhật tại chỗ) chuyển về ghi chú thành Bài tập 04.7, cuối Mục 5; vì đánh số theo thứ tự đọc, các bài củng cố cũ 04.7–04.9 thành 04.8–04.10 (dẫn chiếu trong ghi chú và tệp đã cập nhật; deck dòng 700–710 còn số cũ). Mọi bài cũ khác (04.1–04.6 bản lặp, tám bài tự dựng hoặc từ bộ bài tuần) bị bỏ.
+
+**Kiểm tra độc lập:** 0 chặn bàn giao, 0 nghiêm trọng, 3 trung bình (04.20 dòng 417: "cược hết là hành động tối ưu duy nhất tại 50" mâu thuẫn Kiểm tra lại vì cược 0 cũng cho 0,4 và cược 49 hòa cược 1; 04.20/04.21: khẳng định họ chính sách tối ưu khi $\gamma=1$ thiếu lập luận, nay dùng kết thúc với xác suất 1 và tính duy nhất ở sách tr. 74; ghi chú dòng 1731 "lớn hơn" sai khi $\gamma<1/3$), 7 nhẹ; không lời giải sai. Bài người cờ bạc kiểm bằng số hữu tỉ: 72/99 mức vốn có hơn một cược tối ưu với $p_h=0{,}4$ và $0{,}25$; tại 51 cược 1 và 49 bằng nhau; công thức $(1-(9/11)^s)/(1-(9/11)^{100})$ cho $p_h=0{,}55$. Điều phối viên chấp nhận mọi phát hiện; biên tập viên sửa; kiểm lại: đạt; lập luận kết thúc với xác suất 1 đúng (xác suất chưa kết thúc sau $k$ khối $\le(1-p_h^{99})^k$); một lỗi nhẹ mới (ngoặc kép cong ở dòng 569) đã sửa.
+
+**Mục tiêu chỉ có bài trong ghi chú:** MT5 (lịch cập nhật, bao phủ, CartPole; Bài tập 04.5, 04.6(d), 04.7, 04.10).
+
+Ghi chú `2627-1/materials/lec-04/lecture-note.md` gồm Bài tập 04.1–04.10; 04.7 là bài chuyển về từ `exercises.md`, đặt cuối Mục 5. Tệp `exercises.md` gồm Bài tập 04.11–04.21, đều lấy từ Sutton–Barto.
+
+| Cũ | Vị trí cũ | Mới | Vị trí mới / xử lý |
+|---|---|---|---|
+| 04.1–04.6 | ghi chú (có bản sao trong `exercises.md`) | 04.1–04.6 | chỉ còn ở ghi chú; bản sao trong tệp bài tập đã xóa |
+| 04.7 | ghi chú, Bài tập củng cố, mức nhận biết | 04.8 | giữ chỗ |
+| 04.8 | ghi chú, Bài tập củng cố, mức tính toán | 04.9 | giữ chỗ |
+| 04.9 | ghi chú, Bài tập củng cố, mức vận dụng | 04.10 | giữ chỗ |
+| 04.15(e) | `exercises.md` (lặp chính sách cải biên, câu về cập nhật tại chỗ) | 04.7 | ghi chú, cuối Mục 5, sau Bài tập 04.6: "Thứ tự cập nhật trong lặp giá trị tại chỗ" |
+| 04.15(a)–(d) | `exercises.md` | — | bỏ (tự dựng, lập trình) |
+| 04.10 | `exercises.md` (chuỗi Neumann) | — | bỏ |
+| 04.11 | `exercises.md` (tính đơn điệu của $T_*$) | — | bỏ |
+| 04.12 | `exercises.md` (MDP ba trạng thái) | — | bỏ |
+| 04.13 | `exercises.md` (dãy năm ô trơn trượt) | — | bỏ |
+| 04.14 | `exercises.md` (số lượt quét theo $\gamma$) | — | bỏ |
+| 04.16 | `exercises.md` (lợi tức ban đầu) | — | bỏ |
+| 04.17 | `exercises.md` (cải thiện từ $\pi_u$) | — | bỏ |
+| — | — | 04.11 | SB 4.1 |
+| — | — | 04.12 | SB 4.3 |
+| — | — | 04.13 | SB 3.25–3.28 |
+| — | — | 04.14 | SB 4.10 |
+| — | — | 04.15 | SB 4.2 |
+| — | — | 04.16 | SB 3.22 |
+| — | — | 04.17 | SB 3.24, kèm câu (b) về chặn hội tụ và ngưỡng |
+| — | — | 04.18 | SB 4.4 |
+| — | — | 04.19 | SB 4.5 |
+| — | — | 04.20 | SB 4.8 |
+| — | — | 04.21 | SB 4.9 |
+
+Các số 04.7–04.17 được dùng lại cho nội dung khác, nên mọi dẫn chiếu cũ tới các số này phải sửa; không được giữ nguyên.
+
+### Dẫn chiếu trong phạm vi (đã cập nhật)
+
+- Trong ghi chú đã cập nhật:
+  - dòng 7–11 (mục tiêu học tập) và dòng 13 (câu liên kết tới tệp bài tập);
+  - tiêu đề ba bài củng cố, nay là 04.8–04.10;
+  - dòng tài liệu tham khảo, nay ghi "bài 1–5 và 8 cho Bài tập 04.8–04.10";
+  - xóa câu "Bài tập 04.15 của tệp bài tập" ở mục Đọc thêm.
+- Các dẫn chiếu của ghi chú tới 04.1–04.6 giữ nguyên vì số không đổi.
+- Ghi chú và tệp bài tập của các bài khác không có dẫn chiếu `Bài tập 04.k` (đã grep).
+
+### Dẫn chiếu ngoài phạm vi còn dùng số cũ (không sửa trong lượt này)
+
+- Deck `2627-1/lecture-04-giai-mdp-bang-quy-hoach-dong.html`:
+  - Dòng 700–701, trang L04-G05 "Bài tập về nhà và tài liệu đọc". Theo mạch 1–7, hàng "Tệp bài tập" đang ghi: 04.16 | 04.1, 04.10 | 04.2, 04.17 | 04.3, 04.12 | 04.4, 04.11, 04.13 | 04.5, 04.14, 04.15 | 04.6. Hàng "Chỉ trong ghi chú" đang ghi 04.7, 04.8 (mạch 5) và 04.9 (mạch 6). Theo số mới:
+    - tệp bài tập: — | 04.12, 04.15 | 04.11 | 04.16, 04.18, 04.19 | 04.13, 04.14, 04.17, 04.20, 04.21 | — | —;
+    - ghi chú: — | 04.1 | 04.2 | 04.3 | 04.4, 04.8, 04.9 | 04.5, 04.7, 04.10 | 04.6.
+  - Dòng 710, ghi chú diễn giả của L04-G05, lệch toàn bộ. Ba câu sai theo số mới:
+    - "Bài tập 04.1–04.6 … tệp bài tập giữ cùng đề";
+    - "Bài tập 04.16 gồm hai câu …";
+    - "Bài tập 04.10–04.17 chỉ có trong tệp bài tập: 04.13 …, 04.14 và 04.15 …; Bài tập 04.7–04.9 là bài tập củng cố của ghi chú; 04.7 và 04.8 …".
+  - Các dòng 44–48, 50, 205, 292, 379, 517, 601, 668 dẫn 04.1–04.6 "của ghi chú bài giảng" và vẫn đúng.
+- `2627-1/planning/lec-04/outline.md`, `storyboard.md`, `review-log.md`, `revision-plan-2026-10-12.md` vẫn dẫn 04.7–04.17 theo số cũ.
+
+**Số liệu:** ghi chú 25441 âm tiết (`wc -w`); `git diff --check` sạch; mỗi `exercise` có đúng một `hint` và một `solution`.
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8812, 1600×900 và 390×844, mở mọi khối khi đo: 0 `.katex-error`, 0 `:::` sót, 0 lỗi console (trừ CSP của reloadserver), 0 request lỗi, không tràn ngang trang. Tệp bài tập: 0/24 công thức tràn khung ở 390 px. Ghi chú: 27 công thức có sẵn từ trước tràn khung (ngoài lượt nhẹ).
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-04): rà theo quy tắc 2026-11-09, làm lại bài tập từ Sutton–Barto`.

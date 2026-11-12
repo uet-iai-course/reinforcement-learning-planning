@@ -4,13 +4,13 @@
 
 Sau chương này, người học có thể:
 
-1. Thực hiện một lượt quét (sweep) đánh giá chính sách (policy evaluation), giải giá trị chính xác trên mô hình nhỏ và dùng phần dư Bellman (Bellman residual) để chặn sai số (Bài tập 04.1, 04.7, 04.10, 04.16).
-2. Tính giá trị nhìn trước một bước (one-step lookahead), lập chính sách tham lam (greedy policy) với quy tắc phá hòa (tie-breaking) và giải thích bằng định lý cải thiện chính sách (policy improvement theorem) vì sao giá trị không giảm (Bài tập 04.2, 04.17).
-3. Chạy lặp chính sách (policy iteration) tới chính sách ổn định (policy-stable); phân biệt chứng nhận tối ưu với việc chính sách không đổi theo một bảng gần đúng (Bài tập 04.3, 04.12, 04.15).
-4. Chạy lặp giá trị (value iteration), trích chính sách tham lam, chọn ngưỡng dừng theo sai số cho phép và đọc chặn hội tụ hình học (Bài tập 04.4, 04.6, 04.8, 04.11–04.14).
-5. So sánh cập nhật đồng bộ, cập nhật tại chỗ (in-place update) và quy hoạch động bất đồng bộ (asynchronous dynamic programming); nêu điều kiện bao phủ của lịch cập nhật và các điều kiện về mô hình khi áp dụng cho CartPole rời rạc hóa (discretization; Bài tập 04.5, 04.6, 04.9, 04.14, 04.15).
+1. Thực hiện một lượt quét (sweep) đánh giá chính sách (policy evaluation), giải giá trị chính xác trên mô hình nhỏ và dùng phần dư Bellman (Bellman residual) để chặn sai số (Bài tập 04.1, 04.8, 04.12, 04.15–04.17).
+2. Tính giá trị nhìn trước một bước (one-step lookahead), lập chính sách tham lam (greedy policy) với quy tắc phá hòa (tie-breaking) và giải thích bằng định lý cải thiện chính sách (policy improvement theorem) vì sao giá trị không giảm (Bài tập 04.2, 04.11, 04.13, 04.18).
+3. Chạy lặp chính sách (policy iteration) tới chính sách ổn định (policy-stable); phân biệt chứng nhận tối ưu với việc chính sách không đổi theo một bảng gần đúng (Bài tập 04.3, 04.16, 04.18, 04.19).
+4. Chạy lặp giá trị (value iteration), trích chính sách tham lam, chọn ngưỡng dừng theo sai số cho phép và đọc chặn hội tụ hình học (Bài tập 04.4, 04.6, 04.9, 04.13, 04.14, 04.17, 04.20, 04.21).
+5. So sánh cập nhật đồng bộ, cập nhật tại chỗ (in-place update) và quy hoạch động bất đồng bộ (asynchronous dynamic programming); nêu điều kiện bao phủ của lịch cập nhật và các điều kiện về mô hình khi áp dụng cho CartPole rời rạc hóa (discretization; Bài tập 04.5–04.7, 04.10).
 
-Bài tập 04.1–04.9 nằm trong ghi chú; [tệp bài tập](material-viewer.html?doc=materials/lec-04/exercises.md&deck=lecture-04-giai-mdp-bang-quy-hoach-dong.html) chứa lại Bài tập 04.1–04.6 và thêm Bài tập 04.10–04.17.
+Bài tập 04.1–04.10 nằm trong ghi chú; [tệp bài tập](material-viewer.html?doc=materials/lec-04/exercises.md&deck=lecture-04-giai-mdp-bang-quy-hoach-dong.html) gồm Bài tập 04.11–04.21.
 
 ## Kiến thức tiên quyết
 
@@ -94,7 +94,7 @@ Năm khối của hình là năm bước của chương, mỗi khối ghi đại
 <!-- note-topic-id: lec-04-part-01 -->
 ### 1.1 Mô hình hai trạng thái và lợi tức
 
-Ví dụ xuyên suốt của chương là mô hình hai trạng thái của Bài giảng gốc (2025–2026), trang 17–18. Mô hình có tập trạng thái $\mathcal S=\{\mathrm s_0,\mathrm s_1\}$, không có trạng thái kết thúc (terminal state), mỗi trạng thái có hai hành động $\mathrm a$, $\mathrm b$, và mọi chuyển đều xác định, tức xảy ra với xác suất $1$.
+Ví dụ xuyên suốt của chương là một mô hình hai trạng thái. Mô hình có tập trạng thái $\mathcal S=\{\mathrm s_0,\mathrm s_1\}$, không có trạng thái kết thúc (terminal state), mỗi trạng thái có hai hành động $\mathrm a$, $\mathrm b$, và mọi chuyển đều xác định, tức xảy ra với xác suất $1$.
 
 | Trạng thái $s$ | Hành động | Trạng thái kế tiếp $s'$ | Phần thưởng $r$ |
 |---|---|---|---:|
@@ -131,7 +131,7 @@ $$
 **Kiểm tra lại.** Tính từ cuối về đầu: $1+0{,}9\cdot1=1{,}9$, rồi $2+0{,}9\cdot1{,}9=3{,}71$.
 :::
 
-Ví dụ 04.1 cho thấy rằng tính lợi tức cần cả phần thưởng lẫn trạng thái kế tiếp, tức cần mô hình chuyển, và cộng từng số hạng thì sau hữu hạn bước chỉ được tổng cắt ngắn. Chúng ta cần một cách tính kỳ vọng của tổng vô hạn mà không cộng từng số hạng.
+Chúng ta cần một cách tính kỳ vọng của tổng vô hạn mà không cộng từng số hạng.
 
 Bài toán tính $v_\pi$ khi $\pi$ được giữ cố định gọi là đánh giá chính sách (policy evaluation), hay bài toán dự đoán (prediction). Bài toán tìm chính sách tốt nhất gọi là bài toán điều khiển (control). Trong bài toán điều khiển, chính sách có thể thay đổi giữa các bước tính.
 
@@ -235,9 +235,9 @@ $$
 **Kiểm tra lại.** Với $V_0=0$, mỗi thành phần của $T_{\pi_u}V_0$ là thưởng kỳ vọng một bước dưới $\pi_u$: $\tfrac{1+0}{2}=0{,}5$ và $\tfrac{2+3}{2}=2{,}5$.
 :::
 
-Nhầm lẫn thường gặp là đọc giá trị vừa ghi trong cùng một lượt quét đồng bộ. Lượt quét đồng bộ cần hai mảng, một để đọc và một để ghi; đọc ngay giá trị vừa ghi là cập nhật tại chỗ (Ví dụ 04.2).
+Lượt quét đồng bộ cần hai mảng, một để đọc và một để ghi; đọc ngay giá trị vừa ghi là cập nhật tại chỗ (Ví dụ 04.2).
 
-Tính chất đầu tiên của $T_\pi$, tính đơn điệu (monotonicity), chỉ dùng dấu của các trọng số trong (1.1): khi bảng tiếp nối tăng ở mọi trạng thái, giá trị mới không thể giảm.
+Tính chất đầu tiên của $T_\pi$, tính đơn điệu (monotonicity), chỉ dùng dấu của các trọng số trong (1.1): khi bảng tiếp nối không giảm ở mọi trạng thái, giá trị mới cũng không giảm.
 
 ::: lemma Bổ đề 04.2 (Tính đơn điệu của $T_\pi$)
 **Giả thiết.** MDP hữu hạn; $\gamma\ge0$; $\pi$ là chính sách Markov dừng; $U,V\in\mathbb R^n$ thỏa $U\le V$ theo từng trạng thái.
@@ -339,7 +339,7 @@ Bước (i) là bất đẳng thức tam giác, dùng được vì mọi trọng
 
 Hệ số $\gamma$ xuất hiện vì mỗi lần áp dụng toán tử, chênh lệch bị đẩy lùi một bước và chiết khấu thêm một lần.
 
-Tính co tự nó chưa nói dãy $V_{k+1}=T_\pi V_k$ có giới hạn. Định lý điểm bất động Banach (Banach fixed-point theorem) dưới đây cung cấp phần còn thiếu.
+Để chứng minh dãy $V_{k+1}=T_\pi V_k$ có giới hạn, ta dùng định lý điểm bất động Banach (Banach fixed-point theorem) sau.
 
 ::: theorem Định lý 04.5 (Điểm bất động của ánh xạ co trên $\mathbb R^n$)
 **Giả thiết.** $F:\mathbb R^n\to\mathbb R^n$ là ánh xạ co với hệ số $\beta\in[0,1)$ theo chuẩn vô cùng.
@@ -396,7 +396,7 @@ Vế phải tiến về $0$ theo Bước 2, còn vế trái không phụ thuộc
 
 Bước 1 và Bước 2 của chứng minh dùng $1-\beta>0$; Bước 2 còn dùng tính chất mọi dãy Cauchy số thực hội tụ và số trạng thái hữu hạn.
 
-Ghép Mệnh đề 04.4 với Định lý 04.5 cho câu trả lời đầy đủ về đánh giá chính sách; phần (c) dưới đây nhắc lại kết quả về hệ tuyến tính của Bài 03.
+Ghép Mệnh đề 04.4 với Định lý 04.5 được hệ quả sau về đánh giá chính sách; phần (c) dưới đây nhắc lại kết quả về hệ tuyến tính của Bài 03.
 
 ::: corollary Hệ quả 04.6 (Nghiệm của bài toán đánh giá chính sách)
 **Giả thiết.** MDP hữu hạn với phần thưởng bị chặn; $0\le\gamma<1$; $\pi$ là chính sách Markov dừng.
@@ -455,14 +455,14 @@ $$
 **Kiểm tra lại.** $k=2$: $10\cdot0{,}81=8{,}1$, khớp $10-1{,}9=8{,}1$ và $11-2{,}9=8{,}1$.
 :::
 
-Sau hai lượt quét, sai số vẫn là $8{,}1$; với $\gamma$ gần $1$, hệ số co gần $1$ và dãy hội tụ chậm.
+Sau hai lượt quét, sai số vẫn là $8{,}1$; để sai số giảm mười lần cần $\lceil\ln10/\ln(1/\gamma)\rceil$ lượt quét, tức $22$ lượt khi $\gamma=0{,}9$ và $230$ lượt khi $\gamma=0{,}99$.
 
 Hai điều kiện của Hệ quả 04.6 có vai trò riêng.
 
 - Bỏ $\gamma<1$: với $\gamma=1$, lượt quét cho $V_k=(k,\,k+1)$ với $k\ge1$, tăng không giới hạn vì tác tử nhận phần thưởng $1$ mãi mãi tại $\mathrm s_0$. Mọi phần thưởng không âm và trong hai bước liên tiếp luôn có ít nhất một phần thưởng dương, nên mọi chính sách có lợi tức vô hạn và phép so sánh giá trị mất nghĩa. Toán tử $T_{\pi_0}$ không còn co: $T_{\pi_0}(V+c\mathbf 1)=T_{\pi_0}V+c\mathbf 1$ với $\mathbf 1$ là bảng bằng $1$ ở mọi trạng thái. Bỏ chiết khấu chỉ dùng được khi có giả thiết thay thế, chẳng hạn mọi chính sách tới trạng thái kết thúc với xác suất $1$.
 - Bỏ chính sách cố định: nếu $\pi$ thay đổi giữa các lượt quét, mỗi lượt quét áp dụng một toán tử khác, và Định lý 04.5 không còn nói gì về dãy thu được.
 
-**Trong thực hành.** Bảng $V$ là một mảng $n$ phần tử, cộng một phần tử bằng $0$ cho $s_{\mathrm{term}}$. Trong bài thực hành CartPole, $n=324$ ô, mô hình ước lượng là mảng cỡ $(2,324,325)$ với ba trục là hành động, ô hiện tại và ô kế tiếp kể cả $s_{\mathrm{term}}$, và Hệ quả 04.6(c) được thực hiện bằng một lời gọi giải hệ với chi phí $O(n^3)$. Số liệu CartPole trong chương lấy từ kết quả chạy đã nhúng trong notebook. Tại nghiệm $v$ tìm được, $\lVert T_\pi v-v\rVert_\infty=2{,}1\cdot10^{-14}$, tức nghiệm thỏa (1.2) tới sai số làm tròn. Các bảo đảm của Hệ quả 04.6 thuộc về MDP 324 ô đã ước lượng, không thuộc về CartPole liên tục.
+**Trong thực hành.** Bảng $V$ là một mảng $n$ phần tử, cộng một phần tử bằng $0$ cho $s_{\mathrm{term}}$. Trong bài thực hành CartPole, $n=324$ ô, mô hình ước lượng là mảng cỡ $(2,324,325)$ với ba trục là hành động, ô hiện tại và ô kế tiếp kể cả $s_{\mathrm{term}}$, và Hệ quả 04.6(c) được thực hiện bằng một lời gọi giải hệ với chi phí $O(n^3)$. Tại nghiệm $v$ tìm được, $\lVert T_\pi v-v\rVert_\infty=2{,}1\cdot10^{-14}$, tức nghiệm thỏa (1.2) tới sai số làm tròn. Các bảo đảm của Hệ quả 04.6 thuộc về MDP 324 ô đã ước lượng, không thuộc về CartPole liên tục.
 
 <!-- note-topic-id: lec-04-part-08 -->
 ### 1.4 Phần dư Bellman và thuật toán đánh giá chính sách
@@ -1194,7 +1194,7 @@ $$
 Mỗi giả thiết có vai trò riêng.
 
 - Bỏ tập hành động hữu hạn: xét một trạng thái với các hành động $\mathrm a_1,\mathrm a_2,\dots$, hành động $\mathrm a_j$ cho phần thưởng $1-1/j$ rồi kết thúc. Khi đó $v_*=1$ nhưng không chính sách nào đạt $1$; Bước 2 hỏng vì $\arg\max$ rỗng.
-- Bỏ tính Markov: nếu phân phối của $(S_{t+1},R_{t+1})$ phụ thuộc cả lịch sử, đẳng thức đầu của Bước 3 sai, và chứng minh không còn loại được khả năng một chính sách nhớ lịch sử vượt mọi chính sách Markov dừng.
+- Bỏ tính Markov: nếu phân phối của $(S_{t+1},R_{t+1})$ phụ thuộc cả lịch sử, đẳng thức đầu của Bước 3 sai, nên chứng minh không còn cho $v_\pi\le\bar V$ với mọi $\pi\in\Pi$ và không loại được khả năng một chính sách nhớ lịch sử vượt mọi chính sách Markov dừng.
 - Bỏ $\gamma<1$: Bước 1 và Bước 5 đều dùng $\gamma<1$.
 
 Theo phần (d), trên mô hình hai trạng thái, $(\mathrm b,\mathrm b)$ tốt nhất trong toàn bộ $\Pi$, kể cả các chính sách ngẫu nhiên và các chính sách nhớ lịch sử, và $v_*=(27,30)$. Bốn giá trị hành động tối ưu $q_*(\mathrm s_0,\cdot)=(25{,}3;\,27)$ và $q_*(\mathrm s_1,\cdot)=(26{,}3;\,30)$, tức các giá trị nhìn trước của Ví dụ 04.11, thỏa dạng đệ quy ở (c); chẳng hạn $q_*(\mathrm s_0,\mathrm b)=0+0{,}9\max\{26{,}3;\,30\}=27$ và $q_*(\mathrm s_0,\mathrm a)=1+0{,}9\max\{25{,}3;\,27\}=25{,}3$.
@@ -1279,7 +1279,7 @@ Số lượt quét này có thể so với chặn $\Delta_*(V_k)\le\gamma^k\Delt
 
 ### 4.5 Dãy năm ô
 
-Mô hình hai trạng thái không có trạng thái kết thúc. Ví dụ sau, lấy từ Bài giảng gốc (2025–2026), trang 25–28, có một ô đích kết thúc và cho thấy giá trị lan dần từ đích qua các lượt quét.
+Mô hình hai trạng thái không có trạng thái kết thúc. Ví dụ sau có một ô đích kết thúc và cho thấy giá trị lan dần từ đích qua các lượt quét.
 
 ![Năm ô vuông xếp thành hàng c1, c2, c3, c4, c5. Ô c5 có viền kép, ghi "Đích", là trạng thái kết thúc. Mũi tên cong tại c1 ghi "Trái ở c1: ở lại".](img/lec-04/dp04-five-cell-plain.svg)
 
@@ -1333,7 +1333,7 @@ Nhánh $\mathrm{trai}$ tại $\mathrm c_1$ đọc giá trị tiếp nối của 
 **Kiểm tra lại.** Tại mỗi ô, nhánh $\mathrm{phai}$ lớn hơn nhánh $\mathrm{trai}$, và giá trị nhánh $\mathrm{phai}$ trùng $V_4$.
 :::
 
-Vì $T_*$ co (Mệnh đề 04.24), lặp giá trị tiến tới $v_*$, điểm bất động duy nhất của $T_*$, với tốc độ $\gamma^k$ mà không cần đánh giá đầy đủ, dừng theo phần dư tối ưu với sai số không quá $\Delta_*(V)/(1-\gamma)$, và chính sách tham lam theo $v_*$ tối ưu trên toàn bộ $\Pi$ (Định lý 04.25, Hệ quả 04.26, 04.27, Thuật toán 04.28). Mỗi lượt quét vẫn cập nhật mọi trạng thái từ một bảng cũ và cần $p$ đầy đủ trên một tập trạng thái hữu hạn.
+Vì $T_*$ co (Mệnh đề 04.24), lặp giá trị tiến tới điểm bất động duy nhất $v_*$ với tốc độ $\gamma^k$ mà không cần đánh giá đầy đủ, và dừng theo phần dư tối ưu với sai số không quá $\Delta_*(V)/(1-\gamma)$ (Hệ quả 04.26, 04.27, Thuật toán 04.28). Chính sách tham lam theo $v_*$ tối ưu trên toàn bộ $\Pi$ (Định lý 04.25). Mỗi lượt quét vẫn cập nhật mọi trạng thái từ một bảng cũ và cần $p$ đầy đủ trên một tập trạng thái hữu hạn.
 
 ## 5. Lịch cập nhật và giới hạn của mô hình bảng
 
@@ -1394,7 +1394,7 @@ $$
 
 **Diễn giải.** Lượt quét tại chỗ theo thứ tự ngược từ đích cần một lượt thay vì bốn; theo thứ tự $\mathrm c_1,\dots,\mathrm c_4$, nó chỉ cho $(-1;\,-1;\,-1;\,10;\,0)$, như lượt quét đồng bộ.
 
-**Kiểm tra lại.** Ở (ii), áp dụng $T_*$ tại $\mathrm c_1$ cho bảng thu được: $\max\{-1+0{,}9\cdot4{,}58;\ -1+0{,}9\cdot6{,}2\}=\max\{3{,}122;\ 4{,}58\}=4{,}58$, giá trị không đổi (ba ô còn lại: Bài tập 04.4). Lợi ích của thứ tự ngược là tính chất riêng của ví dụ này.
+**Kiểm tra lại.** Ở (ii), áp dụng $T_*$ tại $\mathrm c_1$ cho bảng thu được: $\max\{-1+0{,}9\cdot4{,}58;\ -1+0{,}9\cdot6{,}2\}=\max\{3{,}122;\ 4{,}58\}=4{,}58$, giá trị không đổi (ba ô còn lại: Bài tập 04.4). Thứ tự ngược có lợi ở ví dụ này vì giá trị lan từ đích sang trái, đúng thứ tự cập nhật $\mathrm c_4,\mathrm c_3,\mathrm c_2,\mathrm c_1$.
 :::
 
 Cập nhật tại chỗ theo một thứ tự cố định vẫn đi qua mọi trạng thái trong mỗi lượt. Quy hoạch động bất đồng bộ (asynchronous dynamic programming) bỏ luôn yêu cầu đó: ở mỗi bước chỉ cập nhật một trạng thái, chọn theo một lịch (schedule) bất kỳ, và luôn đọc các giá trị mới nhất. Với lịch $\mathrm c_4,\mathrm c_3,\mathrm c_2,\mathrm c_1$, bốn bước đầu của thuật toán dưới đây trùng phép tính ở Ví dụ 04.16(ii).
@@ -1481,7 +1481,7 @@ Ba thuật toán của chương khác nhau ở mức độ hoàn tất của bư
 
 ![Hai khối nối bằng hai mũi tên ngược chiều. Khối "Bảng giá trị V" ghi "Điều chỉnh theo π"; khối "Chính sách π" ghi "Chọn theo V". Mũi tên "Đánh giá" đi từ chính sách sang bảng; mũi tên "Cải thiện" đi từ bảng sang chính sách.](img/lec-04/dp04-gpi.svg)
 
-Hình trên đọc theo hai mũi tên. Mũi tên "Đánh giá" làm $V$ khớp với $\pi$, và sau bước đó $\pi$ nói chung không còn tham lam theo bảng mới; mũi tên "Cải thiện" làm $\pi$ tham lam theo $V$, và sau bước đó $V$ không còn là $v_\pi$. $V$ và $\pi$ cùng đứng yên chỉ khi $V=v_\pi$ và $\pi$ tham lam theo $V$; theo Định lý 04.25, khi đó $V=v_*$.
+Hình trên đọc theo hai mũi tên. Mũi tên "Đánh giá" làm $V$ khớp với $\pi$, và sau bước đó $\pi$ nói chung không còn tham lam theo bảng mới; mũi tên "Cải thiện" làm $\pi$ tham lam theo $V$, và sau bước đó $V$ nói chung không còn là $v_\pi$ của chính sách mới. $V$ và $\pi$ cùng đứng yên chỉ khi $V=v_\pi$ và $\pi$ tham lam theo $V$; theo Định lý 04.25, khi đó $V=v_*$.
 
 ::: definition Định nghĩa 04.34 (Lặp chính sách tổng quát)
 Lặp chính sách tổng quát (generalized policy iteration, GPI) là tên chung của các quy trình duy trì đồng thời một bảng giá trị $V$ và một chính sách $\pi$, xen kẽ hai loại bước theo một thứ tự và mức độ hoàn tất tùy ý: bước đánh giá đưa $V$ lại gần $v_\pi$, và bước cải thiện thay $\pi$ bằng một chính sách tham lam hơn theo $V$.
@@ -1516,7 +1516,7 @@ Hình trên ghi bốn biến trạng thái và số khoảng chia của từng b
 **Kiểm tra lại.** $0{,}6+0{,}4=1$; mô hình đầy đủ của bài thực hành dùng $M=200$ và kiểm tra mỗi hàng $\hat p(\cdot\mid s,a)$ có tổng bằng $1$.
 :::
 
-Trên MDP ước lượng, mọi thuật toán của chương chạy đúng như trên một MDP hữu hạn thật, và một bước tính tay vẫn làm được.
+Ví dụ sau tính tay hai lượt quét lặp giá trị tại một ô của MDP ước lượng.
 
 ::: example Ví dụ 04.18 (Hai lượt quét lặp giá trị tại một ô của CartPole)
 **Dữ kiện.** MDP ước lượng của bài thực hành: $\hat r(s,a)=1$ với mọi cặp, $\gamma=0{,}99$, $V_0=0$. Tại ô $s_h=71$, bài thực hành cho $\hat p(s_{\mathrm{term}}\mid s_h,a)=0{,}435$ với cả hai hành động.
@@ -1597,7 +1597,39 @@ Mỗi thành phần của $T_*U$ là cực đại của hai giá trị nhìn tr�
 **Kiểm tra lại.** Theo Định lý 04.13, chính sách tham lam theo $v_{\pi_1}=U$ không kém $\pi_1$; ở đây nó là $(\mathrm b,\mathrm b)$ với giá trị $(27,30)\ge(10,30)$.
 :::
 
-Cập nhật tại chỗ và lịch bất đồng bộ có thể giảm số phép tính so với lượt quét đồng bộ, vốn tốn $O(n^2m)$ với mô hình đặc (Nhận xét 04.30), mà vẫn hội tụ khi mọi trạng thái được cập nhật vô hạn lần (Định lý 04.32). Ba thuật toán của chương là ba cách xen kẽ đánh giá với cải thiện trong khuôn lặp chính sách tổng quát (Định nghĩa 04.34). Mọi bảo đảm của chương thuộc về MDP hữu hạn với mô hình đã biết; mô hình bảng của một môi trường liên tục có thể mất tính Markov (Nhận xét 04.35), và sai số do rời rạc hóa không có chặn trong chương.
+::: exercise Bài tập 04.7 (Thứ tự cập nhật trong lặp giá trị tại chỗ)
+Cho mô hình hai trạng thái: $\mathrm s_0\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $1$; $\mathrm s_0\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $0$; $\mathrm s_1\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $2$; $\mathrm s_1\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $3$; mọi chuyển xác định; $\gamma=0{,}9$; $v_*=(27,30)$. Lặp giá trị tại chỗ đi qua các ô theo một thứ tự cố định, gán $V(s)\leftarrow(T_*V)(s)$ cho từng ô, và ô sau đọc ngay giá trị mới của ô trước. Bảng đầu là $V=(0,0)$. Hai lượt quét đồng bộ đầu tiên cho $V_1=(1,3)$ và $V_2=(2{,}7;\,5{,}7)$ (Ví dụ 04.13).
+
+(a) Chạy hai lượt quét tại chỗ với thứ tự $\mathrm s_0,\mathrm s_1$.
+
+(b) Chạy hai lượt quét tại chỗ với thứ tự $\mathrm s_1,\mathrm s_0$.
+
+(c) So sai số so với $v_*$ của bảng sau hai lượt ở (a), (b) và của $V_2$. Giải thích vì sao thứ tự làm đổi bảng, và vì sao cả hai thứ tự đều hội tụ về $v_*$.
+:::
+
+::: hint
+Nhánh $\mathrm b$ tại $\mathrm s_0$ đọc giá trị của $\mathrm s_1$. Khi $\mathrm s_1$ được cập nhật trước, nhánh này đọc ngay giá trị mới của $\mathrm s_1$ trong cùng lượt quét.
+:::
+
+::: solution
+**(a)** Lượt thứ nhất: $V(\mathrm s_0)\leftarrow\max\{1+0{,}9\cdot0;\ 0+0{,}9\cdot0\}=1$, rồi $V(\mathrm s_1)\leftarrow\max\{2+0{,}9\cdot1;\ 3+0{,}9\cdot0\}=3$; bảng là $(1,3)$. Lượt thứ hai: $V(\mathrm s_0)\leftarrow\max\{1+0{,}9\cdot1;\ 0+0{,}9\cdot3\}=2{,}7$, rồi $V(\mathrm s_1)\leftarrow\max\{2+0{,}9\cdot2{,}7;\ 3+0{,}9\cdot3\}=\max\{4{,}43;\ 5{,}7\}=5{,}7$; bảng là $(2{,}7;\,5{,}7)$.
+
+**(b)** Lượt thứ nhất: $V(\mathrm s_1)\leftarrow\max\{2+0{,}9\cdot0;\ 3+0{,}9\cdot0\}=3$, rồi $V(\mathrm s_0)\leftarrow\max\{1+0{,}9\cdot0;\ 0+0{,}9\cdot3\}=2{,}7$; bảng là $(2{,}7;\,3)$. Lượt thứ hai: $V(\mathrm s_1)\leftarrow\max\{2+0{,}9\cdot2{,}7;\ 3+0{,}9\cdot3\}=5{,}7$, rồi $V(\mathrm s_0)\leftarrow\max\{1+0{,}9\cdot2{,}7;\ 0+0{,}9\cdot5{,}7\}=\max\{3{,}43;\ 5{,}13\}=5{,}13$; bảng là $(5{,}13;\,5{,}7)$.
+
+**(c)** Sai số theo từng trạng thái sau hai lượt:
+
+| Cách cập nhật | Bảng | Sai số $(27-V(\mathrm s_0);\ 30-V(\mathrm s_1))$ | $\lVert V-v_*\rVert_\infty$ |
+|---|---|---|---:|
+| Đồng bộ ($V_2$) | $(2{,}7;\,5{,}7)$ | $(24{,}3;\,24{,}3)$ | $24{,}3$ |
+| Tại chỗ, $\mathrm s_0,\mathrm s_1$ | $(2{,}7;\,5{,}7)$ | $(24{,}3;\,24{,}3)$ | $24{,}3$ |
+| Tại chỗ, $\mathrm s_1,\mathrm s_0$ | $(5{,}13;\,5{,}7)$ | $(21{,}87;\,24{,}3)$ | $24{,}3$ |
+
+Với thứ tự $\mathrm s_0,\mathrm s_1$, ô $\mathrm s_1$ đọc giá trị mới của $\mathrm s_0$, nhưng nhánh tốt tại $\mathrm s_1$ là $\mathrm b$, nhánh đọc chính $\mathrm s_1$; vì vậy bảng trùng lượt quét đồng bộ. Với thứ tự $\mathrm s_1,\mathrm s_0$, nhánh tốt $\mathrm b$ tại $\mathrm s_0$ đọc ngay giá trị mới của $\mathrm s_1$, nên $V(\mathrm s_0)$ tăng nhanh hơn: sai số tại $\mathrm s_0$ giảm từ $24{,}3$ xuống $21{,}87$, còn sai số lớn nhất giữ nguyên $24{,}3$. Mỗi thứ tự lặp lại mãi là một lịch của Thuật toán 04.31 trong đó mỗi trạng thái xuất hiện vô hạn lần, nên theo Định lý 04.32, cả hai dãy bảng hội tụ về $v_*$; thứ tự chỉ đổi tốc độ.
+
+**Kiểm tra lại.** Theo Nhận xét 04.33, lượt quét tại chỗ là trường hợp riêng của Thuật toán 04.31; ở (b), $\lVert V-v_*\rVert_\infty$ sau mỗi lượt là $27$ rồi $24{,}3$, không tăng, đúng Bước 1 của chứng minh Định lý 04.32.
+:::
+
+Mỗi lượt quét đồng bộ tốn $O(n^2m)$ với mô hình đặc (Nhận xét 04.30). Trên dãy năm ô, một lượt quét tại chỗ theo thứ tự ngược thay cho bốn lượt quét đồng bộ (Ví dụ 04.16). Lịch bất đồng bộ vẫn hội tụ khi mọi trạng thái được cập nhật vô hạn lần (Định lý 04.32). Ba thuật toán của chương là ba cách xen kẽ đánh giá với cải thiện trong khuôn lặp chính sách tổng quát (Định nghĩa 04.34). Mọi bảo đảm của chương thuộc về MDP hữu hạn với mô hình đã biết; mô hình bảng của một môi trường liên tục có thể mất tính Markov (Nhận xét 04.35), và sai số do rời rạc hóa không có chặn trong chương.
 
 ## Tình huống áp dụng và ứng dụng
 
@@ -1696,16 +1728,14 @@ Chính sách tham lam: $\pi_V(s)\in\arg\max_aQ_V(s,a)$.
 - Lặp chính sách cần quy tắc phá hòa để dừng; không có nó, thuật toán có thể đổi qua lại giữa các chính sách cùng giá trị (Mệnh đề 04.18).
 - Lịch bất đồng bộ cần mọi trạng thái được cập nhật vô hạn lần (Bài tập 04.5).
 - Mọi chặn sai số cần $\gamma<1$ và thuộc về mô hình đã cho; chúng không chặn sai số do mô hình sai hay do gộp trạng thái (Tình huống 04.2).
-- Phần dư nhỏ chặn sai số của bảng, chưa chặn tổn thất của chính sách trích ra; hết ngân sách không chứng nhận hội tụ (Nhận xét 04.10, 04.29).
+- Phần dư nhỏ chặn sai số của bảng; tổn thất của chính sách trích ra cần chặn riêng của Singh và Yee (1994), bằng chặn sai số của bảng nhân thêm thừa số $2\gamma/(1-\gamma)$; hết ngân sách không chứng nhận hội tụ (Nhận xét 04.10, 04.29).
 
 ## Bài tập củng cố
 
-Ba bài 04.7–04.9 dưới đây chỉ có ở ghi chú, dựa trên Bài tập tuần 3 (2025–2026), mỗi mức một bài.
-
 ### Mức nhận biết
 
-::: exercise Bài tập 04.7 (Giá trị trạng thái, giá trị hành động và hai phương trình Bellman)
-Theo Bài tập tuần 3 (2025–2026), bài 1–2. Cho mô hình hai trạng thái: $\mathrm s_0\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $1$; $\mathrm s_0\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $0$; $\mathrm s_1\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $2$; $\mathrm s_1\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $3$; mọi chuyển xác định; $\gamma=0{,}9$. Chính sách $\pi_1=(\mathrm a,\mathrm b)$.
+::: exercise Bài tập 04.8 (Giá trị trạng thái, giá trị hành động và hai phương trình Bellman)
+Cho mô hình hai trạng thái: $\mathrm s_0\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $1$; $\mathrm s_0\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $0$; $\mathrm s_1\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $2$; $\mathrm s_1\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $3$; mọi chuyển xác định; $\gamma=0{,}9$. Chính sách $\pi_1=(\mathrm a,\mathrm b)$.
 
 (a) Viết và giải hệ phương trình Bellman kỳ vọng của $\pi_1$ để tìm $v_{\pi_1}$.
 
@@ -1730,8 +1760,8 @@ Theo $\pi_1$, $\mathrm s_0$ quay về chính nó và $\mathrm s_1$ quay về ch�
 
 ### Mức tính toán hoặc chứng minh
 
-::: exercise Bài tập 04.8 (Giá trị trạng thái qua giá trị hành động, và đặc trưng của chính sách tối ưu)
-Theo Bài tập tuần 3 (2025–2026), bài 5 và bài 3. Xét MDP hữu hạn, phần thưởng bị chặn, $0\le\gamma<1$.
+::: exercise Bài tập 04.9 (Giá trị trạng thái qua giá trị hành động, và đặc trưng của chính sách tối ưu)
+Xét MDP hữu hạn, phần thưởng bị chặn, $0\le\gamma<1$.
 
 (a) Chứng minh $v_\pi(s)=\sum_a\pi(a\mid s)\,q_\pi(s,a)$ cho mọi chính sách Markov dừng $\pi$, từ định nghĩa $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$ và $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$.
 
@@ -1741,7 +1771,7 @@ Theo Bài tập tuần 3 (2025–2026), bài 5 và bài 3. Xét MDP hữu hạn,
 ::: hint
 Ở (a), dùng luật kỳ vọng toàn phần theo $A_t$ với phân phối có điều kiện $\pi(\cdot\mid s)$. Ở (b), chiều "nếu" chứng minh $v_*$ là điểm bất động của $T_\pi$; chiều "chỉ nếu" dùng $q_\pi=q_*$ khi $v_\pi=v_*$.
 
-Kết quả (a) là Mệnh đề 03.23; bài yêu cầu chứng minh lại từ định nghĩa viết qua $G_t$, trùng với Định nghĩa 03.15, 03.16 theo Bổ đề 03.20(c)–(d).
+Kết quả (a) là Mệnh đề 03.23; theo Bổ đề 03.20(c)–(d), hai định nghĩa viết qua $G_t$ trùng với Định nghĩa 03.15, 03.16.
 :::
 
 ::: solution
@@ -1781,8 +1811,8 @@ Vậy $v_*$ là điểm bất động của $T_\pi$, và theo Hệ quả 04.6(a)
 
 ### Mức vận dụng
 
-::: exercise Bài tập 04.9 (Lịch theo quỹ đạo và trạng thái liên tục)
-Theo Bài tập tuần 3 (2025–2026), bài 4 và bài 8. Một nhóm giải CartPole rời rạc hóa $324$ ô (Ví dụ 04.17) bằng lặp giá trị bất đồng bộ, cập nhật ở mỗi bước ô hiện tại của tác tử khi nó chạy chính sách ngẫu nhiên đều; chính sách này chỉ đi qua $64$ trong $324$ ô.
+::: exercise Bài tập 04.10 (Lịch theo quỹ đạo và trạng thái liên tục)
+Một nhóm giải CartPole rời rạc hóa $324$ ô (Ví dụ 04.17) bằng lặp giá trị bất đồng bộ, cập nhật ở mỗi bước ô hiện tại của tác tử khi nó chạy chính sách ngẫu nhiên đều; chính sách này chỉ đi qua $64$ trong $324$ ô.
 
 (a) Xác định lịch này có làm thay đổi điểm bất động mà thuật toán nhắm tới hay không, và có làm mất bảo đảm hội tụ hay không.
 
@@ -1816,17 +1846,17 @@ Theo Bài tập tuần 3 (2025–2026), bài 4 và bài 8. Một nhóm giải Ca
 <!-- note-topic-id: lec-04-part-13 -->
 ### Đọc thêm
 
-- **Lặp chính sách cải biên.** Thay đánh giá chính xác trong Thuật toán 04.17 bằng $\ell$ lượt quét của Thuật toán 04.9 xuất phát từ bảng của vòng trước. Với $\ell=1$, thuật toán trùng với lặp giá trị từ vòng thứ hai; khi $\ell\to\infty$, nó thành lặp chính sách. Mệnh đề 04.18 không còn áp dụng vì giả thiết đánh giá chính xác bị bỏ; Puterman (1994, §6.5) trình bày điều kiện hội tụ. Bài thực hành CartPole, nhiệm vụ 7, đề nghị thử $\ell\in\{1,5,20\}$. Ba vòng với $\ell=1$ tính bằng tay và lần chạy nhiệm vụ 7 trên CartPole rời rạc hóa có ở Bài tập 04.15 của [tệp bài tập](material-viewer.html?doc=materials/lec-04/exercises.md&deck=lecture-04-giai-mdp-bang-quy-hoach-dong.html).
+- **Lặp chính sách cải biên.** Thay đánh giá chính xác trong Thuật toán 04.17 bằng $\ell$ lượt quét của Thuật toán 04.9 xuất phát từ bảng của vòng trước. Với $\ell=1$, thuật toán trùng với lặp giá trị từ vòng thứ hai; khi $\ell\to\infty$, nó thành lặp chính sách. Mệnh đề 04.18 không còn áp dụng vì giả thiết đánh giá chính xác bị bỏ; Puterman (1994, §6.5) trình bày điều kiện hội tụ. Bài thực hành CartPole, nhiệm vụ 7, đề nghị thử $\ell\in\{1,5,20\}$.
 - **Tổn thất của chính sách tham lam.** Singh và Yee (1994) chứng minh rằng nếu $\lVert V-v_*\rVert_\infty\le\epsilon_0$ thì chính sách tham lam theo $V$ thỏa $\lVert v_{\pi_V}-v_*\rVert_\infty\le2\gamma\epsilon_0/(1-\gamma)$. Bài thực hành CartPole đặt chặn này cạnh tổn thất đo được.
 - **Trường hợp không chiết khấu.** Sutton và Barto (2018, Ví dụ 4.1) xét lưới $4\times4$ với $\gamma=1$ và thay giả thiết $\gamma<1$ bằng điều kiện: chính sách được đánh giá (ngẫu nhiên đều) tới đích với xác suất $1$ từ mọi trạng thái. Trên mô hình hai trạng thái, $\gamma=1$ cho lợi tức vô hạn, nên cần một điều kiện như vậy.
 
 ### Tài liệu tham khảo
 
 - Tạ Việt Cường, Bài giảng gốc Bài 04: Giải MDP (2025–2026): trang 4–6, 12, 17–18 cho Mục 1.1–1.2 và mô hình hai trạng thái; trang 10, 14–15, 31–32 cho Mục 1.2–1.4; trang 19–21 cho Mục 2; trang 7–9, 13, 20, 33–34 cho Mục 3; trang 23–28, 31–34 cho Mục 4; trang 15, 29, 35–37 cho Mục 5, thêm trang 13, 23 cho Mục 5.3; trang 38 cho Tóm tắt chương.
-- Tạ Việt Cường, Bài tập tuần 3 (2025–2026), "Giải bài toán MDP": bài 1–5 và 8 cho Bài tập 04.7–04.9, bài 3 cũng cho Định lý 04.25; bài 6–7 cho Hệ quả 04.6(c) và Bổ đề 04.2. Bài tập tuần 4 (2025–2026), "Đánh giá chính sách": bài 1 cho mô hình hai trạng thái.
+- Tạ Việt Cường, Bài tập tuần 3 (2025–2026), "Giải bài toán MDP": bài 1–5 và 8 cho Bài tập 04.8–04.10, bài 3 cũng cho Định lý 04.25; bài 6–7 cho Hệ quả 04.6(c) và Bổ đề 04.2. Bài tập tuần 4 (2025–2026), "Đánh giá chính sách": bài 1 cho mô hình hai trạng thái.
 - Sutton, R. S., và Barto, A. G. (2018), *Reinforcement Learning: An Introduction*, ấn bản 2, MIT Press, chương 4: §4.1, tr. 74–76 (Mục 1); §4.2, tr. 76–80, công thức (4.6)–(4.9) (Mục 2); §4.3, tr. 80–82, Bài tập 4.4 (Mục 3); §4.4, tr. 82–84, công thức (4.10) (Mục 4); §4.5–4.7, tr. 85–88 (Mục 5); §4.8, tr. 88–89 (Tóm tắt chương).
 - Puterman, M. L. (1994), *Markov Decision Processes: Discrete Stochastic Dynamic Programming*, Wiley: §6.1 (đánh giá chính sách, dạng ma trận), §6.2 (phương trình tối ưu, tồn tại chính sách tối ưu Markov dừng, xác định; Định lý 04.25), §6.3 (lặp giá trị), §6.4 (lặp chính sách), §6.5 (lặp chính sách cải biên).
 - Bertsekas, D. P., và Tsitsiklis, J. N. (1989), *Parallel and Distributed Computation: Numerical Methods*, Prentice Hall: các thuật toán bất đồng bộ, được dẫn trong phần ghi chú lịch sử chương 4 của Sutton và Barto (2018, tr. 90); dùng cho Định lý 04.32.
 - Singh, S. P., và Yee, R. C. (1994), An upper bound on the loss from approximate optimal-value functions, *Machine Learning* 16, 227–233.
-- Giáo trình *Học máy thống kê* của tác giả, chương Học tăng cường, mục "Thuật toán tối ưu quy hoạch động" (tiểu mục lặp giá trị, lặp chính sách): giọng kể, cách đọc $V_k$, thuật ngữ "nhìn trước một bước".
+- Giáo trình *Học máy thống kê* của tác giả, chương Học tăng cường, mục "Thuật toán tối ưu quy hoạch động" (tiểu mục lặp giá trị, lặp chính sách): cách đọc $V_k$, thuật ngữ "nhìn trước một bước".
 - Bài thực hành CartPole của Bài 04 (`thuc-hanh-cartpole-quy-hoach-dong.ipynb`): số liệu "Trong thực hành", Ví dụ 04.15, 04.17, 04.18 và hai tình huống: phần 4–5 cho Ví dụ 04.15, 04.17; mục 6.1 và 7.1 cho Ví dụ 04.18; mục 6.2, 6.3, 6.5, 6.6 cho các đoạn "Trong thực hành" của Mục 1–3; mục 7.2, 7.4, 7.5 cho Mục 4; phần 4 và phần 10 (nhiệm vụ 6) cho Mục 5.2; mục 6.6, 7.2, 7.5, 7.6 và phần 8 (phần mở đầu, mục 8.1–8.3) cho hai tình huống; từ một lần chạy đã nhúng (gymnasium 1.3.0).

@@ -1,791 +1,578 @@
 # Bài tập Bài 04 — Giải MDP bằng quy hoạch động
 
-Bộ bài tập gồm mười bốn bài, phủ bảy mạch của bộ trang chiếu Bài 04, ở ba mức: nhận biết; tính toán hoặc chứng minh; vận dụng vào bài toán Học tăng cường. Bài tập 04.1–04.6 giữ số hiệu, đề bài và kết quả lời giải của [ghi chú bài giảng](material-viewer.html?doc=materials/lec-04/lecture-note.md&deck=lecture-04-giai-mdp-bang-quy-hoach-dong.html), và cả sáu bài trùng bài tập có lời giải trên trang chiếu. Bài tập 04.7–04.9 nằm ở mục "Bài tập củng cố" của ghi chú và không chép lại ở đây; bảng dưới ghi chúng sau chữ "ghi chú" ở mạch mà bộ trang chiếu xếp chúng vào. Bài tập 04.10–04.17 chỉ có trong tệp này; riêng Bài tập 04.16 trùng bài tập lợi tức ở mạch mở đầu của bộ trang chiếu. Khi một bài trùng trang chiếu, dòng "Trùng trang chiếu" dẫn tới trang đề bài và trang lời giải, và lời giải trong tệp cho cùng kết quả với lời giải trên trang. Trong mỗi mức, bài xếp theo thứ tự mạch, không theo độ khó; các bài 04.10, 04.11 và 04.12 dài hơn các bài cùng mức.
+Tệp gồm mười một bài, Bài tập 04.11–04.21, đánh số tiếp theo mười bài tập của [ghi chú bài giảng](material-viewer.html?doc=materials/lec-04/lecture-note.md&deck=lecture-04-giai-mdp-bang-quy-hoach-dong.html) (Bài tập 04.1–04.10) và không lặp đề bài nào của ghi chú. Mọi bài lấy từ bài tập chương 3 và chương 4 của Sutton và Barto (2018). Các bài chia theo ba mức: nhận biết (04.11–04.14); tính toán hoặc chứng minh (04.15–04.18); vận dụng vào bài toán Học tăng cường (reinforcement learning) (04.19–04.21). Bảng dưới xếp bài của tệp này và bài của ghi chú theo mạch của bộ trang chiếu; bài của ghi chú đứng sau chữ "ghi chú".
 
 | Mạch | Mở phần | Bài tập |
 | --- | --- | --- |
-| 1. Mở đầu | [Mở phần](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/1/1) | 04.16 |
-| 2. Đánh giá chính sách | [Mở phần](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/2/1) | 04.1, 04.10 |
-| 3. Cải thiện chính sách | [Mở phần](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/3/1) | 04.2, 04.17 |
-| 4. Lặp chính sách | [Mở phần](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/4/1) | 04.3, 04.12 |
-| 5. Lặp giá trị | [Mở phần](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/5/1) | 04.4, 04.11, 04.13; ghi chú: 04.7, 04.8 |
-| 6. Lịch cập nhật và giới hạn của mô hình bảng | [Mở phần](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/6/1) | 04.5, 04.14, 04.15; ghi chú: 04.9 |
-| 7. Tổng kết và chuyển tiếp | [Mở phần](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/7/1) | 04.6 |
+| 1. Mở đầu | [Mở phần](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/1/1) | — |
+| 2. Đánh giá chính sách | [Mở phần](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/2/1) | 04.12, 04.15; ghi chú: 04.1 |
+| 3. Cải thiện chính sách | [Mở phần](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/3/1) | 04.11; ghi chú: 04.2 |
+| 4. Lặp chính sách | [Mở phần](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/4/1) | 04.16, 04.18, 04.19; ghi chú: 04.3 |
+| 5. Lặp giá trị | [Mở phần](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/5/1) | 04.13, 04.14, 04.17, 04.20, 04.21; ghi chú: 04.4, 04.8, 04.9 |
+| 6. Lịch cập nhật và giới hạn của mô hình bảng | [Mở phần](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/6/1) | ghi chú: 04.5, 04.7, 04.10 |
+| 7. Tổng kết và chuyển tiếp | [Mở phần](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/7/1) | ghi chú: 04.6 |
 
 ## Hướng dẫn và ký hiệu
 
-Ký hiệu, giả thiết và số hiệu theo ghi chú bài giảng Bài 04. Một quá trình quyết định Markov (Markov decision process, MDP) hữu hạn có tập trạng thái chưa kết thúc $\mathcal S$ với $n=\lvert\mathcal S\rvert$, có thể thêm một trạng thái kết thúc $s_{\mathrm{term}}$, tập hành động hữu hạn $\mathcal A(s)$ tại mỗi $s$, và mô hình $p(s',r\mid s,a)=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a)$. Phần thưởng $R_{t+1}$ thuộc về chuyển từ thời điểm $t$ sang $t+1$; lợi tức (return) là $G_t=\sum_{j\ge0}\gamma^jR_{t+j+1}$ với hệ số chiết khấu $0\le\gamma<1$, trừ khi đề bài nói khác. Mọi bảng giá trị bằng $0$ tại $s_{\mathrm{term}}$; phần thưởng của chính chuyển đi vào $s_{\mathrm{term}}$ vẫn được tính. Kỳ vọng $\mathbb E_\pi$ lấy theo cả chính sách $\pi$ lẫn mô hình $p$. Bất đẳng thức giữa hai bảng hiểu theo từng trạng thái.
+Ký hiệu, giả thiết và số hiệu theo ghi chú bài giảng Bài 04; công thức của ghi chú được dẫn bằng số trong ngoặc, chẳng hạn (2.1), còn công thức của sách được ghi rõ "của sách". Tập $\mathcal S$ gồm các trạng thái chưa kết thúc, $s_{\mathrm{term}}$ là trạng thái kết thúc, $\mathcal A(s)$ là tập hành động hợp lệ tại $s$, và mô hình là $p(s',r\mid s,a)=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a)$. Lợi tức là $G_t=\sum_{k\ge0}\gamma^kR_{t+k+1}$ (công thức (3.8) của sách). Mọi bảng giá trị bằng $0$ tại $s_{\mathrm{term}}$; phần thưởng của chính chuyển đi vào $s_{\mathrm{term}}$ vẫn được tính.
 
-Các đại lượng dùng lại: giá trị nhìn trước một bước $Q_V(s,a)=\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma V(s')\bigr]$ (Định nghĩa 04.11); toán tử Bellman đánh giá $(T_\pi V)(s)=\sum_a\pi(a\mid s)Q_V(s,a)$ (Định nghĩa 04.1); toán tử Bellman tối ưu $(T_*V)(s)=\max_aQ_V(s,a)$ (Định nghĩa 04.22); phần dư Bellman $\Delta_\pi(V)=\lVert T_\pi V-V\rVert_\infty$ và $\Delta_*(V)=\lVert T_*V-V\rVert_\infty$, với chuẩn vô cùng $\lVert U\rVert_\infty=\max_s\lvert U(s)\rvert$; ngưỡng dừng $\theta=(1-\gamma)\kappa$ cho sai số cho phép $\kappa$. Quy tắc phá hòa (tie-breaking) của Định nghĩa 04.12 giữ hành động cũ khi nó thuộc tập cực đại, nếu không thì chọn hành động đứng đầu theo thứ tự cố định ($\mathrm a$ trước $\mathrm b$, $\mathrm{trai}$ trước $\mathrm{phai}$).
+Các đại lượng dùng lại:
 
-**Các kết quả dùng lại.** Đề bài dẫn các kết quả sau của ghi chú bằng tên; phát biểu được nhắc lại ở đây.
+- giá trị nhìn trước một bước $Q_V(s,a)=\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma V(s')\bigr]$, công thức (2.1);
+- toán tử Bellman đánh giá $(T_\pi V)(s)=\sum_a\pi(a\mid s)\,Q_V(s,a)$, công thức (1.1), và toán tử Bellman tối ưu $(T_*V)(s)=\max_aQ_V(s,a)$, công thức (4.1);
+- phần dư tối ưu $\Delta_*(V)=\lVert T_*V-V\rVert_\infty$ và ngưỡng dừng $\theta=(1-\gamma)\kappa$ cho sai số cho phép $\kappa$ (Hệ quả 04.27);
+- giá trị tối ưu $v_*(s)=\sup_{\pi}v_\pi(s)$ và $q_*(s,a)=\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma v_*(s')\bigr]$ (Định nghĩa 04.19).
 
-- Điều kiện (2.2) và Định lý 04.13 (cải thiện chính sách): cho $\pi$ là chính sách Markov dừng, có thể ngẫu nhiên, với giá trị chính xác $v_\pi$, và $\pi'$ xác định thỏa (2.2): $q_\pi(s,\pi'(s))\ge v_\pi(s)$ với mọi $s$. Khi đó (a) $v_{\pi'}\ge v_\pi$ tại mọi trạng thái, và (b) $v_{\pi'}(s)>v_\pi(s)$ tại mọi trạng thái $s$ mà (2.2) nghiêm ngặt.
-- Hệ quả 04.8(a) (chặn sai số theo phần dư): $\lVert V-v_\pi\rVert_\infty\le\Delta_\pi(V)/(1-\gamma)$ với mọi bảng $V$.
-- Hệ quả 04.27 (chặn sai số theo phần dư tối ưu): $\lVert V-v_*\rVert_\infty\le\Delta_*(V)/(1-\gamma)$ với mọi bảng $V$; nói riêng, $\Delta_*(V)\le\theta=(1-\gamma)\kappa$ kéo theo $\lVert V-v_*\rVert_\infty\le\kappa$.
-- Định nghĩa 04.16 (chính sách ổn định): chính sách xác định $\pi$ ổn định khi $\pi(s)\in\arg\max_aq_\pi(s,a)$ với mọi $s$, trong đó $q_\pi$ tính từ giá trị chính xác $v_\pi$.
-- Định lý 04.32 (hội tụ của lặp giá trị bất đồng bộ): nếu mỗi trạng thái chưa kết thúc xuất hiện vô hạn lần trong lịch cập nhật thì $\lVert V_j-v_*\rVert_\infty$ không tăng và tiến về $0$; chứng minh chia các bước thành những đoạn liên tiếp, mỗi đoạn cập nhật mọi trạng thái ít nhất một lần, và sai số giảm ít nhất $\gamma$ lần sau mỗi đoạn.
+Tương ứng với sách: (4.4) của sách là $v_\pi=T_\pi v_\pi$, tức (1.2); (4.5) của sách là lượt quét $V_{k+1}=T_\pi V_k$ của Định nghĩa 04.1; (4.10) của sách là lượt quét $V_{k+1}=T_*V_k$ của lặp giá trị (Định nghĩa 04.22). Sách viết $v_k$ cho bảng sau $k$ lượt quét; tệp này viết $V_k$ như ghi chú.
 
-Dòng "Mục tiêu học tập" của mỗi bài dẫn số thứ tự trong danh sách năm mục tiêu ở đầu ghi chú bài giảng.
+Ví dụ 4.1 và Ví dụ 4.3 của sách là nhiệm vụ có lượt, không chiết khấu ($\gamma=1$). Khi mọi lượt dưới chính sách $\pi$ kết thúc với xác suất $1$ từ mọi trạng thái, $v_\pi$ tồn tại và là nghiệm duy nhất của $v_\pi=T_\pi v_\pi$ (Sutton và Barto, 2018, §4.1, trang 74). Công thức (1.1), (2.1) và (4.1) vẫn dùng được với $\gamma=1$; các chặn của Hệ quả 04.8, 04.26, 04.27 dùng $\gamma<1$, nên nằm ngoài phạm vi của hai ví dụ này.
 
-Tên trạng thái và hành động của ví dụ viết chữ đứng ($\mathrm s_0$, $\mathrm a$, $\mathrm c_1$, $\mathrm{phai}$) để phân biệt với biến viết nghiêng ($s$, $a$). Số thập phân viết với dấu phẩy; khi một bảng có thành phần thập phân, các thành phần cách nhau bằng dấu chấm phẩy, như $(1{,}9;\,2{,}9)$.
-
-**Mô hình hai trạng thái** (Bài giảng gốc (2025–2026), trang 17–18), dùng ở nhiều bài và được nêu lại trong từng bài: $\mathcal S=\{\mathrm s_0,\mathrm s_1\}$, không có trạng thái kết thúc, mọi chuyển xác định, $\gamma=0{,}9$.
-
-| Trạng thái $s$ | Hành động | Trạng thái kế tiếp $s'$ | Phần thưởng $r$ |
-|---|---|---|---:|
-| $\mathrm s_0$ | $\mathrm a$ | $\mathrm s_0$ | $1$ |
-| $\mathrm s_0$ | $\mathrm b$ | $\mathrm s_1$ | $0$ |
-| $\mathrm s_1$ | $\mathrm a$ | $\mathrm s_0$ | $2$ |
-| $\mathrm s_1$ | $\mathrm b$ | $\mathrm s_1$ | $3$ |
-
-Chính sách xác định được viết thành cặp theo thứ tự $(\mathrm s_0,\mathrm s_1)$: $\pi_0=(\mathrm a,\mathrm a)$, $\pi_1=(\mathrm a,\mathrm b)$. Các giá trị đã có trong ghi chú: $v_{\pi_0}=(10,11)$, $v_{\pi_1}=(10,30)$, $v_*=v_{(\mathrm b,\mathrm b)}=(27,30)$.
-
-**Dãy năm ô** (Bài giảng gốc (2025–2026), trang 25–28): các ô $\mathrm c_1,\dots,\mathrm c_5$, trong đó $\mathrm c_5$ là trạng thái kết thúc; hành động $\mathrm{trai}$, $\mathrm{phai}$ chuyển xác định sang ô bên cạnh, $\mathrm{trai}$ tại $\mathrm c_1$ giữ nguyên $\mathrm c_1$; phần thưởng $10$ cho chuyển $\mathrm c_4\to\mathrm c_5$ và $-1$ cho mọi chuyển khác; $\gamma=0{,}9$. Bài tập 04.13 dùng phiên bản trơn trượt của dãy này, nêu trong đề bài.
-
-**CartPole rời rạc hóa** (bài thực hành `thuc-hanh-cartpole-quy-hoach-dong.ipynb`): $324$ ô chưa kết thúc cùng một trạng thái kết thúc, hai hành động, mô hình ước lượng $\hat p(s'\mid s,a)$, phần thưởng $\hat r(s,a)=1$ với mọi cặp. Notebook viết $\eta$ cho ngưỡng dừng và $\varepsilon$ cho sai số cho phép; tệp này viết $\theta$ và $\kappa$. Như ghi chú, các ô Markdown của notebook viết $\phi$, $\dot\phi$, $b_\phi$ cho góc cột, vận tốc góc và chỉ số khoảng của góc, và $\ell$ cho số lần áp dụng $T_\pi$ ở nhiệm vụ 7; chỉ mã, dòng in và nhãn đồ thị còn ghi `theta`, $\theta$ cho góc cột, và nhiệm vụ 7 không có tham số `m` trong mã. Số liệu notebook trong tệp lấy từ một lần chạy đã nhúng trong notebook (gymnasium 1.3.0).
-
-Bộ số của chính sách ngẫu nhiên đều $\pi_u$ trên mô hình hai trạng thái là số liệu sư phạm tự xây dựng. Bài có nhãn [Lập trình] cần chạy mã, trên notebook hoặc bằng một chương trình ngắn; các phần còn lại làm được bằng tay. Lời giải cần nêu kết quả của ghi chú được dùng ở từng bước.
+Số thập phân viết bằng dấu phẩy; khi một bảng có thành phần thập phân, các thành phần cách nhau bằng dấu chấm phẩy.
 
 ## Mức nhận biết
 
-### Bài tập 04.16. Lợi tức của chính sách ban đầu
+### Bài tập 04.11. Giá trị hành động trên lưới 4×4
 
-**Mức độ:** nhận biết. Mục tiêu học tập 1 của ghi chú.
+**Mức độ:** nhận biết; mục tiêu học tập 2.
 
-**Nguồn:** Bài giảng gốc (2025–2026), trang 5, 17–18; ghi chú bài giảng, Ví dụ 04.1.
+**Nguồn:** Sutton và Barto (2018), Bài tập 4.1, §4.1, trang 76; dữ kiện của Ví dụ 4.1, trang 76, và Hình 4.1, trang 77.
 
-**Trùng trang chiếu:** [Bài tập: lợi tức của chính sách ban đầu](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/1/9), câu (a) và (b); lời giải hiện trên cùng trang. Câu (c) chỉ có trong tệp này.
+::: exercise Bài tập 04.11 (Giá trị hành động trên lưới 4×4)
+Lưới $4\times4$ có các trạng thái chưa kết thúc $1,\dots,14$ và một trạng thái kết thúc chiếm hai ô góc, xếp theo hàng như sau (ô kết thúc ghi T):
 
-::: exercise Bài tập 04.16 (Lợi tức của chính sách ban đầu)
-Cho mô hình hai trạng thái: $\mathrm s_0\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $1$; $\mathrm s_0\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $0$; $\mathrm s_1\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $2$; $\mathrm s_1\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $3$; mọi chuyển xác định; $\gamma=0{,}9$. Tác tử xuất phát tại $S_0=\mathrm s_1$ và theo $\pi_0=(\mathrm a,\mathrm a)$.
+| | cột 1 | cột 2 | cột 3 | cột 4 |
+|---|---|---|---|---|
+| hàng 1 | T | $1$ | $2$ | $3$ |
+| hàng 2 | $4$ | $5$ | $6$ | $7$ |
+| hàng 3 | $8$ | $9$ | $10$ | $11$ |
+| hàng 4 | $12$ | $13$ | $14$ | T |
 
-- (a) Tính tổng chiết khấu của ba phần thưởng đầu $R_1+\gamma R_2+\gamma^2R_3$.
-- (b) Ngoài phần thưởng, nêu thông tin của mô hình (bảng mô hình hai trạng thái ở mục Hướng dẫn và ký hiệu) cần dùng để làm câu (a).
-- (c) Tính lợi tức $G_0$ bằng tổng của cấp số nhân, và so với $v_{\pi_0}(\mathrm s_1)=11$.
+Tại mỗi trạng thái có bốn hành động lên, xuống, phải, trái, chuyển xác định sang ô kề theo hướng đó; hành động đưa ra ngoài lưới giữ nguyên trạng thái. Mọi chuyển có phần thưởng $-1$ cho tới khi vào trạng thái kết thúc; $\gamma=1$. Chính sách $\pi$ là ngẫu nhiên đều, mỗi hành động có xác suất $\tfrac14$. Giá trị $v_\pi$ (Hình 4.1 của sách, $k=\infty$), xếp theo cùng vị trí:
+
+| | cột 1 | cột 2 | cột 3 | cột 4 |
+|---|---:|---:|---:|---:|
+| hàng 1 | $0$ | $-14$ | $-20$ | $-22$ |
+| hàng 2 | $-14$ | $-18$ | $-20$ | $-20$ |
+| hàng 3 | $-20$ | $-20$ | $-18$ | $-14$ |
+| hàng 4 | $-22$ | $-20$ | $-14$ | $0$ |
+
+Tính $q_\pi(11,\text{xuống})$ và $q_\pi(7,\text{xuống})$.
 :::
 
-::: hint Gợi ý Bài tập 04.16
-Lần theo quỹ đạo $\mathrm s_1\to\mathrm s_0\to\mathrm s_0\to\cdots$. Phần thưởng đầu mang chỉ số $1$ vì nó được nhận sau hành động $A_0$.
+::: hint Gợi ý Bài tập 04.11
+Với $V=v_\pi$, giá trị nhìn trước (2.1) cho $q_\pi$ (Mệnh đề 03.22). Mỗi chuyển ở đây xác định, nên tổng trong (2.1) chỉ còn một số hạng.
 :::
 
-::: solution Lời giải Bài tập 04.16
-**Câu (a).** Tại $\mathrm s_1$, $\pi_0$ chọn $\mathrm a$, nên $R_1=2$ và $S_1=\mathrm s_0$. Tại $\mathrm s_0$, $\pi_0$ chọn $\mathrm a$, nên $R_2=1$, $S_2=\mathrm s_0$ và $R_3=1$. Tổng là
+::: solution Lời giải Bài tập 04.11
+Vì chuyển xác định và $\gamma=1$, công thức (2.1) với $V=v_\pi$ cho $q_\pi(s,a)=-1+v_\pi(s')$, trong đó $s'$ là ô mà hành động $a$ đưa tới từ $s$.
 
+- Từ $11$ (hàng 3, cột 4), đi xuống tới ô kết thúc ở hàng 4, cột 4, nên $q_\pi(11,\text{xuống})=-1+0=-1$.
+- Từ $7$ (hàng 2, cột 4), đi xuống tới $11$, nên $q_\pi(7,\text{xuống})=-1+v_\pi(11)=-1+(-14)=-15$.
+
+**Kiểm tra lại.** Theo Mệnh đề 03.23, $v_\pi(s)=\sum_a\pi(a\mid s)\,q_\pi(s,a)$. Tại $11$, bốn hành động lên, xuống, phải, trái dẫn tới $7$, ô kết thúc, $11$ và $10$, nên
 $$
-R_1+\gamma R_2+\gamma^2R_3=2+0{,}9\cdot1+0{,}81\cdot1=3{,}71 .
+\begin{aligned}
+&\tfrac14\bigl[(-1-20)+(-1+0)\\
+&\quad+(-1-14)\\
+&\quad+(-1-18)\bigr]\\
+&=\tfrac14(-56)\\
+&=-14=v_\pi(11).
+\end{aligned}
 $$
-
-Số $3{,}71$ chưa phải $G_0$, vì còn các số hạng $\gamma^jR_{j+1}$ với $j\ge3$.
-
-**Câu (b).** Cần trạng thái kế tiếp $s'$ của mỗi chuyển, tức cột $s'$ của bảng mô hình, hay mô hình $p$: chỉ biết phần thưởng của từng hành động thì không xác định được $S_1=\mathrm s_0$, do đó không xác định được $R_2=1$.
-
-**Câu (c).** Từ thời điểm $1$, mọi phần thưởng bằng $1$, nên
-
-$$
-G_0=2+\sum_{j\ge1}0{,}9^j\cdot1=2+\frac{0{,}9}{1-0{,}9}=2+9=11 .
-$$
-
-Mô hình và chính sách đều xác định, nên $G_0$ không ngẫu nhiên và bằng $v_{\pi_0}(\mathrm s_1)=11$.
-
-**Kiểm tra lại.** Tính từ cuối về đầu cho cùng tổng cắt ngắn: $1+0{,}9\cdot1=1{,}9$, rồi $2+0{,}9\cdot1{,}9=3{,}71$. Ba lỗi thường gặp: đánh chỉ số phần thưởng đầu là $R_0$ rồi nhân nó với $\gamma$, cho $0{,}9\cdot2+0{,}81+0{,}729=3{,}339$; cho tác tử ở lại $\mathrm s_1$ và cộng phần thưởng $3$ của hành động $\mathrm b$, hành động mà $\pi_0$ không chọn; coi $3{,}71$ là lợi tức.
+Tại $7$, bốn hành động dẫn tới $3$, $11$, $7$ và $6$, nên $\tfrac14\bigl[(-23)+(-15)+(-21)+(-21)\bigr]=-20=v_\pi(7)$. Lỗi thường gặp: cộng $v_\pi(11)$ vào giá trị nhìn trước của hành động xuống tại $11$, trong khi hành động đó đưa vào trạng thái kết thúc, nơi giá trị bằng $0$.
 :::
 
-### Bài tập 04.3. Kết luận dừng từ một bảng gần đúng
+### Bài tập 04.12. Phương trình Bellman và lượt quét cho giá trị hành động
 
-**Mức độ:** nhận biết. Mục tiêu học tập 3 của ghi chú.
+**Mức độ:** nhận biết; mục tiêu học tập 1.
 
-**Nguồn:** Bài giảng gốc (2025–2026), trang 17–20, 34; ghi chú bài giảng, Bài tập 04.3; Sutton và Barto (2018), §4.3.
+**Nguồn:** Sutton và Barto (2018), Bài tập 4.3, §4.1, trang 76; đẳng thức (4.3)–(4.5) của sách, trang 74.
 
-**Trùng trang chiếu:** [Bài tập: kết luận dừng từ bảng gần đúng](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/4/9) và [trang lời giải](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/4/10).
-
-::: exercise Bài tập 04.3 (Kết luận dừng từ một bảng gần đúng)
-Cho mô hình hai trạng thái: $\mathrm s_0\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $1$; $\mathrm s_0\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $0$; $\mathrm s_1\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $2$; $\mathrm s_1\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $3$; mọi chuyển xác định; $\gamma=0{,}9$. Một chương trình giữ chính sách $\pi=(\mathrm a,\mathrm b)$ và bảng gần đúng $V=(0,0)$ thay cho giá trị của $\pi$. Giá trị chính xác của hai chính sách là $v_{(\mathrm a,\mathrm b)}=(10,30)$ và $v_{(\mathrm b,\mathrm b)}=(27,30)$.
-
-- (a) Tính bốn giá trị nhìn trước $Q_V(s,a)$.
-- (b) Xác định chính sách tham lam theo $V$ với quy tắc phá hòa.
-- (c) Chương trình kết luận "chính sách không đổi nên đã tối ưu". Đánh giá kết luận này bằng Định nghĩa 04.16 và Ví dụ 04.11 của ghi chú.
+::: exercise Bài tập 04.12 (Phương trình Bellman và lượt quét cho giá trị hành động)
+Với chính sách Markov dừng $\pi$ và mọi $s\in\mathcal S$, sách viết ba đẳng thức sau cho giá trị trạng thái. Đẳng thức (4.3) của sách:
+$$
+\begin{aligned}
+&v_\pi(s)\\
+&\quad=\mathbb E_\pi\bigl[R_{t+1}+\gamma v_\pi(S_{t+1})\\
+&\qquad\mid S_t=s\bigr].
+\end{aligned}
+$$
+Đẳng thức (4.4) của sách:
+$$
+\begin{aligned}
+&v_\pi(s)\\
+&\quad=\sum_a\pi(a\mid s)\\
+&\qquad\times\sum_{s',r}p(s',r\mid s,a)\\
+&\qquad\times\bigl[r+\gamma v_\pi(s')\bigr].
+\end{aligned}
+$$
+Lượt quét (4.5) của sách:
+$$
+\begin{aligned}
+&V_{k+1}(s)\\
+&\quad=\sum_a\pi(a\mid s)\\
+&\qquad\times\sum_{s',r}p(s',r\mid s,a)\\
+&\qquad\times\bigl[r+\gamma V_k(s')\bigr].
+\end{aligned}
+$$
+Viết ba đẳng thức tương ứng cho giá trị hành động $q_\pi(s,a)=\mathbb E_\pi[G_t\mid S_t=s,A_t=a]$, với $s\in\mathcal S$, $a\in\mathcal A(s)$, và cho dãy bảng giá trị hành động $Q_k$.
 :::
 
-::: hint Gợi ý Bài tập 04.3
-Với $V=(0,0)$, giá trị nhìn trước chỉ còn phần thưởng của bước đầu. Để đánh giá kết luận, tính giá trị nhìn trước từ $v_{(\mathrm a,\mathrm b)}=(10,30)$ và so $(10,30)$ với $(27,30)$.
+::: hint Gợi ý Bài tập 04.12
+Bắt đầu từ $G_t=R_{t+1}+\gamma G_{t+1}$ với điều kiện $S_t=s$, $A_t=a$. Hành động $A_{t+1}$ được chọn theo $\pi(\cdot\mid S_{t+1})$, nên giá trị tiếp nối là trung bình của $q_\pi(S_{t+1},\cdot)$ với trọng số $\pi$.
 :::
 
-::: solution Lời giải Bài tập 04.3
-**Câu (a).** Mọi giá trị tiếp nối bằng $0$, nên $Q_V(\mathrm s_0,\mathrm a)=1$, $Q_V(\mathrm s_0,\mathrm b)=0$, $Q_V(\mathrm s_1,\mathrm a)=2$, $Q_V(\mathrm s_1,\mathrm b)=3$.
+::: solution Lời giải Bài tập 04.12
+Quy ước $q_\pi(s_{\mathrm{term}},a')=0$ và $Q_k(s_{\mathrm{term}},a')=0$, vì mọi phần thưởng sau khi vào trạng thái kết thúc bằng $0$.
 
-**Câu (b).** Tại $\mathrm s_0$, $\arg\max=\{\mathrm a\}$ chứa hành động cũ; tại $\mathrm s_1$, $\arg\max=\{\mathrm b\}$ chứa hành động cũ. Chính sách tham lam theo $V$ là $(\mathrm a,\mathrm b)$, trùng $\pi$.
+**Dạng kỳ vọng, tương ứng (4.3) của sách.** Từ $G_t=R_{t+1}+\gamma G_{t+1}$ và tính Markov, khi đã biết $(S_{t+1},A_{t+1})=(s',a')$, kỳ vọng của $G_{t+1}$ là $q_\pi(s',a')$. Do đó
+$$
+\begin{aligned}
+&q_\pi(s,a)\\
+&\quad=\mathbb E_\pi\bigl[R_{t+1}\\
+&\qquad+\gamma\,q_\pi(S_{t+1},A_{t+1})\\
+&\qquad\mid S_t=s,A_t=a\bigr].
+\end{aligned}
+$$
 
-**Câu (c).** Kết luận sai. Định nghĩa 04.16 đòi kiểm tính ổn định bằng giá trị chính xác $v_\pi$. Ở đây $v_{(\mathrm a,\mathrm b)}=(10,30)$ (Ví dụ 04.10), và từ bảng này $q(\mathrm s_0,\mathrm b)=0+0{,}9\cdot30=27>10=q(\mathrm s_0,\mathrm a)$, nên $\pi$ không ổn định. Theo Ví dụ 04.11, $(\mathrm b,\mathrm b)$ có giá trị $(27,30)$, lớn hơn $(10,30)$ tại $\mathrm s_0$.
+**Dạng tổng, tương ứng (4.4) của sách.** Cặp $(S_{t+1},R_{t+1})$ có phân phối $p(\cdot,\cdot\mid s,a)$, và $A_{t+1}$ có phân phối $\pi(\cdot\mid S_{t+1})$, nên
+$$
+\begin{aligned}
+&q_\pi(s,a)\\
+&\quad=\sum_{s',r}p(s',r\mid s,a)\Bigl[r\\
+&\qquad+\gamma\sum_{a'}\pi(a'\mid s')\\
+&\qquad\quad\times q_\pi(s',a')\Bigr].
+\end{aligned}
+$$
+Vì $\sum_{a'}\pi(a'\mid s')\,q_\pi(s',a')=v_\pi(s')$ (Mệnh đề 03.23), đẳng thức này là $q_\pi=Q_{v_\pi}$ (Mệnh đề 03.22).
 
-**Kiểm tra lại.** Phép chọn hành động ở câu (b) đúng đối với bảng $V$; lỗi nằm ở bảng, vì $V=(0,0)$ không phải giá trị của chính sách đang giữ. Hai lỗi thường gặp: dùng Định lý 04.13 cho một bảng gần đúng, trong khi định lý đòi giá trị chính xác; coi "chính sách không đổi sau một lần cải thiện" là chứng nhận tối ưu mà không kiểm phương trình Bellman tối ưu tại $v_\pi$.
+**Lượt quét, tương ứng (4.5) của sách.** Từ một bảng $Q_0$ bất kỳ trên các cặp $(s,a)$,
+$$
+\begin{aligned}
+&Q_{k+1}(s,a)\\
+&\quad=\sum_{s',r}p(s',r\mid s,a)\Bigl[r\\
+&\qquad+\gamma\sum_{a'}\pi(a'\mid s')\\
+&\qquad\quad\times Q_k(s',a')\Bigr].
+\end{aligned}
+$$
+Lấy hiệu với dạng tổng của $q_\pi$, phần thưởng triệt tiêu, và các trọng số $p$, $\pi$ không âm có tổng bằng $1$, nên $\max_{s,a}\lvert Q_{k+1}(s,a)-q_\pi(s,a)\rvert\le\gamma\max_{s,a}\lvert Q_k(s,a)-q_\pi(s,a)\rvert$, như Bước 2 của chứng minh Mệnh đề 04.4. Với $\gamma<1$, dãy $Q_k$ hội tụ về $q_\pi$.
+
+**Kiểm tra lại.** Lấy trung bình hai vế của dạng tổng theo $\pi(\cdot\mid s)$ cho lại (4.4) của sách: $\sum_a\pi(a\mid s)\,q_\pi(s,a)=v_\pi(s)$. Lỗi thường gặp: viết $\max_{a'}q_\pi(s',a')$ thay cho trung bình theo $\pi(\cdot\mid s')$; đó là phương trình của $q_*$, không phải của $q_\pi$.
+:::
+
+### Bài tập 04.13. Liên hệ giữa giá trị tối ưu và chính sách tối ưu
+
+**Mức độ:** nhận biết; mục tiêu học tập 2 và 4.
+
+**Nguồn:** Sutton và Barto (2018), Bài tập 3.25–3.28, §3.6, trang 67.
+
+::: exercise Bài tập 04.13 (Liên hệ giữa giá trị tối ưu và chính sách tối ưu)
+Xét MDP hữu hạn với mô hình bốn đối số $p(s',r\mid s,a)$, $0\le\gamma<1$, giá trị tối ưu $v_*$, giá trị hành động tối ưu $q_*$ và quy ước $v_*(s_{\mathrm{term}})=0$.
+
+- (a) Viết $v_*$ theo $q_*$.
+- (b) Viết $q_*$ theo $v_*$ và $p$.
+- (c) Viết một chính sách tối ưu $\pi_*$ theo $q_*$.
+- (d) Viết một chính sách tối ưu $\pi_*$ theo $v_*$ và $p$.
+:::
+
+::: hint Gợi ý Bài tập 04.13
+Câu (a) và (b) là Định lý 04.25(c) và Định nghĩa 04.19. Câu (c) và (d) dùng Định lý 04.25(b): chính sách tham lam theo $v_*$ là tối ưu.
+:::
+
+::: solution Lời giải Bài tập 04.13
+**Câu (a).** Theo Định lý 04.25(c), với mọi $s\in\mathcal S$,
+$$
+v_*(s)=\max_{a\in\mathcal A(s)}q_*(s,a).
+$$
+
+**Câu (b).** Theo Định nghĩa 04.19, với mọi $s\in\mathcal S$, $a\in\mathcal A(s)$,
+$$
+\begin{aligned}
+&q_*(s,a)\\
+&\quad=\sum_{s',r}p(s',r\mid s,a)\\
+&\qquad\times\bigl[r+\gamma v_*(s')\bigr].
+\end{aligned}
+$$
+
+**Câu (c).** Chọn tại mỗi $s$ một hành động
+$$
+\pi_*(s)\in\arg\max_{a\in\mathcal A(s)}q_*(s,a).
+$$
+Theo câu (b), $q_*(s,a)=Q_{v_*}(s,a)$, nên $\pi_*$ là chính sách tham lam theo $v_*$ và tối ưu theo Định lý 04.25(b). Khi tập $\arg\max$ có nhiều phần tử, mọi cách chọn đều tối ưu; một chính sách ngẫu nhiên tối ưu khi và chỉ khi nó chỉ đặt xác suất dương lên các hành động trong tập này (Bài tập 04.9(b)).
+
+**Câu (d).** Thế câu (b) vào câu (c):
+$$
+\begin{aligned}
+&\pi_*(s)\in\arg\max_{a\in\mathcal A(s)}\\
+&\quad\sum_{s',r}p(s',r\mid s,a)\\
+&\qquad\times\bigl[r+\gamma v_*(s')\bigr].
+\end{aligned}
+$$
+Đây là phép nhìn trước một bước theo $v_*$, nên cần mô hình $p$; câu (c) chọn hành động chỉ từ bảng $q_*$, không cần $p$.
+
+**Kiểm tra lại.** Trên mô hình hai trạng thái của ghi chú (Ví dụ 04.11, Định lý 04.25), $q_*(\mathrm s_0,\cdot)=(25{,}3;\,27)$ và $q_*(\mathrm s_1,\cdot)=(26{,}3;\,30)$, nên câu (a) cho $v_*=(27,30)$ và câu (c) cho $\pi_*=(\mathrm b,\mathrm b)$. Lỗi thường gặp: viết $\pi_*(s)=\arg\max_aq_*(s,a)$ như một đẳng thức, trong khi $\arg\max$ là một tập và có thể có nhiều phần tử.
+:::
+
+### Bài tập 04.14. Lặp giá trị cho giá trị hành động
+
+**Mức độ:** nhận biết; mục tiêu học tập 4.
+
+**Nguồn:** Sutton và Barto (2018), Bài tập 4.10, §4.4, trang 84; đẳng thức (4.10) của sách, trang 83.
+
+::: exercise Bài tập 04.14 (Lặp giá trị cho giá trị hành động)
+Lặp giá trị trên bảng giá trị trạng thái dùng quy tắc (4.10) của sách, tức (4.1) của ghi chú, với mọi $s\in\mathcal S$:
+$$
+\begin{aligned}
+&V_{k+1}(s)\\
+&\quad=\max_{a\in\mathcal A(s)}\sum_{s',r}p(s',r\mid s,a)\\
+&\qquad\times\bigl[r+\gamma V_k(s')\bigr].
+\end{aligned}
+$$
+Viết quy tắc tương ứng $Q_{k+1}(s,a)$ cho bảng giá trị hành động, với $s\in\mathcal S$, $a\in\mathcal A(s)$.
+:::
+
+::: hint Gợi ý Bài tập 04.14
+Trong quy tắc trên, phép cực đại chọn hành động đầu tiên. Với bảng giá trị hành động, hành động đầu tiên đã được ấn định; phép cực đại chuyển sang hành động tại trạng thái kế tiếp.
+:::
+
+::: solution Lời giải Bài tập 04.14
+Với quy ước $\max_{a'}Q_k(s_{\mathrm{term}},a')=0$,
+$$
+\begin{aligned}
+&Q_{k+1}(s,a)\\
+&\quad=\sum_{s',r}p(s',r\mid s,a)\Bigl[r\\
+&\qquad+\gamma\max_{a'\in\mathcal A(s')}Q_k(s',a')\Bigr].
+\end{aligned}
+$$
+
+Quy tắc này là lặp giá trị trên bảng trạng thái, viết lại. Đặt $V_k(s)=\max_aQ_k(s,a)$. Khi đó $Q_{k+1}=Q_{V_k}$ theo (2.1), và
+$$
+\begin{aligned}
+V_{k+1}(s)&=\max_aQ_{k+1}(s,a)\\
+&=\max_aQ_{V_k}(s,a)\\
+&=(T_*V_k)(s).
+\end{aligned}
+$$
+Theo Hệ quả 04.26, $V_k\to v_*$ khi $\gamma<1$. Lấy hiệu của $Q_{k+1}=Q_{V_k}$ và $q_*=Q_{v_*}$ (Định nghĩa 04.19), phần thưởng triệt tiêu, nên $\lvert Q_{k+1}(s,a)-q_*(s,a)\rvert\le\gamma\lVert V_k-v_*\rVert_\infty\to0$. Điểm bất động của quy tắc là phương trình Bellman tối ưu cho giá trị hành động của Định lý 04.25(c).
+
+**Kiểm tra lại.** Nếu mỗi $\mathcal A(s')$ chỉ có một hành động, phép cực đại biến mất và quy tắc trùng lượt quét cho $q_\pi$ của Bài tập 04.12 với chính sách duy nhất. Lỗi thường gặp: đặt phép cực đại ngoài tổng theo $(s',r)$, viết $\max_{a'}\sum_{s',r}\cdots$; khi đó hành động tại bước sau được chọn trước khi biết trạng thái kế tiếp, và mỗi trạng thái kế tiếp không còn hành động tốt nhất riêng của nó.
 :::
 
 ## Mức tính toán hoặc chứng minh
 
-### Bài tập 04.1. Lượt quét thứ ba và chặn sai số
+### Bài tập 04.15. Thêm một trạng thái vào lưới 4×4
 
-**Mức độ:** tính toán. Mục tiêu học tập 1 của ghi chú.
+**Mức độ:** tính toán; mục tiêu học tập 1.
 
-**Nguồn:** Bài giảng gốc (2025–2026), trang 14, 17–18; ghi chú bài giảng, Bài tập 04.1.
+**Nguồn:** Sutton và Barto (2018), Bài tập 4.2, §4.1, trang 76; dữ kiện của Ví dụ 4.1, trang 76, và Hình 4.1, trang 77.
 
-**Trùng trang chiếu:** [Bài tập: lượt quét thứ ba và chặn sai số](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/2/12) và [trang lời giải](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/2/13).
+::: exercise Bài tập 04.15 (Thêm một trạng thái vào lưới 4×4)
+Dùng lưới $4\times4$ của Bài tập 04.11: các trạng thái chưa kết thúc $1,\dots,14$, bốn hành động xác định, đi ra ngoài lưới thì đứng yên, phần thưởng $-1$ mọi chuyển, $\gamma=1$, chính sách $\pi$ ngẫu nhiên đều, với giá trị
 
-::: exercise Bài tập 04.1 (Lượt quét thứ ba và chặn sai số)
-Cho mô hình hai trạng thái: $\mathrm s_0\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $1$; $\mathrm s_0\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $0$; $\mathrm s_1\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $2$; $\mathrm s_1\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $3$; mọi chuyển xác định; $\gamma=0{,}9$. Chính sách $\pi_0=(\mathrm a,\mathrm a)$ và bảng $V_2=(1{,}9;\,2{,}9)$ thu được sau hai lượt quét đồng bộ từ $V_0=(0,0)$.
+| | cột 1 | cột 2 | cột 3 | cột 4 |
+|---|---:|---:|---:|---:|
+| hàng 1 | $0$ | $-14$ | $-20$ | $-22$ |
+| hàng 2 | $-14$ | $-18$ | $-20$ | $-20$ |
+| hàng 3 | $-20$ | $-20$ | $-18$ | $-14$ |
+| hàng 4 | $-22$ | $-20$ | $-14$ | $0$ |
 
-- (a) Tính bảng đồng bộ $V_3=T_{\pi_0}V_2$.
-- (b) Tính $\Delta_{\pi_0}(V_2)$ và chặn sai số của $V_2$ theo Hệ quả 04.8(a).
-- (c) Biết $v_{\pi_0}=(10,11)$, so chặn ở (b) với sai số thật của $V_2$, và giải thích vì sao $V_3$ chưa phải $v_{\pi_0}$.
+Hàng 4 gồm, từ trái sang, $12$, $13$, $14$ và ô kết thúc. Thêm trạng thái $15$ ngay dưới $13$. Tại $15$, các hành động trái, lên, phải, xuống đưa tác tử tới $12$, $13$, $14$, $15$.
+
+- (a) Các chuyển từ những trạng thái cũ giữ nguyên. Tính $v_\pi(15)$.
+- (b) Đổi thêm động lực tại $13$: hành động xuống từ $13$ đưa tác tử tới $15$. Tính $v_\pi(15)$ trong trường hợp này.
 :::
 
-::: hint Gợi ý Bài tập 04.1
-Theo $\pi_0$, cả hai trạng thái chọn $\mathrm a$ và $\mathrm a$ dẫn về $\mathrm s_0$; cả hai ô của $V_3$ đọc $V_2(\mathrm s_0)$. Phần dư của $V_2$ là $\lVert V_3-V_2\rVert_\infty$.
+::: hint Gợi ý Bài tập 04.15
+Ở (a), không trạng thái cũ nào đi tới $15$, nên phương trình của chúng không đổi. Ở (b), phương trình của $13$ chứa $v_\pi(15)$; thử giữ $v_\pi(13)=-20$ rồi kiểm cả hai phương trình.
 :::
 
-::: solution Lời giải Bài tập 04.1
-**Câu (a).** Cả hai ô đọc $V_2(\mathrm s_0)=1{,}9$ từ bảng cũ:
-
+::: solution Lời giải Bài tập 04.15
+**Câu (a).** Phương trình $v_\pi=T_\pi v_\pi$ của các trạng thái cũ không chứa $15$, nên bảng cũ vẫn là nghiệm của chúng. Phương trình tại $15$ là
 $$
 \begin{aligned}
-V_3(\mathrm s_0)&=1+0{,}9\cdot1{,}9=2{,}71,\\
-V_3(\mathrm s_1)&=2+0{,}9\cdot1{,}9=3{,}71.
+&v_\pi(15)\\
+&=-1+\tfrac14\bigl[v_\pi(12)+v_\pi(13)\\
+&\quad+v_\pi(14)+v_\pi(15)\bigr]\\
+&=-1+\tfrac14\bigl[-56+v_\pi(15)\bigr].
 \end{aligned}
 $$
+Nhân hai vế với $4$: $3\,v_\pi(15)=-60$, nên $v_\pi(15)=-20$.
 
-Vậy $V_3=(2{,}71;\,3{,}71)$.
+**Câu (b).** Chỉ phương trình của $13$ thay đổi: hành động xuống từ $13$ trước đây giữ nguyên $13$, nay đưa tới $15$. Phương trình mới là
+$$
+\begin{aligned}
+&v_\pi(13)\\
+&\quad=-1+\tfrac14\bigl[v_\pi(9)+v_\pi(12)\\
+&\qquad+v_\pi(14)+v_\pi(15)\bigr].
+\end{aligned}
+$$
+Thế bảng cũ cùng $v_\pi(15)=-20$: vế phải bằng $-1+\tfrac14(-20-22-14-20)=-1-19=-20=v_\pi(13)$. Phương trình tại $15$ không đổi so với câu (a) và vẫn đúng với $v_\pi(13)=-20$, $v_\pi(15)=-20$. Mọi phương trình khác không chứa $15$ và không đổi. Vậy bảng cũ cùng $v_\pi(15)=-20$ thỏa toàn bộ hệ.
 
-**Câu (b).** $V_3-V_2=(0{,}81;\,0{,}81)$, nên $\Delta_{\pi_0}(V_2)=0{,}81$. Chặn sai số là $0{,}81/(1-0{,}9)=8{,}1$.
+Dưới chính sách ngẫu nhiên đều, từ mọi trạng thái có một đường tới ô kết thúc với xác suất dương sau không quá $3$ bước, nên mọi lượt kết thúc với xác suất $1$, và $v_\pi$ là nghiệm duy nhất của hệ (Sutton và Barto, 2018, §4.1, trang 74). Do đó $v_\pi(15)=-20$ trong cả hai trường hợp.
 
-**Câu (c).** Sai số thật là $\max\{10-1{,}9;\ 11-2{,}9\}=8{,}1$, đúng bằng chặn. Bảng $V_3$ còn phần dư $\Delta_{\pi_0}(V_3)=0{,}9^3=0{,}729>0$, nên $V_3$ chưa thỏa $V=T_{\pi_0}V$; theo Hệ quả 04.6(a), chỉ $v_{\pi_0}$ thỏa phương trình đó.
-
-**Kiểm tra lại.** Theo Ví dụ 04.5 của ghi chú, $\lVert V_k-v_{\pi_0}\rVert_\infty=10\cdot0{,}9^k$ với $k\ge1$; với $k=2$ được $8{,}1$. Hai lỗi thường gặp: cho ô $\mathrm s_1$ đọc giá trị mới $V_3(\mathrm s_0)=2{,}71$, cho $2+0{,}9\cdot2{,}71=4{,}439$, tức kết quả của cập nhật tại chỗ; đọc phần dư $0{,}81$ là sai số, bỏ quên thừa số $1/(1-\gamma)=10$.
+**Kiểm tra lại.** Ở (b), hành động xuống từ $13$ trước đây cho giá trị nhìn trước $-1+v_\pi(13)=-21$, nay cho $-1+v_\pi(15)=-21$: hai số bằng nhau, nên trung bình tại $13$ không đổi. Lỗi thường gặp: giải phương trình tại $15$ với vế phải chỉ gồm ba ô kề $12$, $13$, $14$, bỏ hành động xuống giữ nguyên $15$.
 :::
 
-### Bài tập 04.10. Dạng ma trận và chuỗi Neumann của bài toán đánh giá chính sách
+### Bài tập 04.16. Chính sách tối ưu phụ thuộc hệ số chiết khấu
 
-**Mức độ:** tính toán và chứng minh. Mục tiêu học tập 1 của ghi chú.
+**Mức độ:** tính toán; mục tiêu học tập 1 và 3.
 
-**Nguồn:** Bài tập tuần 3 (2025–2026), bài 6; ghi chú bài giảng, Hệ quả 04.6(c) và đoạn sau Ví dụ 04.5; ghi chú Bài 03, Định lý 03.28. Bộ số của câu (b) là số liệu sư phạm tự xây dựng.
+**Nguồn:** Sutton và Barto (2018), Bài tập 3.22, §3.6, trang 66.
 
-::: exercise Bài tập 04.10 (Dạng ma trận và chuỗi Neumann của bài toán đánh giá chính sách)
-Xét MDP hữu hạn với $n$ trạng thái chưa kết thúc, phần thưởng bị chặn, chính sách Markov dừng $\pi$ và $0\le\gamma<1$. Đặt $P_\pi(s,s')=\sum_a\pi(a\mid s)\sum_rp(s',r\mid s,a)$ với $s,s'\in\mathcal S$ (chỉ gồm trạng thái chưa kết thúc) và $r_\pi(s)=\sum_a\pi(a\mid s)\sum_{s',r}p(s',r\mid s,a)\,r$.
+::: exercise Bài tập 04.16 (Chính sách tối ưu phụ thuộc hệ số chiết khấu)
+Xét MDP tiếp diễn có ba trạng thái $\mathrm x_0$, $\mathrm x_1$, $\mathrm x_2$, mọi chuyển xác định. Chỉ trạng thái $\mathrm x_0$ có lựa chọn, giữa hai hành động $\mathrm{trai}$ và $\mathrm{phai}$; mỗi trạng thái còn lại có một hành động.
 
-**Nhắc lại:** $T_\pi V=r_\pi+\gamma P_\pi V$ với mọi $V\in\mathbb R^n$, nên $(I-\gamma P_\pi)v_\pi=r_\pi$; ma trận $I-\gamma P_\pi$ khả nghịch khi $0\le\gamma<1$ và $v_\pi=(I-\gamma P_\pi)^{-1}r_\pi$ (Hệ quả 04.6(c) của ghi chú; ghi chú Bài 03, Định lý 03.28).
+| Trạng thái | Hành động | Trạng thái kế tiếp | Phần thưởng |
+|---|---|---|---:|
+| $\mathrm x_0$ | $\mathrm{trai}$ | $\mathrm x_1$ | $+1$ |
+| $\mathrm x_0$ | $\mathrm{phai}$ | $\mathrm x_2$ | $0$ |
+| $\mathrm x_1$ | (duy nhất) | $\mathrm x_0$ | $0$ |
+| $\mathrm x_2$ | (duy nhất) | $\mathrm x_0$ | $+2$ |
 
-Mô hình hai trạng thái: $\mathrm s_0\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $1$; $\mathrm s_0\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $0$; $\mathrm s_1\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $2$; $\mathrm s_1\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $3$; mọi chuyển xác định; $\gamma=0{,}9$.
-
-- (a) Trên mô hình hai trạng thái, viết $P_{\pi_0}$, $r_{\pi_0}$ cho $\pi_0=(\mathrm a,\mathrm a)$ và giải hệ để được $v_{\pi_0}$.
-- (b) Làm như câu (a) cho chính sách ngẫu nhiên đều $\pi_u(\mathrm a\mid s)=\pi_u(\mathrm b\mid s)=\tfrac12$ tại cả hai trạng thái.
-- (c) Chứng minh $(I-\gamma P_\pi)^{-1}=\sum_{k\ge0}\gamma^kP_\pi^k$ (chuỗi Neumann), mọi phần tử của ma trận này không âm và tổng mỗi hàng không vượt $1/(1-\gamma)$. Nêu ý nghĩa của thành phần $s$ của $\gamma^kP_\pi^kr_\pi$. Kiểm công thức trên $\pi_0$ và $\pi_u$ của câu (a), (b), biết $P_{\pi_0}^2=P_{\pi_0}$ và $P_{\pi_u}^2=P_{\pi_u}$.
-- (d) Với $\gamma=1$ và $\pi_0$, chỉ ra $I-P_{\pi_0}$ suy biến, và nối kết quả với dãy lượt quét đồng bộ từ $V_0=(0,0)$, cho $V_k=(k,\,k+1)$ với $k\ge1$.
+Có đúng hai chính sách xác định, $\pi_{\mathrm{trai}}$ và $\pi_{\mathrm{phai}}$. Xác định chính sách tối ưu khi $\gamma=0$, khi $\gamma=0{,}9$ và khi $\gamma=0{,}5$.
 :::
 
-::: hint Gợi ý Bài tập 04.10
-Ở (c), nhân $(I-\gamma P_\pi)$ với tổng riêng $S_N=\sum_{k=0}^{N}\gamma^kP_\pi^k$; các tổng ở giữa triệt tiêu từng cặp. Mỗi hàng của $P_\pi^k$ gồm số không âm có tổng không vượt $1$, vì $P_\pi$ có tính chất đó.
+::: hint Gợi ý Bài tập 04.16
+Viết hệ $v=T_\pi v$ của từng chính sách và giải theo $v(\mathrm x_0)$. Mỗi chính sách lặp lại một chu kỳ hai bước từ $\mathrm x_0$.
 :::
 
-::: solution Lời giải Bài tập 04.10
-**Câu (a).** Theo $\pi_0$, cả hai trạng thái chọn $\mathrm a$ và đi về $\mathrm s_0$, nên
-
+::: solution Lời giải Bài tập 04.16
+**Giá trị của hai chính sách.** Với $\pi_{\mathrm{trai}}$, hệ (1.2) là $v(\mathrm x_0)=1+\gamma v(\mathrm x_1)$, $v(\mathrm x_1)=\gamma v(\mathrm x_0)$, $v(\mathrm x_2)=2+\gamma v(\mathrm x_0)$. Thế phương trình thứ hai vào phương trình thứ nhất: $v(\mathrm x_0)=1+\gamma^2v(\mathrm x_0)$. Với $\pi_{\mathrm{phai}}$, $v(\mathrm x_0)=\gamma v(\mathrm x_2)$ và $v(\mathrm x_2)=2+\gamma v(\mathrm x_0)$ cho $v(\mathrm x_0)=2\gamma+\gamma^2v(\mathrm x_0)$. Với $0\le\gamma<1$,
 $$
-P_{\pi_0}=\begin{bmatrix}1&0\\1&0\end{bmatrix},\qquad r_{\pi_0}=\begin{bmatrix}1\\2\end{bmatrix},\qquad I-0{,}9P_{\pi_0}=\begin{bmatrix}0{,}1&0\\-0{,}9&1\end{bmatrix}.
+\begin{aligned}
+v_{\pi_{\mathrm{trai}}}(\mathrm x_0)&=\frac{1}{1-\gamma^2},\\
+v_{\pi_{\mathrm{phai}}}(\mathrm x_0)&=\frac{2\gamma}{1-\gamma^2}.
+\end{aligned}
 $$
+Ở cả hai chính sách, $v(\mathrm x_1)=\gamma v(\mathrm x_0)$ và $v(\mathrm x_2)=2+\gamma v(\mathrm x_0)$, nên chính sách có $v(\mathrm x_0)$ lớn hơn cũng không kém tại $\mathrm x_1$ và $\mathrm x_2$. Hai giá trị tại $\mathrm x_0$ có cùng mẫu số, nên chỉ cần so $1$ với $2\gamma$.
 
-Hàng thứ nhất cho $0{,}1\,x=1$, nên $x=10$; hàng thứ hai cho $-0{,}9\cdot10+y=2$, nên $y=11$. Vậy $v_{\pi_0}=(10,11)$.
+| $\gamma$ | $v_{\pi_{\mathrm{trai}}}(\mathrm x_0)$ | $v_{\pi_{\mathrm{phai}}}(\mathrm x_0)$ | Chính sách tối ưu |
+|---|---:|---:|---|
+| $0$ | $1$ | $0$ | $\pi_{\mathrm{trai}}$ |
+| $0{,}9$ | $1/0{,}19\approx5{,}263$ | $1{,}8/0{,}19\approx9{,}474$ | $\pi_{\mathrm{phai}}$ |
+| $0{,}5$ | $4/3$ | $4/3$ | cả hai |
 
-**Câu (b).** Theo $\pi_u$, mỗi trạng thái đi về $\mathrm s_0$ hoặc $\mathrm s_1$ với xác suất $\tfrac12$; thưởng kỳ vọng một bước là $\tfrac{1+0}2=0{,}5$ tại $\mathrm s_0$ và $\tfrac{2+3}2=2{,}5$ tại $\mathrm s_1$:
+Theo Định lý 04.25, có một chính sách Markov dừng, xác định tối ưu trên mọi chính sách; MDP này chỉ có hai chính sách như vậy, nên chính sách có giá trị lớn hơn ở mọi trạng thái là tối ưu. Khi $\gamma=0$, tác tử chỉ tính phần thưởng ngay sau hành động, nên chọn $+1$. Khi $\gamma=0{,}9$, phần thưởng $+2$ nhận sau một bước có giá trị hiện tại $1{,}8>1$. Khi $\gamma=0{,}5$, $2\gamma=1$: hai chính sách có cùng giá trị $(4/3;\,2/3;\,8/3)$ tại $(\mathrm x_0,\mathrm x_1,\mathrm x_2)$, cả hai đều tối ưu, và quy tắc phá hòa của Định nghĩa 04.12 quyết định chính sách mà lặp chính sách trả về.
 
-$$
-P_{\pi_u}=\begin{bmatrix}0{,}5&0{,}5\\0{,}5&0{,}5\end{bmatrix},\qquad r_{\pi_u}=\begin{bmatrix}0{,}5\\2{,}5\end{bmatrix},\qquad I-0{,}9P_{\pi_u}=\begin{bmatrix}0{,}55&-0{,}45\\-0{,}45&0{,}55\end{bmatrix}.
-$$
-
-Định thức là $0{,}55^2-0{,}45^2=0{,}1$, nên
-
-$$
-(I-0{,}9P_{\pi_u})^{-1}=\begin{bmatrix}5{,}5&4{,}5\\4{,}5&5{,}5\end{bmatrix},\qquad v_{\pi_u}=\begin{bmatrix}5{,}5\cdot0{,}5+4{,}5\cdot2{,}5\\4{,}5\cdot0{,}5+5{,}5\cdot2{,}5\end{bmatrix}=\begin{bmatrix}14\\16\end{bmatrix}.
-$$
-
-**Câu (c).** *Bước 1 (tổng riêng).* Với $S_N=\sum_{k=0}^{N}\gamma^kP_\pi^k$, khai triển tích và triệt tiêu từng cặp:
-
-$$
-(I-\gamma P_\pi)S_N=\sum_{k=0}^{N}\gamma^kP_\pi^k-\sum_{k=1}^{N+1}\gamma^kP_\pi^k=I-\gamma^{N+1}P_\pi^{N+1}.
-$$
-
-*Bước 2 (giới hạn).* $P_\pi$ có phần tử không âm và tổng mỗi hàng không vượt $1$, vì phần xác suất đi vào $s_{\mathrm{term}}$ bị bỏ khỏi tổng. Tích của hai ma trận có tính chất này cũng có tính chất này, nên mọi phần tử của $P_\pi^{k}$ nằm trong $[0,1]$. Do đó $\gamma^{N+1}P_\pi^{N+1}\to0$ khi $N\to\infty$. Mỗi phần tử của $S_N$ là tổng các số không âm, không giảm theo $N$ và bị chặn bởi $\sum_{k\ge0}\gamma^k=1/(1-\gamma)$, nên $S_N$ hội tụ về một ma trận $S$.
-
-*Bước 3 (kết luận).* Cho $N\to\infty$ ở Bước 1 được $(I-\gamma P_\pi)S=I$, tức $S=(I-\gamma P_\pi)^{-1}$; lập luận này cũng chứng minh lại tính khả nghịch. Mọi phần tử của $S$ không âm, và tổng hàng $s$ của $S$ là $\sum_k\gamma^k\sum_{s'}P_\pi^k(s,s')\le\sum_k\gamma^k=1/(1-\gamma)$.
-
-*Ý nghĩa.* $P_\pi^k(s,s')$ là xác suất ở $s'$ sau $k$ bước khi xuất phát từ $s$ và theo $\pi$, nên $(P_\pi^kr_\pi)(s)=\mathbb E_\pi[R_{k+1}\mid S_0=s]$. Công thức $v_\pi=\sum_k\gamma^kP_\pi^kr_\pi$ chính là $v_\pi(s)=\sum_k\gamma^k\mathbb E_\pi[R_{k+1}\mid S_0=s]$, kỳ vọng của lợi tức viết theo từng bước.
-
-*Kiểm số.* Vì $P^k=P$ với $k\ge1$ khi $P^2=P$, chuỗi rút về $I+\bigl(\sum_{k\ge1}0{,}9^k\bigr)P=I+9P$:
-
-$$
-I+9P_{\pi_0}=\begin{bmatrix}10&0\\9&1\end{bmatrix},\qquad I+9P_{\pi_u}=\begin{bmatrix}5{,}5&4{,}5\\4{,}5&5{,}5\end{bmatrix}.
-$$
-
-Ma trận thứ hai trùng nghịch đảo ở câu (b). Ma trận thứ nhất nhân $r_{\pi_0}=(1,2)$ cho $(10,\ 9+2)=(10,11)$, trùng câu (a). Mọi hàng có tổng $10=1/(1-0{,}9)$, vì mô hình không có trạng thái kết thúc.
-
-**Câu (d).** Với $\gamma=1$, $I-P_{\pi_0}=\begin{bmatrix}0&0\\-1&1\end{bmatrix}$ có định thức $0$. Hàng thứ nhất của hệ thành $0\cdot x=1$, vô nghiệm, nên không có bảng hữu hạn nào thỏa phương trình Bellman kỳ vọng. Điều này khớp với dãy lượt quét $V_k=(k,\,k+1)$, $k\ge1$, tăng không giới hạn. Hệ thuần nhất có nghiệm khác $0$ là $x=(1,1)$, ứng với đẳng thức $T_{\pi_0}(V+c\mathbf 1)=T_{\pi_0}V+c\mathbf 1$: cộng cùng một hằng số vào mọi ô không làm khoảng cách giảm. Ở câu (c), chuỗi $\sum_k P_{\pi_0}^k=I+P_{\pi_0}+P_{\pi_0}+\cdots$ phân kỳ.
-
-**Kiểm tra lại.** Thế $(14,16)$ vào phương trình Bellman của $\pi_u$: $0{,}5+0{,}45\cdot14+0{,}45\cdot16=0{,}5+6{,}3+7{,}2=14$ và $2{,}5+6{,}3+7{,}2=16$. Ba lỗi thường gặp: thêm cột $s_{\mathrm{term}}$ vào $P_\pi$, làm ma trận không vuông; quên trọng số $\pi(a\mid s)$ khi tính $r_\pi$, chẳng hạn lấy $r_{\pi_u}(\mathrm s_0)=1+0=1$; viết chuỗi Neumann bắt đầu từ $k=1$, bỏ số hạng $I$, cho $9P_{\pi_0}r_{\pi_0}=(9,9)$ thay cho $(10,11)$.
+**Kiểm tra lại.** Với $\gamma=0{,}9$, từ $v_{\pi_{\mathrm{phai}}}$: $v(\mathrm x_1)=0{,}9\cdot9{,}474\approx8{,}526$ và $v(\mathrm x_2)=2+0{,}9\cdot9{,}474\approx10{,}526$. Hai giá trị nhìn trước tại $\mathrm x_0$ là $1+0{,}9\cdot8{,}526\approx8{,}674$ cho $\mathrm{trai}$ và $0+0{,}9\cdot10{,}526\approx9{,}474$ cho $\mathrm{phai}$; cực đại bằng $v(\mathrm x_0)$, đúng phương trình (3.1). Lỗi thường gặp: chỉ so phần thưởng của bước đầu, $+1$ với $0$, và kết luận $\pi_{\mathrm{trai}}$ tối ưu với mọi $\gamma$.
 :::
 
-### Bài tập 04.2. Cải thiện từ chính sách π₁
+### Bài tập 04.17. Giá trị tối ưu của ô A trên lưới 5×5
 
-**Mức độ:** tính toán. Mục tiêu học tập 2 của ghi chú.
+**Mức độ:** tính toán; mục tiêu học tập 1 và 4.
 
-**Nguồn:** Bài giảng gốc (2025–2026), trang 17–20; ghi chú bài giảng, Bài tập 04.2.
+**Nguồn:** Sutton và Barto (2018), Bài tập 3.24, §3.6, trang 67; dữ kiện của Ví dụ 3.5, trang 60, và Hình 3.5, trang 65. Câu (b) là phép tính trên cùng dữ kiện.
 
-**Trùng trang chiếu:** [Bài tập: lần cải thiện thứ hai](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/3/9) và [trang lời giải](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/3/10).
+::: exercise Bài tập 04.17 (Giá trị tối ưu của ô A trên lưới 5×5)
+Lưới $5\times5$ có các ô $(i,j)$, hàng $i=0,\dots,4$ tính từ trên xuống, cột $j=0,\dots,4$ tính từ trái sang. Tại mỗi ô có bốn hành động bắc, nam, đông, tây, chuyển xác định sang ô kề. Hành động đưa ra ngoài lưới giữ nguyên ô và cho phần thưởng $-1$. Từ ô $\mathrm A=(0,1)$, mọi hành động cho phần thưởng $+10$ và đưa tác tử tới $\mathrm A'=(4,1)$; từ ô $\mathrm B=(0,3)$, mọi hành động cho $+5$ và đưa tới $\mathrm B'=(2,3)$. Mọi chuyển khác cho phần thưởng $0$. Nhiệm vụ là tiếp diễn với $\gamma=0{,}9$. Theo Hình 3.5 của sách, một chính sách tối ưu đi về phía bắc tại $(4,1)$, $(3,1)$, $(2,1)$, $(1,1)$, và giá trị tối ưu, làm tròn một chữ số thập phân, là
 
-::: exercise Bài tập 04.2 (Cải thiện từ chính sách π₁)
-Cho mô hình hai trạng thái: $\mathrm s_0\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $1$; $\mathrm s_0\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $0$; $\mathrm s_1\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $2$; $\mathrm s_1\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $3$; mọi chuyển xác định; $\gamma=0{,}9$. Chính sách $\pi_1=(\mathrm a,\mathrm b)$ có giá trị chính xác $v_{\pi_1}=(10,30)$. Lần cải thiện từ $\pi_0=(\mathrm a,\mathrm a)$ với $v_{\pi_0}=(10,11)$ đã cho $q_{\pi_0}(\mathrm s_0,\mathrm a)=10$, $q_{\pi_0}(\mathrm s_0,\mathrm b)=9{,}9$, nên giữ $\mathrm a$ tại $\mathrm s_0$.
+| | $j=0$ | $j=1$ | $j=2$ | $j=3$ | $j=4$ |
+|---|---:|---:|---:|---:|---:|
+| $i=0$ | $22{,}0$ | $24{,}4$ | $22{,}0$ | $19{,}4$ | $17{,}5$ |
+| $i=1$ | $19{,}8$ | $22{,}0$ | $19{,}8$ | $17{,}8$ | $16{,}0$ |
+| $i=2$ | $17{,}8$ | $19{,}8$ | $17{,}8$ | $16{,}0$ | $14{,}4$ |
+| $i=3$ | $16{,}0$ | $17{,}8$ | $16{,}0$ | $14{,}4$ | $13{,}0$ |
+| $i=4$ | $14{,}4$ | $16{,}0$ | $14{,}4$ | $13{,}0$ | $11{,}7$ |
 
-- (a) Tính $q_{\pi_1}(\mathrm s_0,\mathrm a)$ và $q_{\pi_1}(\mathrm s_0,\mathrm b)$.
-- (b) Xác định hành động của chính sách tham lam tại $\mathrm s_0$ theo Định nghĩa 04.12.
-- (c) Giải thích vì sao lựa chọn tại $\mathrm s_0$ khác lựa chọn ở lần cải thiện từ $\pi_0$.
-:::
-
-::: hint Gợi ý Bài tập 04.2
-Giá trị nhìn trước của $\mathrm b$ tại $\mathrm s_0$ đọc giá trị tiếp nối của $\mathrm s_1$ trong bảng $v_{\pi_1}$, không phải trong bảng $v_{\pi_0}$.
-:::
-
-::: solution Lời giải Bài tập 04.2
-**Câu (a).** $q_{\pi_1}(\mathrm s_0,\mathrm a)=1+0{,}9\cdot10=10$ và $q_{\pi_1}(\mathrm s_0,\mathrm b)=0+0{,}9\cdot30=27$.
-
-**Câu (b).** Hành động cũ $\pi_1(\mathrm s_0)=\mathrm a$ không thuộc $\arg\max=\{\mathrm b\}$, nên chính sách tham lam chọn $\mathrm b$ tại $\mathrm s_0$.
-
-**Câu (c).** Phần thưởng tức thời tại $\mathrm s_0$ không đổi: $\mathrm a$ vẫn cho $1$, $\mathrm b$ vẫn cho $0$. Giá trị tiếp nối của $\mathrm s_1$ tăng từ $11$ dưới $\pi_0$ lên $30$ dưới $\pi_1$, nên nhánh $\mathrm b$ tăng từ $9{,}9$ lên $27$ và vượt nhánh $\mathrm a$.
-
-**Kiểm tra lại.** Tại $\mathrm s_1$, $q_{\pi_1}(\mathrm s_1,\mathrm a)=2+0{,}9\cdot10=11<30=q_{\pi_1}(\mathrm s_1,\mathrm b)$, nên chính sách tham lam giữ $\mathrm b$ tại $\mathrm s_1$; chính sách mới là $(\mathrm b,\mathrm b)$. Hai lỗi thường gặp: đọc giá trị tiếp nối từ bảng cũ $(10,11)$, cho $9{,}9<10$ và giữ nguyên $\mathrm a$; coi $27$ là giá trị của chính sách mới tại $\mathrm s_0$, trong khi $27$ đo việc chọn $\mathrm b$ một lần rồi theo $\pi_1$ (ở mô hình này hai số trùng nhau vì $(\mathrm b,\mathrm b)$ có $v(\mathrm s_0)=27$, nhưng cần một lần đánh giá để biết điều đó).
-:::
-
-### Bài tập 04.17. Cải thiện từ chính sách ngẫu nhiên đều
-
-**Mức độ:** tính toán. Mục tiêu học tập 2 của ghi chú.
-
-**Nguồn:** ghi chú bài giảng, Định lý 04.13 và Ví dụ 04.3; số liệu sư phạm tự xây dựng.
-
-::: exercise Bài tập 04.17 (Cải thiện từ chính sách ngẫu nhiên đều)
-Cho mô hình hai trạng thái: $\mathrm s_0\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $1$; $\mathrm s_0\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $0$; $\mathrm s_1\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $2$; $\mathrm s_1\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $3$; mọi chuyển xác định; $\gamma=0{,}9$. Chính sách ngẫu nhiên đều $\pi_u(\mathrm a\mid s)=\pi_u(\mathrm b\mid s)=\tfrac12$ tại cả hai trạng thái có giá trị chính xác $v_{\pi_u}=(14,16)$ (Bài tập 04.10(d)). Một bước cải thiện từ $\pi_0=(\mathrm a,\mathrm a)$ chỉ cho $(\mathrm a,\mathrm b)$.
-
-- (a) Tính bốn giá trị hành động $q_{\pi_u}(s,a)$ và kiểm $v_{\pi_u}(s)=\sum_a\pi_u(a\mid s)\,q_{\pi_u}(s,a)$ tại cả hai trạng thái.
-- (b) Xác định chính sách tham lam $\pi'$ theo $v_{\pi_u}$ và các trạng thái mà điều kiện (2.2) của Định lý 04.13 thỏa nghiêm ngặt.
-- (c) Đánh giá $\pi'$ và đối chiếu với kết luận (a), (b) của Định lý 04.13.
-- (d) Giải thích vì sao một bước cải thiện từ $\pi_u$ chọn $\mathrm b$ tại $\mathrm s_0$, còn một bước từ $\pi_0$ giữ $\mathrm a$.
+- (a) Dùng chính sách tối ưu và $G_t=\sum_{k\ge0}\gamma^kR_{t+k+1}$ để viết $v_*(\mathrm A)$ dưới dạng biểu thức, rồi tính tới ba chữ số thập phân.
+- (b) Lặp giá trị đồng bộ chạy từ $V_0=0$. Dùng kết quả (a) và bảng trên, tính $\lVert V_0-v_*\rVert_\infty$, tìm số lượt quét $k$ nhỏ nhất để chặn của Hệ quả 04.26 không vượt $\kappa=0{,}1$, và nêu ngưỡng $\theta$ của Hệ quả 04.27 ứng với $\kappa=0{,}1$.
 :::
 
 ::: hint Gợi ý Bài tập 04.17
-Định lý 04.13 cho phép $\pi$ ngẫu nhiên; chỉ $\pi'$ phải xác định. Giá trị hành động $q_{\pi_u}(s,a)$ ấn định hành động đầu là $a$ rồi theo $\pi_u$, nên phần tiếp nối đọc từ $v_{\pi_u}$.
+Từ $\mathrm A$, quỹ đạo theo chính sách tối ưu lặp lại một chu kỳ: một bước nhảy tới $\mathrm A'$ rồi bốn bước về $\mathrm A$. Ở (b), $\lVert V_0-v_*\rVert_\infty=\max_s\lvert v_*(s)\rvert$.
 :::
 
 ::: solution Lời giải Bài tập 04.17
-**Câu (a).** Với giá trị tiếp nối đọc từ $v_{\pi_u}=(14,16)$:
-
+**Câu (a).** Từ $\mathrm A$, bước đầu cho $R_1=+10$ và đưa tác tử tới $\mathrm A'=(4,1)$. Bốn bước về phía bắc qua $(3,1)$, $(2,1)$, $(1,1)$ tới $(0,1)=\mathrm A$ không đi ra ngoài lưới và không qua $\mathrm A$, $\mathrm B$ trước bước cuối, nên $R_2=\dots=R_5=0$. Sau đó chu kỳ năm bước lặp lại, nên
 $$
 \begin{aligned}
-q_{\pi_u}(\mathrm s_0,\mathrm a)&=1+0{,}9\cdot14=13{,}6, & q_{\pi_u}(\mathrm s_0,\mathrm b)&=0+0{,}9\cdot16=14{,}4,\\
-q_{\pi_u}(\mathrm s_1,\mathrm a)&=2+0{,}9\cdot14=14{,}6, & q_{\pi_u}(\mathrm s_1,\mathrm b)&=3+0{,}9\cdot16=17{,}4.
+v_*(\mathrm A)&=10+\gamma^5v_*(\mathrm A),\\
+v_*(\mathrm A)&=\frac{10}{1-\gamma^5}\\
+&=\frac{10}{1-0{,}59049}\\
+&=\frac{10}{0{,}40951}\approx24{,}419 .
 \end{aligned}
 $$
 
-Trung bình hai hành động là $\tfrac12(13{,}6+14{,}4)=14$ tại $\mathrm s_0$ và $\tfrac12(14{,}6+17{,}4)=16$ tại $\mathrm s_1$, đúng bằng $v_{\pi_u}$.
-
-**Câu (b).** Tại $\mathrm s_0$, $14{,}4>13{,}6$; tại $\mathrm s_1$, $17{,}4>14{,}6$. Tập cực đại có một phần tử ở mỗi trạng thái, nên quy tắc phá hòa không được dùng và $\pi'=(\mathrm b,\mathrm b)$. Điều kiện (2.2) thỏa nghiêm ngặt ở cả hai trạng thái: $14{,}4>14$ và $17{,}4>16$.
-
-**Câu (c).** Hệ $v_{\pi'}=T_{\pi'}v_{\pi'}$ là $x=0+0{,}9y$ và $y=3+0{,}9y$, nên $y=30$, $x=27$. Bảng $(27,30)$ lớn hơn $(14,16)$ nghiêm ngặt ở cả hai trạng thái, đúng như Định lý 04.13(a) và (b) với (2.2) nghiêm ngặt tại $\mathrm s_0$ và $\mathrm s_1$.
-
-**Câu (d).** Hai lựa chọn tại $\mathrm s_0$ cùng phần thưởng tức thời ($1$ cho $\mathrm a$, $0$ cho $\mathrm b$) và khác nhau ở giá trị tiếp nối. Dưới $\pi_0$, $v_{\pi_0}=(10,11)$ chỉ hơn $1$ ở $\mathrm s_1$, nên $\mathrm b$ cho $0{,}9\cdot11=9{,}9<10$. Dưới $\pi_u$, $v_{\pi_u}=(14,16)$ hơn $2$ ở $\mathrm s_1$, vì $\pi_u$ đã chọn $\mathrm b$ tại $\mathrm s_1$ với xác suất $\tfrac12$; nhánh $\mathrm b$ cho $14{,}4>13{,}6$. Chính sách $(\mathrm b,\mathrm b)$ tối ưu (Ví dụ 04.12 của ghi chú), nhưng Định lý 04.13 chỉ bảo đảm không kém đi; muốn chứng nhận tối ưu phải kiểm $(\mathrm b,\mathrm b)$ ổn định, chẳng hạn bằng bốn giá trị nhìn trước $25{,}3$; $27$; $26{,}3$; $30$ từ $(27,30)$.
-
-**Kiểm tra lại.** Theo Định lý 04.13(c), chính sách tham lam thỏa (2.2), vì giá trị trung bình $v_{\pi_u}(s)$ không vượt cực đại của $q_{\pi_u}(s,\cdot)$. Hai lỗi thường gặp: tính $q_{\pi_u}(s,a)$ bằng cách lấy trung bình cả hành động đầu, cho lại $v_{\pi_u}(s)$; dùng bảng $(0{,}5;\,2{,}5)$ sau một lượt quét (Ví dụ 04.3 của ghi chú) thay cho giá trị chính xác, cho $q(\mathrm s_0,\cdot)=(1{,}45;\,2{,}25)$ và vi phạm giả thiết "giá trị chính xác".
-:::
-
-### Bài tập 04.12. Lặp giá trị và lặp chính sách trên MDP ba trạng thái
-
-**Mức độ:** tính toán. Mục tiêu học tập 3, 4 của ghi chú.
-
-**Nguồn:** Bài tập tuần 3 (2025–2026), bài 9; câu (e) bổ sung để hoàn tất vòng lặp chính sách.
-
-::: exercise Bài tập 04.12 (Lặp giá trị và lặp chính sách trên MDP ba trạng thái)
-Xét MDP với $\mathcal S=\{\mathrm s_0,\mathrm s_1,\mathrm s_2\}$, không có trạng thái kết thúc, hai hành động $\mathrm a$, $\mathrm b$ tại mọi trạng thái và $\gamma=0{,}9$. Chỉ các hành động tại $\mathrm s_0$ có kết quả ngẫu nhiên; các hành động tại $\mathrm s_1$, $\mathrm s_2$ xác định.
-
-| Trạng thái $s$ | Hành động | Kết quả $(s',r)$ với xác suất |
-|---|---|---|
-| $\mathrm s_0$ | $\mathrm a$ | $(\mathrm s_0,1)$ với $0{,}5$; $(\mathrm s_2,-1)$ với $0{,}5$ |
-| $\mathrm s_0$ | $\mathrm b$ | $(\mathrm s_1,0)$ với $0{,}5$; $(\mathrm s_2,2)$ với $0{,}5$ |
-| $\mathrm s_1$ | $\mathrm a$ | $(\mathrm s_0,2)$ với $1$ |
-| $\mathrm s_1$ | $\mathrm b$ | $(\mathrm s_1,-1)$ với $1$ |
-| $\mathrm s_2$ | $\mathrm a$ | $(\mathrm s_1,2)$ với $1$ |
-| $\mathrm s_2$ | $\mathrm b$ | $(\mathrm s_0,0)$ với $1$ |
-
-- (a) Viết quy tắc cập nhật lặp giá trị $V_{k+1}=T_*V_k$ cho từng trạng thái.
-- (b) Với $V_0=(0,0,0)$, tính $V_1$ và chính sách tham lam theo $V_0$.
-- (c) Với $\pi_0=(\mathrm b,\mathrm a,\mathrm b)$, theo thứ tự $(\mathrm s_0,\mathrm s_1,\mathrm s_2)$, viết hệ phương trình Bellman kỳ vọng và giải để được $v_{\pi_0}$.
-- (d) Viết công thức cải thiện chính sách và tính chính sách tham lam $\pi_1$ theo $v_{\pi_0}$.
-- (e) Đánh giá $\pi_1$, kiểm $\pi_1$ ổn định, và nêu kết luận về tính tối ưu cùng kết quả của ghi chú được dùng.
-:::
-
-::: hint Gợi ý Bài tập 04.12
-Tại $\mathrm s_0$, giá trị nhìn trước của mỗi hành động là trung bình của hai kết quả với trọng số $0{,}5$; phép cực đại đứng ngoài trung bình đó. Ở (c) và (e), có thể dùng máy tính bỏ túi; thế phương trình của $\mathrm s_1$, $\mathrm s_2$ vào phương trình của $\mathrm s_0$.
-:::
-
-::: solution Lời giải Bài tập 04.12
-**Câu (a).** Theo (4.1) của ghi chú, kỳ vọng theo kết quả chuyển nằm trong phép cực đại. Tại $\mathrm s_0$, hai giá trị nhìn trước là
-
+**Câu (b).** Mọi giá trị trong bảng dương và lớn nhất tại $\mathrm A$, nên $\lVert V_0-v_*\rVert_\infty=v_*(\mathrm A)\approx24{,}419$. Hệ quả 04.26 cho $\lVert V_k-v_*\rVert_\infty\le24{,}419\cdot0{,}9^k$. Điều kiện $24{,}419\cdot0{,}9^k\le0{,}1$ tương đương
 $$
 \begin{aligned}
-Q_{V_k}(\mathrm s_0,\mathrm a)&=0{,}5\,[1+0{,}9V_k(\mathrm s_0)]+0{,}5\,[-1+0{,}9V_k(\mathrm s_2)],\\
-Q_{V_k}(\mathrm s_0,\mathrm b)&=0{,}5\,[0+0{,}9V_k(\mathrm s_1)]+0{,}5\,[2+0{,}9V_k(\mathrm s_2)],
+k&\ge\frac{\ln(24{,}419/0{,}1)}{\ln(1/0{,}9)}\\
+&=\frac{\ln244{,}19}{0{,}10536}\\
+&\approx\frac{5{,}498}{0{,}10536}\approx52{,}2 .
 \end{aligned}
 $$
+Kiểm hai giá trị kề: $24{,}419\cdot0{,}9^{52}\approx0{,}102>0{,}1$ và $24{,}419\cdot0{,}9^{53}\approx0{,}092\le0{,}1$, nên $k=53$. Hệ quả 04.27 cho ngưỡng $\theta=(1-0{,}9)\cdot0{,}1=0{,}01$: khi $\Delta_*(V)\le0{,}01$, bảng $V$ có sai số không quá $0{,}1$, mà không cần biết $v_*$.
 
-và quy tắc cập nhật là
-
-$$
-\begin{aligned}
-V_{k+1}(\mathrm s_0)&=\max\bigl\{Q_{V_k}(\mathrm s_0,\mathrm a);\ Q_{V_k}(\mathrm s_0,\mathrm b)\bigr\},\\
-V_{k+1}(\mathrm s_1)&=\max\bigl\{2+0{,}9V_k(\mathrm s_0);\ -1+0{,}9V_k(\mathrm s_1)\bigr\},\\
-V_{k+1}(\mathrm s_2)&=\max\bigl\{2+0{,}9V_k(\mathrm s_1);\ 0+0{,}9V_k(\mathrm s_0)\bigr\}.
-\end{aligned}
-$$
-
-**Câu (b).** Với $V_0=0$, mỗi nhánh chỉ còn thưởng kỳ vọng một bước. Tại $\mathrm s_0$: nhánh $\mathrm a$ cho $0{,}5\cdot1+0{,}5\cdot(-1)=0$, nhánh $\mathrm b$ cho $0{,}5\cdot0+0{,}5\cdot2=1$. Tại $\mathrm s_1$: $\max\{2;\,-1\}=2$. Tại $\mathrm s_2$: $\max\{2;\,0\}=2$. Vậy $V_1=(1,2,2)$, và chính sách tham lam theo $V_0$ là $(\mathrm b,\mathrm a,\mathrm a)$.
-
-**Câu (c).** Với $x,y,z$ là giá trị của $\pi_0$ tại $\mathrm s_0,\mathrm s_1,\mathrm s_2$:
-
-$$
-\begin{aligned}
-x&=0{,}5\,(0+0{,}9y)+0{,}5\,(2+0{,}9z)=1+0{,}45y+0{,}45z,\\
-y&=2+0{,}9x,\\
-z&=0+0{,}9x.
-\end{aligned}
-$$
-
-Thế hai phương trình sau vào phương trình đầu: $x=1+0{,}45(2+0{,}9x)+0{,}45\cdot0{,}9x=1{,}9+0{,}81x$, nên $0{,}19x=1{,}9$ và $x=10$. Suy ra $y=11$, $z=9$, tức $v_{\pi_0}=(10,11,9)$.
-
-**Câu (d).** Công thức cải thiện là $\pi_1(s)\in\arg\max_aQ_{v_{\pi_0}}(s,a)$ với quy tắc phá hòa của Định nghĩa 04.12. Từ $v_{\pi_0}=(10,11,9)$:
-
-| Trạng thái | $q_{\pi_0}(s,\mathrm a)$ | $q_{\pi_0}(s,\mathrm b)$ | Hành động mới |
-|---|---|---|---|
-| $\mathrm s_0$ | $0{,}5(1+9)+0{,}5(-1+8{,}1)=8{,}55$ | $0{,}5(0+9{,}9)+0{,}5(2+8{,}1)=10$ | $\mathrm b$ |
-| $\mathrm s_1$ | $2+0{,}9\cdot10=11$ | $-1+0{,}9\cdot11=8{,}9$ | $\mathrm a$ |
-| $\mathrm s_2$ | $2+0{,}9\cdot11=11{,}9$ | $0+0{,}9\cdot10=9$ | $\mathrm a$ |
-
-Vậy $\pi_1=(\mathrm b,\mathrm a,\mathrm a)$; chính sách chỉ đổi tại $\mathrm s_2$, nơi (2.2) nghiêm ngặt: $11{,}9>9$.
-
-**Câu (e).** Hệ của $\pi_1$ là $x=1+0{,}45y+0{,}45z$, $y=2+0{,}9x$, $z=2+0{,}9y=3{,}8+0{,}81x$. Thế vào phương trình đầu:
-
-$$
-x=1+0{,}45(2+0{,}9x)+0{,}45(3{,}8+0{,}81x)=3{,}61+0{,}7695x,
-$$
-
-nên $x=3{,}61/0{,}2305=7220/461\approx15{,}662$, $y=7420/461\approx16{,}095$, $z=7600/461\approx16{,}486$. Giá trị nhìn trước từ $v_{\pi_1}$:
-
-- tại $\mathrm s_0$: $\mathrm a$ cho $0{,}5(1+0{,}9\cdot15{,}662)+0{,}5(-1+0{,}9\cdot16{,}486)\approx14{,}466$, $\mathrm b$ cho $\approx15{,}662=v_{\pi_1}(\mathrm s_0)$;
-- tại $\mathrm s_1$: $\mathrm a$ cho $\approx16{,}095=v_{\pi_1}(\mathrm s_1)$, $\mathrm b$ cho $-1+0{,}9\cdot16{,}095\approx13{,}486$;
-- tại $\mathrm s_2$: $\mathrm a$ cho $\approx16{,}486=v_{\pi_1}(\mathrm s_2)$, $\mathrm b$ cho $0{,}9\cdot15{,}662\approx14{,}095$.
-
-Hành động của $\pi_1$ đạt cực đại tại mọi trạng thái, nên $\pi_1$ ổn định (Định nghĩa 04.16). Theo Định lý 04.20 và Định lý 04.25(d), $\pi_1$ tối ưu trên mọi chính sách và $v_*\approx(15{,}662;\,16{,}095;\,16{,}486)$. Chính sách tham lam theo $V_0$ ở câu (b), và cả chính sách tham lam theo $V_1$ (giá trị nhìn trước $1{,}35<2{,}8$ tại $\mathrm s_0$; $2{,}9>0{,}8$ tại $\mathrm s_1$; $3{,}8>0{,}9$ tại $\mathrm s_2$), đã trùng $\pi_1$ dù $V_1=(1,2,2)$ còn xa $v_*$, như Nhận xét 04.29 của ghi chú nêu.
-
-**Kiểm tra lại.** Thế $(10,11,9)$ vào hệ ở (c): $1+0{,}45\cdot11+0{,}45\cdot9=1+4{,}95+4{,}05=10$, $2+9=11$, $0+9=9$. Bảng $v_{\pi_1}$ lớn hơn $v_{\pi_0}$ tại mọi trạng thái, đúng Định lý 04.13(a). Ba lỗi thường gặp: lấy kết quả tốt hơn của một hành động thay cho trung bình hai kết quả, chẳng hạn cho nhánh $\mathrm b$ tại $\mathrm s_0$ ở câu (b) bằng $2$ thay cho $1$, tức cho tác tử chọn kết quả của môi trường; quên trọng số $0{,}5$ ở phần thưởng của $\mathrm s_0$; kiểm tính ổn định ở câu (e) bằng bảng cũ $v_{\pi_0}$ thay cho $v_{\pi_1}$.
+**Kiểm tra lại.** Theo chính sách tối ưu, từ $\mathrm A'$ tác tử đi bốn bước về phía bắc với phần thưởng $0$ tới $\mathrm A$, nên $v_*(\mathrm A')=\gamma^4v_*(\mathrm A)=0{,}6561\cdot24{,}419\approx16{,}02$, khớp số $16{,}0$ ở ô $(4,1)$ của bảng. Lỗi thường gặp: dùng $24{,}4$ đã làm tròn trong bảng thay cho biểu thức $10/(1-\gamma^5)$, khi đó không có đủ ba chữ số thập phân.
 :::
 
-### Bài tập 04.4. Điểm bất động trên dãy năm ô
+### Bài tập 04.18. Sửa giả mã lặp chính sách để bảo đảm dừng
 
-**Mức độ:** tính toán. Mục tiêu học tập 4 của ghi chú.
+**Mức độ:** chứng minh; mục tiêu học tập 2 và 3.
 
-**Nguồn:** Bài giảng gốc (2025–2026), trang 25–28; ghi chú bài giảng, Bài tập 04.4.
+**Nguồn:** Sutton và Barto (2018), Bài tập 4.4, §4.3, trang 82; giả mã lặp chính sách, trang 80.
 
-**Trùng trang chiếu:** [Bài tập: điểm bất động trên dãy năm ô](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/5/15) và [trang lời giải](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/5/16).
+::: exercise Bài tập 04.18 (Sửa giả mã lặp chính sách để bảo đảm dừng)
+Sách trình bày lặp chính sách (dùng đánh giá chính sách lặp) như sau, với ngưỡng nhỏ $\theta>0$.
 
-::: exercise Bài tập 04.4 (Điểm bất động trên dãy năm ô)
-Cho dãy năm ô $\mathrm c_1,\dots,\mathrm c_5$ với $\mathrm c_5$ là trạng thái kết thúc; hành động $\mathrm{trai}$, $\mathrm{phai}$ chuyển xác định sang ô bên cạnh, $\mathrm{trai}$ tại $\mathrm c_1$ giữ nguyên $\mathrm c_1$; phần thưởng $10$ cho chuyển $\mathrm c_4\to\mathrm c_5$ và $-1$ cho mọi chuyển khác; $\gamma=0{,}9$. Bảng $V_4=(4{,}58;\,6{,}2;\,8;\,10;\,0)$ thu được sau bốn lượt quét lặp giá trị đồng bộ từ $V_0=0$.
+1. Khởi tạo: $V(s)\in\mathbb R$ và $\pi(s)\in\mathcal A(s)$ tùy ý với mọi $s\in\mathcal S$; $V(s_{\mathrm{term}})=0$.
+2. Đánh giá chính sách: lặp lại các lượt quét; trong mỗi lượt, với mỗi $s\in\mathcal S$, gán $V(s)\leftarrow\sum_{s',r}p(s',r\mid s,\pi(s))\bigl[r+\gamma V(s')\bigr]$ tại chỗ; dừng khi thay đổi lớn nhất trong lượt nhỏ hơn $\theta$.
+3. Cải thiện chính sách: đặt cờ ổn định là đúng. Với mỗi $s\in\mathcal S$: ghi $a_{\mathrm{cu}}\leftarrow\pi(s)$; gán $\pi(s)\leftarrow\arg\max_a\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma V(s')\bigr]$; nếu $a_{\mathrm{cu}}\ne\pi(s)$ thì đặt cờ ổn định là sai. Nếu cờ ổn định đúng, dừng và trả $V\approx v_*$, $\pi\approx\pi_*$; nếu không, quay lại bước 2.
 
-- (a) Tính hai giá trị nhìn trước tại mỗi ô chưa kết thúc và bảng $T_*V_4$.
-- (b) Xác định $\Delta_*(V_4)$ và chính sách tham lam theo $V_4$.
-- (c) Giải thích vì sao $V_4(\mathrm c_5)=0$ dù chuyển vào $\mathrm c_5$ nhận phần thưởng $10$.
+Giả mã này có thể không bao giờ dừng nếu chính sách cứ đổi qua lại giữa hai hay nhiều chính sách tốt như nhau. Sửa giả mã để bảo đảm dừng.
 :::
 
-::: hint Gợi ý Bài tập 04.4
-Nhánh $\mathrm{trai}$ tại $\mathrm c_1$ đọc giá trị tiếp nối của chính $\mathrm c_1$. Nhánh $\mathrm{phai}$ tại $\mathrm c_4$ đọc $V_4(\mathrm c_5)=0$.
+::: hint Gợi ý Bài tập 04.18
+Lỗi nằm ở phép gán $\pi(s)\leftarrow\arg\max_a(\cdot)$ khi tập $\arg\max$ có nhiều phần tử. So bước 3 với Thuật toán 04.14 và quy tắc phá hòa của Định nghĩa 04.12; chứng minh dừng theo lập luận của Mệnh đề 04.18.
 :::
 
-::: solution Lời giải Bài tập 04.4
-**Câu (a).** Giá trị nhìn trước của hai nhánh tại từng ô:
+::: solution Lời giải Bài tập 04.18
+**Chỗ lỗi.** Khi tập $\arg\max$ tại $s$ có hai hành động, phép gán ở bước 3 có thể chọn hành động khác $a_{\mathrm{cu}}$ dù $a_{\mathrm{cu}}$ cũng đạt cực đại. Cờ ổn định khi đó bị đặt là sai mà giá trị không tăng ở đâu cả, và vòng sau có thể đổi trở lại; dãy chính sách đi vòng giữa các chính sách cùng giá trị.
 
-| Ô | Nhánh $\mathrm{trai}$ | Nhánh $\mathrm{phai}$ | Cực đại |
-|---|---|---|---|
-| $\mathrm c_1$ | $-1+0{,}9\cdot4{,}58=3{,}122$ | $-1+0{,}9\cdot6{,}2=4{,}58$ | $4{,}58$ |
-| $\mathrm c_2$ | $-1+0{,}9\cdot4{,}58=3{,}122$ | $-1+0{,}9\cdot8=6{,}2$ | $6{,}2$ |
-| $\mathrm c_3$ | $-1+0{,}9\cdot6{,}2=4{,}58$ | $-1+0{,}9\cdot10=8$ | $8$ |
-| $\mathrm c_4$ | $-1+0{,}9\cdot8=6{,}2$ | $10+0{,}9\cdot0=10$ | $10$ |
+**Giả mã đã sửa.** Thay bước 3 bằng: đặt cờ ổn định là đúng; với mỗi $s\in\mathcal S$, tính $Q(s,a)=\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma V(s')\bigr]$ cho mọi $a\in\mathcal A(s)$; **nếu $Q(s,\pi(s))<\max_aQ(s,a)$** thì gán $\pi(s)$ là phần tử đầu tiên của $\arg\max_aQ(s,a)$ theo một thứ tự cố định trên $\mathcal A(s)$ và đặt cờ ổn định là sai; nếu không, giữ $\pi(s)$. Đây là Thuật toán 04.14 với quy tắc phá hòa của Định nghĩa 04.12.
 
-Vậy $T_*V_4=(4{,}58;\,6{,}2;\,8;\,10;\,0)$.
+**Chứng minh dừng.** Giả sử bước 2 trả đúng $v_\pi$, như Thuật toán 04.17. Mỗi lần cờ ổn định bị đặt là sai, chính sách mới $\pi'$ khác $\pi$ chỉ tại các trạng thái mà $q_\pi(s,\pi(s))<\max_aq_\pi(s,a)$, nên (2.2) nghiêm ngặt tại các trạng thái đó; theo Định lý 04.13(a)–(c), $v_{\pi'}\ge v_\pi$ và lớn hơn nghiêm ngặt ở ít nhất một trạng thái. Như Bước 2 của chứng minh Mệnh đề 04.18, không chính sách nào lặp lại trong dãy; có $\prod_s\lvert\mathcal A(s)\rvert$ chính sách xác định, nên thuật toán dừng sau không quá chừng đó vòng. Khi dừng, $\pi(s)\in\arg\max_aq_\pi(s,a)$ tại mọi $s$, tức $\pi$ ổn định (Định nghĩa 04.16) và tối ưu (Định lý 04.25(d)).
 
-**Câu (b).** $T_*V_4=V_4$ nên $\Delta_*(V_4)=0$; chính sách tham lam đi phải tại $\mathrm c_1,\dots,\mathrm c_4$. Theo Hệ quả 04.27, $\lVert V_4-v_*\rVert_\infty\le0$, tức $V_4=v_*$, và theo Định lý 04.25(b), chính sách này tối ưu.
+**Trong thực hành.** Bước 2 của sách dừng ở ngưỡng $\theta$, nên $V$ chỉ xấp xỉ $v_\pi$, và hai giá trị bằng nhau về lý thuyết có thể lệch nhau do làm tròn. Cài đặt khi đó so với một dung sai nhỏ: giữ $\pi(s)$ khi $Q(s,\pi(s))\ge\max_aQ(s,a)-\epsilon$, như bài thực hành CartPole dùng $\epsilon=10^{-9}$. Chứng minh trên cần đánh giá chính xác và không bao phủ trường hợp này.
 
-**Câu (c).** Phần thưởng $10$ thuộc về chuyển $\mathrm c_4\to\mathrm c_5$ và được tính trong $Q_{V_4}(\mathrm c_4,\mathrm{phai})$. Sau khi vào $\mathrm c_5$, lượt (episode) kết thúc và không còn phần thưởng nào, nên giá trị của trạng thái kết thúc bằng $0$.
-
-**Kiểm tra lại.** Tại mỗi ô, nhánh $\mathrm{phai}$ lớn hơn nhánh $\mathrm{trai}$, và giá trị nhánh $\mathrm{phai}$ trùng $V_4$. Lặp giá trị tới đúng $v_*$ sau hữu hạn lượt quét là tính chất của ví dụ này; Hệ quả 04.26 chỉ bảo đảm hội tụ dần. Hai lỗi thường gặp: gán $V(\mathrm c_5)=10$, làm phần thưởng của đích bị đếm hai lần và cho nhánh $\mathrm{phai}$ tại $\mathrm c_4$ bằng $19$; cho nhánh $\mathrm{trai}$ tại $\mathrm c_1$ đọc $V_4(\mathrm c_2)$ thay vì $V_4(\mathrm c_1)$, cho $-1+0{,}9\cdot6{,}2=4{,}58$ và một hòa giả giữa hai nhánh.
-:::
-
-### Bài tập 04.11. Tính đơn điệu của toán tử Bellman tối ưu
-
-**Mức độ:** chứng minh. Mục tiêu học tập 4 của ghi chú.
-
-**Nguồn:** Bài tập tuần 3 (2025–2026), bài 7; ghi chú bài giảng, Bổ đề 04.2 (tính đơn điệu của $T_\pi$) và Hệ quả 04.26.
-
-::: exercise Bài tập 04.11 (Tính đơn điệu của toán tử Bellman tối ưu)
-Xét MDP hữu hạn với phần thưởng bị chặn, tập hành động hữu hạn và $0\le\gamma<1$; mọi bảng bằng $0$ tại $s_{\mathrm{term}}$. Bổ đề 04.2 của ghi chú đã chứng minh: nếu $U\le V$ theo từng trạng thái thì $T_\pi U\le T_\pi V$.
-
-- (a) Chứng minh: nếu $U\le V$ theo từng trạng thái thì $T_*U\le T_*V$.
-- (b) Chứng minh: nếu $V_0\le T_*V_0$ thì dãy lặp giá trị $V_{k+1}=T_*V_k$ không giảm theo từng trạng thái và $V_0\le v_*$; nếu $W_0\ge T_*W_0$ thì dãy $W_{k+1}=T_*W_k$ không tăng và $W_0\ge v_*$.
-- (c) Trên mô hình hai trạng thái ($\mathrm s_0\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $1$; $\mathrm s_0\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $0$; $\mathrm s_1\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $2$; $\mathrm s_1\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $3$; mọi chuyển xác định; $\gamma=0{,}9$), kiểm điều kiện của (b) cho $V_0=(0,0)$ và $W_0=(30,30)$, tính $W_1$, $W_2$, rồi dùng $v_{(\mathrm b,\mathrm b)}=(27,30)$ để xác định $v_*$ mà không giải phương trình Bellman tối ưu.
-- (d) Chỉ ra giả thiết dùng ở (a) và giả thiết chỉ cần ở (b).
-:::
-
-::: hint Gợi ý Bài tập 04.11
-Ở (a), so sánh $Q_U(s,a)$ với $Q_V(s,a)$ cho từng hành động trước, rồi mới lấy cực đại. Ở (b), quy nạp theo $k$ bằng (a), rồi chuyển qua giới hạn bằng Hệ quả 04.26.
-:::
-
-::: solution Lời giải Bài tập 04.11
-**Câu (a).** Cố định $s\in\mathcal S$ và $a\in\mathcal A(s)$. Phần thưởng triệt tiêu khi lấy hiệu hai giá trị nhìn trước:
-
-$$
-\begin{aligned}
-Q_V(s,a)-Q_U(s,a)
-&=\gamma\sum_{s',r}p(s',r\mid s,a)\bigl[V(s')-U(s')\bigr]\\
-&\ge0 .
-\end{aligned}
-$$
-
-Dòng đầu là Định nghĩa 04.11. Dòng sau dùng $p\ge0$, $\gamma\ge0$ và $V(s')-U(s')\ge0$; tại $s_{\mathrm{term}}$, hiệu bằng $0$ vì cả hai bảng bằng $0$ ở đó.
-
-Do đó $Q_U(s,a)\le Q_V(s,a)\le\max_{a'}Q_V(s,a')=(T_*V)(s)$ với mọi $a$. Lấy cực đại theo $a$ ở vế trái, ta được $(T_*U)(s)\le(T_*V)(s)$. Điều này đúng với mọi $s$, nên $T_*U\le T_*V$.
-
-**Câu (b).** Quy nạp theo $k$. Với $k=0$, $V_0\le T_*V_0=V_1$ là giả thiết. Nếu $V_{k-1}\le V_k$ thì theo (a), $V_k=T_*V_{k-1}\le T_*V_k=V_{k+1}$. Vậy dãy không giảm và $V_0\le V_k$ với mọi $k$. Theo Hệ quả 04.26, $V_k\to v_*$; bất đẳng thức không nghiêm ngặt giữ khi lấy giới hạn, nên $V_0\le v_*$. Với $W_0\ge T_*W_0$, cùng lập luận với chiều bất đẳng thức đảo lại cho $W_0\ge W_1\ge\cdots\to v_*$, nên $W_0\ge v_*$.
-
-**Câu (c).** $T_*V_0=(\max\{1;0\},\max\{2;3\})=(1,3)\ge(0,0)$, nên điều kiện thứ nhất thỏa. Với $W_0=(30,30)$:
-
-$$
-\begin{aligned}
-W_1&=\bigl(\max\{1+27;\ 0+27\},\ \max\{2+27;\ 3+27\}\bigr)=(28,30)\le W_0,\\
-W_2&=\bigl(\max\{1+25{,}2;\ 0+27\},\ \max\{2+25{,}2;\ 3+27\}\bigr)=(27,30).
-\end{aligned}
-$$
-
-Theo chứng minh (b), $W_0\ge W_1\ge W_2\ge\cdots\to v_*$, nên $v_*\le W_2=(27,30)$. Theo Định nghĩa 04.19, $v_*$ là cận trên đúng của giá trị mọi chính sách, nên $v_*\ge v_{(\mathrm b,\mathrm b)}=(27,30)$. Hai chặn trùng nhau, nên $v_*=(27,30)$. Dãy từ dưới lên đi qua $(0,0)$, $(1,3)$, $(2{,}7;\,5{,}7)$, đều nằm dưới $(27,30)$.
-
-**Câu (d).** Câu (a) chỉ dùng $p(s',r\mid s,a)\ge0$, $\gamma\ge0$ và tập hành động hữu hạn để cực đại đạt; nó không cần $\gamma<1$. Câu (b) cần thêm $\gamma<1$ ở bước chuyển qua giới hạn, vì Hệ quả 04.26 dựa trên tính co của $T_*$.
-
-**Kiểm tra lại.** Kiểm (a) trên một cặp bảng: $(0,0)\le(10,11)$ cho $T_*(0,0)=(1,3)\le(10;\,12{,}9)=T_*(10,11)$. Ba lỗi thường gặp: lấy cực đại trước rồi so sánh, với lập luận "cực đại của $U$ nhỏ hơn cực đại của $V$" mà không qua bước so sánh từng hành động; nhầm tính đơn điệu với tính tăng, tức kết luận $T_*V\ge V$ cho mọi $V$, trong khi $T_*(30,30)=(28,30)\le(30,30)$; quên rằng hiệu tại $s_{\mathrm{term}}$ bằng $0$ vì cả hai bảng cố định bằng $0$ ở đó.
-:::
-
-### Bài tập 04.5. Lịch bỏ sót một trạng thái
-
-**Mức độ:** tính toán. Mục tiêu học tập 5 của ghi chú.
-
-**Nguồn:** Bài giảng gốc (2025–2026), trang 15, 17–18; ghi chú bài giảng, Bài tập 04.5; Sutton và Barto (2018), §4.5.
-
-**Trùng trang chiếu:** [Bài tập: lịch bỏ sót một trạng thái](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/6/9) và [trang lời giải](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/6/10).
-
-::: exercise Bài tập 04.5 (Lịch bỏ sót một trạng thái)
-Cho mô hình hai trạng thái: $\mathrm s_0\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $1$; $\mathrm s_0\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $0$; $\mathrm s_1\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $2$; $\mathrm s_1\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $3$; mọi chuyển xác định; $\gamma=0{,}9$; $v_*=(27,30)$. Lặp giá trị bất đồng bộ (Thuật toán 04.31) bắt đầu từ $V=(0,0)$ với lịch chỉ gồm $\mathrm s_0$, lặp lại mãi mãi; mỗi bước gán $V(\mathrm s_0)\leftarrow(T_*V)(\mathrm s_0)$ và giữ nguyên $V(\mathrm s_1)$.
-
-- (a) Viết quy tắc cập nhật tại $\mathrm s_0$ và tìm giới hạn của $V(\mathrm s_0)$.
-- (b) Cho biết giá trị của $V(\mathrm s_1)$ và so bảng giới hạn với $v_*$.
-- (c) Chỉ ra giả thiết của Định lý 04.32 bị vi phạm và bước của chứng minh không còn đúng.
-:::
-
-::: hint Gợi ý Bài tập 04.5
-Vì $V(\mathrm s_1)$ không bao giờ được cập nhật, nhánh $\mathrm b$ tại $\mathrm s_0$ luôn đọc giá trị tiếp nối $0$.
-:::
-
-::: solution Lời giải Bài tập 04.5
-**Câu (a).** Mỗi bước gán $V(\mathrm s_0)\leftarrow\max\{1+0{,}9V(\mathrm s_0);\ 0+0{,}9\cdot0\}$. Từ $V(\mathrm s_0)=0$, nhánh $\mathrm a$ luôn lớn hơn, và dãy $1;\,1{,}9;\,2{,}71;\dots$ hội tụ về nghiệm của $x=1+0{,}9x$, tức $x=10$.
-
-**Câu (b).** $V(\mathrm s_1)=0$ mãi mãi. Bảng giới hạn $(10,0)$ khác $v_*=(27,30)$ ở cả hai trạng thái; chính sách tham lam theo bảng này tại $\mathrm s_0$ là $\mathrm a$, trong khi chính sách tối ưu chọn $\mathrm b$.
-
-**Câu (c).** Giả thiết "mỗi trạng thái chưa kết thúc xuất hiện vô hạn lần trong lịch" bị vi phạm vì $\mathrm s_1$ không xuất hiện lần nào. Bước 2 của chứng minh cần các đoạn phủ mọi trạng thái; ở đây không có đoạn nào như vậy, nên sai số tại $\mathrm s_1$ giữ nguyên $30$.
-
-**Kiểm tra lại.** $x=10$ thỏa $10=\max\{1+0{,}9\cdot10;\ 0\}$; tăng số lần cập nhật tại $\mathrm s_0$ không đổi giới hạn này. Điểm bất động của $T_*$ vẫn là $v_*$; lịch quyết định thuật toán có tới đó hay không. Hai lỗi thường gặp: kết luận lặp giá trị bất đồng bộ "hội tụ về $v_*$ với mọi lịch", bỏ qua giả thiết vô hạn lần; đo phần dư chỉ tại các ô được cập nhật, cho $\lvert(T_*V)(\mathrm s_0)-V(\mathrm s_0)\rvert\to0$ và một nhãn "đạt ngưỡng" sai, trong khi phần dư trên toàn bảng tại $(10,0)$ là $\max\{0;\ \lvert\max\{2+9;\,3\}-0\rvert\}=11$.
+**Kiểm tra lại.** Trên MDP của Bài tập 04.16 với $\gamma=0{,}5$, hai hành động tại $\mathrm x_0$ có cùng giá trị nhìn trước $4/3$ theo giá trị của bất kỳ chính sách nào trong hai chính sách. Giả mã gốc có thể đổi $\pi(\mathrm x_0)$ ở mọi vòng; giả mã đã sửa giữ $\pi(\mathrm x_0)$ và dừng ngay ở vòng đầu.
 :::
 
 ## Mức vận dụng vào bài toán Học tăng cường
 
-### Bài tập 04.13. Lặp giá trị trên dãy năm ô trơn trượt
+### Bài tập 04.19. Lặp chính sách trên giá trị hành động
 
-**Mức độ:** vận dụng. Mục tiêu học tập 4 của ghi chú.
+**Mức độ:** vận dụng; mục tiêu học tập 3.
 
-**Nguồn:** Bài tập tuần 4 (2025–2026), bài 10. Câu (b) nối tiếp trang [Ví dụ: dãy năm ô trơn trượt](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/5/14), nơi đã tính $V_1(\mathrm c_4)=7{,}8$. Phiếu bài tập chỉ cho mô hình; quy ước tại biên $\mathrm c_1$ và phần thưởng của chuyển trượt vào $\mathrm c_5$ lấy theo trang ví dụ đó, còn bốn câu hỏi do bài này đặt. Bảng $v_*$ ở câu (d) tính bằng chương trình (lặp giá trị tới phần dư dưới $10^{-12}$, đối chiếu với nghiệm hệ tuyến tính của chính sách luôn đi phải).
+**Nguồn:** Sutton và Barto (2018), Bài tập 4.5, §4.3, trang 82; giả mã lặp chính sách, trang 80.
 
-::: exercise Bài tập 04.13 (Lặp giá trị trên dãy năm ô trơn trượt)
-Dãy năm ô $\mathrm c_1,\dots,\mathrm c_5$, $\mathrm c_5$ là trạng thái kết thúc, hai hành động $\mathrm{trai}$, $\mathrm{phai}$, $\gamma=0{,}9$. Robot trượt: khi chọn một hướng, nó đi đúng hướng với xác suất $0{,}8$, đứng yên với xác suất $0{,}1$ và đi ngược hướng với xác suất $0{,}1$. Tại $\mathrm c_1$, chuyển ra ngoài dãy được thay bằng đứng yên. Mọi chuyển vào $\mathrm c_5$ nhận phần thưởng $10$, kể cả khi do trượt; mọi chuyển khác, kể cả đứng yên, nhận $-1$.
-
-- (a) Viết các bộ $(s',r)$ và xác suất của $p(\cdot,\cdot\mid s,a)$ tại $\mathrm c_1$ và tại $\mathrm c_4$ cho cả hai hành động.
-- (b) Từ $V_0=0$, tính $V_1$, rồi tính hai giá trị nhìn trước tại $\mathrm c_3$ từ $V_1$ và $V_2(\mathrm c_3)$.
-- (c) Chọn ngưỡng dừng $\theta$ để bảng trả về có sai số không quá $\kappa=0{,}1$, và nêu kết quả của ghi chú bảo đảm điều đó.
-- (d) Một chương trình cho $v_*\approx(2{,}659;\,4{,}417;\,6{,}639;\,9{,}228;\,0)$. Kiểm phương trình Bellman tối ưu tại $\mathrm c_4$ tới ba chữ số thập phân, xác định hành động tối ưu tại $\mathrm c_4$, và so $v_*(\mathrm c_1)$ với giá trị $4{,}58$ của dãy năm ô không trượt.
+::: exercise Bài tập 04.19 (Lặp chính sách trên giá trị hành động)
+Lặp chính sách của Thuật toán 04.17 (và giả mã của sách ở trang 80, chép ở Bài tập 04.18) tính $v_*$ bằng cách xen kẽ đánh giá $v_\pi$ và cải thiện tham lam theo $v_\pi$, trên MDP hữu hạn với mô hình $p(s',r\mid s,a)$ và $0\le\gamma<1$. Định nghĩa lặp chính sách cho giá trị hành động: viết một thuật toán đầy đủ tính $q_*$, tương tự thuật toán tính $v_*$, kèm điều kiện dừng, và giải thích vì sao thuật toán dừng tại $q_*$.
 :::
 
-::: hint Gợi ý Bài tập 04.13
-Mỗi giá trị nhìn trước là trung bình của ba kết quả chuyển với trọng số $0{,}8$; $0{,}1$; $0{,}1$; tại $\mathrm c_1$, hai kết quả trùng ô thì cộng xác suất. Ở (b), trạng thái kết thúc có giá trị $0$, và phần thưởng $10$ thuộc về chuyển vào $\mathrm c_5$.
+::: hint Gợi ý Bài tập 04.19
+Với chính sách xác định $\pi$, $v_\pi(s)=q_\pi(s,\pi(s))$ và $q_\pi=Q_{v_\pi}$. Bước đánh giá dùng phương trình Bellman của $q_\pi$ (Bài tập 04.12); bước cải thiện chọn $\arg\max_aq_\pi(s,a)$ với quy tắc phá hòa.
 :::
 
-::: solution Lời giải Bài tập 04.13
-**Câu (a).** Tại $\mathrm c_1$, chuyển ra ngoài dãy gộp vào đứng yên; tại $\mathrm c_4$, cả hai hành động có thể đưa robot vào $\mathrm c_5$.
+::: solution Lời giải Bài tập 04.19
+**Thuật toán.** Đầu vào: mô hình $p$, $\gamma\in[0,1)$, chính sách xác định $\pi_0$, một thứ tự cố định trên mỗi $\mathcal A(s)$. Quy ước $Q(s_{\mathrm{term}},\cdot)=0$.
 
-| $(s,a)$ | Kết quả $(s',r)$ với xác suất |
-|---|---|
-| $(\mathrm c_1,\mathrm{trai})$ | $(\mathrm c_1,-1)$ với $0{,}8+0{,}1=0{,}9$; $(\mathrm c_2,-1)$ với $0{,}1$ |
-| $(\mathrm c_1,\mathrm{phai})$ | $(\mathrm c_2,-1)$ với $0{,}8$; $(\mathrm c_1,-1)$ với $0{,}1+0{,}1=0{,}2$ |
-| $(\mathrm c_4,\mathrm{trai})$ | $(\mathrm c_3,-1)$ với $0{,}8$; $(\mathrm c_4,-1)$ với $0{,}1$; $(\mathrm c_5,10)$ với $0{,}1$ |
-| $(\mathrm c_4,\mathrm{phai})$ | $(\mathrm c_5,10)$ với $0{,}8$; $(\mathrm c_4,-1)$ với $0{,}1$; $(\mathrm c_3,-1)$ với $0{,}1$ |
-
-Mỗi hàng có tổng xác suất bằng $1$.
-
-**Câu (b).** Với $V_0=0$, mỗi giá trị nhìn trước là thưởng kỳ vọng một bước. Tại $\mathrm c_1,\mathrm c_2,\mathrm c_3$, mọi kết quả cho $-1$, nên $V_1=-1$ ở ba ô này. Tại $\mathrm c_4$:
-
+1. Khởi tạo: $\pi\leftarrow\pi_0$.
+2. Đánh giá chính sách: tìm bảng $Q$ trên mọi cặp $(s,a)$ thỏa
 $$
 \begin{aligned}
-Q_{V_0}(\mathrm c_4,\mathrm{phai})&=0{,}8\cdot10+0{,}1\cdot(-1)+0{,}1\cdot(-1)=7{,}8,\\
-Q_{V_0}(\mathrm c_4,\mathrm{trai})&=0{,}8\cdot(-1)+0{,}1\cdot(-1)+0{,}1\cdot10=0{,}1.
+&Q(s,a)\\
+&\quad=\sum_{s',r}p(s',r\mid s,a)\\
+&\qquad\times\bigl[r+\gamma Q(s',\pi(s'))\bigr]
 \end{aligned}
 $$
+với mọi $s\in\mathcal S$, $a\in\mathcal A(s)$, bằng cách giải hệ tuyến tính này, hoặc bằng các lượt quét $Q_{k+1}(s,a)=\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma Q_k(s',\pi(s'))\bigr]$ tới khi thay đổi lớn nhất đủ nhỏ, xuất phát từ bảng của vòng trước.
+3. Cải thiện chính sách: đặt cờ ổn định là đúng. Với mỗi $s\in\mathcal S$, nếu $Q(s,\pi(s))<\max_aQ(s,a)$ thì gán $\pi(s)$ là phần tử đầu tiên của $\arg\max_aQ(s,a)$ theo thứ tự cố định và đặt cờ ổn định là sai.
+4. Nếu cờ ổn định đúng, trả $Q$ và $\pi$; nếu không, quay lại bước 2.
 
-Vậy $V_1=(-1;\,-1;\,-1;\,7{,}8;\,0)$. Tại $\mathrm c_3$, đọc $V_1$; kết quả "sang $\mathrm c_4$" có giá trị $-1+0{,}9\cdot7{,}8=6{,}02$, các kết quả còn lại có giá trị $-1+0{,}9\cdot(-1)=-1{,}9$:
+**Vì sao đúng.** Giả sử bước 2 cho đúng nghiệm của hệ, như Thuật toán 04.17 giả sử đánh giá chính xác. Với $\pi$ xác định, nghiệm của bước 2 là $q_\pi$ (Bài tập 04.12 với $\pi(a'\mid s')=1$ khi $a'=\pi(s')$), và hệ có nghiệm duy nhất vì phép lặp ở bước 2 co hệ số $\gamma$ theo chuẩn cực đại trên các cặp. Vì $q_\pi=Q_{v_\pi}$ (Mệnh đề 03.22), bước 3 chọn đúng các hành động mà Thuật toán 04.14 chọn từ $v_\pi$. Do đó dãy chính sách trùng dãy của Thuật toán 04.17, và theo Mệnh đề 04.18, thuật toán dừng sau không quá $\prod_s\lvert\mathcal A(s)\rvert$ vòng tại một chính sách ổn định $\pi$. Theo Định lý 04.25(d), $\pi$ tối ưu, nên $v_\pi=v_*$ và $Q=q_\pi=Q_{v_*}=q_*$ (Định nghĩa 04.19).
 
+**So với thuật toán tính $v_*$.** Bảng có $\sum_s\lvert\mathcal A(s)\rvert\le nm$ ô thay cho $n$ ô. Bước 2 vẫn cần mô hình $p$; một lượt quét với $\pi$ xác định có $nm$ ô, mỗi ô tổng trên tối đa $n$ trạng thái kế tiếp, nên tốn $O(n^2m)$ với mô hình đặc, bằng chi phí của Thuật toán 04.14. Bước 3 chỉ đọc bảng $Q$, tốn $O(nm)$ và không cần $p$, khác bước cải thiện theo $v_\pi$, nơi mỗi giá trị nhìn trước phải tính lại bằng (2.1).
+
+**Kiểm tra lại.** Trên mô hình hai trạng thái của ghi chú với $\pi_0=(\mathrm a,\mathrm a)$, bước 2 cho $Q(\mathrm s_0,\cdot)=(10;\,9{,}9)$ và $Q(\mathrm s_1,\cdot)=(11;\,12{,}9)$, đúng các giá trị nhìn trước của Ví dụ 04.9, và bước 3 cho $(\mathrm a,\mathrm b)$ như Ví dụ 04.9. Lỗi thường gặp: ở bước 2 dùng $\max_{a'}Q(s',a')$ thay cho $Q(s',\pi(s'))$; khi đó bước 2 là lặp giá trị cho $q_*$ (Bài tập 04.14), không còn là đánh giá chính sách.
+:::
+
+### Bài tập 04.20. Hình dạng chính sách tối ưu của bài toán người đánh bạc
+
+**Mức độ:** vận dụng; mục tiêu học tập 4.
+
+**Nguồn:** Sutton và Barto (2018), Bài tập 4.8, §4.4, trang 84; dữ kiện của Ví dụ 4.3 và Hình 4.3, trang 84.
+
+::: exercise Bài tập 04.20 (Hình dạng chính sách tối ưu của bài toán người đánh bạc)
+Một người đánh bạc đặt cược vào kết quả của các lần tung đồng xu. Khi đồng xu ra mặt ngửa, với xác suất $p_h=0{,}4$, người đó thắng số tiền bằng tiền cược; khi ra mặt sấp, người đó mất tiền cược. Ván kết thúc khi vốn đạt $100$ hoặc về $0$. Trạng thái là vốn $s\in\{1,\dots,99\}$, hành động là tiền cược nguyên $a\in\{0,1,\dots,\min(s,100-s)\}$. Phần thưởng bằng $+1$ ở chuyển đưa vốn tới $100$ và bằng $0$ ở mọi chuyển khác; $\gamma=1$. Khi đó $v_*(s)$ là xác suất đạt $100$ từ vốn $s$ dưới chính sách tối ưu. Hình 4.3 của sách vẽ một chính sách tối ưu: cược toàn bộ $50$ khi vốn là $50$, nhưng chỉ cược $1$ khi vốn là $51$; chính sách tối ưu không duy nhất.
+
+Giải thích hình dạng của chính sách tối ưu: vì sao tại vốn $50$ người đó cược hết trong một lần tung, còn tại vốn $51$ thì không, và vì sao đó là một chính sách tốt.
+:::
+
+::: hint Gợi ý Bài tập 04.20
+Với $p_h<0{,}5$, mỗi lần cược $a$ làm kỳ vọng của vốn giảm $(1-2p_h)a$. So giá trị nhìn trước của các mức cược tại vốn $50$ và $51$, dùng bảng $v_*$ tính bằng lặp giá trị ở Bài tập 04.21.
+:::
+
+::: solution Lời giải Bài tập 04.20
+Mọi số dưới đây dùng $v_*$ tính bằng lặp giá trị (Bài tập 04.21) và đối chiếu với nghiệm hữu tỉ chính xác của hệ $v=T_\pi v$ cho chính sách cược $\min(s,100-s)$; chính sách này thỏa phương trình Bellman tối ưu tại mọi vốn. Một số giá trị: $v_*(2)\approx0{,}005164$, $v_*(25)=0{,}16$, $v_*(49)\approx0{,}376222$, $v_*(50)=0{,}4$, $v_*(51)\approx0{,}403098$, $v_*(52)\approx0{,}407746$, $v_*(75)=0{,}64$.
+
+**Ít lần cược là có lợi.** Với $p_h=0{,}4$, một lần cược $a$ đổi vốn thành $s+a$ với xác suất $0{,}4$ và $s-a$ với xác suất $0{,}6$, nên kỳ vọng của vốn giảm $0{,}2a$. Một cách trực quan, mỗi lần tung đều bất lợi cho người đánh bạc, nên chính sách cược $\min(s,100-s)$ tới đích bằng ít lần tung nhất; chính sách này đạt $v_*$ tại mọi vốn. Tại các mốc $25$, $50$, $75$, một lần cược đưa vốn đúng tới một mốc khác hoặc tới $100$: $v_*(50)=0{,}4$, $v_*(25)=0{,}4^2=0{,}16$, $v_*(75)=0{,}4+0{,}6\cdot0{,}4=0{,}64$.
+
+**Tại vốn $50$.** Cược $50$ cho giá trị nhìn trước $0{,}4\cdot1+0{,}6\cdot0=0{,}4=v_*(50)$. Mọi mức cược dương nhỏ hơn cho giá trị nhỏ hơn; mức tốt nhất trong số đó là $a=1$, với $0{,}4\,v_*(51)+0{,}6\,v_*(49)\approx0{,}161239+0{,}225733=0{,}386972<0{,}4$, và $a=49$ cho cùng giá trị. Mức cược $0$ cũng cho $0{,}4$ nhưng không làm ván tiến lên (xem phần kiểm tra lại). Vậy trong các mức cược dương, cược hết là hành động tối ưu duy nhất tại $50$.
+
+**Tại vốn $51$.** Hai mức cược cho cùng giá trị. Với $a=49$:
 $$
 \begin{aligned}
-Q_{V_1}(\mathrm c_3,\mathrm{phai})&=0{,}8\cdot6{,}02+0{,}1\cdot(-1{,}9)+0{,}1\cdot(-1{,}9)=4{,}436,\\
-Q_{V_1}(\mathrm c_3,\mathrm{trai})&=0{,}8\cdot(-1{,}9)+0{,}1\cdot(-1{,}9)+0{,}1\cdot6{,}02=-1{,}108.
+&0{,}4\cdot1+0{,}6\,v_*(2)\\
+&\quad\approx0{,}4+0{,}003098\\
+&\quad=0{,}403098 .
 \end{aligned}
 $$
-
-Vậy $V_2(\mathrm c_3)=4{,}436$, đạt tại $\mathrm{phai}$. Tại $\mathrm c_4$, đọc $V_1$:
-
+Với $a=1$:
 $$
 \begin{aligned}
-Q_{V_1}(\mathrm c_4,\mathrm{phai})&=0{,}8\cdot10+0{,}1\cdot6{,}02+0{,}1\cdot(-1{,}9)=8{,}412,\\
-Q_{V_1}(\mathrm c_4,\mathrm{trai})&=0{,}8\cdot(-1{,}9)+0{,}1\cdot6{,}02+0{,}1\cdot10=0{,}082,
+&0{,}4\,v_*(52)+0{,}6\,v_*(50)\\
+&\quad\approx0{,}163098+0{,}24\\
+&\quad=0{,}403098 .
 \end{aligned}
 $$
+Cả hai bằng $v_*(51)$, nên cả hai tối ưu. Cược $1$ là chính sách tốt vì vốn không xuống dưới $50$: nếu thua, người đánh bạc về đúng $50$, nơi còn nguyên cơ hội thắng $0{,}4$ bằng một lần cược hết; nếu thắng, vốn lên $52$. Khoản dư $1$ trên mốc $50$ được dùng để thử tiến lên mà không mất cơ hội ở mốc đó. Cược $49$ cho cùng xác suất thắng theo một đường khác: thắng ngay với xác suất $0{,}4$, hoặc về vốn $2$.
 
-với $6{,}02$ là giá trị của kết quả "ở lại $\mathrm c_4$" và $-1{,}9$ là giá trị của kết quả "sang $\mathrm c_3$". Tại $\mathrm c_1$, $\mathrm c_2$, mọi kết quả cho $-1+0{,}9\cdot(-1)=-1{,}9$. Vậy $V_2=(-1{,}9;\,-1{,}9;\,4{,}436;\,8{,}412;\,0)$.
+**Họ chính sách tối ưu.** Tính trên nghiệm chính xác, tập $\arg\max_{a\ge1}$ có ít nhất hai phần tử tại $72$ trên $99$ mức vốn. Một chính sách $\pi$ chỉ dùng mức cược dương kết thúc với xác suất $1$: mỗi lần ra mặt ngửa tăng vốn ít nhất $1$, nên từ mọi vốn, $99$ lần ra mặt ngửa liên tiếp kết thúc ván; biến cố này có xác suất ít nhất $p_h^{99}>0$ trong mỗi khối $99$ lần tung, nên ván kết thúc với xác suất $1$. Khi đó $v_\pi$ là nghiệm duy nhất của $v=T_\pi v$ (Sutton và Barto, 2018, §4.1, trang 74). Nếu tại mỗi vốn $\pi$ chọn một phần tử của tập cực đại thì $T_\pi v_*=v_*$, nên $v_\pi=v_*$. Vậy mỗi cách chọn như vậy cho một chính sách tối ưu, và chính sách tối ưu không duy nhất. Chọn mức cược dương nhỏ nhất trong tập cực đại cho cược $50$ tại $50$ và cược $1$ tại $51$, như Hình 4.3; hình răng cưa của đồ thị chính sách đến từ quy tắc chọn trong tập hòa này.
 
-**Câu (c).** Theo Hệ quả 04.27, nếu $\Delta_*(V)\le\theta$ với $\theta=(1-\gamma)\kappa$ thì $\lVert V-v_*\rVert_\infty\le\kappa$. Với $\gamma=0{,}9$ và $\kappa=0{,}1$, $\theta=0{,}1\cdot0{,}1=0{,}01$. Các giả thiết của Hệ quả 04.27 thỏa: MDP hữu hạn có tính Markov, phần thưởng bị chặn bởi $10$, $\gamma<1$, mô hình $p$ cho ở câu (a). Chặn thuộc về bảng $V$ được đo phần dư; Thuật toán 04.28 trả đúng bảng đó. Một chương trình chạy Thuật toán 04.28 với $\theta=0{,}01$ dừng sau $12$ lượt quét, phần dư khoảng $0{,}0087$ và sai số thật khoảng $0{,}018$, dưới chặn $0{,}087$.
+**Kiểm tra lại.** Mức cược $0$ luôn cho giá trị nhìn trước $0{,}4\,v_*(s)+0{,}6\,v_*(s)=v_*(s)$, nên cũng thuộc tập cực đại; nhưng chính sách luôn cược $0$ không bao giờ kết thúc và có giá trị $0$. Với $\gamma=1$, Định lý 04.25(b) không áp dụng, nên một chính sách tham lam theo $v_*$ chưa chắc tối ưu; phép trích chính sách phải bỏ mức cược $0$. Lỗi thường gặp: kết luận "tại $51$ phải cược $1$" từ Hình 4.3, trong khi cược $49$ cũng tối ưu.
+:::
 
-**Câu (d).** Tại $\mathrm c_4$, với $v_*(\mathrm c_3)\approx6{,}639$ và $v_*(\mathrm c_4)\approx9{,}228$:
+### Bài tập 04.21. Lặp giá trị cho bài toán người đánh bạc [Lập trình]
 
+**Mức độ:** vận dụng; mục tiêu học tập 4.
+
+**Nguồn:** Sutton và Barto (2018), Bài tập 4.9, §4.4, trang 84; dữ kiện của Ví dụ 4.3 và Hình 4.3, trang 84.
+
+::: exercise Bài tập 04.21 (Lặp giá trị cho bài toán người đánh bạc)
+Dùng bài toán người đánh bạc của Bài tập 04.20: vốn $s\in\{1,\dots,99\}$, tiền cược $a\in\{0,1,\dots,\min(s,100-s)\}$, mặt ngửa với xác suất $p_h$ thì vốn tăng $a$, mặt sấp thì vốn giảm $a$, phần thưởng $+1$ khi vốn đạt $100$ và $0$ ở mọi chuyển khác, $\gamma=1$. Cài đặt lặp giá trị và giải bài toán với $p_h=0{,}25$ và $p_h=0{,}55$. Khi lập trình, có thể thêm hai trạng thái giả ứng với kết thúc ở vốn $0$ và $100$, với giá trị $0$ và $1$. Trình bày kết quả bằng đồ thị như Hình 4.3 của sách: giá trị theo vốn và chính sách cuối cùng theo vốn. Xác định kết quả có ổn định khi $\theta\to0$ hay không.
+:::
+
+::: hint Gợi ý Bài tập 04.21
+Với $V(0)=0$ và $V(100)=1$ cố định, phần thưởng $+1$ đã nằm trong $V(100)$, nên $Q_V(s,a)=p_h\,V(s+a)+(1-p_h)\,V(s-a)$. Khi trích chính sách, chỉ xét $a\ge1$ (Bài tập 04.20, phần kiểm tra lại), và so chính sách trích ra ở nhiều giá trị $\theta$.
+:::
+
+::: solution Lời giải Bài tập 04.21
+**Cài đặt.** Dùng Thuật toán 04.28 trên mảng $V$ gồm $101$ phần tử $V(0),\dots,V(100)$, với $V(0)=0$, $V(100)=1$ giữ cố định và $V(s)=0$ ban đầu tại $s=1,\dots,99$. Mỗi lượt quét giữ $V$ cố định, tính
 $$
 \begin{aligned}
-Q_{v_*}(\mathrm c_4,\mathrm{phai})&\approx0{,}8\cdot10+0{,}1\cdot7{,}3052+0{,}1\cdot4{,}9751\approx9{,}228,\\
-Q_{v_*}(\mathrm c_4,\mathrm{trai})&\approx0{,}8\cdot4{,}9751+0{,}1\cdot7{,}3052+0{,}1\cdot10\approx5{,}711,
+&Q_V(s,a)=p_h\,V(s+a)\\
+&\qquad+(1-p_h)\,V(s-a),\\
+&W(s)=\max_aQ_V(s,a)
 \end{aligned}
 $$
+với $s=1,\dots,99$, cực đại lấy trên $0\le a\le\min(s,100-s)$; đặt $\Delta=\max_s\lvert W(s)-V(s)\rvert$, dừng khi $\Delta\le\theta$, nếu không thì gán $V\leftarrow W$. Chính sách trích ra chọn mức cược dương nhỏ nhất đạt cực đại của $Q_V(s,\cdot)$ trên $a\ge1$.
 
-với $7{,}3052=-1+0{,}9\cdot9{,}228$ (ở lại $\mathrm c_4$) và $4{,}9751=-1+0{,}9\cdot6{,}639$ (sang $\mathrm c_3$).
+**Kết quả với $p_h=0{,}25$.** Giá trị tại một số mức vốn:
 
-Cực đại $9{,}228$ trùng $v_*(\mathrm c_4)$, nên phương trình Bellman tối ưu thỏa tại $\mathrm c_4$ tới ba chữ số thập phân, và hành động tối ưu tại $\mathrm c_4$ là $\mathrm{phai}$. Giá trị $v_*(\mathrm c_1)\approx2{,}659$ nhỏ hơn $4{,}58$ của dãy không trượt: mỗi lần đứng yên hoặc lùi lại tốn thêm phần thưởng $-1$ và làm phần thưởng $10$ đến muộn hơn, nên bị chiết khấu nhiều hơn.
+| $s$ | $1$ | $2$ | $10$ | $25$ | $50$ | $51$ | $75$ | $99$ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| $v_*(s)$ | $0{,}000073$ | $0{,}000291$ | $0{,}007085$ | $0{,}0625$ | $0{,}25$ | $0{,}250219$ | $0{,}4375$ | $0{,}837972$ |
 
-**Kiểm tra lại.** Thế $v_*$ vào phương trình Bellman tối ưu tại $\mathrm c_3$: $Q_{v_*}(\mathrm c_3,\mathrm{phai})\approx0{,}8\cdot7{,}3052+0{,}1\cdot4{,}9751+0{,}1\cdot2{,}9754\approx6{,}639=v_*(\mathrm c_3)$, với $7{,}3052$; $4{,}9751$; $2{,}9754$ là giá trị $-1+0{,}9\,v_*$ của các ô $\mathrm c_4$, $\mathrm c_3$, $\mathrm c_2$. Ba lỗi thường gặp: gán phần thưởng $-1$ cho chuyển trượt vào $\mathrm c_5$ khi chọn $\mathrm{trai}$ tại $\mathrm c_4$, cho $-1$ thay cho $0{,}1$; quên gộp chuyển ra ngoài dãy vào đứng yên tại $\mathrm c_1$, làm tổng xác suất chỉ còn $0{,}9$; lấy $V_1(\mathrm c_4)=10$ như dãy không trượt, cho $V_2(\mathrm c_3)=0{,}8\cdot8-0{,}38=6{,}02$ thay cho $4{,}436$ (số $6{,}02$ này trùng giá trị của kết quả "sang $\mathrm c_4$" ở câu (b) nhưng là đại lượng khác).
-:::
+Tại các mốc, $v_*(25)=p_h^2$, $v_*(50)=p_h$, $v_*(75)=p_h+(1-p_h)p_h$. Đồ thị giá trị tăng mạnh ngay trước các mốc $25$, $50$, $75$ và gần như phẳng ngay sau mỗi mốc, chẳng hạn $v_*(49)\approx0{,}19599$, $v_*(50)=0{,}25$, $v_*(51)\approx0{,}25022$; đồ thị chính sách có cùng hình răng cưa như Hình 4.3: cược $50$ tại $50$, cược $25$ tại $25$ và $75$, cược $1$ tại $51$. Lý do như Bài tập 04.20: với $p_h<0{,}5$, mỗi lần cược bất lợi, nên chính sách tối ưu dùng ít lần cược.
 
-### Bài tập 04.14. Số lượt quét của lặp giá trị theo hệ số chiết khấu [Lập trình]
-
-**Mức độ:** vận dụng. Mục tiêu học tập 4 (chặn hội tụ của lặp giá trị) và 5 (đọc bảo đảm trên MDP ước lượng của CartPole rời rạc hóa) của ghi chú. Bài xếp ở mạch 6 vì dùng MDP ước lượng của Mục 5.4.
-
-**Nguồn:** bài thực hành `thuc-hanh-cartpole-quy-hoach-dong.ipynb`, mục 7.2 (hàm `value_iteration`), mục 7.3–7.4 (chặn $\gamma^k\Delta_*(V_0)$ và bảng số lượt quét theo $\gamma$) và ý "số lượt quét" của nhiệm vụ 5; ghi chú bài giảng, Mệnh đề 04.24, Hệ quả 04.27 và đoạn "Trong thực hành" của Mục 4.4.
-
-::: exercise Bài tập 04.14 (Số lượt quét của lặp giá trị theo hệ số chiết khấu)
-Bài thực hành CartPole lập MDP ước lượng gồm $324$ ô chưa kết thúc, một trạng thái kết thúc $s_{\mathrm{term}}$, hai hành động, mô hình $\hat p(s'\mid s,a)$ và phần thưởng $\hat r(s,a)=1$ với mọi cặp. Lặp giá trị đồng bộ (Thuật toán 04.28) chạy từ $V_0=0$ với sai số cho phép $\kappa=0{,}01$, ngưỡng $\theta=(1-\gamma)\kappa$ và $\gamma\in\{0{,}9;\ 0{,}95;\ 0{,}99;\ 0{,}995\}$; mỗi giá trị $\gamma$ cho một bài toán khác nhau.
-
-- (a) Chứng minh $\Delta_*(V_0)=1$ và $\Delta_*(V_k)\le\gamma^k\Delta_*(V_0)$. Suy ra số lượt quét $k\ge\ln\theta/\ln\gamma$ là đủ, và tính số nguyên nhỏ nhất thỏa điều kiện này cho bốn giá trị $\gamma$.
-- (b) Dùng xấp xỉ $\ln\gamma\approx-(1-\gamma)$ khi $\gamma$ gần $1$ để giải thích số lượt quét tăng xấp xỉ theo $1/(1-\gamma)$ nhân một thừa số logarit.
-- (c) Đặt $D_k=V_k-V_{k-1}$ với $k\ge1$ và gọi $\pi_k$ là chính sách tham lam theo $V_k$. Chứng minh $0\le D_{k+1}\le\gamma P_{\pi_k}D_k$ theo từng ô, với $P_{\pi_k}$ là ma trận chuyển giữa các ô chưa kết thúc dưới $\pi_k$. Suy ra $\Delta_*(V_k)\le\gamma^k\rho_k$, trong đó $\rho_k=\max_s\bigl(P_{\pi_k}P_{\pi_{k-1}}\cdots P_{\pi_1}\mathbf 1\bigr)(s)\le1$ là xác suất lớn nhất theo ô xuất phát để lượt chưa kết thúc sau $k$ bước khi lần lượt dùng $\pi_k,\pi_{k-1},\dots,\pi_1$.
-- (d) [Lập trình] Sửa hàm `value_iteration` của notebook để trong khi chạy, ở mỗi $k\ge1$, ghi $\Delta_*(V_k)$, tỉ số $\Delta_*(V_k)/\gamma^k$ và $\rho_k$, với $\rho_k$ tính đệ quy qua vectơ $u_k=P_{\pi_k}u_{k-1}$, $u_0=\mathbf 1$. Với bốn giá trị $\gamma$, ghi số lượt quét tới nhãn "đạt ngưỡng", so với chặn ở (a), và kiểm bất đẳng thức $\Delta_*(V_k)/\gamma^k\le\rho_k$ của (c) tại mọi $k$. Dùng kết quả để giải thích khoảng cách giữa số đo được và chặn.
-:::
-
-::: hint Gợi ý Bài tập 04.14
-Ở (a), $\Delta_*(V_k)=\lVert T_*V_k-T_*V_{k-1}\rVert_\infty$ với lượt quét đồng bộ, rồi dùng Mệnh đề 04.24. Ở (c), tính $D_{k+1}(s)$ bằng cùng một hành động $\pi_k(s)$ cho cả hai số hạng; tính không âm của $D_k$ suy từ Bài tập 04.11(b). Ở (d), trong vòng lặp của `value_iteration`, biến `pi_V` chính là $\pi_k$ khi bảng hiện tại là $V_k$, và `P[pi_V, states, :n]` là ma trận $P_{\pi_k}$ cỡ $(n,n)$.
-:::
-
-::: solution Lời giải Bài tập 04.14
-**Câu (a).** Với $V_0=0$, mỗi giá trị nhìn trước chỉ còn phần thưởng, nên $(T_*V_0)(s)=\max_a\hat r(s,a)=1$ tại mọi ô và $\Delta_*(V_0)=\lVert\mathbf 1-0\rVert_\infty=1$. Với $k\ge1$, lượt quét đồng bộ cho $V_k=T_*V_{k-1}$, nên
-
+**Kết quả với $p_h=0{,}55$.** Lặp giá trị hội tụ về
 $$
-\begin{aligned}
-\Delta_*(V_k)
-&=\lVert T_*V_k-T_*V_{k-1}\rVert_\infty &&\text{(}V_k=T_*V_{k-1})\\
-&\le\gamma\lVert V_k-V_{k-1}\rVert_\infty &&\text{(Mệnh đề 04.24)}\\
-&=\gamma\,\Delta_*(V_{k-1}) &&\text{(}V_k=T_*V_{k-1}).
-\end{aligned}
+v_*(s)=\frac{1-(9/11)^s}{1-(9/11)^{100}},
 $$
+với $9/11=(1-p_h)/p_h$; chẳng hạn $v_*(1)\approx0{,}181818$, $v_*(2)\approx0{,}330579$, $v_*(10)\approx0{,}865569$, $v_*(25)\approx0{,}993374$, $v_*(50)\approx0{,}999956$. Đồ thị giá trị là đường lõm, tăng nhanh rồi tiến sát $1$. Chính sách trích ra cược $1$ tại mọi vốn; tính trên công thức chính xác, $a=1$ là mức cược dương duy nhất đạt cực đại tại mọi $s$, và công thức thỏa phương trình Bellman tối ưu. Với $p_h>0{,}5$, mỗi lần cược có lợi về kỳ vọng, nên chính sách tối ưu cược nhỏ để có nhiều lần tung.
 
-Quy nạp cho $\Delta_*(V_k)\le\gamma^k$. Thuật toán dừng ở lượt quét đầu tiên có $\Delta_*(V_k)\le\theta$; điều kiện $\gamma^k\le\theta$ là đủ, tức $k\ln\gamma\le\ln\theta$. Chia hai vế cho $\ln\gamma<0$ đổi chiều bất đẳng thức, cho $k\ge\ln\theta/\ln\gamma$.
+**Độ ổn định khi $\theta\to0$.** Chạy lại với $\theta=10^{-4},10^{-6},\dots,10^{-12}$:
 
-| $\gamma$ | $\theta=(1-\gamma)\cdot0{,}01$ | $\ln\theta/\ln\gamma$ | Chặn số lượt quét |
-|---|---:|---:|---:|
-| $0{,}9$ | $10^{-3}$ | $65{,}56$ | $66$ |
-| $0{,}95$ | $5\cdot10^{-4}$ | $148{,}19$ | $149$ |
-| $0{,}99$ | $10^{-4}$ | $916{,}42$ | $917$ |
-| $0{,}995$ | $5\cdot10^{-5}$ | $1975{,}74$ | $1976$ |
+- Bảng giá trị ổn định. Với $p_h=0{,}25$, sai số so với nghiệm chính xác giảm cùng $\theta$, chẳng hạn khoảng $7{,}4\cdot10^{-5}$ khi $\theta=10^{-4}$. Vì $\gamma=1$, Hệ quả 04.27 không cho chặn $\Delta/(1-\gamma)$; với $p_h=0{,}55$ và $\theta=10^{-12}$, sai số còn khoảng $1{,}8\cdot10^{-10}$, lớn hơn $\theta$.
+- Với $p_h=0{,}55$, chính sách trích ra là cược $1$ ở mọi vốn với mọi $\theta\le10^{-4}$.
+- Với $p_h=0{,}25$, chính sách trích ra đổi tại một số mức vốn khi $\theta$ giảm, vì tại $72$ trên $99$ mức vốn có ít nhất hai mức cược cùng đạt cực đại (Bài tập 04.20). Sai số làm tròn và sai số lặp quyết định mức cược nào trong tập hòa có giá trị tính được lớn nhất. Mọi mức cược được chọn vẫn thuộc tập cực đại chính xác. Chính sách trích ra chỉ dùng mức cược dương, nên theo lập luận ở phần "Họ chính sách tối ưu" của Bài tập 04.20, mọi chính sách trích ra đều tối ưu; chỉ phần tử được chọn trong tập hòa thay đổi.
 
-**Câu (b).** Với $\gamma$ gần $1$, $\ln\gamma\approx-(1-\gamma)$, nên
+Muốn chính sách trích ra ổn định, so các giá trị nhìn trước với một dung sai, như bài thực hành CartPole: coi mọi $a$ thỏa $Q_V(s,a)\ge\max_{a'}Q_V(s,a')-\epsilon$ là đạt cực đại, rồi chọn theo một thứ tự cố định.
 
-$$
-\frac{\ln\theta}{\ln\gamma}\approx\frac{1}{1-\gamma}\,\ln\frac{1}{(1-\gamma)\kappa}.
-$$
-
-Thừa số thứ nhất là $10$; $20$; $100$; $200$, còn thừa số logarit chỉ tăng từ $\ln10^3\approx6{,}9$ lên $\ln(2\cdot10^4)\approx9{,}9$. Xấp xỉ cho $69$; $152$; $921$; $1981$, gần các chặn ở (a). Ngưỡng $\theta=(1-\gamma)\kappa$ nhỏ đi khi $\gamma$ tăng, nên thừa số logarit cũng tăng theo $\gamma$.
-
-**Câu (c).** Theo Bài tập 04.11(b), $V_0=0\le\mathbf 1=T_*V_0$ kéo theo dãy $V_k$ không giảm, nên $D_k\ge0$. Cố định một ô $s$ và đặt $a=\pi_k(s)$. Vì $a$ đạt cực đại của $Q_{V_k}(s,\cdot)$, ta có $(T_*V_k)(s)=Q_{V_k}(s,a)$; vì $T_*$ lấy cực đại, $(T_*V_{k-1})(s)\ge Q_{V_{k-1}}(s,a)$. Trừ hai đẳng thức và bất đẳng thức này; phần thưởng triệt tiêu và hiệu tại $s_{\mathrm{term}}$ bằng $0$:
-
-$$
-D_{k+1}(s)=(T_*V_k)(s)-(T_*V_{k-1})(s)\le Q_{V_k}(s,a)-Q_{V_{k-1}}(s,a)=\gamma\sum_{s'\in\mathcal S}\hat p(s'\mid s,a)\,D_k(s').
-$$
-
-Vậy $D_{k+1}\le\gamma P_{\pi_k}D_k$. Ma trận $P_{\pi_j}$ không âm nên giữ chiều bất đẳng thức; lặp lại và dùng $D_1=V_1-V_0=\mathbf 1$:
-
-$$
-D_{k+1}\le\gamma^k\,P_{\pi_k}P_{\pi_{k-1}}\cdots P_{\pi_1}\mathbf 1 .
-$$
-
-Thành phần tại $s$ của $P_{\pi_k}\cdots P_{\pi_1}\mathbf 1$ là xác suất lượt chưa vào $s_{\mathrm{term}}$ sau $k$ bước khi xuất phát từ $s$ và dùng $\pi_k$ ở bước thứ nhất, $\pi_{k-1}$ ở bước thứ hai, …, $\pi_1$ ở bước thứ $k$; tổng mỗi hàng của $P_\pi$ bằng $1-\hat p(s_{\mathrm{term}}\mid s,\pi(s))$. Lấy cực đại theo $s$: $\Delta_*(V_k)=\lVert D_{k+1}\rVert_\infty\le\gamma^k\rho_k\le\gamma^k$.
-
-**Câu (d).** Một cách sửa hàm, dùng `lookahead` của notebook:
-
-```python
-def value_iteration_rho(P, R, gamma, eta, K):
-    n = P.shape[1]; states = np.arange(n)
-    V, u, k, rows = np.zeros(n), np.ones(n), 0, []
-    while True:
-        Q = lookahead(V, P, R, gamma)           # Q_{V_k}, cỡ (n, 2)
-        W, pi_V = Q.max(axis=1), Q.argmax(axis=1)
-        delta = np.abs(W - V).max()             # Delta_*(V_k)
-        if k >= 1:
-            u = P[pi_V, states, :n] @ u         # u_k = P_{pi_k} u_{k-1}, cỡ (n,)
-            rows.append((k, delta, delta / gamma**k, u.max()))  # u.max() = rho_k
-        if delta <= eta or k == K:
-            return k, np.array(rows)
-        V, k = W, k + 1
-```
-
-Kiểm tra cần thấy: ở mọi dòng, cột $\Delta_*(V_k)/\gamma^k$ không vượt cột $\rho_k$ (sai khác cỡ làm tròn số thực được bỏ qua), và cả hai không vượt $1$. Số lượt quét đo được trong lần chạy đã nhúng ở mục 7.4 của notebook là:
-
-| $\gamma$ | Chặn ở (a) | Đo được | Tỉ số |
-|---|---:|---:|---:|
-| $0{,}9$ | $66$ | $65$ | $0{,}985$ |
-| $0{,}95$ | $149$ | $143$ | $0{,}960$ |
-| $0{,}99$ | $917$ | $736$ | $0{,}803$ |
-| $0{,}995$ | $1976$ | $1\,315$ | $0{,}665$ |
-
-Với phiên bản gói khác, mô hình ước lượng có thể khác và số lượt quét có thể khác các số trên; chặn ở (a) không đổi vì chỉ dùng $\Delta_*(V_0)=1$. Với $\gamma=0{,}99$, output nhúng ở mục 7.2 cho $\Delta_*(V_{736})=9{,}88\cdot10^{-5}$, còn $0{,}99^{736}\approx6{,}13\cdot10^{-4}$, nên tỉ số tại điểm dừng khoảng $0{,}16$; theo (c), $\rho_{736}\ge0{,}16$.
-
-Khi $\gamma^k\le\theta$, điều kiện dừng chắc chắn thỏa, nên số đo được không vượt chặn ở (a). Khi $\rho_k<1$, phần dư xuống dưới $\theta$ sớm hơn. Bảng $\rho_k$ của chương trình cho biết trực tiếp xác suất chưa kết thúc giảm thế nào theo $k$ trên MDP ước lượng: nếu $\rho_k$ giảm rõ khi $k$ lớn, tỉ số "đo được/chặn" giảm khi $\gamma$ tăng như bảng trên, vì $\gamma$ lớn đòi nhiều lượt quét hơn.
-
-**Kiểm tra lại.** Với $\gamma=0{,}9$: $0{,}9^{65}\approx1{,}06\cdot10^{-3}>10^{-3}$ và $0{,}9^{66}\approx9{,}55\cdot10^{-4}\le10^{-3}$, nên chặn là $66$. Ba lỗi thường gặp: lấy $\theta=\kappa$, bỏ thừa số $1-\gamma$, cho $\ln0{,}01/\ln0{,}99\approx458{,}2$, tức $459$ lượt quét với $\gamma=0{,}99$, và bảng trả về khi đó chỉ được chặn sai số $1$ thay cho $0{,}01$; chia cho $\ln\gamma$ mà không đổi chiều bất đẳng thức; cập nhật $u$ bằng chính sách tham lam theo $V_{k+1}$ thay cho $V_k$, làm lệch thứ tự các ma trận trong tích của (c).
-:::
-
-### Bài tập 04.15. Lặp chính sách cải biên [Lập trình]
-
-**Mức độ:** vận dụng. Mục tiêu học tập 3, 5 của ghi chú.
-
-**Nguồn:** bài thực hành `thuc-hanh-cartpole-quy-hoach-dong.ipynb`, nhiệm vụ 7; ghi chú bài giảng, mục Đọc thêm (lặp chính sách cải biên), Thuật toán 04.17, Mệnh đề 04.18, Hệ quả 04.27 và Ví dụ 04.16 (cập nhật tại chỗ); Puterman (1994), §6.5.
-
-::: exercise Bài tập 04.15 (Lặp chính sách cải biên)
-Lặp chính sách cải biên (modified policy iteration) với tham số nguyên $\ell\ge1$ chạy như sau. Khởi tạo chính sách xác định $\pi\leftarrow\pi_0$ và bảng $V\leftarrow0$. Mỗi vòng gồm bốn bước: (1) áp dụng $T_\pi$ đúng $\ell$ lần cho $V$, xuất phát từ bảng của vòng trước; (2) tính $Q_V(s,a)$ cho mọi cặp, phần dư $\Delta_*(V)$ và chính sách tham lam $\pi_V$ theo quy tắc phá hòa; (3) nếu $\Delta_*(V)\le\theta$, trả $(V,\pi_V,\Delta_*(V))$ với nhãn "đạt ngưỡng"; (4) gán $\pi\leftarrow\pi_V$ và sang vòng sau. Mỗi vòng được đếm là $\ell+1$ phép áp dụng toán tử: $\ell$ lần $T_\pi$ và một lần tính $Q_V$ trên toàn bảng.
-
-- (a) Trên mô hình hai trạng thái ($\mathrm s_0\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $1$; $\mathrm s_0\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $0$; $\mathrm s_1\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $2$; $\mathrm s_1\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $3$; mọi chuyển xác định; $\gamma=0{,}9$) với $\pi_0=(\mathrm a,\mathrm a)$ và $\ell=1$, tính $V$, $\pi_V$ và $\Delta_*(V)$ ở ba vòng đầu. Chỉ ra rằng từ vòng thứ hai, bảng mới bằng $T_*$ áp dụng cho bảng của vòng trước.
-- (b) Một phiên bản khác thay bước (3) bằng điều kiện dừng của Thuật toán 04.17: dừng khi $\pi_V=\pi$. Với $\ell=1$ trên cùng mô hình, xác định vòng dừng và bảng $V$ khi dừng; so $V$ với $v_*=(27,30)$ và với chặn của Hệ quả 04.27. Giải thích vì sao Mệnh đề 04.18 không áp dụng.
-- (c) [Lập trình] Viết chương trình cho mô hình hai trạng thái với $\theta=0{,}01$ và $\ell\in\{1,5,20\}$; ghi số vòng và tổng số phép áp dụng toán tử tới nhãn "đạt ngưỡng".
-- (d) [Lập trình] Trong notebook (nhiệm vụ 7), chạy phiên bản dừng theo phần dư trên CartPole rời rạc hóa với $\gamma=0{,}99$, $\theta=10^{-4}$, chính sách khởi tạo theo dấu góc và $\ell\in\{1,5,20\}$. Chứng minh rằng với $\ell=1$, dãy bảng trùng dãy bảng của lặp giá trị đồng bộ từ $V_0=0$, biết $\hat r(s,a)=1$ với mọi cặp, và nêu số vòng dự kiến của phiên bản $\ell=1$, biết lặp giá trị cần $736$ lượt quét trong lần chạy đã nhúng.
-- (e) Một cách khác giảm chi phí là cập nhật tại chỗ. Trên mô hình hai trạng thái, chạy hai lượt quét của lặp giá trị tại chỗ (mỗi ô gán $V(s)\leftarrow(T_*V)(s)$ và ô sau đọc ngay giá trị mới) từ $V=(0,0)$, lần lượt với thứ tự $\mathrm s_0,\mathrm s_1$ và thứ tự $\mathrm s_1,\mathrm s_0$. So với hai lượt quét đồng bộ $(1,3)$, $(2{,}7;\,5{,}7)$ và giải thích vì sao thứ tự có ảnh hưởng.
-:::
-
-::: hint Gợi ý Bài tập 04.15
-Với $\pi_V$ tham lam theo $V$, $T_{\pi_V}V=T_*V$ (đoạn sau Định nghĩa 04.22 của ghi chú). Ở vòng thứ nhất, $\pi=\pi_0$ chưa tham lam theo bảng nào. Ở (b), chặn của Hệ quả 04.27 là $\Delta_*(V)/(1-\gamma)$ và áp dụng cho mọi bảng $V$. Ở (d), notebook có sẵn `bellman_pi` cho bước (1), `lookahead` và `greedy_keep_ties` cho bước (2). Ở (e), nhánh $\mathrm b$ tại $\mathrm s_0$ đọc giá trị của $\mathrm s_1$.
-:::
-
-::: solution Lời giải Bài tập 04.15
-**Câu (a).** Ba vòng đầu với $\ell=1$:
-
-| Vòng | $\pi$ dùng ở bước (1) | $V$ sau bước (1) | $Q_V(\mathrm s_0,\cdot)$ | $Q_V(\mathrm s_1,\cdot)$ | $\pi_V$ | $\Delta_*(V)$ |
-|---|---|---|---|---|---|---:|
-| $1$ | $(\mathrm a,\mathrm a)$ | $(1,2)$ | $1{,}9$; $1{,}8$ | $2{,}9$; $4{,}8$ | $(\mathrm a,\mathrm b)$ | $2{,}8$ |
-| $2$ | $(\mathrm a,\mathrm b)$ | $(1{,}9;\,4{,}8)$ | $2{,}71$; $4{,}32$ | $3{,}71$; $7{,}32$ | $(\mathrm b,\mathrm b)$ | $2{,}52$ |
-| $3$ | $(\mathrm b,\mathrm b)$ | $(4{,}32;\,7{,}32)$ | $4{,}888$; $6{,}588$ | $5{,}888$; $9{,}588$ | $(\mathrm b,\mathrm b)$ | $2{,}268$ |
-
-Chẳng hạn ở vòng 2: $V(\mathrm s_0)=1+0{,}9\cdot1=1{,}9$, $V(\mathrm s_1)=3+0{,}9\cdot2=4{,}8$; phần dư là $\max\{4{,}32-1{,}9;\ 7{,}32-4{,}8\}=2{,}52$. Từ vòng 2, chính sách dùng ở bước (1) là $\pi_V$ của bảng trước, nên bảng mới là $T_{\pi_V}V=T_*V$: $T_*(1,2)=(\max\{1{,}9;1{,}8\},\max\{2{,}9;4{,}8\})=(1{,}9;\,4{,}8)$ và $T_*(1{,}9;\,4{,}8)=(4{,}32;\,7{,}32)$. Vòng 1 khác lặp giá trị: $T_{\pi_0}(0,0)=(1,2)$, còn $T_*(0,0)=(1,3)$.
-
-**Câu (b).** Ở vòng 3, $\pi_V=(\mathrm b,\mathrm b)=\pi$, nên phiên bản này dừng với $V=(4{,}32;\,7{,}32)$. Sai số thật là $\max\{27-4{,}32;\ 30-7{,}32\}=22{,}68$, và chặn của Hệ quả 04.27 là $2{,}268/(1-0{,}9)=22{,}68$, trùng sai số thật. Chính sách trả về là $(\mathrm b,\mathrm b)$, tối ưu theo Ví dụ 04.12 của ghi chú, nhưng nhãn dừng không chứng nhận điều đó: Định nghĩa 04.16 và Định lý 04.20 đòi kiểm tính ổn định bằng giá trị chính xác $v_\pi$, còn ở đây $V\ne v_{(\mathrm b,\mathrm b)}$. Bài tập 04.3 cho một trường hợp chính sách không đổi theo một bảng gần đúng mà không tối ưu. Mệnh đề 04.18 không áp dụng vì giả thiết "mỗi lần đánh giá trả đúng $v_\pi$" bị bỏ, nên Bước 1 của chứng minh (giá trị tăng nghiêm ngặt khi chính sách đổi) không còn căn cứ.
-
-**Câu (c).** Một chương trình viết theo đúng bốn bước của đề cho:
-
-| $\ell$ | Số vòng | Phép áp dụng toán tử | $V$ khi dừng |
-|---:|---:|---:|---|
-| $1$ | $55$ | $110$ | $\approx(26{,}905;\,29{,}905)$ |
-| $5$ | $12$ | $72$ | $\approx(26{,}924;\,29{,}924)$ |
-| $20$ | $4$ | $84$ | $\approx(26{,}964;\,29{,}964)$ |
-
-Tăng $\ell$ làm giảm số vòng nhưng tăng chi phí mỗi vòng; trên mô hình này, tổng số phép nhỏ nhất ở $\ell=5$. Kết luận này thuộc về mô hình, ngưỡng và cách đếm đã cho: với $\ell=1$, bảng mà bước (1) của vòng sau tính ra chính là $T_*V$ đã có ở bước (2) của vòng trước, nên một cài đặt dùng lại kết quả đó chỉ tốn một phép mỗi vòng. Ở cả ba dòng, sai số của $V$ so với $v_*=(27,30)$ không vượt $0{,}1=\theta/(1-\gamma)$, như Hệ quả 04.27 bảo đảm.
-
-**Câu (d).** Với $V=0$ và $\hat r=1$, $(T_{\pi_0}0)(s)=1=(T_*0)(s)$ tại mọi ô, nên bảng sau vòng 1 bằng $V_1$ của lặp giá trị. Giả sử bảng sau vòng $r$ bằng $V_r$. Bước (4) đặt $\pi=\pi_{V_r}$, nên bảng sau vòng $r+1$ là $T_{\pi_{V_r}}V_r=T_*V_r=V_{r+1}$. Quy nạp cho hai dãy trùng nhau, và phép kiểm $\Delta_*(V)\le\theta$ cũng trùng, nên phiên bản $\ell=1$ dừng sau $736$ vòng như lặp giá trị, trừ sai khác do làm tròn số thực. Một cài đặt dùng các hàm của notebook: ở mỗi vòng, gọi `V = bellman_pi(V, pi, P, R, gamma)` đúng $\ell$ lần, rồi `Q = lookahead(V, P, R, gamma)`, `delta = np.abs(Q.max(axis=1) - V).max()`; nếu `delta <= theta` thì dừng, nếu không thì `pi = greedy_keep_ties(Q, pi)`; mỗi vòng cộng $\ell+1$ vào bộ đếm phép. Với $\ell=5$ và $\ell=20$, notebook chưa nhúng kết quả; số vòng và số phép áp dụng toán tử là phần sinh viên đo và báo cáo, kèm sai số thật so với $v_*$ của lặp chính sách.
-
-**Câu (e).** Mỗi ô lấy cực đại của nhánh $\mathrm a$ và nhánh $\mathrm b$, đọc giá trị mới nhất của bảng:
-
-| Thứ tự | Lượt | Ô cập nhật trước | Ô cập nhật sau | Bảng $(\mathrm s_0,\mathrm s_1)$ |
-|---|---|---|---|---|
-| $\mathrm s_0,\mathrm s_1$ | $1$ | $\mathrm s_0$: $\max\{1+0;\ 0+0\}=1$ | $\mathrm s_1$: $\max\{2+0{,}9\cdot1;\ 3+0\}=3$ | $(1,3)$ |
-| $\mathrm s_0,\mathrm s_1$ | $2$ | $\mathrm s_0$: $\max\{1+0{,}9;\ 0+0{,}9\cdot3\}=2{,}7$ | $\mathrm s_1$: $\max\{2+0{,}9\cdot2{,}7;\ 3+0{,}9\cdot3\}=5{,}7$ | $(2{,}7;\,5{,}7)$ |
-| $\mathrm s_1,\mathrm s_0$ | $1$ | $\mathrm s_1$: $\max\{2+0;\ 3+0\}=3$ | $\mathrm s_0$: $\max\{1+0;\ 0+0{,}9\cdot3\}=2{,}7$ | $(2{,}7;\,3)$ |
-| $\mathrm s_1,\mathrm s_0$ | $2$ | $\mathrm s_1$: $\max\{2+0{,}9\cdot2{,}7;\ 3+0{,}9\cdot3\}=5{,}7$ | $\mathrm s_0$: $\max\{1+0{,}9\cdot2{,}7;\ 0{,}9\cdot5{,}7\}=5{,}13$ | $(5{,}13;\,5{,}7)$ |
-
-Thứ tự $\mathrm s_0,\mathrm s_1$ cho đúng hai bảng của lượt quét đồng bộ, $(1,3)$ rồi $(2{,}7;\,5{,}7)$; thứ tự $\mathrm s_1,\mathrm s_0$ cho $(2{,}7;\,3)$ rồi $(5{,}13;\,5{,}7)$. Phần thưởng $3$ nằm ở $\mathrm s_1$, và nhánh tốt tại $\mathrm s_0$ là $\mathrm b$, nhánh đọc giá trị của $\mathrm s_1$. Cập nhật $\mathrm s_1$ trước cho $\mathrm s_0$ đọc ngay giá trị mới trong cùng lượt quét; theo thứ tự ngược lại, $\mathrm s_0$ đọc giá trị cũ của $\mathrm s_1$ như lượt quét đồng bộ. Sau hai lượt, sai số so với $v_*=(27,30)$ là $(24{,}3;\,24{,}3)$ với lượt quét đồng bộ và $(21{,}87;\,24{,}3)$ với thứ tự $\mathrm s_1,\mathrm s_0$: nhỏ hơn tại $\mathrm s_0$, cùng sai số lớn nhất. Cả hai thứ tự lặp lại mãi đều cập nhật mỗi trạng thái vô hạn lần, nên đều hội tụ theo Định lý 04.32; thứ tự chỉ đổi tốc độ, như Ví dụ 04.16 của ghi chú trên dãy năm ô.
-
-**Kiểm tra lại.** Với $\ell\to\infty$, bước (1) cho $V=v_\pi$ và thuật toán trở về lặp chính sách; với $\ell=1$, nó trùng lặp giá trị từ vòng thứ hai, như mục Đọc thêm của ghi chú nêu. Bốn lỗi thường gặp: khởi động lại $V\leftarrow0$ ở mỗi vòng thay vì dùng bảng của vòng trước, khi đó bảng sau bước (1) luôn là $T_\pi^{\ell}0$, có sai số $\gamma^\ell\lVert v_\pi\rVert_\infty$ không giảm theo vòng; trên mô hình hai trạng thái, khi chính sách đã là $(\mathrm b,\mathrm b)$, phần dư đứng yên ở $2{,}7$ với $\ell=1$ (bảng $(0,3)$), $1{,}771$ với $\ell=5$ và $0{,}365$ với $\ell=20$, nên không bao giờ xuống dưới $\theta=0{,}01$, và phải có $\ell\ge55$ thuật toán mới dừng; chỉ đếm $\ell$ lần $T_\pi$ mà bỏ lần tính $Q_V$, làm phiên bản $\ell=1$ có vẻ rẻ gấp đôi; dùng nhãn "chính sách không đổi" làm chứng nhận tối ưu như ở câu (b); ở câu (e), cho $\mathrm s_0$ đọc giá trị cũ của $\mathrm s_1$ dù $\mathrm s_1$ vừa được cập nhật, cho lại $(1,3)$ của lượt quét đồng bộ thay cho $(2{,}7;\,3)$.
-:::
-
-### Bài tập 04.6. Chứng nhận nghiệm tối ưu
-
-**Mức độ:** vận dụng (bài tổng hợp). Mục tiêu học tập 4, 5 của ghi chú.
-
-**Nguồn:** Bài giảng gốc (2025–2026), trang 17–19, 31–38; ghi chú bài giảng, Bài tập 04.6.
-
-**Trùng trang chiếu:** [Bài tập: chứng nhận nghiệm tối ưu](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/7/6) và [trang lời giải](lecture-04-giai-mdp-bang-quy-hoach-dong.html#/7/7).
-
-::: exercise Bài tập 04.6 (Chứng nhận nghiệm tối ưu)
-Cho mô hình hai trạng thái: $\mathrm s_0\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $1$; $\mathrm s_0\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $0$; $\mathrm s_1\xrightarrow{\mathrm a}\mathrm s_0$ thưởng $2$; $\mathrm s_1\xrightarrow{\mathrm b}\mathrm s_1$ thưởng $3$; mọi chuyển xác định; $\gamma=0{,}9$; và hai bảng $U=(10,30)$, giá trị chính xác của $\pi_1=(\mathrm a,\mathrm b)$, và $V=(27,30)$.
-
-- (a) Tính $T_*U$, $T_*V$, $\Delta_*(U)$, $\Delta_*(V)$ và hai chính sách tham lam.
-- (b) Xác định bảng nào là $v_*$ và nêu kết quả của ghi chú được dùng làm căn cứ.
-- (c) So chặn sai số của $U$ theo Hệ quả 04.27 với sai số thật của $U$.
-- (d) Giả sử chỉ có một bộ mô phỏng nhận $(s,a)$ và trả một chuyển $(s',r)$. Xác định phép tính ở (a) không thực hiện được trực tiếp.
-:::
-
-::: hint Gợi ý Bài tập 04.6
-Mỗi thành phần của $T_*U$ là cực đại của hai giá trị nhìn trước; dùng bảng $U$ cho mọi giá trị tiếp nối.
-:::
-
-::: solution Lời giải Bài tập 04.6
-**Câu (a).** Với $U$: tại $\mathrm s_0$, $\max\{1+0{,}9\cdot10;\ 0+0{,}9\cdot30\}=\max\{10;\,27\}=27$; tại $\mathrm s_1$, $\max\{2+0{,}9\cdot10;\ 3+0{,}9\cdot30\}=\max\{11;\,30\}=30$. Vậy $T_*U=(27,30)$, $\Delta_*(U)=\max\{17;\,0\}=17$, chính sách tham lam $(\mathrm b,\mathrm b)$. Với $V$: các giá trị nhìn trước là $25{,}3$; $27$ tại $\mathrm s_0$ và $26{,}3$; $30$ tại $\mathrm s_1$, nên $T_*V=V$, $\Delta_*(V)=0$, chính sách tham lam $(\mathrm b,\mathrm b)$.
-
-**Câu (b).** $V=v_*$, vì $V$ là điểm bất động của $T_*$ và theo Định lý 04.25(a) điểm bất động đó duy nhất và bằng $v_*$; các giả thiết MDP hữu hạn có tính Markov, phần thưởng bị chặn và $\gamma=0{,}9<1$ đều thỏa. Bảng $U$ là giá trị chính xác của một chính sách nhưng không thỏa phương trình Bellman tối ưu.
-
-**Câu (c).** Chặn là $17/(1-0{,}9)=170$, còn sai số thật là $\lVert U-v_*\rVert_\infty=\max\{17;\,0\}=17$. Chặn đúng nhưng lớn gấp mười lần sai số thật.
-
-**Câu (d).** Phép tính kỳ vọng đầy đủ $\sum_{s',r}p(s',r\mid s,a)\bigl[r+\gamma U(s')\bigr]$ cần biết $p$. Bộ mô phỏng chỉ cho từng mẫu; muốn dùng nó phải ước lượng mô hình như CartPole rời rạc hóa (Ví dụ 04.17 của ghi chú) hoặc dùng các phương pháp lấy mẫu của Bài 05.
-
-**Kiểm tra lại.** Theo Định lý 04.13, chính sách tham lam theo $v_{\pi_1}=U$ không kém $\pi_1$; ở đây nó là $(\mathrm b,\mathrm b)$ với giá trị $(27,30)\ge(10,30)$. Hai lỗi thường gặp: kết luận $U$ tối ưu vì $U$ là giá trị chính xác của một chính sách, trong khi phải kiểm $U=T_*U$; đọc chặn $170$ là sai số, trong khi chặn chỉ là cận trên và ở đây gấp mười lần sai số thật.
+**Kiểm tra lại.** Với $p_h=0{,}55$, công thức thỏa $v_*(s)=0{,}55\,v_*(s+1)+0{,}45\,v_*(s-1)$, vì $r=9/11$ là nghiệm của $0{,}55r^2-r+0{,}45=0$. Lỗi thường gặp: để $a=0$ trong phép trích chính sách; vì $Q_V(s,0)=V(s)$ và tại điểm bất động $V(s)$ bằng cực đại, phép $\arg\max$ có thể trả $a=0$, cho một chính sách không bao giờ kết thúc.
 :::
 
 ## Tài liệu tham khảo
 
-- Tạ Việt Cường, Bài giảng gốc Bài 04: Giải MDP (2025–2026): trang 5, 17–18 cho Bài tập 04.16; trang 14, 17–18 cho Bài tập 04.1; trang 17–20 cho Bài tập 04.2, 04.3; trang 25–28 cho Bài tập 04.4; trang 15 cho Bài tập 04.5; trang 17–19, 31–38 cho Bài tập 04.6.
-- Tạ Việt Cường, Bài tập tuần 3 (2025–2026), "Giải bài toán MDP": bài 6 cho Bài tập 04.10, bài 7 cho Bài tập 04.11, bài 9 cho Bài tập 04.12.
-- Tạ Việt Cường, Bài tập tuần 4 (2025–2026), "Đánh giá chính sách": bài 1 cho mô hình hai trạng thái, bài 10 cho Bài tập 04.13.
-- Ghi chú bài giảng Bài 04 ([mở trong viewer](material-viewer.html?doc=materials/lec-04/lecture-note.md&deck=lecture-04-giai-mdp-bang-quy-hoach-dong.html)): Bài tập 04.1–04.6 giữ nguyên đề và kết quả; số liệu của chính sách ngẫu nhiên đều trong Bài tập 04.10, 04.17 là số liệu sư phạm tự xây dựng.
-- Bài thực hành CartPole của Bài 04 (`thuc-hanh-cartpole-quy-hoach-dong.ipynb`): mục 7.3–7.4 và nhiệm vụ 5, 7 cho Bài tập 04.14, 04.15; số liệu từ một lần chạy đã nhúng (gymnasium 1.3.0).
-- Sutton, R. S., và Barto, A. G. (2018), *Reinforcement Learning: An Introduction*, ấn bản 2, MIT Press, chương 4: §4.3, tr. 80–82 cho Bài tập 04.3; §4.5, tr. 85–86 cho Bài tập 04.5.
-- Puterman, M. L. (1994), *Markov Decision Processes: Discrete Stochastic Dynamic Programming*, Wiley, §6.5 (lặp chính sách cải biên) cho Bài tập 04.15.
+- **Sutton, R. S. và Barto, A. G. (2018).** *Reinforcement Learning: An Introduction*, ấn bản 2, MIT Press. Bài tập 3.22, §3.6, trang 66 (Bài tập 04.16); Bài tập 3.24, §3.6, trang 67, Ví dụ 3.5, trang 60, và Hình 3.5, trang 65 (Bài tập 04.17); Bài tập 3.25–3.28, §3.6, trang 67 (Bài tập 04.13); Bài tập 4.1–4.3, §4.1, trang 76, Ví dụ 4.1 và Hình 4.1, trang 76–77, và §4.1, trang 74 (Bài tập 04.11, 04.15, 04.12); Bài tập 4.4, 4.5, §4.3, trang 82, và giả mã lặp chính sách, trang 80 (Bài tập 04.18, 04.19); Bài tập 4.8–4.10, §4.4, trang 84, Ví dụ 4.3 và Hình 4.3, trang 84, và (4.10), trang 83 (Bài tập 04.20, 04.21, 04.14).
