@@ -2070,3 +2070,73 @@ Yêu cầu của người dùng: "Duyệt xem còn câu rào đón nào không t
 **Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in: 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang; lỗi CSP script nội tuyến đến từ máy chủ xem trước.
 
 Quyết định của điều phối viên: **chấp nhận**; commit chung `fix(materials): …`.
+
+
+## Rà nhẹ theo quy tắc 2026-11-09 và làm lại tệp bài tập từ giáo trình (2026-11-12)
+
+Yêu cầu của người dùng: "rà math-4-AI 10–14 và rl-plan 01–10: chỉ cần một lượt nhẹ, gồm rà theo quy tắc 09/11 và làm lại exercises.md từ giáo trình", rồi "chỉ làm lecture note và exercise" (không sửa deck).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Người rà chỉ đọc (`no-ai-slop` Detect), sau đó cũng tác tử đó làm biên tập viên (`no-ai-slop` Edit), tiếp tục bằng `SendMessage` để giữ ngữ cảnh.
+- Người kiểm tra độc lập chỉ đọc (tác tử mới): đối chiếu đề với PDF, giải lại mọi bài trước khi đọc lời giải, rà các hunk đã đổi của ghi chú; sau đó kiểm lại phần đã sửa.
+
+**Rà ghi chú:** 23 phát hiện (0 chặn bàn giao, 0 nghiêm trọng, 5 trung bình, 18 nhẹ): danh sách bài tập ở mục tiêu (dòng 9–14) và câu dòng 16; ba câu nguồn gốc số liệu "bài giảng gốc" (dòng 74, 549, 1390); rào đón ("rất chậm", "ít khi", "nói chung") ở chỗ đã có công thức hoặc số. Điều phối viên chấp nhận: cả 23. SB 3.8, 3.9 thuộc Bài 02, 9.1 thuộc Bài 07; 6.4 (câu hỏi mở dựa vào đọc đồ thị) không dùng.
+
+**Nguồn bài tập:** Sutton và Barto (2018), ấn bản 2 (PDF, SHA-256 2dd0d71d…), đề đối chiếu PDF. Tám bài 05.17–05.24: SB 5.2, 5.5, 2.4, 6.3, 6.1, 6.6, 6.2, 6.5. Bài 05.17 cũ (lượt bị cắt ngắn) chuyển về ghi chú thành 05.16, cuối "Mức vận dụng", để 05.1–05.15 giữ số; các bài cũ khác bị bỏ.
+
+**Kiểm tra độc lập:** 0 chặn bàn giao, 1 nghiêm trọng (05.24(b), SB 6.5: lời giải giải thích đường RMS "giảm rồi tăng" bằng mô hình của Nhận xét 05.19, mô hình này không sinh ra hiện tượng đó; người kiểm xác nhận bằng tính toán và mô phỏng 20 000 lượt; viết lại bằng tách độ chệch/phương sai và 05.20(b)), 2 trung bình (05.23(c): điều kiện đúng là độ chệch² + Var(Y) < Var(G), như Nhận xét 05.29; ghi chú L1851 bỏ "nói chung" làm mạnh khẳng định, khôi phục), 12 nhẹ (05.17(a) lý do $22\le s+c\le31$; danh sách mục tiêu; năm câu ghi chú). Điều phối viên chấp nhận mọi phát hiện; biên tập viên sửa; kiểm lại: lượt một còn một trung bình: lời giải 05.24 vẫn nói độ chệch giảm đều, trong khi mô phỏng cho thấy với $\alpha\ge0{,}1$ độ chệch giảm rồi tăng ($\alpha=0{,}15$: bình phương độ chệch 0,0002 → 0,0011); áp bốn câu thay của người kiểm. Lượt hai đạt; một chữ nhẹ ở dòng 445 đã sửa.
+
+**Mục tiêu chỉ có bài trong ghi chú:** mục tiêu 1, phần phân biệt lượt kết thúc với lượt bị cắt ngắn (Bài tập 05.16); mục tiêu 6, phần nghiệm theo lô (§6.3 của sách không có bài tập; Bài tập 05.12, 05.13).
+
+Bản trước khi sửa: bản cũ trong lịch sử git, `scratchpad của phiên, rl-05-exercises-old.md`.
+
+### Số hiệu cũ → mới
+
+| Cũ | Nơi cũ | Mới | Ghi chú |
+|---|---|---|---|
+| 05.1–05.15 | ghi chú | 05.1–05.15, ghi chú | không đổi |
+| 05.8 | bản sao trong `exercises.md` | bỏ khỏi tệp | bài 05.8 trong ghi chú giữ nguyên |
+| 05.11 | bản sao trong `exercises.md` | bỏ khỏi tệp | bài 05.11 trong ghi chú giữ nguyên |
+| 05.12 | bản sao trong `exercises.md` (thêm câu (b)) | bỏ khỏi tệp | bài 05.12 trong ghi chú giữ nguyên; câu (b) tự dựng bị bỏ |
+| 05.16 | `exercises.md` | bỏ | tự dựng |
+| 05.17 | `exercises.md` | **05.16, ghi chú** | cuối "Bài tập củng cố › Mức vận dụng"; tài liệu tham khảo ghi "bài 1 và bài 3 cho Bài tập 05.16" |
+| 05.18–05.28 | `exercises.md` | bỏ | tự dựng hoặc dựa notebook / Bài tập tuần 5 |
+| — | — | 05.17 | SB Bài tập 5.2, §5.1, tr. 94 |
+| — | — | 05.18 | SB Bài tập 5.5, §5.5, tr. 105 |
+| — | — | 05.19 | SB Bài tập 2.4, §2.5, tr. 33 |
+| — | — | 05.20 | SB Bài tập 6.3, §6.2, tr. 126 |
+| — | — | 05.21 | SB Bài tập 6.1, §6.1, tr. 121 |
+| — | — | 05.22 | SB Bài tập 6.6, §6.2, tr. 126 |
+| — | — | 05.23 | SB Bài tập 6.2, §6.1, tr. 123 |
+| — | — | 05.24 | SB Bài tập 6.5, §6.2, tr. 126 |
+
+SB 6.4 (được phép thêm) không dùng: câu hỏi mở dựa vào đọc đồ thị, theo D2.
+
+Cảnh báo: các số 05.17–05.24 nay chỉ bài khác hẳn với số cũ.
+
+### Dẫn chiếu đã cập nhật (trong phạm vi)
+
+- `lecture-note.md` dòng 9–14 (mục tiêu học tập) và dòng 16 (câu liên kết tới tệp bài tập).
+- `lecture-note.md` tài liệu tham khảo (Bài tập tuần 5 → Bài tập 05.16).
+
+### Dẫn chiếu ngoài phạm vi còn dùng số cũ (không sửa)
+
+Deck `2627-1/lecture-05-du-doan-phi-mo-hinh.html`:
+- dòng 248: "tệp bài tập Bài 05, Bài tập 05.18, câu (a), (b)" (nay 05.18 là SB 5.5).
+- dòng 363: "tệp bài tập Bài 05, Bài tập 05.20, câu (a), (b)" (nay 05.20 là SB 6.3).
+- dòng 570: "Câu (a) là Bài tập 05.12 của ghi chú" (vẫn đúng); dòng 659 nói 05.8, 05.11, 05.12 "có ở cả hai tệp" và 05.18, 05.20 lặp bài trên trang, 05.26–05.28 dùng số liệu Lunar Lander (sai).
+- dòng 656: bảng `Mạch | Bài tập` liệt kê 05.11, 05.16–05.28 của tệp cũ (sai). Bảng mới: mạch 2 → 05.17–05.19; mạch 3 → 05.20, 05.21; mạch 4 → 05.22, 05.24; mạch 6 → 05.23; ghi chú: 05.1; 05.2–05.5; 05.6, 05.7, 05.16; 05.8–05.11, 05.14; 05.12; 05.13, 05.15.
+- dòng 46, 223, 486, 496, 621, 629: dẫn bài của ghi chú, vẫn đúng.
+
+Planning:
+- `2627-1/planning/lec-05/outline.md` dòng 57, 169, 188, 202, 214–218, 224–228, 230.
+- `2627-1/planning/lec-05/storyboard.md` dòng 153.
+- `2627-1/planning/lec-05/review-log.md`: lịch sử, không sửa.
+
+Bài khác: `materials/lec-06/lecture-note.md` (05.11) và `materials/lec-10/lecture-note.md` (05.14) vẫn đúng.
+
+**Số liệu:** ghi chú 26426 âm tiết (`wc -w`); `git diff --check` sạch; mỗi `exercise` có đúng một `hint` và một `solution`.
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8812, 1600×900 và 390×844, mở mọi khối khi đo: 0 `.katex-error`, 0 `:::` sót, 0 lỗi console (trừ CSP của reloadserver), 0 request lỗi, không tràn ngang trang. Tệp bài tập: 0/19 công thức tràn khung ở 390 px. Ghi chú: 42 công thức có sẵn từ trước tràn khung (ngoài lượt nhẹ).
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-05): rà theo quy tắc 2026-11-09, làm lại bài tập từ Sutton–Barto`.
