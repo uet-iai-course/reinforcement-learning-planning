@@ -983,3 +983,81 @@ Yêu cầu của người dùng: "Duyệt xem còn câu rào đón nào không t
 **Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in: 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang; lỗi CSP script nội tuyến đến từ máy chủ xem trước.
 
 Quyết định của điều phối viên: **chấp nhận**; commit chung `fix(materials): …`.
+
+
+## Rà nhẹ theo quy tắc 2026-11-09 và làm lại tệp bài tập từ giáo trình (2026-11-12)
+
+Yêu cầu của người dùng: "rà math-4-AI 10–14 và rl-plan 01–10: chỉ cần một lượt nhẹ, gồm rà theo quy tắc 09/11 và làm lại exercises.md từ giáo trình", rồi "chỉ làm lecture note và exercise" (không sửa deck).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Người rà chỉ đọc (`no-ai-slop` Detect), sau đó cũng tác tử đó làm biên tập viên (`no-ai-slop` Edit), tiếp tục bằng `SendMessage` để giữ ngữ cảnh.
+- Người kiểm tra độc lập chỉ đọc (tác tử mới): đối chiếu đề với PDF, giải lại mọi bài trước khi đọc lời giải, rà các hunk đã đổi của ghi chú; sau đó kiểm lại phần đã sửa.
+
+**Rà ghi chú:** 39 phát hiện (0 chặn bàn giao, 0 nghiêm trọng, 6 trung bình, 33 nhẹ): câu nói về vị thế văn bản ("mỗi câu kèm một điều kiện", "Ví dụ 08.4 chỉ xét…"), khẳng định không có trong dữ kiện ("dù ô bên cạnh đã được ghé nhiều lần"), "đúng tự nhiên", chỉ đường "dòng thứ nhất trong bảng", câu nguồn gốc "khi soạn" (dòng 92, 115, 222, 606, 996, 1250); "thường" không định lượng, câu nói lại kết quả. Điều phối viên chấp nhận: 38 trên 39; thứ tự khối bài tập 08.1, 08.5, 08.2–08.4 giữ nguyên số vì deck dẫn tới.
+
+**Nguồn bài tập:** Sutton và Barto (2018), ấn bản 2 (PDF, SHA-256 2dd0d71d…). Bài 08 dựa chủ yếu trên bài báo DQN (Mnih và cộng sự), không có bài tập; phần lớn bài SB phù hợp đã thuộc bài khác theo phân bổ chung (6.11, 6.12 Bài 06; 9.1, 9.7 Bài 07; 3.5, 3.6 Bài 02; 2.4 Bài 05), SB 11.3 bị bỏ vì sách không cho đặc trưng hành động. Hai bài 08.8–08.9: SB 2.7 (tr. 35), SB 11.1 (tr. 259, rút gọn về trường hợp theo lượt; chính sách hành vi ký hiệu $\mu$). Hai bài tự dựng cũ chuyển về ghi chú: 08.10 → 08.6, 08.12 → 08.7; mười hai bài cũ khác bị bỏ. Tệp chỉ có mức tính toán hoặc chứng minh; mức nhận biết và vận dụng nằm trong ghi chú.
+
+**Kiểm tra độc lập:** 0 chặn bàn giao, 0 nghiêm trọng, 1 trung bình (08.8: $\beta_1$ hai nghĩa, đoạn liên hệ Adam viết lại theo $\alpha$), 13 nhẹ; không lời giải sai (08.6(c) $9{,}9154\cdot10^{-4}\approx9{,}92\cdot10^{-4}$); $\alpha\in(0,1]$ ở 08.8 khớp (2.5) của sách. Điều phối viên chấp nhận mọi phát hiện; biên tập viên sửa; kiểm lại: đạt, không phát hiện mới.
+
+**Mục tiêu chỉ có bài trong ghi chú:** MT6 toàn bộ; một phần MT1–MT5 (cắt ngắn, bộ nhớ phát lại, hai bộ đếm, RMSprop/Adam theo tọa độ, Δy). **Ngoài phạm vi:** deck trang `L08-K5` (dòng 626–637) và `storyboard.md` còn số cũ 08.6–08.19.
+
+### Bảng số hiệu cũ → mới
+
+| cũ | mới | nơi | xử lý |
+|---|---|---|---|
+| 08.1 | 08.1 | ghi chú | giữ |
+| 08.2 | 08.2 | ghi chú | giữ |
+| 08.3 | 08.3 | ghi chú | giữ |
+| 08.4 | 08.4 | ghi chú | giữ |
+| 08.5 | 08.5 | ghi chú | giữ (khối vẫn đứng trước 08.2 theo thứ tự hiện có) |
+| 08.6 (exercises.md) | — | | bỏ (tự dựng) |
+| 08.7 (exercises.md) | — | | bỏ (tự dựng) |
+| 08.8 (exercises.md) | — | | bỏ (tự dựng) |
+| 08.9 (exercises.md) | — | | bỏ (tự dựng) |
+| 08.10 (exercises.md) | 08.6 | ghi chú, Bài tập củng cố, mức tính toán hoặc chứng minh, sau 08.5 | chuyển về ghi chú; bỏ dòng "Mức độ", "Nguồn" (có "số liệu sư phạm tự xây dựng"); sửa câu (c) và thêm căn cứ cho dòng thứ hai của (d) |
+| 08.11 (exercises.md) | — | | bỏ (tự dựng) |
+| 08.12 (exercises.md) | 08.7 | ghi chú, ngay sau 08.6 | chuyển về ghi chú; bỏ "Mức độ", "Nguồn"; bỏ câu cuối (c) nhắc lại Ví dụ 08.14 |
+| 08.13–08.19 (exercises.md) | — | | bỏ (tự dựng) |
+| — | 08.8 | exercises.md | mới: Sutton–Barto Bài tập 2.7, §2.6, tr. 35 |
+| — | 08.9 | exercises.md | mới: Sutton–Barto Bài tập 11.1, §11.1, tr. 259, rút gọn: bỏ phần lợi tức của bài toán liên tục (ghi chú Bài 08 không có phần thưởng trung bình) |
+
+Thứ tự đọc của các khối bài tập trong ghi chú: 08.1, 08.5, 08.6, 08.7 (mức tính toán hoặc chứng minh), 08.2, 08.3, 08.4 (mức vận dụng). Không đánh lại 08.1–08.5 theo quyết định của điều phối viên.
+
+Lưu ý cho số hiệu trùng: số 08.8 và 08.9 mới khác hoàn toàn nội dung với 08.8, 08.9 cũ.
+
+### Dẫn chiếu đã cập nhật trong phạm vi
+
+- `lecture-note.md`, mục "Bài tập về nhà và tài liệu đọc": đoạn liệt kê (08.1–08.7 trong ghi chú; 08.8, 08.9 trong tệp bài tập, có liên kết) và bảng `Phần | Bài tập`.
+- `exercises.md`: viết lại toàn bộ; bảng `Mạch | Mở phần | Bài tập` dùng số mới.
+
+### Dẫn chiếu ngoài phạm vi còn dùng số cũ (không sửa, để ghi nhật ký)
+
+- `2627-1/lecture-08-deep-q-learning.html`:
+  - dòng 626–630, bảng `Mạch | Bài tập` của trang "Bài tập về nhà và tài liệu đọc": "08.6, 08.7, 08.9"; "08.8, 08.10, 08.16"; "08.9, 08.11, 08.12, 08.15, 08.16, 08.17; ghi chú: 08.1, 08.2"; "08.8, 08.13, 08.19; ghi chú: 08.5 (a)"; "08.8, 08.14, 08.17, 08.18, 08.19; ghi chú: 08.3, 08.5 (b)". Theo số mới: phần 2 "ghi chú: 08.1, 08.4"; phần 3 "08.9; ghi chú: 08.6"; phần 4 "ghi chú: 08.1, 08.2, 08.7"; phần 5 "08.8; ghi chú: 08.5 (a)"; phần 6 "ghi chú: 08.3, 08.5 (b)".
+  - dòng 637, ghi chú diễn giả: "Tệp bài tập gồm mười bốn bài 08.6–08.19 ở ba mức: nhận biết (08.6–08.8), tính toán hoặc chứng minh (08.9–08.14), vận dụng … (08.15–08.19)".
+  - Trang bài tập 08.1–08.4 trên deck (`#/4/5–6`, `#/4/13–14`, `#/6/6–7`, `#/7/6–7`) không đổi số.
+- `2627-1/planning/lec-08/storyboard.md` (08.6 ba lần) và `2627-1/planning/lec-08/review-log.md` (08.6 hai lần): số cũ.
+- Notebook `thuc-hanh-dqn-cartpole-lunarlander-flappybird.ipynb`: chỉ dẫn 08.1, 08.3; không đổi.
+- Ghi chú và tệp bài tập của các bài khác: không có dẫn chiếu tới `Bài tập 08.k`.
+
+### Ghi nhật ký khác
+
+- Bài tập 08.8: đề sách ghi $\alpha>0$; tệp giới hạn $\alpha\in(0,1]$ như (2.5), để $\bar o_n>0$ và các trọng số dương. Lời giải có đoạn liên hệ với hiệu chỉnh lệch của Adam ($\alpha=1-\beta_1$, $\bar o_n=1-\beta_1^n$, $Q_{n+1}=\hat m_n$); đây là diễn giải trong lời giải, không phải câu hỏi phụ.
+- Bài tập 08.9: ký hiệu chính sách hành vi đổi từ $b$ (sách) thành $\mu$ để tránh trùng cỡ mini-batch $b$ của ghi chú.
+- Mục tiêu không có bài sách (dựa vào bài trong ghi chú): MT1 (cắt ngắn, phép chọn theo hành động: 08.2, 08.4), MT2 phần bộ nhớ phát lại (08.6), MT3 phần hai bộ đếm (08.4 (d), 08.7), MT4 phần tính bước RMSprop/Adam theo tọa độ (chỉ có 08.5 (a) cho SGD và 08.8 cho cơ chế vô hướng), MT5 phần $\Delta y$ và phạm vi bảo đảm (08.3, 08.5 (b)), MT6 (08.4, 08.1).
+- Tệp bài tập chỉ có mức tính toán hoặc chứng minh; mức nhận biết là Câu hỏi tự kiểm tra, mức vận dụng là 08.2–08.4 của ghi chú (nêu trong đoạn mở của tệp).
+- Kiểm tra trình duyệt (viewer, cổng 8799, 1600×900 và 390×844): ghi chú và tệp bài tập không có lỗi console, yêu cầu hỏng hay `.katex-error`; mọi khối `:::` được nhận; không tràn ngang trang. Ở 390 px, mọi công thức hiển thị của tệp bài tập và của 08.6, 08.7 vừa khung; còn 21 công thức hiển thị cũ trong thân ghi chú tràn khung và cuộn ngang trong khối (có từ trước, ngoài lượt nhẹ).
+
+### Sửa theo báo cáo kiểm tra `check/rl-08.md` (2026-11-12)
+
+- Áp 14 phát hiện (1 trung bình, 13 nhẹ). Đoạn liên hệ Adam của 08.8 chỉ dùng $\alpha$; $\beta_1$ chỉ còn nghĩa bước học (2.8). Bảng mạch 4 của tệp bài tập thêm 08.4 cho khớp ghi chú.
+- Đề 08.6 (d): ngắt trước "$+2\sum$" như đề xuất, bỏ `\quad` ở dòng hai vì trong mục danh sách (rộng 231 px) dòng đó tràn 14 px.
+- Diễn giải Ví dụ 08.1: đưa $79\%$ vào dòng Tính; Diễn giải nêu "ít nhất $7\,281\cdot4=29\,124$ trong $36\,864$ ô giá trị hành động chưa có mẫu".
+- `overflow.py 8812`: exercises.md 0/21; lecture-note.md 21/34, đều là công thức có từ trước; 08.6, 08.7 và các câu đã đổi: 0.
+- Ngoài phạm vi: deck L630–637, storyboard L90, L209 vẫn dùng số cũ; mục tiêu 4 không có bài tính một bước RMSprop/Adam theo tọa độ.
+
+**Số liệu:** ghi chú 32511 âm tiết (`wc -w`); `git diff --check` sạch; mỗi `exercise` có đúng một `hint` và một `solution`.
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8812, 1600×900 và 390×844, mở mọi khối khi đo: 0 `.katex-error`, 0 `:::` sót, 0 lỗi console (trừ CSP của reloadserver), 0 request lỗi, không tràn ngang trang. Tệp bài tập: 0/21 công thức tràn khung ở 390 px. Ghi chú: 21 công thức có sẵn từ trước tràn khung (ngoài lượt nhẹ).
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-08): rà theo quy tắc 2026-11-09, làm lại bài tập từ Sutton–Barto`.
