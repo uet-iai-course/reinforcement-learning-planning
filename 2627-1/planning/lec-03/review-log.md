@@ -2255,3 +2255,66 @@ Yêu cầu của người dùng: "Duyệt xem còn câu rào đón nào không t
 **Kiểm tra trình duyệt (điều phối viên):** cổng 8783, 1600×900, 390×844 và chế độ in: 0 `.katex-error`, 0 `:::` sót, 0 request lỗi hoặc ra ngoài, không tràn ngang trang; lỗi CSP script nội tuyến đến từ máy chủ xem trước.
 
 Quyết định của điều phối viên: **chấp nhận**; commit chung `fix(materials): …`.
+
+
+## Rà nhẹ theo quy tắc 2026-11-09 và làm lại tệp bài tập từ giáo trình (2026-11-12)
+
+Yêu cầu của người dùng: "rà math-4-AI 10–14 và rl-plan 01–10: chỉ cần một lượt nhẹ, gồm rà theo quy tắc 09/11 và làm lại exercises.md từ giáo trình", rồi "chỉ làm lecture note và exercise" (không sửa deck).
+
+**Tác tử** (lấy từ lời gọi công cụ): mọi vai là `Agent`, `subagent_type: general-purpose`, `model: opus` (Claude Opus 5.5), `effort: high`.
+- Người rà chỉ đọc (`no-ai-slop` Detect), sau đó cũng tác tử đó làm biên tập viên (`no-ai-slop` Edit), tiếp tục bằng `SendMessage` để giữ ngữ cảnh.
+- Người kiểm tra độc lập chỉ đọc (tác tử mới): đối chiếu đề với PDF, giải lại mọi bài trước khi đọc lời giải, rà các hunk đã đổi của ghi chú; sau đó kiểm lại phần đã sửa.
+
+**Rà ghi chú:** 21 phát hiện (0 chặn bàn giao, 0 nghiêm trọng, 6 trung bình, 15 nhẹ): dẫn chiếu bài tập ở mục tiêu và L13; đoạn nhồi ý L1267; L1484 nói lại định lý bằng lời; câu nguồn gốc số liệu L1670; tài liệu tham khảo trỏ tới bài sẽ bỏ; câu chỉ đường về Bài 02, tham chiếu tiến, "có thể sai". Điều phối viên chấp nhận: cả 21. Danh sách bài sách đề xuất được thu hẹp theo phân bổ chung: SB 3.4–3.11, 3.15, 3.16 thuộc Bài 02; SB 3.22, 4.1, 4.2 thuộc Bài 04 vì $v_*$, $q_*$ được định nghĩa ở Bài 04. Bài tùy chọn SB 3.1 bị bác.
+
+**Nguồn bài tập:** Sutton và Barto (2018), ấn bản 2 (PDF, SHA-256 2dd0d71d…), đề đối chiếu với trang PDF 58–62. Năm bài 03.15–03.19 (SB 3.12, 3.13, 3.18+3.19, 3.17, 3.14). SB 3.17–3.19 gần Mệnh đề 03.22–03.24: được giữ, đề yêu cầu tự suy ra và lời giải dẫn số hiệu ở bước trùng. Mọi bài cũ 03.15–03.25 bị bỏ; 03.1–03.8 rút khỏi tệp (vẫn ở ghi chú).
+
+**Kiểm tra độc lập:** 0 chặn bàn giao, 0 nghiêm trọng, 2 trung bình (03.17(b) lập luận ngoài quá trình đề cho; 03.19(a) trùng phép tính 0,675 ở Kiểm tra lại của Bài tập 03.14), 8 nhẹ; không lời giải sai; 25 số của Hình 3.2 đúng. Kiểm tra lại của 03.14 đổi sang $r_\pi=-1/4$. Điều phối viên chấp nhận mọi phát hiện; biên tập viên sửa; kiểm lại: đạt, không phát hiện mới. Sau đó ngắt 8 công thức tràn khung của tệp bài tập theo quy tắc D3.
+
+### Cũ → mới
+
+| Cũ | Vị trí cũ | Mới | Ghi chú |
+|---|---|---|---|
+| 03.1–03.14 | ghi chú | 03.1–03.14 | không đổi số, không đổi đề |
+| 03.1–03.8 (bản chép) | `exercises.md` | bỏ | chỉ còn trong ghi chú |
+| 03.15 (SB 3.4 trên số liệu robot) | `exercises.md` | bỏ | SB 3.4 thuộc Bài 02 |
+| 03.16 (Bài tập tuần 3, bài 1) | `exercises.md` | bỏ | bài của học phần |
+| 03.17 (tự dựng, hai số 21/8) | `exercises.md` | bỏ | tự dựng |
+| 03.18 (SB 3.8–3.9 trên dãy robot) | `exercises.md` | bỏ | SB 3.8–3.9 thuộc Bài 02 |
+| 03.19 (SB 3.17 áp vào robot) | `exercises.md` | bỏ | thay bằng 03.18 mới (SB 3.17, dữ kiện gốc) |
+| 03.20 (Bài tập tuần 2, bài 3) | `exercises.md` | bỏ | bài của học phần |
+| 03.21 (Bài tập tuần 2, bài 4) | `exercises.md` | bỏ | bài của học phần |
+| 03.22 (tự dựng, CartPole) | `exercises.md` | bỏ | tự dựng |
+| 03.23 (tự dựng, γ = 1) | `exercises.md` | bỏ | tự dựng |
+| 03.24 (Bài tập tuần 2, bài 10) | `exercises.md` | bỏ | bài của học phần |
+| 03.25 (tự dựng, tham số ρ) | `exercises.md` | bỏ | tự dựng |
+| — | — | 03.15 | SB Bài tập 3.12, §3.5, tr. 58 (nhận biết) |
+| — | — | 03.16 | SB Bài tập 3.13, §3.5, tr. 58 (nhận biết) |
+| — | — | 03.17 | SB Bài tập 3.18 + 3.19, §3.5, tr. 62 (chứng minh) |
+| — | — | 03.18 | SB Bài tập 3.17, §3.5, tr. 61 (chứng minh) |
+| — | — | 03.19 | SB Bài tập 3.14, §3.5, tr. 60, dữ kiện Ví dụ 3.5 và Hình 3.2 (vận dụng) |
+
+Không bài nào chuyển về ghi chú. Các số 03.15–03.19 giờ mang đề khác; mọi dẫn chiếu cũ tới 03.15–03.25 phải viết lại theo nội dung, không thay số.
+
+### Dẫn chiếu đã cập nhật trong phạm vi
+
+- `lecture-note.md` L7–L11 (mục tiêu), L13 (câu liên kết tệp bài tập), mục Tài liệu tham khảo (Bài tập tuần 2: chỉ còn bài 4, 7, 8 và nguồn của 03.7; bỏ dòng Bài tập tuần 3; dòng Sutton–Barto thêm nguồn của 03.15–03.19).
+- `exercises.md`: viết lại toàn bộ.
+
+### Dẫn chiếu ngoài phạm vi còn dùng số cũ (không sửa)
+
+- Deck `2627-1/lecture-03-qua-trinh-quyet-dinh-markov.html`:
+  - L56 (ghi chú diễn giả trang mục tiêu): "Mục tiêu 1 ứng với Bài tập 03.1, 03.2, 03.15, 03.22, 03.24; …; mục tiêu 5 với 03.8, 03.20, 03.21, 03.23, 03.24, 03.25 (03.9, 03.13, 03.14)."
+  - L977–L982: bảng `Mạch | Bài tập` dẫn 03.15–03.25.
+  - L989: "Tệp bài tập có mười chín bài … 03.1–03.8 trùng các trang "Bài tập" … 03.15–03.25 chỉ có trong tệp. Câu (a), (b) của Bài tập 03.24 …"
+  - Các dẫn chiếu 03.1–03.8, 03.13 trên trang bài tập (L179, 191, 277, 297, 375, 387, 507–521, 658, 673, 850, 862, 923, 936, 967) vẫn đúng.
+  - L756 dẫn "Bài tập tuần 2 (2025–2026), bài 4" làm nguồn trang; ghi chú vẫn giữ bài 4 trong tài liệu tham khảo.
+- `planning/lec-03/outline.md` L9–L13: chỉ dẫn 03.1–03.8, vẫn đúng.
+- `planning/lec-03/review-log.md` L1249–L1369: nhắc số cũ theo lịch sử, giữ nguyên.
+- Không có dẫn chiếu `Bài tập 03.k` trong ghi chú, tệp bài tập hay notebook của bài khác.
+
+**Số liệu:** ghi chú 22 900 âm tiết (`wc -w`); `git diff --check` sạch; mỗi `exercise` có đúng một `hint` và một `solution` (ghi chú 14, tệp 5).
+
+**Kiểm tra trình duyệt (điều phối viên):** cổng 8812, 1600×900 và 390×844: 0 `.katex-error`, 0 `:::` sót, 0 lỗi console (trừ CSP của reloadserver), 0 request lỗi, không tràn ngang trang. Tệp bài tập: 0 công thức tràn khung ở 390 px sau khi ngắt. Ghi chú: 46 công thức có sẵn từ trước tràn khung ở 390 px (ngoài lượt nhẹ, quy tắc D3).
+
+Quyết định của điều phối viên: **chấp nhận**; commit `fix(materials-03): rà theo quy tắc 2026-11-09, làm lại bài tập từ Sutton–Barto`.
