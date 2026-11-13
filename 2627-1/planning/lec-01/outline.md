@@ -7,14 +7,15 @@ Bản viết lại trong đợt sửa 2026-10-12 (giai đoạn II, bộ trang ch
 - Đối tượng: sinh viên đại học đã học xác suất cơ bản và học máy nhập môn.
 - Thời lượng: 150 phút, trong đó deck 120 phút; 30 phút còn lại chữa bài tập (không có bài thực hành, không có code demo vì nguồn không có mã).
 - Phạm vi: lượt hữu hạn, không chiết khấu ($\gamma=1$), không giả thiết Markov; lịch sử $H_t$ ghi trên quan sát (quyết định chung §2). Bài 02 bổ sung tính Markov và hệ số chiết khấu.
-- Mục tiêu học tập (trang P01), mỗi mục tiêu một sản phẩm kiểm tra được:
-  1. Mô tả bài toán bằng tác tử, môi trường, trạng thái, quan sát, hành động, phần thưởng: Bài tập 01.1 (A05–A06); trong tệp bài tập còn 01.13, 01.15, 01.16.
-  2. Phân biệt phần thưởng với nhãn; nhận diện bài toán Học tăng cường: Bài tập 01.2 (C05–C06); trong tệp bài tập còn 01.15.
-  3. Tính lợi tức $G_t$ của lượt hữu hạn, kể cả tính ngược: Bài tập 01.3, 01.4, 01.10 (D04–D05); trong tệp bài tập còn 01.13, 01.14.
-  4. Phân biệt chính sách, hàm giá trị, mô hình; tính $v_\pi$ từ định nghĩa: Bài tập 01.5, 01.9, 01.11 (E03–E04); trong tệp bài tập còn 01.12, 01.13, 01.15, 01.16.
-  5. Nhận diện thăm dò và khai thác khi ước lượng còn ít mẫu: Bài tập 01.6 (F03–F04); trong tệp bài tập còn 01.15.
-  6. Mô hình hóa Tic-tac-toe; tính nước khai thác một bước: Bài tập 01.7, 01.8 (G04–G05). Bài tổng hợp Z02–Z02b (Bài tập 01.13 của tệp bài tập) xếp dưới mục tiêu 1, 3 và 4, theo dòng "Mức độ" của bài trong `exercises.md`.
-- Trang Z00 lấy bảng mạch–bài tập từ `materials/lec-01/exercises.md` (bảng `Mạch | Mở phần | Bài tập`): mạch 2: 01.1; mạch 3: 01.2, 01.15; mạch 4: 01.3, 01.4, 01.14; mạch 5: 01.5, 01.6, 01.12, 01.15; mạch 6: 01.7, 01.8; mạch 7: 01.13, 01.16; 01.9–01.11 chỉ trong ghi chú (mạch 4: 01.10; mạch 5: 01.9, 01.11).
+- Mục tiêu học tập (trang P01), mỗi mục tiêu một sản phẩm kiểm tra được; bài tập theo danh sách ở phần mục tiêu của ghi chú bài giảng (đồng bộ 2026-11-13 với `exercises.md` làm lại ngày 2026-11-12):
+  1. Mô tả bài toán bằng tác tử, môi trường, trạng thái, quan sát, hành động, phần thưởng: ghi chú 01.1 (A05–A06), 01.11; tệp bài tập 01.14.
+  2. Phân biệt phần thưởng với nhãn; nhận diện bài toán Học tăng cường: ghi chú 01.2 (C05–C06).
+  3. Tính lợi tức $G_t$ của lượt hữu hạn, kể cả tính ngược: ghi chú 01.3 (D04–D05), 01.4, 01.10.
+  4. Phân biệt chính sách, hàm giá trị, mô hình; tính $v_\pi$ từ định nghĩa: ghi chú 01.5 (E03–E04), 01.9, 01.11; tệp bài tập 01.15.
+  5. Nhận diện thăm dò và khai thác khi ước lượng còn ít mẫu: ghi chú 01.6 (F03–F04); tệp bài tập 01.12, 01.13, 01.16.
+  6. Mô hình hóa Tic-tac-toe; tính nước khai thác một bước: ghi chú 01.7 (G04–G05), 01.8; tệp bài tập 01.14, 01.15, 01.16.
+- Bài tổng hợp Z02–Z02b là bài riêng của deck, không có bản trong `exercises.md`; nó thay Tình huống 01.1 của ghi chú (rút về $L=3$ từ ô 2) và phục vụ mục tiêu 1, 3, 4.
+- Trang Z00 chép bảng `Mạch | Mở phần | Bài tập` của `materials/lec-01/exercises.md`, hai hàng. Tệp bài tập (01.12–01.16, Sutton và Barto 2018, Bài tập 2.1, 2.2, 1.1–1.3): mạch 2: 01.14; mạch 5: 01.12, 01.13, 01.16; mạch 6: 01.14, 01.15, 01.16; mạch 3, 4, 7: —. Ghi chú bài giảng (01.1–01.11): mạch 2: 01.1; mạch 3: 01.2; mạch 4: 01.3, 01.4, 01.10; mạch 5: 01.5, 01.6, 01.9, 01.11; mạch 6: 01.7, 01.8; mạch 7: —.
 
 ## Khung lý thuyết chung
 
@@ -54,7 +55,10 @@ Mã `<tiền tố>00` đều đã dùng cho trang nội dung trong bản cũ nê
 | lịch sử | history | A01c |
 | phần thưởng | reward | P01a |
 | lượt | episode | P01a |
-| thời điểm kết thúc | — ($T$) | D01 |
+| thời điểm kết thúc | termination time | D01 |
+| cắt lượt | truncation | ghi chú D01 |
+| phản hồi trễ | delayed reward | C04b |
+| luật của môi trường | environment dynamics | ghi chú P01a |
 | quỹ đạo | trajectory | D01 |
 | lợi tức | return | P01a |
 | giả thuyết phần thưởng | reward hypothesis | D03 |
@@ -73,6 +77,8 @@ Mã `<tiền tố>00` đều đã dùng cho trang nội dung trong bản cũ nê
 | lập kế hoạch | planning | E02 |
 | phương pháp có mô hình | model-based | E02 |
 | phương pháp phi mô hình | model-free | E02 |
+| bài toán chọn lặp lại một bước | multi-armed bandit | F00 |
+| trung bình mẫu | sample mean | F00 |
 | hành động tham lam | greedy action | F01 ("tham lam (greedy)") |
 | khai thác | exploitation | F01 |
 | thăm dò | exploration | F01 |
@@ -115,7 +121,7 @@ Tên hành động và quan sát (phải, trái, hút, sạch, bẩn) viết b�
 | 7–8 | Giới hạn mô hình cố định | A04 | giữ ba vấn đề, có số $3^5$, $3^{50}$ |
 | 9 | Đặc điểm Học tăng cường | C00 (ghi chú), C04b | sửa |
 | 10–13 | AlphaGo, thao tác robot | B01 | gộp B00–B02 cũ; dữ kiện chi tiết ở Bài tập 01.9, 01.11 |
-| 14–15 | AGI, tác tử nền tảng | — | bỏ khỏi deck; thành Bài tập 01.16 [Tìm hiểu] |
+| 14–15 | AGI, tác tử nền tảng | — | bỏ khỏi deck; nằm ở mục "Đọc thêm: tác tử nhiều nhiệm vụ và mô hình thế giới" của ghi chú |
 | 16, 18 | Tiêu đề phần, lĩnh vực liên quan | CT | bỏ `rl-fields.svg` (ghi chú đã bỏ) |
 | 17 | Hai đặc trưng: thử và sai, phản hồi trễ | C04b | thêm dòng "Hai đặc trưng" (rà soát RL) |
 | 19 | Ba dạng học | C00 (hình), C03, C04b | tách định nghĩa |
@@ -128,7 +134,7 @@ Tên hành động và quan sát (phải, trái, hút, sạch, bẩn) viết b�
 | 29–30 | Tic-tac-toe bằng Học tăng cường | G02–G03d, G03e | sửa tập hành động, chỉ số bước, giá trị sau nước thắng; Hình 1.1 (tr. 30) vẽ lại ở G03e |
 | 31–37 | Thông tin học phần | — | bỏ (thông tin tổ chức chưa xác minh; quyết định chung §8) |
 | 38–42 | Trắc nghiệm | H04 | thành "Câu hỏi tự kiểm tra" |
-| 43–44 | Thảo luận | — | Bài tập 01.16 [Tìm hiểu] |
+| 43–44 | Thảo luận | — | mục "Đọc thêm" của ghi chú |
 | 45 | Cảm ơn | Z00 | thay bằng bài tập về nhà và tài liệu đọc |
 
 ## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)
@@ -161,7 +167,7 @@ Ngày 2026-11-04, người dùng quyết định bỏ mục "Bản đồ chủ �
 | `lec-01-topic-05` | Thăm dò và khai thác | §4.4 | F00–F04 (F02 nối sang G03e) |
 | `lec-01-topic-06` | Tic-tac-toe như một bài toán Học tăng cường | §5.1, 5.3–5.4 | GT, G00–G01, G02, G02b, G03–G05, G03e |
 | `lec-01-topic-07` | Lịch sử và thế cờ trong Tic-tac-toe | §5.2 | G02c |
-| `lec-01-topic-11` | Đọc thêm: tác tử nhiều nhiệm vụ và mô hình thế giới | Hướng dẫn đọc thêm | — (Bài tập 01.16) |
+| `lec-01-topic-11` | Đọc thêm: tác tử nhiều nhiệm vụ và mô hình thế giới | Hướng dẫn đọc thêm | — |
 
 ## Số hiệu kết quả dùng trên deck (theo ghi chú `e860f53`)
 

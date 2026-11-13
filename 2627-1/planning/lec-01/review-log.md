@@ -1951,3 +1951,85 @@ Quyết định của điều phối viên: **chấp nhận**; commit `fix(mater
 **Đã kiểm, không lỗi (theo báo cáo, điều phối viên kiểm mẫu).** Cấu hình RevealJS, plugin cục bộ, footer, thứ tự CSS; 70 `data-slide-id` duy nhất, khớp storyboard. Mở đầu P00 → P01a → P01 → P02 → P03 đúng. Trang tiêu đề mạch AT, CT, DT, ET, GT, ZT: markup và `id` đúng, dòng dẫn 20 âm tiết "Muốn …, phải …", 4–5 từ khóa, ghi chú diễn giả 75–89. Mạch kết luận đủ thành phần. Mọi trang ≤ 60 âm tiết; P01 (77) và P02 (7 dòng) có ngoại lệ. Dẫn chiếu khác đúng khối (Ví dụ 01.1–01.10; Định nghĩa 01.1–01.21; Nhận xét 01.3, 01.4, 01.6, 01.10, 01.19, 01.22; Mệnh đề 01.9, 01.20; Bài tập 01.1–01.9). Bài trên lớp A06, C06, D05, E04, F04, G05 cho cùng kết quả với Bài tập 01.1, 01.2, 01.3, 01.5, 01.6, 01.7. Tính lại: $G_0=1$ với $T=5$; $G_0=0{,}7=3(-0{,}1)+1$; $3^5=243$; $(\tfrac12)^4=\tfrac1{16}$; $12/20=0{,}60$, $1{,}1/2=0{,}55$, khoảng $[\tfrac{11}{30},\tfrac7{10}]$ và $[\tfrac{12}{21},\tfrac{13}{21}]$; Tic-tac-toe $v_{\pi_u}(s)=\tfrac14(\tfrac13+0+\tfrac23+1)=\tfrac12$, $\Pr(\text{X thắng})=\tfrac23$, $\Pr(\text{O thắng})=\tfrac16$; Z02b $(\tfrac13)^3=\tfrac1{27}$; Tình huống 01.1 $w(1,4)=\tfrac1{81}$. Ảnh chụp P03, E01b, G03 (rộng, hẹp), G03b, Z01b, Z00 (rộng, hẹp): không tràn.
 
 **Quyết định của điều phối viên:** **chấp nhận** báo cáo làm danh sách việc cần sửa, sau khi kiểm lại trên tệp gốc các phát hiện ghi ở mục "Điều phối viên kiểm lại". Mọi phát hiện ở trạng thái **mở**; các dòng "Đề nghị sửa ghi chú" chờ người dùng quyết định, không phải lỗi deck.
+
+## Sửa deck theo bảng phát hiện 2026-11-13
+
+**Vai trò.** Người sửa (editor) Bài 01, theo lời giao chung `editor-brief.md` và quyết định G1–G11, D01 của điều phối viên (`edit-decisions-2026-11-13.md`). Loại tác tử, mô hình và effort do điều phối viên ghi theo lời gọi công cụ. `no-ai-slop` chế độ Edit. Không commit.
+
+**Phạm vi ghi.** `2627-1/lecture-01-gioi-thieu-hoc-tang-cuong.html`; `planning/lec-01/{storyboard.md, outline.md, review-log.md}`. Không sửa SVG, CSS, `materials/`, `index.html`. Không thêm `<style>`, `style=""` hay `.dense`.
+
+**Kết quả.** 70 trang trước và sau; không thêm, bỏ, tách hay gộp trang; không đổi `id`, `data-slide-id`, số mạch hay thứ tự trang (các liên kết `#/N/1` của `exercises.md` vẫn đúng). 40 trang đổi mặt trang hoặc ghi chú diễn giả. `deck_check.py` (2026-11-13, toàn deck): 0 lỗi console, 0 lỗi trang, 0 request lỗi, 0 `.katex-error`, 0 tràn khung ở 1600×900 và 390×844. Mọi trang ≤ 60 âm tiết trừ P01 (77, trang mục tiêu, trần 80); P03 60, C04b 59. Ghi chú diễn giả 41–150 âm tiết (E01b 153 → 144, G03e 156 → 142, G03d 149). Z00 còn 36 âm tiết nên bỏ ngoại lệ mật độ cũ của Z00 trong storyboard.
+
+**Xuất xứ số liệu (ghi một lần, chuyển khỏi ghi chú diễn giả).** Robot dọn dãy bốn ô và mọi số của nó là ví dụ học phần tự dựng, thu nhỏ từ robot dọn nhà của bài giảng gốc (tr. 4–8). Bảng hai chế độ hút (A: 20 lần, tổng 12,00; B: 0,50 và 0,60) là số liệu tự dựng. Thế cờ $s$ (X ở 1, 5; O ở 2, 4, 8) và thế cờ $s'$ suy ra từ nó là số liệu tự dựng, vì hình ở tr. 28–29 của bài giảng gốc (như hình của Sutton và Barto §1.5) là một ván đã kết thúc, X thắng theo 1–5–9. Bài giảng gốc (tr. 29–30) ghi hành động là một số từ 1 đến 9 và tập phần thưởng có giá trị 9; Định nghĩa 01.18 của ghi chú thu hẹp hành động về các ô trống và dùng phần thưởng $+1$, $0$, $-1$ theo góc nhìn của X.
+
+**Tính lại và đối chiếu.** Không có số mới; các số đổi chỗ hoặc dẫn lại đã kiểm: bảng Z00 khớp từng ô với bảng mạch của `exercises.md` (ex:5–13); nguồn 01.12–01.16 là Sutton và Barto, Bài tập 2.1 (§2.2), 2.2 (§2.3), 1.1, 1.2, 1.3 (§1.5) theo ex:47, 77, 120, 149, 192, nên "Tài liệu đọc:" thêm §2.1–2.3; ánh xạ mục tiêu → bài tập ở P01 khớp note:9–14; H04 câu 2 sau khi rút gọn: từ ô 1, trái (đứng yên), phải ba lần, hút: $T=5\le L$, $G_0=0+0+0+0+1=1$; E00b: trước nước đi, cột 3–6–9 có X ở ô 3, thiếu ô 6 và ô 9, như note:620; quy ước $\Pr_\pi(H_t=h)=0$ ở E01b chép theo Định nghĩa 01.12 (note:630–634); G03b theo note:1016 (bỏ một điều kiện của Nhận xét 01.19 thì phần (c) không xác định; ví dụ hai giá trị $\frac12$, $\frac34$ của G02c).
+
+**`no-ai-slop` (Edit).** Phạm vi: mọi dòng mặt trang và mọi ghi chú diễn giả đã sửa. Đã bỏ: đối lập nhị phân ("không phải định lý", "không đánh giá việc chơi tốt nhất"), dòng kết rời ("cùng thế cờ, hai chính sách, hai giá trị"), câu mở mơ hồ ("Dữ kiện không đủ để nói cách nào đúng"), nhận xét bên lề, câu lặp mặt trang, câu tự nói xuất xứ và chỉ dẫn điều hướng. Tự kiểm theo `eval.md`: đạt; không thêm khẳng định, số hay nguồn ngoài ghi chú bài giảng và nguồn đã dẫn.
+
+| phát hiện | xử lý | trang | ghi chú |
+|---|---|---|---|
+| nghiêm trọng · bảng `Mạch \| Bài tập` lệch `exercises.md` | đã sửa | Z00 | Hai hàng "Tệp bài tập" (mạch 2: 01.14; 5: 01.12, 01.13, 01.16; 6: 01.14, 01.15, 01.16; 3, 4, 7: —) và "Ghi chú bài giảng" (2: 01.1; 3: 01.2; 4: 01.3, 01.4, 01.10; 5: 01.5, 01.6, 01.9, 01.11; 6: 01.7, 01.8; 7: —) |
+| nghiêm trọng · ghi chú diễn giả Z00 mô tả sai quan hệ ghi chú–tệp bài tập | đã sửa | Z00 | "Bài tập 01.1–01.11 nằm trong ghi chú bài giảng; 01.12–01.16 nằm trong tệp bài tập, lấy từ Sutton và Barto (2018), Bài tập 2.1, 2.2, 1.1–1.3"; bỏ ba câu mô tả cũ; tài liệu đọc thêm §2.1–2.3 |
+| trung bình · ánh xạ mục tiêu → bài tập ở P01 lệch ghi chú | đã sửa | P01 | Danh sáu mục tiêu chép note:9–14, mỗi mục tách bài của ghi chú (trước dấu chấm phẩy) và của tệp bài tập (sau) |
+| trung bình · câu xuất xứ, đính chính nguồn | đã sửa | A00, F00, G00, G02 | Xóa bốn câu; G02 giữ "Định nghĩa dùng phần thưởng $+1$, $0$, $-1$ theo góc nhìn của X; hành động chỉ là các ô trống"; xuất xứ ghi ở mục này |
+| trung bình · F02 dẫn Nhận xét 01.17 sai nội dung | đã sửa | F02 | Bỏ số hiệu khỏi câu chuyển định nghĩa; gắn "(Nhận xét 01.17)" vào câu "thử A thêm một lần không đổi được quyết định, thử B thì có thể" (ý 1 của 01.17) |
+| trung bình · thiếu tên "bài toán chọn lặp lại một bước (multi-armed bandit)" | đã sửa | F00 | Dòng 2 "Bài toán chọn lặp lại một bước (multi-armed bandit): hai chế độ hút."; "phần thưởng là tỉ lệ bụi hút sạch" ghép với dòng dữ kiện B để giữ ≤ 20 âm tiết/dòng; ghi chú diễn giả F00 dùng cùng tên. F00b không có tên bài toán trên mặt trang nên không đổi |
+| trung bình · $\mathcal A(h)$ không có trong ghi chú | đã sửa | G03d | "Dạng khác: trên lịch sử, không cần ba điều kiện: thay $s$, $S_{t+1}$ bằng $h$, $H_{t+1}$."; ghi chú diễn giả: ở dạng lịch sử $a$ chạy trên $\mathcal A(S_t)$, tập tác tử biết khi quan sát đầy đủ hoặc khi tập không đổi (theo ghi chú diễn giả A01c và note:43) |
+| trung bình · dòng "Ký hiệu:" của P01a thiếu miền, $L$, $\mathbb E_\pi$ | đã sửa | P01a | Thêm $S_t\in\mathcal S$, $O_t\in\mathcal O$, $A_t\in\mathcal A(S_t)$; "$L$ là số hành động tối đa"; "$\mathbb E_\pi$: tác tử theo chính sách (policy) $\pi$, môi trường theo luật của nó"; "lịch sử (history)"; "Lợi tức (return) không chiết khấu". "Nhắc lại:" chỉ giữ kỳ vọng toàn phần (công thức đã chứa kỳ vọng có điều kiện). "Quan sát có thể thiếu thông tin" chuyển vào ghi chú diễn giả. 6 dòng, 53 âm tiết; dòng lịch sử đặt riêng để công thức $H_t$ không xuống dòng ở 1600×900 |
+| trung bình · kế hoạch còn bộ bài tập cũ | đã sửa | (kế hoạch) Z00, Z02 | `outline.md`: mục tiêu → bài tập theo ghi chú, bảng Z00 mới, Z02–Z02b là bài riêng của deck; bỏ ba chỗ "Bài tập 01.16 [Tìm hiểu]" (AGI, thảo luận, ánh xạ chủ đề đọc thêm) vì 01.16 nay là bài Sutton–Barto 1.3. `storyboard.md`: hàng Z00, Z02 |
+| trung bình · đề nghị sửa ghi chú: "cây trò chơi (game tree)" chưa định nghĩa trong ghi chú | không sửa deck | G01 | Deck giữ định nghĩa và số nhánh $1+3\cdot3=10$; ghi vào "Đề nghị sửa ghi chú" của báo cáo và mục "Quyết định thiết kế" của storyboard |
+| nhẹ · cột 3–6–9 thiếu cả ô 6 lẫn ô 9 | đã sửa | E00b | Ghi chú diễn giả: "đường 1–5–9 của X thiếu ô 9, cột 3–6–9 thiếu ô 6 và ô 9" |
+| nhẹ · hệ quả bỏ điều kiện rút gọn nói khác ghi chú | đã sửa | G03b | "… đẳng thức trên lịch sử vẫn đúng, còn dạng trên thế cờ không xác định, vì hai lịch sử cùng thế cờ có thể có hai giá trị" |
+| nhẹ · đề nghị sửa ghi chú: Nhận xét 01.22 chỉ nêu $0\le\gamma<1$ | không sửa deck | G03d | Ghi chú diễn giả giữ "với $\gamma\lt 1$ hoặc khi mọi lượt kết thúc" (Sutton và Barto §4.1–4.2); ghi vào "Đề nghị sửa ghi chú" |
+| nhẹ · E01b thiếu quy ước $\Pr_\pi(H_t=h)=0$; gán dự đoán riêng cho Bài 05 | đã sửa | E01b | Thêm "Khi $\Pr_\pi(H_t=h)=0$, kỳ vọng hiểu là kỳ vọng của diễn biến bắt đầu từ $h$, hành động theo $\pi$"; "bài toán dự đoán (prediction), xét ở Bài 04–05". H04 không đổi (câu 1 viết lại theo phát hiện khác) |
+| nhẹ · chỉ dẫn điều hướng trong ghi chú diễn giả | đã sửa | P01a, A01, A04, B01, C04b, C04c, D03b, E00, E01, F02, G03, G03c | Cắt các câu trỏ chỗ hoặc viết lại thành câu nối có nội dung (P01a: hàm giá trị là kỳ vọng có điều kiện, phân tích một bước dùng kỳ vọng toàn phần; A04: tên ba vấn đề và "(Nhận xét 01.4)"; C04b: "Tổng phần thưởng từ một thời điểm là lợi tức; …"). G03 bỏ câu "mệnh đề … chứng minh … tổng quát", G03c giữ câu dẫn sang G03b. Cùng loại, ngoài danh sách: A01c, A01d, D02b, D03, F01, G00 (mặt trang "Nhắc lại:" bỏ "của phần 5"), G01, G02, G03e. Giữ: ghi chú các trang tiêu đề mạch (nêu đầu ra cho mạch sau theo quy tắc trang tiêu đề mạch), P02, P03, Z03, Z00 (nối sang Bài 02), câu "Bài 03 viết đẳng thức thứ hai thành phương trình Bellman" ở G03b (câu nối có nội dung) |
+| nhẹ · `no-ai-slop` Detect | đã sửa | P03, P01a, D03, E00b, F00b, C03, D00, D05 | P03 khung "… sau chuỗi hành động."; P01a "Lợi tức (return) không chiết khấu."; D03 bỏ dòng "Lưu ý: … không phải định lý", dòng đầu gọi là "giả thuyết mô hình hóa", ghi chú diễn giả "Giả thuyết không có chứng minh"; E00b "Diễn giải: giá trị phụ thuộc cả thế cờ lẫn chính sách." (khác đề xuất: đề xuất lặp hai số của dòng ngay trên); F00b theo note:765; cắt câu ở C03, D00, D05 |
+| nhẹ · một câu tách hai `<p>` | đã sửa | A05, D03 | A05: "(c) Liệt kê mọi trạng thái chưa kết thúc lượt cho cùng quan sát với $S_0$." / "Với mỗi trạng thái đó, nêu số lần phải cần để tới rác." (khác đề xuất cho câu tiếng Việt tự nhiên). D03: "Giả thuyết phần thưởng (reward hypothesis) là giả thuyết mô hình hóa sau." / "Mọi mục tiêu mô tả được bằng …" |
+| nhẹ · nhãn "Viết tắt:" | đã sửa | Z01b | "**Ký hiệu:**" |
+| nhẹ · hai ô "Giả thiết không được bỏ" không phải giả thiết | đã sửa | Z01 | "giá trị viết trên lịch sử khi quan sát khác trạng thái"; "phần thưởng không cho biết hành động đúng" |
+| nhẹ · "Nguồn:", "Tài liệu đọc:" thiếu mục | đã sửa | Z03, Z00 | Z03 "Sutton và Barto §1.1–1.5, 2.1–2.2, 3.1–3.5, 8.1"; Z00 thêm §2.1–2.3 |
+| nhẹ · thiếu tên tiếng Anh ở lần đầu | đã sửa | P01a, C04b, D01, F00 | "lịch sử (history)" và "luật của môi trường (environment dynamics)" ở P01a (lần đầu trên deck, mặt trang và ghi chú diễn giả); "phản hồi trễ (delayed reward)" C04b; "Thời điểm kết thúc (termination time)" D01, "cắt lượt (truncation)" ghi chú D01; "Trung bình mẫu (sample mean)" F00. Bảng thuật ngữ `outline.md` cập nhật |
+| nhẹ · ghi chú diễn giả > 150 âm tiết | đã sửa | E01b, G03e | 153 → 144, 156 → 142 (`deck_check`); G03d giữ ≤ 150 (149) sau khi thêm câu về $\mathcal A(S_t)$ |
+| nhẹ · "giá trị theo quan sát" là khái niệm mới ở H04 | đã sửa | H04 | "Vì sao không ghi được giá trị của robot chỉ theo quan sát sạch, bẩn?"; câu 2 bỏ "ở bước 0" ("trái rồi đi đúng đường") để giữ 55 âm tiết |
+| nhẹ · chữ "O" cạnh $\pi$ dễ đọc thành quan sát | đã sửa | P03, Z01b | P03 "đối thủ và $\pi$ theo thế cờ" (bỏ "O" để giữ trần 60); Z01b "đối thủ O và $\pi$ chỉ phụ thuộc thế cờ" |
+| nhẹ · Tình huống 01.1, 01.2 không có trang riêng | giữ, ghi lý do | Z02, H04 | Storyboard, mục "Quyết định thiết kế": Z02–Z02b thay Tình huống 01.1 (cùng phép tính, $L=3$ từ ô 2), H04 câu 1 thay Tình huống 01.2 |
+| nhẹ · đề nghị sửa ghi chú: Bài tập 01.15 nói $w$ xảy ra được, trái với đề | không sửa deck | (`exercises.md`) | Ngoài phạm vi ghi; ghi vào "Đề nghị sửa ghi chú" của báo cáo |
+
+**Quyết định của điều phối viên:** xem mục "Kiểm lại, kiểm định cuối và duyệt của điều phối viên (2026-11-13)" bên dưới.
+
+### Sửa sau kiểm lại
+
+Điều phối viên kiểm lại, kết luận "đạt", giao mười phát hiện nhẹ. `deck_check` các trang đổi: 0 lỗi console, request, KaTeX, 0 tràn khung; D03 52 âm tiết, tối đa 19 âm tiết/dòng; G00 46; H04 56; Z03 54.
+
+| phát hiện | xử lý | trang |
+|---|---|---|
+| mặt trang còn "(Bài 05)" | đã sửa: bỏ | G03e |
+| ghi chú diễn giả còn chỉ dẫn "Bài 02 thêm hệ số này …", "của Bài 05 và Bài 06" | đã sửa: D02 giữ "Chưa dùng hệ số chiết khấu, tức $\gamma=1$."; E02 "… như các tác tử phi mô hình." | D02, E02 |
+| câu cuối ghi chú diễn giả lặp dòng "Diễn giải:" | đã sửa: "Định nghĩa sau ghi rõ cả hai đối số." | E00b |
+| "… là giả thuyết mô hình hóa sau." để phát biểu treo sang dòng dưới | đã sửa: "… là một giả thuyết mô hình hóa." / "Theo đó, mọi mục tiêu …" (15 và 19 âm tiết) | D03 |
+| "đến phiên X" lặp hai dòng liền | đã sửa: "Nhắc lại: với thế cờ $s$, $\pi_w$ chọn ô 9; $v_{\pi_u}(s)$ chưa tính." | G00 |
+| "Nguồn:" thiếu §17.3 | đã sửa: thêm ", 17.3" | Z03 |
+| ghi chú diễn giả dùng "ba thành phần của tác tử" trước E02 | đã sửa: "Mạng chọn nước là một chính sách, …" | B01 |
+| "quan sát sạch, bẩn?" | đã sửa: "quan sát sạch hoặc bẩn?" | H04 |
+| (tùy chọn) thêm $a\in\mathcal A(S_t)$ vào "Dạng khác:" | không sửa: đã thử, dòng xuống hàng giữa $a\in$ và $\mathcal A(S_t)$ ở 1600×900; ghi chú diễn giả G03d đã nêu $a\in\mathcal A(S_t)$ | G03d |
+| storyboard P01a còn "kỳ vọng có điều kiện" | đã sửa: "Nhắc lại kỳ vọng toàn phần (công thức chứa kỳ vọng có điều kiện), học có giám sát" | (kế hoạch) P01a |
+
+### Kiểm lại, kiểm định cuối và duyệt của điều phối viên (2026-11-13)
+
+**Tác tử (theo lời gọi công cụ).**
+
+| vai trò | loại | mô hình | effort | ghi tệp |
+|---|---|---|---|---|
+| rà soát chỉ đọc (bảng phát hiện) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+| người sửa (deck, kế hoạch; tiếp tục bằng SendMessage cho vòng sửa sau kiểm lại) | `general-purpose` | `opus` (Opus 5.5) | `high` | có |
+| kiểm lại chỉ đọc (vai trò A: độ chính xác toán và Học tăng cường; vai trò B: mạch, quy tắc deck, `no-ai-slop` Detect) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+
+Quyết định chung của đợt: G1–G11, D01–D10 (tệp quyết định của điều phối viên trong thư mục nháp của phiên, chép tóm tắt ở mục sửa phía trên).
+
+**Kiểm lại.** Kết luận "đạt": 26/26 phát hiện xử lý đúng; 10 phát hiện nhẹ mới (điều hướng còn sót ở G03e, D02, E02; câu lặp E00b; D03 tách câu; G00 lặp; Z03 thiếu §17.3; B01 dùng khái niệm trước khi giới thiệu; H04; storyboard P01a). Người sửa xử lý 9/10 ở "Sửa sau kiểm lại"; mục G03d thêm $a\in\mathcal A(S_t)$ không làm vì làm ngắt công thức ở 1600×900, ghi chú diễn giả đã nêu.
+
+**Kiểm định cuối của điều phối viên.** `deck_check` toàn deck: 70 trang, 0 lỗi console, lỗi trang, request lỗi, `.katex-error`, 0 tràn khung; cờ duy nhất P02 (Nội dung, 7 dòng, ngoại lệ có sẵn). 42 trang đổi so với HEAD, 16 đổi mặt trang; điều phối viên tự xem bảng ảnh 1600×900 và 390×844 của 16 trang này: không tràn, không chồng chữ. Bảng Z00 đối chiếu `exercises.md` dòng 7–13. `git diff --check` sạch.
+
+**Đề nghị sửa ghi chú (chờ người dùng quyết định; không sửa `materials/` trong đợt này).** G01: định nghĩa "cây trò chơi (game tree)" trong ghi chú §5.3/§5.4; Nhận xét 01.22: thêm "hoặc khi mọi lượt kết thúc"; `exercises.md` Bài tập 01.15: bỏ câu "$w$ xảy ra được với xác suất dương".
+
+**Quyết định của điều phối viên:** **chấp nhận** deck và các tệp kế hoạch; mọi phát hiện `nghiêm trọng` và `trung bình` của bảng 2026-11-13 và của lượt kiểm lại đã xử lý; phát hiện không sửa có lý do ghi ở bảng xử lý.
