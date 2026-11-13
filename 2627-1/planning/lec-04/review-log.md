@@ -2553,3 +2553,85 @@ Quyết định của điều phối viên: **chấp nhận**; commit `fix(mater
 **Đã kiểm, không lỗi (theo báo cáo, điều phối viên kiểm mẫu).** Cấu hình RevealJS, plugin cục bộ, footer, thứ tự CSS; 78 `data-slide-id` duy nhất. Mở đầu đúng thứ tự, có khung chung A03b. Trang tiêu đề mạch 2–7 đúng markup, dòng dẫn 17–24 âm tiết, ≤ 4 từ khóa. Mạch kết luận đủ thành phần. Mỗi cụm có bài tập với "Lời giải:"; tính tay đứng trước giả mã (B02→B05b, D02→D03, E02→E04, F02→F03). Mọi số hiệu khối 04.1–04.35, Ví dụ 04.1–04.18, Tình huống 04.1–04.2 trỏ đúng; Bài tập 04.1–04.6 trên deck trùng ghi chú, cùng kết quả; liên kết `#/N/1` của `exercises.md` đúng. Tính lại: $v_{aa}=(10,11)$, $v_{ab}=(10,30)$, $v_{ba}=(9{,}4737;10{,}5263)$, $v_{bb}=(27,30)$; lượt quét $V_3=(2{,}71;3{,}71)$, $\Delta(V_2)=0{,}81$; dừng ở $k=44$; tính co $9\le9{,}9$; cải thiện $(\mathrm a,\mathrm a)\to(\mathrm a,\mathrm b)\to(\mathrm b,\mathrm b)$; lặp giá trị $V_2=(2{,}7;5{,}7)$, chặn $27$, $V_{55}=(26{,}9087;29{,}9087)$; dãy năm ô $(4{,}58;6{,}2;8;10;0)$; G04 chặn $170$; CartPole $210\,600$, $1{,}55935$. Ảnh chụp D06 (rộng, hẹp), F06, G04, G05, A03, E05 (rộng, hẹp): không tràn.
 
 **Quyết định của điều phối viên:** **chấp nhận** báo cáo làm danh sách việc cần sửa, sau khi kiểm lại trên tệp gốc các phát hiện ghi ở mục "Điều phối viên kiểm lại". Mọi phát hiện ở trạng thái **mở**; các dòng "Đề nghị sửa ghi chú" chờ người dùng quyết định, không phải lỗi deck.
+
+## Sửa deck theo bảng phát hiện 2026-11-13
+
+**Vai trò.** Người sửa (editor) Bài 04, theo lời giao `editor-brief.md` và quyết định G1–G11, D04 của điều phối viên. Loại tác tử, mô hình và effort do điều phối viên ghi theo lời gọi công cụ. Văn bản sửa theo `no-ai-slop` chế độ Edit và tự kiểm theo `eval.md` (phạm vi: mặt trang và ghi chú diễn giả của các trang ghi trong bảng dưới; kết quả: không còn câu điều hướng "ở phần …", câu tự nói trạng thái, liệt kê phủ định ở C04b, từ giảm nhẹ "thường", "chỉ" đánh giá ở F05b). Không commit.
+
+**Phạm vi ghi.** `2627-1/lecture-04-giai-mdp-bang-quy-hoach-dong.html`; `planning/lec-04/{storyboard.md, outline.md, review-log.md}`. Không sửa SVG (hình `dp04-two-state.svg` chỉ được nhúng thêm ở D06, F06, G04); không sửa `materials/`, CSS, `index.html`.
+
+**Kết quả.** 78 → 77 trang, 7 mạch giữ nguyên, số mạch và `id="mach-N"` không đổi. Bỏ L04-E06c ("Ví dụ: dãy năm ô trơn trượt") theo D04; không thêm, không tách trang. Liên kết `#/N/1` của `exercises.md` vẫn đúng vì số mạch không đổi; deck 04 không có liên kết sâu khác. Thời lượng: bỏ 1,5 phút của E06c, cộng 0,5 phút cho E06b, E08, F05; tổng vẫn 120 phút. Hình `img/lec-04/dp04-stochastic-grid.svg` không còn trang nào dùng (ghi chú bài giảng cũng không nhúng); tệp được giữ, chờ điều phối viên quyết định xóa.
+
+**Xuất xứ số liệu.** Không có số liệu tự dựng mới. Mọi số trên các trang sửa lấy từ ghi chú bài giảng (commit `bca27c1`) và `exercises.md` (bảng mạch, 2026-11-12). Ví dụ đã bỏ (E06c) lấy từ Bài tập tuần 4 (2025–2026), bài 10.
+
+**Tính lại.** C06: cực đại $\max\{10;9{,}9\}=10$ (giữ $\mathrm a$), $\max\{11;12{,}9\}=12{,}9$ (đổi sang $\mathrm b$). E02: $\max\{1{,}9;2{,}7\}=2{,}7$, $\max\{2{,}9;5{,}7\}=5{,}7$, hành động tham lam $(\mathrm b,\mathrm b)$. F05b: $95{,}38-84{,}47=10{,}91\approx10{,}9$; $\theta/(1-\gamma)=10^{-4}/0{,}01=0{,}01$. F05 (ghi chú diễn giả): $1-0{,}435=0{,}565$, $1+0{,}99\cdot0{,}565=1{,}55935$. D05 (ghi chú diễn giả): $\prod_s\lvert\mathcal A(s)\rvert=2^{324}$ với $324$ ô, hai hành động. C04b (ghi chú diễn giả): $v_{(\mathrm a,\mathrm b)}=(10,30)$ giữ $10$ tại $\mathrm s_0$, kém $v_{(\mathrm b,\mathrm b)}=(27,30)$. G05: bảng chép từng ô của bảng mạch `exercises.md` dòng 7–13.
+
+**Kiểm tra.** `deck_check.py` (máy chủ `http://127.0.0.1:8799/`): 77 trang, 0 lỗi console, 0 lỗi trang, 0 request lỗi, 0 `.katex-error`, 0 cờ OVERFLOW (các cờ cũ ở D06, F06, G04 hết vì dãy mũi tên được thay bằng hình). Cờ mật độ còn lại đều có ngoại lệ trong storyboard: A01 68 (bìa), A02b 7 dòng, A03 73, D05 65, G02b 67, G06 70. A02 79 âm tiết (trần 80), G01 67, G01b 70, G05 30. Ghi chú diễn giả các trang sửa 72–150 âm tiết; trang tiêu đề mạch E00 98, G00 92. Đã xem ảnh 1600×900 và 390×844 của 39 trang sửa. `git diff --check` sạch.
+
+| phát hiện | xử lý | trang | ghi chú |
+|---|---|---|---|
+| nghiêm trọng, G05, bảng theo số bài tập cũ | đã sửa | L04-G05 | Bảng chép bảng mạch `exercises.md`: hàng "Tệp bài tập" và hàng "Ghi chú", cột là số mạch 1–7. Bảng dọc bảy hàng (`Mạch \| Bài tập`) tràn khung 16:9 (ảnh chụp), nên giữ dạng ngang hai hàng; lý do ghi trong storyboard |
+| nghiêm trọng, G05 ghi chú diễn giả, số bài cũ | đã sửa | L04-G05 | Theo đề xuất: 04.1–04.6 có lời giải trên deck và trong ghi chú; 04.7–04.10 chỉ trong ghi chú, 04.8 và 04.9 dùng Định lý 04.25; tệp bài tập 04.11–04.21 từ Sutton và Barto (2018), chương 3–4, 04.21 có phần lập trình. Bỏ câu "giữ cùng đề và cùng kết quả" |
+| trung bình, E06c không có trong ghi chú | đã sửa: bỏ trang | L04-E06c | Quyết định D04. Bước "kỳ vọng trên nhiều kết quả chuyển" do hình B01 và ví dụ ô 71 của F05 (Ví dụ 04.18) đảm nhận; ghi chú diễn giả F05 nêu rõ hai xác suất $0{,}435$, $0{,}565$. Không thêm trang mới. E08 bỏ "(không trơn trượt)" |
+| trung bình, F04 ghi chú diễn giả, $m$ cho số lượt quét | đã sửa | L04-F04 | Theo đề xuất, dùng $\ell$ và "từ vòng thứ hai" như ghi chú (mục Đọc thêm) |
+| trung bình, E03 "chỉ khi" | đã sửa | L04-E03 | "**Lưu ý:** khi $V=v_\pi$, $Q_V$ là $q_\pi$; $V_1=(1,3)$ không là giá trị của chính sách xác định nào." Rút ngắn đề xuất để dòng ≤ 20 âm tiết; ý "chỉ là giá trị nhìn trước" đã có trong ghi chú diễn giả |
+| trung bình, F05b "sai số do gộp ô không có chặn" | đã sửa | L04-F05b | Tách thành hai dòng: "chênh $10{,}9$ vượt chặn lặp $\theta/(1-\gamma)=0{,}01$." và "Sai số do gộp ô và ước lượng $\hat p$ không có chặn trong bài." (theo Nhận xét 04.35) |
+| trung bình, G01, G01b, A02 nhiều số hiệu mỗi trang | đã sửa | L04-A02, L04-G01, L04-G01b | A02: chuyển mọi số bài tập vào ghi chú diễn giả. G01, G01b: giữ số hiệu từng hàng, ghi ngoại lệ bảng tổng kết có lý do trong storyboard (G4) |
+| trung bình, kế hoạch còn số bài và mốc commit cũ | đã sửa | storyboard, outline | Mốc ghi chú `bca27c1`; mục G05, khối 30 phút, E06c, thời lượng, bảng mục tiêu theo ghi chú, ví dụ xuyên suốt |
+| nhẹ, A02 ghi chú diễn giả gán sai mục tiêu cho 04.6 | đã sửa | L04-A02 | Mặt trang viết lại theo năm mục tiêu của ghi chú (79 âm tiết); ghi chú diễn giả chép đúng danh sách, tách bài của ghi chú và bài của tệp bài tập |
+| nhẹ, A03b, F01, D04b điều hướng trên mặt trang | đã sửa | L04-A03b, L04-F01, L04-D04b | Bỏ "(phần 6)", "(cuối phần)"; D04b theo đề xuất |
+| nhẹ, A01, A03, B02, D01, D06b, E01b, G06 điều hướng trong ghi chú diễn giả | đã sửa | các trang nêu | A01: thay câu điều hướng bằng nội dung của toán tử Bellman tối ưu và chính sách tham lam. A03: bỏ câu tự nói, gọi giả thiết theo tên phương pháp. B02: bỏ "xét ở phần lịch cập nhật". D01: bỏ câu cuối. D06b: theo đề xuất. E01b: nêu hội tụ nhờ tính co, giới hạn $v_*$ theo định lý tồn tại. G06: bỏ câu dẫn trang. Thêm A03b ghi chú diễn giả: bỏ "Phần 6 …" |
+| nhẹ, F02, E08b nêu giới hạn ví dụ bằng nguyên nhân | đã sửa | L04-F02, L04-E08b | Theo đề xuất; E08b viết "với MDP bất kỳ" thay "nói chung" |
+| nhẹ, D05 "thường" | đã sửa | L04-D05 | "Trong bài thực hành CartPole, chặn $\prod_s\lvert\mathcal A(s)\rvert$ bằng $2^{324}$ …"; không dùng $m^n$ vì đẳng thức chỉ đúng khi mọi tập hành động cùng cỡ |
+| nhẹ, C04b, B03 liệt kê phủ định | đã sửa | L04-C04b, L04-B03 | C04b: nêu kết luận $v_{\pi'}\ge v_\pi$ và ví dụ $(\mathrm a,\mathrm b)$ giữ $10$ tại $\mathrm s_0$, còn kém $(\mathrm b,\mathrm b)$. B03 theo đề xuất |
+| nhẹ, F05b "chỉ" | đã sửa | L04-F05b | Bỏ "chỉ" |
+| nhẹ, B04, B06, D02b, D04 thuật ngữ, tên tiếng Anh | đã sửa | các trang nêu | B04: "toán tử Bellman đánh giá (còn gọi là toán tử Bellman kỳ vọng; Bellman operator)". B06: "chuẩn vô cùng (còn gọi là chuẩn cực đại; sup norm, max norm)"; bỏ "infinity norm" để dòng ≤ 20 âm tiết. D02b "(policy-stable)"; D04 "(optimal value)", "(optimal policy)". Bảng thuật ngữ của outline cập nhật |
+| nhẹ, C01 định nghĩa bài toán điều khiển | đã sửa | L04-C01 | Theo ghi chú |
+| nhẹ, $m$, $d$ dùng trước khi định nghĩa | đã sửa | L04-A01c, L04-F01 | A01c thêm $m=\max_s\lvert\mathcal A(s)\rvert$; F01 định nghĩa $d$ và nhắc $m$. $d$ ở ghi chú diễn giả E04 đã được định nghĩa tại chỗ |
+| nhẹ, $v_{\mathrm{ab}}$ và $v_{(\mathrm a,\mathrm b)}$ | đã sửa | L04-D04 | Dùng $v_{(\cdot,\cdot)}$ như ghi chú, cả mặt trang và ghi chú diễn giả |
+| nhẹ, E05b "Hệ quả." không số | đã sửa | L04-E05b | Thành ý thứ ba của Định lý 04.25 (phần (d) của ghi chú) |
+| nhẹ, C02, C06, E02 ba bộ tên cột | đã sửa | L04-C06, L04-E02 | C06 và E02 dùng một khuôn `Trạng thái \| Nhánh a \| Nhánh b \| Cực đại \| Tham lam`. C02 giữ khuôn `Nhánh \| Thưởng \| Tiếp nối \| Nhìn trước` vì là bảng các nhánh của một trạng thái, khác loại phép tính |
+| nhẹ, D06, F06, G04 dãy mũi tên | đã sửa | L04-D06, L04-F06, L04-G04 | Dùng hình `dp04-two-state.svg` như B08, C07 (`.figure.short-s`, đặt cạnh dữ kiện trong `.grid2`) |
+| nhẹ, E00 ghi chú diễn giả 105 âm tiết | đã sửa | L04-E00 | Thay câu cuối bằng "Đầu ra là $T_*$, ngưỡng … và chi phí một lượt quét." (98 âm tiết theo `deck_check`) |
+| nhẹ, G00 "hệ số chiết khấu nhỏ hơn 1" | đã sửa | L04-G00 | "$\gamma<1$" |
+| nhẹ, A01b thiếu nhãn "chưa chứng nhận" | đã sửa | L04-A01b | Thêm nhãn |
+| nhẹ, G01 ghi chú diễn giả lặp mặt trang | đã sửa | L04-G01 | Giữ Thuật toán 04.9 và ngưỡng $\theta$, bỏ phần lặp |
+| nhẹ, G05 điều kiện thay $\gamma<1$ trong Ví dụ 4.1 | đã sửa | L04-G05 | "điều kiện chính sách được đánh giá tới đích với xác suất $1$ từ mọi trạng thái thay cho $\gamma<1$" |
+| nhẹ, đề nghị sửa ghi chú 10,90 → 10,91 | không sửa (ngoài phạm vi) | — | Deck ghi $10{,}9$, khớp cả hai cách làm tròn. Chuyển vào mục "Đề nghị sửa ghi chú" của báo cáo cuối |
+
+**Tệp hình không còn dùng.** `img/lec-04/dp04-stochastic-grid.svg` không còn trang nào của deck dùng (ghi chú bài giảng cũng không nhúng); điều phối viên quyết định giữ tệp, không xóa.
+
+### Sửa sau kiểm lại
+
+Điều phối viên kiểm lại kết luận "cần sửa" (1 trung bình, 7 nhẹ). Người sửa xử lý trong cùng phạm vi ghi. `deck_check` các trang đổi (A01, B06, D06, E00, F05b, F06, G01, G04, G05): 77 trang, 0 lỗi console, 0 lỗi trang, 0 request lỗi, 0 `.katex-error`, 0 OVERFLOW; đã xem ảnh 1600×900 và 390×844 của D06, F06, G04, F05b. `git diff --check` sạch.
+
+| phát hiện | xử lý | trang |
+|---|---|---|
+| trung bình: ghi chú diễn giả phát biểu $T_*$ thiếu kỳ vọng theo $p$ | Thay bằng "Toán tử Bellman tối ưu lấy cực đại theo hành động của kỳ vọng $r+\gamma V(s')$ theo $p$; chính sách tham lam chọn hành động đạt cực đại đó." | L04-A01 |
+| nhẹ: dòng "Sai số … không có chặn trong bài" tự nói phạm vi | Thay bằng "Chặn $\theta/(1-\gamma)$ chỉ đo sai số lặp; sai số do gộp ô và ước lượng $\hat p$ nằm ngoài chặn đó." (18 token; trang 60 âm tiết, đúng trần) | L04-F05b |
+| nhẹ: nhãn hình hai trạng thái quá nhỏ ở `.figure.short-s` | Đổi sang `.figure.short-m`; ảnh hai cỡ không tràn | L04-D06, L04-F06, L04-G04 |
+| nhẹ: ghi chú diễn giả G05 mở bằng câu lặp tiêu đề hàng; câu Sutton–Barto thiếu số bài | Cắt câu lặp, giữ "Số cột là số mạch như trên trang nội dung."; thêm "(Bài tập 04.11, 04.12, 04.15)" theo `exercises.md` dòng 578 (Ví dụ 4.1 của sách gắn với ba bài này) | L04-G05 |
+| nhẹ: "Đầu ra là $T_*$, …" | "Mạch này cho toán tử $T_*$, ngưỡng $\theta=(1-\gamma)\kappa$ và chi phí một lượt quét." (ghi chú 100 âm tiết, trong khoảng 40–100) | L04-E00 |
+| nhẹ: "Nhu cầu:" nêu công cụ thay vì nhu cầu | "**Nhu cầu:** biết $V_k$ có tiến tới $v_\pi$; đo bằng chuẩn vô cùng (còn gọi là chuẩn cực đại; sup norm) …"; bỏ "max norm" để dòng còn 20 token | L04-B06 |
+| nhẹ: "Hàng thứ nhất đi cùng Thuật toán 04.9" | "Thuật toán 04.9 thực hiện phép lặp ở hàng thứ nhất; …" | L04-G01 |
+| nhẹ: storyboard "Ngoại lệ mật độ" theo số đo cũ | Viết lại bảng theo `deck_check` hiện tại (A01 68, A02 79, A02b 7 dòng, A03 73, G06 70 và 6 dòng, G01 67, G01b 70, G02b 67, D05 65, dòng dẫn B00, D00, F00); ghi các trang sát trần F05b 60, B06 57, B04 56; G05 hết ngoại lệ | storyboard |
+
+### Kiểm lại, kiểm định cuối và duyệt của điều phối viên (2026-11-13)
+
+**Tác tử (theo lời gọi công cụ).**
+
+| vai trò | loại | mô hình | effort | ghi tệp |
+|---|---|---|---|---|
+| rà soát chỉ đọc (bảng phát hiện) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+| người sửa (deck, kế hoạch; tiếp tục bằng SendMessage cho vòng sửa sau kiểm lại) | `general-purpose` | `opus` (Opus 5.5) | `high` | có |
+| kiểm lại chỉ đọc (vai trò A: độ chính xác toán và Học tăng cường; vai trò B: mạch, quy tắc deck, `no-ai-slop` Detect) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+
+Quyết định chung của đợt: G1–G11, D01–D10 (tệp quyết định của điều phối viên trong thư mục nháp của phiên, chép tóm tắt ở mục sửa phía trên).
+
+**Kiểm lại.** Kết luận "cần sửa": 29/29 phát hiện xử lý đúng (kiểm kỹ: bỏ E06c giữ mạch E06b → E08 liền; bước "kỳ vọng trên nhiều kết quả chuyển" do hình B01 và F05, Ví dụ 04.18, đảm nhận; G05 bảng ngang khớp `exercises.md`); 1 trung bình mới (L04-A01 ghi chú diễn giả: $T_*$ thiếu kỳ vọng theo $p$) và 7 nhẹ (F05b câu tự nói phạm vi; hình D06, F06, G04 nhỏ; G05, E00, G01 ghi chú diễn giả; B06 "Nhu cầu:"; số đo ngoại lệ trong storyboard). Người sửa xử lý đủ 8 ở "Sửa sau kiểm lại"; điều phối viên đọc lại câu $T_*$ trên tệp: "lấy cực đại theo hành động của kỳ vọng $r+\gamma V(s')$ theo $p$".
+
+**Kiểm định cuối của điều phối viên.** `deck_check` toàn deck: 77 trang (78 → 77, bỏ L04-E06c theo D04), 0 lỗi console, lỗi trang, request lỗi, `.katex-error`, 0 cờ OVERFLOW; các trang vượt trần A01, A03, D05, G02b, G06, A02b có ngoại lệ. 38 trang đổi, 21 đổi mặt trang; điều phối viên tự xem bảng ảnh hai cỡ: không tràn. `img/lec-04/dp04-stochastic-grid.svg` không còn trang nào dùng; giữ tệp (quyết định của điều phối viên). `git diff --check` sạch.
+
+**Đề nghị sửa ghi chú (chờ người dùng quyết định; không sửa `materials/` trong đợt này).** Ghi chú dòng 1667: $95{,}38-84{,}47=10{,}91$, ghi chú ghi $10{,}90$; viết "khoảng $10{,}9$" hoặc ba chữ số thập phân. Nếu muốn giữ ví dụ "dãy năm ô trơn trượt" trên deck, cần thêm vào ghi chú §4.5 trước.
+
+**Quyết định của điều phối viên:** **chấp nhận** deck và các tệp kế hoạch; mọi phát hiện `nghiêm trọng` và `trung bình` của bảng 2026-11-13 và của lượt kiểm lại đã xử lý; phát hiện không sửa có lý do ghi ở bảng xử lý.
