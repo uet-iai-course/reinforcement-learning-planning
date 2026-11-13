@@ -175,7 +175,7 @@ Mạch 1 không mở khái niệm cốt lõi nào: các trang nhắc lại kết
 - **Trang muốn nói gì:** $q_1=q_2=0$, nhiễu $\pm1$ độc lập: từng ước lượng không chệch, $\mathbb E[\max]=\tfrac12$, độ chệch $\tfrac12$.
 - **Phục vụ:** bước ví dụ, tính tay.
 - **Vấn đề còn lại trước sửa:** tiêu đề không theo dạng "Ví dụ: …"; hai thẻ; thiếu "Diễn giải:" (CT P05; SV).
-- **Quyết định:** sửa theo khuôn trang ví dụ: dữ kiện, yêu cầu "Tính", hình bốn cặp (`maximization-bias.svg` vẽ lại: dấu trừ chuẩn, phông không chân, bỏ chấm màu không chú giải và câu khẩu hiệu, ba cặp có cực đại dương viền đậm), một dòng tính, "Diễn giải:". Hình này dùng lại ở `X01` khi sửa mạch 3.
+- **Quyết định:** sửa theo khuôn trang ví dụ: dữ kiện, yêu cầu "Tính", hình bốn cặp (`maximization-bias.svg` vẽ lại: dấu trừ chuẩn, phông không chân, bỏ chấm màu không chú giải và câu khẩu hiệu, ba cặp có cực đại dương viền đậm), một dòng tính, "Diễn giải:".
 - **Mật độ:** trước 24 âm tiết, 4 dòng (6 tính tiêu đề thẻ); sau S10 28; sau R2 34 âm tiết (thêm dòng ứng dụng $q=(0{,}5;\,0)$ và $q=(3;\,0)$; hình có nhãn cặp $(\widehat Q_1;\widehat Q_2)$, bỏ dòng xác suất lặp trong từng khung), 5 dòng chữ và 1 hình, đáy 691 px, ghi chú khoảng 102.
 
 #### `L09-06` Độ chệch của phép cực đại không âm (bước S11)
@@ -193,11 +193,11 @@ Mạch 1 không mở khái niệm cốt lõi nào: các trang nhắc lại kết
 | Vấn đề | `L09-M2T`, `L09-03` | Mục tiêu DQN (`L09-01c`); CartPole: cận 100, $108{,}5$ | Thấy giá trị ước lượng vượt cận; biết con số gộp nhiều nguồn | Ví dụ dẫn nhập đặt cùng vấn đề |
 | Trực giác | `L09-04` | $\widehat Q_a=q_a+\varepsilon_a$ | Phép cực đại chọn nhiễu dương; đại lượng cần đo | Không gộp |
 | Ví dụ | `L09-05` | $q=(0;\,0)$, nhiễu $\pm1$ | Độ chệch $\tfrac12$ | Không gộp |
-| Hình thức | `L09-06` | Jensen (`L09-01d`) | Mệnh đề có giả thiết, điều kiện dấu bằng | Không gộp |
-| Ứng dụng | `L09-05` (dòng cuối, R2), ghi chú diễn giả `L09-06`; ghi chú bài giảng Ví dụ 09.3 | Khoảng cách giá trị đúng $0{,}5$ và $3$; $\widehat Q_a=Q_{\theta^-}(S'_i,a)$ | Độ chệch $0{,}375$ và $0$; độ chệch lớn khi giá trị đúng gần nhau | Gộp với ví dụ trên cùng trang (trang `L09-06` đã đủ dòng) |
+| Hình thức | `L09-06` | Jensen (`L09-01d`); lượng vượt $\tfrac12$ của `L09-05` | Định nghĩa độ chệch $\beta$ (từ 2026-11-13, sau ví dụ như ghi chú: Ví dụ 09.2 trước Định nghĩa 09.1); mệnh đề có giả thiết, điều kiện dấu bằng | Không gộp |
+| Ứng dụng | ghi chú diễn giả `L09-05` (dòng $q=(0{,}5;0)$, $q=(3;0)$ chuyển khỏi mặt trang ngày 2026-11-13), ghi chú diễn giả `L09-06`; ghi chú bài giảng Ví dụ 09.3 | Khoảng cách giá trị đúng $0{,}5$ và $3$; $\widehat Q_a=Q_{\theta^-}(S'_i,a)$ | Độ chệch $0{,}375$ và $0$; độ chệch lớn khi giá trị đúng gần nhau | Gộp với ví dụ trên cùng trang (trang `L09-06` đã đủ dòng) |
 | Kiểm tra | `L09-06` (Câu hỏi, Lời giải) | $\widehat Q_1>\widehat Q_2$ hầu chắc chắn | Độ chệch $0$ | Gộp với bước hình thức |
 
-Thời lượng: `L09-M2T` 1, `L09-03` 4, `L09-04` 3, `L09-05` 3, `L09-06` 4 phút. Dữ kiện truyền: hình bốn cặp của `L09-05` dùng lại ở `X01` (mạch 3); nguyên nhân "cùng ước lượng chọn và đánh giá" là đầu vào của `L09-M3T`.
+Thời lượng: `L09-M2T` 1, `L09-03` 4, `L09-04` 3, `L09-05` 3, `L09-06` 4 phút. Dữ kiện truyền: nguyên nhân "cùng ước lượng chọn và đánh giá" là đầu vào của `L09-M3T`.
 
 #### Mạch 3 "Tách chọn và đánh giá" (bước S12–S23)
 
@@ -530,6 +530,44 @@ Hành trình khái niệm "bỏ phần thưởng quá khứ": Vấn đề `L09-2
 | trang | thay đổi | âm tiết | đáy |
 |---|---|---|---|
 | `L09-K7` | bảng `Mạch \| Bài tập` thêm Bài tập 09.11–09.20 của `materials/lec-09/exercises.md` theo mạch (2: 09.11, 09.18; 3: 09.11, 09.13, 09.18; 4: 09.12, 09.14, 09.16; 5: 09.15, 09.16, 09.20; 6: 09.16, 09.17, 09.19, 09.20); dòng "Bài tập 09.1–09.10: … ; 09.11–09.20: tệp bài tập, theo Sutton và Barto (2018)." thay dòng chỉ dẫn tới mục củng cố; liên kết viewer "Ghi chú bài giảng · Bài tập"; ghi chú diễn giả bỏ ý "chưa có tệp bài tập riêng", nêu nội dung tệp bài tập | 53 → 61 (trần 80 của trang bảng tổng kết) | 630 → 674 px |
+
+Dòng trên ghi số bài của đợt 2026-10-28, nay đã cũ: `exercises.md` làm lại ngày 2026-11-12 chỉ còn sáu bài 09.12–09.17. Bảng hiện hành của `L09-K7` ghi ở mục "Sửa deck theo bảng phát hiện (2026-11-13)" dưới đây.
+
+#### Sửa deck theo bảng phát hiện (2026-11-13)
+
+Theo bảng phát hiện 2026-11-13 trong `review-log.md` và quyết định G1–G11, D09 của điều phối viên. Không thêm, bỏ, tách hay gộp trang: vẫn 67 trang, 7 mạch; thứ tự trang và mọi `data-slide-id` giữ nguyên, nên các liên kết sâu của `exercises.md` (`#/3/7`, `#/5/12`, `#/6/13`, `#/6/14`, `#/7/6`, `#/7/7`) vẫn trỏ đúng `X01`, `X02`, `X03`, `X03b`, `L09-K3`, `L09-K4`. Số âm tiết đo bằng `deck_check.py`.
+
+| trang | thay đổi | quyết định | âm tiết trước → sau |
+|---|---|---|---|
+| `L09-01` | luận đề viết lại (sau kiểm lại): "Trên ước lượng không chệch có nhiễu, phép cực đại có độ chệch $\ge0$; đánh giá hành động được chọn bằng ước lượng không chệch, độc lập với bản chọn thì giá trị báo cáo không chệch lên; dưới giả thiết …, hàm điểm …" (chủ ngữ rõ ở cả ba vế) | sửa | 75 → 76 (ngoại lệ bìa, xem dưới) |
+| `L09-01c`, `L09-01d`, `L09-02c` | ghi chú diễn giả bỏ chỉ dẫn "ở phần 2", "định nghĩa ở phần 5", "nêu cùng định lý ở phần 6" | sửa | 40, 35, 78 (không đổi) |
+| `L09-02` | mục tiêu theo ghi chú: MT1 "khi nào nó bằng $0$", MT2 "vì sao $\theta^-$ chỉ gần độc lập với $\theta$", MT4 "sai phân hữu hạn (finite difference)"; ghi chú diễn giả nêu sản phẩm của từng mục và ánh xạ tệp bài tập → mục tiêu theo dòng "Mức độ" của `exercises.md` | sửa | 71 → 77 (trần 80) |
+| `L09-03` | dòng ví dụ ≤ 20 âm tiết; ghi chú diễn giả bỏ câu "chỉ là một lần chạy …" | sửa | 46 → 43 |
+| `L09-04` | "thường là chỗ nhiễu dương lớn" → "nên ưu tiên hành động có nhiễu dương lớn"; "Định nghĩa." chuyển sang `L09-06` (D09: Ví dụ 09.2 trước Định nghĩa 09.1) | sửa | 46 → 40 |
+| `L09-05` | yêu cầu "Tính $\mathbb E[\widehat Q_a]$ và $\mathbb E[\max_a\widehat Q_a]$" (thuật ngữ độ chệch chưa định nghĩa); một dòng kết "Diễn giải:"; dòng $q=(0{,}5;0)$, $q=(3;0)$ vào ghi chú diễn giả; bỏ "ví dụ sư phạm minh họa" | sửa | 34 → 30 |
+| `L09-06` | thêm "Định nghĩa." $\beta$ ở đầu trang, mệnh đề kết luận $\beta\ge0$; 6 dòng | sửa | 50 → 58 |
+| `L09-06c` | giả thiết thêm "$\widehat Q^B_a$ khả tích"; "Ý nghĩa:" không còn ví dụ số (chuyển vào ghi chú diễn giả) | sửa | 45 → 44 |
+| `L09-09` | bước 1 thêm "đặt lại môi trường khi $Z_{t+1}\lor U_{t+1}=1$"; "bộ nhớ phát lại (replay buffer)"; bước 2 viết $\lvert\mathcal D\rvert\ge N_{\mathrm{start}}$ | sửa | 58 → 60; 7 dòng (ngoại lệ giả mã đã có) |
+| `L09-12` | đầu vào thêm "số lượt $N$"; bước 4 thêm "Đầu ra:" | sửa | 34 → 46; 6 dòng |
+| `L09-16` | "gộp trạng thái (state aliasing)"; bỏ "(Bài 04: xác định)" khỏi mặt trang (vào ghi chú diễn giả); ghi chú diễn giả "có ít nhất hai trong năm ô" | sửa | 52 → 51 |
+| `L09-16b` | tách dữ kiện và yêu cầu "Tính $h_i$"; một dòng kết "Diễn giải: … tất định: ít nhất hai ô không tới đích"; dòng "Lưu ý:" Định lý 04.25 vào ghi chú diễn giả | sửa | 55 → 42 |
+| `L09-17` | định nghĩa viết "… là xác suất hoặc mật độ …"; bỏ ngoặc "từ đây $\theta$ …" (đã có trong ghi chú diễn giả) | sửa | 59 → 52 |
+| `L09-18` | yêu cầu "Xác định phân phối nào có tham số"; dòng "Diễn giải:" | sửa | 27 → 52 |
+| `L09-20` | "Giả thiết:" thêm $\lvert R_{t+1}\rvert\le R_{\max}$ (Định nghĩa 09.14) | sửa | 47 → 47 |
+| `L09-21` | "tăng gradient (gradient ascent)" | sửa | 44 → 45 |
+| `L09-23b` | "miền hỗ trợ (support)" | sửa | 37 → 38 |
+| `L09-25b` | mệnh đề viết lại, dòng ≤ 20 âm tiết | sửa | 34 → 33 |
+| `L09-27` | bỏ "(ở phần 6, $c$ là lợi tức)" khỏi mặt trang | sửa | 25 → 20 |
+| `L09-28` | "quỹ đạo (trajectory)"; "Giả thiết: … khi đó, theo tỉ số xác suất (likelihood ratio):" thay chỉ dẫn "điều kiện đủ nêu cùng định lý" | sửa | 37 → 40 |
+| `L09-30` | "Định lý. Dưới (G1)–(G4), với lượt sinh bởi $\pi_\theta$:" (giả thiết đầy đủ ở `L09-22` ngay trước, như Định lý 09.23 của ghi chú); "Dạng khác:" nêu giả thiết của Hệ quả 09.24 (MDP hữu hạn, lượt kết thúc do MDP), tên tiếng Anh của phân bố chiếm dụng chiết khấu, công thức thành công thức hiển thị; câu đọc nghĩa của $\nu^\pi_\gamma$ vào ghi chú diễn giả | sửa | 59 → 38; 2 công thức hiển thị |
+| `L09-32` | "Kiểm tra lại:" → "Diễn giải:" | sửa | không đổi |
+| `X03b` | dòng "Lưu ý:" ≤ 20 âm tiết | sửa | 31 → 24 |
+| `L09-K1`, `L09-K1b` | đồng bộ bảng kết quả của ghi chú (Mục 7): `L09-K1` bốn hàng về mục tiêu bootstrap (thêm Double Q-learning, bỏ hàng gộp trạng thái vốn không có trong bảng của ghi chú; số $3{,}8$ còn ở `L09-K5`); `L09-K1b` bốn hàng về gradient (thêm "Chính sách tham số hóa", hàng định lý có dạng phân bố chiếm dụng) ; sau kiểm lại: cột giả thiết có đủ "mục tiêu trong $\operatorname{sg}$" (Double DQN) và "hành vi theo $Q_1+Q_2$" (Double Q-learning) như note:1182–1183; để vừa khung, cột công thức bỏ chữ "dấu" và "mục tiêu" (viết $y=\dots$) | sửa | 72 → 72 (sau kiểm lại); 53 → 67 (trần 80) |
+| `L09-K7` | bảng `Mạch \| Bài tập` chép đúng bảng mạch của `exercises.md`: 2 ghi chú 09.1, 09.2; 3 09.12, ghi chú 09.3, 09.11; 4 09.13, 09.16, ghi chú 09.4; 5 09.14, 09.16, 09.17, ghi chú 09.5–09.7; 6 09.15, 09.17, ghi chú 09.8, 09.9; 7 ghi chú 09.10; chú thích "Bài tập 09.12–09.17 thuộc tệp bài tập"; dòng Bài 10 ≤ 20 âm tiết | sửa | 63 → 61 (trần 80) |
+
+Chỉ sửa ghi chú diễn giả (mặt trang giữ nguyên): `L09-08`, `X01`, `L09-13`, `L09-12`, `L09-14` (trả lời "bốn hay tám ước lượng" theo ghi chú), `L09-25`, `X02` (độ dài hàm điểm theo khoảng cách tới đặc trưng trung bình, $\sqrt2(1-\pi)$ khi hai hành động), `L09-26` (đổi biến $\tanh$), `L09-29`, `L09-29b`, `L09-29c`, `L09-29d`, `L09-22`, `L09-31`, `X03`, `L09-K2b` (nêu kết quả hội tụ thật thay câu tự nói trạng thái), `L09-K3`, `L09-K4`, `L09-K6` (câu 4 dẫn Bổ đề 09.21, Hệ quả 09.26). Dòng nguồn thay "ví dụ sư phạm", "ví dụ tính bổ sung", "bổ sung" bằng khối của ghi chú bài giảng.
+
+**Ngoại lệ mật độ hiện hành (2026-11-13).** `L09-01` (bìa) 76 âm tiết: luận đề một câu trong hộp, cùng lý do với ngoại lệ trước (75). `L09-02c` (Vấn đề trung tâm) 78 âm tiết > 60: dòng bài toán và một dòng trả lời có điều kiện cho mỗi mạch 2–6, như `L08-02c`; số này thay ghi chép "94 → 78 (gỡ ngoại lệ)" ở bước F2, vì 78 vẫn vượt trần 60 của trang nội dung. `L09-K5` 78 (trang trả lời vấn đề trung tâm thuộc mạch tổng kết, trần 80). Ngoại lệ số dòng của `L09-02b` (Nội dung, bảy mạch) và hai trang giả mã `L09-09`, `L09-31` giữ như trước. Mọi trang khác ≤ 60 âm tiết (mục tiêu, bảng so sánh, tổng kết ≤ 80); mọi dòng nội dung ≤ 20 âm tiết (dòng dẫn của trang tiêu đề mạch ≤ 25).
 
 ## Bản trước đợt sửa 2026-10-28
 

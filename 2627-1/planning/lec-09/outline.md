@@ -83,7 +83,8 @@ Kế thừa bảng thuật ngữ của Bài 06–08 (`planning/lec-08/outline.md
 | quỹ đạo; lịch sử | trajectory; history | $\tau$; $H_t$ |
 | lợi tức từ thời điểm $t$ | reward-to-go | $G_t$ |
 | định lý gradient chính sách | policy gradient theorem | |
-| phân bố chiếm dụng | (discounted) state occupancy measure | ký hiệu chốt ở bước mạch 6 |
+| phân bố chiếm dụng chiết khấu | discounted state visitation distribution (còn gọi là state occupancy measure) | ký hiệu chốt ở bước mạch 6; tên tiếng Anh theo ghi chú bài giảng, dùng trên `L09-30` từ 2026-11-13 |
+| miền hỗ trợ | support | lần đầu trên mặt trang ở `L09-23b` |
 | đường cơ sở | baseline | chỉ ở dòng nối Bài 10 |
 | actor–critic | actor–critic | tên phương pháp, giữ nguyên |
 | hầu chắc chắn | almost surely | không dùng "gần như chắc chắn" |
@@ -205,7 +206,7 @@ Kiểm kê sau bước mạch 7, cập nhật 2026-10-28: mười bảy tệp tr
 | `score-exercise-card.svg` | `X02` | mới ở bước mạch 5 |
 | `reinforce-trajectory.svg` | ghi chú bài giảng Mục 6 (Thuật toán 09.25) | vẽ lại ở bước mạch 6 |
 | `past-reward-timeline.svg` | `L09-29`; ghi chú bài giảng Mục 6 (trước Bổ đề 09.22) | mới khi sửa theo phản hồi người dùng 2026-10-28 |
-| `short-corridor.svg` | `materials/lec-09/exercises.md` ("Hướng dẫn và ký hiệu", Bài tập 09.12, 09.14, 09.19, 09.20) | mới ở giai đoạn III (2026-10-28) |
+| `short-corridor.svg` | `materials/lec-09/exercises.md` ("Hướng dẫn và ký hiệu", Bài tập 09.13, 09.14, 09.16; số bài theo bản làm lại 2026-11-12) | mới ở giai đoạn III (2026-10-28) |
 
 `dqn-stability.svg` đã xóa ở bước R2 vì không còn trang nào dùng.
 
