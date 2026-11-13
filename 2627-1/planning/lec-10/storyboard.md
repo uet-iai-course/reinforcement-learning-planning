@@ -136,10 +136,10 @@ Kiểm tổng phút theo mạch. Mạch 1: $0{,}5+1{,}5+1{,}5+1+0{,}5+2+2+1+1{,}
 | trang | trần vượt | số đo dự kiến | lý do |
 |---|---|---|---|
 | `L10-105` | 6 dòng | 8 dòng (bảy mạch, dòng đọc trước), khoảng 40 âm tiết (trần 80 của trang nội dung) | Trang nội dung phải liệt kê đủ bảy mạch; như `L09-02b`. Nếu điều phối viên không chấp nhận, dòng "Đọc trước:" chuyển vào ghi chú diễn giả (còn 7 dòng) |
-| `L10-109` | 60 âm tiết | 79 âm tiết sau D1 (hộp 14; năm dòng 13, 12, 14, 13, 13; trước D1: 80), 6 dòng | Quyết định của điều phối viên: trang vấn đề trung tâm theo trần 80; mỗi mạch 2–6 một dòng trả lời có điều kiện. Hình đã tách sang `L10-110` |
+| `L10-109` | 60 âm tiết | 79 âm tiết sau D1 (hộp 14; năm dòng 13, 12, 14, 13, 13; trước D1: 80), 6 dòng; sau sửa 2026-11-13: 80 âm tiết theo `deck_check` (hộp 14; năm dòng 13, 12, 14, 15, 12) | Quyết định của điều phối viên: trang vấn đề trung tâm theo trần 80; mỗi mạch 2–6 một dòng trả lời có điều kiện. Hình đã tách sang `L10-110` |
 | `L10-702` | (đã gỡ) | bản viết tách thành `L10-702` (5 hàng, 46 âm tiết) và `L10-702b` (4 hàng, 42 âm tiết sau D1), trần 80 của bảng tổng kết | Không còn ngoại lệ số dòng |
 
-Dòng dẫn của sáu trang tiêu đề mạch (16–24 âm tiết) theo trần 25 riêng của `p.strand-lead` (`AGENTS.md` §"Trang tiêu đề mạch"), hiển thị trên hai dòng. Trang theo trần 80 không phải ngoại lệ: `L10-104` (mục tiêu, 80), `L10-701`–`L10-704` (bảng tổng kết và so sánh), `L10-707` (trả lời bài toán, 75), `L10-615`, `L10-616` (bảng). Các ngoại lệ của bản trước đã gỡ: `L10-101` (rút còn 49 âm tiết), các trang giả mã `L10-209`, `L10-215`, `L10-308`, `L10-506`, `L10-507`, `L10-613` (rút về 6 dòng).
+Dòng dẫn của sáu trang tiêu đề mạch (16–24 âm tiết) theo trần 25 riêng của `p.strand-lead` (`AGENTS.md` §"Trang tiêu đề mạch"), hiển thị trên hai dòng. Trang theo trần 80 không phải ngoại lệ: `L10-104` (mục tiêu, 80; 6 dòng sau sửa 2026-11-13), `L10-701`–`L10-704` (bảng tổng kết và so sánh), `L10-707` (trả lời bài toán, 80 sau sửa 2026-11-13), `L10-615`, `L10-616` (bảng). Các ngoại lệ của bản trước đã gỡ: `L10-101` (rút còn 49 âm tiết), các trang giả mã `L10-209`, `L10-215`, `L10-308`, `L10-506`, `L10-507`, `L10-613` (rút về 6 dòng).
 
 ## Khuôn bảng cố định
 
@@ -182,6 +182,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Hình, phút:** —; 1,5.
 - **Quyết định:** sửa (`L10-04` "Quy ước của bài"): đổi $d^\pi$, $m_t$, $c_t$, $H$ sang $\nu^\pi$ (để `L10-403`), $1-Z_{t+1}$, $U_{t+1}$, $h$; thêm $\mu_0$; ghi "$\gamma\in[0,1)$ trong các định lý" vì `L10-107`, `L10-108` dùng $\gamma=1$.
 - **Ghi chú diễn giả:** Bài 09 viết $\rho_0$, ở đây $\mu_0$ vì $\rho$ dành cho tỉ số chính sách; sau $T$ là trạng thái hấp thụ với $v_\pi=q_\pi=A_\pi=0$; hành lang ngắn có $\gamma=1$, nằm ngoài giả thiết các định lý; hai loại trung bình (có chiết khấu và đều trên bộ đệm) sẽ tách ở mạch 4 và 6.
+- **Sửa 2026-11-13 (bảng phát hiện):** ô cờ thành "cờ kết thúc (termination); cờ cắt ngắn (truncation)", bỏ "của MDP" để giữ 57 âm tiết (trước 59); tên đầy đủ của MDP lên `L10-103`; ghi chú diễn giả thêm nghĩa của $Z_{t+1}$, $U_{t+1}$ với tên đầy đủ "quá trình quyết định Markov (MDP)". `deck_check`: 57 âm tiết, ghi chú 139.
 
 #### `L10-103` Tiên quyết và quy ước (Nhắc lại)
 - **Vị trí, loại:** trang 3 của mạch 1; tiên quyết, phần "Nhắc lại:".
@@ -194,6 +195,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Hình, phút:** —; 1,5.
 - **Quyết định:** sửa (`L10-05` "REINFORCE dùng return toàn phần"): thêm giả thiết (G1)–(G4), kỳ vọng của hàm điểm, công thức $q_\pi$, $v_\pi$.
 - **Ghi chú diễn giả:** số hiệu Mệnh đề 09.16, 09.17, 03.22, 03.23; lịch sử $H_t$ và tính chất tháp $\mathbb E[\mathbb E[X\mid Y]]=\mathbb E[X]$ dùng ở `L10-205`; bỏ trọng số $\gamma^t$ làm mất tính không chệch (Ví dụ 09.21).
+- **Sửa 2026-11-13 (bảng phát hiện):** dòng (G1) thành "$\mu_0$, $P$ của quá trình quyết định Markov (MDP) không phụ thuộc $\theta$, $S_t$ Markov": lần đầu MDP trên mặt trang có tên đầy đủ. `deck_check`: 44 âm tiết (trước 37), 6 dòng, dòng dài nhất 19.
 
 #### `L10-104` Mục tiêu học tập
 - **Vị trí, loại:** trang 4 của mạch 1; mục tiêu.
@@ -201,11 +203,12 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Liên kết:** trước: `L10-103`; sau: `L10-105`.
 - **Mục tiêu:** 1–5.
 - **Khối ghi chú, nguồn:** Mục tiêu học tập 1–7 (`topic-02`); nguồn tr. 2.
-- **Mặt trang:** năm dòng đánh số, chép đúng câu trong `outline.md`, mục "Mục tiêu học tập".
-- **Mật độ:** 80 âm tiết (trần 80 của trang mục tiêu), 5 dòng (13, 15, 20, 13, 19), 0 công thức.
+- **Mặt trang:** sáu dòng đánh số (2026-11-13; trước năm dòng), chép đúng câu trong `outline.md`, mục "Mục tiêu học tập": thêm dòng 6 "Chứng minh chặn dưới bi quan; approxKL không chệch." (sản phẩm của mục tiêu 6–7 của ghi chú); dòng 3–4 gộp bằng dấu phẩy; dòng 5 bỏ "của tỉ số chính sách (probability ratio)" (tên tiếng Anh chuyển sang `L10-405`).
+- **Mật độ:** 80 âm tiết theo `deck_check` (trần 80 của trang mục tiêu; trước 80), 6 dòng, dòng dài nhất 19, 0 công thức.
 - **Hình, phút:** —; 1.
 - **Quyết định:** sửa (`L10-02` "Kết quả học tập"): đổi tiêu đề; mỗi dòng một mạch, động từ học tập, tên tiếng Anh ở lần đầu (gồm ba tên chuyển từ bìa: baseline, surrogate objective, probability ratio).
 - **Ghi chú diễn giả:** sản phẩm của từng dòng: $\tfrac49(b-1)^2$ và $p_A=0{,}5436$; $\widehat A_0=0{,}98$ và $3{,}572$, điều kiện γ-just; $\Delta J=0{,}296$, $\mathcal L-J=0{,}26$, cận chặn cải thiện $-0{,}892$; $\Delta^*=(0{,}15;\,-0{,}15)$, $\Delta=(0{,}05;\,0{,}1)$; $\mathcal L^{\mathrm{CLIP}}=0{,}2167$, approxKL $0{,}01737$, điều PPO không bảo đảm.
+- **Sửa 2026-11-13 (bảng phát hiện):** xem "Mặt trang", "Mật độ" đã cập nhật.
 
 #### `L10-105` Nội dung
 - **Vị trí, loại:** trang 5 của mạch 1; nội dung.
@@ -230,6 +233,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Hình, phút:** `img/lec-09/one-step-card.svg`; 2.
 - **Quyết định:** thêm (bộ cũ không định lượng phương sai).
 - **Ghi chú diễn giả:** mỗi tọa độ có phương sai $\tfrac29$ rồi $\tfrac89$; kiểm $\mathbb E\lVert\widehat g\rVert^2-\lVert\nabla J\rVert^2$; mức chung của phần thưởng không ảnh hưởng tới việc chọn hành động.
+- **Sửa 2026-11-13 (bảng phát hiện):** `style="grid-template-columns:2fr 3fr"` thay bằng lớp `.grid2.wide-right` của `lecture-course.css` (G8); ảnh chụp không đổi bố cục.
 
 #### `L10-107` Ví dụ: hành lang ngắn, một lượt REINFORCE
 - **Vị trí, loại:** trang 7 của mạch 1; ví dụ dẫn nhập của giới hạn thứ nhất (hậu quả trên một lượt); dữ kiện dùng lại ở `L10-206`.
@@ -242,6 +246,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Hình, phút:** `img/lec-09/short-corridor.svg`; 2.
 - **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo Ví dụ 10.2 của ghi chú.
 - **Ghi chú diễn giả:** tọa độ thứ nhất $\tfrac12(-13)+(-\tfrac12)(-2)=-5{,}5$; hành lang không thỏa (G3), ước lượng vẫn không chệch vì $T$ có đuôi hình học (ghi chú, đoạn sau Ví dụ 10.4); $p^*=2-\sqrt2\approx0{,}59$.
+- **Sửa 2026-11-13 (bảng phát hiện):** `style="max-height:200px"` thay bằng lớp `.figure.short-m` (210 px, G8); ghi chú diễn giả bỏ lời trỏ "ghi chú bài giảng, đoạn sau Ví dụ 10.4", giữ nội dung: "không thỏa (G3), nhưng $T$ có đuôi hình học nên ước lượng vẫn không chệch".
 
 #### `L10-108` Ví dụ: hành lang ngắn, một bước theo đúng gradient
 - **Vị trí, loại:** trang 8 của mạch 1; ví dụ dẫn nhập của giới hạn thứ hai, làm cụ thể vấn đề mà `L10-401` mở lại.
@@ -266,6 +271,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Hình, phút:** —; 1,5.
 - **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo §1.1, năm câu trả lời của ghi chú. Đợt sửa sau cổng: tách hình sang `L10-110`; rút từ khoảng 85 xuống 80 âm tiết; dòng 3 thêm điều kiện "lượt đầy đủ, hàm giá trị cố định".
 - **Ghi chú diễn giả:** "khoảng cách" là TV hoặc KL trung bình (định nghĩa ở mạch 4); dòng 5: TRPO chỉ bảo đảm KL trung bình mẫu không vượt bán kính $\kappa$; dòng 3 là Mệnh đề 10.15, không khẳng định không chệch cho lợi thế.
+- **Sửa 2026-11-13 (bảng phát hiện):** dòng (2) thành "… giữ kỳ vọng; hệ số $\delta_t$ cần $\hat v=v_\pi$." (sửa sau kiểm lại; tránh viết tắt "sai số TD" trước `L10-212b`); dòng (5) thành "TRPO xấp xỉ; trên bộ đệm: KL trung bình mẫu ${\le\kappa}$, hàm thay thế mẫu tăng." theo Nhận xét 10.38 (D10); dòng (6) "… không chặn KL.". Ghi chú diễn giả sửa theo (dòng 2: "còn $\delta_t$, mục tiêu bootstrap một bước trừ $\hat v(S_t)$, chỉ ước lượng đúng lợi thế khi critic đúng"; dòng 5: hai bất đẳng thức kiểm được trên bộ đệm), 149 token (trước 151). `deck_check`: 79 âm tiết (trước 79), 6 dòng, dòng dài nhất 15; vẫn là ngoại lệ trần 60 đã duyệt, trong trần 80.
 
 #### `L10-110` Hệ số của hàm điểm và độ lớn bước
 - **Vị trí, loại:** trang 10 của mạch 1; trang khung chung (mọi phương pháp của bài là một trong hai hàng của cùng một khung).
@@ -292,6 +298,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Hình, phút:** —; 0,5.
 - **Quyết định:** thêm (trang tiêu đề mạch theo `AGENTS.md`).
 - **Ghi chú diễn giả (40–100):** kết quả kế thừa (phương sai phụ thuộc mức chung của phần thưởng; một lượt cho bước ngược chiều); nhiệm vụ (trừ đường cơ sở, đặt tên lợi thế, bootstrap bằng critic); đầu ra ($\delta_t$ ước lượng lợi thế khi critic đúng).
+- **Sửa 2026-11-13 (bảng phát hiện):** từ khóa "Sai số TD" thành "Sai số sai phân thời gian" (viết tắt chỉ dùng sau `L10-212b`). `deck_check`: 40 âm tiết.
 
 #### `L10-201` Mức so sánh của trạng thái
 - **Vị trí, loại:** mạch 2; vấn đề và trực giác của cụm đường cơ sở.
@@ -302,6 +309,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Hình, phút:** —; 1.
 - **Quyết định:** sửa (`L10-06` "Baseline loại phần chung của return"): tiêu đề danh từ, "baseline" thành "đường cơ sở", thêm số dẫn nhập.
 - **Ghi chú diễn giả:** liên hệ bài toán nhiều cần gạt (multi-armed bandit) (Sutton và Barto, 2018, §13.4, tr. 329); mức so sánh phải không phụ thuộc hành động đã chọn, điều kiện được chứng minh ở `L10-204`.
+- **Sửa 2026-11-13 (bảng phát hiện):** ghi chú diễn giả bỏ câu về bài toán nhiều cần gạt (không có trong ghi chú); 98 token.
 
 #### `L10-202` Ví dụ: ba đường cơ sở trên bài toán một bước
 - **Vị trí, loại:** mạch 2; bước ví dụ của cụm đường cơ sở; bước ví dụ và hình thức rút gọn của cụm "đường cơ sở tối ưu" (`topic-04`).
@@ -312,6 +320,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Hình, phút:** thẻ `one-step-card.svg` (nhỏ); 2.
 - **Quyết định:** thêm; gộp trang "Đường cơ sở có phương sai nhỏ nhất" của kế hoạch thành dòng "Lưu ý:" (phương án nén).
 - **Ghi chú diễn giả:** $\operatorname{Var}(X_b)=\operatorname{Var}(X_{b^*})+\mathbb E\lVert\psi\rVert^2(b-b^*)^2$ với $\mathbb E\lVert\psi\rVert^2=\tfrac49$; chứng minh khai triển bậc hai theo $b$; $b=3$ làm tăng phương sai nên đường cơ sở không luôn giảm phương sai; $v_\pi$ không phải đường cơ sở tối ưu.
+- **Sửa 2026-11-13 (bảng phát hiện):** `.grid2.wide-right` thay `style=""` (G8).
 
 #### `L10-203` Đường cơ sở
 - **Vị trí, loại:** mạch 2; bước hình thức (định nghĩa).
@@ -372,6 +381,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Hình, phút:** —; 1,5.
 - **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo Mệnh đề 10.5, Ví dụ 10.5 của ghi chú. Dạng chiếm dụng $\tfrac1{1-\gamma}\mathbb E_{\nu^\pi,\pi_\theta}[A_\pi\psi]$ chỉ trong ghi chú diễn giả vì $\nu^\pi$ được định nghĩa ở `L10-403`.
 - **Ghi chú diễn giả:** dạng chiếm dụng theo Định lý 09.23; lợi thế phải của chính $\pi_\theta$; (a) là lý do $A_\pi$ có trung bình $0$ tại mỗi trạng thái.
+- **Sửa 2026-11-13 (bảng phát hiện):** giả thiết theo Mệnh đề 10.5 của ghi chú: "MDP hữu hạn, phần thưởng bị chặn, $\gamma<1$, $\pi=\pi_\theta$ Markov dừng; (b) thêm (G1)–(G4)". `deck_check`: 37 âm tiết, dòng dài nhất 20.
 
 #### `L10-209` Thuật toán REINFORCE có đường cơ sở
 - **Vị trí, loại:** mạch 2; thuật toán (hình thức) của cụm đường cơ sở; bước tính tay ở `L10-206`.
@@ -382,6 +392,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Hình, phút:** —; 1.
 - **Quyết định:** thêm: bộ cũ không có giả mã REINFORCE có đường cơ sở; Thuật toán 10.6 của ghi chú.
 - **Ghi chú diễn giả:** $\hat v$ dùng $w_{\mathrm{old}}$ cố định trong lượt nên là đường cơ sở hợp lệ; thuật toán không là actor–critic theo Định nghĩa 10.7 (nối sang `L10-212`). Bước tính tay `L10-206` chỉ làm bước cập nhật chính sách với $b=v_\pi$ và $\gamma=1$, ngoài giả thiết $\gamma<1$ của thuật toán, đúng như ghi chú; bước cập nhật critic không được tính tay.
+- **Sửa 2026-11-13 (bảng phát hiện):** "Giả thiết: (G1)–(G4); $\hat v(\cdot,w)$ bị chặn." nối vào dòng Đầu vào/Đầu ra, rồi câu thường riêng "Khởi tạo $\theta$, $w$ tùy ý; lặp $E$ lượt:" (không có nhãn "Khởi tạo:", vì nhãn này không thuộc danh sách nhãn được phép) theo Thuật toán 10.6 của ghi chú; bỏ bước 5 "Lặp lại với lượt mới" (đã nằm trong "lặp $E$ lượt"); vẫn 6 dòng. Ghi chú diễn giả bỏ câu "bước cập nhật critic không được tính tay". `deck_check`: 28 âm tiết, 6 dòng.
 
 #### `L10-210` Bài tập: đường cơ sở hợp lệ
 - **Vị trí, loại:** mạch 2; bước kiểm tra của cụm đường cơ sở; bài tập có lời giải trên mặt trang (fragment).
@@ -392,6 +403,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Hình, phút:** —; 1.
 - **Quyết định:** sửa và tách (`X01` "Bài tập: baseline và GAE"): phần đường cơ sở về đây, phần GAE về `L10-309`.
 - **Ghi chú diễn giả:** "Gợi ý:" kiểm xem $B_t$ có phụ thuộc $A_t$ khi biết $H_t$ không; (b) cần các lượt khác độc lập với lượt đang xét.
+- **Sửa 2026-11-13 (bảng phát hiện):** dòng lời giải thứ hai thành "(c), (d): $G_t-B_t=0$, nên $\widehat g_B\equiv0\ne\nabla_\theta J$; ở (c), $\nabla_\theta J=(\tfrac23;\,-\tfrac23)$." vì $(\tfrac23;-\tfrac23)$ chỉ là gradient của bài toán một bước.
 
 #### `L10-211` Ví dụ: chuỗi hai trạng thái
 - **Vị trí, loại:** mạch 2; ví dụ dẫn nhập của cụm critic (làm cụ thể vấn đề "Thuật toán 10.6 chờ hết lượt; $\hat v$ chỉ đánh giá $S_t$") và ứng dụng của Mệnh đề 10.5; ví dụ xuyên suốt của mạch 2–4.
@@ -402,6 +414,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Hình, phút:** `img/lec-10/two-state-chain.svg`; 2.
 - **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo Ví dụ 10.6 của ghi chú.
 - **Ghi chú diễn giả:** $\psi_\theta(s,1)=(1-p_s)e_s$; đóng góp $0{,}2\,e_A$ của bước $0$ và $0{,}3\,e_B$ của bước $1$ (xác suất $p_A$, trọng số $\gamma$); $\nu^\pi=(0{,}1;\,0{,}045)$ sẽ dùng ở mạch 4.
+- **Sửa 2026-11-13 (bảng phát hiện):** `.grid2.wide-right` thay `style=""` (G8).
 
 #### `L10-212` Critic, actor và phương pháp actor–critic
 - **Vị trí, loại:** mạch 2; vấn đề, trực giác, định nghĩa của cụm critic.
@@ -422,6 +435,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Hình, phút:** `img/lec-10/actor-critic-advantage.svg`; 0,5.
 - **Quyết định:** tách (từ `L10-212`, bản viết); D1 chuyển dòng "Nhắc lại:" từ `L10-212` sang đây.
 - **Ghi chú diễn giả:** sai số TD của Bài 05, 07 với mặt nạ của Bài 08; đọc hình (hai giá trị của critic, khung dừng gradient, hai mũi tên cập nhật, $I=\gamma^t$).
+- **Sửa 2026-11-13 (bảng phát hiện):** "Nhắc lại: sai số sai phân thời gian (sai số TD, temporal-difference error)": lần đầu viết tắt có tên đầy đủ; hình dùng `.figure.short-l` (310 px) thay `max-height:330px`. `deck_check`: 27 âm tiết.
 
 #### `L10-213` Sai số TD và lợi thế
 - **Vị trí, loại:** mạch 2; hình thức (kết quả) và ví dụ (critic đúng) của cụm sai số TD.
@@ -432,6 +446,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Hình, phút:** —; 1,5.
 - **Quyết định:** sửa (`L10-09` "Critic tạo sai số sai phân thời gian"): thêm giả thiết, độ chệch (b), kiểm số.
 - **Ghi chú diễn giả:** phản ví dụ bỏ critic đúng (bài toán một bước, $\hat v=1$: $\mathbb E[\delta_0\mid A_0=1]=2\ne1$); bỏ mặt nạ ($\delta_0=0{,}5$ thay $-0{,}4$); độ chệch không do bootstrap (Sutton và Barto, 2018, §13.5).
+- **Sửa 2026-11-13 (bảng phát hiện):** "$Z_{t+1}=1$ khi và chỉ khi kết thúc" theo Mệnh đề 10.8 của ghi chú. `deck_check`: 55 âm tiết.
 
 #### `L10-214` Ví dụ: hai bước actor–critic
 - **Vị trí, loại:** mạch 2; bước ví dụ tính tay của cụm critic, đứng trước giả mã `L10-215`; ứng dụng của Mệnh đề 10.8(b).
@@ -452,6 +467,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Hình, phút:** —; 1.
 - **Quyết định:** thêm: bộ cũ không có giả mã actor–critic; Thuật toán 10.9 của ghi chú.
 - **Ghi chú diễn giả:** $\delta$ là hệ số đã dừng gradient trong cập nhật actor; khi cắt ngắn ($U=1$, $Z=0$) vẫn bootstrap từ quan sát cuối; bộ nhớ không phụ thuộc độ dài lượt; ước lượng chệch khi critic sai (Nhận xét 10.10).
+- **Sửa 2026-11-13 (bảng phát hiện):** "Giả thiết: môi trường trả cờ $Z$." nối vào dòng Đầu vào/Đầu ra, rồi câu thường riêng "Khởi tạo $\theta$, $w$ tùy ý; mỗi lượt: $I\leftarrow1$, lặp tới khi kết thúc:" theo Thuật toán 10.9; bước 5 cũ ($I\leftarrow\gamma I$, $S\leftarrow S'$) gộp vào bước 4; vẫn 6 dòng. `deck_check`: 28 âm tiết, dòng dài nhất 17.
 
 #### `L10-216` Bài tập: sai số TD khi critic sai
 - **Vị trí, loại:** mạch 2; bước kiểm tra của cụm critic; lời giải trên mặt trang (fragment).
@@ -495,6 +511,7 @@ Phút mạch 2: trang tiêu đề $0{,}5$ + đường cơ sở $9{,}5$ (`L10-201
 - **Hình, phút:** `two-state-chain.svg` (nhỏ); 1,5.
 - **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo Ví dụ 10.8 của ghi chú.
 - **Ghi chú diễn giả:** ước lượng một bước dựa vào critic sai, ước lượng Monte Carlo dựa vào một phần thưởng ngẫu nhiên; hệ số $0{,}72=\gamma\lambda$ báo trước dạng tổng.
+- **Sửa 2026-11-13 (bảng phát hiện):** hình dùng `.figure.short-s` (160 px) thay `max-height:170px` (đã thử `.figure.short-m`: dòng "Kiểm:" đè chân trang, nên giữ `short-s`); ghi chú diễn giả dùng dạng khẳng định của ghi chú: "Muốn so độ chệch của ba ước lượng, cần lấy kỳ vọng theo lượt." Cờ OVERFLOW của `\xrightarrow` là dương tính giả (ảnh chụp không tràn).
 
 #### `L10-302` Lợi tức n bước
 - **Vị trí, loại:** mạch 3; hình thức (định nghĩa và bổ đề) của bước trung gian.
@@ -533,6 +550,7 @@ Phút mạch 2: trang tiêu đề $0{,}5$ + đường cơ sở $9{,}5$ (`L10-201
 - **Mật độ:** khoảng 35 âm tiết, 6 dòng (2 + 3 hàng bảng + 1).
 - **Hình, phút:** —; 1,5. **Quyết định:** thêm: bộ cũ không có; Ví dụ 10.9 của ghi chú, đặt trước Mệnh đề 10.15. Đợt sửa sau cổng: thêm dòng "Nhu cầu:".
 - **Ghi chú diễn giả:** $\delta_1=R_2-1{,}5$ có kỳ vọng $0{,}5$; với $\lambda=0$ độ chệch $-0{,}05$ và $+0{,}4$ khác nhau nên không bị khử; lý do đặt ví dụ trước mệnh đề.
+- **Sửa 2026-11-13 (bảng phát hiện):** ghi chú diễn giả thay câu siêu ngôn bằng số: "Với $\lambda=1$, lợi thế ước lượng chệch ($0{,}8$ so với $0{,}4$) nhưng tọa độ gradient đúng bằng $0{,}2$."
 
 #### `L10-306` GAE và tính không chệch cho gradient
 - **Vị trí, loại:** mạch 3; hình thức (kết quả) của cụm γ-just.
@@ -542,6 +560,7 @@ Phút mạch 2: trang tiêu đề $0{,}5$ + đường cơ sở $9{,}5$ (`L10-201
 - **Mật độ:** khoảng 50 âm tiết, 5 dòng, 1 công thức hiển thị. Điều kiện áp dụng, phạm vi trong ghi chú diễn giả.
 - **Hình, phút:** —; 1,5. **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo Mệnh đề 10.15 của ghi chú.
 - **Ghi chú diễn giả:** đánh đổi chệch–phương sai theo $\lambda$ chỉ định tính (Schulman và cộng sự, 2016, §3; nguồn tr. 13); "λ tốt nhỏ hơn γ" là quan sát thực nghiệm của bài báo; critic học được và $\lambda<1$ nên thực hành không có bảo đảm; lượt bị cắt phá điều kiện (a).
+- **Sửa 2026-11-13 (bảng phát hiện):** ghi chú diễn giả bỏ khẳng định "về thực nghiệm $\lambda$ tốt thường nhỏ hơn hẳn $\gamma$ tốt" (không có trong ghi chú); 137 token (trước 151).
 
 #### `L10-307` Ví dụ: kết thúc và cắt ngắn
 - **Vị trí, loại:** mạch 3; vấn đề, trực giác và ví dụ tính tay của cụm GAE trên đoạn thu; đứng trước thuật toán `L10-308`.
@@ -593,6 +612,7 @@ Phút mạch 3: $0{,}5$ + cụm 1 ($1{,}5+1+1{,}5+2{,}5$) + cụm 2 ($1{,}5+1{,}
 - **Mặt trang:** "4." + tên mạch; dòng dẫn "Muốn dùng dữ liệu cũ cho một bước lớn, phải chặn sai số khi đánh giá chính sách mới bằng dữ liệu đó." (23); từ khóa "Hiệu hiệu năng · Hàm thay thế · Phân kỳ KL · Chặn cải thiện · Miền tin cậy" (15).
 - **Hình, phút:** —; 0,5. **Quyết định:** thêm: trang tiêu đề mạch theo `AGENTS.md` §"Trang tiêu đề mạch"; bộ cũ không có.
 - **Ghi chú diễn giả (40–100):** mọi ước lượng của mạch 2–3 cần dữ liệu của chính sách đang cập nhật; mạch tìm công thức chính xác cho $J(\pi')-J(\pi)$, xấp xỉ nó bằng dữ liệu của $\pi$, chặn sai số, rồi đặt bài toán miền tin cậy.
+- **Sửa 2026-11-13 (bảng phát hiện):** ghi chú diễn giả rút còn 100 token (trước 101).
 
 #### `L10-401` Dữ liệu cũ và chính sách mới
 - **Vị trí, loại:** mạch 4; vấn đề của cụm hiệu hiệu năng.
@@ -603,6 +623,7 @@ Phút mạch 3: $0{,}5$ + cụm 1 ($1{,}5+1+1{,}5+2{,}5$) + cụm 2 ($1{,}5+1{,}
 - **Hình, phút:** `img/lec-10/policy-update-feedback.svg`; 1.
 - **Quyết định:** sửa (`L10-13` "Gradient lớn có thể phá chính sách"): tiêu đề danh từ; câu chung thay bằng chính sách mới cụ thể.
 - **Ghi chú diễn giả:** đọc hình; nối $J=-21{,}32$ của `L10-108`; bước lớn đổi phân bố trạng thái.
+- **Sửa 2026-11-13 (bảng phát hiện):** hình dùng `.figure.short-l` (310 px) thay `max-height:300px`.
 
 #### `L10-402` Ví dụ: đổi chính sách trên chuỗi hai trạng thái
 - **Vị trí, loại:** mạch 4; trực giác và ví dụ của cụm hiệu hiệu năng; dữ kiện dùng lại ở `L10-403`, `L10-405`, `L10-408`, `L10-410`.
@@ -641,6 +662,7 @@ Phút mạch 3: $0{,}5$ + cụm 1 ($1{,}5+1+1{,}5+2{,}5$) + cụm 2 ($1{,}5+1{,}
 - **Hình, phút:** —; 1,5.
 - **Quyết định:** sửa và gộp (`L10-15` "Dữ liệu cũ vẫn cho biết hướng thay đổi", `L10-22` "Tỷ số tại hành động đã lấy mẫu"): $w_t$ thành $\rho_t$, "tỷ số" thành "tỉ số"; tỉ số định nghĩa một lần ở đây, `L10-603` dùng lại.
 - **Ghi chú diễn giả:** Định nghĩa 06.24; dạng $\tfrac1{1-\gamma}\sum_s\nu^{\mathrm{old}}(s)A_{\mathrm{old}}(s,\pi_\theta)$; $A_{\mathrm{old}}=A_{\pi_{\mathrm{old}}}$; $0{,}26$ là số của `L10-402` với $p_A=0{,}5$.
+- **Sửa 2026-11-13 (bảng phát hiện):** thêm tên tiếng Anh "(probability ratio)" ở định nghĩa tỉ số chính sách (chuyển từ `L10-104`). `deck_check`: 50 âm tiết.
 
 #### `L10-406` Khớp giá trị và gradient tại tham số cũ
 - **Vị trí, loại:** mạch 4; hình thức (kết quả) và ứng dụng của cụm hàm thay thế.
@@ -678,6 +700,7 @@ Phút mạch 3: $0{,}5$ + cụm 1 ($1{,}5+1+1{,}5+2{,}5$) + cụm 2 ($1{,}5+1{,}
 - **Mật độ:** khoảng 30 âm tiết, 5 dòng, 2 khối công thức.
 - **Hình, phút:** —; 1,5. **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo chứng minh Định lý 10.26 của ghi chú.
 - **Ghi chú diễn giả (đến khoảng 250):** ý chính của Bổ đề 10.25 (dạng ma trận $\nu'^\top-\nu^\top=\gamma\nu^\top(P_{\pi'}-P_\pi)\Gamma_{\pi'}$, chuẩn của hàng); chỗ dùng cùng $P$, $\gamma<1$, điều kiện hỗ trợ.
+- **Sửa 2026-11-13 (bảng phát hiện):** bỏ lời trỏ "(chứng minh trong ghi chú bài giảng)" trên mặt trang; ý chính của Bổ đề 10.25 vẫn trong ghi chú diễn giả. `deck_check`: 21 âm tiết.
 
 #### `L10-410` Ví dụ: chặn cải thiện trên chuỗi hai trạng thái
 - **Vị trí, loại:** mạch 4; ứng dụng của cụm chặn cải thiện.
@@ -736,6 +759,7 @@ Phút mạch 3: $0{,}5$ + cụm 1 ($1{,}5+1+1{,}5+2{,}5$) + cụm 2 ($1{,}5+1{,}
 - **Mật độ:** khoảng 30 âm tiết, 5 dòng.
 - **Hình, phút:** —; 1. **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo Bài tập 10.11, lời giải của ghi chú.
 - **Ghi chú diễn giả:** câu (e) của ghi chú ($0{,}317$); cận âm không có nghĩa $J$ giảm; mọi bảo đảm cần $\nu$, $A$ chính xác.
+- **Sửa 2026-11-13 (bảng phát hiện):** ghi chú diễn giả bỏ lời trỏ "Câu (e) của ghi chú", giữ "Phạt dạng KL: $18\sqrt{0{,}000619/2}=0{,}317$".
 
 **Hành trình khái niệm, mạch 4.**
 
@@ -807,6 +831,7 @@ Phút mạch 4: $0{,}5+7+2{,}5+1{,}5+6+2{,}5+2{,}5=22{,}5$ (cụm hiệu hiệu 
 - **Hình, phút:** `one-step-card.svg` (nhỏ); 1,5.
 - **Quyết định:** sửa (`L10-18` "Ví dụ bước natural gradient"): tiêu đề "Ví dụ: …", thuật ngữ tiếng Việt, xử lý $F$ suy biến.
 - **Ghi chú diễn giả:** hướng $(1;\,1)$ cộng cùng hằng vào hai logit, không đổi chính sách, nên $\ker F$ không ảnh hưởng; $g=(\tfrac23;\,-\tfrac23)\in\operatorname{range}F_s$.
+- **Sửa 2026-11-13 (bảng phát hiện):** `.grid2.wide-right` thay `style=""` (G8).
 
 #### `L10-505` Ví dụ: hai vòng gradient liên hợp
 - **Vị trí, loại:** mạch 5; vấn đề (giới hạn của việc lập $F$) và ví dụ tính tay của cụm TRPO thực hành, trước `L10-506`.
@@ -836,6 +861,7 @@ Phút mạch 4: $0{,}5+7+2{,}5+1{,}5+6+2{,}5+2{,}5=22{,}5$ (cụm hiệu hiệu 
 - **Hình, phút:** —; 1,5.
 - **Quyết định:** sửa và gộp (`L10-19`, `L10-20` "TRPO chỉ nhận bước qua đủ hai kiểm tra").
 - **Ghi chú diễn giả:** $\widehat{\mathcal L}(\theta)=\widehat{\mathbb E}_{\mathcal D}[\rho_t(\theta)\widehat A_t]$, $\widehat D$ là KL trung bình mẫu cũ‖mới; `L10-504` nhận ngay $j=0$; bài báo TRPO gốc dùng lợi tức Monte Carlo, bước 2 và 7 theo Schulman và cộng sự (2016); chi phí mỗi vòng.
+- **Sửa 2026-11-13 (bảng phát hiện):** ghi chú diễn giả thêm "Giả thiết: chính sách khả vi hai lần, $\pi_\theta>0$; dữ liệu mỗi vòng do $\pi_{\mathrm{old}}$ sinh ra" (Thuật toán 10.37 của ghi chú; mặt trang ở 59 âm tiết, 6 dòng nên giả thiết đặt trong ghi chú diễn giả); bỏ câu về cách bài báo GAE khớp critic (không có trong ghi chú) và câu chi phí; câu nguồn thành "bước 2 theo cách Schulman và cộng sự (2016) ghép TRPO với GAE" (ghi chú, đoạn sau Thuật toán 10.37); 136 token (trước 176).
 
 #### `L10-508` Phạm vi bảo đảm của TRPO thực hành
 - **Vị trí, loại:** mạch 5; ứng dụng và đánh giá của cụm TRPO (nhận xét).
@@ -904,6 +930,7 @@ Phút mạch 5: $0{,}5+(1+1{,}5+1{,}5+1{,}5)+(2+1+1{,}5+1+1+1)=13{,}5$. Câu n�
 - **Mật độ:** khoảng 30 âm tiết, 4 dòng, 1 công thức hiển thị (dạng cases); hình bên phải.
 - **Hình, phút:** `img/lec-10/ppo-one-step-plateau.svg`; 2. **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo Ví dụ 10.17 của ghi chú.
 - **Ghi chú diễn giả:** khúc gấp thứ nhất: mẫu hành động 2 có $\rho<0{,}8$ với lợi thế âm; khúc thứ hai: $\rho(1)>1{,}2$; đọc hình; $\mathcal L^{\mathrm{CPI}}$ tăng không giới hạn trên $[0,1]$ theo $p$.
+- **Sửa 2026-11-13 (bảng phát hiện):** "hàm thay thế mẫu ${\mathcal L^{\mathrm{CPI}}=3p-2}$" gọi tên đại lượng trước khi `L10-603` định nghĩa. `deck_check`: 20 âm tiết.
 
 #### `L10-603` Mục tiêu PPO-Clip
 - **Vị trí, loại:** mạch 6; hình thức (định nghĩa) của cụm PPO-Clip.
@@ -914,6 +941,7 @@ Phút mạch 5: $0{,}5+(1+1{,}5+1{,}5+1{,}5)+(2+1+1{,}5+1+1+1)=13{,}5$. Câu n�
 - **Hình, phút:** —; 1.
 - **Quyết định:** sửa và gộp (`L10-22`, phần công thức của `L10-24` "Công thức PPO-Clip phụ thuộc dấu lợi thế"): $w_t$ thành $\rho_t$; tỉ số đã định nghĩa ở `L10-405`.
 - **Ghi chú diễn giả:** CPI là lặp chính sách bảo thủ (conservative policy iteration) (Kakade và Langford, 2002); $\widehat{\mathbb E}_{\mathcal D}$ là trung bình đều trên bộ đệm, khác $\mathbb E_{\nu}$ của mạch 4.
+- **Sửa 2026-11-13 (bảng phát hiện):** thêm dòng "Chỉ số CPI: lặp chính sách bảo thủ (conservative policy iteration)." trên mặt trang (trước chỉ trong ghi chú diễn giả). `deck_check`: 31 âm tiết, 5 dòng.
 
 #### `L10-604` Dạng theo dấu của lợi thế
 - **Vị trí, loại:** mạch 6; hình thức (kết quả) của cụm PPO-Clip.
@@ -924,6 +952,7 @@ Phút mạch 5: $0{,}5+(1+1{,}5+1{,}5+1{,}5)+(2+1+1{,}5+1+1+1)=13{,}5$. Câu n�
 - **Hình, phút:** —; 1,5.
 - **Quyết định:** sửa (`L10-24`): tiêu đề danh từ; thêm miền gradient bằng $0$. Đánh số (a)–(c) trên mặt trang ứng với (a), (b), (d) của Mệnh đề 10.40; ghi chú diễn giả nêu ứng số.
 - **Ghi chú diễn giả:** trường hợp $\widehat A_t=0$; gradient $\nabla\rho=\rho\psi$; tập gradient bằng $0$ phụ thuộc dấu, khác tỉ lệ cắt (nối `L10-611`).
+- **Sửa 2026-11-13 (bảng phát hiện):** nhãn ý theo ghi chú: thêm "(c) $\widehat A_t=0$: $\ell^{\mathrm{CLIP}}_t=0$" và đổi "(c) gradient bằng $0$" thành "(d)"; ghi chú diễn giả bỏ câu đối chiếu nhãn. `deck_check`: 38 âm tiết, 6 dòng.
 
 #### `L10-605` Ví dụ: bốn mẫu
 - **Vị trí, loại:** mạch 6; ứng dụng của cụm PPO-Clip.
@@ -944,6 +973,7 @@ Phút mạch 5: $0{,}5+(1+1{,}5+1{,}5+1{,}5)+(2+1+1{,}5+1+1+1)=13{,}5$. Câu n�
 - **Hình, phút:** —; 1,5.
 - **Quyết định:** sửa (`L10-26` "Clipping không phải ràng buộc KL"): tiêu đề gọi tên kết quả; câu phạm vi thành "Lưu ý:".
 - **Ghi chú diễn giả:** bước đầu tiên của PPO trùng bước CPI, mọi $\rho_t=1$ là phép kiểm cài đặt; ví dụ $p=0{,}85$ ở `L10-614` cho KL $0{,}1042$ dù mục tiêu phẳng từ $p=0{,}8$; $\epsilon$ không phải bán kính KL.
+- **Sửa 2026-11-13 (bảng phát hiện):** ý "hai hàm trùng nhau quanh $\theta_{\mathrm{old}}$" đổi nhãn (b) thành (c) theo Mệnh đề 10.41 của ghi chú; ghi chú diễn giả "Theo (c)". 135 token.
 
 #### `L10-607` PPO-Penalty
 - **Vị trí, loại:** mạch 6; vấn đề, trực giác và ví dụ tính tay của cụm PPO-Penalty (trang thứ nhất của hai trang cùng tiêu đề).
@@ -974,6 +1004,7 @@ Phút mạch 5: $0{,}5+(1+1{,}5+1{,}5+1{,}5)+(2+1+1{,}5+1+1+1)=13{,}5$. Câu n�
 - **Hình, phút:** —; 1.
 - **Quyết định:** sửa (`L10-27` "Actor chuẩn hóa lợi thế, critic giữ đích thô"): $\widehat A^{\mathrm{actor}}$ thành $\widehat A_t$, "đích" thành "mục tiêu".
 - **Ghi chú diễn giả:** dấu: $\mathcal L^{\mathrm{CLIP}}$ cực đại hóa, $L$ cực tiểu hóa; $c_1$ chỉ có tác dụng khi dùng chung tham số; số hạng entropy giữ chính sách khỏi tất định; biến thể cắt mất mát giá trị trình bày ở `L10-617`.
+- **Sửa 2026-11-13 (bảng phát hiện):** ghi chú diễn giả sửa câu về $c_1$: "Khi chính sách và critic dùng chung tham số, $c_1$ cân hai mục tiêu trên cùng một gradient; với hai mạng tách, $c_1$ chỉ đổi thang mất mát của critic."; bỏ câu lặp về trung bình trên mini-batch để giữ độ dài.
 
 #### `L10-610` Ví dụ: một mini-batch tính tay
 - **Vị trí, loại:** mạch 6; ví dụ tính tay của cụm thuật toán PPO, trước giả mã `L10-613`.
@@ -1014,6 +1045,7 @@ Phút mạch 5: $0{,}5+(1+1{,}5+1{,}5+1{,}5)+(2+1+1{,}5+1+1+1)=13{,}5$. Câu n�
 - **Hình, phút:** `img/lec-10/ppo-data-pipeline.svg`; 1.
 - **Quyết định:** gộp (`L10-28` "Kích thước từ rollout đến batch", `L10-29` "Đường dữ liệu PPO", `L10-30` "Cấu trúc dữ liệu của một batch PPO"): ba trang thành một; kích thước mảng $h\times N$ chuyển vào ghi chú diễn giả.
 - **Ghi chú diễn giả:** mảng cỡ $h\times N$ phẳng thành $hN$ mẫu; giá trị quan sát cuối khi cắt ngắn lấy trước khi môi trường tự đặt lại; hành động nhiều chiều cộng log-xác suất các thành phần trước khi lập tỉ số; đọc hình.
+- **Sửa 2026-11-13 (bảng phát hiện):** hình dùng `.figure.short` (260 px) thay `max-height:270px`.
 
 #### `L10-613` Thuật toán PPO kiểu actor–critic
 - **Vị trí, loại:** mạch 6; thuật toán; nơi hai hàng của bài toán gặp nhau.
@@ -1024,6 +1056,7 @@ Phút mạch 5: $0{,}5+(1+1{,}5+1{,}5+1{,}5)+(2+1+1{,}5+1+1+1)=13{,}5$. Câu n�
 - **Hình, phút:** —; 1,5.
 - **Quyết định:** thêm: bộ cũ không có giả mã PPO đầy đủ; Thuật toán 10.49 của ghi chú. Đợt sửa sau cổng: rút từ 10 xuống 6 dòng; chi phí $K\lceil hN/M\rceil$ chuyển vào ghi chú diễn giả và bảng `L10-616`.
 - **Ghi chú diễn giả:** bước tính tay là `L10-610`; lưu cả giá trị quan sát cuối ở mỗi bước cắt ngắn; mỗi lần thu $hN$ bước cho $K\lceil hN/M\rceil$ bước gradient thay vì một, đó là cách PPO giải giới hạn thứ hai của `L10-108`; điều kiện dừng là ngân sách, không phải tiêu chuẩn hội tụ.
+- **Sửa 2026-11-13 (bảng phát hiện):** ghi chú diễn giả thêm giả thiết của Thuật toán 10.49 ($\pi_\theta>0$; môi trường trả $Z$, $U$, quan sát cuối); bỏ câu chuẩn hóa lợi thế (đã ở `L10-609`).
 
 #### `L10-614` Ví dụ: chẩn đoán trên đoạn phẳng
 - **Vị trí, loại:** mạch 6; ứng dụng và đánh giá của cụm thuật toán PPO (đọc chẩn đoán).
@@ -1034,6 +1067,7 @@ Phút mạch 5: $0{,}5+(1+1{,}5+1{,}5+1{,}5)+(2+1+1{,}5+1+1+1)=13{,}5$. Câu n�
 - **Hình, phút:** —; 1.
 - **Quyết định:** thêm: bộ cũ không đọc chẩn đoán trên số; Ví dụ 10.21 của ghi chú. Đợt sửa sau cổng: phép tính $-\log1{,}275=-0{,}2430$ chuyển vào ghi chú diễn giả.
 - **Ghi chú diễn giả:** một mẫu: $-\log1{,}275=-0{,}2430<0$ trong khi $(\rho-1)-\log\rho=0{,}0321$; KL tăng dù mục tiêu phẳng từ $p=0{,}8$ (Adam, mini-batch khác); một trạng thái nên mọi biến thiên của mục tiêu critic đến từ hành động; tỉ lệ cắt $\tfrac33$ ở đây trùng tập gradient bằng $0$, nói chung không trùng.
+- **Sửa 2026-11-13 (bảng phát hiện):** "Diễn giải:" thành "gradient của mục tiêu cắt bằng $0$ mà KL vẫn tăng, nên mục tiêu cắt không chặn KL." (không lặp số của dòng trên).
 
 #### `L10-615` Siêu tham số của bài báo PPO
 - **Vị trí, loại:** mạch 6; bảng (đọc cấu hình có nguồn, so sánh hai bộ thí nghiệm của bài báo).
@@ -1054,6 +1088,7 @@ Phút mạch 5: $0{,}5+(1+1{,}5+1{,}5+1{,}5)+(2+1+1{,}5+1+1+1)=13{,}5$. Câu n�
 - **Hình, phút:** —; 1.
 - **Quyết định:** sửa (`L10-36` "TRPO và PPO kiểm soát bước theo hai cách"): tiêu đề danh từ; tiêu chí theo bảo đảm.
 - **Ghi chú diễn giả:** không kết luận phương pháp nào tốt hơn ngoài thí nghiệm của bài báo (Schulman và cộng sự, 2017, §6); bảng viết lại bảng tr. 28 của nguồn.
+- **Sửa 2026-11-13 (bảng phát hiện):** ghi chú diễn giả cắt câu phủ định "Không kết luận phương pháp nào tốt hơn …" (sau kiểm lại: không thay bằng câu so sánh không có trong ghi chú).
 
 #### `L10-617` Ví dụ: cắt mất mát giá trị
 - **Vị trí, loại:** mạch 6; vấn đề và ví dụ dẫn nhập của cụm chi tiết cài đặt (D1: trang ví dụ đứng trước bảng).
@@ -1064,6 +1099,7 @@ Phút mạch 5: $0{,}5+(1+1{,}5+1{,}5+1{,}5)+(2+1+1{,}5+1+1+1)=13{,}5$. Câu n�
 - **Hình, phút:** —; 1.
 - **Quyết định:** gộp (`L10-33`, `L10-34`, `L10-35` của bộ cũ) rồi D1 tách (E6: 66 âm tiết, hai luận điểm): ví dụ ở đây, bảng và kết luận ở `L10-617b`.
 - **Ghi chú diễn giả:** phép cắt dùng chính $\epsilon$ của tỉ số; vì sao nhánh cắt cho gradient $0$; critic cực tiểu hóa $\max$ của hai bình phương; nhận định của Huang và cộng sự (2022) về Engstrom và cộng sự, Andrychowicz và cộng sự (2021).
+- **Sửa 2026-11-13 (bảng phát hiện):** "Nhu cầu: đo tác động của một tối ưu mức mã (code-level optimization) lên critic." khớp nội dung trang và câu dẫn trước Ví dụ 10.22 của ghi chú; ghi chú diễn giả bỏ câu dẫn Huang/Engstrom/Andrychowicz (không có trong ghi chú và danh mục tài liệu); 122 token (trước 154).
 
 #### `L10-617b` Chi tiết cài đặt
 - **Vị trí, loại:** mạch 6; bảng rút gọn của Nhận xét 10.50 và kết luận trả lời "Nhu cầu:" của `L10-617`.
@@ -1084,6 +1120,7 @@ Phút mạch 5: $0{,}5+(1+1{,}5+1{,}5+1{,}5)+(2+1+1{,}5+1+1+1)=13{,}5$. Câu n�
 - **Hình, phút:** —; 1.
 - **Quyết định:** gộp (`L10-37` "Mô hình lý thuyết tách vòng ngoài và vòng trong", `L10-37B` "Kết quả điểm dừng có phạm vi hẹp"): tiêu đề gọi tên kết quả.
 - **Ghi chú diễn giả:** Định lý 3.1, 3.2 của bài báo; cận $C\sqrt{\lvert\mathcal A\rvert}\limsup\varphi_n$; GAE với critic học được cho $\varphi_n>0$; bài báo dùng $\min\{\rho,\operatorname{clip}(\rho)\}\tilde A$ và coi gradient bằng $0$ ở hai phía, khác dạng theo dấu của `L10-604`; điểm dừng (stationary point); bốn khó khăn phân tích ở nguồn tr. 37.
+- **Sửa 2026-11-13 (bảng phát hiện):** ghi chú diễn giả bỏ hai tên tiếng Anh đã có trên mặt trang; 145 token (trước 154).
 
 #### `L10-619` Bài tập: kiểm một mini-batch PPO
 - **Vị trí, loại:** mạch 6; bước kiểm tra chung của cụm PPO-Clip và cụm chẩn đoán (đề); lời giải ở trang sau.
@@ -1094,6 +1131,7 @@ Phút mạch 5: $0{,}5+(1+1{,}5+1{,}5+1{,}5)+(2+1+1{,}5+1+1+1)=13{,}5$. Câu n�
 - **Hình, phút:** —; 1.
 - **Quyết định:** sửa và tách (`X03` "Bài tập: kiểm toán một batch PPO"): "kiểm toán" thành "kiểm"; đề và lời giải hai trang. Câu (d) chuyển lên `L10-608`.
 - **Ghi chú diễn giả:** "Gợi ý:" $\rho=e^{\log\rho}$; xét dấu của lợi thế trước khi cắt; dạng $-\log\rho$ có thể bằng $0$ dù chính sách đã đổi.
+- **Sửa 2026-11-13 (bảng phát hiện):** ghi chú diễn giả bỏ câu trỏ về câu (d) của Bài tập 10.12.
 
 #### `L10-620` Bài tập: kiểm một mini-batch PPO
 - **Vị trí, loại:** mạch 6; lời giải trên mặt trang (trang kế tiếp cùng tiêu đề).
@@ -1147,6 +1185,7 @@ Phút mạch 6: $0{,}5$ + PPO-Clip ($1+2+1+1{,}5+1+1{,}5$) + PPO-Penalty $2$ + t
 - **Hình, phút:** —; 0,5.
 - **Quyết định:** thêm; bản viết tách bảng chín hàng thành `L10-702` và `L10-702b` (đáy quá 680 px).
 - **Ghi chú diễn giả (D1):** mở bằng các kết quả (Bổ đề 10.19, Mệnh đề 10.22, Định lý 10.26, Hệ quả 10.29, 10.31); mọi bảo đảm cần lợi thế, $\nu^\pi$ và tối ưu chính xác; dạng KL của chặn cải thiện; điều kiện hỗ trợ.
+- **Sửa 2026-11-13 (bảng phát hiện):** "${\pi_{\mathrm{old}}>0}$" bọc nhóm KaTeX để không ngắt "0" xuống dòng riêng (ảnh chụp 1600×900 đã kiểm).
 
 #### `L10-702b` Kết quả và giả thiết của bài
 - **Vị trí, loại:** mạch 7; bảng tổng kết (tiếp), mạch 5–6 (trang tách ở bản viết, ghi vào storyboard ở D1).
@@ -1175,6 +1214,7 @@ Phút mạch 6: $0{,}5$ + PPO-Clip ($1+2+1+1{,}5+1+1{,}5$) + PPO-Penalty $2$ + t
 - **Mật độ:** khoảng 50 âm tiết, bảng 3 hàng.
 - **Hình, phút:** —; 0,5. **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo §7.2 bảng thứ hai của ghi chú.
 - **Ghi chú diễn giả:** không hàng nào áp dụng cho TRPO hay PPO như cài đặt thực tế.
+- **Sửa 2026-11-13 (bảng phát hiện):** giữ `<colgroup>` với `col style="width:17%"` và `"width:39%"` (D10): nhu cầu một trang, vì bảng ba cột có cột "Kết luận" chứa công thức dài của Jin, Li và Wang; không lớp nào trong `lecture-course.css` đặt độ rộng cột bảng. Đây là `style=""` duy nhất còn lại của deck.
 
 #### `L10-705` Bài tập: GAE ở bước cắt ngắn trên CartPole
 - **Vị trí, loại:** mạch 7; bài tập tổng hợp (đề), dùng nhiều kết quả trên một bài toán Học tăng cường cụ thể; ứng dụng của cụm γ-just và GAE trên đoạn thu.
@@ -1194,6 +1234,7 @@ Phút mạch 6: $0{,}5$ + PPO-Clip ($1+2+1+1{,}5+1+1{,}5$) + PPO-Penalty $2$ + t
 - **Hình, phút:** —; 1.
 - **Quyết định:** thêm: bộ cũ không có bài tổng hợp; Tình huống 10.1, 10.2 của ghi chú. Đợt sửa sau cổng: bỏ bảng hai hàng để trang còn 5 dòng.
 - **Ghi chú diễn giả (đến khoảng 200):** ở (a) lợi thế nhỏ và dương như mọi bước khác, critic được kéo về $100$; ở (b) actor giảm xác suất của chính các hành động giữ cột, critic học mục tiêu $1$ cho trạng thái cuối; Tình huống 10.3 (Breakout) chỉ nêu tên, số đo không trình chiếu.
+- **Sửa 2026-11-13 (bảng phát hiện):** dòng kết luận thành hai câu theo Tình huống 10.2 của ghi chú: "Với cờ sai, thuật toán học như thể lượt kết thúc thật ở bước $500$." và "Bài toán này không còn tính Markov trên trạng thái quan sát." (trước: "Kết luận: … giải một MDP kết thúc tại bước 500"; tách hai câu vì một câu 26 âm tiết vượt trần dòng; 6 dòng); ghi chú diễn giả thêm lý do (trạng thái không chứa chỉ số thời gian) và bỏ câu Breakout. `deck_check`: 48 âm tiết, 6 dòng, dòng dài nhất 17; ghi chú 176 token (lời giải, trần 250).
 
 #### `L10-707` Trả lời vấn đề trung tâm
 - **Vị trí, loại:** mạch 7; trả lời có điều kiện.
@@ -1204,6 +1245,7 @@ Phút mạch 6: $0{,}5$ + PPO-Clip ($1+2+1+1{,}5+1+1{,}5$) + PPO-Penalty $2$ + t
 - **Hình, phút:** —; 1.
 - **Quyết định:** thêm: bộ cũ không có trang trả lời bài toán; §7.3 của ghi chú. Đợt sửa sau cổng: dòng (3) và dòng nguồn rút về dưới 20 âm tiết; trang nguồn của bài giảng gốc và Jin, Li và Wang (2024) chuyển vào ghi chú diễn giả.
 - **Ghi chú diễn giả:** số hiệu kết quả của từng dòng (Mệnh đề 10.2, 10.3, 10.8, 10.14, 10.15, 10.22, Định lý 10.26, Hệ quả 10.27, 10.31, Mệnh đề 10.34, Nhận xét 10.38, Mệnh đề 10.41, Định nghĩa 10.43); kết quả hội tụ hiện có cho PPO-Clip chỉ nói về điểm dừng trong một mô hình đơn giản hóa (Nhận xét 10.51; Jin, Li và Wang, 2024); bài giảng gốc tr. 3–42; đối chiếu với năm dòng của `L10-109`.
+- **Sửa 2026-11-13 (bảng phát hiện):** dòng (4) "…; sai số, mức giảm bị chặn."; dòng (5) "TRPO xấp xỉ; trên bộ đệm: KL trung bình mẫu ${\le\kappa}$, hàm thay thế mẫu tăng." theo Nhận xét 10.38 (D10). `deck_check`: 80 âm tiết (trước 77; trần 80 của trang tổng kết), 6 dòng, dòng dài nhất 17.
 
 #### `L10-708` Câu hỏi tự kiểm tra
 - **Vị trí, loại:** mạch 7; câu hỏi tự kiểm tra.
@@ -1214,26 +1256,29 @@ Phút mạch 6: $0{,}5$ + PPO-Clip ($1+2+1+1{,}5+1+1{,}5$) + PPO-Penalty $2$ + t
 - **Hình, phút:** —; 0,5.
 - **Quyết định:** thêm: bộ cũ không có câu hỏi tự kiểm tra; §7.4 của ghi chú. Phút giảm từ 1 xuống 0,5 để nhường cho trang `L10-710`; lời giải ngắn nằm trong ghi chú diễn giả và thuộc 30 phút chữa bài.
 - **Ghi chú diễn giả:** lời giải ngắn của §7.4 (Mệnh đề 10.2; Bổ đề 10.19 trùng hàm thay thế khi phân bố trạng thái không đổi; Mệnh đề 10.40(d) và Định nghĩa 10.47; Hệ quả 10.29 và Nhận xét 10.38).
+- **Sửa 2026-11-13 (bảng phát hiện):** ghi chú diễn giả: lời giải câu 4 nêu hai bất đẳng thức trên bộ đệm; dòng nguồn dẫn khối có thật cho từng câu: "§7.4 (câu 1–2); Mệnh đề 10.40, Định nghĩa 10.47 (câu 3); Hệ quả 10.29, Nhận xét 10.38 (câu 4)" (D10). Ghi chú 152 token (lời giải).
 
 #### `L10-709` Bài tập về nhà và tài liệu đọc
 - **Vị trí, loại:** mạch 7; bài về nhà (trang thứ nhất của hai trang cùng tiêu đề).
-- **Lý do tồn tại, nhu cầu:** ánh xạ Bài tập 10.13–10.21 của `materials/lec-10/exercises.md` và Bài tập củng cố 10.1–10.12 của ghi chú tới các mạch.
+- **Lý do tồn tại, nhu cầu:** ánh xạ Bài tập 10.13–10.17 của `materials/lec-10/exercises.md` và Bài tập củng cố 10.1–10.12 của ghi chú tới các mạch.
 - **Liên kết:** trước: `L10-708`; sau: `L10-710`. **Mục tiêu:** 1–5. **Ghi chú:** §7.5 (`topic-23`); `exercises.md`, bảng `Mạch | Mở phần | Bài tập`.
-- **Mặt trang (cập nhật 2026-11-05):** bảng `Mạch | Bài tập | Bài tập củng cố (ghi chú)`, sáu hàng theo bảng mạch của `exercises.md`: 1–2: 10.14–10.16, 10.20, 10.21 | 10.1, 10.4, 10.5, 10.10; 3: 10.13, 10.15, 10.18 | 10.6, 10.7; 4: 10.16–10.18 | 10.11; 5: 10.19 | 10.8, 10.9; 6: 10.16, 10.19, 10.21 | 10.2, 10.12; 7: 10.21 | 10.3. Mạch 1 gộp với mạch 2 (Bài tập 10.14 thuộc cả hai) để giữ sáu hàng.
-- **Mật độ:** 37 âm tiết (tính cả hàng tiêu đề; ô chỉ chứa số không tính), 6 dòng (6 hàng bảng), đáy 557 px.
+- **Mặt trang (cập nhật 2026-11-13):** bảng `Mạch | Bài tập (tệp bài tập) | Bài tập củng cố (ghi chú)`, bảy hàng chép đúng bảng mạch hiện tại của `exercises.md` (làm lại 2026-11-12): 1. Mở đầu: — | —; 2: 10.14 | 10.1, 10.4, 10.5, 10.10; 3: 10.13, 10.15 | 10.6, 10.7; 4: 10.16 | 10.11; 5: 10.17 | 10.8, 10.9; 6: 10.14 | 10.2, 10.12; 7: — | 10.3. Tên mạch theo trang tiêu đề mạch. Bản 2026-11-05 (bộ 10.13–10.21 cũ, gộp mạch 1–2) đã thay.
+- **Mật độ:** 50 âm tiết theo `deck_check` (2026-11-13; ô chỉ chứa số không tính), 7 hàng bảng; bảng là trang bài về nhà theo trần 80 của bảng, không vượt trần; ảnh chụp 1600×900 vừa khung.
 - **Hình, phút:** —; 0,5.
 - **Quyết định:** thêm: bộ cũ không có trang bài về nhà. Đợt sửa sau cổng: tách khỏi trang tài liệu đọc (`L10-710`). Cập nhật 2026-11-05: có `exercises.md`, nên bảng chuyển sang ánh xạ của tệp đó (bỏ hàng "4–6. Các kết quả có bảo đảm"; Bài tập 10.3 ở mạch 7 như `exercises.md`), thêm cột Bài tập củng cố; liên kết viewer "Bài tập" đặt ở `L10-710`.
-- **Ghi chú diễn giả:** Bài tập 10.13–10.21 trong tệp bài tập, xây dựng từ bài tập và ví dụ của Sutton và Barto (2018), ba mức (10.13–10.14; 10.15–10.19; 10.20–10.21); lý do gộp mạch 1–2; Bài tập củng cố 10.1–10.12 có lời giải trong ghi chú, các bài đã có trên trang chiếu, 10.12(d) ở `L10-608`; Bài tập 10.3 kiểm các kết quả có bảo đảm.
+- **Ghi chú diễn giả (cập nhật 2026-11-13):** Bài tập 10.13–10.17 trong tệp bài tập, lấy từ bài tập của Sutton và Barto (2018), hai mức: nhận biết (10.13); tính toán hoặc chứng minh (10.14–10.17); Bài tập 10.14 thuộc mạch 2 và mạch 6; Bài tập củng cố 10.1–10.12 có lời giải trong ghi chú, các bài có phiên bản trên trang chiếu; Bài tập 10.3 kiểm các kết quả có bảo đảm.
+- **Sửa 2026-11-13 (bảng phát hiện):** xem "Mặt trang" và "Ghi chú diễn giả" đã cập nhật. `deck_check`: 50 âm tiết (bảng 7 hàng), ghi chú 106 token.
 
 #### `L10-710` Bài tập về nhà và tài liệu đọc
 - **Vị trí, loại:** mạch 7; tài liệu đọc, liên kết viewer, dòng nối Bài 11 (trang thứ hai cùng tiêu đề; trang cuối bài).
 - **Lý do tồn tại, nhu cầu:** tài liệu đọc có mục cụ thể và nối sang bài kế tiếp.
 - **Liên kết:** trước: `L10-709`; sau: — (cuối bài). **Mục tiêu:** 1–5. **Ghi chú:** §7.5, §7.6 (`topic-23`; dòng Bài 11 là `topic-24`); nguồn tr. 43.
-- **Mặt trang:** "Tài liệu đọc: Sutton và Barto (2018), §13.4–13.5, §7.1, §12.1–12.3." (8); "Schulman và cộng sự (2015, 2016, 2017); Engstrom và cộng sự (2020)." (8); dòng liên kết "Ghi chú bài giảng · Bài tập" tới `material-viewer.html?doc=materials/lec-10/lecture-note.md&deck=lecture-10-trpo-va-ppo.html` và `material-viewer.html?doc=materials/lec-10/exercises.md&deck=lecture-10-trpo-va-ppo.html` (cập nhật 2026-11-05); "Bài 11: biến thể SPO, SAM+PPO đổi mục tiêu tỉ số, bước tối ưu." và "Bài 11 dùng bộ nhớ phát lại, tỉ số theo chính sách hành vi." (D2), liên kết `lecture-11-cac-phuong-phap-gradient-chinh-sach-nang-cao.html`. Ghi chú: dòng Schulman và cộng sự có mục (D1).
-- **Mật độ:** 60 âm tiết, 5 dòng, đáy 435 px.
+- **Mặt trang (cập nhật 2026-11-13, theo "Hướng dẫn đọc thêm" của ghi chú):** "Tài liệu đọc: Sutton và Barto (2018), §13.4–13.5, §7.1, §12.1–12.3."; "Schulman và cộng sự (2015), §2–3, Phụ lục C; (2016), §2–3; (2017), §3–5."; "Achiam và cộng sự (2017), §5; Huang và cộng sự (2022); Engstrom và cộng sự (2020)."; một dòng nối "Bài 11: SPO đổi mục tiêu, SAM+PPO đổi bước tối ưu; học khác chính sách có bộ nhớ phát lại." (20 âm tiết) thay hai dòng D2. Bản trước: dòng liên kết "Ghi chú bài giảng · Bài tập" tới `material-viewer.html?doc=materials/lec-10/lecture-note.md&deck=lecture-10-trpo-va-ppo.html` và `material-viewer.html?doc=materials/lec-10/exercises.md&deck=lecture-10-trpo-va-ppo.html` (cập nhật 2026-11-05); "Bài 11: biến thể SPO, SAM+PPO đổi mục tiêu tỉ số, bước tối ưu." và "Bài 11 dùng bộ nhớ phát lại, tỉ số theo chính sách hành vi." (D2), liên kết `lecture-11-cac-phuong-phap-gradient-chinh-sach-nang-cao.html`. Ghi chú: dòng Schulman và cộng sự có mục (D1).
+- **Mật độ:** 50 âm tiết theo `deck_check` (2026-11-13; trước 46), 5 dòng.
 - **Hình, phút:** —; 0,5.
 - **Quyết định:** tách (từ trang `L10-709` của bản trước, theo quy ước đếm hàng bảng của cổng storyboard).
 - **Ghi chú diễn giả:** Bài 11 viết tỉ số $\rho_t(\theta)$ của bài này là $w_t$ và dùng $\rho_t$ cho tỉ số với chính sách hành vi; Phần II của nguồn (A3C, DDPG, SAC, …) thuộc Bài 11.
+- **Sửa 2026-11-13 (bảng phát hiện):** xem "Mặt trang" đã cập nhật. `deck_check`: 50 âm tiết, 5 dòng, dòng dài nhất 19.
 
 **Mạch 7 và hành trình khái niệm.** Mạch kết luận không mở khái niệm mới; sáu bước ghi `không áp dụng`. `L10-705`–`L10-706` là bước ứng dụng và kiểm tra của cụm γ-just và cụm GAE trên đoạn thu (mạch 3). Phút: $0{,}5+1+1+1+0{,}5+1{,}5+1+1+0{,}5+0{,}5+0{,}5=9$.
 

@@ -6,7 +6,7 @@
 - Nguồn bài giảng gốc: `RL-hk2-2025-2026/lecture10_policy_gradient_part2.pdf`, 43 trang (trang bìa ghi "Lecture 10: Overview on Policy Gradient Algorithms, Part 1"). Phần I (tr. 3–42) thuộc bài này; Phần II (A3C, DDPG, SAC, …) thuộc Bài 11 và chỉ xuất hiện trong một dòng nối ở trang cuối.
 - Kế hoạch đã duyệt: kế hoạch bộ trang chiếu của điều phối viên (7 mạch, 101 trang), áp dụng phương án nén 11 cặp trang thành 90 trang; cổng storyboard (2026-11-04, hai lần) tách lại năm trang (`L10-110`, `L10-412`, `L10-510`, `L10-608`, `L10-710`), còn 95 trang; bản viết tách `L10-212b`, `L10-702b`, và đợt sửa D1 (sau năm báo cáo rà soát, 2026-11-04) tách `L10-412b`, `L10-502b`, `L10-611b`, `L10-617b`: **101 trang**, giữ phút từng mạch $12+23+14{,}5+22{,}5+13{,}5+25{,}5+9=120$. Ghi chú bài giảng dùng làm nguồn ở D1 là bản sau commit `9a5478a` (sửa ví dụ miền tin cậy sau Hệ quả 10.31 và Ví dụ 10.4). Mã trang đánh số liên tiếp; bảng đối chiếu mã kế hoạch → mã mới ở cuối `storyboard.md`.
 - Bản cũ: bộ trang chiếu `lecture-10-trpo-va-ppo.html` (42 trang, mã `L10-01`…`L10-38`, `L10-37B`, `X01`–`X03`, ký hiệu $w_t$) và các tệp `outline.md`, `storyboard.md` cũ (còn trong git) viết trước chuẩn hiện hành; chỉ dùng để ghi quyết định so với bản cũ. `note-for-author.md` thuộc vòng soạn cũ, các cảnh báo của nó đã được ghi chú bài giảng mới xử lý; tệp này không phải đầu vào của vòng này.
-- Bài tập: chưa có `materials/lec-10/exercises.md`. Trang "Bài tập về nhà và tài liệu đọc" ánh xạ Bài tập củng cố 10.1–10.12 của ghi chú theo mạch và liên kết viewer của ghi chú bài giảng.
+- Bài tập: chưa có `materials/lec-10/exercises.md`. Trang "Bài tập về nhà và tài liệu đọc" ánh xạ Bài tập củng cố 10.1–10.12 của ghi chú theo mạch và liên kết viewer của ghi chú bài giảng. Cập nhật 2026-11-13: `exercises.md` có Bài tập 10.13–10.17 (làm lại 2026-11-12); `L10-709` chép bảng mạch của tệp đó (bảy hàng, tách cột tệp bài tập và cột ghi chú).
 - Thời lượng: 120 phút trình chiếu; 30 phút còn lại chữa bài (lời giải đầy đủ của bài tập trên trang và bài về nhà).
 
 ## Khung lý thuyết chung
@@ -52,15 +52,16 @@
 
 ## Mục tiêu học tập (trang `L10-104`)
 
-Năm dòng, mỗi dòng ứng một mạch 2–6 và một sản phẩm kiểm được; ghi chú diễn giả nêu sản phẩm. Ánh xạ với bảy mục tiêu của ghi chú: dòng 1 ↔ mục tiêu 1–2; dòng 2 ↔ 3; dòng 3 ↔ 4 và nửa đầu của 5; dòng 4 ↔ nửa sau của 5; dòng 5 ↔ 6–7.
+Sáu dòng (sửa 2026-11-13 theo bảng phát hiện, trước đó năm dòng), mỗi dòng một sản phẩm kiểm được; ghi chú diễn giả nêu sản phẩm. Ánh xạ với bảy mục tiêu của ghi chú: dòng 1 ↔ mục tiêu 1–2; dòng 2 ↔ 3; dòng 3 ↔ 4 và nửa đầu của 5; dòng 4 ↔ nửa sau của 5; dòng 5 ↔ 6–7 (phần tính); dòng 6 ↔ 6–7 (phần chứng minh). Các sản phẩm của mục tiêu 2 (độ chệch của sai số TD khi critic sai), 6 (quy tắc PPO-Penalty) và 7 (một vòng PPO, phạm vi kết quả hội tụ của PPO-Clip) nêu trong ghi chú diễn giả, vì trang đã ở trần 80.
 
-1. (Mạch 2) "Chứng minh đường cơ sở (baseline) không làm chệch; tính hai bước actor–critic." Sản phẩm: $\operatorname{Var}(X_b)=\tfrac49(b-1)^2$; $p_A$ từ $0{,}5$ lên $0{,}5436$.
-2. (Mạch 3) "Tính ước lượng lợi thế tổng quát (GAE) trên đoạn thu (rollout) có cắt ngắn." Sản phẩm: $\widehat A_0=0{,}98$ và $3{,}572$; điều kiện γ-just nêu trong ghi chú diễn giả.
-3. (Mạch 4) "Chứng minh bổ đề hiệu hiệu năng (performance difference lemma); tính hàm thay thế (surrogate objective) và chặn cải thiện." Sản phẩm: $\Delta J=0{,}296$, $\mathcal L-J=0{,}26$, cận chặn cải thiện $-0{,}892$. Tên tiếng Anh của chặn cải thiện ghi ở `L10-408`, vì dòng đã 20 âm tiết.
-4. (Mạch 5) "Tính bước gradient tự nhiên (natural gradient) và gradient liên hợp (conjugate gradient)." Sản phẩm: $\Delta^*=(0{,}15;\,-0{,}15)$; $\Delta=(0{,}05;\,0{,}1)$.
-5. (Mạch 6) "Tính mục tiêu cắt (clipped objective) của tỉ số chính sách (probability ratio), approxKL, tỉ lệ cắt (clip fraction)." Sản phẩm: $\mathcal L^{\mathrm{CLIP}}=0{,}2167$, approxKL $0{,}01737$, tỉ lệ cắt $\tfrac13$; điều PPO không bảo đảm nêu trong ghi chú diễn giả.
+1. (Mạch 2) "Chứng minh đường cơ sở (baseline) không làm chệch; tính hai bước actor–critic." Sản phẩm: $\operatorname{Var}(X_b)=\tfrac49(b-1)^2$; $p_A$ từ $0{,}5$ lên $0{,}5436$; trong ghi chú diễn giả: $\mathbb E[\delta_0\mid s_A,1]=0{,}35\ne0{,}4$ khi critic sai.
+2. (Mạch 3) "Tính ước lượng lợi thế tổng quát (GAE) trên đoạn thu (rollout) có cắt ngắn." Sản phẩm: $\widehat A_0=0{,}98$ và $3{,}572$.
+3. (Mạch 4) "Chứng minh bổ đề hiệu hiệu năng (performance difference lemma); tính hàm thay thế (surrogate objective), chặn cải thiện." Sản phẩm: $\Delta J=0{,}296$, $\mathcal L-J=0{,}26$, cận chặn cải thiện $-0{,}892$. Tên tiếng Anh của chặn cải thiện ghi ở `L10-408`.
+4. (Mạch 5) "Tính bước gradient tự nhiên (natural gradient), gradient liên hợp (conjugate gradient)." Sản phẩm: $\Delta^*=(0{,}15;\,-0{,}15)$; $\Delta=(0{,}05;\,0{,}1)$.
+5. (Mạch 6) "Tính mục tiêu cắt (clipped objective), approxKL, tỉ lệ cắt (clip fraction)." Sản phẩm: $\mathcal L^{\mathrm{CLIP}}=0{,}2167$, approxKL $0{,}01737$, tỉ lệ cắt $\tfrac13$; quy tắc PPO-Penalty cho $\beta=2$ (ghi chú diễn giả).
+6. (Mạch 6) "Chứng minh chặn dưới bi quan; approxKL không chệch." Sản phẩm: $\mathcal L^{\mathrm{CLIP}}\le\mathcal L^{\mathrm{CPI}}$, trùng quanh $\theta_{\mathrm{old}}$ (Mệnh đề 10.41); $\mathbb E[(\rho-1)-\log\rho]=D_{\mathrm{KL}}$ khi $\theta$ không phụ thuộc mẫu (Mệnh đề 10.48).
 
-Năm dòng 13, 15, 20, 13, 19 âm tiết; tổng 80 (trần 80 của trang mục tiêu).
+Tổng 80 âm tiết theo `deck_check` (trần 80 của trang mục tiêu), 6 dòng, dòng dài nhất 19 âm tiết. Tên tiếng Anh "probability ratio" chuyển sang định nghĩa ở `L10-405`.
 
 ## Bảy mạch
 
@@ -69,7 +70,7 @@ HTML có đúng 7 section ngoài. Mạch $N$ mở tại `#/N`; từ mạch 2, tr
 | mạch | tên (trang tiêu đề mạch) | chức năng | đầu vào | đầu ra | đóng góp cho bài toán trung tâm | dòng dẫn (âm tiết) | từ khóa | phút |
 |---|---|---|---|---|---|---|---|---:|
 | 1 | Mở đầu và hai giới hạn của REINFORCE (bìa là trang tiêu đề) | Ký hiệu, nhắc lại Bài 03–09, mục tiêu, nội dung; đo phương sai và tác hại của bước lớn; phát biểu bài toán | REINFORCE, (G1)–(G4), hàm điểm (Bài 09) | Hai nhu cầu: giảm phương sai giữ kỳ vọng; bước lớn bằng dữ liệu cũ | Phát biểu bài toán và khung hai hàng | — | — | 12 |
-| 2 | Đường cơ sở, hàm lợi thế và actor–critic (`L10-200`) | Trừ đường cơ sở, đặt tên lợi thế, bootstrap bằng critic | $\operatorname{Var}$ tăng $\tfrac49\to\tfrac{16}9$ khi cộng $1$ vào phần thưởng | $\widehat g_b$ không chệch; $\nabla J$ dạng lợi thế; $\delta_t$ ước lượng lợi thế khi critic đúng; Thuật toán 10.6, 10.9 | Nửa thứ nhất, hai đầu Monte Carlo và một bước | "Muốn giảm phương sai mà giữ kỳ vọng của gradient, phải trừ khỏi lợi tức một mức không phụ thuộc hành động đã chọn." (24) | Đường cơ sở · Hàm lợi thế · Critic · Sai số TD · Actor–critic một bước | 23 |
+| 2 | Đường cơ sở, hàm lợi thế và actor–critic (`L10-200`) | Trừ đường cơ sở, đặt tên lợi thế, bootstrap bằng critic | $\operatorname{Var}$ tăng $\tfrac49\to\tfrac{16}9$ khi cộng $1$ vào phần thưởng | $\widehat g_b$ không chệch; $\nabla J$ dạng lợi thế; $\delta_t$ ước lượng lợi thế khi critic đúng; Thuật toán 10.6, 10.9 | Nửa thứ nhất, hai đầu Monte Carlo và một bước | "Muốn giảm phương sai mà giữ kỳ vọng của gradient, phải trừ khỏi lợi tức một mức không phụ thuộc hành động đã chọn." (24) | Đường cơ sở · Hàm lợi thế · Critic · Sai số sai phân thời gian · Actor–critic một bước (2026-11-13: tên đầy đủ thay "Sai số TD", vì viết tắt chỉ có tên đầy đủ từ `L10-212b`) | 23 |
 | 3 | Ước lượng lợi thế tổng quát (`L10-300`) | Nối $\delta_t$ và $G_t-\hat v$ bằng $\lambda$; điều kiện γ-just; tính trên đoạn thu có cờ | Hai ước lượng $0{,}35$ và $1{,}7$ của cùng $A_\pi(s_A,1)=0{,}4$ | $\widehat A_t=\sum_k(\gamma\lambda)^k\delta_{t+k}$, truy hồi lùi với $Z$, $U$, $V^{\mathrm{targ}}$ (Thuật toán 10.16) | Hoàn tất nửa thứ nhất; giao lợi thế cho mạch 6 | "Muốn chọn mức trung gian giữa sai số TD và lợi tức Monte Carlo, phải trộn các lợi tức nhiều bước bằng một tham số." (25, D1) | Lợi tức n bước · Lợi tức λ · GAE · Tính không chệch cho gradient · Đoạn thu | 14,5 |
 | 4 | Hàm thay thế và chặn cải thiện (`L10-400`) | Hiệu hiệu năng, hàm thay thế, TV và KL, chặn cải thiện, miền tin cậy | Giới hạn thứ hai: dữ liệu cũ sau một bước | Bài toán miền tin cậy (Định nghĩa 10.30), mức giảm bị chặn khi giải chính xác (Hệ quả 10.31) | Căn cứ định lượng cho việc giới hạn bước | "Muốn dùng dữ liệu cũ cho một bước lớn, phải chặn sai số khi đánh giá chính sách mới bằng dữ liệu đó." (23) | Hiệu hiệu năng · Hàm thay thế · Phân kỳ KL · Chặn cải thiện · Miền tin cậy | 22,5 |
 | 5 | TRPO và gradient tự nhiên (`L10-500`) | KL bậc hai, gradient tự nhiên, gradient liên hợp, tìm kiếm lùi | Bài toán miền tin cậy phi tuyến | Thuật toán 10.37; điều TRPO bảo đảm trên bộ đệm (Nhận xét 10.38) | Giải xấp xỉ bài toán của mạch 4 | "Muốn giải bài toán miền tin cậy với nhiều tham số, phải xấp xỉ KL bậc hai và tránh lập ma trận Fisher." (23) | Ma trận Fisher · Gradient tự nhiên · Gradient liên hợp · Tìm kiếm lùi | 13,5 |
@@ -89,7 +90,8 @@ Kế thừa bảng của Bài 09 (`planning/lec-09/outline.md`). Lần đầu xu
 | đường cơ sở | baseline | $b(s)$; không để "baseline" trần | `L10-104` |
 | hàm lợi thế, lợi thế | advantage function, advantage | $A_\pi$; ước lượng $\widehat A_t$ | `L10-102` ("lợi thế (advantage)"); `L10-207` ("hàm lợi thế (advantage function)") |
 | critic; actor; phương pháp actor–critic | critic; actor; actor–critic method | tên giữ nguyên; định nghĩa theo Định nghĩa 10.7 (critic bootstrap từ $S_{t+1}$) | `L10-104`; định nghĩa ở `L10-212` |
-| sai số TD (sai số sai phân thời gian) | temporal-difference error | $\delta_t$ có mặt nạ $(1-Z_{t+1})$; $\delta$ không dùng cho nghĩa khác | `L10-212b` ("Nhắc lại:"; trước D1 ở `L10-212`) |
+| quá trình quyết định Markov (MDP) | Markov decision process | viết tắt sau lần đầu | `L10-103` (dòng (G1), 2026-11-13); `L10-102` chỉ còn tên cờ |
+| sai số sai phân thời gian (sai số TD) | temporal-difference error | $\delta_t$ có mặt nạ $(1-Z_{t+1})$; $\delta$ không dùng cho nghĩa khác | `L10-212b` ("Nhắc lại:", tên đầy đủ kèm viết tắt, 2026-11-13); `L10-200` (từ khóa, tên đầy đủ) |
 | cập nhật bán gradient | semi-gradient | | `L10-212` (ghi chú diễn giả) |
 | lợi tức; lợi tức $n$ bước; lợi tức λ | return; n-step return; λ-return | $G_t$, $G_{t:t+n}$, $G^\lambda_t$ | `L10-103`; `L10-302`; `L10-303` |
 | lợi tức λ cắt | truncated λ-return | chỉ trong ghi chú diễn giả | `L10-307` |
@@ -101,7 +103,7 @@ Kế thừa bảng của Bài 09 (`planning/lec-09/outline.md`). Lần đầu xu
 | phân bố chiếm dụng (chiết khấu) | discounted occupancy distribution | $\nu^\pi$, chuẩn hóa trên $\mathcal S$, khối $\le1$ | `L10-403` |
 | bổ đề hiệu hiệu năng | performance difference lemma | | `L10-104` |
 | hàm thay thế | surrogate objective | $\mathcal L_{\theta_{\mathrm{old}}}$; không để "surrogate" trần | `L10-104` |
-| tỉ số chính sách | probability ratio | $\rho_t(\theta)$; viết "tỉ số", không "tỷ số"; Bài 11 viết $w_t$ | `L10-104`; định nghĩa ở `L10-405` |
+| tỉ số chính sách | probability ratio | $\rho_t(\theta)$; viết "tỉ số", không "tỷ số"; Bài 11 viết $w_t$ | `L10-405` (định nghĩa, có tên tiếng Anh từ 2026-11-13) |
 | tỉ số lấy mẫu quan trọng | importance sampling ratio | nhắc lại Định nghĩa 06.24 | `L10-405` |
 | biến phân toàn phần (TV) | total variation distance | $D_{\mathrm{TV}}$ | `L10-407` |
 | phân kỳ Kullback–Leibler (KL) | Kullback–Leibler divergence | $D_{\mathrm{KL}}$, $\bar D_{\mathrm{KL}}$, $\widehat D$; chiều cũ‖mới; trước `L10-407` mặt trang chỉ nói "khoảng cách giữa hai chính sách" | `L10-407` |
@@ -116,7 +118,7 @@ Kế thừa bảng của Bài 09 (`planning/lec-09/outline.md`). Lần đầu xu
 | tìm kiếm lùi | backtracking line search | hệ số $\zeta$ | `L10-507` |
 | tối ưu chính sách gần kề (PPO) | Proximal Policy Optimization | tên đầy đủ ở phụ đề bìa; sau đó viết PPO | `L10-101` |
 | mục tiêu cắt; bán kính cắt | clipped objective; clip range | $\mathcal L^{\mathrm{CLIP}}$, $\epsilon$ | `L10-104`; `L10-603` |
-| lặp chính sách bảo thủ (CPI) | conservative policy iteration | chỉ số trên $\mathcal L^{\mathrm{CPI}}$ | `L10-603` (ghi chú diễn giả) |
+| lặp chính sách bảo thủ (CPI) | conservative policy iteration | chỉ số trên $\mathcal L^{\mathrm{CPI}}$ | `L10-603` (mặt trang từ 2026-11-13) |
 | chặn dưới bi quan | pessimistic bound | | `L10-606` |
 | mục tiêu phạt KL; hệ số phạt thích nghi | KL-penalized objective; adaptive KL penalty coefficient | $\beta$, $\kappa_{\mathrm{targ}}$ | `L10-607` |
 | entropy | entropy | $\mathcal H$; giữ nguyên | `L10-609` |
@@ -126,7 +128,7 @@ Kế thừa bảng của Bài 09 (`planning/lec-09/outline.md`). Lần đầu xu
 | phương sai được giải thích | explained variance | | `L10-611` |
 | dừng sớm | early stopping | theo approxKL | `L10-613` |
 | cắt mất mát giá trị | value function clipping | biến thể của Định nghĩa 10.46; công thức và $\epsilon$ trên mặt trang (D1) | `L10-617` |
-| tối ưu mức mã | code-level optimizations | Engstrom và cộng sự (2020) | `L10-617` |
+| tối ưu mức mã | code-level optimization(s) | Engstrom và cộng sự (2020) | `L10-617` (dòng "Nhu cầu:") |
 | điểm dừng | stationary point | $\nabla V(\theta)=0$; tên tiếng Anh trong ghi chú diễn giả (mặt trang ở trần 60 âm tiết) | `L10-618` |
 | hầu chắc chắn | almost surely | không dùng "gần như chắc chắn" | `L10-618` |
 | hai thang thời gian | two-timescale | mô hình của Jin, Li và Wang (2024); chỉ trong ghi chú diễn giả (D1) | `L10-618` |

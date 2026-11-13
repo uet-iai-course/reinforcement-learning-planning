@@ -773,3 +773,83 @@ Quyết định của điều phối viên: **chấp nhận**; commit `fix(mater
 **Đã kiểm, không lỗi (theo báo cáo, điều phối viên kiểm mẫu).** Cấu hình RevealJS, plugin cục bộ, footer, thứ tự CSS. Mở đầu đủ (bìa, hai trang "Tiên quyết và quy ước", mục tiêu, Nội dung, ba ví dụ dẫn nhập, Vấn đề trung tâm, khung chung). Trang tiêu đề mạch `L10-200`…`L10-700`: markup và `id` đúng, dòng dẫn 16–25 âm tiết, ≤ 5 từ khóa. Mạch kết luận đủ thành phần. Ngoại lệ mật độ L10-105, L10-109 có trong storyboard:138–139. Mỗi cụm có bài tập với "Lời giải:" (L10-210, 216, 309, 414, 510, 608, 620, 706); bảng lặp cùng khuôn. 101 `data-slide-id`, khớp 101 mục storyboard; bảng mạch khớp số trang (10/18/10/16/12/23/12). Mọi số hiệu khối 10.k khác trỏ đúng; bài trên lớp trùng ghi chú (10.1, 10.5, 10.7, 10.8, 10.11, 10.12) cùng kết quả; liên kết `#/N/1` của `exercises.md` đúng. Tính lại (script Python của tác tử): hành lang ngắn $J=-18{,}68$, $-11{,}665$, $-21{,}319$; actor–critic $\delta_0=0{,}35$, $p_B=0{,}7583$; GAE $1{,}43$, $\widehat A=(3{,}572;2{,}6;1{,}52;1)$; hiệu hiệu năng $\Delta J=0{,}296$; Pinsker $0{,}1333\le0{,}1561$; nghiệm miền tin cậy chính xác $\Delta J=0{,}2990$; Bài tập 10.11 $\bar D=0{,}000619$; Fisher $F=p(1-p)$, $\Delta^*=(0{,}15;-0{,}15)$; gradient liên hợp $\Delta=(0{,}05;0{,}1)$, Bài tập 10.8 $\tfrac12\Delta^\top F\Delta=0{,}01$; PPO $\mathcal L^{\mathrm{CLIP}}(0{,}75)=0{,}2167$, approxKL $0{,}01737$, đoạn phẳng $0{,}1042$; Bài tập 10.12 $\mathcal L^{\mathrm{CLIP}}=0{,}15048$; CartPole cờ sai $\widehat A_{498}=-88{,}357$. Ảnh chụp 15 trang bị cờ (rộng, hai trang hẹp) và L10-709: không tràn.
 
 **Quyết định của điều phối viên:** **chấp nhận** báo cáo làm danh sách việc cần sửa, sau khi kiểm lại trên tệp gốc các phát hiện ghi ở mục "Điều phối viên kiểm lại". Mọi phát hiện ở trạng thái **mở**; các dòng "Đề nghị sửa ghi chú" chờ người dùng quyết định, không phải lỗi deck.
+
+## Sửa deck theo bảng phát hiện 2026-11-13
+
+**Vai trò.** Người sửa (editor) Bài 10, theo lời giao chung `editor-brief.md` và quyết định G1–G11, D10 của điều phối viên (`edit-decisions-2026-11-13.md`, thư mục nháp của phiên). Loại tác tử, mô hình và effort do điều phối viên ghi theo lời gọi công cụ. `no-ai-slop` chế độ Edit, tự kiểm theo `eval.md`: phạm vi là mọi câu mặt trang và ghi chú diễn giả đã sửa; kết quả: không thêm khẳng định, số hay nguồn ngoài ghi chú; bỏ các câu siêu ngôn, câu phủ định thay khẳng định, lời trỏ điều hướng; văn phong tác giả và độ chính xác toán học đứng trên lời khuyên giọng văn. Không commit.
+
+**Phạm vi ghi.** `2627-1/lecture-10-trpo-va-ppo.html`; `planning/lec-10/{storyboard.md, outline.md, review-log.md}`. Không sửa `materials/`, CSS, SVG, `index.html`.
+
+**Kết quả.** 101 trang trước và sau; không thêm, bỏ, tách hay gộp trang; giữ 7 mạch, `id`, `data-slide-id`, trang tiêu đề mạch và các liên kết `#/N/1` của `exercises.md`. `style=""` còn 1 (colgroup của `L10-704`, D10, lý do trong storyboard); trước 11. `deck_check` (`edit-lec-10/after2/report.json`): 0 lỗi console, 0 request lỗi, 0 lỗi trang, 0 `.katex-error`; mục tiêu `L10-104` 80 âm tiết, 6 dòng; `L10-109` 80; `L10-707` 80; `L10-709` 50; `L10-710` 50. Cờ OVERFLOW còn lại (214, 301, 407, 408, 412b, 503, 507, 510, 618, 702, 702b, 704) là dương tính giả của KaTeX như đợt rà soát; ảnh chụp các trang đã sửa không tràn. `git diff --check` sạch.
+
+**Xuất xứ số liệu.** Không có số liệu tự dựng mới. Các số mới xuất hiện trong ghi chú diễn giả lấy từ khối của ghi chú hoặc từ trang chiếu khác của deck: $\mathbb E[\delta_0\mid s_A,1]=0{,}35$ (Bài tập 10.5, `L10-216`), $\beta=2$ (Ví dụ 10.19, `L10-607`), tọa độ $0{,}2$ khi $\lambda=1$ (Ví dụ 10.9, `L10-305`), phạt dạng KL $0{,}317$ (Bài tập 10.11(e)).
+
+**Tính lại.** $18\sqrt{0{,}000619/2}=0{,}3167$; $0{,}4+0{,}9\cdot(-0{,}5)+0{,}4=0{,}35$; KL$\bigl((\tfrac23;\tfrac13)\Vert(0{,}75;0{,}25)\bigr)=0{,}01737>0{,}015$ nên $\beta=2$; $\tfrac12(0{,}35+0{,}45)\cdot0{,}5=0{,}2$. Không số nào trên mặt trang đổi giá trị.
+
+| phát hiện | xử lý | trang | ghi chú |
+|---|---|---|---|
+| nghiêm trọng, bảng `Mạch \| Bài tập` dẫn 10.18–10.21 | sửa | `L10-709` | Bảy hàng chép bảng mạch hiện tại của `exercises.md`: 1 —; 2 10.14; 3 10.13, 10.15; 4 10.16; 5 10.17; 6 10.14; 7 —; cột "Bài tập (tệp bài tập)" tách khỏi cột "Bài tập củng cố (ghi chú)"; tên mạch theo trang tiêu đề mạch |
+| nghiêm trọng, ghi chú diễn giả mô tả tệp bài tập cũ | sửa | `L10-709` | "10.13–10.17 … hai mức: nhận biết (10.13); tính toán hoặc chứng minh (10.14–10.17)"; bỏ câu gộp mạch; nêu 10.14 thuộc mạch 2 và 6 |
+| trung bình, storyboard còn bộ bài tập cũ | sửa | `L10-709`, `L10-710` (storyboard) | Mặt trang, mật độ, ghi chú diễn giả của hai mục cập nhật; `outline.md` dòng "Bài tập" cập nhật |
+| trung bình, TRPO "chỉ" bảo đảm KL | sửa | `L10-109`, `L10-707`, `L10-708` (ghi chú) | "TRPO xấp xỉ; trên bộ đệm: KL trung bình mẫu ≤ κ, hàm thay thế mẫu tăng." theo Nhận xét 10.38 (D10); ghi chú diễn giả `L10-109` và lời giải câu 4 của `L10-708` sửa theo |
+| trung bình, nhãn ý của Mệnh đề 10.40, 10.41 | sửa | `L10-604`, `L10-606`, `L10-708` | `L10-604`: (a), (b), thêm (c) $\widehat A_t=0$, (d) gradient bằng 0; `L10-606`: (a), (c); ghi chú `L10-708` "(Mệnh đề 10.40(d)" nay khớp mặt trang |
+| trung bình, "giải một MDP kết thúc tại bước 500" | sửa | `L10-706` | "cờ sai coi bước 500 là kết thúc thật; bài toán đó mất tính Markov trên trạng thái." (Tình huống 10.2); lý do (trạng thái không chứa chỉ số thời gian) trong ghi chú diễn giả |
+| trung bình, $c_1$ "chỉ có tác dụng khi dùng chung tham số" | sửa | `L10-609` (ghi chú) | Theo đề xuất của bảng |
+| trung bình, 11 `style=""` | sửa | 106, 107, 202, 211, 212b, 301, 401, 504, 612; giữ 704 | `.grid2.wide-right` (4 trang); `.figure.short-m` (107, 200→210 px), `.figure.short-l` (212b 330→310, 401 300→310), `.figure.short-s` (301, 170→160), `.figure.short` (612, 270→260); colgroup `L10-704` giữ theo D10, lý do trong storyboard; ảnh chụp đã xem |
+| trung bình, thuật toán thiếu Khởi tạo, Giả thiết | sửa | `L10-209`, `L10-215`; `L10-507`, `L10-613` (ghi chú) | 209, 215: dòng "Giả thiết: … Khởi tạo θ, w tùy ý; …" trên mặt trang, gộp bước lặp để giữ 6 dòng; 507, 613 ở gần trần 60 nên giả thiết đặt trong ghi chú diễn giả |
+| nhẹ, khẳng định hoặc nguồn ngoài ghi chú | sửa (cắt) | `L10-201`, `L10-306`, `L10-507`, `L10-617` (ghi chú) | Cắt câu nhiều cần gạt, câu "λ tốt nhỏ hơn hẳn γ tốt", câu hồi quy critic có ràng buộc, câu Huang/Engstrom/Andrychowicz |
+| nhẹ, câu hỏi tự kiểm tra dẫn "§7.4" cho cả bốn | sửa | `L10-708` (ghi chú) | Nguồn: §7.4 (câu 1–2); Mệnh đề 10.40, Định nghĩa 10.47 (câu 3); Hệ quả 10.29, Nhận xét 10.38 (câu 4) (D10) |
+| nhẹ, chỉ dẫn điều hướng | sửa | 107, 409 (mặt trang), 414, 619, 706, 709 | Bỏ lời trỏ, giữ nội dung ("… nhưng T có đuôi hình học nên ước lượng vẫn không chệch"; "Phạt dạng KL: …"); bỏ câu Breakout và câu 10.12(d) |
+| nhẹ, câu tự nói trạng thái, phủ định, siêu ngôn | sửa | 209, 301, 305, 616 (ghi chú) | Cắt câu "không được tính tay"; "Muốn so độ chệch …, cần lấy kỳ vọng theo lượt."; câu 305 thay bằng số $0{,}8$, $0{,}4$, $0{,}2$; câu 616 thành "Bài báo PPO (2017, §6) so PPO với TRPO trên các bài toán MuJoCo." (đề xuất của bảng ghi "MuJoCo và Atari"; trên Atari bài báo so với A2C, ACER, nên chỉ giữ MuJoCo) |
+| nhẹ, lặp số của dòng trên | sửa | `L10-614` | "Diễn giải: gradient của mục tiêu cắt bằng 0 mà KL vẫn tăng, nên mục tiêu cắt không chặn KL." |
+| nhẹ, viết tắt và thuật ngữ ở lần đầu | sửa | 102, 103, 109, 200, 208, 212b, 602, 603 | MDP: tên đầy đủ ở lần đầu trên mặt trang (`L10-103`, dòng (G1)); `L10-102` bỏ "của MDP" để giữ trần 60. Sai số TD: `L10-109` dùng "mục tiêu bootstrap", `L10-200` dùng tên đầy đủ, `L10-212b` "sai số sai phân thời gian (sai số TD, temporal-difference error)". CPI: dòng mới trên `L10-603`; `L10-602` gọi $\mathcal L^{\mathrm{CPI}}$ là "hàm thay thế mẫu" |
+| nhẹ, `L10-710` hai dòng nối Bài 11 | sửa | `L10-710` | Một dòng: "Bài 11: SPO đổi mục tiêu, SAM+PPO đổi bước tối ưu; học khác chính sách có bộ nhớ phát lại." (20 âm tiết; đề xuất của bảng 22 âm tiết, vượt trần dòng) |
+| nhẹ, mục đọc thêm khác ghi chú | sửa | `L10-710` | Theo "Hướng dẫn đọc thêm": Schulman và cộng sự (2015) §2–3, Phụ lục C; (2016) §2–3; (2017) §3–5; thêm Achiam và cộng sự (2017) §5, Huang và cộng sự (2022) |
+| nhẹ, giả thiết rút gọn ở 208, 213 | sửa | `L10-208`, `L10-213` | "MDP hữu hạn, γ<1, π=π_θ Markov dừng; (b) cần thêm (G1)–(G4)"; "khi và chỉ khi kết thúc" |
+| nhẹ, $(\tfrac23;-\tfrac23)$ chỉ cho (c) | sửa | `L10-210` | Theo đề xuất của bảng |
+| nhẹ, mục tiêu thiếu sản phẩm của mục tiêu 2, 6, 7 | sửa một phần | `L10-104` | Thêm dòng 6 "Chứng minh chặn dưới bi quan; approxKL không chệch."; gộp câu, chuyển "(probability ratio)" sang `L10-405`; vẫn 80 âm tiết. Độ chệch của sai số TD khi critic sai, quy tắc PPO-Penalty, một vòng PPO và phạm vi hội tụ PPO-Clip nêu trong ghi chú diễn giả vì trang ở trần 80 |
+| nhẹ, dòng "Nhu cầu:" của `L10-617` | sửa | `L10-617` | "Nhu cầu: đo tác động của một tối ưu mức mã (code-level optimization) lên critic." |
+| nhẹ, $\pi_{\mathrm{old}}>0$ bị ngắt | sửa | `L10-702` | `${\pi_{\mathrm{old}}>0}$`; ảnh chụp: cả cụm xuống một dòng, không còn "0" đứng riêng |
+| nhẹ, ghi chú diễn giả dài | sửa | 109 (147), 306 (137), 400 (100), 507 (138), 609 (149), 613 (135), 617 (122), 618 (145) | Cắt câu bên lề; `L10-706` (176) và `L10-708` (152) là lời giải, trong trần 250 |
+| nhẹ, đề nghị sửa ghi chú §7.3 | không sửa ghi chú | — | Deck theo Nhận xét 10.38 (D10); đề nghị chuyển điều phối viên |
+| nhẹ, đề nghị sửa ghi chú §7.4 | không sửa ghi chú | — | Deck giữ bốn câu, nguồn câu 3–4 dẫn khối có thật (D10); đề nghị chuyển điều phối viên |
+
+**Ngoài bảng.** `L10-101` đo 63 âm tiết theo `deck_check` (tính cả dòng `h2`, mà storyboard không đếm theo quyết định cũ của điều phối viên); không sửa vì không có trong bảng phát hiện.
+
+**Ảnh đã xem** (1600×900 và 390×844, thư mục nháp `edit-lec-10/after2/`): `L10-103`, `L10-104`, `L10-106`, `L10-107`, `L10-109`, `L10-208`, `L10-209`, `L10-212b`, `L10-215`, `L10-301`, `L10-401`, `L10-603`, `L10-604`, `L10-612`, `L10-617`, `L10-702`, `L10-706`, `L10-707`, `L10-709`, `L10-710` (rộng); `L10-103`, `L10-109`, `L10-709` (hẹp).
+
+### Sửa sau kiểm lại
+
+Điều phối viên kiểm lại và kết luận "cần sửa" (2 trung bình, 5 nhẹ). Sửa trong cùng phạm vi ghi, không commit. `deck_check` các trang đổi (`edit-lec-10/after3`, `after4`): 0 lỗi console, request, KaTeX; ảnh 1600×900 của `L10-208`, `L10-209`, `L10-301` (cả 390×844), `L10-706` đã xem; `git diff --check` sạch.
+
+| phát hiện | xử lý | trang |
+|---|---|---|
+| trung bình: "mục tiêu bootstrap cần $\hat v=v_\pi$" sai nghĩa (mục tiêu ước lượng $q_\pi$; chỉ $\delta_t$ ước lượng lợi thế, Mệnh đề 10.8(a)) | sửa: mặt trang "hệ số $\delta_t$ cần $\hat v=v_\pi$" (79 âm tiết, dòng dài nhất 15); ghi chú diễn giả "còn $\delta_t$, mục tiêu bootstrap một bước trừ $\hat v(S_t)$, chỉ ước lượng đúng lợi thế khi critic đúng" | `L10-109` |
+| trung bình: "bước 2 và bước 5 theo cách Schulman và cộng sự (2016)" | sửa: "bước 2 theo cách Schulman và cộng sự (2016) ghép TRPO với GAE" (note:1567) | `L10-507` (ghi chú diễn giả) |
+| nhẹ: câu "Bài báo PPO … so PPO với TRPO trên MuJoCo" không có trong ghi chú | sửa: cắt câu | `L10-616` (ghi chú diễn giả) |
+| nhẹ: dòng kết luận | sửa: "Với cờ sai, thuật toán học như thể lượt kết thúc thật ở bước $500$." và "Bài toán này không còn tính Markov trên trạng thái quan sát." (hai câu, vì một câu 26 âm tiết vượt trần dòng; 48 âm tiết, 6 dòng) | `L10-706` |
+| nhẹ: "Khởi tạo" gộp dưới nhãn "Giả thiết:" | sửa: "Giả thiết: …" nối vào dòng Đầu vào/Đầu ra; "Khởi tạo $\theta$, $w$ tùy ý; …" là câu thường ở dòng riêng, không nhãn; vẫn 6 dòng | `L10-209`, `L10-215` |
+| nhẹ: thiếu "phần thưởng bị chặn" ở giả thiết của (a) | sửa: "MDP hữu hạn, phần thưởng bị chặn, $\gamma<1$, …; (b) thêm (G1)–(G4)" (37 âm tiết, dòng dài nhất 20) | `L10-208` |
+| nhẹ (tùy chọn): chữ của hình nhỏ | không sửa: đã thử `.figure.short-m`, dòng "Kiểm:" đè chân trang ở 1600×900; giữ `.figure.short-s` | `L10-301` |
+
+**Trạng thái:** chờ điều phối viên duyệt.
+
+### Kiểm lại, kiểm định cuối và duyệt của điều phối viên (2026-11-13)
+
+**Tác tử (theo lời gọi công cụ).**
+
+| vai trò | loại | mô hình | effort | ghi tệp |
+|---|---|---|---|---|
+| rà soát chỉ đọc (bảng phát hiện) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+| người sửa (deck, kế hoạch; tiếp tục bằng SendMessage cho vòng sửa sau kiểm lại) | `general-purpose` | `opus` (Opus 5.5) | `high` | có |
+| kiểm lại chỉ đọc (vai trò A: độ chính xác toán và Học tăng cường; vai trò B: mạch, quy tắc deck, `no-ai-slop` Detect) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+
+Quyết định chung của đợt: G1–G11, D01–D10 (tệp quyết định của điều phối viên trong thư mục nháp của phiên, chép tóm tắt ở mục sửa phía trên).
+
+**Kiểm lại.** Kết luận "cần sửa": 25/25 phát hiện xử lý đúng (kiểm kỹ: bảng L10-709 khớp `exercises.md`; nhãn ý L10-604, L10-606 khớp Mệnh đề 10.40, 10.41; L10-109, L10-707, L10-708, L10-616 thống nhất với Nhận xét 10.38; các lớp `.figure.short-*`, `.grid2.wide-right` thay `style=""` so ảnh với HEAD: bốn trang lưới và L10-401 giống từng pixel, bốn hình đổi cỡ vài phần trăm, không tràn); 2 trung bình mới (L10-109 "mục tiêu bootstrap" sai nghĩa; L10-507 gán cả bước 5 cho Schulman và cộng sự 2016) và 5 nhẹ (L10-616, L10-706, L10-209/215 nhãn, L10-208, L10-301 tùy chọn). Người sửa xử lý 6/7 ở "Sửa sau kiểm lại"; L10-301 giữ `.figure.short-s` vì `short-m` làm dòng "Kiểm:" đè chân trang. Điều phối viên đọc lại hai chỗ trung bình trên tệp: "hệ số $\delta_t$ cần $\hat v=v_\pi$" và "bước 2 theo cách Schulman và cộng sự (2016) ghép TRPO với GAE".
+
+**Kiểm định cuối của điều phối viên.** `deck_check` toàn deck: 101 trang, 0 lỗi console, lỗi trang, request lỗi, `.katex-error`; còn 1 `style=""` (`colgroup` của L10-704, có lý do trong storyboard); cờ OVERFLOW ở 13 trang là dương tính giả của KaTeX như đợt rà soát; L10-104 mục tiêu 80 âm tiết, 6 dòng; L10-109 (79), L10-707 (80), bìa và bảng L10-616 có ngoại lệ hoặc trần 80. 44 trang đổi, 32 đổi mặt trang; điều phối viên tự xem bảng ảnh hai cỡ: không tràn. `git diff --check` sạch.
+
+**Đề nghị sửa ghi chú (chờ người dùng quyết định; không sửa `materials/` trong đợt này).** §7.3 mục 4 mâu thuẫn với Nhận xét 10.38: sửa thành "… trên bộ đệm chỉ bảo đảm KL trung bình mẫu không vượt $\kappa$ cùng hàm thay thế mẫu tăng (Mệnh đề 10.34, Nhận xét 10.38)". §7.4: thêm câu 3 (tỉ lệ cắt và tập gradient bằng 0) và câu 4 (TRPO thực hành không bảo đảm $J$ không giảm) cùng lời giải, khớp bốn câu của L10-708.
+
+**Quyết định của điều phối viên:** **chấp nhận** deck và các tệp kế hoạch; mọi phát hiện `nghiêm trọng` và `trung bình` của bảng 2026-11-13 và của lượt kiểm lại đã xử lý; phát hiện không sửa có lý do ghi ở bảng xử lý.
