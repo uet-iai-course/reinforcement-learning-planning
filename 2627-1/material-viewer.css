@@ -286,6 +286,8 @@
 }
 
 .markdown-body code {
+  /* Faces with precomposed Vietnamese glyphs; see lecture-style.css. */
+  font-family: Consolas, "Liberation Mono", "Noto Sans Mono", "SF Mono", "Courier New", monospace;
   padding: 0.1em 0.35em;
   border-radius: 5px;
   background: rgba(24, 34, 45, 0.07);
