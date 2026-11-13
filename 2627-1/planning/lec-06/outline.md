@@ -4,17 +4,17 @@ Ngày lập lại: 2026-10-12, đợt sửa theo chuẩn 2026-10-12 (giai đoạ
 
 ## Thông tin chung
 
-Học phần Học tăng cường, năm học 2026–2027, học kỳ 1; sinh viên đã học học máy, học sâu, thuật toán và Bài 01–05. Nguồn bắt buộc: bài giảng gốc (2025–2026) `lecture-06-model-free-control.pdf`, 30 trang. Đơn vị trên bìa: "Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội" (quyết định chung §5). Deck có 75 trang trong 7 mạch, 120 phút trình chiếu; 30 phút còn lại dành cho chữa bài và bài thực hành LunarLander đã có, không tạo code demo mới.
+Học phần Học tăng cường, năm học 2026–2027, học kỳ 1; sinh viên đã học học máy, học sâu, thuật toán và Bài 01–05. Nguồn bắt buộc: bài giảng gốc (2025–2026) `lecture-06-model-free-control.pdf`, 30 trang. Đơn vị trên bìa: "Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội" (quyết định chung §5). Deck có 76 trang trong 7 mạch (76 từ đợt sửa 2026-11-13, thêm G10), 120 phút trình chiếu; 30 phút còn lại dành cho chữa bài và bài thực hành LunarLander đã có, không tạo code demo mới.
 
 ## Mục tiêu học tập (trùng ghi chú bài giảng)
 
 | Mục tiêu | Năng lực | Trang xây dựng | Trang kiểm tra (lời giải trên mặt trang) |
 |---|---|---|---|
 | MT1 | Phân biệt $q_\pi$, $q_*$, bảng $Q$; xác định thông tin trong một mẫu chuyển | A05, B01, B08, B02 | A05 (fragment), B07/B10 câu 3 |
-| MT2 | Tính phân phối $\varepsilon$-tham lam, kể cả đồng hạng; kiểm điều kiện của Mệnh đề 06.6 | B03, B04, B05, B11, B06, B09 | B07/B10 |
+| MT2 | Tính phân phối $\varepsilon$-tham lam, kể cả đồng hạng; kiểm điều kiện cải thiện trong lớp $\varepsilon$-mềm (Mệnh đề 06.6) | B03, B04, B05, B11, B06, B09 | B07/B10 |
 | MT3 | Thực hiện Monte Carlo lần ghé đầu tiên theo cặp, bộ đếm $N$ đúng | C01–C07, C05, C06, C10 | C08/C09 |
 | MT4 | Thực hiện cập nhật Sarsa và Q-learning; xử lý trạng thái kết thúc, cắt ngắn; phân biệt hành vi với đích | D01–D07, D06, E01–E07, E11 | D08/D11, E08/E12 |
-| MT5 | Kiểm giả thiết của các định lý hội tụ; phân biệt với dừng theo ngân sách | F12–F13 | F05/F09, G03/G07, G08 |
+| MT5 | Kiểm giả thiết của các định lý hội tụ; phân biệt với dừng theo ngân sách | F12–F13 | F05/F09, G03/G10/G07, G08 |
 
 ## Khung lý thuyết chung
 
@@ -77,8 +77,8 @@ Học phần Học tăng cường, năm học 2026–2027, học kỳ 1; sinh vi
 | 4 | Sarsa và mục tiêu một bước | D00 (`mach-4`) | Thuật toán với mục tiêu bootstrap theo hành động kế tiếp | giới hạn Monte Carlo, TD(0) → Thuật toán 06.12, ba sự kiện dừng | 11 | 18 |
 | 5 | Q-learning và học khác chính sách | E00 (`mach-5`) | Tách hành vi và đích; mục tiêu cực đại | mục tiêu Sarsa phụ thuộc thăm dò → Thuật toán 06.16, so sánh trên cùng dữ liệu | 12 | 19,5 |
 | 6 | Điều kiện hội tụ | F00 (`mach-6`) | Giả thiết để $Q_t\to q_*$ | bảng hữu hạn mẫu → GLIE, Robbins–Monro theo cặp, Định lý 06.21–06.22 | 12 | 19,5 |
-| 7 | Tổng kết và chuyển tiếp | G00 (`mach-7`) | Tổng kết, áp dụng LunarLander, trả lời vấn đề trung tâm | toàn bài → bảng giả thiết, bài tập, Bài 07 | 10 | 16 |
-| | **Tổng** | | | | **75** | **120** |
+| 7 | Tổng kết và chuyển tiếp | G00 (`mach-7`) | Tổng kết, áp dụng LunarLander, trả lời vấn đề trung tâm | toàn bài → bảng giả thiết, bài tập, Bài 07 | 11 | 16 |
+| | **Tổng** | | | | **76** | **120** |
 
 ## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)
 
@@ -172,11 +172,12 @@ Mỗi hàng là luận điểm trung tâm của trang; mã đầy đủ có ti�
 | #/7/3 | G09 | Kết quả về ba thuật toán | Bảng kết quả–giả thiết–công thức: ba thuật toán | 1,5 |
 | #/7/4 | G01 | Khung chung của ba phương pháp | Phương pháp–quy tắc–dữ liệu (kèm theo/khác chính sách)–dừng | 1,5 |
 | #/7/5 | G06 | Điều kiện hội tụ của ba phương pháp | Phương pháp–giả thiết–kết luận; thứ tự hàng Monte Carlo, Sarsa, Q-learning như G09, G01 | 1,5 |
-| #/7/6 | G03 | Bài tập: chọn phương pháp cho tàu đổ bộ | Bài tập tổng hợp trên LunarLander | 2 |
-| #/7/7 | G07 | Bài tập: chọn phương pháp cho tàu đổ bộ | Lời giải; số liệu một lần chạy (trung bình ± sai số chuẩn); hiệu ghép cặp chứa 0, chưa xếp hạng được | 2 |
-| #/7/8 | G02 | Trả lời vấn đề trung tâm | Nhắc lại bài toán tại D; bảng ba hàng D có cột khởi tạo; kết luận có điều kiện; dòng "Nguồn:" | 2 |
-| #/7/9 | G08 | Câu hỏi tự kiểm tra | Bốn câu, mỗi câu kiểm một giả thiết | 2 |
-| #/7/10 | G04 | Bài tập về nhà và tài liệu đọc | Bảng Mạch–Bài tập theo `exercises.md` (06.1–06.6, 06.13–06.17), bài chỉ trong ghi chú (06.7–06.12) sau nhãn "ghi chú:"; tài liệu đọc; liên kết ghi chú bài giảng · bài tập; Bài 07 | 1,5 |
+| #/7/6 | G03 | Bài tập: chọn phương pháp cho tàu đổ bộ | Đề Bài tập 06.13 của ghi chú, câu 1–3: dữ kiện LunarLander | 1,5 |
+| #/7/7 | G10 | Bài tập: chọn phương pháp cho tàu đổ bộ, đánh giá | Đề Bài tập 06.13, câu 4: kết quả đánh giá 100 lượt (trung bình ± sai số chuẩn), hiệu ghép cặp | 1 |
+| #/7/8 | G07 | Bài tập: chọn phương pháp cho tàu đổ bộ | Lời giải câu 1–4; hiệu ghép cặp chứa 0, chưa xếp hạng được | 1,5 |
+| #/7/9 | G02 | Trả lời vấn đề trung tâm | Nhắc lại bài toán tại D; bảng ba hàng D có cột khởi tạo; kết luận có điều kiện; dòng "Nguồn:" | 2 |
+| #/7/10 | G08 | Câu hỏi tự kiểm tra | Bốn câu, mỗi câu kiểm một giả thiết | 2 |
+| #/7/11 | G04 | Bài tập về nhà và tài liệu đọc | Bảng Mạch–Bài tập chép bảng mạch của `exercises.md` (2026-11-12): bài của tệp bài tập (06.14–06.19) trước, bài của ghi chú (06.1–06.13) sau nhãn "ghi chú:"; tài liệu đọc; liên kết ghi chú bài giảng · bài tập; Bài 07 | 1,5 |
 
 ## Ánh xạ 30 trang nguồn
 
@@ -209,8 +210,8 @@ Mỗi hàng là luận điểm trung tâm của trang; mã đầy đủ có ti�
 | 25 | GLIE | F06, F02 | ví dụ trước định nghĩa |
 | 26 | Hội tụ Monte Carlo với GLIE | ghi chú diễn giả F08, G06 | không phát biểu thành định lý |
 | 27 | Hội tụ Sarsa | F07, F03, F08 | Robbins–Monro theo cặp, GLIE |
-| 28 | Hội tụ Q-learning; Q-learning nhạy hơn với sai số do cực đại | F04, E07; ghi chú diễn giả E03, G01 (ước lượng cao do cực đại, Sutton và Barto §6.7, nối sang Bài 09) | độ phủ, không cần GLIE; nhận định về cực đại giữ ở ghi chú diễn giả |
+| 28 | Hội tụ Q-learning; Q-learning nhạy hơn với sai số do cực đại | F04, E07; ghi chú diễn giả E03, G01 (ước lượng cao do cực đại, Sutton và Barto §6.7) | độ phủ, không cần GLIE; nhận định về cực đại giữ ở ghi chú diễn giả |
 | 29 | Chặn Monte Carlo hữu hạn mẫu | đọc thêm Mục 6 của ghi chú (G04 ghi chú diễn giả) | chuyển đọc thêm |
 | 30 | Tổng kết | G05, G09, G02 | bảng giả thiết, trả lời vấn đề trung tâm |
 
-Phần bổ sung ngoài nguồn có căn cứ trong ghi chú bài giảng: ví dụ một trạng thái ba hành động (B11), lượt có cặp lặp (C08), mẫu tàu đổ bộ (C10, E11, G03), dãy năm ô với $\gamma=0{,}9$ (F12, F13), phản ví dụ bước hằng (F13). Các bộ số tự xây dựng là số liệu sư phạm, ghi trong ghi chú diễn giả.
+Phần bổ sung ngoài nguồn có căn cứ trong ghi chú bài giảng: ví dụ một trạng thái ba hành động (B11), lượt có cặp lặp (C08), mẫu tàu đổ bộ (C10, E11, G03), dãy năm ô với $\gamma=0{,}9$ (F12, F13), phản ví dụ bước hằng (F13). Xuất xứ của các bộ số tự xây dựng ghi trong `review-log.md` (mục "Sửa deck theo bảng phát hiện 2026-11-13"), không ghi trong ghi chú diễn giả.

@@ -1,6 +1,6 @@
 # Storyboard Bài 06: Điều khiển phi mô hình
 
-Ngày lập lại: 2026-10-12, đợt sửa theo chuẩn 2026-10-12 (giai đoạn II); cập nhật cùng ngày sau vòng biên tập theo năm báo cáo rà soát (mục "Sửa sau rà soát năm vai" cuối tệp). Bản này thay storyboard ngày 29-09-2026 và khớp deck `lecture-06-dieu-khien-phi-mo-hinh.html` hiện tại: 75 trang, 7 mạch, 120 phút. Dàn bài, thuật ngữ và ánh xạ 30 trang nguồn ở [outline.md](outline.md); nhật ký ở [review-log.md](review-log.md). Số hiệu kết quả, ví dụ và bài tập theo ghi chú bài giảng đã commit `19323ad`. Mã trang chỉ dùng trong tệp quy trình.
+Ngày lập lại: 2026-10-12, đợt sửa theo chuẩn 2026-10-12 (giai đoạn II); cập nhật cùng ngày sau vòng biên tập theo năm báo cáo rà soát (mục "Sửa sau rà soát năm vai" cuối tệp). Bản này thay storyboard ngày 29-09-2026 và khớp deck `lecture-06-dieu-khien-phi-mo-hinh.html` hiện tại: 76 trang, 7 mạch, 120 phút (đợt sửa 2026-11-13 thêm G10; mục "Sửa theo bảng phát hiện 2026-11-13" cuối tệp). Dàn bài, thuật ngữ và ánh xạ 30 trang nguồn ở [outline.md](outline.md); nhật ký ở [review-log.md](review-log.md). Số hiệu kết quả, ví dụ và bài tập theo ghi chú bài giảng đã commit `19323ad`. Mã trang chỉ dùng trong tệp quy trình.
 
 Quy ước đếm mật độ: âm tiết đếm bằng `density.py` (từ tách theo khoảng trắng, bỏ tiêu đề, KaTeX, ghi chú diễn giả; nhãn và chữ trong bảng có tính). Script đếm mỗi hàng bảng là một dòng; theo `AGENTS.md`, một bảng dữ kiện được tính là một khối hiển thị, nên cột "dòng thực" dưới đây đếm bảng là một dòng.
 
@@ -14,9 +14,9 @@ Quy ước đếm mật độ: âm tiết đếm bằng `density.py` (từ tách
 | 4 | Phát triển kiến thức (thuật toán) | D00, `mach-4` | Mục tiêu một bước theo hành động kế tiếp; Thuật toán 06.12; ba sự kiện dừng | Giới hạn chờ lượt; TD(0) | Mục tiêu Sarsa phụ thuộc hành động thăm dò | Câu trả lời khi lượt chưa kết thúc | 11 | 18 |
 | 5 | Phát triển kiến thức (khái niệm và thuật toán) | E00, `mach-5` | Hành vi và đích; mục tiêu cực đại; Thuật toán 06.16; tàu đổ bộ | Mục tiêu Sarsa phụ thuộc thăm dò | Hai bảng sau hữu hạn mẫu, chưa có bảo đảm | Câu trả lời khi dữ liệu từ chính sách còn thăm dò, mục tiêu theo chính sách tham lam | 12 | 19,5 |
 | 6 | Phát triển kiến thức và áp dụng | F00, `mach-6` | GLIE, Robbins–Monro theo cặp, Định lý 06.21–06.22, vai trò giả thiết | Bảng hữu hạn mẫu | Danh sách giả thiết để kiểm bài toán thực; điều khiển Monte Carlo không có định lý tương ứng (F08) | Điều kiện để $Q_t\to q_*$ | 12 | 19,5 |
-| 7 | Kết luận | G00, `mach-7` | Bảng tổng kết, khung chung, bảng hội tụ, bài tập tổng hợp, trả lời vấn đề trung tâm | Toàn bài | Bài tập về nhà, Bài 07 | Kết luận có điều kiện tại D | 10 | 16 |
+| 7 | Kết luận | G00, `mach-7` | Bảng tổng kết, khung chung, bảng hội tụ, bài tập tổng hợp, trả lời vấn đề trung tâm | Toàn bài | Bài tập về nhà, Bài 07 | Kết luận có điều kiện tại D | 11 | 16 |
 
-Tổng: 75 trang, 120 phút. Bảy mạch nằm trong khoảng 5–7.
+Tổng: 76 trang, 120 phút. Bảy mạch nằm trong khoảng 5–7.
 
 ## Cụm khái niệm và sáu bước
 
@@ -42,7 +42,7 @@ Mạch mở đầu và mạch kết luận nằm ngoài hành trình khái niệ
 | B00, `mach-2` | điểm vào mạch 2 (#/2/1) | Giá trị hành động và thăm dò / "Muốn so sánh hai hành động tại D khi thiếu mô hình, phải ước lượng giá trị từng cặp và thử cả hai." (23) | Bảng giá trị hành động · Thăm dò · Chính sách ε-tham lam · Cải thiện chính sách | $q_\pi$, định lý cải thiện → lập bảng theo cặp, thăm dò, cải thiện ε-tham lam → bảng $Q$ và quy tắc chọn hành động | `vấn đề` của cụm bảng $Q$ | thêm |
 | C00, `mach-3` | điểm vào mạch 3 (#/3/1) | Điều khiển Monte Carlo / "Muốn ước lượng giá trị cặp từ lượt hoàn chỉnh, phải gắn lợi tức với lần ghé đầu tiên của cặp." (21) | Lần ghé đầu tiên · Bộ đếm lợi tức · Trung bình gia tăng · Chính sách cố định trong lượt | Mệnh đề 06.6 cần $q_\pi$ → trung bình lợi tức theo cặp → Thuật toán 06.9 và giới hạn chờ lượt | `vấn đề` của cụm Monte Carlo | thêm |
 | D00, `mach-4` | điểm vào mạch 4 (#/4/1) | Sarsa và mục tiêu một bước / "Muốn cập nhật trước khi lượt kết thúc, phải thay lợi tức chưa quan sát bằng giá trị của hành động kế tiếp." (23) | Mục tiêu một bước · Bộ năm của mẫu chuyển · Trạng thái kết thúc · Ngân sách cập nhật | giới hạn chờ lượt, TD(0) → mục tiêu một bước → Sarsa và phụ thuộc vào hành động thăm dò | `vấn đề` của cụm Sarsa | thêm |
-| E00, `mach-5` | điểm vào mạch 5 (#/5/1) | Q-learning và học khác chính sách / "Muốn học giá trị chính sách tham lam từ dữ liệu còn thăm dò, phải dùng cực đại của hàng kế tiếp." (22) | Mục tiêu cực đại · Học khác chính sách · Bộ bốn của mẫu chuyển · Dữ liệu hành vi | mục tiêu Sarsa phụ thuộc thăm dò → tách hành vi và đích, mục tiêu cực đại → Q-learning, câu hỏi hội tụ | `vấn đề` của cụm hành vi–đích và Q-learning | thêm |
+| E00, `mach-5` | điểm vào mạch 5 (#/5/1) | Q-learning và học khác chính sách / "Muốn học giá trị chính sách tham lam từ dữ liệu còn thăm dò, phải dùng cực đại của hàng kế tiếp." (22) | Mục tiêu cực đại · Học khác chính sách · Bộ bốn của mẫu chuyển · Chính sách sinh dữ liệu | mục tiêu Sarsa phụ thuộc thăm dò → tách hành vi và đích, mục tiêu cực đại → Q-learning, câu hỏi hội tụ | `vấn đề` của cụm hành vi–đích và Q-learning | thêm |
 | F00, `mach-6` | điểm vào mạch 6 (#/6/1) | Điều kiện hội tụ / "Muốn bảng hội tụ tới giá trị hành động tối ưu, phải kiểm độ phủ, lịch thăm dò và lịch bước học." (21, không KaTeX) | Độ phủ · Tham lam trong giới hạn · Robbins–Monro theo cặp · Hội tụ hầu chắc chắn | hội tụ TD(0) Bài 05, bảng hữu hạn mẫu → điều kiện thăm dò, bước học, hai định lý → danh sách giả thiết cho tàu đổ bộ | `vấn đề` của cụm GLIE, Robbins–Monro, định lý | thêm |
 | G00, `mach-7` | điểm vào mạch 7 (#/7/1) | Tổng kết và chuyển tiếp / "Muốn trả lời bài toán tại D, phải đối chiếu dữ liệu, mục tiêu cập nhật và giả thiết hội tụ." (21) | Giả thiết không được bỏ · Khung cập nhật chung · Bài toán tàu đổ bộ · Xấp xỉ hàm | sản phẩm của bài → tổng kết, áp dụng, trả lời vấn đề trung tâm → Bài 07 | ngoài hành trình khái niệm | thêm |
 
@@ -159,11 +159,12 @@ Cột "MT" là mục tiêu học tập; cột "Quyết định" ghi `giữ | s�
 | G09 | #/7/3 | "Kết quả về ba thuật toán": cùng bảng cho ba thuật toán | G05 → G01 | tất cả | thêm (tách G05 vì tràn khung 16:9; kế hoạch cho phép tách hai trang) |
 | G01 | #/7/4 | Bảng `Phương pháp | Quy tắc cập nhật | Dữ liệu dùng | Điều kiện dừng` | G09 → G06 | MT4, MT5 | sửa: theo khuôn của AGENTS |
 | G06 | #/7/5 | Bảng `Phương pháp | Giả thiết không được bỏ | Kết luận` | G01 → G03 | MT5 | thêm |
-| G03 | #/7/6 | Bài tập tổng hợp trên tàu đổ bộ | G06 → G07 | MT3–MT5 | sửa: dữ kiện LunarLander theo kế hoạch A2 |
-| G07 | #/7/7 | Lời giải trên mặt trang | G03 → G02 | MT3–MT5 | thêm |
-| G02 | #/7/8 | Trả lời vấn đề trung tâm có điều kiện: nhắc lại bài toán tại D, bảng ba hàng D có cột khởi tạo (nghiêng trái/phải), dòng "Nguồn:" | G07 → G08 (câu nối ở cuối ghi chú G07 và đầu ghi chú G02) | tất cả | sửa |
-| G08 | #/7/9 | Câu hỏi tự kiểm tra (lời giải trong ghi chú diễn giả) | G02 → G04 | MT1, MT4, MT5 | thêm |
-| G04 | #/7/10 | Bài tập về nhà, tài liệu đọc, liên kết viewer ghi chú bài giảng và bài tập, nối sang Bài 07 | G08 → — | tất cả | sửa: bỏ liên kết tới PDF nguồn, bảng `Mạch | Bài tập`; 2026-10-14 đồng bộ với `exercises.md` |
+| G03 | #/7/6 | Bài tập tổng hợp trên tàu đổ bộ: đề Bài tập 06.13 của ghi chú, câu 1–3 | G06 → G10 | MT3–MT5 | sửa: dữ kiện LunarLander theo kế hoạch A2; 2026-11-13 câu 3 theo ghi chú ("bị vi phạm và được thỏa"); ba dữ kiện của đề ghi chú (phần thưởng $\pm100$, lịch $\varepsilon_k$, 655 bước / $7\%$) không lên mặt trang vì trần 6 dòng: số liệu câu 1 có trên C10, hai dữ kiện còn lại nằm trong ghi chú diễn giả |
+| G10 | #/7/7 | Đề Bài tập 06.13, câu 4: kết quả đánh giá 100 lượt và hiệu ghép cặp | G03 → G07 | MT5 | tách (2026-11-13): G03 thêm câu 4 và dữ kiện đánh giá sẽ có 8 dòng, khoảng 85 âm tiết |
+| G07 | #/7/8 | Lời giải câu 1–4 trên mặt trang | G10 → G02 | MT3–MT5 | thêm; 2026-11-13 dữ kiện đánh giá chuyển sang G10, thêm lời giải câu 4 và vế "Thỏa:" của câu 3 |
+| G02 | #/7/9 | Trả lời vấn đề trung tâm có điều kiện: nhắc lại bài toán tại D, bảng ba hàng D có cột khởi tạo (nghiêng trái/phải), dòng "Nguồn:" | G07 → G08 (câu nối ở cuối ghi chú G07 và đầu ghi chú G02) | tất cả | sửa |
+| G08 | #/7/10 | Câu hỏi tự kiểm tra (lời giải trong ghi chú diễn giả) | G02 → G04 | MT1, MT4, MT5 | thêm |
+| G04 | #/7/11 | Bài tập về nhà, tài liệu đọc, liên kết viewer ghi chú bài giảng và bài tập, nối sang Bài 07 | G08 → — | tất cả | sửa: bỏ liên kết tới PDF nguồn, bảng `Mạch | Bài tập`; 2026-10-14 đồng bộ với `exercises.md` |
 
 ## Bài tập trên trang chiếu
 
@@ -175,12 +176,12 @@ Cột "MT" là mục tiêu học tập; cột "Quyết định" ghi `giữ | s�
 | D08 / D11 | 06.4 | lời giải mẫu trên mặt trang | cập nhật Sarsa, thứ tự chọn $A'$, ba sự kiện |
 | E08 / E12 | 06.5 | lời giải mẫu trên mặt trang | so sánh hai mục tiêu |
 | F05 / F09 | 06.6 | lời giải mẫu trên mặt trang | kiểm giả thiết hội tụ |
-| G03 / G07 | Tình huống 06.1 của ghi chú; Bài tập 06.17 của `exercises.md` | bài tập tổng hợp, lời giải trên mặt trang | chọn phương pháp, kiểm giả thiết trên bài toán thực |
+| G03, G10 / G07 | 06.13 (đủ bốn câu và dữ kiện đánh giá của ghi chú) | bài tập tổng hợp, lời giải trên mặt trang | chọn phương pháp, kiểm giả thiết trên bài toán thực |
 | G08 | — | tự làm; lời giải trong ghi chú diễn giả | bốn giả thiết hoặc phân biệt |
 
 Khi `exercises.md` lặp các bài 06.1–06.6, lời giải phải trùng kết quả trên trang chiếu và dẫn tới cả trang đề và trang lời giải.
 
-Bảng `Mạch | Bài tập` trên G04 (đồng bộ 2026-10-14) ghi số của `exercises.md` theo bảng mạch của tệp, rồi sau "ghi chú:" các bài chỉ có trong mục Bài tập củng cố của ghi chú: mạch 2: 06.1, 06.2, 06.14; ghi chú: 06.8, 06.11; mạch 3: 06.3, 06.13; mạch 4: 06.4, 06.15; mạch 5: 06.5, 06.13; ghi chú: 06.10; mạch 6: 06.6, 06.16; ghi chú: 06.9, 06.12; mạch 7: 06.17; ghi chú: 06.7 (06.7 phân loại ba thuật toán theo dữ liệu, hành vi và đích, khớp bảng G01). Bài tập 06.13 thuộc cả mạch 3 và mạch 5 vì so Monte Carlo với Q-learning trên cùng dãy sáu ô. Dòng "Tệp bài tập: chưa có" được thay bằng liên kết viewer `material-viewer.html?doc=materials/lec-06/exercises.md&deck=lecture-06-dieu-khien-phi-mo-hinh.html` cạnh liên kết ghi chú bài giảng.
+Bảng `Mạch | Bài tập` trên G04 (đồng bộ lại 2026-11-13) chép đúng bảng mạch ở đầu `exercises.md` hiện tại (làm lại, đánh số lại 2026-11-12): trước nhãn "ghi chú:" là bài của tệp bài tập (06.14–06.19, lấy từ Sutton và Barto 2018), sau nhãn là bài của ghi chú (06.1–06.13). Mạch 2: ghi chú: 06.1, 06.2, 06.8, 06.11; mạch 3: 06.14, 06.16; ghi chú: 06.3; mạch 4: 06.17, 06.19; ghi chú: 06.4; mạch 5: 06.15, 06.18; ghi chú: 06.5, 06.10; mạch 6: ghi chú: 06.6, 06.9, 06.12; mạch 7: ghi chú: 06.7, 06.13. Liên kết viewer `material-viewer.html?doc=materials/lec-06/exercises.md&deck=lecture-06-dieu-khien-phi-mo-hinh.html` đứng cạnh liên kết ghi chú bài giảng.
 
 ## Mật độ: trang vượt trần trước khi sửa
 
@@ -238,7 +239,7 @@ Số đo trước lấy từ deck 29-09-2026 (bản sao `deck06-old.html` trong 
 | G01 | 67 | 6 | 3 | bảng so sánh ba phương pháp, trần 80 (thêm theo/khác chính sách) |
 | G06 | 74 | 5 | 2 | bảng hội tụ của mạch kết luận, trần 80 |
 | G02 | 77 | 8 | 5 | ngoại lệ: trang trả lời vấn đề trung tâm thuộc nhóm tổng kết có bảng so sánh, trần 80 (trước vòng biên tập 58; thêm dòng "Bài toán:" và cột "Khởi tạo" theo quyết định của điều phối viên) |
-| G04 | 72 | 10 | 4 | trang tổng kết bài tập về nhà, trần 80; bảng sáu hàng tính một khối (61 trước đợt đồng bộ 2026-10-14; thêm số 06.13–06.17 và nhãn "ghi chú:") |
+| G04 | 72 | 10 | 4 | trang tổng kết bài tập về nhà, trần 80; bảng sáu hàng tính một khối (61 trước đợt đồng bộ 2026-10-14). Số đo 2026-11-13 bằng `deck_check`: 45 âm tiết |
 
 Bảng trên là các trang `density.py` còn gắn cờ sau vòng biên tập và lý do được phép; không trang nội dung nào vượt 60, không trang nào vượt 80. `density.py` đếm cả dấu câu đứng riêng sau khi bỏ KaTeX (ví dụ ", ;"), nên số âm tiết thật thấp hơn vài đơn vị ở các trang nhiều công thức. Trung vị 52 âm tiết; 64/75 trang trên đích 40 (trước vòng biên tập 62/75, trung vị 50). Các trang định nghĩa, định lý và thuật toán giữ đủ giả thiết quyết định trên mặt trang theo `AGENTS.md` §"Trang phát biểu kết quả". Không dùng lớp hay thuộc tính thu nhỏ chữ; deck không còn khối `<style>` cục bộ (quy tắc KaTeX trong tiêu đề đã nằm trong `lecture-slide.css`).
 
@@ -267,3 +268,39 @@ Mọi trang dưới đây giữ mã, quyết định là `sửa` (trừ dòng d�
 | E11 | Thêm dòng "Tính …"; dời xuống sau E07 | Khuôn trang ví dụ |
 | F00, F02, F06, F07, F08, F12, F13, F05 | Dòng dẫn F00 không KaTeX; tên tiếng Anh GLIE và "(độ phủ)" trên mặt F02, dòng lịch ví dụ chuyển vào ghi chú; F06 "khối cực đại" và số thập phân; F07 dòng "Tính …"; F08 thêm dòng điều khiển Monte Carlo; F12 dòng "Nhắc lại:"; F13 hàng $\gamma<1$ thành hệ quả, "mục tiêu độc lập"; F05 câu hỏi dùng động từ | Phát hiện RL 2, MACH T4, TOAN, PB |
 | G00, G05, G09, G01, G06, G03, G07, G02, G08, G04 | Dòng dẫn và từ khóa G00; tiêu đề theo đối tượng G05/G09; G01 thêm theo/khác chính sách; G06 thứ tự hàng Monte Carlo–Sarsa–Q-learning, "bài không nêu định lý tới $q_*$"; G07 nêu nghĩa của ± và hiệu ghép cặp chứa 0; G02 dòng "Bài toán:" và cột "Khởi tạo"; G08 câu 3 mới; G04 chỉ ghi Bài tập 06.1–06.12 | Thu hồi đầu ra mạch 5, mạch 6 và bài toán tại D |
+
+## Sửa theo bảng phát hiện 2026-11-13
+
+Đợt sửa theo bảng phát hiện ngày 2026-11-13 ở `review-log.md`; chi tiết từng phát hiện ở mục "Sửa deck theo bảng phát hiện 2026-11-13" của tệp đó. Deck từ 75 lên 76 trang: thêm G10 (tách đề Bài tập 06.13 thành G03 câu 1–3 và G10 câu 4); không bỏ hay gộp trang nào; mọi mã trang khác giữ nguyên. Thời lượng mạch 7 giữ 16 phút: G03 2 → 1,5, G10 1, G07 2 → 1,5.
+
+| Mã | Thay đổi | Nhu cầu được giải quyết |
+|---|---|---|
+| A07 | Gộp hai dòng "Nhắc lại:" của Bài 04 thành một; dòng "Ký hiệu:" thêm quy ước $\mathbb E_\pi$ theo $\pi$ và $p$ | Quy ước kỳ vọng trên mặt trang; không cắt câu thành hai đoạn |
+| A02 | Mục tiêu 2 thêm vế kiểm điều kiện cải thiện trong lớp $\varepsilon$-mềm; mục tiêu 4 thêm trạng thái kết thúc và cắt ngắn; tên tiếng Anh "thăm dò (exploration)" chuyển sang B04 để mục tiêu 2 giữ ≤ 20 âm tiết; ghi chú diễn giả chép ánh xạ mục tiêu → bài tập của ghi chú (tách "ghi chú" và "tệp bài tập") | Khớp mục tiêu và danh sách bài tập của ghi chú (G3) |
+| A03 | Dòng 6 thêm "MDP hữu hạn"; ghi chú diễn giả thay chỉ dẫn "ở phần 4/6" bằng nghĩa của $Q(S',A')$, độ phủ, tham lam trong giới hạn; nêu nguyên nhân dãy năm ô nằm ngoài định lý | Giả thiết nền; văn phong tác giả |
+| A05, A09, B03, B04, B06, B10, B11 | A05 bỏ "chỉ để kiểm phép tính"; A09 bỏ câu bước gradient (ghi chú không có); B03 ghi chú nêu "thăm dò (exploration)"; B04 "Thăm dò (exploration):"; B06 thêm điều kiện cực đại duy nhất; B10 bỏ "phần Monte Carlo"; B11 bỏ "(số liệu sư phạm tự xây dựng)" | Văn phong tác giả; khớp ghi chú |
+| C00, C01, C04, C08, C10 | Bỏ chỉ dẫn điều hướng và câu tự nói trạng thái; C08 câu 3 nêu cách gắn lợi tức của mọi lần ghé | Văn phong tác giả; nhắc lại trước khi dùng |
+| D04, D05, D06 | D04 ghi chú: bỏ "định nghĩa chính thức ở phần sau", thêm kết quả Sarsa với chính sách cố định hội tụ tới $q_\pi$; D05 "định lý hội tụ của Sarsa tới $q_*$ đòi lịch $\varepsilon$ giảm"; D06 ô "Hết ngân sách" thêm "nếu $S_{t+1}$ chưa kết thúc" | Điều kiện của mục tiêu; khớp ghi chú |
+| E00, E03, E07, E10, E11 | Bỏ chỉ dẫn "ở phần 6", "phần sau", "Bài 09 xử lý", "phần đọc thêm, Mục 6"; E03, E10 nêu kỳ vọng của mục tiêu theo ghi chú; E11 sửa khẳng định độ phủ "kiểm được" | Không khẳng định hội tụ khi thiếu giả thiết; văn phong tác giả |
+| F00, F02, F04, F08, F10, F13 | F02 lịch $c/C_t(s)$; F04 nêu nguyên nhân dãy năm ô nằm ngoài định lý; F08 $A_{t+1}\sim\pi_{t+1}$; F10 bỏ câu "chưa phải chứng minh"; F13 bỏ "số liệu sư phạm" | Ký hiệu theo ghi chú |
+| G03, G10, G07 | Bài tập trùng Bài tập 06.13: đủ bốn câu và dữ kiện đánh giá; G10 mới chứa dữ kiện đánh giá và câu 4; G07 lời giải câu 1–4 | D06 của điều phối viên |
+| G04, G06, G09 | G04 bảng và ghi chú diễn giả theo `exercises.md` hiện tại; G06 giả thiết nền thêm động lực dừng, $Q_0$ hữu hạn (bước học chọn trước mẫu nằm trong định nghĩa Robbins–Monro, nêu ở ghi chú diễn giả); G09 bỏ câu dẫn rỗng | Dẫn chiếu đúng; giả thiết nền đủ |
+
+Mật độ đo bằng `deck_check.py` (âm tiết là token có chữ, bỏ tiêu đề, KaTeX, ô bảng chỉ có số; số này khác `density.py` ở bảng trên):
+
+| Mã | Trước | Sau | Dòng | Ghi chú |
+|---|---:|---:|---:|---|
+| A02 | 70 | 76 | 5 | trang mục tiêu, trần 80; dòng dài nhất 20 âm tiết |
+| A03 | 55 | 58 | 5 | |
+| A07 | 52 | 55 | 6 → 5 | |
+| B06 | 58 | 60 | 5 | đúng trần 60 |
+| C08 | 44 | 52 | 6 | |
+| D06 | 50 | 54 | 3 | |
+| G03 | 52 | 55 | 6 | |
+| G10 | — | 59 | 4 | trang mới; tiêu đề hai dòng, nội dung vừa khung ở 1600×900 |
+| G07 | 50 | 38 | 6 → 5 | ghi chú diễn giả 200 token, lời giải (trần 250) |
+| G06 | 67 | 71 | 2 | ngoại lệ: bảng hội tụ của mạch kết luận, trần 80 |
+| F13 | 72 | 72 | 1 | ngoại lệ có sẵn: bảng so sánh năm giả thiết, trần 80 |
+| G04 | 41 | 45 | 4 | |
+
+Ghi chú diễn giả D04 đo 153 token kể cả dòng nguồn (146 không tính 7 token của dòng nguồn), trong giới hạn 150.
