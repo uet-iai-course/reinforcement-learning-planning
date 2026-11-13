@@ -99,8 +99,8 @@ Ngày 2026-11-04, người dùng quyết định bỏ mục "Bản đồ chủ �
 | `lec-08-topic-13` | Kiến thức tiên quyết: Q-learning dạng bảng (Bài 06), Q-learning bán gradient và bộ ba bất ổn (Bài 07) | cầu nối | 1 (`## Kiến thức tiên quyết`) | Nhắc quy tắc cập nhật, học khác chính sách, điều kiện hội tụ | Vào: Bài 06–07 → Ra: mục tiêu bootstrap và phạm vi bảo đảm | tr. 3–7 |
 | `lec-08-topic-17` | Mở đầu: mục tiêu, nội dung và bài toán trung tâm | cầu nối | 1 (`## 1.`) | Nêu bài toán và câu trả lời có điều kiện của từng phần | Vào: Bài 06–07 → Ra: khung cho phần 2–6 | tr. 1–2, 8–13 |
 | `lec-08-topic-01` | Giới hạn của bảng giá trị hành động | cốt lõi | 2 (`## 2.`) | Đặt vấn đề quy mô và khái quát hóa | Vào: topic-13 → Ra: nhu cầu $Q_\theta$ | tr. 8–15 |
-| `lec-08-topic-16` | Đầu vào bốn khung Atari và tính Markov | cốt lõi | 2 (`## 2.`) | Ví dụ cho giao diện mạng; giới hạn của bốn khung | Vào: topic-01 → Ra: quan sát $O_t$ cho topic-02 | tr. 17, 35 |
-| `lec-08-topic-02` | Mạng giá trị hành động, mục tiêu di động và mạng mục tiêu | cốt lõi | 2 (`## 2.`) | Định nghĩa $\mathbf q_\theta$, $Q_\theta$; giả thiết Markov khi viết mục tiêu; $Q_{\theta^-}$ | Vào: topic-01, topic-16 → Ra: $\mathbf q_\theta$ và hai bản sao mạng | tr. 14–17, 20, 31, 33, 35 |
+| `lec-08-topic-16` | Đầu vào bốn khung Atari | cốt lõi | 2 (`## 2.`) | Ví dụ cho giao diện mạng (Ví dụ 08.2) | Vào: topic-01 → Ra: quan sát $O_t$ cho topic-02 | tr. 17, 35 |
+| `lec-08-topic-02` | Mạng giá trị hành động, bốn khung và tính Markov, mục tiêu di động và mạng mục tiêu | cốt lõi | 2 (`## 2.`) | Định nghĩa $\mathbf q_\theta$, $Q_\theta$; giả thiết Markov khi viết mục tiêu; giới hạn của bốn khung; $Q_{\theta^-}$ | Vào: topic-01, topic-16 → Ra: $\mathbf q_\theta$ và hai bản sao mạng | tr. 14–17, 20, 31, 33, 35 |
 | `lec-08-topic-03` | Mục tiêu hồi quy | cốt lõi | 2 (`## 2.`) | Mục tiêu $y_t$ và sai số TD | Vào: topic-02 → Ra: nhãn hồi quy | tr. 16, 20–22, 34 |
 | `lec-08-topic-04` | Ví dụ: mục tiêu tại mẫu chuyển kết thúc | cốt lõi | 2 (`## 2.`) | Phân biệt $Z$ và $U$ | Vào: topic-03 → Ra: mục tiêu đúng | tr. 21 |
 | `lec-08-topic-05` | Kết thúc và cắt ngắn | cốt lõi | 2 (`## 2.`) | Hai cờ $Z$, $U$; mặt nạ chỉ dùng $Z$ | Vào: topic-04 → Ra: bộ sáu thành phần | tr. 21 |
@@ -125,7 +125,7 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | `note-topic-id` | `data-slide-id` |
 |---|---|
 | `lec-08-topic-01` | `L08-M2T`, `L08-03` |
-| `lec-08-topic-02` | `L08-07`, `L08-07b`, `L08-07c` |
+| `lec-08-topic-02` | `L08-07`, `L08-32`, `L08-07b`, `L08-07c` |
 | `lec-08-topic-03` | `L08-08` |
 | `lec-08-topic-04` | `L08-09` |
 | `lec-08-topic-05` | `L08-12`, `L08-12b` |
@@ -137,9 +137,9 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | `lec-08-topic-11` | `L08-20` |
 | `lec-08-topic-12` | `L08-M6T`, `L08-27`, `L08-29`, `L08-30`, `L08-30b`, `X03`, `X03b` |
 | `lec-08-topic-13` | `L08-01b`, `L08-01b2`, `L08-01c` |
-| `lec-08-topic-14` | `L08-M5T`, `L08-22`–`L08-26` |
+| `lec-08-topic-14` | `L08-M5T`, `L08-22`–`L08-25`, `X04`, `L08-26` |
 | `lec-08-topic-15` | `L08-M7T`, `L08-34`, `L08-34b`, `L08-K1`, `L08-K1b`, `L08-K2`, `L08-K3`, `L08-K4`, `L08-33`, `L08-K5` |
-| `lec-08-topic-16` | `L08-31`, `L08-32` |
+| `lec-08-topic-16` | `L08-31` |
 | `lec-08-topic-17` | `L08-01`, `L08-02`, `L08-02b`, `L08-02c` |
 | `lec-08-topic-18` | `L08-M3T`, `L08-28` |
 | `lec-08-topic-19` | `L08-05r` |
@@ -169,7 +169,7 @@ Mỗi trang có đúng một `data-note-topic-id`; một chủ đề có thể t
 | 23 | `L08-22`, `L08-26` | gộp | Thu hẹp vai trò optimizer. |
 | 24 | `L08-23` | giữ, sửa | Công thức SGD và phạm vi. |
 | 25 | `L08-24` | giữ, sửa | Nêu phép toán theo tọa độ và quy ước $\epsilon_{\mathrm{opt}}$. |
-| 26 | `L08-25` | giữ, sửa | Sửa mẫu số Adam và bổ sung khởi tạo. |
+| 26 | `L08-25`, `X04` | giữ, sửa; `X04` thêm 2026-11-13 | Sửa mẫu số Adam và bổ sung khởi tạo; `X04` là bài trên lớp về bước đầu có và không có hiệu chỉnh lệch, theo Ví dụ 08.22 của ghi chú. |
 | 27–28 | `L08-26` | gộp, sửa | Không tuyên bố phương pháp thắng tuyệt đối hay hội tụ nhanh. |
 | 29 | `L08-07b`, `L08-27` | tách, sắp xếp lại | Đặt phản ví dụ mục tiêu di động trước mạng mục tiêu. Hai nguồn bất ổn; bộ ba bất ổn xét riêng ở `L08-30`. |
 | 30 | `L08-14`, `L08-28` | sửa | Replay giảm tương quan, không tạo i.i.d. |

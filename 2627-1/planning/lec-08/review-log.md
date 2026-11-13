@@ -1105,3 +1105,77 @@ Quyết định của điều phối viên: **chấp nhận**; commit `fix(mater
 **Đã kiểm, không lỗi (theo báo cáo, điều phối viên kiểm mẫu).** Cấu hình RevealJS, plugin cục bộ, footer, thứ tự CSS. Mở đầu đủ, đúng thứ tự (bìa, ba trang "Tiên quyết và quy ước", mục tiêu, Nội dung, Vấn đề trung tâm). Sáu trang tiêu đề mạch: markup, số, `id` đúng, dòng dẫn ≤ 25 âm tiết, ≤ 5 từ khóa. Mạch kết luận đủ thành phần. Mỗi `data-slide-id` có đúng một mục storyboard. Liên kết trang chiếu trong `exercises.md` (`#/4/5`, `#/4/6`, `#/4/13`, `#/4/14`, `#/6/6`, `#/6/7`, `#/7/6`, `#/7/7`) đúng; Bài tập 08.1–08.4 trên deck và ghi chú cùng kết quả. Dẫn chiếu khác đúng (Định nghĩa 08.4, 08.6, 08.10, 08.15; Thuật toán 08.13; Nhận xét 08.9, 08.19–08.21; các khối 06.x, 07.x được dẫn). Tính lại: $4\cdot84\cdot84=28\,224$; $\epsilon$-tham lam $0{,}925$; $\theta_{n+1}=0{,}95\theta_n+0{,}5\to10$; mẫu kết thúc $y=-2$, $\delta=-0{,}5$; cỡ mẫu hiệu dụng $n_{\mathrm{eff}}=1{,}135$; bộ đệm vòng $2/N$; mini-batch $L_B=1{,}25$; SGD điều kiện $\eta<0{,}02$; RMSprop bước $3{,}162$; Adam $-0{,}266\eta$; hai trạng thái $1{,}5211$ so với $1{,}08^{10}=2{,}1589$; CartPole $L_B=1$, đồng bộ tại $k_{\mathrm{opt}}=1000$; trong ghi chú $1935/9216=0{,}2100$, Bài tập 08.6(c) $9{,}92\cdot10^{-4}$, Bài tập 08.7 $123$ lần đồng bộ. Ảnh chụp L08-24, L08-25, L08-26 (rộng, hẹp), L08-07b, X03, L08-K5: không tràn.
 
 **Quyết định của điều phối viên:** **chấp nhận** báo cáo làm danh sách việc cần sửa, sau khi kiểm lại trên tệp gốc các phát hiện ghi ở mục "Điều phối viên kiểm lại". Mọi phát hiện ở trạng thái **mở**; các dòng "Đề nghị sửa ghi chú" chờ người dùng quyết định, không phải lỗi deck.
+
+## Sửa deck theo bảng phát hiện 2026-11-13
+
+**Vai trò.** Người sửa (editor) deck Bài 08 theo lời giao chung `editor-brief.md` và quyết định G1–G11, D08 của điều phối viên (2026-11-13). Không commit.
+
+**Phạm vi ghi.** `2627-1/lecture-08-deep-q-learning.html`; `planning/lec-08/storyboard.md`, `outline.md`, `review-log.md`. Không sửa SVG, `materials/`, CSS, `index.html`.
+
+**Kết quả.** 60 trang trước, 61 trang sau. Thêm `X04` "Bài tập: bước đầu của Adam" ở mạch 5, sau `L08-25`, trước `L08-26` (`L08-26` chuyển từ `#/5/6` sang `#/5/7`; mạch 5 không có liên kết sâu nào ngoài `#/5/1`). Không bỏ, không tách, không gộp trang. Bảy mạch, sáu trang tiêu đề mạch và các liên kết sâu của `exercises.md` giữ nguyên: kiểm bằng Playwright, `#/4/5` = `X01`, `#/4/6` = `L08-21`, `#/4/13` = `X02`, `#/4/14` = `X02b`, `#/6/6` = `X03`, `#/6/7` = `X03b`, `#/7/6` = `L08-K2`, `#/7/7` = `L08-K3`. Trang có mặt trang đổi: `L08-03`, `L08-07b`, `L08-28`, `L08-14`, `X04`, `L08-27`, `X03`, `X03b`, `L08-K5`; `L08-32` đổi `data-note-topic-id`; các trang còn lại chỉ đổi ghi chú diễn giả.
+
+**Xuất xứ số liệu tự dựng (ghi một lần ở đây, đã bỏ khỏi ghi chú diễn giả).** Các số của ví dụ một tham số ($R=1$, $\gamma=0{,}9$, $\theta_0=0$, $\alpha=0{,}5$), mẫu kết thúc và mẫu cắt ngắn, mini-batch hai mẫu chuyển, tương quan $0{,}9^\ell$, bộ đệm vòng $N=6$, câu hỏi dừng gradient ($-2$ so với $-0{,}2$), truy dấu hai bộ đếm, hàm $\tfrac12(100\theta_1^2+\theta_2^2)$ với $g_1=(2;\,0{,}02)$, hai bước $g_1=2$, $g_2=-1$, mẫu 1 qua mốc đồng bộ ($4\to5$), hai trạng thái với mạng mục tiêu và một bước DQN trên CartPole là ví dụ sư phạm do học phần dựng; chúng trùng các khối của ghi chú (Ví dụ 08.5, 08.7–08.10, 08.12, 08.15, 08.18–08.24; Bài tập 08.1–08.4; đoạn sau Định nghĩa 08.10), nên dòng nguồn của ghi chú diễn giả nay dẫn các khối đó. Số Lunar Lander lấy từ notebook Lunar Lander của Bài 05, phần 5 (Ví dụ 08.1). Cấu hình Atari theo Mnih và cộng sự (2015), Extended Data Table 1.
+
+**Tính lại các số mới hoặc đổi.** `L08-03`: $3\cdot4^5=3\,072$, $3\,072\cdot3=9\,216$; $1\,935/9\,216=0{,}20996\approx0{,}210$; $9\,216-1\,935=7\,281$, $7\,281/9\,216=0{,}790$ (khoảng $79\%$); $9\,216\cdot4=36\,864$. `L08-07b`: $\theta_1=0+0{,}5\cdot1=0{,}5$. `L08-07c` (ghi chú diễn giả): với $\theta^-=0$, $C=3$, $\theta$: $0\to0{,}5\to0{,}75\to0{,}875$, khoảng cách tới $10$ nhân $9{,}125/10=0{,}9125$; $0{,}95^3=0{,}857$. `L08-23` (ghi chú diễn giả): $0{,}98^{100}=0{,}1326\approx13\%$. `L08-25` (ghi chú diễn giả): $\hat m_2=0{,}08/0{,}19=0{,}421$, $\hat v_2=0{,}004996/0{,}001999=2{,}499$, $0{,}421/\sqrt{2{,}499}=0{,}266\approx0{,}27$. `X04`: $m_1=0{,}1\cdot(2;\,0{,}02)=(0{,}2;\,0{,}002)$; $v_1=0{,}001\cdot(4;\,0{,}0004)=(0{,}004;\,4\cdot10^{-7})$; $\hat m_1=g_1$, $\hat v_1=g_1\odot g_1$, $\hat m_1\oslash\sqrt{\hat v_1}=(1;\,1)$, bước $(-0{,}005;\,-0{,}005)$, $\theta_1=(0{,}015;\,0{,}015)$; $0{,}2/\sqrt{0{,}004}=0{,}2/0{,}063246=3{,}1623$ và $0{,}002/\sqrt{4\cdot10^{-7}}=3{,}1623$; bước không hiệu chỉnh $0{,}005\cdot3{,}1623=0{,}0158$, $\theta_1=0{,}0042$; $(1-\beta_1)/\sqrt{1-\beta_2}=0{,}1/0{,}031623=3{,}1623$. Khớp Ví dụ 08.22 của ghi chú.
+
+**Kiểm tra.** `deck_check.py` (toàn deck, 61 trang): 0 lỗi console, 0 lỗi trang, 0 request lỗi, 0 `.katex-error`. Cờ OVERFLOW/NARROW-H ở `L08-24`, `L08-25`, `X04`, `L08-26` là đuôi SVG của `\sqrt`; ảnh 1600×900 và 390×844 không tràn. Ghi chú diễn giả: mọi trang thường ≤ 150 âm tiết; trang lời giải `X02b` 202, `X03b` 203, `L08-K3` 242, `L08-33` 197 (≤ 250); trang tiêu đề mạch 84–96. Ảnh đã xem (1600×900 và 390×844): `L08-03`, `L08-07b`, `L08-28`, `L08-14`, `X04`, `L08-27`, `X03`, `X03b`, `L08-K5`; thêm 1600×900 của `L08-26`. `git diff --check` sạch.
+
+**`no-ai-slop`.** Chế độ Edit trên mọi ghi chú diễn giả đã sửa và chữ mới trên mặt trang (`L08-03`, `L08-14`, `L08-27`, `X03`, `X03b`, `X04`); tự kiểm theo `eval.md`: bỏ câu xuất xứ, câu tự nói trạng thái ("Ví dụ chỉ cố định…", "Ví dụ này không cho phép suy ra…", "Đề không cho ngân sách…", "Dự đoán cần đo"), câu điều hướng, câu khẩu hiệu ("Không có lựa chọn thắng tuyệt đối."), nhận xét bên lề không dùng lại (hàm mất mát Huber ở `L08-17`, tên trường API ở `L08-13`); câu phủ định về phạm vi bảo đảm viết lại ở dạng dương ("lớp phương pháp có đủ ba yếu tố có ví dụ phân kỳ"). Giữ nhãn, định nghĩa, câu hỏi kiểm tra và mọi số.
+
+| phát hiện | xử lý | trang | ghi chú |
+|---|---|---|---|
+| nghiêm trọng: bảng `Mạch \| Bài tập` dẫn bài không còn (08.10–08.19) | sửa | `L08-K5` | Chép đúng ex:8–13: 2: ghi chú 08.1, 08.4; 3: 08.9, ghi chú 08.6; 4: ghi chú 08.1, 08.2, 08.4, 08.7; 5: 08.8, ghi chú 08.5 (a); 6: ghi chú 08.3, 08.5 (b); 7: ghi chú 08.4 (bỏ "(bài tổng hợp)" để chép đúng tệp). |
+| nghiêm trọng: ghi chú diễn giả mô tả tệp bài tập cũ (08.6–08.19) | sửa | `L08-K5` | Theo đoạn mở của `exercises.md`: tệp gồm 08.8, 08.9 lấy từ Sutton và Barto (2018); ghi chú có 08.1–08.7, 08.1–08.4 có trang đề và lời giải. |
+| nghiêm trọng: `L08-03` ghi $1\,896$ ô | sửa | `L08-03` | Theo D08 và Ví dụ 08.1: mặt trang $1\,935$ ô có mẫu sau $2\,000$ lượt, "(Bài 05)"; ghi chú diễn giả $\approx0{,}210$, $7\,281$ ô, khoảng $79\%$; nguồn notebook Bài 05, phần 5 và Ví dụ 08.1 (bỏ Ví dụ 07.1). |
+| trung bình: storyboard chưa đồng bộ bài tập và số liệu | sửa | kế hoạch | `storyboard.md`: hàng `L08-03`, `L08-K5` của bảng trang, bảng cụm mạch 2 và mạch 7, mục từng trang; thêm mục `X04`. Các mục lịch sử (bước S8, R7) giữ nguyên làm hồ sơ. |
+| trung bình: `L08-07b` 7 dòng | sửa | `L08-07b` | Gộp hai dòng thành "$q=0$, $y=1$; $\theta_1=0+0{,}5\cdot1=0{,}5$"; 6 dòng, dòng gộp vừa một dòng của cột trái. |
+| trung bình: `X03`, `L08-14` ba khung | sửa | `X03`, `L08-14` | `X03`: hai thẻ thành hai dòng chữ, còn một khung. `L08-14`: hai thẻ thành bảng hai cột, còn một khung; không cần ngoại lệ số khung. |
+| trung bình: dòng kết `X03b` là câu tự nói trạng thái | sửa | `X03b` | Bỏ dòng "Dự đoán cần đo; không suy ra hội tụ."; ghi chú diễn giả: "Thí nghiệm kiểm hai dự đoán rút từ Nhận xét 08.19: …". Không thay bằng dòng kết mới vì trang ở 60 âm tiết. |
+| nhẹ: câu xuất xứ "tự xây dựng" ở 16 ghi chú diễn giả | sửa | `L08-07b`, `09`, `12b`, `28`, `13`, `14`, `10b`, `X01`, `21`, `19b`, `23`, `24`, `29`, `30b`, `K2`, `K3` | `grep -c 'tự xây dựng'` = 0; dòng nguồn dẫn khối có thật của ghi chú; xuất xứ ghi ở mục này. |
+| nhẹ: "giả thiết minh họa" ở `L08-28` | sửa | `L08-28` | Xóa; thêm "giá trị minh họa" trong alt của `q-vector.svg` ở `L08-07` cũng bỏ chữ "minh họa". |
+| nhẹ: câu tự nói phạm vi văn bản | sửa | `L08-31`, `L08-23`, `X03` | `L08-31`: "Tái lập kết quả Atari cần thêm …"; `L08-23`: xóa; `X03`: "Số hạt giống chọn theo ngân sách tính toán." (theo Bài tập 08.3 (d)). |
+| nhẹ: nêu nghĩa dương | sửa | `L08-34b`, `L08-K1b` | `L08-34b`: "Hàng cuối nói về bảo đảm cho mọi bài toán: lớp phương pháp có đủ ba yếu tố có ví dụ phân kỳ."; `L08-K1b`: "Ở hai hàng sau, bằng chứng là một phản ví dụ: …". |
+| nhẹ: câu điều hướng, nhận xét bên lề | sửa | `L08-02c`, `L08-K4` | Bỏ "Dòng số $N$ …" ở cả hai; bỏ "(phần 4–5)" v.v.; nhận xét hai cận độ phức tạp mẫu chuyển sang `storyboard.md`, "Lệch khỏi trật tự nguồn" ý 2. |
+| nhẹ: từ giảm nhẹ, câu khẩu hiệu | sửa | `L08-01`, `L08-23`, `L08-26` | `L08-01`: "hiệu quả của DQN gốc được đánh giá bằng thí nghiệm" và nguồn Extended Data Table 3; `L08-23`: "có thể giảm theo một lịch định trước"; `L08-26`: xóa "Không có lựa chọn thắng tuyệt đối." |
+| nhẹ: danh sách treo trên phủ định "Không bảo đảm" | sửa | `L08-14` | Bảng "Làm được / Còn lại": "Mẫu cùng quỹ đạo vẫn tương quan"; "Phân phối của $\mathcal D$ trôi theo hành vi"; "Đủ bộ ba bất ổn". |
+| nhẹ: nhãn "Nhu cầu:" không nêu nhu cầu | sửa | `L08-27` | "Nhu cầu: biết bộ nhớ phát lại và mạng mục tiêu giảm nguồn bất ổn nào, còn lại gì."; 76 âm tiết (trần 80 của bảng so sánh). |
+| nhẹ: ký hiệu $k$, $\bar g$ lệch ghi chú | sửa | `L08-28`, `L08-27` | $h_1,\dots,h_4$, $\bar h$, $0{,}9^\ell$ theo Ví dụ 08.9 và Nhận xét 08.19 (mặt trang và ghi chú diễn giả). |
+| nhẹ: `data-note-topic-id` của `L08-32` | sửa | `L08-32` | Theo D08: `lec-08-topic-02`; `outline.md` sửa bảng chủ đề (topic-16 chỉ còn "Đầu vào bốn khung Atari"; topic-02 thêm bốn khung và tính Markov) và bảng ánh xạ. |
+| nhẹ: cụm "Bộ tối ưu" thiếu bài có "Lời giải:" trên mặt trang | sửa | `X04` (mới) | Bài "bước đầu của Adam" theo Ví dụ 08.22 của ghi chú, lời giải bốn dòng fragment; 39 âm tiết, 7 dòng hiển thị (ngoại lệ ghi trong storyboard); 3 phút lấy từ 30 phút chữa bài. Chọn trang riêng thay vì fragment trên `L08-26` vì `L08-26` đã 57 âm tiết và dòng kết phải đứng cuối. |
+| nhẹ: ghi chú diễn giả > 150 âm tiết (27 trang), `L08-M3T` > 100 | sửa | các trang được liệt kê | Rút ở cùng lượt văn phong; nay mọi trang thường ≤ 150 (lớn nhất `L08-01b` 150), `L08-M3T` 91; trang lời giải `X02b`, `X03b`, `L08-K3`, `L08-33` 197–242 (≤ 250). |
+| nhẹ: đề nghị sửa ghi chú, Ví dụ 08.1 dẫn Ví dụ 07.1 | không sửa ghi chú | — | Chuyển điều phối viên ("Đề nghị sửa ghi chú"); deck không dẫn Ví dụ 07.1 nữa. |
+| nhẹ: đề nghị sửa ghi chú, bảng `Phần \| Bài tập` thiếu hàng 7 | không sửa ghi chú | — | Chuyển điều phối viên; deck chép bảng của `exercises.md` (có hàng 7). |
+| nhẹ: đề nghị sửa ghi chú, mục tiêu 4 chưa có bài tính một bước RMSprop, Adam | không sửa ghi chú | — | Chuyển điều phối viên; trên deck, `X04` phục vụ mục tiêu 4 bằng Ví dụ 08.22. |
+
+### Sửa sau kiểm lại
+
+Điều phối viên kiểm lại và kết luận "đạt", kèm sáu phát hiện nhẹ; người sửa xử lý cả sáu (cùng phạm vi ghi, không commit). `deck_check` trên `X04`, `X03b`, `L08-03`, `L08-K4`: 0 lỗi console, request, KaTeX; ảnh `X04` (1600×900, 390×844), `L08-03`, `X03b` (1600×900) đã xem. Liên kết sâu G7 không đổi (không thêm, bớt trang).
+
+| phát hiện | xử lý | trang |
+|---|---|---|
+| Dòng dữ kiện của `X04` để mồ côi "$\epsilon_{\mathrm{opt}}$." | "bỏ qua $\epsilon_{\mathrm{opt}}$" chuyển vào câu hỏi, câu hỏi rút "khi" để vừa một dòng; trang còn 6 dòng hiển thị, 37 âm tiết; xóa ngoại lệ `X04` ở storyboard ("Cập nhật mật độ" và mục `X04`) | `X04` |
+| Ghi chú diễn giả `X04` thiếu "Gợi ý:" và câu nêu năng lực | Thêm "Bài kiểm tra việc viết Adam theo từng tọa độ và vai của phép hiệu chỉnh lệch. Gợi ý: viết $m_1$, $v_1$ theo $g_1$ trước khi chia cho $1-\beta^{\,1}$."; 157 âm tiết (trang lời giải) | `X04` |
+| Ghi chú diễn giả `L08-K4` còn $0{,}9^k$ | Đổi thành $0{,}9^\ell$ | `L08-K4` |
+| `X03b` không có dòng kết | Thêm "**Kết luận:** so hiệu theo từng hạt giống."; bỏ "kèm" ở dòng trước để giữ 60 âm tiết, 6 dòng | `X03b` |
+| Storyboard (bảng cụm mạch 3) còn $0{,}9^k$, $\operatorname{Var}\bar g$ | Đổi thành $0{,}9^\ell$, $\operatorname{Var}\bar h$ | `L08-28` (kế hoạch) |
+| Dòng "Ví dụ." của `L08-03` để mồ côi "lượt." | Bỏ "(Bài 05)" khỏi mặt trang (nguồn ở ghi chú diễn giả); dòng vừa một dòng hiển thị, 58 âm tiết | `L08-03` |
+
+### Kiểm lại, kiểm định cuối và duyệt của điều phối viên (2026-11-13)
+
+**Tác tử (theo lời gọi công cụ).**
+
+| vai trò | loại | mô hình | effort | ghi tệp |
+|---|---|---|---|---|
+| rà soát chỉ đọc (bảng phát hiện) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+| người sửa (deck, kế hoạch; tiếp tục bằng SendMessage cho vòng sửa sau kiểm lại) | `general-purpose` | `opus` (Opus 5.5) | `high` | có |
+| kiểm lại chỉ đọc (vai trò A: độ chính xác toán và Học tăng cường; vai trò B: mạch, quy tắc deck, `no-ai-slop` Detect) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+
+Quyết định chung của đợt: G1–G11, D01–D10 (tệp quyết định của điều phối viên trong thư mục nháp của phiên, chép tóm tắt ở mục sửa phía trên).
+
+**Kiểm lại.** Kết luận "đạt": 22/22 phát hiện xử lý đúng (kiểm kỹ: X04 mới khớp Ví dụ 08.22, tính lại bước $(-0{,}005;-0{,}005)$ và tỉ số $3{,}16$; tám liên kết sâu `#/4/5`, `#/4/6`, `#/4/13`, `#/4/14`, `#/6/6`, `#/6/7`, `#/7/6`, `#/7/7` mở bằng Playwright vẫn trỏ đúng trang đề/lời giải; L08-03 theo Ví dụ 08.1); 6 nhẹ mới (X04 dòng mồ côi và ngoại lệ 7 dòng không cần; X04 thiếu "Gợi ý:"; L08-K4 ký hiệu $\ell$; X03b thiếu dòng kết; storyboard L08-28; L08-03 dòng mồ côi), đã sửa ở "Sửa sau kiểm lại".
+
+**Kiểm định cuối của điều phối viên.** `deck_check` toàn deck: 61 trang (60 → 61, thêm X04 ở mạch 5, sau L08-25; mạch 5 không có liên kết sâu nào ngoài `#/5/1`), 0 lỗi console, lỗi trang, request lỗi, `.katex-error`; cờ OVERFLOW ở L08-24, L08-25, X04, L08-26 là đuôi `\sqrt`; các cờ LINE20 (L08-32, 05r, 17, 30, X02, K2, 26) có từ trước, số đo không đổi so với HEAD, mỗi khối hiển thị thành hai dòng dưới 20 âm tiết (ngoại lệ F2 trong storyboard). 51 trang đổi, 10 đổi mặt trang; điều phối viên tự xem bảng ảnh hai cỡ: không tràn. `git diff --check` sạch.
+
+**Đề nghị sửa ghi chú (chờ người dùng quyết định; không sửa `materials/` trong đợt này).** Ví dụ 08.1 dẫn Ví dụ 07.1 làm nguồn cho $1\,935$ ô, trong khi Ví dụ 07.1 ghi $1\,896$ ô trên $1\,958$ lượt; thống nhất hai ghi chú, nguồn là notebook Bài 05 phần 5. Bảng `Phần | Bài tập` của ghi chú thiếu hàng 7 ("08.4"). Mục tiêu 4 (RMSprop, Adam) chưa có bài tập tính một bước trong ghi chú; X04 trên deck dùng Ví dụ 08.22.
+
+**Quyết định của điều phối viên:** **chấp nhận** deck và các tệp kế hoạch; mọi phát hiện `nghiêm trọng` và `trung bình` của bảng 2026-11-13 và của lượt kiểm lại đã xử lý; phát hiện không sửa có lý do ghi ở bảng xử lý.
