@@ -1915,3 +1915,77 @@ Quyết định của điều phối viên: **chấp nhận**; commit `fix(mater
 **Đã kiểm, không lỗi (theo báo cáo, điều phối viên kiểm mẫu).** Cấu hình RevealJS, plugin cục bộ, footer "Học tăng cường · Học kỳ 1, 2026–2027 · Bài 07", thứ tự CSS, 0 `style=""`. Mở đầu đúng thứ tự (01b "Nhắc lại:", 01c "Ký hiệu:", mục tiêu, Nội dung 1–7, Vấn đề trung tâm, khung chung L07-02). Sáu trang tiêu đề mạch: markup đúng, dòng dẫn 20–24 âm tiết, ≤ 5 từ khóa. Mạch kết luận đủ thành phần trừ L07-36f. Mọi thuật toán có bước tính tay trước công thức và giả mã, ba bên khớp. Mọi số hiệu khối khác (Mệnh đề, Định nghĩa, Hệ quả 07.3, Bổ đề 07.16, 07.27, Định lý 07.17, 07.29, Nhận xét, Thuật toán 07.15, 07.22, 07.33, 07.36, Ví dụ 07.1–07.16, Tình huống 07.2, Bài tập 07.3–07.18) trỏ đúng; dẫn chiếu sang Bài 05, 06 khớp đề mục. Tính lại: $9\,216=3\cdot4^5\cdot3$; mức lan $0{,}4$, $0{,}3$; Monte Carlo $w_{n+1}=(1{,}8;-0{,}6)$; TD(0) $w=(0{,}44;0{,}88)$; hai trạng thái $w_{\mathrm{MC}}=2{,}9$, $w_{\mathrm{TD}}=20/19$, tỉ số $3{,}019$; Sarsa $w_1=(-0{,}2;0{,}6;-1{,}4)$, $w_3=(8{,}032;-2{,}064;1{,}264)$; Q-learning $w_3=(7{,}36;-1{,}92;1{,}12)$; phân kỳ $1{,}08^{30}=10{,}063$; Flappy Bird $d=771$. Ảnh chụp L07-22 (rộng, hẹp), L07-23, L07-23b, L07-34, L07-36f: không tràn.
 
 **Quyết định của điều phối viên:** **chấp nhận** báo cáo làm danh sách việc cần sửa, sau khi kiểm lại trên tệp gốc các phát hiện ghi ở mục "Điều phối viên kiểm lại". Mọi phát hiện ở trạng thái **mở**; các dòng "Đề nghị sửa ghi chú" chờ người dùng quyết định, không phải lỗi deck.
+
+## Sửa deck theo bảng phát hiện 2026-11-13
+
+**Vai trò.** Người sửa (editor) deck Bài 07, một tác tử theo lời giao chung `editor-brief.md` và quyết định G1–G11, D07 của điều phối viên; `no-ai-slop` chế độ Edit, tự kiểm theo `eval.md`. Chuẩn nội dung: `materials/lec-07/lecture-note.md`, `exercises.md` (không sửa). Không commit.
+
+**Phạm vi ghi.** `2627-1/lecture-07-xap-xi-ham.html`; `planning/lec-07/{storyboard.md, outline.md, review-log.md}`. Không sửa SVG, CSS, `materials/`, `index.html`. Sửa bằng script thay chuỗi duy nhất (mỗi chuỗi cũ phải xuất hiện đúng một lần), kiểm `deck_check.py` sau mỗi cụm.
+
+**Kết quả.** 75 trang trước và sau, 7 mạch; không thêm, bỏ, tách hay gộp trang; không đổi `id`, `data-slide-id`, thứ tự trang (liên kết `#/N/1` của `exercises.md` giữ đúng). `deck_check.py` (2026-11-13): 0 lỗi console, 0 lỗi trang, 0 request lỗi, 0 `.katex-error`; cờ OVERFLOW ở `L07-22`, `L07-23` là đuôi `\underbrace`, `\sqrt` như trước (ảnh không tràn). Mặt trang đổi: `L07-04` 54 → 56 âm tiết, `L07-20` 37 → 39, `L07-21` 50 → 49, `L07-22` 31 → 33, `L07-24` 52 → 57, `L07-25` 38 → 40, `L07-26` 36 → 42, `L07-34` 64 → 71 (bảng so sánh, trần 80), `X03b` 34, `L07-36f` 32. Trang mục tiêu `L07-03` 75. Ghi chú diễn giả: mọi trang thường 73–149 âm tiết; trang tiêu đề mạch 70–98 (`L07-M2T` 102 → 93). Ảnh 1600×900 và 390×844 đã xem: `L07-04`, `L07-20`, `L07-21`, `L07-22`, `L07-24`, `L07-25`, `L07-26`, `X03b`, `L07-34`, `L07-36f`. Lần chụp đầu của `L07-34` cho bảng chạm chân trang (cờ OVERFLOW 6 px); lần đầu của `L07-21` cho dòng "Ví dụ." đè chân trang; cả hai đã sửa và chụp lại.
+
+**Xuất xứ số liệu.** Các bộ số của `L07-06` (Ví dụ 07.2), `L07-07` (Ví dụ 07.3), `L07-12`, `L07-14` (Ví dụ 07.7, 07.8), `L07-19` (Ví dụ 07.9), `L07-23b` (Ví dụ 07.11) là số liệu sư phạm tự dựng của ghi chú, dùng để tính tay; câu xuất xứ đã bỏ khỏi ghi chú diễn giả và ghi tại đây. Số liệu thực hành (Lunar Lander, Flappy Bird) lấy từ một lần chạy đã nhúng trong notebook Bài 07, trừ bảng thử nghiệm sơ bộ (ba hạt giống); deck nêu điều này một lần ở ghi chú diễn giả `L07-01c` và giữ tại chỗ ở `L07-29`, `L07-31c`.
+
+**Tính lại.** $2\,000-42=1\,958$ lượt kết thúc thật; $1\,896/9\,216=0{,}2057\approx20{,}6\%$; $9\,216-1\,896=7\,320$; $9\,216=3\cdot4^5\cdot3$. Tập đo $J_{\mathrm{kt}}$: $493$ trên $500$ lượt kiểm tra (ghi chú tr. 282). $v_\pi=(5{,}5;4{,}5)$ không thuộc $\{(w;2w)\}$ vì $4{,}5\ne2\cdot5{,}5$; tỉ số sai số $3{,}6988/1{,}2250=3{,}019$ (không đổi). Bước học ở `X03b`: Monte Carlo $\alpha=0{,}1$, $3+1{,}1\cdot995=1\,097{,}5$; Sarsa $\alpha=0{,}2$, $3+2{,}2\cdot(-2)=-1{,}4$ (khớp ghi chú tr. 1291). Bảng `L07-36f` chép từ `exercises.md` dòng 8–13; mỗi bài 07.20–07.28 xuất hiện ở đúng mạch của bảng đó (07.28 ở mạch 5 và 6 như tệp). Ánh xạ mục tiêu → bài tập ở `L07-03` chép từ ghi chú dòng 9–14.
+
+| phát hiện | xử lý | trang | ghi chú |
+|---|---|---|---|
+| nghiêm trọng: bảng `Mạch \| Bài tập` sai ánh xạ | sửa: chép cột Bài tập của `exercises.md` dòng 8–13 (mạch 2–7) | `L07-36f` | 32 âm tiết, không đổi; storyboard ghi đợt sửa |
+| nghiêm trọng: ghi chú diễn giả mô tả bộ 14 bài cũ | sửa: "Tệp bài tập gồm chín bài 07.20–07.28 lấy từ bài tập chương 9–11 của Sutton và Barto (2018)…"; bỏ câu "không có trang trên trang chiếu" (sai với 07.3, 07.5 …); giữ câu 07.18 và câu nối Bài 08 | `L07-36f` | ghi chú 155 → 140 |
+| nghiêm trọng: hàng "Phương sai: thường lớn hơn / thường nhỏ hơn" | sửa: hàng "Nguồn nhiễu của mục tiêu \| mọi $R_{t+1},\dots,R_T$ \| một chuyển $(R_{t+1},S_{t+1})$"; ghi chú `L07-25` dẫn Nhận xét 05.29; ghi chú `L07-13`, `L07-18`, `L07-19b` thay câu phương sai bằng nguồn nhiễu (ghi chú tr. 791) | `L07-25`, `L07-13`, `L07-18`, `L07-19b` | — |
+| trung bình: "không giảm mất mát cố định" tuyệt đối | sửa: thêm "nói chung" ở mặt trang `L07-20`, `L07-21` và ghi chú diễn giả `L07-M4T`, `L07-20` | `L07-20`, `L07-21`, `L07-M4T` | dòng Nhu cầu `L07-21` viết gọn "điểm dừng của TD(0) bán gradient" để không đè chân trang |
+| trung bình: "quy tắc phá hòa cố định" | sửa: `L07-10` "tập hành động tham lam như nhau ở mọi trạng thái"; `L07-26` ghi chú "phần $1-\varepsilon$ chia đều cho các hành động đạt cực đại", mặt trang thêm "khi hành động tham lam duy nhất" | `L07-10`, `L07-26` | — |
+| trung bình: $1\,896$ ô gán cho $2\,000$ lượt | sửa theo D07: "$1\,958$ lượt (episode) kết thúc thật chỉ ghé $1\,896$ ô ($20{,}6\%$)"; ghi chú diễn giả nêu $42$ lượt cắt ngắn; thêm "số chân chạm đất" theo ghi chú | `L07-04` | mâu thuẫn với Ví dụ 08.1 thuộc "Đề nghị sửa ghi chú" |
+| trung bình: cột giả thiết thiếu giả thiết của Nhận xét 07.40 | sửa: Monte Carlo thêm "đặc trưng bị chặn; $\mathbb E[G^2]<\infty$"; TD thêm "không kết thúc; phần thưởng bị chặn"; câu tương ứng bỏ khỏi ghi chú diễn giả | `L07-34` | bảng chạm chân trang 6 px; hàng Q-learning đổi kết luận thành "không bảo đảm chung; phản ví dụ: TD khác chính sách" như ghi chú; 71 âm tiết |
+| trung bình: ánh xạ mục tiêu → bài tập lệch | sửa: chép ghi chú dòng 9–14, tách "ghi chú" và "tệp bài tập" | `L07-03` (ghi chú diễn giả) | 88 → 101 âm tiết |
+| trung bình: kế hoạch còn số bài tập cũ, "phá hòa" | sửa: `outline.md` dòng 9, mục tiêu 1–6, hàng HW 1–3 và HW 5–6, mục thuật ngữ thành "chia đều khi hòa"; `storyboard.md` hàng K1 dùng Bài tập 07.1 của ghi chú | kế hoạch | — |
+| nhẹ: câu xuất xứ "số liệu sư phạm tự xây dựng" | sửa: xóa sáu câu; xuất xứ ghi ở mục này | `L07-06`, `L07-07`, `L07-12`, `L07-14`, `L07-19`, `L07-23b` | — |
+| nhẹ: câu tự nói trạng thái | sửa: `L07-05` mở thẳng "Mức thay đổi …"; `L07-09` "Ba ô trong hình nêu loại đại lượng theo bài giảng gốc"; `L07-17b` "Bước 4 dùng giả thiết …"; `L07-24b` "Bước 4 viết cập nhật theo hướng trung bình …"; `L07-03c`, `L07-36d` "Định lý Monte Carlo còn cần …; định lý TD(0) còn cần …" (bổ sung đủ giả thiết theo Nhận xét 07.40) | `L07-05`, `L07-09`, `L07-17b`, `L07-24b`, `L07-03c`, `L07-36d` | — |
+| nhẹ: chỉ dẫn điều hướng, dẫn theo số dòng | sửa: `L07-01b` "là trọng số của phép chiếu trong phân tích TD(0)"; `L07-06` thay vế "ở mạch Monte Carlo" bằng điều kiện "khi mục tiêu không chứa $w$, … là một bước hạ gradient của $\tfrac12e^2$"; `L07-07b` bỏ "dùng ở mạch TD"; `L07-03c` câu cuối "Với Sarsa và Q-learning, không có bảo đảm chung; một lần chạy cụ thể vẫn có thể hội tụ"; `L07-36d` bỏ "năm dòng ứng với mạch 2–6" | `L07-01b`, `L07-06`, `L07-07b`, `L07-03c`, `L07-36d` | thêm: `L07-19` "ở mạch Monte Carlo" → "của ví dụ hai mục tiêu"; `L07-26` bỏ "lấy từ mạch 2" |
+| nhẹ: "thường" không kèm điều kiện | sửa: `L07-21` mặt trang "TD tiến về hình chiếu của nó lên lớp" (bỏ "thường ngoài lớp"), ghi chú "khi vector này nằm ngoài lớp …" (ghi chú tr. 857); `L07-01c`, `L07-05` "$d\ll\lvert\mathcal S\rvert$ (Lunar Lander: $156$ … so với $9\,216$ ô)"; `L07-07` "Khi số trạng thái lớn hơn số tham số, …" | `L07-21`, `L07-01c`, `L07-05`, `L07-07` | không dùng đề xuất "nằm ngoài lớp khi $v_\pi\notin\{\Phi w\}$": điều kiện này không suy ra $T_\pi(\Phi w)$ ngoài lớp với mọi $w$; hình chiếu lên lớp đúng trong cả hai trường hợp. Thêm: `L07-07b` "Thường chọn $\mu$" → "Sutton và Barto chọn $\mu$" |
+| nhẹ: "(một lần chạy đã nhúng trong notebook)" lặp | sửa: nêu một lần ở ghi chú `L07-01c`; bỏ ở `L07-04`, `L07-07b`, `L07-12`, `L07-16`, `L07-18`, `L07-20b`, `L07-25`, `L07-35b`; giữ ở `L07-29`, `L07-31c` | các trang trên | — |
+| nhẹ: câu "Lý do" của `L07-23b` | sửa: thay bằng "Ở đây $v_\pi=(5{,}5;4{,}5)$ không thuộc lớp $\{(w;2w)\}$." | `L07-23b` | — |
+| nhẹ: thiếu "chuyển sinh theo $\pi$" | sửa: mặt trang thêm "$(R_{t+1},S_{t+1})$ sinh theo $\pi$"; bỏ vế lặp trong ghi chú diễn giả | `L07-22` | OVERFLOW `\underbrace` dương tính giả như trước |
+| nhẹ: giả thiết bước học rút gọn | sửa: "bước xác định trước, không tăng, Robbins–Monro" | `L07-24` | 57 âm tiết |
+| nhẹ: kết quả thiếu giả thiết hoặc ngoài ghi chú | sửa: `L07-28` thêm "dưới các giả thiết của Định lý 07.29 áp cho chuỗi cặp trạng thái–hành động", nguồn thêm Nhận xét 07.34; `L07-24` bỏ câu về bài toán theo lượt | `L07-28`, `L07-24` | — |
+| nhẹ: "Diễn giải" không nêu hai bước học | sửa: chèn "($\alpha=0{,}1$)" và "($\alpha=0{,}2$)" | `X03b` | — |
+| nhẹ: số thử nghiệm không gán thuật toán, thiếu "ba hạt giống" | sửa: `L07-31c` "Q-learning $36{,}3\pm1{,}4$ và Sarsa $35{,}0\pm3{,}6$ ống (độ lệch chuẩn qua ba hạt giống)"; `L07-32` thêm "(ba hạt giống)", "bảng thử nghiệm sơ bộ" | `L07-31c`, `L07-32` | — |
+| nhẹ: tập đo $J_{\mathrm{kt}}$ | sửa: "trên các bước của $493$ lượt kiểm tra kết thúc thật (trong $500$)" | `L07-07b` | — |
+| nhẹ: ghi chú diễn giả quá dài | sửa: cắt câu lặp mặt trang, câu xuất xứ và câu điều hướng; sau sửa `L07-04` 147, `L07-07b` 143, `L07-16` 142, `L07-24` 141, `L07-25` 149, `L07-26` 147, `L07-27` 148, `L07-28` 142, `L07-29` 147, `L07-31c` 149, `L07-32` 138, `L07-35` 145, `L07-36f` 140, `L07-M2T` 93 | các trang trên | `L07-28` bỏ câu "Thay $A_{t+1}$ … Q-learning" (định nghĩa ở `L07-31b`); `L07-31c` chuyển câu "bổ sung theo notebook" vào dòng Nguồn |
+| nhẹ (đề nghị sửa ghi chú): ô Sarsa của Nhận xét 07.40 | không sửa ghi chú; deck giữ "thiếu: $\pi$ cố định ($\pi_w$ đổi theo $w$)" | `L07-34` | chuyển điều phối viên ở mục "Đề nghị sửa ghi chú" |
+
+**Tự kiểm `no-ai-slop` (Edit).** Câu thay thế giữ mọi số, ký hiệu, điều kiện; không thêm khẳng định ngoài ghi chú; không còn "thường" giảm nhẹ (năm chỗ "Lỗi thường gặp" là nhãn), "phá hòa", "sư phạm", "chưa phải định nghĩa", "chỉ là ý tưởng", dẫn theo số dòng. `git diff --check` sạch.
+
+### Sửa sau kiểm lại
+
+Điều phối viên kiểm lại, kết luận "đạt" (xác nhận cách xử lý `L07-21`, `L07-34`) và giao bảy phát hiện nhẹ. `deck_check.py` sau sửa: 0 lỗi console, trang, request, KaTeX; ghi chú diễn giả `L07-05` 128, `L07-25` 150, `L07-28` 146, `L07-32` 148, `L07-35` 150; mặt trang `L07-21` 50 âm tiết, ảnh 1600×900 không đè chân trang.
+
+| phát hiện | xử lý | trang |
+|---|---|---|
+| nhẹ: câu điều kiện ghép hai sự kiện ("Với $d\ll\lvert\mathcal S\rvert$, hàm vẫn cho dự đoán …") | sửa: "$d\ll\lvert\mathcal S\rvert$; vì $w$ dùng chung, hàm cho dự đoán cả ở trạng thái chưa gặp." | `L07-05` (ghi chú diễn giả) |
+| nhẹ: vế "$4$ đại lượng dẫn xuất từ các biến đó" thiếu vị ngữ | sửa: "đặc trưng Fourier lấy trên $4$ đại lượng dẫn xuất từ các biến đó" | `L07-35` (ghi chú diễn giả) |
+| nhẹ: câu tần suất cập nhật mất nối với học khác chính sách | sửa: "Với học khác chính sách, tần suất cập nhật các chuyển khác tần suất của chính sách đích và là trọng số trong $b-Aw$." | `L07-32` (ghi chú diễn giả) |
+| nhẹ: "cũng" mất vế tương ứng | sửa: "cả Định lý 07.29 lẫn bảo đảm dạng bảng của Bài 06 đều không áp dụng" (Nhận xét 07.34) | `L07-28` (ghi chú diễn giả) |
+| nhẹ: dẫn nguồn rút gọn "(9.14)" | sửa: "(Sutton và Barto, 2018, §9.4, công thức (9.14))", khớp ghi chú dòng 1080; bỏ "và" ở câu đầu để giữ 150 âm tiết | `L07-25` (ghi chú diễn giả) |
+| nhẹ: dòng Nhu cầu mất "vốn" | sửa: "tìm điểm dừng của TD(0) bán gradient, vốn nói chung không giảm mất mát cố định."; ảnh 1600×900 không đè chân trang | `L07-21` (mặt trang) |
+| nhẹ: storyboard `L07-M2T` mô tả ghi chú cũ | sửa: ghi chú nêu đặc trưng bốn khối là đầu vào của Sarsa và Q-learning | `storyboard.md` |
+
+### Kiểm lại, kiểm định cuối và duyệt của điều phối viên (2026-11-13)
+
+**Tác tử (theo lời gọi công cụ).**
+
+| vai trò | loại | mô hình | effort | ghi tệp |
+|---|---|---|---|---|
+| rà soát chỉ đọc (bảng phát hiện) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+| người sửa (deck, kế hoạch; tiếp tục bằng SendMessage cho vòng sửa sau kiểm lại) | `general-purpose` | `opus` (Opus 5.5) | `high` | có |
+| kiểm lại chỉ đọc (vai trò A: độ chính xác toán và Học tăng cường; vai trò B: mạch, quy tắc deck, `no-ai-slop` Detect) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+
+Quyết định chung của đợt: G1–G11, D01–D10 (tệp quyết định của điều phối viên trong thư mục nháp của phiên, chép tóm tắt ở mục sửa phía trên).
+
+**Kiểm lại.** Kết luận "đạt": 23/23 phát hiện xử lý đúng; hai chỗ chọn khác đề xuất được xác nhận đúng (L07-21: "nằm ngoài lớp khi $v_\pi\notin\{\Phi w\}$" sai, có phản ví dụ; L07-34: kết luận hàng Q-learning theo Nhận xét 07.40); 7 phát hiện nhẹ mới (L07-05, 35, 32, 28, 25 ghi chú diễn giả; L07-21 "vốn"; storyboard L07-M2T), đã sửa ở "Sửa sau kiểm lại".
+
+**Kiểm định cuối của điều phối viên.** `deck_check` toàn deck: 75 trang, 0 lỗi console, lỗi trang, request lỗi, `.katex-error`; cờ OVERFLOW ở L07-22, L07-23 là dương tính giả (`\underbrace`, `\sqrt`); các trang vượt trần (L07-01 bìa, 03b, 03c, 29, 34 bảng, 36d) có ngoại lệ hoặc trần 80. 41 trang đổi, 10 đổi mặt trang; điều phối viên tự xem bảng ảnh hai cỡ: không tràn. Bảng L07-36f đối chiếu `exercises.md` dòng 8–13. `git diff --check` sạch.
+
+**Đề nghị sửa ghi chú (chờ người dùng quyết định; không sửa `materials/` trong đợt này).** Ghi chú 07 (Ví dụ 07.1: $1\,958$ lượt kết thúc thật ghé $1\,896$ ô) và ghi chú 08 (Ví dụ 08.1: $1\,935$ ô trên $2\,000$ lượt, dẫn Ví dụ 07.1) cần thống nhất số liệu và nguồn; Nhận xét 07.40, ô giả thiết của hàng Sarsa: "thiếu: $\pi$ cố định ($\pi_w$ đổi theo $w$)".
+
+**Quyết định của điều phối viên:** **chấp nhận** deck và các tệp kế hoạch; mọi phát hiện `nghiêm trọng` và `trung bình` của bảng 2026-11-13 và của lượt kiểm lại đã xử lý; phát hiện không sửa có lý do ghi ở bảng xử lý.
