@@ -4,15 +4,15 @@ Bản này thay dàn ý trước đợt sửa 2026-10-12. Deck `2627-1/lecture-0
 
 ## 1. Đối tượng và mục tiêu học tập
 
-Sinh viên năm 3 đã học xác suất, kỳ vọng có điều kiện, đại số tuyến tính và Bài 02. Bài 02 đã phát biểu hình thức tính Markov, hàm động lực, lợi tức với hệ thức truy hồi và cận $\lvert G_t\rvert\le R_{\max}/(1-\gamma)$, và $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$ (ghi chú Bài 02, Mục 2–4); deck nhắc lại các kết quả này ở `01-01b`, và trang vấn đề của mạch 2–4 mở bằng "Nhắc lại:" rồi "Nhu cầu:". Phần mới của Bài 03: điều kiện xác suất dương, quy tắc sinh quỹ đạo của MDP hữu hạn, mô hình robot, quy ước hấp thụ, $v_\pi$ trên quá trình xuất phát tại $s$, $q_\pi$, phương trình Bellman và cách giải. Mục tiêu (trang `L03R-01-01c`, khớp mục Mục tiêu học tập của ghi chú):
+Sinh viên năm 3 đã học xác suất, kỳ vọng có điều kiện, đại số tuyến tính và Bài 02. Bài 02 đã phát biểu hình thức tính Markov, hàm động lực, lợi tức với hệ thức truy hồi và cận $\lvert G_t\rvert\le R_{\max}/(1-\gamma)$, và $v_\pi(s)=\mathbb E_\pi[G_0\mid S_0=s]$ (ghi chú Bài 02, Định nghĩa 02.5, 02.8, 02.12, 02.14, 02.16, Mệnh đề 02.13); deck nhắc lại các kết quả này ở `01-01b`, và trang vấn đề của mạch 2–4 mở bằng "Nhắc lại:" rồi "Nhu cầu:". Phần mới của Bài 03: điều kiện xác suất dương, quy tắc sinh quỹ đạo của MDP hữu hạn, mô hình robot, quy ước hấp thụ, xác suất đoạn quỹ đạo, $q_\pi$, phương trình Bellman và cách giải. Mục tiêu (trang `L03R-01-01c`, khớp mục Mục tiêu học tập của ghi chú):
 
-1. Kiểm tra tính Markov; lập bộ MDP hữu hạn và bảng $p(s',r\mid s,a)$ (Bài tập 03.1, 03.2).
-2. Tính lợi tức chiết khấu và cận $M/(1-\gamma)$ (Bài tập 03.3, 03.10, 03.12).
-3. Phân biệt mô hình, chính sách, $v_\pi$, $q_\pi$; tính kỳ vọng trên cây hai bước (Bài tập 03.4, 03.5).
-4. Chứng minh phương trình Bellman kỳ vọng cho $v_\pi$, $q_\pi$; chỉ ra bước dùng tính Markov và tính dừng (Bài tập 03.6, 03.7, 03.11).
-5. Lập, giải, kiểm tra hệ $(I-\gamma P_\pi)v=r_\pi$ (Bài tập 03.8, 03.9, 03.13, 03.14).
+1. Kiểm tra tính Markov; lập bộ MDP hữu hạn, bảng $p(s',r\mid s,a)$; suy ra $p(s'\mid s,a)$, $r(s,a)$ (ghi chú: 03.1, 03.2).
+2. Phân loại nhiệm vụ có kết thúc, tiếp diễn; tính lợi tức chiết khấu, cận $M/(1-\gamma)$, tính lùi $G_t=R_{t+1}+\gamma G_{t+1}$ (ghi chú: 03.3, 03.10, 03.12).
+3. Phân biệt mô hình, chính sách, $v_\pi$, $q_\pi$; tính kỳ vọng trên cây hai bước (ghi chú: 03.4, 03.5; tệp bài tập: 03.15–03.17).
+4. Chứng minh phương trình Bellman kỳ vọng cho $v_\pi$, $q_\pi$; chỉ ra bước dùng tính Markov, tính dừng (ghi chú: 03.6, 03.7, 03.11; tệp bài tập: 03.15–03.19).
+5. Lập, giải, kiểm tra hệ $(I-\gamma P_\pi)v=r_\pi$ của một chính sách cho trước; nêu điều kiện nghiệm duy nhất (ghi chú: 03.8, 03.9, 03.13, 03.14; tệp bài tập: 03.19).
 
-Số hiệu trong danh sách trên là của ghi chú. Bài của `materials/lec-03/exercises.md` theo mục tiêu (dòng "Mức độ" của từng bài; ghi chú diễn giả `01-01c`): mục tiêu 1: 03.1, 03.2, 03.15, 03.22, 03.24; mục tiêu 2: 03.3, 03.18, 03.20, 03.23; mục tiêu 3: 03.4, 03.5, 03.16, 03.17; mục tiêu 4: 03.6, 03.7, 03.17, 03.19, 03.24, 03.25; mục tiêu 5: 03.8, 03.20, 03.21, 03.23, 03.24, 03.25.
+Ánh xạ mục tiêu → bài tập chép đúng mục Mục tiêu học tập của ghi chú (2026-11-13); ghi chú diễn giả `01-01c` dùng cùng danh sách. Bài tập 03.1–03.14 nằm trong ghi chú; `materials/lec-03/exercises.md` gồm năm bài 03.15–03.19.
 
 ## 2. Khung lý thuyết chung
 
@@ -108,7 +108,8 @@ Mọi số trên được tính lại bằng `fractions` của Python trong đ�
 |---|---|---|
 | quá trình quyết định Markov | Markov decision process (MDP) | `01-01` |
 | chính sách | policy | ghi chú Bài 02 (deck chỉ ghi "stationary policy" ở `01-01b`) |
-| chính sách dừng, chính sách Markov dừng | stationary policy | `01-01b` |
+| chính sách dừng | stationary policy | `01-01b` |
+| chính sách Markov dừng | stationary Markov policy | `04-03` |
 | chính sách xác định | deterministic policy | ghi chú diễn giả `04-03` (dạng chốt của học phần) |
 | phần thưởng | reward | `01-01b` |
 | mô hình | model | `01-01c`; `02-06` "Mô hình của môi trường là $p$" |
@@ -117,6 +118,7 @@ Mọi số trên được tính lại bằng `fractions` của Python trong đ�
 | tác tử | agent | `01-01b` |
 | quỹ đạo | trajectory | `01-03` |
 | lịch sử | history | `01-04` |
+| mẫu chuyển | transition | ghi chú diễn giả `01-04` |
 | tính Markov | Markov property | `01-01b` |
 | hàm động lực | dynamics function | `01-01b` |
 | xác suất chuyển trạng thái | state-transition probability | `02-05` |
@@ -124,6 +126,7 @@ Mọi số trên được tính lại bằng `fractions` của Python trong đ�
 | nhiệm vụ có kết thúc | episodic task | `03-02` |
 | lượt | episode | `03-02` |
 | trạng thái kết thúc | terminal state | `03-02` |
+| trạng thái hấp thụ | absorbing state | `03-04` |
 | nhiệm vụ tiếp diễn | continuing task | `03-02` |
 | hệ số chiết khấu | discount factor | `01-01b` |
 | cận thị | myopic | ghi chú diễn giả `03-06b` |
@@ -135,6 +138,10 @@ Mọi số trên được tính lại bằng `fractions` của Python trong đ�
 | chuỗi Markov | Markov chain | `06-06` |
 | quá trình phần thưởng Markov | Markov reward process (MRP) | `06-06` |
 | chuỗi Neumann | Neumann series | ghi chú diễn giả `06-07b` |
+| chuẩn cực đại | max norm | `06-07b` |
+| dung sai | tolerance | ghi chú diễn giả `06-07c` |
+| phép khử Gauss | Gaussian elimination | `06-07d` |
+| bài toán điều khiển | control | ghi chú diễn giả `06-01` |
 
 Thuật ngữ thống nhất với `planning/quyet-dinh-chuan-2026-10-12.md` mục 1 (lợi tức, lượt, tác tử, quá trình quyết định Markov).
 
@@ -181,6 +188,6 @@ Ngày 2026-11-04, người dùng quyết định bỏ mục "Bản đồ chủ �
 | 6 | Mục 5; Tình huống 03.1 | `lec-03-part-06`, `lec-03-part-07` |
 | 7 | Tóm tắt chương, Bài tập củng cố, Hướng dẫn đọc thêm | `lec-03-part-08`, `lec-03-part-10` |
 
-Tệp bài tập `materials/lec-03/exercises.md` (mười chín bài: 03.1–03.8, 03.15–03.25) xếp bài theo mạch; trang `07-03` chép đúng bảng đó, thêm cột "Chỉ trong ghi chú" (03.9–03.14) và liên kết viewer của tệp.
+Tệp bài tập `materials/lec-03/exercises.md` (năm bài 03.15–03.19, đánh số lại 2026-11-12) xếp bài theo mạch: 03.15–03.18 ở mạch 5, 03.19 ở mạch 6, bài của ghi chú ghi sau "ghi chú:"; trang `07-03` chép đúng bảng đó (bảng `Mạch | Bài tập`) và liên kết viewer của tệp.
 
 Không có bài thực hành riêng (quyết định chung, mục 8); Tình huống 03.2 về CartPole dẫn sang notebook của Bài 04 và chỉ được nhắc trong ghi chú diễn giả.

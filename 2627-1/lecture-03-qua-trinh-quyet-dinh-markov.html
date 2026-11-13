@@ -23,10 +23,10 @@
   <p>Tính Markov (Markov property): biết $(S_t,A_t)$, quá khứ không đổi phân phối $(S_{t+1},R_{t+1})$.</p>
   <p>Hàm động lực (dynamics function) $p$; chính sách dừng (stationary policy) $\pi$.</p>
   <p>Lợi tức (return) $G_t=R_{t+1}+\gamma G_{t+1}$, $\lvert G_t\rvert\le\tfrac{M}{1-\gamma}$ khi $\lvert R_k\rvert\le M$, hệ số chiết khấu (discount factor) ${\gamma<1}$.</p>
-  <p>Giá trị trạng thái (state-value function) $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$.</p>
+  <p>Giá trị trạng thái (state-value function) $v_\pi(s)=\mathbb E_\pi[G_0\mid S_0=s]$.</p>
   <aside class="notes">
-    <p>Năm kết quả này đã được phát biểu hình thức ở Bài 02 (ghi chú, Mục 2–4); cận ở đó viết bằng $R_{\max}$, ở đây bằng $M$. Hàm động lực $p(s',r\mid s,a)$ không mang chỉ số $t$ vì môi trường dừng. Định nghĩa giá trị nói giá trị là gì nhưng chưa cho cách tính khi không liệt kê được quỹ đạo. Phần mới của Bài 03: bộ MDP hữu hạn với quy tắc sinh quỹ đạo, mô hình của robot, giá trị hành động, phương trình Bellman và cách giải. Chữ "dừng" của môi trường và chính sách nghĩa là không đổi theo thời gian, khác với việc dừng một thuật toán.</p>
-    <p class="note-source">Nguồn: ghi chú Bài 02, Mục 2–4; Sutton và Barto (2018), §3.1–3.5.</p>
+    <p>Các kết quả này là Định nghĩa 02.5 (tính Markov), 02.8 (chính sách), 02.12 và Mệnh đề 02.13 (lợi tức), Định nghĩa 02.14 (giá trị) và 02.16 (hàm động lực) của ghi chú Bài 02; cận ở đó viết bằng $R_{\max}$, ở đây bằng $M$. Hàm động lực $p(s',r\mid s,a)$ không mang chỉ số $t$ vì môi trường dừng. Định nghĩa giá trị nói giá trị là gì nhưng chưa cho cách tính khi không liệt kê được quỹ đạo. Phần mới của Bài 03: bộ MDP hữu hạn với quy tắc sinh quỹ đạo, mô hình của robot, giá trị hành động, phương trình Bellman và cách giải. Chữ "dừng" của môi trường và chính sách nghĩa là không đổi theo thời gian, khác với việc dừng một thuật toán.</p>
+    <p class="note-source">Nguồn: ghi chú Bài 02, Định nghĩa 02.5, 02.8, 02.12, 02.14, 02.16 và Mệnh đề 02.13; Sutton và Barto (2018), §3.1–3.5.</p>
   </aside>
 </section>
 
@@ -38,7 +38,7 @@
   <p>$\Pr_\pi$, $\mathbb E_\pi$: hành động theo $\pi$, phản hồi theo $p$.</p>
   <p>Robot: $\mathrm H$, $\mathrm L$ là pin cao, pin thấp; $\mathrm{tim},\mathrm{cho},\mathrm{sac}$ là Tìm, Chờ, Sạc.</p>
   <aside class="notes">
-    <p>Kỳ vọng toàn phần: $\mathbb E[X\mid B]=\sum_y\Pr(Y=y\mid B)\,\mathbb E[X\mid Y=y,B]$ khi $Y$ nhận hữu hạn giá trị. Ma trận vuông khả nghịch khi và chỉ khi hệ thuần nhất chỉ có nghiệm $0$. $\mathcal A(s)$ là tập hành động hợp lệ tại $s$; ở robot, Sạc chỉ hợp lệ ở pin thấp. $\mathcal R$ là tập giá trị phần thưởng. Quy ước chỉ số $R_{t+1}$ theo Sutton và Barto; một số tài liệu viết $R_t$. Tên hành động viết không dấu trong công thức.</p>
+    <p>Kỳ vọng toàn phần: $\mathbb E[X\mid B]=\sum_y\Pr(Y=y\mid B)\,\mathbb E[X\mid Y=y,B]$ khi $Y$ nhận hữu hạn giá trị. Ma trận vuông khả nghịch khi và chỉ khi hệ thuần nhất chỉ có nghiệm $0$. $\mathcal A(s)$ là tập hành động hợp lệ tại $s$; ở robot, Sạc chỉ hợp lệ ở pin thấp. $\mathcal R$ là tập giá trị phần thưởng. Quy ước chỉ số $R_{t+1}$ theo Sutton và Barto. Tên hành động viết không dấu trong công thức.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Kiến thức tiên quyết và Bảng ký hiệu; Sutton và Barto (2018), §3.1, tr. 48.</p>
   </aside>
 </section>
@@ -46,15 +46,15 @@
 <section data-slide-id="L03R-01-01c">
   <h2>Mục tiêu học tập</h2>
   <ol>
-    <li>Kiểm tra tính Markov; lập bộ MDP hữu hạn và bảng $p(s',r\mid s,a)$.</li>
-    <li>Tính lợi tức chiết khấu và cận của lợi tức.</li>
+    <li>Kiểm tra tính Markov; lập bộ MDP hữu hạn, bảng $p(s',r\mid s,a)$; suy ra $p(s'\mid s,a)$, $r(s,a)$.</li>
+    <li>Phân loại nhiệm vụ có kết thúc, tiếp diễn; tính lợi tức chiết khấu, cận $\tfrac{M}{1-\gamma}$, tính lùi $G_t=R_{t+1}+\gamma G_{t+1}$.</li>
     <li>Phân biệt mô hình (model), chính sách, $v_\pi$, $q_\pi$; tính kỳ vọng trên cây hai bước.</li>
-    <li>Chứng minh phương trình Bellman kỳ vọng (Bellman expectation equation), chỉ ra bước dùng tính Markov.</li>
-    <li>Lập, giải và kiểm tra hệ $(I-\gamma P_\pi)v=r_\pi$ của một chính sách cho trước.</li>
+    <li>Chứng minh phương trình Bellman kỳ vọng (Bellman expectation equation) cho $v_\pi$, $q_\pi$; chỉ ra bước dùng tính Markov, tính dừng.</li>
+    <li>Lập, giải, kiểm tra hệ $(I-\gamma P_\pi)v=r_\pi$ của một chính sách cho trước; nêu điều kiện nghiệm duy nhất.</li>
   </ol>
   <aside class="notes">
-    <p>Mỗi mục tiêu có bài kiểm tra được trong tệp bài tập; số trong ngoặc là bài chỉ có trong ghi chú bài giảng. Mục tiêu 1 ứng với Bài tập 03.1, 03.2, 03.15, 03.22, 03.24; mục tiêu 2 với 03.3, 03.18, 03.20, 03.23 (03.10, 03.12); mục tiêu 3 với 03.4, 03.5, 03.16, 03.17; mục tiêu 4 với 03.6, 03.7, 03.17, 03.19, 03.24, 03.25 (03.11); mục tiêu 5 với 03.8, 03.20, 03.21, 03.23, 03.24, 03.25 (03.9, 03.13, 03.14). Bài toán của bài là bài toán dự đoán: chính sách cho trước, chỉ cần đánh giá; việc chọn chính sách tốt hơn thuộc Bài 04.</p>
-    <p class="note-source">Nguồn: ghi chú bài giảng Bài 03, mục Mục tiêu học tập; tệp bài tập Bài 03, dòng "Mức độ" của từng bài.</p>
+    <p>Mỗi mục tiêu có bài tập kiểm tra được. Mục tiêu 1: ghi chú 03.1, 03.2. Mục tiêu 2: ghi chú 03.3, 03.10, 03.12. Mục tiêu 3: ghi chú 03.4, 03.5; tệp bài tập 03.15–03.17. Mục tiêu 4: ghi chú 03.6, 03.7, 03.11; tệp bài tập 03.15–03.19. Mục tiêu 5: ghi chú 03.8, 03.9, 03.13, 03.14; tệp bài tập 03.19. Bài toán của bài là bài toán dự đoán: chính sách cho trước, chỉ cần đánh giá; chọn chính sách tốt hơn là bài toán điều khiển.</p>
+    <p class="note-source">Nguồn: ghi chú bài giảng Bài 03, mục Mục tiêu học tập.</p>
   </aside>
 </section>
 
@@ -114,7 +114,7 @@
   <p>Chờ: nhận $1$, giữ $\mathrm L$. Sạc: nhận $0$, về $\mathrm H$.</p>
   <p>Tìm: nhận $2$ và giữ $\mathrm L$, hoặc cứu hộ, nhận $-3$, về $\mathrm H$; mỗi khả năng $\tfrac12$.</p>
   <aside class="notes">
-    <p>Robot thu gom lon rỗng trong văn phòng; tác tử chỉ phân biệt hai mức pin. Hậu quả của một hành động có thể phụ thuộc cả quá khứ; bảng theo trạng thái chỉ đủ khi trạng thái giữ đủ thông tin. Ở pin cao, robot Tìm hoặc Chờ: Tìm cho $2$ và giữ pin cao hoặc xuống pin thấp, mỗi khả năng $1/2$; Chờ cho $1$ và giữ pin cao. Cứu hộ sạc lại pin ngay trong bước đó. Robot hoạt động liên tục; cứu hộ và Sạc không dừng công việc. Một bước là một chu kỳ quyết định, không nhất thiết bằng nhau theo thời gian thực. Các mức phần thưởng Tìm $2$, Chờ $1$ là số liệu sư phạm tự xây dựng; hai tham số xác suất của ví dụ gốc được chọn bằng $1/2$.</p>
+    <p>Robot thu gom lon rỗng trong văn phòng; tác tử chỉ phân biệt hai mức pin. Hậu quả của một hành động có thể phụ thuộc cả quá khứ; bảng theo trạng thái chỉ đủ khi trạng thái giữ đủ thông tin. Ở pin cao, robot Tìm hoặc Chờ: Tìm cho $2$ và giữ pin cao hoặc xuống pin thấp, mỗi khả năng $1/2$; Chờ cho $1$ và giữ pin cao. Cứu hộ sạc lại pin ngay trong bước đó. Robot hoạt động liên tục; cứu hộ và Sạc không dừng công việc.</p>
     <p class="note-source">Nguồn: Sutton và Barto (2018), ví dụ 3.3, tr. 52–53; ghi chú Bài 03, Ví dụ 03.1.</p>
   </aside>
 </section>
@@ -126,7 +126,7 @@
   <div class="math-large">$$(S_t,\,A_t,\,R_{t+1},\,S_{t+1})=(\mathrm H,\ \mathrm{tim},\ 2,\ \mathrm L)$$</div>
   <p><strong>Định nghĩa.</strong> Quỹ đạo là dãy $S_0,A_0,R_1,S_1,A_1,R_2,\dots$; lịch sử (history) $H_t=(S_0,A_0,R_1,\dots,S_t)$ là đoạn đầu dừng ở $S_t$.</p>
   <aside class="notes">
-    <p>Trạng thái và hành động mang chỉ số $t$ vì có trước khi robot hành động; phần thưởng và trạng thái mới mang chỉ số $t+1$ vì môi trường trả về chúng cùng lúc. Nếu bước kế tiếp robot ở $\mathrm L$ chọn Chờ, bản ghi tiếp theo là $(\mathrm L,\mathrm{cho},1,\mathrm L)$; hai bản ghi nối nhau ở $S_{t+1}=\mathrm L$. Lịch sử chưa chứa $A_t$ vì đó là thông tin có trước khi chọn hành động tại $t$. Bản ghi là một mẫu đã xảy ra, chưa phải quy luật xác suất.</p>
+    <p>Trạng thái và hành động mang chỉ số $t$ vì có trước khi robot hành động; phần thưởng và trạng thái mới mang chỉ số $t+1$ vì môi trường trả về chúng cùng lúc. Bộ bốn $(S_t,A_t,R_{t+1},S_{t+1})$ là một mẫu chuyển (transition). Nếu bước kế tiếp robot ở $\mathrm L$ chọn Chờ, mẫu chuyển tiếp theo là $(\mathrm L,\mathrm{cho},1,\mathrm L)$; hai mẫu chuyển nối nhau ở $S_{t+1}=\mathrm L$. Lịch sử $H_t$ không chứa $A_t$ vì $H_t$ là thông tin tác tử có khi chọn $A_t$. Mẫu chuyển là một lần rút; quy luật sinh ra nó là hàm $p$.</p>
     <p class="note-source">Nguồn: Sutton và Barto (2018), (3.1), tr. 48; ghi chú Bài 03, Ví dụ 03.2 và Định nghĩa 03.1.</p>
   </aside>
 </section>
@@ -138,19 +138,19 @@
   <p>Lịch sử $(\mathrm H,\mathrm{tim},2,\mathrm L)$ và $(\mathrm L,\mathrm{cho},1,\mathrm L)$ cùng kết thúc ở $\mathrm L$.</p>
   <p>Ở cả hai, Tìm cho $(\mathrm L,2)$ hoặc $(\mathrm H,-3)$, mỗi cặp xác suất $\tfrac12$.</p>
   <aside class="notes">
-    <p>Robot thứ nhất vừa Tìm từ pin cao và xuống pin thấp; robot thứ hai vừa Chờ ở pin thấp. Theo mô hình, phản hồi của Tìm từ pin thấp chỉ phụ thuộc mức pin, nên hai lịch sử khác nhau cho cùng một phân phối phản hồi; ở cả hai, hai xác suất cộng lại bằng $1$. Mức pin là trạng thái đủ thông tin trong mô hình lý tưởng này. Một robot thật có thể cần thêm thông tin, chẳng hạn vị trí, nếu vị trí làm thay đổi cơ hội gặp lon.</p>
+    <p>Robot thứ nhất vừa Tìm từ pin cao và xuống pin thấp; robot thứ hai vừa Chờ ở pin thấp. Theo mô hình, phản hồi của Tìm từ pin thấp chỉ phụ thuộc mức pin, nên hai lịch sử khác nhau cho cùng một phân phối phản hồi; ở cả hai, hai xác suất cộng lại bằng $1$. Mức pin là trạng thái đủ thông tin trong mô hình này.</p>
     <p class="note-source">Nguồn: Sutton và Barto (2018), §3.1, tr. 49; ghi chú Bài 03, Ví dụ 03.3.</p>
   </aside>
 </section>
 
 <section data-slide-id="L03R-01-06">
   <h2>Tính Markov</h2>
-  <p><strong>Định nghĩa.</strong> Trạng thái $S_t$ có tính Markov nếu</p>
+  <p><strong>Định nghĩa.</strong> Trạng thái $S_t$ có tính Markov nếu, với mọi cách chọn hành động chỉ dựa trên lịch sử,</p>
   <div class="math-large">$$\begin{aligned}&\Pr(S_{t+1}=s',R_{t+1}=r\mid H_t=h_t,A_t=a)\\&\quad=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a)\end{aligned}$$</div>
   <p>với mọi $t$, mọi lịch sử $h_t$ kết thúc ở $s$ và mọi $a$ có ${\Pr(H_t=h_t,A_t=a)>0}$ (Định&nbsp;nghĩa&nbsp;03.2).</p>
   <p><strong>Ý nghĩa:</strong> khi đã biết $(S_t,A_t)$, lịch sử không làm thay đổi phân phối phản hồi.</p>
   <aside class="notes">
-    <p>Vế trái dùng toàn bộ lịch sử, vế phải chỉ dùng trạng thái cuối và hành động hiện tại; đẳng thức phải đúng với mọi lịch sử có xác suất dương. Hai lịch sử kết thúc ở $\mathrm L$, sau Tìm từ pin cao và sau Chờ ở pin thấp, là một trường hợp của đẳng thức. Định nghĩa trùng phát biểu của Bài 02; điều kiện xác suất dương được dùng lại trong chứng minh phương trình Bellman. Lịch sử vẫn ảnh hưởng tới tương lai, nhưng mọi ảnh hưởng đã được nén vào $S_t$. Tính Markov không cho biết các xác suất bằng bao nhiêu, và không nói phản hồi là tất định: Tìm từ pin thấp vẫn có hai kết quả ngẫu nhiên.</p>
+    <p>Vế trái dùng toàn bộ lịch sử, vế phải chỉ dùng trạng thái cuối và hành động hiện tại; đẳng thức phải đúng với mọi lịch sử có xác suất dương, các xác suất tính theo cách chọn hành động đó, kể cả cách chọn ngẫu nhiên. Hai lịch sử kết thúc ở $\mathrm L$, sau Tìm từ pin cao và sau Chờ ở pin thấp, là một trường hợp của đẳng thức. Định nghĩa trùng phát biểu của Bài 02; điều kiện xác suất dương được dùng lại trong chứng minh phương trình Bellman. Lịch sử vẫn ảnh hưởng tới tương lai, nhưng mọi ảnh hưởng đã được nén vào $S_t$. Tính Markov không cho biết các xác suất bằng bao nhiêu, và không nói phản hồi là tất định: Tìm từ pin thấp vẫn có hai kết quả ngẫu nhiên.</p>
     <p class="note-source">Nguồn: Sutton và Barto (2018), §3.1, tr. 49; Bài giảng gốc (2025–2026), trang 29.</p>
   </aside>
 </section>
@@ -163,7 +163,7 @@
   <p>$H_1=(\mathrm L,\mathrm{cho},0,\mathrm L)$: robot sang phòng 1, xác suất đó bằng $1$.</p>
   <p><strong>Diễn giải:</strong> cùng $\mathrm L$, hai xác suất khác nhau; mức pin không có tính Markov.</p>
   <aside class="notes">
-    <p>Số liệu sư phạm tự xây dựng. Phòng lúc $t=0$ là phòng 1 hoặc phòng 2, mỗi phòng xác suất $1/2$, nên mỗi lịch sử có xác suất $1/2$ và thuộc phạm vi của định nghĩa. Phần thưởng $R_1$ cho biết phòng lúc $t=0$, do đó cho biết phòng lúc $t=1$. Vế phải của định nghĩa là một số duy nhất, không thể bằng cả $0$ và $1$. Sửa: lấy trạng thái là cặp (mức pin, phòng). Tính Markov thuộc về biểu diễn trạng thái, không thuộc về hệ vật lý.</p>
+    <p>Phòng lúc $t=0$ là phòng 1 hoặc phòng 2, mỗi phòng xác suất $1/2$, nên mỗi lịch sử có xác suất $1/2$ và thuộc phạm vi của định nghĩa. Phần thưởng $R_1$ cho biết phòng lúc $t=0$, do đó cho biết phòng lúc $t=1$. Vế phải của định nghĩa là một số duy nhất, không thể bằng cả $0$ và $1$. Sửa: lấy trạng thái là cặp (mức pin, phòng). Tính Markov thuộc về biểu diễn trạng thái, không thuộc về hệ vật lý.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Ví dụ 03.4 và Nhận xét 03.3; Sutton và Barto (2018), tr. 49.</p>
   </aside>
 </section>
@@ -198,7 +198,7 @@
   <img src="img/lec-03/robot-p02-search-outcomes.svg" class="figure" alt="Hai cây phản hồi. Tìm từ pin thấp L: xác suất 1/2 về L với phần thưởng 2, xác suất 1/2 được cứu hộ về H với phần thưởng −3. Tìm từ pin cao H: xác suất 1/2 về H, xác suất 1/2 về L, cả hai với phần thưởng 2."/>
   <p class="caption">Mỗi phản hồi là một cặp (trạng thái kế tiếp, phần thưởng); phần thưởng cố định trên mỗi nhánh.</p>
   <aside class="notes">
-    <p>Một bản ghi như $(\mathrm H,\mathrm{tim},2,\mathrm L)$ không cho biết phản hồi đó xảy ra thường xuyên đến mức nào, cũng không cho biết những phản hồi khác. Trạng thái kế tiếp và phần thưởng được rút cùng nhau trong một bước, không có giả thiết độc lập: ở pin thấp, biết phần thưởng là $-3$ thì biết robot đã về pin cao. Cứu hộ được tính trọn trong một bước, không cộng thêm phần thưởng $2$. Một bản ghi là một mẫu; danh sách mọi phản hồi kèm xác suất là quy luật sinh ra các mẫu.</p>
+    <p>Một mẫu chuyển như $(\mathrm H,\mathrm{tim},2,\mathrm L)$ không cho biết phản hồi đó xảy ra thường xuyên đến mức nào, cũng không cho biết những phản hồi khác. Trạng thái kế tiếp và phần thưởng được rút cùng nhau trong một bước, không có giả thiết độc lập: ở pin thấp, biết phần thưởng là $-3$ thì biết robot đã về pin cao. Cứu hộ được tính trọn trong một bước, không cộng thêm phần thưởng $2$. Mẫu chuyển là một lần rút; danh sách mọi phản hồi kèm xác suất là quy luật sinh ra các mẫu chuyển.</p>
     <p class="note-source">Nguồn: Sutton và Barto (2018), ví dụ 3.3, tr. 52–53.</p>
   </aside>
 </section>
@@ -230,7 +230,7 @@
   <p><strong>Định nghĩa.</strong> Hàm động lực là hàm $p$ thỏa, với mọi ${s\in\mathcal S}$, ${a\in\mathcal A(s)}$,</p>
   <div class="math-large">$$p(s',r\mid s,a)\ge0,\qquad\sum_{s'\in\mathcal S^+}\sum_{r\in\mathcal R}p(s',r\mid s,a)=1,$$</div>
   <p>và $p(s',r\mid s,a)=\Pr(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a)$ khi điều kiện có xác suất dương.</p>
-  <p><strong>Giả thiết:</strong> các tập hữu hạn; trạng thái có tính Markov; $p$ không đổi theo $t$ (Định&nbsp;nghĩa&nbsp;03.4).</p>
+  <p><strong>Giả thiết:</strong> tập hữu hạn; trạng thái Markov; $p$ không đổi theo $t$ và theo cách chọn hành động (Định&nbsp;nghĩa&nbsp;03.4).</p>
   <aside class="notes">
     <p>Bài 02 đã định nghĩa hàm động lực cho môi trường dừng; ở đây định nghĩa thêm điều kiện xác suất dương và các tập hữu hạn. Hai đối số sau vạch điều kiện, $s$ và $a$, được cố định; hai đối số trước vạch, $s'$ và $r$, chạy trong tổng chuẩn hóa. Hàng thứ năm của bảng cho $p(\mathrm H,-3\mid\mathrm L,\mathrm{tim})=1/2$; bộ không có trong bảng có $p=0$, chẳng hạn $p(\mathrm H,2\mid\mathrm L,\mathrm{tim})=0$. Hàm $p$ không mang chỉ số $t$: tính dừng là giả thiết riêng, khác tính Markov; một robot có pin lão hóa có thể có trạng thái Markov nhưng hàm động lực đổi theo thời gian. Sutton và Barto viết $p$ với chỉ số $t-1$ và $t$; ở đây dịch sang $t$ và $t+1$.</p>
     <p class="note-source">Nguồn: Sutton và Barto (2018), (3.2)–(3.3), tr. 48–49; ghi chú Bài 03, Nhận xét 03.5.</p>
@@ -293,7 +293,7 @@
   </table>
   <p>Mỗi hàng có $p(\mathrm H\mid s,a)+p(\mathrm L\mid s,a)=1$, nên chuẩn hóa thỏa ở cả năm cặp.</p>
   <aside class="notes">
-    <p>Ở cặp $(\mathrm H,\mathrm{tim})$, hai nhánh có cùng phần thưởng $2$ nên thưởng kỳ vọng bằng $2$ dù trạng thái kế tiếp ngẫu nhiên. Ở cặp $(\mathrm L,\mathrm{tim})$, thưởng kỳ vọng $-1/2$ là giá trị robot không bao giờ nhận đúng. Hai cột xác suất chuyển cộng theo hàng bằng $1$, đúng phần cuối của mệnh đề về xác suất chuyển. Số hạng tự do $2$ của hàng đầu sẽ xuất hiện lại trong phương trình Bellman tại pin cao.</p>
+    <p>Ở cặp $(\mathrm H,\mathrm{tim})$, hai nhánh có cùng phần thưởng $2$ nên thưởng kỳ vọng bằng $2$ dù trạng thái kế tiếp ngẫu nhiên. Ở cặp $(\mathrm L,\mathrm{tim})$, thưởng kỳ vọng $-1/2$ là giá trị robot không bao giờ nhận đúng. Hai cột xác suất chuyển cộng theo hàng bằng $1$, đúng phần cuối của mệnh đề về xác suất chuyển.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, lời giải Bài tập 03.2.</p>
   </aside>
 </section>
@@ -315,13 +315,13 @@
 <section data-slide-id="L03R-03-01">
   <h2>Lợi tức của robot</h2>
   <p><strong>Nhắc lại (Bài 02):</strong> $G_t=R_{t+1}+\gamma R_{t+2}+\gamma^2R_{t+3}+\cdots$.</p>
-  <p><strong>Nhu cầu:</strong> Chờ mãi cho $1+1+\cdots=\infty;$ cần quy ước chung cho chuỗi hữu hạn và vô hạn, và cận cho robot.</p>
+  <p><strong>Nhu cầu:</strong> Chờ mãi cho $1+1+\cdots=\infty$; cần quy ước chung cho chuỗi hữu hạn, vô hạn và cận của $G_t$.</p>
   <p>Từ $\mathrm L$, $\gamma=\tfrac12$: Sạc, Tìm, Tìm cho $(0,2,2)$; Chờ ba lần cho $(1,1,1)$.</p>
   <div class="math-large">$$0+\tfrac12\cdot2+\tfrac14\cdot2=\tfrac32,\qquad 1+\tfrac12\cdot1+\tfrac14\cdot1=\tfrac74.$$</div>
   <p><strong>Diễn giải:</strong> tổng không trọng số $4>3$, nhưng tổng có trọng số $\tfrac32<\tfrac74$.</p>
   <aside class="notes">
-    <p>Bài 02 đã định nghĩa lợi tức và chứng minh hệ thức truy hồi cùng cận của nó; trọng số $\gamma^k$ làm phần thưởng sớm nặng hơn phần thưởng muộn. Trên hai dãy ba bước của robot, trọng số đảo thứ hạng: phần thưởng $0$ của dãy thứ nhất rơi vào bước có trọng số lớn nhất. Dãy $(0,2,2)$ là một đường có xác suất dương; lần Tìm đầu từ pin cao cũng có thể đưa robot xuống pin thấp. Cộng thẳng không dùng được cho nhiệm vụ tiếp diễn: Chờ mãi cho $1+1+1+\cdots$, và mọi cách hành động có phần thưởng dương đều cho tổng vô hạn. Hai con số chỉ so sánh hai đoạn ba bước, chưa cho biết cách hành động nào tốt hơn về lâu dài.</p>
-    <p class="note-source">Nguồn: ghi chú Bài 02, Mục 4; ghi chú Bài 03, Ví dụ 03.7; Sutton và Barto (2018), (3.8), tr. 55.</p>
+    <p>Bài 02 đã định nghĩa lợi tức và chứng minh hệ thức truy hồi cùng cận của nó; trọng số $\gamma^k$ làm phần thưởng sớm nặng hơn phần thưởng muộn. Trên hai dãy ba bước của robot, trọng số đảo thứ hạng: phần thưởng $0$ của dãy thứ nhất rơi vào bước có trọng số lớn nhất. Dãy $(0,2,2)$ là một đường có xác suất dương; lần Tìm đầu từ pin cao cũng có thể đưa robot xuống pin thấp. Cộng thẳng không dùng được cho nhiệm vụ tiếp diễn: Chờ mãi cho $1+1+1+\cdots$, và mọi cách hành động có phần thưởng dương đều cho tổng vô hạn.</p>
+    <p class="note-source">Nguồn: ghi chú Bài 02, Định nghĩa 02.12 và Mệnh đề 02.13; ghi chú Bài 03, Ví dụ 03.7; Sutton và Barto (2018), (3.8), tr. 55.</p>
   </aside>
 </section>
 
@@ -333,7 +333,7 @@
   <img src="img/lec-03/robot-p03-episodic-continuing.svg" class="figure short" alt="Hai trục thời gian. Trên: một lượt đi từ bắt đầu tới đích, kết thúc tại thời điểm T, sau đó phần thưởng được đệm bằng 0. Dưới: robot ở L Sạc về H, rồi Tìm và tiếp tục hoạt động, không có thời điểm kết thúc."/>
   <p><strong>Ví dụ.</strong> Robot là nhiệm vụ tiếp diễn: cứu hộ và Sạc chỉ đổi mức pin.</p>
   <aside class="notes">
-    <p>Tổng có trọng số cần biết chuỗi phần thưởng dài bao nhiêu: mê cung của Bài 02 kết thúc khi tác tử tới đích, còn robot không có điểm dừng tự nhiên; với $T=\infty$, tổng chỉ hữu hạn khi $\gamma<1$. Thời điểm kết thúc $T$ là biến ngẫu nhiên và có thể khác nhau giữa các lượt. Một lần đi mê cung của Bài 02 hay một lần giữ cột trong CartPole là nhiệm vụ có kết thúc. Kết thúc một lượt là sự kiện của môi trường, khác việc dừng một thuật toán học chạy qua nhiều lượt. Với nhiệm vụ có kết thúc, $\mathcal S$ chỉ gồm trạng thái chưa kết thúc và $\mathcal S^+$ thêm các trạng thái kết thúc.</p>
+    <p>Tổng có trọng số cần biết chuỗi phần thưởng dài bao nhiêu: mê cung của Bài 02 kết thúc khi tác tử tới đích, còn robot không có điểm dừng tự nhiên; với $T=\infty$, định nghĩa chỉ dùng $\gamma<1$, và khi đó phần thưởng bị chặn bảo đảm tổng hữu hạn. Thời điểm kết thúc $T$ là biến ngẫu nhiên và có thể khác nhau giữa các lượt. Một lần đi mê cung của Bài 02 hay một lần giữ cột trong CartPole là nhiệm vụ có kết thúc. Kết thúc một lượt là sự kiện của môi trường, khác việc dừng một thuật toán học chạy qua nhiều lượt. Với nhiệm vụ có kết thúc, $\mathcal S$ chỉ gồm trạng thái chưa kết thúc và $\mathcal S^+$ thêm các trạng thái kết thúc.</p>
     <p class="note-source">Nguồn: Sutton và Barto (2018), §3.3–3.4, tr. 54–57; ghi chú Bài 03, Định nghĩa 03.8.</p>
   </aside>
 </section>
@@ -343,7 +343,7 @@
   <p><strong>Định nghĩa.</strong> Với hệ số chiết khấu $\gamma\in[0,1]$ và $t\lt T$, lợi tức từ $t$ là</p>
   <div class="math-large">$$G_t=\sum_{k=t+1}^{T}\gamma^{\,k-t-1}R_k=R_{t+1}+\gamma R_{t+2}+\gamma^2R_{t+3}+\cdots$$</div>
   <p>Quy ước $G_T=0$; trường hợp $T=\infty$ chỉ dùng với $\gamma<1$ (Định&nbsp;nghĩa&nbsp;03.9).</p>
-  <p><strong>Nhận xét.</strong> Đặt $R_k=0$ với $k>T$ (trạng thái hấp thụ), mọi nhiệm vụ có dạng</p>
+  <p><strong>Nhận xét.</strong> Đặt $R_k=0$ với $k>T$ (trạng thái hấp thụ, absorbing state), mọi nhiệm vụ có dạng</p>
   <div class="math-large">$$G_t=\sum\nolimits_{j=0}^{\infty}\gamma^{\,j}R_{t+j+1}.$$</div>
   <aside class="notes">
     <p>Phần thưởng đến sau $k$ bước nữa, $R_{t+k+1}$, mang trọng số $\gamma^k$; số hạng đầu là $R_{t+1}$ với trọng số $1$. Lợi tức là biến ngẫu nhiên, vì mỗi quỹ đạo cho một dãy phần thưởng khác. Định nghĩa trùng lợi tức của Bài 02; phần mới là quy ước trạng thái hấp thụ. Với $\gamma=1/2$, ba số hạng đầu là phép tính trên hai dãy phần thưởng ba bước của robot, nên $3/2$ và $7/4$ là lợi tức cắt sau ba bước. Quy ước $G_T=0$ nói sau khi kết thúc không còn phần thưởng; $R_T$ vẫn nằm trong $G_{T-1}$. Trạng thái hấp thụ chỉ chuyển về chính nó với phần thưởng $0$ và một hành động giả; phép đệm là quy ước trong một lượt.</p>
@@ -397,14 +397,14 @@
     <p class="strand-keys">Chính sách Markov dừng · Xác suất quỹ đạo · Giá trị trạng thái · Giá trị hành động</p>
   </div>
   <aside class="notes">
-    <p>Lợi tức có hai nguồn ngẫu nhiên: phản hồi của môi trường, mô tả bằng bảng $p$, và lựa chọn của robot. Giá trị trạng thái $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$ đã có ở Bài 02 cho chính sách dừng; phần mới gồm chính sách Markov dừng như quy tắc sinh hành động, công thức xác suất của mọi đoạn quỹ đạo, $v_\pi$ định nghĩa trên quá trình xuất phát tại $s$, và giá trị hành động $q_\pi$. Hai hàm này là ẩn số của phương trình Bellman.</p>
+    <p>Lợi tức có hai nguồn ngẫu nhiên: phản hồi của môi trường, mô tả bằng bảng $p$, và lựa chọn của robot. Giá trị trạng thái $v_\pi(s)=\mathbb E_\pi[G_0\mid S_0=s]$ đã có ở Bài 02 (Định nghĩa 02.14); phần mới gồm chính sách Markov dừng như quy tắc sinh hành động, công thức xác suất của mọi đoạn quỹ đạo và giá trị hành động $q_\pi$. Hai hàm này là ẩn số của phương trình Bellman.</p>
     <p class="note-source">Nguồn: Sutton và Barto (2018), §3.5, tr. 58; Bài giảng gốc (2025–2026), trang 39, 52–53.</p>
   </aside>
 </section>
 
 <section data-slide-id="L03R-04-02">
   <h2>Ví dụ: chính sách chia đều tại pin thấp</h2>
-  <p><strong>Nhắc lại (Bài 02):</strong> $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$ cần một chính sách cố định.</p>
+  <p><strong>Nhắc lại (Bài 02):</strong> $v_\pi(s)=\mathbb E_\pi[G_0\mid S_0=s]$ cần một chính sách cố định.</p>
   <p><strong>Nhu cầu:</strong> quy tắc chọn hành động theo xác suất, dùng chung ở mọi thời điểm.</p>
   <table>
     <thead><tr><th>Trạng thái</th><th>$\mathrm{tim}$</th><th>$\mathrm{cho}$</th><th>$\mathrm{sac}$</th></tr></thead>
@@ -415,7 +415,7 @@
   </table>
   <p>Ô "—": hành động không hợp lệ; ô $0$: hành động hợp lệ nhưng không được chọn.</p>
   <aside class="notes">
-    <p>Ở $\mathrm H$ robot luôn Tìm; ở $\mathrm L$ robot Chờ hoặc Sạc, mỗi hành động $1/2$, không bao giờ Tìm. Mỗi hàng là một phân phối trên các hành động hợp lệ của trạng thái đó: hàng $\mathrm H$ có $1+0=1$, hàng $\mathrm L$ có $0+\tfrac12+\tfrac12=1$. Ở pin cao quy tắc là tất định, ở pin thấp là ngẫu nhiên; một chính sách có thể mang cả hai tính chất. Đây là số liệu sư phạm tự xây dựng; quy tắc được giữ cố định trong phần còn lại của bài cùng với $\gamma=1/2$, và chưa có khẳng định nào rằng nó tốt.</p>
+    <p>Ở $\mathrm H$ robot luôn Tìm; ở $\mathrm L$ robot Chờ hoặc Sạc, mỗi hành động $1/2$, không bao giờ Tìm. Mỗi hàng là một phân phối trên các hành động hợp lệ của trạng thái đó: hàng $\mathrm H$ có $1+0=1$, hàng $\mathrm L$ có $0+\tfrac12+\tfrac12=1$. Ở pin cao quy tắc là tất định, ở pin thấp là ngẫu nhiên; một chính sách có thể mang cả hai tính chất. Quy tắc này cùng $\gamma=1/2$ được giữ cố định trong phần còn lại của bài.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Ví dụ 03.9; Bài giảng gốc (2025–2026), trang 52.</p>
   </aside>
 </section>
@@ -424,7 +424,7 @@
   <h2>Chính sách Markov dừng</h2>
   <p><strong>Trực quan.</strong> Chính sách rút hành động, sau đó môi trường rút phản hồi.</p>
   <img src="img/lec-03/robot-p04-two-layers.svg" class="figure short" alt="Một bước tại pin thấp L tách thành hai tầng. Tầng chính sách: Chờ hoặc Sạc, mỗi hành động xác suất 1/2. Tầng môi trường: Chờ đưa về L với phần thưởng 1, xác suất 1; Sạc đưa về H với phần thưởng 0, xác suất 1."/>
-  <p><strong>Định nghĩa.</strong> Chính sách Markov dừng là hàm $\pi$ gán mỗi $s\in\mathcal S$ một phân phối $\pi(\cdot\mid s)$ trên $\mathcal A(s)$.</p>
+  <p><strong>Định nghĩa.</strong> Chính sách Markov dừng (stationary Markov policy) là hàm $\pi$ gán mỗi $s\in\mathcal S$ một phân phối $\pi(\cdot\mid s)$ trên $\mathcal A(s)$.</p>
   <p>Tác tử theo $\pi$ nếu $\Pr(A_t=a\mid H_t=h_t)=\pi(a\mid s)$ với mọi $h_t$ kết thúc ở $s$, ${\Pr(H_t=h_t)>0}$.</p>
   <aside class="notes">
     <p>"Markov" nghĩa là xác suất chọn hành động chỉ phụ thuộc trạng thái hiện tại; "dừng" nghĩa là cùng hàm $\pi$ được dùng ở mọi thời điểm. Chính sách xác định (deterministic policy) là trường hợp mỗi $\pi(\cdot\mid s)$ dồn xác suất $1$ vào một hành động. Chính sách là quy luật của tác tử, $p$ là quy luật của môi trường: đổi chính sách không đổi bảng $p$, nhưng đổi xác suất của mọi quỹ đạo. Khi cần, $\mathbb E_\pi$ còn chỉ định phân phối đầu $\mu$ của $S_0$.</p>
@@ -465,7 +465,7 @@
   <p>trên quá trình xuất phát tại $s$; $v_\pi=0$ tại trạng thái kết thúc.</p>
   <p><strong>Ví dụ.</strong> Phần bỏ sau hai bước có trị tuyệt đối $\le\gamma^2\tfrac{M}{1-\gamma}=\tfrac32$; quanh $\tfrac{21}8$ được ${v_\pi(\mathrm H)\in\bigl[\tfrac98,\tfrac{33}8\bigr]}$.</p>
   <aside class="notes">
-    <p>Cây vô hạn không liệt kê được, nên định nghĩa gọi tên đại lượng bằng kỳ vọng; kỳ vọng tồn tại vì $\lvert G_0\rvert\le M/(1-\gamma)$. Bài 02 và Sutton và Barto viết $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$ với $t$ bất kỳ có $\Pr(S_t=s)>0$; định nghĩa trên quá trình xuất phát tại $s$ không cần điều kiện đó, và bổ đề tính Markov của phần tương lai ở mạch sau chứng minh hai cách viết cho cùng một số. Lợi tức $G_t$ thay đổi theo quỹ đạo; $v_\pi(s)$ là trung bình của nó. Với $M=3$, $\gamma=1/2$, phần bỏ có trị tuyệt đối không quá $\tfrac14\cdot6$; mạch 6 sẽ cho $v_\pi(\mathrm H)=13/4$, nằm trong khoảng này.</p>
+    <p>Cây vô hạn không liệt kê được, nên định nghĩa gọi tên đại lượng bằng kỳ vọng; kỳ vọng tồn tại vì $\lvert G_0\rvert\le M/(1-\gamma)$. Sutton và Barto viết $\mathbb E_\pi[G_t\mid S_t=s]$ với $t$ bất kỳ; khi $\Pr_\pi(S_t=s)>0$, hai cách viết cho cùng một số (Bổ đề 03.20(c)). Lợi tức $G_t$ thay đổi theo quỹ đạo; $v_\pi(s)$ là trung bình của nó. Với $M=3$, $\gamma=1/2$, phần bỏ có trị tuyệt đối không quá $\tfrac14\cdot6$. Nghiệm $v_\pi(\mathrm H)=13/4$ của hệ Bellman nằm trong khoảng này.</p>
     <p class="note-source">Nguồn: Sutton và Barto (2018), (3.12), tr. 58; ghi chú Bài 03, Định nghĩa 03.15.</p>
   </aside>
 </section>
@@ -517,7 +517,7 @@
   <p>Kiểm tra bằng hai thí nghiệm: $\tfrac12\cdot\tfrac54+\tfrac12\cdot1=\tfrac98$.</p>
   <p>(c) $\tfrac98$ chỉ gồm hai số hạng đầu; $v_\pi(\mathrm L)$ còn phần $\gamma^2R_3+\gamma^3R_4+\cdots$.</p>
   <aside class="notes">
-    <p>Ở câu (a), nếu tính lại $v_\pi$ cho chính sách mới, phương trình Bellman dùng cùng các hệ số từ $p$ và hệ số mới từ $\pi$. Ở câu (b), ba xác suất nhánh cộng lại bằng $\tfrac14+\tfrac14+\tfrac12=1$. Thí nghiệm Tìm không đóng góp vào phép kiểm tra vì $\pi(\mathrm{tim}\mid\mathrm L)=0$. Mạch 6 cho $v_\pi(\mathrm L)=7/4=14/8$, lớn hơn $9/8$ vì phần đuôi bị cắt có kỳ vọng dương ở robot.</p>
+    <p>Ở câu (a), nếu tính lại $v_\pi$ cho chính sách mới, phương trình Bellman dùng cùng các hệ số từ $p$ và hệ số mới từ $\pi$. Ở câu (b), ba xác suất nhánh cộng lại bằng $\tfrac14+\tfrac14+\tfrac12=1$. Thí nghiệm Tìm không đóng góp vào phép kiểm tra vì $\pi(\mathrm{tim}\mid\mathrm L)=0$. Nghiệm của hệ Bellman cho $v_\pi(\mathrm L)=7/4=14/8$, lớn hơn $9/8$ vì phần đuôi bị cắt có kỳ vọng dương ở robot.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, lời giải Bài tập 03.4 và 03.5.</p>
   </aside>
 </section>
@@ -556,7 +556,7 @@
   <p>Hệ số ngoài ngoặc là $\pi(\cdot\mid\mathrm L)$; hệ số trước $v_\pi$ là $\gamma$; $v_\pi(\mathrm L)$ có ở hai vế.</p>
   <p><strong>Lưu ý:</strong> phương trình giả định phần còn lại có kỳ vọng $v_\pi$ của trạng thái kế tiếp.</p>
   <aside class="notes">
-    <p>Nhóm Chờ có phần thưởng ngay $1$ và phần còn lại bắt đầu ở $\mathrm L$, đóng góp $\gamma\,v_\pi(\mathrm L)$; nhóm Sạc có phần thưởng ngay $0$ và phần còn lại bắt đầu ở $\mathrm H$, đóng góp $\gamma\,v_\pi(\mathrm H)$. Ẩn $v_\pi(\mathrm L)$ có ở cả hai vế vì Chờ giữ nguyên mức pin. Kiểm tra: thay $v_\pi$ trong ngoặc bằng thưởng kỳ vọng một bước dưới chính sách tại trạng thái kế tiếp ($1/2$ ở $\mathrm L$, $2$ ở $\mathrm H$) cho $9/8$, trùng kỳ vọng hai bước từ pin thấp. Phương trình chưa phải kết quả: hai bước còn thiếu là tách lợi tức và chứng minh giả định ở dòng cuối.</p>
+    <p>Nhóm Chờ có phần thưởng ngay $1$ và phần còn lại bắt đầu ở $\mathrm L$, đóng góp $\gamma\,v_\pi(\mathrm L)$; nhóm Sạc có phần thưởng ngay $0$ và phần còn lại bắt đầu ở $\mathrm H$, đóng góp $\gamma\,v_\pi(\mathrm H)$. Ẩn $v_\pi(\mathrm L)$ có ở cả hai vế vì Chờ giữ nguyên mức pin. Kiểm tra: thay $v_\pi$ trong ngoặc bằng thưởng kỳ vọng một bước dưới chính sách tại trạng thái kế tiếp ($1/2$ ở $\mathrm L$, $2$ ở $\mathrm H$) cho $9/8$, trùng kỳ vọng hai bước từ pin thấp. Để phương trình thành kết quả, cần ba bước: tách lợi tức; lấy hai tầng kỳ vọng; chứng minh kỳ vọng của phần còn lại bằng giá trị trạng thái kế tiếp.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Ví dụ 03.12.</p>
   </aside>
 </section>
@@ -592,7 +592,7 @@
   <div class="math-large">$$\begin{aligned}\mathbb E_\pi[G_t\mid H_t=h_t]&=v_\pi(s),\\ \mathbb E_\pi[G_t\mid H_t=h_t,A_t=a]&=q_\pi(s,a).\end{aligned}$$</div>
   <p><strong>Chứng minh.</strong> Đoạn $K$ bước có phân phối như khi xuất phát tại $s$; cho $K\to\infty$.</p>
   <aside class="notes">
-    <p>Đẳng thức thứ hai xét $a$ có $\Pr(H_t=h_t,A_t=a)>0$. Bổ đề dùng tính Markov cho toàn bộ phần tương lai và tính dừng: tích xác suất tại thời điểm $t$ trùng tích của quá trình xuất phát tại $s$ vì cùng hàm $\pi$ và cùng hàm $p$ ở thời điểm $t+i$ và $i$. Tầng phản hồi của bổ đề hai tầng đã dùng tính Markov một bước, qua quy tắc sinh. Phần thưởng bị chặn và $\gamma<1$ dùng ở bước qua giới hạn: phần đuôi sau $K$ bước không quá $\gamma^KM/(1-\gamma)$. Với robot, kỳ vọng của $G_1$ khi biết $H_1=(\mathrm L,\mathrm{cho},1,\mathrm L)$ bằng $v_\pi(\mathrm L)$, đúng giả định của phương trình một bước. Bổ đề cũng cho $\mathbb E_\pi[G_t\mid S_t=s]=v_\pi(s)$ với mọi $t$.</p>
+    <p>Đẳng thức thứ hai xét $a$ có $\Pr(H_t=h_t,A_t=a)>0$. Bổ đề dùng tính Markov cho toàn bộ phần tương lai và tính dừng: tích xác suất tại thời điểm $t$ trùng tích của quá trình xuất phát tại $s$ vì cùng hàm $\pi$ và cùng hàm $p$ ở thời điểm $t+i$ và $i$. Tầng phản hồi của bổ đề hai tầng đã dùng tính Markov một bước, qua quy tắc sinh. Phần thưởng bị chặn và $\gamma<1$ dùng ở bước qua giới hạn: phần đuôi sau $K$ bước không quá $\gamma^KM/(1-\gamma)$. Với robot, kỳ vọng của $G_1$ khi biết $H_1=(\mathrm L,\mathrm{cho},1,\mathrm L)$ bằng $v_\pi(\mathrm L)$, đúng giả định của phương trình một bước. Bổ đề cũng cho $\mathbb E_\pi[G_t\mid S_t=s]=v_\pi(s)$ với mọi $t$ có $\Pr_\pi(S_t=s)>0$.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Bổ đề 03.20; Sutton và Barto (2018), §3.1, tr. 49.</p>
   </aside>
 </section>
@@ -604,7 +604,7 @@
   <div class="math-large">$$v_\pi(s)=\sum_{a\in\mathcal A(s)}\pi(a\mid s)\sum_{s'\in\mathcal S^+}\sum_{r\in\mathcal R}p(s',r\mid s,a)\bigl[r+\gamma\,v_\pi(s')\bigr].$$</div>
   <p><strong>Chứng minh.</strong> Tách $G_0=R_1+\gamma G_1$, lấy hai tầng kỳ vọng, thay kỳ vọng của $G_1$ bằng $v_\pi(s')$.</p>
   <aside class="notes">
-    <p>Đọc bằng lời: giá trị của một trạng thái là trung bình, theo xác suất chọn hành động và xác suất phản hồi, của phần thưởng một bước cộng giá trị chiết khấu của trạng thái kế tiếp. MDP hữu hạn gồm tính Markov của trạng thái và tính dừng của $p$; chính sách còn phải Markov dừng. Bỏ tính Markov: ở trạng thái thiếu phòng làm việc, hai lịch sử kết thúc ở $\mathrm L$ cho hai kỳ vọng phần tương lai khác nhau. Bỏ tính dừng: Chờ ở bước chẵn, Sạc ở bước lẻ, hoặc pin lão hóa, làm giá trị phụ thuộc thời điểm. Bỏ $\gamma<1$: robot luôn Chờ có lợi tức vô hạn; với nhiệm vụ có kết thúc và $\gamma=1$, phương trình vẫn đúng khi lợi tức khả tích, bài không chứng minh. Định lý chưa nói hệ có nghiệm duy nhất. Tại $\mathrm L$, số hạng của Tìm biến mất vì $\pi(\mathrm{tim}\mid\mathrm L)=0$.</p>
+    <p>Đọc bằng lời: giá trị của một trạng thái là trung bình, theo xác suất chọn hành động và xác suất phản hồi, của phần thưởng một bước cộng giá trị chiết khấu của trạng thái kế tiếp. Bỏ tính Markov: ở trạng thái thiếu phòng làm việc, hai lịch sử kết thúc ở $\mathrm L$ cho hai kỳ vọng phần tương lai khác nhau. Bỏ tính dừng: Chờ ở bước chẵn, Sạc ở bước lẻ làm giá trị phụ thuộc thời điểm. Bỏ $\gamma<1$: robot luôn Chờ có lợi tức vô hạn; Sutton và Barto phát biểu cùng phương trình cho cả nhiệm vụ có kết thúc với $\gamma=1$ khi lợi tức khả tích. Tại $\mathrm L$, số hạng của Tìm biến mất vì $\pi(\mathrm{tim}\mid\mathrm L)=0$.</p>
     <p class="note-source">Nguồn: Sutton và Barto (2018), (3.14), tr. 59; ghi chú Bài 03, Định lý 03.21.</p>
   </aside>
 </section>
@@ -642,7 +642,7 @@
   <p>Tổng trong bằng $0$ khi $s'$ là trạng thái kết thúc.</p>
   <p><strong>Chứng minh.</strong> Thế quan hệ $v$ theo $q$ vào quan hệ $q$ theo $v$.</p>
   <aside class="notes">
-    <p>Phép thế dùng $v_\pi(s')=\sum_{a'}\pi(a'\mid s')\,q_\pi(s',a')$ tại trạng thái kế tiếp. Trong phương trình, $a$ là hành động tại thời điểm $t$, còn $a'$ là hành động chính sách chọn tại $t+1$ ở $s'$, nên trọng số là $\pi(a'\mid s')$. Tổng ngoài mang xác suất của môi trường, tổng trong mang xác suất của chính sách, theo thứ tự ngược với phương trình của $v_\pi$. Sơ đồ cập nhật (backup diagram) trong ghi chú bài giảng vẽ hai thứ tự này: với $v_\pi$, tầng trên mang $\pi$, tầng dưới mang $p$; với $q_\pi$ thì ngược lại. Ở robot, phương trình cho $q_\pi$ có năm phương trình, của $v_\pi$ chỉ có hai. Thuật toán Sarsa của Bài 06 dùng mẫu của ngoặc vuông này làm mục tiêu bootstrap (bootstrap target).</p>
+    <p>Phép thế dùng $v_\pi(s')=\sum_{a'}\pi(a'\mid s')\,q_\pi(s',a')$ tại trạng thái kế tiếp. Trong phương trình, $a$ là hành động tại thời điểm $t$, còn $a'$ là hành động chính sách chọn tại $t+1$ ở $s'$, nên trọng số là $\pi(a'\mid s')$. Tổng ngoài mang xác suất của môi trường, tổng trong mang xác suất của chính sách, theo thứ tự ngược với phương trình của $v_\pi$. Sơ đồ cập nhật (backup diagram) vẽ hai thứ tự này: với $v_\pi$, tầng trên mang $\pi$, tầng dưới mang $p$; với $q_\pi$ thì ngược lại. Ở robot, phương trình cho $q_\pi$ có năm phương trình, của $v_\pi$ chỉ có hai. Thuật toán Sarsa của Bài 06 dùng mẫu của ngoặc vuông này làm mục tiêu bootstrap (bootstrap target).</p>
     <p class="note-source">Nguồn: Sutton và Barto (2018), bài tập 3.17, tr. 61; sơ đồ cập nhật tr. 59, 61; ghi chú Bài 03, Mệnh đề 03.22, 03.23 và Hệ quả 03.24.</p>
   </aside>
 </section>
@@ -683,7 +683,7 @@
     <p class="strand-keys">Hệ Bellman của robot · Chuỗi Markov · Quá trình phần thưởng Markov · Dạng ma trận · Nghiệm duy nhất</p>
   </div>
   <aside class="notes">
-    <p>Mỗi trạng thái có một phương trình Bellman, nhưng định lý Bellman chỉ nói $v_\pi$ là một nghiệm. Hệ của robot được giải bằng tay trước; sau đó chính sách được gộp vào mô hình để có chuỗi Markov và quá trình phần thưởng Markov, hệ được viết ở dạng ma trận, và tính duy nhất của nghiệm được chứng minh khi tập trạng thái hữu hạn và $\gamma<1$. Kết quả là $v_\pi=(13/4,\,7/4)$, một thuật toán giải hệ cho MDP hữu hạn bất kỳ, và các giới hạn dẫn sang Bài 04.</p>
+    <p>Định lý Bellman cho biết $v_\pi$ là một nghiệm của hệ gồm mỗi trạng thái một phương trình. Hệ của robot được giải bằng tay. Gộp chính sách vào mô hình cho chuỗi Markov và quá trình phần thưởng Markov. Dạng ma trận cùng tập hữu hạn và $\gamma<1$ cho nghiệm duy nhất. Đầu ra là $v_\pi=(13/4,\,7/4)$ và một thuật toán giải hệ cho MDP hữu hạn bất kỳ.</p>
     <p class="note-source">Nguồn: Sutton và Barto (2018), tr. 60, §4.1, tr. 74; Bài giảng gốc (2025–2026), trang 30, 34, 47–48.</p>
   </aside>
 </section>
@@ -696,7 +696,7 @@
   <img src="img/lec-03/robot-p06-policy-evaluation-setup.svg" class="figure short" alt="Robot có hai trạng thái, pin cao H và pin thấp L, mỗi trạng thái kèm một ô giá trị ghi dấu hỏi. Chú thích chính sách π: tại H luôn Tìm; tại L Chờ với xác suất 1/2, Sạc với xác suất 1/2; γ = 1/2."/>
   <p>Robot: hai ẩn $v_\pi(\mathrm H)$, $v_\pi(\mathrm L)$, mỗi ẩn có mặt ở cả hai phương trình.</p>
   <aside class="notes">
-    <p>Chính sách đã cho, chỉ cần đánh giá; đây là bài toán có mô hình vì $p$ được dùng trực tiếp. Bài toán này khác bài toán điều khiển, tức tìm chính sách tốt nhất, thuộc Bài 04. Không ước lượng giá trị từ các lần chạy mô phỏng; bài toán phi mô hình thuộc Bài 05. Với robot, phương trình tại $\mathrm H$ chứa $v_\pi(\mathrm L)$ và ngược lại, nên hai ẩn phải được giải đồng thời.</p>
+    <p>Chính sách đã cho, chỉ cần đánh giá; đây là bài toán có mô hình vì $p$ được dùng trực tiếp. Bài toán này khác bài toán điều khiển (control), tức tìm chính sách tốt nhất. Với robot, phương trình tại $\mathrm H$ chứa $v_\pi(\mathrm L)$ và ngược lại, nên hai ẩn phải được giải đồng thời.</p>
     <p class="note-source">Nguồn: Sutton và Barto (2018), §4.1, tr. 74; ghi chú Bài 03, phần mở Mục 5.</p>
   </aside>
 </section>
@@ -722,7 +722,7 @@
   <p>Thay lại: $2+\tfrac14\bigl(\tfrac{13}4+\tfrac74\bigr)=\tfrac{13}4$ và $\tfrac12+\tfrac14\bigl(\tfrac{13}4+\tfrac74\bigr)=\tfrac74$.</p>
   <p><strong>Diễn giải:</strong> kỳ vọng hai bước $\tfrac{21}8$, $\tfrac98$ nhỏ hơn $\tfrac{26}8$, $\tfrac{14}8$ vì phần đuôi có kỳ vọng dương.</p>
   <aside class="notes">
-    <p>Dưới chính sách chia đều tại pin thấp, robot ở pin cao có lợi tức kỳ vọng $13/4$, ở pin thấp $7/4$. Hiệu $v_{\mathrm H}-v_{\mathrm L}=3/2$ bằng hiệu thưởng kỳ vọng một bước dưới chính sách ở hai trạng thái, $2-\tfrac12$, vì từ cả hai trạng thái robot chuyển tới $\mathrm H$ và $\mathrm L$ với cùng xác suất. Giá trị $13/4$ nằm trong khoảng $[9/8,\,33/8]$ suy từ kỳ vọng hai bước. Lời giải này chỉ hợp lệ khi hệ có nghiệm duy nhất; định lý nghiệm duy nhất ở phần sau của mạch bảo đảm điều đó.</p>
+    <p>Dưới chính sách chia đều tại pin thấp, robot ở pin cao có lợi tức kỳ vọng $13/4$, ở pin thấp $7/4$. Hiệu $v_{\mathrm H}-v_{\mathrm L}=3/2$ bằng hiệu thưởng kỳ vọng một bước dưới chính sách ở hai trạng thái, $2-\tfrac12$, vì từ cả hai trạng thái robot chuyển tới $\mathrm H$ và $\mathrm L$ với cùng xác suất. Giá trị $13/4$ nằm trong khoảng $[9/8,\,33/8]$ suy từ kỳ vọng hai bước. Phép khử cho thấy hệ hai ẩn này có đúng một nghiệm; với $n$ ẩn, tính duy nhất cần một lập luận chung.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Ví dụ 03.14.</p>
   </aside>
 </section>
@@ -761,10 +761,10 @@
   <h2>Chuỗi Markov và quá trình phần thưởng Markov cảm sinh</h2>
   <p><strong>Định nghĩa.</strong> Với $\mathcal S=\{s_1,\dots,s_n\}$ và $\pi$ Markov dừng, ma trận chuyển và véc-tơ thưởng kỳ vọng dưới $\pi$ là</p>
   <div class="math-large">$$\begin{aligned}(P_\pi)_{ss'}&=\sum\nolimits_{a\in\mathcal A(s)}\pi(a\mid s)\,p(s'\mid s,a),\quad s,s'\in\mathcal S,\\ r_\pi(s)&=\sum\nolimits_{a\in\mathcal A(s)}\pi(a\mid s)\,r(s,a).\end{aligned}$$</div>
-  <p>Chuỗi Markov (Markov chain) cảm sinh bởi $\pi$ là $(\mathcal S,P_\pi)$.</p>
+  <p>Chuỗi Markov (Markov chain) cảm sinh: dãy $S_0,S_1,\dots$ trên $\mathcal S^+$ khi tác tử theo $\pi$.</p>
   <p>Quá trình phần thưởng Markov (Markov reward process, MRP) cảm sinh là $(\mathcal S,P_\pi,r_\pi,\gamma)$ (Định&nbsp;nghĩa&nbsp;03.26).</p>
   <aside class="notes">
-    <p>Hai công thức chỉ lấy trung bình theo chính sách những đại lượng của mạch mô hình. Kiểm tra bằng hàng $\mathrm L$ của bảng gộp: $(P_\pi)_{\mathrm L\mathrm H}=(P_\pi)_{\mathrm L\mathrm L}=1/2$ và $r_\pi(\mathrm L)=1/2$. Mỗi hàng của $P_\pi$ có tổng không quá $1$; phần thiếu là xác suất tới trạng thái kết thúc. Ở robot không có trạng thái kết thúc nên mỗi hàng có tổng đúng bằng $1$. Theo công thức xác suất đoạn quỹ đạo, dãy trạng thái dưới $\pi$ vẫn có tính Markov. Chuỗi Markov và MRP là trường hợp cố định chính sách của MDP. Bộ MRP ghi kèm $\gamma$ vì hệ của nó phụ thuộc $\gamma$; với MDP, $\gamma$ thuộc tiêu chuẩn đánh giá nên đứng ngoài $\mathcal M$.</p>
+    <p>Hai công thức chỉ lấy trung bình theo chính sách những đại lượng của mạch mô hình. Kiểm tra bằng hàng $\mathrm L$ của bảng gộp: $(P_\pi)_{\mathrm L\mathrm H}=(P_\pi)_{\mathrm L\mathrm L}=1/2$ và $r_\pi(\mathrm L)=1/2$. Trạng thái kết thúc là hấp thụ, và $P_\pi$ là khối của ma trận chuyển ứng với $\mathcal S$; mỗi hàng của $P_\pi$ có tổng không quá $1$, phần thiếu là xác suất tới trạng thái kết thúc. Ở robot không có trạng thái kết thúc nên mỗi hàng có tổng đúng bằng $1$. Theo công thức xác suất đoạn quỹ đạo, dãy trạng thái dưới $\pi$ vẫn có tính Markov. Bộ MRP ghi kèm $\gamma$ vì hệ của nó phụ thuộc $\gamma$; với MDP, $\gamma$ thuộc tiêu chuẩn đánh giá nên đứng ngoài $\mathcal M$.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Định nghĩa 03.26; Bài giảng gốc (2025–2026), trang 30, 34, 49; Bài tập tuần 2 (2025–2026), bài 4.</p>
   </aside>
 </section>
@@ -787,10 +787,10 @@
   <p><strong>Định lý.</strong> <strong>Giả thiết:</strong> MDP hữu hạn với $n$ trạng thái chưa kết thúc, $\pi$ Markov dừng, ${0\le\gamma<1}$.</p>
   <p><strong>Kết luận:</strong> $I-\gamma P_\pi$ khả nghịch và (Định&nbsp;lý&nbsp;03.28)</p>
   <div class="math-large">$$v_\pi=(I-\gamma P_\pi)^{-1}r_\pi=\sum_{k=0}^{\infty}\gamma^k(P_\pi)^kr_\pi.$$</div>
-  <p><strong>Chứng minh.</strong> $\lVert P_\pi x\rVert_\infty\le\lVert x\rVert_\infty$; nếu $x=\gamma P_\pi x$ thì $(1-\gamma)\lVert x\rVert_\infty\le0$, nên $x=0$.</p>
+  <p><strong>Chứng minh.</strong> Với chuẩn cực đại (max norm), $\lVert P_\pi x\rVert_\infty\le\lVert x\rVert_\infty$; nếu $x=\gamma P_\pi x$ thì $(1-\gamma)\lVert x\rVert_\infty\le0$, nên $x=0$.</p>
   <p><strong>Lưu ý:</strong> $\gamma=1$ làm hệ robot vô nghiệm ($0=\tfrac52$); với $\gamma=1$, định lý cần thêm: mọi lượt chắc chắn kết thúc.</p>
   <aside class="notes">
-    <p>Phép nhân $P_\pi$ không làm tăng chuẩn cực đại vì phần tử không âm và tổng mỗi hàng không quá $1$; hệ số $\gamma<1$ biến điều đó thành hạt nhân tầm thường, nên ma trận vuông khả nghịch. Khai triển chuỗi Neumann (Neumann series) có tổng riêng $K$ số hạng sai khác $v_\pi$ không quá $\gamma^K\lVert v_\pi\rVert_\infty$; thành phần thứ $s$ của $(P_\pi)^kr_\pi$ là $\mathbb E_\pi[R_{k+1}\mid S_0=s]$. Với robot, $\det(I-\gamma P_\pi)=1/2$ và nghịch đảo có hàng $(3/2,\,1/2)$, $(1/2,\,3/2)$, cho lại $(13/4,\,7/4)$. Với $\gamma=1$, $(I-P_\pi)\mathbf 1=0$. Với nhiệm vụ có kết thúc và $\gamma=1$, nghiệm tồn tại và duy nhất khi dưới $\pi$ mọi trạng thái chắc chắn đi tới kết thúc (Sutton và Barto, §4.1, tr. 74); bài không chứng minh trường hợp này. Bỏ tập hữu hạn thì cần lập luận toán tử co của Bài 04.</p>
+    <p>Phép nhân $P_\pi$ không làm tăng chuẩn cực đại vì phần tử không âm và tổng mỗi hàng không quá $1$; hệ số $\gamma<1$ biến điều đó thành hạt nhân tầm thường, nên ma trận vuông khả nghịch. Khai triển chuỗi Neumann (Neumann series) có tổng riêng $K$ số hạng sai khác $v_\pi$ không quá $\gamma^K\lVert v_\pi\rVert_\infty$; thành phần thứ $s$ của $(P_\pi)^kr_\pi$ là $\mathbb E_\pi[R_{k+1}\mid S_0=s]$. Với robot, $\det(I-\gamma P_\pi)=1/2$ và nghịch đảo có hàng $(3/2,\,1/2)$, $(1/2,\,3/2)$, cho lại $(13/4,\,7/4)$. Với $\gamma=1$, $(I-P_\pi)\mathbf 1=0$; với nhiệm vụ có kết thúc và $\gamma=1$, nghiệm tồn tại và duy nhất khi dưới $\pi$ mọi trạng thái chắc chắn đi tới kết thúc (Sutton và Barto, §4.1, tr. 74). Bỏ tập hữu hạn: với $s\to s+1$, phần thưởng $0$, $\gamma=\tfrac12$, mọi $v(s)=c\,2^s$ thỏa hệ; tính duy nhất chỉ còn trong lớp hàm bị chặn.</p>
     <p class="note-source">Nguồn: Puterman (1994), §6.1; Sutton và Barto (2018), §4.1, tr. 74; ghi chú Bài 03, Định lý 03.28 và Ví dụ 03.17.</p>
   </aside>
 </section>
@@ -798,12 +798,12 @@
 <section data-slide-id="L03R-06-07c">
   <h2>Đánh giá chính sách bằng giải hệ tuyến tính</h2>
   <p><strong>Nhu cầu:</strong> khử thế bằng tay không dùng được cho hệ hàng chục ẩn.</p>
-  <p><strong>Thuật toán.</strong> <strong>Đầu vào:</strong> $p$ hoặc $p(s'\mid s,a)$ cùng $r(s,a)$; $\pi$ Markov dừng; $\gamma$.</p>
+  <p><strong>Thuật toán.</strong> <strong>Đầu vào:</strong> $p$ hoặc $p(s'\mid s,a)$ cùng $r(s,a)$; $\pi$ Markov dừng; $\gamma$; dung sai $\eta>0$.</p>
   <p><strong>Đầu ra:</strong> ${v\in\mathbb R^n}$ với ${v_i=v_\pi(s_i)}$ trên $n$ trạng thái chưa kết thúc.</p>
   <p><strong>Giả thiết:</strong> tập hữu hạn, trạng thái Markov, $p$ dừng, phần thưởng bị chặn, ${0\le\gamma<1}$.</p>
-  <p>Tham số: dung sai $\eta>0$. Không lặp; giải hệ cỡ $n^3$ phép tính.</p>
+  <p>Khởi tạo $P_\pi\leftarrow0$, $r_\pi\leftarrow0$; không lặp, giải hệ cỡ $n^3$ phép tính.</p>
   <aside class="notes">
-    <p>Ba ví dụ của robot đã làm bằng tay mọi bước: lập $P_\pi$ và $r_\pi$ từ $p$ và $\pi$, lập ma trận $I-\gamma P_\pi$, giải hệ, kiểm tra lại. Thuật toán viết các bước đó cho MDP hữu hạn bất kỳ (Thuật toán 03.29). Đây là bài toán dự đoán có mô hình. Khởi tạo $P_\pi$ và $r_\pi$ bằng $0$; dung sai chẳng hạn $\eta=10^{-9}$. Thuật toán trực tiếp dừng sau khi trả $v$, với số phép tính hữu hạn; bước kiểm tra phần dư là phép kiểm tra số học, không phải tiêu chuẩn hội tụ.</p>
+    <p>Ba ví dụ của robot đã làm bằng tay mọi bước: lập $P_\pi$ và $r_\pi$ từ $p$ và $\pi$, lập ma trận $I-\gamma P_\pi$, giải hệ, kiểm tra lại. Thuật toán viết các bước đó cho MDP hữu hạn bất kỳ (Thuật toán 03.29). Đây là bài toán dự đoán có mô hình. Dung sai (tolerance) chẳng hạn $\eta=10^{-9}$. Thuật toán trực tiếp dừng sau khi trả $v$, với số phép tính hữu hạn; bước kiểm tra phần dư là phép kiểm tra số học, không phải tiêu chuẩn hội tụ.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Thuật toán 03.29; Bài giảng gốc (2025–2026), trang 47–48.</p>
   </aside>
 </section>
@@ -811,16 +811,16 @@
 <section data-slide-id="L03R-06-07d">
   <h2>Đánh giá chính sách bằng giải hệ tuyến tính</h2>
   <ol>
-    <li>Kiểm tra $\pi(\cdot\mid s)$ và $p(\cdot,\cdot\mid s,a)$ hoặc $p(\cdot\mid s,a)$ không âm, tổng $1$ trong dung sai $\eta$; nếu không, báo lỗi.</li>
+    <li>Kiểm tra $0\le\gamma<1$; $\pi(\cdot\mid s)$ và $p(\cdot,\cdot\mid s,a)$ hoặc $p(\cdot\mid s,a)$ không âm, tổng $1$ trong dung sai $\eta$; nếu không, báo lỗi.</li>
     <li>Nếu chỉ có $p(s',r\mid s,a)$: tính $p(s'\mid s,a)$ và $r(s,a)$ cho mọi cặp hợp lệ.</li>
     <li>$r_\pi(s)\leftarrow\sum_a\pi(a\mid s)\,r(s,a)$; $(P_\pi)_{ss'}\leftarrow\sum_a\pi(a\mid s)\,p(s'\mid s,a)$, $s'\in\mathcal S$; tổng hàng $\le1+\eta$.</li>
     <li>$A\leftarrow I-\gamma P_\pi$.</li>
-    <li>Giải $Av=r_\pi$ bằng khử Gauss, không tính nghịch đảo tường minh.</li>
+    <li>Giải $Av=r_\pi$ bằng khử Gauss (Gaussian elimination), không tính nghịch đảo tường minh.</li>
     <li>$\rho\leftarrow\lVert v-r_\pi-\gamma P_\pi v\rVert_\infty$; nếu $\rho>\eta\max(1,\lVert r_\pi\rVert_\infty)$, báo sai số làm tròn.</li>
     <li>Trả $v$.</li>
   </ol>
   <aside class="notes">
-    <p>Với robot, bước 3 cho đúng $P_\pi$ và $r_\pi$ của bảng gộp nhánh, bước 4 cho ma trận có hàng $(3/4,\,-1/4)$ và $(-1/4,\,3/4)$, bước 5 cho $(13/4,\,7/4)$ như phép khử thế, và bước 6 cho phần dư $0$. Ví dụ tính tay, công thức nghịch đảo và thuật toán cho cùng một kết quả. Cột của trạng thái kết thúc không đưa vào $P_\pi$. Chi phí: bước 3 tỉ lệ $n^2\max_s\lvert\mathcal A(s)\rvert$, bước 5 cỡ $n^3$ phép tính và $n^2$ ô nhớ, bước 6 cỡ $n^2$.</p>
+    <p>Với robot, bước 3 cho đúng $P_\pi$ và $r_\pi$ của bảng gộp nhánh, bước 4 cho ma trận có hàng $(3/4,\,-1/4)$ và $(-1/4,\,3/4)$, bước 5 cho $(13/4,\,7/4)$ như phép khử thế, và bước 6 cho phần dư $0$ khi tính bằng phân số, cỡ $10^{-16}$ với số dấu phẩy động. Ví dụ tính tay, công thức nghịch đảo và thuật toán cho cùng một kết quả. Cột của trạng thái kết thúc không đưa vào $P_\pi$. Chi phí: bước 3 tỉ lệ $n^2\max_s\lvert\mathcal A(s)\rvert$, bước 5 cỡ $n^3$ phép tính và $n^2$ ô nhớ, bước 6 cỡ $n^2$.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Thuật toán 03.29 và Nhận xét 03.30.</p>
   </aside>
 </section>
@@ -832,7 +832,7 @@
   <img src="img/lec-03/gridworld-5x5-deck.svg" class="figure" alt="Hai lưới 5 hàng 5 cột. Lưới trái: ô A ở hàng 1 cột 2 nhảy tới A' ở hàng 5 cột 2 với phần thưởng +10; ô B ở hàng 1 cột 4 nhảy tới B' ở hàng 3 cột 4 với phần thưởng +5. Lưới phải: giá trị v_π của chính sách chọn đều, γ = 0,9, theo hàng: 3,3 8,8 4,4 5,3 1,5; 1,5 3,0 2,3 1,9 0,5; 0,1 0,7 0,7 0,4 −0,4; −1,0 −0,4 −0,4 −0,6 −1,2; −1,9 −1,3 −1,2 −1,4 −2,0."/>
   <p>Tính $v_\pi$: hệ $25$ ẩn. Tại $\mathrm A$: $10+0{,}9\,v_\pi(\mathrm A')=10+0{,}9\cdot(-1{,}3452)\approx8{,}789$.</p>
   <aside class="notes">
-    <p>Mô hình hóa: $25$ trạng thái, bốn hành động tất định, $\mathcal R=\{-1,0,5,10\}$, nhiệm vụ tiếp diễn. Giả thiết của định lý nghiệm duy nhất thỏa: ô hiện tại và hành động xác định duy nhất phản hồi, quy luật không đổi, $M=10$, $\gamma=0{,}9$, nên $\lvert G_t\rvert\le100$. Bước 3 cho $r_\pi=0$ ở ô bên trong, $-1/4$ ở ô cạnh, $-1/2$ ở ô góc, $10$ ở $\mathrm A$, $5$ ở $\mathrm B$. $v_\pi(\mathrm A)<10$ vì $\mathrm A'$ ở cạnh dưới, nơi chính sách chọn đều thường đi ra ngoài. Ghi chú bài giảng còn áp dụng cùng thuật toán cho notebook CartPole của Bài 04, với $324$ ô: ô không bảo đảm tính Markov, và với một chính sách cố định trên ô, giá trị dự đoán trung bình $84{,}5$ thấp hơn lợi tức chiết khấu thực tế trung bình $95{,}4$ trên $100$ lượt. Bước có thể hỏng là bổ đề tính Markov của phần tương lai; định lý nghiệm duy nhất vẫn đúng cho MDP thay thế dựng từ các ô.</p>
+    <p>Mô hình hóa: $25$ trạng thái, hành động tất định, $\mathcal R=\{-1,0,5,10\}$, nhiệm vụ tiếp diễn. Định lý nghiệm duy nhất áp dụng với $M=10$, $\gamma=0{,}9$, nên $\lvert G_t\rvert\le100$. Bước 3 cho $r_\pi=-1/4$ ở ô cạnh, $-1/2$ ở ô góc. $v_\pi(\mathrm A)<10$ vì $v_\pi(\mathrm A')<0$: $\mathrm A'$ ở cạnh dưới, nơi chính sách chọn đều đi ra ngoài lưới với xác suất $1/4$ ở mỗi bước và nhận $-1$. Với CartPole chia thành $324$ ô, ô không bảo đảm tính Markov. Với một chính sách cố định trên ô (tìm bằng phương pháp của Bài 04), trên $100$ lượt, giá trị dự đoán trung bình $84{,}5$ thấp hơn lợi tức chiết khấu thực tế trung bình $95{,}4$. Chênh lệch đến từ khoảng cách giữa MDP thay thế và quá trình thật, ở bước dùng bổ đề tính Markov của phần tương lai.</p>
     <p class="note-source">Nguồn: Sutton và Barto (2018), ví dụ 3.5 và hình 3.2, tr. 60; ghi chú Bài 03, Tình huống 03.1 và 03.2.</p>
   </aside>
 </section>
@@ -846,7 +846,7 @@
   <p>(b) Giải $(I-\gamma P_\pi)v=r_\pi$.</p>
   <p>(c) So sánh với giá trị $\bigl(\tfrac{13}4,\tfrac74\bigr)$ của chính sách chia đều tại pin thấp.</p>
   <aside class="notes">
-    <p>Bài tập kiểm tra việc áp dụng toàn bộ thuật toán cho một chính sách mới trên cùng mô hình. Gợi ý: hàng $\mathrm H$ giữ nguyên như bảng gộp nhánh; phương trình của $\mathrm L$ chỉ chứa $v_{\mathrm L}$, giải nó trước. Câu (c) chỉ so sánh hai chính sách cụ thể.</p>
+    <p>Bài tập kiểm tra việc áp dụng toàn bộ thuật toán cho một chính sách mới trên cùng mô hình. Gợi ý: hàng $\mathrm H$ giữ nguyên như bảng gộp nhánh; phương trình của $\mathrm L$ chỉ chứa $v_{\mathrm L}$, giải nó trước.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Bài tập 03.8.</p>
   </aside>
 </section>
@@ -856,7 +856,7 @@
   <p><strong>Lời giải:</strong> (a) hàng $\mathrm L$ luôn về $\mathrm L$, nhận $1$:</p>
   <div class="math-large">$$P_\pi=\begin{pmatrix}1/2&1/2\\0&1\end{pmatrix},\qquad r_\pi=\begin{pmatrix}2\\1\end{pmatrix}.$$</div>
   <p>(b) $v_{\mathrm L}=1+\tfrac12v_{\mathrm L}$ nên $v_{\mathrm L}=2$; $\tfrac34v_{\mathrm H}=2+\tfrac14\cdot2$ nên $v_{\mathrm H}=\tfrac{10}3$.</p>
-  <p>(c) $\tfrac{10}3>\tfrac{13}4$, $2>\tfrac74$: luôn Chờ tốt hơn ở cả hai trạng thái; chưa chứng minh là tối ưu.</p>
+  <p>(c) $\tfrac{10}3>\tfrac{13}4$, $2>\tfrac74$: luôn Chờ tốt hơn ở cả hai trạng thái.</p>
   <aside class="notes">
     <p>Kiểm tra lại: $2+\tfrac14\bigl(\tfrac{10}3+2\bigr)=2+\tfrac43=\tfrac{10}3$ và $1+\tfrac12\cdot2=2$. So sánh $\tfrac{10}3=\tfrac{40}{12}>\tfrac{39}{12}=\tfrac{13}4$. Chính sách luôn Chờ dồn toàn bộ xác suất ở pin thấp vào hành động có giá trị hành động lớn hơn dưới chính sách chia đều; định lý nối hai việc này là định lý cải thiện chính sách của Bài 04.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, lời giải Bài tập 03.8 và Nhận xét 03.31.</p>
@@ -872,7 +872,7 @@
     <p class="strand-keys">Tính Markov · Tính dừng · Chiết khấu · Bốn giới hạn</p>
   </div>
   <aside class="notes">
-    <p>Từ mô hình Markov của robot tới nghiệm $v_\pi=(13/4,\,7/4)$, mỗi kết quả của bài dựa trên một nhóm giả thiết riêng. Mỗi kết quả được ghép với giả thiết không được bỏ; bốn kết quả được dùng lại trên robot có rủi ro cứu hộ thấp hơn; vấn đề trung tâm được trả lời có điều kiện, kèm bốn giới hạn: cần biết $p$, chi phí cỡ $n^3$, chưa chọn được chính sách tốt hơn, trạng thái phải có tính Markov. Bài 04 nhận giới hạn về chi phí giải hệ và về chọn chính sách; Bài 05–06 bỏ giả thiết biết $p$.</p>
+    <p>Mỗi kết quả của bài, từ mô hình Markov của robot tới nghiệm $v_\pi=(13/4,\,7/4)$, dựa trên một nhóm giả thiết riêng. Mỗi kết quả được ghép với giả thiết không được bỏ, và vấn đề trung tâm được trả lời kèm bốn giới hạn: cần biết $p$, chi phí cỡ $n^3$, chưa chọn được chính sách tốt hơn, trạng thái phải Markov. Bài 04 nhận hai giới hạn về chi phí và chọn chính sách; Bài 05–06 bỏ giả thiết biết $p$.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Tóm tắt chương.</p>
   </aside>
 </section>
@@ -930,9 +930,8 @@
   <p>(b) $r(\mathrm L,\mathrm{tim})=\tfrac34\cdot2+\tfrac14\cdot(-3)=\tfrac34$, và theo quan hệ $q$ theo $v$:</p>
   <div class="math-large">$$q_\pi(\mathrm L,\mathrm{tim})=\tfrac34+\tfrac12\bigl(\tfrac34\cdot\tfrac74+\tfrac14\cdot\tfrac{13}4\bigr)=\tfrac34+\tfrac12\cdot\tfrac{34}{16}=\tfrac{29}{16}.$$</div>
   <p>(c) $q_\pi(\mathrm L,\mathrm{cho})=1+\tfrac12\cdot\tfrac74=\tfrac{30}{16}$, nên Tìm vẫn kém Chờ $\tfrac1{16}$.</p>
-  <p>Đổi phản hồi của hành động mà chính sách không dùng chỉ đổi giá trị của chính hành động đó.</p>
   <aside class="notes">
-    <p>Câu (a) dùng định nghĩa $P_\pi$, $r_\pi$: cặp $(\mathrm L,\mathrm{tim})$ có trọng số $\pi(\mathrm{tim}\mid\mathrm L)=0$; định lý nghiệm duy nhất cho cùng nghiệm. Câu (b) kiểm lại bằng dạng thứ nhất: $\tfrac34\cdot\tfrac{23}8-\tfrac14\cdot\tfrac{11}8=\tfrac{69}{32}-\tfrac{11}{32}=\tfrac{29}{16}$. So với robot gốc, $q_\pi(\mathrm L,\mathrm{tim})$ tăng từ $3/4$ lên $29/16$, còn $q_\pi(\mathrm L,\mathrm{cho})$ không đổi vì chỉ dùng $v_\pi(\mathrm L)$. Lỗi thường gặp là giải lại toàn bộ hệ hoặc cho rằng mọi giá trị đều đổi khi môi trường đổi.</p>
+    <p>Đổi phản hồi của hành động mà chính sách không dùng chỉ đổi giá trị của chính hành động đó. Câu (a) dùng định nghĩa $P_\pi$, $r_\pi$: cặp $(\mathrm L,\mathrm{tim})$ có trọng số $\pi(\mathrm{tim}\mid\mathrm L)=0$; định lý nghiệm duy nhất cho cùng nghiệm. Câu (b) kiểm lại bằng dạng thứ nhất: $\tfrac34\cdot\tfrac{23}8-\tfrac14\cdot\tfrac{11}8=\tfrac{69}{32}-\tfrac{11}{32}=\tfrac{29}{16}$. So với robot gốc, $q_\pi(\mathrm L,\mathrm{tim})$ tăng từ $3/4$ lên $29/16$, còn $q_\pi(\mathrm L,\mathrm{cho})$ không đổi vì chỉ dùng $v_\pi(\mathrm L)$. Lỗi thường gặp là giải lại toàn bộ hệ hoặc cho rằng mọi giá trị đều đổi khi môi trường đổi.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, lời giải Bài tập 03.13.</p>
   </aside>
 </section>
@@ -946,10 +945,10 @@
     <li>MDP hữu hạn, $\pi$ Markov dừng: tại $\mathrm H$, ${v_{\mathrm H}=2+\tfrac14v_{\mathrm H}+\tfrac14v_{\mathrm L}}$.</li>
     <li>Cùng giả thiết, $\gamma<1$ làm $I-\gamma P_\pi$ khả nghịch: nghiệm duy nhất ${v_\pi=\bigl(\tfrac{13}4,\tfrac74\bigr)}$.</li>
   </ol>
-  <p>Giới hạn: cần biết $p$; chi phí cỡ $n^3$; chưa chọn được chính sách tốt hơn; trạng thái phải Markov.</p>
+  <p>Phương pháp cần biết $p$, tốn cỡ $n^3$ phép tính, chưa chọn được chính sách tốt hơn và cần trạng thái Markov.</p>
   <p class="caption">Nguồn: Sutton và Barto (2018), §3.1–3.5, §4.1; Puterman (1994), §6.1.</p>
   <aside class="notes">
-    <p>Mỗi dòng trả lời dòng cùng số của vấn đề trung tâm, kèm số liệu của robot; tại pin thấp, Chờ hơn Sạc $1/4$. Hệ $n$ ẩn thay cho trung bình lợi tức trên vô hạn quỹ đạo. Tính Markov cho phép tách bước đầu, tính dừng cho phép dùng cùng hàm giá trị ở mọi thời điểm, tập hữu hạn và $\gamma<1$ cho nghiệm duy nhất; với $\gamma=1$, nghiệm duy nhất cần mọi lượt chắc chắn kết thúc, điều bài không chứng minh. Bài 04 thay giải trực tiếp bằng phép lặp và cải thiện chính sách khi vẫn biết mô hình. Bài 05 và Bài 06 bỏ giả thiết biết $p$: TD(0) dùng mẫu của vế phải phương trình Bellman làm mục tiêu. Bài 07 gặp lại giới hạn Markov khi đặc trưng của trạng thái có thể mất tính Markov.</p>
+    <p>Mỗi dòng trả lời dòng cùng số của vấn đề trung tâm, kèm số liệu của robot; tại pin thấp, Chờ hơn Sạc $1/4$. Hệ $n$ ẩn thay cho trung bình lợi tức trên vô hạn quỹ đạo. Tính Markov cho phép thay kỳ vọng của phần còn lại sau bước đầu bằng $v_\pi(s')$, tính dừng cho phép dùng cùng hàm giá trị ở mọi thời điểm, tập hữu hạn và $\gamma<1$ cho nghiệm duy nhất. Bài 04 thay giải trực tiếp bằng phép lặp và cải thiện chính sách khi vẫn biết mô hình; Bài 05 và Bài 06 bỏ giả thiết biết $p$; Bài 07 gặp lại giới hạn Markov khi đặc trưng của trạng thái không giữ tính Markov.</p>
     <p class="note-source">Nguồn: ghi chú Bài 03, Tóm tắt chương và mục Ứng dụng; Sutton và Barto (2018), tr. 60, 74; Puterman (1994), §6.1.</p>
   </aside>
 </section>
@@ -972,22 +971,22 @@
 <section data-slide-id="L03R-07-03">
   <h2>Bài tập về nhà và tài liệu đọc</h2>
   <table>
-    <thead><tr><th scope="col">Mạch</th><th scope="col">Bài tập</th><th scope="col">Chỉ trong ghi chú</th></tr></thead>
+    <thead><tr><th scope="col">Mạch</th><th scope="col">Bài tập</th></tr></thead>
     <tbody>
-      <tr><td>2</td><td>03.1, 03.2, 03.15, 03.22</td><td>—</td></tr>
-      <tr><td>3</td><td>03.3, 03.18</td><td>03.10</td></tr>
-      <tr><td>4</td><td>03.4, 03.5, 03.16</td><td>—</td></tr>
-      <tr><td>5</td><td>03.6, 03.7, 03.17, 03.19</td><td>03.11, 03.12</td></tr>
-      <tr><td>6</td><td>03.8, 03.20, 03.21, 03.23</td><td>03.9, 03.14</td></tr>
-      <tr><td>7</td><td>03.24, 03.25</td><td>03.13</td></tr>
+      <tr><td>2</td><td>ghi chú: 03.1, 03.2</td></tr>
+      <tr><td>3</td><td>ghi chú: 03.3, 03.10</td></tr>
+      <tr><td>4</td><td>ghi chú: 03.4, 03.5</td></tr>
+      <tr><td>5</td><td>03.15–03.18; ghi chú: 03.6, 03.7, 03.11, 03.12</td></tr>
+      <tr><td>6</td><td>03.19; ghi chú: 03.8, 03.9, 03.14</td></tr>
+      <tr><td>7</td><td>ghi chú: 03.13</td></tr>
     </tbody>
   </table>
   <p>Tài liệu đọc: Sutton và Barto (2018), §3.1–3.5 và §4.1; Puterman (1994), §6.1.</p>
   <p><a href="material-viewer.html?doc=materials/lec-03/lecture-note.md&amp;deck=lecture-03-qua-trinh-quyet-dinh-markov.html">Ghi chú bài giảng</a> · <a href="material-viewer.html?doc=materials/lec-03/exercises.md&amp;deck=lecture-03-qua-trinh-quyet-dinh-markov.html">Bài tập</a></p>
   <p><a href="lecture-04-giai-mdp-bang-quy-hoach-dong.html">Bài 04</a> dùng phương trình Bellman để tìm chính sách tốt hơn khi biết mô hình.</p>
   <aside class="notes">
-    <p>Tệp bài tập có mười chín bài ở ba mức, mỗi bài có gợi ý và lời giải: 03.1–03.8 trùng các trang "Bài tập" của bộ trang chiếu và cho cùng kết quả, 03.15–03.25 chỉ có trong tệp. Câu (a), (b) của Bài tập 03.24 làm được ngay sau mạch 2. Bài tập 03.9 và các bài tập củng cố 03.10–03.14 chỉ có trong ghi chú bài giảng; 03.13 là bài tập tổng hợp đã giải ở mạch 7, còn 03.12 tính lợi tức lùi theo hệ thức đệ quy nên xếp cùng mạch phương trình Bellman. Đọc tiếp Sutton và Barto §3.6 về giá trị tối ưu trước Bài 04, và chương 17 về dựng trạng thái Markov từ quan sát không Markov.</p>
-    <p class="note-source">Nguồn: tệp bài tập Bài 03, đoạn mở và bảng theo mạch; ghi chú Bài 03, Bài tập củng cố và Hướng dẫn đọc thêm; Bài tập tuần 2 (2025–2026), bài 3, 4, 7, 8, 10; Bài tập tuần 3 (2025–2026), bài 1.</p>
+    <p>Tệp bài tập gồm năm bài 03.15–03.19 ở ba mức, lấy từ bài tập chương 3 của Sutton và Barto (2018), mỗi bài có gợi ý và lời giải. Số sau chữ "ghi chú" là bài tập của ghi chú bài giảng (03.1–03.14); trong đó 03.1–03.8 và 03.13 trùng các trang "Bài tập" của bộ trang chiếu và cho cùng kết quả. Bài tập 03.12 tính lùi lợi tức theo hệ thức đệ quy nên xếp cùng mạch phương trình Bellman. Đọc tiếp Sutton và Barto §3.6 về giá trị tối ưu trước Bài 04, và chương 17 về dựng trạng thái Markov từ quan sát không Markov.</p>
+    <p class="note-source">Nguồn: tệp bài tập Bài 03, đoạn mở và bảng theo mạch; ghi chú Bài 03, Mục tiêu học tập, Hướng dẫn đọc thêm và tài liệu tham khảo.</p>
   </aside>
 </section>
 </section>

@@ -2363,3 +2363,82 @@ Quyết định của điều phối viên: **chấp nhận**; commit `fix(mater
 **Đã kiểm, không lỗi (theo báo cáo, điều phối viên kiểm mẫu).** Cấu hình RevealJS, plugin cục bộ, footer, thứ tự CSS. Mở đầu đúng thứ tự (bìa có luận đề, hai trang "Tiên quyết và quy ước", mục tiêu, Nội dung 7 mục, Vấn đề trung tâm 5 dòng có điều kiện). Trang tiêu đề mạch: markup đúng, dòng dẫn 18–24 âm tiết "Muốn …, phải …", 4–5 từ khóa. Mạch kết luận đủ thành phần trừ bảng bài tập. Hành trình K1–K10 đủ bước; thuật toán có tính tay trước giả mã. Không trang nội dung nào vượt 60 âm tiết; các ngoại lệ dòng có trong storyboard. Storyboard đủ 72 mục. Mọi số hiệu khác trỏ đúng khối hiện tại (Định nghĩa 03.1–03.26, Nhận xét, Mệnh đề, Bổ đề 03.18–03.20, Định lý 03.21, 03.28, Hệ quả 03.24, Thuật toán 03.29, Ví dụ 03.1–03.17, Tình huống 03.1–03.2, Bài tập 03.1–03.8, 03.13). Bài trên lớp cho cùng kết quả với Bài tập 03.1–03.8, 03.13 của ghi chú; `exercises.md` không có bài trùng trang chiếu. Tính lại: lợi tức $\tfrac32$, $\tfrac74$; cận $6$; Bài tập 03.3 $\tfrac34$, $G_0\in[0,\tfrac32]$; kỳ vọng hai bước $\tfrac{21}8$; $v_\pi(\mathrm H)\in[\tfrac98,\tfrac{33}8]$; Tìm/Chờ/Sạc $\tfrac18,\tfrac54,1$; hệ Bellman $v_{\mathrm L}=\tfrac74$, $v_{\mathrm H}=\tfrac{13}4$; $q_\pi(\mathrm L,\cdot)=(\tfrac34,\tfrac{15}8,\tfrac{13}8)$, trung bình $\tfrac74$; $(I-\gamma P_\pi)^{-1}$ có $\det=\tfrac12$; $\gamma=1$ cho hệ vô nghiệm; Bài tập 03.8 $v_{\mathrm H}=\tfrac{10}3$; Bài tập 03.13 $q_\pi(\mathrm L,\mathrm{tim})=\tfrac{29}{16}$; lưới 5×5 tại A $8{,}789$. Ảnh chụp 07-03, 05-06b (rộng), 07-02b (hẹp): không tràn.
 
 **Quyết định của điều phối viên:** **chấp nhận** báo cáo làm danh sách việc cần sửa, sau khi kiểm lại trên tệp gốc các phát hiện ghi ở mục "Điều phối viên kiểm lại". Mọi phát hiện ở trạng thái **mở**; các dòng "Đề nghị sửa ghi chú" chờ người dùng quyết định, không phải lỗi deck.
+
+## Sửa deck theo bảng phát hiện 2026-11-13
+
+**Vai trò.** Người sửa (editor) deck Bài 03 theo bảng phát hiện 2026-11-13 và quyết định của điều phối viên (`edit-decisions-2026-11-13.md`, G1–G11); `no-ai-slop` chế độ Edit, tự kiểm theo `eval.md`. Ghi tác tử (loại, mô hình, effort) do điều phối viên ghi từ lời gọi công cụ. Không commit.
+
+**Phạm vi ghi.** `2627-1/lecture-03-qua-trinh-quyet-dinh-markov.html`; `planning/lec-03/{storyboard.md, outline.md, review-log.md}`. Không sửa `materials/`, CSS, SVG hay `index.html`.
+
+**Kết quả.** 72 trang trước và sau, 7 mạch; không thêm, bỏ, tách hay gộp trang; mọi `data-slide-id` và chỉ số trang giữ nguyên, nên các liên kết `#/N/1` của `exercises.md` vẫn đúng. 37 trang có thay đổi (16 trang đổi mặt trang, còn lại chỉ đổi ghi chú diễn giả). `deck_check.py` sau sửa: 0 lỗi console, 0 lỗi trang, 0 request lỗi, 0 `.katex-error`, 0 tràn khung; trang mục tiêu `01-01c` 79 âm tiết (trần 80); các trang gần trần: `07-02b` 61 (ngoại lệ trần 80 đã có trong storyboard), `06-07c` 55, `04-05` 53, `06-07b` 51. Bảng mật độ trước → sau ở `storyboard.md` mục 7. Lần sửa đầu của `06-06` làm trang tràn 34 px; đã rút dòng chuỗi Markov về một dòng và chuyển câu "$P_\pi$ là khối ứng với $\mathcal S$" sang ghi chú diễn giả, đo lại không tràn.
+
+**Xuất xứ số liệu (chuyển từ ghi chú diễn giả, G6).** Robot thu gom lon theo Sutton và Barto (2018), ví dụ 3.3; các mức phần thưởng Tìm $2$, Chờ $1$, cứu hộ $-3$, Sạc $0$ do học phần chọn, hai tham số xác suất của ví dụ gốc chọn bằng $1/2$. Ví dụ phòng làm việc (Ví dụ 03.4, trang `01-06b`) và chính sách chia đều tại pin thấp (Ví dụ 03.9, trang `04-02`) do học phần dựng. Lưới 5×5 theo Sutton và Barto (2018), ví dụ 3.5 và hình 3.2. Số liệu CartPole ($324$ ô, $84{,}473$, $95{,}377$) lấy từ Tình huống 03.2 của ghi chú (notebook Bài 04).
+
+**Tính lại các số mới hoặc đổi.**
+- `06-07b` (ghi chú diễn giả): với $s\to s+1$, phần thưởng $0$, $\gamma=\tfrac12$: $v(s)=\tfrac12v(s+1)$, và $v(s)=c\,2^s$ cho $\tfrac12c\,2^{s+1}=c\,2^s$. Phần dư chuỗi Neumann: $v_\pi-\sum_{k<K}\gamma^kP_\pi^kr_\pi=\gamma^KP_\pi^Kv_\pi$, chuẩn cực đại $\le\gamma^K\lVert v_\pi\rVert_\infty$. $\det(I-\gamma P_\pi)=\tfrac9{16}-\tfrac1{16}=\tfrac12$; nghịch đảo $2\begin{pmatrix}3/4&1/4\\1/4&3/4\end{pmatrix}$ có hàng $(3/2,1/2)$, $(1/2,3/2)$; nhân với $(2,\tfrac12)$ được $(\tfrac{13}4,\tfrac74)$.
+- `06-07d` (ghi chú diễn giả): phần dư bằng phân số: $r_\pi+\gamma P_\pi v=(2+\tfrac14\cdot5,\ \tfrac12+\tfrac14\cdot5)=(\tfrac{13}4,\tfrac74)=v$, phần dư $0$.
+- `06-07e` (ghi chú diễn giả): ô góc có hai hướng ra ngoài, $r_\pi=2\cdot\tfrac14\cdot(-1)=-\tfrac12$; ô cạnh $-\tfrac14$; $\mathrm A'$ (hàng 5, cột 2) đi ra ngoài khi chọn hướng nam, xác suất $\tfrac14$. CartPole $84{,}473\approx84{,}5$, $95{,}377\approx95{,}4$.
+- Các số khác trên các trang đã sửa không đổi; bảng `07-03` kiểm từng ô với bảng mạch ở đầu `exercises.md` (dòng 7–13).
+
+**`no-ai-slop`.** Chế độ Edit trên mọi câu mặt trang và ghi chú diễn giả đã đổi; tự kiểm theo `eval.md`: không thêm khẳng định, không còn câu xuất xứ, câu tự nói trạng thái, chỉ dẫn điều hướng hay từ giảm nhẹ trong phần đã sửa (quét lại cả deck bằng `grep` các mẫu "sư phạm", "tự xây dựng", "bài không chứng minh", "chưa phải", "bản ghi", "Mục" của Bài 02, "Tham số:", "Giới hạn:"). Kết quả: đạt.
+
+| phát hiện | xử lý | trang | ghi chú |
+|---|---|---|---|
+| nghiêm trọng: bảng `Mạch \| Bài tập` không khớp `exercises.md` | sửa | `07-03` | Bảng `Mạch \| Bài tập` chép đúng bảng mạch của `exercises.md`: "03.15–03.18; ghi chú: 03.6, 03.7, 03.11, 03.12" (mạch 5), "03.19; ghi chú: 03.8, 03.9, 03.14" (mạch 6), các mạch khác chỉ có bài của ghi chú. Bỏ cột thứ ba để giữ đúng dạng bảng của `exercises.md` |
+| nghiêm trọng: ghi chú diễn giả mô tả tệp bài tập sai | sửa | `07-03` | Tệp gồm năm bài 03.15–03.19 lấy từ Sutton và Barto (2018), chương 3; 03.1–03.14 trong ghi chú, 03.1–03.8 và 03.13 trùng trang "Bài tập"; bỏ câu về 03.24; dòng nguồn trỏ tới tệp bài tập và ghi chú, bỏ "Bài tập tuần" |
+| nghiêm trọng: ánh xạ mục tiêu → bài tập dẫn tới 03.20–03.25 | sửa | `01-01c` | Chép ánh xạ của ghi chú (dòng 7–11), tách "ghi chú" và "tệp bài tập"; bỏ quy ước "số trong ngoặc" |
+| trung bình: thiếu lượng từ theo cách chọn hành động (M2, A5) | sửa | `01-06`, `02-04` | `01-06`: "nếu, với mọi cách chọn hành động chỉ dựa trên lịch sử," trong câu mở định nghĩa (không tách câu); `02-04`: "$p$ không đổi theo $t$ và theo cách chọn hành động" (dòng 20 âm tiết) |
+| trung bình: lỗi G19, $v_\pi=\mathbb E_\pi[G_t\mid S_t=s]$ gán cho Bài 02 | sửa | `01-01b`, `04-00`, `04-02`, `04-05` | Hai dòng nhắc lại dùng $\mathbb E_\pi[G_0\mid S_0=s]$; `04-00` bỏ vế "định nghĩa trên quá trình xuất phát tại $s$"; `04-05`: "Sutton và Barto viết $\mathbb E_\pi[G_t\mid S_t=s]$…; khi $\Pr_\pi(S_t=s)>0$, hai cách viết cho cùng một số (Bổ đề 03.20(c))". `05-06` thêm điều kiện $\Pr_\pi(S_t=s)>0$ vào câu cuối |
+| trung bình: "Tính Markov cho phép tách bước đầu" (M1) | sửa | `07-02b` | "Tính Markov cho phép thay kỳ vọng của phần còn lại sau bước đầu bằng $v_\pi(s')$" |
+| trung bình: "bản ghi" thay cho "mẫu chuyển (transition)" | sửa | `01-04`, `02-02` | Thêm câu "Bộ bốn … là một mẫu chuyển (transition)" ở `01-04`; thay mọi "bản ghi" |
+| trung bình: câu "chỉ hợp lệ khi hệ có nghiệm duy nhất" | sửa | `06-03` | "Phép khử cho thấy hệ hai ẩn này có đúng một nghiệm; với $n$ ẩn, tính duy nhất cần một lập luận chung." |
+| trung bình: chuỗi Markov cảm sinh là $(\mathcal S,P_\pi)$ | sửa | `06-06` | Mặt trang: "dãy $S_0,S_1,\dots$ trên $\mathcal S^+$ khi tác tử theo $\pi$"; câu khối ma trận và trạng thái kết thúc hấp thụ ở ghi chú diễn giả (đặt trên mặt trang làm tràn khung) |
+| trung bình: câu xuất xứ số liệu | sửa | `01-03`, `01-06b`, `04-02` | Cắt ba câu; `04-02` giữ "Quy tắc này cùng $\gamma=1/2$ được giữ cố định trong phần còn lại của bài."; xuất xứ ghi ở mục này |
+| trung bình: "Phương trình chưa phải kết quả", hai bước thay vì ba | sửa | `05-02` | Ba bước theo ghi chú: tách lợi tức; lấy hai tầng kỳ vọng; chứng minh kỳ vọng phần còn lại bằng giá trị trạng thái kế tiếp |
+| trung bình: kế hoạch còn dải bài tập cũ và lỗi G19 | sửa | storyboard `07-03`, outline | Outline mục 1 (G19, mục tiêu, ánh xạ), mục 9 (tệp bài tập), bảng thuật ngữ; storyboard: hàng mạch 4, các trang đã sửa, ngoại lệ mật độ, mục 7 mới |
+| nhẹ: "phần dư 0"; bước 1 thiếu $0\le\gamma<1$ (M8) | sửa | `06-07d` | Bước 1 "Kiểm tra $0\le\gamma<1$; …"; ghi chú diễn giả "phần dư $0$ khi tính bằng phân số, cỡ $10^{-16}$ với số dấu phẩy động" |
+| nhẹ: "bài không chứng minh" | sửa | `05-06b`, `06-07b`, `07-02b` | `05-06b`: dẫn Sutton và Barto cho trường hợp $\gamma=1$; `06-07b`: cắt vế, giữ nguồn §4.1; `07-02b`: cắt cả câu $\gamma=1$ (đã có ở `06-07b`) |
+| nhẹ: nói điều văn bản "chưa"/"chỉ" làm | sửa | `01-04`, `03-01`, `06-08`, `06-08b` | `01-04`: "Mẫu chuyển là một lần rút; quy luật sinh ra nó là hàm $p$."; cắt câu ở `03-01`, `06-08`; `06-08b` kết ở "luôn Chờ tốt hơn ở cả hai trạng thái" |
+| nhẹ: chỉ dẫn điều hướng, dẫn Bài 02 bằng "Mục" | sửa | `01-01b`, `02-07b`, `04-05`, `05-09`, `06-01` | `01-01b`, `03-01`: dẫn Định nghĩa 02.5, 02.8, 02.12, 02.14, 02.16, Mệnh đề 02.13; cắt câu tiến ở `02-07b`; `04-05`: "Nghiệm $v_\pi(\mathrm H)=13/4$ của hệ Bellman nằm trong khoảng này"; `05-09` bỏ "trong ghi chú bài giảng"; `06-01` cắt câu "phi mô hình thuộc Bài 05" (vế có mô hình đã có ở câu đầu), bỏ "thuộc Bài 04". Thêm: `04-08b` "Mạch 6 cho" → "Nghiệm của hệ Bellman cho"; `01-01c` bỏ "thuộc Bài 04" |
+| nhẹ: từ giảm nhẹ, nhận xét bên lề, quy nguồn mơ hồ | sửa | `06-07e`, `01-05`, `01-03`, `01-01d` | `06-07e` theo ghi chú: "đi ra ngoài lưới với xác suất $1/4$ ở mỗi bước và nhận $-1$"; cắt câu ở `01-05`, `01-03`; `01-01d` cắt "một số tài liệu viết $R_t$" |
+| nhẹ: thiếu phản ví dụ khi bỏ tập hữu hạn | sửa | `06-07b` | Phản ví dụ $s\to s+1$, $v(s)=c\,2^s$ theo ghi chú |
+| nhẹ: "với $T=\infty$, tổng chỉ hữu hạn khi $\gamma<1$" | sửa | `03-02` | "định nghĩa chỉ dùng $\gamma<1$, và khi đó phần thưởng bị chặn bảo đảm tổng hữu hạn" |
+| nhẹ: mục tiêu rút gọn bỏ phần năng lực của ghi chú | sửa | `01-01c` | Thêm phân loại nhiệm vụ, tính lùi lợi tức, $p(s'\mid s,a)$, $r(s,a)$, bước dùng tính dừng, điều kiện nghiệm duy nhất; 63 → 79 âm tiết, mỗi dòng ≤ 19 |
+| nhẹ: thiếu tên tiếng Anh ở lần đầu | sửa | `03-04`, `04-03`, `06-07b`, `06-07d` | absorbing state, stationary Markov policy, max norm (mặt trang "Chứng minh."), Gaussian elimination; thêm "(control)" ở `06-01`, "(tolerance)" ở `06-07c`; bảng thuật ngữ của outline cập nhật |
+| nhẹ: nhãn "Tham số:", "Giới hạn:" ngoài danh sách | sửa | `06-07c`, `07-02b` | `06-07c`: dung sai vào "Đầu vào:", dòng cuối "Khởi tạo $P_\pi\leftarrow0$, $r_\pi\leftarrow0$; không lặp, …"; `07-02b`: câu "Phương pháp cần biết $p$, tốn cỡ $n^3$ phép tính, …" |
+| nhẹ: hai dòng kết | sửa | `07-02` | Câu "Đổi phản hồi của hành động mà chính sách không dùng…" chuyển sang ghi chú diễn giả |
+| nhẹ: dấu chấm phẩy trong KaTeX để lách bộ đếm | sửa | `03-01` | Dấu chấm phẩy ra ngoài; "… cần quy ước chung cho chuỗi hữu hạn, vô hạn và cận của $G_t$." (18 âm tiết); storyboard bỏ mô tả mẹo |
+| nhẹ: ghi chú diễn giả quá dài | sửa | `05-06b`, `06-07e`, `07-02b`, `06-00`, `07-00` | 169 → 137, 175 → 132, 154 → 133, 102 → 80, 109 → 88 âm tiết |
+
+**Đề nghị sửa ghi chú.** Không có đề nghị mới từ đợt sửa này.
+
+### Sửa sau kiểm lại
+
+Theo bốn phát hiện nhẹ của điều phối viên; chỉ sửa ghi chú diễn giả. `deck_check` sau sửa: 0 lỗi console, trang, request, KaTeX, 0 tràn khung; ghi chú diễn giả `06-00` 80, `06-07b` 150, `06-07e` 147, `07-03` 125 âm tiết.
+
+| phát hiện | xử lý | trang |
+|---|---|---|
+| nhẹ: "với nhiệm vụ có kết thúc, nghiệm tồn tại…" thiếu điều kiện $\gamma=1$ | sửa: "với nhiệm vụ có kết thúc và $\gamma=1$, nghiệm tồn tại và duy nhất khi …" | `06-07b` |
+| nhẹ: mẫu dấu hai chấm ở câu CartPole; thiếu chính sách và nguồn chênh lệch (note:1681) | sửa: tách câu; "Với một chính sách cố định trên ô (tìm bằng phương pháp của Bài 04), trên $100$ lượt, …"; "Chênh lệch đến từ khoảng cách giữa MDP thay thế và quá trình thật, ở bước dùng bổ đề tính Markov của phần tương lai." Để giữ ≤ 150 âm tiết, câu bước 3 chỉ giữ $r_\pi$ ở ô cạnh và ô góc, "Giả thiết của định lý … thỏa với" rút thành "Định lý nghiệm duy nhất áp dụng với" | `06-07e` |
+| nhẹ: câu ba vế nối bằng dấu chấm phẩy | sửa: tách thành ba câu, giữ nội dung | `06-00` |
+| nhẹ: "Mục tiêu học tập và Hướng dẫn đọc thêm và tài liệu tham khảo" | sửa: "Mục tiêu học tập, Hướng dẫn đọc thêm và tài liệu tham khảo" | `07-03` |
+
+### Kiểm lại, kiểm định cuối và duyệt của điều phối viên (2026-11-13)
+
+**Tác tử (theo lời gọi công cụ).**
+
+| vai trò | loại | mô hình | effort | ghi tệp |
+|---|---|---|---|---|
+| rà soát chỉ đọc (bảng phát hiện) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+| người sửa (deck, kế hoạch; tiếp tục bằng SendMessage cho vòng sửa sau kiểm lại) | `general-purpose` | `opus` (Opus 5.5) | `high` | có |
+| kiểm lại chỉ đọc (vai trò A: độ chính xác toán và Học tăng cường; vai trò B: mạch, quy tắc deck, `no-ai-slop` Detect) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+
+Quyết định chung của đợt: G1–G11, D01–D10 (tệp quyết định của điều phối viên trong thư mục nháp của phiên, chép tóm tắt ở mục sửa phía trên).
+
+**Kiểm lại.** Kết luận "đạt": 25/25 phát hiện xử lý đúng; 4 phát hiện nhẹ mới trong ghi chú diễn giả (06-07b điều kiện $\gamma=1$, 06-07e mẫu dấu hai chấm, 06-00 câu ba vế, 07-03 dòng nguồn), đã sửa ở "Sửa sau kiểm lại". Cờ LINE20 của bìa 01-01 (22 âm tiết) không đổi trong đợt, ngoại lệ có ở storyboard:202.
+
+**Kiểm định cuối của điều phối viên.** `deck_check` toàn deck: 72 trang, 0 lỗi console, lỗi trang, request lỗi, `.katex-error`, 0 tràn khung; cờ còn lại đều có ngoại lệ (01-01 bìa, 01-02 Nội dung 8 dòng, 06-07d 7 dòng, 07-02b 61 âm tiết, 7 dòng). 37 trang đổi, 16 đổi mặt trang; điều phối viên tự xem bảng ảnh hai cỡ: không tràn. Bảng 07-03 đối chiếu `exercises.md`. `git diff --check` sạch.
+
+**Đề nghị sửa ghi chú (chờ người dùng quyết định; không sửa `materials/` trong đợt này).** Không có.
+
+**Quyết định của điều phối viên:** **chấp nhận** deck và các tệp kế hoạch; mọi phát hiện `nghiêm trọng` và `trung bình` của bảng 2026-11-13 và của lượt kiểm lại đã xử lý; phát hiện không sửa có lý do ghi ở bảng xử lý.
