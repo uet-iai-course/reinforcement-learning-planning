@@ -131,5 +131,11 @@
 .reveal.lecture-deck .note-source { font-size: .9em; }
 
 .reveal.lecture-deck .figure.short { max-height: 260px; }
+/* Bậc chiều cao hình thay cho style="max-height:…" cục bộ (đợt sửa deck 2026-11-13). */
+.reveal.lecture-deck .figure.short-s { max-height: 160px; }
+.reveal.lecture-deck .figure.short-m { max-height: 210px; }
+.reveal.lecture-deck .figure.short-l { max-height: 310px; }
+/* Lưới hai cột lệch: cột phải rộng hơn (hình nhỏ bên trái, chữ bên phải). */
+.reveal.lecture-deck .grid2.wide-right { grid-template-columns: 2fr 3fr; }
 
 .reveal.lecture-deck .slides section[data-slide-id] { padding: 0 24px; box-sizing: border-box; }
