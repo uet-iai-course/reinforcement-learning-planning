@@ -33,18 +33,20 @@ Tổng 120 phút.
 
 ## Mục tiêu học tập (khớp ghi chú)
 
-1. Ghi một mẫu chuyển $(O_t,A_t,R_{t+1},O_{t+1})$ với chỉ số thời gian đúng (Bài tập 02.1, 02.14, 02.22).
-2. Phân biệt $S_t$, $O_t$, $X_t$; kiểm tra và sửa tính Markov (Bài tập 02.2, 02.3, 02.11, 02.15, 02.19, 02.22).
-3. Viết chính sách xác định và ngẫu nhiên trên một biểu diễn (Bài tập 02.4, 02.13, 02.16, 02.19).
-4. Tính lợi tức chiết khấu, $v_\pi(s)$; đọc hàm động lực $p$ (Bài tập 02.5–02.7, 02.9, 02.10(a), 02.12, 02.16–02.18, 02.20–02.22).
-5. Tìm ngưỡng chi phí làm tác tử tối ưu đổi hành vi (Bài tập 02.8, 02.10(b), 02.18, 02.20, 02.21).
+1. Ghi một mẫu chuyển $(O_t,A_t,R_{t+1},O_{t+1})$ với chỉ số thời gian đúng, tách thành phần của tác tử và của môi trường (Bài tập 02.1, 02.9, 02.14).
+2. Phân biệt $S_t$, $O_t$, $X_t$; kiểm tra và sửa tính Markov bằng cách mở rộng trạng thái (Bài tập 02.2, 02.3, 02.11).
+3. Viết chính sách xác định và ngẫu nhiên trên một biểu diễn, tính xác suất của một dãy hành động (Bài tập 02.4, 02.13, 02.20).
+4. Tính lợi tức chiết khấu, $v_\pi(s)$; đọc hàm động lực $p$; giải thích trọng số hình học (Bài tập 02.5–02.7, 02.10, 02.12, 02.15–02.22).
+5. Tìm ngưỡng chi phí làm tác tử tối ưu đổi hành vi; nêu giả thiết khi phần thưởng mỗi bước đổi dấu (Bài tập 02.8, 02.10, 02.21–02.24).
+
+Danh sách bài tập chép đúng phần Mục tiêu học tập của ghi chú (đợt sửa 2026-11-13, theo bộ `exercises.md` đánh số lại 2026-11-12): 02.1–02.13 nằm trong ghi chú, 02.14–02.24 trong `exercises.md`.
 
 ## Ví dụ xuyên suốt
 
-- **Mê cung $8\times8$** (bài giảng gốc, trang 25–26): 27 ô đi được, xuất phát $(0,2)$, đích $\mathrm G=(8,6)$ sau bước Đông từ $(7,6)$; tường hoặc biên giữ tác tử đứng yên; $-1$ mỗi bước kể cả bước vào $\mathrm G$; đường 16 bước. Dùng ở `L02-01-02`, `02-02`, `02-03`, `02-05`, `02-07`, `03-02`, `03-13`, `03-06`, `03-08`, `04-01`, `04-02`, `04-07`, `04-08`, `05-01`, `05-15`, `05-13`, `05-08`, `05-17`, `05-18`. Mỗi lần dùng trả lời một câu hỏi mới: một bước (mẫu chuyển), hai đường 16/18 bước (giả thuyết phần thưởng), mã bốn ô kề (biểu diễn, quan sát một phần), ba bước đầu (lịch sử), chính sách nguồn, xác suất dãy hành động, hai ô cùng mã (chính sách ngẫu nhiên), ba bước cuối (lợi tức), bảng giá trị nguồn ($-16$), hai hành động tại $(4,1)$ ($-11$ và $-13$, điều khiển), bước trượt (hàm động lực).
+- **Mê cung $8\times8$** (bài giảng gốc, trang 25–26): 27 ô đi được, xuất phát $(0,2)$, đích $\mathrm G=(8,6)$ sau bước Đông từ $(7,6)$; tường hoặc biên giữ tác tử đứng yên; $-1$ mỗi bước kể cả bước vào $\mathrm G$; đường 16 bước. Dùng ở `L02-01-02`, `02-02`, `02-03`, `02-05`, `02-07`, `03-02`, `03-13`, `03-06`, `03-08`, `04-01`, `04-02`, `04-07`, `04-08`, `05-01`, `05-15`, `05-13`, `05-08`, `05-17`, `05-18`. Mỗi lần dùng trả lời một câu hỏi mới: một bước (mẫu chuyển), hai đường 16/18 bước (giả thuyết phần thưởng), mã bốn ô kề (biểu diễn, quan sát một phần), ba bước đầu (lịch sử), chính sách mũi tên (chính sách nguồn, tên theo ghi chú Mục 3), xác suất dãy hành động, hai ô cùng mã (chính sách ngẫu nhiên), ba bước cuối (lợi tức), bảng giá trị nguồn ($-16$), hai hành động tại $(4,1)$ ($-11$ và $-13$, điều khiển), bước trượt (hàm động lực).
 - **Mê cung có chìa khóa** (biến thể sư phạm của mê cung $8\times8$): chìa khóa ở ngõ cụt $(4,2)$, cửa ở lối $(7,6)\to\mathrm G$. Dùng ở `L02-03-14`, `03-04`, `03-10`, `03-15`, `03-16`.
 - **Mê cung đích–hố** (ví dụ do người dùng duyệt, số liệu sư phạm tự xây dựng): $-c$ mỗi bước, $+10$ khi vào $\mathrm G$, phạt $c_{\mathrm H}$ khi vào $\mathrm H$ (ghi chú bài giảng và `exercises.md` cùng ký hiệu); đường ngắn nhất 6 bước tới $\mathrm G$, 2 bước tới $\mathrm H$. Dùng ở mạch 6 và bài tập tổng hợp `L02-07-04`/`07-07` ($\gamma=0{,}9$).
-- **Ví dụ một lần:** robot (ranh giới), ván cờ (phản hồi trễ), hai chuỗi $(2,0)$, $(1,1)$ (ưu tiên dừng), môi trường hai nhánh (kỳ vọng), Gymnasium `env.step` (mẫu chuyển trong thực hành).
+- **Ví dụ một lần:** robot (ranh giới), ván cờ (phần thưởng trễ), hai chuỗi $(2,0)$, $(1,1)$ (ưu tiên dừng), môi trường hai nhánh (kỳ vọng), Gymnasium `env.step` (mẫu chuyển trong thực hành).
 - **Hành lang pin** (Tình huống 02.1 của ghi chú, robot giao hàng năm ô với mức pin): chỉ có trong ghi chú; deck không có trang riêng, vì mạch 5 đã đủ thời lượng. Ghi trong review-log.
 
 ## Bảng thuật ngữ Việt–Anh
@@ -81,7 +83,10 @@ Tổng 120 phút.
 | dự đoán | prediction | Nhận xét 02.17 |
 | điều khiển | control | |
 | giả thuyết phần thưởng | reward hypothesis | |
-| phản hồi trễ | delayed reward | |
+| phần thưởng trễ | delayed reward | không dùng "phản hồi trễ" làm thuật ngữ (đợt sửa 2026-11-13, theo ghi chú) |
+| nhiệm vụ tiếp diễn | continuing task | $T=\infty$, Định nghĩa 02.12 |
+| chân trời hiệu dụng | effective horizon | $1/(1-\gamma)$; không dùng "chân trời có hiệu lực" |
+| chính sách mũi tên | (tên ví dụ) | chính sách xác định trên tọa độ của hình bài giảng gốc, trang 26 |
 | học có giám sát, học không giám sát | supervised learning, unsupervised learning | |
 | quá trình quyết định Markov | Markov decision process, MDP | Bài 03 |
 | quá trình quyết định Markov quan sát một phần | partially observable Markov decision process, POMDP | ghi chú diễn giả `L02-03-06` |
@@ -94,7 +99,7 @@ Tổng 120 phút.
 | 2–3 | gộp | 1 | Thay bằng "Nội dung" bảy mạch và "Tiên quyết và quy ước". |
 | 4 | giữ, sửa | 2 | Ranh giới tác tử–môi trường (`L02-02-01`). |
 | 5–6 | bỏ | — | Niên biểu, ảnh raster, nhận định AGI ngoài phạm vi (giữ quyết định cũ). |
-| 7–8 | gộp | 2 | Tín hiệu học, phản hồi trễ (`L02-02-04`, `02-06`). |
+| 7–8 | gộp | 2 | Tín hiệu học, phần thưởng trễ (`L02-02-04`, `02-06`). |
 | 9 | sửa | 2 | Giả thuyết phần thưởng là giả thuyết, không phải định lý (`L02-02-05`). |
 | 10 | gộp | 5, 7 | Ba thành phần chính sách, giá trị, mô hình (`L02-05-01`, bảng tổng kết). |
 | 11 | gộp | 2 | Ví dụ ván cờ thưởng khi kết thúc (`L02-02-06`). |
@@ -110,7 +115,7 @@ Tổng 120 phút.
 | 24 | sửa | 5 | Dự đoán và điều khiển (`L02-05-17`). |
 | 25–26 | giữ | 1–5 | Mê cung, chính sách, bảng giá trị (`L02-05-13`). |
 | 27 | sửa | 3, 7 | Phân loại quan sát; câu hỏi tự kiểm tra. |
-| hw02 bài 1, 2, 5, 6, 10 | phân bổ | 2–7 | Bài 1 → Bài tập 02.14, bài 2 → 02.15, bài 5 → 02.10 (ghi chú), bài 6 → 02.19, bài 10 → 02.22 (`exercises.md`); bảng `Mạch | Bài tập` ở `L02-07-03` theo bảng của `exercises.md`; bài 3, 4, 7, 8, 9 cho Bài 03. |
+| hw02 bài 1, 2, 5, 6, 10 | phân bổ | 2–7 | Theo ghi chú: bài 2 → Mục 2, bài 5 → Bài tập 02.10, bài 6 → Tình huống 02.2, bài 10 → Tình huống 02.1. Từ 2026-11-12, `exercises.md` (02.14–02.24) chỉ lấy bài tập chương 3 của Sutton và Barto (2018), không còn bài của hw02; bảng `Mạch | Bài tập` ở `L02-07-03` chép bảng mạch của `exercises.md` hiện tại (đợt sửa 2026-11-13); bài 3, 4, 7, 8, 9 cho Bài 03. |
 | (bổ sung) | thêm | 5 | Ưu tiên dừng và trọng số hình học: Russell và Norvig (2020), §17.1.1; chứng minh trong ghi chú. |
 | (bổ sung) | thêm | 6 | Mê cung đích–hố, ngưỡng $c^*$: ví dụ do người dùng duyệt. |
 

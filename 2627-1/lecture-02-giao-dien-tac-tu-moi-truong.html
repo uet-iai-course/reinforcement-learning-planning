@@ -26,19 +26,19 @@
 <p><strong>Nhắc lại:</strong> tác tử (agent) chọn $A_t$; môi trường (environment) trả phần thưởng (reward) $R_{t+1}$ và quan sát $O_{t+1}$ (Bài 01).</p>
 <p><strong>Nhắc lại:</strong> lượt (episode) kết thúc tại $T$; lợi tức $G_t=R_{t+1}+G_{t+1}$, $G_T=0$ (Bài 01).</p>
 <p><strong>Nhắc lại:</strong> chính sách $\pi(\cdot\mid h)$, giá trị $v_\pi(h)$ trên lịch sử $h$ (Bài 01).</p>
-<p><strong>Ký hiệu:</strong> hướng Bắc, Đông, Nam, Tây; ô ghi (cột, hàng) từ $0$, hàng tăng xuống.</p>
-<aside class="notes"><p>Ba dòng nhắc lại lấy từ ghi chú Bài 01: vòng tương tác (Định nghĩa 01.1), lượt và lợi tức không chiết khấu, chính sách và giá trị trên lịch sử quan sát. Xác suất có điều kiện $\Pr(E\mid F)=\Pr(E\cap F)/\Pr(F)$ với $\Pr(F)&gt;0$ và kỳ vọng của biến rời rạc được dùng trong mọi định nghĩa về sau.</p><p>$R_{t+1}$ là phần thưởng của chuyển từ $t$ sang $t+1$, nhận sau $A_t$; bài giảng gốc (trang 15) viết lịch sử với $R_0$, lệch một chỉ số so với quy ước này. Tọa độ ghi (cột, hàng): ô $(0,2)$ ở cột $0$, hàng $2$. Mê cung $8\times8$ lấy từ bài giảng gốc, trang 25–26; các bộ số khác là số liệu sư phạm tự xây dựng.</p></aside>
+<p><strong>Ký hiệu:</strong> $t=0,1,\dots$; $\mathcal A$ gồm Bắc, Đông, Nam, Tây; ô (cột, hàng) từ $0$; $\mathbb E_\pi$ lấy theo $\pi$ và môi trường.</p>
+<aside class="notes"><p>Ba dòng nhắc lại lấy từ ghi chú Bài 01: vòng tương tác (Định nghĩa 01.1), lượt và lợi tức không chiết khấu, chính sách và giá trị trên lịch sử quan sát. Xác suất có điều kiện $\Pr(E\mid F)=\Pr(E\cap F)/\Pr(F)$ với $\Pr(F)&gt;0$ và kỳ vọng của biến rời rạc được dùng trong mọi định nghĩa về sau.</p><p>$R_{t+1}$ là phần thưởng của chuyển từ $t$ sang $t+1$, nhận sau $A_t$. Tọa độ ghi (cột, hàng), hàng tăng xuống: ô $(0,2)$ ở cột $0$, hàng $2$. Kỳ vọng mang chỉ số $\pi$ vì lợi tức ngẫu nhiên do hai nguồn: hành động rút theo $\pi$ và chuyển của môi trường.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 25–26 (mê cung $8\times8$).</p></aside>
 </section>
 <section data-slide-id="L02-01-03">
 <h2>Mục tiêu học tập</h2>
 <ol>
-<li>Ghi mẫu chuyển đúng chỉ số thời gian (Bài tập 02.1, 02.14, 02.22).</li>
-<li>Phân biệt trạng thái, quan sát, biểu diễn; kiểm tra và sửa tính Markov (02.2, 02.3, 02.11, 02.15, 02.19, 02.22).</li>
-<li>Viết chính sách xác định, ngẫu nhiên trên biểu diễn (02.4, 02.13, 02.16, 02.19).</li>
-<li>Tính lợi tức chiết khấu, giá trị trạng thái; đọc hàm động lực (02.5–02.7, 02.9, 02.10(a), 02.12, 02.16–02.18, 02.20–02.22).</li>
-<li>Tìm ngưỡng chi phí đổi hành vi tối ưu (02.8, 02.10(b), 02.18, 02.20, 02.21).</li>
+<li>Ghi mẫu chuyển đúng chỉ số $t$, $t+1$; tách phần tác tử và môi trường (Bài tập 02.1, 02.9, 02.14).</li>
+<li>Phân biệt trạng thái, quan sát, biểu diễn; kiểm tra, sửa tính Markov (02.2, 02.3, 02.11).</li>
+<li>Viết chính sách xác định, ngẫu nhiên trên biểu diễn; tính xác suất dãy hành động (02.4, 02.13, 02.20).</li>
+<li>Tính lợi tức chiết khấu, giá trị $v_\pi(s)$; đọc hàm động lực; giải thích trọng số hình học (02.5–02.7, 02.10, 02.12, 02.15–02.22).</li>
+<li>Tìm ngưỡng chi phí đổi hành vi tối ưu; nêu giả thiết khi phần thưởng mỗi bước đổi dấu (02.8, 02.10, 02.21–02.24).</li>
 </ol>
-<aside class="notes"><p>Mục tiêu 1 đo bằng bộ bốn mẫu chuyển (transition) $(O_t,A_t,R_{t+1},O_{t+1})$ ghi đúng chỉ số. Mục tiêu 2 đo bằng việc phân loại trạng thái (state), quan sát (observation), biểu diễn (representation) và kiểm tra một trạng thái có tính Markov (Markov property). Mục tiêu 3 đo bằng một phân phối hợp lệ của chính sách xác định (deterministic policy) hoặc ngẫu nhiên (stochastic policy). Mục tiêu 4 đo bằng lợi tức chiết khấu, giá trị trạng thái của một chính sách và bảng hàm động lực (dynamics function) của một bước. Mục tiêu 5 đo bằng ngưỡng chi phí trên mê cung đích–hố. Số trong ngoặc là số hiệu bài tập; 02.1–02.13 đánh số theo ghi chú bài giảng, 02.14–02.22 chỉ có trong tệp bài tập về nhà.</p></aside>
+<aside class="notes"><p>Mục tiêu 1 đo bằng mẫu chuyển (transition) $(O_t,A_t,R_{t+1},O_{t+1})$ ghi đúng chỉ số. Mục tiêu 2 đo bằng việc phân loại trạng thái (state), quan sát (observation), biểu diễn (representation) và kiểm tra tính Markov (Markov property). Mục tiêu 3 đo bằng chính sách xác định (deterministic policy), ngẫu nhiên (stochastic policy) và tích xác suất của một dãy hành động. Mục tiêu 4 đo bằng lợi tức chiết khấu, giá trị trạng thái và hàm động lực (dynamics function). Mục tiêu 5 đo bằng ngưỡng chi phí trên mê cung đích–hố.</p><p>Bài tập theo mục tiêu. Mục tiêu 1: ghi chú 02.1, 02.9; tệp bài tập 02.14. Mục tiêu 2: ghi chú 02.2, 02.3, 02.11. Mục tiêu 3: ghi chú 02.4, 02.13; tệp bài tập 02.20. Mục tiêu 4: ghi chú 02.5–02.7, 02.10, 02.12; tệp bài tập 02.15–02.22. Mục tiêu 5: ghi chú 02.8, 02.10; tệp bài tập 02.21–02.24.</p></aside>
 </section>
 <section data-slide-id="L02-01-04">
 <h2>Nội dung</h2>
@@ -55,16 +55,16 @@
 </section>
 <section data-slide-id="L02-01-02">
 <h2>Vấn đề trung tâm</h2>
-<div class="box"><strong>Nhu cầu:</strong> so sánh cách đi trên hai mê cung:</div>
+<div class="box"><strong>Nhu cầu:</strong> tiêu chí so sánh hai cách đi trên mê cung $8\times8$.</div>
 <div class="grid2"><img class="figure" src="img/lec-02/source-maze.svg" alt="Mê cung tám hàng tám cột của bài giảng gốc; tường tô đậm, ô đi được để trắng. Tác tử bắt đầu tại ô (0,2) ở mép trái; đích G nằm ngoài lưới bên phải ô (7,6), ghi tọa độ (8,6)."/>
 <ol start="2">
-<li>Phần thưởng của $A_t$ mang chỉ số $t+1$.</li>
+<li>Phần thưởng sau $A_t$ là $R_{t+1}$.</li>
 <li>Tọa độ: đầy đủ, Markov; mã bốn ô kề: một phần.</li>
 <li>Chính sách xác định trên mã có thể kẹt.</li>
 <li>Nếu Markov: hàm giá trị đánh giá, hàm động lực dự báo.</li>
 <li>Đích–hố, không chiết khấu: phạt mỗi bước trên $2{,}5$, chọn hố.</li>
 </ol></div>
-<aside class="notes"><p>Hai mê cung: mê cung $8\times8$ trên hình và mê cung đích–hố của mạch 6. Mê cung $8\times8$ có 27 ô đi được; lối ra duy nhất là cạnh phải của ô $(7,6)$. Nhiều ô là ngõ cụt, nên giá trị của một bước phụ thuộc các bước sau nó.</p><p>Phần thưởng sinh sau hành động nên mang chỉ số $t+1$. Với bản đồ cố định, tọa độ vừa đọc lại được vị trí vừa có tính Markov; mã bốn ô kề gộp năm ô thành một mã, và khi hai ô cùng mã cần hai hướng khác nhau, chính sách xác định trên mã kẹt lại. Với trạng thái Markov, chính sách cố định và kỳ vọng hữu hạn, hàm giá trị đánh giá ô. Mê cung đích–hố có thêm một hố kết thúc lượt và thưởng $+10$ ở đích; khi không chiết khấu, tác tử tối ưu chọn hố nếu chi phí mỗi bước vượt $2{,}5$.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 25–26.</p></aside>
+<aside class="notes"><p>Mê cung $8\times8$ có 27 ô đi được; lối ra duy nhất là cạnh phải của ô $(7,6)$. Nhiều ô là ngõ cụt, nên giá trị của một bước phụ thuộc các bước sau nó. Dòng cuối dùng mê cung thứ hai, mê cung đích–hố, có thêm một hố kết thúc lượt và thưởng $+10$ ở đích.</p><p>Phần thưởng sinh sau hành động. Với bản đồ cố định, tọa độ vừa đọc lại được vị trí vừa có tính Markov; mã bốn ô kề gộp năm ô thành một mã, và khi hai ô cùng mã cần hai hướng khác nhau, chính sách xác định trên mã kẹt lại. Với trạng thái Markov, chính sách cố định và kỳ vọng hữu hạn, hàm giá trị đánh giá ô. Trên mê cung đích–hố không chiết khấu, tác tử tối ưu chọn hố khi chi phí mỗi bước vượt $2{,}5$.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 25–26.</p></aside>
 </section>
 </section>
 <section>
@@ -72,7 +72,7 @@
 <div class="strand-title-body">
 <h2><span class="strand-number">2.</span>Vòng tương tác và tín hiệu thưởng</h2>
 <p class="strand-lead">Muốn ghi chuỗi quyết định thành dữ liệu, phải cố định thứ tự quan sát, hành động, phần thưởng.</p>
-<p class="strand-keys">Ranh giới · Mẫu chuyển · Chỉ số thời gian · Giả thuyết phần thưởng · Phản hồi trễ</p>
+<p class="strand-keys">Ranh giới · Mẫu chuyển · Chỉ số thời gian · Giả thuyết phần thưởng · Phần thưởng trễ</p>
 </div>
 <aside class="notes"><p>Vòng tương tác của Bài 01 chưa gắn chỉ số cho các tín hiệu. Trên mê cung $8\times8$, ranh giới tác tử–môi trường được cố định, một bước được ghi thành mẫu chuyển $(O_t,A_t,R_{t+1},O_{t+1})$, và phần thưởng $-1$ mỗi bước được đọc qua giả thuyết phần thưởng. Chỉ số thời gian thu được dùng cho lịch sử ở mạch 3 và cho lợi tức ở mạch 5.</p></aside>
 </section>
@@ -135,14 +135,14 @@
 <p><strong>Ví dụ.</strong> Mê cung $8\times8$ với $-1$ mỗi bước:</p>
 <p>đường 16 bước: tổng $-16$; vòng vào ngõ cụt $(4,2)$: 18 bước, tổng $-18$.</p>
 <p><strong>Diễn giải:</strong> tổng lớn nhất khi tới $\mathrm G$ bằng ít bước nhất, do cách gán phần thưởng.</p>
-<aside class="notes"><p>Giả thuyết phát biểu rằng mọi mục tiêu mô tả được bằng việc làm lớn nhất kỳ vọng của tổng phần thưởng (Nhận xét 01.10); đây là giả thuyết mô hình hóa, không phải định lý. Kỳ vọng tính đến yếu tố ngẫu nhiên của chính sách và môi trường. Với $-1$ mỗi bước, tổng của một đường hữu hạn bằng âm số bước, nên cực đại tổng phần thưởng trùng với tới đích nhanh nhất. Sự trùng khớp đó do người thiết kế phần thưởng tạo ra; mạch 6 xét một cách gán làm hai điều này tách nhau.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 9, 25–26; ghi chú bài giảng, Ví dụ 02.3.</p></aside>
+<aside class="notes"><p>Giả thuyết phát biểu rằng mọi mục tiêu mô tả được bằng việc làm lớn nhất kỳ vọng của tổng phần thưởng (Nhận xét 01.10); đây là một giả thuyết mô hình hóa. Kỳ vọng tính đến yếu tố ngẫu nhiên của chính sách và môi trường. Với $-1$ mỗi bước, tổng của một đường hữu hạn bằng âm số bước, nên cực đại tổng phần thưởng trùng với tới đích nhanh nhất. Sự trùng khớp đó do người thiết kế phần thưởng tạo ra; mạch 6 xét một cách gán làm hai điều này tách nhau.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 9, 25–26; ghi chú bài giảng, Ví dụ 02.3.</p></aside>
 </section>
 <section data-slide-id="L02-02-06">
-<h2>Phản hồi trễ</h2>
+<h2>Phần thưởng trễ</h2>
 <img class="figure" src="img/lec-02/delayed-feedback.svg" alt="Một quỹ đạo ba bước của trò chơi: các quan sát O0, O1, O2, O3 nối bằng ba mũi tên ghi A0 và R1 bằng 0, A1 và R2 bằng 0, A2 và R3 bằng cộng 1, dẫn tới quan sát kết thúc O3. Chú thích: kết quả cuối liên quan tới cả chuỗi hành động."/>
 <p><strong>Ví dụ.</strong> Ván cờ: phần thưởng $0$ ở nước chưa kết thúc, $+1$ khi thắng.</p>
-<p>Phần thưởng khác $0$ gắn với nước cuối; cả $A_0,A_1,A_2$ đều có thể góp phần.</p>
-<aside class="notes"><p>Phản hồi trễ (delayed reward) là trường hợp phần thưởng khác $0$ chỉ đến sau nhiều bước, trong khi các hành động trước đó cũng có thể góp phần vào kết quả; thua nhận $-1$ và hòa nhận $0$ theo cùng cách gán. Trên mê cung, phần thưởng đến ngay sau mỗi bước. Với cả hai cách gán, đánh giá một hành động cần cả chuỗi phần thưởng sau nó; mạch 5 quy chuỗi đó về một số.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 7–8, 11.</p></aside>
+<p>Phần thưởng khác $0$ gắn với nước cuối; kết quả của ván phụ thuộc cả $A_0,A_1,A_2$.</p>
+<aside class="notes"><p>Phần thưởng trễ (delayed reward) là trường hợp phần thưởng khác $0$ chỉ đến sau nhiều bước, trong khi kết quả phụ thuộc cả các hành động trước đó; cách gán là của Nhận xét 01.10, thua nhận $-1$ và hòa nhận $0$. Trên mê cung, phần thưởng đến ngay sau mỗi bước, nhưng cái giá của bước Nam tại $(4,1)$ chỉ hiện ra khi cộng cả hai bước thừa, đi và về. Với cả hai cách gán, đánh giá một hành động cần cả chuỗi phần thưởng sau nó; mạch 5 quy chuỗi đó về một số.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 7–8, 11.</p></aside>
 </section>
 </section>
 <section>
@@ -164,15 +164,15 @@
 <section data-slide-id="L02-03-11">
 <h2>Trạng thái, quan sát và biểu diễn</h2>
 <table><thead><tr><th>Đối tượng</th><th>Ý nghĩa</th><th>Trên mê cung</th></tr></thead><tbody><tr><td>Trạng thái (state) $S_t$</td><td>biến mô tả môi trường, do người mô hình chọn</td><td>ô hiện tại</td></tr><tr><td>Quan sát (observation) $O_t$</td><td>thông tin tác tử nhận</td><td>mã bốn ô kề</td></tr><tr><td>Biểu diễn (representation) $X_t$</td><td>dữ liệu tác tử dùng để chọn</td><td>mã, có thể kèm mã trước</td></tr></tbody></table>
-<p><strong>Mở rộng Bài 01:</strong> $S_t$ được chọn; $X_t$ mới.</p>
-<aside class="notes"><p>Định nghĩa 01.2 gọi trạng thái là cấu hình mà luật chuyển dùng tới. Từ Bài 02, trạng thái là biến do người mô hình chọn, có thể nhỏ hơn cấu hình; cấu hình đầy đủ, như (ô, $k$) trong mê cung có chìa khóa, luôn có tính Markov. Đối tượng thứ ba là dữ liệu tác tử tự tính ra từ những gì đã nhận để đưa vào quy tắc chọn hành động. Biểu diễn thuộc tác tử, trạng thái thuộc môi trường. Khi tác tử nhận tọa độ và dùng luôn tọa độ, $X_t=O_t=S_t$. Nhầm lẫn thường gặp là coi mã hiện tại là trạng thái chỉ vì đó là tất cả những gì tác tử nhận ở một bước; làm vậy gộp $(2,1)$ với $(3,1)$, trong khi bước Đông từ hai ô này cho hai mã kế tiếp khác nhau, $(1,0,1,0)$ và $(1,0,0,0)$.</p></aside>
+<p><strong>Lưu ý:</strong> $X_t$ là đối tượng mới so với Bài 01.</p>
+<aside class="notes"><p>Định nghĩa 01.2 gọi trạng thái là cấu hình mà luật chuyển dùng tới. Từ Bài 02, trạng thái là biến do người mô hình chọn, có thể chứa ít thông tin hơn cấu hình. Đối tượng thứ ba là dữ liệu tác tử tự tính ra từ những gì đã nhận để đưa vào quy tắc chọn hành động. Biểu diễn thuộc tác tử, trạng thái thuộc môi trường. Khi tác tử nhận tọa độ và dùng luôn tọa độ, $X_t=O_t=S_t$. Nhầm lẫn thường gặp là coi mã hiện tại là trạng thái chỉ vì đó là tất cả những gì tác tử nhận ở một bước; làm vậy gộp $(2,1)$ với $(3,1)$, trong khi bước Đông từ hai ô này cho hai mã kế tiếp khác nhau, $(1,0,1,0)$ và $(1,0,0,0)$.</p></aside>
 </section>
 <section data-slide-id="L02-03-12">
 <h2>Biểu diễn từ thông tin khả dụng</h2>
 <p><strong>Định nghĩa.</strong> Biểu diễn là giá trị hàm $f_t$ do người thiết kế chọn, trên dữ liệu trước $A_t$:</p>
 <div class="math-large">$$X_t=f_t\bigl(O_{0:t},A_{0:t-1},R_{1:t}\bigr)\in\mathcal X.$$</div>
 <p>$O_{0:t}=(O_0,\dots,O_t)$; hai dãy sau rỗng khi $t=0$ (Định nghĩa 02.2).</p>
-<p>Chỉ quan sát hiện tại: $X_t=\phi(O_t)$, như mã bốn ô kề.</p>
+<p>Chỉ quan sát hiện tại: $X_t=\phi(O_t)$, $\phi$ không đổi theo $t$, như mã bốn ô kề.</p>
 <p>Cửa sổ $m=2$: $X_t=(O_t,A_{t-1},O_{t-1})$. Toàn bộ dữ liệu: kích thước tăng theo $t$.</p>
 <aside class="notes"><p>Công thức đọc là: biểu diễn tại $t$ chỉ dùng các quan sát tới $t$, các hành động tới $t-1$ và các phần thưởng tới $t$; $A_t$ và mọi tín hiệu sau nó chưa tồn tại khi tính $X_t$. Hàm $f_t:\mathcal O^{t+1}\times\mathcal A^t\times\mathbb R^t\to\mathcal X$ là tất định. Với cửa sổ, quy ước $X_0=(O_0,\varnothing,\varnothing)$. Nhiều biểu diễn được cập nhật đệ quy, $X_t=u(X_{t-1},A_{t-1},R_t,O_t)$, cách mà các mạng hồi quy dùng (Sutton và Barto, 2018, §17.3). Trường hợp toàn bộ dữ liệu chính là lịch sử quan sát của Bài 01.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 14–16, 21.</p></aside>
 </section>
@@ -182,7 +182,7 @@
 <p>Từ $(0,2)$ đi Đông, Bắc, Đông; mỗi bước $-1$:</p>
 <p>$(0,2)$, Đông, $-1$, $(1,2)$, Bắc, $-1$, $(1,1)$, Đông, $-1$, $(2,1)$.</p>
 <p>Tác tử chỉ có mã $(1,0,1,1),(0,1,0,0),(1,0,0,1),(1,0,1,0)$, hành động đã chọn, phần thưởng.</p>
-<p><strong>Diễn giải:</strong> dãy ô là lịch sử $H_3$ của định nghĩa sau.</p>
+<p><strong>Diễn giải:</strong> dãy ô ghi quá khứ của môi trường, $10$ thành phần.</p>
 <aside class="notes"><p>Dãy ghi quá khứ của môi trường bằng ô thay cho quan sát; mỗi bước thêm ba thành phần, nên ba bước cho $3\cdot3+1=10$ thành phần. Mã tại $(0,2)$ là $(1,0,1,1)$ vì ô phía Tây nằm ngoài lưới và hai ô Bắc, Nam là tường. Tại $t=3$ tác tử ở $(2,1)$ với mã trước $(1,0,0,1)$; tại $t=4$ nó ở $(3,1)$ với mã trước $(1,0,1,0)$. Hai ô có cùng quan sát nhưng cửa sổ $(O_t,A_{t-1},O_{t-1})$ khác nhau; dọc đường 16 bước, biểu diễn có nhớ này tách $(2,1)$ khỏi $(3,1)$, điều được dùng lại ở hai ô cùng mã của mạch 4.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng, Ví dụ 02.5, Tình huống 02.2.</p></aside>
 </section>
 <section data-slide-id="L02-03-09">
@@ -214,7 +214,7 @@
 <section data-slide-id="L02-03-14">
 <h2>Ví dụ: mê cung có chìa khóa</h2>
 <p><strong>Nhu cầu:</strong> biết khi nào trạng thái hiện tại đủ để dự báo bước kế tiếp.</p>
-<p>Chìa khóa ở ngõ cụt $(4,2)$; lối $(7,6)\to\mathrm G$ chỉ mở khi đã có chìa khóa.</p>
+<p>Chìa khóa ở ngõ cụt $(4,2)$, bit $k=1$ khi đã nhặt; lối $(7,6)\to\mathrm G$ chỉ mở khi $k=1$.</p>
 <p>$h$: đứng yên hai lần tại $(0,2)$, rồi theo đường 16 bước; $h'$: theo đường đó, rẽ vào $(4,2)$ rồi về.</p>
 <p>Cả hai tới $(7,6)$ tại $t=17$. Với $a$ là bước Đông:</p>
 <div class="math-large">$$\begin{aligned}\Pr(S_{18}=\mathrm G\mid H_{17}=h,A_{17}=a)&amp;=0,\\ \Pr(S_{18}=\mathrm G\mid H_{17}=h',A_{17}=a)&amp;=1.\end{aligned}$$</div>
@@ -233,7 +233,7 @@
 <p><strong>Mệnh đề.</strong> Với các tập đếm được, dãy $\tilde S_t=H_t$ luôn có tính Markov (Mệnh đề 02.6).</p>
 <p><strong>Chứng minh.</strong> Biết $\tilde S_t=H_t$ là biết toàn bộ lịch sử của dãy $\tilde S$.</p>
 <p><strong>Ý nghĩa:</strong> luôn đạt được tính Markov, với giá là $3t+1$ thành phần.</p>
-<p><strong>Ví dụ.</strong> Mê cung có chìa khóa: cửa sổ $m\le11$ tọa độ gần nhất không tách $h$ khỏi $h'$.</p>
+<p><strong>Nhận xét.</strong> Cửa sổ $m\le11$ tọa độ gần nhất không tách $h$ khỏi $h'$ của mê cung có chìa khóa.</p>
 <aside class="notes"><p>Mỗi $H_j$ với $j\le t$ là đoạn đầu của $H_t$, nên hai vế của điều kiện Markov cho dãy mới là cùng một xác suất có điều kiện. Chứng minh không dùng gì về môi trường. Trong mê cung có chìa khóa, trạng thái (ô, $k$) chỉ thêm một bit. Vì số thành phần thay đổi theo $t$, phương pháp dạng bảng của Bài 04–06 không dùng trực tiếp được lịch sử. Cửa sổ $m$ quan sát gần nhất có kích thước cố định nhưng không bảo đảm tính Markov: ô $(4,2)$ đứng trước $(7,6)$ mười một bước trong $h'$, và khoảng cách đó có thể lớn tùy ý (Nhận xét 02.7). Trên CartPole (Bài 04), bỏ vận tốc khỏi quan sát làm hai lần ghé cùng vị trí, cùng góc chuyển khác nhau.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 17; Sutton và Barto (2018), §17.3.</p></aside>
 </section>
 <section data-slide-id="L02-03-15">
@@ -250,7 +250,7 @@
 <p>(b) Đông từ $(2,1)$: mã $(1,0,1,0)$; từ $(3,1)$: mã $(1,0,0,0)$.</p>
 <p>Hai lịch sử cùng kết thúc ở mã $(1,0,1,0)$, cùng chọn Đông, cho hai dự báo khác nhau.</p>
 <p><strong>Kết luận:</strong> mã bốn ô kề không có tính Markov.</p>
-<aside class="notes"><p>Ở (a), trạng thái là cặp (ô, $k$) với $27$ ô đi được và $k\in\{0,1\}$, tức $54$ trạng thái chưa kết thúc. Tác tử chỉ ở $(4,2)$ sau khi đi vào, và lúc đó đã nhặt chìa khóa. Ở (b), lịch sử kết thúc tại $(2,1)$ cho mã kế tiếp $(1,0,1,0)$ với xác suất $1$; lịch sử kết thúc tại $(3,1)$ cho xác suất $0$ với cùng mã kế tiếp. Vế trái của định nghĩa phụ thuộc lịch sử, nên không thể bằng một vế phải chỉ phụ thuộc mã. Cửa sổ $(O_t,A_{t-1},O_{t-1})$ hoặc tọa độ sửa được lỗi này trên đoạn hành lang đang xét.</p></aside>
+<aside class="notes"><p>Ở (a), trạng thái là cặp (ô, $k$) với $27$ ô đi được và $k\in\{0,1\}$, tức $54$ trạng thái chưa kết thúc. Tác tử chỉ ở $(4,2)$ sau khi đi vào, và lúc đó đã nhặt chìa khóa. Ở (b), xét hai lịch sử mã. Lịch sử kết thúc bằng mã $(1,0,0,1)$, bước Đông, mã $(1,0,1,0)$, tức tác tử ở $(2,1)$, cho mã kế tiếp $(1,0,1,0)$ sau bước Đông với xác suất $1$. Lịch sử kết thúc bằng mã $(1,0,1,0)$, bước Đông, mã $(1,0,1,0)$, tức tác tử ở $(3,1)$, cho cùng mã kế tiếp với xác suất $0$. Vế trái của định nghĩa phụ thuộc lịch sử, nên không thể bằng một vế phải chỉ phụ thuộc mã. Cửa sổ $(O_t,A_{t-1},O_{t-1})$ hoặc tọa độ sửa được lỗi này trên đoạn hành lang đang xét.</p></aside>
 </section>
 </section>
 <section>
@@ -267,9 +267,10 @@
 <div class="grid2"><img class="figure" src="img/lec-02/source-policy.svg" alt="Mê cung tám hàng tám cột với một mũi tên trong mỗi ô đi được. Từ ô bắt đầu (0,2) mũi tên chỉ Đông; tại (1,2) chỉ Bắc; dọc hàng 1 từ (1,1) tới (5,1) chỉ Đông; tại (6,1), (6,2) chỉ Nam; tại (6,3) chỉ Tây; tại (5,3), (5,4) chỉ Nam; tại (5,5) chỉ Đông; tại (6,5) chỉ Nam; tại (6,6), (7,6) chỉ Đông, ra đích G. Ngõ cụt (4,2) chỉ Bắc."/><div>
 <p><strong>Nhu cầu:</strong> hai tác tử cùng ở ô $(1,2)$ có thể chọn hai hướng khác nhau.</p>
 <p>Chính sách (policy) chọn hành động từ biểu diễn $X_t$, thay cho lịch sử $h$ của Bài 01.</p>
-<p>Mỗi ô đi được nhận một hướng; theo mũi tên từ $(0,2)$, tác tử tới $\mathrm G$ sau 16 bước.</p>
+<p>Hình gán mỗi ô đi được một hướng, gọi là <em>chính sách mũi tên</em>.</p>
+<p>Theo mũi tên, tác tử đi từ $(0,2)$ tới $\mathrm G$ sau 16 bước.</p>
 </div></div>
-<aside class="notes"><p>Chính sách trên hình lấy từ bài giảng gốc (trang 26), với biểu diễn là tọa độ. Theo mũi tên từ $(0,2)$, tác tử đi lại đường 16 bước; các ô ngoài đường chính, như ngõ cụt $(4,2)$ hay nhánh dưới từ $(1,3)$ tới $(4,6)$, cũng có mũi tên dẫn về đường chính. Một bảng gán hướng cho mọi ô như vậy là một chính sách xác định trên tọa độ. Chính sách trả lời câu hỏi chọn mỗi hành động với xác suất bao nhiêu; hàm động lực của môi trường trả lời câu hỏi chọn hành động đó thì điều gì xảy ra.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 20–21, 26; Bài tập tuần 2 (2025–2026), bài 6.</p></aside>
+<aside class="notes"><p>Chính sách mũi tên lấy từ bài giảng gốc (trang 26), với biểu diễn là tọa độ. Theo mũi tên từ $(0,2)$, tác tử đi lại đường 16 bước; các ô ngoài đường chính, như ngõ cụt $(4,2)$ hay nhánh dưới từ $(1,3)$ tới $(4,6)$, cũng có mũi tên dẫn về đường chính. Một bảng gán hướng cho mọi ô như vậy là một chính sách xác định trên tọa độ. Chính sách trả lời câu hỏi chọn mỗi hành động với xác suất bao nhiêu; hàm động lực của môi trường trả lời câu hỏi chọn hành động đó thì điều gì xảy ra.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 20–21, 26; Bài tập tuần 2 (2025–2026), bài 6.</p></aside>
 </section>
 <section data-slide-id="L02-04-02">
 <h2>Ví dụ: hai quy tắc tại ô $(1,2)$</h2>
@@ -277,7 +278,7 @@
 <table><thead><tr><th>Quy tắc</th><th>Bắc</th><th>Đông</th><th>Nam</th><th>Tây</th></tr></thead><tbody><tr><td>Luôn Bắc</td><td>$1$</td><td>$0$</td><td>$0$</td><td>$0$</td></tr><tr><td>Bắc hoặc Đông</td><td>$0{,}5$</td><td>$0{,}5$</td><td>$0$</td><td>$0$</td></tr></tbody></table>
 <p><strong>Diễn giải:</strong> mỗi hàng là một phân phối: không âm, tổng bằng $1$.</p>
 <p>Chọn Đông thì đứng yên tại $(1,2)$, vẫn nhận $-1$.</p>
-<aside class="notes"><p>Ở đây $x$ là một giá trị của biểu diễn $X_t$, cụ thể là ô $(1,2)$. Quy tắc thứ nhất luôn chọn Bắc; quy tắc thứ hai tung đồng xu giữa Bắc và Đông. Tổng hàng thứ hai là $0{,}5+0{,}5+0+0=1$. Cả bốn hướng đều hợp lệ; đi vào tường giữ nguyên vị trí và vẫn nhận $-1$, nên tính ngẫu nhiên tự nó không làm quy tắc tốt hơn. Hai hàng của bảng là hai giá trị của cùng một đối tượng toán học: chính sách ngẫu nhiên.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng, Ví dụ 02.7.</p></aside>
+<aside class="notes"><p>Ở đây $x$ là một giá trị của biểu diễn $X_t$, cụ thể là ô $(1,2)$. Quy tắc thứ nhất luôn chọn Bắc; quy tắc thứ hai tung đồng xu giữa Bắc và Đông. Tổng hàng thứ hai là $0{,}5+0{,}5+0+0=1$. Cả bốn hướng đều hợp lệ; đi vào tường giữ nguyên vị trí và vẫn nhận $-1$, nên tính ngẫu nhiên tự nó không làm quy tắc tốt hơn. Mỗi hàng là phân phối $\pi(\cdot\mid(1,2))$ của một chính sách; hàng "Luôn Bắc" là trường hợp xác định.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng, Ví dụ 02.7.</p></aside>
 </section>
 <section data-slide-id="L02-04-04">
 <h2>Chính sách trên biểu diễn</h2>
@@ -294,7 +295,7 @@
 <div class="math-large">$$A_t=\pi(X_t).$$</div>
 <p>Trường hợp riêng của chính sách ngẫu nhiên: $\pi(a\mid x)=1$ khi $a=\pi(x)$.</p>
 <table><thead><tr><th>Ô $x$</th><th>Hướng $\pi(x)$</th></tr></thead><tbody><tr><td>$(0,2)$</td><td>Đông</td></tr><tr><td>$(1,2)$</td><td>Bắc</td></tr><tr><td>$(1,1)$</td><td>Đông</td></tr></tbody></table>
-<aside class="notes"><p>Bảng cho ba giá trị của chính sách trên hình mê cung; các ô còn lại được quy định theo các mũi tên của hình. Điều kiện $\pi(x)\in\mathcal A(x)$ bảo đảm hành động được chọn là hợp lệ. Chính sách là quy tắc đang dùng; thuật toán học là cách tạo ra hoặc thay đổi quy tắc đó từ dữ liệu. Trong khi học, chính sách đổi theo thời gian; định nghĩa mô tả quy tắc cố định trong suốt một phép đánh giá. Giáo trình <em>Học máy thống kê</em> gọi chính sách xác định là chính sách đơn định.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 21, 26.</p></aside>
+<aside class="notes"><p>Bảng cho ba giá trị của chính sách mũi tên; các ô còn lại được quy định theo các mũi tên của hình. Điều kiện $\pi(x)\in\mathcal A(x)$ bảo đảm hành động được chọn là hợp lệ. Chính sách là quy tắc đang dùng; thuật toán học là cách tạo ra hoặc thay đổi quy tắc đó từ dữ liệu. Trong khi học, chính sách đổi theo thời gian; định nghĩa mô tả quy tắc cố định trong suốt một phép đánh giá. Giáo trình <em>Học máy thống kê</em> gọi chính sách xác định là chính sách đơn định.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 21, 26.</p></aside>
 </section>
 <section data-slide-id="L02-04-07">
 <h2>Ví dụ: xác suất của một dãy hai hành động</h2>
@@ -313,7 +314,7 @@
 <p>Mọi chính sách xác định trên mã: không bao giờ tới $\mathrm G$.</p>
 <p>Đông, Nam mỗi hướng $0{,}5$ tại mã đó, mã khác theo mũi tên: kỳ vọng $20$ bước.</p>
 </div></div>
-<aside class="notes"><p>Chính sách chỉ được viết trên mã. Mã của $(1,2)$ và của $(6,3)$ là duy nhất; chính sách không chọn Bắc tại $(1,2)$ hoặc Tây tại $(6,3)$ thì không bao giờ tới $\mathrm A$ hoặc $\mathrm B$. Gọi $a^*$ là hành động tại mã $(1,0,0,1)$: Bắc hoặc Tây giữ tác tử đứng yên mãi tại $\mathrm A$; Nam cho vòng $\mathrm A\to(1,2)\to\mathrm A$; Đông qua được $\mathrm A$ nhưng lặp $\mathrm B\to(6,3)\to\mathrm B$. Với chính sách ngẫu nhiên, các mã khác chọn theo mũi tên của chính sách trên hình; mỗi lần chọn hướng sai tốn thêm $2$ bước và số lần chọn sai có kỳ vọng $1$, nên số bước kỳ vọng là $16+2+2=20$. Cửa sổ hai quan sát phân biệt $\mathrm A$ với $\mathrm B$ và cho lại $16$ bước.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng, Tình huống 02.2; Sutton và Barto (2018), §13.1, Ví dụ 13.1; Bài tập tuần 2 (2025–2026), bài 6.</p></aside>
+<aside class="notes"><p>Chính sách chỉ được viết trên mã. Mã của $(1,2)$ và của $(6,3)$ là duy nhất; chính sách không chọn Bắc tại $(1,2)$ hoặc Tây tại $(6,3)$ thì không bao giờ tới $\mathrm A$ hoặc $\mathrm B$. Gọi $a^*$ là hành động tại mã $(1,0,0,1)$: Bắc hoặc Tây giữ tác tử đứng yên mãi tại $\mathrm A$; Nam cho vòng $\mathrm A\to(1,2)\to\mathrm A$; Đông qua được $\mathrm A$ nhưng lặp $\mathrm B\to(6,3)\to\mathrm B$. Với chính sách ngẫu nhiên, các mã khác chọn theo chính sách mũi tên; mỗi lần chọn hướng sai tốn thêm $2$ bước và số lần chọn sai có kỳ vọng $1$, nên số bước kỳ vọng là $16+2+2=20$. Cửa sổ hai quan sát phân biệt $\mathrm A$ với $\mathrm B$ và cho lại $16$ bước.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng, Tình huống 02.2; Sutton và Barto (2018), §13.1, Ví dụ 13.1; Bài tập tuần 2 (2025–2026), bài 6.</p></aside>
 </section>
 <section data-slide-id="L02-04-05">
 <h2>Bài tập: chính sách ngẫu nhiên tại một ô</h2>
@@ -344,7 +345,7 @@
 <li>Lấy trung bình khi có yếu tố ngẫu nhiên.</li>
 <li>Dự báo riêng một bước của môi trường.</li>
 </ul>
-<aside class="notes"><p>Theo chính sách trên hình mê cung ở mạch 4, bước Đông tại $(4,1)$ tới $(5,1)$ rồi đi thêm 10 bước tới $\mathrm G$; bước Nam vào ngõ cụt $(4,2)$, quay về $(4,1)$ rồi mới đi tiếp, tốn thêm hai bước. Phần thưởng ngay sau bước không phân biệt hai lựa chọn; cả chuỗi phần thưởng về sau thì phân biệt được. Ba việc cần làm dẫn tới lợi tức có chiết khấu, hàm giá trị trạng thái và hàm động lực. Với nhiệm vụ không kết thúc và $-1$ mỗi bước, tổng của Bài 01 là $-\infty$ cho mọi cách đi, nên cần trọng số khác $1$.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 10, 22–23, 26.</p></aside>
+<aside class="notes"><p>Theo chính sách mũi tên, bước Đông tại $(4,1)$ tới $(5,1)$ rồi đi thêm 10 bước tới $\mathrm G$; bước Nam vào ngõ cụt $(4,2)$, quay về $(4,1)$ rồi mới đi tiếp, tốn thêm hai bước. Phần thưởng ngay sau bước không phân biệt hai lựa chọn; cả chuỗi phần thưởng về sau thì phân biệt được. Ba việc cần làm dẫn tới lợi tức có chiết khấu, hàm giá trị trạng thái và hàm động lực. Với nhiệm vụ không kết thúc và $-1$ mỗi bước, tổng của Bài 01 là $-\infty$ cho mọi cách đi, nên cần trọng số khác $1$.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 10, 22–23, 26.</p></aside>
 </section>
 <section data-slide-id="L02-05-11">
 <h2>Ví dụ: hai chuỗi $(2,0)$ và $(1,1)$</h2>
@@ -378,15 +379,15 @@
 <p>$\gamma=0{,}5$: $(-1)\cdot1+(-1)\cdot0{,}5+(-1)\cdot0{,}25=-1{,}75$.</p>
 <p>$\gamma=1$: tổng $-3$, bằng âm số bước còn lại.</p>
 <p><strong>Diễn giải:</strong> phần thưởng muộn hơn một bước có trọng số nhỏ hơn $\gamma$ lần.</p>
-<aside class="notes"><p>Đường 16 bước đi qua $(6,5)$ tại $t=13$, nên ba phần thưởng còn lại là $R_{14}=R_{15}=R_{16}=-1$ và lượt kết thúc tại $T=16$. Trọng số $1$, $0{,}5$, $0{,}25$ là trọng số hình học với $\gamma=0{,}5$. Kiểm tra bằng cách tính ngược từ cuối: $G_{16}=0$, $G_{15}=-1$, $G_{14}=-1+0{,}5\cdot(-1)=-1{,}5$, $G_{13}=-1+0{,}5\cdot(-1{,}5)=-1{,}75$. Phép tính ngược này là hệ thức truy hồi phát biểu sau định nghĩa lợi tức.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng, Ví dụ 02.10.</p></aside>
+<aside class="notes"><p>Đường 16 bước đi qua $(6,5)$ tại $t=13$, nên ba phần thưởng còn lại là $R_{14}=R_{15}=R_{16}=-1$ và lượt kết thúc tại $T=16$. Trọng số $1$, $0{,}5$, $0{,}25$ là trọng số hình học với $\gamma=0{,}5$. Kiểm tra bằng cách tính ngược từ cuối: $G_{16}=0$, $G_{15}=-1$, $G_{14}=-1+0{,}5\cdot(-1)=-1{,}5$, $G_{13}=-1+0{,}5\cdot(-1{,}5)=-1{,}75$. Phép tính ngược dùng $G_t=R_{t+1}+\gamma G_{t+1}$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng, Ví dụ 02.10.</p></aside>
 </section>
 <section data-slide-id="L02-05-03">
 <h2>Lợi tức</h2>
 <p><strong>Định nghĩa.</strong> Với $\gamma\in[0,1]$, lượt kết thúc tại $T&lt;\infty$ và $t&lt;T$, lợi tức từ $t$ là</p>
 <div class="math-large">$$G_t=\sum_{k=0}^{T-t-1}\gamma^kR_{t+k+1},\qquad G_T=0.$$</div>
-<p>Nhiệm vụ tiếp diễn, $T=\infty$: cần thêm $\gamma&lt;1$ và $\lvert R_{t+1}\rvert\le R_{\max}$ (Định nghĩa 02.12).</p>
+<p>Nhiệm vụ tiếp diễn (continuing task), $T=\infty$: cần thêm $\gamma&lt;1$ và $\lvert R_{t+1}\rvert\le R_{\max}$ (Định nghĩa 02.12).</p>
 <p>$\gamma=1$: lợi tức của Bài 01. $\gamma=0$: $G_t=R_{t+1}$, tác tử cận thị (myopic).</p>
-<aside class="notes"><p>Số hạng đầu là $R_{t+1}$, phần thưởng của $A_t$; phần thưởng thứ $k+1$ sau $t$ có trọng số $\gamma^k$, đúng dạng hình học. Quy ước $G_T=0$ nói rằng sau khi kết thúc không còn phần thưởng; $R_T$ đã nằm trong $G_{T-1}$. Với nhiệm vụ tiếp diễn, $G_t=\sum_{k\ge0}\gamma^kR_{t+k+1}$. Trường hợp $\gamma=0$ nằm ngoài định lý trọng số hình học, vì khi đó ưu tiên chặt có thể thành ngang nhau. Với $\gamma=0{,}99$, trọng số $0{,}99^{100}\approx0{,}37$, nên chân trời có hiệu lực vào cỡ $1/(1-\gamma)=100$ bước. Nhầm lẫn thường gặp là coi $G_t$ là một số gắn với $S_t$; $G_t$ là biến ngẫu nhiên, phụ thuộc toàn bộ phần còn lại của lượt.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 22; Sutton và Barto (2018), §3.3–3.4.</p></aside>
+<aside class="notes"><p>Số hạng đầu là $R_{t+1}$, phần thưởng của $A_t$; phần thưởng thứ $k+1$ sau $t$ có trọng số $\gamma^k$, đúng dạng hình học. Quy ước $G_T=0$ nói rằng sau khi kết thúc không còn phần thưởng; $R_T$ đã nằm trong $G_{T-1}$. Với nhiệm vụ tiếp diễn, $G_t=\sum_{k\ge0}\gamma^kR_{t+k+1}$. Trường hợp $\gamma=0$ nằm ngoài định lý trọng số hình học, vì khi đó ưu tiên chặt có thể thành ngang nhau. Với $\gamma&lt;1$, tổng mọi trọng số là $1/(1-\gamma)$, gọi là chân trời hiệu dụng (effective horizon); với $\gamma=0{,}99$, chân trời hiệu dụng là $100$ bước. Với $\gamma$ gần $1$, trọng số giảm chậm: $0{,}99^{10}\approx0{,}90$. Nhầm lẫn thường gặp là coi $G_t$ là một số gắn với $S_t$; $G_t$ là biến ngẫu nhiên, phụ thuộc toàn bộ phần còn lại của lượt.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 22; Sutton và Barto (2018), §3.3–3.4.</p></aside>
 </section>
 <section data-slide-id="L02-05-16">
 <h2>Hệ thức truy hồi và chặn của lợi tức</h2>
@@ -413,7 +414,7 @@
 <p>Từ $s$, chính sách cố định; môi trường chọn mỗi nhánh với xác suất $0{,}5$; $-1$ mỗi bước, $\gamma=1$.</p>
 <table><thead><tr><th>Nhánh</th><th>Số bước</th><th>Xác suất</th><th>Lợi tức</th></tr></thead><tbody><tr><td>ngắn</td><td>$3$</td><td>$0{,}5$</td><td>$-3$</td></tr><tr><td>dài</td><td>$5$</td><td>$0{,}5$</td><td>$-5$</td></tr></tbody></table>
 <p>Trung bình $0{,}5\cdot(-3)+0{,}5\cdot(-5)=-4$; không lượt nào cho đúng $-4$.</p>
-<aside class="notes"><p>Đây là môi trường giả định, khác mê cung tất định: sự ngẫu nhiên nằm ở môi trường, tác tử không chọn được nhánh. Lợi tức của một lượt thay đổi giữa các lượt, nên không dùng làm số đo của trạng thái được. Số đo của trạng thái phải lấy trung bình trên những gì môi trường có thể làm, đúng như giả thuyết phần thưởng. Kiểm tra: $-4$ nằm giữa $-5$ và $-3$, bằng trung bình cộng của chúng vì hai xác suất bằng nhau. Con số $-4$ đại diện cho trạng thái $s$, không cho một lượt.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 22; ghi chú bài giảng, Ví dụ 02.11.</p></aside>
+<aside class="notes"><p>Sự ngẫu nhiên nằm ở môi trường; tác tử không chọn được nhánh. Lợi tức của một lượt thay đổi giữa các lượt, nên không dùng làm số đo của trạng thái được. Số đo của trạng thái phải lấy trung bình trên những gì môi trường có thể làm, đúng như giả thuyết phần thưởng. Kiểm tra: $-4$ nằm giữa $-5$ và $-3$, bằng trung bình cộng của chúng vì hai xác suất bằng nhau.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 22; ghi chú bài giảng, Ví dụ 02.11.</p></aside>
 </section>
 <section data-slide-id="L02-05-05">
 <h2>Hàm giá trị trạng thái</h2>
@@ -427,7 +428,7 @@
 <section data-slide-id="L02-05-13">
 <h2>Ví dụ: giá trị của chính sách trên mê cung $8\times8$</h2>
 <div class="grid2"><img class="figure" src="img/lec-02/source-values.svg" alt="Mê cung tám hàng tám cột, mỗi ô đi được ghi giá trị của chính sách với gamma bằng 1 và thưởng âm một mỗi bước. Dọc đường chính từ (0,2) là −16 tới (7,6) là −1, tăng một sau mỗi bước. Ngõ cụt (4,2) là −12; nhánh dưới từ (1,3) là −16 tới (1,5) là −24."/><div>
-<p>Chính sách trên hình mê cung; chuyển tất định, $-1$ mỗi bước, $\gamma=1$.</p>
+<p>Chính sách mũi tên; chuyển tất định, $-1$ mỗi bước, $\gamma=1$.</p>
 <p>$v_\pi(s)$ là âm số bước tới $\mathrm G$ theo mũi tên, xuất phát tại $s$.</p>
 <p>$v_\pi((0,2))=-16$, $v_\pi((7,6))=-1$, $v_\pi((4,2))=-12$.</p>
 <p><strong>Diễn giải:</strong> mỗi ô thỏa $v_\pi(s)=-1+v_\pi(s')$, với $s'$ là ô mũi tên chỉ tới.</p>
@@ -436,22 +437,22 @@
 </section>
 <section data-slide-id="L02-05-08">
 <h2>Hàm động lực</h2>
-<p><strong>Nhu cầu:</strong> dự báo $(S_{t+1},R_{t+1})$ sau $(s,a)$, không phụ thuộc $\pi$.</p>
+<p><strong>Nhu cầu:</strong> dự báo $(S_{t+1},R_{t+1})$ sau $(s,a)$, chung cho mọi $\pi$ khi $X_t=S_t$.</p>
 <p><strong>Ví dụ.</strong> Đông từ $(0,2)$ cho $((1,2),-1)$; Đông từ $(7,6)$ cho $(\mathrm G,-1)$; xác suất $1$.</p>
 <p><strong>Định nghĩa.</strong> Với trạng thái Markov và môi trường dừng, hàm động lực (dynamics function) là</p>
 <div class="math-large">$$p(s',r\mid s,a)=\Pr\bigl(S_{t+1}=s',R_{t+1}=r\mid S_t=s,A_t=a\bigr).$$</div>
 <p>$s$ chưa kết thúc, $a\in\mathcal A(s)$, $s'$ kể cả trạng thái kết thúc; $\sum_{s'}\sum_rp=1$ (Định nghĩa 02.16).</p>
 <p>Suy ra $p(s'\mid s,a)=\sum_rp(s',r\mid s,a)$ và $r(s,a)=\sum_{s',r}r\,p(s',r\mid s,a)$.</p>
-<aside class="notes"><p>Hàm giá trị trả lời câu hỏi kết quả dài hạn trung bình là bao nhiêu khi theo một chính sách; câu hỏi chọn hành động này thì bước kế tiếp ra sao là câu hỏi về môi trường. Vế phải không chứa $t$ và lịch sử nhờ tính dừng và tính Markov; vì tính Markov được đòi với mọi chính sách, vế phải cũng không phụ thuộc $\pi$. Tổng bằng $1$ lấy trên cặp $(s',r)$, không riêng trên $s'$. Các tập trạng thái và giá trị phần thưởng đếm được. Giáo trình <em>Học máy thống kê</em> viết $p(s'\mid s,a)$ là $T(s,a,s')$.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 13, 23; Sutton và Barto (2018), §3.1.</p></aside>
+<aside class="notes"><p>Hàm động lực mô tả bước kế tiếp của môi trường sau một hành động. Giả thiết: các tập trạng thái và giá trị phần thưởng đếm được. Vế phải không chứa $t$ và lịch sử nhờ tính dừng và tính Markov. Với $X_t=S_t$, $p$ không phụ thuộc chính sách, vì các thừa số $\pi(a_k\mid s_k)$ triệt tiêu trong tỉ số xác suất và tính Markov được đòi với mọi chính sách. Khi chính sách dùng thêm thông tin, kết luận có thể sai. Xét bit $z$ nhận $0$ hoặc $1$ với xác suất $0{,}5$, rút độc lập mỗi bước; tác tử thấy $z$ nhưng trạng thái không chứa $z$; phần thưởng là $z\cdot a$. Sau $a=1$, thưởng $1$ có xác suất $0{,}5$ dưới chính sách chọn đều và $1$ dưới chính sách chọn $1$ đúng khi $z=1$. Tổng bằng $1$ lấy trên cặp $(s',r)$, không riêng trên $s'$.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 13, 23; Sutton và Barto (2018), §3.1.</p></aside>
 </section>
 <section data-slide-id="L02-05-17">
 <h2>Dự đoán và điều khiển</h2>
 <p><strong>Nhận xét.</strong> Dự đoán (prediction): tính $v_\pi$ của một chính sách cố định (Nhận xét 02.17).</p>
 <p>Điều khiển (control): tìm hoặc cải thiện chính sách.</p>
 <p><strong>Ví dụ.</strong> Tại $(4,1)$: Đông cho $-1+v_\pi((5,1))=-11$, hơn Nam $-1+v_\pi((4,2))=-13$.</p>
-<p><strong>Lưu ý:</strong> $v_\pi$ phụ thuộc $\pi$; $p$ thì không.</p>
+<p><strong>Lưu ý:</strong> $v_\pi$ phụ thuộc $\pi$; $p$ thì không khi $X_t=S_t$.</p>
 <p>Mô hình (model) của tác tử: xấp xỉ $\hat p$ của $p$; phương pháp phi mô hình chỉ dùng mẫu chuyển.</p>
-<aside class="notes"><p>Bảng giá trị trên mê cung là kết quả của một bài toán dự đoán. So sánh hai hành động tại một ô bằng phần thưởng một bước cộng giá trị của ô tới, rồi chọn hành động tốt hơn, là một bước điều khiển; ở Bài 03, các đại lượng $-11$ và $-13$ được gọi là giá trị hành động. Biết $p$ chưa đồng nghĩa với biết chính sách tốt nhất; vẫn phải giải bài toán chọn trên $p$, nội dung của quy hoạch động ở Bài 04. Mô hình của tác tử có thể sai. Bài giảng gốc xếp mô hình cùng chính sách và hàm giá trị thành ba thành phần của tác tử. Monte Carlo và sai phân thời gian ở Bài 05–06 là phương pháp phi mô hình.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 10, 20, 24.</p></aside>
+<aside class="notes"><p>Bảng giá trị trên mê cung là kết quả của một bài toán dự đoán. So sánh hai hành động tại một ô bằng phần thưởng một bước cộng giá trị của ô tới, rồi chọn hành động tốt hơn, là một bước điều khiển; ở Bài 03, các đại lượng $-11$ và $-13$ được gọi là giá trị hành động. Biết $p$ chưa đồng nghĩa với biết chính sách tốt nhất; vẫn phải giải bài toán chọn trên $p$, nội dung của quy hoạch động ở Bài 04. Câu "$p$ không phụ thuộc $\pi$" cần $X_t=S_t$ để các thừa số $\pi(a_k\mid s_k)$ triệt tiêu trong tỉ số xác suất. Bài giảng gốc xếp mô hình cùng chính sách và hàm giá trị thành ba thành phần của tác tử. Monte Carlo và sai phân thời gian ở Bài 05–06 là phương pháp phi mô hình.</p><p class="note-source"><strong>Nguồn:</strong> Bài giảng gốc (2025–2026), trang 10, 20, 24.</p></aside>
 </section>
 <section data-slide-id="L02-05-18">
 <h2>Bài tập: hàm động lực của bước trượt</h2>
@@ -481,7 +482,7 @@
 <p>$\mathrm G,\mathrm H$ kết thúc lượt; không chiết khấu; chuyển tất định.</p>
 <p>Ngắn nhất: $2$ bước tới $\mathrm H$, $6$ bước tới $\mathrm G$.</p>
 </div></div>
-<aside class="notes"><p>Hành lang khép kín gồm mười nút; mỗi đoạn nối hai nút kề nhau là một bước, khoảng cách vẽ trên hình không biểu thị số bước. Tại mỗi nút chưa kết thúc, tác tử đi sang một nút kề và có thể quay lại. Hố nằm trên đường ngắn tới đích, nên muốn tới đích tác tử phải đi vòng hàng dưới: $1+4+1=6$ bước. Nút trống giữa $\mathrm H$ và $\mathrm G$ chỉ nối với hai trạng thái kết thúc, nên từ $\mathrm S$ không bao giờ tới được. Không chiết khấu nghĩa là $\gamma=1$.</p><p class="note-source"><strong>Nguồn:</strong> ví dụ do người dùng duyệt (số liệu sư phạm tự xây dựng); ghi chú bài giảng, Ví dụ 02.14.</p></aside>
+<aside class="notes"><p>Hành lang khép kín gồm mười nút; mỗi đoạn nối hai nút kề nhau là một bước, khoảng cách vẽ trên hình không biểu thị số bước. Tại mỗi nút chưa kết thúc, tác tử đi sang một nút kề và có thể quay lại. Hố nằm trên đường ngắn tới đích, nên muốn tới đích tác tử phải đi vòng hàng dưới: $1+4+1=6$ bước. Nút trống giữa $\mathrm H$ và $\mathrm G$ chỉ nối với hai trạng thái kết thúc, nên từ $\mathrm S$ không bao giờ tới được. Không chiết khấu nghĩa là $\gamma=1$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng, Ví dụ 02.14.</p></aside>
 </section>
 <section data-slide-id="L02-06-02">
 <h2>Ví dụ: mê cung đích–hố, hai lợi tức</h2>
@@ -521,8 +522,8 @@
 </section>
 <section data-slide-id="L02-06-07">
 <h2>Khuyến khích và chế tài</h2>
-<p><strong>Khuyến khích</strong>: thưởng $+10$ ở đích cho hành vi mong muốn.</p>
-<p><strong>Chế tài</strong>: phạt $c_{\mathrm H}$ khi vào hố, hành vi không mong muốn.</p>
+<p><em>Khuyến khích</em> là thưởng $+10$ ở đích cho hành vi mong muốn.</p>
+<p><em>Chế tài</em> là phạt $c_{\mathrm H}$ khi vào hố, hành vi không mong muốn.</p>
 <p>Với $c$ đủ lớn, vào hố vẫn có lợi tức lớn hơn dù có phạt $c_{\mathrm H}$ hữu hạn.</p>
 <p class="box">Mô hình giả định tác tử cực đại một con số; pháp luật còn xét quyền, nghĩa vụ, công bằng.</p>
 <aside class="notes"><p>Trong mê cung đích–hố, phần thưởng $+10$ ở đích đóng vai trò khuyến khích, mức phạt khi vào hố đóng vai trò chế tài. Mệnh đề ngưỡng cho thấy tác dụng của chế tài phụ thuộc tương quan với các chi phí khác. Các biện pháp xã hội và pháp luật cũng dùng lợi ích để làm hành vi phù hợp hấp dẫn hơn và chế tài để làm hành vi vi phạm kém hấp dẫn hơn. Phép so sánh có giới hạn: con người hành động vì cả nghĩa vụ, niềm tin và quan hệ xã hội. Sutton và Barto (2018, §17.4) nêu rủi ro cùng loại: tác tử có thể tìm ra cách không mong muốn để nhận phần thưởng.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng, Nhận xét 02.19, 02.20; Sutton và Barto (2018), §17.4.</p></aside>
@@ -566,7 +567,7 @@
 <p>(a) Tính lợi tức của hai đường với $c=1$ và $c=3$; chọn đường.</p>
 <p>(b) Tìm ngưỡng $c^*$ và so với $2{,}5$ khi $\gamma=1$.</p>
 <p><strong>Gợi ý:</strong> $m$ bước $-c$ cho $-c(1-\gamma^m)/(1-\gamma)$; $+10$ ở bước thứ sáu nhân $\gamma^5$.</p>
-<aside class="notes"><p>Bài tập tổng hợp, tức Bài tập 02.21 của tệp bài tập, dùng định nghĩa lợi tức chiết khấu, tổng hình học và cách so sánh các đường kết thúc của mệnh đề ngưỡng trong trường hợp bỏ giả thiết $\gamma=1$. Mệnh đề ngưỡng giả thiết $\gamma=1$, nên không dùng trực tiếp công thức $c^*=(10+c_{\mathrm H})/4$ được; phải tính lại lợi tức của hai đường. Phần thưởng của bước thứ $k+1$ có trọng số $\gamma^k$, nên phần thưởng $+10$ ở bước thứ sáu có trọng số $\gamma^5$.</p></aside>
+<aside class="notes"><p>Bài tập tổng hợp dùng định nghĩa lợi tức chiết khấu, tổng hình học và cách so sánh các đường kết thúc của mệnh đề ngưỡng trong trường hợp bỏ giả thiết $\gamma=1$. Mệnh đề ngưỡng giả thiết $\gamma=1$, nên không dùng trực tiếp công thức $c^*=(10+c_{\mathrm H})/4$ được; phải tính lại lợi tức của hai đường. Phần thưởng của bước thứ $k+1$ có trọng số $\gamma^k$, nên phần thưởng $+10$ ở bước thứ sáu có trọng số $\gamma^5$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng, Mục 5.2, vai trò giả thiết $\gamma=1$ của Mệnh đề 02.18.</p></aside>
 </section>
 <section data-slide-id="L02-07-07">
 <h2>Bài tập: mê cung đích–hố có chiết khấu</h2>
@@ -574,8 +575,8 @@
 <p>Tới $\mathrm G$: $G_0=5{,}905-4{,}686\,c$. Vào $\mathrm H$: $G_0=-1{,}9\,c$.</p>
 <p>(a) $c=1$: $1{,}22&gt;-1{,}9$, chọn đích. $c=3$: $-8{,}15&lt;-5{,}7$, chọn hố.</p>
 <p>(b) $5{,}905-4{,}686\,c=-1{,}9\,c\iff c^*=5{,}905/2{,}786\approx2{,}12$.</p>
-<p><strong>Kết luận:</strong> chiết khấu giảm thưởng đích ($10\to5{,}905$) nhiều hơn chênh lệch chi phí ($4\to2{,}786$): ngưỡng giảm còn $2{,}12$.</p>
-<aside class="notes"><p>Với $\gamma=0{,}9$: $0{,}9^5=0{,}59049$ và $0{,}9^6=0{,}531441$, nên năm bước $-c$ cộng bước cuối $10-c$ cho $-c\cdot4{,}68559+5{,}9049$; hai bước vào hố cho $-c(1+0{,}9)$. Với $c=1$: $5{,}9049-4{,}68559\approx1{,}219$. Với $c=3$: $5{,}9049-14{,}05677\approx-8{,}152$. Riêng việc chênh lệch chi phí giảm từ $4$ xuống $2{,}786$ sẽ đẩy ngưỡng lên $10/2{,}786\approx3{,}59$; ngưỡng giảm vì phần thưởng đích giảm mạnh hơn. Các đường dài hơn tới cùng điểm kết thúc có lợi tức nhỏ hơn; quỹ đạo không kết thúc cho $-c/(1-\gamma)=-10c$, nhỏ hơn $-1{,}9c$ khi $c&gt;0$. Vì vậy chỉ cần so sánh hai đường ngắn nhất; câu (c) của Bài tập 02.21 xét thêm chính sách ngẫu nhiên.</p></aside>
+<p><strong>Kết luận:</strong> với $\gamma=0{,}9$, $c^*\approx2{,}12&lt;2{,}5$, vì thưởng đích giảm từ $10$ còn $5{,}905$, còn chênh lệch chi phí chỉ giảm từ $4$ còn $2{,}786$.</p>
+<aside class="notes"><p>Với $\gamma=0{,}9$: $0{,}9^5=0{,}59049$ và $0{,}9^6=0{,}531441$, nên năm bước $-c$ cộng bước cuối $10-c$ cho $-c\cdot4{,}68559+5{,}9049$; hai bước vào hố cho $-c(1+0{,}9)$. Với $c=1$: $5{,}9049-4{,}68559\approx1{,}219$. Với $c=3$: $5{,}9049-14{,}05677\approx-8{,}152$. Riêng việc chênh lệch chi phí giảm từ $4$ xuống $2{,}786$ sẽ đẩy ngưỡng lên $10/2{,}786\approx3{,}59$; ngưỡng giảm vì phần thưởng đích giảm mạnh hơn. Các đường dài hơn tới cùng điểm kết thúc có lợi tức nhỏ hơn; quỹ đạo không kết thúc cho $-c/(1-\gamma)=-10c$, nhỏ hơn $-1{,}9c$ khi $c&gt;0$. Vì vậy chỉ cần so sánh hai đường ngắn nhất.</p></aside>
 </section>
 <section data-slide-id="L02-07-05">
 <h2>Trả lời vấn đề trung tâm</h2>
@@ -603,13 +604,13 @@
 <section data-slide-id="L02-07-03">
 <h2>Bài tập về nhà và tài liệu đọc</h2>
 <table><thead><tr><th>Mạch</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody>
-<tr><th>Tệp bài tập</th><td>02.1, 02.14</td><td>02.2, 02.3, 02.15</td><td>02.4, 02.19</td><td>02.5, 02.7, 02.16, 02.17</td><td>02.8, 02.18, 02.20</td><td>02.21, 02.22</td></tr>
-<tr><th>Chỉ trong ghi chú</th><td>—</td><td>02.11</td><td>02.13</td><td>02.6, 02.9, 02.10(a), 02.12</td><td>02.10(b)</td><td>—</td></tr>
+<tr><th>Tệp bài tập</th><td>02.14</td><td>—</td><td>02.20</td><td>02.15–02.19, 02.21, 02.22</td><td>02.23, 02.24</td><td>—</td></tr>
+<tr><th>Ghi chú bài giảng</th><td>02.1</td><td>02.2, 02.3, 02.11</td><td>02.4, 02.13</td><td>02.5–02.7, 02.9, 02.10(a), 02.12</td><td>02.8, 02.10(b)</td><td>—</td></tr>
 </tbody></table>
 <p><strong>Tài liệu đọc:</strong> Sutton và Barto (2018), §3.1–3.5, §17.3; bài giảng gốc, trang 1–27.</p>
 <p><a href="material-viewer.html?doc=materials/lec-02/lecture-note.md&amp;deck=lecture-02-giao-dien-tac-tu-moi-truong.html">Ghi chú bài giảng</a> · <a href="material-viewer.html?doc=materials/lec-02/exercises.md&amp;deck=lecture-02-giao-dien-tac-tu-moi-truong.html">Bài tập</a></p>
 <p><a href="lecture-03-qua-trinh-quyet-dinh-markov.html">Bài 03</a>: quá trình quyết định Markov (Markov decision process, MDP); phương trình Bellman từ hệ thức truy hồi.</p>
-<aside class="notes"><p>Tệp bài tập có mười sáu bài, mỗi bài kèm gợi ý và lời giải. Các bài 02.1–02.5, 02.7, 02.8 trùng các bài tập đã giải trên lớp; 02.14–02.22 không có trong ghi chú bài giảng, trong đó 02.21 là bài tập tổng hợp của mạch 7 cộng thêm câu (c). Bài tập 02.6 và các bài tập củng cố 02.9–02.13 chỉ có trong ghi chú bài giảng. Bài tập tuần 2 (2025–2026), bài 3, 4, 7, 8, 9 cần quá trình quyết định Markov và phương trình Bellman của Bài 03. Ở Bài 03, lấy kỳ vọng hai vế của hệ thức truy hồi dưới chính sách $\pi$ cho phương trình Bellman của $v_\pi$, nhờ đó giá trị tính được bằng một hệ phương trình thay cho việc liệt kê quỹ đạo.</p></aside>
+<aside class="notes"><p>Tệp bài tập có mười một bài 02.14–02.24, lấy từ chương 3 của Sutton và Barto (2018), mỗi bài kèm gợi ý và lời giải; bài 02.1–02.13 nằm trong ghi chú bài giảng. Bài 02.1–02.5, 02.7, 02.8 của ghi chú trùng các bài tập đã giải trên lớp. Bài tập tuần 2 (2025–2026), bài 3, 4, 7, 8, 9 cần quá trình quyết định Markov và phương trình Bellman của Bài 03. Ở Bài 03, lấy kỳ vọng hai vế của hệ thức truy hồi dưới chính sách $\pi$ cho phương trình Bellman của $v_\pi$, nhờ đó giá trị tính được bằng một hệ phương trình thay cho việc liệt kê quỹ đạo.</p></aside>
 </section>
 </section>
 <div class="footer">Học tăng cường · Học kỳ 1, 2026–2027 · Bài 02</div>

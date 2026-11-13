@@ -1,6 +1,6 @@
 # Storyboard Bài 02 — Giao diện tác tử–môi trường
 
-Bản viết lại trong đợt sửa 2026-10-12 (giai đoạn II), khớp deck `2627-1/lecture-02-giao-dien-tac-tu-moi-truong.html`: 7 mạch, 66 trang (bản trước 41 trang; 65 trang trước vòng biên tập sau rà soát), 120 phút. Ghi chú bài giảng đã commit (`39a1bd1`) là nguồn chuẩn: deck tóm tắt ghi chú theo cùng thứ tự khái niệm, cùng số liệu và cùng số hiệu (bộ đếm chung 02.1–02.20, Ví dụ 02.1–02.15, Bài tập 02.1–02.13). Số âm tiết đo bằng `density.py` (đếm cả dấu câu còn lại sau khi bỏ KaTeX, nên cao hơn số âm tiết thật vài đơn vị). Các bản storyboard trước đợt này được thay toàn bộ; lịch sử nằm trong `review-log.md`.
+Bản viết lại trong đợt sửa 2026-10-12 (giai đoạn II), khớp deck `2627-1/lecture-02-giao-dien-tac-tu-moi-truong.html`: 7 mạch, 66 trang (bản trước 41 trang; 65 trang trước vòng biên tập sau rà soát), 120 phút. Ghi chú bài giảng đã commit (`39a1bd1`) là nguồn chuẩn: deck tóm tắt ghi chú theo cùng thứ tự khái niệm, cùng số liệu và cùng số hiệu (bộ đếm chung 02.1–02.20, Ví dụ 02.1–02.15, Bài tập 02.1–02.13). Số âm tiết đo bằng `density.py` (đếm cả dấu câu còn lại sau khi bỏ KaTeX, nên cao hơn số âm tiết thật vài đơn vị). Các bản storyboard trước đợt này được thay toàn bộ; lịch sử nằm trong `review-log.md`. Đợt sửa 2026-11-13 (sửa theo bảng phát hiện cùng ngày): số trang giữ 66, không thêm, bỏ hay tách trang; số âm tiết ghi "Đợt sửa 2026-11-13" đo bằng `deck_check.py` (chỉ đếm từ có chữ cái, không đếm số hiệu bài tập), nên thấp hơn số của `density.py` ở các dòng cũ.
 
 ## Bản đồ mạch
 
@@ -38,11 +38,11 @@ Mỗi cụm lớn có một trang "Bài tập: …" với "Lời giải:" trên 
 
 | Trang | Âm tiết theo `density.py` (trước đợt → hiện tại) | Dòng | Lý do |
 |---|---|---|---|
-| `L02-01-03` Mục tiêu học tập | 40 → 79 → 80 | 5 | Trang mục tiêu, trần 80; năm mục tiêu kèm số hiệu bài tập đo từng mục tiêu, cả 02.1–02.13 của ghi chú bài giảng lẫn 02.14–02.22 của `exercises.md` (đợt 2026-10-14: lời mục tiêu 1 và 5 rút ba âm tiết, chữ "Bài tập" chỉ ghi ở mục 1; `density.py` đếm cả số hiệu bài, đếm tay không tính 24 số hiệu là 56; dòng dài nhất 20). |
+| `L02-01-03` Mục tiêu học tập | 40 → 79 → 80 (`density.py`); Đợt sửa 2026-11-13: 58 → 80 (`deck_check.py`) | 5 | Trang mục tiêu, trần 80, không vượt trần. Năm mục tiêu theo phần Mục tiêu học tập của ghi chú, kèm số hiệu bài tập chép đúng ghi chú (02.1–02.13 của ghi chú, 02.14–02.24 của `exercises.md`). Đợt sửa 2026-11-13: thêm phần "tách phần tác tử và môi trường", "tính xác suất dãy hành động", "giải thích trọng số hình học", "giả thiết khi phần thưởng mỗi bước đổi dấu"; dòng dài nhất 19. |
 | `L02-01-04` Nội dung | 45 → 39 | 7 | Bài có 7 mạch; trang "Nội dung" được phép 7 dòng (quyết định chung §5). |
 | `L02-07-06` Kết quả về lợi tức, giá trị và phần thưởng | — → 70 | 6 | Bảng tổng kết, trần 80. |
-| `L02-07-05` Trả lời vấn đề trung tâm | — → 77 | 6 | Trang tổng kết viết song song năm dòng với Vấn đề trung tâm, mỗi dòng có điều kiện và số liệu, cộng dòng "Nguồn:"; trần 80. |
-| `L02-07-03` Bài tập về nhà và tài liệu đọc | 62 → 70 → 80 | 6 | Trang tổng kết bắt buộc: bảng `Mạch \| Bài tập` (chuyển vị, hai hàng "Tệp bài tập" và "Chỉ trong ghi chú" cho mạch 2–7, theo bảng của `exercises.md`), "Tài liệu đọc:", liên kết "Ghi chú bài giảng · Bài tập", dòng nối Bài 03 có thuật ngữ gốc; trần 80 (đợt 2026-10-14: 70 → 80 theo `density.py`, đếm cả số hiệu bài trong bảng; mỗi dòng ≤ 20). |
+| `L02-07-05` Trả lời vấn đề trung tâm | — → 77 (`density.py`); 64 theo `deck_check.py`, không đổi trong Đợt sửa 2026-11-13 | 6 | Trang tổng kết viết song song năm dòng với Vấn đề trung tâm, mỗi dòng có điều kiện và số liệu, cộng dòng "Nguồn:"; trần 80. |
+| `L02-07-03` Bài tập về nhà và tài liệu đọc | 62 → 70 → 80 (`density.py`); Đợt sửa 2026-11-13: 44 → 44 (`deck_check.py`, trong trần 60) | 6 | Trang tổng kết bắt buộc: bảng `Mạch \| Bài tập` (chuyển vị, hai hàng "Tệp bài tập" và "Ghi chú bài giảng" cho mạch 2–7, theo bảng của `exercises.md`), "Tài liệu đọc:", liên kết "Ghi chú bài giảng · Bài tập", dòng nối Bài 03 có thuật ngữ gốc; trần 80 (đợt 2026-10-14: 70 → 80 theo `density.py`, đếm cả số hiệu bài trong bảng; mỗi dòng ≤ 20). |
 
 `L02-03-16` (lời giải bài kiểm tra tính Markov) có 66 âm tiết ở vòng biên tập trước theo `density.py` (khoảng 57 đếm tay, do dấu câu còn lại sau khi bỏ KaTeX); vòng rà lại 2 rút dòng (b), nay 58.
 
@@ -62,7 +62,7 @@ Mạch 1: 9 phút; mạch 2: 16; mạch 3: 27; mạch 4: 15; mạch 5: 27; mạc
 - **Thứ tự:** `L02-02-07` dời lên ngay sau `L02-02-08` (cụm mẫu chuyển kết bằng bài kiểm tra; cụm tín hiệu thưởng kết mạch 2); `L02-05-09` dời lên ngay sau `L02-05-16`.
 - **Ký hiệu:** mức phạt hố đổi $h\to c_{\mathrm H}$ trên deck (chữ $h$ dành cho lịch sử); tọa độ ghi "(cột, hàng)", trạng thái chìa khóa ghi (ô, $k$); tên hướng không đặt trong `\text{}` của KaTeX. Ghi chú bài giảng còn dùng $h$, $(x,y)$, $(x,y,k)$: lệch tạm thời, có đề nghị sửa ghi chú trong review-log.
 - **Nguồn trang 10, 20 (ba thành phần của tác tử):** mô hình $\hat p$ của tác tử trở lại mặt trang ở `L02-05-17`.
-- **Nguồn trang 27 (câu đố phân loại cờ vua, Dota hoặc CS:GO, robot hút bụi):** không đưa lên deck; để dành cho `exercises.md` (giai đoạn III); nay là Bài tập 02.15.
+- **Nguồn trang 27 (câu đố phân loại cờ vua, Dota hoặc CS:GO, robot hút bụi):** không đưa lên deck; để dành cho `exercises.md` (giai đoạn III). Bộ bài 2026-11-12 của `exercises.md` chỉ lấy bài tập chương 3 của Sutton và Barto, nên câu đố này không còn trong tệp; Bài tập 02.15 hiện là điều kiện tổng của hàm động lực.
 - **Hình riêng cho trang chiếu:** `aliasing-pair-deck.svg` (bỏ chú giải trong hình, chú giải viết trên mặt trang `L02-04-08`, cỡ nhãn lớn hơn); `aliasing-pair.svg` của ghi chú giữ nguyên chú giải.
 
 ## Mạch 1: Mở đầu — 9 phút
@@ -77,14 +77,14 @@ Chức năng: phát biểu vấn đề trung tâm trên mê cung $8\times8$, nh�
 
 ### L02-01-06 — Tiên quyết và quy ước
 - Vị trí: mạch 1, sau bìa. 2 phút. Nguồn: ghi chú, Kiến thức tiên quyết và Bảng ký hiệu.
-- Lý do tồn tại: ba dòng "Nhắc lại:" (vòng tương tác, lượt và $G_t$ không chiết khấu, chính sách và giá trị trên lịch sử) và một dòng "Ký hiệu:" (hướng, tọa độ (cột, hàng)); chỉ số $t$, $\mathcal A$, tọa độ ô, $\mathbb E_\pi$).
+- Lý do tồn tại: ba dòng "Nhắc lại:" (vòng tương tác, lượt và $G_t$ không chiết khấu, chính sách và giá trị trên lịch sử) và một dòng "Ký hiệu:" (chỉ số $t=0,1,\dots$; $\mathcal A$ gồm bốn hướng; tọa độ ô (cột, hàng) từ $0$; $\mathbb E_\pi$ theo $\pi$ và môi trường).
 - Kết nối vào: bìa. Kết nối ra: mục tiêu dùng các ký hiệu này.
-- Mục tiêu hỗ trợ: tất cả. Quyết định: thêm. Âm tiết 60.
+- Mục tiêu hỗ trợ: tất cả. Quyết định: thêm. Âm tiết 60. Đợt sửa 2026-11-13: sửa dòng "Ký hiệu:" cho đủ miền, chỉ số thời gian, quy ước kỳ vọng; ghi chú diễn giả bỏ câu xuất xứ số liệu và câu đính chính chỉ số của bài giảng gốc, thêm dòng "Nguồn:". Âm tiết 52 → 53 (`deck_check.py`).
 
 ### L02-01-03 — Mục tiêu học tập
 - Vị trí: mạch 1. 2 phút. Nguồn: ghi chú, Mục tiêu học tập.
-- Lý do tồn tại: năm mục tiêu, mỗi mục tiêu kèm bài tập đo nó (02.1–02.13 của ghi chú, 02.14–02.22 của `exercises.md`, theo dòng "Mức độ:" của từng bài); khớp ghi chú.
-- Quyết định: sửa (ba mục tiêu cũ không đo được → năm mục tiêu; đợt 2026-10-14 thêm số hiệu bài của `exercises.md`). Âm tiết 40 → 79 → 80 (ngoại lệ trang mục tiêu).
+- Lý do tồn tại: năm mục tiêu, mỗi mục tiêu kèm bài tập đo nó, chép đúng danh sách ở phần Mục tiêu học tập của ghi chú (02.1–02.13 của ghi chú, 02.14–02.24 của `exercises.md`); ghi chú diễn giả tách bài của ghi chú và bài của tệp bài tập cho từng mục tiêu.
+- Quyết định: sửa (ba mục tiêu cũ không đo được → năm mục tiêu; đợt 2026-10-14 thêm số hiệu bài của `exercises.md`). Âm tiết 40 → 79 → 80 (ngoại lệ trang mục tiêu). Đợt sửa 2026-11-13: sửa số hiệu theo bộ bài 2026-11-12 và lời mục tiêu theo ghi chú; 58 → 80 (`deck_check.py`), đúng trần trang mục tiêu.
 
 ### L02-01-04 — Nội dung
 - Vị trí: mạch 1. 1 phút. Nguồn: bản đồ bảy mạch.
@@ -95,7 +95,7 @@ Chức năng: phát biểu vấn đề trung tâm trên mê cung $8\times8$, nh�
 - Vị trí: cuối mạch 1. 3 phút. Nguồn: PPTX tr. 25–26.
 - Lý do tồn tại: bài toán một dòng ("Nhu cầu:") và năm câu trả lời có điều kiện đánh số 2–6, cạnh hình mê cung.
 - Kết nối vào: nội dung. Kết nối ra: nhu cầu ghi một bước (mạch 2).
-- Quyết định: sửa và chuyển vị trí (trước là "Mê cung và chuỗi quyết định", nhãn "Nhiệm vụ:" bị bỏ). Câu hỏi 2–3 của trang `L02-01-05` cũ chuyển vào ghi chú diễn giả. Âm tiết 21 → 60.
+- Quyết định: sửa và chuyển vị trí (trước là "Mê cung và chuỗi quyết định", nhãn "Nhiệm vụ:" bị bỏ). Câu hỏi 2–3 của trang `L02-01-05` cũ chuyển vào ghi chú diễn giả. Âm tiết 21 → 60. Đợt sửa 2026-11-13: "Nhu cầu:" nêu bài toán cụ thể (tiêu chí so sánh hai cách đi trên mê cung $8\times8$); dòng 2 viết "Phần thưởng sau $A_t$ là $R_{t+1}$" để công thức không ngắt dòng ở 1600×900; ghi chú diễn giả giới thiệu mê cung đích–hố ở dòng cuối, rút 157 → 148 âm tiết. Âm tiết 58 → 58 (`deck_check.py`).
 
 ### L02-01-05 — (bỏ)
 - Quyết định: bỏ (trang câu hỏi ngoài cấu trúc mạch mở đầu, không có lời giải); nội dung vào ghi chú diễn giả của `L02-01-02`.
@@ -107,7 +107,7 @@ Chức năng: cố định ranh giới tác tử–môi trường trên mê cung
 ### L02-02-00 — 2. Vòng tương tác và tín hiệu thưởng (trang tiêu đề mạch)
 - Vị trí: điểm vào mạch 2. 1 phút. Bước `vấn đề` của cụm mẫu chuyển (dòng dẫn "Muốn ghi chuỗi quyết định thành dữ liệu, phải cố định thứ tự quan sát, hành động, phần thưởng.", 19 âm tiết).
 - Ghi chú diễn giả: kết quả kế thừa (vòng tương tác Bài 01), nhiệm vụ, đầu ra (chỉ số thời gian cho mạch 3 và 5).
-- Quyết định: thêm.
+- Quyết định: thêm. Đợt sửa 2026-11-13: từ khóa "Phản hồi trễ" → "Phần thưởng trễ" theo thuật ngữ của ghi chú.
 
 ### L02-02-01 — Ranh giới tác tử–môi trường
 - Vị trí: mạch 2, bước `trực giác` của cụm mẫu chuyển. 2 phút. Nguồn: PPTX tr. 4, 10, 20; Sutton và Barto §3.1.
@@ -146,12 +146,12 @@ Chức năng: cố định ranh giới tác tử–môi trường trên mê cung
 ### L02-02-05 — Giả thuyết phần thưởng
 - Vị trí: mạch 2, cụm phụ (`ví dụ`, nhắc lại phát biểu). 2 phút. Nguồn: PPTX tr. 9, 25–26; ghi chú Ví dụ 02.3.
 - Lý do tồn tại: giả thuyết phần thưởng (reward hypothesis) và hai đường 16 / 18 bước.
-- Quyết định: sửa (tiêu đề bỏ "điểm thưởng"; dòng >20 âm tiết tách; "Ví dụ." đúng nhãn). Âm tiết 58 → 58.
+- Quyết định: sửa (tiêu đề bỏ "điểm thưởng"; dòng >20 âm tiết tách; "Ví dụ." đúng nhãn). Âm tiết 58 → 58. Đợt sửa 2026-11-13: ghi chú diễn giả "đây là một giả thuyết mô hình hóa" (bỏ đối lập "không phải định lý").
 
-### L02-02-06 — Phản hồi trễ
+### L02-02-06 — Phần thưởng trễ
 - Vị trí: mạch 2, cụm phụ (`ứng dụng`). 1 phút. Nguồn: PPTX tr. 7–8, 11.
 - Lý do tồn tại: hình ván cờ; liên hệ bước Nam tại $(4,1)$.
-- Quyết định: sửa nhẹ (nhãn "Ví dụ.", chỉ số $t$ thay $O_i$ trong ghi chú). Âm tiết 30 → 26.
+- Quyết định: sửa nhẹ (nhãn "Ví dụ.", chỉ số $t$ thay $O_i$ trong ghi chú). Âm tiết 30 → 26. Đợt sửa 2026-11-13: tiêu đề và từ khóa trang `L02-02-00` đổi "Phản hồi trễ" → "Phần thưởng trễ (delayed reward)" theo thuật ngữ của ghi chú; dòng cuối "kết quả của ván phụ thuộc cả $A_0,A_1,A_2$" thay "đều có thể góp phần"; ghi chú diễn giả thêm bước Nam tại $(4,1)$ theo ghi chú. Âm tiết 26 → 27.
 
 ## Mạch 3: Thông tin khả dụng và tính Markov — 27 phút
 
@@ -170,17 +170,17 @@ Chức năng: tách trạng thái, quan sát, biểu diễn; ghi quá khứ bằ
 ### L02-03-11 — Trạng thái, quan sát và biểu diễn
 - Vị trí: mạch 3, bước `trực giác`. 2 phút. Nguồn: PPTX tr. 16; ghi chú Mục 2.1.
 - Lý do tồn tại: bảng ba đối tượng với giá trị tại $(2,1)$; "Nhắc lại:" $S_t,O_t$ theo Bài 01.
-- Quyết định: sửa và tách (công thức $f_t$ sang `L02-03-12`). Âm tiết 63 → 58.
+- Quyết định: sửa và tách (công thức $f_t$ sang `L02-03-12`). Âm tiết 63 → 58. Đợt sửa 2026-11-13: nhãn ngoài danh sách "Mở rộng Bài 01:" thay bằng "Lưu ý: $X_t$ là đối tượng mới so với Bài 01." (sau kiểm lại bỏ vế $S_t$ vì lặp ô bảng); ghi chú diễn giả bỏ câu về mê cung có chìa khóa (ví dụ đó chưa xuất hiện; nội dung đã có ở `L02-03-04`). Âm tiết 49 → 57 → 52 (`deck_check.py`, sau kiểm lại).
 
 ### L02-03-12 — Biểu diễn từ thông tin khả dụng
 - Vị trí: mạch 3, bước `hình thức`. 2 phút. Nguồn: PPTX tr. 14–16, 21; ghi chú Định nghĩa 02.2.
 - Lý do tồn tại: "Định nghĩa." $X_t=f_t(O_{0:t},A_{0:t-1},R_{1:t})$ và ba trường hợp ($\phi(O_t)$, cửa sổ, toàn bộ dữ liệu).
-- Quyết định: thêm (tách từ `L02-03-11`). Âm tiết 51.
+- Quyết định: thêm (tách từ `L02-03-11`). Âm tiết 51. Đợt sửa 2026-11-13: thêm "$\phi$ không đổi theo $t$" để định nghĩa $\phi$ trên mặt trang. Âm tiết 44 → 47 (`deck_check.py`).
 
 ### L02-03-13 — Ví dụ: ba bước đầu trên mê cung 8×8
 - Vị trí: mạch 3, bước `vấn đề`, `trực giác`, `ví dụ` của cụm lịch sử. 2 phút. Nguồn: ghi chú Ví dụ 02.5.
 - Lý do tồn tại: dãy 10 thành phần và dãy mã tác tử nhận; ví dụ trước định nghĩa lịch sử.
-- Quyết định: thêm. Âm tiết 55.
+- Quyết định: thêm. Âm tiết 55. Đợt sửa 2026-11-13: "Diễn giải:" bỏ chỉ dẫn "của định nghĩa sau", nêu "dãy ô ghi quá khứ của môi trường, $10$ thành phần". Âm tiết 46 → 47 (`deck_check.py`).
 
 ### L02-03-09 — Lịch sử trạng thái và quỹ đạo
 - Vị trí: mạch 3, bước `hình thức` của cụm lịch sử. 2 phút. Nguồn: PPTX tr. 14–16; ghi chú Định nghĩa 02.3.
@@ -200,7 +200,7 @@ Chức năng: tách trạng thái, quan sát, biểu diễn; ghi quá khứ bằ
 ### L02-03-14 — Ví dụ: mê cung có chìa khóa
 - Vị trí: mạch 3, bước `vấn đề` (Nhu cầu), `trực giác`, `ví dụ` của cụm Markov. 3 phút. Nguồn: ghi chú Ví dụ 02.6.
 - Lý do tồn tại: hai lịch sử cùng độ dài $t=17$ cho hai dự báo $0$ và $1$.
-- Kết nối ra: (2.3) dùng đúng $h,h'$. Quyết định: thêm. Âm tiết 59.
+- Kết nối ra: (2.3) dùng đúng $h,h'$. Quyết định: thêm. Âm tiết 59. Đợt sửa 2026-11-13: định nghĩa bit $k$ trên mặt trang ("bit $k=1$ khi đã nhặt", cửa mở khi $k=1$), vì `L02-03-04`, `L02-03-15` dùng $k$. Âm tiết 53 → 54 (`deck_check.py`).
 
 ### L02-03-04 — Tính Markov
 - Vị trí: mạch 3, bước `hình thức`. 3 phút. Nguồn: PPTX tr. 17; ghi chú Định nghĩa 02.5.
@@ -210,7 +210,7 @@ Chức năng: tách trạng thái, quan sát, biểu diễn; ghi quá khứ bằ
 ### L02-03-10 — Mở rộng trạng thái bằng lịch sử
 - Vị trí: mạch 3, bước `ứng dụng` của cụm Markov. 2 phút. Nguồn: PPTX tr. 17; ghi chú Mệnh đề 02.6, Nhận xét 02.7.
 - Lý do tồn tại: "Mệnh đề.", "Chứng minh." một dòng, "Ý nghĩa:", "Ví dụ." cửa sổ $m\le11$ tọa độ (độ dài cửa sổ ký hiệu $m$, chữ $k$ dành cho bit chìa khóa).
-- Quyết định: sửa (tiêu đề dạng câu hỏi đổi theo quyết định 2 của điều phối viên). Âm tiết 39 → 56.
+- Quyết định: sửa (tiêu đề dạng câu hỏi đổi theo quyết định 2 của điều phối viên). Âm tiết 39 → 56. Đợt sửa 2026-11-13: dòng cửa sổ đổi nhãn "Ví dụ." → "Nhận xét." (nội dung của Nhận xét 02.7); số hiệu 02.7 để trong ghi chú diễn giả, vì mặt trang đã dẫn Mệnh đề 02.6 (một số hiệu mỗi trang). Âm tiết 53 → 54 (`deck_check.py`).
 
 ### L02-03-15 — Bài tập: kiểm tra tính Markov (đề)
 - Vị trí: cuối mạch 3, bước `kiểm tra` của cụm Markov và lịch sử. 2 phút. Nguồn: ghi chú Bài tập 02.3 (câu a) và Bài tập 02.11 (câu b).
@@ -221,7 +221,7 @@ Chức năng: tách trạng thái, quan sát, biểu diễn; ghi quá khứ bằ
 - Vị trí: cuối mạch 3, bước `kiểm tra` của cụm Markov. 1 phút. Nguồn: ghi chú Bài tập 02.3, 02.11.
 - Lý do tồn tại: lời giải trên mặt trang, ở trang kế cùng tiêu đề (đề và lời giải trên một trang vượt 60 âm tiết); kết luận mã bốn ô kề không có tính Markov, khớp dòng 3 của Vấn đề trung tâm.
 - Loại: bài tập có lời giải mẫu. Mục tiêu: 2.
-- Quyết định: thêm (vòng biên tập sau rà soát). Âm tiết 58.
+- Quyết định: thêm (vòng biên tập sau rà soát). Âm tiết 58. Đợt sửa 2026-11-13: ghi chú diễn giả câu (b) viết theo lịch sử mã (mã trước, bước Đông, mã hiện tại) thay cho lịch sử ô, vì tính Markov của mã xét lịch sử của dãy mã.
 
 ## Mạch 4: Quy tắc chọn hành động — 15 phút
 
@@ -233,11 +233,11 @@ Chức năng: viết cách chọn hướng thành phân phối trên biểu di�
 ### L02-04-01 — Chính sách
 - Vị trí: mạch 4, bước `vấn đề` + `trực giác`. 2 phút. Nguồn: PPTX tr. 20–21, 26; hw02 bài 6.
 - Lý do tồn tại: "Nhu cầu:" hai tác tử ở cùng ô; câu định nghĩa bằng lời giữ theo quyết định 3; hình chính sách nguồn.
-- Quyết định: sửa. Âm tiết 12 → 50.
+- Quyết định: sửa. Âm tiết 12 → 50. Đợt sửa 2026-11-13: đặt tên *chính sách mũi tên* cho bảng của hình như ghi chú (Mục 3), dùng thống nhất ở `L02-04-03`, `L02-04-08`, `L02-05-01`, `L02-05-13`. Âm tiết 46 → 48 (`deck_check.py`); sau kiểm lại tách thành hai câu, "theo mũi tên, tác tử đi từ $(0,2)$ tới $\mathrm G$ sau 16 bước", 54 âm tiết, 4 dòng, dòng dài nhất 15.
 
 ### L02-04-02 — Ví dụ: hai quy tắc tại ô (1,2)
 - Vị trí: mạch 4, bước `ví dụ`. 2 phút. Nguồn: ghi chú Ví dụ 02.7.
-- Quyết định: sửa (tiêu đề "Ví dụ:", rút chú thích). Âm tiết 46 → 44.
+- Quyết định: sửa (tiêu đề "Ví dụ:", rút chú thích). Âm tiết 46 → 44. Đợt sửa 2026-11-13: câu cuối ghi chú diễn giả sửa: mỗi hàng là phân phối $\pi(\cdot\mid(1,2))$ của một chính sách.
 
 ### L02-04-04 — Chính sách trên biểu diễn
 - Vị trí: mạch 4, bước `hình thức` (chính sách ngẫu nhiên). 2 phút. Nguồn: PPTX tr. 21; ghi chú Định nghĩa 02.8.
@@ -293,12 +293,12 @@ Chức năng: quy chuỗi phần thưởng về lợi tức (kèm lý do trọng
 ### L02-05-15 — Ví dụ: ba bước cuối của đường 16 bước
 - Vị trí: mạch 5, bước `ví dụ` của cụm lợi tức (và `ứng dụng` của trọng số hình học). 1 phút. Nguồn: ghi chú Ví dụ 02.10.
 - Lý do tồn tại: ví dụ trước định nghĩa lợi tức; $-1{,}75$ với $\gamma=0{,}5$.
-- Quyết định: thêm (kế hoạch A3 đề xuất một dòng ví dụ trên `L02-05-03`; ghi chú dùng ba bước cuối $t=13$, nên ví dụ thành trang riêng). Âm tiết 40.
+- Quyết định: thêm (kế hoạch A3 đề xuất một dòng ví dụ trên `L02-05-03`; ghi chú dùng ba bước cuối $t=13$, nên ví dụ thành trang riêng). Âm tiết 40. Đợt sửa 2026-11-13: ghi chú diễn giả thay chỉ dẫn "hệ thức truy hồi phát biểu sau định nghĩa lợi tức" bằng công thức $G_t=R_{t+1}+\gamma G_{t+1}$.
 
 ### L02-05-03 — Lợi tức
 - Vị trí: mạch 5, bước `hình thức`. 2 phút. Nguồn: PPTX tr. 22; ghi chú Định nghĩa 02.12.
 - Lý do tồn tại: lợi tức (return), $G_T=0$; nhiệm vụ tiếp diễn; $\gamma=1$, $\gamma=0$.
-- Quyết định: sửa (tiêu đề "Phần thưởng tích lũy" → "Lợi tức"; điều kiện $\gamma<1$ lên mặt trang). Âm tiết 19 → 38.
+- Quyết định: sửa (tiêu đề "Phần thưởng tích lũy" → "Lợi tức"; điều kiện $\gamma<1$ lên mặt trang). Âm tiết 19 → 38. Đợt sửa 2026-11-13: thêm "(continuing task)"; ghi chú diễn giả dùng "chân trời hiệu dụng (effective horizon)" và lập luận tổng trọng số $1/(1-\gamma)$ của ghi chú. Âm tiết 30 → 32 (`deck_check.py`).
 
 ### L02-05-16 — Hệ thức truy hồi và chặn của lợi tức
 - Vị trí: mạch 5, bước `hình thức` (kết quả) và `ứng dụng` của cụm lợi tức. 2 phút. Nguồn: ghi chú Mệnh đề 02.13.
@@ -311,7 +311,7 @@ Chức năng: quy chuỗi phần thưởng về lợi tức (kèm lý do trọng
 
 ### L02-05-04 — Ví dụ: môi trường hai nhánh
 - Vị trí: mạch 5, bước `vấn đề` (Nhu cầu), `trực giác`, `ví dụ` của cụm hàm giá trị. 1 phút. Nguồn: PPTX tr. 22; ghi chú Ví dụ 02.11.
-- Quyết định: sửa (tiêu đề "Ví dụ:"; dòng >20 âm tiết rút). Âm tiết 39 → 53.
+- Quyết định: sửa (tiêu đề "Ví dụ:"; dòng >20 âm tiết rút). Âm tiết 39 → 53. Đợt sửa 2026-11-13: ghi chú diễn giả bỏ câu "môi trường giả định" và câu lặp mặt trang về $-4$.
 
 ### L02-05-05 — Hàm giá trị trạng thái
 - Vị trí: mạch 5, bước `hình thức`. 2 phút. Nguồn: PPTX tr. 22, 24; ghi chú Định nghĩa 02.14, Nhận xét 02.15.
@@ -320,16 +320,16 @@ Chức năng: quy chuỗi phần thưởng về lợi tức (kèm lý do trọng
 ### L02-05-13 — Ví dụ: giá trị của chính sách trên mê cung 8×8
 - Vị trí: mạch 5, bước `ứng dụng` của cụm hàm giá trị. 2 phút. Nguồn: PPTX tr. 26; ghi chú Ví dụ 02.12.
 - Lý do tồn tại: bảng giá trị nguồn ($-16$, $-1$, $-12$) và hệ thức $v_\pi(s)=-1+v_\pi(s')$.
-- Quyết định: thêm (`source-values.svg` trước đây không dùng). Âm tiết 40.
+- Quyết định: thêm (`source-values.svg` trước đây không dùng). Âm tiết 40. Đợt sửa 2026-11-13: "Chính sách mũi tên" thay "Chính sách trên hình mê cung". Âm tiết 34 → 32 (`deck_check.py`).
 
 ### L02-05-08 — Hàm động lực
 - Vị trí: mạch 5, bước `ví dụ` + `hình thức` của cụm hàm động lực. 2 phút. Nguồn: PPTX tr. 13, 23; ghi chú Ví dụ 02.13, Định nghĩa 02.16.
 - Lý do tồn tại: ví dụ một bước đứng trước định nghĩa; $p$ chữ thường; $p(s'\mid s,a)$, $r(s,a)$.
-- Quyết định: sửa (tiêu đề "Mô hình chuyển trạng thái và phần thưởng" → "Hàm động lực" theo ghi chú; $P\to p$). Âm tiết 37 → 56.
+- Quyết định: sửa (tiêu đề "Mô hình chuyển trạng thái và phần thưởng" → "Hàm động lực" theo ghi chú; $P\to p$). Âm tiết 37 → 56. Đợt sửa 2026-11-13: "Nhu cầu:" thêm điều kiện "khi $X_t=S_t$" cho việc $p$ chung cho mọi chính sách; ghi chú diễn giả nêu lập luận hai bước và phản ví dụ bit $z$ của ghi chú (Mục 4.5), bỏ câu đối chiếu ký hiệu *Học máy thống kê* để giữ ≤ 150 âm tiết. Âm tiết 48 → 49; ghi chú diễn giả 108 → 148 sau kiểm lại (`deck_check.py`; phản ví dụ nêu đủ phân bố của $z$, giả thiết đếm được thành câu "Giả thiết: …").
 
 ### L02-05-17 — Dự đoán và điều khiển
 - Vị trí: mạch 5, bước `ứng dụng` của cụm hàm động lực và hàm giá trị. 1 phút. Nguồn: PPTX tr. 24; ghi chú Nhận xét 02.17.
-- Quyết định: thêm (trước đây nằm trong ghi chú diễn giả mạch 6). Âm tiết 60.
+- Quyết định: thêm (trước đây nằm trong ghi chú diễn giả mạch 6). Âm tiết 60. Đợt sửa 2026-11-13: "Lưu ý: $v_\pi$ phụ thuộc $\pi$; $p$ thì không khi $X_t=S_t$."; ghi chú diễn giả nhắc điều kiện này. Âm tiết 54 → 55 (`deck_check.py`).
 
 ### L02-05-18 — Bài tập: hàm động lực của bước trượt
 - Vị trí: cuối mạch 5, bước `kiểm tra` của cụm hàm động lực. 2 phút. Nguồn: ghi chú Bài tập 02.7.
@@ -345,7 +345,7 @@ Chức năng: dùng lợi tức với $\gamma=1$ để dự báo hành vi tối 
 
 ### L02-06-01 — Ví dụ: mê cung đích–hố
 - Vị trí: mạch 6, bước `vấn đề` (Nhu cầu) và dữ kiện. 2 phút. Nguồn: ví dụ do người dùng duyệt; ghi chú Ví dụ 02.14.
-- Quyết định: sửa ($\alpha\to c$; tiêu đề "Ví dụ:"; nhãn nút chữ đứng $\mathrm S,\mathrm H,\mathrm G$). Âm tiết 31 → 50.
+- Quyết định: sửa ($\alpha\to c$; tiêu đề "Ví dụ:"; nhãn nút chữ đứng $\mathrm S,\mathrm H,\mathrm G$). Âm tiết 31 → 50. Đợt sửa 2026-11-13: dòng "Nguồn:" của ghi chú diễn giả chỉ còn "ghi chú bài giảng, Ví dụ 02.14"; xuất xứ ghi trong `review-log.md`.
 
 ### L02-06-02 — Ví dụ: mê cung đích–hố, hai lợi tức
 - Vị trí: mạch 6, bước `ví dụ`. 2 phút. Nguồn: ghi chú Ví dụ 02.15.
@@ -370,7 +370,7 @@ Chức năng: dùng lợi tức với $\gamma=1$ để dự báo hành vi tối 
 
 ### L02-06-07 — Khuyến khích và chế tài
 - Vị trí: cuối mạch 6, bước `ứng dụng`. 1 phút. Nguồn: ghi chú Nhận xét 02.19, 02.20.
-- Quyết định: sửa (giữ vị trí cuối mạch theo quyết định 9; một khung; pháp lý, đạo đức vào ghi chú diễn giả). Âm tiết 80 → 59; dòng tối đa 24 → 20.
+- Quyết định: sửa (giữ vị trí cuối mạch theo quyết định 9; một khung; pháp lý, đạo đức vào ghi chú diễn giả). Âm tiết 80 → 59; dòng tối đa 24 → 20. Đợt sửa 2026-11-13: "Khuyến khích", "Chế tài" in nghiêng như thuật ngữ mới, câu "… là …" thay nhãn in đậm. Âm tiết 57 → 59 (`deck_check.py`).
 
 ## Mạch 7: Tổng kết và chuyển tiếp — 12 phút
 
@@ -388,13 +388,13 @@ Chức năng: đặt kết quả cạnh giả thiết không được bỏ, vậ
 - Quyết định: thêm. Âm tiết 70 (ngoại lệ bảng tổng kết).
 
 ### L02-07-04 — Bài tập: mê cung đích–hố có chiết khấu
-- Vị trí: mạch 7, bài tập tổng hợp. 2 phút. Nguồn: kế hoạch A2; trùng Bài tập 02.21 của `exercises.md`, câu (a), (b) (ghi chú diễn giả dẫn số hiệu từ đợt 2026-10-14).
+- Vị trí: mạch 7, bài tập tổng hợp. 2 phút. Nguồn: kế hoạch A2; ghi chú Mục 5.2 (vai trò giả thiết $\gamma=1$ của Mệnh đề 02.18). Bộ bài 2026-11-12 của `exercises.md` không còn bài này; Đợt sửa 2026-11-13 giữ bài trên deck theo quyết định D02, ghi chú diễn giả bỏ số hiệu "02.21" và dẫn Mục 5.2.
 - Lý do tồn tại: dùng lợi tức chiết khấu, tổng hình học và cách so sánh đường kết thúc khi bỏ giả thiết $\gamma=1$.
 - Loại: bài tập tổng hợp có lời giải mẫu ở trang kế. Quyết định: thêm. Âm tiết 53.
 
 ### L02-07-07 — Bài tập: mê cung đích–hố có chiết khấu (lời giải)
 - Vị trí: mạch 7. 2 phút. Số liệu tính lại: $(1-0{,}9^6)/0{,}1=4{,}68559$; $10\cdot0{,}9^5=5{,}9049$; $c=1$: $1{,}219$ và $-1{,}9$; $c=3$: $-8{,}152$ và $-5{,}7$; $c^*=5{,}9049/2{,}78559\approx2{,}120$.
-- Quyết định: thêm. Âm tiết 41.
+- Quyết định: thêm. Âm tiết 41. Đợt sửa 2026-11-13: "Kết luận:" viết thành kết quả có điều kiện ($c^*\approx2{,}12<2{,}5$ khi $\gamma=0{,}9$, kèm lý do), bỏ chuỗi mũi tên; ghi chú diễn giả bỏ mệnh đề về "câu (c) của Bài tập 02.21". Âm tiết 26 → 28 (`deck_check.py`).
 
 ### L02-07-05 — Trả lời vấn đề trung tâm
 - Vị trí: mạch 7. 1 phút. "Kết luận:" có điều kiện và dòng "Nguồn:".
@@ -405,5 +405,5 @@ Chức năng: đặt kết quả cạnh giả thiết không được bỏ, vậ
 - Quyết định: sửa và đặt trước `L02-07-03` (gom câu tự kiểm tra từ các trang "Câu hỏi kiểm tra" cũ). Âm tiết 34 → 60.
 
 ### L02-07-03 — Bài tập về nhà và tài liệu đọc
-- Vị trí: cuối mạch 7. 1 phút. Bảng `Mạch | Bài tập` chuyển vị theo bảng của `exercises.md`: hàng "Tệp bài tập" (02.1–02.5, 02.7, 02.8, 02.14–02.22 theo mạch 2–7), hàng "Chỉ trong ghi chú" (02.6, 02.9–02.13); "Tài liệu đọc:"; liên kết "Ghi chú bài giảng · Bài tập" tới hai trang viewer; dòng nối Bài 03 (MDP, phương trình Bellman).
-- Quyết định: sửa (bỏ `h3` thay nhãn, thêm bảng và liên kết viewer, bỏ đường dẫn tệp nguồn khỏi ghi chú diễn giả). Âm tiết 62 → 70. Đợt 2026-10-14: đồng bộ với `exercises.md` (bảng sáu mạch, liên kết viewer bài tập, ghi chú diễn giả nêu phân bố bài giữa tệp bài tập và ghi chú); âm tiết 70 → 80, trong trần trang tổng kết.
+- Vị trí: cuối mạch 7. 1 phút. Bảng `Mạch | Bài tập` chuyển vị, chép đúng bảng mạch ở đầu `exercises.md`: hàng "Tệp bài tập" (02.14–02.24 theo mạch 2–6), hàng "Ghi chú bài giảng" (02.1–02.13, kể cả các bài đã giải trên lớp); "Tài liệu đọc:"; liên kết "Ghi chú bài giảng · Bài tập" tới hai trang viewer; dòng nối Bài 03 (MDP, phương trình Bellman).
+- Quyết định: sửa (bỏ `h3` thay nhãn, thêm bảng và liên kết viewer, bỏ đường dẫn tệp nguồn khỏi ghi chú diễn giả). Âm tiết 62 → 70. Đợt 2026-10-14: đồng bộ với `exercises.md` (bảng sáu mạch, liên kết viewer bài tập, ghi chú diễn giả nêu phân bố bài giữa tệp bài tập và ghi chú); âm tiết 70 → 80, trong trần trang tổng kết. Đợt sửa 2026-11-13: bảng chép lại theo `exercises.md` hiện tại (02.20 ở mạch 4 như tệp; đề nghị chuyển sang mạch 5 ghi trong `review-log.md`), hàng thứ hai đổi tên "Ghi chú bài giảng"; ghi chú diễn giả nêu mười một bài 02.14–02.24 lấy từ chương 3 của Sutton và Barto (2018). Âm tiết 44 → 44 (`deck_check.py`).

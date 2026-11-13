@@ -3684,3 +3684,81 @@ Quyết định của điều phối viên: **chấp nhận**; commit `fix(mater
 **Đã kiểm, không lỗi (theo báo cáo, điều phối viên kiểm mẫu).** Cấu hình RevealJS, plugin cục bộ, footer, thứ tự CSS. 7 mạch; mở đầu đúng thứ tự. Sáu trang tiêu đề mạch đúng markup và `id`, dòng dẫn 18–20 âm tiết "Muốn …, phải …", ≤ 5 từ khóa, ghi chú diễn giả 63–92. Mạch kết luận đủ thành phần. Mật độ trong trần (L02-07-05 có ngoại lệ). Dẫn chiếu khối khác đúng (Định nghĩa 02.1–02.16, Nhận xét, Mệnh đề 02.6, 02.13, 02.18, Định lý 02.11, Ví dụ 02.2–02.15, Tình huống 02.2). Bài trên lớp cho cùng kết quả với Bài tập 02.1–02.5, 02.7, 02.8, 02.11 của ghi chú. Bản đồ mê cung dựng lại từ note:378: 27 ô đi được, các mã quan sát và 16 biểu diễn cửa sổ khớp. Tính lại: $H_3$ có $10$ thành phần; cửa sổ trùng khi $m\le11$; $E=3$; dãy hai hành động $0{,}45+0{,}05+0{,}25+0{,}25=1$; Bài tập 02.4 $0{,}57$; Bài tập 02.5 $G_0=2{,}25$, $-1{,}875$; $v_\pi((4,2))=-12$, $v_\pi((1,5))=-24$; ngưỡng đích–hố $c=2{,}5$; Bài tập 02.8 $c^*=3{,}5$; bài tổng hợp $c^*=5{,}9049/2{,}78559\approx2{,}12$. Ảnh chụp L02-07-05, L02-07-03, L02-01-02, L02-01-03, L02-03-04, L02-04-08 (hẹp): không tràn.
 
 **Quyết định của điều phối viên:** **chấp nhận** báo cáo làm danh sách việc cần sửa, sau khi kiểm lại trên tệp gốc các phát hiện ghi ở mục "Điều phối viên kiểm lại". Mọi phát hiện ở trạng thái **mở**; các dòng "Đề nghị sửa ghi chú" chờ người dùng quyết định, không phải lỗi deck.
+
+## Sửa deck theo bảng phát hiện 2026-11-13
+
+**Vai trò.** Người sửa (editor) deck Bài 02 theo lời giao chung `editor-brief.md` và quyết định G1–G11, D02 của điều phối viên (2026-11-13). Tác tử do điều phối viên tạo; loại, mô hình và effort ghi theo lời gọi công cụ do điều phối viên ghi nhận. `no-ai-slop` chế độ Edit cho mọi câu mới hoặc sửa trên mặt trang và trong ghi chú diễn giả, tự kiểm theo `eval.md`: không thêm khẳng định ngoài ghi chú, bỏ đối lập nhị phân ("không phải định lý"), từ giảm nhẹ ("có thể góp phần"), chỉ dẫn điều hướng ("của định nghĩa sau", "phát biểu sau định nghĩa lợi tức"), câu xuất xứ; không có câu hỏi tu từ, không dùng gạch ngang dài. Không commit.
+
+**Phạm vi ghi.** `2627-1/lecture-02-giao-dien-tac-tu-moi-truong.html`; `planning/lec-02/{storyboard.md, outline.md, review-log.md}`. Không sửa SVG, CSS, `materials/`, deck khác.
+
+**Kết quả.** 66 trang trước và sau; không thêm, bỏ, tách hay gộp trang; `data-slide-id`, số mạch và trang tiêu đề mạch giữ nguyên. `deck_check.py` (http://127.0.0.1:8799): 0 lỗi console, 0 lỗi trang, 0 request lỗi, 0 `.katex-error`, 0 tràn khung, 0 tràn ngang ở 390×844. Mật độ theo `deck_check.py`: `L02-01-03` 58 → 80 (trang mục tiêu, trần 80); `L02-01-02` 58 → 58; `L02-03-11` 49 → 57; `L02-06-07` 57 → 59; `L02-05-17` 54 → 55; `L02-07-05` 64 (không đổi, ngoại lệ đã có trong storyboard); các trang sửa khác ≤ 54. Ghi chú diễn giả các trang sửa 53–148 âm tiết (`L02-01-02` 157 → 148; `L02-05-08` 108 → 146; `L02-05-17` 132 → 140). Ảnh chụp 1600×900 và 390×844 của 18 trang đổi mặt trang đã tự xem.
+
+**Xuất xứ số liệu (ghi một lần, không ghi trên deck).** Mê cung $8\times8$ và chính sách mũi tên: bài giảng gốc 2025–2026, trang 25–26. Mê cung có chìa khóa, môi trường hai nhánh ($0{,}5$/$0{,}5$, $3$ và $5$ bước), bước trượt ($0{,}8$/$0{,}2$), mê cung đích–hố ($+10$, $-c$, $c_{\mathrm H}$; ví dụ do người dùng duyệt) và bài tổng hợp $\gamma=0{,}9$: số liệu sư phạm do học phần dựng, cùng số liệu với ghi chú bài giảng (trừ bài tổng hợp, xem D02). Bài giảng gốc (trang 15) viết lịch sử với $R_0$, lệch một chỉ số so với quy ước $R_{t+1}$ của học phần; câu đính chính này bỏ khỏi ghi chú diễn giả `L02-01-06`.
+
+**Tính lại.** $0{,}9^5=0{,}59049$; $0{,}9^6=0{,}531441$; $(1-0{,}9^6)/0{,}1=4{,}68559$; $c=1$: $5{,}9049-4{,}68559=1{,}21931>-1{,}9$; $c=3$: $5{,}9049-14{,}05677=-8{,}15187<-5{,}7$; $c^*=5{,}9049/(4{,}68559-1{,}9)=5{,}9049/2{,}78559\approx2{,}1198$; $10/2{,}78559\approx3{,}590$. Chân trời hiệu dụng $1/(1-0{,}99)=100$; $0{,}99^{10}\approx0{,}9044$ (số của ghi chú Mục 4.2). Lịch sử mã ở `L02-03-16`: tại $(1,1)$ mã $(1,0,0,1)$, tại $(2,1)$ và $(3,1)$ mã $(1,0,1,0)$, tại $(4,1)$ mã $(1,0,0,0)$, nên bước Đông từ $(2,1)$ cho mã $(1,0,1,0)$ với xác suất $1$, từ $(3,1)$ với xác suất $0$. Phản ví dụ bit $z$ (ghi chú Mục 4.5): sau $a=1$, $\Pr(R=1)=0{,}5$ dưới chính sách chọn đều và $1$ dưới chính sách chọn $1$ đúng khi $z=1$. Bảng `Mạch | Bài tập` và số hiệu mục tiêu chép lại từ `exercises.md` dòng 8–14 và ghi chú dòng 8–12.
+
+| phát hiện | xử lý | trang | ghi chú |
+|---|---|---|---|
+| nghiêm trọng: số hiệu bài tập trang mục tiêu cũ | sửa | `L02-01-03` | Số hiệu chép đúng ghi chú dòng 8–12; ghi chú diễn giả tách "ghi chú" và "tệp bài tập" cho từng mục tiêu (G3); 80 âm tiết, đúng trần. |
+| nghiêm trọng: bảng `Mạch \| Bài tập` không khớp `exercises.md` | sửa | `L02-07-03` | Hai hàng "Tệp bài tập" (02.14; —; 02.20; 02.15–02.19, 02.21, 02.22; 02.23, 02.24; —) và "Ghi chú bài giảng" (02.1; 02.2, 02.3, 02.11; 02.4, 02.13; 02.5–02.7, 02.9, 02.10(a), 02.12; 02.8, 02.10(b); —); ghi chú diễn giả "mười một bài 02.14–02.24, lấy từ chương 3 của Sutton và Barto (2018)". |
+| nghiêm trọng: bài tổng hợp gọi là "Bài tập 02.21" | sửa | `L02-07-04`, `L02-07-07` | Bỏ số hiệu và mệnh đề "câu (c) của Bài tập 02.21"; `L02-07-04` thêm "Nguồn: ghi chú bài giảng, Mục 5.2, vai trò giả thiết $\gamma=1$ của Mệnh đề 02.18" (D02). |
+| trung bình: dòng "Ký hiệu:" thiếu miền, chỉ số, quy ước kỳ vọng | sửa | `L02-01-06` | "Ký hiệu: $t=0,1,\dots$; $\mathcal A$ gồm Bắc, Đông, Nam, Tây; ô (cột, hàng) từ $0$; $\mathbb E_\pi$ lấy theo $\pi$ và môi trường." "Hàng tăng xuống" chuyển vào ghi chú diễn giả. 53 âm tiết. |
+| trung bình: nhãn "Mở rộng Bài 01:" | sửa | `L02-03-11` | "Lưu ý: $S_t$ do người mô hình chọn; $X_t$ là đối tượng mới so với Bài 01." 57 âm tiết. |
+| trung bình: thuật ngữ lệch ghi chú (chính sách mũi tên, phần thưởng trễ, chân trời hiệu dụng, continuing task) | sửa | `L02-04-01`, `L02-04-03`, `L02-04-08`, `L02-05-01`, `L02-05-13`, `L02-02-00`, `L02-02-06`, `L02-05-03` | Đặt tên *chính sách mũi tên* ở `L02-04-01`, dùng ở các trang còn lại; "Phần thưởng trễ (delayed reward)" ở tiêu đề, từ khóa mạch 2 và ghi chú diễn giả; "chân trời hiệu dụng (effective horizon)"; "Nhiệm vụ tiếp diễn (continuing task)". `outline.md` thêm bốn thuật ngữ. |
+| trung bình: $p$ không phụ thuộc $\pi$ không kèm điều kiện | sửa | `L02-05-08`, `L02-05-17` | Mặt trang: "chung cho mọi $\pi$ khi $X_t=S_t$"; "$p$ thì không khi $X_t=S_t$". Ghi chú diễn giả `L02-05-08` nêu lập luận hai bước và phản ví dụ bit $z$; `L02-05-17` nhắc điều kiện. Dùng công thức $X_t=S_t$ thay cụm "chính sách trên trạng thái" vì ngắn hơn. |
+| trung bình: câu xuất xứ, đính chính nguồn, rào đón | sửa | `L02-01-06`, `L02-06-01`, `L02-05-04` | Bỏ "số liệu sư phạm tự xây dựng", câu $R_0$ của trang 15, "ví dụ do người dùng duyệt", "môi trường giả định, khác mê cung tất định"; xuất xứ ghi ở mục này. `L02-05-04`: "Sự ngẫu nhiên nằm ở môi trường; tác tử không chọn được nhánh." |
+| trung bình: kế hoạch còn số bài tập cũ | sửa | (kế hoạch) | `storyboard.md`: đầu tệp, bảng ngoại lệ (`L02-01-03`, `L02-07-03`, `L02-07-05` thêm số `deck_check.py`), dòng "nay là Bài tập 02.15", mục các trang sửa, `L02-07-04`, `L02-07-03`. `outline.md`: mục tiêu (dòng 36–40), hàng hw02, thuật ngữ, ví dụ xuyên suốt. |
+| nhẹ: "Nhu cầu:" chưa cụ thể; ghi chú diễn giả 157; "$t+1$" ngắt dòng | sửa | `L02-01-02` | "Nhu cầu: tiêu chí so sánh hai cách đi trên mê cung $8\times8$." Dòng 2 "Phần thưởng sau $A_t$ là $R_{t+1}$." Ghi chú diễn giả 148, nêu mê cung đích–hố của dòng cuối. Không dùng đề xuất dài (20 âm tiết) vì trang lên 67 > 60. |
+| nhẹ: lời mục tiêu hẹp hơn ghi chú | sửa | `L02-01-03` | Thêm tách phần tác tử và môi trường, xác suất dãy hành động, trọng số hình học, giả thiết khi phần thưởng mỗi bước đổi dấu; "chỉ số $t$, $t+1$" và "$v_\pi(s)$" viết bằng công thức để giữ trần 80. |
+| nhẹ: đối lập nhị phân "không phải định lý" | sửa | `L02-02-05` | "đây là một giả thuyết mô hình hóa" (ghi chú dòng 25). |
+| nhẹ: từ giảm nhẹ "có thể góp phần" | sửa | `L02-02-06` | Mặt trang và ghi chú diễn giả theo ghi chú dòng 153 ("kết quả của ván phụ thuộc cả $A_0,A_1,A_2$"); thêm bước Nam tại $(4,1)$. |
+| nhẹ: bit $k$ và $\phi$ chỉ định nghĩa trong ghi chú diễn giả | sửa | `L02-03-14`, `L02-03-12` | "bit $k=1$ khi đã nhặt; lối … chỉ mở khi $k=1$"; "$\phi$ không đổi theo $t$". |
+| nhẹ: Mệnh đề 02.6 chung trang với ví dụ cửa sổ | sửa | `L02-03-10` | Nhãn "Nhận xét." cho dòng cửa sổ; số hiệu 02.7 giữ trong ghi chú diễn giả để mặt trang chỉ có một số hiệu (G4). |
+| nhẹ: ghi chú diễn giả dùng mê cung có chìa khóa trước khi xuất hiện | sửa | `L02-03-11` | Bỏ mệnh đề; nội dung (ô, $k$) có tính Markov đã nằm trong ghi chú diễn giả `L02-03-04`. |
+| nhẹ: chỉ dẫn điều hướng | sửa | `L02-03-13`, `L02-05-15` | "Diễn giải: dãy ô ghi quá khứ của môi trường, $10$ thành phần."; "Phép tính ngược dùng $G_t=R_{t+1}+\gamma G_{t+1}$." |
+| nhẹ: lịch sử theo ô thay vì lịch sử mã | sửa | `L02-03-16` | Ghi chú diễn giả viết hai lịch sử mã (mã trước, Đông, mã hiện tại); tên hướng ngoài KaTeX. |
+| nhẹ: "hai giá trị của cùng một đối tượng" | sửa | `L02-04-02` | "Mỗi hàng là phân phối $\pi(\cdot\mid(1,2))$ của một chính sách; hàng "Luôn Bắc" là trường hợp xác định." |
+| nhẹ: lập luận chân trời khác ghi chú, "vào cỡ" | sửa | `L02-05-03` | Theo ghi chú Mục 4.2: tổng trọng số $1/(1-\gamma)$, chân trời hiệu dụng $100$ bước, $0{,}99^{10}\approx0{,}90$; bỏ $0{,}99^{100}\approx0{,}37$ vì ghi chú không dùng số này (G1). |
+| nhẹ: ghi chú diễn giả lặp mặt trang | sửa | `L02-05-04` | Bỏ câu "Con số $-4$ đại diện cho trạng thái $s$, không cho một lượt." |
+| nhẹ: in đậm như nhãn cho "Khuyến khích", "Chế tài" | sửa | `L02-06-07` | In nghiêng như thuật ngữ mới, câu "… là …". 59 âm tiết. |
+| nhẹ: dòng kết dùng mũi tên | sửa | `L02-07-07` | "Kết luận: với $\gamma=0{,}9$, $c^*\approx2{,}12<2{,}5$, vì thưởng đích giảm từ $10$ còn $5{,}905$, còn chênh lệch chi phí chỉ giảm từ $4$ còn $2{,}786$." |
+| nhẹ: cập nhật đệ quy kiểu mạng hồi quy không có trong ghi chú | giữ | `L02-03-12` | Giữ theo phương án thứ nhất của đề xuất: nguồn đúng (Sutton và Barto, 2018, §17.3), một câu trong ghi chú diễn giả, không trên mặt trang; ghi vào "Đề nghị sửa ghi chú" (thêm một câu vào ghi chú Mục 2.2). |
+| nhẹ (đề nghị sửa ghi chú): bài tổng hợp $\gamma=0{,}9$, $c^*\approx2{,}12$ không còn trong ghi chú hay `exercises.md` | giữ trên deck | `L02-07-04`, `L02-07-05`, `L02-07-07` | Theo D02: giữ bài, ghi chú diễn giả dẫn ghi chú Mục 5.2; đề nghị thêm phép tính vào ghi chú Mục 5.2 chờ người dùng. |
+| nhẹ (đề nghị sửa ghi chú): 02.20 xếp ở mạch 4 | không sửa deck | `L02-07-03` | Theo D02: bảng của deck chép đúng `exercises.md` hiện tại (02.20 ở mạch 4); đề nghị chuyển 02.20 sang mạch 5 chờ người dùng. |
+
+### Sửa sau kiểm lại
+
+Điều phối viên kiểm lại bản sửa, kết luận "cần sửa" (1 trung bình, 7 nhẹ). Người sửa xử lý cùng phạm vi ghi; `deck_check.py` sau sửa: 0 lỗi console, trang, request, KaTeX, tràn khung; `L02-04-01` 54 âm tiết, dòng dài nhất 15; ghi chú diễn giả `L02-05-08` 148, `L02-05-17` 145, `L02-01-03` 123, `L02-01-06` 111, `L02-05-03` 135. Ảnh 1600×900 của `L02-04-01`, `L02-03-11` đã tự xem.
+
+| phát hiện | xử lý | trang |
+|---|---|---|
+| trung bình: phản ví dụ bit $z$ thiếu phân bố của $z$ | Thêm "Xét bit $z$ nhận $0$ hoặc $1$ với xác suất $0{,}5$, rút độc lập mỗi bước; tác tử thấy $z$ nhưng trạng thái không chứa $z$; phần thưởng là $z\cdot a$." theo ghi chú Mục 4.5; câu mở rút ngắn để giữ ≤ 150. | `L02-05-08` |
+| nhẹ: mệnh đề treo "các tập … đếm được" | Tách thành câu "Giả thiết: các tập trạng thái và giá trị phần thưởng đếm được." | `L02-05-08` |
+| nhẹ: ghi chú diễn giả mục tiêu là một câu nối bằng dấu chấm phẩy | Viết lại thành năm câu "Mục tiêu k đo bằng …". | `L02-01-03` |
+| nhẹ: "từ $(0,2)$ tới $\mathrm G$" thiếu chủ ngữ | "Theo mũi tên, tác tử đi từ $(0,2)$ tới $\mathrm G$ sau 16 bước." thành câu riêng (một dòng 24 âm tiết vượt trần 20 nên tách hai câu, hai dòng). | `L02-04-01` |
+| nhẹ: "Lưu ý:" lặp ô bảng về $S_t$ | "Lưu ý: $X_t$ là đối tượng mới so với Bài 01." | `L02-03-11` |
+| nhẹ: ghi chú diễn giả lặp mặt trang về điều kiện $X_t=S_t$ | Thay bằng lý do: cần $X_t=S_t$ để các thừa số $\pi(a_k\mid s_k)$ triệt tiêu; bỏ câu "Mô hình của tác tử có thể sai" để giữ ≤ 150. | `L02-05-17` |
+| nhẹ: ghi chú diễn giả lặp dòng "Ký hiệu:" | Thay bằng lý do: kỳ vọng mang chỉ số $\pi$ vì lợi tức ngẫu nhiên do hai nguồn, hành động rút theo $\pi$ và chuyển của môi trường. | `L02-01-06` |
+| nhẹ: "$0{,}99^{10}\approx0{,}90$" đứng rời | "Với $\gamma$ gần $1$, trọng số giảm chậm: $0{,}99^{10}\approx0{,}90$." | `L02-05-03` |
+
+Kèm theo: `storyboard.md` dòng ngoại lệ `L02-07-03` đổi "Chỉ trong ghi chú" → "Ghi chú bài giảng"; các mục `L02-04-01`, `L02-03-11`, `L02-05-08` cập nhật số đo.
+
+### Kiểm lại, kiểm định cuối và duyệt của điều phối viên (2026-11-13)
+
+**Tác tử (theo lời gọi công cụ).**
+
+| vai trò | loại | mô hình | effort | ghi tệp |
+|---|---|---|---|---|
+| rà soát chỉ đọc (bảng phát hiện) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+| người sửa (deck, kế hoạch; tiếp tục bằng SendMessage cho vòng sửa sau kiểm lại) | `general-purpose` | `opus` (Opus 5.5) | `high` | có |
+| kiểm lại chỉ đọc (vai trò A: độ chính xác toán và Học tăng cường; vai trò B: mạch, quy tắc deck, `no-ai-slop` Detect) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+
+Quyết định chung của đợt: G1–G11, D01–D10 (tệp quyết định của điều phối viên trong thư mục nháp của phiên, chép tóm tắt ở mục sửa phía trên).
+
+**Kiểm lại.** Kết luận "cần sửa": 27/27 phát hiện của bảng xử lý đúng; 1 trung bình mới (L02-05-08: phản ví dụ bit $z$ thiếu phân bố của $z$) và 7 nhẹ (mệnh đề treo L02-05-08; ghi chú diễn giả L02-01-03 dồn năm mục tiêu; L02-04-01 thiếu chủ ngữ; L02-03-11 lặp ô bảng; câu lặp L02-05-17, L02-01-06; L02-05-03; storyboard). Người sửa xử lý đủ 8 ở "Sửa sau kiểm lại"; điều phối viên đọc lại câu bit $z$ trên tệp: nêu "$z$ nhận $0$ hoặc $1$ với xác suất $0{,}5$, rút độc lập mỗi bước", khớp ghi chú Mục 4.5.
+
+**Kiểm định cuối của điều phối viên.** `deck_check` toàn deck: 66 trang, 0 lỗi console, lỗi trang, request lỗi, `.katex-error`, 0 tràn khung; cờ còn lại L02-01-04 (Nội dung, 7 dòng) và L02-07-05 (64 âm tiết) có ngoại lệ từ trước. 28 trang đổi, 18 đổi mặt trang; điều phối viên tự xem bảng ảnh hai cỡ: không tràn. Bảng L02-07-03 đối chiếu `exercises.md` (02.20 ở mạch 4 theo D02). `git diff --check` sạch.
+
+**Đề nghị sửa ghi chú (chờ người dùng quyết định; không sửa `materials/` trong đợt này).** Ghi chú Mục 5.2: thêm phép tính bài tổng hợp $\gamma=0{,}9$, $c^*\approx2{,}12$ (hoặc giữ bài chỉ trên deck); `exercises.md`: chuyển 02.20 sang mạch 5 (dùng hàm động lực, Định nghĩa 02.16) và sửa bảng của L02-07-03 theo; ghi chú Mục 2.2: thêm một câu về cập nhật đệ quy $X_t=u(X_{t-1},A_{t-1},R_t,O_t)$ (Sutton và Barto §17.3).
+
+**Quyết định của điều phối viên:** **chấp nhận** deck và các tệp kế hoạch; mọi phát hiện `nghiêm trọng` và `trung bình` của bảng 2026-11-13 và của lượt kiểm lại đã xử lý; phát hiện không sửa có lý do ghi ở bảng xử lý.
