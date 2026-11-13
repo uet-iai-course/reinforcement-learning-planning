@@ -2179,3 +2179,70 @@ Quyết định của điều phối viên: **chấp nhận**; commit `fix(mater
 **Đã kiểm, không lỗi (theo báo cáo, điều phối viên kiểm mẫu).** Cấu hình RevealJS, plugin cục bộ, footer, thứ tự CSS. Sáu mạch có lý do; mở đầu đúng thứ tự (A01 → A04 → A06 → A02 → A03 → khung A07). Năm trang tiêu đề mạch: dòng dẫn 18–22 âm tiết "Muốn …, phải …", ≤ 5 từ khóa, ghi chú diễn giả 71–91. Mạch kết luận đủ (bảng E02/E02b, E02c, E02d; bài tổng hợp E06/E06b; E01 có "Nguồn:"; E04 bốn câu; liên kết viewer; dòng nối Bài 06). Mỗi cụm có bài tập với "Lời giải:" (B13b, C10b, D13b, D12b, E06b); bảng TD dùng một khuôn cột. Mọi số hiệu 05.1–05.35, Ví dụ 05.1–05.22, Tình huống 05.1 trỏ đúng; ví dụ xuyên suốt (tàu đổ bộ thu nhỏ, dãy bảy ô, tám lượt A, B) khớp ghi chú. Tính lại: $G=(0{,}729;0{,}81;0{,}9;1)$; $0{,}2+0{,}8^2=0{,}84$; $V_3(\mathrm X)=\tfrac13$; $\operatorname{Var}(G_0)=320/441$; phương sai giới hạn $0{,}242$; TD(0) $V(\mathrm S)=0{,}25$, $0{,}375$, $-0{,}375$; Lunar Lander $44{,}3715$, $\delta=0{,}5215$; giá trị chuẩn $(11/21;19/21)$; độ chệch mục tiêu TD $-34/105$; dãy bảy ô $83{,}7\%$; ba lịch bước học $1/(n+1)$, $\to1/2$, $\pi^2/6-1$; cập nhật theo lô dừng ở $k=18$, $V_{19}(\mathrm A)=0{,}6822$, nghiệm TD theo lô $(3/4;3/4)$; E06b các độ lệch $-25/168$, $-89/168$, $-11/21$, $-73/336$. Ảnh chụp B12, E01 (rộng, hẹp), D08, D12, E03: không tràn.
 
 **Quyết định của điều phối viên:** **chấp nhận** báo cáo làm danh sách việc cần sửa, sau khi kiểm lại trên tệp gốc các phát hiện ghi ở mục "Điều phối viên kiểm lại". Mọi phát hiện ở trạng thái **mở**; các dòng "Đề nghị sửa ghi chú" chờ người dùng quyết định, không phải lỗi deck.
+
+## Sửa deck theo bảng phát hiện 2026-11-13
+
+**Vai trò.** Người sửa (editor) cho Bài 05, theo lời giao chung `editor-brief.md` và quyết định G1–G11, D05 của điều phối viên (`edit-decisions-2026-11-13.md`). Loại tác tử, mô hình và effort: điều phối viên ghi theo lời gọi công cụ. Không commit.
+
+**Phạm vi ghi.** `lecture-05-du-doan-phi-mo-hinh.html`; `planning/lec-05/{storyboard.md, outline.md, review-log.md}`. Không sửa SVG trong `img/lec-05/`, `materials/`, CSS hay tệp của bài khác.
+
+**Kết quả.** 70 trang trước và sau; không thêm, bỏ, tách hay gộp trang; giữ sáu mạch, mọi `data-slide-id` và năm trang tiêu đề mạch. Mặt trang đổi ở A03, A04, A06, A07, B01, B02, B06, B12, C02, D03, D04, D04b, D05b, D09b, D10, D11, E02b, E02d, E03; ghi chú diễn giả đổi ở A03, A04, A06, A07, B01, B02, B08, B09, B10b, B12, B13, C05b, C06, C10, D01, D02, D04, D05b, D07, D08, D09, D09b, D09c, D10, D11, E01, E02d, E03. Không còn thuộc tính `style=""` nào trong deck. `deck_check.py` (2026-11-13): 0 lỗi console, 0 lỗi trang, 0 request lỗi, 0 `.katex-error`; cờ OVERFLOW/NARROW-H còn ở B12, E01 (đuôi `\sqrt`) và D08, D12 (`\xrightarrow`), dương tính giả đã biết, ảnh chụp không thấy tràn. Số âm tiết: A06 80 (trần 80), A04 60, A07 60, A03 59, D05b 59, E02 63, E02b 67, E02d 66, E01 70 (bốn trang cuối có ngoại lệ trần 80 trong storyboard); ghi chú diễn giả mọi trang ≤ 150 âm tiết. Ảnh chụp 1600×900 và 390×844 của mọi trang có mặt trang đổi đã được xem; D11 với lớp `.figure.short-m` đẩy dòng "Ý nghĩa:" chạm chân trang nên dùng `.figure.short-s`.
+
+**Xuất xứ số liệu.** Tàu đổ bộ thu nhỏ (dãy bốn ô, xác suất $0{,}8$, $0{,}2$) và dãy bảy ô là mô hình học phần dựng từ bài giảng gốc (2025–2026), trang 15–20 và 30; bài giảng gốc trang 31 ghi số mũ $4$ và $2$ cho hai lợi tức của dãy bảy ô, deck dùng $3$ và $1$ theo định nghĩa lợi tức (đính chính chỉ còn ở dòng "Nguồn:" của D04). Tám lượt $\mathrm A$, $\mathrm B$ lấy từ Sutton và Barto (2018), Ví dụ 6.4. Số liệu Lunar Lander lấy từ một lần chạy đã nhúng của notebook thực hành Bài 05 (gymnasium 1.3.0). Các câu xuất xứ trong ghi chú diễn giả (B09 "Bài tập tuần 5, bài 5 liệt kê …", D01 "Bài giảng gốc mô tả …", D04 "Bài giảng gốc ghi hai số mũ …") và câu "mô hình chỉ để kiểm tra/đo sai số" ở B01, B12, D02 đã bỏ; vai trò của mô hình giữ một lần ở ghi chú diễn giả B01, theo Nhận xét 05.2.
+
+**Tính lại.** D09c: sai số tại $\mathrm A$ sau khi dừng là $\tfrac34(7/8)^{18}\approx0{,}0678$, thay đổi ở lượt quét $k=18$ là $\tfrac18\cdot\tfrac34(7/8)^{17}\approx0{,}00969$, tỉ số $c/(1-c)=7$ với $c=7/8$; Hệ quả 04.8(b) có dạng $\gamma\Delta/(1-\gamma)$. D11 (ghi chú diễn giả): với $\mathcal D$ chỉ gồm $\mathrm A\xrightarrow{0}\mathrm B$ bị cắt tại $\mathrm B$, $V_k(\mathrm B)=V_0(\mathrm B)$ và $V_{k+1}(\mathrm A)=V_k(\mathrm A)+\alpha(\gamma V_0(\mathrm B)-V_k(\mathrm A))$, nên $V_k(\mathrm A)\to\gamma V_0(\mathrm B)$ khi $0<\alpha\le1$. D04: $0{,}970299+0{,}99=1{,}960299$. Không số nào trên mặt trang đổi giá trị.
+
+**`no-ai-slop` (chế độ Edit).** Phạm vi: mọi câu mặt trang và ghi chú diễn giả đã sửa. Tự kiểm theo `eval.md`: không thêm khẳng định, số hay nguồn ngoài ghi chú; bỏ câu tự nói trạng thái ("chưa phải phương pháp", "chưa xác định phân phối … chỉ cho thấy"), cặp đối lập "không phải tính chất chung", chỉ dẫn điều hướng ("ở mạch 2", "Bài 07 dùng", "được nêu cùng định lý …", "được xét cùng các trường hợp biên", "trường hợp đó thuộc Bài 07"); giữ nhãn, định nghĩa, câu hỏi kiểm tra. Kết quả: đạt.
+
+| phát hiện | xử lý | trang | ghi chú |
+|---|---|---|---|
+| nghiêm trọng — bảng `Mạch \| Bài tập` không khớp `exercises.md` | sửa | L05-E03 | chép đúng ex:7–12: 1 → ghi chú 05.1; 2 → 05.17, 05.18, 05.19, ghi chú 05.2–05.5; 3 → 05.20, 05.21, ghi chú 05.6, 05.7, 05.16; 4 → 05.22, 05.24, ghi chú 05.8–05.11, 05.14; 5 → ghi chú 05.12; 6 → 05.23, ghi chú 05.13, 05.15; 26 âm tiết |
+| nghiêm trọng — ghi chú diễn giả E03 theo tệp bài tập cũ | sửa | L05-E03 | "Tệp bài tập gồm Bài tập 05.17–05.24, lấy từ Sutton và Barto (2018), không trùng bài trên trang chiếu"; 05.8 là bài tổng hợp đã giải trên lớp; 05.12 là câu (a) của bài tập hai nghiệm |
+| nghiêm trọng — nguồn B13, C10 trỏ số bài cũ | sửa | L05-B13, L05-C10 | B13: "ghi chú bài giảng, Ví dụ 05.2, Bài tập 05.4"; C10: "ghi chú bài giảng, Định nghĩa 05.20, Bài tập 05.6" |
+| trung bình — A03 "hội tụ khi bước giảm" | sửa | L05-A03 | "hội tụ cần Robbins–Monro", như dòng 4 của E01; ghi chú diễn giả bỏ câu vá, nêu hai điều kiện tổng; 59 âm tiết |
+| trung bình — giả thiết nghiệm TD theo lô thiếu điều kiện về $\mathcal S_{\mathcal D}$ | sửa (đề xuất thứ hai) | L05-D11, L05-E02b, L05-E02d | mặt trang giữ "mọi lượt của $\mathcal D$ kết thúc", trùng đầu vào của D09b và đủ cho Mệnh đề 05.34 với mọi $\gamma$; ghi chú diễn giả D11 nêu trường hợp $\gamma<1$ với lượt bị cắt ngắn, điều kiện trên trạng thái đích và phản ví dụ $V_k(\mathrm A)\to\gamma V_0(\mathrm B)$; đề xuất thứ nhất làm E02b tràn khung (cờ OVERFLOW 18 px) |
+| trung bình — ánh xạ mục tiêu → bài tập ở A06 thiếu | sửa | L05-A06 | chép danh sách note:9–14, tách bài của ghi chú và của tệp bài tập |
+| trung bình — storyboard, outline còn số bài tập cũ | sửa | (kế hoạch) | storyboard E03, B13, C10; outline C10, bảng bài tập trên trang chiếu, đoạn E03 |
+| trung bình — chỉ số mẫu chuyển $j$ khác $i$ của ghi chú | sửa theo D05 | L05-D09b, L05-D10 | deck dùng $i$ như Thuật toán 05.32, Mệnh đề 05.33; hai trang không có $g_i(s)$ nên không trùng; bỏ câu so $j$ với $i$ trong ghi chú diễn giả D09b; không cần đề nghị sửa ghi chú |
+| nhẹ — tám `style="max-height:…"` | sửa theo G8 | L05-B02, B06, C02, D03, D04, D04b, D11 | 150 px → `.figure.short-s` (B02 hai hình, B06); 250 → `.figure.short` (C02); 200 → `.figure.short-m` (D03); 255 → `.figure.short` (D04); 225 → `.figure.short-m` (D04b); 190 → `.figure.short-s` (D11, xem Kết quả); kiểm bằng ảnh chụp |
+| nhẹ — ghi chú diễn giả > 150 âm tiết | sửa | L05-B10b, C06, D05b, D07, D11, E01 | 151 → 135, 152 → 142, 160 → 126, 161 → 150, 173 → 141, 213 → 140; E01 bỏ số liệu Lunar Lander, D11 bỏ câu nhắc Bài 03, 04 và trung vị Lunar Lander |
+| nhẹ — câu tự nói trạng thái, đối lập "không phải X" | sửa | L05-D08, D04, B02, D09 | D08 bỏ câu; D04 "Hai quỹ đạo cho hai mục tiêu Monte Carlo từ cùng $\mathrm S$, cách nhau …"; B02 "chỉ khi $\gamma=1$ và …"; D09 "đẳng thức này chỉ có khi $\alpha N(\mathrm B)=1$" |
+| nhẹ — chỉ dẫn điều hướng | sửa | L05-A07, B08, C05b, D02 | A07: công thức và trường hợp trung bình gia tăng; B08: "phương sai giới hạn là $\alpha\sigma^2/(2-\alpha)$"; C05b: bỏ hai câu trỏ; D02: "với bảng giữ cố định, độ chệch và phương sai của mục tiêu tách được hai nguồn đầu" |
+| nhẹ — câu xuất xứ, đính chính nguồn trong thân ghi chú diễn giả | sửa | L05-D04, B09, D01 | D04 giữ đính chính ở dòng Nguồn; B09 "Quy tắc lần ghé và quy tắc bước học là hai lựa chọn độc lập"; D01 "Hai cơ chế lan truyền này mô tả đường đi của thông tin" |
+| nhẹ — "mô hình chỉ để kiểm tra/đo sai số" lặp | sửa | L05-B01, B12, D02 | giữ một lần ở ghi chú diễn giả B01 theo Nhận xét 05.2; bỏ ở mặt trang B01, B12 và ghi chú diễn giả B12, D02 |
+| nhẹ — D09c so với $1/(1-\gamma)$ | sửa | L05-D09c | "$7=c/(1-c)$ với $c=7/8$; Hệ quả 04.8(b) có cùng dạng $\gamma/(1-\gamma)$" |
+| nhẹ — A04 thiếu quy ước $R_{t+1}$, miền $\gamma$ | sửa | L05-A04 | dòng Ký hiệu thêm $\gamma\in[0,1]$ và "phần thưởng $R_{t+1}$ của chuyển $t\to t+1$"; 60 âm tiết, 6 dòng |
+| nhẹ — tên tiếng Anh ở lần đầu | sửa | L05-A07, L05-A06 | "bước học (step size, learning rate)" ở A07; "(variance)" đặt ở A06, lần đầu "phương sai" xuất hiện trên mặt trang (D00 là trang tiêu đề mạch); outline thêm dòng thuật ngữ |
+| nhẹ — D05b bỏ giả thiết khả tích của Hệ quả 05.26(a) | sửa | L05-D05b | "$G_t$ không chệch khi trạng thái Markov, $\pi$ cố định, thưởng bị chặn, lượt kết thúc hầu chắc chắn khi $\gamma=1$"; 59 âm tiết, dòng dài nhất 20 |
+| nhẹ — đề nghị sửa ghi chú: note:868 nói chuyển đầu của $e_1$ | không sửa deck | L05-C02, L05-C03 | deck dùng $e_2$, đúng với bảng $(0;\ 0{,}5)$ sau $e_1$; chuyển lên điều phối viên dưới mục "Đề nghị sửa ghi chú" |
+
+### Sửa sau kiểm lại
+
+Điều phối viên kiểm lại và kết luận "đạt", kèm bốn phát hiện nhẹ; người sửa xử lý cả bốn.
+
+| phát hiện | xử lý | trang |
+|---|---|---|
+| nhẹ — ghi chú diễn giả E02b: "chúng không phải độ chệch và phương sai của bảng sau nhiều cập nhật" | sửa: "bảng sau nhiều cập nhật là ngẫu nhiên nên có độ chệch và phương sai riêng" | L05-E02b |
+| nhẹ — ghi chú diễn giả D05b: "nên không chệch không có nghĩa bảng đúng" | sửa: "nên mục tiêu không chệch cả khi bảng sai tại các trạng thái sau" | L05-D05b |
+| nhẹ — ghi chú diễn giả A04 lặp quy ước $R_{t+1}$ đã có trên mặt trang | sửa: bỏ vế lặp, giữ câu về $\gamma=1$ | L05-A04 |
+| nhẹ — storyboard B12 còn "$11/21$ giải từ mô hình chỉ để đo sai số" | sửa: "giá trị chuẩn $11/21$" | (kế hoạch) L05-B12 |
+
+### Kiểm lại, kiểm định cuối và duyệt của điều phối viên (2026-11-13)
+
+**Tác tử (theo lời gọi công cụ).**
+
+| vai trò | loại | mô hình | effort | ghi tệp |
+|---|---|---|---|---|
+| rà soát chỉ đọc (bảng phát hiện) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+| người sửa (deck, kế hoạch; tiếp tục bằng SendMessage cho vòng sửa sau kiểm lại) | `general-purpose` | `opus` (Opus 5.5) | `high` | có |
+| kiểm lại chỉ đọc (vai trò A: độ chính xác toán và Học tăng cường; vai trò B: mạch, quy tắc deck, `no-ai-slop` Detect) | `general-purpose` | `opus` (Opus 5.5) | `high` | không |
+
+Quyết định chung của đợt: G1–G11, D01–D10 (tệp quyết định của điều phối viên trong thư mục nháp của phiên, chép tóm tắt ở mục sửa phía trên).
+
+**Kiểm lại.** Kết luận "đạt": 19/19 phát hiện xử lý đúng (kiểm kỹ: giả thiết nghiệm TD theo lô "mọi lượt của $\mathcal D$ kết thúc" là điều kiện đủ của Mệnh đề 05.34 với mọi $\gamma$; đổi $j\to i$ không trùng ký hiệu; tám hình đổi sang lớp `.figure.short-*` không tràn); 4 phát hiện nhẹ mới (E02b, D05b, A04 ghi chú diễn giả; storyboard B12), đã sửa ở "Sửa sau kiểm lại".
+
+**Kiểm định cuối của điều phối viên.** `deck_check` toàn deck: 70 trang, 0 lỗi console, lỗi trang, request lỗi, `.katex-error`; 0 `style=""`; cờ OVERFLOW ở B12, E01 (`\sqrt`), D08, D12 (`\xrightarrow`) là dương tính giả đã biết; E01, E02, E02b, E02d vượt 60 có ngoại lệ trần 80. 33 trang đổi, 19 đổi mặt trang; điều phối viên tự xem bảng ảnh hai cỡ: không tràn. Deck dùng $v_\pi(s)=\mathbb E_\pi[G_t\mid S_t=s]$ đúng như ghi chú 05 dòng 25 (dẫn Bổ đề 03.20(c)). `git diff --check` sạch.
+
+**Đề nghị sửa ghi chú (chờ người dùng quyết định; không sửa `materials/` trong đợt này).** Ghi chú dòng 868: chuyển đầu $\mathrm S\to\mathrm X$ thuộc $e_2$, không phải $e_1$ (Ví dụ 05.8 dùng bảng sau $e_1$).
+
+**Quyết định của điều phối viên:** **chấp nhận** deck và các tệp kế hoạch; mọi phát hiện `nghiêm trọng` và `trung bình` của bảng 2026-11-13 và của lượt kiểm lại đã xử lý; phát hiện không sửa có lý do ghi ở bảng xử lý.

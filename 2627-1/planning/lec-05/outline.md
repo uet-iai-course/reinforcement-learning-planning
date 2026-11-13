@@ -26,7 +26,7 @@ Cập nhật 2026-10-12, đợt sửa theo chuẩn 2026-10-12, giai đoạn II (
 | lợi tức | return | L05-A01 |
 | lượt | episode | L05-A04 |
 | mẫu chuyển | transition sample | L05-A04 |
-| bước học | step size | L05-A07 |
+| bước học | step size, learning rate | L05-A07 |
 | mục tiêu cập nhật | update target | L05-A07 |
 | hầu chắc chắn | almost surely | L05-B03 |
 | lượt bị cắt ngắn | truncated episode | L05-B03 |
@@ -36,6 +36,7 @@ Cập nhật 2026-10-12, đợt sửa theo chuẩn 2026-10-12, giai đoạn II (
 | sai số TD | TD error | L05-C03 |
 | tự chuyển | self-transition | L05-C06 |
 | độ chệch | bias | L05-D05b |
+| phương sai | variance | L05-A06 |
 | phần dư Bellman | Bellman residual | Bài 04; nhắc ở ghi chú diễn giả L05-D05b, L05-D07 |
 | lượt quét | sweep | L05-D09 |
 | cập nhật theo lô | batch updating | L05-A07 |
@@ -122,10 +123,10 @@ Cột "Ghi chú" là số hiệu trong ghi chú bài giảng; cột "Nguồn" l�
 | Mã | Tiêu đề | Nội dung chính | Ghi chú | Nguồn |
 |---|---|---|---|---|
 | L05-A01 | Dự đoán phi mô hình | Bìa: học phần, Bài 05, phụ đề có "dự đoán (prediction)", "sai phân thời gian (temporal difference, TD)"; câu luận đề; năm học; đơn vị | Mục 1 | tr. 1, 15 |
-| L05-A04 | Tiên quyết và quy ước | Nhắc lại lợi tức, $v_\pi$, Bellman kỳ vọng, quy hoạch động cần $P_\pi,r_\pi$; ký hiệu $\mathcal S$, $\mathcal S^+$, mẫu chuyển, $V$; giả thiết | Tiên quyết | tr. 3, 15–17; S&B §3.5, §5.1 |
+| L05-A04 | Tiên quyết và quy ước | Nhắc lại lợi tức, $v_\pi$, Bellman kỳ vọng, quy hoạch động cần $P_\pi,r_\pi$; ký hiệu $\gamma\in[0,1]$, $\mathcal S$, $\mathcal S^+$, mẫu chuyển, $R_{t+1}$ là phần thưởng của chuyển $t\to t+1$; giả thiết | Tiên quyết | tr. 3, 15–17; S&B §3.5, §5.1 |
 | L05-A06 | Mục tiêu học tập | MT1–MT6 | Mục tiêu học tập | tr. 2 |
 | L05-A02 | Nội dung | Sáu mạch, khớp trang tiêu đề mạch và `#/N` | — | tr. 2 |
-| L05-A03 | Vấn đề trung tâm | Bài toán một dòng; năm câu trả lời có điều kiện của mạch 2–6, mỗi dòng có tiền tố điều kiện (dòng 4 "Bảng cố định:" với vế độ chệch, dao động và "hội tụ khi bước giảm"); bỏ hình `learning-route.svg` | Mục 1 | tr. 6, 15–16, 28, 33 |
+| L05-A03 | Vấn đề trung tâm | Bài toán một dòng; năm câu trả lời có điều kiện của mạch 2–6, mỗi dòng có tiền tố điều kiện (dòng 4 "Bảng cố định:" với vế độ chệch, dao động và "hội tụ cần Robbins–Monro", như E01; 2026-11-13); bỏ hình `learning-route.svg` | Mục 1 | tr. 6, 15–16, 28, 33 |
 | L05-A07 | Khung chung của quy tắc cập nhật | Bốn dòng: ước lượng mới bằng lời; mục tiêu Monte Carlo; TD một bước, ký hiệu TD(0); cập nhật theo lô (batch updating) | Mục 1.2 | S&B §2.4, §9.3 (ghi chú diễn giả) |
 
 ### Mạch 2. Lợi tức và ước lượng Monte Carlo
@@ -166,7 +167,7 @@ Cột "Ghi chú" là số hiệu trong ghi chú bài giảng; cột "Nguồn" l�
 | L05-C08 | Ví dụ: TD(0) trên lượt thứ hai | Dòng dữ kiện rút gọn; bảng khuôn cố định trên $e_2$, cột Chuyển không ngắt dòng; Diễn giải | Ví dụ 05.10 | tr. 29 |
 | L05-C06 | Ví dụ: hai chuyển trên Lunar Lander | Nhu cầu (tự chuyển, self-transition); ô gộp $9216$; bảng khuôn TD cố định; Diễn giải | Ví dụ 05.11 | notebook mục 7.1 |
 | L05-C06c | Trường hợp biên của TD(0) | Nhận xét: trạng thái kết thúc, tự chuyển, lượt bị cắt ngắn | Nhận xét 05.22, Ví dụ 05.12 (ghi chú diễn giả) | tr. 19 |
-| L05-C10 | Bài tập: một bước TD(0) từ cùng bảng | Đề, bảng khuôn cố định để trống | Bài tập 05.20 của `exercises.md`, câu (a), (b) | Bài tập tuần 5, bài 3, 7 |
+| L05-C10 | Bài tập: một bước TD(0) từ cùng bảng | Đề, bảng khuôn cố định để trống | Định nghĩa 05.20; cùng hai chuyển từ $\mathrm S$ như Bài tập 05.6 của ghi chú, với bảng khác | Bài tập tuần 5, bài 3, 7 |
 | L05-C10b | Bài tập: một bước TD(0) từ cùng bảng | Lời giải trên bảng | Định nghĩa 05.20 | — |
 
 ### Mạch 4. Độ chệch, phương sai và hội tụ
@@ -177,7 +178,7 @@ Cột "Ghi chú" là số hiệu trong ghi chú bài giảng; cột "Nguồn" l�
 | L05-D01 | Ví dụ: Monte Carlo và TD(0) trên cùng dữ liệu | Nhu cầu; bảng sau $e_1$, $e_2$; Diễn giải hai cơ chế lan truyền | Ví dụ 05.13 | tr. 29 |
 | L05-D02 | Ví dụ: giá trị chuẩn và độ lệch sau hai lượt | Nhắc lại Bellman kỳ vọng; bảng $v_\pi$ và độ lệch; Diễn giải | Ví dụ 05.14, 05.15 | tr. 19 |
 | L05-D05 | Ví dụ: kỳ vọng của mục tiêu TD tại $\mathrm S$ | Nhu cầu; Trực quan; $\mathbb E[Y]=0{,}2$; độ chệch $-34/105$ | Ví dụ 05.16 | tr. 26–27 |
-| L05-D05b | Độ chệch của mục tiêu TD | Định nghĩa độ chệch; Mệnh đề; Ý nghĩa (số hiệu); Lưu ý Monte Carlo không chệch khi Markov, $\pi$ cố định; chứng minh trong ghi chú diễn giả | Định nghĩa 05.24, Mệnh đề 05.25, Hệ quả 05.26, Mệnh đề 05.27 (ghi chú diễn giả) | S&B §6.1 |
+| L05-D05b | Độ chệch của mục tiêu TD | Định nghĩa độ chệch; Mệnh đề; Ý nghĩa (số hiệu); Lưu ý $G_t$ không chệch khi trạng thái Markov, $\pi$ cố định, thưởng bị chặn, lượt kết thúc hầu chắc chắn khi $\gamma=1$ (Hệ quả 05.26(a), 2026-11-13); chứng minh trong ghi chú diễn giả | Định nghĩa 05.24, Mệnh đề 05.25, Hệ quả 05.26, Mệnh đề 05.27 (ghi chú diễn giả) | S&B §6.1 |
 | L05-D03 | Ví dụ: dãy bảy ô | Nhu cầu; hình `long-walk.svg`; dữ kiện; $v_\pi(\mathrm S)\approx0{,}829$ | Ví dụ 05.17 | tr. 30 |
 | L05-D04 | Ví dụ: dãy bảy ô, hai lợi tức từ $\mathrm S$ | Hình `long-returns.svg`; $0{,}970299$ và $-0{,}99$; Diễn giải | Ví dụ 05.17 | tr. 31 (sửa số mũ) |
 | L05-D04b | Mục tiêu một bước lý tưởng | $Y^*$; hình `target-randomness.svg`; Trực quan; $Y^*$ là kỳ vọng có điều kiện | Mục 4.3 | tr. 26–28 |
@@ -195,10 +196,10 @@ Cột "Ghi chú" là số hiệu trong ghi chú bài giảng; cột "Nguồn" l�
 | L05-DT | (tiêu đề mạch) Dữ liệu cố định và cập nhật theo lô | Dòng dẫn, từ khóa | — | — |
 | L05-D08 | Ví dụ: tám lượt $\mathrm A$, $\mathrm B$ | Nhu cầu; bảng tám lượt; Trực quan hai cách đọc | Ví dụ 05.20 | S&B §6.3, Ví dụ 6.4 |
 | L05-D09 | Ví dụ: tám lượt $\mathrm A$, $\mathrm B$, lượt quét đầu | $\Delta_0$ của Monte Carlo và TD; $V_1=(0;\ 3/4)$ | Ví dụ 05.21 | S&B §6.3 |
-| L05-D09b | Thuật toán cập nhật theo lô | Đầu vào, bước 1–4, Đầu ra | Thuật toán 05.32 | S&B §6.3 |
+| L05-D09b | Thuật toán cập nhật theo lô | Đầu vào, bước 1–4 với chỉ số mẫu $i$ như Thuật toán 05.32 (2026-11-13), Đầu ra | Thuật toán 05.32 | S&B §6.3 |
 | L05-D09c | Ví dụ: tám lượt $\mathrm A$, $\mathrm B$, các lượt quét tiếp theo | Monte Carlo đứng yên; công thức đóng của TD; dừng ở $k=18$ với $\theta=0{,}01$ | Ví dụ 05.22 | S&B §6.3 |
 | L05-D10 | Nghiệm Monte Carlo theo lô | Mệnh đề; bình phương tối thiểu; Chứng minh; số liệu tám lượt | Mệnh đề 05.33 | S&B §6.3 |
-| L05-D11 | Nghiệm TD theo lô | Hình `ab-empirical.svg` (lớn hơn); Ký hiệu; Giả thiết (bước học; lượt kết thúc hoặc $\gamma<1$); Mệnh đề; số liệu; Ý nghĩa | Mệnh đề 05.34, Nhận xét 05.35 (ghi chú diễn giả) | S&B §6.3 |
+| L05-D11 | Nghiệm TD theo lô | Hình `ab-empirical.svg` (lớn hơn); Ký hiệu; Giả thiết (bước học; mọi lượt của $\mathcal D$ kết thúc, như đầu vào của D09b; trường hợp $\gamma<1$ với lượt bị cắt ngắn và điều kiện trên $\mathcal S_{\mathcal D}$ ở ghi chú diễn giả, 2026-11-13); Mệnh đề; số liệu; Ý nghĩa | Mệnh đề 05.34, Nhận xét 05.35 (ghi chú diễn giả) | S&B §6.3 |
 | L05-D12 | Bài tập: hai nghiệm trên tám lượt $\mathrm A$, $\mathrm B$ | Đề (a) $V_3(\mathrm A)$, (b) tiêu chuẩn | Bài tập 05.12 | S&B Ví dụ 6.4 |
 | L05-D12b | Bài tập: hai nghiệm trên tám lượt $\mathrm A$, $\mathrm B$ | Lời giải; Cách khác | Nhận xét 05.35 | — |
 
@@ -221,10 +222,10 @@ Cột "Ghi chú" là số hiệu trong ghi chú bài giảng; cột "Nguồn" l�
 
 | Trang | Loại | Trùng |
 |---|---|---|
-| L05-B13/B13b | có lời giải trên mặt trang | dữ kiện mới tại $\mathrm S$ với $\gamma=0{,}9$ (đợt biên tập sau năm vai rà soát); không trùng bài nào của ghi chú; câu (a), (b) của Bài tập 05.18 trong `exercises.md` |
-| L05-C10/C10b | có lời giải trên mặt trang | câu (a), (b) của Bài tập 05.20 trong `exercises.md` (Bài tập 05.9 cũ) |
+| L05-B13/B13b | có lời giải trên mặt trang | dữ kiện mới tại $\mathrm S$ với $\gamma=0{,}9$ (đợt biên tập sau năm vai rà soát); lợi tức theo Ví dụ 05.2 của ghi chú; không trùng bài nào của ghi chú hay của `exercises.md` |
+| L05-C10/C10b | có lời giải trên mặt trang | không trùng bài nào của `exercises.md`; cùng hai chuyển từ $\mathrm S$ như Bài tập 05.6 của ghi chú, với $V(\mathrm S)=0{,}25$ thay cho $0$ |
 | L05-D13/D13b | có lời giải trên mặt trang | câu (c) trùng Bài tập 05.11(e) của ghi chú; (a), (b) dùng số liệu của Nhận xét 05.19, 05.29 |
 | L05-D12/D12b | có lời giải trên mặt trang | câu (a) trùng Bài tập 05.12 của ghi chú |
 | L05-E06/E06b | bài tập tổng hợp, lời giải trên mặt trang | trùng Bài tập 05.8 của ghi chú, cùng kết quả |
 
-Trang L05-E03 ghi số hiệu theo bảng `Mạch | Mở phần | Bài tập` của `exercises.md`: mạch 1 → ghi chú 05.1; mạch 2 → 05.16, 05.18, 05.19, ghi chú 05.2–05.5; mạch 3 → 05.17, 05.20, 05.21, 05.26, ghi chú 05.6, 05.7; mạch 4 → 05.11, 05.22–05.24, 05.27, ghi chú 05.9, 05.10, 05.14; mạch 5 → 05.12, 05.25, 05.28; mạch 6 → 05.8, ghi chú 05.13, 05.15. Dòng liên kết cuối trang dẫn tới viewer của ghi chú bài giảng và của `exercises.md` (đồng bộ 2026-10-14).
+Trang L05-E03 ghi số hiệu theo bảng `Mạch | Mở phần | Bài tập` của `exercises.md`: mạch 1 → ghi chú 05.1; mạch 2 → 05.17, 05.18, 05.19, ghi chú 05.2–05.5; mạch 3 → 05.20, 05.21, ghi chú 05.6, 05.7, 05.16; mạch 4 → 05.22, 05.24, ghi chú 05.8–05.11, 05.14; mạch 5 → ghi chú 05.12; mạch 6 → 05.23, ghi chú 05.13, 05.15. Dòng liên kết cuối trang dẫn tới viewer của ghi chú bài giảng và của `exercises.md` (đồng bộ lại với `exercises.md` 2026-11-12 vào ngày 2026-11-13).
