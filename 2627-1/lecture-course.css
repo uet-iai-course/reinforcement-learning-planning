@@ -139,3 +139,12 @@
 .reveal.lecture-deck .grid2.wide-right { grid-template-columns: 2fr 3fr; }
 
 .reveal.lecture-deck .slides section[data-slide-id] { padding: 0 24px; box-sizing: border-box; }
+
+/* Trang dày (Bài 10, mạch 7 và các bảng tổng kết): khoảng cách giữa các dòng và lề ô bảng nhỏ hơn,
+   cỡ chữ giữ nguyên (NT-RL-7). Bật bằng class "compact" trên section của trang. */
+.reveal.lecture-deck .slides section.compact p,
+.reveal.lecture-deck .slides section.compact li { margin-top: .3em; margin-bottom: .3em; line-height: 1.2; }
+.reveal.lecture-deck .slides section.compact .katex-display { margin: .35em 0; }
+.reveal.lecture-deck .slides section.compact h2 { margin-bottom: .45em; }
+.reveal.lecture-deck .slides section.compact th,
+.reveal.lecture-deck .slides section.compact td { padding: .12em .45em; line-height: 1.15; }

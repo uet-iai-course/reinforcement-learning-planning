@@ -1552,3 +1552,730 @@ Ghi chú diễn giả sửa theo E9, E10, E11 ở các trang: `L10-101`, `102`, 
 | `L10-710` | 60 | 5 | 16 | 0 | 435 | 135 |
 
 Cờ còn lại: `L10-101` (trang bìa, dòng phụ đề 28 token, không tính như Bài 09); `L10-105` (8 dòng, ngoại lệ đã duyệt). Trang tiêu đề mạch: dòng dẫn tính theo trần 25.
+
+---
+
+## Bổ sung DPO (2026-11-19)
+
+Giai đoạn III.1 của lượt bổ sung DPO (`prompt-bo-sung-dpo-bai-10.md`, bảng Q, tác giả 2026-11-19 "Accept all proposals"; kế hoạch `ke-hoach-bo-sung-dpo.md` phần C). Phần này thêm mạch 7 mới vào deck đã có và ghi mọi trang cũ phải sửa; các phần ở trên giữ nguyên làm hồ sơ của bản 101 trang. Chỗ phần này khác phần trên thì phần này thắng cho deck sau bổ sung.
+
+- **Nguồn nội dung** (Q1, "P1, Bài 10, Mục 7 (riêng)" ở mục 3 `NGUYEN-TAC-HOC-PHAN.md`; NT1, NT2): ghi chú đã duyệt và commit, `materials/lec-10/lecture-note.md` §7 (7.1–7.6, khối 10.52–10.70, Ví dụ 10.23–10.28, `lec-10-topic-25` … `-30`), Tình huống 10.4–10.5, §8, Tóm tắt chương, Bài tập 10.18–10.21; `exercises.md` Bài tập 10.22. Thuật ngữ, ký hiệu, giả thiết, số liệu trên mặt trang lấy đúng từ đó; mọi số trong mục dưới đã đối chiếu với dòng của ghi chú. Bài báo chỉ xuất hiện trong dòng nguồn của ghi chú diễn giả, đúng như ghi chú dẫn.
+- **Quy định áp dụng.** Trang mới (`L10-D00` … `L10-D18`, `L10-104b`, `L10-702c`, `L10-703b`) theo NT1–NT28, P1–P11, NT-RL-1 … NT-RL-11. Trang cũ giữ quy định cũ (mục 3 `NGUYEN-TAC-HOC-PHAN.md`), trừ các trang liệt kê ở mục "Trang đã có phải sửa"; trên trang đã sửa, phần bị sửa theo NT1–NT28, và trang phải sạch `deck_lint.py` ngoài các ngoại lệ ghi ở mục "Ngoại lệ mật độ và ngoại lệ đã biết của `deck_lint`".
+- **Luận điểm trọng tâm** (tác giả; phải thấy trên trang kết quả `L10-D04`, trang so sánh `L10-D16` và mạch "Tổng kết" `L10-702c`, `L10-707`, `L10-708`): RLHF với PPO và DPO xuất phát từ cùng một mục tiêu, cực đại hóa phần thưởng trong khi giữ chính sách gần một chính sách tham chiếu cố định bằng phạt KL, với nghiệm dạng đóng $\pi^*\propto\pi_{\mathrm{ref}}e^{r/\beta}$ (Định lý 10.57). PPO nhắm tới nghiệm đó bằng mẫu sinh trực tuyến, không có bảo đảm hội tụ. DPO giải cùng bài toán mà không dùng PPO hay vòng học tăng cường trực tuyến nào; cực tiểu của $L^{\mathrm{DPO}}$ là nghiệm của con đường RLHF lý tưởng chỉ dưới (H1)–(H3), (H4a), (H4b) của Định lý 10.65. Hai mỏ neo khác nhau ($\pi_{\mathrm{old}}$ đổi sau mỗi vòng, $\pi_{\mathrm{ref}}$ cố định) và hai chiều KL khác nhau ($D_{\mathrm{KL}}(\pi_{\mathrm{old}}\Vert\pi_\theta)$ ở Định nghĩa 10.43, $D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})$ ở Định nghĩa 10.56).
+- **Âm tiết** như quy ước ở đầu tệp (token theo khoảng trắng, không tính tiêu đề, KaTeX, số trong ô bảng, nhãn hình, ghi chú diễn giả; số viết trong câu có tính); số trong phần này đếm bằng script trên các dòng trong ngoặc kép “…” của mục "Mặt trang" (cùng quy tắc với `deck_lint.py`: chữ trong ô bảng có tính), là số dự kiến; tác tử viết đếm lại trên HTML bằng `deck_lint.py` (NT17).
+- **Bước của hành trình khái niệm** (NT8) ghi bằng các chữ: vấn đề, trực quan, ví dụ, phát biểu, ý tưởng chứng minh, ứng dụng, kiểm tra.
+
+### Bản đồ mạch sau bổ sung
+
+**Bài toán trung tâm** (§1.1 của ghi chú, ba phần): giảm phương sai của ước lượng gradient mà vẫn giữ kỳ vọng của nó; dùng lại dữ liệu của $\pi_{\mathrm{old}}$ để chọn một bước cập nhật lớn mà chính sách mới không kém chính sách cũ; khi phần thưởng chỉ được biết qua các phép so sánh ưu tiên, tìm chính sách cực đại hóa phần thưởng mà vẫn ở gần một chính sách tham chiếu cố định.
+
+| mạch | loại | câu hỏi của mạch (NT13) | chức năng | đầu vào | đầu ra | đóng góp cho bài toán trung tâm | trang tiêu đề mạch | trang | phút |
+|---|---|---|---|---|---|---|---|---:|---:|
+| 1–6 | như bảng "Bản đồ mạch" ở trên | như trên | như trên | như trên | như trên (mạch 6 giao Thuật toán 10.49 cho mạch 7) | phần thứ nhất và thứ hai | như trên | 90 (mạch 1 thêm `L10-104b`) | 104 |
+| 7. Tối ưu chính sách từ phản hồi ưu tiên | khái niệm, kết quả, thuật toán | Khi chỉ có các phép so sánh ưu tiên, chính sách mới nên chọn mỗi câu trả lời với xác suất nào nếu vẫn phải gần chính sách tham chiếu, và có cần một vòng học tăng cường để tìm chính sách đó không? (câu hỏi của §7.1) | Mô hình Bradley–Terry cho mô hình phần thưởng; mục tiêu có phạt KL theo chính sách tham chiếu và nghiệm dạng đóng; RLHF với PPO; phép đổi biến và DPO; định lý tương đương; so sánh hai con đường; giới hạn khi giả thiết hỏng | Thuật toán 10.49 (PPO kiểu actor–critic, cần $R_{t+1}$ của môi trường); phạt KL theo $\pi_{\mathrm{old}}$ của Định nghĩa 10.43 (chỉ giới hạn từng bước); KL và Mệnh đề 10.24 (mạch 4); hàm điểm softmax, bài toán một bước của Ví dụ 10.1 và bộ đệm $y_1,y_1,y_2$ của Ví dụ 10.17 | Định lý 10.57 ($\pi^*_r\propto\pi_{\mathrm{ref}}e^{r/\beta}$), Định lý 10.65 (tương đương dưới (H1)–(H3), (H4a), (H4b)); Thuật toán 10.61, 10.67; bảng so sánh RLHF với PPO và DPO; phản ví dụ ưu tiên tất định; năm hàng của bảng tổng kết, hai hàng của bảng phương pháp, một hàng của bảng kết luận có bảo đảm | Phần thứ ba: cùng công cụ phạt KL của mạch 4–6 với một mỏ neo cố định, quyết định nghiệm cuối; trả lời có điều kiện ở phần 6 của §8.3 | `L10-D00`, `id="mach-7"`, `data-note-topic-id="lec-10-topic-25"` | 19 | 22 |
+| 8. Tổng kết | kết bài | Mỗi kết quả của bài đúng dưới giả thiết nào, và bài toán trung tâm được trả lời đến đâu? | Bảng kết quả–giả thiết (thêm `L10-702c`), bảng phương pháp (sáu phương pháp, thêm `L10-703b`), bảng kết luận có bảo đảm (thêm hàng DPO), bài tổng hợp, vấn đề trung tâm (sáu phần), câu hỏi tự kiểm tra, bài tập về nhà, tài liệu tham khảo | Kết quả mạch 2–7 | Câu trả lời có điều kiện cho cả ba phần; giới hạn còn lại (§8.6) chỉ trong ghi chú diễn giả, không trỏ bài sau (Q8) | Tổng hợp, không khái niệm mới | `L10-700`, `id="mach-8"` (đổi từ `mach-7`), `data-note-topic-id="lec-10-topic-23"` | 14 | 9 |
+| **Tổng** | | | | | | | | **123** | **135** |
+
+**Tám mạch.** NT10 và `AGENTS.md` cho 5–7 mạch. Deck có tám mạch theo yêu cầu cụ thể của tác giả (Q7, QT1; "P1, Bài 10, Mục 7 (riêng)"): Mục 7 mới của ghi chú là một chủ đề trọn vẹn với câu hỏi, hai định lý và hai thuật toán riêng, và số mạch $N$ phải trùng số mục $N$ của ghi chú với $N=2,\dots,8$ (GC16). Ảnh hưởng tới mạch bài: phương án gộp DPO vào mạch 6 cho một mạch 42 trang và tách một mục của ghi chú khỏi mạch của nó, nên bị loại (kế hoạch QT1). "Tổng kết" thành mạch 8 (`#/8`), mạch 7 mới mở tại `#/7`; liên kết `#/7/1`, `#/8/1` của `exercises.md` (đã có) mở đúng `L10-D00` và `L10-700`. `deck_lint.py` báo `STRUCT 8 mạch (cần 5–7)`: ngoại lệ đã biết. Điều phối viên ghi cùng lý do vào `review-log.md`.
+
+**Mã trang của mạch 7** (Q7, QT2, P7): tiền tố `L10-D`, trang tiêu đề mạch `L10-D00`, các trang `L10-D01` … `L10-D18`; không dùng `L10-8xx` vì "Tổng kết" giữ `L10-7xx`; mọi `data-slide-id` cũ giữ nguyên. Trang tách mới của phần cũ theo khuôn hậu tố chữ đã có: `L10-104b`, `L10-702c`, `L10-703b`.
+
+**Dòng dẫn và từ khóa của hai trang tiêu đề mạch** (NT12; không khuôn "Muốn …, phải …", không mở bằng "Người học", khác khuôn câu của nhau):
+
+- `L10-D00`: “Từ phép so sánh ưu tiên, PPO với mẫu trực tuyến và DPO trên dữ liệu cố định nhắm tới cùng một chính sách.” Từ khóa: “Mô hình Bradley–Terry · Mục tiêu có phạt KL · RLHF với PPO · DPO · Hai mỏ neo”.
+- `L10-700`: “Mỗi kết quả của bài đúng dưới một bộ giả thiết riêng.” Từ khóa: “Kết quả và giả thiết · Sáu phương pháp · Vấn đề trung tâm · Câu hỏi tự kiểm tra”.
+
+Lý do đổi bản nháp của kế hoạch C1 ("Cùng một mục tiêu có phạt KL được giải bằng PPO …"): "mục tiêu có phạt KL" là khái niệm chưa có ở điểm vào mạch (định nghĩa ở `L10-D03`), trong khi NT12 chỉ cho dùng từ thông thường và khái niệm đã có; "nhắm tới" giữ đúng mức của luận điểm (PPO không có bảo đảm hội tụ, DPO chỉ trùng nghiệm dưới giả thiết). Dòng dẫn của `L10-700` lấy câu mở §8 của ghi chú.
+
+### Danh sách trang và thời lượng của mạch 7
+
+| mã | tiêu đề | loại, bước NT8 | khối ghi chú | `data-note-topic-id` | hình | phút |
+|---|---|---|---|---|---|---:|
+| `L10-D00` | 7. Tối ưu chính sách từ phản hồi ưu tiên | tiêu đề mạch | §7 | `lec-10-topic-25` | — | 0,5 |
+| `L10-D01` | Phần thưởng từ so sánh ưu tiên | vấn đề (NT-RL-3, NT13), ví dụ dẫn nhập | §7.1 đoạn mở, Câu hỏi, Định nghĩa 10.52(a), Ví dụ 10.23 | `lec-10-topic-25` | — | 1 |
+| `L10-D02` | Mô hình Bradley–Terry | trực quan, phát biểu (định nghĩa, kết quả phụ), ví dụ | Định nghĩa 10.53, Mệnh đề 10.54, Ví dụ 10.24 | `lec-10-topic-25` | — | 1,5 |
+| `L10-D03` | Mục tiêu có phạt KL | vấn đề, trực quan, ví dụ, phát biểu (định nghĩa) | §7.2 đoạn mở, Ví dụ 10.25, Định nghĩa 10.56 | `lec-10-topic-26` | — | 1 |
+| `L10-D04` | Nghiệm của mục tiêu có phạt KL | phát biểu (kết quả chính; luận điểm, phần 1) | Định lý 10.57 | `lec-10-topic-26` | — | 1,5 |
+| `L10-D05` | Ý tưởng chứng minh: nghiệm của mục tiêu có phạt KL | ý tưởng chứng minh (NT6) | chứng minh Định lý 10.57 | `lec-10-topic-26` | — | 1,5 |
+| `L10-D06` | Ví dụ: nghiệm có phạt KL trên bài toán một bước | ứng dụng | Ví dụ 10.26 | `lec-10-topic-26` | — | 1 |
+| `L10-D07` | Phần thưởng đã trừ KL theo token | vấn đề (NT-RL-3), phát biểu (kết quả phụ) | §7.3 đoạn mở, Định nghĩa 10.52(b), Bổ đề 10.59, Mệnh đề 10.60, (7.1) | `lec-10-topic-27` | — | 1 |
+| `L10-D08` | Ví dụ: hai vòng PPO trên phần thưởng đã trừ KL | ví dụ tính tay trước giả mã (NT-RL-2); hai mỏ neo (NT-RL-4) | Ví dụ 10.27, Nhận xét 10.58 | `lec-10-topic-27` | — | 1,5 |
+| `L10-D09` | Thuật toán RLHF với PPO | phát biểu (thuật toán) | Thuật toán 10.61, Nhận xét 10.62 (ghi chú diễn giả) | `lec-10-topic-27` | — | 1 |
+| `L10-D10` | Đổi biến giữa phần thưởng và chính sách | vấn đề (NT-RL-3), ví dụ, trực quan, phát biểu (kết quả phụ) | §7.4 đoạn mở, Mệnh đề 10.63 | `lec-10-topic-28` | — | 1 |
+| `L10-D11` | Hàm mất mát DPO | phát biểu (định nghĩa) | Định nghĩa 10.64 và đoạn sau | `lec-10-topic-28` | — | 1 |
+| `L10-D12` | Tương đương giữa RLHF và DPO | phát biểu (kết quả chính; luận điểm, phần 2) | Định lý 10.65 | `lec-10-topic-28` | — | 1,5 |
+| `L10-D13` | Ý tưởng chứng minh: tương đương giữa RLHF và DPO | ý tưởng chứng minh (NT6), kiểm tra (bỏ (H4b)) | chứng minh Định lý 10.65, đoạn "Mỗi giả thiết có vai trò riêng" | `lec-10-topic-28` | — | 1 |
+| `L10-D14` | Ví dụ: một bước DPO tính tay | phát biểu (kết quả phụ), ví dụ tính tay trước giả mã (NT-RL-2) | Mệnh đề 10.66, Ví dụ 10.28 | `lec-10-topic-28` | — | 1,5 |
+| `L10-D15` | Thuật toán DPO | phát biểu (thuật toán); ngoại tuyến, khác chính sách (NT-RL-4) | Thuật toán 10.67, "Trong thực hành" của §7.4 | `lec-10-topic-28` | — | 1 |
+| `L10-D16` | So sánh PPO trong RLHF và DPO | ứng dụng, bảng so sánh (luận điểm, phần 3) | §7.5, bảng so sánh; Nhận xét 10.70 (đọc thêm, chỉ ghi chú diễn giả) | `lec-10-topic-29` | — (hình hai con đường chỉ ở ghi chú, Q7) | 1,5 |
+| `L10-D17` | Ưu tiên tất định từ ít dữ liệu | ứng dụng khi giả thiết hỏng, phản ví dụ | Tình huống 10.5, Nhận xét 10.69 | `lec-10-topic-29` | — | 1 |
+| `L10-D18` | Bài tập: nghiệm có phạt KL trên ba câu trả lời | kiểm tra (đề và "Lời giải:" bằng fragment) | Bài tập 10.18 (a)–(b) | `lec-10-topic-26` | — | 1 |
+
+Phút mạch 7: $0{,}5+1+1{,}5+1+1{,}5+1{,}5+1+1+1{,}5+1+1+1+1{,}5+1+1{,}5+1+1{,}5+1+1=22$, đúng kế hoạch C2. `topic-30` (đọc thêm) không mang thuộc tính trang nào, chỉ có trong ghi chú diễn giả `L10-D16`, `L10-D17` (NT5: nói rõ là đọc thêm). Không hình mới: hình `rlhf-dpo-hai-con-duong.svg` ở lại ghi chú (Q7, QT7), hình tùy chọn `muc-tieu-phat-kl.svg` không được vẽ ở giai đoạn I nên không dùng; tác tử viết chỉ được thêm `-slide.svg` (prompt III.3).
+
+**Sai khác so với danh sách C2 của kế hoạch** (vẫn 19 trang, cùng mã `L10-D00` … `L10-D18`, cùng 22 phút; điều phối viên duyệt ở cổng storyboard):
+
+1. C2 đặt Thuật toán 10.61 trên `L10-D08` trước ví dụ tính tay `L10-D09`, trái NT-RL-2 (bước tính tay trước giả mã) và trái thứ tự của ghi chú (Bổ đề 10.59, Mệnh đề 10.60, (7.1), Ví dụ 10.27, Thuật toán 10.61; NT2). Storyboard tách: `L10-D07` phát biểu phần thưởng đã trừ KL theo token, `L10-D08` ví dụ tính tay, `L10-D09` thuật toán.
+2. C2 không có trang ý tưởng chứng minh cho Định lý 10.65, trong khi định lý mang phần 2 của luận điểm và là kết quả chính (NT6: mỗi kết quả chính có trang ý tưởng chứng minh riêng). Thêm `L10-D13`.
+3. Để giữ 19 trang (Q7): ví dụ khớp mô hình phần thưởng (C2 `L10-D03`, Ví dụ 10.24, ba con số) thành dòng cuối của `L10-D02`; đề và lời giải Bài tập 10.18 (C2 `L10-D17`, `L10-D18`) thành một trang, "Lời giải:" hiện bằng fragment (NT24 cho phép fragment hoặc trang kế tiếp). Cụm Bradley–Terry là chủ đề `cầu nối` (`outline.md`, "Phân loại chủ đề"), dựa trên hồi quy logistic người học đã biết (GC-RL-16), nên gộp ở đây ít tốn nhất.
+4. Mệnh đề 10.66 (gradient của $L^{\mathrm{DPO}}$) đặt trên trang ví dụ tính tay `L10-D14`, không trên trang định nghĩa như C2 `L10-D11`: theo ghi chú, Mệnh đề 10.66 đứng sau Định lý 10.65 và ngay trước Ví dụ 10.28 (NT2).
+5. Số hiệu bài tập theo Q4: bài trên mặt trang là Bài tập 10.18 của ghi chú (C2 ghi 10.13). Tiêu đề `L10-D17` là "Ưu tiên tất định từ ít dữ liệu" (tên của Tình huống 10.5), không "Giới hạn: …": NT16 chỉ cho các tiền tố chức năng "Ví dụ:", "Bài tập:", "Chứng minh:", "Ý tưởng chứng minh:".
+6. Nhận xét 10.58 (hai mỏ neo, hai chiều KL; cuối §7.2 của ghi chú) lên `L10-D08`, trang ví dụ hai vòng PPO của §7.3: đổi chỗ cục bộ trong cùng mạch, nội dung giữ (NT2), vì ví dụ đó làm cụ thể hai mỏ neo.
+7. Bảng so sánh ở `L10-D16`, không ở `L10-D15` như Q7 ghi: Q7 chốt hình thức (bảng trên mặt trang, hình ở ghi chú); mã dịch một bậc do sai khác 2; không liên kết nào trỏ mã này.
+
+Điều phối viên chấp nhận các sai khác 1–7 ở cổng III.2. Phương án "chỉ một hộp Câu hỏi:" cho `L10-109` của bản trước bị bác (Q3: giữ cấu trúc, thêm một dòng); mục `L10-109` đã viết lại.
+
+### Thời lượng của cả deck (135 phút; Q7, kế hoạch C4; chỉ trong planning, NT27)
+
+| mạch | trang | số trang | phút trước | phút sau | trang đổi phút |
+|---|---|---:|---:|---:|---|
+| 1 | `L10-101`–`L10-110`, `L10-104b` | 11 | 12 | 12 | `L10-104` 1 → 0,5; `L10-104b` 0,5 |
+| 2 | `L10-200`–`L10-216` | 18 | 23 | 22,5 | `L10-205` 1,5 → 1 |
+| 3 | `L10-300`–`L10-309` | 10 | 14,5 | 14,5 | — |
+| 4 | `L10-400`–`L10-414` | 16 | 22,5 | 20,5 | `L10-404` 1,5 → 1; `L10-409` 1,5 → 1; `L10-414` 1 → 0 |
+| 5 | `L10-500`–`L10-510` | 12 | 13,5 | 12 | `L10-505` 2 → 1,5; `L10-510` 1 → 0 |
+| 6 | `L10-600`–`L10-620` | 23 | 25,5 | 22,5 | `L10-614`, `L10-615`, `L10-617`, `L10-618` 1 → 0,5 mỗi trang; `L10-617b` 0,5; `L10-620` 1 → 0 |
+| 7 (mới) | `L10-D00`–`L10-D18` | 19 | — | 22 | bảng trên |
+| 8 | `L10-700`–`L10-710`, `L10-702c`, `L10-703b` | 14 | 9 | 9 | `L10-706` 1 → 0; `L10-702c` 0,5; `L10-703b` 0,5 |
+| **Tổng** | | **123** | **120** | **135** | |
+
+Kiểm: $12+22{,}5+14{,}5+20{,}5+12+22{,}5+22+9=135$; $11+18+10+16+12+23+19+14=123$. Trang có 0 phút (`L10-414`, `L10-510`, `L10-620`, `L10-706`) là trang lời giải, giữ nguyên trong deck và dùng trong 15 phút chữa bài (Q7: deck 135 phút, chữa bài 15 phút); mạch 4–6 giảm $2+1{,}5+3=6{,}5$ phút, mạch 2 giảm $0{,}5$, mạch 8 giảm $1$ ở `L10-706` và tăng $1$ ở hai trang bảng mới, tổng giảm $8$ phút như C4 ($143-8=135$). Phút mạch 8: `L10-700` 0,5; `L10-701` 1; `L10-702` 0,5; `L10-702b` 0,5; `L10-702c` 0,5; `L10-703` 1; `L10-703b` 0,5; `L10-704` 0,5; `L10-705` 1,5; `L10-706` 0; `L10-707` 1; `L10-708` 0,5; `L10-709` 0,5; `L10-710` 0,5; tổng 9. Không trang cũ nào bị bỏ (mục 3 `NGUYEN-TAC-HOC-PHAN.md`, "Số trang ở đợt sửa"). Số trang 123 vượt mặc định P6 vì deck đã có giữ số trang; con số nằm trong khoảng 120–123 của C4.
+
+### Mục từng trang, mạch 7. Tối ưu chính sách từ phản hồi ưu tiên (22 phút)
+
+Các ngoặc dẫn số quy định (NTk, Pk, NT-RL-k) trong bản phác ghi chú diễn giả dưới đây là chú thích cho tác tử viết, không chép vào HTML (VP8, NT22); tác tử viết kiểm bằng grep "NT[0-9-]" trên các khối `aside.notes`. Mỗi mục ghi như phần trên (vị trí và loại; lý do tồn tại; liên kết; mục tiêu học tập theo số của ghi chú, 8 và 9 là hai mục tiêu mới, trên deck là dòng 7–12 của `L10-104b`; khối ghi chú; mặt trang; mật độ; phút; quyết định; ý chính của ghi chú diễn giả). Mặt trang ghi từng dòng trong “…”; công thức hiển thị ghi riêng. Mọi câu đã soát `no-ai-slop` chế độ Edit (mục "Câu chữ dự kiến" của phần này). Mỗi ghi chú diễn giả 40–150 âm tiết (đến khoảng 250 cho ý tưởng chứng minh và bài tập), mở bằng đối tượng toán học hoặc kết quả kế thừa, kết bằng `<p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §7.k (khối); <bài báo mà ghi chú dẫn cho khối đó>.</p>` (NT22).
+
+#### `L10-D00` 7. Tối ưu chính sách từ phản hồi ưu tiên (trang tiêu đề mạch), điểm vào mạch 7
+- **Vị trí, loại:** điểm vào mạch 7; `section.strand-title`, `id="mach-7"`, `data-note-topic-id="lec-10-topic-25"`; ngoài hành trình khái niệm.
+- **Lý do tồn tại:** mở phần thứ ba của bài toán trung tâm; nêu điều người học làm được sau mạch.
+- **Liên kết:** trước: `L10-620` (lời giải bài tập PPO, dùng phần thưởng của môi trường); sau: `L10-D01`. Kế thừa Thuật toán 10.49 và phạt KL theo $\pi_{\mathrm{old}}$; giao cho "Tổng kết" hai định lý, hai thuật toán, bảng so sánh.
+- **Mục tiêu:** 8, 9.
+- **Mặt trang:** `span.strand-number` “7.” + `h2` “Tối ưu chính sách từ phản hồi ưu tiên” (khác tiêu đề `L10-D01`); `p.strand-lead` “Từ phép so sánh ưu tiên, PPO với mẫu trực tuyến và DPO trên dữ liệu cố định nhắm tới cùng một chính sách.”; `p.strand-keys` “Mô hình Bradley–Terry · Mục tiêu có phạt KL · RLHF với PPO · DPO · Hai mỏ neo”.
+- **Mật độ:** dòng dẫn 24 âm tiết (trần 25, đếm bằng script); 5 cụm từ khóa.
+- **Phút:** 0,5. **Quyết định:** thêm (Q7).
+- **Ghi chú diễn giả (40–100):** Thuật toán PPO của phần 6 cần phần thưởng do môi trường trả về sau mỗi hành động, còn phạt KL của PPO-Penalty chỉ giữ mỗi bước gần chính sách vừa sinh dữ liệu. Ở đây phần thưởng chỉ được biết qua so sánh của người gán nhãn; một mục tiêu có phạt KL theo chính sách tham chiếu cố định quyết định nghiệm cuối, và RLHF với PPO cùng DPO nhắm tới nghiệm đó. Kết quả trao cho phần tổng kết: hai định lý, hai thuật toán, một bảng so sánh. Nguồn: §7.
+
+#### `L10-D01` Phần thưởng từ so sánh ưu tiên
+- **Vị trí, loại:** trang nội dung đầu của mạch 7; bước vấn đề của cụm Bradley–Terry và của cả mạch; ví dụ dẫn nhập (dữ liệu của Ví dụ 10.23, dùng lại ở `L10-D02`, `L10-D03`, `L10-D06`, `L10-D08`, `L10-D14`).
+- **Lý do tồn tại:** NT-RL-3 (mở bằng giới hạn cụ thể của phương pháp trước trong một dòng), NT13 (câu nối giữa hai mạch và câu hỏi của mạch trên mặt trang nội dung đầu tiên), NT14 (liệt kê dữ kiện ngay), NT-RL-4 (trạng thái, hành động, kết thúc trước khi dùng: Định nghĩa 10.52(a)).
+- **Liên kết:** trước: `L10-D00`; sau: `L10-D02` (mô hình cho xác suất của từng phép so sánh).
+- **Mục tiêu:** 8.
+- **Khối ghi chú:** §7.1 đoạn mở và "**Câu hỏi.**", Định nghĩa 10.52(a), Ví dụ 10.23 (`topic-25`).
+- **Mặt trang:**
+  1. “PPO cần phần thưởng $R_{t+1}$ của môi trường; ở đây chỉ có so sánh.”
+  2. “Một bước: trạng thái là lời nhắc (prompt) $x$, hành động là câu trả lời (response, completion) $y\in\mathcal Y(x)$.”
+  3. “Chính sách tham chiếu $\pi_{\mathrm{ref}}(\cdot\mid x)=(\tfrac23;\,\tfrac13)$.”
+  4. bảng hai cột: “bộ ba $(x,y_w,y_l)\in\mathcal D_{\mathrm{pref}}$ (lời nhắc, được chọn, bị loại)” | “số lần”; hàng $(x,y_1,y_2)$ | $4$; hàng $(x,y_2,y_1)$ | $2$.
+  5. hộp: “**Câu hỏi:** nếu phải gần $\pi_{\mathrm{ref}}$, chính sách chọn $y_1$, $y_2$ với xác suất nào?<br>Có cần vòng học tăng cường không?”
+- **Mật độ:** khoảng 62 âm tiết (dòng 13, 16, 4, bảng 10, hộp 19), 5 dòng, 1 hộp 2 câu, 0 công thức hiển thị: ngoại lệ trần 60 (≤ 90; sửa sau cổng III.2), lý do NT9 (tập $\mathcal Y(x)$ dùng trong giả thiết của `L10-D04`, `L10-D12` phải có tên trước) và NT21 (tên tiếng Anh của câu trả lời ở lần đầu). "Một bước" là bài toán một bước của Ví dụ 10.1 (lượt dừng sau một hành động); $y_w$, $y_l$, $\mathcal D_{\mathrm{pref}}$ có tên ở đầu cột bảng, định nghĩa đầy đủ ở `L10-D02`.
+- **Phút:** 1. **Quyết định:** thêm.
+- **Ghi chú diễn giả:** mô hình ngôn ngữ nhận lời nhắc và đáp bằng một câu trả lời (response, completion); $\pi_{\mathrm{ref}}$ là chính sách softmax của Ví dụ 10.1 với $\theta_{\mathrm{ref}}=(\log2;\,0)$; đây là dạng một bước của Định nghĩa 10.52 ($s=x$, $a=y$), dạng mức token đến ở RLHF; $y_1$ được chọn 4 trên 6 lần, tức $\tfrac23$; câu hỏi có hai nửa, nửa đầu được trả lời bằng nghiệm có phạt KL, nửa sau bằng định lý tương đương và giả thiết của nó. Nguồn: §7.1, Định nghĩa 10.52, Ví dụ 10.23.
+
+#### `L10-D02` Mô hình Bradley–Terry
+- **Vị trí, loại:** mạch 7; trực quan, định nghĩa, kết quả phụ (Mệnh đề 10.54), ví dụ (Ví dụ 10.24) của cụm Bradley–Terry (`cầu nối`).
+- **Lý do tồn tại:** biến các phép so sánh thành một mô hình phần thưởng bằng hợp lý cực đại; nêu sớm hai sự thật dùng về sau: chỉ hiệu phần thưởng được xác định (lớp $[r]$, dùng ở `L10-D10`, `L10-D12`), và $k=n$ không có cực tiểu (dùng ở `L10-D17`).
+- **Liên kết:** trước: `L10-D01` (dữ liệu sáu phép so sánh); sau: `L10-D03` (chính sách tham lam theo $\hat r$ vừa khớp).
+- **Mục tiêu:** 8.
+- **Khối ghi chú:** đoạn "Một cách trực quan" sau Ví dụ 10.23, Định nghĩa 10.53, Mệnh đề 10.54, Ví dụ 10.24 (`topic-25`).
+- **Mặt trang:**
+  1. “**Trực quan.** Xác suất chọn chỉ phụ thuộc hiệu phần thưởng, tăng theo hiệu.”
+  2. “**Định nghĩa 10.53.** Các phép so sánh độc lập, $\Pr(y\succ y'\mid x)=\sigma\bigl(r(x,y)-r(x,y')\bigr)$, $\sigma(z)=1/(1+e^{-z})$.”
+  3. “**Mệnh đề 10.54.** **Giả thiết:** $\mathcal D_{\mathrm{pref}}$ hữu hạn, bộ ba độc lập theo Bradley–Terry; mô hình phần thưởng (reward model) $\hat r$ tùy ý. **Kết luận:** (a)”
+  4. công thức hiển thị $$L^{\mathrm{BT}}(\hat r)=-\widehat{\mathbb E}_{\mathcal D_{\mathrm{pref}}}\log\sigma\bigl(\hat r(x,y_w)-\hat r(x,y_l)\bigr)$$ (đối log-hợp lý, mất mát của hồi quy logistic; `aligned` khi tràn ở 390 px).
+  5. “(b) chỉ lớp $[\hat r]=\{\hat r+f(x)\}$ được xác định; (c) hai câu trả lời, $n$ phép so sánh, $k$ chọn $y_1$: $\Delta\hat r=\hat r(y_1)-\hat r(y_2)=\log\frac k{n-k}$ nếu $0<k<n$; không có cực tiểu nếu $k=n$.”
+  6. “Ví dụ 10.24, $n=6$, $k=4$: $\hat r=(\log2;\,0)$, $L^{\mathrm{BT}}$ từ $0{,}6931$ xuống $0{,}6365$; $\sigma(\log2)=\tfrac23$.”
+- **Mật độ:** khoảng 73 âm tiết (14, 9, 24, 0, 21, 5 theo dòng), 6 dòng, 1 công thức hiển thị: ngoại lệ trần 60 (≤ 90; sửa sau cổng III.2), lý do NT2 (giả thiết "$\mathcal D_{\mathrm{pref}}$ hữu hạn" và thuật ngữ "mô hình phần thưởng" của Mệnh đề 10.54) và NT9 (định nghĩa $n$, $k$, $\Delta\hat r$ tại chỗ). Dòng 3 và dòng 5 dài hơn 20 âm tiết nhưng mỗi dòng hiển thị thành hai dòng (NT17: mỗi gạch đầu dòng ≤ 2 dòng hiển thị); tác tử viết có thể ngắt sau "tùy ý." thành hai đoạn `p` chỉ khi tổng dòng vẫn ≤ 6. Lớp tương đương $[\hat r]$ của Định nghĩa 10.53 đặt ở kết luận (b), chỗ nó được dùng, cùng nghĩa với ghi chú. Không có dòng "Nhắc lại:" riêng cho hồi quy logistic (kiến thức tiên quyết mới của ghi chú): trang đã đủ 6 dòng, nên dòng 4 gọi tên "mất mát của hồi quy logistic" (đúng Mệnh đề 10.54(a)) và ghi chú diễn giả nhắc $\sigma'(z)=\sigma(z)\sigma(-z)$, $1-\sigma(z)=\sigma(-z)$; `L10-103` không nằm trong danh sách sửa (Q7, C3). Rủi ro chiều cao ở 1600×900; nếu tràn, tác tử viết báo điều phối viên, không tự bỏ dòng.
+- **Phút:** 1,5. **Quyết định:** thêm; gộp C2 `L10-D02`, `L10-D03` (sai khác 3).
+- **Ghi chú diễn giả:** $L^{\mathrm{BT}}$ là mất mát của hồi quy logistic với biến $\hat r(x,y_w)-\hat r(x,y_l)$ và mọi nhãn dương (Mệnh đề 10.54(a)), kiến thức học máy đã có: $\sigma'(z)=\sigma(z)\sigma(-z)$, $1-\sigma(z)=\sigma(-z)$; chứng minh (c) một dòng: đạo hàm theo $\Delta\hat r$ là $\sigma(\Delta\hat r)-\tfrac kn$, tăng ngặt; chuẩn hóa $\hat r(x,y_2)=0$ hợp lệ theo (b); "Điều kiện áp dụng" (cực tiểu trên mọi hàm, không trong lớp tham số) và "Phạm vi" (câu trả lời vắng mặt trong dữ liệu không bị ràng buộc); $k=n$ là ưu tiên tất định (deterministic preference); Nhận xét 10.55: InstructGPT xếp hạng 4–9 câu trả lời và chuẩn hóa trung bình $0$; nhầm lẫn: coi $\hat r$ là điểm tuyệt đối. Nguồn: §7.1, Định nghĩa 10.53, Mệnh đề 10.54, Ví dụ 10.24, Nhận xét 10.55; Rafailov và cộng sự (2023), Bổ đề 1; Ouyang và cộng sự (2022), §3.5.
+
+#### `L10-D03` Mục tiêu có phạt KL
+- **Vị trí, loại:** mạch 7; vấn đề, trực quan, ví dụ (Ví dụ 10.25), định nghĩa (Định nghĩa 10.56) của cụm mục tiêu có phạt KL (`cốt lõi`).
+- **Lý do tồn tại:** hai giới hạn cụ thể dẫn tới mỏ neo cố định: chính sách tham lam theo $\hat r$ bỏ hẳn $y_2$; phạt KL của PPO-Penalty chỉ giữ từng bước (NT-RL-3, NT13 câu nối với mạch 6). Ví dụ ba chính sách cho thấy $(0{,}8;\,0{,}2)$ tốt hơn cả $\pi_{\mathrm{ref}}$ lẫn chính sách tham lam trước khi có định lý.
+- **Liên kết:** trước: `L10-D02` ($\hat r=(\log2;\,0)$); sau: `L10-D04` (nghiệm chính xác của mục tiêu vừa định nghĩa).
+- **Mục tiêu:** 8.
+- **Khối ghi chú:** §7.2 đoạn mở (gồm "Một cách trực quan"), Ví dụ 10.25, Định nghĩa 10.56 và đoạn sau (`topic-26`); câu "phạt KL của PPO-Penalty … chỉ giữ mỗi bước gần $\pi_{\mathrm{old}}$" ở đoạn kết §6.6.
+- **Mặt trang:**
+  1. “Với $\hat r=(\log2;\,0)$, chính sách cực đại $\mathbb E_\pi\hat r$ là $(1;\,0)$: bỏ hẳn $y_2$.”
+  2. “Phạt KL của PPO-Penalty chỉ giữ mỗi bước gần $\pi_{\mathrm{old}}$.”
+  3. “**Trực quan.** Mỗi đơn vị KL rời $\pi_{\mathrm{ref}}$ tốn chi phí $\beta$; chỉ đi xa khi phần thưởng bù được.”
+  4. bảng (khuôn "chính sách có phạt KL"): “chính sách” | $\mathbb E_\pi\hat r$ | $D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})$ | $J_1$; hàng $\pi_{\mathrm{ref}}=(\tfrac23;\,\tfrac13)$ | $0{,}4621$ | $0$ | $0{,}4621$; hàng “tham lam $(1;\,0)$” | $0{,}6931$ | $0{,}4055$ | $0{,}2877$; hàng $(0{,}8;\,0{,}2)$ | $0{,}5545$ | $0{,}0437$ | $0{,}5108$ (dữ kiện $\beta=1$ ghi ở đầu cột $J_1$: $J_1=\mathbb E_\pi\hat r-D_{\mathrm{KL}}$).
+  5. “**Định nghĩa 10.56.** Mục tiêu có phạt KL (KL-regularized objective) theo chính sách tham chiếu (reference policy) $\pi_{\mathrm{ref}}$ cố định, $\beta>0$:”
+  6. công thức hiển thị $$J_\beta(\pi)=\mathbb E_{x\sim\mu_0}\Bigl[\mathbb E_{y\sim\pi(\cdot\mid x)}r(x,y)-\beta D_{\mathrm{KL}}\bigl(\pi(\cdot\mid x)\Vert\pi_{\mathrm{ref}}(\cdot\mid x)\bigr)\Bigr]$$ (`aligned` ba dòng như ghi chú khi tràn ở 390 px).
+- **Mật độ:** khoảng 58 âm tiết (8, 9, 18, bảng 4, 19), 6 dòng (bảng tính một dòng), 1 công thức hiển thị. Rủi ro chiều cao (bảng bốn hàng và công thức ba dòng ở màn hẹp); xử lý nếu tràn ở 1600×900: dòng 2 gộp vào dòng 1 bằng dấu chấm phẩy, không bỏ.
+- **Phút:** 1. **Quyết định:** thêm.
+- **Ghi chú diễn giả:** với mô hình ngôn ngữ, chính sách tham lam có thể sinh câu trả lời khác xa các câu mà $\hat r$ đã được khớp (Stiennon và cộng sự, 2020, §3.4); KL ở đây là $D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})$, kỳ vọng theo chính sách đang tối ưu; $0{,}0437$ chính là KL tại $s_B$ của Ví dụ 10.11 ở phần 4; $J_\beta$ là (3) của Rafailov và cộng sự (2023), và (2) của Ouyang và cộng sự (2022) khi hệ số tiền huấn luyện bằng $0$. Nguồn: §6.6 đoạn kết, §7.2, Ví dụ 10.25, Định nghĩa 10.56.
+
+#### `L10-D04` Nghiệm của mục tiêu có phạt KL
+- **Vị trí, loại:** mạch 7; phát biểu kết quả chính (Định lý 10.57); trang kết quả của luận điểm, phần 1 (cùng mục tiêu, nghiệm dạng đóng là điểm gặp).
+- **Lý do tồn tại:** NT5 trang kết quả với "Giả thiết:" và "Kết luận:" đủ lượng từ; nêu $\pi^*_r\propto\pi_{\mathrm{ref}}e^{r/\beta}$ cùng các kết luận (c), (d) mà `L10-D06`, `L10-D10`, `L10-D13` dùng.
+- **Liên kết:** trước: `L10-D03` (ví dụ cho thấy $(0{,}8;\,0{,}2)$ tốt nhất trong ba); sau: `L10-D05` (vì sao đúng).
+- **Mục tiêu:** 8.
+- **Khối ghi chú:** Định lý 10.57 (Giả thiết, Kết luận (a)–(e), Điều kiện áp dụng, Phạm vi) (`topic-26`).
+- **Mặt trang:**
+  1. “**Giả thiết:** mỗi $\mathcal Y(x)$ hữu hạn, $\pi_{\mathrm{ref}}(\cdot\mid x)$ là phân phối trên đó; $r$ thực; $\beta>0$; chính sách chọn tự do theo $x$.”
+  2. “**Kết luận:** với hàm phân hoạch (partition function) $\mathcal Z_r(x)=\sum_y\pi_{\mathrm{ref}}(y\mid x)\,e^{r(x,y)/\beta}$,”
+  3. công thức hiển thị $$\pi^*_r(y\mid x)=\frac{\pi_{\mathrm{ref}}(y\mid x)\,e^{r(x,y)/\beta}}{\mathcal Z_r(x)};$$
+  4. “(a) với mọi $\pi(\cdot\mid x)$ có KL hữu hạn, $\mathbb E_\pi r-\beta D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})=\beta\log\mathcal Z_r(x)-\beta D_{\mathrm{KL}}(\pi\Vert\pi^*_r)$; (b) $\pi^*_r$ cực đại $J_\beta$, duy nhất tại mọi $x$ có $\mu_0(x)>0$;” (công thức (a) trong dòng, không hiển thị, để trang có 6 dòng theo cách đếm của `deck_lint.py`: mỗi công thức hiển thị là một dòng)
+  5. “(c) $r-\beta\log\frac{\pi^*_r}{\pi_{\mathrm{ref}}}=\beta\log\mathcal Z_r(x)$ khi $\pi_{\mathrm{ref}}(y\mid x)>0$; (d) cùng miền hỗ trợ với $\pi_{\mathrm{ref}}$; (e) $\pi^*_{r+f}=\pi^*_r$ khi $f$ chỉ phụ thuộc $x$.”
+  6. “**Ý nghĩa:** PPO trong RLHF và DPO cùng cực đại hóa $J_\beta$, nên cùng nhắm tới $\pi^*_r$.”
+- **Mật độ:** khoảng 68 âm tiết (17, 8, 0, 15, 13, 15), 6 dòng, 1 công thức hiển thị: ngoại lệ trần 60 (≤ 90; sửa sau cổng III.2), lý do NT2 (đủ giả thiết "$r$ thực" và đủ kết luận (a)–(e) của Định lý 10.57; (e) dùng ở `L10-D13`, NT9). "RLHF" và "DPO" trên dòng 6 là hai tên đã có ở `L10-104b` (tên tiếng Việt đầy đủ); tên tiếng Anh đầy đủ của RLHF ở `L10-D07`, của DPO ở `L10-D11`, nơi phương pháp được trình bày.
+- **Phút:** 1,5. **Quyết định:** thêm.
+- **Ghi chú diễn giả:** "Ý nghĩa" là phần 1 của luận điểm: hai con đường của các trang sau cực đại hóa cùng $J_\beta$, nên cùng một đích; (e) phần thưởng hơn kém một hàm $f(x)$ cho cùng nghiệm; $\max J_\beta=\mathbb E_x\beta\log\mathcal Z_r(x)$; "phần thưởng đã trừ KL" (vế trái của (c)) bằng nhau trên miền hỗ trợ; Điều kiện áp dụng: cực đại riêng từng $x$, với lớp tham số chỉ khi $\pi^*_r$ thuộc lớp; Phạm vi: dạng của nghiệm, không cho thuật toán khi không tính được $\mathcal Z_r(x)$; trường hợp cực biên $\beta\to\infty$ cho $\pi_{\mathrm{ref}}$, $\beta\to0^+$ cho chính sách tham lam. Nguồn: §7.2, Định lý 10.57; Rafailov và cộng sự (2023), (4), Phụ lục A.1, Bổ đề 2.
+
+#### `L10-D05` Ý tưởng chứng minh: nghiệm của mục tiêu có phạt KL
+- **Vị trí, loại:** mạch 7; ý tưởng chứng minh của kết quả chính (NT4, NT6), trang riêng.
+- **Lý do tồn tại:** lộ trình bốn bước; bất đẳng thức then chốt $D_{\mathrm{KL}}\ge0$ (Mệnh đề 10.24(a) của mạch 4) ở một công thức hiển thị; chỗ vào của $\beta>0$ và "chọn tự do theo $x$"; mẹo gộp phần thưởng vào phân phối (NT7, một dòng "Kỹ thuật.").
+- **Liên kết:** trước: `L10-D04`; sau: `L10-D06` (kiểm (a), (c), (d) trên số).
+- **Mục tiêu:** 8 ("chứng minh nghiệm dạng đóng").
+- **Khối ghi chú:** chứng minh Định lý 10.57, Bước 1–4; đoạn "Hai giả thiết có vai trò riêng" (`topic-26`).
+- **Mặt trang:** danh sách đánh số
+  1. “Cố định $x$. KL hữu hạn nên $\pi(y)>0\Rightarrow\pi_{\mathrm{ref}}(y)>0$; từ $\pi^*_r/\pi_{\mathrm{ref}}=e^{r/\beta}/\mathcal Z_r$ (giả thiết $\beta>0$): $\log\frac{\pi}{\pi_{\mathrm{ref}}}-\frac r\beta=\log\frac{\pi}{\pi^*_r}-\log\mathcal Z_r$.”
+  2. “Nhân với $-\beta$, lấy kỳ vọng theo $y\sim\pi$, một tổng hữu hạn: được (a).”
+  3. công thức hiển thị $$D_{\mathrm{KL}}(\pi\Vert\pi^*_r)\ge0$$ rồi “dấu bằng chỉ khi $\pi=\pi^*_r$ (Mệnh đề 10.24(a)): được (b).”
+  4. “Chính sách chọn tự do theo $x$ (giả thiết): cực đại từng $x$ cho cực đại $J_\beta$; $e^{r/\beta}>0$ cho (d).”
+  và dòng “**Kỹ thuật.** Gộp phần thưởng vào phân phối $\pi_{\mathrm{ref}}e^{r/\beta}/\mathcal Z_r$ để đọc mục tiêu bằng KL.”
+- **Mật độ:** khoảng 60 âm tiết (9, 12, 9, 16, 14), 6 dòng (4 bước, 1 công thức, 1 dòng kỹ thuật), 1 công thức hiển thị.
+- **Phút:** 1,5. **Quyết định:** thêm (NT6).
+- **Ghi chú diễn giả (đến khoảng 250):** bỏ $\beta>0$: với $\beta=0$, $J_0=\mathbb E\,r$ có nghiệm tất định $(1;\,0)$ của trang trước, (d) sai và $e^{r/\beta}$ không xác định; bỏ "chọn tự do theo $x$": một lớp tham số dùng chung cho mọi lời nhắc có thể không chứa $\pi^*_r$; chính sách có KL vô hạn cho $-\infty$, nên bị loại ở Bước 3; (c) là logarit của định nghĩa $\pi^*_r$; (e): $\mathcal Z_{r+f}=e^{f/\beta}\mathcal Z_r$ triệt tiêu giữa tử và mẫu; "Trong thực hành": ở dạng mức token, $\mathcal Z_r(x)$ là tổng trên tới $\lvert\mathcal V\rvert^{T_{\max}}$ chuỗi, ước lượng cũng tốn kém. Nguồn: §7.2, chứng minh Định lý 10.57; Rafailov và cộng sự (2023), Phụ lục A.1, §4.
+
+#### `L10-D06` Ví dụ: nghiệm có phạt KL trên bài toán một bước
+- **Vị trí, loại:** mạch 7; ứng dụng của Định lý 10.57 trên ví dụ xuyên suốt; vai trò của $\beta$.
+- **Lý do tồn tại:** cho đúng $\pi^*=(\tfrac45;\,\tfrac15)$, điểm gặp mà `L10-D08` (PPO) và `L10-D14` (DPO) cùng tới; kiểm (a), (c), (d) trên số; giới thiệu tên "phần thưởng đã trừ KL" dùng ở `L10-D07`, `L10-D08`.
+- **Liên kết:** trước: `L10-D05`; sau: `L10-D07` (với mô hình ngôn ngữ, $\mathcal Z$ không tính được).
+- **Mục tiêu:** 8.
+- **Khối ghi chú:** Ví dụ 10.26, đoạn sau Định lý 10.57 (tên phần thưởng đã trừ KL) (`topic-26`).
+- **Mặt trang:**
+  1. “$\pi_{\mathrm{ref}}=(\tfrac23;\,\tfrac13)$, $\hat r=(\log2;\,0)$. Tính $\pi^*$ với $\beta=1$, rồi với $\beta=\tfrac12$, $\beta=2$.”
+  2. “$\beta=1$: $\pi_{\mathrm{ref}}e^{\hat r}=(\tfrac43;\,\tfrac13)$, $\mathcal Z=\tfrac53$, $\pi^*=(\tfrac45;\,\tfrac15)$, $\max J_1=\log\tfrac53=0{,}5108$.”
+  3. “Kiểm (a): $0{,}5108-D_{\mathrm{KL}}(\pi_{\mathrm{ref}}\Vert\pi^*)=0{,}5108-0{,}0487=0{,}4621=J_1(\pi_{\mathrm{ref}})$.”
+  4. “Kiểm (c): phần thưởng đã trừ KL (KL-penalized reward) $\log2-\log1{,}2=-\log0{,}6=0{,}5108$ ở cả hai câu trả lời.”
+  5. “$\pi^*(y_1)/\pi^*(y_2)=2\cdot2^{1/\beta}$: $\beta=\tfrac12$ cho $\pi^*=(\tfrac89;\,\tfrac19)$; $\beta=2$ cho $(0{,}7388;\,0{,}2612)$.”
+  6. “**Diễn giải:** $\beta$ nhỏ cho phép đi xa $\pi_{\mathrm{ref}}$; với mọi $\beta>0$, $\pi^*(y_2)>0$, đúng (d).”
+- **Mật độ:** khoảng 32 âm tiết, 6 dòng, 0 công thức hiển thị.
+- **Phút:** 1. **Quyết định:** thêm.
+- **Ghi chú diễn giả:** $0{,}5108$ đúng $J_1$ của $(0{,}8;\,0{,}2)$ ở bảng trang trước; với chính sách tham lam, $0{,}5108-\log\tfrac1{0{,}8}=0{,}2877$, cũng đúng (a); $\beta=\tfrac12$: $\mathcal Z=3$, giá trị tối ưu $\tfrac12\log3=0{,}5493$; $\beta=2$: $\mathcal Z=1{,}2761$, giá trị $0{,}4877$; $\beta\to\infty$ cho $\pi_{\mathrm{ref}}$, $\beta\to0^+$ cho $(1;\,0)$; phần thưởng đã trừ KL bằng nhau và bằng $\beta\log\mathcal Z$ là dấu hiệu của nghiệm, dùng lại ở vòng 2 của PPO. Nguồn: §7.2, Ví dụ 10.26.
+
+#### `L10-D07` Phần thưởng đã trừ KL theo token
+- **Vị trí, loại:** mạch 7; vấn đề của cụm RLHF với PPO (NT-RL-3: Định lý 10.57 cần $\mathcal Z_r(x)$), dạng mức token, hai kết quả phụ (Bổ đề 10.59, Mệnh đề 10.60) và phần thưởng (7.1) đưa vào PPO.
+- **Lý do tồn tại:** nối mục tiêu có phạt KL với Thuật toán 10.49: gradient của $J_\beta$ là gradient chính sách với phần thưởng đã trừ KL giữ cố định tại $\theta_{\mathrm{old}}$, chia theo token thành (7.1). Nhắc lại mô hình ngôn ngữ tự hồi quy (kiến thức tiên quyết mới của ghi chú) tại chỗ dùng.
+- **Liên kết:** trước: `L10-D06`; sau: `L10-D08` (hai vòng PPO với phần thưởng này).
+- **Mục tiêu:** 8.
+- **Khối ghi chú:** §7.3 đoạn mở, Định nghĩa 10.52(b), Bổ đề 10.59, Mệnh đề 10.60, đoạn có (7.1); Kiến thức tiên quyết, gạch "Hồi quy logistic và mô hình ngôn ngữ tự hồi quy" (`topic-27`).
+- **Mặt trang:**
+  1. “Định lý 10.57 cần $\mathcal Z_r(x)$, tổng trên mọi câu trả lời.”
+  2. “Học tăng cường từ phản hồi con người (reinforcement learning from human feedback, RLHF) cực đại $J_\beta$ bằng mẫu.”
+  3. “Dạng mức token: $S_0=x$, hành động $A_t$ là token, $S_{t+1}=(S_t,A_t)$, $\pi(y\mid x)=\prod_t\pi(A_t\mid S_t)$; dừng ở token kết thúc hoặc $T_{\max}$; chỉ $R_T=r(x,y)$ khác $0$; $\gamma=1$.”
+  4. “**Bổ đề 10.59.** Khi $\pi>0\Rightarrow\pi_{\mathrm{ref}}>0$: (a) $\log\frac{\pi(y\mid x)}{\pi_{\mathrm{ref}}(y\mid x)}=\sum_t\log\frac{\pi(A_t\mid S_t)}{\pi_{\mathrm{ref}}(A_t\mid S_t)}$; (b) KL của câu trả lời bằng kỳ vọng tổng KL theo token.”
+  5. “**Mệnh đề 10.60.** Dạng một bước, $\pi_\theta>0$ khả vi, $\pi_{\mathrm{ref}}>0$, $\tilde r_\theta=r-\beta\log(\pi_\theta/\pi_{\mathrm{ref}})$: $\nabla_\theta J_\beta=\mathbb E[\tilde r_\theta\nabla_\theta\log\pi_\theta]$; tại $\theta_{\mathrm{old}}$ là gradient chính sách với $\tilde r_{\theta_{\mathrm{old}}}$ cố định; phần thưởng của bước $t$:”
+  6. công thức hiển thị (7.1), không `\tag`: $$R_{t+1}=-\beta\log\frac{\pi_{\mathrm{old}}(A_t\mid S_t)}{\pi_{\mathrm{ref}}(A_t\mid S_t)}+\mathbb 1\{t+1=T\}\,\hat r(x,y)$$
+- **Mật độ:** khoảng 81 âm tiết (10, 18, 15, 18, 20), 6 dòng, 1 công thức hiển thị: ngoại lệ trần 60 (≤ 90; sửa sau cổng III.2), lý do NT-RL-3 (dòng 1: giới hạn của Định lý 10.57, như câu cuối §7.2), NT-RL-4 (dạng mức token đủ $S_0$, điều kiện kết thúc, phần thưởng $0$ trước $T$, như Định nghĩa 10.52(b)), NT2 (giả thiết "dạng một bước", "khả vi" của Mệnh đề 10.60), NT21 (tên đầy đủ và tên tiếng Anh của RLHF). Câu "(7.1) có tổng bằng $\tilde r_{\theta_{\mathrm{old}}}(x,y)$ khi $r=\hat r$" chuyển vào ghi chú diễn giả. Dòng 4 và 5 dài, mỗi dòng hiển thị tối đa hai dòng; nếu tràn khung ở 1600×900, tác tử viết báo điều phối viên.
+- **Phút:** 1. **Quyết định:** thêm; tách từ C2 `L10-D08` (sai khác 1).
+- **Ghi chú diễn giả:** (7.1) có tổng bằng $\tilde r_{\theta_{\mathrm{old}}}(x,y)$ khi $r=\hat r$; với mô hình ngôn ngữ, Định lý 10.57 cho dạng nghiệm nhưng cần cực đại hóa $J_\beta$ bằng mẫu; chứng minh hai kết quả: Bổ đề 10.59(a) là logarit của tích theo token vì chuyển tất định, (b) theo tính chất tháp; ví dụ hai token cho KL $0{,}2410=0{,}0201+0{,}6\cdot0{,}3681$; Mệnh đề 10.60 dùng $\nabla\tilde r_\theta=-\beta\nabla\log\pi_\theta$ và Mệnh đề 09.17; theo Mệnh đề 10.41(c), gradient của hàm thay thế mẫu tại $\theta_{\mathrm{old}}$ có kỳ vọng $\nabla J_\beta(\theta_{\mathrm{old}})$ khi lợi thế đúng; trên một câu trả lời tổng KL theo token có thể âm, chỉ bằng KL theo kỳ vọng; đây là phạt KL theo từng token (per-token KL penalty) của InstructGPT. Nguồn: §7.3, Định nghĩa 10.52, Bổ đề 10.59, Mệnh đề 10.60, (7.1); Ouyang và cộng sự (2022), §3.5.
+
+#### `L10-D08` Ví dụ: hai vòng PPO trên phần thưởng đã trừ KL
+- **Vị trí, loại:** mạch 7; ví dụ tính tay của RLHF với PPO trước giả mã (NT-RL-2); hai mỏ neo và hai chiều KL (Nhận xét 10.58; NT-RL-4).
+- **Lý do tồn tại:** cho thấy trên số rằng phép cắt (theo $\pi_{\mathrm{old}}$) giới hạn bước, còn $\pi_{\mathrm{ref}}$ và $\hat r$ quyết định điểm dừng, và PPO dừng ở $\pi^*$ của `L10-D06` trong ví dụ này chỉ do $\epsilon=0{,}2$.
+- **Liên kết:** trước: `L10-D07`; sau: `L10-D09` (giả mã ba giai đoạn, bước 3 là đúng hai vòng này).
+- **Mục tiêu:** 8 ("phân biệt chính sách cũ của PPO với chính sách tham chiếu").
+- **Khối ghi chú:** Ví dụ 10.27; Nhận xét 10.58 (`topic-27`; Nhận xét 10.58 nằm ở §7.2 nhưng mang hai mỏ neo mà ví dụ này làm cụ thể, NT2: nội dung giữ nguyên, chỉ đổi chỗ trình bày trong cùng mạch).
+- **Mặt trang:**
+  1. “$\pi_{\mathrm{ref}}=(\tfrac23;\,\tfrac13)$, $\hat r=(\log2;\,0)$, $\beta=1$, $\epsilon=0{,}2$, $p=\pi(y_1)$; bộ đệm $y_1,y_1,y_2$; mỗi vòng cố định $\tilde r$ và lợi thế đúng. Tính hai vòng.”
+  2. “Vòng 1, $\pi_{\mathrm{old}}=\pi_{\mathrm{ref}}$: $\tilde r=\hat r$, lợi thế $\tfrac13\log2\,(1;\,1;\,-2)$; $\mathcal L^{\mathrm{CLIP}}$ tăng tới $p=\tfrac23\cdot1{,}2=0{,}8$ rồi nằm ngang.”
+  3. “Vòng 2, $\pi_{\mathrm{old}}=(0{,}8;\,0{,}2)$: $\tilde r=(0{,}5108;\,0{,}5108)$, lợi thế $0$; chính sách đứng yên ở $\pi^*$.”
+  4. “**Diễn giải:** $\pi_{\mathrm{old}}$ giới hạn bước; $\pi_{\mathrm{ref}}$ và $\hat r$ quyết định điểm dừng.”
+  5. “**Nhận xét 10.58.** Mỏ neo là chính sách mà phép phạt giữ gần: $\pi_{\mathrm{old}}$ đổi mỗi vòng, trong $D_{\mathrm{KL}}(\pi_{\mathrm{old}}\Vert\pi_\theta)$; $\pi_{\mathrm{ref}}$ cố định, trong $D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})$.”
+  6. “**Lưu ý:** vòng 1 dừng đúng ở $\pi^*$ chỉ vì $\tfrac23(1+\epsilon)=0{,}8$.”
+- **Mật độ:** khoảng 70 âm tiết (13, 9, 9, 10, 20, 9), 6 dòng, 0 công thức hiển thị: ngoại lệ trần 60 (≤ 90; sửa sau cổng III.2), lý do NT9 (định nghĩa $p$ và thuật ngữ "mỏ neo" trên mặt trang trước khi dùng), NT23 (dòng "Tính …"). Khuôn bảng "mẫu PPO" của mạch 6 không dùng: ba mẫu chỉ có hai giá trị lợi thế, viết thành vector trong dòng 2.
+- **Phút:** 1,5. **Quyết định:** thêm.
+- **Ghi chú diễn giả:** lợi thế vòng 1 là $(0{,}2310;\,0{,}2310;\,-0{,}4621)$, đúng $\tfrac13\log2$ lần lợi thế của bộ đệm ở phần 6, nên đoạn phẳng bắt đầu ở cùng $p=0{,}8$; gradient tại $\theta_{\mathrm{ref}}$ là $\tfrac29\log2\,(1;\,-1)=(0{,}1540;\,-0{,}1540)$, đúng Mệnh đề 10.60; vòng 2: mọi số hạng cắt bằng $0$ (Mệnh đề 10.40(c)); $J_1(0{,}8)=0{,}5545-0{,}0437=0{,}5108$; "mỏ neo" là chính sách mà phép phạt giữ chính sách mới ở gần; chiều KL: với $\pi=(1;\,0)$, $D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})=\log\tfrac32$ còn $D_{\mathrm{KL}}(\pi_{\mathrm{ref}}\Vert\pi)=+\infty$; dữ liệu của mỗi vòng do $\pi_{\mathrm{old}}$ sinh, theo chính sách và trực tuyến; với $\epsilon=0{,}1$ dãy dao động quanh $0{,}8$ (Bài tập 10.21 của ghi chú). Nguồn: §7.2, §7.3, Ví dụ 10.27, Nhận xét 10.58; Ziegler và cộng sự (2019), §2.2.
+
+#### `L10-D09` Thuật toán RLHF với PPO
+- **Vị trí, loại:** mạch 7; phát biểu thuật toán (Thuật toán 10.61), sau ví dụ tính tay (NT-RL-2).
+- **Lý do tồn tại:** mục tiêu 8 đòi mô tả ba giai đoạn; nêu bốn mô hình trong bộ nhớ và dữ liệu sinh trực tuyến, đúng hai điểm mà DPO bỏ đi (NT-RL-4: theo chính sách, trực tuyến).
+- **Liên kết:** trước: `L10-D08` (bước 3 với một lời nhắc); sau: `L10-D10` (bốn mô hình và việc sinh mẫu ở mọi vòng là giới hạn mở cụm DPO).
+- **Mục tiêu:** 8.
+- **Khối ghi chú:** Thuật toán 10.61, đoạn "Trong thực hành" sau nó, Nhận xét 10.62 (`topic-27`).
+- **Mặt trang:**
+  1. “**Thuật toán 10.61.** **Giả thiết:** dạng mức token; người gán nhãn theo Bradley–Terry; $\pi_\theta$, $\pi_{\mathrm{ref}}$ softmax trên token.”
+  2. “**Đầu vào:** mô hình tiền huấn luyện, bản mẫu, lời nhắc, $\beta>0$.”
+  3. “1. Tinh chỉnh có giám sát (supervised fine-tuning, SFT) được $\pi^{\mathrm{SFT}}$; $\pi_{\mathrm{ref}}\leftarrow\pi^{\mathrm{SFT}}$ cố định, $\pi_\theta\leftarrow\pi^{\mathrm{SFT}}$.”
+  4. “2. So sánh câu trả lời của $\pi^{\mathrm{SFT}}$ thành $\mathcal D_{\mathrm{pref}}$; khớp $\hat r$ bằng $L^{\mathrm{BT}}$.”
+  5. “3. Mỗi vòng: Thuật toán 10.49 với phần thưởng (7.1), $\gamma=1$, trên mẫu trực tuyến (online) của $\pi_{\mathrm{old}}$.”
+  6. “**Đầu ra:** $\pi_\theta$ sau ngân sách số lượt; bộ nhớ: $\pi_\theta$, $\pi_{\mathrm{ref}}$, $\hat r$, critic.”
+- **Mật độ:** khoảng 72 âm tiết (16, 11, 11, 9, 15, 10; số thứ tự của `ol` không tính), 6 dòng (các bước 1–3 là `ol` trong khối thuật toán), 0 công thức hiển thị: ngoại lệ trần 60 (≤ 90; sửa sau cổng III.2), lý do NT2 (dòng "Giả thiết" của Thuật toán 10.61). "Bản mẫu" là câu trả lời mẫu do người gán nhãn viết; ghi chú diễn giả nêu đủ.
+- **Phút:** 1. **Quyết định:** thêm; tách từ C2 `L10-D08` (sai khác 1).
+- **Ghi chú diễn giả:** giả thiết của thuật toán (dạng mức token, người gán nhãn theo Bradley–Terry, softmax trên token); bước 2 chuẩn hóa $\hat r$ và khởi tạo critic từ $\hat r$; với một lời nhắc và lợi thế đúng, bước 3 là hai vòng của trang trước; chi phí mỗi vòng: sinh $N$ câu trả lời, một lần $\hat r$ mỗi câu, log-xác suất của $\pi_{\mathrm{ref}}$ mỗi token; InstructGPT dùng $\beta=0{,}02$, bán kính cắt $0{,}2$, một epoch, và biến thể PPO-ptx thêm số hạng tiền huấn luyện nên Định lý 10.57 không áp dụng nguyên dạng; Nhận xét 10.62: tối ưu mạnh làm ưu tiên thật giảm so với dự đoán của mô hình phần thưởng (tối ưu quá mức, over-optimization). Nguồn: §7.3, Thuật toán 10.61, Nhận xét 10.62; Ziegler và cộng sự (2019), §2; Stiennon và cộng sự (2020), §3.4, §4.3; Ouyang và cộng sự (2022), §3.1, Phụ lục C.4.
+
+#### `L10-D10` Đổi biến giữa phần thưởng và chính sách
+- **Vị trí, loại:** mạch 7; vấn đề của cụm DPO (NT-RL-3: giới hạn cụ thể của Thuật toán 10.61 trong một dòng), ví dụ số, trực quan, kết quả phụ (Mệnh đề 10.63).
+- **Lý do tồn tại:** phép đổi biến là bước then chốt của DPO; trên số, hàm phân hoạch triệt tiêu trong hiệu hai phần thưởng trước khi có phát biểu tổng quát (NT8: ví dụ trước phát biểu, như ghi chú).
+- **Liên kết:** trước: `L10-D09` (bốn mô hình, sinh mẫu ở mọi vòng); sau: `L10-D11` (thay phần thưởng bằng log-tỉ số trong $L^{\mathrm{BT}}$).
+- **Mục tiêu:** 9 ("bằng phép đổi biến giữa phần thưởng và chính sách").
+- **Khối ghi chú:** đoạn kết §7.3 (bốn mô hình), §7.4 đoạn mở (số và "Một cách trực quan"), Mệnh đề 10.63 và đoạn sau (`topic-28`).
+- **Mặt trang:**
+  1. “Thuật toán 10.61 cần bốn mô hình, sinh mẫu ở mọi vòng; $\hat r$ chỉ để xác định $\pi^*_{\hat r}$.”
+  2. “$\beta\log\frac{\pi^*}{\pi_{\mathrm{ref}}}+\beta\log\mathcal Z$ với $\pi^*=(\tfrac45;\,\tfrac15)$, $\mathcal Z=\tfrac53$, $\beta=1$: $\log1{,}2+\log\tfrac53=\log2=\hat r(y_1)$, $\log0{,}6+\log\tfrac53=0=\hat r(y_2)$.”
+  3. “**Trực quan.** Mỗi chính sách là nghiệm có phạt KL của một phần thưởng.”
+  4. “**Mệnh đề 10.63.** **Giả thiết:** như Định lý 10.57 và $\pi_{\mathrm{ref}}(y\mid x)>0$ với mọi $x$, $y$.”
+  5. “**Kết luận:** (a) $r=\beta\log\frac{\pi^*_r}{\pi_{\mathrm{ref}}}+\beta\log\mathcal Z_r(x)$; (b) trong $\Pr(y\succ y'\mid x)$ của Bradley–Terry, $\mathcal Z_r(x)$ triệt tiêu.”
+  6. “(c) Mỗi $\pi>0$ là $\pi^*_{r_\pi}$ với $r_\pi=\beta\log(\pi/\pi_{\mathrm{ref}})$; trong $[r]$, chỉ $r_{\pi^*_r}$ có dạng $r_\pi$.”
+- **Mật độ:** khoảng 60 âm tiết (16, 1, 14, 12, 9, 8), 6 dòng, 0 công thức hiển thị (ý "học thẳng chính sách" của ghi chú ở ghi chú diễn giả; công thức trong dòng; tác tử viết dùng `\dfrac` hoặc `/` cho phân số trong dòng nếu chữ quá nhỏ).
+- **Phút:** 1. **Quyết định:** thêm.
+- **Ghi chú diễn giả:** hiệu hai vế trái ở dòng 2 là $\log1{,}2-\log0{,}6=\log2$, không chứa $\mathcal Z$; chứng minh ba bước: (a) là Định lý 10.57(c), (b) vì $\beta\log\mathcal Z_r(x)$ có ở cả hai phần thưởng của cùng lời nhắc, (c) vì $\mathcal Z_{r_\pi}=1$; mỗi lớp $[r]$ ứng với đúng một chính sách có miền hỗ trợ đầy đủ; đây là phép đổi biến (reparameterization) của DPO. Nguồn: §7.4, Mệnh đề 10.63; Rafailov và cộng sự (2023), (5), (6), Định lý 1, Mệnh đề 1, Phụ lục A.6.
+
+#### `L10-D11` Hàm mất mát DPO
+- **Vị trí, loại:** mạch 7; định nghĩa (Định nghĩa 10.64) và cách đọc trên ví dụ xuyên suốt.
+- **Lý do tồn tại:** thế (b) của Mệnh đề 10.63 vào $L^{\mathrm{BT}}$ cho một hàm mất mát phân loại theo $\theta$; tên đầy đủ của DPO trên trang nội dung (NT21).
+- **Liên kết:** trước: `L10-D10`; sau: `L10-D12` (cực tiểu của hàm mất mát này là gì).
+- **Mục tiêu:** 9.
+- **Khối ghi chú:** Định nghĩa 10.64 và đoạn sau (`topic-28`).
+- **Mặt trang:**
+  1. “**Định nghĩa 10.64.** Với $\pi_\theta>0$, $\pi_{\mathrm{ref}}>0$, $\beta>0$: phần thưởng ngầm định (implicit reward) và hiệu của nó trên bộ ba”
+  2. công thức hiển thị $$r_\theta(x,y)=\beta\log\frac{\pi_\theta(y\mid x)}{\pi_{\mathrm{ref}}(y\mid x)},\qquad\Delta r_\theta=r_\theta(x,y_w)-r_\theta(x,y_l);$$
+  3. “Tối ưu ưu tiên trực tiếp (Direct Preference Optimization, DPO) cực tiểu hóa theo $\theta$”
+  4. công thức hiển thị $$L^{\mathrm{DPO}}(\theta)=-\widehat{\mathbb E}_{\mathcal D_{\mathrm{pref}}}\bigl[\log\sigma(\Delta r_\theta)\bigr]=L^{\mathrm{BT}}(r_\theta).$$
+  5. “Theo Mệnh đề 10.54(a): hồi quy logistic với biến $\Delta r_\theta$.”
+  6. “Softmax đặc trưng đơn vị, $\pi_{\mathrm{ref}}=(\tfrac23;\,\tfrac13)$: bộ ba chọn $y_1$ có $\Delta r_\theta=\beta(\theta_1-\theta_2-\log2)$.”
+- **Mật độ:** khoảng 49 âm tiết, 6 dòng, 2 công thức hiển thị.
+- **Phút:** 1. **Quyết định:** thêm; Mệnh đề 10.66 chuyển sang `L10-D14` (sai khác 4).
+- **Ghi chú diễn giả:** với softmax, $\log\frac{\pi_\theta(y_1)}{\pi_\theta(y_2)}=\theta_1-\theta_2$; bộ ba chọn $y_2$ có $\Delta r_\theta$ ngược dấu; tại $\theta_{\mathrm{ref}}$, $\Delta r_\theta=0$ và $L^{\mathrm{DPO}}=\log2$; không có mô hình phần thưởng riêng: phần thưởng ngầm định đọc thẳng từ $\pi_\theta$ và $\pi_{\mathrm{ref}}$; ký hiệu của bài báo ($\hat r_\theta$, $\mathcal L_{\mathrm{DPO}}$) khác ký hiệu của bài. Nguồn: §7.4, Định nghĩa 10.64; Rafailov và cộng sự (2023), (7).
+
+#### `L10-D12` Tương đương giữa RLHF và DPO
+- **Vị trí, loại:** mạch 7; phát biểu kết quả chính (Định lý 10.65); trang kết quả của luận điểm, phần 2 (cùng nghiệm, không vòng học tăng cường, chỉ dưới đủ giả thiết).
+- **Lý do tồn tại:** NT5, NT2: đủ năm giả thiết với lượng từ "với mọi $x$, $y$" và "trên mọi hàm phần thưởng", cùng điều kiện "cùng $\mathcal D_{\mathrm{pref}}$, $\beta$, $\pi_{\mathrm{ref}}$"; kết luận tách phần cần (H4a) và phần cần thêm (H4b).
+- **Liên kết:** trước: `L10-D11`; sau: `L10-D13` (vì sao đúng, giả thiết vào ở đâu).
+- **Mục tiêu:** 9 ("phát biểu các giả thiết để DPO và RLHF cho cùng chính sách tối ưu").
+- **Khối ghi chú:** Định lý 10.65 (Giả thiết, đoạn hai con đường, Kết luận (a)–(c), Điều kiện áp dụng, Phạm vi) và đoạn sau chứng minh (`topic-28`).
+- **Mặt trang:**
+  1. “**Giả thiết:** (H1) mọi $\mathcal Y(x)$ hữu hạn, $\pi_{\mathrm{ref}}(y\mid x)>0$ với mọi $x$, $y$; (H2) $\beta>0$;”
+  2. “(H3) lớp chính sách gồm mọi phân phối có miền hỗ trợ đầy đủ, chọn tự do theo $x$;”
+  3. “(H4a) $L^{\mathrm{BT}}$ trên mọi hàm phần thưởng đạt cực tiểu; (H4b) tập cực tiểu là đúng một lớp $[\hat r]$.”
+  4. “Cùng $\mathcal D_{\mathrm{pref}}$, $\beta$, $\pi_{\mathrm{ref}}$; con đường RLHF lý tưởng: cực tiểu $\hat r$ của $L^{\mathrm{BT}}$, rồi $\pi^*_{\hat r}$.”
+  5. “**Kết luận:** dưới (H1)–(H3), (H4a): $\pi^*_{\hat r}$ cực tiểu $L^{\mathrm{DPO}}$ và $\min L^{\mathrm{DPO}}=\min L^{\mathrm{BT}}$; thêm (H4b): $\arg\min L^{\mathrm{DPO}}=\{\pi^*_{\hat r}\}$.”
+  6. “**Ý nghĩa:** dưới các giả thiết đó, cực tiểu $L^{\mathrm{DPO}}$ là nghiệm này, không qua PPO hay học tăng cường trực tuyến.”
+- **Mật độ:** khoảng 84 âm tiết (9, 18, 17, 10, 10, 20), 6 dòng, 0 công thức hiển thị: ngoại lệ trần 60 (≤ 90, kế hoạch C5), lý do: NT2 cấm bỏ giả thiết, lượng từ; năm giả thiết và điều kiện cùng dữ liệu là nội dung của phần 2 luận điểm.
+- **Phút:** 1,5. **Quyết định:** thêm.
+- **Ghi chú diễn giả:** kết luận (b) đầy đủ: dưới (H1)–(H3), (H4a), mọi cực tiểu $\pi$ có $r_\pi$ cực tiểu $L^{\mathrm{BT}}$ và $\pi=\pi^*_{r_\pi}$; Điều kiện áp dụng: cực tiểu hóa chính xác cả hai hàm mất mát và giải chính xác $J_\beta$; Phạm vi: định lý nói về nghiệm, không về các bước lặp của PPO hay của hạ gradient; khi (H4a) hỏng cả hai hàm mất mát không có cực tiểu, khi chỉ (H4b) hỏng nghiệm không duy nhất; (H4a), (H4b) thỏa khi $0<k<n$ với hai câu trả lời, và khi mỗi cặp được so sánh có cả hai kết quả và các cặp nối mọi câu trả lời; mô hình Bradley–Terry chỉ cần để đọc $\hat r$ là ước lượng hợp lý cực đại; phát biểu ghép Định lý 1, Mệnh đề 1 của DPO và nửa đầu Định lý 4.1 của Xu và cộng sự; ứng dụng dương của định lý (Tình huống 10.4, không lên mặt trang): ba bản tóm tắt, $\pi_{\mathrm{ref}}=(0{,}5;\,0{,}3;\,0{,}2)$, 45 phép so sánh, mỗi cặp có cả hai kết quả và ba cặp nối ba bản nên (H4a), (H4b) thỏa, $\hat r=(\log4;\,\log2;\,0)$, $\pi^*=(0{,}7143;\,0{,}2143;\,0{,}0714)$, và DPO trên 45 phép so sánh cho cùng chính sách. Nguồn: §7.4, Định lý 10.65; Tình huống 10.4; Rafailov và cộng sự (2023), Phụ lục A.6; Xu và cộng sự (2024), Định lý 4.1; Gheshlaghi Azar và cộng sự (2024), Phụ lục B.
+
+#### `L10-D13` Ý tưởng chứng minh: tương đương giữa RLHF và DPO
+- **Vị trí, loại:** mạch 7; ý tưởng chứng minh của kết quả chính (NT4, NT6), trang riêng; bước kiểm tra (vai của (H4b)).
+- **Lý do tồn tại:** bốn bước: đẳng thức đại số $L^{\mathrm{DPO}}(\pi)=L^{\mathrm{BT}}(r_\pi)$, cận dưới, dấu bằng tại $\pi^*_{\hat r}$, duy nhất; mỗi giả thiết ghi ở bước dùng nó; một dòng "bỏ giả thiết thì hỏng ở đâu" (NT4) cho (H4b). Trường hợp (H4a) hỏng để cho `L10-D17` (NT13: không trùng ví dụ).
+- **Liên kết:** trước: `L10-D12`; sau: `L10-D14` (hạ gradient trên $L^{\mathrm{DPO}}$ tiến về cực tiểu nào trên số).
+- **Mục tiêu:** 9.
+- **Khối ghi chú:** chứng minh Định lý 10.65, Bước 1–4; gạch "Bỏ (H4b)" của đoạn "Mỗi giả thiết có vai trò riêng" (`topic-28`).
+- **Mặt trang:** danh sách đánh số
+  1. “Với mọi $\pi$ của (H3), $r_\pi$ hữu hạn (giả thiết (H1)) và $L^{\mathrm{DPO}}(\pi)=L^{\mathrm{BT}}(r_\pi)$.”
+  2. “Cực tiểu của (H4a) lấy trên mọi hàm phần thưởng, kể cả $r_\pi$:” và công thức hiển thị $$L^{\mathrm{DPO}}(\pi)\ge\min L^{\mathrm{BT}}.$$
+  3. “$\pi^*_{\hat r}$ thuộc lớp (Định lý 10.57(d), (H1)) và $r_{\pi^*_{\hat r}}\in[\hat r]$ (Mệnh đề 10.63(c)): dấu bằng đạt.”
+  4. “Mọi cực tiểu $\pi$ có $r_\pi$ cực tiểu $L^{\mathrm{BT}}$; dưới (H4b), $r_\pi=\hat r+f$, nên $\pi=\pi^*_{\hat r+f}=\pi^*_{\hat r}$ theo (e).”
+  và dòng “Bỏ (H4b): tập cực tiểu của $L^{\mathrm{BT}}$ không là một lớp, nghiệm không duy nhất.”
+- **Mật độ:** khoảng 58 âm tiết (10, 12, 13, 9, 14), 6 dòng, 1 công thức hiển thị; ý "đẳng thức đại số" của Bước 1 nói trong ghi chú diễn giả. Số hiệu Định lý 10.57 chỉ xuất hiện một lần (NT5); bước 4 dẫn kết luận (e), có trên `L10-D04` sau cổng III.2 (NT9).
+- **Phút:** 1. **Quyết định:** thêm (sai khác 2).
+- **Ghi chú diễn giả (đến khoảng 250):** Bước 1 không cần mô hình Bradley–Terry: đó là định nghĩa $L^{\mathrm{DPO}}(\theta)=L^{\mathrm{BT}}(r_\theta)$; Bước 3 dùng thêm Mệnh đề 10.54(b) ($L^{\mathrm{BT}}$ không đổi trong một lớp); Bước 4 dùng (c) của định lý để có $\min L^{\mathrm{DPO}}=\min L^{\mathrm{BT}}$ và kết luận (e) của Định lý 10.57; bỏ (H1): với $\pi_{\mathrm{ref}}=(\tfrac12;\,\tfrac12;\,0)$ và bốn so sánh chọn $y_1$ trước $y_2$, hai so sánh ngược lại, mọi chính sách có $\pi(y_2)=2^{-1/\beta}\pi(y_1)>0$ cực tiểu $L^{\mathrm{DPO}}$ dù $\pi(y_3)$ lớn, trong khi $\pi^*_{\hat r}(y_3)=0$; bỏ (H4b): với $\pi_{\mathrm{ref}}=(\tfrac12;\,\tfrac14;\,\tfrac14)$, sáu so sánh chỉ giữa $y_1$, $y_2$, mọi chính sách có $\pi(y_1)=4\pi(y_2)$ cực tiểu (Bài tập 10.20 của ghi chú); bỏ (H3): trên lớp tham số không chứa $\pi^*_{\hat r}$, hai nghiệm không nhất thiết trùng. Nguồn: §7.4, chứng minh Định lý 10.65.
+
+#### `L10-D14` Ví dụ: một bước DPO tính tay
+- **Vị trí, loại:** mạch 7; kết quả phụ (Mệnh đề 10.66, gradient) và ví dụ tính tay trước giả mã (NT-RL-2) trên dữ liệu của `L10-D01`.
+- **Lý do tồn tại:** một bước hạ gradient với giá trị khởi tạo $\theta_{\mathrm{ref}}$; các bước sau tiến về $(\tfrac45;\,\tfrac15)$, đúng $\pi^*$ của `L10-D06`: hai con đường gặp nhau trên số (Định lý 10.65).
+- **Liên kết:** trước: `L10-D13`; sau: `L10-D15` (giả mã cho cùng bước).
+- **Mục tiêu:** 9 ("tính bằng tay một bước DPO").
+- **Khối ghi chú:** Mệnh đề 10.66 và đoạn sau (trọng số), Ví dụ 10.28 (`topic-28`).
+- **Mặt trang:**
+  1. “**Mệnh đề 10.66.** **Giả thiết:** như Định nghĩa 10.64; $\pi_\theta$ khả vi; không lấy đạo hàm qua $\pi_{\mathrm{ref}}$. **Kết luận:**”
+  2. công thức hiển thị $$\nabla_\theta L^{\mathrm{DPO}}=-\beta\,\widehat{\mathbb E}_{\mathcal D_{\mathrm{pref}}}\bigl[\sigma(-\Delta r_\theta)\bigl(\nabla_\theta\log\pi_\theta(y_w\mid x)-\nabla_\theta\log\pi_\theta(y_l\mid x)\bigr)\bigr]$$ (`aligned` khi tràn).
+  3. “Sáu phép so sánh, $\beta=1$, bước học $1$, từ $\theta_{\mathrm{ref}}=(\log2;\,0)$. Tính một bước.”
+  4. “Trọng số $\sigma(0)=\tfrac12$, $\psi(y_1)-\psi(y_2)=(1;\,-1)$: $\nabla L^{\mathrm{DPO}}=-\bigl[\tfrac46\cdot\tfrac12\,(1;\,-1)+\tfrac26\cdot\tfrac12\,(-1;\,1)\bigr]=(-\tfrac16;\,\tfrac16)$.”
+  5. “$\theta=(0{,}8598;\,-0{,}1667)$, $\pi_\theta(y_1)=0{,}7362$, $\Delta r_\theta=\tfrac13$, $L^{\mathrm{DPO}}$ từ $0{,}6931$ xuống $0{,}6514$.”
+  6. “**Diễn giải:** các bước sau cho $\pi_\theta(y_1)=0{,}7676;\ 0{,}7829;\ 0{,}7907;\ 0{,}7949$, tiến về cực tiểu $\pi^*=(\tfrac45;\,\tfrac15)$ của Định lý 10.65.”
+- **Mật độ:** khoảng 46 âm tiết, 6 dòng, 1 công thức hiển thị.
+- **Phút:** 1,5. **Quyết định:** thêm; Mệnh đề 10.66 lên trang này theo thứ tự của ghi chú (sai khác 4).
+- **Ghi chú diễn giả:** mỗi bộ ba đẩy $\theta$ theo hướng tăng $\log\pi_\theta(y_w)-\log\pi_\theta(y_l)$ với trọng số $\sigma(-\Delta r_\theta)$, lớn khi phần thưởng ngầm định xếp sai cặp; ở bước 2, trọng số $0{,}4174$ cho bốn bộ chọn $y_1$ và $0{,}5826$ cho hai bộ bị xếp sai; bỏ trọng số có thể làm mô hình ngôn ngữ suy biến (Rafailov và cộng sự, 2023, §4); phần thưởng ngầm định sau bước 1: $0{,}0993$ và $-0{,}2341$; cực tiểu đạt tại $\Delta r_\theta=\log2$, tức $\theta_1-\theta_2=2\log2$, với $\min L^{\mathrm{DPO}}=0{,}6365=\min L^{\mathrm{BT}}$; với $\beta$ tùy ý, tỉ số cực tiểu $2\cdot2^{1/\beta}$, đúng trang nghiệm có phạt KL; Nhận xét 10.68: $\mathbb E_{\pi_{\mathrm{ref}}}r_\theta=-\beta D_{\mathrm{KL}}(\pi_{\mathrm{ref}}\Vert\pi_\theta)\le0$, sau bước 1 bằng $-0{,}0119$, nên DPO không tăng xác suất của mọi câu được chọn. Nguồn: §7.4, Mệnh đề 10.66, Ví dụ 10.28, Nhận xét 10.68; Rafailov, Hejna, Park và Finn (2024), (16).
+
+#### `L10-D15` Thuật toán DPO
+- **Vị trí, loại:** mạch 7; phát biểu thuật toán (Thuật toán 10.67) sau ví dụ tính tay; phân biệt ngoại tuyến và khác chính sách (NT-RL-4).
+- **Lý do tồn tại:** đầu vào, khởi tạo, các bước theo mini-batch, điều kiện dừng, mô hình trong bộ nhớ (P3: "Đầu vào:", "Đầu ra:"); ví dụ, công thức và giả mã cho cùng bước (NT-RL-2).
+- **Liên kết:** trước: `L10-D14`; sau: `L10-D16` (đặt hai thuật toán cạnh nhau).
+- **Mục tiêu:** 9.
+- **Khối ghi chú:** Thuật toán 10.67, đoạn sau nó và "Trong thực hành" của §7.4 (`topic-28`).
+- **Mặt trang:**
+  1. “**Thuật toán 10.67.** **Giả thiết:** (H1), (H2); $\pi_\theta$ softmax trên token.”
+  2. “**Đầu vào:** $\mathcal D_{\mathrm{pref}}$ cố định (ngoại tuyến, offline; khác chính sách), $\pi_{\mathrm{ref}}$ đóng băng, $\beta>0$, cỡ mini-batch $M$; khởi tạo $\theta\leftarrow\theta_{\mathrm{ref}}$.”
+  3. “Mỗi mini-batch: (1) $\log\pi_\theta$, $\log\pi_{\mathrm{ref}}$ của $y_w$, $y_l$, mỗi đại lượng là tổng log-xác suất token;”
+  4. “(2) $\Delta r_\theta$ và $L^{\mathrm{DPO}}$ trung bình trên mini-batch;”
+  5. “(3) một bước của bộ tối ưu theo Mệnh đề 10.66.”
+  6. “**Đầu ra:** $\pi_\theta$ sau số epoch đã định; chỉ $\pi_\theta$, $\pi_{\mathrm{ref}}$; không sinh mẫu, không critic.”
+- **Mật độ:** khoảng 68 âm tiết (10, 16, 12, 6, 11, 13), 6 dòng, 0 công thức hiển thị: ngoại lệ trần 60 (≤ 90; sửa sau cổng III.2), lý do NT2 (dòng "Giả thiết" của Thuật toán 10.67) và NT21 ("offline"). $\log\pi_{\mathrm{ref}}$ tính trước một lần cho mọi bộ ba (ghi chú diễn giả).
+- **Phút:** 1. **Quyết định:** thêm.
+- **Ghi chú diễn giả:** giả thiết (H1), (H2) và $\pi_\theta$ softmax trên token nên dương; với sáu bộ ba của ví dụ trong một mini-batch, hạ gradient bước học $1$ và $\theta\leftarrow\theta_{\mathrm{ref}}$, bước đầu cho gradient $(-\tfrac16;\,\tfrac16)$ và $\pi_\theta(y_1)=0{,}7362$, đúng trang trước; chi phí mỗi bộ ba: hai lượt tính $\log\pi_\theta$ trên chuỗi có sẵn và một lượt lan truyền ngược; dữ liệu cố định do $\pi^{\mathrm{SFT}}$ sinh, nên DPO là phương pháp ngoại tuyến (offline) trên dữ liệu khác chính sách, còn RLHF với PPO là trực tuyến (online); không cần tỉ số $\rho_t$ vì $L^{\mathrm{DPO}}$ không là kỳ vọng theo $\pi_\theta$; khi không có mô hình SFT, bài báo khớp $\pi_{\mathrm{ref}}$ bằng hợp lý cực đại trên các cặp $(x,y_w)$; bài báo dùng $\beta=0{,}1$, cỡ mini-batch $64$, RMSprop với bước học $10^{-6}$. Nguồn: §7.4, Thuật toán 10.67; Rafailov và cộng sự (2023), §4, Phụ lục B.
+
+#### `L10-D16` So sánh PPO trong RLHF và DPO
+- **Vị trí, loại:** mạch 7; bảng so sánh hai phương pháp trên cùng tiêu chí; trang so sánh của luận điểm, phần 3 (khác nhau ở dữ liệu, mô hình, lấy mẫu, mỏ neo; giống nhau ở mục tiêu; bảo đảm có điều kiện). Ứng dụng của cả cụm: đọc hai thuật toán qua định lý.
+- **Lý do tồn tại:** bảng §7.5 của ghi chú; NT-RL-4 (trực tuyến và ngoại tuyến, theo và khác chính sách, mỏ neo $\pi_{\mathrm{old}}$ và $\pi_{\mathrm{ref}}$, chiều KL). Bảng trên mặt trang, hình hai con đường ở ghi chú (Q7, QT7).
+- **Liên kết:** trước: `L10-D15`; sau: `L10-D17` (khi giả thiết của hàng "Bảo đảm" hỏng).
+- **Mục tiêu:** 8, 9.
+- **Khối ghi chú:** §7.5 (đoạn đọc hình, bảng, câu sau bảng) (`topic-29`); Nhận xét 10.70 (`topic-30`, đọc thêm) chỉ trong ghi chú diễn giả.
+- **Mặt trang:** bảng `Tiêu chí | RLHF với PPO | DPO`, sáu hàng rút từ bảng §7.5 (hàng "Điều kiện dừng" vào ghi chú diễn giả):
+  1. “Mục tiêu” | “$\max J_\beta$, $\pi_{\mathrm{ref}}$ cố định” | “cùng mục tiêu”;
+  2. “Tối ưu” | “$L^{\mathrm{BT}}$ cho $\hat r$, rồi $\mathcal L^{\mathrm{CLIP}}$ trên $\tilde r$” | “$L^{\mathrm{DPO}}$”;
+  3. “Dữ liệu” | “$\mathcal D_{\mathrm{pref}}$ và mẫu trực tuyến của $\pi_{\mathrm{old}}$” | “chỉ $\mathcal D_{\mathrm{pref}}$, ngoại tuyến, khác chính sách”;
+  4. “Mô hình” | “$\pi_\theta$, $\pi_{\mathrm{ref}}$, $\hat r$, critic” | “$\pi_\theta$, $\pi_{\mathrm{ref}}$”;
+  5. “Mỏ neo, chiều KL” | “$\pi_{\mathrm{ref}}$, $D_{\mathrm{KL}}(\pi_\theta\Vert\pi_{\mathrm{ref}})$; thêm $\pi_{\mathrm{old}}$ của phép cắt” | “chỉ $\pi_{\mathrm{ref}}$, cùng chiều KL”;
+  6. “Bảo đảm” | “nghiệm của $J_\beta$ là $\pi^*_{\hat r}$; mỗi bước: gradient đúng tại $\theta_{\mathrm{old}}$ khi lợi thế đúng; không bảo đảm hội tụ” | “cực tiểu là $\pi^*_{\hat r}$ dưới (H1)–(H3), (H4a), (H4b); hạ gradient không bảo đảm hội tụ”.
+- **Mật độ:** khoảng 79 âm tiết (bảng tính một dòng, gồm hàng đầu cột; sau cổng III.2 ô "Bảo đảm" của PPO theo đúng chữ ghi chú; trần 80 của bảng so sánh, `deck_lint` nhận tiêu đề "So sánh …"). Hàng "Điều kiện dừng" của ghi chú (hai cột đều là ngân sách, không phân biệt hai phương pháp) và cụm "phần thưởng đã trừ KL" (viết $\tilde r$) vào ghi chú diễn giả để giữ trần 80; bảy hàng đủ cho khoảng 89. Nếu vẫn vượt 80 hoặc chạm chân trang: (1) hàng 5 cột DPO thành "chỉ $\pi_{\mathrm{ref}}$, cùng chiều"; (2) phương án QT7 (hình thay hàng "Dữ liệu", "Mô hình"), chỉ khi điều phối viên duyệt.
+- **Phút:** 1,5. **Quyết định:** thêm.
+- **Ghi chú diễn giả:** hàng "Điều kiện dừng": ngân sách số lượt và ngân sách số epoch, cả hai không là tiêu chuẩn hội tụ; luận điểm: hai con đường xuất phát từ cùng $J_\beta$ với $\pi_{\mathrm{ref}}$ cố định; PPO nhắm tới $\pi^*_{\hat r}$ bằng mẫu sinh trực tuyến và bốn mô hình, không bảo đảm hội tụ; DPO giải cùng bài toán trên dữ liệu cố định, không qua PPO hay vòng học tăng cường nào, và cực tiểu của nó là nghiệm của con đường RLHF lý tưởng chỉ dưới (H1)–(H3), (H4a), (H4b); hàng mỏ neo: DPO giữ $D_{\mathrm{KL}}(\pi_\theta\Vert\pi_{\mathrm{ref}})$ của $J_\beta$ qua phép đổi biến; Rafailov và cộng sự (2023, §6.1) viết rằng DPO và PPO tối ưu cùng một mục tiêu; đọc thêm (Nhận xét 10.70, không thuộc nội dung kiểm tra): IPO, cách viết DPO trên MDP mức token, và hai so sánh thực nghiệm đo trên các bài toán khác nhau, nên không cho biết con đường nào tốt hơn. Nguồn: §7.5, bảng so sánh; §7.6, Nhận xét 10.70; Rafailov và cộng sự (2023), §6.1; Xu và cộng sự (2024), §5–6.
+
+#### `L10-D17` Ưu tiên tất định từ ít dữ liệu
+- **Vị trí, loại:** mạch 7; ứng dụng khi giả thiết hỏng (phản ví dụ của (H4a)); bước kiểm tra của cụm DPO và của phần 3 luận điểm.
+- **Lý do tồn tại:** cho thấy trên số điều xảy ra khi (H4a) hỏng: cả hai con đường lý tưởng đẩy $\pi(y_2)$ về $0$ với mọi $\beta$, và $J_1$ theo phần thưởng thật giảm từ $0{,}5108$ về $0{,}2877$; nêu vì sao dữ liệu thật thường làm hỏng (H4a), (H4b).
+- **Liên kết:** trước: `L10-D16` (hàng "Bảo đảm"); sau: `L10-D18` (bài kiểm của cụm mục tiêu có phạt KL).
+- **Mục tiêu:** 9 ("nêu hậu quả khi một giả thiết không thỏa").
+- **Khối ghi chú:** Tình huống 10.5; Nhận xét 10.69 (`topic-29`).
+- **Mặt trang:**
+  1. “Phần thưởng thật $r=(\log2;\,0)$, $\pi_{\mathrm{ref}}=(\tfrac23;\,\tfrac13)$, $\beta=1$; ba phép so sánh đều chọn $y_1$, xác suất $\tfrac8{27}$.”
+  2. “$k=n=3$: (H4a) hỏng; $L^{\mathrm{DPO}}=-\log\sigma\bigl(\beta(\theta_1-\theta_2-\log2)\bigr)$ giảm ngặt theo $\theta_1-\theta_2$, với mọi $\beta$.”
+  3. bảng (khuôn "chính sách có phạt KL", thêm cột): $\theta_1-\theta_2$ | $\pi_\theta(y_1)$ | $L^{\mathrm{DPO}}$ | $D_{\mathrm{KL}}(\pi_\theta\Vert\pi_{\mathrm{ref}})$ | $J_1$; hàng $2$ | $0{,}8808$ | $0{,}2395$ | $0{,}1228$ | $0{,}4878$; hàng $4$ | $0{,}9820$ | $0{,}0360$ | $0{,}3278$ | $0{,}3528$; hàng $10$ | $0{,}99995$ | $0{,}0001$ | $0{,}4050$ | $0{,}2881$; hàng $\to\infty$ | $\to1$ | $\to0$ | $\to\log\tfrac32$ | $\to0{,}2877$.
+  4. “**Diễn giải:** $J_1$ giảm từ $0{,}5108$ của nghiệm thật về $0{,}2877$; KL bị chặn bởi $\log\tfrac32$, còn $r_\theta(y_2)\to-\infty$.”
+  5. “RLHF lý tưởng cũng vậy: $L^{\mathrm{BT}}$ không có cực tiểu, nghiệm tiến tới $(1;\,0)$.”
+  6. “**Lưu ý:** mỗi cặp thường chỉ gán nhãn một lần, nên (H4a), (H4b) nói chung không thỏa.”
+- **Mật độ:** khoảng 60 âm tiết (11, 7, bảng 0, 13, 12, 17), 6 dòng (bảng tính một dòng), 0 công thức hiển thị. Rủi ro chiều cao (bảng năm cột năm hàng): nếu tràn ở 1600×900, dòng 5 ("RLHF lý tưởng cũng vậy …") chuyển vào ghi chú diễn giả, chỉ khi điều phối viên duyệt.
+- **Phút:** 1. **Quyết định:** thêm (C2 `L10-D16`).
+- **Ghi chú diễn giả:** $J_1$ tính với phần thưởng thật; KL theo chiều của mục tiêu bị chặn, đại lượng không bị chặn là phần thưởng ngầm định của câu thua và KL chiều ngược; với mô hình phần thưởng có điều chuẩn (điều chuẩn $\ell_2$ của Christiano và cộng sự, 2017, §2.2.3) $\hat r$ hữu hạn và nghiệm giữ $\pi(y_2)>0$; Gheshlaghi Azar và cộng sự (2024, §4.2) lập luận, không thành định lý, rằng RLHF trong thực hành tránh được suy biến nhờ điều này; Nhận xét 10.69: (1) khi (H1) hỏng, ví dụ của Xu và cộng sự với $\pi_{\mathrm{ref}}=(0{,}5;\,0{,}5;\,0)$ cho cận dưới $0$ đạt tại $(0{,}1;\,0;\,0{,}9)$, ngoài lớp của (H3); (2) DPO không đánh giá câu trả lời ngoài dữ liệu, còn $\hat r$ có thể sai ở đó; đọc thêm: IPO trên cùng ba so sánh cho $\pi(y_1)=\sigma(\log2+0{,}5)=0{,}7673$ thay cho $1$. Nguồn: Tình huống 10.5, Nhận xét 10.69, 10.70; Gheshlaghi Azar và cộng sự (2024), §4.2, §5; Xu và cộng sự (2024), Định lý 4.1.
+
+#### `L10-D18` Bài tập: nghiệm có phạt KL trên ba câu trả lời
+- **Vị trí, loại:** mạch 7; bài tập có "Lời giải:" trên mặt trang (fragment) của cụm mục tiêu có phạt KL và DPO (NT24, kế hoạch B6); bước kiểm tra.
+- **Lý do tồn tại:** áp dụng Định lý 10.57 trên ba câu trả lời và nhận ra phần thưởng ngầm định của nghiệm thuộc $[r]$ (nối Mệnh đề 10.63(c)); giữ dữ liệu, câu chữ và kết quả của Bài tập 10.18 (NT24).
+- **Liên kết:** trước: `L10-D17`; sau: `L10-700` (mạch "Tổng kết").
+- **Mục tiêu:** 8.
+- **Khối ghi chú:** Bài tập 10.18 (đề, gợi ý, lời giải) (`topic-26`, theo `outline.md`).
+- **Mặt trang:**
+  1. “**Câu hỏi:** một lời nhắc, ba câu trả lời, $\pi_{\mathrm{ref}}=(\tfrac12;\,\tfrac14;\,\tfrac14)$, phần thưởng $r=(\log2;\,0;\,0)$ (Bài tập 10.18).”
+  2. “(a) Với $\beta=1$, tính $\mathcal Z$, $\pi^*$, $\max J_1$, và kiểm bằng $\mathbb E_{\pi^*}r-D_{\mathrm{KL}}(\pi^*\Vert\pi_{\mathrm{ref}})$.”
+  3. “(b) Tính phần thưởng ngầm định $\beta\log(\pi^*/\pi_{\mathrm{ref}})$ và chỉ ra nó thuộc $[r]$.”
+  4. fragment: “**Lời giải:** (a) $\pi_{\mathrm{ref}}e^{r}=(1;\,\tfrac14;\,\tfrac14)$, $\mathcal Z=\tfrac32$, $\pi^*=(\tfrac23;\,\tfrac16;\,\tfrac16)$, $\max J_1=\log\tfrac32=0{,}4055$.”
+  5. fragment: “Kiểm: $\mathbb E_{\pi^*}r=0{,}4621$, $D_{\mathrm{KL}}=0{,}1918-0{,}1352=0{,}0566$, hiệu $0{,}4055$.”
+  6. fragment: “(b) $(\log\tfrac43;\,\log\tfrac23;\,\log\tfrac23)=r-\log\tfrac32$: hơn kém $r$ một hằng của lời nhắc, nên thuộc $[r]$.”
+- **Mật độ:** khoảng 46 âm tiết, 6 dòng, 0 công thức hiển thị.
+- **Phút:** 1. **Quyết định:** thêm; gộp C2 `L10-D17`, `L10-D18` (sai khác 3).
+- **Ghi chú diễn giả (đến khoảng 250; NT-RL-10):** năng lực kiểm tra: áp dụng nghiệm dạng đóng với $\pi_{\mathrm{ref}}$ không đều, kiểm bằng đẳng thức (a) của Định lý 10.57, và đọc phần thưởng ngầm định của nghiệm như một phần tử của lớp tương đương. "Gợi ý: $\pi^*$ tỉ lệ với $\pi_{\mathrm{ref}}e^{r/\beta}$; hằng chuẩn hóa là tổng có trọng số $\pi_{\mathrm{ref}}$." Câu (c), tự làm: với $\beta=\tfrac12$, $\pi_{\mathrm{ref}}e^{2r}=(2;\,\tfrac14;\,\tfrac14)$, $\mathcal Z=\tfrac52$, $\pi^*=(0{,}8;\,0{,}1;\,0{,}1)$, $\max J_{1/2}=\tfrac12\log\tfrac52=0{,}4581$. Lỗi thường gặp: chuẩn hóa bằng $\sum_ye^{r(y)/\beta}$ thay cho tổng có trọng số $\pi_{\mathrm{ref}}$ cho $(\tfrac12;\,\tfrac14;\,\tfrac14)$ ở (a); dùng $e^{\beta r}$ thay cho $e^{r/\beta}$ ở (c) cho $\pi^*(y_1)=0{,}5858$, sai chiều tác dụng của $\beta$. Nguồn: Bài tập củng cố, Bài tập 10.18.
+
+### Hành trình khái niệm, mạch 7 (NT8)
+
+| cụm (dạng) | vấn đề | trực quan | ví dụ | phát biểu | ý tưởng chứng minh | ứng dụng | kiểm tra | truyền từ ví dụ sang công thức | gộp hoặc `không áp dụng` | phút |
+|---|---|---|---|---|---|---|---|---|---|---:|
+| Dữ liệu ưu tiên, mô hình Bradley–Terry (cầu nối; kết quả phụ) | `L10-D00`, `L10-D01` (PPO cần $R_{t+1}$; câu hỏi của mạch) | `L10-D02` dòng 1 | `L10-D01` (dữ liệu), `L10-D02` dòng 6 (Ví dụ 10.24) | `L10-D02` (Định nghĩa 10.53, Mệnh đề 10.54) | `không áp dụng` (kết quả phụ; một dòng trong ghi chú diễn giả) | `L10-D03` (dùng $\hat r$), `L10-D09` bước 2 | `L10-D17` ($k=n$); Bài tập 10.22 của `exercises.md` (về nhà) | bốn trên sáu → $\sigma(\Delta\hat r)=\tfrac23$ → $\Delta\hat r=\log\frac k{n-k}$ | ví dụ sau phát biểu như ghi chú, "Trực quan." đứng trước (NT8) | 2,5 |
+| Mục tiêu có phạt KL, nghiệm dạng đóng (cốt lõi; kết quả chính) | `L10-D03` dòng 1–2 | `L10-D03` dòng 3 | `L10-D03` (ba chính sách) | `L10-D03` (Định nghĩa 10.56), `L10-D04` (Định lý 10.57) | `L10-D05` | `L10-D06` | `L10-D18` (Bài tập 10.18, lời giải trên mặt trang) | $(0{,}8;\,0{,}2)$ có $J_1$ lớn nhất trong ba → $\pi_{\mathrm{ref}}e^{\hat r}/\mathcal Z=(\tfrac45;\,\tfrac15)$ | phút gồm `L10-D18` | 6 |
+| RLHF với PPO (cốt lõi; thuật toán, hai kết quả phụ) | `L10-D07` dòng 1 ($\mathcal Z$ không tính được) | `L10-D08` "Diễn giải:" (mỏ neo giới hạn bước, mỏ neo cố định quyết định điểm dừng) | `L10-D08` (hai vòng, tính tay) | `L10-D07` (Bổ đề 10.59, Mệnh đề 10.60, (7.1)), `L10-D09` (Thuật toán 10.61) | `không áp dụng` (kết quả phụ, lý do trong ghi chú diễn giả `L10-D07`) | `L10-D16` | `L10-D08` "Lưu ý:"; Bài tập 10.21 của ghi chú (về nhà) | lợi thế $\tfrac13\log2\,(1;\,1;\,-2)$ → bước 3 của Thuật toán 10.61 với một lời nhắc | tay trước giả mã (NT-RL-2): `L10-D08` → `L10-D09`; ứng dụng không có trang riêng (Q7, 19 trang): bảng `L10-D16` đặt thuật toán cạnh DPO, "Trong thực hành" của InstructGPT ở ghi chú diễn giả `L10-D09` | 3,5 |
+| DPO, định lý tương đương (cốt lõi; kết quả chính, thuật toán) | `L10-D10` dòng 1 (bốn mô hình, sinh mẫu) | `L10-D10` "Trực quan." | `L10-D10` dòng 2 ($\mathcal Z$ triệt tiêu trên số), `L10-D14` | `L10-D10` (Mệnh đề 10.63), `L10-D11` (Định nghĩa 10.64), `L10-D12` (Định lý 10.65), `L10-D14` (Mệnh đề 10.66), `L10-D15` (Thuật toán 10.67) | `L10-D13` | `L10-D17` (ứng dụng khi (H4a) hỏng); Tình huống 10.4 (ứng dụng khi giả thiết thỏa) chỉ trong ghi chú diễn giả `L10-D12` | `L10-D13` (bỏ (H4b)), `L10-D17` (bỏ (H4a)); Bài tập 10.19, 10.20 của ghi chú (về nhà) | $\log1{,}2-\log0{,}6=\log2$ → $\Delta r_\theta$ → gradient $(-\tfrac16;\,\tfrac16)$ → giả mã | tay trước giả mã: `L10-D14` → `L10-D15` | 7 |
+| So sánh và giới hạn (cốt lõi) | `L10-D15` → `L10-D16` (hai thuật toán đã đủ) | `không áp dụng` (bảng đọc lại hai thuật toán) | `L10-D17` | `L10-D16` (bảng) | `không áp dụng` | `L10-D17` | `L10-708` câu 3 (hai mỏ neo) | hàng "Bảo đảm" → giả thiết hỏng ở `L10-D17` | chu trình rút gọn: bảng tổng hợp hai thuật toán đã có hành trình đầy đủ | 2,5 |
+
+Phút theo cụm (cột cuối): cụm 1 = `L10-D01`, `L10-D02` ($1+1{,}5$); cụm 2 = `L10-D03`–`L10-D06` và trang bài tập `L10-D18` ($1+1{,}5+1{,}5+1+1$); cụm 3 = `L10-D07`–`L10-D09` ($1+1{,}5+1$); cụm 4 = `L10-D10`–`L10-D15` ($1+1+1{,}5+1+1{,}5+1$); cụm 5 = `L10-D16`, `L10-D17` ($1{,}5+1$); cộng trang tiêu đề mạch: $0{,}5+2{,}5+6+3{,}5+7+2{,}5=22$. Mỗi cụm cốt lõi có ít nhất một trang nội dung; `L10-D18` là bài có lời giải duy nhất trên mặt trang của mạch (NT24), vì Q7 giữ 19 trang; các cụm RLHF và DPO có bước kiểm tra bằng phản ví dụ hoặc "Lưu ý:" trên mặt trang và bài về nhà của ghi chú.
+
+**Câu nối giữa các trang của mạch 7 (trên mặt trang, NT13):** "PPO cần phần thưởng $R_{t+1}$ từ môi trường" (`L10-620` → `L10-D01`); "chính sách cực đại $\mathbb E_\pi\hat r$ là $(1;\,0)$" (`L10-D02` → `L10-D03`); "RLHF … cực đại hóa $J_\beta$ bằng mẫu, không tính $\mathcal Z_r(x)$" (`L10-D06` → `L10-D07`); "Thuật toán 10.61 cần bốn mô hình và sinh mẫu ở mọi vòng" (`L10-D09` → `L10-D10`); hàng "Bảo đảm" của bảng (`L10-D16` → `L10-D17`).
+
+### Trang đã có phải sửa (giữ mọi `data-slide-id`; Q7, kế hoạch C3)
+
+Chỉ các trang dưới đây đổi; mọi trang cũ khác giữ nguyên mặt trang và ghi chú diễn giả. Câu mới trên các trang này theo NT1–NT28; phần không nhắc tới giữ nguyên.
+
+#### Toàn deck
+- `<title>` "Bài 10: TRPO, PPO và DPO" (Q6); tên tệp `lecture-10-trpo-va-ppo.html` giữ nguyên.
+- Thêm `section` ngoài thứ bảy (mạch 7, `L10-D00` … `L10-D18`) giữa `section` của mạch 6 và của "Tổng kết"; `L10-700` đổi `id="mach-7"` thành `id="mach-8"`. Tám `section` ngoài.
+- Không thêm `data-lecture` (deck đã có, mục 3; ngoại lệ đã biết), không thêm `<style>`; lớp CSS mới chỉ khi cần cho bảng năm cột của `L10-D17`, do điều phối viên thêm vào `lecture-course.css` (NT26).
+
+#### `L10-101` Bìa
+- **Sửa:** `h1` “TRPO, PPO và DPO”; `h2` “Tối ưu chính sách miền tin cậy (TRPO), tối ưu chính sách gần kề (PPO) và tối ưu ưu tiên trực tiếp (DPO)”; `h3` giữ. Hộp luận điểm, một câu có điều kiện (NT11, NT-RL-8), bốn dòng hiển thị: “Đường cơ sở giữ kỳ vọng của gradient;<br>sai số hàm thay thế bị chặn theo khoảng cách chính sách,<br>nên TRPO ràng buộc khoảng cách, PPO cắt tỉ số;<br>khi phạt khoảng cách tới chính sách tham chiếu cố định, PPO và DPO nhắm tới cùng một nghiệm.”
+- **Lý do:** luận điểm của bài thêm phần thứ ba, ở dạng có điều kiện và đúng mức của Định lý 10.57, 10.65 ("nhắm tới", không "trùng nghiệm"); "khoảng cách" thay "KL" vì bìa không dùng chữ viết tắt chưa giới thiệu (NT9), như phần cũ của luận điểm.
+- **Mật độ:** luận điểm khoảng 49 âm tiết (bốn dòng hiển thị 8, 12, 10, 19), cả trang khoảng 71 (đơn vị 11, năm học 6, `h3` 5). `deck_lint.py` chỉ miễn trang bìa có mã `LNN-1-01`, nên báo `SYLL60` ở `L10-101`: ngoại lệ đã biết (mã bìa giữ, mục 3), không phải lỗi mật độ của trang nội dung.
+- **Ghi chú diễn giả:** thêm câu: "Phần 7 giữ chính sách gần một chính sách tham chiếu cố định bằng phạt KL; mục tiêu đó có nghiệm dạng đóng, RLHF nhắm tới nghiệm bằng PPO với mẫu trực tuyến, còn DPO (Direct Preference Optimization) cực tiểu hóa một hàm mất mát phân loại trên dữ liệu cố định và cho cùng nghiệm khi các giả thiết của định lý tương đương thỏa." Dòng nguồn thêm "§7".
+
+#### `L10-104` và `L10-104b` Mục tiêu học tập
+- **`L10-104`:** giữ sáu dòng và ghi chú diễn giả; phút 1 → 0,5.
+- **`L10-104b`** (mới, tách; `data-note-topic-id="lec-10-topic-02"`; tiêu đề “Mục tiêu học tập”; `ol start="7"`): sáu dòng cho mục tiêu 8 và 9 của ghi chú, đủ nghĩa và đủ động từ (NT11), viết bằng lời (NT9; tên tiếng Anh ở trang nội dung dùng lần đầu, trừ chữ viết tắt cần tên đầy đủ):
+  7. “Ước lượng mô hình phần thưởng từ dữ liệu ưu tiên theo Bradley–Terry bằng hợp lý cực đại.”
+  8. “Chứng minh nghiệm dạng đóng của mục tiêu có phạt KL theo một chính sách tham chiếu cố định.”
+  9. “Mô tả ba giai đoạn của học tăng cường từ phản hồi con người (RLHF) với PPO.”
+  10. “Phân biệt chính sách cũ của PPO với chính sách tham chiếu.”
+  11. “Suy ra hàm mất mát tối ưu ưu tiên trực tiếp (DPO) bằng đổi biến; tính tay một bước.”
+  12. “Phát biểu giả thiết để DPO và RLHF cho cùng chính sách tối ưu, và hậu quả khi giả thiết hỏng.”
+- **Mật độ `L10-104b`:** khoảng 105 âm tiết (18, 19, 17, 12, 19, 20), 6 dòng: ngoại lệ trần 80 của trang mục tiêu (≤ 120), lý do: NT11 giữ đủ hai mục tiêu nhiều vế của ghi chú; NT17 nêu đúng loại ngoại lệ này. Phương án nếu điều phối viên không nhận: chỉ còn cách tách thêm một trang, trái Q7.
+- **Ghi chú diễn giả `L10-104b`:** dòng 7–10 ứng với mục tiêu 8, dòng 11–12 với mục tiêu 9 của ghi chú; sản phẩm kiểm được: $\hat r=(\log2;\,0)$; $\pi^*=(\tfrac45;\,\tfrac15)$ và $\max J_1=0{,}5108$; bốn mô hình của RLHF với PPO; $\pi_{\mathrm{old}}$ giới hạn bước, $\pi_{\mathrm{ref}}$ quyết định nghiệm; gradient DPO $(-\tfrac16;\,\tfrac16)$ và $\pi_\theta(y_1)=0{,}7362$; (H1)–(H3), (H4a), (H4b) và ưu tiên tất định. Tên tiếng Anh: reward model, preference data, KL-regularized objective, reference policy (reference model), reinforcement learning from human feedback, Direct Preference Optimization. Nguồn: Mục tiêu học tập 8–9.
+- **Phút:** 0,5.
+
+#### `L10-105` Nội dung
+- **Sửa:** tám mục, liên kết `#/1` … `#/8`; mục 7 “Tối ưu chính sách từ phản hồi ưu tiên” (`#/7`), mục 8 “Tổng kết” (`#/8`); dòng đọc trước thêm “Rafailov và cộng sự (2023), §3–5.” (nguồn mà "Hướng dẫn đọc thêm" của ghi chú dẫn cho Mục 7).
+- **Mật độ:** khoảng 70 âm tiết (trước 60; trần 80), 9 dòng: ngoại lệ số dòng đã có của trang này (bảng "Ngoại lệ mật độ" ở trên) mở rộng từ 8 lên 9 dòng; `deck_lint.py` không đếm dòng với tiêu đề "Nội dung".
+- **Ghi chú diễn giả:** thay câu "Phần 7 đặt mỗi kết quả cạnh giả thiết của nó." bằng "Phần 7 dùng lại phép phạt KL với một chính sách tham chiếu cố định khi phần thưởng chỉ được biết qua so sánh ưu tiên, và giải bằng PPO hoặc DPO. Phần 8 đặt mỗi kết quả cạnh giả thiết của nó."; bỏ câu "Phần II của bài giảng gốc (A3C, DDPG, SAC) thuộc Bài 11." (Q8: Bài 11 đang dựng lại thành bài khác, câu trỏ sai). Nguồn thêm "ghi chú bài giảng Bài 10, §7; Rafailov và cộng sự (2023), §3–5".
+
+#### `L10-109` Vấn đề trung tâm
+- **Sửa** (bài toán trung tâm của §1.1 có phần thứ ba, QG4; Q3 "một dòng trên `L10-109`"; quyết định của điều phối viên sau cổng III.2: giữ cấu trúc hộp và danh sách của trang cũ): hộp thêm một dòng hiển thị cho phần thứ ba; năm dòng trả lời của phần 2–6 giữ nguyên chữ.
+  Hộp: “Giảm phương sai, giữ kỳ vọng;<br>dùng dữ liệu cũ cho bước lớn, $J$ không giảm;<br>so sánh ưu tiên: gần một chính sách cố định.”
+  Danh sách `ol start="2"`: năm dòng cũ, không đổi. Câu trả lời của phần 7 chỉ trong ghi chú diễn giả (kế hoạch C3), vì thêm dòng thứ sáu làm trang vượt 1,5 lần trần.
+- **Mật độ:** khoảng 89 âm tiết (bản cũ 80 theo `deck_lint.py`, dòng mới của hộp 9; với "chính sách tham chiếu cố định" trang lên 91, quá 1,5 lần trần, nên dòng mới viết "một chính sách cố định", và ghi chú diễn giả gọi đủ tên "chính sách tham chiếu cố định"), 6 dòng, 1 hộp: ngoại lệ trần 60 (≤ 90), mở rộng ngoại lệ đã có của trang (bảng "Ngoại lệ mật độ" ở trên: trang vấn đề trung tâm theo trần 80); lý do Q3 (giữ cấu trúc, thêm một dòng). Dòng mới viết gọn theo khuôn của hai dòng cũ trong hộp; không ký hiệu mới, không chữ viết tắt (NT9). `deck_lint.py` vẫn báo `STRUCT` "trang 'Vấn đề trung tâm' mở đầu có danh sách" và `SYLL60` ở trang này: ngoại lệ đã biết (deck đã có, cấu trúc giữ theo Q3).
+- **Ghi chú diễn giả (≤ 150; trước 154):** "Vấn đề trung tâm có ba phần: giảm phương sai của ước lượng gradient mà vẫn giữ kỳ vọng; dùng lại dữ liệu của $\pi_{\mathrm{old}}$ cho một bước lớn mà chính sách mới không kém chính sách cũ; khi phần thưởng chỉ được biết qua so sánh ưu tiên, cực đại hóa phần thưởng mà vẫn gần một chính sách tham chiếu cố định. Năm dòng ứng với năm phần 2 đến 6. Phần 7 trả lời phần thứ ba: RLHF với PPO và DPO cực đại hóa cùng mục tiêu có phạt KL, và DPO cho cùng nghiệm khi các giả thiết của định lý tương đương thỏa. "Khoảng cách" là biến phân toàn phần hoặc KL trung bình theo phân bố trạng thái của chính sách cũ. Dòng 5: TRPO chỉ còn hai bất đẳng thức kiểm được trên bộ đệm, với bán kính miền tin cậy $\kappa$." (bỏ câu "Dòng 2 ghép hai kết quả …" và câu "Dòng 3 nói về ước lượng gradient …" của bản cũ để giữ ≤ 150; tác tử viết đếm lại). Nguồn giữ, thêm "§1.1 (ba phần)".
+- **Không chấp nhận** (cổng III.2): phương án trước của storyboard (chỉ một hộp "Câu hỏi:", năm dòng trả lời vào ghi chú diễn giả).
+
+#### `L10-110` Khung chung
+- **Sửa:** tiêu đề “Ba hàng của vấn đề trung tâm” (tiêu đề cũ "Hệ số của hàm điểm và độ lớn bước" chỉ gọi tên hai hàng; NT16); hình `central-problem.svg` (đã có hàng thứ ba từ giai đoạn I); `alt` chép đúng câu mô tả hình của ghi chú §1.1 (ba hàng, hàng thứ ba viền chấm, mũi tên từ khung PPO xuống khung "RLHF với PPO, DPO, phạt KL theo pi ref cố định (Mục 7)"); ba dòng cũ giữ, dòng 3 thành “Hai hàng đầu gặp nhau ở PPO kiểu actor–critic.”, thêm dòng 4 “Hàng thứ ba: phần thưởng từ so sánh ưu tiên, giải bằng PPO hoặc DPO (phần 7).”
+- **Mật độ:** khoảng 44 âm tiết (10, 9, 9, 16), 4 dòng, 1 hình.
+- **Hình (NT25):** SVG có 11 nhãn cỡ 14,7 trên `viewBox` rộng 1245; ở 1600×900 chữ dưới 16 px. Tác tử viết đo cỡ chữ hiển thị; nếu dưới 16 px, vẽ `img/lec-10/central-problem-slide.svg` cùng dữ liệu, chữ lớn hơn (và bản `-slide-narrow.svg` nếu cần ở 390 px), không sửa SVG của ghi chú.
+- **Ghi chú diễn giả:** thêm câu đọc hàng thứ ba: "Hàng thứ ba, viền chấm, nhận PPO làm công cụ: phần thưởng học từ so sánh ưu tiên, phạt KL theo chính sách tham chiếu cố định, rồi giải bằng PPO hoặc DPO." Nguồn giữ.
+
+#### `L10-600`, `L10-620` (mạch 6)
+- **`L10-600`:** không sửa. Câu "Kết quả giao cho phần 7 là thuật toán PPO kiểu actor–critic và phạm vi bảo đảm của nó" vẫn đúng: mạch 7 mới dùng Thuật toán 10.49 ở bước 3 của Thuật toán 10.61 và hàng "Bảo đảm" của `L10-D16`. Giữ trang ngoài lượt sửa để không kéo dòng dẫn "Muốn …, phải …" của nó vào phạm vi sửa.
+- **`L10-620`:** chỉ ghi chú diễn giả, thêm cuối đoạn: "Mọi phép tính của PPO ở đây dùng phần thưởng $R_{t+1}$ do môi trường trả về sau mỗi hành động." (câu nối một phía; câu nối trên mặt trang ở `L10-D01`, NT13). Ghi chú vẫn dưới 250 (trang lời giải).
+
+#### `L10-700` 8. Tổng kết (trang tiêu đề mạch), điểm vào mạch 8
+- **Sửa:** `id="mach-8"`; `span.strand-number` “8.”; `h2` “Tổng kết” (NT15, GC-RL-15, Q3); `p.strand-lead` “Mỗi kết quả của bài đúng dưới một bộ giả thiết riêng.” (11 âm tiết; thay dòng "Muốn dùng đúng …, phải …" bị NT12 cấm); `p.strand-keys` “Kết quả và giả thiết · Sáu phương pháp · Vấn đề trung tâm · Câu hỏi tự kiểm tra” (bỏ "Bài 11", Q8). `data-note-topic-id="lec-10-topic-23"` giữ.
+- **Ghi chú diễn giả (40–100):** "Đường cơ sở, lợi thế, critic và GAE tạo phần giảm phương sai; hàm thay thế, chặn cải thiện, miền tin cậy, TRPO và PPO tạo phần giới hạn bước; mô hình Bradley–Terry, mục tiêu có phạt KL, RLHF với PPO và DPO tạo phần thứ ba. Mỗi kết quả được đặt cạnh giả thiết không được bỏ, sáu phương pháp được so trên cùng tiêu chí, và vấn đề trung tâm được trả lời có điều kiện." (bỏ "chuyển sang Bài 11"). Không dòng nguồn mới.
+
+#### `L10-701`, `L10-702`, `L10-702b`, `L10-702c` Kết quả và giả thiết của bài
+- **`L10-701`, `L10-702`, `L10-702b`:** mặt trang giữ; ghi chú diễn giả chỉ đổi dòng nguồn "§7.1" thành "§8.1", viết khác nhau để `deck_lint.py` hết `REPEAT`: "§8.1, sáu hàng đầu", "§8.1, năm hàng của Mục 4", "§8.1, bốn hàng của Mục 5–6".
+- **`L10-702c`** (mới, tách; `data-note-topic-id="lec-10-topic-23"`; tiêu đề “Kết quả và giả thiết của bài”; P4 `Kết quả | Giả thiết không được bỏ | Công thức hoặc thuật toán`), năm hàng của §8.1 thuộc Mục 7, chép đúng ghi chú:
+  1. “Hợp lý cực đại của mô hình phần thưởng” | “mô hình Bradley–Terry; $0<k<n$” | $L^{\mathrm{BT}}=-\widehat{\mathbb E}\log\sigma\bigl(\hat r(x,y_w)-\hat r(x,y_l)\bigr)$; “cực tiểu” $\log\frac k{n-k}$;
+  2. “Nghiệm có phạt KL” | “$\beta>0$; chính sách chọn tự do theo $x$” | $\pi^*_r\propto\pi_{\mathrm{ref}}e^{r/\beta}$; $J_\beta(\pi)=\mathbb E_x[\beta\log\mathcal Z_r-\beta D_{\mathrm{KL}}(\pi\Vert\pi^*_r)]$;
+  3. “Gradient có phạt KL” | “$\pi_\theta>0$; $\pi_{\mathrm{ref}}>0$” | $\nabla J_\beta=\mathbb E[\tilde r_\theta\nabla\log\pi_\theta]$, $\tilde r_\theta=r-\beta\log\frac{\pi_\theta}{\pi_{\mathrm{ref}}}$;
+  4. “Tương đương RLHF và DPO” | “(H1)–(H3), (H4a), (H4b); cực tiểu trên mọi hàm phần thưởng; cùng dữ liệu, $\beta$, $\pi_{\mathrm{ref}}$” | $\arg\min L^{\mathrm{DPO}}=\{\pi^*_{\hat r}\}$;
+  5. “Gradient DPO” | “$\pi_{\mathrm{ref}}$ cố định; $\beta>0$” | $-\beta\widehat{\mathbb E}\bigl[\sigma(-\Delta r_\theta)(\nabla\log\pi_\theta(y_w)-\nabla\log\pi_\theta(y_l))\bigr]$.
+- **Mật độ `L10-702c`:** khoảng 50 âm tiết (bảng 5 hàng; trần 80 của bảng tổng kết, trần 60 theo `deck_lint.py` cũng đạt). Rủi ro tràn công thức ở 390 px (cột thứ ba): tác tử viết đo theo NT26; được ngắt bằng `aligned` trong ô.
+- **Ghi chú diễn giả `L10-702c`:** "Mệnh đề 10.54, Định lý 10.57, Mệnh đề 10.60, Định lý 10.65 và Mệnh đề 10.66 tạo phần thứ ba của bài toán trung tâm. Hai hàng giữa mang luận điểm của phần 7: RLHF với PPO và DPO cùng cực đại hóa $J_\beta$ với $\pi_{\mathrm{ref}}$ cố định, có nghiệm $\pi^*\propto\pi_{\mathrm{ref}}e^{r/\beta}$; cực tiểu của $L^{\mathrm{DPO}}$ là nghiệm đó chỉ dưới (H1)–(H3), (H4a), (H4b). Giả thiết hay bị bỏ: $0<k<n$, tức không có ưu tiên tất định; $\pi_{\mathrm{ref}}>0$ ở mọi câu trả lời; $\pi_{\mathrm{ref}}$ không lấy đạo hàm." Nguồn: "§8.1, năm hàng của Mục 7".
+- **Phút:** `L10-702c` 0,5.
+
+#### `L10-703`, `L10-703b` So sánh sáu phương pháp
+- **Kiểm trần:** `L10-703` hiện 67 âm tiết (bảng 51, dòng 16); thêm hai hàng của §8.2 (khoảng 39) thành khoảng 106, vượt 80: tách `L10-703b` (Q7, QT6).
+- **`L10-703`:** tiêu đề “So sánh sáu phương pháp”; bốn hàng giữ; bỏ dòng "Cả bốn điều kiện dừng …" (chuyển sang `L10-703b` với "sáu"). Khoảng 51 âm tiết. Ghi chú diễn giả: câu "Cả bốn đều cần dữ liệu của chính sách hiện tại …" giữ (nói về bốn hàng của trang), nguồn "§7.2" thành "§8.2, bốn hàng đầu".
+- **`L10-703b`** (mới, tách; `data-note-topic-id="lec-10-topic-23"`; cùng tiêu đề; P4 `Phương pháp | Quy tắc cập nhật | Dữ liệu dùng | Điều kiện dừng`):
+  1. “RLHF với PPO” | “khớp $\hat r$ bằng $L^{\mathrm{BT}}$; rồi Thuật toán 10.49 với phần thưởng (7.1)” | “$\mathcal D_{\mathrm{pref}}$; câu trả lời sinh trực tuyến bằng $\pi_{\mathrm{old}}$” | “ngân sách số lượt”;
+  2. “DPO” | “bước của bộ tối ưu trên $L^{\mathrm{DPO}}$ của mỗi mini-batch” | “$\mathcal D_{\mathrm{pref}}$ cố định, ngoại tuyến” | “số epoch đã định”;
+  dòng “Cả sáu điều kiện dừng là ngân sách tính toán, không là tiêu chuẩn hội tụ.”
+- **Mật độ `L10-703b`:** khoảng 67 âm tiết (trần 80; `deck_lint.py` nhận "So sánh …").
+- **Ghi chú diễn giả `L10-703b`:** "Thuật toán 10.61 và 10.67 dừng theo ngân sách. Bốn phương pháp trước và RLHF với PPO cần dữ liệu của chính sách hiện tại, sinh trực tuyến; DPO dùng $\mathcal D_{\mathrm{pref}}$ cố định do $\pi^{\mathrm{SFT}}$ sinh, ngoại tuyến và khác chính sách, không cần tỉ số $\rho_t$. RLHF với PPO giữ bốn mô hình trong bộ nhớ, DPO hai." Nguồn: "§8.2, hai hàng cuối".
+- **Phút:** `L10-703` 1, `L10-703b` 0,5.
+
+#### `L10-704` Các kết luận có bảo đảm
+- **Sửa:** thêm hàng thứ tư theo §8.2, bảng thứ hai: “DPO” | “(H1)–(H3), (H4a), (H4b); cực tiểu trên mọi hàm phần thưởng; cùng dữ liệu, $\beta$, $\pi_{\mathrm{ref}}$” | “mọi cực tiểu của $L^{\mathrm{DPO}}$ là $\pi^*_{\hat r}$ của RLHF lý tưởng”.
+- **Mật độ:** khoảng 76 âm tiết (trước 54; trần 80 của bảng tổng kết). `deck_lint.py` dùng trần 60 cho tiêu đề này nên báo `SYLL60`: ngoại lệ đã biết (tiêu đề bảng tổng kết không khớp biểu thức của công cụ; NT17 cho 80). `<colgroup style="">` giữ (ngoại lệ P7 đã ghi, mục 5 `NGUYEN-TAC-HOC-PHAN.md`).
+- **Ghi chú diễn giả:** thêm "Hàng DPO là Định lý 10.65: một kết luận về cực tiểu của hàm mất mát, không về các bước lặp của hạ gradient." và đổi "Cả ba kết luận đều không khẳng định hội tụ tới chính sách tối ưu." thành "Không kết luận nào trong bốn khẳng định hội tụ của thuật toán thực hành."; nguồn "§7.2" thành "§8.2, bảng thứ hai".
+
+#### `L10-707` Vấn đề trung tâm (trả lời)
+- **Sửa:** tiêu đề “Vấn đề trung tâm” (NT15; tiêu đề cũ "Trả lời vấn đề trung tâm" bị `deck_lint.py` báo `STRUCT` "tiêu đề cũ"); dòng "Nguồn: …" chuyển vào ghi chú diễn giả (NT15: nguồn trong ghi chú diễn giả); thêm mục 7 theo phần 6 của §8.3 (sửa sau cổng III.2: đủ "cùng mục tiêu" và "không bảo đảm hội tụ"): “Cùng $\max J_\beta$: PPO nhắm tới $\pi^*_{\hat r}$ bằng mẫu trực tuyến, không bảo đảm hội tụ; $\arg\min L^{\mathrm{DPO}}=\{\pi^*_{\hat r}\}$ dưới (H1)–(H3), (H4a), (H4b).”
+- **Mật độ:** khoảng 85 âm tiết (năm dòng cũ 68, dòng mới 17), 6 dòng: ngoại lệ trần 60 (≤ 90), lý do như `L10-109`: sáu phần trả lời có điều kiện, mỗi phần một dòng (NT15 trả lời câu hỏi trung tâm của cả bài). Phương án dự phòng nếu `deck_lint.py` đếm quá 90: dòng 4 cũ "Lợi thế, $\nu$, nghiệm chính xác: hàm thay thế đúng bậc một; sai số, mức giảm bị chặn." rút "hàm thay thế" thành "$\mathcal L$" (đã định nghĩa ở mạch 4).
+- **Ghi chú diễn giả:** câu đầu giữ ("Mệnh đề 10.2, 10.3, 10.8 trả lời dòng 2 của vấn đề trung tâm; các dòng sau trả lời dòng cùng số: …", vì `L10-109` giữ danh sách), thêm "dòng 7, Định lý 10.57, 10.65, trả lời dòng thứ ba của hộp."; thêm "Dòng 7: hai con đường cực đại hóa cùng mục tiêu có phạt KL theo chính sách tham chiếu cố định, có nghiệm $\pi^*\propto\pi_{\mathrm{ref}}e^{r/\beta}$; PPO dùng bốn mô hình; DPO không qua vòng học tăng cường; với ưu tiên tất định, cả hai con đường lý tưởng tiến tới chính sách tất định với mọi $\beta$."; dòng nguồn: "ghi chú bài giảng Bài 10, §8.3; Sutton và Barto (2018); Schulman và cộng sự (2015–2017); Achiam và cộng sự (2017); Rafailov và cộng sự (2023); bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 3–42." Ghi chú khoảng 150; nếu vượt, câu về Nhận xét 10.51 rút gọn.
+
+#### `L10-708` Câu hỏi tự kiểm tra
+- **Sửa** (QT8; NT15 tối đa bốn câu): câu 3 thay bằng “Giải thích vì sao $\beta$ của PPO-Penalty không giữ chính sách gần $\pi_{\mathrm{ref}}$.” (câu 3 của §8.4; một phân biệt, NT-RL-9). Ba câu còn lại giữ.
+- **Mật độ:** khoảng 56 âm tiết (trước 57), 5 dòng.
+- **Ghi chú diễn giả:** lời giải (3) mới: "(3) Định nghĩa 10.43 đo KL tới $\pi_{\mathrm{old}}$, đổi sau mỗi lần cập nhật, nên chỉ giới hạn từng bước; nghiệm cuối do mỏ neo cố định $\pi_{\mathrm{ref}}$ của mục tiêu có phạt KL quyết định (Nhận xét 10.58)."; câu cũ chuyển thành một câu hỏi thêm cuối ghi chú: "Câu hỏi thêm: tỉ lệ cắt bằng $\tfrac33$ có nghĩa mọi mẫu có gradient $0$ không? Không nói chung: tỉ lệ cắt đếm $\lvert\rho-1\rvert>\epsilon$ bất kể dấu, còn tập gradient bằng $0$ phụ thuộc dấu của lợi thế (Mệnh đề 10.40(d), Định nghĩa 10.47)."; dòng nguồn: "ghi chú bài giảng Bài 10, §8.4 (câu 1–3); Nhận xét 10.58 (câu 3); Hệ quả 10.29, Nhận xét 10.38 (câu 4); Mệnh đề 10.40, Định nghĩa 10.47 (câu hỏi thêm)". Ghi chú khoảng 210 âm tiết: là lời giải của bốn câu, NT22 cho đến khoảng 250; `deck_lint.py` báo `NOTES150` vì tiêu đề không chứa "Lời giải": ngoại lệ đã biết.
+
+#### `L10-709` Bài tập về nhà
+- **Sửa:** tiêu đề “Bài tập về nhà” (NT15; trang tài liệu tách sang `L10-710`). Bảng ba cột, đầu cột “Mạch” | “Tệp bài tập” | “Ghi chú bài giảng” (rút từ "Bài tập (tệp bài tập)", "Bài tập củng cố (ghi chú)"); bỏ hàng "1. Mở đầu" (không có bài); hàng 2–6 giữ số, thêm “(trên lớp)” sau mọi bài có trên trang chiếu: hàng 2 “10.1 (trên lớp), 10.4, 10.5 (trên lớp), 10.10”, hàng 3 “10.6, 10.7 (trên lớp)”, hàng 4 “10.11 (trên lớp)”, hàng 5 “10.8 (trên lớp), 10.9”, hàng 6 “10.2, 10.12 (trên lớp)”; hàng “7. Tối ưu chính sách từ phản hồi ưu tiên” | “10.22” | “10.18 (trên lớp), 10.19, 10.20, 10.21”; hàng “8. Tổng kết” | “—” | “10.3” (thay hàng "7. Tổng kết và chuyển tiếp"). Bảng khớp bảng mạch của `exercises.md` (hàng 7, 8). Thêm dòng liên kết “Ghi chú bài giảng · Bài tập” (hai liên kết viewer hiện ở `L10-710`, chuyển sang đây theo NT15).
+- **Mật độ:** khoảng 71 âm tiết (bảng 65, liên kết 6), 2 dòng: ngoại lệ trần 60 (≤ 90; quyết định của điều phối viên sau cổng III.2), lý do NT15 (đánh dấu "(trên lớp)" nhất quán cho cả bảy bài có trên trang chiếu: 10.1, 10.5, 10.7, 10.8, 10.11, 10.12, 10.18).
+- **Ghi chú diễn giả:** "Bài tập 10.13–10.17 và 10.22 nằm trong tệp bài tập của bài, lấy từ bài tập của Sutton và Barto (2018), ở hai mức: nhận biết (10.13, 10.22); tính toán hoặc chứng minh (10.14–10.17). Bài tập 10.22 nối phân phối softmax hai hành động với hàm logistic của mô hình Bradley–Terry. Bài tập 10.14, về biến điều khiển không đổi kỳ vọng của lợi tức, thuộc cả mạch 2 và mạch 6. Bài tập 10.1–10.12 và 10.18–10.21 là mục "Bài tập củng cố" của ghi chú bài giảng, có gợi ý và lời giải tại đó; Bài 10.1, 10.5, 10.7, 10.8, 10.11, 10.12 và 10.18 có phiên bản trên trang chiếu. Bài 10.3 kiểm các kết quả có bảo đảm." Nguồn: "tệp bài tập Bài 10, bảng mạch; ghi chú bài giảng Bài 10, §8.5, Bài tập củng cố".
+
+#### `L10-710` Tài liệu tham khảo
+- **Sửa:** tiêu đề “Tài liệu tham khảo” (NT15); bỏ nhãn "Tài liệu đọc:" (`deck_lint.py` báo `LABEL`); bỏ dòng "Bài 11: SPO …, SAM+PPO …" và liên kết tới deck Bài 11 cũ (Q8: không câu nối tới bài sau trong lượt này); hai liên kết viewer chuyển sang `L10-709`. Mặt trang năm dòng theo "Hướng dẫn đọc thêm" của ghi chú:
+  1. “Sutton và Barto (2018), §13.4–13.5, §7.1, §12.1–12.3.”
+  2. “Schulman và cộng sự (2015), §2–3, Phụ lục C; (2016), §2–3; (2017), §3–5.”
+  3. “Achiam và cộng sự (2017), §5; Huang và cộng sự (2022); Engstrom và cộng sự (2020).”
+  4. “Rafailov và cộng sự (2023), §3–5, Phụ lục A; Ouyang và cộng sự (2022), §3.”
+  5. “Stiennon và cộng sự (2020), §3.4.”
+- **Mật độ:** khoảng 56 âm tiết, 5 dòng (trần 80 của trang tài liệu tham khảo, NT17; trần 60 của `deck_lint.py` cũng đạt).
+- **Sai khác với NT15:** NT15 đòi một dòng nối sang bài sau; Q8 (tác giả) bỏ dòng đó cho tới khi Bài 11 mới được commit. Q8 thắng (thứ tự ưu tiên của NT, mục 0).
+- **Ghi chú diễn giả (thay toàn bộ):** "Giới hạn còn lại của Mục 2–6 là dữ liệu theo chính sách: đường cơ sở và GAE cần lượt do chính sách đang cập nhật sinh ra, và PPO bỏ mỗi đoạn thu sau $K$ epoch. RLHF với PPO giữ giới hạn đó và còn phụ thuộc độ đúng của $\hat r$ trên câu trả lời mới; DPO dùng dữ liệu cố định và chỉ đánh giá các câu trả lời có trong dữ liệu. Định lý tương đương ghép Định lý 1 và Mệnh đề 1 của Rafailov và cộng sự (2023, Phụ lục A.6), nửa đầu chứng minh Định lý 4.1 của Xu và cộng sự (2024) và Mệnh đề 4 của Gheshlaghi Azar và cộng sự (2024, Phụ lục B)." Nguồn: "ghi chú bài giảng Bài 10, §8.6, Hướng dẫn đọc thêm và tài liệu tham khảo". Bỏ mọi câu về Bài 11 (SPO, SAM+PPO, ký hiệu $w_t$, Phần II của bài giảng gốc). `data-note-topic-id="lec-10-topic-23"` giữ; nội dung §8.6 (`topic-24`) chỉ ở ghi chú diễn giả.
+
+#### Chỗ dẫn số mục cũ của ghi chú
+Ngoài các trang trên, deck không còn chỗ nào dẫn "§7.x" của ghi chú (các "§7" ở `L10-502`, `L10-502b` là của Schulman và cộng sự (2015), giữ). Tác tử viết kiểm lại bằng `grep -n '§7' lecture-10-trpo-va-ppo.html` sau khi sửa: mọi "ghi chú bài giảng Bài 10, §7.k" còn lại phải là §7 mới (mạch 7).
+
+### Ngoại lệ mật độ và ngoại lệ đã biết của `deck_lint`
+
+**Ngoại lệ mật độ có lý do** (NT17, NT-RL-7; không trang nào vượt 1,5 lần trần; không thu nhỏ chữ, chữ thân bài từ `0.75em`):
+
+| trang | trần | số dự kiến | lý do |
+|---|---|---|---|
+| `L10-104b` | 80 (mục tiêu) | khoảng 105, 6 dòng | NT11 giữ đủ hai mục tiêu nhiều vế của ghi chú (8, 9); NT17 nêu "trang mục tiêu giữ đúng nghĩa ghi chú" là ngoại lệ thường gặp; Q7 chỉ cho một trang tách |
+| `L10-D12` | 60 | khoảng 84, 6 dòng | NT2: năm giả thiết (H1)–(H4b) với lượng từ, điều kiện cùng dữ liệu, kết luận hai tầng; phần 2 của luận điểm; kế hoạch C5 dự liệu đến 90 |
+| `L10-707` | 60 | khoảng 85, 6 dòng | sáu phần trả lời có điều kiện của câu hỏi trung tâm, mỗi phần một dòng (NT15); dòng 7 đủ "cùng mục tiêu", "không bảo đảm hội tụ" (cổng III.2) |
+| `L10-109` | 60 | khoảng 89, 6 dòng | Q3: giữ cấu trúc hộp và năm dòng của trang cũ, thêm một dòng cho phần thứ ba (cổng III.2); mở rộng ngoại lệ đã có (80) |
+| `L10-709` | 60 | khoảng 71, 2 dòng | NT15: "(trên lớp)" cho cả bảy bài có trên trang chiếu (cổng III.2) |
+| `L10-D01` | 60 | khoảng 62, 5 dòng | NT9 (tập $\mathcal Y(x)$), NT21 (response, completion) (cổng III.2) |
+| `L10-D02` | 60 | khoảng 73, 6 dòng | NT2 ($\mathcal D_{\mathrm{pref}}$ hữu hạn, "mô hình phần thưởng"), NT9 ($n$, $k$, $\Delta\hat r$) (cổng III.2) |
+| `L10-D04` | 60 | khoảng 68, 6 dòng | NT2 ("$r$ thực", kết luận (e)), luận điểm phần 1 đủ chữ (cổng III.2) |
+| `L10-D07` | 60 | khoảng 81, 6 dòng | NT-RL-3, NT-RL-4 (dạng mức token đủ), NT2 ("dạng một bước", "khả vi"), NT21 (cổng III.2) |
+| `L10-D08` | 60 | khoảng 70, 6 dòng | NT9 ($p$, "mỏ neo"), NT23 ("Tính …") (cổng III.2) |
+| `L10-D09` | 60 | khoảng 72, 6 dòng |
+| `L10-D15` | 60 | khoảng 68, 6 dòng | NT2 (dòng "Giả thiết" của Thuật toán 10.67), NT21 ("offline") (cổng III.2) | NT2 (dòng "Giả thiết" của Thuật toán 10.61) (cổng III.2) |
+| `L10-105` | 6 dòng | 9 dòng, khoảng 70 âm tiết | tám mạch và dòng đọc trước; mở rộng ngoại lệ đã có (8 dòng) |
+
+Các trang mới khác dự kiến trong trần (đếm bằng script trên bản nháp, sau cổng III.2): `L10-D03` 58, `L10-D05` 60, `L10-D10` 61, `L10-D13` 60, `L10-D17` 60 sát trần 60; `L10-D06` 34, `L10-D11` 49, `L10-D14` 46, `L10-D18` 46; `L10-D16` khoảng 79 (trần 80): tác tử viết đếm bằng `deck_lint.py` và dùng phương án rút ghi trong mục của trang; không thêm ngoại lệ mới nếu chưa báo điều phối viên. Không trang mới nào quá 6 dòng, quá 3 công thức hiển thị, hay có hộp chữ quá 2 câu; mỗi dòng không quá 20 âm tiết (dòng dẫn trần 25).
+
+**Ngoại lệ đã biết của `deck_lint.py` sau bổ sung** (NT28; mục 3, 5 `NGUYEN-TAC-HOC-PHAN.md`):
+
+- Cấp deck: `STRUCT 8 mạch (cần 5–7)` (Q7, QT1); `STRUCT thiếu data-lecture`, `STRUCT chân trang không kết thúc bằng "Bài NN"` (hệ quả của dòng trước; chân trang đúng "… · Bài 10"), `STRUCT có style="" tĩnh` (`<colgroup>` của `L10-704`, P7) và `STRUCT bìa không có ID LNN-1-01` (`L10-101`): deck đã có, mã giữ.
+- Trang đã sửa, do biểu thức tiêu đề của công cụ hẹp hơn NT17: `L10-101` `SYLL60` (bìa; công cụ chỉ miễn bìa mã `LNN-1-01`); `L10-704` `SYLL60` (bảng tổng kết, NT17 trần 80); `L10-708` `NOTES150` (lời giải bốn câu, NT22 đến khoảng 250); các ngoại lệ có lý do ở bảng trên (`L10-104b` vượt 80; `L10-109`, `L10-707`, `L10-709` vượt 60); `L10-109` còn `STRUCT` "trang Vấn đề trung tâm mở đầu có danh sách" (cấu trúc giữ theo Q3).
+- Trang cũ không sửa (giữ quy định cũ, mục 3): nhãn "Nhu cầu:" và cụm bị cấm ở `L10-106`, `L10-201`, `L10-207`, `L10-212`, `L10-301`, `L10-305`, `L10-307`, `L10-407`, `L10-501`, `L10-505`, `L10-601`, `L10-607`, `L10-609`, `L10-611`, `L10-617`; dòng dẫn "Muốn …, phải …" ở `L10-200`, `L10-300`, `L10-400`, `L10-500`, `L10-600`; nhãn "Bước k." ở `L10-205`, `L10-404`; `L10-617b` `SYLL60` 63; `L10-618` `NOTES150` 155; `L10-701` `SYLL60` 64 (bảng tổng kết, chỉ đổi dòng nguồn); `REPEAT` ở `L10-108`, `L10-109`, `L10-401` (câu nguồn của bài giảng gốc; nếu `L10-109` đổi ghi chú thì hết).
+- Hết sau bổ sung: `STRUCT` tiêu đề cũ ở `L10-700`, `L10-707`; mạch cuối không tên "Tổng kết"; trang cuối không tên "Tài liệu tham khảo"; `L10-109` `NOTES150` (nếu ghi chú mới ≤ 150); `L10-700` `BANNED`; `L10-710` `SYLL60`, `LABEL`; `REPEAT` ở `L10-701`, `L10-702`, `L10-702b`.
+- Mọi trang `L10-D00` … `L10-D18`, `L10-702c`, `L10-703b` phải 0 phát hiện, trừ `SYLL60` của các trang có ngoại lệ ở bảng trên (`L10-D01`, `L10-D02`, `L10-D04`, `L10-D07`, `L10-D08`, `L10-D09`, `L10-D12`, `L10-D15`).
+
+### Khuôn bảng cố định (bổ sung, NT-RL-5)
+
+| khuôn | cột | trang |
+|---|---|---|
+| chính sách có phạt KL | chính sách (hoặc $\theta_1-\theta_2$, $\pi_\theta(y_1)$) · ($L^{\mathrm{DPO}}$ ·) $\mathbb E_\pi\hat r$ hoặc bỏ · $D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})$ · $J_1$ | `L10-D03` (Ví dụ 10.25), `L10-D17` (Tình huống 10.5) |
+| so sánh hai con đường | Tiêu chí · RLHF với PPO · DPO | `L10-D16` |
+| bảng tổng kết, bảng phương pháp | như phần trên (P4) | `L10-702c`, `L10-703b`, `L10-704` |
+
+Hai trang dùng khuôn thứ nhất có chung hai cột cuối $D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})$ và $J_1$, cùng tên cột; `L10-D17` thay cột "chính sách" bằng hai cột tham số và xác suất, vì chính sách chạy theo $\theta_1-\theta_2$.
+
+### Bài tập trên mặt trang, chứng minh, kỹ thuật (bổ sung)
+
+| cụm | trang đề | trang lời giải | khối của ghi chú | loại | kết quả trên mặt trang (trùng ghi chú) |
+|---|---|---|---|---|---|
+| Mục tiêu có phạt KL, DPO (mạch 7) | `L10-D18` | `L10-D18` (fragment) | Bài tập 10.18 (a)–(b) | lời giải mẫu trên mặt trang; (c) trong ghi chú diễn giả | $\mathcal Z=\tfrac32$, $\pi^*=(\tfrac23;\,\tfrac16;\,\tfrac16)$, $\max J_1=0{,}4055$, KL $0{,}0566$; $r-\log\tfrac32\in[r]$ |
+
+`exercises.md` không lặp Bài tập 10.18, nên không có dòng "Trùng trang chiếu" mới (BT11). Bài về nhà của mạch 7 (lời giải trong ghi chú hoặc tệp bài tập): 10.19, 10.20, 10.21, 10.22.
+
+- **Kết quả chính** (NT6, trang ý tưởng chứng minh riêng): Định lý 10.57 (`L10-D05`), Định lý 10.65 (`L10-D13`).
+- **Kết quả phụ** (lý do không có trang chứng minh ghi trong ghi chú diễn giả của trang phát biểu): Mệnh đề 10.54 (`L10-D02`: hồi quy logistic, đạo hàm $\sigma(\Delta\hat r)-\tfrac kn$), Bổ đề 10.59 và Mệnh đề 10.60 (`L10-D07`: logarit của tích, tính chất tháp; đạo hàm tích và Mệnh đề 09.17), Mệnh đề 10.63 (`L10-D10`: ba bước), Mệnh đề 10.66 (`L10-D14`: quy tắc dây chuyền).
+- **Kỹ thuật** (NT7): chỉ một dòng "Kỹ thuật." trên `L10-D05` (gộp phần thưởng vào phân phối $\pi_{\mathrm{ref}}e^{r/\beta}/\mathcal Z_r$ để đọc mục tiêu bằng KL), mẹo chỉ dùng trong một chứng minh. Phép đổi biến (reparameterization) của `L10-D10` là một kết quả có số hiệu (Mệnh đề 10.63), không phải trang kỹ thuật; tên tiếng Anh ở ghi chú diễn giả. Danh sách kỹ thuật đã giới thiệu của deck 10: thêm "gộp phần thưởng vào KL" (`L10-D05`).
+
+### Đối chiếu mã trang (bổ sung)
+
+**Chủ đề mới → trang** (chốt cột "dự kiến" của `outline.md`, mục "Ánh xạ hai chiều"; điều phối viên chép lại vào outline):
+
+| `note-topic-id` | nhóm | khối của ghi chú | trang mang thuộc tính | trang khác dùng |
+|---|---|---|---|---|
+| `lec-10-topic-25` | cầu nối | §7.1, Định nghĩa 10.52, 10.53, Mệnh đề 10.54, Nhận xét 10.55, Ví dụ 10.23, 10.24 | `L10-D00`, `L10-D01`, `L10-D02` | — |
+| `lec-10-topic-26` | cốt lõi | §7.2, Ví dụ 10.25, 10.26, Định nghĩa 10.56, Định lý 10.57, Nhận xét 10.58; Bài tập 10.18 | `L10-D03`, `L10-D04`, `L10-D05`, `L10-D06`, `L10-D18` | Nhận xét 10.58 trên `L10-D08` (thuộc tính `topic-27`) |
+| `lec-10-topic-27` | cốt lõi | §7.3, Bổ đề 10.59, Mệnh đề 10.60, Ví dụ 10.27, Thuật toán 10.61, Nhận xét 10.62 | `L10-D07`, `L10-D08`, `L10-D09` | — |
+| `lec-10-topic-28` | cốt lõi | §7.4, Mệnh đề 10.63, Định nghĩa 10.64, Định lý 10.65, Mệnh đề 10.66, Ví dụ 10.28, Thuật toán 10.67, Nhận xét 10.68 | `L10-D10` … `L10-D15` | — |
+| `lec-10-topic-29` | cốt lõi | §7.5, bảng so sánh, Nhận xét 10.69; Tình huống 10.5 | `L10-D16`, `L10-D17` | Tình huống 10.4 chỉ trong ghi chú (không lên deck) |
+| `lec-10-topic-30` | đọc thêm | §7.6, Nhận xét 10.70 | không trang nào | ghi chú diễn giả `L10-D16`, `L10-D17` |
+| `lec-10-topic-02` | (đã có) | Mục tiêu 8–9 | `L10-104b` | — |
+| `lec-10-topic-23` | (đã có) | §8.1, §8.2 | `L10-702c`, `L10-703b` | — |
+
+Tổng sau bổ sung: 30 chủ đề, 123 `data-slide-id` duy nhất; mọi chủ đề cốt lõi mới (26–29) có trang nội dung; Tình huống 10.4 (ba bản tóm tắt) chỉ ở ghi chú: không có chỗ trong 19 trang, và Định lý 10.65 đã có ví dụ tính tay `L10-D14` trên ví dụ xuyên suốt.
+
+**Kế hoạch C2 → storyboard.**
+
+| C2 | storyboard | quan hệ |
+|---|---|---|
+| `L10-D00`, `L10-D01` | `L10-D00`, `L10-D01` | giữ |
+| `L10-D02` (Định nghĩa 10.53, Mệnh đề 10.54) + `L10-D03` (Ví dụ 10.24) | `L10-D02` | gộp |
+| `L10-D04`, `L10-D05`, `L10-D06`, `L10-D07` | `L10-D03`, `L10-D04`, `L10-D05`, `L10-D06` | giữ nội dung, đổi mã |
+| `L10-D08` (RLHF với PPO) | `L10-D07` (phần thưởng theo token), `L10-D09` (thuật toán) | tách |
+| `L10-D09` (ví dụ hai vòng PPO) | `L10-D08` | giữ nội dung, đặt trước thuật toán |
+| `L10-D10`, `L10-D11` | `L10-D10`, `L10-D11` (Mệnh đề 10.66 chuyển đi) | giữ |
+| `L10-D12` | `L10-D12` | giữ |
+| — | `L10-D13` (ý tưởng chứng minh Định lý 10.65) | thêm |
+| `L10-D13`, `L10-D14` | `L10-D14` (thêm Mệnh đề 10.66), `L10-D15` | giữ nội dung, đổi mã |
+| `L10-D15`, `L10-D16` | `L10-D16`, `L10-D17` | giữ nội dung, đổi mã; đổi tiêu đề `L10-D17` |
+| `L10-D17` + `L10-D18` (Bài tập 10.13 cũ = 10.18) | `L10-D18` | gộp (fragment) |
+
+### Bảng kiểm `quill` (bổ sung; không tạo `quill.json`)
+
+**Outline (thứ tự tiên quyết).** Ký hiệu mới có trước khi dùng: $x$, $y$, $\mathcal Y(x)$, $\pi_{\mathrm{ref}}$, $y_1$, $y_2$, $y_w$, $y_l$, $\mathcal D_{\mathrm{pref}}$ (`L10-D01`); $\sigma$, $\Pr(y\succ y'\mid x)$, $[\hat r]$, $\hat r$, $L^{\mathrm{BT}}$, $n$, $k$, $\Delta\hat r$ (`L10-D02`, định nghĩa tại dòng dùng); $\beta$ (nghĩa mới), $J_\beta$, $J_1$ (`L10-D03`); $\mathcal Z_r$, $\pi^*_r$ (`L10-D04`); phần thưởng đã trừ KL (`L10-D06`, tên), $\tilde r_\theta$, dạng mức token, (7.1) (`L10-D07`); $p=\pi(y_1)$, mỏ neo (`L10-D08`, định nghĩa trên mặt trang); $\pi^{\mathrm{SFT}}$, SFT (`L10-D09`); $r_\pi$ (`L10-D10`); $r_\theta$, $\Delta r_\theta$, $L^{\mathrm{DPO}}$ (`L10-D11`); (H1)–(H4b) (`L10-D12`). Trang tổng quan dùng lời: `L10-101` không dùng "KL", `L10-104b` và `L10-109` không dùng ký hiệu mới. $\mathcal Z_r$ và (e) của Định lý 10.57 có trên `L10-D04` trước khi `L10-D13` dùng. $\beta$ đã có nghĩa hệ số phạt của PPO-Penalty (`L10-607`); `L10-D03` dùng lại chữ với mỏ neo $\pi_{\mathrm{ref}}$, và `L10-D08`, `L10-708` câu 3 nói rõ hai hệ số đo KL tới hai chính sách khác nhau.
+
+**Threads (sợi mở và đóng).**
+
+| sợi | mở | đóng |
+|---|---|---|
+| PPO cần phần thưởng của môi trường | `L10-620` (ghi chú diễn giả), `L10-D01` | `L10-D02` ($\hat r$ học từ so sánh), `L10-D07` ((7.1)) |
+| Phạt KL của PPO-Penalty chỉ giữ từng bước | `L10-D03` dòng 2 | `L10-D08` (Nhận xét 10.58), `L10-D16` hàng mỏ neo, `L10-708` câu 3 |
+| $(0{,}8;\,0{,}2)$ tốt nhất trong ba chính sách | `L10-D03` | `L10-D06` ($\pi^*=(\tfrac45;\,\tfrac15)$), `L10-D08` (PPO dừng ở đó), `L10-D14` (DPO tiến về đó) |
+| $\mathcal Z_r(x)$ không tính được | `L10-D05` (ghi chú diễn giả), `L10-D07` dòng 1 | `L10-D10` ($\mathcal Z$ triệt tiêu), `L10-D11` |
+| Chỉ hiệu phần thưởng được xác định, lớp $[r]$ | `L10-D02` | `L10-D10` (c), `L10-D13` bước 3–4, `L10-D18` (b) |
+| $k=n$ không có cực tiểu | `L10-D02` dòng 5 | `L10-D17`, `L10-707` dòng 7 (ghi chú diễn giả) |
+| Bốn mô hình và sinh mẫu ở mọi vòng | `L10-D09` | `L10-D10` dòng 1, `L10-D15` (hai mô hình), `L10-D16` hàng mô hình |
+| Cùng mục tiêu, cùng nghiệm khi đủ giả thiết (luận điểm) | `L10-101`, `L10-D04` "Ý nghĩa:" | `L10-D12` "Ý nghĩa:", `L10-D16`, `L10-702c`, `L10-707` dòng 7 |
+
+**Concept (năng lực kiểm tra, thuật ngữ).** Năng lực kiểm được của mạch 7: tính nghiệm có phạt KL và kiểm đẳng thức (a) (`L10-D06`, `L10-D18`); tách vai hai mỏ neo trên một ví dụ PPO (`L10-D08`); tính một bước DPO (`L10-D14`); nhận ra giả thiết hỏng (`L10-D13`, `L10-D17`). Thuật ngữ thống nhất với bảng Việt–Anh của `outline.md` và ghi chú: "lời nhắc", "câu trả lời", "chính sách tham chiếu", "mô hình phần thưởng", "dữ liệu ưu tiên", "phép so sánh ưu tiên", "câu trả lời được chọn/bị loại", "hàm phân hoạch", "mục tiêu có phạt KL", "phần thưởng đã trừ KL", "phần thưởng ngầm định", "học tăng cường từ phản hồi con người", "tối ưu ưu tiên trực tiếp", "tinh chỉnh có giám sát", "mỏ neo", "ưu tiên tất định", "ngoại tuyến/trực tuyến", "theo chính sách/khác chính sách", "token" (giữ nguyên).
+
+### Câu chữ dự kiến và `no-ai-slop` (chế độ Edit)
+
+Phạm vi: mọi câu trong “…” của phần này (dòng dẫn, từ khóa, mặt trang của 19 trang mới và các trang sửa, câu ghi chú diễn giả viết sẵn). Đã soát: không câu tương phản "không phải X mà là Y", không câu hỏi tu từ (hai câu hỏi trên mặt trang đều trong hộp "Câu hỏi:" và được trả lời trong mạch), không khẩu hiệu hay chuỗi mũi tên, không câu chỉ đường, không "chúng ta", "ta thấy", "hãy", không câu về trạng thái của chính văn bản, không câu nguồn gốc số liệu (VP11–VP24, NT18, NT20). Chỗ đã sửa khi soát: dòng dẫn C1 "Cùng một mục tiêu có phạt KL được giải bằng PPO …" (khái niệm chưa có, khẳng định "được giải" mạnh hơn định lý) thành "… nhắm tới cùng một chính sách"; "Ý nghĩa:" của `L10-D12` "cùng nghiệm, không vòng học tăng cường" thành câu có điều kiện "khi đủ giả thiết, …"; tiêu đề C2 "Giới hạn: ưu tiên tất định" thành cụm danh từ của ghi chú; "Lưu ý:" của `L10-D08` giữ con số ($\tfrac23(1+\epsilon)=0{,}8$) thay cho câu "PPO tới đúng nghiệm". Các câu "Diễn giải:" chỉ dùng số có trên chính trang (NT19). Tác tử viết soát lại bằng `no-ai-slop` Edit trên HTML và đếm lại âm tiết bằng `deck_lint.py`.
+
+### Câu hỏi đã có quyết định ở cổng storyboard (III.2)
+
+Báo cáo cổng: `III2-cong-storyboard.md` (scratchpad của phiên). Quyết định của điều phối viên:
+
+1. Sai khác 1–7 so với C2: chấp nhận. Phương án một hộp cho `L10-109`: bác; `L10-109` giữ cấu trúc, thêm một dòng (Q3), ngoại lệ khoảng 89.
+2. Phát hiện nghiêm trọng (NT2): đã thêm lại giả thiết và thuật ngữ bị bỏ ở `L10-D02` ($\mathcal D_{\mathrm{pref}}$ hữu hạn, "mô hình phần thưởng"), `L10-D04` ("$r$ thực", kết luận (e)), `L10-D07` ("dạng một bước", "khả vi"), `L10-D14` ("như Định nghĩa 10.64").
+3. Phát hiện trung bình: $\mathcal Y(x)$ (`L10-D01`), $n$, $k$, $\Delta\hat r$ (`L10-D02`), $p$ và "mỏ neo" (`L10-D08`) có trên mặt trang trước khi dùng; `L10-D07` mở bằng giới hạn của Định lý 10.57 và có dạng mức token đủ; `L10-D09`, `L10-D15` có dòng "Giả thiết"; ô "Bảo đảm" của PPO trên `L10-D16` theo chữ ghi chú; dòng 7 của `L10-707` có "cùng mục tiêu" và "không bảo đảm hội tụ"; `L10-709` đánh dấu "(trên lớp)" cho cả bảy bài.
+4. Phát hiện nhẹ đã làm: "Ý nghĩa:" của `L10-D12` nói về cực tiểu; "Ý nghĩa:" của `L10-D04` nêu cùng mục tiêu; "tiến về" ở `L10-D14`; tên tiếng Anh ở `L10-D01`, `L10-D02`, `L10-D07`, `L10-D15`; "Tính …" ở `L10-D08`, tên đại lượng ở dòng 2 `L10-D10`; lượng từ "theo $\theta_1-\theta_2$" ở `L10-D17`; chú thích quy định trong bản phác ghi chú diễn giả được đánh dấu; dòng nguồn `L10-708`; phương án chiều cao `L10-D17`; bước ứng dụng trong bảng hành trình; Tình huống 10.4 vào ghi chú diễn giả `L10-D12`. Không làm (vượt trần): dòng "Nhắc lại:" hồi quy logistic (lý do ở mục `L10-D02`); câu (c) của Bài tập 10.18 trên mặt trang (kế hoạch B6).
+5. `L10-110`: đổi tiêu đề; vẽ `central-problem-slide.svg` nếu đo dưới 16 px.
+
+### Sửa sau rà deck (III.5)
+
+Mục này ghi những chỗ deck đã dựng khác storyboard ở trên. Nguồn: báo cáo dựng deck `III3-deck-report.md`, quyết định biên tập của điều phối viên `III5-quyet-dinh-bien-tap.md` và báo cáo của biên tập viên `III5-editor-report.md`. Chỗ nào mục này khác các mục từng trang ở trên thì deck và mục này thắng.
+
+**Số trang.** 127 trang, 127 mã duy nhất, 8 mạch (11, 18, 10, 16, 12, 23, 21, 16). `#/7/1` mở `L10-D00`; `#/8/1` mở `L10-700`.
+
+**Mã mới (bốn trang tách).**
+
+| mã mới | tiêu đề | `data-note-topic-id` | tách từ | nội dung |
+|---|---|---|---|---|
+| `L10-702d` | Kết quả và giả thiết của bài | `lec-10-topic-23` | `L10-702c` (năm hàng tràn chân trang) | hai hàng của §8.1: tương đương RLHF và DPO; gradient DPO ($\nabla_\theta L^{\mathrm{DPO}}=\dots$, có vế trái, `aligned`) |
+| `L10-704b` | Các kết luận có bảo đảm | `lec-10-topic-23` | `L10-704` (hàng DPO tràn) | hàng DPO (Định lý 10.65), đủ giả thiết trên mặt trang, không `colgroup`; `L10-704` trở về ba hàng cũ |
+| `L10-D02b` | Ví dụ: khớp mô hình phần thưởng | `lec-10-topic-25` | `L10-D02` | Ví dụ 10.24 theo các bước của ghi chú; Nhận xét 10.55 trong ghi chú diễn giả |
+| `L10-D07b` | Phần thưởng đã trừ KL theo token | `lec-10-topic-27` | `L10-D07` (nay tiêu đề "Dạng mức token") | Mệnh đề 10.60 (dạng một bước, "khả vi", công thức hiển thị); (7.1) là hệ quả trên dạng mức token qua Bổ đề 10.59(a) |
+
+Tiêu đề khác đã đổi: `L10-D05` "Ý tưởng chứng minh: nghiệm có phạt KL"; `L10-D13` "Ý tưởng chứng minh: tương đương RLHF và DPO".
+
+**Đối chiếu mã mới với chủ đề** (bổ sung cho mục "Đối chiếu mã trang (bổ sung)"):
+- `lec-10-topic-25`: `L10-D00`, `L10-D01`, `L10-D02`, `L10-D02b`.
+- `lec-10-topic-27`: `L10-D07`, `L10-D07b`, `L10-D08`, `L10-D09`.
+- `lec-10-topic-23`: thêm `L10-702d`, `L10-704b`.
+
+**Thời lượng mạch 7** (22 phút, không đổi):
+
+| trang | D00 | D01 | D02 | D02b | D03 | D04 | D05 | D06 | D07 | D07b | D08 | D09 | D10 | D11 | D12 | D13 | D14 | D15 | D16 | D17 | D18 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| phút | 0,5 | 1 | 1 | 1 | 1 | 1,5 | 1,5 | 1 | 0,75 | 0,75 | 1,5 | 1 | 1 | 1 | 1,5 | 1 | 1,5 | 1 | 1,5 | 0,5 | 0,5 |
+
+- D02 + D02b lấy 2 phút (1,5 + 0,5); D07 + D07b lấy 1,5 phút (1 + 0,5).
+- Phút thêm đó lấy từ D17 (1 → 0,5) và D18 (1 → 0,5). Lời giải của D18 chữa trong 15 phút bài tập.
+
+**Thời lượng mạch 8** (9 phút, không đổi): `L10-702c` 0,25 + `L10-702d` 0,25 (trước 0,5); `L10-704` 0,25 + `L10-704b` 0,25 (trước 0,5). Cả deck khoảng 135 phút.
+
+**`section.compact`** (lớp mới trong `lecture-course.css`): thu lề `p`/`li`, `line-height` (1,2; ô bảng 1,15), lề công thức hiển thị và lề dưới `h2`. Cỡ chữ không đổi (NT-RL-7). Đây là quy định cục bộ theo P7 của deck 10, điều phối viên chấp nhận ở III.5 (A5). Lớp chỉ còn trên các trang vẫn cần sau khi tách: `L10-D03`, `L10-D04`, `L10-D07`, `L10-D08`, `L10-D09`, `L10-D11`, `L10-D12`, `L10-D14`, `L10-D16`, `L10-D17`.
+
+**Ngoại lệ mật độ hiện hành** (`deck_lint.py --course rl-plan`, 2026-11-19: 71 phát hiện trên 127 trang). Số này thay cho số ở bảng "Ngoại lệ mật độ và ngoại lệ đã biết của `deck_lint`" ở trên. Không trang nào vượt 1,5 lần trần:
+
+| trang | phát hiện | trần | lý do |
+|---|---|---|---|
+| `L10-101` | 71 | 60 | bìa; công cụ chỉ miễn bìa mã `LNN-1-01` |
+| `L10-104b` | 106 | 80 | giữ đủ mục tiêu 8–9 (NT11) |
+| `L10-109` | 90 | 60 | Q3: giữ hộp và năm dòng; dòng 2 "dữ liệu cũ, bước lớn, $J$ không giảm;", dòng 3 "so sánh ưu tiên: tăng phần thưởng, gần chính sách cố định." |
+| `L10-D01` | 62 | 60 | NT9, NT21 |
+| `L10-D02` | 78 | 60 | NT2: Mệnh đề 10.54 đầy đủ, (b) đúng như ghi chú, (c) có $k\in\{0,n\}$ |
+| `L10-D04` | 68; `LINES6` 7 | 60; 6 dòng | NT2: Định lý 10.57 (a)–(e); hai công thức hiển thị, mỗi công thức tính một dòng; năm `li` riêng làm trang tràn khoảng 150 px |
+| `L10-D05` | 68 | 60 | NT9: "Nhắc lại:" Mệnh đề 10.24(a) |
+| `L10-D07` | 66 | 60 | NT-RL-3, NT-RL-4, Bổ đề 10.59 đầy đủ |
+| `L10-D08` | 74 | 60 | NT9 ($p$, "mỏ neo"), NT23 |
+| `L10-D09` | 84 | 60 | NT2 (giả thiết của Thuật toán 10.61; "câu trả lời mẫu do người gán nhãn viết") |
+| `L10-D10` | 63 | 60 | viết đủ "lớp tương đương" |
+| `L10-D12` | 90 | 60 | NT2: năm giả thiết, kết luận đánh nhãn (a)–(c) |
+| `L10-D13` | 69 | 60 | bước 4 đầy đủ ($\pi=\pi^*_{r_\pi}=\pi^*_{\hat r+f}=\pi^*_{\hat r}$) |
+| `L10-D15` | 76 | 60 | NT2, NT-RL-4 (giả thiết; ngoại tuyến, khác chính sách; không tỉ số $\rho_t$) |
+| `L10-D16` | 99 | 80 | hàng "Giới hạn" (Nhận xét 10.62, 10.69; r3) |
+| `L10-707` | 90 | 60 | sáu câu trả lời có điều kiện; dòng 7 nêu hai mỏ neo và "DPO không sinh mẫu" |
+| `L10-708` | ghi chú 181 | 150 | lời giải bốn câu cộng một mệnh đề về hai chiều KL (NT22 cho đến khoảng 250) |
+| `L10-709` | 72 | 60 | NT15: đánh dấu "(trên lớp)" cho cả bảy bài có trên trang chiếu |
+| `L10-710` | 73 | 60 (công cụ); 80 (NT17) | trang tài liệu tham khảo; biểu thức tiêu đề của công cụ không nhận "Tài liệu tham khảo" |
+
+Sạch: `L10-D02b`, `L10-D07b`, `L10-D03`, `L10-D06`, `L10-D11`, `L10-D14`, `L10-D17`, `L10-D18`, `L10-702c`, `L10-702d`, `L10-704`, `L10-704b`.
+
+Phát hiện cấp deck (đã biết):
+- `STRUCT 8 mạch`
+- thiếu `data-lecture`
+- chân trang
+- `style=""` trong `colgroup` của `L10-704`
+- mã bìa
+- trang "Vấn đề trung tâm" mở đầu có danh sách (Q3)
+
+Các phát hiện còn lại nằm trên trang cũ không sửa, như đã liệt kê ở trên.
+
+**Sai khác khác của deck so với storyboard.**
+- `L10-D17`: dòng "RLHF lý tưởng cũng vậy …" chuyển vào ghi chú diễn giả (phương án dự phòng điều phối viên đã duyệt trước). Bảng thêm hàng $2\log2$, nên con số của "Diễn giải:" có trên trang.
+- `L10-D16`: hàng "Tối ưu" chuyển vào ghi chú diễn giả; "Dữ liệu" và "Mô hình" gộp thành một hàng; thêm hàng "Giới hạn".
+- `L10-110`: hình `central-problem-slide.svg` (nhãn 16,8 px ở 1600×900).
+- `L10-708`: bỏ "Câu hỏi thêm" về tỉ lệ cắt; ý đó có ở `L10-619`, `L10-620`.
+- Đề xuất sửa ghi chú (NT3, cho tác giả): hàng "Gradient DPO" của bảng §8.1 thiếu vế trái $\nabla_\theta L^{\mathrm{DPO}}=\dots$.
