@@ -1,6 +1,6 @@
-# Bài tập Bài 10 — TRPO và PPO
+# Bài tập Bài 10 — TRPO, PPO và DPO
 
-Tệp gồm năm bài, Bài tập 10.13–10.17, đánh số tiếp theo mười hai bài tập của [ghi chú bài giảng](material-viewer.html?doc=materials/lec-10/lecture-note.md&deck=lecture-10-trpo-va-ppo.html) (Bài tập 10.1–10.12) và không lặp đề bài nào của ghi chú. Mọi bài lấy từ bài tập của Sutton và Barto (2018), ghi số bài, mục và trang. Các bài chia theo hai mức: nhận biết (10.13); tính toán hoặc chứng minh (10.14–10.17). Bảng dưới xếp bài của tệp này và bài của ghi chú theo mạch của bộ trang chiếu; bài của ghi chú đứng sau chữ "ghi chú".
+Tệp gồm sáu bài, Bài tập 10.13–10.17 và 10.22, dùng chung bộ đếm với mười sáu bài tập của [ghi chú bài giảng](material-viewer.html?doc=materials/lec-10/lecture-note.md&deck=lecture-10-trpo-va-ppo.html) (Bài tập 10.1–10.12 và 10.18–10.21) và không lặp đề bài nào của ghi chú. Mọi bài lấy từ bài tập của Sutton và Barto (2018), ghi số bài, mục và trang. Các bài chia theo hai mức: nhận biết (10.13, 10.22); tính toán hoặc chứng minh (10.14–10.17). Mục tiêu học tập 8 dựa vào Bài tập 10.22 cùng Bài tập 10.18, 10.19, 10.21 của ghi chú; mục tiêu học tập 9 dựa vào Bài tập 10.19, 10.20 của ghi chú. Bảng dưới xếp bài của tệp này và bài của ghi chú theo mạch của bộ trang chiếu; bài của ghi chú đứng sau chữ "ghi chú".
 
 | Mạch | Mở phần | Bài tập |
 | --- | --- | --- |
@@ -10,7 +10,8 @@ Tệp gồm năm bài, Bài tập 10.13–10.17, đánh số tiếp theo mười
 | 4. Hàm thay thế và chặn cải thiện | [Mở phần](lecture-10-trpo-va-ppo.html#/4/1) | 10.16; ghi chú: 10.11 |
 | 5. TRPO và gradient tự nhiên | [Mở phần](lecture-10-trpo-va-ppo.html#/5/1) | 10.17; ghi chú: 10.8, 10.9 |
 | 6. Tối ưu chính sách gần kề (PPO) | [Mở phần](lecture-10-trpo-va-ppo.html#/6/1) | 10.14; ghi chú: 10.2, 10.12 |
-| 7. Tổng kết và chuyển tiếp | [Mở phần](lecture-10-trpo-va-ppo.html#/7/1) | ghi chú: 10.3 |
+| 7. Tối ưu chính sách từ phản hồi ưu tiên | [Mở phần](lecture-10-trpo-va-ppo.html#/7/1) | 10.22; ghi chú: 10.18–10.21 |
+| 8. Tổng kết | [Mở phần](lecture-10-trpo-va-ppo.html#/8/1) | ghi chú: 10.3 |
 
 ## Hướng dẫn và ký hiệu
 
@@ -21,6 +22,8 @@ Với hàm giá trị $\hat v(\cdot,w)$ có $w$ cố định, sai số TD (tempo
 Hai bài 10.14 và 10.16 dùng dữ liệu do chính sách hành vi $\pi_{\mathrm{old}}$ sinh ra để đánh giá chính sách đích $\pi_\theta$, trên một quá trình quyết định Markov (Markov decision process, MDP) có tập trạng thái và tập hành động hữu hạn. Tỉ số một bước là
 $$\rho_t=\frac{\pi_\theta(A_t\mid S_t)}{\pi_{\mathrm{old}}(A_t\mid S_t)},$$
 như Định nghĩa 10.21, và điều kiện hỗ trợ $\pi_\theta(a\mid s)>0\Rightarrow\pi_{\mathrm{old}}(a\mid s)>0$ luôn được giả thiết. Miền hỗ trợ của $\pi_{\mathrm{old}}(\cdot\mid s)$ viết $\mathcal A^{\mathrm{old}}_s=\{a:\pi_{\mathrm{old}}(a\mid s)>0\}$. Tích các tỉ số từ bước $t$ tới bước $k$ viết $\rho_{t:k}=\prod_{j=t}^{k}\rho_j$. Quy ước $\rho_j=1$ khi $j\ge T$. Sách viết chính sách hành vi là $b$ và chính sách đích là $\pi$; ở đây chữ $b$ dành cho đường cơ sở, như ghi chú, nên hai chính sách là $\pi_{\mathrm{old}}$ và $\pi_\theta$. Sách gọi $\nabla\ln\pi(a\mid s,\boldsymbol\theta)$ là véc-tơ đủ điều kiện (eligibility vector); ghi chú gọi đại lượng này là hàm điểm $\psi_\theta(s,a)$ (Định nghĩa 09.15).
+
+Bài tập 10.22 xét phân phối softmax trên hai hành động. *Mức ưu tiên* (action preference) của hành động $a$ tại bước $t$ viết $h_t(a)$, vì chữ $H_t$ đã dành cho lịch sử; sách viết $H_t(a)$. Hàm logistic là $\sigma(z)=1/(1+e^{-z})$, như bảng ký hiệu và Mục 7.1 của ghi chú; chữ $\sigma$ có nghĩa này trong Bài tập 10.22, còn trong Bài tập 10.17, $\sigma(s,\theta)$ là độ lệch chuẩn của chính sách Gaussian. Ở Bài tập 10.22, như Mục 7 của ghi chú, $\log$ chỉ logarit tự nhiên.
 
 Số thập phân viết bằng dấu phẩy, chẳng hạn $0{,}5$; véc-tơ có tọa độ thập phân viết $(x_1;\,x_2)$.
 
@@ -55,6 +58,34 @@ Ngược lại, $\lambda=2^{-1/\tau_\lambda}$. Chu kỳ bán rã nói chung khô
 Cùng lập luận áp dụng cho trọng số $(\gamma\lambda)^k$ của sai số TD $\delta_{t+k}$ trong GAE (Mệnh đề 10.14(a)), với $\gamma\lambda$ ở vị trí của $\lambda$: chu kỳ bán rã là $\ln2/\ln\bigl(1/(\gamma\lambda)\bigr)$.
 
 **Kiểm tra lại.** Với $\lambda=\tfrac12$, $\tau_\lambda=\ln2/\ln2=1$: sau một bước, trọng số giảm từ $\tfrac12$ xuống $\tfrac14$. Hai lỗi thường gặp: viết $\tau_\lambda=\ln2/\ln\lambda$, được một số âm; và lấy giá trị ban đầu là $1$ thay cho $1-\lambda$ rồi giải $(1-\lambda)\lambda^{\tau}=\tfrac12$, khi đó kết quả phụ thuộc cả thừa số chuẩn hóa $1-\lambda$, không còn là chu kỳ bán rã của dãy.
+:::
+
+### Bài tập 10.22. Softmax hai hành động và hàm logistic
+
+**Mức độ:** nhận biết; mục tiêu học tập 8; mạch 7.
+
+**Nguồn:** Sutton và Barto (2018), Bài tập 2.9, §2.8, trang 37; phân phối softmax (2.11), cùng trang.
+
+::: exercise Bài tập 10.22 (Softmax hai hành động và hàm logistic)
+Trong bài toán chọn lặp lại một bước (multi-armed bandit) với tập hành động hữu hạn $\mathcal A$, mỗi hành động $a$ có một mức ưu tiên $h_t(a)\in\mathbb R$ tại bước $t$, và hành động $A_t$ được chọn theo phân phối softmax (2.11) của sách:
+$$\begin{aligned}&\Pr(A_t=a)=\pi_t(a)\\&\quad=\frac{e^{h_t(a)}}{\sum_{a'\in\mathcal A}e^{h_t(a')}}.\end{aligned}$$
+Hàm logistic là $\sigma(z)=1/(1+e^{-z})$, $z\in\mathbb R$. Chứng minh rằng khi chỉ có hai hành động, phân phối softmax trùng với phân phối cho bởi hàm logistic, còn gọi là hàm sigmoid (sigmoid function), thường dùng trong thống kê và trong mạng nơ-ron nhân tạo.
+:::
+
+::: hint Gợi ý Bài tập 10.22
+Chia tử và mẫu của $\pi_t(a_1)$ cho $e^{h_t(a_1)}$.
+:::
+
+::: solution Lời giải Bài tập 10.22
+**Softmax hai hành động là hàm logistic.** Viết $\mathcal A=\{a_1,a_2\}$ và đặt $z_t=h_t(a_1)-h_t(a_2)$. Chia tử và mẫu của (2.11) cho $e^{h_t(a_1)}>0$:
+$$\begin{aligned}\pi_t(a_1)&=\frac{e^{h_t(a_1)}}{e^{h_t(a_1)}+e^{h_t(a_2)}}\\&=\frac1{1+e^{-(h_t(a_1)-h_t(a_2))}}\\&=\sigma(z_t).\end{aligned}$$
+Chia cho $e^{h_t(a_2)}$ theo cách tương tự được $\pi_t(a_2)=\sigma(-z_t)$. Vì $\sigma(-z)=\dfrac{e^{-z}}{e^{-z}+1}=1-\sigma(z)$, ta được $\pi_t(a_2)=1-\sigma(z_t)$. Vậy với hai hành động, phân phối softmax chọn $a_1$ với xác suất $\sigma(z_t)$ và $a_2$ với xác suất $1-\sigma(z_t)$, tức phân phối cho bởi hàm logistic của hiệu hai mức ưu tiên. Chỉ hiệu $z_t$ xuất hiện, nên cộng cùng một hằng vào hai mức ưu tiên không đổi phân phối.
+
+**Mọi phân phối trên hai hành động là softmax.** Vì $\sigma'(z)=\sigma(z)\bigl(1-\sigma(z)\bigr)>0$, $\sigma(z)\to0$ khi $z\to-\infty$ và $\sigma(z)\to1$ khi $z\to+\infty$, nên $\sigma$ là song ánh tăng ngặt từ $\mathbb R$ lên $(0,1)$, với hàm ngược $\sigma^{-1}(p)=\log\frac p{1-p}$. Mỗi phân phối trên hai hành động có $\pi_t(a_1)=p\in(0,1)$ là một phân phối softmax, với hiệu mức ưu tiên $z_t=\log\frac p{1-p}$.
+
+**Liên hệ với mô hình Bradley–Terry.** Với chính sách softmax có đặc trưng đơn vị trên hai câu trả lời $y_1$, $y_2$, logit $\theta=(\theta_1;\,\theta_2)$ là mức ưu tiên, và kết quả trên cho $\pi_\theta(y_1)=\sigma(\theta_1-\theta_2)$, đẳng thức dùng ở bước cập nhật của Ví dụ 10.28. Thay mức ưu tiên bằng phần thưởng $r(x,\cdot)$ của hai câu trả lời được đẳng thức của mô hình Bradley–Terry, $\frac{e^{r(x,y)}}{e^{r(x,y)}+e^{r(x,y')}}=\sigma\bigl(r(x,y)-r(x,y')\bigr)$ (Định nghĩa 10.53). Cộng một hằng vào hai mức ưu tiên ứng với Mệnh đề 10.54(b): cộng vào phần thưởng một hàm $f(x)$ chỉ phụ thuộc lời nhắc thì $L^{\mathrm{BT}}$ không đổi. Hiệu phần thưởng tối ưu $\log\frac k{n-k}$ của Mệnh đề 10.54(c) là $\sigma^{-1}(\tfrac kn)$.
+
+**Kiểm tra lại.** Với $h_t=(\log2;\,0)$, (2.11) cho $\pi_t(a_1)=\tfrac{2}{2+1}=\tfrac23$, và $\sigma(\log2)=1/(1+\tfrac12)=\tfrac23$; đây là $\pi_{\mathrm{ref}}=(\tfrac23;\,\tfrac13)$ của Ví dụ 10.23. Ba lỗi thường gặp: nhầm dấu của hiệu, viết $\pi_t(a_1)=\sigma\bigl(h_t(a_2)-h_t(a_1)\bigr)$, cho $\tfrac13$ thay cho $\tfrac23$; áp $\sigma$ cho từng mức ưu tiên rồi chuẩn hóa, $\sigma\bigl(h_t(a_1)\bigr)/\bigl[\sigma\bigl(h_t(a_1)\bigr)+\sigma\bigl(h_t(a_2)\bigr)\bigr]$, cho $\tfrac{2/3}{2/3+1/2}=\tfrac47\approx0{,}5714$; và viết $\pi_t(a_1)=\sigma\bigl(h_t(a_1)\bigr)$, chỉ đúng khi $h_t(a_2)=0$: với $h_t=(\log2;\,\log2)$, cách viết này cho $\tfrac23$ thay cho $\tfrac12$.
 :::
 
 ## Mức tính toán hoặc chứng minh
@@ -285,4 +316,4 @@ và hai khối ngoài đường chéo bằng $0$. Mỗi khối có hạng không
 
 ## Tài liệu tham khảo
 
-- **Sutton, R. S. và Barto, A. G. (2018).** *Reinforcement Learning: An Introduction*, ấn bản 2, MIT Press. Bài tập 5.13 và (5.11)–(5.14), §5.9, trang 114–115 (Bài tập 10.16); (6.6), §6.1, trang 121 (Bài tập 10.15); Bài tập 7.6, (7.13) và (7.14), §7.4, trang 150–151 (Bài tập 10.14); Bài tập 12.2 và (12.3), §12.1, trang 290 (Bài tập 10.13); Bài tập 12.3, §12.2, trang 295, cùng (12.4), trang 290, và (12.6), trang 293 (Bài tập 10.15); Bài tập 13.4, (13.19) và (13.20), §13.7, trang 335–336 (Bài tập 10.17).
+- **Sutton, R. S. và Barto, A. G. (2018).** *Reinforcement Learning: An Introduction*, ấn bản 2, MIT Press. Bài tập 2.9 và (2.11), §2.8, trang 37 (Bài tập 10.22); Bài tập 5.13 và (5.11)–(5.14), §5.9, trang 114–115 (Bài tập 10.16); (6.6), §6.1, trang 121 (Bài tập 10.15); Bài tập 7.6, (7.13) và (7.14), §7.4, trang 150–151 (Bài tập 10.14); Bài tập 12.2 và (12.3), §12.1, trang 290 (Bài tập 10.13); Bài tập 12.3, §12.2, trang 295, cùng (12.4), trang 290, và (12.6), trang 293 (Bài tập 10.15); Bài tập 13.4, (13.19) và (13.20), §13.7, trang 335–336 (Bài tập 10.17).
