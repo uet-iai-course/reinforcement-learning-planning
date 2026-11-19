@@ -1,6 +1,6 @@
 # Bài tập Bài 11 — Lập kế hoạch dựa trên mô hình
 
-Tệp gồm tám bài, Bài tập 11.12–11.19, đánh số tiếp theo mười một bài tập củng cố của [ghi chú bài giảng](material-viewer.html?doc=materials/lec-11/lecture-note.md&deck=lecture-11-lap-ke-hoach-dua-tren-mo-hinh.html) (Bài tập 11.1–11.11) và không lặp đề bài nào của ghi chú. Mọi bài lấy từ bài tập của Sutton và Barto (2018), ấn bản 2, ghi số bài, mục và trang. Các bài chia theo ba mức: nhận biết (11.12, 11.13); tính toán hoặc chứng minh (11.14, 11.15); vận dụng vào bài toán Học tăng cường (11.16–11.19). Mục tiêu học tập 5 (tối ưu kế hoạch bằng đạo hàm) dựa vào Bài tập 11.6, 11.11 của ghi chú; mục tiêu học tập 7 (chọn cách dùng mô hình) dựa vào Bài tập 11.9, 11.10, 11.11 của ghi chú. Bảng dưới xếp bài của tệp này và bài của ghi chú theo mạch của bộ trang chiếu; bài của ghi chú đứng sau chữ "ghi chú".
+Tệp gồm tám bài, Bài tập 11.12–11.19, đánh số tiếp theo mười một bài tập củng cố của [ghi chú bài giảng](material-viewer.html?doc=materials/lec-11/lecture-note.md&deck=lecture-11-lap-ke-hoach-dua-tren-mo-hinh.html) (Bài tập 11.1–11.11) và không lặp đề bài nào của ghi chú. Mọi bài lấy từ bài tập của Sutton và Barto (2018), ấn bản 2, ghi số bài, mục và trang. Các bài chia theo ba mức: nhận biết (11.12, 11.13); tính toán hoặc chứng minh (11.14, 11.15); vận dụng vào bài toán Học tăng cường (11.16–11.19). Tệp này không có bài cho mục tiêu học tập 5 (tối ưu kế hoạch bằng đạo hàm) và 7 (chọn cách dùng mô hình). Mục tiêu 5 được luyện ở Bài tập 11.6, 11.11 của ghi chú, mục tiêu 7 ở Bài tập 11.9, 11.10, 11.11 của ghi chú. Bảng dưới xếp bài của tệp này và bài của ghi chú theo mạch của bộ trang chiếu, với bài của ghi chú đứng sau chữ "ghi chú".
 
 | Mạch | Mở phần | Bài tập |
 | --- | --- | --- |
@@ -59,11 +59,11 @@ Dyna-Q+ khác Dyna-Q ở bốn điểm: sau mỗi bước thật $(S,A)$, $\ell(
 :::
 
 ::: solution Lời giải Bài tập 11.12
-**Câu (a).** Ban đầu $Q\equiv0$ và mọi phần thưởng trước khi tới $\mathrm G$ bằng $0$. Với Dyna-Q, mọi hành động hòa nhau, phá hòa (tie-breaking) ngẫu nhiên, nên lượt đầu là một quá trình đi ngẫu nhiên (random walk); bước (f) chỉ cập nhật cặp đã thử, với mục tiêu $0+\gamma\cdot0=0$, nên không đổi gì cho tới lần đầu tới $\mathrm G$.
+**Câu (a).** Ban đầu $Q\equiv0$ và mọi phần thưởng trước khi tới $\mathrm G$ bằng $0$. Với Dyna-Q, mọi hành động hòa nhau, phá hòa (tie-breaking) ngẫu nhiên, nên lượt đầu là một quá trình đi ngẫu nhiên (random walk). Bước (f) chỉ cập nhật cặp đã thử, với mục tiêu $0+\gamma\cdot0=0$, nên không đổi gì cho tới lần đầu tới $\mathrm G$.
 
 Với Dyna-Q+, bước (f) cập nhật cả hành động chưa thử với mô hình "ở yên, thưởng $0$" và thưởng $\kappa\sqrt{\ell}$. Cặp chưa thử có $\ell$ bằng số bước thật đã trôi qua, lớn nhất trong bảng, còn cặp vừa thử có $\ell=0$. Mục tiêu lập kế hoạch của cặp chưa thử là $\kappa\sqrt{\ell}+\gamma\max_{a'}Q(s,a')>0$, nên các hành động chưa thử được ưu tiên, vì $\ell$ của chúng lớn nhất. Các cập nhật lập kế hoạch còn lan giá trị này qua mô hình về các trạng thái dẫn tới vùng có nhiều cặp chưa thử. Chính sách tham lam theo $Q$ vì vậy đưa tác tử tới các cặp chưa thử một cách có hệ thống, thay cho việc đi ngẫu nhiên. Khi tác tử thăm dò như vậy, mô hình phủ mê cung sau ít bước thật hơn, và các cập nhật lập kế hoạch tìm ra đường ngắn nhất ($10$ bước ở mê cung bị chặn, $16$ bước ở mê cung lối tắt) sớm hơn. Cơ chế này giải thích kết quả trong thí nghiệm của Sutton và Barto: đường phần thưởng tích lũy của Dyna-Q+ nằm trên đường Dyna-Q ngay từ pha thứ nhất, như mô tả Hình 8.4.
 
-**Câu (b).** *Mê cung bị chặn.* Sau bước $1\,000$, mô hình cũ ghi $(5,9)$ với $\uparrow$ dẫn tới $(4,9)$: mô hình lạc quan. Chính sách tham lam đi tới $(5,9)$, chọn $\uparrow$ và ở yên; bước (e) sửa mô hình, các cập nhật lập kế hoạch hạ giá trị của đường cũ. Cả hai tác tử tự sửa loại sai này (Ví dụ 11.8, "mô hình quá lạc quan"); đoạn nằm ngang trên Hình 8.4 là lúc chúng đi quanh sau tường.
+**Câu (b).** *Mê cung bị chặn.* Sau bước $1\,000$, mô hình cũ ghi $(5,9)$ với $\uparrow$ dẫn tới $(4,9)$: mô hình lạc quan. Chính sách tham lam đi tới $(5,9)$, chọn $\uparrow$ và ở yên. Bước (e) sửa mô hình, các cập nhật lập kế hoạch hạ giá trị của đường cũ. Cả hai tác tử tự sửa loại sai này (Ví dụ 11.8, "mô hình quá lạc quan"). Đoạn nằm ngang trên Hình 8.4 là lúc chúng đi quanh sau tường.
 
 Với lối mới ở cột $1$, mô hình cũ sai theo hướng bi quan: cặp $(5,1)$ với $\uparrow$ hoặc chưa có trong mô hình, hoặc được ghi là ở yên, vì $(4,1)$ là tường trong pha thứ nhất. Dyna-Q chỉ sửa ô này của mô hình khi thăm dò $\varepsilon$-tham lam tình cờ đưa nó tới $(5,1)$ và chọn $\uparrow$. Với Dyna-Q+, cặp này lâu không được thử nên $\ell$ lớn, và thưởng $\kappa\sqrt{\ell}$ nâng giá trị lập kế hoạch của các đường dẫn tới nó; tác tử chủ động tới thử, phát hiện lối mới và lập kế hoạch đường $16$ bước sớm hơn.
 
@@ -71,9 +71,9 @@ Với lối mới ở cột $1$, mô hình cũ sai theo hướng bi quan: cặp 
 
 **Kiểm tra lại.** Ba lỗi thường gặp:
 
-- chỉ giải thích pha thứ hai bằng việc thưởng giúp phát hiện thay đổi; khi đó hai tác tử như nhau trước khi mê cung đổi, trái với việc đường Dyna-Q+ nằm trên ở pha thứ nhất;
-- cho rằng thưởng làm bảng $Q$ của Dyna-Q+ chính xác hơn; theo Nhận xét 11.13, bảng đó lệch khỏi $\hat q_*$ của mô hình, và lợi thế đến từ hành vi thăm dò;
-- coi lợi thế ở pha thứ nhất là tính chất chung của Dyna-Q+; nó phụ thuộc tham số, gồm $\kappa$ và bước học $\alpha$: với $\kappa$ quá lớn, hoặc khi giá trị từ $\mathrm G$ lan chậm vì $\alpha$ nhỏ, thưởng của các cặp lâu chưa thử lấn át giá trị của đường tới đích, và Dyna-Q+ có thể tới đích ít hơn Dyna-Q trước khi môi trường đổi.
+- Chỉ giải thích pha thứ hai bằng việc thưởng giúp phát hiện thay đổi. Theo lời giải thích đó, hai tác tử như nhau trước khi mê cung đổi, trái với việc đường Dyna-Q+ nằm trên ở pha thứ nhất.
+- Cho rằng thưởng làm bảng $Q$ của Dyna-Q+ chính xác hơn. Theo Nhận xét 11.13, bảng đó lệch khỏi $\hat q_*$ của mô hình, và lợi thế đến từ hành vi thăm dò.
+- Coi lợi thế ở pha thứ nhất là tính chất chung của Dyna-Q+. Lợi thế đó phụ thuộc tham số, gồm $\kappa$ và bước học $\alpha$. Với $\kappa$ quá lớn, hoặc khi giá trị từ $\mathrm G$ lan chậm vì $\alpha$ nhỏ, thưởng của các cặp lâu chưa thử lấn át giá trị của đường tới đích, và Dyna-Q+ có thể tới đích ít hơn Dyna-Q trước khi môi trường đổi.
 :::
 
 ### Bài tập 11.13. Khoảng cách giữa Dyna-Q+ và Dyna-Q trước khi có lối tắt
@@ -95,15 +95,15 @@ Khoảng cách giữa hai đường phần thưởng tích lũy hẹp lại khi 
 ::: solution Lời giải Bài tập 11.13
 **Khoảng cách và độ dốc.** Khoảng cách giữa hai đường tại bước $t$ là hiệu số lần tới đích của hai tác tử trong $t$ bước đầu. Nó hẹp lại đúng khi, trên đoạn đó, Dyna-Q tới đích với tốc độ lớn hơn Dyna-Q+.
 
-**Nguồn gốc của khoảng cách.** Theo Bài tập 11.12(a), Dyna-Q+ thăm dò có hệ thống nên, trong thí nghiệm của sách, tìm ra đường $16$ bước sớm hơn; khoảng cách mở ra ở đầu thí nghiệm.
+**Nguồn gốc của khoảng cách.** Theo Bài tập 11.12(a), Dyna-Q+ thăm dò có hệ thống nên, trong thí nghiệm của sách, tìm ra đường $16$ bước sớm hơn. Khoảng cách mở ra ở đầu thí nghiệm.
 
 **Chi phí thăm dò khi môi trường không đổi.** Khi cả hai tác tử đã có mô hình đúng của mê cung và đã học đường ngắn nhất, môi trường không đổi cho tới bước $3\,000$, nên không còn gì mới để phát hiện. Dyna-Q đi theo đường ngắn nhất với chính sách $\varepsilon$-tham lam. Dyna-Q+ vẫn trả chi phí thăm dò: mỗi cặp nằm ngoài đường đi có $\ell$ tăng theo thời gian, nên $\kappa\sqrt{\ell}$ tăng không bị chặn; chẳng hạn khi $\ell$ tăng từ $100$ lên $2\,500$, thưởng tăng từ $10\kappa$ lên $50\kappa$. Đến lúc giá trị lập kế hoạch của một chuyến đi thử vượt giá trị của đường ngắn nhất, tác tử rời đường để thử lại cặp đó, rồi $\ell$ của cặp về $0$ trong khi $\ell$ của các cặp khác tiếp tục tăng. Các chuyến đi thử lặp lại làm lượt của Dyna-Q+ dài hơn trung bình, nên số lần tới đích trên một bước của Dyna-Q+ nhỏ hơn của Dyna-Q, và khoảng cách hẹp lại. Lợi thế ban đầu vẫn còn ở bước $3\,000$ nhưng bị bào mòn. Sau bước $3\,000$, chính các chuyến đi thử này giúp Dyna-Q+ tìm ra lối tắt (Bài tập 11.12(b)).
 
 **Kiểm tra lại.** Ba lỗi thường gặp:
 
-- cho rằng Dyna-Q có mô hình tốt hơn ở cuối pha thứ nhất; trong môi trường tất định không đổi, mô hình của cả hai tác tử đều đúng ở mọi cặp đã thử, nên khác biệt nằm ở hành vi;
-- coi thưởng thăm dò là hằng số; khi đó chi phí thăm dò sẽ tắt dần khi mọi cặp đã được thử, và lập luận không giải thích được độ dốc thấp hơn kéo dài;
-- đọc khoảng cách hẹp lại thành việc phần thưởng tích lũy của Dyna-Q+ giảm; phần thưởng tích lũy không bao giờ giảm, chỉ độ dốc của nó nhỏ hơn.
+- Cho rằng Dyna-Q có mô hình tốt hơn ở cuối pha thứ nhất. Trong môi trường tất định không đổi, mô hình của cả hai tác tử đều đúng ở mọi cặp đã thử, nên khác biệt nằm ở hành vi.
+- Coi thưởng thăm dò là hằng số. Khi đó chi phí thăm dò sẽ tắt dần khi mọi cặp đã được thử, và lập luận không giải thích được độ dốc thấp hơn kéo dài.
+- Đọc khoảng cách hẹp lại thành việc phần thưởng tích lũy của Dyna-Q+ giảm. Phần thưởng tích lũy không bao giờ giảm, chỉ độ dốc của nó nhỏ hơn.
 :::
 
 ## Mức tính toán hoặc chứng minh
@@ -157,9 +157,9 @@ $$\sqrt{\frac{1-\sum_i\hat p_i^2}{(b-1)/b}}\le1;$$
 
 **Kiểm tra lại.** Với $\hat p$ đều, câu (a) cho lại (2.5); với $b=1$, $\sum_i\hat p_i^2=1$ và sai số bằng $0$, vì chỉ có một trạng thái kế. Ba lỗi thường gặp:
 
-- dùng (2.5) cho phân phối lệch, được $0{,}9950$ sau một cập nhật thay cho $0{,}4358$, rồi kết luận độ lệch của phân phối không ảnh hưởng;
-- coi $y_i$ và $\bar y$ độc lập khi tính $\mathbb E(y_i-\bar y)^2$, được $1+\sum_j\hat p_j^2$ và $\mathbb E\sigma^2=1{,}810101$ ở câu (b), lớn hơn cả trường hợp phân phối đều;
-- tính chi phí của cập nhật kỳ vọng bằng số trạng thái có xác suất lớn, chẳng hạn $1$ ở câu (b); cập nhật kỳ vọng (2.3) lấy tổng trên mọi trạng thái kế có $\hat p>0$, nên vẫn tốn $100$ lần đánh giá.
+- Dùng (2.5) cho phân phối lệch, được $0{,}9950$ sau một cập nhật thay cho $0{,}4358$, rồi kết luận độ lệch của phân phối không ảnh hưởng.
+- Coi $y_i$ và $\bar y$ độc lập khi tính $\mathbb E(y_i-\bar y)^2$, được $1+\sum_j\hat p_j^2$ và $\mathbb E\sigma^2=1{,}810101$ ở câu (b), lớn hơn cả trường hợp phân phối đều.
+- Tính chi phí của cập nhật kỳ vọng bằng số trạng thái có xác suất lớn, chẳng hạn $1$ ở câu (b). Cập nhật kỳ vọng (2.3) lấy tổng trên mọi trạng thái kế có $\hat p>0$, nên vẫn tốn $100$ lần đánh giá.
 :::
 
 ### Bài tập 11.15. Tùy chọn trong thiết lập phần thưởng trung bình
@@ -218,9 +218,9 @@ $$\begin{aligned}v_\pi(s)&=\sum_a\pi(a\mid s)\\&\quad\times\sum_{s',r}p(s',r\mid
 
 **Kiểm tra lại.** Vì $\sum_{s'}p(s'\mid s,\omega)=1$, cộng cùng một hằng $d$ vào mọi $v_\mu(s')$ làm vế phải tăng đúng $d$; nghĩa là $v_\mu+d$ cũng thỏa phương trình, như phương trình Bellman vi phân của sách. Ba lỗi thường gặp:
 
-- trừ $g(\mu)$ một lần cho cả tùy chọn, $r(s,\omega)=\mathbb E[\sum_{k=1}^{\tau}R_k]-g(\mu)$; ở ví dụ trên, hai tùy chọn cùng có $r=0{,}5$ thay cho $0{,}5$ và $-4$;
-- dùng (5.1) với $\gamma=1$, tức không trừ $g(\mu)$; trong nhiệm vụ liên tục với $g(\mu)\ne0$, tổng phần thưởng của $t$ bước đầu tăng cỡ $g(\mu)\,t$, nên giá trị không xác định;
-- trừ tốc độ phần thưởng $g_\omega$ của chính sách bên trong $\pi_\omega$ thay cho $g(\mu)$; khi đó $r(s,\omega)$ lệch $\bigl(g(\mu)-g_\omega\bigr)\mathbb E_{s,\omega}\tau$ so với câu (a), khác nhau giữa các tùy chọn, và $v_\mu$ không còn thỏa phương trình; lợi tức vi phân được định nghĩa so với tốc độ của chính sách phân cấp, nên mọi tùy chọn trừ cùng một $g(\mu)$.
+- Trừ $g(\mu)$ một lần cho cả tùy chọn, $r(s,\omega)=\mathbb E[\sum_{k=1}^{\tau}R_k]-g(\mu)$. Với ví dụ trên, hai tùy chọn khi đó cùng có $r=0{,}5$ thay cho $0{,}5$ và $-4$.
+- Dùng (5.1) với $\gamma=1$, tức không trừ $g(\mu)$. Trong nhiệm vụ liên tục với $g(\mu)\ne0$, tổng phần thưởng của $t$ bước đầu tăng cỡ $g(\mu)\,t$, nên giá trị không xác định.
+- Trừ tốc độ phần thưởng $g_\omega$ của chính sách bên trong $\pi_\omega$ thay cho $g(\mu)$. Khi đó $r(s,\omega)$ lệch $\bigl(g(\mu)-g_\omega\bigr)\mathbb E_{s,\omega}\tau$ so với câu (a), khác nhau giữa các tùy chọn, và $v_\mu$ không còn thỏa phương trình. Lợi tức vi phân được định nghĩa so với tốc độ của chính sách phân cấp, nên mọi tùy chọn trừ cùng một $g(\mu)$.
 :::
 
 ## Mức vận dụng vào bài toán Học tăng cường
@@ -261,9 +261,9 @@ Kết luận phụ thuộc đơn vị so sánh. Dyna-Q với $n=50$ làm $51$ c�
 
 **Kiểm tra lại.** Với $k=1$, câu (a) cho lại Hình 8.3 của sách: chỉ cặp cuối được học sau lượt thứ nhất. Ba lỗi thường gặp:
 
-- cho rằng Monte Carlo ($k\ge T$) cho đường ngắn nhất sau một lượt; giá trị khi đó phụ thuộc thời điểm tác tử đi qua cặp trên quỹ đạo $1\,700$ bước, nên chính sách tham lam lặp lại các đường vòng đã đi;
-- quên rằng phương pháp $k$ bước chỉ cập nhật cặp trên quỹ đạo thật, rồi kết luận nó lan giá trị khắp mê cung như bước (f) của Dyna-Q;
-- so hai phương pháp mà không nêu đơn vị: "Dyna-Q cần ít lượt hơn" đúng theo số bước thật, nhưng mỗi bước thật của Dyna-Q tốn $51$ cập nhật.
+- Cho rằng Monte Carlo ($k\ge T$) cho đường ngắn nhất sau một lượt. Giá trị khi đó phụ thuộc thời điểm tác tử đi qua cặp trên quỹ đạo $1\,700$ bước, nên chính sách tham lam lặp lại các đường vòng đã đi.
+- Quên rằng phương pháp $k$ bước chỉ cập nhật cặp trên quỹ đạo thật, rồi kết luận nó lan giá trị khắp mê cung như bước (f) của Dyna-Q.
+- So hai phương pháp mà không nêu đơn vị. "Dyna-Q cần ít lượt hơn" đúng theo số bước thật, nhưng mỗi bước thật của Dyna-Q tốn $51$ cập nhật.
 :::
 
 ### Bài tập 11.17. Dyna-Q cho môi trường ngẫu nhiên và môi trường thay đổi
@@ -285,7 +285,7 @@ Kết luận phụ thuộc đơn vị so sánh. Dyna-Q với $n=50$ làm $51$ c�
 :::
 
 ::: solution Lời giải Bài tập 11.17
-**Câu (a).** Thay mô hình ghi đè bằng mô hình đếm (count-based model, Định nghĩa 11.4), như đoạn "Trong thực hành" sau Thuật toán 11.10. Ở bước (e), tăng $C(S,A)$ và $C(S,A,S')$ thêm $1$ và cộng $R$ vào tổng phần thưởng của cặp. Ở bước (f), rút $\tilde S'$ theo $\hat p(\cdot\mid\tilde S,\tilde A)$, dùng $\tilde R=\hat r(\tilde S,\tilde A)$, rồi làm cập nhật mẫu (2.4); mục tiêu kỳ vọng không đổi, vì cập nhật tuyến tính theo $\tilde R$; hoặc làm cập nhật kỳ vọng (2.3) trên $\hat p$, tốn $b$ lần đánh giá với $b$ là số trạng thái kế đã thấy. Khi môi trường dừng và số lần thử cố định, $\hat p$ không chệch và có độ lệch chuẩn $\sqrt{p(1-p)/C(s,a)}$ (Mệnh đề 11.5).
+**Câu (a).** Thay mô hình ghi đè bằng mô hình đếm (count-based model, Định nghĩa 11.4), như đoạn "Trong thực hành" sau Thuật toán 11.10. Ở bước (e), tăng $C(S,A)$ và $C(S,A,S')$ thêm $1$ và cộng $R$ vào tổng phần thưởng của cặp. Ở bước (f), rút $\tilde S'$ theo $\hat p(\cdot\mid\tilde S,\tilde A)$, dùng $\tilde R=\hat r(\tilde S,\tilde A)$, rồi làm cập nhật mẫu (2.4). Mục tiêu kỳ vọng không đổi, vì cập nhật tuyến tính theo $\tilde R$. Cách khác là làm cập nhật kỳ vọng (2.3) trên $\hat p$, tốn $b$ lần đánh giá với $b$ là số trạng thái kế đã thấy. Khi môi trường dừng và số lần thử cố định, $\hat p$ không chệch và có độ lệch chuẩn $\sqrt{p(1-p)/C(s,a)}$ (Mệnh đề 11.5).
 
 **Câu (b).** Mô hình đếm gộp mọi lần thử từ đầu, nên giả thiết "cùng phân phối" của Mệnh đề 11.5 bị vi phạm khi môi trường đổi, và $\hat p$ trộn xác suất cũ với xác suất mới. Hai cách hỏng:
 
@@ -304,13 +304,13 @@ khi số lần thử tăng, nên độ lệch chuẩn không giảm về $0$ nh�
 
 *Thưởng thăm dò.* Bộ đếm có quên chỉ sửa được cặp mà tác tử còn thử. Để phát hiện lối tắt, thêm thưởng $\kappa\sqrt{\ell(s,a)}$ vào phần thưởng mô phỏng ở bước (f) như Dyna-Q+ (Định nghĩa 11.12), để các cặp lâu chưa thử được thử lại.
 
-Tham số $\phi$ (hoặc $M$) cân bằng hai loại sai: quên chậm thì sai vì dữ liệu cũ, quên nhanh thì sai vì ít dữ liệu; $\kappa$ cân bằng chi phí thăm dò với tốc độ phát hiện thay đổi (Bài tập 11.13).
+Tham số $\phi$ (hoặc $M$) cân bằng hai loại sai: quên chậm thì sai vì dữ liệu cũ, quên nhanh thì sai vì ít dữ liệu. Tham số $\kappa$ cân bằng chi phí thăm dò với tốc độ phát hiện thay đổi (Bài tập 11.13).
 
 **Kiểm tra lại.** Khi $\phi\to1$, $\phi^j(1-\phi^{20})/(1-\phi^{j+20})\to20/(20+j)$, đúng công thức của câu (b). Ba lỗi thường gặp:
 
-- giữ bước (e) ghi đè trong môi trường ngẫu nhiên; mô hình khi đó coi kết cục gần nhất là chắc chắn, chẳng hạn sau một lần trượt tại cặp có xác suất đi đúng $0{,}8$, mô hình ghi ở yên với xác suất $1$;
-- bỏ hẳn dữ liệu cũ, tức chỉ giữ lần thử gần nhất; đó lại là mô hình ghi đè, với $\hat p\in\{0,1\}$ và độ lệch chuẩn $\sqrt{p(1-p)}=0{,}4$ khi $p=0{,}8$ (Mệnh đề 11.5 với $C=1$);
-- cho rằng bộ đếm có quên đủ cho môi trường thay đổi; nó sửa nhanh hơn các sai lạc quan nhưng không sửa sai bi quan ở cặp không được thử lại, nên vẫn cần thưởng thăm dò.
+- Giữ bước (e) ghi đè trong môi trường ngẫu nhiên. Mô hình khi đó coi kết cục gần nhất là chắc chắn: sau một lần trượt tại cặp có xác suất đi đúng $0{,}8$, mô hình ghi ở yên với xác suất $1$.
+- Bỏ hẳn dữ liệu cũ, tức chỉ giữ lần thử gần nhất. Đó lại là mô hình ghi đè, với $\hat p\in\{0,1\}$ và độ lệch chuẩn $\sqrt{p(1-p)}=0{,}4$ khi $p=0{,}8$ (Mệnh đề 11.5 với $C=1$).
+- Cho rằng bộ đếm có quên đủ cho môi trường thay đổi. Bộ đếm đó sửa nhanh hơn các sai lạc quan nhưng không sửa sai bi quan ở cặp không được thử lại, nên vẫn cần thưởng thăm dò.
 :::
 
 ### Bài tập 11.18. Đỉnh ở bước thứ mười một của quy tắc cận tin cậy trên
@@ -345,15 +345,15 @@ với $Z_1,\dots,Z_{10}$ là các biến chuẩn tắc độc lập và $\mathbb
 - số hạng thăm dò của nó là $c_{\mathrm{ucb}}\sqrt{\ln12/2}$, của hành động khác là $c_{\mathrm{ucb}}\sqrt{\ln12}$; với $\sqrt{\ln12}=\sqrt{2{,}4849}=1{,}5764$, chênh lệch là $c_{\mathrm{ucb}}\sqrt{\ln12}\,(1-1/\sqrt2)$, bằng $0{,}9234$ khi $c_{\mathrm{ucb}}=2$;
 - $A_{11}$ được chọn vì mẫu đầu lớn nhất, nên mẫu đầu đó ước lượng quá cao: $\mathbb E\max_aY_a=\sqrt2\cdot1{,}5388=2{,}1761$, còn mẫu thứ hai có kỳ vọng $\mathbb E\,q_*(A_{11})=1{,}0881$; trung bình hai mẫu có kỳ vọng $1{,}6321$, nhỏ hơn kỳ vọng của mẫu đầu $0{,}5440$.
 
-Vì vậy, ở bước $12$, quy tắc chọn lại $A_{11}$ chỉ với xác suất $0{,}186$, ước lượng bằng mô phỏng $2\cdot10^7$ bài toán với sai số chuẩn $0{,}0001$; với xác suất còn lại, nó chuyển sang một hành động có mẫu đầu nhỏ hơn, có $q_*$ kỳ vọng nhỏ hơn, và phần thưởng trung bình giảm. Ở các bước tiếp theo, các hành động có mẫu đầu lớn lần lượt được chọn lần thứ hai và bị cùng hai hiệu ứng, nên quy tắc tiếp tục thăm dò các hành động kém hơn trong vài bước, trước khi các ước lượng đủ mẫu để hiệu năng tăng dần.
+Vì vậy, ở bước $12$, quy tắc chọn lại $A_{11}$ chỉ với xác suất $0{,}186$, ước lượng bằng mô phỏng $2\cdot10^7$ bài toán với sai số chuẩn $0{,}0001$. Với xác suất còn lại, quy tắc chuyển sang một hành động có mẫu đầu nhỏ hơn, có $q_*$ kỳ vọng nhỏ hơn, và phần thưởng trung bình giảm. Ở các bước tiếp theo, các hành động có mẫu đầu lớn lần lượt được chọn lần thứ hai và bị cùng hai hiệu ứng, nên quy tắc tiếp tục thăm dò các hành động kém hơn trong vài bước, trước khi các ước lượng đủ mẫu để hiệu năng tăng dần.
 
 **Câu (c).** Lựa chọn ở bước $11$ không phụ thuộc $c_{\mathrm{ucb}}$, nên chiều cao của đỉnh giữ nguyên. Với $c_{\mathrm{ucb}}=1$, chênh lệch số hạng thăm dò ở bước $12$ chỉ còn $0{,}4617$, nên hành động $A_{11}$ được chọn lại ở bước $12$ với xác suất $0{,}360$ (cùng mô phỏng), gần gấp đôi so với $c_{\mathrm{ucb}}=2$, và hiệu năng sau bước $11$ giảm ít. Đỉnh kém rõ vì phần sau nó không tụt sâu.
 
 **Kiểm tra lại.** Một mô phỏng $200\,000$ bài toán (bộ sinh `numpy.random.default_rng(0)`; sai số chuẩn khoảng $0{,}003$ mỗi điểm) cho phần thưởng trung bình $1{,}092$ ở bước $11$, gần giá trị $1{,}0881$ ở câu (a); ở bước $12$ là $0{,}927$ khi $c_{\mathrm{ucb}}=2$ và $1{,}044$ khi $c_{\mathrm{ucb}}=1$; với $c_{\mathrm{ucb}}=2$, giá trị nhỏ nhất sau đỉnh là $0{,}801$ ở bước $16$. Xác suất chọn lại $A_{11}$ ở bước $12$ là $0{,}186$ khi $c_{\mathrm{ucb}}=2$ và $0{,}360$ khi $c_{\mathrm{ucb}}=1$ ($20$ khối $10^6$ bài toán, `default_rng(0)` tới `default_rng(19)`). Ba lỗi thường gặp:
 
-- dùng $\ln11$ ở bước $12$, được chênh lệch $0{,}9071$ thay cho $0{,}9234$; theo (3.2), $t$ là chỉ số của bước đang chọn và $N(a)$ đếm các lần chọn trước bước đó;
-- cho rằng ở bước $11$ quy tắc chọn đúng hành động tốt nhất; theo mô phỏng trên, xác suất đó chỉ khoảng $0{,}43$, và phần thưởng kỳ vọng $1{,}0881$ thấp hơn $1{,}5388$;
-- cho rằng $c_{\mathrm{ucb}}$ đổi lựa chọn ở bước $11$; khi mọi $N(a)$ bằng nhau, số hạng thăm dò như nhau với mọi $c_{\mathrm{ucb}}$.
+- Dùng $\ln11$ ở bước $12$, được chênh lệch $0{,}9071$ thay cho $0{,}9234$. Theo (3.2), $t$ là chỉ số của bước đang chọn và $N(a)$ đếm các lần chọn trước bước đó.
+- Cho rằng ở bước $11$ quy tắc chọn đúng hành động tốt nhất. Theo mô phỏng trên, xác suất đó chỉ khoảng $0{,}43$, và phần thưởng kỳ vọng $1{,}0881$ thấp hơn $1{,}5388$.
+- Cho rằng $c_{\mathrm{ucb}}$ đổi lựa chọn ở bước $11$. Khi mọi $N(a)$ bằng nhau, số hạng thăm dò như nhau với mọi $c_{\mathrm{ucb}}$.
 :::
 
 ### Bài tập 11.19. Thưởng thăm dò chỉ dùng khi chọn hành động [Lập trình]
@@ -462,7 +462,7 @@ Với $\kappa=10^{-4}$, cả (B) lẫn (C) đều không chuyển sang lối t�
 
 *Lặp lại với hạt giống $30,\dots,59$, $\kappa=10^{-3}$.* Các kết luận trên giữ nguyên: ở mê cung lối tắt, (C) đi lối tắt ở $0$ trên $30$ lần chạy với cả hai $\alpha$, (B) ở $27$ ($\alpha=0{,}1$) và $28$ ($\alpha=1$); trong pha thứ hai, (B) hơn (C) $36{,}0\pm2{,}3$ và $47{,}9\pm1{,}9$ lần; tới bước $3\,000$, (C) hơn (A) $23{,}6\pm5{,}2$ và $31{,}8\pm5{,}1$ lần. Ở mê cung bị chặn, trong pha thứ hai (B) hơn (C) $41{,}2\pm5{,}2$ ($\alpha=0{,}1$) và $11{,}0\pm2{,}4$ ($\alpha=1$) lần.
 
-**Câu (c).** *Việc đưa thưởng vào cập nhật có cần thiết không.* Với thí nghiệm này, có, nếu mục đích là phát hiện thay đổi ở một cặp cách xa đường đang đi, như lối tắt: với $\kappa=10^{-3}$, Dyna-Q+ chuyển sang lối tắt ở $24$ tới $28$ trên $30$ lần chạy, (C) ở $0$, Dyna-Q ở nhiều nhất $1$. Thưởng trong cập nhật lan qua các cập nhật lập kế hoạch, nên giá trị của một chuyến đi thử nhiều bước tới cặp lâu chưa thử được cộng vào $Q$ của các trạng thái trên đường tới đó, và tác tử lập kế hoạch đi tới cặp đó. Thưởng chỉ dùng khi chọn hành động tác động một bước, tại trạng thái hiện tại: tác tử chỉ thử những cặp lâu chưa thử ở các trạng thái nó đang đi qua. Lối tắt chỉ được ghi vào mô hình khi tác tử thử $\uparrow$ tại $(5,9)$, một ô không nằm trên đường $16$ bước nào (đường ngắn nhất qua $(5,9)$ trong pha thứ nhất dài $26$ bước); thưởng chỉ dùng khi chọn hành động không kéo tác tử tới ô đó, nên (C) không tìm ra lối tắt.
+**Câu (c).** *Việc đưa thưởng vào cập nhật có cần thiết không.* Với thí nghiệm này, có, nếu mục đích là phát hiện thay đổi ở một cặp cách xa đường đang đi, như lối tắt: với $\kappa=10^{-3}$, Dyna-Q+ chuyển sang lối tắt ở $24$ tới $28$ trên $30$ lần chạy, (C) ở $0$, Dyna-Q ở nhiều nhất $1$. Thưởng trong cập nhật lan qua các cập nhật lập kế hoạch, nên giá trị của một chuyến đi thử nhiều bước tới cặp lâu chưa thử được cộng vào $Q$ của các trạng thái trên đường tới đó, và tác tử lập kế hoạch đi tới cặp đó. Thưởng chỉ dùng khi chọn hành động tác động một bước, tại trạng thái hiện tại: tác tử chỉ thử những cặp lâu chưa thử ở các trạng thái nó đang đi qua. Lối tắt chỉ được ghi vào mô hình khi tác tử thử $\uparrow$ tại $(5,9)$, một ô không nằm trên đường $16$ bước nào (đường ngắn nhất qua $(5,9)$ trong pha thứ nhất dài $26$ bước). Thưởng chỉ dùng khi chọn hành động không kéo tác tử tới ô đó, nên (C) không tìm ra lối tắt.
 
 *Điểm mạnh của (C).*
 
@@ -476,13 +476,13 @@ Với $\kappa=10^{-4}$, cả (B) lẫn (C) đều không chuyển sang lối t�
 - tăng $\kappa$ tới $10^{-2}$ thì (C) tìm ra lối tắt ở $23$ trên $60$ lần chạy (hai giá trị $\alpha$), nhưng mất hơn một nửa số lần tới đích ở pha thứ nhất;
 - không có $\varepsilon$, (C) tới ô $(4,9)$ còn ít hơn Dyna-Q ($4$ so với $9$ và $6$ trên $30$ lần chạy), vì thăm dò của nó chỉ đi theo $\ell$ của các cặp quanh đường đang đi.
 
-Các kết luận này thuộc hai mê cung $6\times9$ tất định, $n=50$, $\alpha\in\{0{,}1;\,1\}$, $\kappa\in\{10^{-4};\,10^{-3};\,10^{-2}\}$ và $6\,000$ hoặc $3\,000$ bước. Phần thưởng tích lũy cuối thí nghiệm xếp (C) trên (B) khi $\alpha=0{,}1$ vì thí nghiệm dừng ở bước $6\,000$; tốc độ tới đích ở $1\,000$ bước cuối cho thấy (B) đã chuyển sang đường tốt hơn.
+Các kết luận này thuộc hai mê cung $6\times9$ tất định, $n=50$, $\alpha\in\{0{,}1;\,1\}$, $\kappa\in\{10^{-4};\,10^{-3};\,10^{-2}\}$ và $6\,000$ hoặc $3\,000$ bước. Phần thưởng tích lũy cuối thí nghiệm xếp (C) trên (B) khi $\alpha=0{,}1$ vì thí nghiệm dừng ở bước $6\,000$. Tốc độ tới đích ở $1\,000$ bước cuối cho thấy (B) đã chuyển sang đường tốt hơn.
 
 **Kiểm tra lại.** Các phép tính tay ở câu (a) là phép kiểm: mã đúng cho thưởng $0{,}2$ và giá trị mới $0{,}64$ ở Ví dụ 11.9, và chỉ số $0{,}3022$, $0{,}3$, $0{,}12$, $0{,}15$ của (C). Ba lỗi thường gặp:
 
-- cộng thưởng cả vào mục tiêu của bước (f); tác tử khi đó là Dyna-Q+ chọn hành động theo $Q+\kappa\sqrt{\ell}$, và mọi khác biệt với (B) không còn đo được tác dụng của việc bỏ thưởng khỏi cập nhật;
-- tăng $\ell$ cả ở các cập nhật lập kế hoạch; $\ell$ đếm bước thật, nên với $n=50$, $\ell$ khi đó tăng nhanh gấp $51$ lần và thưởng lớn gấp $\sqrt{51}\approx7{,}1$ lần;
-- chỉ so phần thưởng tích lũy ở bước $6\,000$; với $\alpha=0{,}1$, (C) đứng đầu ($329{,}1$ so với $308{,}0$ của (B)) dù không lần chạy nào của nó đi lối tắt.
+- Cộng thưởng cả vào mục tiêu của bước (f). Tác tử khi đó là Dyna-Q+ chọn hành động theo $Q+\kappa\sqrt{\ell}$, và mọi khác biệt với (B) không còn đo được tác dụng của việc bỏ thưởng khỏi cập nhật.
+- Tăng $\ell$ cả ở các cập nhật lập kế hoạch. Vì $\ell$ đếm bước thật, với $n=50$, $\ell$ khi đó tăng nhanh gấp $51$ lần và thưởng lớn gấp $\sqrt{51}\approx7{,}1$ lần.
+- Chỉ so phần thưởng tích lũy ở bước $6\,000$. Với $\alpha=0{,}1$, (C) đứng đầu ($329{,}1$ so với $308{,}0$ của (B)) dù không lần chạy nào của nó đi lối tắt.
 :::
 
 ## Tài liệu tham khảo
