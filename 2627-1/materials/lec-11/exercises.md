@@ -13,7 +13,7 @@ Tệp gồm tám bài, Bài tập 11.12–11.19, đánh số tiếp theo mười
 
 ## Hướng dẫn và ký hiệu
 
-Ký hiệu, giả thiết và số hiệu theo ghi chú bài giảng Bài 11; công thức của sách được ghi rõ "của sách". Thời gian rời rạc $t=0,1,\dots$; tại bước $t$, trạng thái $S_t$, hành động $A_t$, phần thưởng $R_{t+1}$ của chuyển từ $t$ sang $t+1$; $\gamma$ là hệ số chiết khấu. $Q$ là bảng giá trị hành động đang học hoặc đang lập kế hoạch, $\alpha$ là bước học, $\varepsilon$ là tham số của chính sách $\varepsilon$-tham lam, $n$ là số cập nhật lập kế hoạch sau mỗi bước thật. Dyna-Q là Thuật toán 11.10. Dyna-Q+ là Định nghĩa 11.12, với hệ số thưởng thăm dò (exploration bonus) $\kappa>0$ và $\ell(s,a)$ là số bước thật kể từ lần thử thật gần nhất của $(s,a)$.
+Ký hiệu, giả thiết và số hiệu theo ghi chú bài giảng Bài 11; công thức của sách được ghi rõ "của sách". Thời gian rời rạc $t=0,1,\dots$; tại bước $t$, trạng thái $S_t$, hành động $A_t$, phần thưởng $R_{t+1}$ của chuyển từ $t$ sang $t+1$; $\gamma$ là hệ số chiết khấu. $Q$ là bảng giá trị hành động đang học hoặc đang lập kế hoạch, $\alpha$ là bước học, $\varepsilon$ là tham số của chính sách $\varepsilon$-tham lam, $n$ là số cập nhật lập kế hoạch sau mỗi bước thật. Dyna-Q là Thuật toán 11.8. Dyna-Q+ là Định nghĩa 11.11, với hệ số thưởng thăm dò (exploration bonus) $\kappa>0$ và $\ell(s,a)$ là số bước thật kể từ lần thử thật gần nhất của $(s,a)$.
 
 Ký hiệu của sách khác ghi chú ở các điểm sau:
 
@@ -43,7 +43,7 @@ Số thập phân viết bằng dấu phẩy, chẳng hạn $0{,}95$; số trong
 **Nguồn:** Sutton và Barto (2018), Bài tập 8.2, §8.3, trang 168; Ví dụ 8.2, 8.3 và Hình 8.4, 8.5, trang 166–167; chú thích 1, trang 168.
 
 ::: exercise Bài tập 11.12 (Dyna-Q+ ở hai pha của thí nghiệm)
-Hai thí nghiệm so Dyna-Q (Thuật toán 11.10) với Dyna-Q+ (Định nghĩa 11.12) trên lưới $6\times9$ với bốn hành động tất định, $\mathrm S=(6,4)$, $\mathrm G=(1,9)$, phần thưởng $+1$ khi vào $\mathrm G$ rồi trở về $\mathrm S$, tường nằm trên hàng $4$:
+Hai thí nghiệm so Dyna-Q (Thuật toán 11.8) với Dyna-Q+ (Định nghĩa 11.11) trên lưới $6\times9$ với bốn hành động tất định, $\mathrm S=(6,4)$, $\mathrm G=(1,9)$, phần thưởng $+1$ khi vào $\mathrm G$ rồi trở về $\mathrm S$, tường nằm trên hàng $4$:
 
 - mê cung bị chặn: trong $1\,000$ bước đầu, lối qua tường ở cột $9$ (đường ngắn nhất $10$ bước); từ bước $1\,001$, lối đó bị chặn và lối mới mở ở cột $1$ (đường ngắn nhất $16$ bước);
 - mê cung lối tắt: trong $3\,000$ bước đầu, lối qua duy nhất ở cột $1$ (đường ngắn nhất $16$ bước); từ bước $3\,001$, cột $9$ mở thêm (đường ngắn nhất $10$ bước), lối cũ vẫn mở.
@@ -55,7 +55,7 @@ Dyna-Q+ khác Dyna-Q ở bốn điểm: sau mỗi bước thật $(S,A)$, $\ell(
 :::
 
 ::: hint Gợi ý Bài tập 11.12
-Ở câu (a), xét lượt đầu tiên, khi $Q\equiv0$: Dyna-Q chọn hành động thế nào, và bước (f) của Dyna-Q+ làm gì với cặp chưa thử. Ở câu (b), xác định trong mỗi thí nghiệm mô hình cũ sai theo hướng lạc quan hay bi quan (Ví dụ 11.8).
+Ở câu (a), xét lượt đầu tiên, khi $Q\equiv0$: Dyna-Q chọn hành động thế nào, và bước (f) của Dyna-Q+ làm gì với cặp chưa thử. Ở câu (b), xác định trong mỗi thí nghiệm mô hình cũ sai theo hướng lạc quan hay bi quan (Ví dụ 11.7).
 :::
 
 ::: solution Lời giải Bài tập 11.12
@@ -63,16 +63,16 @@ Dyna-Q+ khác Dyna-Q ở bốn điểm: sau mỗi bước thật $(S,A)$, $\ell(
 
 Với Dyna-Q+, bước (f) cập nhật cả hành động chưa thử với mô hình "ở yên, thưởng $0$" và thưởng $\kappa\sqrt{\ell}$. Cặp chưa thử có $\ell$ bằng số bước thật đã trôi qua, lớn nhất trong bảng, còn cặp vừa thử có $\ell=0$. Mục tiêu lập kế hoạch của cặp chưa thử là $\kappa\sqrt{\ell}+\gamma\max_{a'}Q(s,a')>0$, nên các hành động chưa thử được ưu tiên, vì $\ell$ của chúng lớn nhất. Các cập nhật lập kế hoạch còn lan giá trị này qua mô hình về các trạng thái dẫn tới vùng có nhiều cặp chưa thử. Chính sách tham lam theo $Q$ vì vậy đưa tác tử tới các cặp chưa thử một cách có hệ thống, thay cho việc đi ngẫu nhiên. Khi tác tử thăm dò như vậy, mô hình phủ mê cung sau ít bước thật hơn, và các cập nhật lập kế hoạch tìm ra đường ngắn nhất ($10$ bước ở mê cung bị chặn, $16$ bước ở mê cung lối tắt) sớm hơn. Cơ chế này giải thích kết quả trong thí nghiệm của Sutton và Barto: đường phần thưởng tích lũy của Dyna-Q+ nằm trên đường Dyna-Q ngay từ pha thứ nhất, như mô tả Hình 8.4.
 
-**Câu (b).** *Mê cung bị chặn.* Sau bước $1\,000$, mô hình cũ ghi $(5,9)$ với $\uparrow$ dẫn tới $(4,9)$: mô hình lạc quan. Chính sách tham lam đi tới $(5,9)$, chọn $\uparrow$ và ở yên. Bước (e) sửa mô hình, các cập nhật lập kế hoạch hạ giá trị của đường cũ. Cả hai tác tử tự sửa loại sai này (Ví dụ 11.8, "mô hình quá lạc quan"). Đoạn nằm ngang trên Hình 8.4 là lúc chúng đi quanh sau tường.
+**Câu (b).** *Mê cung bị chặn.* Sau bước $1\,000$, mô hình cũ ghi $(5,9)$ với $\uparrow$ dẫn tới $(4,9)$: mô hình lạc quan. Chính sách tham lam đi tới $(5,9)$, chọn $\uparrow$ và ở yên. Bước (e) sửa mô hình, các cập nhật lập kế hoạch hạ giá trị của đường cũ. Cả hai tác tử tự sửa loại sai này (Ví dụ 11.7, "mô hình quá lạc quan"). Đoạn nằm ngang trên Hình 8.4 là lúc chúng đi quanh sau tường.
 
 Với lối mới ở cột $1$, mô hình cũ sai theo hướng bi quan: cặp $(5,1)$ với $\uparrow$ hoặc chưa có trong mô hình, hoặc được ghi là ở yên, vì $(4,1)$ là tường trong pha thứ nhất. Dyna-Q chỉ sửa ô này của mô hình khi thăm dò $\varepsilon$-tham lam tình cờ đưa nó tới $(5,1)$ và chọn $\uparrow$. Với Dyna-Q+, cặp này lâu không được thử nên $\ell$ lớn, và thưởng $\kappa\sqrt{\ell}$ nâng giá trị lập kế hoạch của các đường dẫn tới nó; tác tử chủ động tới thử, phát hiện lối mới và lập kế hoạch đường $16$ bước sớm hơn.
 
-*Mê cung lối tắt.* Sau bước $3\,000$, đường cũ vẫn đi được, nên chính sách tham lam không gặp thất bại nào để sửa mô hình. Các cặp dẫn vào $(4,9)$, như $(5,9)$ với $\uparrow$ và $(3,9)$ với $\downarrow$, được mô hình ghi là ở yên: mô hình bi quan. Theo Ví dụ 11.9, các cập nhật lập kế hoạch của Dyna-Q không đổi giá trị của cặp bi quan, và muốn tới thử nó, $\varepsilon$-tham lam phải chọn nhiều hành động thăm dò liên tiếp; Dyna-Q không chuyển sang lối tắt. Với Dyna-Q+, $\ell$ của các cặp đó tăng theo thời gian, nên $\kappa\sqrt{\ell}$ tăng tới khi giá trị lập kế hoạch của chuyến đi thử vượt giá trị của đường cũ; tác tử đi thử, bước (e) ghi lối mở, và bước (f) lập kế hoạch đường $10$ bước (Nhận xét 11.13).
+*Mê cung lối tắt.* Sau bước $3\,000$, đường cũ vẫn đi được, nên chính sách tham lam không gặp thất bại nào để sửa mô hình. Các cặp dẫn vào $(4,9)$, như $(5,9)$ với $\uparrow$ và $(3,9)$ với $\downarrow$, được mô hình ghi là ở yên: mô hình bi quan. Theo Ví dụ 11.8, các cập nhật lập kế hoạch của Dyna-Q không đổi giá trị của cặp bi quan, và muốn tới thử nó, $\varepsilon$-tham lam phải chọn nhiều hành động thăm dò liên tiếp; Dyna-Q không chuyển sang lối tắt. Với Dyna-Q+, $\ell$ của các cặp đó tăng theo thời gian, nên $\kappa\sqrt{\ell}$ tăng tới khi giá trị lập kế hoạch của chuyến đi thử vượt giá trị của đường cũ; tác tử đi thử, bước (e) ghi lối mở, và bước (f) lập kế hoạch đường $10$ bước (Nhận xét 11.12).
 
 **Kiểm tra lại.** Ba lỗi thường gặp:
 
 - Chỉ giải thích pha thứ hai bằng việc thưởng giúp phát hiện thay đổi. Theo lời giải thích đó, hai tác tử như nhau trước khi mê cung đổi, trái với việc đường Dyna-Q+ nằm trên ở pha thứ nhất.
-- Cho rằng thưởng làm bảng $Q$ của Dyna-Q+ chính xác hơn. Theo Nhận xét 11.13, bảng đó lệch khỏi $\hat q_*$ của mô hình, và lợi thế đến từ hành vi thăm dò.
+- Cho rằng thưởng làm bảng $Q$ của Dyna-Q+ chính xác hơn. Theo Nhận xét 11.12, bảng đó lệch khỏi $\hat q_*$ của mô hình, và lợi thế đến từ hành vi thăm dò.
 - Coi lợi thế ở pha thứ nhất là tính chất chung của Dyna-Q+. Lợi thế đó phụ thuộc tham số, gồm $\kappa$ và bước học $\alpha$. Với $\kappa$ quá lớn, hoặc khi giá trị từ $\mathrm G$ lan chậm vì $\alpha$ nhỏ, thưởng của các cặp lâu chưa thử lấn át giá trị của đường tới đích, và Dyna-Q+ có thể tới đích ít hơn Dyna-Q trước khi môi trường đổi.
 :::
 
@@ -83,7 +83,7 @@ Với lối mới ở cột $1$, mô hình cũ sai theo hướng bi quan: cặp 
 **Nguồn:** Sutton và Barto (2018), Bài tập 8.3, §8.3, trang 168; Ví dụ 8.3 và Hình 8.5, trang 167.
 
 ::: exercise Bài tập 11.13 (Khoảng cách giữa Dyna-Q+ và Dyna-Q trước khi có lối tắt)
-Trên mê cung lối tắt (lưới $6\times9$, $\mathrm S=(6,4)$, $\mathrm G=(1,9)$, phần thưởng $+1$ khi vào $\mathrm G$ rồi trở về $\mathrm S$; trong $3\,000$ bước đầu lối qua tường duy nhất ở $(4,1)$, đường ngắn nhất $16$ bước; từ bước $3\,001$, ô $(4,9)$ mở thêm), Dyna-Q (Thuật toán 11.10) và Dyna-Q+ (Định nghĩa 11.12) được chạy $6\,000$ bước thật. Trên đồ thị phần thưởng tích lũy trung bình, trong $3\,000$ bước đầu đường Dyna-Q+ nằm trên đường Dyna-Q, nhưng khoảng cách giữa hai đường hẹp lại một chút.
+Trên mê cung lối tắt (lưới $6\times9$, $\mathrm S=(6,4)$, $\mathrm G=(1,9)$, phần thưởng $+1$ khi vào $\mathrm G$ rồi trở về $\mathrm S$; trong $3\,000$ bước đầu lối qua tường duy nhất ở $(4,1)$, đường ngắn nhất $16$ bước; từ bước $3\,001$, ô $(4,9)$ mở thêm), Dyna-Q (Thuật toán 11.8) và Dyna-Q+ (Định nghĩa 11.11) được chạy $6\,000$ bước thật. Trên đồ thị phần thưởng tích lũy trung bình, trong $3\,000$ bước đầu đường Dyna-Q+ nằm trên đường Dyna-Q, nhưng khoảng cách giữa hai đường hẹp lại một chút.
 
 Giải thích vì sao khoảng cách đó hẹp lại trong pha thứ nhất, khi môi trường chưa đổi.
 :::
@@ -171,9 +171,9 @@ $$\sqrt{\frac{1-\sum_i\hat p_i^2}{(b-1)/b}}\le1;$$
 ::: exercise Bài tập 11.15 (Tùy chọn trong thiết lập phần thưởng trung bình)
 Viết $\mathbb E_{s,\omega}$, $\Pr_{s,\omega}$ cho kỳ vọng và xác suất khi $S_0=s$ và tùy chọn đầu tiên là $\omega$. Trong thiết lập chiết khấu, mô hình của tùy chọn $\omega$ kết thúc với xác suất $1$ tại thời điểm $\tau$ là (5.1):
 $$\begin{aligned}&r(s,\omega)\\&\ =\mathbb E_{s,\omega}\Bigl[\sum_{k=1}^{\tau}\gamma^{k-1}R_k\Bigr],\\&p(s'\mid s,\omega)\\&\ =\sum_{k\ge1}\gamma^k\Pr_{s,\omega}\{S_k=s',\tau=k\},\end{aligned}$$
-và giá trị của chính sách phân cấp $\mu$ thỏa (5.2): $v_\mu(s)=\sum_{\omega}\mu(\omega\mid s)\bigl[r(s,\omega)+\sum_{s'}p(s'\mid s,\omega)v_\mu(s')\bigr]$ (Định lý 11.42).
+và giá trị của chính sách phân cấp $\mu$ thỏa (5.2): $v_\mu(s)=\sum_{\omega}\mu(\omega\mid s)\bigl[r(s,\omega)+\sum_{s'}p(s'\mid s,\omega)v_\mu(s')\bigr]$ (Định lý 11.44).
 
-Thiết lập phần thưởng trung bình (average-reward setting) xét nhiệm vụ liên tục (continuing task) trên một quá trình quyết định Markov (Markov decision process, MDP) hữu hạn, không có trạng thái kết thúc, không chiết khấu. Mỗi tùy chọn có chính sách Markov dừng, hàm kết thúc chỉ phụ thuộc trạng thái, và từ mọi trạng thái của tập khởi đầu kết thúc với xác suất $1$, với $\mathbb E\tau<\infty$. Chính sách phân cấp $\mu$ chọn tùy chọn theo trạng thái tại mỗi thời điểm chọn và chạy tùy chọn tới khi kết thúc (Định nghĩa 11.39). *Tốc độ phần thưởng* (reward rate, average reward) của $\mu$ là
+Thiết lập phần thưởng trung bình (average-reward setting) xét nhiệm vụ liên tục (continuing task) trên một quá trình quyết định Markov (Markov decision process, MDP) hữu hạn, không có trạng thái kết thúc, không chiết khấu. Mỗi tùy chọn có chính sách Markov dừng, hàm kết thúc chỉ phụ thuộc trạng thái, và từ mọi trạng thái của tập khởi đầu kết thúc với xác suất $1$, với $\mathbb E\tau<\infty$. Chính sách phân cấp $\mu$ chọn tùy chọn theo trạng thái tại mỗi thời điểm chọn và chạy tùy chọn tới khi kết thúc (Định nghĩa 11.41). *Tốc độ phần thưởng* (reward rate, average reward) của $\mu$ là
 $$g(\mu)=\lim_{h\to\infty}\frac1h\sum_{t=1}^h\mathbb E_\mu[R_t\mid S_0];$$
 giả thiết giới hạn này tồn tại và không phụ thuộc $S_0$ (sách viết $r(\pi)$, (10.6)). *Lợi tức vi phân* (differential return) là $G_t=\sum_{k\ge1}\bigl(R_{t+k}-g(\mu)\bigr)$, (10.9) của sách, và *giá trị vi phân* (differential value) là $v_\mu(s)=\mathbb E_\mu[G_0\mid S_0=s]$ khi tùy chọn đầu tiên được chọn tại $S_0=s$; giả thiết mọi kỳ vọng dưới đây xác định và hữu hạn. Khi tùy chọn chỉ gồm hành động một bước và $\mu=\pi$, giá trị vi phân thỏa phương trình Bellman vi phân của sách:
 $$\begin{aligned}v_\pi(s)&=\sum_a\pi(a\mid s)\\&\quad\times\sum_{s',r}p(s',r\mid s,a)\\&\quad\times\bigl[r-g(\pi)+v_\pi(s')\bigr].\end{aligned}$$
@@ -184,17 +184,17 @@ $$\begin{aligned}v_\pi(s)&=\sum_a\pi(a\mid s)\\&\quad\times\sum_{s',r}p(s',r\mid
 :::
 
 ::: hint Gợi ý Bài tập 11.15
-Tách lợi tức vi phân tại thời điểm kết thúc $\tau$ của tùy chọn đầu tiên, như Bước 1 của chứng minh Định lý 11.42; tùy chọn chạy $\tau$ bước gốc, và mỗi bước gốc trừ $g(\mu)$ một lần.
+Tách lợi tức vi phân tại thời điểm kết thúc $\tau$ của tùy chọn đầu tiên, như Bước 1 của chứng minh Định lý 11.44; tùy chọn chạy $\tau$ bước gốc, và mỗi bước gốc trừ $g(\mu)$ một lần.
 :::
 
 ::: solution Lời giải Bài tập 11.15
 **Câu (a).** Trong lợi tức vi phân, mỗi bước gốc đóng góp $R_k-g(\mu)$ và không có chiết khấu. Tùy chọn bắt đầu tại $s$ chạy $\tau$ bước gốc, nên hai phần của mô hình là
 $$\begin{aligned}&r(s,\omega)\\&\ =\mathbb E_{s,\omega}\Bigl[\textstyle\sum_{k=1}^{\tau}\bigl(R_k-g(\mu)\bigr)\Bigr]\\&\ =\mathbb E_{s,\omega}\Bigl[\textstyle\sum_{k=1}^{\tau}R_k\Bigr]\\&\qquad-g(\mu)\,\mathbb E_{s,\omega}\tau,\\&p(s'\mid s,\omega)\\&\ =\textstyle\sum_{k\ge1}\Pr_{s,\omega}\{S_k=s',\tau=k\}\\&\ =\Pr_{s,\omega}\{S_\tau=s'\}.\end{aligned}$$
-Đẳng thức thứ hai của $r$ dùng $\mathbb E\tau<\infty$. Phần $p$ là xác suất thật của trạng thái lúc kết thúc: $\sum_{s'}p(s'\mid s,\omega)=\Pr_{s,\omega}\{\tau<\infty\}=1$, khác Mệnh đề 11.41, nơi tổng bằng $\mathbb E[\gamma^\tau]\le\gamma$. Phần $r$ phụ thuộc $\mu$ qua $g(\mu)$, nên mô hình tùy chọn trong thiết lập này không chỉ phụ thuộc tùy chọn. Tương đương, có thể giữ ba đại lượng $\mathbb E[\sum_{k=1}^{\tau}R_k]$, $\mathbb E\tau$ và $p$, rồi ghép với $g(\mu)$ khi cần.
+Đẳng thức thứ hai của $r$ dùng $\mathbb E\tau<\infty$. Phần $p$ là xác suất thật của trạng thái lúc kết thúc: $\sum_{s'}p(s'\mid s,\omega)=\Pr_{s,\omega}\{\tau<\infty\}=1$, khác Mệnh đề 11.43, nơi tổng bằng $\mathbb E[\gamma^\tau]\le\gamma$. Phần $r$ phụ thuộc $\mu$ qua $g(\mu)$, nên mô hình tùy chọn trong thiết lập này không chỉ phụ thuộc tùy chọn. Tương đương, có thể giữ ba đại lượng $\mathbb E[\sum_{k=1}^{\tau}R_k]$, $\mathbb E\tau$ và $p$, rồi ghép với $g(\mu)$ khi cần.
 
 **Câu (b).** Phương trình là
 $$\begin{aligned}&v_\mu(s)=\sum_{\omega\in\Omega(s)}\mu(\omega\mid s)\\&\quad\times\Bigl[r(s,\omega)\\&\qquad+\sum_{s'}p(s'\mid s,\omega)\,v_\mu(s')\Bigr],\end{aligned}$$
-với $r$, $p$ của câu (a). Chứng minh theo các bước của Định lý 11.42.
+với $r$, $p$ của câu (a). Chứng minh theo các bước của Định lý 11.44.
 
 *Bước 1 (tách lợi tức tại $\tau$).* Cố định tùy chọn đầu tiên $\omega$ chọn tại $S_0=s$. Vì $\tau<\infty$ hầu chắc chắn,
 $$G_0=\sum_{k=1}^{\tau}\bigl(R_k-g(\mu)\bigr)+G_\tau,$$
@@ -202,7 +202,7 @@ với $G_\tau=\sum_{k\ge1}\bigl(R_{\tau+k}-g(\mu)\bigr)$.
 
 *Bước 2 (phần đầu).* Theo câu (a), kỳ vọng của tổng đầu khi biết $S_0=s$ và $\omega$ là $r(s,\omega)$.
 
-*Bước 3 (phần sau).* Trên biến cố $\{\tau=k,S_k=s'\}$, $\tau$ là một thời điểm chọn: tác tử rút tùy chọn mới theo $\mu(\cdot\mid s')$. Tùy chọn có chính sách Markov và hàm kết thúc chỉ phụ thuộc trạng thái, nên, như Bước 3 của chứng minh Định lý 11.42, phần tương lai từ bước $k$ cùng phân phối với quá trình theo $\mu$ xuất phát tại $s'$. Do đó $\mathbb E[G_\tau\mid\tau=k,S_k=s']=v_\mu(s')$, và
+*Bước 3 (phần sau).* Trên biến cố $\{\tau=k,S_k=s'\}$, $\tau$ là một thời điểm chọn: tác tử rút tùy chọn mới theo $\mu(\cdot\mid s')$. Tùy chọn có chính sách Markov và hàm kết thúc chỉ phụ thuộc trạng thái, nên, như Bước 3 của chứng minh Định lý 11.44, phần tương lai từ bước $k$ cùng phân phối với quá trình theo $\mu$ xuất phát tại $s'$. Do đó $\mathbb E[G_\tau\mid\tau=k,S_k=s']=v_\mu(s')$, và
 $$\begin{aligned}&\mathbb E_{s,\omega}[G_\tau]\\&\ =\sum_{k\ge1}\sum_{s'}\Pr_{s,\omega}\{\tau=k,S_k=s'\}\\&\qquad\times v_\mu(s')\\&\ =\sum_{s'}p(s'\mid s,\omega)\,v_\mu(s').\end{aligned}$$
 Không có thừa số $\gamma^k$, vì lợi tức vi phân không chiết khấu.
 
@@ -232,7 +232,7 @@ $$\begin{aligned}v_\pi(s)&=\sum_a\pi(a\mid s)\\&\quad\times\sum_{s',r}p(s',r\mid
 **Nguồn:** Sutton và Barto (2018), Bài tập 8.1, §8.2, trang 166; Ví dụ 8.1 và Hình 8.2, 8.3, trang 164–165; Sarsa $n$ bước, (7.4)–(7.5), §7.2, trang 146.
 
 ::: exercise Bài tập 11.16 (Bootstrap nhiều bước so với Dyna-Q trên mê cung Dyna)
-Mê cung Dyna là lưới $6\times9$ với tường ở $(2,3)$, $(3,3)$, $(4,3)$, $(5,6)$, $(1,8)$, $(2,8)$, $(3,8)$ (hàng đếm từ trên, cột đếm từ trái), $47$ trạng thái, $\mathrm S=(3,1)$, $\mathrm G=(1,9)$. Bốn hành động tất định; đụng tường hay biên thì ở yên; phần thưởng $+1$ khi vào $\mathrm G$, $0$ ở mọi chuyển khác; sau khi vào $\mathrm G$ tác tử trở về $\mathrm S$; $\gamma=0{,}95$; đường ngắn nhất dài $14$ bước. Các tác tử Dyna-Q (Thuật toán 11.10) dùng $Q\equiv0$ ban đầu, $\alpha=0{,}1$, $\varepsilon=0{,}1$, phá hòa ngẫu nhiên. Với cùng hạt giống (random seed) cho bộ sinh số ngẫu nhiên, lượt thứ nhất giống nhau cho mọi $n$ và dài khoảng $1\,700$ bước. Tác tử không lập kế hoạch ($n=0$, tức Q-learning một bước) cần khoảng $25$ lượt để đạt hiệu năng gần tối ưu, tác tử $n=5$ khoảng $5$ lượt, tác tử $n=50$ khoảng $3$ lượt. Ở giữa lượt thứ hai, chính sách tham lam của tác tử $n=0$ chỉ có một hành động đã học, tại ô ngay dưới $\mathrm G$; chính sách của tác tử $n=50$ đã có hành động tham lam ở phần lớn các ô, trong khi tác tử vẫn còn ở gần $\mathrm S$; tới cuối lượt, các hành động tham lam đó gần dẫn được từ $\mathrm S$ tới $\mathrm G$.
+Mê cung Dyna là lưới $6\times9$ với tường ở $(2,3)$, $(3,3)$, $(4,3)$, $(5,6)$, $(1,8)$, $(2,8)$, $(3,8)$ (hàng đếm từ trên, cột đếm từ trái), $47$ trạng thái, $\mathrm S=(3,1)$, $\mathrm G=(1,9)$. Bốn hành động tất định; đụng tường hay biên thì ở yên; phần thưởng $+1$ khi vào $\mathrm G$, $0$ ở mọi chuyển khác; sau khi vào $\mathrm G$ tác tử trở về $\mathrm S$; $\gamma=0{,}95$; đường ngắn nhất dài $14$ bước. Các tác tử Dyna-Q (Thuật toán 11.8) dùng $Q\equiv0$ ban đầu, $\alpha=0{,}1$, $\varepsilon=0{,}1$, phá hòa ngẫu nhiên. Với cùng hạt giống (random seed) cho bộ sinh số ngẫu nhiên, lượt thứ nhất giống nhau cho mọi $n$ và dài khoảng $1\,700$ bước. Tác tử không lập kế hoạch ($n=0$, tức Q-learning một bước) cần khoảng $25$ lượt để đạt hiệu năng gần tối ưu, tác tử $n=5$ khoảng $5$ lượt, tác tử $n=50$ khoảng $3$ lượt. Ở giữa lượt thứ hai, chính sách tham lam của tác tử $n=0$ chỉ có một hành động đã học, tại ô ngay dưới $\mathrm G$; chính sách của tác tử $n=50$ đã có hành động tham lam ở phần lớn các ô, trong khi tác tử vẫn còn ở gần $\mathrm S$; tới cuối lượt, các hành động tham lam đó gần dẫn được từ $\mathrm S$ tới $\mathrm G$.
 
 Phương pháp bootstrap nhiều bước (multi-step bootstrapping) được xét là Sarsa $k$ bước (n-step Sarsa; sách viết $n$ bước). Lợi tức $k$ bước có dạng của Định nghĩa 10.11, với bảng $Q$ ở chỗ hàm giá trị:
 $$\begin{aligned}G_{t:t+k}&=R_{t+1}+\gamma R_{t+2}+\dots\\&\quad+\gamma^{k-1}R_{t+k}\\&\quad+\gamma^kQ(S_{t+k},A_{t+k}),\end{aligned}$$
@@ -273,7 +273,7 @@ Kết luận phụ thuộc đơn vị so sánh. Dyna-Q với $n=50$ làm $51$ c�
 **Nguồn:** Sutton và Barto (2018), Bài tập 8.5, §8.3, trang 168; giả mã Dyna-Q dạng bảng, trang 164; Ví dụ 8.2, 8.3, trang 166–167.
 
 ::: exercise Bài tập 11.17 (Dyna-Q cho môi trường ngẫu nhiên và môi trường thay đổi)
-Ở bước (e) của Dyna-Q dạng bảng (Thuật toán 11.10), mô hình ghi đè $\mathrm{Model}(S,A)\leftarrow(R,S')$; bước (f) lấy $(\tilde R,\tilde S')=\mathrm{Model}(\tilde S,\tilde A)$ cho một cặp đã thử chọn ngẫu nhiên. Thuật toán giả thiết môi trường tất định. Môi trường thay đổi được xét là hai mê cung $6\times9$ có $\mathrm S=(6,4)$, $\mathrm G=(1,9)$ và tường trên hàng $4$: mê cung bị chặn, lối qua ở cột $9$ bị chặn sau bước $1\,000$ và lối mới mở ở cột $1$; mê cung lối tắt, chỉ có lối ở cột $1$ tới bước $3\,000$, sau đó cột $9$ mở thêm.
+Ở bước (e) của Dyna-Q dạng bảng (Thuật toán 11.8), mô hình ghi đè $\mathrm{Model}(S,A)\leftarrow(R,S')$; bước (f) lấy $(\tilde R,\tilde S')=\mathrm{Model}(\tilde S,\tilde A)$ cho một cặp đã thử chọn ngẫu nhiên. Thuật toán giả thiết môi trường tất định. Môi trường thay đổi được xét là hai mê cung $6\times9$ có $\mathrm S=(6,4)$, $\mathrm G=(1,9)$ và tường trên hàng $4$: mê cung bị chặn, lối qua ở cột $9$ bị chặn sau bước $1\,000$ và lối mới mở ở cột $1$; mê cung lối tắt, chỉ có lối ở cột $1$ tới bước $3\,000$, sau đó cột $9$ mở thêm.
 
 - (a) Nêu cách sửa Dyna-Q để xử lý môi trường ngẫu nhiên.
 - (b) Chỉ ra sửa đổi ở câu (a) có thể làm việc kém thế nào trong môi trường thay đổi như hai mê cung trên.
@@ -285,14 +285,14 @@ Kết luận phụ thuộc đơn vị so sánh. Dyna-Q với $n=50$ làm $51$ c�
 :::
 
 ::: solution Lời giải Bài tập 11.17
-**Câu (a).** Thay mô hình ghi đè bằng mô hình đếm (count-based model, Định nghĩa 11.4), như đoạn "Trong thực hành" sau Thuật toán 11.10. Ở bước (e), tăng $C(S,A)$ và $C(S,A,S')$ thêm $1$ và cộng $R$ vào tổng phần thưởng của cặp. Ở bước (f), rút $\tilde S'$ theo $\hat p(\cdot\mid\tilde S,\tilde A)$, dùng $\tilde R=\hat r(\tilde S,\tilde A)$, rồi làm cập nhật mẫu (2.4). Mục tiêu kỳ vọng không đổi, vì cập nhật tuyến tính theo $\tilde R$. Cách khác là làm cập nhật kỳ vọng (2.3) trên $\hat p$, tốn $b$ lần đánh giá với $b$ là số trạng thái kế đã thấy. Khi môi trường dừng và số lần thử cố định, $\hat p$ không chệch và có độ lệch chuẩn $\sqrt{p(1-p)/C(s,a)}$ (Mệnh đề 11.5).
+**Câu (a).** Thay mô hình ghi đè bằng mô hình đếm (count-based model, Định nghĩa 11.1), như đoạn "Trong thực hành" sau Thuật toán 11.8. Ở bước (e), tăng $C(S,A)$ và $C(S,A,S')$ thêm $1$ và cộng $R$ vào tổng phần thưởng của cặp. Ở bước (f), rút $\tilde S'$ theo $\hat p(\cdot\mid\tilde S,\tilde A)$, dùng $\tilde R=\hat r(\tilde S,\tilde A)$, rồi làm cập nhật mẫu (2.4). Mục tiêu kỳ vọng không đổi, vì cập nhật tuyến tính theo $\tilde R$. Cách khác là làm cập nhật kỳ vọng (2.3) trên $\hat p$, tốn $b$ lần đánh giá với $b$ là số trạng thái kế đã thấy. Khi môi trường dừng và số lần thử cố định, $\hat p$ không chệch và có độ lệch chuẩn $\sqrt{p(1-p)/C(s,a)}$ (Mệnh đề 11.5).
 
 **Câu (b).** Mô hình đếm gộp mọi lần thử từ đầu, nên giả thiết "cùng phân phối" của Mệnh đề 11.5 bị vi phạm khi môi trường đổi, và $\hat p$ trộn xác suất cũ với xác suất mới. Hai cách hỏng:
 
 - *Thích nghi chậm với thay đổi xấu đi.* Ở mê cung bị chặn, giả sử cặp $(5,9)$ với $\uparrow$ đã được thử $20$ lần trước bước $1\,000$, lần nào cũng tới $(4,9)$. Sau khi lối bị chặn, mỗi lần thử mới cho kết quả ở yên. Sau $j$ lần thử mới, xác suất ước lượng của việc tới $(4,9)$ là
 $$\hat p_j=\frac{20}{20+j},$$
 còn ít nhất $0{,}5$ tới $j=20$ và chỉ xuống dưới $0{,}1$ khi $j>180$. Trong suốt thời gian đó, các cập nhật lập kế hoạch vẫn coi lối cũ là đi được với xác suất lớn, nên tác tử quay lại thử nhiều lần. Mô hình ghi đè của Dyna-Q sửa sai này chỉ sau một lần thử.
-- *Không phát hiện thay đổi tốt lên.* Ở mê cung lối tắt, các cặp dẫn vào $(4,9)$ được ghi là ở yên với $\hat p=1$. Như Dyna-Q (Ví dụ 11.8), chính sách tham lam không thử lại cặp bi quan, nên mô hình đếm không bao giờ nhận dữ liệu mới về chúng.
+- *Không phát hiện thay đổi tốt lên.* Ở mê cung lối tắt, các cặp dẫn vào $(4,9)$ được ghi là ở yên với $\hat p=1$. Như Dyna-Q (Ví dụ 11.7), chính sách tham lam không thử lại cặp bi quan, nên mô hình đếm không bao giờ nhận dữ liệu mới về chúng.
 
 **Câu (c).** Một cách sửa gồm hai phần.
 
@@ -302,7 +302,7 @@ Với $\phi=0{,}9$, $\hat p=0{,}5588$ khi $j=5$ và $0{,}4991$ khi $j=6$: $\hat 
 $$\begin{aligned}&p(1-p)\frac{\sum_i\phi^{2i}}{\bigl(\sum_i\phi^i\bigr)^2}\\&\quad\to p(1-p)\frac{1-\phi}{1+\phi}\end{aligned}$$
 khi số lần thử tăng, nên độ lệch chuẩn không giảm về $0$ như Mệnh đề 11.5. Với $\phi=0{,}9$, giới hạn này bằng phương sai của mô hình đếm không quên với $C=19$ lần thử; khi $p=0{,}8$, độ lệch chuẩn dừng ở $\sqrt{0{,}16/19}=0{,}0918$. Cửa sổ trượt (sliding window) gồm $M$ lần thử gần nhất cho cùng đánh đổi: $M$ nhỏ thích nghi nhanh nhưng phương sai lớn.
 
-*Thưởng thăm dò.* Bộ đếm có quên chỉ sửa được cặp mà tác tử còn thử. Để phát hiện lối tắt, thêm thưởng $\kappa\sqrt{\ell(s,a)}$ vào phần thưởng mô phỏng ở bước (f) như Dyna-Q+ (Định nghĩa 11.12), để các cặp lâu chưa thử được thử lại.
+*Thưởng thăm dò.* Bộ đếm có quên chỉ sửa được cặp mà tác tử còn thử. Để phát hiện lối tắt, thêm thưởng $\kappa\sqrt{\ell(s,a)}$ vào phần thưởng mô phỏng ở bước (f) như Dyna-Q+ (Định nghĩa 11.11), để các cặp lâu chưa thử được thử lại.
 
 Tham số $\phi$ (hoặc $M$) cân bằng hai loại sai: quên chậm thì sai vì dữ liệu cũ, quên nhanh thì sai vì ít dữ liệu. Tham số $\kappa$ cân bằng chi phí thăm dò với tốc độ phát hiện thay đổi (Bài tập 11.13).
 
@@ -320,7 +320,7 @@ Tham số $\phi$ (hoặc $M$) cân bằng hai loại sai: quên chậm thì sai 
 **Nguồn:** Sutton và Barto (2018), Bài tập 2.8, §2.7, trang 36; bộ thử mười tay, §2.3, trang 28–29; (2.10), trang 35; Hình 2.4, trang 36.
 
 ::: exercise Bài tập 11.18 (Đỉnh ở bước thứ mười một của quy tắc cận tin cậy trên)
-Bộ thử mười tay (10-armed testbed) gồm $2\,000$ bài toán chọn lặp lại một bước độc lập. Mỗi bài toán có $10$ hành động; giá trị thật $q_*(a)$, $a=1,\dots,10$, được rút độc lập theo $\mathcal N(0,1)$ khi tạo bài toán; mỗi lần chọn $a$, phần thưởng được rút theo $\mathcal N\bigl(q_*(a),1\bigr)$. Mỗi phương pháp chạy $1\,000$ bước trên mỗi bài toán, và hiệu năng ở bước $t$ là phần thưởng ở bước $t$ lấy trung bình trên $2\,000$ bài toán. Quy tắc cận tin cậy trên (upper confidence bound, UCB) của Định nghĩa 11.23, công thức (3.2), chọn
+Bộ thử mười tay (10-armed testbed) gồm $2\,000$ bài toán chọn lặp lại một bước độc lập. Mỗi bài toán có $10$ hành động; giá trị thật $q_*(a)$, $a=1,\dots,10$, được rút độc lập theo $\mathcal N(0,1)$ khi tạo bài toán; mỗi lần chọn $a$, phần thưởng được rút theo $\mathcal N\bigl(q_*(a),1\bigr)$. Mỗi phương pháp chạy $1\,000$ bước trên mỗi bài toán, và hiệu năng ở bước $t$ là phần thưởng ở bước $t$ lấy trung bình trên $2\,000$ bài toán. Quy tắc cận tin cậy trên (upper confidence bound, UCB) của Định nghĩa 11.25, công thức (3.2), chọn
 $$\begin{aligned}A_t\in\arg\max_a\Bigl[&\bar r(a)\\&+c_{\mathrm{ucb}}\sqrt{\frac{\ln t}{N(a)}}\Bigr],\end{aligned}$$
 với $N(a)$ là số lần đã chọn $a$ trước bước $t$, $\bar r(a)$ là trung bình mẫu, hành động có $N(a)=0$ có chỉ số $+\infty$, phá hòa ngẫu nhiên. Với $c_{\mathrm{ucb}}=2$, đường hiệu năng của quy tắc này nằm quanh $0$ ở bước $1$–$10$, có một đỉnh rõ ở bước $11$, giảm ở các bước ngay sau, rồi tăng dần và nằm trên đường của chính sách $\varepsilon$-tham lam với $\varepsilon=0{,}1$ ở phần lớn $1\,000$ bước.
 
@@ -363,9 +363,9 @@ Vì vậy, ở bước $12$, quy tắc chọn lại $A_{11}$ chỉ với xác su
 **Nguồn:** Sutton và Barto (2018), Bài tập 8.4, §8.3, trang 168; Ví dụ 8.2, 8.3 và Hình 8.4, 8.5, trang 166–167; chú thích 1, trang 168.
 
 ::: exercise Bài tập 11.19 (Thưởng thăm dò chỉ dùng khi chọn hành động)
-Thưởng thăm dò của Dyna-Q+ (Định nghĩa 11.12) làm thay đổi giá trị ước lượng $Q$ của các cặp trạng thái–hành động (Nhận xét 11.13). Xét một cách dùng khác: thưởng $\kappa\sqrt{\ell}$ không đi vào cập nhật nào mà chỉ dùng khi chọn hành động. Tác tử luôn chọn
+Thưởng thăm dò của Dyna-Q+ (Định nghĩa 11.11) làm thay đổi giá trị ước lượng $Q$ của các cặp trạng thái–hành động (Nhận xét 11.12). Xét một cách dùng khác: thưởng $\kappa\sqrt{\ell}$ không đi vào cập nhật nào mà chỉ dùng khi chọn hành động. Tác tử luôn chọn
 $$\begin{aligned}A_t\in\arg\max_a\Bigl[&Q(S_t,a)\\&+\kappa\sqrt{\ell(S_t,a)}\Bigr],\end{aligned}$$
-còn các bước (c)–(f) như Dyna-Q (Thuật toán 11.10). Dùng hai mê cung $6\times9$ có $\mathrm S=(6,4)$, $\mathrm G=(1,9)$ (hàng đếm từ trên, cột đếm từ trái), bốn hành động tất định, đụng tường hay biên thì ở yên, phần thưởng $+1$ khi vào $\mathrm G$ rồi trở về $\mathrm S$, $0$ ở mọi chuyển khác:
+còn các bước (c)–(f) như Dyna-Q (Thuật toán 11.8). Dùng hai mê cung $6\times9$ có $\mathrm S=(6,4)$, $\mathrm G=(1,9)$ (hàng đếm từ trên, cột đếm từ trái), bốn hành động tất định, đụng tường hay biên thì ở yên, phần thưởng $+1$ khi vào $\mathrm G$ rồi trở về $\mathrm S$, $0$ ở mọi chuyển khác:
 
 - mê cung lối tắt: trong $3\,000$ bước thật đầu, tường gồm $(4,2),\dots,(4,9)$ (đường ngắn nhất $16$ bước); từ bước $3\,001$, tường còn $(4,2),\dots,(4,8)$ (đường ngắn nhất $10$ bước qua $(4,9)$, đường cũ vẫn mở); chạy $6\,000$ bước;
 - mê cung bị chặn: trong $1\,000$ bước thật đầu, tường gồm $(4,1),\dots,(4,8)$ (đường ngắn nhất $10$ bước); từ bước $1\,001$, tường gồm $(4,2),\dots,(4,9)$ (đường ngắn nhất $16$ bước); chạy $3\,000$ bước.
@@ -376,14 +376,14 @@ còn các bước (c)–(f) như Dyna-Q (Thuật toán 11.10). Dùng hai mê cun
 :::
 
 ::: hint Gợi ý Bài tập 11.19
-Kiểm mã bằng một bước tính tay trước khi chạy cả thí nghiệm, chẳng hạn cập nhật Dyna-Q+ của Ví dụ 11.9. So ghép cặp theo hạt giống. Thêm một biến thể có $\varepsilon$-tham lam quanh $Q+\kappa\sqrt{\ell}$ để tách tác dụng của thưởng khỏi việc bỏ $\varepsilon$. Ngoài phần thưởng tích lũy, đo số lần tới đích trong $1\,000$ bước cuối, vì phần thưởng tích lũy còn mang lợi thế của pha thứ nhất.
+Kiểm mã bằng một bước tính tay trước khi chạy cả thí nghiệm, chẳng hạn cập nhật Dyna-Q+ của Ví dụ 11.8. So ghép cặp theo hạt giống. Thêm một biến thể có $\varepsilon$-tham lam quanh $Q+\kappa\sqrt{\ell}$ để tách tác dụng của thưởng khỏi việc bỏ $\varepsilon$. Ngoài phần thưởng tích lũy, đo số lần tới đích trong $1\,000$ bước cuối, vì phần thưởng tích lũy còn mang lợi thế của pha thứ nhất.
 :::
 
 ::: solution Lời giải Bài tập 11.19
 **Câu (a).** Bốn tác tử, cùng mô hình tất định ghi đè, $Q\equiv0$ ban đầu (cả tại $\mathrm G$, coi là trạng thái kết thúc), $\gamma=0{,}95$, $n=50$:
 
-- (A) Dyna-Q: Thuật toán 11.10, $\varepsilon$-tham lam theo $Q$ với $\varepsilon=0{,}1$; bước (f) chọn đều một trạng thái đã gặp rồi chọn đều một hành động đã thử tại đó;
-- (B) Dyna-Q+: Định nghĩa 11.12, $\varepsilon$-tham lam theo $Q$ với $\varepsilon=0{,}1$; bước (f) chọn đều một trạng thái đã gặp rồi chọn đều một trong bốn hành động, cộng $\kappa\sqrt{\ell}$ vào phần thưởng mô phỏng; khi một trạng thái được gặp lần đầu, mô hình của các hành động chưa thử tại đó là "ở yên, phần thưởng $0$";
+- (A) Dyna-Q: Thuật toán 11.8, $\varepsilon$-tham lam theo $Q$ với $\varepsilon=0{,}1$; bước (f) chọn đều một trạng thái đã gặp rồi chọn đều một hành động đã thử tại đó;
+- (B) Dyna-Q+: Định nghĩa 11.11, $\varepsilon$-tham lam theo $Q$ với $\varepsilon=0{,}1$; bước (f) chọn đều một trạng thái đã gặp rồi chọn đều một trong bốn hành động, cộng $\kappa\sqrt{\ell}$ vào phần thưởng mô phỏng; khi một trạng thái được gặp lần đầu, mô hình của các hành động chưa thử tại đó là "ở yên, phần thưởng $0$";
 - (C) tác tử của đề: bước (d)–(f) như (A), không có thưởng trong cập nhật; chọn $A_t\in\arg\max_a[Q(S_t,a)+\kappa\sqrt{\ell(S_t,a)}]$, không có $\varepsilon$;
 - (C′) như (C) nhưng $\varepsilon$-tham lam quanh $Q+\kappa\sqrt{\ell}$ với $\varepsilon=0{,}1$.
 
@@ -391,7 +391,7 @@ Với mọi tác tử, $\ell(s,a)$ là số bước thật kể từ lần thử
 
 Trước khi chạy, mã được kiểm bằng `assert` trên các phép tính tay:
 
-- cập nhật Dyna-Q+ của Ví dụ 11.9 ($\kappa=0{,}01$, $\ell=400$, $Q(\mathrm B,\rightarrow)=0{,}54$, $\max_aQ(\mathrm B,a)=0{,}6$, $\alpha=0{,}5$, $\gamma=0{,}9$) cho thưởng $0{,}2$ và giá trị mới $0{,}64$;
+- cập nhật Dyna-Q+ của Ví dụ 11.8 ($\kappa=0{,}01$, $\ell=400$, $Q(\mathrm B,\rightarrow)=0{,}54$, $\max_aQ(\mathrm B,a)=0{,}6$, $\alpha=0{,}5$, $\gamma=0{,}9$) cho thưởng $0{,}2$ và giá trị mới $0{,}64$;
 - với $Q(S_t,\cdot)=(0{,}30;\,0{,}28;\,0{,}10;\,0{,}10)$, $\ell=(5;\,400;\,400;\,2\,500)$, $\kappa=10^{-3}$, các chỉ số của (C) là $0{,}3022$, $0{,}3$, $0{,}12$, $0{,}15$, nên (C) chọn hành động thứ nhất; đổi $\ell$ của hành động thứ hai thành $2\,500$ thì chỉ số của nó thành $0{,}33$ và (C) chọn nó;
 - tìm kiếm theo chiều rộng cho đường ngắn nhất $16$ rồi $10$ bước ở mê cung lối tắt, $10$ rồi $16$ bước ở mê cung bị chặn.
 
@@ -466,7 +466,7 @@ Với $\kappa=10^{-4}$, cả (B) lẫn (C) đều không chuyển sang lối t�
 
 *Điểm mạnh của (C).*
 
-- $Q$ không bị thưởng làm lệch: bước (f) giống hệt Dyna-Q, nên bảng của (C) không chứa thưởng như bảng của Dyna-Q+ ở Nhận xét 11.13, và lập kế hoạch không trả chi phí thăm dò;
+- $Q$ không bị thưởng làm lệch: bước (f) giống hệt Dyna-Q, nên bảng của (C) không chứa thưởng như bảng của Dyna-Q+ ở Nhận xét 11.12, và lập kế hoạch không trả chi phí thăm dò;
 - thăm dò có hệ thống tại trạng thái hiện tại thay được $\varepsilon$; khi môi trường không đổi, với $\kappa\le10^{-3}$, (C) tới đích nhiều hơn cả (A) lẫn (B) ở pha thứ nhất của mê cung lối tắt, nhiều hơn (A) và không kém (B) quá sai số chuẩn ở pha thứ nhất của mê cung bị chặn;
 - ở mê cung bị chặn với $\alpha=1$, nơi sai của mô hình là lạc quan, (C) phục hồi phần lớn: $76{,}8$ lần tới đích trong pha thứ hai, so với $91{,}6$ của Dyna-Q+ và $16{,}9$ của Dyna-Q.
 
@@ -478,7 +478,7 @@ Với $\kappa=10^{-4}$, cả (B) lẫn (C) đều không chuyển sang lối t�
 
 Các kết luận này thuộc hai mê cung $6\times9$ tất định, $n=50$, $\alpha\in\{0{,}1;\,1\}$, $\kappa\in\{10^{-4};\,10^{-3};\,10^{-2}\}$ và $6\,000$ hoặc $3\,000$ bước. Phần thưởng tích lũy cuối thí nghiệm xếp (C) trên (B) khi $\alpha=0{,}1$ vì thí nghiệm dừng ở bước $6\,000$. Tốc độ tới đích ở $1\,000$ bước cuối cho thấy (B) đã chuyển sang đường tốt hơn.
 
-**Kiểm tra lại.** Các phép tính tay ở câu (a) là phép kiểm: mã đúng cho thưởng $0{,}2$ và giá trị mới $0{,}64$ ở Ví dụ 11.9, và chỉ số $0{,}3022$, $0{,}3$, $0{,}12$, $0{,}15$ của (C). Ba lỗi thường gặp:
+**Kiểm tra lại.** Các phép tính tay ở câu (a) là phép kiểm: mã đúng cho thưởng $0{,}2$ và giá trị mới $0{,}64$ ở Ví dụ 11.8, và chỉ số $0{,}3022$, $0{,}3$, $0{,}12$, $0{,}15$ của (C). Ba lỗi thường gặp:
 
 - Cộng thưởng cả vào mục tiêu của bước (f). Tác tử khi đó là Dyna-Q+ chọn hành động theo $Q+\kappa\sqrt{\ell}$, và mọi khác biệt với (B) không còn đo được tác dụng của việc bỏ thưởng khỏi cập nhật.
 - Tăng $\ell$ cả ở các cập nhật lập kế hoạch. Vì $\ell$ đếm bước thật, với $n=50$, $\ell$ khi đó tăng nhanh gấp $51$ lần và thưởng lớn gấp $\sqrt{51}\approx7{,}1$ lần.

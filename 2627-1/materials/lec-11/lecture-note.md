@@ -133,57 +133,120 @@ Về mặt ý tưởng, Dyna-Q, tìm kiếm theo cây và lập kế hoạch v�
 
 Hình đọc từ trái sang phải theo dòng "mô hình → kinh nghiệm mô phỏng → cập nhật → giá trị → chính sách". Vòng phía trên lấy ý từ sơ đồ ở Sutton và Barto (2018, tr. 162): kinh nghiệm thật vừa cập nhật giá trị, vừa cải thiện mô hình. Bốn khối phía dưới thể hiện ba cách dùng mô hình; cách tìm kiếm lúc ra quyết định chiếm hai khối bên trái, chia theo loại hành động. Khối hành động liên tục nối thẳng từ kinh nghiệm mô phỏng, vì tối ưu kế hoạch không đi qua bảng giá trị.
 
-Như vậy, Q-learning bỏ phí bốn trong năm mẫu chuyển của lượt thứ nhất, và Định lý 06.21 chỉ bảo đảm hội tụ khi số bước thật tiến ra vô hạn. Muốn dùng lại các mẫu đã có, chúng ta cần biết mô hình là gì, ước lượng nó từ dữ liệu ra sao, và nó sai đến đâu sau hữu hạn lần thử.
+Như vậy, Q-learning bỏ phí bốn trong năm mẫu chuyển của lượt thứ nhất, và Định lý 06.21 chỉ bảo đảm hội tụ khi số bước thật tiến ra vô hạn. Muốn dùng lại các mẫu đã có, chúng ta cần ghi chúng thành một mô hình, cập nhật bảng giá trị trên mẫu lấy từ mô hình đó, và biết mô hình sai đến đâu sau hữu hạn lần thử.
 
 ---
 
 ## 2. Tính bất định của môi trường và lập kế hoạch nền
 
-<!-- note-topic-id: lec-11-topic-04 -->
-### 2.1 Mô hình phân phối và mô hình mẫu
+<!-- note-topic-id: lec-11-topic-05 -->
+### 2.1 Mô hình đếm
 
-Trên mê cung hai phòng, $(\mathrm F,\rightarrow)$ sang $\mathrm K$ với xác suất $0{,}8$ hoặc ở yên với xác suất $0{,}2$. Muốn cập nhật $Q(\mathrm F,\rightarrow)$ mà không đi thêm bước thật, tác tử hỏi mô hình, và mô hình có thể trả cả bảng xác suất hoặc chỉ một kết cục rút theo bảng đó.
+Sau lượt thứ nhất trên mê cung, tác tử có năm mẫu chuyển, trong đó $(\mathrm A,\rightarrow)$ đã được thử hai lần: một lần sang $\mathrm B$, một lần trượt.
 
-Một cách trực quan, với mười hai con xúc xắc, một mô hình liệt kê mọi tổng cùng xác suất của chúng, mô hình kia chỉ tung thử và báo một tổng (Sutton và Barto, 2018, §8.1, tr. 159). Để làm rõ trên mê cung, xem ví dụ sau.
+Một cách trực quan, tác tử đếm xem mỗi cặp đã thử dẫn tới đâu và bao nhiêu lần, rồi dùng tần suất thay cho xác suất chuyển. Để làm rõ, xem ví dụ sau.
 
-::: example Ví dụ 11.2 (Mô hình phân phối và mô hình mẫu của $(\mathrm F,\rightarrow)$)
-**Dữ kiện.** Mê cung hai phòng (Ví dụ 11.1): tại $\mathrm F$, hành động $\rightarrow$ sang $\mathrm K$ với xác suất $0{,}8$, ở yên với xác suất $0{,}2$, phần thưởng $0$; $\gamma=0{,}9$. Bảng sau lượt thứ nhất: $\max_aQ(\mathrm K,a)=0{,}5$, $\max_aQ(\mathrm F,a)=0$.
+::: example Ví dụ 11.2 (Bảng đếm sau lượt thứ nhất)
+**Dữ kiện.** Lượt thật thứ nhất trên mê cung hai phòng (Ví dụ 11.1): $(\mathrm A,\rightarrow,0,\mathrm A)$, $(\mathrm A,\rightarrow,0,\mathrm B)$, $(\mathrm B,\downarrow,0,\mathrm F)$, $(\mathrm F,\rightarrow,0,\mathrm K)$, $(\mathrm K,\rightarrow,+1,\mathrm Z)$.
 
-**Mô hình phân phối.** Mô hình trả $\{\mathrm K:0{,}8;\ \mathrm F:0{,}2\}$ với phần thưởng $0$. Mục tiêu kỳ vọng là
-$$0{,}9\,(0{,}8\cdot0{,}5+0{,}2\cdot0)=0{,}36.$$
+**Đếm.** $C(\mathrm A,\rightarrow)=2$ với $C(\mathrm A,\rightarrow,\mathrm A)=C(\mathrm A,\rightarrow,\mathrm B)=1$; ba cặp $(\mathrm B,\downarrow)$, $(\mathrm F,\rightarrow)$, $(\mathrm K,\rightarrow)$ mỗi cặp có một lần thử; mọi cặp khác có $C=0$.
 
-**Mô hình mẫu.** Mô hình trả một trạng thái kế rút theo các xác suất trên: mẫu $\mathrm K$ cho mục tiêu $0{,}45$, mẫu $\mathrm F$ cho $0$.
+**Tần suất.** $\hat p(\mathrm B\mid\mathrm A,\rightarrow)=\hat p(\mathrm A\mid\mathrm A,\rightarrow)=1/2$; $\hat p(\mathrm F\mid\mathrm B,\downarrow)=\hat p(\mathrm K\mid\mathrm F,\rightarrow)=\hat p(\mathrm Z\mid\mathrm K,\rightarrow)=1$, và $\hat r(\mathrm K,\rightarrow)=1$. Với các cặp có $C=0$, tần suất chưa xác định.
 
-**Kiểm tra lại.** Trung bình của mục tiêu mẫu là $0{,}8\cdot0{,}45+0{,}2\cdot0=0{,}36$, bằng mục tiêu kỳ vọng.
+**Kiểm tra lại.** $2+1+1+1=5$ lần thử, bằng số mẫu của lượt.
 :::
 
-::: definition Định nghĩa 11.1 (Mô hình phân phối, mô hình mẫu, kinh nghiệm mô phỏng)
+::: definition Định nghĩa 11.1 (Mô hình đếm)
+Cho các mẫu chuyển thật đã thu. Với mỗi cặp hợp lệ $(s,a)$ có $C(s,a)\ge1$, **mô hình đếm** (count-based model, còn gọi là maximum-likelihood model) là
+$$\begin{aligned}\hat p(s'\mid s,a)&=\frac{C(s,a,s')}{C(s,a)},\\\hat r(s,a)&=\frac{1}{C(s,a)}\\&\quad\times\sum_{i=1}^{C(s,a)}R^{(i)}(s,a),\end{aligned}\tag{2.1}$$
+trong đó $C(s,a)$ là số lần thử $(s,a)$, $C(s,a,s')$ là số lần trong đó trạng thái kế là $s'\in\mathcal S^+$, và $R^{(1)}(s,a),\dots$ là các phần thưởng đã nhận. Với cặp có $C(s,a)=0$, mô hình chưa xác định.
+:::
+
+Mô hình đếm thay xác suất chuyển bằng tần suất, như Sutton và Barto (2018, §8.4, tr. 170) dùng cho môi trường ngẫu nhiên. Đó là phép tính của MDP thực nghiệm ở Mệnh đề 05.34, đếm theo cặp thay vì theo trạng thái.
+
+<!-- note-topic-id: lec-11-topic-04 -->
+### 2.2 Mô hình mẫu và Q-planning
+
+Sau lượt thứ nhất, bảng Q-learning chỉ có $Q(\mathrm K,\rightarrow)=0{,}5$, trong khi mô hình đếm của Ví dụ 11.2 đã biết $(\mathrm F,\rightarrow)$ dẫn tới $\mathrm K$. Muốn giá trị của $\mathrm K$ lan về $\mathrm F$ ngay, tác tử phải cập nhật $(\mathrm F,\rightarrow)$ mà không đi lại qua $\mathrm F$.
+
+Về mặt ý tưởng, quy tắc của Q-learning chỉ cần một mẫu $(s,a,R,S')$, không hỏi mẫu đến từ đâu; áp nó lên mẫu do mô hình sinh, ta được một phương pháp lập kế hoạch.
+
+::: example Ví dụ 11.3 (Một cập nhật Q-planning)
+**Dữ kiện.** Bảng sau lượt thứ nhất: $Q\equiv0$ trừ $Q(\mathrm K,\rightarrow)=0{,}5$; $\alpha=0{,}5$, $\gamma=0{,}9$. Cặp được chọn là $(\mathrm F,\rightarrow)$; mô hình đếm của Ví dụ 11.2 trả $(R,S')=(0,\mathrm K)$, lần thử duy nhất của cặp này.
+
+**Cập nhật.**
+
+- mục tiêu: $0+0{,}9\cdot\max_aQ(\mathrm K,a)=0{,}9\cdot0{,}5=0{,}45$;
+- sai lệch: $0{,}45-Q(\mathrm F,\rightarrow)=0{,}45$;
+- giá trị mới: $Q(\mathrm F,\rightarrow)=0+0{,}5\cdot0{,}45=0{,}225$.
+
+**Kiểm tra lại.** Với $\alpha=0{,}5$, giá trị mới là trung bình của $Q$ cũ và mục tiêu: $(0+0{,}45)/2=0{,}225$.
+:::
+
+::: definition Định nghĩa 11.2 (Mô hình mẫu, kinh nghiệm mô phỏng)
 Cho một MDP với tập trạng thái $\mathcal S^+$ và tập hành động $\mathcal A(s)$.
 
-- **Mô hình phân phối** (distribution model) là một hàm gán cho mỗi cặp hợp lệ $(s,a)$ một phân phối $\hat p(\cdot,\cdot\mid s,a)$ trên các cặp (trạng thái kế, phần thưởng).
 - **Mô hình mẫu** (sample model) là một thủ tục nhận $(s,a)$ và trả một cặp $(R,S')$ rút ngẫu nhiên theo một phân phối $\hat p(\cdot,\cdot\mid s,a)$ nào đó, độc lập với các lần gọi trước.
 - **Kinh nghiệm mô phỏng** (simulated experience) là dãy mẫu chuyển $(s,a,R,S')$ sinh từ mô hình, phân biệt với kinh nghiệm thật sinh từ môi trường.
 :::
 
-Mô hình phân phối và mô hình mẫu là hai cách hiện thực mô hình của Định nghĩa 01.14. Từ mô hình phân phối luôn rút được mẫu, nên mọi mô hình phân phối cho một mô hình mẫu. Mô hình mẫu dễ xây dựng hơn, ví dụ một trình mô phỏng (Sutton và Barto, 2018, tr. 160). Mô hình tất định thuộc cả hai loại. Nhầm lẫn thường gặp là đồng nhất mô hình với môi trường: $\hat p$ có thể khác $p$.
+Mô hình đếm cho một mô hình mẫu: rút một mẫu theo nó là rút đều một lần thử cũ của cặp. Một trình mô phỏng cũng là mô hình mẫu (Sutton và Barto, 2018, tr. 160). Nhầm lẫn thường gặp là đồng nhất mô hình với môi trường: $\hat p$ có thể khác $p$.
 
-::: definition Định nghĩa 11.2 (Lập kế hoạch nền, lập kế hoạch tại thời điểm quyết định)
-**Lập kế hoạch trong không gian trạng thái** (state-space planning) là một thủ tục nhận một mô hình và trả hoặc cải thiện một chính sách, bằng các cập nhật giá trị trên kinh nghiệm mô phỏng.
+::: algorithm Thuật toán 11.3 (Q-planning một bước, chọn ngẫu nhiên, dạng bảng)
+**Đầu vào.** Mô hình mẫu xác định ở mọi cặp hợp lệ; $\gamma\in[0,1)$.
 
-- **Lập kế hoạch nền** (background planning) cải thiện một bảng giá trị hoặc chính sách cho nhiều trạng thái trước khi tác tử gặp chúng.
-- **Lập kế hoạch tại thời điểm quyết định** (decision-time planning) bắt đầu sau khi quan sát $S_t$ và kết thúc khi chọn xong $A_t$; đầu ra là $A_t$.
+**Đầu ra.** Bảng $Q$.
+
+**Giả thiết.** Hữu hạn cặp hợp lệ; mô hình không đổi.
+
+**Khởi tạo.** $Q(s,a)$ tùy ý với mọi cặp hợp lệ; $Q=0$ tại trạng thái kết thúc.
+
+**Tham số.** Lịch bước học $\alpha$; ngân sách số cập nhật.
+
+**Lặp:**
+
+1. Chọn ngẫu nhiên một cặp hợp lệ $(S,A)$ trong mọi cặp hợp lệ.
+2. Gọi mô hình mẫu với $(S,A)$, nhận $(R,S')$.
+3. $Q(S,A)\leftarrow Q(S,A)+\alpha\bigl[R+\gamma\max_{a'}Q(S',a')-Q(S,A)\bigr]$.
+
+**Điều kiện dừng.** Hết ngân sách cập nhật.
+
+**Chi phí mỗi bước.** Một lần gọi mô hình và $O(\max_s\lvert\mathcal A(s)\rvert)$ phép so sánh cho $\max_{a'}$.
 :::
 
-Hai cách khác nhau ở trạng thái mà phép tính hướng tới (Sutton và Barto, 2018, §8.8, tr. 180–181): lập kế hoạch nền chia phép tính cho mọi trạng thái nó cập nhật; lập kế hoạch tại thời điểm quyết định dồn phép tính vào trạng thái hiện tại, phù hợp khi có thời gian suy nghĩ trước mỗi bước. Trên mê cung, cập nhật $Q(\mathrm F,\rightarrow)$ khi đứng ở $\mathrm A$ là lập kế hoạch nền; thử trước các hành động khi đứng ở $\mathrm F$ là loại thứ hai.
+Thuật toán 11.3 là hộp Q-planning của Sutton và Barto (2018, §8.1, tr. 161). Ví dụ 11.3 là một lần chạy bước 1–3 tại một cặp đã có mẫu; trên cặp chưa thử, mô hình đếm chưa xác định, nên Thuật toán 11.3 cần mô hình cho sẵn ở mọi cặp. Gọi MDP có động lực $\hat p$ là MDP của mô hình, và $\hat q_*$ là giá trị hành động tối ưu của nó.
 
-::: remark Nhận xét 11.3 (Quy hoạch động là lập kế hoạch nền với mô hình phân phối)
-Thuật toán 04.28 và 04.31 dùng mô hình phân phối đã biết để cập nhật mọi trạng thái trước khi tác tử gặp chúng, nên quy hoạch động là lập kế hoạch nền. Ở chương này, $\hat p$ được học từ ít mẫu thật và có sai số.
+::: proposition Mệnh đề 11.4 (Hội tụ của Q-planning)
+**Giả thiết.** Mô hình mẫu cố định, xác định ở mọi cặp hợp lệ, với phân phối $\hat p(\cdot,\cdot\mid s,a)$ có phần thưởng bị chặn; $0\le\gamma<1$; mỗi cặp hợp lệ được chọn ở bước 1 vô hạn lần, hầu chắc chắn; bước học của mỗi cặp thỏa điều kiện Robbins–Monro theo cặp (Định nghĩa 06.19).
+
+**Kết luận.** Với mọi cặp hợp lệ, $Q(s,a)\to\hat q_*(s,a)$ hầu chắc chắn, trong đó $\hat q_*$ là giá trị hành động tối ưu của MDP của mô hình.
+
+**Điều kiện áp dụng.** Mô hình không đổi trong lúc lập kế hoạch.
+
+**Phạm vi.** Khi $\hat p\ne p$, giới hạn $\hat q_*$ khác $q_*$. Mệnh đề không chặn khoảng cách đó.
 :::
 
-<!-- note-topic-id: lec-11-topic-05 -->
-### 2.2 Mô hình đếm và hai loại bất định
+::: proof
+**Bước 1 (giả thiết nền).** MDP của mô hình là MDP hữu hạn, có động lực dừng vì mô hình cố định, phần thưởng bị chặn và $0\le\gamma<1$: đó là giả thiết nền của Nhận xét 06.20.
 
-Sau lượt thứ nhất trên mê cung, $(\mathrm A,\rightarrow)$ đã được thử hai lần: một lần sang $\mathrm B$, một lần trượt. Tần suất cho ước lượng $\hat p(\mathrm B\mid\mathrm A,\rightarrow)=0{,}5$, trong khi xác suất thật là $0{,}8$.
+**Bước 2 (phân phối của mẫu).** Mô hình mẫu trả $(R,S')$ theo $\hat p(\cdot,\cdot\mid S,A)$, độc lập với các lần gọi trước, nên có điều kiện theo lịch sử và cặp đang cập nhật, mẫu có phân phối $\hat p(\cdot,\cdot\mid S,A)$.
+
+**Bước 3 (Định lý 06.21).** Bước 3 của thuật toán là quy tắc của Thuật toán 06.16. Định lý 06.21 phát biểu cho cập nhật dọc quỹ đạo với chính sách hành vi tùy ý, còn ở đây cặp được rút ngẫu nhiên. Giả thiết nền về mẫu của Nhận xét 06.20 chỉ đòi phân phối của mẫu khi biết lịch sử và cặp đang cập nhật, và chứng minh của Định lý 06.21 (Bertsekas và Tsitsiklis, 1996, §5.6) không dùng việc các cặp nối thành quỹ đạo. Vì vậy kết luận giữ nguyên khi cặp được chọn ngẫu nhiên, độc lập với các mẫu, miễn mọi cặp được cập nhật vô hạn lần và bước học thỏa Định nghĩa 06.19. Theo Bước 1, 2 và giả thiết, $Q\to\hat q_*$ hầu chắc chắn. $\square$
+:::
+
+Mệnh đề là Định lý 06.21 áp cho MDP của mô hình; Sutton và Barto (2018, tr. 161) nêu cùng nhận định bằng lời. Hai giả thiết về mô hình có vai trò riêng, và mỗi giả thiết bị bỏ đều có phản ví dụ:
+
+- Bỏ "mô hình xác định ở mọi cặp": nếu mô hình chưa xác định tại $(\mathrm C,\cdot)$, $Q(\mathrm C,\cdot)$ giữ giá trị khởi tạo.
+- Bỏ "mô hình cố định": nếu $\hat p$ đổi sau mỗi bước thật, không có một $\hat q_*$ duy nhất để hội tụ tới.
+
+Bước 1 của chứng minh dùng giả thiết mô hình cố định; Bước 3 dùng giả thiết mọi cặp được chọn vô hạn lần.
+
+**Trong thực hành.** Mô hình mẫu là một từ điển các lần thử theo cặp hoặc một chương trình mô phỏng. Mệnh đề 11.4 không cần mô hình đúng. Với mô hình học từ ít mẫu, bảng $Q$ vẫn hội tụ tới $\hat q_*$ của mô hình đó, kể cả khi chính sách tham lam theo $\hat q_*$ kém trong môi trường thật.
+
+<!-- note-topic-id: lec-11-topic-06 -->
+### 2.3 Hai loại bất định và tập mô hình
+
+Sau lượt thứ nhất, mô hình đếm cho $\hat p(\mathrm B\mid\mathrm A,\rightarrow)=0{,}5$, trong khi xác suất thật là $0{,}8$.
 
 Một cách trực quan, có hai nguồn bất định: việc trượt là thuộc tính của môi trường, còn sai lệch giữa $\hat p$ và $p$ do ít dữ liệu và thu hẹp khi số lần thử tăng.
 
@@ -194,24 +257,6 @@ Sutton và Barto (2018, §8.3, tr. 166) nêu ba nguyên nhân làm mô hình sai
 - môi trường thay đổi.
 
 Bảng đếm sau lượt thứ nhất thuộc nguyên nhân thứ nhất.
-
-::: example Ví dụ 11.3 (Bảng đếm sau lượt thứ nhất)
-**Dữ kiện.** Lượt thật thứ nhất trên mê cung hai phòng (Ví dụ 11.1): $(\mathrm A,\rightarrow,0,\mathrm A)$, $(\mathrm A,\rightarrow,0,\mathrm B)$, $(\mathrm B,\downarrow,0,\mathrm F)$, $(\mathrm F,\rightarrow,0,\mathrm K)$, $(\mathrm K,\rightarrow,+1,\mathrm Z)$.
-
-**Đếm.** $C(\mathrm A,\rightarrow)=2$ với $C(\mathrm A,\rightarrow,\mathrm A)=C(\mathrm A,\rightarrow,\mathrm B)=1$; ba cặp $(\mathrm B,\downarrow)$, $(\mathrm F,\rightarrow)$, $(\mathrm K,\rightarrow)$ mỗi cặp có một lần thử; mọi cặp khác có $C=0$.
-
-**Tần suất.** $\hat p(\mathrm B\mid\mathrm A,\rightarrow)=\hat p(\mathrm A\mid\mathrm A,\rightarrow)=1/2$; $\hat p(\mathrm F\mid\mathrm B,\downarrow)=\hat p(\mathrm K\mid\mathrm F,\rightarrow)=\hat p(\mathrm Z\mid\mathrm K,\rightarrow)=1$, và $\hat r(\mathrm K,\rightarrow)=1$. Với các cặp có $C=0$, tần suất chưa xác định.
-
-**Kiểm tra lại.** $2+1+1+1=5$ lần thử, bằng số mẫu của lượt.
-:::
-
-::: definition Định nghĩa 11.4 (Mô hình đếm)
-Cho các mẫu chuyển thật đã thu. Với mỗi cặp hợp lệ $(s,a)$ có $C(s,a)\ge1$, **mô hình đếm** (count-based model, còn gọi là maximum-likelihood model) là
-$$\begin{aligned}\hat p(s'\mid s,a)&=\frac{C(s,a,s')}{C(s,a)},\\\hat r(s,a)&=\frac{1}{C(s,a)}\\&\quad\times\sum_{i=1}^{C(s,a)}R^{(i)}(s,a),\end{aligned}\tag{2.1}$$
-trong đó $C(s,a)$ là số lần thử $(s,a)$, $C(s,a,s')$ là số lần trong đó trạng thái kế là $s'\in\mathcal S^+$, và $R^{(1)}(s,a),\dots$ là các phần thưởng đã nhận. Với cặp có $C(s,a)=0$, mô hình chưa xác định.
-:::
-
-Mô hình đếm thay xác suất chuyển bằng tần suất, như Sutton và Barto (2018, §8.4, tr. 170) dùng cho môi trường ngẫu nhiên; đó là phép tính của MDP thực nghiệm ở Mệnh đề 05.34, đếm theo cặp thay vì theo trạng thái. Mô hình đếm là mô hình phân phối; rút một mẫu theo nó tương đương rút đều một lần thử cũ của cặp.
 
 **Câu hỏi.** Tần suất $\hat p$ dao động quanh $p$ đến mức nào khi $C(s,a)$ nhỏ? Mệnh đề sau trả lời bằng phương sai.
 
@@ -259,7 +304,7 @@ Bước 2 của chứng minh dùng tính cùng phân phối; Bước 3 dùng tí
 :::
 
 ::: definition Định nghĩa 11.6 (Bất định ngẫu nhiên, bất định nhận thức)
-Xét một cặp $(s,a)$ với $C=C(s,a)$ lần thử và mô hình đếm của Định nghĩa 11.4.
+Xét một cặp $(s,a)$ với $C=C(s,a)$ lần thử và mô hình đếm của Định nghĩa 11.1.
 
 - **Bất định ngẫu nhiên** (aleatoric uncertainty) của trạng thái kế là độ phân tán của một lần chuyển thật, đo bằng $p(s'\mid s,a)\bigl(1-p(s'\mid s,a)\bigr)$ với mỗi $s'$; nó không phụ thuộc $C$.
 - **Bất định nhận thức** (epistemic uncertainty) là độ phân tán của ước lượng mô hình quanh giá trị thật, đo bằng $\operatorname{Var}\hat p(s'\mid s,a)=p(s'\mid s,a)\bigl(1-p(s'\mid s,a)\bigr)/C$ với mỗi $s'$; với cặp chưa thử ($C=0$), bất định nhận thức là toàn bộ sự không biết về $p(\cdot\mid s,a)$.
@@ -269,13 +314,10 @@ Hai đại lượng cùng xuất hiện trong (2.2): bất định ngẫu nhiên
 
 **Trong thực hành.** Bảng đếm chỉ dùng được với ít trạng thái và hành động rời rạc. Khi mô hình là một mạng nơ-ron, công thức (2.2) không áp dụng được, và bất định nhận thức phải đo bằng cách khác.
 
-<!-- note-topic-id: lec-11-topic-06 -->
-### 2.3 Tập mô hình
-
 Một cách đo bất định nhận thức không cần công thức là huấn luyện nhiều mô hình trên các tập dữ liệu khác nhau một chút và xem các dự báo phân tán đến đâu, như ví dụ sau.
 
 ::: example Ví dụ 11.5 (Tập ba mô hình tại $(\mathrm A,\rightarrow)$)
-**Dữ kiện.** Sau lượt thứ nhất (Ví dụ 11.3), dữ liệu của $(\mathrm A,\rightarrow)$ gồm hai trạng thái kế $\{\mathrm A,\mathrm B\}$; dữ liệu của $(\mathrm B,\downarrow)$ gồm một trạng thái kế $\{\mathrm F\}$.
+**Dữ kiện.** Sau lượt thứ nhất (Ví dụ 11.2), dữ liệu của $(\mathrm A,\rightarrow)$ gồm hai trạng thái kế $\{\mathrm A,\mathrm B\}$; dữ liệu của $(\mathrm B,\downarrow)$ gồm một trạng thái kế $\{\mathrm F\}$.
 
 **Ba mô hình.** Giả sử ba lần lấy lại mẫu có hoàn lại (bootstrap resampling) cỡ $2$ từ $\{\mathrm A,\mathrm B\}$ cho $\{\mathrm A,\mathrm A\}$, $\{\mathrm A,\mathrm B\}$, $\{\mathrm B,\mathrm B\}$. Ba mô hình đếm tương ứng cho $\hat p(\mathrm B\mid\mathrm A,\rightarrow)=0$; $0{,}5$; $1$.
 
@@ -291,78 +333,13 @@ Một **tập mô hình** (ensemble of models, model ensemble) gồm nhiều mô
 :::
 
 <!-- note-topic-id: lec-11-topic-07 -->
-### 2.4 Q-planning và kiến trúc Dyna
+### 2.4 Kiến trúc Dyna và lập kế hoạch nền
 
-Sau lượt thứ nhất, bảng Q-learning chỉ có $Q(\mathrm K,\rightarrow)=0{,}5$, trong khi mô hình đếm của Ví dụ 11.3 đã biết $(\mathrm F,\rightarrow)$ dẫn tới $\mathrm K$. Muốn giá trị của $\mathrm K$ lan về $\mathrm F$ ngay, tác tử phải cập nhật $(\mathrm F,\rightarrow)$ mà không đi lại qua $\mathrm F$.
+Thuật toán 11.3 cần mô hình cho sẵn ở mọi cặp. Tác tử chỉ có mô hình ở các cặp đã thử, và mô hình đó đổi sau mỗi bước thật.
 
-Về mặt ý tưởng, quy tắc của Q-learning chỉ cần một mẫu $(s,a,R,S')$, không hỏi mẫu đến từ đâu; áp nó lên mẫu do mô hình sinh, ta được một phương pháp lập kế hoạch.
+Một cách trực quan, sau mỗi bước thật tác tử xen kẽ ba việc: cập nhật bảng từ mẫu thật, cập nhật mô hình, rồi làm vài cập nhật lập kế hoạch, như ví dụ sau.
 
-::: example Ví dụ 11.6 (Một cập nhật Q-planning)
-**Dữ kiện.** Bảng sau lượt thứ nhất: $Q\equiv0$ trừ $Q(\mathrm K,\rightarrow)=0{,}5$; $\alpha=0{,}5$, $\gamma=0{,}9$. Cặp được chọn là $(\mathrm F,\rightarrow)$; mô hình mẫu trả $(R,S')=(0,\mathrm K)$.
-
-**Cập nhật.**
-
-- mục tiêu: $0+0{,}9\cdot\max_aQ(\mathrm K,a)=0{,}9\cdot0{,}5=0{,}45$;
-- sai lệch: $0{,}45-Q(\mathrm F,\rightarrow)=0{,}45$;
-- giá trị mới: $Q(\mathrm F,\rightarrow)=0+0{,}5\cdot0{,}45=0{,}225$.
-
-**Kiểm tra lại.** Với $\alpha=0{,}5$, giá trị mới là trung bình của $Q$ cũ và mục tiêu: $(0+0{,}45)/2=0{,}225$.
-:::
-
-::: algorithm Thuật toán 11.8 (Q-planning một bước, chọn ngẫu nhiên, dạng bảng)
-**Đầu vào.** Mô hình mẫu xác định ở mọi cặp hợp lệ; $\gamma\in[0,1)$.
-
-**Đầu ra.** Bảng $Q$.
-
-**Giả thiết.** Hữu hạn cặp hợp lệ; mô hình không đổi.
-
-**Khởi tạo.** $Q(s,a)$ tùy ý với mọi cặp hợp lệ; $Q=0$ tại trạng thái kết thúc.
-
-**Tham số.** Lịch bước học $\alpha$; ngân sách số cập nhật.
-
-**Lặp:**
-
-1. Chọn ngẫu nhiên một cặp hợp lệ $(S,A)$ trong mọi cặp hợp lệ.
-2. Gọi mô hình mẫu với $(S,A)$, nhận $(R,S')$.
-3. $Q(S,A)\leftarrow Q(S,A)+\alpha\bigl[R+\gamma\max_{a'}Q(S',a')-Q(S,A)\bigr]$.
-
-**Điều kiện dừng.** Hết ngân sách cập nhật.
-
-**Chi phí mỗi bước.** Một lần gọi mô hình và $O(\max_s\lvert\mathcal A(s)\rvert)$ phép so sánh cho $\max_{a'}$.
-:::
-
-Thuật toán 11.8 là hộp Q-planning của Sutton và Barto (2018, §8.1, tr. 161). Ví dụ 11.6 là một lần chạy bước 1–3 tại một cặp đã có mẫu; trên cặp chưa thử, mô hình đếm chưa xác định, nên Thuật toán 11.8 cần mô hình cho sẵn ở mọi cặp. Gọi MDP có động lực $\hat p$ là MDP của mô hình, và $\hat q_*$ là giá trị hành động tối ưu của nó.
-
-::: proposition Mệnh đề 11.9 (Hội tụ của Q-planning)
-**Giả thiết.** Mô hình mẫu cố định, xác định ở mọi cặp hợp lệ, với phân phối $\hat p(\cdot,\cdot\mid s,a)$ có phần thưởng bị chặn; $0\le\gamma<1$; mỗi cặp hợp lệ được chọn ở bước 1 vô hạn lần, hầu chắc chắn; bước học của mỗi cặp thỏa điều kiện Robbins–Monro theo cặp (Định nghĩa 06.19).
-
-**Kết luận.** Với mọi cặp hợp lệ, $Q(s,a)\to\hat q_*(s,a)$ hầu chắc chắn, trong đó $\hat q_*$ là giá trị hành động tối ưu của MDP của mô hình.
-
-**Điều kiện áp dụng.** Mô hình không đổi trong lúc lập kế hoạch.
-
-**Phạm vi.** Khi $\hat p\ne p$, giới hạn $\hat q_*$ khác $q_*$. Mệnh đề không chặn khoảng cách đó.
-:::
-
-::: proof
-**Bước 1 (giả thiết nền).** MDP của mô hình là MDP hữu hạn, có động lực dừng vì mô hình cố định, phần thưởng bị chặn và $0\le\gamma<1$: đó là giả thiết nền của Nhận xét 06.20.
-
-**Bước 2 (phân phối của mẫu).** Mô hình mẫu trả $(R,S')$ theo $\hat p(\cdot,\cdot\mid S,A)$, độc lập với các lần gọi trước, nên có điều kiện theo lịch sử và cặp đang cập nhật, mẫu có phân phối $\hat p(\cdot,\cdot\mid S,A)$.
-
-**Bước 3 (Định lý 06.21).** Bước 3 của thuật toán là quy tắc của Thuật toán 06.16. Định lý 06.21 phát biểu cho cập nhật dọc quỹ đạo với chính sách hành vi tùy ý, còn ở đây cặp được rút ngẫu nhiên. Giả thiết nền về mẫu của Nhận xét 06.20 chỉ đòi phân phối của mẫu khi biết lịch sử và cặp đang cập nhật, và chứng minh của Định lý 06.21 (Bertsekas và Tsitsiklis, 1996, §5.6) không dùng việc các cặp nối thành quỹ đạo. Vì vậy kết luận giữ nguyên khi cặp được chọn ngẫu nhiên, độc lập với các mẫu, miễn mọi cặp được cập nhật vô hạn lần và bước học thỏa Định nghĩa 06.19. Theo Bước 1, 2 và giả thiết, $Q\to\hat q_*$ hầu chắc chắn. $\square$
-:::
-
-Mệnh đề là Định lý 06.21 áp cho MDP của mô hình; Sutton và Barto (2018, tr. 161) nêu cùng nhận định bằng lời. Hai giả thiết về mô hình có vai trò riêng, và mỗi giả thiết bị bỏ đều có phản ví dụ:
-
-- Bỏ "mô hình xác định ở mọi cặp": nếu mô hình chưa xác định tại $(\mathrm C,\cdot)$, $Q(\mathrm C,\cdot)$ giữ giá trị khởi tạo.
-- Bỏ "mô hình cố định": nếu $\hat p$ đổi sau mỗi bước thật, không có một $\hat q_*$ duy nhất để hội tụ tới.
-
-Bước 1 của chứng minh dùng giả thiết mô hình cố định; Bước 3 dùng giả thiết mọi cặp được chọn vô hạn lần.
-
-**Trong thực hành.** Mô hình mẫu là một từ điển các lần thử theo cặp hoặc một chương trình mô phỏng. Mệnh đề 11.9 không cần mô hình đúng. Với mô hình học từ ít mẫu, bảng $Q$ vẫn hội tụ tới $\hat q_*$ của mô hình đó, kể cả khi chính sách tham lam theo $\hat q_*$ kém trong môi trường thật.
-
-Khi mô hình phải học dần, chúng ta xen kẽ ba việc sau mỗi bước thật: cập nhật bảng từ mẫu thật, cập nhật mô hình, rồi làm vài cập nhật lập kế hoạch, như ví dụ sau.
-
-::: example Ví dụ 11.7 (Lượt thứ nhất của Dyna-Q, $n=2$)
+::: example Ví dụ 11.6 (Lượt thứ nhất của Dyna-Q, $n=2$)
 **Dữ kiện.** Mê cung hai phòng; $Q\equiv0$; $\alpha=0{,}5$, $\gamma=0{,}9$; mô hình tất định lưu kết quả gần nhất của mỗi cặp đã thử; $n=2$. Lượt thật: $(\mathrm A,\rightarrow,0,\mathrm A)$, $(\mathrm A,\rightarrow,0,\mathrm B)$, $(\mathrm B,\downarrow,0,\mathrm F)$, $(\mathrm F,\rightarrow,0,\mathrm K)$, $(\mathrm K,\rightarrow,+1,\mathrm Z)$.
 
 **Bốn bước đầu.** Mọi mục tiêu, thật hay mô phỏng, bằng $0$, nên $Q$ không đổi. Mô hình ghi $\mathrm{Model}(\mathrm A,\rightarrow)=(0,\mathrm A)$ ở bước 1, rồi ghi đè thành $(0,\mathrm B)$ ở bước 2.
@@ -380,6 +357,8 @@ Khi mô hình phải học dần, chúng ta xen kẽ ba việc sau mỗi bước
 - $(\mathrm F,\rightarrow)$: mục tiêu $0+0{,}9\cdot0{,}5=0{,}45$; sai lệch $0{,}45$; giá trị mới $0{,}225$.
 - $(\mathrm K,\rightarrow)$: mục tiêu $1$; sai lệch $1-0{,}5=0{,}5$; giá trị mới $0{,}5+0{,}25=0{,}75$.
 
+**Mô hình đếm.** Ở lượt này, mô hình đếm (Định nghĩa 11.1) cho cùng hai cập nhật lập kế hoạch: $(\mathrm F,\rightarrow)$ và $(\mathrm K,\rightarrow)$ mỗi cặp có một lần thử, và hai mô hình chỉ khác nhau ở $(\mathrm A,\rightarrow)$.
+
 **So sánh.** Với $n=0$ (Q-learning), sau lượt thứ nhất chỉ có $Q(\mathrm K,\rightarrow)=0{,}5$; với $n=2$, bảng có thêm $Q(\mathrm F,\rightarrow)=0{,}225$. Trên mê cung của Sutton và Barto (2018, Hình 8.3, tr. 165), với $n=50$, chính sách tham lam đã phủ phần lớn mê cung ở giữa lượt thứ hai, khi tác tử không lập kế hoạch mới học được một bước.
 
 **Thứ tự cập nhật.** Đảo thứ tự hai cập nhật lập kế hoạch: $(\mathrm K,\rightarrow)$ trước cho $0{,}75$, rồi $(\mathrm F,\rightarrow)$ cho $0{,}5\cdot0{,}9\cdot0{,}75=0{,}3375$. Thứ tự cập nhật đổi kết quả.
@@ -387,7 +366,7 @@ Khi mô hình phải học dần, chúng ta xen kẽ ba việc sau mỗi bước
 **Kiểm tra lại.** $0{,}5\cdot0{,}45=0{,}225$ và $0{,}5+0{,}5\cdot(1-0{,}5)=0{,}75$.
 :::
 
-::: algorithm Thuật toán 11.10 (Dyna-Q dạng bảng)
+::: algorithm Thuật toán 11.8 (Dyna-Q dạng bảng)
 **Đầu vào.** Môi trường; $\gamma\in[0,1)$.
 
 **Đầu ra.** Bảng $Q$ và mô hình $\mathrm{Model}$.
@@ -412,31 +391,37 @@ Khi mô hình phải học dần, chúng ta xen kẽ ba việc sau mỗi bước
 **Chi phí mỗi bước.** $O\bigl((n+1)\max_s\lvert\mathcal A(s)\rvert\bigr)$ phép tính mỗi bước thật.
 :::
 
-Thuật toán 11.10 là hộp Dyna-Q của Sutton và Barto (2018, §8.2, tr. 164). Ba bước cuối có tên riêng:
+Thuật toán 11.8 là hộp Dyna-Q của Sutton và Barto (2018, §8.2, tr. 164). Ba bước cuối có tên riêng:
 
 - bước (d) là học tăng cường trực tiếp (direct reinforcement learning, direct RL);
 - bước (e) là học mô hình (model learning);
 - bước (f) gồm điều khiển tìm kiếm (search control), tức việc chọn cặp, cùng một lần Q-planning.
 
-Ví dụ 11.7 là một lượt của thuật toán với $n=2$.
+Ví dụ 11.6 là một lượt của thuật toán với $n=2$.
 
 ![Kiến trúc Dyna: kinh nghiệm thật đi vào học trực tiếp, bước (d), tới giá trị và chính sách, và vào học mô hình, bước (e). Từ mô hình, điều khiển tìm kiếm chọn cặp, kinh nghiệm mô phỏng đi vào lập kế hoạch, bước (f). Chính sách cho hành động trở lại môi trường.](img/lec-11/kien-truc-dyna.svg)
 
 Hình vẽ lại ý của Sutton và Barto (2018, Hình 8.1, tr. 163): hai đường đi vào khối giá trị, mẫu thật qua bước (d) và mẫu mô phỏng qua bước (f), dùng cùng một quy tắc cập nhật.
 
-::: remark Nhận xét 11.11 (Dyna-Q, bộ nhớ phát lại và bảo đảm)
-- **Về cấu trúc.** Với mô hình tất định, bước (f) giống rút một mẫu từ bộ nhớ phát lại (Định nghĩa 08.7), nhưng mô hình gộp mẫu theo cặp và chỉ giữ kết quả gần nhất.
-- **Về bảo đảm.** Bước (f) chỉ chọn cặp đã thử (Sutton và Barto, 2018, tr. 163), nên cặp chưa thử giữ giá trị khởi tạo mà vẫn đi vào $\max_{a'}Q(S',a')$. Mô hình còn đổi sau mỗi bước thật. Giả thiết của Mệnh đề 11.9 không thỏa, nên bảng đạt được phụ thuộc cả dãy bước thật.
+::: definition Định nghĩa 11.9 (Lập kế hoạch trong không gian trạng thái, lập kế hoạch nền)
+**Lập kế hoạch trong không gian trạng thái** (state-space planning) là một thủ tục nhận một mô hình và trả hoặc cải thiện một chính sách, bằng các cập nhật giá trị trên kinh nghiệm mô phỏng. **Lập kế hoạch nền** (background planning) là lập kế hoạch cải thiện một bảng giá trị hoặc chính sách cho nhiều trạng thái trước khi tác tử gặp chúng.
 :::
 
-**Trong thực hành.** Giả thiết tất định của Thuật toán 11.10 bị vi phạm khi môi trường có trượt, như mê cung hai phòng. Với môi trường ngẫu nhiên, bước (e) cập nhật bảng đếm của Định nghĩa 11.4 và bước (f) rút $(\tilde R,\tilde S')$ theo $\hat p$, như mô hình đếm mà Sutton và Barto (2018, §8.4, tr. 170) dùng cho môi trường ngẫu nhiên. Độ lệch chuẩn của $\hat p$ khi đó giảm theo $1/\sqrt{C(s,a)}$ (Mệnh đề 11.5). Tham số $n$ cho phép đổi phép tính lấy bước thật: $n$ càng lớn, tác tử càng cần ít lượt thật để gần tối ưu (Sutton và Barto, 2018, Hình 8.2, tr. 165).
+Q-planning và bước (f) của Dyna-Q là lập kế hoạch nền. Trên mê cung, cập nhật $Q(\mathrm F,\rightarrow)$ khi tác tử đang đứng ở $\mathrm A$ là lập kế hoạch nền.
+
+::: remark Nhận xét 11.10 (Dyna-Q, bộ nhớ phát lại và bảo đảm)
+- **Về cấu trúc.** Với mô hình tất định, bước (f) giống rút một mẫu từ bộ nhớ phát lại (Định nghĩa 08.7), nhưng mô hình gộp mẫu theo cặp và chỉ giữ kết quả gần nhất.
+- **Về bảo đảm.** Bước (f) chỉ chọn cặp đã thử (Sutton và Barto, 2018, tr. 163), nên cặp chưa thử giữ giá trị khởi tạo mà vẫn đi vào $\max_{a'}Q(S',a')$. Mô hình còn đổi sau mỗi bước thật. Giả thiết của Mệnh đề 11.4 không thỏa, nên bảng đạt được phụ thuộc cả dãy bước thật.
+:::
+
+**Trong thực hành.** Giả thiết tất định của Thuật toán 11.8 bị vi phạm khi môi trường có trượt, như mê cung hai phòng. Với môi trường ngẫu nhiên, bước (e) cập nhật bảng đếm của Định nghĩa 11.1 và bước (f) rút $(\tilde R,\tilde S')$ theo $\hat p$, như mô hình đếm mà Sutton và Barto (2018, §8.4, tr. 170) dùng cho môi trường ngẫu nhiên. Độ lệch chuẩn của $\hat p$ khi đó giảm theo $1/\sqrt{C(s,a)}$ (Mệnh đề 11.5). Tham số $n$ cho phép đổi phép tính lấy bước thật: $n$ càng lớn, tác tử càng cần ít lượt thật để gần tối ưu (Sutton và Barto, 2018, Hình 8.2, tr. 165).
 
 <!-- note-topic-id: lec-11-topic-08 -->
 ### 2.5 Mô hình sai và thưởng thăm dò
 
 Khi môi trường đổi, mô hình học từ các bước đã qua mô tả môi trường cũ, như ví dụ sau.
 
-::: example Ví dụ 11.8 (Mê cung đổi cửa)
+::: example Ví dụ 11.7 (Mê cung đổi cửa)
 **Dữ kiện.** Mê cung hai phòng, tác tử Dyna-Q với mô hình tất định. Giả sử sau 3 000 bước thật, cửa $\mathrm F$–$\mathrm K$ bị chặn, còn tường $\mathrm B$–$\mathrm C$ được dỡ.
 
 **Mô hình quá lạc quan.** Mô hình cũ ghi $(\mathrm F,\rightarrow)\mapsto(0,\mathrm K)$. Tác tử theo chính sách tham lam tới $\mathrm F$, chọn $\rightarrow$ và ở yên; bước (e) ghi $(\mathrm F,\rightarrow)\mapsto(0,\mathrm F)$ và các cập nhật lập kế hoạch hạ $Q(\mathrm F,\rightarrow)$ (tương tự Ví dụ 8.2 của Sutton và Barto, 2018, tr. 166).
@@ -448,8 +433,8 @@ Khi môi trường đổi, mô hình học từ các bước đã qua mô tả m
 
 Một cách trực quan, chính sách tham lam tự kiểm lại mô hình lạc quan vì nó đi tới chỗ mô hình hứa nhiều, và không kiểm lại mô hình bi quan vì nó tránh chỗ mô hình hứa ít. Muốn kiểm lại cặp bi quan, tác tử cộng vào phần thưởng mô phỏng một lượng tăng theo thời gian kể từ lần thử gần nhất, như ví dụ sau.
 
-::: example Ví dụ 11.9 (Một cập nhật Dyna-Q+)
-**Dữ kiện.** Mê cung đổi cửa (Ví dụ 11.8), mô hình ghi $(\mathrm B,\rightarrow)\mapsto(0,\mathrm B)$; cặp này chưa được thử lại trong $\ell(\mathrm B,\rightarrow)=400$ bước thật; $\kappa=0{,}01$; $Q(\mathrm B,\rightarrow)=0{,}54$; $\max_aQ(\mathrm B,a)=Q(\mathrm B,\downarrow)=0{,}6$; $\alpha=0{,}5$, $\gamma=0{,}9$.
+::: example Ví dụ 11.8 (Một cập nhật Dyna-Q+)
+**Dữ kiện.** Mê cung đổi cửa (Ví dụ 11.7), mô hình ghi $(\mathrm B,\rightarrow)\mapsto(0,\mathrm B)$; cặp này chưa được thử lại trong $\ell(\mathrm B,\rightarrow)=400$ bước thật; $\kappa=0{,}01$; $Q(\mathrm B,\rightarrow)=0{,}54$; $\max_aQ(\mathrm B,a)=Q(\mathrm B,\downarrow)=0{,}6$; $\alpha=0{,}5$, $\gamma=0{,}9$.
 
 **Thưởng thăm dò.** $\kappa\sqrt{\ell}=0{,}01\cdot20=0{,}2$.
 
@@ -464,8 +449,8 @@ Một cách trực quan, chính sách tham lam tự kiểm lại mô hình lạc
 **Kiểm tra lại.** Không có thưởng, mục tiêu là $0{,}9\cdot0{,}6=0{,}54$ và sai lệch bằng $0$: cặp đã ở điểm bất động của mô hình, nên các cập nhật lập kế hoạch của Dyna-Q không đổi $Q(\mathrm B,\rightarrow)$; chỉ bước thăm dò $\varepsilon$-tham lam mới đưa tác tử thử lại cặp này.
 :::
 
-::: definition Định nghĩa 11.12 (Thưởng thăm dò của Dyna-Q+)
-Cho hệ số $\kappa>0$ và với mỗi cặp $(s,a)$, số bước thật $\ell(s,a)$ kể từ lần thử thật gần nhất của cặp. **Dyna-Q+** là Thuật toán 11.10 với các thay đổi sau:
+::: definition Định nghĩa 11.11 (Thưởng thăm dò của Dyna-Q+)
+Cho hệ số $\kappa>0$ và với mỗi cặp $(s,a)$, số bước thật $\ell(s,a)$ kể từ lần thử thật gần nhất của cặp. **Dyna-Q+** là Thuật toán 11.8 với các thay đổi sau:
 
 - sau mỗi bước thật $(S,A)$, đặt $\ell(S,A)=0$ và tăng $\ell$ của mọi cặp khác thêm $1$;
 - **thưởng thăm dò** (exploration bonus): ở bước (f), phần thưởng mô phỏng $\tilde R$ được thay bằng $\tilde R+\kappa\sqrt{\ell(\tilde S,\tilde A)}$;
@@ -473,16 +458,37 @@ Cho hệ số $\kappa>0$ và với mỗi cặp $(s,a)$, số bước thật $\el
 - khi khởi tạo, mô hình của một hành động chưa thử cho tác tử ở yên tại trạng thái đó với phần thưởng $0$.
 :::
 
-Thưởng thăm dò chỉ đi vào cập nhật lập kế hoạch; hai thay đổi cuối lấy từ chú thích 1 của Sutton và Barto (2018, tr. 168). Ví dụ 11.9 là một lần chạy bước (f) của Dyna-Q+.
+Thưởng thăm dò chỉ đi vào cập nhật lập kế hoạch; hai thay đổi cuối lấy từ chú thích 1 của Sutton và Barto (2018, tr. 168). Ví dụ 11.8 là một lần chạy bước (f) của Dyna-Q+.
 
-::: remark Nhận xét 11.13 (Thăm dò trong lập kế hoạch)
-Với thưởng thăm dò, MDP mà bước (f) lập kế hoạch có phần thưởng $\hat r(s,a)+\kappa\sqrt{\ell(s,a)}$, thay đổi theo thời gian và khác $\hat r$. Bảng của Dyna-Q+ vì vậy không còn ước lượng $\hat q_*$ của mô hình, và Mệnh đề 11.9 không áp dụng. Khác chính sách $\varepsilon$-tham lam vốn thử ngẫu nhiên, thưởng thăm dò hướng tác tử tới cặp đã lâu chưa thử.
+::: remark Nhận xét 11.12 (Thăm dò trong lập kế hoạch)
+Với thưởng thăm dò, MDP mà bước (f) lập kế hoạch có phần thưởng $\hat r(s,a)+\kappa\sqrt{\ell(s,a)}$, thay đổi theo thời gian và khác $\hat r$. Bảng của Dyna-Q+ vì vậy không còn ước lượng $\hat q_*$ của mô hình, và Mệnh đề 11.4 không áp dụng. Khác chính sách $\varepsilon$-tham lam vốn thử ngẫu nhiên, thưởng thăm dò hướng tác tử tới cặp đã lâu chưa thử.
 :::
 
 <!-- note-topic-id: lec-11-topic-09 -->
-### 2.6 Cập nhật kỳ vọng và cập nhật mẫu
+### 2.6 Mô hình phân phối, cập nhật kỳ vọng và cập nhật mẫu
 
-Theo mô hình đếm của Ví dụ 11.3, $(\mathrm A,\rightarrow)$ có hai trạng thái kế đồng khả năng. Dyna-Q cập nhật cặp này bằng một mẫu; lặp giá trị cập nhật bằng cả phân phối. Chúng ta cần biết mỗi loại cập nhật tốn bao nhiêu lần đánh giá và cho mục tiêu gì.
+Các cập nhật lập kế hoạch của Q-planning và Dyna-Q hỏi mô hình một kết cục rút ngẫu nhiên. Trên mê cung, $(\mathrm F,\rightarrow)$ sang $\mathrm K$ với xác suất $0{,}8$ hoặc ở yên với xác suất $0{,}2$, nên mô hình cũng có thể trả cả bảng xác suất này.
+
+Một cách trực quan, với mười hai con xúc xắc, một mô hình liệt kê mọi tổng cùng xác suất của chúng, mô hình kia chỉ tung thử và báo một tổng (Sutton và Barto, 2018, §8.1, tr. 159). Để làm rõ trên mê cung, xem ví dụ sau.
+
+::: example Ví dụ 11.9 (Mô hình phân phối và mô hình mẫu của $(\mathrm F,\rightarrow)$)
+**Dữ kiện.** Mê cung hai phòng (Ví dụ 11.1): tại $\mathrm F$, hành động $\rightarrow$ sang $\mathrm K$ với xác suất $0{,}8$, ở yên với xác suất $0{,}2$, phần thưởng $0$; $\gamma=0{,}9$. Bảng sau lượt thứ nhất: $\max_aQ(\mathrm K,a)=0{,}5$, $\max_aQ(\mathrm F,a)=0$.
+
+**Mô hình phân phối.** Mô hình trả $\{\mathrm K:0{,}8;\ \mathrm F:0{,}2\}$ với phần thưởng $0$. Mục tiêu kỳ vọng là
+$$0{,}9\,(0{,}8\cdot0{,}5+0{,}2\cdot0)=0{,}36.$$
+
+**Mô hình mẫu.** Mô hình trả một trạng thái kế rút theo các xác suất trên: mẫu $\mathrm K$ cho mục tiêu $0{,}45$, mẫu $\mathrm F$ cho $0$.
+
+**Kiểm tra lại.** Trung bình của mục tiêu mẫu là $0{,}8\cdot0{,}45+0{,}2\cdot0=0{,}36$, bằng mục tiêu kỳ vọng.
+:::
+
+::: definition Định nghĩa 11.13 (Mô hình phân phối)
+Cho một MDP với tập trạng thái $\mathcal S^+$ và tập hành động $\mathcal A(s)$. **Mô hình phân phối** (distribution model) là một hàm gán cho mỗi cặp hợp lệ $(s,a)$ một phân phối $\hat p(\cdot,\cdot\mid s,a)$ trên các cặp (trạng thái kế, phần thưởng).
+:::
+
+Mô hình phân phối và mô hình mẫu (Định nghĩa 11.2) là hai cách hiện thực mô hình của Định nghĩa 01.14. Từ mô hình phân phối luôn rút được mẫu, nên mọi mô hình phân phối cho một mô hình mẫu. Mô hình mẫu dễ xây dựng hơn (Sutton và Barto, 2018, tr. 160). Mô hình đếm (Định nghĩa 11.1) là một mô hình phân phối. Mô hình tất định thuộc cả hai loại.
+
+Theo mô hình đếm của Ví dụ 11.2, $(\mathrm A,\rightarrow)$ có hai trạng thái kế đồng khả năng. Dyna-Q cập nhật cặp này bằng một mẫu; lặp giá trị cập nhật bằng cả phân phối. Chúng ta cần biết mỗi loại cập nhật tốn bao nhiêu lần đánh giá và cho mục tiêu gì.
 
 Một cách trực quan, cập nhật kỳ vọng hỏi mô hình mọi kết cục rồi lấy trung bình, nên mục tiêu không có phương sai nhưng tốn nhiều phép tính; cập nhật mẫu chỉ hỏi một kết cục, rẻ hơn nhưng có nhiễu. Để làm rõ, xem ví dụ sau.
 
@@ -508,7 +514,7 @@ Cho mô hình $\hat p$ và bảng $Q$. Với cặp $(s,a)$:
 Một lần đánh giá là một lần tính $\max_{a'}Q(s',a')$ tại một trạng thái kế.
 :::
 
-Sutton và Barto (2018, §8.5, Hình 8.6) vẽ hai loại cập nhật này bằng sơ đồ cập nhật ngược (backup diagram). Cập nhật kỳ vọng cần mô hình phân phối, cập nhật mẫu chỉ cần mô hình mẫu (Định nghĩa 11.1). Theo Ví dụ 11.2, mục tiêu mẫu có trung bình bằng mục tiêu kỳ vọng, nên hai loại khác nhau ở chi phí và phương sai: cập nhật kỳ vọng tốn $b$ lần đánh giá và cho đúng mục tiêu kỳ vọng, cập nhật mẫu tốn một lần và cho mục tiêu có phương sai.
+Sutton và Barto (2018, §8.5, Hình 8.6) vẽ hai loại cập nhật này bằng sơ đồ cập nhật ngược (backup diagram). Cập nhật kỳ vọng cần mô hình phân phối, cập nhật mẫu chỉ cần mô hình mẫu (Định nghĩa 11.13, 11.2). Theo Ví dụ 11.9, mục tiêu mẫu có trung bình bằng mục tiêu kỳ vọng, nên hai loại khác nhau ở chi phí và phương sai: cập nhật kỳ vọng tốn $b$ lần đánh giá và cho đúng mục tiêu kỳ vọng, cập nhật mẫu tốn một lần và cho mục tiêu có phương sai.
 
 **Câu hỏi.** Sau $k$ cập nhật mẫu, sai số còn lại bao nhiêu so với một cập nhật kỳ vọng tốn $b$ lần đánh giá? Sutton và Barto (2018, tr. 174) xét $b$ trạng thái kế đồng khả năng, lấy sai số ban đầu bằng $1$, và cho sai số sau $k$ cập nhật mẫu là $\sqrt{(b-1)/(bk)}$. Mệnh đề sau nêu các giả thiết xác suất mà dưới đó công thức này đúng: phần (b) coi các giá trị kế như $b$ số rút độc lập có phương sai $1$.
 
@@ -570,20 +576,24 @@ Cập nhật mẫu có lợi khi hệ số phân nhánh lớn và có quá nhi�
 
 **Trong thực hành.** Với mô hình mẫu là một chương trình mô phỏng, tác tử chỉ dùng được cập nhật mẫu, và $b$ có thể rất lớn. Bảng $Q$ thay đổi trong lúc lập kế hoạch, nên giả thiết "giá trị kế cố định" của Mệnh đề 11.15 không thỏa.
 
+::: remark Nhận xét 11.17 (Quy hoạch động là lập kế hoạch nền với mô hình phân phối)
+Thuật toán 04.28 và 04.31 dùng mô hình phân phối đã biết để cập nhật mọi trạng thái trước khi tác tử gặp chúng, nên quy hoạch động là lập kế hoạch nền. Ở chương này, $\hat p$ được học từ ít mẫu thật và có sai số.
+:::
+
 <!-- note-topic-id: lec-11-topic-10 -->
 ### 2.7 Đọc thêm: phân bổ các cập nhật
 
-Thuật toán 11.8 và 11.10 chọn cặp cập nhật ngẫu nhiên, trong khi Ví dụ 11.7 cho thấy cập nhật $(\mathrm K,\rightarrow)$ trước $(\mathrm F,\rightarrow)$ cho $0{,}3375$ thay vì $0{,}225$.
+Thuật toán 11.3 và 11.8 chọn cặp cập nhật ngẫu nhiên, trong khi Ví dụ 11.6 cho thấy cập nhật $(\mathrm K,\rightarrow)$ trước $(\mathrm F,\rightarrow)$ cho $0{,}3375$ thay vì $0{,}225$.
 
-::: remark Nhận xét 11.17 (Quét ưu tiên)
-**Quét ưu tiên** (prioritized sweeping) cập nhật trước cặp có sai lệch dự kiến lớn nhất, rồi đưa các cặp dẫn tới trạng thái vừa đổi giá trị vào hàng đợi (Sutton và Barto, 2018, §8.4, tr. 168–171). Giá trị vì vậy lan ngược từ đích, như thứ tự $(\mathrm K,\rightarrow)$ rồi $(\mathrm F,\rightarrow)$ cho $0{,}3375$ ở Ví dụ 11.7. Định lý 04.32 chỉ bảo đảm hội tụ khi mọi trạng thái được cập nhật vô hạn lần. Quét ưu tiên với ngưỡng $\theta$ bỏ qua các cặp có ưu tiên nhỏ, nên không tự thỏa điều kiện đó.
+::: remark Nhận xét 11.18 (Quét ưu tiên)
+**Quét ưu tiên** (prioritized sweeping) cập nhật trước cặp có sai lệch dự kiến lớn nhất, rồi đưa các cặp dẫn tới trạng thái vừa đổi giá trị vào hàng đợi (Sutton và Barto, 2018, §8.4, tr. 168–171). Giá trị vì vậy lan ngược từ đích, như thứ tự $(\mathrm K,\rightarrow)$ rồi $(\mathrm F,\rightarrow)$ cho $0{,}3375$ ở Ví dụ 11.6. Định lý 04.32 chỉ bảo đảm hội tụ khi mọi trạng thái được cập nhật vô hạn lần. Quét ưu tiên với ngưỡng $\theta$ bỏ qua các cặp có ưu tiên nhỏ, nên không tự thỏa điều kiện đó.
 :::
 
-::: remark Nhận xét 11.18 (Lấy mẫu theo quỹ đạo)
+::: remark Nhận xét 11.19 (Lấy mẫu theo quỹ đạo)
 **Lấy mẫu theo quỹ đạo** (trajectory sampling) chọn cặp cập nhật bằng cách mô phỏng lượt theo chính sách hiện tại, tức theo phân phối theo chính sách (on-policy distribution); trên các bài toán sinh ngẫu nhiên của thí nghiệm, cách này cải thiện nhanh hơn phân bổ đều ở giai đoạn đầu và chậm hơn về lâu dài, với lợi thế lớn hơn khi nhiều trạng thái và hệ số phân nhánh nhỏ (Sutton và Barto, 2018, §8.6, Hình 8.8).
 :::
 
-::: theorem Định lý 11.19 (Hội tụ của RTDP)
+::: theorem Định lý 11.20 (Hội tụ của RTDP)
 **Giả thiết.** Bài toán có kết thúc, không chiết khấu; lượt bắt đầu ngẫu nhiên trong tập trạng thái đầu và kết thúc ở đích hấp thụ; giá trị đầu tại đích bằng $0$ và không nhỏ hơn giá trị tối ưu ở nơi khác; từ mọi trạng thái đầu có chính sách tới đích với xác suất $1$; phần thưởng ngoài đích âm ngặt.
 
 **Kết luận.** Quy hoạch động thời gian thực (real-time dynamic programming, RTDP), lặp giá trị bất đồng bộ trên quỹ đạo tham lam, hội tụ với xác suất $1$ tới chính sách tối ưu trên các trạng thái liên quan.
@@ -593,7 +603,7 @@ Thuật toán 11.8 và 11.10 chọn cặp cập nhật ngẫu nhiên, trong khi 
 **Phạm vi.** Mê cung hai phòng không thỏa hai giả thiết: có chiết khấu $\gamma=0{,}9$ và phần thưởng ngoài đích bằng $0$. Chứng minh nằm ngoài phạm vi học phần; xem Barto, Bradtke và Singh (1995), dẫn theo Sutton và Barto (2018, §8.7, tr. 178).
 :::
 
-Như vậy, chúng ta có mô hình đếm và phương sai của nó (Mệnh đề 11.5), Q-planning hội tụ tới $\hat q_*$ khi mô hình cố định và xác định ở mọi cặp (Mệnh đề 11.9), Dyna-Q (Thuật toán 11.10) và sai số của cập nhật mẫu (Mệnh đề 11.15). Tuy nhiên, lập kế hoạch nền tốn phép tính cho mọi trạng thái được chọn, kể cả những trạng thái như $\mathrm A$, $\mathrm B$, $\mathrm E$ mà đường ngắn nhất từ $\mathrm F$ tới $\mathrm Z$ không đi qua. Tác tử đứng ở một trạng thái chỉ cần chọn tốt một hành động tại đó, nên chỉ cần tính các diễn biến bắt đầu từ trạng thái này.
+Như vậy, chúng ta có mô hình đếm (Định nghĩa 11.1), Q-planning hội tụ tới $\hat q_*$ khi mô hình cố định và xác định ở mọi cặp (Mệnh đề 11.4), phương sai của xác suất ước lượng (Mệnh đề 11.5), Dyna-Q (Thuật toán 11.8) và sai số của cập nhật mẫu (Mệnh đề 11.15). Tuy nhiên, lập kế hoạch nền tốn phép tính cho mọi trạng thái được chọn, kể cả những trạng thái như $\mathrm A$, $\mathrm B$, $\mathrm E$ mà đường ngắn nhất từ $\mathrm F$ tới $\mathrm Z$ không đi qua. Tác tử đứng ở một trạng thái chỉ cần chọn tốt một hành động tại đó, nên chỉ cần tính các diễn biến bắt đầu từ trạng thái này.
 
 ---
 
@@ -603,6 +613,12 @@ Như vậy, chúng ta có mô hình đếm và phương sai của nó (Mệnh đ
 ### 3.1 Lập kế hoạch tại thời điểm quyết định và thuật toán rollout
 
 Tác tử đứng ở $\mathrm F$, có một mô hình mẫu đúng và một chính sách cơ sở $\pi_0$ chọn mỗi mũi tên với xác suất $1/4$. Từ $\mathrm F$, $\pi_0$ chỉ có giá trị $0{,}2016$, so với $v_*(\mathrm F)=0{,}8566$.
+
+::: definition Định nghĩa 11.21 (Lập kế hoạch tại thời điểm quyết định)
+**Lập kế hoạch tại thời điểm quyết định** (decision-time planning) là lập kế hoạch bắt đầu sau khi quan sát $S_t$ và kết thúc khi chọn xong $A_t$; đầu ra là $A_t$.
+:::
+
+Lập kế hoạch nền (Định nghĩa 11.9) và lập kế hoạch tại thời điểm quyết định khác nhau ở trạng thái mà phép tính hướng tới (Sutton và Barto, 2018, §8.8, tr. 180–181): lập kế hoạch nền chia phép tính cho mọi trạng thái nó cập nhật; lập kế hoạch tại thời điểm quyết định dồn phép tính vào trạng thái hiện tại, phù hợp khi có thời gian suy nghĩ trước mỗi bước. Trên mê cung, thử trước các hành động khi đứng ở $\mathrm F$ là lập kế hoạch tại thời điểm quyết định, khác cập nhật $Q(\mathrm F,\rightarrow)$ khi đứng ở $\mathrm A$ (lập kế hoạch nền).
 
 Một cách trực quan, tác tử thử từng hành động tại $\mathrm F$ trong mô hình, đi tiếp theo $\pi_0$ tới hết lượt, lặp lại nhiều lần và lấy trung bình lợi tức, một ước lượng của $q_{\pi_0}(\mathrm F,a)$. Để so ước lượng đó với giá trị chính xác, xem ví dụ sau.
 
@@ -637,7 +653,7 @@ Nghiệm là
 **Kiểm tra lại.** $v_{\pi_0}(\mathrm F)=\tfrac14(0{,}3886+0{,}1814+2\cdot0{,}1181)=0{,}2016$, đúng phương trình Bellman kỳ vọng tại $\mathrm F$; $(0{,}9+0{,}28243)/2=0{,}5912$.
 :::
 
-::: algorithm Thuật toán 11.20 (Thuật toán rollout)
+::: algorithm Thuật toán 11.22 (Thuật toán rollout)
 **Đầu vào.** Mô hình mẫu; chính sách Markov dừng $\pi_0$, gọi là **chính sách cơ sở** (base policy); trạng thái hiện tại $s$; $\gamma\in[0,1)$.
 
 **Đầu ra.** Hành động $A_t\in\mathcal A(s)$.
@@ -662,13 +678,13 @@ Sau vòng lặp:
 **Chi phí mỗi bước.** Với $D$ hữu hạn, mỗi quyết định gọi mô hình nhiều nhất $\lvert\mathcal A(s)\rvert\,m\,D$ lần, tức $O(\lvert\mathcal A(s)\rvert\,m\,D)$; với $D=\infty$, số lần gọi bằng tổng độ dài các mô phỏng.
 :::
 
-Ví dụ 11.12 là một lần chạy Thuật toán 11.20 tại $\mathrm F$ với $m=2$, $D=\infty$. Gọi **chính sách rollout** (rollout policy) là chính sách $\pi_{\mathrm{ro}}$ với $\pi_{\mathrm{ro}}(s)\in\arg\max_{a\in\mathcal A(s)}q_{\pi_0}(s,a)$ tại mọi $s$, phá hòa theo cùng quy tắc cố định. Khi mô hình mẫu đúng, mô phỏng không bị cắt (lượt kết thúc với xác suất $1$) và $m\to\infty$, $\bar G(a)\to q_{\pi_0}(s,a)$ hầu chắc chắn theo luật số lớn, nên thuật toán xấp xỉ $\pi_{\mathrm{ro}}(s)$. Với mô hình sai, $\bar G(a)$ tiến tới giá trị của $\pi_0$ trên MDP của mô hình.
+Ví dụ 11.12 là một lần chạy Thuật toán 11.22 tại $\mathrm F$ với $m=2$, $D=\infty$. Gọi **chính sách rollout** (rollout policy) là chính sách $\pi_{\mathrm{ro}}$ với $\pi_{\mathrm{ro}}(s)\in\arg\max_{a\in\mathcal A(s)}q_{\pi_0}(s,a)$ tại mọi $s$, phá hòa theo cùng quy tắc cố định. Khi mô hình mẫu đúng, mô phỏng không bị cắt (lượt kết thúc với xác suất $1$) và $m\to\infty$, $\bar G(a)\to q_{\pi_0}(s,a)$ hầu chắc chắn theo luật số lớn, nên thuật toán xấp xỉ $\pi_{\mathrm{ro}}(s)$. Với mô hình sai, $\bar G(a)$ tiến tới giá trị của $\pi_0$ trên MDP của mô hình.
 
-Thuật toán rollout là lập kế hoạch tại thời điểm quyết định (Định nghĩa 11.2). Sutton và Barto (2018, §8.10) gọi $\pi_0$ là "rollout policy"; chúng ta theo cách gọi của Bertsekas và dùng tên chính sách rollout cho $\pi_{\mathrm{ro}}$. "Thuật toán rollout" cũng khác "đoạn thu (rollout)" của Bài 10, là dữ liệu thu để học.
+Thuật toán rollout là lập kế hoạch tại thời điểm quyết định (Định nghĩa 11.21). Sutton và Barto (2018, §8.10) gọi $\pi_0$ là "rollout policy"; chúng ta theo cách gọi của Bertsekas và dùng tên chính sách rollout cho $\pi_{\mathrm{ro}}$. "Thuật toán rollout" cũng khác "đoạn thu (rollout)" của Bài 10, là dữ liệu thu để học.
 
 **Câu hỏi.** Chính sách rollout có tốt hơn một chính sách cơ sở kém như ngẫu nhiên đều không? Mệnh đề sau trả lời: không kém hơn, khi $q_{\pi_0}$ chính xác.
 
-::: proposition Mệnh đề 11.21 (Tính chất cải thiện của rollout)
+::: proposition Mệnh đề 11.23 (Tính chất cải thiện của rollout)
 **Giả thiết.** MDP hữu hạn, phần thưởng bị chặn, $0\le\gamma<1$. Chính sách cơ sở $\pi_0$ Markov dừng với giá trị chính xác $q_{\pi_0}$, $v_{\pi_0}$. Chính sách $\pi_{\mathrm{ro}}$ Markov dừng xác định, tham lam theo $q_{\pi_0}$ tại mọi trạng thái.
 
 **Kết luận.** $v_{\pi_{\mathrm{ro}}}(s)\ge v_{\pi_0}(s)$ với mọi $s$; bất đẳng thức nghiêm ngặt tại $s$ khi $\max_aq_{\pi_0}(s,a)>v_{\pi_0}(s)$.
@@ -706,15 +722,15 @@ Thực hiện rollout ở mọi trạng thái gặp trên đường là thực h
 - $\mathrm F$: $\rightarrow$ ($0{,}3886$); $\mathrm K$: $\rightarrow$ ($0{,}8881$);
 - $\mathrm C$: $\rightarrow$ ($0{,}5102$, so với $\downarrow$ là $0{,}4291$); $\mathrm D$: $\downarrow$ ($0{,}9083$).
 
-**Diễn giải.** Mọi lựa chọn là một bước của đường ngắn nhất, nên $\pi_{\mathrm{ro}}$ có giá trị $v_*$: tại $\mathrm F$, từ $0{,}2016$ lên $0{,}8566$, vượt xa bảo đảm "không giảm" của Mệnh đề 11.21.
+**Diễn giải.** Mọi lựa chọn là một bước của đường ngắn nhất, nên $\pi_{\mathrm{ro}}$ có giá trị $v_*$: tại $\mathrm F$, từ $0{,}2016$ lên $0{,}8566$, vượt xa bảo đảm "không giảm" của Mệnh đề 11.23.
 
 **Kiểm tra lại.** $q_{\pi_0}(\mathrm C,\rightarrow)=0{,}72\cdot0{,}601855+0{,}18\cdot0{,}426962=0{,}5102$.
 :::
 
-Mệnh đề 11.21 cần $q_{\pi_0}$ chính xác, còn thuật toán rollout chỉ có trung bình của $m$ mô phỏng. **Câu hỏi.** Cần bao nhiêu mô phỏng để trung bình không đảo thứ tự hai hành động? Mệnh đề sau chặn xác suất đảo thứ tự theo $m$.
+Mệnh đề 11.23 cần $q_{\pi_0}$ chính xác, còn thuật toán rollout chỉ có trung bình của $m$ mô phỏng. **Câu hỏi.** Cần bao nhiêu mô phỏng để trung bình không đảo thứ tự hai hành động? Mệnh đề sau chặn xác suất đảo thứ tự theo $m$.
 
-::: proposition Mệnh đề 11.22 (Xác suất chọn sai của rollout với $m$ mô phỏng)
-**Giả thiết.** Mô hình mẫu đúng. Tại trạng thái $s$, hai hành động $a$, $a'$ có $\Delta=q_{\pi_0}(s,a)-q_{\pi_0}(s,a')>0$. Thuật toán 11.20 chạy $m$ mô phỏng cho mỗi hành động, với $m$ cố định trước; mô phỏng chạy tới trạng thái kết thúc, không cắt ($D=\infty$, lượt kết thúc với xác suất $1$); $2m$ lợi tức mô phỏng độc lập, mỗi lợi tức nằm trong một đoạn độ rộng $B$.
+::: proposition Mệnh đề 11.24 (Xác suất chọn sai của rollout với $m$ mô phỏng)
+**Giả thiết.** Mô hình mẫu đúng. Tại trạng thái $s$, hai hành động $a$, $a'$ có $\Delta=q_{\pi_0}(s,a)-q_{\pi_0}(s,a')>0$. Thuật toán 11.22 chạy $m$ mô phỏng cho mỗi hành động, với $m$ cố định trước; mô phỏng chạy tới trạng thái kết thúc, không cắt ($D=\infty$, lượt kết thúc với xác suất $1$); $2m$ lợi tức mô phỏng độc lập, mỗi lợi tức nằm trong một đoạn độ rộng $B$.
 
 **Kết luận.**
 $$\begin{aligned}&\Pr\bigl\{\bar G(a')\ge\bar G(a)\bigr\}\\&\quad\le\exp\Bigl(-\frac{m\Delta^2}{B^2}\Bigr).\end{aligned}\tag{3.1}$$
@@ -769,7 +785,7 @@ Một cách trực quan, lựa chọn hành động tại $\mathrm F$ là một 
 **Kiểm tra lại.** $\sqrt{0{,}3662}=0{,}6051$ và $\sqrt{1{,}0986}=1{,}0481$.
 :::
 
-::: definition Định nghĩa 11.23 (Quy tắc cận tin cậy trên)
+::: definition Định nghĩa 11.25 (Quy tắc cận tin cậy trên)
 Trong bài toán chọn lặp lại một bước với tập hành động hữu hạn, ở bước $t\ge1$, gọi $N(a)$ là số lần đã chọn $a$ trước bước $t$ và $\bar r(a)$ là trung bình mẫu của các phần thưởng đó. Với hằng số $c_{\mathrm{ucb}}>0$, **quy tắc cận tin cậy trên** (upper confidence bound, UCB) chọn
 $$\begin{aligned}A_t\in\arg\max_a\Bigl[&\bar r(a)\\&+c_{\mathrm{ucb}}\sqrt{\frac{\ln t}{N(a)}}\Bigr],\end{aligned}\tag{3.2}$$
 với quy ước hành động có $N(a)=0$ có chỉ số bằng $+\infty$.
@@ -783,7 +799,7 @@ Số hạng thứ hai giảm khi $N(a)$ tăng và tăng chậm theo $t$ khi $a$ 
 
 Szepesvári (2010, §4.2.1) viết cùng quy tắc cho phần thưởng trong $[-R,R]$.
 
-::: theorem Định lý 11.24 (Bảo đảm của UCB1)
+::: theorem Định lý 11.26 (Bảo đảm của UCB1)
 **Giả thiết.** Có $K>1$ hành động; phần thưởng của mỗi hành động độc lập, cùng phân phối theo thời gian, độc lập giữa các hành động, nhận giá trị trong $[0,1]$. Đặt $\nu_a$ là kỳ vọng phần thưởng của $a$, $\nu^*=\max_a\nu_a$, $\Delta_a=\nu^*-\nu_a$, $N_t(a)$ là số lần chọn $a$ trong $t$ bước đầu.
 
 **Kết luận.**
@@ -855,19 +871,19 @@ với $N(\mathrm F)=8$.
 
 Hình đọc từ trái sang phải theo bốn pha của Ví dụ 11.16; đoạn chấm ngoài cây chỉ góp lợi tức $0{,}729$ rồi bị bỏ.
 
-::: definition Định nghĩa 11.25 (Cây tìm kiếm, chính sách cây, thống kê cạnh)
+::: definition Định nghĩa 11.27 (Cây tìm kiếm, chính sách cây, thống kê cạnh)
 Cho trạng thái gốc $s_0$ và một mô hình mẫu.
 
 - **Cây tìm kiếm** gồm các nút, mỗi nút là một trạng thái gặp trong mô phỏng ở một độ sâu tính từ gốc; mỗi cạnh $(s,a)$ ứng với $a\in\mathcal A(s)$.
 - **Thống kê cạnh**: số lần đi qua $N(s,a)$, tổng lợi tức $W(s,a)$ tính từ cạnh đó, trung bình $\bar Q=W/N$; $N(s)=\sum_aN(s,a)$.
 - **Chính sách cây** (tree policy) chọn tại nút $s$ cạnh có **chỉ số UCT** lớn nhất (UCT: upper confidence bounds applied to trees, cận tin cậy trên áp cho cây),
 $$\bar Q(s,a)+c_{\mathrm{ucb}}\sqrt{\frac{\ln N(s)}{N(s,a)}},\tag{3.3}$$
-với cạnh có $N(s,a)=0$ được chọn trước. Ngoài cây, pha mô phỏng chọn hành động theo chính sách cơ sở $\pi_0$ của Thuật toán 11.20.
+với cạnh có $N(s,a)=0$ được chọn trước. Ngoài cây, pha mô phỏng chọn hành động theo chính sách cơ sở $\pi_0$ của Thuật toán 11.22.
 :::
 
-Chỉ số (3.3) là quy tắc (3.2) áp ở mỗi nút, với $N(s)$, số lần đã qua nút, ở vị trí $t-1$ như UCB1. Kocsis và Szepesvári (2006) viết số hạng thăm dò là $2C_p\sqrt{\ln t/k}$, với $t$ là số lần thăm nút và $k$ là số lần chọn cạnh, ứng với $c_{\mathrm{ucb}}=2C_p$ (§2.2), và coi nút là cặp (trạng thái, độ sâu) như Định nghĩa 11.25 (§2.3). Sutton và Barto (2018, §8.11, Hình 8.10) gọi chính sách ngoài cây là rollout policy; ở đây đó là chính sách cơ sở $\pi_0$.
+Chỉ số (3.3) là quy tắc (3.2) áp ở mỗi nút, với $N(s)$, số lần đã qua nút, ở vị trí $t-1$ như UCB1. Kocsis và Szepesvári (2006) viết số hạng thăm dò là $2C_p\sqrt{\ln t/k}$, với $t$ là số lần thăm nút và $k$ là số lần chọn cạnh, ứng với $c_{\mathrm{ucb}}=2C_p$ (§2.2), và coi nút là cặp (trạng thái, độ sâu) như Định nghĩa 11.27 (§2.3). Sutton và Barto (2018, §8.11, Hình 8.10) gọi chính sách ngoài cây là rollout policy; ở đây đó là chính sách cơ sở $\pi_0$.
 
-::: algorithm Thuật toán 11.26 (Tìm kiếm theo cây Monte Carlo với UCT)
+::: algorithm Thuật toán 11.28 (Tìm kiếm theo cây Monte Carlo với UCT)
 **Đầu vào.** Trạng thái hiện tại $s_0$; mô hình mẫu; chính sách cơ sở $\pi_0$; $\gamma\in[0,1)$.
 
 **Đầu ra.** Hành động $A_t$ tại $s_0$.
@@ -897,7 +913,7 @@ Bốn bước là bốn pha của Sutton và Barto (2018, §8.11, tr. 187): ch�
 <!-- note-topic-id: lec-11-topic-14 -->
 ### 3.4 Bảo đảm của UCT và giá trị học được
 
-Ở gốc của Thuật toán 11.26, lợi tức mô phỏng đổi theo thời gian, nên Định lý 11.24 không áp dụng trực tiếp. Trên mê cung, do trượt, một lượt còn có thể dài tùy ý, nên mô phỏng bị cắt ở độ sâu $D$.
+Ở gốc của Thuật toán 11.28, lợi tức mô phỏng đổi theo thời gian, nên Định lý 11.26 không áp dụng trực tiếp. Trên mê cung, do trượt, một lượt còn có thể dài tùy ý, nên mô phỏng bị cắt ở độ sâu $D$.
 
 Một cách trực quan, ở mỗi nút UCT giải một bài toán chọn lặp lại có trung bình trôi dần, vì lựa chọn ở các nút bên dưới đang thay đổi. Khi các nút sâu hơn ổn định, trung bình ở nút trên cũng ổn định, và quy tắc cận tin cậy trên ở gốc dồn dần mô phỏng vào hành động tốt nhất của bài toán cắt. Phép cắt ở độ sâu $D$ chỉ bỏ phần lợi tức sau bước $D$, phần này có hệ số $\gamma^D$.
 
@@ -905,7 +921,7 @@ Với chính sách $\pi$, đặt
 $$\begin{aligned}v^D_\pi(s)&=\mathbb E_\pi\Bigl[\sum_{t=0}^{\min(D,T)-1}\gamma^tR_{t+1}\\&\qquad\Bigm|S_0=s\Bigr],\\v^D_*(s)&=\sup_\pi v^D_\pi(s),\end{aligned}$$
 là giá trị của bài toán cắt ở độ sâu $D$, cận trên lấy trên mọi chính sách.
 
-::: theorem Định lý 11.27 (Tính nhất quán của UCT cho bài toán cắt)
+::: theorem Định lý 11.29 (Tính nhất quán của UCT cho bài toán cắt)
 **Giả thiết.** Tập hành động hữu hạn; mô hình mẫu đúng; bài toán cắt ở độ sâu $D$.
 
 - Với (a): mỗi phần thưởng nằm trong $[0,1]$, nên lợi tức của bài toán cắt nằm trong $[0,D]$. Thuật toán là UCT của Kocsis và Szepesvári (2006): chỉ số (3.3) áp ở mọi nút (trạng thái, độ sâu) tới độ sâu $D$, mỗi vòng đi từ gốc tới độ sâu $D$ hoặc tới trạng thái kết thúc, với $c_{\mathrm{ucb}}=\sqrt2\,D$, tức hệ số thăm dò của UCB1 nhân $D$, tương đương chia mọi phần thưởng cho $D$ rồi dùng UCB1. Hành động tối ưu của bài toán cắt tại gốc là duy nhất.
@@ -938,7 +954,7 @@ $$\begin{aligned}v_*(s)-v^D_*(s)&\le v_{\pi_*}(s)-v^D_{\pi_*}(s)\\&\le\gamma^D,\
 trong đó bất đẳng thức đầu dùng $v^D_*(s)\ge v^D_{\pi_*}(s)$. $\square$
 :::
 
-Trên mê cung với $D=20$, (b) cho $0\le v_*-v^D_*\le0{,}1216$. Kocsis và Szepesvári (2006, đoạn sau chứng minh Định lý 6) nêu kết quả mở rộng được cho MDP chiết khấu bằng cách cắt ở một chân trời hiệu dụng. Thuật toán 11.26 là biến thể thực hành của UCT: cây mọc mỗi vòng một nút, và ngoài cây mô phỏng theo $\pi_0$. Kết luận (a) không được chứng minh cho biến thể này.
+Trên mê cung với $D=20$, (b) cho $0\le v_*-v^D_*\le0{,}1216$. Kocsis và Szepesvári (2006, đoạn sau chứng minh Định lý 6) nêu kết quả mở rộng được cho MDP chiết khấu bằng cách cắt ở một chân trời hiệu dụng. Thuật toán 11.28 là biến thể thực hành của UCT: cây mọc mỗi vòng một nút, và ngoài cây mô phỏng theo $\pi_0$. Kết luận (a) không được chứng minh cho biến thể này.
 
 Các giả thiết có vai trò riêng, và mỗi giả thiết bị bỏ đều có phản ví dụ:
 
@@ -946,15 +962,15 @@ Các giả thiết có vai trò riêng, và mỗi giả thiết bị bỏ đều
 - Bỏ "phần thưởng không âm": lợi tức cắt có thể lớn hơn lợi tức đầy đủ, và Bước 3 không còn.
 - Bỏ "mô hình đúng": UCT hội tụ tới hành động tối ưu của MDP của mô hình, không của môi trường thật.
 
-::: remark Nhận xét 11.28 (Xác suất tiên nghiệm và giá trị học được trong AlphaGo Zero)
+::: remark Nhận xét 11.30 (Xác suất tiên nghiệm và giá trị học được trong AlphaGo Zero)
 AlphaGo Zero bỏ pha mô phỏng: một mạng nơ-ron cho giá trị nút lá thay lợi tức mô phỏng, và cho xác suất tiên nghiệm $P(s,a)$ dùng trong chính sách cây (Sutton và Barto, 2018, §16.6.2, tr. 447–450). Chính sách cây là một biến thể của PUCT (Silver và cộng sự, 2017, phần Phương pháp, mục "Select"):
 $$\begin{aligned}&a\in\arg\max_a\bigl[\bar Q(s,a)\\&\qquad+U(s,a)\bigr],\\&U(s,a)=c_{\mathrm{puct}}P(s,a)\\&\qquad\times\frac{\sqrt{\sum_{a'}N(s,a')}}{1+N(s,a)},\end{aligned}$$
 với hằng số $c_{\mathrm{puct}}>0$: ban đầu ưu tiên xác suất tiên nghiệm cao, về sau ưu tiên giá trị cao.
 :::
 
-**Trong thực hành.** Khi trạng thái chỉ quan sát được một phần hoặc mô hình là một mạng học được, Mệnh đề 11.22 và Định lý 11.27 mất giả thiết "mô hình đúng". Giá trị $q_{\pi_0}$ tính trên mô hình khi đó là giá trị trên MDP của mô hình, nên Mệnh đề 11.21 chỉ so hai chính sách trên mô hình.
+**Trong thực hành.** Khi trạng thái chỉ quan sát được một phần hoặc mô hình là một mạng học được, Mệnh đề 11.24 và Định lý 11.29 mất giả thiết "mô hình đúng". Giá trị $q_{\pi_0}$ tính trên mô hình khi đó là giá trị trên MDP của mô hình, nên Mệnh đề 11.23 chỉ so hai chính sách trên mô hình.
 
-Như vậy, với mô hình đúng, rollout không làm giảm giá trị (Mệnh đề 11.21), và tại $\mathrm F$, $m=70$ mô phỏng mỗi hành động giữ xác suất xếp $\downarrow$ trên $\rightarrow$ không quá $0{,}0496$ (Mệnh đề 11.22, Ví dụ 11.14). UCT nhất quán cho bài toán cắt (Định lý 11.27). Cả hai cần tập hành động hữu hạn. Với hành động liên tục, như độ dịch chuyển lệnh cho một chiếc xe trên đường ray, cây không liệt kê được các cạnh. Nếu mô hình khả vi, đạo hàm của chi phí theo hành động chỉ ra hướng sửa kế hoạch.
+Như vậy, với mô hình đúng, rollout không làm giảm giá trị (Mệnh đề 11.23), và tại $\mathrm F$, $m=70$ mô phỏng mỗi hành động giữ xác suất xếp $\downarrow$ trên $\rightarrow$ không quá $0{,}0496$ (Mệnh đề 11.24, Ví dụ 11.14). UCT nhất quán cho bài toán cắt (Định lý 11.29). Cả hai cần tập hành động hữu hạn. Với hành động liên tục, như độ dịch chuyển lệnh cho một chiếc xe trên đường ray, cây không liệt kê được các cạnh. Nếu mô hình khả vi, đạo hàm của chi phí theo hành động chỉ ra hướng sửa kế hoạch.
 
 ---
 
@@ -978,7 +994,7 @@ $$\begin{aligned}&J(u_0,u_1)=x_1^2+u_0^2+x_2^2+u_1^2,\\&x_1=x_0+u_0,\quad x_2=x_
 
 Bài toán dùng chi phí $c\ge0$; cực tiểu tổng chi phí tương đương cực đại tổng phần thưởng $-c$.
 
-::: definition Định nghĩa 11.29 (Bài toán tối ưu kế hoạch chân trời $h$, phép bắn)
+::: definition Định nghĩa 11.31 (Bài toán tối ưu kế hoạch chân trời $h$, phép bắn)
 Cho trạng thái đầu $x_0\in\mathbb R$, mô hình tất định $\hat f:\mathbb R\times\mathbb R\to\mathbb R$, chi phí mỗi bước $c:\mathbb R\times\mathbb R\to\mathbb R_{\ge0}$ và chân trời $h\ge1$. **Bài toán tối ưu kế hoạch** (trajectory optimization) là
 $$\begin{aligned}&\min_{u_0,\dots,u_{h-1}\in\mathbb R}J(u_{0:h-1}),\\&J=\sum_{t=0}^{h-1}c(x_{t+1},u_t),\end{aligned}\tag{4.1}$$
 trong đó các trạng thái được thế bằng $x_{t+1}=\hat f(x_t,u_t)$ từ $x_0$. Cách viết $J$ chỉ theo chuỗi hành động, với trạng thái tính bằng mô hình, gọi là **phép bắn** (shooting), hay phép bắn đơn (single shooting).
@@ -1008,7 +1024,7 @@ Một cách trực quan, mỗi $u_t$ đẩy xe một đoạn, và đoạn đẩy
 
 Với $h$ lớn, lan truyền ngược (backpropagation) qua đồ thị tính của $J$ cho mọi đạo hàm trong một lượt ngược.
 
-::: proposition Mệnh đề 11.30 (Gradient theo chuỗi hành động bằng truy hồi ngược)
+::: proposition Mệnh đề 11.32 (Gradient theo chuỗi hành động bằng truy hồi ngược)
 **Giả thiết.** $\hat f$ và $c$ khả vi liên tục; $x_1,\dots,x_h$ tính từ $x_0$ và $u_{0:h-1}$ bằng $x_{t+1}=\hat f(x_t,u_t)$.
 
 **Kết luận.** Định nghĩa $\lambda_t$ bằng **truy hồi ngược** (backward recursion)
@@ -1039,7 +1055,7 @@ Mệnh đề là lan truyền ngược viết cho một chuỗi thời gian; $\l
 
 **Bản truy hồi ngược của Ví dụ 11.18.** Với $\hat f(x,u)=x+u$, $\partial\hat f/\partial x=\partial\hat f/\partial u=1$. Tại $(0;\,0)$: $x_1=x_2=2$; $\lambda_2=2x_2=4$; $\lambda_1=2x_1+\lambda_2=8$; $\partial J/\partial u_1=2u_1+\lambda_2=4$; $\partial J/\partial u_0=2u_0+\lambda_1=8$. Gradient $(8;\,4)$ trùng kết quả khai triển.
 
-::: algorithm Thuật toán 11.31 (Tối ưu kế hoạch bằng hạ gradient)
+::: algorithm Thuật toán 11.33 (Tối ưu kế hoạch bằng hạ gradient)
 **Đầu vào.** $x_0$; mô hình khả vi $\hat f$; chi phí khả vi $c$; chân trời $h$.
 
 **Đầu ra.** Kế hoạch $u_{0:h-1}$.
@@ -1078,67 +1094,16 @@ Mệnh đề là lan truyền ngược viết cho một chuỗi thời gian; $\l
 
 PILCO (probabilistic inference for learning control) tính giải tích gradient của chi phí dài hạn theo tham số chính sách qua mô hình quá trình Gauss (Gaussian process) (Deisenroth và Rasmussen, 2011, §2.3).
 
-**Trong thực hành.** Khi $\hat f$ là một mạng nơ-ron, lượt ngược của Thuật toán 11.31 là lan truyền ngược tự động qua $h$ bản của mạng. Mệnh đề 11.30 cho gradient của chi phí tính trên mô hình. Khi mô hình sai dọc quỹ đạo dự báo, gradient đó không bảo đảm chi phí trên môi trường thật giảm.
-
-<!-- note-topic-id: lec-11-topic-17 -->
-### 4.3 Điều khiển dự báo theo chân trời lùi
-
-Kế hoạch $(-1{,}2;\,-0{,}4)$ của Ví dụ 11.19 tính một lần từ $x_0=2$; nếu xe trôi khác dự báo, bước thứ hai vẫn thực hiện $u_1=-0{,}4$.
-
-Một cách trực quan, tác tử chỉ thực hiện hành động đầu của kế hoạch, quan sát vị trí thật rồi lập kế hoạch lại, nên sai lệch ở bước trước được tính tới ngay ở bước sau, như ví dụ sau.
-
-::: example Ví dụ 11.20 (Điều khiển dự báo trên mô hình)
-**Dữ kiện.** Xe trên đường ray, mô hình $\hat f(x,u)=x+u$, $c=x_{t+1}^2+u_t^2$, $h=2$; kế hoạch tối ưu từ $x_0=2$ là $(-1{,}2;\,-0{,}4)$ (Ví dụ 11.19).
-
-**Luật lập kế hoạch lại.** Với trạng thái đầu $x_0$ tổng quát, hai đạo hàm bằng $0$ cho $2x_0+3u_0+u_1=0$ và $x_0+u_0+2u_1=0$. Hệ này tuyến tính thuần nhất theo $(x_0,u_0,u_1)$, nên nghiệm tỉ lệ với $x_0$: $u_1=-0{,}2x_0$, $u_0=-0{,}6x_0$. Lập kế hoạch lại từ vị trí $x_t$ và chỉ thực hiện hành động đầu cho luật $u_t=-0{,}6x_t$.
-
-**Quỹ đạo khi hệ thật trùng mô hình.** $x_{t+1}=x_t-0{,}6x_t=0{,}4x_t$: $2;\ 0{,}8;\ 0{,}32;\ 0{,}128$. Vòng kín co với hệ số $0{,}4<1$.
-
-**Kiểm tra lại.** Giải lại (4.1) từ $x_1=0{,}8$ cho $u^*_0=-0{,}48=-0{,}6\cdot0{,}8$, đúng luật trên; $0{,}8\cdot0{,}4=0{,}32$.
-:::
-
-::: definition Định nghĩa 11.32 (Điều khiển dự báo theo chân trời lùi)
-**Điều khiển dự báo** (model predictive control, MPC), còn gọi là điều khiển theo chân trời lùi (receding horizon control), tại mỗi bước $t$:
-
-- quan sát trạng thái thật $x_t$;
-- giải bài toán (4.1) với trạng thái đầu $x_t$ và chân trời $h$, được kế hoạch $u^*_{0:h-1}(x_t)$;
-- thực hiện $u_t=u^*_0(x_t)$ và bỏ phần còn lại của kế hoạch.
-:::
-
-Điều khiển dự báo là lập kế hoạch tại thời điểm quyết định (Định nghĩa 11.2) cho hành động liên tục, cùng vai với rollout và tìm kiếm theo cây (Bertsekas, 2019, §2.5.1). Ánh xạ $x_t\mapsto u^*_0(x_t)$ là một chính sách vòng kín (closed-loop); ở Ví dụ 11.20, đó là $u_t=-0{,}6x_t$. Bertsekas (2020, §3.1) chứng minh ổn định cho bài toán có ràng buộc cuối $x_{t+h}=0$ và điều kiện điều khiển được có ràng buộc. Bài toán (4.1) không có ràng buộc đó, nên với xe trên đường ray ta kiểm trực tiếp hệ số co.
-
-::: algorithm Thuật toán 11.33 (Điều khiển dự báo)
-**Đầu vào.** Môi trường; mô hình khả vi $\hat f$; chi phí $c$; chân trời $h$.
-
-**Đầu ra.** Dãy hành động $u_0,u_1,\dots$
-
-**Giả thiết.** Quan sát được $x_t$ tại mỗi bước.
-
-**Khởi tạo.** Kế hoạch ban đầu cho bộ giải, chẳng hạn $u\equiv0$.
-
-**Tham số.** Tham số của Thuật toán 11.31 ($\eta$, $\theta$, ngân sách); số bước điều khiển.
-
-**Lặp, mỗi vòng một bước thật:**
-
-1. Quan sát $x_t$.
-2. Chạy Thuật toán 11.31 từ $x_t$, được $u^*_{0:h-1}$.
-3. Thực hiện $u_t=u^*_0$ trên môi trường.
-
-**Điều kiện dừng.** Hết số bước điều khiển.
-
-**Chi phí mỗi bước.** Một lần chạy Thuật toán 11.31, tức số vòng hạ gradient nhân $O(h)$.
-:::
-
-Ví dụ 11.20 là Thuật toán 11.33 với bộ giải chính xác.
+**Trong thực hành.** Khi $\hat f$ là một mạng nơ-ron, lượt ngược của Thuật toán 11.33 là lan truyền ngược tự động qua $h$ bản của mạng. Mệnh đề 11.32 cho gradient của chi phí tính trên mô hình. Khi mô hình sai dọc quỹ đạo dự báo, gradient đó không bảo đảm chi phí trên môi trường thật giảm.
 
 <!-- note-topic-id: lec-11-topic-18 -->
-### 4.4 Bắn ngẫu nhiên và phương pháp entropy chéo
+### 4.3 Bắn ngẫu nhiên và phương pháp entropy chéo
 
-Thuật toán 11.31 cần mô hình khả vi, và có thể dừng ở một điểm dừng địa phương, tùy điểm khởi tạo.
+Thuật toán 11.33 cần mô hình khả vi, và có thể dừng ở một điểm dừng địa phương, tùy điểm khởi tạo.
 
 Một cách trực quan, tác tử có thể chỉ dùng lượt xuôi: rút nhiều kế hoạch, đánh giá $J$ trên mô hình, giữ kế hoạch tốt, rồi rút tiếp quanh các kế hoạch tốt, như ví dụ sau.
 
-::: example Ví dụ 11.21 (Bắn ngẫu nhiên và một vòng entropy chéo)
+::: example Ví dụ 11.20 (Bắn ngẫu nhiên và một vòng entropy chéo)
 **Dữ kiện.** Xe trên đường ray (Ví dụ 11.17), $x_0=2$, $J^*=2{,}40$. Giả sử bốn kế hoạch ứng viên rút từ phân phối ban đầu:
 
 | ứng viên | $(u_0;\,u_1)$ | $x_1$; $x_2$ | $J$ |
@@ -1180,26 +1145,26 @@ Một cách trực quan, tác tử có thể chỉ dùng lượt xuôi: rút nhi
 **Chi phí mỗi bước.** $M$ lượt xuôi, tức $Mh$ lần gọi $\hat f$; không cần đạo hàm.
 :::
 
-Thuật toán 11.34 là **phương pháp entropy chéo** (cross-entropy method, CEM). **Bắn ngẫu nhiên** (random shooting) là bước 1–3 của thuật toán chạy một lần, không cập nhật $\bar u$, $\sigma$. Thuật toán 11.34 có thể thay Thuật toán 11.31 ở bước 2 của Thuật toán 11.33, như PETS (probabilistic ensembles with trajectory sampling) của Chua và cộng sự (2018, §5, Thuật toán 1).
+Thuật toán 11.34 là **phương pháp entropy chéo** (cross-entropy method, CEM). **Bắn ngẫu nhiên** (random shooting) là bước 1–3 của thuật toán chạy một lần, không cập nhật $\bar u$, $\sigma$.
 
 ::: remark Nhận xét 11.35 (So sánh tối ưu bằng đạo hàm và bằng lấy mẫu)
-| Tiêu chí | Hạ gradient (Thuật toán 11.31) | Entropy chéo (Thuật toán 11.34) |
+| Tiêu chí | Hạ gradient (Thuật toán 11.33) | Entropy chéo (Thuật toán 11.34) |
 |---|---|---|
 | yêu cầu về mô hình | khả vi | chỉ cần gọi được |
 | số lần gọi mô hình mỗi vòng | $h$ cho lượt xuôi, cộng lượt ngược | $Mh$ |
 | cực tiểu địa phương | có thể dừng ở điểm dừng địa phương, tùy điểm khởi tạo | mẫu rải rộng có thể thoát, khi $\sigma$ chưa co |
 :::
 
-**Trong thực hành.** Phương pháp entropy chéo chỉ cần gọi mô hình, nên dùng được với trình mô phỏng hộp đen và mô hình không khả vi. Mỗi bước của điều khiển dự báo khi đó tốn $M$ lượt xuôi cho mỗi vòng entropy chéo. Khi $\sigma$ co về $0$ ở một tọa độ, nghiệm bị giữ ở giá trị đó như Ví dụ 11.21.
+**Trong thực hành.** Phương pháp entropy chéo chỉ cần gọi mô hình, nên dùng được với trình mô phỏng hộp đen và mô hình không khả vi. Mỗi lần tối ưu một kế hoạch tốn $M$ lượt xuôi cho mỗi vòng. Khi $\sigma$ co về $0$ ở một tọa độ, nghiệm bị giữ ở giá trị đó như Ví dụ 11.20.
 
 <!-- note-topic-id: lec-11-topic-19 -->
-### 4.5 Sai số mô hình tích lũy
+### 4.4 Sai số mô hình tích lũy
 
-Mọi kế hoạch trên tính trên mô hình $\hat f(x,u)=x+u$. Giả sử đường ray thật hơi nghiêng: hệ thật là $f(x,u)=1{,}2x+u$, và dự báo $k$ bước lệch dần khỏi quỹ đạo thật.
+Các kế hoạch của Ví dụ 11.17–11.20 tính trên mô hình $\hat f(x,u)=x+u$. Giả sử đường ray thật hơi nghiêng: hệ thật là $f(x,u)=1{,}2x+u$, và dự báo $k$ bước lệch dần khỏi quỹ đạo thật.
 
 Một cách trực quan, mỗi bước dự báo cộng thêm sai số một bước của mô hình, còn hệ thật khuếch đại sai số đã có; sai số tích lũy (compounding error) vì vậy có thể tăng theo cấp số nhân của số bước, như ví dụ sau.
 
-::: example Ví dụ 11.22 (Sai số tích lũy của mô hình)
+::: example Ví dụ 11.21 (Sai số tích lũy của mô hình)
 **Dữ kiện.** Hệ thật $f(x,u)=1{,}2x+u$, mô hình $\hat f(x,u)=x+u$, $x_0=2$, kế hoạch $u\equiv0$.
 
 **Dự báo và thật.** Mô hình dự báo $\hat x_k=2$ với mọi $k$; hệ thật cho $x_k=2\cdot1{,}2^k$. Sai số dự báo $e_k=\lvert x_k-\hat x_k\rvert=2(1{,}2^k-1)$:
@@ -1223,7 +1188,7 @@ $$\begin{aligned}e_k&\le\bar e\sum_{j=0}^{k-1}L^j\\&=\begin{cases}\bar e\,\dfrac
 
 **Điều kiện áp dụng.** Chuỗi hành động cố định trước, tức kế hoạch vòng hở.
 
-**Phạm vi.** Khi $L>1$, chặn tăng theo cấp số nhân của $k$. Không áp dụng trực tiếp cho vòng kín, vì khi đó hành động phụ thuộc trạng thái và hai quỹ đạo nhận hành động khác nhau.
+**Phạm vi.** Khi $L>1$, chặn tăng theo cấp số nhân của $k$. Không áp dụng trực tiếp khi hành động được tính lại từ trạng thái quan sát được, vì khi đó hai quỹ đạo nhận hành động khác nhau.
 :::
 
 ::: proof
@@ -1234,10 +1199,63 @@ Bất đẳng thức đầu là bất đẳng thức tam giác; bất đẳng th
 **Bước 2 (quy nạp).** $e_0=0$. Nếu $e_j\le\bar e\sum_{i<j}L^i$ thì Bước 1 cho $e_{j+1}\le\bar e\sum_{i<j}L^{i+1}+\bar e=\bar e\sum_{i\le j}L^i$. Tổng cấp số nhân cho dạng đóng của (4.4). $\square$
 :::
 
-Ở Ví dụ 11.22, $\bar e=0{,}4$, $L=1{,}2$, và (4.4) cho $2(1{,}2^k-1)$, trùng $e_k$: chặn đạt dấu bằng. Sai số một bước lấy trên trạng thái dự báo $\hat x_j$. Trên quỹ đạo thật, sai số một bước $\lvert f(x,0)-\hat f(x,0)\rvert=0{,}2x$ tăng theo $x$, và tại $x_5=4{,}9766$ bằng $0{,}9953$, lớn hơn $\bar e=0{,}4$. Khi bỏ giả thiết "chuỗi hành động cố định", hai quỹ đạo dùng hai chuỗi hành động khác nhau, và Bước 1 không còn đúng.
+Ở Ví dụ 11.21, $\bar e=0{,}4$, $L=1{,}2$, và (4.4) cho $2(1{,}2^k-1)$, trùng $e_k$: chặn đạt dấu bằng. Sai số một bước lấy trên trạng thái dự báo $\hat x_j$. Trên quỹ đạo thật, sai số một bước $\lvert f(x,0)-\hat f(x,0)\rvert=0{,}2x$ tăng theo $x$, và tại $x_5=4{,}9766$ bằng $0{,}9953$, lớn hơn $\bar e=0{,}4$. Khi bỏ giả thiết "chuỗi hành động cố định", hai quỹ đạo dùng hai chuỗi hành động khác nhau, và Bước 1 không còn đúng.
+
+**Trong thực hành.** Chân trời $h$ dài làm sai số tích lũy (4.4) lớn. Gradient qua $h$ lần nhân $\partial\hat f/\partial x$ có thể bùng nổ hoặc tiêu biến, như với phụ thuộc dài hạn trong mạng hồi quy (Goodfellow, Bengio và Courville, 2016).
+
+<!-- note-topic-id: lec-11-topic-17 -->
+### 4.5 Điều khiển dự báo theo chân trời lùi
+
+Theo Mệnh đề 11.36, kế hoạch vòng hở tính trên mô hình sai lệch dần khỏi quỹ đạo thật. Kế hoạch $(-1{,}2;\,-0{,}4)$ của Ví dụ 11.19 tính một lần từ $x_0=2$; nếu xe trôi khác dự báo, bước thứ hai vẫn thực hiện $u_1=-0{,}4$.
+
+Một cách trực quan, tác tử chỉ thực hiện hành động đầu của kế hoạch, quan sát vị trí thật rồi lập kế hoạch lại, nên sai lệch ở bước trước được tính tới ngay ở bước sau, như ví dụ sau.
+
+::: example Ví dụ 11.22 (Điều khiển dự báo trên mô hình)
+**Dữ kiện.** Xe trên đường ray, mô hình $\hat f(x,u)=x+u$, $c=x_{t+1}^2+u_t^2$, $h=2$; kế hoạch tối ưu từ $x_0=2$ là $(-1{,}2;\,-0{,}4)$ (Ví dụ 11.19).
+
+**Luật lập kế hoạch lại.** Với trạng thái đầu $x_0$ tổng quát, hai đạo hàm bằng $0$ cho $2x_0+3u_0+u_1=0$ và $x_0+u_0+2u_1=0$. Hệ này tuyến tính thuần nhất theo $(x_0,u_0,u_1)$, nên nghiệm tỉ lệ với $x_0$: $u_1=-0{,}2x_0$, $u_0=-0{,}6x_0$. Lập kế hoạch lại từ vị trí $x_t$ và chỉ thực hiện hành động đầu cho luật $u_t=-0{,}6x_t$.
+
+**Quỹ đạo khi hệ thật trùng mô hình.** $x_{t+1}=x_t-0{,}6x_t=0{,}4x_t$: $2;\ 0{,}8;\ 0{,}32;\ 0{,}128$. Vòng kín co với hệ số $0{,}4<1$.
+
+**Kiểm tra lại.** Giải lại (4.1) từ $x_1=0{,}8$ cho $u^*_0=-0{,}48=-0{,}6\cdot0{,}8$, đúng luật trên; $0{,}8\cdot0{,}4=0{,}32$.
+:::
+
+::: definition Định nghĩa 11.37 (Điều khiển dự báo theo chân trời lùi)
+**Điều khiển dự báo** (model predictive control, MPC), còn gọi là điều khiển theo chân trời lùi (receding horizon control), tại mỗi bước $t$:
+
+- quan sát trạng thái thật $x_t$;
+- giải bài toán (4.1) với trạng thái đầu $x_t$ và chân trời $h$, được kế hoạch $u^*_{0:h-1}(x_t)$;
+- thực hiện $u_t=u^*_0(x_t)$ và bỏ phần còn lại của kế hoạch.
+:::
+
+Điều khiển dự báo là lập kế hoạch tại thời điểm quyết định (Định nghĩa 11.21) cho hành động liên tục, cùng vai với rollout và tìm kiếm theo cây (Bertsekas, 2019, §2.5.1). Ánh xạ $x_t\mapsto u^*_0(x_t)$ là một chính sách vòng kín (closed-loop); ở Ví dụ 11.22, đó là $u_t=-0{,}6x_t$. Bertsekas (2020, §3.1) chứng minh ổn định cho bài toán có ràng buộc cuối $x_{t+h}=0$ và điều kiện điều khiển được có ràng buộc. Bài toán (4.1) không có ràng buộc đó, nên với xe trên đường ray ta kiểm trực tiếp hệ số co.
+
+::: algorithm Thuật toán 11.38 (Điều khiển dự báo)
+**Đầu vào.** Môi trường; mô hình khả vi $\hat f$; chi phí $c$; chân trời $h$.
+
+**Đầu ra.** Dãy hành động $u_0,u_1,\dots$
+
+**Giả thiết.** Quan sát được $x_t$ tại mỗi bước.
+
+**Khởi tạo.** Kế hoạch ban đầu cho bộ giải, chẳng hạn $u\equiv0$.
+
+**Tham số.** Tham số của Thuật toán 11.33 ($\eta$, $\theta$, ngân sách); số bước điều khiển.
+
+**Lặp, mỗi vòng một bước thật:**
+
+1. Quan sát $x_t$.
+2. Chạy Thuật toán 11.33 từ $x_t$, được $u^*_{0:h-1}$.
+3. Thực hiện $u_t=u^*_0$ trên môi trường.
+
+**Điều kiện dừng.** Hết số bước điều khiển.
+
+**Chi phí mỗi bước.** Một lần chạy Thuật toán 11.33, tức số vòng hạ gradient nhân $O(h)$.
+:::
+
+Ví dụ 11.22 là Thuật toán 11.38 với bộ giải chính xác. Thuật toán 11.34 có thể thay Thuật toán 11.33 ở bước 2 của Thuật toán 11.38, như PETS (probabilistic ensembles with trajectory sampling) của Chua và cộng sự (2018, §5, Thuật toán 1). Mỗi bước của điều khiển dự báo khi đó tốn $M$ lượt xuôi cho mỗi vòng entropy chéo.
 
 ::: example Ví dụ 11.23 (Vòng hở và điều khiển dự báo với mô hình sai)
-**Dữ kiện.** Hệ thật $f(x,u)=1{,}2x+u$, mô hình $\hat f(x,u)=x+u$, $x_0=2$, chi phí và chân trời như Ví dụ 11.17. Kế hoạch tối ưu trên mô hình $(-1{,}2;\,-0{,}4)$, luật dự báo $u=-0{,}6x$ (Ví dụ 11.19, 11.20).
+**Dữ kiện.** Hệ thật $f(x,u)=1{,}2x+u$, mô hình $\hat f(x,u)=x+u$, $x_0=2$, chi phí và chân trời như Ví dụ 11.17. Kế hoạch tối ưu trên mô hình $(-1{,}2;\,-0{,}4)$, luật dự báo $u=-0{,}6x$ (Ví dụ 11.19, 11.22).
 
 **Vòng hở trên hệ thật.** $x_1=1{,}2\cdot2-1{,}2=1{,}2$, mô hình dự báo $0{,}8$; $x_2=1{,}2\cdot1{,}2-0{,}4=1{,}04$, mô hình dự báo $0{,}4$.
 
@@ -1252,13 +1270,13 @@ Bất đẳng thức đầu là bất đẳng thức tam giác; bất đẳng th
 
 Trên hình, vòng hở tách khỏi kế hoạch từ bước 1; hai đường điều khiển dự báo cùng về mốc, với hệ số $0{,}4$ khi mô hình đúng và $0{,}6$ khi mô hình sai.
 
-::: remark Nhận xét 11.37 (Tính bất định khi lập kế hoạch liên tục)
+::: remark Nhận xét 11.39 (Tính bất định khi lập kế hoạch liên tục)
 PETS lập kế hoạch qua một tập mô hình (Nhận xét 11.7; Chua và cộng sự, 2018, §4–5); PILCO đưa bất định của mô hình vào dự báo dài hạn (Deisenroth và Rasmussen, 2011, §2.2).
 :::
 
-**Trong thực hành.** Chân trời $h$ dài làm sai số tích lũy (4.4) lớn. Gradient qua $h$ lần nhân $\partial\hat f/\partial x$ có thể bùng nổ hoặc tiêu biến, như với phụ thuộc dài hạn trong mạng hồi quy (Goodfellow, Bengio và Courville, 2016). Điều khiển dự báo giữ $h$ ngắn và giải lại ở mỗi bước.
+**Trong thực hành.** Điều khiển dự báo giữ chân trời $h$ ngắn, nên sai số tích lũy (4.4) của mỗi kế hoạch nhỏ. Mỗi bước, nó giải lại kế hoạch từ trạng thái thật.
 
-Như vậy, gradient qua mô hình (Mệnh đề 11.30) và điều khiển dự báo (Định nghĩa 11.32) xử lý hành động liên tục ở bước thời gian nhỏ, với cái giá là sai số tích lũy (Mệnh đề 11.36) và chi phí tăng theo $h$. Mọi phương pháp tới đây quyết định theo từng hành động một bước của MDP, gọi là bước gốc: lặp giá trị đẩy giá trị lùi một bước sau mỗi lượt quét, Q-planning sau mỗi cập nhật, còn kế hoạch nhìn xa $h$ bước phải tối ưu $h$ hành động. Chúng ta cần một đơn vị hành động kéo dài nhiều bước để lập kế hoạch xa mà số lượt quét, số cập nhật hay chân trời không tăng theo cùng tỉ lệ.
+Như vậy, gradient qua mô hình (Mệnh đề 11.32) và điều khiển dự báo (Định nghĩa 11.37) xử lý hành động liên tục ở bước thời gian nhỏ, với cái giá là sai số tích lũy (Mệnh đề 11.36) và chi phí tăng theo $h$. Mọi phương pháp tới đây quyết định theo từng hành động một bước của MDP, gọi là bước gốc: lặp giá trị đẩy giá trị lùi một bước sau mỗi lượt quét, Q-planning sau mỗi cập nhật, còn kế hoạch nhìn xa $h$ bước phải tối ưu $h$ hành động. Chúng ta cần một đơn vị hành động kéo dài nhiều bước để lập kế hoạch xa mà số lượt quét, số cập nhật hay chân trời không tăng theo cùng tỉ lệ.
 
 ---
 
@@ -1285,7 +1303,7 @@ Về mặt ý tưởng, cùng một MDP có thể nhìn ở nhiều thang thời
 
 Trên hình, mỗi phòng là miền của một tùy chọn, mũi tên trong ô là $\pi_\omega$; con số cạnh ô là mô hình của tùy chọn: hệ số $p$ của việc tới $\mathrm K$ ở phòng trái, phần thưởng kỳ vọng $r$ ở phòng phải.
 
-::: definition Định nghĩa 11.38 (Tùy chọn)
+::: definition Định nghĩa 11.40 (Tùy chọn)
 Một **tùy chọn** (option) trên MDP là bộ ba $\omega=\langle\mathcal I_\omega,\pi_\omega,\beta_\omega\rangle$ gồm:
 
 - **tập khởi đầu** (initiation set) $\mathcal I_\omega\subseteq\mathcal S$: các trạng thái mà tùy chọn được bắt đầu;
@@ -1297,7 +1315,7 @@ Bắt đầu ở $S_0\in\mathcal I_\omega$, tùy chọn chọn $A_t\sim\pi_\omeg
 
 Mỗi hành động một bước (primitive action) $a$ là một tùy chọn với $\mathcal I=\{s:a\in\mathcal A(s)\}$, $\pi(s)=a$, $\beta\equiv1$ (Sutton, Precup và Singh, 1999, §2, tr. 186–187; Sutton và Barto, 2018, tr. 462 viết $\gamma_\omega\equiv0$), nên tùy chọn tổng quát hóa hành động. Một tùy chọn có thể không kết thúc: nếu $\pi_{\omega_1}(\mathrm A)=\leftarrow$, đụng biên, và $\beta_{\omega_1}(\mathrm A)=0$, tùy chọn bắt đầu ở $\mathrm A$ ở yên tại $\mathrm A$ mãi mãi. Vì vậy mô hình tùy chọn chỉ được định nghĩa cho tùy chọn kết thúc với xác suất $1$.
 
-::: definition Định nghĩa 11.39 (Chính sách phân cấp, giá trị của chính sách phân cấp)
+::: definition Định nghĩa 11.41 (Chính sách phân cấp, giá trị của chính sách phân cấp)
 Cho một tập tùy chọn và $\Omega(s)=\{\omega:s\in\mathcal I_\omega\}\ne\emptyset$ với mọi $s\in\mathcal S$.
 
 - **Chính sách phân cấp** (hierarchical policy) $\mu$ gán cho mỗi $s$ một phân phối $\mu(\cdot\mid s)$ trên $\Omega(s)$. Ở mỗi **thời điểm chọn**, tại $s$, tác tử rút $\omega\sim\mu(\cdot\mid s)$ và chạy $\omega$ tới khi kết thúc, lúc đó là thời điểm chọn tiếp theo.
@@ -1331,14 +1349,14 @@ Các bước đi đúng liên tiếp độc lập, nên $d$ bước đi đúng c
 **Kiểm tra lại.** $\rho^3\cdot0{,}9756=0{,}6604=v_*(\mathrm A)$: chạy $\omega_1$ rồi $\omega_2$ từ $\mathrm A$ là đi theo đường ngắn nhất.
 :::
 
-::: definition Định nghĩa 11.40 (Mô hình tùy chọn)
+::: definition Định nghĩa 11.42 (Mô hình tùy chọn)
 Cho tùy chọn $\omega$ kết thúc với xác suất $1$ và $s\in\mathcal I_\omega$. **Mô hình tùy chọn** (option model) gồm hai phần:
 $$\begin{aligned}&r(s,\omega)\\&\ =\mathbb E\bigl[R_1+\dots+\gamma^{\tau-1}R_\tau\\&\qquad\bigm|S_0=s,\omega\bigr],\\&p(s'\mid s,\omega)\\&\ =\sum_{k\ge1}\gamma^k\Pr\{S_k=s',\tau=k\\&\qquad\mid S_0=s,\omega\},\ s'\in\mathcal S^+.\end{aligned}\tag{5.1}$$
 :::
 
 Đây là (17.2)–(17.3) của Sutton và Barto (2018, tr. 462) và (6)–(7) của Sutton, Precup và Singh (1999, tr. 189). Phần $p$ đã chứa chiết khấu: với hành động một bước, nó là xác suất chuyển nhân $\gamma$; ở Ví dụ 11.25, $p(\mathrm K\mid\mathrm F,\omega_1)=0{,}8780$ trong khi xác suất tới $\mathrm K$ bằng $1$.
 
-::: proposition Mệnh đề 11.41 (Tổng hệ số chuyển của mô hình tùy chọn)
+::: proposition Mệnh đề 11.43 (Tổng hệ số chuyển của mô hình tùy chọn)
 **Giả thiết.** Tùy chọn $\omega$ kết thúc với xác suất $1$; $0\le\gamma<1$.
 
 **Kết luận.** Với mọi $s\in\mathcal I_\omega$,
@@ -1361,14 +1379,14 @@ trong đó đẳng thức thứ hai dùng $\Pr\{\tau<\infty\}=1$.
 
 **Câu hỏi.** Với mô hình (5.1), giá trị của một chính sách phân cấp có thỏa một phương trình Bellman như $v_\pi$ không? Định lý sau trả lời có, với tùy chọn Markov.
 
-::: theorem Định lý 11.42 (Phương trình Bellman cho chính sách phân cấp)
+::: theorem Định lý 11.44 (Phương trình Bellman cho chính sách phân cấp)
 **Giả thiết.** MDP hữu hạn, phần thưởng bị chặn, $0\le\gamma<1$. Mỗi tùy chọn có $\pi_\omega$ Markov dừng, $\beta_\omega$ chỉ phụ thuộc trạng thái, và kết thúc với xác suất $1$ từ mọi trạng thái của $\mathcal I_\omega$. Chính sách phân cấp $\mu$ chỉ phụ thuộc trạng thái tại mỗi thời điểm chọn.
 
 **Kết luận.** Với mọi $s\in\mathcal S$,
 $$\begin{aligned}&v_\mu(s)=\sum_{\omega\in\Omega(s)}\mu(\omega\mid s)\\&\quad\times\Bigl[r(s,\omega)\\&\qquad+\sum_{s'\in\mathcal S^+}p(s'\mid s,\omega)\,v_\mu(s')\Bigr],\end{aligned}\tag{5.2}$$
 với $v_\mu=0$ tại trạng thái kết thúc.
 
-**Điều kiện áp dụng.** Mỗi tùy chọn được chạy tới khi kết thúc, không bị ngắt giữa chừng (Định nghĩa 11.39).
+**Điều kiện áp dụng.** Mỗi tùy chọn được chạy tới khi kết thúc, không bị ngắt giữa chừng (Định nghĩa 11.41).
 
 **Phạm vi.** Chứng minh dưới đây dùng $\beta_\omega$ chỉ phụ thuộc trạng thái. Sutton, Precup và Singh (1999, (8), tr. 190 và Định lý 1) phát biểu (5.2) cho cả tùy chọn bán-Markov, có chính sách và điều kiện kết thúc phụ thuộc lịch sử từ lúc tùy chọn bắt đầu.
 :::
@@ -1395,11 +1413,11 @@ Hai giả thiết của định lý có vai trò riêng, và mỗi giả thiết
 - Bỏ "kết thúc với xác suất $1$": không có $\tau$ hữu hạn để tách lợi tức ở Bước 1.
 - Bỏ "$\mu$ chỉ phụ thuộc trạng thái": phần sau $\tau$ phụ thuộc lịch sử, và Bước 3 không cho $v_\mu(S_\tau)$.
 
-::: remark Nhận xét 11.43 (Bán-MDP)
+::: remark Nhận xét 11.45 (Bán-MDP)
 Ở các thời điểm chọn, quá trình là một **quá trình quyết định bán-Markov** (semi-Markov decision process, SMDP), gọi tắt là bán-MDP: trạng thái kế và thời gian lưu trú ngẫu nhiên $\tau$ phụ thuộc trạng thái và tùy chọn hiện tại. Với mọi MDP và mọi tập tùy chọn, quá trình đó là một bán-MDP (Sutton, Precup và Singh, 1999, Định lý 1, tr. 188); lý thuyết tổng quát có trong Puterman (1994).
 :::
 
-**Trong thực hành.** Mô hình tùy chọn (5.1) được tính bằng đánh giá $\pi_\omega$ trên mô hình một bước, hoặc ước lượng từ các lần chạy thật. Khi tùy chọn bị ngắt trước $\tau$ hoặc chính sách cấp trên dùng lịch sử, giả thiết của Định lý 11.42 bị vi phạm.
+**Trong thực hành.** Mô hình tùy chọn (5.1) được tính bằng đánh giá $\pi_\omega$ trên mô hình một bước, hoặc ước lượng từ các lần chạy thật. Khi tùy chọn bị ngắt trước $\tau$ hoặc chính sách cấp trên dùng lịch sử, giả thiết của Định lý 11.44 bị vi phạm.
 
 <!-- note-topic-id: lec-11-topic-22 -->
 ### 5.3 Lập kế hoạch ở nhiều mức trừu tượng thời gian
@@ -1429,8 +1447,8 @@ Thay trung bình theo $\mu$ trong (5.2) bằng cực đại theo $\omega$, ta đ
 **Kiểm tra lại.** Lượt quét 2 tại $\mathrm K$: $0{,}8+0{,}18\cdot0{,}8=0{,}944$; tại $\mathrm F$: $0{,}72\cdot0{,}8=0{,}576$. Với tùy chọn, hai vòng cho đúng $v_*(\mathrm A)=0{,}6604$, vì hai tùy chọn đi theo đường ngắn nhất.
 :::
 
-::: theorem Định lý 11.44 (Hội tụ của lặp giá trị với tùy chọn)
-**Giả thiết.** Như Định lý 11.42 cho mọi tùy chọn của tập; $\Omega(s)$ hữu hạn, khác rỗng với mọi $s\in\mathcal S$; mô hình tùy chọn (5.1) đúng.
+::: theorem Định lý 11.46 (Hội tụ của lặp giá trị với tùy chọn)
+**Giả thiết.** Như Định lý 11.44 cho mọi tùy chọn của tập; $\Omega(s)$ hữu hạn, khác rỗng với mọi $s\in\mathcal S$; mô hình tùy chọn (5.1) đúng.
 
 **Kết luận.** Với hàm $V$ trên $\mathcal S^+$, $V=0$ tại trạng thái kết thúc, đặt
 $$\begin{aligned}&(T_\Omega V)(s)\\&\quad=\max_{\omega\in\Omega(s)}\Bigl[r(s,\omega)\\&\qquad+\sum_{s'}p(s'\mid s,\omega)V(s')\Bigr].\end{aligned}$$
@@ -1448,29 +1466,29 @@ $$\begin{aligned}&(T_\Omega V)(s)\\&\quad=\max_{\omega\in\Omega(s)}\Bigl[r(s,\om
 **Phần (a), bước 1 (cực đại).** Với hai hàm $V$, $W$ và mỗi $s$, vì $\Omega(s)$ hữu hạn, Bổ đề 04.23 cho
 $$\begin{aligned}&\lvert(T_\Omega V)(s)-(T_\Omega W)(s)\rvert\\&\quad\le\max_{\omega\in\Omega(s)}\Bigl\lvert\sum_{s'}p(s'\mid s,\omega)\\&\qquad\times\bigl(V(s')-W(s')\bigr)\Bigr\rvert.\end{aligned}$$
 
-**Bước 2 (hệ số co).** Vì $p\ge0$ và theo Mệnh đề 11.41,
+**Bước 2 (hệ số co).** Vì $p\ge0$ và theo Mệnh đề 11.43,
 $$\begin{aligned}&\Bigl\lvert\sum_{s'}p(s'\mid s,\omega)\\&\qquad\times\bigl(V(s')-W(s')\bigr)\Bigr\rvert\\&\quad\le\sum_{s'}p(s'\mid s,\omega)\,\lVert V-W\rVert_\infty\\&\quad\le\gamma\lVert V-W\rVert_\infty.\end{aligned}$$
 Lấy cực đại theo $s$ được $\lVert T_\Omega V-T_\Omega W\rVert_\infty\le\gamma\lVert V-W\rVert_\infty$.
 
 **Phần (b).** Theo (a) và Định lý 04.5 với hệ số co $\gamma<1$.
 
-**Phần (c).** Dẫn nguồn: Sutton và Barto (2018, §17.2, tr. 463) nêu lặp giá trị với tùy chọn hội tụ tới chính sách phân cấp tốt nhất, và tới chính sách tối ưu khi tập tùy chọn chứa mọi hành động một bước; Sutton, Precup và Singh (1999, (10), tr. 190; (13), tr. 191) định nghĩa $v_\Omega$ là giá trị tốt nhất trên các chính sách phân cấp và cho $\lim_kV_k=v_\Omega$. Ý tưởng cho hai vế sau: như Bước 3 của chứng minh Định lý 11.42, $r(s,\omega)+\sum_{s'}p(s'\mid s,\omega)v_*(s')$ là giá trị của việc chạy $\omega$ rồi theo chính sách tối ưu, nên không vượt $v_*(s)$ (Định lý 04.25(b)); vậy $T_\Omega v_*\le v_*$, và vì $T_\Omega$ đơn điệu, $v_\Omega\le v_*$. Khi $\Omega(s)\supseteq\mathcal A(s)$, $T_\Omega v_*\ge T_*v_*=v_*$, nên $v_*$ là điểm bất động $v_\Omega$. $\square$
+**Phần (c).** Dẫn nguồn: Sutton và Barto (2018, §17.2, tr. 463) nêu lặp giá trị với tùy chọn hội tụ tới chính sách phân cấp tốt nhất, và tới chính sách tối ưu khi tập tùy chọn chứa mọi hành động một bước; Sutton, Precup và Singh (1999, (10), tr. 190; (13), tr. 191) định nghĩa $v_\Omega$ là giá trị tốt nhất trên các chính sách phân cấp và cho $\lim_kV_k=v_\Omega$. Ý tưởng cho hai vế sau: như Bước 3 của chứng minh Định lý 11.44, $r(s,\omega)+\sum_{s'}p(s'\mid s,\omega)v_*(s')$ là giá trị của việc chạy $\omega$ rồi theo chính sách tối ưu, nên không vượt $v_*(s)$ (Định lý 04.25(b)); vậy $T_\Omega v_*\le v_*$, và vì $T_\Omega$ đơn điệu, $v_\Omega\le v_*$. Khi $\Omega(s)\supseteq\mathcal A(s)$, $T_\Omega v_*\ge T_*v_*=v_*$, nên $v_*$ là điểm bất động $v_\Omega$. $\square$
 :::
 
-Khi $\Omega(s)=\mathcal A(s)$, $T_\Omega$ là $T_*$ của Định nghĩa 04.22 và (a) là Mệnh đề 04.24. Với tùy chọn nhiều bước, tổng hệ số chuyển không bằng $\gamma$ mà chỉ bị chặn bởi $\gamma$ (Mệnh đề 11.41), nên chứng minh đi qua Bổ đề 04.23 thay vì dùng nguyên văn Mệnh đề 04.24. Hệ số co của $T_\Omega$ vẫn là $\gamma$. Ví dụ 11.26 hội tụ nhanh vì mỗi vòng đi qua cả một phòng. Trên mê cung, hai tùy chọn đi đúng đường ngắn nhất nên $v_\Omega=v_*$ dù $\Omega(s)$ không chứa hành động một bước.
+Khi $\Omega(s)=\mathcal A(s)$, $T_\Omega$ là $T_*$ của Định nghĩa 04.22 và (a) là Mệnh đề 04.24. Với tùy chọn nhiều bước, tổng hệ số chuyển không bằng $\gamma$ mà chỉ bị chặn bởi $\gamma$ (Mệnh đề 11.43), nên chứng minh đi qua Bổ đề 04.23 thay vì dùng nguyên văn Mệnh đề 04.24. Hệ số co của $T_\Omega$ vẫn là $\gamma$. Ví dụ 11.26 hội tụ nhanh vì mỗi vòng đi qua cả một phòng. Trên mê cung, hai tùy chọn đi đúng đường ngắn nhất nên $v_\Omega=v_*$ dù $\Omega(s)$ không chứa hành động một bước.
 
 Các giả thiết có vai trò riêng, và mỗi giả thiết bị bỏ đều có phản ví dụ:
 
 - Bỏ "$\Omega(s)\supseteq\mathcal A(s)$": nếu phòng trái chỉ có một tùy chọn đi về $\mathrm A$ và kết thúc ở $\mathrm A$, tác tử không ra khỏi phòng trái, nên $v_\Omega=0<v_*$ ở đó.
 - Bỏ "mô hình tùy chọn đúng": phép lặp hội tụ tới điểm bất động của $T_\Omega$ trên mô hình sai, miễn mô hình đó có hệ số không âm với tổng không vượt $\gamma$ (Phần (a), (b) của chứng minh).
-- Bỏ "kết thúc với xác suất $1$": nếu vẫn tính (5.1) cho tùy chọn như vậy, Bước 2 của (a) vẫn đúng vì $\sum_{s'}p(s'\mid s,\omega)\le\gamma\Pr\{\tau<\infty\}\le\gamma$, nhưng Bước 1 của chứng minh Định lý 11.42 không còn $\tau$ hữu hạn để tách lợi tức, và tùy chọn không trả lại thời điểm chọn.
+- Bỏ "kết thúc với xác suất $1$": nếu vẫn tính (5.1) cho tùy chọn như vậy, Bước 2 của (a) vẫn đúng vì $\sum_{s'}p(s'\mid s,\omega)\le\gamma\Pr\{\tau<\infty\}\le\gamma$, nhưng Bước 1 của chứng minh Định lý 11.44 không còn $\tau$ hữu hạn để tách lợi tức, và tùy chọn không trả lại thời điểm chọn.
 
-::: algorithm Thuật toán 11.45 (Lặp giá trị với tùy chọn)
+::: algorithm Thuật toán 11.47 (Lặp giá trị với tùy chọn)
 **Đầu vào.** Mô hình tùy chọn $r(s,\omega)$, $p(s'\mid s,\omega)$ với mọi $s$ và $\omega\in\Omega(s)$.
 
 **Đầu ra.** Bảng $V\approx v_\Omega$ và chính sách phân cấp tham lam theo $V$.
 
-**Giả thiết.** Như Định lý 11.44; đặc biệt $\Omega(s)$ hữu hạn, khác rỗng.
+**Giả thiết.** Như Định lý 11.46; đặc biệt $\Omega(s)$ hữu hạn, khác rỗng.
 
 **Khởi tạo.** $V_0$ tùy ý, $V_0=0$ tại trạng thái kết thúc.
 
@@ -1500,7 +1518,7 @@ Ví dụ 11.26 là ba lượt quét của thuật toán. Khi so chi phí với l
 **Kiểm tra lại.** Chiết khấu là $\gamma^k$ theo số bước thật. Dùng $\gamma$ một lần cho cả tùy chọn cho mục tiêu $0{,}81$ và giá trị mới $0{,}405$, là một nhầm lẫn thường gặp.
 :::
 
-::: algorithm Thuật toán 11.46 (Q-learning bán-MDP)
+::: algorithm Thuật toán 11.48 (Q-learning bán-MDP)
 **Đầu vào.** Tập tùy chọn với $\Omega(s)$ hữu hạn, khác rỗng; môi trường; $\gamma\in[0,1)$.
 
 **Đầu ra.** Bảng $Q(s,\omega)$.
@@ -1524,18 +1542,18 @@ $$\begin{aligned}&Q(s,\omega)\leftarrow Q(s,\omega)\\&\ +\alpha\Bigl[\sum_{j=1}^
 **Chi phí mỗi bước.** $O(\lvert\Omega(S_k)\rvert)$ mỗi lần chạy tùy chọn.
 :::
 
-Thuật toán 11.46 là Q-learning bán-MDP (SMDP Q-learning). Mục tiêu của (5.3) là một mẫu của số hạng trong ngoặc của (5.2), với cực đại thay trung bình: tổng chiết khấu trên đường là mẫu không chệch của $r(s,\omega)$, còn $\gamma^k\mathbb 1\{S_k=s'\}$, với $S_k$ là trạng thái nơi tùy chọn dừng, là mẫu không chệch của $p(s'\mid s,\omega)$. Khi mọi tùy chọn là hành động một bước, $k=1$ và (5.3) là quy tắc của Thuật toán 06.16; thành phần đổi là tổng chiết khấu trên đường và thừa số $\gamma^k$ thay $\gamma$. Sutton, Precup và Singh (1999, §3.2, tr. 195–196) trình bày thuật toán này, do Bradtke và Duff (1995) đề xuất, và nêu rằng ước lượng hội tụ dưới các điều kiện tương tự Q-learning thông thường, dẫn theo tài liệu [52] của bài báo.
+Thuật toán 11.48 là Q-learning bán-MDP (SMDP Q-learning). Mục tiêu của (5.3) là một mẫu của số hạng trong ngoặc của (5.2), với cực đại thay trung bình: tổng chiết khấu trên đường là mẫu không chệch của $r(s,\omega)$, còn $\gamma^k\mathbb 1\{S_k=s'\}$, với $S_k$ là trạng thái nơi tùy chọn dừng, là mẫu không chệch của $p(s'\mid s,\omega)$. Khi mọi tùy chọn là hành động một bước, $k=1$ và (5.3) là quy tắc của Thuật toán 06.16; thành phần đổi là tổng chiết khấu trên đường và thừa số $\gamma^k$ thay $\gamma$. Sutton, Precup và Singh (1999, §3.2, tr. 195–196) trình bày thuật toán này, do Bradtke và Duff (1995) đề xuất, và nêu rằng ước lượng hội tụ dưới các điều kiện tương tự Q-learning thông thường, dẫn theo tài liệu [52] của bài báo.
 
-**Trong thực hành.** Tùy chọn thường do người thiết kế viết, như "đi tới cửa", hoặc được học. Tùy chọn viết cho một mục tiêu cũ có thể cho $v_\Omega<v_*$. Mô hình tùy chọn cũng phải học hoặc tính. Khi mô hình tùy chọn sai, chứng minh của Định lý 11.44(a), (b) chỉ cho hội tụ tới điểm bất động của $T_\Omega$ trên mô hình sai, miễn mô hình đó có hệ số không âm với tổng không vượt $\gamma$.
+**Trong thực hành.** Tùy chọn thường do người thiết kế viết, như "đi tới cửa", hoặc được học. Tùy chọn viết cho một mục tiêu cũ có thể cho $v_\Omega<v_*$. Mô hình tùy chọn cũng phải học hoặc tính. Khi mô hình tùy chọn sai, chứng minh của Định lý 11.46(a), (b) chỉ cho hội tụ tới điểm bất động của $T_\Omega$ trên mô hình sai, miễn mô hình đó có hệ số không âm với tổng không vượt $\gamma$.
 
 <!-- note-topic-id: lec-11-topic-23 -->
 ### 5.4 Đọc thêm: học mô hình tùy chọn
 
-::: remark Nhận xét 11.47 (Học mô hình tùy chọn và học trong tùy chọn)
+::: remark Nhận xét 11.49 (Học mô hình tùy chọn và học trong tùy chọn)
 Mỗi phần của (5.1) là một hàm giá trị tổng quát (general value function, GVF), với tín hiệu tích lũy là phần thưởng hoặc chỉ báo "kết thúc tại $s'$" và chiết khấu dừng khi tùy chọn kết thúc (Sutton và Barto, 2018, §17.1, tr. 459–461); học nó từ bước của chính sách khác $\pi_\omega$ là học khác chính sách. Với tùy chọn Markov có chính sách tất định, Q-learning trong tùy chọn một bước (one-step intra-option Q-learning) hội tụ với xác suất $1$ tới giá trị tối ưu trên tập tùy chọn khi mọi hành động được thực hiện ở mọi trạng thái vô hạn lần và bước học thỏa điều kiện Robbins–Monro (Sutton, Precup và Singh, 1999, Định lý 3, tr. 205).
 :::
 
-Như vậy, mô hình tùy chọn (Định nghĩa 11.40) cho phương trình Bellman của chính sách phân cấp (Định lý 11.42), và lặp giá trị với tùy chọn hội tụ với hệ số co $\gamma$ tới $v_\Omega$ (Định lý 11.44): trên mê cung, hai vòng cho $v_*(\mathrm A)=0{,}6604$, trong khi lặp giá trị một bước sau sáu lượt quét mới đạt $0{,}6103$. Cái giá là phải tính hoặc học mô hình tùy chọn. Định lý 11.44 chỉ bảo đảm $v_\Omega=v_*$ khi $\Omega(s)\supseteq\mathcal A(s)$.
+Như vậy, mô hình tùy chọn (Định nghĩa 11.42) cho phương trình Bellman của chính sách phân cấp (Định lý 11.44), và lặp giá trị với tùy chọn hội tụ với hệ số co $\gamma$ tới $v_\Omega$ (Định lý 11.46): trên mê cung, hai vòng cho $v_*(\mathrm A)=0{,}6604$, trong khi lặp giá trị một bước sau sáu lượt quét mới đạt $0{,}6103$. Cái giá là phải tính hoặc học mô hình tùy chọn. Định lý 11.46 chỉ bảo đảm $v_\Omega=v_*$ khi $\Omega(s)\supseteq\mathcal A(s)$.
 
 ---
 
@@ -1548,28 +1566,28 @@ Bảng tách tìm kiếm lúc ra quyết định của Mục 1.2 thành hai hàn
 
 | Phương pháp | Mô hình cần có | Khi nào tính | Đầu ra | Bảo đảm (số hiệu) | Sai số mô hình ảnh hưởng thế nào |
 |---|---|---|---|---|---|
-| Dyna-Q (Thuật toán 11.10) | mô hình mẫu học từ bước thật | nền | bảng $Q$ | Q-planning hội tụ tới $\hat q_*$ khi mô hình cố định, xác định ở mọi cặp (Mệnh đề 11.9); Dyna-Q không thỏa giả thiết đó (Nhận xét 11.11) | tới $\hat q_*$ của mô hình sai; cặp bi quan cần thưởng thăm dò |
-| Tìm kiếm theo cây Monte Carlo (Thuật toán 11.26) | mô hình mẫu nhanh, hành động hữu hạn | tại thời điểm quyết định | $A_t$ | rollout không giảm giá trị (Mệnh đề 11.21); UCT với $c_{\mathrm{ucb}}=\sqrt2D$ nhất quán cho bài toán cắt (Định lý 11.27(a)); Thuật toán 11.26 không có bảo đảm này | Mệnh đề 11.21, 11.22, Định lý 11.27 đúng cho MDP của mô hình |
-| Hạ gradient, điều khiển dự báo (Thuật toán 11.31, 11.33) | mô hình khả vi | tại thời điểm quyết định | $u_t$ | gradient đúng trên mô hình (Mệnh đề 11.30) | vòng hở: sai số theo (4.4) (Mệnh đề 11.36) |
-| Lặp giá trị với tùy chọn (Thuật toán 11.45) | mô hình tùy chọn | nền | $v_\Omega$, $\mu$ | hội tụ tới $v_\Omega$; $v_\Omega=v_*$ khi $\Omega(s)\supseteq\mathcal A(s)$ (Định lý 11.44) | tới điểm bất động của $T_\Omega$ trên mô hình sai |
+| Dyna-Q (Thuật toán 11.8) | mô hình mẫu học từ bước thật | nền | bảng $Q$ | Q-planning hội tụ tới $\hat q_*$ khi mô hình cố định, xác định ở mọi cặp (Mệnh đề 11.4); Dyna-Q không thỏa giả thiết đó (Nhận xét 11.10) | tới $\hat q_*$ của mô hình sai; cặp bi quan cần thưởng thăm dò |
+| Tìm kiếm theo cây Monte Carlo (Thuật toán 11.28) | mô hình mẫu nhanh, hành động hữu hạn | tại thời điểm quyết định | $A_t$ | rollout không giảm giá trị (Mệnh đề 11.23); UCT với $c_{\mathrm{ucb}}=\sqrt2D$ nhất quán cho bài toán cắt (Định lý 11.29(a)); Thuật toán 11.28 không có bảo đảm này | Mệnh đề 11.23, 11.24, Định lý 11.29 đúng cho MDP của mô hình |
+| Hạ gradient, điều khiển dự báo (Thuật toán 11.33, 11.38) | mô hình khả vi | tại thời điểm quyết định | $u_t$ | gradient đúng trên mô hình (Mệnh đề 11.32) | vòng hở: sai số theo (4.4) (Mệnh đề 11.36) |
+| Lặp giá trị với tùy chọn (Thuật toán 11.47) | mô hình tùy chọn | nền | $v_\Omega$, $\mu$ | hội tụ tới $v_\Omega$; $v_\Omega=v_*$ khi $\Omega(s)\supseteq\mathcal A(s)$ (Định lý 11.46) | tới điểm bất động của $T_\Omega$ trên mô hình sai |
+
 ### 6.2 Trả lời bài toán trung tâm
 
-Các phép tính lập kế hoạch dưới đây chỉ chạy trên mô hình, nên không tốn thêm bước thật nào.
+1. **Lập kế hoạch nền.** Q-planning hội tụ tới $\hat q_*$ của mô hình khi mô hình cố định và xác định ở mọi cặp (Mệnh đề 11.4). Sau mỗi bước thật, Dyna-Q làm thêm $n$ cập nhật lập kế hoạch trên các cặp đã thử: hai cập nhật sau lượt thứ nhất cho $Q(\mathrm F,\rightarrow)=0{,}225$, trong khi Q-learning cho $0$ (Ví dụ 11.6). Dyna-Q không thỏa giả thiết của Mệnh đề 11.4: mô hình thay đổi sau mỗi bước thật và chỉ có ở các cặp đã thử (Nhận xét 11.10). Với môi trường ngẫu nhiên, Dyna-Q cần mô hình đếm (Định nghĩa 11.1), với độ lệch chuẩn của $\hat p$ giảm theo $1/\sqrt{C(s,a)}$ (Mệnh đề 11.5). Với môi trường thay đổi, Dyna-Q cần thưởng thăm dò (Định nghĩa 11.11).
+2. **Lập kế hoạch tại thời điểm quyết định.** Với $q_{\pi_0}$ chính xác, rollout không làm giảm giá trị (Mệnh đề 11.23). Trên mê cung, chính sách rollout đưa giá trị tại $\mathrm F$ từ $0{,}2016$ lên $0{,}8566=v_*(\mathrm F)$ (Ví dụ 11.13). Tại $\mathrm F$, với $m=70$, xác suất chọn $\downarrow$ thay vì $\rightarrow$ không vượt $0{,}0496$ (Mệnh đề 11.24, Ví dụ 11.14). UCT chọn sai hành động ở gốc với xác suất tiến về $0$ khi mô hình đúng, bài toán cắt ở $D=20$ và hệ số thăm dò của UCB1 nhân $D$ (Định lý 11.29(a)). Giá trị tối ưu của bài toán cắt lệch $v_*$ không quá $\gamma^{20}=0{,}1216$ (Định lý 11.29(b)).
+3. **Tối ưu kế hoạch bằng đạo hàm.** Với mô hình khả vi, truy hồi ngược cho gradient của chi phí trên mô hình (Mệnh đề 11.32). Một bước hạ gradient giảm chi phí của xe từ $8$ (kế hoạch không làm gì) xuống $2{,}88$, tối ưu là $2{,}40$ (Ví dụ 11.18, 11.19). Điều khiển dự báo lập kế hoạch lại ở mỗi bước, và luật $u_t=-0{,}6x_t$ đưa xe về mốc với hệ số $0{,}4$ trên mô hình (Ví dụ 11.22).
+4. **Tùy chọn.** Hai tùy chọn cho đúng $v_*(\mathrm A)=0{,}6604$ sau hai vòng, so với $0{,}6103$ sau sáu lượt quét một bước (Ví dụ 11.26). Lặp giá trị với tùy chọn hội tụ tới $v_\Omega\le v_*$, với dấu bằng khi $\Omega(s)\supseteq\mathcal A(s)$ (Định lý 11.46). Mô hình tùy chọn phải được tính hoặc học trước (Mục 5.2).
 
-1. **Lập kế hoạch nền.** Q-planning hội tụ tới $\hat q_*$ của mô hình khi mô hình cố định và xác định ở mọi cặp (Mệnh đề 11.9). Sau mỗi bước thật, Dyna-Q làm thêm $n$ cập nhật lập kế hoạch trên các cặp đã thử: hai cập nhật sau lượt thứ nhất cho $Q(\mathrm F,\rightarrow)=0{,}225$, trong khi Q-learning cho $0$ (Ví dụ 11.7). Dyna-Q không thỏa giả thiết của Mệnh đề 11.9: mô hình thay đổi sau mỗi bước thật và chỉ có ở các cặp đã thử (Nhận xét 11.11). Với môi trường ngẫu nhiên, Dyna-Q cần mô hình đếm (Định nghĩa 11.4), với độ lệch chuẩn của $\hat p$ giảm theo $1/\sqrt{C(s,a)}$ (Mệnh đề 11.5). Với môi trường thay đổi, Dyna-Q cần thưởng thăm dò (Định nghĩa 11.12).
-2. **Lập kế hoạch tại thời điểm quyết định.** Với $q_{\pi_0}$ chính xác, rollout không làm giảm giá trị (Mệnh đề 11.21). Trên mê cung, chính sách rollout đưa giá trị tại $\mathrm F$ từ $0{,}2016$ lên $0{,}8566=v_*(\mathrm F)$ (Ví dụ 11.13). Tại $\mathrm F$, với $m=70$, xác suất chọn $\downarrow$ thay vì $\rightarrow$ không vượt $0{,}0496$ (Mệnh đề 11.22, Ví dụ 11.14). UCT chọn sai hành động ở gốc với xác suất tiến về $0$ khi mô hình đúng, bài toán cắt ở $D=20$ và hệ số thăm dò của UCB1 nhân $D$ (Định lý 11.27(a)). Giá trị tối ưu của bài toán cắt lệch $v_*$ không quá $\gamma^{20}=0{,}1216$ (Định lý 11.27(b)).
-3. **Tối ưu kế hoạch bằng đạo hàm.** Với mô hình khả vi, truy hồi ngược cho gradient của chi phí trên mô hình (Mệnh đề 11.30). Một bước hạ gradient giảm chi phí của xe từ $8$ xuống $2{,}88$, tối ưu là $2{,}40$ (Ví dụ 11.18, 11.19).
-4. **Tùy chọn.** Hai tùy chọn cho đúng $v_*(\mathrm A)=0{,}6604$ sau hai vòng, so với $0{,}6103$ sau sáu lượt quét một bước (Ví dụ 11.26). Lặp giá trị với tùy chọn hội tụ tới $v_\Omega\le v_*$, với dấu bằng khi $\Omega(s)\supseteq\mathcal A(s)$ (Định lý 11.44). Mô hình tùy chọn phải được tính hoặc học trước (Mục 5.2).
-5. **Khi mô hình sai.** Mệnh đề 11.9, 11.21, 11.22 và Định lý 11.27 đúng cho MDP của mô hình, không cho môi trường thật. Q-planning hội tụ tới $\hat q_*$ của mô hình sai, còn rollout và tìm kiếm theo cây chọn hành động tốt trên mô hình. Mệnh đề 11.30 cho gradient của chi phí trên mô hình, nên gradient đó không bảo đảm chi phí trên môi trường thật giảm. Lặp giá trị với tùy chọn hội tụ tới điểm bất động của $T_\Omega$ trên mô hình sai, miễn mô hình đó có hệ số không âm với tổng không vượt $\gamma$ (chứng minh Định lý 11.44(a), (b)). Với hệ thật $x'=1{,}2x+u$, điều khiển dự báo thiết kế trên mô hình $x+u$ vẫn co về $0$ với hệ số $0{,}6$ (Ví dụ 11.23). Chỉ hai kết quả đo sai số của mô hình. Mệnh đề 11.5 cho phương sai $p(1-p)/C(s,a)$ của xác suất ước lượng $\hat p(s'\mid s,a)$ tại một cặp. Mệnh đề 11.36 chặn sai số dự báo vòng hở theo (4.4) khi chuỗi hành động cố định.
+**Khi mô hình sai.** Mệnh đề 11.4, 11.23, 11.24 và Định lý 11.29 đúng cho MDP của mô hình, không cho môi trường thật. Q-planning hội tụ tới $\hat q_*$ của mô hình sai, còn rollout và tìm kiếm theo cây chọn hành động tốt trên mô hình. Mệnh đề 11.32 cho gradient của chi phí trên mô hình, nên gradient đó không bảo đảm chi phí trên môi trường thật giảm. Lặp giá trị với tùy chọn hội tụ tới điểm bất động của $T_\Omega$ trên mô hình sai, miễn mô hình đó có hệ số không âm với tổng không vượt $\gamma$ (chứng minh Định lý 11.46(a), (b)). Với hệ thật $x'=1{,}2x+u$, điều khiển dự báo thiết kế trên mô hình $x+u$ vẫn co về $0$ với hệ số $0{,}6$ (Ví dụ 11.23). Chỉ hai kết quả đo sai số của mô hình. Mệnh đề 11.5 cho phương sai $p(1-p)/C(s,a)$ của xác suất ước lượng $\hat p(s'\mid s,a)$ tại một cặp. Mệnh đề 11.36 chặn sai số dự báo vòng hở theo (4.4) khi chuỗi hành động cố định.
 
 ### 6.3 Câu hỏi tự kiểm tra
 
 Trả lời các câu hỏi sau và nêu kết quả đã dùng.
 
-1. Mệnh đề 11.9 bảo đảm hội tụ tới $q_*$ của môi trường hay của mô hình, dưới giả thiết nào? Tới $\hat q_*$ của mô hình, khi mô hình cố định và xác định ở mọi cặp.
+1. Mệnh đề 11.4 bảo đảm hội tụ tới $q_*$ của môi trường hay của mô hình, dưới giả thiết nào? Tới $\hat q_*$ của mô hình, khi mô hình cố định và xác định ở mọi cặp.
 2. Vì sao tập mô hình không thấy bất định ở cặp chỉ có một mẫu? Mọi tập lấy lại từ một mẫu đều trùng mẫu đó (Nhận xét 11.7), trong khi $\operatorname{Var}\hat p=p(1-p)$ với $C=1$ (Mệnh đề 11.5).
-3. Mệnh đề 11.21 còn áp dụng không khi $q_{\pi_0}$ thay bằng trung bình của $m=5$ mô phỏng? Không: giả thiết "$q_{\pi_0}$ chính xác" bị vi phạm. Mệnh đề 11.22 chỉ cho $\Pr\{\bar G(\downarrow)\ge\bar G(\rightarrow)\}\le\exp(-5\Delta^2)=0{,}8069$, còn tổng các chặn cho bốn hành động theo bất đẳng thức hợp vượt $1$.
-4. Khi tập tùy chọn không chứa hành động một bước, lặp giá trị với tùy chọn hội tụ tới đâu? Tới $v_\Omega$, điểm bất động của $T_\Omega$ (Định lý 11.44(b)), với $v_\Omega\le v_*$ và có thể nhỏ hơn ngặt (Định lý 11.44(c)).
+3. Mệnh đề 11.23 còn áp dụng không khi $q_{\pi_0}$ thay bằng trung bình của $m=5$ mô phỏng? Không: giả thiết "$q_{\pi_0}$ chính xác" bị vi phạm. Mệnh đề 11.24 chỉ cho $\Pr\{\bar G(\downarrow)\ge\bar G(\rightarrow)\}\le\exp(-5\Delta^2)=0{,}8069$, còn tổng các chặn cho bốn hành động theo bất đẳng thức hợp vượt $1$.
+4. Khi tập tùy chọn không chứa hành động một bước, lặp giá trị với tùy chọn hội tụ tới đâu? Tới $v_\Omega$, điểm bất động của $T_\Omega$ (Định lý 11.46(b)), với $v_\Omega\le v_*$ và có thể nhỏ hơn ngặt (Định lý 11.46(c)).
 
 <!-- note-topic-id: lec-11-topic-25 -->
 ## Tình huống áp dụng và ứng dụng
@@ -1577,9 +1595,9 @@ Trả lời các câu hỏi sau và nêu kết quả đã dùng.
 ::: application Tình huống 11.1 (Điều khiển dự báo cho xe trên đường ray với mô hình học bằng bình phương tối thiểu)
 **Bài toán.** Xe trên đường ray có hệ thật $x'=1{,}2x+u$, chưa biết; chi phí $x_{t+1}^2+u_t^2$, $h=2$, $x_0=2$. Tác tử thu ba mẫu $(x,u,x')$: $(2;\,0;\,2{,}4)$, $(1;\,-1;\,0{,}2)$, $(0;\,1;\,1)$, rồi dùng điều khiển dự báo trên mô hình học được.
 
-**Mô hình hóa.** Lớp mô hình $\hat f(x,u)=\hat a_1x+\hat a_2u$, học bằng bình phương tối thiểu; tình huống dùng Định nghĩa 11.29, 11.32, điểm dừng của (4.1) và Thuật toán 11.33.
+**Mô hình hóa.** Lớp mô hình $\hat f(x,u)=\hat a_1x+\hat a_2u$, học bằng bình phương tối thiểu; tình huống dùng Định nghĩa 11.31, 11.37, điểm dừng của (4.1) và Thuật toán 11.38.
 
-**Kiểm giả thiết.** Lớp mô hình tuyến tính chứa hệ thật và dữ liệu không nhiễu, nên bình phương tối thiểu tìm đúng hệ thật khi hệ phương trình chuẩn có nghiệm duy nhất; mô hình tuyến tính khả vi như Mệnh đề 11.30 cần.
+**Kiểm giả thiết.** Lớp mô hình tuyến tính chứa hệ thật và dữ liệu không nhiễu, nên bình phương tối thiểu tìm đúng hệ thật khi hệ phương trình chuẩn có nghiệm duy nhất; mô hình tuyến tính khả vi như Mệnh đề 11.32 cần.
 
 **Tính mô hình.** Các tổng: $\sum x^2=5$, $\sum xu=-1$, $\sum u^2=2$, $\sum xx'=5$, $\sum ux'=0{,}8$. Hệ phương trình chuẩn
 $$\begin{aligned}5\hat a_1-\hat a_2&=5,\\-\hat a_1+2\hat a_2&=0{,}8\end{aligned}$$
@@ -1587,7 +1605,7 @@ có định thức $9\ne0$ và nghiệm $\hat a_1=1{,}2$, $\hat a_2=1$.
 
 **Tính luật điều khiển.** Với $\hat f(x,u)=\hat a_1x+u$, $h=2$, ta cực tiểu lần lượt theo $u_1$ rồi theo $u_0$. Với $x_1$ cố định, $(\hat a_1x_1+u_1)^2+u_1^2$ có đạo hàm $2(\hat a_1x_1+u_1)+2u_1$, bằng $0$ tại $u_1=-\hat a_1x_1/2$, với giá trị nhỏ nhất $\hat a_1^2x_1^2/2$. Chi phí còn lại là $(1+\hat a_1^2/2)x_1^2+u_0^2$ với $x_1=\hat a_1x_0+u_0$; đạo hàm theo $u_0$ bằng $0$ cho
 $$u^*_0=-\frac{(1+\hat a_1^2/2)\,\hat a_1}{2+\hat a_1^2/2}\,x_0.$$
-Với $\hat a_1=1$, công thức cho $-0{,}6x_0$, khớp Ví dụ 11.20. Với $\hat a_1=1{,}2$: $u=-1{,}72\cdot1{,}2/2{,}72\cdot x=-0{,}7588x$.
+Với $\hat a_1=1$, công thức cho $-0{,}6x_0$, khớp Ví dụ 11.22. Với $\hat a_1=1{,}2$: $u=-1{,}72\cdot1{,}2/2{,}72\cdot x=-0{,}7588x$.
 
 **Diễn giải.** Vòng kín trên hệ thật là $x_{t+1}=0{,}4412x_t$: $2;\ 0{,}8824;\ 0{,}3893;\ 0{,}1717$, co nhanh hơn hệ số $0{,}6$ của luật thiết kế trên mô hình sai (Ví dụ 11.23).
 
@@ -1595,16 +1613,16 @@ Với $\hat a_1=1$, công thức cho $-0{,}6x_0$, khớp Ví dụ 11.20. Với $
 :::
 
 ::: application Tình huống 11.2 (Dyna-Q với mô hình tất định trên mê cung có trượt)
-**Bài toán.** Tác tử chạy Dyna-Q (Thuật toán 11.10) trên mê cung hai phòng (Ví dụ 11.1: trượt với xác suất $0{,}2$, $\gamma=0{,}9$) và lập kế hoạch nhiều lần trên mô hình hiện có.
+**Bài toán.** Tác tử chạy Dyna-Q (Thuật toán 11.8) trên mê cung hai phòng (Ví dụ 11.1: trượt với xác suất $0{,}2$, $\gamma=0{,}9$) và lập kế hoạch nhiều lần trên mô hình hiện có.
 
-**Kiểm giả thiết.** Thuật toán 11.10 giả thiết môi trường tất định; mê cung có trượt, nên giả thiết **không thỏa**: mô hình lưu kết cục gần nhất của mỗi cặp là một mô hình tất định sai.
+**Kiểm giả thiết.** Thuật toán 11.8 giả thiết môi trường tất định; mê cung có trượt, nên giả thiết **không thỏa**: mô hình lưu kết cục gần nhất của mỗi cặp là một mô hình tất định sai.
 
-**Áp dụng.** Giả sử mọi cặp đã được thử và mô hình đứng yên trong lúc lập kế hoạch, nên Mệnh đề 11.9 áp dụng cho MDP của mô hình.
+**Áp dụng.** Giả sử mọi cặp đã được thử và mô hình đứng yên trong lúc lập kế hoạch, nên Mệnh đề 11.4 áp dụng cho MDP của mô hình.
 
 - Nếu kết cục gần nhất trên đường ngắn nhất đều là "đi đúng", mô hình là mê cung không trượt, với giá trị $\gamma^{d-1}$: $1$; $0{,}9$; $0{,}81$; $0{,}729$ tại khoảng cách $1$–$4$, so với giá trị thật $0{,}9756$; $0{,}8566$; $0{,}7522$; $0{,}6604$; tại $\mathrm A$ mô hình đánh giá cao hơn $0{,}0686$.
 - Nếu kết cục gần nhất của $(\mathrm A,\rightarrow)$ là trượt, mô hình ghi $(\mathrm A,\rightarrow)\mapsto(0,\mathrm A)$ và tác tử chọn $\downarrow$ tại $\mathrm A$, vẫn thuộc một đường ngắn nhất.
 
-**Diễn giải.** Giới hạn của Mệnh đề 11.9 là $\hat q_*$ của mô hình sai: giá trị bỏ qua trượt nên quá lạc quan, và lựa chọn phụ thuộc kết cục của lần thử cuối. Cách sửa là mô hình đếm (Định nghĩa 11.4), có độ lệch chuẩn $\sqrt{p(1-p)/C(s,a)}$ (Mệnh đề 11.5).
+**Diễn giải.** Giới hạn của Mệnh đề 11.4 là $\hat q_*$ của mô hình sai: giá trị bỏ qua trượt nên quá lạc quan, và lựa chọn phụ thuộc kết cục của lần thử cuối. Cách sửa là mô hình đếm (Định nghĩa 11.1), có độ lệch chuẩn $\sqrt{p(1-p)/C(s,a)}$ (Mệnh đề 11.5).
 
 **Giới hạn.** Nếu kết cục cuối của $(\mathrm F,\rightarrow)$ là trượt, mô hình coi cửa là tường, và mọi giá trị của phòng trái trên mô hình bằng $0$.
 :::
@@ -1614,20 +1632,20 @@ Với $\hat a_1=1$, công thức cho $-0{,}6x_0$, khớp Ví dụ 11.20. Với $
 <!-- note-topic-id: lec-11-topic-26 -->
 ## Tóm tắt chương
 
-Q-learning dùng mỗi mẫu thật một lần rồi bỏ. Một mô hình học từ các mẫu thật cho phép dùng lại chúng. Mô hình đếm ước lượng động lực bằng tần suất và tách bất định nhận thức khỏi bất định ngẫu nhiên (Định nghĩa 11.4, 11.6, Mệnh đề 11.5). Q-planning trên một mô hình cố định, xác định ở mọi cặp, hội tụ tới $\hat q_*$ (Mệnh đề 11.9). Dyna-Q xen kẽ học mô hình với Q-planning sau mỗi bước thật (Thuật toán 11.10), nên mô hình đổi theo dữ liệu và Dyna-Q nằm ngoài giả thiết của Mệnh đề 11.9 (Nhận xét 11.11). Khi môi trường đổi, thưởng thăm dò buộc tác tử thử lại cặp mà mô hình đánh giá thấp (Định nghĩa 11.12). Rollout và tìm kiếm theo cây dồn phép tính vào trạng thái hiện tại (Mệnh đề 11.21, 11.22, Định lý 11.27). Với hành động liên tục, gradient qua mô hình và điều khiển dự báo tối ưu trực tiếp chuỗi hành động trên mô hình thay vì dựng cây (Mệnh đề 11.30, Định nghĩa 11.32). Cái giá là sai số tích lũy (Mệnh đề 11.36). Tùy chọn gộp nhiều bước thành một quyết định. Giá trị của chính sách phân cấp vẫn thỏa một phương trình Bellman (Định lý 11.42), và toán tử $T_\Omega$ của lặp giá trị với tùy chọn vẫn là ánh xạ co hệ số $\gamma$ (Định lý 11.44). Mệnh đề 11.9, 11.21, 11.22 và Định lý 11.27 đúng cho MDP của mô hình, không cho môi trường thật. Với mô hình tùy chọn sai, lặp giá trị với tùy chọn hội tụ tới điểm bất động của $T_\Omega$ trên mô hình đó, miễn mô hình có hệ số không âm với tổng không vượt $\gamma$ (chứng minh Định lý 11.44(a), (b)). Chỉ hai kết quả đo sai số của mô hình: Mệnh đề 11.5 cho phương sai của xác suất ước lượng $\hat p(s'\mid s,a)$ tại một cặp, và Mệnh đề 11.36 chặn sai số dự báo vòng hở.
+Một mô hình học từ các mẫu thật cho phép dùng lại chúng, trong khi Q-learning dùng mỗi mẫu thật một lần rồi bỏ. Mô hình đếm ước lượng động lực bằng tần suất (Định nghĩa 11.1), và phương sai của tần suất tách bất định nhận thức khỏi bất định ngẫu nhiên (Mệnh đề 11.5, Định nghĩa 11.6). Q-planning trên một mô hình cố định, xác định ở mọi cặp, hội tụ tới $\hat q_*$ (Mệnh đề 11.4), còn Dyna-Q xen kẽ học mô hình với Q-planning nên nằm ngoài giả thiết đó (Thuật toán 11.8, Nhận xét 11.10). Khi môi trường đổi, thưởng thăm dò buộc tác tử thử lại cặp mà mô hình đánh giá thấp (Định nghĩa 11.11). Rollout và tìm kiếm theo cây dồn phép tính vào trạng thái hiện tại (Mệnh đề 11.23, 11.24, Định lý 11.29). Với hành động liên tục, gradient qua mô hình tối ưu trực tiếp chuỗi hành động (Mệnh đề 11.32), kế hoạch vòng hở tích lũy sai số khi mô hình sai (Mệnh đề 11.36), và điều khiển dự báo lập kế hoạch lại ở mỗi bước từ trạng thái thật (Định nghĩa 11.37). Tùy chọn gộp nhiều bước thành một quyết định, trong khi giá trị của chính sách phân cấp vẫn thỏa một phương trình Bellman và lặp giá trị với tùy chọn vẫn co hệ số $\gamma$ (Định lý 11.44, 11.46). Các bảo đảm của Mệnh đề 11.4, 11.23 và Định lý 11.29, 11.46 nói về MDP của mô hình, còn sai số của chính mô hình chỉ được đo ở Mệnh đề 11.5 và 11.36.
 
 **Định nghĩa và kết quả theo mục.**
 
-- Mục 2: Định nghĩa 11.1, 11.2, 11.4, 11.6 và Mệnh đề 11.5 (mô hình, bất định), Thuật toán 11.8, 11.10 và Mệnh đề 11.9 (Q-planning, Dyna-Q), Định nghĩa 11.12 (Dyna-Q+), 11.14 và Mệnh đề 11.15 (cập nhật mẫu), Định lý 11.19 (RTDP).
-- Mục 3: Thuật toán 11.20 và Mệnh đề 11.21, 11.22 (rollout), Định nghĩa 11.23 và Định lý 11.24 (UCB1), Định nghĩa 11.25, Thuật toán 11.26 và Định lý 11.27 (tìm kiếm theo cây).
-- Mục 4: Định nghĩa 11.29, Mệnh đề 11.30, Thuật toán 11.31 (gradient qua mô hình), Định nghĩa 11.32, Thuật toán 11.33 (điều khiển dự báo), Thuật toán 11.34 (entropy chéo), Mệnh đề 11.36 (sai số tích lũy).
-- Mục 5: Định nghĩa 11.38–11.40 và Mệnh đề 11.41 (tùy chọn, mô hình tùy chọn), Định lý 11.42 (Bellman phân cấp), Định lý 11.44 và Thuật toán 11.45 (lặp giá trị với tùy chọn), Thuật toán 11.46 (Q-learning bán-MDP).
+- Mục 2: Định nghĩa 11.1 (mô hình đếm), Định nghĩa 11.2, Thuật toán 11.3 và Mệnh đề 11.4 (mô hình mẫu, Q-planning), Mệnh đề 11.5, Định nghĩa 11.6 và Nhận xét 11.7 (hai loại bất định, tập mô hình), Thuật toán 11.8 và Định nghĩa 11.9 (Dyna-Q, lập kế hoạch nền), Định nghĩa 11.11 (Dyna-Q+), Định nghĩa 11.13, 11.14 và Mệnh đề 11.15 (mô hình phân phối, cập nhật mẫu), Định lý 11.20 (RTDP).
+- Mục 3: Định nghĩa 11.21 (lập kế hoạch tại thời điểm quyết định), Thuật toán 11.22 và Mệnh đề 11.23, 11.24 (rollout), Định nghĩa 11.25 và Định lý 11.26 (UCB1), Định nghĩa 11.27, Thuật toán 11.28 và Định lý 11.29 (tìm kiếm theo cây).
+- Mục 4: Định nghĩa 11.31, Mệnh đề 11.32, Thuật toán 11.33 (gradient qua mô hình), Thuật toán 11.34 (entropy chéo), Mệnh đề 11.36 (sai số tích lũy), Định nghĩa 11.37, Thuật toán 11.38 (điều khiển dự báo).
+- Mục 5: Định nghĩa 11.40–11.42 và Mệnh đề 11.43 (tùy chọn, mô hình tùy chọn), Định lý 11.44 (Bellman phân cấp), Định lý 11.46 và Thuật toán 11.47 (lặp giá trị với tùy chọn), Thuật toán 11.48 (Q-learning bán-MDP).
 
 **Công thức cần nhớ.**
 
 - Mô hình đếm và phương sai của tần suất, (2.1), (2.2):
   $$\begin{aligned}\hat p(s'\mid s,a)&=\frac{C(s,a,s')}{C(s,a)},\\\operatorname{Var}\hat p&=\frac{p(1-p)}{C}.\end{aligned}$$
-- Cập nhật lập kế hoạch của Dyna-Q+ (Định nghĩa 11.12):
+- Cập nhật lập kế hoạch của Dyna-Q+ (Định nghĩa 11.11):
   $$\begin{aligned}&Q(\tilde S,\tilde A)\leftarrow Q(\tilde S,\tilde A)\\&\quad+\alpha\bigl[\tilde R+\kappa\sqrt{\ell(\tilde S,\tilde A)}\\&\quad+\gamma\max_{a'}Q(\tilde S',a')\\&\quad-Q(\tilde S,\tilde A)\bigr].\end{aligned}$$
 - Sai số sau $k$ cập nhật mẫu, (2.5):
   $$\sqrt{\mathbb E(Q_k-\bar y)^2}=\sqrt{\frac{b-1}{bk}}.$$
@@ -1648,15 +1666,15 @@ Q-learning dùng mỗi mẫu thật một lần rồi bỏ. Một mô hình họ
 
 **Giả thiết hay bị bỏ quên.**
 
-- Mệnh đề 11.9: mô hình cố định, xác định ở mọi cặp. Giới hạn là $\hat q_*$, không phải $q_*$.
-- Thuật toán 11.10: môi trường tất định. Với trượt, mô hình lưu kết cục gần nhất là một mô hình sai (Tình huống 11.2).
-- Mệnh đề 11.21: $q_{\pi_0}$ chính xác.
-- Mệnh đề 11.22: $m$ chọn trước, mô phỏng độc lập, không bị cắt.
-- Định lý 11.24: phần thưởng trong $[0,1]$, phân phối không đổi theo thời gian.
-- Định lý 11.27: mô hình mẫu đúng, chân trời hữu hạn $D$, hệ số thăm dò nhân $D$. Phần (a) được chứng minh cho UCT của Kocsis và Szepesvári, không cho Thuật toán 11.26. Sai số cắt là $\gamma^{20}=0{,}1216$.
+- Mệnh đề 11.4: mô hình cố định, xác định ở mọi cặp. Giới hạn là $\hat q_*$, không phải $q_*$.
+- Thuật toán 11.8: môi trường tất định. Với trượt, mô hình lưu kết cục gần nhất là một mô hình sai (Tình huống 11.2).
+- Mệnh đề 11.23: $q_{\pi_0}$ chính xác.
+- Mệnh đề 11.24: $m$ chọn trước, mô phỏng độc lập, không bị cắt.
+- Định lý 11.26: phần thưởng trong $[0,1]$, phân phối không đổi theo thời gian.
+- Định lý 11.29: mô hình mẫu đúng, chân trời hữu hạn $D$, hệ số thăm dò nhân $D$. Phần (a) được chứng minh cho UCT của Kocsis và Szepesvári, không cho Thuật toán 11.28. Sai số cắt là $\gamma^{20}=0{,}1216$.
 - Mệnh đề 11.36: chuỗi hành động cố định, sai số đo trên quỹ đạo dự báo.
-- Định lý 11.42, 11.44: tùy chọn kết thúc với xác suất $1$. Định lý 11.44 bảo đảm $v_\Omega=v_*$ khi $\Omega(s)\supseteq\mathcal A(s)$.
-- Thuật toán 11.46: chiết khấu bằng $\gamma^k$ theo số bước thật.
+- Định lý 11.44, 11.46: tùy chọn kết thúc với xác suất $1$. Định lý 11.46 bảo đảm $v_\Omega=v_*$ khi $\Omega(s)\supseteq\mathcal A(s)$.
+- Thuật toán 11.48: chiết khấu bằng $\gamma^k$ theo số bước thật.
 
 ---
 
@@ -1685,7 +1703,7 @@ Xét bốn thủ tục: (1) lặp giá trị đồng bộ (Thuật toán 04.28);
 :::
 
 ::: hint
-Dùng Định nghĩa 11.1, 11.2, 11.14 và (2.5); mô hình tất định thuộc cả hai loại.
+Dùng Định nghĩa 11.13, 11.2, 11.9, 11.21, 11.14 và (2.5); mô hình tất định thuộc cả hai loại.
 :::
 
 ::: solution
@@ -1733,7 +1751,7 @@ Hành động là tùy chọn kết thúc sau đúng một bước.
 
 **Câu (b).** Từ $\mathrm F$, một bước đi đúng tới $\mathrm K$, nên $\tau$ nhỏ nhất là $1$, đạt khi lần đầu không trượt, xác suất $0{,}8$. Từ $\mathrm A$, đường $\mathrm A\to\mathrm B\to\mathrm F\to\mathrm K$ cần ba bước đi đúng, nên $\tau$ nhỏ nhất là $3$, đạt khi ba lần thử liên tiếp đều không trượt; các lần thử độc lập, nên xác suất là $0{,}8^3=0{,}512$.
 
-**Câu (c).** Không kết thúc: $\leftarrow$ tại $\mathrm A$ đụng biên. Mệnh đề 11.41 và Định lý 11.42 không áp dụng.
+**Câu (c).** Không kết thúc: $\leftarrow$ tại $\mathrm A$ đụng biên. Mệnh đề 11.43 và Định lý 11.44 không áp dụng.
 
 **Kiểm tra lại.** Lấy $\tau=4$ từ $\mathrm A$ là đếm nhầm bước vào $\mathrm Z$ của $\omega_2$.
 :::
@@ -1741,11 +1759,11 @@ Hành động là tùy chọn kết thúc sau đúng một bước.
 ### Mức tính toán hoặc chứng minh
 
 ::: exercise Bài tập 11.4 (Bước thật đầu của lượt thứ hai trong Dyna-Q)
-Sau Ví dụ 11.7: $Q(\mathrm K,\rightarrow)=0{,}75$, $Q(\mathrm F,\rightarrow)=0{,}225$, ô khác bằng $0$; mô hình ghi $(\mathrm A,\rightarrow)\mapsto(0,\mathrm B)$, $(\mathrm B,\downarrow)\mapsto(0,\mathrm F)$, $(\mathrm F,\rightarrow)\mapsto(0,\mathrm K)$, $(\mathrm K,\rightarrow)\mapsto(+1,\mathrm Z)$; $\alpha=0{,}5$, $\gamma=0{,}9$, $n=2$. Bước thật là $(\mathrm A,\rightarrow,0,\mathrm B)$; bước chọn cặp lấy $(\mathrm F,\rightarrow)$ rồi $(\mathrm B,\downarrow)$. (a) Tính các ô thay đổi. (b) Nêu điều kiện để Q-planning trên một mô hình hội tụ tới $\hat q_*$, và giải thích vì sao Dyna-Q trong bài này không thỏa điều kiện đó.
+Sau Ví dụ 11.6: $Q(\mathrm K,\rightarrow)=0{,}75$, $Q(\mathrm F,\rightarrow)=0{,}225$, ô khác bằng $0$; mô hình ghi $(\mathrm A,\rightarrow)\mapsto(0,\mathrm B)$, $(\mathrm B,\downarrow)\mapsto(0,\mathrm F)$, $(\mathrm F,\rightarrow)\mapsto(0,\mathrm K)$, $(\mathrm K,\rightarrow)\mapsto(+1,\mathrm Z)$; $\alpha=0{,}5$, $\gamma=0{,}9$, $n=2$. Bước thật là $(\mathrm A,\rightarrow,0,\mathrm B)$; bước chọn cặp lấy $(\mathrm F,\rightarrow)$ rồi $(\mathrm B,\downarrow)$. (a) Tính các ô thay đổi. (b) Nêu điều kiện để Q-planning trên một mô hình hội tụ tới $\hat q_*$, và giải thích vì sao Dyna-Q trong bài này không thỏa điều kiện đó.
 :::
 
 ::: hint
-Ghi mục tiêu, sai lệch, giá trị mới cho từng cập nhật, theo thứ tự; với (b), dùng Mệnh đề 11.9.
+Ghi mục tiêu, sai lệch, giá trị mới cho từng cập nhật, theo thứ tự; với (b), dùng Mệnh đề 11.4.
 :::
 
 ::: solution
@@ -1755,7 +1773,7 @@ Ghi mục tiêu, sai lệch, giá trị mới cho từng cập nhật, theo th�
 
 **Tại $(\mathrm B,\downarrow)$.** Mục tiêu $0{,}9\cdot0{,}45=0{,}405$; sai lệch $0{,}405$; giá trị mới $0{,}2025$.
 
-**Câu (b).** Theo Mệnh đề 11.9, mô hình phải cố định, xác định ở mọi cặp, mọi cặp được chọn vô hạn lần và bước học thỏa Robbins–Monro. Ở đây mô hình chỉ xác định ở bốn cặp đã thử và đổi sau mỗi bước thật (Nhận xét 11.11); bước học hằng $\alpha=0{,}5$ không thỏa Định nghĩa 06.19.
+**Câu (b).** Theo Mệnh đề 11.4, mô hình phải cố định, xác định ở mọi cặp, mọi cặp được chọn vô hạn lần và bước học thỏa Robbins–Monro. Ở đây mô hình chỉ xác định ở bốn cặp đã thử và đổi sau mỗi bước thật (Nhận xét 11.10); bước học hằng $\alpha=0{,}5$ không thỏa Định nghĩa 06.19.
 
 **Kiểm tra lại.** Đảo thứ tự hai cặp: $(\mathrm B,\downarrow)$ trước có mục tiêu $0{,}9\cdot0{,}225=0{,}2025$ và giá trị mới $0{,}10125$. Vậy thứ tự đổi kết quả.
 :::
@@ -1795,7 +1813,7 @@ So với Ví dụ 11.18, 11.19.
 :::
 
 ::: exercise Bài tập 11.7 (Mô hình tùy chọn khi trượt nhiều hơn)
-Mê cung hai phòng với xác suất trượt $\delta=0{,}5$ (trượt thì ở yên), phần thưởng $+1$ khi vào $\mathrm Z$, $\gamma=0{,}9$. Tùy chọn $\omega_1$ chạy trong phòng trái $\{\mathrm A,\mathrm B,\mathrm E,\mathrm F\}$ với $\mathrm A,\mathrm E,\mathrm F\mapsto\rightarrow$, $\mathrm B\mapsto\downarrow$ và kết thúc khi tới $\mathrm K$; tùy chọn $\omega_2$ chạy trong phòng phải $\{\mathrm C,\mathrm D,\mathrm K\}$ với $\mathrm C,\mathrm K\mapsto\rightarrow$, $\mathrm D\mapsto\downarrow$ và kết thúc khi vào $\mathrm Z$. (a) Chứng minh thừa số của một bước đi đúng là $\rho=(1-\delta)\gamma/(1-\delta\gamma)$. (b) Tính $p(\mathrm K\mid\mathrm B,\omega_1)$, $r(\mathrm K,\omega_2)$ và giá trị của $\mathrm B$ theo "$\omega_1$ rồi $\omega_2$". (c) Kiểm Mệnh đề 11.41.
+Mê cung hai phòng với xác suất trượt $\delta=0{,}5$ (trượt thì ở yên), phần thưởng $+1$ khi vào $\mathrm Z$, $\gamma=0{,}9$. Tùy chọn $\omega_1$ chạy trong phòng trái $\{\mathrm A,\mathrm B,\mathrm E,\mathrm F\}$ với $\mathrm A,\mathrm E,\mathrm F\mapsto\rightarrow$, $\mathrm B\mapsto\downarrow$ và kết thúc khi tới $\mathrm K$; tùy chọn $\omega_2$ chạy trong phòng phải $\{\mathrm C,\mathrm D,\mathrm K\}$ với $\mathrm C,\mathrm K\mapsto\rightarrow$, $\mathrm D\mapsto\downarrow$ và kết thúc khi vào $\mathrm Z$. (a) Chứng minh thừa số của một bước đi đúng là $\rho=(1-\delta)\gamma/(1-\delta\gamma)$. (b) Tính $p(\mathrm K\mid\mathrm B,\omega_1)$, $r(\mathrm K,\omega_2)$ và giá trị của $\mathrm B$ theo "$\omega_1$ rồi $\omega_2$". (c) Kiểm Mệnh đề 11.43.
 :::
 
 ::: hint
@@ -1819,7 +1837,7 @@ Tại $\mathrm F$, $q_{\pi_0}(\mathrm F,\cdot)$: $\rightarrow$ $0{,}388554$; $\d
 :::
 
 ::: hint
-Bất đẳng thức hợp và Mệnh đề 11.22.
+Bất đẳng thức hợp và Mệnh đề 11.24.
 :::
 
 ::: solution
@@ -1841,11 +1859,11 @@ Xét loại hành động, loại mô hình và độ dài chân trời.
 :::
 
 ::: solution
-**Câu (a).** Tìm kiếm theo cây Monte Carlo (Định lý 11.27): chân trời hữu hạn, lợi tức trong $[0,1]$; trò chơi hai người nằm ngoài giả thiết MDP một tác tử.
+**Câu (a).** Tìm kiếm theo cây Monte Carlo (Định lý 11.29): chân trời hữu hạn, lợi tức trong $[0,1]$; trò chơi hai người nằm ngoài giả thiết MDP một tác tử.
 
-**Câu (b).** Điều khiển dự báo với gradient qua mô hình (Mệnh đề 11.30): sai số tích lũy theo $h$ (Mệnh đề 11.36).
+**Câu (b).** Điều khiển dự báo với gradient qua mô hình (Mệnh đề 11.32): sai số tích lũy theo $h$ (Mệnh đề 11.36).
 
-**Câu (c).** Lặp giá trị với tùy chọn (Định lý 11.44): tùy chọn kết thúc với xác suất $1$; $\Omega(s)\supseteq\mathcal A(s)$ để bảo đảm đạt $v_*$.
+**Câu (c).** Lặp giá trị với tùy chọn (Định lý 11.46): tùy chọn kết thúc với xác suất $1$; $\Omega(s)\supseteq\mathcal A(s)$ để bảo đảm đạt $v_*$.
 
 **Kiểm tra lại.** Chọn Dyna-Q dạng bảng cho (b) là sai, vì bảng không dùng được với hành động liên tục.
 :::
@@ -1873,7 +1891,7 @@ Một bước đi đúng với xác suất $\hat p$ có thừa số $\hat p\gamm
 :::
 
 ::: exercise Bài tập 11.11 (Điều khiển dự báo với mô hình sai)
-Luật $u=-0{,}6x$ thiết kế trên mô hình $x+u$ (Ví dụ 11.20); hệ thật $x'=ax+u$. (a) Với $a=1{,}2$; $1{,}5$; $1{,}7$, tính hệ số vòng kín và ba bước từ $x_0=2$. (b) Tìm mọi $a$ để vòng kín co về $0$. (c) Giải thích vì sao vòng kín chịu được một mức sai số mô hình còn vòng hở thì không.
+Luật $u=-0{,}6x$ thiết kế trên mô hình $x+u$ (Ví dụ 11.22); hệ thật $x'=ax+u$. (a) Với $a=1{,}2$; $1{,}5$; $1{,}7$, tính hệ số vòng kín và ba bước từ $x_0=2$. (b) Tìm mọi $a$ để vòng kín co về $0$. (c) Giải thích vì sao vòng kín chịu được một mức sai số mô hình còn vòng hở thì không.
 :::
 
 ::: hint
@@ -1887,7 +1905,7 @@ Vòng kín là $x_{t+1}=(a-0{,}6)x_t$.
 
 **Câu (c).** Điều khiển dự báo giải lại từ trạng thái thật mỗi bước, nên sai số không cộng dồn qua một chuỗi hành động cố định như (4.4). Tuy nhiên, luật vẫn thiết kế trên mô hình sai, nên vòng kín chỉ co khi $-0{,}4<a<1{,}6$ (câu (b)); với $a=1{,}7$ nó phân kỳ như câu (a). Vòng hở giữ chuỗi hành động, nên sai số dự báo bị nhân với $L=\lvert a\rvert$ qua mỗi bước và tích lũy như (4.4).
 
-**Kiểm tra lại.** $a=1$ cho hệ số $0{,}4$ của Ví dụ 11.20.
+**Kiểm tra lại.** $a=1$ cho hệ số $0{,}4$ của Ví dụ 11.22.
 :::
 
 <!-- note-topic-id: lec-11-topic-28 -->
@@ -1898,9 +1916,9 @@ Vòng kín là $x_{t+1}=(a-0{,}6)x_t$.
 **Tài liệu tham khảo.**
 
 1. Tạ Việt Cường, Trần Quốc Long. *Giáo trình Học tăng cường và lập kế hoạch*, Chương 11 và mục 4.3.1, 4.3.2, 4.7: phạm vi và thứ tự.
-2. Sutton, R. S., Barto, A. G. *Reinforcement Learning: An Introduction*, ấn bản 2, MIT Press, 2018. §2.7 (tr. 35–36): Mục 3.2. §8.1–8.8 (tr. 159–181): Mục 1–2. §8.9–8.11 (tr. 182–188): Mục 3. §16.6 (tr. 441–450): Nhận xét 11.28, Ứng dụng. §17.1–17.2 (tr. 459–464): Mục 5.
-3. Bertsekas, D. P. *Reinforcement Learning and Optimal Control*, Athena Scientific, 2019. §2.4, §2.5.1, §5.1.2: Mục 3.1, 4.3.
-4. Bertsekas, D. P. *Rollout, Policy Iteration, and Distributed Reinforcement Learning*, Athena Scientific, 2020. §3.1, Mệnh đề 5.4.2: Mục 3.1, 4.3.
+2. Sutton, R. S., Barto, A. G. *Reinforcement Learning: An Introduction*, ấn bản 2, MIT Press, 2018. §2.7 (tr. 35–36): Mục 3.2. §8.1–8.8 (tr. 159–181): Mục 1–2. §8.9–8.11 (tr. 182–188): Mục 3. §16.6 (tr. 441–450): Nhận xét 11.30, Ứng dụng. §17.1–17.2 (tr. 459–464): Mục 5.
+3. Bertsekas, D. P. *Reinforcement Learning and Optimal Control*, Athena Scientific, 2019. §2.4, §2.5.1, §5.1.2: Mục 3.1, 4.5.
+4. Bertsekas, D. P. *Rollout, Policy Iteration, and Distributed Reinforcement Learning*, Athena Scientific, 2020. §3.1, Mệnh đề 5.4.2: Mục 3.1, 4.5.
 5. Szepesvári, C. *Algorithms for Reinforcement Learning*, Morgan & Claypool, 2010. §4.2.1: Mục 3.2.
 6. Puterman, M. L. *Markov Decision Processes: Discrete Stochastic Dynamic Programming*, Wiley, 1994. Chương về bán-MDP: Mục 5.2.
 7. Goodfellow, I., Bengio, Y., Courville, A. *Deep Learning*, MIT Press, 2016. Lan truyền ngược, phụ thuộc dài hạn: Mục 4.
@@ -1909,8 +1927,8 @@ Vòng kín là $x_{t+1}=(a-0{,}6)x_t$.
 10. Kocsis, L., Szepesvári, C. "Bandit Based Monte-Carlo Planning." *ECML* 2006, LNCS 4212, tr. 282–293. §2.2–2.4, Định lý 6; Kocsis, L., Szepesvári, C., Willemson, J. "Improved Monte-Carlo Search", báo cáo kỹ thuật, 2006, Định lý 7: Mục 3.3–3.4.
 11. Barto, A. G., Bradtke, S. J., Singh, S. P. "Learning to Act Using Real-Time Dynamic Programming." *Artificial Intelligence* 72 (1995): Mục 2.7.
 12. Sutton, R. S., Precup, D., Singh, S. "Between MDPs and semi-MDPs: A Framework for Temporal Abstraction in Reinforcement Learning." *Artificial Intelligence* 112 (1999): 181–211. tr. 186–205: Mục 5.
-13. Chua, K., Calandra, R., McAllister, R., Levine, S. "Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models." *NeurIPS* 2018. §4–6: Mục 2.2–2.3, 4.4–4.5.
+13. Chua, K., Calandra, R., McAllister, R., Levine, S. "Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models." *NeurIPS* 2018. §4–6: Mục 2.3, 4.5.
 14. Deisenroth, M. P., Rasmussen, C. E. "PILCO: A Model-Based and Data-Efficient Approach to Policy Search." *ICML* 2011. §2.2–2.3: Mục 4.
-15. Silver, D. và cộng sự. "Mastering the Game of Go without Human Knowledge." *Nature* 550 (2017): 354–359. Phần Phương pháp, mục "Select": Nhận xét 11.28.
-16. Bertsekas, D. P., Tsitsiklis, J. N. *Neuro-Dynamic Programming*, Athena Scientific, 1996. §5.6: chứng minh Mệnh đề 11.9.
+15. Silver, D. và cộng sự. "Mastering the Game of Go without Human Knowledge." *Nature* 550 (2017): 354–359. Phần Phương pháp, mục "Select": Nhận xét 11.30.
+16. Bertsekas, D. P., Tsitsiklis, J. N. *Neuro-Dynamic Programming*, Athena Scientific, 1996. §5.6: chứng minh Mệnh đề 11.4.
 17. Bradtke, S. J., Duff, M. O. "Reinforcement Learning Methods for Continuous-Time Markov Decision Problems." *Advances in Neural Information Processing Systems 7*, MIT Press, 1995: 393–400. Mục 5.3.
