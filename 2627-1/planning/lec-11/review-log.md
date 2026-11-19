@@ -194,3 +194,72 @@ Bài 11 đổi chủ đề thành Chương 11 "Lập kế hoạch dựa trên m�
 Điều phối viên tự viết `prompt-xay-dung-bai-11.md` (tài liệu điều phối, không phải nội dung cho sinh viên), theo mẫu `shared/prompts/prompt-mau-xay-dung-bai-giang.md` và prompt Bài 11 của `ds-foundation-algorithms`.
 
 Người dùng chốt bảng Q1–Q18 "theo đề xuất" (2026-11-19). Quyết định có tính học phần đã ghi vào `NGUYEN-TAC-HOC-PHAN.md`: mục 3 "P1, Bài 11 (riêng)" (Q1, Q2), BT-RL-6 mở rộng cho Bài 11 (Q4), dòng mới và dòng sửa ở mục 6, câu hỏi "Bài 11–12" ở mục 7 thu lại thành "Bài 12". Các quyết định còn lại chỉ cho Bài 11, giữ trong cột "Chốt" của `prompt-xay-dung-bai-11.md`.
+
+## Dựng Bài 11 mới theo Chương 11 giáo trình (bắt đầu 2026-11-19)
+
+Chạy theo `prompt-xay-dung-bai-11.md` (bảng Q chốt "theo đề xuất", người dùng 2026-11-19). Điều phối viên: Claude Opus 5.5 (`claude-opus-5-5`), mức `high`, không nhận vai soạn, rà hay sửa. Q2: ghi chú mới ghi đè `materials/lec-11/lecture-note.md`; `outline.md`, `storyboard.md` thay bản mới; deck cũ, SVG cũ trong `img/lec-11/` và `note-for-author.md` cũ xóa trong commit deck mới; các mục trên của tệp này giữ nguyên.
+
+### Tác tử và quyết định
+
+| Giai đoạn | Vai | Loại | Mô hình | Mức nỗ lực | Đầu ra | Quyết định của điều phối viên |
+|---|---|---|---|---|---|---|
+| I.1 | Lập dàn ý (`outline.md`) | `general-purpose` | `opus` (Opus 5.5) | `high` | `outline.md` (688 dòng, 28 `note-topic-id`, số hiệu tiên quyết kiểm bằng grep) | yêu cầu sửa: áp quyết định Đ1–Đ12 và phát hiện phân tích nguồn (tệp quyết định trong scratchpad, chép lại dưới đây); số liệu then chốt điều phối viên tính lại bằng Python: khớp |
+| I.2 | Phân tích nguồn (chỉ đọc) | `general-purpose` | `opus` (Opus 5.5) | `high` | báo cáo trong scratchpad (8 mục; 2 nghiêm trọng, 5 trung bình, 12 nhẹ) | chấp nhận; mọi đề xuất sửa được chấp nhận, áp vào outline |
+
+### Quyết định sau I.1–I.2 (điều phối viên, 2026-11-19)
+
+Số liệu tính lại: $v_*$ (A 0,660438; B, E 0,752166; C, F 0,856633; D, K 0,975610); $q_*(\mathrm F,\cdot)$; $v_{\pi_0}(\mathrm F)=0{,}201554$ với $\pi_0$ ngẫu nhiên đều; $q_{\pi_0}(\mathrm F,\cdot)$: $\rightarrow$ 0,388554, $\downarrow$ 0,181398, $\uparrow,\leftarrow$ 0,118131; chính sách tham lam theo $q_{\pi_0}$ đạt $v_*$ ở mọi ô; $\Delta=0{,}207156$, $\exp(-70\Delta^2)=0{,}049591$; lặp giá trị đồng bộ 6 lượt quét: $V(\mathrm A)=0{,}6103$; xe trên đường ray $J(0,0)=8$, $J(-0{,}8;-0{,}4)=2{,}88$, $J^*=2{,}40$; chứng minh Mệnh đề 11.22 ($\exp(-m\Delta^2/B^2)$ từ Hoeffding một phía cho $2m$ biến, $t=m\Delta$): đúng.
+
+| Mã | Quyết định |
+|---|---|
+| Đ1, phân tích nguồn (2 nghiêm trọng) | Trong máy không có Bertsekas (2019), Szepesvári (2010), Puterman (1994) hay bài báo gốc. Theo Q9: Định lý 11.24 (UCB1) và 11.27(a) (UCT) chỉ câu định tính có nguồn, không hằng số, bậc hay số định lý; hỏi người dùng có bổ sung bản không |
+| Đ2 | $D=20$; 11.27(b) chứng minh đầy đủ $0\le v_*-v_*^D\le\gamma^D$ khi lợi tức trong $[0,1]$ |
+| Đ3 | Chính sách ngoài cây của MCTS là chính sách cơ sở $\pi_0$ (Q6) |
+| Đ4–Đ6 | Bỏ câu hỏi nghiên cứu ở §1.1, câu trỏ Bài tập 11.19 và các tham chiếu tiến (VP-RL-2, VP20, GC3) |
+| Đ7, Đ8, Đ11, Đ12 | Giữ tên mục theo mục lục giáo trình; Nhận xét 11.28 `đọc thêm`; trần 18 000 từ; giữ mục tiêu 5 |
+| Đ9 | Ghi chú làm tròn bốn chữ số từ giá trị chưa làm tròn |
+| Đ10 | Đề xuất cho tác giả: Bài 01 dùng "tùy chọn" nghĩa "không bắt buộc" (`img/lec-01/rl-components.svg`, câu đọc hình sau Định nghĩa 01.14), trùng thuật ngữ "tùy chọn" (option) của Bài 11; đề xuất đổi thành "không bắt buộc". Không sửa Bài 01 trong đợt này |
+| Phân tích nguồn (trung bình) | Thuật toán 11.8 và Mệnh đề 11.9 theo SB tr. 161 (mọi cặp, mô hình xác định đầy đủ), Dyna-Q nêu định tính; 11.15(b) là mô hình cho công thức SB tr. 174; không dùng $C_t$ cho GVF; không ghi số mục chưa kiểm; câu CEM và MPC không tuyên bố hiệu quả |
+
+| I.1 (vòng 2) | Lập dàn ý: áp quyết định | `general-purpose` (tiếp tục cùng tác tử) | `opus` (Opus 5.5) | `high` | `outline.md` (699 dòng; 28 `note-topic-id` duy nhất; `git diff --check` sạch) | chấp nhận: điều phối viên kiểm bằng grep không còn hằng số UCB1, bậc UCT, số mục chưa kiểm; Định lý 11.24 đổi thành Nhận xét 11.24; 11.27(b) với $D=20$. Dừng chờ người dùng duyệt (Q17, sau I.3) |
+
+**Người dùng duyệt I.3 (2026-11-19):** "Duyệt, soạn tiếp" cho `outline.md` và phân tích nguồn; với Đ1 chọn "Cho phép tải bài báo": tác tử tải bản công khai của các bài báo gốc và sách (Auer và cộng sự 2002; Kocsis và Szepesvári 2006; Sutton, Precup và Singh 1999; Chua và cộng sự 2018; Silver và cộng sự 2017; Hoeffding 1963; Szepesvári 2010; Bertsekas 2019 nếu có bản công khai) vào `/data/tqlong/qa/sources/`, kiểm hằng số, bậc hội tụ, số định lý trước khi soạn ghi chú (Q9). Quyết định chỉ cho Bài 11.
+
+| I.3b | Kiểm nguồn gốc (tải bản công khai, chỉ đọc repo) | `general-purpose` | `opus` (Opus 5.5) | `high` | 11 thư mục `/data/tqlong/qa/sources/*-20261119/`; báo cáo kiểm trong scratchpad | chấp nhận: điều phối viên đối chiếu Auer và cộng sự (2002) Định lý 1 (dòng 135 bản trích) và Kocsis và Szepesvári (2006) Định lý 6 (dòng 289–294); bản dài (Kocsis, Szepesvári, Willemson 2006) nói không rút ra được tốc độ cho xác suất chọn sai, nên không ghi "tốc độ đa thức". Không có bản: Hoeffding (1963), nội dung chương Bertsekas (2019). Lệch với outline: phạm vi Định lý 11.42 (SPS phát biểu cả cho tùy chọn bán-Markov), Thuật toán 11.46 không có định lý hội tụ trong SPS, CEM không mô tả trong Chua; giao lại cho người lập dàn ý |
+| I.1 (vòng 3) | Lập dàn ý: áp kiểm nguồn gốc | `general-purpose` (tiếp tục cùng tác tử) | `opus` (Opus 5.5) | `high` | `outline.md` (704 dòng) | chấp nhận: kiểm bằng grep không còn "tốc độ đa thức" hay bậc độ chệch như kết luận; Định lý 11.24 dẫn Auer và cộng sự (2002, Định lý 1), ghi riêng chặn số lần chọn và chặn hối tiếc; chứng minh 11.27(b) ($v_\pi-v^D_\pi=\gamma^D\mathbb E_\pi[v_\pi(S_D)\mathbb 1\{D<T\}]$, rồi so sánh qua $\pi_*$) điều phối viên kiểm: đúng khi lợi tức trong $[0,1]$ và phần thưởng không âm. Outline đóng băng làm đầu vào của I.4 |
+| I.4 | Soạn ghi chú (`no-ai-slop` Edit) | `general-purpose` | `opus` (Opus 5.5) | `high` | `materials/lec-11/lecture-note.md`, SVG mới trong `img/lec-11/`, script vẽ trong `tools/courses/rl-plan/2627-1/img/lec-11/` | đang chạy |
+| I.4 (xong) | Soạn ghi chú | (như trên) | `opus` | `high` | 1 750 dòng; `raw` 22 133, `prose` 17 955 (`count_note_words.py 11`, điều phối viên chạy); 28 `note-topic-id` duy nhất; 8 SVG mới | chấp nhận làm bản đóng băng v1 cho năm vai rà; chín chỗ lệch khỏi outline do người soạn nêu (bỏ "(Mục k)" ở mục tiêu theo VP20; câu hỏi trung tâm dạng khẳng định vì trả lời ở §6.2, VP-RL-2; $\omega_1,\omega_2$; thêm giả thiết "cùng kỳ vọng" ở Mệnh đề 11.15(b); …) giao vai rà kiểm |
+| I.5 | Năm vai rà độc lập trên bản đóng băng v1 (sha256 `02cfa523…`): sinh viên; toán và thuật toán; chuyên gia Học tăng cường; sư phạm và văn phong (`no-ai-slop` Detect); mạch và móc nối | `general-purpose` ×5, chạy song song, chỉ đọc | `opus` (Opus 5.5) | `high` | báo cáo trong scratchpad | đang chạy |
+
+**Người dùng sửa Q5 (2026-11-19, sau năm vai rà):** "Bỏ trần riêng của bài": độ dài ghi chú chỉ theo GC-RL-4 (8 000–30 000 từ `prose`), để biên tập viên khôi phục các đoạn giải thích bị cắt khi rút từ 23 500 xuống 17 955 từ. Ghi vào cột "Chốt" của Q5 trong `prompt-xay-dung-bai-11.md`. Quyết định chỉ cho Bài 11.
+| I.5 (xong) | Năm vai rà | (như trên) | `opus` | `high` | sinh viên 0/14/30; toán 1/8/19; chuyên gia 1/13/28; sư phạm 1/14/27 (`no-ai-slop` Detect); mạch 1/10/19 (nghiêm trọng/trung bình/nhẹ; 0 chặn bàn giao) | chấp nhận các báo cáo; điều phối viên tự kiểm hai phát hiện toán (Ví dụ 11.15 phải dùng $\ln9$; với $\gamma<1$ tổng $p_\omega\le\gamma\Pr\{\tau<\infty\}\le\gamma$ nên bỏ "kết thúc với xác suất 1" không làm mất tính co). Gộp thành bảng quyết định Q-A…Q-R (scratchpad `bang-phat-hien-I6.md`): Q-A Tóm tắt gán hội tụ cho Dyna-Q (nghiêm trọng, bốn vai cùng báo) sửa; Q-B thuật toán rollout thiếu lượt tính tay và khối `algorithm` nâng lên nghiêm trọng, đổi thành Thuật toán 11.20 giữ số; Q-C đánh lại `\tag` theo số mục như ghi chú 04; Q-F Định lý 11.27(a) phát biểu cho UCT của nguồn, không cho biến thể 11.26; Q-Q bác đề xuất đổi tiêu đề "Đọc thêm:" và §6.2 (giữ theo outline); mọi phát hiện còn lại chấp nhận |
+| I.6 | Biên tập (`no-ai-slop` Edit) | `general-purpose` | `opus` (Opus 5.5) | `high` | `lecture-note.md`, SVG của bài, nhật ký sửa trong scratchpad | đang chạy |
+
+**Người dùng bổ sung Q5 (2026-11-19):** "Cho phép 30000 từ hoặc hơn nếu cần nhưng không quá nhiều." Đã báo cho biên tập viên: ưu tiên đủ giải thích; vượt 30 000 từ `prose` chỉ khi cần và ghi lý do.
+| I.6 (xong) | Biên tập vòng 1 (+ hai sửa thêm theo điều phối viên: $W$ đúng bốn chữ số ở Ví dụ 11.16 và Bài tập 11.5; bỏ số trang Bertsekas 2020 theo GC-RL-5) | (như trên, tiếp tục cùng tác tử) | `opus` | `high` | v2: `raw` 26 599, `prose` 21 646; nhật ký sửa: nghiêm trọng 5/5, trung bình 59/59 đã sửa, nhẹ 117/123 (6 không áp có lý do) | chấp nhận để kiểm lại. Điều phối viên kiểm trình xem (máy chủ tĩnh tạm, cổng 8811): 1600×900 và 390×844, 0 `.katex-error` trên 2 553 biểu thức, 0 lỗi console, 0 request lỗi hay ra ngoài, không `:::` sót, không tràn ngang trang, in không tràn; 8 công thức hiển thị cuộn ngang ở 390 px (giao sửa cùng vòng sau); hình hiển thị 900 px trong khung cuộn ở màn hẹp giống ghi chú 10 (cách trình xem chung xử lý hình) |
+| I.6 kiểm lại | Kiểm lại toán; kiểm lại mạch và văn phong (`no-ai-slop` Detect) trên v2 và diff | `general-purpose` ×2, chỉ đọc | `opus` (Opus 5.5) | `high` | báo cáo trong scratchpad | đang chạy |
+| I.6 kiểm lại (xong) | Kiểm lại toán; kiểm lại mạch và văn phong | (như trên) | `opus` | `high` | toán 0/0/3/10, mạch-văn phong 0/0/6/17 (chặn/nghiêm trọng/trung bình/nhẹ); mọi phát hiện nghiêm trọng và trung bình của vòng 1 đã sửa đúng, trừ lặp câu §6–Tóm tắt (Q7) | chấp nhận; giao biên tập vòng 2 (cùng tác tử): Mệnh đề 11.22 thêm giả thiết mô phỏng không cắt và câu cho $q^{D}_{\pi_0}$ ($\Delta^{20}=0{,}2122$); bảng §6.1 không gán tính nhất quán cho Thuật toán 11.26; câu "chương không phát biểu…" (VP19) đổi thành câu nêu sự kiện; bỏ lặp Q7; bỏ $m=75$ ở kết mục §3 (trỏ tiến); bỏ liên kết tới tệp chưa có; ngắt 8 công thức cuộn ở 390 px |
+| I.6 vòng 2–3 | Biên tập vòng 2 (8 quyết định) và vòng 3 (1 trung bình, 4 nhẹ) | (cùng tác tử biên tập) | `opus` | `high` | v4: `raw` 26 802, `prose` 21 791 | chấp nhận: kiểm lại toán vòng 3 không còn phát hiện (rollout $m=2$ không cắt, $\bar G(\rightarrow)=0{,}5912$; $q^{20}$, $\Delta^{20}=0{,}2122$, chặn $0{,}0428$, điều phối viên tự tính lại: khớp; công thức ngắt dòng trùng nguyên văn); kiểm lại mạch vòng 3: 1 trung bình mới (§6.2 ý 3 dẫn Bài tập 11.11 đứng sau) và 4 nhẹ, đã sửa ở vòng 3; điều phối viên đọc diff v3→v4 |
+
+### Kiểm cuối ghi chú (điều phối viên, 2026-11-19; GC26 và `AGENTS.md` §"Kiểm định ghi chú bài giảng")
+
+| Mục kiểm | Kết quả | Bằng chứng |
+|---|---|---|
+| Mỗi mục tiêu học tập có kết quả/ví dụ và bài tập | đạt | vai mạch (bảng phủ mục tiêu, `ra-ghi-chu-mach.md`); Bài tập củng cố 11.1–11.11 |
+| Khái niệm trọng tâm đi đủ bước GC18; mỗi thuật toán có tính tay trước giả mã, hai bản cùng kết quả | đạt sau sửa | vòng 1 thiếu đoạn trực quan ở 8 tiểu mục và thiếu tính tay rollout (Q-B, Q-K), đã sửa; kiểm lại toán xác nhận lượt tính tay khớp khối `algorithm` |
+| Ký hiệu trong bảng hoặc gọi tên lần đầu; không dẫn tới khối phía sau | đạt | kiểm lại mạch vòng 3 (script số hiệu); trỏ tiến cuối cùng (§6.2 → Bài tập 11.11) đã bỏ |
+| Kết quả đủ phần GC21, có chứng minh hoặc nguồn có số trang | đạt | Định lý 11.24 dẫn Auer và cộng sự (2002, Định lý 1); 11.27(a) dẫn Kocsis và Szepesvári (2006, Định lý 6), (b) chứng minh đầy đủ; Q-learning bán-MDP câu định tính theo Sutton, Precup và Singh (1999, tr. 195–196); Bertsekas dẫn mục, không trang (GC-RL-5) |
+| Ví dụ có kết quả số và dòng kiểm tra; số liệu tính lại độc lập | đạt | vai toán vòng 1 và hai vòng kiểm lại; điều phối viên tính lại các số then chốt |
+| Bài tập có `hint` và `solution` đầy đủ | đạt sau sửa | lời giải chỉ có đáp số (11.3(b), 11.6, 11.7(b), 11.10(b)) đã viết đủ bước; 11.11(c) sửa |
+| Không "xem trang chiếu", câu mảnh, bước bỏ; chứng minh chia bước | đạt | năm vai rà và kiểm lại |
+| Móc nối, "Trong thực hành" (GC14), kết mục (GC15) | đạt sau sửa | thêm "Trong thực hành" sau Thuật toán 11.34, Định lý 11.42; kết mục §4 viết lại, kết mục §5 thêm; ranh giới một phía |
+| VP18–VP23 (`no-ai-slop` Detect) | đạt | vai sư phạm (Detect, vòng 1), vai mạch-văn phong (Detect trên diff, vòng 2–3); người soạn và biên tập dùng Edit |
+| Giáo trình tham khảo theo mục, không dịch hay chép | đạt | outline mục "Giáo trình tham khảo theo mục"; mục tài liệu tham khảo của ghi chú (17 mục) dẫn mục/trang; vai chuyên gia đối chiếu |
+| Số hiệu liên tục, tham chiếu đúng, khối không lồng, render 1600×900, 390×844, in | đạt | 120 khối mở/120 đóng; 28 `note-topic-id` duy nhất; trình xem (máy chủ tĩnh tạm cổng 8811): 0 `.katex-error` trên 2 593 biểu thức, 0 lỗi console, 0 request lỗi hay ra ngoài, không `:::` sót, không tràn ngang trang, 0 công thức cuộn ở 390 px, in không tràn; ảnh chụp đã xem |
+| Nhất quán với deck, bài tập, bài thực hành | chưa áp dụng | deck và `exercises.md` chưa có; kiểm ở giai đoạn II–III. Liên kết tới `exercises.md` và deck đã bỏ khỏi ghi chú, thêm lại khi có |
+| Độ dài | 21 791 từ `prose` | GC-RL-4 (8 000–30 000); người dùng bỏ trần riêng 18 000 (2026-11-19) |
+
+Ghi chú: trình xem bắt buộc tham số `&deck=`; tới khi deck mới có (giai đoạn III), nút "Bộ trang chiếu" trong trình xem trỏ tới tệp chưa tồn tại. Thay đổi chưa commit của Bài 10 (`img/lec-10/`, `materials/lec-10/lecture-note.md`, `planning/lec-10/`) thuộc việc khác, không stage.
+| I.1 (vòng 4) | Đồng bộ outline với ghi chú đã biên tập | `general-purpose` (cùng tác tử lập dàn ý) | `opus` | `high` | `outline.md` 695 dòng | chấp nhận: grep không còn "Định nghĩa 11.20" |
+
+**Người dùng duyệt ghi chú (2026-11-19):** "Duyệt, commit và làm tiếp" (điểm dừng Q17 sau giai đoạn I). Thẻ Bài 11 thêm vào `index.html` theo Q18 (Bài giảng, Bài tập, Thực hành: `Chưa có`; ghi chú liên kết trình xem với `&deck=` của deck mới); thẻ kiểm ở 1600×900 và 390×844, 0 lỗi console, không tràn ngang.

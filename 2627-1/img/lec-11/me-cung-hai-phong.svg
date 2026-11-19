@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 430" width="860" height="430" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Mê cung hai phòng</title>
+<desc id="d">Lưới hai hàng bốn cột. Hàng trên A, B, C, D; hàng dưới E, F, K, Z. Tường giữa B và C. Cạnh giữa F và K là cửa giữa hai phòng. Z là đích, phần thưởng cộng 1. Giá trị tối ưu trong ô: K và D 0,9756; F và C 0,8566; B và E 0,7522; A 0,6604. Đi đúng hướng với xác suất 0,8, trượt và ở yên với xác suất 0,2, gamma 0,9.</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="ao" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker></defs>
+<rect x="60" y="40" width="185" height="130" rx="0" fill="#EEF1F8" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="152.5" y="92" font-size="34" text-anchor="middle" font-weight="bold" fill="#2F3E7A">A</text>
+<text x="152.5" y="135" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">v* = 0,6604</text>
+<rect x="245" y="40" width="185" height="130" rx="0" fill="#EEF1F8" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="337.5" y="92" font-size="34" text-anchor="middle" font-weight="bold" fill="#2F3E7A">B</text>
+<text x="337.5" y="135" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">v* = 0,7522</text>
+<rect x="430" y="40" width="185" height="130" rx="0" fill="#FFFFFF" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="522.5" y="92" font-size="34" text-anchor="middle" font-weight="bold" fill="#2F3E7A">C</text>
+<text x="522.5" y="135" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">v* = 0,8566</text>
+<rect x="615" y="40" width="185" height="130" rx="0" fill="#FFFFFF" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="707.5" y="92" font-size="34" text-anchor="middle" font-weight="bold" fill="#2F3E7A">D</text>
+<text x="707.5" y="135" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">v* = 0,9756</text>
+<rect x="60" y="170" width="185" height="130" rx="0" fill="#EEF1F8" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="152.5" y="222" font-size="34" text-anchor="middle" font-weight="bold" fill="#2F3E7A">E</text>
+<text x="152.5" y="265" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">v* = 0,7522</text>
+<rect x="245" y="170" width="185" height="130" rx="0" fill="#EEF1F8" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="337.5" y="222" font-size="34" text-anchor="middle" font-weight="bold" fill="#2F3E7A">F</text>
+<text x="337.5" y="265" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">v* = 0,8566</text>
+<rect x="430" y="170" width="185" height="130" rx="0" fill="#FFFFFF" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="522.5" y="222" font-size="34" text-anchor="middle" font-weight="bold" fill="#2F3E7A">K</text>
+<text x="522.5" y="265" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">v* = 0,9756</text>
+<rect x="615" y="170" width="185" height="130" rx="0" fill="#DCE3F3" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="707.5" y="222" font-size="34" text-anchor="middle" font-weight="bold" fill="#2F3E7A">Z</text>
+<text x="707.5" y="262" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">đích, +1</text>
+<rect x="60" y="40" width="740" height="260" fill="none" stroke="#1d2433" stroke-width="4"/>
+<line x1="430" y1="40" x2="430" y2="170" stroke="#1d2433" stroke-width="9"/>
+<text x="430" y="30" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">tường</text>
+<line x1="430" y1="182" x2="430" y2="288" stroke="#B5541B" stroke-width="4" stroke-dasharray="8 6"/>
+<text x="430" y="330" font-size="22" text-anchor="middle" font-weight="normal" fill="#B5541B">cửa F–K</text>
+<text x="245" y="330" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">phòng trái (tô nền)</text>
+<text x="652.0" y="330" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">phòng phải</text>
+<text x="430" y="395" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">đi đúng hướng: xác suất 0,8; trượt, ở yên: 0,2; γ = 0,9</text>
+</svg>

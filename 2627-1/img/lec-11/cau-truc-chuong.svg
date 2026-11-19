@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 580" width="920" height="580" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Cấu trúc chương: các cách dùng mô hình</title>
+<desc id="d">Dòng chính: mô hình, kinh nghiệm mô phỏng, cập nhật, giá trị, chính sách. Vòng phía trên: chính sách cho hành động trong môi trường; kinh nghiệm thật đi vào học mô hình và, qua học trực tiếp, vào giá trị. Bốn khối phía dưới: lập kế hoạch tại thời điểm quyết định với hành động liên tục (hạ gradient qua mô hình, entropy chéo, điều khiển dự báo), nối thẳng từ kinh nghiệm mô phỏng, không qua giá trị; với hành động rời rạc (rollout, tìm kiếm theo cây Monte Carlo); lập kế hoạch nền (Q-planning, Dyna-Q); trừu tượng thời gian (tùy chọn, lặp giá trị với tùy chọn). Ba khối sau nối từ khối cập nhật.</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="ao" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker></defs>
+<rect x="330" y="20" width="240" height="60" rx="8" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="450" y="58" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">môi trường</text>
+<text x="450" y="120" font-size="20" text-anchor="middle" font-weight="normal" fill="#2F3E7A">kinh nghiệm thật</text>
+<line x1="330" y1="50" x2="120" y2="50" stroke="#2F3E7A" stroke-width="2.5" marker-end="url(#ar)"/>
+<line x1="120" y1="50" x2="120" y2="168" stroke="#2F3E7A" stroke-width="2.5" marker-end="url(#ar)"/>
+<text x="200" y="40" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">học mô hình</text>
+<line x1="570" y1="50" x2="615" y2="50" stroke="#2F3E7A" stroke-width="2.5"/>
+<line x1="615" y1="50" x2="615" y2="168" stroke="#2F3E7A" stroke-width="2.5" marker-end="url(#ar)"/>
+<text x="655" y="40" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">học trực tiếp</text>
+<rect x="40" y="170" width="160" height="80" rx="8" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="120.0" y="213" font-size="21" text-anchor="middle" font-weight="normal" fill="#1d2433">mô hình</text>
+<rect x="215" y="170" width="160" height="80" rx="8" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="295.0" y="201" font-size="21" text-anchor="middle" font-weight="normal" fill="#1d2433">kinh nghiệm</text>
+<text x="295.0" y="227" font-size="21" text-anchor="middle" font-weight="normal" fill="#1d2433">mô phỏng</text>
+<rect x="390" y="170" width="140" height="80" rx="8" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="460.0" y="213" font-size="21" text-anchor="middle" font-weight="normal" fill="#1d2433">cập nhật</text>
+<rect x="545" y="170" width="140" height="80" rx="8" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="615.0" y="213" font-size="21" text-anchor="middle" font-weight="normal" fill="#1d2433">giá trị</text>
+<rect x="700" y="170" width="170" height="80" rx="8" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="785.0" y="213" font-size="21" text-anchor="middle" font-weight="normal" fill="#1d2433">chính sách</text>
+<line x1="200" y1="210" x2="211" y2="210" stroke="#2F3E7A" stroke-width="2.5" marker-end="url(#ar)"/>
+<line x1="375" y1="210" x2="386" y2="210" stroke="#2F3E7A" stroke-width="2.5" marker-end="url(#ar)"/>
+<line x1="530" y1="210" x2="541" y2="210" stroke="#2F3E7A" stroke-width="2.5" marker-end="url(#ar)"/>
+<line x1="685" y1="210" x2="696" y2="210" stroke="#2F3E7A" stroke-width="2.5" marker-end="url(#ar)"/>
+<path d="M 785 170 L 785 110 L 572 80" stroke="#2F3E7A" stroke-width="2.5" fill="none" marker-end="url(#ar)" stroke-dasharray="6 5"/>
+<text x="850" y="140" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">hành động</text>
+<line x1="295" y1="250" x2="122.5" y2="335" stroke="#B5541B" stroke-width="2.5" stroke-dasharray="8 5"/>
+<rect x="15" y="335" width="215" height="180" rx="8" fill="#FFFFFF" stroke="#B5541B" stroke-width="2.5" stroke-dasharray="8 5"/>
+<text x="122.5" y="370" font-size="19" text-anchor="middle" font-weight="bold" fill="#B5541B">hành động liên tục</text>
+<text x="122.5" y="406" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">gradient qua mô hình,</text>
+<text x="122.5" y="434" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">entropy chéo,</text>
+<text x="122.5" y="462" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">điều khiển dự báo;</text>
+<text x="122.5" y="490" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">không qua giá trị</text>
+<line x1="460" y1="250" x2="347.5" y2="335" stroke="#B5541B" stroke-width="2.5" stroke-dasharray="8 5"/>
+<rect x="240" y="335" width="215" height="180" rx="8" fill="#FFFFFF" stroke="#B5541B" stroke-width="2.5" stroke-dasharray="8 5"/>
+<text x="347.5" y="370" font-size="19" text-anchor="middle" font-weight="bold" fill="#B5541B">hành động rời rạc</text>
+<text x="347.5" y="406" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">rollout, tìm kiếm</text>
+<text x="347.5" y="434" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">theo cây Monte Carlo</text>
+<line x1="460" y1="250" x2="572.5" y2="335" stroke="#2F3E7A" stroke-width="2.5"/>
+<rect x="465" y="335" width="215" height="180" rx="8" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="572.5" y="370" font-size="19" text-anchor="middle" font-weight="bold" fill="#2F3E7A">lập kế hoạch nền</text>
+<text x="572.5" y="406" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">Q-planning, Dyna-Q;</text>
+<text x="572.5" y="434" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">bảng Q cho</text>
+<text x="572.5" y="462" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">mọi trạng thái</text>
+<line x1="460" y1="250" x2="797.5" y2="335" stroke="#2E7D4F" stroke-width="2.5" stroke-dasharray="2 4"/>
+<rect x="690" y="335" width="215" height="180" rx="8" fill="#FFFFFF" stroke="#2E7D4F" stroke-width="2.5" stroke-dasharray="2 4"/>
+<text x="797.5" y="370" font-size="19" text-anchor="middle" font-weight="bold" fill="#2E7D4F">trừu tượng thời gian</text>
+<text x="797.5" y="406" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">tùy chọn,</text>
+<text x="797.5" y="434" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">lặp giá trị</text>
+<text x="797.5" y="462" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">với tùy chọn</text>
+<path d="M 15 528 L 15 538 L 455 538 L 455 528" stroke="#B5541B" stroke-width="2" fill="none"/>
+<text x="235" y="564" font-size="20" text-anchor="middle" font-weight="bold" fill="#B5541B">lập kế hoạch tại thời điểm quyết định</text>
+</svg>
