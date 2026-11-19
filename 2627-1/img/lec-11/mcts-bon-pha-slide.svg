@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 410" width="480" height="410" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Bốn pha của tìm kiếm theo cây Monte Carlo</title>
+<desc id="d">Bốn khung xếp hai hàng, mỗi khung là cây gốc F với bốn cạnh phải, xuống, lên, trái. Khung chọn: N(F) bằng 8, chỉ số UCT của bốn cạnh 1,4142; 1,6134; 1,7558; 1,6479, cạnh lên được chọn. Khung mở rộng: dưới cạnh lên thêm nút B viền nét đứt, mọi thống kê bằng 0. Khung mô phỏng: từ B theo chính sách cơ sở đi B, F, K, Z, lợi tức gamma mũ 3 bằng 0,729. Khung cập nhật ngược: cạnh lên có N 2, W 1,0428, Q trung bình 0,5214; N(F) bằng 9; N(B) bằng 0.</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="ao" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker></defs>
+<rect x="2" y="2" width="236" height="201" rx="8" fill="#FFFFFF" stroke="#6B7280" stroke-width="1.5"/>
+<text x="120.0" y="28" font-size="21" text-anchor="middle" font-weight="bold" fill="#2F3E7A">1. Chọn</text>
+<circle cx="92.0" cy="58.0" r="17" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2"/>
+<text x="92" y="65" font-size="19" text-anchor="middle" font-weight="bold" fill="#1d2433">F</text>
+<text x="116" y="54" font-size="18" text-anchor="start" font-weight="normal" fill="#1d2433">N(F) = 8</text>
+<line x1="92" y1="75" x2="36" y2="102" stroke="#2F3E7A" stroke-width="2"/>
+<text x="36" y="122" font-size="20" text-anchor="middle" font-weight="normal" fill="#2F3E7A">→</text>
+<line x1="92" y1="75" x2="92" y2="102" stroke="#2F3E7A" stroke-width="2"/>
+<text x="92" y="122" font-size="20" text-anchor="middle" font-weight="normal" fill="#2F3E7A">↓</text>
+<line x1="92" y1="75" x2="148" y2="102" stroke="#B5541B" stroke-width="4"/>
+<text x="148" y="122" font-size="20" text-anchor="middle" font-weight="bold" fill="#B5541B">↑</text>
+<line x1="92" y1="75" x2="204" y2="102" stroke="#2F3E7A" stroke-width="2"/>
+<text x="204" y="122" font-size="20" text-anchor="middle" font-weight="normal" fill="#2F3E7A">←</text>
+<text x="36" y="150" font-size="17" text-anchor="middle" font-weight="normal" fill="#1d2433">1,4142</text>
+<text x="92" y="150" font-size="17" text-anchor="middle" font-weight="normal" fill="#1d2433">1,6134</text>
+<text x="148" y="150" font-size="17" text-anchor="middle" font-weight="bold" fill="#B5541B">1,7558</text>
+<text x="204" y="150" font-size="17" text-anchor="middle" font-weight="normal" fill="#1d2433">1,6479</text>
+<text x="120.0" y="186" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">chỉ số UCT; chọn ↑</text>
+<rect x="242" y="2" width="236" height="201" rx="8" fill="#FFFFFF" stroke="#6B7280" stroke-width="1.5"/>
+<text x="360.0" y="28" font-size="21" text-anchor="middle" font-weight="bold" fill="#2F3E7A">2. Mở rộng</text>
+<circle cx="332.0" cy="58.0" r="17" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2"/>
+<text x="332" y="65" font-size="19" text-anchor="middle" font-weight="bold" fill="#1d2433">F</text>
+<line x1="332" y1="75" x2="276" y2="102" stroke="#2F3E7A" stroke-width="2"/>
+<text x="276" y="122" font-size="20" text-anchor="middle" font-weight="normal" fill="#2F3E7A">→</text>
+<line x1="332" y1="75" x2="332" y2="102" stroke="#2F3E7A" stroke-width="2"/>
+<text x="332" y="122" font-size="20" text-anchor="middle" font-weight="normal" fill="#2F3E7A">↓</text>
+<line x1="332" y1="75" x2="388" y2="102" stroke="#B5541B" stroke-width="4"/>
+<text x="388" y="122" font-size="20" text-anchor="middle" font-weight="bold" fill="#B5541B">↑</text>
+<line x1="332" y1="75" x2="444" y2="102" stroke="#2F3E7A" stroke-width="2"/>
+<text x="444" y="122" font-size="20" text-anchor="middle" font-weight="normal" fill="#2F3E7A">←</text>
+<line x1="388" y1="128" x2="388" y2="140" stroke="#B5541B" stroke-width="2"/>
+<circle cx="388" cy="157" r="16" fill="#FFFFFF" stroke="#B5541B" stroke-width="2.5" stroke-dasharray="6 4"/>
+<text x="388" y="164" font-size="18" text-anchor="middle" font-weight="bold" fill="#B5541B">B</text>
+<text x="252" y="152" font-size="18" text-anchor="start" font-weight="normal" fill="#1d2433">thêm B,</text>
+<text x="252" y="176" font-size="18" text-anchor="start" font-weight="normal" fill="#1d2433">thống kê 0</text>
+<rect x="2" y="207" width="236" height="201" rx="8" fill="#FFFFFF" stroke="#6B7280" stroke-width="1.5"/>
+<text x="120.0" y="233" font-size="21" text-anchor="middle" font-weight="bold" fill="#2F3E7A">3. Mô phỏng</text>
+<circle cx="92.0" cy="263.0" r="17" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2"/>
+<text x="92" y="270" font-size="19" text-anchor="middle" font-weight="bold" fill="#1d2433">F</text>
+<line x1="92" y1="280" x2="36" y2="307" stroke="#2F3E7A" stroke-width="2"/>
+<text x="36" y="327" font-size="20" text-anchor="middle" font-weight="normal" fill="#2F3E7A">→</text>
+<line x1="92" y1="280" x2="92" y2="307" stroke="#2F3E7A" stroke-width="2"/>
+<text x="92" y="327" font-size="20" text-anchor="middle" font-weight="normal" fill="#2F3E7A">↓</text>
+<line x1="92" y1="280" x2="148" y2="307" stroke="#B5541B" stroke-width="4"/>
+<text x="148" y="327" font-size="20" text-anchor="middle" font-weight="bold" fill="#B5541B">↑</text>
+<line x1="92" y1="280" x2="204" y2="307" stroke="#2F3E7A" stroke-width="2"/>
+<text x="204" y="327" font-size="20" text-anchor="middle" font-weight="normal" fill="#2F3E7A">←</text>
+<line x1="148" y1="333" x2="148" y2="345" stroke="#B5541B" stroke-width="2"/>
+<circle cx="148" cy="362" r="16" fill="#FFFFFF" stroke="#B5541B" stroke-width="2.5" stroke-dasharray="6 4"/>
+<text x="148" y="369" font-size="18" text-anchor="middle" font-weight="bold" fill="#B5541B">B</text>
+<text x="12" y="357" font-size="18" text-anchor="start" font-weight="normal" fill="#2E7D4F">theo π₀:</text>
+<text x="12" y="381" font-size="18" text-anchor="start" font-weight="normal" fill="#2E7D4F">B→F→K→Z</text>
+<text x="120.0" y="403" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">G = γ³ = 0,729</text>
+<rect x="242" y="207" width="236" height="201" rx="8" fill="#FFFFFF" stroke="#6B7280" stroke-width="1.5"/>
+<text x="360.0" y="233" font-size="21" text-anchor="middle" font-weight="bold" fill="#2F3E7A">4. Cập nhật ngược</text>
+<circle cx="332.0" cy="263.0" r="17" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2"/>
+<text x="332" y="270" font-size="19" text-anchor="middle" font-weight="bold" fill="#1d2433">F</text>
+<text x="356" y="259" font-size="18" text-anchor="start" font-weight="normal" fill="#1d2433">N(F) = 9</text>
+<line x1="332" y1="280" x2="276" y2="307" stroke="#2F3E7A" stroke-width="2"/>
+<text x="276" y="327" font-size="20" text-anchor="middle" font-weight="normal" fill="#2F3E7A">→</text>
+<line x1="332" y1="280" x2="332" y2="307" stroke="#2F3E7A" stroke-width="2"/>
+<text x="332" y="327" font-size="20" text-anchor="middle" font-weight="normal" fill="#2F3E7A">↓</text>
+<line x1="332" y1="280" x2="388" y2="307" stroke="#B5541B" stroke-width="4"/>
+<text x="388" y="327" font-size="20" text-anchor="middle" font-weight="bold" fill="#B5541B">↑</text>
+<line x1="332" y1="280" x2="444" y2="307" stroke="#2F3E7A" stroke-width="2"/>
+<text x="444" y="327" font-size="20" text-anchor="middle" font-weight="normal" fill="#2F3E7A">←</text>
+<line x1="388" y1="333" x2="388" y2="345" stroke="#B5541B" stroke-width="2"/>
+<circle cx="388" cy="362" r="16" fill="#FFFFFF" stroke="#B5541B" stroke-width="2.5" stroke-dasharray="6 4"/>
+<text x="388" y="369" font-size="18" text-anchor="middle" font-weight="bold" fill="#B5541B">B</text>
+<text x="364" y="357" font-size="18" text-anchor="end" font-weight="normal" fill="#B5541B">N 2</text>
+<text x="364" y="381" font-size="18" text-anchor="end" font-weight="normal" fill="#B5541B">W 1,0428</text>
+<text x="364" y="404" font-size="18" text-anchor="end" font-weight="normal" fill="#B5541B">Q̄ 0,5214</text>
+<text x="408" y="367" font-size="18" text-anchor="start" font-weight="normal" fill="#1d2433">N(B)</text>
+<text x="408" y="389" font-size="18" text-anchor="start" font-weight="normal" fill="#1d2433">= 0</text>
+</svg>

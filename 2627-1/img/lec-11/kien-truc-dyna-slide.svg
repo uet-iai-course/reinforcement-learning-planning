@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 375" width="440" height="375" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Kiến trúc Dyna</title>
+<desc id="d">Khối môi trường ở trên, khối giá trị và chính sách ở giữa, khối mô hình ở dưới. Kinh nghiệm thật từ môi trường đi vào học trực tiếp, bước d, tới giá trị và chính sách, và đi vào học mô hình, bước e, tới mô hình. Từ mô hình, điều khiển tìm kiếm chọn cặp; kinh nghiệm mô phỏng đi theo mũi tên lập kế hoạch, bước f, tới giá trị và chính sách. Giá trị và chính sách cho hành động quay về môi trường.</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="ao" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker></defs>
+<rect x="170" y="30" width="132" height="50" rx="8" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="236" y="62" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">môi trường</text>
+<rect x="120" y="145" width="200" height="62" rx="8" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="220" y="171" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">giá trị, chính sách</text>
+<text x="220" y="196" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">bảng Q</text>
+<rect x="120" y="285" width="200" height="50" rx="8" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="220" y="317" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">mô hình</text>
+<text x="24" y="22" font-size="18" text-anchor="start" font-weight="normal" fill="#2F3E7A">kinh nghiệm thật</text>
+<line x1="170" y1="55" x2="18" y2="55" stroke="#2F3E7A" stroke-width="2.5"/>
+<line x1="18" y1="55" x2="18" y2="310" stroke="#2F3E7A" stroke-width="2.5"/>
+<line x1="18" y1="310" x2="116" y2="310" stroke="#2F3E7A" stroke-width="2.5" marker-end="url(#ar)"/>
+<text x="28" y="252" font-size="18" text-anchor="start" font-weight="normal" fill="#1d2433">(e) học mô hình</text>
+<line x1="190" y1="80" x2="190" y2="141" stroke="#2F3E7A" stroke-width="2.5" marker-end="url(#ar)"/>
+<text x="182" y="116" font-size="18" text-anchor="end" font-weight="normal" fill="#1d2433">(d) học trực tiếp</text>
+<line x1="282" y1="141" x2="282" y2="84" stroke="#2F3E7A" stroke-width="2.5" marker-end="url(#ar)" stroke-dasharray="7 5"/>
+<text x="292" y="116" font-size="18" text-anchor="start" font-weight="normal" fill="#1d2433">hành động</text>
+<line x1="220" y1="207" x2="220" y2="281" stroke="#2F3E7A" stroke-width="2.5" marker-end="url(#ar)" stroke-dasharray="3 4"/>
+<text x="228" y="240" font-size="18" text-anchor="start" font-weight="normal" fill="#1d2433">điều khiển</text>
+<text x="228" y="262" font-size="18" text-anchor="start" font-weight="normal" fill="#1d2433">tìm kiếm</text>
+<line x1="320" y1="310" x2="424" y2="310" stroke="#B5541B" stroke-width="2.5"/>
+<line x1="424" y1="310" x2="424" y2="176" stroke="#B5541B" stroke-width="2.5"/>
+<line x1="424" y1="176" x2="324" y2="176" stroke="#B5541B" stroke-width="2.5" marker-end="url(#ao)"/>
+<text x="334" y="240" font-size="18" text-anchor="start" font-weight="normal" fill="#B5541B">(f) lập</text>
+<text x="334" y="262" font-size="18" text-anchor="start" font-weight="normal" fill="#B5541B">kế hoạch</text>
+<text x="220" y="362" font-size="18" text-anchor="middle" font-weight="normal" fill="#B5541B">kinh nghiệm mô phỏng</text>
+</svg>

@@ -284,3 +284,49 @@ Commit ghi chú `a6329c2` đã push (`git branch -r --contains HEAD`: `origin/ma
 ### Kiểm cuối `exercises.md` (điều phối viên, 2026-11-19; BT13)
 
 490 dòng, 8 bài 11.12–11.19, 24 khối mở/24 đóng, đúng một `hint` và một `solution` mỗi bài. Trình xem (cổng 8811), 1600×900 và 390×844: 0 `.katex-error` trên 1 129 biểu thức, 0 lỗi console, 0 request lỗi hay ra ngoài, không `:::` sót, không tràn ngang, 0 công thức cuộn, in không tràn; ảnh chụp đã xem. Liên kết `#/N/1` và tên mạch kiểm lại sau giai đoạn III (BT-RL-9). Thẻ Bài 11 trên `index.html`: nhóm Bài tập liên kết trình xem. Chỉ stage khối thẻ Bài 11 của `index.html` (thay đổi thẻ Bài 10 trong cùng tệp thuộc phiên khác, không stage).
+
+Commit bài tập `397e3d5` đã push (`origin/main`).
+
+### Giai đoạn III (bộ trang chiếu)
+
+| Giai đoạn | Vai | Loại | Mô hình | Mức nỗ lực | Đầu ra | Quyết định của điều phối viên |
+|---|---|---|---|---|---|---|
+| III.1 | Storyboard (`no-ai-slop` Edit cho chuỗi lên mặt trang) | `general-purpose` | `opus` (Opus 5.5) | `high` | `storyboard.md` (thay bản cũ theo Q2) | đang chạy |
+| III.1 (xong) | Storyboard | (như trên) | `opus` | `high` | 1 323 dòng; 60 trang (7+13+12+9+10+9), 120 phút; khoảng 38 trang có ngoại lệ mật độ; 6 hình cần bản `-slide.svg` | chuyển cổng storyboard; C7: dùng lớp `.grid2`, `.grid3`, `.grid2.wide-right` có sẵn trong `lecture-course.css`; C6: người viết deck vẽ bản `-slide.svg` bằng script trong `tools/courses/rl-plan/2627-1/img/lec-11/` |
+| III.2 | Cổng storyboard (chỉ đọc) | `general-purpose` | `opus` (Opus 5.5) | `high` | báo cáo trong scratchpad | đang chạy |
+| III.2 (xong) | Cổng storyboard | (như trên) | `opus` | `high` | đạt có điều kiện; 0/3/9/10 (chặn/nghiêm trọng/trung bình/nhẹ); hơn 60 số trên 30 trang tính lại, khớp ghi chú; 60 mã trang đúng lược đồ | chấp nhận; giao người viết storyboard sửa mọi phát hiện (Mệnh đề 11.15(b) đủ giả thiết; phạm vi 11.27(a); trang hai cột vượt mật độ; 38 ngoại lệ mật độ rút theo bảng của cổng, ngoại lệ còn lại có lý do NT17; giữ 60 trang theo đề xuất của cổng vì 58–59 tạo trang khoảng 95 âm tiết) |
+| III.1–III.2 (vòng 2) | Sửa storyboard theo cổng; kiểm lại cổng | (cùng hai tác tử) | `opus` | `high` | 60 trang, 120 phút; 25 ngoại lệ mật độ có lý do NT17, tỉ lệ lớn nhất 1,50 (L11-1-03), 1,48 (L11-6-04), 1,42 (L11-3-10) | kiểm lại: 22 phát hiện cũ sửa đúng; 1 trung bình mới (L11-2-06 không gọi tên $\hat q_*$) và 5 nhẹ, giao sửa; kết luận cổng sau sửa: đạt (điều kiện duy nhất của cổng là dòng L11-2-06) |
+| III.1 (vòng 3) | Sửa nốt storyboard | (cùng tác tử) | `opus` | `high` | L11-2-06 gọi tên $\hat q_*$ (79/80); L11-3-07 bảy dòng, L11-3-06 85 âm tiết: ngoại lệ có lý do ở §4, dưới 1,5 lần trần | chấp nhận; storyboard đạt cổng. Dừng chờ người dùng duyệt (Q17, sau III.2) |
+
+**Người dùng duyệt storyboard (2026-11-19):** "Duyệt 60 trang, viết deck" (Q15: 60 trang có lý do ở cổng; Q17 sau III.2).
+| III.3 | Viết deck (`no-ai-slop` Edit) | `general-purpose` | `opus` (Opus 5.5) | `high` | `lecture-11-lap-ke-hoach-dua-tren-mo-hinh.html`, bản `-slide.svg` | đang chạy |
+| III.3 (xong) | Viết deck | (như trên) | `opus` | `high` | 60 trang (7+13+12+9+10+9), 60 ghi chú diễn giả, 5 bản `-slide.svg`; không `<style>`, không `style=""` | yêu cầu sửa một lần: bản đầu 61 trang (tách bảng tổng kết thành `L11-6-01b`, trái trần 60 đã duyệt và trái lược đồ mã), quay về 60 với cột giả thiết dạng từ khóa, phát biểu đủ ở ghi chú diễn giả; sau sửa chấp nhận làm bản đóng băng v1. Điều phối viên kiểm: 60 `data-slide-id` duy nhất đúng `L11-k-mm`; `deck_lint --course rl-plan`: 29 `SYLL60`, không cờ khác (đánh giá theo §4 storyboard ở vòng rà) |
+| III.4 | Năm vai rà độc lập trên bản đóng băng v1: sinh viên (đo mật độ); toán và thuật toán; chuyên gia Học tăng cường; sư phạm (`no-ai-slop` Detect); mạch truyện | `general-purpose` ×5, chỉ đọc | `opus` (Opus 5.5) | `high` | báo cáo trong scratchpad | đang chạy |
+| III.4 (xong) | Năm vai rà deck | (như trên) | `opus` | `high` | sinh viên 0/0/8/16 (60 trang ở 1600×900, 20 ở 390×844; 0 lỗi console, request, `.katex-error`; chữ nhỏ nhất 0,752em; bàn phím và `#/N` đạt); toán 0/2/5/10 (mọi số đúng ghi chú); chuyên gia 0/1/7/10; sư phạm 0/0/13/23 (`no-ai-slop` Detect); mạch 0/0/3/9 (60/60 mã và tiêu đề trùng storyboard) | chấp nhận; quyết định D-1…D-12 (scratchpad `bang-phat-hien-III5.md`): D-1 $m=70$ chỉ chặn cặp $\downarrow$/$\rightarrow$ (nghiêm trọng); D-2 hàng 11.27 của bảng tổng kết thêm $c_{\mathrm{ucb}}=\sqrt2D$ và phạm vi (a) (nghiêm trọng); D-3 số công thức ghi trong câu dẫn (NT26 không `\tag`); D-11 nhãn hình khoảng 5 px ở 390×844 không sửa: khung Reveal 1280×720 thu nhỏ cả trang ở màn hẹp như mọi deck của học phần, NT25 áp ở kích thước chiếu |
+| III.5 | Biên tập deck (`no-ai-slop` Edit) | `general-purpose` (tiếp tục tác tử viết deck) | `opus` (Opus 5.5) | `high` | deck, nhật ký sửa | đang chạy |
+| III.5 (xong) | Biên tập deck | (như trên) | `opus` | `high` | 60 trang, mọi `data-slide-id` giữ; 107 phát hiện: 95 sửa, 8 sửa một phần, 4 không áp có lý do (D-11; D-4 tên kết quả làm tràn khung nên đưa vào ghi chú diễn giả); `deck_lint` 37 `SYLL60`, `formula_overflow` [], `footer_check` 0; 53 trang đổi | chấp nhận để kiểm lại toàn deck (mở đầu và Tổng kết đổi); điều phối viên trích mặt trang theo trang và lập diff v1→v2 (115 dòng bị cắt hoặc đổi) để vai mạch đọc từng dòng bị cắt |
+| III.6 | Kiểm lại toán; kiểm lại mạch toàn deck (`no-ai-slop` Detect, đọc dòng bị cắt); kiểm lại sinh viên và mật độ | (tiếp tục ba tác tử rà) | `opus` | `high` | mục "Vòng 2" của ba báo cáo | đang chạy |
+| III.6 (xong) | Kiểm lại ba vai | (như trên) | `opus` | `high` | toán: 7 phát hiện cũ từ trung bình trở lên sửa đúng, 4 nhẹ mới; mạch (toàn deck, đọc dòng bị cắt): cấu trúc đạt NT10–NT16, 1 trung bình mới (L11-3-06 mất nghĩa $N(a)$, $\bar r(a)$), 7 nhẹ; sinh viên: 8 trung bình cũ đã xử lý, 1 trung bình mới (L11-3-03 63 > 60 không lý do), 4 nhẹ; 30 trang vượt trần, 29 có lý do, không trang nào vượt 1,5 lần | chấp nhận; giao lượt sửa cuối (cùng tác tử biên tập) |
+| III.5 vòng 2 (xong) | Lượt sửa cuối deck | (cùng tác tử biên tập) | `opus` | `high` | 17 phát hiện: 16 sửa, 1 không áp có lý do (V2-5, vượt trần trang thuật toán); cao nhất L11-1-03 119/80 (1,49); `deck_lint` 35 `SYLL60`, `formula_overflow` [], `footer_check` 0 | chấp nhận; giao đồng bộ storyboard (tác tử storyboard) và rà lại `exercises.md` ("Trùng trang chiếu", `#/N/1`; tác tử bài tập), hai tệp khác nhau, chạy song song; sau đó điều phối viên kiểm cuối NT28 |
+| III.7 | Đồng bộ storyboard với deck cuối; rà lại `exercises.md` sau deck | (tác tử storyboard; tác tử bài tập) | `opus` | `high` | storyboard: §4 28 trang vượt trần có lý do NT17 (cao nhất L11-1-03 119/80, 1,49), §7 số đo cuối 60 trang, §9 35 `SYLL60` đã biết và D-11, §11 đề xuất NT3, §14 đồng bộ; `exercises.md`: liên kết `#/1/1`…`#/6/1` mở đúng, không bài 11.12–11.19 nào có trang đề hay lời giải trên deck (không thêm "Trùng trang chiếu"), bảng "Bài tập về nhà" khớp bảng mở đầu | chấp nhận. C8 (L11-6-01 rút giả thiết của 11.9, 11.15(b) thành từ khóa): chấp nhận vì cột "Giả thiết không được bỏ" chỉ giữ giả thiết cốt yếu dạng từ khóa để vừa khung một trang (NT17); phát biểu đủ ở L11-2-06, L11-2-10 và ghi chú diễn giả của L11-6-01; kiểm lại toán vòng 2 xác nhận trang này đúng |
+
+### Kiểm cuối deck (điều phối viên, 2026-11-19; NT28, P10)
+
+Máy chủ tĩnh tạm `python -m http.server 8811 --bind 127.0.0.1 --directory rl-plan`.
+
+| Kiểm | Kết quả |
+|---|---|
+| `deck_check.py` (bản math-4-AI), 1600×900 và 390×844, 60 trang | 0 lỗi console, 0 lỗi trang, 0 request lỗi, 0 `.katex-error`; `OVERFLOW` duy nhất ở L11-6-01 là hai `path` SVG của dấu căn KaTeX (dương tính giả; ảnh chụp: bảng vừa khung); `LINE20` đo theo khối `<p>`/`<li>` logic, không theo dòng hiển thị, ghi là ngoại lệ đã biết của công cụ; tỉ lệ chữ nhỏ nhất 0,94 so với cỡ gốc |
+| `deck_lint.py --course rl-plan` | 35 `SYLL60` (công cụ dùng trần 60 cho mọi trang; trang trần 80 theo NT17 và ngoại lệ ở §4 storyboard), không cờ `STRUCT`, `NOTES`, `LABEL`, `BANNED`, `REPEAT` |
+| `footer_check.py` | 0 trang chạm chân trang |
+| `formula_overflow.py` (390 px) | [] |
+| Ảnh chụp 60 trang 1600×900 (ba trang ảnh ghép) và 60 trang 390×844 | đã tự xem: vừa khung, không chồng lấn; ở 390×844 khung Reveal thu nhỏ cả trang (D-11) |
+| Raster, tài nguyên ngoài | 0 ảnh raster; không URL ngoài trong deck |
+| `data-slide-id` | 60 mã duy nhất `L11-k-mm`; bìa `L11-1-01`; tiêu đề mạch `L11-k-00`, `id="mach-2"`…`"mach-6"`; số mạch khớp "Nội dung" và `#/N` |
+| Bàn phím | ↓ đi trong mạch (L11-2-00 → L11-2-01 → L11-2-02), ← sang mạch trước, → sang mạch sau |
+| Trình xem với `&deck=` | ghi chú và bài tập mở với 0 lỗi KaTeX; nút "Bộ trang chiếu" nay trỏ tới deck có thật |
+| L11-1-02 sau sửa đánh số | ảnh chụp đã xem: danh sách 1–4, vừa khung |
+
+Q2: commit deck xóa deck cũ `lecture-11-cac-phuong-phap-gradient-chinh-sach-nang-cao.html`, 11 SVG của Bài 11 cũ trong `img/lec-11/` và `note-for-author.md` cũ. Bản `.pdf` xuất của deck cũ không theo dõi trong git, để nguyên trên đĩa (chờ người dùng). `planning/lec-10/storyboard.md` còn nhắc tên deck cũ (thuộc Bài 10, không sửa).
+
+Đề xuất sửa ghi chú chờ tác giả (NT3): bảng §6.1 của ghi chú, hàng Dyna-Q, cột giới hạn ghi "tới $\hat q_*$ của mô hình sai", nên đổi thành câu không gán hội tụ cho Dyna-Q; các đề xuất nhỏ khác ở §11 của `storyboard.md` (chữ $m$ hai nghĩa trong chứng minh Mệnh đề 11.15; $\Delta_k$ của Thuật toán 11.45 trùng chữ $\Delta$; dữ kiện Bài tập 11.5 không cùng khuôn bảng với Ví dụ 11.16). Đề xuất cho Bài 01 (Đ10): "tùy chọn" nghĩa "không bắt buộc".

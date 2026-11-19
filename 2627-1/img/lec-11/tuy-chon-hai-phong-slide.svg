@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 330" width="440" height="330" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Hai tùy chọn trên mê cung hai phòng</title>
+<desc id="d">Mê cung hai hàng bốn cột. Phòng trái A, B, E, F tô nền, tùy chọn omega 1 đi tới cửa, kết thúc tại K; mũi tên: A sang phải, B xuống, E sang phải, F sang phải; hệ số p tới K: F 0,8780; B và E 0,7710; A 0,6769. Phòng phải C, D, K viền nét đứt, tùy chọn omega 2 đi tới đích; mũi tên: C sang phải, D xuống, K sang phải; phần thưởng kỳ vọng r: K và D 0,9756; C 0,8566.</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="ao" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker></defs>
+<text x="115" y="24" font-size="19" text-anchor="middle" font-weight="bold" fill="#2F3E7A">ω₁: tới cửa</text>
+<text x="325" y="24" font-size="19" text-anchor="middle" font-weight="bold" fill="#B5541B">ω₂: tới đích</text>
+<rect x="10" y="36" width="105" height="98" rx="0" fill="#EEF1F8" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="40" y="76" font-size="24" text-anchor="middle" font-weight="bold" fill="#2F3E7A">A</text>
+<text x="82" y="78" font-size="28" text-anchor="middle" font-weight="bold" fill="#2F3E7A">→</text>
+<text x="62.5" y="114" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">0,6769</text>
+<rect x="115" y="36" width="105" height="98" rx="0" fill="#EEF1F8" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="145" y="76" font-size="24" text-anchor="middle" font-weight="bold" fill="#2F3E7A">B</text>
+<text x="187" y="78" font-size="28" text-anchor="middle" font-weight="bold" fill="#2F3E7A">↓</text>
+<text x="167.5" y="114" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">0,7710</text>
+<rect x="223" y="39" width="99" height="92" rx="0" fill="#FFFFFF" stroke="#B5541B" stroke-width="2.5" stroke-dasharray="8 5"/>
+<text x="250" y="76" font-size="24" text-anchor="middle" font-weight="bold" fill="#B5541B">C</text>
+<text x="292" y="78" font-size="28" text-anchor="middle" font-weight="bold" fill="#B5541B">→</text>
+<text x="272.5" y="114" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">0,8566</text>
+<rect x="328" y="39" width="99" height="92" rx="0" fill="#FFFFFF" stroke="#B5541B" stroke-width="2.5" stroke-dasharray="8 5"/>
+<text x="355" y="76" font-size="24" text-anchor="middle" font-weight="bold" fill="#B5541B">D</text>
+<text x="397" y="78" font-size="28" text-anchor="middle" font-weight="bold" fill="#B5541B">↓</text>
+<text x="377.5" y="114" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">0,9756</text>
+<rect x="10" y="134" width="105" height="98" rx="0" fill="#EEF1F8" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="40" y="174" font-size="24" text-anchor="middle" font-weight="bold" fill="#2F3E7A">E</text>
+<text x="82" y="176" font-size="28" text-anchor="middle" font-weight="bold" fill="#2F3E7A">→</text>
+<text x="62.5" y="212" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">0,7710</text>
+<rect x="115" y="134" width="105" height="98" rx="0" fill="#EEF1F8" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="145" y="174" font-size="24" text-anchor="middle" font-weight="bold" fill="#2F3E7A">F</text>
+<text x="187" y="176" font-size="28" text-anchor="middle" font-weight="bold" fill="#2F3E7A">→</text>
+<text x="167.5" y="212" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">0,8780</text>
+<rect x="223" y="137" width="99" height="92" rx="0" fill="#FFFFFF" stroke="#B5541B" stroke-width="2.5" stroke-dasharray="8 5"/>
+<text x="250" y="174" font-size="24" text-anchor="middle" font-weight="bold" fill="#B5541B">K</text>
+<text x="292" y="176" font-size="28" text-anchor="middle" font-weight="bold" fill="#B5541B">→</text>
+<text x="272.5" y="212" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">0,9756</text>
+<rect x="325" y="134" width="105" height="98" rx="0" fill="#DCE3F3" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="377.5" y="176" font-size="26" text-anchor="middle" font-weight="bold" fill="#1d2433">Z</text>
+<text x="377.5" y="210" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">đích</text>
+<rect x="10" y="36" width="420" height="196" fill="none" stroke="#1d2433" stroke-width="4"/>
+<line x1="220" y1="36" x2="220" y2="134" stroke="#1d2433" stroke-width="8"/>
+<text x="220" y="264" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">phòng trái: hệ số tới K của ω₁</text>
+<text x="220" y="292" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">phòng phải: phần thưởng của ω₂</text>
+<text x="220" y="320" font-size="18" text-anchor="middle" font-weight="normal" fill="#1d2433">ω₁ dừng tại K, ω₂ dừng tại Z</text>
+</svg>

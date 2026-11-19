@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 370" width="440" height="370" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Sai số dự báo tích lũy</title>
+<desc id="d">Trục hoành: số bước dự báo k từ 0 đến 5. Trục tung: sai số từ 0 đến 3. Các điểm tròn là e k: 0,4; 0,88; 1,456; 2,1472; 2,9766. Đường nét đứt là chặn 0,4 nhân (1,2 mũ k trừ 1) chia 0,2, đi qua đúng các điểm. Đường chấm là k nhân 0,4.</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="ao" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker></defs>
+<line x1="62" y1="300" x2="422" y2="300" stroke="#1d2433" stroke-width="2"/>
+<line x1="62" y1="300" x2="62" y2="40" stroke="#1d2433" stroke-width="2"/>
+<line x1="62.0" y1="300" x2="62.0" y2="308" stroke="#1d2433" stroke-width="2"/>
+<text x="62.0" y="328" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">0</text>
+<line x1="134.0" y1="300" x2="134.0" y2="308" stroke="#1d2433" stroke-width="2"/>
+<text x="134.0" y="328" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">1</text>
+<line x1="206.0" y1="300" x2="206.0" y2="308" stroke="#1d2433" stroke-width="2"/>
+<text x="206.0" y="328" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">2</text>
+<line x1="278.0" y1="300" x2="278.0" y2="308" stroke="#1d2433" stroke-width="2"/>
+<text x="278.0" y="328" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">3</text>
+<line x1="350.0" y1="300" x2="350.0" y2="308" stroke="#1d2433" stroke-width="2"/>
+<text x="350.0" y="328" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">4</text>
+<line x1="422.0" y1="300" x2="422.0" y2="308" stroke="#1d2433" stroke-width="2"/>
+<text x="422.0" y="328" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">5</text>
+<line x1="54" y1="300.0" x2="62" y2="300.0" stroke="#1d2433" stroke-width="2"/>
+<text x="50" y="307.0" font-size="19" text-anchor="end" font-weight="normal" fill="#1d2433">0</text>
+<line x1="54" y1="216.66666666666669" x2="62" y2="216.66666666666669" stroke="#1d2433" stroke-width="2"/>
+<text x="50" y="223.66666666666669" font-size="19" text-anchor="end" font-weight="normal" fill="#1d2433">1</text>
+<line x1="54" y1="133.33333333333334" x2="62" y2="133.33333333333334" stroke="#1d2433" stroke-width="2"/>
+<text x="50" y="140.33333333333334" font-size="19" text-anchor="end" font-weight="normal" fill="#1d2433">2</text>
+<line x1="54" y1="50.0" x2="62" y2="50.0" stroke="#1d2433" stroke-width="2"/>
+<text x="50" y="57.0" font-size="19" text-anchor="end" font-weight="normal" fill="#1d2433">3</text>
+<text x="242.0" y="358" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">số bước dự báo k</text>
+<text x="20" y="175.0" font-size="19" text-anchor="middle" transform="rotate(-90 20 175.0)">sai số eₖ</text>
+<polyline points="62.0,300.0 69.2,296.9 76.4,293.8 83.6,290.6 90.8,287.4 98.0,284.1 105.2,280.7 112.4,277.3 119.6,273.8 126.8,270.3 134.0,266.7 141.2,263.0 148.4,259.2 155.6,255.4 162.8,251.5 170.0,247.6 177.2,243.5 184.4,239.4 191.6,235.3 198.8,231.0 206.0,226.7 213.2,222.3 220.4,217.8 227.6,213.2 234.8,208.5 242.0,203.8 249.2,198.9 256.4,194.0 263.6,189.0 270.8,183.9 278.0,178.7 285.2,173.4 292.4,168.0 299.6,162.5 306.8,156.9 314.0,151.2 321.2,145.4 328.4,139.5 335.6,133.4 342.8,127.3 350.0,121.1 357.2,114.7 364.4,108.2 371.6,101.6 378.8,94.9 386.0,88.1 393.2,81.1 400.4,74.0 407.6,66.8 414.8,59.4 422.0,51.9" fill="none" stroke="#B5541B" stroke-width="3" stroke-dasharray="10 6"/>
+<polyline points="62.0,300.0 422.0,133.3" fill="none" stroke="#6B7280" stroke-width="3" stroke-dasharray="2 5"/>
+<circle cx="134.0" cy="266.7" r="6" fill="#2F3E7A"/>
+<text x="124.0" y="256.6666666666667" font-size="18" text-anchor="end" font-weight="normal" fill="#1d2433">0,4</text>
+<circle cx="206.0" cy="226.7" r="6" fill="#2F3E7A"/>
+<text x="196.0" y="216.66666666666669" font-size="18" text-anchor="end" font-weight="normal" fill="#1d2433">0,88</text>
+<circle cx="278.0" cy="178.7" r="6" fill="#2F3E7A"/>
+<text x="268.0" y="168.6666666666667" font-size="18" text-anchor="end" font-weight="normal" fill="#1d2433">1,456</text>
+<circle cx="350.0" cy="121.1" r="6" fill="#2F3E7A"/>
+<text x="340.0" y="111.06666666666669" font-size="18" text-anchor="end" font-weight="normal" fill="#1d2433">2,1472</text>
+<circle cx="422.0" cy="51.9" r="6" fill="#2F3E7A"/>
+<text x="412.0" y="41.94666666666677" font-size="18" text-anchor="end" font-weight="normal" fill="#1d2433">2,9766</text>
+<text x="422.0" y="237.5" font-size="18" text-anchor="end" font-weight="normal" fill="#6B7280">tăng tuyến tính</text>
+<text x="72" y="30" font-size="18" text-anchor="start" font-weight="normal" fill="#B5541B">chặn của Mệnh đề 11.36</text>
+</svg>
