@@ -853,3 +853,15 @@ Quyết định chung của đợt: G1–G11, D01–D10 (tệp quyết định c
 **Đề nghị sửa ghi chú (chờ người dùng quyết định; không sửa `materials/` trong đợt này).** §7.3 mục 4 mâu thuẫn với Nhận xét 10.38: sửa thành "… trên bộ đệm chỉ bảo đảm KL trung bình mẫu không vượt $\kappa$ cùng hàm thay thế mẫu tăng (Mệnh đề 10.34, Nhận xét 10.38)". §7.4: thêm câu 3 (tỉ lệ cắt và tập gradient bằng 0) và câu 4 (TRPO thực hành không bảo đảm $J$ không giảm) cùng lời giải, khớp bốn câu của L10-708.
 
 **Quyết định của điều phối viên:** **chấp nhận** deck và các tệp kế hoạch; mọi phát hiện `nghiêm trọng` và `trung bình` của bảng 2026-11-13 và của lượt kiểm lại đã xử lý; phát hiện không sửa có lý do ghi ở bảng xử lý.
+
+## Lập kế hoạch bổ sung DPO (2026-11-19)
+
+Yêu cầu của tác giả (2026-11-19): thêm DPO vào Bài 10 theo thứ tự ghi chú → bài tập → deck, làm nổi bật quan hệ với PPO (cùng mục tiêu có phạt KL tới chính sách tham chiếu cố định; DPO giải bài toán đó không cần vòng học tăng cường trực tuyến). Nhật ký yêu cầu: `nhat-ky/yeu-cau-thay-doi-2026-11-13.md`, mục 25.
+
+| Vai | Loại | Mô hình | Mức nỗ lực | Đầu ra | Quyết định của điều phối viên |
+|---|---|---|---|---|---|
+| Lập kế hoạch | `general-purpose` | `opus` | `high` | `ke-hoach-bo-sung-dpo.md` (653 dòng); tám bài báo lưu ở `/data/tqlong/qa/sources/*-20261119/` | chấp nhận, kèm hai chỉnh: sửa một công thức hỏng ký tự điều khiển ở A7(5); Q4 của prompt chọn phương án giữ số đã công bố (BT4) thay phương án 1 của kế hoạch |
+
+Điều phối viên tính lại: $\pi^*=(\tfrac45;\,\tfrac15)$, $\mathcal Z=\tfrac53$, $\log\tfrac53=0{,}5108$, $D_{\mathrm{KL}}(\pi^*\Vert\pi_{\mathrm{ref}})=0{,}04369$; giới hạn ưu tiên tất định $\log\tfrac32=0{,}4055$, $J_1\to0{,}2877$ (brief của điều phối viên ghi sai "KL không bị chặn"; kế hoạch sửa đúng); PPO-Clip $\epsilon=0{,}2$ dừng ở $0{,}8$; dãy $\epsilon=0{,}1$; bước DPO đầu tiên; IPO $0{,}7673$; Sutton và Barto Bài tập 2.9 có trong bản trích (dòng 2550). Prompt: `prompt-bo-sung-dpo-bai-10.md`, bảng Q1–Q9 chờ tác giả chốt.
+
+**Tác giả chốt (2026-11-19):** "Accept all proposals": Q1–Q9 theo cột "Đề xuất" của prompt, kể cả Q4 giữ số đã công bố (ghi chú 10.18–10.21, `exercises.md` thêm 10.22). Điều phối viên điền cột "Chốt", đổi trạng thái kế hoạch thành đã duyệt (Q4 thắng số hiệu của kế hoạch), ghi GC-RL-18 (trần 37 000 từ), BT-RL-10 (ngoại lệ BT4) và "P1, Bài 10, Mục 7 (riêng)" (nguồn bài báo, tám mạch, 135 phút) vào `NGUYEN-TAC-HOC-PHAN.md`. Chưa chạy prompt; chưa sửa `materials/` và deck.
