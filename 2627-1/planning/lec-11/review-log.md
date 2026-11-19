@@ -263,3 +263,24 @@ Ghi chú: trình xem bắt buộc tham số `&deck=`; tới khi deck mới có (
 | I.1 (vòng 4) | Đồng bộ outline với ghi chú đã biên tập | `general-purpose` (cùng tác tử lập dàn ý) | `opus` | `high` | `outline.md` 695 dòng | chấp nhận: grep không còn "Định nghĩa 11.20" |
 
 **Người dùng duyệt ghi chú (2026-11-19):** "Duyệt, commit và làm tiếp" (điểm dừng Q17 sau giai đoạn I). Thẻ Bài 11 thêm vào `index.html` theo Q18 (Bài giảng, Bài tập, Thực hành: `Chưa có`; ghi chú liên kết trình xem với `&deck=` của deck mới); thẻ kiểm ở 1600×900 và 390×844, 0 lỗi console, không tràn ngang.
+
+### Giai đoạn II (bài tập)
+
+Commit ghi chú `a6329c2` đã push (`git branch -r --contains HEAD`: `origin/main`).
+
+| Giai đoạn | Vai | Loại | Mô hình | Mức nỗ lực | Đầu ra | Quyết định của điều phối viên |
+|---|---|---|---|---|---|---|
+| II.1 | Chọn bài tập (chỉ đọc) | `general-purpose` | `opus` (Opus 5.5) | `high` | báo cáo chọn bài trong scratchpad | đang chạy |
+| II.1 (xong) | Chọn bài tập | (như trên) | `opus` | `high` | 11.12↔SB 8.2, 11.13↔8.3 (nhận biết); 11.14↔8.6, 11.15↔17.1 (tính toán hoặc chứng minh); 11.16↔8.1, 11.17↔8.5, 11.18↔2.8, 11.19↔8.4 [Lập trình] (vận dụng); đề đối chiếu PDF và errata | chấp nhận. Quyết định: không dùng bài của Bertsekas (2020) (không thuộc danh sách GC-RL-5); 8.4 giữ số cuối; ký hiệu tốc độ phần thưởng trung bình $g(\mu)$ ở 11.15, nêu một câu tương ứng $r(\pi)$ của SB (tránh trùng $r(s,a)$, $r(s,\omega)$ của ghi chú); 11.18 dùng $\ln 12$. Theo BT9, BT-RL-1 và Q12: mục tiêu 5 (tối ưu kế hoạch bằng đạo hàm, điều khiển dự báo, entropy chéo) không có bài trong Sutton và Barto; Szepesvári (2010) không có bài tập; bản Bertsekas (2019) trong máy chỉ có mục lục; mục tiêu 5 dựa vào Bài tập 11.6, 11.11 của ghi chú; phương pháp entropy chéo (`bổ sung`) không có bài luyện riêng. Mục tiêu 7 dựa vào Bài tập 11.9–11.11 của ghi chú |
+| II.2 | Soạn `exercises.md` (`no-ai-slop` Edit) | `general-purpose` | `opus` (Opus 5.5) | `high` | `materials/lec-11/exercises.md` | đang chạy |
+| II.2 (xong) | Soạn `exercises.md` | (như trên) | `opus` | `high` | 486 dòng, 8 bài; thí nghiệm 11.19 (mê cung lối tắt, $n=50$, $\kappa=10^{-3}$, hạt giống 0–29, kiểm thêm 30–59) chạy thật trong scratchpad | chấp nhận làm bản đóng băng v1 sau hai quyết định: 11.19 báo cả $\alpha=0{,}1$ và $\alpha=1$ (công khai thử nghiệm sơ bộ, kết luận có điều kiện); 11.12, 11.13 không dẫn số của 11.19 đứng sau, chỉ dùng dữ kiện Hình 8.4–8.5 |
+| II.3 | Hai vai rà độc lập: toán và thuật toán; sư phạm và văn phong (`no-ai-slop` Detect) | `general-purpose` ×2, chỉ đọc | `opus` (Opus 5.5) | `high` | báo cáo trong scratchpad | đang chạy |
+| II.3 (xong) | Hai vai rà | (như trên) | `opus` | `high` | toán 0/0/2/10 (tái lập 184 lần chạy của 11.19, khớp JSON; 11.18 tái lập), sư phạm 0/0/4/17 (`no-ai-slop` Detect) | chấp nhận; quyết định E-1…E-7 (scratchpad `bang-phat-hien-II4.md`): 11.12–11.13 giải thích có điều kiện theo thí nghiệm của sách, bỏ "$\kappa$ đủ nhỏ"; 11.19(c) cặp $(5,9),\uparrow$; tên tiếng Anh ở lần đầu trong tệp (VP2); MDP viết đủ; gợi ý 11.17 không lộ lời giải |
+| II.4 | Biên tập `exercises.md` (`no-ai-slop` Edit) | `general-purpose` (tiếp tục tác tử soạn bài tập) | `opus` (Opus 5.5) | `high` | `exercises.md` | đang chạy |
+| II.4 (xong) | Biên tập `exercises.md` | (như trên) | `opus` | `high` | v2, 488 dòng; trình xem `kerr` 0, `nscroll` 0 | chấp nhận để kiểm lại; E-7 (tên mạch theo ghi chú) và 11.10 ở mạch 5 kiểm lại ở giai đoạn III |
+| II.4 kiểm lại | Kiểm lại toán; kiểm lại sư phạm (`no-ai-slop` Detect) trên diff | (tiếp tục hai tác tử rà II.3) | `opus` | `high` | mục "Vòng 2" trong hai báo cáo | đang chạy |
+| II.4 kiểm lại (xong) | Kiểm lại toán; kiểm lại sư phạm | (như trên) | `opus` | `high` | toán: hai trung bình đã sửa đúng, 1 nhẹ mới; sư phạm: bốn trung bình đã sửa đúng, 7 nhẹ mới | chấp nhận; biên tập viên sửa nốt các nhẹ (vòng 3). Xác suất chọn lại $A_{11}$ ở bước 12 của 11.18: biên tập viên mô phỏng $2\cdot10^7$ bài toán ($0{,}18587$; $0{,}35959$), điều phối viên mô phỏng độc lập $4\cdot10^6$ bài toán ($0{,}1856\pm0{,}0002$; $0{,}3601$): ghi $0{,}186$ và $0{,}360$ |
+
+### Kiểm cuối `exercises.md` (điều phối viên, 2026-11-19; BT13)
+
+490 dòng, 8 bài 11.12–11.19, 24 khối mở/24 đóng, đúng một `hint` và một `solution` mỗi bài. Trình xem (cổng 8811), 1600×900 và 390×844: 0 `.katex-error` trên 1 129 biểu thức, 0 lỗi console, 0 request lỗi hay ra ngoài, không `:::` sót, không tràn ngang, 0 công thức cuộn, in không tràn; ảnh chụp đã xem. Liên kết `#/N/1` và tên mạch kiểm lại sau giai đoạn III (BT-RL-9). Thẻ Bài 11 trên `index.html`: nhóm Bài tập liên kết trình xem. Chỉ stage khối thẻ Bài 11 của `index.html` (thay đổi thẻ Bài 10 trong cùng tệp thuộc phiên khác, không stage).
