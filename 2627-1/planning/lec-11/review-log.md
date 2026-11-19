@@ -182,3 +182,15 @@ Yêu cầu của người dùng (2026-11-08): bỏ mục "Bản đồ chủ đ�
 - **Outline:** thêm mục "## Phân loại chủ đề (chuyển từ ghi chú, 2026-11-08)", 13 hàng chép từ bản đồ ở HEAD `f86f4a0` (script đối chiếu: 0 sai lệch). Số trang nguồn và các phần chỉ có trong bản đồ (danh sách phần, thời lượng nếu có) nằm ở đó.
 - **Kiểm tra trình duyệt (điều phối viên):** viewer tại máy chủ tĩnh cổng 8782, 1600×900 và 390×844: 0 `.katex-error`, 0 lỗi console, 0 request lỗi hoặc ra ngoài, không tràn ngang trang, không còn `:::` sót. `git diff --check`: sạch.
 - Đợt này không siết câu chữ của ghi chú; việc đó nằm ngoài goal 01–07.
+
+## Lập kế hoạch Bài 11 mới (2026-11-19)
+
+Bài 11 đổi chủ đề thành Chương 11 "Lập kế hoạch dựa trên mô hình" của giáo trình của học phần (mục lục: `rl-plan/giao-trinh/muc-luc-giao-trinh-hoc-tang-cuong-2026.pdf`, không theo dõi trong git). Các mục trên của tệp này thuộc Bài 11 cũ (gradient chính sách nâng cao); số phận của chúng chờ tác giả chốt (Q2 trong `prompt-xay-dung-bai-11.md`).
+
+| Vai | Loại | Mô hình | Mức nỗ lực | Đầu ra | Quyết định của điều phối viên |
+|---|---|---|---|---|---|
+| Lập kế hoạch (ghi chú, bài tập, deck) | `general-purpose` | `opus` (Opus 5.5) | `high` | `ke-hoach-ghi-chu.md`, `ke-hoach-bai-tap.md`, `ke-hoach-trang-chieu.md` | chấp nhận làm đầu vào của `prompt-xay-dung-bai-11.md`: số liệu then chốt được điều phối viên tính lại bằng Python và khớp; bổ sung một điểm (Q9: Định lý UCT cần chân trời hữu hạn, mê cung có trượt nên MCTS cần độ sâu cắt $D$); các câu hỏi mở QG1–QG14, QB1–QB7, QT1–QT8 gộp thành Q1–Q18 của prompt, chờ tác giả chốt |
+
+Điều phối viên tự viết `prompt-xay-dung-bai-11.md` (tài liệu điều phối, không phải nội dung cho sinh viên), theo mẫu `shared/prompts/prompt-mau-xay-dung-bai-giang.md` và prompt Bài 11 của `ds-foundation-algorithms`.
+
+Người dùng chốt bảng Q1–Q18 "theo đề xuất" (2026-11-19). Quyết định có tính học phần đã ghi vào `NGUYEN-TAC-HOC-PHAN.md`: mục 3 "P1, Bài 11 (riêng)" (Q1, Q2), BT-RL-6 mở rộng cho Bài 11 (Q4), dòng mới và dòng sửa ở mục 6, câu hỏi "Bài 11–12" ở mục 7 thu lại thành "Bài 12". Các quyết định còn lại chỉ cho Bài 11, giữ trong cột "Chốt" của `prompt-xay-dung-bai-11.md`.
