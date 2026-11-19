@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1245 410" width="1245" height="410" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Hai con đường từ dữ liệu ưu tiên tới cùng một chính sách</title>
+<desc id="d">Sơ đồ hai con đường từ cùng tập dữ liệu ưu tiên D pref ở bên trái. Nhánh trên, nét liền: khung mô hình phần thưởng r mũ, cực tiểu L BT (Mệnh đề 10.54), mũi tên sang khung PPO trên phần thưởng đã trừ KL, có pi ref, critic và mẫu sinh trực tuyến từ pi old (Thuật toán 10.61), ghi bốn mô hình trong bộ nhớ. Nhánh dưới, nét đứt: khung cực tiểu L DPO với pi ref trên dữ liệu cố định (Thuật toán 10.67), ghi hai mô hình trong bộ nhớ. Hai nhánh gặp nhau ở khung viền đậm bên phải: pi sao tỉ lệ với pi ref nhân e mũ r chia beta (Định lý 10.57, 10.65).</desc>
+<defs>
+<marker id="ao" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="16" refY="9" orient="auto"><path d="M0,0 L18,9 L0,18 Z" fill="#B15A2B"/></marker>
+<marker id="an" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="16" refY="9" orient="auto"><path d="M0,0 L18,9 L0,18 Z" fill="#2F3E7A"/></marker>
+</defs>
+<rect x="20" y="150" width="190" height="110" rx="12" fill="#FFFFFF" stroke="#1d2433" stroke-width="3"/>
+<text x="115" y="192" font-size="21" text-anchor="middle" font-weight="700">dữ liệu ưu tiên</text>
+<text x="115" y="228" font-size="21" text-anchor="middle"><tspan font-style="italic">D</tspan><tspan dy="6.3" font-size="14.7">pref</tspan></text>
+<rect x="265" y="36" width="280" height="118" rx="12" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/>
+<text x="405" y="72" font-size="21" text-anchor="middle" font-weight="700">mô hình phần thưởng <tspan font-style="italic">r̂</tspan></text>
+<text x="405" y="106" font-size="21" text-anchor="middle">cực tiểu <tspan font-style="italic">L</tspan><tspan dy="-8.4" font-size="14.7">BT</tspan><tspan dy="8.4"></tspan></text>
+<text x="405" y="138" font-size="19" text-anchor="middle" fill="#424954">(Mệnh đề 10.54)</text>
+<line x1="547" y1="95" x2="581" y2="95" stroke="#B15A2B" stroke-width="3" marker-end="url(#ao)"/>
+<rect x="585" y="36" width="360" height="118" rx="12" fill="#F7EFE6" stroke="#B15A2B" stroke-width="3"/>
+<text x="765" y="72" font-size="21" text-anchor="middle" font-weight="700">PPO trên phần thưởng đã trừ KL</text>
+<text x="765" y="106" font-size="20" text-anchor="middle"><tspan font-style="italic">π</tspan><tspan dy="6.3" font-size="14.7">ref</tspan><tspan dy="-6.3"></tspan>, critic, mẫu trực tuyến từ <tspan font-style="italic">π</tspan><tspan dy="6.3" font-size="14.7">old</tspan><tspan dy="-6.3"></tspan></text>
+<text x="765" y="138" font-size="19" text-anchor="middle" fill="#424954">(Thuật toán 10.61)</text>
+<text x="605" y="184" font-size="19" text-anchor="middle" fill="#B15A2B">4 mô hình trong bộ nhớ</text>
+<rect x="265" y="262" width="680" height="100" rx="12" fill="#EDF4FF" stroke="#2F3E7A" stroke-width="3" stroke-dasharray="10 6"/>
+<text x="605" y="300" font-size="21" text-anchor="middle" font-weight="700">cực tiểu <tspan font-style="italic">L</tspan><tspan dy="-8.4" font-size="14.7">DPO</tspan><tspan dy="8.4"></tspan> với <tspan font-style="italic">π</tspan><tspan dy="6.3" font-size="14.7">ref</tspan><tspan dy="-6.3"></tspan> trên dữ liệu cố định</text>
+<text x="605" y="336" font-size="19" text-anchor="middle" fill="#424954">(Thuật toán 10.67)</text>
+<text x="605" y="392" font-size="19" text-anchor="middle" fill="#2F3E7A">2 mô hình trong bộ nhớ</text>
+<line x1="212" y1="180" x2="261" y2="110" stroke="#B15A2B" stroke-width="3" marker-end="url(#ao)"/>
+<line x1="212" y1="232" x2="261" y2="300" stroke="#2F3E7A" stroke-width="3" stroke-dasharray="10 6" marker-end="url(#an)"/>
+<rect x="990" y="140" width="240" height="130" rx="12" fill="#FFFFFF" stroke="#1d2433" stroke-width="5"/>
+<text x="1110" y="188" font-size="21" text-anchor="middle" font-weight="700"><tspan font-style="italic">π</tspan><tspan dy="-8.4" font-size="14.7">*</tspan><tspan dy="8.4"> ∝ </tspan><tspan font-style="italic">π</tspan><tspan dy="6.3" font-size="14.7">ref</tspan><tspan dy="-6.3"></tspan> <tspan font-style="italic">e</tspan><tspan dy="-8.4" font-size="14.7" font-style="italic">r/β</tspan><tspan dy="8.4"></tspan></text>
+<text x="1110" y="226" font-size="19" text-anchor="middle" fill="#424954">(Định lý 10.57,</text>
+<text x="1110" y="252" font-size="19" text-anchor="middle" fill="#424954">10.65)</text>
+<line x1="947" y1="110" x2="986" y2="170" stroke="#B15A2B" stroke-width="3" marker-end="url(#ao)"/>
+<line x1="947" y1="312" x2="986" y2="245" stroke="#2F3E7A" stroke-width="3" stroke-dasharray="10 6" marker-end="url(#an)"/>
+</svg>
