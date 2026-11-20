@@ -965,3 +965,18 @@ Yêu cầu của tác giả (nhật ký yêu cầu thay đổi hàng 33–36): l
 | 3 | Kiểm mạch, sư phạm vòng 7 | `general-purpose` | `opus` | `high` | trung bình: `503` 8 dòng; các bước gradient liên hợp trên `505` viết liền | chấp nhận |
 | 4 | Biên tập theo 10 mục gộp | tác tử biên tập | `opus` | `high` | `104` (ghi chú diễn giả), `502`, `503`, `505`, `505b`, `505c`, `507`, `509`, `510`; storyboard | chấp nhận |
 | 5 | Kiểm cuối | điều phối viên | — | — | — | Playwright 1600×900 và 390×844 trên 15 trang (`L10-104`, `L10-500`…`L10-600`): 0 lỗi console, 0 request lỗi, 0 `.katex-error`, không tràn ngang, cao ≤ 665/720 px; khoảng cách chân trang ≥ 32 px, không tràn trong (tác tử đo). `deck_lint`: 0 phát hiện ở mạch 5. `git diff --check` sạch. Ghi nhận: `L10-507`, `508` mật độ sát trần 60. |
+
+## Dựng lại deck theo TB1–TB23 (bắt đầu 2026-11-20)
+
+Tác giả: "Ok duyệt dự thảo, ghi riêng cho rl-plan trước, làm deck 10 theo các nguyên tắc trong dự thảo". Quy tắc: `NGUYEN-TAC-HOC-PHAN.md` mục 3a (TB1–TB23). Trạng thái trước khi bắt đầu: deck và storyboard trong cây làm việc có thay đổi chưa commit của đợt NT23 (phiên khác, sửa lần cuối 08:45); bản sao giữ ở scratchpad của phiên điều phối (`deck10/deck10-worktree-truoc.html`, `storyboard10-worktree-truoc.md`).
+
+| Bước | Vai | Loại | Mô hình | Mức nỗ lực | Đầu ra | Quyết định của điều phối viên |
+|---|---|---|---|---|---|---|
+| 1–2 | Lập câu chuyện bằng lời thường, sơ đồ neo, ví dụ chạy số tròn | `general-purpose` | `opus` (Opus 5.5) | `high` | `cau-chuyen-deck-2026-11-20.md` | đang chạy; dừng chờ tác giả duyệt câu chuyện (TB1) |
+| 1–2 (xong) | Lập câu chuyện | (như trên) | `opus` | `high` | `cau-chuyen-deck-2026-11-20.md`: câu chuyện sáu câu, 7 mạch, 120 phút, khoảng 56 trang đếm (60 thật), 3 khối Giả thiết/Kết luận (Mệnh đề 10.2, Định lý 10.26, 10.57), sơ đồ neo, ví dụ chạy và bảng số tính lại, đề xuất sửa ghi chú, 10 câu hỏi | chấp nhận làm dự thảo trình tác giả; điều phối viên kiểm bước hỏng: gốc $(0{,}5;\tfrac23)$, $J=2{,}7p_Ap_B+1-p_A$, bước $(1;0{,}5)$ cho $\Delta\mathcal L=0{,}175$, $\Delta J=-0{,}05$ (đúng); sửa câu lưu ý TB15 trong dự thảo quy tắc (đã dùng nhầm gốc). Tác giả: "Tôi đọc tệp trước" — dừng chờ |
+| 1–2 (duyệt) | — | — | — | — | — | Tác giả: "Duyệt" câu chuyện; mười câu hỏi theo đề xuất của tệp (ghi cuối `cau-chuyen-deck-2026-11-20.md`); dòng P1 Bài 10 của `NGUYEN-TAC-HOC-PHAN.md` sửa: 7 mạch, 120 phút |
+| 3 | Sửa ví dụ trong ghi chú 10 theo mục 7 của câu chuyện (`no-ai-slop` Edit) | `general-purpose` | `opus` (Opus 5.5) | `high` | `materials/lec-10/lecture-note.md`, `exercises.md` nếu dẫn | đang chạy |
+| 3 (xong) | Sửa ví dụ ghi chú 10 | (như trên) | `opus` | `high` | Ví dụ 10.2, 10.6–10.9, 10.11, 10.13, Bài tập 10.23 mới, §8.4; chỗ dẫn khác và `exercises.md` cập nhật; `prose` 36 990 → 38 429 (đã vượt 30 000 của GC-RL-4 từ trước, do mạch DPO); trình xem 0 `.katex-error` | chuyển rà toán và thông điệp |
+| 3 rà | Rà toán và thông điệp (chỉ đọc) | `general-purpose` | `opus` (Opus 5.5) | `high` | báo cáo trong scratchpad | đang chạy |
+| 3 rà (xong) | Rà toán và thông điệp | (như trên) | `opus` | `high` | 0 chặn/nghiêm trọng/trung bình, 7 nhẹ; mọi số tính lại khớp; mọi ví dụ đúng thông điệp; không sót số cũ | chấp nhận; giao biên tập sửa bảy nhẹ (Ví dụ 10.13 bỏ tên $s_B$ nếu không đổi được điểm xuất phát) rồi commit ghi chú |
+| 3 (đóng) | Sửa bảy nhẹ | (cùng biên tập viên) | `opus` | `high` | Ví dụ 10.13 trả lại "Một trạng thái"; trình xem 0 lỗi | chấp nhận; commit ghi chú, `exercises.md`, câu chuyện, review-log Bài 10 |

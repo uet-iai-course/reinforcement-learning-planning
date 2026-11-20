@@ -1,6 +1,6 @@
 # Bài tập Bài 10 — TRPO, PPO và DPO
 
-Tệp gồm sáu bài, Bài tập 10.13–10.17 và 10.22, dùng chung bộ đếm với mười sáu bài tập của [ghi chú bài giảng](material-viewer.html?doc=materials/lec-10/lecture-note.md&deck=lecture-10-trpo-va-ppo.html) (Bài tập 10.1–10.12 và 10.18–10.21) và không lặp đề bài nào của ghi chú. Mọi bài lấy từ bài tập của Sutton và Barto (2018), ghi số bài, mục và trang. Các bài chia theo hai mức: nhận biết (10.13, 10.22); tính toán hoặc chứng minh (10.14–10.17). Mục tiêu học tập 8 dựa vào Bài tập 10.22 cùng Bài tập 10.18, 10.19, 10.21 của ghi chú; mục tiêu học tập 9 dựa vào Bài tập 10.19, 10.20 của ghi chú. Bảng dưới xếp bài của tệp này và bài của ghi chú theo mạch của bộ trang chiếu; bài của ghi chú đứng sau chữ "ghi chú".
+Tệp gồm sáu bài, Bài tập 10.13–10.17 và 10.22, dùng chung bộ đếm với mười bảy bài tập của [ghi chú bài giảng](material-viewer.html?doc=materials/lec-10/lecture-note.md&deck=lecture-10-trpo-va-ppo.html) (Bài tập 10.1–10.12, 10.18–10.21 và 10.23) và không lặp đề bài nào của ghi chú. Mọi bài lấy từ bài tập của Sutton và Barto (2018), ghi số bài, mục và trang. Các bài chia theo hai mức: nhận biết (10.13, 10.22); tính toán hoặc chứng minh (10.14–10.17). Mục tiêu học tập 8 dựa vào Bài tập 10.22 cùng Bài tập 10.18, 10.19, 10.21 của ghi chú; mục tiêu học tập 9 dựa vào Bài tập 10.19, 10.20 của ghi chú. Bảng dưới xếp bài của tệp này và bài của ghi chú theo mạch của bộ trang chiếu; bài của ghi chú đứng sau chữ "ghi chú".
 
 | Mạch | Mở phần | Bài tập |
 | --- | --- | --- |
@@ -11,7 +11,7 @@ Tệp gồm sáu bài, Bài tập 10.13–10.17 và 10.22, dùng chung bộ đ�
 | 5. TRPO và gradient tự nhiên | [Mở phần](lecture-10-trpo-va-ppo.html#/5/1) | 10.17; ghi chú: 10.8, 10.9 |
 | 6. Tối ưu chính sách gần kề (PPO) | [Mở phần](lecture-10-trpo-va-ppo.html#/6/1) | 10.14; ghi chú: 10.2, 10.12 |
 | 7. Tối ưu chính sách từ phản hồi ưu tiên | [Mở phần](lecture-10-trpo-va-ppo.html#/7/1) | 10.22; ghi chú: 10.18–10.21 |
-| 8. Tổng kết | [Mở phần](lecture-10-trpo-va-ppo.html#/8/1) | ghi chú: 10.3 |
+| 8. Tổng kết | [Mở phần](lecture-10-trpo-va-ppo.html#/8/1) | ghi chú: 10.3, 10.23 |
 
 ## Hướng dẫn và ký hiệu
 
@@ -204,7 +204,7 @@ Vế trái là ước lượng lợi thế tổng quát $\widehat A_t$ của Đ�
 $$G_t-V(S_t)=\sum_{k=t}^{T-1}\gamma^{k-t}\delta_k ,$$
 đúng là (6.6) của sách. Như vậy (6.6) là trường hợp $\lambda=1$, và hệ thức $E_t=\delta_t+\gamma\lambda E_{t+1}$ thay thừa số $\gamma$ của (6.6) bằng $\gamma\lambda$.
 
-**Kiểm tra lại.** Trên lượt của Ví dụ 10.8, Bài tập 10.6(c) đã tính hai vế của (a) và được cùng giá trị $1{,}43$. Hai lỗi thường gặp: tính các $\delta_k$ với $w$ đã cập nhật trong lượt, khi đó $V(S_{t+1})$ trong $\delta_t$ và trong $E_{t+1}$ khác nhau và tổng có thêm các số hạng hiệu chỉnh như Bài tập 6.1 của sách; và gán giá trị $c\ne0$ cho trạng thái kết thúc trong $\delta_{T-1}$ mà vẫn dùng $G^\lambda_T=0$, khi đó $E_{T-1}=\delta_{T-1}-\gamma c$ và tổng sai số TD lớn hơn vế trái đúng $(\gamma\lambda)^{T-1-t}\gamma c$.
+**Kiểm tra lại.** Trên hai lượt của Ví dụ 10.8, Bài tập 10.6(c) đã tính hai vế của (a) và được cùng giá trị, $0{,}4$ và $-0{,}95$. Hai lỗi thường gặp: tính các $\delta_k$ với $w$ đã cập nhật trong lượt, khi đó $V(S_{t+1})$ trong $\delta_t$ và trong $E_{t+1}$ khác nhau và tổng có thêm các số hạng hiệu chỉnh như Bài tập 6.1 của sách; và gán giá trị $c\ne0$ cho trạng thái kết thúc trong $\delta_{T-1}$ mà vẫn dùng $G^\lambda_T=0$, khi đó $E_{T-1}=\delta_{T-1}-\gamma c$ và tổng sai số TD lớn hơn vế trái đúng $(\gamma\lambda)^{T-1-t}\gamma c$.
 :::
 
 ### Bài tập 10.16. Các tỉ số sau một phần thưởng có kỳ vọng bằng 1

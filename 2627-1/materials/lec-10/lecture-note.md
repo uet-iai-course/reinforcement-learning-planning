@@ -128,47 +128,50 @@ Mỗi hàm điểm được nhân với lợi tức đến sau nó và với tr�
 **Kiểm tra lại.** $\operatorname{Var}(\widehat g)=\mathbb E\lVert\widehat g\rVert^2-\lVert\nabla_\theta J\rVert^2$. Với $r=(3;\,0)$: $\tfrac23\cdot2-\tfrac89=\tfrac49$. Với $r=(4;\,1)$: $\tfrac23\cdot\tfrac{32}9+\tfrac13\cdot\tfrac89-\tfrac89=\tfrac{64+8-24}{27}=\tfrac{16}9$.
 :::
 
-Ví dụ sau cho thấy hậu quả của phương sai lớn trên một lượt: bước cập nhật có thể ngược chiều gradient.
+Ví dụ sau cho thấy hậu quả của phương sai lớn trên từng lượt: mỗi lượt cho một hướng cập nhật khác, và có lượt cho hướng ngược chiều gradient.
 
-::: example Ví dụ 10.2 (Một lượt REINFORCE đi ngược chiều gradient trên hành lang ngắn)
+::: example Ví dụ 10.2 (Ba lượt REINFORCE trên hành lang ngắn)
 **Dữ kiện.** Hành lang ngắn đảo hành động (Sutton và Barto, 2018, Ví dụ 13.1): bốn ô $s_1$ (xuất phát), $s_2$, $s_3$, $s_4$ (đích, kết thúc lượt); phần thưởng $-1$ mỗi bước; $\gamma=1$. Hành động 1 là "sang phải", hành động 2 là "sang trái"; ở $s_2$ hai hành động bị đảo; sang trái tại $s_1$ thì đứng yên. Mọi ô có cùng đặc trưng $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$, nên chính sách softmax chọn hành động 1 với cùng xác suất $p=\pi_\theta(1\mid s)$ ở mọi ô. Tại $\theta=(0;\,0)$: $p=\tfrac12$, $\psi_\theta(s,1)=(\tfrac12;\,-\tfrac12)$, $\psi_\theta(s,2)=(-\tfrac12;\,\tfrac12)$. Hàm mục tiêu là $J(p)=-2(2-p)/\bigl(p(1-p)\bigr)$, nên $J(\tfrac12)=-12$. Vì $J'(\tfrac12)=8$ và $\partial p/\partial\theta_1=-\partial p/\partial\theta_2=p(1-p)=\tfrac14$, gradient đúng là $\nabla_\theta J=(2;\,-2)$. Bước học $\alpha=0{,}1$.
 
-**Lượt.** Các hành động $A_0,\dots,A_4=1,1,1,2,1$ cho dãy trạng thái $s_1,s_2,s_1,s_2,s_3$ rồi tới đích $s_4$, nên $T=5$ và $G_t=-(5-t)$, tức $-5,-4,-3,-2,-1$.
+**Ba lượt.** Mỗi lượt đi theo động lực của hành lang tới đích $s_4$, nên $G_t=-(T-t)$. Mỗi hành động được chọn với xác suất $\tfrac12$, nên lượt dài $T$ bước có xác suất $(\tfrac12)^T$.
 
-**Ước lượng.** Với $\gamma=1$, $\widehat g=\sum_tG_t\psi_t$. Bốn bước chọn hành động 1 có tọa độ thứ nhất của hàm điểm bằng $\tfrac12$, bước $t=3$ chọn hành động 2 có tọa độ đó bằng $-\tfrac12$, nên tọa độ thứ nhất của $\widehat g$ là
-$$
-\begin{aligned}
-&\tfrac12(-5-4-3-1)\\
-&\quad+\bigl(-\tfrac12\bigr)(-2)\\
-&\quad=-6{,}5+1\\
-&\quad=-5{,}5.
-\end{aligned}
-$$
-Tọa độ thứ hai ngược dấu, nên $\widehat g=(-5{,}5;\,5{,}5)$, ngược chiều $\nabla_\theta J=(2;\,-2)$.
+| Lượt | Hành động | Trạng thái | $T$ | Xác suất | $G_0,\dots,G_{T-1}$ |
+|---|---|---|---|---|---|
+| (a) | $1,2,1$ | $s_1,s_2,s_3$ | $3$ | $\tfrac18$ | $-3,-2,-1$ |
+| (b) | $2,1,2,1$ | $s_1,s_1,s_2,s_3$ | $4$ | $\tfrac1{16}$ | $-4,-3,-2,-1$ |
+| (c) | $1,1,1,2,1$ | $s_1,s_2,s_1,s_2,s_3$ | $5$ | $\tfrac1{32}$ | $-5,\dots,-1$ |
 
-**Cập nhật.** Bước tăng gradient cho
+**Ước lượng.** Với $\gamma=1$, $\widehat g=\sum_tG_t\psi_t$. Bước chọn hành động 1 có tọa độ thứ nhất của hàm điểm bằng $\tfrac12$, bước chọn hành động 2 có tọa độ đó bằng $-\tfrac12$, và tọa độ thứ hai luôn ngược dấu tọa độ thứ nhất. Tọa độ thứ nhất của $\widehat g$ là
+
+- lượt (a): $\tfrac12(-3)-\tfrac12(-2)+\tfrac12(-1)=-1$;
+- lượt (b): $-\tfrac12(-4)+\tfrac12(-3)-\tfrac12(-2)+\tfrac12(-1)=1$;
+- lượt (c): $\tfrac12(-5-4-3-1)-\tfrac12(-2)=-6{,}5+1=-5{,}5$.
+
+Ba lượt cho $\widehat g=(-1;\,1)$, $(1;\,-1)$ và $(-5{,}5;\,5{,}5)$, trong khi $\nabla_\theta J=(2;\,-2)$: lượt (b) cùng chiều gradient, hai lượt (a) và (c) ngược chiều.
+
+**Cập nhật theo lượt (c).** Bước tăng gradient cho
 
 - hướng: $\alpha\widehat g=(-0{,}55;\,0{,}55)$;
 - tham số mới: $\theta=(0;\,0)+(-0{,}55;\,0{,}55)=(-0{,}55;\,0{,}55)$;
-- xác suất mới: $p=\sigma(\theta_1-\theta_2)=\sigma(-1{,}1)=0{,}2497$, với hàm logistic $\sigma(x)=1/(1+e^{-x})$.
+- xác suất mới: $p=\sigma(\theta_1-\theta_2)=\sigma(-1{,}1)\approx0{,}25$, với hàm logistic $\sigma(x)=1/(1+e^{-x})$.
 
-Hàm mục tiêu giảm từ $J(0{,}5)=-12$ xuống $J(0{,}2497)=-18{,}68$.
+Hàm mục tiêu giảm từ $J(0{,}5)=-12$ xuống $J\approx-18{,}7$.
 
-**Diễn giải.** Mọi phần thưởng âm nên mọi $G_t<0$, và mỗi hành động đã chọn bị giảm xác suất theo $\lvert G_t\rvert$. Lượt này chọn hành động 1 bốn lần, nên $p$ giảm từ $0{,}5$ xuống $0{,}25$, xa dần giá trị tốt nhất $p^*=2-\sqrt2\approx0{,}59$, nghiệm trong $(0,1)$ của $J'(p)=0$, tức của $p^2-4p+2=0$.
+**Diễn giải.** Mọi phần thưởng âm nên mọi $G_t<0$, và mỗi hành động đã chọn bị giảm xác suất theo $\lvert G_t\rvert$. Hướng của một lượt vì vậy do các hành động nó đã chọn quyết định. Lượt (a) chọn hành động 1 ở hai bước có $\lvert G_t\rvert$ cộng lại bằng $4$, lớn hơn $2$ của bước chọn hành động 2, nên đẩy $p$ xuống. Lượt (b) chọn hành động 2 ở hai bước có $\lvert G_t\rvert$ cộng lại bằng $6$, lớn hơn tổng $4$ của hai bước chọn hành động 1, nên đẩy $p$ lên. Lượt (c) chọn hành động 1 bốn lần, nên $p$ giảm từ $0{,}5$ xuống $0{,}25$, xa dần giá trị tốt nhất $p^*=2-\sqrt2\approx0{,}59$, nghiệm trong $(0,1)$ của $J'(p)=0$, tức của $p^2-4p+2=0$.
 
-**Kiểm tra lại.** Với $p=0{,}24974$: $p(1-p)=0{,}18737$ và $2(2-p)=3{,}50052$, nên $J=-3{,}50052/0{,}18737=-18{,}68$.
+**Kiểm tra lại.** Với $p=\sigma(-1{,}1)=0{,}24974$: $p(1-p)=0{,}18737$ và $2(2-p)=3{,}50052$, nên $J=-3{,}50052/0{,}18737=-18{,}68$.
 :::
 
 ![Hành lang ngắn đảo hành động: bốn ô s 1 (xuất phát), s 2, s 3, s 4 (đích). Ô s 1: hành động 1 tới s 2, hành động 2 đứng yên. Ô s 2, viền nét đứt đậm, ghi đảo hành động: hành động 1 về s 1, hành động 2 tới s 3. Ô s 3: hành động 1 tới s 4, hành động 2 về s 2. Ô s 4 tô xám: đích, kết thúc lượt. Mỗi bước phần thưởng âm 1; mọi ô cùng đặc trưng nên chọn hành động 1 với cùng xác suất p.](img/lec-09/short-corridor.svg)
 
-Trên hình, lượt của Ví dụ 10.2 đi $s_1\to s_2\to s_1\to s_2\to s_3\to s_4$; lần chọn "sang phải" tại ô viền nét đứt $s_2$ đưa tác tử lùi về $s_1$.
+Trên hình, lượt (c) của Ví dụ 10.2 đi $s_1\to s_2\to s_1\to s_2\to s_3\to s_4$; lần chọn "sang phải" tại ô viền nét đứt $s_2$ đưa tác tử lùi về $s_1$.
 
 Trên Breakout, notebook thực hành thứ hai của Bài 09 cho thấy REINFORCE chỉ học được một hành vi gần hằng sau $10^6$ bước, khi nhiều lượt có $\widehat g=0$ (Tình huống 10.3).
 
 Giới hạn thứ hai nằm ở cách dùng dữ liệu. Hệ quả 09.26 cần lượt do chính $\pi_{\theta_{\mathrm{old}}}$ sinh ra, nên sau một bước cập nhật, lượt vừa dùng thuộc về chính sách cũ và không còn cho mẫu không chệch của gradient tại tham số mới. REINFORCE vì vậy dùng mỗi lượt cho đúng một bước. Muốn mỗi lượt đem lại nhiều tiến bộ hơn, chúng ta cần bước lớn hơn; nhưng bước lớn đổi chính sách, chính sách mới thăm các trạng thái theo một phân bố khác, và kết quả có thể tệ đi (bài giảng gốc, tr. 4, 14). Trên hành lang của Ví dụ 10.2, ta tính một bước theo đúng gradient $(2;\,-2)$ từ $\theta=(0;\,0)$ với hai bước học:
 
-- $\alpha=0{,}1$ cho $\theta=(0{,}2;\,-0{,}2)$, $p=\sigma(0{,}4)=0{,}5987$ và $J=-11{,}66$, tức $J$ tăng;
-- $\alpha=0{,}5$ cho $\theta=(1;\,-1)$, $p=\sigma(2)=0{,}8808$, vượt qua $p^*\approx0{,}59$, và $J=-21{,}32$, tức $J$ giảm $9{,}32$.
+- $\alpha=0{,}1$ cho $\theta=(0{,}2;\,-0{,}2)$, $p=\sigma(0{,}4)\approx0{,}60$ và $J\approx-11{,}7$, tức $J$ tăng;
+- $\alpha=0{,}5$ cho $\theta=(1;\,-1)$, $p=\sigma(2)\approx0{,}88$, vượt qua $p^*\approx0{,}59$, và $J\approx-21{,}3$, tức $J$ giảm khoảng $9{,}3$.
 
 Cùng một hướng đúng, bước nhỏ làm $J$ tăng còn bước lớn làm $J$ giảm, vì $J$ chỉ gần tuyến tính trong một lân cận nhỏ của chính sách cũ.
 
@@ -282,8 +285,8 @@ Theo Mệnh đề 10.2, nếu mức trừ khỏi mỗi lợi tức chỉ phụ t
 
 Hai giả thiết đầu được dùng ở Bước 2, nơi phân phối có điều kiện của $A_t$ phải là $\pi_\theta(\cdot\mid S_t)$; giả thiết bị chặn được dùng ở Bước 3 để áp dụng tính chất tháp. Một nhầm lẫn thường gặp là đòi đường cơ sở độc lập với hành động. $b(S_t)$ và $A_t$ nói chung không độc lập, vì cả hai phụ thuộc $S_t$; điều chứng minh cần là $b$ không phụ thuộc $A_t$ khi đã biết lịch sử $H_t$.
 
-::: example Ví dụ 10.4 (Đường cơ sở trên lượt hành lang của Ví dụ 10.2)
-**Dữ kiện.** Hành lang ngắn của Ví dụ 10.2: bốn ô $s_1,\dots,s_4$, phần thưởng $-1$ mỗi bước, $\gamma=1$, hai hành động bị đảo ở $s_2$; $p=\tfrac12$, $\psi_\theta(s,1)=(\tfrac12;\,-\tfrac12)$, $\psi_\theta(s,2)=(-\tfrac12;\,\tfrac12)$, $\nabla_\theta J=(2;\,-2)$. Lượt: hành động $1,1,1,2,1$, trạng thái $s_1,s_2,s_1,s_2,s_3$, lợi tức $G_t=-5,-4,-3,-2,-1$. Đường cơ sở là $b=v_\pi$ tại $p=\tfrac12$.
+::: example Ví dụ 10.4 (Đường cơ sở trên lượt năm bước của Ví dụ 10.2)
+**Dữ kiện.** Hành lang ngắn của Ví dụ 10.2: bốn ô $s_1,\dots,s_4$, phần thưởng $-1$ mỗi bước, $\gamma=1$, hai hành động bị đảo ở $s_2$; $p=\tfrac12$, $\psi_\theta(s,1)=(\tfrac12;\,-\tfrac12)$, $\psi_\theta(s,2)=(-\tfrac12;\,\tfrac12)$, $\nabla_\theta J=(2;\,-2)$. Lượt (c): hành động $1,1,1,2,1$, trạng thái $s_1,s_2,s_1,s_2,s_3$, lợi tức $G_t=-5,-4,-3,-2,-1$. Đường cơ sở là $b=v_\pi$ tại $p=\tfrac12$.
 
 **Giá trị trạng thái.** Với $p=\tfrac12$, Mệnh đề 03.22 và 03.23 cho hệ
 $$\begin{aligned}v(s_1)&=-1+\tfrac12v(s_2)+\tfrac12v(s_1),\\v(s_2)&=-1+\tfrac12v(s_1)+\tfrac12v(s_3),\\v(s_3)&=-1+\tfrac12v(s_2),\end{aligned}$$
@@ -293,7 +296,7 @@ trong đó số hạng thiếu ở phương trình thứ ba là đích, có giá
 
 **Ước lượng.** Tọa độ thứ nhất của $\widehat g_b$ là $\tfrac12(7+6+9+5)-\tfrac12\cdot8=13{,}5-4=9{,}5$, nên $\widehat g_b=(9{,}5;\,-9{,}5)$, cùng chiều $\nabla_\theta J=(2;\,-2)$.
 
-**Diễn giải.** Với $\gamma=1$ và phần thưởng $-1$ mỗi bước, $-G_t$ là số bước còn lại của lượt từ bước $t$, còn $-v_\pi(S_t)$ là số bước còn lại kỳ vọng từ trạng thái $S_t$. Do đó chênh lệch $G_t-v_\pi(S_t)$ dương đúng khi lượt về đích sớm hơn kỳ vọng từ $S_t$. Trên lượt này, cả năm chênh lệch đều dương, nên mọi hành động đã chọn được tăng xác suất; bốn lần tăng cho hành động 1 thắng một lần tăng cho hành động 2. Kết quả thuộc về lượt này; một lượt dài hơn $12$ bước cho chênh lệch âm ở bước đầu.
+**Diễn giải.** Với $\gamma=1$ và phần thưởng $-1$ mỗi bước, $-G_t$ là số bước còn lại của lượt từ bước $t$, còn $-v_\pi(S_t)$ là số bước còn lại kỳ vọng từ trạng thái $S_t$. Do đó chênh lệch $G_t-v_\pi(S_t)$ dương đúng khi lượt về đích sớm hơn kỳ vọng từ $S_t$. Trên lượt này, cả năm chênh lệch đều dương, nên mọi hành động đã chọn được tăng xác suất; bốn lần tăng cho hành động 1 thắng một lần tăng cho hành động 2. Kết quả thuộc về lượt này. Cùng phép tính cho tọa độ thứ nhất bằng $3$ trên lượt (a) và $-1$ trên lượt (b): lượt (b) cùng chiều gradient khi chưa trừ đường cơ sở, và thành ngược chiều sau khi trừ. Trên ba lượt, đường cơ sở sửa chiều của lượt (a) và (c) và làm lượt (b) ngược chiều: nó không làm mọi lượt cùng chiều gradient, điều nó giữ là kỳ vọng (Mệnh đề 10.2). Một lượt dài hơn $12$ bước cho chênh lệch âm ở bước đầu.
 
 **Kiểm tra lại.** $v_\pi(s_1)=-12=J(\tfrac12)$, đúng với $J(p)=-2(2-p)/\bigl(p(1-p)\bigr)$ của Ví dụ 10.2. Thay $v_\pi$ vào phương trình thứ hai: $-1+\tfrac12(-12)+\tfrac12(-6)=-10$.
 :::
@@ -478,6 +481,20 @@ $$\begin{aligned}\frac{\partial J}{\partial\theta_A}&=p_A(1-p_A)(2{,}7p_B-1)\\&=
 
 **Gradient theo Mệnh đề 10.5(b).** Bước $t=0$ ở $s_A$ đóng góp $\tfrac12\cdot0{,}4\cdot0{,}5\,e_A+\tfrac12(-0{,}4)(-0{,}5)\,e_A=0{,}2\,e_A$. Bước $t=1$ ở $s_B$, xảy ra với xác suất $p_A=\tfrac12$ và trọng số $\gamma=0{,}9$, đóng góp $0{,}9\cdot\tfrac12\bigl(\tfrac23\cdot1\cdot\tfrac13+\tfrac13(-2)(-\tfrac23)\bigr)e_B=0{,}45\cdot\tfrac23\,e_B=0{,}3\,e_B$. Tổng là $(0{,}2;\,0{,}3)$, khớp cách tính trực tiếp.
 
+**Ba loại lượt.** Mọi lượt thuộc một trong ba loại. Bảng sau ghi tọa độ $\theta_A$ của ba ước lượng gradient trên mỗi loại: REINFORCE, với hệ số $G_t$; ước lượng có đường cơ sở $b=v_\pi$, với hệ số $G_t-v_\pi(S_t)$; và ước lượng với hệ số là sai số TD $\delta_t=R_{t+1}+\gamma v_\pi(S_{t+1})-v_\pi(S_t)$ của hàm giá trị đúng (Định nghĩa 05.20). Tọa độ $\theta_A$ chỉ nhận đóng góp của bước $t=0$, nên bằng hệ số tại $s_A$ nhân $\psi_\theta(s_A,A_0)=\pm0{,}5$.
+
+| Loại lượt | Xác suất | $G_0$ | REINFORCE | trừ $v_\pi$ | $\delta_t$ |
+|---|---|---|---|---|---|
+| $s_A\xrightarrow1s_B\xrightarrow1$ | $\tfrac13$ | $2{,}7$ | $1{,}35$ | $0{,}65$ | $0{,}2$ |
+| $s_A\xrightarrow1s_B\xrightarrow2$ | $\tfrac16$ | $0$ | $0$ | $-0{,}7$ | $0{,}2$ |
+| $s_A\xrightarrow2$ | $\tfrac12$ | $1$ | $-0{,}5$ | $0{,}2$ | $0{,}2$ |
+| trung bình | | | $0{,}2$ | $0{,}2$ | $0{,}2$ |
+| phương sai | | | $0{,}6925$ | $0{,}2025$ | $0$ |
+
+Ở dòng đầu, REINFORCE cho $2{,}7\cdot0{,}5=1{,}35$, trừ $v_\pi$ cho $(2{,}7-1{,}4)\cdot0{,}5=0{,}65$, và $\delta_0=0+0{,}9\cdot2-1{,}4=0{,}4$ cho $0{,}4\cdot0{,}5=0{,}2$. Ở dòng thứ ba, hàm điểm bằng $-0{,}5$: REINFORCE cho $1\cdot(-0{,}5)=-0{,}5$, trừ $v_\pi$ cho $(1-1{,}4)(-0{,}5)=0{,}2$, và $\delta_0=1-1{,}4=-0{,}4$ cho $0{,}2$. Ở dòng thứ hai, $G_0=0$ cho $0$, trừ $v_\pi$ cho $(0-1{,}4)\cdot0{,}5=-0{,}7$, và $\delta_0=0{,}4$ cho $0{,}2$. Phương sai của cột REINFORCE là $\tfrac13\cdot1{,}35^2+\tfrac12\cdot0{,}5^2-0{,}2^2=0{,}6925\approx0{,}69$; của cột trừ $v_\pi$ là $\tfrac13\cdot0{,}65^2+\tfrac16\cdot0{,}7^2+\tfrac12\cdot0{,}2^2-0{,}2^2=0{,}2025\approx0{,}20$.
+
+Cả ba cột có trung bình $0{,}2$, đúng tọa độ $\theta_A$ của gradient. Ở cột REINFORCE, lượt $s_A\xrightarrow2$ xảy ra một nửa số lần và đẩy $p_A$ xuống: phần thưởng $1$ dương làm tăng xác suất hành động 2, dù $q_\pi(s_A,2)=1<v_\pi(s_A)=1{,}4$. Xác suất một lượt cho tọa độ $\theta_A$ âm là $\tfrac12$ ở cột REINFORCE, $\tfrac16$ ở cột trừ $v_\pi$ và $0$ ở cột cuối. Cột trừ $v_\pi$ làm lượt $s_A\xrightarrow1s_B\xrightarrow2$ xấu đi, từ $0$ xuống $-0{,}7$, nhưng phương sai của cả cột giảm từ $0{,}6925$ xuống $0{,}2025$. Ở tọa độ $\theta_B$, ba cột cho $(0{,}9;\,0;\,0)$, $(0{,}3;\,1{,}2;\,0)$ và $(0{,}3;\,1{,}2;\,0)$ trên ba loại lượt, cùng trung bình $0{,}3$ và cùng phương sai $0{,}18$; hai cột sau trùng nhau vì lượt kết thúc ngay sau $s_B$, nên $G_1-v_\pi(s_B)=\delta_1$.
+
 **Kiểm tra lại.** Kết luận (a) của Mệnh đề 10.5: $\tfrac12\cdot0{,}4+\tfrac12(-0{,}4)=0$ và $\tfrac23\cdot1+\tfrac13(-2)=0$. Ở dạng chiếm dụng, $\nu^\pi(s_A)=0{,}1$, $\nu^\pi(s_B)=0{,}1\cdot0{,}9\cdot\tfrac12=0{,}045$, và $\tfrac1{0{,}1}(0{,}1\cdot0{,}2;\,0{,}045\cdot\tfrac23)=(0{,}2;\,0{,}3)$.
 :::
 
@@ -485,7 +502,7 @@ $$\begin{aligned}\frac{\partial J}{\partial\theta_A}&=p_A(1-p_A)(2{,}7p_B-1)\\&=
 
 Trên hình, chỉ cung "hành động 1 tại $s_A$" dẫn tới trạng thái thứ hai, nên mọi lượt dài $1$ hoặc $2$ bước, và lợi thế tại $s_A$ phụ thuộc $s_B$ qua $q_\pi(s_A,1)=\gamma v_\pi(s_B)$.
 
-Trên chuỗi này, với hàm giá trị $\hat v=(1;\,1{,}5)$, ta đánh giá được bước chuyển $s_A\to s_B$ bằng hành động 1 ngay sau một bước: phần thưởng $0$ cộng giá trị chiết khấu của $s_B$ là $0+0{,}9\cdot1{,}5=1{,}35$, lớn hơn $\hat v(s_A)=1$, nên hành động 1 tốt hơn mức mong đợi. Định nghĩa sau gọi tên hai thành phần của cách đánh giá này.
+Trên chuỗi này, với một hàm giá trị $\hat v$, ta đánh giá được bước chuyển $s_A\to s_B$ bằng hành động 1 ngay sau một bước: lấy phần thưởng $0$ cộng giá trị chiết khấu của $s_B$ rồi so với $\hat v(s_A)$. Với $\hat v=v_\pi=(1{,}4;\,2)$, phép so sánh cho $0+0{,}9\cdot2-1{,}4=0{,}4=A_\pi(s_A,1)$, như cột cuối của bảng ba loại lượt trong Ví dụ 10.6. Với $\hat v=(1{,}4;\,1)$, đúng ở $s_A$ nhưng đánh giá thấp $s_B$, phép so sánh cho $0+0{,}9\cdot1-1{,}4=-0{,}5$, và hành động 1 bị coi là kém hơn mức mong đợi. Định nghĩa sau gọi tên hai thành phần của cách đánh giá này.
 
 ::: definition Định nghĩa 10.7 (Critic, actor, phương pháp actor–critic)
 Cho chính sách tham số hóa $\pi_\theta$, hàm giá trị tham số hóa $\hat v(s,w)$ với $w\in\mathbb R^{d'}$, và một bước chuyển $(S_t,A_t,R_{t+1},S_{t+1},Z_{t+1})$ sinh bởi $\pi_\theta$.
@@ -550,35 +567,35 @@ Hai giả thiết của mệnh đề có vai trò riêng.
 Bước 1 dùng tính Markov và mặt nạ, Bước 2 dùng Mệnh đề 03.22, còn điều kiện critic đúng chỉ dùng ở (a). Sutton và Barto (2018, §13.5, tr. 331) nêu rằng độ chệch này không do bootstrap gây ra: critic học bằng Monte Carlo nhưng chưa hội tụ cũng cho actor bị chệch, đúng như số hạng $e$ trong (b). Ví dụ sau thực hiện hai bước actor–critic với một critic chưa đúng.
 
 ::: example Ví dụ 10.7 (Hai bước actor–critic bằng tay)
-**Dữ kiện.** Chuỗi hai trạng thái của Ví dụ 10.6: tại $s_A$, hành động 1 sang $s_B$ với phần thưởng $0$, hành động 2 kết thúc với phần thưởng $1$; tại $s_B$, hành động 1 kết thúc với phần thưởng $3$, hành động 2 kết thúc với phần thưởng $0$; $\gamma=0{,}9$; $p_s=\sigma(\theta_s)$, $\psi_\theta(s,1)=(1-p_s)e_s$; ban đầu $\theta=(0;\,\log2)$, $p_A=\tfrac12$, $p_B=\tfrac23$. Critic dạng bảng $\hat v(s,w)=w_s$ với $w=(w_A;\,w_B)=(1;\,1{,}5)$, nên $\nabla_w\hat v(s,w)=e_s$. Bước học $\alpha_w=0{,}5$, $\alpha_\theta=1$. Ở mỗi bước $t$, critic tính $\delta_t$ và cập nhật $w$; actor dùng cùng $\delta_t$, nhân với thừa số $I=\gamma^t$, đóng vai trọng số $\gamma^t$ của Định lý 09.23. Lượt: $S_0=s_A$, $A_0=1$, $R_1=0$, $S_1=s_B$, $Z_1=0$; $A_1=1$, $R_2=3$, kết thúc, $Z_2=1$.
+**Dữ kiện.** Chuỗi hai trạng thái của Ví dụ 10.6: tại $s_A$, hành động 1 sang $s_B$ với phần thưởng $0$, hành động 2 kết thúc với phần thưởng $1$; tại $s_B$, hành động 1 kết thúc với phần thưởng $3$, hành động 2 kết thúc với phần thưởng $0$; $\gamma=0{,}9$; $p_s=\sigma(\theta_s)$, $\psi_\theta(s,1)=(1-p_s)e_s$; ban đầu $\theta=(0;\,\log2)$, $p_A=\tfrac12$, $p_B=\tfrac23$. Critic dạng bảng $\hat v(s,w)=w_s$ với $w=(w_A;\,w_B)=(1{,}4;\,1)$, đúng ở $s_A$ và đánh giá thấp $s_B$, vì $v_\pi=(1{,}4;\,2)$; ta có $\nabla_w\hat v(s,w)=e_s$. Bước học $\alpha_w=0{,}5$, $\alpha_\theta=1$. Ở mỗi bước $t$, critic tính $\delta_t$ và cập nhật $w$; actor dùng cùng $\delta_t$, nhân với thừa số $I=\gamma^t$, đóng vai trọng số $\gamma^t$ của Định lý 09.23. Lượt: $S_0=s_A$, $A_0=1$, $R_1=0$, $S_1=s_B$, $Z_1=0$; $A_1=1$, $R_2=3$, kết thúc, $Z_2=1$.
 
 **Bước $t=0$, $I=1$.** Critic:
 
-- mục tiêu $R_1+\gamma(1-Z_1)w_B=0+0{,}9\cdot1{,}5=1{,}35$;
-- sai lệch $\delta_0=1{,}35-w_A=0{,}35$;
-- giá trị mới $w_A=1+0{,}5\cdot0{,}35=1{,}175$.
+- mục tiêu $R_1+\gamma(1-Z_1)w_B=0+0{,}9\cdot1=0{,}9$;
+- sai lệch $\delta_0=0{,}9-w_A=-0{,}5$;
+- giá trị mới $w_A=1{,}4+0{,}5\cdot(-0{,}5)=1{,}15$.
 
 Actor:
 
-- hướng $I\,\delta_0\,\psi_\theta(s_A,1)=1\cdot0{,}35\cdot0{,}5\,e_A=0{,}175\,e_A$;
-- tham số mới $\theta_A=0+1\cdot0{,}175=0{,}175$;
-- xác suất mới $p_A=\sigma(0{,}175)=0{,}5436$.
+- hướng $I\,\delta_0\,\psi_\theta(s_A,1)=1\cdot(-0{,}5)\cdot0{,}5\,e_A=-0{,}25\,e_A$;
+- tham số mới $\theta_A=0+1\cdot(-0{,}25)=-0{,}25$;
+- xác suất mới $p_A=\sigma(-0{,}25)\approx0{,}438$.
 
 **Bước $t=1$, $I=\gamma=0{,}9$.** Critic:
 
 - mục tiêu $R_2+\gamma(1-Z_2)\hat v(S_2,w)=3+0=3$, vì mặt nạ bằng $0$;
-- sai lệch $\delta_1=3-w_B=1{,}5$;
-- giá trị mới $w_B=1{,}5+0{,}5\cdot1{,}5=2{,}25$.
+- sai lệch $\delta_1=3-w_B=2$;
+- giá trị mới $w_B=1+0{,}5\cdot2=2$.
 
 Actor:
 
-- hướng $I\,\delta_1\,\psi_\theta(s_B,1)=0{,}9\cdot1{,}5\cdot\tfrac13\,e_B=0{,}45\,e_B$;
-- tham số mới $\theta_B=\log2+0{,}45=1{,}1431$;
-- xác suất mới $p_B=\sigma(1{,}1431)=0{,}7583$.
+- hướng $I\,\delta_1\,\psi_\theta(s_B,1)=0{,}9\cdot2\cdot\tfrac13\,e_B=0{,}6\,e_B$;
+- tham số mới $\theta_B=\log2+0{,}6=1{,}2931$;
+- xác suất mới $p_B=\sigma(1{,}2931)\approx0{,}785$.
 
-**Diễn giải.** Cả hai sai số TD đều dương: mỗi hành động cho kết quả tốt hơn critic dự đoán, nên xác suất chọn lại nó tăng. Sai số $\delta_0=0{,}35$ khác lợi thế $A_\pi(s_A,1)=0{,}4$ vì critic chưa đúng, như Mệnh đề 10.8(b) mô tả.
+**Diễn giải.** Sai số $\delta_0=-0{,}5$ âm dù $A_\pi(s_A,1)=0{,}4>0$: critic đánh giá thấp $s_B$, nên hành động 1 tại $s_A$ bị giảm xác suất, $p_A$ từ $0{,}5$ xuống $0{,}438$. Theo Mệnh đề 10.8(b) với $e=\hat v-v_\pi=(0;\,-1)$, độ chệch của $\delta_0$ là $\gamma e(s_B)-e(s_A)=-0{,}9$, và $0{,}4-0{,}9=-0{,}5$. Sai số $\delta_1=2$ dương, nên $p_B$ tăng từ $0{,}667$ lên $0{,}785$; sau bước này $w_B=2=v_\pi(s_B)$.
 
-**Kiểm tra lại.** $\sigma(0{,}175)=1/(1+e^{-0{,}175})=1/(1+0{,}8395)=0{,}5436$ và $\sigma(1{,}1431)=1/(1+0{,}3188)=0{,}7583$.
+**Kiểm tra lại.** $\sigma(-0{,}25)=1/(1+e^{0{,}25})=1/(1+1{,}2840)=0{,}4378$; $\theta_B=0{,}6931+0{,}6=1{,}2931$ và $\sigma(1{,}2931)=1/(1+e^{-1{,}2931})=1/(1+0{,}2744)=0{,}7847$.
 :::
 
 ![Sơ đồ một bước chuyển: S t, hành động A t, phần thưởng R t+1, trạng thái S t+1 và cờ Z t+1. Khung critic v mũ của s, w tính v mũ tại S t và tại S t+1. Nút sai số TD: delta t bằng R t+1 cộng gamma nhân (1 trừ Z t+1) nhân v mũ của S t+1, trừ v mũ của S t; phần mục tiêu R t+1 cộng gamma (1 trừ Z t+1) v mũ của S t+1 nằm trong khung nét đứt ghi dừng gradient. Từ delta t có hai mũi tên: tới critic, ghi w cộng alpha w nhân delta t nhân gradient theo w của v mũ tại S t; tới actor pi theta, ghi theta cộng alpha theta nhân I nhân delta t nhân psi theta tại S t, A t.](img/lec-10/actor-critic-advantage.svg)
@@ -623,30 +640,38 @@ Hệ số Monte Carlo $G_t-\hat v(S_t,w)$ không làm chệch gradient nhưng ch
 
 ## 3. Ước lượng lợi thế tổng quát
 
-Trên chuỗi hai trạng thái với critic chưa đúng $\hat v=(1;\,1{,}5)$, lượt $s_A\xrightarrow{1}s_B\xrightarrow{1}$ kết thúc cho sai số TD $\delta_0=0{,}35$ và hệ số Monte Carlo $G_0-\hat v(s_A)=0+0{,}9\cdot3-1=1{,}7$, trong khi lợi thế đúng là $A_\pi(s_A,1)=0{,}4$.
+Trên chuỗi hai trạng thái với critic $\hat v=(1{,}4;\,1)$ của Ví dụ 10.7, xét hai lượt cùng bắt đầu bằng hành động 1 ở $s_A$; tại $s_B$, lượt thứ nhất chọn hành động 1 (phần thưởng $3$, xác suất $\tfrac23$), lượt thứ hai chọn hành động 2 (phần thưởng $0$, xác suất $\tfrac13$). Lợi thế đúng là $A_\pi(s_A,1)=0{,}4$. Sai số TD cho $\delta_0=0+0{,}9\cdot1-1{,}4=-0{,}5$ ở cả hai lượt: hai giá trị bằng nhau nhưng sai dấu. Hệ số Monte Carlo $G_0-\hat v(s_A)$ cho $2{,}7-1{,}4=1{,}3$ ở lượt thứ nhất và $0-1{,}4=-1{,}4$ ở lượt thứ hai: trung bình $\tfrac23\cdot1{,}3-\tfrac13\cdot1{,}4=0{,}4$ đúng, nhưng hai giá trị cách nhau $2{,}7$.
 
 <!-- note-topic-id: lec-10-topic-07 -->
 ### 3.1 Lợi tức n bước
 
-Giữa TD một bước và Monte Carlo có các phương pháp dùng vài phần thưởng thực nhận rồi thay phần còn lại của lợi tức bằng giá trị ước lượng của trạng thái đạt tới (Sutton và Barto, 2018, §7.1, tr. 142). Về mặt ý tưởng, dùng càng nhiều phần thưởng thực thì càng ít phụ thuộc critic, nhưng càng chịu nhiều ngẫu nhiên của lượt. Ví dụ sau đặt ba lựa chọn cạnh nhau trên cùng một lượt.
+Giữa TD một bước và Monte Carlo có các phương pháp dùng vài phần thưởng thực nhận rồi thay phần còn lại của lợi tức bằng giá trị ước lượng của trạng thái đạt tới (Sutton và Barto, 2018, §7.1, tr. 142). Về mặt ý tưởng, dùng càng nhiều phần thưởng thực thì càng ít phụ thuộc critic, nhưng càng chịu nhiều ngẫu nhiên của lượt. Ví dụ sau đặt ba lựa chọn cạnh nhau trên hai lượt.
 
-::: example Ví dụ 10.8 (Ba ước lượng lợi thế trên một lượt của chuỗi hai trạng thái)
-**Dữ kiện.** Chuỗi hai trạng thái của Ví dụ 10.6: tại $s_A$, hành động 1 sang $s_B$ với phần thưởng $0$, hành động 2 kết thúc với phần thưởng $1$; tại $s_B$, hành động 1 kết thúc với phần thưởng $3$, hành động 2 kết thúc với phần thưởng $0$; $\gamma=0{,}9$; $p_A=\tfrac12$, $p_B=\tfrac23$; lợi thế đúng $A_\pi(s_A,1)=0{,}4$. Critic cố định $\hat v=(1;\,1{,}5)$. Lượt: $S_0=s_A$, $A_0=1$, $R_1=0$, $S_1=s_B$, $A_1=1$, $R_2=3$, kết thúc tại $T=2$.
+::: example Ví dụ 10.8 (Ba ước lượng lợi thế trên hai lượt của chuỗi hai trạng thái)
+**Dữ kiện.** Chuỗi hai trạng thái của Ví dụ 10.6: tại $s_A$, hành động 1 sang $s_B$ với phần thưởng $0$, hành động 2 kết thúc với phần thưởng $1$; tại $s_B$, hành động 1 kết thúc với phần thưởng $3$, hành động 2 kết thúc với phần thưởng $0$; $\gamma=0{,}9$; $p_A=\tfrac12$, $p_B=\tfrac23$; $v_\pi=(1{,}4;\,2)$ và lợi thế đúng $A_\pi(s_A,1)=0{,}4$. Critic cố định $\hat v=(1{,}4;\,1)$. Hai lượt cùng có $S_0=s_A$, $A_0=1$, $R_1=0$, $S_1=s_B$ và kết thúc tại $T=2$: lượt (i) có $A_1=1$, $R_2=3$, xác suất có điều kiện $\tfrac23$; lượt (ii) có $A_1=2$, $R_2=0$, xác suất $\tfrac13$.
 
-**Sai số TD.** $\delta_0=0+0{,}9\cdot1{,}5-1=0{,}35$ và $\delta_1=3-1{,}5=1{,}5$, vì mặt nạ tắt ở bước cuối.
+**Sai số TD.** $\delta_0=0+0{,}9\cdot1-1{,}4=-0{,}5$ ở cả hai lượt; $\delta_1=3-1=2$ ở lượt (i) và $\delta_1=0-1=-1$ ở lượt (ii), vì mặt nạ tắt ở bước cuối.
 
 **Ba ước lượng của $A_\pi(s_A,1)$.**
 
-- Một bước: $R_1+\gamma\hat v(S_1)-\hat v(S_0)=\delta_0=0{,}35$.
-- Hai bước, ở đây trùng Monte Carlo vì $T=2$: $R_1+\gamma R_2-\hat v(S_0)=0+0{,}9\cdot3-1=1{,}7$.
-- Trộn hai ước lượng trên với trọng số $1-\lambda$ và $\lambda$, $\lambda=0{,}8$: $0{,}2\cdot0{,}35+0{,}8\cdot1{,}7=1{,}43$.
+- Một bước: $R_1+\gamma\hat v(S_1)-\hat v(S_0)=\delta_0=-0{,}5$ ở cả hai lượt.
+- Hai bước, ở đây trùng Monte Carlo vì $T=2$: $R_1+\gamma R_2-\hat v(S_0)$, tức $0{,}9\cdot3-1{,}4=1{,}3$ ở lượt (i) và $0-1{,}4=-1{,}4$ ở lượt (ii).
+- Trộn hai ước lượng trên với trọng số $1-\lambda$ và $\lambda$, $\lambda=0{,}5$: $0{,}5\cdot(-0{,}5)+0{,}5\cdot1{,}3=0{,}4$ ở lượt (i) và $0{,}5\cdot(-0{,}5)+0{,}5\cdot(-1{,}4)=-0{,}95$ ở lượt (ii).
 
-**Diễn giải.** Ba số khác nhau trên cùng một lượt, và không số nào bằng $0{,}4$. Muốn so độ chệch của ba ước lượng, cần lấy kỳ vọng theo lượt.
+| Ước lượng | Lượt (i), $\tfrac23$ | Lượt (ii), $\tfrac13$ | Trung bình | Khoảng cách |
+|---|---|---|---|---|
+| một bước | $-0{,}5$ | $-0{,}5$ | $-0{,}5$ | $0$ |
+| trộn, $\lambda=0{,}5$ | $0{,}4$ | $-0{,}95$ | $-0{,}05$ | $1{,}35$ |
+| hai bước | $1{,}3$ | $-1{,}4$ | $0{,}4$ | $2{,}7$ |
 
-**Kiểm tra lại.** $1{,}7=0{,}35+0{,}9\cdot1{,}5=\delta_0+\gamma\delta_1$ và $1{,}43=\delta_0+0{,}72\,\delta_1$, với $0{,}72=\gamma\lambda$.
+Cột "khoảng cách" là hiệu hai giá trị trên hai lượt.
+
+**Diễn giải.** Ước lượng một bước như nhau trên hai lượt, nhưng có trung bình $-0{,}5$, lệch $-0{,}9$ so với $0{,}4$ và sai dấu, vì critic đánh giá thấp $s_B$. Ước lượng hai bước có trung bình đúng $0{,}4$, nhưng hai giá trị cách nhau $2{,}7$. Ước lượng trộn nằm giữa: độ lệch $-0{,}45$, khoảng cách $1{,}35$. Tổng quát, với $\lambda\in[0,1]$, hai giá trị là $-0{,}5+1{,}8\lambda$ và $-0{,}5-0{,}9\lambda$, trung bình là $-0{,}5+0{,}9\lambda$, nên độ lệch là $-0{,}9(1-\lambda)$ và khoảng cách là $2{,}7\lambda$. Với $\lambda=0{,}5$, lượt (i) cho đúng $0{,}4$ chỉ do trùng hợp; trung bình trên hai lượt là $-0{,}05$.
+
+**Kiểm tra lại.** $1{,}3=-0{,}5+0{,}9\cdot2$ và $-1{,}4=-0{,}5+0{,}9\cdot(-1)$, tức $\delta_0+\gamma\delta_1$; $0{,}4=-0{,}5+0{,}45\cdot2$ và $-0{,}95=-0{,}5+0{,}45\cdot(-1)$, tức $\delta_0+\gamma\lambda\,\delta_1$ với $\gamma\lambda=0{,}45$.
 :::
 
-Hai đẳng thức ở dòng kiểm tra lại có chung một lý do: mọi ước lượng ở đây là tổng có trọng số của các sai số TD. Định nghĩa và bổ đề sau phát biểu điều này cho mọi $n$.
+Các đẳng thức ở dòng kiểm tra lại có chung một lý do: mọi ước lượng ở đây là tổng có trọng số của các sai số TD. Định nghĩa và bổ đề sau phát biểu điều này cho mọi $n$.
 
 ::: definition Định nghĩa 10.11 (Lợi tức $n$ bước, lợi thế $n$ bước)
 Cho một lượt kết thúc tại $T$, một critic $\hat v(\cdot,w)$ với $w$ cố định, và $n\in\mathbb N_+$. *Lợi tức $n$ bước* (n-step return) từ bước $t<T$ là
@@ -707,11 +732,11 @@ và với $\lambda=1$ đặt $G^1_t=G_t$, tức dạng thứ hai với $\lambda=
 $$\widehat A_t=G^\lambda_t-\hat v(S_t,w).$$
 :::
 
-Hai dạng của $G^\lambda_t$ bằng nhau vì mọi $n\ge T-t$ cho cùng lợi tức $G_t$, và tổng trọng số của chúng là $(1-\lambda)\sum_{n\ge T-t}\lambda^{n-1}=\lambda^{T-t-1}$. Trọng số $(1-\lambda)\lambda^{n-1}$ giảm theo cấp số nhân và cộng lại bằng $1$, nên $G^\lambda_t$ là một trung bình của các lợi tức $n$ bước. Với $\lambda=0$, chỉ lợi tức một bước có trọng số khác $0$ và $\widehat A_t=\delta_t$; với $\lambda=1$, $\widehat A_t=G_t-\hat v(S_t,w)$ là hệ số Monte Carlo của Thuật toán 10.6. Như vậy GAE chứa cả hai đầu của Mục 2. Trong Ví dụ 10.8, $T-t-1=1$ tại $t=0$, nên $G^\lambda_0=0{,}2\,G_{0:1}+0{,}8\,G_0=0{,}2\cdot1{,}35+0{,}8\cdot2{,}7=2{,}43$ và $\widehat A_0=1{,}43$.
+Hai dạng của $G^\lambda_t$ bằng nhau vì mọi $n\ge T-t$ cho cùng lợi tức $G_t$, và tổng trọng số của chúng là $(1-\lambda)\sum_{n\ge T-t}\lambda^{n-1}=\lambda^{T-t-1}$. Trọng số $(1-\lambda)\lambda^{n-1}$ giảm theo cấp số nhân và cộng lại bằng $1$, nên $G^\lambda_t$ là một trung bình của các lợi tức $n$ bước. Với $\lambda=0$, chỉ lợi tức một bước có trọng số khác $0$ và $\widehat A_t=\delta_t$; với $\lambda=1$, $\widehat A_t=G_t-\hat v(S_t,w)$ là hệ số Monte Carlo của Thuật toán 10.6. Như vậy GAE chứa cả hai đầu của Mục 2. Trong Ví dụ 10.8, $T-t-1=1$ tại $t=0$, nên trên lượt (i), $G^\lambda_0=0{,}5\,G_{0:1}+0{,}5\,G_0=0{,}5\cdot0{,}9+0{,}5\cdot2{,}7=1{,}8$ và $\widehat A_0=1{,}8-1{,}4=0{,}4$.
 
 ![Hai biểu đồ cột cạnh nhau. Trái: trọng số (1 trừ lambda) nhân lambda mũ n trừ 1 của lợi tức n bước, với lambda bằng 0,8 và n từ 1 đến 6: 0,2; 0,16; 0,128; 0,102; 0,082; 0,066; một cột cuối tô sọc, lambda mũ 6 bằng 0,262, ghi phần trọng số còn lại dồn vào lợi tức thực khi lượt kết thúc. Phải: trọng số (gamma lambda) mũ k của sai số TD delta t cộng k trong GAE, với gamma bằng 0,9 và lambda bằng 0,8, k từ 0 đến 5: 1; 0,72; 0,518; 0,373; 0,269; 0,193.](img/lec-10/gae-weights.svg)
 
-Nửa trái của hình là trọng số của từng lợi tức $n$ bước trong $G^\lambda_t$; cột sọc là phần $\lambda^{T-t-1}$ dồn vào lợi tức thực, ở đây với $T-t-1=6$. Nửa phải là trọng số $(\gamma\lambda)^k$ của sai số TD thứ $k$ trong dạng tổng của mệnh đề sau. Hai nửa mô tả cùng một ước lượng theo hai cách đếm.
+Hình dùng $\gamma=0{,}9$, $\lambda=0{,}8$. Nửa trái của hình là trọng số của từng lợi tức $n$ bước trong $G^\lambda_t$; cột sọc là phần $\lambda^{T-t-1}$ dồn vào lợi tức thực, ở đây với $T-t-1=6$. Nửa phải là trọng số $(\gamma\lambda)^k$ của sai số TD thứ $k$ trong dạng tổng của mệnh đề sau. Hai nửa mô tả cùng một ước lượng theo hai cách đếm.
 
 ::: proposition Mệnh đề 10.14 (Dạng tổng, hai đầu mút và truy hồi của GAE)
 **Giả thiết.** Lượt kết thúc tại $T$; critic cố định trong cả lượt; $\delta_k$ như Bổ đề 10.12, $\delta_k=0$ với $k\ge T$; $\lambda\in[0,1]$.
@@ -747,7 +772,7 @@ trong đó đẳng thức cuối dùng $(1-\lambda)\sum_{n\ge k+1}\lambda^{n-1}=
 **Bước 4 (truy hồi).** Tách số hạng $k=0$ của (a): $\widehat A_t=\delta_t+\gamma\lambda\sum_{k=1}^{T-t-1}(\gamma\lambda)^{k-1}\delta_{t+k}=\delta_t+\gamma\lambda\,\widehat A_{t+1}$, với tổng của $\widehat A_{T}$ rỗng nên $\widehat A_T=0$. Khi $Z_{t+1}=1$ thì $t+1=T$ và $\widehat A_{t+1}=0$, nên nhân thêm $(1-Z_{t+1})$ không đổi kết quả. $\square$
 :::
 
-Dạng tổng (a) là (16) của Schulman và cộng sự (2016); truy hồi (c) cho phép tính mọi $\widehat A_t$ của một lượt bằng một lượt quét lùi. Trên Ví dụ 10.8, truy hồi của lợi tức λ, $G^\lambda_t=R_{t+1}+\gamma\bigl[(1-\lambda)\hat v(S_{t+1})+\lambda G^\lambda_{t+1}\bigr]$ (Sutton và Barto, 2018, Bài tập 12.1), cho $G^\lambda_1=3$ và $G^\lambda_0=0+0{,}9(0{,}2\cdot1{,}5+0{,}8\cdot3)=2{,}43$, khớp $\widehat A_0=0{,}35+0{,}72\cdot1{,}5=1{,}43$ của (a).
+Dạng tổng (a) là (16) của Schulman và cộng sự (2016); truy hồi (c) cho phép tính mọi $\widehat A_t$ của một lượt bằng một lượt quét lùi. Trên lượt (i) của Ví dụ 10.8, truy hồi của lợi tức λ, $G^\lambda_t=R_{t+1}+\gamma\bigl[(1-\lambda)\hat v(S_{t+1})+\lambda G^\lambda_{t+1}\bigr]$ (Sutton và Barto, 2018, Bài tập 12.1), cho $G^\lambda_1=3$ và $G^\lambda_0=0+0{,}9(0{,}5\cdot1+0{,}5\cdot3)=1{,}8$, khớp $\widehat A_0+\hat v(s_A)=(-0{,}5+0{,}45\cdot2)+1{,}4=1{,}8$ của (a).
 
 Còn lại câu hỏi của Mục 2: GAE có làm chệch ước lượng gradient không. Schulman và cộng sự (2016, Định nghĩa 1) gọi một ước lượng lợi thế là *γ-just* nếu thay lợi thế đúng bằng nó trong công thức gradient không đổi kỳ vọng. Mệnh đề sau cho hai điều kiện đủ.
 
@@ -789,23 +814,25 @@ $$
 
 Đọc bằng lời, GAE không làm chệch gradient khi nó là hệ số Monte Carlo trừ một đường cơ sở ($\lambda=1$), hoặc khi mọi sai số TD đều có kỳ vọng có điều kiện bằng lợi thế ($\hat v=v_\pi$). Đây là Mệnh đề 1 của Schulman và cộng sự (2016, chứng minh ở Phụ lục B). Hai điều kiện có vai trò riêng.
 
-- Bỏ cả hai điều kiện: với $\lambda=0{,}8$ và $\hat v=(1;\,1{,}5)$ trên chuỗi hai trạng thái, tọa độ $\theta_A$ của $\mathbb E[\widehat A_0\psi_0]$ là $0{,}1775$, khác giá trị đúng $0{,}2$ (Ví dụ 10.9 dưới đây).
-- Bỏ "lượt kết thúc trong dữ liệu": nếu lượt của chuỗi bị cắt sau bước $0$ và bootstrap bằng $\hat v(s_B)=1{,}5$, thì kể cả với $\lambda=1$, $\widehat A_0=\delta_0$, và tọa độ $\theta_A$ của kỳ vọng là $0{,}0875\ne0{,}2$.
+- Bỏ cả hai điều kiện: với $\lambda=0{,}5$ và $\hat v=(1{,}4;\,1)$ trên chuỗi hai trạng thái, tọa độ $\theta_A$ của $\mathbb E[\widehat A_0\psi_0]$ là $0{,}0875$, khác giá trị đúng $0{,}2$ (Ví dụ 10.9 dưới đây).
+- Bỏ "lượt kết thúc trong dữ liệu": nếu lượt của chuỗi bị cắt ngay khi tới $s_B$ và bootstrap bằng $\hat v(s_B)=1$, thì kể cả với $\lambda=1$, $\widehat A_0=\delta_0$, tức $-0{,}5$ khi chọn hành động 1 và $-0{,}4$ khi chọn hành động 2, và tọa độ $\theta_A$ của kỳ vọng là $-0{,}025\ne0{,}2$.
 
 Bước 1 dùng $\lambda=1$ cùng lượt đầy đủ, để $\widehat A_t$ là $G_t$ trừ một đường cơ sở; Bước 3–4 dùng $\hat v=v_\pi$ qua Mệnh đề 10.8(a). Một nhầm lẫn thường gặp là đọc mệnh đề thành "GAE với $\lambda=1$ là ước lượng không chệch của lợi thế". Ví dụ sau cho thấy điều đó sai.
 
 ::: example Ví dụ 10.9 (Kỳ vọng và gradient của GAE trên chuỗi hai trạng thái)
-**Dữ kiện.** Chuỗi hai trạng thái như Ví dụ 10.8: $\gamma=0{,}9$, $p_A=\tfrac12$, $p_B=\tfrac23$, critic cố định $\hat v=(1;\,1{,}5)$; lợi thế đúng $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$; hàm điểm tại $s_A$: $\psi_\theta(s_A,1)=0{,}5\,e_A$, $\psi_\theta(s_A,2)=-0{,}5\,e_A$; tọa độ $\theta_A$ của gradient đúng tại bước $0$ là $0{,}2$ (Ví dụ 10.6). Tại $s_B$, phần thưởng kỳ vọng là $\tfrac23\cdot3=2$.
+**Dữ kiện.** Chuỗi hai trạng thái như Ví dụ 10.8: $\gamma=0{,}9$, $p_A=\tfrac12$, $p_B=\tfrac23$, $v_\pi=(1{,}4;\,2)$, critic cố định $\hat v=(1{,}4;\,1)$; lợi thế đúng $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$ và $A_\pi(s_B,\cdot)=(1;\,-2)$; hàm điểm $\psi_\theta(s_A,1)=0{,}5\,e_A$, $\psi_\theta(s_A,2)=-0{,}5\,e_A$, $\psi_\theta(s_B,1)=\tfrac13e_B$, $\psi_\theta(s_B,2)=-\tfrac23e_B$; gradient đúng $(0{,}2;\,0{,}3)$ (Ví dụ 10.6).
 
-**Hành động 1 tại $s_A$.** $\delta_0=0{,}35$ là tất định; $\delta_1=R_2-1{,}5$ có kỳ vọng $0{,}5$. Theo Mệnh đề 10.14(a), $\mathbb E[\widehat A_0\mid s_A,1]=0{,}35+0{,}9\lambda\cdot0{,}5=0{,}35+0{,}45\lambda$, tức $0{,}35$; $0{,}71$; $0{,}8$ với $\lambda=0$; $0{,}8$; $1$, so với $A_\pi(s_A,1)=0{,}4$.
+**Hành động 1 tại $s_A$.** $\delta_0=-0{,}5$ là tất định; $\delta_1=R_2-1$ có kỳ vọng $\tfrac23\cdot3-1=1$. Theo Mệnh đề 10.14(a), $\mathbb E[\widehat A_0\mid s_A,1]=-0{,}5+0{,}9\lambda\cdot1$, tức $-0{,}5$; $-0{,}05$; $0{,}4$ với $\lambda=0$; $0{,}5$; $1$, so với $A_\pi(s_A,1)=0{,}4$.
 
-**Hành động 2 tại $s_A$.** Lượt kết thúc với phần thưởng $1$, nên $\widehat A_0=\delta_0=1-1=0$ với mọi $\lambda$, so với $A_\pi(s_A,2)=-0{,}4$.
+**Hành động 2 tại $s_A$.** Lượt kết thúc với phần thưởng $1$, nên $\widehat A_0=\delta_0=1-1{,}4=-0{,}4$ với mọi $\lambda$, bằng $A_\pi(s_A,2)$.
 
-**Gradient.** Tọa độ $\theta_A$ của $\mathbb E[\widehat A_0\psi_0]$ là $\tfrac12\cdot\mathbb E[\widehat A_0\mid s_A,1]\cdot0{,}5+\tfrac12\cdot0\cdot(-0{,}5)$, tức $0{,}0875$; $0{,}1775$; $0{,}2$ với $\lambda=0$; $0{,}8$; $1$.
+**Bước $t=1$ tại $s_B$.** Lượt kết thúc sau bước này, nên $\widehat A_1=\delta_1=R_2-1$ với mọi $\lambda$: $\mathbb E[\widehat A_1\mid s_B,1]=2$ và $\mathbb E[\widehat A_1\mid s_B,2]=-1$, so với $A_\pi(s_B,\cdot)=(1;\,-2)$.
 
-**Diễn giải.** Với $\lambda=1$, độ chệch của $\widehat A_0$ là $+0{,}4$ cho cả hai hành động, nên bị khử khi nhân với hàm điểm có kỳ vọng $0$, và gradient đúng dù lợi thế sai. Với $\lambda<1$, độ chệch khác nhau giữa hai hành động, chẳng hạn $-0{,}05$ và $+0{,}4$ khi $\lambda=0$, nên không bị khử.
+**Gradient.** Tọa độ $\theta_A$ của $\mathbb E[\widehat A_0\psi_0]$ là $\tfrac12\cdot\mathbb E[\widehat A_0\mid s_A,1]\cdot0{,}5+\tfrac12\cdot(-0{,}4)\cdot(-0{,}5)=-0{,}025+0{,}225\lambda$, tức $-0{,}025$; $0{,}0875$; $0{,}2$ với $\lambda=0$; $0{,}5$; $1$. Tọa độ $\theta_B$ của $\mathbb E[\gamma\widehat A_1\psi_1]$ là $0{,}9\cdot\tfrac12\bigl(\tfrac23\cdot2\cdot\tfrac13+\tfrac13\cdot(-1)\cdot(-\tfrac23)\bigr)=0{,}45\cdot\tfrac23=0{,}3$ với mọi $\lambda$.
 
-**Kiểm tra lại.** Giá trị đúng: $0{,}5\cdot0{,}4\cdot0{,}5+0{,}5\cdot(-0{,}4)(-0{,}5)=0{,}2$.
+**Diễn giải.** Tại $s_B$, với mọi $\lambda$, kể cả $\lambda=1$, lợi thế ước lượng lệch $+1$ ở cả hai hành động; phần lệch bị khử khi nhân với hàm điểm có kỳ vọng $0$, nên tọa độ $\theta_B$ của gradient đúng dù lợi thế sai. Tại $s_A$ với $\lambda<1$, độ lệch là $-0{,}9(1-\lambda)$ ở hành động 1 và $0$ ở hành động 2, nên không bị khử; với $\lambda=0$, tọa độ $\theta_A$ âm, ngược dấu giá trị đúng $0{,}2$. Với $\lambda=1$, $\widehat A_0=G_0-\hat v(s_A)$ không lệch vì $\hat v(s_A)=v_\pi(s_A)$.
+
+**Kiểm tra lại.** Giá trị đúng: $0{,}5\cdot0{,}4\cdot0{,}5+0{,}5\cdot(-0{,}4)(-0{,}5)=0{,}2$ và $0{,}45\bigl(\tfrac23\cdot1\cdot\tfrac13+\tfrac13\cdot(-2)(-\tfrac23)\bigr)=0{,}3$.
 :::
 
 **Trong thực hành.** Critic học được không bằng $v_\pi$, và các cài đặt dùng $\lambda<1$, nên Mệnh đề 10.15 không bảo đảm ước lượng gradient bằng GAE là γ-just. Schulman và cộng sự (2016, §3) nêu định tính một đánh đổi giữa độ chệch và phương sai theo $\lambda$: GAE với $\lambda=1$ γ-just bất kể critic nhưng có phương sai cao vì là tổng của nhiều số hạng, còn GAE với $\lambda=0$ chệch khi critic sai nhưng thường có phương sai thấp hơn nhiều.
@@ -828,6 +855,8 @@ Mệnh đề 10.14 giả sử có cả lượt. Dữ liệu của PPO gồm các
 
 **Kiểm tra lại.** Ở (ii), $\widehat A_0+\hat v(S_0)=5{,}572$ phải bằng *lợi tức λ cắt* (truncated λ-return) tại bước $2$ của Sutton và Barto (2018, (12.9)): $G_{0:1}=1+0{,}9\cdot3=3{,}7$, $G_{0:2}=1+0{,}9\cdot2+0{,}81\cdot4=6{,}04$, và $0{,}2\cdot3{,}7+0{,}8\cdot6{,}04=5{,}572$.
 :::
+
+Trên chuỗi hai trạng thái với critic $\hat v=(1{,}4;\,1)$, giả sử lượt bị cắt vì giới hạn thời gian ngay khi vừa tới $s_B$: $U_1=1$, $Z_1=0$. Trạng thái $s_B$ còn tương lai, nên sai số TD của bước $0$ giữ phần bootstrap, $\delta_0=0+0{,}9\cdot1-1{,}4=-0{,}5$, như trường hợp (ii). Ghi nhầm bước cắt thành kết thúc, $Z_1=1$, xóa phần đó và cho $\delta_0=0-1{,}4=-1{,}4$.
 
 ![Quan sát O t, qua hành động A t và phần thưởng R t+1, tới quan sát O t+1. Nhánh trên, khung viền liền: Z t+1 bằng 1, MDP kết thúc, mục tiêu y t bằng R t+1. Nhánh dưới, khung viền nét đứt: U t+1 bằng 1 và Z t+1 bằng 0, hết giới hạn bước, mục tiêu y t bằng R t+1 cộng gamma nhân max của Q theta trừ tại O t+1.](img/lec-08/termination-truncation.svg)
 
@@ -892,7 +921,18 @@ Với chính sách $\pi$ và một chính sách khác $\pi'$, đặt $A_\pi(s,\p
 
 **Dùng xác suất của chính sách cũ.** Nếu thay xác suất tới $s_B$ của $\pi'$ bằng của $\pi$, $p_A=0{,}5$: $0{,}08+0{,}9\cdot0{,}5\cdot0{,}4=0{,}26$, lệch $0{,}036$ so với $\Delta J$.
 
-**Kiểm tra lại.** $1{,}696-1{,}4=0{,}296$; độ lệch $0{,}036=0{,}9\cdot(0{,}6-0{,}5)\cdot0{,}4$.
+**Mọi chính sách mới trên chuỗi.** Đặt $\Delta p_A=p'_A-\tfrac12$ và $\Delta p_B=p'_B-\tfrac23$. Với hai hành động, $A_\pi(s_A,\pi')=0{,}4p'_A-0{,}4(1-p'_A)=0{,}8\,\Delta p_A$ và $A_\pi(s_B,\pi')=p'_B-2(1-p'_B)=3\,\Delta p_B$, nên tổng dùng xác suất cũ là $0{,}8\,\Delta p_A+0{,}9\cdot0{,}5\cdot3\,\Delta p_B=0{,}8\,\Delta p_A+1{,}35\,\Delta p_B$. Khai triển $J=2{,}7p_Ap_B+1-p_A$ quanh $(\tfrac12;\,\tfrac23)$ cho
+$$\begin{aligned}\Delta J&=0{,}8\,\Delta p_A+1{,}35\,\Delta p_B\\&\quad+2{,}7\,\Delta p_A\,\Delta p_B.\end{aligned}$$
+Tổng dùng xác suất cũ là đúng phần bậc nhất của $\Delta J$. Phần còn lại, $2{,}7\,\Delta p_A\Delta p_B=\gamma\,\Delta p_A\,A_\pi(s_B,\pi')$, đến từ việc $\pi'$ tới $s_B$ với xác suất $p'_A$ thay cho $p_A$: mỗi lượt thêm $\Delta p_A$ lần thăm $s_B$, mỗi lần đóng góp $\gamma\,A_\pi(s_B,\pi')$. Với $\pi'$ ở trên, phần đó là $2{,}7\cdot0{,}1\cdot\tfrac2{15}=0{,}036$.
+
+**Hai bước trên một đường thẳng.** Các chính sách $p'_A=\tfrac12+0{,}5t$, $p'_B=\tfrac23-\tfrac16t$ với $t\in[0,1]$ đi từ $\pi$ tới $(1;\,0{,}5)$. Trên đường này, tổng dùng xác suất cũ là $0{,}175t$ và $\Delta J=0{,}175t-0{,}225t^2$.
+
+- $t=0{,}4$, chính sách $(0{,}7;\,0{,}6)$: tổng dùng xác suất cũ là $0{,}07$, còn $\Delta J=0{,}034$; hai số cùng dấu.
+- $t=1$, chính sách $(1;\,0{,}5)$: tổng dùng xác suất cũ là $0{,}175$, còn $\Delta J=-0{,}05$; phép tính với xác suất cũ báo $J$ tăng trong khi $J$ giảm.
+
+Ở $t=1$, chính sách mới luôn tới $s_B$, gấp đôi chính sách cũ, và tại $s_B$ nó kém chính sách cũ, $A_\pi(s_B,\pi')=3\cdot(-\tfrac16)=-0{,}5$; phần bậc hai là $2{,}7\cdot0{,}5\cdot(-\tfrac16)=-0{,}225$. Đường thẳng $0{,}175t$ và parabol $\Delta J$ tiếp xúc tại $t=0$; $\Delta J$ lớn nhất, khoảng $0{,}034$, tại $t\approx0{,}39$ và bằng $0$ tại $t=\tfrac79\approx0{,}78$.
+
+**Kiểm tra lại.** $1{,}696-1{,}4=0{,}296$; độ lệch $0{,}036=0{,}9\cdot(0{,}6-0{,}5)\cdot0{,}4$. Tại $(0{,}7;\,0{,}6)$: $J=2{,}7\cdot0{,}42+0{,}3=1{,}434$; tại $(1;\,0{,}5)$: $J=2{,}7\cdot0{,}5=1{,}35$.
 :::
 
 Đẳng thức trong Ví dụ 10.11 cộng lợi thế trên các trạng thái mà $\pi'$ thăm, mỗi lần thăm ở bước $t$ có trọng số $\gamma^t$. Để viết nó cho MDP tổng quát, chúng ta cần phân bố chiếm dụng trên đúng các trạng thái chưa kết thúc.
@@ -1032,12 +1072,12 @@ $$
 
 Hàm thay thế và hàm mục tiêu có cùng giá trị và cùng tiếp tuyến tại tham số cũ, nên một bước đủ nhỏ theo hướng tăng của $\mathcal L$ cũng làm $J$ tăng; với bước hữu hạn, hai hàm tách nhau.
 
-Kiểm trên chuỗi hai trạng thái: với $\pi'$ của Ví dụ 10.11, dạng tỉ số tại $s_A$ cho $0{,}5\cdot\tfrac{0{,}6}{0{,}5}\cdot0{,}4+0{,}5\cdot\tfrac{0{,}4}{0{,}5}\cdot(-0{,}4)=0{,}08$, và $\mathcal L-J=\tfrac1{0{,}1}(0{,}1\cdot0{,}08+0{,}045\cdot0{,}4)=0{,}26$, như ở Ví dụ 10.11. Gradient của $\mathcal L$ theo $(\theta_A;\,\theta_B)$ tại $\theta_{\mathrm{old}}$ là $\tfrac1{0{,}1}\bigl(0{,}1\cdot0{,}2;\,0{,}045\cdot\tfrac23\bigr)=(0{,}2;\,0{,}3)$, bằng gradient tính trực tiếp của Ví dụ 10.6.
+Kiểm trên chuỗi hai trạng thái: với $\pi'$ của Ví dụ 10.11, dạng tỉ số tại $s_A$ cho $0{,}5\cdot\tfrac{0{,}6}{0{,}5}\cdot0{,}4+0{,}5\cdot\tfrac{0{,}4}{0{,}5}\cdot(-0{,}4)=0{,}08$, và $\mathcal L-J=\tfrac1{0{,}1}(0{,}1\cdot0{,}08+0{,}045\cdot0{,}4)=0{,}26$, như ở Ví dụ 10.11. Gradient của $\mathcal L$ theo $(\theta_A;\,\theta_B)$ tại $\theta_{\mathrm{old}}$ là $\tfrac1{0{,}1}\bigl(0{,}1\cdot0{,}2;\,0{,}045\cdot\tfrac23\bigr)=(0{,}2;\,0{,}3)$, bằng gradient tính trực tiếp của Ví dụ 10.6. Với mọi chính sách mới trên chuỗi, $\mathcal L-J$ là tổng dùng xác suất cũ của Ví dụ 10.11, nên $\Delta J=(\mathcal L-J)+2{,}7\,\Delta p_A\Delta p_B$. Dọc đường tới $(1;\,0{,}5)$ của ví dụ đó, đường thẳng $\mathcal L-J=0{,}175t$ tiếp xúc parabol $\Delta J=0{,}175t-0{,}225t^2$ tại $t=0$; tại $t=1$, hàm thay thế báo tăng $0{,}175$ còn $J$ giảm $0{,}05$.
 
 Hai giả thiết của mệnh đề có vai trò riêng.
 
 - Bỏ "$\pi_{\mathrm{old}}(a\mid s)>0$": nếu $\pi_{\mathrm{old}}$ chọn chắc chắn hành động 1 tại $s_B$, dữ liệu không có hành động 2, và dạng tỉ số bỏ mất số hạng $\pi_\theta(2\mid s_B)A_{\mathrm{old}}(s_B,2)$; Bước 2 cũng cần $\pi_\theta>0$ để viết $\nabla_\theta\pi_\theta=\pi_\theta\psi_\theta$.
-- Bỏ "$\nu^{\mathrm{old}}$ và $A_{\mathrm{old}}$ chính xác": với lợi thế ước lượng, Bước 1 không còn đúng. Trên chuỗi hai trạng thái với critic $\hat v=(1;\,1{,}5)$ và $\lambda=0$, kỳ vọng của lợi thế ước lượng tại $s_A$ là $(0{,}35;\,0)$, nên $\sum_a\pi_{\mathrm{old}}(a\mid s_A)\widehat A(s_A,a)=0{,}175\ne0$ và $\mathcal L(\theta_{\mathrm{old}})\ne J(\theta_{\mathrm{old}})$.
+- Bỏ "$\nu^{\mathrm{old}}$ và $A_{\mathrm{old}}$ chính xác": với lợi thế ước lượng, Bước 1 không còn đúng. Trên chuỗi hai trạng thái với critic $\hat v=(1{,}4;\,1)$ và $\lambda=0$, kỳ vọng của lợi thế ước lượng tại $s_A$ là $(-0{,}5;\,-0{,}4)$, nên $\sum_a\pi_{\mathrm{old}}(a\mid s_A)\widehat A(s_A,a)=-0{,}45\ne0$ và $\mathcal L(\theta_{\mathrm{old}})\ne J(\theta_{\mathrm{old}})$.
 
 **Trong thực hành.** Trên một đoạn thu của $\pi_{\mathrm{old}}$, kỳ vọng trong $\mathcal L$ được thay bằng trung bình đều $\widehat{\mathbb E}_{\mathcal D}[\rho_t(\theta)\widehat A_t]$, với $\widehat A_t$ của Thuật toán 10.16 và $\rho_t(\theta)=\exp\bigl(\log\pi_\theta(A_t\mid S_t)-\log\pi_{\mathrm{old}}(A_t\mid S_t)\bigr)$ tính từ log-xác suất đã lưu khi thu. Hai thay thế này có giá: trung bình đều không có trọng số $\gamma^t$ của $\nu^{\mathrm{old}}$, và lợi thế là ước lượng. Đổi lại, cùng một bộ dữ liệu cho giá trị của $\mathcal L$ tại mọi $\theta$, nên có thể thực hiện nhiều bước tối ưu trên một lần thu.
 
@@ -1055,7 +1095,7 @@ bằng $+\infty$ nếu có $a$ với $q(a)>0=q'(a)$. Với hai chính sách $\pi
 $$\begin{aligned}&\bar D_{\mathrm{KL}}(\pi_{\mathrm{old}}\Vert\pi_\theta)\\&\quad=\mathbb E_{S\sim\nu^{\mathrm{old}}}\bigl[D_{\mathrm{KL}}(\pi_{\mathrm{old}}(\cdot\mid S)\\&\qquad\qquad\Vert\pi_\theta(\cdot\mid S))\bigr].\end{aligned}$$
 :::
 
-$D_{\mathrm{TV}}$ đối xứng, nằm trong $[0,1]$, và bằng hiệu lớn nhất giữa xác suất mà hai phân phối gán cho cùng một tập hành động, $\max_{\mathcal E\subseteq\mathcal A}\lvert q(\mathcal E)-q'(\mathcal E)\rvert$. $D_{\mathrm{KL}}$ không đối xứng và có thể vô hạn. Với $q=\pi_{\mathrm{old}}(\cdot\mid s)$ và $q'=\pi_\theta(\cdot\mid s)$, $D_{\mathrm{KL}}(q\Vert q')=\mathbb E_{A\sim\pi_{\mathrm{old}}(\cdot\mid s)}[-\log\rho_\theta(s,A)]$, nên KL gắn trực tiếp với tỉ số chính sách của Định nghĩa 10.21. Tại $s_B$ của Ví dụ 10.11, với $\pi(\cdot\mid s_B)=(\tfrac23;\,\tfrac13)$ và $\pi'(\cdot\mid s_B)=(0{,}8;\,0{,}2)$: $D_{\mathrm{TV}}=\tfrac2{15}\approx0{,}1333$, $D_{\mathrm{KL}}(\pi\Vert\pi')=0{,}04873$ và $D_{\mathrm{KL}}(\pi'\Vert\pi)=0{,}04369$.
+$D_{\mathrm{TV}}$ đối xứng, nằm trong $[0,1]$, và bằng hiệu lớn nhất giữa xác suất mà hai phân phối gán cho cùng một tập hành động, $\max_{\mathcal E\subseteq\mathcal A}\lvert q(\mathcal E)-q'(\mathcal E)\rvert$. $D_{\mathrm{KL}}$ không đối xứng và có thể vô hạn. Với $q=\pi_{\mathrm{old}}(\cdot\mid s)$ và $q'=\pi_\theta(\cdot\mid s)$, $D_{\mathrm{KL}}(q\Vert q')=\mathbb E_{A\sim\pi_{\mathrm{old}}(\cdot\mid s)}[-\log\rho_\theta(s,A)]$, nên KL gắn trực tiếp với tỉ số chính sách của Định nghĩa 10.21. Tại $s_B$ của Ví dụ 10.11, với $\pi(\cdot\mid s_B)=(\tfrac23;\,\tfrac13)$ và $\pi'(\cdot\mid s_B)=(0{,}8;\,0{,}2)$: $D_{\mathrm{TV}}=\tfrac2{15}\approx0{,}1333$, $D_{\mathrm{KL}}(\pi\Vert\pi')=0{,}04873$ và $D_{\mathrm{KL}}(\pi'\Vert\pi)=0{,}04369$. Với bước $(1;\,0{,}5)$ của Ví dụ 10.11, chính sách mới không chọn hành động 2 tại $s_A$, nên tại $s_A$, $D_{\mathrm{KL}}(\pi\Vert\pi')=+\infty$, trong khi $D_{\mathrm{TV}}=0{,}5$.
 
 ::: proposition Mệnh đề 10.24 (Hai tính chất của KL)
 **Giả thiết.** $q$, $q'$ là hai phân phối trên tập hữu hạn $\mathcal A$.
@@ -1345,15 +1385,15 @@ Trên chuỗi hai trạng thái, ràng buộc của Định nghĩa 10.30 là $0{
 Về mặt ý tưởng, độ dài của một bước cập nhật cần được đo bằng mức thay đổi của phân phối hành động mà bước đó gây ra, vì ràng buộc của bài toán miền tin cậy là một ràng buộc trên KL. Ví dụ sau cho thấy vì sao ràng buộc đó không thể là một quả cầu Euclid trong không gian tham số.
 
 ::: example Ví dụ 10.13 (Cùng một bước tham số, hai khoảng cách chính sách)
-**Dữ kiện.** Một trạng thái, hai hành động, chính sách chọn hành động 1 với xác suất $p=\sigma(\theta)$, $\theta\in\mathbb R$. Bước cập nhật tăng $\theta$ thêm $1$. Hai điểm xuất phát: $p=0{,}5$ và $p=0{,}99$.
+**Dữ kiện.** Một trạng thái, hai hành động; chính sách chọn hành động 1 với xác suất $p=\sigma(\theta)$, $\theta\in\mathbb R$. Bước cập nhật tăng $\theta$ thêm $1$, đưa chính sách cũ $\pi$ thành chính sách mới $\pi'$. Hai điểm xuất phát: $p=0{,}5$ và $p=0{,}99$.
 
-**Tại $p=0{,}5$.** $\theta=0$, $p'=\sigma(1)=0{,}7311$, và $D_{\mathrm{KL}}(\text{cũ}\Vert\text{mới})=0{,}5\log\frac{0{,}5}{0{,}7311}+0{,}5\log\frac{0{,}5}{0{,}2689}=0{,}1201$.
+**Tại $p=0{,}5$.** $\theta=0$, $p'=\sigma(1)=0{,}7311$, và $D_{\mathrm{KL}}(\pi\Vert\pi')=0{,}5\log\frac{0{,}5}{0{,}7311}+0{,}5\log\frac{0{,}5}{0{,}2689}\approx0{,}12$.
 
-**Tại $p=0{,}99$.** $\theta=\log99$, $p'=\sigma(\log99+1)=0{,}99630$, và $D_{\mathrm{KL}}(\text{cũ}\Vert\text{mới})=0{,}00366$.
+**Tại $p=0{,}99$.** $\theta=\log99$, $p'=\sigma(\log99+1)=0{,}99630$, và $D_{\mathrm{KL}}(\pi\Vert\pi')\approx0{,}0037$.
 
 **Diễn giải.** Cùng một bước Euclid trên tham số cho KL ở điểm thứ nhất gấp khoảng $33$ lần KL ở điểm thứ hai. Khoảng cách Euclid giữa hai tham số không đo được mức thay đổi của chính sách.
 
-**Kiểm tra lại.** Tại $p=0{,}5$, hai số hạng của KL là $0{,}5\log\frac{0{,}5}{0{,}7311}=-0{,}1899$ và $0{,}5\log\frac{0{,}5}{0{,}2689}=0{,}3101$, tổng $0{,}1201$.
+**Kiểm tra lại.** Tại $p=0{,}5$, hai số hạng của KL là $0{,}5\log\frac{0{,}5}{0{,}7311}=-0{,}1899$ và $0{,}5\log\frac{0{,}5}{0{,}2689}=0{,}3101$, tổng $0{,}1201$. Tại $p=0{,}99$, KL bằng $0{,}00366$, và $0{,}1201/0{,}00366\approx33$.
 :::
 
 Hai KL của Ví dụ 10.13 khác nhau vì độ cong của KL theo tham số đổi theo điểm xuất phát. Định nghĩa sau đo độ cong đó và gom nó cho mọi trạng thái.
@@ -2575,21 +2615,21 @@ Câu trả lời cho bài toán trung tâm gồm sáu phần, mỗi phần đún
 
 ### 8.4 Câu hỏi tự kiểm tra
 
-Trả lời các câu hỏi sau và nêu kết quả đã dùng.
+Trả lời các câu hỏi sau bằng phép tính trên các ví dụ của chương.
 
-1. Vì sao $G_t-\hat v(S_t,w)$ cho ước lượng gradient không chệch với mọi critic cố định, nhưng là ước lượng chệch của lợi thế khi $\hat v\ne v_\pi$?
-2. Trong bước nhỏ của Ví dụ 10.12, vì sao hàm thay thế cho đúng $\Delta J$, trong khi chặn cải thiện vẫn phạt?
-3. Vì sao hệ số $\beta$ của phạt KL theo chính sách cũ (PPO-Penalty) không giữ chính sách gần $\pi_{\mathrm{ref}}$?
+1. Trên chuỗi hai trạng thái với critic $\hat v=(1{,}4;\,1)$, lượt $s_A\xrightarrow1s_B\xrightarrow1$ cho hệ số GAE tại bước $0$ bằng bao nhiêu khi $\lambda=1$, và khi $\lambda=0$?
+2. Trên chuỗi hai trạng thái, với chính sách mới $p'_A=0{,}6$, $p'_B=0{,}7$, hàm thay thế đoán mức tăng của $J$ thấp hơn hay cao hơn mức tăng thật, và lệch bao nhiêu?
+3. Trên bài toán một bước của Ví dụ 10.17, với bộ đệm ba mẫu và bán kính cắt $\epsilon=0{,}1$, mục tiêu cắt hết tăng từ $p$ nào?
 
 Lời giải ngắn.
 
-1. Phần chệch $v_\pi(S_t)-\hat v(S_t,w)$ không phụ thuộc hành động nên bị khử khi nhân với hàm điểm (Mệnh đề 10.2), nhưng vẫn còn trong kỳ vọng có điều kiện của hệ số.
-2. Bước chỉ đổi chính sách tại $s_B$, nên phân bố trạng thái không đổi và Bổ đề 10.19 trùng hàm thay thế; phạt của Định lý 10.26 không dùng thông tin này.
-3. Định nghĩa 10.43 đo KL tới $\pi_{\mathrm{old}}$, đổi sau mỗi lần cập nhật, nên chỉ giới hạn từng bước (Nhận xét 10.58).
+1. Với $\lambda=1$: $G_0-\hat v(s_A)=2{,}7-1{,}4=1{,}3$. Với $\lambda=0$: $\delta_0=0{,}9\cdot1-1{,}4=-0{,}5$, sai dấu so với lợi thế đúng $0{,}4$ (Ví dụ 10.8).
+2. Thấp hơn. Với $\Delta p_A=0{,}1$, $\Delta p_B=\tfrac1{30}$, hàm thay thế cho $\mathcal L-J=0{,}08+0{,}045=0{,}125$, còn $\Delta J=0{,}125+2{,}7\cdot0{,}1\cdot\tfrac1{30}=0{,}134$; vì $\Delta p_A$ và $\Delta p_B$ cùng dấu nên phần bậc hai $2{,}7\,\Delta p_A\Delta p_B$ dương (Ví dụ 10.11).
+3. Mẫu hành động 2 chạm $\rho=0{,}9$ tại $p=0{,}7$, nhưng hai mẫu hành động 1 còn tăng tới $\rho=1{,}1$, tức $p=\tfrac23\cdot1{,}1\approx0{,}733$; từ đó mục tiêu cắt bằng hằng $\tfrac13(2\cdot1{,}1-2\cdot0{,}9)=0{,}1\overline3$ (Ví dụ 10.17, Mệnh đề 10.40).
 
 ### 8.5 Bài tập theo mục
 
-Bài tập củng cố 10.1–10.12 và 10.18–10.21 nằm ở cuối chương; bộ bài tập chính thức, Bài tập 10.13–10.17 và 10.22, nằm ở [tệp bài tập Bài 10](material-viewer.html?doc=materials/lec-10/exercises.md&deck=lecture-10-trpo-va-ppo.html). Bảng sau ghi hai loại bài tập theo mục.
+Bài tập củng cố 10.1–10.12, 10.18–10.21 và 10.23 nằm ở cuối chương; bộ bài tập chính thức, Bài tập 10.13–10.17 và 10.22, nằm ở [tệp bài tập Bài 10](material-viewer.html?doc=materials/lec-10/exercises.md&deck=lecture-10-trpo-va-ppo.html). Bảng sau ghi hai loại bài tập theo mục.
 
 | Mục | Bài tập | Tệp bài tập |
 |---|---|---|
@@ -2600,7 +2640,7 @@ Bài tập củng cố 10.1–10.12 và 10.18–10.21 nằm ở cuối chương;
 | 5. TRPO và gradient tự nhiên | 10.8, 10.9 | 10.17 |
 | 6. PPO | 10.2, 10.12 | 10.14 |
 | 7. Tối ưu chính sách từ phản hồi ưu tiên | 10.18, 10.19, 10.20, 10.21 | 10.22 |
-| 8. Tổng kết | 10.3 | — |
+| 8. Tổng kết | 10.3, 10.23 | — |
 
 <!-- note-topic-id: lec-10-topic-24 -->
 ### 8.6 Giới hạn còn lại
@@ -2696,7 +2736,7 @@ Nghiệm của bài toán thật có $J_1=0{,}5108$. KL theo chiều của mục
 
 ## Tóm tắt chương
 
-Chúng ta bắt đầu từ hai giới hạn của REINFORCE: trên bài toán một bước, tổng phương sai của ước lượng tăng từ $\tfrac49$ lên $\tfrac{16}9$ khi cộng $1$ vào mọi phần thưởng (Ví dụ 10.1); trên hành lang ngắn, một lượt cho bước ngược chiều gradient (Ví dụ 10.2), và một bước lớn theo đúng gradient kéo $J$ từ $-12$ xuống $-21{,}32$. Trừ một đường cơ sở giữ kỳ vọng (Mệnh đề 10.2), với đường cơ sở tối ưu $b^*=1\ne v_\pi=2$ trên bài toán một bước (Mệnh đề 10.3). Critic đánh giá hành động qua mục tiêu bootstrap (Định nghĩa 10.7), với sai số TD có kỳ vọng có điều kiện bằng lợi thế khi critic đúng (Mệnh đề 10.8), và GAE trộn các ước lượng $n$ bước bằng trọng số $(\gamma\lambda)^k$, không làm chệch gradient khi $\lambda=1$ với lượt đầy đủ hoặc khi critic đúng (Mệnh đề 10.14, 10.15). Trên chuỗi hai trạng thái, bổ đề hiệu hiệu năng cho $\Delta J=0{,}296$ còn hàm thay thế cho $0{,}26$ (Bổ đề 10.19, Mệnh đề 10.22), và Định lý 10.26 chặn sai số này theo khoảng cách TV trung bình, dẫn tới bài toán miền tin cậy (Định nghĩa 10.30, Hệ quả 10.31). TRPO giải bài toán đó xấp xỉ bằng gradient tự nhiên và gradient liên hợp (Mệnh đề 10.34, Thuật toán 10.37), còn PPO thay ràng buộc bằng mục tiêu cắt, một chặn dưới của hàm thay thế mẫu (Mệnh đề 10.41, Thuật toán 10.49), hoặc bằng phạt KL với hệ số thích nghi (Định nghĩa 10.43). Không phương pháp thực hành nào giữ được bảo đảm đơn điệu, và kết quả hội tụ hiện có cho PPO-Clip chỉ nói về điểm dừng của một mô hình đơn giản hóa (Nhận xét 10.51). Khi phần thưởng chỉ được biết qua so sánh ưu tiên, mô hình Bradley–Terry cho mô hình phần thưởng bằng hợp lý cực đại (Mệnh đề 10.54), và mục tiêu có phạt KL theo chính sách tham chiếu cố định có nghiệm $\pi^*\propto\pi_{\mathrm{ref}}e^{r/\beta}$ (Định lý 10.57). RLHF với PPO nhắm tới nghiệm đó bằng mẫu sinh trực tuyến (Thuật toán 10.61), DPO giải cùng mục tiêu bằng một hàm mất mát phân loại trên dữ liệu cố định, không qua vòng học tăng cường (Thuật toán 10.67), và dưới các giả thiết của Định lý 10.65 cực tiểu của DPO là nghiệm của con đường RLHF lý tưởng.
+Chúng ta bắt đầu từ hai giới hạn của REINFORCE: trên bài toán một bước, tổng phương sai của ước lượng tăng từ $\tfrac49$ lên $\tfrac{16}9$ khi cộng $1$ vào mọi phần thưởng (Ví dụ 10.1); trên hành lang ngắn, ba lượt cho tọa độ thứ nhất của ước lượng bằng $-1$, $1$ và $-5{,}5$, trong khi gradient đúng có tọa độ đó bằng $2$ (Ví dụ 10.2), và một bước lớn theo đúng gradient kéo $J$ từ $-12$ xuống khoảng $-21{,}3$. Trừ một đường cơ sở giữ kỳ vọng (Mệnh đề 10.2): trên chuỗi hai trạng thái, trừ $v_\pi$ giữ trung bình $0{,}2$ của tọa độ $\theta_A$ và giảm phương sai từ $0{,}6925$ xuống $0{,}2025$ (Ví dụ 10.6); trên bài toán một bước, đường cơ sở tối ưu là $b^*=1\ne v_\pi=2$ (Mệnh đề 10.3). Critic đánh giá hành động qua mục tiêu bootstrap (Định nghĩa 10.7), với sai số TD có kỳ vọng có điều kiện bằng lợi thế khi critic đúng (Mệnh đề 10.8); critic $(1{,}4;\,1)$, đánh giá thấp $s_B$, cho $\delta_0=-0{,}5$ dù lợi thế bằng $0{,}4$ (Ví dụ 10.7). GAE trộn các ước lượng $n$ bước bằng trọng số $(\gamma\lambda)^k$; với critic đó và $\lambda=0{,}5$, độ lệch là $-0{,}45$, thay cho $-0{,}9$ của ước lượng một bước, và khoảng cách giữa hai lượt là $1{,}35$, thay cho $2{,}7$ của hệ số Monte Carlo (Ví dụ 10.8); GAE không làm chệch gradient khi $\lambda=1$ với lượt đầy đủ hoặc khi critic đúng (Mệnh đề 10.14, 10.15). Trên chuỗi hai trạng thái, bổ đề hiệu hiệu năng cho $\Delta J=0{,}296$ còn hàm thay thế cho $0{,}26$; với bước tới $(1;\,0{,}5)$, hàm thay thế báo tăng $0{,}175$ trong khi $J$ giảm $0{,}05$ (Ví dụ 10.11, Bổ đề 10.19, Mệnh đề 10.22), và Định lý 10.26 chặn sai số này theo khoảng cách TV trung bình, dẫn tới bài toán miền tin cậy (Định nghĩa 10.30, Hệ quả 10.31). TRPO giải bài toán đó xấp xỉ bằng gradient tự nhiên và gradient liên hợp (Mệnh đề 10.34, Thuật toán 10.37), còn PPO thay ràng buộc bằng mục tiêu cắt, một chặn dưới của hàm thay thế mẫu (Mệnh đề 10.41, Thuật toán 10.49), hoặc bằng phạt KL với hệ số thích nghi (Định nghĩa 10.43). Không phương pháp thực hành nào giữ được bảo đảm đơn điệu, và kết quả hội tụ hiện có cho PPO-Clip chỉ nói về điểm dừng của một mô hình đơn giản hóa (Nhận xét 10.51). Khi phần thưởng chỉ được biết qua so sánh ưu tiên, mô hình Bradley–Terry cho mô hình phần thưởng bằng hợp lý cực đại (Mệnh đề 10.54), và mục tiêu có phạt KL theo chính sách tham chiếu cố định có nghiệm $\pi^*\propto\pi_{\mathrm{ref}}e^{r/\beta}$ (Định lý 10.57). RLHF với PPO nhắm tới nghiệm đó bằng mẫu sinh trực tuyến (Thuật toán 10.61), DPO giải cùng mục tiêu bằng một hàm mất mát phân loại trên dữ liệu cố định, không qua vòng học tăng cường (Thuật toán 10.67), và dưới các giả thiết của Định lý 10.65 cực tiểu của DPO là nghiệm của con đường RLHF lý tưởng.
 
 **Định nghĩa và kết quả theo mục.**
 
@@ -2755,7 +2795,7 @@ $$
 
 ## Bài tập củng cố
 
-Các bài phủ chín mục tiêu học tập: mục tiêu 1 (Bài tập 10.1, 10.4), 2 (10.5, 10.10), 3 (10.6, 10.7), 4 (10.11), 5 (10.3, 10.8, 10.9, 10.11), 6 (10.2, 10.12), 7 (10.2, 10.3, 10.12), 8 (10.18, 10.19, 10.21), 9 (10.19, 10.20).
+Các bài phủ chín mục tiêu học tập: mục tiêu 1 (Bài tập 10.1, 10.4), 2 (10.5, 10.10), 3 (10.6, 10.7), 4 (10.11, 10.23), 5 (10.3, 10.8, 10.9, 10.11), 6 (10.2, 10.12, 10.23), 7 (10.2, 10.3, 10.12), 8 (10.18, 10.19, 10.21), 9 (10.19, 10.20).
 
 ### Mức nhận biết
 
@@ -2852,21 +2892,21 @@ Dùng $\operatorname{Var}(X_b)=\mathbb E\lVert X_b\rVert^2-\lVert g\rVert^2$ nh�
 :::
 
 ::: exercise Bài tập 10.5 (Độ chệch của sai số TD khi critic sai)
-Chuỗi hai trạng thái: tại $s_A$, hành động 1 sang $s_B$ với phần thưởng $0$, hành động 2 kết thúc với phần thưởng $1$; tại $s_B$, hành động 1 kết thúc với phần thưởng $3$, hành động 2 kết thúc với phần thưởng $0$; $\gamma=0{,}9$; $p_A=\tfrac12$, $p_B=\tfrac23$; $v_\pi=(1{,}4;\,2)$, $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$; $\psi_\theta(s_A,1)=0{,}5\,e_A$, $\psi_\theta(s_A,2)=-0{,}5\,e_A$. Critic cố định $\hat v=(1;\,1{,}5)$. Dùng Mệnh đề 10.8(b), tính $\mathbb E[\delta_0\mid s_A,a]$ cho hai hành động, và tọa độ $\theta_A$ của $\mathbb E[\delta_0\psi_0]$; so với giá trị đúng $0{,}2$.
+Chuỗi hai trạng thái: tại $s_A$, hành động 1 sang $s_B$ với phần thưởng $0$, hành động 2 kết thúc với phần thưởng $1$; tại $s_B$, hành động 1 kết thúc với phần thưởng $3$, hành động 2 kết thúc với phần thưởng $0$; $\gamma=0{,}9$; $p_A=\tfrac12$, $p_B=\tfrac23$; $v_\pi=(1{,}4;\,2)$, $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$; $\psi_\theta(s_A,1)=0{,}5\,e_A$, $\psi_\theta(s_A,2)=-0{,}5\,e_A$. Critic cố định $\hat v=(1{,}4;\,1)$. Dùng Mệnh đề 10.8(b), tính $\mathbb E[\delta_0\mid s_A,a]$ cho hai hành động, và tọa độ $\theta_A$ của $\mathbb E[\delta_0\psi_0]$; so với giá trị đúng $0{,}2$.
 :::
 
 ::: hint
-$e=\hat v-v_\pi=(-0{,}4;\,-0{,}5)$; hành động 1 dẫn tới $s_B$ chắc chắn, hành động 2 dẫn tới trạng thái kết thúc, nơi $e=0$.
+$e=\hat v-v_\pi=(0;\,-1)$; hành động 1 dẫn tới $s_B$ chắc chắn, hành động 2 dẫn tới trạng thái kết thúc, nơi $e=0$.
 :::
 
 ::: solution
-**Hành động 1.** Độ chệch $\gamma e(s_B)-e(s_A)=0{,}9\cdot(-0{,}5)+0{,}4=-0{,}05$, nên $\mathbb E[\delta_0\mid s_A,1]=0{,}4-0{,}05=0{,}35$.
+**Hành động 1.** Độ chệch $\gamma e(s_B)-e(s_A)=0{,}9\cdot(-1)-0=-0{,}9$, nên $\mathbb E[\delta_0\mid s_A,1]=0{,}4-0{,}9=-0{,}5$.
 
-**Hành động 2.** Độ chệch $0-e(s_A)=0{,}4$, nên $\mathbb E[\delta_0\mid s_A,2]=-0{,}4+0{,}4=0$.
+**Hành động 2.** Độ chệch $0-e(s_A)=0$, nên $\mathbb E[\delta_0\mid s_A,2]=-0{,}4$.
 
-**Gradient.** $\tfrac12\cdot0{,}35\cdot0{,}5+\tfrac12\cdot0\cdot(-0{,}5)=0{,}0875\ne0{,}2$.
+**Gradient.** $\tfrac12\cdot(-0{,}5)\cdot0{,}5+\tfrac12\cdot(-0{,}4)\cdot(-0{,}5)=-0{,}125+0{,}1=-0{,}025$, ngược dấu giá trị đúng $0{,}2$.
 
-**Kiểm tra lại.** Tính trực tiếp: $\delta_0=0+0{,}9\cdot1{,}5-1=0{,}35$ và $\delta_0=1-1=0$. Hai độ chệch khác nhau, nên không bị khử khi nhân với hàm điểm.
+**Kiểm tra lại.** Tính trực tiếp: $\delta_0=0+0{,}9\cdot1-1{,}4=-0{,}5$ và $\delta_0=1-1{,}4=-0{,}4$. Hai độ chệch khác nhau, $-0{,}9$ và $0$, nên không bị khử khi nhân với hàm điểm. Lỗi thường gặp là cho rằng critic đúng ở $s_A$ thì $\delta_0$ không chệch tại $s_A$; độ chệch của hành động 1 đến từ sai số $e(s_B)$ của trạng thái kế.
 :::
 
 ::: exercise Bài tập 10.6 (Truy hồi của lợi tức λ và lợi tức λ cắt)
@@ -2874,7 +2914,7 @@ Cho critic cố định và $\lambda\in[0,1)$.
 
 - (a) Từ Định nghĩa 10.11 và 10.13, chứng minh $G^\lambda_t=R_{t+1}+\gamma\bigl[(1-\lambda)\hat v(S_{t+1})+\lambda G^\lambda_{t+1}\bigr]$, với quy ước $G^\lambda_T=0$ và $\hat v(S_T)=0$ (Sutton và Barto, 2018, Bài tập 12.1).
 - (b) Với lợi tức λ cắt tại $h$, $G^\lambda_{t:h}=(1-\lambda)\sum_{n=1}^{h-t-1}\lambda^{n-1}G_{t:t+n}+\lambda^{h-t-1}G_{t:h}$, chứng minh $G^\lambda_{t:h}=\hat v(S_t)+\sum_{i=t}^{h-1}(\gamma\lambda)^{i-t}\delta_i$ (Sutton và Barto, 2018, (12.10), Bài tập 12.5).
-- (c) Kiểm câu (a) trên lượt của Ví dụ 10.8: $\gamma=0{,}9$, $\lambda=0{,}8$, $\hat v=(1;\,1{,}5)$, $R_1=0$, $R_2=3$, kết thúc tại $T=2$.
+- (c) Kiểm câu (a) trên hai lượt của Ví dụ 10.8: $\gamma=0{,}9$, $\lambda=0{,}5$, $\hat v=(1{,}4;\,1)$, $R_1=0$, $R_2=3$ hoặc $R_2=0$, kết thúc tại $T=2$.
 :::
 
 ::: hint
@@ -2916,7 +2956,7 @@ $$
 $$
 Đẳng thức thứ nhất dùng tổng trọng số bằng $1$, đẳng thức thứ hai là Bổ đề 10.12, đẳng thức thứ ba đổi thứ tự hai tổng hữu hạn. Đẳng thức cuối dùng $(1-\lambda)\sum_{n=k+1}^{h-t-1}\lambda^{n-1}=\lambda^k-\lambda^{h-t-1}$, nên hệ số trong ngoặc vuông là $\lambda^k$; với $k=h-t-1$, tổng theo $n$ rỗng và hệ số là $\lambda^{h-t-1}=\lambda^k$. Khác tổng vô hạn của Mệnh đề 10.14, phần dư $\lambda^{h-t-1}$ ở đây đến từ lợi tức $n$ bước cuối $G_{t:h}$, bootstrap từ $\hat v(S_h)$.
 
-**Câu (c).** $G^\lambda_1=3$, $G^\lambda_0=0+0{,}9(0{,}2\cdot1{,}5+0{,}8\cdot3)=2{,}43$, và $2{,}43-1=1{,}43=\delta_0+\gamma\lambda\delta_1$.
+**Câu (c).** Với $R_2=3$: $G^\lambda_1=3$, $G^\lambda_0=0+0{,}9(0{,}5\cdot1+0{,}5\cdot3)=1{,}8$, và $1{,}8-1{,}4=0{,}4=\delta_0+\gamma\lambda\delta_1=-0{,}5+0{,}45\cdot2$. Với $R_2=0$: $G^\lambda_1=0$, $G^\lambda_0=0+0{,}9(0{,}5\cdot1+0{,}5\cdot0)=0{,}45$, và $0{,}45-1{,}4=-0{,}95=-0{,}5+0{,}45\cdot(-1)$.
 
 **Kiểm tra lại.** Lỗi thường gặp ở (a) là quên rằng phần dư $\lambda^{T-t-1}$ dồn vào lợi tức thực; ở (b) là dùng $\hat v$ đã cập nhật giữa các bước, khi đó các số hạng không triệt tiêu.
 :::
@@ -3147,6 +3187,40 @@ Với $p_{\mathrm{old}}>\tfrac12$: khi lợi thế của $y_1$ dương, vòng d�
 **Câu (c).** Phép cắt chỉ chặn độ dài bước so với $\pi_{\mathrm{old}}$. Dấu của lợi thế, do $\pi_{\mathrm{ref}}$ và $\hat r$ quyết định qua phần thưởng đã trừ KL, đổi khi $p$ vượt $0{,}8$, nhưng mỗi vòng vẫn đi hết tới biên khoảng cắt, nên dãy dao động quanh $0{,}8$; vòng 4 cho $p=0{,}7986$.
 
 **Kiểm tra lại.** Tính phần thưởng đã trừ KL theo $\pi_{\mathrm{ref}}$ thay cho $\pi_{\mathrm{old}}$ bỏ mất phạt KL, nên lợi thế của $y_1$ luôn dương và $p$ tiếp tục tăng. Cắt theo $\pi_{\mathrm{ref}}$ thay cho $\pi_{\mathrm{old}}$ cho $p$ dừng ở $0{,}7333$.
+:::
+
+::: exercise Bài tập 10.23 (Một vòng PPO-Clip trên chuỗi hai trạng thái)
+Chuỗi hai trạng thái của Ví dụ 10.6: tại $s_A$, hành động 1 sang $s_B$ với phần thưởng $0$, hành động 2 kết thúc với phần thưởng $1$; tại $s_B$, hành động 1 kết thúc với phần thưởng $3$, hành động 2 kết thúc với phần thưởng $0$; $\gamma=0{,}9$; mỗi trạng thái có một tham số, $p_s=\sigma(\theta_s)$. Chính sách cũ $p_A=\tfrac12$, $p_B=\tfrac23$ có $J=1{,}4$, $\nu^{\mathrm{old}}=(0{,}1;\,0{,}045)$ và lợi thế đúng $A_{\mathrm{old}}(s_A,\cdot)=(0{,}4;\,-0{,}4)$, $A_{\mathrm{old}}(s_B,\cdot)=(1;\,-2)$. Một vòng PPO-Clip với $\epsilon=0{,}2$ dùng lợi thế đúng, giữ cố định; tại mỗi trạng thái, các mẫu có đúng tần suất hành động của $\pi_{\mathrm{old}}$; vòng trong tăng $\mathcal L^{\mathrm{CLIP}}$ từ $\pi_{\mathrm{old}}$ tới đầu đoạn phẳng. Với $\rho_s(a)=\pi_\theta(a\mid s)/\pi_{\mathrm{old}}(a\mid s)$, phần của mục tiêu cắt tại $s$ là
+$$\begin{aligned}\ell_s&=\sum_a\pi_{\mathrm{old}}(a\mid s)\\&\quad\times\min\bigl(\rho_s(a)A_{\mathrm{old}}(s,a),\\&\qquad\operatorname{clip}(\rho_s(a),0{,}8,1{,}2)\\&\qquad\quad\times A_{\mathrm{old}}(s,a)\bigr).\end{aligned}$$
+
+- (a) Viết $\ell_{s_A}$ theo $p_A$ và $\ell_{s_B}$ theo $p_B$, rồi tìm chính sách $\pi'$ nơi vòng trong dừng.
+- (b) Tính mức tăng mà hàm thay thế dự báo, $\mathcal L_{\pi_{\mathrm{old}}}(\pi')-J(\pi_{\mathrm{old}})$, và mức tăng thật $\Delta J=J(\pi')-J(\pi_{\mathrm{old}})$.
+- (c) Tính $\tfrac1{1-\gamma}\sum_s\nu^{\mathrm{old}}(s)\,\ell_s(\pi')$ và xếp ba số của (b), (c) theo thứ tự tăng.
+- (d) Dùng đẳng thức $\Delta J=0{,}8\,\Delta p_A+1{,}35\,\Delta p_B+2{,}7\,\Delta p_A\Delta p_B$ của Ví dụ 10.11, giải thích vì sao hàm thay thế đoán thấp hơn mức tăng thật.
+:::
+
+::: hint
+Tham số của hai trạng thái tách nhau, nên vòng trong tăng từng $\ell_s$ riêng. Theo Mệnh đề 10.40, mẫu có lợi thế dương đóng góp $A\min(\rho,1+\epsilon)$, mẫu có lợi thế âm đóng góp $A\max(\rho,1-\epsilon)$; khi $p_s$ tăng, tìm lúc từng nhóm mẫu chạm biên.
+:::
+
+::: solution
+**Câu (a).** Tại $s_A$, $\rho(1)=2p_A$ và $\rho(2)=2(1-p_A)$, nên với $p_A\ge\tfrac12$,
+$$\begin{aligned}\ell_{s_A}&=0{,}2\min(2p_A;\,1{,}2)\\&\quad-0{,}2\max(2-2p_A;\,0{,}8).\end{aligned}$$
+Hai nhóm mẫu chạm biên cùng lúc tại $p_A=0{,}6$. Trên $[\tfrac12;\,0{,}6]$, $\ell_{s_A}=0{,}8p_A-0{,}4$ tăng; từ $p_A=0{,}6$, $\ell_{s_A}=0{,}24-0{,}16=0{,}08$ là hằng.
+
+Tại $s_B$, $\rho(1)=1{,}5p_B$ và $\rho(2)=3(1-p_B)$, nên với $p_B\ge\tfrac23$,
+$$\begin{aligned}\ell_{s_B}&=\tfrac23\min(1{,}5p_B;\,1{,}2)\\&\quad-\tfrac23\max(3-3p_B;\,0{,}8).\end{aligned}$$
+Mẫu hành động 2 chạm $\rho=0{,}8$ tại $p_B=0{,}7\overline3$, mẫu hành động 1 chạm $\rho=1{,}2$ tại $p_B=0{,}8$. Do đó $\ell_{s_B}=3p_B-2$ trên $[\tfrac23;\,0{,}7\overline3]$, $\ell_{s_B}=p_B-0{,}5\overline3$ trên $[0{,}7\overline3;\,0{,}8]$, và $\ell_{s_B}=0{,}8-0{,}5\overline3=0{,}2\overline6$ từ $p_B=0{,}8$.
+
+Vòng trong dừng tại $\pi'$: $p'_A=0{,}6$, $p'_B=0{,}8$, đúng chính sách $\pi'$ của Ví dụ 10.11.
+
+**Câu (b).** $A_{\mathrm{old}}(s_A,\pi')=0{,}6\cdot0{,}4-0{,}4\cdot0{,}4=0{,}08$ và $A_{\mathrm{old}}(s_B,\pi')=0{,}8\cdot1-0{,}2\cdot2=0{,}4$, nên $\mathcal L-J=10(0{,}1\cdot0{,}08+0{,}045\cdot0{,}4)=0{,}26$. $J(\pi')=2{,}7\cdot0{,}6\cdot0{,}8+0{,}4=1{,}696$, nên $\Delta J=0{,}296$.
+
+**Câu (c).** $10(0{,}1\cdot0{,}08+0{,}045\cdot0{,}2\overline6)=0{,}08+0{,}12=0{,}2$. Thứ tự là $0{,}2<0{,}26<0{,}296$. Mục tiêu cắt nằm dưới hàm thay thế (Mệnh đề 10.41(a)): tại $s_B$, mẫu hành động 2 có $\rho=0{,}6<0{,}8$ nên được tính như $\rho=0{,}8$, đóng góp $-\tfrac23\cdot0{,}8=-0{,}5\overline3$ thay cho $-\tfrac23\cdot0{,}6=-0{,}4$.
+
+**Câu (d).** Với $\Delta p_A=0{,}1$ và $\Delta p_B=\tfrac2{15}$, hàm thay thế là phần bậc nhất $0{,}08+0{,}18=0{,}26$, và phần bậc hai là $2{,}7\cdot0{,}1\cdot\tfrac2{15}=0{,}036>0$. Chính sách mới tới $s_B$ nhiều hơn chính sách cũ ($0{,}6$ so với $0{,}5$), và tại $s_B$ nó tốt hơn chính sách cũ, $A_{\mathrm{old}}(s_B,\pi')=0{,}4>0$; hàm thay thế giữ tần suất thăm cũ nên bỏ mất phần đóng góp $0{,}9\cdot0{,}1\cdot0{,}4=0{,}036$ của các lần thăm thêm.
+
+**Kiểm tra lại.** Bổ đề 10.19: $0{,}08+0{,}9\cdot0{,}6\cdot0{,}4=0{,}296$. Hai lỗi thường gặp: dừng ở $p_B=0{,}7\overline3$, nơi chỉ mẫu hành động 2 chạm biên, trong khi hai mẫu hành động 1 còn gradient dương; và bỏ phép cắt, khi đó $\ell_{s_B}=3p_B-2$ tăng mãi và đẩy $p_B$ về $1$.
 :::
 
 ## Hướng dẫn đọc thêm và tài liệu tham khảo
