@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 345" width="430" height="345" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Critic đánh giá thấp s B</title>
+<desc id="d">Chuỗi thu nhỏ, ô s A ở trên, ô s B ở dưới, các cung ghi hành động và phần thưởng: từ s A, 1, thưởng 0 sang s B; 2, thưởng 1 tới kết thúc; từ s B, 1, thưởng 3 và 2, thưởng 0 tới kết thúc. Dưới ô s B hai thẻ: v mũ bằng 1, màu cam, nét đứt; v pi bằng 2, màu xanh, nét liền.</desc>
+<defs><marker id="mk" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#1d2433"/></marker><marker id="mf" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#3E4A5E"/></marker><marker id="mx" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#8C95A6"/></marker><marker id="mr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#C62828"/></marker><marker id="mo" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#B35C00"/></marker><marker id="mg" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#2E7D4F"/></marker><marker id="mp" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#6B3FA0"/></marker><pattern id="sx" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#8C95A6" stroke-width="3"/></pattern><pattern id="sp" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#6B3FA0" stroke-width="3"/></pattern><pattern id="sg" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#2E7D4F" stroke-width="3"/></pattern></defs>
+<rect x="10.0" y="20.0" width="110.0" height="60.0" rx="10" fill="#FFFFFF" stroke="#3E4A5E" stroke-width="2.5"/>
+<text x="65.0" y="58.6" font-size="24" text-anchor="middle" fill="#1d2433"><tspan font-style="italic">s</tspan><tspan dy="6.0" font-style="italic" font-size="19.2">A</tspan><tspan dy="-6.0"></tspan></text>
+<rect x="10.0" y="200.0" width="110.0" height="60.0" rx="10" fill="#FFFFFF" stroke="#3E4A5E" stroke-width="2.5"/>
+<text x="65.0" y="238.6" font-size="24" text-anchor="middle" fill="#1d2433"><tspan font-style="italic">s</tspan><tspan dy="6.0" font-style="italic" font-size="19.2">B</tspan><tspan dy="-6.0"></tspan></text>
+<line x1="65.0" y1="80.0" x2="65.0" y2="198.0" stroke="#1d2433" stroke-width="3.5" marker-end="url(#mk)"/>
+<text x="80.0" y="146.0" font-size="22" text-anchor="start" fill="#1d2433"><tspan>1, thưởng 0</tspan></text>
+<line x1="120.0" y1="50.0" x2="385.0" y2="50.0" stroke="#1d2433" stroke-width="3.5" marker-end="url(#mk)"/>
+<rect x="387.0" y="37.0" width="26.0" height="26.0" rx="3" fill="#EEF0F4" stroke="#3E4A5E" stroke-width="2"/>
+<text x="255.0" y="38.0" font-size="22" text-anchor="middle" fill="#1d2433"><tspan>2, thưởng 1</tspan></text>
+<line x1="120.0" y1="215.0" x2="385.0" y2="215.0" stroke="#1d2433" stroke-width="3.5" marker-end="url(#mk)"/>
+<rect x="387.0" y="202.0" width="26.0" height="26.0" rx="3" fill="#EEF0F4" stroke="#3E4A5E" stroke-width="2"/>
+<text x="255.0" y="203.0" font-size="22" text-anchor="middle" fill="#1d2433"><tspan>1, thưởng 3</tspan></text>
+<line x1="120.0" y1="248.0" x2="385.0" y2="263.0" stroke="#1d2433" stroke-width="3.5" marker-end="url(#mk)"/>
+<rect x="387.0" y="252.0" width="26.0" height="26.0" rx="3" fill="#EEF0F4" stroke="#3E4A5E" stroke-width="2"/>
+<text x="255.0" y="288.0" font-size="22" text-anchor="middle" fill="#1d2433"><tspan>2, thưởng 0</tspan></text>
+<rect x="4.0" y="300.0" width="112.0" height="40.0" rx="8" fill="#FFFFFF" stroke="#B35C00" stroke-width="3" stroke-dasharray="8 6"/>
+<text x="60.0" y="328.0" font-size="23" text-anchor="middle" fill="#B35C00"><tspan font-style="italic">v̂</tspan><tspan> = 1</tspan></text>
+<rect x="126.0" y="300.0" width="120.0" height="40.0" rx="8" fill="#FFFFFF" stroke="#2E7D4F" stroke-width="3"/>
+<text x="186.0" y="328.0" font-size="23" text-anchor="middle" fill="#2E7D4F"><tspan font-style="italic">v</tspan><tspan dy="5.8" font-size="18.4">π</tspan><tspan dy="-5.8"> = 2</tspan></text>
+<line x1="60.0" y1="298.0" x2="60.0" y2="262.0" stroke="#B35C00" stroke-width="2"/>
+</svg>

@@ -5,13 +5,12 @@ Tệp gồm sáu bài, Bài tập 10.13–10.17 và 10.22, dùng chung bộ đ�
 | Mạch | Mở phần | Bài tập |
 | --- | --- | --- |
 | 1. Mở đầu | [Mở phần](lecture-10-trpo-va-ppo.html#/1/1) | — |
-| 2. Đường cơ sở, hàm lợi thế và actor–critic | [Mở phần](lecture-10-trpo-va-ppo.html#/2/1) | 10.14; ghi chú: 10.1, 10.4, 10.5, 10.10 |
-| 3. Ước lượng lợi thế tổng quát | [Mở phần](lecture-10-trpo-va-ppo.html#/3/1) | 10.13, 10.15; ghi chú: 10.6, 10.7 |
-| 4. Hàm thay thế và chặn cải thiện | [Mở phần](lecture-10-trpo-va-ppo.html#/4/1) | 10.16; ghi chú: 10.11 |
-| 5. TRPO và gradient tự nhiên | [Mở phần](lecture-10-trpo-va-ppo.html#/5/1) | 10.17; ghi chú: 10.8, 10.9 |
-| 6. Tối ưu chính sách gần kề (PPO) | [Mở phần](lecture-10-trpo-va-ppo.html#/6/1) | 10.14; ghi chú: 10.2, 10.12 |
-| 7. Tối ưu chính sách từ phản hồi ưu tiên | [Mở phần](lecture-10-trpo-va-ppo.html#/7/1) | 10.22; ghi chú: 10.18–10.21 |
-| 8. Tổng kết | [Mở phần](lecture-10-trpo-va-ppo.html#/8/1) | ghi chú: 10.3, 10.23 |
+| 2. So lợi tức với giá trị của trạng thái | [Mở phần](lecture-10-trpo-va-ppo.html#/2/1) | 10.14; ghi chú: 10.1, 10.4, 10.5, 10.10 |
+| 3. Trộn đánh giá một bước và cả lượt | [Mở phần](lecture-10-trpo-va-ppo.html#/3/1) | 10.13, 10.15; ghi chú: 10.6, 10.7 |
+| 4. Đánh giá chính sách mới bằng dữ liệu cũ | [Mở phần](lecture-10-trpo-va-ppo.html#/4/1) | 10.16, 10.17; ghi chú: 10.8, 10.9, 10.11 |
+| 5. Giữ chính sách mới gần chính sách cũ | [Mở phần](lecture-10-trpo-va-ppo.html#/5/1) | 10.14; ghi chú: 10.2, 10.12 |
+| 6. Học từ so sánh của người | [Mở phần](lecture-10-trpo-va-ppo.html#/6/1) | 10.22; ghi chú: 10.18–10.21 |
+| 7. Tổng kết | [Mở phần](lecture-10-trpo-va-ppo.html#/7/1) | ghi chú: 10.3, 10.23 |
 
 ## Hướng dẫn và ký hiệu
 

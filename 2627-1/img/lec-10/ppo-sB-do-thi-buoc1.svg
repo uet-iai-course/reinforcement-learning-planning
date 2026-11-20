@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 455" width="700" height="455" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Mục tiêu cắt trên s B</title>
+<desc id="d">Đồ thị theo p từ hai phần ba tới 1, trục tung từ 0 tới 1. Điểm đen tại p bằng hai phần ba ghi chính sách cũ. Đường cam, nét đứt: 3p trừ 2. Đường xanh, nét liền đậm, trùng 3p trừ 2 từ hai phần ba tới 0,73; vạch đứng mảnh tại 0,73, ghi rho của hành động 2 bằng 0,8.</desc>
+<defs><marker id="mk" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#1d2433"/></marker><marker id="mf" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#3E4A5E"/></marker><marker id="mx" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#8C95A6"/></marker><marker id="mr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#C62828"/></marker><marker id="mo" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#B35C00"/></marker><marker id="mg" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#2E7D4F"/></marker><marker id="mp" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#6B3FA0"/></marker><pattern id="sx" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#8C95A6" stroke-width="3"/></pattern><pattern id="sp" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#6B3FA0" stroke-width="3"/></pattern><pattern id="sg" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#2E7D4F" stroke-width="3"/></pattern></defs>
+<line x1="110.0" y1="380.0" x2="632.0" y2="380.0" stroke="#1d2433" stroke-width="2"/>
+<line x1="110.0" y1="380.0" x2="110.0" y2="70.0" stroke="#1d2433" stroke-width="2"/>
+<line x1="103.0" y1="380.0" x2="110.0" y2="380.0" stroke="#1d2433" stroke-width="2"/>
+<text x="98.0" y="387.0" font-size="20" text-anchor="end" fill="#1d2433"><tspan>0</tspan></text>
+<line x1="103.0" y1="230.0" x2="110.0" y2="230.0" stroke="#1d2433" stroke-width="2"/>
+<text x="98.0" y="237.0" font-size="20" text-anchor="end" fill="#1d2433"><tspan>0,5</tspan></text>
+<line x1="103.0" y1="80.0" x2="110.0" y2="80.0" stroke="#1d2433" stroke-width="2"/>
+<text x="98.0" y="87.0" font-size="20" text-anchor="end" fill="#1d2433"><tspan>1</tspan></text>
+<line x1="110.0" y1="380.0" x2="110.0" y2="387.0" stroke="#1d2433" stroke-width="2"/>
+<text x="110.0" y="414.0" font-size="27" text-anchor="middle" fill="#1d2433"><tspan>⅔</tspan></text>
+<line x1="620.0" y1="380.0" x2="620.0" y2="387.0" stroke="#1d2433" stroke-width="2"/>
+<text x="620.0" y="414.0" font-size="21" text-anchor="middle" fill="#1d2433"><tspan>1</tspan></text>
+<text x="642.0" y="388.0" font-size="22" text-anchor="start" fill="#1d2433"><tspan font-style="italic">p</tspan></text>
+<circle cx="110.0" cy="380.0" r="8" fill="#1d2433"/>
+<text x="110.0" y="440.0" font-size="20" text-anchor="middle" fill="#1d2433"><tspan>chính sách cũ</tspan></text>
+<line x1="110.0" y1="380.0" x2="620.0" y2="80.0" stroke="#B35C00" stroke-width="3.5" stroke-dasharray="12 8"/>
+<text x="497.6" y="89.0" font-size="23" text-anchor="end" fill="#B35C00"><tspan>3</tspan><tspan font-style="italic">p</tspan><tspan>−2</tspan></text>
+<line x1="212.0" y1="380.0" x2="212.0" y2="150.0" stroke="#8C95A6" stroke-width="1.5" stroke-dasharray="4 4"/>
+<text x="212.0" y="412.0" font-size="20" text-anchor="middle" fill="#1d2433"><tspan>0,73</tspan></text>
+<rect x="160.0" y="124.2" width="104.1" height="24.1" fill="#FFFFFF"/>
+<text x="212.0" y="142.0" font-size="21" text-anchor="middle" fill="#1d2433"><tspan>ρ(2) = 0,8</tspan></text>
+<path d="M 110.0 380.0 L 212.0 320.0" stroke="#2E7D4F" stroke-width="5" fill="none" stroke-linejoin="round"/>
+</svg>

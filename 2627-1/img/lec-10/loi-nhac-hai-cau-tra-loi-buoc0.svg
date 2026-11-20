@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 390" width="600" height="390" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Một lời nhắc, hai câu trả lời, sáu lần chọn</title>
+<desc id="d">Thẻ lời nhắc ở trên, hai mũi tên xuống hai thẻ câu trả lời 1 và câu trả lời 2. Thẻ 1 ghi mô hình: hai phần ba, kèm thanh xác suất; thẻ 2 ghi mô hình: một phần ba.</desc>
+<defs><marker id="mk" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#1d2433"/></marker><marker id="mf" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#3E4A5E"/></marker><marker id="mx" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#8C95A6"/></marker><marker id="mr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#C62828"/></marker><marker id="mo" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#B35C00"/></marker><marker id="mg" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#2E7D4F"/></marker><marker id="mp" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#6B3FA0"/></marker><pattern id="sx" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#8C95A6" stroke-width="3"/></pattern><pattern id="sp" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#6B3FA0" stroke-width="3"/></pattern><pattern id="sg" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#2E7D4F" stroke-width="3"/></pattern></defs>
+<rect x="200.0" y="15.0" width="200.0" height="56.0" rx="10" fill="#EEF0F4" stroke="#3E4A5E" stroke-width="2.5"/>
+<text x="300.0" y="51.0" font-size="22" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan>lời nhắc</tspan></text>
+<line x1="270.0" y1="71.0" x2="170.0" y2="128.0" stroke="#1d2433" stroke-width="3" marker-end="url(#mk)"/>
+<line x1="330.0" y1="71.0" x2="430.0" y2="128.0" stroke="#1d2433" stroke-width="3" marker-end="url(#mk)"/>
+<rect x="40.0" y="130.0" width="230.0" height="140.0" rx="10" fill="#FFFFFF" stroke="#3E4A5E" stroke-width="2.5"/>
+<text x="155.0" y="164.0" font-size="22" text-anchor="middle" fill="#1d2433"><tspan>câu trả lời 1</tspan></text>
+<text x="58.0" y="200.0" font-size="21" text-anchor="start" fill="#6E7787"><tspan>mô hình:</tspan></text>
+<text x="156.0" y="204.0" font-size="30" text-anchor="start" fill="#1d2433"><tspan>⅔</tspan></text>
+<rect x="58.0" y="220.0" width="129.3" height="28.0" rx="3" fill="#8C95A6" stroke="#3E4A5E" stroke-width="1.5"/>
+<rect x="58.0" y="220.0" width="194.0" height="28.0" rx="3" fill="none" stroke="#8C95A6" stroke-width="1.5"/>
+<rect x="330.0" y="130.0" width="230.0" height="140.0" rx="10" fill="#FFFFFF" stroke="#3E4A5E" stroke-width="2.5"/>
+<text x="445.0" y="164.0" font-size="22" text-anchor="middle" fill="#1d2433"><tspan>câu trả lời 2</tspan></text>
+<text x="348.0" y="200.0" font-size="21" text-anchor="start" fill="#6E7787"><tspan>mô hình:</tspan></text>
+<text x="446.0" y="204.0" font-size="30" text-anchor="start" fill="#1d2433"><tspan>⅓</tspan></text>
+<rect x="348.0" y="220.0" width="64.7" height="28.0" rx="3" fill="#8C95A6" stroke="#3E4A5E" stroke-width="1.5"/>
+<rect x="348.0" y="220.0" width="194.0" height="28.0" rx="3" fill="none" stroke="#8C95A6" stroke-width="1.5"/>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 370" width="540" height="370" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">DPO tiến về pi sao theo từng bước</title>
+<desc id="d">Đồ thị pi theta của y 1 theo số bước. Bước 0: 0,67; điểm của bước 1 cao hơn. Các bước sau tăng dần và chậm lại, mũi tên tiến tới 0,8. Đường ngang tím nét đứt tại 0,8 ghi pi sao của y 1 bằng 0,8.</desc>
+<defs><marker id="mk" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#1d2433"/></marker><marker id="mf" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#3E4A5E"/></marker><marker id="mx" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#8C95A6"/></marker><marker id="mr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#C62828"/></marker><marker id="mo" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#B35C00"/></marker><marker id="mg" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#2E7D4F"/></marker><marker id="mp" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#6B3FA0"/></marker><pattern id="sx" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#8C95A6" stroke-width="3"/></pattern><pattern id="sp" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#6B3FA0" stroke-width="3"/></pattern><pattern id="sg" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#2E7D4F" stroke-width="3"/></pattern></defs>
+<line x1="60.0" y1="300.0" x2="470.0" y2="300.0" stroke="#1d2433" stroke-width="2"/>
+<line x1="60.0" y1="300.0" x2="60.0" y2="60.0" stroke="#1d2433" stroke-width="2"/>
+<line x1="53.0" y1="300.0" x2="60.0" y2="300.0" stroke="#1d2433" stroke-width="2"/>
+<text x="48.0" y="307.0" font-size="20" text-anchor="end" fill="#1d2433"><tspan>0,6</tspan></text>
+<line x1="53.0" y1="204.0" x2="60.0" y2="204.0" stroke="#1d2433" stroke-width="2"/>
+<text x="48.0" y="211.0" font-size="20" text-anchor="end" fill="#1d2433"><tspan>0,7</tspan></text>
+<line x1="53.0" y1="108.0" x2="60.0" y2="108.0" stroke="#1d2433" stroke-width="2"/>
+<text x="48.0" y="115.0" font-size="20" text-anchor="end" fill="#1d2433"><tspan>0,8</tspan></text>
+<line x1="80.0" y1="300.0" x2="80.0" y2="307.0" stroke="#1d2433" stroke-width="2"/>
+<text x="80.0" y="330.0" font-size="20" text-anchor="middle" fill="#1d2433"><tspan>0</tspan></text>
+<line x1="152.0" y1="300.0" x2="152.0" y2="307.0" stroke="#1d2433" stroke-width="2"/>
+<text x="152.0" y="330.0" font-size="20" text-anchor="middle" fill="#1d2433"><tspan>1</tspan></text>
+<line x1="224.0" y1="300.0" x2="224.0" y2="307.0" stroke="#1d2433" stroke-width="2"/>
+<text x="224.0" y="330.0" font-size="20" text-anchor="middle" fill="#1d2433"><tspan>2</tspan></text>
+<line x1="296.0" y1="300.0" x2="296.0" y2="307.0" stroke="#1d2433" stroke-width="2"/>
+<text x="296.0" y="330.0" font-size="20" text-anchor="middle" fill="#1d2433"><tspan>3</tspan></text>
+<line x1="368.0" y1="300.0" x2="368.0" y2="307.0" stroke="#1d2433" stroke-width="2"/>
+<text x="368.0" y="330.0" font-size="20" text-anchor="middle" fill="#1d2433"><tspan>4</tspan></text>
+<line x1="440.0" y1="300.0" x2="440.0" y2="307.0" stroke="#1d2433" stroke-width="2"/>
+<text x="440.0" y="330.0" font-size="20" text-anchor="middle" fill="#1d2433"><tspan>5</tspan></text>
+<text x="468.0" y="330.0" font-size="20" text-anchor="start" fill="#1d2433"><tspan>bước</tspan></text>
+<text x="68.0" y="54.0" font-size="23" text-anchor="start" fill="#1d2433"><tspan>π</tspan><tspan dy="5.8" font-size="18.4">θ</tspan><tspan dy="-5.8">(</tspan><tspan font-style="italic">y</tspan><tspan dy="5.8" font-size="18.4">1</tspan><tspan dy="-5.8">)</tspan></text>
+<path d="M 80.0 236.0 L 152.0 169.2" stroke="#1d2433" stroke-width="3" fill="none" stroke-linejoin="round"/>
+<circle cx="80.0" cy="236.0" r="8" fill="#1d2433"/>
+<circle cx="152.0" cy="169.2" r="8" fill="#1d2433"/>
+<text x="94.0" y="244.0" font-size="21" text-anchor="start" fill="#1d2433"><tspan>0,67</tspan></text>
+<line x1="60.0" y1="108.0" x2="470.0" y2="108.0" stroke="#6B3FA0" stroke-width="3" stroke-dasharray="10 7"/>
+<text x="80.0" y="94.0" font-size="23" text-anchor="start" font-weight="bold" fill="#6B3FA0"><tspan>π</tspan><tspan dy="-8.7" font-size="18.4">*</tspan><tspan dy="8.7">(</tspan><tspan font-style="italic">y</tspan><tspan dy="5.8" font-size="18.4">1</tspan><tspan dy="-5.8">) = 0,8</tspan></text>
+<path d="M 152.0 169.2 L 224.0 139.1 L 296.0 124.5 L 368.0 116.9 L 440.0 112.9" stroke="#1d2433" stroke-width="3" fill="none" stroke-linejoin="round"/>
+<circle cx="224.0" cy="139.1" r="8" fill="#1d2433"/>
+<circle cx="296.0" cy="124.5" r="8" fill="#1d2433"/>
+<circle cx="368.0" cy="116.9" r="8" fill="#1d2433"/>
+<circle cx="440.0" cy="112.9" r="8" fill="#1d2433"/>
+<text x="454.0" y="96.9" font-size="21" text-anchor="start" fill="#1d2433"><tspan>→ 0,8</tspan></text>
+</svg>
