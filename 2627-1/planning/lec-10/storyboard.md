@@ -11,7 +11,7 @@ Ký hiệu cột "quyết định": so với bộ trang chiếu cũ (mã cũ tro
 | mạch | loại | chức năng | đầu vào | đầu ra | đóng góp cho bài toán trung tâm | trang tiêu đề mạch | trang | phút |
 |---|---|---|---|---|---|---|---:|---:|
 | 1. Mở đầu và hai giới hạn của REINFORCE | mở bài | Ký hiệu, nhắc lại Bài 03–09; mục tiêu; nội dung; một ví dụ định lượng (hành lang ngắn); bài toán và khung hai hàng | REINFORCE, (G1)–(G4), hàm điểm (Bài 09); $q_\pi$, $v_\pi$ (Bài 03) | Hai nhu cầu: giảm phương sai giữ kỳ vọng; bước lớn bằng dữ liệu cũ; năm câu trả lời có điều kiện | Phát biểu bài toán | không có (bìa `L10-101` là trang tiêu đề của mạch mở đầu) | 12 | 12 |
-| 2. Đường cơ sở, hàm lợi thế và actor–critic | khái niệm, kết quả, thuật toán | Trừ đường cơ sở; đặt tên lợi thế; bootstrap bằng critic; hai thuật toán | $\operatorname{Var}$ tăng $\tfrac49\to\tfrac{16}9$ (Ví dụ 10.1, dòng kết quả ở `L10-201`); lượt hành lang (`L10-107`) | $\widehat g_b$ không chệch; $\nabla J$ dạng lợi thế; $\mathbb E[\delta_t\mid s,a]=A_\pi$ khi critic đúng; Thuật toán 10.6, 10.9; $\delta_0=0{,}35\ne0{,}4$ khi critic sai | Hai đầu của hệ số nhân với hàm điểm: Monte Carlo và một bước | `L10-200`, `id="mach-2"` | 18 | 23 |
+| 2. Đường cơ sở, hàm lợi thế và actor–critic | khái niệm, kết quả, thuật toán | Trừ đường cơ sở; đặt tên lợi thế; bootstrap bằng critic; hai thuật toán | $\operatorname{Var}$ tăng $\tfrac49\to\tfrac{16}9$ (Ví dụ 10.1, dòng kết quả ở `L10-201`); lượt hành lang (`L10-107`) | $\widehat g_b$ không chệch; $\nabla J$ dạng lợi thế; $\mathbb E[\delta_t\mid s,a]=A_\pi$ khi critic đúng; Thuật toán 10.6, 10.9; $\delta_0=0{,}35\ne0{,}4$ khi critic sai | Hai đầu của hệ số nhân với hàm điểm: Monte Carlo và một bước | `L10-200`, `id="mach-2"` | 19 | 23 |
 | 3. Ước lượng lợi thế tổng quát | khái niệm, kết quả, thuật toán | Nối $\delta_t$ và $G_t-\hat v$ bằng $\lambda$; điều kiện γ-just; GAE trên đoạn thu có cờ | Hai ước lượng $0{,}35$, $1{,}7$ của cùng $A_\pi(s_A,1)=0{,}4$ | $\widehat A_t=\sum_k(\gamma\lambda)^k\delta_{t+k}$; Thuật toán 10.16 với $Z$, $U$; $V^{\mathrm{targ}}_t$ | Hoàn tất nửa thứ nhất; giao $\widehat A_t$, $V^{\mathrm{targ}}_t$ cho mạch 6 | `L10-300`, `id="mach-3"` | 10 | 14,5 |
 | 4. Hàm thay thế và chặn cải thiện | kết quả | Hiệu hiệu năng; hàm thay thế; TV và KL; chặn cải thiện; cải thiện đơn điệu; miền tin cậy | Giới hạn thứ hai (`L10-108`): lượt cũ không cho mẫu của gradient sau một bước | Bài toán miền tin cậy với mức giảm bị chặn khi giải chính xác (Hệ quả 10.31) | Căn cứ định lượng cho việc giới hạn bước | `L10-400`, `id="mach-4"` | 16 | 22,5 |
 | 5. TRPO và gradient tự nhiên | kết quả, thuật toán | KL bậc hai, Fisher, gradient tự nhiên, gradient liên hợp, tìm kiếm lùi, TRPO | Bài toán miền tin cậy phi tuyến (`L10-411`) | Thuật toán 10.37; TRPO thực hành chỉ bảo đảm KL trung bình mẫu $\le\kappa$ và hàm thay thế mẫu tăng | Giải xấp xỉ bài toán của mạch 4 | `L10-500`, `id="mach-5"` | 12 | 13,5 |
@@ -40,22 +40,27 @@ Mã trang tiêu đề mạch theo quy ước `<tiền tố mạch>00`: mã trang
 | 1 | `L10-110` | Ba hàng của vấn đề trung tâm | khung chung | §1.1, hình | `img/lec-10/central-problem-slide.svg` | 0,5 |
 | 2 | `L10-200` | 2. Đường cơ sở, hàm lợi thế và actor–critic | tiêu đề mạch | §2 | — | 0,5 |
 | 2 | `L10-201` | Mức so sánh của trạng thái | vấn đề, trực giác | §2.1 đoạn đầu | — | 1 |
-| 2 | `L10-202` | Ví dụ: ba đường cơ sở trên bài toán một bước | ví dụ | Ví dụ 10.3; Mệnh đề 10.3 | `one-step-card.svg` (nhỏ) | 2 |
+| 2 | `L10-202` | (đã bỏ khỏi deck 2026-11-20, NT23; Ví dụ 10.3 còn ở ghi chú, kết quả ở ghi chú diễn giả `L10-204`) | — | Ví dụ 10.3; Mệnh đề 10.3 | — | 0 |
 | 2 | `L10-203` | Đường cơ sở | định nghĩa | Định nghĩa 10.1 | — | 1 |
 | 2 | `L10-204` | Đường cơ sở không làm chệch | kết quả | Mệnh đề 10.2 | — | 1,5 |
 | 2 | `L10-205` | Chứng minh: đường cơ sở không làm chệch | chứng minh | chứng minh Mệnh đề 10.2 | — | 1,5 |
-| 2 | `L10-206` | Ví dụ: đường cơ sở trên lượt hành lang | ứng dụng | Ví dụ 10.4 | — | 1,5 |
+| 2 | `L10-206` | (đã bỏ khỏi deck 2026-11-20, NT23; Ví dụ 10.4 còn ở ghi chú, dòng kết quả ở `L10-204`) | — | Ví dụ 10.4 | — | 0 |
 | 2 | `L10-207` | Hàm lợi thế | trực giác, định nghĩa, ví dụ | §2.3, Định nghĩa 10.4, Ví dụ 10.5 | — | 1 |
 | 2 | `L10-208` | Gradient dạng lợi thế | kết quả | Mệnh đề 10.5 | — | 1,5 |
 | 2 | `L10-209` | Thuật toán REINFORCE có đường cơ sở | thuật toán | Thuật toán 10.6 | — | 1 |
 | 2 | `L10-210` | Bài tập: đường cơ sở hợp lệ | bài tập, lời giải (fragment) | Bài tập 10.1 | — | 1 |
-| 2 | `L10-211` | Ví dụ: chuỗi hai trạng thái | ví dụ dẫn nhập, ứng dụng | Ví dụ 10.6 | `img/lec-10/two-state-chain.svg` | 2 |
+| 2 | `L10-211` | (đã bỏ khỏi deck 2026-11-20; nội dung chuyển vào `L10-214`–`L10-214c`) | — | Ví dụ 10.6 | — | 0 |
 | 2 | `L10-212` | Critic, actor và phương pháp actor–critic | vấn đề, trực giác, định nghĩa | §2.4, Định nghĩa 10.7 | — | 1 |
 | 2 | `L10-212b` | Critic, actor và phương pháp actor–critic | nhắc lại sai số TD, hình | §2.4, hình sơ đồ actor–critic | `img/lec-10/actor-critic-advantage.svg` | 0,5 |
 | 2 | `L10-213` | Sai số TD và lợi thế | kết quả | Mệnh đề 10.8 | — | 1,5 |
-| 2 | `L10-214` | Ví dụ: hai bước actor–critic | ví dụ tính tay | Ví dụ 10.7 | — | 2 |
+| 2 | `L10-214` | Ví dụ: chuỗi hai trạng thái | ví dụ của mạch (dữ kiện) | Ví dụ 10.6 | `img/lec-10/two-state-chain.svg` | 1 |
+| 2 | `L10-214b` | Ví dụ: chuỗi hai trạng thái, giá trị | ví dụ (tiếp) | Ví dụ 10.6, phần giá trị | — | 1,5 |
+| 2 | `L10-214c` | Ví dụ: chuỗi hai trạng thái, lợi thế | ví dụ (tiếp, bảng) | Ví dụ 10.6, lợi thế, Mệnh đề 10.5 | — | 1,5 |
+| 2 | `L10-214d` | Ví dụ: chuỗi hai trạng thái, critic | ví dụ (tiếp, bảng) | Ví dụ 10.7, critic | — | 1,5 |
+| 2 | `L10-214e` | Ví dụ: chuỗi hai trạng thái, actor | ví dụ (tiếp, bảng) | Ví dụ 10.7, actor | — | 1,5 |
+| 2 | `L10-214f` | Ví dụ: chuỗi hai trạng thái, hệ số của hàm điểm | ví dụ (tiếp, bảng) | Ví dụ 10.6–10.8, Nhận xét 10.10 | — | 2 |
 | 2 | `L10-215` | Thuật toán actor–critic một bước | thuật toán | Thuật toán 10.9, Nhận xét 10.10 | — | 1 |
-| 2 | `L10-216` | Bài tập: sai số TD khi critic sai | bài tập, lời giải (fragment) | Bài tập 10.5 | — | 1,5 |
+| 2 | `L10-216` | (đã bỏ khỏi deck 2026-11-20, phương án A′ của tác giả; Bài tập 10.5 còn ở ghi chú) | — | Bài tập 10.5 | — | 0 |
 | 3 | `L10-300` | 3. Ước lượng lợi thế tổng quát | tiêu đề mạch | §3 | — | 0,5 |
 | 3 | `L10-301` | Ví dụ: ba ước lượng lợi thế trên một lượt | vấn đề, ví dụ dẫn nhập | Ví dụ 10.8 | `two-state-chain.svg` (nhỏ) | 1,5 |
 | 3 | `L10-302` | Lợi tức n bước | định nghĩa, bổ đề | Định nghĩa 10.11, Bổ đề 10.12 | — | 1 |
@@ -324,15 +329,15 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 #### `L10-201` Mức so sánh của trạng thái
 - **Vị trí, loại:** mạch 2; vấn đề và trực giác của cụm đường cơ sở.
 - **Lý do tồn tại, nhu cầu:** đưa phép so sánh với một mức của trạng thái trước khi đặt ký hiệu $b$.
-- **Liên kết:** trước: `L10-200`; sau: `L10-202` (ba mức cụ thể). **Mục tiêu:** 1. **Ghi chú:** §2 đoạn đầu, §2.1 đoạn 1 (`topic-03`); nguồn tr. 11.
-- **Mặt trang:** bốn dòng: "Nhu cầu: tách khỏi $G_t$ phần chung không phân biệt hành động." (10); "Bài toán một bước: cộng $1$ vào phần thưởng, phương sai từ $\tfrac49$ lên $\tfrac{16}9$." (12); "Trực quan. So $G_t$ với một mức $b(S_t)$ chỉ phụ thuộc trạng thái." (11); "Hệ số của $\psi_t$ là $G_t-b(S_t)$: dương thì tăng, âm thì giảm xác suất hành động đã chọn." (16). Dòng "Trực quan." cũ khoảng 30 âm tiết tách thành hai dòng.
+- **Liên kết:** trước: `L10-200`; sau: `L10-203` (`L10-202` đã bỏ 2026-11-20). **Mục tiêu:** 1. **Ghi chú:** §2 đoạn đầu, §2.1 đoạn 1 (`topic-03`); nguồn tr. 11.
+- **Mặt trang:** (sửa 2026-11-20) một dòng kết quả "Bài toán một bước (Bài 09), $\pi_\theta(\cdot\mid s)=(\tfrac23;\,\tfrac13)$, $r=(3;\,0)$: cộng $1$ vào phần thưởng giữ gradient $(\tfrac23;\,-\tfrac23)$, tổng phương sai tăng từ $\tfrac49$ lên $\tfrac{16}9$."; "Trực quan." so $G_t$ với mức $b(S_t)$; dòng hệ số $G_t-b(S_t)$. Dữ kiện ($\phi=e_a$, $\theta$, $\psi_\theta$) và định nghĩa tổng phương sai ở ghi chú diễn giả.
 - **Mật độ:** 49 âm tiết, 4 dòng, 0 công thức hiển thị.
 - **Hình, phút:** —; 1.
 - **Quyết định:** sửa (`L10-06` "Baseline loại phần chung của return"): tiêu đề danh từ, "baseline" thành "đường cơ sở", thêm số dẫn nhập.
 - **Ghi chú diễn giả:** liên hệ bài toán nhiều cần gạt (multi-armed bandit) (Sutton và Barto, 2018, §13.4, tr. 329); mức so sánh phải không phụ thuộc hành động đã chọn, điều kiện được chứng minh ở `L10-204`.
 - **Sửa 2026-11-13 (bảng phát hiện):** ghi chú diễn giả bỏ câu về bài toán nhiều cần gạt (không có trong ghi chú); 98 token.
 
-#### `L10-202` Ví dụ: ba đường cơ sở trên bài toán một bước
+#### `L10-202` Ví dụ: ba đường cơ sở trên bài toán một bước (đã bỏ 2026-11-20)
 - **Vị trí, loại:** mạch 2; bước ví dụ của cụm đường cơ sở; bước ví dụ và hình thức rút gọn của cụm "đường cơ sở tối ưu" (`topic-04`).
 - **Lý do tồn tại, nhu cầu:** cho thấy kỳ vọng không phụ thuộc $b$ còn phương sai thì phụ thuộc, trước khi phát biểu tổng quát.
 - **Liên kết:** trước: `L10-201`; sau: `L10-203` (đặt tên đại lượng $X_b$ thành $\widehat g_b$). **Mục tiêu:** 1. **Ghi chú:** Ví dụ 10.3; Mệnh đề 10.3 (`topic-03`, `topic-04`); nguồn tr. 11; Greensmith và cộng sự (2004), §5.
@@ -346,7 +351,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 #### `L10-203` Đường cơ sở
 - **Vị trí, loại:** mạch 2; bước hình thức (định nghĩa).
 - **Lý do tồn tại, nhu cầu:** cố định miền của $b$ và dạng $\widehat g_b$ trên lượt nhiều bước.
-- **Liên kết:** trước: `L10-202` ($X_b$ là $\widehat g_b$ với $T=1$); sau: `L10-204`. **Mục tiêu:** 1. **Ghi chú:** Định nghĩa 10.1 (`topic-03`); nguồn tr. 11.
+- **Liên kết:** trước: `L10-201`; sau: `L10-204`. **Mục tiêu:** 1. **Ghi chú:** Định nghĩa 10.1 (`topic-03`); nguồn tr. 11.
 - **Mặt trang:** "Định nghĩa." Hàm bị chặn $b:\mathcal S\to\mathbb R$ gọi là đường cơ sở; ước lượng có đường cơ sở $\widehat g_b=\sum_{t<T}\gamma^t\bigl(G_t-b(S_t)\bigr)\psi_t$. Dòng: đường cơ sở ngẫu nhiên $B_t$ được phép nếu khi biết $(H_t,B_t)$, $A_t$ vẫn có phân phối $\pi_\theta(\cdot\mid S_t)$.
 - **Mật độ:** khoảng 35 âm tiết, 3 dòng, 1 công thức hiển thị.
 - **Hình, phút:** —; 1.
@@ -366,14 +371,14 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 #### `L10-205` Chứng minh: đường cơ sở không làm chệch
 - **Vị trí, loại:** mạch 2; chứng minh, trang riêng.
 - **Lý do tồn tại, nhu cầu:** chứng minh quan trọng của mạch (mục tiêu 1 đòi chứng minh).
-- **Liên kết:** trước: `L10-204`; sau: `L10-206`. **Mục tiêu:** 1. **Ghi chú:** chứng minh Mệnh đề 10.2 (`topic-03`).
+- **Liên kết:** trước: `L10-204`; sau: `L10-207`. **Mục tiêu:** 1. **Ghi chú:** chứng minh Mệnh đề 10.2 (`topic-03`).
 - **Mặt trang:** ba dòng bước: (1) tách $\widehat g_b=\widehat g-\sum_t\gamma^tb(S_t)\psi_t$; (2) $\mathbb E[b(S_t)\psi_t\mid H_t]=b(S_t)\sum_a\pi_\theta(a\mid S_t)\psi_\theta(S_t,a)=0$; (3) tính chất tháp, cộng tối đa $T_{\max}$ số hạng, dùng Hệ quả 09.26 cho $\widehat g$. Kết thúc $\square$.
 - **Mật độ:** khoảng 30 âm tiết, 4 dòng, 1 khối `aligned`.
 - **Hình, phút:** —; 1,5.
 - **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo chứng minh Mệnh đề 10.2 của ghi chú.
 - **Ghi chú diễn giả (đến khoảng 200):** chỗ dùng từng giả thiết: $b$ không phụ thuộc $A_t$ ở bước 2, (G3) cho đổi tổng và kỳ vọng ở bước 3; $\psi_t=0$ khi $t\ge T$.
 
-#### `L10-206` Ví dụ: đường cơ sở trên lượt hành lang
+#### `L10-206` Ví dụ: đường cơ sở trên lượt hành lang (đã bỏ 2026-11-20)
 - **Vị trí, loại:** mạch 2; bước ứng dụng của cụm đường cơ sở; bước tính tay trước `L10-209`.
 - **Lý do tồn tại, nhu cầu:** áp dụng $b=v_\pi$ cho đúng lượt đã cho bước ngược chiều ở `L10-107`.
 - **Liên kết:** trước: `L10-205`; sau: `L10-207` (hệ số $7,6,9,8,5$ ước lượng đại lượng nào). **Mục tiêu:** 1. **Ghi chú:** Ví dụ 10.4 (`topic-03`); nguồn tr. 11.
@@ -386,8 +391,8 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 #### `L10-207` Hàm lợi thế
 - **Vị trí, loại:** mạch 2; vấn đề, trực giác, định nghĩa, ví dụ của cụm lợi thế trên một trang (khái niệm ngắn).
 - **Lý do tồn tại, nhu cầu:** đặt tên cho đại lượng mà hệ số $G_t-v_\pi(S_t)$ ước lượng.
-- **Liên kết:** trước: `L10-206`; sau: `L10-208`. **Mục tiêu:** 1. **Ghi chú:** §2.3 đoạn đầu, Định nghĩa 10.4, Ví dụ 10.5 (`topic-05`); nguồn tr. 5, 8.
-- **Mặt trang:** bốn dòng theo thứ tự vấn đề, ví dụ, định nghĩa: "Hệ số $G_t-v_\pi(S_t)$ có kỳ vọng $q_\pi(S_t,A_t)-v_\pi(S_t)$ khi biết $(H_t,A_t)$." (6); "Ví dụ. Bài toán một bước: $q_\pi=(3;\,0)$, $v_\pi=2$, hiệu $(1;\,-2)$; với $r=(4;\,1)$ hiệu vẫn $(1;\,-2)$." (9); "Định nghĩa." $A_\pi(s,a)=q_\pi(s,a)-v_\pi(s)$ gọi là hàm lợi thế (advantage function) (công thức hiển thị); "$A_\pi=0$ sau khi lượt kết thúc." (6).
+- **Liên kết:** trước: `L10-205`; sau: `L10-208`. **Mục tiêu:** 1. **Ghi chú:** §2.3 đoạn đầu, Định nghĩa 10.4, Ví dụ 10.5 (`topic-05`); nguồn tr. 5, 8.
+- **Mặt trang:** (sửa 2026-11-20) câu vấn đề "Với $b=v_\pi$, hệ số $G_t-v_\pi(S_t)$ đo $A_t$ tốt hơn mức chung của $S_t$ bao nhiêu."; "Trực quan." kỳ vọng có điều kiện $q_\pi-v_\pi$; Định nghĩa 10.4; $A_\pi=0$ sau khi lượt kết thúc; dòng kết quả "Bài toán một bước: $A_\pi(s,\cdot)=(1;\,-2)$, không đổi khi cộng $1$ vào phần thưởng."
 - **Mật độ:** khoảng 40 âm tiết, 4 dòng, 1 công thức hiển thị.
 - **Hình, phút:** —; 1.
 - **Quyết định:** thêm: bộ cũ không có trang định nghĩa lợi thế; Định nghĩa 10.4 và Ví dụ 10.5 của ghi chú. Đợt sửa sau cổng: ví dụ đưa lên trước định nghĩa.
@@ -418,7 +423,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 #### `L10-210` Bài tập: đường cơ sở hợp lệ
 - **Vị trí, loại:** mạch 2; bước kiểm tra của cụm đường cơ sở; bài tập có lời giải trên mặt trang (fragment).
 - **Lý do tồn tại, nhu cầu:** kiểm năng lực nhận diện đường cơ sở hợp lệ (điều kiện "không phụ thuộc $A_t$ khi biết $H_t$").
-- **Liên kết:** trước: `L10-209`; sau: `L10-211`. **Mục tiêu:** 1. **Ghi chú:** Bài tập 10.1 (`topic-03`).
+- **Liên kết:** trước: `L10-209`; sau: `L10-212`. **Mục tiêu:** 1. **Ghi chú:** Bài tập 10.1 (`topic-03`).
 - **Mặt trang:** "Câu hỏi:" xác định lựa chọn nào là đường cơ sở hợp lệ: (a) $\hat v(S_t,w)$, $w$ cố định; (b) trung bình $G_0$ của các lượt khác; (c) $r(A_t)$ trên bài toán một bước; (d) $G_t$. "Lời giải:" (fragment) (a), (b) hợp lệ theo Mệnh đề 10.2; (c), (d) cho $\widehat g_b\equiv0\ne(\tfrac23;\,-\tfrac23)$.
 - **Mật độ:** khoảng 45 âm tiết, 6 dòng, 0 công thức hiển thị.
 - **Hình, phút:** —; 1.
@@ -426,7 +431,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Ghi chú diễn giả:** "Gợi ý:" kiểm xem $B_t$ có phụ thuộc $A_t$ khi biết $H_t$ không; (b) cần các lượt khác độc lập với lượt đang xét.
 - **Sửa 2026-11-13 (bảng phát hiện):** dòng lời giải thứ hai thành "(c), (d): $G_t-B_t=0$, nên $\widehat g_B\equiv0\ne\nabla_\theta J$; ở (c), $\nabla_\theta J=(\tfrac23;\,-\tfrac23)$." vì $(\tfrac23;-\tfrac23)$ chỉ là gradient của bài toán một bước.
 
-#### `L10-211` Ví dụ: chuỗi hai trạng thái
+#### `L10-211` Ví dụ: chuỗi hai trạng thái (đã bỏ 2026-11-20)
 - **Vị trí, loại:** mạch 2; ví dụ dẫn nhập của cụm critic (làm cụ thể vấn đề "Thuật toán 10.6 chờ hết lượt; $\hat v$ chỉ đánh giá $S_t$") và ứng dụng của Mệnh đề 10.5; ví dụ xuyên suốt của mạch 2–4.
 - **Lý do tồn tại, nhu cầu:** môi trường hai bước để lợi thế tại $s_A$ phụ thuộc $s_B$; dữ kiện dùng lại ở `L10-212`–`L10-216`, mạch 3 và mạch 4.
 - **Liên kết:** trước: `L10-210`; sau: `L10-212`. **Mục tiêu:** 1. **Ghi chú:** Ví dụ 10.6 (`topic-06`); nguồn tr. 12.
@@ -440,7 +445,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 #### `L10-212` Critic, actor và phương pháp actor–critic
 - **Vị trí, loại:** mạch 2; vấn đề, trực giác, định nghĩa của cụm critic.
 - **Lý do tồn tại, nhu cầu:** giới hạn một dòng của Thuật toán 10.6 (chờ hết lượt) rồi ý tưởng đánh giá hành động bằng $\hat v(S_{t+1})$.
-- **Liên kết:** trước: `L10-211`; sau: `L10-212b`. **Mục tiêu:** 1. **Ghi chú:** §2.4 đoạn đầu, Định nghĩa 10.7 (`topic-06`); nguồn tr. 12.
+- **Liên kết:** trước: `L10-210`; sau: `L10-212b`. **Mục tiêu:** 1. **Ghi chú:** §2.4 đoạn đầu, Định nghĩa 10.7 (`topic-06`); nguồn tr. 12.
 - **Mặt trang (D1):** "Nhu cầu: cập nhật sau mỗi bước, không chờ hết lượt." "Trực quan. Chuỗi hai trạng thái, $\hat v=(1;\,1{,}5)$: sau một bước, $0+0{,}9\cdot1{,}5=1{,}35>\hat v(s_A)=1$, hành động 1 tốt hơn dự báo." "Định nghĩa 10.7." critic, actor qua mục tiêu $R_{t+1}+\gamma(1-Z_{t+1})\hat v(S_{t+1},w)$; "Phương pháp actor–critic cập nhật $\theta$ theo hệ số lập từ mục tiêu này, và $w$ để $\hat v$ xấp xỉ $v_{\pi_\theta}$." Dòng "Nhắc lại:" sai số TD chuyển sang `L10-212b`.
 - **Mật độ:** 59 âm tiết, 4 dòng, 0 công thức hiển thị.
 - **Hình, phút:** — (hình chuyển sang `L10-212b` ở bản viết); 1.
@@ -469,7 +474,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Ghi chú diễn giả:** phản ví dụ bỏ critic đúng (bài toán một bước, $\hat v=1$: $\mathbb E[\delta_0\mid A_0=1]=2\ne1$); bỏ mặt nạ ($\delta_0=0{,}5$ thay $-0{,}4$); độ chệch không do bootstrap (Sutton và Barto, 2018, §13.5).
 - **Sửa 2026-11-13 (bảng phát hiện):** "$Z_{t+1}=1$ khi và chỉ khi kết thúc" theo Mệnh đề 10.8 của ghi chú. `deck_check`: 55 âm tiết.
 
-#### `L10-214` Ví dụ: hai bước actor–critic
+#### `L10-214` Ví dụ: hai bước actor–critic (bản cũ; mã dùng lại cho trang đầu của ví dụ chuỗi hai trạng thái, 2026-11-20)
 - **Vị trí, loại:** mạch 2; bước ví dụ tính tay của cụm critic, đứng trước giả mã `L10-215`; ứng dụng của Mệnh đề 10.8(b).
 - **Lý do tồn tại, nhu cầu:** thực hiện hai vòng lặp với giá trị khởi tạo, mục tiêu, sai lệch, giá trị mới.
 - **Liên kết:** trước: `L10-213`; sau: `L10-215` (bảng thành giả mã). **Mục tiêu:** 1. **Ghi chú:** Ví dụ 10.7 (`topic-06`).
@@ -479,10 +484,15 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo Ví dụ 10.7 của ghi chú.
 - **Ghi chú diễn giả:** $I=\gamma^t$ đóng vai trọng số $\gamma^t$; mặt nạ bằng $0$ ở bước $1$; kiểm $\sigma(0{,}175)$, $\sigma(1{,}1431)$.
 
+#### `L10-214`–`L10-214f` Ví dụ: chuỗi hai trạng thái (ví dụ duy nhất của mạch 2, 2026-11-20)
+- **Vị trí, loại:** mạch 2, sau `L10-213`, trước `L10-215` (Thuật toán 10.9); sáu trang cùng tiêu đề, phần tiếp ghi sau dấu phẩy.
+- **Mặt trang:** `L10-214` hình chuỗi (một hàng riêng), dữ kiện, $\psi_\theta(s,1)=(1-p_s)e_s$, $\psi_\theta(s,2)=-p_se_s$, "Tính …"; `L10-214b` "Nhắc lại:" $v_\pi$, $q_\pi$ rồi năm dòng tính $p_A$, $p_B$, $q_\pi(s_B,\cdot)$, $v_\pi(s_B)=2$, $q_\pi(s_A,\cdot)=(1{,}8;\,1)$, $v_\pi(s_A)=1{,}4=J$; `L10-214c` bảng $(s,a)$ | $\pi$ | $q_\pi$ | $v_\pi$ | $A_\pi$ | $\pi A_\pi$ | $\psi$ theo $\theta_s$ | $\pi A_\pi\psi$, tổng theo trạng thái cho Mệnh đề 10.5(a) và $\nabla_\theta J=(0{,}2;\,0{,}3)$ theo 10.5(b); `L10-214d` bảng critic hai bước ($1{,}35$, $0{,}35$, $1{,}175$; $3$, $1{,}5$, $2{,}25$); `L10-214e` bảng actor ($0{,}175$, $0{,}5436$; $0{,}45$, $1{,}1431$, $0{,}7583$), "Diễn giải:" $\delta_0=0{,}35\ne A_\pi(s_A,1)=0{,}4$; `L10-214f` bảng hệ số $G_t$ | $G_t-\hat v(S_t)$ | $\delta_t$ | $A_\pi(S_t,1)$ ($2{,}7$, $1{,}7$, $0{,}35$, $0{,}4$; $3$, $1{,}5$, $1{,}5$, $1$).
+- **Hình, phút:** `img/lec-10/two-state-chain.svg` (`.figure.short`); 1 + 1,5 + 1,5 + 1,5 + 1,5 + 2 = 9 phút.
+
 #### `L10-215` Thuật toán actor–critic một bước
 - **Vị trí, loại:** mạch 2; thuật toán của cụm critic.
 - **Lý do tồn tại, nhu cầu:** quy trình đầy đủ khớp bảng của `L10-214`.
-- **Liên kết:** trước: `L10-214`; sau: `L10-216`. **Mục tiêu:** 1. **Ghi chú:** Thuật toán 10.9, Nhận xét 10.10 (`topic-06`); nguồn tr. 12–13.
+- **Liên kết:** trước: `L10-214f`; sau: `L10-300` (`L10-216` đã bỏ 2026-11-20). **Mục tiêu:** 1. **Ghi chú:** Thuật toán 10.9, Nhận xét 10.10 (`topic-06`); nguồn tr. 12–13.
 - **Mặt trang:** "Thuật toán." sáu dòng: (1) "Đầu vào: $\pi_\theta$, $\hat v(s,w)$, $\alpha_\theta$, $\alpha_w$, $\gamma$; dừng sau $E$ lượt. Mỗi lượt: $I\leftarrow1$, lặp tới khi kết thúc:" (2) "$A\sim\pi_\theta(\cdot\mid S)$; quan sát $R$, $S'$, $Z$." (3) $\delta\leftarrow R+\gamma(1-Z)\hat v(S',w)-\hat v(S,w)$. (4) $w\leftarrow w+\alpha_w\delta\nabla_w\hat v(S,w)$. (5) $\theta\leftarrow\theta+\alpha_\theta I\delta\psi_\theta(S,A)$. (6) $I\leftarrow\gamma I$, $S\leftarrow S'$.
 - **Mật độ:** khoảng 25 âm tiết, 6 dòng. Không còn là ngoại lệ (bản trước 7 dòng).
 - **Hình, phút:** —; 1.
@@ -490,7 +500,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Ghi chú diễn giả:** $\delta$ là hệ số đã dừng gradient trong cập nhật actor; khi cắt ngắn ($U=1$, $Z=0$) vẫn bootstrap từ quan sát cuối; bộ nhớ không phụ thuộc độ dài lượt; ước lượng chệch khi critic sai (Nhận xét 10.10).
 - **Sửa 2026-11-13 (bảng phát hiện):** "Giả thiết: môi trường trả cờ $Z$." nối vào dòng Đầu vào/Đầu ra, rồi câu thường riêng "Khởi tạo $\theta$, $w$ tùy ý; mỗi lượt: $I\leftarrow1$, lặp tới khi kết thúc:" theo Thuật toán 10.9; bước 5 cũ ($I\leftarrow\gamma I$, $S\leftarrow S'$) gộp vào bước 4; vẫn 6 dòng. `deck_check`: 28 âm tiết, dòng dài nhất 17.
 
-#### `L10-216` Bài tập: sai số TD khi critic sai
+#### `L10-216` Bài tập: sai số TD khi critic sai (đã bỏ 2026-11-20)
 - **Vị trí, loại:** mạch 2; bước kiểm tra của cụm critic; lời giải trên mặt trang (fragment).
 - **Lý do tồn tại, nhu cầu:** kiểm việc dùng Mệnh đề 10.8(b) và hệ quả lên gradient.
 - **Liên kết:** trước: `L10-215`; sau: `L10-300` (hai đầu $\delta_t$ và $G_t-\hat v$ chờ được nối). **Mục tiêu:** 1. **Ghi chú:** Bài tập 10.5 (`topic-06`).
@@ -1651,7 +1661,7 @@ Phút mạch 7: $0{,}5+1+1{,}5+1+1{,}5+1{,}5+1+1+1{,}5+1+1+1+1{,}5+1+1{,}5+1+1{,
 | mạch | trang | số trang | phút trước | phút sau | trang đổi phút |
 |---|---|---:|---:|---:|---|
 | 1 | `L10-101`–`L10-110`, `L10-104b` | 11 | 12 | 12 | `L10-104` 1 → 0,5; `L10-104b` 0,5 |
-| 2 | `L10-200`–`L10-216` | 18 | 23 | 22,5 | `L10-205` 1,5 → 1 |
+| 2 | `L10-200`–`L10-216` | 19 | 23 | 22,5 | `L10-205` 1,5 → 1 | 2026-11-20: 19 trang (`L10-200`–`L10-215`, ví dụ `L10-214`–`L10-214f`)
 | 3 | `L10-300`–`L10-309` | 10 | 14,5 | 14,5 | — |
 | 4 | `L10-400`–`L10-414` | 16 | 22,5 | 20,5 | `L10-404` 1,5 → 1; `L10-409` 1,5 → 1; `L10-414` 1 → 0 |
 | 5 | `L10-500`–`L10-510` | 12 | 13,5 | 12 | `L10-505` 2 → 1,5; `L10-510` 1 → 0 |
@@ -2379,3 +2389,35 @@ Theo kế hoạch tác giả đã duyệt (`ke-hoach-mot-vi-du-moi-mach-2026-11-
 - `L10-201` (mạch 2, sửa sớm vì bài toán một bước phải được nêu trước khi các mạch sau dùng): bỏ dòng "Nhu cầu:" (NT14); mặt trang nêu dữ kiện "Bài toán một bước: một trạng thái $s$, hai hành động, softmax với $\phi(s,a)=e_a$, $\theta=(\log2;\,0)$, lượt dừng sau $A_0$; $\pi_\theta(\cdot\mid s)=(\tfrac23;\,\tfrac13)$, $\psi_\theta(s,1)=(\tfrac13;\,-\tfrac13)$, $\psi_\theta(s,2)=(-\tfrac23;\,\tfrac23)$, $r=(3;\,0)$." và dòng kết quả "Cộng $1$ vào phần thưởng giữ gradient $(\tfrac23;\,-\tfrac23)$; tổng phương sai $\mathbb E\lVert\widehat g-\mathbb E\widehat g\rVert^2$ tăng từ $\tfrac49$ lên $\tfrac{16}9$." (không chuỗi tính). Ghi chú diễn giả định nghĩa "tổng phương sai" là tổng phương sai các tọa độ, giải thích $e_a$, giữ hai tổng có trọng số. Trang cao 534 px.
 - `L10-200`: dòng dẫn "Trừ khỏi lợi tức một mức không phụ thuộc hành động giữ kỳ vọng và có thể giảm phương sai." (bỏ khuôn "Muốn …, phải …", NT12; "có thể giảm" theo Mệnh đề 10.3, vì đường cơ sở $b=3$ làm phương sai tăng); ghi chú diễn giả chỉ nhắc lượt hành lang của mạch 1, số $\tfrac49\to\tfrac{16}9$ nằm ở `L10-201`.
 - Storyboard: tiêu đề `L10-101` ("TRPO, PPO và DPO") và `L10-110` ("Ba hàng của vấn đề trung tâm", hình `central-problem-slide.svg`) trong bảng trang–phút; mục từng trang của `L10-105`, `L10-106` (đã bỏ), `L10-106b` (đã bỏ), `L10-107`, `L10-107b`, `L10-107c`, `L10-108` cập nhật liên kết, mặt trang và phút; đoạn hành trình khái niệm mạch 1; ký hiệu liên kết sâu sửa thành `#/1/k` với k ≥ 2.
+
+## Mạch 2 theo NT23 một ví dụ (2026-11-20)
+
+Theo kế hoạch đã duyệt (`ke-hoach-mot-vi-du-moi-mach-2026-11-20.md`), lựa chọn của tác giả (mạch 2 giữ chuỗi hai trạng thái; bài tập phương án A′: giữ Bài tập 10.1 ở `L10-210`, bỏ Bài tập 10.5) và NT23 sửa 2026-11-20:
+
+- **Bỏ khỏi deck:** `L10-202` (Ví dụ 10.3), `L10-206` (Ví dụ 10.4), `L10-211` (Ví dụ 10.6, nội dung chuyển vào ví dụ mới), `L10-216` (Bài tập 10.5). Nội dung còn trong ghi chú.
+- **Ví dụ duy nhất của mạch 2:** chuỗi hai trạng thái (Ví dụ 10.6 + 10.7), sáu trang liền nhau `L10-214`, `L10-214b`…`L10-214f`, sau `L10-213`, trước `L10-215`. Hình chuỗi đứng một hàng riêng ở `L10-214`, không cạnh phép tính.
+- **Phần thêm `L10-214f` (hệ số của hàm điểm):** khái niệm đường cơ sở (Mệnh đề 10.2, Thuật toán 10.6) mất hai ví dụ riêng (`L10-202`, `L10-206`). Theo lời tác giả "nếu cần bổ sung nội dung vào ví dụ được chọn", trang này đặt trên cùng lượt của chuỗi ba hệ số nhân với $\psi_t$: $G_t$ (REINFORCE), $G_t-\hat v(S_t)$ (Thuật toán 10.6, critic $\hat v=(1;\,1{,}5)$ cố định trong lượt) và $\delta_t$ (actor–critic), cạnh lợi thế đúng $A_\pi(S_t,1)$. Trang này trả lời đúng đầu ra của mạch trong bảng mạch ("hai đầu của hệ số nhân với hàm điểm: Monte Carlo và một bước") và cho Thuật toán 10.6 một phép tính trên đối tượng chung, điều mà một dòng kết quả trên `L10-204` không làm được. Mọi số đã có trong ghi chú: $2{,}7$ và $0{,}4$ (Ví dụ 10.6), $0{,}35$, $1{,}5$ (Ví dụ 10.7), $1{,}7$ (Ví dụ 10.8), $A_\pi(s_B,1)=1$ (Ví dụ 10.6). "Diễn giải:" theo Nhận xét 10.10 và đoạn sau nó.
+- **`L10-214c` thêm hai cột $\psi$ theo $\theta_s$ và $\pi A_\pi\psi$:** Mệnh đề 10.5(b) mất dòng tính trên bài toán một bước (`L10-208`, chuyển xuống ghi chú diễn giả); bảng cho $\nabla_\theta J=(0{,}2;\,0{,}9\cdot\tfrac12\cdot\tfrac23)=(0{,}2;\,0{,}3)$ đúng như phần "Gradient theo Mệnh đề 10.5(b)" của Ví dụ 10.6.
+- **Số liệu kiểm lại:** $\sigma(\log2)=\tfrac23$; $v_\pi(s_B)=2$; $q_\pi(s_A,\cdot)=(1{,}8;\,1)$; $v_\pi(s_A)=1{,}4$; $A_\pi=(0{,}4;\,-0{,}4)$, $(1;\,-2)$; $\pi A_\pi\psi$: $0{,}1+0{,}1=0{,}2$, $\tfrac29+\tfrac49=\tfrac23$; critic $1{,}35$, $0{,}35$, $1{,}175$, $3$, $1{,}5$, $2{,}25$; actor $1\cdot0{,}35\cdot\tfrac12=0{,}175$, $\sigma(0{,}175)=0{,}5436$, $0{,}9\cdot1{,}5\cdot\tfrac13=0{,}45$, $\log2+0{,}45=1{,}1431$, $\sigma(1{,}1431)=0{,}7583$; $G_0=2{,}7$, $G_1=3$. Khớp Ví dụ 10.6–10.8.
+- **Dòng kết quả và ghi chú:** `L10-204` thêm "Lượt hành lang, $b=v_\pi$: $\widehat g_b=(9{,}5;\,-9{,}5)$, cùng chiều $\nabla_\theta J$, so với $(-5{,}5;\,5{,}5)$ khi không trừ."; ghi chú diễn giả thêm $\tfrac49(b-1)^2$, $b^*=1\ne v_\pi(s)=2$, $\tfrac{16}9$ khi $b=3$ (Ví dụ 10.3, Mệnh đề 10.3) và $v_\pi$, hệ số $7,6,9,8,5$ của hành lang (Ví dụ 10.4). `L10-207` bỏ "Nhu cầu:" và nhắc hệ số $7,6,9,8,5$; dòng "Ví dụ." thành dòng kết quả "Bài toán một bước: $A_\pi(s,\cdot)=(1;\,-2)$, không đổi khi cộng $1$ vào phần thưởng.", đặt sau Định nghĩa 10.4; ghi chú nêu $q_\pi$, $v_\pi$ của hai vector phần thưởng (Ví dụ 10.5). `L10-208` chuyển dòng tính xuống ghi chú. `L10-212` bỏ "Nhu cầu:", "Trực quan." không còn số của chuỗi: "Ngay sau một bước, nếu $R_{t+1}+\gamma\hat v(S_{t+1})>\hat v(S_t)$ thì $A_t$ tốt hơn dự báo."; ghi chú bỏ câu về $1{,}35$. `L10-213` chuyển dòng "Critic đúng $(1{,}4;\,2)$ …" xuống ghi chú. `L10-203` ghi chú không còn dùng $X_b$. `L10-205` ba nhãn "Bước k." thành danh sách đánh số (hết LABEL). `L10-209` ghi chú bỏ câu về ví dụ hành lang đã bỏ.
+- **Thời lượng:** 7 phút của `L10-202` (2), `L10-206` (1,5), `L10-211` (2), `L10-216` (1,5) chuyển cho ví dụ chuỗi; ví dụ chiếm 9 phút (trước: `L10-214` 2 phút); tổng mạch 2 giữ 23 phút; mạch 2 có 19 trang (sửa sau kiểm lại: trước ghi nhầm 18).
+- **Số trang deck:** 129 (trước 128).
+- **Liên kết sâu:** mạch 2 là `#/2`; liên kết vào mạch 2 chỉ có `#/2/1` (trang tiêu đề), không có `#/2/k` với k ≥ 2, nên không liên kết nào lệch.
+- **Kiểm tra:** Playwright 1280×720 và 1600×900, chiều cao (khung 720): `L10-214` 692, `214b` 576, `214c` 612, `214d` 527, `214e` 567, `214f` 536; các trang khác của mạch 2 từ 395 đến 610. Không lỗi console, không yêu cầu hỏng, không `.katex-error`. `deck_lint` không còn phát hiện nào ở mạch 2.
+- **Tham chiếu tới dữ kiện chuỗi ở mạch sau (cho đợt sửa tiếp, chưa sửa):** mặt trang `L10-301` ($\hat v=(1;\,1{,}5)$, $1{,}4$), `L10-303`, `L10-304`, `L10-305` (chuỗi, $\hat v$, $A_\pi(s_A,\cdot)$), `L10-401`, `L10-402`, `L10-410`, `L10-413`, `L10-414`, `L10-605`; ghi chú diễn giả `L10-300`, `L10-302`, `L10-306`, `L10-403`, `L10-404`, `L10-406`, `L10-701`. Chuỗi vẫn được giới thiệu ở mạch 2 (`L10-214`), nên không tham chiếu nào bị treo; các trang này chỉ cần kiểm theo NT23 khi tới mạch của chúng.
+
+## Sửa mạch 2 sau kiểm lại (2026-11-20)
+
+1. `L10-201`: bài toán một bước rút về một câu kết quả "Bài toán một bước (Bài 09), $\pi_\theta(\cdot\mid s)=(\tfrac23;\,\tfrac13)$, $r=(3;\,0)$: cộng $1$ vào phần thưởng giữ gradient $(\tfrac23;\,-\tfrac23)$, tổng phương sai tăng từ $\tfrac49$ lên $\tfrac{16}9$." (NT23); $\phi(s,a)=e_a$ (vector đơn vị thứ $a$), $\theta$, $\psi_\theta$, $\widehat g$ và định nghĩa tổng phương sai chuyển vào ghi chú diễn giả. Cao 360 px.
+2. `L10-204`: thêm dòng kết quả Mệnh đề 10.3 (`L10-701` dẫn tới): "Bài toán một bước, $b$ hằng: tổng phương sai $\tfrac49(b-1)^2$, nhỏ nhất tại $b^*=\mathbb E[R\lVert\psi\rVert^2]/\mathbb E\lVert\psi\rVert^2=1\ne v_\pi(s)=2$ (Mệnh đề 10.3)."; dòng hành lang rút còn "Lượt hành lang, $b=v_\pi$: $\widehat g_b=(9{,}5;\,-9{,}5)$, cùng chiều $\nabla_\theta J$." (bản đầy đủ cao 704 px), $(-5{,}5;\,5{,}5)$ chuyển vào ghi chú. Cao 661 px.
+3. `L10-200` dòng dẫn: "Phép trừ một mức không phụ thuộc hành động khỏi lợi tức giữ kỳ vọng và có thể giảm phương sai." (21 âm tiết).
+4. `L10-207` mở bằng câu vấn đề "Với $b=v_\pi$, hệ số $G_t-v_\pi(S_t)$ đo $A_t$ tốt hơn mức chung của $S_t$ bao nhiêu."; dòng kết quả bài toán một bước đặt sau Định nghĩa 10.4. `L10-212` thêm "Thuật toán 10.6 chờ hết lượt; critic đánh giá $A_t$ ngay sau một bước."; "Trực quan." rút còn điều kiện so sánh. Cả hai trong trần 60 (`deck_lint` sạch).
+5. `L10-212b`: dòng dưới hình thêm "nhân với $I=\gamma^t$".
+6. `L10-213`: giả thiết Mệnh đề 10.8 thêm "phần thưởng bị chặn, $0\le\gamma<1$; $\pi$ Markov dừng" theo ghi chú; hai câu dùng số của chuỗi (critic đúng $(1{,}4;\,2)$; bỏ mặt nạ cho $\delta_0=0{,}5$) chuyển sang ghi chú diễn giả `L10-214e`.
+7. `L10-214`: bỏ câu chuyển trạng thái trên mặt trang (hình mang thông tin này; câu chuyển xuống ghi chú); thêm $e_A=(1;\,0)$, $e_B=(0;\,1)$; dòng "Tính …" thành "Tính $v_\pi$, $q_\pi$, $A_\pi$, rồi hai bước actor–critic và ba hệ số của hàm điểm trên một lượt." Cao 569 px.
+8. `L10-214c`: tiêu đề cột "tọa độ $\theta_s$ của $\psi$"; dòng trọng số tách hai dòng: "Tổng cột $\pi A_\pi\psi$: $0{,}2$ tại $s_A$ ($t=0$, trọng số $1$), $\tfrac23$ tại $s_B$; theo Mệnh đề 10.5(b):" và "$\nabla_\theta J=(0{,}2;\ \gamma\Pr(S_1=s_B)\cdot\tfrac23)=(0{,}2;\ 0{,}9\cdot\tfrac12\cdot\tfrac23)=(0{,}2;\ 0{,}3)$". Cao 689 px.
+9. `L10-214e`: thêm dòng "$\sigma(0{,}175)=1/(1+e^{-0{,}175})=1/(1+0{,}8395)=0{,}5436$; $\sigma(1{,}1431)=1/(1+0{,}3188)=0{,}7583$"; ghi chú bỏ câu trùng, nhận hai câu từ `L10-213`. Cao 690 px.
+10. `L10-214f` ghi chú: "(Ví dụ 10.8; Nhận xét 10.10)".
+11. Storyboard: số trang mạch 2 là 19 (bảng mạch, bảng phụ lục, mục "Mạch 2 theo NT23"); liên kết từng trang `L10-201`→`L10-203`, `L10-203`←`L10-201`, `L10-205`→`L10-207`, `L10-207`←`L10-205`, `L10-210`→`L10-212`, `L10-212`←`L10-210`, `L10-213`→`L10-214` (đã đúng), `L10-215`←`L10-214f`, `L10-215`→`L10-300`; "Mặt trang" của `L10-201`, `L10-207` viết lại.
+
+Kiểm tra: Playwright 1280×720 và 1600×900, không lỗi console, không yêu cầu hỏng, không `.katex-error`; `deck_lint`: 58 phát hiện trên 129 trang, không phát hiện nào ở mạch 2.

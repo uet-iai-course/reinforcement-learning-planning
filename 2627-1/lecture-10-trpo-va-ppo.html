@@ -154,36 +154,24 @@
 <section data-slide-id="L10-200" id="mach-2" class="strand-title" data-note-topic-id="lec-10-topic-03">
 <div class="strand-title-body">
 <h2><span class="strand-number">2.</span>Đường cơ sở, hàm lợi thế và actor–critic</h2>
-<p class="strand-lead">Trừ khỏi lợi tức một mức không phụ thuộc hành động giữ kỳ vọng và có thể giảm phương sai.</p>
+<p class="strand-lead">Phép trừ một mức không phụ thuộc hành động khỏi lợi tức giữ kỳ vọng và có thể giảm phương sai.</p>
 <p class="strand-keys">Đường cơ sở · Hàm lợi thế · Critic · Sai số sai phân thời gian · Actor–critic một bước</p>
 </div>
 <aside class="notes"><p>Trên hành lang ngắn, một lượt REINFORCE cho bước ngược chiều gradient vì ước lượng có phương sai lớn. Ở phần này, lợi tức được so với một mức của trạng thái, đại lượng còn lại được đặt tên là lợi thế, rồi lợi tức Monte Carlo được thay bằng một bước bootstrap của critic. Kết quả giao cho phần 3 là hai hệ số của hàm điểm: $G_t-\hat v(S_t)$ không chệch cho gradient, và sai số TD $\delta_t$ ước lượng lợi thế khi critic đúng.</p></aside>
 </section>
 <section data-slide-id="L10-201" data-note-topic-id="lec-10-topic-03">
 <h2>Mức so sánh của trạng thái</h2>
-<p>Bài toán một bước: một trạng thái $s$, hai hành động, softmax với ${\phi(s,a)=e_a}$, ${\theta=(\log2;\,0)}$, lượt dừng sau $A_0$; ${\pi_\theta(\cdot\mid s)=(\tfrac23;\,\tfrac13)}$, ${\psi_\theta(s,1)=(\tfrac13;\,-\tfrac13)}$, ${\psi_\theta(s,2)=(-\tfrac23;\,\tfrac23)}$, ${r=(3;\,0)}$.</p>
-<p>Cộng $1$ vào phần thưởng giữ gradient $(\tfrac23;\,-\tfrac23)$; tổng phương sai ${\mathbb E\lVert\widehat g-\mathbb E\widehat g\rVert^2}$ tăng từ $\tfrac49$ lên $\tfrac{16}9$.</p>
+<p>Bài toán một bước (Bài 09), ${\pi_\theta(\cdot\mid s)=(\tfrac23;\,\tfrac13)}$, ${r=(3;\,0)}$: cộng $1$ vào phần thưởng giữ gradient $(\tfrac23;\,-\tfrac23)$, tổng phương sai tăng từ $\tfrac49$ lên $\tfrac{16}9$.</p>
 <p><strong>Trực quan.</strong> So $G_t$ với một mức $b(S_t)$ chỉ phụ thuộc trạng thái.</p>
 <p>Hệ số của $\psi_t$ là $G_t-b(S_t)$: dương thì tăng, âm thì giảm xác suất hành động đã chọn.</p>
-<aside class="notes"><p>Một hành động tốt là hành động cho lợi tức cao hơn mức thường đạt được tại trạng thái đó. Trong một MDP, mức so sánh phải thay đổi theo trạng thái, vì ở trạng thái mà mọi hành động đều có giá trị cao, mức so sánh phải cao thì mới phân biệt được hành động tốt hơn. Mức so sánh không được phụ thuộc hành động đã chọn; Bước 2 của chứng minh phép trừ không làm chệch dùng đúng giả thiết này. Bài toán một bước là Ví dụ 10.1 của ghi chú; $e_a$ là vector đơn vị thứ $a$, và $\widehat g=r(A_0)\,\psi_\theta(s,A_0)$. Tổng phương sai là tổng phương sai các tọa độ: $\tfrac23\cdot\tfrac29+\tfrac13\cdot\tfrac89=\tfrac49$, và $\tfrac23\cdot\tfrac89+\tfrac13\cdot\tfrac{32}9=\tfrac{16}9$ khi $r=(4;\,1)$.</p><p class="note-source"><strong>Nguồn:</strong> Sutton và Barto (2018), §13.4, tr. 329; ghi chú bài giảng Bài 10, §2.1; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 11.</p></aside>
-</section>
-<section data-slide-id="L10-202" data-note-topic-id="lec-10-topic-03">
-<h2>Ví dụ: ba đường cơ sở trên bài toán một bước</h2>
-<div class="grid2 wide-right"><img class="figure" src="img/lec-09/one-step-card.svg" alt="Thẻ dữ kiện bài toán một bước, chính sách softmax, hai hành động: bảng hai cột cho a bằng 1 và a bằng 2, đặc trưng phi của s, a bằng (1; 0) và (0; 1); xác suất pi theta bằng 2/3 và 1/3; phần thưởng r bằng 3 và 0. Dòng dưới: theta bằng (log 2; 0), lượt dừng sau A 0."/>
-<div>
-<p>Tính ${X_b=\bigl(r(A)-b\bigr)\psi_\theta(s,A)}$ với ${b\in\{0;\,2;\,1\}}$.</p>
-<p>$\mathbb EX_b=(\tfrac23;\,-\tfrac23)$ với mọi $b$; $\operatorname{Var}(X_b)$: $\tfrac49$, $\tfrac49$, $0$.</p>
-<div>$$\operatorname{Var}(X_b)=\tfrac49(b-1)^2\quad(b=3:\ \tfrac{16}9).$$</div>
-</div></div>
-<p><strong>Lưu ý:</strong> đường cơ sở hằng tốt nhất là ${b^*=\mathbb E[R\lVert\psi\rVert^2]/\mathbb E\lVert\psi\rVert^2=1}$, khác ${v_\pi(s)=2}$ (Mệnh đề 10.3).</p>
-<aside class="notes"><p>Với $b=1$, cả hai hành động cho $X_1=(\tfrac23;\,-\tfrac23)$, đúng bằng gradient, nên phương sai bằng $0$. Tổng quát, $\operatorname{Var}(X_b)=\operatorname{Var}(X_{b^*})+\mathbb E\lVert\psi\rVert^2(b-b^*)^2$ với $\mathbb E\lVert\psi\rVert^2=\tfrac49$: khai triển bậc hai theo $b$ cho đúng một cực tiểu. Đường cơ sở $b=3$ làm phương sai tăng lên $\tfrac{16}9$, nên trừ một đường cơ sở không luôn giảm phương sai. Giá trị trạng thái $v_\pi(s)=2$ không phải đường cơ sở tối ưu; mệnh đề này chỉ nói về bài toán một bước và đường cơ sở hằng.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.3, Mệnh đề 10.3; Greensmith, Bartlett và Baxter (2004), §5.</p></aside>
+<aside class="notes"><p>Một hành động tốt là hành động cho lợi tức cao hơn mức thường đạt được tại trạng thái đó. Trong một MDP, mức so sánh phải thay đổi theo trạng thái, vì ở trạng thái mà mọi hành động đều có giá trị cao, mức so sánh phải cao thì mới phân biệt được hành động tốt hơn. Mức so sánh không được phụ thuộc hành động đã chọn; Bước 2 của chứng minh phép trừ không làm chệch dùng đúng giả thiết này. Bài toán một bước (Ví dụ 10.1 của ghi chú): một trạng thái, hai hành động, softmax với $\phi(s,a)=e_a$, vector đơn vị thứ $a$, $\theta=(\log2;\,0)$, lượt dừng sau $A_0$; $\psi_\theta(s,1)=(\tfrac13;\,-\tfrac13)$, $\psi_\theta(s,2)=(-\tfrac23;\,\tfrac23)$, $\widehat g=r(A_0)\psi_\theta(s,A_0)$. Tổng phương sai $\mathbb E\lVert\widehat g-\mathbb E\widehat g\rVert^2$ là tổng phương sai các tọa độ: $\tfrac23\cdot\tfrac29+\tfrac13\cdot\tfrac89=\tfrac49$, và $\tfrac23\cdot\tfrac89+\tfrac13\cdot\tfrac{32}9=\tfrac{16}9$ khi $r=(4;\,1)$.</p><p class="note-source"><strong>Nguồn:</strong> Sutton và Barto (2018), §13.4, tr. 329; ghi chú bài giảng Bài 10, §2.1; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 11.</p></aside>
 </section>
 <section data-slide-id="L10-203" data-note-topic-id="lec-10-topic-03">
 <h2>Đường cơ sở</h2>
 <p><strong>Định nghĩa 10.1.</strong> Hàm bị chặn $b:\mathcal S\to\mathbb R$ gọi là <em>đường cơ sở</em>; ước lượng có đường cơ sở là</p>
 <div>$$\widehat g_b=\sum_{t=0}^{T-1}\gamma^t\bigl(G_t-b(S_t)\bigr)\psi_t.$$</div>
 <p>Dãy bị chặn $B_t$ là đường cơ sở ngẫu nhiên nếu khi biết $(H_t,B_t)$, $A_t$ vẫn có phân phối $\pi_\theta(\cdot\mid S_t)$.</p>
-<aside class="notes"><p>Với $X_b$ của bài toán một bước, $T=1$ và $\widehat g_b=X_b$. Với $b\equiv0$, $\widehat g_b$ là ước lượng REINFORCE. Hàm $\hat v(S_t,w)$ với $w$ giữ cố định trong lượt là một đường cơ sở; trung bình $G_0$ của các lượt khác, độc lập với lượt đang xét, là một đường cơ sở ngẫu nhiên. Lợi tức $G_t$ của chính lượt không là đường cơ sở, vì nó phụ thuộc $A_t$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Định nghĩa 10.1; Sutton và Barto (2018), §13.4, (13.11).</p></aside>
+<aside class="notes"><p>Trên bài toán một bước, $T=1$ và $\widehat g_b=\bigl(r(A_0)-b\bigr)\psi_\theta(s,A_0)$. Với $b\equiv0$, $\widehat g_b$ là ước lượng REINFORCE. Hàm $\hat v(S_t,w)$ với $w$ giữ cố định trong lượt là một đường cơ sở; trung bình $G_0$ của các lượt khác, độc lập với lượt đang xét, là một đường cơ sở ngẫu nhiên. Lợi tức $G_t$ của chính lượt không là đường cơ sở, vì nó phụ thuộc $A_t$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Định nghĩa 10.1; Sutton và Barto (2018), §13.4, (13.11).</p></aside>
 </section>
 <section data-slide-id="L10-204" data-note-topic-id="lec-10-topic-03">
 <h2>Đường cơ sở không làm chệch</h2>
@@ -191,42 +179,36 @@
 <p><strong>Kết luận:</strong></p>
 <div>$$\mathbb E\Bigl[\sum_{t=0}^{T-1}\gamma^tb(S_t)\,\psi_t\Bigr]=0,\qquad\text{nên}\quad\mathbb E[\widehat g_b]=\nabla_\theta J(\theta).$$</div>
 <p><strong>Ý nghĩa:</strong> phép trừ giữ nguyên kỳ vọng của ước lượng, chỉ đổi độ phân tán của các mẫu.</p>
-<aside class="notes"><p>Ba giả thiết có phản ví dụ riêng. Đường cơ sở phụ thuộc hành động: trên bài toán một bước, $b=r(A)$ cho $\widehat g_b\equiv0$. Hành động không lấy từ $\pi_\theta$: nếu chọn đều mỗi hành động với xác suất $\tfrac12$, $\mathbb E[b\,\psi]=b\,(-\tfrac16;\,\tfrac16)\ne0$ khi $b\ne0$. Đường cơ sở không bị chặn, như phân phối Cauchy: kỳ vọng không xác định. Mệnh đề nói về kỳ vọng, không nói về phương sai. Điều cần là $b$ không phụ thuộc $A_t$ khi đã biết lịch sử $H_t$, không phải $b$ độc lập với $A_t$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Mệnh đề 10.2; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 11.</p></aside>
+<p>Bài toán một bước, $b$ hằng: tổng phương sai $\tfrac49(b-1)^2$, nhỏ nhất tại ${b^*=\mathbb E[R\lVert\psi\rVert^2]/\mathbb E\lVert\psi\rVert^2=1\ne v_\pi(s)=2}$ (Mệnh đề 10.3).</p>
+<p>Lượt hành lang, $b=v_\pi$: ${\widehat g_b=(9{,}5;\,-9{,}5)}$, cùng chiều $\nabla_\theta J$.</p>
+<aside class="notes"><p>Đường cơ sở $b=3$ cho tổng phương sai $\tfrac{16}9$, lớn hơn $\tfrac49$ của $b=0$, nên phép trừ không luôn giảm phương sai (Ví dụ 10.3). Trên lượt hành lang, $v_\pi=(-12;\,-10;\,-6)$, các hệ số $G_t-v_\pi(S_t)$ là $7,6,9,8,5$, và khi không trừ, $\widehat g=(-5{,}5;\,5{,}5)$ (Ví dụ 10.4). Ba giả thiết có phản ví dụ riêng. Đường cơ sở phụ thuộc hành động: trên bài toán một bước, $b=r(A)$ cho $\widehat g_b\equiv0$. Hành động không lấy từ $\pi_\theta$: nếu chọn đều mỗi hành động với xác suất $\tfrac12$, $\mathbb E[b\,\psi]=b\,(-\tfrac16;\,\tfrac16)\ne0$ khi $b\ne0$. Đường cơ sở không bị chặn, như phân phối Cauchy: kỳ vọng không xác định. Mệnh đề nói về kỳ vọng, không nói về phương sai. Điều cần là $b$ không phụ thuộc $A_t$ khi đã biết lịch sử $H_t$, không phải $b$ độc lập với $A_t$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Mệnh đề 10.2; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 11.</p></aside>
 </section>
 <section data-slide-id="L10-205" data-note-topic-id="lec-10-topic-03">
 <h2>Chứng minh: đường cơ sở không làm chệch</h2>
-<p><strong>Bước 1.</strong> $\widehat g_b=\widehat g-\sum_t\gamma^tb(S_t)\psi_t$ và ${\mathbb E[\widehat g]=\nabla_\theta J}$ (Hệ quả 09.26).</p>
-<p><strong>Bước 2.</strong> Khi biết $H_t$, $t&lt;T$: $b(S_t)$ đã xác định và ${A_t\sim\pi_\theta(\cdot\mid S_t)}$, nên</p>
-<div>$$\mathbb E\bigl[b(S_t)\psi_t\mid H_t\bigr]=b(S_t)\sum_a\pi_\theta(a\mid S_t)\,\psi_\theta(S_t,a)=0.$$</div>
-<p><strong>Bước 3.</strong> Tính chất tháp cho $\mathbb E[\gamma^tb(S_t)\psi_t]=0$; cộng $T_{\max}$ số hạng. $\square$</p>
+<ol>
+<li>$\widehat g_b=\widehat g-\sum_t\gamma^tb(S_t)\psi_t$ và ${\mathbb E[\widehat g]=\nabla_\theta J}$ (Hệ quả 09.26).</li>
+<li>Khi biết $H_t$, $t&lt;T$: $b(S_t)$ đã xác định và ${A_t\sim\pi_\theta(\cdot\mid S_t)}$, nên
+<div>$$\mathbb E\bigl[b(S_t)\psi_t\mid H_t\bigr]=b(S_t)\sum_a\pi_\theta(a\mid S_t)\,\psi_\theta(S_t,a)=0.$$</div></li>
+<li>Tính chất tháp cho $\mathbb E[\gamma^tb(S_t)\psi_t]=0$; cộng $T_{\max}$ số hạng. $\square$</li>
+</ol>
 <aside class="notes"><p>Ở Bước 1, với quy ước $\psi_t=0$ khi $t\ge T$ và giả thiết $T\le T_{\max}$ của (G3), tổng theo $t$ đến $T-1$ bằng tổng có $T_{\max}$ số hạng cố định, nên được đổi chỗ tổng và kỳ vọng. Bước 2 dùng hai giả thiết: $b(S_t)$ là hàm của $H_t$, không phụ thuộc $A_t$; và $A_t$ lấy từ chính $\pi_\theta(\cdot\mid S_t)$, vì chính sách và trạng thái có tính Markov theo (G1). Đẳng thức cuối là kỳ vọng bằng $0$ của hàm điểm, cần (G2). Bước 3 cần $b(S_t)\psi_t$ khả tích: $\lvert b\rvert\le\bar b$ và hàm điểm khả tích theo (G4). Với đường cơ sở ngẫu nhiên $B_t$, Bước 2 điều kiện theo $(H_t,B_t)$ thay cho $H_t$, và cùng chuỗi đẳng thức cho kỳ vọng $0$. Lập luận này là lập luận đã dùng cho phần thưởng quá khứ ở Bài 09 (Bổ đề 09.22).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, chứng minh Mệnh đề 10.2.</p></aside>
-</section>
-<section data-slide-id="L10-206" data-note-topic-id="lec-10-topic-03">
-<h2>Ví dụ: đường cơ sở trên lượt hành lang</h2>
-<p>Lượt hành lang: hành động $1,1,1,2,1$; trạng thái $s_1,s_2,s_1,s_2,s_3$; ${G_t=-5,-4,-3,-2,-1}$.</p>
-<p>Đường cơ sở $b=v_\pi=(-12;\,-10;\,-6)$ tại $s_1,s_2,s_3$, với $p=\tfrac12$. Tính $\widehat g_b$.</p>
-<p>$G_t-v_\pi(S_t)=7,6,9,8,5$.</p>
-<p>$\widehat g_b=(9{,}5;\,-9{,}5)$, cùng chiều $\nabla_\theta J=(2;\,-2)$; không đường cơ sở: $(-5{,}5;\,5{,}5)$.</p>
-<p><strong>Diễn giải:</strong> số bước còn lại ${-G_t\le5}$ ít hơn số bước kỳ vọng ${-v_\pi(S_t)\ge6}$, nên mọi chênh lệch dương.</p>
-<aside class="notes"><p>$v_\pi$ giải từ hệ ba phương trình Bellman với $p=\tfrac12$: $v(s_1)=v(s_2)-2$, $v(s_3)=\tfrac12v(s_2)-1$, rồi $v(s_2)=-10$; kiểm lại $v_\pi(s_1)=-12=J(\tfrac12)$. Tọa độ thứ nhất của $\widehat g_b$ là $\tfrac12(7+6+9+5)-\tfrac12\cdot8=9{,}5$. Với $\gamma=1$ và phần thưởng $-1$ mỗi bước, $-G_t$ là số bước còn lại của lượt và $-v_\pi(S_t)$ là số bước còn lại kỳ vọng; các cặp trên lượt là $(5;12)$, $(4;10)$, $(3;12)$, $(2;10)$, $(1;6)$. Bốn lần tăng xác suất cho hành động 1 thắng một lần tăng cho hành động 2. Trên lượt này, phép trừ đổi dấu của mọi hệ số. Một lượt dài hơn $12$ bước cho chênh lệch âm ở bước đầu.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.4; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 11.</p></aside>
 </section>
 <section data-slide-id="L10-207" data-note-topic-id="lec-10-topic-05">
 <h2>Hàm lợi thế</h2>
-<p><strong>Nhu cầu:</strong> gọi tên đại lượng mà các hệ số $7,6,9,8,5$ ước lượng.</p>
+<p>Với $b=v_\pi$, hệ số $G_t-v_\pi(S_t)$ đo $A_t$ tốt hơn mức chung của $S_t$ bao nhiêu.</p>
 <p><strong>Trực quan.</strong> Khi biết $(H_t,A_t)$, hệ số $G_t-v_\pi(S_t)$ có kỳ vọng ${q_\pi(S_t,A_t)-v_\pi(S_t)}$: dương khi $A_t$ tốt hơn mức chung của $S_t$.</p>
-<p><strong>Ví dụ.</strong> Bài toán một bước: $q_\pi=(3;\,0)$, $v_\pi=2$, hiệu $(1;\,-2)$; với $r=(4;\,1)$, hiệu vẫn là $(1;\,-2)$.</p>
 <p><strong>Định nghĩa 10.4.</strong> Với chính sách Markov dừng $\pi$, <em>hàm lợi thế</em> (advantage function) là</p>
 <div>$$A_\pi(s,a)=q_\pi(s,a)-v_\pi(s),\qquad s\in\mathcal S,\ a\in\mathcal A;$$</div>
 <p>$A_\pi=0$ sau khi lượt kết thúc.</p>
-<aside class="notes"><p>Kỳ vọng có điều kiện của $G_t$ là Bổ đề 03.20(d). Các hệ số $7,6,9,8,5$ là các hiệu $G_t-v_\pi(S_t)$ trên lượt hành lang, tức mẫu của lợi thế. $A_\pi(s,a)&gt;0$ nghĩa là thực hiện $a$ tại $s$ rồi theo $\pi$ cho lợi tức kỳ vọng lớn hơn theo $\pi$ ngay từ $s$. Cộng một hằng vào mọi phần thưởng không đổi lợi thế, khác với phương sai $\tfrac{16}9$ của REINFORCE. Lợi thế trung bình của chính sách khác $\pi'$ tại $s$ là $A_\pi(s,\pi')=\sum_a\pi'(a\mid s)A_\pi(s,a)$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §2.3, Định nghĩa 10.4, Ví dụ 10.5; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 5, 8.</p></aside>
+<p>Bài toán một bước: ${A_\pi(s,\cdot)=(1;\,-2)}$, không đổi khi cộng $1$ vào phần thưởng.</p>
+<aside class="notes"><p>Kỳ vọng có điều kiện của $G_t$ là Bổ đề 03.20(d). Trên bài toán một bước, $q_\pi(s,\cdot)=(3;\,0)$ và $v_\pi(s)=2$; với $r=(4;\,1)$, $q_\pi=(4;\,1)$ và $v_\pi=3$, nên hiệu vẫn là $(1;\,-2)$ (Ví dụ 10.5). $A_\pi(s,a)&gt;0$ nghĩa là thực hiện $a$ tại $s$ rồi theo $\pi$ cho lợi tức kỳ vọng lớn hơn theo $\pi$ ngay từ $s$. Cộng một hằng vào mọi phần thưởng không đổi lợi thế, khác với phương sai $\tfrac{16}9$ của REINFORCE. Lợi thế trung bình của chính sách khác $\pi'$ tại $s$ là $A_\pi(s,\pi')=\sum_a\pi'(a\mid s)A_\pi(s,a)$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §2.3, Định nghĩa 10.4, Ví dụ 10.5; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 5, 8.</p></aside>
 </section>
 <section data-slide-id="L10-208" data-note-topic-id="lec-10-topic-05">
 <h2>Gradient dạng lợi thế</h2>
 <p><strong>Mệnh đề 10.5.</strong> MDP hữu hạn, phần thưởng bị chặn, $\gamma&lt;1$, $\pi=\pi_\theta$ Markov dừng; (b) thêm (G1)–(G4). Khi đó (a) ${\sum_a\pi_\theta(a\mid s)A_\pi(s,a)=0}$ với mọi $s$; (b)</p>
 <div>$$\nabla_\theta J(\theta)=\mathbb E_{\pi_\theta}\Bigl[\sum_{t=0}^{T-1}\gamma^tA_\pi(S_t,A_t)\,\psi_t\Bigr].$$</div>
-<p>Bài toán một bước: ${\tfrac23\cdot1\cdot\psi(s,1)+\tfrac13(-2)\,\psi(s,2)=(\tfrac29;\,-\tfrac29)+(\tfrac49;\,-\tfrac49)=(\tfrac23;\,-\tfrac23)}$.</p>
 <p><strong>Chứng minh.</strong> Đường cơ sở $b=v_\pi$ không làm chệch, rồi tính chất tháp theo $(H_t,A_t)$.</p>
-<aside class="notes"><p>Lợi thế trong (b) phải là của chính chính sách đang được lấy gradient. Kết luận (a) là lý do $A_\pi$ có trung bình $0$ tại mỗi trạng thái. Theo Hệ quả 09.24, (b) còn có dạng chiếm dụng $\nabla_\theta J=\tfrac1{1-\gamma}\mathbb E_{S\sim\nu^\pi,A\sim\pi_\theta}[A_\pi(S,A)\psi_\theta(S,A)]$, với $\nu^\pi$ là phân bố chiếm dụng chiết khấu. Từ đây, mọi phương pháp của bài chỉ cần một ước lượng của lợi thế.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Mệnh đề 10.5, Ví dụ 10.5.</p></aside>
+<aside class="notes"><p>Lợi thế trong (b) phải là của chính chính sách đang được lấy gradient. Kết luận (a) là lý do $A_\pi$ có trung bình $0$ tại mỗi trạng thái. Theo Hệ quả 09.24, (b) còn có dạng chiếm dụng $\nabla_\theta J=\tfrac1{1-\gamma}\mathbb E_{S\sim\nu^\pi,A\sim\pi_\theta}[A_\pi(S,A)\psi_\theta(S,A)]$, với $\nu^\pi$ là phân bố chiếm dụng chiết khấu. Từ đây, mọi phương pháp của bài chỉ cần một ước lượng của lợi thế. Trên bài toán một bước, (b) cho $\tfrac23\cdot1\cdot\psi(s,1)+\tfrac13(-2)\psi(s,2)=(\tfrac29;\,-\tfrac29)+(\tfrac49;\,-\tfrac49)=(\tfrac23;\,-\tfrac23)$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Mệnh đề 10.5, Ví dụ 10.5.</p></aside>
 </section>
 <section data-slide-id="L10-209" data-note-topic-id="lec-10-topic-05">
 <h2>Thuật toán REINFORCE có đường cơ sở</h2>
@@ -238,7 +220,7 @@
 <li>${w\leftarrow w_{\mathrm{old}}+\alpha_w\sum_t\bigl(G_t-\hat v(S_t,w_{\mathrm{old}})\bigr)\nabla_w\hat v(S_t,w_{\mathrm{old}})}$.</li>
 <li>${\theta\leftarrow\theta_{\mathrm{old}}+\alpha_\theta\sum_t\gamma^t\bigl(G_t-\hat v(S_t,w_{\mathrm{old}})\bigr)\psi_t}$.</li>
 </ol>
-<aside class="notes"><p>$\hat v$ dùng $w_{\mathrm{old}}$ cố định trong cả lượt, nên là một đường cơ sở hợp lệ theo Mệnh đề 10.2. Bước 3 hồi quy $\hat v$ về lợi tức Monte Carlo, không có trọng số $\gamma^t$; bước 4 có $\gamma^t$ như REINFORCE. Ví dụ trên lượt hành lang chỉ tính bước cập nhật chính sách, với $b=v_\pi$ và $\gamma=1$, ngoài giả thiết $\gamma&lt;1$ của thuật toán. Thuật toán vẫn chờ lượt kết thúc, và $\hat v$ chỉ đánh giá $S_t$, nên theo Sutton và Barto (2018, §13.5) nó không là phương pháp actor–critic.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Thuật toán 10.6; Sutton và Barto (2018), §13.4, tr. 330.</p></aside>
+<aside class="notes"><p>$\hat v$ dùng $w_{\mathrm{old}}$ cố định trong cả lượt, nên là một đường cơ sở hợp lệ theo Mệnh đề 10.2. Bước 3 hồi quy $\hat v$ về lợi tức Monte Carlo, không có trọng số $\gamma^t$; bước 4 có $\gamma^t$ như REINFORCE. Thuật toán vẫn chờ lượt kết thúc, và $\hat v$ chỉ đánh giá $S_t$, nên theo Sutton và Barto (2018, §13.5) nó không là phương pháp actor–critic.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Thuật toán 10.6; Sutton và Barto (2018), §13.4, tr. 330.</p></aside>
 </section>
 <section data-slide-id="L10-210" data-note-topic-id="lec-10-topic-03">
 <h2>Bài tập: đường cơ sở hợp lệ</h2>
@@ -249,53 +231,92 @@
 <p class="fragment">(c), (d): $G_t-B_t=0$, nên ${\widehat g_B\equiv0\ne\nabla_\theta J}$; ở (c), ${\nabla_\theta J=(\tfrac23;\,-\tfrac23)}$.</p>
 <aside class="notes"><p>Gợi ý: kiểm xem khi biết $(H_t,B_t)$, hành động $A_t$ có còn phân phối $\pi_\theta(\cdot\mid S_t)$ không. Ở (b), các lượt khác phải độc lập với lượt đang xét; lỗi thường gặp là lấy trung bình $G_0$ của cả batch, kể cả lượt đang xét, khi đó $B_t$ chứa phần thưởng đến sau $A_t$. Ở (c) và (d), $B_t$ phụ thuộc $A_t$, nên Bước 2 của chứng minh không còn đúng. Bài tập kiểm việc nhận ra điều kiện $A_t\sim\pi_\theta(\cdot\mid S_t)$ khi biết $(H_t,B_t)$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bài tập 10.1.</p></aside>
 </section>
-<section data-slide-id="L10-211" data-note-topic-id="lec-10-topic-06">
-<h2>Ví dụ: chuỗi hai trạng thái</h2>
-<div class="grid2 wide-right"><img class="figure" src="img/lec-10/two-state-chain.svg" alt="Chuỗi hai trạng thái. Ô s A, ghi xuất phát và p A bằng xác suất chọn hành động 1, có hai cung: hành động 1 sang ô s B với phần thưởng 0; hành động 2 tới ô kết thúc tô xám với phần thưởng 1. Ô s B, ghi p B, có hai cung tới ô kết thúc: hành động 1 với phần thưởng 3, hành động 2 với phần thưởng 0. Góc dưới ghi gamma bằng 0,9 và chính sách cũ p A bằng 1/2, p B bằng 2/3."/>
-<div>
-<p>$s_A$: hành động 1 sang $s_B$ ($r=0$), hành động 2 kết thúc ($r=1$); $s_B$: kết thúc, hành động 1: ${r=3}$, hành động 2: ${r=0}$; $\gamma=0{,}9$.</p>
-</div></div>
-<p>${\theta=(\theta_A;\,\theta_B)=(0;\,\log2)}$, $p_s=\sigma(\theta_s)$: $p_A=\tfrac12$, $p_B=\tfrac23$; $v_\pi(s_B)=2$, ${q_\pi(s_A,\cdot)=(1{,}8;\,1)}$, ${v_\pi(s_A)=1{,}4=J}$.</p>
-<p>$A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$, $A_\pi(s_B,\cdot)=(1;\,-2)$; $\nabla_\theta J=(0{,}2;\,0{,}3)$.</p>
-<p><strong>Câu hỏi:</strong> kiểm (a) của Mệnh đề 10.5 tại $s_A$ và $s_B$.</p>
-<p class="fragment"><strong>Lời giải:</strong> $\tfrac12\cdot0{,}4+\tfrac12(-0{,}4)=0$; $\tfrac23\cdot1+\tfrac13(-2)=0$.</p>
-<aside class="notes"><p>Chính sách có một tham số cho mỗi trạng thái, $\psi_\theta(s,1)=(1-p_s)e_s$, $\psi_\theta(s,2)=-p_se_s$, với $e_A=(1;\,0)$, $e_B=(0;\,1)$. Gradient tính trực tiếp từ $J=p_A\cdot2{,}7p_B+(1-p_A)$ là $(0{,}2;\,0{,}3)$. Theo gradient dạng lợi thế: bước $0$ ở $s_A$ đóng góp $0{,}2\,e_A$; bước $1$ ở $s_B$, xảy ra với xác suất $p_A=\tfrac12$ và trọng số $\gamma=0{,}9$, đóng góp $0{,}3\,e_B$. Chỉ hành động 1 tại $s_A$ dẫn tới $s_B$, nên lợi thế tại $s_A$ phụ thuộc $s_B$ qua $q_\pi(s_A,1)=\gamma v_\pi(s_B)$. Phân bố chiếm dụng của chuỗi là $(0{,}1;\,0{,}045)$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.6; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 12.</p></aside>
-</section>
 <section data-slide-id="L10-212" data-note-topic-id="lec-10-topic-06">
 <h2>Critic, actor và phương pháp actor–critic</h2>
-<p><strong>Nhu cầu:</strong> cập nhật sau mỗi bước, không chờ hết lượt.</p>
-<p><strong>Trực quan.</strong> Chuỗi hai trạng thái, $\hat v=(1;\,1{,}5)$: sau một bước, ${0+0{,}9\cdot1{,}5=1{,}35&gt;\hat v(s_A)=1}$, hành động 1 tốt hơn dự báo.</p>
+<p>Thuật toán 10.6 chờ hết lượt; critic đánh giá $A_t$ ngay sau một bước.</p>
+<p><strong>Trực quan.</strong> Nếu ${R_{t+1}+\gamma\hat v(S_{t+1})&gt;\hat v(S_t)}$ thì $A_t$ tốt hơn dự báo.</p>
 <p><strong>Định nghĩa 10.7.</strong> $\hat v(\cdot,w)$ gọi là <em>critic</em> khi đánh giá $A_t$ qua mục tiêu ${R_{t+1}+\gamma(1-Z_{t+1})\hat v(S_{t+1},w)}$; $\pi_\theta$ gọi là <em>actor</em>.</p>
 <p><em>Phương pháp actor–critic</em> cập nhật $\theta$ theo hệ số lập từ mục tiêu này, và $w$ để $\hat v$ xấp xỉ $v_{\pi_\theta}$.</p>
 
-<aside class="notes"><p>REINFORCE có đường cơ sở chờ hết lượt mới cập nhật, và $\hat v$ trong đó chỉ đánh giá $S_t$. Mục tiêu một bước $1{,}35$ lớn hơn dự báo $1$ của critic, nên hành động 1 tốt hơn mức critic chờ đợi tại $s_A$; điều này biết được ngay sau một bước, không phải chờ hết lượt. Theo Sutton và Barto (2018, §13.5, tr. 331), phép bootstrap từ $S_{t+1}$ phân biệt critic với đường cơ sở; bài giảng gốc (tr. 12) dùng tên actor–critic theo nghĩa rộng hơn. Mặt nạ $(1-Z_{t+1})$ thay quy ước $\hat v=0$ tại trạng thái kết thúc (Định nghĩa 05.20, 07.19). Critic cập nhật theo kiểu bán gradient (semi-gradient) của Định nghĩa 07.21: mục tiêu được coi là hằng.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §2.4, Định nghĩa 10.7; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 12.</p></aside>
+<aside class="notes"><p>REINFORCE có đường cơ sở chờ hết lượt mới cập nhật, và $\hat v$ trong đó chỉ đánh giá $S_t$. Theo Sutton và Barto (2018, §13.5, tr. 331), phép bootstrap từ $S_{t+1}$ phân biệt critic với đường cơ sở; bài giảng gốc (tr. 12) dùng tên actor–critic theo nghĩa rộng hơn. Mặt nạ $(1-Z_{t+1})$ thay quy ước $\hat v=0$ tại trạng thái kết thúc (Định nghĩa 05.20, 07.19). Critic cập nhật theo kiểu bán gradient (semi-gradient) của Định nghĩa 07.21: mục tiêu được coi là hằng.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §2.4, Định nghĩa 10.7; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 12.</p></aside>
 </section>
 <section data-slide-id="L10-212b" data-note-topic-id="lec-10-topic-06">
 <h2>Critic, actor và phương pháp actor–critic</h2>
 <p><strong>Nhắc lại:</strong> sai số sai phân thời gian (sai số TD, temporal-difference error) ${\delta_t=R_{t+1}+\gamma(1-Z_{t+1})\hat v(S_{t+1},w)-\hat v(S_t,w)}$.</p>
 <img class="figure short-l" src="img/lec-10/actor-critic-advantage.svg" alt="Sơ đồ một bước chuyển: S t, hành động A t, phần thưởng R t+1, trạng thái S t+1 và cờ Z t+1. Khung critic v mũ của s, w tính v mũ tại S t và tại S t+1. Nút sai số TD: delta t bằng R t+1 cộng gamma nhân (1 trừ Z t+1) nhân v mũ của S t+1, trừ v mũ của S t; phần mục tiêu R t+1 cộng gamma (1 trừ Z t+1) v mũ của S t+1 nằm trong khung nét đứt ghi dừng gradient. Từ delta t có hai mũi tên: tới critic, ghi w cộng alpha w nhân delta t nhân gradient theo w của v mũ tại S t; tới actor pi theta, ghi theta cộng alpha theta nhân I nhân delta t nhân psi theta tại S t, A t."/>
-<p>Cùng một số $\delta_t$: sai lệch cho critic, hệ số của hàm điểm cho actor.</p>
+<p>Cùng một số $\delta_t$: sai lệch cho critic, hệ số của hàm điểm cho actor, nhân với ${I=\gamma^t}$.</p>
 <aside class="notes"><p>Sai số TD đã gặp ở Bài 05 và Bài 07; ở đây nó có mặt nạ kết thúc của Bài 08. Trên hình, critic cho hai giá trị, tại $S_t$ và tại $S_{t+1}$, để lập $\delta_t$. Khung nét đứt đánh dấu mục tiêu được dừng gradient. Mũi tên tới critic là cập nhật $w\leftarrow w+\alpha_w\delta_t\nabla_w\hat v(S_t,w)$; mũi tên tới actor là $\theta\leftarrow\theta+\alpha_\theta I\delta_t\psi_\theta(S_t,A_t)$, với $I=\gamma^t$. Trong actor, $\delta_t$ đứng ở vị trí của $G_t-\hat v(S_t,w)$ của REINFORCE có đường cơ sở, nhưng chỉ chứa một phần thưởng thực.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §2.4, hình sơ đồ actor–critic; Sutton và Barto (2018), §13.5.</p></aside>
 </section>
 <section data-slide-id="L10-213" data-note-topic-id="lec-10-topic-06">
 <h2>Sai số TD và lợi thế</h2>
-<p><strong>Mệnh đề 10.8.</strong> <strong>Giả thiết:</strong> MDP hữu hạn, Markov, $\gamma&lt;1$; critic cố định; $Z_{t+1}=1$ khi và chỉ khi kết thúc; $e=\hat v-v_\pi$.</p>
+<p><strong>Mệnh đề 10.8.</strong> <strong>Giả thiết:</strong> MDP hữu hạn, Markov, phần thưởng bị chặn, $0\le\gamma&lt;1$; $\pi$ Markov dừng; critic cố định; $Z_{t+1}=1$ khi và chỉ khi kết thúc; $e=\hat v-v_\pi$.</p>
 <p><strong>Kết luận:</strong> (a) nếu $\hat v=v_\pi$ thì ${\mathbb E[\delta_t\mid S_t=s,A_t=a]=A_\pi(s,a)}$; (b) tổng quát</p>
 <div>$$\mathbb E[\delta_t\mid S_t=s,A_t=a]=A_\pi(s,a)+\gamma\sum_{s'}P(s'\mid s,a)\,e(s')-e(s).$$</div>
-<p>Critic đúng $(1{,}4;\,2)$: $\delta_0=0{,}4$ hoặc $-0{,}4$; $\delta_1=1$ (hành động 1 tại $s_B$).</p>
 <p><strong>Lưu ý:</strong> điều kiện theo $(S_t,A_t)$; với critic đúng, điều kiện theo $S_t$ cho kỳ vọng $0$.</p>
 <p><strong>Chứng minh.</strong> Kỳ vọng của mục tiêu một bước là ${q_\pi(s,a)+\gamma\sum_{s'}P(s'\mid s,a)e(s')}$.</p>
-<aside class="notes"><p>Bỏ "critic đúng": trên bài toán một bước với $\hat v=1$, $\mathbb E[\delta_0\mid A_0=1]=2\ne A_\pi(s,1)=1$. Bỏ mặt nạ và gán giá trị $1$ cho trạng thái kết thúc: hành động 2 tại $s_A$ cho $\delta_0=0{,}5$ thay vì $-0{,}4$. Với critic đúng, $\mathbb E[\delta_t\mid S_t=s]=\sum_a\pi(a\mid s)A_\pi(s,a)=0$, nên $\delta_t$ chỉ đánh giá hành động khi đặt cạnh hành động đã chọn. Độ chệch trong (b) không do bootstrap gây ra: critic học bằng Monte Carlo nhưng chưa đúng cũng cho số hạng $e$ (Sutton và Barto, 2018, §13.5).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Mệnh đề 10.8 và chứng minh; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 12.</p></aside>
+<aside class="notes"><p>Bỏ "critic đúng": trên bài toán một bước với $\hat v=1$, $\mathbb E[\delta_0\mid A_0=1]=2\ne A_\pi(s,1)=1$. Với critic đúng, $\mathbb E[\delta_t\mid S_t=s]=\sum_a\pi(a\mid s)A_\pi(s,a)=0$, nên $\delta_t$ chỉ đánh giá hành động khi đặt cạnh hành động đã chọn. Độ chệch trong (b) không do bootstrap gây ra: critic học bằng Monte Carlo nhưng chưa đúng cũng cho số hạng $e$ (Sutton và Barto, 2018, §13.5).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Mệnh đề 10.8 và chứng minh; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 12.</p></aside>
 </section>
 <section data-slide-id="L10-214" data-note-topic-id="lec-10-topic-06">
-<h2>Ví dụ: hai bước actor–critic</h2>
-<p>$w=(1;\,1{,}5)$, $\theta=(0;\,\log2)$, $\alpha_w=0{,}5$, $\alpha_\theta=1$; lượt $s_A\xrightarrow{1}s_B\xrightarrow{1}$ kết thúc, $R=(0;\,3)$. Tính mục tiêu, sai số TD, giá trị mới.</p>
-<table><thead><tr><th scope="col">$t$</th><th scope="col">$I$</th><th scope="col">mục tiêu</th><th scope="col">$\delta_t$</th><th scope="col">$w$ mới</th><th scope="col">hướng actor</th><th scope="col">$\theta$ mới</th><th scope="col">$p$ mới</th></tr></thead><tbody>
-<tr><td>$0$</td><td>$1$</td><td>$1{,}35$</td><td>$0{,}35$</td><td>${w_A=1{,}175}$</td><td>$(0{,}175;\,0)$</td><td>${\theta_A=0{,}175}$</td><td>${p_A=0{,}5436}$</td></tr>
-<tr><td>$1$</td><td>$0{,}9$</td><td>$3$</td><td>$1{,}5$</td><td>${w_B=2{,}25}$</td><td>$(0;\,0{,}45)$</td><td>${\theta_B=1{,}1431}$</td><td>${p_B=0{,}7583}$</td></tr>
+<h2>Ví dụ: chuỗi hai trạng thái</h2>
+<img class="figure short" src="img/lec-10/two-state-chain.svg" alt="Chuỗi hai trạng thái. Ô s A, ghi xuất phát và p A bằng xác suất chọn hành động 1, có hai cung: hành động 1 sang ô s B với phần thưởng 0; hành động 2 tới ô kết thúc tô xám với phần thưởng 1. Ô s B, ghi p B, có hai cung tới ô kết thúc: hành động 1 với phần thưởng 3, hành động 2 với phần thưởng 0. Góc dưới ghi gamma bằng 0,9 và chính sách cũ p A bằng 1/2, p B bằng 2/3."/>
+<p>$\gamma=0{,}9$; ${\theta=(\theta_A;\,\theta_B)=(0;\,\log2)}$, ${p_s=\pi_\theta(1\mid s)=\sigma(\theta_s)}$; ${\psi_\theta(s,1)=(1-p_s)\,e_s}$, ${\psi_\theta(s,2)=-p_s\,e_s}$, ${e_A=(1;\,0)}$, ${e_B=(0;\,1)}$.</p>
+<p>Tính $v_\pi$, $q_\pi$, $A_\pi$, rồi hai bước actor–critic và ba hệ số của hàm điểm trên một lượt.</p>
+<aside class="notes"><p>Chính sách có một tham số cho mỗi trạng thái: logit $\theta_s$ cho hành động 1 và $0$ cho hành động 2, nên $p_s=\sigma(\theta_s)$ với $\sigma(x)=1/(1+e^{-x})$. Hai hàm điểm là Mệnh đề 09.16. Tại $s_A$, hành động 1 sang $s_B$ với phần thưởng $0$, hành động 2 kết thúc với phần thưởng $1$; tại $s_B$, hai hành động kết thúc với phần thưởng $3$ và $0$. Mọi lượt bắt đầu ở $s_A$ và dài nhiều nhất hai bước.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.6, phần dữ kiện; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 12.</p></aside>
+</section>
+<section data-slide-id="L10-214b" data-note-topic-id="lec-10-topic-06">
+<h2>Ví dụ: chuỗi hai trạng thái, giá trị</h2>
+<p><strong>Nhắc lại:</strong> ${v_\pi(s)=\sum_a\pi(a\mid s)\,q_\pi(s,a)}$, ${q_\pi(s,a)=r(s,a)+\gamma\sum_{s'}P(s'\mid s,a)\,v_\pi(s')}$.</p>
+<p>${p_A=\sigma(0)=\tfrac12}$; ${p_B=\sigma(\log2)=1/(1+\tfrac12)=\tfrac23}$.</p>
+<p>${q_\pi(s_B,1)=3}$, ${q_\pi(s_B,2)=0}$, vì $s_B$ kết thúc ngay.</p>
+<p>${v_\pi(s_B)=\tfrac23\cdot3+\tfrac13\cdot0=2}$.</p>
+<p>${q_\pi(s_A,1)=0+0{,}9\,v_\pi(s_B)=0{,}9\cdot2=1{,}8}$; ${q_\pi(s_A,2)=1}$.</p>
+<p>${v_\pi(s_A)=\tfrac12\cdot1{,}8+\tfrac12\cdot1=1{,}4=J}$.</p>
+<aside class="notes"><p>Hai công thức nhắc lại là Mệnh đề 03.22 và 03.23. Hành động 2 tại $s_A$ kết thúc lượt, nên $q_\pi(s_A,2)$ chỉ gồm phần thưởng $1$. $J$ là $v_\pi(s_A)$ vì mọi lượt bắt đầu ở $s_A$. Viết theo tham số, $J=p_A\cdot0{,}9\cdot3p_B+(1-p_A)$; tại $p_A=\tfrac12$, $p_B=\tfrac23$ biểu thức này cho $0{,}9+0{,}5=1{,}4$. Đạo hàm trực tiếp cho $\nabla_\theta J=(0{,}2;\,0{,}3)$, với $\mathrm dp_s/\mathrm d\theta_s=p_s(1-p_s)$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.6, phần giá trị và gradient tính trực tiếp.</p></aside>
+</section>
+<section data-slide-id="L10-214c" data-note-topic-id="lec-10-topic-06">
+<h2>Ví dụ: chuỗi hai trạng thái, lợi thế</h2>
+<table><thead><tr><th scope="col">${(s,a)}$</th><th scope="col">${\pi(a\mid s)}$</th><th scope="col">${q_\pi(s,a)}$</th><th scope="col">${v_\pi(s)}$</th><th scope="col">${A_\pi=q-v}$</th><th scope="col">${\pi A_\pi}$</th><th scope="col">tọa độ $\theta_s$ của $\psi$</th><th scope="col">${\pi A_\pi\psi}$</th></tr></thead><tbody>
+<tr><td>$(s_A,1)$</td><td>$\tfrac12$</td><td>$1{,}8$</td><td>$1{,}4$</td><td>$0{,}4$</td><td>$0{,}2$</td><td>$0{,}5$</td><td>$0{,}1$</td></tr>
+<tr><td>$(s_A,2)$</td><td>$\tfrac12$</td><td>$1$</td><td>$1{,}4$</td><td>$-0{,}4$</td><td>$-0{,}2$</td><td>$-0{,}5$</td><td>$0{,}1$</td></tr>
+<tr><td>$(s_B,1)$</td><td>$\tfrac23$</td><td>$3$</td><td>$2$</td><td>$1$</td><td>$\tfrac23$</td><td>$\tfrac13$</td><td>$\tfrac29$</td></tr>
+<tr><td>$(s_B,2)$</td><td>$\tfrac13$</td><td>$0$</td><td>$2$</td><td>$-2$</td><td>$-\tfrac23$</td><td>$-\tfrac23$</td><td>$\tfrac49$</td></tr>
 </tbody></table>
-<p><strong>Diễn giải:</strong> $\delta_0=0{,}35\ne A_\pi(s_A,1)=0{,}4$ vì critic sai.</p>
-<aside class="notes"><p>Critic dạng bảng $\hat v(s,w)=w_s$, nên $\nabla_w\hat v(s,w)=e_s$. Thừa số $I=\gamma^t$ đóng vai trọng số $\gamma^t$ của định lý gradient chính sách. Ở bước $0$: mục tiêu $0+0{,}9\cdot1{,}5=1{,}35$, hướng $1\cdot0{,}35\cdot0{,}5\,e_A$. Ở bước $1$, mặt nạ bằng $0$ vì lượt kết thúc, nên mục tiêu là $3$; hướng $0{,}9\cdot1{,}5\cdot\tfrac13\,e_B$. Kiểm: $\sigma(0{,}175)=1/(1+0{,}8395)=0{,}5436$, $\sigma(1{,}1431)=1/(1+0{,}3188)=0{,}7583$. Cả hai sai số TD dương nên xác suất của hai hành động đã chọn đều tăng.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.7.</p></aside>
+<p>Tổng cột $\pi A_\pi$ theo trạng thái: ${0{,}2-0{,}2=0}$, ${\tfrac23-\tfrac23=0}$ (Mệnh đề 10.5(a)).</p>
+<p>Tổng cột $\pi A_\pi\psi$: $0{,}2$ tại $s_A$ ($t=0$, trọng số $1$), $\tfrac23$ tại $s_B$; theo Mệnh đề 10.5(b):</p>
+<p>${\nabla_\theta J=\bigl(0{,}2;\ \gamma\Pr(S_1=s_B)\cdot\tfrac23\bigr)=\bigl(0{,}2;\ 0{,}9\cdot\tfrac12\cdot\tfrac23\bigr)=(0{,}2;\ 0{,}3)}$.</p>
+<aside class="notes"><p>Ở tọa độ $\theta_B$, trạng thái $s_B$ được thăm ở bước $t=1$ với xác suất $p_A=\tfrac12$, và bước đó có trọng số $\gamma=0{,}9$; vì vậy tổng $\tfrac23$ của $s_B$ được nhân với $0{,}9\cdot\tfrac12$. Kết quả $(0{,}2;\,0{,}3)$ khớp đạo hàm trực tiếp của $J=p_A\cdot2{,}7p_B+(1-p_A)$. Lợi thế tại $s_A$ phụ thuộc $s_B$ qua $q_\pi(s_A,1)=\gamma v_\pi(s_B)$. Ở dạng chiếm dụng, $\nu^\pi=(0{,}1;\,0{,}045)$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.6, phần lợi thế, gradient theo Mệnh đề 10.5(b) và kiểm tra lại.</p></aside>
+</section>
+<section data-slide-id="L10-214d" data-note-topic-id="lec-10-topic-06">
+<h2>Ví dụ: chuỗi hai trạng thái, critic</h2>
+<p>Critic dạng bảng ${\hat v(s,w)=w_s}$, ${w=(w_A;\,w_B)=(1;\,1{,}5)}$, ${\alpha_w=0{,}5}$. Lượt: $s_A$, hành động 1, $R_1=0$; $s_B$, hành động 1, $R_2=3$, kết thúc.</p>
+<p><strong>Nhắc lại:</strong> mục tiêu ${R_{t+1}+\gamma(1-Z_{t+1})\,w_{S_{t+1}}}$; ${\delta_t=\text{mục tiêu}-w_{S_t}}$; ${w_{S_t}\leftarrow w_{S_t}+\alpha_w\delta_t}$.</p>
+<table><thead><tr><th scope="col">$t$</th><th scope="col">$S_t$</th><th scope="col">$R_{t+1}$</th><th scope="col">$Z_{t+1}$</th><th scope="col">$w_{S_{t+1}}$</th><th scope="col">mục tiêu</th><th scope="col">$w_{S_t}$</th><th scope="col">$\delta_t$</th><th scope="col">$w_{S_t}$ mới</th></tr></thead><tbody>
+<tr><td>$0$</td><td>$s_A$</td><td>$0$</td><td>$0$</td><td>$1{,}5$</td><td>$0+0{,}9\cdot1{,}5=1{,}35$</td><td>$1$</td><td>$0{,}35$</td><td>$1{,}175$</td></tr>
+<tr><td>$1$</td><td>$s_B$</td><td>$3$</td><td>$1$</td><td>—</td><td>$3+0=3$</td><td>$1{,}5$</td><td>$1{,}5$</td><td>$2{,}25$</td></tr>
+</tbody></table>
+<aside class="notes"><p>Với critic dạng bảng, $\nabla_w\hat v(s,w)=e_s$, nên cập nhật bán gradient chỉ đổi $w_{S_t}$. Ở bước $1$, lượt kết thúc nên $Z_2=1$ và mặt nạ $1-Z_2$ bằng $0$: mục tiêu chỉ là phần thưởng $3$, không cần giá trị của trạng thái sau. Hai giá trị mới: $w_A=1+0{,}5\cdot0{,}35=1{,}175$ và $w_B=1{,}5+0{,}5\cdot1{,}5=2{,}25$. Critic ban đầu $(1;\,1{,}5)$ khác $v_\pi=(1{,}4;\,2)$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.7, phần critic.</p></aside>
+</section>
+<section data-slide-id="L10-214e" data-note-topic-id="lec-10-topic-06">
+<h2>Ví dụ: chuỗi hai trạng thái, actor</h2>
+<p>${\alpha_\theta=1}$, ${I=\gamma^t}$; hành động đã chọn là 1 ở cả hai bước, nên ${\psi_\theta(S_t,1)=(1-p_{S_t})\,e_{S_t}}$.</p>
+<p><strong>Nhắc lại:</strong> ${\theta_{S_t}\leftarrow\theta_{S_t}+\alpha_\theta\,I\,\delta_t\,(1-p_{S_t})}$; ${p_s=\sigma(\theta_s)}$.</p>
+<table><thead><tr><th scope="col">$t$</th><th scope="col">$S_t$</th><th scope="col">$I$</th><th scope="col">$\delta_t$</th><th scope="col">$1-p_{S_t}$</th><th scope="col">$I\delta_t(1-p_{S_t})$</th><th scope="col">$\theta_{S_t}$</th><th scope="col">$\theta_{S_t}$ mới</th><th scope="col">$p_{S_t}$ mới</th></tr></thead><tbody>
+<tr><td>$0$</td><td>$s_A$</td><td>$1$</td><td>$0{,}35$</td><td>$\tfrac12$</td><td>$0{,}175$</td><td>$0$</td><td>$0{,}175$</td><td>$0{,}5436$</td></tr>
+<tr><td>$1$</td><td>$s_B$</td><td>$0{,}9$</td><td>$1{,}5$</td><td>$\tfrac13$</td><td>$0{,}45$</td><td>$\log2=0{,}6931$</td><td>$1{,}1431$</td><td>$0{,}7583$</td></tr>
+</tbody></table>
+<p>${\sigma(0{,}175)=1/(1+e^{-0{,}175})=1/(1+0{,}8395)=0{,}5436}$; ${\sigma(1{,}1431)=1/(1+0{,}3188)=0{,}7583}$.</p>
+<p><strong>Diễn giải:</strong> ${\delta_0=0{,}35\ne A_\pi(s_A,1)=0{,}4}$ vì critic sai.</p>
+<aside class="notes"><p>Thừa số $I=\gamma^t$ đóng vai trọng số $\gamma^t$ của định lý gradient chính sách. Với critic đúng $(1{,}4;\,2)$, $\delta_0$ bằng $0{,}4$ hoặc $-0{,}4$ và $\delta_1=1$ cho hành động 1 tại $s_B$, đúng bằng lợi thế (Mệnh đề 10.8(a)). Bỏ mặt nạ và gán giá trị $1$ cho trạng thái kết thúc: hành động 2 tại $s_A$ cho $\delta_0=1+0{,}9\cdot1-1{,}4=0{,}5$ thay vì $-0{,}4$. Cả hai sai số TD dương, nên xác suất của hai hành động đã chọn đều tăng. Chênh lệch $0{,}35-0{,}4$ là độ chệch mà Mệnh đề 10.8(b) mô tả khi critic chưa đúng.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.7, phần actor và diễn giải.</p></aside>
+</section>
+<section data-slide-id="L10-214f" data-note-topic-id="lec-10-topic-06">
+<h2>Ví dụ: chuỗi hai trạng thái, hệ số của hàm điểm</h2>
+<p>Cùng lượt, critic trước cập nhật ${\hat v=(1;\,1{,}5)}$; ${G_t=R_{t+1}+\gamma G_{t+1}}$, ${G_2=0}$.</p>
+<table><thead><tr><th scope="col">$t$</th><th scope="col">$S_t$</th><th scope="col">$G_t$ (REINFORCE)</th><th scope="col">$G_t-\hat v(S_t)$ (Thuật toán 10.6)</th><th scope="col">$\delta_t$ (actor–critic)</th><th scope="col">$A_\pi(S_t,1)$</th></tr></thead><tbody>
+<tr><td>$0$</td><td>$s_A$</td><td>${0+0{,}9\cdot3=2{,}7}$</td><td>$2{,}7-1=1{,}7$</td><td>$0{,}35$</td><td>$0{,}4$</td></tr>
+<tr><td>$1$</td><td>$s_B$</td><td>$3$</td><td>$3-1{,}5=1{,}5$</td><td>$1{,}5$</td><td>$1$</td></tr>
+</tbody></table>
+<p><strong>Diễn giải:</strong> $G_t-\hat v(S_t)$ không làm chệch gradient với mọi $\hat v$ cố định nhưng chứa mọi phần thưởng tới cuối lượt; $\delta_t$ chỉ chứa một phần thưởng nhưng chệch khi critic sai.</p>
+<aside class="notes"><p>Ba cột đầu là ba hệ số nhân với $\psi_t$ trên cùng một lượt; cột cuối là đại lượng mà chúng ước lượng. Phép trừ $\hat v(S_t)$ là đường cơ sở hợp lệ của Mệnh đề 10.2. Ở bước cuối, $G_1-\hat v(s_B)$ trùng $\delta_1$ vì lượt kết thúc sau một phần thưởng. Không hệ số nào bằng lợi thế trên một lượt; độ chệch chỉ thấy khi lấy kỳ vọng theo lượt (Ví dụ 10.8; Nhận xét 10.10).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.6–10.8, Nhận xét 10.10.</p></aside>
 </section>
 <section data-slide-id="L10-215" data-note-topic-id="lec-10-topic-06">
 <h2>Thuật toán actor–critic một bước</h2>
@@ -308,16 +329,6 @@
 <li>$\theta\leftarrow\theta+\alpha_\theta\,I\,\delta\,\psi_\theta(S,A)$; $I\leftarrow\gamma I$, $S\leftarrow S'$.</li>
 </ol>
 <aside class="notes"><p>Thuật toán lặp đúng hai phép tính của bảng hai bước actor–critic: cập nhật critic, rồi cập nhật actor với cùng $\delta$. Trong cập nhật actor, $\delta$ là một hệ số đã dừng gradient. Khi lượt bị cắt ngắn ($U=1$, $Z=0$), mục tiêu vẫn bootstrap từ quan sát cuối. Bộ nhớ không phụ thuộc độ dài lượt, vì thuật toán cập nhật ngay sau từng bước mà không lưu lượt. Phần $-\hat v(S,w)$ là một đường cơ sở hợp lệ, nhưng mục tiêu một bước thay cho $G_t$ làm ước lượng gradient chệch khi critic sai (Nhận xét 10.10).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Thuật toán 10.9, Nhận xét 10.10; Sutton và Barto (2018), §13.5, (13.12)–(13.14); bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 12–13.</p></aside>
-</section>
-<section data-slide-id="L10-216" data-note-topic-id="lec-10-topic-06">
-<h2>Bài tập: sai số TD khi critic sai</h2>
-<p><strong>Câu hỏi:</strong> chuỗi hai trạng thái, $v_\pi=(1{,}4;\,2)$, critic cố định $\hat v=(1;\,1{,}5)$; tọa độ $\theta_A$ của $\psi_\theta(s_A,a)$ là $\pm0{,}5$.</p>
-<p>Tính $\mathbb E[\delta_0\mid s_A,a]$ cho hai hành động và tọa độ $\theta_A$ của $\mathbb E[\delta_0\psi_0]$.</p>
-<p class="fragment"><strong>Lời giải:</strong> $e=\hat v-v_\pi=(-0{,}4;\,-0{,}5)$.</p>
-<p class="fragment">Hành động 1: $0{,}4+0{,}9\cdot(-0{,}5)+0{,}4=0{,}35$.</p>
-<p class="fragment">Hành động 2 kết thúc lượt: $-0{,}4+0+0{,}4=0$.</p>
-<p class="fragment">Tọa độ $\theta_A$: ${\tfrac12\cdot0{,}35\cdot0{,}5+\tfrac12\cdot0\cdot(-0{,}5)=0{,}0875\ne0{,}2}$.</p>
-<aside class="notes"><p>Gợi ý: lập $e=\hat v-v_\pi$, rồi dùng (b) của mệnh đề về sai số TD. Hành động 2 kết thúc lượt, nên không có số hạng $\gamma e(s')$. Hai độ chệch, $-0{,}05$ và $+0{,}4$, khác nhau giữa hai hành động, nên không bị khử khi nhân với hàm điểm: actor một bước bị chệch dù mỗi sai số TD có dấu đúng. Kiểm trực tiếp: $\delta_0=0+0{,}9\cdot1{,}5-1=0{,}35$ và $\delta_0=1-1=0$. Bài tập kiểm việc dùng dạng tổng quát của mệnh đề sai số TD khi critic sai. Hai hệ số $\delta_t$ và $G_t-\hat v(S_t)$ là hai đầu một bước và Monte Carlo của cùng một lợi thế.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bài tập 10.5.</p></aside>
 </section>
 </section>
 
