@@ -14,7 +14,7 @@ Ký hiệu cột "quyết định": so với bộ trang chiếu cũ (mã cũ tro
 | 2. Đường cơ sở, hàm lợi thế và actor–critic | khái niệm, kết quả, thuật toán | Trừ đường cơ sở; đặt tên lợi thế; bootstrap bằng critic; hai thuật toán | $\operatorname{Var}$ tăng $\tfrac49\to\tfrac{16}9$ (Ví dụ 10.1, dòng kết quả ở `L10-201`); lượt hành lang (`L10-107`) | $\widehat g_b$ không chệch; $\nabla J$ dạng lợi thế; $\mathbb E[\delta_t\mid s,a]=A_\pi$ khi critic đúng; Thuật toán 10.6, 10.9; $\delta_0=0{,}35\ne0{,}4$ khi critic sai | Hai đầu của hệ số nhân với hàm điểm: Monte Carlo và một bước | `L10-200`, `id="mach-2"` | 19 | 23 |
 | 3. Ước lượng lợi thế tổng quát | khái niệm, kết quả, thuật toán | Nối $\delta_t$ và $G_t-\hat v$ bằng $\lambda$; điều kiện γ-just; GAE trên đoạn thu có cờ | Hai ước lượng $0{,}35$, $1{,}7$ của cùng $A_\pi(s_A,1)=0{,}4$ | $\widehat A_t=\sum_k(\gamma\lambda)^k\delta_{t+k}$; Thuật toán 10.16 với $Z$, $U$; $V^{\mathrm{targ}}_t$ | Hoàn tất nửa thứ nhất; giao $\widehat A_t$, $V^{\mathrm{targ}}_t$ cho mạch 6 | `L10-300`, `id="mach-3"` | 11 | 14,5 |
 | 4. Hàm thay thế và chặn cải thiện | kết quả | Hiệu hiệu năng; hàm thay thế; TV và KL; chặn cải thiện; cải thiện đơn điệu; miền tin cậy | Giới hạn thứ hai (`L10-108`): lượt cũ không cho mẫu của gradient sau một bước | Bài toán miền tin cậy với mức giảm bị chặn khi giải chính xác (Hệ quả 10.31) | Căn cứ định lượng cho việc giới hạn bước | `L10-400`, `id="mach-4"` | 20 | 22,5 |
-| 5. TRPO và gradient tự nhiên | kết quả, thuật toán | KL bậc hai, Fisher, gradient tự nhiên, gradient liên hợp, tìm kiếm lùi, TRPO | Bài toán miền tin cậy phi tuyến (`L10-411`) | Thuật toán 10.37; TRPO thực hành chỉ bảo đảm KL trung bình mẫu $\le\kappa$ và hàm thay thế mẫu tăng | Giải xấp xỉ bài toán của mạch 4 | `L10-500`, `id="mach-5"` | 12 | 13,5 |
+| 5. TRPO và gradient tự nhiên | kết quả, thuật toán | KL bậc hai, Fisher, gradient tự nhiên, gradient liên hợp, tìm kiếm lùi, TRPO | Bài toán miền tin cậy phi tuyến (`L10-411`) | Thuật toán 10.37; TRPO thực hành chỉ bảo đảm KL trung bình mẫu $\le\kappa$ và hàm thay thế mẫu tăng | Giải xấp xỉ bài toán của mạch 4 | `L10-500`, `id="mach-5"` | 13 | 13,5 |
 | 6. Tối ưu chính sách gần kề (PPO) | khái niệm, kết quả, thuật toán | Mục tiêu cắt, PPO-Penalty, mất mát tổng, chẩn đoán, thuật toán, siêu tham số, cài đặt, phạm vi lý thuyết | Chi phí bậc hai của TRPO; hàm thay thế mẫu tuyến tính theo $\rho_t$; $\widehat A_t$, $V^{\mathrm{targ}}_t$ (mạch 3) | Thuật toán 10.49; mục tiêu cắt không chặn KL; approxKL chỉ không chệch khi $\theta$ không phụ thuộc mẫu | Hai hàng gặp nhau | `L10-600`, `id="mach-6"` | 23 | 25,5 |
 | 7. Tổng kết và chuyển tiếp | kết bài | Ba bảng tổng kết, bài tổng hợp, trả lời bài toán, câu hỏi, bài về nhà, nối Bài 11 | Kết quả mạch 2–6 | Câu trả lời có điều kiện; giới hạn dữ liệu theo chính sách sang Bài 11 | Tổng hợp, không khái niệm mới | `L10-700`, `id="mach-7"` | 12 | 9 |
 | **Tổng** | | | | | | | **101** | **120** |
@@ -96,17 +96,20 @@ Mã trang tiêu đề mạch theo quy ước `<tiền tố mạch>00`: mã trang
 | 4 | `L10-414b` | Bài tập: đánh giá một bước cập nhật, lời giải (c), (e) | lời giải (c), bảng | Bài tập 10.11 | — | 0,5 |
 | 4 | `L10-414c` | Bài tập: đánh giá một bước cập nhật, lời giải (d) | lời giải (d), bảng, kết luận | Bài tập 10.11 | — | 0,5 |
 | 5 | `L10-500` | 5. TRPO và gradient tự nhiên | tiêu đề mạch | §5 | — | 0,5 |
-| 5 | `L10-501` | Ví dụ: cùng một bước tham số, hai khoảng cách chính sách | vấn đề, ví dụ dẫn nhập | §5 đoạn đầu, Ví dụ 10.13 | — | 1 |
+| 5 | `L10-501` | (đã bỏ khỏi deck 2026-11-20, NT23; Ví dụ 10.13 thành dòng "Trực quan." của `L10-502`) | — | Ví dụ 10.13 | — | 0 |
 | 5 | `L10-502` | Ma trận Fisher | trực giác, định nghĩa, ví dụ | Định nghĩa 10.32 | — | 0,5 |
 | 5 | `L10-502b` | KL trung bình bậc hai | kết quả | Mệnh đề 10.33 | — | 1 |
 | 5 | `L10-503` | Bước gradient tự nhiên | kết quả | Mệnh đề 10.34 | — | 1,5 |
-| 5 | `L10-504` | Ví dụ: bước gradient tự nhiên trên bài toán một bước | ứng dụng | Ví dụ 10.14, 10.15, Nhận xét 10.35 | `one-step-card.svg` (nhỏ) | 1,5 |
-| 5 | `L10-505` | Ví dụ: hai vòng gradient liên hợp | vấn đề, ví dụ tính tay | §5.2 đoạn đầu, Ví dụ 10.16 | `img/lec-10/trpo-trust-region.svg` | 2 |
+| 5 | `L10-504` | (đã bỏ khỏi deck 2026-11-20, NT23; Ví dụ 10.14–10.15 còn ở ghi chú, dòng kết quả ở `L10-503`, bước gradient tự nhiên ở `L10-505c`) | — | Ví dụ 10.14, 10.15 | — | 0 |
+| 5 | `L10-505` | Ví dụ: hai vòng gradient liên hợp | ví dụ của mạch (dữ kiện, các bước) | §5.2 đoạn đầu, Ví dụ 10.16 | — | 1 |
+| 5 | `L10-505b` | Ví dụ: hai vòng gradient liên hợp, các vòng | ví dụ (tiếp, hai bảng) | Ví dụ 10.16 | — | 1,5 |
+| 5 | `L10-505c` | Ví dụ: hai vòng gradient liên hợp, bước TRPO | ví dụ (tiếp) | Ví dụ 10.16, Mệnh đề 10.34 | `img/lec-10/trpo-trust-region.svg` | 1,5 |
 | 5 | `L10-506` | Thuật toán gradient liên hợp với tích Fisher–vector | thuật toán | Thuật toán 10.36 | — | 1 |
 | 5 | `L10-507` | Thuật toán TRPO với lợi thế GAE | thuật toán | Thuật toán 10.37 | — | 1,5 |
 | 5 | `L10-508` | Phạm vi bảo đảm của TRPO thực hành | nhận xét | Nhận xét 10.38 | — | 1 |
 | 5 | `L10-509` | Bài tập: gradient liên hợp và bước TRPO | bài tập (đề) | Bài tập 10.8 | — | 1 |
-| 5 | `L10-510` | Bài tập: gradient liên hợp và bước TRPO | lời giải | Bài tập 10.8 | — | 1 |
+| 5 | `L10-510` | Bài tập: gradient liên hợp và bước TRPO, lời giải (hai vòng) | lời giải (hai bảng) | Bài tập 10.8 | — | 1 |
+| 5 | `L10-510b` | Bài tập: gradient liên hợp và bước TRPO, lời giải (bước TRPO) | lời giải (bước, kiểm, số vòng) | Bài tập 10.8 | — | 0,5 |
 | 6 | `L10-600` | 6. Tối ưu chính sách gần kề (PPO) | tiêu đề mạch | §6 | — | 0,5 |
 | 6 | `L10-601` | Giới hạn của TRPO | vấn đề, trực giác | §5 cuối, §6.1 đoạn đầu | — | 1 |
 | 6 | `L10-602` | Ví dụ: hai hàm thay thế mẫu trên bài toán một bước | ví dụ | Ví dụ 10.17 | `img/lec-10/ppo-one-step-plateau.svg` | 2 |
@@ -827,13 +830,13 @@ Phút mạch 4: $0{,}5+7+2{,}5+1{,}5+6+2{,}5+2{,}5=22{,}5$ (cụm hiệu hiệu 
 #### `L10-500` 5. TRPO và gradient tự nhiên (trang tiêu đề mạch), điểm vào mạch 5
 - **Vị trí, loại:** điểm vào mạch 5; `id="mach-5"`, `data-note-topic-id="lec-10-topic-15"`.
 - **Lý do tồn tại, nhu cầu:** dòng dẫn nêu nhu cầu của cụm gradient tự nhiên (giải bài toán miền tin cậy với nhiều tham số), nên trang là bước `vấn đề` chung của cụm.
-- **Liên kết:** trước: `L10-414c`; sau: `L10-501`. Kế thừa bài toán miền tin cậy phi tuyến (`L10-411`); giao Thuật toán 10.37 và chi phí khoảng mười tích Fisher–vector mỗi vòng cho mạch 6.
+- **Liên kết:** trước: `L10-414c`; sau: `L10-502` (`L10-501` đã bỏ 2026-11-20). Kế thừa bài toán miền tin cậy phi tuyến (`L10-411`); giao Thuật toán 10.37 và chi phí khoảng mười tích Fisher–vector mỗi vòng cho mạch 6.
 - **Mục tiêu:** 4.
 - **Mặt trang:** "5." + tên mạch; dòng dẫn "Muốn giải bài toán miền tin cậy với nhiều tham số, phải xấp xỉ KL bậc hai và tránh lập ma trận Fisher." (23); từ khóa "Ma trận Fisher · Gradient tự nhiên · Gradient liên hợp · Tìm kiếm lùi" (12).
 - **Hình, phút:** —; 0,5. **Quyết định:** thêm: trang tiêu đề mạch theo `AGENTS.md` §"Trang tiêu đề mạch"; bộ cũ không có.
 - **Ghi chú diễn giả (40–100):** bài toán của mạch 4 phi tuyến cả ở mục tiêu lẫn ràng buộc; xấp xỉ mục tiêu bậc một, KL bậc hai, giải bằng gradient liên hợp, kiểm bằng tìm kiếm lùi; điều còn bảo đảm sau các xấp xỉ.
 
-#### `L10-501` Ví dụ: cùng một bước tham số, hai khoảng cách chính sách
+#### `L10-501` Ví dụ: cùng một bước tham số, hai khoảng cách chính sách (đã bỏ 2026-11-20)
 - **Vị trí, loại:** mạch 5; vấn đề và ví dụ dẫn nhập của cụm gradient tự nhiên (làm cụ thể vấn đề "độ dài bước phải đo bằng mức đổi chính sách").
 - **Lý do tồn tại, nhu cầu:** cho thấy cùng một bước trong không gian tham số đổi chính sách rất khác nhau.
 - **Liên kết:** trước: `L10-500`; sau: `L10-502` (độ cong $p(1-p)$). **Mục tiêu:** 4. **Ghi chú:** §5 đoạn đầu, Ví dụ 10.13 (`topic-15`); nguồn tr. 17.
@@ -845,7 +848,7 @@ Phút mạch 4: $0{,}5+7+2{,}5+1{,}5+6+2{,}5+2{,}5=22{,}5$ (cụm hiệu hiệu 
 #### `L10-502` Ma trận Fisher
 - **Vị trí, loại:** mạch 5; trực giác (độ cong), định nghĩa và ví dụ Bernoulli.
 - **Lý do tồn tại, nhu cầu:** hệ số của xấp xỉ bậc hai của KL quanh $\theta_{\mathrm{old}}$.
-- **Liên kết:** trước: `L10-501`; sau: `L10-502b`. **Mục tiêu:** 4. **Ghi chú:** Định nghĩa 10.32 (`topic-15`); Schulman và cộng sự (2015), §7; nguồn tr. 17.
+- **Liên kết:** trước: `L10-500`; sau: `L10-502b`. **Mục tiêu:** 4. **Ghi chú:** Định nghĩa 10.32 (`topic-15`); Schulman và cộng sự (2015), §7; nguồn tr. 17.
 - **Mặt trang (D1):** "Trực quan. KL tăng theo bình phương độ dài bước; hệ số là độ cong của KL tại $\theta_{\mathrm{old}}$." "Định nghĩa 10.32." $F=\mathbb E_{S\sim\nu^{\mathrm{old}},A\sim\pi_{\mathrm{old}}}[\psi\psi^\top]$ gọi là ma trận thông tin Fisher (Fisher information matrix), nửa xác định dương. "Bernoulli logit, $p=\sigma(\theta)$: $\psi=1-p$ với xác suất $p$, $\psi=-p$ với xác suất $1-p$." "Do đó $F=p(1-p)$: $0{,}25$ tại $p=0{,}5$, $0{,}0099$ tại $p=0{,}99$."
 - **Mật độ:** 47 âm tiết, 4 dòng.
 - **Hình, phút:** —; 0,5.
@@ -865,13 +868,13 @@ Phút mạch 4: $0{,}5+7+2{,}5+1{,}5+6+2{,}5+2{,}5=22{,}5$ (cụm hiệu hiệu 
 #### `L10-503` Bước gradient tự nhiên
 - **Vị trí, loại:** mạch 5; hình thức (kết quả) của cụm gradient tự nhiên.
 - **Lý do tồn tại, nhu cầu:** nghiệm của bài toán xấp xỉ: mục tiêu tuyến tính, ràng buộc toàn phương.
-- **Liên kết:** trước: `L10-502`; sau: `L10-504`. **Mục tiêu:** 4. **Ghi chú:** Mệnh đề 10.34 (`topic-15`); Kakade (2002) theo Schulman và cộng sự (2015).
+- **Liên kết:** trước: `L10-502b`; sau: `L10-505` (`L10-504` đã bỏ 2026-11-20). **Mục tiêu:** 4. **Ghi chú:** Mệnh đề 10.34 (`topic-15`); Kakade (2002) theo Schulman và cộng sự (2015).
 - **Mặt trang:** "Mệnh đề." Bài toán $\max_\Delta g^\top\Delta$ với $\tfrac12\Delta^\top F\Delta\le\kappa$. (a) $F$ xác định dương: $\Delta^*=\sqrt{2\kappa/(g^\top F^{-1}g)}\,F^{-1}g$, gọi là bước gradient tự nhiên (natural gradient); (b) $F$ suy biến, $g\in\operatorname{range}F$: thay $F^{-1}$ bằng $F^+$, nghiệm là $\Delta^*+\ker F$; (c) $g\notin\operatorname{range}F$: bài toán không bị chặn. "Lưu ý:" đây là nghiệm của bài toán xấp xỉ, không của bài toán miền tin cậy. "Chứng minh." bất đẳng thức Cauchy–Schwarz theo tích vô hướng $\langle u,v\rangle_F$.
 - **Mật độ:** khoảng 50 âm tiết, 6 dòng, 1 công thức hiển thị.
 - **Hình, phút:** —; 1,5. **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo Mệnh đề 10.34 của ghi chú.
 - **Ghi chú diễn giả:** $g=\nabla\mathcal L(\theta_{\mathrm{old}})=\nabla J(\theta_{\mathrm{old}})$ theo `L10-406`; hướng $F^{-1}g$ không phụ thuộc cách tham số hóa theo nghĩa bậc nhất; (b) xảy ra ngay ở bài toán một bước (`L10-504`).
 
-#### `L10-504` Ví dụ: bước gradient tự nhiên trên bài toán một bước
+#### `L10-504` Ví dụ: bước gradient tự nhiên trên bài toán một bước (đã bỏ 2026-11-20)
 - **Vị trí, loại:** mạch 5; ứng dụng của cụm gradient tự nhiên; bước tính tay cho bước 5–6 của Thuật toán 10.37 (`L10-507` nhận ngay $j=0$).
 - **Lý do tồn tại, nhu cầu:** tính $F$ suy biến, $F^+$, bước và kiểm KL thật.
 - **Liên kết:** trước: `L10-503`; sau: `L10-505`. **Mục tiêu:** 4. **Ghi chú:** Ví dụ 10.14, 10.15, Nhận xét 10.35 (`topic-15`).
@@ -885,16 +888,16 @@ Phút mạch 4: $0{,}5+7+2{,}5+1{,}5+6+2{,}5+2{,}5=22{,}5$ (cụm hiệu hiệu 
 #### `L10-505` Ví dụ: hai vòng gradient liên hợp
 - **Vị trí, loại:** mạch 5; vấn đề (giới hạn của việc lập $F$) và ví dụ tính tay của cụm TRPO thực hành, trước `L10-506`.
 - **Lý do tồn tại, nhu cầu:** $d$ tới hàng triệu; lập $F$ tốn $O(d^2)$ bộ nhớ, nghịch đảo $O(d^3)$; chỉ cần tích $Fv$.
-- **Liên kết:** trước: `L10-504`; sau: `L10-506`. **Mục tiêu:** 4. **Ghi chú:** §5.2 đoạn đầu, Ví dụ 10.16 (`topic-16`); Nocedal và Wright (2006), Chương 5; nguồn tr. 18.
-- **Mặt trang:** "Nhu cầu: với $d$ cỡ $10^6$, không lập được $F$; chỉ dùng tích $Fv$." $F=\operatorname{diag}(4;\,1)$, $g=(2;\,1)$, $x_0=0$. Bảng khuôn vòng gradient liên hợp: $k=0$: $x_1=(\tfrac{10}{17};\,\tfrac5{17})$; $k=1$: $x_2=(0{,}5;\,1)=F^{-1}g$, $\tilde g_2=0$; $\tau=x_2^\top Fx_2=2$; $\kappa=0{,}01$: $\Delta=(0{,}05;\,0{,}1)$. Hình elip: bước lệch hướng $g$.
-- **Mật độ:** khoảng 30 âm tiết, 4 dòng và bảng 2 hàng; hình bên phải.
-- **Hình, phút:** `img/lec-10/trpo-trust-region.svg`; 2. **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo §5.2 đoạn đầu, Ví dụ 10.16 của ghi chú.
-- **Ghi chú diễn giả:** $F$ có hai giá trị riêng phân biệt nên hai vòng cho nghiệm đúng (Nocedal và Wright, 2006, Định lý 5.4); $\omega_0=\tfrac5{17}$, $\omega_1=0{,}85$; đọc hình (miền $\tfrac12\Delta^\top F\Delta\le\kappa$ là elip).
+- **Liên kết:** trước: `L10-503`; sau: `L10-505b`, `L10-505c`, rồi `L10-506`. **Mục tiêu:** 4. **Ghi chú:** §5.2 đoạn đầu, Ví dụ 10.16 (`topic-16`); Nocedal và Wright (2006), Chương 5; nguồn tr. 18.
+- **Mặt trang:** (sửa 2026-11-20) câu vấn đề "Bước $\Delta^*$ cần $F^{-1}g$. Với $\theta\in\mathbb R^d$, $d$ cỡ $10^6$, không lập được $F$; gradient liên hợp giải $Fx=g$ chỉ bằng các tích $Fv$."; dữ kiện $F=\operatorname{diag}(4;\,1)$, $g=(2;\,1)$, $x_0=0$, $\kappa=0{,}01$, "Tính $x_2$ và bước $\Delta$ theo các bước của gradient liên hợp:"; danh sách đánh số theo thứ tự tính, khớp các cột bảng của `L10-505b`: 1. $\tilde g_0=Fx_0-g=-g$, $p_0=-\tilde g_0$; 2. $\omega_k$; 3. $x_{k+1}$, $\tilde g_{k+1}$; 4. $\xi_{k+1}$, $p_{k+1}$. Không hình, không bảng.
+- **Mật độ:** 6 dòng (hai đoạn và bốn mục), khoảng trống tới chân trang 57 px.
+- **Hình, phút:** — (hình miền tin cậy chuyển sang `L10-505c`); 1. **Quyết định:** trang đầu của ví dụ duy nhất của mạch 5 (NT23); bảng hai vòng sang `L10-505b`, bước TRPO sang `L10-505c`.
+- **Ghi chú diễn giả:** chi phí lập và nghịch đảo $F$; quy ước của Nocedal và Wright, $\tilde g_k=Fx_k-g$ là gradient của $\tfrac12x^\top Fx-g^\top x$; mỗi vòng đi một đoạn $\omega_k$ theo $p_k$, hướng sau liên hợp với hướng trước theo $F$.
 
 #### `L10-506` Thuật toán gradient liên hợp với tích Fisher–vector
 - **Vị trí, loại:** mạch 5; thuật toán (bước 4 của TRPO).
 - **Lý do tồn tại, nhu cầu:** quy trình khớp bảng của `L10-505`.
-- **Liên kết:** trước: `L10-505`; sau: `L10-507`. **Mục tiêu:** 4. **Ghi chú:** Thuật toán 10.36 (`topic-16`); nguồn tr. 18.
+- **Liên kết:** trước: `L10-505c`; sau: `L10-507`. **Mục tiêu:** 4. **Ghi chú:** Thuật toán 10.36 (`topic-16`); nguồn tr. 18.
 - **Mặt trang:** "Thuật toán." sáu dòng: (1) "Đầu vào: $v\mapsto Fv$ (hai lần vi phân tự động), $g$, $k_{\max}$, $\varepsilon_{\mathrm{cg}}$. Đầu ra: $x\approx F^{-1}g$, $\tau\approx x^\top Fx$." (2) "Khởi tạo $x_0=0$, $\tilde g_0=-g$, $p_0=g$, $\tau_0=0$." (3) $y_k=Fp_k$, $\omega_k=\tilde g_k^\top\tilde g_k/(p_k^\top y_k)$. (4) $x_{k+1}=x_k+\omega_kp_k$, $\tilde g_{k+1}=\tilde g_k+\omega_ky_k$, $\tau_{k+1}=\tau_k+\omega_k\tilde g_k^\top\tilde g_k$. (5) "Dừng nếu $\lVert\tilde g_{k+1}\rVert\le\varepsilon_{\mathrm{cg}}$ hoặc $k+1=k_{\max}$." (6) $\xi_{k+1}=\tilde g_{k+1}^\top\tilde g_{k+1}/\tilde g_k^\top\tilde g_k$, $p_{k+1}=-\tilde g_{k+1}+\xi_{k+1}p_k$.
 - **Mật độ:** khoảng 25 âm tiết, 6 dòng. Không còn là ngoại lệ (bản trước 7 dòng; công thức $Fv=\nabla_\theta((\nabla_\theta\widehat D)^\top v)$ chuyển vào ghi chú diễn giả).
 - **Hình, phút:** —; 1.
@@ -934,7 +937,7 @@ Phút mạch 4: $0{,}5+7+2{,}5+1{,}5+6+2{,}5+2{,}5=22{,}5$ (cụm hiệu hiệu 
 #### `L10-510` Bài tập: gradient liên hợp và bước TRPO
 - **Vị trí, loại:** mạch 5; lời giải trên mặt trang (trang kế tiếp cùng tiêu đề).
 - **Lý do tồn tại, nhu cầu:** lời giải mẫu của cụm TRPO.
-- **Liên kết:** trước: `L10-509`; sau: `L10-600`. **Mục tiêu:** 4. **Ghi chú:** Bài tập 10.8, lời giải (`topic-16`).
+- **Liên kết:** trước: `L10-509`; sau: `L10-510b`, rồi `L10-600`. **Mục tiêu:** 4. **Ghi chú:** Bài tập 10.8, lời giải (`topic-16`).
 - **Mặt trang:** "Lời giải:" bảng khuôn vòng hai hàng: $k=0$: $\omega_0=\tfrac12$, $x_1=(0{,}5;\,0)$, $\tilde g_1=(0;\,0{,}5)$; $k=1$: $\xi_1=0{,}25$, $\omega_1=\tfrac23$, $x_2=(\tfrac23;\,-\tfrac13)$, $\tilde g_2=0$. Dòng "$\tau=\tfrac23$; $\Delta=(0{,}1155;\,-0{,}0577)$; $\tfrac12\Delta^\top F\Delta=0{,}01$." Kết luận: "$F$ có hai giá trị riêng phân biệt $3$ và $1$, nên hai vòng cho nghiệm đúng." (12).
 - **Mật độ:** khoảng 15 âm tiết, 5 dòng (lời giải, 2 hàng bảng, 2 dòng).
 - **Hình, phút:** —; 1.
@@ -955,7 +958,7 @@ Phút mạch 5: $0{,}5+(1+1{,}5+1{,}5+1{,}5)+(2+1+1{,}5+1+1+1)=13{,}5$. Câu n�
 #### `L10-600` 6. Tối ưu chính sách gần kề (PPO) (trang tiêu đề mạch), điểm vào mạch 6
 - **Vị trí, loại:** điểm vào mạch 6; `id="mach-6"`, `data-note-topic-id="lec-10-topic-17"`.
 - **Lý do tồn tại, nhu cầu:** dòng dẫn nêu nhu cầu của cụm PPO-Clip, nên trang là bước `vấn đề` chung của cụm.
-- **Liên kết:** trước: `L10-509`; sau: `L10-601`. Kế thừa chi phí và bộ máy bậc hai của TRPO, $\widehat A_t$, $V^{\mathrm{targ}}_t$ của mạch 3; giao Thuật toán 10.49 và danh sách điều không được bảo đảm cho mạch 7.
+- **Liên kết:** trước: `L10-510b`; sau: `L10-601`. Kế thừa chi phí và bộ máy bậc hai của TRPO, $\widehat A_t$, $V^{\mathrm{targ}}_t$ của mạch 3; giao Thuật toán 10.49 và danh sách điều không được bảo đảm cho mạch 7.
 - **Mục tiêu:** 5.
 - **Mặt trang:** "6." + tên mạch; dòng dẫn "Muốn giữ chính sách mới gần chính sách cũ bằng tối ưu bậc một, phải đưa giới hạn khoảng cách vào hàm mục tiêu." (24); từ khóa "Mục tiêu cắt · PPO-Penalty · Hàm mất mát tổng · Đại lượng chẩn đoán · Chi tiết cài đặt" (16).
 - **Hình, phút:** —; 0,5. **Quyết định:** thêm: trang tiêu đề mạch theo `AGENTS.md` §"Trang tiêu đề mạch"; bộ cũ không có.
@@ -1682,7 +1685,7 @@ Phút mạch 7: $0{,}5+1+1{,}5+1+1{,}5+1{,}5+1+1+1{,}5+1+1+1+1{,}5+1+1{,}5+1+1{,
 | 2 | `L10-200`–`L10-216` | 19 | 23 | 22,5 | `L10-205` 1,5 → 1 | 2026-11-20: 19 trang (`L10-200`–`L10-215`, ví dụ `L10-214`–`L10-214f`)
 | 3 | `L10-300`–`L10-309` | 11 | 14,5 | 14,5 | — | 2026-11-20: 11 trang (`L10-300`–`L10-309b`; bỏ `301`, `305`; thêm `307b`, `307c`, `309b`)
 | 4 | `L10-400`–`L10-414` | 20 | 22,5 | 20,5 | `L10-404` 1,5 → 1; `L10-409` 1,5 → 1; `L10-414` 1 → 0 | 2026-11-20: 20 trang (bỏ `402`; thêm `410b`–`410d`, `414b`, `414c`)
-| 5 | `L10-500`–`L10-510` | 12 | 13,5 | 12 | `L10-505` 2 → 1,5; `L10-510` 1 → 0 |
+| 5 | `L10-500`–`L10-510` | 13 | 13,5 | 12 | `L10-505` 2 → 1,5; `L10-510` 1 → 0 | 2026-11-20: 13 trang (bỏ `501`, `504`; thêm `505b`, `505c`, `510b`)
 | 6 | `L10-600`–`L10-620` | 23 | 25,5 | 22,5 | `L10-614`, `L10-615`, `L10-617`, `L10-618` 1 → 0,5 mỗi trang; `L10-617b` 0,5; `L10-620` 1 → 0 |
 | 7 (mới) | `L10-D00`–`L10-D18` | 19 | — | 22 | bảng trên |
 | 8 | `L10-700`–`L10-710`, `L10-702c`, `L10-703b` | 14 | 9 | 9 | `L10-706` 1 → 0; `L10-702c` 0,5; `L10-703b` 0,5 |
@@ -2504,3 +2507,37 @@ Theo kế hoạch đã duyệt (`ke-hoach-mot-vi-du-moi-mach-2026-11-20.md`), b�
 10. Để giữ khoảng trống tới chân trang: `L10-410c` bỏ hàng "tổng" (tổng viết trong dòng $\Delta J=10(0{,}008+0{,}0216)$, $\mathcal L-J=10(0{,}008+0{,}018)$); `L10-410d` gộp phạt thành một dòng $\tfrac{2\gamma}{(1-\gamma)^2}\chi_{\pi'}\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]=180\cdot0{,}4\cdot(0{,}01+0{,}006)=1{,}152$ và đưa cận vào "Diễn giải:"; `L10-407` bỏ "của chuỗi" trong dòng TV/KL.
 
 Kiểm tra (Playwright, đo khoảng cách từ đáy nội dung tới đỉnh chân trang, đơn vị px của khung 1280×720, như nhau ở 1280×720 và 1600×900): `L10-401` 29, `403` 38, `404` 72, `405` 99, `406` 114, `407` 88, `408` 70, `409` 66, `410` 71, `410b` 60, `410c` 52, `410d` 44, `411` 95, `412` 113, `412b` 109, `413` 85, `414` 110, `414b` 72, `414c` 77. Không lỗi console, không `.katex-error`, không tràn ngang. `deck_lint`: 44 phát hiện trên 134 trang, không phát hiện nào ở mạch 4.
+
+## Mạch 5 theo NT23 một ví dụ (2026-11-20)
+
+Theo kế hoạch đã duyệt (`ke-hoach-mot-vi-du-moi-mach-2026-11-20.md`), bài tập phương án A′ và NT23 sửa 2026-11-20:
+
+- **Bỏ khỏi deck:** `L10-501` (Ví dụ 10.13), `L10-504` (Ví dụ 10.14–10.15). Nội dung còn trong ghi chú.
+- **Ví dụ duy nhất của mạch 5:** "Ví dụ: hai vòng gradient liên hợp" (Ví dụ 10.16), ba trang; bỏ bố cục `grid2` cũ (không còn phép tính cạnh hình).
+  - `L10-505`: câu vấn đề thay "Nhu cầu:" ("Với $\theta\in\mathbb R^d$, $d$ cỡ $10^6$, không lập được $F$; gradient liên hợp giải $Fx=g$ chỉ bằng các tích $Fv$."); dữ kiện $F=\operatorname{diag}(4;\,1)$, $g=(2;\,1)$, $x_0=0$, $\kappa=0{,}01$, "Tính $x_2$ và bước $\Delta$."; dòng "Các bước của gradient liên hợp:" nêu $\tilde g_0=Fx_0-g=-g$, $p_0=-\tilde g_0$, $\omega_k$, $x_{k+1}$, $\tilde g_{k+1}$, $\xi_{k+1}$, $p_{k+1}$ theo ký hiệu của ghi chú (không gắn nhãn "Nhắc lại:" vì Thuật toán 10.36 đứng sau ví dụ).
+  - `L10-505b`: bảng bước $k$ | $\tilde g_k$ | $p_k$ | $Fp_k$ | $\tilde g_k^\top\tilde g_k$ | $p_k^\top Fp_k$ | $\omega_k$ ($(-2;-1)$, $(2;1)$, $(8;1)$, $5$, $17$, $\tfrac5{17}$; $(\tfrac6{17};-\tfrac{12}{17})$, $(-\tfrac{30}{289};\tfrac{240}{289})$, $(-\tfrac{120}{289};\tfrac{240}{289})$, $\tfrac{180}{289}$, $\tfrac{61\,200}{289^2}$, $0{,}85$) và bảng cập nhật $x_{k+1}$ | $\tilde g_{k+1}$ | $\tilde g_{k+1}^\top\tilde g_{k+1}$ | $\xi_{k+1}$ | $p_{k+1}$ ($(\tfrac{10}{17};\tfrac5{17})$, $(\tfrac6{17};-\tfrac{12}{17})$, $\tfrac{180}{289}$, $\tfrac{36}{289}$, $p_1$; $(0{,}5;1)$, $(0;0)$, $0$, dừng).
+  - `L10-505c` "…, bước TRPO": hình miền tin cậy (một hàng riêng); $x_2=(0{,}5;\,1)=F^{-1}g$, $\tau=x_2^\top Fx_2=2$; $\sqrt{2\kappa/\tau}=0{,}1$, $\Delta=(0{,}05;\,0{,}1)$, "bước gradient tự nhiên $\Delta^*$" (Mệnh đề 10.34: khái niệm gradient tự nhiên mất Ví dụ 10.14–10.15, nên dòng này nói rõ bước của ví dụ chính là $\Delta^*$ vì $x_2=F^{-1}g$); kiểm $\tfrac12\Delta^\top F\Delta=0{,}01$; "Diễn giải:" $\Delta$ lệch hướng $g$. Tiêu đề phần tiếp đổi từ "bước miền tin cậy" thành "bước TRPO" để tiêu đề một dòng (bản hai dòng: khoảng trống $-47$ px).
+  - Số liệu khớp Ví dụ 10.16 (tính lại $Fp_1$, $p_1^\top Fp_1=61\,200/289^2$, $\omega_1=0{,}85$, $x_2$, $\tilde g_2=0$, $\tau_2=\tfrac{25}{17}+\tfrac{153}{289}=2$).
+- **Dòng kết quả:** `L10-502` "Trực quan." thành "Một trạng thái, $p=\sigma(\theta)$, bước $\theta\leftarrow\theta+1$: KL $0{,}1201$ tại $p=0{,}5$, $0{,}00366$ tại $p=0{,}99$; độ dài bước cần đo bằng độ cong của KL." (Ví dụ 10.13); hai dòng tính $\psi$, $F$ thành "Với $p=\sigma(\theta)$: $F=p(1-p)$, bằng $0{,}25$ tại $p=0{,}5$ và $0{,}0099$ tại $p=0{,}99$." (tính $\mathbb E[\psi^2]$ vào ghi chú). `L10-502b` giữ dòng so bậc hai với KL thật (một dòng kết quả). `L10-503` thêm "Bài toán một bước: $F_s=\tfrac29uu^\top$, $u=(1;\,-1)$, suy biến theo $(1;\,1)$." (kiểm: $\psi(s,1)=\tfrac13u$, $\psi(s,2)=-\tfrac23u$, $F_s=(\tfrac2{27}+\tfrac4{27})uu^\top$, dữ kiện như `L10-201`); dòng "Chứng minh." (Cauchy–Schwarz) và câu "hướng không đổi chính sách softmax" chuyển vào ghi chú để giữ trần 60 âm tiết. `L10-507` ghi chú bỏ câu về bước gradient tự nhiên trên bài toán một bước.
+- **Bài tập 10.8 (A′):** `L10-509` đề với hai bảng cùng cột như ví dụ, ô trống trừ $\tilde g_0=(-1;\,0)$, $p_0=(1;\,0)$; "Gợi ý" ở ghi chú. Lời giải hai trang: `L10-510` "…, lời giải (hai vòng)" hai bảng ($Fp_0=(2;1)$, $1$, $2$, $\omega_0=\tfrac12$; $p_1=(0{,}25;-0{,}5)$, $Fp_1=(0;-0{,}75)$, $0{,}25$, $0{,}375$, $\omega_1=\tfrac23$; $x_1=(0{,}5;0)$, $\tilde g_1=(0;0{,}5)$, $\xi_1=0{,}25$; $x_2=(\tfrac23;-\tfrac13)$, $\tilde g_2=0$); `L10-510b` "…, lời giải (bước TRPO)": $\tau_2=\tfrac12\cdot1+\tfrac23\cdot0{,}25=\tfrac23$ (đại lượng cộng dồn của Thuật toán 10.36, như ghi chú), kiểm $g^\top x_2=\tfrac23$ qua $Fx_2=g$; $\sqrt{0{,}03}=0{,}1732$, $\Delta=(0{,}1155;\,-0{,}0577)$, $F\Delta=(0{,}1732;\,0)$, $\tfrac12\Delta^\top F\Delta=0{,}01$; "Kết luận:" hai giá trị riêng phân biệt $3$, $1$ và $\tilde g_1\ne0$.
+- **`L10-500` dòng dẫn:** "TRPO xấp xỉ KL bậc hai và giải bằng gradient liên hợp, không cần lập ma trận Fisher." (18 âm tiết).
+- **Kiểm tra khác:** không còn "Nhu cầu:" ở mạch 5; các nhãn kết quả đều có số hiệu; ký hiệu $\tilde g_k$, $\omega_k$, $\xi_k$, $p_k$ có trên mặt trang `L10-505` trước khi dùng.
+- **Thời lượng:** 2,5 phút của `L10-501` (1) và `L10-504` (1,5): ví dụ `L10-505` 1, `505b` 1,5, `505c` 1,5 (trước: 2); bài tập `L10-509` 1, `510` 1, `510b` 0,5 (trước: 1 + 1). Tổng mạch 5 giữ 13,5 phút; mạch 5 có 13 trang.
+- **Số trang deck:** 135.
+- **Liên kết sâu:** không có liên kết `#/5/k` (k ≥ 2) nào trong deck, `exercises.md`, ghi chú hay `index.html`.
+- **Kiểm tra:** Playwright, khoảng trống tới chân trang (px khung 1280×720, như nhau ở 1600×900): `L10-500` 183, `502` 158, `502b` 160, `503` 29, `505` 96, `505b` 112, `505c` 33, `506` 56, `507` 37, `508` 118, `509` 32, `510` 54, `510b` 42; không tràn ngang, không lỗi console, không `.katex-error`. `deck_lint`: 39 phát hiện trên 135 trang, không phát hiện nào ở mạch 5.
+
+## Sửa mạch 5 sau kiểm lại (2026-11-20)
+
+1. `L10-505`: các bước của gradient liên hợp thành danh sách đánh số 1–4 theo thứ tự tính, khớp cột hai bảng ở `L10-505b`; câu vấn đề mở bằng "Bước $\Delta^*$ cần $F^{-1}g$."; dòng "Các bước …" gộp vào dòng dữ kiện để giữ 6 dòng.
+2. `L10-503`: "gradient tự nhiên (natural gradient)" gộp vào câu (a); "Lưu ý:" thành "$\Delta^*$ có thể vi phạm ràng buộc KL thật." (câu "nghiệm của bài toán xấp xỉ" chuyển vào ghi chú); giữ (a), (b), (c); 6 dòng, khoảng trống 40 px.
+3. `L10-502`: Định nghĩa 10.32 thêm $F=\sum_s\nu^{\mathrm{old}}(s)F_s$, $F_s=\mathbb E_{A\sim\pi_{\mathrm{old}}(\cdot\mid s)}[\psi\psi^\top]$; ghi chú "Độ cong lớn ở $p=0{,}5$ và nhỏ ở $p$ gần $1$ (tỉ số $25$), cùng chiều với tỉ số khoảng $33$ giữa hai KL." ($0{,}25/0{,}0099\approx25$).
+4. `L10-505b`: dòng hướng dẫn đọc "Vòng $k$: hàng $k$ của bảng trên cho $\omega_k$, rồi hàng $k$ của bảng dưới cập nhật."
+5. `L10-505c`: "Nhắc lại:" $\Delta^*=\sqrt{2\kappa/(g^\top F^{-1}g)}\,F^{-1}g$, ở đây $F^{-1}g=x_2$, $g^\top F^{-1}g=\tau$ (lập luận $g^\top x_2=x_2^\top Fx_2$ ở ghi chú); các dòng tính gộp thành hai dòng ($x_2$, $\tau$, $\sqrt{2\kappa/\tau}$; $\Delta^*$ và phép kiểm) để giữ khoảng trống 32 px.
+6. `L10-507`: bước 4 nêu điểm thử $\theta=\theta_{\mathrm{old}}+\zeta^j\Delta_0$, $j=0,\dots,j_{\max}$ (bước 6 của Thuật toán 10.37); để giữ trần 60 âm tiết, "dừng theo số vòng" và "lưu $\log\pi_{\mathrm{old}}$" chuyển vào ghi chú.
+7. `L10-509`: "…; giải thích vì sao thuật toán dừng sau hai vòng."
+8. `L10-510`: bỏ dòng "Lời giải: hai bảng …" cũ, thay bằng "Lời giải: bảng độ dài bước, rồi bảng cập nhật."; nhãn nhỏ "Bảng cập nhật:" (lớp `caption` có sẵn) tách hai bảng; lớp `compact` có sẵn cho trang; ô $x_2$ viết $(2/3;\,-1/3)$ để phần dưới của phân số không tràn khỏi trang (trước đó `scrollHeight` lớn hơn `clientHeight` 4–7 px); ghi chú thêm "Vòng 1 cần vì $\tilde g_1\ne0$; $p_1$ liên hợp với $p_0$ theo $F$".
+9. `L10-104` ghi chú: "Dòng 4: gradient liên hợp cho $x_2=(0{,}5;\,1)$, bước $\Delta^*=(0{,}05;\,0{,}1)$." (thay số của Ví dụ 10.15 đã bỏ).
+10. Mật độ `L10-507`, `L10-508` ở sát trần (đã biết, không vượt).
+
+Kiểm tra (Playwright, khoảng trống tới chân trang ở khung 1280×720, như nhau ở 1600×900; `scrollHeight` không vượt `clientHeight`): `L10-502` 132, `503` 40, `505` 57, `505b` 76, `505c` 32, `507` 58, `509` 32, `510` 54, `510b` 42, `104` 86. Không tràn ngang, không lỗi console, không `.katex-error`. `deck_lint`: 39 phát hiện trên 135 trang, không phát hiện nào ở mạch 5.

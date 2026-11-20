@@ -55,7 +55,7 @@
 <li>Tính mục tiêu cắt (clipped objective), approxKL, tỉ lệ cắt (clip fraction).</li>
 <li>Chứng minh chặn dưới bi quan; approxKL không chệch.</li>
 </ol>
-<aside class="notes"><p>Sáu dòng gộp bảy mục tiêu đầu của ghi chú; GAE là viết tắt của generalized advantage estimation. Dòng 1: phương sai $\tfrac49(b-1)^2$ của đường cơ sở hằng $b$; $p_A$ tăng từ $0{,}5$ lên $0{,}5436$ sau hai bước actor–critic; sai số TD có kỳ vọng $0{,}35\ne0{,}4$ khi critic sai. Dòng 2: $\widehat A_0=0{,}98$ khi lượt kết thúc, $3{,}572$ khi bị cắt. Dòng 3: $\Delta J=0{,}296$, hàm thay thế $0{,}26$, cận $-0{,}892$. Dòng 4: $\Delta^*=(0{,}15;\,-0{,}15)$, $\Delta=(0{,}05;\,0{,}1)$. Dòng 5: $\mathcal L^{\mathrm{CLIP}}=0{,}2167$, approxKL $0{,}01737$; quy tắc PPO-Penalty cho $\beta=2$. Dòng 6: $\mathcal L^{\mathrm{CLIP}}\le\mathcal L^{\mathrm{CPI}}$, trùng quanh $\theta_{\mathrm{old}}$; approxKL không chệch khi $\theta$ không phụ thuộc mẫu. Mục tiêu 7 còn gồm một vòng PPO đầy đủ và phạm vi kết quả hội tụ của PPO-Clip.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 2; ghi chú bài giảng Bài 10, Mục tiêu học tập 1–7.</p></aside>
+<aside class="notes"><p>Sáu dòng gộp bảy mục tiêu đầu của ghi chú; GAE là viết tắt của generalized advantage estimation. Dòng 1: phương sai $\tfrac49(b-1)^2$ của đường cơ sở hằng $b$; $p_A$ tăng từ $0{,}5$ lên $0{,}5436$ sau hai bước actor–critic; sai số TD có kỳ vọng $0{,}35\ne0{,}4$ khi critic sai. Dòng 2: $\widehat A_0=0{,}98$ khi lượt kết thúc, $3{,}572$ khi bị cắt. Dòng 3: $\Delta J=0{,}296$, hàm thay thế $0{,}26$, cận $-0{,}892$. Dòng 4: gradient liên hợp cho $x_2=(0{,}5;\,1)$, bước $\Delta^*=(0{,}05;\,0{,}1)$. Dòng 5: $\mathcal L^{\mathrm{CLIP}}=0{,}2167$, approxKL $0{,}01737$; quy tắc PPO-Penalty cho $\beta=2$. Dòng 6: $\mathcal L^{\mathrm{CLIP}}\le\mathcal L^{\mathrm{CPI}}$, trùng quanh $\theta_{\mathrm{old}}$; approxKL không chệch khi $\theta$ không phụ thuộc mẫu. Mục tiêu 7 còn gồm một vòng PPO đầy đủ và phạm vi kết quả hội tụ của PPO-Clip.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 2; ghi chú bài giảng Bài 10, Mục tiêu học tập 1–7.</p></aside>
 </section>
 <section data-slide-id="L10-104b" data-note-topic-id="lec-10-topic-02">
 <h2>Mục tiêu học tập</h2>
@@ -644,27 +644,17 @@
 <section data-slide-id="L10-500" id="mach-5" class="strand-title" data-note-topic-id="lec-10-topic-15">
 <div class="strand-title-body">
 <h2><span class="strand-number">5.</span>TRPO và gradient tự nhiên</h2>
-<p class="strand-lead">Muốn giải bài toán miền tin cậy với nhiều tham số, phải xấp xỉ KL bậc hai và tránh lập ma trận Fisher.</p>
+<p class="strand-lead">TRPO xấp xỉ KL bậc hai và giải bằng gradient liên hợp, không cần lập ma trận Fisher.</p>
 <p class="strand-keys">Ma trận Fisher · Gradient tự nhiên · Gradient liên hợp · Tìm kiếm lùi</p>
 </div>
 <aside class="notes"><p>Bài toán miền tin cậy của phần 4 phi tuyến cả ở mục tiêu lẫn ràng buộc, và với mạng nơ-ron $\theta$ có hàng triệu chiều. Ở phần này, mục tiêu được xấp xỉ bậc một, KL được xấp xỉ bậc hai bằng ma trận Fisher, bài toán xấp xỉ được giải bằng bước gradient tự nhiên, tính qua gradient liên hợp và kiểm lại bằng tìm kiếm lùi. Kết quả giao cho phần 6 là thuật toán TRPO, chi phí khoảng mười tích Fisher–vector mỗi vòng, và điều thuật toán còn bảo đảm sau các xấp xỉ.</p></aside>
 </section>
-<section data-slide-id="L10-501" data-note-topic-id="lec-10-topic-15">
-<h2>Ví dụ: cùng một bước tham số, hai khoảng cách chính sách</h2>
-<p><strong>Nhu cầu:</strong> đo độ dài bước bằng mức đổi chính sách.</p>
-<p>Một trạng thái, $p=\sigma(\theta)$, $\theta\in\mathbb R$; bước $\theta\leftarrow\theta+1$. Tính $p'$ và KL tại hai điểm.</p>
-<p>Tại $p=0{,}5$: $p'=0{,}7311$, KL $0{,}1201$.</p>
-<p>Tại $p=0{,}99$: $p'=0{,}99630$, KL $0{,}00366$.</p>
-<p><strong>Kết luận:</strong> cùng bước $+1$, KL ở $p=0{,}5$ gấp khoảng $33$ lần KL ở $p=0{,}99$.</p>
-<aside class="notes"><p>KL lấy theo chiều cũ‖mới, như trong ràng buộc của bài toán miền tin cậy. Tại $p=0{,}5$, hai số hạng của KL là $0{,}5\log\frac{0{,}5}{0{,}7311}=-0{,}1899$ và $0{,}5\log\frac{0{,}5}{0{,}2689}=0{,}3101$. Bước gradient thông thường đo độ dài bằng khoảng cách Euclid trên $\theta$, một đại lượng không gắn với chính sách: cùng một bước Euclid đổi chính sách nhiều ở $p=0{,}5$ và rất ít ở $p=0{,}99$. Vì vậy ràng buộc KL không thể là một quả cầu trong không gian tham số.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5 đoạn đầu, Ví dụ 10.13; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 17.</p></aside>
-</section>
 <section data-slide-id="L10-502" data-note-topic-id="lec-10-topic-15">
 <h2>Ma trận Fisher</h2>
-<p><strong>Trực quan.</strong> KL tăng theo bình phương độ dài bước; hệ số là độ cong của KL tại $\theta_{\mathrm{old}}$.</p>
-<p><strong>Định nghĩa 10.32.</strong> ${F=\mathbb E_{S\sim\nu^{\mathrm{old}},A\sim\pi_{\mathrm{old}}}[\psi\psi^\top]}$ gọi là <em>ma trận thông tin Fisher</em> (Fisher information matrix); $F$ nửa xác định dương.</p>
-<p>Bernoulli logit, $p=\sigma(\theta)$: $\psi=1-p$ với xác suất $p$, $\psi=-p$ với xác suất $1-p$.</p>
-<p>Do đó $F=p(1-p)$: $0{,}25$ tại $p=0{,}5$, $0{,}0099$ tại $p=0{,}99$.</p>
-<aside class="notes"><p>Kỳ vọng trong $F$ lấy theo dữ liệu của chính sách cũ, nên $F$ ước lượng được từ bộ đệm. $F$ nửa xác định dương vì $x^\top Fx=\mathbb E[(x^\top\psi)^2]\ge0$. Trên ví dụ Bernoulli, $\mathbb E[\psi^2]=p(1-p)^2+(1-p)p^2=p(1-p)$. Độ cong lớn ở $p=0{,}5$ và nhỏ ở $p$ gần $1$, đúng với tỉ số khoảng $33$ giữa KL tại $p=0{,}5$ và tại $p=0{,}99$ của bước $\theta\leftarrow\theta+1$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Định nghĩa 10.32; Schulman và cộng sự (2015), §7, Phụ lục C; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 17.</p></aside>
+<p><strong>Trực quan.</strong> Một trạng thái, $p=\sigma(\theta)$, bước $\theta\leftarrow\theta+1$: KL $0{,}1201$ tại $p=0{,}5$, $0{,}00366$ tại $p=0{,}99$; độ dài bước cần đo bằng độ cong của KL.</p>
+<p><strong>Định nghĩa 10.32.</strong> ${F=\mathbb E_{S\sim\nu^{\mathrm{old}},A\sim\pi_{\mathrm{old}}}[\psi\psi^\top]=\sum_s\nu^{\mathrm{old}}(s)F_s}$, ${F_s=\mathbb E_{A\sim\pi_{\mathrm{old}}(\cdot\mid s)}[\psi\psi^\top]}$, gọi là <em>ma trận thông tin Fisher</em> (Fisher information matrix); $F$ nửa xác định dương.</p>
+<p>Với $p=\sigma(\theta)$: $F=p(1-p)$, bằng $0{,}25$ tại $p=0{,}5$ và $0{,}0099$ tại $p=0{,}99$.</p>
+<aside class="notes"><p>Kỳ vọng trong $F$ lấy theo dữ liệu của chính sách cũ, nên $F$ ước lượng được từ bộ đệm. $F$ nửa xác định dương vì $x^\top Fx=\mathbb E[(x^\top\psi)^2]\ge0$. Với $p=\sigma(\theta)$, $\psi=1-p$ với xác suất $p$ và $\psi=-p$ với xác suất $1-p$, nên $\mathbb E[\psi^2]=p(1-p)^2+(1-p)p^2=p(1-p)$. Bước $\theta\leftarrow\theta+1$ cho $p'=0{,}7311$ tại $p=0{,}5$ và $p'=0{,}99630$ tại $p=0{,}99$ (Ví dụ 10.13). Độ cong lớn ở $p=0{,}5$ và nhỏ ở $p$ gần $1$ (tỉ số $25$), cùng chiều với tỉ số khoảng $33$ giữa hai KL.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Định nghĩa 10.32; Schulman và cộng sự (2015), §7, Phụ lục C; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 17.</p></aside>
 </section>
 <section data-slide-id="L10-502b" data-note-topic-id="lec-10-topic-15">
 <h2>KL trung bình bậc hai</h2>
@@ -676,41 +666,46 @@
 </section>
 <section data-slide-id="L10-503" data-note-topic-id="lec-10-topic-15">
 <h2>Bước gradient tự nhiên</h2>
-<p><strong>Mệnh đề 10.34.</strong> ${\max_\Delta g^\top\Delta}$ với ${\tfrac12\Delta^\top F\Delta\le\kappa}$; $g\ne0$, $F$ đối xứng, nửa xác định dương. (a) $F$ xác định dương:</p>
+<p><strong>Mệnh đề 10.34.</strong> ${\max_\Delta g^\top\Delta}$ với ${\tfrac12\Delta^\top F\Delta\le\kappa}$; $g\ne0$, $F$ đối xứng, nửa xác định dương. (a) $F$ xác định dương: nghiệm dưới đây, với hướng $F^{-1}g$ gọi là <em>gradient tự nhiên</em> (natural gradient);</p>
 <div>$$\Delta^*=\sqrt{2\kappa/(g^\top F^{-1}g)}\;F^{-1}g;$$</div>
-<p>hướng $F^{-1}g$ gọi là <em>gradient tự nhiên</em> (natural gradient).</p>
 <p>(b) $F$ suy biến, ${g\in\operatorname{range}F}$: thay $F^{-1}$ bằng giả nghịch đảo $F^+$ (pseudoinverse), nghiệm ${\Delta^*+\ker F}$; (c) ${g\notin\operatorname{range}F}$: không bị chặn.</p>
-<p><strong>Lưu ý:</strong> đây là nghiệm của bài toán xấp xỉ, không của bài toán miền tin cậy.</p>
-<p><strong>Chứng minh.</strong> Cauchy–Schwarz với tích vô hướng ${\langle u,v\rangle_F=u^\top Fv}$.</p>
-<aside class="notes"><p>Ở đây $g=\nabla\mathcal L(\theta_{\mathrm{old}})=\nabla J(\theta_{\mathrm{old}})$, theo tính khớp gradient của hàm thay thế; $F^+$ là giả nghịch đảo Moore–Penrose. Chứng minh (a): $g^\top\Delta=\langle F^{-1}g,\Delta\rangle_F\le\lVert F^{-1}g\rVert_F\lVert\Delta\rVert_F\le\sqrt{g^\top F^{-1}g}\sqrt{2\kappa}$, dấu bằng khi $\Delta$ cùng hướng $F^{-1}g$ và ràng buộc chặt. Gradient thường là hướng tăng nhanh nhất khi đo bước bằng chuẩn Euclid; $F^{-1}g$ là hướng tăng nhanh nhất khi đo bằng KL bậc hai. Trường hợp (b) xảy ra ngay ở bài toán một bước; khi $g$ và $F$ tính trên cùng phân bố của $(S,A)$, $g\in\operatorname{range}F$. Bước $\Delta^*$ có thể vi phạm ràng buộc KL thật.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Mệnh đề 10.34; Kakade (2002), theo Schulman và cộng sự (2015), §7.</p></aside>
-</section>
-<section data-slide-id="L10-504" data-note-topic-id="lec-10-topic-15">
-<h2>Ví dụ: bước gradient tự nhiên trên bài toán một bước</h2>
-<div class="grid2 wide-right"><img class="figure" src="img/lec-09/one-step-card.svg" alt="Thẻ dữ kiện bài toán một bước, chính sách softmax, hai hành động: bảng hai cột cho a bằng 1 và a bằng 2, đặc trưng phi của s, a bằng (1; 0) và (0; 1); xác suất pi theta bằng 2/3 và 1/3; phần thưởng r bằng 3 và 0. Dòng dưới: theta bằng (log 2; 0), lượt dừng sau A 0."/>
-<div>
-<p>Tính bước gradient tự nhiên với ma trận Fisher $F_s$ tại $s$, $\kappa=0{,}01$.</p>
-<p>$u=(1;\,-1)$: ${F_s=\tfrac29uu^\top}$, suy biến theo hướng $(1;\,1)$; ${F_s^+=\tfrac98uu^\top}$.</p>
-<p>$g=\tfrac23u$: ${F_s^+g=(1{,}5;\,-1{,}5)}$, ${g^\top F_s^+g=2}$.</p>
-<div>$$\kappa=0{,}01:\ \Delta^*=0{,}1\,(1{,}5;\,-1{,}5)=(0{,}15;\,-0{,}15).$$</div>
-</div></div>
-<p>Kết quả: $\pi(1\mid s)=0{,}7297$; $J$ từ $2$ lên $2{,}189$; KL thật ${0{,}009644\le\kappa}$.</p>
-<aside class="notes"><p>$\psi_\theta(s,1)=\tfrac13u$ và $\psi_\theta(s,2)=-\tfrac23u$, nên $F_s=\tfrac23\cdot\tfrac19uu^\top+\tfrac13\cdot\tfrac49uu^\top=\tfrac29uu^\top$. Hướng $(1;\,1)$ cộng cùng một hằng vào hai logit và không đổi chính sách softmax, nên $\ker F_s$ không ảnh hưởng tới chính sách mới. $g=(\tfrac23;\,-\tfrac23)$ vuông góc với $(1;\,1)$, nên $g\in\operatorname{range}F_s$. Hệ số độ dài là $\sqrt{2\cdot0{,}01/2}=0{,}1$. Giả nghịch đảo chọn nghiệm có chuẩn nhỏ nhất trong $\Delta^*+\ker F_s$. Kiểm: $\tfrac12\cdot\tfrac29\cdot0{,}3^2=0{,}01$. Ràng buộc ở đây là KL tại $s$, $\tfrac12\Delta^\top F_s\Delta\le\kappa$; KL trung bình chỉ khác hằng $\nu^{\mathrm{old}}(s)$. Bước này qua ngay phép kiểm của tìm kiếm lùi với $j=0$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.14, 10.15, Nhận xét 10.35.</p></aside>
+<p><strong>Lưu ý:</strong> $\Delta^*$ có thể vi phạm ràng buộc KL thật.</p>
+<p>Bài toán một bước: ${F_s=\tfrac29uu^\top}$, ${u=(1;\,-1)}$, suy biến theo $(1;\,1)$.</p>
+<aside class="notes"><p>Chứng minh: Cauchy–Schwarz với tích vô hướng $\langle u,v\rangle_F=u^\top Fv$. Ở đây $g=\nabla\mathcal L(\theta_{\mathrm{old}})=\nabla J(\theta_{\mathrm{old}})$, theo tính khớp gradient của hàm thay thế; $F^+$ là giả nghịch đảo Moore–Penrose. Chứng minh (a): $g^\top\Delta=\langle F^{-1}g,\Delta\rangle_F\le\lVert F^{-1}g\rVert_F\lVert\Delta\rVert_F\le\sqrt{g^\top F^{-1}g}\sqrt{2\kappa}$, dấu bằng khi $\Delta$ cùng hướng $F^{-1}g$ và ràng buộc chặt. Gradient thường là hướng tăng nhanh nhất khi đo bước bằng chuẩn Euclid; $F^{-1}g$ là hướng tăng nhanh nhất khi đo bằng KL bậc hai. Trường hợp (b) xảy ra ngay ở bài toán một bước: $\psi_\theta(s,1)=\tfrac13u$, $\psi_\theta(s,2)=-\tfrac23u$, nên $F_s=\tfrac23\cdot\tfrac19uu^\top+\tfrac13\cdot\tfrac49uu^\top$, và hướng $(1;\,1)$ cộng cùng một hằng vào hai logit, không đổi chính sách softmax; khi $g$ và $F$ tính trên cùng phân bố của $(S,A)$, $g\in\operatorname{range}F$. $\Delta^*$ là nghiệm của bài toán xấp xỉ, không của bài toán miền tin cậy.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Mệnh đề 10.34; Kakade (2002), theo Schulman và cộng sự (2015), §7.</p></aside>
 </section>
 <section data-slide-id="L10-505" data-note-topic-id="lec-10-topic-16">
 <h2>Ví dụ: hai vòng gradient liên hợp</h2>
-<p><strong>Nhu cầu:</strong> với $\theta\in\mathbb R^d$, $d$ cỡ $10^6$, không lập được $F$; chỉ dùng tích $Fv$.</p>
-<div class="grid2"><div>
-<p>$F=\operatorname{diag}(4;\,1)$, $g=(2;\,1)$, $x_0=0$, $p_0=g$, ${\omega_k=\tfrac{\tilde g_k^\top\tilde g_k}{p_k^\top Fp_k}}$. Tính $x_2$.</p>
-<table><thead><tr><th scope="col">$k$</th><th scope="col">$x_k$</th><th scope="col">$\tilde g_k=Fx_k-g$</th><th scope="col">$\omega_k$</th></tr></thead><tbody>
-<tr><td>$0$</td><td>$(0;\,0)$</td><td>$(-2;\,-1)$</td><td>$\tfrac5{17}$</td></tr>
-<tr><td>$1$</td><td>$(\tfrac{10}{17};\,\tfrac5{17})$</td><td>$(\tfrac6{17};\,-\tfrac{12}{17})$</td><td>$0{,}85$</td></tr>
-<tr><td>$2$</td><td>$(0{,}5;\,1)$</td><td>$(0;\,0)$</td><td>—</td></tr>
+<p>Bước $\Delta^*$ cần $F^{-1}g$. Với $\theta\in\mathbb R^d$, $d$ cỡ $10^6$, không lập được $F$; gradient liên hợp giải $Fx=g$ chỉ bằng các tích $Fv$.</p>
+<p>${F=\operatorname{diag}(4;\,1)}$, ${g=(2;\,1)}$, ${x_0=0}$, ${\kappa=0{,}01}$. Tính $x_2$ và bước $\Delta$ theo các bước của gradient liên hợp:</p>
+<ol>
+<li>${\tilde g_0=Fx_0-g=-g}$, ${p_0=-\tilde g_0}$.</li>
+<li>${\omega_k=\tilde g_k^\top\tilde g_k/(p_k^\top Fp_k)}$.</li>
+<li>${x_{k+1}=x_k+\omega_kp_k}$, ${\tilde g_{k+1}=\tilde g_k+\omega_kFp_k}$.</li>
+<li>${\xi_{k+1}=\tilde g_{k+1}^\top\tilde g_{k+1}/(\tilde g_k^\top\tilde g_k)}$, ${p_{k+1}=-\tilde g_{k+1}+\xi_{k+1}p_k}$.</li>
+</ol>
+<aside class="notes"><p>Lập $F$ cần $O(d^2)$ bộ nhớ, nghịch đảo cần $O(d^3)$ phép tính. Quy ước là của Nocedal và Wright (2006, Thuật toán 5.2): $\tilde g_k=Fx_k-g$ là gradient của mô hình $\tfrac12x^\top Fx-g^\top x$ tại $x_k$, nên cực tiểu của mô hình là $F^{-1}g$. Mỗi vòng đi một đoạn $\omega_k$ theo hướng $p_k$; hướng sau liên hợp với hướng trước theo $F$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.2, Ví dụ 10.16, dữ kiện; Nocedal và Wright (2006), Chương 5; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 18.</p></aside>
+</section>
+<section data-slide-id="L10-505b" data-note-topic-id="lec-10-topic-16">
+<h2>Ví dụ: hai vòng gradient liên hợp, các vòng</h2>
+<p>Vòng $k$: hàng $k$ của bảng trên cho $\omega_k$, rồi hàng $k$ của bảng dưới cập nhật.</p>
+<table><thead><tr><th scope="col">$k$</th><th scope="col">$\tilde g_k$</th><th scope="col">$p_k$</th><th scope="col">$Fp_k$</th><th scope="col">${\tilde g_k^\top\tilde g_k}$</th><th scope="col">${p_k^\top Fp_k}$</th><th scope="col">$\omega_k$</th></tr></thead><tbody>
+<tr><td>$0$</td><td>$(-2;\,-1)$</td><td>$(2;\,1)$</td><td>$(8;\,1)$</td><td>$5$</td><td>$17$</td><td>$\tfrac5{17}$</td></tr>
+<tr><td>$1$</td><td>$(\tfrac6{17};\,-\tfrac{12}{17})$</td><td>$(-\tfrac{30}{289};\,\tfrac{240}{289})$</td><td>$(-\tfrac{120}{289};\,\tfrac{240}{289})$</td><td>$\tfrac{180}{289}$</td><td>$\tfrac{61\,200}{289^2}$</td><td>$0{,}85$</td></tr>
 </tbody></table>
-</div>
-<img class="figure" src="img/lec-10/trpo-trust-region.svg" alt="Mặt phẳng tọa độ của bước Delta. Elip tâm gốc tọa độ, phương trình một nửa Delta chuyển vị F Delta bằng 0,01 với F bằng diag(4; 1), bán trục 0,0707 theo trục thứ nhất và 0,1414 theo trục thứ hai. Mũi tên nét liền từ gốc theo hướng gradient g bằng (2; 1). Mũi tên nét đứt từ gốc tới điểm (0,05; 0,1) trên biên elip, ghi bước gradient tự nhiên F mũ trừ 1 g nhân 0,1. Hai mũi tên lệch hướng nhau."/>
-</div>
-<p>$\tau=x_2^\top Fx_2=2$; $\kappa=0{,}01$: $\Delta=0{,}1\,x_2=(0{,}05;\,0{,}1)$, lệch hướng $g$.</p>
-<aside class="notes"><p>Mỗi vòng đi một đoạn $\omega_k$ theo hướng $p_k$: $x_{k+1}=x_k+\omega_kp_k$; hướng sau liên hợp với hướng trước theo $F$. Vòng thứ hai cho $x_2=F^{-1}g$ và $\tilde g_2=0$. Lập $F$ cần $O(d^2)$ bộ nhớ, nghịch đảo cần $O(d^3)$ phép tính. Gradient liên hợp cực tiểu hóa $\tfrac12x^\top Fx-g^\top x$ lần lượt theo các hướng đôi một liên hợp đối với $F$: $p_0=(2;\,1)$, $p_1=(-\tfrac{30}{289};\,\tfrac{240}{289})$, với $p_0^\top Fp_1=0$. $F$ có hai giá trị riêng phân biệt nên hai vòng cho nghiệm đúng (Nocedal và Wright, 2006, Định lý 5.4). Trên hình, miền $\tfrac12\Delta^\top F\Delta\le\kappa$ là một elip hẹp theo trục thứ nhất, nơi $F$ lớn; gradient $g$ nghiêng về trục thứ nhất, bước tối ưu nghiêng về trục thứ hai.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.2, Ví dụ 10.16; Nocedal và Wright (2006), Chương 5; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 18.</p></aside>
+<table><thead><tr><th scope="col">$k$</th><th scope="col">$x_{k+1}$</th><th scope="col">$\tilde g_{k+1}$</th><th scope="col">${\tilde g_{k+1}^\top\tilde g_{k+1}}$</th><th scope="col">$\xi_{k+1}$</th><th scope="col">$p_{k+1}$</th></tr></thead><tbody>
+<tr><td>$0$</td><td>$(\tfrac{10}{17};\,\tfrac5{17})$</td><td>$(\tfrac6{17};\,-\tfrac{12}{17})$</td><td>$\tfrac{180}{289}$</td><td>${\tfrac{180/289}{5}=\tfrac{36}{289}}$</td><td>$(-\tfrac{30}{289};\,\tfrac{240}{289})$</td></tr>
+<tr><td>$1$</td><td>$(0{,}5;\,1)$</td><td>$(0;\,0)$</td><td>$0$</td><td colspan="2">dừng</td></tr>
+</tbody></table>
+<aside class="notes"><p>Hàng $k$ của bảng trên cho $\omega_k$; hàng $k$ của bảng dưới dùng $\omega_k$ để cập nhật, và $p_{k+1}$ của nó là $p_k$ của hàng kế ở bảng trên. Ví dụ, $x_1=0+\tfrac5{17}(2;\,1)$ và $\tilde g_1=(-2;\,-1)+\tfrac5{17}(8;\,1)$. Hai hướng liên hợp theo $F$: $p_0^\top Fp_1=\tfrac1{289}(8\cdot(-30)+1\cdot240)=0$. $F$ có hai giá trị riêng phân biệt nên hai vòng cho nghiệm đúng (Nocedal và Wright, 2006, Định lý 5.4).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.16, vòng 0 và vòng 1.</p></aside>
+</section>
+<section data-slide-id="L10-505c" data-note-topic-id="lec-10-topic-16">
+<h2>Ví dụ: hai vòng gradient liên hợp, bước TRPO</h2>
+<img class="figure short-m" src="img/lec-10/trpo-trust-region.svg" alt="Mặt phẳng tọa độ của bước Delta. Elip tâm gốc tọa độ, phương trình một nửa Delta chuyển vị F Delta bằng 0,01 với F bằng diag(4; 1), bán trục 0,0707 theo trục thứ nhất và 0,1414 theo trục thứ hai. Mũi tên nét liền từ gốc theo hướng gradient g bằng (2; 1). Mũi tên nét đứt từ gốc tới điểm (0,05; 0,1) trên biên elip, ghi bước gradient tự nhiên F mũ trừ 1 g nhân 0,1. Hai mũi tên lệch hướng nhau."/>
+<p><strong>Nhắc lại:</strong> ${\Delta^*=\sqrt{2\kappa/(g^\top F^{-1}g)}\,F^{-1}g}$; ở đây ${F^{-1}g=x_2}$, ${g^\top F^{-1}g=\tau}$.</p>
+<p>${x_2=(0{,}5;\,1)}$, ${\tau=4\cdot0{,}5^2+1\cdot1^2=2}$, ${\sqrt{2\kappa/\tau}=\sqrt{0{,}02/2}=0{,}1}$.</p>
+<p>${\Delta^*=0{,}1\,x_2=(0{,}05;\,0{,}1)}$; ${\tfrac12\Delta^{*\top}F\Delta^*=\tfrac12(4\cdot0{,}0025+0{,}01)=0{,}01=\kappa}$.</p>
+<p><strong>Diễn giải:</strong> $\Delta$ lệch hướng ${g=(2;\,1)}$ vì KL bậc hai phạt nặng trục thứ nhất ($F_{11}=4$).</p>
+<aside class="notes"><p>Thuật toán cộng dồn cùng số: $\tau_2=\tfrac5{17}\cdot5+0{,}85\cdot\tfrac{180}{289}=2$, và $\tau=x_2^\top Fx_2=g^\top x_2$ vì $Fx_2=g$. Vì $x_2=F^{-1}g$ nên $g^\top F^{-1}g=g^\top x_2=x_2^\top Fx_2=\tau$, và bước $\sqrt{2\kappa/\tau}\,x_2$ là bước $\Delta_0$ của TRPO và đúng là $\sqrt{2\kappa/(g^\top F^{-1}g)}\,F^{-1}g$ của Mệnh đề 10.34. Trên hình, miền $\tfrac12\Delta^\top F\Delta\le\kappa$ là một elip hẹp theo trục thứ nhất, nơi $F$ lớn; gradient $g$ nghiêng về trục thứ nhất, bước tối ưu nghiêng về trục thứ hai.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.16, bước miền tin cậy và kiểm tra lại; Mệnh đề 10.34.</p></aside>
 </section>
 <section data-slide-id="L10-506" data-note-topic-id="lec-10-topic-16">
 <h2>Thuật toán gradient liên hợp với tích Fisher–vector</h2>
@@ -726,15 +721,15 @@
 </section>
 <section data-slide-id="L10-507" data-note-topic-id="lec-10-topic-16">
 <h2>Thuật toán TRPO với lợi thế GAE</h2>
-<p><strong>Thuật toán 10.37.</strong> <strong>Đầu vào:</strong> $\pi_\theta$, $\hat v$, $\kappa$, $\zeta$, $j_{\max}$, $N$, $h$, $\gamma$, $\lambda$. <strong>Đầu ra:</strong> $\theta$, $w$; dừng theo số vòng. Mỗi vòng:</p>
+<p><strong>Thuật toán 10.37.</strong> <strong>Đầu vào:</strong> $\pi_\theta$, $\hat v$, $\kappa$, $\zeta$, $j_{\max}$, $N$, $h$, $\gamma$, $\lambda$. <strong>Đầu ra:</strong> $\theta$, $w$. Mỗi vòng:</p>
 <ol>
-<li>$\theta_{\mathrm{old}}\leftarrow\theta$; thu $h$ bước trên $N$ môi trường; <em>bộ đệm</em> (buffer) $\mathcal D$ gồm $hN$ mẫu, lưu $\log\pi_{\mathrm{old}}$; $\widehat{\mathbb E}_{\mathcal D}$: trung bình đều trên $\mathcal D$.</li>
+<li>$\theta_{\mathrm{old}}\leftarrow\theta$; thu $h$ bước trên $N$ môi trường; <em>bộ đệm</em> (buffer) $\mathcal D$ gồm $hN$ mẫu; $\widehat{\mathbb E}_{\mathcal D}$: trung bình đều trên $\mathcal D$.</li>
 <li>Tính $\widehat A_t$, $V^{\mathrm{targ}}_t$ bằng GAE lùi; ${g=\widehat{\mathbb E}_{\mathcal D}[\widehat A_t\psi_t]}$.</li>
 <li>Giải $Fx=g$ bằng gradient liên hợp; ${\Delta_0=\sqrt{2\kappa/(x^\top Fx)}\;x}$.</li>
-<li><em>Tìm kiếm lùi</em> (backtracking line search): $j$ nhỏ nhất có ${\widehat{\mathbb E}_{\mathcal D}[\rho_t\widehat A_t]}$ tăng, KL trung bình mẫu ${\le\kappa}$; không có thì giữ $\theta_{\mathrm{old}}$.</li>
+<li><em>Tìm kiếm lùi</em> (backtracking line search): thử ${\theta=\theta_{\mathrm{old}}+\zeta^j\Delta_0}$, ${j=0,\dots,j_{\max}}$; nhận $j$ đầu tiên có ${\widehat{\mathbb E}_{\mathcal D}[\rho_t\widehat A_t]}$ tăng, KL trung bình mẫu ${\le\kappa}$; không có thì giữ $\theta_{\mathrm{old}}$.</li>
 <li>Hạ gradient cho critic về $V^{\mathrm{targ}}_t$.</li>
 </ol>
-<aside class="notes"><p>Giả thiết: chính sách khả vi hai lần, $\pi_\theta&gt;0$; dữ liệu mỗi vòng do $\pi_{\mathrm{old}}$ sinh ra. Ở bước 4, $\widehat{\mathcal L}(\theta)=\widehat{\mathbb E}_{\mathcal D}[\rho_t(\theta)\widehat A_t]$ là hàm thay thế mẫu, $\widehat D$ là KL trung bình mẫu trên $\mathcal D$ theo chiều cũ‖mới, cả hai tính tại $\theta_{\mathrm{old}}+\zeta^j\Delta_0$ với $j=0,\dots,j_{\max}$; $\zeta\in(0,1)$ là hệ số co bước. $F$ là Hessian của $\widehat D$ tại $\theta_{\mathrm{old}}$. Bước gradient tự nhiên trên bài toán một bước được nhận ngay với $j=0$. Bài báo TRPO gốc ước lượng lợi thế bằng lợi tức Monte Carlo và không dùng critic; bước 2 theo cách Schulman và cộng sự (2016) ghép TRPO với GAE. Điều kiện dừng là ngân sách số vòng.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Thuật toán 10.37; Schulman và cộng sự (2015), §5–6, Phụ lục C; Schulman và cộng sự (2016), §5–6; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 18–19.</p></aside>
+<aside class="notes"><p>Giả thiết: chính sách khả vi hai lần, $\pi_\theta&gt;0$; dữ liệu mỗi vòng do $\pi_{\mathrm{old}}$ sinh ra. Ở bước 4, $\widehat{\mathcal L}(\theta)=\widehat{\mathbb E}_{\mathcal D}[\rho_t(\theta)\widehat A_t]$ là hàm thay thế mẫu, $\widehat D$ là KL trung bình mẫu trên $\mathcal D$ theo chiều cũ‖mới, cả hai tính tại $\theta_{\mathrm{old}}+\zeta^j\Delta_0$ với $j=0,\dots,j_{\max}$; $\zeta\in(0,1)$ là hệ số co bước. $F$ là Hessian của $\widehat D$ tại $\theta_{\mathrm{old}}$. Bài báo TRPO gốc ước lượng lợi thế bằng lợi tức Monte Carlo và không dùng critic; bước 2 theo cách Schulman và cộng sự (2016) ghép TRPO với GAE. Điều kiện dừng là ngân sách số vòng; bộ đệm lưu $\log\pi_{\mathrm{old}}$ của từng mẫu để tính $\rho_t$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Thuật toán 10.37; Schulman và cộng sự (2015), §5–6, Phụ lục C; Schulman và cộng sự (2016), §5–6; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 18–19.</p></aside>
 </section>
 <section data-slide-id="L10-508" data-note-topic-id="lec-10-topic-16">
 <h2>Phạm vi bảo đảm của TRPO thực hành</h2>
@@ -748,27 +743,38 @@
 </section>
 <section data-slide-id="L10-509" data-note-topic-id="lec-10-topic-16">
 <h2>Bài tập: gradient liên hợp và bước TRPO</h2>
-<p><strong>Câu hỏi:</strong></p>
-<div>$$F=\begin{pmatrix}2&amp;1\\1&amp;2\end{pmatrix},\qquad g=(1;\,0),\qquad\kappa=0{,}01,\qquad x_0=0.$$</div>
-<p>Chạy hai vòng Thuật toán 10.36; tính $\tau$, $\Delta$ và kiểm $\tfrac12\Delta^\top F\Delta$.</p>
-<p>Giải thích vì sao thuật toán dừng sau hai vòng.</p>
-<table><thead><tr><th scope="col">$k$</th><th scope="col">$x_k$</th><th scope="col">$\tilde g_k$</th><th scope="col">$\omega_k$</th></tr></thead><tbody>
-<tr><td>$0$</td><td>$(0;\,0)$</td><td></td><td></td></tr>
-<tr><td>$1$</td><td></td><td></td><td></td></tr>
+<p><strong>Câu hỏi:</strong> Bài tập 10.8. ${F=\begin{pmatrix}2&amp;1\\1&amp;2\end{pmatrix}}$, ${g=(1;\,0)}$, ${\kappa=0{,}01}$, ${x_0=0}$: chạy Thuật toán 10.36; tính $\tau$, $\Delta$, $\tfrac12\Delta^\top F\Delta$; giải thích vì sao thuật toán dừng sau hai vòng.</p>
+<table><thead><tr><th scope="col">$k$</th><th scope="col">$\tilde g_k$</th><th scope="col">$p_k$</th><th scope="col">$Fp_k$</th><th scope="col">${\tilde g_k^\top\tilde g_k}$</th><th scope="col">${p_k^\top Fp_k}$</th><th scope="col">$\omega_k$</th></tr></thead><tbody>
+<tr><td>$0$</td><td>$(-1;\,0)$</td><td>$(1;\,0)$</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>$1$</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+</tbody></table>
+<table><thead><tr><th scope="col">$k$</th><th scope="col">$x_{k+1}$</th><th scope="col">$\tilde g_{k+1}$</th><th scope="col">${\tilde g_{k+1}^\top\tilde g_{k+1}}$</th><th scope="col">$\xi_{k+1}$</th><th scope="col">$p_{k+1}$</th></tr></thead><tbody>
+<tr><td>$0$</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>$1$</td><td></td><td></td><td></td><td></td><td></td></tr>
 </tbody></table>
 <aside class="notes"><p>Gợi ý: dùng đúng quy ước của thuật toán, $\tilde g_0=-g$ và $p_0=g$, nên $y_0=Fp_0=(2;\,1)$; độ dài bước là $\omega_k=\tilde g_k^\top\tilde g_k/(p_k^\top Fp_k)$, hệ số liên hợp là $\xi_{k+1}=\tilde g_{k+1}^\top\tilde g_{k+1}/\tilde g_k^\top\tilde g_k$. Số $\tau$ cộng dồn $\omega_k\tilde g_k^\top\tilde g_k$ qua các vòng. Các giá trị riêng của $F$ là $3$ và $1$; số giá trị riêng phân biệt cho số vòng tối đa. Kiểm cuối cùng: $x_2$ phải bằng $F^{-1}g$, và bước TRPO $\Delta=\sqrt{2\kappa/\tau}\,x_2$ phải cho KL bậc hai đúng bằng $\kappa$. Bài tập kiểm việc chạy đúng các công thức cập nhật của gradient liên hợp và nối kết quả với bước TRPO.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bài tập 10.8.</p></aside>
 </section>
-<section data-slide-id="L10-510" data-note-topic-id="lec-10-topic-16">
-<h2>Bài tập: gradient liên hợp và bước TRPO</h2>
-<p><strong>Lời giải:</strong></p>
-<table><thead><tr><th scope="col">$k$</th><th scope="col">$x_k$</th><th scope="col">$\tilde g_k$</th><th scope="col">$\omega_k$</th></tr></thead><tbody>
-<tr><td>$0$</td><td>$(0;\,0)$</td><td>$(-1;\,0)$</td><td>$\tfrac12$</td></tr>
-<tr><td>$1$</td><td>$(0{,}5;\,0)$</td><td>$(0;\,0{,}5)$</td><td>$\tfrac23$, với $\xi_1=0{,}25$</td></tr>
-<tr><td>$2$</td><td>$(\tfrac23;\,-\tfrac13)$</td><td>$(0;\,0)$</td><td>—</td></tr>
+<section data-slide-id="L10-510" class="compact" data-note-topic-id="lec-10-topic-16">
+<h2>Bài tập: gradient liên hợp và bước TRPO, lời giải (hai vòng)</h2>
+<p><strong>Lời giải:</strong> bảng độ dài bước, rồi bảng cập nhật.</p>
+<table><thead><tr><th scope="col">$k$</th><th scope="col">$\tilde g_k$</th><th scope="col">$p_k$</th><th scope="col">$Fp_k$</th><th scope="col">${\tilde g_k^\top\tilde g_k}$</th><th scope="col">${p_k^\top Fp_k}$</th><th scope="col">$\omega_k$</th></tr></thead><tbody>
+<tr><td>$0$</td><td>$(-1;\,0)$</td><td>$(1;\,0)$</td><td>$(2;\,1)$</td><td>$1$</td><td>$2$</td><td>$\tfrac12$</td></tr>
+<tr><td>$1$</td><td>$(0;\,0{,}5)$</td><td>$(0{,}25;\,-0{,}5)$</td><td>$(0;\,-0{,}75)$</td><td>$0{,}25$</td><td>$0{,}375$</td><td>$\tfrac23$</td></tr>
 </tbody></table>
-<p>$\tau=\tfrac12\cdot1+\tfrac23\cdot0{,}25=\tfrac23$; ${\Delta=\sqrt{0{,}03}\,x_2=(0{,}1155;\,-0{,}0577)}$; ${\tfrac12\Delta^\top F\Delta=0{,}01}$.</p>
-<p><strong>Kết luận:</strong> $F$ có hai giá trị riêng phân biệt $3$ và $1$, nên hai vòng cho nghiệm đúng.</p>
-<aside class="notes"><p>Vòng $0$: $Fp_0=(2;\,1)$, $\omega_0=\tfrac12$, $\tilde g_1=(-1;\,0)+\tfrac12(2;\,1)=(0;\,0{,}5)$. Vòng $1$: $p_1=(0;\,-0{,}5)+0{,}25\,(1;\,0)=(0{,}25;\,-0{,}5)$, $Fp_1=(0;\,-0{,}75)$, $\omega_1=0{,}25/0{,}375=\tfrac23$. Kiểm: $Fx_2=(\tfrac43-\tfrac13;\,\tfrac23-\tfrac23)=(1;\,0)=g$, nên $\tau=g^\top x_2=\tfrac23$. Bước đầy đủ thỏa ràng buộc bậc hai đúng bằng $\kappa$. Thuật toán không dừng sau một vòng vì $\tilde g_1\ne0$; theo Nocedal và Wright (2006, Định lý 5.4), số vòng không vượt số giá trị riêng phân biệt. Lỗi thường gặp: quên dấu của $\tilde g_0=-g$, hoặc đổi quy ước $Fx-g$ thành $g-Fx$ giữa chừng. Mỗi vòng TRPO vì vậy cần khoảng $k_{\max}$ tích Fisher–vector và một lần tìm kiếm lùi cho mỗi bước cập nhật.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bài tập 10.8, lời giải.</p></aside>
+<p class="caption">Bảng cập nhật:</p>
+<table><thead><tr><th scope="col">$k$</th><th scope="col">$x_{k+1}$</th><th scope="col">$\tilde g_{k+1}$</th><th scope="col">${\tilde g_{k+1}^\top\tilde g_{k+1}}$</th><th scope="col">$\xi_{k+1}$</th><th scope="col">${p_{k+1}=-\tilde g_{k+1}+\xi_{k+1}p_k}$</th></tr></thead><tbody>
+<tr><td>$0$</td><td>$(0{,}5;\,0)$</td><td>$(0;\,0{,}5)$</td><td>$0{,}25$</td><td>${0{,}25/1=0{,}25}$</td><td>$(0{,}25;\,-0{,}5)$</td></tr>
+<tr><td>$1$</td><td>$(2/3;\,-1/3)$</td><td>$(0;\,0)$</td><td>$0$</td><td colspan="2">dừng</td></tr>
+</tbody></table>
+<aside class="notes"><p>Vòng $0$: $\tilde g_1=(-1;\,0)+\tfrac12(2;\,1)=(0;\,0{,}5)$. Vòng $1$: $Fp_1=(2\cdot0{,}25-0{,}5;\,0{,}25-1)=(0;\,-0{,}75)$, $p_1^\top Fp_1=0{,}375$, $\omega_1=0{,}25/0{,}375=\tfrac23$; $x_2=(0{,}5;\,0)+\tfrac23(0{,}25;\,-0{,}5)$. Thuật toán không dừng sau một vòng vì $\tilde g_1\ne0$. Lỗi thường gặp: quên dấu của $\tilde g_0=-g$, hoặc đổi quy ước $Fx-g$ thành $g-Fx$ giữa chừng. Vòng 1 cần vì $\tilde g_1\ne0$; $p_1$ liên hợp với $p_0$ theo $F$: $p_0^\top Fp_1=(1;\,0)\cdot(0;\,-0{,}75)=0$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bài tập 10.8, lời giải, vòng 0 và vòng 1.</p></aside>
+</section>
+<section data-slide-id="L10-510b" data-note-topic-id="lec-10-topic-16">
+<h2>Bài tập: gradient liên hợp và bước TRPO, lời giải (bước TRPO)</h2>
+<p>${\tau_2=\omega_0\tilde g_0^\top\tilde g_0+\omega_1\tilde g_1^\top\tilde g_1=\tfrac12\cdot1+\tfrac23\cdot0{,}25=\tfrac23}$; kiểm ${\tau=g^\top x_2=\tfrac23}$ vì ${Fx_2=(\tfrac43-\tfrac13;\,\tfrac23-\tfrac23)=g}$.</p>
+<p>${\sqrt{2\kappa/\tau}=\sqrt{0{,}02/(2/3)}=\sqrt{0{,}03}=0{,}1732}$; ${\Delta=0{,}1732\,(\tfrac23;\,-\tfrac13)=(0{,}1155;\,-0{,}0577)}$.</p>
+<p>${F\Delta=0{,}1732\,g=(0{,}1732;\,0)}$; ${\tfrac12\Delta^\top F\Delta=\tfrac12\cdot0{,}1155\cdot0{,}1732=0{,}01=\kappa}$.</p>
+<p><strong>Kết luận:</strong> $F$ có hai giá trị riêng phân biệt $3$ và $1$, nên gradient liên hợp dừng sau không quá hai vòng; $\tilde g_1\ne0$ nên cần đúng hai vòng.</p>
+<aside class="notes"><p>Số $\tau$ là đại lượng cộng dồn của Thuật toán 10.36, $\tau_{k+1}=\tau_k+\omega_k\tilde g_k^\top\tilde g_k$; khi thuật toán cho nghiệm đúng, $\tau=x^\top Fx=g^\top x$. Bước đầy đủ thỏa ràng buộc bậc hai đúng bằng $\kappa$. Định lý 5.4 của Nocedal và Wright (2006) cho số vòng không vượt số giá trị riêng phân biệt. Mỗi vòng TRPO vì vậy cần khoảng $k_{\max}$ tích Fisher–vector và một lần tìm kiếm lùi cho mỗi bước cập nhật.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bài tập 10.8, lời giải, bước và số vòng.</p></aside>
 </section>
 </section>
 

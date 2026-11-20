@@ -955,3 +955,13 @@ Yêu cầu của tác giả (nhật ký yêu cầu thay đổi hàng 33–36): l
 | 3 | Kiểm mạch, sư phạm vòng 6 | `general-purpose` | `opus` | `high` | trung bình: `405` 8 dòng; dòng $\Delta p$ của `412` đứng sau định nghĩa | chấp nhận |
 | 4 | Biên tập theo 10 mục gộp | tác tử biên tập | `opus` | `high` | `403`–`414c`; storyboard. Sự cố: lượt đo đầu lưu ảnh PNG vào thư mục workspace và repo; tác tử đã xóa, không tệp nào được stage | chấp nhận; điều phối viên kiểm: không còn ảnh mới ở workspace và repo (ba tệp PNG cũ ở gốc rl-plan có từ 2026-04 và 2026-10, bị `.gitignore` bỏ qua) |
 | 5 | Kiểm cuối | điều phối viên | — | — | — | Playwright 1600×900 và 390×844 trên 21 trang `L10-400`…`L10-500`: 0 lỗi console, 0 request lỗi, 0 `.katex-error`, không tràn ngang, cao ≤ 670/720 px; khoảng cách tới chân trang ≥ 29 px (tác tử đo). `deck_lint`: 0 phát hiện ở mạch 4. `git diff --check` sạch. |
+
+### Mạch 5 theo NT23 một ví dụ (2026-11-20)
+
+| Bước | Vai | Loại | Mô hình | Mức nỗ lực | Đầu ra | Quyết định của điều phối viên |
+|---|---|---|---|---|---|---|
+| 1 | Biên tập mạch 5 | tác tử biên tập | `opus` | `high` | ví dụ duy nhất Ví dụ 10.16 `L10-505`, `505b`, `505c` (bước cuối là bước gradient tự nhiên $\Delta^*$, theo lời tác giả "nếu cần bổ sung nội dung vào ví dụ được chọn"); bỏ `L10-501`, `504`; dòng kết quả `502`, `503`; Bài tập 10.8 `509` + lời giải `510`, `510b` (A′); dòng dẫn `500` | chấp nhận; điều phối viên tính lại $\Delta=(0{,}1155;-0{,}0577)$, $F\Delta=(0{,}1732;0)$; deck 135 trang |
+| 2 | Kiểm toán vòng 7 | `general-purpose` | `opus` | `high` | 0 chặn, 0 nghiêm trọng, 0 trung bình; tên "bước gradient tự nhiên $\Delta^*$" đúng Mệnh đề 10.34 và Thuật toán 10.37; nhẹ: `510` tràn 5 px | chấp nhận |
+| 3 | Kiểm mạch, sư phạm vòng 7 | `general-purpose` | `opus` | `high` | trung bình: `503` 8 dòng; các bước gradient liên hợp trên `505` viết liền | chấp nhận |
+| 4 | Biên tập theo 10 mục gộp | tác tử biên tập | `opus` | `high` | `104` (ghi chú diễn giả), `502`, `503`, `505`, `505b`, `505c`, `507`, `509`, `510`; storyboard | chấp nhận |
+| 5 | Kiểm cuối | điều phối viên | — | — | — | Playwright 1600×900 và 390×844 trên 15 trang (`L10-104`, `L10-500`…`L10-600`): 0 lỗi console, 0 request lỗi, 0 `.katex-error`, không tràn ngang, cao ≤ 665/720 px; khoảng cách chân trang ≥ 32 px, không tràn trong (tác tử đo). `deck_lint`: 0 phát hiện ở mạch 5. `git diff --check` sạch. Ghi nhận: `L10-507`, `508` mật độ sát trần 60. |
