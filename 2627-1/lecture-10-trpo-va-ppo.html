@@ -336,29 +336,18 @@
 <section data-slide-id="L10-300" id="mach-3" class="strand-title" data-note-topic-id="lec-10-topic-07">
 <div class="strand-title-body">
 <h2><span class="strand-number">3.</span>Ước lượng lợi thế tổng quát</h2>
-<p class="strand-lead">Muốn chọn mức trung gian giữa sai số TD và lợi tức Monte Carlo, phải trộn các lợi tức nhiều bước bằng một tham số.</p>
+<p class="strand-lead">Một tham số trộn các lợi tức nhiều bước, cho mọi mức giữa sai số TD và lợi tức Monte Carlo.</p>
 <p class="strand-keys">Lợi tức n bước · Lợi tức λ · GAE · Tính không chệch cho gradient · Đoạn thu</p>
 </div>
-<aside class="notes"><p>Trên lượt của ví dụ hai bước actor–critic, sai số TD cho $0{,}35$, còn hệ số Monte Carlo $G_0-\hat v(s_A)$ cho $1{,}7$, trong khi lợi thế đúng là $A_\pi(s_A,1)=0{,}4$. Các lợi tức $n$ bước nối hai đầu này, và tham số $\lambda$ trộn chúng thành GAE; GAE giữ ước lượng gradient không chệch khi $\lambda=1$ trên lượt đầy đủ hoặc khi critic đúng, và được tính lùi trên dữ liệu có cờ kết thúc và cờ cắt ngắn. Kết quả giao cho phần 6 là $\widehat A_t$ và mục tiêu của critic $V^{\mathrm{targ}}_t$.</p></aside>
-</section>
-<section data-slide-id="L10-301" data-note-topic-id="lec-10-topic-07">
-<h2>Ví dụ: ba ước lượng lợi thế trên một lượt</h2>
-<img class="figure short-s" src="img/lec-10/two-state-chain.svg" alt="Chuỗi hai trạng thái. Ô s A, ghi xuất phát và p A bằng xác suất chọn hành động 1, có hai cung: hành động 1 sang ô s B với phần thưởng 0; hành động 2 tới ô kết thúc tô xám với phần thưởng 1. Ô s B, ghi p B, có hai cung tới ô kết thúc: hành động 1 với phần thưởng 3, hành động 2 với phần thưởng 0. Góc dưới ghi gamma bằng 0,9 và chính sách cũ p A bằng 1/2, p B bằng 2/3."/>
-<p><strong>Nhu cầu:</strong> chọn số phần thưởng thực trong ước lượng lợi thế.</p>
-<p>Lượt $s_A\xrightarrow{1}s_B\xrightarrow{1}$ kết thúc, $R=(0;\,3)$, $\gamma=0{,}9$, $\hat v=(1;\,1{,}5)$: $\delta_0=0{,}35$, $\delta_1=1{,}5$. Tính ba ước lượng.</p>
-<p>Một bước: $0{,}35$; hai bước (Monte Carlo): $0{,}9\cdot3-1=1{,}7$; lợi thế đúng $0{,}4$.</p>
-<p>Trộn với trọng số $0{,}2$ và $0{,}8$: $0{,}2\cdot0{,}35+0{,}8\cdot1{,}7=1{,}43$.</p>
-<p>Kiểm: $1{,}7=\delta_0+\gamma\delta_1$; $1{,}43=\delta_0+0{,}9\cdot0{,}8\,\delta_1$.</p>
-<aside class="notes"><p>Ước lượng một bước dựa vào critic sai, vì $\hat v(s_B)=1{,}5$ khác $v_\pi(s_B)=2$. Ước lượng Monte Carlo dựa vào một phần thưởng ngẫu nhiên $R_2$, bằng $3$ với xác suất $\tfrac23$ và $0$ với xác suất $\tfrac13$. Ba số khác nhau trên cùng một lượt, và không số nào bằng $0{,}4$. Muốn so độ chệch của ba ước lượng, cần lấy kỳ vọng theo lượt. Hệ số $0{,}72$ là $\gamma\lambda$ với $\lambda=0{,}8$: mọi ước lượng ở đây là tổng có trọng số của các sai số TD.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.8; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 13.</p></aside>
+<aside class="notes"><p>Trên lượt của chuỗi hai trạng thái (bảng hệ số cuối mạch 2), sai số TD cho $0{,}35$, còn hệ số Monte Carlo $G_0-\hat v(s_A)$ cho $1{,}7$, trong khi lợi thế đúng là $A_\pi(s_A,1)=0{,}4$. Các lợi tức $n$ bước nối hai đầu này, và tham số $\lambda$ trộn chúng thành GAE; GAE giữ ước lượng gradient không chệch khi $\lambda=1$ trên lượt đầy đủ hoặc khi critic đúng, và được tính lùi trên dữ liệu có cờ kết thúc và cờ cắt ngắn. Kết quả giao cho phần 6 là $\widehat A_t$ và mục tiêu của critic $V^{\mathrm{targ}}_t$.</p></aside>
 </section>
 <section data-slide-id="L10-302" data-note-topic-id="lec-10-topic-07">
 <h2>Lợi tức $n$ bước</h2>
-<p><strong>Trực quan.</strong> Dùng $n$ phần thưởng thực rồi bootstrap từ $\hat v(S_{t+n})$.</p>
-<p><strong>Định nghĩa 10.11.</strong> Với $w$ cố định, <em>lợi tức $n$ bước</em> (n-step return) từ bước $t&lt;T$ là</p>
+<p>Chuỗi hai trạng thái, lượt ${s_A\xrightarrow{1}s_B\xrightarrow{1}}$, critic $(1;\,1{,}5)$: hệ số một bước ${\delta_0=0{,}35}$, hệ số Monte Carlo ${G_0-\hat v(s_A)=1{,}7}$, lợi thế đúng $0{,}4$.</p>
+<p><strong>Định nghĩa 10.11.</strong> Với $w$ cố định, <em>lợi tức $n$ bước</em> (n-step return) từ bước $t&lt;T$ là $G_{t:t+n}$ dưới đây, và <em>lợi thế $n$ bước</em> là ${\widehat A^{(n)}_t=G_{t:t+n}-\hat v(S_t,w)}$:</p>
 <div>$$G_{t:t+n}=\begin{cases}\sum_{k=0}^{n-1}\gamma^kR_{t+k+1}+\gamma^n\hat v(S_{t+n},w), &amp; t+n&lt;T,\\ G_t, &amp; t+n\ge T;\end{cases}$$</div>
-<p>$\widehat A^{(n)}_t=G_{t:t+n}-\hat v(S_t,w)$ gọi là lợi thế $n$ bước.</p>
-<p><strong>Bổ đề.</strong> Với $w$ cố định trong lượt và $\delta_k=0$ khi $k\ge T$: ${\widehat A^{(n)}_t=\sum_{k=0}^{n-1}\gamma^k\delta_{t+k}}$.</p>
-<aside class="notes"><p>Chứng minh bổ đề: thay $\delta_{t+k}$ vào tổng; các số hạng $\hat v(S_{t+j})$, $1\le j&lt;n$, triệt tiêu lồng nhau. Khi lượt kết thúc trước bước $t+n$, lợi tức $n$ bước là lợi tức thực. Trường hợp $n=1$ cho $\widehat A^{(1)}_t=\delta_t$; trường hợp $n\ge T-t$ cho $G_t-\hat v(S_t)$. Trên lượt của chuỗi hai trạng thái, $\widehat A^{(1)}_0=0{,}35$ và $\widehat A^{(2)}_0=1{,}7$. Bổ đề cần cùng một $w$ cho mọi sai số TD: nếu $\hat v(S_{t+1})$ trong $\delta_t$ và trong $\delta_{t+1}$ dùng hai tham số khác nhau, hai số hạng không triệt tiêu.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Định nghĩa 10.11, Bổ đề 10.12; Sutton và Barto (2018), §7.1, (7.1).</p></aside>
+<p><strong>Bổ đề 10.12.</strong> $w$ cố định trong lượt, ${Z_{k+1}=1}$ khi và chỉ khi ${k+1=T}$, ${\delta_k=0}$ khi ${k\ge T}$: ${\widehat A^{(n)}_t=\sum_{k=0}^{n-1}\gamma^k\delta_{t+k}}$.</p>
+<aside class="notes"><p>Lợi tức $n$ bước dùng $n$ phần thưởng thực rồi bootstrap từ $\hat v(S_{t+n})$. Chứng minh bổ đề: thay $\delta_{t+k}$ vào tổng; các số hạng $\hat v(S_{t+j})$, $1\le j&lt;n$, triệt tiêu lồng nhau. Khi lượt kết thúc trước bước $t+n$, lợi tức $n$ bước là lợi tức thực. Trường hợp $n=1$ cho $\widehat A^{(1)}_t=\delta_t$; trường hợp $n\ge T-t$ cho $G_t-\hat v(S_t)$. Trên lượt của chuỗi hai trạng thái, $\widehat A^{(1)}_0=0{,}35$ và $\widehat A^{(2)}_0=1{,}7$. Bổ đề cần cùng một $w$ cho mọi sai số TD: nếu $\hat v(S_{t+1})$ trong $\delta_t$ và trong $\delta_{t+1}$ dùng hai tham số khác nhau, hai số hạng không triệt tiêu.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Định nghĩa 10.11, Bổ đề 10.12; Sutton và Barto (2018), §7.1, (7.1).</p></aside>
 </section>
 <section data-slide-id="L10-303" data-note-topic-id="lec-10-topic-08">
 <h2>Lợi tức $\lambda$ và GAE</h2>
@@ -369,50 +358,54 @@
 <img class="figure" src="img/lec-10/gae-weights.svg" alt="Hai biểu đồ cột cạnh nhau. Trái: trọng số (1 trừ lambda) nhân lambda mũ n trừ 1 của lợi tức n bước, với lambda bằng 0,8 và n từ 1 đến 6: 0,2; 0,16; 0,128; 0,102; 0,082; 0,066; một cột cuối tô sọc, lambda mũ 6 bằng 0,262, ghi phần trọng số còn lại dồn vào lợi tức thực khi lượt kết thúc. Phải: trọng số (gamma lambda) mũ k của sai số TD delta t cộng k trong GAE, với gamma bằng 0,9 và lambda bằng 0,8, k từ 0 đến 5: 1; 0,72; 0,518; 0,373; 0,269; 0,193."/></div>
 <p><strong>Định nghĩa 10.13.</strong> <em>Lợi tức λ</em> (λ-return): ${G^\lambda_t=(1-\lambda)\sum_{n=1}^{T-t-1}\lambda^{n-1}G_{t:t+n}+\lambda^{T-t-1}G_t}$;</p>
 <p>$\widehat A_t=G^\lambda_t-\hat v(S_t,w)$ gọi là <em>ước lượng lợi thế tổng quát</em> (GAE); $\lambda=1$: $G^\lambda_t=G_t$.</p>
-<p>Lượt trên, $\lambda=0{,}8$: $G^\lambda_0=0{,}2\cdot1{,}35+0{,}8\cdot2{,}7=2{,}43$, $\widehat A_0=1{,}43$.</p>
-<aside class="notes"><p>Nửa trái của hình là trọng số của từng lợi tức $n$ bước trong $G^\lambda_t$ với $\lambda=0{,}8$; cột sọc là phần $\lambda^6=0{,}262$ dồn vào lợi tức thực khi còn $7$ bước tới kết thúc. Nửa phải là trọng số $(\gamma\lambda)^k$ của sai số TD thứ $k$, tức dạng tổng của GAE; hai nửa mô tả cùng một ước lượng theo hai cách đếm. Với $\lambda=0$, $\widehat A_t=\delta_t$; với $\lambda=1$, $\widehat A_t=G_t-\hat v(S_t,w)$, hệ số Monte Carlo của REINFORCE có đường cơ sở. Dạng thứ hai của $G^\lambda_t$ là (12.3) của Sutton và Barto.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §3.2, Định nghĩa 10.13; Sutton và Barto (2018), §12.1, (12.3); bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 13.</p></aside>
+<aside class="notes"><p>Nửa trái của hình là trọng số của từng lợi tức $n$ bước trong $G^\lambda_t$ với $\lambda=0{,}8$; cột sọc là phần $\lambda^6=0{,}262$ dồn vào lợi tức thực khi còn $7$ bước tới kết thúc. Nửa phải là trọng số $(\gamma\lambda)^k$ của sai số TD thứ $k$, tức dạng tổng của GAE; hai nửa mô tả cùng một ước lượng theo hai cách đếm. Với $\lambda=0$, $\widehat A_t=\delta_t$; với $\lambda=1$, $\widehat A_t=G_t-\hat v(S_t,w)$, hệ số Monte Carlo của REINFORCE có đường cơ sở. Dạng thứ hai của $G^\lambda_t$ là (12.3) của Sutton và Barto. Trên lượt của chuỗi hai trạng thái, với $\lambda=0{,}8$: $G^\lambda_0=0{,}2\cdot1{,}35+0{,}8\cdot2{,}7=2{,}43$ và $\widehat A_0=1{,}43$ (Ví dụ 10.8).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §3.2, Định nghĩa 10.13; Sutton và Barto (2018), §12.1, (12.3); bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 13.</p></aside>
 </section>
 <section data-slide-id="L10-304" data-note-topic-id="lec-10-topic-08">
 <h2>Dạng tổng và truy hồi của GAE</h2>
 <p><strong>Mệnh đề 10.14.</strong> Critic cố định trong lượt, $\lambda\in[0,1]$, $\delta_k=0$ khi $k\ge T$. Khi đó (a)</p>
 <div>$$\widehat A_t=\sum_{k=0}^{T-t-1}(\gamma\lambda)^k\,\delta_{t+k};$$</div>
 <p>(b) $\lambda=0$: $\widehat A_t=\delta_t$; $\lambda=1$: $\widehat A_t=G_t-\hat v(S_t,w)$;</p>
-<p>(c) ${\widehat A_t=\delta_t+\gamma\lambda(1-Z_{t+1})\widehat A_{t+1}}$, $\widehat A_T=0$. Kiểm: ${0{,}35+0{,}72\cdot1{,}5=1{,}43}$.</p>
+<p>(c) ${\widehat A_t=\delta_t+\gamma\lambda(1-Z_{t+1})\widehat A_{t+1}}$, $\widehat A_T=0$.</p>
 <p><strong>Chứng minh.</strong> Thay bổ đề lợi thế $n$ bước, đổi thứ tự lấy tổng: ${(1-\lambda)\sum_{n&gt;k}\lambda^{n-1}=\lambda^k}$; (c): tách số hạng $k=0$.</p>
-<aside class="notes"><p>Bước đổi thứ tự lấy tổng hợp lệ vì chỉ hữu hạn sai số TD khác $0$ và chuỗi $\sum_n\lambda^{n-1}$ hội tụ tuyệt đối: $\widehat A_t=(1-\lambda)\sum_n\lambda^{n-1}\sum_{k&lt;n}\gamma^k\delta_{t+k}=\sum_k\gamma^k\delta_{t+k}(1-\lambda)\sum_{n&gt;k}\lambda^{n-1}$. Trường hợp $\lambda=1$ phải xử lý riêng, vì thừa số $1-\lambda$ bằng $0$: định nghĩa cho $G_t-\hat v(S_t)$, và bổ đề với $n=T-t$ cho cùng tổng. Ở (c), khi $Z_{t+1}=1$ thì $t+1=T$ và $\widehat A_{t+1}=0$, nên mặt nạ không đổi kết quả trên một lượt đầy đủ. Mệnh đề là đồng nhất thức trên từng lượt; nó không nói gì về kỳ vọng hay phương sai.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Mệnh đề 10.14 và chứng minh; Schulman và cộng sự (2016), (16).</p></aside>
-</section>
-<section data-slide-id="L10-305" data-note-topic-id="lec-10-topic-08">
-<h2>Ví dụ: GAE và gradient trên chuỗi hai trạng thái</h2>
-<p><strong>Nhu cầu:</strong> xác định GAE có làm chệch ước lượng gradient hay không.</p>
-<p>$\hat v=(1;\,1{,}5)$, $p_A=\tfrac12$, $p_B=\tfrac23$, ${A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)}$; tọa độ $\theta_A$ của $\psi_\theta(s_A,a)$: $\pm0{,}5$. Tính theo $\lambda$:</p>
-<table><thead><tr><th scope="col">Đại lượng</th><th scope="col">$\lambda=0$</th><th scope="col">$\lambda=0{,}8$</th><th scope="col">$\lambda=1$</th></tr></thead><tbody>
-<tr><td>${\mathbb E[\widehat A_0\mid s_A,1]=0{,}35+0{,}45\lambda}$</td><td>$0{,}35$</td><td>$0{,}71$</td><td>$0{,}8$</td></tr>
-<tr><td>$\mathbb E[\widehat A_0\mid s_A,2]$</td><td>$0$</td><td>$0$</td><td>$0$</td></tr>
-<tr><td>tọa độ $\theta_A$ của $\mathbb E[\widehat A_0\psi_0]$; đúng: $0{,}2$</td><td>$0{,}0875$</td><td>$0{,}1775$</td><td>$0{,}2$</td></tr>
-</tbody></table>
-<p><strong>Diễn giải:</strong> với $\lambda=1$, độ chệch $+0{,}4$ như nhau cho hai hành động nên bị hàm điểm khử.</p>
-<aside class="notes"><p>Với hành động 1, $\delta_0=0{,}35$ tất định, còn $\delta_1=R_2-1{,}5$ có kỳ vọng $0{,}5$, nên $\mathbb E[\widehat A_0\mid s_A,1]=0{,}35+0{,}9\lambda\cdot0{,}5$. Hành động 2 kết thúc lượt với phần thưởng $1$, nên $\widehat A_0=0$ với mọi $\lambda$. Với $\lambda=0$, hai độ chệch $-0{,}05$ và $+0{,}4$ khác nhau nên không bị khử. Với $\lambda=1$, lợi thế ước lượng chệch ($0{,}8$ so với $0{,}4$) nhưng tọa độ gradient đúng bằng $0{,}2$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.9; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 13.</p></aside>
+<aside class="notes"><p>Bước đổi thứ tự lấy tổng hợp lệ vì chỉ hữu hạn sai số TD khác $0$ và chuỗi $\sum_n\lambda^{n-1}$ hội tụ tuyệt đối: $\widehat A_t=(1-\lambda)\sum_n\lambda^{n-1}\sum_{k&lt;n}\gamma^k\delta_{t+k}=\sum_k\gamma^k\delta_{t+k}(1-\lambda)\sum_{n&gt;k}\lambda^{n-1}$. Trường hợp $\lambda=1$ phải xử lý riêng, vì thừa số $1-\lambda$ bằng $0$: định nghĩa cho $G_t-\hat v(S_t)$, và bổ đề với $n=T-t$ cho cùng tổng. Ở (c), khi $Z_{t+1}=1$ thì $t+1=T$ và $\widehat A_{t+1}=0$, nên mặt nạ không đổi kết quả trên một lượt đầy đủ. Mệnh đề là đồng nhất thức trên từng lượt; nó không nói gì về kỳ vọng hay phương sai. Trên lượt của chuỗi, (c) cho $0{,}35+0{,}72\cdot1{,}5=1{,}43$, khớp $G^\lambda_0-\hat v(s_A)$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Mệnh đề 10.14 và chứng minh; Schulman và cộng sự (2016), (16).</p></aside>
 </section>
 <section data-slide-id="L10-306" data-note-topic-id="lec-10-topic-08">
 <h2>GAE và tính không chệch cho gradient</h2>
-<p><strong>Mệnh đề 10.15.</strong> <strong>Giả thiết:</strong> (G1)–(G4), MDP hữu hạn; critic cố định, bị chặn; GAE tính trên lượt đầy đủ.</p>
-<p><strong>Kết luận:</strong> nếu $\lambda=1$ hoặc $\hat v=v_\pi$ thì ${\mathbb E[\widehat A_t\psi_t]=\mathbb E[A_\pi(S_t,A_t)\psi_t]}$, nên</p>
-<div>$$\mathbb E\Bigl[\sum_{t=0}^{T-1}\gamma^t\widehat A_t\,\psi_t\Bigr]=\nabla_\theta J(\theta);$$</div>
-<p>ước lượng như vậy gọi là <em>γ-just</em>.</p>
-<p><strong>Lưu ý:</strong> mệnh đề không khẳng định ${\mathbb E[\widehat A_t\mid S_t,A_t]=A_\pi}$; trên chuỗi, $0{,}8\ne0{,}4$.</p>
+<p><strong>Mệnh đề 10.15.</strong> <strong>Giả thiết:</strong> (G1)–(G4), MDP hữu hạn; $\pi_\theta$ Markov dừng; critic cố định, bị chặn; GAE tính trên lượt đầy đủ.</p>
+<p><strong>Kết luận:</strong> nếu $\lambda=1$ hoặc $\hat v=v_\pi$ thì ${\mathbb E[\widehat A_t\psi_t]=\mathbb E[A_\pi(S_t,A_t)\psi_t]}$, nên ước lượng là <em>γ-just</em>:</p>
+<div>$$\mathbb E\Bigl[\sum_{t=0}^{T-1}\gamma^t\widehat A_t\,\psi_t\Bigr]=\nabla_\theta J(\theta).$$</div>
+<p><strong>Lưu ý:</strong> trên chuỗi, critic $(1;\,1{,}5)$, $\lambda=1$: ${\mathbb E[\widehat A_0\mid s_A,1]=0{,}8\ne A_\pi=0{,}4}$, nhưng tọa độ $\theta_A$ của kỳ vọng ước lượng gradient vẫn đúng $0{,}2$.</p>
 <p><strong>Chứng minh.</strong> $\lambda=1$: đường cơ sở $b=\hat v$; $\hat v=v_\pi$: mỗi $\delta_{t+k}$ ước lượng $A_\pi$.</p>
-<aside class="notes"><p>Trên chuỗi hai trạng thái với $\lambda=1$, $\mathbb E[\widehat A_0\mid s_A,1]=0{,}8$, trong khi $A_\pi(s_A,1)=0{,}4$. Trường hợp $\lambda=1$ là Mệnh đề 10.2 với $b=\hat v$. Trường hợp $\hat v=v_\pi$ dùng Mệnh đề 10.8(a) cho từng sai số TD $\delta_{t+k}$: mỗi số hạng $k\ge1$ có $\mathbb E[\delta_{t+k}\psi_t]=0$, vì kỳ vọng của lợi thế tại bước $t+k$ khi biết lịch sử bằng $0$. Lượt bị cắt phá điều kiện thứ nhất: nếu lượt của chuỗi bị cắt sau bước $0$, kể cả với $\lambda=1$ tọa độ $\theta_A$ là $0{,}0875$. Schulman và cộng sự (2016, §3) nêu định tính một đánh đổi giữa độ chệch và phương sai theo $\lambda$. Critic học được không bằng $v_\pi$ và các cài đặt dùng $\lambda&lt;1$, nên trong thực hành mệnh đề không cho bảo đảm.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Mệnh đề 10.15; Schulman và cộng sự (2016), Định nghĩa 1, Mệnh đề 1, §3.</p></aside>
+<aside class="notes"><p>Trên chuỗi, với $\lambda=1$, độ chệch $+0{,}4$ như nhau cho hai hành động nên bị hàm điểm khử, còn với $\lambda=0$ hai độ chệch $-0{,}05$ và $+0{,}4$ không bị khử và tọa độ $\theta_A$ là $0{,}0875\ne0{,}2$ (Ví dụ 10.9). Trường hợp $\lambda=1$ là Mệnh đề 10.2 với $b=\hat v$. Trường hợp $\hat v=v_\pi$ dùng Mệnh đề 10.8(a) cho từng sai số TD $\delta_{t+k}$: mỗi số hạng $k\ge1$ có $\mathbb E[\delta_{t+k}\psi_t]=0$, vì kỳ vọng của lợi thế tại bước $t+k$ khi biết lịch sử bằng $0$. Lượt bị cắt phá giả thiết lượt đầy đủ: nếu lượt của chuỗi bị cắt sau bước $0$, kể cả với $\lambda=1$ tọa độ $\theta_A$ là $0{,}0875$. Critic học được không bằng $v_\pi$ và các cài đặt dùng $\lambda&lt;1$, nên trong thực hành mệnh đề không cho bảo đảm.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Mệnh đề 10.15; Schulman và cộng sự (2016), Định nghĩa 1, Mệnh đề 1, §3.</p></aside>
 </section>
 <section data-slide-id="L10-307" data-note-topic-id="lec-10-topic-09">
 <h2>Ví dụ: kết thúc và cắt ngắn</h2>
-<p><strong>Nhu cầu:</strong> tính GAE trên đoạn thu có lượt kết thúc, bị cắt, hoặc dở ở biên.</p>
-<p>$R_1=1$, $R_2=2$, $\hat v(S_0)=2$, $\hat v(S_1)=3$, $\gamma=0{,}9$, $\lambda=0{,}8$; $\delta_0=1{,}7$. Tính $\widehat A_0$.</p>
-<table><thead><tr><th scope="col">trường hợp</th><th scope="col">$t$</th><th scope="col">$R_{t+1}$</th><th scope="col">$Z_{t+1}$</th><th scope="col">$U_{t+1}$</th><th scope="col">$\hat v_{\mathrm{old}}(S_t)$</th><th scope="col">$\delta_t$</th><th scope="col">$\widehat A_t$</th><th scope="col">$\widehat A_0$</th></tr></thead><tbody>
-<tr><td>(i) kết thúc</td><td>$1$</td><td>$2$</td><td>$1$</td><td>$0$</td><td>$3$</td><td>$-1$</td><td>$-1$</td><td>$0{,}98$</td></tr>
-<tr><td>(ii) cắt, $\hat v(S_2)=4$</td><td>$1$</td><td>$2$</td><td>$0$</td><td>$1$</td><td>$3$</td><td>$2{,}6$</td><td>$2{,}6$</td><td>$3{,}572$</td></tr>
+<p>Đoạn hai bước, $\gamma=0{,}9$, $\lambda=0{,}8$; $R_1=1$, $R_2=2$; ${\hat v(S_0)=2}$, ${\hat v(S_1)=3}$; ${Z_1=U_1=0}$.</p>
+<p>Sau bước $2$: (i) kết thúc, $Z_2=1$; (ii) cắt vì giới hạn thời gian, ${U_2=1}$, ${Z_2=0}$, quan sát cuối có ${\hat v(S_2)=4}$.</p>
+<p><strong>Nhắc lại:</strong> ${\delta_t=R_{t+1}+\gamma(1-Z_{t+1})\hat v(S_{t+1})-\hat v(S_t)}$; ${\widehat A_t=\delta_t+\gamma\lambda(1-Z_{t+1})\widehat A_{t+1}}$, ${\widehat A_2=0}$, ${\gamma\lambda=0{,}72}$.</p>
+<p>Tính $\delta_0$, $\delta_1$, $\widehat A_1$, $\widehat A_0$ cho (i) và (ii).</p>
+<p>${\delta_0=1+0{,}9\cdot3-2=1{,}7}$ trong cả hai trường hợp.</p>
+<aside class="notes"><p>Hai cờ: $Z_{t+1}=1$ khi MDP kết thúc; $U_{t+1}=1$ khi việc thu dừng vì một giới hạn ngoài MDP, như giới hạn thời gian. Khi $Z_{t+1}=1$, mục tiêu một bước chỉ còn $R_{t+1}$; khi $U_{t+1}=1$ và $Z_{t+1}=0$, mục tiêu vẫn bootstrap, ở đây bằng giá trị của quan sát cuối $S_2$. Đoạn chỉ có hai bước, nên $\widehat A_2=0$ và cờ $U_2$ không cần nhân vào truy hồi ở ví dụ này.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §3.3, Ví dụ 10.10, phần dữ kiện; Bài 08, Định nghĩa 08.4, 08.6; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 24.</p></aside>
+</section>
+<section data-slide-id="L10-307b" data-note-topic-id="lec-10-topic-09">
+<h2>Ví dụ: kết thúc và cắt ngắn, hai trường hợp</h2>
+<p>${\delta_1=R_2+\gamma(1-Z_2)\hat v(S_2)-\hat v(S_1)}$; ${\widehat A_1=\delta_1}$ vì ${\widehat A_2=0}$; ${\widehat A_0=\delta_0+0{,}72\,\widehat A_1}$.</p>
+<table><thead><tr><th scope="col">trường hợp</th><th scope="col">${1-Z_2}$</th><th scope="col">${\hat v(S_2)}$</th><th scope="col">${\delta_1=\widehat A_1}$</th><th scope="col">${0{,}72\,\widehat A_1}$</th><th scope="col">${\widehat A_0}$</th></tr></thead><tbody>
+<tr><td>(i)</td><td>$0$</td><td>—</td><td>${2+0-3=-1}$</td><td>$-0{,}72$</td><td>${1{,}7-0{,}72=0{,}98}$</td></tr>
+<tr><td>(ii)</td><td>$1$</td><td>$4$</td><td>${2+0{,}9\cdot4-3=2{,}6}$</td><td>$1{,}872$</td><td>${1{,}7+1{,}872=3{,}572}$</td></tr>
 </tbody></table>
-<p><strong>Kết luận:</strong> cùng phần thưởng và critic, hai cờ cho hai kết quả cách nhau $2{,}592$.</p>
-<aside class="notes"><p>Nhắc lại hai cờ: $Z_{t+1}=1$ khi MDP kết thúc; $U_{t+1}=1$ khi việc thu dừng vì một giới hạn ngoài MDP, như giới hạn thời gian. Khi $Z_{t+1}=1$, mục tiêu một bước chỉ còn $R_{t+1}$; khi $U_{t+1}=1$ và $Z_{t+1}=0$, mục tiêu vẫn bootstrap, ở đây bằng $R_2+\gamma\hat v(S_2)$ của quan sát cuối. Trường hợp (i): $\widehat A_0=1{,}7+0{,}72\cdot(-1)$. Trường hợp (ii): $\widehat A_0=1{,}7+0{,}72\cdot2{,}6$. Kiểm (ii) bằng lợi tức λ cắt (truncated λ-return): $0{,}2\cdot3{,}7+0{,}8\cdot6{,}04=5{,}572=\widehat A_0+\hat v(S_0)$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §3.3, Ví dụ 10.10; Bài 08, Định nghĩa 08.4, 08.6; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 24.</p></aside>
+<p><strong>Diễn giải:</strong> cùng phần thưởng và critic, hai cờ cho hai kết quả cách nhau $2{,}592$; ở (ii), $S_2$ vẫn có tương lai nên giá trị của nó đi vào sai số TD.</p>
+<aside class="notes"><p>Ở (i), mặt nạ $1-Z_2=0$ xóa phần bootstrap, nên $\delta_1$ chỉ còn $R_2-\hat v(S_1)$. Ở (ii), lượt bị dừng từ bên ngoài, nên giá trị của quan sát cuối vẫn vào mục tiêu. Ghi một bước cắt ngắn thành kết thúc, $Z=1$, biến (ii) thành (i) và làm $\widehat A_0$ giảm $2{,}592$. Hiệu đó là $0{,}72\cdot0{,}9\cdot4=2{,}592$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.10, hai trường hợp và diễn giải.</p></aside>
+</section>
+<section data-slide-id="L10-307c" data-note-topic-id="lec-10-topic-09">
+<h2>Ví dụ: kết thúc và cắt ngắn, kiểm bằng lợi tức λ cắt</h2>
+<p>Lợi tức λ cắt (truncated λ-return) tại biên $2$ (Định nghĩa 10.13 với biên $2$ thay $T$): ${G^\lambda_{0:2}=(1-\lambda)\,G_{0:1}+\lambda\,G_{0:2}}$. Trường hợp (ii):</p>
+<p>${G_{0:1}=R_1+\gamma\hat v(S_1)=1+0{,}9\cdot3=3{,}7}$.</p>
+<p>${G_{0:2}=R_1+\gamma R_2+\gamma^2\hat v(S_2)=1+0{,}9\cdot2+0{,}81\cdot4=6{,}04}$.</p>
+<p>${G^\lambda_{0:2}=0{,}2\cdot3{,}7+0{,}8\cdot6{,}04=0{,}74+4{,}832=5{,}572}$.</p>
+<p>${\widehat A_0+\hat v(S_0)=3{,}572+2=5{,}572}$.</p>
+<p><strong>Diễn giải:</strong> truy hồi lùi của GAE trên đoạn bị cắt cho đúng phép trộn hai lợi tức nhiều bước bằng $\lambda$.</p>
+<aside class="notes"><p>Với biên $h=2$, chỉ còn lợi tức một bước và lợi tức hai bước, trọng số $1-\lambda=0{,}2$ và $\lambda=0{,}8$. Lợi tức hai bước bootstrap từ quan sát cuối $S_2$ của lượt bị cắt. Đẳng thức $G^\lambda_{0:2}=\widehat A_0+\hat v(S_0)$ là nhận xét của ghi chú ngay sau Thuật toán 10.16: với $w$ cố định, $V^{\mathrm{targ}}_t$ là lợi tức λ cắt tại biên gần nhất của bước $t$ (kết thúc, cắt ngắn hoặc biên đoạn), và ví dụ này là trường hợp $h=2$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.10, kiểm tra lại; đoạn sau Thuật toán 10.16; Sutton và Barto (2018), (12.9)–(12.10), tr. 296–297.</p></aside>
 </section>
 <section data-slide-id="L10-308" data-note-topic-id="lec-10-topic-09">
 <h2>Thuật toán tính GAE lùi trên đoạn thu</h2>
@@ -428,15 +421,28 @@
 </section>
 <section data-slide-id="L10-309" data-note-topic-id="lec-10-topic-09">
 <h2>Bài tập: GAE trên đoạn thu</h2>
-<p><strong>Câu hỏi:</strong> với $\gamma=0{,}9$, $\lambda=0{,}8$, quan sát cuối sau $U_2$ có $\hat v=4$, tính $\delta_t$, $\widehat A_t$, $V^{\mathrm{targ}}_t$.</p>
-<table><thead><tr><th scope="col">$t$</th><th scope="col">$R_{t+1}$</th><th scope="col">$Z_{t+1}$</th><th scope="col">$U_{t+1}$</th><th scope="col">$\hat v_{\mathrm{old}}(S_t)$</th><th scope="col">$\delta_t$</th><th scope="col">$\widehat A_t$</th><th scope="col">$V^{\mathrm{targ}}_t$</th></tr></thead><tbody>
-<tr><td>$0$</td><td>$1$</td><td>$0$</td><td>$0$</td><td>$2$</td><td class="fragment" data-fragment-index="1">$1{,}7$</td><td class="fragment" data-fragment-index="1">$3{,}572$</td><td class="fragment" data-fragment-index="1">$5{,}572$</td></tr>
-<tr><td>$1$</td><td>$2$</td><td>$0$</td><td>$1$</td><td>$3$</td><td class="fragment" data-fragment-index="1">$2{,}6$</td><td class="fragment" data-fragment-index="1">$2{,}6$</td><td class="fragment" data-fragment-index="1">$5{,}6$</td></tr>
-<tr><td>$2$</td><td>$0$</td><td>$0$</td><td>$0$</td><td>$1$</td><td class="fragment" data-fragment-index="1">$0{,}8$</td><td class="fragment" data-fragment-index="1">$1{,}52$</td><td class="fragment" data-fragment-index="1">$2{,}52$</td></tr>
-<tr><td>$3$</td><td>$3$</td><td>$1$</td><td>$0$</td><td>$2$</td><td class="fragment" data-fragment-index="1">$1$</td><td class="fragment" data-fragment-index="1">$1$</td><td class="fragment" data-fragment-index="1">$3$</td></tr>
+<p><strong>Câu hỏi:</strong> Bài tập 10.7, $\gamma=0{,}9$, $\lambda=0{,}8$: tính $\delta_t$, $\widehat A_t$, $V^{\mathrm{targ}}_t$ bằng Thuật toán 10.16.</p>
+<table><thead><tr><th scope="col">$t$</th><th scope="col">$R_{t+1}$</th><th scope="col">$Z_{t+1}$</th><th scope="col">$U_{t+1}$</th><th scope="col">${V_t=\hat v_{\mathrm{old}}(S_t)}$</th><th scope="col">$V'_{t+1}$ (khi $U_{t+1}=1$)</th></tr></thead><tbody>
+<tr><td>$0$</td><td>$1$</td><td>$0$</td><td>$0$</td><td>$2$</td><td>—</td></tr>
+<tr><td>$1$</td><td>$2$</td><td>$0$</td><td>$1$</td><td>$3$</td><td>$4$</td></tr>
+<tr><td>$2$</td><td>$0$</td><td>$0$</td><td>$0$</td><td>$1$</td><td>—</td></tr>
+<tr><td>$3$</td><td>$3$</td><td>$1$</td><td>$0$</td><td>$2$</td><td>—</td></tr>
 </tbody></table>
-<p class="fragment" data-fragment-index="1"><strong>Lời giải:</strong> truy hồi ngắt ở $U_2$ và $Z_4$; $\widehat A_0$ trùng trường hợp (ii) của ví dụ kết thúc và cắt ngắn.</p>
-<aside class="notes"><p>Gợi ý: ở bước $1$, giá trị kế là của quan sát cuối, không phải của $S_2$. Lời giải: $\delta_1=2+0{,}9\cdot4-3=2{,}6$; $\delta_2=0+0{,}9\cdot2-1=0{,}8$; $\delta_3=3-2=1$ vì $Z_4=1$. Truy hồi: $\widehat A_2=0{,}8+0{,}72\cdot1=1{,}52$; $\widehat A_1=2{,}6$ vì $U_2=1$; $\widehat A_0=1{,}7+0{,}72\cdot2{,}6=3{,}572$. Hai lỗi thường gặp: bootstrap bằng $\hat v(S_2)=1$ của lượt mới, cho $\delta_1=2+0{,}9-3=-0{,}1$; không ngắt truy hồi ở $U_2$, cho $\widehat A_1=2{,}6+0{,}72\cdot1{,}52=3{,}6944$. Bài tập kiểm hai việc: ngắt truy hồi ở $U$ và $Z$, và bootstrap bằng quan sát cuối. Mọi ước lượng ở đây vẫn cần đoạn thu của chính $\pi_{\mathrm{old}}$; dùng dữ liệu đó cho một bước lớn đòi hỏi đánh giá chính sách mới bằng dữ liệu cũ.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bài tập 10.7.</p></aside>
+<p><strong>Nhắc lại:</strong> ${V^{\mathrm{next}}_{t+1}=V'_{t+1}}$ nếu $U_{t+1}=1$, ngược lại $V_{t+1}$; ${\delta_t=R_{t+1}+\gamma(1-Z_{t+1})V^{\mathrm{next}}_{t+1}-V_t}$; ${\widehat A_t=\delta_t+\gamma\lambda(1-Z_{t+1})(1-U_{t+1})\widehat A_{t+1}}$, ${\widehat A_4=0}$; ${V^{\mathrm{targ}}_t=\widehat A_t+V_t}$.</p>
+<aside class="notes"><p>Đoạn bốn bước: lượt thứ nhất gồm $t=0,1$ và bị cắt sau bước $1$ ($U_2=1$), lượt thứ hai bắt đầu ở $S_2$ và kết thúc sau bước $3$ ($Z_4=1$). Gợi ý: ở bước $1$, giá trị kế là của quan sát cuối của lượt bị cắt, $V'_2=4$, không phải $V_2=1$ của lượt mới; truy hồi bị ngắt ở $U_2=1$ và ở $Z_4=1$. Bài tập kiểm hai việc của Thuật toán 10.16: ngắt truy hồi ở $U$ và $Z$, và bootstrap bằng quan sát cuối. Biên đoạn có $Z_4=1$, nên bước 1 của thuật toán không đổi gì.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bài tập 10.7, đề và gợi ý.</p></aside>
+</section>
+<section data-slide-id="L10-309b" data-note-topic-id="lec-10-topic-09">
+<h2>Bài tập: GAE trên đoạn thu, lời giải</h2>
+<p><strong>Lời giải:</strong> tính lùi từ $t=3$, với $\gamma\lambda=0{,}72$.</p>
+<table><thead><tr><th scope="col">$t$</th><th scope="col">${V^{\mathrm{next}}_{t+1}}$</th><th scope="col">$\delta_t$</th><th scope="col">${(1-Z_{t+1})}$<br>${(1-U_{t+1})}$</th><th scope="col">${\widehat A_t}$</th></tr></thead><tbody>
+<tr><td>$3$</td><td>—</td><td>${3+0-2=1}$</td><td>$0$</td><td>$1$</td></tr>
+<tr><td>$2$</td><td>${V_3=2}$</td><td>${0+0{,}9\cdot2-1=0{,}8}$</td><td>$1$</td><td>${0{,}8+0{,}72\cdot1=1{,}52}$</td></tr>
+<tr><td>$1$</td><td>${V'_2=4}$</td><td>${2+0{,}9\cdot4-3=2{,}6}$</td><td>$0$</td><td>$2{,}6$</td></tr>
+<tr><td>$0$</td><td>${V_1=3}$</td><td>${1+0{,}9\cdot3-2=1{,}7}$</td><td>$1$</td><td>${1{,}7+0{,}72\cdot2{,}6=3{,}572}$</td></tr>
+</tbody></table>
+<p>${V^{\mathrm{targ}}_t=\widehat A_t+V_t}$, $t=0,\dots,3$: ${(5{,}572;\,5{,}6;\,2{,}52;\,3)}$.</p>
+<p>$\widehat A_0=3{,}572$ trùng trường hợp (ii) của ví dụ kết thúc và cắt ngắn.</p>
+<aside class="notes"><p>Hai lỗi thường gặp: bootstrap bằng $\hat v(S_2)=1$ của lượt mới cho $\delta_1=2+0{,}9-3=-0{,}1$; không ngắt truy hồi ở $U_2$ cho $\widehat A_1=2{,}6+0{,}72\cdot1{,}52=3{,}6944$. Mọi ước lượng ở đây vẫn cần đoạn thu của chính $\pi_{\mathrm{old}}$; dùng dữ liệu đó cho một bước lớn đòi hỏi đánh giá chính sách mới bằng dữ liệu cũ.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bài tập 10.7, lời giải và kiểm tra lại.</p></aside>
 </section>
 </section>
 

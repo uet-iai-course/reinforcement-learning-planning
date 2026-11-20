@@ -12,7 +12,7 @@ Ký hiệu cột "quyết định": so với bộ trang chiếu cũ (mã cũ tro
 |---|---|---|---|---|---|---|---:|---:|
 | 1. Mở đầu và hai giới hạn của REINFORCE | mở bài | Ký hiệu, nhắc lại Bài 03–09; mục tiêu; nội dung; một ví dụ định lượng (hành lang ngắn); bài toán và khung hai hàng | REINFORCE, (G1)–(G4), hàm điểm (Bài 09); $q_\pi$, $v_\pi$ (Bài 03) | Hai nhu cầu: giảm phương sai giữ kỳ vọng; bước lớn bằng dữ liệu cũ; năm câu trả lời có điều kiện | Phát biểu bài toán | không có (bìa `L10-101` là trang tiêu đề của mạch mở đầu) | 12 | 12 |
 | 2. Đường cơ sở, hàm lợi thế và actor–critic | khái niệm, kết quả, thuật toán | Trừ đường cơ sở; đặt tên lợi thế; bootstrap bằng critic; hai thuật toán | $\operatorname{Var}$ tăng $\tfrac49\to\tfrac{16}9$ (Ví dụ 10.1, dòng kết quả ở `L10-201`); lượt hành lang (`L10-107`) | $\widehat g_b$ không chệch; $\nabla J$ dạng lợi thế; $\mathbb E[\delta_t\mid s,a]=A_\pi$ khi critic đúng; Thuật toán 10.6, 10.9; $\delta_0=0{,}35\ne0{,}4$ khi critic sai | Hai đầu của hệ số nhân với hàm điểm: Monte Carlo và một bước | `L10-200`, `id="mach-2"` | 19 | 23 |
-| 3. Ước lượng lợi thế tổng quát | khái niệm, kết quả, thuật toán | Nối $\delta_t$ và $G_t-\hat v$ bằng $\lambda$; điều kiện γ-just; GAE trên đoạn thu có cờ | Hai ước lượng $0{,}35$, $1{,}7$ của cùng $A_\pi(s_A,1)=0{,}4$ | $\widehat A_t=\sum_k(\gamma\lambda)^k\delta_{t+k}$; Thuật toán 10.16 với $Z$, $U$; $V^{\mathrm{targ}}_t$ | Hoàn tất nửa thứ nhất; giao $\widehat A_t$, $V^{\mathrm{targ}}_t$ cho mạch 6 | `L10-300`, `id="mach-3"` | 10 | 14,5 |
+| 3. Ước lượng lợi thế tổng quát | khái niệm, kết quả, thuật toán | Nối $\delta_t$ và $G_t-\hat v$ bằng $\lambda$; điều kiện γ-just; GAE trên đoạn thu có cờ | Hai ước lượng $0{,}35$, $1{,}7$ của cùng $A_\pi(s_A,1)=0{,}4$ | $\widehat A_t=\sum_k(\gamma\lambda)^k\delta_{t+k}$; Thuật toán 10.16 với $Z$, $U$; $V^{\mathrm{targ}}_t$ | Hoàn tất nửa thứ nhất; giao $\widehat A_t$, $V^{\mathrm{targ}}_t$ cho mạch 6 | `L10-300`, `id="mach-3"` | 11 | 14,5 |
 | 4. Hàm thay thế và chặn cải thiện | kết quả | Hiệu hiệu năng; hàm thay thế; TV và KL; chặn cải thiện; cải thiện đơn điệu; miền tin cậy | Giới hạn thứ hai (`L10-108`): lượt cũ không cho mẫu của gradient sau một bước | Bài toán miền tin cậy với mức giảm bị chặn khi giải chính xác (Hệ quả 10.31) | Căn cứ định lượng cho việc giới hạn bước | `L10-400`, `id="mach-4"` | 16 | 22,5 |
 | 5. TRPO và gradient tự nhiên | kết quả, thuật toán | KL bậc hai, Fisher, gradient tự nhiên, gradient liên hợp, tìm kiếm lùi, TRPO | Bài toán miền tin cậy phi tuyến (`L10-411`) | Thuật toán 10.37; TRPO thực hành chỉ bảo đảm KL trung bình mẫu $\le\kappa$ và hàm thay thế mẫu tăng | Giải xấp xỉ bài toán của mạch 4 | `L10-500`, `id="mach-5"` | 12 | 13,5 |
 | 6. Tối ưu chính sách gần kề (PPO) | khái niệm, kết quả, thuật toán | Mục tiêu cắt, PPO-Penalty, mất mát tổng, chẩn đoán, thuật toán, siêu tham số, cài đặt, phạm vi lý thuyết | Chi phí bậc hai của TRPO; hàm thay thế mẫu tuyến tính theo $\rho_t$; $\widehat A_t$, $V^{\mathrm{targ}}_t$ (mạch 3) | Thuật toán 10.49; mục tiêu cắt không chặn KL; approxKL chỉ không chệch khi $\theta$ không phụ thuộc mẫu | Hai hàng gặp nhau | `L10-600`, `id="mach-6"` | 23 | 25,5 |
@@ -62,15 +62,18 @@ Mã trang tiêu đề mạch theo quy ước `<tiền tố mạch>00`: mã trang
 | 2 | `L10-215` | Thuật toán actor–critic một bước | thuật toán | Thuật toán 10.9, Nhận xét 10.10 | — | 1 |
 | 2 | `L10-216` | (đã bỏ khỏi deck 2026-11-20, phương án A′ của tác giả; Bài tập 10.5 còn ở ghi chú) | — | Bài tập 10.5 | — | 0 |
 | 3 | `L10-300` | 3. Ước lượng lợi thế tổng quát | tiêu đề mạch | §3 | — | 0,5 |
-| 3 | `L10-301` | Ví dụ: ba ước lượng lợi thế trên một lượt | vấn đề, ví dụ dẫn nhập | Ví dụ 10.8 | `two-state-chain.svg` (nhỏ) | 1,5 |
+| 3 | `L10-301` | (đã bỏ khỏi deck 2026-11-20, NT23; Ví dụ 10.8 còn ở ghi chú, dòng kết quả ở `L10-302`) | — | Ví dụ 10.8 | — | 0 |
 | 3 | `L10-302` | Lợi tức n bước | định nghĩa, bổ đề | Định nghĩa 10.11, Bổ đề 10.12 | — | 1 |
 | 3 | `L10-303` | Lợi tức λ và GAE | trực giác, định nghĩa | §3.2, Định nghĩa 10.13 | `img/lec-10/gae-weights.svg` | 1,5 |
 | 3 | `L10-304` | Dạng tổng và truy hồi của GAE | kết quả | Mệnh đề 10.14 và chứng minh | — | 2,5 |
-| 3 | `L10-305` | Ví dụ: GAE và gradient trên chuỗi hai trạng thái | ví dụ | Ví dụ 10.9 | — | 1,5 |
+| 3 | `L10-305` | (đã bỏ khỏi deck 2026-11-20, NT23; Ví dụ 10.9 còn ở ghi chú, dòng kết quả ở `L10-306`) | — | Ví dụ 10.9 | — | 0 |
 | 3 | `L10-306` | GAE và tính không chệch cho gradient | kết quả | Mệnh đề 10.15 | — | 1,5 |
-| 3 | `L10-307` | Ví dụ: kết thúc và cắt ngắn | vấn đề, ví dụ tính tay | §3.3, Ví dụ 10.10 | — (bỏ hình Bài 08 ở D1) | 1,5 |
+| 3 | `L10-307` | Ví dụ: kết thúc và cắt ngắn | ví dụ của mạch (dữ kiện) | §3.3, Ví dụ 10.10 | — | 1 |
+| 3 | `L10-307b` | Ví dụ: kết thúc và cắt ngắn, hai trường hợp | ví dụ (tiếp, bảng) | Ví dụ 10.10 | — | 1,5 |
+| 3 | `L10-307c` | Ví dụ: kết thúc và cắt ngắn, kiểm bằng lợi tức λ cắt | ví dụ (tiếp) | Ví dụ 10.10, kiểm tra lại | — | 1 |
 | 3 | `L10-308` | Thuật toán tính GAE lùi trên đoạn thu | thuật toán | Thuật toán 10.16, Nhận xét 10.17 | — | 1 |
-| 3 | `L10-309` | Bài tập: GAE trên đoạn thu | bài tập, lời giải (fragment) | Bài tập 10.7 | — | 2 |
+| 3 | `L10-309` | Bài tập: GAE trên đoạn thu | bài tập (đề, bảng dữ kiện, nhắc lại) | Bài tập 10.7 | — | 1 |
+| 3 | `L10-309b` | Bài tập: GAE trên đoạn thu | lời giải (bảng tính lùi) | Bài tập 10.7, lời giải | — | 2 |
 | 4 | `L10-400` | 4. Hàm thay thế và chặn cải thiện | tiêu đề mạch | §4 | — | 0,5 |
 | 4 | `L10-401` | Dữ liệu cũ và chính sách mới | vấn đề | §4 đoạn đầu | `img/lec-10/policy-update-feedback.svg` | 1 |
 | 4 | `L10-402` | Ví dụ: đổi chính sách trên chuỗi hai trạng thái | trực giác, ví dụ | §4.1, Ví dụ 10.11 | — (bản viết bỏ hình nhỏ) | 2 |
@@ -527,13 +530,13 @@ Phút mạch 2: trang tiêu đề $0{,}5$ + đường cơ sở $9{,}5$ (`L10-201
 #### `L10-300` 3. Ước lượng lợi thế tổng quát (trang tiêu đề mạch), điểm vào mạch 3
 - **Vị trí, loại:** điểm vào mạch 3; `id="mach-3"`, `data-note-topic-id="lec-10-topic-07"`.
 - **Lý do tồn tại, nhu cầu:** dòng dẫn nêu nhu cầu của cụm lợi tức $n$ bước và GAE (trộn hai đầu của mạch 2), nên trang là bước `vấn đề` chung của cụm.
-- **Liên kết:** trước: `L10-216`; sau: `L10-301`. Kế thừa $\delta_t$ và hệ số Monte Carlo $G_t-\hat v(S_t)$; giao $\widehat A_t$, $V^{\mathrm{targ}}_t$ và Thuật toán 10.16 cho mạch 6.
+- **Liên kết:** trước: `L10-215`; sau: `L10-302` (`L10-216`, `L10-301` đã bỏ 2026-11-20). Kế thừa $\delta_t$ và hệ số Monte Carlo $G_t-\hat v(S_t)$; giao $\widehat A_t$, $V^{\mathrm{targ}}_t$ và Thuật toán 10.16 cho mạch 6.
 - **Mục tiêu:** 2.
 - **Mặt trang:** "3." + tên mạch; dòng dẫn "Muốn chọn mức trung gian giữa sai số TD và lợi tức Monte Carlo, phải trộn các lợi tức nhiều bước bằng một tham số." (25; D1 thay "điều chỉnh giữa"); từ khóa "Lợi tức n bước · Lợi tức λ · GAE · Tính không chệch cho gradient · Đoạn thu" (15).
 - **Hình, phút:** —; 0,5. **Quyết định:** thêm: trang tiêu đề mạch theo `AGENTS.md` §"Trang tiêu đề mạch"; bộ cũ không có.
 - **Ghi chú diễn giả (40–100):** hai ước lượng của cùng lợi thế $A_\pi(s_A,1)=0{,}4$ cho $0{,}35$ và $1{,}7$; mạch trộn chúng bằng $\lambda$, nêu khi nào gradient không chệch, và tính trên dữ liệu có cờ $Z$, $U$.
 
-#### `L10-301` Ví dụ: ba ước lượng lợi thế trên một lượt
+#### `L10-301` Ví dụ: ba ước lượng lợi thế trên một lượt (đã bỏ 2026-11-20)
 - **Vị trí, loại:** mạch 3; vấn đề và ví dụ dẫn nhập của cụm GAE (làm cụ thể vấn đề "chọn số phần thưởng thực trong ước lượng lợi thế"); dữ kiện dùng tiếp ở `L10-303`, `L10-304`, `L10-305`.
 - **Lý do tồn tại, nhu cầu:** đặt hai đầu Monte Carlo và một bước lên cùng một lượt có số.
 - **Liên kết:** trước: `L10-300`; sau: `L10-302`. **Mục tiêu:** 2. **Ghi chú:** Ví dụ 10.8 (`topic-07`); nguồn tr. 13.
@@ -547,7 +550,7 @@ Phút mạch 2: trang tiêu đề $0{,}5$ + đường cơ sở $9{,}5$ (`L10-201
 #### `L10-302` Lợi tức n bước
 - **Vị trí, loại:** mạch 3; hình thức (định nghĩa và bổ đề) của bước trung gian.
 - **Lý do tồn tại, nhu cầu:** họ ước lượng nằm giữa hai đầu; viết thành tổng sai số TD.
-- **Liên kết:** trước: `L10-301`; sau: `L10-303`. **Mục tiêu:** 2. **Ghi chú:** Định nghĩa 10.11, Bổ đề 10.12 (`topic-07`); Sutton và Barto (2018), §7.1.
+- **Liên kết:** trước: `L10-300`; sau: `L10-303`. **Mục tiêu:** 2. **Ghi chú:** Định nghĩa 10.11, Bổ đề 10.12 (`topic-07`); Sutton và Barto (2018), §7.1.
 - **Mặt trang:** "Định nghĩa." $G_{t:t+n}=\sum_{k<n}\gamma^kR_{t+k+1}+\gamma^n\hat v(S_{t+n},w)$ nếu $t+n<T$, $G_{t:t+n}=G_t$ nếu $t+n\ge T$, gọi là lợi tức $n$ bước (n-step return); $\widehat A^{(n)}_t=G_{t:t+n}-\hat v(S_t,w)$. "Bổ đề." với $w$ cố định, $\widehat A^{(n)}_t=\sum_{k<n}\gamma^k\delta_{t+k}$. "Chứng minh." tổng lồng nhau.
 - **Mật độ:** khoảng 30 âm tiết, 4 dòng, 2 công thức hiển thị.
 - **Hình, phút:** —; 1. **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo Định nghĩa 10.11, Bổ đề 10.12 của ghi chú.
@@ -566,14 +569,14 @@ Phút mạch 2: trang tiêu đề $0{,}5$ + đường cơ sở $9{,}5$ (`L10-201
 #### `L10-304` Dạng tổng và truy hồi của GAE
 - **Vị trí, loại:** mạch 3; hình thức (kết quả) và ứng dụng (kiểm số) của cụm GAE.
 - **Lý do tồn tại, nhu cầu:** dạng tính được bằng một lượt quét lùi; hai đầu mút.
-- **Liên kết:** trước: `L10-303`; sau: `L10-305` (dùng dạng tổng để tính kỳ vọng). **Mục tiêu:** 2. **Ghi chú:** Mệnh đề 10.14 và chứng minh (`topic-08`); Schulman và cộng sự (2016), (16).
+- **Liên kết:** trước: `L10-303`; sau: `L10-306` (`L10-305` đã bỏ 2026-11-20). **Mục tiêu:** 2. **Ghi chú:** Mệnh đề 10.14 và chứng minh (`topic-08`); Schulman và cộng sự (2016), (16).
 - **Mặt trang:** "Mệnh đề." critic cố định trong lượt. (a) $\widehat A_t=\sum_{k<T-t}(\gamma\lambda)^k\delta_{t+k}$; (b) $\lambda=0$: $\delta_t$; $\lambda=1$: $G_t-\hat v(S_t,w)$; (c) $\widehat A_t=\delta_t+\gamma\lambda(1-Z_{t+1})\widehat A_{t+1}$, $\widehat A_T=0$. Kiểm: $0{,}35+0{,}72\cdot1{,}5=1{,}43$. "Chứng minh." thay Bổ đề 10.12 vào định nghĩa, đổi thứ tự lấy tổng với $(1-\lambda)\sum_{n>k}\lambda^{n-1}=\lambda^k$; $\lambda=1$ theo Bổ đề 10.12 với $n=T-t$; (c) tách số hạng $k=0$.
 - **Mật độ:** khoảng 45 âm tiết, 6 dòng, 2 công thức hiển thị.
 - **Hình, phút:** —; 2,5.
 - **Quyết định:** thêm; gộp trang chứng minh của kế hoạch thành dòng "Chứng minh." (phương án nén).
 - **Ghi chú diễn giả (đến khoảng 200):** khối đổi thứ tự lấy tổng của Bước 2 trong ghi chú, lý do được đổi (hữu hạn số hạng khác $0$, hội tụ tuyệt đối); vì sao $\lambda=1$ xử lý riêng (thừa số $1-\lambda=0$); mệnh đề là đồng nhất thức trên từng lượt, không nói về kỳ vọng hay phương sai.
 
-#### `L10-305` Ví dụ: GAE và gradient trên chuỗi hai trạng thái
+#### `L10-305` Ví dụ: GAE và gradient trên chuỗi hai trạng thái (đã bỏ 2026-11-20)
 - **Vị trí, loại:** mạch 3; vấn đề và ví dụ của cụm γ-just, đặt trước `L10-306` (sai khác thứ tự so với ghi chú, xem `outline.md`).
 - **Lý do tồn tại, nhu cầu:** hỏi GAE có làm chệch ước lượng gradient không, và tách "chệch cho lợi thế" khỏi "chệch cho gradient" trên số.
 - **Liên kết:** trước: `L10-304`; sau: `L10-306` (điều kiện tổng quát). **Mục tiêu:** 2. **Ghi chú:** Ví dụ 10.9 (`topic-08`); nguồn tr. 13.
@@ -586,7 +589,7 @@ Phút mạch 2: trang tiêu đề $0{,}5$ + đường cơ sở $9{,}5$ (`L10-201
 #### `L10-306` GAE và tính không chệch cho gradient
 - **Vị trí, loại:** mạch 3; hình thức (kết quả) của cụm γ-just.
 - **Lý do tồn tại, nhu cầu:** hai điều kiện đủ để GAE không làm chệch gradient.
-- **Liên kết:** trước: `L10-305`; sau: `L10-307` (dữ liệu thực hành không phải lượt đầy đủ). **Mục tiêu:** 2. **Ghi chú:** Mệnh đề 10.15 (`topic-08`); Schulman và cộng sự (2016), Định nghĩa 1, Mệnh đề 1.
+- **Liên kết:** trước: `L10-304`; sau: `L10-307` (dữ liệu thực hành không phải lượt đầy đủ). **Mục tiêu:** 2. **Ghi chú:** Mệnh đề 10.15 (`topic-08`); Schulman và cộng sự (2016), Định nghĩa 1, Mệnh đề 1.
 - **Mặt trang:** "Mệnh đề." "Giả thiết:" (G1)–(G4), MDP hữu hạn, critic cố định bị chặn, GAE tính trên lượt đầy đủ. "Kết luận:" nếu $\lambda=1$ hoặc $\hat v=v_\pi$ thì $\mathbb E[\widehat A_t\psi_t]=\mathbb E[A_\pi(S_t,A_t)\psi_t]$, nên $\mathbb E\bigl[\sum_t\gamma^t\widehat A_t\psi_t\bigr]=\nabla_\theta J$; ước lượng như vậy gọi là γ-just. "Lưu ý:" mệnh đề không khẳng định $\mathbb E[\widehat A_t\mid S_t,A_t]=A_\pi$ (ví dụ trước: $0{,}8\ne0{,}4$). "Chứng minh." (a) Mệnh đề 10.2 với $b=\hat v$; (b) Mệnh đề 10.8(a) cho từng $\delta_{t+k}$.
 - **Mật độ:** khoảng 50 âm tiết, 5 dòng, 1 công thức hiển thị. Điều kiện áp dụng, phạm vi trong ghi chú diễn giả.
 - **Hình, phút:** —; 1,5. **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo Mệnh đề 10.15 của ghi chú.
@@ -596,17 +599,22 @@ Phút mạch 2: trang tiêu đề $0{,}5$ + đường cơ sở $9{,}5$ (`L10-201
 #### `L10-307` Ví dụ: kết thúc và cắt ngắn
 - **Vị trí, loại:** mạch 3; vấn đề, trực giác và ví dụ tính tay của cụm GAE trên đoạn thu; đứng trước thuật toán `L10-308`.
 - **Lý do tồn tại, nhu cầu:** đoạn thu độ dài $h$ trên $N$ môi trường có bước kết thúc, bước cắt ngắn và bước dở ở biên; cờ đặt sai đổi kết quả.
-- **Liên kết:** trước: `L10-306`; sau: `L10-308`. **Mục tiêu:** 2. **Ghi chú:** §3.3 đoạn đầu, Ví dụ 10.10 (`topic-09`); nguồn tr. 24.
-- **Mặt trang:** "Nhu cầu: tính GAE trên đoạn thu có lượt kết thúc, bị cắt, hoặc dở ở biên." Dòng dữ kiện và bảng khuôn GAE hai hàng: $R=(1;\,2)$, $\hat v(S_0)=2$, $\hat v(S_1)=3$, $\gamma=0{,}9$, $\lambda=0{,}8$; $\delta_0=1{,}7$; (i) $Z_2=1$: $\delta_1=-1$, $\widehat A_0=0{,}98$; (ii) $U_2=1$, $\hat v(S_2)=4$: $\delta_1=2{,}6$, $\widehat A_0=3{,}572$. Kết luận: "Cùng phần thưởng và critic, hai cờ cho hai kết quả cách nhau $2{,}592$."
-- **Mật độ:** 40 âm tiết, 5 dòng (Nhu cầu, dữ kiện, 2 hàng bảng, kết luận).
-- **Hình, phút:** — (D1 bỏ `img/lec-08/termination-truncation.svg`: nhãn mục tiêu DQN gây nhầm, bảng đủ dữ kiện); 1,5.
+- **Liên kết:** trước: `L10-306`; sau: `L10-307b`. **Mục tiêu:** 2. **Ghi chú:** §3.3 đoạn đầu, Ví dụ 10.10 (`topic-09`); nguồn tr. 24.
+- **Mặt trang:** (sửa 2026-11-20) "Đoạn hai bước, $\gamma=0{,}9$, $\lambda=0{,}8$; $R_1=1$, $R_2=2$; $\hat v(S_0)=2$, $\hat v(S_1)=3$; $Z_1=U_1=0$."; "Sau bước $2$: (i) kết thúc, $Z_2=1$; (ii) cắt vì giới hạn thời gian, $U_2=1$, $Z_2=0$, quan sát cuối có $\hat v(S_2)=4$."; "Nhắc lại:" $\delta_t$ có mặt nạ, $\widehat A_t=\delta_t+\gamma\lambda(1-Z_{t+1})\widehat A_{t+1}$, $\widehat A_2=0$, $\gamma\lambda=0{,}72$; "Tính $\delta_0$, $\delta_1$, $\widehat A_1$, $\widehat A_0$ cho (i) và (ii)."; "$\delta_0=1+0{,}9\cdot3-2=1{,}7$ trong cả hai trường hợp." Bảng hai trường hợp ở `L10-307b`, phép kiểm ở `L10-307c`.
+- **Mật độ:** 5 dòng, cao 609 px ở khung 720.
+- **Hình, phút:** — (D1 bỏ `img/lec-08/termination-truncation.svg`); 1 (2026-11-20; trước: 1,5 cho cả ví dụ trên một trang).
 - **Quyết định:** sửa (`L10-12` "Ví dụ GAE phân biệt kết thúc và truncation"): thuật ngữ "cắt ngắn"; số của Ví dụ 10.10.
 - **Ghi chú diễn giả:** nhắc lại cờ ($Z_{t+1}=1$ khi MDP kết thúc; $U_{t+1}=1$ khi dừng vì giới hạn ngoài MDP; đã nêu ở `L10-102`), dòng "Nhắc lại:" của bản trước chuyển xuống đây; mục tiêu một bước theo từng cờ (D1, thay chú thích hình): $Z_2=1$ cho $R_2$, $U_2=1$ cho $R_2+\gamma\hat v(S_2)$ của quan sát cuối; kiểm (ii) bằng lợi tức λ cắt (truncated λ-return): $0{,}2\cdot3{,}7+0{,}8\cdot6{,}04=5{,}572$ (Định nghĩa 08.4, 08.6).
+
+#### `L10-307b`, `L10-307c` Ví dụ: kết thúc và cắt ngắn (phần tiếp, 2026-11-20)
+- **Vị trí, loại:** mạch 3, sau `L10-307`; hai trang tiếp của ví dụ duy nhất của mạch.
+- **Mặt trang:** `L10-307b` "…, hai trường hợp": dòng công thức $\delta_1$, $\widehat A_1=\delta_1$, $\widehat A_0=\delta_0+0{,}72\widehat A_1$; bảng (i), (ii): $1-Z_2$ | $\hat v(S_2)$ | $\delta_1=\widehat A_1$ | $0{,}72\widehat A_1$ | $\widehat A_0$ ($0$, —, $-1$, $-0{,}72$, $0{,}98$; $1$, $4$, $2{,}6$, $1{,}872$, $3{,}572$); "Diễn giải:" cách nhau $2{,}592$. `L10-307c` "…, kiểm bằng lợi tức λ cắt": $G_{0:1}=3{,}7$, $G_{0:2}=6{,}04$, $G^\lambda_{0:2}=0{,}74+4{,}832=5{,}572=\widehat A_0+\hat v(S_0)$; "Diễn giải:" truy hồi GAE là phép trộn bằng $\lambda$.
+- **Phút:** `L10-307b` 1,5; `L10-307c` 1.
 
 #### `L10-308` Thuật toán tính GAE lùi trên đoạn thu
 - **Vị trí, loại:** mạch 3; thuật toán của cụm GAE trên đoạn thu.
 - **Lý do tồn tại, nhu cầu:** quy tắc cờ cho đoạn thu tổng quát và mục tiêu của critic.
-- **Liên kết:** trước: `L10-307` (hai bước là hai vòng của bước 3); sau: `L10-309`. **Mục tiêu:** 2. **Ghi chú:** Thuật toán 10.16, Nhận xét 10.17 (`topic-09`); nguồn tr. 24.
+- **Liên kết:** trước: `L10-307c` (hai bước của ví dụ là hai vòng của bước 3); sau: `L10-309`. **Mục tiêu:** 2. **Ghi chú:** Thuật toán 10.16, Nhận xét 10.17 (`topic-09`); nguồn tr. 24.
 - **Mặt trang:** "Thuật toán." sáu dòng: (1) "Thuật toán 10.16. Đầu vào: đoạn thu $h$ bước: $R_{t+1}$, $Z_{t+1}$, $U_{t+1}$, $V_t=\hat v_{\mathrm{old}}(S_t)$, $t\le h$; $V'_{t+1}$ của quan sát cuối khi cắt. Đầu ra: …" (D1: nêu $h$, $V_h$) (2) "Nếu $Z_h=0$ và $U_h=0$, coi như cắt ngắn: $U_h\leftarrow1$, $V'_h\leftarrow V_h$." (D1: thêm điều kiện) (3) $\delta_t=R_{t+1}+\gamma(1-Z_{t+1})V^{\mathrm{next}}_{t+1}-V_t$, $V^{\mathrm{next}}=V'$ khi $U=1$. (4) $\widehat A_h=0$; lùi: $\widehat A_t=\delta_t+\gamma\lambda(1-Z_{t+1})(1-U_{t+1})\widehat A_{t+1}$. (5) $V^{\mathrm{targ}}_t=\widehat A_t+V_t$. (6) "Lưu ý: ghi cắt ngắn thành $Z=1$ xóa $\gamma\hat v$ của quan sát cuối." (12).
 - **Mật độ:** khoảng 35 âm tiết, 6 dòng. Không còn là ngoại lệ (bản trước 7 dòng; $\gamma$, $\lambda$ ghi trong ghi chú diễn giả).
 - **Hình, phút:** —; 1.
@@ -616,7 +624,7 @@ Phút mạch 2: trang tiêu đề $0{,}5$ + đường cơ sở $9{,}5$ (`L10-201
 #### `L10-309` Bài tập: GAE trên đoạn thu
 - **Vị trí, loại:** mạch 3; bước kiểm tra của cụm GAE; lời giải trên mặt trang (fragment).
 - **Lý do tồn tại, nhu cầu:** kiểm việc chạy Thuật toán 10.16 khi một đoạn có cả cắt ngắn và kết thúc.
-- **Liên kết:** trước: `L10-308`; sau: `L10-400` (giới hạn dữ liệu theo chính sách còn nguyên). **Mục tiêu:** 2. **Ghi chú:** Bài tập 10.7 (`topic-09`).
+- **Liên kết:** trước: `L10-308`; sau: `L10-309b` (lời giải), rồi `L10-400` (giới hạn dữ liệu theo chính sách còn nguyên). **Mục tiêu:** 2. **Ghi chú:** Bài tập 10.7 (`topic-09`).
 - **Mặt trang:** dòng "Câu hỏi: với $\gamma=0{,}9$, $\lambda=0{,}8$, quan sát cuối sau $U_2$ có $\hat v=4$, tính $\delta_t$, $\widehat A_t$, $V^{\mathrm{targ}}_t$." (11); bảng khuôn GAE bốn hàng $t=0,\dots,3$ với $R_{t+1}=1;\,2;\,0;\,3$, $Z_{t+1}$ ($Z_4=1$), $U_{t+1}$ ($U_2=1$), $\hat v_{\mathrm{old}}(S_t)=2;\,3;\,1;\,2$; ba cột $\delta_t$, $\widehat A_t$, $V^{\mathrm{targ}}_t$ hiện bằng fragment ("Lời giải:"): $\delta=1{,}7;\,2{,}6;\,0{,}8;\,1$; $\widehat A=3{,}572;\,2{,}6;\,1{,}52;\,1$ (ngắt ở $U_2$); $V^{\mathrm{targ}}=5{,}572;\,5{,}6;\,2{,}52;\,3$. Kết luận (fragment): "$\widehat A_0$ trùng trường hợp (ii) của ví dụ kết thúc và cắt ngắn." (12).
 - **Mật độ:** khoảng 25 âm tiết, 6 dòng (1 + 4 hàng bảng + 1).
 - **Hình, phút:** —; 2.
@@ -635,10 +643,14 @@ Phút mạch 3: $0{,}5$ + cụm 1 ($1{,}5+1+1{,}5+2{,}5$) + cụm 2 ($1{,}5+1{,}
 
 ### Mạch 4. Hàm thay thế và chặn cải thiện (22,5 phút)
 
+#### `L10-309b` Bài tập: GAE trên đoạn thu (lời giải, 2026-11-20)
+- **Mặt trang:** "Lời giải:" tính lùi từ $t=3$; bảng $t$ | $\delta_t$ (thay số) | $(1-Z_{t+1})(1-U_{t+1})$ | $\widehat A_t$ ($t=3$: $1$, $0$, $1$; $t=2$: $0{,}8$, $1$, $1{,}52$; $t=1$: $2{,}6$, $0$, $2{,}6$; $t=0$: $1{,}7$, $1$, $3{,}572$); dòng $V^{\mathrm{targ}}=(5{,}572;\,5{,}6;\,2{,}52;\,3)$; dòng nối với trường hợp (ii) của ví dụ.
+- **Phút:** 2.
+
 #### `L10-400` 4. Hàm thay thế và chặn cải thiện (trang tiêu đề mạch), điểm vào mạch 4
 - **Vị trí, loại:** điểm vào mạch 4; `id="mach-4"`, `data-note-topic-id="lec-10-topic-10"`.
 - **Lý do tồn tại, nhu cầu:** mở nửa thứ hai của bài toán; dòng dẫn nêu nhu cầu của cụm hiệu hiệu năng, nên trang là bước `vấn đề` chung của cụm.
-- **Liên kết:** trước: `L10-309`; sau: `L10-401`. Kế thừa giới hạn thứ hai (`L10-108`) và $A_\pi$, $\nu^\pi$ của chuỗi hai trạng thái; giao bài toán miền tin cậy cho mạch 5.
+- **Liên kết:** trước: `L10-309b`; sau: `L10-401`. Kế thừa giới hạn thứ hai (`L10-108`) và $A_\pi$, $\nu^\pi$ của chuỗi hai trạng thái; giao bài toán miền tin cậy cho mạch 5.
 - **Mục tiêu:** 3.
 - **Mặt trang:** "4." + tên mạch; dòng dẫn "Muốn dùng dữ liệu cũ cho một bước lớn, phải chặn sai số khi đánh giá chính sách mới bằng dữ liệu đó." (23); từ khóa "Hiệu hiệu năng · Hàm thay thế · Phân kỳ KL · Chặn cải thiện · Miền tin cậy" (15).
 - **Hình, phút:** —; 0,5. **Quyết định:** thêm: trang tiêu đề mạch theo `AGENTS.md` §"Trang tiêu đề mạch"; bộ cũ không có.
@@ -1662,7 +1674,7 @@ Phút mạch 7: $0{,}5+1+1{,}5+1+1{,}5+1{,}5+1+1+1{,}5+1+1+1+1{,}5+1+1{,}5+1+1{,
 |---|---|---:|---:|---:|---|
 | 1 | `L10-101`–`L10-110`, `L10-104b` | 11 | 12 | 12 | `L10-104` 1 → 0,5; `L10-104b` 0,5 |
 | 2 | `L10-200`–`L10-216` | 19 | 23 | 22,5 | `L10-205` 1,5 → 1 | 2026-11-20: 19 trang (`L10-200`–`L10-215`, ví dụ `L10-214`–`L10-214f`)
-| 3 | `L10-300`–`L10-309` | 10 | 14,5 | 14,5 | — |
+| 3 | `L10-300`–`L10-309` | 11 | 14,5 | 14,5 | — | 2026-11-20: 11 trang (`L10-300`–`L10-309b`; bỏ `301`, `305`; thêm `307b`, `307c`, `309b`)
 | 4 | `L10-400`–`L10-414` | 16 | 22,5 | 20,5 | `L10-404` 1,5 → 1; `L10-409` 1,5 → 1; `L10-414` 1 → 0 |
 | 5 | `L10-500`–`L10-510` | 12 | 13,5 | 12 | `L10-505` 2 → 1,5; `L10-510` 1 → 0 |
 | 6 | `L10-600`–`L10-620` | 23 | 25,5 | 22,5 | `L10-614`, `L10-615`, `L10-617`, `L10-618` 1 → 0,5 mỗi trang; `L10-617b` 0,5; `L10-620` 1 → 0 |
@@ -2421,3 +2433,32 @@ Theo kế hoạch đã duyệt (`ke-hoach-mot-vi-du-moi-mach-2026-11-20.md`), l�
 11. Storyboard: số trang mạch 2 là 19 (bảng mạch, bảng phụ lục, mục "Mạch 2 theo NT23"); liên kết từng trang `L10-201`→`L10-203`, `L10-203`←`L10-201`, `L10-205`→`L10-207`, `L10-207`←`L10-205`, `L10-210`→`L10-212`, `L10-212`←`L10-210`, `L10-213`→`L10-214` (đã đúng), `L10-215`←`L10-214f`, `L10-215`→`L10-300`; "Mặt trang" của `L10-201`, `L10-207` viết lại.
 
 Kiểm tra: Playwright 1280×720 và 1600×900, không lỗi console, không yêu cầu hỏng, không `.katex-error`; `deck_lint`: 58 phát hiện trên 129 trang, không phát hiện nào ở mạch 2.
+
+## Mạch 3 theo NT23 một ví dụ (2026-11-20)
+
+Theo kế hoạch đã duyệt (`ke-hoach-mot-vi-du-moi-mach-2026-11-20.md`), lựa chọn của tác giả (mạch 3 giữ Ví dụ 10.10; bài tập phương án A′: giữ Bài tập 10.7 với lời giải mở rộng) và NT23 sửa 2026-11-20:
+
+- **Bỏ khỏi deck:** `L10-301` (Ví dụ 10.8), `L10-305` (Ví dụ 10.9). Nội dung còn trong ghi chú.
+- **Ví dụ duy nhất của mạch 3:** "Ví dụ: kết thúc và cắt ngắn" (Ví dụ 10.10), ba trang `L10-307`, `L10-307b`, `L10-307c`.
+  - `L10-307`: dữ kiện (đoạn hai bước, $\gamma=0{,}9$, $\lambda=0{,}8$, $R_1=1$, $R_2=2$, $\hat v(S_0)=2$, $\hat v(S_1)=3$, $Z_1=U_1=0$; hai trường hợp sau bước 2); "Nhắc lại:" $\delta_t$ có mặt nạ kết thúc và truy hồi $\widehat A_t=\delta_t+\gamma\lambda(1-Z_{t+1})\widehat A_{t+1}$ của Mệnh đề 10.14(c), $\widehat A_2=0$, $\gamma\lambda=0{,}72$; $\delta_0=1+0{,}9\cdot3-2=1{,}7$; "Tính …". Cờ $U$ đi vào qua giá trị của quan sát cuối trong $\delta_1$; thừa số $(1-U)$ của truy hồi không đổi kết quả vì $\widehat A_2=0$ (ghi chú diễn giả). Nhãn "Nhu cầu:" và "Kết luận:" cũ bỏ.
+  - `L10-307b`: bảng hai trường hợp, xem mục từng trang; số khớp Ví dụ 10.10: $\delta_1=-1$ và $2{,}6$, $\widehat A_0=0{,}98$ và $3{,}572$, hiệu $2{,}592=0{,}72\cdot0{,}9\cdot4$.
+  - `L10-307c`: kiểm bằng lợi tức λ cắt (phần "Kiểm tra lại" của Ví dụ 10.10): $G_{0:1}=3{,}7$, $G_{0:2}=6{,}04$, $0{,}2\cdot3{,}7+0{,}8\cdot6{,}04=5{,}572=\widehat A_0+\hat v(S_0)$. Trang này cho thấy truy hồi GAE chính là phép trộn bằng $\lambda$, đúng câu hỏi của mạch; là phần tiếp của cùng ví dụ nên không vi phạm quy định một ví dụ.
+- **Bài tập 10.7 (A′):** `L10-309` đề với bảng dữ kiện có cột $V^{\mathrm{next}}_{t+1}$ ($V_1=3$, $V'_2=4$, $V_3=2$, — vì mặt nạ $0$) và "Nhắc lại:" ba công thức của Thuật toán 10.16; `L10-309b` (mới) lời giải: bảng tính lùi $t=3,2,1,0$ với $\delta_t$ thay số, hệ số ngắt $(1-Z_{t+1})(1-U_{t+1})$, $\widehat A_t$; dòng $V^{\mathrm{targ}}$. Cột $\widehat A_{t+1}$ và cột $V^{\mathrm{targ}}$ riêng bỏ vì bảng rộng 1621 px; $V^{\mathrm{targ}}$ thành một dòng. Số liệu theo lời giải của ghi chú. Hai lỗi thường gặp ở ghi chú diễn giả.
+- **Dòng kết quả:** `L10-302` mở bằng "Chuỗi hai trạng thái, critic $(1;\,1{,}5)$: hệ số một bước $0{,}35$, Monte Carlo $1{,}7$, lợi thế đúng $0{,}4$; lợi tức $n$ bước nằm giữa hai đầu." Ba số này đã có ở bảng `L10-214f`; dòng này giữ chúng làm câu vấn đề của mạch (NT13) và nêu lại dữ kiện trên trang dùng lại (NT23), không lặp phép tính. `L10-306` "Lưu ý:" thêm "trên chuỗi, critic $(1;\,1{,}5)$, $\lambda=1$ cho tọa độ $\theta_A$ đúng $0{,}2$ dù $\mathbb E[\widehat A_0\mid s_A,1]=0{,}8\ne0{,}4$; $\lambda=0$ cho $0{,}0875$" (Ví dụ 10.9); ghi chú diễn giả giải thích độ chệch bị khử khi $\lambda=1$. `L10-303` bỏ dòng "Lượt trên … $G^\lambda_0=2{,}43$" (số chuyển vào ghi chú); `L10-304` bỏ "Kiểm: $0{,}35+0{,}72\cdot1{,}5=1{,}43$" (vào ghi chú).
+- **`L10-300` dòng dẫn:** "Một tham số trộn các lợi tức nhiều bước, cho mọi mức giữa sai số TD và lợi tức Monte Carlo." (21 âm tiết, bỏ khuôn "Muốn …, phải …"); ghi chú dẫn $0{,}35$, $1{,}7$, $0{,}4$ của bảng hệ số cuối mạch 2.
+- **Thời lượng:** 3 phút của `L10-301` (1,5) và `L10-305` (1,5): ví dụ từ 1,5 lên 3,5 (`L10-307` 1, `307b` 1,5, `307c` 1), bài tập từ 2 lên 3 (`L10-309` 1, `309b` 2). Tổng mạch 3 giữ 14,5 phút; mạch 3 có 11 trang.
+- **Số trang deck:** 130.
+- **Liên kết sâu:** không có liên kết `#/3/k` (k ≥ 2) nào trong deck, `exercises.md`, ghi chú hay `index.html`.
+- **Kiểm tra:** Playwright 1280×720 và 1600×900; chiều cao: `L10-300` 321, `302` 698, `303` 623, `304` 608, `306` 707, `307` 609, `307b` 574 (bảng 1249 px), `307c` 568, `308` 571, `309` 670, `309b` 678 (bảng 1190 px). Không lỗi console, không yêu cầu hỏng, không `.katex-error`. `deck_lint`: 51 phát hiện trên 130 trang, không phát hiện nào ở mạch 3.
+
+## Sửa mạch 3 sau kiểm lại (2026-11-20)
+
+1. `L10-309`: cột dữ kiện $V^{\mathrm{next}}_{t+1}$ (đã chọn sẵn giá trị) thay bằng "$V'_{t+1}$ (khi $U_{t+1}=1$)": $4$ ở $t=1$, "—" ở các hàng khác; "Nhắc lại:" thêm quy tắc chọn $V^{\mathrm{next}}_{t+1}=V'_{t+1}$ nếu $U_{t+1}=1$, ngược lại $V_{t+1}$. Dòng "Câu hỏi:" rút còn một dòng ("Bài tập 10.7, $\gamma=0{,}9$, $\lambda=0{,}8$: tính … bằng Thuật toán 10.16."); mô tả hai lượt chuyển vào ghi chú diễn giả, vì bảng đã cho các cờ. Cao 662 px.
+   `L10-309b`: tiêu đề "Bài tập: GAE trên đoạn thu, lời giải"; bảng thêm cột $V^{\mathrm{next}}_{t+1}$ của lời giải (—, $V_3=2$, $V'_2=4$, $V_1=3$) đứng trước cột $\delta_t$, thay cho việc viết lựa chọn trong ô $\delta_t$ (ô như vậy làm bảng rộng 1490 px); tiêu đề cột hệ số ngắt xuống hai dòng; dòng $V^{\mathrm{targ}}$ rút còn kết quả $(5{,}572;\,5{,}6;\,2{,}52;\,3)$. Cao 685 px, bảng 1163 px.
+2. `L10-302`: câu vấn đề "Chuỗi hai trạng thái, lượt $s_A\xrightarrow{1}s_B\xrightarrow{1}$, critic $(1;\,1{,}5)$: hệ số một bước $\delta_0=0{,}35$, hệ số Monte Carlo $G_0-\hat v(s_A)=1{,}7$, lợi thế đúng $0{,}4$." (bỏ "nằm giữa hai đầu"); Định nghĩa 10.11 gộp lợi thế $n$ bước vào câu định nghĩa; "Bổ đề 10.12." ghi điều kiện $Z_{k+1}=1$ khi và chỉ khi $k+1=T$ theo ghi chú. Dòng "Trực quan." chuyển vào ghi chú diễn giả để trang vừa trần 60 âm tiết (bản có dòng này: 64 âm tiết, 738 px). Cao 666 px; `deck_lint` sạch.
+3. `L10-306`: "Lưu ý:" dạng khẳng định "trên chuỗi, critic $(1;\,1{,}5)$, $\lambda=1$: $\mathbb E[\widehat A_0\mid s_A,1]=0{,}8\ne A_\pi=0{,}4$, nhưng tọa độ $\theta_A$ của kỳ vọng ước lượng gradient vẫn đúng $0{,}2$."; "$\lambda=0$ cho $0{,}0875\ne0{,}2$" chuyển vào ghi chú; "γ-just" gộp vào dòng "Kết luận:"; giả thiết thêm "$\pi_\theta$ Markov dừng" (Mệnh đề 10.15). Ghi chú: "Lượt bị cắt phá giả thiết lượt đầy đủ: …"; bỏ câu về Schulman và cộng sự (2016, §3) để giữ NOTES150. Cao 695 px.
+4. `L10-307`: dòng "Tính $\delta_0$, $\delta_1$, $\widehat A_1$, $\widehat A_0$ cho (i) và (ii)." đặt trước dòng tính $\delta_0$.
+5. `L10-307c`: dòng đầu thành "Lợi tức λ cắt (truncated λ-return) tại biên $2$ (Định nghĩa 10.13 với biên $2$ thay $T$): $G^\lambda_{0:2}=(1-\lambda)G_{0:1}+\lambda G_{0:2}$. Trường hợp (ii):" (không còn nhãn "Nhắc lại:"); ghi chú dẫn đoạn ngay sau Thuật toán 10.16 ($V^{\mathrm{targ}}_t$ là lợi tức λ cắt tại biên gần nhất) và Sutton và Barto (2018), (12.9)–(12.10), thay cho "Mệnh đề 10.14 cho đoạn hữu hạn". Cao 620 px.
+6. Storyboard: liên kết `L10-304`→`L10-306`, `L10-307`→`L10-307b`; mục `L10-307` viết lại "Mặt trang", mật độ và phút (1).
+
+Kiểm tra: Playwright 1280×720 (và 1600×900), không lỗi console, không yêu cầu hỏng, không `.katex-error`; `deck_lint`: 51 phát hiện trên 130 trang, không phát hiện nào ở mạch 3.
