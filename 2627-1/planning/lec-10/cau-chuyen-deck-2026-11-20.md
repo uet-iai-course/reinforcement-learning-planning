@@ -310,3 +310,9 @@ Tác giả: "Duyệt" (sau khi xem câu chuyện liệt kê trong phiên). Đi�
 10. Khoảng 56 trang đếm (khoảng 60 trang thật).
 
 Bước tiếp theo: sửa ví dụ của ghi chú theo mục 7 (đề xuất 1–8), rà toán, commit; rồi storyboard theo TB1–TB23; rồi deck.
+
+## Sửa sau cổng storyboard (2026-11-20, điều phối viên)
+
+Câu 5 của câu chuyện và hiện tượng mở mạch 5 đổi vì bản đã duyệt nêu một vấn đề không có thật: trên $s_B$ đứng riêng, hàm thay thế $3p-2$ bằng đúng $J-J_{\mathrm{old}}$, nên "tăng mãi" không phải lỗi. Câu 5 mới: "Hàm thay thế dùng lợi thế ước lượng từ ít lượt có thể sai chiều: với bộ đệm hai lượt trên chuỗi, nó đẩy chính sách tới $(0;1)$ và $J$ giảm $0{,}4$; PPO cắt tỉ số xác suất nên dừng ở $(0{,}4;\tfrac{11}{15})$, $J$ chỉ giảm $0{,}008$, và chỉ cần Adam." Cổng kiểm lại đã tính lại các số này.
+
+Thêm (cổng storyboard, rà toán vòng 2): bước nhỏ trên hành lang đổi từ $\alpha=0{,}1$ thành $\alpha=0{,}05$, vì $\alpha=0{,}1$ cho $p=0{,}5987$ đã vượt đỉnh $p^*\approx0{,}586$; với $\alpha=0{,}05$, $p\approx0{,}55$, $J\approx-11{,}72$, còn dưới đỉnh $-11{,}66$. Mục 2 và 4 của tệp này còn ghi $\alpha=0{,}1$: số đúng là số trong ghi chú và storyboard.
