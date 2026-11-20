@@ -13,7 +13,7 @@ Ký hiệu cột "quyết định": so với bộ trang chiếu cũ (mã cũ tro
 | 1. Mở đầu và hai giới hạn của REINFORCE | mở bài | Ký hiệu, nhắc lại Bài 03–09; mục tiêu; nội dung; một ví dụ định lượng (hành lang ngắn); bài toán và khung hai hàng | REINFORCE, (G1)–(G4), hàm điểm (Bài 09); $q_\pi$, $v_\pi$ (Bài 03) | Hai nhu cầu: giảm phương sai giữ kỳ vọng; bước lớn bằng dữ liệu cũ; năm câu trả lời có điều kiện | Phát biểu bài toán | không có (bìa `L10-101` là trang tiêu đề của mạch mở đầu) | 12 | 12 |
 | 2. Đường cơ sở, hàm lợi thế và actor–critic | khái niệm, kết quả, thuật toán | Trừ đường cơ sở; đặt tên lợi thế; bootstrap bằng critic; hai thuật toán | $\operatorname{Var}$ tăng $\tfrac49\to\tfrac{16}9$ (Ví dụ 10.1, dòng kết quả ở `L10-201`); lượt hành lang (`L10-107`) | $\widehat g_b$ không chệch; $\nabla J$ dạng lợi thế; $\mathbb E[\delta_t\mid s,a]=A_\pi$ khi critic đúng; Thuật toán 10.6, 10.9; $\delta_0=0{,}35\ne0{,}4$ khi critic sai | Hai đầu của hệ số nhân với hàm điểm: Monte Carlo và một bước | `L10-200`, `id="mach-2"` | 19 | 23 |
 | 3. Ước lượng lợi thế tổng quát | khái niệm, kết quả, thuật toán | Nối $\delta_t$ và $G_t-\hat v$ bằng $\lambda$; điều kiện γ-just; GAE trên đoạn thu có cờ | Hai ước lượng $0{,}35$, $1{,}7$ của cùng $A_\pi(s_A,1)=0{,}4$ | $\widehat A_t=\sum_k(\gamma\lambda)^k\delta_{t+k}$; Thuật toán 10.16 với $Z$, $U$; $V^{\mathrm{targ}}_t$ | Hoàn tất nửa thứ nhất; giao $\widehat A_t$, $V^{\mathrm{targ}}_t$ cho mạch 6 | `L10-300`, `id="mach-3"` | 11 | 14,5 |
-| 4. Hàm thay thế và chặn cải thiện | kết quả | Hiệu hiệu năng; hàm thay thế; TV và KL; chặn cải thiện; cải thiện đơn điệu; miền tin cậy | Giới hạn thứ hai (`L10-108`): lượt cũ không cho mẫu của gradient sau một bước | Bài toán miền tin cậy với mức giảm bị chặn khi giải chính xác (Hệ quả 10.31) | Căn cứ định lượng cho việc giới hạn bước | `L10-400`, `id="mach-4"` | 16 | 22,5 |
+| 4. Hàm thay thế và chặn cải thiện | kết quả | Hiệu hiệu năng; hàm thay thế; TV và KL; chặn cải thiện; cải thiện đơn điệu; miền tin cậy | Giới hạn thứ hai (`L10-108`): lượt cũ không cho mẫu của gradient sau một bước | Bài toán miền tin cậy với mức giảm bị chặn khi giải chính xác (Hệ quả 10.31) | Căn cứ định lượng cho việc giới hạn bước | `L10-400`, `id="mach-4"` | 20 | 22,5 |
 | 5. TRPO và gradient tự nhiên | kết quả, thuật toán | KL bậc hai, Fisher, gradient tự nhiên, gradient liên hợp, tìm kiếm lùi, TRPO | Bài toán miền tin cậy phi tuyến (`L10-411`) | Thuật toán 10.37; TRPO thực hành chỉ bảo đảm KL trung bình mẫu $\le\kappa$ và hàm thay thế mẫu tăng | Giải xấp xỉ bài toán của mạch 4 | `L10-500`, `id="mach-5"` | 12 | 13,5 |
 | 6. Tối ưu chính sách gần kề (PPO) | khái niệm, kết quả, thuật toán | Mục tiêu cắt, PPO-Penalty, mất mát tổng, chẩn đoán, thuật toán, siêu tham số, cài đặt, phạm vi lý thuyết | Chi phí bậc hai của TRPO; hàm thay thế mẫu tuyến tính theo $\rho_t$; $\widehat A_t$, $V^{\mathrm{targ}}_t$ (mạch 3) | Thuật toán 10.49; mục tiêu cắt không chặn KL; approxKL chỉ không chệch khi $\theta$ không phụ thuộc mẫu | Hai hàng gặp nhau | `L10-600`, `id="mach-6"` | 23 | 25,5 |
 | 7. Tổng kết và chuyển tiếp | kết bài | Ba bảng tổng kết, bài tổng hợp, trả lời bài toán, câu hỏi, bài về nhà, nối Bài 11 | Kết quả mạch 2–6 | Câu trả lời có điều kiện; giới hạn dữ liệu theo chính sách sang Bài 11 | Tổng hợp, không khái niệm mới | `L10-700`, `id="mach-7"` | 12 | 9 |
@@ -76,7 +76,7 @@ Mã trang tiêu đề mạch theo quy ước `<tiền tố mạch>00`: mã trang
 | 3 | `L10-309b` | Bài tập: GAE trên đoạn thu | lời giải (bảng tính lùi) | Bài tập 10.7, lời giải | — | 2 |
 | 4 | `L10-400` | 4. Hàm thay thế và chặn cải thiện | tiêu đề mạch | §4 | — | 0,5 |
 | 4 | `L10-401` | Dữ liệu cũ và chính sách mới | vấn đề | §4 đoạn đầu | `img/lec-10/policy-update-feedback.svg` | 1 |
-| 4 | `L10-402` | Ví dụ: đổi chính sách trên chuỗi hai trạng thái | trực giác, ví dụ | §4.1, Ví dụ 10.11 | — (bản viết bỏ hình nhỏ) | 2 |
+| 4 | `L10-402` | (đã bỏ khỏi deck 2026-11-20, NT23; dòng "Trực quan." chuyển lên `L10-403`, dữ kiện vào `L10-410`) | — | §4.1, Ví dụ 10.11 | — | 0 |
 | 4 | `L10-403` | Bổ đề hiệu hiệu năng | định nghĩa, kết quả | Định nghĩa 10.18, Bổ đề 10.19, Hệ quả 10.20 | — | 2,5 |
 | 4 | `L10-404` | Chứng minh: bổ đề hiệu hiệu năng | chứng minh | chứng minh Bổ đề 10.19 | — | 1,5 |
 | 4 | `L10-405` | Tỉ số chính sách và hàm thay thế | trực giác, định nghĩa | §4.2, Định nghĩa 10.21 | — | 1,5 |
@@ -84,12 +84,17 @@ Mã trang tiêu đề mạch theo quy ước `<tiền tố mạch>00`: mã trang
 | 4 | `L10-407` | Biến phân toàn phần và phân kỳ KL | định nghĩa, kết quả | Định nghĩa 10.23, Mệnh đề 10.24 | — | 1,5 |
 | 4 | `L10-408` | Chặn cải thiện | trực giác, kết quả | §4.4, Định lý 10.26, Hệ quả 10.27 | — | 2,5 |
 | 4 | `L10-409` | Chứng minh: chặn cải thiện | chứng minh | chứng minh Định lý 10.26, Bổ đề 10.25 | — | 1,5 |
-| 4 | `L10-410` | Ví dụ: chặn cải thiện trên chuỗi hai trạng thái | ứng dụng | Ví dụ 10.12 | — | 2 |
+| 4 | `L10-410` | Ví dụ: đổi chính sách trên chuỗi hai trạng thái | ví dụ của mạch (dữ kiện, $J$ trực tiếp) | Ví dụ 10.11 | — | 1 |
+| 4 | `L10-410b` | Ví dụ: đổi chính sách trên chuỗi hai trạng thái, phân bố chiếm dụng | ví dụ (tiếp, bảng) | Định nghĩa 10.18, Ví dụ 10.11 | — | 1 |
+| 4 | `L10-410c` | Ví dụ: đổi chính sách trên chuỗi hai trạng thái, hiệu hiệu năng và hàm thay thế | ví dụ (tiếp, bảng) | Ví dụ 10.11, Bổ đề 10.19 | — | 1 |
+| 4 | `L10-410d` | Ví dụ: đổi chính sách trên chuỗi hai trạng thái, chặn cải thiện | ví dụ (tiếp, bảng) | Ví dụ 10.12 | — | 1 |
 | 4 | `L10-411` | Cải thiện đơn điệu | kết quả (vấn đề của cụm miền tin cậy) | Hệ quả 10.29 | — | 1 |
 | 4 | `L10-412` | Bài toán miền tin cậy | trực giác, định nghĩa | Định nghĩa 10.30 | — | 0,5 |
 | 4 | `L10-412b` | Mức giảm tối đa của bước miền tin cậy | kết quả, ứng dụng | Hệ quả 10.31 và đoạn sau | — | 1 |
-| 4 | `L10-413` | Bài tập: đánh giá một bước cập nhật | bài tập (đề) | Bài tập 10.11 | — | 1,5 |
-| 4 | `L10-414` | Bài tập: đánh giá một bước cập nhật | lời giải | Bài tập 10.11 | — | 1 |
+| 4 | `L10-413` | Bài tập: đánh giá một bước cập nhật | bài tập (đề, "Gợi ý:") | Bài tập 10.11 | — | 1 |
+| 4 | `L10-414` | Bài tập: đánh giá một bước cập nhật, lời giải (a), (b) | lời giải (a), (b), bảng | Bài tập 10.11 | — | 0,5 |
+| 4 | `L10-414b` | Bài tập: đánh giá một bước cập nhật, lời giải (c), (e) | lời giải (c), bảng | Bài tập 10.11 | — | 0,5 |
+| 4 | `L10-414c` | Bài tập: đánh giá một bước cập nhật, lời giải (d) | lời giải (d), bảng, kết luận | Bài tập 10.11 | — | 0,5 |
 | 5 | `L10-500` | 5. TRPO và gradient tự nhiên | tiêu đề mạch | §5 | — | 0,5 |
 | 5 | `L10-501` | Ví dụ: cùng một bước tham số, hai khoảng cách chính sách | vấn đề, ví dụ dẫn nhập | §5 đoạn đầu, Ví dụ 10.13 | — | 1 |
 | 5 | `L10-502` | Ma trận Fisher | trực giác, định nghĩa, ví dụ | Định nghĩa 10.32 | — | 0,5 |
@@ -660,7 +665,7 @@ Phút mạch 3: $0{,}5$ + cụm 1 ($1{,}5+1+1{,}5+2{,}5$) + cụm 2 ($1{,}5+1{,}
 #### `L10-401` Dữ liệu cũ và chính sách mới
 - **Vị trí, loại:** mạch 4; vấn đề của cụm hiệu hiệu năng.
 - **Lý do tồn tại, nhu cầu:** muốn đánh giá một chính sách cụ thể trước khi chạy nó, bằng mẫu của chính sách cũ.
-- **Liên kết:** trước: `L10-400`; sau: `L10-402`. **Mục tiêu:** 3. **Ghi chú:** §4 đoạn đầu (`topic-10`); nguồn tr. 4, 14.
+- **Liên kết:** trước: `L10-400`; sau: `L10-403` (`L10-402` đã bỏ 2026-11-20). **Mục tiêu:** 3. **Ghi chú:** §4 đoạn đầu (`topic-10`); nguồn tr. 4, 14.
 - **Mặt trang:** "Muốn đánh giá $\pi'$ với $p'_A=0{,}6$, $p'_B=0{,}8$ trên chuỗi hai trạng thái trước khi chạy nó." Mẫu của $\pi$ chỉ cho gradient $(0{,}2;\,0{,}3)$ tại $\pi$. Hình vòng phản hồi: dữ liệu theo trạng thái mà $\pi_{\mathrm{old}}$ thăm, chất lượng của $\pi_\theta$ theo trạng thái mà $\pi_\theta$ thăm.
 - **Mật độ:** khoảng 35 âm tiết, 3 dòng; hình chiếm nửa trang.
 - **Hình, phút:** `img/lec-10/policy-update-feedback.svg`; 1.
@@ -668,7 +673,7 @@ Phút mạch 3: $0{,}5$ + cụm 1 ($1{,}5+1+1{,}5+2{,}5$) + cụm 2 ($1{,}5+1{,}
 - **Ghi chú diễn giả:** đọc hình; nối $J=-21{,}32$ của `L10-108`; bước lớn đổi phân bố trạng thái.
 - **Sửa 2026-11-13 (bảng phát hiện):** hình dùng `.figure.short-l` (310 px) thay `max-height:300px`.
 
-#### `L10-402` Ví dụ: đổi chính sách trên chuỗi hai trạng thái
+#### `L10-402` (đã bỏ 2026-11-20) Ví dụ: đổi chính sách trên chuỗi hai trạng thái
 - **Vị trí, loại:** mạch 4; trực giác và ví dụ của cụm hiệu hiệu năng; dữ kiện dùng lại ở `L10-403`, `L10-405`, `L10-408`, `L10-410`.
 - **Lý do tồn tại, nhu cầu:** tính mức tăng thật và hai cách cộng lợi thế trước khi phát biểu bổ đề.
 - **Liên kết:** trước: `L10-401`; sau: `L10-403`. **Mục tiêu:** 3. **Ghi chú:** §4.1, Ví dụ 10.11 (`topic-10`); nguồn tr. 15.
@@ -680,7 +685,7 @@ Phút mạch 3: $0{,}5$ + cụm 1 ($1{,}5+1+1{,}5+2{,}5$) + cụm 2 ($1{,}5+1{,}
 #### `L10-403` Bổ đề hiệu hiệu năng
 - **Vị trí, loại:** mạch 4; hình thức (định nghĩa phân bố chiếm dụng, bổ đề, hệ quả) và ứng dụng (Hệ quả 10.20) của cụm hiệu hiệu năng.
 - **Lý do tồn tại, nhu cầu:** đẳng thức chính xác cho $J(\pi')-J(\pi)$; phân bố chiếm dụng cần cho dạng theo trạng thái.
-- **Liên kết:** trước: `L10-402`; sau: `L10-404`. **Mục tiêu:** 3. **Ghi chú:** Định nghĩa 10.18, Bổ đề 10.19, Hệ quả 10.20 (`topic-10`); Kakade và Langford (2002), Bổ đề 6.1; nguồn tr. 15.
+- **Liên kết:** trước: `L10-401`; sau: `L10-404`. **Mục tiêu:** 3. **Ghi chú:** Định nghĩa 10.18, Bổ đề 10.19, Hệ quả 10.20 (`topic-10`); Kakade và Langford (2002), Bổ đề 6.1; nguồn tr. 15.
 - **Mặt trang:** bốn dòng: "Định nghĩa." $\nu^\pi(s)=(1-\gamma)\sum_t\gamma^t\Pr_\pi(S_t=s,\,t<T)$ trên $\mathcal S$ gọi là phân bố chiếm dụng (occupancy distribution); "Trên chuỗi: $\nu^\pi=(0{,}1;\,0{,}045)$, $\nu^{\pi'}=(0{,}1;\,0{,}054)$." "Bổ đề. MDP hữu hạn, cùng $P$ và $\mu_0$, $\gamma<1$, chính sách Markov dừng:" $J(\pi')-J(\pi)=\tfrac1{1-\gamma}\sum_s\nu^{\pi'}(s)A_\pi(s,\pi')$ (công thức hiển thị); "Kiểm: $10(0{,}1\cdot0{,}08+0{,}054\cdot0{,}4)=0{,}296$."
 - **Mật độ:** khoảng 35 âm tiết, 5 dòng, 2 công thức hiển thị. Hệ quả 10.20 chuyển vào ghi chú diễn giả (quyết định sau cổng).
 - **Hình, phút:** —; 2,5.
@@ -745,19 +750,19 @@ Phút mạch 3: $0{,}5$ + cụm 1 ($1{,}5+1+1{,}5+2{,}5$) + cụm 2 ($1{,}5+1{,}
 - **Ghi chú diễn giả (đến khoảng 250):** ý chính của Bổ đề 10.25 (dạng ma trận $\nu'^\top-\nu^\top=\gamma\nu^\top(P_{\pi'}-P_\pi)\Gamma_{\pi'}$, chuẩn của hàng); chỗ dùng cùng $P$, $\gamma<1$, điều kiện hỗ trợ.
 - **Sửa 2026-11-13 (bảng phát hiện):** bỏ lời trỏ "(chứng minh trong ghi chú bài giảng)" trên mặt trang; ý chính của Bổ đề 10.25 vẫn trong ghi chú diễn giả. `deck_check`: 21 âm tiết.
 
-#### `L10-410` Ví dụ: chặn cải thiện trên chuỗi hai trạng thái
-- **Vị trí, loại:** mạch 4; ứng dụng của cụm chặn cải thiện.
-- **Lý do tồn tại, nhu cầu:** cho thấy cận rất bảo thủ và chỉ chứng nhận bước rất nhỏ.
-- **Liên kết:** trước: `L10-409`; sau: `L10-411` (cận dưới dùng như mục tiêu). **Mục tiêu:** 3. **Ghi chú:** Ví dụ 10.12, đoạn sau Hệ quả 10.27 (`topic-13`); nguồn tr. 14, 16.
-- **Mặt trang:** "Tính" cận cho bước của ví dụ đổi chính sách: $\chi=0{,}4$, $\mathbb E_\nu[D_{\mathrm{TV}}]=0{,}016$, phạt $\frac{2\cdot0{,}9\cdot0{,}4}{0{,}01}\cdot0{,}016=1{,}152>0{,}26$, cận $-0{,}892$ dù $\Delta J=0{,}296$. Bước nhỏ chỉ đổi $p_B$: $\Delta J=\mathcal L-J=1{,}35\,\Delta p$, phạt $24{,}3\,(\Delta p)^2$, cận dương khi $\Delta p<0{,}0556$. "Diễn giải:" cận chỉ chứng nhận bước rất nhỏ.
-- **Mật độ:** khoảng 35 âm tiết, 5 dòng, 1 công thức hiển thị.
-- **Hình, phút:** —; 2. **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo Ví dụ 10.12, đoạn sau Hệ quả 10.27 của ghi chú.
-- **Ghi chú diễn giả:** dạng KL: $\bar D_{\mathrm{KL}}=0{,}004234$, phạt $3{,}31$; bước nhỏ tại $s_B$ không đổi phân bố trạng thái nên hàm thay thế đúng, cận vẫn phạt (Câu hỏi 2 của `L10-708`).
+#### `L10-410` Ví dụ: đổi chính sách trên chuỗi hai trạng thái (sửa 2026-11-20; trước: "Ví dụ: chặn cải thiện trên chuỗi hai trạng thái")
+- **Vị trí, loại:** mạch 4, sau `L10-409`; ví dụ duy nhất của mạch (trang đầu), tiếp theo là `L10-410b`, `L10-410c`, `L10-410d`.
+- **Lý do tồn tại, nhu cầu:** tính trên cùng một bước $p'=(0{,}6;\,0{,}8)$ mọi đại lượng của mạch: $\Delta J$ trực tiếp, phân bố chiếm dụng, bổ đề hiệu hiệu năng, hàm thay thế, cận của chặn cải thiện.
+- **Liên kết:** trước: `L10-409`; sau: `L10-410b`, `L10-410c`, `L10-410d`, rồi `L10-411` (cận dưới dùng như mục tiêu). **Mục tiêu:** 3. **Ghi chú:** Ví dụ 10.12, đoạn sau Hệ quả 10.27 (`topic-13`); nguồn tr. 14, 16.
+- **Mặt trang:** dữ kiện (chuỗi, $\gamma=0{,}9$, $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$, $A_\pi(s_B,\cdot)=(1;\,-2)$); "Tính …"; "Từ dữ kiện của chuỗi: $J=p_A\cdot0{,}9\cdot v(s_B)+(1-p_A)\cdot1$, $v(s_B)=3p_B$."; bảng hai chính sách ($J=1{,}4$ và $1{,}696$); $\Delta J=0{,}296$.
+- **Mật độ:** 5 dòng cộng bảng; khoảng trống tới chân trang 71 px.
+- **Hình, phút:** —; 1 (2026-11-20; trước: 2 cho trang cận). **Quyết định:** dùng lại mã `L10-410` cho trang đầu của ví dụ duy nhất (NT23); phần cận chuyển sang `L10-410d`, phần bước nhỏ thành dòng kết quả ở `L10-412`.
+- **Ghi chú diễn giả:** nguồn của dữ kiện (bảng lợi thế mạch 2); cách lập $J$ từ hai nhánh của $s_A$; lợi thế là của chính sách cũ.
 
 #### `L10-411` Cải thiện đơn điệu
 - **Vị trí, loại:** mạch 4; kết quả (Hệ quả 10.29), đồng thời là bước vấn đề của cụm miền tin cậy.
 - **Lý do tồn tại, nhu cầu:** cận dưới của `L10-408` cho một lược đồ lặp có $J$ không giảm; trên chuỗi, hằng phạt lớn tới mức lược đồ đứng yên, nên cần đổi phạt thành ràng buộc.
-- **Liên kết:** trước: `L10-410`; sau: `L10-412`. **Mục tiêu:** 3. **Ghi chú:** Hệ quả 10.29 (`topic-14`); Schulman và cộng sự (2015), §3; nguồn tr. 16.
+- **Liên kết:** trước: `L10-410d`; sau: `L10-412`. **Mục tiêu:** 3. **Ghi chú:** Hệ quả 10.29 (`topic-14`); Schulman và cộng sự (2015), §3; nguồn tr. 16.
 - **Mặt trang:** "Hệ quả." $\mathcal M_k(\pi)=\mathcal L_{\pi_k}(\pi)-C_k\,\mathbb E_{\nu^{\pi_k}}[D_{\mathrm{TV}}]$ với $C_k=\frac{2\gamma\bar\chi_k}{(1-\gamma)^2}$ (công thức hiển thị); dòng "Đánh giá và cực đại hóa chính xác: $\mathcal M_k(\pi_{k+1})\ge\mathcal M_k(\pi_k)$ kéo theo $J(\pi_{k+1})\ge J(\pi_k)$."; "Chứng minh." $J\ge\mathcal M_k$ và $\mathcal M_k(\pi_k)=J(\pi_k)$. Kết luận: "Trên chuỗi, $C_k=360$: mọi bước khác $\pi_k$ làm $\mathcal M_k$ giảm, lược đồ đứng yên."
 - **Mật độ:** khoảng 35 âm tiết, 4 dòng, 1 công thức hiển thị.
 - **Hình, phút:** —; 1.
@@ -769,6 +774,7 @@ Phút mạch 3: $0{,}5$ + cụm 1 ($1{,}5+1+1{,}5+2{,}5$) + cụm 2 ($1{,}5+1{,}
 - **Lý do tồn tại, nhu cầu:** thay phạt quá lớn ($C_k=360$) bằng ràng buộc khoảng cách.
 - **Liên kết:** trước: `L10-411`; sau: `L10-412b`. **Mục tiêu:** 3. **Ghi chú:** Định nghĩa 10.30 (`topic-14`); nguồn tr. 16.
 - **Mặt trang (D1):** "Trực quan. Thay phạt $C_k\mathbb E[D_{\mathrm{TV}}]$ bằng giới hạn trực tiếp cho khoảng cách giữa hai chính sách." "Định nghĩa 10.30. Bài toán miền tin cậy (trust region problem) với bán kính $\kappa>0$:" công thức hiển thị $\max_{\theta:\,\bar D_{\mathrm{KL}}(\pi_{\mathrm{old}}\Vert\pi_\theta)\le\kappa}\mathbb E_{\nu^{\mathrm{old}},\pi_{\mathrm{old}}}[\rho_\theta A_{\mathrm{old}}]$ (ràng buộc viết dưới $\max$, bỏ chữ Việt trong KaTeX). "Mục tiêu bằng $(1-\gamma)(\mathcal L-J)$, nên bài toán cực đại hóa hàm thay thế trong lân cận KL của $\pi_{\mathrm{old}}$."
+- **Sửa 2026-11-20:** dòng vấn đề đầu trang "Trên chuỗi, bước chỉ đổi $p_B$ thêm $\Delta p>0$: $\mathcal L-J=\Delta J=1{,}35\,\Delta p$, phạt $24{,}3\,(\Delta p)^2$; cận của chặn cải thiện chỉ dương khi $\Delta p<0{,}0556$." (phần bước nhỏ của Ví dụ 10.12, cần cho câu hỏi 2 của `L10-708`); "Mục tiêu bằng $(1-\gamma)(\mathcal L-J)$ …" chuyển vào ghi chú diễn giả để giữ trần 60 âm tiết.
 - **Mật độ:** 47 âm tiết, 4 dòng, 1 công thức hiển thị.
 - **Hình, phút:** —; 0,5.
 - **Quyết định:** tách (từ trang gộp `L10-411` của bản trước; D1 tách tiếp phần hệ quả sang `L10-412b`).
@@ -797,7 +803,7 @@ Phút mạch 3: $0{,}5$ + cụm 1 ($1{,}5+1+1{,}5+2{,}5$) + cụm 2 ($1{,}5+1{,}
 #### `L10-414` Bài tập: đánh giá một bước cập nhật
 - **Vị trí, loại:** mạch 4; lời giải trên mặt trang (trang kế tiếp cùng tiêu đề).
 - **Lý do tồn tại, nhu cầu:** lời giải mẫu của cụm lớn hàm thay thế và chặn cải thiện.
-- **Liên kết:** trước: `L10-413`; sau: `L10-500`. **Mục tiêu:** 3. **Ghi chú:** Bài tập 10.11, lời giải (`topic-14`).
+- **Liên kết:** trước: `L10-413`; sau: `L10-414b`, `L10-414c`, rồi `L10-500`. **Mục tiêu:** 3. **Ghi chú:** Bài tập 10.11, lời giải (`topic-14`).
 - **Mặt trang:** "Lời giải:" (a) $J(\pi'')=1{,}4895$, $\Delta J=0{,}0895$; (b) $\mathcal L-J=0{,}085$; (c) $\chi=0{,}1$, $\mathbb E_\nu[D_{\mathrm{TV}}]=0{,}0065$, phạt $0{,}117$, cận $-0{,}032$; (d) $\bar D_{\mathrm{KL}}=0{,}000619\le0{,}001$. Kết luận: bước thuộc miền tin cậy và tăng $J$, dù cận âm.
 - **Mật độ:** khoảng 30 âm tiết, 5 dòng.
 - **Hình, phút:** —; 1. **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo Bài tập 10.11, lời giải của ghi chú.
@@ -821,7 +827,7 @@ Phút mạch 4: $0{,}5+7+2{,}5+1{,}5+6+2{,}5+2{,}5=22{,}5$ (cụm hiệu hiệu 
 #### `L10-500` 5. TRPO và gradient tự nhiên (trang tiêu đề mạch), điểm vào mạch 5
 - **Vị trí, loại:** điểm vào mạch 5; `id="mach-5"`, `data-note-topic-id="lec-10-topic-15"`.
 - **Lý do tồn tại, nhu cầu:** dòng dẫn nêu nhu cầu của cụm gradient tự nhiên (giải bài toán miền tin cậy với nhiều tham số), nên trang là bước `vấn đề` chung của cụm.
-- **Liên kết:** trước: `L10-414`; sau: `L10-501`. Kế thừa bài toán miền tin cậy phi tuyến (`L10-411`); giao Thuật toán 10.37 và chi phí khoảng mười tích Fisher–vector mỗi vòng cho mạch 6.
+- **Liên kết:** trước: `L10-414c`; sau: `L10-501`. Kế thừa bài toán miền tin cậy phi tuyến (`L10-411`); giao Thuật toán 10.37 và chi phí khoảng mười tích Fisher–vector mỗi vòng cho mạch 6.
 - **Mục tiêu:** 4.
 - **Mặt trang:** "5." + tên mạch; dòng dẫn "Muốn giải bài toán miền tin cậy với nhiều tham số, phải xấp xỉ KL bậc hai và tránh lập ma trận Fisher." (23); từ khóa "Ma trận Fisher · Gradient tự nhiên · Gradient liên hợp · Tìm kiếm lùi" (12).
 - **Hình, phút:** —; 0,5. **Quyết định:** thêm: trang tiêu đề mạch theo `AGENTS.md` §"Trang tiêu đề mạch"; bộ cũ không có.
@@ -1675,7 +1681,7 @@ Phút mạch 7: $0{,}5+1+1{,}5+1+1{,}5+1{,}5+1+1+1{,}5+1+1+1+1{,}5+1+1{,}5+1+1{,
 | 1 | `L10-101`–`L10-110`, `L10-104b` | 11 | 12 | 12 | `L10-104` 1 → 0,5; `L10-104b` 0,5 |
 | 2 | `L10-200`–`L10-216` | 19 | 23 | 22,5 | `L10-205` 1,5 → 1 | 2026-11-20: 19 trang (`L10-200`–`L10-215`, ví dụ `L10-214`–`L10-214f`)
 | 3 | `L10-300`–`L10-309` | 11 | 14,5 | 14,5 | — | 2026-11-20: 11 trang (`L10-300`–`L10-309b`; bỏ `301`, `305`; thêm `307b`, `307c`, `309b`)
-| 4 | `L10-400`–`L10-414` | 16 | 22,5 | 20,5 | `L10-404` 1,5 → 1; `L10-409` 1,5 → 1; `L10-414` 1 → 0 |
+| 4 | `L10-400`–`L10-414` | 20 | 22,5 | 20,5 | `L10-404` 1,5 → 1; `L10-409` 1,5 → 1; `L10-414` 1 → 0 | 2026-11-20: 20 trang (bỏ `402`; thêm `410b`–`410d`, `414b`, `414c`)
 | 5 | `L10-500`–`L10-510` | 12 | 13,5 | 12 | `L10-505` 2 → 1,5; `L10-510` 1 → 0 |
 | 6 | `L10-600`–`L10-620` | 23 | 25,5 | 22,5 | `L10-614`, `L10-615`, `L10-617`, `L10-618` 1 → 0,5 mỗi trang; `L10-617b` 0,5; `L10-620` 1 → 0 |
 | 7 (mới) | `L10-D00`–`L10-D18` | 19 | — | 22 | bảng trên |
@@ -2462,3 +2468,39 @@ Theo kế hoạch đã duyệt (`ke-hoach-mot-vi-du-moi-mach-2026-11-20.md`), l�
 6. Storyboard: liên kết `L10-304`→`L10-306`, `L10-307`→`L10-307b`; mục `L10-307` viết lại "Mặt trang", mật độ và phút (1).
 
 Kiểm tra: Playwright 1280×720 (và 1600×900), không lỗi console, không yêu cầu hỏng, không `.katex-error`; `deck_lint`: 51 phát hiện trên 130 trang, không phát hiện nào ở mạch 3.
+
+## Mạch 4 theo NT23 một ví dụ (2026-11-20)
+
+Theo kế hoạch đã duyệt (`ke-hoach-mot-vi-du-moi-mach-2026-11-20.md`), bài tập phương án A′ và NT23 sửa 2026-11-20:
+
+- **Bỏ khỏi deck:** `L10-402` (Ví dụ 10.11 dạng trang riêng); dòng "Trực quan." chuyển lên `L10-403`.
+- **Ví dụ duy nhất của mạch 4:** "Ví dụ: đổi chính sách trên chuỗi hai trạng thái" (Ví dụ 10.11 + 10.12), bốn trang sau chứng minh chặn cải thiện, dùng lại mã `L10-410`:
+  - `L10-410`: dữ kiện (chuỗi, $\gamma=0{,}9$, $A_\pi$ của chính sách cũ, nêu lại từ mạch 2); "Tính …"; "Nhắc lại:" $J=p_A\cdot0{,}9\cdot v(s_B)+(1-p_A)$, $v(s_B)=3p_B$; bảng hai chính sách $p_A$ | $p_B$ | $v(s_B)$ | $p_A\cdot0{,}9\cdot v(s_B)$ | $1-p_A$ | $J$ ($\tfrac12$, $\tfrac23$, $2$, $0{,}9$, $0{,}5$, $1{,}4$; $0{,}6$, $0{,}8$, $2{,}4$, $1{,}296$, $0{,}4$, $1{,}696$); $\Delta J=0{,}296$.
+  - `L10-410b`: "Nhắc lại:" $\nu^\pi(s)=(1-\gamma)\sum_t\gamma^t\Pr_\pi(S_t=s,\,t<T)$, ở đây $0{,}1\cdot0{,}9^t\Pr$; bảng $s$ | $t$ | $\Pr_\pi$ | $\nu^\pi$ | $\Pr_{\pi'}$ | $\nu^{\pi'}$ ($(0{,}1;\,0{,}045)$, $(0{,}1;\,0{,}054)$); dòng tính tại $s_B$.
+  - `L10-410c`: "Nhắc lại:" hai công thức (Bổ đề 10.19, hàm thay thế); bảng $\pi'(\cdot\mid s)$ | $A_\pi(s,\cdot)$ | $\bar a(s)$ | $\nu^{\pi'}\bar a$ | $\nu^\pi\bar a$, hàng tổng $0{,}0296$, $0{,}026$; $\Delta J=0{,}296$, $\mathcal L-J=0{,}26$, sai số $0{,}036$. Bảng gộp hai cột xác suất và hai cột lợi thế thành cặp, vì bản tám cột rộng 1315 px.
+  - `L10-410d`: "Nhắc lại:" chặn cải thiện; bảng $\nu^\pi$ | $D_{\mathrm{TV}}=\lvert p'_s-p_s\rvert$ | $\nu^\pi D_{\mathrm{TV}}$ | $\lvert\bar a\rvert$; $\mathbb E=0{,}016$, $\chi=0{,}4$, $180$; phạt $1{,}152$, cận $-0{,}892$; "Diễn giải:" cận âm dù $\Delta J=0{,}296>0$ vì phạt vượt mức tăng dự báo.
+  - Số liệu khớp Ví dụ 10.11, 10.12, đoạn sau Bổ đề 10.19 và đoạn đầu §4.4.
+- **Phần "bước nhỏ" của Ví dụ 10.12** (cần cho câu hỏi 2 của `L10-708`): một dòng kết quả trên `L10-412`: "Chuỗi, bước chỉ đổi $p_B$ thêm $\Delta p$: $\mathcal L-J=\Delta J=1{,}35\,\Delta p$, phạt $24{,}3\,(\Delta p)^2$; cận chỉ dương khi $\Delta p<0{,}0556$." Lập luận ở ghi chú diễn giả.
+- **Dòng kết quả thay chuỗi tính:** `L10-403` bỏ dòng $\nu$ trên chuỗi và dòng "Kiểm", thay bằng "Chuỗi hai trạng thái, bước $p'=(0{,}6;\,0{,}8)$: $\Delta J=0{,}296$." ($\nu$ chuyển vào ghi chú); `L10-405` "Chuỗi hai trạng thái, bước $p'$: $\mathcal L-J=0{,}26$" (ghi chú bỏ câu dẫn tới ví dụ đã bỏ); `L10-406` phép kiểm gradient chuyển vào ghi chú; `L10-407` bỏ "Nhu cầu:", dòng TV/KL tại $s_B$ nêu lại hai phân phối, nhãn "Mệnh đề 10.24.", phép kiểm Pinsker vào ghi chú; `L10-408` dòng đầu thành "Sai số $0{,}036$ của hàm thay thế trên chuỗi đến từ $\nu^{\pi'}-\nu^\pi$." (không chuỗi tính); `L10-411` giữ dòng $C_k=360$; `L10-412b` một dòng "Chuỗi, $\kappa=0{,}004234$ bằng KL trung bình của bước $p'$: cận $\approx-3{,}91$, $\Delta J\approx0{,}299$." (nghiệm $p\approx(0{,}571;\,0{,}824)$ vào ghi chú; số khớp đoạn sau Hệ quả 10.31). `L10-404` bốn nhãn "Bước k." thành danh sách đánh số (hết LABEL). Các trang trước `L10-410` chỉ nêu kết quả có số, không dựa vào phép tính của ví dụ.
+- **Bài tập 10.11 (A′):** `L10-413` thêm dòng "Gợi ý:" $J=p_A\cdot0{,}9\cdot3p_B+(1-p_A)$, $A_\pi(s,\pi'')=\sum_a\pi''(a\mid s)A_\pi(s,a)$. Lời giải ba trang ", lời giải": `L10-414` (a) $J(\pi'')=1{,}0395+0{,}45=1{,}4895$, $\Delta J=0{,}0895$; (b) bảng $\nu^\pi$ | $\pi''(\cdot\mid s)$ | $A_\pi(s,\cdot)$ | $A_\pi(s,\pi'')$ | $\nu^\pi A$, tổng $0{,}0085$, $\mathcal L-J=0{,}085$; `L10-414b` (c) bảng $\nu^\pi$ | $p_s$ | $p''_s$ | $D_{\mathrm{TV}}$ | $\nu^\pi D_{\mathrm{TV}}$, $\mathbb E=0{,}0065$, $\chi=0{,}1$, phạt $0{,}117$, cận $-0{,}032$; `L10-414c` (d) bảng $p_s\log$ | $(1-p_s)\log$ | $\mathrm{KL}_s$ | $\nu^\pi\mathrm{KL}_s$ ($-0{,}04766$, $0{,}05268$, $0{,}005025$, $0{,}0005025$; $-0{,}03253$, $0{,}03512$, $0{,}002593$, $0{,}0001167$), $\bar D_{\mathrm{KL}}=0{,}000619\le0{,}001$, "Kết luận:". Số khớp lời giải của ghi chú; các số hạng log tính lại bằng máy.
+- **`L10-400` dòng dẫn:** "Dữ liệu cũ đánh giá được chính sách mới, với sai số bị chặn theo khoảng cách giữa hai chính sách." (21 âm tiết, bỏ khuôn "Muốn …, phải …").
+- **Thời lượng:** 2 phút của `L10-402` chuyển cho ví dụ và lời giải: ví dụ `L10-410`–`410d` 1 + 1 + 1 + 1 = 4 (trước: `L10-410` 2); bài tập `L10-413` 1, lời giải `414`, `414b`, `414c` 0,5 mỗi trang (trước: 1,5 + 1). Tổng mạch 4 giữ 22,5 phút; mạch 4 có 20 trang.
+- **Số trang deck:** 134.
+- **Liên kết sâu:** không có liên kết `#/4/k` (k ≥ 2) nào trong deck, `exercises.md`, ghi chú hay `index.html`.
+- **Phụ thuộc `L10-708`:** câu hỏi 2 ("Bước chỉ đổi $p_B$ …") dựa vào dòng kết quả mới trên `L10-412`.
+- **Kiểm tra:** Playwright 1280×720; chiều cao: `L10-400` 321, `401` 670, `403` 600, `404` 563, `405` 709, `406` 501, `407` 596, `408` 667, `409` 596, `410` 639, `410b` 608, `410c` 641, `410d` 653, `411` 537, `412` 653, `412b` 510, `413` 710, `414` 632, `414b` 513, `414c` 573. Không lỗi console, không yêu cầu hỏng, không `.katex-error`. `deck_lint`: 44 phát hiện trên 134 trang, không phát hiện nào ở mạch 4.
+
+## Sửa mạch 4 sau kiểm lại (2026-11-20)
+
+1. `L10-403`: nhãn "Định nghĩa 10.18."; dòng "Trực quan." định nghĩa ngay lợi thế trung bình khi chọn theo $\pi'$, $A_\pi(s,\pi')=\sum_a\pi'(a\mid s)A_\pi(s,a)$, trước Bổ đề 10.19; giả thiết của bổ đề thêm $\lvert R_{t+1}\rvert\le R_{\max}$ (phần thưởng bị chặn) theo ghi chú, $\pi$, $\pi'$ Markov dừng giữ nguyên.
+2. `L10-405`: "Trực quan." thành "Thay $\nu^{\pi'}$ chưa biết bằng $\nu^{\mathrm{old}}$, rồi tính trung bình theo $\pi_\theta$ từ mẫu của $\pi_{\mathrm{old}}$ bằng tỉ số lấy mẫu quan trọng."; Định nghĩa 10.21 nêu $\nu^{\mathrm{old}}=\nu^{\pi_{\mathrm{old}}}$, $A_{\mathrm{old}}=A_{\pi_{\mathrm{old}}}$ và hiện cả hai dạng của hàm thay thế (dạng thứ hai $J(\theta_{\mathrm{old}})+\tfrac1{1-\gamma}\sum_s\nu^{\mathrm{old}}(s)A_{\mathrm{old}}(s,\pi_\theta)$), nên dòng "Nhắc lại:" ở `L10-410c` là nhắc lại thật; "Nhắc lại:" về tỉ số lấy mẫu quan trọng và dòng $\mathcal L-J=0{,}26$ chuyển vào ghi chú.
+3. `L10-408`: "Hệ quả 10.27." (KL theo một trong hai chiều) giữ trên mặt trang, vì `L10-412b` và `L10-414b` dùng dạng KL; định lý nêu $D_{\mathrm{TV}}(s)=D_{\mathrm{TV}}(\pi(\cdot\mid s),\pi'(\cdot\mid s))$ và dẫn giả thiết của Bổ đề 10.19; dòng "Ý nghĩa:" chuyển vào ghi chú.
+4. `L10-412`: dòng bước nhỏ đặt đầu trang làm vấn đề; "Mục tiêu bằng $(1-\gamma)(\mathcal L-J)$ …" chuyển vào ghi chú (trang có dòng này: 62 âm tiết).
+5. `L10-404`: bốn bước đánh số 1–4 liên tiếp (bước 3 gồm cả phép cho số bước tới vô cùng); ghi chú gọi tên bước theo số mới.
+6. `L10-410`: "Nhắc lại:" của công thức $J$ thành "Từ dữ kiện của chuỗi:".
+7. Bài tập 10.11: `L10-413` khôi phục câu (e) (phạt dạng KL của Hệ quả 10.27); bảng dữ kiện theo trạng thái gồm $p_s$, $p''_s$, $\nu^\pi(s)$, $A_\pi(s,\cdot)$ (gộp dòng "Dữ kiện"); "Gợi ý:" chuyển vào ghi chú (NT-RL-10). `L10-414b` thêm dòng "(e) Hệ quả 10.27, $\bar D_{\mathrm{KL}}$ của (d): $180\cdot0{,}1\cdot\sqrt{0{,}000619/2}=0{,}317$" (hằng $2\gamma\chi/(1-\gamma)^2=180\cdot0{,}1=18$, khớp lời giải câu (e) của ghi chú; tính lại $0{,}31667$).
+8. Tiêu đề lời giải: "…, lời giải (a), (b)", "…, lời giải (c), (e)", "…, lời giải (d)". `L10-414` gộp dòng (b) với kết quả $\mathcal L-J=10\cdot0{,}0085=0{,}085$ sau bảng.
+9. Ghi chú: `L10-410d` thêm câu nối sang Hệ quả 10.29 (86 âm tiết); `L10-414` thêm lỗi thường gặp ở (b) (dùng $\nu^{\pi''}=(0{,}1;\,0{,}0495)$); `L10-414b` thêm lỗi thường gặp ở (c) ($\chi=\max_{s,a}\lvert A_\pi\rvert=2$ cho phạt $2{,}34$) và $D_{\mathrm{TV}}(s_B)=\tfrac1{30}$.
+10. Để giữ khoảng trống tới chân trang: `L10-410c` bỏ hàng "tổng" (tổng viết trong dòng $\Delta J=10(0{,}008+0{,}0216)$, $\mathcal L-J=10(0{,}008+0{,}018)$); `L10-410d` gộp phạt thành một dòng $\tfrac{2\gamma}{(1-\gamma)^2}\chi_{\pi'}\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]=180\cdot0{,}4\cdot(0{,}01+0{,}006)=1{,}152$ và đưa cận vào "Diễn giải:"; `L10-407` bỏ "của chuỗi" trong dòng TV/KL.
+
+Kiểm tra (Playwright, đo khoảng cách từ đáy nội dung tới đỉnh chân trang, đơn vị px của khung 1280×720, như nhau ở 1280×720 và 1600×900): `L10-401` 29, `403` 38, `404` 72, `405` 99, `406` 114, `407` 88, `408` 70, `409` 66, `410` 71, `410b` 60, `410c` 52, `410d` 44, `411` 95, `412` 113, `412b` 109, `413` 85, `414` 110, `414b` 72, `414c` 77. Không lỗi console, không `.katex-error`, không tràn ngang. `deck_lint`: 44 phát hiện trên 134 trang, không phát hiện nào ở mạch 4.

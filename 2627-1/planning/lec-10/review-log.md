@@ -945,3 +945,13 @@ Yêu cầu của tác giả (nhật ký yêu cầu thay đổi hàng 33–36): l
 | 3 | Kiểm mạch, sư phạm vòng 5 | `general-purpose` | `opus` | `high` | trung bình: "lợi tức $n$ bước nằm giữa hai đầu" sai trên chuỗi (lượt hai bước); `302`, `306` quá 6 dòng | chấp nhận |
 | 4 | Biên tập theo 6 mục gộp | tác tử biên tập | `opus` | `high` | `302`, `306`, `307`, `307c`, `309`, `309b`; storyboard | chấp nhận |
 | 5 | Kiểm cuối | điều phối viên | — | — | — | Playwright 1600×900 và 390×844 trên 12 trang `L10-300`…`L10-400`: 0 lỗi console, 0 request lỗi, 0 `.katex-error`, không tràn ngang, cao ≤ 695/720 px; ảnh `306`, `309b` đã xem. `deck_lint`: 0 phát hiện ở mạch 3. `git diff --check` sạch. |
+
+### Mạch 4 theo NT23 một ví dụ (2026-11-20)
+
+| Bước | Vai | Loại | Mô hình | Mức nỗ lực | Đầu ra | Quyết định của điều phối viên |
+|---|---|---|---|---|---|---|
+| 1 | Biên tập mạch 4 | tác tử biên tập | `opus` | `high` | ví dụ duy nhất Ví dụ 10.11 + 10.12 `L10-410`…`410d` ($J$, $\nu$, hiệu hiệu năng và hàm thay thế, chặn cải thiện); bỏ `L10-402`; dòng kết quả `403`, `405`, `407`, `408`, `411`, `412`, `412b`; Bài tập 10.11 `413` + lời giải `414`, `414b`, `414c` (A′); dòng dẫn `400` | chấp nhận sau xem ảnh; deck 134 trang |
+| 2 | Kiểm toán vòng 6 | `general-purpose` | `opus` | `high` | 0 chặn, 0 nghiêm trọng; trung bình: $A_\pi(s,\pi')$ dùng trên mặt trang mà chỉ định nghĩa trong ghi chú diễn giả; giải số lại $\kappa$, cận $-3{,}91$, $\Delta J=0{,}299$: đúng | chấp nhận mọi phát hiện; khôi phục câu (e) của Bài tập 10.11 |
+| 3 | Kiểm mạch, sư phạm vòng 6 | `general-purpose` | `opus` | `high` | trung bình: `405` 8 dòng; dòng $\Delta p$ của `412` đứng sau định nghĩa | chấp nhận |
+| 4 | Biên tập theo 10 mục gộp | tác tử biên tập | `opus` | `high` | `403`–`414c`; storyboard. Sự cố: lượt đo đầu lưu ảnh PNG vào thư mục workspace và repo; tác tử đã xóa, không tệp nào được stage | chấp nhận; điều phối viên kiểm: không còn ảnh mới ở workspace và repo (ba tệp PNG cũ ở gốc rl-plan có từ 2026-04 và 2026-10, bị `.gitignore` bỏ qua) |
+| 5 | Kiểm cuối | điều phối viên | — | — | — | Playwright 1600×900 và 390×844 trên 21 trang `L10-400`…`L10-500`: 0 lỗi console, 0 request lỗi, 0 `.katex-error`, không tràn ngang, cao ≤ 670/720 px; khoảng cách tới chân trang ≥ 29 px (tác tử đo). `deck_lint`: 0 phát hiện ở mạch 4. `git diff --check` sạch. |
