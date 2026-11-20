@@ -18,10 +18,10 @@
 <h1>TRPO, PPO và DPO</h1>
 <h2>Tối ưu chính sách miền tin cậy (TRPO), tối ưu chính sách gần kề (PPO) và tối ưu ưu tiên trực tiếp (DPO)</h2>
 <h3>Bài 10 · Học tăng cường</h3>
-<div class="box">Đường cơ sở giữ kỳ vọng của gradient;<br>sai số hàm thay thế bị chặn theo khoảng cách chính sách,<br>nên TRPO ràng buộc khoảng cách, PPO cắt tỉ số;<br>khi phạt khoảng cách tới chính sách tham chiếu cố định, PPO và DPO nhắm tới cùng một nghiệm.</div>
+<div class="box">TRPO, PPO và DPO đều tìm chính sách tốt hơn ở gần một chính sách cho trước.</div>
 <p>Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội</p>
 <p>Năm học 2026–2027, học kỳ 1</p>
-<aside class="notes"><p>REINFORCE cho mẫu không chệch của gradient, nhưng phương sai lớn và mỗi lượt chỉ cho một bước. Mục 2–3 giảm phương sai: đường cơ sở giữ kỳ vọng; critic và GAE chỉ giữ kỳ vọng khi critic đúng, hoặc khi $\lambda=1$ trên lượt đầy đủ. Mục 4–6 giới hạn bước khi dùng lại dữ liệu cũ; khoảng cách chính sách là biến phân toàn phần hoặc KL trung bình theo phân bố trạng thái của chính sách cũ. Mục 7 phạt KL tới một chính sách tham chiếu cố định: RLHF nhắm tới nghiệm dạng đóng bằng PPO với mẫu trực tuyến, còn cực tiểu của DPO là nghiệm đó khi đủ giả thiết. Tên tiếng Anh: Trust Region Policy Optimization, Proximal Policy Optimization, reinforcement learning from human feedback, Direct Preference Optimization.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 1–2; ghi chú bài giảng Bài 10, §1.1, §7.</p></aside>
+<aside class="notes"><p>Chính sách cho trước là $\pi_{\mathrm{old}}$ ở TRPO, PPO và $\pi_{\mathrm{ref}}$ cố định ở DPO. Phép trừ một đường cơ sở không phụ thuộc hành động đã chọn giữ nguyên kỳ vọng của ước lượng gradient. Sai số hàm thay thế bị chặn theo biến phân toàn phần hoặc KL, trung bình theo phân bố trạng thái của chính sách cũ, nên TRPO ràng buộc KL này, PPO cắt tỉ số $\rho_t$ (Mục 4–6). Với phần thưởng $\hat r$ khớp từ dữ liệu ưu tiên, mục tiêu phạt KL theo $\pi_{\mathrm{ref}}$ có nghiệm $\pi^*_{\hat r}\propto\pi_{\mathrm{ref}}e^{\hat r/\beta}$. RLHF nhắm tới nghiệm này bằng PPO với mẫu trực tuyến; với cùng dữ liệu, $\beta$ và $\pi_{\mathrm{ref}}$, cực tiểu của DPO là nghiệm này dưới giả thiết của Định lý 10.65. Tên tiếng Anh: Trust Region Policy Optimization, Proximal Policy Optimization, reinforcement learning from human feedback, Direct Preference Optimization.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 1–2; ghi chú bài giảng Bài 10, §1.1, §7.</p></aside>
 </section>
 <section data-slide-id="L10-102" data-note-topic-id="lec-10-topic-01">
 <h2>Tiên quyết và quy ước</h2>
@@ -84,35 +84,47 @@
 <p>Đọc trước: Sutton và Barto (2018), §13.4–13.5, §12.1–12.3; Schulman và cộng sự (2017), §3–5; Rafailov và cộng sự (2023), §3–5.</p>
 <aside class="notes"><p>Đường cơ sở, critic và GAE giảm phương sai của ước lượng gradient (Mục 2–3), tạo hàng trên của vấn đề trung tâm. Hàng dưới (Mục 4–6) gồm chặn sai số khi đánh giá chính sách mới bằng dữ liệu cũ, giải bài toán miền tin cậy bằng TRPO, rồi thay ràng buộc bằng phép cắt tỉ số của PPO. Mục 7 dùng lại phép phạt KL với một chính sách tham chiếu cố định khi phần thưởng chỉ được biết qua so sánh ưu tiên, và giải bằng PPO hoặc DPO. Mục 8 đặt mỗi kết quả cạnh giả thiết của nó.</p><p class="note-source"><strong>Nguồn:</strong> bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 3; Sutton và Barto (2018), §12.1–12.3, §13.4–13.5; Schulman và cộng sự (2017), §3–5; ghi chú bài giảng Bài 10, §7; Rafailov và cộng sự (2023), §3–5.</p></aside>
 </section>
-<section data-slide-id="L10-106" data-note-topic-id="lec-10-topic-02">
-<h2>Ví dụ: bài toán một bước, phương sai của REINFORCE</h2>
-<div class="grid2 wide-right"><img class="figure" src="img/lec-09/one-step-card.svg" alt="Thẻ dữ kiện bài toán một bước, chính sách softmax, hai hành động: bảng hai cột cho a bằng 1 và a bằng 2, đặc trưng phi của s, a bằng (1; 0) và (0; 1); xác suất pi theta bằng 2/3 và 1/3; phần thưởng r bằng 3 và 0. Dòng dưới: theta bằng (log 2; 0), lượt dừng sau A 0."/>
-<div>
-<p><strong>Nhu cầu:</strong> đo độ dao động của $\widehat g$; tính $\operatorname{Var}(\widehat g)$.</p>
-<p>${\widehat g=(1;\,-1)}$ với xác suất $\tfrac23$, ${\widehat g=(0;\,0)}$ với xác suất $\tfrac13$; ${\mathbb E\widehat g=(\tfrac23;\,-\tfrac23)=\nabla_\theta J}$.</p>
-<div>$$\operatorname{Var}(\widehat g)=\mathbb E\lVert\widehat g-\mathbb E\widehat g\rVert^2=\tfrac49.$$</div>
-<p>Với $r=(4;\,1)$: kỳ vọng giữ nguyên, ${\operatorname{Var}(\widehat g)=\tfrac{16}9}$.</p>
-</div></div>
-<p><strong>Diễn giải:</strong> cộng $1$ vào mọi phần thưởng không đổi gradient, phương sai tăng gấp bốn.</p>
-<aside class="notes"><p>Vì lượt dừng sau một hành động, $\widehat g=r(A_0)\,\psi_\theta(s,A_0)$, với $\psi_\theta(s,1)=(\tfrac13;\,-\tfrac13)$. Mỗi tọa độ có phương sai $\tfrac23-\tfrac49=\tfrac29$, tổng $\tfrac49$. Với $r=(4;\,1)$, mỗi tọa độ có mô men bậc hai $\tfrac43$ và phương sai $\tfrac89$, tổng $\tfrac{16}9$. Kiểm lại bằng $\operatorname{Var}(\widehat g)=\mathbb E\lVert\widehat g\rVert^2-\lVert\nabla_\theta J\rVert^2$: $\tfrac43-\tfrac89=\tfrac49$. Cộng $1$ vào phần thưởng làm $J$ tăng đúng $1$ với mọi $\theta$, nên mức chung của phần thưởng không ảnh hưởng tới việc chọn hành động, nhưng làm các mẫu dao động mạnh hơn.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.1; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 9–10.</p></aside>
-</section>
 <section data-slide-id="L10-107" data-note-topic-id="lec-10-topic-02">
 <h2>Ví dụ: hành lang ngắn, một lượt REINFORCE</h2>
 <img class="figure short-m" src="img/lec-09/short-corridor.svg" alt="Hành lang ngắn đảo hành động: bốn ô s 1 (xuất phát), s 2, s 3, s 4 (đích). Ô s 1: hành động 1 tới s 2, hành động 2 đứng yên. Ô s 2, viền nét đứt đậm, ghi đảo hành động: hành động 1 về s 1, hành động 2 tới s 3. Ô s 3: hành động 1 tới s 4, hành động 2 về s 2. Ô s 4 tô xám: đích, kết thúc lượt. Mỗi bước phần thưởng âm 1; mọi ô cùng đặc trưng nên chọn hành động 1 với cùng xác suất p."/>
-<p>$\theta=(0;\,0)$, $p=\tfrac12$, $\gamma=1$, $J=-12$, $\nabla_\theta J=(2;\,-2)$, $\alpha=0{,}1$.</p>
-<p>Lượt $A_{0:4}=1,1,1,2,1$; $G_t=-5,-4,-3,-2,-1$. Tính $\widehat g$.</p>
-<p>$\widehat g=\sum_tG_t\psi_t=(-5{,}5;\,5{,}5)$, ngược chiều $\nabla_\theta J$.</p>
-<p>$\theta=(-0{,}55;\,0{,}55)$: $p$ từ $0{,}5$ xuống $0{,}2497$; $J$ từ $-12$ xuống $-18{,}68$.</p>
-<p><strong>Diễn giải:</strong> mọi $G_t&lt;0$, nên mọi hành động đã chọn bị giảm xác suất.</p>
-<aside class="notes"><p>Tại $\theta=(0;\,0)$, $\psi_\theta(s,1)=(\tfrac12;\,-\tfrac12)$, $\psi_\theta(s,2)=(-\tfrac12;\,\tfrac12)$. Tọa độ thứ nhất của $\widehat g$ là $\tfrac12(-5-4-3-1)+(-\tfrac12)(-2)=-5{,}5$. Lượt chọn hành động 1 bốn lần nên $p$ giảm, xa dần giá trị tốt nhất $p^*=2-\sqrt2\approx0{,}59$. Hành lang có $\gamma=1$ và độ dài lượt không bị chặn nên không thỏa (G3), nhưng $T$ có đuôi hình học nên ước lượng vẫn không chệch. Ước lượng không chệch vẫn có thể cho một bước ngược chiều gradient trên một lượt cụ thể.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.2; Sutton và Barto (2018), Ví dụ 13.1; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 10.</p></aside>
+<p>Mọi ô: ${\phi(s,1)=(1;\,0)}$, ${\phi(s,2)=(0;\,1)}$; $\theta=(0;\,0)$, ${p=\pi_\theta(1\mid s)=\tfrac12}$.</p>
+<p>$\gamma=1$; ${J(p)=-2(2-p)/\bigl(p(1-p)\bigr)}$, ${J(\tfrac12)=-12}$.</p>
+<p>${\nabla_\theta J=J'(\tfrac12)\,p(1-p)\,(1;\,-1)=8\cdot\tfrac14(1;\,-1)=(2;\,-2)}$.</p>
+<p>Lượt: ${A_0,\dots,A_4=1,1,1,2,1}$ qua ${s_1,s_2,s_1,s_2,s_3}$ rồi tới $s_4$, nên $T=5$.</p>
+<p>Tính $\widehat g$, rồi $\theta$, $p$, $J$ sau một bước.</p>
+<aside class="notes"><p>Hành động 1 là sang phải, hành động 2 là sang trái; ở $s_2$ hai hành động bị đảo, nên $A_1=1$ đưa tác tử về $s_1$ và $A_3=2$ đưa tới $s_3$; sang trái tại $s_1$ thì đứng yên. Mọi ô có cùng đặc trưng, nên chính sách softmax chọn hành động 1 với cùng xác suất $p$ ở mọi ô. Đạo hàm $J'(p)=2(p^2-4p+2)/\bigl(p(1-p)\bigr)^2$ cho $J'(\tfrac12)=8$, và $\partial p/\partial\theta_1=-\partial p/\partial\theta_2=p(1-p)$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.2; Sutton và Barto (2018), Ví dụ 13.1; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 10.</p></aside>
+</section>
+<section data-slide-id="L10-107b" data-note-topic-id="lec-10-topic-02">
+<h2>Ví dụ: hành lang ngắn, một lượt REINFORCE, ước lượng gradient</h2>
+<p><strong>Nhắc lại:</strong> ${\psi_\theta(s,a)=\phi(s,a)-\sum_b\pi_\theta(b\mid s)\,\phi(s,b)=\phi(s,a)-(0{,}5;\,0{,}5)}$.</p>
+<table><thead><tr><th scope="col">$t$</th><th scope="col">$S_t$</th><th scope="col">$A_t$</th><th scope="col">$G_t=-(5-t)$</th><th scope="col">$\psi_t=\phi(S_t,A_t)-(0{,}5;\,0{,}5)$</th><th scope="col">$G_t\psi_t$</th></tr></thead><tbody>
+<tr><td>$0$</td><td>$s_1$</td><td>$1$</td><td>$-5$</td><td>$(0{,}5;\,-0{,}5)$</td><td>$(-2{,}5;\,2{,}5)$</td></tr>
+<tr><td>$1$</td><td>$s_2$</td><td>$1$</td><td>$-4$</td><td>$(0{,}5;\,-0{,}5)$</td><td>$(-2;\,2)$</td></tr>
+<tr><td>$2$</td><td>$s_1$</td><td>$1$</td><td>$-3$</td><td>$(0{,}5;\,-0{,}5)$</td><td>$(-1{,}5;\,1{,}5)$</td></tr>
+<tr><td>$3$</td><td>$s_2$</td><td>$2$</td><td>$-2$</td><td>$(-0{,}5;\,0{,}5)$</td><td>$(1;\,-1)$</td></tr>
+<tr><td>$4$</td><td>$s_3$</td><td>$1$</td><td>$-1$</td><td>$(0{,}5;\,-0{,}5)$</td><td>$(-0{,}5;\,0{,}5)$</td></tr>
+<tr><th scope="row" colspan="5">$\widehat g=\sum_tG_t\psi_t$, ngược chiều ${\nabla_\theta J=(2;\,-2)}$</th><td>$(-5{,}5;\,5{,}5)$</td></tr>
+</tbody></table>
+<aside class="notes"><p>Với $\gamma=1$, REINFORCE cho $\widehat g=\sum_tG_t\psi_t$, và $G_t$ là tổng các phần thưởng $-1$ còn lại, nên $G_t=-(5-t)$. Bốn bước chọn hành động 1 góp $\tfrac12(-5-4-3-1)=-6{,}5$ vào tọa độ thứ nhất, bước $t=3$ góp $+1$. Hành lang có $\gamma=1$ và độ dài lượt không bị chặn nên không thỏa (G3), nhưng $T$ có đuôi hình học nên ước lượng vẫn không chệch. Ước lượng không chệch vẫn có thể cho một bước ngược chiều gradient trên một lượt cụ thể.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.2, phần ước lượng; ghi chú bài giảng Bài 09, Mệnh đề 09.16.</p></aside>
+</section>
+<section data-slide-id="L10-107c" data-note-topic-id="lec-10-topic-02">
+<h2>Ví dụ: hành lang ngắn, một lượt REINFORCE, cập nhật tham số</h2>
+<p><strong>Nhắc lại:</strong> ${p=\sigma(\theta_1-\theta_2)}$, ${\sigma(x)=1/(1+e^{-x})}$; ${J(p)=-2(2-p)/\bigl(p(1-p)\bigr)}$.</p>
+<p>$\alpha=0{,}1$: ${\theta\leftarrow\theta+\alpha\widehat g=(0;\,0)+0{,}1\cdot(-5{,}5;\,5{,}5)=(-0{,}55;\,0{,}55)}$.</p>
+<p>${p=\sigma(-0{,}55-0{,}55)=\sigma(-1{,}1)=1/(1+e^{1{,}1})=0{,}24974}$.</p>
+<p>${J(0{,}24974)=-\dfrac{2\cdot1{,}75026}{0{,}24974\cdot0{,}75026}=-\dfrac{3{,}50052}{0{,}18737}=-18{,}68}$.</p>
+<p><strong>Diễn giải:</strong> $\widehat g$ có kỳ vọng $\nabla_\theta J$ nhưng phương sai lớn, nên một lượt có thể cho bước ngược chiều gradient và làm $J$ giảm.</p>
+<aside class="notes"><p>Mọi $G_t&lt;0$, nên mỗi số hạng $G_t\psi_t$ giảm xác suất của hành động chọn ở bước $t$ theo $\lvert G_t\rvert$. Tổng $\lvert G_t\rvert$ của hành động 1 là $13$, của hành động 2 là $2$, nên $p$ giảm; $\pi_\theta(2\mid s)$ tăng từ $0{,}5$ lên $0{,}75$ dù hành động 2 cũng bị phạt. Giá trị tốt nhất là $p^*=2-\sqrt2\approx0{,}59$, nghiệm trong $(0,1)$ của $J'(p)=0$, tức của $p^2-4p+2=0$; bước này đưa $p$ xa dần $p^*$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Ví dụ 10.2, phần cập nhật và diễn giải.</p></aside>
 </section>
 <section data-slide-id="L10-108" data-note-topic-id="lec-10-topic-02">
 <h2>Ví dụ: hành lang ngắn, một bước theo đúng gradient</h2>
-<p>Cùng hành lang, từ $\theta=(0;\,0)$ đi theo đúng gradient $(2;\,-2)$; $p^*\approx0{,}59$ là xác suất tốt nhất.</p>
+<p>Cùng hành lang: $\theta=(0;\,0)$, $J(\tfrac12)=-12$, ${\nabla_\theta J=(2;\,-2)}$, ${p^*=2-\sqrt2\approx0{,}59}$.</p>
 <p>Tính $p$ và $J$ sau một bước với $\alpha=0{,}1$ và $\alpha=0{,}5$.</p>
-<p>$\alpha=0{,}1$: $\theta=(0{,}2;\,-0{,}2)$, $p=0{,}5987$, $J=-11{,}66$.</p>
-<p>$\alpha=0{,}5$: $\theta=(1;\,-1)$, $p=0{,}8808&gt;p^*$, $J=-21{,}32$.</p>
-<p><strong>Kết luận:</strong> với $\alpha=0{,}5$, $J$ giảm $9{,}32$.</p>
+<table><thead><tr><th scope="col">$\alpha$</th><th scope="col">${\theta+\alpha\nabla_\theta J}$</th><th scope="col">${\theta_1-\theta_2}$</th><th scope="col">${p=\sigma(\theta_1-\theta_2)}$</th><th scope="col">${p(1-p)}$</th><th scope="col">${2(2-p)}$</th><th scope="col">${J(p)}$</th></tr></thead><tbody>
+<tr><td>$0{,}1$</td><td>${(0{,}2;\,-0{,}2)}$</td><td>$0{,}4$</td><td>$0{,}5987$</td><td>$0{,}24026$</td><td>$2{,}8026$</td><td>$-11{,}66$</td></tr>
+<tr><td>$0{,}5$</td><td>${(1;\,-1)}$</td><td>$2$</td><td>$0{,}8808$</td><td>$0{,}10499$</td><td>$2{,}2384$</td><td>$-21{,}32$</td></tr>
+</tbody></table>
+<p><strong>Diễn giải:</strong> cùng hướng đúng, $\alpha=0{,}1$ làm $J$ tăng, còn $\alpha=0{,}5$ đưa $p$ vượt $p^*$ và làm $J$ giảm $9{,}32$; mỗi lượt chỉ cho một bước tại $\theta_{\mathrm{old}}$.</p>
 <aside class="notes"><p>Hệ quả 09.26 cần lượt của chính $\pi_{\theta_{\mathrm{old}}}$, nên mỗi lượt chỉ cho một bước cập nhật. Muốn mỗi lượt đem lại nhiều tiến bộ hơn thì cần bước lớn hơn. Cùng một hướng đúng, bước nhỏ làm $J$ tăng còn bước lớn làm $J$ giảm, vì $J$ chỉ gần tuyến tính trong một lân cận nhỏ của chính sách cũ. Bước lớn đổi chính sách, và chính sách mới thăm các trạng thái theo một phân bố khác. Hai giới hạn này không mâu thuẫn với Hệ quả 09.26: tính không chệch chỉ nói về trung bình tại đúng tham số đã sinh lượt.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §1.1, đoạn sau Ví dụ 10.2; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 4, 14.</p></aside>
 </section>
 <section data-slide-id="L10-109" data-note-topic-id="lec-10-topic-02">
@@ -142,18 +154,18 @@
 <section data-slide-id="L10-200" id="mach-2" class="strand-title" data-note-topic-id="lec-10-topic-03">
 <div class="strand-title-body">
 <h2><span class="strand-number">2.</span>Đường cơ sở, hàm lợi thế và actor–critic</h2>
-<p class="strand-lead">Muốn giảm phương sai mà giữ kỳ vọng của gradient, phải trừ khỏi lợi tức một mức không phụ thuộc hành động đã chọn.</p>
+<p class="strand-lead">Trừ khỏi lợi tức một mức không phụ thuộc hành động giữ kỳ vọng và có thể giảm phương sai.</p>
 <p class="strand-keys">Đường cơ sở · Hàm lợi thế · Critic · Sai số sai phân thời gian · Actor–critic một bước</p>
 </div>
-<aside class="notes"><p>Tổng phương sai của REINFORCE trên bài toán một bước tăng từ $\tfrac49$ lên $\tfrac{16}9$ khi cộng $1$ vào phần thưởng, và một lượt hành lang cho bước ngược chiều gradient. Ở phần này, lợi tức được so với một mức của trạng thái, đại lượng còn lại được đặt tên là lợi thế, rồi lợi tức Monte Carlo được thay bằng một bước bootstrap của critic. Kết quả giao cho phần 3 là hai hệ số của hàm điểm: $G_t-\hat v(S_t)$ không chệch cho gradient, và sai số TD $\delta_t$ ước lượng lợi thế khi critic đúng.</p></aside>
+<aside class="notes"><p>Trên hành lang ngắn, một lượt REINFORCE cho bước ngược chiều gradient vì ước lượng có phương sai lớn. Ở phần này, lợi tức được so với một mức của trạng thái, đại lượng còn lại được đặt tên là lợi thế, rồi lợi tức Monte Carlo được thay bằng một bước bootstrap của critic. Kết quả giao cho phần 3 là hai hệ số của hàm điểm: $G_t-\hat v(S_t)$ không chệch cho gradient, và sai số TD $\delta_t$ ước lượng lợi thế khi critic đúng.</p></aside>
 </section>
 <section data-slide-id="L10-201" data-note-topic-id="lec-10-topic-03">
 <h2>Mức so sánh của trạng thái</h2>
-<p><strong>Nhu cầu:</strong> tách khỏi $G_t$ phần chung không phân biệt hành động.</p>
-<p>Bài toán một bước: cộng $1$ vào phần thưởng, phương sai từ $\tfrac49$ lên $\tfrac{16}9$.</p>
+<p>Bài toán một bước: một trạng thái $s$, hai hành động, softmax với ${\phi(s,a)=e_a}$, ${\theta=(\log2;\,0)}$, lượt dừng sau $A_0$; ${\pi_\theta(\cdot\mid s)=(\tfrac23;\,\tfrac13)}$, ${\psi_\theta(s,1)=(\tfrac13;\,-\tfrac13)}$, ${\psi_\theta(s,2)=(-\tfrac23;\,\tfrac23)}$, ${r=(3;\,0)}$.</p>
+<p>Cộng $1$ vào phần thưởng giữ gradient $(\tfrac23;\,-\tfrac23)$; tổng phương sai ${\mathbb E\lVert\widehat g-\mathbb E\widehat g\rVert^2}$ tăng từ $\tfrac49$ lên $\tfrac{16}9$.</p>
 <p><strong>Trực quan.</strong> So $G_t$ với một mức $b(S_t)$ chỉ phụ thuộc trạng thái.</p>
 <p>Hệ số của $\psi_t$ là $G_t-b(S_t)$: dương thì tăng, âm thì giảm xác suất hành động đã chọn.</p>
-<aside class="notes"><p>Một hành động tốt là hành động cho lợi tức cao hơn mức thường đạt được tại trạng thái đó. Trong một MDP, mức so sánh phải thay đổi theo trạng thái, vì ở trạng thái mà mọi hành động đều có giá trị cao, mức so sánh phải cao thì mới phân biệt được hành động tốt hơn. Mức so sánh không được phụ thuộc hành động đã chọn; Bước 2 của chứng minh phép trừ không làm chệch dùng đúng giả thiết này.</p><p class="note-source"><strong>Nguồn:</strong> Sutton và Barto (2018), §13.4, tr. 329; ghi chú bài giảng Bài 10, §2.1; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 11.</p></aside>
+<aside class="notes"><p>Một hành động tốt là hành động cho lợi tức cao hơn mức thường đạt được tại trạng thái đó. Trong một MDP, mức so sánh phải thay đổi theo trạng thái, vì ở trạng thái mà mọi hành động đều có giá trị cao, mức so sánh phải cao thì mới phân biệt được hành động tốt hơn. Mức so sánh không được phụ thuộc hành động đã chọn; Bước 2 của chứng minh phép trừ không làm chệch dùng đúng giả thiết này. Bài toán một bước là Ví dụ 10.1 của ghi chú; $e_a$ là vector đơn vị thứ $a$, và $\widehat g=r(A_0)\,\psi_\theta(s,A_0)$. Tổng phương sai là tổng phương sai các tọa độ: $\tfrac23\cdot\tfrac29+\tfrac13\cdot\tfrac89=\tfrac49$, và $\tfrac23\cdot\tfrac89+\tfrac13\cdot\tfrac{32}9=\tfrac{16}9$ khi $r=(4;\,1)$.</p><p class="note-source"><strong>Nguồn:</strong> Sutton và Barto (2018), §13.4, tr. 329; ghi chú bài giảng Bài 10, §2.1; bài giảng gốc lecture10_policy_gradient_part2.pdf (2025–2026), trang 11.</p></aside>
 </section>
 <section data-slide-id="L10-202" data-note-topic-id="lec-10-topic-03">
 <h2>Ví dụ: ba đường cơ sở trên bài toán một bước</h2>

@@ -10,8 +10,8 @@ Ký hiệu cột "quyết định": so với bộ trang chiếu cũ (mã cũ tro
 
 | mạch | loại | chức năng | đầu vào | đầu ra | đóng góp cho bài toán trung tâm | trang tiêu đề mạch | trang | phút |
 |---|---|---|---|---|---|---|---:|---:|
-| 1. Mở đầu và hai giới hạn của REINFORCE | mở bài | Ký hiệu, nhắc lại Bài 03–09; mục tiêu; nội dung; hai ví dụ định lượng; bài toán và khung hai hàng | REINFORCE, (G1)–(G4), hàm điểm (Bài 09); $q_\pi$, $v_\pi$ (Bài 03) | Hai nhu cầu: giảm phương sai giữ kỳ vọng; bước lớn bằng dữ liệu cũ; năm câu trả lời có điều kiện | Phát biểu bài toán | không có (bìa `L10-101` là trang tiêu đề của mạch mở đầu) | 10 | 12 |
-| 2. Đường cơ sở, hàm lợi thế và actor–critic | khái niệm, kết quả, thuật toán | Trừ đường cơ sở; đặt tên lợi thế; bootstrap bằng critic; hai thuật toán | $\operatorname{Var}$ tăng $\tfrac49\to\tfrac{16}9$ (`L10-106`); lượt hành lang (`L10-107`) | $\widehat g_b$ không chệch; $\nabla J$ dạng lợi thế; $\mathbb E[\delta_t\mid s,a]=A_\pi$ khi critic đúng; Thuật toán 10.6, 10.9; $\delta_0=0{,}35\ne0{,}4$ khi critic sai | Hai đầu của hệ số nhân với hàm điểm: Monte Carlo và một bước | `L10-200`, `id="mach-2"` | 18 | 23 |
+| 1. Mở đầu và hai giới hạn của REINFORCE | mở bài | Ký hiệu, nhắc lại Bài 03–09; mục tiêu; nội dung; một ví dụ định lượng (hành lang ngắn); bài toán và khung hai hàng | REINFORCE, (G1)–(G4), hàm điểm (Bài 09); $q_\pi$, $v_\pi$ (Bài 03) | Hai nhu cầu: giảm phương sai giữ kỳ vọng; bước lớn bằng dữ liệu cũ; năm câu trả lời có điều kiện | Phát biểu bài toán | không có (bìa `L10-101` là trang tiêu đề của mạch mở đầu) | 12 | 12 |
+| 2. Đường cơ sở, hàm lợi thế và actor–critic | khái niệm, kết quả, thuật toán | Trừ đường cơ sở; đặt tên lợi thế; bootstrap bằng critic; hai thuật toán | $\operatorname{Var}$ tăng $\tfrac49\to\tfrac{16}9$ (Ví dụ 10.1, dòng kết quả ở `L10-201`); lượt hành lang (`L10-107`) | $\widehat g_b$ không chệch; $\nabla J$ dạng lợi thế; $\mathbb E[\delta_t\mid s,a]=A_\pi$ khi critic đúng; Thuật toán 10.6, 10.9; $\delta_0=0{,}35\ne0{,}4$ khi critic sai | Hai đầu của hệ số nhân với hàm điểm: Monte Carlo và một bước | `L10-200`, `id="mach-2"` | 18 | 23 |
 | 3. Ước lượng lợi thế tổng quát | khái niệm, kết quả, thuật toán | Nối $\delta_t$ và $G_t-\hat v$ bằng $\lambda$; điều kiện γ-just; GAE trên đoạn thu có cờ | Hai ước lượng $0{,}35$, $1{,}7$ của cùng $A_\pi(s_A,1)=0{,}4$ | $\widehat A_t=\sum_k(\gamma\lambda)^k\delta_{t+k}$; Thuật toán 10.16 với $Z$, $U$; $V^{\mathrm{targ}}_t$ | Hoàn tất nửa thứ nhất; giao $\widehat A_t$, $V^{\mathrm{targ}}_t$ cho mạch 6 | `L10-300`, `id="mach-3"` | 10 | 14,5 |
 | 4. Hàm thay thế và chặn cải thiện | kết quả | Hiệu hiệu năng; hàm thay thế; TV và KL; chặn cải thiện; cải thiện đơn điệu; miền tin cậy | Giới hạn thứ hai (`L10-108`): lượt cũ không cho mẫu của gradient sau một bước | Bài toán miền tin cậy với mức giảm bị chặn khi giải chính xác (Hệ quả 10.31) | Căn cứ định lượng cho việc giới hạn bước | `L10-400`, `id="mach-4"` | 16 | 22,5 |
 | 5. TRPO và gradient tự nhiên | kết quả, thuật toán | KL bậc hai, Fisher, gradient tự nhiên, gradient liên hợp, tìm kiếm lùi, TRPO | Bài toán miền tin cậy phi tuyến (`L10-411`) | Thuật toán 10.37; TRPO thực hành chỉ bảo đảm KL trung bình mẫu $\le\kappa$ và hàm thay thế mẫu tăng | Giải xấp xỉ bài toán của mạch 4 | `L10-500`, `id="mach-5"` | 12 | 13,5 |
@@ -25,16 +25,19 @@ Mã trang tiêu đề mạch theo quy ước `<tiền tố mạch>00`: mã trang
 
 | mạch | mã | tiêu đề | loại | khối ghi chú | hình | phút |
 |---|---|---|---|---|---|---:|
-| 1 | `L10-101` | TRPO và PPO | bìa | §1.1 | — | 0,5 |
+| 1 | `L10-101` | TRPO, PPO và DPO | bìa | §1.1 | — | 0,5 |
 | 1 | `L10-102` | Tiên quyết và quy ước | tiên quyết (Ký hiệu) | Bảng ký hiệu, Quy ước đọc | — | 1,5 |
 | 1 | `L10-103` | Tiên quyết và quy ước | tiên quyết (Nhắc lại) | Kiến thức tiên quyết | — | 1,5 |
 | 1 | `L10-104` | Mục tiêu học tập | mục tiêu | Mục tiêu học tập 1–7 | — | 1 |
 | 1 | `L10-105` | Nội dung | nội dung | Bảy phần của chương | — | 0,5 |
-| 1 | `L10-106` | Ví dụ: bài toán một bước, phương sai của REINFORCE | ví dụ dẫn nhập | Ví dụ 10.1 | `img/lec-09/one-step-card.svg` | 2 |
-| 1 | `L10-107` | Ví dụ: hành lang ngắn, một lượt REINFORCE | ví dụ dẫn nhập | Ví dụ 10.2 | `img/lec-09/short-corridor.svg` | 2 |
-| 1 | `L10-108` | Ví dụ: hành lang ngắn, một bước theo đúng gradient | ví dụ dẫn nhập | §1.1 sau Ví dụ 10.2 | — | 1 |
+| 1 | `L10-106` | (đã bỏ khỏi deck 2026-11-20, NT23 một ví dụ mỗi mạch; Ví dụ 10.1 còn ở ghi chú, dòng kết quả ở `L10-201`) | — | Ví dụ 10.1 | — | 0 |
+| 1 | `L10-106b` | (đã bỏ khỏi deck 2026-11-20, cùng lý do) | — | Ví dụ 10.1 | — | 0 |
+| 1 | `L10-107` | Ví dụ: hành lang ngắn, một lượt REINFORCE | ví dụ dẫn nhập (dữ kiện) | Ví dụ 10.2 | `img/lec-09/short-corridor.svg` | 1 |
+| 1 | `L10-107b` | Ví dụ: hành lang ngắn, một lượt REINFORCE, ước lượng gradient | ví dụ dẫn nhập (tiếp) | Ví dụ 10.2, phần ước lượng | — (bảng) | 1,5 |
+| 1 | `L10-107c` | Ví dụ: hành lang ngắn, một lượt REINFORCE, cập nhật tham số | ví dụ dẫn nhập (tiếp) | Ví dụ 10.2, phần cập nhật | — | 1 |
+| 1 | `L10-108` | Ví dụ: hành lang ngắn, một bước theo đúng gradient | ví dụ dẫn nhập (tiếp, bảng hai bước học) | §1.1 sau Ví dụ 10.2 | — | 1,5 |
 | 1 | `L10-109` | Vấn đề trung tâm | vấn đề trung tâm | §1.1, năm câu trả lời | — | 1,5 |
-| 1 | `L10-110` | Hệ số của hàm điểm và độ lớn bước | khung chung | §1.1, hình | `img/lec-10/central-problem.svg` | 0,5 |
+| 1 | `L10-110` | Ba hàng của vấn đề trung tâm | khung chung | §1.1, hình | `img/lec-10/central-problem-slide.svg` | 0,5 |
 | 2 | `L10-200` | 2. Đường cơ sở, hàm lợi thế và actor–critic | tiêu đề mạch | §2 | — | 0,5 |
 | 2 | `L10-201` | Mức so sánh của trạng thái | vấn đề, trực giác | §2.1 đoạn đầu | — | 1 |
 | 2 | `L10-202` | Ví dụ: ba đường cơ sở trên bài toán một bước | ví dụ | Ví dụ 10.3; Mệnh đề 10.3 | `one-step-card.svg` (nhỏ) | 2 |
@@ -213,7 +216,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 #### `L10-105` Nội dung
 - **Vị trí, loại:** trang 5 của mạch 1; nội dung.
 - **Lý do tồn tại, nhu cầu:** bản đồ bảy mạch, số trùng `#/N` và trang tiêu đề mạch.
-- **Liên kết:** trước: `L10-104`; sau: `L10-106`.
+- **Liên kết:** trước: `L10-104`; sau: `L10-107` (`L10-106` đã bỏ 2026-11-20).
 - **Mục tiêu:** —.
 - **Khối ghi chú, nguồn:** Bảy phần của chương (`topic-02`); nguồn tr. 3.
 - **Mặt trang:** bảy mục đánh số, mỗi mục là liên kết `#/N` với tên trong bảng "Bảy mạch" của `outline.md`; dòng "Đọc trước: Sutton và Barto (2018), §13.4–13.5, §12.1–12.3; Schulman và cộng sự (2017), §3–5."
@@ -222,7 +225,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Quyết định:** thêm (bộ cũ không có trang Nội dung).
 - **Ghi chú diễn giả:** hàng trên của bài toán (mạch 2–3) và hàng dưới (mạch 4–6); mạch 7 tổng kết; Phần II của nguồn thuộc Bài 11.
 
-#### `L10-106` Ví dụ: bài toán một bước, phương sai của REINFORCE
+#### `L10-106` Ví dụ: bài toán một bước, phương sai của REINFORCE (đã bỏ 2026-11-20)
 - **Vị trí, loại:** trang 6 của mạch 1; ví dụ dẫn nhập của giới hạn thứ nhất, làm cụ thể vấn đề "phương sai phụ thuộc mức chung của phần thưởng" mà `L10-201` dùng lại.
 - **Lý do tồn tại, nhu cầu:** tính không chệch của Hệ quả 09.26 là khẳng định về trung bình; cần một số đo cho độ dao động trên từng lượt.
 - **Liên kết:** trước: `L10-105`; sau: `L10-107` (hậu quả trên một lượt dài hơn).
@@ -238,25 +241,43 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 #### `L10-107` Ví dụ: hành lang ngắn, một lượt REINFORCE
 - **Vị trí, loại:** trang 7 của mạch 1; ví dụ dẫn nhập của giới hạn thứ nhất (hậu quả trên một lượt); dữ kiện dùng lại ở `L10-206`.
 - **Lý do tồn tại, nhu cầu:** cho thấy ước lượng không chệch vẫn có thể cho bước ngược chiều gradient.
-- **Liên kết:** trước: `L10-106`; sau: `L10-108` (cùng hành lang, bước theo đúng gradient).
+- **Liên kết:** trước: `L10-105`; sau: `L10-107b` (bảng $\widehat g$), rồi `L10-107c`, `L10-108` (cùng hành lang).
 - **Mục tiêu:** 1.
 - **Khối ghi chú, nguồn:** Ví dụ 10.2 (`topic-02`); nguồn tr. 10.
-- **Mặt trang:** hình hành lang; dữ kiện $\theta=(0;\,0)$, $p=\tfrac12$, $\gamma=1$, $J=-12$, $\nabla_\theta J=(2;\,-2)$, $\alpha=0{,}1$; lượt $A_{0:4}=1,1,1,2,1$, $G_t=-5,\dots,-1$; "Tính $\widehat g$." $\widehat g=(-5{,}5;\,5{,}5)$; $p$ từ $0{,}5$ xuống $0{,}2497$, $J$ từ $-12$ xuống $-18{,}68$. "Diễn giải:" mọi $G_t<0$ nên hành động đã chọn bị giảm xác suất.
-- **Mật độ:** khoảng 35 âm tiết, 5 dòng, 0–1 công thức hiển thị.
-- **Hình, phút:** `img/lec-09/short-corridor.svg`; 2.
+- **Mặt trang:** (sửa 2026-11-20) hình hành lang (`.figure.short-m`); "Mọi ô: $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$; $\theta=(0;\,0)$, $p=\pi_\theta(1\mid s)=\tfrac12$."; "$\gamma=1$; $J(p)=-2(2-p)/\bigl(p(1-p)\bigr)$, $J(\tfrac12)=-12$."; "$\nabla_\theta J=J'(\tfrac12)\,p(1-p)\,(1;\,-1)=8\cdot\tfrac14(1;\,-1)=(2;\,-2)$."; "Lượt: $A_0,\dots,A_4=1,1,1,2,1$ qua $s_1,s_2,s_1,s_2,s_3$ rồi tới $s_4$, nên $T=5$."; "Tính $\widehat g$, rồi $\theta$, $p$, $J$ sau một bước." Các phép tính ở `L10-107b`, `L10-107c`.
+- **Mật độ:** 5 dòng cộng hình, cao 682 px ở khung 720.
+- **Hình, phút:** `img/lec-09/short-corridor.svg`; 1 (2026-11-20; trước: 2, rồi 0,5).
 - **Quyết định:** thêm: bộ cũ không có trang tương ứng; nội dung theo Ví dụ 10.2 của ghi chú.
 - **Ghi chú diễn giả:** tọa độ thứ nhất $\tfrac12(-13)+(-\tfrac12)(-2)=-5{,}5$; hành lang không thỏa (G3), ước lượng vẫn không chệch vì $T$ có đuôi hình học (ghi chú, đoạn sau Ví dụ 10.4); $p^*=2-\sqrt2\approx0{,}59$.
 - **Sửa 2026-11-13 (bảng phát hiện):** `style="max-height:200px"` thay bằng lớp `.figure.short-m` (210 px, G8); ghi chú diễn giả bỏ lời trỏ "ghi chú bài giảng, đoạn sau Ví dụ 10.4", giữ nội dung: "không thỏa (G3), nhưng $T$ có đuôi hình học nên ước lượng vẫn không chệch".
 
+#### `L10-106b` Ví dụ: bài toán một bước, phương sai của REINFORCE, cộng $1$ vào phần thưởng (đã bỏ 2026-11-20)
+- **Vị trí, loại:** mạch 1, ngay sau `L10-106`; phần tiếp của Ví dụ 10.1 (thêm 2026-11-20).
+- **Mặt trang:** "Cùng $s$, $\theta$, $\psi_\theta$; phần thưởng $r=(4;\,1)$."; bảng cùng bố cục với `L10-106` ($a$ | $\phi(s,a)$ | $\pi_\theta(a\mid s)$ | $\psi_\theta(s,a)$ | $r(a)$ | $\widehat g$ | $\lVert\widehat g-\mathbb E\widehat g\rVert^2$, hàng "Kỳ vọng theo $\pi_\theta$": $(\tfrac23;\,-\tfrac23)$, $\tfrac{16}9$); $\mathbb E\widehat g=\nabla_\theta J$ với cả hai vector phần thưởng; "Diễn giải:" phương sai tăng từ $\tfrac49$ lên $\tfrac{16}9$.
+- **Ghi chú diễn giả:** tổng có trọng số của hàng kỳ vọng; kiểm lại $\mathbb E\lVert\widehat g\rVert^2-\lVert\nabla_\theta J\rVert^2$; mức chung của phần thưởng; trừ một mức chung không phụ thuộc hành động có thể giảm phương sai mà không đổi kỳ vọng.
+- **Hình, phút:** —; 1.
+
+#### `L10-107b` Ví dụ: hành lang ngắn, một lượt REINFORCE, ước lượng gradient
+- **Vị trí, loại:** mạch 1, ngay sau `L10-107`; phần ước lượng của Ví dụ 10.2 (thêm 2026-11-20).
+- **Mặt trang:** "Nhắc lại:" $\psi_\theta(s,a)=\phi(s,a)-\sum_b\pi_\theta(b\mid s)\phi(s,b)=\phi(s,a)-(0{,}5;\,0{,}5)$; bảng $t$ | $S_t$ | $A_t$ | $G_t=-(5-t)$ | $\psi_t=\phi(S_t,A_t)-(0{,}5;\,0{,}5)$ | $G_t\psi_t$, năm hàng và hàng "$\widehat g=\sum_tG_t\psi_t$, ngược chiều $\nabla_\theta J=(2;\,-2)$": $(-5{,}5;\,5{,}5)$.
+- **Ghi chú diễn giả:** cách tính $G_t$; tọa độ thứ nhất $-6{,}5+1$; (G3) không thỏa nhưng ước lượng vẫn không chệch; không chệch vẫn có thể ngược chiều trên một lượt.
+- **Hình, phút:** —; 1,5.
+
+#### `L10-107c` Ví dụ: hành lang ngắn, một lượt REINFORCE, cập nhật tham số
+- **Vị trí, loại:** mạch 1, ngay sau `L10-107b`; phần cập nhật của Ví dụ 10.2 (thêm 2026-11-20).
+- **Mặt trang:** "Nhắc lại:" $p=\sigma(\theta_1-\theta_2)$, $\sigma(x)=1/(1+e^{-x})$, $J(p)$; $\alpha=0{,}1$: $\theta\leftarrow\theta+\alpha\widehat g=(-0{,}55;\,0{,}55)$; $p=\sigma(-1{,}1)=0{,}24974$; $J(0{,}24974)=-18{,}68$; "Diễn giải:" $\widehat g$ có kỳ vọng $\nabla_\theta J$ nhưng phương sai lớn, nên một lượt có thể cho bước ngược chiều gradient và làm $J$ giảm (sửa 2026-11-20).
+- **Ghi chú diễn giả:** cơ chế từng số hạng: tổng $\lvert G_t\rvert$ của hành động 1 là $13$, của hành động 2 là $2$; $\pi_\theta(2\mid s)$ tăng từ $0{,}5$ lên $0{,}75$; $p^*=2-\sqrt2$.
+- **Hình, phút:** —; 1.
+
 #### `L10-108` Ví dụ: hành lang ngắn, một bước theo đúng gradient
 - **Vị trí, loại:** trang 8 của mạch 1; ví dụ dẫn nhập của giới hạn thứ hai, làm cụ thể vấn đề mà `L10-401` mở lại.
 - **Lý do tồn tại, nhu cầu:** muốn mỗi lượt cho nhiều tiến bộ hơn thì cần bước lớn; cần thấy bước lớn theo đúng hướng vẫn có thể làm $J$ giảm.
-- **Liên kết:** trước: `L10-107`; sau: `L10-109`.
+- **Liên kết:** trước: `L10-107c`; sau: `L10-109`.
 - **Mục tiêu:** 3 (động cơ của chặn cải thiện).
 - **Khối ghi chú, nguồn:** §1.1 đoạn sau Ví dụ 10.2 (`topic-02`); nguồn tr. 4, 14.
-- **Mặt trang:** từ $\theta=(0;\,0)$ theo $(2;\,-2)$: $\alpha=0{,}1$: $p=0{,}5987$, $J=-11{,}66$; $\alpha=0{,}5$: $p=0{,}8808>p^*\approx0{,}59$, $J=-21{,}32$. Dòng: Hệ quả 09.26 cần lượt của chính $\pi_{\theta_{\mathrm{old}}}$, nên mỗi lượt cho một bước. Kết luận: "Với $\alpha=0{,}5$, $J$ giảm $9{,}32$."
-- **Mật độ:** khoảng 35 âm tiết, 4 dòng, 0 công thức hiển thị.
-- **Hình, phút:** —; 1.
+- **Mặt trang:** (sửa 2026-11-20) "Cùng hành lang: $\theta=(0;\,0)$, $J(\tfrac12)=-12$, $\nabla_\theta J=(2;\,-2)$, $p^*=2-\sqrt2\approx0{,}59$."; "Tính $p$ và $J$ sau một bước với $\alpha=0{,}1$ và $\alpha=0{,}5$."; bảng $\alpha$ | $\theta+\alpha\nabla_\theta J$ | $\theta_1-\theta_2$ | $p=\sigma(\theta_1-\theta_2)$ | $p(1-p)$ | $2(2-p)$ | $J(p)$, hai hàng ($0{,}1$: $(0{,}2;\,-0{,}2)$, $0{,}4$, $0{,}5987$, $0{,}24026$, $2{,}8026$, $-11{,}66$; $0{,}5$: $(1;\,-1)$, $2$, $0{,}8808$, $0{,}10499$, $2{,}2384$, $-21{,}32$); "Diễn giải:" cùng hướng đúng, $\alpha=0{,}1$ làm $J$ tăng, còn $\alpha=0{,}5$ đưa $p$ vượt $p^*$ và làm $J$ giảm $9{,}32$; mỗi lượt chỉ cho một bước tại $\theta_{\mathrm{old}}$.
+- **Mật độ:** 3 dòng cộng bảng, cao 673 px ở khung 720.
+- **Hình, phút:** —; 1,5 (2026-11-20; trước: 1).
 - **Quyết định:** sửa (`L10-03` "Dữ liệu đổi sau mỗi lần cập nhật"): câu khẳng định không số thay bằng hai bước có số.
 - **Ghi chú diễn giả:** $J$ chỉ gần tuyến tính trong lân cận nhỏ của chính sách cũ; bước lớn đổi phân bố trạng thái mà chính sách mới thăm; hai giới hạn không mâu thuẫn với Hệ quả 09.26.
 
@@ -285,7 +306,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 - **Quyết định:** tách (từ `L10-109` của bản storyboard trước, theo quyết định của điều phối viên ở cổng); trang này là trang khung của kế hoạch đã duyệt.
 - **Ghi chú diễn giả:** đọc hình: hàng trên viền liền gồm đường cơ sở và critic, rồi GAE; hàng dưới nét đứt gồm hàm thay thế và chặn cải thiện, TRPO, PPO; khung cuối viền đậm là Thuật toán 10.49, nơi GAE cho lợi thế và mục tiêu cắt cho chính sách.
 
-**Hành trình khái niệm, mạch 1.** Mạch 1 không mở khái niệm cốt lõi: các trang nhắc lại kết quả đã học, phát biểu bài toán (`L10-109`) và nêu khung chung (`L10-110`). Ba ví dụ dẫn nhập (`L10-106`–`L10-108`) là bước vấn đề của cụm đường cơ sở (mạch 2) và của cụm hiệu hiệu năng (mạch 4); sáu bước của mạch 1 ghi `không áp dụng`.
+**Hành trình khái niệm, mạch 1.** Mạch 1 không mở khái niệm cốt lõi: các trang nhắc lại kết quả đã học, phát biểu bài toán (`L10-109`) và nêu khung chung (`L10-110`). Ví dụ hành lang (`L10-107`–`L10-108`, ví dụ duy nhất của mạch theo NT23 sửa 2026-11-20) là bước vấn đề của cụm đường cơ sở (mạch 2) và của cụm hiệu hiệu năng (mạch 4); bài toán một bước chỉ còn dòng kết quả ở `L10-201`; sáu bước của mạch 1 ghi `không áp dụng`.
 
 ### Mạch 2. Đường cơ sở, hàm lợi thế và actor–critic (23 phút)
 
@@ -483,7 +504,7 @@ Mỗi mục ghi: vị trí và loại; lý do tồn tại và nhu cầu lấp; l
 
 | cụm (dạng) | vấn đề | trực giác | ví dụ | hình thức/thuật toán | ứng dụng | kiểm tra | truyền từ ví dụ sang công thức | gộp hoặc `không áp dụng` | phút |
 |---|---|---|---|---|---|---|---|---|---:|
-| Đường cơ sở (khái niệm, kết quả) | `L10-106` (ví dụ dẫn nhập), `L10-200`, `L10-201` | `L10-201` | `L10-202` | `L10-203`, `L10-204`, `L10-205` | `L10-206` | `L10-210` | $X_b=(r(A)-b)\psi$ → $\widehat g_b$; $\mathbb E X_b$ không phụ thuộc $b$ → $\mathbb E[b(S_t)\psi_t\mid H_t]=0$ | vấn đề và trực giác chung `L10-201`; ví dụ dẫn nhập `L10-106` ở mạch 1 làm cụ thể vấn đề | 9,5 (gồm cụm dưới) |
+| Đường cơ sở (khái niệm, kết quả) | `L10-200`, `L10-201` | `L10-201` | `L10-202` | `L10-203`, `L10-204`, `L10-205` | `L10-206` | `L10-210` | $X_b=(r(A)-b)\psi$ → $\widehat g_b$; $\mathbb E X_b$ không phụ thuộc $b$ → $\mathbb E[b(S_t)\psi_t\mid H_t]=0$ | vấn đề và trực giác chung `L10-201`; ví dụ dẫn nhập `L10-106` ở mạch 1 làm cụ thể vấn đề | 9,5 (gồm cụm dưới) |
 | Đường cơ sở tối ưu (kết quả, bổ sung) | `L10-202` ($b=1$ cho phương sai $0$) | `không áp dụng` (hàm bậc hai của $b$ chỉ nêu trong ghi chú diễn giả) | `L10-202` | `L10-202` dòng "Lưu ý:" | `L10-202` ($b^*=1\ne2$) | Bài tập 10.4 (về nhà) | $\tfrac49(b-1)^2$ → $\mathbb E\lVert\psi\rVert^2(b-b^*)^2$ | chu trình rút gọn trên một trang (chủ đề bổ sung, phương án nén) | (trong `L10-202`) |
 | Hàm lợi thế (khái niệm, kết quả) | `L10-207` (hệ số $7,6,9,8,5$ ước lượng gì) | `L10-207` | `L10-207` ($A_\pi=(1;\,-2)$) | `L10-207`, `L10-208` | `L10-209`, `L10-211` | `L10-211` ("Câu hỏi:" $\sum_a\pi A_\pi=0$) | $G_t-v_\pi(S_t)$ → $q_\pi-v_\pi$ → $A_\pi$ → $\sum\gamma^tA_\pi\psi_t$ | vấn đề, trực giác, ví dụ, định nghĩa chung `L10-207` (khái niệm ngắn) | 3,5 |
 | Critic và actor–critic (khái niệm, thuật toán) | `L10-211` (ví dụ dẫn nhập), `L10-212` dòng "Nhu cầu:" | `L10-212` ($1{,}35>1$) | `L10-214` | `L10-212` (định nghĩa), `L10-212b` (sai số TD, hình), `L10-215` (thuật toán) | `L10-214` | `L10-216` | mục tiêu $0+0{,}9\cdot1{,}5$ → $R+\gamma(1-Z)\hat v(S')$ → $\delta_t$ → bước (2) của giả mã | ví dụ dẫn nhập chuỗi hai trạng thái làm cụ thể vấn đề "chờ hết lượt"; tay trước thuật toán | 9,5 (gồm cụm dưới) |
@@ -2279,3 +2300,82 @@ Các phát hiện còn lại nằm trên trang cũ không sửa, như đã liệ
 - `L10-110`: hình `central-problem-slide.svg` (nhãn 16,8 px ở 1600×900).
 - `L10-708`: bỏ "Câu hỏi thêm" về tỉ lệ cắt; ý đó có ở `L10-619`, `L10-620`.
 - Đề xuất sửa ghi chú (NT3, cho tác giả): hàng "Gradient DPO" của bảng §8.1 thiếu vế trái $\nabla_\theta L^{\mathrm{DPO}}=\dots$.
+
+## Sửa trang bìa (2026-11-20)
+
+- **Lý do:** tác giả thấy luận điểm bìa rất khó hiểu và yêu cầu "trên trang mở đầu viết 1 dòng ngắn gọn thôi" (2026-11-20); quy định theo NT11 (sửa 2026-11-20, mọi học phần) và NT-RL-8 (`NGUYEN-TAC-HOC-PHAN.md` §3). Câu cũ nối bốn khẳng định bằng dấu chấm phẩy, dùng cụm rút gọn ("đường cơ sở giữ kỳ vọng", "cắt tỉ số") và thuật ngữ người học chưa có trước bài (VP25), và đặt một thuật toán (PPO) ngang một hàm mất mát (DPO).
+- **Dòng cũ (`L10-101`):** "Đường cơ sở giữ kỳ vọng của gradient; sai số hàm thay thế bị chặn theo khoảng cách chính sách, nên TRPO ràng buộc khoảng cách, PPO cắt tỉ số; khi phạt khoảng cách tới chính sách tham chiếu cố định, PPO và DPO nhắm tới cùng một nghiệm."
+- **Dòng mới:** "TRPO, PPO và DPO đều tìm chính sách tốt hơn ở gần một chính sách cho trước." (14 âm tiết cộng ba tên viết tắt.) Căn cứ: ghi chú §1.1 (bài toán trung tâm: bước lớn mà chính sách mới không kém $\pi_{\mathrm{old}}$; chính sách ở gần $\pi_{\mathrm{ref}}$ cố định), bảng so sánh TRPO–PPO ở §6.4 (hàng "Cách giữ gần chính sách cũ"), Nhận xét 10.58 (hai mỏ neo $\pi_{\mathrm{old}}$, $\pi_{\mathrm{ref}}$). Động từ "tìm" nêu mục đích, không nêu bảo đảm: mục tiêu cắt không chặn KL, không phương pháp thực hành nào giữ bảo đảm đơn điệu (Tóm tắt chương), cực tiểu DPO chỉ là nghiệm RLHF lý tưởng dưới (H1)–(H3), (H4a), (H4b) (Định lý 10.65). Dòng không nói về nửa giảm phương sai (Mục 2–3); ý "ở gần" nối được Mục 4–7, nên được chọn.
+- **Ghi chú diễn giả:** câu đầu nói "chính sách cho trước" là $\pi_{\mathrm{old}}$ ở TRPO, PPO và $\pi_{\mathrm{ref}}$ ở DPO; các vế cơ chế của câu cũ chuyển vào ghi chú: đường cơ sở không phụ thuộc hành động giữ kỳ vọng, critic và GAE chỉ giữ kỳ vọng khi critic đúng hoặc $\lambda=1$ trên lượt đầy đủ; sai số hàm thay thế bị chặn theo TV hoặc KL trung bình, nên TRPO ràng buộc KL trung bình, PPO cắt tỉ số $\rho_t$; mục tiêu phạt KL theo $\pi_{\mathrm{ref}}$ có nghiệm $\pi^*\propto\pi_{\mathrm{ref}}e^{r/\beta}$, RLHF nhắm tới nghiệm này bằng PPO với mẫu trực tuyến, cực tiểu DPO là nghiệm này dưới các giả thiết của Định lý 10.65. Câu tên tiếng Anh và đoạn nguồn giữ nguyên. Bỏ câu mở "REINFORCE cho mẫu không chệch …" (đã có ở `L10-103` và các ví dụ `L10-106`–`L10-108`).
+- **Bổ sung sau duyệt (2026-11-20):** ghi chú diễn giả viết "biến phân toàn phần" thay cho "TV"; bỏ câu "Để giảm phương sai …, ta trừ đường cơ sở và dùng critic, GAE (Mục 2–3)." (số mục chuyển sang câu sau) và rút vài chữ, để toàn bộ ghi chú đạt trần 150 âm tiết của `deck_lint` (NOTES150 sạch).
+
+## Sửa trang L10-106 (2026-11-20)
+
+- **Lý do:** tác giả yêu cầu "mở rộng bảng bên trái để tính toán, viết các tính toán bên cạnh rất khó đọc" (2026-11-20). Bố cục cũ: hình thẻ dữ kiện `img/lec-09/one-step-card.svg` bên trái (`grid2 wide-right`), các phép tính viết thành câu ở cột phải, kèm dòng "**Nhu cầu:** đo độ dao động của $\widehat g$; tính $\operatorname{Var}(\widehat g)$." (nhãn bị cấm theo NT14).
+- **Bố cục mới:** bỏ hai cột và hình; một bảng HTML (VP10) mở rộng thẻ dữ kiện, mỗi hành động một hàng: $a$ | $\pi_\theta(a\mid s)$ | $\psi_\theta(s,a)$, rồi hai nhóm cột cùng tên $\widehat g$ | $\lVert\widehat g-\mathbb E\widehat g\rVert^2$ cho $r=(3;\,0)$ và $r=(4;\,1)$ (tiêu đề nhóm `scope="colgroup"`). Dòng dữ kiện trước bảng: "Softmax, $\theta=(\log2;\,0)$; lượt dừng sau $A_0$, nên $\widehat g=r(A_0)\,\psi_\theta(s,A_0)$." Sau bảng: $\mathbb E\widehat g=(\tfrac23;\,-\tfrac23)=\nabla_\theta J$ với cả hai vector phần thưởng; $\operatorname{Var}(\widehat g)$ lần lượt bằng $\tfrac23\cdot\tfrac29+\tfrac13\cdot\tfrac89=\tfrac49$ và $\tfrac23\cdot\tfrac89+\tfrac13\cdot\tfrac{32}9=\tfrac{16}9$; dòng "Diễn giải:" giữ nguyên. Số liệu khớp Ví dụ 10.1 của ghi chú.
+- **Ghi chú diễn giả:** thêm "một trạng thái, hai hành động" và đặc trưng $\phi$ (chuyển từ thẻ); bỏ các phép tính phương sai theo tọa độ mà bảng đã cho; giữ định nghĩa $\operatorname{Var}(X)=\mathbb E\lVert X-\mathbb EX\rVert^2$, phép kiểm lại bằng $\mathbb E\lVert\widehat g\rVert^2-\lVert\nabla_\theta J\rVert^2$ cho cả hai vector phần thưởng và ý nghĩa của phép cộng hằng; đoạn nguồn giữ nguyên.
+- **Không đổi:** tệp `img/lec-09/one-step-card.svg` giữ lại (deck 10 còn dùng ở `L10-202`, `L10-504`; deck 09 và ghi chú Bài 09, Bài 10 cũng dùng).
+
+## Sửa trang L10-107 (2026-11-20)
+
+- **Lý do:** tác giả: "tìm cách bố cục lại, các tính toán viết liên tục nhau thế rất khó theo dõi; nói chung các ví dụ cần viết sao cho sinh viên có thể tự tính lại, theo các bước" (2026-11-20); quy định chung thêm vào NT23. Trang cũ nhảy từ lượt tới $\widehat g=(-5{,}5;\,5{,}5)$, rồi $\theta$, $p$, $J$ mỗi thứ một dòng, không có $\psi_\theta$, tích từng bước, phép cập nhật, $p=\sigma(\theta_1-\theta_2)$ và $J(p)$.
+- **Bố cục mới, ba trang cùng tiêu đề gốc (NT16, NT23):**
+  - `L10-107` "Ví dụ: hành lang ngắn, một lượt REINFORCE": hình hành lang (`.figure.short-m`); dữ kiện $\theta=(0;\,0)$, $p=\tfrac12$, $\gamma=1$, $\alpha=0{,}1$, $\nabla_\theta J=(2;\,-2)$; lượt $A_{0:4}=1,1,1,2,1$ qua $s_1,s_2,s_1,s_2,s_3$ rồi tới $s_4$, $T=5$; "Nhắc lại:" $\psi_\theta(s,a)=\phi(s,a)-\sum_b\pi_\theta(b\mid s)\phi(s,b)$, $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$; "Tính $\widehat g$, rồi $\theta$, $p$, $J$ sau một bước."
+  - `L10-107b` "…, ước lượng gradient" (mới): bảng $t$ | $S_t$ | $A_t$ | $G_t=-(5-t)$ | $\psi_t=\phi(s,A_t)-(\tfrac12;\,\tfrac12)$ | $G_t\psi_t$, năm hàng $t=0..4$ và hàng $\widehat g=\sum_tG_t\psi_t=(-5{,}5;\,5{,}5)$; dòng "$\widehat g$ ngược chiều $\nabla_\theta J=(2;\,-2)$".
+  - `L10-107c` "…, cập nhật tham số" (mới): "Nhắc lại:" $p=\sigma(\theta_1-\theta_2)$, $\sigma(x)=1/(1+e^{-x})$, $J(p)=-2(2-p)/\bigl(p(1-p)\bigr)$, $J(\tfrac12)=-12$; $\theta\leftarrow\theta+\alpha\widehat g=(-0{,}55;\,0{,}55)$; $p=\sigma(-1{,}1)=0{,}24974$; $J(0{,}24974)=-3{,}50052/0{,}18737=-18{,}68$; "Diễn giải:" giữ nguyên.
+- **Lý do ba trang:** bản hai trang (hình, dữ kiện và bảng trên một trang) cao 984 px ở khung 720; bản có hình cạnh bảng vẫn 806 px. Tách thành dữ kiện / bảng / cập nhật thì ba trang cao 662, 682, 602 px.
+- **Số liệu:** khớp Ví dụ 10.2 của ghi chú (dãy trạng thái, $G_t=-(5-t)$, $\psi$ tại $p=\tfrac12$, $\widehat g$, $\sigma(-1{,}1)=0{,}24974$, $J$ theo công thức của ghi chú, các số $1{,}75026$, $0{,}18737$, $3{,}50052$ của "Kiểm tra lại").
+- **Ghi chú diễn giả:** `L10-107` giữ quy tắc đảo ở $s_2$, đặc trưng chung, $J'(\tfrac12)=8$ và $\partial p/\partial\theta$; `L10-107b` giữ cách tính $G_t$, tổng tọa độ thứ nhất $-6{,}5+1$, ý (G3) và "không chệch nhưng ngược chiều"; `L10-107c` giữ $p^*=2-\sqrt2$ và tổng $\lvert G_t\rvert$ theo hành động. Đoạn nguồn của ba trang khác nhau (tránh REPEAT của `deck_lint`).
+- **Thời lượng:** ba trang 0,5 + 1 + 0,5 phút, giữ 2 phút của `L10-107` và số phút của mạch 1.
+- **Liên kết sâu:** deck dùng `hashOneBasedIndex`, mạch 1 là `#/1`. Không có liên kết `#/1/k` với k ≥ 2 nào trong deck, `exercises.md`, ghi chú hay `index.html`; liên kết duy nhất vào mạch 1 là `#/1/1` (trang bìa), trang "Nội dung" chỉ trỏ `#/1`–`#/8`, nên việc chèn hai trang dọc vào mạch 1 không làm lệch liên kết nào.
+
+## Sửa sau kiểm lại (2026-11-20)
+
+Theo quyết định gộp của điều phối viên sau hai người rà (chính xác, mạch truyện):
+
+1. `L10-106` dòng dữ kiện mở bằng "Một trạng thái $s$, hai hành động; softmax, $\theta=(\log2;\,0)$; lượt dừng sau $A_0$, nên $\widehat g=r(A_0)\,\psi_\theta(s,A_0)$."; thêm dòng "Tính $\mathbb E\widehat g$ và $\operatorname{Var}(\widehat g)=\mathbb E\lVert\widehat g-\mathbb E\widehat g\rVert^2$ với $r=(3;\,0)$ và $r=(4;\,1)$."
+2. Bảng thêm cột $\phi(s,a)$ sau $a$ và cột $r(a)$ trước $\widehat g$; dòng "Nhắc lại:" $\psi_\theta(s,a)=\phi(s,a)-\sum_b\pi_\theta(b\mid s)\phi(s,b)=\phi(s,a)-(\tfrac23;\,\tfrac13)$ (Mệnh đề 09.16).
+3. Thêm hàng "Kỳ vọng theo $\pi_\theta$" ($(\tfrac23;\,-\tfrac23)$; $\tfrac49$ hoặc $\tfrac{16}9$); dòng phương sai trên mặt trang bỏ, tổng có trọng số chuyển vào ghi chú diễn giả. Vì không còn vừa khung 720, trang tách theo vector phần thưởng với cùng một bố cục bảng: `L10-106` ($r=(3;\,0)$) và `L10-106b` mới "Ví dụ: bài toán một bước, phương sai của REINFORCE, cộng $1$ vào phần thưởng" ($r=(4;\,1)$, dòng $\mathbb E\widehat g=\nabla_\theta J$ với cả hai vector phần thưởng, "Diễn giải:"). Thời lượng 1 + 1 phút, giữ 2 phút của `L10-106`. Liên kết sâu: như `L10-107`, không liên kết nào trỏ vào mạch 1. Phần ghi "véc-tơ" ở mục "Sửa trang L10-106" phía trên đã đổi thành "vector" trên trang (VP-RL-8).
+4. Ghi chú diễn giả `L10-106`: "hàng kỳ vọng" thay "dòng dưới bảng"; giữ phép kiểm lại $\mathbb E\lVert\widehat g\rVert^2-\lVert\nabla_\theta J\rVert^2$ (phần $r=(4;\,1)$ ở `L10-106b`).
+5. `L10-101` ghi chú: "Trừ một đường cơ sở không phụ thuộc hành động đã chọn giữ kỳ vọng của ước lượng gradient (Mục 2)." Vế critic, GAE ("giữ kỳ vọng khi critic đúng, hoặc khi $\lambda=1$ trên lượt đầy đủ, ngoài hai trường hợp đó không có bảo đảm") bị bỏ để đạt trần NOTES150, vì câu tên tiếng Anh và đoạn nguồn giữ nguyên; bỏ vế này không tạo khẳng định thừa.
+6. "Sai số hàm thay thế bị chặn theo biến phân toàn phần hoặc KL, trung bình theo phân bố trạng thái của chính sách cũ, nên TRPO ràng buộc KL này, PPO cắt tỉ số $\rho_t$ (Mục 4–6)."
+7. "Với phần thưởng $\hat r$ khớp từ dữ liệu ưu tiên, mục tiêu phạt KL theo $\pi_{\mathrm{ref}}$ có nghiệm $\pi^*_{\hat r}\propto\pi_{\mathrm{ref}}e^{\hat r/\beta}$. RLHF nhắm tới nghiệm này bằng PPO với mẫu trực tuyến; với cùng dữ liệu, $\beta$ và $\pi_{\mathrm{ref}}$, cực tiểu của DPO là nghiệm này dưới giả thiết của Định lý 10.65." Ký hiệu $\pi^*_{\hat r}$ và số hiệu định lý theo ghi chú (Định lý 10.57, 10.65). `deck_lint`: NOTES150 sạch.
+- Bổ sung: bìa được ghi theo NT11 (sửa 2026-11-20, mọi học phần) và NT-RL-8 ở mục "Sửa trang bìa".
+
+## Sửa vòng 2 (2026-11-20)
+
+Theo quyết định của điều phối viên sau vòng kiểm lại thứ hai (`L10-108` không đổi, chuyển sang kế hoạch ví dụ riêng):
+
+- `L10-107c` "Diễn giải:" thay câu sai "mọi hành động đã chọn bị giảm xác suất" ($\pi_\theta(2\mid s)$ thực ra tăng từ $0{,}5$ lên $0{,}75$) bằng: mọi $G_t<0$, nên mỗi số hạng $G_t\psi_t$ giảm xác suất của hành động chọn ở bước $t$ theo $\lvert G_t\rvert$; hành động 1 chịu tổng $13$, hành động 2 chịu $2$, nên $p$ giảm và $J$ giảm. Ghi chú diễn giả nêu $\pi_\theta(2\mid s)$ tăng từ $0{,}5$ lên $0{,}75$. Dòng $\theta\leftarrow\theta+\alpha\widehat g$ ghi thêm "$\alpha=0{,}1$:"; "Nhắc lại:" bỏ $J(\tfrac12)$ (đã ở `L10-107`).
+- `L10-106`: "Nhắc lại:" gồm $\pi_\theta(a\mid s)\propto e^{\phi(s,a)^\top\theta}$ và $\psi_\theta(s,a)=\phi(s,a)-\sum_b\pi_\theta(b\mid s)\phi(s,b)$ (dạng $\propto$ để vừa một dòng; mẫu số ở ghi chú); bỏ "$=\phi(s,a)-(\tfrac23;\,\tfrac13)$". Nhãn hàng kỳ vọng giữ "Kỳ vọng theo $\pi_\theta$": nhãn "Kỳ vọng $\sum_a\pi_\theta(a\mid s)(\cdot)$" làm trang cao 728 px, quá khung 720. Ghi chú thêm cách đọc bảng (mỗi hàng một hành động; cột $\widehat g$ bằng $r(a)$ nhân cột $\psi_\theta$).
+- `L10-106b`: "Diễn giải:" kết bằng "phương sai tăng từ $\tfrac49$ lên $\tfrac{16}9$" (bỏ "mọi" để câu vừa một dòng); ghi chú thêm câu nối sang ý đường cơ sở.
+- `L10-107`: dòng dữ kiện mang $\phi$; thêm dòng $\gamma=1$, $J(p)=-2(2-p)/\bigl(p(1-p)\bigr)$, $J(\tfrac12)=-12$ và dòng $\nabla_\theta J=J'(\tfrac12)\,p(1-p)\,(1;\,-1)=8\cdot\tfrac14(1;\,-1)=(2;\,-2)$; "Lượt: $A_0,\dots,A_4=1,1,1,2,1$"; công thức $J'(p)=2(p^2-4p+2)/\bigl(p(1-p)\bigr)^2$ ở ghi chú diễn giả. Dòng "Nhắc lại:" của $\psi_\theta$ (kèm $\sum_b\pi_\theta(b\mid s)\phi(s,b)=(\tfrac12;\,\tfrac12)$) chuyển sang `L10-107b`, nơi dùng nó, để `L10-107` vừa khung với hình `.figure.short-m`.
+- `L10-107b`: tiêu đề cột $\psi_t=\phi(S_t,A_t)-(0{,}5;\,0{,}5)$; các ô $\psi_t$ viết thập phân như cột $G_t\psi_t$; dòng "ngược chiều $\nabla_\theta J=(2;\,-2)$" gộp vào nhãn hàng tổng của bảng để vừa khung.
+- `L10-101` ghi chú: "Phép trừ một đường cơ sở không phụ thuộc hành động đã chọn giữ nguyên kỳ vọng của ước lượng gradient." (bỏ "(Mục 2)" để giữ NOTES150).
+- Đoạn nguồn của `L10-106b`, `L10-107b`, `L10-107c` theo mẫu "ghi chú bài giảng Bài 10, Ví dụ 10.k, phần …", khác nhau từng trang.
+- Tiêu đề trang tiếp ", <bước>" giữ nguyên (CLAUDE.md của học phần cho phép).
+- Bảng trang–phút của mạch 1 và các mục từng trang đã thêm `L10-106b` (1 phút), `L10-107b` (1), `L10-107c` (0,5); `L10-106` còn 1 phút, `L10-107` còn 0,5 phút; tổng mạch 1 không đổi.
+- Kiểm tra: Playwright 1280×720 và 1600×900, chiều cao trang `L10-106` 676, `L10-106b` 649, `L10-107` 682, `L10-107b` 664, `L10-107c` 698 px (khung 720); không lỗi console, không yêu cầu hỏng, không `.katex-error`; `deck_lint` không còn phát hiện nào trên các trang đã sửa.
+
+## Mạch 1 theo NT23 một ví dụ (2026-11-20)
+
+Theo kế hoạch tác giả đã duyệt (`ke-hoach-mot-vi-du-moi-mach-2026-11-20.md`) và NT23 sửa 2026-11-20 (mỗi mạch đúng một ví dụ tính tay):
+
+- **Bỏ khỏi deck:** `L10-106`, `L10-106b` (Ví dụ 10.1, bài toán một bước). Ví dụ còn nguyên trong ghi chú.
+- **Ví dụ duy nhất của mạch 1:** hành lang ngắn, bốn trang: `L10-107` (dữ kiện, $J(p)$, $\nabla_\theta J$, lượt), `L10-107b` (bảng $\widehat g$), `L10-107c` (cập nhật theo $\widehat g$), `L10-108` (một bước theo đúng gradient).
+- **`L10-108` mở rộng theo NT23:** dòng dữ kiện "Cùng hành lang: $\theta=(0;\,0)$, $J(\tfrac12)=-12$, $\nabla_\theta J=(2;\,-2)$, $p^*=2-\sqrt2\approx0{,}59$."; "Tính $p$ và $J$ sau một bước với $\alpha=0{,}1$ và $\alpha=0{,}5$."; bảng $\alpha$ | $\theta+\alpha\nabla_\theta J$ | $\theta_1-\theta_2$ | $p=\sigma(\theta_1-\theta_2)$ | $p(1-p)$ | $2(2-p)$ | $J(p)$ với hai hàng $0{,}1$: $(0{,}2;\,-0{,}2)$, $0{,}4$, $0{,}5987$, $0{,}24026$, $2{,}8026$, $-11{,}66$ và $0{,}5$: $(1;\,-1)$, $2$, $0{,}8808$, $0{,}10499$, $2{,}2384$, $-21{,}32$; "Kết luận:" với $\alpha=0{,}1$, $J$ tăng; với $\alpha=0{,}5$, $p$ vượt $p^*$ và $J$ giảm $9{,}32$. Công thức cập nhật nằm ở tiêu đề cột thay cho dòng "Nhắc lại:" ($\sigma$ và $J(p)$ đã nhắc ở `L10-107c`); cột $\alpha\nabla_\theta J$ riêng bị gộp vào cột $\theta+\alpha\nabla_\theta J$ (bằng nhau vì $\theta=(0;\,0)$), vì bảng tám cột rộng 1561 px, quá khung 1280. Số liệu kiểm lại bằng máy: $\sigma(0{,}4)=0{,}598688$, $\sigma(2)=0{,}880797$, $J=-11{,}6649$ và $-21{,}3195$. Ghi chú diễn giả giữ nguyên.
+- **Dòng kết quả thay ví dụ đã bỏ:** `L10-201` thay "Bài toán một bước: cộng $1$ vào phần thưởng, phương sai từ $\tfrac49$ lên $\tfrac{16}9$." bằng "Bài toán một bước, $\pi_\theta(\cdot\mid s)=(\tfrac23;\,\tfrac13)$, $r=(3;\,0)$: cộng $1$ vào phần thưởng giữ gradient $(\tfrac23;\,-\tfrac23)$, tổng phương sai tăng từ $\tfrac49$ lên $\tfrac{16}9$."; ghi chú diễn giả của `L10-201` thêm số liệu của Ví dụ 10.1 (softmax, $\psi_\theta$, $\widehat g=r(A_0)\psi_\theta(s,A_0)$, hai tổng có trọng số).
+- **Tham chiếu đã kiểm:** `L10-104`, `L10-104b`, `L10-105`, `L10-109` và ghi chú của chúng không nhắc trang đã bỏ hay "hai ví dụ"; không sửa. Trong storyboard: hàng mạch 1 của bảng mạch đổi "hai ví dụ định lượng" thành "một ví dụ định lượng (hành lang ngắn)" và số trang 12; hàng mạch 2 trỏ Ví dụ 10.1 sang `L10-201`; bảng hành trình khái niệm bỏ `L10-106`.
+- **Thời lượng:** 2 phút của `L10-106`, `L10-106b` chuyển cho ví dụ hành lang: `L10-107` 1, `L10-107b` 1,5, `L10-107c` 1, `L10-108` 1,5 (trước: 0,5, 1, 0,5, 1); tổng mạch 1 không đổi.
+- **Số trang deck:** 128 (trước 130).
+- **Liên kết sâu:** không liên kết nào có dạng `#/1/k` với k ≥ 2 (chỉ `#/1/1`, trang bìa, trong `exercises.md` và một tệp kế hoạch), nên việc bỏ hai trang không làm lệch liên kết.
+- **Tham chiếu tới bài toán một bước còn ở mạch 2 trở đi (để đợt sửa mạch 2 xử lý):** `L10-200` ghi chú ("Tổng phương sai … trên bài toán một bước tăng từ $\tfrac49$ lên $\tfrac{16}9$"), `L10-201` nhãn "Nhu cầu:" (NT14, chưa sửa), `L10-202` (thẻ dữ kiện, Ví dụ 10.3), `L10-203`, `L10-204`, `L10-207` ("khác với phương sai $\tfrac{16}9$ của REINFORCE"), `L10-208`, `L10-210`, `L10-213`; mạch 5–7: `L10-503`, `L10-504`, `L10-507`, `L10-602`, `L10-603`, `L10-606`, `L10-D01` ("chính sách softmax của Ví dụ 10.1"), `L10-D06`. Các trang này nêu lại dữ kiện của bài toán một bước hoặc trỏ tới nó; sau khi bỏ `L10-106`, dữ kiện xuất hiện lần đầu trên deck ở `L10-201`.
+
+## Sửa mạch 1 sau kiểm lại (2026-11-20)
+
+- `L10-107c` "Diễn giải:" thành "$\widehat g$ có kỳ vọng $\nabla_\theta J$ nhưng phương sai lớn, nên một lượt có thể cho bước ngược chiều gradient và làm $J$ giảm."; cơ chế từng số hạng (tổng $\lvert G_t\rvert$ của hai hành động là $13$ và $2$; $\pi_\theta(2\mid s)$ từ $0{,}5$ lên $0{,}75$) chuyển vào ghi chú diễn giả.
+- `L10-108` "Kết luận:" thành "Diễn giải:" hai dòng: cùng hướng đúng, $\alpha=0{,}1$ làm $J$ tăng, còn $\alpha=0{,}5$ đưa $p$ vượt $p^*$ và làm $J$ giảm $9{,}32$; mỗi lượt chỉ cho một bước tại $\theta_{\mathrm{old}}$.
+- `L10-107`: thêm $J'(p)$ vào dòng $J(p)$ làm trang cao 740 px (trần 700), nên không thêm; $J'(p)$ ở ghi chú diễn giả.
+- `L10-201` (mạch 2, sửa sớm vì bài toán một bước phải được nêu trước khi các mạch sau dùng): bỏ dòng "Nhu cầu:" (NT14); mặt trang nêu dữ kiện "Bài toán một bước: một trạng thái $s$, hai hành động, softmax với $\phi(s,a)=e_a$, $\theta=(\log2;\,0)$, lượt dừng sau $A_0$; $\pi_\theta(\cdot\mid s)=(\tfrac23;\,\tfrac13)$, $\psi_\theta(s,1)=(\tfrac13;\,-\tfrac13)$, $\psi_\theta(s,2)=(-\tfrac23;\,\tfrac23)$, $r=(3;\,0)$." và dòng kết quả "Cộng $1$ vào phần thưởng giữ gradient $(\tfrac23;\,-\tfrac23)$; tổng phương sai $\mathbb E\lVert\widehat g-\mathbb E\widehat g\rVert^2$ tăng từ $\tfrac49$ lên $\tfrac{16}9$." (không chuỗi tính). Ghi chú diễn giả định nghĩa "tổng phương sai" là tổng phương sai các tọa độ, giải thích $e_a$, giữ hai tổng có trọng số. Trang cao 534 px.
+- `L10-200`: dòng dẫn "Trừ khỏi lợi tức một mức không phụ thuộc hành động giữ kỳ vọng và có thể giảm phương sai." (bỏ khuôn "Muốn …, phải …", NT12; "có thể giảm" theo Mệnh đề 10.3, vì đường cơ sở $b=3$ làm phương sai tăng); ghi chú diễn giả chỉ nhắc lượt hành lang của mạch 1, số $\tfrac49\to\tfrac{16}9$ nằm ở `L10-201`.
+- Storyboard: tiêu đề `L10-101` ("TRPO, PPO và DPO") và `L10-110` ("Ba hàng của vấn đề trung tâm", hình `central-problem-slide.svg`) trong bảng trang–phút; mục từng trang của `L10-105`, `L10-106` (đã bỏ), `L10-106b` (đã bỏ), `L10-107`, `L10-107b`, `L10-107c`, `L10-108` cập nhật liên kết, mặt trang và phút; đoạn hành trình khái niệm mạch 1; ký hiệu liên kết sâu sửa thành `#/1/k` với k ≥ 2.
