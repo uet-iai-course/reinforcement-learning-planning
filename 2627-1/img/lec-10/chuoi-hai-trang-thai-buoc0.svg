@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 450" width="640" height="450" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Chuỗi hai trạng thái</title>
+<desc id="d">Ô s A, ghi xuất phát, ở trên trái; ô s B ở dưới trái; hai ô kết thúc màu xám ở bên phải. Từ s A: mũi tên đi xuống s B ghi 1, thưởng 0; mũi tên sang phải tới ô kết thúc trên ghi 2, thưởng 1. Từ s B: hai mũi tên sang phải tới ô kết thúc dưới, ghi 1, thưởng 3 và 2, thưởng 0.</desc>
+<defs><marker id="mk" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#1d2433"/></marker><marker id="mf" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#3E4A5E"/></marker><marker id="mx" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#8C95A6"/></marker><marker id="mr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#C62828"/></marker><marker id="mo" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#B35C00"/></marker><marker id="mg" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#2E7D4F"/></marker><marker id="mp" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#6B3FA0"/></marker><pattern id="sx" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#8C95A6" stroke-width="3"/></pattern><pattern id="sp" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#6B3FA0" stroke-width="3"/></pattern><pattern id="sg" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#2E7D4F" stroke-width="3"/></pattern></defs>
+<rect x="20.0" y="20.0" width="180.0" height="100.0" rx="10" fill="#FFFFFF" stroke="#3E4A5E" stroke-width="2.5"/>
+<text x="110.0" y="60.0" font-size="30" text-anchor="middle" fill="#1d2433"><tspan font-style="italic">s</tspan><tspan dy="7.5" font-style="italic" font-size="24.0">A</tspan><tspan dy="-7.5"></tspan></text>
+<text x="110.0" y="98.0" font-size="24" text-anchor="middle" fill="#6E7787"><tspan>xuất phát</tspan></text>
+<rect x="20.0" y="290.0" width="180.0" height="100.0" rx="10" fill="#FFFFFF" stroke="#3E4A5E" stroke-width="2.5"/>
+<text x="110.0" y="350.8" font-size="30" text-anchor="middle" fill="#1d2433"><tspan font-style="italic">s</tspan><tspan dy="7.5" font-style="italic" font-size="24.0">B</tspan><tspan dy="-7.5"></tspan></text>
+<rect x="480.0" y="50.0" width="140.0" height="70.0" rx="6" fill="#EEF0F4" stroke="#3E4A5E" stroke-width="2"/>
+<text x="550.0" y="93.6" font-size="24" text-anchor="middle" fill="#6E7787"><tspan>kết thúc</tspan></text>
+<rect x="480.0" y="290.0" width="140.0" height="100.0" rx="6" fill="#EEF0F4" stroke="#3E4A5E" stroke-width="2"/>
+<text x="550.0" y="348.6" font-size="24" text-anchor="middle" fill="#6E7787"><tspan>kết thúc</tspan></text>
+<line x1="200.0" y1="95.0" x2="478.0" y2="95.0" stroke="#1d2433" stroke-width="3.5" marker-end="url(#mk)"/>
+<text x="340.0" y="52.0" font-size="26" text-anchor="middle" fill="#1d2433"><tspan>2, thưởng 1</tspan></text>
+<line x1="80.0" y1="120.0" x2="80.0" y2="288.0" stroke="#1d2433" stroke-width="3.5" marker-end="url(#mk)"/>
+<text x="96.0" y="196.0" font-size="26" text-anchor="start" fill="#1d2433"><tspan>1, thưởng 0</tspan></text>
+<line x1="200.0" y1="315.0" x2="478.0" y2="315.0" stroke="#1d2433" stroke-width="3.5" marker-end="url(#mk)"/>
+<text x="340.0" y="262.0" font-size="26" text-anchor="middle" fill="#1d2433"><tspan>1, thưởng 3</tspan></text>
+<line x1="200.0" y1="368.0" x2="478.0" y2="368.0" stroke="#1d2433" stroke-width="3.5" marker-end="url(#mk)"/>
+<text x="340.0" y="402.0" font-size="26" text-anchor="middle" fill="#1d2433"><tspan>2, thưởng 0</tspan></text>
+</svg>

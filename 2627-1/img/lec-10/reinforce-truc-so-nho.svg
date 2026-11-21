@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 470" width="360" height="470" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Ước lượng REINFORCE: phương sai lớn</title>
+<desc id="d">Hình thu nhỏ, tiêu đề phương sai lớn. Trục số đứng g mũ A với ba chấm: tại 1,35, tại 0 và một chấm đỏ lớn tại âm 0,5; vạch ngang xanh nét liền ghi kỳ vọng nằm gần 0; vùng dưới 0 tô đỏ nhạt, ghi ngược dấu gradient.</desc>
+<defs><marker id="mk" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#1d2433"/></marker><marker id="mf" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#3E4A5E"/></marker><marker id="mx" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#8C95A6"/></marker><marker id="mr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#C62828"/></marker><marker id="mo" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#B35C00"/></marker><marker id="mg" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#2E7D4F"/></marker><marker id="mp" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#6B3FA0"/></marker><pattern id="sx" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#8C95A6" stroke-width="3"/></pattern><pattern id="sp" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#6B3FA0" stroke-width="3"/></pattern><pattern id="sg" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#2E7D4F" stroke-width="3"/></pattern></defs>
+<rect x="10" y="289.2" width="340" height="136.8" fill="#FBE4E4"/>
+<text x="16.0" y="36.0" font-size="30" text-anchor="start" font-weight="bold" fill="#1d2433"><tspan>phương sai lớn</tspan></text>
+<line x1="70.0" y1="420.0" x2="70.0" y2="82.5" stroke="#1d2433" stroke-width="2.5" marker-end="url(#mk)"/>
+<text x="86.0" y="91.5" font-size="28" text-anchor="start" fill="#1d2433"><tspan>ĝ</tspan><tspan dy="7.0" font-style="italic" font-size="22.4">A</tspan><tspan dy="-7.0"></tspan></text>
+<line x1="63.0" y1="289.2" x2="77.0" y2="289.2" stroke="#1d2433" stroke-width="2"/>
+<text x="44.0" y="297.2" font-size="28" text-anchor="end" fill="#1d2433"><tspan>0</tspan></text>
+<circle cx="70.0" cy="121.1" r="15.5" fill="#1d2433"/>
+<circle cx="70.0" cy="289.2" r="11.0" fill="#1d2433"/>
+<circle cx="70.0" cy="351.5" r="19.0" fill="#C62828"/>
+<text x="348.0" y="366.5" font-size="28" text-anchor="end" fill="#C62828"><tspan>ngược dấu</tspan></text>
+<text x="348.0" y="400.5" font-size="28" text-anchor="end" fill="#C62828"><tspan>gradient</tspan></text>
+<line x1="20.0" y1="264.3" x2="348.0" y2="264.3" stroke="#2E7D4F" stroke-width="4"/>
+<text x="348.0" y="252.3" font-size="28" text-anchor="end" fill="#2E7D4F"><tspan>kỳ vọng</tspan></text>
+</svg>

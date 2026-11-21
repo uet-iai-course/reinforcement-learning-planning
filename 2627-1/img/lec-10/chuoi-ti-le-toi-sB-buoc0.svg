@@ -1,18 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" width="500" height="300" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
-<title id="t">Tỉ lệ lượt tới s B của hai chính sách</title>
-<desc id="d">Trên: ô s A, mũi tên hành động 1 sang ô s B. Dưới: tiêu đề tỉ lệ lượt tới s B và hai thanh ngang: chính sách cũ 0,5, thanh xám dài một nửa; chính sách mới 1, thanh tím dài hết.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 335" width="520" height="335" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Xác suất thăm s B của chính sách cũ và chính sách ứng viên</title>
+<desc id="d">Trên: ô s A, mũi tên hành động 1 sang ô s B. Dưới: tiêu đề xác suất thăm s B và hai thanh ngang trong khung dài một đơn vị: chính sách cũ pi, 0,5, thanh xám dài một nửa; chính sách ứng viên pi ngã, 0,9, thanh tím dài 0,9.</desc>
 <defs><marker id="mk" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#1d2433"/></marker><marker id="mf" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#3E4A5E"/></marker><marker id="mx" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#8C95A6"/></marker><marker id="mr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#C62828"/></marker><marker id="mo" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#B35C00"/></marker><marker id="mg" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#2E7D4F"/></marker><marker id="mp" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#6B3FA0"/></marker><pattern id="sx" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#8C95A6" stroke-width="3"/></pattern><pattern id="sp" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#6B3FA0" stroke-width="3"/></pattern><pattern id="sg" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#2E7D4F" stroke-width="3"/></pattern></defs>
-<rect x="20.0" y="20.0" width="120.0" height="60.0" rx="10" fill="#FFFFFF" stroke="#3E4A5E" stroke-width="2.5"/>
-<text x="80.0" y="58.6" font-size="24" text-anchor="middle" fill="#1d2433"><tspan font-style="italic">s</tspan><tspan dy="6.0" font-style="italic" font-size="19.2">A</tspan><tspan dy="-6.0"></tspan></text>
-<rect x="330.0" y="20.0" width="120.0" height="60.0" rx="10" fill="#FFFFFF" stroke="#3E4A5E" stroke-width="2.5"/>
-<text x="390.0" y="58.6" font-size="24" text-anchor="middle" fill="#1d2433"><tspan font-style="italic">s</tspan><tspan dy="6.0" font-style="italic" font-size="19.2">B</tspan><tspan dy="-6.0"></tspan></text>
-<line x1="140.0" y1="50.0" x2="328.0" y2="50.0" stroke="#1d2433" stroke-width="3" marker-end="url(#mk)"/>
-<text x="234.0" y="38.0" font-size="20" text-anchor="middle" fill="#1d2433"><tspan>hành động 1</tspan></text>
-<text x="20.0" y="135.0" font-size="21" text-anchor="start" font-weight="bold" fill="#1d2433"><tspan>tỉ lệ lượt tới </tspan><tspan font-style="italic">s</tspan><tspan dy="5.2" font-style="italic" font-size="16.8">B</tspan><tspan dy="-5.2"></tspan></text>
-<text x="20.0" y="180.0" font-size="20" text-anchor="start" fill="#1d2433"><tspan>chính sách cũ</tspan></text>
-<rect x="175.0" y="158.0" width="125.0" height="30.0" rx="3" fill="#EEF0F4" stroke="#8C95A6" stroke-width="2"/>
-<text x="310.0" y="180.0" font-size="21" text-anchor="start" fill="#1d2433"><tspan>0,5</tspan></text>
-<text x="20.0" y="230.0" font-size="20" text-anchor="start" fill="#1d2433"><tspan>chính sách mới</tspan></text>
-<rect x="175.0" y="208.0" width="250.0" height="30.0" rx="3" fill="#F1EAF9" stroke="#6B3FA0" stroke-width="2.5"/>
-<text x="435.0" y="230.0" font-size="21" text-anchor="start" fill="#6B3FA0"><tspan>1</tspan></text>
+<rect x="20.0" y="15.0" width="120.0" height="60.0" rx="10" fill="#FFFFFF" stroke="#3E4A5E" stroke-width="2.5"/>
+<text x="80.0" y="54.4" font-size="26" text-anchor="middle" fill="#1d2433"><tspan font-style="italic">s</tspan><tspan dy="6.5" font-style="italic" font-size="20.8">A</tspan><tspan dy="-6.5"></tspan></text>
+<rect x="380.0" y="15.0" width="120.0" height="60.0" rx="10" fill="#FFFFFF" stroke="#3E4A5E" stroke-width="2.5"/>
+<text x="440.0" y="54.4" font-size="26" text-anchor="middle" fill="#1d2433"><tspan font-style="italic">s</tspan><tspan dy="6.5" font-style="italic" font-size="20.8">B</tspan><tspan dy="-6.5"></tspan></text>
+<line x1="140.0" y1="45.0" x2="378.0" y2="45.0" stroke="#1d2433" stroke-width="3" marker-end="url(#mk)"/>
+<text x="259.0" y="33.0" font-size="22" text-anchor="middle" fill="#1d2433"><tspan>hành động 1</tspan></text>
+<text x="20.0" y="120.0" font-size="23" text-anchor="start" font-weight="bold" fill="#1d2433"><tspan>xác suất thăm </tspan><tspan font-style="italic">s</tspan><tspan dy="5.8" font-style="italic" font-size="18.4">B</tspan><tspan dy="-5.8"></tspan></text>
+<text x="20.0" y="156.0" font-size="22" text-anchor="start" fill="#1d2433"><tspan>chính sách cũ </tspan><tspan>π</tspan><tspan>: 0,5</tspan></text>
+<rect x="20.0" y="166.0" width="480.0" height="30.0" rx="3" fill="#FFFFFF" stroke="#8C95A6" stroke-width="1.5"/>
+<rect x="20.0" y="166.0" width="240.0" height="30.0" rx="3" fill="#EEF0F4" stroke="#8C95A6" stroke-width="2.5"/>
+<text x="20.0" y="232.0" font-size="22" text-anchor="start" fill="#6B3FA0"><tspan>chính sách ứng viên </tspan><tspan>π̃</tspan><tspan>: 0,9</tspan></text>
+<rect x="20.0" y="242.0" width="480.0" height="30.0" rx="3" fill="#FFFFFF" stroke="#8C95A6" stroke-width="1.5"/>
+<rect x="20.0" y="242.0" width="432.0" height="30.0" rx="3" fill="#F1EAF9" stroke="#6B3FA0" stroke-width="2.5"/>
 </svg>

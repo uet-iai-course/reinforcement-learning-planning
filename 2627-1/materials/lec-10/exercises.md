@@ -1,16 +1,14 @@
-# Bài tập Bài 10 — TRPO, PPO và DPO
+# Bài tập Bài 10 — TRPO và PPO
 
-Tệp gồm sáu bài, Bài tập 10.13–10.17 và 10.22, dùng chung bộ đếm với mười bảy bài tập của [ghi chú bài giảng](material-viewer.html?doc=materials/lec-10/lecture-note.md&deck=lecture-10-trpo-va-ppo.html) (Bài tập 10.1–10.12, 10.18–10.21 và 10.23) và không lặp đề bài nào của ghi chú. Mọi bài lấy từ bài tập của Sutton và Barto (2018), ghi số bài, mục và trang. Các bài chia theo hai mức: nhận biết (10.13, 10.22); tính toán hoặc chứng minh (10.14–10.17). Mục tiêu học tập 8 dựa vào Bài tập 10.22 cùng Bài tập 10.18, 10.19, 10.21 của ghi chú; mục tiêu học tập 9 dựa vào Bài tập 10.19, 10.20 của ghi chú. Bảng dưới xếp bài của tệp này và bài của ghi chú theo mạch của bộ trang chiếu; bài của ghi chú đứng sau chữ "ghi chú".
+Tệp gồm sáu bài, Bài tập 10.13–10.17 và 10.22, dùng chung bộ đếm với mười ba bài tập của [ghi chú bài giảng](material-viewer.html?doc=materials/lec-10/lecture-note.md&deck=lecture-10-trpo-va-ppo.html) (Bài tập 10.1–10.12 và 10.23) và không lặp đề bài nào của ghi chú. Mọi bài lấy từ bài tập của Sutton và Barto (2018), ghi số bài, mục và trang. Các bài chia theo hai mức: nhận biết (10.13, 10.22); tính toán hoặc chứng minh (10.14–10.17). Bảng dưới xếp bài của tệp này và bài của ghi chú theo mạch của bộ trang chiếu; bài của ghi chú đứng sau chữ "ghi chú".
 
 | Mạch | Mở phần | Bài tập |
 | --- | --- | --- |
-| 1. Mở đầu | [Mở phần](lecture-10-trpo-va-ppo.html#/1/1) | — |
-| 2. So lợi tức với giá trị của trạng thái | [Mở phần](lecture-10-trpo-va-ppo.html#/2/1) | 10.14; ghi chú: 10.1, 10.4, 10.5, 10.10 |
-| 3. Trộn đánh giá một bước và cả lượt | [Mở phần](lecture-10-trpo-va-ppo.html#/3/1) | 10.13, 10.15; ghi chú: 10.6, 10.7 |
-| 4. Đánh giá chính sách mới bằng dữ liệu cũ | [Mở phần](lecture-10-trpo-va-ppo.html#/4/1) | 10.16, 10.17; ghi chú: 10.8, 10.9, 10.11 |
-| 5. Giữ chính sách mới gần chính sách cũ | [Mở phần](lecture-10-trpo-va-ppo.html#/5/1) | 10.14; ghi chú: 10.2, 10.12 |
-| 6. Học từ so sánh của người | [Mở phần](lecture-10-trpo-va-ppo.html#/6/1) | 10.22; ghi chú: 10.18–10.21 |
-| 7. Tổng kết | [Mở phần](lecture-10-trpo-va-ppo.html#/7/1) | ghi chú: 10.3, 10.23 |
+| 1. Giới hạn của REINFORCE | [Mở phần](lecture-10-trpo-va-ppo.html#/1/1) | 10.22 |
+| 2. Đường cơ sở và hàm lợi thế | [Mở phần](lecture-10-trpo-va-ppo.html#/2/1) | ghi chú: 10.1, 10.4, 10.10 |
+| 3. Ước lượng lợi thế: độ chệch và phương sai | [Mở phần](lecture-10-trpo-va-ppo.html#/3/1) | 10.13, 10.15; ghi chú: 10.5, 10.6, 10.7 |
+| 4. Hàm thay thế và miền tin cậy | [Mở phần](lecture-10-trpo-va-ppo.html#/4/1) | 10.16, 10.17; ghi chú: 10.8, 10.9, 10.11 |
+| 5. Tối ưu chính sách gần kề (PPO) | [Mở phần](lecture-10-trpo-va-ppo.html#/5/1) | 10.14; ghi chú: 10.2, 10.3, 10.12, 10.23 |
 
 ## Hướng dẫn và ký hiệu
 
@@ -22,7 +20,7 @@ Hai bài 10.14 và 10.16 dùng dữ liệu do chính sách hành vi $\pi_{\mathr
 $$\rho_t=\frac{\pi_\theta(A_t\mid S_t)}{\pi_{\mathrm{old}}(A_t\mid S_t)},$$
 như Định nghĩa 10.21, và điều kiện hỗ trợ $\pi_\theta(a\mid s)>0\Rightarrow\pi_{\mathrm{old}}(a\mid s)>0$ luôn được giả thiết. Miền hỗ trợ của $\pi_{\mathrm{old}}(\cdot\mid s)$ viết $\mathcal A^{\mathrm{old}}_s=\{a:\pi_{\mathrm{old}}(a\mid s)>0\}$. Tích các tỉ số từ bước $t$ tới bước $k$ viết $\rho_{t:k}=\prod_{j=t}^{k}\rho_j$. Quy ước $\rho_j=1$ khi $j\ge T$. Sách viết chính sách hành vi là $b$ và chính sách đích là $\pi$; ở đây chữ $b$ dành cho đường cơ sở, như ghi chú, nên hai chính sách là $\pi_{\mathrm{old}}$ và $\pi_\theta$. Sách gọi $\nabla\ln\pi(a\mid s,\boldsymbol\theta)$ là véc-tơ đủ điều kiện (eligibility vector); ghi chú gọi đại lượng này là hàm điểm $\psi_\theta(s,a)$ (Định nghĩa 09.15).
 
-Bài tập 10.22 xét phân phối softmax trên hai hành động. *Mức ưu tiên* (action preference) của hành động $a$ tại bước $t$ viết $h_t(a)$, vì chữ $H_t$ đã dành cho lịch sử; sách viết $H_t(a)$. Hàm logistic là $\sigma(z)=1/(1+e^{-z})$, như bảng ký hiệu và Mục 7.1 của ghi chú; chữ $\sigma$ có nghĩa này trong Bài tập 10.22, còn trong Bài tập 10.17, $\sigma(s,\theta)$ là độ lệch chuẩn của chính sách Gaussian. Ở Bài tập 10.22, như Mục 7 của ghi chú, $\log$ chỉ logarit tự nhiên.
+Bài tập 10.22 xét phân phối softmax trên hai hành động. *Mức ưu tiên* (action preference) của hành động $a$ tại bước $t$ viết $h_t(a)$, vì chữ $H_t$ đã dành cho lịch sử; sách viết $H_t(a)$. Hàm logistic là $\sigma(z)=1/(1+e^{-z})$, như bảng ký hiệu của ghi chú; chữ $\sigma$ có nghĩa này trong Bài tập 10.22, còn trong Bài tập 10.17, $\sigma(s,\theta)$ là độ lệch chuẩn của chính sách Gaussian. Như ghi chú, $\log$ chỉ logarit tự nhiên.
 
 Số thập phân viết bằng dấu phẩy, chẳng hạn $0{,}5$; véc-tơ có tọa độ thập phân viết $(x_1;\,x_2)$.
 
@@ -61,7 +59,7 @@ Cùng lập luận áp dụng cho trọng số $(\gamma\lambda)^k$ của sai s�
 
 ### Bài tập 10.22. Softmax hai hành động và hàm logistic
 
-**Mức độ:** nhận biết; mục tiêu học tập 8; mạch 7.
+**Mức độ:** nhận biết; mục tiêu học tập 2 (hàm điểm của chính sách softmax trên chuỗi hai trạng thái, Ví dụ 10.6); mạch 1.
 
 **Nguồn:** Sutton và Barto (2018), Bài tập 2.9, §2.8, trang 37; phân phối softmax (2.11), cùng trang.
 
@@ -82,9 +80,9 @@ Chia cho $e^{h_t(a_2)}$ theo cách tương tự được $\pi_t(a_2)=\sigma(-z_t
 
 **Mọi phân phối trên hai hành động là softmax.** Vì $\sigma'(z)=\sigma(z)\bigl(1-\sigma(z)\bigr)>0$, $\sigma(z)\to0$ khi $z\to-\infty$ và $\sigma(z)\to1$ khi $z\to+\infty$, nên $\sigma$ là song ánh tăng ngặt từ $\mathbb R$ lên $(0,1)$, với hàm ngược $\sigma^{-1}(p)=\log\frac p{1-p}$. Mỗi phân phối trên hai hành động có $\pi_t(a_1)=p\in(0,1)$ là một phân phối softmax, với hiệu mức ưu tiên $z_t=\log\frac p{1-p}$.
 
-**Liên hệ với mô hình Bradley–Terry.** Với chính sách softmax có đặc trưng đơn vị trên hai câu trả lời $y_1$, $y_2$, logit $\theta=(\theta_1;\,\theta_2)$ là mức ưu tiên, và kết quả trên cho $\pi_\theta(y_1)=\sigma(\theta_1-\theta_2)$, đẳng thức dùng ở bước cập nhật của Ví dụ 10.28. Thay mức ưu tiên bằng phần thưởng $r(x,\cdot)$ của hai câu trả lời được đẳng thức của mô hình Bradley–Terry, $\frac{e^{r(x,y)}}{e^{r(x,y)}+e^{r(x,y')}}=\sigma\bigl(r(x,y)-r(x,y')\bigr)$ (Định nghĩa 10.53). Cộng một hằng vào hai mức ưu tiên ứng với Mệnh đề 10.54(b): cộng vào phần thưởng một hàm $f(x)$ chỉ phụ thuộc lời nhắc thì $L^{\mathrm{BT}}$ không đổi. Hiệu phần thưởng tối ưu $\log\frac k{n-k}$ của Mệnh đề 10.54(c) là $\sigma^{-1}(\tfrac kn)$.
+**Liên hệ với các ví dụ của ghi chú.** Trên hành lang ngắn (Ví dụ 10.2), mọi ô có đặc trưng đơn vị, nên mức ưu tiên là $h=(\theta_1;\,\theta_2)$ và kết quả trên cho $p=\pi_\theta(1\mid s)=\sigma(\theta_1-\theta_2)$. Trên chuỗi hai trạng thái (Ví dụ 10.6), mức ưu tiên tại trạng thái $s$ là $h=(\theta_s;\,0)$, nên $p_s=\sigma(\theta_s)$. Từ $\sigma'(z)=\sigma(z)\bigl(1-\sigma(z)\bigr)$, hàm điểm theo $\theta_s$ là $\partial\log p_s/\partial\theta_s=1-p_s$ cho hành động 1 và $\partial\log(1-p_s)/\partial\theta_s=-p_s$ cho hành động 2, như trong Ví dụ 10.6.
 
-**Kiểm tra lại.** Với $h_t=(\log2;\,0)$, (2.11) cho $\pi_t(a_1)=\tfrac{2}{2+1}=\tfrac23$, và $\sigma(\log2)=1/(1+\tfrac12)=\tfrac23$; đây là $\pi_{\mathrm{ref}}=(\tfrac23;\,\tfrac13)$ của Ví dụ 10.23. Ba lỗi thường gặp: nhầm dấu của hiệu, viết $\pi_t(a_1)=\sigma\bigl(h_t(a_2)-h_t(a_1)\bigr)$, cho $\tfrac13$ thay cho $\tfrac23$; áp $\sigma$ cho từng mức ưu tiên rồi chuẩn hóa, $\sigma\bigl(h_t(a_1)\bigr)/\bigl[\sigma\bigl(h_t(a_1)\bigr)+\sigma\bigl(h_t(a_2)\bigr)\bigr]$, cho $\tfrac{2/3}{2/3+1/2}=\tfrac47\approx0{,}5714$; và viết $\pi_t(a_1)=\sigma\bigl(h_t(a_1)\bigr)$, chỉ đúng khi $h_t(a_2)=0$: với $h_t=(\log2;\,\log2)$, cách viết này cho $\tfrac23$ thay cho $\tfrac12$.
+**Kiểm tra lại.** Với $h_t=(\log2;\,0)$, (2.11) cho $\pi_t(a_1)=\tfrac{2}{2+1}=\tfrac23$, và $\sigma(\log2)=1/(1+\tfrac12)=\tfrac23$; đây là $p_B=\tfrac23$ của chuỗi hai trạng thái tại $\theta_B=\log2$ (Ví dụ 10.6). Ba lỗi thường gặp: nhầm dấu của hiệu, viết $\pi_t(a_1)=\sigma\bigl(h_t(a_2)-h_t(a_1)\bigr)$, cho $\tfrac13$ thay cho $\tfrac23$; áp $\sigma$ cho từng mức ưu tiên rồi chuẩn hóa, $\sigma\bigl(h_t(a_1)\bigr)/\bigl[\sigma\bigl(h_t(a_1)\bigr)+\sigma\bigl(h_t(a_2)\bigr)\bigr]$, cho $\tfrac{2/3}{2/3+1/2}=\tfrac47\approx0{,}5714$; và viết $\pi_t(a_1)=\sigma\bigl(h_t(a_1)\bigr)$, chỉ đúng khi $h_t(a_2)=0$: với $h_t=(\log2;\,\log2)$, cách viết này cho $\tfrac23$ thay cho $\tfrac12$.
 :::
 
 ## Mức tính toán hoặc chứng minh
@@ -150,7 +148,7 @@ Ta chứng minh $\mathbb E[D_t\mid H_t,A_t]=0$ bằng quy nạp lùi. Giả sử
 
 Ở (7.14), hành động đầu $A_t$ không nhân với tỉ số, vì điều kiện lấy theo $(H_t,A_t)$; tỉ số chỉ áp cho các hành động sau nó. Đẳng thức $\mathbb E[\rho_t\mid H_t]=1$ của (a) cũng là Bước 1 của chứng minh Mệnh đề 10.48; lấy đạo hàm theo $\theta$ tại $\theta=\theta_{\mathrm{old}}$ hai vế của $\sum_a\pi_{\mathrm{old}}(a\mid s)\rho_\theta(s,a)=1$ được $\sum_a\pi_{\mathrm{old}}(a\mid s)\psi_{\theta_{\mathrm{old}}}(s,a)=0$, đẳng thức mà Mệnh đề 10.2 dùng cho đường cơ sở.
 
-**Kiểm tra lại.** Khi $\pi_\theta=\pi_{\mathrm{old}}$, mọi $\rho_t=1$: biến điều khiển của (7.13) bằng $0$ ở mọi mẫu, còn biến điều khiển của (7.14) là $\gamma\bigl(\bar V(S_{t+1})-Q(S_{t+1},A_{t+1})\bigr)$, có kỳ vọng $0$ khi biết $S_{t+1}$ vì $\bar V(S_{t+1})$ là trung bình của $Q(S_{t+1},\cdot)$ theo chính chính sách sinh $A_{t+1}$. Hai lỗi thường gặp: viết $\mathbb E[\rho_tG_{t+1:h}]=\mathbb E[\rho_t]\,\mathbb E[G_{t+1:h}]$, sai vì $G_{t+1:h}$ phụ thuộc $A_t$ qua $S_{t+1}$, nên chứng minh phải đi qua tính chất tháp; và bỏ điều kiện hỗ trợ, khi đó tổng ở (a) thiếu các hành động có $\pi_{\mathrm{old}}(a\mid s)=0<\pi_\theta(a\mid s)$ và $\mathbb E[\rho_t\mid H_t]<1$.
+**Kiểm tra lại.** Khi $\pi_\theta=\pi_{\mathrm{old}}$, mọi $\rho_t=1$: biến điều khiển của (7.13) bằng $0$ ở mọi mẫu, còn biến điều khiển của (7.14) là $\gamma\bigl(\bar V(S_{t+1})-Q(S_{t+1},A_{t+1})\bigr)$, có kỳ vọng $0$ khi biết $S_{t+1}$ vì $\bar V(S_{t+1})$ là kỳ vọng của $Q(S_{t+1},A)$ khi $A$ theo chính chính sách sinh $A_{t+1}$. Hai lỗi thường gặp: viết $\mathbb E[\rho_tG_{t+1:h}]=\mathbb E[\rho_t]\,\mathbb E[G_{t+1:h}]$, sai vì $G_{t+1:h}$ phụ thuộc $A_t$ qua $S_{t+1}$, nên chứng minh phải đi qua tính chất tháp; và bỏ điều kiện hỗ trợ, khi đó tổng ở (a) thiếu các hành động có $\pi_{\mathrm{old}}(a\mid s)=0<\pi_\theta(a\mid s)$ và $\mathbb E[\rho_t\mid H_t]<1$.
 :::
 
 ### Bài tập 10.15. Sai số của lợi tức λ là tổng sai số TD
@@ -308,7 +306,7 @@ Các véc-tơ $x_\mu(s)$, $x_\sigma(s)$ và số $\sigma$ không ngẫu nhiên k
 
 Vậy $F_s$ có hai khối trên đường chéo,
 $$\begin{aligned}F_{\mu\mu}&=\sigma^{-2}\,x_\mu(s)x_\mu(s)^\top,\\F_{\sigma\sigma}&=2\,x_\sigma(s)x_\sigma(s)^\top,\end{aligned}$$
-và hai khối ngoài đường chéo bằng $0$. Mỗi khối có hạng không quá $1$, nên khi số chiều của $\theta$ lớn hơn $2$, $F_s$ suy biến, như Nhận xét 10.35 mô tả cho softmax. Một bước $\Delta$ chỉ đổi $\theta_\mu$ làm trung bình đổi $\Delta\mu=x_\mu(s)^\top\Delta_\mu$ và giữ nguyên $\sigma$. KL giữa hai phân phối chuẩn cùng phương sai $\sigma^2$ là $(\Delta\mu)^2/(2\sigma^2)$, đúng bằng $\tfrac12\Delta^\top F_s\Delta$. Do đó, với cùng một mức đổi trung bình, chính sách có $\sigma$ nhỏ đổi nhiều hơn theo KL.
+và hai khối ngoài đường chéo bằng $0$. Mỗi khối có hạng không quá $1$, nên khi số chiều của $\theta$ lớn hơn $2$, $F_s$ suy biến, như Nhận xét 10.35 mô tả cho softmax. Một bước $\Delta$ chỉ đổi $\theta_\mu$ làm kỳ vọng $\mu$ của phân phối đổi $\Delta\mu=x_\mu(s)^\top\Delta_\mu$ và giữ nguyên $\sigma$. KL giữa hai phân phối chuẩn cùng phương sai $\sigma^2$ là $(\Delta\mu)^2/(2\sigma^2)$, đúng bằng $\tfrac12\Delta^\top F_s\Delta$. Do đó, với cùng một mức đổi kỳ vọng, chính sách có $\sigma$ nhỏ đổi nhiều hơn theo KL.
 
 **Kiểm tra lại.** Hàm điểm có kỳ vọng $0$, như Mệnh đề 09.17: $\mathbb E[\psi_\mu]=\mathbb EZ\,x_\mu/\sigma=0$ và $\mathbb E[\psi_\sigma]=(\mathbb EZ^2-1)\,x_\sigma=0$. Ba lỗi thường gặp: quên số hạng $-\ln\sigma$ của hằng chuẩn hóa, được $\frac{(a-\mu)^2}{\sigma^2}x_\sigma$ thay cho $\bigl(\frac{(a-\mu)^2}{\sigma^2}-1\bigr)x_\sigma$; lấy đạo hàm theo $\sigma$ thay cho $\theta_\sigma$, được thêm thừa số $1/\sigma$; và dùng $\mathbb EZ^4=1$, được khối $\theta_\sigma\theta_\sigma$ bằng $0$.
 :::

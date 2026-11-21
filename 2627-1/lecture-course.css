@@ -137,6 +137,38 @@
 .reveal.lecture-deck .figure.short-l { max-height: 310px; }
 /* Lưới hai cột lệch: cột phải rộng hơn (hình nhỏ bên trái, chữ bên phải). */
 .reveal.lecture-deck .grid2.wide-right { grid-template-columns: 2fr 3fr; }
+/* Lưới hai cột có một cột hình rộng đúng bằng hình (đặt bằng thuộc tính width của img, theo
+   độ rộng tối thiểu để nhãn hình đạt cỡ chữ quy định); cột chữ lấy phần còn lại.
+   Thêm cho deck 10 dựng lại (2026-11-21); chưa deck nào khác dùng hai lớp này. */
+.reveal.lecture-deck .grid2.fig-right { grid-template-columns: minmax(0, 1fr) auto; }
+.reveal.lecture-deck .grid2.fig-left { grid-template-columns: auto minmax(0, 1fr); }
+/* Bảng tính tay (deck 10 dựng lại, 2026-11-21): mỗi ô một dòng, để phép tính trong ô và ký hiệu
+   lượt như $s_A\xrightarrow1s_B$ không bị ngắt giữa chừng; cỡ chữ giữ như bảng thường. */
+.reveal.lecture-deck table.calc th,
+.reveal.lecture-deck table.calc td { white-space: nowrap; }
+.reveal.lecture-deck .slides section table.calc th,
+.reveal.lecture-deck .slides section table.calc td { padding-left: .3em; padding-right: .3em; }
+/* Công thức trong bảng tính cùng cỡ chữ của bảng (.94 x .8em = .752em, trên mức tối thiểu .75em),
+   thay cho cỡ 1.21em mặc định của KaTeX, để bảng đủ cột (TB29) vừa bề rộng khung. */
+.reveal.lecture-deck table.calc .katex { font-size: 1em; }
+/* Deck dày bật lớp dense trên div.reveal (deck 10 dựng lại, 2026-11-21): công thức nội dòng và
+   hiển thị ở 1.1 lần cỡ chữ quanh nó thay cho 1.21 mặc định của KaTeX, khoảng cách giữa các khối
+   nhỏ hơn trên trang compact; cỡ chữ thân bài giữ .8em (NT-RL-7). Chưa deck nào khác dùng lớp này. */
+.reveal.lecture-deck.dense .katex { font-size: 1.1em; }
+.reveal.lecture-deck.dense table.calc .katex { font-size: 1em; }
+.reveal.lecture-deck.dense .slides section.compact h2 { margin-bottom: .3em; }
+.reveal.lecture-deck.dense .slides section.compact p,
+.reveal.lecture-deck.dense .slides section.compact li { margin-top: .2em; margin-bottom: .2em; }
+.reveal.lecture-deck.dense .slides section.compact .katex-display { margin: .25em 0; }
+.reveal.lecture-deck.dense .box,
+.reveal.lecture-deck.dense .check { padding: .35em .6em; }
+/* Hình có thuộc tính width (độ rộng tối thiểu để nhãn đạt cỡ chữ quy định) hiện đúng độ rộng đó,
+   không bị quy tắc max-width: 95% của Reveal thu nhỏ. */
+.reveal.lecture-deck.dense img[width] { max-width: none; }
+/* Với ảnh không bị thu theo phần trăm, cột hình lấy min-content: rộng đúng bằng hình, chữ đặt
+   dưới hình trong cùng cột (câu hỏi nhanh, hộp) xuống dòng theo bề rộng đó. */
+.reveal.lecture-deck.dense .grid2.fig-right { grid-template-columns: minmax(0, 1fr) min-content; }
+.reveal.lecture-deck.dense .grid2.fig-left { grid-template-columns: min-content minmax(0, 1fr); }
 
 .reveal.lecture-deck .slides section[data-slide-id] { padding: 0 24px; box-sizing: border-box; }
 

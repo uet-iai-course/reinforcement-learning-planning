@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 560" width="400" height="560" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Ba giá trị của ước lượng REINFORCE, tọa độ θ A</title>
+<desc id="d">Trục số đứng ghi g mũ A, tọa độ theta A của ước lượng REINFORCE, từ âm 1 ở dưới tới 1,5 ở trên, có vạch 0. Cạnh mỗi chấm ghi xác suất của loại lượt; diện tích chấm tỉ lệ với xác suất.</desc>
+<defs><marker id="mk" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#1d2433"/></marker><marker id="mf" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#3E4A5E"/></marker><marker id="mx" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#8C95A6"/></marker><marker id="mr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#C62828"/></marker><marker id="mo" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#B35C00"/></marker><marker id="mg" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#2E7D4F"/></marker><marker id="mp" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#6B3FA0"/></marker><pattern id="sx" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#8C95A6" stroke-width="3"/></pattern><pattern id="sp" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#6B3FA0" stroke-width="3"/></pattern><pattern id="sg" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#2E7D4F" stroke-width="3"/></pattern></defs>
+<line x1="130.0" y1="480.0" x2="130.0" y2="50.5" stroke="#1d2433" stroke-width="2.5" marker-end="url(#mk)"/>
+<text x="146.0" y="60.8" font-size="24" text-anchor="start" fill="#1d2433"><tspan>ĝ</tspan><tspan dy="6.0" font-style="italic" font-size="19.2">A</tspan><tspan dy="-6.0"></tspan></text>
+<line x1="123.0" y1="472.1" x2="137.0" y2="472.1" stroke="#1d2433" stroke-width="2"/>
+<text x="104.0" y="480.1" font-size="24" text-anchor="end" fill="#1d2433"><tspan>−1</tspan></text>
+<line x1="123.0" y1="392.8" x2="137.0" y2="392.8" stroke="#1d2433" stroke-width="2"/>
+<text x="104.0" y="400.8" font-size="24" text-anchor="end" fill="#1d2433"><tspan>−0,5</tspan></text>
+<line x1="123.0" y1="313.6" x2="137.0" y2="313.6" stroke="#1d2433" stroke-width="2"/>
+<text x="104.0" y="321.6" font-size="24" text-anchor="end" fill="#1d2433"><tspan>0</tspan></text>
+<line x1="123.0" y1="234.3" x2="137.0" y2="234.3" stroke="#1d2433" stroke-width="2"/>
+<text x="104.0" y="242.3" font-size="24" text-anchor="end" fill="#1d2433"><tspan>0,5</tspan></text>
+<line x1="123.0" y1="155.1" x2="137.0" y2="155.1" stroke="#1d2433" stroke-width="2"/>
+<text x="104.0" y="163.1" font-size="24" text-anchor="end" fill="#1d2433"><tspan>1</tspan></text>
+<line x1="123.0" y1="99.6" x2="137.0" y2="99.6" stroke="#1d2433" stroke-width="2"/>
+<text x="104.0" y="107.6" font-size="24" text-anchor="end" font-weight="bold" fill="#1d2433"><tspan>1,35</tspan></text>
+<text x="16.0" y="522.0" font-size="24" text-anchor="start" fill="#6E7787"><tspan x="16.0">số ghi cạnh mỗi chấm là</tspan><tspan x="16.0" dy="28">xác suất của lượt</tspan></text>
+</svg>

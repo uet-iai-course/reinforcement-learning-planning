@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" width="640" height="420" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Hàm mục tiêu theo độ dài bước, lượt s A rồi hành động 2</title>
+<desc id="d">Đồ thị J theo bước học alpha từ 0 tới 8. Trục tung từ 0,95 tới 1,45. Đường ngang mảnh tại 1,4 ghi chính sách hiện tại; điểm tại alpha bằng 0, J bằng 1,4. Điểm tại alpha bằng 1, J bằng 1,30.</desc>
+<defs><marker id="mk" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#1d2433"/></marker><marker id="mf" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#3E4A5E"/></marker><marker id="mx" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#8C95A6"/></marker><marker id="mr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#C62828"/></marker><marker id="mo" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#B35C00"/></marker><marker id="mg" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#2E7D4F"/></marker><marker id="mp" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#6B3FA0"/></marker><pattern id="sx" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#8C95A6" stroke-width="3"/></pattern><pattern id="sp" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#6B3FA0" stroke-width="3"/></pattern><pattern id="sg" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#2E7D4F" stroke-width="3"/></pattern></defs>
+<line x1="100.0" y1="340.0" x2="587.2" y2="340.0" stroke="#1d2433" stroke-width="2.5" marker-end="url(#mk)"/>
+<line x1="100.0" y1="340.0" x2="100.0" y2="28.0" stroke="#1d2433" stroke-width="2.5" marker-end="url(#mk)"/>
+<text x="595.2" y="348.0" font-size="24" text-anchor="start" fill="#1d2433"><tspan>α</tspan></text>
+<text x="114.0" y="38.0" font-size="24" text-anchor="start" fill="#1d2433"><tspan font-style="italic">J</tspan></text>
+<line x1="100.0" y1="340.0" x2="100.0" y2="347.0" stroke="#1d2433" stroke-width="2"/>
+<text x="100.0" y="372.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan>0</tspan></text>
+<line x1="216.0" y1="340.0" x2="216.0" y2="347.0" stroke="#1d2433" stroke-width="2"/>
+<text x="216.0" y="372.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan>2</tspan></text>
+<line x1="332.0" y1="340.0" x2="332.0" y2="347.0" stroke="#1d2433" stroke-width="2"/>
+<text x="332.0" y="372.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan>4</tspan></text>
+<line x1="448.0" y1="340.0" x2="448.0" y2="347.0" stroke="#1d2433" stroke-width="2"/>
+<text x="448.0" y="372.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan>6</tspan></text>
+<line x1="564.0" y1="340.0" x2="564.0" y2="347.0" stroke="#1d2433" stroke-width="2"/>
+<text x="564.0" y="372.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan>8</tspan></text>
+<line x1="93.0" y1="310.0" x2="100.0" y2="310.0" stroke="#1d2433" stroke-width="2"/>
+<text x="88.0" y="318.0" font-size="24" text-anchor="end" fill="#1d2433"><tspan>1</tspan></text>
+<line x1="93.0" y1="190.0" x2="100.0" y2="190.0" stroke="#1d2433" stroke-width="2"/>
+<text x="88.0" y="198.0" font-size="24" text-anchor="end" fill="#1d2433"><tspan>1,2</tspan></text>
+<line x1="93.0" y1="70.0" x2="100.0" y2="70.0" stroke="#1d2433" stroke-width="2"/>
+<text x="88.0" y="78.0" font-size="24" text-anchor="end" fill="#1d2433"><tspan>1,4</tspan></text>
+<line x1="100.0" y1="70.0" x2="564.0" y2="70.0" stroke="#1d2433" stroke-width="1.5"/>
+<text x="564.0" y="58.0" font-size="24" text-anchor="end" fill="#1d2433"><tspan>chính sách hiện tại</tspan></text>
+<circle cx="100.0" cy="70.0" r="8" fill="#2E7D4F"/>
+<circle cx="158.0" cy="128.8" r="8" fill="#2E7D4F"/>
+<text x="172.0" y="118.8" font-size="24" text-anchor="start" fill="#2E7D4F"><tspan>1,30</tspan></text>
+</svg>

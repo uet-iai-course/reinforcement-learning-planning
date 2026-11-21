@@ -1,8 +1,143 @@
-# Dàn ý Bài 10: TRPO, PPO và DPO
+# Dàn ý Bài 10: TRPO và PPO
+
+Bản hiện hành (2026-11-21, sau lượt sửa thứ hai theo năm vai rà), khớp bộ trang chiếu dựng lại `2627-1/lecture-10-trpo-va-ppo.html` (6 mạch, 83 trang) và `storyboard.md` (phần trước "Lịch sử (bản 2026-11-20)"). Phần DPO và học tăng cường từ phản hồi con người đã bỏ khỏi Bài 10 (người dùng 2026-11-21, `gop-y-tac-gia-deck-2026-11-20.md` mục #27); nội dung cắt lưu ở `dpo-chuyen-sang-bai-13.md` cho Bài 13. Dàn ý cũ (bảy, tám mạch, có Mục 7 DPO) giữ nguyên chữ ở cuối tệp, mục "Lịch sử (bản 2026-11-19)", chỉ để đối chiếu nhật ký.
+
+## Phạm vi và nguồn
+
+- Nguồn nội dung: ghi chú bài giảng đã sửa `materials/lec-10/lecture-note.md` (bỏ DPO, tổng kết là §7, Bài tập 10.23 là bài PPO-Clip trên chuỗi hai trạng thái); deck nguồn `RL-hk2-2025-2026/lecture10_policy_gradient_part2.pdf` (P1) giữ thứ tự ý chính: hai giới hạn của REINFORCE, đường cơ sở và lợi thế, GAE, hàm thay thế và miền tin cậy, TRPO, PPO.
+- Quy tắc trình bày: TB1–TB33 và tinh chỉnh Đ1–Đ15 (`NGUYEN-TAC-HOC-PHAN.md` §3a), NT1–NT29 phần không bị thay, VP1–VP25.
+- Câu chuyện của bài: `cau-chuyen-deck-2026-11-21.md`. Một ví dụ chung cho cả bài (TB25): chuỗi hai trạng thái, $\gamma=0{,}9$, chính sách $p_s=\sigma(\theta_s)$, $\theta=(0;\,\log2)$.
+- Bài tập: `exercises.md` có Bài tập 10.13–10.17 và 10.22; ghi chú có 10.1–10.12 và 10.23; số 10.18–10.21 bỏ trống (BT4).
+- Thời lượng: 120 phút trình chiếu trong 150 phút (P6); phút từng trang ở `storyboard.md` §5.
+
+## Khung lý thuyết chung
+
+- **Bài toán trung tâm** (ghi chú §1.1). (1) Ước lượng gradient chính sách có phương sai nhỏ mà kỳ vọng không đổi. (2) Dùng bước cập nhật dài, trên dữ liệu của chính sách cũ, mà hàm mục tiêu không giảm.
+- **Đối tượng chung.** MDP hữu hạn, $\mu_0$, $P$; chính sách $\pi_\theta$, hàm điểm $\psi_\theta=\nabla_\theta\log\pi_\theta$; $v_\pi$, $q_\pi$, $A_\pi=q_\pi-v_\pi$; critic $\hat v(s,w)$, sai số TD $\delta_t$, GAE $\widehat A_t$; số lần thăm kỳ vọng có chiết khấu $\eta_\pi$, phân bố chiếm dụng $\nu^\pi=(1-\gamma)\eta_\pi$; hàm thay thế $\mathcal L_\pi(\pi')$, tỉ số chính sách $\rho$; $D_{\mathrm{TV}}$, $D_{\mathrm{KL}}$, $\bar D_{\mathrm{KL}}$; ma trận Fisher $F$; $\mathcal L^{\mathrm{CPI}}$, $\mathcal L^{\mathrm{CLIP}}$, bộ đệm $\mathcal D$.
+- **Giả thiết chung** (trang `L10-1-02`, Đ7): MDP hữu hạn, Markov; mọi chính sách cùng $P$, cùng $\mu_0$; $|R_{t+1}|\le R_{\max}$; $0\le\gamma<1$; chính sách Markov dừng, $\pi_\theta>0$, khả vi theo $\theta$. Mỗi kết quả ghi "giả thiết chung; thêm: …".
+- **Chuỗi định nghĩa → kết quả → phương pháp.** Hai giới hạn của REINFORCE (phương sai $0{,}6925$; bước dài theo một lượt làm $J$ giảm) → đường cơ sở (Định nghĩa 10.1, Mệnh đề 10.2) → hàm lợi thế, gradient dạng lợi thế (Định nghĩa 10.4, Mệnh đề 10.5) → sai số TD với $v_\pi$ (Mệnh đề 10.8) → critic, actor (Định nghĩa 10.7) → lợi thế $n$ bước, GAE (Định nghĩa 10.11, 10.13, Mệnh đề 10.14, 10.15) → actor–critic với GAE → bổ đề hiệu hiệu năng (Bổ đề 10.19) → hàm thay thế, tỉ số chính sách (Định nghĩa 10.21, Mệnh đề 10.22) → TV, KL, Pinsker (Định nghĩa 10.23, Mệnh đề 10.24) → chặn cải thiện (Định lý 10.26, Hệ quả 10.27) → miền tin cậy (Định nghĩa 10.30) → Fisher, gradient tự nhiên (Mệnh đề 10.33, 10.34) → TRPO (Thuật toán 10.37) → mục tiêu cắt (Định nghĩa 10.39, Mệnh đề 10.40) → PPO-Clip (Thuật toán 10.49).
+- **Giới hạn áp dụng.** Đường cơ sở không phụ thuộc hành động đã chọn; critic sai làm sai số TD chệch; GAE không chệch cho gradient chỉ khi $\lambda=1$ trên lượt đầy đủ hoặc critic đúng; mọi bảo đảm của hàm thay thế và chặn cải thiện cần lợi thế, $\eta_\pi$ chính xác; TRPO chỉ bảo đảm trên bộ đệm; mục tiêu cắt không chặn KL; dữ liệu theo chính sách.
+
+## Sáu mạch (deck dựng lại 2026-11-21)
+
+HTML có 6 section ngoài (NT10). Mạch $k$ mở tại `#/k`; từ mạch 2, trang đầu là trang tiêu đề mạch `L10-k-00`, `id="mach-k"`. Mã trang theo `NGUYEN-TAC-HOC-PHAN.md` §5.
+
+| Mạch | Tên (`h2`) | Dòng dẫn | Mục ghi chú | Đầu ra | Trang | Phút |
+|---|---|---|---|---|---:|---:|
+| 1 | Giới hạn của REINFORCE (mở đầu; bìa `L10-1-01`) | không có | Kiến thức tiên quyết, §1.1, Ví dụ 10.6 | chuỗi hai trạng thái, $J=1{,}4$, gradient $(0{,}2;\,0{,}3)$; phương sai $0{,}6925$; bước dài làm $J$ giảm; câu hỏi nhanh; hai câu hỏi | 11 | 17 |
+| 2 | Đường cơ sở và hàm lợi thế | So lợi tức với giá trị của trạng thái giữ nguyên kỳ vọng của ước lượng gradient và giảm phương sai. | §2.1, §2.3, §2.4 | đường cơ sở, $A_\pi$, gradient dạng lợi thế, $\delta_t$ với $v_\pi$; phương sai $0{,}69\to0{,}20\to0$ | 11 | 18 |
+| 3 | Ước lượng lợi thế: độ chệch và phương sai | Tổ hợp có trọng số các ước lượng lợi thế nhiều bước cân bằng độ chệch và phương sai. | §2.4 (critic), §3 | critic, actor, GAE, $\lambda$ cân bằng chệch và phương sai; thuật toán actor–critic với GAE | 12 | 20 |
+| 4 | Hàm thay thế và miền tin cậy | Chính sách mới được đánh giá từ dữ liệu của chính sách cũ với sai số nhỏ khi hai chính sách gần nhau. | §4, §5 | bổ đề hiệu hiệu năng, hàm thay thế, chặn cải thiện, miền tin cậy, gradient tự nhiên, TRPO | 26 | 37 |
+| 5 | Tối ưu chính sách gần kề (PPO) | PPO cắt tỉ số chính sách để dùng lại một bộ đệm nhiều lần bằng gradient bậc một. | §6.1, §6.3 | mục tiêu cắt, PPO-Clip, so sánh TRPO–PPO, Bài tập 10.23 | 13 | 16,5 (+3,5 bài tập) |
+| 6 | Tổng kết | Mỗi phương pháp của bài giảm phương sai hoặc giới hạn bước cập nhật dưới những giả thiết riêng. | §7 | sơ đồ neo cuối, câu trả lời có điều kiện, bảng kết quả, bảng phương pháp | 10 | 11 |
+| **Tổng** | | | | | **83** | **119,5** |
+
+"Nội dung" (`L10-1-08`) gồm sơ đồ neo `so-do-neo-m1.svg` và danh sách sáu mạch có liên kết `#/k`. Ngoại lệ số trang (83 trang thật, 82 trang đếm theo TB17) và hai ước lượng thời lượng (biên tập viên 119,5 phút; vai mạch truyện khoảng 145–155 phút) ghi ở `storyboard.md` §5, chờ tác giả; Bài tập 10.23 tính vào 30 phút bài tập. Mạch 1: câu hỏi nhanh `1-12` đứng giữa `1-04` và `1-05`. Mạch 6: câu trả lời câu 2 tách sang `6-18` ngay sau `6-11`.
+
+## Bảng thuật ngữ Việt–Anh
+
+Tên tiếng Anh trong ngoặc ở lần đầu trên mặt trang (VP2, NT21); các lần sau chỉ dùng tên tiếng Việt. Cột "lần đầu" là mã trang của deck hiện hành. Thuật ngữ đã có ở bài trước được nhắc lại, không kèm lại tên tiếng Anh.
+
+| Tiếng Việt | Tiếng Anh | Quy ước | Lần đầu |
+|---|---|---|---|
+| hàm điểm | score function | $\psi_\theta(s,a)=\nabla_\theta\log\pi_\theta(a\mid s)$ | `L10-1-02` |
+| giả thiết chung | — | tên của khối giả thiết dùng chung | `L10-1-02` |
+| hệ số (của một bước) | — | số nhân với $\psi_t$ | `L10-1-02` |
+| kỳ vọng; ước lượng không chệch; phương sai | expectation; unbiased estimator; variance | "kỳ vọng" cho biến ngẫu nhiên, "trung bình trên bộ đệm" cho mẫu hữu hạn (TB26) | `L10-1-02` |
+| đường cơ sở | baseline | $b(s)$ | `L10-2-01` |
+| hàm lợi thế, lợi thế | advantage function, advantage | $A_\pi$; ước lượng $\widehat A_t$ | `L10-2-06` |
+| gradient dạng lợi thế | advantage form of the policy gradient | Mệnh đề 10.5(b) | `L10-2-09` |
+| sai số TD | temporal-difference error | $\delta_t$, nhắc lại Bài 05 | `L10-2-07` |
+| critic; actor; phương pháp actor–critic | critic; actor; actor–critic method | Định nghĩa 10.7; không dùng trước mạch 3 | `L10-3-01` |
+| độ chệch | bias | kỳ vọng của ước lượng trừ đại lượng cần ước lượng | `L10-3-06` |
+| tính chất tháp | tower property | kỳ vọng có điều kiện lồng nhau | `L10-2-10` |
+| lợi tức $n$ bước; lợi thế $n$ bước | n-step return; n-step advantage | $G_{t:t+n}$, $\widehat A^{(n)}_t$; Bổ đề 10.12 trên trang | `L10-3-07` |
+| lợi tức λ | λ-return | $G^\lambda_t$ | `L10-3-02` |
+| ước lượng lợi thế tổng quát (GAE) | generalized advantage estimation | $\widehat A_t$, tham số $\lambda$ | `L10-3-02` |
+| γ-just | γ-just | chỉ trong ghi chú diễn giả | `L10-3-09` |
+| chính sách ứng viên | candidate policy | $\tilde\theta=(\log9;\,0)$, $\tilde\pi=(0{,}9;\,0{,}5)$ | `L10-4-01` |
+| lợi thế của $\pi'$ so với $\pi$ | — | $A_\pi(s,\pi')$ | `L10-4-13` |
+| bổ đề hiệu hiệu năng | performance difference lemma | Bổ đề 10.19 | `L10-4-02` |
+| số lần thăm kỳ vọng có chiết khấu | discounted visitation | $\eta_\pi(s)=\sum_t\gamma^t\Pr_\pi(S_t=s,\,t<T)$ | `L10-4-02` |
+| hàm thay thế | surrogate objective | $\mathcal L_\pi(\pi')$; $\Delta J$, $\Delta\mathcal L$ | `L10-4-03` |
+| tỉ số chính sách; điều kiện hỗ trợ | probability ratio; support condition | $\rho(s,a)$, $\rho_t(\theta)$; "tỉ số", không "tỷ số"; $\pi'(a\mid s)\gt0\Rightarrow\pi(a\mid s)\gt0$ | `L10-4-11` |
+| biến phân toàn phần (TV) | total variation distance | $D_{\mathrm{TV}}(s)$ | `L10-4-24` |
+| phân bố chiếm dụng | occupancy distribution | $\nu^\pi=(1-\gamma)\eta_\pi$ | `L10-4-24` |
+| chặn cải thiện | policy improvement bound | Định lý 10.26 | `L10-4-06` |
+| phân kỳ Kullback–Leibler (KL); KL trung bình | Kullback–Leibler divergence | $D_{\mathrm{KL}}(s)$ chiều cũ‖mới; $\bar D_{\mathrm{KL}}=\sum_s\nu^\pi(s)D_{\mathrm{KL}}(s)$ | `L10-4-12` |
+| bất đẳng thức Pinsker | Pinsker's inequality | tên riêng | `L10-4-20` |
+| miền tin cậy; bài toán miền tin cậy | trust region; trust region problem | bán kính $\kappa$ | `L10-4-07` |
+| ma trận thông tin Fisher | Fisher information matrix | $F$ | `L10-4-22` |
+| gradient tự nhiên | natural gradient | $F^{-1}g$ | `L10-4-08` |
+| tối ưu chính sách miền tin cậy (TRPO) | trust region policy optimization | sau lần đầu viết TRPO | `L10-4-09` |
+| gradient liên hợp; tích Fisher–vector | conjugate gradient; Fisher–vector product | | `L10-4-09` |
+| tìm kiếm lùi | backtracking line search | hệ số co $\zeta$ | `L10-4-09` |
+| bộ đệm | buffer | $\mathcal D$ | `L10-4-09` |
+| hàm thay thế mẫu; lặp chính sách bảo thủ (CPI) | sample surrogate; conservative policy iteration | $\mathcal L^{\mathrm{CPI}}$ | `L10-5-09` |
+| mục tiêu cắt; bán kính cắt; đoạn phẳng | clipped surrogate objective; clip range | $\mathcal L^{\mathrm{CLIP}}$, $\epsilon$; đoạn phẳng là khoảng $\rho_t$ có gradient theo mẫu bằng $0$ | `L10-5-02` |
+| vòng trong | inner loop | bước 3 của PPO-Clip, $K$ lần qua bộ đệm | `L10-5-05` |
+| cải thiện đơn điệu | monotonic improvement | Hệ quả 10.29, $\mathcal M_k$ | `L10-4-21` |
+| tối ưu chính sách gần kề (PPO) | proximal policy optimization | tên mạch 5; tên tiếng Anh ở trang thuật toán | `L10-5-00`; `L10-5-07` |
+| lô nhỏ; số lần qua bộ đệm; dừng sớm | mini-batch; epoch; early stopping | $M$; $K$; theo KL ước lượng trên bộ đệm | `L10-5-07` |
+
+Thuật ngữ không dùng trên deck hiện hành (chỉ ở ghi chú): đường cơ sở có phương sai nhỏ nhất, PPO-Penalty, entropy, hàm mất mát tổng, approxKL, tỉ lệ cắt, phương sai được giải thích, cắt mất mát giá trị, điểm dừng, đoạn thu và cờ cắt ngắn (chỉ ở câu hỏi tự kiểm tra 4 và ghi chú diễn giả). Từ khẩu ngữ bị bỏ theo #11, #12 (TB26): "đoán/thật", "học dở", "dao động", "đi quá xa", "nơi chính sách tới", "trừ một mức".
+
+## Quyết định ký hiệu
+
+- Ví dụ chung: $p_s=\pi_\theta(1\mid s)=\sigma(\theta_s)$; mọi chính sách viết theo $\theta=(\theta_A;\,\theta_B)$ và đọc qua $(p_A;\,p_B)$.
+- Phát biểu tổng quát dùng $\pi$ (cũ) và $\pi'$ (mới bất kỳ); chính sách ứng viên của ví dụ là $\tilde\theta$, $\tilde\pi$ (TB25).
+- Mạch 4 dùng $\eta_\pi$ trên mặt trang; $\nu^\pi=(1-\gamma)\eta_\pi$ chỉ ở định lý chặn cải thiện, KL trung bình và Fisher (như ghi chú, N5).
+- Critic sai của ví dụ: $\hat v=(1{,}4;\,1)$, giả định trên mặt trang. Bộ đệm chung của mạch 5: hai lượt $s_A\xrightarrow1s_B\xrightarrow2$, $s_A\xrightarrow2$, $\lambda=1$.
+- $\epsilon$ là bán kính cắt, $\kappa$ là bán kính KL, $\zeta$ là hệ số co, $\delta_t$ chỉ là sai số TD; $\log$ tự nhiên; dấu phẩy thập phân, tọa độ ngăn bằng dấu chấm phẩy.
+
+## Phân loại chủ đề
+
+Phân loại bốn nhóm chỉ nằm ở đây, không vào ghi chú (GC-RL-12). Số mục theo ghi chú sau khi bỏ DPO (tổng kết là §7).
+
+| `note-topic-id` | Phần ghi chú | Nhóm | Lý do ngắn |
+|---|---|---|---|
+| `lec-10-topic-01` | Kiến thức tiên quyết, Bảng ký hiệu | cầu nối | nhắc lại Bài 03–09 và kiến thức học máy |
+| `lec-10-topic-02` | Mục tiêu, §1.1 | cầu nối | kết quả kế thừa, bài toán trung tâm hai phần |
+| `lec-10-topic-03` | §2.1 Đường cơ sở | cốt lõi | |
+| `lec-10-topic-04` | §2.2 Đường cơ sở có phương sai nhỏ nhất | bổ sung | Greensmith và cộng sự (2004) |
+| `lec-10-topic-05` | §2.3 Hàm lợi thế | cốt lõi | |
+| `lec-10-topic-06` | §2.4 Critic và actor–critic một bước | cốt lõi | |
+| `lec-10-topic-07` | §3.1 Lợi tức n bước | cầu nối | nhắc lại Bài 07 cho GAE |
+| `lec-10-topic-08` | §3.2 Lợi tức λ và GAE | cốt lõi | |
+| `lec-10-topic-09` | §3.3 GAE trên đoạn thu | cốt lõi | |
+| `lec-10-topic-10` | §4.1 Bổ đề hiệu hiệu năng | cốt lõi | |
+| `lec-10-topic-11` | §4.2 Tỉ số chính sách và hàm thay thế | cốt lõi | |
+| `lec-10-topic-12` | §4.3 Khoảng cách giữa hai chính sách | cầu nối | TV, KL, Pinsker |
+| `lec-10-topic-13` | §4.4 Chặn cải thiện | cốt lõi | |
+| `lec-10-topic-14` | §4.5 Cải thiện đơn điệu và miền tin cậy | cốt lõi | |
+| `lec-10-topic-15` | §5.1 KL bậc hai và gradient tự nhiên | cốt lõi | |
+| `lec-10-topic-16` | §5.2 TRPO thực hành | cốt lõi | |
+| `lec-10-topic-17` | §6.1 PPO-Clip | cốt lõi | |
+| `lec-10-topic-18` | §6.2 PPO-Penalty | cốt lõi | không lên deck hiện hành |
+| `lec-10-topic-19` | §6.3 Hàm mất mát tổng và thuật toán PPO | cốt lõi | Thuật toán 10.49 |
+| `lec-10-topic-20` | §6.4 Chẩn đoán và siêu tham số | cốt lõi | không lên deck hiện hành (TB4) |
+| `lec-10-topic-21` | §6.5 Chi tiết cài đặt | cốt lõi | chỉ ở ghi chú diễn giả |
+| `lec-10-topic-22` | §6.6 Hội tụ về điểm dừng của PPO-Clip | đọc thêm | Jin, Li và Wang (2024) |
+| `lec-10-topic-23` | §7.1–7.5 Tổng kết | cầu nối | tổng hợp, không khái niệm mới |
+| `lec-10-topic-24` | §7.6 Giới hạn còn lại | cầu nối | |
+
+Tổng (sau khi bỏ DPO, 2026-11-21): cốt lõi 16 (03, 05, 06, 08–11, 13–21), cầu nối 6 (01, 02, 07, 12, 23, 24), bổ sung 1 (04), đọc thêm 1 (22). Mã `lec-10-topic-25` … `-30` (DPO) chuyển sang Bài 13.
+
+## Ánh xạ trang ↔ khối ghi chú, hình, thời lượng
+
+Bản hiện hành nằm ở `storyboard.md`: dòng "Ghi chú nguồn" của từng trang (§3), danh sách hình (§4), thời lượng (§5), đối chiếu mã trang cũ và mới (§6). Các bảng cùng loại trong phần lịch sử dưới đây dùng mã trang của các bản 2026-11-13 và 2026-11-19, không còn hiệu lực.
+
+---
+
+# Lịch sử (bản 2026-11-19)
+
+Phần dưới là dàn ý bản 2026-11-19 (bảy mạch, sau đó tám mạch có Mục 7 DPO), giữ nguyên chữ, mọi tiêu đề hạ một bậc. Không còn hiệu lực; chỉ để đối chiếu nhật ký rà.
+
+## Dàn ý Bài 10: TRPO, PPO và DPO
 
 Tên hiển thị đổi từ "TRPO và PPO" theo Q6 (2026-11-19); tên tệp `lecture-10-trpo-va-ppo.html` và mọi đường dẫn giữ nguyên.
 
-## Bổ sung DPO (giai đoạn I.1, 2026-11-19)
+### Bổ sung DPO (giai đoạn I.1, 2026-11-19)
 
 - **Việc của lượt này.** Thêm mục `## 7. Tối ưu chính sách từ phản hồi ưu tiên` vào ghi chú, sau §6 (PPO); §7 cũ "Tổng kết và chuyển tiếp" thành `## 8. Tổng kết`, tiểu mục 7.1–7.6 thành 8.1–8.6 (Q3, GC-RL-15). Bổ sung vào bài đã có, không dựng lại bài; §1–§6 chỉ sửa đúng các chỗ liệt kê ở mục "Các chỗ sửa ngoài Mục 7 và Mục 8" dưới đây. Thứ tự sản phẩm: ghi chú → `exercises.md` → deck (BT-RL-9).
 - **Đầu vào đã duyệt.** `prompt-bo-sung-dpo-bai-10.md` (bảng Q, Q1–Q9 "Theo đề xuất", tác giả 2026-11-19) và `ke-hoach-bo-sung-dpo.md` (kế hoạch A–C). Chỗ hai tệp khác nhau thì bảng Q thắng. Quy định học phần đã ghi: GC-RL-18 (trần 37 000 từ `prose`), BT-RL-10 (số bài tập), "P1, Bài 10, Mục 7 (riêng)" ở mục 3 của `NGUYEN-TAC-HOC-PHAN.md`.
@@ -12,7 +147,7 @@ Tên hiển thị đổi từ "TRPO và PPO" theo Q6 (2026-11-19); tên tệp `l
 - **Độ dài (Q2, GC-RL-18).** Mục mới 4 000–5 000 từ `prose`, các chỗ sửa khác không quá 2 800; ghi chú lên khoảng 36 600, trần 37 000. Ngân sách theo tiểu mục ở mục "Mục 7 của ghi chú".
 - **Điểm dừng (Q9).** Sau I.3 (outline và phân tích nguồn), sau giai đoạn I, sau III.2 (storyboard).
 
-## Phạm vi (Giai đoạn II, viết lại 2026-11-04)
+### Phạm vi (Giai đoạn II, viết lại 2026-11-04)
 
 - Nguồn chính của bộ trang chiếu: ghi chú bài giảng đã duyệt `materials/lec-10/lecture-note.md` (commit `1c9ef05`; commit `567c96c` chỉ bỏ mục "Bản đồ chủ đề" theo yêu cầu người dùng, ghi chú ngắn đi 63 dòng, số hiệu khối và mốc `note-topic-id` không đổi). Bộ trang chiếu tóm tắt ghi chú: cùng thuật ngữ, ký hiệu, giả thiết, ví dụ, số hiệu kết quả và thứ tự khái niệm, trừ các sai khác ghi ở mục "Sai khác có chủ ý".
 - Nguồn bài giảng gốc: `RL-hk2-2025-2026/lecture10_policy_gradient_part2.pdf`, 43 trang (trang bìa ghi "Lecture 10: Overview on Policy Gradient Algorithms, Part 1"). Phần I (tr. 3–42) thuộc bài này; Phần II (A3C, DDPG, SAC, …) thuộc Bài 11 và chỉ xuất hiện trong một dòng nối ở trang cuối (dòng nối này bỏ theo Q8, 2026-11-19).
@@ -21,7 +156,7 @@ Tên hiển thị đổi từ "TRPO và PPO" theo Q6 (2026-11-19); tên tệp `l
 - Bài tập: chưa có `materials/lec-10/exercises.md`. Trang "Bài tập về nhà và tài liệu đọc" ánh xạ Bài tập củng cố 10.1–10.12 của ghi chú theo mạch và liên kết viewer của ghi chú bài giảng. Cập nhật 2026-11-13: `exercises.md` có Bài tập 10.13–10.17 (làm lại 2026-11-12); `L10-709` chép bảng mạch của tệp đó (bảy hàng, tách cột tệp bài tập và cột ghi chú).
 - Thời lượng: 120 phút trình chiếu; 30 phút còn lại chữa bài (lời giải đầy đủ của bài tập trên trang và bài về nhà). Sau bổ sung DPO: 135 phút trình chiếu, 15 phút chữa bài (Q7; mục "Phân bổ thời lượng").
 
-## Khung lý thuyết chung
+### Khung lý thuyết chung
 
 **Bài toán trung tâm** (ghi chú §1.1). Giảm phương sai của ước lượng gradient chính sách mà vẫn giữ kỳ vọng của nó, và dùng lại dữ liệu của $\pi_{\mathrm{old}}$ để chọn một bước cập nhật lớn mà chính sách mới không kém chính sách cũ. Hai nửa ứng với hai hàng của hình `img/lec-10/central-problem.svg`: hàng trên (mạch 2–3) chọn hệ số nhân với hàm điểm, hàng dưới (mạch 4–6) giới hạn độ lớn bước; hai hàng gặp nhau ở Thuật toán 10.49 (PPO kiểu actor–critic).
 
@@ -67,7 +202,7 @@ Tên hiển thị đổi từ "TRPO và PPO" theo Q6 (2026-11-19); tên tệp `l
 
 **Quy ước tên tiếng Anh.** Tên tiếng Anh và tên đầy đủ của chữ viết tắt ghi trong ngoặc ở lần đầu thuật ngữ xuất hiện trong một câu trên mặt trang, trừ bìa: luận đề không có tên tiếng Anh, và tên tiếng Anh của các thuật ngữ trong luận đề (đường cơ sở, hàm thay thế, tỉ số chính sách) ghi ở trang mục tiêu `L10-104`. Trang "Nội dung" và trang tiêu đề mạch giữ đúng tên mạch nên không chèn tên tiếng Anh; ký hiệu chưa được nêu ($\delta_t$, $\nu^\pi$, $\kappa$, $\rho_t$) không xuất hiện trước trang định nghĩa hoặc nhắc lại của nó.
 
-## Mục tiêu học tập (trang `L10-104`)
+### Mục tiêu học tập (trang `L10-104`)
 
 Sáu dòng (sửa 2026-11-13 theo bảng phát hiện, trước đó năm dòng), mỗi dòng một sản phẩm kiểm được; ghi chú diễn giả nêu sản phẩm. Ánh xạ với bảy mục tiêu của ghi chú: dòng 1 ↔ mục tiêu 1–2; dòng 2 ↔ 3; dòng 3 ↔ 4 và nửa đầu của 5; dòng 4 ↔ nửa sau của 5; dòng 5 ↔ 6–7 (phần tính); dòng 6 ↔ 6–7 (phần chứng minh). Các sản phẩm của mục tiêu 2 (độ chệch của sai số TD khi critic sai), 6 (quy tắc PPO-Penalty) và 7 (một vòng PPO, phạm vi kết quả hội tụ của PPO-Clip) nêu trong ghi chú diễn giả, vì trang đã ở trần 80.
 
@@ -80,7 +215,7 @@ Sáu dòng (sửa 2026-11-13 theo bảng phát hiện, trước đó năm dòng)
 
 Tổng 80 âm tiết theo `deck_check` (trần 80 của trang mục tiêu), 6 dòng, dòng dài nhất 19 âm tiết. Tên tiếng Anh "probability ratio" chuyển sang định nghĩa ở `L10-405`.
 
-### Mục tiêu học tập mới của ghi chú (bổ sung DPO, 2026-11-19)
+#### Mục tiêu học tập mới của ghi chú (bổ sung DPO, 2026-11-19)
 
 Thêm hai mục sau mục tiêu 7 của ghi chú (GC16, VP21: bằng lời, không ký hiệu mới, không số hiệu khối; thuật ngữ theo bảng thuật ngữ dưới đây). Bản nháp đã qua `no-ai-slop` Edit; tác tử soạn chép vào ghi chú, chỉ chỉnh khi trái quy định:
 
@@ -91,7 +226,7 @@ Chỗ đổi so với kế hoạch A3: mục tiêu 8 dùng đúng thuật ngữ 
 
 Ánh xạ: mục tiêu 8 ↔ §7.1–7.3 (Mệnh đề 10.54, Định lý 10.57, Thuật toán 10.61, Nhận xét 10.58); mục tiêu 9 ↔ §7.4–7.5 (Mệnh đề 10.63, Định lý 10.65, Thuật toán 10.67, Tình huống 10.5). Bài tập phủ mục tiêu ở mục "Bài tập: kế hoạch bổ sung DPO". Trên deck: trang mục tiêu tách thêm `L10-104b` vì chín mục tiêu vượt trần 80 âm tiết (Q7, QT4); storyboard chốt cách chia dòng.
 
-### Kiến thức tiên quyết thêm (bổ sung DPO)
+#### Kiến thức tiên quyết thêm (bổ sung DPO)
 
 Danh sách hiện có đã đủ cho Mục 7 về softmax, hàm điểm (Mệnh đề 09.16, 09.17), định lý gradient chính sách (Định lý 09.23), tính chất tháp (Bổ đề 09.21, 09.22); KL và Mệnh đề 10.24 nằm trong chương. Thêm một gạch đầu dòng kiến thức học máy và học sâu mà đối tượng đã học (GC-RL-16), phát biểu lại trong hai câu (kế hoạch A4):
 
@@ -99,7 +234,7 @@ Danh sách hiện có đã đủ cho Mục 7 về softmax, hàm điểm (Mệnh 
 
 Câu quy ước đầu mục sửa dải số theo Q4: "Bài tập 10.13–10.17 và 10.22 thuộc tệp bài tập `exercises.md` của Bài 10." (Bài tập 10.18–10.21 thuộc ghi chú.)
 
-## Tám mạch (bảy mạch tới 2026-11-19)
+### Tám mạch (bảy mạch tới 2026-11-19)
 
 Bổ sung DPO (Q7, "P1, Bài 10, Mục 7 (riêng)"): HTML có 8 section ngoài, vượt khoảng 5–7 của NT10 theo yêu cầu cụ thể của tác giả (lý do ghi trong `storyboard.md` và `review-log.md` ở giai đoạn III). Mạch 7 mới mã `L10-D00` … `L10-D18`, `id="mach-7"`; "Tổng kết" giữ mã `L10-700` … `L10-710`, thành `id="mach-8"`. Số mạch $N$ trùng số mục $N$ của ghi chú với $N=2,\dots,8$. Đoạn dưới đây là quy ước của bản bảy mạch, giữ để đối chiếu.
 
@@ -120,7 +255,7 @@ HTML có đúng 7 section ngoài. Mạch $N$ mở tại `#/N`; từ mạch 2, tr
 
 Trang "Nội dung" (`L10-105`) liệt kê bảy tên theo cột "tên", mục 1 là "Mở đầu và hai giới hạn của REINFORCE". Sau bổ sung DPO: tám tên, liên kết `#/1` … `#/8`, mục 7 "Tối ưu chính sách từ phản hồi ưu tiên", mục 8 "Tổng kết". Phút của mạch 1–6 và 8 trong bảng trên là số của bản bảy mạch; số sau khi rút về 135 phút ở mục "Phân bổ thời lượng".
 
-## Mục 7 của ghi chú: Tối ưu chính sách từ phản hồi ưu tiên (bổ sung 2026-11-19)
+### Mục 7 của ghi chú: Tối ưu chính sách từ phản hồi ưu tiên (bổ sung 2026-11-19)
 
 Tiêu đề `## 7. Tối ưu chính sách từ phản hồi ưu tiên` (Q3; cụm danh từ tiếng Việt, VP7, GC-RL-17). Mục đi theo mẫu GC-RL-1, mỗi khái niệm trọng tâm theo GC18 (bài toán → "Một cách trực quan" → định nghĩa → kết quả hoặc thuật toán, có ví dụ chạy tay trước → chứng minh → ví dụ → nhận xét); không bài tập cuối mục (BT-RL-6). Chi tiết từng khối, số liệu tính lại và chỗ dẫn đầy đủ ở kế hoạch A7, A8; mục này chốt cấu trúc, số hiệu và vai.
 
@@ -136,7 +271,7 @@ Tiêu đề `## 7. Tối ưu chính sách từ phản hồi ưu tiên` (Q3; cụ
 
 **Câu trả lời của mục** (kết §7.5; phần 6 của §8.3): mô hình Bradley–Terry cho $\hat r=(\log2;\,0)$ (Mệnh đề 10.54); mục tiêu có phạt KL với $\beta=1$ có nghiệm $(\tfrac45;\,\tfrac15)$ (Định lý 10.57); PPO đi tới nghiệm đó bằng mẫu sinh trực tuyến (Ví dụ 10.27); DPO cực tiểu hóa một hàm mất mát phân loại trên sáu phép so sánh và cho cùng $(\tfrac45;\,\tfrac15)$ (Ví dụ 10.28, Định lý 10.65) khi các giả thiết của Định lý 10.65 thỏa; với ba so sánh cùng chọn $y_1$, giả thiết (H4a) hỏng: $L^{\mathrm{BT}}$ và $L^{\mathrm{DPO}}$ đều không có cực tiểu, và cả hai con đường lý tưởng đẩy xác suất của $y_2$ về $0$ với mọi $\beta$ (Tình huống 10.5); hai con đường chỉ khác nhau khi mô hình phần thưởng được điều chuẩn, theo lập luận của Gheshlaghi Azar và cộng sự (§4.2), không phải một định lý. (Sửa vòng 2: bản trước chỉ nói về DPO, gợi ý sai rằng RLHF tránh được.)
 
-### Bảng khối mới 10.52–10.70
+#### Bảng khối mới 10.52–10.70
 
 Một bộ đếm chung tiếp sau Nhận xét 10.51 (GC19: số tăng theo thứ tự đọc; Bổ đề là công cụ, Mệnh đề là sự kiện hẹp, Định lý là kết quả chính). Mức chứng minh: "đầy đủ" là chứng minh trong khối `proof`, chia bước có nhãn, kết bằng $\square$; "không áp dụng" cho định nghĩa, thuật toán, nhận xét.
 
@@ -166,7 +301,7 @@ Ví dụ 10.23–10.28 và Tình huống 10.4–10.5 ghi theo tiểu mục dư�
 
 Viết tắt nguồn dưới đây (kế hoạch A1): **DPO** Rafailov và cộng sự (2023); **IG** Ouyang và cộng sự (2022); **ST** Stiennon và cộng sự (2020); **ZI** Ziegler và cộng sự (2019); **CH** Christiano và cộng sự (2017); **IPO** Gheshlaghi Azar và cộng sự (2024); **XU** Xu và cộng sự (2024); **RQ** Rafailov, Hejna, Park, Finn (2024). "tr." là trang PDF của bản arXiv đã lưu.
 
-### 7.1 Dữ liệu ưu tiên và mô hình Bradley–Terry
+#### 7.1 Dữ liệu ưu tiên và mô hình Bradley–Terry
 
 - `note-topic-id`: `lec-10-topic-25` (cầu nối). Khoảng 900 từ. Mục lục 13.4.1, 13.4.2.
 - **Nội dung, theo thứ tự.** Bài toán mở mục và "**Câu hỏi.**" (trên); Định nghĩa 10.52 (dạng (a) một bước: $s=x$, $a=y$, lượt dừng sau một hành động; dạng (b) mức token: $S_{t+1}=(S_t,A_t)$ tất định, phần thưởng chỉ ở bước cuối; cùng một chính sách, khác cách đếm bước); Ví dụ 10.23 (Dữ liệu ưu tiên trên bài toán một bước: sáu bộ ba, mỗi bộ một dòng, VP12; tỉ lệ $\tfrac23$; đặt trước định nghĩa, GC10); "Một cách trực quan": xác suất chọn tăng theo hiệu phần thưởng, chỉ hiệu có nghĩa; Định nghĩa 10.53; Mệnh đề 10.54 với chứng minh; Ví dụ 10.24 (Khớp mô hình phần thưởng: $d=\log2$, $L^{\mathrm{BT}}$ từ $0{,}6931$ xuống $0{,}6365$, $\hat r=(\log2;\,0)$, kiểm $\sigma(\log2)=\tfrac23$); Nhận xét 10.55; kết tiểu mục: có $\hat r$, chưa có chính sách.
@@ -176,20 +311,20 @@ Viết tắt nguồn dưới đây (kế hoạch A1): **DPO** Rafailov và cộn
 - **Định nghĩa 10.52(b)** (P-14): độ dài tối đa $T_{\max}$ tính là kết thúc ($Z=1$), phần thưởng $\hat r$ cho cả câu trả lời đã cắt; đây là quy ước của học phần (ST, RQ chỉ nói kết thúc ở ký hiệu kết thúc), ghi `review-log.md`.
 - **Phân loại.** Cầu nối: chuyển hồi quy logistic của học máy (GC-RL-16) sang phần thưởng; khoảng trống cụ thể là Thuật toán 10.49 cần $R_{t+1}$ mà bài toán chỉ có so sánh (GC-RL-12).
 
-### 7.2 Mục tiêu có phạt KL theo chính sách tham chiếu
+#### 7.2 Mục tiêu có phạt KL theo chính sách tham chiếu
 
 - `note-topic-id`: `lec-10-topic-26` (cốt lõi). Khoảng 900 từ. Mục lục 13.5.2.
 - **Nội dung, theo thứ tự.** Bài toán: với $\hat r=(\log2;\,0)$, chính sách cực đại hóa $\mathbb E\hat r$ là $(1;\,0)$, trong khi $\hat r$ chỉ được khớp trên câu trả lời của $\pi_{\mathrm{ref}}$; "Một cách trực quan": trả một chi phí cho mỗi đơn vị KL rời khỏi $\pi_{\mathrm{ref}}$; Ví dụ 10.25 (Ba chính sách trên bài toán một bước: $\pi_{\mathrm{ref}}$, tham lam $(1;\,0)$, $(0{,}8;\,0{,}2)$ với $J_1=0{,}4621$; $0{,}2877$; $0{,}5108$; trước định nghĩa); Định nghĩa 10.56; Định lý 10.57 (Giả thiết, Kết luận (a)–(d), Điều kiện áp dụng, Phạm vi; chứng minh ba bước; đoạn GC9 bỏ $\beta>0$ và bỏ "chọn tự do theo $x$"; "**Trong thực hành.**": $\mathcal Z_r(x)$ là tổng trên mọi chuỗi token, không tính được, nên định lý cho dạng nghiệm chứ không cho thuật toán); Ví dụ 10.26 (Nghiệm dạng đóng và vai trò của $\beta$: $\mathcal Z=\tfrac53$, $\pi^*=(\tfrac45;\,\tfrac15)$; $\beta=\tfrac12$ cho $(\tfrac89;\,\tfrac19)$, $\beta=2$ cho $(0{,}7388;\,0{,}2612)$; phần thưởng đã trừ KL bằng $0{,}5108$ ở cả hai câu trả lời); Nhận xét 10.58 (mở bằng câu hỏi nghiên cứu "Hệ số $\beta$ ở đây và $\beta$ của PPO-Penalty có cùng vai trò không?", trả lời ngay). Bổ đề 2 của DPO ($\pi^*_{r+f}=\pi^*_r$ khi $f$ chỉ phụ thuộc $x$) được chứng minh Mệnh đề 10.63(c) và Định lý 10.65 dùng: thêm phần (e) vào Định lý 10.57 hoặc một câu trong chứng minh, kèm chỗ dẫn (P-15).
 - **Nguồn (Q1).** DPO (3), tr. 3; DPO (4), tr. 4, chứng minh Phụ lục A.1, (11)–(15), tr. 15–16; DPO Bổ đề 2, tr. 5; IG (2), tr. 9; ZI (2), tr. 3; ST §3.4, tr. 6 (vai của số hạng KL); ZI §2.2, tr. 3 (bộ điều khiển $\beta$ theo KL tới mô hình ban đầu, dùng trong Nhận xét 10.58). Mệnh đề 10.24(a) của ghi chú.
 - **Lưu ý thứ tự.** Mục lục đặt 13.5.2 sau 13.5.1; ghi chú đặt mục tiêu có phạt KL trước RLHF vì đó là điểm chung của 13.5.2 và 13.6.1 (kế hoạch A1).
 
-### 7.3 RLHF với PPO
+#### 7.3 RLHF với PPO
 
 - `note-topic-id`: `lec-10-topic-27` (cốt lõi). Khoảng 900 từ. Mục lục 13.5.1, 13.5.2.
 - **Nội dung, theo thứ tự.** Bài toán: tập câu trả lời quá lớn để tính $\mathcal Z_r(x)$, cần cực đại hóa $J_\beta$ bằng mẫu; Bổ đề 10.59 với chứng minh, rồi ví dụ hai token không đánh số (KL của chuỗi $0{,}240974=0{,}020136+0{,}6\cdot0{,}368064$; kế hoạch A7(10)); Mệnh đề 10.60 với chứng minh và hệ quả cho Mục 6 (gradient của hàm thay thế mẫu với lợi thế của $\tilde r_{\theta_{\mathrm{old}}}$ bằng $\nabla J_\beta$ tại $\theta_{\mathrm{old}}$, với lợi thế đúng); Ví dụ 10.27 (Hai vòng PPO trên phần thưởng đã trừ KL: vòng 1 lợi thế $\tfrac13\log2\,(1;\,1;\,-2)$, dừng ở $p=0{,}8=\tfrac23\cdot1{,}2$; vòng 2 lợi thế $0$; "**Diễn giải.**" về hai mỏ neo; chạy tay trước thuật toán, GC-RL-11); Thuật toán 10.61 (ba giai đoạn SFT, mô hình phần thưởng, PPO trên MDP mức token với $R_{t+1}=-\beta\log\frac{\pi_{\mathrm{old}}(A_t\mid S_t)}{\pi_{\mathrm{ref}}(A_t\mid S_t)}+\mathbb 1\{t+1=T\}\hat r(x,y)$, $\gamma=1$; bốn mô hình trong bộ nhớ; điều kiện dừng là ngân sách; chi phí mỗi vòng; ghi rõ đây là khung chung, mỗi bài báo khác chi tiết); "**Trong thực hành.**" (GC-RL-9: $\pi_{\mathrm{ref}}$ là bản sao đóng băng của $\pi^{\mathrm{SFT}}$; $\gamma=1$ với độ dài bị chặn thỏa (G3), còn Mục 4 giả thiết $\gamma<1$; phần thưởng thưa cộng KL ở mọi bước; mỗi vòng sinh mẫu mới; một câu bằng lời, không đưa chữ $\gamma$ của bài báo: biến thể "PPO" của Ouyang và cộng sự cực đại hóa đúng $J_\beta$, còn các mô hình InstructGPT chính (PPO-ptx) cộng thêm một số hạng hợp lý trên dữ liệu tiền huấn luyện, nên không cực đại hóa đúng $J_\beta$ và Định lý 10.57 không áp dụng nguyên dạng cho chúng, sửa vòng 2, P-06); Nhận xét 10.62 (chỉ điều ST đo: với một phiên bản trước của mô hình phần thưởng (rm3), khi tối ưu mạnh hơn, ưu tiên thật của người gán nhãn giảm so với dự đoán; ST nêu hai vai của số hạng KL, ZI nêu thêm một vai riêng cho bài toán phong cách; các giá trị $\beta$ của từng bài ghi kèm tên bài, không so sánh với nhau vì thang phần thưởng khác nhau; P-19, P-23). Trong Thuật toán 10.61, $N$ đọc là số lời nhắc mỗi vòng, đúng vai số môi trường song song (P-20); $\pi_{\mathrm{ref}}\leftarrow\pi^{\mathrm{SFT}}$ là khung chung, không gắn chi tiết SFT trộn dữ liệu tiền huấn luyện của IG (P-16); dạng $R_{t+1}$ theo token là cách viết của học phần, đúng theo Bổ đề 10.59 và Mệnh đề 10.60, ghi `review-log.md` (P-13).
 - **Nguồn (Q1).** IG §3.1 và Hình 2, tr. 3, 6; IG §3.5, tr. 8–9 (phạt KL theo từng token; hàm giá trị khởi tạo từ mô hình phần thưởng); IG Phụ lục C.4, tr. 42 ($\beta=0{,}02$, bán kính cắt $0{,}2$, một epoch trong, không chiết khấu khi tính GAE); ST §3.4 và chú thích 8, tr. 6; ST §4.3 và Hình 5, tr. 7–8 (tối ưu quá mức); ZI §2, quy trình bốn bước, tr. 3; ZI §2.2, tr. 3. IG (2), tr. 9 và C.4, tr. 42 (PPO-ptx). Đối chiếu: DPO §3, tr. 4 (dạng $r_\phi-\beta(\log\pi_\theta-\log\pi_{\mathrm{ref}})$ tối ưu bằng PPO); DPO chú thích 3, tr. 8 (KL chuỗi bằng tổng KL từng bước, cho Bổ đề 10.59); DPO §5.2, (10), tr. 6 (bài báo viết "Eq. 7", đúng là (4): nếu dẫn, dẫn (4), P-17); RQ §3.2, (2), tr. 3–4.
 
-### 7.4 Tối ưu ưu tiên trực tiếp
+#### 7.4 Tối ưu ưu tiên trực tiếp
 
 - `note-topic-id`: `lec-10-topic-28` (cốt lõi). Khoảng 1 200 từ. Mục lục 13.6.1.
 - **Nội dung, theo thứ tự.** Bài toán: Thuật toán 10.61 giữ bốn mô hình và sinh mẫu ở mọi vòng, trong khi $\hat r$ chỉ dùng để đi tới $\pi^*_{\hat r}$; ví dụ đảo: từ $\pi^*=(\tfrac45;\,\tfrac15)$ và $\mathcal Z=\tfrac53$ đọc lại $\hat r=(\log2;\,0)$, hiệu $\log1{,}2-\log0{,}6=\log2$ không chứa $\mathcal Z$; "Một cách trực quan": mỗi chính sách xác định một phần thưởng mà nó là nghiệm; Mệnh đề 10.63 với chứng minh; Định nghĩa 10.64 (với hai câu trả lời, $\Delta r_\theta=\beta(\theta_1-\theta_2-\log2)$); Định lý 10.65 (bốn phần, chứng minh bốn bước; giả thiết và phản ví dụ theo đoạn "Định lý 10.65 sau vòng 2" dưới đây; một câu kết của luận điểm); Mệnh đề 10.66 với chứng minh (câu về bản bỏ trọng số chỉ viết "Rafailov và cộng sự viết rằng …", tr. 5, không dẫn Bảng 3: Bảng 3, tr. 22, là mẫu của phương pháp Unlikelihood, P-07); Ví dụ 10.28 (Một bước DPO tính tay: trọng số $\sigma(0)=\tfrac12$, gradient $(-\tfrac16;\,\tfrac16)$, $\pi_\theta(y_1)=0{,}7362$, $\Delta r_\theta=\tfrac13$, $L^{\mathrm{DPO}}$ từ $0{,}6931$ xuống $0{,}6514$; dãy bước 2–5; cực tiểu $(\tfrac45;\,\tfrac15)$ với $\min L^{\mathrm{DPO}}=0{,}6365=\min L^{\mathrm{BT}}$, trùng Ví dụ 10.26 và 10.27; hai bản cho cùng kết quả, GC-RL-11); Thuật toán 10.67 (đầu vào, đầu ra, giả thiết (H1)–(H2), khởi tạo $\theta\leftarrow\theta_{\mathrm{ref}}$, tham số, các bước, điều kiện dừng là số epoch, chi phí mỗi bộ ba; hai mô hình, không sinh mẫu, không critic); "**Trong thực hành.**" (GC-RL-9: $\pi_{\mathrm{ref}}$ là mô hình SFT; log-xác suất của chuỗi là tổng log-xác suất token theo Bổ đề 10.59; hai mô hình trong bộ nhớ; dữ liệu ưu tiên cố định; giá trị của DPO Phụ lục B); Nhận xét 10.68 (đẳng thức $\mathbb E_{\pi_{\mathrm{ref}}}r_\theta=-\beta D_{\mathrm{KL}}(\pi_{\mathrm{ref}}\Vert\pi_\theta)\le0$, số $-0{,}011855$ sau bước 1).
@@ -211,26 +346,26 @@ Viết tắt nguồn dưới đây (kế hoạch A1): **DPO** Rafailov và cộn
   - bỏ (H3): lớp tham số không chứa $\pi^*_{\hat r}$.
 - **Hình.** `img/lec-10/rlhf-dpo-hai-con-duong.svg` (mới) đặt ở đầu §7.4 hoặc §7.5 (tác tử soạn chọn một chỗ), có đoạn đọc hình.
 
-### 7.5 So sánh hai con đường và giới hạn
+#### 7.5 So sánh hai con đường và giới hạn
 
 - `note-topic-id`: `lec-10-topic-29` (cốt lõi; luận điểm của tác giả). Khoảng 400 từ. Mục lục 13.6.1.
 - **Nội dung, theo thứ tự.** Bảng so sánh `Tiêu chí | RLHF với PPO (Thuật toán 10.61) | DPO (Thuật toán 10.67)`, bảy hàng: mục tiêu ($\max J_\beta$, $\pi_{\mathrm{ref}}$ cố định, cả hai); đại lượng được tối ưu ($L^{\mathrm{BT}}$ rồi $\mathcal L^{\mathrm{CLIP}}$ với $\tilde r$ | $L^{\mathrm{DPO}}$); dữ liệu ($\mathcal D_{\mathrm{pref}}$ cộng mẫu trực tuyến từ $\pi_{\mathrm{old}}$ | chỉ $\mathcal D_{\mathrm{pref}}$, ngoại tuyến); mô hình trong bộ nhớ (bốn | hai); mỏ neo và chiều KL ($\pi_{\mathrm{ref}}$ trong mục tiêu, $D_{\mathrm{KL}}(\pi_\theta\Vert\pi_{\mathrm{ref}})$, thêm $\pi_{\mathrm{old}}$ của phép cắt | chỉ $\pi_{\mathrm{ref}}$, qua tỉ số trong $r_\theta$); điều kiện dừng (ngân sách vòng lặp | ngân sách epoch); bảo đảm (gradient đúng tại $\theta_{\mathrm{old}}$, Mệnh đề 10.60, không bảo đảm hội tụ | cực tiểu toàn cục trùng nghiệm RLHF dưới (H1)–(H4), Định lý 10.65). Nhận xét 10.69 ((a) cả hai dùng hàm mất mát Bradley–Terry (mô hình Bradley–Terry chỉ cần để đọc $\hat r$ là ước lượng hợp lý cực đại) và phụ thuộc miền hỗ trợ của $\pi_{\mathrm{ref}}$; (b) DPO không đánh giá câu trả lời ngoài dữ liệu, PPO đánh giá bằng $\hat r$ có thể sai ở đó (XU Định lý 4.1, Bảng 1 làm ví dụ ở đây); (c) ưu tiên tất định làm (H4a) hỏng: cả hai con đường lý tưởng không có nghiệm hữu hạn và cùng tiến tới chính sách tất định với mọi $\beta$; Gheshlaghi Azar và cộng sự (§4.2) lập luận rằng RLHF trong thực hành tránh được nhờ mô hình phần thưởng được điều chuẩn hoặc khớp chưa hết (CH §2.2.3: điều chuẩn $\ell_2$), lập luận chứ không phải định lý, phát biểu kèm tên bài; dữ liệu không phủ làm (H4b) hỏng, nghiệm không duy nhất; (d) không con đường nào thăm dò ngoài miền hỗ trợ của $\pi_{\mathrm{ref}}$). Trong bảng và nhận xét, "(H1)–(H4)" nghĩa là (H1)–(H3) cùng (H4a), (H4b). (Sửa vòng 2, P-04.) Kết mục (GC15, một phía): kết quả đã có, giới hạn còn lại; không dẫn số mục sau; trả lời "**Câu hỏi.**" của §7.1.
 - **Nguồn (Q1).** DPO §1, tr. 2 và §6.1, tr. 8 (chỉ nửa câu "DPO and PPO optimize the same objective"; nửa sau về hiệu quả là kết quả thực nghiệm, không dẫn như sự thật, VP6); IPO §4.2, tr. 4; IPO §5.3 (tập $D_1$), tr. 8; IPO Định lý 2, tr. 5 và Phụ lục A.2, tr. 13; XU Định lý 4.1 và Bảng 1, tr. 3–4; RQ §5.4, (16), tr. 9; CH §2.2.3, tr. 5 (điều chuẩn $\ell_2$, dùng ở Nhận xét 10.69(c) và Tình huống 10.5).
 
-### 7.6 Đọc thêm: biến thể và so sánh thực nghiệm
+#### 7.6 Đọc thêm: biến thể và so sánh thực nghiệm
 
 - `note-topic-id`: `lec-10-topic-30` (đọc thêm). Khoảng 200 từ. Mục lục 13.6.
 - **Nội dung.** Nhận xét 10.70, chỉ điều từng bài báo nêu, có tên bài (VP6): IPO, hàm mất mát bình phương (17) đưa hiệu log-tỉ số về $\tfrac1{2\tau}$, trên dữ liệu của Tình huống 10.5 cho $\pi(y_1)=\sigma(\log2+0{,}5)=0{,}7673$ thay cho $1$; cách đọc mức token của RQ; hai so sánh thực nghiệm (DPO §6.1, Hình 2: đường biên phần thưởng–KL trên bài toán sinh văn bản theo cảm xúc; XU: PPO với chuẩn hóa lợi thế, lô lớn và mô hình tham chiếu cập nhật bằng trung bình trượt vượt DPO trên các bài thử của họ; nửa câu: với cách cập nhật này mô hình tham chiếu không còn cố định, nên mục tiêu không còn là $J_\beta$ của Định nghĩa 10.56; không lặp lại việc XU gán kỹ thuật này cho Ouyang và cộng sự, vì IG C.4 chỉ nói trung bình trượt của trọng số, P-05), đo trên các bài toán khác nhau, không kết luận phương pháp nào tốt hơn. Không đưa $\mu$, $\rho$, $\Psi$ của IPO vào ghi chú; viết bằng lời (P-11).
 - **Nguồn (Q1; sửa vòng 2, P-22).** IPO §5, tr. 5–7; (17), Thuật toán 1, §5.3.1 đều ở tr. 7; RQ §3.1, Định lý 1, (11), tr. 3, 6; DPO §6.1, Hình 2, tr. 7–8; XU tóm tắt, tr. 1 (kết luận chung) và ba yếu tố của PPO ở tr. 2 (phần giới thiệu) và §5, tr. 6, không ở tóm tắt.
 - Trên deck chỉ ở ghi chú diễn giả của `L10-D15`, `L10-D16`.
 
-### Tình huống mới (mục "Tình huống áp dụng và ứng dụng", sau Tình huống 10.3)
+#### Tình huống mới (mục "Tình huống áp dụng và ứng dụng", sau Tình huống 10.3)
 
 - **Tình huống 10.4 (Chọn bản tóm tắt bằng dữ liệu ưu tiên)** (GC24): một bài đăng, ba bản tóm tắt do $\pi_{\mathrm{ref}}=(0{,}5;\,0{,}3;\,0{,}2)$ sinh ra, 45 phép so sánh (15 mỗi cặp: 10–5, 12–3, 10–5); mô hình hóa theo Định nghĩa 10.52(a), 10.53; kiểm (H1), (H4a), (H4b) bằng điều kiện đủ (mỗi cặp có cả hai kết quả, ba cặp nối ba câu trả lời); áp dụng Mệnh đề 10.54, Định lý 10.57, 10.65: $\hat r=(\log4;\,\log2;\,0)$, với $\beta=1$ nghiệm $(\tfrac57;\,\tfrac3{14};\,\tfrac1{14})$; giới hạn: một lời nhắc, ba câu trả lời; với mô hình ngôn ngữ phải đi qua Thuật toán 10.61 hoặc 10.67. Nguồn khung: ST (bài toán tóm tắt), số liệu tự dựng.
 - **Tình huống 10.5 (Vi phạm giả thiết: ưu tiên tất định từ ít dữ liệu)** (GC-RL-8): phần thưởng thật $(\log2;\,0)$, ba so sánh cùng chọn $y_1$ (xác suất $\tfrac8{27}$); (H4a) hỏng vì $k=n$; DPO đẩy $\pi_\theta(y_1)\to1$ với mọi $\beta$, $J_1$ theo phần thưởng thật từ $0{,}5108$ xuống $0{,}2877$, $D_{\mathrm{KL}}(\pi_\theta\Vert\pi_{\mathrm{ref}})\to\log\tfrac32=0{,}4055$ (bị chặn; đại lượng không bị chặn là $r_\theta(y_2)$). Con đường RLHF lý tưởng cũng vậy: $L^{\mathrm{BT}}$ không có cực tiểu, hiệu $\hat r(y_1)-\hat r(y_2)\to\infty$, và nghiệm có phạt KL tương ứng tiến tới $(1;\,0)$ với mọi $\beta$ (IPO §4.2, "for any τ"; IPO §5.3, $D_1$). Hai con đường chỉ khác nhau khi mô hình phần thưởng được điều chuẩn (CH §2.2.3), cho $\hat r$ hữu hạn và nghiệm có $\pi(y_2)>0$: lập luận của Gheshlaghi Azar và cộng sự (§4.2), không phải định lý, phát biểu kèm tên bài. Nêu nguyên nhân bằng giả thiết, không khuyến nghị ngoài nguồn. (Sửa vòng 2, P-04.)
 - Chủ đề: hai tình huống không có mốc `note-topic-id` riêng (đứng trong mục Tình huống, như 10.1–10.3); khi ánh xạ deck, Tình huống 10.5 (`L10-D16`) mang `lec-10-topic-29`.
 
-## Mục 8 của ghi chú: Tổng kết (đổi số từ §7, 2026-11-19)
+### Mục 8 của ghi chú: Tổng kết (đổi số từ §7, 2026-11-19)
 
 `## 7. Tổng kết và chuyển tiếp` thành `## 8. Tổng kết` (GC-RL-15, Q3). Câu dẫn "Mỗi kết quả của Mục 2–6 đúng dưới một bộ giả thiết riêng." thành "Mục 2–7". Mốc `lec-10-topic-23` (trước 8.1) và `lec-10-topic-24` (trước 8.6) giữ nguyên. Không khái niệm mới.
 
@@ -247,7 +382,7 @@ Viết tắt nguồn dưới đây (kế hoạch A1): **DPO** Rafailov và cộn
 
 **"Ứng dụng" sau Tình huống 10.3 (Q8).** Hai gạch đầu dòng đều trỏ nội dung Bài 11 cũ (A2C, A3C, ACER, IMPALA, ACKTR, SAC; SPO, SAM+PPO), trong khi Bài 11 đang dựng lại thành "Lập kế hoạch dựa trên mô hình": bỏ cả đoạn "**Ứng dụng.**". Gạch thứ nhất không thuộc đúng danh sách của Q8 (không SPO, SAM+PPO, không "Bài 11 xử lý …") nhưng trỏ tới nội dung không còn trong kho (GC15). Điều phối viên đã duyệt (vòng 2). Tên mục `## Tình huống áp dụng và ứng dụng` giữ nguyên dù không còn đoạn "Ứng dụng": GC-RL-1 cố định tên mục của mẫu chương, và các tình huống 10.1–10.5 là ứng dụng của chương.
 
-### Các chỗ sửa ngoài Mục 7 và Mục 8 (kế hoạch A9, tóm tắt)
+#### Các chỗ sửa ngoài Mục 7 và Mục 8 (kế hoạch A9, tóm tắt)
 
 | Vị trí | Sửa | Căn cứ |
 |---|---|---|
@@ -262,7 +397,7 @@ Viết tắt nguồn dưới đây (kế hoạch A1): **DPO** Rafailov và cộn
 | Bài tập củng cố | câu dẫn phủ chín mục tiêu; bốn bài 10.18–10.21 cuối "Mức vận dụng" | BT-RL-5, BT-RL-10 |
 | Tài liệu tham khảo | "Hướng dẫn đọc thêm" thêm một câu về Mục 7; thêm tám mục 18–25 (kế hoạch A9; nơi công bố chỉ ghi khi đã kiểm); sửa vòng 2: mục 23 (Gheshlaghi Azar và cộng sự) dẫn "Mệnh đề 1, 4, §4.2, §5 (tr. 5–7), (17), Định lý 2, Phụ lục A.2, B: Mục 7.4–7.6, Tình huống 10.5", năm theo bản đã kiểm (arXiv v2, 2023) cho tới khi kiểm nơi công bố, và A1 của kế hoạch viết "2024" phải thống nhất (P-18); mục 21 (Ziegler và cộng sự) dẫn "(1) dạng chọn một trong bốn, (2), §2.2"; mục 24 (Xu và cộng sự) dẫn "Định lý 4.1, Bảng 1, tr. 2, §5"; mục 18 (DPO) không dẫn Bảng 3; câu ghi nguồn của Định lý 10.65 theo đoạn "Ghi nguồn của Định lý 10.65" ở mục 7; mục 1 "Mục 7: tr. 2–3, 28, 43" thành "Mục 8"; mục 17 bỏ phần SPO, SAM+PPO và "trình bày ở Bài 11" | GC25, Q1, Q8 |
 
-## Bảng thuật ngữ Việt–Anh
+### Bảng thuật ngữ Việt–Anh
 
 Kế thừa bảng của Bài 09 (`planning/lec-09/outline.md`). Lần đầu xuất hiện trên mặt trang, viết tên tiếng Việt kèm tên tiếng Anh trong ngoặc; các lần sau chỉ dùng tên tiếng Việt. Cột "lần đầu" là trang dự kiến.
 
@@ -358,7 +493,7 @@ Quy ước cho phần mới:
 
 Thuật ngữ bỏ của bộ trang chiếu cũ: "surrogate", "truncation", "rollout", "batch", "value clipping", "clip fraction" để trần; "hợp đồng"; $\widehat A^{\mathrm{actor}}$; $w_t$; $d^\pi$, $\mathbb E_{\mathrm{disc},\pi}$, $\mathbb E_B$; $m_t$, $c_t$ (thay bằng $1-Z_{t+1}$, $(1-Z_{t+1})(1-U_{t+1})$); $H$ cho độ dài đoạn (thay bằng $h$).
 
-## Quyết định ký hiệu
+### Quyết định ký hiệu
 
 - Phân phối đầu $\mu_0$ (Bài 09: $\rho_0$), nêu ở `L10-102` và trong ghi chú diễn giả.
 - Tỉ số $\rho_t(\theta)$, $\rho_\theta(s,a)$; Bài 11 viết $w_t$ cho tỉ số này và $\rho_t$ cho tỉ số với chính sách hành vi, nêu trong ghi chú diễn giả `L10-709`.
@@ -372,7 +507,7 @@ Thuật ngữ bỏ của bộ trang chiếu cũ: "surrogate", "truncation", "rol
 - Số câu trả lời được xếp hạng cho một lời nhắc (IG viết $K$): $K$ đã là số epoch và mọi chữ Latin đơn trong chương đã có nghĩa, nên dùng ký hiệu cục bộ $n_{\mathrm{xh}}$ (chỉ trong Nhận xét 10.55, ghi vào danh sách nghĩa cục bộ), hoặc viết bằng lời (sửa vòng 2, P-12). Cũng không dùng $\mu$, $\rho$, $\Psi$ của IPO và $f$ theo nghĩa toán tử chiếu của DPO (8) hay của XU; bảng tương ứng với bài báo ghi thêm $\rho$ của IPO, $f$ của DPO (8) và XU, cặp $\theta/\phi$ ngược của IG, ST, và một câu cảnh báo: DPO đặt dấu mũ cho phần thưởng ngầm định ($\hat r_\theta$), học phần đặt dấu mũ cho mô hình phần thưởng tường minh ($\hat r$) (P-11, mục 5 của báo cáo phân tích nguồn).
 - Chiều KL của Mục 7: $D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})$ (mới‖tham chiếu), ngược chiều cũ‖mới của TRPO, PPO-Penalty, approxKL.
 
-## Ánh xạ hai chiều `note-topic-id` ↔ `data-slide-id`
+### Ánh xạ hai chiều `note-topic-id` ↔ `data-slide-id`
 
 **Chủ đề → trang.**
 
@@ -413,7 +548,7 @@ Thuật ngữ bỏ của bộ trang chiếu cũ: "surrogate", "truncation", "rol
 
 **Bổ sung DPO (2026-11-19).** Cột trang của `topic-25` … `-30` là dự kiến theo kế hoạch C2; storyboard (giai đoạn III.1) chốt. Trang tiêu đề mạch `L10-D00` mang `topic-25`. Bài tập 10.18 (trên trang `L10-D17`, `L10-D18`) gán `topic-26`, chủ đề của Định lý 10.57 mà bài dùng. Mọi chủ đề cốt lõi mới (26–29) có ít nhất một trang nội dung; `topic-30` (đọc thêm) chỉ ở ghi chú diễn giả. `L10-104b` (tách từ `L10-104`) mang `topic-02`. Tổng sau bổ sung: 30 chủ đề, 120–123 `data-slide-id`. `topic-24` đổi nhóm sang cầu nối vì sau Q8 tiểu mục chỉ còn đoạn giới hạn còn lại của chương, không còn nội dung đọc thêm (SPO, SAM+PPO); điều phối viên đã duyệt (vòng 2).
 
-## Phân loại chủ đề
+### Phân loại chủ đề
 
 GC-RL-12, GC17: phân loại bốn nhóm chỉ nằm ở đây, không vào ghi chú. Nhóm của `topic-01` … `-23` lấy từ cột "nhóm" của bảng ánh xạ (bản đồ chủ đề của commit `1c9ef05`); `topic-24` đổi nhóm theo Q8; `topic-25` … `-30` theo kế hoạch A6. Mục 7 không áp quy định "nội dung dựa chủ yếu vào bài báo xếp `bổ sung`" ("P1, Bài 10, Mục 7 (riêng)"): tác giả yêu cầu DPO là nội dung của bài và mục lục giáo trình đặt nó ở 13.4–13.6.
 
@@ -452,7 +587,7 @@ GC-RL-12, GC17: phân loại bốn nhóm chỉ nằm ở đây, không vào ghi 
 
 Tổng: cốt lõi 20 (03, 05, 06, 08–11, 13–21, 26–29), cầu nối 7 (01, 02, 07, 12, 23–25), bổ sung 1 (04), đọc thêm 2 (22, 30). Trong các chủ đề cốt lõi của Mục 7, các giá trị thực nghiệm của bài báo (Nhận xét 10.55, 10.62; giá trị Phụ lục B của DPO trong "Trong thực hành") là chi tiết thực hành của chủ đề, không tách thành chủ đề riêng. Dạng mức token của Định nghĩa 10.52(b) và Bổ đề 10.59 thuộc chủ đề cốt lõi vì Thuật toán 10.61, 10.67 dùng chúng; cách đọc DPO như hàm $Q$ mức token của RQ thuộc `topic-30`.
 
-## Bài tập: kế hoạch bổ sung DPO (2026-11-19)
+### Bài tập: kế hoạch bổ sung DPO (2026-11-19)
 
 Số hiệu theo Q4 và BT-RL-10: `exercises.md` giữ 10.13–10.17; bốn bài mới của ghi chú là 10.18–10.21, cuối "Mức vận dụng" của "Bài tập củng cố", sau Bài tập 10.12 (ghi chú nhảy từ 10.12 sang 10.18); Sutton và Barto (2018) Bài tập 2.9 thành Bài tập 10.22 trong `exercises.md`. Mỗi bài của ghi chú: một `hint`, một `solution` chia "**Câu (a).**", kết bằng "**Kiểm tra lại.**", đề tự chứa (GC23, BT-RL-5). Đề, lời giải và số đã tính lại ở kế hoạch B2 (số hiệu cũ của kế hoạch ghi trong ngoặc).
 
@@ -478,7 +613,7 @@ Câu dẫn mới của "Bài tập củng cố": "Các bài phủ chín mục ti
 
 **Số hiệu đã chốt (điều phối viên, vòng 2).** Bốn bài 10.13–10.16 của kế hoạch thành 10.18–10.21 theo thứ tự; bài bán kính cắt là Bài tập 10.21. Ô "Đề xuất" của Q4 viết "đánh lại thành 10.20 theo thứ tự mới": đó là lỗi chép của điều phối viên, không phải quyết định khác; tác tử sau không theo câu chữ đó.
 
-## Sai khác có chủ ý
+### Sai khác có chủ ý
 
 **So với ghi chú bài giảng** (cần điều phối viên ghi `review-log.md`).
 
@@ -506,7 +641,7 @@ Câu dẫn mới của "Bài tập củng cố": "Các bài phủ chín mục ti
 6. Tr. 37, 39–42 (lý thuyết PPO-Clip) nén vào trang đọc thêm `L10-618`; kết luận theo Jin, Li và Wang (2024), có giả thiết và phạm vi.
 7. Bổ sung không có trong nguồn, theo ghi chú: hai ví dụ dẫn nhập định lượng (tr. 9–10, 14 chỉ nêu bằng lời), đường cơ sở tối ưu (Greensmith và cộng sự, 2004), chứng minh bổ đề hiệu hiệu năng (Kakade và Langford, 2002), chặn cải thiện dạng trung bình (Achiam và cộng sự, 2017), gradient liên hợp (Nocedal và Wright, 2006), approxKL và mệnh đề không chệch.
 
-## Nguồn theo trang
+### Nguồn theo trang
 
 | trang nguồn | nội dung | trang đích |
 |---|---|---|
@@ -537,7 +672,7 @@ Câu dẫn mới của "Bài tập củng cố": "Các bài phủ chín mục ti
 
 Mạch 7 (`L10-D00` … `L10-D18`) không có trang nguồn: nguồn là Mục 7 của ghi chú đã kiểm định ("P1, Bài 10, Mục 7 (riêng)"); chỗ dẫn bài báo theo tiểu mục ở mục "Mục 7 của ghi chú".
 
-## Hình
+### Hình
 
 | hình | trạng thái | trang |
 |---|---|---|
@@ -565,7 +700,7 @@ Không vẽ hình mới. Các phép tính lặp dùng bảng HTML cố định t
 | `img/lec-10/rlhf-dpo-hai-con-duong.svg` | mới | từ $\mathcal D_{\mathrm{pref}}$ hai nhánh: nhánh trên nét liền, mô hình phần thưởng (Mệnh đề 10.54) → PPO với $\pi_{\mathrm{ref}}$, critic, mẫu trực tuyến (Thuật toán 10.61); nhánh dưới nét đứt, $L^{\mathrm{DPO}}$ với $\pi_{\mathrm{ref}}$ (Thuật toán 10.67); hai nhánh gặp ở khung đậm $\pi^*\propto\pi_{\mathrm{ref}}e^{r/\beta}$ (Định lý 10.57, 10.65); số mô hình trong bộ nhớ 4 và 2; §7.4 hoặc §7.5; trên deck `L10-D15` là bảng, hình chỉ thay hai hàng khi bảng vượt trần (QT7) |
 | `img/lec-10/muc-tieu-phat-kl.svg` | mới, tùy chọn | $J_1(p)$ trên $(0;\,1)$, cực đại $0{,}5108$ tại $p=0{,}8$; ba điểm $\pi_{\mathrm{ref}}$, $(0{,}8;\,0{,}2)$, tham lam; đường nét đứt $\mathbb E\hat r=p\log2$; Ví dụ 10.26; `L10-D07` |
 
-## Phân bổ thời lượng
+### Phân bổ thời lượng
 
 | mạch | trang | số trang | phút |
 |---|---|---:|---:|

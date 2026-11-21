@@ -1,4 +1,4 @@
-# Bài 10 — TRPO, PPO và DPO
+# Bài 10 — TRPO và PPO
 
 ## Mục tiêu học tập
 
@@ -11,8 +11,6 @@ Sau chương này, người học có thể:
 5. **Chặn cải thiện và gradient tự nhiên.** Phát biểu *chặn cải thiện* cùng các giả thiết của nó và suy ra bài toán *miền tin cậy* (trust region); xấp xỉ *phân kỳ Kullback–Leibler* (Kullback–Leibler divergence, KL) bằng *ma trận thông tin Fisher* (Fisher information matrix); tính bằng tay bước *gradient tự nhiên* (natural gradient) và hai vòng *gradient liên hợp* (conjugate gradient) của phương pháp tối ưu chính sách miền tin cậy (Trust Region Policy Optimization, TRPO).
 6. **Mục tiêu cắt và mục tiêu phạt của PPO.** Tính *mục tiêu cắt* (clipped objective) của phương pháp tối ưu chính sách gần kề (Proximal Policy Optimization, PPO) theo dấu của lợi thế; chứng minh mục tiêu cắt không vượt mục tiêu không cắt và trùng giá trị, gradient với nó tại tham số cũ; áp dụng quy tắc điều chỉnh hệ số phạt KL của *PPO-Penalty*.
 7. **Một vòng PPO đầy đủ.** Mô tả một vòng PPO (thu đoạn, GAE, chuẩn hóa lợi thế, $K$ epoch) và phân biệt đại lượng giữ cố định với đại lượng tính lại; tính *approxKL* và *tỉ lệ cắt* (clip fraction) trên một mini-batch; chứng minh approxKL không chệch khi tham số không phụ thuộc mẫu; nêu phạm vi của kết quả hội tụ của *PPO-Clip*.
-8. **Phần thưởng từ dữ liệu ưu tiên và mục tiêu có phạt KL.** Ước lượng *mô hình phần thưởng* (reward model) từ *dữ liệu ưu tiên* (preference data) theo mô hình Bradley–Terry bằng hợp lý cực đại; chứng minh nghiệm dạng đóng của *mục tiêu có phạt KL* (KL-regularized objective) theo một *chính sách tham chiếu* (reference policy, reference model) cố định; mô tả ba giai đoạn của *học tăng cường từ phản hồi con người* (reinforcement learning from human feedback, RLHF) với PPO; phân biệt chính sách cũ của PPO với chính sách tham chiếu.
-9. **Tối ưu ưu tiên trực tiếp.** Suy ra hàm mất mát của *tối ưu ưu tiên trực tiếp* (Direct Preference Optimization, DPO) bằng phép đổi biến giữa phần thưởng và chính sách; tính bằng tay một bước DPO; phát biểu các giả thiết để DPO và RLHF cho cùng chính sách tối ưu, và nêu hậu quả khi một giả thiết không thỏa.
 
 <!-- note-topic-id: lec-10-topic-01 -->
 ## Kiến thức tiên quyết
@@ -39,8 +37,7 @@ Số hiệu `03.k`, …, `09.k` chỉ khối trong ghi chú Bài 03–09. Bài t
   Dưới (G1)–(G4), gradient của hàm mục tiêu có hai dạng
   $$\begin{aligned}&\nabla_\theta J(\theta)\\&\quad=\mathbb E_{\pi_\theta}\Bigl[\sum_{t=0}^{T-1}\gamma^tG_t\,\psi_t\Bigr]\\&\quad=\frac1{1-\gamma}\,\mathbb E_{\substack{S\sim\nu^\pi\\A\sim\pi_\theta(\cdot\mid S)}}\bigl[q_\pi(S,A)\\&\qquad\times\psi_\theta(S,A)\bigr],\end{aligned}$$
   với $\pi=\pi_\theta$ và phân bố chiếm dụng chiết khấu (discounted occupancy distribution) $\nu^\pi(s)=(1-\gamma)\sum_{t\ge0}\gamma^t\Pr_\pi(S_t=s)$. Dạng thứ hai (Hệ quả 09.24) cần thêm MDP hữu hạn ($\mathcal S$ và $\mathcal A$ hữu hạn), chính sách Markov dừng và một trạng thái hấp thụ (absorbing state) sau khi lượt kết thúc, nơi $q_\pi=0$.
-- **REINFORCE** (Thuật toán 09.25, Hệ quả 09.26, Nhận xét 09.27; Ví dụ 09.20, 09.21). REINFORCE thu một lượt bằng $\pi_{\theta_{\mathrm{old}}}$, tính $\widehat g=\sum_t\gamma^tG_t\psi_t$ tại $\theta_{\mathrm{old}}$ rồi cập nhật $\theta\leftarrow\theta_{\mathrm{old}}+\alpha\widehat g$. Dưới (G1)–(G4), $\mathbb E[\widehat g\mid\theta_{\mathrm{old}}]=\nabla_\theta J(\theta_{\mathrm{old}})$. Bỏ trọng số $\gamma^t$ làm kỳ vọng của ước lượng lệch khỏi $\nabla J$ khi $\gamma<1$.
-- **Hồi quy logistic và mô hình ngôn ngữ tự hồi quy** (kiến thức học máy và học sâu). Với $\sigma(z)=1/(1+e^{-z})$, hồi quy logistic cực tiểu hóa trung bình của $-\log\sigma(z_i)$ trên các mẫu nhãn dương, với $\sigma'(z)=\sigma(z)\sigma(-z)$ và $1-\sigma(z)=\sigma(-z)$. Mô hình ngôn ngữ tự hồi quy gán cho chuỗi token $y=(A_0,\dots,A_{T-1})$ sau lời nhắc $x$ xác suất $\prod_t\pi(A_t\mid x,A_0,\dots,A_{t-1})$.
+- **REINFORCE** (Thuật toán 09.25, Hệ quả 09.26, Nhận xét 09.27; Ví dụ 09.20, 09.21). REINFORCE thu một lượt bằng $\pi_{\theta_{\mathrm{old}}}$, tính $\widehat g=\sum_t\gamma^tG_t\psi_t$ tại $\theta_{\mathrm{old}}$ rồi cập nhật $\theta\leftarrow\theta_{\mathrm{old}}+\alpha\widehat g$. Dưới (G1)–(G4), $\mathbb E[\widehat g\mid\theta_{\mathrm{old}}]=\nabla_\theta J(\theta_{\mathrm{old}})$. Bỏ trọng số $\gamma^t$ làm kỳ vọng của ước lượng khác $\nabla J$ khi $\gamma<1$.
 
 ## Bảng ký hiệu
 
@@ -56,7 +53,7 @@ Mỗi chữ giữ một nghĩa trong cả chương, trừ chữ $A$ và vài ngh
 | $\operatorname{sg}$ | dừng gradient | toán tử trong đồ thị tính |
 | $H_t$ | lịch sử $(S_0,A_0,R_1,\dots,R_t,S_t)$, đã biết khi chọn $A_t$ | dãy hữu hạn |
 | $J(\theta)$, $\psi_\theta(s,a)$, $\psi_t$ | hàm mục tiêu; hàm điểm; viết gọn của $\psi_\theta(S_t,A_t)$, bằng $0$ khi $t\ge T$ | $\mathbb R$; $\mathbb R^d$ |
-| $v_\pi$, $q_\pi$, $A_\pi$, $A_{\mathrm{old}}$; $A_\pi(s,\pi')$ | giá trị trạng thái, giá trị hành động, lợi thế $q_\pi-v_\pi$, lợi thế của $\pi_{\mathrm{old}}$; lợi thế trung bình của $\pi'$ so với $\pi$ tại $s$ | hàm thực |
+| $v_\pi$, $q_\pi$, $A_\pi$, $A_{\mathrm{old}}$; $A_\pi(s,\pi')$ | giá trị trạng thái, giá trị hành động, lợi thế $q_\pi-v_\pi$, lợi thế của $\pi_{\mathrm{old}}$; kỳ vọng của $A_\pi(s,A)$ khi $A\sim\pi'(\cdot\mid s)$ | hàm thực |
 | $b(s)$ | đường cơ sở | $\mathcal S\to\mathbb R$, bị chặn |
 | $\hat v(s,w)$, $w$, $w_{\mathrm{old}}$, $\hat v_{\mathrm{old}}$ | hàm giá trị tham số hóa (critic từ Mục 2.4); tham số của nó; tham số lúc thu dữ liệu; viết gọn của $\hat v(\cdot,w_{\mathrm{old}})$ | $\mathbb R$; $\mathbb R^{d'}$ |
 | $\delta_t$ | sai số TD có mặt nạ $(1-Z_{t+1})$ | $\mathbb R$ |
@@ -64,24 +61,17 @@ Mỗi chữ giữ một nghĩa trong cả chương, trừ chữ $A$ và vài ngh
 | $\widehat A^{\mathrm{raw}}_t$, $V^{\mathrm{targ}}_t$ | lợi thế GAE trước chuẩn hóa; mục tiêu của critic $\widehat A^{\mathrm{raw}}_t+\hat v_{\mathrm{old}}(S_t)$ | $\mathbb R$ |
 | $\lambda$ | tham số của GAE | $[0,1]$ |
 | $Z_{t+1}$, $U_{t+1}$ | cờ kết thúc của MDP, cờ cắt ngắn | $\{0,1\}$ |
-| $\nu^\pi$, $\nu^{\mathrm{old}}$, $\eta(s)$ | phân bố chiếm dụng chiết khấu chuẩn hóa, xét trên $\mathcal S$; viết gọn của $\nu^{\pi_{\mathrm{old}}}$; $\eta(s)=\sum_t\gamma^t\Pr(S_t=s,\,t<T)$, số lần thăm kỳ vọng có chiết khấu, không chuẩn hóa, xác định cả khi $\gamma=1$ nếu $\mathbb E[T]<\infty$ | khối $\nu^\pi(\mathcal S)\le1$; $[0,\infty)$ |
+| $\nu^\pi$, $\nu^{\mathrm{old}}$, $\eta_\pi(s)$ | phân bố chiếm dụng chiết khấu chuẩn hóa, xét trên $\mathcal S$; viết gọn của $\nu^{\pi_{\mathrm{old}}}$; $\eta_\pi(s)=\sum_t\gamma^t\Pr_\pi(S_t=s,\,t<T)$, số lần thăm có chiết khấu (kỳ vọng, không chuẩn hóa), bằng $\nu^\pi(s)/(1-\gamma)$ khi $\gamma<1$ và xác định cả khi $\gamma=1$ nếu $\mathbb E[T]<\infty$; viết $\eta(s)$ khi chính sách đã rõ | khối $\nu^\pi(\mathcal S)\le1$; $[0,\infty)$ |
 | $\rho_\theta(s,a)$, $\rho_t(\theta)$ | tỉ số chính sách $\pi_\theta(a\mid s)/\pi_{\mathrm{old}}(a\mid s)$; giá trị tại mẫu, $\rho_\theta(S_t,A_t)$ | $[0,\infty)$ |
-| $\mathcal L_{\theta_{\mathrm{old}}}(\theta)$, $\mathcal L^{\mathrm{CPI}}$, $\mathcal L^{\mathrm{CLIP}}$, $\ell^{\mathrm{CLIP}}_t$ | hàm thay thế; hai hàm thay thế mẫu trên dữ liệu; số hạng cắt của một mẫu (đều được cực đại hóa) | $\mathbb R$ |
+| $\mathcal L_{\theta_{\mathrm{old}}}(\theta)$, $\mathcal L_\pi(\pi')$, $\mathcal L^{\mathrm{CPI}}$, $\mathcal L^{\mathrm{CLIP}}$, $\ell^{\mathrm{CLIP}}_t$ | hàm thay thế, viết theo tham số hoặc theo chính sách (cùng một đại lượng với $\pi=\pi_{\theta_{\mathrm{old}}}$, $\pi'=\pi_\theta$); hai hàm thay thế mẫu trên dữ liệu; số hạng cắt của một mẫu (đều được cực đại hóa) | $\mathbb R$ |
 | $L(\theta,w)$, $L^V$ | hàm mất mát tổng và mất mát giá trị (đều được cực tiểu hóa) | $\mathbb R$ |
-| $D_{\mathrm{TV}}$, $D_{\mathrm{KL}}$, $\bar D_{\mathrm{KL}}$, $\widehat D$, $\mathcal H$ | biến phân toàn phần, KL tại một trạng thái, KL trung bình theo phân bố chiếm dụng, KL trung bình trên bộ đệm, entropy | $[0,1]$; $[0,\infty]$ |
+| $D_{\mathrm{TV}}$, $D_{\mathrm{KL}}$, $\bar D_{\mathrm{KL}}$, $\widehat D$, $\mathcal H$ | biến phân toàn phần, KL tại một trạng thái, KL trung bình (kỳ vọng của KL theo phân bố chiếm dụng), KL trung bình trên bộ đệm, entropy | $[0,1]$; $[0,\infty]$ |
 | $\kappa$, $\kappa_{\mathrm{targ}}$; $\chi_{\pi'}$, $\bar\chi$ | bán kính miền tin cậy; KL mục tiêu của PPO-Penalty; hai hằng của chặn cải thiện | $(0,\infty)$; $[0,\infty)$ |
 | $F$, $g$, $\Delta$ | ma trận Fisher; gradient của hàm thay thế tại $\theta_{\mathrm{old}}$; bước $\theta-\theta_{\mathrm{old}}$ | $\mathbb R^{d\times d}$; $\mathbb R^d$; $\mathbb R^d$ |
-| $\epsilon$, $\beta$, $c_1$, $c_2$ | bán kính cắt; hệ số phạt KL (theo $\pi_{\mathrm{old}}$ ở Mục 6.2, theo $\pi_{\mathrm{ref}}$ ở Mục 7); hai trọng số mất mát | $(0,1)$; $(0,\infty)$; $[0,\infty)$ |
+| $\epsilon$, $\beta$, $c_1$, $c_2$ | bán kính cắt; hệ số phạt KL theo $\pi_{\mathrm{old}}$ (Mục 6.2); hai trọng số mất mát | $(0,1)$; $(0,\infty)$; $[0,\infty)$ |
 | $N$, $h$, $K$, $M$, $E$; $\mathcal D$, $\mathcal B$, $\widehat{\mathbb E}_{\mathcal D}$ | số môi trường, độ dài đoạn thu, số epoch, cỡ mini-batch, số lượt của Thuật toán 10.6 và 10.9; bộ đệm $hN$ mẫu, tập chỉ số của một mini-batch, trung bình đều trên bộ đệm | $\mathbb N_+$; tập |
 | $\alpha$, $\alpha_\theta$, $\alpha_w$ | bước học | $(0,\infty)$ |
-| $x$, $\mathcal X$; $y$, $\mathcal Y(x)$; $\mathcal V$ | lời nhắc, tập lời nhắc; câu trả lời, tập câu trả lời cho $x$; tập token (Mục 7) | $\mathcal Y(x)$, $\mathcal V$ hữu hạn |
-| $\pi_{\mathrm{ref}}$, $\theta_{\mathrm{ref}}$ | chính sách tham chiếu, cố định trong cả Mục 7; tham số của nó | phân phối trên $\mathcal Y(x)$ với mỗi $x$ |
-| $y_w$, $y_l$; $\mathcal D_{\mathrm{pref}}$, $\widehat{\mathbb E}_{\mathcal D_{\mathrm{pref}}}$ | câu trả lời được chọn, bị loại trong một phép so sánh; tập dữ liệu ưu tiên, trung bình đều trên nó | bộ ba $(x,y_w,y_l)$ |
 | $\sigma$ | hàm logistic $\sigma(z)=1/(1+e^{-z})$ | $\mathbb R\to(0,1)$ |
-| $r(x,y)$, $\hat r(x,y)$ | phần thưởng chưa biết sinh ra các phép so sánh, tức $r(s,a)$ với $s=x$, $a=y$; mô hình phần thưởng học được | $\mathbb R$ |
-| $J_\beta$, $\pi^*_r$, $\mathcal Z_r(x)$ | mục tiêu có phạt KL; nghiệm của nó với phần thưởng $r$; hàm phân hoạch | $\mathbb R$; phân phối; $(0,\infty)$ |
-| $r_\theta$, $\Delta r_\theta$; $\tilde r_\theta$ | phần thưởng ngầm định $\beta\log(\pi_\theta/\pi_{\mathrm{ref}})$ và hiệu của nó giữa $y_w$ và $y_l$; phần thưởng đã trừ KL $r-r_\theta$ | $\mathbb R$ |
-| $L^{\mathrm{BT}}$, $L^{\mathrm{DPO}}$ | mất mát Bradley–Terry của mô hình phần thưởng; mất mát DPO (đều được cực tiểu hóa) | $[0,\infty)$ |
 
 Quy ước đọc bảng gồm các điểm sau.
 
@@ -91,14 +81,13 @@ Quy ước đọc bảng gồm các điểm sau.
   - $e_A$, $e_B$, $e_s$ là véc-tơ đơn vị, còn $e(s)=\hat v(s,w)-v_\pi(s)$ là sai số critic (Mệnh đề 10.8, Bài tập 10.5);
   - $I$ là ma trận đơn vị, còn trong Thuật toán 10.9 là thừa số $\gamma^t$;
   - $p$, $p_A$, $p_B$ là xác suất chọn hành động 1 trong các ví dụ hai hành động, còn $p_k$ là hướng liên hợp của Thuật toán 10.36;
-  - $n$ là số trạng thái, số bước của lợi tức $n$ bước, và là hình chiếu trong chứng minh Mệnh đề 10.34; ở Mục 7, Tình huống 10.5 và Bài tập 10.19, $n$ là số phép so sánh và $k$ là số phép chọn $y_1$;
-  - $x_k$, $y_k$ là bước lặp và tích $Fp_k$ của Thuật toán 10.36, $x$ trong $\langle x,f\rangle$ là vector của chứng minh Định lý 10.26, $\sigma(x)$ ở Ví dụ 10.2 có biến $x$ thực, và $y_t$ là mục tiêu $V^{\mathrm{targ}}_t$ ở Định nghĩa 10.47; ngoài các chỗ đó, $x$ và $y$ là lời nhắc và câu trả lời của Mục 7;
-  - $\Delta J$, $\Delta p$, $\Delta_P$, $\Delta_\pi$ là các hiệu, khác bước $\Delta$;
+  - $n$ là số trạng thái, số bước của lợi tức $n$ bước, và là hình chiếu trong chứng minh Mệnh đề 10.34;
+  - $x_k$, $y_k$ là bước lặp và tích $Fp_k$ của Thuật toán 10.36, $x$ trong $\langle x,f\rangle$ là vector của chứng minh Định lý 10.26, $\sigma(x)$ ở Ví dụ 10.2 có biến $x$ thực, và $y_t$ là mục tiêu $V^{\mathrm{targ}}_t$ ở Định nghĩa 10.47;
+  - $\Delta J$, $\Delta\mathcal L$, $\Delta p$, $\Delta_P$, $\Delta_\pi$ là các hiệu, khác bước $\Delta$;
   - $V$, $V'$, $C_k$ là ký hiệu cục bộ của Thuật toán 10.16 và Hệ quả 10.29, còn $V(\theta)$, $C$, $n$ trong Nhận xét 10.51 theo ký hiệu của bài báo được dẫn.
-- Có hai loại trung bình. Kỳ vọng lý thuyết $\mathbb E_{S\sim\nu^\pi}$ có trọng số chiết khấu $(1-\gamma)\gamma^t$ theo thời điểm thăm. Trung bình thực hành $\widehat{\mathbb E}_{\mathcal D}$ là trung bình đều trên các mẫu của một bộ đệm $\mathcal D$.
+- Kỳ vọng $\mathbb E_{S\sim\nu^\pi}$ có trọng số chiết khấu $(1-\gamma)\gamma^t$ theo thời điểm thăm. Ký hiệu $\widehat{\mathbb E}_{\mathcal D}$ chỉ trung bình đều trên các mẫu của một bộ đệm $\mathcal D$, một đại lượng tính từ mẫu hữu hạn.
 - Bài 09 viết phân phối đầu là $\rho_0$; ở đây viết $\mu_0$ vì chữ $\rho$ dành cho tỉ số chính sách. Sutton và Barto (2018, Chương 13) viết chính sách là $\pi(a\mid s,\boldsymbol\theta)$ và hai bước học là $\alpha^{\boldsymbol\theta}$, $\alpha^{\mathbf w}$; ở đây viết $\pi_\theta(a\mid s)$, $\alpha_\theta$, $\alpha_w$, còn $\hat v(s,w)$ giữ nguyên.
 - Ký hiệu của các bài báo: $\rho_\pi$ của Schulman và cộng sự (2015) là $\eta$, bán kính $\delta$ là $\kappa$; tỉ số $r_t(\theta)$ của Schulman và cộng sự (2017) là $\rho_t(\theta)$, độ dài đoạn $T$ là $h$; phần thưởng $r_t$ là $R_{t+1}$.
-- Ký hiệu của các bài báo ở Mục 7: $r^*$, $r_\phi$, $\hat r_\theta$, $Z(x)$, $\mathcal D$, $\mathcal L_R$, $\mathcal L_{\mathrm{DPO}}$, $\pi_r$ của Rafailov và cộng sự (2023) là $r$, $\hat r$, $r_\theta$, $\mathcal Z_r(x)$, $\mathcal D_{\mathrm{pref}}$, $L^{\mathrm{BT}}$, $L^{\mathrm{DPO}}$, $\pi^*_r$; ở đây dấu mũ chỉ mô hình phần thưởng, không chỉ phần thưởng ngầm định. Ouyang và cộng sự (2022) viết mô hình phần thưởng là $r_\theta$ và chính sách là $\pi^{\mathrm{RL}}_\phi$; Ziegler và cộng sự (2019) viết mô hình ban đầu là $\rho$; Gheshlaghi Azar và cộng sự (2024) viết hệ số KL là $\tau$.
 - Ứng với giáo trình *Học máy thống kê*: $v_\pi$, $q_\pi$ là $V^\pi$, $Q^\pi$.
 
 ---
@@ -110,7 +99,7 @@ Quy ước đọc bảng gồm các điểm sau.
 
 Bài 09 kết thúc với thuật toán REINFORCE (Thuật toán 09.25). Thuật toán thu một lượt bằng chính sách $\pi_{\theta_{\mathrm{old}}}$, tính lợi tức $G_t$ của từng bước, rồi cập nhật tham số theo ước lượng
 $$\widehat g=\sum_{t=0}^{T-1}\gamma^tG_t\,\psi_{\theta_{\mathrm{old}}}(S_t,A_t).$$
-Mỗi hàm điểm được nhân với lợi tức đến sau nó và với trọng số chiết khấu $\gamma^t$. Dưới các giả thiết (G1)–(G4) của Định lý 09.23, Hệ quả 09.26 cho $\mathbb E[\widehat g\mid\theta_{\mathrm{old}}]=\nabla_\theta J(\theta_{\mathrm{old}})$, nghĩa là mỗi lượt cho một mẫu không chệch của gradient; Ví dụ 09.21 cho thấy bỏ trọng số $\gamma^t$ làm mất tính chất này khi $\gamma<1$. Tính không chệch là một khẳng định về trung bình trên nhiều lượt. Hai ví dụ sau đo điều xảy ra trên từng lượt.
+Mỗi hàm điểm được nhân với lợi tức đến sau nó và với trọng số chiết khấu $\gamma^t$. Dưới các giả thiết (G1)–(G4) của Định lý 09.23, Hệ quả 09.26 cho $\mathbb E[\widehat g\mid\theta_{\mathrm{old}}]=\nabla_\theta J(\theta_{\mathrm{old}})$, nghĩa là mỗi lượt cho một mẫu không chệch của gradient; Ví dụ 09.21 cho thấy bỏ trọng số $\gamma^t$ làm mất tính chất này khi $\gamma<1$. Tính không chệch là một khẳng định về kỳ vọng theo phân phối của lượt. Hai ví dụ sau đo điều xảy ra trên từng lượt.
 
 ![Thẻ dữ kiện bài toán một bước, chính sách softmax, hai hành động: bảng hai cột cho a bằng 1 và a bằng 2, đặc trưng phi của s, a bằng (1; 0) và (0; 1); xác suất pi theta bằng 2/3 và 1/3; phần thưởng r bằng 3 và 0. Dòng dưới: theta bằng (log 2; 0), lượt dừng sau A 0.](img/lec-09/one-step-card.svg)
 
@@ -131,7 +120,28 @@ Mỗi hàm điểm được nhân với lợi tức đến sau nó và với tr�
 Ví dụ sau cho thấy hậu quả của phương sai lớn trên từng lượt: mỗi lượt cho một hướng cập nhật khác, và có lượt cho hướng ngược chiều gradient.
 
 ::: example Ví dụ 10.2 (Ba lượt REINFORCE trên hành lang ngắn)
-**Dữ kiện.** Hành lang ngắn đảo hành động (Sutton và Barto, 2018, Ví dụ 13.1): bốn ô $s_1$ (xuất phát), $s_2$, $s_3$, $s_4$ (đích, kết thúc lượt); phần thưởng $-1$ mỗi bước; $\gamma=1$. Hành động 1 là "sang phải", hành động 2 là "sang trái"; ở $s_2$ hai hành động bị đảo; sang trái tại $s_1$ thì đứng yên. Mọi ô có cùng đặc trưng $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$, nên chính sách softmax chọn hành động 1 với cùng xác suất $p=\pi_\theta(1\mid s)$ ở mọi ô. Tại $\theta=(0;\,0)$: $p=\tfrac12$, $\psi_\theta(s,1)=(\tfrac12;\,-\tfrac12)$, $\psi_\theta(s,2)=(-\tfrac12;\,\tfrac12)$. Hàm mục tiêu là $J(p)=-2(2-p)/\bigl(p(1-p)\bigr)$, nên $J(\tfrac12)=-12$. Vì $J'(\tfrac12)=8$ và $\partial p/\partial\theta_1=-\partial p/\partial\theta_2=p(1-p)=\tfrac14$, gradient đúng là $\nabla_\theta J=(2;\,-2)$. Bước học $\alpha=0{,}1$.
+**Dữ kiện.** Hành lang ngắn đảo hành động (Sutton và Barto, 2018, Ví dụ 13.1): bốn ô $s_1$ (xuất phát), $s_2$, $s_3$, $s_4$ (đích, kết thúc lượt); phần thưởng $-1$ mỗi bước; $\gamma=1$. Hành động 1 là "sang phải", hành động 2 là "sang trái"; ở $s_2$ hai hành động bị đảo; sang trái tại $s_1$ thì đứng yên. Mọi ô có cùng đặc trưng $\phi(s,1)=(1;\,0)$, $\phi(s,2)=(0;\,1)$, nên chính sách softmax chọn hành động 1 với cùng xác suất $p=\pi_\theta(1\mid s)=\sigma(\theta_1-\theta_2)$ ở mọi ô, với hàm logistic $\sigma(x)=1/(1+e^{-x})$. Tại $\theta=(0;\,0)$: $p=\tfrac12$, $\psi_\theta(s,1)=(\tfrac12;\,-\tfrac12)$, $\psi_\theta(s,2)=(-\tfrac12;\,\tfrac12)$. Bước học $\alpha=0{,}1$.
+
+**Hàm mục tiêu.** Viết $v_i=v_\pi(s_i)$ với $i=1,2,3$; đích có giá trị $0$. Theo động lực của hành lang, tại $s_1$ hành động 1 tới $s_2$ và hành động 2 đứng yên; tại $s_2$ hành động 1 về $s_1$ và hành động 2 tới $s_3$; tại $s_3$ hành động 1 tới đích và hành động 2 về $s_2$. Với phần thưởng $-1$ và $\gamma=1$, Mệnh đề 03.22 và 03.23 cho hệ
+$$\begin{aligned}v_1&=-1+p\,v_2+(1-p)\,v_1,\\v_2&=-1+p\,v_1+(1-p)\,v_3,\\v_3&=-1+(1-p)\,v_2.\end{aligned}$$
+Ta khử từng ẩn.
+
+- Phương trình thứ nhất cho $p\,v_1=-1+p\,v_2$, tức $v_1=v_2-\tfrac1p$.
+- Phương trình thứ ba cho $v_3$ theo $v_2$: $v_3=-1+(1-p)\,v_2$.
+- Thế hai biểu thức vào phương trình thứ hai: $v_2=-1+p\,v_2-1-(1-p)+(1-p)^2v_2$, tức $\bigl[1-p-(1-p)^2\bigr]v_2=-(3-p)$.
+- Vì $1-p-(1-p)^2=(1-p)\bigl(1-(1-p)\bigr)=p(1-p)$, ta được $v_2=-\dfrac{3-p}{p(1-p)}$.
+- Lượt xuất phát từ $s_1$, nên $J(p)=v_1=v_2-\tfrac1p$.
+
+Do đó
+$$\begin{aligned}J(p)&=-\frac{(3-p)+(1-p)}{p(1-p)}\\&=-\frac{2(2-p)}{p(1-p)}.\end{aligned}$$
+
+Tại $p=\tfrac12$: $v_2=-2{,}5/0{,}25=-10$, $v_1=J(\tfrac12)=-12$ và $v_3=-1+\tfrac12\cdot(-10)=-6$.
+
+**Gradient đúng.** Đặt $N(p)=2-p$ và $D(p)=p(1-p)$, nên $J=-2N/D$ và
+$$\begin{aligned}J'(p)&=-2\,\frac{N'D-ND'}{D^2}\\&=2\,\frac{D+N(1-2p)}{D^2}.\end{aligned}$$
+Tại $p=\tfrac12$: $1-2p=0$ và $D=\tfrac14$, nên $J'(\tfrac12)=2\cdot\tfrac14\big/\tfrac1{16}=8$. Vì $p=\sigma(\theta_1-\theta_2)$ và $\sigma'=\sigma(1-\sigma)$, ta có $\partial p/\partial\theta_1=-\partial p/\partial\theta_2=p(1-p)=\tfrac14$; quy tắc dây chuyền cho $\nabla_\theta J=J'(\tfrac12)\cdot\tfrac14\cdot(1;\,-1)=(2;\,-2)$.
+
+**Giá trị tốt nhất.** $J'(p)=0$ khi $D+N(1-2p)=p(1-p)+(2-p)(1-2p)=p^2-4p+2=0$. Nghiệm trong $(0,1)$ là $p^*=2-\sqrt2\approx0{,}586$, với $J(p^*)\approx-11{,}66$. Vì $J(p)\to-\infty$ khi $p\to0$ và khi $p\to1$, đây là giá trị lớn nhất của $J$.
 
 **Ba lượt.** Mỗi lượt đi theo động lực của hành lang tới đích $s_4$, nên $G_t=-(T-t)$. Mỗi hành động được chọn với xác suất $\tfrac12$, nên lượt dài $T$ bước có xác suất $(\tfrac12)^T$.
 
@@ -153,11 +163,11 @@ Ba lượt cho $\widehat g=(-1;\,1)$, $(1;\,-1)$ và $(-5{,}5;\,5{,}5)$, trong k
 
 - hướng: $\alpha\widehat g=(-0{,}55;\,0{,}55)$;
 - tham số mới: $\theta=(0;\,0)+(-0{,}55;\,0{,}55)=(-0{,}55;\,0{,}55)$;
-- xác suất mới: $p=\sigma(\theta_1-\theta_2)=\sigma(-1{,}1)\approx0{,}25$, với hàm logistic $\sigma(x)=1/(1+e^{-x})$.
+- xác suất mới: $p=\sigma(\theta_1-\theta_2)=\sigma(-1{,}1)\approx0{,}25$.
 
 Hàm mục tiêu giảm từ $J(0{,}5)=-12$ xuống $J\approx-18{,}7$.
 
-**Diễn giải.** Mọi phần thưởng âm nên mọi $G_t<0$, và mỗi hành động đã chọn bị giảm xác suất theo $\lvert G_t\rvert$. Hướng của một lượt vì vậy do các hành động nó đã chọn quyết định. Lượt (a) chọn hành động 1 ở hai bước có $\lvert G_t\rvert$ cộng lại bằng $4$, lớn hơn $2$ của bước chọn hành động 2, nên đẩy $p$ xuống. Lượt (b) chọn hành động 2 ở hai bước có $\lvert G_t\rvert$ cộng lại bằng $6$, lớn hơn tổng $4$ của hai bước chọn hành động 1, nên đẩy $p$ lên. Lượt (c) chọn hành động 1 bốn lần, nên $p$ giảm từ $0{,}5$ xuống $0{,}25$, xa dần giá trị tốt nhất $p^*=2-\sqrt2\approx0{,}59$, nghiệm trong $(0,1)$ của $J'(p)=0$, tức của $p^2-4p+2=0$.
+**Diễn giải.** Mọi phần thưởng âm nên mọi $G_t<0$, và mỗi hành động đã chọn bị giảm xác suất theo $\lvert G_t\rvert$. Hướng của một lượt vì vậy do các hành động nó đã chọn quyết định. Lượt (a) chọn hành động 1 ở hai bước có $\lvert G_t\rvert$ cộng lại bằng $4$, lớn hơn $2$ của bước chọn hành động 2, nên đẩy $p$ xuống. Lượt (b) chọn hành động 2 ở hai bước có $\lvert G_t\rvert$ cộng lại bằng $6$, lớn hơn tổng $4$ của hai bước chọn hành động 1, nên đẩy $p$ lên. Lượt (c) chọn hành động 1 bốn lần, nên $p$ giảm từ $0{,}5$ xuống $0{,}25$, xa dần giá trị tốt nhất $p^*\approx0{,}59$.
 
 **Kiểm tra lại.** Với $p=\sigma(-1{,}1)=0{,}24974$: $p(1-p)=0{,}18737$ và $2(2-p)=3{,}50052$, nên $J=-3{,}50052/0{,}18737=-18{,}68$.
 :::
@@ -175,11 +185,11 @@ Giới hạn thứ hai nằm ở cách dùng dữ liệu. Hệ quả 09.26 cần
 
 Cùng một hướng đúng, bước nhỏ làm $J$ tăng còn bước lớn làm $J$ giảm, vì $J$ chỉ gần tuyến tính trong một lân cận nhỏ của chính sách cũ.
 
-Hai giới hạn này dẫn tới **bài toán trung tâm của chương**: giảm phương sai của ước lượng gradient mà vẫn giữ kỳ vọng của nó, và dùng lại dữ liệu của $\pi_{\mathrm{old}}$ để chọn một bước cập nhật lớn mà chính sách mới không kém chính sách cũ. Khi phần thưởng chỉ được biết qua các phép so sánh ưu tiên, bài toán có thêm phần thứ ba: tìm chính sách cực đại hóa phần thưởng mà vẫn ở gần một chính sách tham chiếu cố định.
+Hai giới hạn này dẫn tới **bài toán trung tâm của chương**: giảm phương sai của ước lượng gradient mà vẫn giữ kỳ vọng của nó, và dùng lại dữ liệu của $\pi_{\mathrm{old}}$ để chọn một bước cập nhật lớn mà chính sách mới không kém chính sách cũ.
 
-![Ba hàng khung nối bằng mũi tên. Hàng trên, viền liền, nhãn phương sai của ước lượng gradient: khung đường cơ sở và critic, với G t trừ v mũ của S t và sai số TD delta t (Mục 2), dẫn tới khung GAE, A mũ t bằng tổng theo k của (gamma lambda) mũ k nhân delta t cộng k (Mục 3). Hàng dưới, viền nét đứt, nhãn độ lớn bước cập nhật: khung hàm thay thế và chặn cải thiện (Mục 4), dẫn tới khung TRPO, KL trung bình không vượt kappa (Mục 5), rồi khung PPO, cắt tỉ số rho t vào đoạn từ 1 trừ epsilon đến 1 cộng epsilon (Mục 6). Hai hàng gặp nhau ở khung cuối, viền đậm: Thuật toán 10.49, PPO kiểu actor–critic, GAE cho lợi thế và mục tiêu cắt cho chính sách. Hàng thứ ba, viền chấm, nhãn phần thưởng từ so sánh ưu tiên: một mũi tên đi xuống từ khung PPO tới khung RLHF với PPO, DPO, phạt KL theo pi ref cố định (Mục 7).](img/lec-10/central-problem.svg)
+![Hai hàng khung nối bằng mũi tên. Hàng trên, viền liền, nhãn phương sai của ước lượng gradient: khung đường cơ sở và critic, với G t trừ v mũ của S t và sai số TD delta t (Mục 2), dẫn tới khung GAE, A mũ t bằng tổng theo k của (gamma lambda) mũ k nhân delta t cộng k (Mục 3). Hàng dưới, viền nét đứt, nhãn độ lớn bước cập nhật: khung hàm thay thế và chặn cải thiện (Mục 4), dẫn tới khung TRPO, KL trung bình không vượt kappa (Mục 5), rồi khung PPO, cắt tỉ số rho t vào đoạn từ 1 trừ epsilon đến 1 cộng epsilon (Mục 6). Hai hàng gặp nhau ở khung cuối, viền đậm: Thuật toán 10.49, PPO kiểu actor–critic, GAE cho lợi thế và mục tiêu cắt cho chính sách.](img/lec-10/central-problem.svg)
 
-Trên hình, các mục xếp thành ba hàng, mỗi hàng trả lời một phần của bài toán trung tâm. Hàng trên giảm phương sai: ở Mục 2, chúng ta trừ đường cơ sở và bootstrap từ một hàm giá trị học được; ở Mục 3, chúng ta trộn các ước lượng nhiều bước thành GAE. Hàng dưới giới hạn bước cập nhật: ở Mục 4, chúng ta chặn mức thay đổi của $J$ theo khoảng cách giữa hai chính sách; ở Mục 5, chúng ta giải bài toán có ràng buộc KL; ở Mục 6, chúng ta thay ràng buộc bằng phép cắt tỉ số. Hai hàng đầu gặp nhau ở thuật toán PPO, nơi lợi thế ước lượng bằng GAE đi vào mục tiêu cắt. Hàng thứ ba nhận PPO làm công cụ: ở Mục 7, chúng ta học phần thưởng từ các phép so sánh, phạt KL theo một chính sách tham chiếu cố định, rồi giải bài toán đó bằng PPO hoặc bằng DPO.
+Trên hình, các mục xếp thành hai hàng, mỗi hàng trả lời một phần của bài toán trung tâm. Hàng trên giảm phương sai: ở Mục 2, chúng ta trừ đường cơ sở và bootstrap từ một hàm giá trị học được; ở Mục 3, chúng ta trộn các ước lượng nhiều bước thành GAE. Hàng dưới giới hạn bước cập nhật: ở Mục 4, chúng ta chặn mức thay đổi của $J$ theo khoảng cách giữa hai chính sách; ở Mục 5, chúng ta giải bài toán có ràng buộc KL; ở Mục 6, chúng ta thay ràng buộc bằng phép cắt tỉ số. Hai hàng gặp nhau ở thuật toán PPO, nơi lợi thế ước lượng bằng GAE đi vào mục tiêu cắt.
 
 ---
 
@@ -277,7 +287,7 @@ $$
 Với đường cơ sở ngẫu nhiên $B_t$, Bước 2 điều kiện theo $(H_t,B_t)$ thay cho $H_t$: theo Định nghĩa 10.1, khi biết $(H_t,B_t)$ hành động $A_t$ vẫn có phân phối $\pi_\theta(\cdot\mid S_t)$, nên cùng chuỗi đẳng thức cho $\mathbb E[B_t\psi_t\mid H_t,B_t]=0$. $\square$
 :::
 
-Theo Mệnh đề 10.2, nếu mức trừ khỏi mỗi lợi tức chỉ phụ thuộc thông tin có trước khi chọn hành động thì hướng trung bình của bước cập nhật giữ nguyên; phép trừ chỉ đổi cách các mẫu phân tán quanh kỳ vọng. Ba giả thiết có vai trò riêng, và mỗi giả thiết bị bỏ đều có phản ví dụ.
+Theo Mệnh đề 10.2, nếu mức trừ khỏi mỗi lợi tức chỉ phụ thuộc thông tin có trước khi chọn hành động thì kỳ vọng của bước cập nhật giữ nguyên; phép trừ chỉ đổi cách các mẫu phân tán quanh kỳ vọng. Ba giả thiết có vai trò riêng, và mỗi giả thiết bị bỏ đều có phản ví dụ.
 
 - Bỏ "đường cơ sở không phụ thuộc hành động": trên bài toán một bước, đặt $b(S_0,A_0)=r(A_0)$. Khi đó $G_0-b=0$ ở mọi lượt, nên $\widehat g_b\equiv0\ne(\tfrac23;\,-\tfrac23)$. Chọn $b=G_t$ của chính lượt cho cùng kết quả.
 - Bỏ "lượt sinh bởi $\pi_\theta$": nếu hành động của bài toán một bước được chọn đều, mỗi hành động với xác suất $\tfrac12$, thì $\mathbb E[b\,\psi_\theta(s,A)]=b\bigl(\tfrac12(\tfrac13;\,-\tfrac13)+\tfrac12(-\tfrac23;\,\tfrac23)\bigr)=b\,(-\tfrac16;\,\tfrac16)$, khác $0$ khi $b\ne0$.
@@ -342,7 +352,7 @@ $$
 **Bước 3 ($b^*$ là cực tiểu duy nhất).** Đặt $k_2=\mathbb E\lVert\psi\rVert^2>0$ và $k_1=\mathbb E[R\lVert\psi\rVert^2]$. Phần phụ thuộc $b$ là $k_2b^2-2k_1b=k_2(b-k_1/k_2)^2-k_1^2/k_2$, một hàm bậc hai có hệ số dương. Hàm này đạt nhỏ nhất duy nhất tại $b^*=k_1/k_2$, và hiệu $\operatorname{Var}(X_b)-\operatorname{Var}(X_{b^*})$ bằng $k_2(b-b^*)^2$. $\square$
 :::
 
-Đọc bằng lời, $b^*$ là trung bình của phần thưởng với trọng số $\pi_\theta(a\mid s)\lVert\psi_\theta(s,a)\rVert^2$ cho hành động $a$, còn $v_\pi(s)=\mathbb E[R]$ là trung bình với trọng số $\pi_\theta(a\mid s)$; hai số trùng nhau khi mọi hành động có cùng $\lVert\psi_\theta(s,a)\rVert$. Trên Ví dụ 10.3, $\lVert\psi_\theta(s,1)\rVert^2=\tfrac29$ và $\lVert\psi_\theta(s,2)\rVert^2=\tfrac89$, nên
+Đọc bằng lời, $b^*$ là trung bình của phần thưởng với trọng số $\pi_\theta(a\mid s)\lVert\psi_\theta(s,a)\rVert^2$ cho hành động $a$, còn $v_\pi(s)=\mathbb E[R]$ là kỳ vọng của phần thưởng theo $\pi_\theta(\cdot\mid s)$; hai số trùng nhau khi mọi hành động có cùng $\lVert\psi_\theta(s,a)\rVert$. Trên Ví dụ 10.3, $\lVert\psi_\theta(s,1)\rVert^2=\tfrac29$ và $\lVert\psi_\theta(s,2)\rVert^2=\tfrac89$, nên
 $$\begin{aligned}b^*&=\frac{\tfrac23\cdot3\cdot\tfrac29}{\tfrac23\cdot\tfrac29+\tfrac13\cdot\tfrac89}=\frac{4/9}{4/9}\\&=1\ne v_\pi(s)=2,\end{aligned}$$
 và $k_2=\tfrac49$ khớp hệ số của công thức $\tfrac49(b-1)^2$. Hành động 2, hiếm hơn, có hàm điểm dài gấp đôi và phần thưởng $0$, nên kéo $b^*$ xuống dưới $v_\pi(s)$.
 
@@ -370,7 +380,7 @@ với quy ước $A_\pi=0$ tại trạng thái hấp thụ sau khi lượt kết
 
 $A_\pi(s,a)>0$ nghĩa là thực hiện $a$ tại $s$ rồi theo $\pi$ cho lợi tức kỳ vọng lớn hơn theo $\pi$ ngay từ $s$. Vì $v_\pi(s)$ không phụ thuộc $a$, $A_\pi(s,\cdot)$ và $q_\pi(s,\cdot)$ xếp các hành động theo cùng thứ tự, và điều kiện $q_\pi(s,\pi'(s))\ge v_\pi(s)$ của Định lý 04.13 chính là $A_\pi(s,\pi'(s))\ge0$. $A_\pi$ là đại lượng đúng của $\pi$; các đại lượng như $G_t-\hat v(S_t,w)$ là ước lượng của nó.
 
-Mệnh đề sau dùng Mệnh đề 03.23 và Mệnh đề 10.2 để viết lại Hệ quả 09.24 với $A_\pi$ ở vị trí của $q_\pi$.
+Mệnh đề sau viết lại Hệ quả 09.24 với $A_\pi$ ở vị trí của $q_\pi$. Dạng quỹ đạo của kết luận (b) là hệ quả của Mệnh đề 10.2 với đường cơ sở $b=v_\pi$: phép trừ $v_\pi(S_t)$ không đổi kỳ vọng của ước lượng, và hệ số còn lại, $G_t-v_\pi(S_t)$, có kỳ vọng có điều kiện bằng lợi thế. Kết luận (a) dùng Mệnh đề 03.23.
 
 ::: proposition Mệnh đề 10.5 (Tính chất của lợi thế, gradient dạng lợi thế)
 **Giả thiết.**
@@ -381,7 +391,7 @@ Mệnh đề sau dùng Mệnh đề 03.23 và Mệnh đề 10.2 để viết l�
 **Kết luận.**
 
 - (a) $\sum_a\pi(a\mid s)A_\pi(s,a)=0$ với mọi $s\in\mathcal S$.
-- (b) Gradient của hàm mục tiêu có hai dạng
+- (b) (Dạng quỹ đạo là hệ quả của Mệnh đề 10.2 với $b=v_\pi$.) Gradient của hàm mục tiêu có hai dạng
 $$\begin{aligned}&\nabla_\theta J(\theta)\\&=\mathbb E_{\pi_\theta}\Bigl[\sum_{t=0}^{T-1}\gamma^t\\&\qquad\times A_\pi(S_t,A_t)\,\psi_t\Bigr]\\&=\frac1{1-\gamma}\\&\quad\times\mathbb E_{\substack{S\sim\nu^\pi\\A\sim\pi_\theta(\cdot\mid S)}}\bigl[A_\pi(S,A)\\&\qquad\times\psi_\theta(S,A)\bigr].\end{aligned}$$
 
 **Điều kiện áp dụng.** $A_\pi$ và $\nu^\pi$ là của chính chính sách đang được lấy gradient, $\pi=\pi_\theta$.
@@ -392,31 +402,26 @@ $$\begin{aligned}&\nabla_\theta J(\theta)\\&=\mathbb E_{\pi_\theta}\Bigl[\sum_{t
 ::: proof
 **Bước 1 (kết luận a).** Theo Mệnh đề 03.23, $\sum_a\pi(a\mid s)q_\pi(s,a)=v_\pi(s)$, nên $\sum_a\pi(a\mid s)A_\pi(s,a)=v_\pi(s)-v_\pi(s)\sum_a\pi(a\mid s)=0$.
 
-**Bước 2 (dạng quỹ đạo).** Giá trị $v_\pi$ bị chặn bởi $T_{\max}R_{\max}$ theo (G3), nên Mệnh đề 10.2 áp dụng với $b=v_\pi$. Với quy ước $\psi_t=0$ khi $t\ge T$,
-$$
-\begin{aligned}
-&\nabla_\theta J(\theta)\\
-&=\sum_{t=0}^{T_{\max}-1}\gamma^t\,\mathbb E\bigl[(G_t-v_\pi(S_t))\psi_t\bigr]\\
-&=\sum_{t=0}^{T_{\max}-1}\gamma^t\,\mathbb E\bigl[(\mathbb E[G_t\mid H_t,A_t]\\
-&\qquad-v_\pi(S_t))\psi_t\bigr]\\
-&=\sum_{t=0}^{T_{\max}-1}\gamma^t\,\mathbb E\bigl[(q_\pi(S_t,A_t)\\
-&\qquad-v_\pi(S_t))\psi_t\bigr]\\
-&=\mathbb E\Bigl[\sum_{t=0}^{T-1}\gamma^tA_\pi(S_t,A_t)\psi_t\Bigr].
-\end{aligned}
-$$
-Đẳng thức thứ nhất là Mệnh đề 10.2 với $b=v_\pi$. Đẳng thức thứ hai dùng tính chất tháp theo $(H_t,A_t)$ và đưa $v_\pi(S_t)$, $\psi_t$, đều là hàm của $(H_t,A_t)$, ra ngoài kỳ vọng có điều kiện. Đẳng thức thứ ba là Bổ đề 03.20(d), đẳng thức cuối là Định nghĩa 10.4.
+**Bước 2 (Mệnh đề 10.2 với $b=v_\pi$).** Giá trị $v_\pi$ bị chặn bởi $T_{\max}R_{\max}$ theo (G3), nên $v_\pi$ là một đường cơ sở theo Định nghĩa 10.1, và Mệnh đề 10.2 áp dụng với $b=v_\pi$. Với quy ước $\psi_t=0$ khi $t\ge T$, ta được
+$$\begin{aligned}&\nabla_\theta J(\theta)\\&=\sum_{t=0}^{T_{\max}-1}\gamma^t\,\mathbb E\bigl[(G_t-v_\pi(S_t))\psi_t\bigr].\end{aligned}$$
 
-**Bước 3 (dạng chiếm dụng).** Theo Hệ quả 09.24, $\nabla_\theta J=\frac1{1-\gamma}\mathbb E_{S\sim\nu^\pi,A\sim\pi_\theta}[q_\pi(S,A)\psi_\theta(S,A)]$. Với mỗi $s$, Mệnh đề 09.17 với $c=v_\pi(s)$ cho $\sum_a\pi_\theta(a\mid s)v_\pi(s)\psi_\theta(s,a)=0$; trừ đại lượng này trong kỳ vọng theo $A$ được dạng thứ hai của (b). $\square$
+**Bước 3 (tính chất tháp theo $(H_t,A_t)$).** Cố định $t$. Cả $v_\pi(S_t)$ và $\psi_t$ là hàm của $(H_t,A_t)$, nên ra ngoài kỳ vọng có điều kiện theo $(H_t,A_t)$:
+$$\begin{aligned}&\mathbb E\bigl[(G_t-v_\pi(S_t))\psi_t\bigr]\\&=\mathbb E\bigl[(\mathbb E[G_t\mid H_t,A_t]\\&\qquad-v_\pi(S_t))\psi_t\bigr].\end{aligned}$$
+
+**Bước 4 (tính Markov).** Với chính sách Markov dừng, Bổ đề 03.20(d) cho $\mathbb E[G_t\mid H_t,A_t]=q_\pi(S_t,A_t)$ trên $\{t<T\}$; trên $\{t\ge T\}$, $\psi_t=0$. Thế vào Bước 3, dùng $q_\pi-v_\pi=A_\pi$ (Định nghĩa 10.4) rồi cộng theo $t$ như ở Bước 2:
+$$\begin{aligned}&\nabla_\theta J(\theta)\\&=\sum_{t=0}^{T_{\max}-1}\gamma^t\,\mathbb E\bigl[A_\pi(S_t,A_t)\psi_t\bigr]\\&=\mathbb E\Bigl[\sum_{t=0}^{T-1}\gamma^tA_\pi(S_t,A_t)\psi_t\Bigr].\end{aligned}$$
+
+**Bước 5 (dạng chiếm dụng).** Theo Hệ quả 09.24, $\nabla_\theta J=\frac1{1-\gamma}\mathbb E_{S\sim\nu^\pi,A\sim\pi_\theta}[q_\pi(S,A)\psi_\theta(S,A)]$. Với mỗi $s$, Mệnh đề 09.17 với $c=v_\pi(s)$ cho $\sum_a\pi_\theta(a\mid s)v_\pi(s)\psi_\theta(s,a)=0$; trừ đại lượng này trong kỳ vọng theo $A$ được dạng thứ hai của (b). $\square$
 :::
 
-Mệnh đề 10.5(b) nói rằng hướng tăng của $J$ là trung bình của các hàm điểm, mỗi hàm điểm nhân với lợi thế của hành động đã chọn; phép thay $q_\pi$ bằng $A_\pi$ không đổi kết quả vì phần bị trừ, $v_\pi(s)$, là hằng theo hành động.
+Mệnh đề 10.5(b) nói rằng hướng tăng của $J$ là kỳ vọng của tổng các hàm điểm, mỗi hàm điểm nhân với lợi thế của hành động đã chọn; phép thay $q_\pi$ bằng $A_\pi$ không đổi kết quả vì phần bị trừ, $v_\pi(s)$, là hằng theo hành động.
 
 Hai điều kiện của mệnh đề có vai trò riêng.
 
 - Bỏ "$A_\pi$ là của chính $\pi_\theta$": trên bài toán một bước, lợi thế của chính sách đều $\pi'=(\tfrac12;\,\tfrac12)$ là $A_{\pi'}=(3-1{,}5;\,0-1{,}5)=(1{,}5;\,-1{,}5)$, và $\sum_a\pi_\theta(a\mid s)A_{\pi'}(s,a)=\tfrac23\cdot1{,}5-\tfrac13\cdot1{,}5=0{,}5\ne0$: kết luận (a) không còn đúng.
 - Bỏ "$\gamma<1$": thừa số $1/(1-\gamma)$ không xác định. Dạng quỹ đạo vẫn dùng được khi $T$ có đuôi hình học, như trên hành lang ngắn, nhờ hội tụ trội như ở đoạn sau Ví dụ 10.4; khi gom theo trạng thái, trọng số là số lần thăm kỳ vọng không chuẩn hóa $\eta(s)=\sum_t\Pr(S_t=s)$.
 
-Bước 1 dùng Mệnh đề 03.23 cho chính $\pi$; Bước 2 dùng Bổ đề 03.20(d), cần chính sách Markov dừng, và Mệnh đề 10.2, cần (G1)–(G4).
+Bước 1 dùng Mệnh đề 03.23 cho chính $\pi$; Bước 2 dùng Mệnh đề 10.2, cần (G1)–(G4); Bước 4 dùng Bổ đề 03.20(d), cần chính sách Markov dừng.
 
 ::: example Ví dụ 10.5 (Lợi thế trên bài toán một bước)
 **Dữ kiện.** Như Ví dụ 10.1: một trạng thái, $\pi_\theta(\cdot\mid s)=(\tfrac23;\,\tfrac13)$, $r=(3;\,0)$, $\psi_\theta(s,1)=(\tfrac13;\,-\tfrac13)$, $\psi_\theta(s,2)=(-\tfrac23;\,\tfrac23)$, lượt dừng sau một hành động.
@@ -470,13 +475,22 @@ Thuật toán 10.6 chỉ cập nhật khi lượt đã kết thúc, vì $G_t$ c�
 - Tại $s_A$: hành động 1 chuyển sang $s_B$ với phần thưởng $0$; hành động 2 kết thúc lượt với phần thưởng $1$.
 - Tại $s_B$: hành động 1 kết thúc với phần thưởng $3$; hành động 2 kết thúc với phần thưởng $0$.
 
-Chính sách có một tham số cho mỗi trạng thái, $\theta=(\theta_A;\,\theta_B)$, và $p_s=\pi_\theta(1\mid s)=\sigma(\theta_s)$ với $\sigma(x)=1/(1+e^{-x})$; đây là chính sách softmax (Định nghĩa 09.11) với logit $\theta_s$ cho hành động 1 và $0$ cho hành động 2. Theo Mệnh đề 09.16, $\psi_\theta(s,1)=(1-p_s)e_s$ và $\psi_\theta(s,2)=-p_se_s$, với $e_A=(1;\,0)$, $e_B=(0;\,1)$. Chính sách đang xét: $\theta=(0;\,\log2)$, tức $p_A=\tfrac12$, $p_B=\tfrac23$.
+Chính sách có một tham số cho mỗi trạng thái, $\theta=(\theta_A;\,\theta_B)$, và $p_s=\pi_\theta(1\mid s)=\sigma(\theta_s)$ với $\sigma(x)=1/(1+e^{-x})$; đây là chính sách softmax (Định nghĩa 09.11) với logit $\theta_s$ cho hành động 1 và $0$ cho hành động 2. Theo Mệnh đề 09.16, $\psi_\theta(s,1)=(1-p_s)e_s$ và $\psi_\theta(s,2)=-p_se_s$, với $e_A=(1;\,0)$, $e_B=(0;\,1)$. Chính sách đang xét: $\theta=(0;\,\log2)$, tức $p_A=\sigma(0)=\tfrac12$, $p_B=\sigma(\log2)=\tfrac23$.
+
+**Hàm mục tiêu.** Mọi lượt bắt đầu ở $s_A$ và rẽ theo hành động đầu tiên.
+
+- Với xác suất $1-p_A$, lượt chọn hành động 2 tại $s_A$ và kết thúc ngay: $G_0=1$.
+- Với xác suất $p_A$, lượt sang $s_B$ với $R_1=0$. Tại $s_B$, hành động 1 (xác suất $p_B$) cho $R_2=3$ và $G_0=0+0{,}9\cdot3=2{,}7$; hành động 2 (xác suất $1-p_B$) cho $G_0=0$.
+
+Do đó
+$$\begin{aligned}J&=(1-p_A)\cdot1+p_Ap_B\cdot2{,}7\\&\quad+p_A(1-p_B)\cdot0\\&=2{,}7\,p_Ap_B+1-p_A,\end{aligned}$$
+và tại chính sách đang xét, $J=2{,}7\cdot\tfrac12\cdot\tfrac23+\tfrac12=0{,}9+0{,}5=1{,}4$.
 
 **Giá trị.** Theo Mệnh đề 03.22 và 03.23: $v_\pi(s_B)=\tfrac23\cdot3=2$; $q_\pi(s_A,1)=0+0{,}9\cdot2=1{,}8$; $q_\pi(s_A,2)=1$; $v_\pi(s_A)=\tfrac12\cdot1{,}8+\tfrac12\cdot1=1{,}4=J$.
 
 **Lợi thế.** $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$ và $A_\pi(s_B,\cdot)=(3-2;\,0-2)=(1;\,-2)$.
 
-**Gradient tính trực tiếp.** $J=p_A\cdot0{,}9\cdot3p_B+(1-p_A)\cdot1$ và $\mathrm dp_s/\mathrm d\theta_s=p_s(1-p_s)$, nên
+**Gradient tính trực tiếp.** Lấy đạo hàm $J=2{,}7\,p_Ap_B+1-p_A$ theo $p_A$, $p_B$ rồi nhân với $\mathrm dp_s/\mathrm d\theta_s=p_s(1-p_s)$:
 $$\begin{aligned}\frac{\partial J}{\partial\theta_A}&=p_A(1-p_A)(2{,}7p_B-1)\\&=0{,}25\cdot0{,}8=0{,}2,\\\frac{\partial J}{\partial\theta_B}&=p_A\cdot2{,}7\cdot p_B(1-p_B)\\&=0{,}5\cdot2{,}7\cdot\tfrac29=0{,}3.\end{aligned}$$
 
 **Gradient theo Mệnh đề 10.5(b).** Bước $t=0$ ở $s_A$ đóng góp $\tfrac12\cdot0{,}4\cdot0{,}5\,e_A+\tfrac12(-0{,}4)(-0{,}5)\,e_A=0{,}2\,e_A$. Bước $t=1$ ở $s_B$, xảy ra với xác suất $p_A=\tfrac12$ và trọng số $\gamma=0{,}9$, đóng góp $0{,}9\cdot\tfrac12\bigl(\tfrac23\cdot1\cdot\tfrac13+\tfrac13(-2)(-\tfrac23)\bigr)e_B=0{,}45\cdot\tfrac23\,e_B=0{,}3\,e_B$. Tổng là $(0{,}2;\,0{,}3)$, khớp cách tính trực tiếp.
@@ -488,12 +502,20 @@ $$\begin{aligned}\frac{\partial J}{\partial\theta_A}&=p_A(1-p_A)(2{,}7p_B-1)\\&=
 | $s_A\xrightarrow1s_B\xrightarrow1$ | $\tfrac13$ | $2{,}7$ | $1{,}35$ | $0{,}65$ | $0{,}2$ |
 | $s_A\xrightarrow1s_B\xrightarrow2$ | $\tfrac16$ | $0$ | $0$ | $-0{,}7$ | $0{,}2$ |
 | $s_A\xrightarrow2$ | $\tfrac12$ | $1$ | $-0{,}5$ | $0{,}2$ | $0{,}2$ |
-| trung bình | | | $0{,}2$ | $0{,}2$ | $0{,}2$ |
+| kỳ vọng | | | $0{,}2$ | $0{,}2$ | $0{,}2$ |
 | phương sai | | | $0{,}6925$ | $0{,}2025$ | $0$ |
 
 Ở dòng đầu, REINFORCE cho $2{,}7\cdot0{,}5=1{,}35$, trừ $v_\pi$ cho $(2{,}7-1{,}4)\cdot0{,}5=0{,}65$, và $\delta_0=0+0{,}9\cdot2-1{,}4=0{,}4$ cho $0{,}4\cdot0{,}5=0{,}2$. Ở dòng thứ ba, hàm điểm bằng $-0{,}5$: REINFORCE cho $1\cdot(-0{,}5)=-0{,}5$, trừ $v_\pi$ cho $(1-1{,}4)(-0{,}5)=0{,}2$, và $\delta_0=1-1{,}4=-0{,}4$ cho $0{,}2$. Ở dòng thứ hai, $G_0=0$ cho $0$, trừ $v_\pi$ cho $(0-1{,}4)\cdot0{,}5=-0{,}7$, và $\delta_0=0{,}4$ cho $0{,}2$. Phương sai của cột REINFORCE là $\tfrac13\cdot1{,}35^2+\tfrac12\cdot0{,}5^2-0{,}2^2=0{,}6925\approx0{,}69$; của cột trừ $v_\pi$ là $\tfrac13\cdot0{,}65^2+\tfrac16\cdot0{,}7^2+\tfrac12\cdot0{,}2^2-0{,}2^2=0{,}2025\approx0{,}20$.
 
-Cả ba cột có trung bình $0{,}2$, đúng tọa độ $\theta_A$ của gradient. Ở cột REINFORCE, lượt $s_A\xrightarrow2$ xảy ra một nửa số lần và đẩy $p_A$ xuống: phần thưởng $1$ dương làm tăng xác suất hành động 2, dù $q_\pi(s_A,2)=1<v_\pi(s_A)=1{,}4$. Xác suất một lượt cho tọa độ $\theta_A$ âm là $\tfrac12$ ở cột REINFORCE, $\tfrac16$ ở cột trừ $v_\pi$ và $0$ ở cột cuối. Cột trừ $v_\pi$ làm lượt $s_A\xrightarrow1s_B\xrightarrow2$ xấu đi, từ $0$ xuống $-0{,}7$, nhưng phương sai của cả cột giảm từ $0{,}6925$ xuống $0{,}2025$. Ở tọa độ $\theta_B$, ba cột cho $(0{,}9;\,0;\,0)$, $(0{,}3;\,1{,}2;\,0)$ và $(0{,}3;\,1{,}2;\,0)$ trên ba loại lượt, cùng trung bình $0{,}3$ và cùng phương sai $0{,}18$; hai cột sau trùng nhau vì lượt kết thúc ngay sau $s_B$, nên $G_1-v_\pi(s_B)=\delta_1$.
+Cả ba cột có kỳ vọng $0{,}2$, đúng tọa độ $\theta_A$ của gradient. Ở cột REINFORCE, lượt $s_A\xrightarrow2$ xảy ra một nửa số lần và đẩy $p_A$ xuống: phần thưởng $1$ dương làm tăng xác suất hành động 2, dù $q_\pi(s_A,2)=1<v_\pi(s_A)=1{,}4$. Xác suất một lượt cho tọa độ $\theta_A$ âm là $\tfrac12$ ở cột REINFORCE, $\tfrac16$ ở cột trừ $v_\pi$ và $0$ ở cột cuối. Cột trừ $v_\pi$ làm lượt $s_A\xrightarrow1s_B\xrightarrow2$ xấu đi, từ $0$ xuống $-0{,}7$, nhưng phương sai của cả cột giảm từ $0{,}6925$ xuống $0{,}2025$. Ở tọa độ $\theta_B$, ba cột cho $(0{,}9;\,0;\,0)$, $(0{,}3;\,1{,}2;\,0)$ và $(0{,}3;\,1{,}2;\,0)$ trên ba loại lượt, cùng kỳ vọng $0{,}3$ và cùng phương sai $0{,}18$; hai cột sau trùng nhau vì lượt kết thúc ngay sau $s_B$, nên $G_1-v_\pi(s_B)=\delta_1$.
+
+**Bước dài theo ước lượng của một lượt.** Một lượt $s_A\xrightarrow2$, loại lượt có xác suất $\tfrac12$, cho ước lượng REINFORCE $\widehat g=G_0\,\psi_\theta(s_A,2)=1\cdot(-0{,}5)\,e_A=(-0{,}5;\,0)$, ngược dấu tọa độ $\theta_A$ của gradient $(0{,}2;\,0{,}3)$. Bước $\theta\leftarrow\theta+\alpha\widehat g$ chỉ đổi $\theta_A$ thành $-0{,}5\alpha$ và giữ $p_B=\tfrac23$, nên $J=2{,}7\cdot\tfrac23\,p_A+1-p_A=1+0{,}8\,p_A$:
+
+- $\alpha=1$: $\theta_A=-0{,}5$, $p_A=\sigma(-0{,}5)\approx0{,}378$, $J\approx1{,}30$;
+- $\alpha=2$: $\theta_A=-1$, $p_A=\sigma(-1)\approx0{,}27$, $J\approx1{,}22$;
+- $\alpha\to\infty$: $\theta_A\to-\infty$, $p_A\to0$ và $J\to1$; đây là giá trị giới hạn, không ứng với $\theta$ hữu hạn nào.
+
+Bước càng dài thì $J$ càng giảm khỏi $1{,}4$, tới mức giảm $0{,}4$ ở giới hạn, khi chính sách bỏ hẳn hành động 1 tại $s_A$.
 
 **Kiểm tra lại.** Kết luận (a) của Mệnh đề 10.5: $\tfrac12\cdot0{,}4+\tfrac12(-0{,}4)=0$ và $\tfrac23\cdot1+\tfrac13(-2)=0$. Ở dạng chiếm dụng, $\nu^\pi(s_A)=0{,}1$, $\nu^\pi(s_B)=0{,}1\cdot0{,}9\cdot\tfrac12=0{,}045$, và $\tfrac1{0{,}1}(0{,}1\cdot0{,}2;\,0{,}045\cdot\tfrac23)=(0{,}2;\,0{,}3)$.
 :::
@@ -640,7 +662,7 @@ Hệ số Monte Carlo $G_t-\hat v(S_t,w)$ không làm chệch gradient nhưng ch
 
 ## 3. Ước lượng lợi thế tổng quát
 
-Trên chuỗi hai trạng thái với critic $\hat v=(1{,}4;\,1)$ của Ví dụ 10.7, xét hai lượt cùng bắt đầu bằng hành động 1 ở $s_A$; tại $s_B$, lượt thứ nhất chọn hành động 1 (phần thưởng $3$, xác suất $\tfrac23$), lượt thứ hai chọn hành động 2 (phần thưởng $0$, xác suất $\tfrac13$). Lợi thế đúng là $A_\pi(s_A,1)=0{,}4$. Sai số TD cho $\delta_0=0+0{,}9\cdot1-1{,}4=-0{,}5$ ở cả hai lượt: hai giá trị bằng nhau nhưng sai dấu. Hệ số Monte Carlo $G_0-\hat v(s_A)$ cho $2{,}7-1{,}4=1{,}3$ ở lượt thứ nhất và $0-1{,}4=-1{,}4$ ở lượt thứ hai: trung bình $\tfrac23\cdot1{,}3-\tfrac13\cdot1{,}4=0{,}4$ đúng, nhưng hai giá trị cách nhau $2{,}7$.
+Trên chuỗi hai trạng thái với critic $\hat v=(1{,}4;\,1)$ của Ví dụ 10.7, xét hai lượt cùng bắt đầu bằng hành động 1 ở $s_A$; tại $s_B$, lượt thứ nhất chọn hành động 1 (phần thưởng $3$, xác suất $\tfrac23$), lượt thứ hai chọn hành động 2 (phần thưởng $0$, xác suất $\tfrac13$). Lợi thế đúng là $A_\pi(s_A,1)=0{,}4$. Sai số TD cho $\delta_0=0+0{,}9\cdot1-1{,}4=-0{,}5$ ở cả hai lượt: hai giá trị bằng nhau nhưng sai dấu. Hệ số Monte Carlo $G_0-\hat v(s_A)$ cho $2{,}7-1{,}4=1{,}3$ ở lượt thứ nhất và $0-1{,}4=-1{,}4$ ở lượt thứ hai: kỳ vọng $\tfrac23\cdot1{,}3-\tfrac13\cdot1{,}4=0{,}4$ đúng, nhưng hai giá trị cách nhau $2{,}7$.
 
 <!-- note-topic-id: lec-10-topic-07 -->
 ### 3.1 Lợi tức n bước
@@ -658,15 +680,15 @@ Giữa TD một bước và Monte Carlo có các phương pháp dùng vài phầ
 - Hai bước, ở đây trùng Monte Carlo vì $T=2$: $R_1+\gamma R_2-\hat v(S_0)$, tức $0{,}9\cdot3-1{,}4=1{,}3$ ở lượt (i) và $0-1{,}4=-1{,}4$ ở lượt (ii).
 - Trộn hai ước lượng trên với trọng số $1-\lambda$ và $\lambda$, $\lambda=0{,}5$: $0{,}5\cdot(-0{,}5)+0{,}5\cdot1{,}3=0{,}4$ ở lượt (i) và $0{,}5\cdot(-0{,}5)+0{,}5\cdot(-1{,}4)=-0{,}95$ ở lượt (ii).
 
-| Ước lượng | Lượt (i), $\tfrac23$ | Lượt (ii), $\tfrac13$ | Trung bình | Khoảng cách |
-|---|---|---|---|---|
-| một bước | $-0{,}5$ | $-0{,}5$ | $-0{,}5$ | $0$ |
-| trộn, $\lambda=0{,}5$ | $0{,}4$ | $-0{,}95$ | $-0{,}05$ | $1{,}35$ |
-| hai bước | $1{,}3$ | $-1{,}4$ | $0{,}4$ | $2{,}7$ |
+| Ước lượng | Lượt (i), $\tfrac23$ | Lượt (ii), $\tfrac13$ | Kỳ vọng | Khoảng cách | Phương sai |
+|---|---|---|---|---|---|
+| một bước | $-0{,}5$ | $-0{,}5$ | $-0{,}5$ | $0$ | $0$ |
+| trộn, $\lambda=0{,}5$ | $0{,}4$ | $-0{,}95$ | $-0{,}05$ | $1{,}35$ | $0{,}405$ |
+| hai bước | $1{,}3$ | $-1{,}4$ | $0{,}4$ | $2{,}7$ | $1{,}62$ |
 
-Cột "khoảng cách" là hiệu hai giá trị trên hai lượt.
+Cột "khoảng cách" là hiệu hai giá trị trên hai lượt. Với hai giá trị có xác suất $\tfrac23$ và $\tfrac13$, phương sai bằng $\tfrac23\cdot\tfrac13$ nhân bình phương khoảng cách: $\tfrac29\cdot1{,}35^2=0{,}405$ và $\tfrac29\cdot2{,}7^2=1{,}62$.
 
-**Diễn giải.** Ước lượng một bước như nhau trên hai lượt, nhưng có trung bình $-0{,}5$, lệch $-0{,}9$ so với $0{,}4$ và sai dấu, vì critic đánh giá thấp $s_B$. Ước lượng hai bước có trung bình đúng $0{,}4$, nhưng hai giá trị cách nhau $2{,}7$. Ước lượng trộn nằm giữa: độ lệch $-0{,}45$, khoảng cách $1{,}35$. Tổng quát, với $\lambda\in[0,1]$, hai giá trị là $-0{,}5+1{,}8\lambda$ và $-0{,}5-0{,}9\lambda$, trung bình là $-0{,}5+0{,}9\lambda$, nên độ lệch là $-0{,}9(1-\lambda)$ và khoảng cách là $2{,}7\lambda$. Với $\lambda=0{,}5$, lượt (i) cho đúng $0{,}4$ chỉ do trùng hợp; trung bình trên hai lượt là $-0{,}05$.
+**Diễn giải.** Ước lượng một bước như nhau trên hai lượt, nhưng có kỳ vọng $-0{,}5$, chệch $-0{,}9$ so với $0{,}4$ và sai dấu, vì critic đánh giá thấp $s_B$. Ước lượng hai bước có kỳ vọng đúng $0{,}4$, nhưng hai giá trị cách nhau $2{,}7$. Ước lượng trộn nằm giữa: độ chệch $-0{,}45$, khoảng cách $1{,}35$. Tổng quát, với $\lambda\in[0,1]$, hai giá trị là $-0{,}5+1{,}8\lambda$ và $-0{,}5-0{,}9\lambda$, kỳ vọng là $-0{,}5+0{,}9\lambda$, nên độ chệch là $-0{,}9(1-\lambda)$, khoảng cách là $2{,}7\lambda$ và phương sai là $\tfrac29(2{,}7\lambda)^2=1{,}62\lambda^2$. Với $\lambda=0{,}5$, lượt (i) cho đúng $0{,}4$ chỉ do trùng hợp; kỳ vọng theo hai lượt là $-0{,}05$.
 
 **Kiểm tra lại.** $1{,}3=-0{,}5+0{,}9\cdot2$ và $-1{,}4=-0{,}5+0{,}9\cdot(-1)$, tức $\delta_0+\gamma\delta_1$; $0{,}4=-0{,}5+0{,}45\cdot2$ và $-0{,}95=-0{,}5+0{,}45\cdot(-1)$, tức $\delta_0+\gamma\lambda\,\delta_1$ với $\gamma\lambda=0{,}45$.
 :::
@@ -830,7 +852,7 @@ Bước 1 dùng $\lambda=1$ cùng lượt đầy đủ, để $\widehat A_t$ là
 
 **Gradient.** Tọa độ $\theta_A$ của $\mathbb E[\widehat A_0\psi_0]$ là $\tfrac12\cdot\mathbb E[\widehat A_0\mid s_A,1]\cdot0{,}5+\tfrac12\cdot(-0{,}4)\cdot(-0{,}5)=-0{,}025+0{,}225\lambda$, tức $-0{,}025$; $0{,}0875$; $0{,}2$ với $\lambda=0$; $0{,}5$; $1$. Tọa độ $\theta_B$ của $\mathbb E[\gamma\widehat A_1\psi_1]$ là $0{,}9\cdot\tfrac12\bigl(\tfrac23\cdot2\cdot\tfrac13+\tfrac13\cdot(-1)\cdot(-\tfrac23)\bigr)=0{,}45\cdot\tfrac23=0{,}3$ với mọi $\lambda$.
 
-**Diễn giải.** Tại $s_B$, với mọi $\lambda$, kể cả $\lambda=1$, lợi thế ước lượng lệch $+1$ ở cả hai hành động; phần lệch bị khử khi nhân với hàm điểm có kỳ vọng $0$, nên tọa độ $\theta_B$ của gradient đúng dù lợi thế sai. Tại $s_A$ với $\lambda<1$, độ lệch là $-0{,}9(1-\lambda)$ ở hành động 1 và $0$ ở hành động 2, nên không bị khử; với $\lambda=0$, tọa độ $\theta_A$ âm, ngược dấu giá trị đúng $0{,}2$. Với $\lambda=1$, $\widehat A_0=G_0-\hat v(s_A)$ không lệch vì $\hat v(s_A)=v_\pi(s_A)$.
+**Diễn giải.** Tại $s_B$, với mọi $\lambda$, kể cả $\lambda=1$, lợi thế ước lượng chệch $+1$ ở cả hai hành động; phần chệch bị khử khi nhân với hàm điểm có kỳ vọng $0$, nên tọa độ $\theta_B$ của gradient đúng dù lợi thế sai. Tại $s_A$ với $\lambda<1$, độ chệch là $-0{,}9(1-\lambda)$ ở hành động 1 và $0$ ở hành động 2, nên không bị khử; với $\lambda=0$, tọa độ $\theta_A$ âm, ngược dấu giá trị đúng $0{,}2$. Với $\lambda=1$, $\widehat A_0=G_0-\hat v(s_A)$ không chệch vì $\hat v(s_A)=v_\pi(s_A)$.
 
 **Kiểm tra lại.** Giá trị đúng: $0{,}5\cdot0{,}4\cdot0{,}5+0{,}5\cdot(-0{,}4)(-0{,}5)=0{,}2$ và $0{,}45\bigl(\tfrac23\cdot1\cdot\tfrac13+\tfrac13\cdot(-2)(-\tfrac23)\bigr)=0{,}3$.
 :::
@@ -885,6 +907,24 @@ Bước 2 dùng mặt nạ $(1-Z_{t+1})$ cho sai số TD, như Bài 08: chỉ k�
 
 Với $w$ cố định, $V^{\mathrm{targ}}_t$ là lợi tức λ cắt tại biên gần nhất của bước $t$, tức kết thúc, cắt ngắn hoặc biên đoạn (Sutton và Barto, 2018, (12.9)–(12.10), tr. 296–297); Ví dụ 10.10(ii) là trường hợp $h=2$. Hai bước của Ví dụ 10.10 là hai vòng của bước 3.
 
+Ghép Thuật toán 10.9 và 10.16 cho phương pháp actor–critic với GAE. Thuật toán 10.9 cập nhật sau từng bước với hệ số $\delta_t$; ở đây chúng ta chờ hết lượt, hoặc hết đoạn thu, rồi dùng hệ số $\widehat A_t$. Với chính sách $\pi_\theta$, critic $\hat v(s,w)$, $\gamma\in[0,1)$, $\lambda\in[0,1]$ và hai bước học $\alpha_\theta$, $\alpha_w$, mỗi vòng gồm bốn việc:
+
+1. **Thu lượt.** Thu một lượt $S_0,A_0,R_1,\dots,S_T$ bằng $\pi_\theta$ và giữ $w_{\mathrm{old}}=w$.
+2. **Ước lượng lợi thế.** Tính $\delta_t$ với $\hat v(\cdot,w_{\mathrm{old}})$, đặt $\widehat A_T=0$ và tính lùi $\widehat A_t=\delta_t+\gamma\lambda(1-Z_{t+1})\widehat A_{t+1}$ (Mệnh đề 10.14(c); trên đoạn thu, Thuật toán 10.16).
+3. **Cập nhật actor.** $\theta\leftarrow\theta+\alpha_\theta\sum_t\gamma^t\widehat A_t\,\psi_\theta(S_t,A_t)$.
+4. **Cập nhật critic.** Hồi quy $\hat v(S_t,w)$ về mục tiêu $V^{\mathrm{targ}}_t=\widehat A_t+\hat v(S_t,w_{\mathrm{old}})$; một bước hạ gradient là $w\leftarrow w_{\mathrm{old}}+\alpha_w\sum_t\bigl(V^{\mathrm{targ}}_t-\hat v(S_t,w_{\mathrm{old}})\bigr)\nabla_w\hat v(S_t,w_{\mathrm{old}})$.
+
+Với $\lambda=1$, hệ số $\widehat A_t=G_t-\hat v(S_t,w_{\mathrm{old}})$ và vòng lặp là Thuật toán 10.6. Với $\lambda=0$, hệ số là $\delta_t$, như Thuật toán 10.9, nhưng mọi cập nhật dùng cùng $w_{\mathrm{old}}$ và diễn ra sau khi thu xong lượt.
+
+Trên lượt (i) của Ví dụ 10.8 ($s_A\xrightarrow1s_B\xrightarrow1$, critic $\hat v=(1{,}4;\,1)$), với $\lambda=0{,}5$, $\alpha_\theta=1$, $\alpha_w=0{,}5$ và $\theta=(0;\,\log2)$ như Ví dụ 10.7, một vòng cho:
+
+- lợi thế: $\widehat A_1=\delta_1=2$ và $\widehat A_0=-0{,}5+0{,}9\cdot0{,}5\cdot2=0{,}4$;
+- actor tại $s_A$: $\theta_A=0+1\cdot0{,}4\cdot0{,}5=0{,}2$, $p_A=\sigma(0{,}2)\approx0{,}550$;
+- actor tại $s_B$, với trọng số $\gamma=0{,}9$: $\theta_B=\log2+0{,}9\cdot2\cdot\tfrac13=\log2+0{,}6$, $p_B=\sigma(1{,}293)\approx0{,}785$;
+- critic: mục tiêu $V^{\mathrm{targ}}_0=0{,}4+1{,}4=1{,}8$ và $V^{\mathrm{targ}}_1=2+1=3$, nên $w=(1{,}4+0{,}5\cdot0{,}4;\,1+0{,}5\cdot2)=(1{,}6;\,2)$.
+
+Sau vòng này $J=2{,}7\cdot0{,}550\cdot0{,}785+0{,}450\approx1{,}615$. Trên cùng lượt, với $\lambda=0$ (Ví dụ 10.7), $\widehat A_0=-0{,}5$ và $p_A$ giảm xuống $0{,}438$.
+
 ::: remark Nhận xét 10.17 (Vai trò của $\gamma$ và các nhầm lẫn)
 1. Ước lượng gradient của TRPO và PPO tỉ lệ với $\sum_t\widehat A_t\psi_t$, không có trọng số $\gamma^t$. Kỳ vọng của nó, khi GAE γ-just, là $\mathbb E\bigl[\sum_tA_\pi(S_t,A_t)\psi_t\bigr]$, tức $g^\gamma$ của Schulman và cộng sự (2016, (6)), không phải $\nabla_\theta J$ (Ví dụ 09.21; Nota và Thomas, 2020).
 2. Ghi một bước cắt ngắn thành kết thúc, $Z=1$, xóa phần bootstrap $\gamma\hat v$ của quan sát cuối: mục tiêu của critic mất giá trị của tương lai, và actor bị phạt ở các bước gần giới hạn thời gian dù chúng không khác các bước khác.
@@ -908,31 +948,37 @@ Dữ liệu dùng để chọn bước cập nhật được thu theo phân bố
 <!-- note-topic-id: lec-10-topic-10 -->
 ### 4.1 Bổ đề hiệu hiệu năng
 
-Với chính sách $\pi$ và một chính sách khác $\pi'$, đặt $A_\pi(s,\pi')=\sum_a\pi'(a\mid s)A_\pi(s,a)$: lợi thế trung bình, đo bằng lợi thế của $\pi$, khi chọn hành động theo $\pi'$ tại $s$. Một cách trực quan, nếu $\pi'$ chọn hành động có lợi thế dương ở những trạng thái nó hay thăm, thì $\pi'$ tốt hơn $\pi$. Ví dụ sau kiểm trực giác này.
+Với chính sách $\pi$ và một chính sách khác $\pi'$, đặt $A_\pi(s,\pi')=\sum_a\pi'(a\mid s)A_\pi(s,a)$: kỳ vọng của lợi thế $A_\pi(s,A)$ khi hành động $A$ được chọn theo $\pi'(\cdot\mid s)$. Đại lượng này là mức tăng lợi tức kỳ vọng khi tại $s$ chọn một hành động theo $\pi'$ rồi từ bước sau theo $\pi$, so với theo $\pi$ ngay từ $s$, vì $A_\pi(s,\pi')=\sum_a\pi'(a\mid s)q_\pi(s,a)-v_\pi(s)$. Trên chuỗi hai trạng thái, với $q_\pi(s_A,\cdot)=(1{,}8;\,1)$, $v_\pi(s_A)=1{,}4$, $q_\pi(s_B,\cdot)=(3;\,0)$, $v_\pi(s_B)=2$ (Ví dụ 10.6) và chính sách $\tilde\pi$ có $\tilde p_A=0{,}9$, $\tilde p_B=0{,}5$: $A_\pi(s_A,\tilde\pi)=0{,}9\cdot1{,}8+0{,}1\cdot1-1{,}4=0{,}32$ và $A_\pi(s_B,\tilde\pi)=0{,}5\cdot3+0{,}5\cdot0-2=-0{,}5$. Một cách trực quan, nếu $\pi'$ chọn hành động có lợi thế dương ở những trạng thái nó hay thăm, thì $\pi'$ tốt hơn $\pi$. Ví dụ sau kiểm trực giác này.
 
 ::: example Ví dụ 10.11 (Đổi chính sách trên chuỗi hai trạng thái)
 **Dữ kiện.** Chuỗi hai trạng thái của Ví dụ 10.6: tại $s_A$, hành động 1 sang $s_B$ với phần thưởng $0$, hành động 2 kết thúc với phần thưởng $1$; tại $s_B$, hành động 1 kết thúc với phần thưởng $3$, hành động 2 kết thúc với phần thưởng $0$; $\gamma=0{,}9$. Chính sách cũ $\pi$: $p_A=\tfrac12$, $p_B=\tfrac23$, với $J(\pi)=1{,}4$, $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$, $A_\pi(s_B,\cdot)=(1;\,-2)$. Chính sách mới $\pi'$: $p'_A=0{,}6$, $p'_B=0{,}8$.
 
 **Giá trị thật.** $v_{\pi'}(s_B)=0{,}8\cdot3=2{,}4$ và $J(\pi')=0{,}6\cdot0{,}9\cdot2{,}4+0{,}4\cdot1=1{,}696$, nên $\Delta J=J(\pi')-J(\pi)=0{,}296$.
 
-**Lợi thế trung bình theo $\pi'$.** $A_\pi(s_A,\pi')=0{,}6\cdot0{,}4+0{,}4\cdot(-0{,}4)=0{,}08$ và $A_\pi(s_B,\pi')=0{,}8\cdot1+0{,}2\cdot(-2)=0{,}4$.
+**Kỳ vọng của lợi thế theo $\pi'$.** $A_\pi(s_A,\pi')=0{,}6\cdot0{,}4+0{,}4\cdot(-0{,}4)=0{,}08$ và $A_\pi(s_B,\pi')=0{,}8\cdot1+0{,}2\cdot(-2)=0{,}4$.
 
 **Cộng theo bước thời gian.** Bước $0$ ở $s_A$; bước $1$ ở $s_B$ với xác suất $p'_A=0{,}6$ dưới $\pi'$ và trọng số $\gamma$: $0{,}08+0{,}9\cdot0{,}6\cdot0{,}4=0{,}296$, đúng bằng $\Delta J$.
 
-**Dùng xác suất của chính sách cũ.** Nếu thay xác suất tới $s_B$ của $\pi'$ bằng của $\pi$, $p_A=0{,}5$: $0{,}08+0{,}9\cdot0{,}5\cdot0{,}4=0{,}26$, lệch $0{,}036$ so với $\Delta J$.
+**Dùng xác suất của chính sách cũ.** Nếu thay xác suất tới $s_B$ của $\pi'$ bằng của $\pi$, $p_A=0{,}5$: $0{,}08+0{,}9\cdot0{,}5\cdot0{,}4=0{,}26$, sai số $0{,}036$ so với $\Delta J$.
 
 **Mọi chính sách mới trên chuỗi.** Đặt $\Delta p_A=p'_A-\tfrac12$ và $\Delta p_B=p'_B-\tfrac23$. Với hai hành động, $A_\pi(s_A,\pi')=0{,}4p'_A-0{,}4(1-p'_A)=0{,}8\,\Delta p_A$ và $A_\pi(s_B,\pi')=p'_B-2(1-p'_B)=3\,\Delta p_B$, nên tổng dùng xác suất cũ là $0{,}8\,\Delta p_A+0{,}9\cdot0{,}5\cdot3\,\Delta p_B=0{,}8\,\Delta p_A+1{,}35\,\Delta p_B$. Khai triển $J=2{,}7p_Ap_B+1-p_A$ quanh $(\tfrac12;\,\tfrac23)$ cho
 $$\begin{aligned}\Delta J&=0{,}8\,\Delta p_A+1{,}35\,\Delta p_B\\&\quad+2{,}7\,\Delta p_A\,\Delta p_B.\end{aligned}$$
 Tổng dùng xác suất cũ là đúng phần bậc nhất của $\Delta J$. Phần còn lại, $2{,}7\,\Delta p_A\Delta p_B=\gamma\,\Delta p_A\,A_\pi(s_B,\pi')$, đến từ việc $\pi'$ tới $s_B$ với xác suất $p'_A$ thay cho $p_A$: mỗi lượt thêm $\Delta p_A$ lần thăm $s_B$, mỗi lần đóng góp $\gamma\,A_\pi(s_B,\pi')$. Với $\pi'$ ở trên, phần đó là $2{,}7\cdot0{,}1\cdot\tfrac2{15}=0{,}036$.
 
-**Hai bước trên một đường thẳng.** Các chính sách $p'_A=\tfrac12+0{,}5t$, $p'_B=\tfrac23-\tfrac16t$ với $t\in[0,1]$ đi từ $\pi$ tới $(1;\,0{,}5)$. Trên đường này, tổng dùng xác suất cũ là $0{,}175t$ và $\Delta J=0{,}175t-0{,}225t^2$.
+**Hai bước trên một đường thẳng.** Xét thêm chính sách $\tilde\pi$ với tham số $\tilde\theta=(\log9;\,0)$, tức $\tilde p_A=\sigma(\log9)=0{,}9$ và $\tilde p_B=\sigma(0)=0{,}5$: so với $\pi$, xác suất chọn hành động 1 tăng $0{,}4$ tại $s_A$ và giảm $\tfrac16$ tại $s_B$. Các chính sách $p'_A=\tfrac12+0{,}4t$, $p'_B=\tfrac23-\tfrac t6$ với $t\in[0,1]$ nằm trên đoạn thẳng trong tọa độ xác suất $(p_A;\,p_B)$ từ $\pi$ ($t=0$) tới $\tilde\pi$ ($t=1$). Thế $\Delta p_A=0{,}4t$ và $\Delta p_B=-\tfrac t6$ vào hai công thức trên:
 
-- $t=0{,}4$, chính sách $(0{,}7;\,0{,}6)$: tổng dùng xác suất cũ là $0{,}07$, còn $\Delta J=0{,}034$; hai số cùng dấu.
-- $t=1$, chính sách $(1;\,0{,}5)$: tổng dùng xác suất cũ là $0{,}175$, còn $\Delta J=-0{,}05$; phép tính với xác suất cũ báo $J$ tăng trong khi $J$ giảm.
+- tổng dùng xác suất cũ: $0{,}8\cdot0{,}4t-1{,}35\cdot\tfrac t6=0{,}32t-0{,}225t=0{,}095t$;
+- phần bậc hai: $2{,}7\cdot0{,}4t\cdot\bigl(-\tfrac t6\bigr)=-0{,}18t^2$;
+- mức thay đổi thật: $\Delta J=0{,}095t-0{,}18t^2$.
 
-Ở $t=1$, chính sách mới luôn tới $s_B$, gấp đôi chính sách cũ, và tại $s_B$ nó kém chính sách cũ, $A_\pi(s_B,\pi')=3\cdot(-\tfrac16)=-0{,}5$; phần bậc hai là $2{,}7\cdot0{,}5\cdot(-\tfrac16)=-0{,}225$. Đường thẳng $0{,}175t$ và parabol $\Delta J$ tiếp xúc tại $t=0$; $\Delta J$ lớn nhất, khoảng $0{,}034$, tại $t\approx0{,}39$ và bằng $0$ tại $t=\tfrac79\approx0{,}78$.
+Tại hai điểm của đoạn:
 
-**Kiểm tra lại.** $1{,}696-1{,}4=0{,}296$; độ lệch $0{,}036=0{,}9\cdot(0{,}6-0{,}5)\cdot0{,}4$. Tại $(0{,}7;\,0{,}6)$: $J=2{,}7\cdot0{,}42+0{,}3=1{,}434$; tại $(1;\,0{,}5)$: $J=2{,}7\cdot0{,}5=1{,}35$.
+- $t=0{,}25$, chính sách $(0{,}6;\,0{,}625)$, tức $\theta=(\log1{,}5;\,\log\tfrac53)$: tổng dùng xác suất cũ là $0{,}02375$, còn $\Delta J=0{,}0125$; hai số cùng dấu.
+- $t=1$, chính sách $\tilde\pi=(0{,}9;\,0{,}5)$: tổng dùng xác suất cũ là $0{,}095$, còn $\Delta J=-0{,}085$; hai số trái dấu.
+
+Ở $t=1$, chính sách mới tới $s_B$ với xác suất $0{,}9$ thay cho $0{,}5$, và tại $s_B$ nó kém chính sách cũ, $A_\pi(s_B,\tilde\pi)=3\cdot(-\tfrac16)=-0{,}5$; phần bậc hai là $2{,}7\cdot0{,}4\cdot(-\tfrac16)=-0{,}18$, tức $\gamma\cdot0{,}4\cdot(-0{,}5)$. Đường thẳng $0{,}095t$ và parabol $\Delta J$ tiếp xúc tại $t=0$; $\Delta J$ lớn nhất, khoảng $0{,}0125$, tại $t=\tfrac{0{,}095}{0{,}36}\approx0{,}26$ và bằng $0$ tại $t=\tfrac{0{,}095}{0{,}18}=\tfrac{19}{36}\approx0{,}53$.
+
+**Kiểm tra lại.** $1{,}696-1{,}4=0{,}296$; sai số $0{,}036=0{,}9\cdot(0{,}6-0{,}5)\cdot0{,}4$. Tại $(0{,}6;\,0{,}625)$: $J=2{,}7\cdot0{,}375+0{,}4=1{,}4125$; tại $\tilde\pi=(0{,}9;\,0{,}5)$: $J=2{,}7\cdot0{,}45+0{,}1=1{,}315$.
 :::
 
 Đẳng thức trong Ví dụ 10.11 cộng lợi thế trên các trạng thái mà $\pi'$ thăm, mỗi lần thăm ở bước $t$ có trọng số $\gamma^t$. Để viết nó cho MDP tổng quát, chúng ta cần phân bố chiếm dụng trên đúng các trạng thái chưa kết thúc.
@@ -945,7 +991,7 @@ $$\begin{aligned}&\nu^\pi(s)\\&=(1-\gamma)\sum_{t\ge0}\gamma^t\\&\quad\times\Pr_
 
 Theo tính Markov, $\Pr_\pi(S_{t+1}=s',\,t+1<T)=\sum_{s\in\mathcal S}\Pr_\pi(S_t=s,\,t<T)\,(P_\pi)_{ss'}$, nên véc-tơ hàng của các xác suất này là $\mu_0^\top P_\pi^t$; Định lý 03.28 cho $\sum_t\gamma^tP_\pi^t=\Gamma_\pi$. Khối bằng $(1-\gamma)\mathbb E_\pi\bigl[\sum_{t<T}\gamma^t\bigr]=\mathbb E_\pi[1-\gamma^T]$.
 
-Trên $\mathcal S$, $\nu^\pi$ trùng phân bố $\nu^\pi_\gamma$ của Hệ quả 09.24; Hệ quả 09.24 tính cả trạng thái hấp thụ sau khi lượt kết thúc, nơi dồn phần khối $1-\nu^\pi(\mathcal S)$. Tại trạng thái đó $q_\pi=A_\pi=0$ và mọi khoảng cách giữa hai chính sách bằng $0$, nên mọi kỳ vọng của chương, như Mệnh đề 10.5(b), không đổi khi chuyển từ cách viết này sang cách viết kia. Trên chuỗi hai trạng thái, $\nu^\pi(s_A)=0{,}1$ và $\nu^\pi(s_B)=0{,}1\cdot0{,}9\cdot p_A=0{,}045$, khối $0{,}145=1-(0{,}5\cdot0{,}9+0{,}5\cdot0{,}81)$, vì lượt dài $1$ hoặc $2$ bước với xác suất $\tfrac12$; với $\pi'$ của Ví dụ 10.11, $\nu^{\pi'}=(0{,}1;\,0{,}054)$.
+Trên $\mathcal S$, $\nu^\pi$ trùng phân bố $\nu^\pi_\gamma$ của Hệ quả 09.24; Hệ quả 09.24 tính cả trạng thái hấp thụ sau khi lượt kết thúc, nơi dồn phần khối $1-\nu^\pi(\mathcal S)$. Tại trạng thái đó $q_\pi=A_\pi=0$ và mọi khoảng cách giữa hai chính sách bằng $0$, nên mọi kỳ vọng của chương, như Mệnh đề 10.5(b), không đổi khi chuyển từ cách viết này sang cách viết kia. Trên chuỗi hai trạng thái, $\nu^\pi(s_A)=0{,}1$ và $\nu^\pi(s_B)=0{,}1\cdot0{,}9\cdot p_A=0{,}045$, khối $0{,}145=1-(0{,}5\cdot0{,}9+0{,}5\cdot0{,}81)$, vì lượt dài $1$ hoặc $2$ bước với xác suất $\tfrac12$; với $\pi'$ của Ví dụ 10.11, $\nu^{\pi'}=(0{,}1;\,0{,}054)$; với $\tilde\pi$ của ví dụ đó, $\nu^{\tilde\pi}=(0{,}1;\,0{,}081)$.
 
 Bổ đề sau, theo Kakade và Langford (2002, Bổ đề 6.1), là dạng tổng quát của phép cộng trong Ví dụ 10.11.
 
@@ -993,14 +1039,16 @@ $$\begin{aligned}&\sum_{t\ge0}\gamma^t\sum_{s\in\mathcal S}\Pr_{\pi'}(S_t=s,\,t<
 theo Định nghĩa 10.18. $\square$
 :::
 
-Bổ đề nói rằng mức cải thiện của $\pi'$ so với $\pi$ là tổng chiết khấu của lợi thế của $\pi$ nhưng cộng dọc các quỹ đạo của $\pi'$. Kiểm trên Ví dụ 10.11 ở dạng chiếm dụng: $\tfrac1{0{,}1}(0{,}1\cdot0{,}08+0{,}054\cdot0{,}4)=0{,}296$. Hai giả thiết có vai trò riêng.
+Bổ đề nói rằng mức cải thiện của $\pi'$ so với $\pi$ là tổng chiết khấu của lợi thế của $\pi$ nhưng cộng dọc các quỹ đạo của $\pi'$. Với số lần thăm có chiết khấu
+$$\begin{aligned}\eta_{\pi'}(s)&=\sum_{t\ge0}\gamma^t\Pr_{\pi'}(S_t=s,\,t<T)\\&=\frac{\nu^{\pi'}(s)}{1-\gamma},\end{aligned}$$
+kết luận của bổ đề có dạng $J(\pi')-J(\pi)=\sum_{s\in\mathcal S}\eta_{\pi'}(s)\,A_\pi(s,\pi')$: mỗi lần $\pi'$ thăm $s$, tính với trọng số $\gamma^t$, đóng góp $A_\pi(s,\pi')$. Kiểm trên Ví dụ 10.11: với $\pi'$, $\eta_{\pi'}=(1;\,0{,}9\cdot0{,}6)=(1;\,0{,}54)$ và $0{,}08+0{,}54\cdot0{,}4=0{,}296$; với $\tilde\pi$, $\eta_{\tilde\pi}=(1;\,0{,}81)$, $A_\pi(s_A,\tilde\pi)=0{,}9\cdot0{,}4+0{,}1\cdot(-0{,}4)=0{,}32$, $A_\pi(s_B,\tilde\pi)=-0{,}5$ và $0{,}32-0{,}81\cdot0{,}5=-0{,}085$. Hai giả thiết có vai trò riêng.
 
 - Bỏ "cùng $\mu_0$": nếu $\pi'$ xuất phát từ $s_B$ còn $\pi$ từ $s_A$ trên chuỗi hai trạng thái, vế trái là $2{,}4-1{,}4=1$, còn vế phải tính trên quỹ đạo của $\pi'$ từ $s_B$ là $A_\pi(s_B,\pi')=0{,}4=v_{\pi'}(s_B)-v_\pi(s_B)$.
 - Bỏ "cùng động lực $P$": nếu $\pi'$ chạy trong một môi trường khác, Bước 2 không còn đúng vì $\mathbb E_{\pi'}[R_{t+1}+\gamma v_\pi(S_{t+1})\mid S_t,A_t]$ không còn bằng $q_\pi(S_t,A_t)$.
 
-Bước 2 dùng cùng $P$ và tính Markov; Bước 4 dùng cùng $\mu_0$ và phần thưởng bị chặn; $\gamma<1$ được dùng ở Bước 4 và Bước 5. Nhầm lẫn thường gặp là đổi vai hai chính sách: lấy trung bình theo $\nu^\pi$ thay cho $\nu^{\pi'}$ thì được $0{,}26$ thay cho $0{,}296$ trên Ví dụ 10.11, tức $\mathcal L-J$ với hàm thay thế $\mathcal L$ của Mục 4.2, không phải $\Delta J$.
+Bước 2 dùng cùng $P$ và tính Markov; Bước 4 dùng cùng $\mu_0$ và phần thưởng bị chặn; $\gamma<1$ được dùng ở Bước 4 và Bước 5. Nhầm lẫn thường gặp là đổi vai hai chính sách: lấy kỳ vọng theo $\nu^\pi$ thay cho $\nu^{\pi'}$ thì được $0{,}26$ thay cho $0{,}296$ trên Ví dụ 10.11, tức $\mathcal L-J$ với hàm thay thế $\mathcal L$ của Mục 4.2, không phải $\Delta J$.
 
-**Trong thực hành.** Bổ đề 10.19 được dùng để đo sai số của mọi xấp xỉ chỉ dùng dữ liệu cũ, như độ lệch $0{,}036$ của Ví dụ 10.11.
+**Trong thực hành.** Bổ đề 10.19 được dùng để đo sai số của mọi xấp xỉ chỉ dùng dữ liệu cũ, như sai số $0{,}036$ của Ví dụ 10.11.
 
 Lấy $\mu_0$ tập trung tại một trạng thái, ta được tiêu chuẩn cải thiện chính sách cho cả $\pi'$ ngẫu nhiên.
 
@@ -1026,7 +1074,7 @@ Lấy $\mu_0$ tập trung tại một trạng thái, ta được tiêu chuẩn c
 <!-- note-topic-id: lec-10-topic-11 -->
 ### 4.2 Tỉ số chính sách và hàm thay thế
 
-Bổ đề 10.19 cần $\nu^{\pi'}$, phân bố trạng thái của chính sách chưa chạy. Về mặt ý tưởng, phép xấp xỉ giữ phân bố trạng thái cũ (Ví dụ 10.11) ước lượng được từ dữ liệu cũ: trung bình theo hành động của $\pi_\theta$ tính được từ hành động của $\pi_{\mathrm{old}}$ bằng tỉ số lấy mẫu quan trọng (Định nghĩa 06.24).
+Bổ đề 10.19 cần $\nu^{\pi'}$, phân bố trạng thái của chính sách chưa chạy. Về mặt ý tưởng, phép xấp xỉ giữ phân bố trạng thái cũ (Ví dụ 10.11) ước lượng được từ dữ liệu cũ: kỳ vọng theo hành động của $\pi_\theta$ tính được từ hành động của $\pi_{\mathrm{old}}$ bằng tỉ số lấy mẫu quan trọng (Định nghĩa 06.24).
 
 ::: definition Định nghĩa 10.21 (Tỉ số chính sách, hàm thay thế)
 Cho chính sách cũ $\pi_{\mathrm{old}}=\pi_{\theta_{\mathrm{old}}}$ với lợi thế $A_{\mathrm{old}}=A_{\pi_{\mathrm{old}}}$ và phân bố chiếm dụng $\nu^{\mathrm{old}}=\nu^{\pi_{\mathrm{old}}}$, và chính sách $\pi_\theta$ thỏa điều kiện hỗ trợ $\pi_\theta(a\mid s)>0\Rightarrow\pi_{\mathrm{old}}(a\mid s)>0$. *Tỉ số chính sách* (probability ratio) tại cặp $(s,a)$ với $\pi_{\mathrm{old}}(a\mid s)>0$ là $\rho_\theta(s,a)=\pi_\theta(a\mid s)/\pi_{\mathrm{old}}(a\mid s)$; với mẫu $(S_t,A_t)$, $A_t\sim\pi_{\mathrm{old}}(\cdot\mid S_t)$, viết $\rho_t(\theta)=\rho_\theta(S_t,A_t)$, tức
@@ -1037,7 +1085,19 @@ $$\begin{aligned}&\mathcal L_{\theta_{\mathrm{old}}}(\theta)\\&=J(\theta_{\mathr
 
 Đẳng thức giữa hai dạng là phép lấy mẫu quan trọng tại từng trạng thái: $\sum_a\pi_{\mathrm{old}}(a\mid s)\frac{\pi_\theta(a\mid s)}{\pi_{\mathrm{old}}(a\mid s)}A_{\mathrm{old}}(s,a)=\sum_a\pi_\theta(a\mid s)A_{\mathrm{old}}(s,a)$, đúng nhờ điều kiện hỗ trợ.
 
-So với Bổ đề 10.19, hàm thay thế chỉ thay $\nu^{\pi_\theta}$ bằng $\nu^{\mathrm{old}}$; khi viết theo chính sách, ta cũng ký hiệu $\mathcal L_\pi(\pi')$. Tỉ số $\rho_t$ là tỉ số lấy mẫu quan trọng của Định nghĩa 06.24 với chính sách hành vi $\pi_{\mathrm{old}}$ và chính sách đích $\pi_\theta$.
+So với Bổ đề 10.19, hàm thay thế chỉ thay $\nu^{\pi_\theta}$ bằng $\nu^{\mathrm{old}}$. Khi viết theo chính sách, với $\pi=\pi_{\mathrm{old}}$ và $\pi'=\pi_\theta$, ta ký hiệu cùng đại lượng đó là $\mathcal L_\pi(\pi')$, tức $\mathcal L_\pi(\pi')=\mathcal L_{\theta_{\mathrm{old}}}(\theta)$. Theo số lần thăm có chiết khấu $\eta_\pi=\nu^\pi/(1-\gamma)$,
+$$\mathcal L_\pi(\pi')=J(\pi)+\sum_{s\in\mathcal S}\eta_\pi(s)\,A_\pi(s,\pi').$$
+Ngoài xác suất hành động $\pi'(\cdot\mid s)$, mọi đại lượng ở vế phải là của $\pi$, nên $\mathcal L_\pi(\pi')$ tính được mà không chạy $\pi'$. Tỉ số $\rho_t$ là tỉ số lấy mẫu quan trọng của Định nghĩa 06.24 với chính sách hành vi $\pi_{\mathrm{old}}$ và chính sách đích $\pi_\theta$.
+
+Đặt $\Delta J=J(\pi')-J(\pi)$ và $\Delta\mathcal L=\mathcal L_\pi(\pi')-J(\pi)$. Trừ đẳng thức trên khỏi dạng $\Delta J=\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$ của Bổ đề 10.19 cho sai số của hàm thay thế:
+$$\begin{aligned}&\Delta J-\Delta\mathcal L\\&\quad=\sum_{s\in\mathcal S}\bigl(\eta_{\pi'}(s)-\eta_\pi(s)\bigr)\,A_\pi(s,\pi').\end{aligned}$$
+Mỗi số hạng là mức thay đổi của số lần thăm có chiết khấu tại $s$ nhân với $A_\pi(s,\pi')$, mức tăng lợi tức kỳ vọng của mỗi lần thăm. Trên chuỗi hai trạng thái, chỉ $s_B$ đổi số lần thăm, $\eta_{\pi'}(s_B)-\eta_\pi(s_B)=\gamma\,\Delta p_A$, và $A_\pi(s_B,\pi')=3\,\Delta p_B$, nên sai số là $2{,}7\,\Delta p_A\Delta p_B$, đúng phần bậc hai của Ví dụ 10.11. Với $\tilde\pi=(0{,}9;\,0{,}5)$ của ví dụ đó, $\eta_\pi=(1;\,0{,}45)$ và $\eta_{\tilde\pi}=(1;\,0{,}81)$:
+
+- $\Delta\mathcal L=0{,}32+0{,}45\cdot(-0{,}5)=0{,}095$;
+- $\Delta J=0{,}32+0{,}81\cdot(-0{,}5)=-0{,}085$;
+- sai số $\Delta J-\Delta\mathcal L=(0{,}81-0{,}45)\cdot(-0{,}5)=-0{,}18$.
+
+Chính sách $\tilde\pi$ thăm $s_B$ nhiều hơn $\pi$, và tại $s_B$ nó có $A_\pi(s_B,\tilde\pi)<0$, nên hàm thay thế báo tăng trong khi $J$ giảm.
 
 Mệnh đề sau dùng Mệnh đề 10.5 để so $\mathcal L_{\theta_{\mathrm{old}}}$ với $J$ tại $\theta_{\mathrm{old}}$.
 
@@ -1072,7 +1132,7 @@ $$
 
 Hàm thay thế và hàm mục tiêu có cùng giá trị và cùng tiếp tuyến tại tham số cũ, nên một bước đủ nhỏ theo hướng tăng của $\mathcal L$ cũng làm $J$ tăng; với bước hữu hạn, hai hàm tách nhau.
 
-Kiểm trên chuỗi hai trạng thái: với $\pi'$ của Ví dụ 10.11, dạng tỉ số tại $s_A$ cho $0{,}5\cdot\tfrac{0{,}6}{0{,}5}\cdot0{,}4+0{,}5\cdot\tfrac{0{,}4}{0{,}5}\cdot(-0{,}4)=0{,}08$, và $\mathcal L-J=\tfrac1{0{,}1}(0{,}1\cdot0{,}08+0{,}045\cdot0{,}4)=0{,}26$, như ở Ví dụ 10.11. Gradient của $\mathcal L$ theo $(\theta_A;\,\theta_B)$ tại $\theta_{\mathrm{old}}$ là $\tfrac1{0{,}1}\bigl(0{,}1\cdot0{,}2;\,0{,}045\cdot\tfrac23\bigr)=(0{,}2;\,0{,}3)$, bằng gradient tính trực tiếp của Ví dụ 10.6. Với mọi chính sách mới trên chuỗi, $\mathcal L-J$ là tổng dùng xác suất cũ của Ví dụ 10.11, nên $\Delta J=(\mathcal L-J)+2{,}7\,\Delta p_A\Delta p_B$. Dọc đường tới $(1;\,0{,}5)$ của ví dụ đó, đường thẳng $\mathcal L-J=0{,}175t$ tiếp xúc parabol $\Delta J=0{,}175t-0{,}225t^2$ tại $t=0$; tại $t=1$, hàm thay thế báo tăng $0{,}175$ còn $J$ giảm $0{,}05$.
+Kiểm trên chuỗi hai trạng thái: với $\pi'$ của Ví dụ 10.11, dạng tỉ số tại $s_A$ cho $0{,}5\cdot\tfrac{0{,}6}{0{,}5}\cdot0{,}4+0{,}5\cdot\tfrac{0{,}4}{0{,}5}\cdot(-0{,}4)=0{,}08$, và $\mathcal L-J=\tfrac1{0{,}1}(0{,}1\cdot0{,}08+0{,}045\cdot0{,}4)=0{,}26$, như ở Ví dụ 10.11. Gradient của $\mathcal L$ theo $(\theta_A;\,\theta_B)$ tại $\theta_{\mathrm{old}}$ là $\tfrac1{0{,}1}\bigl(0{,}1\cdot0{,}2;\,0{,}045\cdot\tfrac23\bigr)=(0{,}2;\,0{,}3)$, bằng gradient tính trực tiếp của Ví dụ 10.6. Với mọi chính sách mới trên chuỗi, $\mathcal L-J$ là tổng dùng xác suất cũ của Ví dụ 10.11, nên $\Delta J=(\mathcal L-J)+2{,}7\,\Delta p_A\Delta p_B$. Dọc đoạn thẳng tới $\tilde\pi=(0{,}9;\,0{,}5)$ của ví dụ đó, đường thẳng $\mathcal L-J=0{,}095t$ tiếp xúc parabol $\Delta J=0{,}095t-0{,}18t^2$ tại $t=0$; tại $t=1$, $\mathcal L-J=0{,}095$ còn $\Delta J=-0{,}085$.
 
 Hai giả thiết của mệnh đề có vai trò riêng.
 
@@ -1084,18 +1144,20 @@ Hai giả thiết của mệnh đề có vai trò riêng.
 <!-- note-topic-id: lec-10-topic-12 -->
 ### 4.3 Khoảng cách giữa hai chính sách
 
-Sai số $0{,}036$ của Ví dụ 10.11 đến từ hiệu $\nu^{\pi'}-\nu^\pi$, và hiệu này đến từ khác biệt giữa hai phân phối hành động tại mỗi trạng thái. Để chặn sai số, chúng ta cần đo khác biệt đó. Về mặt ý tưởng, có hai cách đo: lượng xác suất phải chuyển để biến phân phối hành động này thành phân phối kia, và trung bình của log-tỉ số hai xác suất. Định nghĩa sau đưa vào hai cách đo này.
+Sai số $0{,}036$ của Ví dụ 10.11 đến từ hiệu $\nu^{\pi'}-\nu^\pi$, và hiệu này đến từ khác biệt giữa hai phân phối hành động tại mỗi trạng thái. Để chặn sai số, chúng ta cần đo khác biệt đó. Về mặt ý tưởng, có hai cách đo: lượng xác suất phải chuyển để biến phân phối hành động này thành phân phối kia, và kỳ vọng của log-tỉ số hai xác suất. Định nghĩa sau đưa vào hai cách đo này.
 
 ::: definition Định nghĩa 10.23 (Biến phân toàn phần và phân kỳ Kullback–Leibler)
 Cho hai phân phối $q$, $q'$ trên tập hành động hữu hạn $\mathcal A$. Khoảng cách *biến phân toàn phần* (total variation distance, TV) là
 $$\begin{aligned}&D_{\mathrm{TV}}(q,q')\\&\quad=\tfrac12\sum_{a\in\mathcal A}\lvert q(a)-q'(a)\rvert .\end{aligned}$$
 *Phân kỳ Kullback–Leibler* (Kullback–Leibler divergence) của $q$ đối với $q'$ là
 $$\begin{aligned}&D_{\mathrm{KL}}(q\Vert q')\\&\quad=\sum_{a:\,q(a)>0}q(a)\log\frac{q(a)}{q'(a)},\end{aligned}$$
-bằng $+\infty$ nếu có $a$ với $q(a)>0=q'(a)$. Với hai chính sách $\pi$, $\pi'$, viết $D_{\mathrm{TV}}(s)=D_{\mathrm{TV}}(\pi'(\cdot\mid s),\pi(\cdot\mid s))$, và $D_{\mathrm{KL}}(s)$ cho KL tại $s$, với chiều cũ‖mới hoặc mới‖cũ ghi tại chỗ dùng; KL trung bình theo phân bố chiếm dụng của chính sách cũ là
+bằng $+\infty$ nếu có $a$ với $q(a)>0=q'(a)$. Với hai chính sách $\pi$, $\pi'$, viết $D_{\mathrm{TV}}(s)=D_{\mathrm{TV}}(\pi'(\cdot\mid s),\pi(\cdot\mid s))$, và $D_{\mathrm{KL}}(s)$ cho KL tại $s$, với chiều cũ‖mới hoặc mới‖cũ ghi tại chỗ dùng; KL trung bình, tức kỳ vọng của KL theo phân bố chiếm dụng của chính sách cũ, là
 $$\begin{aligned}&\bar D_{\mathrm{KL}}(\pi_{\mathrm{old}}\Vert\pi_\theta)\\&\quad=\mathbb E_{S\sim\nu^{\mathrm{old}}}\bigl[D_{\mathrm{KL}}(\pi_{\mathrm{old}}(\cdot\mid S)\\&\qquad\qquad\Vert\pi_\theta(\cdot\mid S))\bigr].\end{aligned}$$
 :::
 
-$D_{\mathrm{TV}}$ đối xứng, nằm trong $[0,1]$, và bằng hiệu lớn nhất giữa xác suất mà hai phân phối gán cho cùng một tập hành động, $\max_{\mathcal E\subseteq\mathcal A}\lvert q(\mathcal E)-q'(\mathcal E)\rvert$. $D_{\mathrm{KL}}$ không đối xứng và có thể vô hạn. Với $q=\pi_{\mathrm{old}}(\cdot\mid s)$ và $q'=\pi_\theta(\cdot\mid s)$, $D_{\mathrm{KL}}(q\Vert q')=\mathbb E_{A\sim\pi_{\mathrm{old}}(\cdot\mid s)}[-\log\rho_\theta(s,A)]$, nên KL gắn trực tiếp với tỉ số chính sách của Định nghĩa 10.21. Tại $s_B$ của Ví dụ 10.11, với $\pi(\cdot\mid s_B)=(\tfrac23;\,\tfrac13)$ và $\pi'(\cdot\mid s_B)=(0{,}8;\,0{,}2)$: $D_{\mathrm{TV}}=\tfrac2{15}\approx0{,}1333$, $D_{\mathrm{KL}}(\pi\Vert\pi')=0{,}04873$ và $D_{\mathrm{KL}}(\pi'\Vert\pi)=0{,}04369$. Với bước $(1;\,0{,}5)$ của Ví dụ 10.11, chính sách mới không chọn hành động 2 tại $s_A$, nên tại $s_A$, $D_{\mathrm{KL}}(\pi\Vert\pi')=+\infty$, trong khi $D_{\mathrm{TV}}=0{,}5$.
+$D_{\mathrm{TV}}$ đối xứng, nằm trong $[0,1]$, và bằng hiệu lớn nhất giữa xác suất mà hai phân phối gán cho cùng một tập hành động, $\max_{\mathcal E\subseteq\mathcal A}\lvert q(\mathcal E)-q'(\mathcal E)\rvert$. $D_{\mathrm{KL}}$ không đối xứng và có thể vô hạn. Với $q=\pi_{\mathrm{old}}(\cdot\mid s)$ và $q'=\pi_\theta(\cdot\mid s)$, $D_{\mathrm{KL}}(q\Vert q')=\mathbb E_{A\sim\pi_{\mathrm{old}}(\cdot\mid s)}[-\log\rho_\theta(s,A)]$, nên KL gắn trực tiếp với tỉ số chính sách của Định nghĩa 10.21. Tại $s_B$ của Ví dụ 10.11, với $\pi(\cdot\mid s_B)=(\tfrac23;\,\tfrac13)$ và $\pi'(\cdot\mid s_B)=(0{,}8;\,0{,}2)$: $D_{\mathrm{TV}}=\tfrac2{15}\approx0{,}1333$, $D_{\mathrm{KL}}(\pi\Vert\pi')=0{,}04873$ và $D_{\mathrm{KL}}(\pi'\Vert\pi)=0{,}04369$. Với bước dài $\tilde\pi=(0{,}9;\,0{,}5)$ của Ví dụ 10.11, tại $s_A$, $\pi(\cdot\mid s_A)=(0{,}5;\,0{,}5)$ và $\tilde\pi(\cdot\mid s_A)=(0{,}9;\,0{,}1)$:
+$$\begin{aligned}D_{\mathrm{KL}}(\pi\Vert\tilde\pi)&=\tfrac12\log\tfrac{0{,}5}{0{,}9}+\tfrac12\log\tfrac{0{,}5}{0{,}1}\\&=\log\tfrac53\approx0{,}511,\end{aligned}$$
+và $D_{\mathrm{TV}}=\tfrac12(0{,}4+0{,}4)=0{,}4$. Khi $\tilde p_A\to1$, chính sách mới gần như bỏ hành động 2 tại $s_A$: $D_{\mathrm{KL}}(\pi\Vert\tilde\pi)\to+\infty$, trong khi $D_{\mathrm{TV}}\to0{,}5$.
 
 ::: proposition Mệnh đề 10.24 (Hai tính chất của KL)
 **Giả thiết.** $q$, $q'$ là hai phân phối trên tập hữu hạn $\mathcal A$.
@@ -1128,12 +1190,12 @@ Dấu bằng cần $q'(a)=q(a)$ trên $\{q>0\}$ (Bước 1) và $\sum_{q(a)>0}q'
 **Bước 3 (kết luận b, ý tưởng chứng minh).** Chứng minh đầy đủ nằm ngoài phạm vi học phần; xem Cover và Thomas (2006, Bổ đề 11.6.1, tr. 370), nơi sách dùng logarit cơ số $2$ nên hằng số viết là $1/(2\ln2)$, và Achiam và cộng sự (2017, (7)). Ta gộp các hành động thành hai nhóm, $\{a:q(a)>q'(a)\}$ và phần bù. Phép gộp giữ nguyên $D_{\mathrm{TV}}$ và không làm $D_{\mathrm{KL}}$ tăng, theo bất đẳng thức xử lý dữ liệu cho KL (Cover và Thomas, 2006). Do đó chỉ cần chứng minh bất đẳng thức cho phân phối trên hai điểm, $p\log\frac p{p'}+(1-p)\log\frac{1-p}{1-p'}\ge2(p-p')^2$, bằng cách khảo sát hiệu hai vế như một hàm của $p'$. $\square$
 :::
 
-Kết luận (a) cho phép dùng KL như một độ đo khác biệt: nó bằng $0$ đúng khi hai chính sách trùng nhau tại trạng thái đó. Kết luận (b) cho phép chuyển một ràng buộc trên KL thành ràng buộc trên TV. Tại $s_B$ của Ví dụ 10.11, $\tfrac2{15}=0{,}1333\le\sqrt{0{,}04873/2}=0{,}1561$; tại $s_A$, $0{,}1\le\sqrt{0{,}02041/2}=0{,}1010$, gần dấu bằng vì hai phân phối gần nhau.
+Kết luận (a) cho phép dùng KL như một độ đo khác biệt: nó bằng $0$ đúng khi hai chính sách trùng nhau tại trạng thái đó. Kết luận (b) cho phép chuyển một ràng buộc trên KL thành ràng buộc trên TV. Tại $s_B$ của Ví dụ 10.11, $\tfrac2{15}=0{,}1333\le\sqrt{0{,}04873/2}=0{,}1561$; tại $s_A$, $0{,}1\le\sqrt{0{,}02041/2}=0{,}1010$, gần dấu bằng vì hai phân phối gần nhau. Với bước dài $\tilde\pi$, tại $s_A$, $0{,}4\le\sqrt{0{,}511/2}\approx0{,}505$; tại $s_B$, $D_{\mathrm{KL}}(\pi\Vert\tilde\pi)=\tfrac23\log\tfrac43+\tfrac13\log\tfrac23\approx0{,}0566$ và $\tfrac16\approx0{,}1667\le\sqrt{0{,}0566/2}\approx0{,}1683$.
 
 <!-- note-topic-id: lec-10-topic-13 -->
 ### 4.4 Chặn cải thiện
 
-Trên Ví dụ 10.11, sai số của hàm thay thế là $\frac1{1-\gamma}\sum_s\bigl(\nu^{\pi'}(s)-\nu^\pi(s)\bigr)A_\pi(s,\pi')=\tfrac1{0{,}1}(0{,}054-0{,}045)\cdot0{,}4=0{,}036$. Sai số này nhỏ khi $\nu^{\pi'}$ gần $\nu^\pi$ và lợi thế trung bình nhỏ. Một cách trực quan, nếu tại mọi trạng thái $\pi'$ chọn hành động gần như $\pi$, thì hai chính sách thăm các trạng thái với tần suất gần nhau; khác biệt nhỏ ở mỗi bước tích lũy dọc lượt, nên sai lệch giữa hai phân bố chiếm dụng có thêm thừa số $\gamma/(1-\gamma)$. Bổ đề sau chặn khoảng cách giữa hai phân bố chiếm dụng bằng khoảng cách TV trung bình giữa hai chính sách.
+Trên Ví dụ 10.11, sai số của hàm thay thế là $\frac1{1-\gamma}\sum_s\bigl(\nu^{\pi'}(s)-\nu^\pi(s)\bigr)A_\pi(s,\pi')=\tfrac1{0{,}1}(0{,}054-0{,}045)\cdot0{,}4=0{,}036$. Sai số này nhỏ khi $\nu^{\pi'}$ gần $\nu^\pi$ và $\lvert A_\pi(s,\pi')\rvert$ nhỏ. Một cách trực quan, nếu tại mọi trạng thái $\pi'$ chọn hành động gần như $\pi$, thì hai chính sách thăm các trạng thái với tần suất gần nhau; khác biệt nhỏ ở mỗi bước tích lũy dọc lượt, nên sai lệch giữa hai phân bố chiếm dụng có thêm thừa số $\gamma/(1-\gamma)$. Bổ đề sau chặn khoảng cách giữa hai phân bố chiếm dụng bằng kỳ vọng theo $\nu^\pi$ của khoảng cách TV giữa hai chính sách.
 
 ::: lemma Bổ đề 10.25 (Dịch chuyển phân bố chiếm dụng)
 **Giả thiết.** MDP hữu hạn với tập trạng thái chưa kết thúc $\mathcal S$, $0\le\gamma<1$; $\pi$, $\pi'$ Markov dừng, cùng $\mu_0$ và $P$; $\nu=\nu^\pi$, $\nu'=\nu^{\pi'}$ theo Định nghĩa 10.18.
@@ -1232,7 +1294,7 @@ $$
 Đẳng thức ghép Bước 1–3, bất đẳng thức thứ nhất là Bước 4, bất đẳng thức thứ hai là Bổ đề 10.25. $\square$
 :::
 
-Định lý nói rằng mức cải thiện thật không nhỏ hơn mức cải thiện mà hàm thay thế dự báo, trừ một phạt tỉ lệ với khoảng cách TV trung bình giữa hai chính sách. Khi $\pi'$ gần $\pi$, phạt nhỏ và hàm thay thế đáng tin; khi $\pi'$ xa, phạt có thể lớn hơn mọi mức tăng dự báo. Các giả thiết có vai trò riêng.
+Định lý nói rằng mức cải thiện thật không nhỏ hơn mức cải thiện mà hàm thay thế dự báo, trừ một phạt tỉ lệ với kỳ vọng theo $\nu^\pi$ của khoảng cách TV giữa hai chính sách. Khi $\pi'$ gần $\pi$, phạt nhỏ và hàm thay thế đáng tin; khi $\pi'$ xa, phạt có thể lớn hơn mọi mức tăng dự báo. Các giả thiết có vai trò riêng.
 
 - Bỏ "$\gamma<1$": trên hành lang ngắn, $\gamma=1$ làm thừa số $2\gamma/(1-\gamma)^2$ vô hạn và $\nu$ không xác định; định lý không áp dụng.
 - Bỏ "lợi thế và phân bố chính xác": nếu $\mathcal L$ được thay bằng một ước lượng mẫu, vế phải có thêm sai số ước lượng mà định lý không kiểm soát, nên cận không còn chứng nhận được cải thiện.
@@ -1240,12 +1302,20 @@ $$
 
 Bước 1 dùng các giả thiết của Bổ đề 10.19; Bước 5 dùng $\gamma<1$ và sự kết thúc qua Bổ đề 10.25. Achiam và cộng sự (2017, Hệ quả 1, (5)) phát biểu cùng cận.
 
-**Trong thực hành.** Không đại lượng nào của cận tính được từ một bộ đệm: $\chi_{\pi'}$ cần lợi thế chính xác tại mọi trạng thái, còn $\nu^\pi$ là kỳ vọng có chiết khấu trong khi bộ đệm chỉ cho trung bình đều trên các trạng thái đã thăm. Với $\gamma=0{,}99$, thừa số $2\gamma/(1-\gamma)^2$ bằng $19\,800$. Vì vậy, chúng ta dùng cận để chọn đại lượng cần kiểm soát: khoảng cách trung bình giữa hai chính sách theo phân bố trạng thái của chính sách cũ.
+**Trong thực hành.** Không đại lượng nào của cận tính được từ một bộ đệm: $\chi_{\pi'}$ cần lợi thế chính xác tại mọi trạng thái, còn $\nu^\pi$ là kỳ vọng có chiết khấu trong khi bộ đệm chỉ cho trung bình đều trên các trạng thái đã thăm. Với $\gamma=0{,}99$, thừa số $2\gamma/(1-\gamma)^2$ bằng $19\,800$. Vì vậy, chúng ta dùng cận để chọn đại lượng cần kiểm soát: kỳ vọng của khoảng cách giữa hai chính sách theo phân bố trạng thái của chính sách cũ.
 
 ::: example Ví dụ 10.12 (Chặn cải thiện trên chuỗi hai trạng thái)
-**Dữ kiện.** Chuỗi hai trạng thái, $\gamma=0{,}9$, chính sách cũ $p_A=\tfrac12$, $p_B=\tfrac23$, $\nu^\pi=(0{,}1;\,0{,}045)$, $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$, $A_\pi(s_B,\cdot)=(1;\,-2)$. Bước của Ví dụ 10.11: $p'_A=0{,}6$, $p'_B=0{,}8$, $\Delta J=0{,}296$, $\mathcal L-J=0{,}26$, $A_\pi(s,\pi')=(0{,}08;\,0{,}4)$, $D_{\mathrm{TV}}=(0{,}1;\,\tfrac2{15})$.
+**Dữ kiện.** Chuỗi hai trạng thái, $\gamma=0{,}9$, chính sách cũ $p_A=\tfrac12$, $p_B=\tfrac23$, $\nu^\pi=(0{,}1;\,0{,}045)$, $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$, $A_\pi(s_B,\cdot)=(1;\,-2)$. Bước của Ví dụ 10.11: $p'_A=0{,}6$, $p'_B=0{,}8$, $\Delta J=0{,}296$, $\mathcal L-J=0{,}26$, $A_\pi(s,\pi')=(0{,}08;\,0{,}4)$, $D_{\mathrm{TV}}=(0{,}1;\,\tfrac2{15})$. Bước dài $\tilde\pi$ của Ví dụ 10.11: $\tilde p_A=0{,}9$, $\tilde p_B=0{,}5$, $\Delta J=-0{,}085$, $\mathcal L-J=0{,}095$, $A_\pi(s,\tilde\pi)=(0{,}32;\,-0{,}5)$, $D_{\mathrm{TV}}=(0{,}4;\,\tfrac16)$.
 
 **Bước của Ví dụ 10.11.** $\chi_{\pi'}=0{,}4$ và $\mathbb E_\nu[D_{\mathrm{TV}}]=0{,}016$, nên phạt là $\frac{2\cdot0{,}9\cdot0{,}4}{0{,}01}\cdot0{,}016=1{,}152$, lớn hơn $0{,}26$; cận dưới là $0{,}26-1{,}152=-0{,}892$, không chứng nhận được cải thiện dù $\Delta J=0{,}296>0$.
+
+**Bước dài $\tilde\pi$.** Hằng của định lý và phạt:
+
+- $\chi_{\tilde\pi}=\max(0{,}32;\,0{,}5)=0{,}5$, nên $\dfrac{2\gamma\chi_{\tilde\pi}}{(1-\gamma)^2}=\dfrac{2\cdot0{,}9\cdot0{,}5}{0{,}01}=90$;
+- $\mathbb E_\nu[D_{\mathrm{TV}}]=0{,}1\cdot0{,}4+0{,}045\cdot\tfrac16=0{,}04+0{,}0075=0{,}0475$;
+- phạt $90\cdot0{,}0475=4{,}275$ và cận dưới $0{,}095-4{,}275=-4{,}18$.
+
+Cận đúng, vì $-4{,}18\le\Delta J=-0{,}085$, nhưng rất lỏng: phạt lớn gấp $45$ lần mức tăng $0{,}095$ mà hàm thay thế báo.
 
 **Bước nhỏ chỉ đổi $s_B$.** Lấy $p'_A=\tfrac12$, $p'_B=\tfrac23+\Delta p$ với bước $\Delta p>0$. Khi đó $\Delta J=0{,}5\cdot0{,}9\cdot3\Delta p=1{,}35\Delta p$. Vì $p_A$ không đổi, $\nu(s_B)$ không đổi, nên hàm thay thế chính xác: $A_\pi(s_A,\pi')=0$, $A_\pi(s_B,\pi')=(\tfrac23+\Delta p)\cdot1+(\tfrac13-\Delta p)(-2)=3\Delta p$, và $\mathcal L-J=\tfrac1{0{,}1}\cdot0{,}045\cdot3\Delta p=1{,}35\Delta p$. Cận vẫn phạt: $\chi_{\pi'}=3\Delta p$, $\mathbb E_\nu[D_{\mathrm{TV}}]=0{,}045\Delta p$, phạt $\frac{2\cdot0{,}9\cdot3\Delta p}{0{,}01}\cdot0{,}045\Delta p=24{,}3(\Delta p)^2$. Cận dương khi và chỉ khi $1{,}35\Delta p>24{,}3(\Delta p)^2$, tức $\Delta p<1{,}35/24{,}3\approx0{,}0556$.
 
@@ -1287,12 +1357,12 @@ Bất đẳng thức thứ nhất là bất đẳng thức Jensen, bất đẳng
 
 Achiam và cộng sự (2017, Hệ quả 3) phát biểu cùng kết quả với chiều $D_{\mathrm{KL}}(\pi'\Vert\pi)$; Bước 1 cho phép dùng cả chiều $D_{\mathrm{KL}}(\pi\Vert\pi')$ mà TRPO ràng buộc.
 
-Trên bước của Ví dụ 10.12, KL theo chiều cũ‖mới là $(0{,}02041;\,0{,}04873)$, $\bar D_{\mathrm{KL}}=0{,}1\cdot0{,}02041+0{,}045\cdot0{,}04873=0{,}004234$, và phạt là $72\sqrt{0{,}002117}=3{,}31$; theo chiều mới‖cũ, $\bar D_{\mathrm{KL}}=0{,}003980$ và phạt là $3{,}21$. Cả hai lớn hơn phạt dạng TV $1{,}152$.
+Trên bước của Ví dụ 10.12, KL theo chiều cũ‖mới là $(0{,}02041;\,0{,}04873)$, $\bar D_{\mathrm{KL}}=0{,}1\cdot0{,}02041+0{,}045\cdot0{,}04873=0{,}004234$, và phạt là $72\sqrt{0{,}002117}=3{,}31$; theo chiều mới‖cũ, $\bar D_{\mathrm{KL}}=0{,}003980$ và phạt là $3{,}21$. Cả hai lớn hơn phạt dạng TV $1{,}152$. Với bước dài $\tilde\pi$ của Ví dụ 10.12, KL theo chiều cũ‖mới là $(0{,}511;\,0{,}0566)$, $\bar D_{\mathrm{KL}}=0{,}1\cdot0{,}511+0{,}045\cdot0{,}0566\approx0{,}0536$, phạt là $90\sqrt{0{,}0536/2}\approx14{,}7$ và cận là $0{,}095-14{,}7\approx-14{,}6$, lỏng hơn cận $-4{,}18$ dạng TV.
 
 ::: remark Nhận xét 10.28 (Định lý 1 của Schulman và cộng sự, 2015)
-Schulman và cộng sự (2015, Định lý 1) chứng minh một cận cùng loại với độ lệch TV lớn nhất theo trạng thái, $D^{\max}_{\mathrm{TV}}=\max_sD_{\mathrm{TV}}(s)$:
+Schulman và cộng sự (2015, Định lý 1) chứng minh một cận cùng loại với khoảng cách TV lớn nhất theo trạng thái, $D^{\max}_{\mathrm{TV}}=\max_sD_{\mathrm{TV}}(s)$:
 $$\begin{aligned}J(\pi^\prime)&\ge\mathcal L_\pi(\pi^\prime)\\&\quad-\frac{4\bar\chi\gamma}{(1-\gamma)^2}\bigl(D^{\max}_{\mathrm{TV}}\bigr)^2 .\end{aligned}$$
-Chứng minh nằm ngoài phạm vi học phần; bài báo chứng minh bằng ghép cặp (coupling) hai chính sách (Phụ lục A) hoặc bằng lý thuyết nhiễu loạn (Phụ lục B). Trên Ví dụ 10.12, $\bar\chi=2$: bước của Ví dụ 10.11 có $D^{\max}_{\mathrm{TV}}=\tfrac2{15}$ và phạt $\frac{4\cdot2\cdot0{,}9}{0{,}01}\cdot\bigl(\tfrac2{15}\bigr)^2=12{,}8$; bước nhỏ có phạt $720(\Delta p)^2$, dương khi $\Delta p<0{,}001875$. Trên ví dụ này, cận dạng lớn nhất lỏng hơn cận dạng trung bình của Định lý 10.26.
+Chứng minh nằm ngoài phạm vi học phần; bài báo chứng minh bằng ghép cặp (coupling) hai chính sách (Phụ lục A) hoặc bằng lý thuyết nhiễu loạn (Phụ lục B). Trên Ví dụ 10.12, $\bar\chi=2$: bước của Ví dụ 10.11 có $D^{\max}_{\mathrm{TV}}=\tfrac2{15}$ và phạt $\frac{4\cdot2\cdot0{,}9}{0{,}01}\cdot\bigl(\tfrac2{15}\bigr)^2=12{,}8$; bước nhỏ có phạt $720(\Delta p)^2$, dương khi $\Delta p<0{,}001875$. Trên ví dụ này, cận dạng lớn nhất lỏng hơn cận dạng kỳ vọng của Định lý 10.26.
 :::
 
 <!-- note-topic-id: lec-10-topic-14 -->
@@ -1366,6 +1436,8 @@ vì $2\sqrt{\kappa/2}=\sqrt{2\kappa}$. $\square$
 :::
 
 Hệ quả 10.31 là Mệnh đề 1 của Achiam và cộng sự (2017, (9)), viết cho chiều KL của TRPO. Trên Ví dụ 10.12, lấy $\kappa=0{,}004234$, đúng bằng KL trung bình của bước của Ví dụ 10.11. Nghiệm chính xác của bài toán là $p_A\approx0{,}571$, $p_B\approx0{,}824$, với $\chi_{\pi_{k+1}}=\max_s\lvert A_{\pi_k}(s,\pi_{k+1})\rvert\approx\max(0{,}057;\,0{,}472)=0{,}472$, nên cận là $-\sqrt{0{,}008468}\cdot0{,}9\cdot0{,}472/0{,}01\approx-3{,}91$; mức tăng thật là $\Delta J\approx0{,}299$. Hằng $\chi$ của cận thuộc về nghiệm và khác $\chi_{\pi'}=0{,}4$ của bước $\pi'$, nên mức giảm tối đa $3{,}91$ khác phạt $3{,}31$ mà Hệ quả 10.27 cho bước $\pi'$.
+
+Trên đoạn thẳng của Ví dụ 10.11 từ $\pi$ tới $\tilde\pi$, với $\kappa=0{,}01$, miền tin cậy chứa các điểm $t\le0{,}515$: tại $t=0{,}515$, $\bar D_{\mathrm{KL}}=0{,}01$, $\Delta\mathcal L\approx0{,}049$ và $\Delta J\approx0{,}0012>0$. Điểm $t=1$, tức $\tilde\pi$, có $\bar D_{\mathrm{KL}}\approx0{,}0536>\kappa$ và nằm ngoài miền.
 
 Bỏ giả thiết "nghiệm chính xác" thì Bước 1 không còn cho $\mathcal L_{\pi_k}(\pi_{k+1})\ge J(\pi_k)$, và cận không còn áp dụng. Một nhầm lẫn thường gặp là áp hệ quả cho TRPO như được cài đặt: TRPO thực hành lấy trung bình đều trên mẫu thay cho $\nu^{\pi_k}$, dùng lợi thế ước lượng, xấp xỉ KL bậc hai và giải gần đúng, nên giả thiết này không thỏa.
 
@@ -1524,6 +1596,14 @@ Giả thiết $g\in\operatorname{range}F$ của (b) luôn thỏa khi $g$ và $F$
 **Kiểm tra lại.** $\tfrac12\Delta^{*\top}F_s\Delta^*=\tfrac12\cdot\tfrac29\cdot(0{,}3)^2=0{,}01$. Mọi $\Delta^*+c(1;\,1)$ cho cùng chính sách, đúng như tập nghiệm của Mệnh đề 10.34(b).
 :::
 
+Trên chuỗi hai trạng thái, tại $\theta=(0;\,\log2)$ và với $\kappa=0{,}01$, mỗi trạng thái có một tham số nên $F$ chéo. Với softmax một logit, $F_s=\mathbb E[\psi^2]=p_s(1-p_s)^2+(1-p_s)p_s^2=p_s(1-p_s)$, và $\nu^\pi=(0{,}1;\,0{,}045)$, nên $F=\operatorname{diag}(0{,}1\cdot\tfrac14;\,0{,}045\cdot\tfrac29)=\operatorname{diag}(0{,}025;\,0{,}01)$. Với $g=(0{,}2;\,0{,}3)$ của Ví dụ 10.6:
+
+- $F^{-1}g=(8;\,30)$ và $g^\top F^{-1}g=0{,}2\cdot8+0{,}3\cdot30=10{,}6$;
+- hệ số độ dài $\sqrt{2\cdot0{,}01/10{,}6}\approx0{,}0434$, nên $\Delta^*\approx(0{,}35;\,1{,}30)$;
+- chính sách mới $p_A=\sigma(0{,}35)\approx0{,}586$, $p_B=\sigma(\log2+1{,}30)\approx0{,}880$, với KL trung bình thật theo chiều cũ‖mới $\approx0{,}0085\le\kappa$ và $J\approx1{,}807$, tăng $0{,}407$.
+
+Bước dồn phần lớn độ dài vào $\theta_B$, vì $F_B=0{,}01$ nhỏ hơn $F_A=0{,}025$ và $g_B=0{,}3$ lớn hơn $g_A=0{,}2$.
+
 ::: remark Nhận xét 10.35 (Ma trận Fisher suy biến)
 Với chính sách softmax, hướng cộng cùng một hằng vào mọi logit của một trạng thái nằm trong $\ker F$; khi các trạng thái có tham số chung, hạt nhân có thể nhỏ hơn. Giả nghịch đảo chọn nghiệm có chuẩn nhỏ nhất trong $\Delta^*+\ker F$. Mọi nghiệm cho cùng giá trị của mô hình bậc hai; với softmax có tham số riêng cho từng trạng thái, các nghiệm cho đúng cùng một chính sách trên các trạng thái có $\nu^{\mathrm{old}}(s)>0$.
 :::
@@ -1646,7 +1726,7 @@ Trên bài toán một bước, bước TRPO của Ví dụ 10.15 đã cần gi�
 
 Hàm thay thế mẫu $\widehat{\mathbb E}_{\mathcal D}[\rho_t(\theta)\widehat A_t]$ tăng tuyến tính theo tỉ số: với lợi thế dương, hàm này tăng mãi khi $\rho_t$ tăng, dù chính sách mới đã rời xa vùng mà Mệnh đề 10.22 bảo đảm khớp.
 
-Hàm thay thế cũng chỉ đáng tin khi lợi thế được ước lượng tốt. Trên chuỗi hai trạng thái với critic $\hat v=(1{,}4;\,1)$ của Mục 3 và $\lambda=1$, giả sử bộ đệm chỉ có hai lượt: $s_A\xrightarrow1s_B\xrightarrow2$, với lợi tức $0$, và $s_A\xrightarrow2$, với lợi tức $1$; bộ đệm này xảy ra với xác suất $2\cdot\tfrac16\cdot\tfrac12=\tfrac16$. Lợi thế ước lượng là $0-1{,}4=-1{,}4$ cho hành động 1 tại $s_A$, $1-1{,}4=-0{,}4$ cho hành động 2 tại $s_A$ và $0-1=-1$ cho hành động 2 tại $s_B$, trong khi lợi thế đúng là $0{,}4$, $-0{,}4$ và $-2$. Với $\rho_s(a)=\pi_\theta(a\mid s)/\pi_{\mathrm{old}}(a\mid s)$, ta có $\rho_{s_A}(1)=2p_A$, $\rho_{s_A}(2)=2(1-p_A)$, $\rho_{s_B}(2)=3(1-p_B)$, nên hàm thay thế mẫu tại $s_A$ là $\tfrac12\bigl[2p_A\cdot(-1{,}4)+2(1-p_A)\cdot(-0{,}4)\bigr]=-0{,}4-p_A$, và tại $s_B$ là $3(1-p_B)\cdot(-1)$. Cực đại hóa không ràng buộc đẩy $p_A$ về $0$ và $p_B$ về $1$, nơi $J=1$, tức $J$ giảm $0{,}4$ so với $J(\pi_{\mathrm{old}})=1{,}4$. Tại $s_A$, ước lượng với $\lambda=1$ không chệch vì $\hat v(s_A)=v_\pi(s_A)$, nhưng trên một bộ đệm nhỏ nó sai dấu ở hành động 1; hàm thay thế mẫu tuyến tính theo tỉ số, nên không có gì giữ bước gần chính sách cũ.
+Hàm thay thế cũng chỉ đáng tin khi lợi thế được ước lượng tốt. Trên chuỗi hai trạng thái với critic $\hat v=(1{,}4;\,1)$ của Mục 3 và $\lambda=1$, giả sử bộ đệm chỉ có hai lượt: $s_A\xrightarrow1s_B\xrightarrow2$, với lợi tức $0$, và $s_A\xrightarrow2$, với lợi tức $1$; bộ đệm này xảy ra với xác suất $2\cdot\tfrac16\cdot\tfrac12=\tfrac16$. Lợi thế ước lượng là $0-1{,}4=-1{,}4$ cho hành động 1 tại $s_A$, $1-1{,}4=-0{,}4$ cho hành động 2 tại $s_A$ và $0-1=-1$ cho hành động 2 tại $s_B$, trong khi lợi thế đúng là $0{,}4$, $-0{,}4$ và $-2$. Với $\rho_s(a)=\pi_\theta(a\mid s)/\pi_{\mathrm{old}}(a\mid s)$, ta có $\rho_{s_A}(1)=2p_A$, $\rho_{s_A}(2)=2(1-p_A)$, $\rho_{s_B}(2)=3(1-p_B)$, nên hàm thay thế mẫu tại $s_A$ là $\tfrac12\bigl[2p_A\cdot(-1{,}4)+2(1-p_A)\cdot(-0{,}4)\bigr]=-0{,}4-p_A$, và tại $s_B$ là $3(1-p_B)\cdot(-1)$. Cực đại hóa không ràng buộc đẩy $p_A$ về $0$ và $p_B$ về $1$. Hàm thay thế mẫu tiến tới cận trên đúng của nó khi $\theta_A\to-\infty$, $\theta_B\to+\infty$; không tham số hữu hạn nào đạt cận này. Ở giới hạn đó $J=2{,}7\cdot0\cdot1+1-0=1$, tức $J$ giảm $0{,}4$ so với $J(\pi_{\mathrm{old}})=1{,}4$. Tại $s_A$, ước lượng với $\lambda=1$ không chệch vì $\hat v(s_A)=v_\pi(s_A)$, nhưng trên một bộ đệm nhỏ nó sai dấu ở hành động 1; hàm thay thế mẫu tuyến tính theo tỉ số, nên không có gì giữ bước gần chính sách cũ.
 
 Về mặt ý tưởng, ta cắt phần thưởng của việc đẩy tỉ số ra ngoài một khoảng $[1-\epsilon,1+\epsilon]$, nhưng giữ nguyên phần phạt khi tỉ số đi theo hướng bất lợi. Ví dụ sau so hai mục tiêu trên bài toán một bước.
 
@@ -1668,7 +1748,7 @@ Về mặt ý tưởng, ta cắt phần thưởng của việc đẩy tỉ số 
 
 ![Đồ thị theo p từ 0,5 đến 0,9. Đường thẳng nét đứt: L CPI bằng 3p trừ 2. Đường gấp khúc nét liền: L CLIP, trùng 3p trừ 2 tới p bằng 0,733, sau đó bằng p trừ 0,533 tới p bằng 0,8, rồi nằm ngang ở 0,267. Hai đường thẳng đứng mảnh đánh dấu p bằng 0,733 (mẫu hành động 2 chạm rho bằng 0,8) và p bằng 0,8 (mẫu hành động 1 chạm rho bằng 1,2). Điểm p bằng 2/3 ghi chính sách cũ, nơi hai đường trùng nhau.](img/lec-10/ppo-one-step-plateau.svg)
 
-Trên hình, đường gấp khúc nằm dưới đường thẳng ở mọi $p$, trùng nó quanh chính sách cũ $p=\tfrac23$, và trở nên nằm ngang từ $p=0{,}8$. Hai mốc gấp ứng với hai lúc một nhóm mẫu chạm biên của khoảng cắt. Định nghĩa sau viết mục tiêu cắt cho bộ đệm tổng quát.
+Trên hình, đường gấp khúc nằm dưới đường thẳng ở mọi $p$, trùng nó quanh chính sách cũ $p=\tfrac23$, và trở nên nằm ngang từ $p=0{,}8$. Hai mốc gấp ứng với hai lúc một nhóm mẫu chạm biên của khoảng cắt. Trạng thái $s_B$ của chuỗi hai trạng thái có cùng chính sách cũ $(\tfrac23;\,\tfrac13)$ và cùng lợi thế đúng $(1;\,-2)$ như bài toán một bước, nên với ba mẫu tại $s_B$ có đúng tần suất của $\pi_{\mathrm{old}}$, hành động $1,1,2$, mục tiêu cắt theo $p_B$ trùng $\mathcal L^{\mathrm{CLIP}}$ của Ví dụ 10.17 và nằm ngang từ $p_B=0{,}8$. Định nghĩa sau viết mục tiêu cắt cho bộ đệm tổng quát.
 
 ::: definition Định nghĩa 10.39 (Mục tiêu PPO-Clip)
 Cho bộ đệm $\mathcal D$ các mẫu $(S_t,A_t,\widehat A_t)$ do $\pi_{\mathrm{old}}$ sinh ra, tỉ số $\rho_t(\theta)$ của Định nghĩa 10.21 và bán kính cắt $\epsilon\in(0,1)$. Với $\operatorname{clip}(x,l,u)=\min(\max(x,l),u)$, số hạng cắt của mẫu $t$ là
@@ -1730,6 +1810,14 @@ Hình trên được vẽ theo Hình 1 của Schulman và cộng sự (2017), v�
 :::
 
 Trở lại bộ đệm hai lượt ở đầu mục, với $\epsilon=0{,}2$. Tại $s_A$, mỗi mẫu có trọng số $\tfrac12$ và cả hai lợi thế ước lượng đều âm, nên theo Mệnh đề 10.40(b), mục tiêu cắt là $\tfrac12\bigl[-1{,}4\max(2p_A;\,0{,}8)-0{,}4\max(2-2p_A;\,0{,}8)\bigr]$. Khi $p_A$ giảm từ $\tfrac12$, mẫu hành động 1 chạm biên $\rho=0{,}8$ tại $p_A=0{,}4$; dưới mức đó, chỉ mẫu hành động 2 còn đổi, theo hướng bất lợi và không bị cắt, nên mục tiêu cắt tại $s_A$ lớn nhất ở $p_A=0{,}4$. Tại $s_B$, mẫu duy nhất đóng góp $-\max(3-3p_B;\,0{,}8)$, nằm ngang từ $p_B=\tfrac{11}{15}\approx0{,}733$. Vòng trong dừng ở $(0{,}4;\,\tfrac{11}{15})$, với $J=2{,}7\cdot0{,}4\cdot\tfrac{11}{15}+0{,}6=1{,}392$: $J$ giảm $0{,}008$, thay cho $0{,}4$ khi không cắt. Phép cắt không sửa lợi thế sai; nó giới hạn mỗi vòng đi bao xa.
+
+Từ $p_B=\tfrac{11}{15}$, phần của mục tiêu cắt tại $s_B$ hằng bằng $-0{,}8$, nên mọi $p_B\ge\tfrac{11}{15}$ cho cùng giá trị mục tiêu và gradient bằng $0$. Với $p_A=0{,}4$, KL tại $s_B$ theo chiều cũ‖mới và $J=2{,}7\cdot0{,}4\,p_B+0{,}6$ trên đoạn đó là:
+
+- $p_B=\tfrac{11}{15}$: KL $\approx0{,}011$, $J=1{,}392$;
+- $p_B=0{,}85$: KL $\approx0{,}104$, $J=1{,}518$;
+- $p_B=0{,}95$: KL $\approx0{,}396$, $J=1{,}626$.
+
+Mục tiêu cắt không phân biệt ba chính sách này. Nó không chặn KL tại $s_B$ khi các bước khác đẩy $p_B$ đi tiếp (Nhận xét 10.42), và nó dừng vòng trong ở $p_B=\tfrac{11}{15}$ dù $\partial J/\partial p_B=2{,}7\cdot0{,}4=1{,}08>0$.
 
 Mệnh đề sau so mục tiêu cắt với mục tiêu không cắt.
 
@@ -2093,473 +2181,14 @@ Mô hình được phân tích khác PPO của Thuật toán 10.49 ở nhiều �
 
 Cái giá của PPO là không còn cận KL (Nhận xét 10.42), hành vi thực tế phụ thuộc chi tiết cài đặt (Nhận xét 10.50), và kết quả hội tụ hiện có chỉ nói về điểm dừng của một mô hình đơn giản hóa (Nhận xét 10.51).
 
-Thuật toán 10.49 cần phần thưởng $R_{t+1}$ do môi trường trả về sau mỗi hành động, và phạt KL của PPO-Penalty (Định nghĩa 10.43) chỉ giữ mỗi bước gần chính sách $\pi_{\mathrm{old}}$ vừa sinh dữ liệu. Khi môi trường không trả phần thưởng mà chỉ có người so sánh hai kết quả, các công cụ của Mục 2–6 không dùng trực tiếp được, và chưa có gì giữ chính sách cuối gần một chính sách cho trước.
-
 ---
 
-## 7. Tối ưu chính sách từ phản hồi ưu tiên
+## 7. Tổng kết
 
-<!-- note-topic-id: lec-10-topic-25 -->
-### 7.1 Dữ liệu ưu tiên và mô hình Bradley–Terry
-
-Giả sử một mô hình ngôn ngữ nhận một *lời nhắc* (prompt) $x$ và đáp bằng một trong hai *câu trả lời* (response, completion) $y_1$, $y_2$, với xác suất $(\tfrac23;\,\tfrac13)$; gọi mô hình hiện có này là *chính sách tham chiếu* $\pi_{\mathrm{ref}}$. Không có hàm phần thưởng, chỉ có sáu lần người gán nhãn đọc hai câu trả lời và chọn câu tốt hơn, bốn lần chọn $y_1$, hai lần chọn $y_2$.
-
-**Câu hỏi.** Từ sáu phép so sánh này, chính sách mới nên chọn mỗi câu trả lời với xác suất nào nếu vẫn phải gần chính sách tham chiếu, và có cần một vòng học tăng cường để tìm chính sách đó không?
-
-::: definition Định nghĩa 10.52 (Bài toán sinh câu trả lời)
-Cho tập lời nhắc hữu hạn $\mathcal X$ với phân phối $\mu_0$, và với mỗi $x$ một tập câu trả lời hữu hạn $\mathcal Y(x)$.
-
-- (a) *Dạng một bước.* Trạng thái đầu $x\sim\mu_0$; hành động là câu trả lời $y\in\mathcal Y(x)$, chọn theo $\pi(y\mid x)$; lượt kết thúc sau hành động đó với phần thưởng $r(x,y)$. Đây là bài toán một bước của Ví dụ 10.1 với $s=x$, $a=y$.
-- (b) *Dạng mức token* (token-level MDP). Với tập token hữu hạn $\mathcal V$ có một ký hiệu kết thúc: $S_0=x$; hành động $A_t\in\mathcal V$; chuyển tất định $S_{t+1}=(S_t,A_t)$, chuỗi đã có ghép thêm token mới; lượt kết thúc, $Z_{t+1}=1$, khi $A_t$ là ký hiệu kết thúc hoặc $t+1=T_{\max}$; vì $T_{\max}$ thuộc bài toán và $S_t$ chứa độ dài chuỗi, đây là kết thúc, không phải cắt ngắn. Câu trả lời $y=(A_0,\dots,A_{T-1})$ có xác suất $\pi(y\mid x)=\prod_{t=0}^{T-1}\pi(A_t\mid S_t)$; phần thưởng chỉ ở bước cuối, $R_T=r(x,y)$, các $R_{t+1}$ khác bằng $0$; $\gamma=1$.
-:::
-
-Với $\gamma=1$, lợi tức $G_0$ của dạng (b) bằng $r(x,y)$, nên hai dạng có cùng hàm mục tiêu và chỉ khác cách đếm bước. Tập $\mathcal Y(x)$ của dạng (b) có tới $\lvert\mathcal V\rvert^{T_{\max}}$ phần tử.
-
-::: example Ví dụ 10.23 (Dữ liệu ưu tiên trên bài toán một bước)
-**Dữ kiện.** Lời nhắc $x$, hai câu trả lời; $\pi_{\mathrm{ref}}$ là chính sách softmax của Ví dụ 10.1 với $\theta_{\mathrm{ref}}=(\log2;\,0)$, tức $(\tfrac23;\,\tfrac13)$. Mỗi phép so sánh là một bộ ba (lời nhắc, câu được chọn, câu bị loại):
-
-- phép 1: $(x,y_1,y_2)$;
-- phép 2: $(x,y_1,y_2)$;
-- phép 3: $(x,y_1,y_2)$;
-- phép 4: $(x,y_1,y_2)$;
-- phép 5: $(x,y_2,y_1)$;
-- phép 6: $(x,y_2,y_1)$.
-
-**Tần suất.** $y_1$ được chọn $4$ trên $6$ lần, tức $\tfrac23$.
-:::
-
-Một cách trực quan, người gán nhãn chọn câu có phần thưởng cao hơn thường xuyên hơn, và chọn gần như ngẫu nhiên khi hai phần thưởng gần nhau; xác suất chọn chỉ phụ thuộc hiệu hai phần thưởng.
-
-::: definition Định nghĩa 10.53 (Dữ liệu ưu tiên, mô hình Bradley–Terry)
-Một *phép so sánh ưu tiên* (pairwise comparison) là bộ ba $(x,y_w,y_l)$, $y_w\ne y_l$ trong $\mathcal Y(x)$, với *câu trả lời được chọn* $y_w$ và *câu trả lời bị loại* $y_l$ (chosen, rejected). *Tập dữ liệu ưu tiên* $\mathcal D_{\mathrm{pref}}$ là một tập hữu hạn các bộ ba. Với hàm phần thưởng $r$ trên các cặp $(x,y)$, *mô hình Bradley–Terry* giả thiết các phép so sánh độc lập và
-$$\begin{aligned}&\Pr(y\succ y'\mid x)\\&\quad=\frac{e^{r(x,y)}}{e^{r(x,y)}+e^{r(x,y')}}\\&\quad=\sigma\bigl(r(x,y)-r(x,y')\bigr).\end{aligned}$$
-Hai hàm phần thưởng *tương đương* nếu chúng hơn kém nhau một hàm $f(x)$ chỉ phụ thuộc lời nhắc; *lớp tương đương* của $r$ là $[r]=\{r+f:\ f\text{ chỉ phụ thuộc }x\}$.
-:::
-
-Chỉ hiệu $r(x,y)-r(x,y')$ xuất hiện, nên mọi phần thưởng trong $[r]$ cho cùng xác suất ưu tiên (Rafailov và cộng sự, 2023, Bổ đề 1).
-
-::: proposition Mệnh đề 10.54 (Hợp lý cực đại của mô hình phần thưởng)
-**Giả thiết.** $\mathcal D_{\mathrm{pref}}$ hữu hạn, các bộ ba độc lập và sinh theo Định nghĩa 10.53; *mô hình phần thưởng* $\hat r$ là một hàm thực tùy ý trên các cặp $(x,y)$.
-
-**Kết luận.**
-
-- (a) Đối log-hợp lý trung bình của $\mathcal D_{\mathrm{pref}}$ dưới $\hat r$ là
-  $$\begin{aligned}&L^{\mathrm{BT}}(\hat r)\\&\quad=-\widehat{\mathbb E}_{\mathcal D_{\mathrm{pref}}}\bigl[\log\sigma\bigl(\\&\qquad\hat r(x,y_w)-\hat r(x,y_l)\bigr)\bigr],\end{aligned}$$
-  mất mát của hồi quy logistic với biến $\hat r(x,y_w)-\hat r(x,y_l)$ và mọi nhãn dương.
-- (b) $L^{\mathrm{BT}}(\hat r+f)=L^{\mathrm{BT}}(\hat r)$ với mọi $f$ chỉ phụ thuộc $x$.
-- (c) Với một lời nhắc, hai câu trả lời và $n$ phép so sánh, $k$ phép chọn $y_1$, đặt $\Delta\hat r=\hat r(x,y_1)-\hat r(x,y_2)$. Nếu $0<k<n$, $L^{\mathrm{BT}}$ đạt cực tiểu khi và chỉ khi $\Delta\hat r=\log\frac k{n-k}$, tức $\sigma(\Delta\hat r)=\frac kn$. Nếu $k=n$ (tương tự $k=0$), $L^{\mathrm{BT}}>0$ với mọi $\hat r$ và giảm về $0$ khi $\Delta\hat r\to+\infty$, nên không có cực tiểu.
-
-**Điều kiện áp dụng.** Cực tiểu lấy trên mọi hàm $\hat r$, không trong một lớp tham số.
-
-**Phạm vi.** Mệnh đề chỉ ràng buộc hiệu phần thưởng trong từng phép so sánh, không nói gì về câu trả lời vắng mặt trong $\mathcal D_{\mathrm{pref}}$.
-:::
-
-::: proof
-**Bước 1 (kết luận a, b).** Bộ ba $(x,y_w,y_l)$ có xác suất $\sigma\bigl(\hat r(x,y_w)-\hat r(x,y_l)\bigr)$; các bộ ba độc lập, nên log-hợp lý là tổng các logarit đó; chia cho số bộ ba và đổi dấu được (a). Mỗi số hạng chỉ chứa một hiệu, trong đó $f(x)$ triệt tiêu: đó là (b).
-
-**Bước 2 (kết luận c).** $L^{\mathrm{BT}}=-\frac1n\bigl[k\log\sigma(\Delta\hat r)+(n-k)\log\sigma(-\Delta\hat r)\bigr]$. Từ $\sigma'(z)=\sigma(z)\sigma(-z)$ và $\sigma(-z)=1-\sigma(z)$,
-$$\begin{aligned}&\frac{dL^{\mathrm{BT}}}{d\Delta\hat r}\\&\quad=-\frac1n\bigl[k\,\sigma(-\Delta\hat r)\\&\qquad-(n-k)\,\sigma(\Delta\hat r)\bigr]\\&\quad=\sigma(\Delta\hat r)-\frac kn ,\end{aligned}$$
-tăng ngặt, nên $L^{\mathrm{BT}}$ lồi ngặt theo $\Delta\hat r$. Với $0<k<n$, đạo hàm bằng $0$ tại đúng $\sigma(\Delta\hat r)=\frac kn$. Với $k=n$, $L^{\mathrm{BT}}=-\log\sigma(\Delta\hat r)>0$, đạo hàm âm ở mọi điểm, và $L^{\mathrm{BT}}\to0$ khi $\Delta\hat r\to+\infty$. $\square$
-:::
-
-Trường hợp $k=n$ là *ưu tiên tất định* (deterministic preference): hợp lý cực đại đòi hiệu phần thưởng vô hạn (Gheshlaghi Azar và cộng sự, 2024, §4.2). Với một lớp tham số dùng chung tham số cho nhiều cặp, $\log\frac k{n-k}$ có thể không đạt được ở mọi cặp cùng lúc.
-
-::: example Ví dụ 10.24 (Khớp mô hình phần thưởng)
-**Dữ kiện.** Sáu phép so sánh của Ví dụ 10.23: $n=6$, $k=4$.
-
-**Tính.** $L^{\mathrm{BT}}=-\tfrac16\bigl[4\log\sigma(\Delta\hat r)+2\log\sigma(-\Delta\hat r)\bigr]$. Khi hai câu trả lời có cùng phần thưởng, $L^{\mathrm{BT}}=\log2=0{,}6931$. Theo Mệnh đề 10.54(c), cực tiểu đạt tại $\Delta\hat r=\log\frac42=\log2$, với giá trị $-\tfrac23\log\tfrac23-\tfrac13\log\tfrac13=0{,}6365$. Mệnh đề 10.54(b) cho phép chọn $\hat r(x,y_2)=0$, nên $\hat r=(\log2;\,0)$.
-
-**Kiểm tra lại.** $\sigma(\log2)=1/(1+\tfrac12)=\tfrac23$, đúng tần suất chọn $y_1$.
-:::
-
-::: remark Nhận xét 10.55 (Thu thập và chuẩn hóa dữ liệu ưu tiên)
-1. Ouyang và cộng sự (2022, §3.5) cho người gán nhãn xếp hạng từ 4 đến 9 câu trả lời của một lời nhắc, và mọi cặp trong đó thành một phép so sánh.
-2. Vì dữ liệu chỉ xác định $\hat r$ tới một hàm của $x$, các bài báo chuẩn hóa $\hat r$ về trung bình $0$ trên một tập câu trả lời chọn trước (Ouyang và cộng sự, 2022, §3.5; Stiennon và cộng sự, 2020, §3.4; Ziegler và cộng sự, 2019, §2).
-3. Nhầm lẫn thường gặp: coi $\hat r(x,y)$ là điểm tuyệt đối, trong khi dữ liệu chỉ xác định hiệu $\hat r(x,y)-\hat r(x,y')$ trong cùng một lời nhắc.
-:::
-
-Mệnh đề 10.54 cho phần thưởng $\hat r=(\log2;\,0)$, khớp trên các câu trả lời có trong dữ liệu, nhưng chưa cho chính sách.
-
-<!-- note-topic-id: lec-10-topic-26 -->
-### 7.2 Mục tiêu có phạt KL theo chính sách tham chiếu
-
-Với $\hat r=(\log2;\,0)$, chính sách cực đại hóa $\mathbb E_{y\sim\pi}\hat r(x,y)$ là $(1;\,0)$: nó bỏ hẳn $y_2$, và với mô hình ngôn ngữ nó có thể sinh câu trả lời khác xa các câu mà $\hat r$ đã được khớp (Stiennon và cộng sự, 2020, §3.4). Một cách trực quan, chính sách mới trả một chi phí $\beta$ cho mỗi đơn vị KL rời khỏi chính sách tham chiếu và chỉ đi xa khi phần thưởng bù được chi phí.
-
-::: example Ví dụ 10.25 (Ba chính sách trên bài toán một bước)
-**Dữ kiện.** $\pi_{\mathrm{ref}}(\cdot\mid x)=(\tfrac23;\,\tfrac13)$, $\hat r=(\log2;\,0)$, $\beta=1$. Với $p=\pi(y_1\mid x)$, phần thưởng kỳ vọng trừ $\beta$ lần KL là
-$$\begin{aligned}&J_1(p)=p\log2-p\log\frac{p}{2/3}\\&\quad-(1-p)\log\frac{1-p}{1/3}.\end{aligned}$$
-
-**Tính.**
-
-| Chính sách | $\mathbb E_\pi\hat r$ | $D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})$ | $J_1$ |
-|---|---|---|---|
-| $\pi_{\mathrm{ref}}=(\tfrac23;\,\tfrac13)$ | $0{,}4621$ | $0$ | $0{,}4621$ |
-| tham lam $(1;\,0)$ | $0{,}6931$ | $\log\tfrac32=0{,}4055$ | $0{,}2877$ |
-| $(0{,}8;\,0{,}2)$ | $0{,}5545$ | $0{,}0437$ | $0{,}5108$ |
-
-**Diễn giải.** Chính sách tham lam có phần thưởng kỳ vọng và chi phí KL lớn nhất; $(0{,}8;\,0{,}2)$ có $J_1$ lớn nhất.
-
-**Kiểm tra lại.** $0{,}8\log1{,}2+0{,}2\log0{,}6=0{,}1459-0{,}1022=0{,}0437$, bằng $D_{\mathrm{KL}}(\pi'\Vert\pi)$ tại $s_B$ của Ví dụ 10.11 ở Mục 4.3.
-:::
-
-::: definition Định nghĩa 10.56 (Mục tiêu có phạt KL, chính sách tham chiếu)
-Cho bài toán ở dạng (a) của Định nghĩa 10.52 với phần thưởng $r$, một *chính sách tham chiếu* $\pi_{\mathrm{ref}}(\cdot\mid x)$ cố định và $\beta>0$. *Mục tiêu có phạt KL theo chính sách tham chiếu* của chính sách $\pi$ là
-$$\begin{aligned}&J_\beta(\pi)=\mathbb E_{x\sim\mu_0}\Bigl[\mathbb E_{y\sim\pi(\cdot\mid x)}r(x,y)\\&\quad-\beta D_{\mathrm{KL}}\bigl(\pi(\cdot\mid x)\\&\qquad\Vert\pi_{\mathrm{ref}}(\cdot\mid x)\bigr)\Bigr],\end{aligned}$$
-với KL của Định nghĩa 10.23 trên $\mathcal Y(x)$.
-:::
-
-KL ở đây là $D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})$, kỳ vọng lấy theo chính sách đang tối ưu. Đây là (3) của Rafailov và cộng sự (2023), kỳ vọng theo $\pi$ của phần thưởng (2) của Ziegler và cộng sự (2019), và (2) của Ouyang và cộng sự (2022) khi hệ số của số hạng tiền huấn luyện bằng $0$.
-
-::: theorem Định lý 10.57 (Nghiệm của mục tiêu có phạt KL)
-**Giả thiết.** Với mỗi $x$, $\mathcal Y(x)$ hữu hạn và $\pi_{\mathrm{ref}}(\cdot\mid x)$ là phân phối trên $\mathcal Y(x)$; $r$ nhận giá trị thực; $\beta>0$; chính sách được chọn tự do cho mỗi $x$.
-
-**Kết luận.** Đặt *hàm phân hoạch* (partition function) và chính sách
-$$\begin{aligned}&\mathcal Z_r(x)=\sum_{y}\pi_{\mathrm{ref}}(y\mid x)\,e^{r(x,y)/\beta},\\&\pi^*_r(y\mid x)=\frac{\pi_{\mathrm{ref}}(y\mid x)\,e^{r(x,y)/\beta}}{\mathcal Z_r(x)}.\end{aligned}$$
-
-- (a) Với mọi $x$ và mọi $\pi(\cdot\mid x)$ có $D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})<\infty$,
-  $$\begin{aligned}&\mathbb E_{y\sim\pi}r(x,y)\\&\quad-\beta D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})\\&\quad=\beta\log\mathcal Z_r(x)\\&\quad-\beta D_{\mathrm{KL}}(\pi\Vert\pi^*_r).\end{aligned}$$
-- (b) $\pi^*_r$ cực đại $J_\beta$, là nghiệm duy nhất tại mọi $x$ có $\mu_0(x)>0$, và $\max J_\beta=\mathbb E_{x\sim\mu_0}\beta\log\mathcal Z_r(x)$.
-- (c) $r(x,y)-\beta\log\frac{\pi^*_r(y\mid x)}{\pi_{\mathrm{ref}}(y\mid x)}=\beta\log\mathcal Z_r(x)$ với mọi $y$ có $\pi_{\mathrm{ref}}(y\mid x)>0$.
-- (d) Miền hỗ trợ của $\pi^*_r(\cdot\mid x)$ là miền hỗ trợ của $\pi_{\mathrm{ref}}(\cdot\mid x)$.
-- (e) $\pi^*_{r+f}=\pi^*_r$ với mọi $f$ chỉ phụ thuộc $x$.
-
-**Điều kiện áp dụng.** Cực đại hóa riêng cho từng $x$; với lớp chính sách tham số, kết luận chỉ cho nghiệm khi $\pi^*_r$ thuộc lớp.
-
-**Phạm vi.** Định lý cho dạng của nghiệm, không cho thuật toán tìm nghiệm khi không tính được $\mathcal Z_r(x)$.
-:::
-
-::: proof
-Cố định $x$, viết $\pi=\pi(\cdot\mid x)$, $\mathcal Z=\mathcal Z_r(x)$.
-
-**Bước 1 (viết lại log-tỉ số).** Vì KL hữu hạn, mọi $y$ có $\pi(y)>0$ cũng có $\pi_{\mathrm{ref}}(y)>0$ và $\pi^*_r(y)>0$. Từ $\pi^*_r/\pi_{\mathrm{ref}}=e^{r/\beta}/\mathcal Z$, với các $y$ đó $\log\frac{\pi(y)}{\pi_{\mathrm{ref}}(y)}-\frac{r(x,y)}\beta=\log\frac{\pi(y)}{\pi^*_r(y)}-\log\mathcal Z$.
-
-**Bước 2 (kết luận a).** Nhân với $-\beta$ và lấy kỳ vọng theo $y\sim\pi$, một tổng hữu hạn.
-
-**Bước 3 (kết luận b).** Theo (a) và Mệnh đề 10.24(a), biểu thức trong ngoặc của $J_\beta$ tại $x$ không vượt $\beta\log\mathcal Z_r(x)$, dấu bằng chỉ tại $\pi^*_r(\cdot\mid x)$; chính sách có KL vô hạn cho $-\infty$. Chính sách chọn tự do theo $x$, nên cực đại từng $x$ cho cực đại của $J_\beta$.
-
-**Bước 4 (kết luận c, d, e).** Lấy logarit định nghĩa của $\pi^*_r$ được (c). Vì $e^{r/\beta}>0$, $\pi^*_r(y)>0$ khi và chỉ khi $\pi_{\mathrm{ref}}(y)>0$: đó là (d). Với $r+f$, $\mathcal Z_{r+f}(x)=e^{f(x)/\beta}\mathcal Z_r(x)$, nên thừa số $e^{f(x)/\beta}$ triệt tiêu giữa tử và mẫu: đó là (e). $\square$
-:::
-
-Định lý là (4) và Phụ lục A.1 của Rafailov và cộng sự (2023); (e) là Bổ đề 2 của bài báo. Theo (a), cực đại hóa $J_\beta$ là kéo $\pi$ về $\pi^*_r$ theo KL; theo (c), tại nghiệm, *phần thưởng đã trừ KL* (KL-penalized reward) $r-\beta\log(\pi^*_r/\pi_{\mathrm{ref}})$ bằng nhau trên miền hỗ trợ. Hai giả thiết có vai trò riêng.
-
-- Bỏ $\beta>0$: với $\beta=0$, $J_0=\mathbb E\,r$ có nghiệm tất định như $(1;\,0)$ của Ví dụ 10.25, nên kết luận (d) sai và $e^{r/\beta}$ không xác định.
-- Bỏ "chọn tự do theo $x$": một lớp tham số dùng chung cho mọi lời nhắc có thể không chứa $\pi^*_r$.
-
-**Trong thực hành.** Ở dạng (b) của Định nghĩa 10.52, $\mathcal Z_r(x)$ là tổng trên tới $\lvert\mathcal V\rvert^{T_{\max}}$ chuỗi token; Rafailov và cộng sự (2023, §4) ghi rằng ngay cả ước lượng $\mathcal Z_r(x)$ cũng tốn kém.
-
-::: example Ví dụ 10.26 (Nghiệm dạng đóng và vai trò của $\beta$)
-**Dữ kiện.** $\pi_{\mathrm{ref}}(\cdot\mid x)=(\tfrac23;\,\tfrac13)$, $\hat r=(\log2;\,0)$.
-
-**Nghiệm với $\beta=1$.** $\pi_{\mathrm{ref}}e^{\hat r}=(\tfrac43;\,\tfrac13)$, $\mathcal Z=\tfrac53$, $\pi^*=(\tfrac45;\,\tfrac15)$, giá trị tối ưu $\log\tfrac53=0{,}5108$, đúng $J_1$ của $(0{,}8;\,0{,}2)$ trong Ví dụ 10.25.
-
-**Kiểm kết luận (a) và (c).** $D_{\mathrm{KL}}(\pi_{\mathrm{ref}}\Vert\pi^*)=0{,}0487$, $0{,}5108-0{,}0487=0{,}4621=J_1(\pi_{\mathrm{ref}})$; với chính sách tham lam, $0{,}5108-\log\tfrac1{0{,}8}=0{,}2877$. Phần thưởng đã trừ KL tại $\pi^*$: $\log2-\log1{,}2=-\log0{,}6=0{,}5108$.
-
-**Vai trò của $\beta$.** $\pi^*(y_1)/\pi^*(y_2)=2\cdot2^{1/\beta}$:
-
-- $\beta=\tfrac12$: $\mathcal Z=3$, $\pi^*=(\tfrac89;\,\tfrac19)$, giá trị tối ưu $\tfrac12\log3=0{,}5493$;
-- $\beta=2$: $\mathcal Z=1{,}2761$, $\pi^*=(0{,}7388;\,0{,}2612)$, giá trị tối ưu $0{,}4877$;
-- $\beta\to\infty$: $\pi^*\to\pi_{\mathrm{ref}}$; $\beta\to0^+$: $\pi^*\to(1;\,0)$.
-
-**Diễn giải.** $\beta$ nhỏ cho phép đi xa $\pi_{\mathrm{ref}}$; với mọi $\beta>0$, $\pi^*(y_2)>0$, đúng (d).
-:::
-
-::: remark Nhận xét 10.58 (Hai mỏ neo, hai chiều KL)
-**Câu hỏi.** Hệ số $\beta$ của Định nghĩa 10.56 và hệ số $\beta$ của phạt KL theo chính sách cũ (PPO-Penalty) có cùng vai trò không? Không, vì hai phép phạt đo KL tới hai chính sách khác nhau.
-
-1. Phạt KL theo chính sách cũ (PPO-Penalty, Định nghĩa 10.43) đo $D_{\mathrm{KL}}(\pi_{\mathrm{old}}\Vert\pi_\theta)$ với $\pi_{\mathrm{old}}$ đổi sau mỗi lần cập nhật, nên chỉ giới hạn từng bước. Mục tiêu có phạt KL theo chính sách tham chiếu đo $D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})$ với $\pi_{\mathrm{ref}}$ cố định, nên quyết định nghiệm cuối. Ta gọi chính sách mà phép phạt giữ chính sách mới ở gần là *mỏ neo* của phép phạt: $\pi_{\mathrm{old}}$ là mỏ neo đổi theo vòng, $\pi_{\mathrm{ref}}$ là mỏ neo cố định.
-2. Quy tắc chỉnh $\beta$ theo KL mục tiêu của Ziegler và cộng sự (2019, §2.2), tương tự Định nghĩa 10.43, đo KL tới mô hình ban đầu, không tới $\pi_{\mathrm{old}}$.
-3. Chiều KL ngược nhau: phạt KL theo chính sách cũ đặt mỏ neo ở vị trí thứ nhất, $D_{\mathrm{KL}}(\pi_{\mathrm{old}}\Vert\pi_\theta)$, còn Định nghĩa 10.56 đặt mỏ neo ở vị trí thứ hai, $D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})$. Với $\pi=(1;\,0)$, $D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})=\log\tfrac32$, còn $D_{\mathrm{KL}}(\pi_{\mathrm{ref}}\Vert\pi)=+\infty$.
-:::
-
-Định lý 10.57 cho $\pi^*=(\tfrac45;\,\tfrac15)$ trên ví dụ, nhưng cần $\mathcal Z_r(x)$; với mô hình ngôn ngữ, chúng ta cần cực đại hóa $J_\beta$ bằng mẫu.
-
-<!-- note-topic-id: lec-10-topic-27 -->
-### 7.3 RLHF với PPO
-
-*Học tăng cường từ phản hồi con người* (reinforcement learning from human feedback, RLHF) cực đại hóa $J_\beta$ bằng mẫu. Thuật toán 10.49 nhận phần thưởng sau mỗi bước, còn $J_\beta$ chứa KL của cả câu trả lời; bổ đề sau chia KL đó theo token.
-
-::: lemma Bổ đề 10.59 (KL của câu trả lời bằng tổng KL theo token)
-**Giả thiết.** Bài toán ở dạng (b) của Định nghĩa 10.52; $\pi$, $\pi_{\mathrm{ref}}$ là hai chính sách trên token, với $\pi_{\mathrm{ref}}(a\mid s)>0$ khi $\pi(a\mid s)>0$.
-
-**Kết luận.**
-
-- (a) Với mọi câu trả lời $y=(A_0,\dots,A_{T-1})$ có $\pi(y\mid x)>0$,
-  $$\begin{aligned}&\log\frac{\pi(y\mid x)}{\pi_{\mathrm{ref}}(y\mid x)}\\&\quad=\sum_{t=0}^{T-1}\log\frac{\pi(A_t\mid S_t)}{\pi_{\mathrm{ref}}(A_t\mid S_t)}.\end{aligned}$$
-- (b) KL của câu trả lời bằng kỳ vọng của tổng KL theo token:
-  $$\begin{aligned}&D_{\mathrm{KL}}\bigl(\pi(\cdot\mid x)\Vert\pi_{\mathrm{ref}}(\cdot\mid x)\bigr)\\&\quad=\mathbb E_\pi\Bigl[\sum_{t=0}^{T-1}D_{\mathrm{KL}}\bigl(\pi(\cdot\mid S_t)\\&\qquad\Vert\pi_{\mathrm{ref}}(\cdot\mid S_t)\bigr)\Bigr].\end{aligned}$$
-
-**Điều kiện áp dụng.** Kỳ vọng ở (b) lấy theo câu trả lời do $\pi$ sinh từ $S_0=x$.
-
-**Phạm vi.** (b) đúng theo kỳ vọng; trên một câu trả lời, tổng ở (a) có thể âm.
-:::
-
-::: proof
-**Bước 1 (kết luận a).** Theo Định nghĩa 10.52(b), cả $\pi(y\mid x)$ và $\pi_{\mathrm{ref}}(y\mid x)$ là tích theo token trên cùng dãy trạng thái, vì chuyển tất định; lấy logarit của thương.
-
-**Bước 2 (kết luận b).** Lấy kỳ vọng của (a) theo $y\sim\pi$ và viết vế phải là $\sum_{t<T_{\max}}\mathbb E[\mathbb 1\{t<T\}\ell_t]$, với $\ell_t$ là log-tỉ số tại bước $t$. Sự kiện $\{t<T\}$ chỉ phụ thuộc $S_t$, và khi biết $S_t$ thì $A_t\sim\pi(\cdot\mid S_t)$, nên theo tính chất tháp $\mathbb E[\mathbb 1\{t<T\}\ell_t]=\mathbb E\bigl[\mathbb 1\{t<T\}\,\mathbb E[\ell_t\mid S_t]\bigr]$, với $\mathbb E[\ell_t\mid S_t]=D_{\mathrm{KL}}(\pi(\cdot\mid S_t)\Vert\pi_{\mathrm{ref}}(\cdot\mid S_t))$. $\square$
-:::
-
-Với hai token $\mathrm a$, $\mathrm b$, câu trả lời dài $T_{\max}=2$ token, $\pi_{\mathrm{ref}}$ đều ở mỗi bước, và $\pi$ chọn $(\mathrm a;\,\mathrm b)$ ở token đầu với xác suất $(0{,}6;\,0{,}4)$, token sau với $(0{,}9;\,0{,}1)$ sau $\mathrm a$, $(0{,}5;\,0{,}5)$ sau $\mathrm b$: KL của câu trả lời là $0{,}2410=0{,}0201+0{,}6\cdot0{,}3681+0{,}4\cdot0$. Theo Bổ đề 10.59(b), *phạt KL theo từng token* (per-token KL penalty) của Ouyang và cộng sự (2022, §3.5) có tổng kỳ vọng bằng KL của câu trả lời.
-
-::: proposition Mệnh đề 10.60 (Gradient của mục tiêu có phạt KL)
-**Giả thiết.** Dạng (a) của Định nghĩa 10.52; $\pi_\theta>0$ khả vi theo $\theta$, như chính sách softmax; $\pi_{\mathrm{ref}}>0$.
-
-**Kết luận.** Với phần thưởng đã trừ KL $\tilde r_\theta=r-\beta\log(\pi_\theta/\pi_{\mathrm{ref}})$,
-
-- (a) $\nabla_\theta J_\beta(\theta)=\mathbb E_{x\sim\mu_0,\,y\sim\pi_\theta}\bigl[\tilde r_\theta(x,y)\,\nabla_\theta\log\pi_\theta(y\mid x)\bigr]$;
-- (b) tại $\theta_{\mathrm{old}}$, $\nabla_\theta J_\beta=\mathbb E[A_{\mathrm{old}}\nabla_\theta\log\pi_\theta]$, gradient chính sách với phần thưởng cố định $\tilde r_{\theta_{\mathrm{old}}}$ và lợi thế $A_{\mathrm{old}}(x,y)=\tilde r_{\theta_{\mathrm{old}}}(x,y)-\mathbb E_{y'\sim\pi_{\mathrm{old}}}\tilde r_{\theta_{\mathrm{old}}}(x,y')$.
-
-**Điều kiện áp dụng.** Kỳ vọng chính xác; ở (b), $\tilde r_{\theta_{\mathrm{old}}}$ giữ cố định khi lấy đạo hàm.
-
-**Phạm vi.** Gradient tại một điểm; không nói về bước lớn hay hội tụ.
-:::
-
-::: proof
-Viết $J_\beta=\mathbb E_x\sum_y\pi_\theta\tilde r_\theta$. Đạo hàm tích, với $\nabla\pi_\theta=\pi_\theta\nabla\log\pi_\theta$ và $\nabla\tilde r_\theta=-\beta\nabla\log\pi_\theta$, cho $\mathbb E[\tilde r_\theta\nabla\log\pi_\theta]-\beta\,\mathbb E[\nabla\log\pi_\theta]$; số hạng sau bằng $0$ theo Mệnh đề 09.17: đó là (a). Với $\tilde r_{\theta_{\mathrm{old}}}$ cố định, gradient chính sách $\mathbb E_{\pi_\theta}[\tilde r_{\theta_{\mathrm{old}}}\nabla\log\pi_\theta]$ trùng (a) tại $\theta_{\mathrm{old}}$, và trừ hằng $\mathbb E_{\pi_{\mathrm{old}}}\tilde r_{\theta_{\mathrm{old}}}$ không đổi kỳ vọng (Mệnh đề 09.17): đó là (b). $\square$
-:::
-
-PPO tính $\tilde r_{\theta_{\mathrm{old}}}$ lúc sinh mẫu và giữ cố định trong vòng. Khi lợi thế đúng, theo (b) và Mệnh đề 10.41(c), gradient của hàm thay thế mẫu tại $\theta_{\mathrm{old}}$ có kỳ vọng $\nabla J_\beta(\theta_{\mathrm{old}})$. Trên dạng mức token, Bổ đề 10.59(a) chia số hạng KL theo token, cho phần thưởng của bước $t$
-$$\begin{aligned}&R_{t+1}=-\beta\log\frac{\pi_{\mathrm{old}}(A_t\mid S_t)}{\pi_{\mathrm{ref}}(A_t\mid S_t)}\\&\quad+\mathbb 1\{t+1=T\}\,\hat r(x,y),\end{aligned}\tag{7.1}$$
-với tổng bằng $\tilde r_{\theta_{\mathrm{old}}}(x,y)$ khi $r=\hat r$.
-
-::: example Ví dụ 10.27 (Hai vòng PPO trên phần thưởng đã trừ KL)
-**Dữ kiện.** $\pi_{\mathrm{ref}}(\cdot\mid x)=(\tfrac23;\,\tfrac13)$, $\hat r=(\log2;\,0)$, $\beta=1$, $\epsilon=0{,}2$; $p$ là xác suất chọn $y_1$. Mỗi vòng giữ cố định $\tilde r(y)=\hat r(y)-\log\frac{\pi_{\mathrm{old}}(y)}{\pi_{\mathrm{ref}}(y)}$ và lợi thế đúng $\tilde r(y)-\mathbb E_{\pi_{\mathrm{old}}}\tilde r$; vòng trong tăng $\mathcal L^{\mathrm{CLIP}}$ từ $\pi_{\mathrm{old}}$ tới đầu đoạn phẳng. Vòng 1 dùng bộ đệm $y_1,y_1,y_2$ của Ví dụ 10.17.
-
-**Vòng 1, $\pi_{\mathrm{old}}=\pi_{\mathrm{ref}}$.** $\tilde r=\hat r$, $\mathbb E_{\pi_{\mathrm{old}}}\tilde r=\tfrac23\log2$, và lợi thế của ba mẫu là $\tfrac13\log2\,(1;\,1;\,-2)=(0{,}2310;\,0{,}2310;\,-0{,}4621)$, tức $\tfrac13\log2$ lần lợi thế của Ví dụ 10.17. Vì vậy $\mathcal L^{\mathrm{CLIP}}$ tăng tới $p=0{,}8=\tfrac23\cdot1{,}2$ rồi nằm ngang. Gradient tại $\theta_{\mathrm{ref}}$ là $\tfrac13\bigl[2\cdot0{,}2310\,(\tfrac13;\,-\tfrac13)-0{,}4621\,(-\tfrac23;\,\tfrac23)\bigr]=\tfrac29\log2\,(1;\,-1)=(0{,}1540;\,-0{,}1540)$, đúng $\nabla J_1$ theo Mệnh đề 10.60.
-
-**Vòng 2, $\pi_{\mathrm{old}}=(0{,}8;\,0{,}2)$.** $\tilde r=(\log2-\log1{,}2;\,-\log0{,}6)=(0{,}5108;\,0{,}5108)$, như Ví dụ 10.26; lợi thế bằng $0$, mọi số hạng cắt bằng $0$ (Mệnh đề 10.40(c)), và chính sách đứng yên ở $\pi^*=(\tfrac45;\,\tfrac15)$.
-
-**Diễn giải.** Phép cắt đo tỉ số tới $\pi_{\mathrm{old}}$ và giới hạn vòng 1 ở $p\le0{,}8$; điểm dừng do $\pi_{\mathrm{ref}}$ và $\hat r$ quyết định qua phần thưởng đã trừ KL. Vòng 1 dừng đúng ở $\pi^*$ chỉ vì $\tfrac23(1+\epsilon)=0{,}8$ khi $\epsilon=0{,}2$.
-
-**Kiểm tra lại.** $J_1(0{,}8)=0{,}5545-0{,}0437=0{,}5108=\log\tfrac53$.
-:::
-
-::: algorithm Thuật toán 10.61 (RLHF với PPO)
-**Đầu vào.** Mô hình ngôn ngữ đã tiền huấn luyện; câu trả lời mẫu do người gán nhãn viết; tập lời nhắc; người gán nhãn; $\beta>0$; tham số của Thuật toán 10.49, với $N$ là số lời nhắc mỗi vòng.
-
-**Đầu ra.** Chính sách $\pi_\theta$.
-
-**Giả thiết.** Dạng (b) của Định nghĩa 10.52; người gán nhãn so sánh theo Định nghĩa 10.53; $\pi_\theta$, $\pi_{\mathrm{ref}}$ là softmax trên token.
-
-**Các bước.**
-
-1. *Tinh chỉnh có giám sát* (supervised fine-tuning, SFT) trên bản mẫu bằng hợp lý cực đại, được $\pi^{\mathrm{SFT}}$; đặt $\pi_{\mathrm{ref}}\leftarrow\pi^{\mathrm{SFT}}$, cố định từ đây, và $\pi_\theta\leftarrow\pi^{\mathrm{SFT}}$.
-2. Sinh câu trả lời bằng $\pi^{\mathrm{SFT}}$, thu so sánh thành $\mathcal D_{\mathrm{pref}}$, khớp $\hat r$ bằng cực tiểu hóa $L^{\mathrm{BT}}$ (Mệnh đề 10.54), chuẩn hóa (Nhận xét 10.55); khởi tạo critic từ $\hat r$.
-3. Mỗi vòng, chạy một vòng của Thuật toán 10.49 trên MDP mức token với $\gamma=1$: sinh câu trả lời bằng $\pi_{\mathrm{old}}$ cho $N$ lời nhắc, gán phần thưởng (7.1) cho mỗi token, tính GAE, cập nhật $\theta$, $w$ trong $K$ epoch.
-
-**Mô hình trong bộ nhớ.** $\pi_\theta$, $\pi_{\mathrm{ref}}$, $\hat r$, critic.
-
-**Điều kiện dừng.** Ngân sách số lượt.
-
-**Chi phí mỗi vòng.** Sinh $N$ câu trả lời; một lần tính $\hat r$ mỗi câu trả lời; log-xác suất của $\pi_{\mathrm{ref}}$ mỗi token; các bước gradient của Thuật toán 10.49.
-:::
-
-Thuật toán 10.61 theo khung chung của Ziegler và cộng sự (2019, §2), Stiennon và cộng sự (2020, §3.4) và Ouyang và cộng sự (2022, §3.1).
-
-**Trong thực hành.** $\pi_{\mathrm{ref}}$ là bản sao đóng băng của $\pi^{\mathrm{SFT}}$. Với $\gamma=1$ và độ dài bị chặn, (G3) thỏa, còn các kết quả của Mục 4 cần $\gamma<1$. Ouyang và cộng sự (2022, Phụ lục C.4) dùng $\beta=0{,}02$, bán kính cắt $0{,}2$, một epoch mỗi vòng. Biến thể "PPO" của bài báo cực đại hóa đúng $J_\beta$; các mô hình InstructGPT chính (PPO-ptx) cộng thêm một số hạng hợp lý trên dữ liệu tiền huấn luyện, nên Định lý 10.57 không áp dụng nguyên dạng cho chúng.
-
-::: remark Nhận xét 10.62 (Tối ưu quá mức mô hình phần thưởng)
-Stiennon và cộng sự (2020, §4.3, Hình 5) đo, với một phiên bản trước của mô hình phần thưởng và nhiều hệ số KL: khi tối ưu nhẹ, chất lượng do người gán nhãn đánh giá tăng; khi tối ưu mạnh hơn, ưu tiên thật giảm so với dự đoán của mô hình phần thưởng, và cuối cùng mô hình phần thưởng tương quan âm với ưu tiên đó. Đó là *tối ưu quá mức* (over-optimization) mô hình phần thưởng; số hạng KL giữ đầu ra gần dữ liệu mà mô hình phần thưởng đã thấy (§3.4).
-:::
-
-Thuật toán 10.61 cần bốn mô hình và việc sinh câu trả lời ở mọi vòng, trong khi $\hat r$ chỉ được dùng để xác định $\pi^*_{\hat r}$.
-
-<!-- note-topic-id: lec-10-topic-28 -->
-### 7.4 Tối ưu ưu tiên trực tiếp
-
-Trên ví dụ, ta có thể đọc lại $\hat r$ từ nghiệm: từ $\pi^*=(\tfrac45;\,\tfrac15)$ và $\mathcal Z=\tfrac53$ của Ví dụ 10.26, với $\beta=1$,
-$$\begin{aligned}&\log\tfrac{0{,}8}{2/3}+\log\tfrac53\\&\quad=0{,}1823+0{,}5108\\&\quad=0{,}6931=\hat r(x,y_1),\\&\log\tfrac{0{,}2}{1/3}+\log\tfrac53\\&\quad=-0{,}5108+0{,}5108\\&\quad=0=\hat r(x,y_2).\end{aligned}$$
-Hiệu hai vế trái, $\log1{,}2-\log0{,}6=\log2$, bằng $\hat r(x,y_1)-\hat r(x,y_2)$ và không chứa $\mathcal Z$. Một cách trực quan, mỗi chính sách là nghiệm của mục tiêu có phạt KL theo chính sách tham chiếu với một phần thưởng nào đó, nên chúng ta có thể viết phần thưởng theo chính sách và học thẳng chính sách.
-
-::: proposition Mệnh đề 10.63 (Đổi biến giữa phần thưởng và chính sách)
-**Giả thiết.** Như Định lý 10.57; thêm $\pi_{\mathrm{ref}}(y\mid x)>0$ với mọi $x$, $y$.
-
-**Kết luận.**
-
-- (a) $r(x,y)=\beta\log\dfrac{\pi^*_r(y\mid x)}{\pi_{\mathrm{ref}}(y\mid x)}+\beta\log\mathcal Z_r(x)$ với mọi $x$, $y$.
-- (b) Dưới mô hình Bradley–Terry với phần thưởng $r$,
-  $$\begin{aligned}&\Pr(y\succ y'\mid x)\\&\quad=\sigma\Bigl(\beta\log\frac{\pi^*_r(y\mid x)}{\pi_{\mathrm{ref}}(y\mid x)}\\&\qquad-\beta\log\frac{\pi^*_r(y'\mid x)}{\pi_{\mathrm{ref}}(y'\mid x)}\Bigr),\end{aligned}$$
-  không còn $\mathcal Z_r$.
-- (c) Với mỗi chính sách $\pi$ có $\pi(y\mid x)>0$ với mọi $x$, $y$, đặt $r_\pi=\beta\log(\pi/\pi_{\mathrm{ref}})$. Khi đó $\pi^*_{r_\pi}=\pi$; $r_{\pi^*_r}=r-\beta\log\mathcal Z_r\in[r]$; và $r_{\pi^*_r}$ là phần tử duy nhất của $[r]$ có dạng $r_\pi$.
-
-**Điều kiện áp dụng.** $\beta>0$ và $\pi_{\mathrm{ref}}>0$, để mọi log-tỉ số hữu hạn.
-
-**Phạm vi.** Một phép đổi biến; không nói về dữ liệu hay cực tiểu của hàm mất mát.
-:::
-
-::: proof
-**Bước 1 (kết luận a).** Định lý 10.57(c) cho đẳng thức với mọi $y$ có $\pi_{\mathrm{ref}}(y\mid x)>0$, tức mọi $y$ theo giả thiết.
-
-**Bước 2 (kết luận b).** Thế (a) vào $\sigma\bigl(r(x,y)-r(x,y')\bigr)$ của Định nghĩa 10.53; số hạng $\beta\log\mathcal Z_r(x)$ có mặt ở cả $r(x,y)$ và $r(x,y')$, nên triệt tiêu trong hiệu.
-
-**Bước 3 (kết luận c).** Với $r_\pi$, $\mathcal Z_{r_\pi}(x)=\sum_y\pi_{\mathrm{ref}}(y\mid x)\,\frac{\pi(y\mid x)}{\pi_{\mathrm{ref}}(y\mid x)}=1$, nên $\pi^*_{r_\pi}=\pi_{\mathrm{ref}}\cdot\pi/\pi_{\mathrm{ref}}=\pi$. Theo (a), $r_{\pi^*_r}=r-\beta\log\mathcal Z_r(x)$, và $-\beta\log\mathcal Z_r(x)$ chỉ phụ thuộc $x$. Nếu $r_\pi$ và $r_{\pi'}$ cùng thuộc $[r]$ thì $r_\pi-r_{\pi'}=\beta\log(\pi/\pi')=f(x)$ với một $f$ chỉ phụ thuộc $x$, nên $\pi(y\mid x)=\pi'(y\mid x)\,e^{f(x)/\beta}$; lấy tổng theo $y$ được $1=e^{f(x)/\beta}$, tức $f=0$ và $\pi=\pi'$. $\square$
-:::
-
-Mệnh đề là (5), (6), Định lý 1 và Mệnh đề 1 (Phụ lục A.6) của Rafailov và cộng sự (2023). Theo (b), hàm phân hoạch triệt tiêu vì $\mathcal Z_r(x)$ chỉ phụ thuộc lời nhắc, còn phép so sánh luôn giữa hai câu trả lời của cùng lời nhắc. Theo (c), mỗi lớp $[r]$ ứng với đúng một chính sách có miền hỗ trợ đầy đủ.
-
-::: definition Định nghĩa 10.64 (Phần thưởng ngầm định, hàm mất mát DPO)
-Cho $\pi_{\mathrm{ref}}>0$, $\beta>0$ và một chính sách $\pi_\theta>0$. *Phần thưởng ngầm định* (implicit reward) của $\pi_\theta$ là
-$$r_\theta(x,y)=\beta\log\frac{\pi_\theta(y\mid x)}{\pi_{\mathrm{ref}}(y\mid x)}.$$
-Với bộ ba $(x,y_w,y_l)$, đặt $\Delta r_\theta=r_\theta(x,y_w)-r_\theta(x,y_l)$. *Hàm mất mát DPO* là
-$$\begin{aligned}&L^{\mathrm{DPO}}(\theta)\\&\quad=-\widehat{\mathbb E}_{\mathcal D_{\mathrm{pref}}}\bigl[\log\sigma(\Delta r_\theta)\bigr].\end{aligned}$$
-*Tối ưu ưu tiên trực tiếp* (Direct Preference Optimization, DPO) cực tiểu hóa $L^{\mathrm{DPO}}$ theo $\theta$.
-:::
-
-Theo Mệnh đề 10.54(a), $L^{\mathrm{DPO}}(\theta)=L^{\mathrm{BT}}(r_\theta)$: DPO là hồi quy logistic với biến $\Delta r_\theta$ (Rafailov và cộng sự, 2023, (7)). Với hai câu trả lời, chính sách softmax đặc trưng đơn vị và $\pi_{\mathrm{ref}}=(\tfrac23;\,\tfrac13)$, $\log\frac{\pi_\theta(y_1\mid x)}{\pi_\theta(y_2\mid x)}=\theta_1-\theta_2$, nên bộ ba chọn $y_1$ có $\Delta r_\theta=\beta(\theta_1-\theta_2-\log2)$ và bộ ba chọn $y_2$ có $\Delta r_\theta$ ngược dấu.
-
-::: theorem Định lý 10.65 (Tương đương giữa RLHF và DPO)
-**Giả thiết.**
-
-- (H1) Với mọi $x$, $\mathcal Y(x)$ hữu hạn và $\pi_{\mathrm{ref}}(y\mid x)>0$ với mọi $y$.
-- (H2) $\beta>0$.
-- (H3) Lớp chính sách gồm mọi phân phối có miền hỗ trợ đầy đủ trên $\mathcal Y(x)$, chọn tự do theo $x$.
-- (H4a) $L^{\mathrm{BT}}$, xét trên mọi hàm phần thưởng $\hat r$ trên các cặp $(x,y)$, đạt cực tiểu.
-- (H4b) Tập cực tiểu của $L^{\mathrm{BT}}$ là đúng một lớp $[\hat r]$.
-
-Hai con đường dùng cùng $\mathcal D_{\mathrm{pref}}$, cùng $\beta$, cùng $\pi_{\mathrm{ref}}$. Con đường RLHF lý tưởng khớp một cực tiểu $\hat r$ của $L^{\mathrm{BT}}$ rồi lấy nghiệm $\pi^*_{\hat r}$ của Định lý 10.57. Viết $L^{\mathrm{DPO}}(\pi)$ cho giá trị của $L^{\mathrm{DPO}}$ khi $\pi_\theta=\pi$.
-
-**Kết luận.**
-
-- (a) Dưới (H1)–(H3) và (H4a), với mọi cực tiểu $\hat r$ của $L^{\mathrm{BT}}$, $\pi^*_{\hat r}$ cực tiểu $L^{\mathrm{DPO}}$.
-- (b) Dưới (H1)–(H3) và (H4a), mọi cực tiểu $\pi$ của $L^{\mathrm{DPO}}$ có $r_\pi$ cực tiểu $L^{\mathrm{BT}}$ và $\pi=\pi^*_{r_\pi}$. Thêm (H4b), $L^{\mathrm{DPO}}$ có đúng một cực tiểu, là $\pi^*_{\hat r}$.
-- (c) Dưới (H1)–(H3) và (H4a), $\min L^{\mathrm{DPO}}=\min L^{\mathrm{BT}}$.
-
-**Điều kiện áp dụng.** Cực tiểu hóa chính xác cả hai hàm mất mát và giải chính xác $J_\beta$.
-
-**Phạm vi.** Định lý nói về nghiệm, không về các bước lặp của PPO hay hạ gradient. Khi (H4a) hỏng, cả hai hàm mất mát không có cực tiểu; khi chỉ (H4b) hỏng, nghiệm không duy nhất.
-:::
-
-::: proof
-**Bước 1 (đẳng thức đại số).** Với mọi $\pi$ trong lớp của (H3), $r_\pi$ hữu hạn theo (H1), và $L^{\mathrm{DPO}}(\pi)=L^{\mathrm{BT}}(r_\pi)$ theo Định nghĩa 10.64.
-
-**Bước 2 (cận dưới).** Cực tiểu của (H4a) lấy trên mọi hàm phần thưởng, kể cả $r_\pi$, nên $L^{\mathrm{DPO}}(\pi)=L^{\mathrm{BT}}(r_\pi)\ge\min L^{\mathrm{BT}}$ với mọi $\pi$.
-
-**Bước 3 (kết luận a và c).** Cho $\hat r$ là một cực tiểu của $L^{\mathrm{BT}}$. Theo Định lý 10.57(d) và (H1), $\pi^*_{\hat r}$ có miền hỗ trợ đầy đủ, nên thuộc lớp của (H3). Theo Mệnh đề 10.63(c), $r_{\pi^*_{\hat r}}\in[\hat r]$, nên theo Mệnh đề 10.54(b),
-$$\begin{aligned}&L^{\mathrm{DPO}}(\pi^*_{\hat r})=L^{\mathrm{BT}}(r_{\pi^*_{\hat r}})\\&\quad=L^{\mathrm{BT}}(\hat r)=\min L^{\mathrm{BT}}.\end{aligned}$$
-Cùng Bước 2, $\pi^*_{\hat r}$ cực tiểu $L^{\mathrm{DPO}}$ và $\min L^{\mathrm{DPO}}=\min L^{\mathrm{BT}}$.
-
-**Bước 4 (kết luận b).** Nếu $\pi$ cực tiểu $L^{\mathrm{DPO}}$ thì $L^{\mathrm{BT}}(r_\pi)=\min L^{\mathrm{DPO}}=\min L^{\mathrm{BT}}$ theo (c), nên $r_\pi$ cực tiểu $L^{\mathrm{BT}}$; và $\pi=\pi^*_{r_\pi}$ theo Mệnh đề 10.63(c). Dưới (H4b), $r_\pi=\hat r+f$ với $f$ chỉ phụ thuộc $x$, nên $\pi=\pi^*_{\hat r+f}=\pi^*_{\hat r}$ theo Định lý 10.57(e). $\square$
-:::
-
-Dưới (H1)–(H3), (H4a), (H4b), cực tiểu của $L^{\mathrm{DPO}}$ là nghiệm $\pi^*_{\hat r}$ của con đường RLHF lý tưởng, nhưng DPO không cần mô hình phần thưởng riêng, critic hay lấy mẫu. Vì Bước 1 là đẳng thức đại số, mô hình Bradley–Terry chỉ cần để đọc $\hat r$ là ước lượng hợp lý cực đại. (H4a), (H4b) thỏa khi $0<k<n$ với hai câu trả lời, và khi mỗi cặp được so sánh có cả hai kết quả và các cặp nối mọi câu trả lời của mỗi lời nhắc: mỗi số hạng của $L^{\mathrm{BT}}$ khi đó lồi ngặt theo hiệu của nó và tiến tới $+\infty$ khi hiệu tiến tới $\pm\infty$. Mỗi giả thiết có vai trò riêng.
-
-- Bỏ (H1): với $\pi_{\mathrm{ref}}=(\tfrac12;\,\tfrac12;\,0)$, bốn phép so sánh chọn $y_1$ trước $y_2$ và hai phép ngược lại, mọi chính sách có $\pi(y_2)=2^{-1/\beta}\pi(y_1)>0$ đều cực tiểu $L^{\mathrm{DPO}}$, dù $\pi(y_3)$ lớn, trong khi $\pi^*_{\hat r}(y_3)=0$ theo Định lý 10.57(d). Ví dụ cũng làm (H4b) hỏng, nhưng ở đây hai tập nghiệm khác nhau.
-- Bỏ (H4a): với $\pi_{\mathrm{ref}}=(\tfrac23;\,\tfrac13)$ và ba phép so sánh cùng chọn $y_1$, $L^{\mathrm{BT}}$ không có cực tiểu và $L^{\mathrm{DPO}}=-\log\sigma\bigl(\beta(\theta_1-\theta_2-\log2)\bigr)$ giảm ngặt theo $\theta_1-\theta_2$; cả hai con đường đẩy chính sách về $(1;\,0)$.
-- Bỏ (H4b): với $\pi_{\mathrm{ref}}=(\tfrac12;\,\tfrac14;\,\tfrac14)$, $\beta=1$ và sáu phép so sánh chỉ giữa $y_1$, $y_2$, bốn chọn $y_1$, mọi chính sách có $\pi(y_1)=4\pi(y_2)$ đều cực tiểu $L^{\mathrm{DPO}}$.
-- Bỏ (H3): trên một lớp tham số không chứa $\pi^*_{\hat r}$, cực tiểu của $L^{\mathrm{DPO}}$ và nghiệm của $J_\beta$ không nhất thiết trùng nhau.
-
-::: proposition Mệnh đề 10.66 (Gradient của hàm mất mát DPO)
-**Giả thiết.** Như Định nghĩa 10.64; $\pi_\theta$ khả vi theo $\theta$.
-
-**Kết luận.**
-$$\begin{aligned}&\nabla_\theta L^{\mathrm{DPO}}(\theta)\\&\quad=-\beta\,\widehat{\mathbb E}_{\mathcal D_{\mathrm{pref}}}\Bigl[\sigma(-\Delta r_\theta)\\&\qquad\times\bigl(\nabla_\theta\log\pi_\theta(y_w\mid x)\\&\qquad-\nabla_\theta\log\pi_\theta(y_l\mid x)\bigr)\Bigr].\end{aligned}$$
-
-**Điều kiện áp dụng.** $\pi_{\mathrm{ref}}$ cố định, không lấy đạo hàm qua nó.
-
-**Phạm vi.** Gradient của hàm mất mát mẫu trên $\mathcal D_{\mathrm{pref}}$.
-:::
-
-::: proof
-Từ $\frac{d}{dz}\bigl[-\log\sigma(z)\bigr]=-\sigma(-z)$ và $\nabla_\theta\Delta r_\theta=\beta\bigl(\nabla\log\pi_\theta(y_w\mid x)-\nabla\log\pi_\theta(y_l\mid x)\bigr)$, vì $\pi_{\mathrm{ref}}$ không phụ thuộc $\theta$, quy tắc dây chuyền cho từng số hạng; lấy trung bình trên $\mathcal D_{\mathrm{pref}}$. $\square$
-:::
-
-Mỗi bộ ba đẩy $\theta$ theo hướng làm tăng hiệu $\log\pi_\theta(y_w\mid x)-\log\pi_\theta(y_l\mid x)$, với trọng số $\sigma(-\Delta r_\theta)$, lớn khi phần thưởng ngầm định xếp sai cặp ($\Delta r_\theta<0$). Rafailov và cộng sự (2023, §4) viết rằng phiên bản bỏ trọng số này có thể làm mô hình ngôn ngữ suy biến.
-
-::: example Ví dụ 10.28 (Một bước DPO tính tay)
-**Dữ kiện.** Sáu phép so sánh của Ví dụ 10.23: bốn bộ ba $(x,y_1,y_2)$, hai bộ ba $(x,y_2,y_1)$. Chính sách softmax với đặc trưng đơn vị, $\pi_{\mathrm{ref}}$ có $\theta_{\mathrm{ref}}=(\log2;\,0)$, tức $(\tfrac23;\,\tfrac13)$; $\beta=1$. Hạ gradient với bước học $1$, khởi tạo $\theta=\theta_{\mathrm{ref}}$.
-
-**Hàm mất mát.** Với $\beta=1$, bộ ba chọn $y_1$ có $\Delta r_\theta=\theta_1-\theta_2-\log2$, bộ ba chọn $y_2$ có hiệu ngược dấu, nên
-$$\begin{aligned}&L^{\mathrm{DPO}}=-\tfrac16\bigl[4\log\sigma(\Delta r_\theta)\\&\quad+2\log\sigma(-\Delta r_\theta)\bigr].\end{aligned}$$
-Tại $\theta_{\mathrm{ref}}$, $\Delta r_\theta=0$ và $L^{\mathrm{DPO}}=\log2=0{,}6931$.
-
-**Gradient.** Mọi trọng số bằng $\sigma(0)=\tfrac12$. Theo Mệnh đề 09.16, $\psi_\theta(y_1)-\psi_\theta(y_2)=(1-p)(1;\,-1)+p(1;\,-1)=(1;\,-1)$ với mọi $\theta$. Mệnh đề 10.66 cho
-$$\begin{aligned}&\nabla L^{\mathrm{DPO}}\\&\quad=-\bigl[\tfrac46\cdot\tfrac12\,(1;\,-1)\\&\qquad+\tfrac26\cdot\tfrac12\,(-1;\,1)\bigr]\\&\quad=(-\tfrac16;\,\tfrac16).\end{aligned}$$
-
-**Bước.** $\theta=(\log2+\tfrac16;\,-\tfrac16)=(0{,}8598;\,-0{,}1667)$, nên $\theta_1-\theta_2=\log2+\tfrac13=1{,}0265$, $\pi_\theta(y_1)=\sigma(1{,}0265)=0{,}7362$ và $L^{\mathrm{DPO}}=0{,}6514$. Phần thưởng ngầm định là $r_\theta(y_1)=\log\frac{0{,}7362}{2/3}=0{,}0993$, $r_\theta(y_2)=\log\frac{0{,}2638}{1/3}=-0{,}2341$, với hiệu $\tfrac13$.
-
-**Bước tiếp theo.** Ở bước 2, trọng số là $\sigma(-\tfrac13)=0{,}4174$ cho bốn bộ ba chọn $y_1$ và $\sigma(\tfrac13)=0{,}5826$ cho hai bộ ba bị xếp sai. Bước 2 đến 5 cho $\pi_\theta(y_1)=0{,}7676$; $0{,}7829$; $0{,}7907$; $0{,}7949$ và $L^{\mathrm{DPO}}=0{,}6407$; $0{,}6377$; $0{,}6369$; $0{,}6366$.
-
-**Cực tiểu.** Theo Mệnh đề 10.54(c) với $n=6$, $k=4$, cực tiểu đạt tại $\Delta r_\theta=\log2$, tức $\theta_1-\theta_2=2\log2$ và $\pi_\theta=(\tfrac45;\,\tfrac15)$, với $\min L^{\mathrm{DPO}}=0{,}6365$. Đó là nghiệm $\pi^*$ của Ví dụ 10.26 và giá trị $\min L^{\mathrm{BT}}$ của Ví dụ 10.24, đúng như Định lý 10.65.
-
-**Kiểm tra lại.** Với $\beta$ tùy ý, cực tiểu đạt tại $\beta(\theta_1-\theta_2-\log2)=\log2$, cho $\pi_\theta(y_1)/\pi_\theta(y_2)=2\cdot2^{1/\beta}$, đúng tỉ số của Ví dụ 10.26.
-:::
-
-::: algorithm Thuật toán 10.67 (DPO)
-**Đầu vào.** Tập dữ liệu ưu tiên $\mathcal D_{\mathrm{pref}}$ cố định; chính sách tham chiếu $\pi_{\mathrm{ref}}$ đóng băng; hệ số $\beta>0$; bộ tối ưu, bước học, cỡ mini-batch $M$, số epoch.
-
-**Đầu ra.** Chính sách $\pi_\theta$.
-
-**Giả thiết.** (H1), (H2) của Định lý 10.65; $\pi_\theta$ là softmax trên token, nên dương ở mọi token.
-
-**Khởi tạo.** $\theta\leftarrow\theta_{\mathrm{ref}}$; tính trước $\log\pi_{\mathrm{ref}}(y_w\mid x)$ và $\log\pi_{\mathrm{ref}}(y_l\mid x)$ cho mọi bộ ba.
-
-**Mỗi epoch:** xáo $\mathcal D_{\mathrm{pref}}$ và chia thành các mini-batch cỡ $M$; với mỗi mini-batch:
-
-1. tính $\log\pi_\theta(y_w\mid x)$ và $\log\pi_\theta(y_l\mid x)$, mỗi đại lượng là tổng log-xác suất của các token (Bổ đề 10.59(a));
-2. tính $\Delta r_\theta$ của Định nghĩa 10.64 từ bốn log-xác suất và $L^{\mathrm{DPO}}$ trung bình trên mini-batch;
-3. thực hiện một bước của bộ tối ưu theo gradient của Mệnh đề 10.66.
-
-**Điều kiện dừng.** Sau số epoch đã định.
-
-**Chi phí mỗi bộ ba.** Hai lượt tính $\log\pi_\theta$ trên chuỗi có sẵn và một lượt lan truyền ngược; không sinh mẫu, không critic.
-
-**Mô hình trong bộ nhớ.** $\pi_\theta$, $\pi_{\mathrm{ref}}$.
-:::
-
-Với sáu bộ ba của Ví dụ 10.23 trong một mini-batch, hạ gradient với bước học $1$ và $\theta\leftarrow\theta_{\mathrm{ref}}$, bước đầu của Thuật toán 10.67 cho gradient $(-\tfrac16;\,\tfrac16)$ và $\pi_\theta(y_1)=0{,}7362$, đúng bước tính tay của Ví dụ 10.28.
-
-**Trong thực hành.** $\pi_{\mathrm{ref}}$ là mô hình SFT; khi không có, Rafailov và cộng sự (2023, §4) khớp $\pi_{\mathrm{ref}}$ bằng hợp lý cực đại trên các cặp $(x,y_w)$. Log-xác suất của câu trả lời là tổng log-xác suất token (Bổ đề 10.59(a)). Dữ liệu cố định, do $\pi^{\mathrm{SFT}}$ sinh: DPO là phương pháp *ngoại tuyến* (offline) trên dữ liệu khác chính sách, khác Thuật toán 10.61 (*trực tuyến*, online), và không cần tỉ số $\rho_t$ vì $L^{\mathrm{DPO}}$ không là kỳ vọng theo $\pi_\theta$. Bài báo (Phụ lục B) dùng $\beta=0{,}1$, cỡ mini-batch $64$, RMSprop với bước học $10^{-6}$.
-
-::: remark Nhận xét 10.68 (Đọc kết quả của DPO)
-Nhầm lẫn thường gặp: coi DPO là tăng xác suất của mọi câu trả lời được chọn. $L^{\mathrm{DPO}}$ chỉ điều khiển hiệu $\Delta r_\theta$. Với mọi $\pi_\theta>0$,
-$$\begin{aligned}&\mathbb E_{y\sim\pi_{\mathrm{ref}}}r_\theta(x,y)\\&\quad=\beta\sum_y\pi_{\mathrm{ref}}(y\mid x)\\&\qquad\times\log\frac{\pi_\theta(y\mid x)}{\pi_{\mathrm{ref}}(y\mid x)}\\&\quad=-\beta D_{\mathrm{KL}}(\pi_{\mathrm{ref}}\Vert\pi_\theta)\le0\end{aligned}$$
-(Rafailov, Hejna, Park và Finn, 2024, (16)), nên khi phần thưởng ngầm định của một số câu tăng, của các câu khác phải giảm. Sau bước 1 của Ví dụ 10.28, $\tfrac23\cdot0{,}0993+\tfrac13\cdot(-0{,}2341)=-0{,}0119=-D_{\mathrm{KL}}(\pi_{\mathrm{ref}}\Vert\pi_\theta)$. Khi có nhiều câu trả lời, cả $y_w$ và $y_l$ có thể giảm xác suất mà $\Delta r_\theta$ vẫn tăng.
-:::
-
-<!-- note-topic-id: lec-10-topic-29 -->
-### 7.5 So sánh hai con đường và giới hạn
-
-![Hai con đường từ dữ liệu ưu tiên D pref. Nhánh trên, nét liền: mô hình phần thưởng r mũ, rồi PPO; bốn mô hình. Nhánh dưới, nét đứt: cực tiểu L DPO trên dữ liệu cố định; hai mô hình. Hai nhánh gặp ở khung đậm pi sao tỉ lệ pi ref nhân e mũ r chia beta.](img/lec-10/rlhf-dpo-hai-con-duong.svg)
-
-Trên hình, nhánh dưới bỏ khung mô hình phần thưởng nhờ phép đổi biến của Mệnh đề 10.63; hai nhánh gặp nhau ở nghiệm của Định lý 10.57 khi các giả thiết của Định lý 10.65 thỏa.
-
-| Tiêu chí | RLHF với PPO (Thuật toán 10.61) | DPO (Thuật toán 10.67) |
-|---|---|---|
-| Mục tiêu | $\max J_\beta$, $\pi_{\mathrm{ref}}$ cố định (Định nghĩa 10.56) | cùng mục tiêu |
-| Đại lượng được tối ưu | $L^{\mathrm{BT}}$ cho $\hat r$, rồi $\mathcal L^{\mathrm{CLIP}}$ với phần thưởng đã trừ KL | $L^{\mathrm{DPO}}$ |
-| Dữ liệu | $\mathcal D_{\mathrm{pref}}$ cộng câu trả lời sinh trực tuyến bằng $\pi_{\mathrm{old}}$ | chỉ $\mathcal D_{\mathrm{pref}}$, ngoại tuyến, khác chính sách |
-| Mô hình trong bộ nhớ | $\pi_\theta$, $\pi_{\mathrm{ref}}$, $\hat r$, critic | $\pi_\theta$, $\pi_{\mathrm{ref}}$ |
-| Mỏ neo và chiều KL | $\pi_{\mathrm{ref}}$ trong mục tiêu, $D_{\mathrm{KL}}(\pi_\theta\Vert\pi_{\mathrm{ref}})$; thêm $\pi_{\mathrm{old}}$ của phép cắt | chỉ $\pi_{\mathrm{ref}}$; cùng $D_{\mathrm{KL}}(\pi_\theta\Vert\pi_{\mathrm{ref}})$ của $J_\beta$, qua phép đổi biến của Mệnh đề 10.63 |
-| Điều kiện dừng | ngân sách số lượt | ngân sách số epoch |
-| Bảo đảm | nghiệm của $J_\beta$ là $\pi^*_{\hat r}$ (Định lý 10.57); mỗi bước: gradient đúng tại $\theta_{\mathrm{old}}$ khi lợi thế đúng (Mệnh đề 10.60); không bảo đảm hội tụ | cực tiểu toàn cục là $\pi^*_{\hat r}$ dưới (H1)–(H3), (H4a), (H4b) (Định lý 10.65); hạ gradient không bảo đảm hội tụ |
-
-Rafailov và cộng sự (2023, §6.1) viết rằng DPO và PPO tối ưu cùng một mục tiêu.
-
-::: remark Nhận xét 10.69 (Giới hạn của hai con đường)
-1. Nghiệm $\pi^*_{\hat r}$ của con đường RLHF không gán xác suất dương cho câu trả lời mà $\pi_{\mathrm{ref}}$ không sinh (Định lý 10.57(d)); DPO thì có thể khi (H1) hỏng. Trong ví dụ của Xu và cộng sự (2024, Định lý 4.1, Bảng 1), với $\pi_{\mathrm{ref}}=(0{,}5;\,0{,}5;\,0)$ và một phép so sánh $y_1\succ y_2$, $L^{\mathrm{DPO}}$ không có cực tiểu trong lớp của (H3); cận dưới đúng $0$ đạt tại $(0{,}1;\,0;\,0{,}9)$, ngoài lớp đó, với xác suất $0{,}9$ trên $y_3$.
-2. DPO không đánh giá câu trả lời ngoài dữ liệu; RLHF với PPO đánh giá chúng bằng $\hat r$, có thể sai ở đó (Nhận xét 10.62).
-3. Với ưu tiên tất định, cả hai con đường lý tưởng đẩy xác suất của câu thua về $0$ với mọi $\beta$. Gheshlaghi Azar và cộng sự (2024, §4.2) lập luận, không thành định lý, rằng RLHF trong thực hành tránh được điều này nhờ mô hình phần thưởng được điều chuẩn.
-:::
-
-<!-- note-topic-id: lec-10-topic-30 -->
-### 7.6 Đọc thêm: biến thể và so sánh thực nghiệm
-
-::: remark Nhận xét 10.70 (Biến thể và so sánh thực nghiệm)
-1. *Tối ưu ưu tiên đồng nhất* (Identity Preference Optimization, IPO) của Gheshlaghi Azar và cộng sự (2024, §5, (17)) hồi quy hiệu log-tỉ số $\log\frac{\pi(y_w)\pi_{\mathrm{ref}}(y_l)}{\pi(y_l)\pi_{\mathrm{ref}}(y_w)}$ về $\tfrac1{2\beta}$; trên ba phép so sánh cùng chọn $y_1$, với $\pi_{\mathrm{ref}}=(\tfrac23;\,\tfrac13)$, $\beta=1$, IPO cho $\pi(y_1)=\sigma(\log2+0{,}5)=0{,}7673$ thay cho $1$.
-2. Rafailov, Hejna, Park và Finn (2024, §3.1, Định lý 1) viết lại DPO trên MDP mức token.
-3. Rafailov và cộng sự (2023, §6.1, Hình 2) báo DPO có đường biên phần thưởng–KL tốt hơn PPO trên bài toán sinh văn bản theo cảm xúc; Xu và cộng sự (2024, §5–6) báo PPO với chuẩn hóa lợi thế, mini-batch lớn và mô hình tham chiếu cập nhật bằng trung bình trượt (khi đó không còn cố định) vượt DPO trên các bài thử của họ. Hai kết quả đo trên các bài toán khác nhau.
-:::
-
-Trên Ví dụ 10.23, mô hình Bradley–Terry cho $\hat r=(\log2;\,0)$ (Mệnh đề 10.54), và mục tiêu có phạt KL theo chính sách tham chiếu với $\beta=1$ có nghiệm $(\tfrac45;\,\tfrac15)$ (Định lý 10.57). PPO nhắm tới nghiệm đó bằng mẫu sinh trực tuyến (Ví dụ 10.27), không có bảo đảm hội tụ; DPO tới cùng nghiệm bằng một hàm mất mát phân loại trên sáu phép so sánh, không cần vòng học tăng cường, khi các giả thiết của Định lý 10.65 thỏa (Ví dụ 10.28). Các kết quả nói về nghiệm, không cho biết con đường nào tốt hơn khi tối ưu không chính xác.
-
----
-
-## 8. Tổng kết
-
-Mỗi kết quả của Mục 2–7 đúng dưới một bộ giả thiết riêng.
+Mỗi kết quả của Mục 2–6 đúng dưới một bộ giả thiết riêng.
 
 <!-- note-topic-id: lec-10-topic-23 -->
-### 8.1 Kết quả và giả thiết của bài
+### 7.1 Kết quả và giả thiết của bài
 
 Bảng sau đặt mỗi kết quả chính cạnh giả thiết mà thiếu nó thì công thức sai nghĩa hoặc kết luận vượt quá điều đã chứng minh.
 
@@ -2567,11 +2196,11 @@ Bảng sau đặt mỗi kết quả chính cạnh giả thiết mà thiếu nó 
 |---|---|---|
 | Đường cơ sở không làm chệch (Mệnh đề 10.2) | $b$ không phụ thuộc $A_t$ khi biết $H_t$; lượt sinh bởi $\pi_\theta$; (G1)–(G4) | $\mathbb E\bigl[\sum_t\gamma^t(G_t-b(S_t))\psi_t\bigr]=\nabla J$ |
 | Đường cơ sở tối ưu (Mệnh đề 10.3) | một bước, $b$ hằng, $\mathbb E\lVert\psi\rVert^2>0$ | $b^*=\mathbb E[R\lVert\psi\rVert^2]/\mathbb E\lVert\psi\rVert^2$ |
-| Gradient dạng lợi thế (Mệnh đề 10.5) | lợi thế và $\nu^\pi$ của chính $\pi_\theta$ | $\nabla J=\frac1{1-\gamma}\mathbb E_{\nu^\pi,\pi_\theta}[A_\pi\psi]$ |
+| Gradient dạng lợi thế (Mệnh đề 10.5(b); dạng quỹ đạo là hệ quả của Mệnh đề 10.2) | lợi thế và $\nu^\pi$ của chính $\pi_\theta$ | $\nabla J=\frac1{1-\gamma}\mathbb E_{\nu^\pi,\pi_\theta}[A_\pi\psi]$ |
 | Sai số TD và lợi thế (Mệnh đề 10.8) | critic cố định; mặt nạ chỉ ở kết thúc; điều kiện theo $(S_t,A_t)$ | $\mathbb E[\delta_t\mid S_t,A_t]=A_\pi+\gamma\mathbb E[(1-Z_{t+1})e(S_{t+1})\mid S_t,A_t]-e(S_t)$ |
 | Dạng tổng của GAE (Mệnh đề 10.14) | critic cố định trong lượt | $\widehat A_t=\sum_k(\gamma\lambda)^k\delta_{t+k}=\delta_t+\gamma\lambda(1-Z_{t+1})\widehat A_{t+1}$ |
 | GAE và gradient (Mệnh đề 10.15) | $\lambda=1$ với lượt đầy đủ, hoặc $\hat v=v_\pi$ | $\mathbb E[\widehat A_t\psi_t]=\mathbb E[A_\pi\psi_t]$; không chệch cho lợi thế thì không |
-| Hiệu hiệu năng (Bổ đề 10.19) | cùng $P$, cùng $\mu_0$; $\gamma<1$ | $J(\pi')-J(\pi)=\frac1{1-\gamma}\sum_s\nu^{\pi'}(s)A_\pi(s,\pi')$ |
+| Hiệu hiệu năng (Bổ đề 10.19) | cùng $P$, cùng $\mu_0$; $\gamma<1$ | $J(\pi')-J(\pi)=\frac1{1-\gamma}\sum_s\nu^{\pi'}(s)A_\pi(s,\pi')=\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$ |
 | Khớp bậc một (Mệnh đề 10.22) | $\nu^{\mathrm{old}}$, $A_{\mathrm{old}}$ chính xác; $\pi_{\mathrm{old}}>0$ | $\mathcal L=J$ và $\nabla\mathcal L=\nabla J$ tại $\theta_{\mathrm{old}}$ |
 | Chặn cải thiện (Định lý 10.26, Hệ quả 10.27) | như Bổ đề 10.19; $\gamma<1$; điều kiện hỗ trợ | $J'-J\ge[\mathcal L-J]-\frac{2\gamma\chi_{\pi'}}{(1-\gamma)^2}\mathbb E_\nu[D_{\mathrm{TV}}]$, hoặc $\sqrt{\tfrac12\bar D_{\mathrm{KL}}}$ thay cho $\mathbb E_\nu[D_{\mathrm{TV}}]$ |
 | Cải thiện đơn điệu (Hệ quả 10.29) | đánh giá và cực đại hóa chính xác | $J(\pi_{k+1})\ge\mathcal M_k(\pi_{k+1})\ge\mathcal M_k(\pi_k)=J(\pi_k)$ |
@@ -2580,15 +2209,10 @@ Bảng sau đặt mỗi kết quả chính cạnh giả thiết mà thiếu nó 
 | Gradient tự nhiên (Mệnh đề 10.34) | $g\in\operatorname{range}F$ | $\Delta^*=\sqrt{2\kappa/(g^\top F^+g)}\,F^+g$ |
 | Mục tiêu cắt (Mệnh đề 10.40, 10.41) | lợi thế cố định; $\pi_{\mathrm{old}}>0$ | gradient $0$ trên $\{\widehat A>0,\rho>1+\epsilon\}\cup\{\widehat A<0,\rho<1-\epsilon\}$; $\mathcal L^{\mathrm{CLIP}}\le\mathcal L^{\mathrm{CPI}}$, trùng quanh $\theta_{\mathrm{old}}$ |
 | approxKL (Mệnh đề 10.48) | mẫu theo $\pi_{\mathrm{old}}$; $\theta$ không phụ thuộc mẫu; miền hỗ trợ của $\pi_\theta$ nằm trong miền hỗ trợ của $\pi_{\mathrm{old}}$, và $\pi_\theta>0$ trên miền hỗ trợ của $\pi_{\mathrm{old}}$ | $\mathbb E[(\rho-1)-\log\rho]=D_{\mathrm{KL}}(\pi_{\mathrm{old}}\Vert\pi_\theta)$, mỗi số hạng $\ge0$ |
-| Hợp lý cực đại của mô hình phần thưởng (Mệnh đề 10.54) | mô hình Bradley–Terry; $0<k<n$ | $L^{\mathrm{BT}}=-\widehat{\mathbb E}\log\sigma(\hat r(x,y_w)-\hat r(x,y_l))$; cực tiểu $\log\frac k{n-k}$ |
-| Nghiệm có phạt KL (Định lý 10.57) | $\beta>0$; chính sách chọn tự do theo $x$ | $\pi^*_r\propto\pi_{\mathrm{ref}}e^{r/\beta}$; $J_\beta(\pi)=\mathbb E_x[\beta\log\mathcal Z_r-\beta D_{\mathrm{KL}}(\pi\Vert\pi^*_r)]$ |
-| Gradient có phạt KL (Mệnh đề 10.60) | $\pi_\theta>0$; $\pi_{\mathrm{ref}}>0$ | $\nabla J_\beta=\mathbb E[\tilde r_\theta\nabla\log\pi_\theta]$, $\tilde r_\theta=r-\beta\log\frac{\pi_\theta}{\pi_{\mathrm{ref}}}$ |
-| Tương đương RLHF và DPO (Định lý 10.65) | (H1)–(H3), (H4a), (H4b); cực tiểu trên mọi hàm phần thưởng; cùng dữ liệu, $\beta$, $\pi_{\mathrm{ref}}$ | $\arg\min L^{\mathrm{DPO}}=\{\pi^*_{\hat r}\}$ |
-| Gradient DPO (Mệnh đề 10.66) | $\pi_{\mathrm{ref}}$ cố định; $\beta>0$ | $-\beta\widehat{\mathbb E}[\sigma(-\Delta r_\theta)(\nabla\log\pi_\theta(y_w)-\nabla\log\pi_\theta(y_l))]$ |
 
-Sáu hàng đầu thuộc phần giảm phương sai của bài toán trung tâm, chín hàng tiếp theo thuộc phần giới hạn bước cập nhật, năm hàng cuối thuộc phần thứ ba (Mục 7).
+Sáu hàng đầu thuộc phần giảm phương sai của bài toán trung tâm, chín hàng sau thuộc phần giới hạn bước cập nhật.
 
-### 8.2 So sánh sáu phương pháp
+### 7.2 So sánh bốn phương pháp
 
 | Phương pháp | Quy tắc cập nhật | Dữ liệu dùng | Điều kiện dừng |
 |---|---|---|---|
@@ -2596,64 +2220,59 @@ Sáu hàng đầu thuộc phần giảm phương sai của bài toán trung tâm
 | Actor–critic một bước (Thuật toán 10.9) | $\theta\leftarrow\theta+\alpha_\theta I\delta\psi$; $w\leftarrow w+\alpha_w\delta\nabla_w\hat v$ | từng bước chuyển của chính sách hiện tại, dùng một lần | sau $E$ lượt |
 | TRPO (Thuật toán 10.37) | bước $\sqrt{2\kappa/(x^\top Fx)}\,x$ với $x\approx F^{-1}g$, tìm kiếm lùi | $hN$ mẫu của $\pi_{\mathrm{old}}$, một bước cập nhật | sau số vòng lặp đã định |
 | PPO (Thuật toán 10.49) | bước Adam trên $L(\theta,w)$ của mỗi mini-batch | $hN$ mẫu của $\pi_{\mathrm{old}}$, $K$ epoch | sau số vòng lặp; tùy chọn dừng sớm theo approxKL |
-| RLHF với PPO (Thuật toán 10.61) | khớp $\hat r$ bằng $L^{\mathrm{BT}}$; rồi Thuật toán 10.49 với phần thưởng (7.1) | $\mathcal D_{\mathrm{pref}}$; câu trả lời sinh trực tuyến bằng $\pi_{\mathrm{old}}$ | sau ngân sách số lượt |
-| DPO (Thuật toán 10.67) | bước của bộ tối ưu trên $L^{\mathrm{DPO}}$ của mỗi mini-batch | $\mathcal D_{\mathrm{pref}}$ cố định, ngoại tuyến | sau số epoch đã định |
 
-Cả sáu điều kiện dừng trong bảng là ngân sách, không phải tiêu chuẩn hội tụ. Bảng sau ghi các kết luận có bảo đảm.
+Cả bốn điều kiện dừng trong bảng là ngân sách, không phải tiêu chuẩn hội tụ. Bảng sau ghi các kết luận có bảo đảm.
 
 | Phương pháp | Giả thiết không được bỏ | Kết luận |
 |---|---|---|
 | Lặp chính sách với $\mathcal M_k$ (Hệ quả 10.29) | lợi thế, $\nu^{\pi_k}$ và phép cực đại hóa chính xác | $J$ không giảm qua các vòng |
 | Bài toán miền tin cậy (Hệ quả 10.31) | nghiệm chính xác theo $\nu^{\pi_k}$ | mức giảm của $J$ không quá $\sqrt{2\kappa}\gamma\chi/(1-\gamma)^2$ |
 | PPO-Clip trong mô hình của Jin, Li và Wang (Nhận xét 10.51) | MDP hữu hạn; Giả thiết 3.1, 3.2, 3.4; mô hình hai thang không Adam, không mini-batch | $\liminf_n\lVert\nabla V(\theta_{n,1})\rVert^2\le C\sqrt{\lvert\mathcal A\rvert}\limsup_n\varphi_n$ hầu chắc chắn |
-| DPO (Định lý 10.65) | (H1)–(H3), (H4a), (H4b); cực tiểu trên mọi hàm phần thưởng; cùng dữ liệu, $\beta$, $\pi_{\mathrm{ref}}$ | mọi cực tiểu của $L^{\mathrm{DPO}}$ là $\pi^*_{\hat r}$, nghiệm của con đường RLHF lý tưởng |
 
-### 8.3 Trả lời bài toán trung tâm
+### 7.3 Trả lời bài toán trung tâm
 
-Câu trả lời cho bài toán trung tâm gồm sáu phần, mỗi phần đúng dưới một điều kiện.
+Câu trả lời cho bài toán trung tâm gồm năm phần, mỗi phần đúng dưới một điều kiện.
 
 1. Trừ một đường cơ sở không phụ thuộc hành động đã chọn giữ kỳ vọng và có thể giảm phương sai (Mệnh đề 10.2, 10.3); thay lợi tức bằng mục tiêu bootstrap của critic giảm số phần thưởng ngẫu nhiên trong ước lượng nhưng làm chệch khi critic sai (Định nghĩa 10.7, Mệnh đề 10.8).
 2. GAE nối hai đầu bằng tham số $\lambda$, và chỉ bảo đảm gradient không chệch khi $\lambda=1$ với lượt đầy đủ hoặc khi critic đúng (Mệnh đề 10.14, 10.15).
 3. Hàm thay thế đánh giá chính sách mới bằng dữ liệu cũ, đúng đến bậc một (Mệnh đề 10.22), với sai số bị chặn theo khoảng cách TV hoặc KL trung bình (Định lý 10.26, Hệ quả 10.27); bước miền tin cậy giải chính xác có mức giảm bị chặn (Hệ quả 10.31).
 4. TRPO giải xấp xỉ bài toán miền tin cậy bằng gradient tự nhiên và gradient liên hợp, và chỉ bảo đảm KL trung bình mẫu không vượt $\kappa$ (Mệnh đề 10.34, Nhận xét 10.38).
 5. PPO dùng lại mỗi đoạn thu trong $K$ epoch với một mục tiêu cắt là chặn dưới của hàm thay thế mẫu (Mệnh đề 10.41), hoặc với phạt KL có hệ số thích nghi (Định nghĩa 10.43), không có cận KL; kết quả hội tụ hiện có chỉ nói về điểm dừng trong một mô hình đơn giản hóa (Nhận xét 10.51).
-6. Khi phần thưởng chỉ được biết qua so sánh ưu tiên, RLHF với PPO và DPO cực đại hóa cùng mục tiêu có phạt KL theo chính sách tham chiếu cố định, có nghiệm $\pi^*\propto\pi_{\mathrm{ref}}e^{r/\beta}$ (Định lý 10.57). PPO nhắm tới nghiệm bằng mẫu sinh trực tuyến và bốn mô hình, không có bảo đảm hội tụ; DPO cực tiểu hóa một hàm mất mát phân loại trên dữ liệu cố định, và dưới (H1)–(H3), (H4a), (H4b) cực tiểu đó là nghiệm của con đường RLHF lý tưởng (Định lý 10.65). Với ưu tiên tất định, các hàm mất mát của cả hai con đường không có cực tiểu, và cả hai con đường lý tưởng tiến tới chính sách tất định với mọi $\beta$ (Mệnh đề 10.54(c), Nhận xét 10.69).
 
-### 8.4 Câu hỏi tự kiểm tra
+### 7.4 Câu hỏi tự kiểm tra
 
 Trả lời các câu hỏi sau bằng phép tính trên các ví dụ của chương.
 
-1. Trên chuỗi hai trạng thái với critic $\hat v=(1{,}4;\,1)$ và $\lambda=0{,}8$, hai lượt (i), (ii) của Ví dụ 10.8 cho hệ số GAE tại bước $0$ bằng bao nhiêu? Trung bình lệch bao nhiêu so với lợi thế đúng $0{,}4$?
-2. Trên chuỗi hai trạng thái, với chính sách mới $p'_A=0{,}6$, $p'_B=0{,}7$, hàm thay thế đoán mức tăng của $J$ thấp hơn hay cao hơn mức tăng thật, và lệch bao nhiêu?
+1. Trên chuỗi hai trạng thái với critic $\hat v=(1{,}4;\,1)$ và $\lambda=0{,}8$, hai lượt (i), (ii) của Ví dụ 10.8 cho hệ số GAE tại bước $0$ bằng bao nhiêu? Kỳ vọng của hệ số đó chệch bao nhiêu so với lợi thế đúng $0{,}4$?
+2. Trên chuỗi hai trạng thái, với chính sách mới $p'_A=0{,}6$, $p'_B=0{,}7$, hàm thay thế dự báo mức tăng của $J$ thấp hơn hay cao hơn mức tăng thật, và sai số bằng bao nhiêu?
 3. Trên bài toán một bước của Ví dụ 10.17, với bộ đệm ba mẫu và bán kính cắt $\epsilon=0{,}1$, mục tiêu cắt hết tăng từ $p$ nào?
-4. Trên chuỗi hai trạng thái, bước tới $(0{,}5;\,1)$ chỉ đổi $p_B$. Vì sao hàm thay thế đoán đúng mức tăng của $J$, dù bước xa chính sách cũ?
+4. Trên chuỗi hai trạng thái, bước tới $(0{,}5;\,1)$ chỉ đổi $p_B$. Vì sao hàm thay thế dự báo đúng mức tăng của $J$, dù bước xa chính sách cũ?
 
 Lời giải ngắn.
 
-1. Với $\gamma\lambda=0{,}72$: lượt (i) cho $-0{,}5+0{,}72\cdot2=0{,}94$, lượt (ii) cho $-0{,}5-0{,}72=-1{,}22$; trung bình $\tfrac23\cdot0{,}94-\tfrac13\cdot1{,}22=0{,}22$, lệch $-0{,}18=-0{,}9(1-\lambda)$ (Ví dụ 10.8).
-2. Thấp hơn. Với $\Delta p_A=0{,}1$, $\Delta p_B=\tfrac1{30}$, hàm thay thế cho $\mathcal L-J=0{,}08+0{,}045=0{,}125$, còn $\Delta J=0{,}125+2{,}7\cdot0{,}1\cdot\tfrac1{30}=0{,}134$; vì $\Delta p_A$ và $\Delta p_B$ cùng dấu nên phần bậc hai $2{,}7\,\Delta p_A\Delta p_B$ dương (Ví dụ 10.11).
+1. Với $\gamma\lambda=0{,}72$: lượt (i) cho $-0{,}5+0{,}72\cdot2=0{,}94$, lượt (ii) cho $-0{,}5-0{,}72=-1{,}22$; kỳ vọng $\tfrac23\cdot0{,}94-\tfrac13\cdot1{,}22=0{,}22$, độ chệch $-0{,}18=-0{,}9(1-\lambda)$ (Ví dụ 10.8).
+2. Thấp hơn. Với $\Delta p_A=0{,}1$, $\Delta p_B=\tfrac1{30}$, hàm thay thế cho $\mathcal L-J=0{,}08+0{,}045=0{,}125$, còn $\Delta J=0{,}125+2{,}7\cdot0{,}1\cdot\tfrac1{30}=0{,}134$, sai số $0{,}009$; vì $\Delta p_A$ và $\Delta p_B$ cùng dấu nên phần bậc hai $2{,}7\,\Delta p_A\Delta p_B$ dương (Ví dụ 10.11).
 3. Mẫu hành động 2 chạm $\rho=0{,}9$ tại $p=0{,}7$, nhưng hai mẫu hành động 1 còn tăng tới $\rho=1{,}1$, tức $p=\tfrac23\cdot1{,}1\approx0{,}733$; từ đó mục tiêu cắt bằng hằng $\tfrac13(2\cdot1{,}1-2\cdot0{,}9)=0{,}1\overline3$ (Ví dụ 10.17, Mệnh đề 10.40).
 4. $\Delta p_A=0$, nên chính sách mới tới $s_B$ với cùng xác suất $0{,}5$ như chính sách cũ, và phần bậc hai $2{,}7\,\Delta p_A\Delta p_B$ bằng $0$: $\Delta J=\mathcal L-J=1{,}35\cdot\tfrac13=0{,}45$ (Ví dụ 10.11, 10.12). Trên chuỗi, sai số của hàm thay thế là $2{,}7\,\Delta p_A\Delta p_B$, nên hàm thay thế chỉ sai khi chính sách mới đổi cả xác suất tới $s_B$ lẫn chính sách tại $s_B$; đổi riêng $p_A$ hay riêng $p_B$ đều cho đúng $\Delta J$.
 
-### 8.5 Bài tập theo mục
+### 7.5 Bài tập theo mục
 
-Bài tập củng cố 10.1–10.12, 10.18–10.21 và 10.23 nằm ở cuối chương; bộ bài tập chính thức, Bài tập 10.13–10.17 và 10.22, nằm ở [tệp bài tập Bài 10](material-viewer.html?doc=materials/lec-10/exercises.md&deck=lecture-10-trpo-va-ppo.html). Bảng sau ghi hai loại bài tập theo mục.
+Bài tập củng cố 10.1–10.12 và 10.23 nằm ở cuối chương; bộ bài tập chính thức, Bài tập 10.13–10.17 và 10.22, nằm ở [tệp bài tập Bài 10](material-viewer.html?doc=materials/lec-10/exercises.md&deck=lecture-10-trpo-va-ppo.html). Bảng sau ghi hai loại bài tập theo mục.
 
 | Mục | Bài tập | Tệp bài tập |
 |---|---|---|
-| 1. Hai giới hạn của REINFORCE | — | — |
+| 1. Hai giới hạn của REINFORCE | — | 10.22 |
 | 2. Đường cơ sở, lợi thế, actor–critic | 10.1, 10.4, 10.5, 10.10 | 10.14 |
 | 3. GAE | 10.6, 10.7 | 10.13, 10.15 |
 | 4. Hàm thay thế và chặn cải thiện | 10.11 | 10.16 |
 | 5. TRPO và gradient tự nhiên | 10.8, 10.9 | 10.17 |
-| 6. PPO | 10.2, 10.12 | 10.14 |
-| 7. Tối ưu chính sách từ phản hồi ưu tiên | 10.18, 10.19, 10.20, 10.21 | 10.22 |
-| 8. Tổng kết | 10.3, 10.23 | — |
+| 6. PPO | 10.2, 10.12, 10.23 | 10.14 |
+| 7. Tổng kết | 10.3 | — |
 
 <!-- note-topic-id: lec-10-topic-24 -->
-### 8.6 Giới hạn còn lại
+### 7.6 Giới hạn còn lại
 
-Ở Mục 2–6, giới hạn còn lại là dữ liệu theo chính sách: Mệnh đề 10.2 và 10.15 cần lượt do chính sách đang cập nhật sinh ra, và Thuật toán 10.49 bỏ mỗi đoạn thu sau $K$ epoch. Thuật toán 10.61 giữ giới hạn đó và còn phụ thuộc độ đúng của $\hat r$ trên câu trả lời mới (Nhận xét 10.62). Thuật toán 10.67 dùng dữ liệu cố định và chỉ đánh giá các câu trả lời có trong dữ liệu (Nhận xét 10.69).
+Ở Mục 2–6, giới hạn còn lại là dữ liệu theo chính sách: Mệnh đề 10.2 và 10.15 cần lượt do chính sách đang cập nhật sinh ra, và Thuật toán 10.49 bỏ mỗi đoạn thu sau $K$ epoch.
 
 ---
 
@@ -2699,52 +2318,9 @@ Mệnh đề 10.2 chỉ áp dụng cho bài toán đã lý tưởng hóa.
 **Giới hạn.** Các số $2{,}43$ và $42$–$66$ đo REINFORCE, DQN và Double DQN; để so PPO với chúng, cần chạy PPO với cùng ngân sách $10^6$ bước và cùng các lần chạy.
 :::
 
-::: application Tình huống 10.4 (Chọn bản tóm tắt bằng dữ liệu ưu tiên)
-**Bài toán.** Một bài đăng $x$ có ba bản tóm tắt $y_1$, $y_2$, $y_3$, do $\pi_{\mathrm{ref}}=(0{,}5;\,0{,}3;\,0{,}2)$ sinh ra. Người gán nhãn thực hiện $45$ phép so sánh, $15$ cho mỗi cặp:
-
-- cặp $(y_1,y_2)$: $10$ chọn $y_1$, $5$ chọn $y_2$;
-- cặp $(y_1,y_3)$: $12$ chọn $y_1$, $3$ chọn $y_3$;
-- cặp $(y_2,y_3)$: $10$ chọn $y_2$, $5$ chọn $y_3$.
-
-Cần chính sách mới với $\beta=1$.
-
-**Mô hình hóa.** Bài toán một bước của Định nghĩa 10.52(a) với ba hành động; dữ liệu theo Định nghĩa 10.53.
-
-**Kiểm giả thiết.** (H1): $\pi_{\mathrm{ref}}>0$ ở cả ba bản. (H2): $\beta=1$. (H3): chính sách chọn tự do trên ba bản. (H4a), (H4b): mỗi cặp có cả hai kết quả và ba cặp nối ba bản, nên $L^{\mathrm{BT}}$ có cực tiểu, duy nhất tới một hằng.
-
-**Tính.** Tần suất $\tfrac23$, $\tfrac45$, $\tfrac23$ bằng $\sigma(\log2)$, $\sigma(\log4)$, $\sigma(\log2)$, và $\log2+\log2=\log4$, nên $\hat r=(\log4;\,\log2;\,0)$ cực tiểu từng số hạng của $L^{\mathrm{BT}}$ (Mệnh đề 10.54(c)), do đó cực tiểu $L^{\mathrm{BT}}$, đưa nó từ $0{,}6931$ xuống $0{,}5911$. Theo Định lý 10.57, $\pi_{\mathrm{ref}}e^{\hat r}=(2;\,0{,}6;\,0{,}2)$, $\mathcal Z=2{,}8$ và $\pi^*=(\tfrac57;\,\tfrac3{14};\,\tfrac1{14})=(0{,}7143;\,0{,}2143;\,0{,}0714)$, với giá trị $\log2{,}8=1{,}0296$. Theo Định lý 10.65, DPO trên $45$ phép so sánh cho cùng chính sách.
-
-**Diễn giải.** Bản thứ nhất được chọn với xác suất $0{,}7143$ thay cho $0{,}5$; bản thứ ba giảm còn $0{,}0714$ nhưng vẫn dương (Định lý 10.57(d)).
-
-**Kiểm tra lại.** $\mathbb E_{\pi^*}\hat r-D_{\mathrm{KL}}(\pi^*\Vert\pi_{\mathrm{ref}})=1{,}1387-0{,}1091=1{,}0296$.
-
-**Giới hạn.** Một lời nhắc và ba câu trả lời; với mô hình ngôn ngữ, lời giải phải đi qua Thuật toán 10.61 hoặc 10.67.
-:::
-
-::: application Tình huống 10.5 (Vi phạm giả thiết: ưu tiên tất định từ ít dữ liệu)
-**Bài toán.** Lời nhắc $x$, $\pi_{\mathrm{ref}}=(\tfrac23;\,\tfrac13)$, $\beta=1$. Phần thưởng thật là $r=(\log2;\,0)$, nên mỗi phép so sánh chọn $y_1$ với xác suất $\tfrac23$. Chỉ thu được ba phép so sánh và cả ba chọn $y_1$, một biến cố có xác suất $(\tfrac23)^3=\tfrac8{27}=0{,}2963$.
-
-**Kiểm giả thiết.** $k=n=3$, nên (H4a) của Định lý 10.65 hỏng (Mệnh đề 10.54(c)).
-
-**Hậu quả.** $L^{\mathrm{DPO}}=-\log\sigma\bigl(\beta(\theta_1-\theta_2-\log2)\bigr)$ giảm ngặt theo $\theta_1-\theta_2$, nên hạ gradient đẩy $\theta_1-\theta_2\to\infty$ với mọi $\beta$. Với $\beta=1$ và $J_1$ tính theo phần thưởng thật:
-
-| $\theta_1-\theta_2$ | $\pi_\theta(y_1)$ | $L^{\mathrm{DPO}}$ | $D_{\mathrm{KL}}(\pi_\theta\Vert\pi_{\mathrm{ref}})$ | $J_1$ |
-|---|---|---|---|---|
-| $2$ | $0{,}8808$ | $0{,}2395$ | $0{,}1228$ | $0{,}4878$ |
-| $4$ | $0{,}9820$ | $0{,}0360$ | $0{,}3278$ | $0{,}3528$ |
-| $10$ | $0{,}99995$ | $0{,}0001$ | $0{,}4050$ | $0{,}2881$ |
-| $\to\infty$ | $\to1$ | $\to0$ | $\to\log\tfrac32=0{,}4055$ | $\to0{,}2877$ |
-
-Nghiệm của bài toán thật có $J_1=0{,}5108$. KL theo chiều của mục tiêu bị chặn bởi $\log\tfrac32$; đại lượng không bị chặn là $r_\theta(y_2)=\log\frac{\pi_\theta(y_2)}{1/3}\to-\infty$. Con đường RLHF lý tưởng cũng vậy: $L^{\mathrm{BT}}$ không có cực tiểu, $\hat r(y_1)-\hat r(y_2)\to\infty$, và nghiệm có phạt KL tiến tới $(1;\,0)$ với mọi $\beta$ (Gheshlaghi Azar và cộng sự, 2024, §4.2).
-
-**Phân tích có điều kiện.** Với mô hình phần thưởng có điều chuẩn, như điều chuẩn $\ell_2$ của Christiano và cộng sự (2017, §2.2.3), $\hat r$ hữu hạn và nghiệm có $\pi(y_2)>0$.
-
-**Giới hạn.** Trong dữ liệu ưu tiên thật, mỗi cặp câu trả lời thường chỉ được gán nhãn một lần, nên tần suất ưu tiên thực nghiệm bằng $0$ hoặc $1$ ở hầu hết các cặp (Gheshlaghi Azar và cộng sự, 2024, §4.2, §5); khi đó (H4a), (H4b) nói chung không thỏa.
-:::
-
 ## Tóm tắt chương
 
-Chúng ta bắt đầu từ hai giới hạn của REINFORCE: trên bài toán một bước, tổng phương sai của ước lượng tăng từ $\tfrac49$ lên $\tfrac{16}9$ khi cộng $1$ vào mọi phần thưởng (Ví dụ 10.1); trên hành lang ngắn, ba lượt cho tọa độ thứ nhất của ước lượng bằng $-1$, $1$ và $-5{,}5$, trong khi gradient đúng có tọa độ đó bằng $2$ (Ví dụ 10.2), và một bước lớn theo đúng gradient kéo $J$ từ $-12$ xuống khoảng $-21{,}3$. Trừ một đường cơ sở giữ kỳ vọng (Mệnh đề 10.2): trên chuỗi hai trạng thái, trừ $v_\pi$ giữ trung bình $0{,}2$ của tọa độ $\theta_A$ và giảm phương sai từ $0{,}6925$ xuống $0{,}2025$ (Ví dụ 10.6); trên bài toán một bước, đường cơ sở tối ưu là $b^*=1\ne v_\pi=2$ (Mệnh đề 10.3). Critic đánh giá hành động qua mục tiêu bootstrap (Định nghĩa 10.7), với sai số TD có kỳ vọng có điều kiện bằng lợi thế khi critic đúng (Mệnh đề 10.8); critic $(1{,}4;\,1)$, đánh giá thấp $s_B$, cho $\delta_0=-0{,}5$ dù lợi thế bằng $0{,}4$ (Ví dụ 10.7). GAE trộn các ước lượng $n$ bước bằng trọng số $(\gamma\lambda)^k$; với critic đó và $\lambda=0{,}5$, độ lệch là $-0{,}45$, thay cho $-0{,}9$ của ước lượng một bước, và khoảng cách giữa hai lượt là $1{,}35$, thay cho $2{,}7$ của hệ số Monte Carlo (Ví dụ 10.8); GAE không làm chệch gradient khi $\lambda=1$ với lượt đầy đủ hoặc khi critic đúng (Mệnh đề 10.14, 10.15). Trên chuỗi hai trạng thái, bổ đề hiệu hiệu năng cho $\Delta J=0{,}296$ còn hàm thay thế cho $0{,}26$; với bước tới $(1;\,0{,}5)$, hàm thay thế báo tăng $0{,}175$ trong khi $J$ giảm $0{,}05$ (Ví dụ 10.11, Bổ đề 10.19, Mệnh đề 10.22), và Định lý 10.26 chặn sai số này theo khoảng cách TV trung bình, dẫn tới bài toán miền tin cậy (Định nghĩa 10.30, Hệ quả 10.31). TRPO giải bài toán đó xấp xỉ bằng gradient tự nhiên và gradient liên hợp (Mệnh đề 10.34, Thuật toán 10.37), còn PPO thay ràng buộc bằng mục tiêu cắt, một chặn dưới của hàm thay thế mẫu (Mệnh đề 10.41, Thuật toán 10.49); trên chuỗi hai trạng thái, với bộ đệm hai lượt có lợi thế ước lượng sai dấu, phép cắt giữ mức giảm của $J$ ở $0{,}008$ thay cho $0{,}4$ (Mục 6.1). PPO cũng có thể thay ràng buộc bằng phạt KL với hệ số thích nghi (Định nghĩa 10.43). Không phương pháp thực hành nào giữ được bảo đảm đơn điệu, và kết quả hội tụ hiện có cho PPO-Clip chỉ nói về điểm dừng của một mô hình đơn giản hóa (Nhận xét 10.51). Khi phần thưởng chỉ được biết qua so sánh ưu tiên, mô hình Bradley–Terry cho mô hình phần thưởng bằng hợp lý cực đại (Mệnh đề 10.54), và mục tiêu có phạt KL theo chính sách tham chiếu cố định có nghiệm $\pi^*\propto\pi_{\mathrm{ref}}e^{r/\beta}$ (Định lý 10.57). RLHF với PPO nhắm tới nghiệm đó bằng mẫu sinh trực tuyến (Thuật toán 10.61), DPO giải cùng mục tiêu bằng một hàm mất mát phân loại trên dữ liệu cố định, không qua vòng học tăng cường (Thuật toán 10.67), và dưới các giả thiết của Định lý 10.65 cực tiểu của DPO là nghiệm của con đường RLHF lý tưởng.
+Chúng ta bắt đầu từ hai giới hạn của REINFORCE: trên bài toán một bước, tổng phương sai của ước lượng tăng từ $\tfrac49$ lên $\tfrac{16}9$ khi cộng $1$ vào mọi phần thưởng (Ví dụ 10.1); trên hành lang ngắn, ba lượt cho tọa độ thứ nhất của ước lượng bằng $-1$, $1$ và $-5{,}5$, trong khi gradient đúng có tọa độ đó bằng $2$ (Ví dụ 10.2), và một bước lớn theo đúng gradient kéo $J$ từ $-12$ xuống khoảng $-21{,}3$. Trừ một đường cơ sở giữ kỳ vọng (Mệnh đề 10.2): trên chuỗi hai trạng thái, trừ $v_\pi$ giữ kỳ vọng $0{,}2$ của tọa độ $\theta_A$ và giảm phương sai từ $0{,}6925$ xuống $0{,}2025$ (Ví dụ 10.6); trên bài toán một bước, đường cơ sở tối ưu là $b^*=1\ne v_\pi=2$ (Mệnh đề 10.3). Critic đánh giá hành động qua mục tiêu bootstrap (Định nghĩa 10.7), với sai số TD có kỳ vọng có điều kiện bằng lợi thế khi critic đúng (Mệnh đề 10.8); critic $(1{,}4;\,1)$, đánh giá thấp $s_B$, cho $\delta_0=-0{,}5$ dù lợi thế bằng $0{,}4$ (Ví dụ 10.7). GAE trộn các ước lượng $n$ bước bằng trọng số $(\gamma\lambda)^k$; với critic đó và $\lambda=0{,}5$, độ chệch là $-0{,}45$, thay cho $-0{,}9$ của ước lượng một bước, và khoảng cách giữa hai lượt là $1{,}35$, thay cho $2{,}7$ của hệ số Monte Carlo (Ví dụ 10.8); GAE không làm chệch gradient khi $\lambda=1$ với lượt đầy đủ hoặc khi critic đúng (Mệnh đề 10.14, 10.15). Trên chuỗi hai trạng thái, bổ đề hiệu hiệu năng cho $\Delta J=0{,}296$ còn hàm thay thế cho $0{,}26$ (Ví dụ 10.11, Bổ đề 10.19, Mệnh đề 10.22). Với bước dài tới $(0{,}9;\,0{,}5)$, $\Delta\mathcal L=0{,}095$ còn $\Delta J=-0{,}085$, vì chính sách mới thăm $s_B$ nhiều hơn và tại đó kém chính sách cũ. Định lý 10.26 chặn sai số của hàm thay thế theo kỳ vọng của khoảng cách TV, và cận này dẫn tới bài toán miền tin cậy (Định nghĩa 10.30, Hệ quả 10.31). TRPO giải bài toán đó xấp xỉ bằng gradient tự nhiên và gradient liên hợp (Mệnh đề 10.34, Thuật toán 10.37), còn PPO thay ràng buộc bằng mục tiêu cắt, một chặn dưới của hàm thay thế mẫu (Mệnh đề 10.41, Thuật toán 10.49); trên chuỗi hai trạng thái, với bộ đệm hai lượt có lợi thế ước lượng sai dấu, phép cắt giữ mức giảm của $J$ ở $0{,}008$ thay cho $0{,}4$ (Mục 6.1). PPO cũng có thể thay ràng buộc bằng phạt KL với hệ số thích nghi (Định nghĩa 10.43). Không phương pháp thực hành nào giữ được bảo đảm đơn điệu, và kết quả hội tụ hiện có cho PPO-Clip chỉ nói về điểm dừng của một mô hình đơn giản hóa (Nhận xét 10.51).
 
 **Định nghĩa và kết quả theo mục.**
 
@@ -2753,7 +2329,6 @@ Chúng ta bắt đầu từ hai giới hạn của REINFORCE: trên bài toán m
 - Mục 4: Định nghĩa 10.18 (phân bố chiếm dụng), Bổ đề 10.19 (hiệu hiệu năng), Hệ quả 10.20 (cải thiện cho chính sách ngẫu nhiên), Định nghĩa 10.21 (hàm thay thế), Mệnh đề 10.22 (khớp bậc một), Định nghĩa 10.23 (TV, KL), Mệnh đề 10.24 (KL không âm, Pinsker), Bổ đề 10.25 (dịch chuyển phân bố chiếm dụng), Định lý 10.26 (chặn cải thiện), Hệ quả 10.27 (chặn dạng KL), Nhận xét 10.28 (cận dạng lớn nhất), Hệ quả 10.29 (cải thiện đơn điệu), Định nghĩa 10.30 (miền tin cậy), Hệ quả 10.31 (mức giảm tối đa).
 - Mục 5: Định nghĩa 10.32 (Fisher), Mệnh đề 10.33 (KL bậc hai), Mệnh đề 10.34 (gradient tự nhiên), Nhận xét 10.35 (Fisher suy biến), Thuật toán 10.36 (gradient liên hợp), Thuật toán 10.37 (TRPO), Nhận xét 10.38 (giả thiết bị vi phạm).
 - Mục 6: Định nghĩa 10.39 (PPO-Clip), Mệnh đề 10.40 (dạng theo dấu), Mệnh đề 10.41 (chặn dưới bi quan), Nhận xét 10.42 (cắt tỉ số và KL), Định nghĩa 10.43 (PPO-Penalty), Nhận xét 10.44 (phạm vi của PPO-Penalty), Định nghĩa 10.45–10.47 (entropy, hàm mất mát, chẩn đoán), Mệnh đề 10.48 (approxKL), Thuật toán 10.49 (PPO), Nhận xét 10.50 (chi tiết cài đặt), Nhận xét 10.51 (hội tụ về điểm dừng).
-- Mục 7: Định nghĩa 10.52 (bài toán sinh câu trả lời), Định nghĩa 10.53 (mô hình Bradley–Terry), Mệnh đề 10.54 (hợp lý cực đại), Nhận xét 10.55 (chuẩn hóa), Định nghĩa 10.56 (mục tiêu có phạt KL), Định lý 10.57 (nghiệm dạng đóng), Nhận xét 10.58 (hai mỏ neo), Bổ đề 10.59 (KL theo token), Mệnh đề 10.60 (gradient có phạt KL), Thuật toán 10.61 (RLHF với PPO), Nhận xét 10.62 (tối ưu quá mức), Mệnh đề 10.63 (đổi biến), Định nghĩa 10.64 (mất mát DPO), Định lý 10.65 (tương đương), Mệnh đề 10.66 (gradient DPO), Thuật toán 10.67 (DPO), Nhận xét 10.68–10.70 (đọc kết quả, giới hạn, biến thể).
 
 **Công thức cần nhớ.**
 
@@ -2770,6 +2345,8 @@ $$
 &\quad=\tfrac1{1-\gamma}\textstyle\sum_s\nu^{\pi'}(s)A_\pi(s,\pi'),\\
 &\mathcal L_{\theta_{\mathrm{old}}}(\theta)=J(\theta_{\mathrm{old}})\\
 &\quad+\tfrac1{1-\gamma}\mathbb E_{\nu^{\mathrm{old}},\pi_{\mathrm{old}}}[\rho_\theta A_{\mathrm{old}}],\\
+&\Delta J-\Delta\mathcal L\\
+&\quad=\textstyle\sum_s\bigl(\eta_{\pi'}(s)-\eta_\pi(s)\bigr)A_\pi(s,\pi'),\\
 &J(\pi')-J(\pi)\\
 &\quad\ge\bigl[\mathcal L_\pi(\pi')-J(\pi)\bigr]\\
 &\quad\quad-\tfrac{2\gamma\chi_{\pi'}}{(1-\gamma)^2}\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}],\\
@@ -2779,10 +2356,7 @@ $$
 &L=-\mathcal L^{\mathrm{CLIP}}+c_1L^V\\
 &\quad-c_2\widehat{\mathbb E}[\mathcal H],\\
 &\text{approxKL}\\
-&\quad=\tfrac1{\lvert\mathcal B\rvert}\textstyle\sum_{i\in\mathcal B}\bigl[(\rho_i-1)-\log\rho_i\bigr],\\
-&\pi^*_r(y\mid x)\propto\pi_{\mathrm{ref}}(y\mid x)\,e^{r(x,y)/\beta},\\
-&L^{\mathrm{DPO}}=-\widehat{\mathbb E}_{\mathcal D_{\mathrm{pref}}}\log\sigma\Bigl(\beta\log\tfrac{\pi_\theta(y_w\mid x)}{\pi_{\mathrm{ref}}(y_w\mid x)}\\
-&\quad-\beta\log\tfrac{\pi_\theta(y_l\mid x)}{\pi_{\mathrm{ref}}(y_l\mid x)}\Bigr).
+&\quad=\tfrac1{\lvert\mathcal B\rvert}\textstyle\sum_{i\in\mathcal B}\bigl[(\rho_i-1)-\log\rho_i\bigr].
 \end{aligned}
 $$
 
@@ -2796,14 +2370,12 @@ $$
 - Mục tiêu cắt không chặn KL giữa hai chính sách.
 - approxKL không chệch chỉ khi tham số không phụ thuộc các mẫu dùng để tính nó.
 - Điều kiện hỗ trợ có hai chiều: $\pi_\theta>0\Rightarrow\pi_{\mathrm{old}}>0$ cho hàm thay thế, và $\pi_\theta>0$ trên miền hỗ trợ của $\pi_{\mathrm{old}}$ cho KL hữu hạn.
-- Định lý 10.65 cần $L^{\mathrm{BT}}$ có cực tiểu để hai con đường có nghiệm, và tập cực tiểu là một lớp để nghiệm duy nhất: với ưu tiên tất định, cả hai con đường suy biến; với dữ liệu không nối mọi câu trả lời, nghiệm không duy nhất.
-- $\pi_{\mathrm{old}}$ của PPO đổi sau mỗi vòng và chỉ giới hạn từng bước; $\pi_{\mathrm{ref}}$ cố định và quyết định nghiệm cuối.
 
 ---
 
 ## Bài tập củng cố
 
-Các bài phủ chín mục tiêu học tập: mục tiêu 1 (Bài tập 10.1, 10.4), 2 (10.5, 10.10), 3 (10.6, 10.7), 4 (10.11, 10.23), 5 (10.3, 10.8, 10.9, 10.11), 6 (10.2, 10.12, 10.23), 7 (10.2, 10.3, 10.12), 8 (10.18, 10.19, 10.21), 9 (10.19, 10.20).
+Các bài phủ bảy mục tiêu học tập: mục tiêu 1 (Bài tập 10.1, 10.4), 2 (10.5, 10.10), 3 (10.6, 10.7), 4 (10.11, 10.23), 5 (10.3, 10.8, 10.9, 10.11), 6 (10.2, 10.12, 10.23), 7 (10.2, 10.3, 10.12).
 
 ### Mức nhận biết
 
@@ -3109,94 +2681,6 @@ Các số hạng cắt là $2\min(1{,}1052;\,1{,}2)=2{,}2103$; $-\max(0{,}7408;\
 **Kiểm tra lại.** Mọi số hạng $(\rho-1)-\log\rho$ đều không âm (Mệnh đề 10.48); dựa vào dạng $-\log\rho$ ở đây sẽ bỏ qua một bước đã đi xa. Ở (d), lỗi thường gặp là so KL trực tiếp với $\kappa_{\mathrm{targ}}$ thay cho hai ngưỡng.
 :::
 
-::: exercise Bài tập 10.18 (Nghiệm có phạt KL trên ba câu trả lời)
-Một lời nhắc, ba câu trả lời, $\pi_{\mathrm{ref}}=(\tfrac12;\,\tfrac14;\,\tfrac14)$, phần thưởng $r=(\log2;\,0;\,0)$.
-
-- (a) Với $\beta=1$, tính $\mathcal Z$, $\pi^*$, $\max J_1$, và kiểm bằng $\mathbb E_{\pi^*}r-D_{\mathrm{KL}}(\pi^*\Vert\pi_{\mathrm{ref}})$.
-- (b) Tính phần thưởng ngầm định $\beta\log(\pi^*/\pi_{\mathrm{ref}})$ và chỉ ra nó thuộc $[r]$.
-- (c) Lặp lại (a) với $\beta=\tfrac12$.
-:::
-
-::: hint
-Theo Định lý 10.57, $\pi^*$ tỉ lệ với $\pi_{\mathrm{ref}}e^{r/\beta}$; hằng chuẩn hóa là tổng có trọng số $\pi_{\mathrm{ref}}$.
-:::
-
-::: solution
-**Câu (a).** $\pi_{\mathrm{ref}}e^{r}=(1;\,\tfrac14;\,\tfrac14)$, $\mathcal Z=\tfrac32$, $\pi^*=(\tfrac23;\,\tfrac16;\,\tfrac16)$, $\max J_1=\log\tfrac32=0{,}4055$. Kiểm: $\mathbb E_{\pi^*}r=\tfrac23\log2=0{,}4621$, $D_{\mathrm{KL}}=\tfrac23\log\tfrac43+2\cdot\tfrac16\log\tfrac23=0{,}1918-0{,}1352=0{,}0566$, và $0{,}4621-0{,}0566=0{,}4055$.
-
-**Câu (b).** $(\log\tfrac43;\,\log\tfrac23;\,\log\tfrac23)=(0{,}2877;\,-0{,}4055;\,-0{,}4055)=r-\log\tfrac32$, hơn kém $r$ một hằng của lời nhắc (Định lý 10.57(c)).
-
-**Câu (c).** $\pi_{\mathrm{ref}}e^{2r}=(2;\,\tfrac14;\,\tfrac14)$, $\mathcal Z=\tfrac52$, $\pi^*=(0{,}8;\,0{,}1;\,0{,}1)$, $\max J_{1/2}=\tfrac12\log\tfrac52=0{,}4581$.
-
-**Kiểm tra lại.** Chuẩn hóa bằng $\sum_ye^{r(y)/\beta}$ thay cho $\sum_y\pi_{\mathrm{ref}}(y)e^{r(y)/\beta}$ cho $(\tfrac12;\,\tfrac14;\,\tfrac14)$ ở (a). Dùng $e^{\beta r}$ thay cho $e^{r/\beta}$ ở (c) cho $\pi^*(y_1)=0{,}5858$, sai chiều tác dụng của $\beta$.
-:::
-
-::: exercise Bài tập 10.19 (Hàm mất mát DPO với hai câu trả lời)
-Chính sách softmax với đặc trưng đơn vị trên hai câu trả lời; $\pi_{\mathrm{ref}}$ có $\theta_{\mathrm{ref}}=(\log2;\,0)$, tức $(\tfrac23;\,\tfrac13)$; $n$ phép so sánh giữa $y_1$ và $y_2$, trong đó $k$ phép chọn $y_1$.
-
-- (a) Chứng minh: nếu $0<k<n$, $L^{\mathrm{DPO}}$ đạt cực tiểu khi và chỉ khi $\beta(\theta_1-\theta_2-\log2)=\log\frac k{n-k}$, và chính sách đó là $\pi^*_{\hat r}$ của con đường RLHF.
-- (b) Với $n=5$, $k=4$, $\beta=1$: tính chính sách cực tiểu, gradient tại $\theta_{\mathrm{ref}}$, và chính sách sau một bước hạ gradient với bước học $1$.
-- (c) Với $k=n$: chứng minh $L^{\mathrm{DPO}}$ không có cực tiểu.
-:::
-
-::: hint
-Với bộ ba chọn $y_1$, $\Delta r_\theta=\beta(\theta_1-\theta_2-\log2)$; áp dụng Mệnh đề 10.54(c) với $\Delta r_\theta$ thay cho $\Delta\hat r$.
-:::
-
-::: solution
-**Câu (a).** $L^{\mathrm{DPO}}=-\tfrac1n\bigl[k\log\sigma(\Delta r_\theta)+(n-k)\log\sigma(-\Delta r_\theta)\bigr]$ có đạo hàm theo $\Delta r_\theta$ là $\sigma(\Delta r_\theta)-\tfrac kn$, và $\Delta r_\theta$ tăng ngặt theo $\theta_1-\theta_2$ vì $\beta>0$; cực tiểu duy nhất tại $\Delta r_\theta=\log\frac k{n-k}$, cho $\pi(y_1)/\pi(y_2)=e^{\theta_1-\theta_2}=2\bigl(\frac k{n-k}\bigr)^{1/\beta}$. Con đường RLHF cho $\hat r(y_1)-\hat r(y_2)=\log\frac k{n-k}$ (Mệnh đề 10.54(c)) và $\pi^*_{\hat r}(y_1)/\pi^*_{\hat r}(y_2)=2\,e^{(\hat r(y_1)-\hat r(y_2))/\beta}$, cùng tỉ số.
-
-**Câu (b).** $\Delta r_\theta=\log4$, $\theta_1-\theta_2=\log8$, $\pi=(\tfrac89;\,\tfrac19)$. Theo Mệnh đề 10.66 với trọng số $\sigma(0)=\tfrac12$ và $\psi(y_1)-\psi(y_2)=(1;\,-1)$, gradient là $-\bigl[\tfrac45\cdot\tfrac12-\tfrac15\cdot\tfrac12\bigr](1;\,-1)=(-0{,}3;\,0{,}3)$. Sau một bước, $\theta_1-\theta_2=\log2+0{,}6=1{,}2931$, $\pi_\theta(y_1)=0{,}7847$, và $L^{\mathrm{DPO}}$ giảm từ $0{,}6931$ xuống $0{,}5575$; giá trị cực tiểu là $0{,}5004$.
-
-**Câu (c).** Với $k=n$, $L^{\mathrm{DPO}}=-\log\sigma(\Delta r_\theta)>0$, giảm ngặt theo $\theta_1-\theta_2$ và tiến về $0$ khi $\theta_1-\theta_2\to\infty$.
-
-**Kiểm tra lại.** Quên $\log\pi_{\mathrm{ref}}$ cho cực tiểu $\theta_1-\theta_2=\log4$, tức $\pi=(0{,}8;\,0{,}2)$ ở (b). Nhầm dấu trọng số cho gradient $(0{,}3;\,-0{,}3)$, làm giảm $\pi(y_1)$.
-:::
-
-::: exercise Bài tập 10.20 (Dữ liệu không phủ một câu trả lời)
-Ba câu trả lời, $\pi_{\mathrm{ref}}=(\tfrac12;\,\tfrac14;\,\tfrac14)$, $\beta=1$; $\mathcal D_{\mathrm{pref}}$ gồm sáu phép so sánh chỉ giữa $y_1$ và $y_2$, bốn chọn $y_1$; lớp chính sách gồm mọi phân phối có miền hỗ trợ đầy đủ.
-
-- (a) Chứng minh mọi chính sách có $\pi(y_1)=4\pi(y_2)$ đều cực tiểu $L^{\mathrm{DPO}}$.
-- (b) Tính $D_{\mathrm{KL}}(\pi\Vert\pi_{\mathrm{ref}})$ cho ba cực tiểu $(\tfrac23;\,\tfrac16;\,\tfrac16)$, $(0{,}6;\,0{,}15;\,0{,}25)$, $(0{,}4;\,0{,}1;\,0{,}5)$.
-- (c) Con đường RLHF có $\hat r(y_1)-\hat r(y_2)=\log2$, còn $c=\hat r(y_3)-\hat r(y_2)$ không được dữ liệu xác định. Viết $\pi^*_{\hat r}$ theo $c$, chỉ ra giả thiết nào của Định lý 10.65 hỏng, và chứng minh tập nghiệm của hai con đường bằng nhau.
-:::
-
-::: hint
-$\Delta r_\theta$ chỉ phụ thuộc tỉ số $\pi(y_1)/\pi(y_2)$; ở (c), cho $c$ chạy trên $\mathbb R$.
-:::
-
-::: solution
-**Câu (a).** Bộ ba chọn $y_1$ có $\Delta r_\theta=\log\frac{\pi(y_1)}{1/2}-\log\frac{\pi(y_2)}{1/4}=\log\frac{\pi(y_1)}{2\pi(y_2)}$. Theo Mệnh đề 10.54(c) với $n=6$, $k=4$, cực tiểu đạt khi $\Delta r_\theta=\log2$, tức $\pi(y_1)=4\pi(y_2)$; $\pi(y_3)$ không xuất hiện.
-
-**Câu (b).** $0{,}0566$; $0{,}0328$; $0{,}1657$.
-
-**Câu (c).** $\pi^*_{\hat r}\propto(1;\,\tfrac14;\,\tfrac14e^c)$: $c=0$ cho $(\tfrac23;\,\tfrac16;\,\tfrac16)$, $c=\log2$ cho $(\tfrac47;\,\tfrac17;\,\tfrac27)$, $c=-\log2$ cho $(\tfrac8{11};\,\tfrac2{11};\,\tfrac1{11})$. (H4a) thỏa, (H4b) hỏng: tập cực tiểu của $L^{\mathrm{BT}}$ gồm mọi $\hat r$ có $\hat r(y_1)-\hat r(y_2)=\log2$, với $c$ tùy ý, nên không là một lớp. Mọi $\pi^*_{\hat r}$ có $\pi(y_1)=4\pi(y_2)$; ngược lại, mỗi cực tiểu $\pi$ của $L^{\mathrm{DPO}}$ là $\pi^*_{\hat r}$ với $c=\log\frac{\pi(y_3)}{\pi(y_2)}$. Hai tập nghiệm bằng nhau và không có nghiệm duy nhất.
-
-**Kiểm tra lại.** Kết luận "DPO cho $\pi(y_3)=\pi_{\mathrm{ref}}(y_3)$" sai vì $L^{\mathrm{DPO}}$ không chứa $\pi(y_3)$. Kết luận "hai con đường cho nghiệm khác nhau" sai: tập nghiệm trùng nhau, chỉ không duy nhất.
-:::
-
-::: exercise Bài tập 10.21 (Hai mỏ neo khi bán kính cắt nhỏ)
-Như Ví dụ 10.27 nhưng với $\epsilon=0{,}1$: $\pi_{\mathrm{ref}}=(\tfrac23;\,\tfrac13)$, $\hat r=(\log2;\,0)$, $\beta=1$. Mỗi vòng tính phần thưởng đã trừ KL tại $\pi_{\mathrm{old}}$ và lợi thế đúng, giữ cố định; bộ đệm có đúng tần suất của $\pi_{\mathrm{old}}$; vòng trong tăng $\mathcal L^{\mathrm{CLIP}}$ từ $\pi_{\mathrm{old}}$ tới đầu đoạn phẳng, nơi mọi mẫu có gradient khác $0$ đều đã bị cắt.
-
-- (a) Tính $p=\pi(y_1)$ sau vòng 1, 2, 3 và lợi thế của mỗi vòng.
-- (b) So $J_1$ tại các chính sách đó với $\max J_1=0{,}5108$.
-- (c) Giải thích vì sao dãy không dừng ở $p=0{,}8$.
-:::
-
-::: hint
-Với $p_{\mathrm{old}}>\tfrac12$: khi lợi thế của $y_1$ dương, vòng dừng ở $p=1{,}1\,p_{\mathrm{old}}$; khi âm, ở $p=0{,}9\,p_{\mathrm{old}}$.
-:::
-
-::: solution
-**Câu (a).** Vòng 1, $p_{\mathrm{old}}=\tfrac23$: phần thưởng đã trừ KL $(\log2;\,0)$, lợi thế $(0{,}2310;\,-0{,}4621)$, $p=0{,}7333$. Vòng 2: phần thưởng $(\log2-\log1{,}1;\,-\log0{,}8)=(0{,}5978;\,0{,}2231)$, lợi thế $(0{,}0999;\,-0{,}2748)$, $p=1{,}1\cdot0{,}7333=0{,}8067$. Vòng 3: phần thưởng $(0{,}5025;\,0{,}5447)$, lợi thế $(-0{,}0082;\,0{,}0340)$, $p=0{,}9\cdot0{,}8067=0{,}7260$.
-
-**Câu (b).** $J_1=0{,}4979$; $0{,}5107$; $0{,}4950$, đều dưới $0{,}5108$.
-
-**Câu (c).** Phép cắt chỉ chặn độ dài bước so với $\pi_{\mathrm{old}}$. Dấu của lợi thế, do $\pi_{\mathrm{ref}}$ và $\hat r$ quyết định qua phần thưởng đã trừ KL, đổi khi $p$ vượt $0{,}8$, nhưng mỗi vòng vẫn đi hết tới biên khoảng cắt, nên dãy dao động quanh $0{,}8$; vòng 4 cho $p=0{,}7986$.
-
-**Kiểm tra lại.** Tính phần thưởng đã trừ KL theo $\pi_{\mathrm{ref}}$ thay cho $\pi_{\mathrm{old}}$ bỏ mất phạt KL, nên lợi thế của $y_1$ luôn dương và $p$ tiếp tục tăng. Cắt theo $\pi_{\mathrm{ref}}$ thay cho $\pi_{\mathrm{old}}$ cho $p$ dừng ở $0{,}7333$.
-:::
-
 ::: exercise Bài tập 10.23 (Một vòng PPO-Clip trên chuỗi hai trạng thái)
 Chuỗi hai trạng thái của Ví dụ 10.6: tại $s_A$, hành động 1 sang $s_B$ với phần thưởng $0$, hành động 2 kết thúc với phần thưởng $1$; tại $s_B$, hành động 1 kết thúc với phần thưởng $3$, hành động 2 kết thúc với phần thưởng $0$; $\gamma=0{,}9$; mỗi trạng thái có một tham số, $p_s=\sigma(\theta_s)$. Chính sách cũ $p_A=\tfrac12$, $p_B=\tfrac23$ có $J=1{,}4$, $\nu^{\mathrm{old}}=(0{,}1;\,0{,}045)$ và lợi thế đúng $A_{\mathrm{old}}(s_A,\cdot)=(0{,}4;\,-0{,}4)$, $A_{\mathrm{old}}(s_B,\cdot)=(1;\,-2)$. Một vòng PPO-Clip với $\epsilon=0{,}2$ dùng lợi thế đúng, giữ cố định; tại mỗi trạng thái, các mẫu có đúng tần suất hành động của $\pi_{\mathrm{old}}$; vòng trong tăng $\mathcal L^{\mathrm{CLIP}}$ từ $\pi_{\mathrm{old}}$ tới đầu đoạn phẳng. Với $\rho_s(a)=\pi_\theta(a\mid s)/\pi_{\mathrm{old}}(a\mid s)$, phần của mục tiêu cắt tại $s$ là
 $$\begin{aligned}\ell_s&=\sum_a\pi_{\mathrm{old}}(a\mid s)\\&\quad\times\min\bigl(\rho_s(a)A_{\mathrm{old}}(s,a),\\&\qquad\operatorname{clip}(\rho_s(a),0{,}8,1{,}2)\\&\qquad\quad\times A_{\mathrm{old}}(s,a)\bigr).\end{aligned}$$
@@ -3204,7 +2688,7 @@ $$\begin{aligned}\ell_s&=\sum_a\pi_{\mathrm{old}}(a\mid s)\\&\quad\times\min\big
 - (a) Viết $\ell_{s_A}$ theo $p_A$ và $\ell_{s_B}$ theo $p_B$, rồi tìm chính sách $\pi'$ nơi vòng trong dừng.
 - (b) Tính mức tăng mà hàm thay thế dự báo, $\mathcal L_{\pi_{\mathrm{old}}}(\pi')-J(\pi_{\mathrm{old}})$, và mức tăng thật $\Delta J=J(\pi')-J(\pi_{\mathrm{old}})$.
 - (c) Tính $\tfrac1{1-\gamma}\sum_s\nu^{\mathrm{old}}(s)\,\ell_s(\pi')$ và xếp ba số của (b), (c) theo thứ tự tăng.
-- (d) Dùng đẳng thức $\Delta J=0{,}8\,\Delta p_A+1{,}35\,\Delta p_B+2{,}7\,\Delta p_A\Delta p_B$ của Ví dụ 10.11, giải thích vì sao hàm thay thế đoán thấp hơn mức tăng thật.
+- (d) Dùng đẳng thức $\Delta J=0{,}8\,\Delta p_A+1{,}35\,\Delta p_B+2{,}7\,\Delta p_A\Delta p_B$ của Ví dụ 10.11, giải thích vì sao hàm thay thế dự báo thấp hơn mức tăng thật.
 :::
 
 ::: hint
@@ -3233,11 +2717,11 @@ Vòng trong dừng tại $\pi'$: $p'_A=0{,}6$, $p'_B=0{,}8$, đúng chính sách
 
 ## Hướng dẫn đọc thêm và tài liệu tham khảo
 
-**Hướng dẫn đọc thêm.** Sutton và Barto (2018), §13.4–13.5, trình bày đường cơ sở và actor–critic một bước với hộp giả mã mà Thuật toán 10.6 và 10.9 dựa vào; §7.1 và §12.1–12.3 trình bày lợi tức $n$ bước và lợi tức λ, cơ sở của Mục 3. Các phần TRPO, GAE, PPO không có trong sách; đọc Schulman và cộng sự (2015, §2–3, Phụ lục C), (2016, §2–3) và (2017, §3–5). Chặn cải thiện dạng trung bình theo Achiam và cộng sự (2017, §5, phụ lục); chi tiết cài đặt theo Huang và cộng sự (2022) và Engstrom và cộng sự (2020). Mục 7 dựa vào Rafailov và cộng sự (2023, §3–5, Phụ lục A); quy trình RLHF theo Ouyang và cộng sự (2022, §3) và Stiennon và cộng sự (2020, §3.4). Định lý 10.65 ghép Định lý 1 và Mệnh đề 1 của Rafailov và cộng sự (2023, Phụ lục A.6), nửa đầu chứng minh Định lý 4.1 của Xu và cộng sự (2024) và Mệnh đề 4 của Gheshlaghi Azar và cộng sự (2024, Phụ lục B).
+**Hướng dẫn đọc thêm.** Sutton và Barto (2018), §13.4–13.5, trình bày đường cơ sở và actor–critic một bước với hộp giả mã mà Thuật toán 10.6 và 10.9 dựa vào; §7.1 và §12.1–12.3 trình bày lợi tức $n$ bước và lợi tức λ, cơ sở của Mục 3. Các phần TRPO, GAE, PPO không có trong sách; đọc Schulman và cộng sự (2015, §2–3, Phụ lục C), (2016, §2–3) và (2017, §3–5). Chặn cải thiện dạng kỳ vọng theo Achiam và cộng sự (2017, §5, phụ lục); chi tiết cài đặt theo Huang và cộng sự (2022) và Engstrom và cộng sự (2020).
 
 **Tài liệu tham khảo.**
 
-1. Tạ Việt Cường. *Lecture 10: Overview on Policy Gradient Algorithms, Part 1* (lecture10_policy_gradient_part2.pdf, 43 trang), học phần AIT3007, 2025–2026. Mục 1: tr. 3–4, 9–10, 14; Mục 2: tr. 5, 8, 11–13; Mục 3: tr. 13, 24; Mục 4: tr. 4, 14–16; Mục 5: tr. 17–19; Mục 6: tr. 19–42; Mục 8: tr. 2–3, 28, 43.
+1. Tạ Việt Cường. *Lecture 10: Overview on Policy Gradient Algorithms, Part 1* (lecture10_policy_gradient_part2.pdf, 43 trang), học phần AIT3007, 2025–2026. Mục 1: tr. 3–4, 9–10, 14; Mục 2: tr. 5, 8, 11–13; Mục 3: tr. 13, 24; Mục 4: tr. 4, 14–16; Mục 5: tr. 17–19; Mục 6: tr. 19–42; Mục 7: tr. 2–3, 28, 43.
 2. Sutton, R. S., Barto, A. G. *Reinforcement Learning: An Introduction*, ấn bản 2, MIT Press, 2018. §7.1 (tr. 142–144): Mục 3.1. §12.1 (tr. 288–291, Bài tập 12.1 tr. 290), §12.3 (tr. 295–297, (12.9)–(12.10), Bài tập 12.5): Mục 3.2–3.3. §13.3 (tr. 326–329), §13.4 (tr. 329–331, hộp tr. 330), §13.5 (tr. 331–332, (13.12)–(13.14), hộp tr. 332), ghi chú thư mục tr. 338: Mục 2.
 3. Kakade, S., Langford, J. "Approximately Optimal Approximate Reinforcement Learning." *ICML* 2002, 267–274. Bổ đề 6.1: Bổ đề 10.19.
 4. Kakade, S. "A Natural Policy Gradient." *NIPS* 14, 2002. Dẫn theo Schulman và cộng sự (2015, §7): Mục 5.1.
@@ -3254,11 +2738,3 @@ Vòng trong dừng tại $\pi'$: $p'_A=0{,}6$, $p'_B=0{,}8$, đúng chính sách
 15. Jin, R., Li, S., Wang, B. "On Stationary Point Convergence of PPO-Clip." *ICLR* 2024. §2.1, §3.1–3.3, Giả thiết 3.1–3.4, Định lý 3.1–3.3: Mục 6.6.
 16. Nota, C., Thomas, P. S. "Is the Policy Gradient a Gradient?" *AAMAS* 2020: Nhận xét 10.17.
 17. Weng, L. "Policy Gradient Algorithms." Blog, 2018: tài liệu đọc chung cho Mục 2–6.
-18. Rafailov, R., Sharma, A., Mitchell, E., Ermon, S., Manning, C. D., Finn, C. "Direct Preference Optimization: Your Language Model is Secretly a Reward Model." *NeurIPS* 2023 (arXiv 2305.18290). §3–6, (1)–(7), Định nghĩa 1, Bổ đề 1–2, Định lý 1, Phụ lục A.1–A.6, B: Mục 7.1–7.6.
-19. Ouyang, L. và cộng sự. "Training language models to follow instructions with human feedback." *NeurIPS* 2022 (arXiv 2203.02155). §3.1, §3.5, (1)–(2), Phụ lục C.4: Mục 7.1–7.3.
-20. Stiennon, N., Ouyang, L., Wu, J., Ziegler, D. M., Lowe, R., Voss, C., Radford, A., Amodei, D., Christiano, P. "Learning to summarize from human feedback." *NeurIPS* 2020 (arXiv 2009.01325). §3.4, §4.3, Hình 5: Mục 7.1–7.3.
-21. Ziegler, D. M., Stiennon, N., Wu, J., Brown, T. B., Radford, A., Amodei, D., Christiano, P., Irving, G. "Fine-Tuning Language Models from Human Preferences." arXiv 1909.08593, 2019. §2, (2), §2.2: Mục 7.1–7.3.
-22. Christiano, P. F., Leike, J., Brown, T. B., Martic, M., Legg, S., Amodei, D. "Deep Reinforcement Learning from Human Preferences." *NIPS* 2017 (arXiv 1706.03741). §2.2.3: Tình huống 10.5.
-23. Gheshlaghi Azar, M., Guo, Z. D., Piot, B., Munos, R., Rowland, M., Valko, M., Calandriello, D. "A General Theoretical Paradigm to Understand Learning from Human Preferences." *AISTATS* 2024, PMLR 238 (arXiv 2310.12036; mục và số phương trình theo bản arXiv v2). Mệnh đề 4, §4.2, §5, (17), Phụ lục B: Mục 7.1, 7.4–7.6, Tình huống 10.5.
-24. Xu, S., Fu, W., Gao, J., Ye, W., Liu, W., Mei, Z., Wang, G., Yu, C., Wu, Y. "Is DPO Superior to PPO for LLM Alignment? A Comprehensive Study." *ICML* 2024, PMLR 235 (arXiv 2404.10719). Định lý 4.1, Bảng 1, §5–6: Mục 7.4–7.6.
-25. Rafailov, R., Hejna, J., Park, R., Finn, C. "From $r$ to $Q^*$: Your Language Model is Secretly a Q-Function." *COLM* 2024 (arXiv 2404.12358). §3.1, Định lý 1, §5.4, (16): Mục 7.4, 7.6.
