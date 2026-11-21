@@ -30,7 +30,7 @@
 <p class="fragment" data-fragment-index="2"><strong>Ký hiệu:</strong> $J(\theta)=\mathbb E[G_0]$. <em>Hệ số</em> của bước $t$ là số nhân với $\gamma^t\psi_t$, ở REINFORCE là $G_t$.</p>
 <p class="fragment" data-fragment-index="2"><strong>Lưu ý:</strong> $\mathbb E$ lấy theo phân phối của lượt sinh bởi $\pi_\theta$, không phải trung bình trên các lượt đã thu. Ước lượng không chệch khi kỳ vọng của nó bằng đại lượng cần ước lượng. Phương sai là kỳ vọng của bình phương độ lệch khỏi kỳ vọng.</p>
 <p class="fragment" data-fragment-index="3"><strong>Giả thiết:</strong> <em>giả thiết chung</em> của bài gồm MDP hữu hạn, Markov; mọi chính sách có cùng động lực $P$, cùng phân phối đầu $\mu_0$; $|R_{t+1}|\le R_{\max}$; $0\le\gamma\lt1$; chính sách Markov dừng, $\pi_\theta\gt0$, khả vi theo $\theta$.</p>
-<aside class="notes"><p>Đẳng thức $\mathbb E[\widehat g]=\nabla J$ đúng dưới bốn giả thiết của định lý gradient chính sách ở Bài 09. Giả thiết chung trên trang gồm các giả thiết đó và các giả thiết của bổ đề hiệu hiệu năng ở mạch 4; mọi kết quả sau gọi tên nó thay vì chép lại. Hệ số là đại lượng mà mạch 2 và 3 thay thế. Hỏi lớp: nếu mọi lợi tức đều dương thì REINFORCE làm gì với một hành động kém.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Kiến thức tiên quyết (Thuật toán 09.25, Hệ quả 09.26, Định nghĩa 09.15).</p></aside>
+<aside class="notes"><p>Đẳng thức $\mathbb E[\widehat g]=\nabla J$ đúng dưới bốn giả thiết của định lý gradient chính sách ở Bài 09. Giả thiết chung trên trang gồm các giả thiết đó và các giả thiết của bổ đề chênh lệch hiệu năng ở mạch 4; mọi kết quả sau gọi tên nó thay vì chép lại. Hệ số là đại lượng mà mạch 2 và 3 thay thế. Hỏi lớp: nếu mọi lợi tức đều dương thì REINFORCE làm gì với một hành động kém.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Kiến thức tiên quyết (Thuật toán 09.25, Hệ quả 09.26, Định nghĩa 09.15).</p></aside>
 </section>
 
 <section data-slide-id="L10-1-09" class="compact">
@@ -487,31 +487,46 @@ $$\mathbb E\Bigl[\sum_t\gamma^t\,\widehat A_t\,\psi_t\Bigr]=\nabla_\theta J(\the
 <aside class="notes"><p>Đẳng thức cuối của Bước 3 dùng $\sum_a\pi(a\mid s)A_\pi(s,a)=0$ từ trang hàm lợi thế. Lượt bị cắt ngắn giữa chừng làm mất Bước 1, vì khi đó $\widehat A_t$ bootstrap từ $\hat v$ ở biên; ghi chú tính trên chuỗi: cắt ở $s_B$ cho $-0{,}025$ thay cho $0{,}2$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §3.2 (Mệnh đề 10.15, chứng minh Bước 1–5); §2.4 (Mệnh đề 10.8(a)); §2.3 (Mệnh đề 10.5(a)).</p></aside>
 </section>
 
+<section data-slide-id="L10-3-13" class="compact">
+<h2>Critic hồi quy về lợi tức $\lambda$</h2>
+<p>Critic xấp xỉ $v_\pi$ chưa biết. Lượt đã thu cho một ước lượng của $v_\pi(S_t)$ để hồi quy.</p>
+<p class="fragment" data-fragment-index="1">Lợi tức $\lambda$ $G^\lambda_t$ là trung bình có trọng số của các lợi tức $n$ bước, mỗi lợi tức ước lượng $v_\pi(S_t)$. Tham số $\lambda$ cân bằng độ chệch và phương sai như ở $\widehat A_t$.</p>
+<p class="fragment" data-fragment-index="2"><strong>Định nghĩa.</strong> Mục tiêu của critic là $V^{\mathrm{targ}}_t=G^\lambda_t$, tính được là $\widehat A_t+\hat v(S_t,w_{\mathrm{old}})$ vì $\widehat A_t=G^\lambda_t-\hat v(S_t,w_{\mathrm{old}})$.</p>
+<table class="calc fragment" data-fragment-index="3">
+<tbody>
+<tr><td>$\lambda=0$</td><td>$V^{\mathrm{targ}}_t=R_{t+1}+\gamma(1-Z_{t+1})\,\hat v(S_{t+1},w_{\mathrm{old}})$</td><td>mục tiêu TD (Bài 05)</td></tr>
+<tr><td>$\lambda=1$</td><td>$V^{\mathrm{targ}}_t=G_t$</td><td>lợi tức Monte Carlo</td></tr>
+</tbody></table>
+<p class="fragment" data-fragment-index="4">Một bước hạ gradient của mất mát bình phương $\tfrac12\sum_t\bigl(V^{\mathrm{targ}}_t-\hat v(S_t,w)\bigr)^2$, với $V^{\mathrm{targ}}_t$ giữ cố định, là $w\leftarrow w+\alpha_w\sum_t\bigl(V^{\mathrm{targ}}_t-\hat v(S_t,w)\bigr)\nabla_w\hat v(S_t,w)$.</p>
+<p class="fragment" data-fragment-index="4">Critic dạng bảng $\hat v(s,w)=w_s$ cho $w_s\leftarrow w_s+\alpha_w\sum_{t:S_t=s}\bigl(V^{\mathrm{targ}}_t-w_s\bigr)$.</p>
+<p class="box fragment" data-fragment-index="5">Lượt (i), $\lambda=0{,}5$: $V^{\mathrm{targ}}=(0{,}4+1{,}4;\,2+1)=(1{,}8;\,3)=(G^{0{,}5}_0;\,G_1)$.</p>
+<aside class="notes"><p>Mục tiêu của critic là $\widehat A_t+\hat v$ vì tổng này khử phần $-\hat v(S_t,w_{\mathrm{old}})$ trong định nghĩa GAE, còn lại lợi tức λ: một lợi tức quan sát được một phần, phần còn lại lấy từ critic cũ. Mục tiêu tính bằng $w_{\mathrm{old}}$ và giữ cố định trong bước cập nhật, nên gradient chỉ đi qua $\hat v(S_t,w)$. Dạng bảng có $\nabla_w\hat v(S_t,w)=e_{S_t}$; trên chuỗi mỗi trạng thái xuất hiện một lần trong lượt, nên tổng có một số hạng. Với $\lambda=1$, đây là bước hồi quy về $G_t$ của REINFORCE có đường cơ sở. Ở dòng cuối, $\widehat A_1=\delta_1=2$ và $1{,}8$ trùng $G^{0{,}5}_0$ tính từ định nghĩa lợi tức λ.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §2.3 (Thuật toán 10.6 và đoạn "Trong thực hành" sau đó); §3.3 (thuật toán actor–critic với GAE, bước 4); bảng ký hiệu ($V^{\mathrm{targ}}_t$).</p></aside>
+</section>
+
 <section data-slide-id="L10-3-04" class="compact">
 <h2>Câu hỏi nhanh: một vòng cập nhật với GAE</h2>
-<p>Lượt (i), $\lambda=0{,}5$: $\widehat A_0=0{,}4$ tại $(s_A,1)$, $\widehat A_1=2$ tại $(s_B,1)$. Actor: $\theta\leftarrow\theta+\alpha_\theta\sum_t\gamma^t\,\widehat A_t\,\psi_t$, $\alpha_\theta=1$. Critic dạng bảng $\hat v(s,w)=w_s$, $w=(1{,}4;\,1)$: $w_{S_t}\leftarrow w_{S_t}+\alpha_w(\widehat A_t+\hat v(S_t)-w_{S_t})$, $\alpha_w=0{,}5$.</p>
+<p><strong>Nhắc lại:</strong> actor cập nhật $\theta\leftarrow\theta+\alpha_\theta\sum_t\gamma^t\,\widehat A_t\,\psi_t$. Critic dạng bảng $\hat v(s,w)=w_s$ cập nhật $w_s\leftarrow w_s+\alpha_w\sum_{t:S_t=s}(V^{\mathrm{targ}}_t-w_s)$ với $V^{\mathrm{targ}}_t=\widehat A_t+\hat v(S_t,w_{\mathrm{old}})$. Hàm điểm $\psi(s,1)=(1-p_s)e_s$, nên $\psi_A(1)=0{,}5$, $\psi_B(1)=\tfrac13$.</p>
+<p>Lượt (i), $\lambda=0{,}5$, $\widehat A_0=0{,}4$, $\widehat A_1=2$, $\alpha_\theta=1$, $\alpha_w=0{,}5$, critic $w=(1{,}4;\,1)$.</p>
 <p class="check"><strong>Câu hỏi:</strong> từ $\theta=(0;\,\log2)$, tham số, chính sách và critic mới bằng bao nhiêu?</p>
 <div class="box fragment" data-fragment-index="1">
-<p><strong>Lời giải:</strong></p>
-<p><strong>Ước lượng lợi thế</strong>: $\widehat A_1=\delta_1=2$, $\widehat A_0=-0{,}5+0{,}45\cdot2=0{,}4$.</p>
-<p><strong>Cập nhật actor</strong>: $\theta_A=0+1\cdot0{,}4\cdot0{,}5=0{,}2$, $p_A=\sigma(0{,}2)=0{,}550$; $\theta_B=\log2+0{,}9\cdot2\cdot\tfrac13=\log2+0{,}6$, $p_B=\sigma(1{,}293)=0{,}785$.</p>
-<p><strong>Cập nhật critic</strong>: $w_A=1{,}4+0{,}5(1{,}8-1{,}4)=1{,}6$, $w_B=1+0{,}5(3-1)=2$.</p>
+<p><strong>Lời giải:</strong> <strong>Ước lượng lợi thế</strong>: $\widehat A_1=\delta_1=2$, $\widehat A_0=-0{,}5+0{,}45\cdot2=0{,}4$.</p>
+<p><strong>Cập nhật actor</strong>: $\theta=(0+0{,}4\cdot0{,}5;\,\log2+0{,}9\cdot2\cdot\tfrac13)=(0{,}2;\,\log2+0{,}6)$, $p=(\sigma(0{,}2);\,\sigma(1{,}293))=(0{,}550;\,0{,}785)$.</p>
+<p><strong>Cập nhật critic</strong>: $V^{\mathrm{targ}}=(1{,}8;\,3)$, $w=(1{,}4+0{,}5(1{,}8-1{,}4);\,1+0{,}5(3-1))=(1{,}6;\,2)$.</p>
 </div>
-<aside class="notes"><p>Quy tắc cập nhật áp dụng trên một lượt, mỗi tọa độ nhận đúng một bước.</p><p><strong>Gợi ý:</strong> tọa độ $\theta_A$ chỉ nhận bước $t=0$, tọa độ $\theta_B$ chỉ nhận bước $t=1$ với trọng số $\gamma$.</p><p>Hàm điểm dùng $\psi_A(1)=0{,}5$ và $\psi_B(1)=1-\tfrac23=\tfrac13$. Một vòng với GAE tăng cả $p_A$ lẫn $p_B$. Với $\lambda=0$ (Ví dụ 10.7), cùng lượt cho $\widehat A_0=-0{,}5$ và $p_A$ giảm xuống $0{,}438$. Mục tiêu của critic là $\widehat A_t+\hat v(S_t)$: $1{,}8$ tại $s_A$, $3$ tại $s_B$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §2.4 (Ví dụ 10.7, cùng lượt với $\lambda=0$); §3.2 (Định nghĩa 10.13).</p></aside>
+<aside class="notes"><p>Quy tắc cập nhật áp dụng trên một lượt, mỗi tọa độ nhận đúng một bước.</p><p><strong>Gợi ý:</strong> tọa độ $\theta_A$ chỉ nhận bước $t=0$, tọa độ $\theta_B$ chỉ nhận bước $t=1$ với trọng số $\gamma$.</p><p>Hàm điểm dùng $\psi_A(1)=0{,}5$ và $\psi_B(1)=1-\tfrac23=\tfrac13$. Một vòng với GAE tăng cả $p_A$ lẫn $p_B$. Với $\lambda=0$ (Ví dụ 10.7), cùng lượt cho $\widehat A_0=-0{,}5$ và $p_A$ giảm xuống $0{,}438$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §2.4 (Ví dụ 10.7, cùng lượt với $\lambda=0$); §3.2 (Định nghĩa 10.13).</p></aside>
 </section>
 
 <section data-slide-id="L10-3-10" class="compact">
 <h2>Thuật toán actor–critic với GAE</h2>
-<p>Ước lượng REINFORCE có phương sai lớn. Actor–critic thay lợi tức bằng lợi thế GAE $\widehat A_t$ lập từ critic.</p>
-<p><strong>Thuật toán.</strong> <strong>Đầu vào:</strong> chính sách $\pi_\theta$, critic $\hat v(s,w)$; $\gamma\in[0,1)$, $\lambda\in[0,1]$; bước học $\alpha_\theta$, $\alpha_w$. <strong>Đầu ra:</strong> $\theta$, $w$.</p>
-<p>Lặp với mỗi lượt, dừng sau số lượt đã định:</p>
+<p>REINFORCE có phương sai lớn. Actor–critic thay lợi tức bằng lợi thế GAE $\widehat A_t$ lập từ critic.</p>
+<p><strong>Thuật toán.</strong> <strong>Đầu vào:</strong> chính sách $\pi_\theta$, critic $\hat v(s,w)$; $\gamma\in[0,1)$, $\lambda\in[0,1]$; bước học $\alpha_\theta$, $\alpha_w$. <strong>Đầu ra:</strong> $\theta$, $w$. Lặp với mỗi lượt, dừng sau số lượt đã định:</p>
 <ol>
 <li><strong>Thu lượt</strong>: một lượt $S_0,A_0,R_1,\dots,S_T$ bằng $\pi_\theta$; giữ $w_{\mathrm{old}}=w$.</li>
-<li><strong>Ước lượng lợi thế</strong>: $\delta_t$ với $\hat v(\cdot,w_{\mathrm{old}})$; $\widehat A_T=0$, tính lùi $\widehat A_t=\delta_t+\gamma\lambda(1-Z_{t+1})\widehat A_{t+1}$.</li>
+<li><strong>Ước lượng lợi thế</strong>: $\delta_t=R_{t+1}+\gamma(1-Z_{t+1})\,\hat v(S_{t+1},w_{\mathrm{old}})-\hat v(S_t,w_{\mathrm{old}})$, với $Z_{t+1}=1$ khi $S_{t+1}$ kết thúc; $\widehat A_T=0$, tính lùi $\widehat A_t=\delta_t+\gamma\lambda(1-Z_{t+1})\widehat A_{t+1}$.</li>
 <li><strong>Cập nhật actor</strong>: $\theta\leftarrow\theta+\alpha_\theta\sum_t\gamma^t\widehat A_t\,\psi_\theta(S_t,A_t)$.</li>
-<li><strong>Cập nhật critic</strong>: $w\leftarrow w+\alpha_w\sum_t\bigl(\widehat A_t+\hat v(S_t,w_{\mathrm{old}})-\hat v(S_t,w)\bigr)\nabla_w\hat v(S_t,w)$.</li>
+<li><strong>Cập nhật critic</strong>: với mục tiêu $V^{\mathrm{targ}}_t=\widehat A_t+\hat v(S_t,w_{\mathrm{old}})$, $w\leftarrow w+\alpha_w\sum_t\bigl(V^{\mathrm{targ}}_t-\hat v(S_t,w)\bigr)\nabla_w\hat v(S_t,w)$.</li>
 </ol>
-<p class="box">Mỗi lượt chỉ cho một bước cập nhật, vì các ước lượng cần lượt của chính sách đang được cập nhật.</p>
+<p class="box">Mỗi lượt chỉ cho một bước, vì các ước lượng cần lượt của chính sách đang cập nhật.</p>
 <aside class="notes"><p>$\lambda=0$ cho bản cập nhật theo lượt của actor–critic một bước (Thuật toán 10.9 cập nhật sau từng bước); $\lambda=1$ cho REINFORCE có đường cơ sở (Thuật toán 10.6). Khi cập nhật actor, $\widehat A_t$ là hằng số theo $\theta$ và gradient của actor không đi vào $w$. Dữ liệu theo chính sách: mỗi lượt chỉ dùng một lần, giới hạn mà mạch 4 xử lý.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §2.4 (Thuật toán 10.9); §3.3 (Thuật toán 10.16 và đoạn mô tả actor–critic với GAE sau đó); §2.3 (Thuật toán 10.6).</p></aside>
 </section>
 </section>
@@ -565,9 +580,9 @@ $$\mathbb E\Bigl[\sum_t\gamma^t\,\widehat A_t\,\psi_t\Bigr]=\nabla_\theta J(\the
 </section>
 
 <section data-slide-id="L10-4-02" class="compact">
-<h2>Bổ đề hiệu hiệu năng</h2>
+<h2>Bổ đề chênh lệch hiệu năng</h2>
 <div class="card">
-<p><strong>Bổ đề</strong> (hiệu hiệu năng, performance difference lemma). <strong>Giả thiết:</strong> giả thiết chung cho hai chính sách $\pi$, $\pi'$ (cùng $P$, cùng $\mu_0$).</p>
+<p><strong>Bổ đề</strong> (chênh lệch hiệu năng, performance difference lemma). <strong>Giả thiết:</strong> giả thiết chung cho hai chính sách $\pi$, $\pi'$ (cùng $P$, cùng $\mu_0$).</p>
 <p><strong>Ký hiệu:</strong> <em>số lần thăm có chiết khấu</em> của $s$ dưới $\pi'$ là $\eta_{\pi'}(s)=\sum_{t\ge0}\gamma^t\Pr_{\pi'}(S_t=s,\,t\lt T)$.</p>
 <p class="fragment" data-fragment-index="1"><strong>Kết luận:</strong></p>
 <div class="fragment" data-fragment-index="1">$$J(\pi')-J(\pi)=\sum_s\eta_{\pi'}(s)\,A_\pi(s,\pi').$$</div>
@@ -578,7 +593,7 @@ $$\mathbb E\Bigl[\sum_t\gamma^t\,\widehat A_t\,\psi_t\Bigr]=\nabla_\theta J(\the
 </section>
 
 <section data-slide-id="L10-4-14" class="compact">
-<h2>Ý tưởng chứng minh: bổ đề hiệu hiệu năng</h2>
+<h2>Ý tưởng chứng minh: bổ đề chênh lệch hiệu năng</h2>
 <p class="fragment" data-fragment-index="1"><strong>Bước 1</strong> (một bước): $A_\pi(s,a)=r(s,a)+\gamma\sum_{s'}P(s'\mid s,a)v_\pi(s')-v_\pi(s)$ với $r(s,a)=\mathbb E[R_{t+1}\mid S_t=s,A_t=a]$, không chứa $\pi'$.</p>
 <p class="fragment" data-fragment-index="2"><strong>Bước 2</strong> (tính chất tháp trên quỹ đạo của $\pi'$): $\mathbb E_{\pi'}\bigl[A_\pi(S_t,A_t)\bigr]=\mathbb E_{\pi'}[\delta_t]$, $\delta_t$ là sai số TD với $v_\pi$.</p>
 <p class="fragment" data-fragment-index="3"><strong>Bước 3</strong> (tổng lồng nhau tới $K$): cộng theo $t\lt K$ với trọng số $\gamma^t$, các số hạng $v_\pi$ triệt tiêu, còn $\sum_{t\lt K}\gamma^tR_{t+1}+\gamma^Kv_\pi(S_K)-v_\pi(S_0)$.</p>
@@ -591,7 +606,7 @@ $$\mathbb E\Bigl[\sum_t\gamma^t\,\widehat A_t\,\psi_t\Bigr]=\nabla_\theta J(\the
 </section>
 
 <section data-slide-id="L10-4-15" class="compact">
-<h2>Ví dụ: bổ đề hiệu hiệu năng trên chuỗi</h2>
+<h2>Ví dụ: bổ đề chênh lệch hiệu năng trên chuỗi</h2>
 <p>Với $\tilde\pi$: $\eta_{\tilde\pi}(s_A)=1$ (chỉ thăm ở $t=0$); $\eta_{\tilde\pi}(s_B)=\gamma\cdot\Pr_{\tilde\pi}(S_1=s_B)=\gamma\tilde p_A=0{,}9\cdot0{,}9=0{,}81$.</p>
 <table class="calc fragment" data-fragment-index="1">
 <thead><tr><th>$s$</th><th>$A_\pi(s,\tilde\pi)$</th><th>$\eta_{\tilde\pi}(s)$</th><th>$\eta_{\tilde\pi}A_\pi$</th></tr></thead>
@@ -608,12 +623,12 @@ $$\mathbb E\Bigl[\sum_t\gamma^t\,\widehat A_t\,\psi_t\Bigr]=\nabla_\theta J(\the
 
 <section data-slide-id="L10-4-03" class="compact">
 <h2>Hàm thay thế</h2>
-<p>Vế phải của bổ đề hiệu hiệu năng cần $\eta_{\pi'}$, tức cần chạy $\pi'$. Thay $\eta_{\pi'}$ bằng $\eta_\pi$.</p>
+<p>Vế phải của bổ đề chênh lệch hiệu năng cần $\eta_{\pi'}$, tức cần chạy $\pi'$. Thay $\eta_{\pi'}$ bằng $\eta_\pi$.</p>
 <p class="fragment" data-fragment-index="1"><strong>Định nghĩa.</strong> Hàm thay thế (surrogate objective) của $\pi'$ quanh $\pi$ là</p>
 <div class="fragment" data-fragment-index="1">$$\mathcal L_\pi(\pi')=J(\pi)+\sum_s\eta_\pi(s)\,A_\pi(s,\pi').$$</div>
 <p class="fragment" data-fragment-index="1"><strong>Ký hiệu:</strong> $\Delta J=J(\pi')-J(\pi)$, $\Delta\mathcal L=\mathcal L_\pi(\pi')-J(\pi)$.</p>
 <p class="box fragment" data-fragment-index="2"><strong>Ý nghĩa:</strong> $\eta_\pi$ và $A_\pi(s,a)$ là của $\pi$, còn $A_\pi(s,\pi')$ chỉ cần thêm $\pi'(a\mid s)$. Do đó $\mathcal L_\pi(\pi')$ tính được từ lượt của $\pi$ mà không cần chạy $\pi'$.</p>
-<aside class="notes"><p>Hàm thay thế là bổ đề hiệu hiệu năng với số lần thăm của chính sách cũ. Ghi chú viết $\mathcal L_{\theta_{\mathrm{old}}}(\theta)$ khi tham số hóa và $\mathcal L_\pi(\pi')$ khi viết theo chính sách; bài chỉ dùng dạng sau. "Tính được từ lượt của $\pi$" cần thêm một bước: $A_\pi(s,\pi')$ là kỳ vọng theo hành động của $\pi'$, đổi sang hành động của $\pi$ bằng tỉ số chính sách.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.2 (đoạn mở; Định nghĩa 10.21).</p></aside>
+<aside class="notes"><p>Hàm thay thế là bổ đề chênh lệch hiệu năng với số lần thăm của chính sách cũ. Ghi chú viết $\mathcal L_{\theta_{\mathrm{old}}}(\theta)$ khi tham số hóa và $\mathcal L_\pi(\pi')$ khi viết theo chính sách; bài chỉ dùng dạng sau. "Tính được từ lượt của $\pi$" cần thêm một bước: $A_\pi(s,\pi')$ là kỳ vọng theo hành động của $\pi'$, đổi sang hành động của $\pi$ bằng tỉ số chính sách.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.2 (đoạn mở; Định nghĩa 10.21).</p></aside>
 </section>
 
 <section data-slide-id="L10-4-11" class="compact">
@@ -650,7 +665,7 @@ $$\mathbb E\Bigl[\sum_t\gamma^t\,\widehat A_t\,\psi_t\Bigr]=\nabla_\theta J(\the
 
 <section data-slide-id="L10-4-05" class="compact">
 <h2>Sai số của hàm thay thế (1)</h2>
-<p>Trừ định nghĩa hàm thay thế khỏi bổ đề hiệu hiệu năng:</p>
+<p>Trừ định nghĩa hàm thay thế khỏi bổ đề chênh lệch hiệu năng:</p>
 $$\Delta J-\Delta\mathcal L=\sum_s\bigl(\eta_{\pi'}(s)-\eta_\pi(s)\bigr)\,A_\pi(s,\pi').$$
 <p class="fragment" data-fragment-index="1">Trên chuỗi, với $\Delta p_A=p'_A-\tfrac12$, $\Delta p_B=p'_B-\tfrac23$: $A_\pi(s_A,\pi')=0{,}4p'_A-0{,}4(1-p'_A)=0{,}8\,\Delta p_A$ và $A_\pi(s_B,\pi')=p'_B-2(1-p'_B)=3\,\Delta p_B$.</p>
 <p class="fragment" data-fragment-index="2">Với $\eta_\pi=(1;\,0{,}45)$: $\Delta\mathcal L=1\cdot0{,}8\,\Delta p_A+0{,}45\cdot3\,\Delta p_B=0{,}8\,\Delta p_A+1{,}35\,\Delta p_B$.</p>
@@ -736,7 +751,7 @@ $$J(\pi')-J(\pi)\ \ge\ \Delta\mathcal L-\frac{2\gamma\,\chi_{\pi'}}{(1-\gamma)^2
 
 <section data-slide-id="L10-4-18" class="compact">
 <h2>Ý tưởng chứng minh: định lý chặn cải thiện</h2>
-<p class="fragment" data-fragment-index="1"><strong>Bước 1</strong> (đẳng thức chính xác): bổ đề hiệu hiệu năng, $\Delta J=\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$.</p>
+<p class="fragment" data-fragment-index="1"><strong>Bước 1</strong> (đẳng thức chính xác): bổ đề chênh lệch hiệu năng, $\Delta J=\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$.</p>
 <p class="fragment" data-fragment-index="2"><strong>Bước 2</strong> (tách): $\eta_{\pi'}=\eta_\pi+(\eta_{\pi'}-\eta_\pi)$. <strong>Bước 3</strong> (hàm thay thế): phần với $\eta_\pi$ là $\Delta\mathcal L$.</p>
 <p class="fragment" data-fragment-index="3"><strong>Bước 4</strong> (bất đẳng thức Hölder): $\sum_s(\eta_{\pi'}-\eta_\pi)(s)A_\pi(s,\pi')\ge-\chi_{\pi'}\sum_s|\eta_{\pi'}(s)-\eta_\pi(s)|$.</p>
 <p class="fragment" data-fragment-index="4"><strong>Bước 5</strong> (bổ đề dịch chuyển phân bố chiếm dụng): khác biệt ở mỗi bước tích lũy dọc lượt, $\sum_s|\eta_{\pi'}(s)-\eta_\pi(s)|\le\frac{2\gamma}{(1-\gamma)^2}\,\mathbb E_{S\sim\nu^\pi}\bigl[D_{\mathrm{TV}}(S)\bigr]$. $\square$</p>
@@ -855,17 +870,29 @@ $$\Delta^*=\sqrt{\frac{2\kappa}{g^\top F^{-1}g}}\;F^{-1}g .$$
 </section>
 
 <section data-slide-id="L10-4-09" class="compact">
-<h2>Tối ưu chính sách miền tin cậy (TRPO)</h2>
-<p><strong>Thuật toán</strong> (trust region policy optimization, TRPO). <strong>Đầu vào:</strong> $\pi_\theta$, $\hat v_w$; $\gamma$, $\lambda$, $\kappa$, $\zeta\in(0,1)$, $j_{\max}$. <strong>Đầu ra:</strong> $\theta$, $w$.</p>
+<h2>Thuật toán TRPO (1)</h2>
+<p>Actor–critic dùng mỗi lượt cho một bước nhỏ. TRPO tối đa hàm thay thế trên một bộ đệm (buffer) với KL trung bình không vượt $\kappa$.</p>
+<p><strong>Thuật toán</strong> tối ưu chính sách miền tin cậy (trust region policy optimization, TRPO). <strong>Đầu vào:</strong> chính sách $\pi_\theta$, critic $\hat v(s,w)$; $\gamma$, $\lambda$, bán kính $\kappa$, hệ số co $\zeta\in(0,1)$, số lần co tối đa $j_{\max}$. <strong>Đầu ra:</strong> $\theta$, $w$.</p>
 <ol>
-<li><strong>Thu lượt</strong>: một bộ đệm (buffer) bằng $\pi_{\mathrm{old}}=\pi_\theta$, lưu $\log\pi_{\mathrm{old}}(A_t\mid S_t)$.</li>
-<li><strong>Ước lượng lợi thế</strong>: $\widehat A_t$ bằng GAE.</li>
-<li><strong>Tính hướng</strong>: $g=$ trung bình đều trên bộ đệm của $\widehat A_t\psi_t$; giải gần đúng $Fx=g$ bằng gradient liên hợp (conjugate gradient), chỉ dùng tích $Fv$.</li>
-<li><strong>Chọn độ dài bước</strong>: $\Delta_0=\sqrt{2\kappa/(x^\top Fx)}\,x$; tìm kiếm lùi (backtracking line search) nhận $\zeta^j\Delta_0$ đầu tiên ($j\le j_{\max}$) có hàm thay thế mẫu tăng, KL mẫu $\le\kappa$.</li>
-<li><strong>Cập nhật critic</strong>: hồi quy $\hat v$ về $\widehat A_t+\hat v_{\mathrm{old}}(S_t)$.</li>
+<li><strong>Thu lượt</strong>: một bộ đệm $\mathcal D$ bằng $\pi_{\mathrm{old}}=\pi_\theta$, giữ $\hat v_{\mathrm{old}}=\hat v(\cdot,w)$, lưu $\log\pi_{\mathrm{old}}(A_t\mid S_t)$.</li>
+<li><strong>Ước lượng lợi thế</strong>: $\delta_t=R_{t+1}+\gamma(1-Z_{t+1})\,\hat v_{\mathrm{old}}(S_{t+1})-\hat v_{\mathrm{old}}(S_t)$; $\widehat A_T=0$, tính lùi $\widehat A_t=\delta_t+\gamma\lambda(1-Z_{t+1})\widehat A_{t+1}$; mục tiêu của critic $V^{\mathrm{targ}}_t=\widehat A_t+\hat v_{\mathrm{old}}(S_t)$.</li>
 </ol>
-<p><strong>Lưu ý:</strong> $g$ không có $\gamma^t$. Trung bình trên bộ đệm tỉ lệ với $g^\gamma=\mathbb E[\sum_tA_\pi(S_t,A_t)\psi_t]$. Trên chuỗi $g^\gamma=(0{,}2;\,0{,}333)$, khác $\nabla J=(0{,}2;\,0{,}3)$.</p>
-<aside class="notes"><p>Actor–critic dùng mỗi lượt cho một bước nhỏ; TRPO tối đa hàm thay thế trên một bộ đệm với KL trung bình không vượt $\kappa$. $\zeta$ là tỉ lệ co của tìm kiếm lùi. Không có $j$ nào đạt thì giữ $\theta$. TRPO của Schulman và cộng sự (2015) ước lượng $Q$ bằng Monte Carlo; bước 2 và bước 5 theo GAE của Schulman và cộng sự (2016). So với định lý, TRPO thay năm điểm: trung bình trên bộ đệm thay kỳ vọng có chiết khấu, lợi thế GAE thay lợi thế đúng, hàm thay thế bậc một và KL bậc hai, gradient liên hợp dừng sớm, ràng buộc KL thay phạt TV; nên TRPO trong thực hành không bảo đảm $J$ tăng. Trên chuỗi, bước vừa tính được giữ nguyên ($j=0$). Mỗi vòng cần khoảng mười tích $Fv$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.2 (Thuật toán 10.36, 10.37; Nhận xét 10.38).</p></aside>
+<aside class="notes"><p>TRPO của Schulman và cộng sự (2015) ước lượng $Q$ bằng Monte Carlo; bước 2 và bước 5 theo GAE của Schulman và cộng sự (2016). Trên đoạn thu nhiều lượt, ghi chú dùng thêm cờ cắt ngắn (Thuật toán 10.16). Mục tiêu của critic là lợi tức $\lambda$, như ở thuật toán actor–critic với GAE. Bán kính $\kappa$ là siêu tham số.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.2 (Thuật toán 10.37); §3.3 (Thuật toán 10.16).</p></aside>
+</section>
+
+<section data-slide-id="L10-4-26" class="compact">
+<h2>Thuật toán TRPO (2)</h2>
+<ol start="3">
+<li><strong>Tính hướng</strong>: với $\rho_t(\theta)=\pi_\theta(A_t\mid S_t)/\pi_{\mathrm{old}}(A_t\mid S_t)$,
+$$\textstyle\widehat{\mathcal L}(\theta)=\frac1{|\mathcal D|}\sum_{t\in\mathcal D}\rho_t(\theta)\widehat A_t,\qquad\widehat D(\theta)=\frac1{|\mathcal D|}\sum_{t\in\mathcal D}D_{\mathrm{KL}}\bigl(\pi_{\mathrm{old}}(\cdot\mid S_t)\Vert\pi_\theta(\cdot\mid S_t)\bigr),$$
+tính $g=\nabla\widehat{\mathcal L}(\theta_{\mathrm{old}})=\frac1{|\mathcal D|}\sum_{t\in\mathcal D}\widehat A_t\psi_t$, rồi giải gần đúng $Fx=g$ bằng gradient liên hợp (conjugate gradient), với $F$ là Hessian của $\widehat D$ tại $\theta_{\mathrm{old}}$, chỉ dùng tích $Fv$.</li>
+</ol>
+<p><strong>Lưu ý:</strong> $g$ ở bước 3 không có $\gamma^t$. Với lợi thế đúng, kỳ vọng của $g$ tỉ lệ với $g^\gamma=\mathbb E[\sum_tA_\pi(S_t,A_t)\psi_t]$. Trên chuỗi $g^\gamma=(0{,}2;\,0{,}333)$, khác $\nabla J=(0{,}2;\,0{,}3)$.</p>
+<ol start="4">
+<li><strong>Chọn độ dài bước</strong>: $\Delta_0=\sqrt{2\kappa/(x^\top Fx)}\,x$. Tìm kiếm lùi (backtracking line search): với $j=0,1,\dots,j_{\max}$, đặt $\theta=\theta_{\mathrm{old}}+\zeta^j\Delta_0$ và nhận $j$ đầu tiên có $\widehat{\mathcal L}(\theta)\gt\widehat{\mathcal L}(\theta_{\mathrm{old}})$ và $\widehat D(\theta)\le\kappa$. Không có $j$ nào thì giữ $\theta=\theta_{\mathrm{old}}$.</li>
+<li><strong>Cập nhật critic</strong>: vài bước hạ gradient trên $\frac1{|\mathcal D|}\sum_{t\in\mathcal D}\bigl(\hat v(S_t,w)-V^{\mathrm{targ}}_t\bigr)^2$.</li>
+</ol>
+<aside class="notes"><p>$\widehat{\mathcal L}$ và $\widehat D$ là hàm thay thế mẫu và KL mẫu: trung bình đều trên bộ đệm thay cho kỳ vọng. So với định lý, TRPO thay năm điểm: trung bình trên bộ đệm thay kỳ vọng có chiết khấu, lợi thế GAE thay lợi thế đúng, hàm thay thế bậc một và KL bậc hai, gradient liên hợp dừng sớm, ràng buộc KL thay phạt TV; nên TRPO trong thực hành không bảo đảm $J$ tăng. Trên chuỗi, bước vừa tính được giữ nguyên ($j=0$). Mỗi vòng cần khoảng mười tích $Fv$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.2 (Thuật toán 10.36, 10.37; Nhận xét 10.38).</p></aside>
 </section>
 </section>
 
@@ -1007,20 +1034,27 @@ $$\Delta^*=\sqrt{\frac{2\kappa}{g^\top F^{-1}g}}\;F^{-1}g .$$
 </section>
 
 <section data-slide-id="L10-5-07" class="compact">
-<h2>Thuật toán PPO-Clip</h2>
+<h2>Thuật toán PPO-Clip (1)</h2>
 <p>TRPO cho một bước mỗi bộ đệm và cần phép tính bậc hai. PPO-Clip, dạng cắt của PPO, dùng lại mỗi bộ đệm cho nhiều bước bậc một.</p>
-<p><strong>Thuật toán.</strong> <strong>Đầu vào:</strong> $\pi_\theta$, $\hat v_w$; $\gamma$, $\lambda$, $\epsilon$; số lần qua bộ đệm (epoch) $K$, cỡ lô nhỏ (mini-batch) $M$, bước học. <strong>Đầu ra:</strong> $\theta$, $w$.</p>
+<p><strong>Thuật toán.</strong> <strong>Đầu vào:</strong> chính sách $\pi_\theta$, critic $\hat v(s,w)$; $\gamma$, $\lambda$, $\epsilon$; số lần qua bộ đệm (epoch) $K$, cỡ lô nhỏ (mini-batch) $M$, bước học; ngưỡng KL (tùy chọn). <strong>Đầu ra:</strong> $\theta$, $w$.</p>
 <ol>
-<li><strong>Thu lượt</strong>: một bộ đệm $\mathcal D$ bằng $\pi_{\mathrm{old}}=\pi_\theta$; lưu $\log\pi_{\mathrm{old}}(A_t\mid S_t)$ và $\hat v_{\mathrm{old}}(S_t)$.</li>
-<li><strong>Ước lượng lợi thế</strong>: $\widehat A_t$ bằng GAE và mục tiêu của critic $\widehat A_t+\hat v_{\mathrm{old}}(S_t)$; giữ cố định trong vòng.</li>
-<li><em>Vòng trong</em>, lặp $K$ lần: xáo $\mathcal D$, chia lô nhỏ cỡ $M$. Với mỗi lô, tính lại $\rho_t(\theta)$, rồi
-<ul>
-<li><strong>Cập nhật actor</strong>: một bước gradient tăng $\mathcal L^{\mathrm{CLIP}}$;</li>
-<li><strong>Cập nhật critic</strong>: một bước gradient giảm $(\hat v(S_t,w)-\widehat A_t-\hat v_{\mathrm{old}}(S_t))^2$.</li>
-</ul></li>
-<li><strong>Dừng sớm</strong> (early stopping, tùy chọn) khi KL ước lượng vượt ngưỡng.</li>
+<li><strong>Thu lượt</strong>: một bộ đệm $\mathcal D$ bằng $\pi_{\mathrm{old}}=\pi_\theta$; lưu $\log\pi_{\mathrm{old}}(A_t\mid S_t)$ và $\hat v_{\mathrm{old}}(S_t)=\hat v(S_t,w)$.</li>
+<li><strong>Ước lượng lợi thế</strong>: $\delta_t=R_{t+1}+\gamma(1-Z_{t+1})\,\hat v_{\mathrm{old}}(S_{t+1})-\hat v_{\mathrm{old}}(S_t)$; $\widehat A_T=0$, tính lùi $\widehat A_t=\delta_t+\gamma\lambda(1-Z_{t+1})\widehat A_{t+1}$; mục tiêu của critic $V^{\mathrm{targ}}_t=\widehat A_t+\hat v_{\mathrm{old}}(S_t)$. Cả hai giữ cố định trong cả $K$ lần qua bộ đệm (bước 3).</li>
 </ol>
-<aside class="notes"><p>Mỗi vòng lặp: một bộ đệm, GAE một lần, rồi $K$ lần qua bộ đệm với mục tiêu cắt. Cài đặt thường gộp hai bước của mục 3 thành hàm mất mát tổng $-\mathcal L^{\mathrm{CLIP}}+c_1L^V-c_2\mathcal H$, dạng cực tiểu của $L^{\mathrm{CLIP+VF+S}}$ ở (9) của Schulman và cộng sự (2017), thêm chuẩn hóa lợi thế trên lô, và dùng Adam (Bài 08). PPO-Penalty phạt trực tiếp KL trong hàm mục tiêu, với trọng số phạt chỉnh sau mỗi lần cập nhật. Từ lô thứ hai, dữ liệu đã khác chính sách; $\rho_t$ hiệu chỉnh phân phối hành động, phân bố trạng thái vẫn của $\pi_{\mathrm{old}}$. </p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.2; §6.3 (Thuật toán 10.49, bảng "giữ cố định / tính lại"; Định nghĩa 10.46).</p></aside>
+<aside class="notes"><p>Mỗi vòng lặp: một bộ đệm, GAE một lần, rồi $K$ lần qua bộ đệm với mục tiêu cắt. Lợi thế và mục tiêu của critic tính một lần ở bước 2 và giữ cố định trong cả $K$ lần qua bộ đệm. Trên đoạn thu nhiều lượt, ghi chú dùng thêm cờ cắt ngắn (Thuật toán 10.16).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.3 (Thuật toán 10.49, bảng "giữ cố định / tính lại"); §3.3 (Thuật toán 10.16).</p></aside>
+</section>
+
+<section data-slide-id="L10-5-14" class="compact">
+<h2>Thuật toán PPO-Clip (2)</h2>
+<ol start="3">
+<li><em>Vòng trong</em>, lặp $K$ lần: xáo $\mathcal D$, chia lô nhỏ cỡ $M$. Với mỗi lô $\mathcal B$, tính lại $\rho_t(\theta)=\pi_\theta(A_t\mid S_t)/\pi_{\mathrm{old}}(A_t\mid S_t)$, rồi
+<ul>
+<li><strong>Cập nhật actor</strong>: một bước gradient tăng $\frac1M\sum_{t\in\mathcal B}\min\bigl(\rho_t\widehat A_t,\operatorname{clip}(\rho_t,1-\epsilon,1+\epsilon)\widehat A_t\bigr)$;</li>
+<li><strong>Cập nhật critic</strong>: một bước hạ gradient trên $\frac1M\sum_{t\in\mathcal B}(\hat v(S_t,w)-V^{\mathrm{targ}}_t)^2$;</li>
+<li><strong>Dừng sớm</strong> (early stopping, tùy chọn): tính approxKL $\frac1M\sum_{t\in\mathcal B}\bigl[(\rho_t-1)-\log\rho_t\bigr]$; nếu giá trị vượt ngưỡng, bỏ các lần qua bộ đệm còn lại.</li>
+</ul></li>
+</ol>
+<aside class="notes"><p>Cài đặt thường gộp cập nhật actor và critic ở bước 3 thành hàm mất mát tổng $-\mathcal L^{\mathrm{CLIP}}+c_1L^V-c_2\mathcal H$, dạng cực tiểu của $L^{\mathrm{CLIP+VF+S}}$ ở (9) của Schulman và cộng sự (2017), thêm chuẩn hóa lợi thế trên lô, và dùng Adam (Bài 08). PPO-Penalty phạt trực tiếp KL trong hàm mục tiêu, với trọng số phạt chỉnh sau mỗi lần cập nhật. Từ lô thứ hai, dữ liệu đã khác chính sách; $\rho_t$ hiệu chỉnh phân phối hành động, phân bố trạng thái vẫn của $\pi_{\mathrm{old}}$. approxKL là ước lượng KL của ghi chú, không âm trên từng mẫu.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.2; §6.3 (Thuật toán 10.49; Định nghĩa 10.46, 10.47).</p></aside>
 </section>
 
 <section data-slide-id="L10-5-08" class="compact">
@@ -1134,7 +1168,7 @@ $$\textstyle\ell_s=\sum_a\pi(a\mid s)\min\bigl(\rho_s(a)A_\pi(s,a),\ \operatorna
 <table>
 <thead><tr><th>Kết quả</th><th>Giả thiết không được bỏ</th><th>Công thức hoặc thuật toán</th></tr></thead>
 <tbody>
-<tr><td>Bổ đề hiệu hiệu năng</td><td>cùng $P$, cùng $\mu_0$; $\gamma\lt1$</td><td>$J(\pi')-J(\pi)=\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$</td></tr>
+<tr><td>Bổ đề chênh lệch hiệu năng</td><td>cùng $P$, cùng $\mu_0$; $\gamma\lt1$</td><td>$J(\pi')-J(\pi)=\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$</td></tr>
 <tr><td>Hàm thay thế tiếp xúc $J$</td><td>$\eta_\pi$, $A_\pi$ chính xác; $\pi\gt0$</td><td>$\mathcal L_\pi(\pi)=J(\pi)$, $\nabla\mathcal L=\nabla J$ tại $\pi$</td></tr>
 <tr><td>Chặn cải thiện</td><td>như bổ đề</td><td>$\Delta J\ge\Delta\mathcal L-\frac{2\gamma\chi}{(1-\gamma)^2}\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]$, hoặc $\sqrt{\tfrac12\bar D_{\mathrm{KL}}}$ thay $\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]$</td></tr>
 <tr><td>Mục tiêu cắt</td><td>lợi thế cố định trong vòng</td><td>gradient $0$ khi $\widehat A\gt0,\ \rho\gt1+\epsilon$ hoặc $\widehat A\lt0,\ \rho\lt1-\epsilon$</td></tr>
@@ -1164,7 +1198,7 @@ $$\textstyle\ell_s=\sum_a\pi(a\mid s)\min\bigl(\rho_s(a)A_\pi(s,a),\ \operatorna
 <li>Phép cắt tỉ số có chặn KL giữa chính sách mới và chính sách cũ không?</li>
 <li>Một môi trường có giới hạn thời gian cắt ngắn nhiều lượt. Điểm cắt không phải trạng thái kết thúc của MDP, nên GAE bootstrap từ $\hat v$ ở bước cắt. Với critic sai, GAE với $\lambda=1$ còn cho ước lượng gradient không chệch không?</li>
 </ol></div>
-<aside class="notes"><p>Lời giải ngắn. (1) Mệnh đề đường cơ sở cần $\mathbb E[b\psi_t\mid H_t]=0$; trừ $q_\pi(S_t,A_t)$ làm kỳ vọng thành $0$. (2) Bổ đề hiệu hiệu năng cần số lần thăm của chính sách mới; sai số là $\sum_s(\eta_{\pi'}-\eta_\pi)A_\pi(s,\pi')$. (3) Không. Theo nhận xét về giới hạn của phép cắt, đoạn phẳng có gradient $0$, nên mục tiêu không đưa tỉ số trở lại khoảng cắt. (4) Không. Mệnh đề GAE và gradient cần lượt đầy đủ; lượt bị cắt bootstrap từ $\hat v$ sai ở biên, nên ước lượng chệch kể cả khi $\lambda=1$ (Nhận xét 10.17).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §7.4; §3.2 (đoạn sau Mệnh đề 10.15); §3.3 (Nhận xét 10.17).</p></aside>
+<aside class="notes"><p>Lời giải ngắn. (1) Mệnh đề đường cơ sở cần $\mathbb E[b\psi_t\mid H_t]=0$; trừ $q_\pi(S_t,A_t)$ làm kỳ vọng thành $0$. (2) Bổ đề chênh lệch hiệu năng cần số lần thăm của chính sách mới; sai số là $\sum_s(\eta_{\pi'}-\eta_\pi)A_\pi(s,\pi')$. (3) Không. Theo nhận xét về giới hạn của phép cắt, đoạn phẳng có gradient $0$, nên mục tiêu không đưa tỉ số trở lại khoảng cắt. (4) Không. Mệnh đề GAE và gradient cần lượt đầy đủ; lượt bị cắt bootstrap từ $\hat v$ sai ở biên, nên ước lượng chệch kể cả khi $\lambda=1$ (Nhận xét 10.17).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §7.4; §3.2 (đoạn sau Mệnh đề 10.15); §3.3 (Nhận xét 10.17).</p></aside>
 </section>
 
 <section data-slide-id="L10-6-16" class="compact">

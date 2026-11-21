@@ -1,0 +1,10 @@
+# Góp ý của tác giả về deck 10 bản 469a3d5 (2026-11-21)
+
+Tác giả xem deck đã dựng lại (commit `469a3d5`) và góp ý theo từng trang. Mỗi góp ý ghi nguyên văn, kèm quyết định xử lý.
+
+| # | Trang | Góp ý (nguyên văn) | Xử lý |
+|---|---|---|---|
+| 1 | `L10-3-10` (Thuật toán actor–critic với GAE) | "cần có công thức của \delta_t" | Bước 2 ghi $\delta_t=R_{t+1}+\gamma(1-Z_{t+1})\,\hat v(S_{t+1},w_{\mathrm{old}})-\hat v(S_t,w_{\mathrm{old}})$. Cùng lỗi ở bước 2 của `4-09` (TRPO) và `5-07` (PPO-Clip): "$\widehat A_t$ bằng GAE" không có công thức, nên hai trang này cũng ghi công thức. Quy tắc chung ghi vào `NGUYEN-TAC-HOC-PHAN.md`, phần tinh chỉnh TB31: mọi đại lượng một bước thuật toán tính ra đều có công thức trong bước đó. |
+| 2 | `L10-3-10` (bước 4) và các trang trước | "công thức cập nhật w cũng chưa nói ở các slide trước" | Đúng: quy tắc cập nhật critic xuất hiện lần đầu ở lời giải `3-04` và ở `3-10` mà không có trang nào dựng nó (TB24). Thêm trang mới `L10-3-13` "Cập nhật critic" đặt ngay trước `3-04`: bài toán, mục tiêu, mất mát, bước cập nhật, ví dụ trên lượt (i). |
+| 3 | `L10-3-10` | "tại sao dùng A_t+v làm target" | Vì $\widehat A_t+\hat v(S_t,w_{\mathrm{old}})=G^\lambda_t$, tức lợi tức λ (định nghĩa GAE ở `3-02`: $\widehat A_t=G^\lambda_t-\hat v(S_t)$). Critic hồi quy về lợi tức λ: $\lambda=0$ cho mục tiêu TD $R_{t+1}+\gamma\hat v(S_{t+1})$, $\lambda=1$ cho lợi tức Monte Carlo $G_t$, cùng sự cân bằng độ chệch–phương sai như hệ số của actor. Trên lượt (i), $\lambda=0{,}5$: $0{,}4+1{,}4=1{,}8=G^{0{,}5}_0$; tại $s_B$: $2+1=3=G_1$. Nội dung này vào trang `3-13`. Căn cứ ghi chú: Thuật toán 10.6 và đoạn "Trong thực hành" (bước hạ gradient của mất mát bình phương), §3.3 bước 4 ($V^{\mathrm{targ}}_t$), dòng "hồi quy critic về lợi tức λ cắt". |
+| 4 | thuật ngữ (`4-02`, `4-14`, `4-15`, …) | "HIỆU HIỆU NĂNG --> sai phân hiệu năng, có được không ?"; sau khi nghe đề xuất: "dùng 'chênh lệch hiệu năng'" | Đổi "bổ đề hiệu hiệu năng" thành "bổ đề chênh lệch hiệu năng" ở deck, ghi chú, `outline.md` và các phần hiện hành của storyboard. Quyết định ghi thành VP-RL-10 trong `NGUYEN-TAC-HOC-PHAN.md`. |

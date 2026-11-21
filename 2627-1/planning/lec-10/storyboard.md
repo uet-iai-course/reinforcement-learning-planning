@@ -26,11 +26,11 @@ Bước 3–4 của quy trình dựng deck (`NGUYEN-TAC-HOC-PHAN.md` §3a.E). Th
 |---|---|---|---|---|---|---|---|---|
 | 1 | (mở đầu) Giới hạn của REINFORCE | không có (mạch mở đầu) | dựng ví dụ chung; cho thấy hai giới hạn; nêu câu hỏi trung tâm | REINFORCE, hàm điểm, $J$ (Bài 09); giá trị trạng thái (Bài 03) | chuỗi hai trạng thái, $J=1{,}4$, gradient $(0{,}2;\,0{,}3)$; phương sai $0{,}6925$; bước dài làm $J$ giảm; hai câu hỏi | không (bìa `L10-1-01`) | 11 | 17 |
 | 2 | Đường cơ sở và hàm lợi thế | "So lợi tức với giá trị của trạng thái giữ nguyên kỳ vọng của ước lượng gradient và giảm phương sai." (22) | giảm phương sai mà giữ kỳ vọng khi biết $v_\pi$ | ba loại lượt, phương sai $0{,}6925$, câu hỏi (1) | đường cơ sở, $A_\pi$, gradient dạng lợi thế, $\delta_t$ với $v_\pi$; phương sai $0{,}69\to0{,}20\to0$; $v_\pi$ chưa biết | `L10-2-00`, `id="mach-2"` | 11 | 18 |
-| 3 | Ước lượng lợi thế: độ chệch và phương sai | "Tổ hợp có trọng số các ước lượng lợi thế nhiều bước cân bằng độ chệch và phương sai." (19) | ước lượng lợi thế khi hàm giá trị phải học | $A_\pi$, $\delta_t$, gradient dạng lợi thế | critic, actor; GAE; $\lambda$ cân bằng chệch–phương sai; thuật toán actor–critic với GAE; mỗi lượt một bước nhỏ | `L10-3-00`, `id="mach-3"` | 12 | 20 |
-| 4 | Hàm thay thế và miền tin cậy | "Chính sách mới được đánh giá từ dữ liệu của chính sách cũ với sai số nhỏ khi hai chính sách gần nhau." (23) | đánh giá chính sách mới bằng dữ liệu cũ; chặn sai số; TRPO | GAE, critic, câu hỏi (2), lượt của $\pi$ | bổ đề hiệu hiệu năng, hàm thay thế, tỉ số chính sách, chặn cải thiện (TV, KL), miền tin cậy, gradient tự nhiên, TRPO; chi phí bậc hai | `L10-4-00`, `id="mach-4"` | 26 | 37 |
-| 5 | Tối ưu chính sách gần kề (PPO) | "PPO cắt tỉ số chính sách để dùng lại một bộ đệm nhiều lần bằng gradient bậc một." (18) | thay ràng buộc KL bằng phép cắt; dùng lại bộ đệm | hàm thay thế, tỉ số chính sách, critic $(1{,}4;\,1)$, chi phí TRPO | mục tiêu cắt, PPO-Clip, so sánh TRPO–PPO, bài tập tổng hợp | `L10-5-00`, `id="mach-5"` | 13 | 16,5 (+3,5 bài tập) |
+| 3 | Ước lượng lợi thế: độ chệch và phương sai | "Tổ hợp có trọng số các ước lượng lợi thế nhiều bước cân bằng độ chệch và phương sai." (19) | ước lượng lợi thế khi hàm giá trị phải học | $A_\pi$, $\delta_t$, gradient dạng lợi thế | critic, actor; GAE; $\lambda$ cân bằng chệch–phương sai; thuật toán actor–critic với GAE; mỗi lượt một bước nhỏ | `L10-3-00`, `id="mach-3"` | 13 | 21,5 |
+| 4 | Hàm thay thế và miền tin cậy | "Chính sách mới được đánh giá từ dữ liệu của chính sách cũ với sai số nhỏ khi hai chính sách gần nhau." (23) | đánh giá chính sách mới bằng dữ liệu cũ; chặn sai số; TRPO | GAE, critic, câu hỏi (2), lượt của $\pi$ | bổ đề chênh lệch hiệu năng, hàm thay thế, tỉ số chính sách, chặn cải thiện (TV, KL), miền tin cậy, gradient tự nhiên, TRPO; chi phí bậc hai | `L10-4-00`, `id="mach-4"` | 27 | 37,5 |
+| 5 | Tối ưu chính sách gần kề (PPO) | "PPO cắt tỉ số chính sách để dùng lại một bộ đệm nhiều lần bằng gradient bậc một." (18) | thay ràng buộc KL bằng phép cắt; dùng lại bộ đệm | hàm thay thế, tỉ số chính sách, critic $(1{,}4;\,1)$, chi phí TRPO | mục tiêu cắt, PPO-Clip, so sánh TRPO–PPO, bài tập tổng hợp | `L10-5-00`, `id="mach-5"` | 14 | 17 (+3,5 bài tập) |
 | 6 | Tổng kết | "Mỗi phương pháp của bài giảm phương sai hoặc giới hạn bước cập nhật dưới những giả thiết riêng." (19) | kết luận định tính kèm điều kiện | đầu ra mạch 1–5 | sơ đồ neo cuối, câu trả lời có điều kiện, bảng kết quả, bảng phương pháp | `L10-6-00`, `id="mach-6"` | 10 | 11 |
-| **Tổng** | | | | | | | **83** | **119,5 (+3,5 bài tập)** |
+| **Tổng** | | | | | | | **86** | **122 (+3,5 bài tập)** |
 
 Năm dòng dẫn khác mẫu câu (NT12) và chỉ dùng thuật ngữ của mạch trước hoặc tiên quyết (Đ11): "giá trị của trạng thái", "lợi tức", "kỳ vọng" (Bài 03, 09); "lợi thế" (mạch 2), "độ chệch", "phương sai" (mạch 1); "chính sách cũ/mới" (mạch 1); "tỉ số chính sách" (mạch 4), "bộ đệm" (Bài 08, mạch 4); "phương sai", "bước cập nhật" (mạch 1). Các mẫu câu (đồng bộ với deck, 2026-11-21): "So … giữ nguyên … và giảm …", "Tổ hợp … cân bằng …", "… được đánh giá từ … khi …", "PPO (…) cắt … để …", "Mỗi phương pháp … giảm … hoặc …". Tên tiếng Anh đầy đủ của PPO đứng ở mục 5 của danh sách `1-08` (lần đầu); dòng dẫn mạch 5 và `5-07` không lặp lại (G3). Không dòng nào nhắc ví dụ hay số (TB30); "lợi thế" (mạch 3) và "tỉ số chính sách" (mạch 5) được dạy ở mạch trước. Không `p.strand-keys` (thuật ngữ của mạch chưa được dạy ở điểm vào mạch, TB11).
 
@@ -101,7 +101,7 @@ Thứ tự: `1-01` → `1-02` → `1-09` → `1-10` → `1-11` → `1-04` → `1
 - **1 phút:** REINFORCE nhân hàm điểm với lợi tức; hàm điểm là hướng làm xác suất của hành động đã chọn tăng, và hệ số dương tăng xác suất đó.
 - **Mới:** không (nhắc lại Bài 09). **Nguồn số:** không. **Hình:** không.
 - **Ghi chú nguồn:** Kiến thức tiên quyết (Thuật toán 09.25, Hệ quả 09.26, Định nghĩa 09.15).
-- **Diễn giả:** $\mathbb E[\widehat g]=\nabla J$ đúng dưới bốn giả thiết (G1)–(G4) của định lý gradient chính sách (Bài 09); giả thiết chung trên trang gồm các giả thiết đó (độ dài lượt bị chặn đúng trên chuỗi) và các giả thiết của bổ đề hiệu hiệu năng (mạch 4); mọi kết quả sau gọi tên nó thay vì chép lại. Hệ số là đại lượng mà mạch 2–3 thay thế. Hỏi lớp: nếu mọi lợi tức đều dương thì REINFORCE làm gì với hành động kém.
+- **Diễn giả:** $\mathbb E[\widehat g]=\nabla J$ đúng dưới bốn giả thiết (G1)–(G4) của định lý gradient chính sách (Bài 09); giả thiết chung trên trang gồm các giả thiết đó (độ dài lượt bị chặn đúng trên chuỗi) và các giả thiết của bổ đề chênh lệch hiệu năng (mạch 4); mọi kết quả sau gọi tên nó thay vì chép lại. Hệ số là đại lượng mà mạch 2–3 thay thế. Hỏi lớp: nếu mọi lợi tức đều dương thì REINFORCE làm gì với hành động kém.
 - **Phút:** 2.
 
 #### `L10-1-09` · Ví dụ: chuỗi hai trạng thái (1) (mã mới; #2, #7a, #8)
@@ -441,9 +441,9 @@ Thứ tự: `2-00` → `2-01` → `2-04` → `2-02` → `2-03` → `2-06` → `2
 
 ---
 
-### Mạch 3. Ước lượng lợi thế: độ chệch và phương sai (`id="mach-3"`, 12 trang, 20 phút)
+### Mạch 3. Ước lượng lợi thế: độ chệch và phương sai (`id="mach-3"`, 13 trang, 21,5 phút)
 
-Thứ tự: `3-00` → `3-01` → `3-06` → `3-07` → `3-02` → `3-08` → `3-11` → `3-05` → `3-09` → `3-12` → `3-04` → `3-10`. Mã mới thêm ở cổng: `3-11`, `3-12` (trang ý tưởng chứng minh, TB28). Mã bỏ: `3-03` (đã bỏ từ trước, không dùng lại). Hành trình: bài toán (critic có sai số) `3-01` → hiện tượng chệch/phương sai trên ví dụ `3-06` → công cụ `3-07`, `3-02` → kết quả `3-08`, `3-09` → ví dụ $\lambda$ `3-05` → một vòng tay `3-04` → thuật toán `3-10` (TB31). Critic, actor giới thiệu ở `3-01` (#15).
+Thứ tự: `3-00` → `3-01` → `3-06` → `3-07` → `3-02` → `3-08` → `3-11` → `3-05` → `3-09` → `3-12` → `3-13` → `3-04` → `3-10`. Mã mới `3-13` (góp ý tác giả #2, #3: dựng quy tắc cập nhật critic trước khi dùng). Mã mới thêm ở cổng: `3-11`, `3-12` (trang ý tưởng chứng minh, TB28). Mã bỏ: `3-03` (đã bỏ từ trước, không dùng lại). Hành trình: bài toán (critic có sai số) `3-01` → hiện tượng chệch/phương sai trên ví dụ `3-06` → công cụ `3-07`, `3-02` → kết quả `3-08`, `3-09` → ví dụ $\lambda$ `3-05` → một vòng tay `3-04` → thuật toán `3-10` (TB31). Critic, actor giới thiệu ở `3-01` (#15).
 
 #### `L10-3-00` · Ước lượng lợi thế: độ chệch và phương sai (trang tiêu đề mạch; điểm vào mạch 3; giữ mã; #17)
 
@@ -612,6 +612,15 @@ Thứ tự: `3-00` → `3-01` → `3-06` → `3-07` → `3-02` → `3-08` → `3
 - **Diễn giả:** đẳng thức cuối của Bước 3 dùng $\sum_a\pi(a\mid s)A_\pi(s,a)=0$ (`2-06`). Lượt bị cắt ngắn giữa chừng làm mất Bước 1, vì $\widehat A_t$ khi đó bootstrap từ $\hat v$ (ghi chú: cắt ở $s_B$ cho $-0{,}025$ thay cho $0{,}2$).
 - **Phút:** 2.
 
+#### `L10-3-13` · Critic hồi quy về lợi tức λ (mã mới; góp ý tác giả #2, #3; TB24, TB27)
+
+- **Nhãn:** "Định nghĩa."; hộp ví dụ.
+- **Mặt trang:** bài toán (critic cần xấp xỉ $v_\pi$ chưa biết; dữ liệu của lượt cho mục tiêu thay thế); định nghĩa $V^{\mathrm{targ}}_t=\widehat A_t+\hat v(S_t,w_{\mathrm{old}})$, bằng $G^\lambda_t$ vì $\widehat A_t=G^\lambda_t-\hat v(S_t,w_{\mathrm{old}})$; bảng hai dòng $\lambda=0$ (mục tiêu TD, Bài 05), $\lambda=1$ ($G_t$, lợi tức Monte Carlo); một bước hạ gradient của $\tfrac12\sum_t(V^{\mathrm{targ}}_t-\hat v(S_t,w))^2$ với mục tiêu cố định: $w\leftarrow w+\alpha_w\sum_t(V^{\mathrm{targ}}_t-\hat v(S_t,w))\nabla_w\hat v(S_t,w)$; dạng bảng $w_{S_t}\leftarrow w_{S_t}+\alpha_w(V^{\mathrm{targ}}_t-w_{S_t})$; hộp: lượt (i), $\lambda=0{,}5$, critic $(1{,}4;\,1)$, $V^{\mathrm{targ}}_0=1{,}8=G^{0{,}5}_0$, $V^{\mathrm{targ}}_1=3=G_1$.
+- **Dựng dần:** (0) bài toán; (1) định nghĩa; (2) bảng $\lambda$; (3) cập nhật; (4) hộp.
+- **1 phút:** Mục tiêu của critic là lợi tức λ, nên critic dùng cùng $\lambda$ với actor.
+- **Nguồn số:** $\widehat A_0=0{,}4$, $\widehat A_1=2$ (`3-02`, `3-08`); điều phối viên đã kiểm.
+- **Ghi chú nguồn:** §2.3 (Thuật toán 10.6 và đoạn "Trong thực hành"); §3.3 (thuật toán actor–critic với GAE, bước 4); bảng ký hiệu ($V^{\mathrm{targ}}_t$). **Diễn giả:** vì sao mục tiêu là $\widehat A_t+\hat v$; câu "critic cân bằng độ chệch và phương sai bằng cùng $\lambda$" (chuyển xuống để vừa khung). **Phút:** 1,5.
+
 #### `L10-3-04` · Câu hỏi nhanh: một vòng cập nhật với GAE (giữ mã, nội dung mới; TB22; ví dụ tay trước thuật toán)
 
 - **Câu:** 4. **Nhãn:** "Câu hỏi:", "Lời giải:".
@@ -654,9 +663,9 @@ Thứ tự: `3-00` → `3-01` → `3-06` → `3-07` → `3-02` → `3-08` → `3
 
 ---
 
-### Mạch 4. Hàm thay thế và miền tin cậy (`id="mach-4"`, 26 trang, 37 phút)
+### Mạch 4. Hàm thay thế và miền tin cậy (`id="mach-4"`, 27 trang, 37,5 phút)
 
-Thứ tự hiện hành (B5): `4-00` → `4-01` → `4-13` → `4-02` → `4-14` → `4-15` → `4-03` → `4-11` → `4-16` → `4-05` → `4-23` → `4-17` → `4-04` → `4-10` → `4-24` → `4-06` → `4-18` → `4-19` → `4-12` → `4-20` → `4-21` → `4-07` → `4-22` → `4-08` → `4-25` → `4-09`; `4-15` và `4-16` không còn liền nhau, tính hai trang. Thứ tự sau cổng storyboard (cũ): `4-00` → `4-01` → `4-13` → `4-02` → `4-14` → `4-03` → `4-15` → `4-16` → `4-11` → `4-05` → `4-23` → `4-17` → `4-04` → `4-10` → `4-24` → `4-06` → `4-18` → `4-19` → `4-12` → `4-20` → `4-21` → `4-07` → `4-22` → `4-08` → `4-25` → `4-09`. Mã mới thêm ở cổng: `4-23` (sai số (2)), `4-24` ($D_{\mathrm{TV}}$, $\nu^\pi$), `4-25` (ví dụ một bước TRPO). `4-03` đặt trước `4-15` để chuỗi dựng dần `4-15`–`4-16` liền nhau. Không bỏ mã nào; mã mới `4-13` … `4-22`. Thứ tự theo #20–#25: bài toán → $A_\pi(s,\pi')$ → bổ đề → ý tưởng chứng minh → bảng kiểm → hàm thay thế → bảng đủ cột → tỉ số → sai số → tiếp xúc → đoạn thẳng → câu hỏi nhanh → định lý TV → ý tưởng → số → KL → Pinsker → hệ quả KL → miền tin cậy → Fisher → gradient tự nhiên → TRPO. `4-15` và `4-16` là một chuỗi dựng dần cùng bố cục (bảng thêm cột), tính một trang theo TB17. Trạm dừng: `4-16` (trang 7), `4-19` (trang 15), `4-09` (cuối).
+Thứ tự hiện hành (B5): `4-00` → `4-01` → `4-13` → `4-02` → `4-14` → `4-15` → `4-03` → `4-11` → `4-16` → `4-05` → `4-23` → `4-17` → `4-04` → `4-10` → `4-24` → `4-06` → `4-18` → `4-19` → `4-12` → `4-20` → `4-21` → `4-07` → `4-22` → `4-08` → `4-25` → `4-09` → `4-26`; `4-09`/`4-26` là thuật toán TRPO tách hai trang (góp ý tác giả #1); `4-15` và `4-16` không còn liền nhau, tính hai trang. Thứ tự sau cổng storyboard (cũ): `4-00` → `4-01` → `4-13` → `4-02` → `4-14` → `4-03` → `4-15` → `4-16` → `4-11` → `4-05` → `4-23` → `4-17` → `4-04` → `4-10` → `4-24` → `4-06` → `4-18` → `4-19` → `4-12` → `4-20` → `4-21` → `4-07` → `4-22` → `4-08` → `4-25` → `4-09`. Mã mới thêm ở cổng: `4-23` (sai số (2)), `4-24` ($D_{\mathrm{TV}}$, $\nu^\pi$), `4-25` (ví dụ một bước TRPO). `4-03` đặt trước `4-15` để chuỗi dựng dần `4-15`–`4-16` liền nhau. Không bỏ mã nào; mã mới `4-13` … `4-22`. Thứ tự theo #20–#25: bài toán → $A_\pi(s,\pi')$ → bổ đề → ý tưởng chứng minh → bảng kiểm → hàm thay thế → bảng đủ cột → tỉ số → sai số → tiếp xúc → đoạn thẳng → câu hỏi nhanh → định lý TV → ý tưởng → số → KL → Pinsker → hệ quả KL → miền tin cậy → Fisher → gradient tự nhiên → TRPO. `4-15` và `4-16` là một chuỗi dựng dần cùng bố cục (bảng thêm cột), tính một trang theo TB17. Trạm dừng: `4-16` (trang 7), `4-19` (trang 15), `4-09` (cuối).
 
 Bảng số dùng chung của mạch (kiểm trong `kiem_so.py`):
 
@@ -722,11 +731,11 @@ $J(\tilde\pi)=2{,}7\cdot0{,}45+0{,}1=1{,}315$; $\Delta J=-0{,}085$; $\Delta\math
 - **Diễn giả:** $A_\pi(s,\pi)=0$ với mọi $s$ (kỳ vọng của lợi thế theo chính sách của nó). Nếu $A_\pi(s,\pi')\ge0$ với mọi $s$ thì $\pi'$ không kém $\pi$ ở mọi trạng thái (Hệ quả 10.20), dạng ngẫu nhiên của định lý cải thiện chính sách (Bài 04).
 - **Phút:** 1,5.
 
-#### `L10-4-02` · Bổ đề hiệu hiệu năng (giữ mã; #21, TB28)
+#### `L10-4-02` · Bổ đề chênh lệch hiệu năng (giữ mã; #21, TB28)
 
 - **Câu:** 2. **Nhãn:** "Bổ đề.", "Giả thiết:", "Ký hiệu:", "Kết luận:", "Ý nghĩa:".
 - **Mặt trang:**
-  - "**Bổ đề** (hiệu hiệu năng). Giả thiết: giả thiết chung cho hai chính sách $\pi$, $\pi'$ (cùng $P$, cùng $\mu_0$)."
+  - "**Bổ đề** (chênh lệch hiệu năng). Giả thiết: giả thiết chung cho hai chính sách $\pi$, $\pi'$ (cùng $P$, cùng $\mu_0$)."
   - "Ký hiệu: số lần thăm kỳ vọng có chiết khấu của $s$ dưới $\pi'$ là $\eta_{\pi'}(s)=\sum_{t\ge0}\gamma^t\Pr_{\pi'}(S_t=s,\,t<T)$."
   - "Kết luận:" $$J(\pi')-J(\pi)=\sum_s\eta_{\pi'}(s)\,A_\pi(s,\pi').$$
   - "Ý nghĩa: mức thay đổi của $J$ là lợi thế một bước của $\pi'$ tại mỗi trạng thái, cộng theo số lần $\pi'$ thăm trạng thái đó."
@@ -739,7 +748,7 @@ $J(\tilde\pi)=2{,}7\cdot0{,}45+0{,}1=1{,}315$; $\Delta J=-0{,}085$; $\Delta\math
 - **Diễn giả:** $\eta$ không phải số lần thăm: mỗi lần thăm ở bước $t$ có trọng số $\gamma^t$. Vế phải cần quỹ đạo của $\pi'$, nên chưa tính được từ lượt của $\pi$. Bỏ "cùng $\mu_0$" hay "cùng $P$" thì bổ đề sai (ghi chú, hai phản ví dụ).
 - **Phút:** 1,5.
 
-#### `L10-4-14` · Ý tưởng chứng minh: bổ đề hiệu hiệu năng (mã mới; #21)
+#### `L10-4-14` · Ý tưởng chứng minh: bổ đề chênh lệch hiệu năng (mã mới; #21)
 
 - **Câu:** 2. **Nhãn:** "Ý tưởng chứng minh." (tiêu đề).
 - **Mặt trang** (năm bước của chứng minh Bổ đề 10.19, Đ8):
@@ -759,12 +768,12 @@ $J(\tilde\pi)=2{,}7\cdot0{,}45+0{,}1=1{,}315$; $\Delta J=-0{,}085$; $\Delta\math
 
 - **Câu:** 3 (mạch 4). **Nhãn:** "Định nghĩa.", "Ý nghĩa:".
 - **Mặt trang:**
-  - "Vế phải của bổ đề hiệu hiệu năng cần $\eta_{\pi'}$, tức cần chạy $\pi'$. Thay $\eta_{\pi'}$ bằng $\eta_\pi$."
+  - "Vế phải của bổ đề chênh lệch hiệu năng cần $\eta_{\pi'}$, tức cần chạy $\pi'$. Thay $\eta_{\pi'}$ bằng $\eta_\pi$."
   - "**Định nghĩa.** Hàm thay thế (surrogate objective) của $\pi'$ quanh $\pi$ là" $$\mathcal L_\pi(\pi')=J(\pi)+\sum_s\eta_\pi(s)\,A_\pi(s,\pi').$$
   - "Ký hiệu: $\Delta J=J(\pi')-J(\pi)$, $\Delta\mathcal L=\mathcal L_\pi(\pi')-J(\pi)$."
   - "Ý nghĩa: mọi đại lượng ở vế phải là của $\pi$, nên $\mathcal L_\pi(\pi')$ tính được từ lượt của $\pi$."
 - **Dựng dần:** (0) lý do; (1) định nghĩa, ký hiệu; (2) ý nghĩa.
-- **1 phút:** Hàm thay thế là bổ đề hiệu hiệu năng với số lần thăm của chính sách cũ.
+- **1 phút:** Hàm thay thế là bổ đề chênh lệch hiệu năng với số lần thăm của chính sách cũ.
 - **Mới:** hàm thay thế; ký hiệu $\Delta J$, $\Delta\mathcal L$ (#22).
 - **Nguồn số:** không.
 - **Hình:** không.
@@ -772,7 +781,7 @@ $J(\tilde\pi)=2{,}7\cdot0{,}45+0{,}1=1{,}315$; $\Delta J=-0{,}085$; $\Delta\math
 - **Diễn giả:** ghi chú viết $\mathcal L_{\theta_{\mathrm{old}}}(\theta)$ khi tham số hóa và $\mathcal L_\pi(\pi')$ khi viết theo chính sách; deck chỉ dùng dạng sau. "Tính được từ lượt của $\pi$" cần một bước nữa: $A_\pi(s,\pi')$ là kỳ vọng theo hành động của $\pi'$, đổi sang hành động của $\pi$ bằng tỉ số (trang `4-11`).
 - **Phút:** 1,5.
 
-#### `L10-4-15` · Ví dụ: bổ đề hiệu hiệu năng trên chuỗi (mã mới; #21; đầu chuỗi dựng dần với `4-16`)
+#### `L10-4-15` · Ví dụ: bổ đề chênh lệch hiệu năng trên chuỗi (mã mới; #21; đầu chuỗi dựng dần với `4-16`)
 
 - **Câu:** 2. **Nhãn:** hộp.
 - **Mặt trang:**
@@ -842,7 +851,7 @@ $J(\tilde\pi)=2{,}7\cdot0{,}45+0{,}1=1{,}315$; $\Delta J=-0{,}085$; $\Delta\math
 
 - **Câu:** 3. **Nhãn:** hộp.
 - **Mặt trang:**
-  - "Trừ định nghĩa hàm thay thế khỏi bổ đề hiệu hiệu năng:" $$\Delta J-\Delta\mathcal L=\sum_s\bigl(\eta_{\pi'}(s)-\eta_\pi(s)\bigr)\,A_\pi(s,\pi').$$
+  - "Trừ định nghĩa hàm thay thế khỏi bổ đề chênh lệch hiệu năng:" $$\Delta J-\Delta\mathcal L=\sum_s\bigl(\eta_{\pi'}(s)-\eta_\pi(s)\bigr)\,A_\pi(s,\pi').$$
   - "Trên chuỗi, với $\Delta p_A=p'_A-\tfrac12$, $\Delta p_B=p'_B-\tfrac23$: $A_\pi(s_A,\pi')=0{,}4p'_A-0{,}4(1-p'_A)=0{,}8\,\Delta p_A$ và $A_\pi(s_B,\pi')=p'_B-2(1-p'_B)=3\,\Delta p_B$."
   - "Với $\eta_\pi=(1;\,0{,}45)$:" $$\Delta\mathcal L=1\cdot0{,}8\,\Delta p_A+0{,}45\cdot3\,\Delta p_B=0{,}8\,\Delta p_A+1{,}35\,\Delta p_B .$$
   - "Chỉ $s_B$ đổi số lần thăm, $\eta_{\pi'}(s_B)-\eta_\pi(s_B)=\gamma\,\Delta p_A$, nên sai số bằng $\gamma\,\Delta p_A\cdot3\,\Delta p_B=2{,}7\,\Delta p_A\,\Delta p_B$."
@@ -955,7 +964,7 @@ $J(\tilde\pi)=2{,}7\cdot0{,}45+0{,}1=1{,}315$; $\Delta J=-0{,}085$; $\Delta\math
 
 - **Câu:** 3–4. **Nhãn:** "Ý tưởng chứng minh." (tiêu đề), "Bổ đề" nêu tên trong bước 2.
 - **Mặt trang** (năm bước của chứng minh Định lý 10.26, Đ8):
-  - "Bước 1 (đẳng thức chính xác): bổ đề hiệu hiệu năng, $\Delta J=\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$."
+  - "Bước 1 (đẳng thức chính xác): bổ đề chênh lệch hiệu năng, $\Delta J=\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$."
   - "Bước 2 (tách): $\eta_{\pi'}=\eta_\pi+(\eta_{\pi'}-\eta_\pi)$. Bước 3 (hàm thay thế): phần với $\eta_\pi$ là $\Delta\mathcal L$."
   - "Bước 4 (bất đẳng thức Hölder): $\sum_s(\eta_{\pi'}-\eta_\pi)(s)A_\pi(s,\pi')\ge-\chi_{\pi'}\sum_s|\eta_{\pi'}(s)-\eta_\pi(s)|$."
   - "Bước 5 (bổ đề dịch chuyển phân bố chiếm dụng): khác biệt ở mỗi bước tích lũy dọc lượt," $$\sum_s|\eta_{\pi'}(s)-\eta_\pi(s)|\ \le\ \frac{2\gamma}{(1-\gamma)^2}\,\mathbb E_{S\sim\nu^\pi}\bigl[D_{\mathrm{TV}}(S)\bigr].\ \square$$
@@ -1138,9 +1147,9 @@ $J(\tilde\pi)=2{,}7\cdot0{,}45+0{,}1=1{,}315$; $\Delta J=-0{,}085$; $\Delta\math
 
 ---
 
-### Mạch 5. Tối ưu chính sách gần kề (PPO) (`id="mach-5"`, 13 trang, 16,5 phút + 3,5 bài tập)
+### Mạch 5. Tối ưu chính sách gần kề (PPO) (`id="mach-5"`, 14 trang, 17 phút + 3,5 bài tập)
 
-Thứ tự: `5-00` → `5-09` → `5-10` → `5-01` → `5-02` → `5-11` → `5-03` → `5-05` → `5-06` → `5-07` → `5-08` → `5-12` → `5-13`. Mã bỏ: `5-04` (đồ thị $s_B$ với bộ đệm ba mẫu khác; #26: một bộ dữ liệu cho cả mạch). Mã mới: `5-09` … `5-13` (bài tập tổng hợp, Bài tập 10.23, chuyển từ `7-03`, `7-04` cũ). Ví dụ tay của PPO-Clip là `5-10`, `5-01`, `5-05`, đứng trước thuật toán `5-07` và mang cùng tên nhóm bước (Đ12). `5-10` và `5-01` là chuỗi dựng dần cùng bố cục (bảng bộ đệm thêm cột), tính một trang theo TB17. Một bộ đệm cho cả mạch; bài tập tổng hợp dùng lợi thế đúng, lý do nêu trên trang đề. Không dùng "Adam" trên mặt trang; không nhãn "Còn thiếu:".
+Thứ tự: `5-00` → `5-09` → `5-10` → `5-01` → `5-02` → `5-11` → `5-03` → `5-05` → `5-06` → `5-07` → `5-14` → `5-08` → `5-12` → `5-13`. `5-07`/`5-14` là thuật toán PPO-Clip tách hai trang (góp ý tác giả #1). Mã bỏ: `5-04` (đồ thị $s_B$ với bộ đệm ba mẫu khác; #26: một bộ dữ liệu cho cả mạch). Mã mới: `5-09` … `5-13` (bài tập tổng hợp, Bài tập 10.23, chuyển từ `7-03`, `7-04` cũ). Ví dụ tay của PPO-Clip là `5-10`, `5-01`, `5-05`, đứng trước thuật toán `5-07` và mang cùng tên nhóm bước (Đ12). `5-10` và `5-01` là chuỗi dựng dần cùng bố cục (bảng bộ đệm thêm cột), tính một trang theo TB17. Một bộ đệm cho cả mạch; bài tập tổng hợp dùng lợi thế đúng, lý do nêu trên trang đề. Không dùng "Adam" trên mặt trang; không nhãn "Còn thiếu:".
 
 Bộ đệm chung (kiểm trong `kiem_so.py`): hai lượt $s_A\xrightarrow1s_B\xrightarrow2$ ($G_0=0$, $G_1=0$) và $s_A\xrightarrow2$ ($G_0=1$); critic $\hat v=(1{,}4;\,1)$; $\lambda=1$; ba mẫu $(s_A,1)$, $(s_A,2)$, $(s_B,2)$ với $\widehat A=-1{,}4$; $-0{,}4$; $-1$ (lợi thế đúng $0{,}4$; $-0{,}4$; $-2$); $\rho_{s_A}(1)=2p_A$, $\rho_{s_A}(2)=2(1-p_A)$, $\rho_{s_B}(2)=3(1-p_B)$.
 
@@ -1442,7 +1451,7 @@ Thứ tự: `6-00` → `6-10` → `6-11` → `6-18` → `6-12` → `6-13` → `6
 
   | Kết quả | Giả thiết không được bỏ | Công thức hoặc thuật toán |
   |---|---|---|
-  | Bổ đề hiệu hiệu năng | cùng $P$, cùng $\mu_0$; $\gamma<1$ | $J(\pi')-J(\pi)=\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$ |
+  | Bổ đề chênh lệch hiệu năng | cùng $P$, cùng $\mu_0$; $\gamma<1$ | $J(\pi')-J(\pi)=\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$ |
   | Hàm thay thế tiếp xúc $J$ | $\eta_\pi$, $A_\pi$ chính xác; $\pi>0$ | $\mathcal L_\pi(\pi)=J(\pi)$, $\nabla\mathcal L=\nabla J$ tại $\pi$ |
   | Chặn cải thiện | như bổ đề; điều kiện hỗ trợ | $\Delta J\ge\Delta\mathcal L-\frac{2\gamma\chi}{(1-\gamma)^2}\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]$, hoặc $\sqrt{\tfrac12\bar D_{\mathrm{KL}}}$ thay $\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]$ |
   | Mục tiêu cắt | lợi thế cố định trong vòng | gradient $0$ khi $\widehat A>0,\rho>1+\epsilon$ hoặc $\widehat A<0,\rho<1-\epsilon$ |
@@ -1464,7 +1473,7 @@ Thứ tự: `6-00` → `6-10` → `6-11` → `6-18` → `6-12` → `6-13` → `6
 #### `L10-6-15` · Câu hỏi tự kiểm tra (thay `7-05`; #28, NT-RL-9)
 
 - **Mặt trang:** "Câu hỏi: trả lời và nêu kết quả đã dùng." Ba câu khái niệm, một câu vận dụng sang tình huống mới (Đ13): 1. "Vì sao đường cơ sở không được phụ thuộc hành động đã chọn?" 2. "Vì sao hàm thay thế sai khi chính sách mới thăm các trạng thái với tần suất khác chính sách cũ?" 3. "Phép cắt tỉ số có chặn KL giữa chính sách mới và chính sách cũ không?" 4. "Một môi trường có giới hạn thời gian, nên nhiều lượt bị cắt ngắn ở biên đoạn thu. Với critic sai, GAE với $\lambda=1$ còn cho ước lượng gradient không chệch không?"
-- **Ghi chú nguồn:** §7.4 (bản định tính). **Diễn giả (lời giải ngắn):** (1) mệnh đề đường cơ sở cần $\mathbb E[b\psi_t\mid H_t]=0$; trừ $q_\pi(S_t,A_t)$ làm kỳ vọng thành $0$. (2) bổ đề hiệu hiệu năng cần số lần thăm của chính sách mới; sai số là $\sum_s(\eta_{\pi'}-\eta_\pi)A_\pi(s,\pi')$. (3) không (nhận xét về phép cắt); đoạn phẳng có gradient $0$, không lực kéo về. (4) không: mệnh đề GAE và gradient cần lượt đầy đủ; lượt bị cắt bootstrap từ $\hat v$ sai ở biên, nên ước lượng chệch kể cả khi $\lambda=1$ (ghi chú, đoạn sau Mệnh đề 10.15: cắt ở $s_B$ cho $-0{,}025$ thay cho $0{,}2$; Nhận xét 10.17). **Phút:** 1,5.
+- **Ghi chú nguồn:** §7.4 (bản định tính). **Diễn giả (lời giải ngắn):** (1) mệnh đề đường cơ sở cần $\mathbb E[b\psi_t\mid H_t]=0$; trừ $q_\pi(S_t,A_t)$ làm kỳ vọng thành $0$. (2) bổ đề chênh lệch hiệu năng cần số lần thăm của chính sách mới; sai số là $\sum_s(\eta_{\pi'}-\eta_\pi)A_\pi(s,\pi')$. (3) không (nhận xét về phép cắt); đoạn phẳng có gradient $0$, không lực kéo về. (4) không: mệnh đề GAE và gradient cần lượt đầy đủ; lượt bị cắt bootstrap từ $\hat v$ sai ở biên, nên ước lượng chệch kể cả khi $\lambda=1$ (ghi chú, đoạn sau Mệnh đề 10.15: cắt ở $s_B$ cho $-0{,}025$ thay cho $0{,}2$; Nhận xét 10.17). **Phút:** 1,5.
 
 #### `L10-6-16` · Bài tập về nhà (thay `7-06`)
 
@@ -1546,17 +1555,17 @@ Nhãn ≥ 20 px trên ảnh 1600×900; màu theo quy ước đầu tệp, luôn 
 |---|---|---|
 | 1 | 1-01 0,5 · 1-02 2 · 1-09 2 · 1-10 1,5 · 1-11 2 · 1-04 3 · 1-12 1 · 1-05 2,5 · 1-06 1 · 1-07 0,5 · 1-08 1 | 17 |
 | 2 | 2-00 0,5 · 2-01 2,5 · 2-04 1,5 · 2-02 2 · 2-03 2 · 2-06 1,5 · 2-09 1,5 · 2-10 2 · 2-07 1,5 · 2-08 1,5 · 2-11 1,5 | 18 |
-| 3 | 3-00 0,5 · 3-01 1,5 · 3-06 2,5 · 3-07 1,5 · 3-02 1,5 · 3-08 1,5 · 3-11 2 · 3-05 2 · 3-09 1 · 3-12 2 · 3-04 2 · 3-10 2 | 20 |
-| 4 | 4-00 0,5 · 4-01 1,5 · 4-13 1,5 · 4-02 1,5 · 4-14 2 · 4-15 1 · 4-03 1,5 · 4-11 1 · 4-16 1,5 · 4-05 1,5 · 4-23 1,5 · 4-17 1,5 · 4-04 1,5 · 4-10 2 · 4-24 1 · 4-06 1 · 4-18 2 · 4-19 1,5 · 4-12 1,5 · 4-20 1 · 4-21 1,5 · 4-07 1,5 · 4-22 1 · 4-08 1,5 · 4-25 1,5 · 4-09 2 | 37 |
-| 5 | 5-00 0,5 · 5-09 1,5 · 5-10 1,5 · 5-01 2 · 5-02 1,5 · 5-11 1 · 5-03 2 · 5-05 2 · 5-06 1,5 · 5-07 2 · 5-08 1 · (5-12 1,5 · 5-13 2: tính vào 30 phút bài tập) | 16,5 |
+| 3 | 3-00 0,5 · 3-01 1,5 · 3-06 2,5 · 3-07 1,5 · 3-02 1,5 · 3-08 1,5 · 3-11 2 · 3-05 2 · 3-09 1 · 3-12 2 · 3-13 1,5 · 3-04 2 · 3-10 2 | 21,5 |
+| 4 | 4-00 0,5 · 4-01 1,5 · 4-13 1,5 · 4-02 1,5 · 4-14 2 · 4-15 1 · 4-03 1,5 · 4-11 1 · 4-16 1,5 · 4-05 1,5 · 4-23 1,5 · 4-17 1,5 · 4-04 1,5 · 4-10 2 · 4-24 1 · 4-06 1 · 4-18 2 · 4-19 1,5 · 4-12 1,5 · 4-20 1 · 4-21 1,5 · 4-07 1,5 · 4-22 1 · 4-08 1,5 · 4-25 1,5 · 4-09 1,5 · 4-26 1 | 37,5 |
+| 5 | 5-00 0,5 · 5-09 1,5 · 5-10 1,5 · 5-01 2 · 5-02 1,5 · 5-11 1 · 5-03 2 · 5-05 2 · 5-06 1,5 · 5-07 1 · 5-14 1,5 · 5-08 1 · (5-12 1,5 · 5-13 2: tính vào 30 phút bài tập) | 17 |
 | 6 | 6-00 0,5 · 6-10 1,5 · 6-11 1 · 6-18 1 · 6-12 1 · 6-13 1 · 6-14 1,5 · 6-15 1,5 · 6-16 1 · 6-17 0,5 | 11 |
-| **Tổng** | 83 trang thật; 82 trang đếm (TB17: `5-10`–`5-01`) | **119,5** trình chiếu + 3,5 bài tập 10.23 (ước lượng của biên tập viên) |
+| **Tổng** | 86 trang thật; 85 trang đếm (TB17: `5-10`–`5-01`) | **122** trình chiếu + 3,5 bài tập 10.23 (ước lượng của biên tập viên) |
 
 *Lịch sử (bản trước hai lượt sửa theo năm vai; số trang và phút đã thay bằng đoạn "Cập nhật sau lượt sửa thứ hai" dưới đây).* **Ngoại lệ số trang (điều phối viên chấp nhận 2026-11-21; chờ tác giả xác nhận khi duyệt deck).** 81 trang thật, 79 trang đếm (TB17: `4-15`–`4-16`, `5-10`–`5-01`), 120 phút; vượt trần 60 của P6 (`NGUYEN-TAC-HOC-PHAN.md` §3, "Số trang ở đợt sửa"). Lý do: TB24 (ba trang dựng ví dụ), TB28 (mỗi kết quả một khối có nhãn; năm trang ý tưởng chứng minh riêng `2-10`, `3-11`, `3-12`, `4-14`, `4-18`), TB29 (bảng tính đủ cột; `4-05`/`4-23` tách vì đưa khai triển lên mặt trang), TB12/TB24 (`4-24` tách định nghĩa khỏi định lý), TB31 và Đ12 (ba trang thuật toán, ví dụ tay TRPO riêng `4-25`), cùng góp ý #14, #21–#26 của tác giả. Bản trước cổng storyboard: 76 trang thật, 74 trang đếm; cổng thêm năm trang (`3-11`, `3-12`, `4-23`, `4-24`, `4-25`). Thời lượng giữ 120 phút bằng cách rút phút ở các trang kết quả có chứng minh một dòng và ở câu hỏi nhanh (mục trên). Rủi ro: mạch 4 dài 36,5 phút (26 trang), có ba trạm dừng `4-16`, `4-19`, `4-09`.
 
 *Lịch sử (lượt sửa thứ nhất).* **Cập nhật sau năm vai rà (2026-11-21, B8).** Thêm trang `1-12` (câu hỏi nhanh của mạch 1, B5; không vừa `1-05` và `1-04`, nên tách trang, trái khuyến nghị "không tách thêm trang" của B7) và đổi thứ tự mạch 4 (B5), nên `4-15` và `4-16` không còn liền nhau: chúng không còn là một chuỗi dựng dần, tính hai trang. `3-07` (+0,5, bổ đề) và `4-21` (+0,5, hệ quả cải thiện đơn điệu) thêm phút. Bài tập 10.23 (`5-12`, `5-13`, 3,5 phút) tính vào 30 phút bài tập trên lớp. Tổng: 82 trang thật, 81 trang đếm, 118,5 phút trình chiếu.
 
-**Cập nhật sau lượt sửa thứ hai (2026-11-21, E1, E3).** `6-11` tách thành `6-11` và `6-18` (+1 phút); `1-12` chuyển lên giữa `1-04` và `1-05`. Tổng theo biên tập viên: 83 trang thật, 82 trang đếm, 119,5 phút trình chiếu, Bài tập 10.23 tính 3,5 phút. Ước lượng của vai mạch truyện (mục D của `ra-soat-nam-vai-2026-11-21.md`): khoảng 145–155 phút, riêng mạch 4 khoảng 50 phút; Bài tập 10.23 khoảng 10–12 phút. Hai ước lượng chênh nhau khoảng 30 phút; ước lượng của vai mạch truyện vượt 120 phút của P6. Lượt sửa thứ ba (G1–G3) không thêm, không bớt trang; số phút giữ nguyên. Đây là đoạn hiện hành của mục này. **Ngoại lệ chờ tác giả:** chọn ước lượng thời lượng và quyết định có rút trang hay không.
+**Cập nhật sau lượt sửa thứ hai (2026-11-21, E1, E3).** `6-11` tách thành `6-11` và `6-18` (+1 phút); `1-12` chuyển lên giữa `1-04` và `1-05`. Tổng theo biên tập viên: 83 trang thật, 82 trang đếm, 119,5 phút trình chiếu, Bài tập 10.23 tính 3,5 phút. Ước lượng của vai mạch truyện (mục D của `ra-soat-nam-vai-2026-11-21.md`): khoảng 145–155 phút, riêng mạch 4 khoảng 50 phút; Bài tập 10.23 khoảng 10–12 phút. Hai ước lượng chênh nhau khoảng 30 phút; ước lượng của vai mạch truyện vượt 120 phút của P6. Lượt sửa thứ ba (G1–G3) không thêm, không bớt trang; số phút giữ nguyên. Sau góp ý tác giả #1–#3 (2026-11-21): thêm `3-13` (+1,5 phút), tách thuật toán TRPO (`4-09`, `4-26`) và PPO-Clip (`5-07`, `5-14`) để mọi đại lượng có công thức tại bước tính nó (+0,5 phút mỗi thuật toán); tổng 86 trang thật, 85 trang đếm, 122 phút trình chiếu theo ước lượng của biên tập viên, vượt 120 phút của P6: ngoại lệ chờ tác giả. Đây là đoạn hiện hành của mục này. **Ngoại lệ chờ tác giả:** chọn ước lượng thời lượng và quyết định có rút trang hay không.
 
 **Phương án rút gọn: không áp dụng** (quyết định của điều phối viên, 2026-11-21). Danh sách giữ lại để đối chiếu nếu lượt rà sau cần:
 
@@ -1609,7 +1618,7 @@ Nhãn ≥ 20 px trên ảnh 1600×900; màu theo quy ước đầu tệp, luôn 
 | Gradient dạng lợi thế (Mệnh đề 10.5(b)) | (b) | `2-10` |
 | Dạng tổng, truy hồi của GAE (Mệnh đề 10.14) | (b) | `3-11` |
 | GAE và gradient (Mệnh đề 10.15) | (b) | `3-12` |
-| Bổ đề hiệu hiệu năng (Bổ đề 10.19) | (b) | `4-14` |
+| Bổ đề chênh lệch hiệu năng (Bổ đề 10.19) | (b) | `4-14` |
 | Hàm thay thế tiếp xúc (Mệnh đề 10.22) | (a), gộp Bước 1–2 | `4-17` |
 | Chặn cải thiện (Định lý 10.26) | (b) | `4-18` |
 | Pinsker (Mệnh đề 10.24(b)) | (a), Bước 3 (ý tưởng, như ghi chú) | `4-20` |
@@ -1689,7 +1698,7 @@ Không có mục nào chưa xử lý. Hai điểm thực hiện một phần: #5
 | Đ | Nội dung | Xử lý ở |
 |---|---|---|
 | 1 | "Nhắc lại:" ở trang tính đầu sau trang dựng | `1-04` ($\theta$, $p$, $J$, gradient, $\psi_A$); `3-06` (critic, $v_\pi$, $p_B$); `4-13` ($q_\pi$, $v_\pi$, $\tilde\pi$); `5-10` (critic, GAE $\lambda=1$, $\pi_{\mathrm{old}}$) |
-| 2 | trường hợp khác cấu trúc cho mỗi kết quả chính; tính chất chỉ đúng trên chuỗi | đường cơ sở: `2-03` (trừ $q_\pi$), `2-02` (phương sai chỉ giảm trên ví dụ); gradient dạng lợi thế: `2-09` (phản ví dụ của ghi chú: lợi thế của chính sách đều cho $0{,}5\ne0$); chệch của $\delta$: `2-07` (điều kiện theo riêng $S_t$), ví dụ critic sai `3-06`; bổ đề hiệu hiệu năng: `4-15` (khác $\mu_0$, số của ghi chú: $1$ so với $0{,}4$); tiếp xúc: `4-17` (lợi thế ước lượng, $-0{,}45\ne0$), `4-23` (dạng tích chỉ trên chuỗi); chặn cải thiện: `4-19` (bước chỉ đổi $p_B$); mục tiêu cắt: `5-03` (phía bất lợi), `5-05` (tham số tách theo trạng thái), `5-06`; chỉ đúng trên chuỗi: `1-05` (gradient đúng không làm $J$ giảm) |
+| 2 | trường hợp khác cấu trúc cho mỗi kết quả chính; tính chất chỉ đúng trên chuỗi | đường cơ sở: `2-03` (trừ $q_\pi$), `2-02` (phương sai chỉ giảm trên ví dụ); gradient dạng lợi thế: `2-09` (phản ví dụ của ghi chú: lợi thế của chính sách đều cho $0{,}5\ne0$); chệch của $\delta$: `2-07` (điều kiện theo riêng $S_t$), ví dụ critic sai `3-06`; bổ đề chênh lệch hiệu năng: `4-15` (khác $\mu_0$, số của ghi chú: $1$ so với $0{,}4$); tiếp xúc: `4-17` (lợi thế ước lượng, $-0{,}45\ne0$), `4-23` (dạng tích chỉ trên chuỗi); chặn cải thiện: `4-19` (bước chỉ đổi $p_B$); mục tiêu cắt: `5-03` (phía bất lợi), `5-05` (tham số tách theo trạng thái), `5-06`; chỉ đúng trên chuỗi: `1-05` (gradient đúng không làm $J$ giảm) |
 | 3 | phương pháp trình bày riêng trước; so sánh cùng bảng, cùng tên cột | REINFORCE `1-04`, đường cơ sở `2-02`, $\delta$ `2-07` → so sánh `2-08`, `2-11`; TRPO `4-09`, PPO `5-07` → `5-08`; bốn phương pháp → `6-14` |
 | 4 | dòng phân biệt khi dùng lần đầu | kỳ vọng, không chệch, phương sai `1-02`; lợi thế `2-06` (trong "Ý nghĩa:"); độ chệch như đại lượng `3-06`; KL trung bình `4-12` (trong định nghĩa, "tổng có trọng số $\nu^\pi$") |
 | 5 | khái niệm mở bằng trực quan trên chuỗi | đường cơ sở `2-01`; lợi thế `2-06` (dòng lý do); critic `3-01`; lợi thế $n$ bước `3-07`; GAE `3-02`; $A_\pi(s,\pi')$ `4-13` (câu hỏi); hàm thay thế `4-03`; $D_{\mathrm{TV}}$ `4-06`; KL `4-12`; Fisher `4-22`; mục tiêu cắt `5-02` |
@@ -1877,6 +1886,40 @@ Biên tập viên sửa theo mục G của `ra-soat-nam-vai-2026-11-21.md` (G1�
 **Kiểm máy sau lượt sửa thứ ba** (cổng 8843): `deck_lint.py --course rl-plan` 45 phát hiện (SYLL60 ở 37 trang; LINES6 ở `2-10`, `3-12`, `3-10`, `4-13`, `4-09`, `5-07`, `5-12`; STRUCT danh sách trong hộp ở trang "Vấn đề trung tâm"); `footer_check.py` 0 trang; `formula_overflow.py` 0; Playwright 83 trang × 1600×900 và 390×844, chuyển trang tắt, fragment hiện hết: 0 lỗi console, 0 lỗi trang, 0 request lỗi, 0 `.katex-error`, không trang nào cao quá 720 px, không tràn ngang; liên kết mạch và phím điều hướng đúng; `git diff --check` sạch.
 
 **Lượt sửa thứ tư (2026-11-21, sau vòng kiểm hẹp).** `6-11` mục 1 "…giữ nguyên kỳ vọng của ước lượng gradient, và trên ví dụ chung, $b=v_\pi$ làm phương sai giảm." (không còn đọc như mọi đường cơ sở đều giảm phương sai); `6-15` danh sách bốn câu hỏi đưa vào khung `div.check` "Câu hỏi:" như `6-11`; ghi chú diễn giả `4-06` "Định lý dùng lợi thế và phân bố chính xác; với đại lượng ước lượng, cận không áp dụng." thay câu "điều kiện áp dụng, không phải giả thiết" (khớp Giả thiết của `4-17`, `4-21`); ghi chú diễn giả `1-10` bỏ con trỏ "được dùng lại ở mạch 2". Kiểm: `deck_lint` 45 phát hiện (không đổi), `footer_check` 0, `formula_overflow` 0, Playwright `6-11`, `6-15`, `4-06`, `1-10` ở hai cỡ: 0 lỗi, không tràn; `git diff --check` sạch.
+
+### Góp ý tác giả #1 (2026-11-21)
+
+Góp ý "cần có công thức của \delta_t" ở `3-10` (`gop-y-tac-gia-deck-2026-11-21.md` #1); quy tắc: mọi đại lượng một bước thuật toán tính ra có công thức trong bước đó (tinh chỉnh TB31). Chỉ dùng công thức của ghi chú (Thuật toán 10.16, 10.37, 10.49, Định nghĩa 10.47) hoặc trang trước.
+
+| Trang | Thay đổi |
+|---|---|
+| `3-10` | bước 2: $\delta_t=R_{t+1}+\gamma(1-Z_{t+1})\,\hat v(S_{t+1},w_{\mathrm{old}})-\hat v(S_t,w_{\mathrm{old}})$ với $Z_{t+1}=1$ khi $S_{t+1}$ kết thúc, $\widehat A_T=0$, công thức tính lùi. Để vừa khung: câu mở rút một dòng ("phương sai lớn" xuống ghi chú diễn giả), hộp rút một dòng, dòng "Lặp với mỗi lượt…" nhập vào dòng Đầu vào/Đầu ra |
+| `4-09`, `4-26` (mới) | tách hai trang "Thuật toán TRPO (1)", "(2)"; tên đầy đủ "tối ưu chính sách miền tin cậy (trust region policy optimization, TRPO)" ở dòng nhãn "Thuật toán". (1): bước 1 giữ $\hat v_{\mathrm{old}}$; bước 2 công thức $\delta_t$, $\widehat A_t$, $V^{\mathrm{targ}}_t$; bước 3 $\rho_t(\theta)$, $\widehat{\mathcal L}(\theta)=\frac1{|\mathcal D|}\sum_t\rho_t(\theta)\widehat A_t$, $\widehat D(\theta)=\frac1{|\mathcal D|}\sum_tD_{\mathrm{KL}}(\pi_{\mathrm{old}}(\cdot\mid S_t)\Vert\pi_\theta(\cdot\mid S_t))$, $g=\nabla\widehat{\mathcal L}(\theta_{\mathrm{old}})=\frac1{|\mathcal D|}\sum_t\widehat A_t\psi_t$, $F$ là Hessian của $\widehat D$. (2): bước 4 tìm kiếm lùi viết đủ điều kiện nhận $j$ và trường hợp không có $j$; bước 5 mất mát của critic theo $V^{\mathrm{targ}}_t$; "Lưu ý:" về $g^\gamma$ giữ nguyên. Ghi chú diễn giả chia hai trang |
+| `5-07`, `5-14` (mới) | tách hai trang "Thuật toán PPO-Clip (1)", "(2)". (1): câu mở, Đầu vào/Đầu ra, bước 1, bước 2 với $\delta_t$, $\widehat A_t$, $V^{\mathrm{targ}}_t$. (2): bước 3 với $\rho_t(\theta)$, mục tiêu cắt trên lô $\frac1M\sum_{t\in\mathcal B}\min(\rho_t\widehat A_t,\operatorname{clip}(\rho_t,1-\epsilon,1+\epsilon)\widehat A_t)$, mất mát của critic; bước 4 KL ước lượng (approxKL) $\frac1M\sum_{t\in\mathcal B}[(\rho_t-1)-\log\rho_t]$ |
+
+### Góp ý tác giả #2, #3 (2026-11-21)
+
+Góp ý "công thức cập nhật w cũng chưa nói ở các slide trước" và "tại sao dùng A_t+v làm target". Thêm `3-13` "Critic hồi quy về lợi tức λ" sau `3-12`, trước `3-04` (mục §3). Sửa kèm: `3-04` đề dùng "Nhắc lại:" quy tắc của actor và critic (dạng bảng, $V^{\mathrm{targ}}_t$), dòng dữ kiện rút một dòng, lời giải ghi $V^{\mathrm{targ}}=(1{,}8;\,3)$; `3-10` bước 4 theo $V^{\mathrm{targ}}_t=\widehat A_t+\hat v(S_t,w_{\mathrm{old}})$; `4-09` bước 2 và `5-07` bước 2 gọi "mục tiêu của critic $V^{\mathrm{targ}}_t$", `4-26` bước 5 và `5-14` bước 3 viết mất mát theo $V^{\mathrm{targ}}_t$.
+
+**Kiểm máy** (cổng 8843): `deck_lint.py --course rl-plan` 44 phát hiện trên 86 trang (LINES6 ở `2-10`, `3-12`, `3-04`, `3-10`, `4-13`, `5-12`; STRUCT trang "Vấn đề trung tâm"; còn lại SYLL60); `footer_check.py` 0 trang; `formula_overflow.py` 0; Playwright `3-04`, `3-10`, `3-12`, `3-13`, `4-09`, `4-26`, `5-07`, `5-14` ở 1600×900 và 390×844: 0 lỗi console, 0 request lỗi, không trang nào cao quá 720 px; `git diff --check` sạch.
+
+### Sau kiểm lại góp ý #1–#3 (2026-11-21)
+
+| Trang | Thay đổi |
+|---|---|
+| `3-13` | thứ tự theo TB27, TB28: bài toán ("Critic xấp xỉ $v_\pi$ chưa biết. Lượt đã thu cho một ước lượng của $v_\pi(S_t)$ để hồi quy.", bỏ chữ "mục tiêu thay thế" trùng với surrogate) → lý do ($G^\lambda_t$ là trung bình có trọng số của các lợi tức $n$ bước, mỗi lợi tức ước lượng $v_\pi(S_t)$; $\lambda$ cân bằng độ chệch và phương sai như ở $\widehat A_t$) → "Định nghĩa. Mục tiêu của critic là $V^{\mathrm{targ}}_t=G^\lambda_t$, tính được là $\widehat A_t+\hat v(S_t,w_{\mathrm{old}})$." → bảng hai hàng → bước hạ gradient → ví dụ. Dạng bảng $w_s\leftarrow w_s+\alpha_w\sum_{t:S_t=s}(V^{\mathrm{targ}}_t-w_s)$; "lợi tức $\lambda$" trong `$…$`; hộp ví dụ gọn một dòng (giá trị critic $1{,}4$, $1$ hiện trong phép cộng) |
+| `3-04` | "Nhắc lại:" dạng bảng có $\sum_{t:S_t=s}$ và hàm điểm $\psi(s,1)=(1-p_s)e_s$, $\psi_A(1)=0{,}5$, $\psi_B(1)=\tfrac13$; dòng cập nhật critic trong lời giải viết gọn $w=(1{,}4+0{,}5\cdot0{,}4;\,1+0{,}5\cdot2)=(1{,}6;\,2)$ để vừa khung |
+| `3-10` | câu bài toán trở lại mặt trang: "REINFORCE có phương sai lớn. Actor–critic thay lợi tức bằng lợi thế GAE $\widehat A_t$ lập từ critic." (hai câu, không dùng dấu chấm phẩy, TB13) |
+| `4-09`, `4-26` | `4-09`: câu bài toán, Đầu vào/Đầu ra (chính sách $\pi_\theta$, critic $\hat v(s,w)$, bán kính $\kappa$, hệ số co $\zeta\in(0,1)$, số lần co tối đa $j_{\max}$), bước 1–2. `4-26`: bước 3, "Lưu ý:" ngay sau bước 3 ("$g$ ở bước 3 không có $\gamma^t$. Với lợi thế đúng, kỳ vọng của $g$ tỉ lệ với $g^\gamma=\dots$. Trên chuỗi …"), bước 4–5; "vài bước hạ gradient". Ghi chú diễn giả chia lại |
+| `5-07`, `5-14` | Đầu vào thêm "ngưỡng approxKL (tùy chọn)" (ghi chú, Thuật toán 10.49, không đặt ký hiệu cho ngưỡng nên deck cũng không dùng $d_{\mathrm{targ}}$); critic $\hat v(s,w)$, $\hat v_{\mathrm{old}}(S_t)=\hat v(S_t,w)$; "giữ cố định trong cả $K$ lần qua bộ đệm (bước 3)". Dừng sớm thành ý thứ ba của bước 3: tính approxKL, vượt ngưỡng thì bỏ các lần qua bộ đệm còn lại; "một bước hạ gradient" cho critic; ghi chú diễn giả "bước 3" |
+
+`3-04` thêm sau vòng kiểm: dòng "Lời giải:" nhập vào dòng "Ước lượng lợi thế", cập nhật actor viết theo vectơ $\theta=(0+0{,}4\cdot0{,}5;\,\log2+0{,}9\cdot2\cdot\tfrac13)$, critic $w=(1{,}4+0{,}5(1{,}8-1{,}4);\,1+0{,}5(3-1))=(1{,}6;\,2)$, để trang không chạm chân trang.
+
+**Kiểm** (cổng 8843): `deck_lint.py --course rl-plan` 46 phát hiện trên 86 trang (LINES6 ở `2-10`, `3-12`, `3-13`, `3-10`, `4-13`, `5-12`; STRUCT trang "Vấn đề trung tâm"; còn lại SYLL60); `footer_check.py` 0; `formula_overflow.py` 0; Playwright `3-12`, `3-13`, `3-04`, `3-10`, `4-09`, `4-26`, `5-07`, `5-14` ở hai cỡ: 0 lỗi, không trang nào cao quá 720 px.
+
+### Đổi thuật ngữ "bổ đề chênh lệch hiệu năng" (2026-11-21, góp ý tác giả #4, VP-RL-10)
+
+Tên cũ của bổ đề (ghi ở góp ý #4) đổi thành "bổ đề chênh lệch hiệu năng" (performance difference lemma), giữ viết hoa đúng vị trí: deck 11 chỗ (`1-02` ghi chú diễn giả, `4-02` tiêu đề và khối bổ đề, `4-14`, `4-15` tiêu đề, `4-03`, `4-16`, `4-05` và các ghi chú diễn giả, `6-12` bảng, `6-15` ghi chú diễn giả); `materials/lec-10/lecture-note.md` 7 chỗ trên 6 dòng (mục tiêu 4 "Chênh lệch hiệu năng và hàm thay thế", tiêu đề §4.1, Bổ đề 10.19, bảng tổng kết, hai dòng §7); `outline.md` cả tệp; phần hiện hành của storyboard này (phần lịch sử giữ nguyên). Không có chỗ nào trong SVG `img/lec-10`. Trình xem ghi chú: 0 `.katex-error`, 0 lỗi console, 0 request lỗi, không còn dấu `:::` chưa nhận; tiêu đề trang deck đã đổi (`4-02`, `4-14`, `4-15`) vừa khung.
 
 
 # Lịch sử (bản 2026-11-20)
