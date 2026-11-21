@@ -19,7 +19,7 @@ Mọi con số dưới đây được tính lại bằng `/tmp/claude-1000/-data
 1. Trên chuỗi hai trạng thái, ước lượng REINFORCE của một lượt có kỳ vọng bằng tọa độ gradient $0{,}2$ nhưng phương sai $0{,}69$; với xác suất $\tfrac12$ nó ngược dấu gradient, và một bước dài theo ước lượng đó làm $J$ giảm từ $1{,}4$ về gần $1$.
 2. Trừ khỏi lợi tức một đường cơ sở chỉ phụ thuộc trạng thái không làm chệch ước lượng gradient; với đường cơ sở $v_\pi$, hệ số có kỳ vọng có điều kiện bằng lợi thế, phương sai giảm còn $0{,}20$, và sai số TD với $v_\pi$ đúng cho phương sai $0$.
 3. Hàm giá trị phải học từ dữ liệu nên có sai số; khi đó ước lượng lợi thế một bước bị chệch ($-0{,}5$ thay cho $0{,}4$) còn ước lượng cả lượt có phương sai lớn ($1{,}62$), và GAE tổ hợp các ước lượng nhiều bước bằng tham số $\lambda$ để cân bằng hai đại lượng.
-4. Bổ đề hiệu hiệu năng cho thấy đánh giá chính sách mới cần phân bố trạng thái của chính nó; hàm thay thế dùng phân bố của chính sách cũ, khớp $J$ đến bậc một, nhưng với bước tới $(0{,}9;\,0{,}5)$ nó dự báo $J$ tăng $0{,}095$ trong khi $J$ giảm $0{,}085$, nên TRPO tối đa hàm thay thế trong một miền KL trung bình nhỏ.
+4. Bổ đề chênh lệch hiệu năng cho thấy đánh giá chính sách mới cần phân bố trạng thái của chính nó; hàm thay thế dùng phân bố của chính sách cũ, khớp $J$ đến bậc một, nhưng với bước tới $(0{,}9;\,0{,}5)$ nó dự báo $J$ tăng $0{,}095$ trong khi $J$ giảm $0{,}085$, nên TRPO tối đa hàm thay thế trong một miền KL trung bình nhỏ.
 5. PPO thay ràng buộc KL bằng phép cắt tỉ số chính sách và dùng lại một bộ đệm nhiều lần chỉ với gradient bậc một: trên một bộ đệm hai lượt có lợi thế ước lượng sai dấu, phép cắt giữ mức giảm của $J$ ở $0{,}008$ thay cho $0{,}4$.
 
 Mạch tổng kết gọi tên ví dụ chung (chuỗi hai trạng thái) mà không nhắc số (Đ13). Câu hỏi trung tâm (trang "Vấn đề trung tâm" của mạch 1): (1) làm thế nào để ước lượng gradient chính sách có phương sai nhỏ mà kỳ vọng không đổi; (2) làm thế nào để dùng bước cập nhật dài mà hàm mục tiêu không giảm. Câu 2–3 trả lời phần (1), câu 4–5 trả lời phần (2).
@@ -56,11 +56,13 @@ Khuôn mỗi mạch (TB1, TB27): bài toán → trực quan → công cụ → k
 
 ### Mạch 4. Hàm thay thế và miền tin cậy (TRPO)
 
-1. Bài toán: một bước cập nhật dài đề xuất chính sách ứng viên $\tilde\theta=(\log9;\,0)$, tức $\tilde\pi=(0{,}9;\,0{,}5)$; cần đánh giá $J(\tilde\pi)$ từ các lượt của $\pi$, trong khi $\tilde\pi$ thăm $s_B$ với xác suất $0{,}9$ thay cho $0{,}5$.
-2. Trực quan: đổi một bước tại $s$ sang $\pi'$ rồi theo $\pi$ cho lợi ích $A_\pi(s,\pi')$; với $\tilde\pi$, lợi ích bằng $0{,}32$ tại $s_A$ và $-0{,}5$ tại $s_B$; bổ đề hiệu hiệu năng cộng các lợi ích này theo số lần thăm kỳ vọng có chiết khấu của chính sách mới, $\eta_{\tilde\pi}=(1;\,0{,}81)$, cho $\Delta J=-0{,}085$.
-3. Công cụ: hàm thay thế giữ số lần thăm của $\pi$ nên tính được từ lượt cũ nhờ tỉ số chính sách; với $\tilde\pi$ nó dự báo $+0{,}095$, sai số bằng $\sum_s(\eta_{\tilde\pi}-\eta_\pi)A_\pi(s,\tilde\pi)=-0{,}18$; nó tiếp xúc $J$ tại $\pi$ (cùng giá trị, cùng gradient), và định lý chặn cải thiện chặn sai số theo khoảng cách TV, rồi theo KL trung bình.
-4. Kết quả trên ví dụ: trên đoạn từ $\pi$ tới $\tilde\pi$, $\Delta\mathcal L=0{,}095t$ và $\Delta J=0{,}095t-0{,}18t^2$; bước $t=0{,}25$ cho hai số cùng dấu, bước $t=1$ cho hai số trái dấu; cận cải thiện dương chỉ khi bước rất ngắn ($\Delta<0{,}056$ trên bước chỉ đổi $p_B$).
-5. Kết quả: bài toán miền tin cậy tối đa hàm thay thế với KL trung bình không vượt $\kappa$; gần chính sách cũ, nghiệm đi theo gradient tự nhiên $F^{-1}g=(8;\,30)$, và TRPO giải xấp xỉ bài toán này. Điều còn thiếu: mỗi bước TRPO cần ma trận Fisher, gradient liên hợp và tìm kiếm lùi, và mỗi bộ đệm chỉ cho một bước.
+Bản theo đề xuất trình bày TRPO của tác giả (`de-xuat-trinh-bay-trpo-2026-11-21.md`), điều phối viên duyệt 2026-11-21; storyboard §3 mạch 4. Bản trước ở mục lịch sử cuối tệp.
+
+1. Hiện tượng và câu hỏi: mỗi lượt của mạch trước chỉ cho một bước, và bước dài theo ước lượng của một lượt cũ làm $J$ giảm. Trên đoạn từ $\pi$ tới ứng viên $\tilde\pi=(0{,}9;\,0{,}5)$, $J(\pi_t)=1{,}4+0{,}095t-0{,}18t^2$: hướng này làm $J$ tăng lúc đầu, nhưng $J$ về $1{,}4$ tại $t=\tfrac{19}{36}$ và xuống $1{,}315$ tại $t=1$. Biết hướng làm $J$ tăng chưa cho biết đi bao xa. $\tilde\pi$ đổi cả hành động tại $s_B$ lẫn tần suất tới $s_B$ (trong $100$ lượt, từ $50$ lên $90$), và $J(\tilde\pi)$ chỉ biết sau khi chạy nó. Đánh giá chính sách mới từ lượt của $\pi$ thế nào, và tin được đến đâu?
+2. Mô hình: mức thay đổi của $J$ là lợi thế của $\pi$ cộng theo tần suất gặp trạng thái dưới chính sách mới, $1\cdot0{,}32+0{,}81\cdot(-0{,}5)=-0{,}085$ (bổ đề chênh lệch hiệu năng). Hàm thay thế thay tần suất mới bằng tần suất cũ và hiệu chỉnh hành động bằng tỉ số chính sách, nên tính được từ lượt cũ.
+3. Kết quả trên ví dụ: hàm thay thế dự báo $+0{,}095$ trong khi $J$ giảm $0{,}085$, toàn bộ sai số nằm ở $s_B$. Trên đoạn từ $\pi$ tới $\tilde\pi$, dự báo tăng như $0{,}095t$ còn sai số tăng như $0{,}18t^2$; hàm thay thế tiếp xúc $J$ tại $\pi$ nên là mô hình cục bộ.
+4. Giới hạn thay đổi: cùng bước tham số đổi hành vi rất khác nhau ($\Delta p=0{,}2311$ so với $0{,}0042$), nên khoảng cách đo trên phân phối hành động bằng KL. Bài toán miền tin cậy tối đa hàm thay thế với KL trung bình $\le\kappa$; trên đoạn, $\kappa=0{,}01$ giữ $t\le0{,}515$, nơi $\Delta J>0$. KL nhỏ kéo theo TV nhỏ, phân bố chiếm dụng ít đổi và sai số nhỏ (cơ sở lý thuyết; với $\tilde\pi$ cận là $-4{,}18$, cận dương chỉ với bước rất ngắn).
+5. Giải và thuật toán: bậc một cho hàm thay thế, bậc hai cho KL, miền tin cậy thành một elip của ma trận Fisher; bước tối ưu đi theo gradient tự nhiên $F^{-1}g=(8;\,30)$, dồn về $\theta_B$, và một bước TRPO đưa $J$ từ $1{,}4$ lên $1{,}807$. Điều còn thiếu: mỗi bộ đệm chỉ cho một bước, với gradient liên hợp và tìm kiếm lùi.
 
 ### Mạch 5. Tối ưu chính sách gần kề (PPO)
 
@@ -90,7 +92,7 @@ Mọi kết quả mà trang chiếu dùng mang nhãn, giả thiết lấy từ g
 | 2 | Sai số TD với $v_\pi$ đúng và lợi thế (Mệnh đề 10.8(a)) | Mệnh đề. | (a) `2-07` |
 | 3 | Dạng tổng, hai đầu mút, truy hồi của GAE (Mệnh đề 10.14; dùng Bổ đề 10.12) | Mệnh đề. | (b) `3-11` |
 | 3 | GAE và gradient, tính không chệch (Mệnh đề 10.15) | Mệnh đề. | (b) `3-12` |
-| 4 | Bổ đề hiệu hiệu năng (Bổ đề 10.19) | Bổ đề. | (b) `4-14` |
+| 4 | Bổ đề chênh lệch hiệu năng (Bổ đề 10.19) | Bổ đề. | (b) `4-14` |
 | 4 | Hàm thay thế tiếp xúc $J$ (Mệnh đề 10.22) | Mệnh đề. | (a) `4-17` |
 | 4 | Chặn cải thiện (Định lý 10.26; dùng Bổ đề 10.25) | Định lý. | (b) `4-18` |
 | 4 | Bất đẳng thức Pinsker (Mệnh đề 10.24(b)) | Mệnh đề. | (a) `4-20` (phép gộp hai nhóm, như ghi chú) |
@@ -137,3 +139,17 @@ Ngoài N1–N6 của bản tổng hợp:
 - N8. (Điều phối viên chốt 2026-11-21.) Không thêm khối định nghĩa (tránh đánh lại số); ghi chú thêm câu $A_\pi(s,\pi')=\sum_a\pi'(a\mid s)q_\pi(s,a)-v_\pi(s)$ vào đoạn mở §4.1; trang chiếu `L10-4-13` vẫn ghi nhãn "Định nghĩa."
 - N9. (Điều phối viên chốt 2026-11-21: các số được thêm vào ghi chú.) Bổ sung vào ví dụ tương ứng các số deck dùng mà ghi chú chưa có: $D_{\mathrm{KL}}(s_B)=0{,}0566$, $\bar D_{\mathrm{KL}}=0{,}0536$, phạt dạng KL $14{,}7$ cho bước tới $\tilde\pi$; miền KL $\kappa=0{,}01$ trên đoạn thẳng là $t\le0{,}515$; bước TRPO trên chuỗi với $\kappa=0{,}01$ ($\Delta^*=(0{,}35;\,1{,}30)$, KL thật $0{,}0085$, $J=1{,}807$); trên bộ đệm hai lượt, KL tại $s_B$ $0{,}011\to0{,}104$ và $J(0{,}4;\,0{,}85)=1{,}518$; câu hỏi nhanh actor–critic với GAE ($\theta=(0{,}2;\,\log2+0{,}6)$, $p=(0{,}550;\,0{,}785)$). Các trường hợp khác cấu trúc của Đ2 trên trang chỉ dùng phản ví dụ đã có trong ghi chú (đoạn sau Mệnh đề 10.5, đoạn sau Bổ đề 10.19); thêm số cho ví dụ một bước TRPO (`4-25`: $D_{\mathrm{KL}}=(0{,}0150;\,0{,}156)$ tại $p=(0{,}586;\,0{,}880)$) và nghiệm số $t\approx0{,}515$ của $\bar D_{\mathrm{KL}}(t)=0{,}01$ kèm dòng kiểm.
 - N10. (Đã giải quyết theo điều phối viên 2026-11-21.) Ghi chú giữ $\pi'=(0{,}6;\,0{,}8)$ cho Ví dụ 10.11 và gọi bước dài là $\tilde\pi$, $\tilde\theta=(\log9;\,0)$; deck dùng $\pi'$ trong phát biểu tổng quát và $\tilde\pi$ cho chính sách cụ thể của ví dụ. Đánh số ghi chú sau khi bỏ DPO: tổng kết là §7; số bài tập giữ theo BT4: bài softmax là Bài tập 10.22 (mạch 1), bài PPO-Clip là Bài tập 10.23 (cuối mạch 5), số 10.18–10.21 bỏ trống.
+
+---
+
+# Lịch sử: câu chuyện mạch 4 trước đề xuất TRPO (2026-11-21)
+
+Phần dưới là mục "Mạch 4" trước khi thay theo đề xuất trình bày TRPO của tác giả, giữ nguyên chữ, tiêu đề hạ một bậc. Không còn hiệu lực.
+
+#### Mạch 4. Hàm thay thế và miền tin cậy (TRPO)
+
+1. Bài toán: một bước cập nhật dài đề xuất chính sách ứng viên $\tilde\theta=(\log9;\,0)$, tức $\tilde\pi=(0{,}9;\,0{,}5)$; cần đánh giá $J(\tilde\pi)$ từ các lượt của $\pi$, trong khi $\tilde\pi$ thăm $s_B$ với xác suất $0{,}9$ thay cho $0{,}5$.
+2. Trực quan: đổi một bước tại $s$ sang $\pi'$ rồi theo $\pi$ cho lợi ích $A_\pi(s,\pi')$; với $\tilde\pi$, lợi ích bằng $0{,}32$ tại $s_A$ và $-0{,}5$ tại $s_B$; bổ đề hiệu hiệu năng cộng các lợi ích này theo số lần thăm kỳ vọng có chiết khấu của chính sách mới, $\eta_{\tilde\pi}=(1;\,0{,}81)$, cho $\Delta J=-0{,}085$.
+3. Công cụ: hàm thay thế giữ số lần thăm của $\pi$ nên tính được từ lượt cũ nhờ tỉ số chính sách; với $\tilde\pi$ nó dự báo $+0{,}095$, sai số bằng $\sum_s(\eta_{\tilde\pi}-\eta_\pi)A_\pi(s,\tilde\pi)=-0{,}18$; nó tiếp xúc $J$ tại $\pi$ (cùng giá trị, cùng gradient), và định lý chặn cải thiện chặn sai số theo khoảng cách TV, rồi theo KL trung bình.
+4. Kết quả trên ví dụ: trên đoạn từ $\pi$ tới $\tilde\pi$, $\Delta\mathcal L=0{,}095t$ và $\Delta J=0{,}095t-0{,}18t^2$; bước $t=0{,}25$ cho hai số cùng dấu, bước $t=1$ cho hai số trái dấu; cận cải thiện dương chỉ khi bước rất ngắn ($\Delta<0{,}056$ trên bước chỉ đổi $p_B$).
+5. Kết quả: bài toán miền tin cậy tối đa hàm thay thế với KL trung bình không vượt $\kappa$; gần chính sách cũ, nghiệm đi theo gradient tự nhiên $F^{-1}g=(8;\,30)$, và TRPO giải xấp xỉ bài toán này. Điều còn thiếu: mỗi bước TRPO cần ma trận Fisher, gradient liên hợp và tìm kiếm lùi, và mỗi bộ đệm chỉ cho một bước.

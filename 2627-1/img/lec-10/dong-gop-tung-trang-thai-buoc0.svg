@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" width="900" height="440" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Đóng góp của từng trạng thái vào dự báo và vào mức thay đổi tính trực tiếp</title>
+<desc id="d">Bảng trái, delta L: số lần thăm eta pi. Trục tung chung từ âm 0,45 tới 0,4. Cột s A dương, xanh lục nhạt: 1 nhân 0,32 bằng cộng 0,32. Cột s B âm, xám đậm: 0,45 nhân âm 0,5 bằng âm 0,225. Tổng delta L bằng cộng 0,095, chữ cam trong khung nét đứt.</desc>
+<defs><marker id="mk" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#1d2433"/></marker><marker id="mf" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#3E4A5E"/></marker><marker id="mx" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#8C95A6"/></marker><marker id="mr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#C62828"/></marker><marker id="mo" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#B35C00"/></marker><marker id="mg" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#2E7D4F"/></marker><marker id="mp" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#6B3FA0"/></marker><pattern id="sx" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#8C95A6" stroke-width="3"/></pattern><pattern id="sp" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#6B3FA0" stroke-width="3"/></pattern><pattern id="sg" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#2E7D4F" stroke-width="3"/></pattern></defs>
+<line x1="78.0" y1="84.0" x2="78.0" y2="330.5" stroke="#1d2433" stroke-width="2"/>
+<line x1="71.0" y1="84.0" x2="78.0" y2="84.0" stroke="#1d2433" stroke-width="2"/>
+<text x="66.0" y="93.0" font-size="26" text-anchor="end" fill="#1d2433"><tspan>0,4</tspan></text>
+<line x1="71.0" y1="142.0" x2="78.0" y2="142.0" stroke="#1d2433" stroke-width="2"/>
+<text x="66.0" y="151.0" font-size="26" text-anchor="end" fill="#1d2433"><tspan>0,2</tspan></text>
+<line x1="71.0" y1="200.0" x2="78.0" y2="200.0" stroke="#1d2433" stroke-width="2"/>
+<text x="66.0" y="209.0" font-size="26" text-anchor="end" fill="#1d2433"><tspan>0</tspan></text>
+<line x1="71.0" y1="258.0" x2="78.0" y2="258.0" stroke="#1d2433" stroke-width="2"/>
+<text x="66.0" y="267.0" font-size="26" text-anchor="end" fill="#1d2433"><tspan>−0,2</tspan></text>
+<line x1="71.0" y1="316.0" x2="78.0" y2="316.0" stroke="#1d2433" stroke-width="2"/>
+<text x="66.0" y="325.0" font-size="26" text-anchor="end" fill="#1d2433"><tspan>−0,4</tspan></text>
+<text x="269.0" y="30.0" font-size="26" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan>Δℒ: số lần thăm η</tspan><tspan dy="6.5" font-size="20.8">π</tspan><tspan dy="-6.5"></tspan></text>
+<line x1="78.0" y1="200.0" x2="460.0" y2="200.0" stroke="#1d2433" stroke-width="2"/>
+<rect x="115.0" y="107.2" width="120.0" height="92.8" rx="0" fill="#CFE8D8" stroke="#2E7D4F" stroke-width="2"/>
+<text x="175.0" y="66.2" font-size="26" text-anchor="middle" fill="#1d2433"><tspan>1 · 0,32</tspan></text>
+<text x="175.0" y="99.2" font-size="26" text-anchor="middle" fill="#1d2433"><tspan> = +0,32</tspan></text>
+<text x="175.0" y="232.0" font-size="26" text-anchor="middle" fill="#1d2433"><tspan font-style="italic">s</tspan><tspan dy="6.5" font-style="italic" font-size="20.8">A</tspan><tspan dy="-6.5"></tspan></text>
+<rect x="305.0" y="200.0" width="120.0" height="65.2" rx="0" fill="#6E7787" stroke="#1d2433" stroke-width="2"/>
+<text x="365.0" y="188.0" font-size="26" text-anchor="middle" fill="#1d2433"><tspan font-style="italic">s</tspan><tspan dy="6.5" font-style="italic" font-size="20.8">B</tspan><tspan dy="-6.5"></tspan></text>
+<text x="365.0" y="299.2" font-size="26" text-anchor="middle" fill="#1d2433"><tspan>0,45 · (−0,5)</tspan></text>
+<text x="365.0" y="332.2" font-size="26" text-anchor="middle" fill="#1d2433"><tspan> = −0,225</tspan></text>
+<rect x="134.0" y="396.0" width="270.0" height="42.0" rx="6" fill="#FFFFFF" stroke="#B35C00" stroke-width="3" stroke-dasharray="10 6"/>
+<text x="269.0" y="426.0" font-size="26" text-anchor="middle" font-weight="bold" fill="#B35C00"><tspan>tổng </tspan><tspan>Δℒ = +0,095</tspan></text>
+</svg>

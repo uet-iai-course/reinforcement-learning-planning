@@ -163,8 +163,8 @@
 .reveal.lecture-deck.dense .box,
 .reveal.lecture-deck.dense .check { padding: .35em .6em; }
 /* Hình có thuộc tính width (độ rộng tối thiểu để nhãn đạt cỡ chữ quy định) hiện đúng độ rộng đó,
-   không bị quy tắc max-width: 95% của Reveal thu nhỏ. */
-.reveal.lecture-deck.dense img[width] { max-width: none; }
+   không bị quy tắc max-width: 95% và max-height: 95% của Reveal thu nhỏ. */
+.reveal.lecture-deck.dense img[width] { max-width: none; max-height: none; }
 /* Với ảnh không bị thu theo phần trăm, cột hình lấy min-content: rộng đúng bằng hình, chữ đặt
    dưới hình trong cùng cột (câu hỏi nhanh, hộp) xuống dòng theo bề rộng đó. */
 .reveal.lecture-deck.dense .grid2.fig-right { grid-template-columns: minmax(0, 1fr) min-content; }

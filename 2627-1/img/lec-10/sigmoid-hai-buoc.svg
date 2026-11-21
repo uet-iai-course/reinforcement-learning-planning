@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" width="720" height="440" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Cùng bước tham số, hai mức thay đổi xác suất trên đường sigmoid</title>
+<desc id="d">Đường p bằng sigma của theta, theta từ âm 6 tới 6, trục tung từ 0 tới 1. Bước theta từ 0 tới 1: đoạn ngang tại p bằng 0,5, đoạn đứng tím nét đứt lên 0,7311, hai chấm tím; nhãn delta theta bằng 1, delta p bằng 0,2311. Bước theta từ 5 tới 6: hai chấm tím sát nhau trên đoạn bão hòa, tại p bằng 0,9933 và 0,9975; nhãn delta theta bằng 1, delta p bằng 0,0042.</desc>
+<defs><marker id="mk" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#1d2433"/></marker><marker id="mf" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#3E4A5E"/></marker><marker id="mx" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#8C95A6"/></marker><marker id="mr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#C62828"/></marker><marker id="mo" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#B35C00"/></marker><marker id="mg" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#2E7D4F"/></marker><marker id="mp" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#6B3FA0"/></marker><pattern id="sx" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#8C95A6" stroke-width="3"/></pattern><pattern id="sp" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#6B3FA0" stroke-width="3"/></pattern><pattern id="sg" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#2E7D4F" stroke-width="3"/></pattern></defs>
+<line x1="92.0" y1="360.0" x2="680.0" y2="360.0" stroke="#1d2433" stroke-width="2"/>
+<line x1="92.0" y1="360.0" x2="92.0" y2="40.0" stroke="#1d2433" stroke-width="2"/>
+<line x1="85.0" y1="360.0" x2="92.0" y2="360.0" stroke="#1d2433" stroke-width="2"/>
+<line x1="85.0" y1="200.0" x2="92.0" y2="200.0" stroke="#1d2433" stroke-width="2"/>
+<text x="80.0" y="208.0" font-size="24" text-anchor="end" fill="#1d2433"><tspan>0,5</tspan></text>
+<line x1="85.0" y1="40.0" x2="92.0" y2="40.0" stroke="#1d2433" stroke-width="2"/>
+<text x="80.0" y="48.0" font-size="24" text-anchor="end" fill="#1d2433"><tspan>1</tspan></text>
+<line x1="92.0" y1="200.0" x2="680.0" y2="200.0" stroke="#8C95A6" stroke-width="1.2" stroke-dasharray="3 6"/>
+<line x1="92.0" y1="360.0" x2="92.0" y2="367.0" stroke="#1d2433" stroke-width="2"/>
+<text x="92.0" y="392.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan>−6</tspan></text>
+<line x1="239.0" y1="360.0" x2="239.0" y2="367.0" stroke="#1d2433" stroke-width="2"/>
+<text x="239.0" y="392.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan>−3</tspan></text>
+<line x1="386.0" y1="360.0" x2="386.0" y2="367.0" stroke="#1d2433" stroke-width="2"/>
+<text x="386.0" y="392.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan>0</tspan></text>
+<line x1="435.0" y1="360.0" x2="435.0" y2="367.0" stroke="#1d2433" stroke-width="2"/>
+<text x="435.0" y="392.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan>1</tspan></text>
+<line x1="631.0" y1="360.0" x2="631.0" y2="367.0" stroke="#1d2433" stroke-width="2"/>
+<text x="631.0" y="392.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan>5</tspan></text>
+<line x1="680.0" y1="360.0" x2="680.0" y2="367.0" stroke="#1d2433" stroke-width="2"/>
+<text x="680.0" y="392.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan>6</tspan></text>
+<text x="716.0" y="392.0" font-size="24" text-anchor="end" fill="#1d2433"><tspan>θ</tspan></text>
+<path d="M 92.0 359.2 L 96.9 359.1 L 101.8 359.0 L 106.7 358.9 L 111.6 358.8 L 116.5 358.7 L 121.4 358.6 L 126.3 358.4 L 131.2 358.2 L 136.1 358.1 L 141.0 357.9 L 145.9 357.6 L 150.8 357.4 L 155.7 357.1 L 160.6 356.8 L 165.5 356.5 L 170.4 356.1 L 175.3 355.7 L 180.2 355.3 L 185.1 354.8 L 190.0 354.2 L 194.9 353.7 L 199.8 353.0 L 204.7 352.3 L 209.6 351.5 L 214.5 350.6 L 219.4 349.7 L 224.3 348.6 L 229.2 347.5 L 234.1 346.2 L 239.0 344.8 L 243.9 343.3 L 248.8 341.7 L 253.7 339.8 L 258.6 337.9 L 263.5 335.7 L 268.4 333.4 L 273.3 330.8 L 278.2 328.1 L 283.1 325.1 L 288.0 321.9 L 292.9 318.4 L 297.8 314.6 L 302.7 310.6 L 307.6 306.2 L 312.5 301.6 L 317.4 296.7 L 322.3 291.5 L 327.2 285.9 L 332.1 280.1 L 337.0 273.9 L 341.9 267.5 L 346.8 260.8 L 351.7 253.8 L 356.6 246.6 L 361.5 239.2 L 366.4 231.6 L 371.3 223.8 L 376.2 215.9 L 381.1 208.0 L 386.0 200.0 L 390.9 192.0 L 395.8 184.1 L 400.7 176.2 L 405.6 168.4 L 410.5 160.8 L 415.4 153.4 L 420.3 146.2 L 425.2 139.2 L 430.1 132.5 L 435.0 126.1 L 439.9 119.9 L 444.8 114.1 L 449.7 108.5 L 454.6 103.3 L 459.5 98.4 L 464.4 93.8 L 469.3 89.4 L 474.2 85.4 L 479.1 81.6 L 484.0 78.1 L 488.9 74.9 L 493.8 71.9 L 498.7 69.2 L 503.6 66.6 L 508.5 64.3 L 513.4 62.1 L 518.3 60.2 L 523.2 58.3 L 528.1 56.7 L 533.0 55.2 L 537.9 53.8 L 542.8 52.5 L 547.7 51.4 L 552.6 50.3 L 557.5 49.4 L 562.4 48.5 L 567.3 47.7 L 572.2 47.0 L 577.1 46.3 L 582.0 45.8 L 586.9 45.2 L 591.8 44.7 L 596.7 44.3 L 601.6 43.9 L 606.5 43.5 L 611.4 43.2 L 616.3 42.9 L 621.2 42.6 L 626.1 42.4 L 631.0 42.1 L 635.9 41.9 L 640.8 41.8 L 645.7 41.6 L 650.6 41.4 L 655.5 41.3 L 660.4 41.2 L 665.3 41.1 L 670.2 41.0 L 675.1 40.9 L 680.0 40.8" stroke="#3E4A5E" stroke-width="3.5" fill="none" stroke-linejoin="round"/>
+<text x="101.8" y="264.0" font-size="24" text-anchor="start" fill="#3E4A5E"><tspan font-style="italic">p</tspan><tspan> = σ(θ)</tspan></text>
+<line x1="386.0" y1="200.0" x2="435.0" y2="200.0" stroke="#1d2433" stroke-width="2"/>
+<line x1="435.0" y1="200.0" x2="435.0" y2="126.1" stroke="#6B3FA0" stroke-width="3.5" stroke-dasharray="8 5"/>
+<circle cx="386.0" cy="200.0" r="7" fill="#6B3FA0"/>
+<circle cx="435.0" cy="126.1" r="7" fill="#6B3FA0"/>
+<text x="449.7" y="161.6" font-size="24" text-anchor="start" font-weight="bold" fill="#6B3FA0"><tspan>Δθ = 1</tspan><tspan>,</tspan></text>
+<text x="449.7" y="191.6" font-size="24" text-anchor="start" font-weight="bold" fill="#6B3FA0"><tspan>Δ</tspan><tspan font-style="italic">p</tspan><tspan> = 0,2311</tspan></text>
+<line x1="631.0" y1="42.1" x2="680.0" y2="42.1" stroke="#1d2433" stroke-width="2"/>
+<line x1="680.0" y1="42.1" x2="680.0" y2="40.8" stroke="#6B3FA0" stroke-width="3.5"/>
+<circle cx="631.0" cy="42.1" r="7" fill="#6B3FA0"/>
+<circle cx="680.0" cy="40.8" r="7" fill="#6B3FA0"/>
+<text x="680.0" y="84.8" font-size="24" text-anchor="end" font-weight="bold" fill="#6B3FA0"><tspan>Δθ = 1</tspan><tspan>,</tspan></text>
+<text x="680.0" y="114.8" font-size="24" text-anchor="end" font-weight="bold" fill="#6B3FA0"><tspan>Δ</tspan><tspan font-style="italic">p</tspan><tspan> = 0,0042</tspan></text>
+</svg>
