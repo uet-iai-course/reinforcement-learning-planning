@@ -108,22 +108,34 @@
 </section>
 <section data-slide-id="L11-1-03" data-note-topic-id="lec-11-topic-01">
 <h2>Mục tiêu học tập</h2>
+<p>Sau bài này, sinh viên có thể:</p>
 <ol>
-<li>Tính mô hình đếm của $(\mathrm A,\rightarrow)$ từ hai lần thử. Với hai cỡ mẫu giả định $C=5$ và $C=50$ của một cặp có $p=0{,}8$, dự đoán độ lệch chuẩn của $\hat p$ giảm mấy lần<span class="fragment">: ${\sqrt{50/5}\approx3{,}16}$, ${0{,}1789\to0{,}0566}$</span>.</li>
-<li>Ở bước thật $5$ của Dyna-Q, chỉ ra riêng ô $Q$ sửa từ bước thật, mục ghi vào mô hình và các ô $Q$ sửa khi lập kế hoạch lấy $(\mathrm F,\rightarrow)$ rồi $(\mathrm K,\rightarrow)$. Nêu điều kiện hội tụ của Q-planning. Khi tường $\mathrm B$–$\mathrm C$ mở, chỉ ra hành động mà thưởng thăm dò giúp thử lại.</li>
-<li>${b=100}$ trạng thái kế, $10$ lần đánh giá: chỉ ra cách cập nhật chạy được. So sai số căn bình phương trung bình (RMSE) với $\bar y$ của hai cách: kỳ vọng ($100$ lần), mẫu ${(k=10)}$.</li>
+<li>Phân biệt mô hình phân phối với mô hình mẫu, lập kế hoạch nền với lập kế hoạch tại thời điểm quyết định.</li>
+<li>Ước lượng mô hình bằng tần suất từ dữ liệu.</li>
+<li>Tách bất định ngẫu nhiên (aleatoric uncertainty) của môi trường khỏi bất định nhận thức (epistemic uncertainty) do thiếu dữ liệu.</li>
+<li>Thực hiện Dyna-Q, nêu điều kiện Q-planning hội tụ, giải thích vì sao mô hình sai cần thưởng thăm dò.</li>
 </ol>
-<aside class="notes"><p>Mỗi mục tiêu là một việc sinh viên tự kiểm được trên mê cung. Mục tiêu 1: lượt thứ nhất chọn $(\mathrm A,\rightarrow)$ hai lần, một lần ở lại $\mathrm A$, một lần sang $\mathrm B$, nên mô hình đếm cho mỗi kết cục tần suất $1/2$; với $C$ ấn định trước, độ lệch chuẩn $\sqrt{0{,}16/C}$ giảm $\sqrt{10}\approx3{,}16$ lần, từ $0{,}1789$ xuống $0{,}0566$, còn phương sai một lần chuyển $p(1-p)=0{,}16$ không đổi; mục tiêu còn gồm phân biệt mô hình phân phối với mô hình mẫu, lập kế hoạch nền với lập kế hoạch tại thời điểm quyết định. Mục tiêu 2: (d) sửa $Q(\mathrm K,\rightarrow)$ thành $0{,}5$; (e) ghi $(\mathrm K,\rightarrow)\mapsto(S',R)=(\mathrm Z,+1)$; (f) sửa $Q(\mathrm F,\rightarrow)$ thành $0{,}225$ rồi $Q(\mathrm K,\rightarrow)$ thành $0{,}75$ khi bước chọn cặp lấy hai cặp đó theo thứ tự này. Điều kiện hội tụ là giả thiết của Mệnh đề 11.4. Thưởng thăm dò đưa $Q(\mathrm B,\rightarrow)$ từ $0{,}54$ lên $0{,}64$. Mục tiêu 3: với ngân sách $10$ lần đánh giá chỉ cập nhật mẫu chạy được, vì cập nhật kỳ vọng cần đủ $100$ lần và cho đúng $\bar y$; $10$ cập nhật mẫu cho sai số căn bình phương trung bình so với $\bar y$ bằng $\sqrt{99/1000}=0{,}3146$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 11, Mục tiêu học tập 1–3; Mệnh đề 11.4, 11.5; Ví dụ 11.2, 11.4, 11.6, 11.8, 11.11.</p></aside>
+<aside class="notes"><p>Năng lực đầu dựng ở mạch 2 (hai dạng mô hình, lập kế hoạch nền) và mạch 3 (lập kế hoạch tại thời điểm quyết định). Ba năng lực còn lại của trang thuộc mạch 2: ước lượng mô hình bằng bảng đếm, hai loại bất định, rồi Dyna-Q cùng điều kiện hội tụ của Q-planning và thưởng thăm dò.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 11, Mục tiêu học tập 1–2.</p></aside>
 </section>
 <section data-slide-id="L11-1-04" data-note-topic-id="lec-11-topic-01">
 <h2>Mục tiêu học tập</h2>
-<ol start="4">
-<li>Tại $\mathrm F$, so sánh hai hành động $\downarrow$ và $\rightarrow$ với $m$ mô phỏng mỗi hành động: chặn xác suất rollout xếp nhầm $\downarrow$ cao hơn $\rightarrow$.<br/>Chạy một vòng tìm kiếm theo cây Monte Carlo.</li>
-<li>Tính một bước hạ gradient của chi phí kế hoạch qua mô hình bằng truy hồi ngược.</li>
-<li>Tính mô hình của tùy chọn đi từ phòng trái tới $\mathrm K$, rồi chạy lặp giá trị với tùy chọn từ ${V_0\equiv0}$.</li>
-<li>Với một bài toán mới, chọn cách dùng mô hình và kiểm giả thiết mà bảo đảm của cách đó cần.</li>
+<ol start="5">
+<li>So sánh cập nhật kỳ vọng với cập nhật mẫu theo số phép tính và sai số khi ngân sách tính toán nhỏ.</li>
+<li>Phát biểu tính chất cải thiện của rollout cùng giả thiết của nó; chọn số mô phỏng theo xác suất chọn sai cho phép.</li>
+<li>Giải thích quy tắc cận tin cậy trên và thực hiện tìm kiếm theo cây Monte Carlo.</li>
+<li>Tối ưu kế hoạch bằng đạo hàm qua mô hình khả vi và bằng phương pháp entropy chéo (cross-entropy method).</li>
 </ol>
-<aside class="notes"><p>Mục tiêu 4: với $\Delta=0{,}2072$, $m=70$ mô phỏng mỗi hành động chặn xác suất xếp $\downarrow$ trên $\rightarrow$ bởi $0{,}0496$ (Ví dụ 11.14); chọn đúng trong cả bốn hành động cần $m=75$, chặn $0{,}0483$ (Bài tập 11.8). Mục tiêu này còn gồm tính chất cải thiện của rollout, giá trị tại $\mathrm F$ từ $0{,}2016$ lên $0{,}8566$ (Mệnh đề 11.23, Ví dụ 11.13), chỉ số cận tin cậy trên $1{,}4481$ (Ví dụ 11.15) và chỉ số UCT $1{,}7558$ (Ví dụ 11.16). Mục tiêu 5: gradient $(8;\,4)$, $J$ từ $8$ xuống $2{,}88$ (Ví dụ 11.18); một vòng entropy chéo (Ví dụ 11.20); trên hệ thật $1{,}2x+u$, luật $u=-0{,}6x$ cho vòng kín co hệ số $0{,}6$ (Ví dụ 11.23); chặn sai số dự báo tích lũy (Mệnh đề 11.36). Mục tiêu 6: tùy chọn phòng trái kết thúc ở $\mathrm K$, tùy chọn phòng phải kết thúc ở $\mathrm Z$; hệ số chuyển từ $\mathrm F$ là $0{,}8780$; hai vòng cho $V_2(\mathrm A)=0{,}6604$ (Ví dụ 11.25, 11.26). Mục tiêu 7: Bài tập 11.9–11.11.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 11, Mục tiêu học tập 4–7; Mệnh đề 11.23, 11.36; Ví dụ 11.13–11.16, 11.18, 11.20, 11.23, 11.25, 11.26; Bài tập 11.8–11.11.</p></aside>
+<aside class="notes"><p>Năng lực so sánh hai cách cập nhật khép mạch 2, với ngân sách tính toán nhỏ hơn số trạng thái kế. Rollout, quy tắc cận tin cậy trên và tìm kiếm theo cây ứng với mạch 3; tính chất cải thiện của rollout cần giá trị chính xác của chính sách cơ sở, nên năng lực này gồm cả việc nêu giả thiết đó. Tối ưu kế hoạch bằng đạo hàm và bằng phương pháp entropy chéo ứng với mạch 4.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 11, Mục tiêu học tập 3–5.</p></aside>
+</section>
+<section data-slide-id="L11-1-10" data-note-topic-id="lec-11-topic-01">
+<h2>Mục tiêu học tập</h2>
+<ol start="9">
+<li>Giải thích sai số dự báo tích lũy và vai trò của điều khiển dự báo theo chân trời lùi.</li>
+<li>Định nghĩa tùy chọn và chính sách phân cấp; tính mô hình của tùy chọn; viết phương trình Bellman cho tùy chọn.</li>
+<li>Lập kế hoạch và học giá trị với tùy chọn.</li>
+<li>Chọn cách dùng mô hình cho bài toán và kiểm các giả thiết mà bảo đảm của cách đó cần.</li>
+</ol>
+<aside class="notes"><p>Sai số dự báo tích lũy và điều khiển dự báo theo chân trời lùi khép mạch 4. Các năng lực về tùy chọn ứng với mạch 5: lặp giá trị với tùy chọn là lập kế hoạch trên mô hình của tùy chọn, Q-learning với tùy chọn là học từ kinh nghiệm thật. Năng lực cuối là việc của mạch tổng kết: so bốn cách dùng mô hình rồi kiểm giả thiết mà bảo đảm của cách được chọn cần.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 11, Mục tiêu học tập 5–7.</p></aside>
 </section>
 </section>
 
