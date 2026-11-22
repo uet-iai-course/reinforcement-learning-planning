@@ -2,7 +2,7 @@
 
 Bước 3–4 của quy trình dựng deck (`NGUYEN-TAC-HOC-PHAN.md` §3a.E). Thay phần hiện hành của storyboard 2026-11-20; bản cũ giữ ở cuối tệp, mục "Lịch sử (bản 2026-11-20)".
 
-**Đầu vào chuẩn.** Câu chuyện `planning/lec-10/cau-chuyen-deck-2026-11-21.md`; góp ý `gop-y-tac-gia-deck-2026-11-20.md` (#1–#28); tổng hợp `tong-hop-gop-y-2026-11-21.md`; quy tắc TB1–TB33 (§3a), NT1–NT29 phần không bị thay, VP1–VP25; ghi chú `materials/lec-10/lecture-note.md` (bản đã sửa ngày 2026-11-21: bỏ DPO, tổng kết là §7, bài tập PPO-Clip là Bài tập 10.23, `exercises.md` có Bài tập 10.13–10.17 và 10.22, số 10.18–10.21 bỏ trống theo BT4); tinh chỉnh Đ1–Đ13 của TB24–TB33 (`NGUYEN-TAC-HOC-PHAN.md` §3a.F, khối "Tinh chỉnh TB24–TB33", tác giả 2026-11-21). Mọi số được tính lại trong `/tmp/claude-1000/-data-tqlong-lectures/678a7f48-9d80-46cf-a421-67398857f913/scratchpad/deck10-v2/kiem_so.py`.
+**Đầu vào chuẩn.** Câu chuyện `planning/lec-10/cau-chuyen-deck-2026-11-21.md`; nhận xét website `nhan-xet-website-trpo-2026-11-21.md` và quyết định #6 ở `gop-y-tac-gia-deck-2026-11-21.md` (2026-11-22, mục "Nhận xét website (#6)" của §10); góp ý `gop-y-tac-gia-deck-2026-11-20.md` (#1–#28); tổng hợp `tong-hop-gop-y-2026-11-21.md`; quy tắc TB1–TB33 (§3a), NT1–NT29 phần không bị thay, VP1–VP25; ghi chú `materials/lec-10/lecture-note.md` (bản đã sửa ngày 2026-11-21: bỏ DPO, tổng kết là §7, bài tập PPO-Clip là Bài tập 10.23, `exercises.md` có Bài tập 10.13–10.17 và 10.22, số 10.18–10.21 bỏ trống theo BT4); tinh chỉnh Đ1–Đ13 của TB24–TB33 (`NGUYEN-TAC-HOC-PHAN.md` §3a.F, khối "Tinh chỉnh TB24–TB33", tác giả 2026-11-21). Mọi số được tính lại trong `/tmp/claude-1000/-data-tqlong-lectures/678a7f48-9d80-46cf-a421-67398857f913/scratchpad/deck10-v2/kiem_so.py`.
 
 **Quy ước của tệp.**
 
@@ -27,14 +27,15 @@ Bước 3–4 của quy trình dựng deck (`NGUYEN-TAC-HOC-PHAN.md` §3a.E). Th
 | 1 | (mở đầu) Giới hạn của REINFORCE | không có (mạch mở đầu) | dựng ví dụ chung; cho thấy hai giới hạn; nêu câu hỏi trung tâm | REINFORCE, hàm điểm, $J$ (Bài 09); giá trị trạng thái (Bài 03) | chuỗi hai trạng thái, $J=1{,}4$, gradient $(0{,}2;\,0{,}3)$; phương sai $0{,}6925$; bước dài làm $J$ giảm; hai câu hỏi | không (bìa `L10-1-01`) | 11 | 17 |
 | 2 | Đường cơ sở và hàm lợi thế | "So lợi tức với giá trị của trạng thái giữ nguyên kỳ vọng của ước lượng gradient và giảm phương sai." (22) | giảm phương sai mà giữ kỳ vọng khi biết $v_\pi$ | ba loại lượt, phương sai $0{,}6925$, câu hỏi (1) | đường cơ sở, $A_\pi$, gradient dạng lợi thế, $\delta_t$ với $v_\pi$; phương sai $0{,}69\to0{,}20\to0$; $v_\pi$ chưa biết | `L10-2-00`, `id="mach-2"` | 11 | 18 |
 | 3 | Ước lượng lợi thế: độ chệch và phương sai | "Tổ hợp có trọng số các ước lượng lợi thế nhiều bước cân bằng độ chệch và phương sai." (19) | ước lượng lợi thế khi hàm giá trị phải học | $A_\pi$, $\delta_t$, gradient dạng lợi thế | critic, actor; GAE; $\lambda$ cân bằng chệch–phương sai; thuật toán actor–critic với GAE; mỗi lượt một bước nhỏ | `L10-3-00`, `id="mach-3"` | 13 | 21,5 |
-| 4 | Hàm thay thế và miền tin cậy | "Chính sách mới được đánh giá từ dữ liệu của chính sách cũ với sai số nhỏ khi hai chính sách gần nhau." (23) | đánh giá chính sách mới bằng dữ liệu cũ; chặn sai số; TRPO | GAE, critic, câu hỏi (2), lượt của $\pi$ | luồng 100 lượt (phân phối hành động, phân bố trạng thái), bổ đề chênh lệch hiệu năng, hàm thay thế, tỉ số chính sách, sai số bậc hai theo độ dài bước, KL, bài toán miền tin cậy, cơ sở lý thuyết (Pinsker, bổ đề dịch chuyển, chặn cải thiện, cải thiện đơn điệu), gradient tự nhiên, TRPO; chi phí bậc hai | `L10-4-00`, `id="mach-4"` | 28 | 37,5 |
+| 4 | Hàm thay thế và miền tin cậy | "Chính sách mới được đánh giá từ dữ liệu của chính sách cũ với sai số nhỏ khi hai chính sách gần nhau." (23) | đánh giá chính sách mới bằng dữ liệu cũ; chặn sai số; TRPO | GAE, critic, câu hỏi (2), lượt của $\pi$ | luồng 100 lượt (phân phối hành động, phân bố trạng thái), bổ đề chênh lệch hiệu năng, hàm thay thế, tỉ số chính sách, sai số bậc hai theo độ dài bước, KL, bài toán miền tin cậy, cơ sở lý thuyết (Pinsker, bổ đề dịch chuyển, chặn cải thiện, cải thiện đơn điệu), gradient tự nhiên, TRPO; chi phí bậc hai | `L10-4-00`, `id="mach-4"` | 26 (2026-11-22; trước đó 29) | 34 |
 | 5 | Tối ưu chính sách gần kề (PPO) | "PPO cắt tỉ số chính sách để dùng lại một bộ đệm nhiều lần bằng gradient bậc một." (18) | thay ràng buộc KL bằng phép cắt; dùng lại bộ đệm | hàm thay thế, tỉ số chính sách, critic $(1{,}4;\,1)$, chi phí TRPO | mục tiêu cắt, PPO-Clip, so sánh TRPO–PPO, bài tập tổng hợp | `L10-5-00`, `id="mach-5"` | 14 | 17 (+3,5 bài tập) |
-| 6 | Tổng kết | "Mỗi phương pháp của bài giảm phương sai hoặc giới hạn bước cập nhật dưới những giả thiết riêng." (19) | kết luận định tính kèm điều kiện | đầu ra mạch 1–5 | sơ đồ neo cuối, câu trả lời có điều kiện, bảng kết quả, bảng phương pháp | `L10-6-00`, `id="mach-6"` | 10 | 11 |
-| **Tổng** | | | | | | | **87** | **122 (+3,5 bài tập)** |
+| 6 | Tổng kết | "Mỗi phương pháp của bài giảm phương sai hoặc giới hạn bước cập nhật dưới những giả thiết riêng." (19) | kết luận định tính kèm điều kiện | đầu ra mạch 1–5 | sơ đồ neo cuối, câu trả lời có điều kiện, bảng kết quả, bảng phương pháp | `L10-6-00`, `id="mach-6"` | 10 | 11,5 (2026-11-22: `6-18` thêm một mục) |
+| Phụ lục | Phụ lục: cơ sở lý thuyết của miền tin cậy | "Các chứng minh nối giới hạn KL của bài toán miền tin cậy với sai số của hàm thay thế." (20) | chứng minh đầy đủ hơn cho lớp cần độ sâu toán học; không tính vào 120 phút | bổ đề chênh lệch hiệu năng, hàm thay thế, KL, $\nu^\pi$, hệ quả chặn cải thiện theo KL (`4-21`) | ý tưởng chứng minh bổ đề, Pinsker, bổ đề dịch chuyển, định lý chặn cải thiện, ví dụ cận trên chuỗi, cải thiện đơn điệu | `L10-7-00`, `id="mach-7"` | 7 | (8,5, ngoài giờ) |
+| **Tổng** | | | | | | | **85 + 7 phụ lục** (2026-11-22) | **119 (+3,5 bài tập)** (2026-11-22; §5) |
 
 Năm dòng dẫn khác mẫu câu (NT12) và chỉ dùng thuật ngữ của mạch trước hoặc tiên quyết (Đ11): "giá trị của trạng thái", "lợi tức", "kỳ vọng" (Bài 03, 09); "lợi thế" (mạch 2), "độ chệch", "phương sai" (mạch 1); "chính sách cũ/mới" (mạch 1); "tỉ số chính sách" (mạch 4), "bộ đệm" (Bài 08, mạch 4); "phương sai", "bước cập nhật" (mạch 1). Các mẫu câu (đồng bộ với deck, 2026-11-21): "So … giữ nguyên … và giảm …", "Tổ hợp … cân bằng …", "… được đánh giá từ … khi …", "PPO (…) cắt … để …", "Mỗi phương pháp … giảm … hoặc …". Tên tiếng Anh đầy đủ của PPO đứng ở mục 5 của danh sách `1-08` (lần đầu); dòng dẫn mạch 5 và `5-07` không lặp lại (G3). Không dòng nào nhắc ví dụ hay số (TB30); "lợi thế" (mạch 3) và "tỉ số chính sách" (mạch 5) được dạy ở mạch trước. Không `p.strand-keys` (thuật ngữ của mạch chưa được dạy ở điểm vào mạch, TB11).
 
-"Nội dung" (`L10-1-08`) và `#/N`: 1. Giới hạn của REINFORCE · 2. Đường cơ sở và hàm lợi thế · 3. Ước lượng lợi thế: độ chệch và phương sai · 4. Hàm thay thế và miền tin cậy · 5. Tối ưu chính sách gần kề (Proximal Policy Optimization, PPO) · 6. Tổng kết.
+"Nội dung" (`L10-1-08`) và `#/N`: 1. Giới hạn của REINFORCE · 2. Đường cơ sở và hàm lợi thế · 3. Ước lượng lợi thế: độ chệch và phương sai · 4. Hàm thay thế và miền tin cậy · 5. Tối ưu chính sách gần kề (Proximal Policy Optimization, PPO) · 6. Tổng kết. Sau danh sách đánh số, một dòng không đánh số "Phụ lục: cơ sở lý thuyết của miền tin cậy" liên kết `#/7` (2026-11-22, mục `1-08`).
 
 ## 2. Sơ đồ neo (TB2)
 
@@ -81,10 +82,10 @@ Thứ tự: `1-01` → `1-02` → `1-09` → `1-10` → `1-11` → `1-04` → `1
 #### `L10-1-01` · TRPO và PPO (bìa; giữ mã)
 
 - **Câu:** bài. **Nhãn:** không.
-- **Mặt trang:** "Học tăng cường · Bài 10"; `h1` "TRPO và PPO"; luận điểm "Dùng lại lượt đã thu cho những bước cập nhật chính sách lớn mà hàm mục tiêu không giảm." (19 âm tiết, một câu, không `<br>`, chỉ từ sinh viên có trước bài, NT11); "Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội"; "Năm học 2026–2027, học kỳ 1".
-- **1 phút:** Bài nói về các bước cập nhật chính sách lớn trên dữ liệu đã thu mà hàm mục tiêu không giảm.
+- **Mặt trang:** "Học tăng cường · Bài 10"; `h1` "TRPO và PPO"; luận điểm (2026-11-22, tác giả, #6) "Kiểm soát mức đổi chính sách để giảm nguy cơ suy giảm khi dùng lại lượt đã thu." (18 âm tiết, một câu, không `<br>`, chỉ từ sinh viên có trước bài, NT11; thay câu cũ "Dùng lại lượt đã thu cho những bước cập nhật chính sách lớn mà hàm mục tiêu không giảm.", hứa $J$ không giảm); "Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội"; "Năm học 2026–2027, học kỳ 1".
+- **1 phút:** Bài nói về cách giới hạn mức đổi chính sách khi dùng lại dữ liệu đã thu, để giảm nguy cơ hàm mục tiêu giảm.
 - **Mới:** không. **Nguồn số:** không. **Hình:** không.
-- **Diễn giả:** hai phần của bài: giảm phương sai của ước lượng gradient (mạch 2–3) là điều kiện để bước cập nhật dựa trên ước lượng có nghĩa; giới hạn bước cập nhật (mạch 4–5). Tên đầy đủ: tối ưu chính sách miền tin cậy (TRPO), tối ưu chính sách gần kề (PPO). Ghi chú nguồn: đoạn mở §1.
+- **Diễn giả:** hai phần của bài: giảm phương sai của ước lượng gradient (mạch 2–3) là điều kiện để bước cập nhật dựa trên ước lượng có nghĩa; giới hạn bước cập nhật (mạch 4–5). Câu deck hiện có "Mạch 4 và 5 giới hạn bước cập nhật để hàm mục tiêu không giảm." đổi thành "Mạch 4 và 5 giới hạn mức đổi chính sách ở mỗi bước cập nhật để hạn chế nguy cơ $J$ giảm khi dùng lại lượt đã thu." (2026-11-22). Tên đầy đủ: tối ưu chính sách miền tin cậy (TRPO), tối ưu chính sách gần kề (PPO). Ghi chú nguồn: đoạn mở §1.
 - **Phút:** 0,5.
 
 #### `L10-1-02` · Tiên quyết và quy ước (giữ mã; sửa #1)
@@ -220,7 +221,7 @@ Thứ tự: `1-01` → `1-02` → `1-09` → `1-10` → `1-11` → `1-04` → `1
 #### `L10-1-06` · Vấn đề trung tâm (giữ mã)
 
 - **Câu:** bài. **Nhãn:** "Câu hỏi:".
-- **Mặt trang:** hai hình thu nhỏ cạnh nhau, chú thích "phương sai lớn", "bước dài theo lượt $s_A\to2$ làm $J$ giảm" (G1); hộp "Câu hỏi:" với danh sách: 1. "Làm thế nào để ước lượng gradient chính sách có phương sai nhỏ mà kỳ vọng không đổi?" 2. "Làm thế nào để dùng lượt của chính sách cũ cho bước cập nhật dài mà hàm mục tiêu không giảm?"
+- **Mặt trang:** hai hình thu nhỏ cạnh nhau, chú thích "phương sai lớn", "bước dài theo lượt $s_A\to2$ làm $J$ giảm" (G1); hộp "Câu hỏi:" với danh sách: 1. "Làm thế nào để ước lượng gradient chính sách có phương sai nhỏ mà kỳ vọng không đổi?" 2. "Làm thế nào để dùng lượt của chính sách cũ cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm?" (2026-11-22, #6; câu cũ "… mà hàm mục tiêu không giảm?" hứa điều thuật toán không bảo đảm; câu mới cùng ý với bài toán trung tâm của ghi chú §1.1: "kiểm soát nguy cơ chính sách mới kém chính sách cũ", TB20)
 - **1 phút:** Câu 1 đến từ bảng ba ước lượng REINFORCE, câu 2 từ hai bước dài trên chuỗi (`1-12`, `1-05`).
 - **Mới:** không. **Nguồn số:** không số trên trang.
 - **Hình:** mới `reinforce-truc-so-nho.svg`, `buoc-dai-mot-luot-nho.svg` (bản thu nhỏ, nhãn lớn hơn, bỏ số phụ).
@@ -237,6 +238,7 @@ Thứ tự: `1-01` → `1-02` → `1-09` → `1-10` → `1-11` → `1-04` → `1
 #### `L10-1-08` · Nội dung (giữ mã)
 
 - **Mặt trang:** sơ đồ neo đầy đủ `so-do-neo-m1.svg` (mục 2); cột phải của hình là danh sách đánh số 1–6 đúng tên mục 1 (không lặp danh sách bằng chữ HTML).
+- **Bản 2026-11-22 (nhận xét website #6):** sau `<ol>` của deck (danh sách HTML 1–6, liên kết `#/1` … `#/6`, `hashOneBasedIndex`), thêm một dòng không đánh số `<p><a href="#/7">Phụ lục: cơ sở lý thuyết của miền tin cậy</a></p>` (không thêm `<li>`, vì phụ lục không phải mạch thứ bảy của bài). Hình `so-do-neo-m1.svg` không đổi. Ghi chú diễn giả thêm: "Phụ lục cuối bài chứa các chứng minh của mạch 4; nó không thuộc thời lượng trên lớp."
 - **1 phút:** Vòng cập nhật có ba khối và một chỗ trống; mạch 2–3 sửa khối hệ số và lấp chỗ trống, mạch 4–5 sửa khối cập nhật.
 - **Mới:** sơ đồ neo. **Hình:** `so-do-neo-m1.svg` (sửa, mục 6).
 - **Diễn giả:** đọc vòng: thu lượt bằng chính sách cũ, tính hệ số mỗi bước, cập nhật, chính sách mới thành chính sách cũ. Hai dấu "?" là hai câu hỏi trung tâm. **Phút:** 1.
@@ -663,7 +665,44 @@ Thứ tự: `3-00` → `3-01` → `3-06` → `3-07` → `3-02` → `3-08` → `3
 
 ---
 
-### Mạch 4. Hàm thay thế và miền tin cậy (`id="mach-4"`, 29 trang sau khi tách `4-07` thành `4-07` và `4-32`, 37,5 phút; kế hoạch theo đề xuất trình bày TRPO của tác giả, 2026-11-21)
+### Mạch 4. Hàm thay thế và miền tin cậy (`id="mach-4"`, 26 trang, 34 phút; bản 2026-11-22 theo nhận xét website #6; trước đó 29 trang, 37,5 phút)
+
+**Bản hiện hành: nhận xét website (#6, 2026-11-22).** Các mục "Thứ tự (28 trang …)" và "Đối chiếu mã (cũ 27 trang → mới 28 trang)" dưới đây là bản 2026-11-21; thứ tự hiện hành là bảng ngay sau. Căn cứ: `nhan-xet-website-trpo-2026-11-21.md` (năm đề xuất, hình 1 "sơ đồ định hướng"); quyết định #6 của tác giả ở `gop-y-tac-gia-deck-2026-11-21.md`; tinh chỉnh "TB27, Bài 10 (tác giả 2026-11-22 …)" của `NGUYEN-TAC-HOC-PHAN.md` §3a.F (thay cách đặt cụm "Cơ sở lý thuyết" sau trang ba mắt xích); ghi chú `materials/lec-10/lecture-note.md` bản 2026-11-22 (§4.5, đoạn "KL trung bình $\bar D_{\mathrm{KL}}$ lấy trọng số $\nu^\pi$ …" với ba cách lấy trọng số; §5.1, đoạn "Bước theo $g$ …" và bảng ba tầng). Mọi số mới được tính lại trong `/tmp/claude-1000/-data-tqlong-lectures/678a7f48-9d80-46cf-a421-67398857f913/scratchpad/m4-phu-luc/kiem.py`.
+
+**Câu chuyện mạch 4 (bản 2026-11-22; thay câu 4–5 của bản 2026-11-21 dưới đây, câu 1–3 giữ).**
+
+4. Giới hạn thay đổi: cùng bước tham số đổi hành vi rất khác nhau ($\Delta p=0{,}2311$ so với $0{,}0042$), nên khoảng cách đo trên phân phối hành động bằng KL. Bài toán miền tin cậy tối đa hàm thay thế với KL trung bình $\le\kappa$; trên đoạn, $\kappa=0{,}01$ giữ $t\le0{,}515$, nơi $\Delta J>0$. KL nhỏ kéo theo TV nhỏ, phân bố chiếm dụng ít đổi và sai số nhỏ, nhưng cận lỏng: với $\tilde\pi$, phạt $14{,}7$ lớn hơn nhiều mức tăng dự báo $0{,}095$. Bài toán thay phạt bằng ràng buộc, nên giới hạn mức đổi mà không tự bảo đảm $J$ tăng.
+5. Giải và thuật toán: TRPO dự báo bằng hàm thay thế, giới hạn mức đổi bằng KL trung bình, rồi tối ưu trong miền tin cậy. Bậc một cho hàm thay thế, bậc hai cho KL, miền thành một elip của ma trận Fisher; bước tối ưu đi theo gradient tự nhiên $F^{-1}g=(8;\,30)$ và đưa $J$ từ $1{,}4$ lên $1{,}807$, thấp hơn $1{,}835$ của bước theo $g$, vì gradient tự nhiên chỉ tối ưu bài toán xấp xỉ. Thuật toán áp $\kappa$ lên KL trung bình trên bộ đệm ($\approx0{,}36$ với $\tilde\pi$), khác KL trung bình có chiết khấu ($0{,}0536$). Điều còn thiếu: mỗi bộ đệm chỉ cho một bước, với gradient liên hợp và tìm kiếm lùi.
+
+Phụ lục (không thuộc mạch 4, ngoài 120 phút): các chứng minh dài của mạch (bổ đề chênh lệch hiệu năng, Pinsker, dịch chuyển phân bố chiếm dụng, định lý chặn cải thiện, ví dụ cận trên chuỗi, cải thiện đơn điệu) đứng sau tài liệu tham khảo, mỗi trang đọc được độc lập.
+
+**Thứ tự hiện hành (26 trang, 34 phút theo cách cộng trang; §5).**
+
+| Cụm | Trang (theo thứ tự) | Đổi so với 2026-11-21 | Phút |
+|---|---|---|---|
+| — | `4-00` | — | 0,5 |
+| A. Động cơ | `4-01` → `4-27` | ghi chú diễn giả `4-01`: bỏ câu hứa "$J$ không giảm" | 3,5 |
+| B. Hàm thay thế | `4-13` → `4-02` → `4-03` → `4-11` | ghi chú diễn giả `4-02`: "Chứng minh ở cụm lý thuyết" → "Ý tưởng chứng minh ở phụ lục cuối bài" | 5,5 |
+| C. Từ hàm thay thế đến miền tin cậy | `4-16` → `4-04` → `4-10` → `4-17` → `4-28` → `4-12` → `4-07` → `4-32` → `4-21` | `4-21` thêm câu nối và câu "cận không chứng nhận" lên mặt trang (1,5 → 2 phút) | 11,5 |
+| Sơ đồ tổng thể | `4-33` | **thêm** (đề xuất 2) | 1 |
+| D. Giải bài toán TRPO | `4-22` → `4-30` → `4-08` | `4-22` nối vào `4-33` | 4 |
+| E. Từ lý thuyết đến thuật toán | `4-25` → `4-34` → `4-35` → `4-09` → `4-26` → `4-31` | **thêm** `4-34` (đề xuất 4), `4-35` (đề xuất 5); `4-25` bỏ dòng "Lưu ý:" | 8 |
+| **Tổng** | **26 trang** | bỏ khỏi mạch 6 trang (`4-14`, `4-20`, `4-24`, `4-06`, `4-19`, `4-29` → phụ lục `L10-7-10` … `L10-7-15`), thêm 3 | **34** |
+
+**Trạm dừng (TB5), bản 2026-11-22.** `4-16`, `4-17`, `4-07`, `4-08`, `4-31` (`4-19` sang phụ lục). Giữa `4-07` và `4-08` có năm trang (`4-32`, `4-21`, `4-33`, `4-22`, `4-30`); `4-33` là bản đồ, không phải trạm dừng. **Câu hỏi nhanh (TB22).** `4-16`, `4-10`, `4-34` (thêm theo đề xuất 4). **Trang ý tưởng chứng minh.** Không còn trên mạch chính; `4-14` thành `7-01`.
+
+**Bảng số bổ sung (2026-11-22; kiểm trong `m4-phu-luc/kiem.py`).**
+
+| Đại lượng | Giá trị | Trang |
+|---|---|---|
+| bước theo $g$ cùng ràng buộc $\tfrac12\Delta^\top F\Delta\le0{,}01$ | $g^\top Fg=0{,}025\cdot0{,}04+0{,}01\cdot0{,}09=0{,}0019$; hệ số $\sqrt{0{,}02/0{,}0019}=3{,}2444$; $\Delta=(0{,}6489;\,0{,}9733)$; $p=(0{,}6568;\,0{,}8411)$; $\Delta p=(0{,}1568;\,0{,}1744)$ | `4-34` |
+| ba tầng, bước theo $g$ / bước gradient tự nhiên | $J$: $1{,}835$ / $1{,}807$; $\Delta\mathcal L$: $0{,}361$ / $0{,}357$; $g^\top\Delta$: $0{,}422$ / $0{,}460$; sai số $2{,}7\Delta p_A\Delta p_B$: $0{,}074$ / $0{,}050$; KL thật $\bar D_{\mathrm{KL}}$: $0{,}0093$ / $0{,}0085$ | `4-34` |
+| KL mẫu $\widehat D$ với $\tilde\pi$ | tần suất $(\tfrac23;\,\tfrac13)$: $\approx0{,}36$ (không làm tròn $0{,}3594$; từ số làm tròn $0{,}3595$) | `4-35` |
+| $\nu^\pi$ chuẩn hóa | $(0{,}1;\,0{,}045)/0{,}145=(0{,}690;\,0{,}310)$; trung bình KL $\approx0{,}37$ ($0{,}3699=0{,}0536/0{,}145$) | `4-35` |
+| miền trên đoạn | $\bar D_{\mathrm{KL}}\le0{,}01$: $t\le0{,}515$; $\widehat D\le0{,}01$: $t\le0{,}206$ (tại đó $D_{\mathrm{KL}}=(0{,}0137;\,0{,}00256)$, $\tfrac23\cdot0{,}0137+\tfrac13\cdot0{,}00256=0{,}0100$) | `4-35` |
+| $\widehat D$ của bước `4-25` | $\tfrac23\cdot0{,}0150+\tfrac13\cdot0{,}156=0{,}062>\kappa$ | ghi chú diễn giả `4-35`, `4-26` |
+| ngưỡng cận dương, bước chỉ đổi $p_B$ thêm $d$ | dạng TV (định lý): $d<1{,}35/24{,}3=0{,}056$; dạng KL (hệ quả của `4-21`): $d<0{,}011$ | `7-14`; ghi chú diễn giả `4-21` |
+
 
 **Trạng thái.** Đã dựng trên deck (biên tập viên, 2026-11-21); chỗ lệch so với các mục dưới đây ở §10, mục "Ghi chú khi dựng mạch 4 (2026-11-21)". Bản trước đề xuất TRPO ở mục "Lịch sử: mạch 4 trước đề xuất TRPO (2026-11-21)" cuối tệp. Chữ trong ngoặc kép là chữ dự kiến lên trang (`no-ai-slop` chế độ Edit); người dựng được rút, không thêm ý. Số lấy từ ghi chú mới (`materials/lec-10/lecture-note.md` §4–§5, bản đang rà) và được tính lại trong `/tmp/claude-1000/-data-tqlong-lectures/678a7f48-9d80-46cf-a421-67398857f913/scratchpad/m4-plan/kiem.py`. Số hiệu khối theo `doi-so-ghi-chu-2026-11-21.md`.
 
@@ -736,7 +775,7 @@ Thứ tự: `3-00` → `3-01` → `3-06` → `3-07` → `3-02` → `3-08` → `3
 | Fisher, gradient tự nhiên | $F=\operatorname{diag}(0{,}025;\,0{,}01)$; $F^{-1}g=(8;\,30)$; $g^\top F^{-1}g=10{,}6$; tỉ trọng $40\%/60\%$ và $21\%/79\%$ | `4-22`, `4-08` |
 | một bước TRPO | $\Delta^*=(0{,}35;\,1{,}30)$, $p=(0{,}586;\,0{,}880)$, $\bar D_{\mathrm{KL}}=0{,}0085$, $J=1{,}807$ | `4-25` |
 
-**Rủi ro số (TB15).** Trên chuỗi, bước theo $g$ co về cùng bán kính KL bậc hai cho $J\approx1{,}835$, lớn hơn $1{,}807$ của bước gradient tự nhiên (mức tăng bậc một $0{,}422$ so với $0{,}460$). Không trang nào được so $J$ của hai bước này hay viết rằng gradient tự nhiên cho $J$ lớn hơn; `4-30`, `4-08` chỉ nói về hướng và tỉ trọng.
+**Rủi ro số (TB15).** *(Thay ngày 2026-11-22: tác giả chọn so hai bước trên trang câu hỏi nhanh `4-34`, bảng ba tầng; quy định "không trang nào được so" dưới đây hết hiệu lực.)* Trên chuỗi, bước theo $g$ co về cùng bán kính KL bậc hai cho $J\approx1{,}835$, lớn hơn $1{,}807$ của bước gradient tự nhiên (mức tăng bậc một $0{,}422$ so với $0{,}460$). Không trang nào được so $J$ của hai bước này hay viết rằng gradient tự nhiên cho $J$ lớn hơn; `4-30`, `4-08` chỉ nói về hướng và tỉ trọng.
 
 #### `L10-4-00` · Hàm thay thế và miền tin cậy (trang tiêu đề mạch; điểm vào mạch 4)
 
@@ -767,6 +806,7 @@ Thứ tự: `3-00` → `3-01` → `3-06` → `3-07` → `3-02` → `3-08` → `3
 - **Diễn giả:** đề xuất hỏi lớp: đã thu $10\,000$ bước tương tác, dùng bộ dữ liệu này thế nào để cập nhật đủ lớn mà không quá mạo hiểm; câu trả lời của mạch là đánh giá ứng viên bằng chính bộ dữ liệu đó. $\tilde\pi$ được chọn để sai số của phép đánh giá hiện rõ; nó không nằm trên hướng gradient ($p_B$ giảm). $J$ lớn nhất khoảng $1{,}4125$ quanh $t\approx0{,}26$. $\tilde\theta$ hữu hạn nên $\tilde\pi$ dương trên mọi hành động.
 - **Nguồn:** §4 (đoạn mở, "Câu hỏi."); §4.1 (Ví dụ 10.11, giá trị thật); §4.3 (Ví dụ 10.12, "Đoạn thẳng", "Diễn giải", "Kiểm tra lại").
 - **Nối vào:** `4-00`, `3-10` (mỗi lượt chỉ cho một bước). **Nối ra:** `4-27` (dữ liệu của chính sách mới khác dữ liệu cũ ở đâu).
+- **Bản 2026-11-22 (nhận xét website #6):** mặt trang giữ. Ghi chú diễn giả trên deck: câu hỏi "… để có một bước cập nhật dài mà $J$ không giảm?" đổi thành "… để có một bước cập nhật dài mà vẫn kiểm soát nguy cơ $J$ giảm?" (đề xuất 1 của nhận xét).
 - **Phút:** 2.
 
 #### `L10-4-27` · Đổi chính sách cũng làm đổi dữ liệu (thêm; cụm A; đề xuất 3, H4)
@@ -1008,6 +1048,7 @@ Thứ tự: `3-00` → `3-01` → `3-06` → `3-07` → `3-02` → `3-08` → `3
 - **Nguồn:** §4.4 (đoạn KL trung bình trên chuỗi); §4.5 (Định nghĩa 10.24 và đoạn sau, ví dụ $\kappa=0{,}01$).
 - **Nối vào:** `4-12`. **Nối ra:** `4-21` (vì sao giới hạn KL kiểm soát sai số).
 - **Phút:** 1,5.
+- **Bản 2026-11-22 (nhận xét website #6):** mặt trang giữ. Câu nối "TRPO thay phạt bằng ràng buộc" không đặt ở đây: số hạng phạt chưa có trước `4-21`. Ghi chú diễn giả: câu "So với kỳ vọng theo phân bố chuẩn hóa $\nu^\pi/0{,}145$, một bán kính $\kappa=0{,}01$ ứng với khoảng $0{,}07$" bỏ, vì `4-35` đưa ý này lên mặt trang; giữ "Bài toán không tự bảo đảm $J$ tăng."
 
 #### `L10-4-32` · Ví dụ: miền tin cậy $\kappa=0{,}01$ loại $\tilde\pi$ (thêm, tách từ `4-07`; cụm C; quyết định của điều phối viên sau lượt sửa C)
 
@@ -1040,107 +1081,40 @@ Thứ tự: `3-00` → `3-01` → `3-06` → `3-07` → `3-02` → `3-08` → `3
 - **Nguồn:** §4.5 (đoạn ba mắt xích và cận); §4.6 (Hệ quả 10.28; đoạn sau hệ quả, số $14{,}7$).
 - **Nối vào:** `4-07`. **Nối ra:** `4-14` (cụm lý thuyết: mắt xích dưới cùng của định lý là bổ đề chênh lệch hiệu năng).
 - **Phút:** 1,5.
+- **Bản 2026-11-22 (nhận xét website #6):** trang giữ trên mạch chính (đề xuất 3: "giữ slide diễn giải ba mắt xích … rồi dùng một ví dụ cận lỏng"). Thay đổi so với deck hiện tại:
+  - Hộp "Ý nghĩa:" (mảnh 5): "Ý nghĩa: số hạng phạt tỉ lệ với $\sqrt{\bar D_{\mathrm{KL}}}$, về $0$ khi $\kappa\to0$. Với $\tilde\pi$, phạt là $14{,}7\gt0{,}095$, nên cận không chứng nhận $J$ tăng." Câu cuối chuyển từ ghi chú diễn giả lên mặt trang: đây là ví dụ cận lỏng mà đề xuất 3 cần, và nó nằm sẵn trên trang (TB8, TB9).
+  - Dòng mới (mảnh 6, chữ thường, không hộp): "Bài toán miền tin cậy thay phạt bằng ràng buộc $\bar D_{\mathrm{KL}}\le\kappa$. Bước được phép dài hơn, nhưng ràng buộc không tự bảo đảm $J$ tăng." Câu nối của `4-29` cũ (hộp "TRPO thay phạt bằng ràng buộc …") viết lại với chủ ngữ "bài toán miền tin cậy": tên TRPO lên trang ở `4-33`, ngay sau (TB11); câu thứ hai lấy từ ghi chú diễn giả `4-29` ("Ràng buộc cho bước dài hơn, đổi lại $J$ có thể giảm") và `4-07` ("Bài toán không tự bảo đảm $J$ tăng"), là mức "bài toán KL" của đề xuất 1. Không đặt ở `4-07`: số hạng phạt chỉ xuất hiện từ trang này.
+  - Không thêm dòng "$\Delta p_B<0{,}056$" của `4-19`. Ngưỡng $0{,}056$ thuộc cận dạng TV của định lý (nay ở `7-13`, `7-14`); hệ quả trên trang này là cận dạng KL, với nó bước chỉ đổi $p_B$ thêm $d$ cho cận dương khi $d<0{,}011$ (`kiem.py`). Cả hai ngưỡng cần năm đại lượng trung gian không có trên trang ($A_\pi(s_B,\pi')=3d$, $\chi$, $D_{\mathrm{TV}}$ hay $D_{\mathrm{KL}}(s_B)$, phạt), trái TB29. Ví dụ $14{,}7\gt0{,}095$ đủ làm ví dụ cận lỏng.
+  - Ghi chú diễn giả: giữ cách đọc chuỗi; bỏ câu "Với $\tilde\pi$, $\chi=0{,}5$ và cận không chứng nhận $J$ tăng" (đã lên mặt trang); thêm "Chứng minh hệ quả và ba mắt xích ở phụ lục cuối bài: ý tưởng chứng minh bổ đề chênh lệch hiệu năng, bất đẳng thức Pinsker, bổ đề dịch chuyển phân bố chiếm dụng, định lý chặn cải thiện, ví dụ cận trên chuỗi và hệ quả cải thiện đơn điệu." và "Với bước chỉ đổi $p_B$ thêm $d$, cận dạng KL dương khi $d<0{,}011$, cận dạng TV của định lý khi $d<0{,}056$; cả hai rất nhỏ so với bước tới $\tilde\pi$." Mặt trang không có câu điều hướng.
+  - Tên ba mắt xích trên hình ("bất đẳng thức Pinsker", "bổ đề dịch chuyển", "định lý chặn cải thiện") và dòng "(… từ định lý chặn cải thiện và Pinsker)" của khối hệ quả giữ: chúng gọi tên kết quả mà phát biểu nay ở phụ lục (ngoại lệ TB11, TB28 ở §7).
+  - **Dựng dần:** (0) câu hỏi, khối 1; (1)–(3) từng mũi tên; (4) hệ quả; (5) hộp ý nghĩa; (6) dòng nối. Nếu trang tràn ở 1280×720 (`footer_check.py`): hình đặt `width="900"`; nếu vẫn tràn, dòng nối thành câu mở của `4-33` (trước câu ý chính) và ghi ở §10.
+  - **1 phút:** KL nhỏ kéo theo sai số nhỏ qua ba mắt xích, nhưng với $\tilde\pi$ phạt $14{,}7$ lớn hơn nhiều mức tăng dự báo, nên cận không chứng nhận $J$ tăng; bài toán miền tin cậy dùng ràng buộc thay cho phạt.
+  - **Nối ra:** `4-33` (trước đó `4-14`). **Phút:** 1,5 → 2.
 
-**Cụm "Cơ sở lý thuyết"** (`4-14` → `4-20` → `4-24` → `4-06` → `4-19` → `4-29`, 8 phút). Đặt sau `4-21`, trước cụm D (quyết định của tác giả). Sau cổng storyboard, thứ tự theo các mắt xích của H10: bổ đề chênh lệch hiệu năng (nền của đẳng thức sai số), Pinsker (mắt xích 1), bổ đề dịch chuyển (mắt xích 2), định lý chặn cải thiện (mắt xích 3) cùng chứng minh hệ quả KL của `4-21`, ví dụ trên chuỗi, hệ quả đơn điệu. Không có trang tiêu đề cụm (VP: không câu điều hướng); tên cụm chỉ ở storyboard.
 
-#### `L10-4-14` · Ý tưởng chứng minh: bổ đề chênh lệch hiệu năng (giữ, chuyển vào cụm lý thuyết)
+*(Đoạn "Cụm Cơ sở lý thuyết" và sáu mục `4-14` … `4-29` chuyển xuống mạch "Phụ lục" sau `6-17`, mã `L10-7-10` … `L10-7-15`, ngày 2026-11-22.)*
 
-- **Quyết định:** giữ mặt trang; chuyển chỗ; thêm dòng bỏ giả thiết "cùng $\mu_0$" từ `4-15` cũ (Đ2) làm mảnh cuối.
-- **Mục đích:** cho lộ trình năm bước của chứng minh bổ đề và vai trò của từng giả thiết.
-- **Câu:** 4 (cơ sở lý thuyết). **Nhãn:** "Ý tưởng chứng minh." (tiêu đề), "Câu hỏi:", "Lời giải:".
-- **Mặt trang:** năm bước như deck (Đ8); hộp câu hỏi và lời giải như deck (Đ9); mảnh cuối: "Bỏ cùng $\mu_0$: nếu $\tilde\pi$ xuất phát từ $s_B$ còn $\pi$ từ $s_A$, vế trái là $0{,}5\cdot3-1{,}4=0{,}1$, vế phải là $A_\pi(s_B,\tilde\pi)=-0{,}5$."
-- **Hình:** không. **Dựng dần:** từng bước; câu hỏi; lời giải; dòng bỏ giả thiết.
-- **1 phút:** Lợi thế của $\pi$ cộng dọc lượt của $\pi'$ là tổng lồng nhau, còn lại đúng hiệu $J$; Bước 4 cần cùng $\mu_0$.
-- **Mới:** không. **Nguồn số:** $A_\pi(s_B,\tilde\pi)$ từ `4-13`; $v_{\tilde\pi}(s_B)=\tilde p_B\cdot3$.
-- **Diễn giả:** như deck: Bước 2 dùng cùng $P$ và tính Markov; Bước 4 dùng cùng $\mu_0$, phần thưởng bị chặn và $\gamma<1$. Ghi chú dùng phản ví dụ cùng dạng với $\pi'=(0{,}6;\,0{,}8)$ ($1$ so với $0{,}4$); số với $\tilde\pi$ là đề xuất NT3 (§10). Ngoại lệ mật độ: §7.
-- **Nguồn:** §4.1 (Bổ đề 10.19, chứng minh Bước 1–5; đoạn "Hai giả thiết có vai trò riêng").
-- **Nối vào:** `4-21`. **Nối ra:** `4-20`.
-- **Phút:** 1,5.
+#### `L10-4-33` · Sơ đồ tổng thể của TRPO (thêm 2026-11-22; nhận xét website, đề xuất 2, hình 1; TB2, tinh chỉnh TB27 Bài 10)
 
-#### `L10-4-20` · Bất đẳng thức Pinsker (giữ, sửa dòng "Ý nghĩa:"; cụm lý thuyết; mắt xích 1)
-
-- **Quyết định:** giữ khối mệnh đề và dòng "Chứng minh."; dòng "Ý nghĩa:" tính $D_{\mathrm{TV}}(s_B)=\tfrac16$ ngay trên trang (sau cổng storyboard, vì `4-20` nay đứng trước `4-24`); dòng nguồn đổi số (Mệnh đề 10.25(b)).
-- **Mục đích:** cho mắt xích thứ nhất: KL nhỏ thì TV nhỏ.
-- **Câu:** 4 (cơ sở lý thuyết). **Nhãn:** "Mệnh đề.", "Giả thiết:", "Kết luận:", "Chứng minh.", "Ý nghĩa:".
-- **Mặt trang:** khối mệnh đề và "Chứng minh." như deck; "Ý nghĩa: KL nhỏ kéo theo TV nhỏ. Với $\tilde\pi$, tại $s_A$: $0{,}4\le\sqrt{0{,}511/2}=0{,}505$; tại $s_B$: $D_{\mathrm{TV}}=\tfrac12\bigl(\lvert0{,}5-\tfrac23\rvert+\lvert0{,}5-\tfrac13\rvert\bigr)=\tfrac16\approx0{,}167\le\sqrt{0{,}0566/2}=0{,}168$."
-- **Hình:** không. **Dựng dần:** như deck.
-- **1 phút:** Khoảng cách TV bị chặn bởi căn của nửa KL; trên chuỗi bất đẳng thức gần chặt tại $s_B$.
-- **Mới:** bất đẳng thức Pinsker. **Nguồn số:** $D_{\mathrm{TV}}(s_A)$, $D_{\mathrm{KL}}(s_A)$ từ `4-12`; $D_{\mathrm{KL}}(s_B)$ từ `4-07`; $D_{\mathrm{TV}}(s_B)$ trên trang.
-- **Diễn giả:** như deck; thêm: chứng minh hệ quả theo KL trung bình (`4-06`) dùng bất đẳng thức này tại từng trạng thái.
-- **Nguồn:** §4.6 (Mệnh đề 10.25(b), chứng minh Bước 3; đoạn sau).
-- **Nối vào:** `4-14`. **Nối ra:** `4-24` (mắt xích 2).
+- **Quyết định:** thêm. Đề xuất 2 của nhận xét: cho sinh viên thấy toàn bộ quy trình ngay sau bài toán miền tin cậy, rồi mới giải thích ma trận Fisher, gradient tự nhiên và tìm kiếm lùi. Đặt sau `4-21`, trước `4-22`: bài toán (`4-07`, `4-32`) và lý do của ràng buộc (`4-21`) đã có, và cụm D bắt đầu ngay sau. Tên TRPO đầy đủ, kèm tiếng Anh, lên mặt trang lần đầu ở đây (VP2).
+- **Mục đích:** cho bản đồ của thuật toán trước khi giải từng bộ phận: hai đầu vào tính từ dữ liệu cũ đi vào một bước tối ưu.
+- **Câu:** 5. **Nhãn:** hộp ý chính.
+- **Mặt trang:**
+  - `h2` "Sơ đồ tổng thể của TRPO".
+  - Hộp (ý chính, TB8): "Tối ưu chính sách miền tin cậy (trust region policy optimization, TRPO) dự báo mức cải thiện từ lượt của chính sách cũ, giới hạn mức đổi bằng KL trung bình, rồi tìm bước tốt nhất trong giới hạn đó."
+  - Hình bên trái; cột phải, danh sách ba mục nêu nội dung của khối tối ưu (không câu điều hướng):
+    1. "Gần $\theta_{\mathrm{old}}$, hàm thay thế được thay bằng một hàm tuyến tính của bước $\Delta$, KL trung bình bằng một dạng toàn phương của $\Delta$."
+    2. "Ràng buộc bậc hai là một elip. Bước tốt nhất trong elip lệch khỏi hướng gradient, gọi là bước gradient tự nhiên."
+    3. "Tìm kiếm lùi thu nhỏ bước cho tới khi hàm thay thế mẫu tăng và KL mẫu không vượt $\kappa$."
+- **Hình:** `so-do-trpo-tong-the-buoc0.svg` (khối "Lượt thu bằng chính sách cũ" và hai khối đầu vào: "Hàm thay thế: dự báo mức cải thiện", "KL trung bình: giới hạn mức đổi chính sách"), `so-do-trpo-tong-the.svg` (thêm khối "Tối ưu trong miền tin cậy: gradient tự nhiên, tìm kiếm lùi" và "Chính sách mới"); `r-stack`, `width="760"` (viewBox 1000×572, tối thiểu 571), cao khoảng 435 px, bên trái; cột chữ bên phải khoảng 400 px. Dòng tiêu đề hiển thị "Sơ đồ tổng thể của TRPO" trong SVG trùng `h2` (TB10): đề nghị người vẽ hình bỏ dòng đó, giữ `<title>` (§4.5, §10).
+- **Dựng dần:** (0) hộp ý chính, hình `-buoc0`; (1) hình đủ, ba mục.
+- **1 phút:** TRPO có hai đầu vào tính từ dữ liệu cũ, một dự báo và một giới hạn; cả hai đi vào một bước tối ưu cho ra chính sách mới.
+- **Mới:** tên TRPO; sơ đồ. "Gradient tự nhiên" và "tìm kiếm lùi" là tên khối của bản đồ, mỗi tên kèm một câu nghĩa; định nghĩa ở `4-08` và thuật toán ở `4-26` (ngoại lệ TB11, §7).
+- **Nguồn số:** không số.
+- **Ghi chú nguồn:** §4.5 (đoạn mở, "Về mặt ý tưởng …"); §5 (đoạn mở); §5.2 (Thuật toán 10.37; đoạn kết "TRPO chọn từ một bộ đệm …").
+- **Diễn giả:** đọc hình từ trên xuống: lượt của chính sách cũ cho hai đại lượng. Hàm thay thế dùng tỉ số chính sách và lợi thế ước lượng; KL trung bình dùng phân phối hành động cũ lưu trong bộ đệm. Khối tối ưu nhận cả hai và trả về chính sách mới, rồi chính sách mới thành chính sách cũ của vòng sau. Thông điệp của nhận xét (chuyển từ ghi chú diễn giả `4-31`): "TRPO không chỉ là gradient chính sách với bước nhỏ: nó dựng một mô hình dự báo hiệu năng từ dữ liệu cũ, giới hạn miền mà mô hình còn đáng tin, rồi tìm bước tốt nhất trong miền đó." Khối tối ưu kiểm điều kiện trên mẫu, nên đầu ra không chắc có $J$ cao hơn.
+- **Nối vào:** `4-21`. **Nối ra:** `4-22` (bước thứ nhất của khối tối ưu: hai xấp xỉ).
 - **Phút:** 1.
-
-#### `L10-4-24` · Bổ đề dịch chuyển phân bố chiếm dụng (sửa; cụm lý thuyết; mục "TV và phân bố chiếm dụng" của đề xuất; mắt xích 2)
-
-- **Quyết định:** sửa. Giữ mã vì trang cũ "Biến phân toàn phần và phân bố chiếm dụng" chuyển thành trang của mắt xích "TV nhỏ thì phân bố chiếm dụng ít thay đổi"; định nghĩa TV đã lên `4-12`, $\nu^\pi$ lên `4-07`, $\chi$ lên `4-21`. Bổ đề 10.26 có khối riêng (TB28); trước đây chỉ nêu trong bước 5 của `4-18`. Sau cổng storyboard: vế trái viết $0{,}1\cdot\lvert0{,}81-0{,}45\rvert$ để thấy đây là hiệu phân bố chiếm dụng, không lẫn với sai số $0{,}036$ của bước $\pi'$ trong ghi chú.
-- **Mục đích:** phát biểu mắt xích thứ hai và kiểm trên chuỗi.
-- **Câu:** 4 (cơ sở lý thuyết). **Nhãn:** "Bổ đề.", "Giả thiết:", "Kết luận:", "Chứng minh.".
-- **Mặt trang:**
-  - "Tại mọi trạng thái, nếu $\pi'$ chọn hành động gần như $\pi$ thì hai chính sách gặp các trạng thái với tần suất gần nhau. Khác biệt nhỏ ở mỗi bước tích lũy dọc lượt." (Đ5)
-  - "**Bổ đề** (dịch chuyển phân bố chiếm dụng). Giả thiết: giả thiết chung. Kết luận, với $D_{\mathrm{TV}}(s)=D_{\mathrm{TV}}(\pi'(\cdot\mid s),\pi(\cdot\mid s))$:" $$\sum_s\bigl\lvert\nu^{\pi'}(s)-\nu^\pi(s)\bigr\rvert\ \le\ \frac{2\gamma}{1-\gamma}\,\mathbb E_{S\sim\nu^\pi}\bigl[D_{\mathrm{TV}}(S)\bigr].$$
-  - "Chứng minh. Hiệu hai phân bố bằng $\gamma$ nhân khác biệt một bước của hai ma trận chuyển, lan qua các bước sau với tổng trọng số không quá $\tfrac1{1-\gamma}$; khác biệt một bước không quá $2\,\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]$."
-  - "Ở đây, với $\tilde\pi$: $\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]=0{,}1\cdot0{,}4+0{,}045\cdot\tfrac16=0{,}0475$. Chỉ $s_B$ đổi tần suất: vế trái $=(1-\gamma)\lvert\eta_{\tilde\pi}(s_B)-\eta_\pi(s_B)\rvert=0{,}1\cdot\lvert0{,}81-0{,}45\rvert=0{,}036$, vế phải $=18\cdot0{,}0475=0{,}855$."
-- **Hình:** không. **Dựng dần:** (0) trực quan; (1) bổ đề; (2) chứng minh; (3) dòng số.
-- **1 phút:** Khoảng cách giữa hai phân bố chiếm dụng không vượt $\tfrac{2\gamma}{1-\gamma}$ lần TV kỳ vọng; trên chuỗi cận đúng nhưng lỏng.
-- **Mới:** bổ đề dịch chuyển.
-- **Nguồn số:** $D_{\mathrm{TV}}=(0{,}4;\,\tfrac16)$ từ `4-12`, `4-20`; $\nu^\pi$ từ `4-07`; $\eta$ từ `4-02`, `4-03`; $2\gamma/(1-\gamma)=18$.
-- **Diễn giả:** câu hỏi của `4-18` cũ: vì sao định lý có $1/(1-\gamma)^2$. Một thừa số $\tfrac1{1-\gamma}$ ở bổ đề này (khác biệt tích lũy qua các bước sau), một thừa số khi đổi $\nu$ về $\eta$ trong định lý. Chứng minh trong ghi chú dùng dạng ma trận $(I-\gamma P_\pi)^{-1}$; sự kết thúc chỉ làm các tổng nhỏ đi. Ghi chú kiểm bổ đề với $\pi'=(0{,}6;\,0{,}8)$ ($0{,}009$ so với $0{,}288$); số với $\tilde\pi$ là đề xuất NT3 (§10).
-- **Nguồn:** §4.6 (Bổ đề 10.26, chứng minh Bước 1–6; đoạn trực quan trước bổ đề; đoạn sau chứng minh).
-- **Nối vào:** `4-20`. **Nối ra:** `4-06` (mắt xích 3).
-- **Phút:** 1,5.
-
-#### `L10-4-06` · Định lý chặn cải thiện (sửa, gộp `4-18`; cụm lý thuyết; mục "định lý chặn cải thiện và ý tưởng chứng minh"; mắt xích 3)
-
-- **Quyết định:** sửa. Chứng minh rút thành một dòng gọi tên Bước 1–5 của ghi chú, vì đẳng thức sai số (`4-16`) và bổ đề dịch chuyển (`4-24`) đã có trang (TB28 dạng a); `4-18` bỏ. Giả thiết theo Định lý 10.27 mới (không còn điều kiện hỗ trợ). Sau cổng storyboard: "Ý nghĩa:" dùng biểu thức của ghi chú $\tfrac{2\gamma\chi}{(1-\gamma)^2}=90$; dòng chứng minh Hệ quả 10.28 (của `4-21`) đặt ở mảnh cuối trang này.
-- **Mục đích:** phát biểu cận dạng TV và khép chứng minh của cận dạng KL ở `4-21`.
-- **Câu:** 4 (cơ sở lý thuyết). **Nhãn:** "Định lý.", "Giả thiết:", "Kết luận:", "Chứng minh.", "Ý nghĩa:".
-- **Mặt trang:**
-  - "**Định lý** (chặn cải thiện). Giả thiết: giả thiết chung; $A_\pi$ và $\nu^\pi$ tính chính xác. Kết luận:" $$J(\pi')-J(\pi)\ \ge\ \Delta\mathcal L-\frac{2\gamma\,\chi_{\pi'}}{(1-\gamma)^2}\,\mathbb E_{S\sim\nu^\pi}\bigl[D_{\mathrm{TV}}(S)\bigr].$$
-  - "Chứng minh. Bước 1–3: bổ đề chênh lệch hiệu năng và hàm thay thế cho $\Delta J-\Delta\mathcal L=\sum_s(\eta_{\pi'}-\eta_\pi)(s)A_\pi(s,\pi')$. Bước 4: bất đẳng thức Hölder chặn tổng này dưới bởi $-\chi_{\pi'}\sum_s\lvert\eta_{\pi'}(s)-\eta_\pi(s)\rvert$. Bước 5: bổ đề dịch chuyển, với $\eta=\nu/(1-\gamma)$."
-  - "Ý nghĩa: phạt tỉ lệ với TV kỳ vọng theo phân bố của chính sách cũ. Với $\tilde\pi$, $\chi=0{,}5$ và $\tfrac{2\gamma\chi}{(1-\gamma)^2}=\tfrac{2\cdot0{,}9\cdot0{,}5}{0{,}01}=90$."
-  - "**Chứng minh** (hệ quả chặn cải thiện theo KL trung bình). Bất đẳng thức Pinsker tại từng trạng thái, rồi bất đẳng thức Jensen cho hàm lõm $\sqrt{\cdot}$ với $\sum_s\nu^\pi(s)\le1$, cho $\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]\le\sqrt{\tfrac12\bar D_{\mathrm{KL}}}$; thế vào định lý."
-- **Hình:** không. **Dựng dần:** (0) định lý; (1) chứng minh; (2) ý nghĩa; (3) chứng minh hệ quả.
-- **1 phút:** Mức tăng thật không nhỏ hơn dự báo trừ một phạt tỉ lệ với TV kỳ vọng giữa hai chính sách; Pinsker và Jensen đổi phạt đó sang KL trung bình.
-- **Mới:** định lý.
-- **Nguồn số:** $\chi$ từ `4-21`; $2\cdot0{,}9\cdot0{,}5/0{,}01$.
-- **Diễn giả:** cận vẫn đúng khi thay $\chi_{\pi'}$ bằng $\max_{s,a}\lvert A_\pi(s,a)\rvert$. Định lý không cần điều kiện hỗ trợ vì Bước 3 dùng dạng tổng của hàm thay thế. Bỏ "$\gamma<1$" thì thừa số vô hạn; bỏ "đại lượng chính xác" thì cận không còn chứng nhận cải thiện. Nhận xét 10.29: cận dạng TV lớn nhất của Schulman và cộng sự (2015), lỏng hơn trên chuỗi. Dòng chứng minh hệ quả là Bước 1–3 của chứng minh Hệ quả 10.28.
-- **Nguồn:** §4.6 (Định lý 10.27, chứng minh Bước 1–5; đoạn sau định lý; Hệ quả 10.28, chứng minh Bước 1–3; Nhận xét 10.29).
-- **Nối vào:** `4-24`. **Nối ra:** `4-19`.
-- **Phút:** 1.
-
-#### `L10-4-19` · Ví dụ: chặn cải thiện trên chuỗi (giữ; cụm lý thuyết; mục "ví dụ trên chuỗi")
-
-- **Quyết định:** giữ bảng; sửa dòng "Nhắc lại:" theo trang mới của các đại lượng ($\nu^\pi$ ở `4-07`, $D_{\mathrm{TV}}$ ở `4-12`, `4-20`, $\chi$ ở `4-21`) và dòng nguồn. Trang mang thông điệp "cận có ích" của TB15 (cận dương với bước ngắn) và "cận lỏng" (bước tới $\tilde\pi$).
-- **Mục đích:** cho hai số của cận trên chuỗi: đúng nhưng lỏng với $\tilde\pi$, dương với bước rất ngắn.
-- **Câu:** 4 (cơ sở lý thuyết). **Nhãn:** "Nhắc lại:", hộp.
-- **Mặt trang:** như deck; giữ phép tính đủ $0{,}1\cdot0{,}4+0{,}045\cdot\tfrac16=0{,}0475$ trong ô (TB29: phép tính ở `4-24` cách hai trang).
-- **Hình:** không. **Dựng dần:** như deck.
-- **1 phút:** Với $\tilde\pi$ cận là $-4{,}18$, đúng nhưng xa $-0{,}085$; cận chỉ dương khi bước chỉ đổi $p_B$ dưới $0{,}056$.
-- **Mới:** không. **Nguồn số:** như deck.
-- **Diễn giả:** như deck; Ví dụ 10.14 còn tính bước $\pi'=(0{,}6;\,0{,}8)$: phạt $1{,}152>0{,}26$.
-- **Nguồn:** §4.6 (Ví dụ 10.14: bước dài $\tilde\pi$, bước nhỏ chỉ đổi $s_B$, "Diễn giải", "Kiểm tra lại").
-- **Nối vào:** `4-06`. **Nối ra:** `4-29`.
-- **Phút:** 1,5.
-
-#### `L10-4-29` · Cải thiện đơn điệu qua hàm chặn dưới (thêm, tách từ `4-21`; cụm lý thuyết; mục "hệ quả đơn điệu")
-
-- **Quyết định:** thêm. Hệ quả 10.30 có trang riêng thay vì đứng chung `4-21` (TB6). Trang khép cụm lý thuyết và nối về bài toán `4-07`: phạt với hằng của lý thuyết cho bước gần như bằng $0$, nên TRPO dùng ràng buộc.
-- **Mục đích:** cho biết khi nào cận bảo đảm $J$ không giảm, và vì sao TRPO không dùng trực tiếp cách đó.
-- **Câu:** 4 (cơ sở lý thuyết). **Nhãn:** "Hệ quả.", "Giả thiết:", "Kết luận:", "Chứng minh.", hộp.
-- **Mặt trang:**
-  - "**Hệ quả** (cải thiện đơn điệu). Giả thiết: như định lý chặn cải thiện cho mỗi cặp $(\pi_k,\pi)$, với $A_{\pi_k}$, $\nu^{\pi_k}$ chính xác. Đặt $C_k=\tfrac{2\gamma\bar\chi_k}{(1-\gamma)^2}$, $\bar\chi_k=\max_{s,a}\lvert A_{\pi_k}(s,a)\rvert$ và" $$\mathcal M_k(\pi)=\mathcal L_{\pi_k}(\pi)-C_k\,\mathbb E_{S\sim\nu^{\pi_k}}\bigl[D_{\mathrm{TV}}(S)\bigr].$$ "Kết luận: nếu $\mathcal M_k(\pi_{k+1})\ge\mathcal M_k(\pi_k)$ thì $J(\pi_{k+1})\ge J(\pi_k)$."
-  - "Chứng minh. $J(\pi_{k+1})\ge\mathcal M_k(\pi_{k+1})\ge\mathcal M_k(\pi_k)=J(\pi_k)$, theo định lý, giả thiết, rồi $\mathcal L_{\pi_k}(\pi_k)=J(\pi_k)$ và $D_{\mathrm{TV}}=0$."
-  - "Trên chuỗi, $\bar\chi=2$ nên $C=\tfrac{2\cdot0{,}9\cdot2}{0{,}01}=360$: mọi bước khác $\pi_k$ làm $\mathcal M_k$ giảm, nên phép cực đại hóa đứng yên tại $\pi_k$."
-  - Hộp: "TRPO thay phạt bằng ràng buộc $\bar D_{\mathrm{KL}}\le\kappa$ của bài toán miền tin cậy. Bước được phép dài hơn, đổi lại $J$ có thể giảm."
-- **Hình:** không. **Dựng dần:** (0) hệ quả; (1) chứng minh; (2) dòng chuỗi; (3) hộp.
-- **1 phút:** Cực đại một hàm nằm dưới $J$ và chạm $J$ tại chính sách hiện tại thì $J$ không giảm, nhưng với hằng của lý thuyết bước gần như bằng $0$.
-- **Mới:** hàm chặn dưới $\mathcal M_k$.
-- **Nguồn số:** $\bar\chi=\max\lvert A_\pi(s,a)\rvert=\lvert-2\rvert$ từ `2-06`.
-- **Diễn giả:** Schulman và cộng sự (2015) gọi đây là thuật toán cực đại hóa qua hàm chặn dưới (minorize–maximize). Trên chuỗi, $\mathcal M_k(\pi')-\mathcal M_k(\pi_k)\le\sum_s\nu(s)D_{\mathrm{TV}}(s)c_s$ với $c_s=8-360$ và $30-360$. Hệ quả 10.31: với đại lượng và nghiệm chính xác, bước miền tin cậy có $J(\pi_{k+1})-J(\pi_k)\ge-\sqrt{2\kappa}\,\gamma\chi_{\pi_{k+1}}/(1-\gamma)^2$; mức giảm tối đa nhỏ khi $\kappa$ nhỏ, không phải bảo đảm cải thiện. Hệ quả không áp dụng khi lợi thế, phân bố chiếm dụng hay nghiệm chỉ có gần đúng.
-- **Nguồn:** §4.6 (Hệ quả 10.30, chứng minh Bước 1–3; đoạn MM; đoạn số trên chuỗi; đoạn "Để cho phép bước lớn"; Hệ quả 10.31 và đoạn sau).
-- **Nối vào:** `4-19`. **Nối ra:** `4-22` (giải bài toán của `4-07` khi $d$ lớn).
-- **Phút:** 1,5.
 
 #### `L10-4-22` · Xấp xỉ bậc một của hàm thay thế và bậc hai của KL (sửa; cụm D; đề xuất 16)
 
@@ -1157,7 +1131,8 @@ Thứ tự: `3-00` → `3-01` → `3-06` → `3-07` → `3-02` → `3-08` → `3
 - **Nguồn số:** $\nu^\pi$ từ `4-07`; $p_s(1-p_s)$ từ `1-11`; $\mathbb E[\psi^2]=p(1-p)^2+(1-p)p^2=p(1-p)$ (ghi chú diễn giả).
 - **Diễn giả:** với sigmoid của trang "cùng một bước tham số", $F=p(1-p)$ bằng $0{,}25$ tại $\theta=0$ và $0{,}00665$ tại $\theta=5$; xấp xỉ bậc hai $\tfrac12p(1-p)\cdot1^2$ là $0{,}125$ và $0{,}00332$, cùng bậc độ lớn với KL thật $0{,}1201$ và $0{,}00245$; lệch $0{,}0049$ và $0{,}00087$ (số của ghi chú §5.1). Hai chiều KL có cùng xấp xỉ bậc hai. $F$ nửa xác định dương, có thể suy biến (Ví dụ 10.15).
 - **Nguồn:** §4.6 (câu cuối: "bài toán tối ưu phi tuyến có ràng buộc trên $\theta$"); §5 (đoạn mở); §5.1 (đoạn mở; Định nghĩa 10.32; Mệnh đề 10.33, chứng minh Bước 2–3; đoạn sau mệnh đề với Ví dụ 10.13; đoạn chuỗi $F=\operatorname{diag}(0{,}025;\,0{,}01)$).
-- **Nối vào:** `4-29`. **Nối ra:** `4-30` (bài toán xấp xỉ nhìn bằng hình).
+- **Nối vào:** `4-33` (2026-11-22; trước đó `4-29`). **Nối ra:** `4-30` (bài toán xấp xỉ nhìn bằng hình).
+- **Bản 2026-11-22 (nhận xét website #6):** mặt trang giữ; dòng "Nhắc lại:" của deck (bài toán miền tin cậy, $\nabla\mathcal L=\nabla J$) đủ để nối từ sơ đồ tổng thể. Ghi chú diễn giả: thêm "Đây là khối tối ưu của sơ đồ tổng thể, bước thứ nhất: thay hai đầu vào bằng xấp xỉ bậc một và bậc hai."
 - **Phút:** 1,5.
 
 #### `L10-4-30` · Miền tin cậy bậc hai là một elip (thêm; cụm D; đề xuất 17, H11)
@@ -1216,7 +1191,59 @@ Thứ tự: `3-00` → `3-01` → `3-06` → `3-07` → `3-02` → `3-08` → `3
 - **Nguồn số:** $A_\pi(s_A,\pi')=0{,}4p'_A-0{,}4(1-p'_A)=0{,}8\Delta p_A$ và $A_\pi(s_B,\pi')=p'_B-2(1-p'_B)=3\Delta p_B$ từ $A_\pi(s,\cdot)$ của `2-06` (phép tính trong ghi chú diễn giả); $\eta_\pi$ từ `4-03`; $\Delta p=(0{,}5860-0{,}5;\,0{,}8804-\tfrac23)$; $D_{\mathrm{KL}}$ theo định nghĩa ở `4-12`.
 - **Diễn giả:** như deck; thêm dòng đầu cũ "Ví dụ dùng $g=\nabla\mathcal L$ và $F$ tính chính xác theo $\nu^\pi$" và phép tính hai lợi thế của dòng "Nhắc lại:". Các số nhiều chữ số của trang ($0{,}04344$, $(0{,}3475;\,1{,}3031)$, $0{,}0150$, $0{,}156$, $0{,}357$) không có trong ghi chú; ghi chú chỉ có $\Delta^*\approx(0{,}35;\,1{,}30)$, $p\approx(0{,}586;\,0{,}880)$, KL $\approx0{,}0085$, $J\approx1{,}807$: đề xuất NT3 ở §10.
 - **Nguồn:** §5.1 (đoạn chuỗi: $F^{-1}g$, $10{,}6$, hệ số $0{,}0434$, $\Delta^*\approx(0{,}35;\,1{,}30)$, $J\approx1{,}807$); §5.2 (Thuật toán 10.37, bước 5–6); §4.3 (Ví dụ 10.12, "Hai mức thay đổi với mọi chính sách mới").
-- **Nối vào:** `4-08`. **Nối ra:** `4-09`.
+- **Nối vào:** `4-08`. **Nối ra:** `4-34` (2026-11-22; trước đó `4-09`).
+- **Phút:** 1,5.
+- **Bản 2026-11-22 (nhận xét website #6):** dòng "Lưu ý:" cuối trang trên deck ("bước theo $g$ cùng bán kính bậc hai cho $J\approx1{,}835$, KL thật $0{,}0093$. Gradient tự nhiên tối ưu bài toán xấp xỉ, không tối ưu $J$.") bỏ khỏi trang này; số $1{,}835$ và kết luận lên `4-34` (câu hỏi nhanh và lời giải), KL thật $0{,}0093$ xuống ghi chú diễn giả `4-34`. Trang còn bốn mảnh (0)–(3). Phần còn lại giữ.
+
+
+#### `L10-4-34` · Câu hỏi nhanh: bước gradient tự nhiên cho $J$ thấp hơn (thêm 2026-11-22; nhận xét website, đề xuất 4; TB22)
+
+- **Quyết định:** thêm, ngay sau `4-25`. Đề xuất 4 của nhận xét: đặt câu hỏi trên trang và trả lời bằng ba tầng $J$, hàm thay thế, xấp xỉ tuyến tính. Số theo bảng ba tầng của ghi chú §5.1 (bản 2026-11-22). Quy định "Rủi ro số (TB15)" ở đầu mạch (không so $J$ của hai bước) hết hiệu lực với trang này. Dòng "Lưu ý:" của `4-25` gộp vào đây.
+- **Mục đích:** tách ba đối tượng: $J$ cần tăng, hàm thay thế dự báo $\Delta J$ từ dữ liệu cũ, và bài toán xấp xỉ mà gradient tự nhiên tối ưu.
+- **Câu:** 5. **Nhãn:** "Nhắc lại:", "Câu hỏi:", "Lời giải:".
+- **Mặt trang:**
+  - "Nhắc lại: bước gradient tự nhiên $\Delta^*=(0{,}3475;\,1{,}3031)$ cho $J=1{,}807$. Bước theo $g$, co về cùng ràng buộc $\tfrac12\Delta^\top F\Delta\le0{,}01$, là $\Delta=3{,}2444\,g=(0{,}6489;\,0{,}9733)$ và cho $p=(\sigma(0{,}6489);\,\sigma(\log2+0{,}9733))=(0{,}6568;\,0{,}8411)$."
+  - Hộp "Câu hỏi: gradient tự nhiên là nghiệm của bài toán xấp xỉ. Vì sao bước của nó cho $J$ thấp hơn bước theo $g$?"
+  - "Lời giải:" bảng (một khuôn với các bảng tính của bài, NT-RL-5):
+
+    | Tầng | Đại lượng | Bước theo $g$ | Bước gradient tự nhiên |
+    |---|---|---|---|
+    | 1 | $J$, hiệu năng cần tăng | $2{,}7\cdot0{,}6568\cdot0{,}8411+0{,}3432=1{,}835$ | $1{,}807$ |
+    | 2 | $\Delta\mathcal L=0{,}8\Delta p_A+1{,}35\Delta p_B$, dự báo từ lượt cũ | $0{,}8\cdot0{,}1568+1{,}35\cdot0{,}1744=0{,}361$ | $0{,}357$ |
+    | 3 | $g^\top\Delta$, bài toán xấp xỉ | $0{,}2\cdot0{,}6489+0{,}3\cdot0{,}9733=0{,}422$ | $0{,}2\cdot0{,}3475+0{,}3\cdot1{,}3031=0{,}460$ |
+
+    Ô tầng 3 của bước gradient tự nhiên tô tím, kèm khung (TB18, NT25).
+  - Hộp kết luận: "Gradient tự nhiên lớn nhất ở tầng 3, nơi nó là nghiệm. Nghiệm của bài toán xấp xỉ cục bộ không nhất thiết tốt nhất trên $J$."
+- **Hình:** không (bảng là bằng chứng; hình elip đã ở `4-30`).
+- **Dựng dần:** (0) nhắc lại, câu hỏi; (1) bảng; (2) hộp kết luận.
+- **1 phút:** Gradient tự nhiên thắng ở bài toán xấp xỉ ($0{,}460$ so với $0{,}422$), nhưng thua nhẹ ở hàm thay thế và ở $J$ ($1{,}807$ so với $1{,}835$).
+- **Mới:** bước theo $g$ (một đối tượng); phân biệt ba tầng (một ý).
+- **Nguồn số:** $g$, $F$ từ `4-17`, `4-22`; $\Delta^*$, $p$, $\Delta\mathcal L=0{,}357$, $J=1{,}807$ từ `4-25`; hệ số $0{,}8$, $1{,}35$ từ dòng "Nhắc lại:" của `4-25` ($A_\pi(s,\pi')=(0{,}8\Delta p_A;\,3\Delta p_B)$, $\eta_\pi=(1;\,0{,}45)$); $3{,}2444=\sqrt{2\kappa/(g^\top Fg)}$ với $g^\top Fg=0{,}025\cdot0{,}2^2+0{,}01\cdot0{,}3^2=0{,}0019$ (ghi chú diễn giả); $\Delta p=(0{,}6568-0{,}5;\,0{,}8411-\tfrac23)$; $1-p_A=0{,}3432$.
+- **Ghi chú nguồn:** §5.1 (đoạn "Bước theo $g$, co về cùng bán kính bậc hai …"; bảng ba tầng và đoạn sau).
+- **Diễn giả:** "Gợi ý: đọc bảng từ dưới lên." Tầng 3 dùng mục tiêu tuyến tính và KL bậc hai; gradient tự nhiên là nghiệm của đúng bài toán đó (mệnh đề bước gradient tự nhiên). Tầng 2 là hàm thay thế thật, tuyến tính theo $\Delta p_s$ nhưng phi tuyến theo $\theta$ vì $p_s=\sigma(\theta_s)$. Tầng 1 cộng thêm sai số $2{,}7\Delta p_A\Delta p_B$ do phân bố trạng thái thay đổi: $0{,}074$ cho bước theo $g$, $0{,}050$ cho bước gradient tự nhiên. KL thật của hai bước là $0{,}0093$ và $0{,}0085$, đều $\le\kappa$. Ưu điểm của gradient tự nhiên là độ dài bước đo trên phân phối hành động, nên không phụ thuộc cách tham số hóa; ví dụ không cho thấy bước theo $g$ tốt hơn nói chung.
+- **Nối vào:** `4-25`. **Nối ra:** `4-35` (thuật toán không có $\nu^\pi$, chỉ có bộ đệm).
+- **Phút:** 1,5.
+
+#### `L10-4-35` · Hai cách lấy trung bình KL (thêm 2026-11-22; nhận xét website, đề xuất 5)
+
+- **Quyết định:** thêm, sau `4-34`, trước `4-09` (không đặt sau `4-26`). Lý do: (1) ví dụ tay `4-25` và câu hỏi `4-34` dùng $\bar D_{\mathrm{KL}}$ theo $\nu^\pi$, còn thuật toán chỉ có bộ đệm; trang này là bước chuyển từ bài toán lý thuyết sang triển khai, chỗ nhận xét chấm thấp nhất (tiêu chí "từ lý thuyết đến thuật toán", 8 điểm); (2) $\widehat D$ được giới thiệu trước khi bước 3–4 của thuật toán dùng (TB11), trang thuật toán vẫn ghi công thức của nó (TB31); (3) ví dụ tay vẫn đứng trước trang thuật toán (Đ12). Đặt sau `4-26` thì trang chen giữa thuật toán và trạm dừng `4-31`, và giải thích ngược một đại lượng đã dùng.
+- **Mục đích:** phân biệt KL trung bình của bài toán (trọng số $\nu^\pi$ có chiết khấu, tổng $0{,}145$) với KL mẫu trên bộ đệm (trung bình đều), và nêu hệ quả với $\kappa$.
+- **Câu:** 5. **Nhãn:** "Nhắc lại:", "Ký hiệu:", hộp.
+- **Mặt trang:**
+  - "Nhắc lại: $\bar D_{\mathrm{KL}}=\sum_s\nu^\pi(s)D_{\mathrm{KL}}(s)$ với $\nu^\pi=(0{,}1;\,0{,}045)$, tổng $0{,}145$. Với $\tilde\pi$, $D_{\mathrm{KL}}(s)=(0{,}511;\,0{,}0566)$."
+  - "Ký hiệu: trên bộ đệm $\mathcal D$ thu bằng $\pi$, KL trung bình trên bộ đệm là trung bình đều" $$\widehat D=\frac1{|\mathcal D|}\sum_{t\in\mathcal D}D_{\mathrm{KL}}(S_t),\qquad D_{\mathrm{KL}}(s)=D_{\mathrm{KL}}\bigl(\pi(\cdot\mid s)\Vert\pi'(\cdot\mid s)\bigr).$$
+  - "Mỗi lượt của $\pi$ thăm $s_A$ một lần và thăm $s_B$ với xác suất $p_A=\tfrac12$, nên tần suất trên bộ đệm là $(\tfrac23;\,\tfrac13)$."
+  - Hình hai cột (nửa phải); hai phép tính $0{,}0536$ và $\approx0{,}36$ nằm trong hình, không chép lại bằng chữ (TB10).
+  - "Chuẩn hóa $\nu^\pi$: $(0{,}1;\,0{,}045)/0{,}145=(0{,}690;\,0{,}310)$ cho $0{,}690\cdot0{,}511+0{,}310\cdot0{,}0566\approx0{,}37$, gần $\widehat D\approx0{,}36$. Phần chênh còn lại do chiết khấu: $\nu^\pi(s_B)/\nu^\pi(s_A)=0{,}45$, còn trên bộ đệm tỉ lệ này là $0{,}5$."
+  - Hộp: "TRPO thực hành áp $\kappa$ lên $\widehat D$. Trên đoạn từ $\pi$ tới $\tilde\pi$, $\bar D_{\mathrm{KL}}\le0{,}01$ giữ $t\le0{,}515$, còn $\widehat D\le0{,}01$ chỉ giữ $t\le0{,}206$."
+- **Hình:** `hai-cach-trung-binh-kl.svg` (viewBox 820×588, `width="600"`, tối thiểu 547, cao khoảng 430 px), nửa phải; mô tả ở §4.5. Dòng tiêu đề hiển thị trong SVG gần trùng `h2` (TB10): như `4-33`.
+- **Dựng dần:** (0) nhắc lại, ký hiệu; (1) dòng tần suất, hình; (2) dòng chuẩn hóa; (3) hộp.
+- **1 phút:** Cùng các KL theo trạng thái, trọng số có chiết khấu (tổng $0{,}145$) cho $0{,}0536$, tần suất trên bộ đệm cho khoảng $0{,}36$; cùng một $\kappa$, miền của thuật toán hẹp hơn nhiều.
+- **Mới:** $\widehat D$; tần suất trên bộ đệm (hai đối tượng, TB24).
+- **Nguồn số:** $\nu^\pi$ và tổng $0{,}145$ từ `4-07`; $D_{\mathrm{KL}}(s)$ từ `4-12`, `4-32`; tần suất từ $p_A=\tfrac12$ (`1-09`): $1:\tfrac12$ chuẩn hóa thành $(\tfrac23;\,\tfrac13)$; $0{,}1/0{,}145=0{,}690$, $0{,}045/0{,}145=0{,}310$; tích trên trang; $0{,}0536$, $\approx0{,}36$ trên hình; $t\le0{,}515$ từ `4-32`; $t\le0{,}206$ là nghiệm số như $0{,}515$ ở `4-32` (ghi chú diễn giả có đường tính). Số không làm tròn trong `kiem.py`: $0{,}3594$, $0{,}3699$; theo yêu cầu của điều phối viên, trang ghi $\approx0{,}36$, $\approx0{,}37$, vì tính lại từ số đã làm tròn cho $0{,}3595$.
+- **Ghi chú nguồn:** §4.5 (đoạn "KL trung bình $\bar D_{\mathrm{KL}}$ lấy trọng số $\nu^\pi$ …", ba cách lấy trọng số và đoạn sau, bản 2026-11-22); §5.2 (Thuật toán 10.37, bước 3–4).
+- **Diễn giả:** tổng $0{,}145$ khác $1$ vì lượt kết thúc: $\nu^\pi=(1-\gamma)\eta_\pi$ chỉ đặt khối lên các trạng thái của MDP, phần còn lại ở trạng thái hấp thụ (đề xuất 5 của nhận xét). Chuẩn hóa chia cho khối, tương ứng phép quy đổi bán kính của dạng (14) trong Schulman và cộng sự (2015). Bộ đệm không có trọng số chiết khấu: $s_B$ chỉ được thăm ở bước $1$ nên trong $\nu^\pi$ mang thêm thừa số $\gamma=0{,}9$. Tại $t=0{,}206$: $D_{\mathrm{KL}}=(0{,}0137;\,0{,}00256)$, $\tfrac23\cdot0{,}0137+\tfrac13\cdot0{,}00256=0{,}0100$. Bước của ví dụ tay có $\widehat D=\tfrac23\cdot0{,}0150+\tfrac13\cdot0{,}156=0{,}062\gt\kappa$: thuật toán tính $g$, $F$ và $\widehat D$ theo cùng tần suất mẫu, nên bước của nó ngắn hơn bước của ví dụ. Để cùng miền với $\bar D_{\mathrm{KL}}\le0{,}01$, bán kính trên $\widehat D$ phải khoảng $0{,}07$.
+- **Nối vào:** `4-34`. **Nối ra:** `4-09` (thuật toán dùng $\widehat D$ ở bước 3–4).
 - **Phút:** 1,5.
 
 #### `L10-4-09` · Thuật toán TRPO (1) (sửa một cụm từ ở bước 1)
@@ -1226,8 +1253,9 @@ Thứ tự: `3-00` → `3-01` → `3-06` → `3-07` → `3-02` → `3-08` → `3
 - **Câu:** 5.
 - **Diễn giả:** thêm một câu: KL ở bước 3 cần cả phân phối cũ tại mỗi trạng thái, không chỉ log-xác suất của hành động đã chọn.
 - **Nguồn:** §5.2 (Thuật toán 10.37, bước 1–2; đoạn "Trong thực hành" sau thuật toán); §3.3 (Thuật toán 10.16).
-- **Nối vào:** `4-25`. **Nối ra:** `4-26`.
+- **Nối vào:** `4-35` (2026-11-22; trước đó `4-25`). **Nối ra:** `4-26`.
 - **Phút:** 1,5.
+- **Bản 2026-11-22 (nhận xét website #6):** mặt trang giữ. Câu mở của deck "TRPO cực đại hóa hàm thay thế trên một bộ đệm (buffer) với KL trung bình không vượt $\kappa$" đổi "KL trung bình" thành "KL trung bình trên bộ đệm $\widehat D$" để khớp `4-35`; tên đầy đủ "tối ưu chính sách miền tin cậy (trust region policy optimization, TRPO)" của dòng "Thuật toán" giữ (khối thuật toán phát biểu tên đầy đủ; lần đầu có tên tiếng Anh nay ở `4-33`).
 
 #### `L10-4-26` · Thuật toán TRPO (2) (giữ nguyên)
 
@@ -1236,6 +1264,7 @@ Thứ tự: `3-00` → `3-01` → `3-06` → `3-07` → `3-02` → `3-08` → `3
 - **Nguồn:** §5.2 (Thuật toán 10.36, 10.37; Nhận xét 10.38).
 - **Nối vào:** `4-09`. **Nối ra:** `4-31`.
 - **Phút:** 1.
+- **Bản 2026-11-22 (nhận xét website #6):** mặt trang giữ. Ghi chú diễn giả trên deck có câu "Trên chuỗi, bước vừa tính được giữ nguyên ($j=0$)." Câu này chỉ đúng với ví dụ tay `4-25`, nơi $g$, $F$ và KL lấy trọng số $\nu^\pi$. Với KL mẫu $\widehat D$ của thuật toán (tần suất $(\tfrac23;\,\tfrac13)$), bước của `4-25` có $\widehat D=\tfrac23\cdot0{,}0150+\tfrac13\cdot0{,}156=0{,}062>\kappa=0{,}01$ và bị tìm kiếm lùi từ chối. Câu thay: "Ví dụ tay dùng $g$, $F$ và KL theo $\nu^\pi$. Trên bộ đệm, $g$, $F$ và $\widehat D$ lấy theo tần suất mẫu, nên bước của thuật toán ngắn hơn: kỳ vọng của nó là $\Delta_0\approx(0{,}129;\,0{,}482)$, cho $p\approx(0{,}532;\,0{,}764)$, $\widehat D\approx0{,}0095\le\kappa$, nhận ngay $j=0$, và $J\approx1{,}566$." (tính trong `m4-phu-luc/kiem.py`; số này không lên mặt trang).
 
 #### `L10-4-31` · TRPO dự báo cục bộ, giới hạn thay đổi và đi theo hình học KL (thêm; cụm E; đề xuất 20, H14; trạm dừng cuối mạch)
 
@@ -1257,6 +1286,7 @@ Thứ tự: `3-00` → `3-01` → `3-06` → `3-07` → `3-02` → `3-08` → `3
 - **Diễn giả:** thông điệp xuyên suốt của đề xuất: TRPO không chỉ là gradient chính sách với bước nhỏ; nó dựng mô hình dự báo hiệu năng từ dữ liệu hiện có, giới hạn miền mà mô hình còn tương đối đáng tin, rồi tìm bước tốt nhất trong miền đó. So với định lý, TRPO thực hành thay năm điểm (Nhận xét 10.38), nên không bảo đảm $J$ tăng.
 - **Nguồn:** §5.2 (đoạn kết "TRPO chọn từ một bộ đệm …"; Nhận xét 10.38).
 - **Nối vào:** `4-26`. **Nối ra:** `5-00`, `5-09` (dùng lại một bộ đệm cho nhiều bước).
+- **Bản 2026-11-22 (nhận xét website #6):** mặt trang giữ (chú thích "Miền tin cậy: vùng $\bar D_{\mathrm{KL}}\le\kappa$, nơi sai số của dự báo bị chặn theo KL" đúng với điều kiện của hệ quả). Ghi chú diễn giả: câu "TRPO không chỉ là gradient chính sách với bước nhỏ …" chuyển lên ghi chú diễn giả `4-33`; câu "Bước theo $g$ cho $J\approx1{,}835$ …" rút còn "như câu hỏi nhanh về gradient tự nhiên". Trạm dừng `4-31` và sơ đồ `4-33` cùng mạch: `4-33` là bản đồ trước khi giải, `4-31` gom ba ý sau khi giải; không đổi hình `ba-truc-giac.svg` (quyết định của điều phối viên có thể thay bằng `so-do-trpo-tong-the.svg`, xem §10).
 - **Phút:** 1.
 
 **Ảnh hưởng ngoài mạch 4** (người dựng làm cùng lượt; mỗi chỗ ghi ở §10 khi làm):
@@ -1528,7 +1558,7 @@ Bộ đệm chung (kiểm trong `kiem_so.py`): hai lượt $s_A\xrightarrow1s_B\
 
 ---
 
-### Mạch 6. Tổng kết (`id="mach-6"`, 10 trang, 11 phút)
+### Mạch 6. Tổng kết (`id="mach-6"`, 10 trang, 11,5 phút từ 2026-11-22)
 
 Thứ tự: `6-00` → `6-10` → `6-11` → `6-18` → `6-12` → `6-13` → `6-14` → `6-15` → `6-16` → `6-17`. Mã mới `6-18` (E1: câu trả lời câu 2 tách khỏi `6-11` để vừa khung). Mã cũ `7-00` … `7-07` bỏ (đổi tiền tố); `7-03`, `7-04` chuyển thành `5-12`, `5-13`. Không có số của ví dụ trên mặt trang (#28, TB32); không khái niệm mới.
 
@@ -1554,6 +1584,7 @@ Thứ tự: `6-00` → `6-10` → `6-11` → `6-18` → `6-12` → `6-13` → `6
 - **1 phút:** Câu 1 có hai câu trả lời (đường cơ sở, GAE), mỗi câu trả lời kèm điều kiện.
 - **Ngoại lệ:** câu "Với $b=v_\pi$, hệ số có kỳ vọng có điều kiện bằng lợi thế." ở ghi chú diễn giả (vừa khung); dòng ví dụ chung ở `6-18`; mật độ > 80 âm tiết, mục 7.
 - **Ghi chú nguồn:** §7.3. **Diễn giả:** điều kiện của từng câu trả lời; Mệnh đề 10.2, 10.5; 10.8, 10.14, 10.15. **Phút:** 1.
+- **Bản 2026-11-22 (nhận xét website #6):** câu 2 trong khung "Câu hỏi:" viết như `1-06`: "Làm thế nào để dùng lượt của chính sách cũ cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm?"
 
 #### `L10-6-18` · Vấn đề trung tâm: trả lời câu 2 (mã mới; E1, tách từ `6-11`; G2)
 
@@ -1564,6 +1595,11 @@ Thứ tự: `6-00` → `6-10` → `6-11` → `6-18` → `6-12` → `6-13` → `6
   Dòng cuối "Ví dụ chung của bài là chuỗi hai trạng thái." (Đ13).
 - **1 phút:** Câu 2 có hai câu trả lời (hàm thay thế và cận; TRPO và PPO), mỗi câu kèm điều kiện.
 - **Ghi chú nguồn:** §7.3. **Diễn giả:** Mệnh đề 10.22, Định lý 10.26, Hệ quả 10.27; Thuật toán 10.37, 10.49, Nhận xét 10.38, 10.42. **Phút:** 1.
+- **Bản 2026-11-22 (nhận xét website #6):** "Nhắc lại:" đổi thành "câu 2 hỏi cách dùng lượt của chính sách cũ cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm." Câu trả lời xếp theo ba mức của đề xuất 1 (mục 3.1 của nhận xét), ba mục `<ul>`:
+  - mục 1 giữ (mức lý thuyết; câu "$J$ không giảm nếu …" là kết luận có điều kiện của định lý, không phải lời hứa);
+  - mục 2 mới (mức bài toán): "Bài toán miền tin cậy thay phạt bằng ràng buộc $\bar D_{\mathrm{KL}}\le\kappa$. Ràng buộc giới hạn mức đổi chính sách, nhưng không tự bảo đảm $J$ tăng.";
+  - mục 3 (mức thuật toán) là mục 2 cũ, thêm một câu đầu: "TRPO thực hành dùng lợi thế ước lượng, xấp xỉ bậc hai, KL trên bộ đệm và tìm kiếm lùi." rồi giữ phần còn lại.
+  Dòng "Ví dụ chung của bài là chuỗi hai trạng thái." giữ. Nếu trang tràn: câu "Thừa số của phạt là …" của mục 1 xuống ghi chú diễn giả. **Phút:** 1 → 1,5 (thêm một mục; tính trong §5).
 
 #### `L10-6-12` · Kết quả và giả thiết (1) (thay một phần `7-02`; CLAUDE.md "Conclusion strand", P4)
 
@@ -1625,6 +1661,142 @@ Thứ tự: `6-00` → `6-10` → `6-11` → `6-18` → `6-12` → `6-13` → `6
 
 - **Mặt trang:** Sutton, R. S., Barto, A. G. *Reinforcement Learning: An Introduction*, ấn bản 2, 2018, §7.1, §12.1–12.3, §13.4–13.5. Kakade, S., Langford, J. Approximately Optimal Approximate Reinforcement Learning, 2002. Schulman và cộng sự. Trust Region Policy Optimization, 2015; High-Dimensional Continuous Control Using Generalized Advantage Estimation, 2016; Proximal Policy Optimization Algorithms, 2017. Achiam và cộng sự. Constrained Policy Optimization, 2017. Engstrom và cộng sự. Implementation Matters in Deep Policy Gradients, 2020. Tạ Việt Cường. Bài giảng 10, học phần AIT3007, 2025–2026. "Bài tiếp theo: [Bài 11, Lập kế hoạch dựa trên mô hình](lecture-11-lap-ke-hoach-dua-tren-mo-hinh.html)." Bỏ Christiano, Ouyang, Rafailov (DPO, #27).
 - **Phút:** 0,5.
+
+---
+
+### Phụ lục: cơ sở lý thuyết của miền tin cậy (`id="mach-7"`, 7 trang, ngoài 120 phút; thêm 2026-11-22)
+
+**Căn cứ.** Quyết định #6(1) của tác giả (chứng minh dài chuyển sang mạch "Phụ lục" cuối deck); tinh chỉnh "TB27, Bài 10 (tác giả 2026-11-22 …)" của `NGUYEN-TAC-HOC-PHAN.md` §3a.F; đề xuất 3 của `nhan-xet-website-trpo-2026-11-21.md` ("chuyển các chứng minh đầy đủ sang slide dọc/phụ lục để phục vụ lớp cần độ sâu toán học").
+
+**Vị trí và mã.** Một `section` ngang mới, thứ bảy, ngay sau `section id="mach-6"` (trang cuối `6-17`). Chọn `id="mach-7"`, không `id="phu-luc"`: (1) lược đồ mã của học phần (`NGUYEN-TAC-HOC-PHAN.md` §5) gắn tiền tố `LNN-k-` với `id="mach-k"` và yêu cầu một lược đồ cho mọi trang của deck; mã `L10-7-xx` đi với `mach-7`; (2) liên kết `#/7` của `1-08` dùng chỉ số ngang (`hashOneBasedIndex: true`), không dùng `id`, nên lựa chọn này không đổi liên kết; (3) `id="phu-luc"` sẽ là `id` mạch khác mẫu `mach-k` của các deck rl-plan, và các công cụ kiểm, các brief đều đọc mẫu `mach-k`. Phụ lục không đánh số mạch: trang tiêu đề không có `span.strand-number`, dòng ở `1-08` không có số.
+
+**Mã đã dùng.** `L10-7-00` … `L10-7-07` từng là mạch Tổng kết của bản 2026-11-20 (đã đổi thành `6-00`, `6-10`, `6-11`, `6-15` … `6-17`, `5-12`, `5-13`; §6), và còn trong mục lịch sử của tệp này cùng `review-log.md`. Theo quyết định (1) của điều phối viên (dòng N2 của `review-log.md`, 2026-11-22), sáu trang phụ lục lấy `L10-7-10` … `L10-7-15`, theo cách làm của mạch 6; chỉ trang tiêu đề dùng lại `L10-7-00` (bắt buộc theo §5 `NGUYEN-TAC-HOC-PHAN.md`).
+
+**Câu chuyện của phụ lục (một dòng).** Các chứng minh nối giới hạn KL của bài toán miền tin cậy với sai số của hàm thay thế, theo thứ tự mắt xích của hình chuỗi bốn khối: bổ đề chênh lệch hiệu năng (nền của đẳng thức sai số), bất đẳng thức Pinsker, bổ đề dịch chuyển, định lý chặn cải thiện cùng chứng minh hệ quả theo KL, ví dụ cận trên chuỗi, cải thiện đơn điệu.
+
+**Quy ước.** Tiêu đề bỏ tiền tố "Cơ sở lý thuyết:" (tên mạch đã mang ý này). Mỗi trang đọc được độc lập: đại lượng của mạch 4 cách hơn năm trang có dòng "Nhắc lại:" với giá trị cần dùng (TB11, TB29). Mặt trang không có câu điều hướng; ghi chú diễn giả `4-21` nói chứng minh ở phụ lục. Phụ lục không tính vào 120 phút; nếu giảng thì khoảng 8,5 phút theo cách cộng trang. Mặt trang, hình, ghi chú diễn giả của sáu trang cũ giữ như mục cũ (chép nguyên dưới đây, chỉ đổi tiêu đề mục), trừ các dòng "Bản 2026-11-22". Dòng "Nối vào/Nối ra" và "Phút" cũ trong sáu mục là của cụm lý thuyết trên mạch 4; dòng "Bản 2026-11-22" cuối mỗi mục thay chúng.
+
+| Thứ tự | Mã mới | Mã cũ | Tiêu đề trên deck (mới) | Tiêu đề trên deck (cũ) |
+|---|---|---|---|---|
+| 0 | `L10-7-00` | — | Phụ lục: cơ sở lý thuyết của miền tin cậy | — |
+| 1 | `L10-7-10` | `L10-4-14` | Ý tưởng chứng minh: bổ đề chênh lệch hiệu năng | Cơ sở lý thuyết: ý tưởng chứng minh bổ đề |
+| 2 | `L10-7-11` | `L10-4-20` | Bất đẳng thức Pinsker | Cơ sở lý thuyết: bất đẳng thức Pinsker |
+| 3 | `L10-7-12` | `L10-4-24` | Bổ đề dịch chuyển phân bố chiếm dụng | Cơ sở lý thuyết: dịch chuyển phân bố chiếm dụng |
+| 4 | `L10-7-13` | `L10-4-06` | Định lý chặn cải thiện | Cơ sở lý thuyết: định lý chặn cải thiện |
+| 5 | `L10-7-14` | `L10-4-19` | Chặn cải thiện trên chuỗi: đúng nhưng lỏng | Cơ sở lý thuyết: chặn cải thiện đúng nhưng lỏng |
+| 6 | `L10-7-15` | `L10-4-29` | Cải thiện đơn điệu qua hàm chặn dưới | Cơ sở lý thuyết: cải thiện đơn điệu |
+
+#### `L10-7-00` · Phụ lục: cơ sở lý thuyết của miền tin cậy (trang tiêu đề; thêm 2026-11-22)
+
+- **Mặt trang:** lớp `strand-title`; `h2` "Phụ lục: cơ sở lý thuyết của miền tin cậy" (không `span.strand-number`); `p.strand-lead` "Các chứng minh nối giới hạn KL của bài toán miền tin cậy với sai số của hàm thay thế." (20 âm tiết; chỉ thuật ngữ của mạch 4, TB30, Đ11).
+- **Hình:** `chuoi-bon-mat-xich.svg` (bản đủ, dùng lại từ `4-21`), `width="1000"` như `4-21`, dưới dòng dẫn; không dựng dần. Thay cho sơ đồ neo của bài (TB2): phụ lục là một nhánh của khối "Cập nhật actor", và hình chuỗi là bản đồ đúng của các trang sau.
+- **Diễn giả:** "Phụ lục dành cho lớp cần độ sâu toán học và không thuộc thời lượng trên lớp. Nó gồm chứng minh bổ đề chênh lệch hiệu năng, nền của đẳng thức sai số; ba kết quả ứng với ba mũi tên của hình; cận trên chuỗi; hệ quả cải thiện đơn điệu." **Nguồn:** §4.6 (đoạn mở). **Nối vào:** `6-17`. **Nối ra:** `7-10`.
+- **Phút (ngoài giờ):** 0,5.
+
+#### `L10-7-10` (mã cũ `L10-4-14`) · Ý tưởng chứng minh: bổ đề chênh lệch hiệu năng (giữ, chuyển vào cụm lý thuyết)
+
+- **Quyết định:** giữ mặt trang; chuyển chỗ; thêm dòng bỏ giả thiết "cùng $\mu_0$" từ `4-15` cũ (Đ2) làm mảnh cuối.
+- **Mục đích:** cho lộ trình năm bước của chứng minh bổ đề và vai trò của từng giả thiết.
+- **Câu:** 4 (cơ sở lý thuyết). **Nhãn:** "Ý tưởng chứng minh." (tiêu đề), "Câu hỏi:", "Lời giải:".
+- **Mặt trang:** năm bước như deck (Đ8); hộp câu hỏi và lời giải như deck (Đ9); mảnh cuối: "Bỏ cùng $\mu_0$: nếu $\tilde\pi$ xuất phát từ $s_B$ còn $\pi$ từ $s_A$, vế trái là $0{,}5\cdot3-1{,}4=0{,}1$, vế phải là $A_\pi(s_B,\tilde\pi)=-0{,}5$."
+- **Hình:** không. **Dựng dần:** từng bước; câu hỏi; lời giải; dòng bỏ giả thiết.
+- **1 phút:** Lợi thế của $\pi$ cộng dọc lượt của $\pi'$ là tổng lồng nhau, còn lại đúng hiệu $J$; Bước 4 cần cùng $\mu_0$.
+- **Mới:** không. **Nguồn số:** $A_\pi(s_B,\tilde\pi)$ từ `4-13`; $v_{\tilde\pi}(s_B)=\tilde p_B\cdot3$.
+- **Diễn giả:** như deck: Bước 2 dùng cùng $P$ và tính Markov; Bước 4 dùng cùng $\mu_0$, phần thưởng bị chặn và $\gamma<1$. Ghi chú dùng phản ví dụ cùng dạng với $\pi'=(0{,}6;\,0{,}8)$ ($1$ so với $0{,}4$); số với $\tilde\pi$ là đề xuất NT3 (§10). Ngoại lệ mật độ: §7.
+- **Nguồn:** §4.1 (Bổ đề 10.19, chứng minh Bước 1–5; đoạn "Hai giả thiết có vai trò riêng").
+- **Nối vào:** `4-21`. **Nối ra:** `4-20`.
+- **Phút:** 1,5.
+- **Bản 2026-11-22 (nhận xét website #6):** tiêu đề trên deck "Cơ sở lý thuyết: ý tưởng chứng minh bổ đề" thành "Ý tưởng chứng minh: bổ đề chênh lệch hiệu năng" (bỏ tiền tố, gọi đủ tên kết quả như các trang ý tưởng chứng minh khác). Dòng "Nhắc lại:" bổ đề đã có, nên trang đọc được độc lập; thêm vào dòng đó "với $A_\pi(s,\pi')=\sum_a\pi'(a\mid s)A_\pi(s,a)$ và giả thiết chung". Dòng "Lưu ý:" về cùng $\mu_0$ giữ $A_\pi(s_B,\tilde\pi)=-0{,}5$; thêm vào ngoặc "(trang lợi thế của $\tilde\pi$ tại một trạng thái)" ở ghi chú diễn giả, không trên mặt trang. **Nối vào:** `7-00`. **Nối ra:** `7-11`. **Phút (ngoài giờ):** 1,5.
+
+#### `L10-7-11` (mã cũ `L10-4-20`) · Bất đẳng thức Pinsker (giữ, sửa dòng "Ý nghĩa:"; cụm lý thuyết; mắt xích 1)
+
+- **Quyết định:** giữ khối mệnh đề và dòng "Chứng minh."; dòng "Ý nghĩa:" tính $D_{\mathrm{TV}}(s_B)=\tfrac16$ ngay trên trang (sau cổng storyboard, vì `4-20` nay đứng trước `4-24`); dòng nguồn đổi số (Mệnh đề 10.25(b)).
+- **Mục đích:** cho mắt xích thứ nhất: KL nhỏ thì TV nhỏ.
+- **Câu:** 4 (cơ sở lý thuyết). **Nhãn:** "Mệnh đề.", "Giả thiết:", "Kết luận:", "Chứng minh.", "Ý nghĩa:".
+- **Mặt trang:** khối mệnh đề và "Chứng minh." như deck; "Ý nghĩa: KL nhỏ kéo theo TV nhỏ. Với $\tilde\pi$, tại $s_A$: $0{,}4\le\sqrt{0{,}511/2}=0{,}505$; tại $s_B$: $D_{\mathrm{TV}}=\tfrac12\bigl(\lvert0{,}5-\tfrac23\rvert+\lvert0{,}5-\tfrac13\rvert\bigr)=\tfrac16\approx0{,}167\le\sqrt{0{,}0566/2}=0{,}168$."
+- **Hình:** không. **Dựng dần:** như deck.
+- **1 phút:** Khoảng cách TV bị chặn bởi căn của nửa KL; trên chuỗi bất đẳng thức gần chặt tại $s_B$.
+- **Mới:** bất đẳng thức Pinsker. **Nguồn số:** $D_{\mathrm{TV}}(s_A)$, $D_{\mathrm{KL}}(s_A)$ từ `4-12`; $D_{\mathrm{KL}}(s_B)$ từ `4-07`; $D_{\mathrm{TV}}(s_B)$ trên trang.
+- **Diễn giả:** như deck; thêm: chứng minh hệ quả theo KL trung bình (`4-06`) dùng bất đẳng thức này tại từng trạng thái.
+- **Nguồn:** §4.6 (Mệnh đề 10.25(b), chứng minh Bước 3; đoạn sau).
+- **Nối vào:** `4-14`. **Nối ra:** `4-24` (mắt xích 2).
+- **Phút:** 1.
+- **Bản 2026-11-22 (nhận xét website #6):** tiêu đề "Cơ sở lý thuyết: bất đẳng thức Pinsker" thành "Bất đẳng thức Pinsker". Thêm dòng đầu "Nhắc lại: $D_{\mathrm{TV}}(q,q')=\tfrac12\sum_a\lvert q(a)-q'(a)\rvert$, $D_{\mathrm{KL}}(q\Vert q')=\sum_aq(a)\log\tfrac{q(a)}{q'(a)}$; với $\tilde\pi$, $D_{\mathrm{KL}}=(0{,}511;\,0{,}0566)$." (hai định nghĩa ở `4-12`, số ở `4-12`, `4-32`, cách hơn năm trang, TB11, TB29). Nếu tràn: dòng "Ý tưởng chứng minh." xuống ghi chú diễn giả. **Nối vào:** `7-10`. **Nối ra:** `7-12`. **Phút (ngoài giờ):** 1.
+
+#### `L10-7-12` (mã cũ `L10-4-24`) · Bổ đề dịch chuyển phân bố chiếm dụng (sửa; cụm lý thuyết; mục "TV và phân bố chiếm dụng" của đề xuất; mắt xích 2)
+
+- **Quyết định:** sửa. Giữ mã vì trang cũ "Biến phân toàn phần và phân bố chiếm dụng" chuyển thành trang của mắt xích "TV nhỏ thì phân bố chiếm dụng ít thay đổi"; định nghĩa TV đã lên `4-12`, $\nu^\pi$ lên `4-07`, $\chi$ lên `4-21`. Bổ đề 10.26 có khối riêng (TB28); trước đây chỉ nêu trong bước 5 của `4-18`. Sau cổng storyboard: vế trái viết $0{,}1\cdot\lvert0{,}81-0{,}45\rvert$ để thấy đây là hiệu phân bố chiếm dụng, không lẫn với sai số $0{,}036$ của bước $\pi'$ trong ghi chú.
+- **Mục đích:** phát biểu mắt xích thứ hai và kiểm trên chuỗi.
+- **Câu:** 4 (cơ sở lý thuyết). **Nhãn:** "Bổ đề.", "Giả thiết:", "Kết luận:", "Chứng minh.".
+- **Mặt trang:**
+  - "Tại mọi trạng thái, nếu $\pi'$ chọn hành động gần như $\pi$ thì hai chính sách gặp các trạng thái với tần suất gần nhau. Khác biệt nhỏ ở mỗi bước tích lũy dọc lượt." (Đ5)
+  - "**Bổ đề** (dịch chuyển phân bố chiếm dụng). Giả thiết: giả thiết chung. Kết luận, với $D_{\mathrm{TV}}(s)=D_{\mathrm{TV}}(\pi'(\cdot\mid s),\pi(\cdot\mid s))$:" $$\sum_s\bigl\lvert\nu^{\pi'}(s)-\nu^\pi(s)\bigr\rvert\ \le\ \frac{2\gamma}{1-\gamma}\,\mathbb E_{S\sim\nu^\pi}\bigl[D_{\mathrm{TV}}(S)\bigr].$$
+  - "Chứng minh. Hiệu hai phân bố bằng $\gamma$ nhân khác biệt một bước của hai ma trận chuyển, lan qua các bước sau với tổng trọng số không quá $\tfrac1{1-\gamma}$; khác biệt một bước không quá $2\,\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]$."
+  - "Ở đây, với $\tilde\pi$: $\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]=0{,}1\cdot0{,}4+0{,}045\cdot\tfrac16=0{,}0475$. Chỉ $s_B$ đổi tần suất: vế trái $=(1-\gamma)\lvert\eta_{\tilde\pi}(s_B)-\eta_\pi(s_B)\rvert=0{,}1\cdot\lvert0{,}81-0{,}45\rvert=0{,}036$, vế phải $=18\cdot0{,}0475=0{,}855$."
+- **Hình:** không. **Dựng dần:** (0) trực quan; (1) bổ đề; (2) chứng minh; (3) dòng số.
+- **1 phút:** Khoảng cách giữa hai phân bố chiếm dụng không vượt $\tfrac{2\gamma}{1-\gamma}$ lần TV kỳ vọng; trên chuỗi cận đúng nhưng lỏng.
+- **Mới:** bổ đề dịch chuyển.
+- **Nguồn số:** $D_{\mathrm{TV}}=(0{,}4;\,\tfrac16)$ từ `4-12`, `4-20`; $\nu^\pi$ từ `4-07`; $\eta$ từ `4-02`, `4-03`; $2\gamma/(1-\gamma)=18$.
+- **Diễn giả:** câu hỏi của `4-18` cũ: vì sao định lý có $1/(1-\gamma)^2$. Một thừa số $\tfrac1{1-\gamma}$ ở bổ đề này (khác biệt tích lũy qua các bước sau), một thừa số khi đổi $\nu$ về $\eta$ trong định lý. Chứng minh trong ghi chú dùng dạng ma trận $(I-\gamma P_\pi)^{-1}$; sự kết thúc chỉ làm các tổng nhỏ đi. Ghi chú kiểm bổ đề với $\pi'=(0{,}6;\,0{,}8)$ ($0{,}009$ so với $0{,}288$); số với $\tilde\pi$ là đề xuất NT3 (§10).
+- **Nguồn:** §4.6 (Bổ đề 10.26, chứng minh Bước 1–6; đoạn trực quan trước bổ đề; đoạn sau chứng minh).
+- **Nối vào:** `4-20`. **Nối ra:** `4-06` (mắt xích 3).
+- **Phút:** 1,5.
+- **Bản 2026-11-22 (nhận xét website #6):** tiêu đề "Cơ sở lý thuyết: dịch chuyển phân bố chiếm dụng" thành "Bổ đề dịch chuyển phân bố chiếm dụng". Thêm vào dòng mở một mệnh đề "Nhắc lại: $\nu^\pi=(1-\gamma)\eta_\pi=(0{,}1;\,0{,}045)$, $\eta_{\tilde\pi}=(1;\,0{,}81)$; $D_{\mathrm{TV}}$ của $\tilde\pi$ là $(0{,}4;\,\tfrac16)$." (số của `4-02`, `4-07`, `4-12`, `7-11`). **Nối vào:** `7-11`. **Nối ra:** `7-13`. **Phút (ngoài giờ):** 1,5.
+
+#### `L10-7-13` (mã cũ `L10-4-06`) · Định lý chặn cải thiện (sửa, gộp `4-18`; cụm lý thuyết; mục "định lý chặn cải thiện và ý tưởng chứng minh"; mắt xích 3)
+
+- **Quyết định:** sửa. Chứng minh rút thành một dòng gọi tên Bước 1–5 của ghi chú, vì đẳng thức sai số (`4-16`) và bổ đề dịch chuyển (`4-24`) đã có trang (TB28 dạng a); `4-18` bỏ. Giả thiết theo Định lý 10.27 mới (không còn điều kiện hỗ trợ). Sau cổng storyboard: "Ý nghĩa:" dùng biểu thức của ghi chú $\tfrac{2\gamma\chi}{(1-\gamma)^2}=90$; dòng chứng minh Hệ quả 10.28 (của `4-21`) đặt ở mảnh cuối trang này.
+- **Mục đích:** phát biểu cận dạng TV và khép chứng minh của cận dạng KL ở `4-21`.
+- **Câu:** 4 (cơ sở lý thuyết). **Nhãn:** "Định lý.", "Giả thiết:", "Kết luận:", "Chứng minh.", "Ý nghĩa:".
+- **Mặt trang:**
+  - "**Định lý** (chặn cải thiện). Giả thiết: giả thiết chung; $A_\pi$ và $\nu^\pi$ tính chính xác. Kết luận:" $$J(\pi')-J(\pi)\ \ge\ \Delta\mathcal L-\frac{2\gamma\,\chi_{\pi'}}{(1-\gamma)^2}\,\mathbb E_{S\sim\nu^\pi}\bigl[D_{\mathrm{TV}}(S)\bigr].$$
+  - "Chứng minh. Bước 1–3: bổ đề chênh lệch hiệu năng và hàm thay thế cho $\Delta J-\Delta\mathcal L=\sum_s(\eta_{\pi'}-\eta_\pi)(s)A_\pi(s,\pi')$. Bước 4: bất đẳng thức Hölder chặn tổng này dưới bởi $-\chi_{\pi'}\sum_s\lvert\eta_{\pi'}(s)-\eta_\pi(s)\rvert$. Bước 5: bổ đề dịch chuyển, với $\eta=\nu/(1-\gamma)$."
+  - "Ý nghĩa: phạt tỉ lệ với TV kỳ vọng theo phân bố của chính sách cũ. Với $\tilde\pi$, $\chi=0{,}5$ và $\tfrac{2\gamma\chi}{(1-\gamma)^2}=\tfrac{2\cdot0{,}9\cdot0{,}5}{0{,}01}=90$."
+  - "**Chứng minh** (hệ quả chặn cải thiện theo KL trung bình). Bất đẳng thức Pinsker tại từng trạng thái, rồi bất đẳng thức Jensen cho hàm lõm $\sqrt{\cdot}$ với $\sum_s\nu^\pi(s)\le1$, cho $\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]\le\sqrt{\tfrac12\bar D_{\mathrm{KL}}}$; thế vào định lý."
+- **Hình:** không. **Dựng dần:** (0) định lý; (1) chứng minh; (2) ý nghĩa; (3) chứng minh hệ quả.
+- **1 phút:** Mức tăng thật không nhỏ hơn dự báo trừ một phạt tỉ lệ với TV kỳ vọng giữa hai chính sách; Pinsker và Jensen đổi phạt đó sang KL trung bình.
+- **Mới:** định lý.
+- **Nguồn số:** $\chi$ từ `4-21`; $2\cdot0{,}9\cdot0{,}5/0{,}01$.
+- **Diễn giả:** cận vẫn đúng khi thay $\chi_{\pi'}$ bằng $\max_{s,a}\lvert A_\pi(s,a)\rvert$. Định lý không cần điều kiện hỗ trợ vì Bước 3 dùng dạng tổng của hàm thay thế. Bỏ "$\gamma<1$" thì thừa số vô hạn; bỏ "đại lượng chính xác" thì cận không còn chứng nhận cải thiện. Nhận xét 10.29: cận dạng TV lớn nhất của Schulman và cộng sự (2015), lỏng hơn trên chuỗi. Dòng chứng minh hệ quả là Bước 1–3 của chứng minh Hệ quả 10.28.
+- **Nguồn:** §4.6 (Định lý 10.27, chứng minh Bước 1–5; đoạn sau định lý; Hệ quả 10.28, chứng minh Bước 1–3; Nhận xét 10.29).
+- **Nối vào:** `4-24`. **Nối ra:** `4-19`.
+- **Phút:** 1.
+- **Bản 2026-11-22 (nhận xét website #6):** tiêu đề "Cơ sở lý thuyết: định lý chặn cải thiện" thành "Định lý chặn cải thiện". Thêm "Nhắc lại: $\Delta\mathcal L=\mathcal L_\pi(\pi')-J(\pi)$, $\chi_{\pi'}=\max_s\lvert A_\pi(s,\pi')\rvert$; với $\tilde\pi$, $\chi=0{,}5$." trước khối định lý. Dòng cuối "Chứng minh (hệ quả chặn cải thiện theo KL trung bình)" giữ; thêm vào ngoặc công thức của hệ quả không cần, vì hệ quả có ở `4-21` và câu chứng minh tự đủ. **Nối vào:** `7-12`. **Nối ra:** `7-14`. **Phút (ngoài giờ):** 1.
+
+#### `L10-7-14` (mã cũ `L10-4-19`) · Ví dụ: chặn cải thiện trên chuỗi (giữ; cụm lý thuyết; mục "ví dụ trên chuỗi")
+
+- **Quyết định:** giữ bảng; sửa dòng "Nhắc lại:" theo trang mới của các đại lượng ($\nu^\pi$ ở `4-07`, $D_{\mathrm{TV}}$ ở `4-12`, `4-20`, $\chi$ ở `4-21`) và dòng nguồn. Trang mang thông điệp "cận có ích" của TB15 (cận dương với bước ngắn) và "cận lỏng" (bước tới $\tilde\pi$).
+- **Mục đích:** cho hai số của cận trên chuỗi: đúng nhưng lỏng với $\tilde\pi$, dương với bước rất ngắn.
+- **Câu:** 4 (cơ sở lý thuyết). **Nhãn:** "Nhắc lại:", hộp.
+- **Mặt trang:** như deck; giữ phép tính đủ $0{,}1\cdot0{,}4+0{,}045\cdot\tfrac16=0{,}0475$ trong ô (TB29: phép tính ở `4-24` cách hai trang).
+- **Hình:** không. **Dựng dần:** như deck.
+- **1 phút:** Với $\tilde\pi$ cận là $-4{,}18$, đúng nhưng xa $-0{,}085$; cận chỉ dương khi bước chỉ đổi $p_B$ dưới $0{,}056$.
+- **Mới:** không. **Nguồn số:** như deck.
+- **Diễn giả:** như deck; Ví dụ 10.14 còn tính bước $\pi'=(0{,}6;\,0{,}8)$: phạt $1{,}152>0{,}26$.
+- **Nguồn:** §4.6 (Ví dụ 10.14: bước dài $\tilde\pi$, bước nhỏ chỉ đổi $s_B$, "Diễn giải", "Kiểm tra lại").
+- **Nối vào:** `4-06`. **Nối ra:** `4-29`.
+- **Phút:** 1,5.
+- **Bản 2026-11-22 (nhận xét website #6):** tiêu đề "Cơ sở lý thuyết: chặn cải thiện đúng nhưng lỏng" thành "Chặn cải thiện trên chuỗi: đúng nhưng lỏng". Dòng "Nhắc lại:" giữ và thêm "$\Delta\mathcal L$ của $\tilde\pi$ là $0{,}095$, $\Delta J=-0{,}085$". Mạch chính đã có ví dụ cận lỏng dạng KL ($14{,}7>0{,}095$, `4-21`); trang này giữ ví dụ dạng TV và ngưỡng $\Delta p_B<0{,}056$. **Nối vào:** `7-13`. **Nối ra:** `7-15`. **Phút (ngoài giờ):** 1,5.
+
+#### `L10-7-15` (mã cũ `L10-4-29`) · Cải thiện đơn điệu qua hàm chặn dưới (thêm, tách từ `4-21`; cụm lý thuyết; mục "hệ quả đơn điệu")
+
+- **Quyết định:** thêm. Hệ quả 10.30 có trang riêng thay vì đứng chung `4-21` (TB6). Trang khép cụm lý thuyết và nối về bài toán `4-07`: phạt với hằng của lý thuyết cho bước gần như bằng $0$, nên TRPO dùng ràng buộc.
+- **Mục đích:** cho biết khi nào cận bảo đảm $J$ không giảm, và vì sao TRPO không dùng trực tiếp cách đó.
+- **Câu:** 4 (cơ sở lý thuyết). **Nhãn:** "Hệ quả.", "Giả thiết:", "Kết luận:", "Chứng minh.", hộp.
+- **Mặt trang:**
+  - "**Hệ quả** (cải thiện đơn điệu). Giả thiết: như định lý chặn cải thiện cho mỗi cặp $(\pi_k,\pi)$, với $A_{\pi_k}$, $\nu^{\pi_k}$ chính xác. Đặt $C_k=\tfrac{2\gamma\bar\chi_k}{(1-\gamma)^2}$, $\bar\chi_k=\max_{s,a}\lvert A_{\pi_k}(s,a)\rvert$ và" $$\mathcal M_k(\pi)=\mathcal L_{\pi_k}(\pi)-C_k\,\mathbb E_{S\sim\nu^{\pi_k}}\bigl[D_{\mathrm{TV}}(S)\bigr].$$ "Kết luận: nếu $\mathcal M_k(\pi_{k+1})\ge\mathcal M_k(\pi_k)$ thì $J(\pi_{k+1})\ge J(\pi_k)$."
+  - "Chứng minh. $J(\pi_{k+1})\ge\mathcal M_k(\pi_{k+1})\ge\mathcal M_k(\pi_k)=J(\pi_k)$, theo định lý, giả thiết, rồi $\mathcal L_{\pi_k}(\pi_k)=J(\pi_k)$ và $D_{\mathrm{TV}}=0$."
+  - "Trên chuỗi, $\bar\chi=2$ nên $C=\tfrac{2\cdot0{,}9\cdot2}{0{,}01}=360$: mọi bước khác $\pi_k$ làm $\mathcal M_k$ giảm, nên phép cực đại hóa đứng yên tại $\pi_k$."
+  - Hộp: "TRPO thay phạt bằng ràng buộc $\bar D_{\mathrm{KL}}\le\kappa$ của bài toán miền tin cậy. Bước được phép dài hơn, đổi lại $J$ có thể giảm."
+- **Hình:** không. **Dựng dần:** (0) hệ quả; (1) chứng minh; (2) dòng chuỗi; (3) hộp.
+- **1 phút:** Cực đại một hàm nằm dưới $J$ và chạm $J$ tại chính sách hiện tại thì $J$ không giảm, nhưng với hằng của lý thuyết bước gần như bằng $0$.
+- **Mới:** hàm chặn dưới $\mathcal M_k$.
+- **Nguồn số:** $\bar\chi=\max\lvert A_\pi(s,a)\rvert=\lvert-2\rvert$ từ `2-06`.
+- **Diễn giả:** Schulman và cộng sự (2015) gọi đây là thuật toán cực đại hóa qua hàm chặn dưới (minorize–maximize). Trên chuỗi, $\mathcal M_k(\pi')-\mathcal M_k(\pi_k)\le\sum_s\nu(s)D_{\mathrm{TV}}(s)c_s$ với $c_s=8-360$ và $30-360$. Hệ quả 10.31: với đại lượng và nghiệm chính xác, bước miền tin cậy có $J(\pi_{k+1})-J(\pi_k)\ge-\sqrt{2\kappa}\,\gamma\chi_{\pi_{k+1}}/(1-\gamma)^2$; mức giảm tối đa nhỏ khi $\kappa$ nhỏ, không phải bảo đảm cải thiện. Hệ quả không áp dụng khi lợi thế, phân bố chiếm dụng hay nghiệm chỉ có gần đúng.
+- **Nguồn:** §4.6 (Hệ quả 10.30, chứng minh Bước 1–3; đoạn MM; đoạn số trên chuỗi; đoạn "Để cho phép bước lớn"; Hệ quả 10.31 và đoạn sau).
+- **Nối vào:** `4-19`. **Nối ra:** `4-22` (giải bài toán của `4-07` khi $d$ lớn).
+- **Phút:** 1,5.
+- **Bản 2026-11-22 (nhận xét website #6):** tiêu đề "Cơ sở lý thuyết: cải thiện đơn điệu" thành "Cải thiện đơn điệu qua hàm chặn dưới" (tên của storyboard). Hộp cuối giữ cả hai câu: câu "TRPO thay phạt bằng ràng buộc $\bar D_{\mathrm{KL}}\le\kappa$" đã lên mạch chính (`4-21`), nhưng trang phụ lục phải đọc được độc lập, nên giữ ở đây như kết luận của mạch phụ lục. Thêm "Nhắc lại: $\mathcal L_{\pi_k}(\pi_k)=J(\pi_k)$ (hàm thay thế tiếp xúc $J$)" vào dòng "Chứng minh." nếu vừa khung. **Nối vào:** `7-14`. **Nối ra:** không (trang cuối deck). **Phút (ngoài giờ):** 1,5.
 
 ---
 
@@ -1705,6 +1877,15 @@ Phong cách theo các SVG hiện có trong `img/lec-10/`: `viewBox` cố định
 
 **Sửa.** `ham-thay-the-tiep-xuc-loi-giai.svg` (`4-10`): nhãn điểm cam "$0{,}024$" thành "$0{,}02375$" (khớp bảng của trang), sửa `<desc>` và `alt`. `ham-thay-the-mien-tin-cay.svg` (`4-07`): nhãn tại $t=1$ "$\bar D_{\mathrm{KL}}=0{,}054$" thành "$0{,}0536$" (khớp mặt trang), sửa `<desc>` và `alt`.
 
+**Mới (nhận xét website #6, 2026-11-22; người vẽ hình đã giao, điều phối viên báo kích thước).**
+
+| Tệp | Trang | Nội dung và số | Dựng dần | `viewBox` · bề rộng đặt · tối thiểu |
+|---|---|---|---|---|
+| `so-do-trpo-tong-the-buoc0.svg`, `so-do-trpo-tong-the.svg` (hình 1 của nhận xét) | `4-33` | Khối trên "Lượt thu bằng chính sách cũ"; mũi tên tách đôi xuống hai khối cạnh nhau: trái, viền xanh lá, "Hàm thay thế: dự báo mức cải thiện"; phải, viền tím, "KL trung bình: giới hạn mức đổi chính sách"; hai mũi tên hội tụ vào "Tối ưu trong miền tin cậy: gradient tự nhiên, tìm kiếm lùi"; mũi tên cuối xuống "Chính sách mới". Không số, không chữ tiếng Anh. Cần sửa: dòng tiêu đề hiển thị "Sơ đồ tổng thể của TRPO" trùng `h2` của trang (TB10); bỏ dòng hiển thị, giữ `<title>`, rồi đo lại chiều cao (hình thấp đi thì cột chữ bên phải có thêm chỗ). Kiểm: xanh lá ở khối hàm thay thế khác quy ước cam nét đứt của bài cho hàm thay thế (TB18, NT25); nếu không có nét đứt hay nhãn kèm, đổi viền sang cam nét đứt cho khớp `ham-thay-the-tiep-xuc*.svg` | `-buoc0`: khối trên và hai khối đầu vào; bản đủ thêm khối tối ưu và chính sách mới | 1000×572 · 760 · 571 |
+| `hai-cach-trung-binh-kl.svg` (đề xuất 5) | `4-35` | Hai bảng cạnh nhau, chung thang trọng số $[0;\,1]$, vạch $1$ nét đứt qua cả hai. Hàng dưới mỗi bảng cùng $D_{\mathrm{KL}}(s)$: $0{,}511$ tại $s_A$, $0{,}0566$ tại $s_B$ (tím). Trái "trọng số $\nu^\pi$ (có chiết khấu)": cột $0{,}1$, $0{,}045$, cột tổng $0{,}145$, phần tới $1$ chỉ là khung nét đứt; kết quả "$\bar D_{\mathrm{KL}}=0{,}1\cdot0{,}511+0{,}045\cdot0{,}0566=0{,}0536$". Phải "tần suất trên bộ đệm": cột $\tfrac23$, $\tfrac13$, tổng $1$; kết quả "$\widehat D=\tfrac23\cdot0{,}511+\tfrac13\cdot0{,}0566\approx0{,}36$". Cần sửa như trên: dòng tiêu đề hiển thị "Hai cách lấy trung bình KL trên chuỗi hai trạng thái" gần trùng `h2` | không | 820×588 · 600 · 547 |
+
+**Dùng lại (2026-11-22).** `chuoi-bon-mat-xich.svg` (bản đủ) thêm ở `7-00`, `width="1000"` như `4-21`.
+
 **Bỏ khỏi deck (giữ tệp).** `chuoi-ti-le-toi-sB-buoc0.svg`, `chuoi-ti-le-toi-sB.svg` (thay bằng H4); `elip-gradient-tu-nhien-buoc0.svg`, `-buoc1.svg`, `elip-gradient-tu-nhien.svg` (thành nguồn hình học của H11; `4-08` dùng H12).
 
 ---
@@ -1741,6 +1922,20 @@ Phong cách theo các SVG hiện có trong `img/lec-10/`: `viewBox` cố định
 *Lịch sử (lượt sửa thứ nhất).* **Cập nhật sau năm vai rà (2026-11-21, B8).** Thêm trang `1-12` (câu hỏi nhanh của mạch 1, B5; không vừa `1-05` và `1-04`, nên tách trang, trái khuyến nghị "không tách thêm trang" của B7) và đổi thứ tự mạch 4 (B5), nên `4-15` và `4-16` không còn liền nhau: chúng không còn là một chuỗi dựng dần, tính hai trang. `3-07` (+0,5, bổ đề) và `4-21` (+0,5, hệ quả cải thiện đơn điệu) thêm phút. Bài tập 10.23 (`5-12`, `5-13`, 3,5 phút) tính vào 30 phút bài tập trên lớp. Tổng: 82 trang thật, 81 trang đếm, 118,5 phút trình chiếu.
 
 **Cập nhật sau lượt sửa thứ hai (2026-11-21, E1, E3).** `6-11` tách thành `6-11` và `6-18` (+1 phút); `1-12` chuyển lên giữa `1-04` và `1-05`. Tổng theo biên tập viên: 83 trang thật, 82 trang đếm, 119,5 phút trình chiếu, Bài tập 10.23 tính 3,5 phút. Ước lượng của vai mạch truyện (mục D của `ra-soat-nam-vai-2026-11-21.md`): khoảng 145–155 phút, riêng mạch 4 khoảng 50 phút; Bài tập 10.23 khoảng 10–12 phút. Hai ước lượng chênh nhau khoảng 30 phút; ước lượng của vai mạch truyện vượt 120 phút của P6. Lượt sửa thứ ba (G1–G3) không thêm, không bớt trang; số phút giữ nguyên. Sau góp ý tác giả #1–#3 (2026-11-21): thêm `3-13` (+1,5 phút), tách thuật toán TRPO (`4-09`, `4-26`) và PPO-Clip (`5-07`, `5-14`) để mọi đại lượng có công thức tại bước tính nó (+0,5 phút mỗi thuật toán); tổng 86 trang thật, 85 trang đếm, 122 phút trình chiếu theo ước lượng của biên tập viên, vượt 120 phút của P6: ngoại lệ chờ tác giả. Đây là đoạn hiện hành của mục này. **Ngoại lệ chờ tác giả:** chọn ước lượng thời lượng và quyết định có rút trang hay không.
+
+**Cập nhật theo nhận xét website (#6, 2026-11-22). Đoạn hiện hành của mục này; các đoạn trên là lịch sử.**
+
+| Mạch | Phút từng trang | Tổng |
+|---|---|---|
+| 4 | 4-00 0,5 · 4-01 2 · 4-27 1,5 · 4-13 1,5 · 4-02 1,5 · 4-03 1,5 · 4-11 1 · 4-16 1,5 · 4-04 1 · 4-10 1,5 · 4-17 1 · 4-28 1,5 · 4-12 1,5 · 4-07 0,75 · 4-32 0,75 · 4-21 2 · **4-33 1** · 4-22 1,5 · 4-30 1 · 4-08 1,5 · 4-25 1,5 · **4-34 1,5** · **4-35 1,5** · 4-09 1,5 · 4-26 1 · 4-31 1 (26 trang) | 34 |
+| 6 | như bảng trên, trừ 6-18 1 → 1,5 (thêm mục "mức bài toán") | 11,5 |
+| Phụ lục | 7-00 0,5 · 7-10 1,5 · 7-11 1 · 7-12 1,5 · 7-13 1 · 7-14 1,5 · 7-15 1,5 (7 trang) | 8,5, không tính vào 120 phút |
+
+Mạch 4 mất 8 phút của sáu trang lý thuyết (1,5 + 1 + 1,5 + 1 + 1,5 + 1,5), thêm 4 phút của ba trang mới và 0,5 phút ở `4-21`: $37{,}5-8+4+0{,}5=34$.
+
+**Hai ước lượng mạch 4.** (a) Cộng theo trang: 34 phút (bảng trên). (b) Ước lượng thực tế: mỗi trang có khối kết quả (bổ đề, mệnh đề, hệ quả) hoặc câu hỏi nhanh tính ít nhất 2 phút, các trang khác như (a). Bảy trang được nâng (`4-21` đã là 2 phút): `4-02` (+0,5), `4-17` (+1), `4-22` (+0,5), `4-08` (+0,5), `4-16` (+0,5), `4-10` (+0,5), `4-34` (+0,5), cộng 4 phút: **38 phút**. Cùng quy tắc (b) cho mạch 4 bản 2026-11-21 (29 trang) cho 45 phút, gần ước lượng 47,5 phút của cổng storyboard; vậy phụ lục bớt khoảng 7–9,5 phút thực tế khỏi giờ học.
+
+**Cả bài.** 85 trang thật trên mạch chính, 84 trang đếm (TB17: `5-10`–`5-01`), cộng 7 trang phụ lục. (a) $122-37{,}5+34+0{,}5=119$ phút trình chiếu, cộng 3,5 phút Bài tập 10.23 (tính vào 30 phút bài tập); phần trình chiếu dưới 120 phút của P6. (b) chỉ áp cho mạch 4 như các lần trước: $119+4=123$ phút. Ước lượng khoảng 145–155 phút của vai mạch truyện (2026-11-21) chưa được làm lại; nó tính cả sáu trang lý thuyết nay ở phụ lục.
 
 **Phương án rút gọn: không áp dụng** (quyết định của điều phối viên, 2026-11-21). Danh sách giữ lại để đối chiếu nếu lượt rà sau cần:
 
@@ -1779,6 +1974,23 @@ Phong cách theo các SVG hiện có trong `img/lec-10/`: `viewBox` cố định
 | — | `6-12`, `6-13`, `6-14` | bảng kết quả, bảng phương pháp |
 
 **Đề xuất TRPO (2026-11-21, kế hoạch).** Mạch 4: bỏ `4-05` (gộp vào `4-04`), `4-15` (gộp vào `4-02`), `4-18` (gộp vào `4-06`), `4-23` (xuống ghi chú diễn giả `4-04`); thêm `4-27` (luồng 100 lượt), `4-28` (sigmoid), `4-29` (cải thiện đơn điệu, tách từ `4-21`), `4-30` (tròn và elip), `4-31` (trạm dừng cuối mạch); không dùng lại mã đã bỏ. Chi tiết ở §3 mạch 4.
+
+**Nhận xét website (#6, 2026-11-22).**
+
+| Mã cũ | Mã mới | Ghi chú |
+|---|---|---|
+| `4-14` | `7-10` | ý tưởng chứng minh bổ đề chênh lệch hiệu năng; sang phụ lục |
+| `4-20` | `7-11` | bất đẳng thức Pinsker (mắt xích 1) |
+| `4-24` | `7-12` | bổ đề dịch chuyển phân bố chiếm dụng (mắt xích 2) |
+| `4-06` | `7-13` | định lý chặn cải thiện (mắt xích 3) và chứng minh hệ quả theo KL |
+| `4-19` | `7-14` | ví dụ cận trên chuỗi |
+| `4-29` | `7-15` | cải thiện đơn điệu; câu nối "thay phạt bằng ràng buộc" cũng lên `4-21` |
+| — | `4-33` | sơ đồ tổng thể của TRPO, sau `4-21` |
+| — | `4-34` | câu hỏi nhanh ba tầng, sau `4-25` |
+| — | `4-35` | hai cách lấy trung bình KL, trước `4-09` |
+| — | `7-00` | trang tiêu đề phụ lục, `id="mach-7"` |
+
+Mã `4-14`, `4-20`, `4-24`, `4-06`, `4-19`, `4-29` không dùng lại trong mạch 4. Sáu trang phụ lục mang mã `7-10` … `7-15` (quyết định (1) của điều phối viên, 2026-11-22), không trùng mã `7-01` … `7-07` của mạch Tổng kết bản 2026-11-20.
 
 **Liên kết sâu cần sửa (giao cho người khác):** bảng mở đầu `exercises.md` (`#/1/1` … `#/6/1`, tên mạch theo mục 1, bài tập theo `6-16`); dòng "Trùng trang chiếu" của Bài tập 10.23 trong ghi chú (nếu có) trỏ tới `5-12`, `5-13`; thẻ Bài 10 trong `index.html` ("TRPO và PPO").
 
@@ -1851,6 +2063,23 @@ Dòng "Chứng minh." một dòng tính là một phần của khối kết qu�
 | `4-16` | câu hỏi, hình hai bảng cột, đẳng thức sai số và hộp "Lời giải:" có bảng hai cột "đã hiệu chỉnh / chưa hiệu chỉnh" (quyết định 7 của điều phối viên). Nếu tràn: hình đặt cạnh bảng hai cột, đẳng thức hiện cùng mảnh với hình; nếu vẫn tràn, tách trang câu hỏi nhanh và bảng hai cột ngay sau `4-11` (mục `4-16`) |
 | `4-06` | dòng "Chứng minh." dài hai dòng (gộp `4-18`) |
 | `4-24`, `4-29` | khối kết quả có công thức hiển thị cộng dòng số trên chuỗi (Đ6) |
+
+**Nhận xét website (#6, 2026-11-22): ngoại lệ mới.**
+
+| Trang | Quy tắc | Lý do và cách xử lý |
+|---|---|---|
+| `4-33` | TB11 (một phần tử mới mỗi trang) | ba tên mới trên một trang: TRPO, "gradient tự nhiên", "tìm kiếm lùi". Tác giả yêu cầu bản đồ trước các bộ phận (đề xuất 2, TB27 Bài 10); mỗi tên có một câu nghĩa trên trang, định nghĩa ở `4-08`, `4-26` |
+| `4-33`, `4-35` | TB10 (hình không lặp chữ của trang) | dòng tiêu đề hiển thị trong SVG trùng `h2`; người vẽ hình bỏ dòng đó (§4.5) |
+| `4-21` | TB13 (≤ 2 khối có nhãn), mật độ | câu hỏi, hình bốn khối, hệ quả, "Ý nghĩa:" và dòng nối, bảy mảnh; dòng nối là chữ thường, không nhãn. Nếu tràn: hình 900 px, rồi dòng nối sang `4-33` |
+| `4-21`, `4-02` | TB28 (mỗi kết quả có trang ý tưởng chứng minh hoặc dòng "Chứng minh.") | chứng minh của Bổ đề 10.19 và Hệ quả 10.28 ở phụ lục (`7-10`, `7-13`), theo quyết định #6(1); tên ba mắt xích trên hình `4-21` gọi các kết quả phát biểu ở phụ lục |
+| `4-34` | "Rủi ro số (TB15)" đầu mạch 4 | so $J$ của bước theo $g$ và bước gradient tự nhiên theo đề xuất 4 của tác giả; kết luận nêu rõ chỉ trên ví dụ này |
+| mạch 4 | TB22 (một câu hỏi nhanh mỗi mạch) | ba câu hỏi nhanh (`4-16`, `4-10`, `4-34`); `4-34` do tác giả đề xuất |
+| `4-35` | mật độ | hai dòng chữ, một công thức hiển thị, dòng chuẩn hóa, hộp và hình 430 px. Nếu tràn: dòng chuẩn hóa xuống ghi chú diễn giả, chỉ giữ "$\nu^\pi$ chuẩn hóa cho $\approx0{,}37$" trong hộp |
+| `7-11`, `7-12`, `7-13` | mật độ | dòng "Nhắc lại:" thêm để trang đọc độc lập; nếu tràn, dòng "Ý tưởng chứng minh." (`7-11`) hoặc dòng trực quan (`7-12`) xuống ghi chú diễn giả |
+| phụ lục | P6, TB4 | 7 trang không tính vào 120 phút (quyết định #6(1)) |
+| deck | `deck_lint.py` STRUCT (NT28) | với bảy `section` ngang, công cụ báo ba mục đúng thiết kế: "Nội dung" có 6 mục (`<li>`) trong khi deck có 7 mạch (dòng phụ lục không đánh số); mạch cuối không tên "Tổng kết"; trang cuối không tên "Tài liệu tham khảo". Ghi là ngoại lệ có lý do; `id="mach-7"` tránh mục thứ tư "thiếu trang tiêu đề mạch `id=\"mach-7\"`" |
+| `4-33`, `4-34`, `6-18`, `7-10`, `7-12`, `7-13`, `7-15` | `deck_lint` SYLL60, LINES6 (đo 2026-11-22, người dựng) | `4-33` 105 âm tiết (dòng nối của `4-21`, hộp ý chính, ba mục); `4-34` 79 (nhắc lại hai bước, bảng ba tầng); `6-18` 171 (ba mức trả lời; trần 80 của trang tổng kết, như `6-11`); `7-10` 81, 8 dòng (trang ý tưởng chứng minh, như `4-14` cũ); `7-12` 63, `7-13` 95, `7-15` 78 (dòng "Nhắc lại:" thêm để đọc độc lập). Mọi trang ≤ 720 px, `footer_check` 0 |
+| deck | `deck_lint` STRUCT (đã chạy 2026-11-22) | đúng ba mục dự kiến ở hàng trên: "Nội dung" có 6 mục, deck có 7 mạch; mạch cuối không tên "Tổng kết"; trang cuối `7-15` không tên "Tài liệu tham khảo". Cộng mục cũ của `1-06`. Quyết định (9) của điều phối viên: ghi ngoại lệ, không sửa cấu hình công cụ |
 
 ---
 
@@ -2307,6 +2536,116 @@ Ghi chú diễn giả rút để dưới 150 âm tiết: `4-01` (câu "$\tilde\t
 Sau lượt sửa C, `4-07` chạm mép trên chân trang. Điều phối viên quyết tách, nội dung giữ nguyên. `4-07` "Bài toán miền tin cậy" còn dòng mở, "Ký hiệu:" (đưa lại cụm "không phải trung bình mẫu"), "Định nghĩa." (bỏ "(ở đây $\kappa=0{,}01$)", số này sang `4-32`) và hộp "Ý nghĩa:" với $(1-\gamma)\Delta\mathcal L$ và câu ràng buộc giữ chính sách mới gần chính sách cũ. `4-32` "Ví dụ: miền tin cậy $\kappa=0{,}01$ loại $\tilde\pi$" mới: "Nhắc lại:" $\nu^\pi$ và $D_{\mathrm{KL}}(s_A)=0{,}511$ (TB24, Đ1), đường tính $D_{\mathrm{KL}}(s_B)$ và $\bar D_{\mathrm{KL}}(\tilde\pi)=0{,}0536\gt\kappa$, hộp nghiệm $t=0{,}515$ với $\Delta\mathcal L\approx0{,}049\approx41\,\Delta J$, hình `ham-thay-the-mien-tin-cay*`. Ghi chú diễn giả chia đôi (91 và 53 âm tiết theo cách đếm bỏ công thức). Phút: `4-07` 0,75, `4-32` 0,75; mạch 4 29 trang, 37,5 phút; toàn deck 88 trang thật, 87 trang đếm, 122 phút. Ngoại lệ mật độ: `4-07` SYLL60 79 (dòng Ký hiệu hai đối tượng và hộp ý nghĩa hai câu; trang trung tâm của mạch).
 
 **Kiểm (máy chủ cổng 8844, đã tắt).** `footer_check.py`: 0. `formula_overflow.py`: 0. `deck_lint.py --course rl-plan`: 55 phát hiện trên 88 trang, mới chỉ có SYLL60 ở `4-07`. Playwright `4-12`, `4-07`, `4-32`, `4-21` ở 1600×900 và 390×844: 0 lỗi, chiều cao 650, 564, 456, 678 px, không tràn ngang. `#/4/1` mở `4-00`, `#/4/29` mở `4-31`; phím Space đi hết 29 trang mạch 4 rồi sang `5-00`. `git diff --check` sạch.
+
+### Nhận xét website (#6, 2026-11-22): kế hoạch của người lập kế hoạch
+
+**Đầu vào.** `nhan-xet-website-trpo-2026-11-21.md` (năm đề xuất, hình 1); quyết định #6 (`gop-y-tac-gia-deck-2026-11-21.md`); `NGUYEN-TAC-HOC-PHAN.md` §3a (TB1–TB33, Đ1–Đ15, dòng "TB27, Bài 10 (tác giả 2026-11-22 …)"); deck `lecture-10-trpo-va-ppo.html` (88 trang); ghi chú bản 2026-11-22 (§4.5 ba cách lấy trọng số, §5.1 bảng ba tầng: số khớp các số của storyboard). Hình `so-do-trpo-tong-the*.svg`, `hai-cach-trung-binh-kl.svg` đã có trong `img/lec-10/`. Số tính lại trong `/tmp/claude-1000/-data-tqlong-lectures/678a7f48-9d80-46cf-a421-67398857f913/scratchpad/m4-phu-luc/kiem.py`.
+
+**Đối chiếu năm đề xuất.**
+
+| # | Đề xuất | Xử lý |
+|---|---|---|
+| 1 | chuẩn hóa phát biểu bảo đảm | bìa `1-01`; câu hỏi 2 ở `1-06`, `6-11`, `6-18`; `6-18` xếp câu trả lời theo ba mức (lý thuyết, bài toán, thuật toán); `4-21` thêm "cận không chứng nhận $J$ tăng" và "ràng buộc không tự bảo đảm $J$ tăng"; ghi chú diễn giả `1-01`, `4-01`, `4-26` (bảng dưới) |
+| 2 | sơ đồ tổng thể TRPO sớm | `4-33` sau `4-21`, trước `4-22` |
+| 3 | chứng minh dài sang phụ lục | sáu trang sang `7-10` … `7-15`; `4-21` giữ ba mắt xích và ví dụ cận lỏng $14{,}7\gt0{,}095$ |
+| 4 | câu hỏi gradient tự nhiên cho $J$ thấp hơn | `4-34`, bảng ba tầng; dòng "Lưu ý:" của `4-25` gộp vào |
+| 5 | hai khái niệm KL trung bình | `4-35`, hình hai cột; tổng $0{,}145$ giải thích ở ghi chú diễn giả |
+
+**Câu hứa bảo đảm trong deck (`grep` "không giảm", "bảo đảm", "đảm bảo", "chứng nhận", "đơn điệu", "$J$ tăng" theo từng trang, mặt trang và ghi chú diễn giả).**
+
+| Trang | Chỗ | Chữ hiện tại | Xử lý |
+|---|---|---|---|
+| `1-01` | mặt trang | "Dùng lại lượt đã thu cho những bước cập nhật chính sách lớn mà hàm mục tiêu không giảm." | "Kiểm soát mức đổi chính sách để giảm nguy cơ suy giảm khi dùng lại lượt đã thu." |
+| `1-01` | ghi chú diễn giả | "Mạch 4 và 5 giới hạn bước cập nhật để hàm mục tiêu không giảm." | "Mạch 4 và 5 giới hạn mức đổi chính sách ở mỗi bước cập nhật để hạn chế nguy cơ $J$ giảm khi dùng lại lượt đã thu." |
+| `1-06`, `6-11` | câu hỏi 2 | "… cho bước cập nhật dài mà hàm mục tiêu không giảm?" | "… cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm?" |
+| `6-18` | "Nhắc lại:" | "… mà hàm mục tiêu không giảm." | như câu hỏi 2 mới |
+| `6-18` | mục 1 | "Khi lợi thế và số lần thăm tính chính xác, $J$ không giảm nếu …" | giữ: kết luận có điều kiện của định lý (mức lý thuyết); thêm mục "mức bài toán" (mục `6-18` §3) |
+| `4-01` | ghi chú diễn giả | "… để có một bước cập nhật dài mà $J$ không giảm?" | "… mà vẫn kiểm soát nguy cơ $J$ giảm?" |
+| `4-29` → `7-15` | mặt trang, ghi chú diễn giả | hệ quả cải thiện đơn điệu, "thì $J$ không giảm" | giữ: kết luận có giả thiết đại lượng chính xác; nay ở phụ lục |
+| `1-05` | ghi chú diễn giả | "bước theo gradient đúng … không làm $J$ giảm" | giữ: sự kiện trên chuỗi, không phải lời hứa về thuật toán |
+| `5-03` | mặt trang | "$p_B$ không giảm" | giữ: nói về $p_B$ |
+| `4-26` | ghi chú diễn giả | "Trên chuỗi, bước vừa tính được giữ nguyên ($j=0$)." | không phải lời hứa, nhưng sai khi thuật toán dùng $\widehat D$: bước của `4-25` có $\widehat D=0{,}062\gt\kappa$; câu thay ở mục `4-26` §3 |
+
+Các chỗ khác có "bảo đảm" (`4-07`, `4-26`, `4-31` ghi chú diễn giả; `5-08`, `6-14` mặt trang; `6-13`, `6-14`, `6-18` ghi chú diễn giả) đều nói "không bảo đảm $J$ tăng": giữ. `outline.md`, `cau-chuyen-deck-2026-11-21.md` §1 và "Quyết định đã chốt" còn câu hỏi 2 và bìa cũ: câu chuyện đã sửa trong lượt này; `outline.md` giao người khác.
+
+**Ảnh hưởng ngoài storyboard (người dựng, người sửa khác).**
+
+| Chỗ | Việc |
+|---|---|
+| deck `1-08` | thêm dòng phụ lục `#/7` (mục `1-08`) |
+| deck `4-02` | ghi chú diễn giả "Chứng minh ở cụm lý thuyết." → "Ý tưởng chứng minh ở phụ lục cuối bài." |
+| deck `4-07`, `4-25`, `4-09`, `4-26`, `4-31` | như dòng "Bản 2026-11-22" của từng mục |
+| deck, cuối `section id="mach-6"` | thêm `section id="mach-7"` gồm `7-00` … `7-15`; sáu trang chuyển nguyên khối HTML, đổi `data-slide-id` và `h2`, thêm dòng "Nhắc lại:" |
+| `outline.md` | bảng "Sáu mạch": mạch 4 26 trang, 34 phút, thêm hàng phụ lục 7 trang ngoài giờ; câu hỏi trung tâm 2; luận điểm bìa |
+| `exercises.md` | không đổi (liên kết `#/1/1` … `#/5/1`; mạch 4 vẫn mở ở `#/4/1`) |
+| ghi chú | không đổi thêm: §4.5, §5.1 đã có hai đoạn mới với đúng số của storyboard |
+
+**Câu hỏi cho điều phối viên.**
+
+1. Mã phụ lục: brief đặt `L10-7-01` … `L10-7-06`, trùng mã Tổng kết của bản 2026-11-20 trong mục lịch sử và `review-log.md`. Giữ, hay dùng `L10-7-10` … `L10-7-15` như mạch 6 đã làm (`6-10` trở đi)?
+2. `4-21`: không thêm dòng "$\Delta p_B<0{,}056$". Ngưỡng đó thuộc cận dạng TV (`7-13`, `7-14`); với hệ quả dạng KL trên trang, ngưỡng là $0{,}011$, và cả hai cần năm đại lượng không có trên trang (TB29). Cả hai ngưỡng ở ghi chú diễn giả. Đồng ý?
+3. Câu nối ở `4-21` viết "Bài toán miền tin cậy thay phạt bằng ràng buộc …" thay cho "TRPO thay phạt …", vì tên TRPO lên trang ở `4-33`. Phương án dự phòng khi tràn: câu này mở `4-33`.
+4. `4-35` đặt trước `4-09` (lý do ở mục `4-35`). Đồng ý?
+5. `4-26`, ghi chú diễn giả: câu "$j=0$" chỉ đúng với ví dụ tay theo $\nu^\pi$. Câu thay có số của bước theo tần suất mẫu ($\Delta_0\approx(0{,}129;\,0{,}482)$, $J\approx1{,}566$); các số này không có trong ghi chú. Nhận câu thay, hay chỉ giữ câu định tính "bước của thuật toán ngắn hơn" và đề xuất NT3 cho ghi chú?
+6. Hai SVG mới có dòng tiêu đề hiển thị trùng `h2` (TB10); khối hàm thay thế của `so-do-trpo-tong-the.svg` viền xanh lá, khác quy ước cam nét đứt của bài. Giao lại người vẽ hình?
+7. `6-18`: thêm mục "mức bài toán" (+0,5 phút) để câu trả lời theo ba mức của đề xuất 1. Hay chỉ sửa "Nhắc lại:"?
+8. `4-31` giữ `ba-truc-giac.svg`; có thể thay bằng `so-do-trpo-tong-the.svg` để trạm dừng cuối mạch dùng lại bản đồ của `4-33` (TB2: dùng lại sơ đồ, mỗi lần thêm một chi tiết). Chưa đổi.
+9. `deck_lint.py` sẽ báo ba STRUCT đúng thiết kế khi có bảy `section` ngang (§7). Ghi ngoại lệ, hay sửa cấu hình công cụ cho mạch phụ lục?
+10. Thời lượng: (a) mạch 4 34 phút, cả bài 119; (b) mạch 4 38 phút, cả bài 123 (§5). Phụ lục 8,5 phút ngoài giờ.
+
+### Ghi chú khi dựng (#6, 2026-11-22)
+
+Biên tập viên dựng mạch 4 (26 trang), mạch Phụ lục (7 trang), bìa, câu hỏi 2 theo storyboard và quyết định N2 của điều phối viên (`review-log.md`). Deck 92 trang: 85 trang mạch chính, 7 trang phụ lục.
+
+**Thứ tự trên deck.** Mạch 4: `4-00`, `4-01`, `4-27`, `4-13`, `4-02`, `4-03`, `4-11`, `4-16`, `4-04`, `4-10`, `4-17`, `4-28`, `4-12`, `4-07`, `4-32`, `4-21`, `4-33`, `4-22`, `4-30`, `4-08`, `4-25`, `4-34`, `4-35`, `4-09`, `4-26`, `4-31`. Mạch 7 (`id="mach-7"`, sau `6-17`): `7-00`, `7-10` (cũ `4-14`), `7-11` (`4-20`), `7-12` (`4-24`), `7-13` (`4-06`), `7-14` (`4-19`), `7-15` (`4-29`).
+
+**Chỗ lệch so với các mục §3 và lý do.**
+
+| Trang | Lệch | Lý do |
+|---|---|---|
+| `4-21` | dòng nối (mảnh 6) không ở trang này; hình `width="900"`; khối hệ quả bỏ cụm "; từ định lý chặn cải thiện và Pinsker" (câu này xuống ghi chú diễn giả) | với dòng nối trang cao 817 px; theo phương án dự phòng của mục `4-21`, hình 900 px rồi dòng nối sang `4-33`; vẫn chạm chân trang 4 px nên rút cụm trùng với nhãn mũi tên của hình (TB10) |
+| `4-21` ghi chú diễn giả | bỏ câu Achiam và cộng sự (2017) và câu "hệ quả đúng với cả hai chiều KL"; danh sách sáu trang phụ lục gộp thành một câu | trần 150 âm tiết (`deck_lint` NOTES150); ngưỡng $d<0{,}011$ và $d<0{,}056$ giữ (quyết định 2) |
+| `4-33` | câu mở là dòng nối của `4-21`, rút thành "Bài toán miền tin cậy thay phạt bằng ràng buộc $\bar D_{\mathrm{KL}}\le\kappa$, và ràng buộc không tự bảo đảm $J$ tăng." ("bước được phép dài hơn" xuống ghi chú diễn giả); hình `width="600"` (tối thiểu 571); ba mục rút: "Gần $\theta_{\mathrm{old}}$: hàm thay thế bậc một, KL trung bình bậc hai theo bước $\Delta$." / "Miền bậc hai là một elip. Bước gradient tự nhiên, tốt nhất trong elip, lệch khỏi gradient." / "Tìm kiếm lùi co bước tới khi hàm thay thế mẫu tăng và KL mẫu không vượt $\kappa$." | với hình 760 px và chữ đủ, trang cao 858 px; cột chữ cạnh hình 760 px chỉ rộng khoảng 430 px |
+| `4-33` ghi chú diễn giả | câu "TRPO không chỉ là gradient chính sách với bước nhỏ: …" viết lại thành "TRPO dựng một mô hình dự báo hiệu năng từ dữ liệu cũ, …" | mẫu "không chỉ là X: Y" (`no-ai-slop`, Edit) |
+| `4-34` | tiêu đề "Câu hỏi nhanh: gradient tự nhiên và bước theo $g$" (tiêu đề storyboard xuống hai dòng); bảng ba cột, cột đầu "Lời giải: tầng" gộp tên đại lượng ("1. $J$, hiệu năng", "2. $\Delta\mathcal L$, dự báo", "3. $g^\top\Delta$, xấp xỉ"); cột cuối "Gradient tự nhiên"; công thức $\Delta\mathcal L=0{,}8\Delta p_A+1{,}35\Delta p_B$ xuống ghi chú diễn giả; ô tầng 3 tô tím bằng `\boxed{}` và lớp `text-purple`; dòng "1 phút" và câu ưu điểm của gradient tự nhiên không lên ghi chú diễn giả | bảng bốn cột rộng 1745 px; trang cao 780 px; trần 150 âm tiết của ghi chú diễn giả |
+| `4-35` | dòng chuẩn hóa xuống ghi chú diễn giả, trên trang còn "Trọng số $\nu^\pi$ chuẩn hóa cho $\approx0{,}37$, gần $\widehat D\approx0{,}36$." (dòng riêng, không vào hộp, để hộp giữ hai câu); $\widehat D$ viết trong dòng "Ký hiệu:" (`\tfrac`), không công thức hiển thị; định nghĩa $D_{\mathrm{KL}}(s)$ vào dòng "Nhắc lại:"; "Bộ đệm $\mathcal D$ thu bằng $\pi$." mở dòng tần suất; hộp đặt ở cột trái cạnh hình; hình `width="550"` (tối thiểu 547), một lớp, hiện ở mảnh 1; câu quy đổi dạng (14) bỏ khỏi ghi chú diễn giả | trang cao 1027 px, rồi 793 px; phương án dự phòng §7; NOTES150 |
+| `4-25` ghi chú diễn giả | bỏ câu "trong thuật toán, bước được giữ vì tìm kiếm lùi nhận ngay $j=0$" và câu bước theo $g$ (đã ở `4-34`); thêm phép tính hai lợi thế của dòng "Nhắc lại:" | câu $j=0$ sai với $\widehat D$ như ở `4-26` ($\widehat D=0{,}062\gt\kappa$) |
+| `4-26` ghi chú diễn giả | "Ví dụ tay dùng $g$, $F$ và KL lấy trọng số $\nu^\pi$. Với KL trung bình trên bộ đệm, bước của ví dụ tay vượt $\kappa$, nên tìm kiếm lùi phải co bước." | quyết định (5); không số mới. Số $\Delta_0\approx(0{,}129;\,0{,}482)$, $J\approx1{,}566$ là đề xuất NT3 cho ghi chú |
+| `4-31` ghi chú diễn giả | câu mở thay bằng "Ba bảng gom ba ý của mạch: dự báo, giới hạn, hướng."; câu $1{,}835$ rút thành "như bảng ba tầng của câu hỏi nhanh" | câu thông điệp đã lên `4-33` |
+| `4-00` ghi chú diễn giả | "Đầu ra là bài toán miền tin cậy, lý do của ràng buộc KL và thuật toán TRPO." | cơ sở lý thuyết nay ở phụ lục |
+| `4-02` ghi chú diễn giả | thêm "Ý tưởng chứng minh ở phụ lục cuối bài." | quyết định (11) |
+| `6-18` | câu "Thừa số của phạt là …" của mục 1 xuống ghi chú diễn giả; mục 3: "TRPO thực hành dùng lợi thế ước lượng, xấp xỉ bậc hai và tìm kiếm lùi, giữ KL trung bình trên bộ đệm không vượt $\kappa$. PPO …" (gộp câu mới với câu cũ "TRPO giữ KL trung bình mẫu …") | trang cao 756 px; phương án dự phòng của mục `6-18` |
+| `7-10` | "Nhắc lại: $J(\pi')-J(\pi)=\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$, $A_\pi(s,\pi')=\sum_a\pi'(a\mid s)A_\pi(s,a)$; giả thiết chung."; Bước 2 giữ tên bước của ghi chú, công thức $\delta_t$ xuống ghi chú diễn giả ("với sai số TD $\delta_t$") | chạm chân trang |
+| `7-12` | dòng trực quan xuống ghi chú diễn giả; câu dạng ma trận $(I-\gamma P_\pi)^{-1}$ bỏ khỏi ghi chú diễn giả | phương án dự phòng §7; NOTES150 |
+| `7-13` | "Ý nghĩa: … Với $\tilde\pi$, thừa số là $2\cdot0{,}9\cdot0{,}5/0{,}01=90$." ($\chi=0{,}5$ đã ở dòng "Nhắc lại:"); dòng chứng minh hệ quả rút: "Pinsker tại từng trạng thái, rồi Jensen cho hàm lõm $\sqrt{\cdot}$ với $\sum_s\nu^\pi(s)\le1$: …" | trang cao 735 px |
+| `7-15` | "Nhắc lại" đặt thành cụm trong ngoặc "(hàm thay thế tiếp xúc $J$)" của dòng "Chứng minh.", không thêm nhãn | một dòng chứng minh không chứa nhãn thứ hai |
+| phụ lục, dòng nguồn | giữ (số khối, mục §4.1, §4.6 đúng với ghi chú bản 2026-11-22) | đã đối chiếu `lecture-note.md` |
+| `1-08` | `<ol>` và dòng phụ lục bọc trong một `div` (cột phải của `grid2 fig-left`) | lưới hai cột |
+
+**Kiểm (máy chủ `http.server` cổng 8845).** `deck_lint --course rl-plan`: 59 mục (trước lượt: 55); mới so với trước là các hàng §7 ở trên và ba STRUCT của phụ lục; không NOTES150. `footer_check.py`: 0 trang chạm chân trang. `formula_overflow.py`: 0. Playwright 92 trang × 1600×900 và 390×844 (`transition:'none'`): 0 lỗi console, 0 lỗi trang, 0 request lỗi, 0 `.katex-error`, không tràn ngang, trang cao nhất 687 px (`7-15`). `#/1` … `#/7` mở `1-01`, `2-00`, … `6-00`, `7-00`; phím mũi tên từ `6-17` sang `7-00`. `git diff --check` sạch. Ảnh và script: `/tmp/claude-1000/-data-tqlong-lectures/678a7f48-9d80-46cf-a421-67398857f913/scratchpad/m4-v3/`.
+
+**Thời lượng.** Không đổi so với §5 (bản #6): mạch 4 34 phút (cộng theo trang), cả bài 119 phút; phụ lục 8,5 phút ngoài giờ.
+
+### Sửa sau kiểm lại #6 (2026-11-22)
+
+Mười mục mức trung bình của lượt kiểm lại, theo brief của điều phối viên. Chữ trên mặt trang qua `no-ai-slop` (Edit); không thu nhỏ chữ.
+
+| # | Trang | Đã sửa | Ghi chú |
+|---|---|---|---|
+| 1 | `4-12`, `1-08`, `7-00` | `4-12`: "(chiều cũ‖mới)" và "nên ràng buộc đặt trên KL", không còn chữ TRPO; hộp rút "KL tăng khoảng" thành "KL khoảng" để vừa khung. Tên phụ lục thành "Phụ lục: cơ sở lý thuyết của miền tin cậy" ở `1-08`, `7-00`, `outline.md` và phần hiện hành của tệp này | |
+| 2 | `4-33`, `4-25` | `4-33` dùng "quanh chính sách cũ"; `4-25` "Nhắc lại: $\theta=(0;\,\log2)$"; $\theta_{\mathrm{old}}$ chỉ từ `4-09` | |
+| 3 | `4-33`, `1-07`, `4-09`, `5-08`, `6-14`, ghi chú diễn giả `4-26`, `5-09` (alt, ghi chú) | ba mục của `4-33`: "Xấp xỉ hàm thay thế bậc một và KL trung bình bậc hai quanh chính sách cũ." / "Tìm bước tốt nhất của bài toán xấp xỉ." / "Co bước tới khi hàm thay thế tăng và ràng buộc thỏa trên bộ đệm." Tên tiếng Anh: natural gradient giữ ở `4-08` (mặt trang `4-33` không còn chữ "gradient tự nhiên", chỉ có trong hình); backtracking line search giữ ở `4-26`; buffer chuyển từ `4-09` lên `1-07` (mục tiêu 4, lần đầu "bộ đệm" trên mặt trang). "KL mẫu" thành "KL trung bình trên bộ đệm" ở `5-08`, `6-14`, alt `vong-trpo.svg` và ghi chú diễn giả `4-26`, `5-09` | `vong-trpo.svg` còn chữ "KL mẫu" trong khối "Chọn độ dài bước" (ngoài phạm vi lượt này; giao người vẽ hình). Các chỗ "KL mẫu" trong các mục storyboard cũ (§3 mạch 4 bảng số, `4-33` mục 3, `5-08`, `6-14`) là bản ghi; tên hiện hành là "KL trung bình trên bộ đệm" |
+| 4 | `4-21` | hộp: "… Với $\tilde\pi$, $\chi=0{,}5$: phạt $=90\sqrt{0{,}0536/2}\approx14{,}7\gt0{,}095$, nên cận không chứng nhận $J$ tăng." Cụm "về $0$ khi $\kappa\to0$" giữ (vừa khung) | |
+| 5 | `4-21`, `7-00`, `chuoi-bon-mat-xich.svg` | nhãn mũi tên 3 "định lý chặn cải thiện" thành "đẳng thức sai số" (chữ, `<desc>`, alt ở `4-21` và `7-00`); XML hợp lệ; chuỗi mới ngắn hơn chuỗi cũ nên không chạm khối. Nhãn "Hệ quả" của khối giữ | ba bản `-buoc0` … `-buoc2` không có mũi tên 3 |
+| 6 | `6-13`, `6-18` | `6-13` hàng "Chặn cải thiện": giả thiết "như bổ đề; $A_\pi$, $\nu^\pi$ chính xác", công thức chỉ dạng KL; `6-18` mục 1 "… vượt phạt tỉ lệ với căn của KL trung bình." | |
+| 7 | `4-34` | "Nhắc lại: bước gradient tự nhiên $\Delta^*=(0{,}3475;\,1{,}3031)$, $J=1{,}807$." và dòng dữ kiện "Bước theo $g$, cùng ràng buộc $\tfrac12\Delta^\top F\Delta\le0{,}01$: $g^\top Fg=0{,}0019$, $\Delta=\sqrt{0{,}02/0{,}0019}\,g=3{,}2444\,g=(0{,}6489;\,0{,}9733)$, $p=\dots$". Câu hỏi rút một dòng: "vì sao nghiệm của bài toán xấp xỉ cho $J$ thấp hơn bước theo $g$?" | trang chạm chân trang 21 px sau khi thêm dòng |
+| 8 | `4-35` | "Nhắc lại: … tổng $0{,}145\lt1$ vì lượt kết thúc"; "Chuẩn hóa $(0{,}1;\,0{,}045)/0{,}145=(0{,}69;\,0{,}31)$ cho $\approx0{,}37$, gần $\widehat D\approx0{,}36$."; hộp "cho miền $t\le0{,}515$", "chỉ cho miền $t\le0{,}206$" | |
+| 9 | `4-31`, `4-25` | `4-31`: "Trên chuỗi, một bước miền tin cậy với $\bar D_{\mathrm{KL}}$ (trọng số $\nu^\pi$) đưa $J$ từ $1{,}4$ lên $1{,}807$." ($\bar D_{\mathrm{KL}}=0{,}0085$ xuống ghi chú diễn giả, cùng câu "thuật toán dùng KL trung bình trên bộ đệm"); `4-25` tiêu đề "Ví dụ: một bước miền tin cậy trên chuỗi", ghi chú diễn giả "Một bước miền tin cậy trên chuỗi: …" | dòng đủ dài chạm chân trang |
+| 10 | `7-15` | "Nhắc lại: định lý chặn cải thiện, $J(\pi')-J(\pi)\ge\Delta\mathcal L-\tfrac{2\gamma\chi_{\pi'}}{(1-\gamma)^2}\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]$; $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$, $A_\pi(s_B,\cdot)=(1;\,-2)$."; dòng tính "Trên chuỗi, $C=360$ ($\bar\chi=2$). Với $c=(0{,}8;\,3)/(1-\gamma)=(8;\,30)$: $\mathcal M_k(\pi')-\mathcal M_k(\pi_k)\le\sum_s\nu^{\pi_k}(s)D_{\mathrm{TV}}(s)(c_s-360)\lt0$ khi $\pi'\ne\pi_k$." Để vừa khung: giả thiết của hệ quả rút ("như định lý, cho mỗi cặp $(\pi_k,\pi')$"; $\bar\chi_k\ge\chi_{\pi'}$ bỏ), $C_k$ viết dạng phẳng, dòng chứng minh "…$=J(\pi_k)$, vì $\mathcal L_{\pi_k}(\pi_k)=J(\pi_k)$", hộp còn câu "TRPO thay phạt bằng ràng buộc $\bar D_{\mathrm{KL}}\le\kappa$."; câu Schulman và cộng sự (2015), $C=2\cdot0{,}9\cdot2/0{,}01$, $D_{\mathrm{TV}}(s)=\lvert\Delta p_s\rvert$ và bất đẳng thức $\Delta\mathcal L\le\sum_s\nu D_{\mathrm{TV}}c_s$ xuống ghi chú diễn giả | trang cao 1030 px khi chỉ thêm hai dòng; ghi chú diễn giả rút về 150 âm tiết |
+
+`6-14`: ô "Bảo đảm" của TRPO xuống dòng lại ("trên bộ đệm: KL / trung bình $\le\kappa$, hàm / thay thế mẫu tăng. / Không bảo đảm $J$ tăng") vì "KL trung bình" làm bảng rộng 1284 px.
+
+**Kiểm.** `deck_lint`: 59 mục, không NOTES150; STRUCT ba mục của phụ lục như §7. `footer_check` 0, `formula_overflow` 0. Playwright 92 trang × hai cỡ: 0 lỗi console, 0 lỗi trang, 0 request lỗi, 0 `.katex-error`, không tràn ngang, không trang nào cao quá 720 px; `#/1` … `#/7` đúng. `git diff --check` sạch.
 
 # Lịch sử (bản 2026-11-20)
 

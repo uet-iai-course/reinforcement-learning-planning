@@ -1,6 +1,6 @@
 # Dàn ý Bài 10: TRPO và PPO
 
-Bản hiện hành (2026-11-21, sau lượt sửa thứ hai theo năm vai rà), khớp bộ trang chiếu dựng lại `2627-1/lecture-10-trpo-va-ppo.html` (6 mạch, 88 trang; mạch 4 dựng lại theo đề xuất trình bày TRPO của tác giả, 2026-11-21) và `storyboard.md` (phần trước "Lịch sử (bản 2026-11-20)"). Phần DPO và học tăng cường từ phản hồi con người đã bỏ khỏi Bài 10 (người dùng 2026-11-21, `gop-y-tac-gia-deck-2026-11-20.md` mục #27); nội dung cắt lưu ở `dpo-chuyen-sang-bai-13.md` cho Bài 13. Dàn ý cũ (bảy, tám mạch, có Mục 7 DPO) giữ nguyên chữ ở cuối tệp, mục "Lịch sử (bản 2026-11-19)", chỉ để đối chiếu nhật ký.
+Bản hiện hành (2026-11-22, sau nhận xét website #6), khớp bộ trang chiếu dựng lại `2627-1/lecture-10-trpo-va-ppo.html` (6 mạch và mạch Phụ lục, 92 trang: 85 trang mạch chính, 7 trang phụ lục; mạch 4 dựng lại theo đề xuất trình bày TRPO của tác giả, 2026-11-21, và nhận xét website, 2026-11-22) và `storyboard.md` (phần trước "Lịch sử (bản 2026-11-20)"). Phần DPO và học tăng cường từ phản hồi con người đã bỏ khỏi Bài 10 (người dùng 2026-11-21, `gop-y-tac-gia-deck-2026-11-20.md` mục #27); nội dung cắt lưu ở `dpo-chuyen-sang-bai-13.md` cho Bài 13. Dàn ý cũ (bảy, tám mạch, có Mục 7 DPO) giữ nguyên chữ ở cuối tệp, mục "Lịch sử (bản 2026-11-19)", chỉ để đối chiếu nhật ký.
 
 ## Phạm vi và nguồn
 
@@ -12,27 +12,29 @@ Bản hiện hành (2026-11-21, sau lượt sửa thứ hai theo năm vai rà), 
 
 ## Khung lý thuyết chung
 
-- **Bài toán trung tâm** (ghi chú §1.1). (1) Ước lượng gradient chính sách có phương sai nhỏ mà kỳ vọng không đổi. (2) Dùng bước cập nhật dài, trên dữ liệu của chính sách cũ, mà hàm mục tiêu không giảm.
+- **Luận điểm bìa** (`L10-1-01`, tác giả 2026-11-22, #6): "Kiểm soát mức đổi chính sách để giảm nguy cơ suy giảm khi dùng lại lượt đã thu." (18 âm tiết, NT11).
+- **Bài toán trung tâm** (ghi chú §1.1). (1) Ước lượng gradient chính sách có phương sai nhỏ mà kỳ vọng không đổi. (2) Dùng lượt của chính sách cũ cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm (2026-11-22, #6; câu cũ "… mà hàm mục tiêu không giảm" hứa điều thuật toán không bảo đảm). Trang `L10-1-06`, `L10-6-11`, `L10-6-18` dùng đúng câu này.
 - **Đối tượng chung.** MDP hữu hạn, $\mu_0$, $P$; chính sách $\pi_\theta$, hàm điểm $\psi_\theta=\nabla_\theta\log\pi_\theta$; $v_\pi$, $q_\pi$, $A_\pi=q_\pi-v_\pi$; critic $\hat v(s,w)$, sai số TD $\delta_t$, GAE $\widehat A_t$; số lần thăm kỳ vọng có chiết khấu $\eta_\pi$, phân bố chiếm dụng $\nu^\pi=(1-\gamma)\eta_\pi$; hàm thay thế $\mathcal L_\pi(\pi')$, tỉ số chính sách $\rho$; $D_{\mathrm{TV}}$, $D_{\mathrm{KL}}$, $\bar D_{\mathrm{KL}}$; ma trận Fisher $F$; $\mathcal L^{\mathrm{CPI}}$, $\mathcal L^{\mathrm{CLIP}}$, bộ đệm $\mathcal D$.
 - **Giả thiết chung** (trang `L10-1-02`, Đ7): MDP hữu hạn, Markov; mọi chính sách cùng $P$, cùng $\mu_0$; $|R_{t+1}|\le R_{\max}$; $0\le\gamma<1$; chính sách Markov dừng, $\pi_\theta>0$, khả vi theo $\theta$. Mỗi kết quả ghi "giả thiết chung; thêm: …".
-- **Chuỗi định nghĩa → kết quả → phương pháp.** Hai giới hạn của REINFORCE (phương sai $0{,}6925$; bước dài theo một lượt làm $J$ giảm) → đường cơ sở (Định nghĩa 10.1, Mệnh đề 10.2) → hàm lợi thế, gradient dạng lợi thế (Định nghĩa 10.4, Mệnh đề 10.5) → sai số TD với $v_\pi$ (Mệnh đề 10.8) → critic, actor (Định nghĩa 10.7) → lợi thế $n$ bước, GAE (Định nghĩa 10.11, 10.13, Mệnh đề 10.14, 10.15) → actor–critic với GAE → luồng 100 lượt, phân phối hành động và phân bố trạng thái (Ví dụ 10.11) → bổ đề chênh lệch hiệu năng (Định nghĩa 10.18, Bổ đề 10.19) → hàm thay thế, lấy mẫu quan trọng, tỉ số chính sách (Định nghĩa 10.21, Mệnh đề 10.22) → sai số dự báo và đoạn thẳng $\pi_t$ (Ví dụ 10.12) → bước tham số và thay đổi hành vi (Ví dụ 10.13), TV, KL (Định nghĩa 10.23) → bài toán miền tin cậy (Định nghĩa 10.24) → cơ sở lý thuyết: chặn cải thiện (Bổ đề 10.26, Định lý 10.27, Hệ quả 10.28, Mệnh đề 10.25, Hệ quả 10.30) → Fisher, gradient tự nhiên (Định nghĩa 10.32, Mệnh đề 10.33, 10.34) → TRPO (Thuật toán 10.37) → mục tiêu cắt (Định nghĩa 10.39, Mệnh đề 10.40) → PPO-Clip (Thuật toán 10.49).
+- **Chuỗi định nghĩa → kết quả → phương pháp.** Hai giới hạn của REINFORCE (phương sai $0{,}6925$; bước dài theo một lượt làm $J$ giảm) → đường cơ sở (Định nghĩa 10.1, Mệnh đề 10.2) → hàm lợi thế, gradient dạng lợi thế (Định nghĩa 10.4, Mệnh đề 10.5) → sai số TD với $v_\pi$ (Mệnh đề 10.8) → critic, actor (Định nghĩa 10.7) → lợi thế $n$ bước, GAE (Định nghĩa 10.11, 10.13, Mệnh đề 10.14, 10.15) → actor–critic với GAE → luồng 100 lượt, phân phối hành động và phân bố trạng thái (Ví dụ 10.11) → bổ đề chênh lệch hiệu năng (Định nghĩa 10.18, Bổ đề 10.19) → hàm thay thế, lấy mẫu quan trọng, tỉ số chính sách (Định nghĩa 10.21, Mệnh đề 10.22) → sai số dự báo và đoạn thẳng $\pi_t$ (Ví dụ 10.12) → bước tham số và thay đổi hành vi (Ví dụ 10.13), TV, KL (Định nghĩa 10.23) → bài toán miền tin cậy (Định nghĩa 10.24) → chặn cải thiện theo KL (Hệ quả 10.28; chứng minh và Bổ đề 10.26, Định lý 10.27, Mệnh đề 10.25, Hệ quả 10.30 ở phụ lục) → sơ đồ tổng thể của TRPO → Fisher, gradient tự nhiên (Định nghĩa 10.32, Mệnh đề 10.33, 10.34) → hai cách lấy trung bình KL → TRPO (Thuật toán 10.37) → mục tiêu cắt (Định nghĩa 10.39, Mệnh đề 10.40) → PPO-Clip (Thuật toán 10.49).
 - **Giới hạn áp dụng.** Đường cơ sở không phụ thuộc hành động đã chọn; critic sai làm sai số TD chệch; GAE không chệch cho gradient chỉ khi $\lambda=1$ trên lượt đầy đủ hoặc critic đúng; mọi bảo đảm của hàm thay thế và chặn cải thiện cần lợi thế, $\eta_\pi$ chính xác; TRPO chỉ bảo đảm trên bộ đệm; mục tiêu cắt không chặn KL; dữ liệu theo chính sách.
 
-## Sáu mạch (deck dựng lại 2026-11-21)
+## Sáu mạch và phụ lục (deck dựng lại 2026-11-21, phụ lục 2026-11-22)
 
-HTML có 6 section ngoài (NT10). Mạch $k$ mở tại `#/k`; từ mạch 2, trang đầu là trang tiêu đề mạch `L10-k-00`, `id="mach-k"`. Mã trang theo `NGUYEN-TAC-HOC-PHAN.md` §5.
+HTML có 7 section ngoài: sáu mạch (NT10) và mạch Phụ lục `id="mach-7"` sau tổng kết. Mạch $k$ mở tại `#/k`; từ mạch 2, trang đầu là trang tiêu đề mạch `L10-k-00`, `id="mach-k"`. Mã trang theo `NGUYEN-TAC-HOC-PHAN.md` §5.
 
 | Mạch | Tên (`h2`) | Dòng dẫn | Mục ghi chú | Đầu ra | Trang | Phút |
 |---|---|---|---|---|---:|---:|
 | 1 | Giới hạn của REINFORCE (mở đầu; bìa `L10-1-01`) | không có | Kiến thức tiên quyết, §1.1, Ví dụ 10.6 | chuỗi hai trạng thái, $J=1{,}4$, gradient $(0{,}2;\,0{,}3)$; phương sai $0{,}6925$; bước dài làm $J$ giảm; câu hỏi nhanh; hai câu hỏi | 11 | 17 |
 | 2 | Đường cơ sở và hàm lợi thế | So lợi tức với giá trị của trạng thái giữ nguyên kỳ vọng của ước lượng gradient và giảm phương sai. | §2.1, §2.3, §2.4 | đường cơ sở, $A_\pi$, gradient dạng lợi thế, $\delta_t$ với $v_\pi$; phương sai $0{,}69\to0{,}20\to0$ | 11 | 18 |
 | 3 | Ước lượng lợi thế: độ chệch và phương sai | Tổ hợp có trọng số các ước lượng lợi thế nhiều bước cân bằng độ chệch và phương sai. | §2.4 (critic), §3 | critic, actor, GAE, $\lambda$ cân bằng chệch và phương sai; thuật toán actor–critic với GAE | 13 | 21,5 |
-| 4 | Hàm thay thế và miền tin cậy | Chính sách mới được đánh giá từ dữ liệu của chính sách cũ với sai số nhỏ khi hai chính sách gần nhau. | §4, §5 | luồng 100 lượt; bổ đề chênh lệch hiệu năng, hàm thay thế; bài toán miền tin cậy trước cơ sở lý thuyết (chặn cải thiện); hình học elip, gradient tự nhiên, TRPO | 29 | 37,5 |
+| 4 | Hàm thay thế và miền tin cậy | Chính sách mới được đánh giá từ dữ liệu của chính sách cũ với sai số nhỏ khi hai chính sách gần nhau. | §4, §5 | luồng 100 lượt; bổ đề chênh lệch hiệu năng, hàm thay thế; bài toán miền tin cậy; ba mắt xích và cận lỏng $14{,}7\gt0{,}095$; sơ đồ tổng thể của TRPO; hình học elip, gradient tự nhiên; bảng ba tầng ($J$, hàm thay thế, bài toán xấp xỉ); hai cách lấy trung bình KL ($0{,}0536$, $\approx0{,}36$); TRPO | 26 | 34 |
 | 5 | Tối ưu chính sách gần kề (PPO) | PPO cắt tỉ số chính sách để dùng lại một bộ đệm nhiều lần bằng gradient bậc một. | §6.1, §6.3 | mục tiêu cắt, PPO-Clip, so sánh TRPO–PPO, Bài tập 10.23 | 14 | 17 (+3,5 bài tập) |
-| 6 | Tổng kết | Mỗi phương pháp của bài giảm phương sai hoặc giới hạn bước cập nhật dưới những giả thiết riêng. | §7 | sơ đồ neo cuối, câu trả lời có điều kiện, bảng kết quả, bảng phương pháp | 10 | 11 |
-| **Tổng** | | | | | **88** | **122** |
+| 6 | Tổng kết | Mỗi phương pháp của bài giảm phương sai hoặc giới hạn bước cập nhật dưới những giả thiết riêng. | §7 | sơ đồ neo cuối, câu trả lời có điều kiện (câu 2 theo ba mức: lý thuyết, bài toán, thuật toán), bảng kết quả, bảng phương pháp | 10 | 11,5 |
+| Phụ lục | Phụ lục: cơ sở lý thuyết của miền tin cậy (không số mạch) | Các chứng minh nối giới hạn KL của bài toán miền tin cậy với sai số của hàm thay thế. | §4.1, §4.6 | ý tưởng chứng minh bổ đề chênh lệch hiệu năng, Pinsker, bổ đề dịch chuyển, định lý chặn cải thiện và chứng minh hệ quả theo KL, cận trên chuỗi, cải thiện đơn điệu | 7 | 8,5 (ngoài 120 phút) |
+| **Tổng** | | | | | **85 + 7** | **119 (+8,5 phụ lục)** |
 
-"Nội dung" (`L10-1-08`) gồm sơ đồ neo `so-do-neo-m1.svg` và danh sách sáu mạch có liên kết `#/k`. Ngoại lệ số trang (88 trang thật, 87 trang đếm theo TB17) và hai ước lượng thời lượng (biên tập viên 122 phút; vai mạch truyện khoảng 145–155 phút) ghi ở `storyboard.md` §5, chờ tác giả; Bài tập 10.23 tính vào 30 phút bài tập. Mạch 1: câu hỏi nhanh `1-12` đứng giữa `1-04` và `1-05`. Mạch 6: câu trả lời câu 2 tách sang `6-18` ngay sau `6-11`.
+"Nội dung" (`L10-1-08`) gồm sơ đồ neo `so-do-neo-m1.svg`, danh sách sáu mạch có liên kết `#/k` và một dòng không đánh số "Phụ lục: cơ sở lý thuyết của miền tin cậy" liên kết `#/7`. Ngoại lệ số trang (85 trang thật trên mạch chính, 84 trang đếm theo TB17, cộng 7 trang phụ lục) và hai ước lượng thời lượng (cộng theo trang 119 phút, ước lượng thực tế cho mạch 4 thêm 4 phút; vai mạch truyện khoảng 145–155 phút cho bản trước) ghi ở `storyboard.md` §5, chờ tác giả; Bài tập 10.23 tính vào 30 phút bài tập. Mạch 1: câu hỏi nhanh `1-12` đứng giữa `1-04` và `1-05`. Mạch 6: câu trả lời câu 2 tách sang `6-18` ngay sau `6-11`.
 
 ## Bảng thuật ngữ Việt–Anh
 
@@ -66,22 +68,25 @@ Tên tiếng Anh trong ngoặc ở lần đầu trên mặt trang (VP2, NT21); c
 | tỉ số chính sách; điều kiện hỗ trợ | probability ratio; support condition | $\rho(s,a)$, $\rho_t(\theta)$; "tỉ số", không "tỷ số"; $\pi'(a\mid s)\gt0\Rightarrow\pi(a\mid s)\gt0$ | `L10-4-11` |
 | biến phân toàn phần (TV) | total variation distance | $D_{\mathrm{TV}}(q,q')$, $D_{\mathrm{TV}}(s)$ | `L10-4-12` |
 | phân bố chiếm dụng | — (ghi chú không có tên tiếng Anh; không ghi trên deck) | $\nu^\pi=(1-\gamma)\eta_\pi$ | `L10-4-07` |
-| chặn cải thiện | policy improvement bound | Hệ quả 10.28 ở `L10-4-21`, Định lý 10.27 ở `L10-4-06` | `L10-4-21` |
+| chặn cải thiện | policy improvement bound | Hệ quả 10.28 ở `L10-4-21`, Định lý 10.27 ở `L10-7-13` (phụ lục) | `L10-4-21` |
 | phân kỳ Kullback–Leibler (KL); KL trung bình | Kullback–Leibler divergence | $D_{\mathrm{KL}}(s)$ chiều cũ‖mới; $\bar D_{\mathrm{KL}}=\sum_s\nu^\pi(s)D_{\mathrm{KL}}(s)$ | `L10-4-12` |
-| bất đẳng thức Pinsker | Pinsker's inequality | tên riêng | `L10-4-20` |
-| bổ đề dịch chuyển phân bố chiếm dụng | — | Bổ đề 10.26; ghi chú không có tên tiếng Anh | `L10-4-24` |
+| bất đẳng thức Pinsker | Pinsker's inequality | tên riêng; phát biểu ở `L10-7-11` (phụ lục) | `L10-4-12` |
+| bổ đề dịch chuyển phân bố chiếm dụng | — | Bổ đề 10.26; ghi chú không có tên tiếng Anh; tên trên hình `L10-4-21`, phát biểu ở `L10-7-12` (phụ lục) | `L10-4-21` |
 | miền tin cậy; bài toán miền tin cậy | trust region; trust region problem | bán kính $\kappa$ | `L10-4-07` |
 | ma trận thông tin Fisher | Fisher information matrix | $F$ | `L10-4-22` |
 | gradient tự nhiên | natural gradient | $F^{-1}g$; dòng "Ký hiệu:" trước mệnh đề | `L10-4-08` |
-| tối ưu chính sách miền tin cậy (TRPO) | trust region policy optimization | sau lần đầu viết TRPO | `L10-4-09` |
+| tối ưu chính sách miền tin cậy (TRPO) | trust region policy optimization | sau lần đầu viết TRPO; dòng "Thuật toán" của `L10-4-09` nhắc lại tên đầy đủ | `L10-4-33` |
+| sơ đồ tổng thể của TRPO | — | hình `so-do-trpo-tong-the.svg` | `L10-4-33` |
+| KL trung bình trên bộ đệm | — | $\widehat D=\tfrac1{|\mathcal D|}\sum_{t\in\mathcal D}D_{\mathrm{KL}}(S_t)$, trung bình đều; khác $\bar D_{\mathrm{KL}}$ (trọng số $\nu^\pi$, tổng $0{,}145$) | `L10-4-35` |
+| tần suất trên bộ đệm | — | $(\tfrac23;\,\tfrac13)$ trên chuỗi | `L10-4-35` |
 | gradient liên hợp; tích Fisher–vector | conjugate gradient; Fisher–vector product | | `L10-4-09` |
-| tìm kiếm lùi | backtracking line search | hệ số co $\zeta$ | `L10-4-09` |
-| bộ đệm | buffer | $\mathcal D$ | `L10-4-09` |
+| tìm kiếm lùi | backtracking line search | hệ số co $\zeta$; tên khối trên hình `L10-4-33` | `L10-4-26` |
+| bộ đệm | buffer | $\mathcal D$; tên tiếng Anh ở mục tiêu 4 | `L10-1-07` |
 | hàm thay thế mẫu; lặp chính sách bảo thủ (CPI) | sample surrogate; conservative policy iteration | $\mathcal L^{\mathrm{CPI}}$ | `L10-5-09` |
 | mục tiêu cắt; bán kính cắt; đoạn phẳng | clipped surrogate objective; clip range | $\mathcal L^{\mathrm{CLIP}}$, $\epsilon$; đoạn phẳng là khoảng $\rho_t$ có gradient theo mẫu bằng $0$ | `L10-5-02` |
 | vòng trong | inner loop | bước 3 của PPO-Clip, $K$ lần qua bộ đệm | `L10-5-05` |
-| cải thiện đơn điệu | monotonic improvement | Hệ quả 10.30, $\mathcal M_k$ | `L10-4-29` |
-| cực đại hóa qua hàm chặn dưới | minorize–maximize (MM) | chỉ ở ghi chú diễn giả | `L10-4-29` |
+| cải thiện đơn điệu | monotonic improvement | Hệ quả 10.30, $\mathcal M_k$; phụ lục | `L10-7-15` |
+| cực đại hóa qua hàm chặn dưới | minorize–maximize (MM) | chỉ ở ghi chú diễn giả | `L10-7-15` |
 | tối ưu chính sách gần kề (PPO) | proximal policy optimization | tên mạch 5; tên tiếng Anh ở trang thuật toán | `L10-5-00`; `L10-5-07` |
 | lô nhỏ; số lần qua bộ đệm; dừng sớm | mini-batch; epoch; early stopping | $M$; $K$; theo KL ước lượng trên bộ đệm | `L10-5-07` |
 
@@ -141,6 +146,8 @@ Mạch 3 có thêm `3-13` "Critic hồi quy về lợi tức λ" (mục tiêu $V
 Tiêu đề mạch 4 sau lượt sửa theo năm vai (2026-11-21, `ra-soat-mach4-2026-11-21.md` B2): `4-01` "Hướng làm $J$ tăng chưa cho biết độ dài bước", `4-04` "Sai số của dự báo trên đoạn thẳng là $-0{,}18t^2$", `4-28` "Cùng $\Delta\theta$, hai mức thay đổi phân phối hành động", `4-32` (mới, tách từ `4-07`) "Ví dụ: miền tin cậy $\kappa=0{,}01$ loại $\tilde\pi$", cụm lý thuyết mang tiền tố "Cơ sở lý thuyết: …" (`4-14`, `4-20`, `4-24`, `4-06`, `4-19` "… chặn cải thiện đúng nhưng lỏng", `4-29`), `4-31` "Hàm thay thế, miền tin cậy và gradient tự nhiên".
 
 Mạch 4 dựng lại (2026-11-21) theo đề xuất trình bày TRPO của tác giả và `storyboard.md` §3 mạch 4: 29 trang (`4-07` tách thành `4-07` và `4-32` sau năm vai rà), thứ tự `4-00`, `4-01`, `4-27`, `4-13`, `4-02`, `4-03`, `4-11`, `4-16`, `4-04`, `4-10`, `4-17`, `4-28`, `4-12`, `4-07`, `4-32`, `4-21`, cụm cơ sở lý thuyết `4-14`, `4-20`, `4-24`, `4-06`, `4-19`, `4-29`, rồi `4-22`, `4-30`, `4-08`, `4-25`, `4-09`, `4-26`, `4-31`. Bỏ `4-05`, `4-15`, `4-18`, `4-23`. Chỗ lệch storyboard khi dựng: `storyboard.md` §10, mục "Ghi chú khi dựng mạch 4 (2026-11-21)".
+
+**Bản 2026-11-22 (nhận xét website #6).** Mạch 4 còn 26 trang: `4-00`, `4-01`, `4-27`, `4-13`, `4-02`, `4-03`, `4-11`, `4-16`, `4-04`, `4-10`, `4-17`, `4-28`, `4-12`, `4-07`, `4-32`, `4-21`, `4-33` (sơ đồ tổng thể của TRPO), `4-22`, `4-30`, `4-08`, `4-25`, `4-34` (câu hỏi nhanh: gradient tự nhiên và bước theo $g$), `4-35` (hai cách lấy trung bình KL); `4-25` đổi tiêu đề thành "Ví dụ: một bước miền tin cậy trên chuỗi" (2026-11-22), `4-09`, `4-26`, `4-31`. Đối chiếu mã: cụm cơ sở lý thuyết sang mạch Phụ lục (`id="mach-7"`, sau `6-17`): `4-14` → `7-10`, `4-20` → `7-11`, `4-24` → `7-12`, `4-06` → `7-13`, `4-19` → `7-14`, `4-29` → `7-15`; trang tiêu đề `7-00`. Mã `7-01` … `7-07` của mạch Tổng kết bản 2026-11-20 không dùng lại. Tiêu đề phụ lục bỏ tiền tố "Cơ sở lý thuyết:". Chỗ lệch khi dựng: `storyboard.md` §10, mục "Ghi chú khi dựng (#6, 2026-11-22)".
 
 # Lịch sử (bản 2026-11-19)
 

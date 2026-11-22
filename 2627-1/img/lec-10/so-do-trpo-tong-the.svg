@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 572" width="1000" height="572" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Sơ đồ tổng thể của TRPO</title>
+<desc id="d">Khối trên cùng: lượt thu bằng chính sách cũ. Từ khối này một mũi tên tách thành hai, xuống hai khối cạnh nhau. Khối trái, viền cam nét đứt: hàm thay thế, dự báo mức cải thiện. Khối phải, viền tím: KL trung bình, giới hạn mức đổi chính sách. Hai mũi tên từ hai khối giữa hội tụ vào khối: tối ưu trong miền tin cậy, bằng gradient tự nhiên và tìm kiếm lùi. Mũi tên cuối xuống khối: chính sách mới.</desc>
+<defs><marker id="mk" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#1d2433"/></marker><marker id="mf" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#3E4A5E"/></marker><marker id="mx" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#8C95A6"/></marker><marker id="mr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#C62828"/></marker><marker id="mo" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#B35C00"/></marker><marker id="mg" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#2E7D4F"/></marker><marker id="mp" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#6B3FA0"/></marker><pattern id="sx" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#8C95A6" stroke-width="3"/></pattern><pattern id="sp" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#6B3FA0" stroke-width="3"/></pattern><pattern id="sg" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#2E7D4F" stroke-width="3"/></pattern></defs>
+<rect x="230.0" y="6.0" width="540.0" height="72.0" rx="10" fill="#FFFFFF" stroke="#3E4A5E" stroke-width="2.5"/>
+<text x="500.0" y="52.1" font-size="28" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan>Lượt thu bằng chính sách cũ</tspan></text>
+<line x1="500.0" y1="80.0" x2="500.0" y2="112.0" stroke="#1d2433" stroke-width="3"/>
+<path d="M 249.0 144.0 L 249.0 112.0 L 751.0 112.0 L 751.0 144.0" stroke="#1d2433" stroke-width="3" fill="none" stroke-linejoin="miter"/>
+<line x1="249.0" y1="112.0" x2="249.0" y2="145.0" stroke="#1d2433" stroke-width="3" marker-end="url(#mk)"/>
+<line x1="751.0" y1="112.0" x2="751.0" y2="145.0" stroke="#1d2433" stroke-width="3" marker-end="url(#mk)"/>
+<rect x="14.0" y="148.0" width="470.0" height="118.0" rx="10" fill="#FCF1E6" stroke="#B35C00" stroke-width="3.5" stroke-dasharray="12 8"/>
+<text x="249.0" y="200.8" font-size="28" text-anchor="middle" font-weight="bold" fill="#B35C00"><tspan>Hàm thay thế:</tspan></text>
+<text x="249.0" y="238.4" font-size="28" text-anchor="middle" fill="#1d2433"><tspan>dự báo mức cải thiện</tspan></text>
+<rect x="516.0" y="148.0" width="470.0" height="118.0" rx="10" fill="#F1EAF9" stroke="#6B3FA0" stroke-width="3"/>
+<text x="751.0" y="200.8" font-size="28" text-anchor="middle" font-weight="bold" fill="#6B3FA0"><tspan>KL trung bình:</tspan></text>
+<text x="751.0" y="238.4" font-size="28" text-anchor="middle" fill="#1d2433"><tspan>giới hạn mức đổi chính sách</tspan></text>
+<line x1="249.0" y1="268.0" x2="350.0" y2="337.0" stroke="#1d2433" stroke-width="3" marker-end="url(#mk)"/>
+<line x1="751.0" y1="268.0" x2="650.0" y2="337.0" stroke="#1d2433" stroke-width="3" marker-end="url(#mk)"/>
+<rect x="200.0" y="340.0" width="600.0" height="118.0" rx="10" fill="#EEF0F4" stroke="#3E4A5E" stroke-width="2.5"/>
+<text x="500.0" y="392.8" font-size="28" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan>Tối ưu trong miền tin cậy:</tspan></text>
+<text x="500.0" y="430.4" font-size="28" text-anchor="middle" fill="#1d2433"><tspan>gradient tự nhiên, tìm kiếm lùi</tspan></text>
+<line x1="500.0" y1="460.0" x2="500.0" y2="491.0" stroke="#1d2433" stroke-width="3" marker-end="url(#mk)"/>
+<rect x="330.0" y="494.0" width="340.0" height="72.0" rx="10" fill="#FFFFFF" stroke="#3E4A5E" stroke-width="2.5"/>
+<text x="500.0" y="540.1" font-size="28" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan>Chính sách mới</tspan></text>
+</svg>

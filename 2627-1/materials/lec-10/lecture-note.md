@@ -185,7 +185,7 @@ Giới hạn thứ hai nằm ở cách dùng dữ liệu. Hệ quả 09.26 cần
 
 Cùng một hướng đúng, bước nhỏ làm $J$ tăng còn bước lớn làm $J$ giảm, vì $J$ chỉ gần tuyến tính trong một lân cận nhỏ của chính sách cũ.
 
-Hai giới hạn này dẫn tới **bài toán trung tâm của chương**: giảm phương sai của ước lượng gradient mà vẫn giữ kỳ vọng của nó, và dùng lại dữ liệu của $\pi_{\mathrm{old}}$ để chọn một bước cập nhật lớn mà chính sách mới không kém chính sách cũ.
+Hai giới hạn này dẫn tới **bài toán trung tâm của chương**: giảm phương sai của ước lượng gradient mà vẫn giữ kỳ vọng của nó, và dùng lại dữ liệu của $\pi_{\mathrm{old}}$ để chọn một bước cập nhật lớn mà vẫn kiểm soát nguy cơ chính sách mới kém chính sách cũ.
 
 ![Hai hàng khung nối bằng mũi tên. Hàng trên, viền liền, nhãn phương sai của ước lượng gradient: khung đường cơ sở và critic, với G t trừ v mũ của S t và sai số TD delta t (Mục 2), dẫn tới khung GAE, A mũ t bằng tổng theo k của (gamma lambda) mũ k nhân delta t cộng k (Mục 3). Hàng dưới, viền nét đứt, nhãn độ lớn bước cập nhật: khung hàm thay thế và chặn cải thiện (Mục 4), dẫn tới khung TRPO, KL trung bình không vượt kappa (Mục 5), rồi khung PPO, cắt tỉ số rho t vào đoạn từ 1 trừ epsilon đến 1 cộng epsilon (Mục 6). Hai hàng gặp nhau ở khung cuối, viền đậm: Thuật toán 10.49, PPO kiểu actor–critic, GAE cho lợi thế và mục tiêu cắt cho chính sách.](img/lec-10/central-problem.svg)
 
@@ -1286,6 +1286,14 @@ Ghép ba mắt xích được cận (Hệ quả 10.28)
 $$\Delta J\ge\Delta\mathcal L-\frac{2\gamma\,\chi_{\pi'}}{(1-\gamma)^2}\sqrt{\tfrac12\bar D_{\mathrm{KL}}},$$
 với $\chi_{\pi'}=\max_s\lvert A_\pi(s,\pi')\rvert$ và $\bar D_{\mathrm{KL}}=\mathbb E_{S\sim\nu^\pi}[D_{\mathrm{KL}}(S)]$. Cận chứng nhận cải thiện chỉ khi mức tăng dự báo lớn hơn phạt. TRPO thực hành ràng buộc KL trên mẫu và giải gần đúng, nên thỏa ràng buộc chưa đủ để $J$ tăng.
 
+KL trung bình $\bar D_{\mathrm{KL}}$ lấy trọng số $\nu^\pi$, với tổng bằng khối $\nu^\pi(\mathcal S)=0{,}145$, không bằng $1$. Trên bộ đệm, KL trung bình là trung bình đều $\widehat D=\widehat{\mathbb E}_{\mathcal D}[D_{\mathrm{KL}}(S_t)]$ trên các trạng thái đã thu. Với $\tilde\pi$, $D_{\mathrm{KL}}(s)=(0{,}511;\,0{,}0566)$, và ba cách lấy trọng số cho ba giá trị:
+
+- trọng số $\nu^\pi=(0{,}1;\,0{,}045)$: $\bar D_{\mathrm{KL}}=0{,}1\cdot0{,}511+0{,}045\cdot0{,}0566=0{,}0536$;
+- trọng số $\nu^\pi$ chuẩn hóa, $(0{,}1;\,0{,}045)/0{,}145=(0{,}690;\,0{,}310)$: $0{,}690\cdot0{,}511+0{,}310\cdot0{,}0566\approx0{,}37$;
+- tần suất mẫu: mỗi lượt của $\pi$ thăm $s_A$ một lần và thăm $s_B$ với xác suất $p_A=0{,}5$, nên tần suất là $(\tfrac23;\,\tfrac13)$ và $\widehat D=\tfrac23\cdot0{,}511+\tfrac13\cdot0{,}0566\approx0{,}36$.
+
+Chuẩn hóa chia $\bar D_{\mathrm{KL}}$ cho khối; đó là phép quy đổi bán kính theo khối $\nu^\pi(\mathcal S)$ của dạng (14) ở trên. Bộ đệm không có trọng số chiết khấu, nên tần suất mẫu còn khác $\nu^\pi$ chuẩn hóa: $s_B$ chỉ được thăm ở bước $1$, nên trong $\nu^\pi$ nó mang thêm thừa số $\gamma=0{,}9$, và tỉ lệ $\nu^\pi(s_B)/\nu^\pi(s_A)$ bằng $0{,}45$, còn tỉ lệ số lần thăm trên bộ đệm bằng $0{,}5$. TRPO thực hành áp bán kính $\kappa$ lên $\widehat D$, nên cùng một số $\kappa$ ứng với hai miền khác nhau: trên đoạn thẳng của Ví dụ 10.12, $\bar D_{\mathrm{KL}}\le0{,}01$ chứa các điểm $t\le0{,}515$, còn $\widehat D\le0{,}01$ với tần suất $(\tfrac23;\,\tfrac13)$ chỉ chứa các điểm $t\le0{,}206$.
+
 <!-- note-topic-id: lec-10-topic-13 -->
 ### 4.6 Cơ sở lý thuyết
 
@@ -1713,7 +1721,19 @@ Trên chuỗi hai trạng thái, tại $\theta=(0;\,\log2)$ và với $\kappa=0{
 
 Gradient tự nhiên dồn bước về $\theta_B$. Với một logit mỗi trạng thái, $g_s=\eta_\pi(s)\,p_s(1-p_s)\bigl(A_\pi(s,1)-A_\pi(s,2)\bigr)$ và $F_{ss}=\nu(s)\,p_s(1-p_s)$, nên $(F^{-1}g)_s=\bigl(A_\pi(s,1)-A_\pi(s,2)\bigr)/(1-\gamma)$, tức $0{,}8/0{,}1=8$ và $3/0{,}1=30$. Vì $g_s=F_{ss}(F^{-1}g)_s$ với $(F_{AA};\,F_{BB})=(0{,}025;\,0{,}01)$, thành phần $s_B$ của $g$ bị nhân với thừa số nhỏ hơn, chủ yếu do $\nu(s_B)=0{,}045<0{,}1$; gradient tự nhiên chia cho $F_{ss}$ nên bỏ thừa số này, chỉ còn chênh lệch lợi thế (Kakade, 2002). Tỉ trọng chỉ so hướng, không so độ dài bước.
 
-Bước theo $g$, co về cùng bán kính bậc hai, là $\Delta\approx(0{,}649;\,0{,}973)$; nó cho $p\approx(0{,}657;\,0{,}841)$, KL thật $0{,}0093$ và $J\approx1{,}835$, cao hơn $1{,}807$. Gradient tự nhiên tối ưu bài toán xấp xỉ, không tối ưu $J$; ưu điểm của nó là độ dài bước đo trên phân phối hành động, nên không phụ thuộc cách tham số hóa.
+Bước theo $g$, co về cùng bán kính bậc hai, là $\Delta\approx(0{,}649;\,0{,}973)$; nó cho $p\approx(0{,}657;\,0{,}841)$, KL thật $0{,}0093$ và $J\approx1{,}835$, cao hơn $1{,}807$. Bước gradient tự nhiên là $\Delta^*=(0{,}3475;\,1{,}3031)$. Bảng sau so hai bước trên ba tầng:
+
+- tầng 1: hiệu năng thật $J$;
+- tầng 2: mức tăng $\Delta\mathcal L=0{,}8\,\Delta p_A+1{,}35\,\Delta p_B$ của hàm thay thế (Ví dụ 10.12), tính chính xác;
+- tầng 3: mức tăng tuyến tính $g^\top\Delta$, đại lượng mà Mệnh đề 10.34 cực đại hóa với ràng buộc $\tfrac12\Delta^\top F\Delta\le\kappa$.
+
+| Tầng | Đại lượng | Theo $g$ | Theo $F^{-1}g$ |
+|---|---|---|---|
+| 1 | $J$ | $1{,}835$ | $1{,}807$ |
+| 2 | $\Delta\mathcal L$ | $0{,}361$ | $0{,}357$ |
+| 3 | $g^\top\Delta$ | $0{,}422$ | $0{,}460$ |
+
+Gradient tự nhiên là nghiệm của bài toán ở tầng 3, nên cho giá trị lớn hơn ở tầng đó. Tầng 2 thay $g^\top\Delta$ bằng hàm thay thế thật, tuyến tính theo $\Delta p_s$ nhưng phi tuyến theo $\theta$ vì $p_s=\sigma(\theta_s)$. Tầng 1 cộng thêm sai số $2{,}7\,\Delta p_A\,\Delta p_B$ do phân bố trạng thái thay đổi: $0{,}074$ cho bước theo $g$ và $0{,}050$ cho bước gradient tự nhiên. Ở tầng 2 và tầng 1, bước theo $g$ cho giá trị lớn hơn. Nghiệm của bài toán xấp xỉ cục bộ vì vậy không nhất thiết tốt nhất cho hàm thay thế hay cho $J$. Ưu điểm của gradient tự nhiên là độ dài bước đo trên phân phối hành động, nên không phụ thuộc cách tham số hóa.
 
 ::: remark Nhận xét 10.35 (Ma trận Fisher suy biến)
 Với chính sách softmax, hướng cộng cùng một hằng vào mọi logit của một trạng thái nằm trong $\ker F$; khi các trạng thái có tham số chung, hạt nhân có thể nhỏ hơn. Giả nghịch đảo chọn nghiệm có chuẩn nhỏ nhất trong $\Delta^*+\ker F$. Mọi nghiệm cho cùng giá trị của mô hình bậc hai; với softmax có tham số riêng cho từng trạng thái, các nghiệm cho đúng cùng một chính sách trên các trạng thái có $\nu^{\mathrm{old}}(s)>0$.

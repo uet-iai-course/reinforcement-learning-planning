@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 588" width="820" height="588" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Hai cách lấy trung bình KL trên chuỗi hai trạng thái</title>
+<desc id="d">Hai bảng cạnh nhau, cùng một thang trọng số từ 0 tới 1, vạch 1 nét đứt chạy qua cả hai bảng. Hàng dưới mỗi bảng ghi cùng giá trị D KL của s: s A 0,511, s B 0,0566, chữ tím. Bảng trái, trọng số nu pi có chiết khấu: cột s A 0,1, cột s B 0,045, cột tổng 0,145, phần còn lại tới 1 chỉ là khung nét đứt; kết quả D gạch trên KL bằng 0,1 nhân 0,511 cộng 0,045 nhân 0,0566 bằng 0,0536. Bảng phải, tần suất trên bộ đệm: cột s A hai phần ba, cột s B một phần ba, cột tổng 1; kết quả D mũ bằng hai phần ba nhân 0,511 cộng một phần ba nhân 0,0566 xấp xỉ 0,36.</desc>
+<defs><marker id="mk" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#1d2433"/></marker><marker id="mf" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#3E4A5E"/></marker><marker id="mx" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#8C95A6"/></marker><marker id="mr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#C62828"/></marker><marker id="mo" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#B35C00"/></marker><marker id="mg" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#2E7D4F"/></marker><marker id="mp" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#6B3FA0"/></marker><pattern id="sx" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#8C95A6" stroke-width="3"/></pattern><pattern id="sp" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#6B3FA0" stroke-width="3"/></pattern><pattern id="sg" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#2E7D4F" stroke-width="3"/></pattern></defs>
+<line x1="104.0" y1="352.0" x2="104.0" y2="112.0" stroke="#1d2433" stroke-width="2"/>
+<line x1="97.0" y1="352.0" x2="104.0" y2="352.0" stroke="#1d2433" stroke-width="2"/>
+<text x="92.0" y="360.0" font-size="24" text-anchor="end" fill="#1d2433"><tspan>0</tspan></text>
+<line x1="97.0" y1="237.0" x2="104.0" y2="237.0" stroke="#1d2433" stroke-width="2"/>
+<text x="92.0" y="245.0" font-size="24" text-anchor="end" fill="#1d2433"><tspan>0,5</tspan></text>
+<line x1="97.0" y1="122.0" x2="104.0" y2="122.0" stroke="#1d2433" stroke-width="2"/>
+<text x="92.0" y="130.0" font-size="24" text-anchor="end" fill="#1d2433"><tspan>1</tspan></text>
+<text x="92.0" y="424.0" font-size="24" text-anchor="end" font-weight="bold" fill="#6B3FA0"><tspan font-style="italic">D</tspan><tspan dy="6.0" font-size="19.2">KL</tspan><tspan dy="-6.0">(</tspan><tspan font-style="italic">s</tspan><tspan>)</tspan></text>
+<line x1="104.0" y1="122.0" x2="814.0" y2="122.0" stroke="#8C95A6" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="282.0" y="30.0" font-size="24" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan>trọng số </tspan><tspan>ν</tspan><tspan dy="-9.1" font-size="19.2">π</tspan><tspan dy="9.1"></tspan></text>
+<text x="282.0" y="62.0" font-size="24" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan>(có chiết khấu)</tspan></text>
+<line x1="104.0" y1="352.0" x2="452.0" y2="352.0" stroke="#1d2433" stroke-width="2"/>
+<rect x="137.0" y="329.0" width="70.0" height="23.0" rx="0" fill="#C5CAD3" stroke="#1d2433" stroke-width="1.5"/>
+<text x="172.0" y="319.0" font-size="24" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan>0,1</tspan></text>
+<rect x="247.0" y="341.6" width="70.0" height="10.3" rx="0" fill="url(#sx)" stroke="#1d2433" stroke-width="1.5"/>
+<text x="282.0" y="331.6" font-size="24" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan>0,045</tspan></text>
+<text x="172.0" y="384.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan font-style="italic">s</tspan><tspan dy="6.0" font-style="italic" font-size="19.2">A</tspan><tspan dy="-6.0"></tspan></text>
+<text x="282.0" y="384.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan font-style="italic">s</tspan><tspan dy="6.0" font-style="italic" font-size="19.2">B</tspan><tspan dy="-6.0"></tspan></text>
+<text x="392.0" y="384.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan>tổng</tspan></text>
+<text x="172.0" y="424.0" font-size="24" text-anchor="middle" font-weight="bold" fill="#6B3FA0"><tspan>0,511</tspan></text>
+<text x="282.0" y="424.0" font-size="24" text-anchor="middle" font-weight="bold" fill="#6B3FA0"><tspan>0,0566</tspan></text>
+<rect x="357.0" y="122.0" width="70.0" height="230.0" rx="0" fill="none" stroke="#8C95A6" stroke-width="2" stroke-dasharray="7 5"/>
+<rect x="357.0" y="329.0" width="70.0" height="23.0" rx="0" fill="#C5CAD3" stroke="#1d2433" stroke-width="1.5"/>
+<rect x="357.0" y="318.6" width="70.0" height="10.3" rx="0" fill="url(#sx)" stroke="#1d2433" stroke-width="1.5"/>
+<text x="392.0" y="308.6" font-size="24" text-anchor="middle" font-weight="bold" fill="#1d2433" stroke="#FFFFFF" stroke-width="7" stroke-linejoin="round" paint-order="stroke"><tspan>0,145</tspan></text>
+<rect x="112.0" y="450.0" width="340.0" height="132.0" rx="10" fill="#F1EAF9" stroke="#6B3FA0" stroke-width="3"/>
+<text x="282.0" y="496.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan>0,1 · 0,511 + 0,045 · 0,0566</tspan></text>
+<text x="282.0" y="556.0" font-size="28" text-anchor="middle" font-weight="bold" fill="#6B3FA0"><tspan font-style="italic">D̄</tspan><tspan dy="7.0" font-size="22.4">KL</tspan><tspan dy="-7.0"> = 0,0536</tspan></text>
+<text x="650.0" y="30.0" font-size="24" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan>tần suất</tspan></text>
+<text x="650.0" y="62.0" font-size="24" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan>trên bộ đệm</tspan></text>
+<line x1="472.0" y1="352.0" x2="820.0" y2="352.0" stroke="#1d2433" stroke-width="2"/>
+<rect x="505.0" y="198.7" width="70.0" height="153.3" rx="0" fill="#C5CAD3" stroke="#1d2433" stroke-width="1.5"/>
+<text x="540.0" y="188.7" font-size="24" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan font-size="34">⅔</tspan></text>
+<rect x="615.0" y="275.3" width="70.0" height="76.7" rx="0" fill="url(#sx)" stroke="#1d2433" stroke-width="1.5"/>
+<text x="650.0" y="265.3" font-size="24" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan font-size="34">⅓</tspan></text>
+<text x="540.0" y="384.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan font-style="italic">s</tspan><tspan dy="6.0" font-style="italic" font-size="19.2">A</tspan><tspan dy="-6.0"></tspan></text>
+<text x="650.0" y="384.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan font-style="italic">s</tspan><tspan dy="6.0" font-style="italic" font-size="19.2">B</tspan><tspan dy="-6.0"></tspan></text>
+<text x="760.0" y="384.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan>tổng</tspan></text>
+<text x="540.0" y="424.0" font-size="24" text-anchor="middle" font-weight="bold" fill="#6B3FA0"><tspan>0,511</tspan></text>
+<text x="650.0" y="424.0" font-size="24" text-anchor="middle" font-weight="bold" fill="#6B3FA0"><tspan>0,0566</tspan></text>
+<rect x="725.0" y="122.0" width="70.0" height="230.0" rx="0" fill="none" stroke="#8C95A6" stroke-width="2" stroke-dasharray="7 5"/>
+<rect x="725.0" y="198.7" width="70.0" height="153.3" rx="0" fill="#C5CAD3" stroke="#1d2433" stroke-width="1.5"/>
+<rect x="725.0" y="122.0" width="70.0" height="76.7" rx="0" fill="url(#sx)" stroke="#1d2433" stroke-width="1.5"/>
+<text x="760.0" y="112.0" font-size="24" text-anchor="middle" font-weight="bold" fill="#1d2433" stroke="#FFFFFF" stroke-width="7" stroke-linejoin="round" paint-order="stroke"><tspan>1</tspan></text>
+<rect x="480.0" y="450.0" width="340.0" height="132.0" rx="10" fill="#F1EAF9" stroke="#6B3FA0" stroke-width="3"/>
+<text x="650.0" y="496.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan font-size="32">⅔</tspan><tspan> · 0,511 + </tspan><tspan font-size="32">⅓</tspan><tspan> · 0,0566</tspan></text>
+<text x="650.0" y="556.0" font-size="28" text-anchor="middle" font-weight="bold" fill="#6B3FA0"><tspan font-style="italic">D̂</tspan><tspan> ≈ 0,36</tspan></text>
+</svg>

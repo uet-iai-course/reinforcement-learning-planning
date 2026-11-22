@@ -38,3 +38,9 @@ Hình trong đề xuất (dựng lại thành SVG, không dùng ảnh raster):
 14. Ba trực giác: hàm thay thế (dự báo cục bộ), miền tin cậy (giới hạn thay đổi), gradient tự nhiên (hướng theo hình học KL).
 
 Điều phối viên đã kiểm các số mới: KL $0{,}0204$, $0{,}5108$; $\Delta p$ $0{,}2311$, $0{,}0042$; tỉ trọng $8/38=21\%$, $30/38=79\%$; bảng độ dài bước tại $t=0{,}5$.
+
+## Nhận xét website TRPO (#6, 2026-11-22)
+
+| # | Trang | Góp ý (nguyên văn) | Xử lý |
+|---|---|---|---|
+| 6 | mạch 4, bìa, `1-06`, `6-11`, `6-18` | "Tham khảo các nhận xét này" (tệp `Nhan_xet_website_TRPO_sau_chinh_sua.docx`, văn bản ở `nhan-xet-website-trpo-2026-11-21.md`) | Tác giả chọn (2026-11-22): (1) chứng minh dài chuyển sang mạch "Phụ lục" cuối deck; (2) bìa: "Kiểm soát mức đổi chính sách để giảm nguy cơ suy giảm khi dùng lại lượt đã thu." (18 âm tiết); (3) nâng trần ghi chú lên 33 000 từ (GC-RL-19) để thêm đoạn ba tầng và đoạn hai cách lấy trung bình KL. Năm đề xuất: (1) chuẩn hóa phát biểu bảo đảm cải thiện (bìa, câu hỏi 2 ở `1-06`, `6-11`, `6-18`); (2) sơ đồ tổng thể TRPO ngay sau bài toán miền tin cậy; (3) chứng minh sang phụ lục; (4) câu hỏi nhanh "vì sao gradient tự nhiên cho $J$ thấp hơn" với bảng ba tầng: xấp xỉ tuyến tính $g^\top\Delta$ $0{,}460$ (gradient tự nhiên) so với $0{,}422$ (theo $g$), hàm thay thế $\Delta\mathcal L$ $0{,}357$ so với $0{,}361$, $J$ $1{,}807$ so với $1{,}835$; (5) hai cách lấy trung bình KL: $\bar D_{\mathrm{KL}}=\sum_s\nu^\pi(s)D_{\mathrm{KL}}(s)=0{,}0536$ (tổng trọng số $0{,}145$) và trung bình trên bộ đệm với tần suất mẫu $(\tfrac23;\tfrac13)$: $\widehat D=0{,}359$; $\nu^\pi$ chuẩn hóa $(0{,}690;0{,}310)$ cho $0{,}370$. Điều phối viên đã tính các số. |

@@ -17,10 +17,10 @@
 <section data-slide-id="L10-1-01">
 <h3>Học tăng cường · Bài 10</h3>
 <h1>TRPO và PPO</h1>
-<p><strong>Dùng lại lượt đã thu cho những bước cập nhật chính sách lớn mà hàm mục tiêu không giảm.</strong></p>
+<p><strong>Kiểm soát mức đổi chính sách để giảm nguy cơ suy giảm khi dùng lại lượt đã thu.</strong></p>
 <p>Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội</p>
 <p>Năm học 2026–2027, học kỳ 1</p>
-<aside class="notes"><p>Bài gồm hai phần. Mạch 2 và 3 giảm phương sai của ước lượng gradient chính sách; đó là điều kiện để một bước cập nhật dựa trên ước lượng có nghĩa. Mạch 4 và 5 giới hạn bước cập nhật để hàm mục tiêu không giảm. Tên đầy đủ: tối ưu chính sách miền tin cậy (Trust Region Policy Optimization, TRPO) và tối ưu chính sách gần kề (Proximal Policy Optimization, PPO).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §1.1 (đoạn mở).</p></aside>
+<aside class="notes"><p>Bài gồm hai phần. Mạch 2 và 3 giảm phương sai của ước lượng gradient chính sách; đó là điều kiện để một bước cập nhật dựa trên ước lượng có nghĩa. Mạch 4 và 5 giới hạn mức đổi chính sách ở mỗi bước cập nhật để hạn chế nguy cơ $J$ giảm khi dùng lại lượt đã thu. Tên đầy đủ: tối ưu chính sách miền tin cậy (Trust Region Policy Optimization, TRPO) và tối ưu chính sách gần kề (Proximal Policy Optimization, PPO).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §1.1 (đoạn mở).</p></aside>
 </section>
 
 <section data-slide-id="L10-1-02" class="compact">
@@ -158,7 +158,7 @@ $$\begin{aligned}\frac{\partial J}{\partial\theta_A}&=(2{,}7p_B-1)\,p_A(1-p_A)=0
 <div class="check"><strong>Câu hỏi:</strong>
 <ol>
 <li>Làm thế nào để ước lượng gradient chính sách có phương sai nhỏ mà kỳ vọng không đổi?</li>
-<li>Làm thế nào để dùng lượt của chính sách cũ cho bước cập nhật dài mà hàm mục tiêu không giảm?</li>
+<li>Làm thế nào để dùng lượt của chính sách cũ cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm?</li>
 </ol></div>
 <aside class="notes"><p>Câu trả lời theo mạch: mạch 2 (đường cơ sở, lợi thế) và mạch 3 (critic, ước lượng lợi thế tổng quát) trả lời câu 1; mạch 4 (hàm thay thế, miền tin cậy, TRPO) và mạch 5 (PPO) trả lời câu 2. Câu 1 đến từ bảng ba ước lượng REINFORCE; câu 2 đến từ hai bước dài trên chuỗi, theo lượt $s_A\xrightarrow1s_B\xrightarrow1$ và lượt $s_A\xrightarrow2$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §1.1 (đoạn "bài toán trung tâm").</p></aside>
 </section>
@@ -170,7 +170,7 @@ $$\begin{aligned}\frac{\partial J}{\partial\theta_A}&=(2{,}7p_B-1)\,p_A(1-p_A)=0
 <li>Giảm phương sai của ước lượng gradient chính sách mà giữ nguyên kỳ vọng.</li>
 <li>Ước lượng mức độ hành động đã chọn tốt hơn hay kém hơn mức kỳ vọng khi hàm giá trị phải học từ dữ liệu, và tính độ chệch, phương sai của ước lượng đó.</li>
 <li>Đánh giá chính sách mới từ lượt của chính sách cũ và chặn sai số của phép đánh giá.</li>
-<li>Thực hiện nhiều bước cập nhật trên cùng một bộ đệm mà vẫn giữ chính sách mới gần chính sách cũ.</li>
+<li>Thực hiện nhiều bước cập nhật trên cùng một bộ đệm (buffer) mà vẫn giữ chính sách mới gần chính sách cũ.</li>
 </ol>
 <aside class="notes"><p>Mỗi dòng ứng với một mạch nội dung, từ mạch 2 tới mạch 5. Danh sách đầy đủ ở đầu ghi chú gồm cả các chứng minh và các phép tính trên chuỗi hai trạng thái. Mục tiêu 2 dùng hiệu giữa lợi tức và giá trị của trạng thái, đại lượng mạch 2 đặt tên là lợi thế.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Mục tiêu học tập 1–7.</p></aside>
 </section>
@@ -179,6 +179,7 @@ $$\begin{aligned}\frac{\partial J}{\partial\theta_A}&=(2{,}7p_B-1)\,p_A(1-p_A)=0
 <h2>Nội dung</h2>
 <div class="grid2 fig-left">
 <img width="760" src="img/lec-10/so-do-neo-m1.svg" alt="Vòng cập nhật chính sách của REINFORCE: thu lượt bằng chính sách cũ; hệ số của mỗi bước G_t, dấu hỏi đỏ ghi phương sai lớn; khối nét đứt chưa có; cập nhật một bước gradient, dấu hỏi đỏ ghi bước dài làm J giảm; chính sách mới thành chính sách cũ. Thẻ cạnh khối: mạch 2 (Đường cơ sở và hàm lợi thế) và mạch 3 (Ước lượng lợi thế: độ chệch và phương sai) sửa khối hệ số và lấp khối nét đứt; mạch 4 (Hàm thay thế và miền tin cậy) và mạch 5 (Tối ưu chính sách gần kề) sửa khối cập nhật."/>
+<div>
 <ol>
 <li><a href="#/1">Giới hạn của REINFORCE</a></li>
 <li><a href="#/2">Đường cơ sở và hàm lợi thế</a></li>
@@ -187,8 +188,10 @@ $$\begin{aligned}\frac{\partial J}{\partial\theta_A}&=(2{,}7p_B-1)\,p_A(1-p_A)=0
 <li><a href="#/5">Tối ưu chính sách gần kề (Proximal Policy Optimization, PPO)</a></li>
 <li><a href="#/6">Tổng kết</a></li>
 </ol>
+<p><a href="#/7">Phụ lục: cơ sở lý thuyết của miền tin cậy</a></p>
 </div>
-<aside class="notes"><p>Đọc vòng: thu lượt bằng chính sách cũ, tính hệ số của mỗi bước, cập nhật, rồi chính sách mới thành chính sách cũ. Hai dấu hỏi đỏ là hai câu hỏi trung tâm. Mạch 2 và 3 sửa khối hệ số và lấp khối nét đứt; mạch 4 và 5 sửa khối cập nhật. Đầu mỗi mạch hình này hiện lại, với khối của mạch được tô màu.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §1.1 (hình vấn đề trung tâm, sắp lại thành vòng).</p></aside>
+</div>
+<aside class="notes"><p>Đọc vòng: thu lượt bằng chính sách cũ, tính hệ số của mỗi bước, cập nhật, rồi chính sách mới thành chính sách cũ. Hai dấu hỏi đỏ là hai câu hỏi trung tâm. Mạch 2 và 3 sửa khối hệ số và lấp khối nét đứt; mạch 4 và 5 sửa khối cập nhật. Đầu mỗi mạch hình này hiện lại, với khối của mạch được tô màu. Phụ lục cuối bài chứa các chứng minh của mạch 4; nó không thuộc thời lượng trên lớp.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §1.1 (hình vấn đề trung tâm, sắp lại thành vòng).</p></aside>
 </section>
 </section>
 
@@ -539,7 +542,7 @@ $$\mathbb E\Bigl[\sum_t\gamma^t\,\widehat A_t\,\psi_t\Bigr]=\nabla_\theta J(\the
 <p class="strand-lead">Chính sách mới được đánh giá từ dữ liệu của chính sách cũ với sai số nhỏ khi hai chính sách gần nhau.</p>
 </div>
 <img width="650" src="img/lec-10/so-do-neo-m4-vao.svg" alt="Vòng cập nhật chính sách thu nhỏ: khối dưới, cập nhật actor: một bước gradient, tô tím, viền đậm, có dấu hỏi; các khối khác mờ: thu lượt bằng chính sách cũ; cập nhật critic: v mũ, khối liền; ước lượng lợi thế: A mũ t (GAE)."/>
-<aside class="notes"><p>Mạch 2 và 3 cho hệ số ít phương sai, nhưng mọi ước lượng cần lượt của chính sách đang cập nhật, nên mỗi lượt chỉ cho một bước nhỏ. Mạch 4 đánh giá chính sách mới bằng lượt của chính sách cũ, giới hạn khoảng cách giữa hai chính sách bằng KL, rồi tìm bước tốt nhất trong giới hạn đó. Đầu ra là bài toán miền tin cậy, cơ sở lý thuyết của nó và thuật toán TRPO.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4 (đoạn mở).</p></aside>
+<aside class="notes"><p>Mạch 2 và 3 cho hệ số ít phương sai, nhưng mọi ước lượng cần lượt của chính sách đang cập nhật, nên mỗi lượt chỉ cho một bước nhỏ. Mạch 4 đánh giá chính sách mới bằng lượt của chính sách cũ, giới hạn khoảng cách giữa hai chính sách bằng KL, rồi tìm bước tốt nhất trong giới hạn đó. Đầu ra là bài toán miền tin cậy, lý do của ràng buộc KL và thuật toán TRPO.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4 (đoạn mở).</p></aside>
 </section>
 
 <section data-slide-id="L10-4-01" class="compact">
@@ -554,7 +557,7 @@ $$\mathbb E\Bigl[\sum_t\gamma^t\,\widehat A_t\,\psi_t\Bigr]=\nabla_\theta J(\the
 </div>
 <img class="fragment" data-fragment-index="1" width="560" src="img/lec-10/ham-thay-the-tiep-xuc-chi-J.svg" alt="Giá trị J dọc đoạn thẳng từ pi, t = 0, tới pi ngã = (0,9; 0,5), t = 1; trục tung J từ 1,3 tới 1,5; một đường cong xanh nét liền: J = 1,4 tại t = 0, 1,4125 gần đỉnh, 1,4025 tại t = 0,5, trở về 1,4 tại t ≈ 0,53 và 1,315 tại t = 1."/>
 </div>
-<aside class="notes"><p>Mạch 2 và 3 cho hướng cập nhật ít phương sai, nhưng mỗi lượt chỉ cho một bước. Câu hỏi: đã thu $10\,000$ bước tương tác, dùng bộ dữ liệu này thế nào để có một bước cập nhật dài mà $J$ không giảm? Lời giải: đánh giá chính sách ứng viên bằng chính bộ dữ liệu đó, trước khi thu lượt của nó. $\tilde\pi$ được chọn để sai số của phép đánh giá hiện rõ; nó không nằm trên hướng gradient $(0{,}2;\,0{,}3)$, vì $p_B$ giảm. $\sigma(\log9)=\tfrac9{10}$, $\sigma(0)=\tfrac12$. Khai triển: $2{,}7(\tfrac12+0{,}4t)(\tfrac23-\tfrac t6)=0{,}9+0{,}495t-0{,}18t^2$, cộng $\tfrac12-0{,}4t$. Đọc hình: $J$ lên $1{,}4125$ tại $t=0{,}25$, gần đỉnh $t\approx0{,}26$, còn $1{,}4025$ tại $t=0{,}5$, về $1{,}4$ tại $t=\tfrac{19}{36}\approx0{,}53$. Công thức $J=2{,}7p_Ap_B+1-p_A$ dùng phần thưởng và xác suất chuyển của chuỗi; khi không có mô hình, $J(\pi_t)$ chỉ ước lượng được từ lượt của $\pi_t$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4 (đoạn mở, "Câu hỏi."); §4.1 (Ví dụ 10.11, "Giá trị thật"); §4.3 (Ví dụ 10.12, "Đoạn thẳng", "Diễn giải", "Kiểm tra lại").</p></aside>
+<aside class="notes"><p>Mạch 2 và 3 cho hướng cập nhật ít phương sai, nhưng mỗi lượt chỉ cho một bước. Câu hỏi: đã thu $10\,000$ bước tương tác, dùng bộ dữ liệu này thế nào để có một bước cập nhật dài mà vẫn kiểm soát nguy cơ $J$ giảm? Lời giải: đánh giá chính sách ứng viên bằng chính bộ dữ liệu đó, trước khi thu lượt của nó. $\tilde\pi$ được chọn để sai số của phép đánh giá hiện rõ; nó không nằm trên hướng gradient $(0{,}2;\,0{,}3)$, vì $p_B$ giảm. $\sigma(\log9)=\tfrac9{10}$, $\sigma(0)=\tfrac12$. Khai triển: $2{,}7(\tfrac12+0{,}4t)(\tfrac23-\tfrac t6)=0{,}9+0{,}495t-0{,}18t^2$, cộng $\tfrac12-0{,}4t$. Đọc hình: $J$ lên $1{,}4125$ tại $t=0{,}25$, gần đỉnh $t\approx0{,}26$, còn $1{,}4025$ tại $t=0{,}5$, về $1{,}4$ tại $t=\tfrac{19}{36}\approx0{,}53$. Công thức $J=2{,}7p_Ap_B+1-p_A$ dùng phần thưởng và xác suất chuyển của chuỗi; khi không có mô hình, $J(\pi_t)$ chỉ ước lượng được từ lượt của $\pi_t$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4 (đoạn mở, "Câu hỏi."); §4.1 (Ví dụ 10.11, "Giá trị thật"); §4.3 (Ví dụ 10.12, "Đoạn thẳng", "Diễn giải", "Kiểm tra lại").</p></aside>
 </section>
 
 <section data-slide-id="L10-4-27" class="compact">
@@ -598,7 +601,7 @@ $$J(\pi')-J(\pi)=\sum_s\eta_{\pi'}(s)\sum_a\pi'(a\mid s)\,A_\pi(s,a).$$
 <img class="fragment" data-fragment-index="2" width="900" src="img/lec-10/ba-thanh-phan.svg" alt="Khối eta pi phẩy tô tím, viền tím đậm, nhãn dưới: chưa có lượt của pi phẩy."/>
 </div>
 <p class="fragment" data-fragment-index="2"><strong>Ý nghĩa:</strong> trong ba thừa số, chỉ $\eta_{\pi'}$ cần lượt của $\pi'$.</p>
-<aside class="notes"><p>Mức thay đổi của $J$ là lợi thế của $\pi$ cộng theo số lần thăm có chiết khấu của chính sách mới. Mỗi lần thăm ở bước $t$ được tính với trọng số $\gamma^t$. Ghi chú viết bổ đề theo phân bố chiếm dụng $\nu=(1-\gamma)\eta$ với thừa số $\tfrac1{1-\gamma}$. Lợi thế $A_\pi$ ước lượng được từ lượt cũ như ở mạch 2 và 3, còn $\pi'(\cdot\mid s)$ là của ứng viên. Khi không có mô hình, chỉ $\eta_{\pi'}$ cần lượt của chính sách mới. Ba khối của hình đứng theo thứ tự ba thừa số của công thức.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.1 (đoạn cộng theo bước thời gian; Định nghĩa 10.18; Bổ đề 10.19 và đoạn sau, dạng $\eta$; đoạn cuối §4.1).</p></aside>
+<aside class="notes"><p>Mức thay đổi của $J$ là lợi thế của $\pi$ cộng theo số lần thăm có chiết khấu của chính sách mới. Mỗi lần thăm ở bước $t$ được tính với trọng số $\gamma^t$. Ghi chú viết bổ đề theo phân bố chiếm dụng $\nu=(1-\gamma)\eta$ với thừa số $\tfrac1{1-\gamma}$. Lợi thế $A_\pi$ ước lượng được từ lượt cũ như ở mạch 2 và 3, còn $\pi'(\cdot\mid s)$ là của ứng viên. Khi không có mô hình, chỉ $\eta_{\pi'}$ cần lượt của chính sách mới. Ba khối của hình đứng theo thứ tự ba thừa số của công thức. Ý tưởng chứng minh ở phụ lục cuối bài.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.1 (đoạn cộng theo bước thời gian; Định nghĩa 10.18; Bổ đề 10.19 và đoạn sau, dạng $\eta$; đoạn cuối §4.1).</p></aside>
 </section>
 
 <section data-slide-id="L10-4-03" class="compact">
@@ -731,10 +734,10 @@ $$\mathcal L_\pi(\pi_\theta)=J(\theta),\qquad\nabla_{\theta'}\mathcal L_\pi(\pi_
 <p>Khác biệt giữa hai phân phối đo bằng xác suất phải dời, hoặc kỳ vọng của log-tỉ số.</p>
 <p><strong>Định nghĩa.</strong> Với hai phân phối $q$, $q'$ trên tập hành động, khoảng cách biến phân toàn phần (total variation distance, TV) và phân kỳ Kullback–Leibler (KL divergence) là</p>
 $$D_{\mathrm{TV}}(q,q')=\tfrac12\sum_a\lvert q(a)-q'(a)\rvert,\qquad D_{\mathrm{KL}}(q\Vert q')=\sum_aq(a)\log\frac{q(a)}{q'(a)}.$$
-<p class="fragment" data-fragment-index="2">Tại $s_A$, so với $\pi$ (KL chiều cũ‖mới, như TRPO): $\tilde\pi$ cho $D_{\mathrm{TV}}=\tfrac12(0{,}4+0{,}4)=0{,}4$ và $D_{\mathrm{KL}}=\tfrac12\log\tfrac{0{,}5}{0{,}9}+\tfrac12\log\tfrac{0{,}5}{0{,}1}=\log\tfrac53\approx0{,}511$.</p>
+<p class="fragment" data-fragment-index="2">Tại $s_A$, so với $\pi$ (chiều cũ‖mới): $\tilde\pi$ cho $D_{\mathrm{TV}}=\tfrac12(0{,}4+0{,}4)=0{,}4$ và $D_{\mathrm{KL}}=\tfrac12\log\tfrac{0{,}5}{0{,}9}+\tfrac12\log\tfrac{0{,}5}{0{,}1}=\log\tfrac53\approx0{,}511$.</p>
 <div class="grid2 fig-right">
 <div>
-<p class="box fragment" data-fragment-index="3">Từ $t=0{,}25$ tới $\tilde\pi$, TV tăng $4$ lần, KL tăng khoảng $25$ lần. KL trơn theo $\theta$, TV không khả vi tại $\pi'=\pi$, nên TRPO ràng buộc KL, và KL nhỏ kéo theo TV nhỏ (bất đẳng thức Pinsker).</p>
+<p class="box fragment" data-fragment-index="3">Từ $t=0{,}25$ tới $\tilde\pi$, TV tăng $4$ lần, KL khoảng $25$ lần. KL trơn theo $\theta$, TV không khả vi tại $\pi'=\pi$, nên ràng buộc đặt trên KL, và KL nhỏ kéo theo TV nhỏ (bất đẳng thức Pinsker).</p>
 </div>
 <div class="r-stack">
 <img width="510" src="img/lec-10/kl-ba-bernoulli-buoc0.svg" alt="Tiêu đề: phân phối hành động tại s A; chú giải: hành động 1 xanh dương, hành động 2 xám. Mỗi hàng một thanh xếp chồng 100 phần trăm, cột phải ghi TV và KL so với pi. Hàng pi: 50 phần trăm và 50 phần trăm; TV 0, KL 0."/>
@@ -753,7 +756,7 @@ $$D_{\mathrm{TV}}(q,q')=\tfrac12\sum_a\lvert q(a)-q'(a)\rvert,\qquad D_{\mathrm{
 <div class="fragment" data-fragment-index="1">$$\max_\theta\ \mathbb E_{S\sim\nu^\pi,\,A\sim\pi(\cdot\mid S)}\bigl[\rho_\theta(S,A)\,A_\pi(S,A)\bigr]$$</div>
 <p class="fragment" data-fragment-index="1">với ràng buộc $\bar D_{\mathrm{KL}}(\pi\Vert\pi_\theta)\le\kappa$, trong đó $\rho_\theta=\pi_\theta/\pi$.</p>
 <p class="box fragment" data-fragment-index="2"><strong>Ý nghĩa:</strong> hàm mục tiêu bằng $(1-\gamma)\Delta\mathcal L$, nên bài toán chọn phân phối hành động có dự báo tốt nhất. Ràng buộc giữ chính sách mới gần chính sách cũ.</p>
-<aside class="notes"><p>KL trung bình là kỳ vọng theo $\nu^\pi$, không phải trung bình trên các mẫu của bộ đệm. Khối của $\nu^\pi$ là $0{,}145\lt1$ vì lượt kết thúc, nên KL trung bình nhỏ hơn KL tại từng trạng thái. So với kỳ vọng theo phân bố chuẩn hóa $\nu^\pi/0{,}145$, một bán kính $\kappa=0{,}01$ ứng với khoảng $0{,}07$. Dạng (14) của Schulman và cộng sự (2015) bỏ thừa số $1/(1-\gamma)$ và thay $A$ bằng $Q$, có cùng nghiệm khi bán kính được quy đổi theo khối $\nu^\pi(\mathcal S)$. $\kappa$ là siêu tham số. Bài toán không tự bảo đảm $J$ tăng.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.1 (Định nghĩa 10.18); §4.4 (Định nghĩa 10.23); §4.5 (Định nghĩa 10.24 và đoạn sau).</p></aside>
+<aside class="notes"><p>KL trung bình là kỳ vọng theo $\nu^\pi$, không phải trung bình trên các mẫu của bộ đệm. Khối của $\nu^\pi$ là $0{,}145\lt1$ vì lượt kết thúc, nên KL trung bình nhỏ hơn KL tại từng trạng thái. Dạng (14) của Schulman và cộng sự (2015) bỏ thừa số $1/(1-\gamma)$ và thay $A$ bằng $Q$, có cùng nghiệm khi bán kính được quy đổi theo khối $\nu^\pi(\mathcal S)$. $\kappa$ là siêu tham số. Bài toán không tự bảo đảm $J$ tăng.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.1 (Định nghĩa 10.18); §4.4 (Định nghĩa 10.23); §4.5 (Định nghĩa 10.24 và đoạn sau).</p></aside>
 </section>
 
 <section data-slide-id="L10-4-32" class="compact">
@@ -776,98 +779,35 @@ $$D_{\mathrm{TV}}(q,q')=\tfrac12\sum_a\lvert q(a)-q'(a)\rvert,\qquad D_{\mathrm{
 <h2>Giới hạn KL kiểm soát sai số qua ba mắt xích</h2>
 <p class="check"><strong>Câu hỏi:</strong> vì sao giữ KL trung bình nhỏ thì sai số $\lvert\Delta J-\Delta\mathcal L\rvert$ nhỏ?</p>
 <div class="r-stack">
-<img width="1000" src="img/lec-10/chuoi-bon-mat-xich-buoc0.svg" alt="Khối 1, viền tím: KL trung bình không vượt kappa."/>
-<img class="fragment" data-fragment-index="1" width="1000" src="img/lec-10/chuoi-bon-mat-xich-buoc1.svg" alt="Thêm mũi tên ghi Pinsker và Jensen tới khối 2: TV kỳ vọng theo nu pi nhỏ."/>
-<img class="fragment" data-fragment-index="2" width="1000" src="img/lec-10/chuoi-bon-mat-xich-buoc2.svg" alt="Thêm mũi tên ghi bổ đề dịch chuyển tới khối 3: phân bố chiếm dụng ít thay đổi."/>
-<img class="fragment" data-fragment-index="3" width="1000" src="img/lec-10/chuoi-bon-mat-xich.svg" alt="Thêm mũi tên ghi định lý chặn cải thiện tới khối 4: sai số, trị tuyệt đối của Delta J − Delta L, nhỏ."/>
+<img width="900" src="img/lec-10/chuoi-bon-mat-xich-buoc0.svg" alt="Khối 1, viền tím: KL trung bình không vượt kappa."/>
+<img class="fragment" data-fragment-index="1" width="900" src="img/lec-10/chuoi-bon-mat-xich-buoc1.svg" alt="Thêm mũi tên ghi Pinsker và Jensen tới khối 2: TV kỳ vọng theo nu pi nhỏ."/>
+<img class="fragment" data-fragment-index="2" width="900" src="img/lec-10/chuoi-bon-mat-xich-buoc2.svg" alt="Thêm mũi tên ghi bổ đề dịch chuyển tới khối 3: phân bố chiếm dụng ít thay đổi."/>
+<img class="fragment" data-fragment-index="3" width="900" src="img/lec-10/chuoi-bon-mat-xich.svg" alt="Thêm mũi tên ghi đẳng thức sai số tới khối 4: sai số, trị tuyệt đối của Delta J − Delta L, nhỏ."/>
 </div>
 <div class="card fragment" data-fragment-index="4">
-<p><strong>Hệ quả</strong> (chặn cải thiện theo KL trung bình, policy improvement bound; từ định lý chặn cải thiện và Pinsker). <strong>Giả thiết:</strong> giả thiết chung, $A_\pi$, $\nu^\pi$ chính xác, $\chi_{\pi'}=\max_s\lvert A_\pi(s,\pi')\rvert$. <strong>Kết luận:</strong></p>
+<p><strong>Hệ quả</strong> (chặn cải thiện theo KL trung bình, policy improvement bound). <strong>Giả thiết:</strong> giả thiết chung, $A_\pi$, $\nu^\pi$ chính xác, $\chi_{\pi'}=\max_s\lvert A_\pi(s,\pi')\rvert$. <strong>Kết luận:</strong></p>
 $$J(\pi')-J(\pi)\ \ge\ \Delta\mathcal L-\frac{2\gamma\,\chi_{\pi'}}{(1-\gamma)^2}\sqrt{\tfrac12\,\bar D_{\mathrm{KL}}}.$$
 </div>
-<p class="box fragment" data-fragment-index="5"><strong>Ý nghĩa:</strong> số hạng phạt tỉ lệ với $\sqrt{\bar D_{\mathrm{KL}}}$, về $0$ khi $\kappa\to0$. Với $\tilde\pi$, nó là $14{,}7\gt0{,}095$.</p>
-<aside class="notes"><p>KL trung bình nhỏ kéo theo TV kỳ vọng nhỏ, phân bố chiếm dụng ít đổi và sai số nhỏ. Đọc chuỗi: bất đẳng thức Pinsker cho $D_{\mathrm{TV}}(s)\le\sqrt{D_{\mathrm{KL}}(s)/2}$ tại từng trạng thái, rồi Jensen cho $\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]\le\sqrt{\bar D_{\mathrm{KL}}/2}$; bổ đề dịch chuyển chặn $\lVert\nu^{\pi'}-\nu^\pi\rVert_1$ theo TV kỳ vọng; định lý chặn cải thiện chặn $\lvert\Delta J-\Delta\mathcal L\rvert$ theo khoảng cách đó, qua đẳng thức sai số của bảng đóng góp từng trạng thái. Với $\tilde\pi$, $\chi=0{,}5$ và cận không chứng nhận $J$ tăng. Cận chỉ chứng nhận cải thiện khi $\Delta\mathcal L$ lớn hơn số hạng phạt. Hệ quả đúng với cả hai chiều KL; Achiam và cộng sự (2017, Hệ quả 1, 3) phát biểu cận dạng kỳ vọng này. Với $\tilde\pi$, $\tfrac{2\gamma\chi}{(1-\gamma)^2}=\tfrac{2\cdot0{,}9\cdot0{,}5}{0{,}01}=90$, $\sqrt{0{,}0268}\approx0{,}164$ và $90\cdot0{,}164\approx14{,}7$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.5 (đoạn ba mắt xích và cận); §4.6 (Hệ quả 10.28; đoạn sau hệ quả; "Trong thực hành" sau Định lý 10.27).</p></aside>
+<p class="box fragment" data-fragment-index="5"><strong>Ý nghĩa:</strong> số hạng phạt tỉ lệ với $\sqrt{\bar D_{\mathrm{KL}}}$, về $0$ khi $\kappa\to0$. Với $\tilde\pi$, $\chi=0{,}5$: phạt $=90\sqrt{0{,}0536/2}\approx14{,}7\gt0{,}095$, nên cận không chứng nhận $J$ tăng.</p>
+<aside class="notes"><p>KL trung bình nhỏ kéo theo TV kỳ vọng nhỏ, phân bố chiếm dụng ít đổi và sai số nhỏ. Hệ quả suy từ định lý chặn cải thiện và Pinsker. Đọc chuỗi: bất đẳng thức Pinsker cho $D_{\mathrm{TV}}(s)\le\sqrt{D_{\mathrm{KL}}(s)/2}$ tại từng trạng thái, rồi Jensen cho $\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]\le\sqrt{\bar D_{\mathrm{KL}}/2}$; bổ đề dịch chuyển chặn $\lVert\nu^{\pi'}-\nu^\pi\rVert_1$ theo TV kỳ vọng; định lý chặn cải thiện chặn $\lvert\Delta J-\Delta\mathcal L\rvert$ theo khoảng cách đó. Cận chỉ chứng nhận cải thiện khi $\Delta\mathcal L$ lớn hơn số hạng phạt. Với $\tilde\pi$, $\tfrac{2\gamma\chi}{(1-\gamma)^2}=\tfrac{2\cdot0{,}9\cdot0{,}5}{0{,}01}=90$, $\sqrt{0{,}0268}\approx0{,}164$ và $90\cdot0{,}164\approx14{,}7$. Với bước chỉ đổi $p_B$ thêm $d$, cận dạng KL dương khi $d\lt0{,}011$, cận dạng TV của định lý khi $d\lt0{,}056$. Chứng minh hệ quả, ba mắt xích, ví dụ cận trên chuỗi và hệ quả cải thiện đơn điệu ở phụ lục cuối bài.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.5 (đoạn ba mắt xích và cận); §4.6 (Hệ quả 10.28; đoạn sau hệ quả; "Trong thực hành" sau Định lý 10.27).</p></aside>
 </section>
 
-<section data-slide-id="L10-4-14" class="compact">
-<h2>Cơ sở lý thuyết: ý tưởng chứng minh bổ đề</h2>
-<p><strong>Nhắc lại:</strong> bổ đề chênh lệch hiệu năng, $J(\pi')-J(\pi)=\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$.</p>
-<p class="fragment" data-fragment-index="1"><strong>Bước 1</strong> (một bước): $A_\pi(s,a)=r(s,a)+\gamma\sum_{s'}P(s'\mid s,a)v_\pi(s')-v_\pi(s)$.</p>
-<p class="fragment" data-fragment-index="2"><strong>Bước 2</strong> (tính chất tháp trên quỹ đạo của $\pi'$): $\mathbb E_{\pi'}\bigl[A_\pi(S_t,A_t)\bigr]=\mathbb E_{\pi'}[\delta_t]$, $\delta_t=R_{t+1}+\gamma v_\pi(S_{t+1})-v_\pi(S_t)$.</p>
-<p class="fragment" data-fragment-index="3"><strong>Bước 3</strong> (tổng lồng nhau tới $K$): $\sum_{t\lt K}\gamma^t\delta_t=\sum_{t\lt K}\gamma^tR_{t+1}+\gamma^Kv_\pi(S_K)-v_\pi(S_0)$.</p>
-<p class="fragment" data-fragment-index="4"><strong>Bước 4</strong> (qua giới hạn): $K\to\infty$, cùng $\mu_0$ cho $J(\pi')-J(\pi)$. <strong>Bước 5</strong> (dạng chiếm dụng): gom theo trạng thái được $\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$. $\square$</p>
-<div class="grid2">
-<p class="check fragment" data-fragment-index="5"><strong>Câu hỏi:</strong> vì sao ở Bước 2 kỳ vọng dưới $\pi'$ của $R_{t+1}+\gamma v_\pi(S_{t+1})$ bằng $q_\pi(S_t,A_t)$?</p>
-<p class="box fragment" data-fragment-index="6"><strong>Lời giải:</strong> khi biết $(S_t,A_t)$, bước chuyển chỉ phụ thuộc $P$, chung cho cả hai.</p>
+<section data-slide-id="L10-4-33" class="compact">
+<h2>Sơ đồ tổng thể của TRPO</h2>
+<p>Bài toán miền tin cậy thay phạt bằng ràng buộc $\bar D_{\mathrm{KL}}\le\kappa$, và ràng buộc không tự bảo đảm $J$ tăng.</p>
+<p class="box">Tối ưu chính sách miền tin cậy (trust region policy optimization, TRPO) dự báo mức cải thiện từ lượt của chính sách cũ, giới hạn mức đổi bằng KL trung bình, rồi tìm bước tốt nhất trong giới hạn đó.</p>
+<div class="grid2 fig-left">
+<div class="r-stack">
+<img width="600" src="img/lec-10/so-do-trpo-tong-the-buoc0.svg" alt="Khối trên cùng: lượt thu bằng chính sách cũ. Từ khối này một mũi tên tách thành hai, xuống hai khối cạnh nhau. Khối trái, viền cam nét đứt: hàm thay thế, dự báo mức cải thiện. Khối phải, viền tím: KL trung bình, giới hạn mức đổi chính sách."/>
+<img class="fragment" data-fragment-index="1" width="600" src="img/lec-10/so-do-trpo-tong-the.svg" alt="Thêm: từ hai khối hàm thay thế và KL trung bình, hai mũi tên hội tụ vào khối tối ưu trong miền tin cậy: gradient tự nhiên, tìm kiếm lùi; mũi tên cuối xuống khối chính sách mới."/>
 </div>
-<p class="fragment" data-fragment-index="7"><strong>Lưu ý:</strong> bổ đề cần cùng $\mu_0$: $\tilde\pi$ từ $s_B$, $\pi$ từ $s_A$ cho vế trái $0{,}5\cdot3-1{,}4=0{,}1\ne-0{,}5$.</p>
-<aside class="notes"><p>Lợi thế của $\pi$ cộng dọc lượt của $\pi'$ là một tổng lồng nhau, còn lại đúng hiệu $J$. Ở Bước 1, $r(s,a)=\mathbb E[R_{t+1}\mid S_t=s,A_t=a]$, nên vế phải không chứa $\pi'$. Ở Bước 2, $\delta_t$ là sai số TD với $v_\pi$, quy ước $v_\pi(S_T)=0$. Ở Bước 3, các số hạng $v_\pi$ triệt tiêu theo $t\lt K$. Chính sách chỉ quyết định $A_t$; phần sau đó của bước chuyển do $P$ quyết định, nên lời giải đúng cho mọi chính sách. Bước 2 dùng cùng động lực và tính Markov; Bước 4 dùng cùng $\mu_0$, phần thưởng bị chặn và $\gamma\lt1$ (hội tụ trội); Bước 5 dùng định nghĩa của $\eta_{\pi'}$. Ở dòng cuối, vế trái là $v_{\tilde\pi}(s_B)-v_\pi(s_A)$; vế phải chỉ còn số hạng tại $s_B$ với $\eta_{\tilde\pi}(s_B)=1$, tức $A_\pi(s_B,\tilde\pi)=-0{,}5$. Hai vế khác dấu. Ghi chú dùng phản ví dụ cùng dạng với $\pi'=(0{,}6;\,0{,}8)$: $1$ so với $0{,}4$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.1 (Bổ đề 10.19, chứng minh Bước 1–5; đoạn "Hai giả thiết có vai trò riêng").</p></aside>
-</section>
-
-<section data-slide-id="L10-4-20" class="compact">
-<h2>Cơ sở lý thuyết: bất đẳng thức Pinsker</h2>
-<div class="card">
-<p><strong>Mệnh đề.</strong> <strong>Giả thiết:</strong> $q$, $q'$ là hai phân phối trên tập hữu hạn, logarit tự nhiên. <strong>Kết luận:</strong></p>
-$$D_{\mathrm{TV}}(q,q')\le\sqrt{\tfrac12D_{\mathrm{KL}}(q\Vert q')},$$
-<p>cũng đúng với $D_{\mathrm{KL}}(q'\Vert q)$.</p>
+<ol class="fragment" data-fragment-index="1">
+<li>Xấp xỉ hàm thay thế bậc một và KL trung bình bậc hai quanh chính sách cũ.</li>
+<li>Tìm bước tốt nhất của bài toán xấp xỉ.</li>
+<li>Co bước tới khi hàm thay thế tăng và ràng buộc thỏa trên bộ đệm.</li>
+</ol>
 </div>
-<p class="fragment" data-fragment-index="1"><strong>Ý tưởng chứng minh.</strong> Gộp các phần tử thành hai nhóm $\{q\gt q'\}$ và phần bù, giữ nguyên $D_{\mathrm{TV}}$ và không làm $D_{\mathrm{KL}}$ tăng, rồi chứng minh trên hai điểm.</p>
-<p class="fragment" data-fragment-index="2"><strong>Ý nghĩa:</strong> KL nhỏ kéo theo TV nhỏ. Với $\tilde\pi$, tại $s_A$: $0{,}4\le\sqrt{0{,}511/2}=0{,}505$; tại $s_B$: $D_{\mathrm{TV}}=\tfrac12\bigl(\lvert0{,}5-\tfrac23\rvert+\lvert0{,}5-\tfrac13\rvert\bigr)=\tfrac16\approx0{,}167\le\sqrt{0{,}0566/2}=0{,}168$.</p>
-<aside class="notes"><p>Khoảng cách TV bị chặn bởi căn của nửa KL; trên chuỗi bất đẳng thức gần chặt tại $s_B$. Phép gộp dùng bất đẳng thức xử lý dữ liệu cho KL; trên hai điểm, khảo sát hiệu hai vế như hàm một biến. Chứng minh đầy đủ nằm ngoài phạm vi học phần (Cover và Thomas, 2006, Bổ đề 11.6.1). Không có cận ngược: TV nhỏ không kéo theo KL nhỏ. Với $\pi=(1-\varepsilon;\,\varepsilon)$ và $\pi'=(1;\,0)$, $D_{\mathrm{TV}}=\varepsilon$ còn $D_{\mathrm{KL}}(\pi\Vert\pi')=+\infty$. Hệ quả chặn cải thiện theo KL trung bình dùng bất đẳng thức này tại từng trạng thái, rồi bất đẳng thức Jensen.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (Mệnh đề 10.25(b), chứng minh Bước 3; đoạn sau).</p></aside>
-</section>
-
-<section data-slide-id="L10-4-24" class="compact">
-<h2>Cơ sở lý thuyết: dịch chuyển phân bố chiếm dụng</h2>
-<p>Nếu TV kỳ vọng theo $\nu^\pi$ nhỏ, hai phân bố chiếm dụng gần nhau. Khác biệt ở mỗi bước cộng dồn qua các bước sau.</p>
-<div class="card fragment" data-fragment-index="1">
-<p><strong>Bổ đề</strong> (dịch chuyển phân bố chiếm dụng). <strong>Giả thiết:</strong> giả thiết chung. <strong>Kết luận:</strong> với $D_{\mathrm{TV}}(s)=D_{\mathrm{TV}}(\pi'(\cdot\mid s),\pi(\cdot\mid s))$,</p>
-$$\sum_s\bigl\lvert\nu^{\pi'}(s)-\nu^\pi(s)\bigr\rvert\ \le\ \frac{2\gamma}{1-\gamma}\,\mathbb E_{S\sim\nu^\pi}\bigl[D_{\mathrm{TV}}(S)\bigr].$$
-</div>
-<p class="fragment" data-fragment-index="2"><strong>Chứng minh.</strong> Hiệu hai phân bố bằng $\gamma$ nhân khác biệt một bước của hai ma trận chuyển, lan qua các bước sau với tổng trọng số không quá $\tfrac1{1-\gamma}$. Khác biệt một bước không quá $2\,\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]$.</p>
-<p class="fragment" data-fragment-index="3">Ở đây, với $\tilde\pi$: $\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]=0{,}1\cdot0{,}4+0{,}045\cdot\tfrac16=0{,}0475$. Chỉ $s_B$ đổi: vế trái $(1-\gamma)\lvert\eta_{\tilde\pi}(s_B)-\eta_\pi(s_B)\rvert=0{,}1\cdot\lvert0{,}81-0{,}45\rvert=0{,}036$, vế phải $18\cdot0{,}0475=0{,}855$.</p>
-<aside class="notes"><p>TV kỳ vọng nhỏ nghĩa là phân phối hành động của $\pi'$ gần của $\pi$ ở các trạng thái có $\nu^\pi$ lớn. Khoảng cách giữa hai phân bố chiếm dụng không vượt $\tfrac{2\gamma}{1-\gamma}$ lần TV kỳ vọng; trên chuỗi cận đúng nhưng lỏng. $\tfrac{2\gamma}{1-\gamma}=\tfrac{1{,}8}{0{,}1}=18$. Vế trái là $\sum_s\lvert\nu^{\tilde\pi}(s)-\nu^\pi(s)\rvert=(1-\gamma)\lvert\eta_{\tilde\pi}(s_B)-\eta_\pi(s_B)\rvert$, vì $\nu^{\tilde\pi}(s_A)=\nu^\pi(s_A)=0{,}1$. Câu hỏi: vì sao định lý chặn cải thiện có thừa số $1/(1-\gamma)^2$? Lời giải: một thừa số $\tfrac1{1-\gamma}$ đến từ bổ đề này, vì khác biệt tích lũy qua các bước sau; thừa số thứ hai xuất hiện khi đổi $\nu$ về $\eta$ trong định lý. Chứng minh trong ghi chú dùng dạng ma trận $(I-\gamma P_\pi)^{-1}$; trạng thái kết thúc chỉ làm các tổng nhỏ đi. Ghi chú kiểm bổ đề với $\pi'=(0{,}6;\,0{,}8)$: $0{,}009$ so với $0{,}288$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (đoạn trực quan trước Bổ đề 10.26; Bổ đề 10.26, chứng minh Bước 1–6; đoạn sau chứng minh); §4.1 (Định nghĩa 10.18).</p></aside>
-</section>
-
-<section data-slide-id="L10-4-06" class="compact">
-<h2>Cơ sở lý thuyết: định lý chặn cải thiện</h2>
-<div class="card">
-<p><strong>Định lý</strong> (chặn cải thiện). <strong>Giả thiết:</strong> giả thiết chung; $A_\pi$ và $\nu^\pi$ tính chính xác. <strong>Kết luận:</strong></p>
-$$J(\pi')-J(\pi)\ \ge\ \Delta\mathcal L-\frac{2\gamma\,\chi_{\pi'}}{(1-\gamma)^2}\,\mathbb E_{S\sim\nu^\pi}\bigl[D_{\mathrm{TV}}(S)\bigr].$$
-</div>
-<p class="fragment" data-fragment-index="1"><strong>Chứng minh.</strong> Bước 1–3: bổ đề chênh lệch hiệu năng và hàm thay thế cho $\Delta J-\Delta\mathcal L=\sum_s(\eta_{\pi'}-\eta_\pi)(s)A_\pi(s,\pi')$. Bước 4: bất đẳng thức Hölder chặn tổng này dưới bởi $-\chi_{\pi'}\sum_s\lvert\eta_{\pi'}(s)-\eta_\pi(s)\rvert$. Bước 5: bổ đề dịch chuyển, với $\eta=\nu/(1-\gamma)$.</p>
-<p class="fragment" data-fragment-index="2"><strong>Ý nghĩa:</strong> phạt tỉ lệ với TV kỳ vọng theo phân bố của chính sách cũ. Với $\tilde\pi$, $\chi=0{,}5$ và $\tfrac{2\gamma\chi}{(1-\gamma)^2}=\tfrac{2\cdot0{,}9\cdot0{,}5}{0{,}01}=90$.</p>
-<p class="fragment" data-fragment-index="3"><strong>Chứng minh</strong> (hệ quả chặn cải thiện theo KL trung bình). Bất đẳng thức Pinsker tại từng trạng thái, rồi bất đẳng thức Jensen cho hàm lõm $\sqrt{\cdot}$ với $\sum_s\nu^\pi(s)\le1$, cho $\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]\le\sqrt{\tfrac12\bar D_{\mathrm{KL}}}$. Thế vào định lý.</p>
-<aside class="notes"><p>Mức tăng thật không nhỏ hơn dự báo trừ một phạt tỉ lệ với TV kỳ vọng giữa hai chính sách; Pinsker và Jensen đổi phạt đó sang KL trung bình. Cận vẫn đúng khi thay $\chi_{\pi'}$ bằng $\max_{s,a}\lvert A_\pi(s,a)\rvert$. Định lý không cần điều kiện hỗ trợ, vì Bước 3 dùng dạng tổng của hàm thay thế. Bỏ $\gamma\lt1$ thì thừa số vô hạn; bỏ "đại lượng chính xác" thì cận không còn chứng nhận cải thiện. Nhận xét 10.29 nêu cận theo TV lớn nhất của Schulman và cộng sự (2015), lỏng hơn trên chuỗi. Dòng chứng minh cuối là Bước 1–3 của chứng minh Hệ quả 10.28.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (Định lý 10.27, chứng minh Bước 1–5; đoạn sau định lý; Hệ quả 10.28, chứng minh Bước 1–3; Nhận xét 10.29).</p></aside>
-</section>
-
-<section data-slide-id="L10-4-19" class="compact">
-<h2>Cơ sở lý thuyết: chặn cải thiện đúng nhưng lỏng</h2>
-<p><strong>Nhắc lại:</strong> $\nu^\pi=(0{,}1;\,0{,}045)$, $D_{\mathrm{TV}}(s)=\tfrac12\sum_a|\pi'(a\mid s)-\pi(a\mid s)|$, $\chi_{\pi'}=\max_s|A_\pi(s,\pi')|$.</p>
-<table class="calc">
-<thead><tr><th></th><th>Bước tới $\tilde\pi$</th><th><span class="fragment" data-fragment-index="1">Bước chỉ đổi $p_B$ thêm $\Delta p_B\gt0$</span></th></tr></thead>
-<tbody>
-<tr><td>$\Delta\mathcal L$</td><td>$0{,}095$</td><td><span class="fragment" data-fragment-index="1">$0{,}45\cdot3\Delta p_B=1{,}35\Delta p_B$</span></td></tr>
-<tr><td>$D_{\mathrm{TV}}(s_A)$; $D_{\mathrm{TV}}(s_B)$</td><td>$0{,}4$; $\tfrac16$</td><td><span class="fragment" data-fragment-index="1">$0$; $\Delta p_B$</span></td></tr>
-<tr><td>$\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]$</td><td>$0{,}1\cdot0{,}4+0{,}045\cdot\tfrac16=0{,}0475$</td><td><span class="fragment" data-fragment-index="1">$0{,}045\Delta p_B$</span></td></tr>
-<tr><td>$\chi$; $\tfrac{2\gamma\chi}{(1-\gamma)^2}$</td><td>$0{,}5$; $90$</td><td><span class="fragment" data-fragment-index="1">$3\Delta p_B$; $540\Delta p_B$</span></td></tr>
-<tr><td>cận dưới của $\Delta J$</td><td>$0{,}095-90\cdot0{,}0475=-4{,}18$</td><td><span class="fragment" data-fragment-index="1">$1{,}35\Delta p_B-24{,}3(\Delta p_B)^2$</span></td></tr>
-<tr><td>$\Delta J$ tính trực tiếp</td><td>$-0{,}085$</td><td><span class="fragment" data-fragment-index="1">$1{,}35\Delta p_B$</span></td></tr>
-</tbody></table>
-<p class="box fragment" data-fragment-index="2">Cận đúng nhưng không chặt. Cận chỉ chứng nhận $J$ tăng khi $\Delta p_B\lt1{,}35/24{,}3\approx0{,}056$.</p>
-<aside class="notes"><p>Với bước tới $\tilde\pi$, cận là $-4{,}18$, đúng nhưng xa $-0{,}085$. Ở cột hai, $A_\pi(s_A,\pi')=0$, $A_\pi(s_B,\pi')=3\Delta p_B$, thừa số $2\cdot0{,}9\cdot3\Delta p_B/0{,}01=540\Delta p_B$, phạt $540\Delta p_B\cdot0{,}045\Delta p_B=24{,}3(\Delta p_B)^2$. $\Delta J=1{,}35\Delta p_B$ vì $\Delta p_A=0$ nên sai số bằng $0$. Hàm thay thế chính xác nhưng cận vẫn phạt, vì cận phải đúng cho mọi MDP. Giá trị $\Delta p_B=0{,}05$ cho cận $0{,}0068\gt0$, còn $\Delta p_B=0{,}06$ cho $-0{,}0065$. Ví dụ 10.14 còn tính bước $\pi'=(0{,}6;\,0{,}8)$: phạt $1{,}152$ lớn hơn $\Delta\mathcal L=0{,}26$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (Ví dụ 10.14: "Bước dài $\tilde\pi$", "Bước nhỏ chỉ đổi $s_B$", "Diễn giải", "Kiểm tra lại").</p></aside>
-</section>
-
-<section data-slide-id="L10-4-29" class="compact">
-<h2>Cơ sở lý thuyết: cải thiện đơn điệu</h2>
-<div class="card">
-<p><strong>Hệ quả</strong> (cải thiện đơn điệu). <strong>Giả thiết:</strong> như định lý chặn cải thiện cho mỗi cặp $(\pi_k,\pi')$, với $A_{\pi_k}$, $\nu^{\pi_k}$ chính xác. Đặt $\bar\chi_k=\max_{s,a}\lvert A_{\pi_k}(s,a)\rvert\ge\chi_{\pi'}$, $C_k=\tfrac{2\gamma\bar\chi_k}{(1-\gamma)^2}$ và</p>
-$$\mathcal M_k(\pi')=\mathcal L_{\pi_k}(\pi')-C_k\,\mathbb E_{S\sim\nu^{\pi_k}}\bigl[D_{\mathrm{TV}}(S)\bigr].$$
-<p><strong>Kết luận:</strong> nếu $\mathcal M_k(\pi_{k+1})\ge\mathcal M_k(\pi_k)$ thì $J(\pi_{k+1})\ge J(\pi_k)$.</p>
-</div>
-<p class="fragment" data-fragment-index="1"><strong>Chứng minh.</strong> $J(\pi_{k+1})\ge\mathcal M_k(\pi_{k+1})\ge\mathcal M_k(\pi_k)=J(\pi_k)$, theo định lý, giả thiết, rồi $\mathcal L_{\pi_k}(\pi_k)=J(\pi_k)$ và $D_{\mathrm{TV}}=0$.</p>
-<p class="fragment" data-fragment-index="2">Trên chuỗi, $\bar\chi=\lvert A_\pi(s_B,2)\rvert=2$, $C=\tfrac{2\cdot0{,}9\cdot2}{0{,}01}=360$, và mọi bước khác $\pi_k$ làm $\mathcal M_k$ giảm.</p>
-<p class="box fragment" data-fragment-index="3">TRPO thay phạt bằng ràng buộc $\bar D_{\mathrm{KL}}\le\kappa$. Schulman và cộng sự (2015) chứng minh cận với KL lớn nhất theo trạng thái, còn KL trung bình là xấp xỉ kinh nghiệm.</p>
-<aside class="notes"><p>Ràng buộc cho bước dài hơn, đổi lại $J$ có thể giảm. Cực đại một hàm nằm dưới $J$ và chạm $J$ tại chính sách hiện tại thì $J$ không giảm; với hằng của lý thuyết, bước gần như bằng $0$. Schulman và cộng sự (2015) gọi đây là thuật toán cực đại hóa qua hàm chặn dưới (minorize–maximize, MM). $\chi_{\pi'}\le\bar\chi_k$ vì $\lvert A_{\pi_k}(s,\pi')\rvert\le\max_a\lvert A_{\pi_k}(s,a)\rvert$. Trên chuỗi, $\mathcal M_k(\pi')-\mathcal M_k(\pi_k)\le\sum_s\nu(s)D_{\mathrm{TV}}(s)c_s$ với $c_s=8-360$ tại $s_A$ và $30-360$ tại $s_B$. Cực đại của $\mathcal M_k$ là chính $\pi_k$: phạt tuyến tính theo TV làm phép cực đại đứng tại $\pi_k$; phạt bình phương theo KL vẫn cho một bước nhỏ khác $0$. Hệ quả 10.31: với đại lượng và nghiệm chính xác, bước miền tin cậy có $J(\pi_{k+1})-J(\pi_k)\ge-\sqrt{2\kappa}\,\gamma\chi_{\pi_{k+1}}/(1-\gamma)^2$: mức giảm tối đa nhỏ khi $\kappa$ nhỏ.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (Hệ quả 10.30, chứng minh Bước 1–3; đoạn cực đại hóa qua hàm chặn dưới; đoạn số trên chuỗi; đoạn "Để cho phép bước lớn"; Hệ quả 10.31 và đoạn sau).</p></aside>
+<aside class="notes"><p>Ràng buộc cho phép bước dài hơn phạt của cận. Đọc hình từ trên xuống: lượt của chính sách cũ cho hai đại lượng. Hàm thay thế dùng tỉ số chính sách và lợi thế ước lượng; KL trung bình dùng phân phối hành động cũ lưu trong bộ đệm. Khối tối ưu nhận cả hai và trả về chính sách mới. TRPO dựng một mô hình dự báo hiệu năng từ dữ liệu cũ, giới hạn miền mà mô hình còn đáng tin, rồi tìm bước tốt nhất trong miền đó. Khối tối ưu kiểm điều kiện trên mẫu, nên chính sách mới không chắc có $J$ cao hơn.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.5 (đoạn mở); §5 (đoạn mở); §5.2 (Thuật toán 10.37; đoạn kết "TRPO chọn từ một bộ đệm …").</p></aside>
 </section>
 
 <section data-slide-id="L10-4-22" class="compact">
@@ -880,7 +820,7 @@ $$\bar D_{\mathrm{KL}}(\theta+\Delta)=\tfrac12\Delta^\top F\Delta+o(\lVert\Delta
 </div>
 <p class="fragment" data-fragment-index="2"><strong>Chứng minh.</strong> $\bar D_{\mathrm{KL}}$ có cực tiểu $0$ tại $\theta$ nên gradient bằng $0$, và Hessian của $-\mathbb E_{a\sim\pi}\log\pi_\theta(a\mid s)$ tại $\theta$ là $\mathbb E[\psi\psi^\top]$.</p>
 <p class="fragment" data-fragment-index="3">Ở đây $F=\operatorname{diag}\bigl(\nu^\pi(s)\,p_s(1-p_s)\bigr)=\operatorname{diag}(0{,}1\cdot\tfrac14;\,0{,}045\cdot\tfrac29)=\operatorname{diag}(0{,}025;\,0{,}01)$.</p>
-<aside class="notes"><p>Gần chính sách cũ, dự báo là tuyến tính theo bước, còn KL trung bình là dạng toàn phương với ma trận Fisher. Trên chuỗi, $\mathbb E[\psi^2]=p(1-p)^2+(1-p)p^2=p(1-p)$ tại mỗi trạng thái. Với ví dụ sigmoid, $F=p(1-p)$ bằng $0{,}25$ tại $\theta=0$ và $0{,}00665$ tại $\theta=5$; xấp xỉ bậc hai $\tfrac12p(1-p)\cdot1^2$ là $0{,}125$ và $0{,}00332$, cùng bậc độ lớn với KL thật $0{,}1201$ và $0{,}00245$, lệch $0{,}0049$ và $0{,}00087$. Hai chiều KL có cùng xấp xỉ bậc hai. $F$ nửa xác định dương và có thể suy biến (Ví dụ 10.15).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (câu cuối); §5 (đoạn mở); §5.1 (đoạn mở; Định nghĩa 10.32; Mệnh đề 10.33, chứng minh Bước 2–3; đoạn sau mệnh đề; đoạn chuỗi hai trạng thái).</p></aside>
+<aside class="notes"><p>Đây là khối tối ưu của sơ đồ tổng thể, bước thứ nhất: thay hai đầu vào bằng xấp xỉ bậc một và bậc hai. Gần chính sách cũ, dự báo là tuyến tính theo bước, còn KL trung bình là dạng toàn phương với ma trận Fisher. Trên chuỗi, $\mathbb E[\psi^2]=p(1-p)^2+(1-p)p^2=p(1-p)$ tại mỗi trạng thái. Với ví dụ sigmoid, $F=p(1-p)$ bằng $0{,}25$ tại $\theta=0$ và $0{,}00665$ tại $\theta=5$; xấp xỉ bậc hai $\tfrac12p(1-p)\cdot1^2$ là $0{,}125$ và $0{,}00332$, cùng bậc độ lớn với KL thật $0{,}1201$ và $0{,}00245$, lệch $0{,}0049$ và $0{,}00087$. Hai chiều KL có cùng xấp xỉ bậc hai. $F$ nửa xác định dương và có thể suy biến (Ví dụ 10.15).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (câu cuối); §5 (đoạn mở); §5.1 (đoạn mở; Định nghĩa 10.32; Mệnh đề 10.33, chứng minh Bước 2–3; đoạn sau mệnh đề; đoạn chuỗi hai trạng thái).</p></aside>
 </section>
 
 <section data-slide-id="L10-4-30" class="compact">
@@ -912,20 +852,50 @@ $$\bar D_{\mathrm{KL}}(\theta+\Delta)=\tfrac12\Delta^\top F\Delta+o(\lVert\Delta
 </section>
 
 <section data-slide-id="L10-4-25" class="compact">
-<h2>Ví dụ: một bước TRPO trên chuỗi</h2>
-<p><strong>Nhắc lại:</strong> $\theta_{\mathrm{old}}=(0;\,\log2)$, $\eta_\pi=(1;\,0{,}45)$, $A_\pi(s,\pi')=(0{,}8\,\Delta p_A;\,3\,\Delta p_B)$.</p>
+<h2>Ví dụ: một bước miền tin cậy trên chuỗi</h2>
+<p><strong>Nhắc lại:</strong> $\theta=(0;\,\log2)$, $\eta_\pi=(1;\,0{,}45)$, $A_\pi(s,\pi')=(0{,}8\,\Delta p_A;\,3\,\Delta p_B)$.</p>
 <p><strong>Tính hướng</strong>: $g=(0{,}2;\,0{,}3)$, $F^{-1}g=(8;\,30)$, $g^\top F^{-1}g=0{,}2\cdot8+0{,}3\cdot30=10{,}6$.</p>
 <p class="fragment" data-fragment-index="1"><strong>Chọn độ dài bước</strong> ($\kappa=0{,}01$): $\Delta_0=\sqrt{0{,}02/10{,}6}\cdot(8;\,30)=0{,}043437\cdot(8;\,30)=(0{,}3475;\,1{,}3031)$.</p>
 <p class="fragment" data-fragment-index="1">Chính sách mới: $p=(\sigma(0{,}3475);\,\sigma(\log2+1{,}3031))=(0{,}5860;\,0{,}8804)$.</p>
 <p class="fragment" data-fragment-index="2">KL tính trực tiếp theo trạng thái là $(0{,}0150;\,0{,}156)$, trung bình $0{,}1\cdot0{,}0150+0{,}045\cdot0{,}156=0{,}0085\le\kappa$. Với $\Delta p=(0{,}0860;\,0{,}2137)$: $\Delta\mathcal L=1\cdot0{,}8\cdot0{,}0860+0{,}45\cdot3\cdot0{,}2137=0{,}357\gt0$, nên giữ $\Delta_0$.</p>
 <p class="box fragment" data-fragment-index="3">$J=2{,}7p_Ap_B+1-p_A=2{,}7\cdot0{,}5860\cdot0{,}8804+0{,}4140=1{,}807$, tăng từ $1{,}4$.</p>
-<p class="fragment" data-fragment-index="4"><strong>Lưu ý:</strong> bước theo $g$ cùng bán kính bậc hai cho $J\approx1{,}835$, KL thật $0{,}0093$. Gradient tự nhiên tối ưu bài toán xấp xỉ, không tối ưu $J$.</p>
-<aside class="notes"><p>Một bước TRPO trên chuỗi: hướng $(8;\,30)$, bước tới biên miền, KL trung bình tính trực tiếp $0{,}0085\le\kappa$, $J$ tăng từ $1{,}4$ lên $1{,}807$. Ví dụ dùng $g=\nabla\mathcal L$ và $F$ tính chính xác theo $\nu^\pi$. $\Delta p=(0{,}5860-0{,}5;\,0{,}8804-\tfrac23)$. Xấp xỉ bậc hai cho $\tfrac12\Delta_0^\top F\Delta_0=0{,}01$, KL tính trực tiếp $0{,}0085$; trong thuật toán, bước được giữ vì tìm kiếm lùi nhận ngay $j=0$. Bước theo $g$ là $\Delta\approx(0{,}649;\,0{,}973)$, cho $p\approx(0{,}657;\,0{,}841)$. Ghi chú làm tròn: $\Delta^*\approx(0{,}35;\,1{,}30)$, $p\approx(0{,}586;\,0{,}880)$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.1 (đoạn chuỗi hai trạng thái: $F^{-1}g$, $10{,}6$, hệ số $0{,}0434$, $\Delta^*$, $J\approx1{,}807$; đoạn "Bước theo $g$"); §5.2 (Thuật toán 10.37, bước 5–6); §4.3 (Ví dụ 10.12, "Hai mức thay đổi với mọi chính sách mới").</p></aside>
+<aside class="notes"><p>Một bước miền tin cậy trên chuỗi: hướng $(8;\,30)$, bước tới biên miền, KL trung bình tính trực tiếp $0{,}0085\le\kappa$, $J$ tăng từ $1{,}4$ lên $1{,}807$. Ví dụ dùng $g=\nabla\mathcal L$ và $F$ tính chính xác theo $\nu^\pi$. $\Delta p=(0{,}5860-0{,}5;\,0{,}8804-\tfrac23)$. Xấp xỉ bậc hai cho $\tfrac12\Delta_0^\top F\Delta_0=0{,}01$, còn KL tính trực tiếp là $0{,}0085$. Hai lợi thế của dòng nhắc lại: $A_\pi(s_A,\pi')=0{,}4p'_A-0{,}4(1-p'_A)=0{,}8\Delta p_A$ và $A_\pi(s_B,\pi')=p'_B-2(1-p'_B)=3\Delta p_B$. Ghi chú làm tròn: $\Delta^*\approx(0{,}35;\,1{,}30)$, $p\approx(0{,}586;\,0{,}880)$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.1 (đoạn chuỗi hai trạng thái: $F^{-1}g$, $10{,}6$, hệ số $0{,}0434$, $\Delta^*$, $J\approx1{,}807$; đoạn "Bước theo $g$"); §5.2 (Thuật toán 10.37, bước 5–6); §4.3 (Ví dụ 10.12, "Hai mức thay đổi với mọi chính sách mới").</p></aside>
+</section>
+
+<section data-slide-id="L10-4-34" class="compact">
+<h2>Câu hỏi nhanh: gradient tự nhiên và bước theo $g$</h2>
+<p><strong>Nhắc lại:</strong> bước gradient tự nhiên $\Delta^*=(0{,}3475;\,1{,}3031)$, $J=1{,}807$.</p>
+<p>Bước theo $g$, cùng ràng buộc $\tfrac12\Delta^\top F\Delta\le0{,}01$: $g^\top Fg=0{,}0019$, $\Delta=\sqrt{0{,}02/0{,}0019}\,g=3{,}2444\,g=(0{,}6489;\,0{,}9733)$, $p=(\sigma(0{,}6489);\,\sigma(\log2+0{,}9733))=(0{,}6568;\,0{,}8411)$.</p>
+<p class="check"><strong>Câu hỏi:</strong> vì sao nghiệm của bài toán xấp xỉ cho $J$ thấp hơn bước theo $g$?</p>
+<table class="calc fragment" data-fragment-index="1">
+<thead><tr><th><strong>Lời giải:</strong> tầng</th><th>Bước theo $g$</th><th>Gradient tự nhiên</th></tr></thead>
+<tbody>
+<tr><td>1. $J$, hiệu năng</td><td>$2{,}7\cdot0{,}6568\cdot0{,}8411+0{,}3432=1{,}835$</td><td>$1{,}807$</td></tr>
+<tr><td>2. $\Delta\mathcal L$, dự báo</td><td>$0{,}8\cdot0{,}1568+1{,}35\cdot0{,}1744=0{,}361$</td><td>$0{,}357$</td></tr>
+<tr><td>3. $g^\top\Delta$, xấp xỉ</td><td>$0{,}2\cdot0{,}6489+0{,}3\cdot0{,}9733=0{,}422$</td><td class="text-purple">$\boxed{0{,}2\cdot0{,}3475+0{,}3\cdot1{,}3031=0{,}460}$</td></tr>
+</tbody></table>
+<p class="box fragment" data-fragment-index="2">Gradient tự nhiên lớn nhất ở tầng 3, nơi nó là nghiệm. Nghiệm của bài toán xấp xỉ cục bộ không nhất thiết tốt nhất trên $J$.</p>
+<aside class="notes"><p><strong>Gợi ý:</strong> đọc bảng từ dưới lên.</p><p>Ở tầng 2, $\Delta\mathcal L=0{,}8\Delta p_A+1{,}35\Delta p_B$ với $\Delta p=p-(0{,}5;\,\tfrac23)$. Hệ số co của bước theo $g$ là $\sqrt{2\kappa/(g^\top Fg)}$ với $g^\top Fg=0{,}025\cdot0{,}2^2+0{,}01\cdot0{,}3^2=0{,}0019$, nên $\sqrt{0{,}02/0{,}0019}=3{,}2444$. Tầng 3 dùng mục tiêu tuyến tính và KL bậc hai; gradient tự nhiên là nghiệm của đúng bài toán đó. Tầng 2 là hàm thay thế thật, tuyến tính theo $\Delta p_s$ nhưng phi tuyến theo $\theta$ vì $p_s=\sigma(\theta_s)$. Tầng 1 cộng thêm sai số $2{,}7\Delta p_A\Delta p_B$ do phân bố trạng thái thay đổi: $0{,}074$ cho bước theo $g$, $0{,}050$ cho bước gradient tự nhiên. KL thật của hai bước là $0{,}0093$ và $0{,}0085$, đều không vượt $\kappa$. Ví dụ này không cho thấy bước theo $g$ tốt hơn nói chung.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.1 (đoạn "Bước theo $g$, co về cùng bán kính bậc hai …"; bảng ba tầng và đoạn sau).</p></aside>
+</section>
+
+<section data-slide-id="L10-4-35" class="compact">
+<h2>Hai cách lấy trung bình KL</h2>
+<p><strong>Nhắc lại:</strong> $\bar D_{\mathrm{KL}}=\sum_s\nu^\pi(s)D_{\mathrm{KL}}(s)$, $\nu^\pi=(0{,}1;\,0{,}045)$, tổng $0{,}145\lt1$ vì lượt kết thúc, với $D_{\mathrm{KL}}(s)=D_{\mathrm{KL}}(\pi(\cdot\mid s)\Vert\pi'(\cdot\mid s))$. Với $\tilde\pi$, $D_{\mathrm{KL}}(s)=(0{,}511;\,0{,}0566)$.</p>
+<p><strong>Ký hiệu:</strong> KL trung bình trên bộ đệm là trung bình đều $\widehat D=\tfrac1{|\mathcal D|}\sum_{t\in\mathcal D}D_{\mathrm{KL}}(S_t)$.</p>
+<div class="grid2 fig-right">
+<div>
+<p class="fragment" data-fragment-index="1">Bộ đệm $\mathcal D$ thu bằng $\pi$. Mỗi lượt thăm $s_A$ một lần, thăm $s_B$ với xác suất $p_A=\tfrac12$, nên tần suất trên bộ đệm là $(\tfrac23;\,\tfrac13)$.</p>
+<p class="fragment" data-fragment-index="2">Chuẩn hóa $(0{,}1;\,0{,}045)/0{,}145=(0{,}69;\,0{,}31)$ cho $\approx0{,}37$, gần $\widehat D\approx0{,}36$.</p>
+<p class="box fragment" data-fragment-index="3">TRPO thực hành áp $\kappa$ lên $\widehat D$. Trên đoạn từ $\pi$ tới $\tilde\pi$, $\bar D_{\mathrm{KL}}\le0{,}01$ cho miền $t\le0{,}515$, còn $\widehat D\le0{,}01$ chỉ cho miền $t\le0{,}206$.</p>
+</div>
+<img class="fragment" data-fragment-index="1" width="550" src="img/lec-10/hai-cach-trung-binh-kl.svg" alt="Cùng D KL của s bằng 0,511 tại s A và 0,0566 tại s B, hai cách lấy trọng số trên cùng thang từ 0 tới 1. Trọng số nu pi, có chiết khấu: 0,1 và 0,045, tổng chỉ 0,145; D KL trung bình = 0,1 nhân 0,511 + 0,045 nhân 0,0566 = 0,0536. Tần suất trên bộ đệm: hai phần ba và một phần ba, tổng 1; D mũ = hai phần ba nhân 0,511 + một phần ba nhân 0,0566, xấp xỉ 0,36."/>
+</div>
+<aside class="notes"><p>Cùng các KL theo trạng thái, trọng số có chiết khấu cho $0{,}0536$, tần suất trên bộ đệm cho khoảng $0{,}36$. Chuẩn hóa: $(0{,}1;\,0{,}045)/0{,}145=(0{,}690;\,0{,}310)$ và $0{,}690\cdot0{,}511+0{,}310\cdot0{,}0566\approx0{,}37$. Tổng $0{,}145$ khác $1$ vì lượt kết thúc: $\nu^\pi=(1-\gamma)\eta_\pi$ chỉ đặt khối lên các trạng thái của MDP, phần còn lại ở trạng thái hấp thụ. Bộ đệm không có trọng số chiết khấu: $s_B$ chỉ được thăm ở bước $1$, nên trong $\nu^\pi$ nó mang thêm thừa số $\gamma=0{,}9$: $\nu^\pi(s_B)/\nu^\pi(s_A)=0{,}45$, còn trên bộ đệm tỉ lệ này là $0{,}5$. Tại $t=0{,}206$: $D_{\mathrm{KL}}=(0{,}0137;\,0{,}00256)$ và $\tfrac23\cdot0{,}0137+\tfrac13\cdot0{,}00256=0{,}0100$. Bước của ví dụ tay có $\widehat D=\tfrac23\cdot0{,}0150+\tfrac13\cdot0{,}156=0{,}062\gt\kappa$; thuật toán tính $g$, $F$ và $\widehat D$ theo cùng tần suất mẫu, nên bước của nó ngắn hơn bước của ví dụ. Để cùng miền với $\bar D_{\mathrm{KL}}\le0{,}01$, bán kính trên $\widehat D$ phải khoảng $0{,}07$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.5 (đoạn "KL trung bình $\bar D_{\mathrm{KL}}$ lấy trọng số $\nu^\pi$ …", ba cách lấy trọng số và đoạn sau); §5.2 (Thuật toán 10.37, bước 3–4).</p></aside>
 </section>
 
 <section data-slide-id="L10-4-09" class="compact">
 <h2>Thuật toán TRPO (1)</h2>
-<p>Actor–critic dùng mỗi lượt cho một bước nhỏ. TRPO cực đại hóa hàm thay thế trên một bộ đệm (buffer) với KL trung bình không vượt $\kappa$.</p>
+<p>Actor–critic dùng mỗi lượt cho một bước nhỏ. TRPO cực đại hóa hàm thay thế trên một bộ đệm với KL trung bình trên bộ đệm $\widehat D$ không vượt $\kappa$.</p>
 <p><strong>Thuật toán</strong> tối ưu chính sách miền tin cậy (trust region policy optimization, TRPO). <strong>Đầu vào:</strong> chính sách $\pi_\theta$, critic $\hat v(s,w)$; $\gamma$, $\lambda$, bán kính $\kappa$, hệ số co $\zeta\in(0,1)$, số lần co tối đa $j_{\max}$, số vòng gradient liên hợp $k_{\max}$. <strong>Đầu ra:</strong> $\theta$, $w$.</p>
 <ol>
 <li><strong>Thu lượt</strong>: thu một bộ đệm $\mathcal D$ bằng $\pi_{\mathrm{old}}=\pi_\theta$, giữ $\hat v_{\mathrm{old}}=\hat v(\cdot,w)$, lưu $\log\pi_{\mathrm{old}}(A_t\mid S_t)$ và phân phối $\pi_{\mathrm{old}}(\cdot\mid S_t)$.</li>
@@ -946,7 +916,7 @@ tính $g=\nabla\widehat{\mathcal L}(\theta_{\mathrm{old}})=\frac1{|\mathcal D|}\
 <li><strong>Chọn độ dài bước</strong>: $\Delta_0=\sqrt{2\kappa/(x^\top Fx)}\,x$. Tìm kiếm lùi (backtracking line search): với $j=0,1,\dots,j_{\max}$, đặt $\theta=\theta_{\mathrm{old}}+\zeta^j\Delta_0$ và nhận $j$ đầu tiên có $\widehat{\mathcal L}(\theta)\gt\widehat{\mathcal L}(\theta_{\mathrm{old}})$ và $\widehat D(\theta)\le\kappa$. Không có $j$ nào thì giữ $\theta=\theta_{\mathrm{old}}$.</li>
 <li><strong>Cập nhật critic</strong>: vài bước hạ gradient trên $\frac1{|\mathcal D|}\sum_{t\in\mathcal D}\bigl(\hat v(S_t,w)-V^{\mathrm{targ}}_t\bigr)^2$.</li>
 </ol>
-<aside class="notes"><p>$\widehat{\mathcal L}$ và $\widehat D$ là hàm thay thế mẫu và KL mẫu: trung bình đều trên bộ đệm thay cho kỳ vọng. So với định lý, TRPO thay năm điểm: trung bình trên bộ đệm thay kỳ vọng có chiết khấu, lợi thế GAE thay lợi thế đúng, hàm thay thế bậc một và KL bậc hai, gradient liên hợp dừng sớm, ràng buộc KL thay phạt TV; nên TRPO trong thực hành không bảo đảm $J$ tăng. Trên chuỗi, bước vừa tính được giữ nguyên ($j=0$). Mỗi vòng cần khoảng mười tích $Fv$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.2 (Thuật toán 10.36, 10.37; Nhận xét 10.38).</p></aside>
+<aside class="notes"><p>$\widehat{\mathcal L}$ và $\widehat D$ là hàm thay thế mẫu và KL trung bình trên bộ đệm: trung bình đều trên bộ đệm thay cho kỳ vọng. So với định lý, TRPO thay năm điểm: trung bình trên bộ đệm thay kỳ vọng có chiết khấu, lợi thế GAE thay lợi thế đúng, hàm thay thế bậc một và KL bậc hai, gradient liên hợp dừng sớm, ràng buộc KL thay phạt TV; nên TRPO trong thực hành không bảo đảm $J$ tăng. Ví dụ tay dùng $g$, $F$ và KL lấy trọng số $\nu^\pi$. Với KL trung bình trên bộ đệm, bước của ví dụ tay vượt $\kappa$, nên tìm kiếm lùi phải co bước. Mỗi vòng cần khoảng mười tích $Fv$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.2 (Thuật toán 10.36, 10.37; Nhận xét 10.38).</p></aside>
 </section>
 
 <section data-slide-id="L10-4-31" class="compact">
@@ -958,9 +928,9 @@ tính $g=\nabla\widehat{\mathcal L}(\theta_{\mathrm{old}})=\frac1{|\mathcal D|}\
 <p>Miền tin cậy: vùng $\bar D_{\mathrm{KL}}\le\kappa$, nơi sai số của dự báo bị chặn theo KL.</p>
 <p>Gradient tự nhiên: hướng tốt nhất của bài toán xấp xỉ bậc một–bậc hai.</p>
 </div>
-<p class="fragment" data-fragment-index="1">Trên chuỗi, một bước TRPO đưa $J$ từ $1{,}4$ lên $1{,}807$, với KL trung bình $0{,}0085\le\kappa$.</p>
+<p class="fragment" data-fragment-index="1">Trên chuỗi, một bước miền tin cậy với $\bar D_{\mathrm{KL}}$ (trọng số $\nu^\pi$) đưa $J$ từ $1{,}4$ lên $1{,}807$.</p>
 <p class="box fragment" data-fragment-index="2">Mỗi bộ đệm chỉ cho một bước cập nhật, sau gradient liên hợp và tìm kiếm lùi.</p>
-<aside class="notes"><p>TRPO dựng mô hình dự báo hiệu năng từ dữ liệu cũ, giới hạn vùng mà sai số của dự báo bị chặn theo KL, rồi tìm bước tốt nhất của bài toán xấp xỉ trong vùng đó. Đọc ba bảng: tiếp tuyến cam chạm đường $J$ tại chính sách cũ; chấm xanh là bước được nhận trong miền tin cậy, chấm đỏ là ứng viên ngoài miền, như $\tilde\pi$; mũi tên tím $F^{-1}g$ lệch khỏi $g$ về phía trục rộng của elip. Bước theo $g$ cho $J\approx1{,}835$, nên gradient tự nhiên tối ưu bài toán xấp xỉ, không tối ưu $J$. So với định lý chặn cải thiện, TRPO thực hành thay năm điểm (Nhận xét 10.38), nên không bảo đảm $J$ tăng.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.2 (đoạn kết "TRPO chọn từ một bộ đệm …"; Nhận xét 10.38).</p></aside>
+<aside class="notes"><p>Ba bảng gom ba ý của mạch: dự báo, giới hạn, hướng. Bước của ví dụ dùng KL trung bình theo $\nu^\pi$, với $\bar D_{\mathrm{KL}}=0{,}0085\le\kappa$; thuật toán dùng KL trung bình trên bộ đệm. Đọc ba bảng: tiếp tuyến cam chạm đường $J$ tại chính sách cũ; chấm xanh là bước được nhận trong miền tin cậy, chấm đỏ là ứng viên ngoài miền, như $\tilde\pi$; mũi tên tím $F^{-1}g$ lệch khỏi $g$ về phía trục rộng của elip. Gradient tự nhiên tối ưu bài toán xấp xỉ, không tối ưu $J$, như bảng ba tầng của câu hỏi nhanh. So với định lý chặn cải thiện, TRPO thực hành thay năm điểm (Nhận xét 10.38), nên không bảo đảm $J$ tăng.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.2 (đoạn kết "TRPO chọn từ một bộ đệm …"; Nhận xét 10.38).</p></aside>
 </section>
 </section>
 
@@ -978,7 +948,7 @@ tính $g=\nabla\widehat{\mathcal L}(\theta_{\mathrm{old}})=\frac1{|\mathcal D|}\
 <section data-slide-id="L10-5-09" class="compact">
 <h2>Mỗi bộ đệm của TRPO chỉ cho một bước cập nhật</h2>
 <div class="grid2 fig-left">
-<img width="420" src="img/lec-10/vong-trpo.svg" alt="Vòng TRPO, năm khối đứng: Thu lượt (bộ đệm, lưu phân phối cũ) → Ước lượng lợi thế (delta t, GAE) → Tính hướng (giải F x = g bằng gradient liên hợp; khối viền tím, ghi khoảng mười tích F v) → Chọn độ dài bước (kiểm hàm thay thế mẫu và KL mẫu; vòng đỏ nét liền: không đạt, thu nhỏ bước) → Cập nhật critic; mũi tên cuối: bỏ bộ đệm, thu lượt mới."/>
+<img width="420" src="img/lec-10/vong-trpo.svg" alt="Vòng TRPO, năm khối đứng: Thu lượt (bộ đệm, lưu phân phối cũ) → Ước lượng lợi thế (delta t, GAE) → Tính hướng (giải F x = g bằng gradient liên hợp; khối viền tím, ghi khoảng mười tích F v) → Chọn độ dài bước (kiểm hàm thay thế mẫu và KL trung bình trên bộ đệm; vòng đỏ nét liền: không đạt, thu nhỏ bước) → Cập nhật critic; mũi tên cuối: bỏ bộ đệm, thu lượt mới."/>
 <div>
 <p>Cần dùng lại một bộ đệm $\mathcal D$ cho nhiều bước cập nhật, mỗi bước chỉ cần gradient bậc một của một hàm mục tiêu.</p>
 <p class="fragment" data-fragment-index="1">Hàm thay thế mẫu $\widehat{\mathcal L}$ ở bước 3 của TRPO được ký hiệu là $\mathcal L^{\mathrm{CPI}}$, theo tên phương pháp lặp chính sách bảo thủ (conservative policy iteration, CPI):</p>
@@ -987,7 +957,7 @@ tính $g=\nabla\widehat{\mathcal L}(\theta_{\mathrm{old}})=\frac1{|\mathcal D|}\
 <p class="check fragment" data-fragment-index="2"><strong>Câu hỏi:</strong> cực đại $\mathcal L^{\mathrm{CPI}}$ không ràng buộc trên một bộ đệm nhỏ cho chính sách nào?</p>
 </div>
 </div>
-<aside class="notes"><p>Đọc vòng TRPO trên hình: mỗi vòng cần khoảng mười tích $Fv$ ở bước tính hướng, một lượt tìm kiếm lùi (vòng đỏ, thu nhỏ bước khi hàm thay thế mẫu không tăng hoặc KL mẫu vượt $\kappa$), rồi bỏ bộ đệm. $\mathcal L^{\mathrm{CPI}}$ là hàm thay thế của mạch 4 với kỳ vọng thay bằng trung bình trên bộ đệm và lợi thế thay bằng GAE, bỏ hằng $J(\theta_{\mathrm{old}})$. Tên CPI theo Kakade và Langford (2002). Trung bình đều không có trọng số $\gamma^t$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.2 (Thuật toán 10.37; đoạn kết); §6 (đoạn mở); §6.1 (Định nghĩa 10.39); §4.2 (đoạn "Trong thực hành" sau Mệnh đề 10.22).</p></aside>
+<aside class="notes"><p>Đọc vòng TRPO trên hình: mỗi vòng cần khoảng mười tích $Fv$ ở bước tính hướng, một lượt tìm kiếm lùi (vòng đỏ, thu nhỏ bước khi hàm thay thế mẫu không tăng hoặc KL trung bình trên bộ đệm vượt $\kappa$), rồi bỏ bộ đệm. $\mathcal L^{\mathrm{CPI}}$ là hàm thay thế của mạch 4 với kỳ vọng thay bằng trung bình trên bộ đệm và lợi thế thay bằng GAE, bỏ hằng $J(\theta_{\mathrm{old}})$. Tên CPI theo Kakade và Langford (2002). Trung bình đều không có trọng số $\gamma^t$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.2 (Thuật toán 10.37; đoạn kết); §6 (đoạn mở); §6.1 (Định nghĩa 10.39); §4.2 (đoạn "Trong thực hành" sau Mệnh đề 10.22).</p></aside>
 </section>
 
 <section data-slide-id="L10-5-10" class="compact">
@@ -1138,7 +1108,7 @@ tính $g=\nabla\widehat{\mathcal L}(\theta_{\mathrm{old}})=\frac1{|\mathcal D|}\
 <tr><td>Quy tắc cập nhật</td><td>bước gradient tự nhiên (gradient liên hợp, tích Fisher–vector), tìm kiếm lùi</td><td>gradient bậc một của $\mathcal L^{\mathrm{CLIP}}$ trên lô nhỏ</td></tr>
 <tr><td>Dữ liệu dùng</td><td>một bộ đệm, một bước</td><td>một bộ đệm, $K$ lần</td></tr>
 <tr><td>Cách giữ bước gần</td><td>$\bar D_{\mathrm{KL}}\le\kappa$</td><td>cắt tỉ số chính sách</td></tr>
-<tr><td>Bảo đảm</td><td>trên bộ đệm: KL mẫu $\le\kappa$, hàm thay thế mẫu tăng. Không bảo đảm $J$ tăng</td><td>không chặn KL; gradient $0$ khi tỉ số ra ngoài theo hướng có lợi. Không bảo đảm $J$ tăng</td></tr>
+<tr><td>Bảo đảm</td><td>trên bộ đệm: KL trung bình $\le\kappa$, hàm thay thế mẫu tăng. Không bảo đảm $J$ tăng</td><td>không chặn KL; gradient $0$ khi tỉ số ra ngoài theo hướng có lợi. Không bảo đảm $J$ tăng</td></tr>
 </tbody></table>
 <aside class="notes"><p>Hai thuật toán cùng ý giữ bước gần, khác cách giữ và chi phí. Cả hai dựa vào tính tiếp xúc của hàm thay thế và chặn cải thiện của mạch 4, nhưng các đại lượng đều là ước lượng, nên bảo đảm của định lý không chuyển sang thuật toán.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.2 (Nhận xét 10.38); §6.1 (Nhận xét 10.42); §7.2.</p></aside>
 </section>
@@ -1201,7 +1171,7 @@ $$\textstyle\ell_s=\sum_a\pi(a\mid s)\min\bigl(\rho_s(a)A_\pi(s,a),\ \operatorna
 <div class="check"><strong>Câu hỏi:</strong>
 <ol>
 <li>Làm thế nào để ước lượng gradient chính sách có phương sai nhỏ mà kỳ vọng không đổi?</li>
-<li>Làm thế nào để dùng lượt của chính sách cũ cho bước cập nhật dài mà hàm mục tiêu không giảm?</li>
+<li>Làm thế nào để dùng lượt của chính sách cũ cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm?</li>
 </ol></div>
 <p>Trả lời câu 1:</p>
 <ul>
@@ -1213,14 +1183,15 @@ $$\textstyle\ell_s=\sum_a\pi(a\mid s)\min\bigl(\rho_s(a)A_\pi(s,a),\ \operatorna
 
 <section data-slide-id="L10-6-18" class="compact">
 <h2>Vấn đề trung tâm: trả lời câu 2</h2>
-<p><strong>Nhắc lại:</strong> câu 2 hỏi cách dùng lượt của chính sách cũ cho bước cập nhật dài mà hàm mục tiêu không giảm.</p>
+<p><strong>Nhắc lại:</strong> câu 2 hỏi cách dùng lượt của chính sách cũ cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm.</p>
 <p>Trả lời câu 2:</p>
 <ul>
-<li>Hàm thay thế tính được từ lượt của chính sách cũ và tiếp xúc $J$ tại chính sách cũ. Khi lợi thế và số lần thăm tính chính xác, $J$ không giảm nếu mức tăng của hàm thay thế vượt phạt tỉ lệ với kỳ vọng khoảng cách TV, hoặc với căn của KL trung bình. Thừa số của phạt là $2\gamma\chi_{\pi'}/(1-\gamma)^2$.</li>
-<li>TRPO giữ KL trung bình mẫu trên bộ đệm không vượt $\kappa$. PPO dùng lại bộ đệm $K$ lần, cắt tỉ số chính sách và không chặn KL. Với lợi thế ước lượng, cả hai đều có thể làm $J$ giảm.</li>
+<li>Hàm thay thế tính được từ lượt của chính sách cũ và tiếp xúc $J$ tại chính sách cũ. Khi lợi thế và số lần thăm tính chính xác, $J$ không giảm nếu mức tăng của hàm thay thế vượt phạt tỉ lệ với căn của KL trung bình.</li>
+<li>Bài toán miền tin cậy thay phạt bằng ràng buộc $\bar D_{\mathrm{KL}}\le\kappa$. Ràng buộc giới hạn mức đổi chính sách, nhưng không tự bảo đảm $J$ tăng.</li>
+<li>TRPO thực hành dùng lợi thế ước lượng, xấp xỉ bậc hai và tìm kiếm lùi, giữ KL trung bình trên bộ đệm không vượt $\kappa$. PPO dùng lại bộ đệm $K$ lần, cắt tỉ số chính sách và không chặn KL. Với lợi thế ước lượng, cả hai đều có thể làm $J$ giảm.</li>
 </ul>
 <p>Ví dụ chung của bài là chuỗi hai trạng thái.</p>
-<aside class="notes"><p>Câu 2 có hai câu trả lời: hàm thay thế cùng cận sai số của nó, và hai thuật toán dựa trên hàm thay thế. TRPO ràng buộc KL trung bình ước lượng trên bộ đệm; PPO chỉ cắt tỉ số, nên KL có thể vượt mọi ngưỡng. Lợi thế ước lượng, trung bình trên bộ đệm và các xấp xỉ làm cả hai mất bảo đảm của định lý. Nguồn từng câu trong ghi chú: Mệnh đề 10.22, Định lý 10.27, Hệ quả 10.28; Thuật toán 10.37, 10.49, Nhận xét 10.38, 10.42.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §7.3.</p></aside>
+<aside class="notes"><p>Câu 2 có ba câu trả lời theo ba mức: lý thuyết (hàm thay thế cùng cận sai số của nó), bài toán (ràng buộc KL thay cho phạt), thuật toán (TRPO và PPO trên bộ đệm). Câu "$J$ không giảm nếu …" là kết luận có điều kiện của định lý, không phải tính chất của thuật toán. Thừa số của phạt là $2\gamma\chi_{\pi'}/(1-\gamma)^2$. TRPO ràng buộc KL trung bình ước lượng trên bộ đệm; PPO chỉ cắt tỉ số, nên KL có thể vượt mọi ngưỡng. Lợi thế ước lượng, trung bình trên bộ đệm và các xấp xỉ làm cả hai mất bảo đảm của định lý. Nguồn từng câu trong ghi chú: Mệnh đề 10.22, Định lý 10.27, Hệ quả 10.28; Thuật toán 10.37, 10.49, Nhận xét 10.38, 10.42.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §7.3.</p></aside>
 </section>
 
 <section data-slide-id="L10-6-12" class="compact">
@@ -1243,7 +1214,7 @@ $$\textstyle\ell_s=\sum_a\pi(a\mid s)\min\bigl(\rho_s(a)A_\pi(s,a),\ \operatorna
 <tbody>
 <tr><td>Bổ đề chênh lệch hiệu năng</td><td>cùng $P$, cùng $\mu_0$; $\gamma\lt1$</td><td>$J(\pi')-J(\pi)=\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$</td></tr>
 <tr><td>Hàm thay thế tiếp xúc $J$</td><td>$\eta_\pi$, $A_\pi$ chính xác; $\pi\gt0$</td><td>$\mathcal L_\pi(\pi)=J(\pi)$, $\nabla\mathcal L=\nabla J$ tại $\pi$</td></tr>
-<tr><td>Chặn cải thiện</td><td>như bổ đề</td><td>$\Delta J\ge\Delta\mathcal L-\frac{2\gamma\chi}{(1-\gamma)^2}\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]$, hoặc $\sqrt{\tfrac12\bar D_{\mathrm{KL}}}$ thay $\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]$</td></tr>
+<tr><td>Chặn cải thiện</td><td>như bổ đề; $A_\pi$, $\nu^\pi$ chính xác</td><td>$\Delta J\ge\Delta\mathcal L-\frac{2\gamma\chi}{(1-\gamma)^2}\sqrt{\tfrac12\bar D_{\mathrm{KL}}}$</td></tr>
 <tr><td>Mục tiêu cắt</td><td>lợi thế cố định trong vòng</td><td>gradient $0$ khi $\widehat A\gt0,\ \rho\gt1+\epsilon$ hoặc $\widehat A\lt0,\ \rho\lt1-\epsilon$</td></tr>
 </tbody></table>
 <aside class="notes"><p>"Chính xác" là điều kiện áp dụng; mọi thuật toán của bài thay nó bằng ước lượng trên bộ đệm, nên bảo đảm của các kết quả này không chuyển nguyên sang thuật toán. Bổ đề dịch chuyển phân bố chiếm dụng chặn $\sum_s|\eta_{\pi'}(s)-\eta_\pi(s)|$ theo $\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §7.1.</p></aside>
@@ -1256,7 +1227,7 @@ $$\textstyle\ell_s=\sum_a\pi(a\mid s)\min\bigl(\rho_s(a)A_\pi(s,a),\ \operatorna
 <tbody>
 <tr><td>REINFORCE</td><td>$\theta\leftarrow\theta+\alpha\sum_t\gamma^tG_t\psi_t$</td><td>một lượt,<br/>một lần</td><td>bước học<br/>nhỏ</td><td>ước lượng gradient<br/>không chệch</td></tr>
 <tr><td>Actor–critic<br/>với GAE</td><td>$\theta\leftarrow\theta+\alpha_\theta\sum_t\gamma^t\widehat A_t\psi_t$;<br/>critic về $\widehat A_t+\hat v_{\mathrm{old}}$</td><td>một lượt,<br/>một lần</td><td>bước học<br/>nhỏ</td><td>không chệch khi $\lambda=1$<br/>hoặc critic đúng</td></tr>
-<tr><td>TRPO</td><td>bước gradient tự nhiên<br/>(gradient liên hợp, tích<br/>Fisher–vector), tìm<br/>kiếm lùi</td><td>một bộ đệm,<br/>một bước</td><td>$\bar D_{\mathrm{KL}}\le\kappa$</td><td>trên bộ đệm: KL mẫu<br/>$\le\kappa$, hàm thay thế<br/>mẫu tăng. Không bảo đảm<br/>$J$ tăng</td></tr>
+<tr><td>TRPO</td><td>bước gradient tự nhiên<br/>(gradient liên hợp, tích<br/>Fisher–vector), tìm<br/>kiếm lùi</td><td>một bộ đệm,<br/>một bước</td><td>$\bar D_{\mathrm{KL}}\le\kappa$</td><td>trên bộ đệm: KL<br/>trung bình $\le\kappa$, hàm<br/>thay thế mẫu tăng.<br/>Không bảo đảm $J$ tăng</td></tr>
 <tr><td>PPO-Clip</td><td>gradient bậc một của<br/>$\mathcal L^{\mathrm{CLIP}}$ trên lô nhỏ</td><td>một bộ đệm,<br/>$K$ lần</td><td>cắt tỉ số<br/>chính sách</td><td>không chặn KL.<br/>Không bảo đảm<br/>$J$ tăng</td></tr>
 </tbody></table>
 <aside class="notes"><p>Với PPO-Clip, gradient bằng $0$ khi tỉ số ra ngoài khoảng cắt theo hướng có lợi, như bảng kết quả trước. Bốn phương pháp khác nhau ở dữ liệu dùng và cách giữ bước gần; không phương pháp nào trong thực hành bảo đảm $J$ tăng. Điều kiện dừng của cả bốn là ngân sách: số lượt hoặc số vòng lặp đã định.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §7.2 (bảng phương pháp và bảng bảo đảm).</p></aside>
@@ -1300,6 +1271,102 @@ $$\textstyle\ell_s=\sum_a\pi(a\mid s)\min\bigl(\rho_s(a)A_\pi(s,a),\ \operatorna
 </ul>
 <p>Bài tiếp theo: <a href="lecture-11-lap-ke-hoach-dua-tren-mo-hinh.html">Bài 11, Lập kế hoạch dựa trên mô hình</a>.</p>
 <aside class="notes"><p>Đối chiếu ký hiệu với các bài báo: Schulman và cộng sự (2015) viết $J(\pi)$ là $\eta(\pi)$, số lần thăm có chiết khấu $\eta_\pi$ là $\rho_\pi$, bán kính $\kappa$ là $\delta$; Schulman và cộng sự (2017) viết tỉ số $\rho_t(\theta)$ là $r_t(\theta)$, độ dài đoạn thu, ký hiệu $h$ trong ghi chú bài giảng, là $T$; phần thưởng $r_t$ của các bài báo là $R_{t+1}$. Danh sách đủ tài liệu, kèm số mục và số trang, ở cuối ghi chú. Bài 11 dùng một mô hình của môi trường để lập kế hoạch, thay cho việc chỉ học từ các lượt đã thu.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bảng ký hiệu (đối chiếu với các bài báo); "Hướng dẫn đọc thêm và tài liệu tham khảo".</p></aside>
+</section>
+</section>
+
+
+<section id="mach-7">
+<section data-slide-id="L10-7-00" class="strand-title">
+<div class="strand-title-body">
+<h2>Phụ lục: cơ sở lý thuyết của miền tin cậy</h2>
+<p class="strand-lead">Các chứng minh nối giới hạn KL của bài toán miền tin cậy với sai số của hàm thay thế.</p>
+</div>
+<img width="1000" src="img/lec-10/chuoi-bon-mat-xich.svg" alt="Bốn khối nối bằng ba mũi tên. Khối 1, viền tím: KL trung bình không vượt kappa. Mũi tên ghi Pinsker và Jensen tới khối 2: TV kỳ vọng theo nu pi nhỏ. Mũi tên ghi bổ đề dịch chuyển tới khối 3: phân bố chiếm dụng ít thay đổi. Mũi tên ghi đẳng thức sai số tới khối 4: sai số, trị tuyệt đối của Delta J − Delta L, nhỏ."/>
+<aside class="notes"><p>Phụ lục dành cho lớp cần độ sâu toán học và không thuộc thời lượng trên lớp. Nó gồm chứng minh bổ đề chênh lệch hiệu năng, nền của đẳng thức sai số; ba kết quả ứng với ba mũi tên của hình; cận trên chuỗi; hệ quả cải thiện đơn điệu.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (đoạn mở).</p></aside>
+</section>
+
+<section data-slide-id="L10-7-10" class="compact">
+<h2>Ý tưởng chứng minh: bổ đề chênh lệch hiệu năng</h2>
+<p><strong>Nhắc lại:</strong> $J(\pi')-J(\pi)=\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$, $A_\pi(s,\pi')=\sum_a\pi'(a\mid s)A_\pi(s,a)$; giả thiết chung.</p>
+<p class="fragment" data-fragment-index="1"><strong>Bước 1</strong> (một bước): $A_\pi(s,a)=r(s,a)+\gamma\sum_{s'}P(s'\mid s,a)v_\pi(s')-v_\pi(s)$.</p>
+<p class="fragment" data-fragment-index="2"><strong>Bước 2</strong> (tính chất tháp trên quỹ đạo của $\pi'$): $\mathbb E_{\pi'}[A_\pi(S_t,A_t)]=\mathbb E_{\pi'}[\delta_t]$, với sai số TD $\delta_t$.</p>
+<p class="fragment" data-fragment-index="3"><strong>Bước 3</strong> (tổng lồng nhau tới $K$): $\sum_{t\lt K}\gamma^t\delta_t=\sum_{t\lt K}\gamma^tR_{t+1}+\gamma^Kv_\pi(S_K)-v_\pi(S_0)$.</p>
+<p class="fragment" data-fragment-index="4"><strong>Bước 4</strong> (qua giới hạn): $K\to\infty$, cùng $\mu_0$ cho $J(\pi')-J(\pi)$. <strong>Bước 5</strong> (dạng chiếm dụng): gom theo trạng thái được $\sum_s\eta_{\pi'}(s)A_\pi(s,\pi')$. $\square$</p>
+<div class="grid2">
+<p class="check fragment" data-fragment-index="5"><strong>Câu hỏi:</strong> vì sao ở Bước 2 kỳ vọng dưới $\pi'$ của $R_{t+1}+\gamma v_\pi(S_{t+1})$ bằng $q_\pi(S_t,A_t)$?</p>
+<p class="box fragment" data-fragment-index="6"><strong>Lời giải:</strong> khi biết $(S_t,A_t)$, bước chuyển chỉ phụ thuộc $P$, chung cho cả hai.</p>
+</div>
+<p class="fragment" data-fragment-index="7"><strong>Lưu ý:</strong> bổ đề cần cùng $\mu_0$: $\tilde\pi$ từ $s_B$, $\pi$ từ $s_A$ cho vế trái $0{,}5\cdot3-1{,}4=0{,}1\ne-0{,}5$.</p>
+<aside class="notes"><p>Lợi thế của $\pi$ cộng dọc lượt của $\pi'$ là một tổng lồng nhau, còn lại đúng hiệu $J$. Ở Bước 1, $r(s,a)=\mathbb E[R_{t+1}\mid S_t=s,A_t=a]$, nên vế phải không chứa $\pi'$. Ở Bước 2, $\delta_t=R_{t+1}+\gamma v_\pi(S_{t+1})-v_\pi(S_t)$, quy ước $v_\pi(S_T)=0$. Ở Bước 3, các số hạng $v_\pi$ triệt tiêu theo $t\lt K$. Chính sách chỉ quyết định $A_t$; phần sau đó của bước chuyển do $P$ quyết định, nên lời giải đúng cho mọi chính sách. Bước 2 dùng cùng động lực và tính Markov; Bước 4 dùng cùng $\mu_0$, phần thưởng bị chặn và $\gamma\lt1$ (hội tụ trội); Bước 5 dùng định nghĩa của $\eta_{\pi'}$. Ở dòng cuối, vế trái là $v_{\tilde\pi}(s_B)-v_\pi(s_A)$; vế phải chỉ còn số hạng tại $s_B$ với $\eta_{\tilde\pi}(s_B)=1$, tức $A_\pi(s_B,\tilde\pi)=-0{,}5$ (trang lợi thế của $\pi'$ so với $\pi$ tại một trạng thái). Hai vế khác dấu. Ghi chú dùng phản ví dụ cùng dạng với $\pi'=(0{,}6;\,0{,}8)$: $1$ so với $0{,}4$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.1 (Bổ đề 10.19, chứng minh Bước 1–5; đoạn "Hai giả thiết có vai trò riêng").</p></aside>
+</section>
+
+<section data-slide-id="L10-7-11" class="compact">
+<h2>Bất đẳng thức Pinsker</h2>
+<p><strong>Nhắc lại:</strong> $D_{\mathrm{TV}}(q,q')=\tfrac12\sum_a\lvert q(a)-q'(a)\rvert$, $D_{\mathrm{KL}}(q\Vert q')=\sum_aq(a)\log\tfrac{q(a)}{q'(a)}$; với $\tilde\pi$, $D_{\mathrm{KL}}=(0{,}511;\,0{,}0566)$.</p>
+<div class="card">
+<p><strong>Mệnh đề.</strong> <strong>Giả thiết:</strong> $q$, $q'$ là hai phân phối trên tập hữu hạn, logarit tự nhiên. <strong>Kết luận:</strong></p>
+$$D_{\mathrm{TV}}(q,q')\le\sqrt{\tfrac12D_{\mathrm{KL}}(q\Vert q')},$$
+<p>cũng đúng với $D_{\mathrm{KL}}(q'\Vert q)$.</p>
+</div>
+<p class="fragment" data-fragment-index="1"><strong>Ý tưởng chứng minh.</strong> Gộp các phần tử thành hai nhóm $\{q\gt q'\}$ và phần bù, giữ nguyên $D_{\mathrm{TV}}$ và không làm $D_{\mathrm{KL}}$ tăng, rồi chứng minh trên hai điểm.</p>
+<p class="fragment" data-fragment-index="2"><strong>Ý nghĩa:</strong> KL nhỏ kéo theo TV nhỏ. Với $\tilde\pi$, tại $s_A$: $0{,}4\le\sqrt{0{,}511/2}=0{,}505$; tại $s_B$: $D_{\mathrm{TV}}=\tfrac12\bigl(\lvert0{,}5-\tfrac23\rvert+\lvert0{,}5-\tfrac13\rvert\bigr)=\tfrac16\approx0{,}167\le\sqrt{0{,}0566/2}=0{,}168$.</p>
+<aside class="notes"><p>Khoảng cách TV bị chặn bởi căn của nửa KL; trên chuỗi bất đẳng thức gần chặt tại $s_B$. Phép gộp dùng bất đẳng thức xử lý dữ liệu cho KL; trên hai điểm, khảo sát hiệu hai vế như hàm một biến. Chứng minh đầy đủ nằm ngoài phạm vi học phần (Cover và Thomas, 2006, Bổ đề 11.6.1). Không có cận ngược: TV nhỏ không kéo theo KL nhỏ. Với $\pi=(1-\varepsilon;\,\varepsilon)$ và $\pi'=(1;\,0)$, $D_{\mathrm{TV}}=\varepsilon$ còn $D_{\mathrm{KL}}(\pi\Vert\pi')=+\infty$. Hệ quả chặn cải thiện theo KL trung bình dùng bất đẳng thức này tại từng trạng thái, rồi bất đẳng thức Jensen.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (Mệnh đề 10.25(b), chứng minh Bước 3; đoạn sau).</p></aside>
+</section>
+
+<section data-slide-id="L10-7-12" class="compact">
+<h2>Bổ đề dịch chuyển phân bố chiếm dụng</h2>
+<p><strong>Nhắc lại:</strong> $\nu^\pi=(1-\gamma)\eta_\pi=(0{,}1;\,0{,}045)$, $\eta_{\tilde\pi}=(1;\,0{,}81)$; $D_{\mathrm{TV}}$ của $\tilde\pi$ là $(0{,}4;\,\tfrac16)$.</p>
+<div class="card fragment" data-fragment-index="1">
+<p><strong>Bổ đề</strong> (dịch chuyển phân bố chiếm dụng). <strong>Giả thiết:</strong> giả thiết chung. <strong>Kết luận:</strong> với $D_{\mathrm{TV}}(s)=D_{\mathrm{TV}}(\pi'(\cdot\mid s),\pi(\cdot\mid s))$,</p>
+$$\sum_s\bigl\lvert\nu^{\pi'}(s)-\nu^\pi(s)\bigr\rvert\ \le\ \frac{2\gamma}{1-\gamma}\,\mathbb E_{S\sim\nu^\pi}\bigl[D_{\mathrm{TV}}(S)\bigr].$$
+</div>
+<p class="fragment" data-fragment-index="2"><strong>Chứng minh.</strong> Hiệu hai phân bố bằng $\gamma$ nhân khác biệt một bước của hai ma trận chuyển, lan qua các bước sau với tổng trọng số không quá $\tfrac1{1-\gamma}$. Khác biệt một bước không quá $2\,\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]$.</p>
+<p class="fragment" data-fragment-index="3">Ở đây, với $\tilde\pi$: $\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]=0{,}1\cdot0{,}4+0{,}045\cdot\tfrac16=0{,}0475$. Chỉ $s_B$ đổi: vế trái $(1-\gamma)\lvert\eta_{\tilde\pi}(s_B)-\eta_\pi(s_B)\rvert=0{,}1\cdot\lvert0{,}81-0{,}45\rvert=0{,}036$, vế phải $18\cdot0{,}0475=0{,}855$.</p>
+<aside class="notes"><p>Nếu TV kỳ vọng theo $\nu^\pi$ nhỏ, hai phân bố chiếm dụng gần nhau; khác biệt ở mỗi bước cộng dồn qua các bước sau. TV kỳ vọng nhỏ nghĩa là phân phối hành động của $\pi'$ gần của $\pi$ ở các trạng thái có $\nu^\pi$ lớn. Khoảng cách giữa hai phân bố chiếm dụng không vượt $\tfrac{2\gamma}{1-\gamma}$ lần TV kỳ vọng; trên chuỗi cận đúng nhưng lỏng. $\tfrac{2\gamma}{1-\gamma}=\tfrac{1{,}8}{0{,}1}=18$. Vế trái là $\sum_s\lvert\nu^{\tilde\pi}(s)-\nu^\pi(s)\rvert=(1-\gamma)\lvert\eta_{\tilde\pi}(s_B)-\eta_\pi(s_B)\rvert$, vì $\nu^{\tilde\pi}(s_A)=\nu^\pi(s_A)=0{,}1$. Câu hỏi: vì sao định lý chặn cải thiện có thừa số $1/(1-\gamma)^2$? Lời giải: một thừa số $\tfrac1{1-\gamma}$ đến từ bổ đề này, vì khác biệt tích lũy qua các bước sau; thừa số thứ hai xuất hiện khi đổi $\nu$ về $\eta$ trong định lý. Ghi chú kiểm bổ đề với $\pi'=(0{,}6;\,0{,}8)$: $0{,}009$ so với $0{,}288$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (đoạn trực quan trước Bổ đề 10.26; Bổ đề 10.26, chứng minh Bước 1–6; đoạn sau chứng minh); §4.1 (Định nghĩa 10.18).</p></aside>
+</section>
+
+<section data-slide-id="L10-7-13" class="compact">
+<h2>Định lý chặn cải thiện</h2>
+<p><strong>Nhắc lại:</strong> $\Delta\mathcal L=\mathcal L_\pi(\pi')-J(\pi)$, $\chi_{\pi'}=\max_s\lvert A_\pi(s,\pi')\rvert$; với $\tilde\pi$, $\chi=0{,}5$.</p>
+<div class="card">
+<p><strong>Định lý</strong> (chặn cải thiện). <strong>Giả thiết:</strong> giả thiết chung; $A_\pi$ và $\nu^\pi$ tính chính xác. <strong>Kết luận:</strong></p>
+$$J(\pi')-J(\pi)\ \ge\ \Delta\mathcal L-\frac{2\gamma\,\chi_{\pi'}}{(1-\gamma)^2}\,\mathbb E_{S\sim\nu^\pi}\bigl[D_{\mathrm{TV}}(S)\bigr].$$
+</div>
+<p class="fragment" data-fragment-index="1"><strong>Chứng minh.</strong> Bước 1–3: bổ đề chênh lệch hiệu năng và hàm thay thế cho $\Delta J-\Delta\mathcal L=\sum_s(\eta_{\pi'}-\eta_\pi)(s)A_\pi(s,\pi')$. Bước 4: bất đẳng thức Hölder chặn tổng này dưới bởi $-\chi_{\pi'}\sum_s\lvert\eta_{\pi'}(s)-\eta_\pi(s)\rvert$. Bước 5: bổ đề dịch chuyển, với $\eta=\nu/(1-\gamma)$.</p>
+<p class="fragment" data-fragment-index="2"><strong>Ý nghĩa:</strong> phạt tỉ lệ với TV kỳ vọng theo phân bố của chính sách cũ. Với $\tilde\pi$, thừa số là $2\cdot0{,}9\cdot0{,}5/0{,}01=90$.</p>
+<p class="fragment" data-fragment-index="3"><strong>Chứng minh</strong> (hệ quả theo KL trung bình). Pinsker tại từng trạng thái, rồi Jensen cho hàm lõm $\sqrt{\cdot}$ với $\sum_s\nu^\pi(s)\le1$: $\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]\le\sqrt{\tfrac12\bar D_{\mathrm{KL}}}$. Thế vào định lý.</p>
+<aside class="notes"><p>Mức tăng thật không nhỏ hơn dự báo trừ một phạt tỉ lệ với TV kỳ vọng giữa hai chính sách; Pinsker và Jensen đổi phạt đó sang KL trung bình. Cận vẫn đúng khi thay $\chi_{\pi'}$ bằng $\max_{s,a}\lvert A_\pi(s,a)\rvert$. Định lý không cần điều kiện hỗ trợ, vì Bước 3 dùng dạng tổng của hàm thay thế. Bỏ $\gamma\lt1$ thì thừa số vô hạn; bỏ "đại lượng chính xác" thì cận không còn chứng nhận cải thiện. Nhận xét 10.29 nêu cận theo TV lớn nhất của Schulman và cộng sự (2015), lỏng hơn trên chuỗi. Dòng chứng minh cuối là Bước 1–3 của chứng minh Hệ quả 10.28.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (Định lý 10.27, chứng minh Bước 1–5; đoạn sau định lý; Hệ quả 10.28, chứng minh Bước 1–3; Nhận xét 10.29).</p></aside>
+</section>
+
+<section data-slide-id="L10-7-14" class="compact">
+<h2>Chặn cải thiện trên chuỗi: đúng nhưng lỏng</h2>
+<p><strong>Nhắc lại:</strong> $\nu^\pi=(0{,}1;\,0{,}045)$, $D_{\mathrm{TV}}(s)=\tfrac12\sum_a|\pi'(a\mid s)-\pi(a\mid s)|$, $\chi_{\pi'}=\max_s|A_\pi(s,\pi')|$; với $\tilde\pi$, $\Delta\mathcal L=0{,}095$, $\Delta J=-0{,}085$.</p>
+<table class="calc">
+<thead><tr><th></th><th>Bước tới $\tilde\pi$</th><th><span class="fragment" data-fragment-index="1">Bước chỉ đổi $p_B$ thêm $\Delta p_B\gt0$</span></th></tr></thead>
+<tbody>
+<tr><td>$\Delta\mathcal L$</td><td>$0{,}095$</td><td><span class="fragment" data-fragment-index="1">$0{,}45\cdot3\Delta p_B=1{,}35\Delta p_B$</span></td></tr>
+<tr><td>$D_{\mathrm{TV}}(s_A)$; $D_{\mathrm{TV}}(s_B)$</td><td>$0{,}4$; $\tfrac16$</td><td><span class="fragment" data-fragment-index="1">$0$; $\Delta p_B$</span></td></tr>
+<tr><td>$\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]$</td><td>$0{,}1\cdot0{,}4+0{,}045\cdot\tfrac16=0{,}0475$</td><td><span class="fragment" data-fragment-index="1">$0{,}045\Delta p_B$</span></td></tr>
+<tr><td>$\chi$; $\tfrac{2\gamma\chi}{(1-\gamma)^2}$</td><td>$0{,}5$; $90$</td><td><span class="fragment" data-fragment-index="1">$3\Delta p_B$; $540\Delta p_B$</span></td></tr>
+<tr><td>cận dưới của $\Delta J$</td><td>$0{,}095-90\cdot0{,}0475=-4{,}18$</td><td><span class="fragment" data-fragment-index="1">$1{,}35\Delta p_B-24{,}3(\Delta p_B)^2$</span></td></tr>
+<tr><td>$\Delta J$ tính trực tiếp</td><td>$-0{,}085$</td><td><span class="fragment" data-fragment-index="1">$1{,}35\Delta p_B$</span></td></tr>
+</tbody></table>
+<p class="box fragment" data-fragment-index="2">Cận đúng nhưng không chặt. Cận chỉ chứng nhận $J$ tăng khi $\Delta p_B\lt1{,}35/24{,}3\approx0{,}056$.</p>
+<aside class="notes"><p>Với bước tới $\tilde\pi$, cận là $-4{,}18$, đúng nhưng xa $-0{,}085$. Ở cột hai, $A_\pi(s_A,\pi')=0$, $A_\pi(s_B,\pi')=3\Delta p_B$, thừa số $2\cdot0{,}9\cdot3\Delta p_B/0{,}01=540\Delta p_B$, phạt $540\Delta p_B\cdot0{,}045\Delta p_B=24{,}3(\Delta p_B)^2$. $\Delta J=1{,}35\Delta p_B$ vì $\Delta p_A=0$ nên sai số bằng $0$. Hàm thay thế chính xác nhưng cận vẫn phạt, vì cận phải đúng cho mọi MDP. Giá trị $\Delta p_B=0{,}05$ cho cận $0{,}0068\gt0$, còn $\Delta p_B=0{,}06$ cho $-0{,}0065$. Ví dụ 10.14 còn tính bước $\pi'=(0{,}6;\,0{,}8)$: phạt $1{,}152$ lớn hơn $\Delta\mathcal L=0{,}26$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (Ví dụ 10.14: "Bước dài $\tilde\pi$", "Bước nhỏ chỉ đổi $s_B$", "Diễn giải", "Kiểm tra lại").</p></aside>
+</section>
+
+<section data-slide-id="L10-7-15" class="compact">
+<h2>Cải thiện đơn điệu qua hàm chặn dưới</h2>
+<p><strong>Nhắc lại:</strong> định lý chặn cải thiện, $J(\pi')-J(\pi)\ge\Delta\mathcal L-\tfrac{2\gamma\chi_{\pi'}}{(1-\gamma)^2}\mathbb E_{\nu^\pi}[D_{\mathrm{TV}}]$; $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$, $A_\pi(s_B,\cdot)=(1;\,-2)$.</p>
+<div class="card">
+<p><strong>Hệ quả</strong> (cải thiện đơn điệu). <strong>Giả thiết:</strong> như định lý, cho mỗi cặp $(\pi_k,\pi')$. Đặt $\bar\chi_k=\max_{s,a}\lvert A_{\pi_k}(s,a)\rvert$, $C_k=2\gamma\bar\chi_k/(1-\gamma)^2$ và</p>
+$$\mathcal M_k(\pi')=\mathcal L_{\pi_k}(\pi')-C_k\,\mathbb E_{S\sim\nu^{\pi_k}}\bigl[D_{\mathrm{TV}}(S)\bigr].$$
+<p><strong>Kết luận:</strong> nếu $\mathcal M_k(\pi_{k+1})\ge\mathcal M_k(\pi_k)$ thì $J(\pi_{k+1})\ge J(\pi_k)$.</p>
+</div>
+<p class="fragment" data-fragment-index="1"><strong>Chứng minh.</strong> $J(\pi_{k+1})\ge\mathcal M_k(\pi_{k+1})\ge\mathcal M_k(\pi_k)=J(\pi_k)$, vì $\mathcal L_{\pi_k}(\pi_k)=J(\pi_k)$.</p>
+<p class="fragment" data-fragment-index="2">Trên chuỗi, $C=360$ ($\bar\chi=2$). Với $c=(0{,}8;\,3)/(1-\gamma)=(8;\,30)$: $\mathcal M_k(\pi')-\mathcal M_k(\pi_k)\le\sum_s\nu^{\pi_k}(s)D_{\mathrm{TV}}(s)(c_s-360)\lt0$ khi $\pi'\ne\pi_k$.</p>
+<p class="box fragment" data-fragment-index="3">TRPO thay phạt bằng ràng buộc $\bar D_{\mathrm{KL}}\le\kappa$.</p>
+<aside class="notes"><p>Ràng buộc cho bước dài hơn, đổi lại $J$ có thể giảm. Schulman và cộng sự (2015) chứng minh cận với KL lớn nhất theo trạng thái; KL trung bình là xấp xỉ kinh nghiệm. Trên chuỗi, $\bar\chi=\lvert A_\pi(s_B,2)\rvert=2$, $C=2\cdot0{,}9\cdot2/0{,}01=360$; với $D_{\mathrm{TV}}(s)=\lvert\Delta p_s\rvert$, $\Delta\mathcal L\le\sum_s\nu(s)D_{\mathrm{TV}}(s)c_s$. Cực đại một hàm nằm dưới $J$ và chạm $J$ tại chính sách hiện tại thì $J$ không giảm; với hằng của lý thuyết, bước gần như bằng $0$. Hai bất đẳng thức theo định lý và giả thiết. Đây là cực đại hóa qua hàm chặn dưới (minorize–maximize, MM). Phạt tuyến tính theo TV làm phép cực đại đứng tại $\pi_k$. Hệ quả 10.31: với đại lượng và nghiệm chính xác, bước miền tin cậy có $J(\pi_{k+1})-J(\pi_k)\ge-\sqrt{2\kappa}\,\gamma\chi_{\pi_{k+1}}/(1-\gamma)^2$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (Hệ quả 10.30, chứng minh Bước 1–3; đoạn cực đại hóa qua hàm chặn dưới; đoạn số trên chuỗi; đoạn "Để cho phép bước lớn"; Hệ quả 10.31 và đoạn sau).</p></aside>
 </section>
 </section>
 

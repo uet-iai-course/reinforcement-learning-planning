@@ -10,7 +10,7 @@ Căn cứ:
 
 Mọi con số dưới đây được tính lại bằng `/tmp/claude-1000/-data-tqlong-lectures/678a7f48-9d80-46cf-a421-67398857f913/scratchpad/deck10-v2/kiem_so.py`.
 
-**Quyết định đã chốt** (không bàn lại; thêm 2026-11-21: luận điểm bìa "Dùng lại lượt đã thu cho những bước cập nhật chính sách lớn mà hàm mục tiêu không giảm.", 74 trang đếm và 120 phút là ngoại lệ P6, tinh chỉnh Đ1–Đ13 của `NGUYEN-TAC-HOC-PHAN.md` §3a.F áp cho storyboard): bỏ DPO; tên bài "TRPO và PPO"; sáu mạch đánh số; một ví dụ chung là chuỗi hai trạng thái với một tham số mỗi trạng thái, $p_s=\sigma(\theta_s)$, chính sách cũ $\theta=(0;\,\log2)$, tức $(p_A;\,p_B)=(\tfrac12;\,\tfrac23)$; chính sách ứng viên của mạch 4 là $\tilde\theta=(\log9;\,0)$, tức $\tilde\pi=(0{,}9;\,0{,}5)$ (ký hiệu theo ghi chú: phát biểu tổng quát dùng $\pi'$, chính sách cụ thể của ví dụ dùng $\tilde\pi$; $\pi'=(0{,}6;\,0{,}8)$ của Ví dụ 10.11 không lên trang); bài tập tổng hợp PPO-Clip ở cuối mạch 5; tổng kết định tính.
+**Quyết định đã chốt** (không bàn lại; thêm 2026-11-21: luận điểm bìa "Dùng lại lượt đã thu cho những bước cập nhật chính sách lớn mà hàm mục tiêu không giảm." (thay ngày 2026-11-22, quyết định #6 của tác giả, bằng "Kiểm soát mức đổi chính sách để giảm nguy cơ suy giảm khi dùng lại lượt đã thu.", 18 âm tiết), 74 trang đếm và 120 phút là ngoại lệ P6, tinh chỉnh Đ1–Đ13 của `NGUYEN-TAC-HOC-PHAN.md` §3a.F áp cho storyboard): bỏ DPO; tên bài "TRPO và PPO"; sáu mạch đánh số; một ví dụ chung là chuỗi hai trạng thái với một tham số mỗi trạng thái, $p_s=\sigma(\theta_s)$, chính sách cũ $\theta=(0;\,\log2)$, tức $(p_A;\,p_B)=(\tfrac12;\,\tfrac23)$; chính sách ứng viên của mạch 4 là $\tilde\theta=(\log9;\,0)$, tức $\tilde\pi=(0{,}9;\,0{,}5)$ (ký hiệu theo ghi chú: phát biểu tổng quát dùng $\pi'$, chính sách cụ thể của ví dụ dùng $\tilde\pi$; $\pi'=(0{,}6;\,0{,}8)$ của Ví dụ 10.11 không lên trang); bài tập tổng hợp PPO-Clip ở cuối mạch 5; tổng kết định tính.
 
 ---
 
@@ -22,7 +22,7 @@ Mọi con số dưới đây được tính lại bằng `/tmp/claude-1000/-data
 4. Bổ đề chênh lệch hiệu năng cho thấy đánh giá chính sách mới cần phân bố trạng thái của chính nó; hàm thay thế dùng phân bố của chính sách cũ, khớp $J$ đến bậc một, nhưng với bước tới $(0{,}9;\,0{,}5)$ nó dự báo $J$ tăng $0{,}095$ trong khi $J$ giảm $0{,}085$, nên TRPO tối đa hàm thay thế trong một miền KL trung bình nhỏ.
 5. PPO thay ràng buộc KL bằng phép cắt tỉ số chính sách và dùng lại một bộ đệm nhiều lần chỉ với gradient bậc một: trên một bộ đệm hai lượt có lợi thế ước lượng sai dấu, phép cắt giữ mức giảm của $J$ ở $0{,}008$ thay cho $0{,}4$.
 
-Mạch tổng kết gọi tên ví dụ chung (chuỗi hai trạng thái) mà không nhắc số (Đ13). Câu hỏi trung tâm (trang "Vấn đề trung tâm" của mạch 1): (1) làm thế nào để ước lượng gradient chính sách có phương sai nhỏ mà kỳ vọng không đổi; (2) làm thế nào để dùng bước cập nhật dài mà hàm mục tiêu không giảm. Câu 2–3 trả lời phần (1), câu 4–5 trả lời phần (2).
+Mạch tổng kết gọi tên ví dụ chung (chuỗi hai trạng thái) mà không nhắc số (Đ13). Câu hỏi trung tâm (trang "Vấn đề trung tâm" của mạch 1): (1) làm thế nào để ước lượng gradient chính sách có phương sai nhỏ mà kỳ vọng không đổi; (2) làm thế nào để dùng lượt của chính sách cũ cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm (2026-11-22; câu cũ "… mà hàm mục tiêu không giảm" hứa điều thuật toán không bảo đảm). Câu 2–3 trả lời phần (1), câu 4–5 trả lời phần (2).
 
 ---
 
@@ -56,13 +56,21 @@ Khuôn mỗi mạch (TB1, TB27): bài toán → trực quan → công cụ → k
 
 ### Mạch 4. Hàm thay thế và miền tin cậy (TRPO)
 
-Bản theo đề xuất trình bày TRPO của tác giả (`de-xuat-trinh-bay-trpo-2026-11-21.md`), điều phối viên duyệt 2026-11-21; storyboard §3 mạch 4. Bản trước ở mục lịch sử cuối tệp.
+Bản theo đề xuất trình bày TRPO của tác giả (`de-xuat-trinh-bay-trpo-2026-11-21.md`), điều phối viên duyệt 2026-11-21; câu 4–5 sửa ngày 2026-11-22 theo nhận xét website (#6, `nhan-xet-website-trpo-2026-11-21.md`); storyboard §3 mạch 4. Bản trước ở mục lịch sử cuối tệp; câu 4–5 của bản 2026-11-21 chép ở cuối mục này.
 
 1. Hiện tượng và câu hỏi: mỗi lượt của mạch trước chỉ cho một bước, và bước dài theo ước lượng của một lượt cũ làm $J$ giảm. Trên đoạn từ $\pi$ tới ứng viên $\tilde\pi=(0{,}9;\,0{,}5)$, $J(\pi_t)=1{,}4+0{,}095t-0{,}18t^2$: hướng này làm $J$ tăng lúc đầu, nhưng $J$ về $1{,}4$ tại $t=\tfrac{19}{36}$ và xuống $1{,}315$ tại $t=1$. Biết hướng làm $J$ tăng chưa cho biết đi bao xa. $\tilde\pi$ đổi cả hành động tại $s_B$ lẫn tần suất tới $s_B$ (trong $100$ lượt, từ $50$ lên $90$), và $J(\tilde\pi)$ chỉ biết sau khi chạy nó. Đánh giá chính sách mới từ lượt của $\pi$ thế nào, và tin được đến đâu?
 2. Mô hình: mức thay đổi của $J$ là lợi thế của $\pi$ cộng theo tần suất gặp trạng thái dưới chính sách mới, $1\cdot0{,}32+0{,}81\cdot(-0{,}5)=-0{,}085$ (bổ đề chênh lệch hiệu năng). Hàm thay thế thay tần suất mới bằng tần suất cũ và hiệu chỉnh hành động bằng tỉ số chính sách, nên tính được từ lượt cũ.
 3. Kết quả trên ví dụ: hàm thay thế dự báo $+0{,}095$ trong khi $J$ giảm $0{,}085$, toàn bộ sai số nằm ở $s_B$. Trên đoạn từ $\pi$ tới $\tilde\pi$, dự báo tăng như $0{,}095t$ còn sai số tăng như $0{,}18t^2$; hàm thay thế tiếp xúc $J$ tại $\pi$ nên là mô hình cục bộ.
-4. Giới hạn thay đổi: cùng bước tham số đổi hành vi rất khác nhau ($\Delta p=0{,}2311$ so với $0{,}0042$), nên khoảng cách đo trên phân phối hành động bằng KL. Bài toán miền tin cậy tối đa hàm thay thế với KL trung bình $\le\kappa$; trên đoạn, $\kappa=0{,}01$ giữ $t\le0{,}515$, nơi $\Delta J>0$. KL nhỏ kéo theo TV nhỏ, phân bố chiếm dụng ít đổi và sai số nhỏ (cơ sở lý thuyết; với $\tilde\pi$ cận là $-4{,}18$, cận dương chỉ với bước rất ngắn).
-5. Giải và thuật toán: bậc một cho hàm thay thế, bậc hai cho KL, miền tin cậy thành một elip của ma trận Fisher; bước tối ưu đi theo gradient tự nhiên $F^{-1}g=(8;\,30)$, dồn về $\theta_B$, và một bước TRPO đưa $J$ từ $1{,}4$ lên $1{,}807$. Điều còn thiếu: mỗi bộ đệm chỉ cho một bước, với gradient liên hợp và tìm kiếm lùi.
+4. Giới hạn thay đổi: cùng bước tham số đổi hành vi rất khác nhau ($\Delta p=0{,}2311$ so với $0{,}0042$), nên khoảng cách đo trên phân phối hành động bằng KL. Bài toán miền tin cậy tối đa hàm thay thế với KL trung bình $\le\kappa$; trên đoạn, $\kappa=0{,}01$ giữ $t\le0{,}515$, nơi $\Delta J>0$. KL nhỏ kéo theo TV nhỏ, phân bố chiếm dụng ít đổi và sai số nhỏ, nhưng cận lỏng: với $\tilde\pi$, phạt $14{,}7$ lớn hơn nhiều mức tăng dự báo $0{,}095$. Bài toán thay phạt bằng ràng buộc, nên giới hạn mức đổi mà không tự bảo đảm $J$ tăng.
+5. Giải và thuật toán: TRPO dự báo bằng hàm thay thế, giới hạn mức đổi bằng KL trung bình, rồi tối ưu trong miền tin cậy. Bậc một cho hàm thay thế, bậc hai cho KL, miền thành một elip của ma trận Fisher; bước tối ưu đi theo gradient tự nhiên $F^{-1}g=(8;\,30)$ và đưa $J$ từ $1{,}4$ lên $1{,}807$, thấp hơn $1{,}835$ của bước theo $g$, vì gradient tự nhiên chỉ tối ưu bài toán xấp xỉ. Thuật toán áp $\kappa$ lên KL trung bình trên bộ đệm ($\approx0{,}36$ với $\tilde\pi$), khác KL trung bình có chiết khấu ($0{,}0536$). Điều còn thiếu: mỗi bộ đệm chỉ cho một bước, với gradient liên hợp và tìm kiếm lùi.
+
+Phụ lục (2026-11-22; không thuộc mạch 4, ngoài 120 phút, sau tài liệu tham khảo): các chứng minh nối giới hạn KL của bài toán miền tin cậy với sai số của hàm thay thế, theo thứ tự mắt xích (bổ đề chênh lệch hiệu năng, Pinsker, dịch chuyển phân bố chiếm dụng, định lý chặn cải thiện, ví dụ cận trên chuỗi, cải thiện đơn điệu); storyboard §3, mục "Phụ lục".
+
+*Câu 4–5 bản 2026-11-21 (đã thay):*
+
+> 4. Giới hạn thay đổi: cùng bước tham số đổi hành vi rất khác nhau ($\Delta p=0{,}2311$ so với $0{,}0042$), nên khoảng cách đo trên phân phối hành động bằng KL. Bài toán miền tin cậy tối đa hàm thay thế với KL trung bình $\le\kappa$; trên đoạn, $\kappa=0{,}01$ giữ $t\le0{,}515$, nơi $\Delta J>0$. KL nhỏ kéo theo TV nhỏ, phân bố chiếm dụng ít đổi và sai số nhỏ (cơ sở lý thuyết; với $\tilde\pi$ cận là $-4{,}18$, cận dương chỉ với bước rất ngắn).
+>
+> 5. Giải và thuật toán: bậc một cho hàm thay thế, bậc hai cho KL, miền tin cậy thành một elip của ma trận Fisher; bước tối ưu đi theo gradient tự nhiên $F^{-1}g=(8;\,30)$, dồn về $\theta_B$, và một bước TRPO đưa $J$ từ $1{,}4$ lên $1{,}807$. Điều còn thiếu: mỗi bộ đệm chỉ cho một bước, với gradient liên hợp và tìm kiếm lùi.
 
 ### Mạch 5. Tối ưu chính sách gần kề (PPO)
 
@@ -82,6 +90,8 @@ Bản theo đề xuất trình bày TRPO của tác giả (`de-xuat-trinh-bay-tr
 ---
 
 ## 3. Kết quả lên trang (TB28)
+
+*Lưu ý 2026-11-22:* bảng dưới là bản 2026-11-21 trước đề xuất TRPO; trang chứng minh của mạch 4 nay theo storyboard §3 (mạch 4 và mục "Phụ lục": bổ đề chênh lệch hiệu năng `7-01`, Pinsker `7-02`, bổ đề dịch chuyển `7-03`, định lý chặn cải thiện và chứng minh hệ quả theo KL `7-04`, cải thiện đơn điệu `7-06`).
 
 Mọi kết quả mà trang chiếu dùng mang nhãn, giả thiết lấy từ ghi chú (ghi "giả thiết chung" cộng giả thiết riêng, Đ7), kết luận bằng công thức. Chứng minh theo đúng một trong hai dạng (quyết định ở cổng storyboard 2026-11-21): (a) một dòng "Chứng minh." nêu bước then chốt; (b) trang riêng "Ý tưởng chứng minh: …" có bước mang tên của ghi chú và một hộp câu hỏi tự giải thích.
 
