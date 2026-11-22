@@ -1,16 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 520" width="540" height="401.1" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
 <title id="t">Q-learning ở bước thật 4 và 5</title>
-<desc id="d">Lớp thêm, nét xanh: ô F ghi mục tiêu 0, ô K ghi Q(K, phải) bằng 0,5. Dải dưới lưới: mốc bước thật 4, lưu (F, phải) cho (0, K), max Q(K, ·) bằng 0; mốc bước thật 5, lưu (K, phải) cho (cộng 1, Z), Q(K, phải) bằng 0,5.</desc>
+<desc id="d">Lớp thêm, nét xanh: ô F ghi mục tiêu 0, ô K ghi Q(K, phải) bằng 0,5, số 0,5 tô xanh lục. Bảng dưới lưới, hai hàng Bảng Q và Mô hình, kết cục ghi theo thứ tự (S′, R). Cột bước thật 4: Q(F, phải) bằng 0; mô hình ghi (F, phải) cho (K, 0). Cột bước thật 5: Q(K, phải) bằng 0,5; mô hình ghi (K, phải) cho (Z, cộng 1).</desc>
 <defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="ao" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker><marker id="ars" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="aos" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker><marker id="ag" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2E7D4F"/></marker><marker id="ags" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#2E7D4F"/></marker><marker id="ax" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#6B7280"/></marker><marker id="axs" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#6B7280"/></marker><marker id="ak" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#1d2433"/></marker><marker id="aks" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#1d2433"/></marker><pattern id="van" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#2F3E7A" stroke-width="3.5"/></pattern><pattern id="vano" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#B5541B" stroke-width="3.5"/></pattern><pattern id="vanx" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#6B7280" stroke-width="3.5"/></pattern></defs>
 <text x="239.0" y="298" font-size="22" text-anchor="middle" font-weight="bold" fill="#2F3E7A">mục tiêu 0</text>
-<text x="389.0" y="298" font-size="22" text-anchor="middle" font-weight="bold" fill="#2F3E7A">Q(K,→) = 0,5</text>
-<rect x="14" y="374" width="222" height="96" rx="8" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2.5"/>
-<text x="125.0" y="402" font-size="22" text-anchor="middle" font-weight="bold" fill="#2F3E7A">bước thật 4:</text>
-<text x="125.0" y="430" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">lưu (F,→) ↦ (0, K)</text>
-<text x="125.0" y="458" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">max Q(K,·) = 0</text>
-<rect x="250" y="374" width="238" height="96" rx="8" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2.5"/>
-<text x="369.0" y="402" font-size="22" text-anchor="middle" font-weight="bold" fill="#2F3E7A">bước thật 5:</text>
-<text x="369.0" y="430" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">lưu (K,→) ↦ (+1, Z)</text>
-<text x="369.0" y="458" font-size="22" text-anchor="middle" font-weight="bold" fill="#2F3E7A">Q(K,→) = 0,5</text>
-<line x1="237.0" y1="422.0" x2="249.0" y2="422.0" stroke="#1d2433" stroke-width="2" marker-end="url(#ak)"/>
+<text x="389.0" y="298" font-size="22" text-anchor="middle" font-weight="bold" fill="#2F3E7A">Q(K,→) = <tspan fill="#2E7D4F">0,5</tspan></text>
+<rect x="2" y="406" width="102" height="34" rx="0" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2"/>
+<text x="53.0" y="431" font-size="22" text-anchor="middle" font-weight="bold" fill="#2F3E7A">Bảng Q</text>
+<rect x="2" y="440" width="102" height="34" rx="0" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2"/>
+<text x="53.0" y="465" font-size="22" text-anchor="middle" font-weight="bold" fill="#2F3E7A">Mô hình</text>
+<rect x="104" y="374" width="198" height="32" rx="0" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2"/>
+<text x="203.0" y="398" font-size="22" text-anchor="middle" font-weight="bold" fill="#2F3E7A">bước thật 4</text>
+<rect x="104" y="406" width="198" height="34" rx="0" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2"/>
+<text x="203.0" y="431" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">Q(F,→) = 0</text>
+<rect x="104" y="440" width="198" height="34" rx="0" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2"/>
+<text x="203.0" y="465" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">ghi (F,→) ↦ (K, 0)</text>
+<rect x="302" y="374" width="198" height="32" rx="0" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2"/>
+<text x="401.0" y="398" font-size="22" text-anchor="middle" font-weight="bold" fill="#2F3E7A">bước thật 5</text>
+<rect x="302" y="406" width="198" height="34" rx="0" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2"/>
+<text x="401.0" y="431" font-size="22" text-anchor="middle" fill="#1d2433">Q(K,→) = <tspan font-weight="bold" fill="#2E7D4F">0,5</tspan></text>
+<rect x="302" y="440" width="198" height="34" rx="0" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2"/>
+<text x="401.0" y="465" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">ghi (K,→) ↦ (Z, +1)</text>
 </svg>

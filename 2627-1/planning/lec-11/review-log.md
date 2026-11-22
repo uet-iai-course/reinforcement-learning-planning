@@ -521,3 +521,60 @@ Nhận xét: hai tiêu chí "cân bằng trực giác–chứng minh" và "từ 
 | Độ chính xác, kiểm lại sau vòng 4 | (cùng tác tử độ chính xác) | `opus` | `high` | `ra-soat-chinh-xac-mach12-vong4-kiem-lai-2026-11-22.md` | đang chạy |
 | Độ chính xác, kiểm lại sau vòng 4 (xong) | 2-06, 2-15 (nhẹ) | hai phát hiện trước sửa đúng; 2 nhẹ mới: "chọn một cặp có mô hình" ở Thuật toán 11.3 đổi nghĩa thuật toán (ghi chú dòng 196, 208, 217: mô hình xác định ở mọi cặp); $\mathbb E(Q_k-\bar y)^2=\sigma^2/k$ thiếu điều kiện theo $y$ | chấp nhận cả hai. Phát hiện 1 do dòng bảng xét vòng 4 của điều phối viên (nhận đề xuất Codex 2-06 mà không đối chiếu ghi chú): rút lại dòng đó. Giao biên tập viên sửa trước khi commit |
 | Sửa nhỏ sau kiểm lại vòng 4 (xong) | Biên tập | (như trên) | `opus` | `high` | 2-06 "chọn ngẫu nhiên một cặp hợp lệ … mô hình mẫu, xác định ở mọi cặp"; 2-15 $\mathbb E[(Q_k-\bar y)^2\mid y]=\sigma^2/k$ | chấp nhận: điều phối viên kiểm phần đầu tệp và mạch 3–6 không đổi, `footer_check` 0, `formula_overflow` []. Hết chu kỳ 2: commit và push |
+| Commit chu kỳ 2 | | | | | `2f7f616` đã push; origin/main chứa HEAD; Pages "built 2f7f616"; SVG mới trả 200 |
+| Codex mạch 1, vòng 5 (chu kỳ 3) | `codex exec` | mặc định tài khoản | `high` | `nhan-xet-codex-mach1-2026-11-22-vong5.md` | đang chạy |
+| Codex mạch 2, vòng 5 (chu kỳ 3) | `codex exec` | mặc định tài khoản | `high` | `nhan-xet-codex-mach2-2026-11-22-vong5.md` | đang chạy |
+| Codex mạch 1, vòng 5 (xong) | | | | | 9; 9; 9; 8,5; 8,5 (không đổi) |
+| Codex mạch 2, vòng 5 (xong) | | | | | 9; 9,5; 9; 9; 8,5 (chỉ còn "từ lý thuyết đến thuật toán") |
+
+### Xét nhận xét vòng 5 (điều phối viên, 2026-11-22)
+
+Codex mạch 1 nêu lần thứ tư hai đề xuất đã bác theo NT11 (câu trả lời có điều kiện trên thẻ phải của câu hỏi trung tâm; câu dẫn đổi "hoặc" thành trình tự Dyna-Q) và lần thứ ba dải hình trên trang mục tiêu. Điều phối viên hỏi tác giả ba điểm này; các dòng còn lại làm ngay.
+
+| Nguồn | Trang | Nhận xét | Quyết định | Lý do |
+|---|---|---|---|---|
+| Codex m1 | 1-02 | nhãn cam "ví dụ: mô hình khớp luật mê cung" bị cắt; rút thành "Mô hình khớp luật mê cung", đặt giữa phía trên hai hộp; ghi $S'$, $R$ trong đầu ra; ghi chú diễn giả: $\alpha=0{,}5$ ở ví dụ để tính tay, định lý dùng Robbins–Monro | chấp nhận | lỗi hiển thị thật (vòng 4), điều phối viên xác nhận trên ảnh 1600×900; kiểm tràn hiện tại không bắt lỗi bên trong SVG |
+| Codex m1 | 1-07 | nhãn cạnh 0,225: "sau bước thật 5, lập kế hoạch tại (F,→) rồi (K,→)"; câu hệ quả ngắn cạnh bảng (bốn hành động đồng hạng; chọn tham lam cho →) | chấp nhận nếu không tăng âm tiết quá 79 + 10 | NT2 |
+| Codex m1 | 1-07 | thẻ phải: câu trả lời có điều kiện; câu dẫn theo trình tự Dyna-Q | chờ tác giả | NT11; nêu lần thứ tư |
+| Codex m1 | 1-06 | giải thích hệ số bằng F: thêm nhánh F → K (0,8, thưởng 0) và vòng trượt tại F (0,2) vào hình nhỏ, hiện sau hình K; "Khởi tạo $Q\equiv0$" ở 1-09 | chấp nhận (hình, không thêm chữ) | TB10 |
+| Codex m1 | 1-09 | mỗi mốc hai dòng "Bảng $Q$" / "Mô hình"; mốc 3 ghi thao tác đọc $(\mathrm F,\rightarrow)$ → $S'=\mathrm K,R=0$; tô cùng màu 0,5 ở K và 0,5 trong mục tiêu | chấp nhận | TB17 |
+| Codex m1 | 1-05 | "tối ưu chuỗi hành động nhận giá trị thực" | chấp nhận | vòng 4 viết thiếu "nhận" |
+| Codex m1 | 1-03 | mở bài tính mô hình đếm bằng hai lần chọn (A,→) của lượt thứ nhất (tần suất 1/2); RMSE tách hai câu (cách nào thực hiện được với 10 lần; so RMSE nêu đại lượng đích và số lần đánh giá) | chấp nhận nếu không tăng âm tiết | lời giải đã là fragment; ảnh chụp hiện mọi fragment |
+| Codex m1 | 1-04 | dải A → K → Z với $V_0$, $V_1(\mathrm K)$, $V_2(\mathrm A)$ | chờ tác giả | nêu lần thứ ba; trang mục tiêu |
+| Codex m2 | 2-08 | bước (f): chọn trạng thái có ít nhất một hành động đã lưu trong Model, rồi một hành động đã lưu tại đó; dưới giả mã hai dòng "giữ kết cục gần nhất: (e) ghi đè, (f) đọc" / "đếm kết cục: (e) tăng số đếm của $(R,S')$, (f) rút cả $(R,S')$ theo tần suất" | chấp nhận, hai dòng thay dòng "Lưu ý" hiện có (không tăng âm tiết) | ghi chú dòng 387, 193, 417; vai độ chính xác kiểm |
+
+**Tác giả (2026-11-23), ba câu hỏi của điều phối viên:** (1) L11-1-07: "Giữ NT11, bác cả hai" (không thêm câu trả lời lên thẻ phải, không đổi câu dẫn); (2) L11-1-04: "Giữ, không thêm hình"; (3) hết ba chu kỳ mà chưa đạt ≥ 9: "Dừng, giữ bản đã đẩy" (commit và push bản sau vòng 6, ghi điểm còn thiếu vào nhật ký). Hai dòng "chờ tác giả" của vòng 5 thành "bác bỏ (tác giả)"; các đề xuất này không xét lại ở vòng 6.
+| Biên tập vòng 5 mạch 1–2 (xong) | | (cùng tác tử biên tập) | `opus` | `high` | mọi dòng chấp nhận của vòng 5; nhãn 1-02 sửa (chữ tràn viewBox 560 tới x = 577); SVG mới `me-cung-he-so-slide.svg`; kiểm nhãn SVG mới (`getBBox` trong viewBox và khung chứa) trên 20 SVG: sửa thêm 2-10, 2-04, 2-17, nhánh 4 sơ đồ neo; âm tiết 1-07 79 → 87, 2-08 92 → 88, 1-03 110 → 108 | chờ điều phối viên kiểm |
+| Biên tập vòng 5 (kiểm) | | | | | chấp nhận: điều phối viên kiểm phần đầu tệp và mạch 3–6 không đổi, `footer_check` 0, `formula_overflow` [], xem ảnh 1-02 (nhãn nằm trong khung), 1-09 |
+| Công cụ | `codex_review.py` | | | | `mach.md` đánh dấu ⟨bấm k⟩ cho phần hiện theo lượt bấm; prompt nói ảnh là trạng thái cuối (Codex nhiều lần nhận xét nhầm "đáp số hiện cùng câu hỏi") |
+| Codex mạch 1, vòng 6 (chu kỳ 3, vòng cuối) | `codex exec` | mặc định tài khoản | `high` | `nhan-xet-codex-mach1-2026-11-23.md` | đang chạy |
+| Codex mạch 2, vòng 6 (chu kỳ 3, vòng cuối) | `codex exec` | mặc định tài khoản | `high` | `nhan-xet-codex-mach2-2026-11-23.md` | đang chạy |
+| Độ chính xác, kiểm lại sau vòng 5 | (cùng tác tử độ chính xác) | `opus` | `high` | `ra-soat-chinh-xac-mach12-vong5-kiem-lai-2026-11-23.md` | đang chạy |
+| Độ chính xác, kiểm lại sau vòng 5 (xong) | | hai phát hiện trước sửa đúng; 0 phát hiện mới. Đề xuất cho tác giả (không phải lỗi): ghi chú dòng 387 có thể viết rõ như deck ("trạng thái có cặp trong Model") | chấp nhận |
+| Codex mạch 1, vòng 6 (xong) | | | | | 9; 9,5; 9,5; 8,5; 9 |
+| Codex mạch 2, vòng 6 (xong) | | | | | 9; 9,5; 9; 9; 9 — **đạt điều kiện dừng**; mạch 2 không sửa thêm |
+
+### Xét nhận xét vòng 6, mạch 1 (điều phối viên, 2026-11-23; lượt sửa cuối của chu kỳ 3)
+
+Không xét lại các đề xuất tác giả đã bác (thẻ phải và câu dẫn của 1-07; hình trên 1-04).
+
+| Nguồn | Trang | Nhận xét | Quyết định | Lý do |
+|---|---|---|---|---|
+| Codex m1 | 1-06 | ở lượt bấm 2, hiện ngay dưới nhánh F dòng $v(2)=0{,}8\gamma v(1)+0{,}2\gamma v(2)$ rồi $v(2)\approx0{,}8780\,v(1)=0{,}8566$; tô hai hạng tử cùng màu mũi tên sang K và vòng trượt tại F | chấp nhận, thay mệnh đề "mỗi bước thêm nhân …" (không tăng âm tiết quá 74 + 8) | tiêu chí còn thiếu (trực giác–chứng minh); số đã kiểm (0,8566) |
+| Codex m1 | 1-09 | câu hỏi có mốc thời gian "Ngay sau cập nhật thật ở bước 5, $Q(\mathrm F,\rightarrow)$ bằng bao nhiêu?" cùng lượt với 0,5; ghi chú diễn giả khớp số lượt bấm; thứ tự kết cục thống nhất $(S',R)$ với 1-02 (bảng đang ghi "(0, K)") | chấp nhận | lệch ký hiệu thật giữa 1-02 và 1-09 |
+| Codex m1 | 1-05 | hiện nhánh Dyna-Q trước, rồi hai nhánh thời điểm quyết định cùng ngoặc | chấp nhận | TB17 |
+| Codex m1 | 1-07 | quy tắc phá hòa ở hàng Q-learning | chấp nhận vào ghi chú diễn giả | mặt trang đã 87 âm tiết |
+| Codex m1 | 1-02, 1-03 | câu nối hai cách phân loại mô hình; chú thích $\alpha=0{,}5$ trên trang; đánh dấu hai bước (A,→); câu tự kiểm 0,75; dẫn tới Ví dụ 11.11 | bác bỏ | đã có trong ghi chú diễn giả hoặc trang khác; mật độ; VP (không dẫn tiến) |
+| Biên tập vòng 6 mạch 1 (xong) | | (cùng tác tử biên tập) | `opus` | `high` | 1-06 dòng $v(2)$ tô màu theo hình; 1-09 câu hỏi có mốc thời gian, bảng theo $(S',R)$; 1-05 sơ đồ neo ba lớp; 1-07 phá hòa trong ghi chú diễn giả; mạch 2 không đổi từng byte | chấp nhận: điều phối viên kiểm phần đầu tệp và mạch 3–6 không đổi, `footer_check` 0, `formula_overflow` [], xem ảnh 1-06 |
+| Độ chính xác, kiểm lại sau vòng 6 (xong) | | 0 phát hiện; thứ tự $(S',R)$ ở mạch 1, $(R,S')$ ở mạch 2 đều đúng (ghi chú dùng cả hai: Định nghĩa 01.14 và Định nghĩa 11.2, Thuật toán 11.3, 11.8) | chấp nhận; thống nhất ký hiệu là việc trình bày, chuyển cho tác giả |
+
+### Kết thúc mạch 1–2 (2026-11-23)
+
+Theo quyết định của tác giả ("Dừng, giữ bản đã đẩy"): hết chu kỳ 3, commit và push bản sau vòng 6.
+
+| Mạch | Vòng 1 | Vòng 2 | Vòng 3 | Vòng 4 | Vòng 5 | Vòng 6 | Kết quả |
+|---|---|---|---|---|---|---|---|
+| 1 | 7; 6,5; 7; 7,5; 6,5 | 8,5; 8,5; 8,5; 8; 8 | 9; 9; 9; 8,5; 8,5 | 9; 9; 9; 8,5; 8,5 | 9; 9; 9; 8,5; 8,5 | 9; 9,5; 9,5; 8,5; 9 | chưa đạt: "cân bằng trực giác–chứng minh" 8,5 (lượt sửa sau vòng 6 chưa được chấm) |
+| 2 | 7,5; 7,5; 8; 7; 8 | 8,5; 9; 8,5; 8; 8,5 | 8,5; 9; 9; 8,5; 8,5 | 9; 9; 9; 8,5; 8,5 | 9; 9,5; 9; 9; 8,5 | 9; 9,5; 9; 9; 9 | đạt |
+
+Còn mở cho tác giả: deck 65 trang (trần P6 là 60); trang vượt 1,5 lần trần âm tiết (2-08 88, 2-17 91, 1-03 108/80); ghi chú diễn giả trên 150 âm tiết ở nhiều trang; thứ tự $(S',R)$ ở mạch 1 và $(R,S')$ ở mạch 2; mạch 3–6 còn số hiệu cũ của ghi chú; `storyboard.md` chưa cập nhật theo mạch 1–2 mới; đề xuất sửa ghi chú: Ví dụ 11.7 dẫn Ví dụ 8.3 (gần Ví dụ 8.2 hơn), dòng 387 viết rõ "trạng thái có cặp trong Model"; 2-04 đổi biến cố sang (A,→)→B (Ví dụ 11.4 dùng (F,→)→K).

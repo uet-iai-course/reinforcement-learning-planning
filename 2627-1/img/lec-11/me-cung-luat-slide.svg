@@ -21,11 +21,11 @@
 <text x="377.5" y="208" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">đích, +1</text>
 <rect x="10" y="34" width="420" height="196" fill="none" stroke="#1d2433" stroke-width="4"/>
 <line x1="220" y1="34" x2="220" y2="132" stroke="#1d2433" stroke-width="8"/>
-<text x="220" y="24" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">tường</text>
+<text x="220" y="24" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">tường</text>
 <line x1="220" y1="142" x2="220" y2="220" stroke="#B5541B" stroke-width="4" stroke-dasharray="8 6"/>
 <text x="220" y="256" font-size="20" text-anchor="middle" font-weight="normal" fill="#B5541B">cửa F–K</text>
-<text x="104.5" y="256" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">phòng trái</text>
-<text x="346.0" y="256" font-size="19" text-anchor="middle" font-weight="normal" fill="#1d2433">phòng phải</text>
+<text x="104.5" y="256" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">phòng trái</text>
+<text x="346.0" y="256" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">phòng phải</text>
 <polyline points="40.0,123.0 205.0,123.0 205.0,221.0 360.0,221.0" fill="none" stroke="#2E7D4F" stroke-width="3" stroke-dasharray="3 5"/>
 <line x1="350.0" y1="221.0" x2="372.0" y2="221.0" stroke="#2E7D4F" stroke-width="3" marker-end="url(#ag)"/>
 <text x="220" y="290" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">đi đúng: 0,8; trượt, ở yên: 0,2; γ = 0,9</text>
