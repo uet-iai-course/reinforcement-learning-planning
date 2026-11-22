@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 466" width="330" height="466" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Bảng đếm sau lượt thứ nhất</title>
+<desc id="d">Mô hình đếm sau lượt thứ nhất, vẽ thành thanh ngang dài theo tần suất: 5 bước thật, 4 cặp đã thử. Cặp (A, phải) có C bằng 2: bước 1 trượt, ở lại A; bước 2 sang B; mỗi nhánh đếm 1, chia 2 được 1/2. Cặp (B, xuống), (F, phải), (K, phải) mỗi cặp C bằng 1, tới F, K, Z với tần suất 1; phần thưởng ước lượng của (K, phải) bằng 1. Cặp khác: C bằng 0, chưa xác định.</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="ao" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker><marker id="ars" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="aos" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker><marker id="ag" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2E7D4F"/></marker><marker id="ags" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#2E7D4F"/></marker><marker id="ax" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#6B7280"/></marker><marker id="axs" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#6B7280"/></marker><marker id="ak" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#1d2433"/></marker><marker id="aks" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#1d2433"/></marker><pattern id="van" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#2F3E7A" stroke-width="3.5"/></pattern><pattern id="vano" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#B5541B" stroke-width="3.5"/></pattern><pattern id="vanx" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#6B7280" stroke-width="3.5"/></pattern></defs>
+<text x="6" y="22" font-size="21" text-anchor="start" font-weight="bold" fill="#2F3E7A">mô hình đếm:</text>
+<text x="6" y="48" font-size="21" text-anchor="start" font-weight="bold" fill="#2F3E7A">5 bước thật, 4 cặp đã thử</text>
+<text x="6" y="88" font-size="20" text-anchor="start" font-weight="bold" fill="#1d2433">(A,→), C = 2</text>
+<text x="20" y="119" font-size="20" text-anchor="middle" font-weight="bold" fill="#2F3E7A">A</text>
+<rect x="40" y="100" width="85.0" height="24" rx="2" fill="#2F3E7A" stroke="#2F3E7A" stroke-width="2"/>
+<circle cx="145.0" cy="112" r="14.0" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="145.0" y="119.0" font-size="20" text-anchor="middle" font-weight="bold" fill="#2F3E7A">1</text>
+<text x="165.0" y="119" font-size="20" text-anchor="start" font-weight="normal" fill="#1d2433">đếm 1 → 1/2</text>
+<text x="20" y="151" font-size="20" text-anchor="middle" font-weight="bold" fill="#2F3E7A">B</text>
+<rect x="40" y="132" width="85.0" height="24" rx="2" fill="#2F3E7A" stroke="#2F3E7A" stroke-width="2"/>
+<circle cx="145.0" cy="144" r="14.0" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="145.0" y="151.0" font-size="20" text-anchor="middle" font-weight="bold" fill="#2F3E7A">2</text>
+<text x="165.0" y="151" font-size="20" text-anchor="start" font-weight="normal" fill="#1d2433">đếm 1 → 1/2</text>
+<text x="6" y="178" font-size="20" text-anchor="start" font-weight="bold" fill="#1d2433">(B,↓), C = 1</text>
+<text x="20" y="209" font-size="20" text-anchor="middle" font-weight="bold" fill="#2F3E7A">F</text>
+<rect x="40" y="190" width="170" height="24" rx="2" fill="#2F3E7A" stroke="#2F3E7A" stroke-width="2"/>
+<text x="218" y="209" font-size="20" text-anchor="start" font-weight="normal" fill="#1d2433">1</text>
+<text x="6" y="236" font-size="20" text-anchor="start" font-weight="bold" fill="#1d2433">(F,→), C = 1</text>
+<text x="20" y="267" font-size="20" text-anchor="middle" font-weight="bold" fill="#2F3E7A">K</text>
+<rect x="40" y="248" width="170" height="24" rx="2" fill="#2F3E7A" stroke="#2F3E7A" stroke-width="2"/>
+<text x="218" y="267" font-size="20" text-anchor="start" font-weight="normal" fill="#1d2433">1</text>
+<text x="6" y="294" font-size="20" text-anchor="start" font-weight="bold" fill="#1d2433">(K,→), C = 1, r̂ = 1</text>
+<text x="20" y="325" font-size="20" text-anchor="middle" font-weight="bold" fill="#2F3E7A">Z</text>
+<rect x="40" y="306" width="170" height="24" rx="2" fill="#2F3E7A" stroke="#2F3E7A" stroke-width="2"/>
+<text x="218" y="325" font-size="20" text-anchor="start" font-weight="normal" fill="#1d2433">1</text>
+<line x1="40" y1="348" x2="210" y2="348" stroke="#1d2433" stroke-width="2"/>
+<line x1="40" y1="348" x2="40" y2="355" stroke="#1d2433" stroke-width="2"/>
+<text x="40" y="376" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">0</text>
+<line x1="125.0" y1="348" x2="125.0" y2="355" stroke="#1d2433" stroke-width="2"/>
+<text x="125.0" y="376" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">0,5</text>
+<line x1="210" y1="348" x2="210" y2="355" stroke="#1d2433" stroke-width="2"/>
+<text x="210" y="376" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">1</text>
+<text x="224" y="376" font-size="22" text-anchor="start" font-weight="normal" fill="#1d2433" font-style="italic">p̂</text>
+<text x="6" y="410" font-size="19" text-anchor="start" font-weight="normal" fill="#6B7280">số trong vòng tròn: bước của lượt</text>
+<text x="6" y="440" font-size="20" text-anchor="start" font-weight="bold" fill="#6B7280">cặp khác: C = 0, chưa xác định</text>
+</svg>

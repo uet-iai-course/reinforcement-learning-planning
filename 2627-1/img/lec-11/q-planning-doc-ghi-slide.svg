@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" width="480" height="360" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Một cập nhật Q-planning: ô được đọc và ô được ghi</title>
+<desc id="d">Mê cung hai phòng. Ô K viền xanh, nhãn đọc: Q(K, phải) bằng 0,5; mũi tên liền từ K sang Z là mẫu thật. Mũi tên nét đứt màu cam từ F sang K là mẫu từ mô hình, phần thưởng 0, trạng thái kế K. Ô F viền cam, nhãn ghi: Q(F, phải) đổi từ 0 thành 0,225.</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="ao" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker><marker id="ars" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="aos" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker><marker id="ag" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2E7D4F"/></marker><marker id="ags" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#2E7D4F"/></marker><marker id="ax" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#6B7280"/></marker><marker id="axs" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#6B7280"/></marker><marker id="ak" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#1d2433"/></marker><marker id="aks" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#1d2433"/></marker><pattern id="van" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#2F3E7A" stroke-width="3.5"/></pattern><pattern id="vano" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#B5541B" stroke-width="3.5"/></pattern><pattern id="vanx" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#6B7280" stroke-width="3.5"/></pattern></defs>
+<rect x="8" y="8" width="116" height="124" rx="0" fill="#FFFFFF" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="16" y="34" font-size="22" text-anchor="start" font-weight="bold" fill="#2F3E7A">A</text>
+<rect x="124" y="8" width="116" height="124" rx="0" fill="#FFFFFF" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="132" y="34" font-size="22" text-anchor="start" font-weight="bold" fill="#2F3E7A">B</text>
+<rect x="240" y="8" width="116" height="124" rx="0" fill="#FFFFFF" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="248" y="34" font-size="22" text-anchor="start" font-weight="bold" fill="#2F3E7A">C</text>
+<rect x="356" y="8" width="116" height="124" rx="0" fill="#FFFFFF" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="364" y="34" font-size="22" text-anchor="start" font-weight="bold" fill="#2F3E7A">D</text>
+<rect x="8" y="132" width="116" height="124" rx="0" fill="#FFFFFF" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="16" y="158" font-size="22" text-anchor="start" font-weight="bold" fill="#2F3E7A">E</text>
+<rect x="124" y="132" width="116" height="124" rx="0" fill="#F7EFE6" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="132" y="158" font-size="22" text-anchor="start" font-weight="bold" fill="#2F3E7A">F</text>
+<rect x="240" y="132" width="116" height="124" rx="0" fill="#FFFFFF" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="248" y="158" font-size="22" text-anchor="start" font-weight="bold" fill="#2F3E7A">K</text>
+<rect x="356" y="132" width="116" height="124" rx="0" fill="#DCE3F3" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="364" y="158" font-size="22" text-anchor="start" font-weight="bold" fill="#2F3E7A">Z</text>
+<rect x="8" y="8" width="464" height="248" fill="none" stroke="#1d2433" stroke-width="4"/>
+<line x1="240" y1="8" x2="240" y2="132" stroke="#1d2433" stroke-width="8"/>
+<line x1="240" y1="142" x2="240" y2="246" stroke="#B5541B" stroke-width="4" stroke-dasharray="8 6"/>
+<rect x="127" y="135" width="110" height="118" rx="2" fill="none" stroke="#B5541B" stroke-width="4"/>
+<rect x="243" y="135" width="110" height="118" rx="2" fill="none" stroke="#2F3E7A" stroke-width="4"/>
+<text x="230" y="160" font-size="20" text-anchor="end" font-weight="bold" fill="#B5541B">ghi</text>
+<text x="346" y="160" font-size="20" text-anchor="end" font-weight="bold" fill="#2F3E7A">đọc</text>
+<text x="182.0" y="192.0" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">Q(F,→)</text>
+<text x="182.0" y="218.0" font-size="20" text-anchor="middle" font-weight="bold" fill="#B5541B">0 → 0,225</text>
+<text x="298.0" y="192.0" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">Q(K,→)</text>
+<text x="298.0" y="218.0" font-size="20" text-anchor="middle" font-weight="bold" fill="#2F3E7A">= 0,5</text>
+<line x1="192.0" y1="238.0" x2="280.0" y2="238.0" stroke="#B5541B" stroke-width="3.5" marker-end="url(#ao)" stroke-dasharray="9 6"/>
+<line x1="308.0" y1="238.0" x2="404.0" y2="238.0" stroke="#2F3E7A" stroke-width="3.5" marker-end="url(#ar)"/>
+<line x1="16.0" y1="289.0" x2="66.0" y2="289.0" stroke="#2F3E7A" stroke-width="3.5" marker-end="url(#ar)"/>
+<text x="78" y="296" font-size="20" text-anchor="start" font-weight="normal" fill="#1d2433">mẫu thật (+1, Z)</text>
+<line x1="16.0" y1="325.0" x2="66.0" y2="325.0" stroke="#B5541B" stroke-width="3.5" marker-end="url(#ao)" stroke-dasharray="9 6"/>
+<text x="78" y="332" font-size="20" text-anchor="start" font-weight="normal" fill="#B5541B">mẫu từ mô hình (0, K)</text>
+</svg>

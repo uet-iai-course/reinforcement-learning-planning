@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 476" width="620" height="476" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Hai loại bất định tại (A, phải), biến cố sang B</title>
+<desc id="d">Đồ thị cho biến cố đi sang B khi chọn phải ở A, p bằng 0,8. Trục hoành: số lần thử thật của cặp (A, phải), C, thang log từ 1 đến 50. Trục tung: độ lệch chuẩn từ 0 đến 0,45. Đường ngang liền tại 0,4: một lần thử, căn của p(1 − p), bất định ngẫu nhiên, không đổi theo C. Đường cong nét đứt 0,4 chia căn C: ước lượng p mũ qua C lần thử, bất định nhận thức. Hai mốc: C bằng 2 lần thử ấn định trước, 0,2828, là độ lệch chuẩn của p mũ qua các nhóm hai lần thử; C bằng 50, 0,0566.</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="ao" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker><marker id="ars" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="aos" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker><marker id="ag" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2E7D4F"/></marker><marker id="ags" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#2E7D4F"/></marker><marker id="ax" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#6B7280"/></marker><marker id="axs" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#6B7280"/></marker><marker id="ak" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#1d2433"/></marker><marker id="aks" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#1d2433"/></marker><pattern id="van" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#2F3E7A" stroke-width="3.5"/></pattern><pattern id="vano" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#B5541B" stroke-width="3.5"/></pattern><pattern id="vanx" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#6B7280" stroke-width="3.5"/></pattern></defs>
+<line x1="84" y1="340" x2="590" y2="340" stroke="#1d2433" stroke-width="2"/>
+<line x1="84" y1="340" x2="84" y2="54" stroke="#1d2433" stroke-width="2"/>
+<line x1="84.0" y1="340" x2="84.0" y2="348" stroke="#1d2433" stroke-width="2"/>
+<text x="84.0" y="370" font-size="23" text-anchor="middle" font-weight="normal" fill="#1d2433">1</text>
+<line x1="172.59191006777894" y1="340" x2="172.59191006777894" y2="348" stroke="#1d2433" stroke-width="2"/>
+<text x="172.59191006777894" y="370" font-size="23" text-anchor="middle" font-weight="normal" fill="#1d2433">2</text>
+<line x1="289.7040449661106" y1="340" x2="289.7040449661106" y2="348" stroke="#1d2433" stroke-width="2"/>
+<text x="289.7040449661106" y="370" font-size="23" text-anchor="middle" font-weight="normal" fill="#1d2433">5</text>
+<line x1="378.2959550338895" y1="340" x2="378.2959550338895" y2="348" stroke="#1d2433" stroke-width="2"/>
+<text x="378.2959550338895" y="370" font-size="23" text-anchor="middle" font-weight="normal" fill="#1d2433">10</text>
+<line x1="466.88786510166847" y1="340" x2="466.88786510166847" y2="348" stroke="#1d2433" stroke-width="2"/>
+<text x="466.88786510166847" y="370" font-size="23" text-anchor="middle" font-weight="normal" fill="#1d2433">20</text>
+<line x1="584.0" y1="340" x2="584.0" y2="348" stroke="#1d2433" stroke-width="2"/>
+<text x="584.0" y="370" font-size="23" text-anchor="middle" font-weight="normal" fill="#1d2433">50</text>
+<line x1="76" y1="340.0" x2="84" y2="340.0" stroke="#1d2433" stroke-width="2"/>
+<text x="72" y="347.0" font-size="23" text-anchor="end" font-weight="normal" fill="#1d2433">0</text>
+<line x1="76" y1="277.77777777777777" x2="84" y2="277.77777777777777" stroke="#1d2433" stroke-width="2"/>
+<text x="72" y="284.77777777777777" font-size="23" text-anchor="end" font-weight="normal" fill="#1d2433">0,1</text>
+<line x1="76" y1="215.55555555555554" x2="84" y2="215.55555555555554" stroke="#1d2433" stroke-width="2"/>
+<text x="72" y="222.55555555555554" font-size="23" text-anchor="end" font-weight="normal" fill="#1d2433">0,2</text>
+<line x1="76" y1="153.33333333333334" x2="84" y2="153.33333333333334" stroke="#1d2433" stroke-width="2"/>
+<text x="72" y="160.33333333333334" font-size="23" text-anchor="end" font-weight="normal" fill="#1d2433">0,3</text>
+<line x1="76" y1="91.11111111111109" x2="84" y2="91.11111111111109" stroke="#1d2433" stroke-width="2"/>
+<text x="72" y="98.11111111111109" font-size="23" text-anchor="end" font-weight="normal" fill="#1d2433">0,4</text>
+<text x="334.0" y="402" font-size="23" text-anchor="middle" font-weight="normal" fill="#1d2433">C: số lần thử thật của cặp (A,→), thang log</text>
+<text x="24" y="200.0" font-size="23" text-anchor="middle" transform="rotate(-90 24 200.0)">độ lệch chuẩn</text>
+<line x1="84" y1="91.11111111111111" x2="584" y2="91.11111111111111" stroke="#2F3E7A" stroke-width="3.5"/>
+<text x="584" y="53.111111111111114" font-size="24" text-anchor="end" font-weight="bold" fill="#2F3E7A">bất định ngẫu nhiên</text>
+<text x="584" y="79.11111111111111" font-size="23" text-anchor="end" font-weight="normal" fill="#2F3E7A">một lần thử: √(p(1−p)) = 0,4</text>
+<polyline points="84.0,91.1 89.0,95.9 94.0,100.7 99.0,105.3 104.0,109.8 109.0,114.3 114.0,118.7 119.0,123.0 124.0,127.2 129.0,131.3 134.0,135.3 139.0,139.3 144.0,143.2 149.0,147.0 154.0,150.7 159.0,154.4 164.0,158.0 169.0,161.5 174.0,165.0 179.0,168.4 184.0,171.7 189.0,175.0 194.0,178.1 199.0,181.3 204.0,184.4 209.0,187.4 214.0,190.3 219.0,193.2 224.0,196.1 229.0,198.9 234.0,201.6 239.0,204.3 244.0,206.9 249.0,209.5 254.0,212.0 259.0,214.5 264.0,216.9 269.0,219.3 274.0,221.6 279.0,223.9 284.0,226.2 289.0,228.4 294.0,230.5 299.0,232.7 304.0,234.7 309.0,236.8 314.0,238.8 319.0,240.7 324.0,242.7 329.0,244.6 334.0,246.4 339.0,248.2 344.0,250.0 349.0,251.7 354.0,253.4 359.0,255.1 364.0,256.8 369.0,258.4 374.0,260.0 379.0,261.5 384.0,263.0 389.0,264.5 394.0,266.0 399.0,267.4 404.0,268.8 409.0,270.2 414.0,271.6 419.0,272.9 424.0,274.2 429.0,275.5 434.0,276.7 439.0,277.9 444.0,279.1 449.0,280.3 454.0,281.5 459.0,282.6 464.0,283.7 469.0,284.8 474.0,285.9 479.0,286.9 484.0,288.0 489.0,289.0 494.0,289.9 499.0,290.9 504.0,291.9 509.0,292.8 514.0,293.7 519.0,294.6 524.0,295.5 529.0,296.4 534.0,297.2 539.0,298.0 544.0,298.8 549.0,299.6 554.0,300.4 559.0,301.2 564.0,301.9 569.0,302.7 574.0,303.4 579.0,304.1 584.0,304.8" fill="none" stroke="#B5541B" stroke-width="3.5" stroke-dasharray="10 6"/>
+<text x="584" y="147.11111111111111" font-size="24" text-anchor="end" font-weight="bold" fill="#B5541B">bất định nhận thức</text>
+<text x="584" y="173.11111111111111" font-size="23" text-anchor="end" font-weight="normal" fill="#B5541B">ước lượng p̂ qua C lần thử: 0,4/√C</text>
+<circle cx="172.6" cy="164.0" r="8" fill="#B5541B" stroke="#1d2433" stroke-width="2"/>
+<line x1="172.59191006777894" y1="173.00897890468156" x2="172.59191006777894" y2="340" stroke="#1d2433" stroke-width="1.5" stroke-dasharray="3 3"/>
+<text x="180.59191006777894" y="324" font-size="23" text-anchor="start" font-weight="bold" fill="#1d2433">C = 2: 0,2828</text>
+<text x="334.0" y="436" font-size="21" text-anchor="middle" font-weight="normal" fill="#1d2433">C = 2 lần thử ấn định trước: 0,2828 là độ lệch chuẩn</text>
+<text x="334.0" y="462" font-size="21" text-anchor="middle" font-weight="normal" fill="#1d2433">của p̂ qua các nhóm hai lần thử</text>
+<circle cx="584.0" cy="304.8" r="8" fill="#B5541B" stroke="#1d2433" stroke-width="2"/>
+<text x="580.0" y="222" font-size="23" text-anchor="end" font-weight="bold" fill="#1d2433">C = 50: 0,0566</text>
+</svg>
