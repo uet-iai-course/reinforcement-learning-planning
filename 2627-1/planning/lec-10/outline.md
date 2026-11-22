@@ -1,6 +1,6 @@
 # Dàn ý Bài 10: TRPO và PPO
 
-Bản hiện hành (2026-11-22, sau nhận xét website #6), khớp bộ trang chiếu dựng lại `2627-1/lecture-10-trpo-va-ppo.html` (6 mạch và mạch Phụ lục, 92 trang: 85 trang mạch chính, 7 trang phụ lục; mạch 4 dựng lại theo đề xuất trình bày TRPO của tác giả, 2026-11-21, và nhận xét website, 2026-11-22) và `storyboard.md` (phần trước "Lịch sử (bản 2026-11-20)"). Phần DPO và học tăng cường từ phản hồi con người đã bỏ khỏi Bài 10 (người dùng 2026-11-21, `gop-y-tac-gia-deck-2026-11-20.md` mục #27); nội dung cắt lưu ở `dpo-chuyen-sang-bai-13.md` cho Bài 13. Dàn ý cũ (bảy, tám mạch, có Mục 7 DPO) giữ nguyên chữ ở cuối tệp, mục "Lịch sử (bản 2026-11-19)", chỉ để đối chiếu nhật ký.
+Bản hiện hành (2026-11-22, sau nhận xét website #6), khớp bộ trang chiếu dựng lại `2627-1/lecture-10-trpo-va-ppo.html` (6 mạch và mạch Phụ lục, 98 trang: 91 trang mạch chính, 7 trang phụ lục; mạch 5 dựng lại theo nhận xét PPO, 2026-11-22; mạch 4 dựng lại theo đề xuất trình bày TRPO của tác giả, 2026-11-21, và nhận xét website, 2026-11-22) và `storyboard.md` (phần trước "Lịch sử (bản 2026-11-20)"). Phần DPO và học tăng cường từ phản hồi con người đã bỏ khỏi Bài 10 (người dùng 2026-11-21, `gop-y-tac-gia-deck-2026-11-20.md` mục #27); nội dung cắt lưu ở `dpo-chuyen-sang-bai-13.md` cho Bài 13. Dàn ý cũ (bảy, tám mạch, có Mục 7 DPO) giữ nguyên chữ ở cuối tệp, mục "Lịch sử (bản 2026-11-19)", chỉ để đối chiếu nhật ký.
 
 ## Phạm vi và nguồn
 
@@ -29,12 +29,12 @@ HTML có 7 section ngoài: sáu mạch (NT10) và mạch Phụ lục `id="mach-7
 | 2 | Đường cơ sở và hàm lợi thế | So lợi tức với giá trị của trạng thái giữ nguyên kỳ vọng của ước lượng gradient và giảm phương sai. | §2.1, §2.3, §2.4 | đường cơ sở, $A_\pi$, gradient dạng lợi thế, $\delta_t$ với $v_\pi$; phương sai $0{,}69\to0{,}20\to0$ | 11 | 18 |
 | 3 | Ước lượng lợi thế: độ chệch và phương sai | Tổ hợp có trọng số các ước lượng lợi thế nhiều bước cân bằng độ chệch và phương sai. | §2.4 (critic), §3 | critic, actor, GAE, $\lambda$ cân bằng chệch và phương sai; thuật toán actor–critic với GAE | 13 | 21,5 |
 | 4 | Hàm thay thế và miền tin cậy | Chính sách mới được đánh giá từ dữ liệu của chính sách cũ với sai số nhỏ khi hai chính sách gần nhau. | §4, §5 | luồng 100 lượt; bổ đề chênh lệch hiệu năng, hàm thay thế; bài toán miền tin cậy; ba mắt xích và cận lỏng $14{,}7\gt0{,}095$; sơ đồ tổng thể của TRPO; hình học elip, gradient tự nhiên; bảng ba tầng ($J$, hàm thay thế, bài toán xấp xỉ); hai cách lấy trung bình KL ($0{,}0536$, $\approx0{,}36$); TRPO | 26 | 34 |
-| 5 | Tối ưu chính sách gần kề (PPO) | PPO cắt tỉ số chính sách để dùng lại một bộ đệm nhiều lần bằng gradient bậc một. | §6.1, §6.3 | mục tiêu cắt, PPO-Clip, so sánh TRPO–PPO, Bài tập 10.23 | 14 | 17 (+3,5 bài tập) |
+| 5 | Tối ưu chính sách gần kề (PPO) | PPO cắt tỉ số chính sách để dùng lại một bộ đệm nhiều lần bằng gradient bậc một. | §6.1, §6.2 (chỉ ghi chú diễn giả), §6.3, §6.4 | hàm thay thế mẫu không tự dừng (lợi thế đúng, biên $(1;\,1)$); hai trường hợp dấu và mục tiêu cắt; câu hỏi nhanh "vì sao $\min$"; bộ đệm hai lượt: phép cắt không sửa lợi thế sai ($J$ giảm $0{,}008$ thay cho $0{,}4$) và không chặn KL; một vòng nhiều lần qua bộ đệm; hàm mất mát tổng; chỉ số theo dõi (lô giả định); PPO-Clip, so sánh TRPO–PPO, Bài tập 10.23 | 20 (18 chính + 2 bài tập; 19 đếm theo TB17) | 20 (+3,5 bài tập) |
 | 6 | Tổng kết | Mỗi phương pháp của bài giảm phương sai hoặc giới hạn bước cập nhật dưới những giả thiết riêng. | §7 | sơ đồ neo cuối, câu trả lời có điều kiện (câu 2 theo ba mức: lý thuyết, bài toán, thuật toán), bảng kết quả, bảng phương pháp | 10 | 11,5 |
 | Phụ lục | Phụ lục: cơ sở lý thuyết của miền tin cậy (không số mạch) | Các chứng minh nối giới hạn KL của bài toán miền tin cậy với sai số của hàm thay thế. | §4.1, §4.6 | ý tưởng chứng minh bổ đề chênh lệch hiệu năng, Pinsker, bổ đề dịch chuyển, định lý chặn cải thiện và chứng minh hệ quả theo KL, cận trên chuỗi, cải thiện đơn điệu | 7 | 8,5 (ngoài 120 phút) |
-| **Tổng** | | | | | **85 + 7** | **119 (+8,5 phụ lục)** |
+| **Tổng** | | | | | **91 + 7** | **122 (+8,5 phụ lục)** |
 
-"Nội dung" (`L10-1-08`) gồm sơ đồ neo `so-do-neo-m1.svg`, danh sách sáu mạch có liên kết `#/k` và một dòng không đánh số "Phụ lục: cơ sở lý thuyết của miền tin cậy" liên kết `#/7`. Ngoại lệ số trang (85 trang thật trên mạch chính, 84 trang đếm theo TB17, cộng 7 trang phụ lục) và hai ước lượng thời lượng (cộng theo trang 119 phút, ước lượng thực tế cho mạch 4 thêm 4 phút; vai mạch truyện khoảng 145–155 phút cho bản trước) ghi ở `storyboard.md` §5, chờ tác giả; Bài tập 10.23 tính vào 30 phút bài tập. Mạch 1: câu hỏi nhanh `1-12` đứng giữa `1-04` và `1-05`. Mạch 6: câu trả lời câu 2 tách sang `6-18` ngay sau `6-11`.
+"Nội dung" (`L10-1-08`) gồm sơ đồ neo `so-do-neo-m1.svg`, danh sách sáu mạch có liên kết `#/k` và một dòng không đánh số "Phụ lục: cơ sở lý thuyết của miền tin cậy" liên kết `#/7`. Ngoại lệ số trang (91 trang thật trên mạch chính, 90 trang đếm theo TB17 vì `5-15`–`5-16` là một chuỗi cùng bố cục, cộng 7 trang phụ lục) và hai ước lượng thời lượng (cộng theo trang 122 phút, ước lượng thực tế cho mạch 4 thêm 4 phút; vai mạch truyện khoảng 145–155 phút cho bản trước) ghi ở `storyboard.md` §5, chờ tác giả; Bài tập 10.23 tính vào 30 phút bài tập. Mạch 1: câu hỏi nhanh `1-12` đứng giữa `1-04` và `1-05`. Mạch 6: câu trả lời câu 2 tách sang `6-18` ngay sau `6-11`.
 
 ## Bảng thuật ngữ Việt–Anh
 
@@ -83,14 +83,18 @@ Tên tiếng Anh trong ngoặc ở lần đầu trên mặt trang (VP2, NT21); c
 | tìm kiếm lùi | backtracking line search | hệ số co $\zeta$; tên khối trên hình `L10-4-33` | `L10-4-26` |
 | bộ đệm | buffer | $\mathcal D$; tên tiếng Anh ở mục tiêu 4 | `L10-1-07` |
 | hàm thay thế mẫu; lặp chính sách bảo thủ (CPI) | sample surrogate; conservative policy iteration | $\mathcal L^{\mathrm{CPI}}$ | `L10-5-09` |
-| mục tiêu cắt; bán kính cắt; đoạn phẳng | clipped surrogate objective; clip range | $\mathcal L^{\mathrm{CLIP}}$, $\epsilon$; đoạn phẳng là khoảng $\rho_t$ có gradient theo mẫu bằng $0$ | `L10-5-02` |
-| vòng trong | inner loop | bước 3 của PPO-Clip, $K$ lần qua bộ đệm | `L10-5-05` |
+| bán kính cắt; đoạn phẳng | clip range | $\epsilon$; đoạn phẳng là khoảng $\rho$ mà đóng góp của mẫu không đổi, gradient theo mẫu bằng $0$ | `L10-5-15` |
+| mục tiêu cắt | clipped surrogate objective | $\mathcal L^{\mathrm{CLIP}}$ | `L10-5-02` |
+| vòng trong | inner loop | nhiều bước gradient trên cùng bộ đệm, lợi thế cố định | `L10-5-05` |
 | cải thiện đơn điệu | monotonic improvement | Hệ quả 10.30, $\mathcal M_k$; phụ lục | `L10-7-15` |
 | cực đại hóa qua hàm chặn dưới | minorize–maximize (MM) | chỉ ở ghi chú diễn giả | `L10-7-15` |
 | tối ưu chính sách gần kề (PPO) | proximal policy optimization | tên mạch 5; tên tiếng Anh ở trang thuật toán | `L10-5-00`; `L10-5-07` |
-| lô nhỏ; số lần qua bộ đệm; dừng sớm | mini-batch; epoch; early stopping | $M$; $K$; theo KL ước lượng trên bộ đệm | `L10-5-07` |
+| số lần qua bộ đệm; lô nhỏ | epoch; mini-batch | $K$; cỡ $M$ | `L10-5-17` |
+| hàm mất mát tổng; entropy | — ; entropy | $L(\theta,w)=-\mathcal L^{\mathrm{CLIP}}+c_1L^V-c_2\mathcal H$; $\mathcal H$ | `L10-5-18` |
+| approxKL; tỉ lệ cắt | approximate KL; clip fraction | $\tfrac1{|\mathcal B|}\sum[(\rho_t-1)-\log\rho_t]$; phần mẫu có $\lvert\rho_t-1\rvert>\epsilon$ | `L10-5-19` |
+| dừng sớm | early stopping | theo approxKL | `L10-5-14` |
 
-Thuật ngữ không dùng trên deck hiện hành (chỉ ở ghi chú): đường cơ sở có phương sai nhỏ nhất, PPO-Penalty, entropy, hàm mất mát tổng, approxKL, tỉ lệ cắt, phương sai được giải thích, cắt mất mát giá trị, điểm dừng, đoạn thu và cờ cắt ngắn (chỉ ở câu hỏi tự kiểm tra 4 và ghi chú diễn giả). Từ khẩu ngữ bị bỏ theo #11, #12 (TB26): "đoán/thật", "học dở", "dao động", "đi quá xa", "nơi chính sách tới", "trừ một mức".
+Thuật ngữ không dùng trên deck hiện hành (chỉ ở ghi chú): đường cơ sở có phương sai nhỏ nhất, PPO-Penalty (chỉ ở ghi chú diễn giả `L10-5-18`), phương sai được giải thích, cắt mất mát giá trị, điểm dừng, đoạn thu và cờ cắt ngắn (chỉ ở câu hỏi tự kiểm tra 4 và ghi chú diễn giả). Từ khẩu ngữ bị bỏ theo #11, #12 (TB26): "đoán/thật", "học dở", "dao động", "đi quá xa", "nơi chính sách tới", "trừ một mức".
 
 ## Quyết định ký hiệu
 

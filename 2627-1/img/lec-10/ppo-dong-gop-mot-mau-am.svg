@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 440" width="740" height="440" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Đóng góp của một mẫu có lợi thế âm</title>
+<desc id="d">Đồ thị theo rho từ 0,4 tới 1,6, tiêu đề A bằng âm 2, epsilon bằng 0,2. Đường cam nét đứt rho nhân A, bằng âm 2 rho, đi xuống đều. Vùng rho nhỏ hơn 0,8 tô tím nhạt, ghi không thưởng thêm. Đường tím là mục tiêu cắt, min của âm 2 rho và âm 1,6: nằm ngang ở âm 1,6 tới rho bằng 0,8 rồi trùng đường cam. Tại rho bằng 0,7: điểm cam âm 1,4, điểm tím âm 1,6. Tại rho bằng 1,3: hai đường trùng nhau, giá trị âm 2,6.</desc>
+<defs><marker id="mk" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#1d2433"/></marker><marker id="mf" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#3E4A5E"/></marker><marker id="mx" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#8C95A6"/></marker><marker id="mr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#C62828"/></marker><marker id="mo" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#B35C00"/></marker><marker id="mg" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#2E7D4F"/></marker><marker id="mp" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#6B3FA0"/></marker><pattern id="sx" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#8C95A6" stroke-width="3"/></pattern><pattern id="sp" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#6B3FA0" stroke-width="3"/></pattern><pattern id="sg" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#2E7D4F" stroke-width="3"/></pattern></defs>
+<line x1="78.0" y1="370.0" x2="704.0" y2="370.0" stroke="#1d2433" stroke-width="2"/>
+<line x1="78.0" y1="370.0" x2="78.0" y2="62.0" stroke="#1d2433" stroke-width="2"/>
+<line x1="90.0" y1="370.0" x2="90.0" y2="378.0" stroke="#1d2433" stroke-width="2"/>
+<text x="90.0" y="404.0" font-size="22" text-anchor="middle" fill="#1d2433"><tspan>0,4</tspan></text>
+<line x1="290.0" y1="370.0" x2="290.0" y2="378.0" stroke="#1d2433" stroke-width="2"/>
+<text x="290.0" y="404.0" font-size="22" text-anchor="middle" fill="#1d2433"><tspan>0,8</tspan></text>
+<line x1="390.0" y1="370.0" x2="390.0" y2="378.0" stroke="#1d2433" stroke-width="2"/>
+<text x="390.0" y="404.0" font-size="22" text-anchor="middle" fill="#1d2433"><tspan>1</tspan></text>
+<line x1="490.0" y1="370.0" x2="490.0" y2="378.0" stroke="#1d2433" stroke-width="2"/>
+<text x="490.0" y="404.0" font-size="22" text-anchor="middle" fill="#1d2433"><tspan>1,2</tspan></text>
+<line x1="690.0" y1="370.0" x2="690.0" y2="378.0" stroke="#1d2433" stroke-width="2"/>
+<text x="690.0" y="404.0" font-size="22" text-anchor="middle" fill="#1d2433"><tspan>1,6</tspan></text>
+<text x="714.0" y="378.0" font-size="24" text-anchor="start" fill="#1d2433"><tspan>ρ</tspan></text>
+<line x1="70.0" y1="114.4" x2="78.0" y2="114.4" stroke="#1d2433" stroke-width="2"/>
+<text x="65.0" y="122.4" font-size="22" text-anchor="end" fill="#1d2433"><tspan>−1</tspan></text>
+<line x1="70.0" y1="225.6" x2="78.0" y2="225.6" stroke="#1d2433" stroke-width="2"/>
+<text x="65.0" y="233.6" font-size="22" text-anchor="end" fill="#1d2433"><tspan>−2</tspan></text>
+<line x1="70.0" y1="336.7" x2="78.0" y2="336.7" stroke="#1d2433" stroke-width="2"/>
+<text x="65.0" y="344.7" font-size="22" text-anchor="end" fill="#1d2433"><tspan>−3</tspan></text>
+<text x="370.0" y="32.0" font-size="24" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan font-style="italic">A</tspan><tspan> = −2</tspan><tspan>,  </tspan><tspan>ε = 0,2</tspan></text>
+<path d="M 90.0 92.2 L 690.0 358.9" stroke="#B35C00" stroke-width="3" fill="none" stroke-linejoin="round" stroke-dasharray="10 7"/>
+<line x1="380.0" y1="81.0" x2="424.0" y2="81.0" stroke="#B35C00" stroke-width="3" stroke-dasharray="10 7"/>
+<text x="434.0" y="88.0" font-size="22" text-anchor="start" font-weight="bold" fill="#B35C00"><tspan>ρ</tspan><tspan font-style="italic">A</tspan><tspan> = −2ρ</tspan></text>
+<rect x="90.0" y="62.0" width="200.0" height="307.0" rx="0" fill="#F1EAF9" stroke="none" stroke-width="0"/>
+<line x1="290.0" y1="370.0" x2="290.0" y2="62.0" stroke="#8C95A6" stroke-width="1.5" stroke-dasharray="4 5"/>
+<path d="M 90.0 92.2 L 690.0 358.9" stroke="#B35C00" stroke-width="3" fill="none" stroke-linejoin="round" stroke-dasharray="10 7"/>
+<path d="M 90.0 181.1 L 96.0 181.1 L 102.0 181.1 L 108.0 181.1 L 114.0 181.1 L 120.0 181.1 L 126.0 181.1 L 132.0 181.1 L 138.0 181.1 L 144.0 181.1 L 150.0 181.1 L 156.0 181.1 L 162.0 181.1 L 168.0 181.1 L 174.0 181.1 L 180.0 181.1 L 186.0 181.1 L 192.0 181.1 L 198.0 181.1 L 204.0 181.1 L 210.0 181.1 L 216.0 181.1 L 222.0 181.1 L 228.0 181.1 L 234.0 181.1 L 240.0 181.1 L 246.0 181.1 L 252.0 181.1 L 258.0 181.1 L 264.0 181.1 L 270.0 181.1 L 276.0 181.1 L 282.0 181.1 L 288.0 181.1 L 294.0 182.9 L 300.0 185.6 L 306.0 188.2 L 312.0 190.9 L 318.0 193.6 L 324.0 196.2 L 330.0 198.9 L 336.0 201.6 L 342.0 204.2 L 348.0 206.9 L 354.0 209.6 L 360.0 212.2 L 366.0 214.9 L 372.0 217.6 L 378.0 220.2 L 384.0 222.9 L 390.0 225.6 L 396.0 228.2 L 402.0 230.9 L 408.0 233.6 L 414.0 236.2 L 420.0 238.9 L 426.0 241.6 L 432.0 244.2 L 438.0 246.9 L 444.0 249.6 L 450.0 252.2 L 456.0 254.9 L 462.0 257.6 L 468.0 260.2 L 474.0 262.9 L 480.0 265.6 L 486.0 268.2 L 492.0 270.9 L 498.0 273.6 L 504.0 276.2 L 510.0 278.9 L 516.0 281.6 L 522.0 284.2 L 528.0 286.9 L 534.0 289.6 L 540.0 292.2 L 546.0 294.9 L 552.0 297.6 L 558.0 300.2 L 564.0 302.9 L 570.0 305.6 L 576.0 308.2 L 582.0 310.9 L 588.0 313.6 L 594.0 316.2 L 600.0 318.9 L 606.0 321.6 L 612.0 324.2 L 618.0 326.9 L 624.0 329.6 L 630.0 332.2 L 636.0 334.9 L 642.0 337.6 L 648.0 340.2 L 654.0 342.9 L 660.0 345.6 L 666.0 348.2 L 672.0 350.9 L 678.0 353.6 L 684.0 356.2 L 690.0 358.9" stroke="#6B3FA0" stroke-width="5" fill="none" stroke-linejoin="round"/>
+<line x1="380.0" y1="119.0" x2="424.0" y2="119.0" stroke="#6B3FA0" stroke-width="5"/>
+<text x="434.0" y="126.0" font-size="22" text-anchor="start" font-weight="bold" fill="#6B3FA0"><tspan>min</tspan><tspan>(−2ρ; −1,6)</tspan></text>
+<text x="160.0" y="308.9" font-size="22" text-anchor="middle" font-weight="bold" fill="#6B3FA0"><tspan>không</tspan></text>
+<text x="160.0" y="336.9" font-size="22" text-anchor="middle" font-weight="bold" fill="#6B3FA0"><tspan>thưởng thêm</tspan></text>
+<line x1="240.0" y1="370.0" x2="240.0" y2="378.0" stroke="#1d2433" stroke-width="2"/>
+<text x="240.0" y="404.0" font-size="22" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan>0,7</tspan></text>
+<line x1="240.0" y1="370.0" x2="240.0" y2="158.9" stroke="#8C95A6" stroke-width="2" stroke-dasharray="5 5"/>
+<circle cx="240.0" cy="158.9" r="8" fill="#B35C00"/>
+<circle cx="240.0" cy="181.1" r="8" fill="#6B3FA0"/>
+<text x="254.0" y="148.9" font-size="22" text-anchor="start" font-weight="bold" fill="#B35C00" stroke="#FFFFFF" stroke-width="7" stroke-linejoin="round" paint-order="stroke"><tspan>−1,4</tspan></text>
+<text x="226.0" y="211.1" font-size="22" text-anchor="end" font-weight="bold" fill="#6B3FA0" stroke="#F1EAF9" stroke-width="7" stroke-linejoin="round" paint-order="stroke"><tspan>−1,6</tspan></text>
+<line x1="540.0" y1="370.0" x2="540.0" y2="378.0" stroke="#1d2433" stroke-width="2"/>
+<text x="540.0" y="404.0" font-size="22" text-anchor="middle" font-weight="bold" fill="#1d2433"><tspan>1,3</tspan></text>
+<line x1="540.0" y1="370.0" x2="540.0" y2="292.2" stroke="#8C95A6" stroke-width="2" stroke-dasharray="5 5"/>
+<circle cx="540.0" cy="292.2" r="10" fill="#6B3FA0" stroke="#B35C00" stroke-width="3"/>
+<text x="524.0" y="322.2" font-size="22" text-anchor="end" font-weight="bold" fill="#6B3FA0" stroke="#FFFFFF" stroke-width="7" stroke-linejoin="round" paint-order="stroke"><tspan>−2,6</tspan></text>
+</svg>

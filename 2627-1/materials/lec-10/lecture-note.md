@@ -1856,11 +1856,29 @@ Trên bài toán một bước, bước TRPO của Ví dụ 10.16 đã cần gi�
 <!-- note-topic-id: lec-10-topic-17 -->
 ### 6.1 PPO-Clip
 
-Hàm thay thế mẫu $\widehat{\mathbb E}_{\mathcal D}[\rho_t(\theta)\widehat A_t]$ tăng tuyến tính theo tỉ số: với lợi thế dương, hàm này tăng mãi khi $\rho_t$ tăng, dù chính sách mới đã rời xa vùng mà Mệnh đề 10.22 bảo đảm khớp.
+Gọi $\mathcal L^{\mathrm{CPI}}(\theta)=\widehat{\mathbb E}_{\mathcal D}[\rho_t(\theta)\widehat A_t]$ là hàm thay thế mẫu của Mục 4.2, bỏ hằng $J(\theta_{\mathrm{old}})$ (CPI: *phương pháp lặp chính sách bảo thủ*, conservative policy iteration, của Kakade và Langford, 2002). Mỗi mẫu đóng góp $\rho_t\widehat A_t$, nên với lợi thế dương, $\mathcal L^{\mathrm{CPI}}$ tăng tuyến tính khi $\rho_t$ tăng, dù chính sách mới đã rời xa vùng mà Mệnh đề 10.22 bảo đảm khớp.
 
-Hàm thay thế cũng chỉ đáng tin khi lợi thế được ước lượng tốt. Trên chuỗi hai trạng thái với critic $\hat v=(1{,}4;\,1)$ của Mục 3 và $\lambda=1$, giả sử bộ đệm chỉ có hai lượt: $s_A\xrightarrow1s_B\xrightarrow2$, với lợi tức $0$, và $s_A\xrightarrow2$, với lợi tức $1$; bộ đệm này xảy ra với xác suất $2\cdot\tfrac16\cdot\tfrac12=\tfrac16$. Lợi thế ước lượng là $0-1{,}4=-1{,}4$ cho hành động 1 tại $s_A$, $1-1{,}4=-0{,}4$ cho hành động 2 tại $s_A$ và $0-1=-1$ cho hành động 2 tại $s_B$, trong khi lợi thế đúng là $0{,}4$, $-0{,}4$ và $-2$. Với $\rho_s(a)=\pi_\theta(a\mid s)/\pi_{\mathrm{old}}(a\mid s)$, ta có $\rho_{s_A}(1)=2p_A$, $\rho_{s_A}(2)=2(1-p_A)$, $\rho_{s_B}(2)=3(1-p_B)$, nên hàm thay thế mẫu tại $s_A$ là $\tfrac12\bigl[2p_A\cdot(-1{,}4)+2(1-p_A)\cdot(-0{,}4)\bigr]=-0{,}4-p_A$, và tại $s_B$ là $3(1-p_B)\cdot(-1)$. Cực đại hóa không ràng buộc đẩy $p_A$ về $0$ và $p_B$ về $1$. Hàm thay thế mẫu tiến tới cận trên đúng của nó khi $\theta_A\to-\infty$, $\theta_B\to+\infty$; không tham số hữu hạn nào đạt cận này. Ở giới hạn đó $J=2{,}7\cdot0\cdot1+1-0=1$, tức $J$ giảm $0{,}4$ so với $J(\pi_{\mathrm{old}})=1{,}4$. Tại $s_A$, ước lượng với $\lambda=1$ không chệch vì $\hat v(s_A)=v_\pi(s_A)$, nhưng trên một bộ đệm nhỏ nó sai dấu ở hành động 1; hàm thay thế mẫu tuyến tính theo tỉ số, nên không có gì giữ bước gần chính sách cũ.
+Trên chuỗi hai trạng thái với lợi thế đúng $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$ và $A_\pi(s_B,\cdot)=(1;\,-2)$, ta có $A_\pi(s_A,\pi')=0{,}8p_A-0{,}4$ và $A_\pi(s_B,\pi')=3p_B-2$. Cả hai tăng, nên mọi trung bình có trọng số dương của chúng, gồm trung bình đều trên bộ đệm và hàm thay thế $\mathcal L_\pi(\pi')$ của Mục 4.2, đạt cực đại không ràng buộc tại $(p_A;\,p_B)=(1;\,1)$, với $J=2{,}7$, chính sách tối ưu. Tại điểm này $\mathcal L_\pi(\pi')-J(\pi)=0{,}85$, trong khi $J$ tăng $1{,}3$: sai số lớn, nhưng không đổi hướng cập nhật. Trên chuỗi, với lợi thế đúng, tối ưu $\mathcal L^{\mathrm{CPI}}$ tới biên không làm $J$ giảm. Tổng quát, rủi ro của việc tối ưu $\mathcal L^{\mathrm{CPI}}$ quá lâu đến từ hai nguồn: sai số của hàm thay thế khi chính sách mới rời xa chính sách cũ, được Định lý 10.27 chặn theo TV, và lợi thế ước lượng sai dấu.
 
-Về mặt ý tưởng, ta cắt phần thưởng của việc đẩy tỉ số ra ngoài một khoảng $[1-\epsilon,1+\epsilon]$, nhưng giữ nguyên phần phạt khi tỉ số đi theo hướng bất lợi. Ví dụ sau so hai mục tiêu trên bài toán một bước.
+Về mặt ý tưởng, mục tiêu cần ngừng thưởng cho một mẫu khi tỉ số của nó đã vượt một ngưỡng theo hướng có lợi. Xét hai mẫu tại $s_B$, với chính sách cũ $(\tfrac23;\,\tfrac13)$, lợi thế đúng và $\epsilon=0{,}2$:
+
+- hành động 1, $A=+1$: đóng góp vào $\mathcal L^{\mathrm{CPI}}$ là $\rho$, nên việc tăng xác suất của hành động 1 được thưởng mãi; PPO-Clip ngừng thưởng khi $\rho>1+\epsilon=1{,}2$, với đóng góp $\ell=\min(\rho,\,1{,}2)\cdot1$;
+- hành động 2, $A=-2$: đóng góp là $-2\rho$, nên việc giảm xác suất của hành động 2 làm số hạng bớt âm; PPO-Clip ngừng thưởng khi $\rho<1-\epsilon=0{,}8$, với đóng góp $\ell=\min(-2\rho,\,-1{,}6)$.
+
+Bảng sau tính hai đóng góp tại bốn tỉ số, với $\rho_{s_B}(1)=1{,}5p_B$ và $\rho_{s_B}(2)=3(1-p_B)$. Cột $a$ ghi hành động ($A=+1$ khi $a=1$, $A=-2$ khi $a=2$), cột $\rho A$ ghi đóng góp vào $\mathcal L^{\mathrm{CPI}}$ và cột $\ell$ ghi đóng góp vào mục tiêu cắt.
+
+| $a$ | $\rho$ | $p_B$ | $\rho A$ | $\ell$ |
+|---|---|---|---|---|
+| 1 | $1{,}3$ | $0{,}867$ | $1{,}3$ | $1{,}2$ |
+| 1 | $0{,}7$ | $0{,}467$ | $0{,}7$ | $0{,}7$ |
+| 2 | $0{,}7$ | $0{,}767$ | $-1{,}4$ | $-1{,}6$ |
+| 2 | $1{,}3$ | $0{,}567$ | $-2{,}6$ | $-2{,}6$ |
+
+Quy tắc rút ra từ bảng: phép cắt chỉ bỏ phần cải thiện dự báo vượt ngưỡng theo hướng có lợi, ở dòng thứ nhất và dòng thứ ba; khi tỉ số thay đổi theo hướng bất lợi, ở dòng thứ hai và dòng thứ tư, đóng góp giữ nguyên $\rho A$. Hai trường hợp gộp thành một công thức cho mọi dấu của lợi thế, $\ell=\min\bigl(\rho A,\ \operatorname{clip}(\rho,1-\epsilon,1+\epsilon)A\bigr)$, với $\operatorname{clip}(x,l,u)=\min(\max(x,l),u)$.
+
+**Câu hỏi.** Vì sao lấy $\min$ với $\rho A$ thay vì chỉ dùng $\operatorname{clip}(\rho,1-\epsilon,1+\epsilon)A$? Số hạng chỉ cắt che tín hiệu ở hướng bất lợi: ở dòng cuối của bảng, nó cho $1{,}2\cdot(-2)=-2{,}4$ thay cho $-2{,}6$, và ở dòng thứ hai, $0{,}8$ thay cho $0{,}7$. Phép $\min$ chọn giá trị bảo thủ hơn trong hai giá trị, nên chỉ phần thưởng của cập nhật vượt ngưỡng theo hướng có lợi bị bỏ.
+
+Ví dụ sau cộng ba mẫu có đúng tần suất của chính sách cũ, trên bài toán một bước có cùng chính sách cũ và cùng lợi thế đúng như $s_B$.
 
 ::: example Ví dụ 10.18 (Hai hàm thay thế mẫu trên bài toán một bước)
 **Dữ kiện.** Bài toán một bước với chính sách cũ $\pi_{\mathrm{old}}(\cdot\mid s)=(\tfrac23;\,\tfrac13)$, $r=(3;\,0)$. Bộ đệm ba mẫu, hành động $1,1,2$, đúng tần suất của $\pi_{\mathrm{old}}$, với lợi thế $\widehat A=(1;\,1;\,-2)$, là lợi thế đúng của Ví dụ 10.5. *Bán kính cắt* (clipping parameter, clip range) $\epsilon=0{,}2$. Chính sách mới chọn hành động 1 với xác suất $p$, nên $\rho(1)=p/\tfrac23=1{,}5p$ và $\rho(2)=(1-p)/\tfrac13=3(1-p)$.
@@ -1880,7 +1898,7 @@ Về mặt ý tưởng, ta cắt phần thưởng của việc đẩy tỉ số 
 
 ![Đồ thị theo p từ 0,5 đến 0,9. Đường thẳng nét đứt: L CPI bằng 3p trừ 2. Đường gấp khúc nét liền: L CLIP, trùng 3p trừ 2 tới p bằng 0,733, sau đó bằng p trừ 0,533 tới p bằng 0,8, rồi nằm ngang ở 0,267. Hai đường thẳng đứng mảnh đánh dấu p bằng 0,733 (mẫu hành động 2 chạm rho bằng 0,8) và p bằng 0,8 (mẫu hành động 1 chạm rho bằng 1,2). Điểm p bằng 2/3 ghi chính sách cũ, nơi hai đường trùng nhau.](img/lec-10/ppo-one-step-plateau.svg)
 
-Trên hình, đường gấp khúc nằm dưới đường thẳng ở mọi $p$, trùng nó quanh chính sách cũ $p=\tfrac23$, và trở nên nằm ngang từ $p=0{,}8$. Hai mốc gấp ứng với hai lúc một nhóm mẫu chạm biên của khoảng cắt. Trạng thái $s_B$ của chuỗi hai trạng thái có cùng chính sách cũ $(\tfrac23;\,\tfrac13)$ và cùng lợi thế đúng $(1;\,-2)$ như bài toán một bước, nên với ba mẫu tại $s_B$ có đúng tần suất của $\pi_{\mathrm{old}}$, hành động $1,1,2$, mục tiêu cắt theo $p_B$ trùng $\mathcal L^{\mathrm{CLIP}}$ của Ví dụ 10.18 và nằm ngang từ $p_B=0{,}8$. Định nghĩa sau viết mục tiêu cắt cho bộ đệm tổng quát.
+Trên hình, đường gấp khúc nằm dưới đường thẳng ở mọi $p$, trùng nó quanh chính sách cũ $p=\tfrac23$, và trở nên nằm ngang từ $p=0{,}8$. Hai mốc gấp ứng với hai lúc một nhóm mẫu chạm biên của khoảng cắt. Với ba mẫu tại $s_B$, hành động $1,1,2$, mục tiêu cắt theo $p_B$ trùng $\mathcal L^{\mathrm{CLIP}}$ của Ví dụ 10.18 và nằm ngang từ $p_B=0{,}8$. Định nghĩa sau viết mục tiêu cắt cho bộ đệm tổng quát.
 
 ::: definition Định nghĩa 10.39 (Mục tiêu PPO-Clip)
 Cho bộ đệm $\mathcal D$ các mẫu $(S_t,A_t,\widehat A_t)$ do $\pi_{\mathrm{old}}$ sinh ra, tỉ số $\rho_t(\theta)$ của Định nghĩa 10.21 và bán kính cắt $\epsilon\in(0,1)$. Với $\operatorname{clip}(x,l,u)=\min(\max(x,l),u)$, số hạng cắt của mẫu $t$ là
@@ -1889,7 +1907,7 @@ $$\begin{aligned}&\ell^{\mathrm{CLIP}}_t(\theta)\\&=\min\bigl(\rho_t(\theta)\wid
 $$\begin{aligned}\mathcal L^{\mathrm{CLIP}}(\theta)&=\widehat{\mathbb E}_{\mathcal D}\bigl[\ell^{\mathrm{CLIP}}_t(\theta)\bigr],\\\mathcal L^{\mathrm{CPI}}(\theta)&=\widehat{\mathbb E}_{\mathcal D}\bigl[\rho_t(\theta)\widehat A_t\bigr].\end{aligned}$$
 :::
 
-$\mathcal L^{\mathrm{CPI}}$ là hàm thay thế mẫu của Mục 4.2, bỏ hằng $J(\theta_{\mathrm{old}})$ (CPI: *phương pháp lặp chính sách bảo thủ*, conservative policy iteration, của Kakade và Langford, 2002). Phép $\min$ lấy giá trị nhỏ hơn giữa mục tiêu không cắt và mục tiêu đã cắt tỉ số; mệnh đề sau viết lại nó theo dấu của lợi thế.
+Mệnh đề sau viết lại phép $\min$ theo dấu của lợi thế, tổng quát hóa hai trường hợp của bảng tại $s_B$.
 
 ::: proposition Mệnh đề 10.40 (Dạng theo dấu của lợi thế)
 **Giả thiết.** $\epsilon\in(0,1)$; $\rho_t(\theta)>0$ khả vi theo $\theta$, với $\nabla_\theta\rho_t=\rho_t\,\psi_\theta(S_t,A_t)$.
@@ -1941,7 +1959,11 @@ Hình trên được vẽ theo Hình 1 của Schulman và cộng sự (2017), v�
 **Kiểm tra lại.** Theo dạng theo dấu: $2\min(1{,}3;\,1{,}2)=2{,}4$, $-2\max(0{,}7;\,0{,}8)=-1{,}6$, $2\min(0{,}7;\,1{,}2)=1{,}4$, $-2\max(1{,}3;\,0{,}8)=-2{,}6$.
 :::
 
-Trở lại bộ đệm hai lượt ở đầu mục, với $\epsilon=0{,}2$. Tại $s_A$, mỗi mẫu có trọng số $\tfrac12$ và cả hai lợi thế ước lượng đều âm, nên theo Mệnh đề 10.40(b), mục tiêu cắt là $\tfrac12\bigl[-1{,}4\max(2p_A;\,0{,}8)-0{,}4\max(2-2p_A;\,0{,}8)\bigr]$. Khi $p_A$ giảm từ $\tfrac12$, mẫu hành động 1 chạm biên $\rho=0{,}8$ tại $p_A=0{,}4$; dưới mức đó, chỉ mẫu hành động 2 còn đổi, theo hướng bất lợi và không bị cắt, nên mục tiêu cắt tại $s_A$ lớn nhất ở $p_A=0{,}4$. Tại $s_B$, mẫu duy nhất đóng góp $-\max(3-3p_B;\,0{,}8)$, nằm ngang từ $p_B=\tfrac{11}{15}\approx0{,}733$. Vòng trong dừng ở $(0{,}4;\,\tfrac{11}{15})$, với $J=2{,}7\cdot0{,}4\cdot\tfrac{11}{15}+0{,}6=1{,}392$: $J$ giảm $0{,}008$, thay cho $0{,}4$ khi không cắt. Phép cắt không sửa lợi thế sai; nó giới hạn mỗi vòng đi bao xa.
+**Câu hỏi.** Phép cắt ngăn cập nhật vượt ngưỡng theo hướng có lợi, nhưng nó có sửa được lợi thế ước lượng sai dấu không? Xét chuỗi hai trạng thái với critic $\hat v=(1{,}4;\,1)$ của Mục 3 và $\lambda=1$. Giả sử bộ đệm chỉ có hai lượt: $s_A\xrightarrow1s_B\xrightarrow2$, với lợi tức $0$, và $s_A\xrightarrow2$, với lợi tức $1$; bộ đệm này xảy ra với xác suất $2\cdot\tfrac16\cdot\tfrac12=\tfrac16$. Lợi thế ước lượng là $0-1{,}4=-1{,}4$ cho hành động 1 tại $s_A$, $1-1{,}4=-0{,}4$ cho hành động 2 tại $s_A$ và $0-1=-1$ cho hành động 2 tại $s_B$, trong khi lợi thế đúng là $0{,}4$, $-0{,}4$ và $-2$.
+
+Tại $s_A$, critic đúng, $\hat v(s_A)=v_\pi(s_A)=1{,}4$, nên ước lượng với $\lambda=1$ không chệch; lợi thế của hành động 1 sai dấu do phương sai của lợi tức một lượt, không do critic. Với $\rho_{s_A}(1)=2p_A$, $\rho_{s_A}(2)=2(1-p_A)$, $\rho_{s_B}(2)=3(1-p_B)$, mục tiêu không cắt tại $s_A$ là $\tfrac12\bigl[2p_A\cdot(-1{,}4)+2(1-p_A)\cdot(-0{,}4)\bigr]=-0{,}4-p_A$, và tại $s_B$ là $-3(1-p_B)$. Cực đại hóa không ràng buộc đẩy $p_A$ về $0$ và $p_B$ về $1$; mục tiêu tiến tới cận trên của nó khi $\theta_A\to-\infty$, $\theta_B\to+\infty$, và không tham số hữu hạn nào đạt cận này. Ở giới hạn đó $J=2{,}7\cdot0\cdot1+1-0=1{,}000$, tức $J$ giảm $0{,}4$ so với $J(\pi_{\mathrm{old}})=1{,}400$.
+
+Với mục tiêu cắt và $\epsilon=0{,}2$: tại $s_A$, mỗi mẫu có trọng số $\tfrac12$ và cả hai lợi thế ước lượng đều âm, nên theo Mệnh đề 10.40(b), mục tiêu cắt là $\tfrac12\bigl[-1{,}4\max(2p_A;\,0{,}8)-0{,}4\max(2-2p_A;\,0{,}8)\bigr]$. Khi $p_A$ giảm từ $\tfrac12$, mẫu hành động 1 chạm biên $\rho=0{,}8$ tại $p_A=0{,}4$; dưới mức đó, chỉ mẫu hành động 2 còn đổi, theo hướng bất lợi và không bị cắt, nên mục tiêu cắt tại $s_A$ lớn nhất ở $p_A=0{,}4$. Tại $s_B$, mẫu duy nhất đóng góp $-\max(3-3p_B;\,0{,}8)$, nằm ngang từ $p_B=\tfrac{11}{15}\approx0{,}733$. Vòng trong dừng ở $(0{,}4;\,\tfrac{11}{15})$, với $J=2{,}7\cdot0{,}4\cdot\tfrac{11}{15}+0{,}6=1{,}392$: $J$ giảm $0{,}008$, thay cho $0{,}4$ khi không cắt. Phép cắt không sửa lợi thế sai dấu và không bảo đảm $J$ tăng; nó chỉ giới hạn mức thay đổi mà mục tiêu thưởng trong một vòng. Hai giá trị này là $J$ tại nghiệm của bài toán tối ưu lý tưởng hóa trên bộ đệm nhỏ này: $1{,}000$ là $J$ tại chính sách giới hạn mà phép cực đại hóa mục tiêu không cắt tiến tới, còn $1{,}392$ là $J$ tại điểm dừng của phép tăng gradient chính xác trên mục tiêu cắt, xuất phát từ chính sách cũ. Một số hữu hạn bước Adam cho điểm khác.
 
 Từ $p_B=\tfrac{11}{15}$, phần của mục tiêu cắt tại $s_B$ hằng bằng $-0{,}8$, nên mọi $p_B\ge\tfrac{11}{15}$ cho cùng giá trị mục tiêu và gradient bằng $0$. Với $p_A=0{,}4$, KL tại $s_B$ theo chiều cũ‖mới và $J=2{,}7\cdot0{,}4\,p_B+0{,}6$ trên đoạn đó là:
 
@@ -1949,7 +1971,7 @@ Từ $p_B=\tfrac{11}{15}$, phần của mục tiêu cắt tại $s_B$ hằng b�
 - $p_B=0{,}85$: KL $\approx0{,}104$, $J=1{,}518$;
 - $p_B=0{,}95$: KL $\approx0{,}396$, $J=1{,}626$.
 
-Mục tiêu cắt không phân biệt ba chính sách này. Nó không chặn KL tại $s_B$ khi các bước khác đẩy $p_B$ đi tiếp (Nhận xét 10.42), và nó dừng vòng trong ở $p_B=\tfrac{11}{15}$ dù $\partial J/\partial p_B=2{,}7\cdot0{,}4=1{,}08>0$.
+Mục tiêu cắt không phân biệt ba chính sách này, và nó dừng vòng trong ở $p_B=\tfrac{11}{15}$ dù $\partial J/\partial p_B=2{,}7\cdot0{,}4=1{,}08>0$. PPO-Clip cắt đóng góp của từng mẫu vào hàm mục tiêu và không đặt ràng buộc nào lên chính sách mới: trên cả đoạn, đóng góp của mẫu tại $s_B$ giữ giá trị $-0{,}8$, còn KL tại $s_B$ tăng từ $0{,}011$ lên $0{,}396$ khi các bước khác đẩy $p_B$ đi tiếp (Nhận xét 10.42). Sự gần nhau của hai chính sách là tính chất của toàn bộ phân phối hành động tại các trạng thái liên quan, đo bằng $D_{\mathrm{TV}}(s)$ hay $D_{\mathrm{KL}}(s)$ (Định nghĩa 10.23). Các tỉ số $\rho_t$ chỉ cho xác suất mới của những cặp $(S_t,A_t)$ có trong mẫu, nên vài tỉ số gần $1$ không suy ra được TV nhỏ.
 
 Mệnh đề sau so mục tiêu cắt với mục tiêu không cắt.
 
@@ -2176,11 +2198,11 @@ Trên hình, dữ liệu đi từ trái sang phải: thu một lần bằng $\pi
 
 | Giữ cố định trong cả $K$ epoch | Tính lại ở mỗi mini-batch |
 |---|---|
-| $\log\pi_{\mathrm{old}}(A_t\mid S_t)$, $\widehat A^{\mathrm{raw}}_t$, $V^{\mathrm{targ}}_t$, $\hat v_{\mathrm{old}}(S_t)$ | $\log\pi_\theta(A_t\mid S_t)$, $\rho_t(\theta)$, $\hat v(S_t,w)$, $\mathcal H(\pi_\theta(\cdot\mid S_t))$ |
+| $\mathcal D$, $\log\pi_{\mathrm{old}}(A_t\mid S_t)$, $\widehat A^{\mathrm{raw}}_t$, $V^{\mathrm{targ}}_t$, $\hat v_{\mathrm{old}}(S_t)$ | $\log\pi_\theta(A_t\mid S_t)$, $\rho_t(\theta)$, $\hat v(S_t,w)$, $\mathcal H(\pi_\theta(\cdot\mid S_t))$, $L(\theta,w)$ và gradient của nó |
 
 Thuật toán 10.49 là Thuật toán 1 của Schulman và cộng sự (2017) với các bước của bài giảng gốc (tr. 24–25) và các cờ của Mục 3.3. Cột trái của bảng tính một lần từ dữ liệu của $\pi_{\mathrm{old}}$; cột phải phụ thuộc tham số hiện tại.
 
-Từ mini-batch thứ hai, $\theta\ne\theta_{\mathrm{old}}$, nên dữ liệu đã là dữ liệu khác chính sách. Tỉ số $\rho_t$ hiệu chỉnh phân phối hành động tại mỗi trạng thái, còn phân bố trạng thái vẫn là của $\pi_{\mathrm{old}}$, như trong hàm thay thế của Mục 4.2.
+Từ mini-batch thứ hai, $\theta\ne\theta_{\mathrm{old}}$, nên dữ liệu đã là dữ liệu khác chính sách. Tỉ số $\rho_t$ hiệu chỉnh phân phối hành động tại mỗi trạng thái, còn phân bố trạng thái vẫn là của $\pi_{\mathrm{old}}$, như trong hàm thay thế của Mục 4.2. PPO dùng lại bộ đệm vừa thu trong $K$ epoch, rồi bỏ nó và thu bộ đệm mới bằng chính sách vừa cập nhật; mọi tỉ số lấy mẫu số là $\pi_{\mathrm{old}}$, chính sách duy nhất đã sinh bộ đệm. Cách dùng dữ liệu này khác với học khác chính sách trên bộ nhớ phát lại, như ở DQN, nơi bộ đệm lịch sử trộn dữ liệu của nhiều chính sách cũ.
 
 Với hành động nhiều chiều có các thành phần độc lập, log-xác suất của hành động là tổng log-xác suất các thành phần, cộng trước khi lập tỉ số. Ví dụ 10.21 là một mini-batch của bước 3.
 
@@ -2189,13 +2211,17 @@ Với hành động nhiều chiều có các thành phần độc lập, log-xá
 <!-- note-topic-id: lec-10-topic-20 -->
 ### 6.4 Đọc chẩn đoán và chọn siêu tham số
 
-Sau mỗi vòng PPO, các kết quả của Mục 4–6 không bảo đảm bước vừa chạy đủ nhỏ và critic đã học được, vì Mệnh đề 10.41 không chặn KL và lợi thế chỉ là ước lượng. Về mặt ý tưởng, mỗi đại lượng chẩn đoán của Định nghĩa 10.47 trả lời một câu hỏi về vòng cập nhật vừa chạy (bài giảng gốc, tr. 27):
+Sau mỗi vòng PPO, các kết quả của Mục 4–6 không bảo đảm bước vừa chạy đủ nhỏ và critic đã học được, vì Mệnh đề 10.41 không chặn KL và lợi thế chỉ là ước lượng. Về mặt ý tưởng, mỗi đại lượng chẩn đoán của Định nghĩa 10.47 trả lời một câu hỏi về vòng cập nhật vừa chạy (bài giảng gốc, tr. 27).
 
-- approxKL: bước cập nhật có quá lớn không;
-- tỉ lệ cắt: bao nhiêu mẫu ở vùng bị cắt;
-- entropy: việc thăm dò có đang sụp không;
-- phương sai được giải thích: critic dự đoán lợi tức tốt đến đâu;
-- mất mát giá trị: critic có chi phối bước cập nhật không.
+| Đại lượng | Ý nghĩa | Tín hiệu cần chú ý |
+|---|---|---|
+| approxKL | mức thay đổi của chính sách trong vòng cập nhật | cao so với ngưỡng mục tiêu; có thể dừng sớm các epoch còn lại |
+| tỉ lệ cắt | tỉ lệ mẫu có tỉ số ngoài khoảng cắt | lớn và kéo dài qua nhiều vòng: nhiều mẫu chịu tác động của phép cắt |
+| entropy | mức ngẫu nhiên của chính sách | giảm quá nhanh: thăm dò bị thu hẹp |
+| phương sai được giải thích | mức critic dự đoán được lợi tức | thấp hoặc âm |
+| mất mát giá trị | sai số bình phương của critic so với $V^{\mathrm{targ}}$ | lớn so với số hạng của actor khi hai mạng dùng chung tham số |
+
+Giả sử một mini-batch bốn mẫu có $\rho=(1{,}05;\,1{,}18;\,1{,}24;\,0{,}70)$ và $\epsilon=0{,}2$. Hai mẫu $1{,}24$ và $0{,}70$ nằm ngoài $[0{,}8;\,1{,}2]$, nên tỉ lệ cắt là $2/4=50\%$. Các số hạng $(\rho-1)-\log\rho$ là $(0{,}0012;\,0{,}0145;\,0{,}0249;\,0{,}0567)$, nên approxKL, trung bình của bốn số hạng, xấp xỉ $0{,}0243$. Nếu bốn mẫu này vừa được dùng để cập nhật $\theta$, giả thiết "$\theta$ không phụ thuộc mẫu" của Mệnh đề 10.48 không thỏa, nên $0{,}0243$ là một giá trị chẩn đoán không có bảo đảm không chệch.
 
 Một dấu hiệu bất ổn thường gặp gồm phần thưởng tăng trong thời gian ngắn, KL tăng vọt, entropy sụp và chính sách ngừng thăm dò. Ví dụ sau tiếp tục Ví dụ 10.21 sau vài mini-batch.
 

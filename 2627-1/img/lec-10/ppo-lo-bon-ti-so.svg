@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 40 760 430" width="760" height="430" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Bốn tỉ số trong một lô và khoảng cắt</title>
+<desc id="d">Bốn thanh đứng theo rho, dải từ 0,8 tới 1,2 tô nhạt, ghi khoảng cắt. Mẫu 1: 1,05, tím, trong dải. Mẫu 2: 1,18, tím, trong dải. Mẫu 3: 1,24, đỏ, vượt dải. Mẫu 4: 0,70, đỏ, dưới dải. KL xấp xỉ (approxKL) của lô, một phần tư tổng của (rho trừ 1) trừ log rho, bằng 0,0243.</desc>
+<defs><marker id="mk" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#1d2433"/></marker><marker id="mf" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#3E4A5E"/></marker><marker id="mx" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#8C95A6"/></marker><marker id="mr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#C62828"/></marker><marker id="mo" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#B35C00"/></marker><marker id="mg" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#2E7D4F"/></marker><marker id="mp" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="15" refY="9" orient="auto"><path d="M0,1 L17,9 L0,17 Z" fill="#6B3FA0"/></marker><pattern id="sx" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#8C95A6" stroke-width="3"/></pattern><pattern id="sp" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#6B3FA0" stroke-width="3"/></pattern><pattern id="sg" patternUnits="userSpaceOnUse" width="11" height="11" patternTransform="rotate(45)"><rect width="11" height="11" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="11" stroke="#2E7D4F" stroke-width="3"/></pattern></defs>
+<rect x="90.0" y="144.3" width="540.0" height="88.6" rx="0" fill="#F1EAF9" stroke="none" stroke-width="0"/>
+<line x1="90.0" y1="232.9" x2="630.0" y2="232.9" stroke="#6B3FA0" stroke-width="2" stroke-dasharray="7 6"/>
+<line x1="90.0" y1="144.3" x2="630.0" y2="144.3" stroke="#6B3FA0" stroke-width="2" stroke-dasharray="7 6"/>
+<line x1="90.0" y1="410.0" x2="640.0" y2="410.0" stroke="#1d2433" stroke-width="2"/>
+<line x1="90.0" y1="410.0" x2="90.0" y2="82.0" stroke="#1d2433" stroke-width="2"/>
+<line x1="82.0" y1="410.0" x2="90.0" y2="410.0" stroke="#1d2433" stroke-width="2"/>
+<text x="77.0" y="417.0" font-size="21" text-anchor="end" fill="#1d2433"><tspan>0</tspan></text>
+<line x1="82.0" y1="299.3" x2="90.0" y2="299.3" stroke="#1d2433" stroke-width="2"/>
+<text x="77.0" y="306.3" font-size="21" text-anchor="end" fill="#1d2433"><tspan>0,5</tspan></text>
+<line x1="82.0" y1="232.9" x2="90.0" y2="232.9" stroke="#1d2433" stroke-width="2"/>
+<text x="77.0" y="239.9" font-size="21" text-anchor="end" font-weight="bold" fill="#1d2433"><tspan>0,8</tspan></text>
+<line x1="82.0" y1="188.6" x2="90.0" y2="188.6" stroke="#1d2433" stroke-width="2"/>
+<text x="77.0" y="195.6" font-size="21" text-anchor="end" fill="#1d2433"><tspan>1</tspan></text>
+<line x1="82.0" y1="144.3" x2="90.0" y2="144.3" stroke="#1d2433" stroke-width="2"/>
+<text x="77.0" y="151.3" font-size="21" text-anchor="end" font-weight="bold" fill="#1d2433"><tspan>1,2</tspan></text>
+<text x="90.0" y="70.0" font-size="24" text-anchor="middle" fill="#1d2433"><tspan>ρ</tspan></text>
+<rect x="123.0" y="177.5" width="84.0" height="232.5" rx="2" fill="#6B3FA0" stroke="none" stroke-width="0"/>
+<text x="165.0" y="209.5" font-size="22" text-anchor="middle" font-weight="bold" fill="#FFFFFF"><tspan>1,05</tspan></text>
+<text x="165.0" y="442.0" font-size="21" text-anchor="middle" fill="#1d2433"><tspan>mẫu 1</tspan></text>
+<rect x="253.0" y="148.7" width="84.0" height="261.3" rx="2" fill="#6B3FA0" stroke="none" stroke-width="0"/>
+<text x="295.0" y="180.7" font-size="22" text-anchor="middle" font-weight="bold" fill="#FFFFFF"><tspan>1,18</tspan></text>
+<text x="295.0" y="442.0" font-size="21" text-anchor="middle" fill="#1d2433"><tspan>mẫu 2</tspan></text>
+<rect x="383.0" y="135.4" width="84.0" height="274.6" rx="2" fill="#C62828" stroke="none" stroke-width="0"/>
+<text x="425.0" y="167.4" font-size="22" text-anchor="middle" font-weight="bold" fill="#FFFFFF"><tspan>1,24</tspan></text>
+<text x="425.0" y="442.0" font-size="21" text-anchor="middle" fill="#1d2433"><tspan>mẫu 3</tspan></text>
+<rect x="513.0" y="255.0" width="84.0" height="155.0" rx="2" fill="#C62828" stroke="none" stroke-width="0"/>
+<text x="555.0" y="287.0" font-size="22" text-anchor="middle" font-weight="bold" fill="#FFFFFF"><tspan>0,70</tspan></text>
+<text x="555.0" y="442.0" font-size="21" text-anchor="middle" fill="#1d2433"><tspan>mẫu 4</tspan></text>
+<text x="650.0" y="184.6" font-size="21" text-anchor="start" font-weight="bold" fill="#6B3FA0"><tspan>khoảng</tspan></text>
+<text x="650.0" y="210.6" font-size="21" text-anchor="start" font-weight="bold" fill="#6B3FA0"><tspan>cắt</tspan></text>
+</svg>
