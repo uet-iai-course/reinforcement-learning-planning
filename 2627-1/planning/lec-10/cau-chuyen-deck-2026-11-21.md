@@ -20,9 +20,9 @@ Mọi con số dưới đây được tính lại bằng `/tmp/claude-1000/-data
 2. Trừ khỏi lợi tức một đường cơ sở chỉ phụ thuộc trạng thái không làm chệch ước lượng gradient; với đường cơ sở $v_\pi$, hệ số có kỳ vọng có điều kiện bằng lợi thế, phương sai giảm còn $0{,}20$, và sai số TD với $v_\pi$ đúng cho phương sai $0$.
 3. Hàm giá trị phải học từ dữ liệu nên có sai số; khi đó ước lượng lợi thế một bước bị chệch ($-0{,}5$ thay cho $0{,}4$) còn ước lượng cả lượt có phương sai lớn ($1{,}62$), và GAE tổ hợp các ước lượng nhiều bước bằng tham số $\lambda$ để cân bằng hai đại lượng.
 4. Bổ đề chênh lệch hiệu năng cho thấy đánh giá chính sách mới cần phân bố trạng thái của chính nó; hàm thay thế dùng phân bố của chính sách cũ, khớp $J$ đến bậc một, nhưng với bước tới $(0{,}9;\,0{,}5)$ nó dự báo $J$ tăng $0{,}095$ trong khi $J$ giảm $0{,}085$, nên TRPO tối đa hàm thay thế trong một miền KL trung bình nhỏ.
-5. PPO thay ràng buộc KL bằng phép cắt tỉ số chính sách và dùng lại một bộ đệm nhiều lần chỉ với gradient bậc một: trên một bộ đệm hai lượt có lợi thế ước lượng sai dấu, phép cắt giữ mức giảm của $J$ ở $0{,}008$ thay cho $0{,}4$.
+5. PPO thay ràng buộc KL bằng phép cắt đóng góp của từng mẫu và dùng lại một bộ đệm nhiều lần chỉ với gradient bậc một: trên một bộ đệm hai lượt có lợi thế ước lượng sai dấu, trong ví dụ này phép cắt giữ mức giảm của $J$ ở $0{,}008$ thay cho $0{,}4$, nhưng không chặn KL và không bảo đảm $J$ tăng.
 
-Mạch tổng kết gọi tên ví dụ chung (chuỗi hai trạng thái) mà không nhắc số (Đ13). Câu hỏi trung tâm (trang "Vấn đề trung tâm" của mạch 1): (1) làm thế nào để ước lượng gradient chính sách có phương sai nhỏ mà kỳ vọng không đổi; (2) làm thế nào để dùng lượt của chính sách cũ cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm (2026-11-22; câu cũ "… mà hàm mục tiêu không giảm" hứa điều thuật toán không bảo đảm). Câu 2–3 trả lời phần (1), câu 4–5 trả lời phần (2).
+Mạch tổng kết gọi tên ví dụ chung (chuỗi hai trạng thái) mà không nhắc số (Đ13). Câu hỏi trung tâm (trang "Vấn đề trung tâm" của mạch 1): (1) làm thế nào để ước lượng gradient chính sách có phương sai nhỏ mà kỳ vọng không đổi; (2) làm thế nào để dùng lại dữ liệu từ chính sách cũ cho các bước cập nhật hiệu quả, đồng thời kiểm soát nguy cơ suy giảm hiệu năng (bản #8, câu chuẩn của tác giả; trước đó "… cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm", và trước nữa "… mà hàm mục tiêu không giảm"). Câu 2–3 trả lời phần (1), câu 4–5 trả lời phần (2).
 
 ---
 
@@ -64,7 +64,7 @@ Bản theo đề xuất trình bày TRPO của tác giả (`de-xuat-trinh-bay-tr
 4. Giới hạn thay đổi: cùng bước tham số đổi hành vi rất khác nhau ($\Delta p=0{,}2311$ so với $0{,}0042$), nên khoảng cách đo trên phân phối hành động bằng KL. Bài toán miền tin cậy tối đa hàm thay thế với KL trung bình $\le\kappa$; trên đoạn, $\kappa=0{,}01$ giữ $t\le0{,}515$, nơi $\Delta J>0$. KL nhỏ kéo theo TV nhỏ, phân bố chiếm dụng ít đổi và sai số nhỏ, nhưng cận lỏng: với $\tilde\pi$, phạt $14{,}7$ lớn hơn nhiều mức tăng dự báo $0{,}095$. Bài toán thay phạt bằng ràng buộc, nên giới hạn mức đổi mà không tự bảo đảm $J$ tăng.
 5. Giải và thuật toán: TRPO dự báo bằng hàm thay thế, giới hạn mức đổi bằng KL trung bình, rồi tối ưu trong miền tin cậy. Bậc một cho hàm thay thế, bậc hai cho KL, miền thành một elip của ma trận Fisher; bước tối ưu đi theo gradient tự nhiên $F^{-1}g=(8;\,30)$ và đưa $J$ từ $1{,}4$ lên $1{,}807$, thấp hơn $1{,}835$ của bước theo $g$, vì gradient tự nhiên chỉ tối ưu bài toán xấp xỉ. Thuật toán áp $\kappa$ lên KL trung bình trên bộ đệm ($\approx0{,}36$ với $\tilde\pi$), khác KL trung bình có chiết khấu ($0{,}0536$). Điều còn thiếu: mỗi bộ đệm chỉ cho một bước, với gradient liên hợp và tìm kiếm lùi.
 
-Phụ lục (2026-11-22; không thuộc mạch 4, ngoài 120 phút, sau tài liệu tham khảo): các chứng minh nối giới hạn KL của bài toán miền tin cậy với sai số của hàm thay thế, theo thứ tự mắt xích (bổ đề chênh lệch hiệu năng, Pinsker, dịch chuyển phân bố chiếm dụng, định lý chặn cải thiện, ví dụ cận trên chuỗi, cải thiện đơn điệu); storyboard §3, mục "Phụ lục".
+Phụ lục (2026-11-22; tên từ bản #8: "Phụ lục: cơ sở lý thuyết của TRPO và PPO"; không thuộc mạch 4, ngoài 120 phút, sau tài liệu tham khảo; phần PPO ở cuối mục mạch 5): các chứng minh nối giới hạn KL của bài toán miền tin cậy với sai số của hàm thay thế, theo thứ tự mắt xích (bổ đề chênh lệch hiệu năng, Pinsker, dịch chuyển phân bố chiếm dụng, định lý chặn cải thiện, ví dụ cận trên chuỗi, cải thiện đơn điệu); storyboard §3, mục "Phụ lục".
 
 *Câu 4–5 bản 2026-11-21 (đã thay):*
 
@@ -74,13 +74,15 @@ Phụ lục (2026-11-22; không thuộc mạch 4, ngoài 120 phút, sau tài li�
 
 ### Mạch 5. Tối ưu chính sách gần kề (PPO)
 
-Bản 2026-11-22 theo nhận xét phần PPO (#7, `nhan-xet-ppo-2026-11-22.md`) và quyết định #7 của tác giả (lợi thế đúng tại $s_B$ cho trực giác; lô giả định cho chỉ số); storyboard §3 mạch 5. Bản 2026-11-21 ở mục lịch sử cuối tệp.
+Bản #8 (2026-11-22) theo nhận xét PPO sau chỉnh sửa (`nhan-xet-ppo-sau-sua-2026-11-22.md`) và quyết định #8: mạch chính 16 trang, phần chuyên sâu (chứng minh dạng theo dấu, phép tính chi tiết trên bộ đệm, điều kiện không chệch của approxKL, Bài tập 10.23) sang phụ lục; storyboard §3 mạch 5. Bản #7 ở mục lịch sử cuối tệp.
 
-1. Bài toán: TRPO cho mỗi bộ đệm một bước, sau gradient liên hợp và tìm kiếm lùi; cần dùng lại một bộ đệm cho nhiều bước gradient bậc một. Hàm thay thế mẫu $\mathcal L^{\mathrm{CPI}}$ là ứng viên trực tiếp, nhưng mỗi mẫu đóng góp tuyến tính theo tỉ số, nên nó không tự dừng: với lợi thế đúng, phần của nó tại $s_B$ là $3p_B-2$, tăng tới biên $p_B=1$. Trên chuỗi, biên $(1;\,1)$ là chính sách tối ưu ($J=2{,}7$), nhưng xa chính sách cũ sai số của dự báo lớn và đổi dấu được: $+0{,}45$ tại $(1;\,1)$, $-0{,}18$ với $\tilde\pi$.
-2. Trực quan: mẫu $(s_B,1)$ có lợi thế $+1$, đóng góp $\rho$ tăng mãi khi $p_B$ tăng; mẫu $(s_B,2)$ có lợi thế $-2$, đóng góp $-2\rho$ tăng khi xác suất của hành động 2 giảm. Với $\epsilon=0{,}2$, đóng góp ngừng tăng khi $\rho>1{,}2$ (tức $p_B>0{,}8$) và khi $\rho<0{,}8$ (tức $p_B>\tfrac{11}{15}$); bốn trường hợp cho $1{,}3/1{,}2$; $0{,}7/0{,}7$; $-1{,}4/-1{,}6$; $-2{,}6/-2{,}6$.
-3. Công cụ: hai đường gấp khúc là một công thức, $\min\bigl(\rho A,\operatorname{clip}(\rho,1-\epsilon,1+\epsilon)A\bigr)$, tức mục tiêu cắt. Phép $\min$ giữ phạt của thay đổi bất lợi: chỉ cắt thì mẫu $A=-2$, $\rho=1{,}3$ cho $-2{,}4$ thay cho $-2{,}6$. Theo dấu của lợi thế, mẫu ngừng đóng góp ở $1+\epsilon$ hoặc $1-\epsilon$.
-4. Kết quả trên ví dụ và giới hạn: bộ đệm hai lượt cho lợi thế ước lượng sai dấu ($-1{,}4$ thay cho $+0{,}4$) dù critic đúng tại $s_A$. Tối đa $\mathcal L^{\mathrm{CPI}}$ trên bộ đệm đưa $J$ về $1$; vòng trong của mục tiêu cắt dừng ở $(0{,}4;\,\tfrac{11}{15})$ với $J=1{,}392$: phép cắt không sửa lợi thế sai, nhưng giới hạn mức giảm. Trên đoạn phẳng, mục tiêu cắt không đổi mà KL tại $s_B$ tăng từ $0{,}011$ lên $0{,}396$: PPO cắt đóng góp của từng mẫu, không cắt chính sách mới.
-5. Thuật toán: một vòng PPO giữ cố định bộ đệm, $\log\pi_{\mathrm{old}}$, $\widehat A_t$, $V^{\mathrm{targ}}_t$ và tính lại $\rho_t$ qua $K$ lần qua bộ đệm; hàm mất mát tổng gộp actor, critic và entropy; approxKL, tỉ lệ cắt và entropy cho biết vòng vừa chạy đổi chính sách bao nhiêu (lô giả định: tỉ lệ cắt $50\%$, approxKL $\approx0{,}0243$). Thuật toán PPO-Clip, so sánh với TRPO và một bài tập tổng hợp (một vòng PPO-Clip với lợi thế đúng) khép mạch. Điều còn thiếu chuyển sang tổng kết: không phương pháp nào trong thực hành bảo đảm $J$ tăng.
+1. Bài toán: cần dùng lại dữ liệu từ chính sách cũ để thực hiện các bước cập nhật hiệu quả, chỉ với gradient bậc một, đồng thời kiểm soát nguy cơ suy giảm hiệu năng; TRPO cho mỗi bộ đệm một bước, sau gradient liên hợp và tìm kiếm lùi. Hàm thay thế mẫu $\mathcal L^{\mathrm{CPI}}$ tuyến tính theo tỉ số, nên không tự dừng: với lợi thế đúng, phần của nó tại $s_B$ là $3p_B-2$, tăng tới biên. Trên chuỗi, biên $(1;\,1)$ là chính sách tối ưu, nhưng xa chính sách cũ sai số của dự báo lớn và đổi dấu được ($+0{,}45$ tại $(1;\,1)$, $-0{,}18$ với $\tilde\pi$).
+2. Trực quan: mẫu có lợi thế $+1$ không được thưởng thêm khi $\rho>1{,}2$; mẫu có lợi thế $-2$ không được thưởng thêm khi $\rho<0{,}8$; ở phía bất lợi, đóng góp giữ nguyên $\rho A$.
+3. Công cụ: hai đường gấp khúc là mục tiêu cắt $\min\bigl(\rho A,\operatorname{clip}(\rho,1-\epsilon,1+\epsilon)A\bigr)$; phép $\min$ giữ phạt của thay đổi bất lợi (chỉ cắt thì $-2{,}4$ thay cho $-2{,}6$); theo dấu của lợi thế, mẫu ngừng đóng góp ở $1+\epsilon$ hoặc $1-\epsilon$.
+4. Giới hạn trên ví dụ: bộ đệm hai lượt cho lợi thế ước lượng sai dấu ($-1{,}4$ thay cho $+0{,}4$) dù critic đúng tại $s_A$; tối đa trên bộ đệm cho $J=1$ khi không cắt và $J=1{,}392$ khi có cắt: trong ví dụ này phép cắt làm giảm mức suy giảm, nhưng không sửa lợi thế sai. Trên đoạn phẳng, mục tiêu không đổi mà KL tại $s_B$ tăng: PPO cắt đóng góp của từng mẫu, không cắt chính sách mới.
+5. Thực hành và kết luận: một vòng PPO giữ cố định $\log\pi_{\mathrm{old}}$, $\widehat A_t$, $V^{\mathrm{targ}}_t$ và tính lại $\rho_t$ qua $K$ lần qua bộ đệm; hàm mất mát tổng gộp actor, critic, entropy; approxKL, tỉ lệ cắt và tỉ lệ cắt có tác dụng cho biết vòng vừa chạy đổi chính sách bao nhiêu (lô giả định: $50\%$ ngoài khoảng cắt, $25\%$ mất gradient); thuật toán PPO-Clip. Ba đại lượng khép mạch: $\mathcal L^{\mathrm{CLIP}}\le\mathcal L^{\mathrm{CPI}}$ trên cùng dữ liệu, còn giữa $\Delta\mathcal L$ và $\Delta J$ không có thứ tự chung (với $\tilde\pi$: $-0{,}145$; $0{,}095$; $-0{,}085$). Điều còn thiếu chuyển sang tổng kết: không phương pháp nào trong thực hành bảo đảm $J$ tăng.
+
+Phụ lục, phần PPO (bản #8; ngoài 120 phút): chứng minh dạng theo dấu và bốn trường hợp; phép tính tối ưu trên bộ đệm hai lượt; điều kiện để approxKL không chệch; Bài tập 10.23 (một vòng PPO-Clip với lợi thế đúng) với lời giải ba bước: chính sách mới $(0{,}6;\,0{,}8)$; $\mathcal L^{\mathrm{CLIP}}=0{,}200$, $\Delta\mathcal L=0{,}260$, $\Delta J=0{,}296$; sai số $0{,}036$ do số lần thăm $s_B$ tăng.
 
 ### Mạch 6. Tổng kết
 
@@ -114,7 +116,10 @@ Mọi kết quả mà trang chiếu dùng mang nhãn, giả thiết lấy từ g
 | 5 | Mục tiêu cắt theo dấu của lợi thế (Mệnh đề 10.40) | Mệnh đề. | (a) `5-11` |
 | 5 | Phép cắt không chặn KL (Nhận xét 10.42) | Nhận xét. | không cần (nhận xét có ví dụ số) |
 | 5 | Hàm mất mát tổng (Định nghĩa 10.46), entropy (Định nghĩa 10.45) | Định nghĩa. | không cần (bản #7, `5-18`) |
-| 5 | approxKL, tỉ lệ cắt (Định nghĩa 10.47) | Định nghĩa. | không cần (bản #7, `5-19`) |
+| 5 | approxKL, tỉ lệ cắt (Định nghĩa 10.47); tỉ lệ cắt có tác dụng (bản #8) | Định nghĩa. | không cần (`5-19`) |
+| 5 | Mục tiêu cắt theo dấu (Mệnh đề 10.40), bản #8 | Mệnh đề. | chứng minh ở phụ lục `7-16` (TB28: phát biểu ở mạch chính) |
+| 5 | Chặn dưới bi quan $\mathcal L^{\mathrm{CLIP}}\le\mathcal L^{\mathrm{CPI}}$ (Mệnh đề 10.41), bản #8 | Mệnh đề. | (a) `5-22` |
+| phụ lục | approxKL không chệch (Mệnh đề 10.48), bản #8 | Mệnh đề. | (a) `7-18` |
 
 Định nghĩa lên trang: đường cơ sở (10.1), hàm lợi thế (10.4), critic và actor (10.7), lợi thế $n$ bước (10.11), GAE (10.13), $A_\pi(s,\pi')$ (đoạn mở §4.1, đề xuất N8), hàm thay thế và tỉ số chính sách (10.21), phân kỳ KL (10.23; biến phân toàn phần đặt ở dòng "Ký hiệu:" của trang định lý), bài toán miền tin cậy (10.30), mục tiêu PPO-Clip (10.39). Thuật toán lên trang (TB31): actor–critic với GAE (ghép 10.9 và 10.16, đề xuất N7), TRPO (10.37), PPO-Clip (10.49, bản rút gọn).
 
@@ -184,3 +189,19 @@ Phần dưới là mục "Mạch 5" trước khi thay theo nhận xét phần PP
 3. Công cụ: hàm thay thế chỉ đáng tin khi mọi tỉ số chính sách gần $1$, nên mục tiêu cắt bỏ phần lợi của việc đẩy $\rho$ ra ngoài $[1-\epsilon,1+\epsilon]$ và giữ phần thiệt.
 4. Kết quả trên ví dụ: với $\epsilon=0{,}2$, vòng trong dừng ở $(0{,}4;\,\tfrac{11}{15})$, $J=1{,}392$, giảm $0{,}008$ thay cho $0{,}4$; phép cắt không chặn KL và cũng dừng cả bước làm $J$ tăng.
 5. Thuật toán PPO-Clip, so sánh với TRPO, và một bài tập tổng hợp có lời giải (một vòng PPO-Clip với lợi thế đúng) khép mạch. Điều còn thiếu chuyển sang tổng kết: không phương pháp nào trong thực hành bảo đảm $J$ tăng.
+
+---
+
+# Lịch sử: câu chuyện mạch 5 bản #7 (2026-11-22, trước nhận xét PPO sau chỉnh sửa #8)
+
+Giữ nguyên chữ, tiêu đề hạ một bậc. Không còn hiệu lực.
+
+#### Mạch 5. Tối ưu chính sách gần kề (PPO)
+
+Bản 2026-11-22 theo nhận xét phần PPO (#7, `nhan-xet-ppo-2026-11-22.md`) và quyết định #7 của tác giả (lợi thế đúng tại $s_B$ cho trực giác; lô giả định cho chỉ số); storyboard §3 mạch 5. Bản 2026-11-21 ở mục lịch sử cuối tệp.
+
+1. Bài toán: TRPO cho mỗi bộ đệm một bước, sau gradient liên hợp và tìm kiếm lùi; cần dùng lại một bộ đệm cho nhiều bước gradient bậc một. Hàm thay thế mẫu $\mathcal L^{\mathrm{CPI}}$ là ứng viên trực tiếp, nhưng mỗi mẫu đóng góp tuyến tính theo tỉ số, nên nó không tự dừng: với lợi thế đúng, phần của nó tại $s_B$ là $3p_B-2$, tăng tới biên $p_B=1$. Trên chuỗi, biên $(1;\,1)$ là chính sách tối ưu ($J=2{,}7$), nhưng xa chính sách cũ sai số của dự báo lớn và đổi dấu được: $+0{,}45$ tại $(1;\,1)$, $-0{,}18$ với $\tilde\pi$.
+2. Trực quan: mẫu $(s_B,1)$ có lợi thế $+1$, đóng góp $\rho$ tăng mãi khi $p_B$ tăng; mẫu $(s_B,2)$ có lợi thế $-2$, đóng góp $-2\rho$ tăng khi xác suất của hành động 2 giảm. Với $\epsilon=0{,}2$, đóng góp ngừng tăng khi $\rho>1{,}2$ (tức $p_B>0{,}8$) và khi $\rho<0{,}8$ (tức $p_B>\tfrac{11}{15}$); bốn trường hợp cho $1{,}3/1{,}2$; $0{,}7/0{,}7$; $-1{,}4/-1{,}6$; $-2{,}6/-2{,}6$.
+3. Công cụ: hai đường gấp khúc là một công thức, $\min\bigl(\rho A,\operatorname{clip}(\rho,1-\epsilon,1+\epsilon)A\bigr)$, tức mục tiêu cắt. Phép $\min$ giữ phạt của thay đổi bất lợi: chỉ cắt thì mẫu $A=-2$, $\rho=1{,}3$ cho $-2{,}4$ thay cho $-2{,}6$. Theo dấu của lợi thế, mẫu ngừng đóng góp ở $1+\epsilon$ hoặc $1-\epsilon$.
+4. Kết quả trên ví dụ và giới hạn: bộ đệm hai lượt cho lợi thế ước lượng sai dấu ($-1{,}4$ thay cho $+0{,}4$) dù critic đúng tại $s_A$. Tối đa $\mathcal L^{\mathrm{CPI}}$ trên bộ đệm đưa $J$ về $1$; vòng trong của mục tiêu cắt dừng ở $(0{,}4;\,\tfrac{11}{15})$ với $J=1{,}392$: phép cắt không sửa lợi thế sai, nhưng giới hạn mức giảm. Trên đoạn phẳng, mục tiêu cắt không đổi mà KL tại $s_B$ tăng từ $0{,}011$ lên $0{,}396$: PPO cắt đóng góp của từng mẫu, không cắt chính sách mới.
+5. Thuật toán: một vòng PPO giữ cố định bộ đệm, $\log\pi_{\mathrm{old}}$, $\widehat A_t$, $V^{\mathrm{targ}}_t$ và tính lại $\rho_t$ qua $K$ lần qua bộ đệm; hàm mất mát tổng gộp actor, critic và entropy; approxKL, tỉ lệ cắt và entropy cho biết vòng vừa chạy đổi chính sách bao nhiêu (lô giả định: tỉ lệ cắt $50\%$, approxKL $\approx0{,}0243$). Thuật toán PPO-Clip, so sánh với TRPO và một bài tập tổng hợp (một vòng PPO-Clip với lợi thế đúng) khép mạch. Điều còn thiếu chuyển sang tổng kết: không phương pháp nào trong thực hành bảo đảm $J$ tăng.

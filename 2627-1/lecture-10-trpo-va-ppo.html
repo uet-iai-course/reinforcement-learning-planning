@@ -20,7 +20,7 @@
 <p><strong>Kiểm soát mức đổi chính sách để giảm nguy cơ suy giảm khi dùng lại lượt đã thu.</strong></p>
 <p>Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội</p>
 <p>Năm học 2026–2027, học kỳ 1</p>
-<aside class="notes"><p>Bài gồm hai phần. Mạch 2 và 3 giảm phương sai của ước lượng gradient chính sách; đó là điều kiện để một bước cập nhật dựa trên ước lượng có nghĩa. Mạch 4 và 5 giới hạn mức đổi chính sách ở mỗi bước cập nhật để hạn chế nguy cơ $J$ giảm khi dùng lại lượt đã thu. Tên đầy đủ: tối ưu chính sách miền tin cậy (Trust Region Policy Optimization, TRPO) và tối ưu chính sách gần kề (Proximal Policy Optimization, PPO).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §1.1 (đoạn mở).</p></aside>
+<aside class="notes"><p>Bài gồm hai phần. Mạch 2 và 3 giảm phương sai của ước lượng gradient chính sách; đó là điều kiện để một bước cập nhật dựa trên ước lượng có nghĩa. Mạch 4 và 5 dùng lại dữ liệu từ chính sách cũ để thực hiện các bước cập nhật hiệu quả, đồng thời kiểm soát nguy cơ suy giảm hiệu năng. Tên đầy đủ: tối ưu chính sách miền tin cậy (Trust Region Policy Optimization, TRPO) và tối ưu chính sách gần kề (Proximal Policy Optimization, PPO).</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §1.1 (đoạn mở).</p></aside>
 </section>
 
 <section data-slide-id="L10-1-02" class="compact">
@@ -158,7 +158,7 @@ $$\begin{aligned}\frac{\partial J}{\partial\theta_A}&=(2{,}7p_B-1)\,p_A(1-p_A)=0
 <div class="check"><strong>Câu hỏi:</strong>
 <ol>
 <li>Làm thế nào để ước lượng gradient chính sách có phương sai nhỏ mà kỳ vọng không đổi?</li>
-<li>Làm thế nào để dùng lượt của chính sách cũ cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm?</li>
+<li>Làm thế nào để dùng lại dữ liệu từ chính sách cũ cho các bước cập nhật hiệu quả, đồng thời kiểm soát nguy cơ suy giảm hiệu năng?</li>
 </ol></div>
 <aside class="notes"><p>Câu trả lời theo mạch: mạch 2 (đường cơ sở, lợi thế) và mạch 3 (critic, ước lượng lợi thế tổng quát) trả lời câu 1; mạch 4 (hàm thay thế, miền tin cậy, TRPO) và mạch 5 (PPO) trả lời câu 2. Câu 1 đến từ bảng ba ước lượng REINFORCE; câu 2 đến từ hai bước dài trên chuỗi, theo lượt $s_A\xrightarrow1s_B\xrightarrow1$ và lượt $s_A\xrightarrow2$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §1.1 (đoạn "bài toán trung tâm").</p></aside>
 </section>
@@ -170,7 +170,7 @@ $$\begin{aligned}\frac{\partial J}{\partial\theta_A}&=(2{,}7p_B-1)\,p_A(1-p_A)=0
 <li>Giảm phương sai của ước lượng gradient chính sách mà giữ nguyên kỳ vọng.</li>
 <li>Ước lượng mức độ hành động đã chọn tốt hơn hay kém hơn mức kỳ vọng khi hàm giá trị phải học từ dữ liệu, và tính độ chệch, phương sai của ước lượng đó.</li>
 <li>Đánh giá chính sách mới từ lượt của chính sách cũ và chặn sai số của phép đánh giá.</li>
-<li>Thực hiện nhiều bước cập nhật trên cùng một bộ đệm (buffer) mà vẫn giữ chính sách mới gần chính sách cũ.</li>
+<li>Thực hiện nhiều bước cập nhật trên cùng một bộ đệm (buffer) và theo dõi mức đổi chính sách.</li>
 </ol>
 <aside class="notes"><p>Mỗi dòng ứng với một mạch nội dung, từ mạch 2 tới mạch 5. Danh sách đầy đủ ở đầu ghi chú gồm cả các chứng minh và các phép tính trên chuỗi hai trạng thái. Mục tiêu 2 dùng hiệu giữa lợi tức và giá trị của trạng thái, đại lượng mạch 2 đặt tên là lợi thế.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Mục tiêu học tập 1–7.</p></aside>
 </section>
@@ -188,10 +188,10 @@ $$\begin{aligned}\frac{\partial J}{\partial\theta_A}&=(2{,}7p_B-1)\,p_A(1-p_A)=0
 <li><a href="#/5">Tối ưu chính sách gần kề (Proximal Policy Optimization, PPO)</a></li>
 <li><a href="#/6">Tổng kết</a></li>
 </ol>
-<p><a href="#/7">Phụ lục: cơ sở lý thuyết của miền tin cậy</a></p>
+<p><a href="#/7">Phụ lục: cơ sở lý thuyết của TRPO và PPO</a></p>
 </div>
 </div>
-<aside class="notes"><p>Đọc vòng: thu lượt bằng chính sách cũ, tính hệ số của mỗi bước, cập nhật, rồi chính sách mới thành chính sách cũ. Hai dấu hỏi đỏ là hai câu hỏi trung tâm. Mạch 2 và 3 sửa khối hệ số và lấp khối nét đứt; mạch 4 và 5 sửa khối cập nhật. Đầu mỗi mạch hình này hiện lại, với khối của mạch được tô màu. Phụ lục cuối bài chứa các chứng minh của mạch 4; nó không thuộc thời lượng trên lớp.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §1.1 (hình vấn đề trung tâm, sắp lại thành vòng).</p></aside>
+<aside class="notes"><p>Đọc vòng: thu lượt bằng chính sách cũ, tính hệ số của mỗi bước, cập nhật, rồi chính sách mới thành chính sách cũ. Hai dấu hỏi đỏ là hai câu hỏi trung tâm. Mạch 2 và 3 sửa khối hệ số và lấp khối nét đứt; mạch 4 và 5 sửa khối cập nhật. Đầu mỗi mạch hình này hiện lại, với khối của mạch được tô màu. Phụ lục cuối bài chứa các chứng minh của mạch 4, các phép tính chi tiết và bài tập tổng hợp của mạch 5; nó không thuộc thời lượng trên lớp.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §1.1 (hình vấn đề trung tâm, sắp lại thành vòng).</p></aside>
 </section>
 </section>
 
@@ -557,7 +557,7 @@ $$\mathbb E\Bigl[\sum_t\gamma^t\,\widehat A_t\,\psi_t\Bigr]=\nabla_\theta J(\the
 </div>
 <img class="fragment" data-fragment-index="1" width="560" src="img/lec-10/ham-thay-the-tiep-xuc-chi-J.svg" alt="Giá trị J dọc đoạn thẳng từ pi, t = 0, tới pi ngã = (0,9; 0,5), t = 1; trục tung J từ 1,3 tới 1,5; một đường cong xanh nét liền: J = 1,4 tại t = 0, 1,4125 gần đỉnh, 1,4025 tại t = 0,5, trở về 1,4 tại t ≈ 0,53 và 1,315 tại t = 1."/>
 </div>
-<aside class="notes"><p>Mạch 2 và 3 cho hướng cập nhật ít phương sai, nhưng mỗi lượt chỉ cho một bước. Câu hỏi: đã thu $10\,000$ bước tương tác, dùng bộ dữ liệu này thế nào để có một bước cập nhật dài mà vẫn kiểm soát nguy cơ $J$ giảm? Lời giải: đánh giá chính sách ứng viên bằng chính bộ dữ liệu đó, trước khi thu lượt của nó. $\tilde\pi$ được chọn để sai số của phép đánh giá hiện rõ; nó không nằm trên hướng gradient $(0{,}2;\,0{,}3)$, vì $p_B$ giảm. $\sigma(\log9)=\tfrac9{10}$, $\sigma(0)=\tfrac12$. Khai triển: $2{,}7(\tfrac12+0{,}4t)(\tfrac23-\tfrac t6)=0{,}9+0{,}495t-0{,}18t^2$, cộng $\tfrac12-0{,}4t$. Đọc hình: $J$ lên $1{,}4125$ tại $t=0{,}25$, gần đỉnh $t\approx0{,}26$, còn $1{,}4025$ tại $t=0{,}5$, về $1{,}4$ tại $t=\tfrac{19}{36}\approx0{,}53$. Công thức $J=2{,}7p_Ap_B+1-p_A$ dùng phần thưởng và xác suất chuyển của chuỗi; khi không có mô hình, $J(\pi_t)$ chỉ ước lượng được từ lượt của $\pi_t$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4 (đoạn mở, "Câu hỏi."); §4.1 (Ví dụ 10.11, "Giá trị thật"); §4.3 (Ví dụ 10.12, "Đoạn thẳng", "Diễn giải", "Kiểm tra lại").</p></aside>
+<aside class="notes"><p>Mạch 2 và 3 cho hướng cập nhật ít phương sai, nhưng mỗi lượt chỉ cho một bước. Câu hỏi: đã thu $10\,000$ bước tương tác, dùng lại bộ dữ liệu này thế nào cho các bước cập nhật hiệu quả, đồng thời kiểm soát nguy cơ suy giảm hiệu năng? Lời giải: đánh giá chính sách ứng viên bằng chính bộ dữ liệu đó, trước khi thu lượt của nó. $\tilde\pi$ được chọn để sai số của phép đánh giá hiện rõ; nó không nằm trên hướng gradient $(0{,}2;\,0{,}3)$, vì $p_B$ giảm. Khai triển: $2{,}7(\tfrac12+0{,}4t)(\tfrac23-\tfrac t6)=0{,}9+0{,}495t-0{,}18t^2$, cộng $\tfrac12-0{,}4t$. Đọc hình: $J$ lên $1{,}4125$ tại $t=0{,}25$, gần đỉnh $t\approx0{,}26$, còn $1{,}4025$ tại $t=0{,}5$, về $1{,}4$ tại $t=\tfrac{19}{36}\approx0{,}53$. Khi không có mô hình, $J(\pi_t)$ chỉ ước lượng được từ lượt của $\pi_t$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4 (đoạn mở, "Câu hỏi."); §4.1 (Ví dụ 10.11, "Giá trị thật"); §4.3 (Ví dụ 10.12, "Đoạn thẳng", "Diễn giải", "Kiểm tra lại").</p></aside>
 </section>
 
 <section data-slide-id="L10-4-27" class="compact">
@@ -942,7 +942,7 @@ tính $g=\nabla\widehat{\mathcal L}(\theta_{\mathrm{old}})=\frac1{|\mathcal D|}\
 <p class="strand-lead">PPO cắt đóng góp của từng mẫu vào hàm mục tiêu để dùng lại một bộ đệm nhiều lần bằng gradient bậc một.</p>
 </div>
 <img width="650" src="img/lec-10/so-do-neo-m5-vao.svg" alt="Vòng cập nhật chính sách thu nhỏ: khối cập nhật actor: tối đa hàm thay thế trong miền tin cậy (TRPO), tô tím, viền đậm, có dấu hỏi; mũi tên mờ từ khối thu lượt thẳng xuống khối cập nhật, ghi dùng lại lượt vừa thu; các khối khác mờ: thu lượt bằng chính sách cũ, cập nhật critic, ước lượng lợi thế."/>
-<aside class="notes"><p>Mạch trước cho TRPO: tối đa hàm thay thế trong miền KL, mỗi bộ đệm một bước, với ma trận Fisher, gradient liên hợp và tìm kiếm lùi. Mạch 5 giữ ý hàm thay thế chỉ đáng tin gần chính sách cũ, nhưng đưa giới hạn vào chính hàm mục tiêu. Đầu ra là mục tiêu cắt, giới hạn của nó trên bộ đệm hai lượt, một vòng PPO với hàm mất mát tổng và các chỉ số theo dõi, thuật toán PPO-Clip, so sánh với TRPO và một bài tập tổng hợp.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6 (đoạn mở).</p></aside>
+<aside class="notes"><p>Mạch trước cho TRPO: tối đa hàm thay thế trong miền KL, mỗi bộ đệm một bước, với ma trận Fisher, gradient liên hợp và tìm kiếm lùi. Mạch 5 giữ ý hàm thay thế chỉ đáng tin gần chính sách cũ, và đưa cơ chế kiểm soát vào chính hàm mục tiêu: mục tiêu ngừng thưởng thay đổi có lợi vượt ngưỡng. Đầu ra là mục tiêu cắt, giới hạn của nó trên bộ đệm hai lượt, một vòng PPO với hàm mất mát tổng và các chỉ số theo dõi, thuật toán PPO-Clip và ba đại lượng mà mạch dùng.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6 (đoạn mở).</p></aside>
 </section>
 
 <section data-slide-id="L10-5-09" class="compact">
@@ -950,7 +950,7 @@ tính $g=\nabla\widehat{\mathcal L}(\theta_{\mathrm{old}})=\frac1{|\mathcal D|}\
 <div class="grid2 fig-left">
 <img width="420" src="img/lec-10/vong-trpo.svg" alt="Vòng TRPO, năm khối đứng: Thu lượt (bộ đệm, lưu phân phối cũ) → Ước lượng lợi thế (delta t, GAE) → Tính hướng (giải F x = g bằng gradient liên hợp; khối viền tím, ghi khoảng mười tích F v) → Chọn độ dài bước (kiểm hàm thay thế mẫu và KL trung bình trên bộ đệm; vòng đỏ nét liền: không đạt, thu nhỏ bước) → Cập nhật critic; mũi tên cuối: bỏ bộ đệm, thu lượt mới."/>
 <div>
-<p>Cần dùng lại một bộ đệm $\mathcal D$ cho nhiều bước cập nhật, mỗi bước chỉ cần gradient bậc một của một hàm mục tiêu.</p>
+<p>Cần dùng lại dữ liệu từ chính sách cũ cho nhiều bước cập nhật hiệu quả, mỗi bước chỉ cần gradient bậc một, đồng thời kiểm soát nguy cơ suy giảm hiệu năng.</p>
 <p class="fragment" data-fragment-index="1">Hàm thay thế mẫu $\widehat{\mathcal L}$ ở bước 3 của TRPO được ký hiệu là $\mathcal L^{\mathrm{CPI}}$, theo tên phương pháp lặp chính sách bảo thủ (conservative policy iteration, CPI):</p>
 <div class="fragment" data-fragment-index="1">$$\mathcal L^{\mathrm{CPI}}(\theta)=\frac1{|\mathcal D|}\sum_{t\in\mathcal D}\rho_t(\theta)\,\widehat A_t,$$</div>
 <p class="fragment" data-fragment-index="1">với $\rho_t(\theta)=\pi_\theta(A_t\mid S_t)/\pi_{\mathrm{old}}(A_t\mid S_t)$.</p>
@@ -1053,66 +1053,50 @@ $$\ell_{s_B}=\tfrac23\cdot1{,}5p_B\cdot1+\tfrac13\cdot3(1-p_B)\cdot(-2)=3p_B-2.$
 <tr><td>$\widehat A_t\lt0$</td><td>$\widehat A_t\,\max(\rho_t,\,1-\epsilon)$</td><td>$\rho_t\lt1-\epsilon$</td></tr>
 <tr><td>$\widehat A_t=0$</td><td>$0$</td><td>mọi $\rho_t$</td></tr>
 </tbody></table>
-<table class="calc fragment" data-fragment-index="1">
-<thead><tr><th>Ở đây: $\widehat A_t=A_\pi(s_B,a)$, lợi thế đúng</th><th>$\rho$</th><th>$\rho A_\pi$</th><th>Số hạng cắt</th><th>Gradient theo mẫu</th></tr></thead>
-<tbody>
-<tr><td>$A_\pi=+1$</td><td>$1{,}3$</td><td>$1{,}3$</td><td>$\min(1{,}3;\,1{,}2)=1{,}2$</td><td>$0$</td></tr>
-<tr><td>$A_\pi=+1$</td><td>$0{,}7$</td><td>$0{,}7$</td><td>$0{,}7$</td><td>khác $0$</td></tr>
-<tr><td>$A_\pi=-2$</td><td>$0{,}7$</td><td>$-1{,}4$</td><td>$-1{,}6$</td><td>$0$</td></tr>
-<tr><td>$A_\pi=-2$</td><td>$1{,}3$</td><td>$-2{,}6$</td><td>$-2{,}6$</td><td>khác $0$</td></tr>
-</tbody></table>
-<p class="fragment" data-fragment-index="2"><strong>Chứng minh.</strong> Nhân với $\widehat A_t\gt0$ giữ thứ tự và nhân với $\widehat A_t\lt0$ đảo thứ tự, nên phép $\min$ của định nghĩa thành $\min(\rho_t,1+\epsilon)$ hoặc $\max(\rho_t,1-\epsilon)$.</p>
-<aside class="notes"><p>Ngoài các tập có gradient bằng $0$, gradient của số hạng là $\widehat A_t\rho_t\psi_t$. Lợi thế dương ngừng ở $1+\epsilon$, lợi thế âm ngừng ở $1-\epsilon$; phía bất lợi giữ tín hiệu. Nhầm lẫn thường gặp: mọi mẫu ngoài khoảng cắt có gradient $0$; điều đó chỉ đúng khi tỉ số ra ngoài theo hướng có lợi. Tại $\rho_t=1\pm\epsilon$, vi phân tự động trả về gradient của một nhánh. Câu hỏi còn lại: mục tiêu cắt làm gì khi lợi thế là ước lượng, và nó có giữ chính sách gần chính sách cũ không.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.1 (Mệnh đề 10.40, chứng minh Bước 1–2; bảng bốn trường hợp và câu "Quy tắc rút ra từ bảng").</p></aside>
-</section>
-
-<section data-slide-id="L10-5-10" class="compact">
-<h2>Bộ đệm hai lượt cho lợi thế ước lượng sai dấu</h2>
-<p><strong>Nhắc lại:</strong> critic $\hat v=(1{,}4;\,1)$; GAE với $\lambda=1$ cho $\widehat A_t=G_t-\hat v(S_t)$; $\pi_{\mathrm{old}}=(\tfrac12;\,\tfrac23)$.</p>
-<p>Dữ liệu thu được chỉ cho lợi thế ước lượng. <strong>Thu lượt</strong>: bộ đệm gồm hai lượt $s_A\xrightarrow1s_B\xrightarrow2$ và $s_A\xrightarrow2$, xác suất $2\cdot\tfrac16\cdot\tfrac12=\tfrac16$. <strong>Ước lượng lợi thế</strong>:</p>
-<div class="grid2 fig-left">
-<img width="300" src="img/lec-10/chuoi-bo-dem-hai-luot.svg" alt="Chuỗi thu nhỏ: ô s_A trên, ô s_B dưới, hai ô kết thúc bên phải. Lượt 1, nét liền đậm: từ s_A xuống s_B rồi tới kết thúc, thưởng 0. Lượt 2, nét đứt đậm: từ s_A tới kết thúc, thưởng 1."/>
-<table class="calc fragment" data-fragment-index="1">
-<thead><tr><th>Mẫu</th><th>$G_t$</th><th>$\widehat A_t=G_t-\hat v(S_t)$</th><th>$A_\pi$ đúng</th><th>$\rho_t$</th></tr></thead>
-<tbody>
-<tr><td>$(s_A,1)$</td><td>$0+0{,}9\cdot0=0$</td><td>$0-1{,}4=\color{#C62828}{\mathbf{-1{,}4}}$</td><td>$+0{,}4$</td><td>$p_A/\tfrac12=2p_A$</td></tr>
-<tr><td>$(s_A,2)$</td><td>$1$</td><td>$1-1{,}4=-0{,}4$</td><td>$-0{,}4$</td><td>$2-2p_A$</td></tr>
-<tr><td>$(s_B,2)$</td><td>$0$</td><td>$0-1=-1$</td><td>$-2$</td><td>$3-3p_B$</td></tr>
-</tbody></table>
-</div>
-<p class="box fragment" data-fragment-index="2">Lợi thế ước lượng của hành động 1 ở $s_A$ sai dấu dù $\hat v(s_A)=v_\pi(s_A)=1{,}4$.</p>
-<p class="check fragment" data-fragment-index="3"><strong>Câu hỏi:</strong> phép cắt có sửa được lợi thế ước lượng sai dấu không?</p>
-<aside class="notes"><p>Một bộ đệm nhỏ cho lợi thế ước lượng sai dấu ở hành động tốt, kể cả khi critic đúng tại $s_A$: lượt chọn hành động 1 gặp phần thưởng $0$ ở $s_B$. Phép cắt ngăn cập nhật vượt ngưỡng theo hướng có lợi; câu hỏi là nó có sửa được dấu sai không. Sai dấu đến từ phương sai của lợi tức một lượt, không đến từ critic: với $\lambda=1$, ước lượng tại $s_A$ không chệch. Xác suất của bộ đệm: hai thứ tự của hai lượt, mỗi lượt có xác suất $\tfrac16$ và $\tfrac12$. Cột tỉ số: $(1-p_A)/\tfrac12$ và $(1-p_B)/\tfrac13$ cho hai hàng sau.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.1 (đoạn "Câu hỏi. Phép cắt ngăn cập nhật vượt ngưỡng … có sửa được lợi thế ước lượng sai dấu không?" và đoạn sau).</p></aside>
+<p class="fragment" data-fragment-index="1">Ở đây, hai đường gấp khúc của $A_\pi=+1$ và $A_\pi=-2$ là hai hàng đầu: đoạn phẳng ở $\rho\gt1{,}2$ và ở $\rho\lt0{,}8$.</p>
+<p class="fragment" data-fragment-index="2"><strong>Chứng minh.</strong> Nhân với $\widehat A_t\gt0$ giữ thứ tự, nhân với $\widehat A_t\lt0$ đảo thứ tự, nên phép $\min$ của định nghĩa thành $\min(\rho_t,1+\epsilon)$ hoặc $\max(\rho_t,1-\epsilon)$.</p>
+<aside class="notes"><p>Ngoài các tập có gradient bằng $0$, gradient của số hạng là $\widehat A_t\rho_t\psi_t$. Lợi thế dương ngừng ở $1+\epsilon$, lợi thế âm ngừng ở $1-\epsilon$; phía bất lợi giữ tín hiệu. Nhầm lẫn thường gặp: mọi mẫu ngoài khoảng cắt có gradient $0$; điều đó chỉ đúng khi tỉ số ra ngoài theo hướng có lợi. Tại $\rho_t=1\pm\epsilon$, vi phân tự động trả về gradient của một nhánh. Câu hỏi còn lại: mục tiêu cắt làm gì khi lợi thế là ước lượng. Chứng minh đầy đủ và bảng bốn trường hợp ở phụ lục cuối bài.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.1 (Mệnh đề 10.40; câu "Quy tắc rút ra từ bảng").</p></aside>
 </section>
 
 <section data-slide-id="L10-5-05" class="compact">
-<h2>Phép cắt hạn chế mức giảm của $J$</h2>
-<p><em>Vòng trong</em>: nhiều bước gradient trên cùng bộ đệm, lợi thế cố định. <strong>Cập nhật actor</strong>:</p>
-<table class="calc">
-<thead><tr><th>Phần của</th><th>$3\mathcal L^{\mathrm{CPI}}$</th><th>Tới</th><th><span class="fragment" data-fragment-index="2">$3\mathcal L^{\mathrm{CLIP}}$</span></th><th><span class="fragment" data-fragment-index="2">Dừng tại</span></th></tr></thead>
-<tbody>
-<tr><td>$s_A$</td><td>$-0{,}8-2p_A$</td><td>$p_A\to0$</td><td><span class="fragment" data-fragment-index="2">$-1{,}4\max(2p_A;\,0{,}8)-0{,}4\max(2-2p_A;\,0{,}8)$</span></td><td><span class="fragment" data-fragment-index="2">$p_A=0{,}4$</span></td></tr>
-<tr class="fragment" data-fragment-index="1"><td>$s_B$</td><td>$-(3-3p_B)$</td><td>$p_B\to1$</td><td><span class="fragment" data-fragment-index="2">$-\max(3-3p_B;\,0{,}8)$</span></td><td><span class="fragment" data-fragment-index="2">$p_B=\tfrac{11}{15}$</span></td></tr>
-</tbody></table>
-<p class="fragment" data-fragment-index="2">Dưới $p_A=0{,}4$, mẫu $(s_A,2)$ có $\rho\gt1{,}2$ ở phía bất lợi, không bị cắt.</p>
-<p class="fragment" data-fragment-index="1">$J(0;\,1)=2{,}7\cdot0\cdot1+1-0=1$; <span class="fragment" data-fragment-index="3">$J(0{,}4;\,\tfrac{11}{15})=2{,}7\cdot0{,}4\cdot\tfrac{11}{15}+0{,}6=1{,}392$.</span></p>
+<h2>Trong ví dụ này, phép cắt làm $J$ giảm ít hơn</h2>
+<p><strong>Nhắc lại:</strong> critic $\hat v=(1{,}4;\,1)$; GAE với $\lambda=1$ cho $\widehat A_t=G_t-\hat v(S_t)$; $\pi_{\mathrm{old}}=(\tfrac12;\,\tfrac23)$. Bộ đệm: $s_A\xrightarrow1s_B\xrightarrow2$, $G_0=0$; $s_A\xrightarrow2$, $G_0=1$.</p>
 <div class="grid2 fig-right">
 <div>
-<p class="box fragment" data-fragment-index="3">Phép cắt không sửa lợi thế sai: $J$ vẫn giảm, $0{,}008$ thay cho $0{,}4$.</p>
+<table class="calc">
+<thead><tr><th>Mẫu</th><th>$\widehat A_t$</th><th>$A_\pi$ đúng</th><th>$\rho_t$</th></tr></thead>
+<tbody>
+<tr><td>$(s_A,1)$</td><td>$0-1{,}4=\color{#C62828}{\mathbf{-1{,}4}}$</td><td>$+0{,}4$</td><td>$2p_A$</td></tr>
+<tr><td>$(s_A,2)$</td><td>$-0{,}4$</td><td>$-0{,}4$</td><td>$2-2p_A$</td></tr>
+<tr><td>$(s_B,2)$</td><td>$-1$</td><td>$-2$</td><td>$3-3p_B$</td></tr>
+</tbody></table>
+<p class="fragment" data-fragment-index="2">Không cắt: $3\mathcal L^{\mathrm{CPI}}=(-0{,}8-2p_A)-(3-3p_B)$ giảm theo $p_A$, tăng theo $p_B$: tới $(0;1)$, $J=1$.</p>
 </div>
-<img class="fragment" data-fragment-index="3" width="656" src="img/lec-10/ppo-so-sanh-J.svg" alt="Ba thanh ngang trên cùng trục J: chính sách cũ (0,5; 2/3), J bằng 1,400, xám; giới hạn khi tối đa hàm thay thế mẫu không cắt, (0; 1), J bằng 1,000, đỏ; mục tiêu cắt, điểm dừng (0,4; 11/15), J bằng 1,392, tím, ngay dưới vạch J bằng 1,4."/>
+<div>
+<div class="r-stack">
+<div class="fragment" data-fragment-index="1"><p class="check fragment fade-out" data-fragment-index="2"><strong>Câu hỏi:</strong> phép cắt có sửa dấu sai không?</p>
 </div>
-<aside class="notes"><p>Trên cùng bộ đệm, không cắt thì $J$ về $1$; có cắt thì $J=1{,}392$: phép cắt giới hạn mỗi vòng đi bao xa, không sửa dấu của lợi thế. Cột không cắt: $-1{,}4\cdot2p_A-0{,}4(2-2p_A)=-0{,}8-2p_A$. Dưới $p_A=0{,}4$, phần của $s_A$ giảm. Trên $[0{,}4;\,0{,}6]$ phần của $s_A$ trong mục tiêu cắt bằng $-0{,}8-2p_A$, dưới $0{,}4$ bằng $-1{,}92+0{,}8p_A$; tại điểm dừng $\rho=(0{,}8;\,1{,}2;\,0{,}8)$. Giới hạn $(0;\,1)$ không đạt với $\theta$ hữu hạn. Hai chính sách là điểm dừng của bài toán tối ưu trên bộ đệm, không phải kết quả của một số bước gradient cụ thể. Giảm $0{,}4$ trùng mức giảm của bước dài ở mạch 1.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, mục tiêu không cắt trên bộ đệm ở §6.1, đoạn "Tại $s_A$, critic đúng …"; đoạn "Với mục tiêu cắt và $\epsilon=0{,}2$ …".</p></aside>
+<p class="box fragment" data-fragment-index="2">Phép cắt không sửa dấu sai: $J$ giảm $0{,}008$.</p>
+</div>
+<img class="fragment" data-fragment-index="2" width="656" src="img/lec-10/ppo-so-sanh-J.svg" alt="Ba thanh ngang trên cùng trục J: chính sách cũ (0,5; 2/3), J bằng 1,400, xám; giới hạn khi tối đa hàm thay thế mẫu không cắt, (0; 1), J bằng 1,000, đỏ; mục tiêu cắt, điểm dừng (0,4; 11/15), J bằng 1,392, tím, ngay dưới vạch J bằng 1,4."/>
+</div>
+</div>
+<p class="fragment" data-fragment-index="2">Có cắt: <em>vòng trong</em> (nhiều bước gradient trên cùng bộ đệm, lợi thế cố định) dừng khi $2p_A=0{,}8$ và $3-3p_B=0{,}8$, ở $(0{,}4;\,\tfrac{11}{15})$, $J=2{,}7\cdot0{,}4\cdot\tfrac{11}{15}+0{,}6=1{,}392$.</p>
+<aside class="notes"><p>Không cắt, $J$ giảm $0{,}4$; có cắt, $J$ giảm $0{,}008$. Dữ liệu chỉ cho lợi thế ước lượng. Vòng trong dừng khi $(s_A,1)$ và $(s_B,2)$ chạm biên. Phép cắt loại bỏ động lực cải thiện dự báo vượt ngưỡng theo hướng có lợi. Trong ví dụ tối ưu lý tưởng hóa này, cơ chế đó tạo ra điểm dừng sớm hơn, nhưng không áp đặt giới hạn cứng lên độ dài bước cập nhật chính sách. Lợi thế của hành động 1 ở $s_A$ sai dấu do phương sai của lợi tức một lượt, không do critic: $\hat v(s_A)=v_\pi(s_A)$. Giảm $0{,}4$ trùng mức giảm của bước dài ở mạch 1. Phép tính điểm dừng trên bộ đệm ở phụ lục cuối bài.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.1 (đoạn "Câu hỏi. Phép cắt ngăn cập nhật vượt ngưỡng …", đoạn mục tiêu không cắt trên bộ đệm, đoạn "Với mục tiêu cắt và $\epsilon=0{,}2$ …").</p></aside>
 </section>
 
 <section data-slide-id="L10-5-06" class="compact">
 <h2>Trên đoạn phẳng, KL vẫn tăng</h2>
+<p><strong>Nhắc lại:</strong> trong $3\mathcal L^{\mathrm{CLIP}}$ ($\lvert\mathcal D\rvert=3$), mẫu $(s_B,2)$ có $\widehat A=-1$, $\rho=3-3p_B$.</p>
 <p class="fragment" data-fragment-index="1"><strong>Nhận xét.</strong> Với $p_A=0{,}4$, phần của $s_B$ hằng $-0{,}8$ khi $p_B\ge\tfrac{11}{15}$, còn KL tăng. Tại $p_B=0{,}85$: $D_{\mathrm{KL}}(s_B)=\tfrac23\log\tfrac{2/3}{0{,}85}+\tfrac13\log\tfrac{1/3}{0{,}15}=-0{,}162+0{,}266=0{,}104$.</p>
 <div class="grid2 fig-left fragment" data-fragment-index="1">
 <img width="896" src="img/lec-10/ppo-phang-va-kl.svg" alt="Hai bảng theo p B từ 2/3 tới 0,96. Trái, mục tiêu đã phẳng: phần của s B trong 3 lần mục tiêu cắt, âm max(3 − 3p B; 0,8), từ âm 1 tại chính sách cũ p B bằng 2/3 tăng tới âm 0,8 tại p B bằng 11/15 rồi nằm ngang. Phải, KL vẫn tăng: D KL của s B, chiều cũ‖mới, bằng 0 tại chính sách cũ, 0,011 tại 0,733, 0,104 tại 0,85, 0,396 tại 0,95."/>
+<div>
 <p class="fragment" data-fragment-index="2">Mục tiêu không phạt $p_B\gt\tfrac{11}{15}$: bước trên mẫu khác hay lô khác có thể đẩy $p_B$ đi tiếp, và KL tăng theo.</p>
-</div>
 <p class="box fragment" data-fragment-index="3">PPO không cắt chính sách mới; PPO cắt đóng góp của từng mẫu.</p>
-<aside class="notes"><p>Trên đoạn phẳng, mục tiêu cắt không phân biệt ba chính sách có KL rất khác nhau. Mục tiêu cắt bỏ động lực đẩy $\rho$ ra ngoài $[0{,}8;\,1{,}2]$ theo hướng có lợi; nó không sửa lợi thế sai và không chặn khoảng cách giữa hai chính sách. Trên chuỗi, mỗi trạng thái có tham số riêng; khi tham số dùng chung, bước trên mẫu khác có thể đẩy $\rho$ ra ngoài khoảng cắt. Với $J(0{,}4;\,p_B)=1{,}08p_B+0{,}6$, ba chính sách cho $1{,}392$; $1{,}518$; $1{,}626$: mục tiêu cắt dừng vòng trong ở $\tfrac{11}{15}$ dù $\partial J/\partial p_B=1{,}08\gt0$. Các lô nhỏ khác nhau và động lượng của Adam cũng đẩy tỉ số ra ngoài khoảng cắt (Nhận xét 10.42); Engstrom và cộng sự (2020, §4) đo được điều này. Theo dõi KL và dừng sớm là biện pháp thực hành.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.1 (đoạn "Từ $p_B=\tfrac{11}{15}$ …" và đoạn sau; Nhận xét 10.42).</p></aside>
+</div>
+</div>
+<aside class="notes"><p>Trên đoạn phẳng, mục tiêu cắt không phân biệt ba chính sách có KL rất khác nhau. Mục tiêu cắt bỏ động lực đẩy $\rho$ ra ngoài $[0{,}8;\,1{,}2]$ theo hướng có lợi; nó không sửa lợi thế sai và không chặn khoảng cách giữa hai chính sách. Với $J(0{,}4;\,p_B)=1{,}08p_B+0{,}6$, ba chính sách cho $1{,}392$; $1{,}518$; $1{,}626$: mục tiêu cắt dừng vòng trong ở $\tfrac{11}{15}$ dù $\partial J/\partial p_B=1{,}08\gt0$. Các lô nhỏ khác nhau và động lượng của Adam cũng đẩy tỉ số ra ngoài khoảng cắt (Nhận xét 10.42); Engstrom và cộng sự (2020, §4) đo được điều này. Theo dõi KL và dừng sớm là biện pháp thực hành.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.1 (đoạn "Từ $p_B=\tfrac{11}{15}$ …" và đoạn sau; Nhận xét 10.42).</p></aside>
 </section>
 
 <section data-slide-id="L10-5-17" class="compact">
@@ -1138,35 +1122,40 @@ $$L(\theta,w)=-\mathcal L^{\mathrm{CLIP}}(\theta)+c_1L^V(w)-c_2\,\mathcal H(\the
 <tr><td>$-c_2\mathcal H$ (entropy)</td><td>giữ mức ngẫu nhiên của chính sách, hỗ trợ khám phá</td></tr>
 </tbody></table>
 <p class="fragment" data-fragment-index="2"><strong>Ý nghĩa:</strong> tại $s_B$, $\pi_{\mathrm{old}}=(\tfrac23;\,\tfrac13)$ có entropy $-\tfrac23\log\tfrac23-\tfrac13\log\tfrac13=0{,}637$. Chính sách tất định có entropy $0$. Trừ $c_2\mathcal H$ làm mất mát tăng khi chính sách mất tính ngẫu nhiên.</p>
-<aside class="notes"><p>Một hàm mất mát gộp ba việc: tăng mục tiêu cắt, khớp critic, giữ entropy. Cực tiểu $L$ tương đương tăng $\mathcal L^{\mathrm{CLIP}}$, giảm $L^V$, tăng entropy. Khi actor và critic dùng chung mạng, $c_1$ cân hai mất mát; khi tách mạng, $c_1$ chỉ đổi bước học của critic. Đây là dạng cực tiểu của $L^{\mathrm{CLIP+VF+S}}$ ở (9) của Schulman và cộng sự (2017). PPO-Penalty thay phép cắt bằng phạt KL trong hàm mục tiêu, với trọng số phạt chỉnh sau mỗi vòng.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.3 (Định nghĩa 10.45, 10.46); §6.2 (Định nghĩa 10.43).</p></aside>
+<aside class="notes"><p>Một hàm mất mát gộp ba việc: tăng mục tiêu cắt, khớp critic, giữ entropy. Cực tiểu $L$ tương đương tăng $\mathcal L^{\mathrm{CLIP}}$, giảm $L^V$, tăng entropy. Khi actor và critic dùng chung mạng, $c_1$ cân hai mất mát; khi tách mạng, $c_1$ chỉ đổi bước học của critic. Đây là dạng cực tiểu của $L^{\mathrm{CLIP+VF+S}}$ ở (9) của Schulman và cộng sự (2017). Cài đặt ghi entropy trung bình trên lô; entropy giảm quá nhanh là dấu hiệu khám phá bị thu hẹp. PPO-Penalty thay phép cắt bằng phạt KL trong hàm mục tiêu, với trọng số phạt chỉnh sau mỗi vòng.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.3 (Định nghĩa 10.45, 10.46); §6.2 (Định nghĩa 10.43).</p></aside>
 </section>
 
 <section data-slide-id="L10-5-19" class="compact">
 <h2>Các chỉ số theo dõi khi huấn luyện PPO</h2>
 <p>Mục tiêu cắt không chặn KL, nên mỗi vòng cần đo mức đổi chính sách.</p>
-<p><strong>Định nghĩa.</strong> Trên lô nhỏ $\mathcal B$: approxKL (approximate KL) $=\tfrac1{|\mathcal B|}\sum_{t\in\mathcal B}\bigl[(\rho_t-1)-\log\rho_t\bigr]$; tỉ lệ cắt (clip fraction) $=\tfrac1{|\mathcal B|}\#\{t\in\mathcal B:\lvert\rho_t-1\rvert\gt\epsilon\}$.</p>
-<table>
+<p><strong>Định nghĩa.</strong> Trên lô nhỏ $\mathcal B$, với $N=\lvert\mathcal B\rvert$:</p>
+<ul>
+<li>approxKL (approximate KL) $=\tfrac1N\sum_t\bigl[(\rho_t-1)-\log\rho_t\bigr]$;</li>
+<li>tỉ lệ cắt (clip fraction) $f_{\mathrm{clip}}=\tfrac1N\sum_t\mathbb 1\{\lvert\rho_t-1\rvert\gt\epsilon\}$;</li>
+<li class="fragment" data-fragment-index="1">tỉ lệ cắt có tác dụng (active clipping fraction) $f_{\mathrm{active}}=\tfrac1N\sum_t\mathbb 1\{(\widehat A_t\gt0\wedge\rho_t\gt1+\epsilon)\vee(\widehat A_t\lt0\wedge\rho_t\lt1-\epsilon)\}$: phần mẫu nằm trên đoạn phẳng.</li>
+</ul>
+<table class="fragment" data-fragment-index="2">
 <thead><tr><th>Chỉ số</th><th>Đo gì</th><th>Tín hiệu cần chú ý</th></tr></thead>
 <tbody>
 <tr><td>approxKL</td><td>mức đổi chính sách trong vòng</td><td>cao so với ngưỡng: dừng sớm</td></tr>
-<tr><td>tỉ lệ cắt</td><td>phần mẫu có tỉ số ngoài khoảng cắt</td><td>lớn và kéo dài qua nhiều vòng</td></tr>
+<tr><td>$f_{\mathrm{clip}}$</td><td>phần mẫu ngoài khoảng cắt</td><td>lớn và kéo dài qua nhiều vòng</td></tr>
+<tr><td>$f_{\mathrm{active}}$</td><td>phần mẫu trên đoạn phẳng</td><td>lớn: phần lớn lô không còn gradient cho actor</td></tr>
 <tr><td>entropy</td><td>mức ngẫu nhiên của chính sách</td><td>giảm quá nhanh: khám phá thu hẹp</td></tr>
 </tbody></table>
-<p class="fragment" data-fragment-index="1"><strong>Lưu ý:</strong> trên các mẫu vừa dùng để cập nhật $\theta$, approxKL là chỉ số chẩn đoán, không phải ước lượng không chệch của KL.</p>
-<aside class="notes"><p>Tín hiệu đầy đủ: approxKL cao so với ngưỡng thì dừng sớm các lần qua bộ đệm còn lại; tỉ lệ cắt lớn và kéo dài thì nhiều mẫu chịu tác động của phép cắt. Ba con số trả lời ba câu hỏi về vòng vừa chạy: chính sách đổi bao nhiêu, phép cắt chạm bao nhiêu mẫu, chính sách còn ngẫu nhiên đến đâu. Với $\theta$ chọn trước khi rút mẫu, approxKL là ước lượng không chệch của KL (Mệnh đề 10.48); từ lần qua bộ đệm thứ hai, điều kiện đó không còn. Một dấu hiệu bất ổn thường gặp: phần thưởng tăng ngắn hạn, KL tăng vọt, entropy sụp.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.3 (Định nghĩa 10.47, Mệnh đề 10.48); §6.4 (bảng chẩn đoán).</p></aside>
+<aside class="notes"><p>Ba chỉ số trả lời ba câu hỏi về vòng vừa chạy: chính sách đổi bao nhiêu, bao nhiêu mẫu ra ngoài khoảng cắt, bao nhiêu mẫu mất gradient. Tỉ lệ cắt đếm mẫu ra ngoài khoảng cắt theo cả hai hướng; tỉ lệ cắt có tác dụng chỉ đếm mẫu mất gradient. Tín hiệu: approxKL cao so với ngưỡng thì dừng sớm; $f_{\mathrm{clip}}$ lớn và kéo dài qua nhiều vòng thì nhiều mẫu ra ngoài khoảng cắt; $f_{\mathrm{active}}$ cho biết bao nhiêu mẫu thực sự mất gradient, trừ điểm gãy và $\widehat A_t=0$. approxKL không âm trên từng mẫu. Điều kiện để approxKL là ước lượng không chệch của KL ở phụ lục cuối bài.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.3 (Định nghĩa 10.47); §6.4 (bảng chẩn đoán).</p></aside>
 </section>
 
 <section data-slide-id="L10-5-21" class="compact">
 <h2>Ví dụ: chỉ số trên một lô nhỏ giả định</h2>
 <div class="grid2 fig-right">
 <div>
-<p>Trên bộ đệm hai lượt, tại điểm dừng $(0{,}4;\,\tfrac{11}{15})$: ${\rho=(2p_A;\,2-2p_A;\,3-3p_B)}=(0{,}8;\,1{,}2;\,0{,}8)$ nằm đúng trên biên, nên tỉ lệ cắt theo $\lvert\rho-1\rvert\gt\epsilon$ bằng $0$. Lô giả định: $\rho=(1{,}05;\,1{,}18;\,1{,}24;\,0{,}70)$, $\epsilon=0{,}2$.</p>
-<p class="fragment" data-fragment-index="1">Hai mẫu ngoài $[0{,}8;\,1{,}2]$: tỉ lệ cắt $2/4=50\%$.</p>
-<p class="fragment" data-fragment-index="2">Số hạng $(\rho-1)-\log\rho$: $0{,}05-\log1{,}05=0{,}0012$; $0{,}0145$; $0{,}0249$; $0{,}0567$; approxKL $\approx0{,}0243$.</p>
+<p>Trên bộ đệm hai lượt, điểm dừng có $\rho=(0{,}8;\,1{,}2;\,0{,}8)$ trên biên: $f_{\mathrm{clip}}=0$. Lô giả định: $\rho=(1{,}05;\,1{,}18;\,1{,}24;\,0{,}70)$, dấu $\widehat A=(+;\,-;\,+;\,+)$, $\epsilon=0{,}2$. $f_{\mathrm{clip}}=2/4=50\%$.</p>
+<p class="fragment" data-fragment-index="1">$f_{\mathrm{active}}=1/4=25\%$: chỉ mẫu 3 ($\widehat A\gt0$, $\rho=1{,}24\gt1{,}2$) nằm trên đoạn phẳng. Mẫu 4 ($\widehat A\gt0$, $\rho=0{,}70$) ở phía bất lợi, gradient khác $0$.</p>
+<p class="fragment" data-fragment-index="2">approxKL: $0{,}05-\log1{,}05=0{,}0012$; $0{,}0145$; $0{,}0249$; $0{,}0567$; trung bình $\approx0{,}0243$.</p>
 </div>
-<img width="580" src="img/lec-10/ppo-lo-bon-ti-so.svg" alt="Bốn tỉ số trong một lô, epsilon bằng 0,2: 1,05 và 1,18 nằm trong khoảng cắt từ 0,8 tới 1,2 tô nhạt; 1,24 và 0,70 nằm ngoài khoảng."/>
+<img width="580" src="img/lec-10/ppo-lo-bon-ti-so.svg" alt="Bốn tỉ số trong một lô, epsilon bằng 0,2, dấu lợi thế (+; −; +; +): 1,05 (A mũ dương) và 1,18 (A mũ âm) tím, trong khoảng cắt từ 0,8 tới 1,2 tô nhạt; 1,24 (A mũ dương) đỏ đặc, trên đoạn phẳng; 0,70 (A mũ dương) viền đỏ, ngoài khoảng nhưng giữ gradient. Chú giải: ngoài khoảng cắt 2/4; cắt có tác dụng 1/4."/>
 </div>
-<aside class="notes"><p>Trên bộ đệm hai lượt, cả ba tỉ số tại điểm dừng nằm đúng trên biên khoảng cắt, nên tỉ lệ cắt bằng $0$. Lô bốn tỉ số là giả định, để tỉ lệ cắt khác $0$. Mẫu $0{,}70$ có số hạng lớn nhất, $0{,}0567$, vì $-\log\rho$ tăng nhanh khi $\rho$ nhỏ. approxKL không âm trên từng mẫu; dạng $-\log\rho$ cũng được dùng nhưng có thể âm. Tỉ lệ cắt $50\%$ nói rằng một nửa lô đã ra ngoài khoảng cắt, chưa nói theo hướng nào.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.4 (đoạn "Giả sử một mini-batch bốn mẫu …").</p></aside>
+<aside class="notes"><p>Trên bộ đệm hai lượt, tại điểm dừng $(0{,}4;\,\tfrac{11}{15})$ ba tỉ số $(2p_A;\,2-2p_A;\,3-3p_B)=(0{,}8;\,1{,}2;\,0{,}8)$ nằm đúng trên biên, nên cả hai tỉ lệ bằng $0$; lô bốn tỉ số là giả định. Mẫu 3 có lợi thế dương và tỉ số vượt $1{,}2$, nên mất gradient. Mẫu 4 ra ngoài khoảng theo hướng bất lợi và vẫn giữ gradient: tỉ lệ cắt đếm nó, tỉ lệ cắt có tác dụng thì không. Mẫu $0{,}70$ có số hạng approxKL lớn nhất vì $-\log\rho$ tăng nhanh khi $\rho$ nhỏ.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.4 (đoạn "Giả sử một mini-batch bốn mẫu …").</p></aside>
 </section>
 
 <section data-slide-id="L10-5-07" class="compact">
@@ -1189,52 +1178,23 @@ $$L(\theta,w)=-\mathcal L^{\mathrm{CLIP}}(\theta)+c_1L^V(w)-c_2\,\mathcal H(\the
 <li><strong>Dừng sớm</strong> (early stopping, tùy chọn): ghi approxKL $\frac1M\sum_{t\in\mathcal B}\bigl[(\rho_t-1)-\log\rho_t\bigr]$ và tỉ lệ cắt; nếu approxKL vượt ngưỡng, bỏ các lần qua bộ đệm còn lại.</li>
 </ul></li>
 </ol>
-<aside class="notes"><p>Bước 3 cập nhật actor và critic bằng một bước giảm hàm mất mát tổng, với $\mathcal H$ là entropy trung bình trên lô. Cài đặt thêm chuẩn hóa lợi thế trên lô và dùng Adam (Bài 08). Từ lô thứ hai, dữ liệu đã khác chính sách; $\rho_t$ hiệu chỉnh phân phối hành động, phân bố trạng thái vẫn của $\pi_{\mathrm{old}}$. approxKL là ước lượng KL của ghi chú, không âm trên từng mẫu.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.3 (Thuật toán 10.49; Định nghĩa 10.46, 10.47).</p></aside>
+<aside class="notes"><p>Bước 3 cập nhật actor và critic bằng một bước giảm hàm mất mát tổng, với $\mathcal H$ là entropy trung bình trên lô. Cài đặt thêm chuẩn hóa lợi thế trên lô và dùng Adam (Bài 08). Từ lô thứ hai, dữ liệu đã khác chính sách; $\rho_t$ hiệu chỉnh phân phối hành động, phân bố trạng thái vẫn của $\pi_{\mathrm{old}}$. approxKL là ước lượng KL của ghi chú, không âm trên từng mẫu; trên mẫu vừa dùng để cập nhật, nó là chỉ số chẩn đoán.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.3 (Thuật toán 10.49; Định nghĩa 10.46, 10.47).</p></aside>
 </section>
 
-<section data-slide-id="L10-5-08" class="compact">
-<h2>So sánh TRPO và PPO</h2>
-<table>
-<thead><tr><th></th><th>TRPO</th><th>PPO-Clip</th></tr></thead>
-<tbody>
-<tr><td>Quy tắc cập nhật</td><td>bước gradient tự nhiên (gradient liên hợp, tích Fisher–vector), tìm kiếm lùi</td><td>gradient bậc một của $\mathcal L^{\mathrm{CLIP}}$ trên lô nhỏ</td></tr>
-<tr><td>Dữ liệu dùng</td><td>một bộ đệm, một bước</td><td>một bộ đệm, $K$ lần</td></tr>
-<tr><td>Cách giữ bước gần</td><td>$\bar D_{\mathrm{KL}}\le\kappa$</td><td>cắt đóng góp của từng mẫu</td></tr>
-<tr><td>Bảo đảm</td><td>trên bộ đệm: KL trung bình $\le\kappa$, hàm thay thế mẫu tăng. Không bảo đảm $J$ tăng</td><td>không chặn KL. Gradient $0$ khi tỉ số ra ngoài theo hướng có lợi. Không bảo đảm $J$ tăng</td></tr>
-</tbody></table>
-<p class="box fragment" data-fragment-index="1">TRPO giới hạn mức đổi chính sách bằng ràng buộc KL trung bình. PPO-Clip bỏ phần thưởng của thay đổi có lợi vượt khoảng cắt, nên cần theo dõi KL.</p>
-<aside class="notes"><p>Hai thuật toán cùng ý giữ bước gần, khác cách giữ và chi phí. Cả hai dựa vào tính tiếp xúc của hàm thay thế và chặn cải thiện của mạch 4, nhưng các đại lượng đều là ước lượng, nên bảo đảm của định lý không chuyển sang thuật toán. Phép cắt không bảo đảm KL nhỏ và không bảo đảm $J$ tăng; nó giảm động lực cập nhật quá mức theo hướng được đánh giá là có lợi.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §5.2 (Nhận xét 10.38); §6.1 (Nhận xét 10.42); §7.2.</p></aside>
-</section>
-
-<section data-slide-id="L10-5-12" class="compact">
-<h2>Bài tập: một vòng PPO-Clip trên chuỗi</h2>
-<p>Lợi thế đúng, giữ cố định: $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$, $A_\pi(s_B,\cdot)=(1;\,-2)$. Bộ đệm chứa các cặp $(s,a)$ với tần suất hành động bằng $\pi(a\mid s)$, $\pi=(\tfrac12;\,\tfrac23)$, $\eta_\pi=(1;\,0{,}45)$, $\epsilon=0{,}2$. Vòng trong tăng $\mathcal L^{\mathrm{CLIP}}$ từ $\pi$ tới đầu đoạn phẳng. $\pi'$ là chính sách tại đó vòng trong dừng.</p>
-<p>Phần của mục tiêu cắt tại $s$:</p>
-$$\textstyle\ell_s=\sum_a\pi(a\mid s)\min\bigl(\rho_s(a)A_\pi(s,a),\ \operatorname{clip}(\rho_s(a),0{,}8,1{,}2)A_\pi(s,a)\bigr).$$
-<p><strong>Câu hỏi:</strong> (Bài tập 10.23)</p>
-<ol type="a">
-<li>Viết $\ell_{s_A}$ theo $p_A$, $\ell_{s_B}$ theo $p_B$, và tìm $\pi'$.</li>
-<li>Tính $\Delta\mathcal L$ và $\Delta J$ của $\pi'$.</li>
-<li>Tính $\sum_s\eta_\pi(s)\ell_s(\pi')$ và xếp ba số theo thứ tự tăng.</li>
-<li>Giải thích vì sao $\Delta\mathcal L\lt\Delta J$.</li>
-</ol>
-<aside class="notes"><p>Bài tập dùng dạng theo dấu của mục tiêu cắt, hàm thay thế và công thức sai số trên một bài toán. Dữ liệu đổi so với bộ đệm hai lượt để kiểm cơ chế cắt khi lợi thế đúng. Mỗi mẫu tại $s_B$ có một ngưỡng riêng: $0{,}8$ cho hành động 1, $\tfrac{11}{15}$ cho hành động 2. Câu (a) hỏi điểm dừng khi có cả hai mẫu.</p><p><strong>Gợi ý:</strong> tham số hai trạng thái tách nhau; tìm lúc từng nhóm mẫu chạm biên.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bài tập 10.23 (ghi chú viết theo $\nu^{\mathrm{old}}$ với thừa số $\tfrac1{1-\gamma}$, trang viết theo $\eta$).</p></aside>
-</section>
-
-<section data-slide-id="L10-5-13" class="compact">
-<h2>Bài tập: một vòng PPO-Clip trên chuỗi</h2>
+<section data-slide-id="L10-5-22" class="compact">
+<h2>Ba đại lượng: $\Delta J$, $\Delta\mathcal L$ và $\mathcal L^{\mathrm{CLIP}}$</h2>
 <table class="calc">
-<thead><tr><th><strong>Lời giải:</strong></th><th>$s_A$ ($p_A\ge\tfrac12$)</th><th>$s_B$ ($p_B\ge\tfrac23$)</th></tr></thead>
+<thead><tr><th>Đại lượng</th><th>Với $\tilde\pi=(0{,}9;\,0{,}5)$</th></tr></thead>
 <tbody>
-<tr><td>$\ell_s$</td><td>$0{,}2\bigl[\min(2p_A;\,1{,}2)-\max(2-2p_A;\,0{,}8)\bigr]$</td><td>$\tfrac23\bigl[\min(1{,}5p_B;\,1{,}2)$<br/>$\quad-\max(3-3p_B;\,0{,}8)\bigr]$</td></tr>
-<tr class="fragment" data-fragment-index="1"><td>chạm biên</td><td>cả hai mẫu tại $p_A=0{,}6$</td><td>$0{,}7\overline3$ (hành động 2), $0{,}8$ (hành động 1)</td></tr>
-<tr class="fragment" data-fragment-index="1"><td>dừng ở</td><td>$p'_A=0{,}6$</td><td>$p'_B=0{,}8$</td></tr>
-<tr class="fragment" data-fragment-index="2"><td>$A_\pi(s,\pi')$</td><td>$0{,}6\cdot0{,}4-0{,}4\cdot0{,}4=0{,}08$</td><td>$0{,}8\cdot1-0{,}2\cdot2=0{,}4$</td></tr>
-<tr class="fragment" data-fragment-index="2"><td>$\ell_s(\pi')$</td><td>$0{,}24-0{,}16=0{,}08$</td><td>$0{,}8-0{,}5\overline3=0{,}2\overline6$</td></tr>
+<tr><td>$\Delta J$, hiệu năng thật (số lần thăm của chính sách mới)</td><td>$J(\tilde\pi)-1{,}4=-0{,}085$</td></tr>
+<tr><td>$\Delta\mathcal L=\sum_s\eta_\pi(s)\ell^{\mathrm{CPI}}_s$, dự báo với lợi thế đúng</td><td>$1\cdot0{,}32+0{,}45\cdot(-0{,}5)=0{,}095$</td></tr>
+<tr class="fragment" data-fragment-index="1"><td>$\sum_s\eta_\pi(s)\ell^{\mathrm{CLIP}}_s$, mục tiêu cắt theo trạng thái</td><td>$1\cdot0{,}08+0{,}45\cdot(-0{,}5)=-0{,}145$</td></tr>
 </tbody></table>
-<p class="fragment" data-fragment-index="3">(b) $\Delta\mathcal L=0{,}08+0{,}45\cdot0{,}4=0{,}26$; $\Delta J=2{,}7\cdot0{,}6\cdot0{,}8+0{,}4-1{,}4=0{,}296$. (c) $0{,}08+0{,}45\cdot0{,}2\overline6=0{,}2$; thứ tự $0{,}2\lt0{,}26\lt0{,}296$.</p>
-<p class="box fragment" data-fragment-index="4">(d) Chỉ $s_B$ đổi số lần thăm: $\eta_{\pi'}(s_B)-\eta_\pi(s_B)=\gamma\Delta p_A=0{,}09\gt0$ và $A_\pi(s_B,\pi')=0{,}4\gt0$, nên sai số $0{,}09\cdot0{,}4=0{,}036\gt0$.</p>
-<aside class="notes"><p>Vòng trong dừng ở $(0{,}6;\,0{,}8)$; mục tiêu cắt nhỏ hơn hàm thay thế, hàm thay thế nhỏ hơn mức tăng tính trực tiếp. Sai số cũng bằng $2{,}7\Delta p_A\Delta p_B=2{,}7\cdot0{,}1\cdot\tfrac2{15}$. Tỉ số: $\rho_{s_A}=(2p_A;\,2-2p_A)$, $\rho_{s_B}=(1{,}5p_B;\,3-3p_B)$. Hai lỗi thường gặp: dừng ở $p_B=0{,}7\overline3$ khi chỉ mẫu hành động 2 chạm biên; bỏ phép cắt thì $\ell_{s_B}=3p_B-2$ tăng mãi. Ở đây hàm thay thế dự báo thấp hơn mức tăng tính trực tiếp vì sai số dương; với $\tilde\pi$ ở mạch 4, hàm thay thế dự báo sai dấu vì sai số âm và lớn. Cùng một công thức sai số giải thích cả hai.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bài tập 10.23 (lời giải (a)–(d)).</p></aside>
+<p class="fragment" data-fragment-index="1">$\rho_{s_A}=(1{,}8;\,0{,}2)$, cả hai trên đoạn phẳng: $\ell^{\mathrm{CLIP}}_{s_A}=\tfrac12\cdot0{,}48+\tfrac12\cdot(-0{,}32)=0{,}08$.</p>
+<p class="fragment" data-fragment-index="2"><strong>Mệnh đề.</strong> <strong>Giả thiết:</strong> cùng dữ liệu, cùng trọng số không âm. <strong>Kết luận:</strong> $\mathcal L^{\mathrm{CLIP}}\le\mathcal L^{\mathrm{CPI}}$, chặn dưới bi quan (pessimistic bound). <strong>Chứng minh.</strong> $\min(x,y)\le x$ với $x=\rho_t\widehat A_t$.</p>
+<p class="fragment" data-fragment-index="3">Trung bình đều trên bộ đệm, tần suất $(s_A;\,s_B)=(\tfrac23;\,\tfrac13)$: $\mathcal L^{\mathrm{CPI}}=0{,}047$, $\mathcal L^{\mathrm{CLIP}}=\tfrac23\cdot0{,}08+\tfrac13\cdot(-0{,}5)\approx-0{,}113$. Giữa $\Delta\mathcal L$ và $\Delta J$ không có thứ tự chung: $0{,}095\gt-0{,}085$ với $\tilde\pi$, $0{,}85\lt1{,}3$ tại $(1;\,1)$.</p>
+<p class="box fragment" data-fragment-index="4">PPO-Clip tối ưu chặn dưới bi quan này. Tối ưu nó không bảo đảm $J$ tăng.</p>
+<aside class="notes"><p>Mục tiêu cắt không vượt hàm thay thế mẫu, còn hàm thay thế có thể dự báo cao hơn hoặc thấp hơn mức thay đổi thật; vì thế tối ưu mục tiêu cắt không bảo đảm $J$ tăng. Tại $s_A$, $\tfrac12\min(1{,}8\cdot0{,}4;\,1{,}2\cdot0{,}4)=0{,}24$ và $\tfrac12\min(0{,}2\cdot(-0{,}4);\,0{,}8\cdot(-0{,}4))=-0{,}16$. Sai số $\Delta J-\Delta\mathcal L$ là $-0{,}18$ với $\tilde\pi$, $+0{,}45$ tại $(1;\,1)$. PPO-Clip ngừng thưởng cập nhật quá mạnh theo hướng có lợi dự báo, trên dữ liệu đã thu; nó không áp đặt miền tin cậy cứng như TRPO. Tại $s_B$, cả hai mẫu ở phía bất lợi, nên $\ell^{\mathrm{CLIP}}_{s_B}=\ell^{\mathrm{CPI}}_{s_B}=-0{,}5$. Trọng số không âm giữ bất đẳng thức của từng mẫu. Với lợi thế đúng, $\ell^{\mathrm{CPI}}_s=A_\pi(s,\tilde\pi)$, nên tổng theo $\eta_\pi$ là $\Delta\mathcal L$. Trung bình đều: $\tfrac23\cdot0{,}32+\tfrac13\cdot(-0{,}5)=0{,}047$. Bài tập 10.23, một vòng PPO-Clip với lợi thế đúng, có lời giải ở phụ lục cuối bài.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.1 (Mệnh đề 10.41; bảng ba đại lượng và đoạn sau).</p></aside>
 </section>
 </section>
 
@@ -1264,7 +1224,7 @@ $$\textstyle\ell_s=\sum_a\pi(a\mid s)\min\bigl(\rho_s(a)A_\pi(s,a),\ \operatorna
 <div class="check"><strong>Câu hỏi:</strong>
 <ol>
 <li>Làm thế nào để ước lượng gradient chính sách có phương sai nhỏ mà kỳ vọng không đổi?</li>
-<li>Làm thế nào để dùng lượt của chính sách cũ cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm?</li>
+<li>Làm thế nào để dùng lại dữ liệu từ chính sách cũ cho các bước cập nhật hiệu quả, đồng thời kiểm soát nguy cơ suy giảm hiệu năng?</li>
 </ol></div>
 <p>Trả lời câu 1:</p>
 <ul>
@@ -1276,7 +1236,7 @@ $$\textstyle\ell_s=\sum_a\pi(a\mid s)\min\bigl(\rho_s(a)A_\pi(s,a),\ \operatorna
 
 <section data-slide-id="L10-6-18" class="compact">
 <h2>Vấn đề trung tâm: trả lời câu 2</h2>
-<p><strong>Nhắc lại:</strong> câu 2 hỏi cách dùng lượt của chính sách cũ cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm.</p>
+<p><strong>Nhắc lại:</strong> câu 2 hỏi cách dùng lại dữ liệu từ chính sách cũ cho các bước cập nhật hiệu quả, đồng thời kiểm soát nguy cơ suy giảm hiệu năng.</p>
 <p>Trả lời câu 2:</p>
 <ul>
 <li>Hàm thay thế tính được từ lượt của chính sách cũ và tiếp xúc $J$ tại chính sách cũ. Khi lợi thế và số lần thăm tính chính xác, $J$ không giảm nếu mức tăng của hàm thay thế vượt phạt tỉ lệ với căn của KL trung bình.</li>
@@ -1347,10 +1307,10 @@ $$\textstyle\ell_s=\sum_a\pi(a\mid s)\min\bigl(\rho_s(a)A_\pi(s,a),\ \operatorna
 <tr><td>2. Đường cơ sở và hàm lợi thế</td><td>ghi chú: 10.1, 10.4, 10.10</td></tr>
 <tr><td>3. Ước lượng lợi thế: độ chệch và phương sai</td><td>10.13, 10.15; ghi chú: 10.5, 10.6, 10.7</td></tr>
 <tr><td>4. Hàm thay thế và miền tin cậy</td><td>10.16, 10.17; ghi chú: 10.8, 10.9, 10.11</td></tr>
-<tr><td>5. Tối ưu chính sách gần kề (PPO)</td><td>10.14; ghi chú: 10.2, 10.3, 10.12, 10.23 (trên lớp)</td></tr>
+<tr><td>5. Tối ưu chính sách gần kề (PPO)</td><td>10.14; ghi chú: 10.2, 10.3, 10.12, 10.23 (phụ lục)</td></tr>
 </tbody></table>
 <p><a href="material-viewer.html?doc=materials/lec-10/lecture-note.md&amp;deck=lecture-10-trpo-va-ppo.html">Ghi chú bài giảng</a> · <a href="material-viewer.html?doc=materials/lec-10/exercises.md&amp;deck=lecture-10-trpo-va-ppo.html">Bài tập</a></p>
-<aside class="notes"><p>Mỗi bài đặt ở mạch cung cấp kiến thức cuối cùng nó cần. Bài 10.22 (softmax hai hành động là hàm logistic) dùng tham số hóa của mạch 1; bài 10.5 (độ chệch của sai số TD khi critic sai) cần critic của mạch 3; bài 10.23 là bài tổng hợp đã giải trên lớp ở cuối mạch 5. Các bài 10.13–10.17 và 10.22 ở tệp bài tập; các bài khác ở cuối ghi chú.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §7.5; bảng mở đầu của tệp bài tập.</p></aside>
+<aside class="notes"><p>Mỗi bài đặt ở mạch cung cấp kiến thức cuối cùng nó cần. Bài 10.22 (softmax hai hành động là hàm logistic) dùng tham số hóa của mạch 1; bài 10.5 (độ chệch của sai số TD khi critic sai) cần critic của mạch 3; bài 10.23 là bài tổng hợp của mạch 5, lời giải ở phụ lục cuối bài. Các bài 10.13–10.17 và 10.22 ở tệp bài tập; các bài khác ở cuối ghi chú.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §7.5; bảng mở đầu của tệp bài tập.</p></aside>
 </section>
 
 <section data-slide-id="L10-6-17" class="compact">
@@ -1371,11 +1331,11 @@ $$\textstyle\ell_s=\sum_a\pi(a\mid s)\min\bigl(\rho_s(a)A_\pi(s,a),\ \operatorna
 <section id="mach-7">
 <section data-slide-id="L10-7-00" class="strand-title">
 <div class="strand-title-body">
-<h2>Phụ lục: cơ sở lý thuyết của miền tin cậy</h2>
-<p class="strand-lead">Các chứng minh nối giới hạn KL của bài toán miền tin cậy với sai số của hàm thay thế.</p>
+<h2>Phụ lục: cơ sở lý thuyết của TRPO và PPO</h2>
+<p class="strand-lead">Các chứng minh và phép tính chi tiết cho miền tin cậy của TRPO và mục tiêu cắt của PPO.</p>
 </div>
 <img width="1000" src="img/lec-10/chuoi-bon-mat-xich.svg" alt="Bốn khối nối bằng ba mũi tên. Khối 1, viền tím: KL trung bình không vượt kappa. Mũi tên ghi Pinsker và Jensen tới khối 2: TV kỳ vọng theo nu pi nhỏ. Mũi tên ghi bổ đề dịch chuyển tới khối 3: phân bố chiếm dụng ít thay đổi. Mũi tên ghi đẳng thức sai số tới khối 4: sai số, trị tuyệt đối của Delta J − Delta L, nhỏ."/>
-<aside class="notes"><p>Phụ lục dành cho lớp cần độ sâu toán học và không thuộc thời lượng trên lớp. Nó gồm chứng minh bổ đề chênh lệch hiệu năng, nền của đẳng thức sai số; ba kết quả ứng với ba mũi tên của hình; cận trên chuỗi; hệ quả cải thiện đơn điệu.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (đoạn mở).</p></aside>
+<aside class="notes"><p>Phụ lục dành cho lớp cần độ sâu toán học và không thuộc thời lượng trên lớp. Phần TRPO gồm chứng minh bổ đề chênh lệch hiệu năng, ba kết quả ứng với ba mũi tên của hình, cận trên chuỗi và hệ quả cải thiện đơn điệu. Phần PPO gồm chứng minh dạng theo dấu, phép tính trên bộ đệm hai lượt, điều kiện không chệch của approxKL và Bài tập 10.23 có lời giải.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (đoạn mở); §6.1, §6.3; Bài tập 10.23.</p></aside>
 </section>
 
 <section data-slide-id="L10-7-10" class="compact">
@@ -1460,6 +1420,96 @@ $$\mathcal M_k(\pi')=\mathcal L_{\pi_k}(\pi')-C_k\,\mathbb E_{S\sim\nu^{\pi_k}}\
 <p class="fragment" data-fragment-index="2">Trên chuỗi, $C=360$ ($\bar\chi=2$). Với $c=(0{,}8;\,3)/(1-\gamma)=(8;\,30)$: $\mathcal M_k(\pi')-\mathcal M_k(\pi_k)\le\sum_s\nu^{\pi_k}(s)D_{\mathrm{TV}}(s)(c_s-360)\lt0$ khi $\pi'\ne\pi_k$.</p>
 <p class="box fragment" data-fragment-index="3">TRPO thay phạt bằng ràng buộc $\bar D_{\mathrm{KL}}\le\kappa$.</p>
 <aside class="notes"><p>Ràng buộc cho bước dài hơn, đổi lại $J$ có thể giảm. Schulman và cộng sự (2015) chứng minh cận với KL lớn nhất theo trạng thái; KL trung bình là xấp xỉ kinh nghiệm. Trên chuỗi, $\bar\chi=\lvert A_\pi(s_B,2)\rvert=2$, $C=2\cdot0{,}9\cdot2/0{,}01=360$; với $D_{\mathrm{TV}}(s)=\lvert\Delta p_s\rvert$, $\Delta\mathcal L\le\sum_s\nu(s)D_{\mathrm{TV}}(s)c_s$. Cực đại một hàm nằm dưới $J$ và chạm $J$ tại chính sách hiện tại thì $J$ không giảm; với hằng của lý thuyết, bước gần như bằng $0$. Hai bất đẳng thức theo định lý và giả thiết. Đây là cực đại hóa qua hàm chặn dưới (minorize–maximize, MM). Phạt tuyến tính theo TV làm phép cực đại đứng tại $\pi_k$. Hệ quả 10.31: với đại lượng và nghiệm chính xác, bước miền tin cậy có $J(\pi_{k+1})-J(\pi_k)\ge-\sqrt{2\kappa}\,\gamma\chi_{\pi_{k+1}}/(1-\gamma)^2$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §4.6 (Hệ quả 10.30, chứng minh Bước 1–3; đoạn cực đại hóa qua hàm chặn dưới; đoạn số trên chuỗi; đoạn "Để cho phép bước lớn"; Hệ quả 10.31 và đoạn sau).</p></aside>
+</section>
+
+<section data-slide-id="L10-7-16" class="compact">
+<h2>Mục tiêu cắt theo dấu: chứng minh và bốn trường hợp</h2>
+<p><strong>Nhắc lại:</strong> với $\epsilon\in(0,1)$, số hạng của mẫu là $\widehat A_t\min(\rho_t,1+\epsilon)$ khi $\widehat A_t\gt0$ và $\widehat A_t\max(\rho_t,1-\epsilon)$ khi $\widehat A_t\lt0$.</p>
+<p><strong>Chứng minh.</strong> Bước 1 (trường hợp $\widehat A_t\gt0$): đưa $\widehat A_t$ ra ngoài giữ thứ tự, số hạng là $\widehat A_t\min\bigl(\rho_t,\operatorname{clip}(\rho_t,1-\epsilon,1+\epsilon)\bigr)=\widehat A_t\min(\rho_t,1+\epsilon)$. Bước 2 (trường hợp $\widehat A_t\lt0$): đưa $\widehat A_t$ ra ngoài đảo thứ tự, $\min$ thành $\max$, và $\max\bigl(\rho_t,\operatorname{clip}(\rho_t,1-\epsilon,1+\epsilon)\bigr)=\max(\rho_t,1-\epsilon)$.</p>
+<table class="calc fragment" data-fragment-index="1">
+<thead><tr><th>Ở đây: $\widehat A_t=A_\pi(s_B,a)$, lợi thế đúng</th><th>$\rho$</th><th>$\rho A_\pi$</th><th>Số hạng cắt</th><th>Gradient theo mẫu</th></tr></thead>
+<tbody>
+<tr><td>$A_\pi=+1$</td><td>$1{,}3$</td><td>$1{,}3$</td><td>$\min(1{,}3;\,1{,}2)=1{,}2$</td><td>$0$</td></tr>
+<tr><td>$A_\pi=+1$</td><td>$0{,}7$</td><td>$0{,}7$</td><td>$0{,}7$</td><td>khác $0$</td></tr>
+<tr><td>$A_\pi=-2$</td><td>$0{,}7$</td><td>$-1{,}4$</td><td>$-1{,}6$</td><td>$0$</td></tr>
+<tr><td>$A_\pi=-2$</td><td>$1{,}3$</td><td>$-2{,}6$</td><td>$-2{,}6$</td><td>khác $0$</td></tr>
+</tbody></table>
+<aside class="notes"><p>Đẳng thức $\min(\rho,\operatorname{clip}(\rho,1-\epsilon,1+\epsilon))=\min(\rho,1+\epsilon)$: khi $\rho\gt1+\epsilon$, giá trị cắt là $1+\epsilon\lt\rho$; khi $\rho\le1+\epsilon$, giá trị cắt không nhỏ hơn $\rho$. Ngoài các tập có gradient bằng $0$, gradient của số hạng là $\widehat A_t\rho_t\psi_t$. Nhầm lẫn thường gặp: mọi mẫu ngoài khoảng cắt có gradient $0$; điều đó chỉ đúng khi tỉ số ra ngoài theo hướng có lợi. Tại $\rho_t=1\pm\epsilon$, vi phân tự động trả về gradient của một nhánh.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.1 (Mệnh đề 10.40, chứng minh Bước 1–2; bảng bốn trường hợp).</p></aside>
+</section>
+
+<section data-slide-id="L10-7-17" class="compact">
+<h2>Bộ đệm hai lượt: tối ưu không cắt và có cắt</h2>
+<p><strong>Nhắc lại:</strong> $\widehat A=(-1{,}4;\,-0{,}4;\,-1)$ cho $(s_A,1)$, $(s_A,2)$, $(s_B,2)$; $\rho=(2p_A;\,2-2p_A;\,3-3p_B)$; $J=2{,}7p_Ap_B+1-p_A$.</p>
+<table class="calc">
+<thead><tr><th>Phần của</th><th>$3\mathcal L^{\mathrm{CPI}}$</th><th>Tới</th><th>$3\mathcal L^{\mathrm{CLIP}}$</th><th>Dừng tại</th></tr></thead>
+<tbody>
+<tr><td>$s_A$</td><td>$-0{,}8-2p_A$</td><td>$p_A\to0$</td><td>$-1{,}4\max(2p_A;\,0{,}8)-0{,}4\max(2-2p_A;\,0{,}8)$</td><td>$p_A=0{,}4$</td></tr>
+<tr><td>$s_B$</td><td>$-(3-3p_B)$</td><td>$p_B\to1$</td><td>$-\max(3-3p_B;\,0{,}8)$</td><td>$p_B=\tfrac{11}{15}$</td></tr>
+</tbody></table>
+<p>Không cắt, tại $s_A$: $-1{,}4\cdot2p_A-0{,}4(2-2p_A)=-0{,}8-2p_A$.</p>
+<p class="fragment" data-fragment-index="1">Dưới $p_A=0{,}4$, mẫu $(s_A,2)$ có $\rho\gt1{,}2$ ở phía bất lợi, không bị cắt: phần của $s_A$ trong mục tiêu cắt là $-1{,}92+0{,}8p_A$. Trên $[0{,}4;\,0{,}6]$ nó bằng $-0{,}8-2p_A$.</p>
+<p class="fragment" data-fragment-index="2">$J(0;\,1)=1-0=1$; $J(0{,}4;\,\tfrac{11}{15})=2{,}7\cdot0{,}4\cdot\tfrac{11}{15}+0{,}6=1{,}392$, với $\rho=(0{,}8;\,1{,}2;\,0{,}8)$.</p>
+<aside class="notes"><p>Giới hạn $(0;\,1)$ không đạt với $\theta$ hữu hạn; hai chính sách là điểm dừng của bài toán tối ưu lý tưởng hóa, không phải kết quả của một số hữu hạn bước gradient. Với $\epsilon=0{,}2$, cả ba $\widehat A_t$ âm, nên mỗi số hạng là $\widehat A_t\max(\rho_t,0{,}8)$. Vòng trong dừng tại cực đại của phần $s_A$, một đỉnh gấp tại $p_A=0{,}4$, nơi $2p_A=0{,}8$; với $s_B$, nó dừng ở đầu đoạn phẳng $p_B=\tfrac{11}{15}$, nơi $3-3p_B=0{,}8$. Phép cắt tạo điểm dừng sớm hơn trong ví dụ lý tưởng hóa này, nhưng không áp đặt giới hạn cứng lên độ dài bước.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.1 (đoạn mục tiêu không cắt trên bộ đệm; đoạn "Với mục tiêu cắt và $\epsilon=0{,}2$ …").</p></aside>
+</section>
+
+<section data-slide-id="L10-7-18" class="compact">
+<h2>approxKL không chệch khi tham số được chọn trước khi rút mẫu</h2>
+<p><strong>Mệnh đề.</strong> <strong>Giả thiết:</strong> tại trạng thái $s$, $A\sim\pi_{\mathrm{old}}(\cdot\mid s)$; $\theta$ được chọn trước khi rút $A$; $\pi_\theta$ và $\pi_{\mathrm{old}}$ dương trên cùng tập hành động. <strong>Kết luận:</strong> với $\rho=\pi_\theta(A\mid s)/\pi_{\mathrm{old}}(A\mid s)$,</p>
+$$\mathbb E\bigl[(\rho-1)-\log\rho\bigr]=D_{\mathrm{KL}}\bigl(\pi_{\mathrm{old}}(\cdot\mid s)\,\Vert\,\pi_\theta(\cdot\mid s)\bigr).$$
+<p class="fragment" data-fragment-index="1"><strong>Chứng minh.</strong> $\mathbb E[\rho]=\sum_a\pi_\theta(a\mid s)=1$, và $\mathbb E[-\log\rho]=\sum_a\pi_{\mathrm{old}}(a\mid s)\log\tfrac{\pi_{\mathrm{old}}(a\mid s)}{\pi_\theta(a\mid s)}$.</p>
+<p class="fragment" data-fragment-index="2"><strong>Lưu ý:</strong> từ lần qua bộ đệm thứ hai, $\theta$ đã được tối ưu trên chính các mẫu dùng để tính approxKL, nên approxKL là chỉ số chẩn đoán, không phải ước lượng không chệch. Ví dụ: ba hành động, $\pi_{\mathrm{old}}$ đều; sau khi thấy $A=a$, chọn $\pi_\theta$ gán $\tfrac13$ cho $a$, $\tfrac12$ và $\tfrac16$ cho hai hành động còn lại: $\rho=1$, approxKL $=0$, trong khi $D_{\mathrm{KL}}=\tfrac13\bigl(\log\tfrac23+\log2\bigr)=0{,}0959$.</p>
+<aside class="notes"><p>Với $\theta$ chọn trước khi rút mẫu, approxKL là ước lượng không chệch của KL; từ lần qua bộ đệm thứ hai, điều kiện đó không còn. Mỗi số hạng $(\rho-1)-\log\rho$ không âm vì $\log x\le x-1$. Dạng $-\log\rho$ cũng không chệch nhưng có thể âm trên từng mẫu. Trong ví dụ, $D_{\mathrm{KL}}=\tfrac13\bigl(\log\tfrac{1/3}{1/3}+\log\tfrac{1/3}{1/2}+\log\tfrac{1/3}{1/6}\bigr)$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, §6.3 (Mệnh đề 10.48, kết luận, điều kiện áp dụng, phần Phạm vi; ví dụ ba hành động).</p></aside>
+</section>
+
+<section data-slide-id="L10-7-19" class="compact">
+<h2>Bài tập 10.23: một vòng PPO-Clip trên chuỗi</h2>
+<p>Lợi thế đúng, giữ cố định: $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$, $A_\pi(s_B,\cdot)=(1;\,-2)$. Bộ đệm chứa các cặp $(s,a)$ với tần suất hành động bằng $\pi(a\mid s)$, $\pi=(\tfrac12;\,\tfrac23)$, $\eta_\pi=(1;\,0{,}45)$, $\epsilon=0{,}2$. Vòng trong tăng $\mathcal L^{\mathrm{CLIP}}$ từ $\pi$ tới đầu đoạn phẳng. $\pi'$ là chính sách tại đó vòng trong dừng.</p>
+<p>Phần của mục tiêu cắt tại $s$:</p>
+$$\textstyle\ell_s=\sum_a\pi(a\mid s)\min\bigl(\rho_s(a)A_\pi(s,a),\ \operatorname{clip}(\rho_s(a),0{,}8,1{,}2)A_\pi(s,a)\bigr).$$
+<p><strong>Câu hỏi:</strong></p>
+<ol type="a">
+<li>Viết $\ell_{s_A}$ theo $p_A$, $\ell_{s_B}$ theo $p_B$, và tìm $\pi'$.</li>
+<li>Tính $\Delta\mathcal L$ và $\Delta J$ của $\pi'$.</li>
+<li>Tính $\sum_s\eta_\pi(s)\ell_s(\pi')$ và xếp ba số theo thứ tự tăng.</li>
+<li>Giải thích vì sao $\Delta\mathcal L\lt\Delta J$.</li>
+</ol>
+<aside class="notes"><p>Bài tập dùng dạng theo dấu của mục tiêu cắt, hàm thay thế và công thức sai số trên một bài toán. Dữ liệu đổi so với bộ đệm hai lượt để kiểm cơ chế cắt khi lợi thế đúng. Mỗi mẫu tại $s_B$ có một ngưỡng riêng: $0{,}8$ cho hành động 1, $\tfrac{11}{15}$ cho hành động 2. Câu (a) hỏi điểm dừng khi có cả hai mẫu. Lời giải gồm ba bước: chính sách mới, ba đại lượng, sai số do số lần thăm thay đổi.</p><p><strong>Gợi ý:</strong> tham số hai trạng thái tách nhau; tìm lúc từng nhóm mẫu chạm biên.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bài tập 10.23 (ghi chú viết theo $\nu^{\mathrm{old}}$ với thừa số $\tfrac1{1-\gamma}$, trang viết theo $\eta$).</p></aside>
+</section>
+
+<section data-slide-id="L10-7-20" class="compact">
+<h2>Bài tập 10.23, lời giải (1): chính sách mới</h2>
+<table class="calc">
+<thead><tr><th><strong>Lời giải:</strong></th><th>$s_A$ ($p_A\ge\tfrac12$)</th><th>$s_B$ ($p_B\ge\tfrac23$)</th></tr></thead>
+<tbody>
+<tr><td>$\ell_s$</td><td>$0{,}2\bigl[\min(2p_A;\,1{,}2)-\max(2-2p_A;\,0{,}8)\bigr]$</td><td>$\tfrac23\bigl[\min(1{,}5p_B;\,1{,}2)$<br/>$\quad-\max(3-3p_B;\,0{,}8)\bigr]$</td></tr>
+<tr class="fragment" data-fragment-index="1"><td>chạm biên</td><td>cả hai mẫu tại $p_A=0{,}6$</td><td>$0{,}7\overline3$ (hành động 2), $0{,}8$ (hành động 1)</td></tr>
+<tr class="fragment" data-fragment-index="1"><td>dừng ở</td><td>$p'_A=0{,}6$</td><td>$p'_B=0{,}8$</td></tr>
+</tbody></table>
+<p class="box fragment" data-fragment-index="2">Vòng trong dừng ở $\pi'=(0{,}6;\,0{,}8)$: tại $s_B$, chỉ khi cả hai mẫu đều chạm biên thì gradient bằng $0$.</p>
+<aside class="notes"><p>Tỉ số: $\rho_{s_A}=(2p_A;\,2-2p_A)$, $\rho_{s_B}=(1{,}5p_B;\,3-3p_B)$. Tại $s_A$, hai mẫu chạm biên cùng lúc ở $p_A=0{,}6$. Tại $s_B$, mẫu hành động 2 chạm $\rho=0{,}8$ ở $p_B=0{,}7\overline3$, mẫu hành động 1 chạm $\rho=1{,}2$ ở $p_B=0{,}8$. Hai lỗi thường gặp: dừng ở $p_B=0{,}7\overline3$ khi chỉ mẫu hành động 2 chạm biên; bỏ phép cắt thì $\ell_{s_B}=3p_B-2$ tăng mãi.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bài tập 10.23 (lời giải câu (a)).</p></aside>
+</section>
+
+<section data-slide-id="L10-7-21" class="compact">
+<h2>Bài tập 10.23, lời giải (2): ba đại lượng</h2>
+<table class="calc">
+<thead><tr><th><strong>Lời giải:</strong></th><th>$s_A$</th><th>$s_B$</th></tr></thead>
+<tbody>
+<tr><td>$A_\pi(s,\pi')$</td><td>$0{,}6\cdot0{,}4-0{,}4\cdot0{,}4=0{,}08$</td><td>$0{,}8\cdot1-0{,}2\cdot2=0{,}4$</td></tr>
+<tr><td>$\ell_s(\pi')$</td><td>$0{,}24-0{,}16=0{,}08$</td><td>$0{,}8-0{,}5\overline3=0{,}2\overline6$</td></tr>
+</tbody></table>
+<p class="fragment" data-fragment-index="1">$\Delta\mathcal L=0{,}08+0{,}45\cdot0{,}4=0{,}260$.</p>
+<p class="fragment" data-fragment-index="1">$\Delta J=2{,}7\cdot0{,}6\cdot0{,}8+0{,}4-1{,}4=0{,}296$.</p>
+<p class="fragment" data-fragment-index="1">$\sum_s\eta_\pi(s)\ell_s(\pi')=0{,}08+0{,}45\cdot0{,}2\overline6=0{,}200$.</p>
+<p class="box fragment" data-fragment-index="2">Trong bài này $0{,}200\lt0{,}260\lt0{,}296$. Với lợi thế đúng và cùng trọng số $\eta_\pi$, bất đẳng thức đầu đúng với mọi chính sách, vì mục tiêu cắt không vượt hàm thay thế. Thứ tự giữa $0{,}260$ và $0{,}296$ là riêng của bài này.</p>
+<aside class="notes"><p>Ba số dùng cùng trọng số $\eta_\pi=(1;\,0{,}45)$; ghi chú viết theo $\nu^{\mathrm{old}}$ với thừa số $\tfrac1{1-\gamma}$, cho cùng kết quả. Với $\tilde\pi$ thứ tự giữa dự báo và mức thay đổi thật ngược lại: $\Delta\mathcal L=0{,}095\gt\Delta J=-0{,}085$. Vì vậy chỉ bất đẳng thức giữa mục tiêu cắt và hàm thay thế là chung cho mọi chính sách.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bài tập 10.23 (lời giải câu (b), (c)); §6.1 (Mệnh đề 10.41(a)).</p></aside>
+</section>
+
+<section data-slide-id="L10-7-22" class="compact">
+<h2>Bài tập 10.23, lời giải (3): sai số do số lần thăm thay đổi</h2>
+<p><strong>Nhắc lại:</strong> $\Delta J-\Delta\mathcal L=\sum_s\bigl(\eta_{\pi'}(s)-\eta_\pi(s)\bigr)A_\pi(s,\pi')$.</p>
+<p class="fragment" data-fragment-index="1"><strong>Lời giải:</strong> chỉ $s_B$ đổi số lần thăm: $\eta_{\pi'}(s_B)=\gamma p'_A=0{,}9\cdot0{,}6=0{,}54$, $\eta_\pi(s_B)=0{,}45$. Sai số $(0{,}54-0{,}45)\cdot0{,}4=0{,}036=0{,}296-0{,}260$.</p>
+<p class="box fragment" data-fragment-index="2">$\pi'$ thăm $s_B$ nhiều hơn và tại $s_B$ tốt hơn $\pi$, nên sai số dương. Với $\tilde\pi$, sai số là $-0{,}18$: dấu do mức đổi số lần thăm và lợi thế tại các trạng thái đó quyết định.</p>
+<aside class="notes"><p>Sai số cũng bằng $2{,}7\,\Delta p_A\Delta p_B=2{,}7\cdot0{,}1\cdot\tfrac2{15}=0{,}036$. Với $\tilde\pi$, $\eta_{\tilde\pi}(s_B)=0{,}81$ tăng so với $0{,}45$ trong khi $A_\pi(s_B,\tilde\pi)=-0{,}5\lt0$, nên sai số âm. Cùng một công thức sai số giải thích cả hai ví dụ: hàm thay thế dự báo thấp hơn ở bài tập này và sai dấu ở $\tilde\pi$.</p><p class="note-source"><strong>Nguồn:</strong> ghi chú bài giảng Bài 10, Bài tập 10.23 (lời giải câu (d), "Kiểm tra lại"); §4.3 (đẳng thức sai số).</p></aside>
 </section>
 </section>
 

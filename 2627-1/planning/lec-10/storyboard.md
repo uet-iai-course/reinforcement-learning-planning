@@ -28,10 +28,10 @@ Bước 3–4 của quy trình dựng deck (`NGUYEN-TAC-HOC-PHAN.md` §3a.E). Th
 | 2 | Đường cơ sở và hàm lợi thế | "So lợi tức với giá trị của trạng thái giữ nguyên kỳ vọng của ước lượng gradient và giảm phương sai." (22) | giảm phương sai mà giữ kỳ vọng khi biết $v_\pi$ | ba loại lượt, phương sai $0{,}6925$, câu hỏi (1) | đường cơ sở, $A_\pi$, gradient dạng lợi thế, $\delta_t$ với $v_\pi$; phương sai $0{,}69\to0{,}20\to0$; $v_\pi$ chưa biết | `L10-2-00`, `id="mach-2"` | 11 | 18 |
 | 3 | Ước lượng lợi thế: độ chệch và phương sai | "Tổ hợp có trọng số các ước lượng lợi thế nhiều bước cân bằng độ chệch và phương sai." (19) | ước lượng lợi thế khi hàm giá trị phải học | $A_\pi$, $\delta_t$, gradient dạng lợi thế | critic, actor; GAE; $\lambda$ cân bằng chệch–phương sai; thuật toán actor–critic với GAE; mỗi lượt một bước nhỏ | `L10-3-00`, `id="mach-3"` | 13 | 21,5 |
 | 4 | Hàm thay thế và miền tin cậy | "Chính sách mới được đánh giá từ dữ liệu của chính sách cũ với sai số nhỏ khi hai chính sách gần nhau." (23) | đánh giá chính sách mới bằng dữ liệu cũ; chặn sai số; TRPO | GAE, critic, câu hỏi (2), lượt của $\pi$ | luồng 100 lượt (phân phối hành động, phân bố trạng thái), bổ đề chênh lệch hiệu năng, hàm thay thế, tỉ số chính sách, sai số bậc hai theo độ dài bước, KL, bài toán miền tin cậy, cơ sở lý thuyết (Pinsker, bổ đề dịch chuyển, chặn cải thiện, cải thiện đơn điệu), gradient tự nhiên, TRPO; chi phí bậc hai | `L10-4-00`, `id="mach-4"` | 26 (2026-11-22; trước đó 29) | 34 |
-| 5 | Tối ưu chính sách gần kề (PPO) | "PPO cắt tỉ số chính sách để dùng lại một bộ đệm nhiều lần bằng gradient bậc một." (18) | thay ràng buộc KL bằng phép cắt; dùng lại bộ đệm | hàm thay thế, tỉ số chính sách, critic $(1{,}4;\,1)$, chi phí TRPO | $\mathcal L^{\mathrm{CPI}}$ không tự dừng; hai đường đóng góp một mẫu ($A=+1$, $A=-2$), mục tiêu cắt và câu hỏi "vì sao $\min$", dạng theo dấu; phản ví dụ bộ đệm ($J$: $1{,}400$; $1{,}000$; $1{,}392$); KL trên đoạn phẳng; một vòng nhiều lần qua bộ đệm, hàm mất mát tổng, approxKL, tỉ lệ cắt; PPO-Clip, so sánh TRPO–PPO, bài tập tổng hợp (bản #7) | `L10-5-00`, `id="mach-5"` | 18 (bản #7; trước 14) | 20,5 (+3,5 bài tập; trước 17) |
+| 5 | Tối ưu chính sách gần kề (PPO) | "PPO cắt đóng góp của từng mẫu vào hàm mục tiêu để dùng lại một bộ đệm nhiều lần bằng gradient bậc một." (bản #7) | thay ràng buộc KL bằng phép cắt; dùng lại bộ đệm | hàm thay thế, tỉ số chính sách, critic $(1{,}4;\,1)$, chi phí TRPO | $\mathcal L^{\mathrm{CPI}}$ không tự dừng; hai đường đóng góp một mẫu ($A=+1$, $A=-2$), mục tiêu cắt và câu hỏi "vì sao $\min$", dạng theo dấu; phản ví dụ bộ đệm ($J$: $1{,}400$; $1{,}000$; $1{,}392$); KL trên đoạn phẳng; một vòng nhiều lần qua bộ đệm, hàm mất mát tổng, approxKL, tỉ lệ cắt; PPO-Clip; bản #8: tỉ lệ cắt có tác dụng, ba đại lượng $\Delta J$, $\Delta\mathcal L$, $\mathcal L^{\mathrm{CLIP}}$; so sánh TRPO–PPO ở `6-14`, bài tập tổng hợp ở phụ lục | `L10-5-00`, `id="mach-5"` | 16 (bản #8; bản #7 dựng: 20) | 17,5 (bản #8; bản #7 dựng: 20 + 3,5 bài tập) |
 | 6 | Tổng kết | "Mỗi phương pháp của bài giảm phương sai hoặc giới hạn bước cập nhật dưới những giả thiết riêng." (19) | kết luận định tính kèm điều kiện | đầu ra mạch 1–5 | sơ đồ neo cuối, câu trả lời có điều kiện, bảng kết quả, bảng phương pháp | `L10-6-00`, `id="mach-6"` | 10 | 11,5 (2026-11-22: `6-18` thêm một mục) |
-| Phụ lục | Phụ lục: cơ sở lý thuyết của miền tin cậy | "Các chứng minh nối giới hạn KL của bài toán miền tin cậy với sai số của hàm thay thế." (20) | chứng minh đầy đủ hơn cho lớp cần độ sâu toán học; không tính vào 120 phút | bổ đề chênh lệch hiệu năng, hàm thay thế, KL, $\nu^\pi$, hệ quả chặn cải thiện theo KL (`4-21`) | ý tưởng chứng minh bổ đề, Pinsker, bổ đề dịch chuyển, định lý chặn cải thiện, ví dụ cận trên chuỗi, cải thiện đơn điệu | `L10-7-00`, `id="mach-7"` | 7 | (8,5, ngoài giờ) |
-| **Tổng** | | | | | | | **89 + 7 phụ lục** (bản #7, 2026-11-22; trước 85 + 7) | **122,5 (+3,5 bài tập)** (bản #7; trước 119; §5) |
+| Phụ lục | Phụ lục: cơ sở lý thuyết của TRPO và PPO (bản #8; trước: "… của miền tin cậy") | "Các chứng minh và phép tính chi tiết cho miền tin cậy của TRPO và mục tiêu cắt của PPO." (20) | chứng minh và phép tính chi tiết cho lớp cần độ sâu toán học; không tính vào 120 phút | mạch 4, 5 | TRPO: ý tưởng chứng minh bổ đề, Pinsker, bổ đề dịch chuyển, định lý chặn cải thiện, ví dụ cận trên chuỗi, cải thiện đơn điệu; PPO: chứng minh dạng theo dấu, bộ đệm hai lượt chi tiết, approxKL không chệch, Bài tập 10.23 (đề và lời giải ba bước) | `L10-7-00`, `id="mach-7"` | 14 | (18, ngoài giờ) |
+| **Tổng** | | | | | | | **87 + 14 phụ lục** (bản #8; bản #7 dựng: 91 + 7) | **119,5** (bản #8; bản #7 dựng: 122; §5) |
 
 Năm dòng dẫn khác mẫu câu (NT12) và chỉ dùng thuật ngữ của mạch trước hoặc tiên quyết (Đ11): "giá trị của trạng thái", "lợi tức", "kỳ vọng" (Bài 03, 09); "lợi thế" (mạch 2), "độ chệch", "phương sai" (mạch 1); "chính sách cũ/mới" (mạch 1); "tỉ số chính sách" (mạch 4), "bộ đệm" (Bài 08, mạch 4); "phương sai", "bước cập nhật" (mạch 1). Các mẫu câu (đồng bộ với deck, 2026-11-21): "So … giữ nguyên … và giảm …", "Tổ hợp … cân bằng …", "… được đánh giá từ … khi …", "PPO (…) cắt … để …", "Mỗi phương pháp … giảm … hoặc …". Tên tiếng Anh đầy đủ của PPO đứng ở mục 5 của danh sách `1-08` (lần đầu); dòng dẫn mạch 5 và `5-07` không lặp lại (G3). Không dòng nào nhắc ví dụ hay số (TB30); "lợi thế" (mạch 3) và "tỉ số chính sách" (mạch 5) được dạy ở mạch trước. Không `p.strand-keys` (thuật ngữ của mạch chưa được dạy ở điểm vào mạch, TB11).
 
@@ -1309,327 +1309,150 @@ Phụ lục (không thuộc mạch 4, ngoài 120 phút): các chứng minh dài 
 
 ---
 
-### Mạch 5. Tối ưu chính sách gần kề (PPO) (`id="mach-5"`, 18 trang gồm hai trang bài tập, 20,5 phút + 3,5 bài tập; bản 2026-11-22 theo nhận xét PPO #7; bản trước 14 trang, 17 phút, ở mục lịch sử cuối tệp)
+### Mạch 5. Tối ưu chính sách gần kề (PPO) (`id="mach-5"`, 16 trang, 17,5 phút; bản #8, 2026-11-22, theo nhận xét PPO sau chỉnh sửa; bản #7 ở mục lịch sử cuối tệp)
 
-**Thứ tự (bản #7).** `5-00` → `5-09` → `5-01` → `5-15` → `5-16` → `5-02` → `5-11` → `5-10` → `5-05` → `5-06` → `5-17` → `5-18` → `5-19` → `5-07` → `5-14` → `5-08` → `5-12` → `5-13`.
+**Thứ tự (bản #8).** `5-00` → `5-09` → `5-01` → `5-15` → `5-16` → `5-02` → `5-20` → `5-11` → `5-05` → `5-06` → `5-17` → `5-18` → `5-19` → `5-07` → `5-14` → `5-22`. Mười sáu trang, 15 trang đếm (TB17: `5-15`–`5-16`). Phần chuyên sâu sang phụ lục `7-16` … `7-22` (mục "Phụ lục" của §3).
 
-Ứng với 13 trang chính của nhận xét (§7 của `nhan-xet-ppo-2026-11-22.md`): 1 `5-09`; 2 `5-01`; 3 `5-15`; 4 `5-16`; 5 `5-02`; 6 `5-11`; 8 `5-10`, `5-05`; 7 `5-06`; 9 `5-17`; 10 `5-18`; 11 `5-19`; 12 `5-07`, `5-14`; 13 `5-08`. Hai chỗ khác bố cục của nhận xét:
+**Mã (bản #8).** Giữ, không đổi mặt trang: `5-00` (chỉ ghi chú diễn giả), `5-01`, `5-15`, `5-16`, `5-02`, `5-20`, `5-17`, `5-18` (chỉ ghi chú diễn giả), `5-07`, `5-14` (chỉ ghi chú diễn giả). Giữ, sửa: `5-09` (câu mở), `5-11` (chứng minh và bảng bốn trường hợp sang `7-16`), `5-05` (gộp `5-10`, phép tính chi tiết sang `7-17`, tiêu đề mới), `5-06` (rút), `5-19` (gộp `5-21`, thêm tỉ lệ cắt có tác dụng, "Lưu ý:" sang `7-18`). Mới: `5-22` (ba đại lượng). Bỏ khỏi mạch 5: `5-10` (gộp vào `5-05`), `5-21` (gộp vào `5-19`), `5-08` (bảng trùng `6-14`; hộp kết lên `5-22`), `5-12`, `5-13` (Bài tập 10.23 sang `7-19` … `7-22`). Các mã bỏ không dùng lại.
 
-- **Trang 7 đứng sau trang 8** (`5-06` sau `5-10`, `5-05`). Ví dụ KL trên đoạn phẳng của nhận xét ($p_B=0{,}733$; $0{,}85$; $0{,}95$, mục tiêu cắt $-0{,}8$) là phần của $s_B$ trên bộ đệm hai lượt, với $p_A=0{,}4$ là điểm dừng của vòng trong; ghi chú §6.1 bản đang sửa cũng đặt đoạn này ngay sau phản ví dụ bộ đệm. Đặt `5-06` trước bộ đệm thì $-0{,}8$ và $p_A=0{,}4$ chưa có đường tính (TB29) và deck khác ghi chú (NT2). Thân bài của nhận xét cũng theo thứ tự này (§3 bộ đệm, rồi §4 KL). `5-06` thành trạm dừng gom hai giới hạn (lợi thế sai, KL), đúng chức năng "bảo vệ được gì, không bảo vệ được gì". Phương án giữ thứ tự 7 → 8 ở câu hỏi 1 của §10 (mục #7).
-- **Trang 8 tách hai trang** (`5-10` bộ đệm và lợi thế ước lượng; `5-05` CPI so với PPO-Clip trên bộ đệm, cột $J$). Một trang không chứa được bảng bộ đệm, hai lời giải tối ưu và hình cột (đo ở bản trước: `5-10`, `5-01`, `5-05` là ba trang).
+**Lý do chọn chỗ của `5-22`.** Trang đứng cuối mạch, sau thuật toán, ở chỗ của `5-08` cũ. (1) Thuật toán vừa nêu PPO-Clip tối ưu $\mathcal L^{\mathrm{CLIP}}$ trên bộ đệm; trang này trả lời đại lượng đó liên hệ thế nào với dự báo $\Delta\mathcal L$ và với $\Delta J$, đúng điều còn thiếu chuyển sang tổng kết ("không phương pháp nào bảo đảm $J$ tăng", `6-18`). (2) Nhận xét đặt trang "trước bài tập tổng hợp"; bài tập nay ở phụ lục, nên trang cuối mạch chính là chỗ liền trước nó trong thứ tự đọc. (3) Trang làm trạm dừng cuối mạch (TB5), thay `5-08`. Đặt sau `5-06` (sau phản ví dụ) cũng hợp, nhưng khi đó mạch kết thúc ở trang thuật toán, không có trạm dừng.
 
-**Mã.** Giữ: `5-00`, `5-09`, `5-01` (cùng chức năng "hàm thay thế mẫu tuyến tính theo tỉ số nên không tự dừng", dữ liệu đổi sang lợi thế đúng), `5-02`, `5-11`, `5-10`, `5-05`, `5-06`, `5-07`, `5-14`, `5-08`, `5-12`, `5-13`. Mới: `5-15` (lợi thế dương), `5-16` (lợi thế âm), `5-17` (vòng nhiều lần qua bộ đệm), `5-18` (hàm mất mát tổng), `5-19` (chỉ số theo dõi). Bỏ: `5-03` (câu hỏi nhanh mẫu $\widehat A=-1$, $\rho=1{,}3$; trường hợp $A=-2$, $\rho=1{,}3$ nay là một dòng của `5-16` và lời giải câu hỏi nhanh ở `5-02`). Mã `5-04` (bỏ từ 2026-11-21) và `5-03` không dùng lại.
+**Dữ liệu.** Như bản #7: lợi thế đúng ở `5-01` … `5-11`; bộ đệm hai lượt ở `5-05`, `5-06`; lô giả định ở `5-19` (nay có dấu lợi thế, quyết định #8); `5-22` dùng $\tilde\pi$ của mạch 4 và $(1;\,1)$ của `5-01`, không dùng số của Bài tập 10.23. Số mới tính trong `/tmp/claude-1000/-data-tqlong-lectures/678a7f48-9d80-46cf-a421-67398857f913/scratchpad/m5-ppo/kiem_m5_8.py`.
 
-**Hai bộ dữ liệu trong mạch (TB29, quyết định #7(1) của tác giả).** (a) `5-01` … `5-11`: lợi thế đúng tại chuỗi, $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$, $A_\pi(s_B,\cdot)=(1;\,-2)$, tỉ số $\rho_{s_A}=(2p_A;\,2-2p_A)$, $\rho_{s_B}=(1{,}5p_B;\,3-3p_B)$, $\epsilon=0{,}2$. Lý do nêu trên `5-01`: dựng cơ chế cắt khi lợi thế đúng, tách khỏi sai số ước lượng. (b) `5-10` … `5-06`: bộ đệm hai lượt $s_A\xrightarrow1s_B\xrightarrow2$, $s_A\xrightarrow2$ với critic $\hat v=(1{,}4;\,1)$, $\lambda=1$, $\widehat A=(-1{,}4;\,-0{,}4;\,-1)$ cho $(s_A,1)$, $(s_A,2)$, $(s_B,2)$ (lợi thế đúng $0{,}4$; $-0{,}4$; $-2$). Lý do nêu trên `5-10`: dữ liệu thu được cho lợi thế ước lượng, không cho lợi thế đúng. Bài tập 10.23 quay lại (a). (c) Lô giả định bốn tỉ số ở `5-19` (quyết định #7(2)); lý do nêu trên trang.
+**Câu về bảo đảm (nhận xét §3.1).** Câu chuẩn của tác giả: "dùng lại dữ liệu từ chính sách cũ để thực hiện các bước cập nhật hiệu quả, đồng thời kiểm soát nguy cơ suy giảm hiệu năng". Chỗ đổi trong mạch 5: `5-09` (câu mở), `5-00` (ghi chú diễn giả), `5-22` (hộp). Chỗ đổi ngoài mạch 5: bảng cuối mục này.
 
-Mọi số tính lại trong `/tmp/claude-1000/-data-tqlong-lectures/678a7f48-9d80-46cf-a421-67398857f913/scratchpad/m5-ppo/kiem_m5.py` (venv của workspace). Không "Adam" trên mặt trang; không nhãn "Còn thiếu:". Câu hỏi nhanh của mạch (TB22): `5-02`. Trạm dừng (TB5): `5-11` (sau năm trang dựng mục tiêu cắt), `5-06` (sau phản ví dụ), `5-08` (cuối mạch). Ví dụ tay đứng trước thuật toán và mang cùng tên nhóm bước (Đ12): `5-10` (**Thu lượt**, **Ước lượng lợi thế**), `5-05` (**Cập nhật actor**, vòng trong), `5-17` (cả bốn nhóm trên hình).
+#### `L10-5-00` · Tối ưu chính sách gần kề (PPO) (giữ)
 
-#### `L10-5-00` · Tối ưu chính sách gần kề (PPO) (trang tiêu đề mạch; giữ mã)
-
-- **Mặt trang:** giữ: "5."; `h2` "Tối ưu chính sách gần kề (PPO)"; `p.strand-lead` "PPO cắt tỉ số chính sách để dùng lại một bộ đệm nhiều lần bằng gradient bậc một." (xem câu hỏi 4 của §10 mục #7 về cụm "cắt tỉ số chính sách").
-- **Hình:** `so-do-neo-m5-vao.svg`, giữ.
-- **Diễn giả:** câu cuối đổi thành "Đầu ra là mục tiêu cắt, giới hạn của nó trên bộ đệm hai lượt, một vòng PPO với hàm mất mát tổng và các chỉ số theo dõi, thuật toán PPO-Clip, so sánh với TRPO và một bài tập tổng hợp." Hai câu đầu giữ.
+- **Mặt trang:** giữ (dòng dẫn "PPO cắt đóng góp của từng mẫu vào hàm mục tiêu để dùng lại một bộ đệm nhiều lần bằng gradient bậc một.").
+- **Diễn giả:** câu thứ hai thành "Mạch 5 giữ ý hàm thay thế chỉ đáng tin gần chính sách cũ, và đưa cơ chế kiểm soát vào chính hàm mục tiêu: mục tiêu ngừng thưởng thay đổi có lợi vượt ngưỡng." Câu cuối thành "Đầu ra là mục tiêu cắt, giới hạn của nó trên bộ đệm hai lượt, một vòng PPO với hàm mất mát tổng và các chỉ số theo dõi, thuật toán PPO-Clip và ba đại lượng mà mạch dùng."
 - **Phút:** 0,5.
 
-#### `L10-5-09` · Mỗi bộ đệm của TRPO chỉ cho một bước cập nhật (giữ mã; trang 1 của nhận xét)
+#### `L10-5-09` · Mỗi bộ đệm của TRPO chỉ cho một bước cập nhật (giữ; sửa câu mở)
 
-- **Câu:** 1. **Nhãn:** "Câu hỏi:".
-- **Mặt trang:** giữ bản hiện hành (hình `vong-trpo.svg` nửa trái; câu "Cần dùng lại một bộ đệm $\mathcal D$ …"; định nghĩa $\mathcal L^{\mathrm{CPI}}$ và $\rho_t$), trừ câu hỏi:
-  - "**Câu hỏi:** tối đa $\mathcal L^{\mathrm{CPI}}$ trên một bộ đệm thì chính sách dừng ở đâu?"
-- **Quyết định về hình:** không vẽ sơ đồ bốn khối "TRPO → vấn đề → PPO-Clip → giám sát" (hình rId23 của nhận xét). Ở trang 1, các tên "PPO-Clip", "mục tiêu cắt", "approxKL", "tỉ lệ cắt" chưa được dạy (TB3: trang mở không có tên phương pháp mới; TB11). Phần "TRPO đắt" đã có trên `vong-trpo.svg` (vòng tìm kiếm lùi đỏ, "khoảng mười tích $Fv$"). Câu "PPO một vòng" của nhận xét do `5-17` đảm nhận, sau khi các tên đã dạy.
-- **Dựng dần:** giữ ((0) hình và dòng bài toán; (1) định nghĩa; (2) câu hỏi).
-- **1 phút:** TRPO bỏ bộ đệm sau một bước đắt; ứng viên đầu tiên để dùng lại bộ đệm là hàm thay thế mẫu.
-- **Mới:** $\mathcal L^{\mathrm{CPI}}$.
-- **Nguồn số:** không.
-- **Ghi chú nguồn:** đoạn mở §6; đoạn đầu §6.1 (định nghĩa $\mathcal L^{\mathrm{CPI}}$, không đánh số). Dòng nguồn hiện tại của `5-09` dẫn "§6.1 (Định nghĩa 10.39)", nhưng Định nghĩa 10.39 là mục tiêu PPO-Clip: biên tập viên sửa.
-- **Diễn giả:** giữ.
-- **Phút:** 1 (trước 1,5: hộp "mỗi bộ đệm chỉ cho một bước" đã ở `4-31`, trang này chỉ đọc hình).
-
-#### `L10-5-01` · Hàm thay thế mẫu tuyến tính theo tỉ số nên không tự dừng (giữ mã, chức năng giữ, dữ liệu mới; trang 2 của nhận xét)
-
-- **Câu:** 1. **Nhãn:** "Nhắc lại:".
-- **Mục đích:** trả lời câu hỏi của `5-09` mà không nói sai về chuỗi. Với lợi thế đúng, cực đại không ràng buộc của $\mathcal L^{\mathrm{CPI}}$ là $(1;\,1)$, $J=2{,}7$, chính sách tối ưu; trang không nói lợi thế đúng dẫn tới chính sách xấu. Rủi ro nêu trên trang: hàm thay thế không có tín hiệu dừng, và sai số của dự báo xa chính sách cũ lớn, có thể đổi dấu (mạch 4, $\tilde\pi$). Nguồn rủi ro thứ hai, lợi thế ước lượng sai dấu, ở `5-10`, `5-05`.
-- **Mặt trang:**
-  - "**Nhắc lại:** với $\tilde\pi=(0{,}9;\,0{,}5)$, hàm thay thế dự báo $J$ tăng $0{,}095$, còn $J$ giảm $0{,}085$: sai số $-0{,}18$."
-  - "Để tách cơ chế khỏi sai số ước lượng, dùng lợi thế đúng $A_\pi(s_B,\cdot)=(1;\,-2)$, với mẫu tại $s_B$ theo đúng tần suất $\pi(\cdot\mid s_B)=(\tfrac23;\,\tfrac13)$. Phần của $\mathcal L^{\mathrm{CPI}}$ tại $s_B$ là"
-    $$\ell_{s_B}=\tfrac23\cdot1{,}5p_B\cdot1+\tfrac13\cdot3(1-p_B)\cdot(-2)=3p_B-2.$$
-  - "$\ell_{s_B}$ tăng đều theo $p_B$ tới biên $p_B=1$, nơi tỉ số của hành động 2 bằng $0$. Tương tự, $\ell_{s_A}=0{,}8p_A-0{,}4$ tăng tới $p_A=1$."
-  - "Tại $(1;\,1)$: $\Delta\mathcal L=1\cdot0{,}4+0{,}45\cdot1=0{,}85$, còn $\Delta J=2{,}7-1{,}4=1{,}3$. Trên chuỗi, biên này là chính sách tốt nhất."
-  - Hộp: "$\mathcal L^{\mathrm{CPI}}$ không có tín hiệu dừng: tối ưu đi tới biên, xa chính sách cũ, nơi sai số của dự báo lớn và có thể đổi dấu ($+0{,}45$ ở đây, $-0{,}18$ với $\tilde\pi$)."
-- **Dựng dần:** (0) "Nhắc lại:", dòng dữ liệu, công thức; (1) dòng biên; (2) dòng $(1;\,1)$; (3) hộp.
-- **1 phút:** Mỗi mẫu đóng góp tuyến tính theo tỉ số, nên hàm thay thế mẫu tăng tới biên của miền xác suất; xa chính sách cũ, dự báo sai nhiều, khi thì có lợi, khi thì đổi dấu.
-- **Mới:** $\ell_s$, phần của mục tiêu tại một trạng thái (dùng lại ở `5-05`, `5-12`).
-- **Nguồn số:** $A_\pi$ từ `2-06`; tỉ số $1{,}5p_B$, $3(1-p_B)$ từ $\pi(\cdot\mid s_B)=(\tfrac23;\,\tfrac13)$; $\ell_{s_A}=\tfrac12\cdot2p_A\cdot0{,}4+\tfrac12(2-2p_A)(-0{,}4)$ (ghi chú diễn giả, cùng khuôn với $\ell_{s_B}$, Đ10); $\eta_\pi=(1;\,0{,}45)$ từ `4-02`; $J=2{,}7p_Ap_B+1-p_A$ từ `1-10`; $+0{,}095$, $-0{,}085$ từ `4-16`.
-- **Hình:** không.
-- **Ghi chú nguồn:** §6.1, đoạn mở và đoạn "Trên chuỗi hai trạng thái với lợi thế đúng …" (bản #7 của ghi chú: $\mathcal L-J=0{,}85$, $J$ tăng $1{,}3$).
-- **Diễn giả:** $\ell_s=\sum_a\pi(a\mid s)\rho_s(a)A_\pi(s,a)=A_\pi(s,\pi')$, nên trung bình trên bộ đệm có đúng tần suất là hàm thay thế của mạch 4 bỏ hằng. Tại $(1;\,1)$, bốn tỉ số là $2$; $0$; $1{,}5$; $0$. Sai số $0{,}45=(\eta_{\pi'}(s_B)-\eta_\pi(s_B))A_\pi(s_B,\pi')=(0{,}9-0{,}45)\cdot1$. Trên chuỗi với lợi thế đúng, hướng của $\mathcal L^{\mathrm{CPI}}$ trùng hướng tăng của $J$; điều đó không đúng khi lợi thế là ước lượng, như bộ đệm hai lượt (nguồn rủi ro thứ hai). Định lý chặn cải thiện (phụ lục) chặn sai số theo TV.
-- **Phút:** 1,5.
-
-#### `L10-5-15` · Lợi thế dương: đóng góp của mẫu ngừng tăng khi $\rho>1{,}2$ (mã mới; trang 3 của nhận xét, "Hành động tốt có nên được tăng xác suất mãi?")
-
-- **Câu:** 2. **Nhãn:** "Câu hỏi:".
-- **Mặt trang (cột trái; hình cột phải):**
-  - "Mẫu $(s_B,1)$: $A=+1$, $\rho=p_B/\tfrac23=1{,}5p_B$. Đóng góp vào $\mathcal L^{\mathrm{CPI}}$ là $\rho A=\rho$, tăng mãi khi $p_B$ tăng."
-  - "**Câu hỏi:** hàm thay thế chỉ đáng tin gần chính sách cũ. Đến mức tỉ số nào thì việc tăng $p_B$ còn nên được thưởng?"
-  - "Với bán kính cắt $\epsilon=0{,}2$, đóng góp dừng ở $1+\epsilon$:" $$\ell=A\min(\rho,\,1+\epsilon)=\min(\rho,\,1{,}2).$$
-  - Bảng hai hàng:
-
-    | $\rho$ | $p_B$ | $\rho A$ | $\ell$ |
-    |---|---|---|---|
-    | $1{,}3$ | $0{,}867$ | $1{,}3$ | $\min(1{,}3;\,1{,}2)=1{,}2$ |
-    | $0{,}7$ | $0{,}467$ | $0{,}7$ | $0{,}7$ |
-  - "Khoảng $\rho>1{,}2$ là *đoạn phẳng*: đóng góp không đổi, gradient theo mẫu bằng $0$."
-  - Hộp: "Tăng xác suất của hành động có lợi thế dương vẫn được thưởng tới $\rho=1{,}2$, tức $p_B=0{,}8$; vượt mức đó, dữ liệu cũ không thưởng thêm."
-- **Dựng dần:** (0) dòng mẫu, câu hỏi; (1) hình, công thức, bảng; (2) dòng đoạn phẳng, hộp.
-- **1 phút:** Với lợi thế dương, đóng góp của mẫu đi lên theo tỉ số rồi nằm ngang từ $1+\epsilon$.
-- **Mới:** bán kính cắt $\epsilon$ (ngưỡng $1+\epsilon$); đoạn phẳng (TB24 cho phép hai).
-- **Nguồn số:** $A_\pi(s_B,1)=1$ từ `2-06`; $\rho=1{,}5p_B$ từ `5-01`; $p_B=\rho/1{,}5$: $1{,}3/1{,}5=0{,}867$, $0{,}7/1{,}5=0{,}467$, $1{,}2/1{,}5=0{,}8$.
-- **Hình:** `ppo-dong-gop-mot-mau-duong.svg` (mới, §4.5), `width` khoảng 520.
-- **Ghi chú nguồn:** §6.1, đoạn "Về mặt ý tưởng …", gạch đầu dòng "hành động 1, $A=+1$", bảng bốn trường hợp.
-- **Diễn giả:** đọc hình: đường cam nét đứt là $\rho A$ của $\mathcal L^{\mathrm{CPI}}$, đường tím là đóng góp đã cắt; hai đường trùng nhau tới $\rho=1{,}2$. Hàng $\rho=0{,}7$ ($p_B$ giảm, hướng bất lợi) không bị cắt. Giá trị $\epsilon=0{,}2$ là giá trị thường dùng (Schulman và cộng sự, 2017); trang không chứng minh lựa chọn này.
-- **Phút:** 1,5.
-
-#### `L10-5-16` · Lợi thế âm: đóng góp của mẫu ngừng tăng khi $\rho<0{,}8$ (mã mới; trang 4 của nhận xét, "Hành động xấu có nên giảm xác suất về 0?")
-
-- **Câu:** 2. **Nhãn:** không.
-- **Mặt trang (cùng bố cục với `5-15`):**
-  - "Mẫu $(s_B,2)$: $A=-2$, $\rho=(1-p_B)/\tfrac13=3(1-p_B)$. Đóng góp $\rho A=-2\rho$ tăng khi $\rho$ giảm, tức khi $p_B$ tăng, và tăng tới $0$ khi xác suất của hành động 2 về $0$."
-  - "Với $\epsilon=0{,}2$, đóng góp dừng ở $1-\epsilon$:" $$\ell=A\max(\rho,\,1-\epsilon)=-2\max(\rho,\,0{,}8).$$
-  - Bảng hai hàng:
-
-    | $\rho$ | $p_B$ | $\rho A$ | $\ell$ |
-    |---|---|---|---|
-    | $0{,}7$ | $0{,}767$ | $-1{,}4$ | $-2\max(0{,}7;\,0{,}8)=-1{,}6$ |
-    | $1{,}3$ | $0{,}567$ | $-2{,}6$ | $-2{,}6$ |
-  - Hộp: "Giảm xác suất của hành động có lợi thế âm được thưởng tới $\rho=0{,}8$, tức $p_B=\tfrac{11}{15}\approx0{,}733$. Khi $\rho>1$, tức khi mục tiêu giảm, đóng góp giữ nguyên $\rho A$."
-- **Dựng dần:** (0) dòng mẫu; (1) hình, công thức, bảng; (2) hộp.
-- **1 phút:** Với lợi thế âm, đóng góp nằm ngang dưới $1-\epsilon$ và đi xuống theo $\rho A$ ở phía bất lợi.
-- **Mới:** không (cùng ngưỡng, phía kia).
-- **Nguồn số:** $A_\pi(s_B,2)=-2$ từ `2-06`; $\rho=3(1-p_B)$ từ `5-01`; $p_B=1-\rho/3$: $1-0{,}7/3=0{,}767$, $1-1{,}3/3=0{,}567$, $1-0{,}8/3=\tfrac{11}{15}$.
-- **Hình:** `ppo-dong-gop-mot-mau-am.svg` (mới, §4.5), cùng `width` với `5-15`.
-- **Ghi chú nguồn:** như `5-15`, gạch đầu dòng "hành động 2, $A=-2$".
-- **Diễn giả:** $\min(-2\rho,\,-1{,}6)=-2\max(\rho,\,0{,}8)$ vì nhân với số âm đảo thứ tự; dạng tổng quát ở `5-11`. Phía $\rho>1$ (hàng $1{,}3$, $p_B$ giảm) là hướng làm mục tiêu giảm; phép cắt không che nó.
+- **Mặt trang:** câu mở thành "Cần dùng lại dữ liệu từ chính sách cũ cho nhiều bước cập nhật hiệu quả, mỗi bước chỉ cần gradient bậc một, đồng thời kiểm soát nguy cơ suy giảm hiệu năng." Phần còn lại giữ.
 - **Phút:** 1.
 
-#### `L10-5-02` · Mục tiêu cắt (giữ mã; trang 5 của nhận xét; câu hỏi nhanh của mạch, TB22)
+#### `L10-5-01`, `L10-5-15`, `L10-5-16`, `L10-5-02`, `L10-5-20` (giữ như deck `de6b739`)
 
-- **Câu:** 3. **Nhãn:** "Định nghĩa.", "Câu hỏi:", "Lời giải:" (ngoại lệ TB13, §7).
-- **Mặt trang:**
-  - "Hai đường gấp khúc theo cùng một quy tắc: mỗi mẫu lấy giá trị nhỏ hơn giữa $\rho A$ và $\operatorname{clip}(\rho,\,0{,}8,\,1{,}2)\,A$."
-  - Hai hình cạnh nhau: `ppo-dong-gop-mot-mau-duong.svg`, `ppo-dong-gop-mot-mau-am.svg`.
-  - "**Định nghĩa.** Với bán kính cắt (clip range) $\epsilon\in(0,1)$ và $\operatorname{clip}(x,l,u)=\min(\max(x,l),u)$, mục tiêu cắt (clipped surrogate objective) là" $$\textstyle\mathcal L^{\mathrm{CLIP}}(\theta)=\frac1{|\mathcal D|}\sum_{t\in\mathcal D}\min\Bigl(\rho_t(\theta)\widehat A_t,\ \operatorname{clip}(\rho_t(\theta),1-\epsilon,1+\epsilon)\,\widehat A_t\Bigr).$$
-  - "**Câu hỏi:** vì sao lấy $\min$, không tối ưu trực tiếp $\operatorname{clip}(\rho_t,1-\epsilon,1+\epsilon)\widehat A_t$?"
-  - "**Lời giải:** chỉ cắt thì mẫu $A=-2$, $\rho=1{,}3$ cho $1{,}2\cdot(-2)=-2{,}4$ thay cho $-2{,}6$, và mẫu $A=+1$, $\rho=0{,}7$ cho $0{,}8$ thay cho $0{,}7$: thay đổi bất lợi được đánh giá cao hơn $\rho A$ và có gradient bằng $0$. Phép $\min$ giữ $-2{,}6$ và $0{,}7$; nó chỉ bỏ phần thưởng của thay đổi có lợi vượt ngưỡng."
-- **Bỏ khỏi mặt trang:** câu mở cũ "Khi $\rho_t\approx1$ trên phân bố trạng thái của $\pi_{\mathrm{old}}$, sai số của hàm thay thế nhỏ." (nhận xét §4: sự gần nhau của hai chính sách không suy ra được từ vài tỉ số trên mẫu); dòng "*Đoạn phẳng*: …" (đã định nghĩa ở `5-15`). Hình `ppo-cat-hai-dau-buoc0.svg`, `ppo-cat-hai-dau.svg` rời trang.
-- **Dựng dần:** (0) dòng quy tắc và hai hình; (1) định nghĩa; (2) câu hỏi; (3) lời giải.
-- **1 phút:** Hai đường gấp khúc là một công thức $\min$; phép $\min$ cắt phần thưởng vượt ngưỡng và giữ nguyên phạt của thay đổi bất lợi.
-- **Mới:** $\mathcal L^{\mathrm{CLIP}}$.
-- **Nguồn số:** bốn giá trị từ bảng của `5-15`, `5-16`; $\operatorname{clip}(1{,}3)=1{,}2$, $\operatorname{clip}(0{,}7)=0{,}8$.
-- **Hình:** hai hình của `5-15`, `5-16`, mỗi hình `width` khoảng 420 (cỡ chữ tối thiểu ở §4.5 tính cho bề rộng này).
-- **Ghi chú nguồn:** §6.1, câu "Hai trường hợp gộp thành một công thức …"; đoạn "**Câu hỏi.** Vì sao lấy $\min$ …"; Định nghĩa 10.39.
-- **Diễn giả:** sửa câu cũ "Khi tỉ số gần $1$, khoảng cách TV nhỏ" thành: "Hàm thay thế đáng tin khi phân phối hành động mới gần phân phối cũ tại các trạng thái mà $\pi_{\mathrm{old}}$ thăm; vài tỉ số trên mẫu gần $1$ không đủ để kết luận điều đó." Giữ: phép $\min$ làm mục tiêu cắt không vượt mục tiêu không cắt và trùng nó gần $\theta_{\mathrm{old}}$ (Mệnh đề 10.41). "Gợi ý: so hai đường của mỗi hình ở phía bất lợi." Năng lực kiểm tra: phân biệt phía có lợi và phía bất lợi của phép cắt.
-- **Phút:** 2.
+Phút: 1,5; 1,5; 0,5; 1; 1.
 
-#### `L10-5-11` · Mục tiêu cắt theo dấu của lợi thế (giữ mã; trang 6 của nhận xét; trạm dừng)
+#### `L10-5-11` · Mục tiêu cắt theo dấu của lợi thế (giữ; chứng minh và bảng bốn trường hợp sang `7-16`)
 
-- **Câu:** 3. **Nhãn:** "Mệnh đề.", "Chứng minh.".
-- **Mặt trang:**
-  - Mệnh đề và bảng ba hàng ($\widehat A_t>0$, $<0$, $=0$), giữ như bản hiện hành.
-  - "Ngoài các tập đó, gradient là $\widehat A_t\,\rho_t\,\psi_t$." (giữ)
-  - Dòng "Ở đây" mới (Đ6), thay dòng "mẫu $(s_A,1)$ với $\rho=1$": "Ở đây, bốn trường hợp của $s_B$ với $\epsilon=0{,}2$:"
-
-    | Mẫu | $\rho$ | $\rho A$ | Số hạng cắt | Gradient theo mẫu |
-    |---|---|---|---|---|
-    | $A=+1$ | $1{,}3$ | $1{,}3$ | $1\cdot\min(1{,}3;\,1{,}2)=1{,}2$ | $0$ |
-    | $A=+1$ | $0{,}7$ | $0{,}7$ | $0{,}7$ | khác $0$ |
-    | $A=-2$ | $0{,}7$ | $-1{,}4$ | $-1{,}6$ | $0$ |
-    | $A=-2$ | $1{,}3$ | $-2{,}6$ | $-2{,}6$ | khác $0$ |
-  - "**Chứng minh.** …" (giữ).
-- **Dựng dần:** (0) mệnh đề và bảng; (1) dòng gradient và bảng bốn trường hợp; (2) chứng minh.
+- **Câu:** 3. **Nhãn:** "Mệnh đề.".
+- **Mặt trang:** mệnh đề và bảng ba hàng ($\widehat A_t>0$, $<0$, $=0$), giữ. Dòng "Ở đây" (Đ6) thay bảng bốn trường hợp: "Ở đây, hai đường gấp khúc của $A_\pi=+1$ và $A_\pi=-2$ là hai hàng đầu: đoạn phẳng ở $\rho>1{,}2$ và ở $\rho<0{,}8$."
+- **Bỏ khỏi mặt trang:** dòng "Chứng minh." và bảng bốn trường hợp (sang `7-16`; TB28 cho phép chuyển dòng chứng minh, phát biểu ở lại mạch chính; nhận xét §4 xếp "bảng chứng minh theo dấu" vào mạch chuyên sâu).
 - **1 phút:** Lợi thế dương ngừng ở $1+\epsilon$, lợi thế âm ngừng ở $1-\epsilon$; phía bất lợi giữ tín hiệu.
-- **Mới:** dạng theo dấu.
-- **Nguồn số:** bốn hàng từ `5-15`, `5-16` (Đ10: hàng đầu đủ phép tính).
-- **Ghi chú nguồn:** Mệnh đề 10.40 (dòng "Chứng minh." gộp Bước 1–2); bảng bốn trường hợp và câu "Quy tắc rút ra từ bảng" của §6.1.
-- **Diễn giả:** giữ; thêm câu trạm dừng (TB5, phần điều còn thiếu): "Câu hỏi còn lại: mục tiêu cắt làm gì khi lợi thế là ước lượng, và nó có giữ chính sách gần chính sách cũ không." Câu này ở ghi chú diễn giả, không lên mặt trang (VP: không câu dẫn đường).
-- **Quyết định về phụ lục:** dòng "Chứng minh." một dòng ở lại trang này, không chuyển sang `7-16` (§10 mục #7, việc 2).
-- **Phút:** 1.
+- **Diễn giả:** giữ; thêm "Chứng minh và bảng bốn trường hợp ở phụ lục cuối bài."
+- **Phút:** 0,5.
 
-#### `L10-5-10` · Bộ đệm hai lượt cho lợi thế ước lượng sai dấu (giữ mã, tiêu đề mới; nửa đầu trang 8 của nhận xét)
+#### `L10-5-05` · Trong ví dụ này, phép cắt làm giảm mức suy giảm của $J$ (giữ mã; gộp `5-10`; phép tính chi tiết sang `7-17`)
 
 - **Câu:** 4. **Nhãn:** "Nhắc lại:", "Câu hỏi:".
 - **Mặt trang:**
-  - "**Nhắc lại:** critic $\hat v=(1{,}4;\,1)$; GAE với $\lambda=1$ cho $\widehat A_t=G_t-\hat v(S_t)$; $\pi_{\mathrm{old}}=(\tfrac12;\,\tfrac23)$." (giữ)
-  - "Dữ liệu thu được chỉ cho lợi thế ước lượng. **Thu lượt:** bộ đệm gồm hai lượt $s_A\xrightarrow1s_B\xrightarrow2$ và $s_A\xrightarrow2$, xác suất $2\cdot\tfrac16\cdot\tfrac12=\tfrac16$. **Ước lượng lợi thế:**" (câu đầu là lý do đổi dữ liệu, TB29)
-  - Bảng (thêm cột tỉ số, chuyển từ `5-01` cũ):
+  - "**Nhắc lại:** critic $\hat v=(1{,}4;\,1)$; GAE với $\lambda=1$ cho $\widehat A_t=G_t-\hat v(S_t)$; $\pi_{\mathrm{old}}=(\tfrac12;\,\tfrac23)$."
+  - "Dữ liệu thu được chỉ cho lợi thế ước lượng. Bộ đệm gồm hai lượt: $s_A\xrightarrow1s_B\xrightarrow2$, lợi tức $0$, và $s_A\xrightarrow2$, lợi tức $1$."
+  - Bảng ba cột (cột trái; hình cột phải):
 
-    | Mẫu | $G_t$ | $\widehat A_t=G_t-\hat v(S_t)$ | $A_\pi$ đúng | $\rho_t$ theo $(p_A;\,p_B)$ |
-    |---|---|---|---|---|
-    | $(s_A,1)$ | $0+0{,}9\cdot0=0$ | $0-1{,}4=$ **$-1{,}4$** (đỏ) | $+0{,}4$ | $2p_A$ |
-    | $(s_A,2)$ | $1$ | $1-1{,}4=-0{,}4$ | $-0{,}4$ | $2-2p_A$ |
-    | $(s_B,2)$ | $0$ | $0-1=-1$ | $-2$ | $3-3p_B$ |
-  - Hộp: "Lợi thế ước lượng của hành động 1 ở $s_A$ sai dấu dù $\hat v(s_A)=v_\pi(s_A)=1{,}4$: lượt chọn nó gặp phần thưởng $0$ ở $s_B$."
-  - "**Câu hỏi:** phép cắt ngăn cập nhật vượt ngưỡng theo hướng có lợi. Nó có sửa được lợi thế ước lượng sai dấu không?"
-- **Dựng dần:** (0) "Nhắc lại:", dòng bộ đệm, hình; (1) bảng; (2) hộp; (3) câu hỏi.
-- **1 phút:** Một bộ đệm nhỏ cho lợi thế ước lượng sai dấu ở hành động tốt, kể cả khi critic đúng tại $s_A$.
-- **Mới:** bộ đệm hai lượt (một đối tượng, nguồn gốc trên trang, TB25).
-- **Nguồn số:** như bản trước; cột $\rho_t$: $p_A/\tfrac12$, $(1-p_A)/\tfrac12$, $(1-p_B)/\tfrac13$.
-- **Hình:** `chuoi-bo-dem-hai-luot.svg`, giữ.
-- **Ghi chú nguồn:** §6.1, đoạn "**Câu hỏi.** Phép cắt ngăn cập nhật vượt ngưỡng … có sửa được lợi thế ước lượng sai dấu không?" và đoạn sau ("Tại $s_A$, critic đúng …").
-- **Diễn giả:** sai dấu đến từ phương sai của lợi tức một lượt, không đến từ critic (nhận xét §3, "lưu ý sư phạm"). Với $\lambda=1$, ước lượng tại $s_A$ không chệch. Xác suất của bộ đệm: hai thứ tự của hai lượt.
-- **Phút:** 1,5.
-
-#### `L10-5-05` · Phép cắt không sửa lợi thế sai, nhưng giới hạn mức giảm của $J$ (giữ mã, tiêu đề mới; gộp phần CPI của `5-01` cũ; nửa sau trang 8 của nhận xét; ví dụ tay của vòng trong)
-
-- **Câu:** 4. **Nhãn:** không (hộp).
-- **Mặt trang:**
-  - "*Vòng trong* gồm nhiều bước gradient tăng một mục tiêu trên cùng bộ đệm, lợi thế giữ cố định. **Cập nhật actor** theo hai mục tiêu:" (Đ12)
-
-    | Trạng thái | Phần của $3\mathcal L^{\mathrm{CPI}}$ | Tới | Phần của $3\mathcal L^{\mathrm{CLIP}}$ | Dừng tại |
-    |---|---|---|---|---|
-    | $s_A$ | $-1{,}4\cdot2p_A-0{,}4(2-2p_A)=-0{,}8-2p_A$ | $p_A\to0$ | $-1{,}4\max(2p_A;\,0{,}8)-0{,}4\max(2-2p_A;\,0{,}8)$ | $p_A=0{,}4$ |
-    | $s_B$ | $-(3-3p_B)$ | $p_B\to1$ | $-\max(3-3p_B;\,0{,}8)$ | $p_B=\tfrac{11}{15}$ |
-  - "Dưới $p_A=0{,}4$, mẫu $(s_A,2)$ có $\rho>1{,}2$ ở phía bất lợi, không bị cắt, nên phần của $s_A$ giảm."
-  - "$J(0;\,1)=2{,}7\cdot0\cdot1+1-0=1$; $J(0{,}4;\,\tfrac{11}{15})=2{,}7\cdot0{,}4\cdot\tfrac{11}{15}+0{,}6=1{,}392$."
-  - Hộp cạnh hình: "Phép cắt không sửa lợi thế ước lượng sai: $J$ vẫn giảm, $0{,}008$ thay cho $0{,}4$."
-- **Dựng dần:** (0) dòng vòng trong, hàng $s_A$ cột CPI; (1) hàng $s_B$ cột CPI, $J(0;\,1)$, cột đầu của hình; (2) hai cột CLIP, dòng "dưới $p_A=0{,}4$"; (3) $J(0{,}4;\,\tfrac{11}{15})$, hình đủ, hộp.
-- **1 phút:** Trên cùng bộ đệm, không cắt thì $J$ về $1$; có cắt thì $J=1{,}392$: phép cắt giới hạn mỗi vòng đi bao xa, không sửa dấu của lợi thế.
-- **Mới:** vòng trong (định nghĩa tại chỗ, như bản trước).
-- **Nguồn số:** $\widehat A_t$, $\rho_t$ từ `5-10`; dạng theo dấu từ `5-11`; $-0{,}8-2p_A$ bằng $-1{,}8$ tại $0{,}5$, $-1{,}6$ tại $0{,}4$; dưới $0{,}4$: $-1{,}12-0{,}4(2-2p_A)=-1{,}92+0{,}8p_A$; $1-0{,}8/3=\tfrac{11}{15}$.
-- **Hình:** `ppo-so-sanh-J.svg` (mới, §4.5), `width` khoảng 460, cột phải dưới bảng; hộp cột trái. `ppo-bo-dem-hai-luot*.svg` rời trang (giữ tệp).
-- **Ghi chú nguồn:** §6.1, đoạn mục tiêu không cắt trên bộ đệm ("mục tiêu không cắt tại $s_A$ là …") và đoạn "Với mục tiêu cắt và $\epsilon=0{,}2$ …".
-- **Diễn giả:** trên $[0{,}4;\,0{,}6]$ phần của $s_A$ trong mục tiêu cắt bằng $-0{,}8-2p_A$; vòng trong dừng ở đỉnh gấp $p_A=0{,}4$ của $s_A$ và ở đầu đoạn phẳng của $s_B$; tại điểm dừng $\rho=(0{,}8;\,1{,}2;\,0{,}8)$. Giới hạn $(0;\,1)$ không đạt với $\theta$ hữu hạn. Hai chính sách là điểm dừng của bài toán tối ưu trên bộ đệm, không phải kết quả của một số bước gradient cụ thể; bài không giả định bộ tối ưu nào (nhận xét §3). Giảm $0{,}4$ trùng mức giảm của bước dài ở mạch 1.
-- **Phút:** 2.
-
-#### `L10-5-06` · Trên đoạn phẳng, mục tiêu cắt không đổi mà KL vẫn tăng (giữ mã, tiêu đề mới; trang 7 của nhận xét; trạm dừng)
-
-- **Câu:** 4. **Nhãn:** "Nhận xét.", "Nhắc lại:".
-- **Mặt trang:**
-  - "Mục tiêu cắt bỏ động lực đẩy $\rho$ ra ngoài $[0{,}8;\,1{,}2]$ theo hướng có lợi. Nó không sửa lợi thế sai, và nó cũng không chặn khoảng cách giữa hai chính sách."
-  - "**Nhắc lại:** $D_{\mathrm{KL}}(s_B)=\tfrac23\log\tfrac{2/3}{p_B}+\tfrac13\log\tfrac{1/3}{1-p_B}$; tại $p_B=0{,}85$: $\tfrac23\log0{,}784+\tfrac13\log2{,}222=-0{,}162+0{,}266=0{,}104$."
-  - "**Nhận xét.** Trên bộ đệm hai lượt, với $p_A=0{,}4$, phần của $s_B$ trong $3\mathcal L^{\mathrm{CLIP}}$ bằng $-0{,}8$ với mọi $p_B\ge\tfrac{11}{15}$, còn $D_{\mathrm{KL}}(s_B)$ tăng $0{,}011\to0{,}104\to0{,}396$ khi $p_B=\tfrac{11}{15}$; $0{,}85$; $0{,}95$."
-  - Hình hai bảng `ppo-phang-va-kl.svg`.
-  - Hộp: "PPO không cắt chính sách mới; PPO cắt đóng góp của từng mẫu." (câu của nhận xét, quyết định #7; giữ nguyên chữ, ngoại lệ TB13 ở §7)
-  - "Trên chuỗi, mỗi trạng thái có tham số riêng. Khi tham số dùng chung, bước trên mẫu khác, nhiều lô nhỏ và nhiều lần qua bộ đệm có thể đẩy $\rho$ ra ngoài khoảng cắt." (Đ2)
-- **Dựng dần:** (0) dòng mở; (1) "Nhắc lại:", nhận xét, hình; (2) hộp; (3) dòng tham số dùng chung.
-- **1 phút:** Trên đoạn phẳng, mục tiêu cắt không phân biệt ba chính sách có KL rất khác nhau; phép cắt giới hạn đóng góp của mẫu, không giới hạn chính sách.
-- **Mới:** không.
-- **Nguồn số:** $-0{,}8$ từ `5-05` ($-\max(3-3p_B;\,0{,}8)$); công thức KL từ `4-12`; ba giá trị KL tính trong `kiem_m5.py` ($0{,}0108$; $0{,}1042$; $0{,}3963$), hàng $0{,}85$ đủ phép tính trên trang (Đ10).
-- **Hình:** `ppo-phang-va-kl.svg` (mới, §4.5), `width` khoảng 760.
-- **Ghi chú nguồn:** §6.1, đoạn "Từ $p_B=\tfrac{11}{15}$ …" và đoạn sau ("PPO-Clip cắt đóng góp của từng mẫu …"); Nhận xét 10.42.
-- **Bỏ khỏi mặt trang:** bảng ba hàng có cột $J$ và ý 2 "gradient bằng $0$ cả khi tăng $p_B$ làm $J$ tăng" (xuống ghi chú diễn giả; hình và bảng nói cùng điều thì giữ một, TB10).
-- **Diễn giả:** cột $J$: $J(0{,}4;\,p_B)=1{,}08p_B+0{,}6$ cho $1{,}392$; $1{,}518$; $1{,}626$: mục tiêu cắt dừng vòng trong ở $\tfrac{11}{15}$ dù $\partial J/\partial p_B=1{,}08>0$. Sự gần nhau của hai chính sách là tính chất của cả phân phối hành động tại các trạng thái liên quan, đo bằng TV hay KL tại từng trạng thái; vài tỉ số trên mẫu gần $1$ không đủ để suy ra nó (nhận xét §4). Engstrom và cộng sự (2020, §4) đo được tỉ số vượt khoảng cắt trong thực hành; động lượng của Adam là một nguyên nhân (Nhận xét 10.42(1)). Theo dõi KL và dừng sớm theo KL là biện pháp thực hành; nó không biến PPO-Clip thành TRPO.
-- **Phút:** 1,5.
-
-#### `L10-5-17` · Một vòng PPO giữ cố định dữ liệu cũ và tính lại tỉ số (mã mới; trang 9 của nhận xét)
-
-- **Câu:** 5. **Nhãn:** không (hộp).
-- **Mặt trang:**
-  - "Một vòng dùng lại bộ đệm $\mathcal D$ trong $K$ lần qua bộ đệm (epoch); mỗi lần chia $\mathcal D$ thành các lô nhỏ (mini-batch) cỡ $M$."
-  - Hình `ppo-vong-nhieu-epoch.svg`, gần hết bề rộng.
-  - "Ở đây, trên bộ đệm hai lượt, $\widehat A_t$ giữ cố định, $\rho_t$ tính lại theo $(p_A;\,p_B)$, và vòng trong đi từ $(\tfrac12;\,\tfrac23)$ tới $(0{,}4;\,\tfrac{11}{15})$." (Đ6, Đ12)
-  - Hộp: "PPO dùng lại dữ liệu của chính sách vừa thu trong $K$ lần qua bộ đệm, rồi bỏ bộ đệm và thu bộ đệm mới. Nó không giữ dữ liệu của các chính sách cũ hơn."
-- **Dựng dần:** (0) dòng mở và hình; (1) dòng "Ở đây"; (2) hộp.
-- **1 phút:** Trong một vòng, log-xác suất cũ, lợi thế và mục tiêu của critic đứng yên; tỉ số, mất mát và gradient tính lại sau mỗi bước.
-- **Mới:** $K$ (số lần qua bộ đệm), lô nhỏ cỡ $M$ (TB24 cho phép hai). Tên tiếng Anh epoch, mini-batch lên lần đầu ở trang này (chuyển từ `5-07`).
-- **Nguồn số:** điểm đầu, điểm dừng từ `5-05`.
-- **Hình:** `ppo-vong-nhieu-epoch.svg` (mới, §4.5), `width` khoảng 1000.
-- **Ghi chú nguồn:** Thuật toán 10.49 và bảng "giữ cố định / tính lại" sau thuật toán (§6.3).
-- **Diễn giả:** đây là chỗ dễ nhầm với học ngoài chính sách tổng quát: PPO tái sử dụng dữ liệu vừa thu trong một số lần hữu hạn, không giữ một bộ đệm lịch sử (nhận xét §5). Từ lô thứ hai, $\pi_\theta$ đã khác $\pi_{\mathrm{old}}$; $\rho_t$ hiệu chỉnh phân phối hành động, phân bố trạng thái vẫn của $\pi_{\mathrm{old}}$. Chi phí: $K\lceil|\mathcal D|/M\rceil$ bước gradient mỗi bộ đệm.
-- **Phút:** 1,5.
-
-#### `L10-5-18` · Hàm mất mát tổng của PPO (mã mới; trang 10 của nhận xét)
-
-- **Câu:** 5. **Nhãn:** "Định nghĩa.", "Ý nghĩa:".
-- **Mặt trang:**
-  - "Cài đặt cập nhật actor và critic bằng một bước gradient trên một hàm mất mát."
-  - "**Định nghĩa.** Với $V^{\mathrm{targ}}_t$ giữ cố định và hệ số $c_1,c_2\ge0$, hàm mất mát tổng trên lô $\mathcal B$ là" $$L(\theta,w)=-\mathcal L^{\mathrm{CLIP}}(\theta)+c_1\,\frac1{|\mathcal B|}\sum_{t\in\mathcal B}\bigl(\hat v(S_t,w)-V^{\mathrm{targ}}_t\bigr)^2-c_2\,\mathcal H(\theta),$$ "với entropy $\mathcal H(\theta)=\frac1{|\mathcal B|}\sum_{t\in\mathcal B}\bigl[-\sum_a\pi_\theta(a\mid S_t)\log\pi_\theta(a\mid S_t)\bigr]$."
-  - Bảng:
-
-    | Thành phần | Vai trò |
-    |---|---|
-    | $-\mathcal L^{\mathrm{CLIP}}$ (actor) | tăng mục tiêu cắt, không thưởng thay đổi có lợi vượt khoảng cắt |
-    | $c_1L^V$ (critic) | hồi quy $\hat v$ về $V^{\mathrm{targ}}_t=\widehat A_t+\hat v_{\mathrm{old}}(S_t)$, như mạch 3 |
-    | $-c_2\mathcal H$ (entropy) | giữ mức ngẫu nhiên của chính sách, hỗ trợ khám phá |
-  - "**Ý nghĩa:** tại $s_B$, $\pi_{\mathrm{old}}=(\tfrac23;\,\tfrac13)$ có entropy $-\tfrac23\log\tfrac23-\tfrac13\log\tfrac13=0{,}637$; chính sách tất định có entropy $0$. Trừ $c_2\mathcal H$ làm mất mát tăng khi chính sách mất tính ngẫu nhiên."
-- **Dựng dần:** (0) dòng mở, định nghĩa; (1) bảng; (2) "Ý nghĩa:".
-- **1 phút:** Một hàm mất mát gộp ba việc: tăng mục tiêu cắt, khớp critic, giữ entropy.
-- **Mới:** hàm mất mát tổng; entropy (TB24 cho phép hai).
-- **Nguồn số:** $0{,}637$ trên trang; $V^{\mathrm{targ}}_t$ từ `3-13`.
-- **Hình:** không.
-- **Ghi chú nguồn:** Định nghĩa 10.45 (entropy), Định nghĩa 10.46 (hàm mất mát tổng).
-- **Diễn giả:** cực tiểu $L$ tương đương tăng $\mathcal L^{\mathrm{CLIP}}$, giảm $L^V$, tăng entropy. Khi actor và critic dùng chung mạng, $c_1$ cân hai mất mát; khi tách mạng, $c_1$ chỉ đổi bước học của critic. Đây là dạng cực tiểu của $L^{\mathrm{CLIP+VF+S}}$ ở (9) của Schulman và cộng sự (2017). PPO-Penalty thay phép cắt bằng phạt KL trong hàm mục tiêu, với trọng số phạt chỉnh sau mỗi vòng (§6.2; không lên trang, §10 mục #7, việc 2).
-- **Phút:** 1.
-
-#### `L10-5-19` · Các chỉ số theo dõi khi huấn luyện PPO (mã mới; trang 11 của nhận xét)
-
-- **Câu:** 5. **Nhãn:** "Định nghĩa.", "Lưu ý:".
-- **Mặt trang:**
-  - "**Định nghĩa.** Trên lô nhỏ $\mathcal B$: approxKL (approximate KL) $=\frac1{|\mathcal B|}\sum_{t\in\mathcal B}\bigl[(\rho_t-1)-\log\rho_t\bigr]$; tỉ lệ cắt (clip fraction) $=\frac1{|\mathcal B|}\#\{t\in\mathcal B:\lvert\rho_t-1\rvert>\epsilon\}$."
-  - Bảng:
-
-    | Chỉ số | Đo gì | Tín hiệu cần chú ý |
+    | Mẫu | $\widehat A_t$ | $A_\pi$ đúng |
     |---|---|---|
-    | approxKL | mức đổi chính sách trong vòng | cao so với ngưỡng: dừng sớm các lần qua bộ đệm còn lại |
-    | tỉ lệ cắt | phần mẫu có tỉ số ngoài khoảng cắt | lớn và kéo dài qua nhiều vòng: nhiều mẫu chịu tác động của phép cắt |
-    | entropy | mức ngẫu nhiên của chính sách | giảm quá nhanh: khám phá bị thu hẹp |
-  - "Lô nhỏ giả định, vì trên chuỗi vòng trong dừng khi tỉ số chạm biên khoảng cắt: $\rho=(1{,}05;\,1{,}18;\,1{,}24;\,0{,}70)$, $\epsilon=0{,}2$. Hai mẫu ngoài $[0{,}8;\,1{,}2]$, tỉ lệ cắt $2/4=50\%$. Số hạng $(\rho-1)-\log\rho$: $0{,}05-\log1{,}05=0{,}0012$; $0{,}0145$; $0{,}0249$; $0{,}0567$; approxKL $\approx0{,}0243$."
-  - Hình `ppo-lo-bon-ti-so.svg` cạnh dòng ví dụ.
-  - "**Lưu ý:** approxKL tính trên chính các mẫu vừa dùng để cập nhật $\theta$ là chỉ số chẩn đoán, không phải ước lượng không chệch của KL."
-- **Dựng dần:** (0) định nghĩa, bảng; (1) dòng lô giả định, hình; (2) "Lưu ý:".
-- **1 phút:** Ba con số trả lời ba câu hỏi về vòng vừa chạy: chính sách đổi bao nhiêu, phép cắt chạm bao nhiêu mẫu, chính sách còn ngẫu nhiên đến đâu.
-- **Mới:** approxKL; tỉ lệ cắt (entropy đã có ở `5-18`).
-- **Nguồn số:** trên trang; lô giả định theo quyết định #7(2) (TB29: giá trị giả định ghi là giả định, kèm lý do).
-- **Hình:** `ppo-lo-bon-ti-so.svg` (mới, §4.5), `width` khoảng 500.
-- **Ghi chú nguồn:** Định nghĩa 10.47, Mệnh đề 10.48 (phần Phạm vi); §6.4, bảng chẩn đoán và đoạn "Giả sử một mini-batch bốn mẫu …".
-- **Diễn giả:** approxKL không âm trên từng mẫu; dạng $-\log\rho$ cũng được dùng nhưng có thể âm. Với $\theta$ chọn trước khi rút mẫu, approxKL là ước lượng không chệch của KL (Mệnh đề 10.48); từ lần qua bộ đệm thứ hai, điều kiện đó không còn. Một dấu hiệu bất ổn thường gặp: phần thưởng tăng ngắn hạn, KL tăng vọt, entropy sụp.
+    | $(s_A,1)$ | $0-1{,}4=$ **$-1{,}4$** (đỏ) | $+0{,}4$ |
+    | $(s_A,2)$ | $-0{,}4$ | $-0{,}4$ |
+    | $(s_B,2)$ | $-1$ | $-2$ |
+  - "**Câu hỏi:** phép cắt có sửa được lợi thế ước lượng sai dấu không?"
+  - "Tối đa trên bộ đệm: không cắt, chính sách tới giới hạn $(0;\,1)$ và $J=1$; có cắt, *vòng trong* (nhiều bước gradient trên cùng bộ đệm, lợi thế cố định) dừng ở $(0{,}4;\,\tfrac{11}{15})$ và $J=2{,}7\cdot0{,}4\cdot\tfrac{11}{15}+0{,}6=1{,}392$. Hai chính sách là điểm dừng của bài toán tối ưu trên bộ đệm."
+  - Hình `ppo-so-sanh-J.svg` (cột phải, cạnh bảng).
+  - Hộp: "Phép cắt không sửa lợi thế sai dấu, nên $J$ vẫn giảm. Trong ví dụ này, mức giảm là $0{,}008$ thay cho $0{,}4$."
+- **Dựng dần:** (0) "Nhắc lại:", dòng bộ đệm, bảng; (1) câu hỏi; (2) dòng kết quả, hình, hộp.
+- **1 phút:** Trên một bộ đệm có lợi thế ước lượng sai dấu, cả hai mục tiêu làm $J$ giảm; phép cắt làm mức giảm nhỏ hơn trong ví dụ này.
+- **Mới:** bộ đệm hai lượt; vòng trong (định nghĩa tại chỗ, như bản trước).
+- **Nguồn số:** $\widehat A_t$ trên trang; điểm dừng $(0;\,1)$, $(0{,}4;\,\tfrac{11}{15})$ có đường tính ở `7-17` (ngoại lệ TB29, §7); $J$ trên trang.
+- **Hình:** `ppo-so-sanh-J.svg`, bề rộng tối thiểu đo được 655 px (`m5-hinh/kiem-tra.json`).
+- **Ghi chú nguồn:** §6.1, đoạn "**Câu hỏi.** Phép cắt ngăn cập nhật vượt ngưỡng …", đoạn mục tiêu không cắt trên bộ đệm, đoạn "Với mục tiêu cắt và $\epsilon=0{,}2$ …".
+- **Diễn giả:** bỏ cụm "phép cắt giới hạn mỗi vòng đi bao xa". Thay bằng câu của tác giả (nhận xét §3.3): "Phép cắt loại bỏ động lực cải thiện dự báo vượt ngưỡng theo hướng có lợi. Trong ví dụ tối ưu lý tưởng hóa này, cơ chế đó tạo ra điểm dừng sớm hơn, nhưng không áp đặt giới hạn cứng lên độ dài bước cập nhật chính sách." Giữ: sai dấu đến từ phương sai của lợi tức một lượt, không đến từ critic ($\hat v(s_A)=v_\pi(s_A)$; nhận xét §2.3); xác suất bộ đệm $\tfrac16$; giảm $0{,}4$ trùng mức giảm của bước dài ở mạch 1. Thêm "Phép tính điểm dừng trên bộ đệm ở phụ lục cuối bài."
+- **Phút:** 1,5 (trước: `5-10` 1,5 + `5-05` 2).
+
+#### `L10-5-06` · Trên đoạn phẳng, KL vẫn tăng (giữ; rút)
+
+- **Mặt trang:** "**Nhận xét.** Với $p_A=0{,}4$, phần của $s_B$ trong $3\mathcal L^{\mathrm{CLIP}}$, $-\max(3-3p_B;\,0{,}8)$, hằng $-0{,}8$ khi $p_B\ge\tfrac{11}{15}$, còn KL tăng."; dòng tính KL tại $p_B=0{,}85$ (giữ); hình `ppo-phang-va-kl.svg`; hộp "PPO không cắt chính sách mới; PPO cắt đóng góp của từng mẫu." (giữ).
+- **Bỏ khỏi mặt trang:** dòng "Mục tiêu không phạt $p_B>\tfrac{11}{15}$: bước trên mẫu khác hay lô khác có thể đẩy $p_B$ đi tiếp, và KL tăng theo." (xuống ghi chú diễn giả). Công thức phần $s_B$ lên dòng nhận xét vì bảng chi tiết của `5-05` cũ nay ở `7-17` (TB29).
+- **Phút:** 1 (trước 1,5).
+
+#### `L10-5-17`, `L10-5-18` (giữ như deck `de6b739`)
+
+- `5-18`, ghi chú diễn giả: thêm tín hiệu của entropy chuyển từ bảng `5-19` cũ: "Cài đặt ghi entropy trung bình trên lô; entropy giảm quá nhanh là dấu hiệu khám phá bị thu hẹp."
+- Phút: 1,5; 1.
+
+#### `L10-5-19` · Các chỉ số theo dõi khi huấn luyện PPO (giữ mã; gộp `5-21`; thêm tỉ lệ cắt có tác dụng)
+
+- **Câu:** 5. **Nhãn:** "Định nghĩa.".
+- **Mặt trang (cột trái chữ, cột phải hình):**
+  - "Mục tiêu cắt không chặn KL, nên mỗi vòng cần đo mức đổi chính sách." (giữ)
+  - "**Định nghĩa.** Trên lô nhỏ $\mathcal B$, với $N=\lvert\mathcal B\rvert$:"
+    - "approxKL (approximate KL) $=\tfrac1N\sum_t\bigl[(\rho_t-1)-\log\rho_t\bigr]$;"
+    - "tỉ lệ cắt (clip fraction) $f_{\mathrm{clip}}=\tfrac1N\sum_t\mathbb 1\{\lvert\rho_t-1\rvert>\epsilon\}$;"
+    - "tỉ lệ cắt có tác dụng (active clipping fraction) $f_{\mathrm{active}}=\tfrac1N\sum_t\mathbb 1\{(\widehat A_t>0\wedge\rho_t>1+\epsilon)\vee(\widehat A_t<0\wedge\rho_t<1-\epsilon)\}$: phần mẫu nằm trên đoạn phẳng."
+  - "Lô giả định, vì trên bộ đệm hai lượt ba tỉ số dừng đúng trên biên nên $f_{\mathrm{clip}}=0$: $\rho=(1{,}05;\,1{,}18;\,1{,}24;\,0{,}70)$, dấu $\widehat A=(+;\,-;\,+;\,+)$, $\epsilon=0{,}2$."
+  - "$f_{\mathrm{clip}}=2/4=50\%$ (mẫu 3 và 4). $f_{\mathrm{active}}=1/4=25\%$: chỉ mẫu 3 ($\widehat A>0$, $\rho=1{,}24>1{,}2$) nằm trên đoạn phẳng. Mẫu 4 có $\widehat A>0$, $\rho=0{,}70<0{,}8$: thay đổi bất lợi, gradient còn."
+  - "approxKL: $0{,}05-\log1{,}05=0{,}0012$; $0{,}0145$; $0{,}0249$; $0{,}0567$; trung bình $\approx0{,}0243$."
+  - Hình `ppo-lo-bon-ti-so.svg` (bản có dấu lợi thế).
+- **Bỏ khỏi mặt trang:** bảng "Chỉ số | Đo gì | Tín hiệu cần chú ý" (xuống ghi chú diễn giả; tín hiệu của entropy sang ghi chú diễn giả `5-18`; "dừng sớm" đã ở bước của `5-14`); "**Lưu ý:**" về tính không chệch của approxKL (sang `7-18`).
+- **Dựng dần:** (0) dòng mở, định nghĩa approxKL, $f_{\mathrm{clip}}$; (1) dòng lô giả định, hình, $f_{\mathrm{clip}}$; (2) định nghĩa $f_{\mathrm{active}}$, dòng $25\%$; (3) dòng approxKL.
+- **1 phút:** Tỉ lệ cắt đếm mẫu ra ngoài khoảng cắt theo cả hai hướng; tỉ lệ cắt có tác dụng chỉ đếm mẫu mất gradient; trên lô giả định hai con số là $50\%$ và $25\%$.
+- **Mới:** approxKL, tỉ lệ cắt, tỉ lệ cắt có tác dụng (ba phần tử, ngoại lệ TB24, §7).
+- **Nguồn số:** trên trang; `kiem_m5_8.py` ($f_{\mathrm{clip}}=0{,}5$, $f_{\mathrm{active}}=0{,}25$, approxKL $0{,}02431$).
+- **Hình:** `ppo-lo-bon-ti-so.svg`, bề rộng tối thiểu 579 px (bản #7; đo lại khi người vẽ giao bản có dấu).
+- **Ghi chú nguồn:** Định nghĩa 10.47 (§6.3); §6.4, bảng chẩn đoán và đoạn "Giả sử một mini-batch bốn mẫu …" (người viết ghi chú thêm dấu lợi thế và $f_{\mathrm{active}}$ theo quyết định #8; biên tập viên đối chiếu số hiệu).
+- **Diễn giả:** bảng tín hiệu bằng lời: approxKL cao so với ngưỡng thì dừng sớm; $f_{\mathrm{clip}}$ lớn và kéo dài qua nhiều vòng thì nhiều mẫu ra ngoài khoảng cắt; $f_{\mathrm{active}}$ cho biết bao nhiêu mẫu thực sự mất gradient (trừ điểm gãy và $\widehat A_t=0$). approxKL không âm trên từng mẫu. "Điều kiện để approxKL là ước lượng không chệch của KL ở phụ lục cuối bài."
+- **Phút:** 1,5 (trước: `5-19` 1 + `5-21` 0,5).
+- **Phương án khi trang quá 720 px:** tách lại `5-19` (định nghĩa) và `5-21` (lô giả định với hai tỉ lệ); thời lượng +0,5 phút, cả bài 120 phút (câu hỏi 2 của §10 mục #8).
+
+#### `L10-5-07`, `L10-5-14` · Thuật toán PPO-Clip (1), (2) (giữ)
+
+- `5-14`, ghi chú diễn giả: câu "approxKL là ước lượng KL của ghi chú, không âm trên từng mẫu." thêm "; trên mẫu vừa dùng để cập nhật, nó là chỉ số chẩn đoán". Dòng "Dừng sớm" có thể ghi thêm "tỉ lệ cắt có tác dụng" (không bắt buộc; nếu tràn thì bỏ).
+- Phút: 1; 1.
+
+#### `L10-5-22` · Ba đại lượng: $\Delta J$, $\Delta\mathcal L$ và $\mathcal L^{\mathrm{CLIP}}$ (mã mới; nhận xét §3.4; trạm dừng cuối mạch)
+
+- **Câu:** 5. **Nhãn:** "Mệnh đề.", "Chứng minh." (một khối).
+- **Mặt trang:**
+  - Bảng (cùng trọng số $\eta_\pi$, lợi thế đúng; cột cuối là chính sách $\tilde\pi=(0{,}9;\,0{,}5)$ của mạch 4):
+
+    | Đại lượng | Ý nghĩa | Với $\tilde\pi$ |
+    |---|---|---|
+    | $\Delta J$ | mức thay đổi hiệu năng khi chạy chính sách mới | $J(\tilde\pi)-1{,}4=-0{,}085$ |
+    | $\Delta\mathcal L$ | mức thay đổi dự báo với số lần thăm của chính sách cũ | $1\cdot0{,}32+0{,}45\cdot(-0{,}5)=0{,}095$ |
+    | $\mathcal L^{\mathrm{CLIP}}$ | mục tiêu bi quan theo từng mẫu, tối ưu trên dữ liệu đã thu | $1\cdot0{,}08+0{,}45\cdot(-0{,}5)=-0{,}145$ |
+  - "**Mệnh đề.** **Giả thiết:** cùng dữ liệu, cùng trọng số không âm. **Kết luận:** $\mathcal L^{\mathrm{CLIP}}\le\mathcal L^{\mathrm{CPI}}$. **Chứng minh.** Với mỗi mẫu, $\min\bigl(\rho_t\widehat A_t,\operatorname{clip}(\rho_t,1-\epsilon,1+\epsilon)\widehat A_t\bigr)\le\rho_t\widehat A_t$; cộng với trọng số không âm giữ bất đẳng thức."
+  - "Giữa $\Delta\mathcal L$ và $\Delta J$ không có thứ tự chung: với $\tilde\pi$, $\Delta\mathcal L=0{,}095>\Delta J=-0{,}085$; tại $(1;\,1)$, $\Delta\mathcal L=0{,}85<\Delta J=1{,}3$."
+  - "Trung bình đều trên bộ đệm dùng tần suất mẫu $(\tfrac23;\,\tfrac13)$, không dùng $\eta_\pi=(1;\,0{,}45)$: với $\tilde\pi$, $\tfrac23\cdot0{,}32+\tfrac13\cdot(-0{,}5)=0{,}047\ne0{,}095$."
+  - Hộp: "PPO-Clip tối ưu một chặn dưới bi quan của hàm thay thế trên dữ liệu đã thu. Nó không áp đặt miền tin cậy cứng như TRPO và không tự bảo đảm $J$ tăng."
+- **Dựng dần:** (0) bảng hai hàng đầu; (1) hàng $\mathcal L^{\mathrm{CLIP}}$, mệnh đề; (2) dòng thứ tự; (3) dòng trung bình đều; (4) hộp.
+- **1 phút:** Mục tiêu cắt không vượt hàm thay thế mẫu; hàm thay thế có thể dự báo cao hơn hoặc thấp hơn mức thay đổi thật; vì thế tối ưu mục tiêu cắt không bảo đảm $J$ tăng.
+- **Mới:** không (ba đại lượng đã có: $\Delta J$, $\Delta\mathcal L$ ở `4-03`, $\mathcal L^{\mathrm{CLIP}}$ ở `5-02`); bất đẳng thức là kết quả mới.
+- **Nguồn số:** $-0{,}085$, $0{,}095$, $0{,}32$, $-0{,}5$ từ `4-16`; $\ell^{\mathrm{CLIP}}_{s_A}(\tilde\pi)=\tfrac12\min(1{,}8\cdot0{,}4;\,1{,}2\cdot0{,}4)+\tfrac12\min(0{,}2\cdot(-0{,}4);\,0{,}8\cdot(-0{,}4))=0{,}24-0{,}16=0{,}08$ (ghi chú diễn giả); $\ell^{\mathrm{CLIP}}_{s_B}(\tilde\pi)=\tfrac23\cdot0{,}75+\tfrac13\cdot(-3)=-0{,}5$, hai mẫu ở phía bất lợi nên không bị cắt; $(1;\,1)$ từ `5-01`; tần suất $(\tfrac23;\,\tfrac13)$ như `4-35`. Mọi số trong `kiem_m5_8.py`.
+- **Hình:** không.
+- **Ghi chú nguồn:** Mệnh đề 10.41 (chặn dưới bi quan); nhận xét §3.4. Số $\mathcal L^{\mathrm{CLIP}}(\tilde\pi)=-0{,}145$ và $0{,}047$ chưa có trong ghi chú: đề xuất NT3 cho người viết ghi chú (câu hỏi 4 của §10 mục #8).
+- **Diễn giả:** tại $\tilde\pi$, cả hai mẫu ở $s_A$ nằm trên đoạn phẳng ($\rho=1{,}8$ với $A>0$, $\rho=0{,}2$ với $A<0$), hai mẫu ở $s_B$ ở phía bất lợi; nên $\mathcal L^{\mathrm{CLIP}}$ thấp hơn $\Delta\mathcal L$ đúng ở $s_A$. Hai chiều sai số: $\Delta J-\Delta\mathcal L=-0{,}18$ với $\tilde\pi$, $+0{,}45$ tại $(1;\,1)$. Trung bình đều khác $\Delta\mathcal L$ cả tỉ lệ giữa hai trạng thái ($1:0{,}5$ so với $1:0{,}45$) lẫn thang ($\sum\eta_\pi=1{,}45$). Thông điệp kết của nhận xét: PPO-Clip ngừng thưởng các cập nhật quá mạnh theo hướng có lợi dự báo; nó hỗ trợ tối ưu bậc một trên bộ đệm, không tự bảo đảm chính sách luôn gần chính sách cũ hay hiệu năng tăng. "Bài tập 10.23, một vòng PPO-Clip với lợi thế đúng, có lời giải ở phụ lục cuối bài."
 - **Phút:** 1,5.
+- **Phương án khi trang quá 720 px:** dòng trung bình đều rút còn "Trung bình đều trên bộ đệm dùng tần suất mẫu $(\tfrac23;\,\tfrac13)$, không dùng $\eta_\pi$: với $\tilde\pi$ nó cho $0{,}047$."; rồi hộp rút còn câu thứ hai.
 
-#### `L10-5-07` · Thuật toán PPO-Clip (1) (giữ mã; trang 12 của nhận xét)
-
-- **Mặt trang:** giữ, trừ dòng đầu vào: "số lần qua bộ đệm $K$, cỡ lô nhỏ $M$" (tên tiếng Anh đã ở `5-17`).
-- **Ghi chú nguồn:** giữ; biên tập viên đối chiếu số hiệu với ghi chú bản #7.
-- **Phút:** 1.
-
-#### `L10-5-14` · Thuật toán PPO-Clip (2) (giữ mã)
-
-- **Mặt trang:** giữ mục 3, trừ dòng **Dừng sớm**: "**Dừng sớm** (early stopping, tùy chọn): ghi approxKL $\frac1M\sum_{t\in\mathcal B}\bigl[(\rho_t-1)-\log\rho_t\bigr]$ và tỉ lệ cắt; nếu approxKL vượt ngưỡng, bỏ các lần qua bộ đệm còn lại." (công thức giữ trong bước, tinh chỉnh TB31)
-- **Diễn giả:** câu "Cài đặt thường gộp cập nhật actor và critic … hàm mất mát tổng …" đổi thành "Cài đặt thay hai bước cập nhật bằng một bước giảm hàm mất mát tổng, thêm chuẩn hóa lợi thế trên lô, và dùng Adam (Bài 08)." Câu PPO-Penalty chuyển sang `5-18`. Giữ các câu còn lại.
-- **Phút:** 1 (trước 1,5: vòng và mất mát đã ở `5-17`, `5-18`).
-
-#### `L10-5-08` · So sánh TRPO và PPO (giữ mã; trang 13 của nhận xét; trạm dừng cuối mạch)
-
-- **Mặt trang:** bảng giữ; ô "Cách giữ bước gần" của PPO-Clip chờ câu hỏi 4 (§10 mục #7). Thêm hộp dưới bảng (thông điệp kết của nhận xét §8): "TRPO giới hạn mức đổi chính sách bằng ràng buộc KL trung bình. PPO-Clip bỏ phần thưởng của thay đổi có lợi vượt khoảng cắt, nên cần theo dõi KL."
-- **Dựng dần:** (0) bảng; (1) hộp.
-- **1 phút:** Hai thuật toán cùng ý giữ bước gần, khác cách giữ, chi phí và mức bảo đảm.
-- **Diễn giả:** giữ; thêm: "Phép cắt không bảo đảm KL nhỏ và không bảo đảm $J$ tăng; nó giảm động lực cập nhật quá mức theo hướng được đánh giá là có lợi."
-- **Phút:** 1.
-
-#### `L10-5-12` · Bài tập: một vòng PPO-Clip trên chuỗi hai trạng thái (giữ mã; Bài tập 10.23)
-
-- **Mặt trang:** câu đầu đổi: "Bài dùng lợi thế đúng, như các trang dựng mục tiêu cắt, giữ cố định: $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$, $A_\pi(s_B,\cdot)=(1;\,-2)$." Phần còn lại giữ.
-- **Diễn giả:** thêm: "Trang lợi thế dương và lợi thế âm cho từng mẫu tại $s_B$ một ngưỡng riêng ($0{,}8$ và $\tfrac{11}{15}$); câu (a) hỏi điểm dừng khi có cả hai mẫu."
-- **Phút:** 1,5 (tính vào thời gian bài tập).
-
-#### `L10-5-13` · Bài tập: lời giải (giữ mã)
-
-- **Mặt trang:** giữ. Số $\mathcal L^{\mathrm{CLIP}}=0{,}200$, $\Delta\mathcal L=0{,}260$, $\Delta J=0{,}296$ khớp `kiem_m5.py`.
-- **Phút:** 2 (tính vào thời gian bài tập).
-
-**Ảnh hưởng ngoài mạch 5 (bản #7; người dựng làm cùng lượt, ghi ở §10 khi làm).**
+**Ảnh hưởng ngoài mạch 5 (bản #8; người dựng làm cùng lượt).**
 
 | Chỗ | Việc |
 |---|---|
-| mạch 4, `4-31` | không đổi: hộp "Mỗi bộ đệm chỉ cho một bước cập nhật, sau gradient liên hợp và tìm kiếm lùi." vẫn là điều còn thiếu dẫn vào `5-09` |
-| mạch 6, `6-12` | không đổi (không có hàng PPO) |
-| mạch 6, `6-13` | giữ hàng "Mục tiêu cắt" (giả thiết "lợi thế cố định trong vòng", gradient $0$ theo dấu); ghi chú diễn giả có thể thêm "phép cắt không chặn KL" nếu còn chỗ trong 150 âm tiết |
-| mạch 6, `6-14` | ô "Cách giữ bước gần" của PPO-Clip theo quyết định câu hỏi 4; ô "Bảo đảm" giữ |
-| mạch 6, `6-18` | mục 3 "PPO dùng lại bộ đệm $K$ lần, cắt tỉ số chính sách và không chặn KL" và câu "PPO chỉ cắt tỉ số …" của ghi chú diễn giả theo câu hỏi 4; số hiệu "Thuật toán 10.49, Nhận xét 10.42" đối chiếu với ghi chú bản #7 |
-| mạch 6, `6-15` | không đổi (câu 3 hỏi đúng ý của `5-06`) |
-| mạch 6, `6-16` | không đổi nếu ghi chú bản #7 không đổi số bài tập |
-| dòng nguồn mạch 5 | mọi số hiệu (Định nghĩa 10.39, 10.45–10.47, Mệnh đề 10.40, 10.41, 10.48, Nhận xét 10.42, Thuật toán 10.49) và tên đoạn §6.1 đối chiếu với ghi chú sau khi người viết ghi chú giao; `5-06` cũ dẫn "§6.4 (Định nghĩa 10.47, Mệnh đề 10.48)" trong khi hai khối này ở §6.3 của bản hiện có |
-| `exercises.md` | bảng `Mạch | Mở phần`: không đổi; mạch 5 mở ở `#/5/1`, trang `5-00` giữ mã và vị trí |
-| `outline.md` | bảng "Sáu mạch": mạch 5 18 trang (16 + 2 bài tập), 20,5 phút (+3,5 bài tập), mục ghi chú §6.1, §6.3, §6.4, đầu ra mới (§10 mục #7); tổng 89 + 7 trang, 122,5 phút. Bảng thuật ngữ: thêm "số lần qua bộ đệm (epoch)", "lô nhỏ (mini-batch)" ở `5-17`; "hàm mất mát tổng", "entropy" ở `5-18`; "approxKL", "tỉ lệ cắt (clip fraction)" ở `5-19`; "đoạn phẳng" ở `5-15`; dòng "lô nhỏ; số lần qua bộ đệm; dừng sớm" đổi trang từ `5-07` sang `5-17`. Dòng "Thuật ngữ không dùng trên deck hiện hành": bỏ entropy, hàm mất mát tổng, approxKL, tỉ lệ cắt |
-| câu chuyện | mục mạch 5, §3 (kết quả lên trang), §4, §5 đã sửa trong lượt này |
+| `1-01` ghi chú diễn giả | "Mạch 4 và 5 giới hạn mức đổi chính sách ở mỗi bước cập nhật để hạn chế nguy cơ $J$ giảm khi dùng lại lượt đã thu." → "Mạch 4 và 5 dùng lại dữ liệu từ chính sách cũ để thực hiện các bước cập nhật hiệu quả, đồng thời kiểm soát nguy cơ suy giảm hiệu năng." Bìa giữ (quyết định #6; câu bìa không hứa bảo đảm) |
+| `1-06`, `6-11` câu hỏi 2; `6-18` "Nhắc lại:"; `4-01` ghi chú diễn giả | "… dùng lượt của chính sách cũ cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm?" → "Làm thế nào để dùng lại dữ liệu từ chính sách cũ cho các bước cập nhật hiệu quả, đồng thời kiểm soát nguy cơ suy giảm hiệu năng?" (`6-18`: "Nhắc lại: câu 2 hỏi cách dùng lại dữ liệu từ chính sách cũ cho các bước cập nhật hiệu quả, đồng thời kiểm soát nguy cơ suy giảm hiệu năng.") |
+| `1-07` mục tiêu 4 | "Thực hiện nhiều bước cập nhật trên cùng một bộ đệm (buffer) mà vẫn giữ chính sách mới gần chính sách cũ." hứa điều PPO không bảo đảm (`5-06`) → "Thực hiện nhiều bước cập nhật trên cùng một bộ đệm (buffer) và theo dõi mức đổi chính sách." |
+| `1-08` | dòng phụ lục: "Phụ lục: cơ sở lý thuyết của TRPO và PPO"; ghi chú diễn giả "Phụ lục cuối bài chứa các chứng minh của mạch 4 …" → "Phụ lục cuối bài chứa các chứng minh của mạch 4, các phép tính chi tiết và bài tập tổng hợp của mạch 5; nó không thuộc thời lượng trên lớp." |
+| `4-31` | không đổi (hộp nêu chi phí, ghi chú diễn giả nói "không bảo đảm $J$ tăng") |
+| `4-33` | không nhắc phụ lục: không đổi |
+| `6-14` | không đổi: ô "Bảo đảm" đã ghi "Không bảo đảm $J$ tăng"; hai hàng TRPO, PPO-Clip thay `5-08` |
+| `6-18` | mục 1 giữ (đã nói rõ "Khi lợi thế và số lần thăm tính chính xác …", ghi chú diễn giả gọi là kết luận có điều kiện); mục 3 giữ; chỉ đổi "Nhắc lại:" |
+| `6-16` | hàng mạch 5: "10.14; ghi chú: 10.2, 10.3, 10.12, 10.23 (phụ lục)"; ghi chú diễn giả "bài 10.23 là bài tổng hợp đã giải trên lớp ở cuối mạch 5" → "bài 10.23 là bài tổng hợp của mạch 5, lời giải ở phụ lục cuối bài" |
+| `7-00` | đổi tên và dòng dẫn (mục "Phụ lục" dưới đây) |
+| `exercises.md` | bảng `Mạch | Mở phần`: không đổi (`#/5/1` là `5-00`) |
+| `outline.md` | bảng "Sáu mạch": mạch 5 16 trang, 17,5 phút, đầu ra thêm "ba đại lượng, tỉ lệ cắt có tác dụng", bỏ "so sánh TRPO–PPO, Bài tập 10.23"; hàng phụ lục: tên "Phụ lục: cơ sở lý thuyết của TRPO và PPO", dòng dẫn mới, 14 trang, nội dung thêm bảy trang PPO; tổng 87 + 14 trang, 119,5 phút (+18,5 phụ lục); câu "Nội dung" (`1-08`); câu hỏi 2 của "Bài toán trung tâm" theo câu chuẩn; bảng thuật ngữ: thêm "tỉ lệ cắt có tác dụng | active clipping fraction | $f_{\mathrm{active}}$ | `L10-5-19`", "chặn dưới bi quan | pessimistic lower bound | $\mathcal L^{\mathrm{CLIP}}\le\mathcal L^{\mathrm{CPI}}$ | `L10-5-22`"; mọi chỗ dẫn `5-10`, `5-21`, `5-08`, `5-12`, `5-13` đổi theo bảng mã |
+| ghi chú (người viết ghi chú) | câu hỏi 2 ở §1.1 theo câu chuẩn, nếu ghi chú còn câu cũ; dấu lợi thế và $f_{\mathrm{active}}$ ở ví dụ lô bốn mẫu (quyết định #8); đề xuất NT3 cho `5-22` |
 
 ---
 
@@ -1739,7 +1562,7 @@ Thứ tự: `6-00` → `6-10` → `6-11` → `6-18` → `6-12` → `6-13` → `6
 
 ---
 
-### Phụ lục: cơ sở lý thuyết của miền tin cậy (`id="mach-7"`, 7 trang, ngoài 120 phút; thêm 2026-11-22)
+### Phụ lục: cơ sở lý thuyết của TRPO và PPO (`id="mach-7"`, 14 trang, ngoài 120 phút; thêm 2026-11-22; tên và bảy trang PPO từ bản #8, trước: "… của miền tin cậy", 7 trang)
 
 **Căn cứ.** Quyết định #6(1) của tác giả (chứng minh dài chuyển sang mạch "Phụ lục" cuối deck); tinh chỉnh "TB27, Bài 10 (tác giả 2026-11-22 …)" của `NGUYEN-TAC-HOC-PHAN.md` §3a.F; đề xuất 3 của `nhan-xet-website-trpo-2026-11-21.md` ("chuyển các chứng minh đầy đủ sang slide dọc/phụ lục để phục vụ lớp cần độ sâu toán học").
 
@@ -1873,6 +1696,86 @@ Thứ tự: `6-00` → `6-10` → `6-11` → `6-18` → `6-12` → `6-13` → `6
 - **Phút:** 1,5.
 - **Bản 2026-11-22 (nhận xét website #6):** tiêu đề "Cơ sở lý thuyết: cải thiện đơn điệu" thành "Cải thiện đơn điệu qua hàm chặn dưới" (tên của storyboard). Hộp cuối giữ cả hai câu: câu "TRPO thay phạt bằng ràng buộc $\bar D_{\mathrm{KL}}\le\kappa$" đã lên mạch chính (`4-21`), nhưng trang phụ lục phải đọc được độc lập, nên giữ ở đây như kết luận của mạch phụ lục. Thêm "Nhắc lại: $\mathcal L_{\pi_k}(\pi_k)=J(\pi_k)$ (hàm thay thế tiếp xúc $J$)" vào dòng "Chứng minh." nếu vừa khung. **Nối vào:** `7-14`. **Nối ra:** không (trang cuối deck). **Phút (ngoài giờ):** 1,5.
 
+
+**Bản #8 (2026-11-22): phụ lục thành "Phụ lục: cơ sở lý thuyết của TRPO và PPO", 14 trang.** Thứ tự: `7-00`, `7-10` … `7-15` (TRPO, giữ), `7-16` … `7-22` (PPO, mới). Trang PPO theo thứ tự của mạch 5: dạng theo dấu (`5-11`), bộ đệm (`5-05`), approxKL (`5-19`), Bài tập 10.23. Không trang tiêu đề phụ cho phần PPO: tiêu đề `7-16` nêu chủ đề. Chữ của các trang chuyển từ mạch 5 lấy từ deck `de6b739`, chỉ thêm dòng "Nhắc lại:" để trang đọc độc lập.
+
+#### `L10-7-00` · Phụ lục: cơ sở lý thuyết của TRPO và PPO (đổi tên, dòng dẫn mới)
+
+- **Mặt trang:** `h2` "Phụ lục: cơ sở lý thuyết của TRPO và PPO"; `p.strand-lead` "Các chứng minh và phép tính chi tiết cho miền tin cậy của TRPO và mục tiêu cắt của PPO." (20 âm tiết; chỉ dùng thuật ngữ của mạch 4, 5, Đ11). Hình `chuoi-bon-mat-xich.svg` giữ.
+- **Diễn giả:** "Phụ lục dành cho lớp cần độ sâu toán học và không thuộc thời lượng trên lớp. Phần TRPO gồm chứng minh bổ đề chênh lệch hiệu năng, ba kết quả ứng với ba mũi tên của hình, cận trên chuỗi và hệ quả cải thiện đơn điệu. Phần PPO gồm chứng minh dạng theo dấu, phép tính trên bộ đệm hai lượt, điều kiện không chệch của approxKL và Bài tập 10.23 có lời giải." Dòng nguồn thêm "§6.1, §6.3, Bài tập 10.23".
+- **Phút:** 0,5.
+
+#### `L10-7-16` · Mục tiêu cắt theo dấu: chứng minh và bốn trường hợp (mới; từ `5-11`)
+
+- **Nhãn:** "Nhắc lại:", "Chứng minh.".
+- **Mặt trang:**
+  - "**Nhắc lại:** với $\epsilon\in(0,1)$, số hạng của mẫu là $\widehat A_t\min(\rho_t,1+\epsilon)$ khi $\widehat A_t>0$ và $\widehat A_t\max(\rho_t,1-\epsilon)$ khi $\widehat A_t<0$."
+  - "**Chứng minh.** Bước 1 ($\widehat A_t>0$): đưa $\widehat A_t$ ra ngoài giữ thứ tự, số hạng là $\widehat A_t\min\bigl(\rho_t,\operatorname{clip}(\rho_t,1-\epsilon,1+\epsilon)\bigr)=\widehat A_t\min(\rho_t,1+\epsilon)$. Bước 2 ($\widehat A_t<0$): đưa $\widehat A_t$ ra ngoài đảo thứ tự, $\min$ thành $\max$, và $\max\bigl(\rho_t,\operatorname{clip}(\rho_t,1-\epsilon,1+\epsilon)\bigr)=\max(\rho_t,1-\epsilon)$."
+  - Bảng bốn trường hợp của `5-11` bản `de6b739` (cột "Ở đây: $\widehat A_t=A_\pi(s_B,a)$", $\rho$, $\rho A_\pi$, số hạng cắt, gradient theo mẫu), giữ nguyên số.
+- **Ghi chú nguồn:** Mệnh đề 10.40 (Bước 1–2); bảng bốn trường hợp của §6.1.
+- **Diễn giả:** đẳng thức $\min(\rho,\operatorname{clip}(\rho))=\min(\rho,1+\epsilon)$: khi $\rho>1+\epsilon$, $\operatorname{clip}=1+\epsilon<\rho$; khi $\rho\le1+\epsilon$, $\operatorname{clip}(\rho,1-\epsilon,1+\epsilon)\ge\rho$. Giữ câu "Ngoài các tập có gradient bằng $0$, gradient của số hạng là $\widehat A_t\rho_t\psi_t$" và câu nhầm lẫn thường gặp của `5-11`.
+- **Phút:** 1.
+
+#### `L10-7-17` · Bộ đệm hai lượt: tối ưu không cắt và có cắt (mới; từ `5-10`, `5-05`)
+
+- **Nhãn:** "Nhắc lại:".
+- **Mặt trang:**
+  - "**Nhắc lại:** $\widehat A=(-1{,}4;\,-0{,}4;\,-1)$ cho $(s_A,1)$, $(s_A,2)$, $(s_B,2)$; $\rho=(2p_A;\,2-2p_A;\,3-3p_B)$; $J=2{,}7p_Ap_B+1-p_A$."
+  - Bảng của `5-05` bản `de6b739` (Phần của $3\mathcal L^{\mathrm{CPI}}$ / Tới / $3\mathcal L^{\mathrm{CLIP}}$ / Dừng tại), hàng $s_A$ cột không cắt ghi đủ phép rút gọn: $-1{,}4\cdot2p_A-0{,}4(2-2p_A)=-0{,}8-2p_A$.
+  - "Dưới $p_A=0{,}4$, mẫu $(s_A,2)$ có $\rho>1{,}2$ ở phía bất lợi, không bị cắt, nên phần của $s_A$ trong mục tiêu cắt bằng $-1{,}92+0{,}8p_A$ và giảm khi $p_A$ giảm. Trên $[0{,}4;\,0{,}6]$ nó bằng $-0{,}8-2p_A$."
+  - "$J(0;\,1)=2{,}7\cdot0\cdot1+1-0=1$; $J(0{,}4;\,\tfrac{11}{15})=2{,}7\cdot0{,}4\cdot\tfrac{11}{15}+0{,}6=1{,}392$; tại điểm dừng $\rho=(0{,}8;\,1{,}2;\,0{,}8)$."
+  - "Giới hạn $(0;\,1)$ không đạt với $\theta$ hữu hạn; hai chính sách là điểm dừng của bài toán tối ưu lý tưởng hóa, không phải kết quả của một số bước Adam hữu hạn."
+- **Ghi chú nguồn:** như `5-05` bản `de6b739`.
+- **Diễn giả:** phần chi tiết của ghi chú diễn giả `5-05` bản `de6b739` (cột không cắt, hai đoạn của $s_A$, điểm dừng). Câu của tác giả (nhận xét §3.3) nhắc lại: phép cắt tạo điểm dừng sớm hơn trong ví dụ lý tưởng hóa này, không áp đặt giới hạn cứng lên độ dài bước.
+- **Phút:** 2.
+
+#### `L10-7-18` · approxKL không chệch khi tham số được chọn trước khi rút mẫu (mới; "Lưu ý:" của `5-19`)
+
+- **Nhãn:** "Mệnh đề.", "Lưu ý:".
+- **Mặt trang:**
+  - "**Mệnh đề.** **Giả thiết:** tại trạng thái $s$, $A\sim\pi_{\mathrm{old}}(\cdot\mid s)$; $\theta$ được chọn trước khi rút $A$; $\pi_\theta$ và $\pi_{\mathrm{old}}$ dương trên cùng tập hành động. **Kết luận:** với $\rho=\pi_\theta(A\mid s)/\pi_{\mathrm{old}}(A\mid s)$," $$\mathbb E\bigl[(\rho-1)-\log\rho\bigr]=D_{\mathrm{KL}}\bigl(\pi_{\mathrm{old}}(\cdot\mid s)\,\Vert\,\pi_\theta(\cdot\mid s)\bigr).$$
+  - "**Chứng minh.** $\mathbb E[\rho]=\sum_a\pi_\theta(a\mid s)=1$, và $\mathbb E[-\log\rho]=\sum_a\pi_{\mathrm{old}}(a\mid s)\log\tfrac{\pi_{\mathrm{old}}(a\mid s)}{\pi_\theta(a\mid s)}$."
+  - "**Lưu ý:** từ lần qua bộ đệm thứ hai, $\theta$ đã được tối ưu trên chính các mẫu dùng để tính approxKL, nên approxKL là chỉ số chẩn đoán, không phải ước lượng không chệch. Ví dụ: ba hành động, $\pi_{\mathrm{old}}$ đều; sau khi thấy $A=a$, chọn $\pi_\theta$ gán $\tfrac13$ cho $a$, $\tfrac12$ và $\tfrac16$ cho hai hành động còn lại: $\rho=1$, approxKL $=0$, trong khi $D_{\mathrm{KL}}=\tfrac13\bigl(\log\tfrac23+\log2\bigr)=0{,}0959$."
+- **Nguồn số:** `kiem_m5_8.py` ($0{,}09589$).
+- **Ghi chú nguồn:** Mệnh đề 10.48 (kết luận, điều kiện áp dụng, phần Phạm vi; ví dụ ba hành động trong đoạn "Ba giả thiết có vai trò riêng").
+- **Diễn giả:** từ `5-19` bản `de6b739`: "Với $\theta$ chọn trước khi rút mẫu, approxKL là ước lượng không chệch của KL; từ lần qua bộ đệm thứ hai, điều kiện đó không còn." Dạng $-\log\rho$ cũng không chệch nhưng có thể âm trên từng mẫu.
+- **Phút:** 1,5.
+
+#### `L10-7-19` · Bài tập 10.23: một vòng PPO-Clip trên chuỗi (mã mới; từ `5-12`)
+
+- **Mặt trang:** như `5-12` bản `de6b739`, tiêu đề thêm số bài. Câu hỏi (a)–(d) giữ.
+- **Diễn giả:** như `5-12`; thêm "Lời giải chia ba bước: chính sách mới; ba đại lượng; sai số do số lần thăm thay đổi."
+- **Phút:** 1,5.
+
+#### `L10-7-20` · Bài tập 10.23, lời giải (1): chính sách mới (mã mới; từ `5-13`)
+
+- **Nhãn:** "Lời giải:".
+- **Mặt trang:** ba hàng đầu của bảng `5-13`: $\ell_s$ theo $p_s$; chạm biên (cả hai mẫu tại $p_A=0{,}6$; $s_B$: $0{,}7\overline3$ cho hành động 2, $0{,}8$ cho hành động 1); dừng ở. Hộp: "Vòng trong dừng ở $\pi'=(0{,}6;\,0{,}8)$: tại $s_B$, chỉ khi cả hai mẫu đều chạm biên thì gradient bằng $0$."
+- **Diễn giả:** lỗi thường gặp: dừng ở $p_B=0{,}7\overline3$ khi chỉ mẫu hành động 2 chạm biên; bỏ phép cắt thì $\ell_{s_B}=3p_B-2$ tăng mãi. Tỉ số $\rho_{s_A}=(2p_A;\,2-2p_A)$, $\rho_{s_B}=(1{,}5p_B;\,3-3p_B)$.
+- **Phút:** 1,5.
+
+#### `L10-7-21` · Bài tập 10.23, lời giải (2): ba đại lượng (mã mới; từ `5-13`)
+
+- **Nhãn:** "Lời giải:".
+- **Mặt trang:**
+  - Hai hàng cuối của bảng `5-13`: $A_\pi(s,\pi')=(0{,}08;\,0{,}4)$, $\ell_s(\pi')=(0{,}08;\,0{,}2\overline6)$, mỗi ô đủ phép tính.
+  - "$\Delta\mathcal L=0{,}08+0{,}45\cdot0{,}4=0{,}260$."
+  - "$\Delta J=2{,}7\cdot0{,}6\cdot0{,}8+0{,}4-1{,}4=0{,}296$."
+  - "$\mathcal L^{\mathrm{CLIP}}=0{,}08+0{,}45\cdot0{,}2\overline6=0{,}200$."
+  - Hộp: "Trong bài này $0{,}200<0{,}260<0{,}296$. Bất đẳng thức đầu đúng với mọi chính sách (mục tiêu cắt không vượt hàm thay thế); thứ tự giữa $0{,}260$ và $0{,}296$ là riêng của bài này."
+- **Diễn giả:** với $\tilde\pi$, $\Delta\mathcal L=0{,}095>\Delta J=-0{,}085$ (trang ba đại lượng của mạch 5).
+- **Phút:** 1.
+
+#### `L10-7-22` · Bài tập 10.23, lời giải (3): sai số do số lần thăm thay đổi (mã mới; từ `5-13`)
+
+- **Nhãn:** "Nhắc lại:", "Lời giải:".
+- **Mặt trang:**
+  - "**Nhắc lại:** $\Delta J-\Delta\mathcal L=\sum_s\bigl(\eta_{\pi'}(s)-\eta_\pi(s)\bigr)A_\pi(s,\pi')$."
+  - "**Lời giải:** chỉ $s_B$ đổi số lần thăm: $\eta_{\pi'}(s_B)=\gamma p'_A=0{,}9\cdot0{,}6=0{,}54$, $\eta_\pi(s_B)=0{,}45$. Sai số $(0{,}54-0{,}45)\cdot0{,}4=0{,}036=0{,}296-0{,}260$."
+  - Hộp: "$\pi'$ thăm $s_B$ nhiều hơn và tại $s_B$ tốt hơn $\pi$, nên sai số dương. Với $\tilde\pi$, sai số là $-0{,}18$: dấu do mức đổi số lần thăm và lợi thế tại các trạng thái đó quyết định."
+- **Diễn giả:** sai số cũng bằng $2{,}7\,\Delta p_A\Delta p_B=2{,}7\cdot0{,}1\cdot\tfrac2{15}$. Cùng một công thức sai số giải thích cả hai ví dụ.
+- **Phút:** 1.
+
 ---
 
 ## 4. Danh sách hình (`2627-1/img/lec-10/`)
@@ -1980,6 +1883,8 @@ Phong cách theo các SVG hiện có trong `img/lec-10/`: `viewBox` cố định
 
 **Rời deck (giữ tệp).** `ppo-cat-hai-dau-buoc0.svg`, `ppo-cat-hai-dau.svg` (khung chung không số; thay bằng hai hình một mẫu có số của chuỗi); `ppo-cat-hai-dau-cau-hoi.svg`, `ppo-cat-hai-dau-loi-giai.svg` (`5-03` bỏ); `ppo-bo-dem-hai-luot-buoc0.svg`, `ppo-bo-dem-hai-luot.svg` (`5-05` dùng hình cột $J$; điểm dừng $0{,}4$, $\tfrac{11}{15}$ đọc từ bảng).
 
+**Bản #8 (2026-11-22).** Không hình mới. `ppo-lo-bon-ti-so.svg`: người vẽ đang thêm dấu lợi thế $(+;\,-;\,+;\,+)$ (nhãn dưới mỗi cột "$\widehat A>0$" hoặc "$\widehat A<0$"); khi nhận, kiểm: mẫu 3 đánh dấu "đoạn phẳng", mẫu 4 đánh dấu "phía bất lợi" hoặc không nhãn (chữ của `5-19` nói điều đó); không dòng tiêu đề "50%" (TB10); hai cột ngoài khoảng tím, không đỏ (bản `de6b739` còn đỏ, mục "Hình cần người vẽ xem lại" của §10 #7). `ppo-so-sanh-J.svg` dùng ở `5-05` bản gộp, đặt cạnh bảng ba hàng (tối thiểu 655 px). Phụ lục `7-16` … `7-22` không hình. `ppo-vong-nhieu-epoch.svg` còn "approxKL", "tỉ lệ mẫu bị cắt" ở khối 4 (TB11, §10 #7): vẫn chờ người vẽ.
+
 ---
 
 ## 5. Thời lượng (P6: 120 phút)
@@ -2050,6 +1955,20 @@ So với bản trước (17 phút): bỏ `5-03` (−2); `5-01` cũ, `5-10`, `5-0
 
 Áp #1 và #2: mạch 5 19 phút (+2), cả bài 121 phút. Áp #1: mạch 5 19,5 phút (+2,5), cả bài 121,5 phút. Không phương án nào ở bảng đưa cả bài về 120 phút mà không đụng mạch khác.
 
+**Cập nhật theo nhận xét PPO sau chỉnh sửa (#8, 2026-11-22). Đoạn hiện hành; các đoạn trên là lịch sử.**
+
+| Mạch | Phút từng trang | Tổng |
+|---|---|---|
+| 1, 2, 3, 4, 6 | như bản #6 (17; 18; 21,5; 34; 11,5) | 102 |
+| 5 | 5-00 0,5 · 5-09 1 · 5-01 1,5 · 5-15 1,5 · 5-16 0,5 · 5-02 1 · 5-20 1 · 5-11 0,5 · 5-05 1,5 · 5-06 1 · 5-17 1,5 · 5-18 1 · 5-19 1,5 · 5-07 1 · 5-14 1 · **5-22 1,5** (16 trang) | 17,5 |
+| Phụ lục | 7-00 0,5 · 7-10 … 7-15 8 · **7-16 1 · 7-17 2 · 7-18 1,5 · 7-19 1,5 · 7-20 1,5 · 7-21 1 · 7-22 1** (14 trang) | 18, ngoài 120 phút |
+
+So với bản `de6b739` (mạch 5 20 phút, 18 trang chính và 2 trang bài tập): `5-10` + `5-05` (3,5) thành `5-05` (1,5): −2; `5-19` + `5-21` (1,5) giữ 1,5; `5-11` 1 → 0,5; `5-06` 1,5 → 1; `5-08` bỏ: −1; `5-22` mới: +1,5. $20-2-0{,}5-0{,}5-1+1{,}5=17{,}5$. Bài tập 10.23 (3,5 phút, trước tính vào thời gian bài tập) sang phụ lục.
+
+**Cả bài.** 87 trang mạch chính (86 trang đếm, TB17 `5-15`–`5-16`) và 14 trang phụ lục, 101 trang. (a) Cộng theo trang: $102+17{,}5=119{,}5$ phút trình chiếu, **dưới 120 phút** của P6. (b) Ước lượng thực tế (trang có khối kết quả hoặc câu hỏi nhanh tính ít nhất 2 phút) cho mạch 4 và mạch 5: mạch 4 +4 (bản #6); mạch 5: `5-11` +1,5, `5-20` +1, `5-22` +0,5, cộng 3; cả bài $102+4+17{,}5+3=126{,}5$ phút.
+
+**Dự phòng (nếu `5-19` phải tách lại hoặc người dựng đo lại dài hơn).** Theo thứ tự: (1) `5-01` dòng $(1;\,1)$ xuống ghi chú diễn giả (−0,5; `5-22` vẫn có số $(1;\,1)$ nên cần giữ một dòng nguồn trên `5-22`: "tại $(1;\,1)$, với lợi thế đúng"); (2) gộp `6-12` và `6-13` (mạch 6, −0,5; phương án 5 của danh sách rút gọn cũ, vượt ≤ 6 hàng của TB21); (3) `5-16` thành mảnh của `5-15` (đã tính 0,5, không bớt thêm).
+
 **Phương án rút gọn: không áp dụng** (quyết định của điều phối viên, 2026-11-21). Danh sách giữ lại để đối chiếu nếu lượt rà sau cần:
 
 1. `4-22` gộp vào `4-08`: xấp xỉ bậc hai của KL thành giả thiết của mệnh đề bước gradient tự nhiên (−1 phút).
@@ -2116,6 +2035,22 @@ Mã `4-14`, `4-20`, `4-24`, `4-06`, `4-19`, `4-29` không dùng lại trong mạ
 | — | `5-17`, `5-18`, `5-19` | vòng nhiều lần qua bộ đệm, hàm mất mát tổng, chỉ số theo dõi (trang 9–11) |
 
 Mã `5-03`, `5-04` không dùng lại. Không thêm trang phụ lục (`7-16`, `7-17` không dùng; §10 mục #7, việc 2).
+
+**Nhận xét PPO sau chỉnh sửa (#8, 2026-11-22).**
+
+| Mã cũ | Mã mới | Ghi chú |
+|---|---|---|
+| `5-10` | gộp vào `5-05` | bộ đệm và lợi thế ước lượng; cột $G_t$, $\rho_t$ sang `7-17` |
+| `5-05` | `5-05` (gọn) và `7-17` (chi tiết) | tiêu đề "Trong ví dụ này, phép cắt làm giảm mức suy giảm của $J$" |
+| `5-11` | `5-11` (phát biểu) và `7-16` (chứng minh, bốn trường hợp) | TB28: phát biểu ở mạch chính |
+| `5-19`, `5-21` | `5-19` | thêm tỉ lệ cắt có tác dụng; "Lưu ý:" sang `7-18` |
+| `5-08` | bỏ | hai hàng ở `6-14`; hộp kết lên `5-22` |
+| `5-12` | `7-19` | đề Bài tập 10.23 |
+| `5-13` | `7-20`, `7-21`, `7-22` | lời giải ba bước |
+| — | `5-22` | ba đại lượng |
+| — | `7-16`, `7-17`, `7-18` | phần chuyên sâu của PPO |
+
+Mã `5-08`, `5-10`, `5-12`, `5-13`, `5-21` không dùng lại.
 
 **Liên kết sâu cần sửa (giao cho người khác):** bảng mở đầu `exercises.md` (`#/1/1` … `#/6/1`, tên mạch theo mục 1, bài tập theo `6-16`); dòng "Trùng trang chiếu" của Bài tập 10.23 trong ghi chú (nếu có) trỏ tới `5-12`, `5-13`; thẻ Bài 10 trong `index.html` ("TRPO và PPO").
 
@@ -2223,6 +2158,20 @@ Dòng "Chứng minh." một dòng tính là một phần của khối kết qu�
 | `5-11` | TB28 | dòng "Chứng minh." một dòng ở lại mạch chính; không có chứng minh dài nào của mạch 5 sang phụ lục (dòng "TB27, Bài 10" chỉ áp cho chứng minh dài) |
 | `5-18` | P1 (khối không lên trang của câu chuyện §4) | PPO-Penalty (§6.2) chỉ ở ghi chú diễn giả `5-18`; không trang phụ lục |
 | mạch 5 | P6 | 20,5 phút, dài thêm 3,5 phút; cả bài 122,5 phút (§5, đề xuất rút) |
+
+
+**Nhận xét PPO sau chỉnh sửa (#8, 2026-11-22): ngoại lệ mới.**
+
+| Trang | Quy tắc | Lý do và cách xử lý |
+|---|---|---|
+| `5-05` | TB29 (mỗi số có đường tính trên trang hoặc trang ngay trước) | điểm dừng $(0;\,1)$ và $(0{,}4;\,\tfrac{11}{15})$ có đường tính ở `7-17` (phụ lục), theo quyết định #8 (phần tính chi tiết của bộ đệm sang phụ lục); trang ghi kết quả, $J$ có phép tính |
+| `5-11` | TB28 (dòng "Chứng minh.") | chứng minh sang `7-16`; phát biểu ở mạch chính (quyết định #8, nhận xét §4) |
+| `5-22` | TB28 | khối "Mệnh đề." có dòng "Chứng minh." trên trang; mật độ: bảng ba hàng, mệnh đề, hai dòng, hộp (khoảng 8 dòng, vượt 6); dự phòng ở mục `5-22` |
+| `5-19` | TB24 (≤ 2 phần tử mới) | ba chỉ số mới (approxKL, tỉ lệ cắt, tỉ lệ cắt có tác dụng); hai tỉ lệ đi thành cặp theo quyết định #8(2), và tách trang làm cả bài chạm 120 phút. Dự phòng ở mục `5-19` |
+| `5-22` | TB5 | trạm dừng cuối mạch là trang ba đại lượng, thay `5-08` |
+| mạch 5 | Đ3 (trang so sánh TRPO–PPO) | so sánh chỉ còn ở `6-14` (bốn phương pháp, cùng cột); `5-08` bỏ để cả bài dưới 120 phút |
+| `7-16` … `7-22` | P6 | phụ lục không tính vào 120 phút; Bài tập 10.23 không còn giải trên lớp |
+| `7-00` | Đ11 | dòng dẫn mới dùng "miền tin cậy", "mục tiêu cắt", "TRPO", "PPO": đều đã dạy ở mạch 4, 5 |
 
 ---
 
@@ -2884,6 +2833,401 @@ Theo brief của điều phối viên (một mục nghiêm trọng, mười mộ
 | — | `5-05` | alt: "giới hạn khi tối đa hàm thay thế mẫu không cắt", khớp nhãn mới của `ppo-so-sanh-J.svg` |
 
 **Kiểm.** `deck_lint` 59 mục (không NOTES150, không BANNED, không REPEAT); `footer_check` 0; `formula_overflow` 0; Playwright 98 trang × hai cỡ: 0 lỗi console, trang, request, `.katex-error`, không tràn ngang, trang cao nhất 681 px; `#/1` … `#/7` đúng; `git diff --check` sạch.
+
+### Nhận xét PPO sau chỉnh sửa (#8, 2026-11-22): kế hoạch của người lập kế hoạch
+
+**Đầu vào.** `nhan-xet-ppo-sau-sua-2026-11-22.md` (nhận xét bản `de6b739`); quyết định #8 (`gop-y-tac-gia-deck-2026-11-21.md`): phần chuyên sâu sang phụ lục, phụ lục đổi tên, mạch chính khoảng 16 trang, cả bài dưới 120 phút; lô giả định có dấu $\widehat A=(+;\,-;\,+;\,+)$; trần ghi chú 34 000. Deck `lecture-10-trpo-va-ppo.html` bản `de6b739` (98 trang; mạch 5 20 trang); §10 các mục #7. Số mới tính trong `/tmp/claude-1000/-data-tqlong-lectures/678a7f48-9d80-46cf-a421-67398857f913/scratchpad/m5-ppo/kiem_m5_8.py`.
+
+**Số đã kiểm.** $\tilde\pi$: $\ell^{\mathrm{CPI}}=(0{,}32;\,-0{,}5)$, $\ell^{\mathrm{CLIP}}=(0{,}08;\,-0{,}5)$; với trọng số $\eta_\pi$: $\Delta\mathcal L=0{,}095$, $\mathcal L^{\mathrm{CLIP}}=-0{,}145$, $\Delta J=-0{,}085$; trung bình đều $(\tfrac23;\,\tfrac13)$: $0{,}0467$ (không cắt), $-0{,}1133$ (có cắt). Bài tập 10.23: $0{,}200$; $0{,}260$; $0{,}296$; $\eta_{\pi'}(s_B)=0{,}54$, sai số $0{,}036$. $(1;\,1)$: $\Delta\mathcal L=0{,}85$, $\Delta J=1{,}3$. Lô giả định: $f_{\mathrm{clip}}=0{,}5$, $f_{\mathrm{active}}=0{,}25$, approxKL $0{,}02431$. Ví dụ approxKL của Mệnh đề 10.48: $D_{\mathrm{KL}}=0{,}09589$, approxKL $0$.
+
+**Đối chiếu nhận xét.**
+
+| Mục | Xử lý |
+|---|---|
+| §3.1 câu về bảo đảm | câu chuẩn của tác giả ở `5-09` (mặt trang), `5-00`, `1-01` (ghi chú diễn giả), câu hỏi 2 ở `1-06`, `6-11`, `6-18`, `4-01`; `1-07` mục tiêu 4 bỏ "mà vẫn giữ chính sách mới gần chính sách cũ"; `5-22` hộp. Giữ: bìa (quyết định #6, không hứa bảo đảm), `4-31`, `4-33`, `6-14` (đều ghi "không bảo đảm $J$ tăng"), `6-18` mục 1 (câu có điều kiện, ghi chú diễn giả gọi là kết luận có điều kiện của định lý) |
+| §3.2 tỉ lệ cắt và tỉ lệ cắt có tác dụng | `5-19` (định nghĩa $f_{\mathrm{active}}$, lô có dấu: $50\%$ và $25\%$) |
+| §3.3 tiêu đề `5-05`, câu "giới hạn mỗi vòng đi bao xa" | tiêu đề "Trong ví dụ này, phép cắt làm giảm mức suy giảm của $J$"; hộp "Trong ví dụ này, mức giảm là …"; ghi chú diễn giả dùng câu của tác giả |
+| §3.4 ba đại lượng | `5-22` cuối mạch (lý do ở §3 mạch 5) |
+| §3.5 lời giải ba bước | `7-20`, `7-21`, `7-22` |
+| §4 hai tầng | mạch chính 16 trang; phụ lục PPO: chứng minh theo dấu `7-16`, bộ đệm chi tiết `7-17`, approxKL `7-18`, bài tập `7-19` … `7-22` |
+| §2.3 lợi thế sai dấu không chỉ do critic | giữ ở hộp và ghi chú diễn giả `5-05` |
+| §6 thông điệp cuối | hộp và ghi chú diễn giả `5-22` |
+
+**Dòng dẫn sang phụ lục.** Theo kiểu mạch 4 (câu cuối ghi chú diễn giả "… ở phụ lục cuối bài."): `5-11` (chứng minh, bốn trường hợp), `5-05` (phép tính điểm dừng), `5-19` (điều kiện không chệch của approxKL), `5-22` (Bài tập 10.23). Trên mặt trang chỉ `6-16` ("10.23 (phụ lục)") và dòng phụ lục của `1-08`.
+
+**Ảnh hưởng ngoài mạch 5.** Bảng cuối §3 mạch 5 (bản #8). Tóm tắt: `1-01`, `1-06`, `1-07`, `1-08`, `4-01`, `6-11`, `6-16`, `6-18`, `7-00` đổi chữ; `4-31`, `4-33`, `6-12`, `6-13`, `6-14`, `6-15` không đổi; `exercises.md` không đổi; `outline.md` đổi nhiều chỗ (giao người khác); ghi chú: câu hỏi 2 ở §1.1, lô bốn mẫu có dấu, đề xuất NT3 cho `5-22`.
+
+**Câu hỏi cho điều phối viên.**
+
+1. **Bỏ `5-08`.** Brief giữ `5-08`, nhưng với `5-08` cả bài là 120,5 phút. Bảng của `5-08` là hai hàng của `6-14` (cùng cột); hộp kết lên `5-22`. Đồng ý bỏ? Phương án giữ: `5-08` ở lại và rút `5-01` dòng $(1;\,1)$ cùng gộp `6-12`/`6-13` (−1 phút, mạch 6 ngoài phạm vi brief).
+2. **`5-19` gộp `5-21`** (ba chỉ số mới trên một trang, ngoại lệ TB24). Nếu người dựng không đặt vừa 720 px, tách lại làm cả bài 120 phút, cần dự phòng (1) của §5. Chấp nhận thứ tự dự phòng đó?
+3. **Chỗ của `5-22`.** Cuối mạch (thay `5-08`, trạm dừng cuối, liền trước bài tập ở phụ lục) hay sau `5-06` (sau phản ví dụ)? Storyboard chọn cuối mạch.
+4. **NT3 cho ghi chú.** `5-22` dùng $\mathcal L^{\mathrm{CLIP}}(\tilde\pi)=-0{,}145$ và trung bình đều $0{,}047$, chưa có trong ghi chú. Giao người viết ghi chú thêm một câu ở §6.1 (sau Mệnh đề 10.41)?
+5. **Câu hỏi 2 của vấn đề trung tâm.** Đổi "cho bước cập nhật dài mà vẫn kiểm soát nguy cơ hàm mục tiêu giảm" thành "cho các bước cập nhật hiệu quả, đồng thời kiểm soát nguy cơ suy giảm hiệu năng" ở `1-06`, `6-11`, `6-18`, `4-01`, `outline.md`, câu chuyện và ghi chú §1.1. Chữ "dài" mất đi; mạch 1 (`1-05`) vẫn nói bước dài làm $J$ giảm. Đồng ý?
+
+### Ghi chú khi dựng (#8, 2026-11-22)
+
+Biên tập viên dựng mạch 5 và phụ lục theo §3 (bản #8) và quyết định Q1 của điều phối viên (`review-log.md`). Deck 102 trang: 88 trang mạch chính (87 đếm theo TB17), 14 trang phụ lục.
+
+**Thứ tự trên deck.** Mạch 5 (17 trang): `5-00`, `5-09`, `5-01`, `5-15`, `5-16`, `5-02`, `5-20`, `5-11`, `5-05`, `5-06`, `5-17`, `5-18`, `5-19`, **`5-21`**, `5-07`, `5-14`, `5-22`. Phụ lục (14 trang): `7-00`, `7-10` … `7-15`, `7-16` … `7-22`. Bỏ: `5-08`, `5-10`, `5-12`, `5-13` (nội dung sang `5-05`, `7-19` … `7-22`).
+
+**Chỗ lệch so với §3 và lý do.**
+
+| Trang | Lệch | Lý do |
+|---|---|---|
+| `5-19` → `5-19`, `5-21` | tách lại theo phương án dự phòng của mục `5-19` (quyết định Q1(2)): `5-19` giữ dòng mở và ba định nghĩa (danh sách); `5-21` "Ví dụ: chỉ số trên một lô nhỏ giả định" mang dòng lô giả định, $f_{\mathrm{clip}}$, $f_{\mathrm{active}}$, approxKL và hình 580 px. Mã `5-21` dùng lại vì trang giữ đúng chức năng của `5-21` bản `de6b739` | trang gộp cao 975 px |
+| `5-05` | tiêu đề "Trong ví dụ này, phép cắt làm $J$ giảm ít hơn" (tiêu đề §3 xuống hai dòng; cùng ý "phép cắt làm giảm mức suy giảm của $J$"); dòng bộ đệm "Dữ liệu chỉ cho lợi thế ước lượng. Bộ đệm: $s_A\xrightarrow1s_B\xrightarrow2$, $G_0=0$; $s_A\xrightarrow2$, $G_0=1$."; câu hỏi rút "phép cắt có sửa được dấu sai không?" (đặt dưới bảng, hình bên phải); dòng kết quả bỏ "chính sách" và câu "Hai chính sách là điểm dừng của bài toán tối ưu trên bộ đệm" (xuống ghi chú diễn giả); hộp một câu "Phép cắt không sửa lợi thế sai dấu: $J$ vẫn giảm, $0{,}008$ thay cho $0{,}4$." | trang cao 932 px |
+| `5-06` | dòng tính KL tại $p_B=0{,}85$ và hộp câu tác giả đặt ở cột phải cạnh hình (896 px); câu "Mục tiêu không phạt $p_B>\tfrac{11}{15}$ …" ở ghi chú diễn giả theo §3 | trang cao 886 px |
+| `5-22` | bảng dạng `calc`, cột "Ý nghĩa" rút ("hiệu năng thật khi chạy chính sách mới"; "dự báo theo số lần thăm cũ"; "mục tiêu bi quan theo mẫu, trên dữ liệu đã thu"); tên tiếng Anh "chặn dưới bi quan (pessimistic bound)" ở dòng kết luận của mệnh đề; chứng minh "Trên từng mẫu, $\min(x,y)\le x$ với $x=\rho_t\widehat A_t$. Trọng số không âm giữ bất đẳng thức."; dòng thứ tự "$0{,}095>-0{,}085$ với $\tilde\pi$, $0{,}85<1{,}3$ tại $(1;\,1)$"; dòng trung bình đều theo dự phòng ("không dùng $\eta_\pi$"); hộp "PPO-Clip tối ưu chặn dưới bi quan này. Nó không tự bảo đảm $J$ tăng." (câu "không áp đặt miền tin cậy cứng như TRPO" xuống ghi chú diễn giả) | trang cao 936 px; phương án dự phòng của mục `5-22` cộng rút bảng |
+| `7-17` | dòng "Không cắt, tại $s_A$: …" giữ riêng dưới bảng; dòng $J$ rút "$J(0;\,1)=1-0=1$"; hộp "Giới hạn $(0;\,1)$ không đạt …" xuống ghi chú diễn giả | trang cao 898 px |
+| `7-19` | câu hỏi bỏ cụm "(Bài tập 10.23)" vì tiêu đề đã có số bài | trùng |
+| `4-01` ghi chú diễn giả | bỏ hai câu phụ ($\sigma(\log9)$, công thức $J$ dùng mô hình) | 150 âm tiết sau khi đổi câu hỏi 2 |
+| `6-16` | ô mạch 5 "… 10.23 (phụ lục)"; ghi chú diễn giả "lời giải ở phụ lục cuối bài" | §3 bảng phụ thuộc |
+| dòng nguồn | `5-22`: §6.1 (Mệnh đề 10.41; bảng ba đại lượng và đoạn sau); `5-19`: §6.3 (Định nghĩa 10.47), §6.4 (bảng chẩn đoán); `5-21`: §6.4 (đoạn lô bốn mẫu); `7-16`: Mệnh đề 10.40; `7-18`: §6.3, Mệnh đề 10.48; `7-19` … `7-22`: Bài tập 10.23 | đối chiếu `lecture-note.md` (bảng ba đại lượng cuối §6.1, Định nghĩa 10.47 có tỉ lệ cắt có tác dụng) |
+
+**Kiểm (máy chủ cổng 8845).** `deck_lint`: 60 mục; không NOTES150, BANNED, REPEAT; STRUCT ba mục phụ lục (§7; trang cuối nay là `7-22`) và mục cũ `1-06`. `footer_check` 0, `formula_overflow` 0. Playwright 102 trang × 1600×900 và 390×844: 0 lỗi console, trang, request, `.katex-error`, không tràn ngang; trang cao nhất 688 px (`5-05`); `#/1` … `#/7` đúng; phím mũi tên từ `6-17` sang `7-00`. `git diff --check` sạch.
+
+**Thời lượng.** Mạch 5: như §5 bản #8 nhưng `5-19` 1 + `5-21` 1 (thay 1,5): **18 phút**. Cả bài $102+18=$ **120 phút** trình chiếu (đúng trần P6). Phụ lục 18 phút ngoài giờ.
+
+### Sửa sau kiểm lại #8 (2026-11-22)
+
+| # | Trang | Đã sửa |
+|---|---|---|
+| 1 (nghiêm trọng) | `5-22` | bảng một trọng số $\eta_\pi$: cột đầu "Đại lượng (cùng trọng số $\eta_\pi$)"; hàng 2 "$\Delta\mathcal L=\sum_s\eta_\pi(s)\ell^{\mathrm{CPI}}_s$, dự báo với lợi thế đúng"; hàng 3 "$\sum_s\eta_\pi(s)\ell^{\mathrm{CLIP}}_s$, mục tiêu cắt theo trạng thái" $=-0{,}145$; dòng "$\rho_{s_A}=(1{,}8;\,0{,}2)$, cả hai trên đoạn phẳng: $\ell^{\mathrm{CLIP}}_{s_A}=\tfrac12\cdot0{,}48+\tfrac12\cdot(-0{,}32)=0{,}08$"; dòng trung bình đều "tần suất $(s_A;\,s_B)=(\tfrac23;\,\tfrac13)$: $\mathcal L^{\mathrm{CPI}}=\dots=0{,}047$, $\mathcal L^{\mathrm{CLIP}}=\tfrac23\cdot0{,}08+\tfrac13\cdot(-0{,}5)\approx-0{,}113$". Để vừa khung: tên "chặn dưới bi quan (pessimistic bound)" chuyển vào hộp ("PPO-Clip tối ưu chặn dưới bi quan (pessimistic bound) này. $J$ không chắc tăng."); chứng minh "$\min(x,y)\le x$ với $x=\rho_t\widehat A_t$"; câu $\ell^{\mathrm{CLIP}}_{s_B}=-0{,}5$ (hai mẫu phía bất lợi) và câu tổng theo $\eta_\pi$ của $\ell^{\mathrm{CPI}}$ ở ghi chú diễn giả. Câu hỏi mở đầu trang (TB27) không thêm: không còn chỗ |
+| 2 (nghiêm trọng) | `7-21` | dòng "$\sum_s\eta_\pi(s)\ell_s(\pi')=0{,}08+0{,}45\cdot0{,}2\overline6=0{,}200$"; hộp "Với lợi thế đúng và cùng trọng số $\eta_\pi$, bất đẳng thức đầu đúng với mọi chính sách …". `7-19` (c) đã dùng $\sum_s\eta_\pi(s)\ell_s(\pi')$ |
+| 3 | `5-05`, `5-06` | `5-05` thêm cột $\rho_t$ ($2p_A$; $2-2p_A$; $3-3p_B$); `5-06` "Nhắc lại: trong $3\mathcal L^{\mathrm{CLIP}}$ ($\lvert\mathcal D\rvert=3$), mẫu $(s_B,2)$ có $\rho=3-3p_B$."; câu "Mục tiêu không phạt $p_B>\tfrac{11}{15}$ …" lên mặt trang, cột phải cạnh hình, trên hộp câu tác giả. Công thức $-\max(3-3p_B;0{,}8)$ đọc trên nhãn hình |
+| 4 | `5-05` | dòng kết quả có lý do: "Không cắt: giảm theo $p_A$, tăng theo $p_B$, tới $(0;\,1)$, $J=1$. Có cắt: vòng trong dừng khi $2p_A=0{,}8$ và $3-3p_B=0{,}8$, ở $(0{,}4;\,\tfrac{11}{15})$, $J=\dots=1{,}392$." (tên mẫu $(s_A,1)$, $(s_B,2)$ ở ghi chú diễn giả; định nghĩa "vòng trong" chuyển xuống ghi chú diễn giả); câu hỏi "phép cắt có sửa dấu sai không?" |
+| 5 | `5-21` | câu đầu dẫn lại cột $\rho_t$ của `5-05`: "điểm dừng có $\rho=(0{,}8;\,1{,}2;\,0{,}8)$ trên biên: $f_{\mathrm{clip}}=0$"; mẫu 4 "ở phía bất lợi, gradient khác $0$"; bỏ "(mẫu 3 và 4)" |
+| 6 | `5-19` | bảng "Chỉ số | Đo gì | Tín hiệu cần chú ý" bốn hàng (approxKL, $f_{\mathrm{clip}}$, $f_{\mathrm{active}}$, entropy) theo ghi chú §6.4 |
+| 7 | `5-11` | dòng "Chứng minh." một dòng; ghi chú diễn giả "Chứng minh đầy đủ và bảng bốn trường hợp ở phụ lục cuối bài." |
+
+**Kiểm.** `deck_lint` 60 mục (không NOTES150, BANNED, REPEAT); `footer_check` 0; `formula_overflow` 0; Playwright 102 trang × hai cỡ: 0 lỗi, không tràn ngang, trang cao nhất 688 px; `#/1` … `#/7` đúng; `git diff --check` sạch. Thời lượng không đổi: cả bài 120 phút.
+
+# Lịch sử: mạch 5 bản #7 (kế hoạch 2026-11-22, trước nhận xét PPO sau chỉnh sửa #8)
+
+Phần dưới là mục "Mạch 5" của §3 theo kế hoạch #7, giữ nguyên chữ, tiêu đề hạ một bậc. Bản dựng thật (`de6b739`) lệch kế hoạch ở các điểm ghi trong §10, mục "Ghi chú khi dựng (#7)" và "Sửa sau kiểm lại mạch 5 (#7)". Không còn hiệu lực.
+
+#### Mạch 5. Tối ưu chính sách gần kề (PPO) (`id="mach-5"`, 18 trang gồm hai trang bài tập, 20,5 phút + 3,5 bài tập; bản 2026-11-22 theo nhận xét PPO #7; bản trước 14 trang, 17 phút, ở mục lịch sử cuối tệp)
+
+**Thứ tự (bản #7).** `5-00` → `5-09` → `5-01` → `5-15` → `5-16` → `5-02` → `5-11` → `5-10` → `5-05` → `5-06` → `5-17` → `5-18` → `5-19` → `5-07` → `5-14` → `5-08` → `5-12` → `5-13`.
+
+Ứng với 13 trang chính của nhận xét (§7 của `nhan-xet-ppo-2026-11-22.md`): 1 `5-09`; 2 `5-01`; 3 `5-15`; 4 `5-16`; 5 `5-02`; 6 `5-11`; 8 `5-10`, `5-05`; 7 `5-06`; 9 `5-17`; 10 `5-18`; 11 `5-19`; 12 `5-07`, `5-14`; 13 `5-08`. Hai chỗ khác bố cục của nhận xét:
+
+- **Trang 7 đứng sau trang 8** (`5-06` sau `5-10`, `5-05`). Ví dụ KL trên đoạn phẳng của nhận xét ($p_B=0{,}733$; $0{,}85$; $0{,}95$, mục tiêu cắt $-0{,}8$) là phần của $s_B$ trên bộ đệm hai lượt, với $p_A=0{,}4$ là điểm dừng của vòng trong; ghi chú §6.1 bản đang sửa cũng đặt đoạn này ngay sau phản ví dụ bộ đệm. Đặt `5-06` trước bộ đệm thì $-0{,}8$ và $p_A=0{,}4$ chưa có đường tính (TB29) và deck khác ghi chú (NT2). Thân bài của nhận xét cũng theo thứ tự này (§3 bộ đệm, rồi §4 KL). `5-06` thành trạm dừng gom hai giới hạn (lợi thế sai, KL), đúng chức năng "bảo vệ được gì, không bảo vệ được gì". Phương án giữ thứ tự 7 → 8 ở câu hỏi 1 của §10 (mục #7).
+- **Trang 8 tách hai trang** (`5-10` bộ đệm và lợi thế ước lượng; `5-05` CPI so với PPO-Clip trên bộ đệm, cột $J$). Một trang không chứa được bảng bộ đệm, hai lời giải tối ưu và hình cột (đo ở bản trước: `5-10`, `5-01`, `5-05` là ba trang).
+
+**Mã.** Giữ: `5-00`, `5-09`, `5-01` (cùng chức năng "hàm thay thế mẫu tuyến tính theo tỉ số nên không tự dừng", dữ liệu đổi sang lợi thế đúng), `5-02`, `5-11`, `5-10`, `5-05`, `5-06`, `5-07`, `5-14`, `5-08`, `5-12`, `5-13`. Mới: `5-15` (lợi thế dương), `5-16` (lợi thế âm), `5-17` (vòng nhiều lần qua bộ đệm), `5-18` (hàm mất mát tổng), `5-19` (chỉ số theo dõi). Bỏ: `5-03` (câu hỏi nhanh mẫu $\widehat A=-1$, $\rho=1{,}3$; trường hợp $A=-2$, $\rho=1{,}3$ nay là một dòng của `5-16` và lời giải câu hỏi nhanh ở `5-02`). Mã `5-04` (bỏ từ 2026-11-21) và `5-03` không dùng lại.
+
+**Hai bộ dữ liệu trong mạch (TB29, quyết định #7(1) của tác giả).** (a) `5-01` … `5-11`: lợi thế đúng tại chuỗi, $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$, $A_\pi(s_B,\cdot)=(1;\,-2)$, tỉ số $\rho_{s_A}=(2p_A;\,2-2p_A)$, $\rho_{s_B}=(1{,}5p_B;\,3-3p_B)$, $\epsilon=0{,}2$. Lý do nêu trên `5-01`: dựng cơ chế cắt khi lợi thế đúng, tách khỏi sai số ước lượng. (b) `5-10` … `5-06`: bộ đệm hai lượt $s_A\xrightarrow1s_B\xrightarrow2$, $s_A\xrightarrow2$ với critic $\hat v=(1{,}4;\,1)$, $\lambda=1$, $\widehat A=(-1{,}4;\,-0{,}4;\,-1)$ cho $(s_A,1)$, $(s_A,2)$, $(s_B,2)$ (lợi thế đúng $0{,}4$; $-0{,}4$; $-2$). Lý do nêu trên `5-10`: dữ liệu thu được cho lợi thế ước lượng, không cho lợi thế đúng. Bài tập 10.23 quay lại (a). (c) Lô giả định bốn tỉ số ở `5-19` (quyết định #7(2)); lý do nêu trên trang.
+
+Mọi số tính lại trong `/tmp/claude-1000/-data-tqlong-lectures/678a7f48-9d80-46cf-a421-67398857f913/scratchpad/m5-ppo/kiem_m5.py` (venv của workspace). Không "Adam" trên mặt trang; không nhãn "Còn thiếu:". Câu hỏi nhanh của mạch (TB22): `5-02`. Trạm dừng (TB5): `5-11` (sau năm trang dựng mục tiêu cắt), `5-06` (sau phản ví dụ), `5-08` (cuối mạch). Ví dụ tay đứng trước thuật toán và mang cùng tên nhóm bước (Đ12): `5-10` (**Thu lượt**, **Ước lượng lợi thế**), `5-05` (**Cập nhật actor**, vòng trong), `5-17` (cả bốn nhóm trên hình).
+
+##### `L10-5-00` · Tối ưu chính sách gần kề (PPO) (trang tiêu đề mạch; giữ mã)
+
+- **Mặt trang:** giữ: "5."; `h2` "Tối ưu chính sách gần kề (PPO)"; `p.strand-lead` "PPO cắt tỉ số chính sách để dùng lại một bộ đệm nhiều lần bằng gradient bậc một." (xem câu hỏi 4 của §10 mục #7 về cụm "cắt tỉ số chính sách").
+- **Hình:** `so-do-neo-m5-vao.svg`, giữ.
+- **Diễn giả:** câu cuối đổi thành "Đầu ra là mục tiêu cắt, giới hạn của nó trên bộ đệm hai lượt, một vòng PPO với hàm mất mát tổng và các chỉ số theo dõi, thuật toán PPO-Clip, so sánh với TRPO và một bài tập tổng hợp." Hai câu đầu giữ.
+- **Phút:** 0,5.
+
+##### `L10-5-09` · Mỗi bộ đệm của TRPO chỉ cho một bước cập nhật (giữ mã; trang 1 của nhận xét)
+
+- **Câu:** 1. **Nhãn:** "Câu hỏi:".
+- **Mặt trang:** giữ bản hiện hành (hình `vong-trpo.svg` nửa trái; câu "Cần dùng lại một bộ đệm $\mathcal D$ …"; định nghĩa $\mathcal L^{\mathrm{CPI}}$ và $\rho_t$), trừ câu hỏi:
+  - "**Câu hỏi:** tối đa $\mathcal L^{\mathrm{CPI}}$ trên một bộ đệm thì chính sách dừng ở đâu?"
+- **Quyết định về hình:** không vẽ sơ đồ bốn khối "TRPO → vấn đề → PPO-Clip → giám sát" (hình rId23 của nhận xét). Ở trang 1, các tên "PPO-Clip", "mục tiêu cắt", "approxKL", "tỉ lệ cắt" chưa được dạy (TB3: trang mở không có tên phương pháp mới; TB11). Phần "TRPO đắt" đã có trên `vong-trpo.svg` (vòng tìm kiếm lùi đỏ, "khoảng mười tích $Fv$"). Câu "PPO một vòng" của nhận xét do `5-17` đảm nhận, sau khi các tên đã dạy.
+- **Dựng dần:** giữ ((0) hình và dòng bài toán; (1) định nghĩa; (2) câu hỏi).
+- **1 phút:** TRPO bỏ bộ đệm sau một bước đắt; ứng viên đầu tiên để dùng lại bộ đệm là hàm thay thế mẫu.
+- **Mới:** $\mathcal L^{\mathrm{CPI}}$.
+- **Nguồn số:** không.
+- **Ghi chú nguồn:** đoạn mở §6; đoạn đầu §6.1 (định nghĩa $\mathcal L^{\mathrm{CPI}}$, không đánh số). Dòng nguồn hiện tại của `5-09` dẫn "§6.1 (Định nghĩa 10.39)", nhưng Định nghĩa 10.39 là mục tiêu PPO-Clip: biên tập viên sửa.
+- **Diễn giả:** giữ.
+- **Phút:** 1 (trước 1,5: hộp "mỗi bộ đệm chỉ cho một bước" đã ở `4-31`, trang này chỉ đọc hình).
+
+##### `L10-5-01` · Hàm thay thế mẫu tuyến tính theo tỉ số nên không tự dừng (giữ mã, chức năng giữ, dữ liệu mới; trang 2 của nhận xét)
+
+- **Câu:** 1. **Nhãn:** "Nhắc lại:".
+- **Mục đích:** trả lời câu hỏi của `5-09` mà không nói sai về chuỗi. Với lợi thế đúng, cực đại không ràng buộc của $\mathcal L^{\mathrm{CPI}}$ là $(1;\,1)$, $J=2{,}7$, chính sách tối ưu; trang không nói lợi thế đúng dẫn tới chính sách xấu. Rủi ro nêu trên trang: hàm thay thế không có tín hiệu dừng, và sai số của dự báo xa chính sách cũ lớn, có thể đổi dấu (mạch 4, $\tilde\pi$). Nguồn rủi ro thứ hai, lợi thế ước lượng sai dấu, ở `5-10`, `5-05`.
+- **Mặt trang:**
+  - "**Nhắc lại:** với $\tilde\pi=(0{,}9;\,0{,}5)$, hàm thay thế dự báo $J$ tăng $0{,}095$, còn $J$ giảm $0{,}085$: sai số $-0{,}18$."
+  - "Để tách cơ chế khỏi sai số ước lượng, dùng lợi thế đúng $A_\pi(s_B,\cdot)=(1;\,-2)$, với mẫu tại $s_B$ theo đúng tần suất $\pi(\cdot\mid s_B)=(\tfrac23;\,\tfrac13)$. Phần của $\mathcal L^{\mathrm{CPI}}$ tại $s_B$ là"
+    $$\ell_{s_B}=\tfrac23\cdot1{,}5p_B\cdot1+\tfrac13\cdot3(1-p_B)\cdot(-2)=3p_B-2.$$
+  - "$\ell_{s_B}$ tăng đều theo $p_B$ tới biên $p_B=1$, nơi tỉ số của hành động 2 bằng $0$. Tương tự, $\ell_{s_A}=0{,}8p_A-0{,}4$ tăng tới $p_A=1$."
+  - "Tại $(1;\,1)$: $\Delta\mathcal L=1\cdot0{,}4+0{,}45\cdot1=0{,}85$, còn $\Delta J=2{,}7-1{,}4=1{,}3$. Trên chuỗi, biên này là chính sách tốt nhất."
+  - Hộp: "$\mathcal L^{\mathrm{CPI}}$ không có tín hiệu dừng: tối ưu đi tới biên, xa chính sách cũ, nơi sai số của dự báo lớn và có thể đổi dấu ($+0{,}45$ ở đây, $-0{,}18$ với $\tilde\pi$)."
+- **Dựng dần:** (0) "Nhắc lại:", dòng dữ liệu, công thức; (1) dòng biên; (2) dòng $(1;\,1)$; (3) hộp.
+- **1 phút:** Mỗi mẫu đóng góp tuyến tính theo tỉ số, nên hàm thay thế mẫu tăng tới biên của miền xác suất; xa chính sách cũ, dự báo sai nhiều, khi thì có lợi, khi thì đổi dấu.
+- **Mới:** $\ell_s$, phần của mục tiêu tại một trạng thái (dùng lại ở `5-05`, `5-12`).
+- **Nguồn số:** $A_\pi$ từ `2-06`; tỉ số $1{,}5p_B$, $3(1-p_B)$ từ $\pi(\cdot\mid s_B)=(\tfrac23;\,\tfrac13)$; $\ell_{s_A}=\tfrac12\cdot2p_A\cdot0{,}4+\tfrac12(2-2p_A)(-0{,}4)$ (ghi chú diễn giả, cùng khuôn với $\ell_{s_B}$, Đ10); $\eta_\pi=(1;\,0{,}45)$ từ `4-02`; $J=2{,}7p_Ap_B+1-p_A$ từ `1-10`; $+0{,}095$, $-0{,}085$ từ `4-16`.
+- **Hình:** không.
+- **Ghi chú nguồn:** §6.1, đoạn mở và đoạn "Trên chuỗi hai trạng thái với lợi thế đúng …" (bản #7 của ghi chú: $\mathcal L-J=0{,}85$, $J$ tăng $1{,}3$).
+- **Diễn giả:** $\ell_s=\sum_a\pi(a\mid s)\rho_s(a)A_\pi(s,a)=A_\pi(s,\pi')$, nên trung bình trên bộ đệm có đúng tần suất là hàm thay thế của mạch 4 bỏ hằng. Tại $(1;\,1)$, bốn tỉ số là $2$; $0$; $1{,}5$; $0$. Sai số $0{,}45=(\eta_{\pi'}(s_B)-\eta_\pi(s_B))A_\pi(s_B,\pi')=(0{,}9-0{,}45)\cdot1$. Trên chuỗi với lợi thế đúng, hướng của $\mathcal L^{\mathrm{CPI}}$ trùng hướng tăng của $J$; điều đó không đúng khi lợi thế là ước lượng, như bộ đệm hai lượt (nguồn rủi ro thứ hai). Định lý chặn cải thiện (phụ lục) chặn sai số theo TV.
+- **Phút:** 1,5.
+
+##### `L10-5-15` · Lợi thế dương: đóng góp của mẫu ngừng tăng khi $\rho>1{,}2$ (mã mới; trang 3 của nhận xét, "Hành động tốt có nên được tăng xác suất mãi?")
+
+- **Câu:** 2. **Nhãn:** "Câu hỏi:".
+- **Mặt trang (cột trái; hình cột phải):**
+  - "Mẫu $(s_B,1)$: $A=+1$, $\rho=p_B/\tfrac23=1{,}5p_B$. Đóng góp vào $\mathcal L^{\mathrm{CPI}}$ là $\rho A=\rho$, tăng mãi khi $p_B$ tăng."
+  - "**Câu hỏi:** hàm thay thế chỉ đáng tin gần chính sách cũ. Đến mức tỉ số nào thì việc tăng $p_B$ còn nên được thưởng?"
+  - "Với bán kính cắt $\epsilon=0{,}2$, đóng góp dừng ở $1+\epsilon$:" $$\ell=A\min(\rho,\,1+\epsilon)=\min(\rho,\,1{,}2).$$
+  - Bảng hai hàng:
+
+    | $\rho$ | $p_B$ | $\rho A$ | $\ell$ |
+    |---|---|---|---|
+    | $1{,}3$ | $0{,}867$ | $1{,}3$ | $\min(1{,}3;\,1{,}2)=1{,}2$ |
+    | $0{,}7$ | $0{,}467$ | $0{,}7$ | $0{,}7$ |
+  - "Khoảng $\rho>1{,}2$ là *đoạn phẳng*: đóng góp không đổi, gradient theo mẫu bằng $0$."
+  - Hộp: "Tăng xác suất của hành động có lợi thế dương vẫn được thưởng tới $\rho=1{,}2$, tức $p_B=0{,}8$; vượt mức đó, dữ liệu cũ không thưởng thêm."
+- **Dựng dần:** (0) dòng mẫu, câu hỏi; (1) hình, công thức, bảng; (2) dòng đoạn phẳng, hộp.
+- **1 phút:** Với lợi thế dương, đóng góp của mẫu đi lên theo tỉ số rồi nằm ngang từ $1+\epsilon$.
+- **Mới:** bán kính cắt $\epsilon$ (ngưỡng $1+\epsilon$); đoạn phẳng (TB24 cho phép hai).
+- **Nguồn số:** $A_\pi(s_B,1)=1$ từ `2-06`; $\rho=1{,}5p_B$ từ `5-01`; $p_B=\rho/1{,}5$: $1{,}3/1{,}5=0{,}867$, $0{,}7/1{,}5=0{,}467$, $1{,}2/1{,}5=0{,}8$.
+- **Hình:** `ppo-dong-gop-mot-mau-duong.svg` (mới, §4.5), `width` khoảng 520.
+- **Ghi chú nguồn:** §6.1, đoạn "Về mặt ý tưởng …", gạch đầu dòng "hành động 1, $A=+1$", bảng bốn trường hợp.
+- **Diễn giả:** đọc hình: đường cam nét đứt là $\rho A$ của $\mathcal L^{\mathrm{CPI}}$, đường tím là đóng góp đã cắt; hai đường trùng nhau tới $\rho=1{,}2$. Hàng $\rho=0{,}7$ ($p_B$ giảm, hướng bất lợi) không bị cắt. Giá trị $\epsilon=0{,}2$ là giá trị thường dùng (Schulman và cộng sự, 2017); trang không chứng minh lựa chọn này.
+- **Phút:** 1,5.
+
+##### `L10-5-16` · Lợi thế âm: đóng góp của mẫu ngừng tăng khi $\rho<0{,}8$ (mã mới; trang 4 của nhận xét, "Hành động xấu có nên giảm xác suất về 0?")
+
+- **Câu:** 2. **Nhãn:** không.
+- **Mặt trang (cùng bố cục với `5-15`):**
+  - "Mẫu $(s_B,2)$: $A=-2$, $\rho=(1-p_B)/\tfrac13=3(1-p_B)$. Đóng góp $\rho A=-2\rho$ tăng khi $\rho$ giảm, tức khi $p_B$ tăng, và tăng tới $0$ khi xác suất của hành động 2 về $0$."
+  - "Với $\epsilon=0{,}2$, đóng góp dừng ở $1-\epsilon$:" $$\ell=A\max(\rho,\,1-\epsilon)=-2\max(\rho,\,0{,}8).$$
+  - Bảng hai hàng:
+
+    | $\rho$ | $p_B$ | $\rho A$ | $\ell$ |
+    |---|---|---|---|
+    | $0{,}7$ | $0{,}767$ | $-1{,}4$ | $-2\max(0{,}7;\,0{,}8)=-1{,}6$ |
+    | $1{,}3$ | $0{,}567$ | $-2{,}6$ | $-2{,}6$ |
+  - Hộp: "Giảm xác suất của hành động có lợi thế âm được thưởng tới $\rho=0{,}8$, tức $p_B=\tfrac{11}{15}\approx0{,}733$. Khi $\rho>1$, tức khi mục tiêu giảm, đóng góp giữ nguyên $\rho A$."
+- **Dựng dần:** (0) dòng mẫu; (1) hình, công thức, bảng; (2) hộp.
+- **1 phút:** Với lợi thế âm, đóng góp nằm ngang dưới $1-\epsilon$ và đi xuống theo $\rho A$ ở phía bất lợi.
+- **Mới:** không (cùng ngưỡng, phía kia).
+- **Nguồn số:** $A_\pi(s_B,2)=-2$ từ `2-06`; $\rho=3(1-p_B)$ từ `5-01`; $p_B=1-\rho/3$: $1-0{,}7/3=0{,}767$, $1-1{,}3/3=0{,}567$, $1-0{,}8/3=\tfrac{11}{15}$.
+- **Hình:** `ppo-dong-gop-mot-mau-am.svg` (mới, §4.5), cùng `width` với `5-15`.
+- **Ghi chú nguồn:** như `5-15`, gạch đầu dòng "hành động 2, $A=-2$".
+- **Diễn giả:** $\min(-2\rho,\,-1{,}6)=-2\max(\rho,\,0{,}8)$ vì nhân với số âm đảo thứ tự; dạng tổng quát ở `5-11`. Phía $\rho>1$ (hàng $1{,}3$, $p_B$ giảm) là hướng làm mục tiêu giảm; phép cắt không che nó.
+- **Phút:** 1.
+
+##### `L10-5-02` · Mục tiêu cắt (giữ mã; trang 5 của nhận xét; câu hỏi nhanh của mạch, TB22)
+
+- **Câu:** 3. **Nhãn:** "Định nghĩa.", "Câu hỏi:", "Lời giải:" (ngoại lệ TB13, §7).
+- **Mặt trang:**
+  - "Hai đường gấp khúc theo cùng một quy tắc: mỗi mẫu lấy giá trị nhỏ hơn giữa $\rho A$ và $\operatorname{clip}(\rho,\,0{,}8,\,1{,}2)\,A$."
+  - Hai hình cạnh nhau: `ppo-dong-gop-mot-mau-duong.svg`, `ppo-dong-gop-mot-mau-am.svg`.
+  - "**Định nghĩa.** Với bán kính cắt (clip range) $\epsilon\in(0,1)$ và $\operatorname{clip}(x,l,u)=\min(\max(x,l),u)$, mục tiêu cắt (clipped surrogate objective) là" $$\textstyle\mathcal L^{\mathrm{CLIP}}(\theta)=\frac1{|\mathcal D|}\sum_{t\in\mathcal D}\min\Bigl(\rho_t(\theta)\widehat A_t,\ \operatorname{clip}(\rho_t(\theta),1-\epsilon,1+\epsilon)\,\widehat A_t\Bigr).$$
+  - "**Câu hỏi:** vì sao lấy $\min$, không tối ưu trực tiếp $\operatorname{clip}(\rho_t,1-\epsilon,1+\epsilon)\widehat A_t$?"
+  - "**Lời giải:** chỉ cắt thì mẫu $A=-2$, $\rho=1{,}3$ cho $1{,}2\cdot(-2)=-2{,}4$ thay cho $-2{,}6$, và mẫu $A=+1$, $\rho=0{,}7$ cho $0{,}8$ thay cho $0{,}7$: thay đổi bất lợi được đánh giá cao hơn $\rho A$ và có gradient bằng $0$. Phép $\min$ giữ $-2{,}6$ và $0{,}7$; nó chỉ bỏ phần thưởng của thay đổi có lợi vượt ngưỡng."
+- **Bỏ khỏi mặt trang:** câu mở cũ "Khi $\rho_t\approx1$ trên phân bố trạng thái của $\pi_{\mathrm{old}}$, sai số của hàm thay thế nhỏ." (nhận xét §4: sự gần nhau của hai chính sách không suy ra được từ vài tỉ số trên mẫu); dòng "*Đoạn phẳng*: …" (đã định nghĩa ở `5-15`). Hình `ppo-cat-hai-dau-buoc0.svg`, `ppo-cat-hai-dau.svg` rời trang.
+- **Dựng dần:** (0) dòng quy tắc và hai hình; (1) định nghĩa; (2) câu hỏi; (3) lời giải.
+- **1 phút:** Hai đường gấp khúc là một công thức $\min$; phép $\min$ cắt phần thưởng vượt ngưỡng và giữ nguyên phạt của thay đổi bất lợi.
+- **Mới:** $\mathcal L^{\mathrm{CLIP}}$.
+- **Nguồn số:** bốn giá trị từ bảng của `5-15`, `5-16`; $\operatorname{clip}(1{,}3)=1{,}2$, $\operatorname{clip}(0{,}7)=0{,}8$.
+- **Hình:** hai hình của `5-15`, `5-16`, mỗi hình `width` khoảng 420 (cỡ chữ tối thiểu ở §4.5 tính cho bề rộng này).
+- **Ghi chú nguồn:** §6.1, câu "Hai trường hợp gộp thành một công thức …"; đoạn "**Câu hỏi.** Vì sao lấy $\min$ …"; Định nghĩa 10.39.
+- **Diễn giả:** sửa câu cũ "Khi tỉ số gần $1$, khoảng cách TV nhỏ" thành: "Hàm thay thế đáng tin khi phân phối hành động mới gần phân phối cũ tại các trạng thái mà $\pi_{\mathrm{old}}$ thăm; vài tỉ số trên mẫu gần $1$ không đủ để kết luận điều đó." Giữ: phép $\min$ làm mục tiêu cắt không vượt mục tiêu không cắt và trùng nó gần $\theta_{\mathrm{old}}$ (Mệnh đề 10.41). "Gợi ý: so hai đường của mỗi hình ở phía bất lợi." Năng lực kiểm tra: phân biệt phía có lợi và phía bất lợi của phép cắt.
+- **Phút:** 2.
+
+##### `L10-5-11` · Mục tiêu cắt theo dấu của lợi thế (giữ mã; trang 6 của nhận xét; trạm dừng)
+
+- **Câu:** 3. **Nhãn:** "Mệnh đề.", "Chứng minh.".
+- **Mặt trang:**
+  - Mệnh đề và bảng ba hàng ($\widehat A_t>0$, $<0$, $=0$), giữ như bản hiện hành.
+  - "Ngoài các tập đó, gradient là $\widehat A_t\,\rho_t\,\psi_t$." (giữ)
+  - Dòng "Ở đây" mới (Đ6), thay dòng "mẫu $(s_A,1)$ với $\rho=1$": "Ở đây, bốn trường hợp của $s_B$ với $\epsilon=0{,}2$:"
+
+    | Mẫu | $\rho$ | $\rho A$ | Số hạng cắt | Gradient theo mẫu |
+    |---|---|---|---|---|
+    | $A=+1$ | $1{,}3$ | $1{,}3$ | $1\cdot\min(1{,}3;\,1{,}2)=1{,}2$ | $0$ |
+    | $A=+1$ | $0{,}7$ | $0{,}7$ | $0{,}7$ | khác $0$ |
+    | $A=-2$ | $0{,}7$ | $-1{,}4$ | $-1{,}6$ | $0$ |
+    | $A=-2$ | $1{,}3$ | $-2{,}6$ | $-2{,}6$ | khác $0$ |
+  - "**Chứng minh.** …" (giữ).
+- **Dựng dần:** (0) mệnh đề và bảng; (1) dòng gradient và bảng bốn trường hợp; (2) chứng minh.
+- **1 phút:** Lợi thế dương ngừng ở $1+\epsilon$, lợi thế âm ngừng ở $1-\epsilon$; phía bất lợi giữ tín hiệu.
+- **Mới:** dạng theo dấu.
+- **Nguồn số:** bốn hàng từ `5-15`, `5-16` (Đ10: hàng đầu đủ phép tính).
+- **Ghi chú nguồn:** Mệnh đề 10.40 (dòng "Chứng minh." gộp Bước 1–2); bảng bốn trường hợp và câu "Quy tắc rút ra từ bảng" của §6.1.
+- **Diễn giả:** giữ; thêm câu trạm dừng (TB5, phần điều còn thiếu): "Câu hỏi còn lại: mục tiêu cắt làm gì khi lợi thế là ước lượng, và nó có giữ chính sách gần chính sách cũ không." Câu này ở ghi chú diễn giả, không lên mặt trang (VP: không câu dẫn đường).
+- **Quyết định về phụ lục:** dòng "Chứng minh." một dòng ở lại trang này, không chuyển sang `7-16` (§10 mục #7, việc 2).
+- **Phút:** 1.
+
+##### `L10-5-10` · Bộ đệm hai lượt cho lợi thế ước lượng sai dấu (giữ mã, tiêu đề mới; nửa đầu trang 8 của nhận xét)
+
+- **Câu:** 4. **Nhãn:** "Nhắc lại:", "Câu hỏi:".
+- **Mặt trang:**
+  - "**Nhắc lại:** critic $\hat v=(1{,}4;\,1)$; GAE với $\lambda=1$ cho $\widehat A_t=G_t-\hat v(S_t)$; $\pi_{\mathrm{old}}=(\tfrac12;\,\tfrac23)$." (giữ)
+  - "Dữ liệu thu được chỉ cho lợi thế ước lượng. **Thu lượt:** bộ đệm gồm hai lượt $s_A\xrightarrow1s_B\xrightarrow2$ và $s_A\xrightarrow2$, xác suất $2\cdot\tfrac16\cdot\tfrac12=\tfrac16$. **Ước lượng lợi thế:**" (câu đầu là lý do đổi dữ liệu, TB29)
+  - Bảng (thêm cột tỉ số, chuyển từ `5-01` cũ):
+
+    | Mẫu | $G_t$ | $\widehat A_t=G_t-\hat v(S_t)$ | $A_\pi$ đúng | $\rho_t$ theo $(p_A;\,p_B)$ |
+    |---|---|---|---|---|
+    | $(s_A,1)$ | $0+0{,}9\cdot0=0$ | $0-1{,}4=$ **$-1{,}4$** (đỏ) | $+0{,}4$ | $2p_A$ |
+    | $(s_A,2)$ | $1$ | $1-1{,}4=-0{,}4$ | $-0{,}4$ | $2-2p_A$ |
+    | $(s_B,2)$ | $0$ | $0-1=-1$ | $-2$ | $3-3p_B$ |
+  - Hộp: "Lợi thế ước lượng của hành động 1 ở $s_A$ sai dấu dù $\hat v(s_A)=v_\pi(s_A)=1{,}4$: lượt chọn nó gặp phần thưởng $0$ ở $s_B$."
+  - "**Câu hỏi:** phép cắt ngăn cập nhật vượt ngưỡng theo hướng có lợi. Nó có sửa được lợi thế ước lượng sai dấu không?"
+- **Dựng dần:** (0) "Nhắc lại:", dòng bộ đệm, hình; (1) bảng; (2) hộp; (3) câu hỏi.
+- **1 phút:** Một bộ đệm nhỏ cho lợi thế ước lượng sai dấu ở hành động tốt, kể cả khi critic đúng tại $s_A$.
+- **Mới:** bộ đệm hai lượt (một đối tượng, nguồn gốc trên trang, TB25).
+- **Nguồn số:** như bản trước; cột $\rho_t$: $p_A/\tfrac12$, $(1-p_A)/\tfrac12$, $(1-p_B)/\tfrac13$.
+- **Hình:** `chuoi-bo-dem-hai-luot.svg`, giữ.
+- **Ghi chú nguồn:** §6.1, đoạn "**Câu hỏi.** Phép cắt ngăn cập nhật vượt ngưỡng … có sửa được lợi thế ước lượng sai dấu không?" và đoạn sau ("Tại $s_A$, critic đúng …").
+- **Diễn giả:** sai dấu đến từ phương sai của lợi tức một lượt, không đến từ critic (nhận xét §3, "lưu ý sư phạm"). Với $\lambda=1$, ước lượng tại $s_A$ không chệch. Xác suất của bộ đệm: hai thứ tự của hai lượt.
+- **Phút:** 1,5.
+
+##### `L10-5-05` · Phép cắt không sửa lợi thế sai, nhưng giới hạn mức giảm của $J$ (giữ mã, tiêu đề mới; gộp phần CPI của `5-01` cũ; nửa sau trang 8 của nhận xét; ví dụ tay của vòng trong)
+
+- **Câu:** 4. **Nhãn:** không (hộp).
+- **Mặt trang:**
+  - "*Vòng trong* gồm nhiều bước gradient tăng một mục tiêu trên cùng bộ đệm, lợi thế giữ cố định. **Cập nhật actor** theo hai mục tiêu:" (Đ12)
+
+    | Trạng thái | Phần của $3\mathcal L^{\mathrm{CPI}}$ | Tới | Phần của $3\mathcal L^{\mathrm{CLIP}}$ | Dừng tại |
+    |---|---|---|---|---|
+    | $s_A$ | $-1{,}4\cdot2p_A-0{,}4(2-2p_A)=-0{,}8-2p_A$ | $p_A\to0$ | $-1{,}4\max(2p_A;\,0{,}8)-0{,}4\max(2-2p_A;\,0{,}8)$ | $p_A=0{,}4$ |
+    | $s_B$ | $-(3-3p_B)$ | $p_B\to1$ | $-\max(3-3p_B;\,0{,}8)$ | $p_B=\tfrac{11}{15}$ |
+  - "Dưới $p_A=0{,}4$, mẫu $(s_A,2)$ có $\rho>1{,}2$ ở phía bất lợi, không bị cắt, nên phần của $s_A$ giảm."
+  - "$J(0;\,1)=2{,}7\cdot0\cdot1+1-0=1$; $J(0{,}4;\,\tfrac{11}{15})=2{,}7\cdot0{,}4\cdot\tfrac{11}{15}+0{,}6=1{,}392$."
+  - Hộp cạnh hình: "Phép cắt không sửa lợi thế ước lượng sai: $J$ vẫn giảm, $0{,}008$ thay cho $0{,}4$."
+- **Dựng dần:** (0) dòng vòng trong, hàng $s_A$ cột CPI; (1) hàng $s_B$ cột CPI, $J(0;\,1)$, cột đầu của hình; (2) hai cột CLIP, dòng "dưới $p_A=0{,}4$"; (3) $J(0{,}4;\,\tfrac{11}{15})$, hình đủ, hộp.
+- **1 phút:** Trên cùng bộ đệm, không cắt thì $J$ về $1$; có cắt thì $J=1{,}392$: phép cắt giới hạn mỗi vòng đi bao xa, không sửa dấu của lợi thế.
+- **Mới:** vòng trong (định nghĩa tại chỗ, như bản trước).
+- **Nguồn số:** $\widehat A_t$, $\rho_t$ từ `5-10`; dạng theo dấu từ `5-11`; $-0{,}8-2p_A$ bằng $-1{,}8$ tại $0{,}5$, $-1{,}6$ tại $0{,}4$; dưới $0{,}4$: $-1{,}12-0{,}4(2-2p_A)=-1{,}92+0{,}8p_A$; $1-0{,}8/3=\tfrac{11}{15}$.
+- **Hình:** `ppo-so-sanh-J.svg` (mới, §4.5), `width` khoảng 460, cột phải dưới bảng; hộp cột trái. `ppo-bo-dem-hai-luot*.svg` rời trang (giữ tệp).
+- **Ghi chú nguồn:** §6.1, đoạn mục tiêu không cắt trên bộ đệm ("mục tiêu không cắt tại $s_A$ là …") và đoạn "Với mục tiêu cắt và $\epsilon=0{,}2$ …".
+- **Diễn giả:** trên $[0{,}4;\,0{,}6]$ phần của $s_A$ trong mục tiêu cắt bằng $-0{,}8-2p_A$; vòng trong dừng ở đỉnh gấp $p_A=0{,}4$ của $s_A$ và ở đầu đoạn phẳng của $s_B$; tại điểm dừng $\rho=(0{,}8;\,1{,}2;\,0{,}8)$. Giới hạn $(0;\,1)$ không đạt với $\theta$ hữu hạn. Hai chính sách là điểm dừng của bài toán tối ưu trên bộ đệm, không phải kết quả của một số bước gradient cụ thể; bài không giả định bộ tối ưu nào (nhận xét §3). Giảm $0{,}4$ trùng mức giảm của bước dài ở mạch 1.
+- **Phút:** 2.
+
+##### `L10-5-06` · Trên đoạn phẳng, mục tiêu cắt không đổi mà KL vẫn tăng (giữ mã, tiêu đề mới; trang 7 của nhận xét; trạm dừng)
+
+- **Câu:** 4. **Nhãn:** "Nhận xét.", "Nhắc lại:".
+- **Mặt trang:**
+  - "Mục tiêu cắt bỏ động lực đẩy $\rho$ ra ngoài $[0{,}8;\,1{,}2]$ theo hướng có lợi. Nó không sửa lợi thế sai, và nó cũng không chặn khoảng cách giữa hai chính sách."
+  - "**Nhắc lại:** $D_{\mathrm{KL}}(s_B)=\tfrac23\log\tfrac{2/3}{p_B}+\tfrac13\log\tfrac{1/3}{1-p_B}$; tại $p_B=0{,}85$: $\tfrac23\log0{,}784+\tfrac13\log2{,}222=-0{,}162+0{,}266=0{,}104$."
+  - "**Nhận xét.** Trên bộ đệm hai lượt, với $p_A=0{,}4$, phần của $s_B$ trong $3\mathcal L^{\mathrm{CLIP}}$ bằng $-0{,}8$ với mọi $p_B\ge\tfrac{11}{15}$, còn $D_{\mathrm{KL}}(s_B)$ tăng $0{,}011\to0{,}104\to0{,}396$ khi $p_B=\tfrac{11}{15}$; $0{,}85$; $0{,}95$."
+  - Hình hai bảng `ppo-phang-va-kl.svg`.
+  - Hộp: "PPO không cắt chính sách mới; PPO cắt đóng góp của từng mẫu." (câu của nhận xét, quyết định #7; giữ nguyên chữ, ngoại lệ TB13 ở §7)
+  - "Trên chuỗi, mỗi trạng thái có tham số riêng. Khi tham số dùng chung, bước trên mẫu khác, nhiều lô nhỏ và nhiều lần qua bộ đệm có thể đẩy $\rho$ ra ngoài khoảng cắt." (Đ2)
+- **Dựng dần:** (0) dòng mở; (1) "Nhắc lại:", nhận xét, hình; (2) hộp; (3) dòng tham số dùng chung.
+- **1 phút:** Trên đoạn phẳng, mục tiêu cắt không phân biệt ba chính sách có KL rất khác nhau; phép cắt giới hạn đóng góp của mẫu, không giới hạn chính sách.
+- **Mới:** không.
+- **Nguồn số:** $-0{,}8$ từ `5-05` ($-\max(3-3p_B;\,0{,}8)$); công thức KL từ `4-12`; ba giá trị KL tính trong `kiem_m5.py` ($0{,}0108$; $0{,}1042$; $0{,}3963$), hàng $0{,}85$ đủ phép tính trên trang (Đ10).
+- **Hình:** `ppo-phang-va-kl.svg` (mới, §4.5), `width` khoảng 760.
+- **Ghi chú nguồn:** §6.1, đoạn "Từ $p_B=\tfrac{11}{15}$ …" và đoạn sau ("PPO-Clip cắt đóng góp của từng mẫu …"); Nhận xét 10.42.
+- **Bỏ khỏi mặt trang:** bảng ba hàng có cột $J$ và ý 2 "gradient bằng $0$ cả khi tăng $p_B$ làm $J$ tăng" (xuống ghi chú diễn giả; hình và bảng nói cùng điều thì giữ một, TB10).
+- **Diễn giả:** cột $J$: $J(0{,}4;\,p_B)=1{,}08p_B+0{,}6$ cho $1{,}392$; $1{,}518$; $1{,}626$: mục tiêu cắt dừng vòng trong ở $\tfrac{11}{15}$ dù $\partial J/\partial p_B=1{,}08>0$. Sự gần nhau của hai chính sách là tính chất của cả phân phối hành động tại các trạng thái liên quan, đo bằng TV hay KL tại từng trạng thái; vài tỉ số trên mẫu gần $1$ không đủ để suy ra nó (nhận xét §4). Engstrom và cộng sự (2020, §4) đo được tỉ số vượt khoảng cắt trong thực hành; động lượng của Adam là một nguyên nhân (Nhận xét 10.42(1)). Theo dõi KL và dừng sớm theo KL là biện pháp thực hành; nó không biến PPO-Clip thành TRPO.
+- **Phút:** 1,5.
+
+##### `L10-5-17` · Một vòng PPO giữ cố định dữ liệu cũ và tính lại tỉ số (mã mới; trang 9 của nhận xét)
+
+- **Câu:** 5. **Nhãn:** không (hộp).
+- **Mặt trang:**
+  - "Một vòng dùng lại bộ đệm $\mathcal D$ trong $K$ lần qua bộ đệm (epoch); mỗi lần chia $\mathcal D$ thành các lô nhỏ (mini-batch) cỡ $M$."
+  - Hình `ppo-vong-nhieu-epoch.svg`, gần hết bề rộng.
+  - "Ở đây, trên bộ đệm hai lượt, $\widehat A_t$ giữ cố định, $\rho_t$ tính lại theo $(p_A;\,p_B)$, và vòng trong đi từ $(\tfrac12;\,\tfrac23)$ tới $(0{,}4;\,\tfrac{11}{15})$." (Đ6, Đ12)
+  - Hộp: "PPO dùng lại dữ liệu của chính sách vừa thu trong $K$ lần qua bộ đệm, rồi bỏ bộ đệm và thu bộ đệm mới. Nó không giữ dữ liệu của các chính sách cũ hơn."
+- **Dựng dần:** (0) dòng mở và hình; (1) dòng "Ở đây"; (2) hộp.
+- **1 phút:** Trong một vòng, log-xác suất cũ, lợi thế và mục tiêu của critic đứng yên; tỉ số, mất mát và gradient tính lại sau mỗi bước.
+- **Mới:** $K$ (số lần qua bộ đệm), lô nhỏ cỡ $M$ (TB24 cho phép hai). Tên tiếng Anh epoch, mini-batch lên lần đầu ở trang này (chuyển từ `5-07`).
+- **Nguồn số:** điểm đầu, điểm dừng từ `5-05`.
+- **Hình:** `ppo-vong-nhieu-epoch.svg` (mới, §4.5), `width` khoảng 1000.
+- **Ghi chú nguồn:** Thuật toán 10.49 và bảng "giữ cố định / tính lại" sau thuật toán (§6.3).
+- **Diễn giả:** đây là chỗ dễ nhầm với học ngoài chính sách tổng quát: PPO tái sử dụng dữ liệu vừa thu trong một số lần hữu hạn, không giữ một bộ đệm lịch sử (nhận xét §5). Từ lô thứ hai, $\pi_\theta$ đã khác $\pi_{\mathrm{old}}$; $\rho_t$ hiệu chỉnh phân phối hành động, phân bố trạng thái vẫn của $\pi_{\mathrm{old}}$. Chi phí: $K\lceil|\mathcal D|/M\rceil$ bước gradient mỗi bộ đệm.
+- **Phút:** 1,5.
+
+##### `L10-5-18` · Hàm mất mát tổng của PPO (mã mới; trang 10 của nhận xét)
+
+- **Câu:** 5. **Nhãn:** "Định nghĩa.", "Ý nghĩa:".
+- **Mặt trang:**
+  - "Cài đặt cập nhật actor và critic bằng một bước gradient trên một hàm mất mát."
+  - "**Định nghĩa.** Với $V^{\mathrm{targ}}_t$ giữ cố định và hệ số $c_1,c_2\ge0$, hàm mất mát tổng trên lô $\mathcal B$ là" $$L(\theta,w)=-\mathcal L^{\mathrm{CLIP}}(\theta)+c_1\,\frac1{|\mathcal B|}\sum_{t\in\mathcal B}\bigl(\hat v(S_t,w)-V^{\mathrm{targ}}_t\bigr)^2-c_2\,\mathcal H(\theta),$$ "với entropy $\mathcal H(\theta)=\frac1{|\mathcal B|}\sum_{t\in\mathcal B}\bigl[-\sum_a\pi_\theta(a\mid S_t)\log\pi_\theta(a\mid S_t)\bigr]$."
+  - Bảng:
+
+    | Thành phần | Vai trò |
+    |---|---|
+    | $-\mathcal L^{\mathrm{CLIP}}$ (actor) | tăng mục tiêu cắt, không thưởng thay đổi có lợi vượt khoảng cắt |
+    | $c_1L^V$ (critic) | hồi quy $\hat v$ về $V^{\mathrm{targ}}_t=\widehat A_t+\hat v_{\mathrm{old}}(S_t)$, như mạch 3 |
+    | $-c_2\mathcal H$ (entropy) | giữ mức ngẫu nhiên của chính sách, hỗ trợ khám phá |
+  - "**Ý nghĩa:** tại $s_B$, $\pi_{\mathrm{old}}=(\tfrac23;\,\tfrac13)$ có entropy $-\tfrac23\log\tfrac23-\tfrac13\log\tfrac13=0{,}637$; chính sách tất định có entropy $0$. Trừ $c_2\mathcal H$ làm mất mát tăng khi chính sách mất tính ngẫu nhiên."
+- **Dựng dần:** (0) dòng mở, định nghĩa; (1) bảng; (2) "Ý nghĩa:".
+- **1 phút:** Một hàm mất mát gộp ba việc: tăng mục tiêu cắt, khớp critic, giữ entropy.
+- **Mới:** hàm mất mát tổng; entropy (TB24 cho phép hai).
+- **Nguồn số:** $0{,}637$ trên trang; $V^{\mathrm{targ}}_t$ từ `3-13`.
+- **Hình:** không.
+- **Ghi chú nguồn:** Định nghĩa 10.45 (entropy), Định nghĩa 10.46 (hàm mất mát tổng).
+- **Diễn giả:** cực tiểu $L$ tương đương tăng $\mathcal L^{\mathrm{CLIP}}$, giảm $L^V$, tăng entropy. Khi actor và critic dùng chung mạng, $c_1$ cân hai mất mát; khi tách mạng, $c_1$ chỉ đổi bước học của critic. Đây là dạng cực tiểu của $L^{\mathrm{CLIP+VF+S}}$ ở (9) của Schulman và cộng sự (2017). PPO-Penalty thay phép cắt bằng phạt KL trong hàm mục tiêu, với trọng số phạt chỉnh sau mỗi vòng (§6.2; không lên trang, §10 mục #7, việc 2).
+- **Phút:** 1.
+
+##### `L10-5-19` · Các chỉ số theo dõi khi huấn luyện PPO (mã mới; trang 11 của nhận xét)
+
+- **Câu:** 5. **Nhãn:** "Định nghĩa.", "Lưu ý:".
+- **Mặt trang:**
+  - "**Định nghĩa.** Trên lô nhỏ $\mathcal B$: approxKL (approximate KL) $=\frac1{|\mathcal B|}\sum_{t\in\mathcal B}\bigl[(\rho_t-1)-\log\rho_t\bigr]$; tỉ lệ cắt (clip fraction) $=\frac1{|\mathcal B|}\#\{t\in\mathcal B:\lvert\rho_t-1\rvert>\epsilon\}$."
+  - Bảng:
+
+    | Chỉ số | Đo gì | Tín hiệu cần chú ý |
+    |---|---|---|
+    | approxKL | mức đổi chính sách trong vòng | cao so với ngưỡng: dừng sớm các lần qua bộ đệm còn lại |
+    | tỉ lệ cắt | phần mẫu có tỉ số ngoài khoảng cắt | lớn và kéo dài qua nhiều vòng: nhiều mẫu chịu tác động của phép cắt |
+    | entropy | mức ngẫu nhiên của chính sách | giảm quá nhanh: khám phá bị thu hẹp |
+  - "Lô nhỏ giả định, vì trên chuỗi vòng trong dừng khi tỉ số chạm biên khoảng cắt: $\rho=(1{,}05;\,1{,}18;\,1{,}24;\,0{,}70)$, $\epsilon=0{,}2$. Hai mẫu ngoài $[0{,}8;\,1{,}2]$, tỉ lệ cắt $2/4=50\%$. Số hạng $(\rho-1)-\log\rho$: $0{,}05-\log1{,}05=0{,}0012$; $0{,}0145$; $0{,}0249$; $0{,}0567$; approxKL $\approx0{,}0243$."
+  - Hình `ppo-lo-bon-ti-so.svg` cạnh dòng ví dụ.
+  - "**Lưu ý:** approxKL tính trên chính các mẫu vừa dùng để cập nhật $\theta$ là chỉ số chẩn đoán, không phải ước lượng không chệch của KL."
+- **Dựng dần:** (0) định nghĩa, bảng; (1) dòng lô giả định, hình; (2) "Lưu ý:".
+- **1 phút:** Ba con số trả lời ba câu hỏi về vòng vừa chạy: chính sách đổi bao nhiêu, phép cắt chạm bao nhiêu mẫu, chính sách còn ngẫu nhiên đến đâu.
+- **Mới:** approxKL; tỉ lệ cắt (entropy đã có ở `5-18`).
+- **Nguồn số:** trên trang; lô giả định theo quyết định #7(2) (TB29: giá trị giả định ghi là giả định, kèm lý do).
+- **Hình:** `ppo-lo-bon-ti-so.svg` (mới, §4.5), `width` khoảng 500.
+- **Ghi chú nguồn:** Định nghĩa 10.47, Mệnh đề 10.48 (phần Phạm vi); §6.4, bảng chẩn đoán và đoạn "Giả sử một mini-batch bốn mẫu …".
+- **Diễn giả:** approxKL không âm trên từng mẫu; dạng $-\log\rho$ cũng được dùng nhưng có thể âm. Với $\theta$ chọn trước khi rút mẫu, approxKL là ước lượng không chệch của KL (Mệnh đề 10.48); từ lần qua bộ đệm thứ hai, điều kiện đó không còn. Một dấu hiệu bất ổn thường gặp: phần thưởng tăng ngắn hạn, KL tăng vọt, entropy sụp.
+- **Phút:** 1,5.
+
+##### `L10-5-07` · Thuật toán PPO-Clip (1) (giữ mã; trang 12 của nhận xét)
+
+- **Mặt trang:** giữ, trừ dòng đầu vào: "số lần qua bộ đệm $K$, cỡ lô nhỏ $M$" (tên tiếng Anh đã ở `5-17`).
+- **Ghi chú nguồn:** giữ; biên tập viên đối chiếu số hiệu với ghi chú bản #7.
+- **Phút:** 1.
+
+##### `L10-5-14` · Thuật toán PPO-Clip (2) (giữ mã)
+
+- **Mặt trang:** giữ mục 3, trừ dòng **Dừng sớm**: "**Dừng sớm** (early stopping, tùy chọn): ghi approxKL $\frac1M\sum_{t\in\mathcal B}\bigl[(\rho_t-1)-\log\rho_t\bigr]$ và tỉ lệ cắt; nếu approxKL vượt ngưỡng, bỏ các lần qua bộ đệm còn lại." (công thức giữ trong bước, tinh chỉnh TB31)
+- **Diễn giả:** câu "Cài đặt thường gộp cập nhật actor và critic … hàm mất mát tổng …" đổi thành "Cài đặt thay hai bước cập nhật bằng một bước giảm hàm mất mát tổng, thêm chuẩn hóa lợi thế trên lô, và dùng Adam (Bài 08)." Câu PPO-Penalty chuyển sang `5-18`. Giữ các câu còn lại.
+- **Phút:** 1 (trước 1,5: vòng và mất mát đã ở `5-17`, `5-18`).
+
+##### `L10-5-08` · So sánh TRPO và PPO (giữ mã; trang 13 của nhận xét; trạm dừng cuối mạch)
+
+- **Mặt trang:** bảng giữ; ô "Cách giữ bước gần" của PPO-Clip chờ câu hỏi 4 (§10 mục #7). Thêm hộp dưới bảng (thông điệp kết của nhận xét §8): "TRPO giới hạn mức đổi chính sách bằng ràng buộc KL trung bình. PPO-Clip bỏ phần thưởng của thay đổi có lợi vượt khoảng cắt, nên cần theo dõi KL."
+- **Dựng dần:** (0) bảng; (1) hộp.
+- **1 phút:** Hai thuật toán cùng ý giữ bước gần, khác cách giữ, chi phí và mức bảo đảm.
+- **Diễn giả:** giữ; thêm: "Phép cắt không bảo đảm KL nhỏ và không bảo đảm $J$ tăng; nó giảm động lực cập nhật quá mức theo hướng được đánh giá là có lợi."
+- **Phút:** 1.
+
+##### `L10-5-12` · Bài tập: một vòng PPO-Clip trên chuỗi hai trạng thái (giữ mã; Bài tập 10.23)
+
+- **Mặt trang:** câu đầu đổi: "Bài dùng lợi thế đúng, như các trang dựng mục tiêu cắt, giữ cố định: $A_\pi(s_A,\cdot)=(0{,}4;\,-0{,}4)$, $A_\pi(s_B,\cdot)=(1;\,-2)$." Phần còn lại giữ.
+- **Diễn giả:** thêm: "Trang lợi thế dương và lợi thế âm cho từng mẫu tại $s_B$ một ngưỡng riêng ($0{,}8$ và $\tfrac{11}{15}$); câu (a) hỏi điểm dừng khi có cả hai mẫu."
+- **Phút:** 1,5 (tính vào thời gian bài tập).
+
+##### `L10-5-13` · Bài tập: lời giải (giữ mã)
+
+- **Mặt trang:** giữ. Số $\mathcal L^{\mathrm{CLIP}}=0{,}200$, $\Delta\mathcal L=0{,}260$, $\Delta J=0{,}296$ khớp `kiem_m5.py`.
+- **Phút:** 2 (tính vào thời gian bài tập).
+
+**Ảnh hưởng ngoài mạch 5 (bản #7; người dựng làm cùng lượt, ghi ở §10 khi làm).**
+
+| Chỗ | Việc |
+|---|---|
+| mạch 4, `4-31` | không đổi: hộp "Mỗi bộ đệm chỉ cho một bước cập nhật, sau gradient liên hợp và tìm kiếm lùi." vẫn là điều còn thiếu dẫn vào `5-09` |
+| mạch 6, `6-12` | không đổi (không có hàng PPO) |
+| mạch 6, `6-13` | giữ hàng "Mục tiêu cắt" (giả thiết "lợi thế cố định trong vòng", gradient $0$ theo dấu); ghi chú diễn giả có thể thêm "phép cắt không chặn KL" nếu còn chỗ trong 150 âm tiết |
+| mạch 6, `6-14` | ô "Cách giữ bước gần" của PPO-Clip theo quyết định câu hỏi 4; ô "Bảo đảm" giữ |
+| mạch 6, `6-18` | mục 3 "PPO dùng lại bộ đệm $K$ lần, cắt tỉ số chính sách và không chặn KL" và câu "PPO chỉ cắt tỉ số …" của ghi chú diễn giả theo câu hỏi 4; số hiệu "Thuật toán 10.49, Nhận xét 10.42" đối chiếu với ghi chú bản #7 |
+| mạch 6, `6-15` | không đổi (câu 3 hỏi đúng ý của `5-06`) |
+| mạch 6, `6-16` | không đổi nếu ghi chú bản #7 không đổi số bài tập |
+| dòng nguồn mạch 5 | mọi số hiệu (Định nghĩa 10.39, 10.45–10.47, Mệnh đề 10.40, 10.41, 10.48, Nhận xét 10.42, Thuật toán 10.49) và tên đoạn §6.1 đối chiếu với ghi chú sau khi người viết ghi chú giao; `5-06` cũ dẫn "§6.4 (Định nghĩa 10.47, Mệnh đề 10.48)" trong khi hai khối này ở §6.3 của bản hiện có |
+| `exercises.md` | bảng `Mạch | Mở phần`: không đổi; mạch 5 mở ở `#/5/1`, trang `5-00` giữ mã và vị trí |
+| `outline.md` | bảng "Sáu mạch": mạch 5 18 trang (16 + 2 bài tập), 20,5 phút (+3,5 bài tập), mục ghi chú §6.1, §6.3, §6.4, đầu ra mới (§10 mục #7); tổng 89 + 7 trang, 122,5 phút. Bảng thuật ngữ: thêm "số lần qua bộ đệm (epoch)", "lô nhỏ (mini-batch)" ở `5-17`; "hàm mất mát tổng", "entropy" ở `5-18`; "approxKL", "tỉ lệ cắt (clip fraction)" ở `5-19`; "đoạn phẳng" ở `5-15`; dòng "lô nhỏ; số lần qua bộ đệm; dừng sớm" đổi trang từ `5-07` sang `5-17`. Dòng "Thuật ngữ không dùng trên deck hiện hành": bỏ entropy, hàm mất mát tổng, approxKL, tỉ lệ cắt |
+| câu chuyện | mục mạch 5, §3 (kết quả lên trang), §4, §5 đã sửa trong lượt này |
 
 # Lịch sử: mạch 5 bản 2026-11-21 (trước nhận xét PPO #7)
 

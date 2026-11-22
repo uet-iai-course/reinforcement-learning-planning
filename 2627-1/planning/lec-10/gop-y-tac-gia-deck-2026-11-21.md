@@ -50,3 +50,12 @@ Hình trong đề xuất (dựng lại thành SVG, không dùng ảnh raster):
 | # | Trang | Góp ý (nguyên văn) | Xử lý |
 |---|---|---|---|
 | 7 | mạch 5 (PPO), ghi chú §6 | "Tiếp tục với mạch PPO" (tệp `Nhan_xet_phan_PPO_bai_10.docx`, văn bản ở `nhan-xet-ppo-2026-11-22.md`) | Tác giả chọn (2026-11-22): (1) dựng trực giác clipping bằng lợi thế đúng trên chuỗi tại $s_B$: $A=+1$ (hành động 1), $A=-2$ (hành động 2), $\epsilon=0{,}2$; bảng bốn trường hợp CPI/CLIP: $A=+1,\rho=1{,}3$: $1{,}3/1{,}2$; $A=+1,\rho=0{,}7$: $0{,}7/0{,}7$; $A=-2,\rho=0{,}7$: $-1{,}4/-1{,}6$; $A=-2,\rho=1{,}3$: $-2{,}6/-2{,}6$; (2) giữ ví dụ chỉ số huấn luyện, ghi là lô nhỏ giả định: $\rho=(1{,}05;1{,}18;1{,}24;0{,}70)$, tỉ lệ cắt $50\%$, approxKL $\approx0{,}0243$; (3) sửa ghi chú §6, trần GC-RL-19 nâng lên 33 500. Ưu tiên của nhận xét: hai trường hợp dấu lợi thế trước định nghĩa và công thức min; bộ đệm lợi thế sai dấu thành phản ví dụ sau công thức; sơ đồ một vòng PPO nhiều epoch (giữ cố định / tính lại); trang hàm mất mát tổng và trang chỉ số huấn luyện; câu "PPO không cắt chính sách mới; PPO cắt đóng góp của từng mẫu"; bố cục 13 trang chính, chứng minh dài và biến thể sang phụ lục. Điều phối viên đã tính các số. |
+
+## #8 (2026-11-22): nhận xét PPO sau chỉnh sửa
+
+Nguồn: `nhan-xet-ppo-sau-sua-2026-11-22.md`. Năm việc: (1) thống nhất câu về bảo đảm hiệu năng ("dùng lại dữ liệu từ chính sách cũ để thực hiện các bước cập nhật hiệu quả, đồng thời kiểm soát nguy cơ suy giảm hiệu năng") ở mở đầu, chuyển tiếp TRPO→PPO, tổng kết; (2) phân biệt tỉ lệ cắt (clip fraction) với tỉ lệ cắt có tác dụng (mẫu trên đoạn phẳng); (3) tiêu đề `5-05` gắn với ví dụ, bỏ "giới hạn mỗi vòng đi bao xa"; (4) trang ba đại lượng $\Delta J$, $\Delta\mathcal L$, $\mathcal L^{\mathrm{CLIP}}$ trước bài tập, $\mathcal L^{\mathrm{CLIP}}\le\mathcal L^{\mathrm{CPI}}$, không có thứ tự tổng quát giữa $\Delta\mathcal L$ và $\Delta J$; (5) lời giải bài tập 10.23 tách ba bước.
+
+Quyết định của tác giả (AskUserQuestion):
+- Mạch 5: "Chuyển sang phụ lục (Rec.)": phụ lục đổi tên thành cơ sở lý thuyết của TRPO và PPO; chuyển bài tập 10.23 (4 trang), phần tính chi tiết bộ đệm ở `5-05`, lưu ý không chệch của approxKL; mạch chính khoảng 16 trang; thời lượng dưới 120 phút.
+- Lô giả định: "Gán dấu lợi thế (Rec.)": $\widehat A=(+;-;+;+)$; tỉ lệ cắt $50\%$, tỉ lệ cắt có tác dụng $1/4=25\%$ (chỉ mẫu 3).
+- Ghi chú: "Nâng trần lên 34 000 (Rec.)".
