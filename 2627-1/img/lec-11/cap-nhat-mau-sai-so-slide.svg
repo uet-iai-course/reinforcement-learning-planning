@@ -43,10 +43,13 @@
 <text x="510" y="168" font-size="20" text-anchor="start" font-weight="bold" fill="#6B7280">số ban đầu giả định</text>
 <circle cx="266.0" cy="300.0" r="8" fill="#6B7280" stroke="#1d2433" stroke-width="2"/>
 <circle cx="480.0" cy="195.0" r="8" fill="#6B7280" stroke="#1d2433" stroke-width="2"/>
-<text x="510" y="202" font-size="20" text-anchor="start" font-weight="bold" fill="#6B7280">(1; 0): kỳ vọng xong</text>
-<text x="510" y="228" font-size="20" text-anchor="start" font-weight="normal" fill="#6B7280">sau đủ b lần đánh giá</text>
-<circle cx="480.0" cy="261.0" r="8" fill="#2E7D4F" stroke="#1d2433" stroke-width="2"/>
-<text x="510" y="268" font-size="20" text-anchor="start" font-weight="bold" fill="#1d2433">b = 100, k = 10:</text>
-<text x="510" y="294" font-size="20" text-anchor="start" font-weight="normal" fill="#1d2433">k/b = 0,1;</text>
-<text x="510" y="320" font-size="20" text-anchor="start" font-weight="bold" fill="#2E7D4F">sai số 0,3146</text>
+<text x="510" y="202" font-size="20" text-anchor="start" font-weight="bold" fill="#6B7280">(1; 0): đã tính đúng</text>
+<text x="510" y="228" font-size="20" text-anchor="start" font-weight="normal" fill="#6B7280">mục tiêu kỳ vọng</text>
+<circle cx="266.0" cy="170.0" r="11" fill="none" stroke="#2F3E7A" stroke-width="3"/>
+<circle cx="480" cy="255" r="11" fill="none" stroke="#2F3E7A" stroke-width="3"/>
+<text x="510" y="262" font-size="20" text-anchor="start" font-weight="bold" fill="#2F3E7A">b = 2, k = 2: RMSE 0,5</text>
+<circle cx="480.0" cy="297.0" r="8" fill="#2E7D4F" stroke="#1d2433" stroke-width="2"/>
+<text x="510" y="304" font-size="20" text-anchor="start" font-weight="bold" fill="#1d2433">b = 100, k = 10:</text>
+<text x="510" y="330" font-size="20" text-anchor="start" font-weight="normal" fill="#1d2433">k/b = 0,1;</text>
+<text x="510" y="356" font-size="20" text-anchor="start" font-weight="bold" fill="#2E7D4F">sai số 0,3146</text>
 </svg>
