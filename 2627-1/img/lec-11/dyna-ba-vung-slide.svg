@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 362" width="1000" height="362" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Bước thật 5 trên ba vùng: trước bước</title>
+<desc id="d">Ba vùng. Mê cung thật: dải F, K, Z, chấm tác tử ở K. Mô hình: ba kết cục đã ghi, (A, phải) cho (0, B), (B, xuống) cho (0, F), (F, phải) cho (0, K). Bảng Q: Q(F, phải) bằng 0, Q(K, phải) bằng 0.</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="ao" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker><marker id="ars" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="aos" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker><marker id="ag" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2E7D4F"/></marker><marker id="ags" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#2E7D4F"/></marker><marker id="ax" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#6B7280"/></marker><marker id="axs" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#6B7280"/></marker><marker id="ak" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#1d2433"/></marker><marker id="aks" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#1d2433"/></marker><pattern id="van" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#2F3E7A" stroke-width="3.5"/></pattern><pattern id="vano" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#B5541B" stroke-width="3.5"/></pattern><pattern id="vanx" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#6B7280" stroke-width="3.5"/></pattern></defs>
+<rect x="10" y="4" width="300" height="316" rx="8" fill="#FFFFFF" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="160.0" y="36" font-size="24" text-anchor="middle" font-weight="bold" fill="#2F3E7A">mê cung thật</text>
+<rect x="340" y="4" width="300" height="316" rx="8" fill="#FFFFFF" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="490.0" y="36" font-size="24" text-anchor="middle" font-weight="bold" fill="#2F3E7A">mô hình</text>
+<rect x="670" y="4" width="320" height="316" rx="8" fill="#FFFFFF" stroke="#8A94AD" stroke-width="1.5"/>
+<text x="830.0" y="36" font-size="24" text-anchor="middle" font-weight="bold" fill="#2F3E7A">bảng Q</text>
+<rect x="30" y="120" width="64" height="56" rx="0" fill="#FFFFFF" stroke="#8A94AD" stroke-width="2"/>
+<text x="62" y="157" font-size="24" text-anchor="middle" font-weight="bold" fill="#2F3E7A">F</text>
+<rect x="130" y="120" width="64" height="56" rx="0" fill="#FFFFFF" stroke="#8A94AD" stroke-width="2"/>
+<text x="162" y="157" font-size="24" text-anchor="middle" font-weight="bold" fill="#2F3E7A">K</text>
+<rect x="230" y="120" width="64" height="56" rx="0" fill="#DCE3F3" stroke="#8A94AD" stroke-width="2"/>
+<text x="262" y="157" font-size="24" text-anchor="middle" font-weight="bold" fill="#2F3E7A">Z</text>
+<circle cx="182.0" cy="132.0" r="8" fill="#2F3E7A"/>
+<text x="155" y="230" font-size="21" text-anchor="middle" font-weight="normal" fill="#2F3E7A">chấm: vị trí tác tử</text>
+<rect x="356" y="76" width="268" height="44" rx="6" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2"/>
+<text x="490" y="106" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">(A,→) ↦ (0, B)</text>
+<rect x="356" y="128" width="268" height="44" rx="6" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2"/>
+<text x="490" y="158" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">(B,↓) ↦ (0, F)</text>
+<rect x="356" y="180" width="268" height="44" rx="6" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2"/>
+<text x="490" y="210" font-size="22" text-anchor="middle" font-weight="normal" fill="#1d2433">(F,→) ↦ (0, K)</text>
+<text x="684" y="132" font-size="23" text-anchor="start" font-weight="bold" fill="#1d2433">Q(F,→)</text>
+<text x="790" y="132" font-size="24" text-anchor="start" font-weight="bold" fill="#1d2433">0</text>
+<text x="684" y="262" font-size="23" text-anchor="start" font-weight="bold" fill="#1d2433">Q(K,→)</text>
+<text x="790" y="262" font-size="24" text-anchor="start" font-weight="bold" fill="#1d2433">0</text>
+</svg>

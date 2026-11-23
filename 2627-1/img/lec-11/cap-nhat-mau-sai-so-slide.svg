@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="720" height="400" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 790 426" width="790" height="426" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
 <title id="t">Sai số của cập nhật mẫu so với mục tiêu kỳ vọng</title>
-<desc id="d">Trục hoành: k/b, số lần đánh giá chia cho b, từ 0 đến 2. Trục tung: sai số căn bình phương trung bình so với mục tiêu kỳ vọng của mô hình, từ 0 đến 1. Ba đường cập nhật mẫu căn của (b − 1) chia (b nhân k) với b bằng 2 (liền), 10 (nét đứt), 100 (chấm). Bậc thang xám của cập nhật kỳ vọng: sai số 1 tới k bằng b, rồi về 0. Chấm tại (0,1; 0,3146): b bằng 100, k bằng 10.</desc>
+<desc id="d">Trục hoành: k/b, số lần đánh giá chia cho b, từ 0 đến 2. Trục tung: sai số căn bình phương trung bình so với mục tiêu kỳ vọng của mô hình, từ 0 đến 1. Ba đường cập nhật mẫu căn của (b − 1) chia (b nhân k) với b bằng 2 (liền), 10 (nét đứt), 100 (chấm). Bậc thang xám của cập nhật kỳ vọng: sai số 1 tới k bằng b, rồi về 0. Chấm xám tại (1; 0): 100 trên 100 lượt, tính đúng mục tiêu kỳ vọng. Chấm xanh lá tại (0,1; 0,3146): b bằng 100, k bằng 10, 10 trên 100 lượt đánh giá. Dải xám từ 0 tới 1: chưa hoàn tất cập nhật kỳ vọng; đường xám ở mức 0 từ k/b bằng 1.</desc>
 <defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="ao" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker><marker id="ars" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="aos" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker><marker id="ag" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2E7D4F"/></marker><marker id="ags" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#2E7D4F"/></marker><marker id="ax" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#6B7280"/></marker><marker id="axs" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#6B7280"/></marker><marker id="ak" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#1d2433"/></marker><marker id="aks" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#1d2433"/></marker><pattern id="van" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#2F3E7A" stroke-width="3.5"/></pattern><pattern id="vano" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#B5541B" stroke-width="3.5"/></pattern><pattern id="vanx" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#6B7280" stroke-width="3.5"/></pattern></defs>
 <line x1="96" y1="300" x2="442" y2="300" stroke="#1d2433" stroke-width="2"/>
 <line x1="96" y1="300" x2="96" y2="32" stroke="#1d2433" stroke-width="2"/>
@@ -20,10 +20,15 @@
 <text x="84" y="178.0" font-size="21" text-anchor="end" font-weight="normal" fill="#1d2433">0,5</text>
 <line x1="88" y1="40" x2="96" y2="40" stroke="#1d2433" stroke-width="2"/>
 <text x="84" y="48" font-size="21" text-anchor="end" font-weight="normal" fill="#1d2433">1</text>
-<text x="266.0" y="362" font-size="21" text-anchor="middle" font-weight="normal" fill="#1d2433">k/b: số lần đánh giá chia b</text>
+<text x="266.0" y="358" font-size="21" text-anchor="middle" font-weight="normal" fill="#1d2433">k/b: số lần rút từ mô hình chia b</text>
+<text x="266.0" y="384" font-size="21" text-anchor="middle" font-weight="normal" fill="#1d2433">(rút để ước lượng mục tiêu)</text>
 <text x="22" y="170.0" font-size="20" text-anchor="middle" transform="rotate(-90 22 170.0)">RMSE so với mục tiêu</text>
 <text x="48" y="170.0" font-size="20" text-anchor="middle" transform="rotate(-90 48 170.0)">kỳ vọng của mô hình</text>
-<polyline points="96.0,40.0 266.0,40.0 266.0,300.0 436.0,300.0" fill="none" stroke="#6B7280" stroke-width="4.5"/>
+<rect x="96.0" y="40" width="170.0" height="260" rx="0" fill="#E5E7EB" stroke="none" stroke-width="2.5"/>
+<text x="260.0" y="66.0" font-size="20" text-anchor="end" font-weight="bold" fill="#6B7280">chưa hoàn tất</text>
+<text x="260.0" y="88.0" font-size="20" text-anchor="end" font-weight="bold" fill="#6B7280">cập nhật</text>
+<text x="260.0" y="110.0" font-size="20" text-anchor="end" font-weight="bold" fill="#6B7280">kỳ vọng</text>
+<line x1="266.0" y1="300" x2="436.0" y2="300" stroke="#6B7280" stroke-width="4.5"/>
 <polyline points="181.0,116.2 266.0,170.0 351.0,193.9 436.0,208.1" fill="none" stroke="#2F3E7A" stroke-width="3.5"/>
 <circle cx="181.0" cy="116.2" r="5" fill="#2F3E7A"/>
 <circle cx="266.0" cy="170.0" r="5" fill="#2F3E7A"/>
@@ -38,18 +43,18 @@
 <text x="510" y="74" font-size="20" text-anchor="start" font-weight="bold" fill="#B5541B">mẫu, b = 10</text>
 <line x1="460" y1="101" x2="500" y2="101" stroke="#2E7D4F" stroke-width="3.5" stroke-dasharray="3 5"/>
 <text x="510" y="108" font-size="20" text-anchor="start" font-weight="bold" fill="#2E7D4F">mẫu, b = 100</text>
-<line x1="460" y1="135" x2="500" y2="135" stroke="#6B7280" stroke-width="4.5"/>
-<text x="510" y="142" font-size="20" text-anchor="start" font-weight="bold" fill="#6B7280">kỳ vọng: mức 1 là sai</text>
-<text x="510" y="168" font-size="20" text-anchor="start" font-weight="bold" fill="#6B7280">số ban đầu giả định</text>
+<rect x="460" y="124" width="40" height="22" rx="0" fill="#E5E7EB" stroke="none" stroke-width="2.5"/>
+<text x="510" y="142" font-size="20" text-anchor="start" font-weight="bold" fill="#6B7280">kỳ vọng: dải xám,</text>
+<text x="510" y="168" font-size="20" text-anchor="start" font-weight="bold" fill="#6B7280">sai số 0 khi đủ k = b</text>
 <circle cx="266.0" cy="300.0" r="8" fill="#6B7280" stroke="#1d2433" stroke-width="2"/>
 <circle cx="480.0" cy="195.0" r="8" fill="#6B7280" stroke="#1d2433" stroke-width="2"/>
-<text x="510" y="202" font-size="20" text-anchor="start" font-weight="bold" fill="#6B7280">(1; 0): đã tính đúng</text>
+<text x="510" y="202" font-size="20" text-anchor="start" font-weight="bold" fill="#6B7280">100/100 lượt: tính đúng</text>
 <text x="510" y="228" font-size="20" text-anchor="start" font-weight="normal" fill="#6B7280">mục tiêu kỳ vọng</text>
 <circle cx="266.0" cy="170.0" r="11" fill="none" stroke="#2F3E7A" stroke-width="3"/>
 <circle cx="480" cy="255" r="11" fill="none" stroke="#2F3E7A" stroke-width="3"/>
 <text x="510" y="262" font-size="20" text-anchor="start" font-weight="bold" fill="#2F3E7A">b = 2, k = 2: RMSE 0,5</text>
 <circle cx="480.0" cy="297.0" r="8" fill="#2E7D4F" stroke="#1d2433" stroke-width="2"/>
 <text x="510" y="304" font-size="20" text-anchor="start" font-weight="bold" fill="#1d2433">b = 100, k = 10:</text>
-<text x="510" y="330" font-size="20" text-anchor="start" font-weight="normal" fill="#1d2433">k/b = 0,1;</text>
+<text x="510" y="330" font-size="20" text-anchor="start" font-weight="normal" fill="#1d2433">10/100 lượt đánh giá;</text>
 <text x="510" y="356" font-size="20" text-anchor="start" font-weight="bold" fill="#2E7D4F">sai số 0,3146</text>
 </svg>

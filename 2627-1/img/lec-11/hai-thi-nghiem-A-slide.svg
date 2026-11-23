@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 160" width="1100" height="160" role="img" aria-labelledby="t d" font-family="'Source Sans 3','Source Sans Pro','Noto Sans',Arial,sans-serif" fill="#1d2433">
+<title id="t">Hai thí nghiệm với cặp (A, phải)</title>
+<desc id="d">Trái, lượt đã quan sát: thẻ 1 trượt, ở lại A; thẻ 2 sang B; p mũ của biến cố sang B bằng 1/2; C bằng 2 vì lần đầu trượt, không chọn trước. Phải, ấn định C bằng 2 và lặp nhiều nhóm, p bằng 0,8: ba cột p mũ bằng 0, 0,5, 1 với xác suất 0,04; 0,32; 0,64; độ lệch chuẩn 0,2828.</desc>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="ao" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker><marker id="ars" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#2F3E7A"/></marker><marker id="aos" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#B5541B"/></marker><marker id="ag" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#2E7D4F"/></marker><marker id="ags" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#2E7D4F"/></marker><marker id="ax" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#6B7280"/></marker><marker id="axs" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#6B7280"/></marker><marker id="ak" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#1d2433"/></marker><marker id="aks" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto-start-reverse"><path d="M0,0 L16,8 L0,16 Z" fill="#1d2433"/></marker><pattern id="van" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#2F3E7A" stroke-width="3.5"/></pattern><pattern id="vano" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#B5541B" stroke-width="3.5"/></pattern><pattern id="vanx" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="10" stroke="#6B7280" stroke-width="3.5"/></pattern></defs>
+<rect x="4" y="4" width="470" height="152" rx="8" fill="#EEF1F8" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="239" y="32" font-size="22" text-anchor="middle" font-weight="bold" fill="#2F3E7A">lượt đã quan sát</text>
+<rect x="16" y="46" width="220" height="34" rx="6" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2"/>
+<circle cx="36" cy="63.0" r="14.0" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="36" y="70.0" font-size="20" text-anchor="middle" font-weight="bold" fill="#2F3E7A">1</text>
+<text x="56" y="70.0" font-size="20" text-anchor="start" font-weight="normal" fill="#1d2433">trượt, ở lại A</text>
+<rect x="244" y="46" width="220" height="34" rx="6" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2"/>
+<circle cx="264" cy="63.0" r="14.0" fill="#FFFFFF" stroke="#2F3E7A" stroke-width="2.5"/>
+<text x="264" y="70.0" font-size="20" text-anchor="middle" font-weight="bold" fill="#2F3E7A">2</text>
+<text x="284" y="70.0" font-size="20" text-anchor="start" font-weight="normal" fill="#1d2433">sang B</text>
+<text x="239" y="108" font-size="22" text-anchor="middle" font-weight="bold" fill="#1d2433">p̂(B | A,→) = 1/2</text>
+<text x="239" y="134" font-size="20" text-anchor="middle" font-weight="normal" fill="#6B7280">C = 2 vì lần đầu trượt, không chọn trước</text>
+<rect x="490" y="4" width="606" height="152" rx="8" fill="#F7EFE6" stroke="#B5541B" stroke-width="2.5"/>
+<text x="793" y="32" font-size="22" text-anchor="middle" font-weight="bold" fill="#B5541B">ấn định C = 2, lặp nhiều nhóm (p = 0,8)</text>
+<rect x="538" y="108.8" width="44" height="3.2" rx="0" fill="#B5541B" stroke="#B5541B" stroke-width="1.5"/>
+<text x="560" y="102.8" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">0,04</text>
+<text x="560" y="136" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">p̂ = 0</text>
+<rect x="648" y="86.4" width="44" height="25.6" rx="0" fill="#B5541B" stroke="#B5541B" stroke-width="1.5"/>
+<text x="670" y="80.4" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">0,32</text>
+<text x="670" y="136" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">p̂ = 0,5</text>
+<rect x="758" y="60.8" width="44" height="51.2" rx="0" fill="#B5541B" stroke="#B5541B" stroke-width="1.5"/>
+<text x="780" y="54.8" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">0,64</text>
+<text x="780" y="136" font-size="20" text-anchor="middle" font-weight="normal" fill="#1d2433">p̂ = 1</text>
+<line x1="520" y1="112" x2="820" y2="112" stroke="#1d2433" stroke-width="1.5"/>
+<text x="850" y="82" font-size="21" text-anchor="start" font-weight="normal" fill="#1d2433">độ lệch chuẩn</text>
+<text x="850" y="110" font-size="21" text-anchor="start" font-weight="bold" fill="#1d2433">của p̂: 0,2828</text>
+</svg>
