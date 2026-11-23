@@ -627,3 +627,36 @@ Chẩn đoán từ mục "Kể lại như sinh viên": sinh viên nắm phần �
 | Điều phối viên | 2-14, 2-20 | "F–K" ngắt dòng giữa F và –K; mũi tên nét đứt cắt qua nhãn "Q(K,→)" | chấp nhận | lỗi hiển thị |
 | Biên tập vòng P2 mạch 2 (xong) | | (cùng tác tử biên tập) | `opus` | `high` | mọi phần chấp nhận của P2, năm phát hiện độ chính xác, hai lỗi hiển thị; 68 trang; không trang nào trên 90 âm tiết (2-08, 2-18, 2-15 đúng 90); 2-08 hết LINES6 | chấp nhận: điều phối viên kiểm phần đầu tệp, mạch 1, mạch 3–6 không đổi, `footer_check` 0, `formula_overflow` [], xem ảnh 2-09, 2-13 |
 | Độ chính xác mạch 2 sau P2 (xong) | | năm phát hiện trước sửa đúng; 2 nhẹ mới (2-19 ghi chú diễn giả tả hình cũ; 2-13 nhãn "→ q̂*" cạnh giá trị trạng thái) | chấp nhận; đã sửa ("→ maxₐ q̂*", "→ v* = maxₐ q*"). Hết chu kỳ 1 của vòng mạch 2 mới: commit và push |
+| Commit chu kỳ 1 (mạch 2, prompt mới) | | | | | `f9d58bd` đã push; origin/main chứa HEAD; Pages "built f9d58bd" |
+| Codex mạch 2, vòng P3 (chu kỳ 2) | `codex exec` (prompt mới) | mặc định tài khoản | `high` | `nhan-xet-codex-mach2-2026-11-23-p3.md` | đang chạy |
+| Codex mạch 2, vòng P3 (xong) | | | | | 8,5; 8,5; 8,5; 9; 9; 8,5; 8,5 (như P2) |
+
+### Xét nhận xét vòng P3 mạch 2 (điều phối viên, 2026-11-23; chu kỳ 2, lượt 1)
+
+| Nguồn | Trang | Nhận xét | Quyết định | Lý do |
+|---|---|---|---|---|
+| Codex | 2-04, 2-16, 2-10 | hai vai trò của dữ liệu bằng chính hai thẻ ① ② ở A: "muốn biết xác suất thật sang B → đi thật thêm"; "muốn tính mục tiêu với hai thẻ đang có → rút từ mô hình hoặc xét cả hai nhánh"; lời chốt hiện ngay sau câu hỏi ở 2-16, nhắc lại ở 2-10; 2-04 nhãn "hai lần thử phát sinh trong một lượt đi" / "mỗi nhóm được ấn định hai lần thử" | chấp nhận | "không rút ra được" (ý đồ: hai số đếm $C$ và $k$) |
+| Codex | 2-06, 2-13, 2-18, 2-17 | 2-06 nhãn "một cập nhật trên cặp đã có thẻ"; cùng nhãn "mô hình cố định" ở 2-13 và 2-18, nói rõ mô hình cố định trong hình khác bảng bốn cặp của lượt đầu; đổi câu chữ định nghĩa lập kế hoạch nền | chấp nhận hai nhãn; bác bỏ đổi câu chữ định nghĩa | định nghĩa giữ câu chữ ghi chú (NT2); ví dụ đã có ở 2-17 |
+| Codex | 2-13 | nhãn hai nhánh tại K "0,8 → Z, thưởng +1" và "0,2 → K, thưởng 0"; lượt bấm sau cùng bố cục tại F: nhánh đi tiếp hệ số 0,8 · 0,9, nhánh trượt 0,2 · 0,9, chuyển vế ra 0,72/0,82; dải cam "mô hình cố định, giả sử luôn đi tới ô kế" | chấp nhận | "không rút ra được" (dựng hệ số) |
+| Codex | 2-03, 2-08 | thẻ giả định "thưởng 0, ở A" / "thưởng +1, sang B" để thấy vì sao rút nguyên thẻ | bác bỏ | ví dụ dựng thêm ngoài ghi chú (NT2, TB25: một ví dụ chung) |
+| Codex | 2-14, 2-09 | một dòng cạnh bản đồ cũ: trong một lượt trước khi đổi, tác tử từng thử đi phải ở B và ghi thẻ "thưởng 0, ở lại B"; 2-09 dùng lại thẻ đó làm mốc đếm 400 bước | chấp nhận (đã nhận ở P2, chưa làm vì chỗ) | "không rút ra được" (thẻ (B,→)) |
+| Codex | 2-21, 2-15, 2-19 | ghi giá trị hai vạch và độ dài sai lệch; thêm hai vạch cam mảnh của hai lần rút lại trên cùng bộ nhánh; 2-15 một câu: trước đo sai số khi giữ bộ nhánh, rồi trung bình bình phương qua các bộ giá trị nhánh, 0,3146 là RMSE của thí nghiệm đó; 2-19 trục "số lần đánh giá nhánh / tổng số nhánh" | chấp nhận hai vạch cam (không số), câu ở 2-15, nhãn trục 2-19; bác bỏ ghi số | số của một lần rút ngẫu nhiên không có trong ghi chú (NT2) |
+| Biên tập vòng P3 mạch 2 (xong) | | (cùng tác tử biên tập) | `opus` | `high` | mọi phần chấp nhận của P3; 1 SVG mới (`hai-gioi-han-he-so-slide.svg`, lớp dựng hệ số tại F); 68 trang; âm tiết 2-13 83, 2-16 80, 2-15 89, 2-08 90, 2-18 90 | chấp nhận để vào P4: điều phối viên kiểm phần đầu tệp, mạch 1, mạch 3–6 không đổi, `footer_check` 0, `formula_overflow` [] |
+| Codex mạch 2, vòng P4 (chu kỳ 2) | `codex exec` | mặc định tài khoản | `high` | `nhan-xet-codex-mach2-2026-11-23-p4.md` | đang chạy |
+| Độ chính xác mạch 2 sau P3 | (cùng tác tử độ chính xác) | `opus` | `high` | `ra-soat-chinh-xac-mach2-p3-2026-11-23.md` | đang chạy |
+| Độ chính xác mạch 2 sau P3 (xong) | | hai phát hiện trước sửa đúng; 0 phát hiện mới | chấp nhận |
+| Codex mạch 2, vòng P4 (xong) | | | | | 8,5; 8,5; 8,5; 9; 9; 8,5; 8,5 (như P2, P3) |
+
+### Xét nhận xét vòng P4 mạch 2 (điều phối viên, 2026-11-23; chu kỳ 2, lượt sửa cuối)
+
+| Nguồn | Trang | Nhận xét | Quyết định | Lý do |
+|---|---|---|---|---|
+| Codex | 2-00 | thay dòng liệt kê chủ đề bằng đường dẫn ngắn "đi thật để học mô hình → rút từ mô hình để cập nhật Q → thử lại khi mô hình đã cũ" | chấp nhận dưới dạng `p.strand-keys` (ba cụm ngăn bằng "·"), giữ cấu trúc NT12 | ý đồ ngay từ trang tiêu đề mạch |
+| Codex | 2-06, 2-08 | hai dòng dưới hình: bảng bốn cặp đủ cho lần cập nhật F này; Thuật toán 11.3 cần mô hình trả kết cục ở mọi cặp hợp lệ; 2-08 "rồi chọn đều một hành động đã lưu tại ô đó" | chấp nhận | ghi chú dòng 387 |
+| Codex | 2-03, 2-08 | ô nhỏ với thẻ giả định khác phần thưởng | bác bỏ (lần hai) | NT2, TB25 |
+| Codex | 2-13 | nhãn hai nhánh tại K: "trượt thì ở lại K, thưởng 0; đi được thì vào Z, thưởng +1"; giả thiết các hành động trên tuyến là tối ưu | chấp nhận | khớp ghi chú §1.1 |
+| Codex | 2-09 | dựng dần: thẻ cũ → mốc mở tường → ba vạch 0,54 → 0,6 → 0,64; hỏi chọn hành động nào trước khi hiện mốc cuối | chấp nhận | TB17 |
+| Codex | 2-19, 2-21 | chú thích trục "mỗi lần đánh giá tính một giá trị nhánh", hai mốc "10 lượt rút có hoàn lại" và "duyệt đủ 100 nhánh"; ghi số thật của một lần rút | chấp nhận phần 2-19; bác bỏ ghi số (lần ba) | NT2 |
+| Biên tập vòng P4 mạch 2 (xong) | | (cùng tác tử biên tập) | `opus` | `high` | mọi phần chấp nhận của P4; 2-00 strand-keys thành đường dẫn ba cụm; 2-09 dựng dần năm lớp; 68 trang; 2-13 90 âm tiết | chấp nhận: điều phối viên kiểm phần đầu tệp, mạch 1, mạch 3–6 không đổi, `footer_check` 0, `formula_overflow` [] |
+| Độ chính xác mạch 2 sau P4 | (cùng tác tử độ chính xác) | `opus` | `high` | `ra-soat-chinh-xac-mach2-p4-2026-11-23.md` | đang chạy |
+| Độ chính xác mạch 2 sau P4 (xong) | | 0 phát hiện | chấp nhận. Hết chu kỳ 2 (mạch 2, prompt mới): commit và push |
